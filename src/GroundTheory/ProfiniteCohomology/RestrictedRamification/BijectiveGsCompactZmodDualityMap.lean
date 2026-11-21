@@ -39,22 +39,23 @@ theorem BaseDualityHypotheses.of_gs
         gsCompactInv S ιs n hodd h3 (compactCupRes (gsFinFamily S ιs) (zmodMulPairingRight n (gsRoots S n)
           (nsmul_gsRoots S n)) (show 2 + 1 = 3 from rfl) y x) = 0) → y = 0) :
     BaseDualityHypotheses (gsFinFamily S ιs) (gsRoots S n) (nsmul_gsRoots S n) (gsLocalInvRoots S ιs n)
-      (gsCompactInv S ιs n hodd h3) where
-  triv := gsRoots_ρ_apply_of_mem S n hμ
-  nonempty_addEquiv := nonempty_addEquiv_gsRoots S n hμ
-  loc_one v := (bijective_gsLocalPairing_one S ιs n hμ v).2
-  loc_two v := bijective_gsLocalPairing_two S ιs n hμ v
-  bijective_alt := bijective_gsCompactInv_of_mem S n ιs ℓ k hℓ hnk hS hμ hodd h3
-  T_localToCompact := gsCompactInv_localToCompact S ιs n hodd h3
-  three_zmod := h3Z
-  three_D := h3
-  finite_one := hfin1
-  finite_two := hfin2
-  ker_left := hleft
-  ker_right := hright
-  swap yc xc := congrArg (gsCompactInv S ιs n hodd h3)
-    (compactCupRes_zmodMulPairingRight_swap (gsFinFamily S ιs) (gsRoots S n) (nsmul_gsRoots S n)
-      (_root_.GroundTheory.ProfCoh.localToCompact_two_surjective S ιs n h3) yc xc)
+      (gsCompactInv S ιs n hodd h3) := by
+  exact
+    { triv := gsRoots_ρ_apply_of_mem S n hμ
+      nonempty_addEquiv := nonempty_addEquiv_gsRoots S n hμ
+      loc_one v := (bijective_gsLocalPairing_one S ιs n hμ v).2
+      loc_two v := bijective_gsLocalPairing_two S ιs n hμ v
+      bijective_alt := bijective_gsCompactInv_of_mem S n ιs ℓ k hℓ hnk hS hμ hodd h3
+      T_localToCompact := gsCompactInv_localToCompact S ιs n hodd h3
+      three_zmod := h3Z
+      three_D := h3
+      finite_one := hfin1
+      finite_two := hfin2
+      ker_left := hleft
+      ker_right := hright
+      swap yc xc := congrArg (gsCompactInv S ιs n hodd h3)
+        (compactCupRes_zmodMulPairingRight_swap (gsFinFamily S ιs) (gsRoots S n) (nsmul_gsRoots S n)
+          (_root_.GroundTheory.ProfCoh.localToCompact_two_surjective S ιs n h3) yc xc) }
 
 
 include ℓ k hℓ hnk hS hμ in

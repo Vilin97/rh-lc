@@ -81,7 +81,7 @@ private theorem exists_in (hσ : IsK σ) {c : Un n → ℂ} (hc : Continuous c) 
       have := b.sum_repr' (G κ)
       simpa [G, Submodule.coe_inner] using this.symm
     rw [e]
-    exact continuous_finset_sum _ fun i _ => (hσ.cont v _).smul continuous_const
+    exact continuous_finsetSum _ fun i _ => (hσ.cont v _).smul continuous_const
   have hF : Integrable (fun κ => c κ • G κ) ν :=
     (hc.smul hG).integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)
   refine ⟨((∫ κ, c κ • G κ ∂ν : S) : V), Subtype.coe_prop _, fun w => ?_⟩

@@ -78,10 +78,10 @@ theorem phase_continuous : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     have hmv : ∀ l, Continuous fun g : Matrix (Fin d) (Fin d) (AE F E) => (g *ᵥ incV F H'.y) l := by
       intro l
       simp only [Matrix.mulVec, _root_.dotProduct]
-      refine continuous_finset_sum _ fun j _ => ?_
+      refine continuous_finsetSum _ fun j _ => ?_
       exact (hLin (LinearMap.mulRight (AF F) (incV F H'.y j))).comp (continuous_id.matrix_elem l j)
     have hin : Continuous fun g : Matrix (Fin d) (Fin d) (AE F E) => ∑ l, u l * cA σ ((g *ᵥ incV F H'.y) l) :=
-      continuous_finset_sum _ fun l _ =>
+      continuous_finsetSum _ fun l _ =>
         (hLin (LinearMap.mulLeft (AF F) (u l))).comp ((hLin (cA σ).toLinearMap).comp (hmv l))
     have h3 := (hLin (LinearMap.mulLeft (AF F) ((-1) * K))).comp hin
     exact htr.comp (h3.congr fun g => by simp [mul_assoc, Finset.mul_sum])

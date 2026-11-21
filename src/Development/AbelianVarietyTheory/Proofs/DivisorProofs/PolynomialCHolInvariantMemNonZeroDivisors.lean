@@ -30,7 +30,8 @@ theorem C_mem_nonZeroDivisors : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
   intro E _ _ _ r U C _ _ M D hD
   have key : ∀ p : Polynomial (HA M), p * Polynomial.C D = 0 → p = 0 := by
     intro p hp
-    ext i : 1
+    apply Polynomial.ext
+    intro i
     have hq : p.coeff i * D = 0 := by
       have := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q i) hp
       simp only [Polynomial.coeff_mul_C, Polynomial.coeff_zero] at this

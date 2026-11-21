@@ -100,12 +100,12 @@ theorem weilOK_of_tau {t : Tup c} (v v' : VCom c) (hτ : v'.τ = v.τ) (h : Weil
   obtain ⟨h1, h2, h3⟩ := h
   exact ⟨h1, h2, by rw [hτ]; exact h3⟩
 
-theorem unrOn_mono {t : Tup c} {P P' : Pl D → Prop} (h : t.UnrOn P) (hPP : ∀ x, P' x → P x) : t.UnrOn P' where
-  bf j ρ hh x hx := h.bf j ρ hh x (hPP x hx)
-  fb j σ hh x hx := h.fb j σ hh x (hPP x hx)
-  top j hh := by
-    obtain ⟨χS, χT, h1, h2⟩ := h.top j hh
-    exact ⟨χS, χT, h1, fun x hx => h2 x (hPP x hx)⟩
+theorem unrOn_mono {t : Tup c} {P P' : Pl D → Prop} (h : t.UnrOn P) (hPP : ∀ x, P' x → P x) : t.UnrOn P' := by
+  refine ⟨fun j ρ hh x hx => h.bf j ρ hh x (hPP x hx),
+    fun j σ hh x hx => h.fb j σ hh x (hPP x hx), ?_⟩
+  intro j hh
+  obtain ⟨χS, χT, h1, h2⟩ := h.top j hh
+  exact ⟨χS, χT, h1, fun x hx => h2 x (hPP x hx)⟩
 
 end GlobalTheory.SeeSawAll
 

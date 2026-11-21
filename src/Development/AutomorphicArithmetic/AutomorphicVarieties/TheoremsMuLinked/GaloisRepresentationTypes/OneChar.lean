@@ -134,7 +134,7 @@ private theorem exists_unram {l : ℕ} [Fact l.Prime] (c : Coef l) {N : ℕ} [Ne
     simp
 
 private theorem isPush_push {O Γ R κ : Type} [CommRing O] [Group Γ] [CommRing R] [Algebra O R] [CommRing κ] [Algebra O κ]
-    (f : R →ₐ[O] κ) (r : Γ →* GG 3 R) : IsPush (f.comp (entAlg O r).val) r (push f r) :=
+    (f : R →ₐ[O] κ) (r : Γ →* GG (m := 3) (R := R)) : IsPush (f.comp (entAlg O r).val) r (push f r) :=
   fun g => ⟨rfl, fun a b => ⟨Algebra.subset_adjoin ⟨g, a, b, rfl⟩, rfl⟩⟩
 
 private theorem trace_reducible_three_dim {Γ R : Type} [Group Γ] [CommRing R] (η : Γ →* ℤˣ) (Ψ : Γ →* Rˣ) (g : Γ) :

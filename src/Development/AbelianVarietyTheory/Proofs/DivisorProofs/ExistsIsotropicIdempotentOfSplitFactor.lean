@@ -103,8 +103,7 @@ theorem exists_root (K : Type) [Field K] [Algebra F K] (h2 : Module.finrank F E 
     simp only [hι, A, Algebra.TensorProduct.tmul_mul_tmul, mul_one, ← TensorProduct.tmul_sub, hts]
   have hspan : ∀ x : K ⊗[F] E, ∃ u v : K, x = ι u + ι v * A := by
     intro x
-    induction x using TensorProduct.induction_on with
-    | zero => exact ⟨0, 0, by simp⟩
+    induction x using TensorProduct.inductionOn with
     | tmul k e =>
       obtain ⟨u, v, rfl⟩ := exists_coord h2 ha e
       refine ⟨u • k, v • k, ?_⟩

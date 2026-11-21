@@ -51,10 +51,13 @@ theorem kap_pow (L : KapL (l := l) (K := K) Amp) {M : Model l K} (a : (dat Amp).
     exact (sum_coord _ _ _ (cupR M (2 * k) 2) φ _ _).trans (congrArg (fun t => (per l K).o (φ t)) (cupR_eq M _ _ _ _))
 
 theorem pow_ex {M : Model l K} (a : (dat Amp).Ch M) (x : ((dat Amp).H a).N 2) :
-    ∀ k : ℕ, ∃ z : ((dat Amp).H a).N (2 * k), IsPow (N := ((dat Amp).H a).N) ((dat Amp).H a).one ((dat Amp).H a).cup x k z
-  | 0 => ⟨(⟨fun n => CH.oneH _, fun n => (B.compatH l).one _ _ false n.le_succ⟩ : (M.HS false 0).lim), fun _ => rfl⟩
-  | k + 1 => by
-    obtain ⟨y, hy⟩ := pow_ex a x k
+    ∀ k : ℕ, ∃ z : ((dat Amp).H a).N (2 * k), IsPow (N := ((dat Amp).H a).N) ((dat Amp).H a).one ((dat Amp).H a).cup x k z := by
+  intro k
+  induction k with
+  | zero =>
+    exact ⟨(⟨fun n => CH.oneH _, fun n => (B.compatH l).one _ _ false n.le_succ⟩ : (M.HS false 0).lim), fun _ => rfl⟩
+  | succ k ih =>
+    obtain ⟨y, hy⟩ := ih
     refine ⟨(⟨fun n => (CH.mulP (B.OcA (B.schFn M.p) (okToOC l K) false n)).cup rfl ((show (M.HS false (2 * k)).lim from y).1 n)
       ((show (M.HS false 2).lim from x).1 n), fun n => ?_⟩ : (M.HS false (2 * k + 2)).lim), y, hy, fun _ => rfl⟩
     refine ((B.compatH l).cup _ _ false n.le_succ rfl _ _).trans ?_

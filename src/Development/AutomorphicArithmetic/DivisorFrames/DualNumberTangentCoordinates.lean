@@ -256,9 +256,41 @@ private theorem mem_latDR_iff_span {E : Type} [Field E] [NumberField E] [IsCMFie
   have hpK := F.fib.comp hψ
   obtain ⟨bR, bR'⟩ := ((GlobalTheory.LocM.FrameBase.lieBasis_iff t _ _ _ hpR).2 _ e).1 he
   obtain ⟨bK, bK'⟩ := ((GlobalTheory.LocM.FrameBase.lieBasis_iff t _ _ _ hpK).2 _ F.v).1 F.basis
-  obtain ⟨bC, bC'⟩ := GlobalTheory.LocM.FrameBase.tanBasis_baseChange t j _ _ _ bK bK'
+  have hbase : ∀ {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T)
+      (x : Sp S ⟶ X) (n : ℕ) (v : Fin n → (Sp (DualNumber S) ⟶ t.G.left)),
+      (∀ i, IsTanAtG t x (v i)) →
+      (∀ w, IsTanAtG t x w → ∃! a : Fin n → S, IsCombAtG t x v a w) →
+      (∀ i, IsTanAtG t (spMap φ ≫ x) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v i)) ∧
+      ∀ w, IsTanAtG t (spMap φ ≫ x) w →
+        ∃! a : Fin n → T, IsCombAtG t (spMap φ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v i) a w := by
+    intro S T _ _ φ x n v hv hv'
+    have := t.semi.comm
+    have := t.semi.smooth
+    have h₁ := isGrpPullback_pullback t.G x
+    have h₂ := isGrpPullback_pullback ((Over.pullback x).obj t.G) (spMap φ)
+    have h₃ := h₂.comp h₁
+    have : IsCommMonObj ((Over.pullback x).obj t.G) := Functor.isCommMonObj_obj
+    have : IsCommMonObj ((Over.pullback (spMap φ)).obj ((Over.pullback x).obj t.G)) :=
+      Functor.isCommMonObj_obj
+    obtain ⟨a₁, b₁⟩ := GlobalTheory.LocM.FrameBase.lieBasis_iff t x _ _ h₁
+    obtain ⟨-, b₃⟩ := GlobalTheory.LocM.FrameBase.lieBasis_iff t _ _ _ h₃
+    choose u hu using fun i => a₁ (v i) (hv i)
+    have hb : IsLieBasis u := (b₁ n u).2 ⟨fun i => by rw [hu]; exact hv i, by rw [funext hu]; exact hv'⟩
+    have hs : Smooth ((Over.pullback x).obj t.G).hom :=
+      inferInstanceAs (Smooth (pullback.snd t.G.hom x))
+    obtain ⟨u', hb', hu'⟩ := GlobalTheory.exists_isLieBasis_baseChange S T φ _ _ _ h₂ hs n u hb
+    have e : Chart.dualMapR φ = GlobalTheory.CompanionTheory.Ar.dualMap φ := by
+      ext a <;> rfl
+    have key := (b₃ n u').1 hb'
+    have e' : ∀ i, (u' i).left ≫ pullback.fst ((Over.pullback x).obj t.G).hom (spMap φ) ≫ pullback.fst t.G.hom x =
+        spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v i := fun i => by
+      rw [← Category.assoc, hu', e, Category.assoc, hu]
+    refine ⟨fun i => e' i ▸ key.1 i, ?_⟩
+    rw [← funext e']
+    exact key.2
+  obtain ⟨bC, bC'⟩ := hbase j _ _ _ bK bK'
   have hE : GlobalTheory.LineNorm.IsTanBasis t (spMap f ≫ yO) (fun k => (e k).left ≫ π ≫ ψ) :=
-    ⟨bR, fun T _ φ => (GlobalTheory.LocM.FrameBase.tanBasis_baseChange t φ _ _ _ bR bR').2⟩
+    ⟨bR, fun T _ φ => (hbase φ _ _ _ bR bR').2⟩
   have hx : spMap (intO C).subtype ≫ spMap ρ ≫ spMap f ≫ yO = spMap j ≫ spMap (algebraMap (𝓞 K) K) ≫ yO := by
     rw [← Category.assoc, spMap_comp_spMap, hρ, ← hg, ← spMap_comp_spMap, ← spMap_comp_spMap]
     simp only [Category.assoc]

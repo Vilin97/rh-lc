@@ -326,13 +326,15 @@ theorem exists_central_line : ∀ (F E : Type) [Field F] [NumberField F] [Field 
     simp only [Function.comp_apply, map_inv]
   refine ⟨zu, γ, ⟨hgc.subtype_mk _, fun t => ?_⟩, fun t w => ?_, fun t => ?_, fun t => Z_at i₀ c θ t, hpi⟩
   · intro u hu
+    change u • ((((γ t : UG (cA σ) J) : GL β (AE F E)) : Matrix β β (AE F E)) - 1) = 0
     rw [hγ]
     ext i j
     rw [Matrix.smul_apply, Matrix.sub_apply, Matrix.diagonal_apply, Matrix.one_apply]
     split_ifs
     · exact Z_at i₀ c θ _ u hu
     · simp
-  · rw [hγ, Matrix.diagonal_map (map_zero _), toAdd_ofAdd, hpi t w]
+  · change ((((γ (Multiplicative.ofAdd t) : UG (cA σ) J) : GL β (AE F E)) : Matrix β β (AE F E)).map (piInf (τ w))) * C w = _
+    rw [hγ, Matrix.diagonal_map (map_zero _), toAdd_ofAdd, hpi t w]
     show _ = C w * NormedSpace.exp (t • (if w = w₀ then Complex.I • (1 : Mat R S) else 0))
     by_cases h : w = w₀
     · rw [if_pos h, if_pos h]

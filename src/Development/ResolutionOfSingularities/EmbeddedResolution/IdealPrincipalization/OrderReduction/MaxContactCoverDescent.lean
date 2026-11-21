@@ -191,7 +191,7 @@ theorem isLocallyNoetherian_schemeAt_coverBlowupSequence (hstar : _root_.Functor
       (Spec (CommRingCat.of (MaxContactCoverData.coverTriple T h.valid).base)) := inferInstance
   have : AlgebraicGeometry.IsNoetherian (MaxContactCoverData.coverTriple T h.valid).scheme :=
     isNoetherian_of_locallyOfFiniteType (MaxContactCoverData.coverTriple T h.valid).structMap
-  constructor
+  refine ⟨?_, ?_⟩
   · intro i hi
     have := isNoetherian_blowupSequenceData_schemeAt T.scheme d i hi
     infer_instance

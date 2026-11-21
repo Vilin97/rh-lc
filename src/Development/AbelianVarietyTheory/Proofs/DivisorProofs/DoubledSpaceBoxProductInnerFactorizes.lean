@@ -34,7 +34,7 @@ theorem isAddFundamentalDomain_blocks (e : G ≃ᵐ H × H) (he : ∀ x y, e (x 
   let eA : G →+ H × H := AddMonoidHom.mk' e he
   have hneg : ∀ g, e (-g) = -e g := fun g => eA.map_neg g
   have hqmp : Measure.QuasiMeasurePreserving e ((μ₁.prod μ₁).map e.symm) (μ₁.prod μ₁) :=
-    ⟨e.measurable, by rw [MeasurableEquiv.map_map_symm]⟩
+    ⟨e.measurable.aemeasurable, by rw [MeasurableEquiv.map_map_symm]⟩
   have hvadd : ∀ (g : Γ) (x : G), e (g +ᵥ x) = e g + e x := fun g x => he _ _
   refine ⟨(h.nullMeasurableSet.prod h.nullMeasurableSet).preimage hqmp, ?_, ?_⟩
   · rw [e.symm.measurableEmbedding.ae_map_iff]
@@ -141,5 +141,10 @@ theorem GlobalTheory.DblBoxHaar.box_integral : ∀ (D : D7) (ψ : AddChar (AF D.
   · intro a a' b b' _ _ _ _
     rw [← GlobalTheory.DblBoxHaar.setIntegral_blocks eM μ₁ 𝓕₁ (fun u => a u * star (a' u)) (fun v => b v * star (b' v))]
     congr 1
-    show _ = a (GlobalTheory.DblBox.top w) * star (a' (GlobalTheory.DblBox.top w)) * (star (b (GlobalTheory.DblBox.bot w)) * b' (GlobalTheory.DblBox.bot w))
+    funext w
+    change (a (GlobalTheory.DblBox.top w) * star (b (GlobalTheory.DblBox.bot w))) *
+      star (a' (GlobalTheory.DblBox.top w) * star (b' (GlobalTheory.DblBox.bot w))) =
+      (a (GlobalTheory.DblBox.top w) * star (a' (GlobalTheory.DblBox.top w))) *
+        star (b (GlobalTheory.DblBox.bot w) * star (b' (GlobalTheory.DblBox.bot w)))
+    simp only [star_mul, star_star]
     ring

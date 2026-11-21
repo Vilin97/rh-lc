@@ -13,7 +13,7 @@ namespace UpperTheory.IdealSupremumPower
 
 private theorem w_le_one {K : Type} [Field K] [NumberField K] (w : AbsoluteValue K ℝ)
     (hw : IsNonarchimedean w) (r : 𝓞 K) : w (r : K) ≤ 1 := by
-  have hint : ∀ n : ℤ, w (n : K) ≤ 1 := fun n => IsNonarchimedean.apply_intCast_le_one hw
+  have hint : ∀ n : ℤ, w (n : K) ≤ 1 := fun n => IsNonarchimedean.apply_intCast_le_one (by simp) (map_one w) (fun a => w.map_neg a) hw
   by_contra h
   push Not at h
   obtain ⟨p, hp, hpr⟩ := (RingOfIntegers.isIntegral_coe r)

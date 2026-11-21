@@ -30,7 +30,7 @@ noncomputable section
 
 open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory GlobalTheory.VB GlobalTheory.LieVB GlobalTheory.CurveRootGeometry GlobalTheory.TwoSeq GlobalTheory.AbDatum GlobalTheory.DeRham GlobalTheory.AbDual GlobalTheory.ConjSeq GlobalTheory.PDiv GlobalTheory.PDivGroup GlobalTheory.BadPt
+open GlobalTheory GlobalTheory.VB GlobalTheory.LieVB GlobalTheory.CurveRootGeometry GlobalTheory.TwoSeq GlobalTheory.DeRham GlobalTheory.AbDual GlobalTheory.ConjSeq GlobalTheory.PDiv GlobalTheory.PDivGroup GlobalTheory.BadPt
 open GlobalTheory.Cris (dp0)
 open GlobalTheory.QCoh (pullbackSections)
 open GlobalTheory.Twist (resM)
@@ -67,7 +67,7 @@ end Reads
 
 section Tangent
 
-open GlobalTheory.HodgeSub.Nat GlobalTheory.TanFibre GlobalTheory.Conormal
+open GlobalTheory.TanFibre GlobalTheory.Conormal
 open GlobalTheory.DeRhamSheaf (onAff)
 open GlobalTheory.Published.AbelianDeRham (bcMor)
 open ReciprocityTheory.ChartRestriction.G.Pdiv (specO)

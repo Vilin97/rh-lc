@@ -61,7 +61,7 @@ theorem col_le {σ I K : Type} [Fintype I] [Fintype K] (e : I × K → σ) (he :
     · subst hs; simp [δ]; omega
     · simp [δ, Finsupp.single_apply, Ne.symm hs]
   have h := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single (e (i₀, c₀)) 1 + δ)) (hE i₀ i hi.symm)
-  rw [coeff_sum, coeff_zero, Finset.sum_eq_single c₀, coeff_X_mul, coeff_pderiv_eq, hδ] at h
+  rw [coeff_sum, AddMonoidAlgebra.coeff_zero, Finset.sum_eq_single c₀, coeff_X_mul, coeff_pderiv_eq, hδ] at h
   · refine hα.1 ((mul_eq_zero.1 h).resolve_left ?_)
     exact Nat.cast_add_one_ne_zero _
   · intro c _ hc
@@ -94,7 +94,7 @@ theorem omE_off {P Q R S : ℕ} {a b : Ix P Q} (hab : a ≠ b) (c : Ix R S) (f :
   · simp [omE, raiB, lowB, h1, h2, hne]
   · have hd : pderiv (a, c) f = 0 := by
       ext γ
-      rw [coeff_pderiv_eq, coeff_zero]
+      rw [coeff_pderiv_eq, AddMonoidAlgebra.coeff_zero]
       refine mul_eq_zero_of_right _ ?_
       by_contra h
       simpa using h0 _ h

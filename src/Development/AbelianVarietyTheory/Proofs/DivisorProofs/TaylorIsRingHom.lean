@@ -34,12 +34,17 @@ theorem iterHom_apply {A : Type} [CommRing A] (D : Derivation ℤ A A) (k : ℕ)
     iterHom D k x = (⇑D)^[k] x := rfl
 
 theorem exists_iterOpHom {A : Type} [CommRing A] : ∀ {n : ℕ} (ds : Fin n → Derivation ℤ A A) (α : Fin n →₀ ℕ),
-    ∃ F : A →+ A, ∀ x, F x = iterOp (fun i => ⇑(ds i)) α x
-  | 0, ds, α => ⟨AddMonoidHom.id A, fun x => by
+    ∃ F : A →+ A, ∀ x, F x = iterOp (fun i => ⇑(ds i)) α x := by
+  intro n
+  induction n with
+  | zero =>
+      intro ds α
+      refine ⟨AddMonoidHom.id A, fun x => ?_⟩
       have : α = 0 := Subsingleton.elim _ _
-      subst this; rw [iterOp_zero]; rfl⟩
-  | n+1, ds, α => by
-      obtain ⟨F, hF⟩ := exists_iterOpHom (fun i => ds i.succ) α.tail
+      subst this; rw [iterOp_zero]; rfl
+  | succ n ih =>
+      intro ds α
+      obtain ⟨F, hF⟩ := ih (fun i => ds i.succ) α.tail
       exact ⟨(iterHom (ds 0) (α 0)).comp F, fun x => by
         rw [iterOp_succ, AddMonoidHom.comp_apply, iterHom_apply, hF]⟩
 

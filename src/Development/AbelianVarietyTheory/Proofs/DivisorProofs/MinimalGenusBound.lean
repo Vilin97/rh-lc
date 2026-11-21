@@ -119,7 +119,11 @@ theorem half_lt_laOf (τ : Psi p.T.Q.H) (k : Fin ((dat p i).p + (dat p i).q)) (h
   omega
 
 theorem one_le_kap (hp : 1 ≤ (dat p i).p) : 1 ≤ kap p i := by
-  have hf : 1 ≤ D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity); omega
+  have hf : 1 ≤ D.R.f := by
+    unfold Ranks.f Ranks.n
+    have := D.R.two_le_m
+    have := D.R.m_le_f
+    omega
   have hne : Nonempty (Psi p.T.Q.H) := (Nat.card_pos_iff.1 (by rw [WtShape.card_psi p]; exact hf)).1
   obtain ⟨τ⟩ := hne
   have h := half_lt_laOf p i τ ⟨0, by omega⟩ hp

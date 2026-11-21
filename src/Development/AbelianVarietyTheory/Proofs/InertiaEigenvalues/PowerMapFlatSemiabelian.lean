@@ -107,6 +107,7 @@ theorem isSmallKernel_sq_mul {φ : GA E a → ℂ} (h : Decays φ) {G : (Fin a �
   refine (mul_le_mul (mul_le_mul h1 h2 (norm_nonneg _) (by positivity)) h3 (norm_nonneg _) (by positivity)).trans_eq ?_
   ring
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem lintegral_theta_upper_ne_top : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ) (π' : CuspSub E (m + 1)), π'.IsUnitary →
     ∀ φ' ∈ GlobalTheory.JSW.mspanR π', ∀ G ∈ GroundTheory.Automorphic.GJMatrix.schwartzBruhatPi (K := E) (ι := Fin (m + 1)),
     ∀ (μ : Measure (GA E (m + 1))) [μ.IsHaarMeasure] (𝓕 : Set (GA E (m + 1))),
@@ -123,8 +124,8 @@ theorem lintegral_theta_upper_ne_top : ∀ (E : Type) [Field E] [NumberField E] 
   change _ ≤ C * GlobalTheory.RSnm.detAbs g ^ _ at hle
   change _ ≤ ENNReal.ofReal (C * GlobalTheory.RSnm.detAbs g ^ _)
   rw [← ENNReal.tsum_mul_left]
-  simp only [← enorm_pow, ← enorm_mul]
-  simp only [← ofReal_norm_eq_enorm]
+  simp only [← eNorm_pow, ← eNorm_mul]
+  simp only [← ofReal_norm]
   rw [← ENNReal.ofReal_tsum_of_nonneg (fun _ => norm_nonneg _) hs,
     ← ENNReal.ofReal_mul (tsum_nonneg fun _ => norm_nonneg _), neg_sub, sub_eq_neg_add, Real.rpow_add h0, ← mul_assoc]
   exact ENNReal.ofReal_le_ofReal (mul_le_mul_of_nonneg_right hle (by positivity))

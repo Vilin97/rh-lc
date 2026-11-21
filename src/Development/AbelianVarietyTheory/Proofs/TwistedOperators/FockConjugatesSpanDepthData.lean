@@ -56,20 +56,21 @@ theorem cj_heisO {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {S
   rw [h, cj_cj]
 
 theorem tame_conjFun {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {S T : HSp D} {ℓ : (WO S T → ℂ) → ℂ}
-    (h : Tame ψ S T ℓ) : Tame ψ (negSp S) T (conjFun ℓ) where
-  add f f' hf hf' := by
+    (h : Tame ψ S T ℓ) : Tame ψ (negSp S) T (conjFun ℓ) := by
+  constructor
+  · intro f f' hf hf'
     simp only [conjFun]
     rw [cj_add, h.add _ _ (theta_cj hψ f hf) (theta_cj hψ f' hf'), map_add (f := _)]
-  smul c f hf := by
+  · intro c f hf
     simp only [conjFun]
     rw [cj_smul, h.smul _ _ (theta_cj hψ f hf), map_mul, Complex.conj_conj]
-  cont f hf := by
+  · intro f hf
     simp only [conjFun, cj_heisO hψ]
     exact Complex.continuous_conj.comp (h.cont _ (theta_cj hψ f hf))
-  bdd f hf := by
+  · intro f hf
     obtain ⟨C, hC⟩ := h.bdd _ (theta_cj hψ f hf)
     exact ⟨C, fun w => by simp only [conjFun, cj_heisO hψ, Complex.norm_conj]; exact hC w⟩
-  sup f hf m _ α hα hth := by
+  · intro f hf m _ α hα hth
     have e1 : (cj id (fun x => ∫ w, α w * heisO ψ (negSp S) T w f x ∂m) : WO S T → ℂ) =
         fun x => ∫ w, starRingEnd ℂ (α w) * heisO ψ S T w (cj id f) x ∂m := by
       funext x

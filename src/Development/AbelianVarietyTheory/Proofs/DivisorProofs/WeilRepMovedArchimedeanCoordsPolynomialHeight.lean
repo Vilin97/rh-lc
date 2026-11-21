@@ -31,7 +31,6 @@ abbrev Zs (F : Type) [Field F] [NumberField F] (n d : ℕ) : Type :=
 theorem infAd_add (a b : mixedEmbedding.mixedSpace F) : infAd F (a + b) = infAd F a + infAd F b := by
   unfold infAd
   rw [map_add (f := _), map_add (f := _)]
-  rfl
 
 theorem infAd_smul (t : ℝ) (a : mixedEmbedding.mixedSpace F) : infAd F (t • a) = realAd F t * infAd F a := by
   refine Prod.ext ?_ ?_

@@ -280,8 +280,8 @@ theorem UpperTheory.etaleCorrespondence_local_parameters_statement :
     refine ⟨c * p, q, ?_, ?_⟩
     · rw [← hy0W, map_mul, map_mul, hy0W, hy0W]
       exact mul_ne_zero hc hp
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_mul, mul_assoc, ← hap, ← map_mul, hcq, map_sum, ht]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_mul, mul_assoc, ← hap, ← map_mul, hcq, map_sum, ht]
       simp only [map_mul]
   obtain ⟨ψ, p1, p2, p3⟩ := pdW
   obtain ⟨φ, q1, q2, q3, q4⟩ := UpperTheory.exists_cotangent_map_dual_basis_of_parameters (evA hW) t ψ (fun b ω => by rw [p1, evA_apply]) p2 evt

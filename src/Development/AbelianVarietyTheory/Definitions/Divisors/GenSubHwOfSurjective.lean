@@ -376,7 +376,7 @@ def hypFrame : Matrix (Fin 2) (Ix 1 1) ℂ :=
 theorem isAdapted_hyp : IsAdapted τ w (hypPlane F E) hypFrame := by
   refine ⟨⟨?_, Matrix.of (Sum.elim (fun _ => ![1 / 2, -Complex.I]) fun _ => ![1 / 2, Complex.I]), ?_⟩, ?_⟩
   · ext (b | b) (c | c) <;> rw [Subsingleton.elim b 0, Subsingleton.elim c 0] <;>
-      simp [herm, hypPlane, hypFrame, Jm, Formalism.UG.Jpq, Matrix.mul_apply, Fin.sum_univ_two, map_ofNat, Complex.ext_iff] <;> norm_num
+      simp [herm, hypPlane, hypFrame, Jm, Formalism.UG.Jpq, Matrix.mul_apply, Fin.sum_univ_two, map_ofNat, Complex.ext_iff, Function.swap] <;> norm_num
   · ext r s
     fin_cases r <;> fin_cases s <;> simp [hypFrame, Matrix.mul_apply, Complex.ext_iff] <;> norm_num
   · ext r (c | c) <;> rw [Subsingleton.elim c 0] <;> fin_cases r <;>

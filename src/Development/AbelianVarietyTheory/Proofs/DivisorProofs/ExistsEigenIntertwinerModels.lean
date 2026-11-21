@@ -215,7 +215,13 @@ theorem exists_modelChange_pol : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E :
   refine SchwartzMap.ext fun x => ?_
   have h1 := (hD u hu f).1 _ hg _ (GlobalTheory.T.eigen_intertwiner_good_models F E σ B n d n d X W X W M M' 1 1 ∅ e hM hM' hE _ (proj_adm x y'))
   have h2 := (hD' u hu (ei f)).1 _ hg' _ (proj_adm x y')
-  simp only [LinearMap.comp_apply, Heisenberg₂ _ _ (mem f _ hg), hvac] at h1
+  simp only [LinearMap.comp_apply, hvac] at h1
+  have heq : (fun (t : ℝ) => (LinearMap.proj (pt x y') : Fn F n d →ₗ[ℂ] ℂ) (e (M.co.rho B.ψ (realAd F t • u) (pureA F f (finPr M.vac))))) =
+      (fun t => (LinearMap.proj (pt x y') : Fn F n d →ₗ[ℂ] ℂ) (M'.co.rho B.ψ (realAd F t • u) (pureA F (ei f) (finPr M'.vac)))) := by
+    funext t
+    rw [Heisenberg₂ _ _ (mem f _ hg), hvac]
+  set_option backward.isDefEq.respectTransparency false in
+    rw [heq] at h1
   have h3 := h1.unique h2
   rw [LinearMap.proj_apply, LinearMap.proj_apply, pureA_pt, pureA_pt] at h3
   exact mul_right_cancel₀ hy' h3

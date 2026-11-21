@@ -89,7 +89,7 @@ theorem first_step_flat : ∀ {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 
     have e : O.1 = GlobalTheory.LocFlat.flCol (psiAt ch.W w) (unitVol w) (0 + 1) Ob.1 := by
       rw [hO]
       show _ = GlobalTheory.LocFlat.flCol (psiAt ch.W w) (unitVol w) (0 + 1) (Set.indicator _ _)
-      rw [hun.1, if_neg (by omega)]
+      rw [hun.1, ite_eq_right (by omega)]
     refine (hT₀e Ob O e).symm.trans ?_
     exact congrArg _ (hTmO Ob hOb)
   · show GlobalTheory.LocFlat.flCol _ _ _ Φ.1 = _

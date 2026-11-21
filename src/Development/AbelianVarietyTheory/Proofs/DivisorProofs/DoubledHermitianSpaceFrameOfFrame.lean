@@ -27,7 +27,7 @@ theorem dblM_gram {β : Type} [Fintype β] [DecidableEq β] {R S : ℕ} (N : Mat
     obtain ⟨y, rfl⟩ := finSumFinEquiv.surjective q
     rcases x with r | s <;> rcases y with r' | s' <;>
       simp [Matrix.mul_apply, Fintype.sum_sum_type, dblM, dblCol, hG, Jm, Formalism.UG.Jpq, Matrix.one_apply,
-        Finset.sum_neg_distrib, Matrix.neg_apply, Fin.ext_iff] <;> omega
+        Finset.sum_neg_distrib, Matrix.neg_apply, Fin.ext_iff, Function.swap] <;> omega
 
 theorem dblM_rinv {β : Type} [Fintype β] [DecidableEq β] {R S : ℕ} (C : Matrix β (Ix R S) ℂ)
     (h : ∃ C' : Matrix (Ix R S) β ℂ, C * C' = 1) :
@@ -40,7 +40,7 @@ theorem dblM_rinv {β : Type} [Fintype β] [DecidableEq β] {R S : ℕ} (C : Mat
     rw [← hC', Matrix.mul_apply, Fintype.sum_sum_type]
   ext i i'
   rcases i with i | i <;> rcases i' with i' | i' <;>
-    simp [Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_add, dblM, dblCol, Matrix.one_apply, hI, add_comm]
+    simp [Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_add, dblM, dblCol, Matrix.one_apply, hI, add_comm, Function.swap]
 
 theorem dblM_isFrame {β : Type} [Fintype β] [DecidableEq β] {R S : ℕ} (N : Matrix β β ℂ) (C : Matrix β (Ix R S) ℂ)
     (h : IsFrame N C) : IsFrame (Matrix.fromBlocks N 0 0 (-N)) (dblM C) :=

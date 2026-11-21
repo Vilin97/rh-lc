@@ -28,7 +28,7 @@ theorem countable_charts [SmoothOfRelativeDimension d p] {U : X.Opens} (hU : IsA
     ∃ C : Set (AlgChart p (RingHom.id ℂ) d), C.Countable ∧
       ∀ z ∈ ptsIn p (RingHom.id ℂ) U, ∃ ch ∈ C, z ∈ ch.e.source := by
   haveI : Smooth p := SmoothOfRelativeDimension.smooth d p
-  have h1 := LocallyOfFiniteType.finiteType_of_affine_subset p (isAffineOpen_top (Sp ℂ)) hU (by simp)
+  have h1 := Scheme.Hom.finiteType_appLE p (isAffineOpen_top (Sp ℂ)) hU (by simp)
   have h2 : ((Scheme.ΓSpecIso (CommRingCat.of ℂ)).inv).hom.FiniteType :=
     RingHom.FiniteType.of_surjective _
       (Scheme.ΓSpecIso (CommRingCat.of ℂ)).commRingCatIsoToRingEquiv.symm.surjective

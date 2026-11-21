@@ -133,15 +133,7 @@ theorem smul (r j : ℕ) (c : Y.Λ) (x : Y.Fam M r j) (w : HG (L.QB M) r j) (h :
 
 end RhoA
 
-theorem rhoEx {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)} [FiniteDimensional ℚ_[l] K] : RhoEx l K where
-  ex := by
-    intro Y m L M hM r j hr x hx
-    exact RhoA.ex L M hM r j hr x hx
-  add := by
-    intro Y m L M r j x y w w' h h'
-    exact RhoA.add L M r j x y w w' h h'
-  smul := by
-    intro Y m L M r j c x w h
-    exact RhoA.smul L M r j c x w h
+theorem rhoEx {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)} [FiniteDimensional ℚ_[l] K] : RhoEx l K := by
+  exact ⟨fun L M => RhoA.ex L M, fun L M => RhoA.add L M, fun L M => RhoA.smul L M⟩
 
 end CrystallineSemistableComparison.HT

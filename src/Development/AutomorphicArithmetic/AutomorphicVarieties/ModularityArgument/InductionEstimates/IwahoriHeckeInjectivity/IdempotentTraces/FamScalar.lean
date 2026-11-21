@@ -59,7 +59,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E.famScalar :
     Module.End.mem_eigenspace_iff.1 (hE ▸ Submodule.mem_top : v ∈ Module.End.eigenspace (symb β 0 : Eu d →ₗ[ℂ] Eu d) l)
   have hl0 : 0 ≤ l := by
     obtain ⟨v, hv⟩ := exists_ne (0 : Eu d)
-    have hp := (ContinuousLinearMap.nonneg_iff_isPositive _).1 hpos
+    have hp := ContinuousLinearMap.nonneg_iff_isPositive.1 hpos
     have h2 := hp.inner_nonneg_right v
     rw [hT, inner_smul_right, inner_self_eq_norm_sq_to_K] at h2
     have hn : 0 < ‖v‖ ^ 2 := pow_pos (norm_pos_iff.2 hv) 2

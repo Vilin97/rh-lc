@@ -82,8 +82,26 @@ theorem mem_Fil_of_corr (hF : PrimitiveSubmodule B = Submodule.span R' ((bcMor h
 
 theorem IsLieImage.baseChange (hF : PrimitiveSubmodule B = Submodule.span R' ((bcMor hφ).pull '' (PrimitiveSubmodule A)))
     (hL : LieExact B) {h : HdR A} {h' : HdR B} (e : (bcMor hφ).Corr h h') {v : epsR R ⟶ A} {v' : epsR R' ⟶ B}
-    (ev : v'.left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R R')) ≫ v.left) (hv : IsLieImage h v) : IsLieImage h' v' := by
-  have ht := ArcQ.NormalForm.isTangent_baseChange hφ ev hv.1
+    (ev : v'.left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R R')) ≫ v.left) (hv : IsLieImage h v) : IsLieImage h' v' := open CategoryTheory.MonoidalCategory CategoryTheory.CartesianMonoidalCategory CategoryTheory.MonObj in open scoped CategoryTheory.Obj in by
+  have ht : IsTangent v' := by
+    apply hφ.1.hom_ext
+    · rw [Category.assoc, ev, ← Category.assoc, ← Cris.spMap_comp]
+      have ee : (TrivSqZeroExt.fstHom R' R' R').toRingHom.comp
+          (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R R')) =
+          (algebraMap R R').comp (TrivSqZeroExt.fstHom R R R).toRingHom := by
+        ext x <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+      rw [ee, Cris.spMap_comp, Category.assoc, hv.1]
+      letI : Monoid (Over.mk (𝟙 (Sp R')) ⟶ B) := CategoryTheory.Hom.monoid
+      letI : Monoid (Over.mk ((Over.mk (𝟙 (Sp R'))).hom ≫ spMap (algebraMap R R')) ⟶ A) := CategoryTheory.Hom.monoid
+      have he := congrArg (fun t => t.left) (map_one (pushHom hφ (Over.mk (𝟙 (Sp R')))))
+      simpa [pushHom, pushPt, ArcQ.NormalForm.one_left_eq] using he.symm
+    · have ee : spMap (TrivSqZeroExt.fstHom R' R' R').toRingHom ≫
+          spMap (algebraMap R' (DualNumber R')) = 𝟙 _ := ArcLieCompare.epsRed_hom
+      change spMap (TrivSqZeroExt.fstHom R' R' R').toRingHom ≫ v'.left ≫ B.hom = _
+      rw [Over.w]
+      change spMap (TrivSqZeroExt.fstHom R' R' R').toRingHom ≫ spMap (algebraMap R' (DualNumber R')) = _
+      rw [ee, Over.w]
+      rfl
   obtain ⟨k, hk⟩ := hL.2 v' ht
   have : h' - k ∈ Fil B := by
     rw [Fil, hF, Submodule.mem_dualAnnihilator]
@@ -148,7 +166,7 @@ theorem IsKSValue.baseChange (P : AbelianDeRham) {A' : Over (Sp (DualNumber R))}
   refine ⟨k', ⟨d', mem_Fil_of_corr (hφ := hφ') hF₁ ex hd, fun c => ?_⟩,
     hk.baseChange (hφ := hφ) hF₀ (PH R' B g b₀.1 b₀.2).1 ek ev⟩
   obtain ⟨z, rfl⟩ := bc₀.2 c
-  induction z with
+  induction z using TensorProduct.induction_on with
   | zero =>
     rw [map_zero, map_zero, map_zero, LinearMap.map_zero, LinearMap.map_zero]
     simp
@@ -199,7 +217,7 @@ theorem exists_isGrpPullback {S S' : Scheme.{0}} (G : Over S) [GrpObj G] (f : S'
   ⟨_, inferInstance, _, isGrpPullback_pullback G f⟩
 
 theorem IsKS.baseChange (P : AbelianDeRham) (h : FrMap ψ y y') {x : Sp (DualNumber K) ⟶ Xo.X} {M : HIx Dw Φ → K}
-    (hM : IsKS Φ y x M) : IsKS Φ y' (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ x) (ψ ∘ M) := by
+    (hM : IsKS Φ y x M) : IsKS Φ y' (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ x) (ψ ∘ M) := open CategoryTheory.MonoidalCategory CategoryTheory.CartesianMonoidalCategory CategoryTheory.MonObj in open scoped CategoryTheory.Obj in by
   obtain ⟨A, _, A', _, π, π', i, hi, b, ub, hb, hπ, hπ', e, hpol, hu, hl, hM⟩ := hM
   letI : Algebra K K' := ψ.toRingHom.toAlgebra
   obtain ⟨B, _, φ, hφ⟩ := exists_isGrpPullback A (spMap (algebraMap K K'))
@@ -223,14 +241,54 @@ theorem IsKS.baseChange (P : AbelianDeRham) (h : FrMap ψ y y') {x : Sp (DualNum
   have hL := (P.2.1 K' B _ (PolPull.isAbelianScheme_of_isGrpPullback hA hφ)
     ((smoothOfRelativeDimension_isStableUnderBaseChange _).of_isPullback hφ.1 gA)).1
   obtain ⟨b', hpol', eb⟩ := hpol.pull_comp (AbelianDeRham.bcMor hφ) (UnivPol.pol Xo).isLB
-  choose tv htv using ArcQ.NormalForm.exists_baseChange hφ
+  have dual_over : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K K')) ≫
+      spMap (algebraMap K (DualNumber K)) = spMap (algebraMap K' (DualNumber K')) ≫ spMap (algebraMap K K') := by
+    rw [← Cris.spMap_comp, ← Cris.spMap_comp]
+    congr 1
+    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  have exists_bc (v : epsR K ⟶ A) : ∃ u : epsR K' ⟶ B,
+      u.left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K K')) ≫ v.left := by
+    have e : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K K')) ≫ v.left) ≫ A.hom =
+        (epsR K').hom ≫ spMap (algebraMap K K') := by rw [Category.assoc, Over.w]; exact dual_over
+    exact ⟨Over.homMk (hφ.1.lift _ _ e) (hφ.1.lift_snd _ _ _), hφ.1.lift_fst _ _ _⟩
+  choose tv htv using exists_bc
+  have comb_bc {n : ℕ} {cf : Fin n → K} {v : Fin n → (epsR K ⟶ A)} {w : epsR K ⟶ A}
+      {u : Fin n → (epsR K' ⟶ B)} {w' : epsR K' ⟶ B}
+      (hu : ∀ i, (u i).left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K K')) ≫ (v i).left)
+      (hw : w'.left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K K')) ≫ w.left)
+      (h : IsLieComb cf v w) : IsLieComb (fun i => algebraMap K K' (cf i)) u w' := by
+    have dual_scale (a : K) : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K K')) ≫ spMap (epsScaleR a) =
+        spMap (epsScaleR (algebraMap K K' a)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K K')) := by
+      rw [← Cris.spMap_comp, ← Cris.spMap_comp]
+      congr 1
+      ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsScaleR, TrivSqZeroExt.algebraMap_eq_inl]
+    rw [ArcQ.NormalForm.isLieComb_iff] at h ⊢
+    let U : Over.mk ((epsR K').hom ≫ spMap (algebraMap K K')) ⟶ epsR K :=
+      Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K K'))) dual_over
+    letI : Monoid (epsR K' ⟶ B) := CategoryTheory.Hom.monoid
+    letI : Monoid (epsR K ⟶ A) := CategoryTheory.Hom.monoid
+    letI : Monoid (Over.mk ((epsR K').hom ≫ spMap (algebraMap K K')) ⟶ A) := CategoryTheory.Hom.monoid
+    have e₁ := map_list_prod (pushHom hφ (epsR K')) (List.ofFn fun i => ArcQ.NormalForm.sc (algebraMap K K' (cf i)) ≫ u i)
+    have e₂ := map_list_prod (preHom (G := A) U) (List.ofFn fun i => ArcQ.NormalForm.sc (cf i) ≫ v i)
+    rw [List.map_ofFn] at e₁ e₂
+    have e₃ : (pushHom hφ (epsR K')) ∘ (fun i => ArcQ.NormalForm.sc (algebraMap K K' (cf i)) ≫ u i) =
+        (preHom (G := A) U) ∘ fun i => ArcQ.NormalForm.sc (cf i) ≫ v i :=
+      funext fun i => Over.OverMorphism.ext (by
+        show (spMap (epsScaleR (algebraMap K K' (cf i))) ≫ (u i).left) ≫ φ =
+          spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K K')) ≫ spMap (epsScaleR (cf i)) ≫ (v i).left
+        rw [Category.assoc, hu, ← Category.assoc, ← Category.assoc, dual_scale])
+    rw [e₃, ← e₂, ← h] at e₁
+    apply Over.OverMorphism.ext
+    apply hφ.1.hom_ext
+    · exact hw.trans (congrArg (·.left) e₁).symm
+    · rw [Over.w, Over.w]
   choose th hth using bc.exists
   refine ⟨B, _, B', _, φ ≫ π, φ' ≫ π', _, hj, b', fun σ k => tv (ub σ k), fun k => th (hb k),
     (hφ.comp hπ).congr h.1.symm rfl, hφ'.comp hπ', by rw [← Category.assoc, sq, Category.assoc, e], hpol',
     fun σ k => ?_, fun σ k => (hl σ k).baseChange (hφ := hφ) hF hL (hth _) (htv _), fun τ a => ?_⟩
   · rw [← Category.assoc, htv, Category.assoc, hu, h.2.1]
   · obtain ⟨w, hw, f, hf, hd, hv⟩ := hM τ a
-    refine ⟨tv w, ArcQ.NormalForm.isLieComb_baseChange hφ (fun _ => htv _) (htv w) hw, th f,
+    refine ⟨tv w, comb_bc (fun _ => htv _) (htv w) hw, th f,
       mem_Fil_of_corr (hφ := hφ) hF (hth f) hf, fun k => ?_,
       hv.baseChange (hφ := hφ) P hA' gA' hj hφ' sq (hth f) (htv w)⟩
     rw [eb _ _ _ _ (hth f) (hth _), hd]

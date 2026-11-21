@@ -59,6 +59,6 @@ theorem jac_mulSingle_scalar : ∀ (k : Type) [Field k] [ValuativeRel k] [Topolo
   obtain ⟨v, rfl⟩ := Submodule.Quotient.mk_surjective _ x
   refine (jac_mk f σ _ v).trans ?_
   rw [h3, h1, hω z v, inv_one, Units.val_one, one_smul]
-  rfl
+  exact map_smul (Submodule.mkQ _) _ _
 
 end GlobalTheory.JacGL1

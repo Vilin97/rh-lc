@@ -62,7 +62,7 @@ theorem finite_joint_eigen {K I : Type} [Field K] {n : ℕ} (T : I → Matrix (F
   have hfin : Finite {θ // V θ ≠ ⊥} := by
     haveI := hind.fintypeNeBotOfFiniteDimensional
     infer_instance
-  refine (Set.finite_coe_iff.mp hfin).subset ?_
+  refine (Set.finite_coe_iff (s := {θ | V θ ≠ ⊥})).mp hfin |>.subset ?_
   rintro θ ⟨c, hc0, hc⟩
   show V θ ≠ ⊥
   rw [Submodule.ne_bot_iff]

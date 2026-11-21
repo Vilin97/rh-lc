@@ -36,7 +36,7 @@ theorem continuous_locAdele (S₁ : Finset (InfinitePlace F)) (S₂ : Finset (He
       exact (continuous_apply _).comp continuous_snd
     · simp only [h, dite_false]
       exact continuous_const
-  · exact continuous_finset_sum _ fun v _ =>
+  · exact continuous_finsetSum _ fun v _ =>
       (GlobalTheory.AdelicU.continuous_singleFin v.1).comp ((continuous_apply v).comp continuous_fst)
 
 open Classical in
@@ -47,7 +47,6 @@ theorem locAdele_zero (S₁ : Finset (InfinitePlace F)) (S₂ : Finset (HeightOn
     change (if h : u ∈ S₁ then (0 : u.Completion) else 0) = 0
     split_ifs <;> rfl
   · simp [locAdele]
-    rfl
 
 open Classical in
 theorem mul_eq_locAdele {S₁ : Finset (InfinitePlace F)} {S₂ : Finset (HeightOneSpectrum (𝓞 F))} {ε : AF F}

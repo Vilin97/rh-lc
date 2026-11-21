@@ -61,7 +61,7 @@ theorem card_finCl_eq (V : HSp D) (K : Subgroup (GL (Fin V.rank) (Lev.EAf D))) :
   let f : FinCl V K → Cl D.sp.cm V.gram K := Quotient.lift
     (fun x : GfC V => (DoubleCoset.mk (UQ D.sp.cm V.gram) (K.subgroupOf (UA D.sp.cm V.gram)) (GlobalTheory.DefFree.finU V x.1) :
       Cl D.sp.cm V.gram K))
-    (fun a b h => (finCl_mk_eq_iff V K a b).1 ((DoubleCoset.eq'' _ _).2 h))
+    (fun a b h => (finCl_mk_eq_iff V K a b).1 ((DoubleCoset.eq'').2 h))
   refine Nat.card_eq_of_bijective f ⟨fun c c' h => ?_, fun c => ?_⟩
   · induction c using Quotient.inductionOn with | h a => ?_
     induction c' using Quotient.inductionOn with | h b => ?_

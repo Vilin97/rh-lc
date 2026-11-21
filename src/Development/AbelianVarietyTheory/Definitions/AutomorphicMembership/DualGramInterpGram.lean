@@ -122,12 +122,12 @@ theorem co_eq {T : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) R}
   Matrix.ext fun a i => congrFun ((f.basis τ _ (g.tan τ i) (g.eig τ i)).unique (f.co_spec g τ i) (h i)) a
 
 theorem co_mul : f.co g τ * g.co k τ = f.co k τ := by
-  refine (co_eq fun i => (isComb_iff (f.vec τ) _ (k.vec τ i)).2 ?_).symm
-  simp only [g.vec_eq k τ i, f.vec_eq g τ, Finset.smul_sum, smul_smul, mul_apply, Finset.sum_smul, mul_comm]
+  refine (co_eq (T := f.co g τ * g.co k τ) fun i => (isComb_iff (f.vec τ) _ (k.vec τ i)).2 ?_).symm
+  simp only [g.vec_eq k τ i, f.vec_eq g τ, Finset.smul_sum, smul_smul, Matrix.mul_apply, Finset.sum_smul, mul_comm]
   exact Finset.sum_comm
 
 theorem co_self : f.co f τ = 1 :=
-  co_eq fun i => (isComb_iff (f.vec τ) _ (f.vec τ i)).2 (by simp [one_apply])
+  co_eq (T := 1) fun i => (isComb_iff (f.vec τ) _ (f.vec τ i)).2 (by simp [Matrix.one_apply])
 
 theorem isUnit_det_co : IsUnit (f.co g τ).det := isUnit_det_of_right_inverse ((f.co_mul g f τ).trans (f.co_self τ))
 
@@ -289,7 +289,7 @@ theorem Adapted.compare (h₁ : Y.Adapted p t₁ g₁ 1) (h : Y.Adapted p t g t'
   obtain ⟨q₁, hq₁⟩ := f₁.exists_isMap _ b.2.1 b.1
   obtain ⟨q, hq⟩ := f.exists_isMap _ b.2.1 b.1
   have e1 (τ i d) : k₁.co Y.f0 τ d i = ∑ j, k.co Y.f0 τ j i * algebraMap _ Y.Y.X.functionField (f₁.co f τ d j) := by
-    rw [← k₁.co_mul k, hk₁.co τ hk a.1, mul_apply]
+    rw [← k₁.co_mul k, hk₁.co τ hk a.1, Matrix.mul_apply]
     exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
   have hM (τ d i) (h : i < d) : f₁.co f τ d i = 0 := hι ((CoordUniq.tri_of_mul
     (M := fun i a => algebraMap _ Y.Y.X.functionField (f₁.co f τ a i)) (fun i a => (a₁.co τ hk₁).1 a i)

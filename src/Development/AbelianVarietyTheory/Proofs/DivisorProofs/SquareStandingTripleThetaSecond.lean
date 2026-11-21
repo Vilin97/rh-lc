@@ -26,6 +26,7 @@ noncomputable section
 
 namespace GlobalTheory.TopFlip.LinSmall
 
+open _root_.GlobalTheory.TopFlip (spX ptB)
 open GlobalTheory.SmallDat (PtS IxS sympS thetaS heisS thetaS_rho thetaS_smul)
 open GlobalTheory.BigDat (atW atW_atPl_self atW_atPl_ne atPl_one_mul symplO_cA_smul isHalf_smul_self
   smul_of_isHalf smul_eq_zero_of_isHalf map_infPart_of_isHalf)

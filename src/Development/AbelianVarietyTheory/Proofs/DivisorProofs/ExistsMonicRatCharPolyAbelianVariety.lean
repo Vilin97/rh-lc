@@ -13,9 +13,9 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 open GlobalTheory GlobalTheory.HTLat GlobalTheory.Published.AbVarRed GlobalTheory.CechPic GlobalTheory.AV GlobalTheory.AV.AbVar
 attribute [local instance] Over.cartesianMonoidalCategory
 
-theorem GlobalTheory.charPolyRat : ∀ (K : Type) [Field K] (A : AbVar K) (f : End A), ∃ P : Polynomial ℚ, P.Monic ∧ P.natDegree = 2 * A.dim ∧ ∀ n : ℤ, P.eval (n : ℚ) = (deg (A := A) (B := A) ((n : End A) - f) : ℚ) := by
+theorem GlobalTheory.charPolyRat : ∀ (K : Type) [Field K] (A : AbVar K) (f : End A), ∃ P : Polynomial ℚ, P.Monic ∧ P.natDegree = 2 * A.dim ∧ ∀ n : ℤ, P.eval (n : ℚ) = (deg (A := A) (B := A) ((n : End A) - f).asHom : ℚ) := by
   intro K _ A f
-  obtain ⟨F, hF, hev⟩ := GlobalTheory.T.homDegree_integerCombination_isHomogeneous K A A rfl 2 ![𝟙 A, f]
+  obtain ⟨F, hF, hev⟩ := GlobalTheory.T.homDegree_integerCombination_isHomogeneous K A A rfl 2 ![𝟙 A, f.asHom]
   set N := 2 * A.dim with hN
   have hsupp : ∀ d ∈ F.support, d 0 + d 1 = N := by
     intro d hd
@@ -36,7 +36,7 @@ theorem GlobalTheory.charPolyRat : ∀ (K : Type) [Field K] (A : AbVar K) (f : E
     rw [Finset.sum_eq_single (Finsupp.single 0 N)]
     · simp
     · intro d hd hne
-      rw [if_neg]
+      rw [ite_eq_right]
       intro h0
       apply hne
       have := hsupp d hd
@@ -85,7 +85,5 @@ theorem GlobalTheory.charPolyRat : ∀ (K : Type) [Field K] (A : AbVar K) (f : E
     rw [h]
     congr 2
     rw [Fin.sum_univ_two]
-    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, neg_smul, one_smul]
-    rw [sub_eq_add_neg]
-    congr 1
-    exact zsmul_one (R := End A) n
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, neg_smul, one_smul]
+    rw [← zsmul_one (R := End A) n, End.sub_asHom, End.smul_asHom, End.one_asHom, sub_eq_add_neg]

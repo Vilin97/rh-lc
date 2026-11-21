@@ -35,7 +35,7 @@ private theorem spread {X : Scheme.{0}} {ι : Type} [Finite ι] {y : X} (t : ι 
 private theorem inj_emb {F : Type} [Field F] [NumberField F] (σ : 𝓞 F →+* ℂ) : Function.Injective σ := by
   rw [RingHom.injective_iff_ker_eq_bot]
   refine Ideal.eq_bot_of_comap_eq_bot (R := ℤ) ?_
-  rw [RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
+  rw [Ideal.under_def, RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
   exact RingHom.injective_int _
 
 section

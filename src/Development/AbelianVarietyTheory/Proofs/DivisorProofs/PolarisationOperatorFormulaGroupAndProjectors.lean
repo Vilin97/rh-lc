@@ -66,12 +66,12 @@ theorem comp_of_rowZ {O : Type} [CommRing O] {N : ℕ} (H : Fin N → ℤ) (h : 
         exact_mod_cast this.symm
     by_cases hw : (fun c => (w c : ℤ)) = H
     · rw [if_pos (key.mpr hw), if_pos hw]
-    · rw [if_neg (mt key.mp hw), if_neg hw, coeff_zero]
+    · rw [if_neg (mt key.mp hw), if_neg hw, AddMonoidAlgebra.coeff_zero] <;> rfl
 
 theorem eq_zero_of_rowZ_neg {O : Type} [CommRing O] {N : ℕ} (H : Fin N → ℤ) (h : MvPolynomial (Fin N × Fin N) O)
     (hh : IsWeightedHomogeneous (GlobalTheory.LvT.KerLat.rowZ N N) h H) (c : Fin N) (hc : H c < 0) : h = 0 := by
   ext d
-  rw [coeff_zero]
+  simp only [AddMonoidAlgebra.coeff_zero, Pi.zero_apply]
   by_contra hd
   have e := congrFun (hh hd) c
   rw [GlobalTheory.LvT.KerLat.weight_rowZ] at e
@@ -163,7 +163,14 @@ theorem polar_formula : ∀ (O : Type) [CommRing O] (N : ℕ) (ι : Type) [Finty
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [evalE, map_sum, map_smul, FreeAlgebra.lift_ι_apply, Sum.elim_inr, LinearMap.sum_apply,
       Finset.sum_apply, LinearMap.smul_apply, hPx]
-    simp_rw [← MultilinearMap.map_update_smul]
+    have hsum : (∑ w ∈ Fintype.piFinset (fun _ : Fin N => Finset.range (M + 1)),
+        (w a : O) • PiTensorProduct.tprod O (Function.update x τ (cmp w))) =
+        ∑ w ∈ Fintype.piFinset (fun _ : Fin N => Finset.range (M + 1)),
+          PiTensorProduct.tprod O (Function.update x τ ((w a : O) • cmp w)) := by
+      apply Finset.sum_congr rfl
+      intro w _
+      exact ((PiTensorProduct.tprod O).map_update_smul x τ (w a : O) (cmp w)).symm
+    rw [hsum]
     rw [← MultilinearMap.map_update_sum]
     congr 2
     apply Subtype.ext

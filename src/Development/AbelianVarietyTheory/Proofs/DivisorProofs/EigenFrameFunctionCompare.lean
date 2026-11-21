@@ -148,7 +148,12 @@ theorem graded_bijective : ∀ (q : ℕ) [NeZero q] {E : Spc} {N : ℕ} (V : E �
     congr 1
     apply Cocycle.ext
     change (Cochain.ofHom (colCx _ (twX E V) a).hom).comp (∑ j, γ j).1 (zero_add m) = b.1
-    erw [AddSubgroup.val_finset_sum]
+    have hsum : ∀ s : Finset (Fin N), (∑ j ∈ s, γ j).1 = ∑ j ∈ s, (γ j).1 := by
+      intro s
+      induction s using Finset.induction_on with
+      | empty => rfl
+      | @insert j s hj ih => simp only [Finset.sum_insert hj, Cocycle.coe_add, ih]
+    rw [hsum]
     exact col_identity q V ℓ i (fun j => (z j).1) a n m hnm α (fun j => (ac j).1) ha b.1 hb (fun j => (γ j).1) hγ
 
 end GlobalTheory.PBFg

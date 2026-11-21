@@ -57,7 +57,7 @@ private theorem valuationRing_stalk {k : Type} [Field k] {C : Scheme.{0}} [Algeb
   have h3 : IsIntegrallyClosed (C.presheaf.stalk c) ∧
       ∀ P : Ideal (C.presheaf.stalk c), P ≠ ⊥ → P.IsPrime → P = IsLocalRing.maximalIdeal _ :=
     ⟨(hn c).2, fun P h₁ h₂ ↦ IsLocalRing.eq_maximalIdeal (Ring.krullDimLE_one_iff_of_noZeroDivisors.mp h1 P h₁ h₂)⟩
-  exact ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain (C.presheaf.stalk c)).out 1 3).mpr h3
+  exact ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain (C.presheaf.stalk c)).out 2 4).mpr h3
 
 private theorem val_specializes {C : Scheme.{0}} [IsIntegral C] {c ξ : C} [ValuationRing (C.presheaf.stalk c)]
     (hξ : ξ = genericPoint C) (hs : ξ ⤳ c) {K : Type} [Field K] (e : C.presheaf.stalk ξ →+* K)

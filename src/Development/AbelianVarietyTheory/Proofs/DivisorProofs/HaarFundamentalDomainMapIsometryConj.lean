@@ -34,7 +34,7 @@ theorem _root_.GlobalTheory.T.haar_fundamentalDomain_map_isometry_conj : ∀ {D 
   have hm : Measurable I.kap := I.continuous_kap.measurable
   have hm' : Measurable I.kap.symm := I.continuous_kap_symm.measurable
   have hq : MeasureTheory.Measure.QuasiMeasurePreserving I.kap.symm (m.map I.kap) m := by
-    refine ⟨hm', ?_⟩
+    refine ⟨hm'.aemeasurable, ?_⟩
     rw [MeasureTheory.Measure.map_map hm' hm]
     have : (I.kap.symm : GA D S' → GA D S) ∘ I.kap = id := funext fun x => I.kap.symm_apply_apply x
     rw [this, MeasureTheory.Measure.map_id]

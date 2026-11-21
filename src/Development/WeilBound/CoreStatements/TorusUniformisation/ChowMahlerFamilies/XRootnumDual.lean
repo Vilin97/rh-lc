@@ -87,9 +87,11 @@ theorem isVerticalDivisor_swap {P : Ideal (MRing ι O)} {ϖ : O} {b : K → ℤ}
     simp
   num_not_mem := hD.den_not_mem
   den_not_mem := hD.num_not_mem
-  vertical := fun W hW => hD.vertical W fun h => hW (by
-    unfold ratDiv at h ⊢
-    linarith)
+  vertical := by
+    intro W hW
+    apply hD.vertical W
+    unfold ratDiv at hW ⊢
+    exact fun h => hW (sub_eq_zero.mpr (sub_eq_zero.mp h).symm)
   unit_off_special := by
     intro W hW hPW hrel hϖ
     obtain ⟨u, v, hu, hv, h⟩ := hD.unit_off_special W hW hPW hrel hϖ

@@ -179,8 +179,46 @@ theorem exists_invariant_isEqn : ∀ (F : Type) [Field F] [CharZero F] (X W : Sc
     (fun i f hf => zeroAt_sig ρ i.1 (by rw [i.2]; exact hf))
     (fun i => (hu i).regAt)
     (fun i hi => by
-      have hfr := fromSpecResidueField_comp_eq_of_fixes X Γ ρ i.1 x i.2
-        (fun v hv => by rw [fnAct_val]; exact hi v hv)
+      have hfr : X.fromSpecResidueField x ≫ (ρ i.1).asIso.hom = X.fromSpecResidueField x := by
+        haveI : IsIso (ρ i.1).asIso.hom := Iso.isIso_hom (ρ i.1).asIso
+        set φ := (ρ i.1).asIso.hom
+        have key : (X.residueFieldCongr i.2.symm).hom ≫ φ.residueFieldMap x = 𝟙 _ := by
+          rw [← cancel_epi (X.residue x), Category.comp_id, X.residue_residueFieldCongr_assoc,
+            Scheme.residue_residueFieldMap]
+          ext a
+          change IsLocalRing.residue _ (φ.stalkMap x ((X.presheaf.stalkCongr (.of_eq i.2.symm)).hom a)) =
+            IsLocalRing.residue _ a
+          set b := (X.presheaf.stalkCongr (.of_eq i.2.symm)).hom a with hb
+          change Ideal.Quotient.mk _ _ = Ideal.Quotient.mk _ _
+          rw [Ideal.Quotient.eq]
+          by_cases ha : a = 0
+          · rw [hb, ha, map_zero, map_zero, sub_zero]
+            exact zero_mem _
+          · have hne : algebraMap (X.presheaf.stalk x) X.functionField a ≠ 0 :=
+              (map_ne_zero_iff _ (IsFractionRing.injective _ _)).2 ha
+            obtain ⟨c, hc, e⟩ := hi (Units.mk0 _ hne) ⟨a, rfl⟩
+            have e2 : σ i (Units.mk0 _ hne) =
+                GlobalTheory.functionFieldMap φ (algebraMap (X.presheaf.stalk x) X.functionField a) := rfl
+            have e4 : GlobalTheory.functionFieldMap φ (algebraMap (X.presheaf.stalk x) X.functionField a) =
+                algebraMap (X.presheaf.stalk x) X.functionField (φ.stalkMap x b) := by
+              have hc' : ∀ {y z : X} (h : y = z) (d : X.presheaf.stalk y),
+                  algebraMap (X.presheaf.stalk z) X.functionField
+                    ((X.presheaf.stalkCongr (.of_eq h)).hom d) =
+                    algebraMap (X.presheaf.stalk y) X.functionField d := by
+                intro y z h d
+                subst h
+                simp
+              have hc : algebraMap (X.presheaf.stalk ((ρ i.1).asIso.hom x)) X.functionField b =
+                  algebraMap (X.presheaf.stalk x) X.functionField a := by
+                rw [hb]
+                exact hc' i.2.symm a
+              rw [← hc]
+              exact GlobalTheory.functionFieldMap_algebraMap φ x b
+            rw [e2, Units.val_mk0, e4, ← map_sub] at e
+            rwa [← IsFractionRing.injective _ _ e]
+        rw [← Scheme.Hom.SpecMap_residueFieldMap_fromSpecResidueField,
+          ← X.residueFieldCongr_fromSpecResidueField i.2.symm, ← Category.assoc, ← Spec.map_comp, key,
+          Spec.map_id, Category.id_comp]
       have h1 := hin i.1 x g hfr hg
       rw [Units.val_mul, fnAct_val, Units.val_inv_eq_inv_val g] at h1
       have hs0 : sig ρ i.1 g ≠ 0 := by rw [← fnAct_val]; exact Units.ne_zero _

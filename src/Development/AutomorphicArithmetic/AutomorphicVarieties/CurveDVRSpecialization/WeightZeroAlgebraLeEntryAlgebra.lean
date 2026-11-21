@@ -288,7 +288,7 @@ private theorem exists_range {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [A
       IsAdicComplete (@maximalIdeal A _ h.toIsLocalRing) A ∧ ∀ x, (f x : PadicAlgCl l) = Ξ x := by
   obtain ⟨n, p, hp⟩ := Module.Finite.exists_fin' O Ξ.range
   have hint : ∀ x : Ξ.range, ‖(x : PadicAlgCl l)‖ ≤ 1 := fun x =>
-    (int_iff_norm _).1 (isIntegral_trans (A := O) _ ((Algebra.IsIntegral.isIntegral x).map Ξ.range.val))
+    (int_iff_norm _).1 (isIntegral_trans (A := O) _ ((IsIntegral.of_finite O x).map Ξ.range.val))
   obtain ⟨A, hA1, hA2, hbA⟩ := exists_dvr (O := O) (fun i => (p (Pi.single i 1) : PadicAlgCl l)) fun i => hint _
   have hmem : ∀ x, Ξ x ∈ A := fun x => by
     obtain ⟨v, hv⟩ := hp ⟨Ξ x, x, rfl⟩
@@ -322,6 +322,7 @@ end SlopeTestRemainingChoices
 
 open NumberField IsLocalRing Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.GalOfCusp UpperTheory.V.HV UpperTheory.V.U3 UpperTheory.V.Aut UpperTheory.V.Pr UpperTheory.V
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem UpperTheory.V.Pr.exists_ordPt_of_point :
     Loc.LocalPublishedTheorems → ∀ {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {K : Type} [Field K] [NumberField K] [Algebra K Ω] {l : ℕ} [Fact l.Prime] {c : Coef l} {N : ℕ} [NeZero N] {e : ℕ} {ψ : DirichletCharacter c.O N} (D : Dat Ω K c e ψ) (g₁ : G ℚ Ω), D.Marked g₁ → ∀ (U : (_root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition _ (D.η.comp D.ι) (D.Ψ.comp D.ι)))) (S : D.Ring U g₁),
     FinA D g₁ → ∀ (B : ValuationSubring Ω), (∀ x, x ∈ B ↔ ‖D.j x‖ ≤ 1) →
@@ -351,5 +352,6 @@ theorem UpperTheory.V.Pr.exists_ordPt_of_point :
   obtain ⟨t, Ξ, hΞ, hr'⟩ := Alg.points_finite c.O ℤ S.R W hz (PadicAlgCl l) _ hfg
   obtain ⟨A, hA1, hA2, f, hA3, hf⟩ := exists_range Ξ hr'
   haveI : IsLocalRing A := hA1.toIsLocalRing
+  have : Algebra.IsIntegral c.O A := Algebra.IsIntegral.of_finite c.O A
   exact ⟨A, hA1, hA2, t (Multiplicative.ofAdd 1), U3.push f S.r.hom,
     ordPt_of_gd hP D g₁ hg U S B hB A f (loc_of_int f), push_eq _ W hent hA ξ r hr t Ξ hΞ A f hf⟩

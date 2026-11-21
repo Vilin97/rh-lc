@@ -91,19 +91,19 @@ theorem orbK_congr_equiv (e : A ≃* B) (K : Subgroup A) (δ : A) (F : A → ℂ
     constructor
     · intro q1 q2 h
       obtain ⟨a, ha, b, hb, h'⟩ := (@DoubleCoset.eq _ _ _ _ _ _).mp h
-      calc q1 = DoubleCoset.mk _ K (Quotient.out q1) := (DoubleCoset.out_eq' _ _ q1).symm
+      calc q1 = DoubleCoset.mk _ K (Quotient.out q1) := (DoubleCoset.out_eq' q1).symm
         _ = DoubleCoset.mk _ K (Quotient.out q2) := by
           rw [DoubleCoset.eq]
           refine ⟨e.symm a, hmemT a ha, e.symm b, hmemK b hb, ?_⟩
           apply e.injective
           simp [h']
-        _ = q2 := DoubleCoset.out_eq' _ _ q2
+        _ = q2 := DoubleCoset.out_eq' q2
     · intro p
       refine ⟨DoubleCoset.mk (twCent (MonoidHom.id A) δ) K (e.symm (Quotient.out p)), ?_⟩
-      obtain ⟨a, b, ha, hb, h'⟩ := DoubleCoset.mk_out_eq_mul (twCent (MonoidHom.id A) δ) K (e.symm (Quotient.out p))
+      obtain ⟨a, ha, b, hb, h'⟩ := DoubleCoset.mk_out_eq_mul (twCent (MonoidHom.id A) δ) K (e.symm (Quotient.out p))
       show DoubleCoset.mk TB KB (e (Quotient.out (DoubleCoset.mk (twCent (MonoidHom.id A) δ) K (e.symm (Quotient.out p))))) = p
       rw [h']
-      conv_rhs => rw [← DoubleCoset.out_eq' TB KB p]
+      conv_rhs => rw [← DoubleCoset.out_eq' p]
       rw [DoubleCoset.eq]
       have ha' : e a ∈ TB := by rw [← show (twCent (MonoidHom.id A) δ).map e.toMonoidHom = TB from map_twCent_id e δ]; exact Subgroup.mem_map_of_mem _ ha
       have hb' : e b ∈ KB := Subgroup.mem_map_of_mem _ hb
@@ -113,7 +113,7 @@ theorem orbK_congr_equiv (e : A ≃* B) (K : Subgroup A) (δ : A) (F : A → ℂ
       oTerm (MonoidHom.id B) KB (TB ⊓ KB) (e δ) (fun z => F (e.symm z)) (Quotient.out (Equiv.ofBijective Φ hΦ q)) := by
     intro q
     rw [hpt]
-    obtain ⟨a, b, ha, hb, h'⟩ := DoubleCoset.mk_out_eq_mul TB KB (e (Quotient.out q))
+    obtain ⟨a, ha, b, hb, h'⟩ := DoubleCoset.mk_out_eq_mul TB KB (e (Quotient.out q))
     show _ = oTerm (MonoidHom.id B) KB (TB ⊓ KB) (e δ) (fun z => F (e.symm z)) (Quotient.out (DoubleCoset.mk TB KB (e (Quotient.out q))))
     rw [h', hinv a ha b hb]
   rw [finsum_congr hz]

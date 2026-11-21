@@ -36,6 +36,6 @@ theorem inter_pull_ample_pos : ∀ (K : Type) [Field K] (A B : AbVar K) (n : ℕ
     · simp [Function.update, Fin.succ_ne_zero]
   rw [← hΦ, hcons, Φ.map_update_smul, Fin.update_cons_zero, smul_eq_mul] at hpos
   rw [← hΦ]
-  exact pos_of_mul_pos_right hpos (by exact_mod_cast hm.le)
+  exact pos_of_mul_pos_right hpos (by simpa using Int.ofNat_nonneg m)
 
 end GlobalTheory.AV.AbVar

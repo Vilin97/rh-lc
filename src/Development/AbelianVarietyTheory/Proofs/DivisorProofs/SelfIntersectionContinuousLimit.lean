@@ -36,7 +36,7 @@ noncomputable section
 
 open CategoryTheory AlgebraicGeometry MvPolynomial Filter Topology MeasureTheory
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory GlobalTheory.ArInt GlobalTheory.HermLB GlobalTheory.CxPts GlobalTheory.MetFam GlobalTheory.Published
+open GlobalTheory GlobalTheory.ArInt GlobalTheory.HermLB GlobalTheory.CxPts GlobalTheory.Published
 
 namespace GlobalTheory.SelfCont
 

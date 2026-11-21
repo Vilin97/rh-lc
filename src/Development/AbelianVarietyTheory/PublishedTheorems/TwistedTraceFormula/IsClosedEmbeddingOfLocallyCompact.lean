@@ -68,8 +68,8 @@ def infMat : GInf σ J →* Matrix (Fin n × Σ w : InfinitePlace F, EmbOver E w
 open Classical in
 variable (σ) in
 theorem ccInf_eq : CcInf σ J = CcMat (infMat σ J) := by
-  refine le_antisymm (ccSmooth_le (p := fun y w τ i j => y (i, ⟨w, τ⟩) (j, ⟨w, τ⟩)) (by fun_prop) fun g => ?_)
-    (ccSmooth_le (p := fun y a b => if a.2 = b.2 then y a.2.1 a.2.2 a.1 b.1 else 0) ?_ fun _ => rfl)
+  refine le_antisymm (ccSmooth_le (p := fun (y : (Fin n × Σ w : InfinitePlace F, EmbOver E w) → (Fin n × Σ w : InfinitePlace F, EmbOver E w) → ℂ) w τ i j => y (i, ⟨w, τ⟩) (j, ⟨w, τ⟩)) (by fun_prop) fun g => ?_)
+    (ccSmooth_le (p := fun (y : ∀ w : InfinitePlace F, EmbOver E w → Fin n → Fin n → ℂ) (a b : Fin n × Σ w : InfinitePlace F, EmbOver E w) => if a.2 = b.2 then y a.2.1 a.2.2 a.1 b.1 else 0) ?_ fun _ => rfl)
   · funext w τ i j
     exact (Matrix.blockDiagonal_apply_eq (fun t : Σ w : InfinitePlace F, EmbOver E w =>
       archMat σ J t.2 (projInfArch σ J t.1 g)) i j ⟨w, τ⟩).symm
@@ -87,7 +87,7 @@ theorem isEmbedding_infMat (h : IsCMExt F E σ) : Topology.IsEmbedding (matCoord
   have h2 : Continuous (matCoord (infMat σ J)) :=
     Continuous.matrix_blockDiagonal (continuous_pi fun t : Σ w : InfinitePlace F, EmbOver E w =>
       (continuous_archMat σ J t.2).comp (continuous_projInfArch σ J t.1))
-  refine Topology.IsEmbedding.of_comp (g := fun y w i j => y (i, ⟨w, τ w⟩) (j, ⟨w, τ w⟩)) h2 (by fun_prop) ?_
+  refine Topology.IsEmbedding.of_comp (g := fun (y : (Fin n × Σ w : InfinitePlace F, EmbOver E w) → (Fin n × Σ w : InfinitePlace F, EmbOver E w) → ℂ) w i j => y (i, ⟨w, τ w⟩) (j, ⟨w, τ w⟩)) h2 (by fun_prop) ?_
   convert h1 using 1
   funext g w i j
   exact Matrix.blockDiagonal_apply_eq (fun t : Σ w : InfinitePlace F, EmbOver E w =>

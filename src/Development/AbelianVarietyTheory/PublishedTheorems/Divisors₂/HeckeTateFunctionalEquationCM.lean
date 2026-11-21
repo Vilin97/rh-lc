@@ -163,7 +163,7 @@ theorem completed_eq_mul {I : Type} [Fintype I] {χ : HChar E} {n : I → ℤ} {
       refine Finset.prod_congr rfl fun i _ => ?_
       rw [mul_inv, mul_inv, Complex.cpow_neg, inv_inv]
     rw [this]
-    refine Differentiable.fun_finset_prod fun i _ => Differentiable.mul (Differentiable.const_mul ?_ _) ?_
+    refine Differentiable.fun_finsetProd fun i _ => Differentiable.mul (Differentiable.const_mul ?_ _) ?_
     · exact (differentiable_id.add_const _).const_cpow (Or.inl hπ)
     · exact Complex.differentiable_one_div_Gamma.comp (differentiable_id.add_const _)
   have key : (fun s => (archFactor n s)⁻¹ * Λ s) = L := by

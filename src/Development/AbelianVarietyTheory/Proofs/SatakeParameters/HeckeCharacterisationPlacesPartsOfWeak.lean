@@ -48,7 +48,10 @@ theorem exists_two (D : D7) : ∃ P : HeightOneSpectrum (𝓞 D.host.E), ((2 : �
       simpa using this
     rw [this]; exact zero_mem _)
   have h2 : ((2 : ℕ) : 𝓞 D.host.E) ∈ Q := by
-    have : (2 : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 D.host.E)) := hc ▸ Ideal.mem_span_singleton_self _
+    have : (2 : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 D.host.E)) := by
+      change (2 : ℤ) ∈ Ideal.under ℤ Q
+      rw [hc]
+      exact Ideal.mem_span_singleton_self _
     simpa using this
   refine ⟨⟨Q, hQ.isPrime, fun hb => ?_⟩, h2⟩
   rw [hb, Ideal.mem_bot] at h2

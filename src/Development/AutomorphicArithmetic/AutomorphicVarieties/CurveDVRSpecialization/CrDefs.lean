@@ -102,7 +102,7 @@ theorem natCast_place {A : ValuationSubring Ω} {v : W.Plc E} (h : IsPlaceOver A
     A.valuation (m : Ω) < 1 ↔ ((m : ℕ) : 𝓞 E) ∈ v.asIdeal := by
   unfold IsPlaceOver at h
   rw [← h (m : 𝓞 E)]
-  simp
+  simp only [map_natCast]
 
 end
 

@@ -137,7 +137,9 @@ theorem uniq : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1
   refine ⟨c, fun Φ hΦ => ?_⟩
   rw [hc Φ hΦ, GlobalTheory.LagrTheta.lagrInt, hint, GlobalTheory.DiagSiegel.thetaDiagInt]
   congr 2
-    Matrix.transpose_transpose]
+  funext w
+  simp only [GlobalTheory.WeilSchrodinger.thetaTr, GlobalTheory.WeilSchrodinger.transD_rho,
+    diagMat_eq_mul, Matrix.transpose_mul, Matrix.transpose_transpose]
 
 end GlobalTheory.DiagSiegelUniq
 

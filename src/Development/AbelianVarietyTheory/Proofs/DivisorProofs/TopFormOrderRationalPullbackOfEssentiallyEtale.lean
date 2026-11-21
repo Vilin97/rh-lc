@@ -60,6 +60,7 @@ theorem formOrd_ratPull (M W : Scheme.{0}) [IsIntegral M] [IsIntegral W] (p : W 
     have hinj := (E'.isFreeGen_toRat hω').1
     have : φ (g : W.functionField) = 0 := hinj (by simpa using h0)
     exact (g.map φ.toMonoidHom).ne_zero this
+  change E'.formOrd (ratPull p f n η) = E.formOrd η
   rw [← hg]
   refine DivOver.IsFormOrd.formOrd_eq hne ⟨_, hω', Units.map φ.toMonoidHom g, hpull, hord g⟩
 

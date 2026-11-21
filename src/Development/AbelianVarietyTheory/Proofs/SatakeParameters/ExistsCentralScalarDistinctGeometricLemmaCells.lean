@@ -40,7 +40,7 @@ theorem twKer_piTensor_eq_top {α : Type} [DecidableEq α] {Γ X : α → Type} 
   | add x y hx hy => exact add_mem hx hy
   | smul_tprod r x =>
     refine Submodule.smul_mem _ r ?_
-    let L := (PiTensorProduct.tprod ℂ : MultilinearMap ℂ X (⨂[ℂ] i, X i)).toLinearMap x a
+    let L := (PiTensorProduct.tprod ℂ : (∀ i, X i) →ₘₗ[ℂ] (⨂[ℂ] i, X i)).toLinearMap x a
     have hL : ∀ w, L w = PiTensorProduct.tprod ℂ (Function.update x a w) := fun w => rfl
     have hle : twKer (ρ a) Na 1 ≤ (twKer (piTensor ρ) N 1).comap L := by
       refine Submodule.span_le.2 ?_
@@ -134,9 +134,11 @@ theorem one_case (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsN
   have hcen : ∀ g, g * z = z * g := fun g => funext fun j => hcomm _ _
   refine ⟨z, ψ₁ t, ψ₀ t, hcen, fun h => ht (Units.ext h).symm, ?_, ?_⟩
   · intro x
-    refine GlobalTheory.ProdSupport.piTensor_mulSingle _ 0 _ _ (fun v => ?_) x
-    have hs : Equiv.swap (0 : Fin 2) 1 0 = 1 := by simp
-    rw [hact _ ψ₁ (hs ▸ e₁), GlobalTheory.ProdSupport.det_scalar_one rfl]
+    apply GlobalTheory.ProdSupport.piTensor_mulSingle _ 0 _ _ _ x
+    intro v
+    have hs : Equiv.swap (0 : Fin 2) 1 0 = 1 := Equiv.swap_apply_left 0 1
+    rw [hact _ ψ₁ (hs ▸ e₁),
+      GlobalTheory.ProdSupport.det_scalar_one rfl]
   · intro b hb f g y
     have hr0 := b.2.1 0
     have hr1 := b.2.1 1

@@ -31,15 +31,15 @@ open CategoryTheory Limits AlgebraicGeometry TensorProduct
 
 namespace CrystallineSemistableComparison
 
-theorem chapters_of (hP : BocksteinBaseChangeP) : Chapters where
-  rin l _ := R.forE l
-  et l _ K := E.etMap l K
-  uniq := E.Main.firstChern_unique
-  main l _ := B.main l
-  compat l _ := B.compat l
-  compatH l _ := B.compatH l
-  c1 l _ := B.firstChern_compatible_l l
-  p := hP
+theorem chapters_of (hP : BocksteinBaseChangeP) : Chapters :=
+  { rin := fun l _ => R.forE l
+    et := fun l _ K => E.etMap l K
+    uniq := E.Main.firstChern_unique
+    main := fun l _ => B.main l
+    compat := fun l _ => B.compat l
+    compatH := fun l _ => B.compatH l
+    c1 := fun l _ => B.firstChern_compatible_l l
+    p := hP }
 
 theorem etSideS (h4 : GlobalTheory.EtC.E4) (h8 : GlobalTheory.EtC.E8) : EtSideS := fun l _ K _ => (etSide (zIn formalIn h4 h8) l K).1
 

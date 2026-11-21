@@ -51,17 +51,18 @@ theorem basicOpen_fRatio_le {n : ℕ} {a g : MvPolynomial (Fin (N + 1)) ℂ} (ha
 variable {d n : ℕ} (f : Fin (d + 1) → MvPolynomial (Fin (N + 1)) ℂ) (hf : ∀ i, f i ∈ grading ℂ N n)
 
 theorem isCoordFamily_fRatio (hcov : ⨆ i, fOpen ι (f i) = ⊤) :
-    IsCoordFamily (fun i => fOpen ι (f i)) (fun i j => fRatio ι (f j) (f i) (hf j) (hf i)) where
-  cover := hcov
-  self i := fRatio_self ι (f i) (hf i)
-  mul i j k := by
-    have hWV : fOpen ι (f i) ⊓ fOpen ι (f j) ≤
-        ι ⁻¹ᵁ (Proj.basicOpen (grading ℂ N) (f i) ⊓ Proj.basicOpen (grading ℂ N) (f j)) :=
-      fun x hx => ⟨hx.1, hx.2⟩
-    rw [resG_fRatio ι (hf j) (hf i) _ inf_le_left hWV, resG_fRatio ι (hf k) (hf j) _ inf_le_right hWV,
-      resG_fRatio ι (hf k) (hf i) _ inf_le_left hWV, ← map_mul]
-    exact congrArg _ (frac_mul_eq (by ring))
-  basicOpen_le i j := basicOpen_fRatio_le ι (hf j) (hf i)
+    IsCoordFamily (fun i => fOpen ι (f i)) (fun i j => fRatio ι (f j) (f i) (hf j) (hf i)) := by
+  refine { cover := hcov
+           self := fun i => fRatio_self ι (f i) (hf i)
+           mul := ?_
+           basicOpen_le := fun i j => basicOpen_fRatio_le ι (hf j) (hf i) }
+  intro i j k
+  have hWV : fOpen ι (f i) ⊓ fOpen ι (f j) ≤
+      ι ⁻¹ᵁ (Proj.basicOpen (grading ℂ N) (f i) ⊓ Proj.basicOpen (grading ℂ N) (f j)) :=
+    fun x hx => ⟨hx.1, hx.2⟩
+  rw [resG_fRatio ι (hf j) (hf i) _ inf_le_left hWV, resG_fRatio ι (hf k) (hf j) _ inf_le_right hWV,
+    resG_fRatio ι (hf k) (hf i) _ inf_le_left hWV, ← map_mul]
+  exact congrArg _ (frac_mul_eq (by ring))
 
 def formMap (p : X ⟶ Sp ℂ) (hcov : ⨆ i, fOpen ι (f i) = ⊤) : X ⟶ PSpace ℂ d :=
   (isCoordFamily_fRatio ι f hf hcov).toHom p

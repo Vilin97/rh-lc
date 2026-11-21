@@ -37,7 +37,7 @@ theorem eq_one_of_forall_cLoc {x : UA E a} (hx : x ∈ finU (E := E) (n := a)) (
     have := congrArg (fun g : GL (Fin a) (u.adicCompletion E) => g.val i j) (h u)
     simp only [Units.val_one, Matrix.one_apply] at this
     refine this.trans ?_
-    split_ifs with hij <;> simp [hij]
+    split_ifs with hij <;> simp [hij] <;> rfl
 
 theorem mem_integral_iff (k : finU (E := E) (n := a)) :
     k ∈ (AdelicGLn.integralFiniteGL E a).comap (finPart E a) ↔ ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u (n := a) := by
@@ -92,7 +92,7 @@ theorem fixed_intU_eventually : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
   have hdt : Directed (· ⊇ ·) t := by
     intro S₁ S₂
     refine ⟨S₁ ∪ S₂, ?_, ?_⟩ <;> rintro k ⟨hk, hk'⟩ <;> refine ⟨fun u hu => hk u ?_, hk'⟩ <;> simp [hu]
-  obtain ⟨S, hS⟩ := isCompact_integral.elim_directed_family_closed t htc hst hdt
+  obtain ⟨S, hS⟩ := isCompact_integral.elim_directed_family_closed t htc (Set.disjoint_iff_inter_eq_empty.mpr hst) hdt
   have hfin : {w : HeightOneSpectrum (𝓞 E) | ¬ ∀ u ∈ S, Apart u w}.Finite := by
     refine ((S.finite_toSet.biUnion fun u _ => (Set.toFinite ({u, conjSrc (GlobalTheory.SplitPts.conjE E) u} : Set _)))).subset ?_
     intro w hw
@@ -119,7 +119,6 @@ theorem fixed_intU_eventually : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
     · exact hxi u hu
   by_contra hne
   have : (⟨x, hxf⟩ : finU (E := E) (n := a)) ∈ K₀ ∩ t S := ⟨hK, fun u hu => hcomp u (hS' u hu), hne⟩
-  rw [hS] at this
-  exact this
+  exact (Set.disjoint_left.mp hS) this.1 this.2
 
 end GlobalTheory.Cong.AutFormFix

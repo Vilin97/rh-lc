@@ -128,11 +128,11 @@ theorem charpoly_eq_lattice_model : ∀ (k : Type) [Field k] [IsAlgClosed k] (B 
     (∀ j x, ev j (φ x) = ev j x ≫ f.hom) →
     (∀ j x, ev j x = 1 ↔ ∃ y, x = l ^ j • y) →
     (∀ j (q : Over.mk (𝟙 (Sp k)) ⟶ B.X), q ^ (l ^ j) = 1 ↔ ∃ x, ev j x = q) →
-    LinearMap.charpoly φ = GlobalTheory.AV.AbVar.charpoly f := by
+    LinearMap.charpoly φ = GlobalTheory.AV.AbVar.charpoly (End.of f) := by
   intro k _ _ B f L _ _ _ φ l hl hlk ev hadd hequi hker him
   haveI : Fact l.Prime := ⟨hl⟩
   obtain ⟨e, he⟩ := pts_equiv k B
-  obtain ⟨hfree, hfin, -⟩ := tl_free_finrank k l hlk B
+  obtain ⟨hfree, hfin, -, hfinV, -⟩ := tl_free_finrank k l hlk B
   have hc : ∀ n : ℕ, Nat.card {x : B.Pt // x ^ (l ^ n) = 1} = l ^ (2 * B.dim * n) := by
     intro n
     rw [card_torsion_pt k B (l ^ n) (by push_cast; exact pow_ne_zero _ hlk), ← pow_mul, mul_comm n]
@@ -142,7 +142,7 @@ theorem charpoly_eq_lattice_model : ∀ (k : Type) [Field k] [IsAlgClosed k] (B 
   have hE : ∀ j (n : ℕ) x, e (ev j (n • x)) = e (ev j x) ^ n := fun j n x =>
     congrArg Additive.toMul (map_nsmul (E j) n x)
   have key : ∀ j : ℕ, (LinearMap.charpoly φ).map (Int.castRingHom (ZMod (l ^ j))) =
-      (LinearMap.charpoly (tend l B f)).map (PadicInt.toZModPow j) := by
+      (LinearMap.charpoly (tend l B (End.of f))).map (PadicInt.toZModPow j) := by
     intro j
     haveI : NeZero (l ^ j) := ⟨pow_ne_zero _ hl.ne_zero⟩
     let K := (powMonoidHom (l ^ j) : B.Pt →* B.Pt).ker
@@ -197,19 +197,35 @@ theorem charpoly_eq_lattice_model : ∀ (k : Type) [Field k] [IsAlgClosed k] (B 
         obtain ⟨s, hs⟩ := (tate_lev_eq_one_iff B.Pt l t j).1
           (congrArg Subtype.val (congrArg Additive.toMul ht))
         exact ⟨s, hs⟩)
-      (tend l B f) G (fun t => rfl)
+      (tend l B (End.of f)) G (fun t => rfl)
     exact h1.symm.trans h2
-  have hT := (charpoly_tate_det_trace k l hlk B f).2.1
+  have hT : (charpoly (End.of f)).map (algebraMap ℤ ℤ_[l]) =
+      (tend l B (End.of f)).charpoly := by
+    apply Polynomial.map_injective (algebraMap ℤ_[l] ℚ_[l]) (IsFractionRing.injective ℤ_[l] ℚ_[l])
+    rw [Polynomial.map_map, ← LinearMap.charpoly_baseChange]
+    have hcomp : (algebraMap ℤ_[l] ℚ_[l]).comp (algebraMap ℤ ℤ_[l]) = algebraMap ℤ ℚ_[l] :=
+      Subsingleton.elim _ _
+    rw [hcomp]
+    obtain ⟨⟨hm, hd, hev⟩, -⟩ := GlobalTheory.T.abelianVarietyEndCharpoly_spec k B (End.of f)
+    have hQ := GlobalTheory.T.abelianVariety_degreePolynomial_map_eq_charpoly_rationalTate k l
+      hlk B (End.of f) ((charpoly (End.of f)).map (algebraMap ℤ ℚ)) (hm.map _)
+      (by rw [Polynomial.natDegree_map_eq_of_injective (RingHom.injective_int (algebraMap ℤ ℚ)), hd])
+      (fun n => by rw [Polynomial.eval_intCast_map, Int.cast_id, hev n]; simp)
+    rw [Polynomial.map_map] at hQ
+    have hcompQ : (algebraMap ℚ ℚ_[l]).comp (algebraMap ℤ ℚ) = algebraMap ℤ ℚ_[l] :=
+      Subsingleton.elim _ _
+    rw [hcompQ] at hQ
+    exact hQ
   have hinj : Function.Injective (Polynomial.map (Int.castRingHom ℤ_[l])) :=
     Polynomial.map_injective _ Int.cast_injective
   apply hinj
   rw [show Int.castRingHom ℤ_[l] = algebraMap ℤ ℤ_[l] from RingHom.ext_int _ _, hT]
-  ext i
-  rw [← PadicInt.ext_of_toZModPow]
+  apply AddMonoidAlgebra.ext
+  apply Finsupp.ext
+  intro i
+  apply PadicInt.ext_of_toZModPow.mp
   intro n
-  have h := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P i) (key n)
-  simp only [Polynomial.coeff_map, eq_intCast] at h ⊢
-  rw [map_intCast]
-  exact h
+  have h := congrArg (fun P : Polynomial (ZMod (l ^ n)) => P.coeff i) (key n)
+  simpa only [Polynomial.coeff_map, eq_intCast, map_intCast] using h
 
 end GlobalTheory.AV.AbVar

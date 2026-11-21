@@ -35,7 +35,7 @@ theorem continuous_theta_infPartF {τ : E →+* ℂ} {θ : Ainf F ⊗[F] E →+*
     rw [← hθ.1 (b i), ← map_mul, Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
   have hc : ∀ i, Continuous fun z : AEF F E => bb.repr z i := fun i =>
     IsModuleTopology.continuous_of_linearMap (bb.coord i)
-  refine (continuous_finset_sum _ fun i _ => ?_).congr fun z => (hz z).symm
+  refine (continuous_finsetSum _ fun i _ => ?_).congr fun z => (hz z).symm
   exact (hθ.2.comp (continuous_fst.comp (hc i))).mul continuous_const
 
 end GlobalTheory.ThetaOfSmF

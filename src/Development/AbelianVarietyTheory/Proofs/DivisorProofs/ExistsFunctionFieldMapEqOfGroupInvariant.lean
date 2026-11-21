@@ -48,7 +48,7 @@ theorem exists_functionFieldMap_eq_of_invariant (X W : Scheme.{0}) [IsIntegral X
   obtain ⟨x, hx⟩ := q.denseRange.exists_mem_open V.isOpen ⟨_, hyV⟩
   haveI : Nonempty (q ⁻¹ᵁ V) := ⟨⟨x, hx⟩⟩
   have hst := h.preimage_le V
-  haveI (γ : Γ) : IsIso (ρ γ).asIso.hom := Iso.isIso_hom (ρ γ)
+  haveI (γ : Γ) : IsIso (ρ γ).asIso.hom := Iso.isIso_hom (ρ γ).asIso
   haveI := functionField_isFractionRing_of_isAffineOpen X _ hU
   let σ : Γ → Γ(X, q ⁻¹ᵁ V) →+* Γ(X, q ⁻¹ᵁ V) := fun γ ↦ ((ρ γ).asIso.hom.appLE _ _ (hst γ)).hom
   have hσ (γ : Γ) (s : Γ(X, q ⁻¹ᵁ V)) :

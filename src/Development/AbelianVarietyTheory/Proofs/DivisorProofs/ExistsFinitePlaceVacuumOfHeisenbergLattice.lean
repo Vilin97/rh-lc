@@ -172,12 +172,35 @@ theorem exists_vac_of_lattice : ∀ {F : Type} [Field F] [NumberField F] {W : Ty
       rintro _ ⟨γ, hγ, rfl⟩ _ ⟨γ', hγ', rfl⟩
       rw [← map_add (f := _), hχ _ (add_mem hγ hγ'), hχ _ hγ, hχ _ hγ', hcoc γ hγ γ' hγ']
       congr 1
+      have at_mul_left (x : AF F) {y : AF F}
+          (hy : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.AdelicU.evFin F v) y) :
+          GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.AdelicU.evFin F v) (x * y) := fun u hu => by
+        rw [smul_eq_mul, mul_left_comm, show u * y = 0 from hy u hu, mul_zero]
+      have at_sub {x y : AF F}
+          (hx : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.AdelicU.evFin F v) x)
+          (hy : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.AdelicU.evFin F v) y) :
+          GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.AdelicU.evFin F v) (x - y) := fun u hu => by
+        rw [smul_sub, hx u hu, hy u hu, sub_self]
+      have at_sum : ∀ (s : Finset κ) {f : κ → AF F},
+          (∀ i ∈ s, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.AdelicU.evFin F v) (f i)) →
+          GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.AdelicU.evFin F v) (∑ i ∈ s, f i) := by
+        intro s f h
+        induction s using Finset.induction_on with
+        | empty => simp only [Finset.sum_empty]; exact fun u _ => smul_zero u
+        | insert a s ha ih =>
+          rw [Finset.sum_insert ha]
+          exact fun u hu => by rw [smul_add, h a (Finset.mem_insert_self a s) u hu,
+            ih (fun i hi => h i (Finset.mem_insert_of_mem hi)) u hu, add_zero]
+      have evFin_invOf_two : GlobalTheory.AdelicU.evFin F v (⅟(2 : AF F)) = ⅟(2 : Fv F v) := by
+        refine (invOf_eq_right_inv ?_).symm
+        have h : GlobalTheory.AdelicU.evFin F v (2 * ⅟(2 : AF F)) = 1 := by rw [mul_invOf_self, map_one]
+        rwa [map_mul, map_ofNat] at h
       have hA : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.AdelicU.evFin F v) (⅟(2 : AF F) * B γ γ') := by
         rw [co.form]
-        refine GlobalTheory.VacAny.at_mul_left _ (GlobalTheory.VacAny.at_sub ?_ ?_)
-        · exact GlobalTheory.VacAny.at_sum _ fun i _ => GlobalTheory.VacAny.at_mul_left _ (hAtE _ (hAt _ hγ') i).2
-        · exact GlobalTheory.VacAny.at_sum _ fun i _ => GlobalTheory.VacAny.at_mul_left _ (hAtE _ (hAt _ hγ) i).2
-      rw [hψloc _ hA, co.form, map_mul, GlobalTheory.VacAny.evFin_invOf_two, map_sub]
+        refine at_mul_left _ (at_sub ?_ ?_)
+        · exact at_sum _ fun i _ => at_mul_left _ (hAtE _ (hAt _ hγ') i).2
+        · exact at_sum _ fun i _ => at_mul_left _ (hAtE _ (hAt _ hγ) i).2
+      rw [hψloc _ hA, co.form, map_mul, evFin_invOf_two, map_sub]
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [dotProduct, map_sum, map_mul]
       rfl)

@@ -124,7 +124,9 @@ theorem mid {m : ℕ} (A K : GL (Fin m) R) (i j : Fin m) :
 theorem invK {m : ℕ} (K : GL (Fin m) R) (i j : Fin m) :
     ∑ y, ((K⁻¹ : GL (Fin m) R) : Matrix (Fin m) (Fin m) R) i y * (K : Matrix (Fin m) (Fin m) R) y j =
       if i = j then 1 else 0 := by
-  rw [← Matrix.mul_apply, Units.inv_mul, one_apply]
+  rw [← Matrix.mul_apply, Units.inv_mul]
+  change (1 : Matrix (Fin m) (Fin m) R) i j = _
+  exact Matrix.one_apply
 
 theorem one_apply_middle_block {m : ℕ} (i j : Fin (blk3 m 1)) :
     (1 : Matrix (Ix m) (Ix m) R) ⟨1, i⟩ ⟨1, j⟩ = if i = j then 1 else 0 := by

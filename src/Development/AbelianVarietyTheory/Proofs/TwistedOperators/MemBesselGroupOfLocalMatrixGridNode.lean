@@ -34,7 +34,8 @@ theorem mem_bes {D : D7} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace
     {b b' : Matrix (Fin A.rank) (Fin A.rank) k} (hb : b * b' = 1) (hb' : b' * b = 1) {u : Fin (2 * σ + 1) → k}
     {Γ : Matrix (Fin A.rank ⊕ Fin (2 * σ + 1)) (Fin B.rank) k} (h1 : Γ * sumCols d p.π b u = 1) (h2 : sumCols d p.π b u * Γ = 1)
     {g : GA D B} (hg : SuppAt p.e B g) {x : GL (Fin A.rank ⊕ Fin (2 * σ + 1)) k}
-    (e : x.val = Γ * ((mt B g).map p.π * sumCols d p.π b u)) (hx : x ∈ symR k (Fin A.rank) (2 * σ + 1)) :
+    (e : Eq (α := Matrix (Fin A.rank ⊕ Fin (2 * σ + 1)) (Fin A.rank ⊕ Fin (2 * σ + 1)) k)
+      x.val (Γ * ((mt B g).map p.π * sumCols d p.π b u))) (hx : x ∈ symR k (Fin A.rank) (2 * σ + 1)) :
     g ∈ besGrp (diagDec (besDec d rfl) l hl) (GlobalTheory.OrthSumExists.orthDecHsum D _ _) := by
   have hσ : σ ≤ 2 * σ + 1 := by omega
   have hσ' : σ < 2 * σ + 1 := by omega

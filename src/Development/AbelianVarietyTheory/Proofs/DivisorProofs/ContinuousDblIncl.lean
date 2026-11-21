@@ -69,6 +69,7 @@ theorem sumPl_tprod (L : ι → Module.End ℂ V) (v : V) (μ : ι → ℂ) (h :
     · subst hi; simp [h]
     · simp [Function.update_of_ne hi]
   rw [e, MultilinearMap.map_update_smul, Function.update_eq_self]
+  rfl
 
 end Tensor
 
@@ -98,7 +99,9 @@ theorem lines_dbl {JB : Matrix β β (AE F E)} {γ : Multiplicative ℝ →* UG 
     ext i j
     rcases i with a | a <;> rcases j with b | b <;> simp [Matrix.one_apply]
   intro u hu
-  rw [e, Matrix.fromBlocks_smul, h u hu]
+  change u • (((((dblIncl (cA σ) JB).comp γ) t : UG (cA σ) (dbl JB)) : GL (β ⊕ β) (AE F E)).1 - 1) = 0
+  have h' : u • (((γ t : UG (cA σ) JB) : GL β (AE F E)).1 - 1) = 0 := h u hu
+  rw [e, Matrix.fromBlocks_smul, h']
   simp
 
 theorem gen_dbl (τ : ∀ w : InfinitePlace F, EmbOver E w) {JB : Matrix β β (AE F E)} (C : InfinitePlace F → Matrix β (Ix R S) ℂ)
@@ -110,6 +113,7 @@ theorem gen_dbl (τ : ∀ w : InfinitePlace F, EmbOver E w) {JB : Matrix β β (
   have e1 : ((((dblIncl (cA σ) JB).comp γ) (Multiplicative.ofAdd t) : UG (cA σ) (dbl JB)) : GL (β ⊕ β) (AE F E)).1 =
       Matrix.fromBlocks ((z t : AE F E) • (1 : Matrix β β (AE F E))) 0 0 1 := by
     rw [MonoidHom.comp_apply, dblIncl_val, ← hz t]
+  change ((((((dblIncl (cA σ) JB).comp γ) (Multiplicative.ofAdd t) : UG (cA σ) (dbl JB)) : GL (β ⊕ β) (AE F E)).1).map (piInf (τ w))) * dblM (C w) = dblM (C w) * NormedSpace.exp (t • genDbl R S w₀ w)
   rw [e1, genDbl, ← Matrix.diagonal_smul, Matrix.exp_diagonal]
   have e2 : (Matrix.fromBlocks ((z t : AE F E) • (1 : Matrix β β (AE F E))) (0 : Matrix β β (AE F E)) 0
       (1 : Matrix β β (AE F E))).map (piInf (τ w)) =
@@ -300,6 +304,7 @@ theorem compare_of (hcen : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     rw [hbox, map_smul, hres (γ (Multiplicative.ofAdd t)) (((dblIncl (cA σ) JB).comp γ) (Multiplicative.ofAdd t)) rfl
       φ₁ hφ₁ φ₂ hφ₂]
     simp only [boxFun, Pi.smul_apply, smul_eq_mul, hxl, hxr]
+  change HasDerivAt (fun t : ℝ => omd (((dblIncl (cA σ) JB).comp γ) (Multiplicative.ofAdd t)) (pureA F fd G) xd) (pureA F (lamd • fd) G xd) 0 at hB'
   rw [hfun] at hB'
   have hB'' := (hA'.mul_const (φ₂ x₁)).const_mul z0
   have heq := hB''.unique hB'

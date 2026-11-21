@@ -87,9 +87,7 @@ namespace GlobalTheory.CosetFin
 
 theorem commensurable_map_conj {G : Type} [Group G] {A B : Subgroup G} (h : A.Commensurable B) (y : G) :
     (A.map (MulAut.conj y).toMonoidHom).Commensurable (B.map (MulAut.conj y).toMonoidHom) := by
-  have hinj : Function.Injective (MulAut.conj y).toMonoidHom := (MulAut.conj y).injective
-  exact ⟨by rw [Subgroup.relIndex_map_map_of_injective _ _ hinj]; exact h.1,
-    by rw [Subgroup.relIndex_map_map_of_injective _ _ hinj]; exact h.2⟩
+  exact ⟨h.1.map _, h.2.map _⟩
 
 end GlobalTheory.CosetFin
 
@@ -113,10 +111,10 @@ theorem GlobalTheory.testProd_support_finite : ∀ (p : ℕ) [Fact p.Prime] (G :
       exact relIndex_ne_zero_open_compact _ _ (isOpen_map_conj _ L.K.isOpen y) L.compact
 
   have hB : {b : Gr G 1 ⧸ K' | ∃ g, f' g ≠ 0 ∧ b = (QuotientGroup.mk g : Gr G 1 ⧸ K')}.Finite := by
-    refine finite_mk_support (KHT p G.m G.n 1 G.Fw) K' hc'.1 ?_ f' S' hS'
+    refine finite_mk_support (KHT p G.m G.n 1 G.Fw) K' hc'.1.relIndex_ne_zero ?_ f' S' hS'
     intro y
     have h1 := (GlobalTheory.heckeOperator_integral p G 1 Nat.one_pos).1 y
-    exact ((commensurable_map_conj hc' y).trans h1).1
+    exact ((commensurable_map_conj hc' y).trans h1).1.relIndex_ne_zero
   let ψ : (G.GAf × Gr G 1) ⧸ (L.K.toSubgroup.prod K' : Subgroup (G.GAf × Gr G 1)) →
       (G.GAf ⧸ L.K.toSubgroup) × (Gr G 1 ⧸ K') :=
     fun q => ((QuotientGroup.mk q.out.1 : G.GAf ⧸ L.K.toSubgroup), (QuotientGroup.mk q.out.2 : Gr G 1 ⧸ K'))

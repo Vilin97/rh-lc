@@ -27,8 +27,7 @@ private theorem cyc1_surjective (l : ℕ) [Fact (Nat.Prime l)] (Ω : Type) [Fiel
   set K := IntermediateField.adjoin ℚ ({ζ} : Set Ω) with hK
   haveI : IsCyclotomicExtension {l} ℚ K := by
     convert hζ.intermediateField_adjoin_isCyclotomicExtension ℚ
-    · rfl
-    · exact Subsingleton.elim _ _
+    exact Subsingleton.elim _ _
   haveI : NumberField K := IsCyclotomicExtension.numberField {l} ℚ K
   haveI : IsScalarTower ℚ K Ω := IsScalarTower.of_algebraMap_eq (fun x => by simp)
   let σ := (IsCyclotomicExtension.Rat.galEquivZMod l K).symm u

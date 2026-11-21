@@ -42,10 +42,7 @@ def zeroSp (D : D7) : HSp D where
   frame := Pi.basisFun D.host.E (Fin 0)
   sig := fun _ => (0, 0)
   L0 := ⊥
-  standardTuple_isLattice := by
-    refine ⟨?_, ?_⟩
-    · exact Submodule.fg_bot
-    · exact Subsingleton.elim _ _
+  standardTuple_isLattice := Submodule.IsLattice.of_fg D.host.E Submodule.fg_bot
   baseLattice_isUnimodular := Subsingleton.elim _ _
 
 def orthZero (S : HSp D) : OrthDec S S (zeroSp D) where

@@ -91,12 +91,17 @@ theorem rowFam_cusp (hS : GlobalTheory.FlipRun.CuspStep W M ρ t) {e : AE D} (he
     {F : Fn G (.grid 0 D.R.m)} (hF : GlobalTheory.FlipRun.IsCuspListed W.θ (.grid 0 D.R.m) F) :
     ∀ n, n ≤ D.R.m → ∀ (f : ∀ i : Fin n, Sch G (.right i D.R.m)),
       (∀ i : Fin n, ∃ φ g Q, IsLocVec W (.chi i D.R.m) e (ρ.vX i D.R.m) φ g ∧ f i = W.fock (.chi i D.R.m) g Q) →
-      GlobalTheory.FlipRun.IsCuspListed W.θ (.grid n D.R.m) (liftP W M (rowPath T D.R.m n) (rowFam D.R.m n f) F)
-  | 0, _, _, _ => hF
-  | n + 1, hn, f, hf => by
+      GlobalTheory.FlipRun.IsCuspListed W.θ (.grid n D.R.m) (liftP W M (rowPath T D.R.m n) (rowFam D.R.m n f) F) := by
+  intro n
+  induction n with
+  | zero =>
+    intro _ _ _
+    exact hF
+  | succ n ih =>
+    intro hn f hf
     obtain ⟨φ, g, Q, hl, e1⟩ := hf (Fin.last n)
-    have ih := rowFam_cusp hS he hF n (by omega) (fun i => f i.castSucc) (fun i => hf i.castSucc)
-    have h1 := (hS (.right n D.R.m) (Or.inl ⟨n, D.R.m, by omega, le_rfl, rfl⟩) e he φ g hl Q _ ih).2
+    have hprev := ih (by omega) (fun i => f i.castSucc) (fun i => hf i.castSucc)
+    have h1 := (hS (.right n D.R.m) (Or.inl ⟨n, D.R.m, by omega, le_rfl, rfl⟩) e he φ g hl Q _ hprev).2
     show GlobalTheory.FlipRun.IsCuspListed W.θ (.grid (n + 1) D.R.m)
       (liftA W M (.right n D.R.m) (f (Fin.last n)) (liftP W M (rowPath T D.R.m n) (rowFam D.R.m n fun i => f i.castSucc) F))
     rw [e1]
@@ -106,9 +111,14 @@ theorem downFam_cusp (hS : GlobalTheory.FlipRun.CuspStep W M ρ t) {e : AE D} (h
     ∀ n, n ≤ D.R.m → ∀ (f : ∀ j : Fin n, Sch G (.down t D.R.m j)),
       (∀ j : Fin n, ∃ φ g Q, IsLocVec W (.mu t D.R.m j) e (ρ.vT D.R.m j) φ g ∧ f j = W.fock (.mu t D.R.m j) g Q) →
       ∀ F : Fn G (.grid D.R.m n), GlobalTheory.FlipRun.IsCuspListed W.θ (.grid D.R.m n) F →
-      GlobalTheory.FlipRun.IsCuspListed W.θ (.grid D.R.m 0) (liftP W M (downPath t D.R.m n) (downFam t D.R.m n f) F)
-  | 0, _, _, _, _, hF => hF
-  | n + 1, hn, f, hf, F, hF => by
+      GlobalTheory.FlipRun.IsCuspListed W.θ (.grid D.R.m 0) (liftP W M (downPath t D.R.m n) (downFam t D.R.m n f) F) := by
+  intro n
+  induction n with
+  | zero =>
+    intro _ _ _ _ hF
+    exact hF
+  | succ n ih =>
+    intro hn f hf F hF
     obtain ⟨φ, g, Q, hl, e1⟩ := hf (Fin.last n)
     have h1 := (hS (.down t D.R.m n) (Or.inr ⟨D.R.m, n, le_rfl, by omega, rfl⟩) e he φ g hl Q F hF).2
     have h1' : GlobalTheory.FlipRun.IsCuspListed W.θ (.grid D.R.m n) (liftA W M (.down t D.R.m n) (f (Fin.last n)) F) := by
@@ -119,7 +129,7 @@ theorem downFam_cusp (hS : GlobalTheory.FlipRun.CuspStep W M ρ t) {e : AE D} (h
       pathLift_comp W M (Path.one (.down t D.R.m n)) ((), f (Fin.last n)) F (downPath t D.R.m n)
         (downFam t D.R.m n fun j => f j.castSucc)
     rw [key]
-    exact downFam_cusp hS he n (by omega) (fun j => f j.castSucc) (fun j => hf j.castSucc) _ h1'
+    exact ih (by omega) (fun j => f j.castSucc) (fun j => hf j.castSucc) _ h1'
 
 theorem opp_contAut (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : IsInfFam W.θ) (hS : GlobalTheory.FlipRun.CuspStep W M ρ t) {e : AE D}
     (he : IsIdemSum e (locPl G t)) {F : Fn G (.grid 0 D.R.m)} (hF : GlobalTheory.FlipRun.IsCuspListed W.θ (.grid 0 D.R.m) F)
@@ -140,10 +150,54 @@ theorem opp_contAut (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : IsInfFam
 theorem bplus_fsum {M₀ : Vol G} (h₀ : M₀.IsRow) (hM : M.Is t) {φ : Fn G (.top 0)} (hφ : GlobalTheory.Unf.IsContAut _ φ) {I : Type}
     (s : Finset I) (a : I → ℂ) (f : I → Fn G (.grid D.R.m 0)) (hf : ∀ i ∈ s, GlobalTheory.Unf.IsContAut _ (f i)) :
     Bplus W M₀ φ (∑ i ∈ s, a i • f i) = ∑ i ∈ s, a i * Bplus W M₀ φ (f i) := by
-  rw [bplus_indep G W M₀ M h₀ hM.isRow φ _ hφ (GlobalTheory.SeeSaw.TrcProof.contAut_sum s a f hf), bplus_eq_per G W t M hM]
-  refine ((per_linear_trc D W.ψ W.ψ_std _ (topLev G hM) φ hφ).1 I s a f hf).trans ?_
-  refine Finset.sum_congr rfl fun i hi => ?_
-  rw [bplus_indep G W M₀ M h₀ hM.isRow φ _ hφ (hf i hi), bplus_eq_per G W t M hM]
+  suffices hs : Bplus W M φ (∑ i ∈ s, a i • f i) = ∑ i ∈ s, a i * Bplus W M φ (f i) by
+    rw [bplus_indep G W M₀ M h₀ hM.isRow φ _ hφ (GlobalTheory.SeeSaw.TrcProof.contAut_sum s a f hf), hs]
+    refine Finset.sum_congr rfl fun i hi => ?_
+    rw [bplus_indep G W M₀ M h₀ hM.isRow φ _ hφ (hf i hi)]
+  have hconv (F : Fn G (.grid D.R.m 0)) (hF : GlobalTheory.Unf.IsContAut _ F) : BplusConv W M φ F := by
+    let d := G.rowDec 0 (by have := D.R.two_le_m; omega)
+    have hV := G.isV (X := .top 0) (Nat.zero_le _) (fun j e => by cases e)
+    have hA : IsAniso (G.V (.top 0)) := GlobalTheory.Per.isAniso_of_posDef hV.sigOK fun τ => by
+      rw [hV.sig τ, hV.rank]
+      simp [Node.neg]
+    obtain ⟨emb, hc, hrel, hrat⟩ := GlobalTheory.Mem.UnitaryEmb.exists_embHom D _ _ _ d.isom
+    have hemb : embTop G = emb := funext fun h => (hrel h _).1 ((embRel_iff d h _).2 rfl)
+    have hQ : GlobalTheory.Per.Inhab.IsRatInv d.ι G.besTop.e
+        (fun h n => φ h * F (n * embTop G h) * star (besChar W.ψ G.besTop n)) := by
+      refine ⟨fun δ γ h n hn => (GlobalTheory.BesselChar.besChar_conj W.ψ G.besTop δ γ h n hn).1, ?_, ?_⟩
+      · intro g n hn γ hγ hq
+        rw [GlobalTheory.BesselChar.besChar_mul W.ψ G.besTop γ n hγ hn,
+          GlobalTheory.BesselChar.besChar_rat W.ψ W.ψ_std.1 G.besTop γ hγ hq, one_mul,
+          mul_assoc γ, hF.1 γ hq]
+      · intro g n hn γ hγ δ hδ
+        have e : (δ * n * δ⁻¹) * embTop G (γ * g) = emb γ * (n * embTop G g) := by
+          rw [hemb, (hrel _ _).1 hδ]
+          simp only [map_mul, mul_assoc, inv_mul_cancel_left]
+        rw [(GlobalTheory.BesselChar.besChar_conj W.ψ G.besTop δ γ hδ n hn).2, e,
+          hF.1 _ (hrat γ hγ), hφ.1 γ hγ]
+    obtain ⟨hμ, hfd⟩ := hM.isRow.top.haar_fund
+    obtain ⟨-, -, -, -, _, -, -⟩ := GlobalTheory.Mem.AdelicGroupTop.adelic_unitary_topology D (G.V (.grid D.R.m 0))
+    have hemb_cont : Continuous (embTop G) := hemb.symm ▸ hc
+    exact GlobalTheory.RowBplus.integrable_of_haar hQ G.besTop.e_iso d.isom hA
+      (((hφ.2.comp continuous_fst).mul
+        (hF.2.comp ((continuous_subtype_val.comp continuous_snd).mul (hemb_cont.comp continuous_fst)))).mul
+        ((GlobalTheory.BesselChar.besChar_continuous W.ψ W.ψ_std.1 G.besTop).comp continuous_snd).star)
+      hμ hfd hM.isRow.unip
+  have hterms := fun i (hi : i ∈ s) => hconv (f i) (hf i hi)
+  have hsum (h : GA D (G.V (.top 0))) (n : NFlag (G.V (.grid D.R.m 0)) G.besTop.e) :
+      besInt W φ (∑ i ∈ s, a i • f i) h n = ∑ i ∈ s, a i * besInt W φ (f i) h n := by
+    simp only [besInt, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, Finset.sum_mul]
+    exact Finset.sum_congr rfl fun i _ => by ring
+  simp only [Bplus]
+  simp_rw [hsum]
+  have hinner (h : GA D (G.V (.top 0))) :
+      (∫ n in M.fdN, ∑ i ∈ s, a i * besInt W φ (f i) h n ∂M.νN) =
+        ∑ i ∈ s, a i * ∫ n in M.fdN, besInt W φ (f i) h n ∂M.νN := by
+    rw [integral_finsetSum s fun i hi => ((hterms i hi).1 h).const_mul (a i)]
+    exact Finset.sum_congr rfl fun i _ => integral_const_mul _ _
+  simp_rw [hinner]
+  rw [integral_finsetSum s fun i hi => (hterms i hi).2.const_mul (a i)]
+  exact Finset.sum_congr rfl fun i _ => integral_const_mul _ _
 
 theorem liftT_oppTens (τi : PolRow G × PolDown G →₀ ℂ) (τ : SchRow G × SchDown G t →₀ ℂ) (F : Fn G (.grid 0 D.R.m)) :
     liftT W M (oppPath t D.R.m) (oppTens W t τi τ) F =

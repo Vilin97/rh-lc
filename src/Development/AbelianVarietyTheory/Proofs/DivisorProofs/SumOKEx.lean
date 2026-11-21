@@ -460,7 +460,7 @@ theorem isLattice_grid_succ (G : GridData L sc) {i : ℕ} (hi : i + 1 ≤ D.R.m)
 theorem isLattice_X {μ₀ : T} (hL : L.Is μ₀) : Submodule.IsLattice D.host.E L.ΛX := by
   obtain ⟨c, hc⟩ := hL.βX
   obtain ⟨h1, h2⟩ := GlobalTheory.ParahoricLift.base_lattice hc
-  exact ⟨h1, h2⟩
+  exact Submodule.IsLattice.of_fg D.host.E h1
 
 theorem isLattice_grid_zero {μ₀ : T} (hL : L.Is μ₀) (G : GridData L sc) :
     Submodule.IsLattice D.host.E (G.Λ (.grid 0 D.R.m)) := by

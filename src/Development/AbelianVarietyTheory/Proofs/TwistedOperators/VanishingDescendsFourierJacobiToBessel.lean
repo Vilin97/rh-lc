@@ -43,13 +43,11 @@ namespace GlobalTheory.Asc.VanJac
 variable {D : D7} {ψ : AddChar (AF D.host.F) ℂ}
 
 theorem isTh_const_mul {V V₀ W : HSp D} {ρ : ℕ} {d : HypDec V V₀ ρ} {x₀ : Matrix (Fin W.rank) (Fin ρ) D.host.E}
-    {Th : GA D V → ℂ} (h : IsTh ψ d W x₀ Th) (c : ℂ) : IsTh ψ d W x₀ fun n => c * Th n where
-  cont := continuous_const.mul h.cont
-  left γ hγ hγ' n hn := by rw [h.left γ hγ hγ' n hn]
-  cen a n hn := by rw [h.cen a n hn]; ring
-  dep j a h1 h2 h3 := by
-    obtain ⟨v, u, t, e1, e2, e3, e4, e5⟩ := h.dep j a h1 h2 h3
-    exact ⟨v, u, t, e1, e2, e3, e4, fun n hn n' hn' => by rw [e5 n hn n' hn']; ring⟩
+    {Th : GA D V → ℂ} (h : IsTh ψ d W x₀ Th) (c : ℂ) : IsTh ψ d W x₀ fun n => c * Th n := by
+  refine ⟨continuous_const.mul h.cont, fun γ hγ hγ' n hn => by rw [h.left γ hγ hγ' n hn],
+    fun a n hn => by rw [h.cen a n hn]; ring, fun j a h1 h2 h3 => ?_⟩
+  obtain ⟨v, u, t, e1, e2, e3, e4, e5⟩ := h.dep j a h1 h2 h3
+  exact ⟨v, u, t, e1, e2, e3, e4, fun n hn n' hn' => by rw [e5 n hn n' hn']; ring⟩
 
 theorem fl_const_mul {V V₀ W : HSp D} {ρ : ℕ} (d : HypDec V V₀ ρ) (v : VolM D W.rank ρ) (vb : VolM D ρ V₀.rank)
     (vU : VolU D ρ) (Th : GA D V → ℂ) (c : ℂ) (x : Mx D W.rank ρ) (Ψ : WO V W → ℂ) :

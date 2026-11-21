@@ -157,7 +157,7 @@ lemma gr_act (h : GL (Fin 2) (InfinitePlace F → ℝ)) {f : Hn F → ℂ} (hf :
     intro z
     unfold sP
     rw [← Finset.prod_mul_distrib]
-    apply Finset.prod_le_prod
+    apply Finset.prod_le_prod₀
     · intro v _
       exact sF_nonneg _
     · intro v _
@@ -179,7 +179,7 @@ lemma gr_denom (k : ℕ) (h : GL (Fin 2) (InfinitePlace F → ℝ)) :
     rw [norm_inv, norm_prod, ← Finset.prod_inv_distrib]
     unfold sP
     rw [← Finset.prod_mul_distrib]
-    apply Finset.prod_le_prod
+    apply Finset.prod_le_prod₀
     · intro v _
       positivity
     · intro v _

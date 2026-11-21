@@ -204,6 +204,7 @@ theorem framesOn_model : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
     have := hq (q.symm Z) ⟨y, hy⟩ s
     rwa [Equiv.apply_symm_apply] at this
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem cuspOn_fd_span : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (r : ℕ) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r), NeatUnf U → ∀ (Z : Comp Xo c) (σ : c.F →+* ℂ), GoodEmb c σ → ∀ (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ), Dom a n → (∀ τ i, i < Dw.mult τ → 1 ≤ a (τ, i)) → 4 * (finrank ℚ E * r) + 4 ≤ n → SumDvd U a n → FiniteDimensional c.F (cuspOn U Z (wtZ a n)) ∧ ∀ P ∈ holSub (U σ).X (modelWt (U σ) (wtZ a n)), (∀ k y, (⟨k, y⟩ : Σ k, Frame ((U σ).X k).Ψ r) ∉ framesOn (U σ) Z → P k y = 0) → P ∈ Submodule.span ℂ (rdU (U σ) '' (cuspOn U Z (wtZ a n) : Set (Rul Xo c))) := by
   intro E _ _ _ H Dw l Xo c r U h Z σ hσ a n hD hpos hn hdv
   refine ⟨?_, fun P hP hoffZ => ?_⟩
@@ -440,6 +441,7 @@ theorem res_ind {U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r} (hL : NeatUnf U) (Z 
     · exact hoff f hs k y hz
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 open GlobalTheory.FlatPair in
 theorem exists_flat_pair : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E)
     (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (r : ℕ) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r), NeatUnf U → ∀ (Z : Comp Xo c) (τ : Psi H), ∃ (G : WTZ E) (f g : Rul Xo c), Even G.2 ∧
@@ -601,7 +603,8 @@ theorem exists_frame_ne (hL : NeatUnf U) {σ : c.F →+* ℂ} (hσ : GoodEmb c �
   have hb : ¬ IsNilpotent b := fun h => by
     have h2 : ((b : Om Z)) = 0 := by rw [h.eq_zero]; rfl
     exact genVal_ne_zero_of_mem_cuspOn hf hf0 ((mul_eq_zero.1 h2).resolve_left (Units.ne_zero _))
-  obtain ⟨φ, hφσ, hφb⟩ := exists_ringHom_ne_zero_of_not_isNilpotent σ hb
+  obtain ⟨φ, hφσ, hφb⟩ :=
+    @exists_ringHom_ne_zero_of_not_isNilpotent c.F ↥R inferInstance R.toCommRing R.algebra hR σ b hb
   obtain ⟨z, hz, s, hread⟩ := hφ φ hφσ
   refine ⟨z, hz, fun h0 => hφb ?_⟩
   rw [hread _ f hfs b rfl, h0, mul_zero]
@@ -704,7 +707,8 @@ theorem archEx {U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r} (hL : NeatUnf U) (x :
     obtain ⟨b, hb, h2⟩ := hnorm σ₀ hσ₀
     obtain ⟨⟨z, hz⟩, h3⟩ := image_eq_singleton_iff.1 h2
     have h4 := h3 z hz
-    rw [h1, ← zero_smul c.F (0 : Rul Xo c), homN_smul, map_zero, norm_zero, zero_mul] at h4
+    simp only [h1, homN, ptN, Data.pnorm, map_zero, Pi.zero_apply, norm_zero, zero_mul,
+      mul_zero] at h4
     exact hb.ne h4
   obtain ⟨inv, hinv, hii, hig⟩ := exists_quot E H Dw l Xo c r U hL Z _ _ g f hgs hg.2 hfs hf.2 hg0 σ₀ hσ₀
     (fun k y => a₀⁻¹ * (mat y ⟨_, hmem σ₀ hσ₀ k⟩).det)

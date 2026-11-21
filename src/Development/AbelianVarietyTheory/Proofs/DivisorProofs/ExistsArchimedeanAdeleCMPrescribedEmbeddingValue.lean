@@ -74,17 +74,17 @@ theorem exists_at_inf_values : ∀ {F E : Type} [Field F] [NumberField F] [Field
     rw [smul_add, smul_adAt_tmul u hu, smul_adAt_tmul u hu, add_zero]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, Finset.sum_eq_single v]
-    · rw [map_add (f := _), piInf_adAt_same, piInf_adAt_same]
-      simp only [cR, ext_symm_real, map_one, mul_one]
-      have h0 := hξ v
-      apply Complex.ext
-      · simp only [Complex.add_re, Complex.ofReal_re, Complex.mul_re, Complex.ofReal_im, zero_mul, sub_zero, r]
-        ring
-      · simp only [Complex.add_im, Complex.ofReal_im, Complex.mul_im, Complex.ofReal_re, zero_add, zero_mul,
-          add_zero, s]
-        field_simp
-    · intro w _ hw
-      rw [map_add (f := _), piInf_adAt_ne (Ne.symm hw), piInf_adAt_ne (Ne.symm hw), add_zero]
-    · intro hv; exact absurd (Finset.mem_univ v) hv
+      · rw [map_add (f := _), piInf_adAt_same, piInf_adAt_same]
+        simp only [cR, ext_symm_real, map_one, mul_one]
+        have h0 := hξ v
+        apply Complex.ext
+        · simp only [Complex.add_re, Complex.ofReal_re, Complex.mul_re, Complex.ofReal_im, zero_mul, sub_zero, r]
+          ring
+        · simp only [Complex.add_im, Complex.ofReal_im, Complex.mul_im, Complex.ofReal_re, zero_add, zero_mul,
+            add_zero, s]
+          field_simp
+      · intro w _ hw
+        rw [map_add (f := _), piInf_adAt_ne (Ne.symm hw), piInf_adAt_ne (Ne.symm hw), add_zero]
+      · intro hv; exact absurd (Finset.mem_univ v) hv
 
 end GlobalTheory.PolRangeInf

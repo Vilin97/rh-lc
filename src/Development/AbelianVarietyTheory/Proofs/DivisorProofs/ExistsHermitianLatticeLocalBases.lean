@@ -110,17 +110,9 @@ theorem conjSub_isLattice {Λ : Submodule (𝓞 E) (Fin n → E)} (h : Λ.IsLatt
     · rintro _ ⟨x, hx, rfl⟩
       rw [SetLike.mem_coe, mem_conjSub, star_star, ← hS]
       exact Submodule.subset_span hx
-  refine ⟨?_, ?_⟩
-  · rw [e, Submodule.fg_def]
-    exact ⟨_, S.finite_toSet.image _, rfl⟩
-  · refine eq_top_iff.2 fun v _ => ?_
-    have hv : star v ∈ Submodule.span E (Λ : Set (Fin n → E)) := h.span_eq_top ▸ Submodule.mem_top
-    have := star_mem_span star star_smulE hv
-    rw [star_star] at this
-    refine Submodule.span_mono ?_ this
-    rintro _ ⟨x, hx, rfl⟩
-    rw [SetLike.mem_coe, mem_conjSub, star_star]
-    exact hx
+  apply Submodule.IsLattice.of_fg E
+  rw [e, Submodule.fg_def]
+  exact ⟨_, S.finite_toSet.image _, rfl⟩
 
 theorem exists_coe_iff (z : E) : (∃ b : 𝓞 E, (b : E) = z) ↔ IsIntegral ℤ (star z) := by
   refine ⟨fun ⟨b, hb⟩ => hb ▸ (RingOfIntegers.isIntegral_coe b).map (starRingEnd E).toIntAlgHom, fun h => ?_⟩

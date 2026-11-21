@@ -87,7 +87,7 @@ theorem pathLift_column_add (t : T) : ∀ (n : ℕ) (f f' f'' : ∀ j : Fin n, S
       rw [e1] at h1b ⊢
       rw [e2] at h2b ⊢
       exact liftA_datum_add W M (fun g h => by rw [h0]; exact kerA_col_add W t n _ _ g h) h1b h2b
-    · obtain ⟨j1, rfl⟩ := Fin.exists_castSucc_eq.2 hj
+    · obtain ⟨j1, rfl⟩ := Fin.eq_castSucc_of_ne_last hj
       have el : f (Fin.last n) = f'' (Fin.last n) := (hne _ (Ne.symm hj)).1
       have el' : f' (Fin.last n) = f'' (Fin.last n) := (hne _ (Ne.symm hj)).2
       have ih := pathLift_column_add t n (fun j => f j.castSucc) (fun j => f' j.castSucc) (fun j => f'' j.castSucc) j1
@@ -110,7 +110,7 @@ theorem pathLift_column_smul (t : T) (c : ℂ) : ∀ (n : ℕ) (f f'' : ∀ j : 
         funext fun j => hne _ (Fin.castSucc_lt_last j).ne
       rw [e1]
       exact liftA_datum_smul W M c (fun g h => by rw [h0]; exact kerA_col_smul W t n c _ g h)
-    · obtain ⟨j1, rfl⟩ := Fin.exists_castSucc_eq.2 hj
+    · obtain ⟨j1, rfl⟩ := Fin.eq_castSucc_of_ne_last hj
       have el : f (Fin.last n) = f'' (Fin.last n) := hne _ (Ne.symm hj)
       have ih := pathLift_column_smul t c n (fun j => f j.castSucc) (fun j => f'' j.castSucc) j1
         (fun j hj' => hne _ (fun e => hj' (Fin.castSucc_injective _ e))) h0 F
@@ -140,7 +140,7 @@ theorem pathLift_row_add (k : ℕ) : ∀ (n : ℕ) (f f' f'' : ∀ i : Fin n, Sc
       rw [e1] at h1b ⊢
       rw [e2] at h2b ⊢
       exact liftA_datum_add W M (fun g h => by rw [h0]; exact kerA_right_add W n k _ _ g h) h1b h2b
-    · obtain ⟨j1, rfl⟩ := Fin.exists_castSucc_eq.2 hj
+    · obtain ⟨j1, rfl⟩ := Fin.eq_castSucc_of_ne_last hj
       have el : f (Fin.last n) = f'' (Fin.last n) := (hne _ (Ne.symm hj)).1
       have el' : f' (Fin.last n) = f'' (Fin.last n) := (hne _ (Ne.symm hj)).2
       have ih := pathLift_row_add k n (fun j => f j.castSucc) (fun j => f' j.castSucc) (fun j => f'' j.castSucc) j1
@@ -163,7 +163,7 @@ theorem pathLift_row_smul (k : ℕ) (c : ℂ) : ∀ (n : ℕ) (f f'' : ∀ i : F
         funext fun j => hne _ (Fin.castSucc_lt_last j).ne
       rw [e1]
       exact liftA_datum_smul W M c (fun g h => by rw [h0]; exact kerA_right_smul W n k c _ g h)
-    · obtain ⟨j1, rfl⟩ := Fin.exists_castSucc_eq.2 hj
+    · obtain ⟨j1, rfl⟩ := Fin.eq_castSucc_of_ne_last hj
       have el : f (Fin.last n) = f'' (Fin.last n) := hne _ (Ne.symm hj)
       have ih := pathLift_row_smul k c n (fun j => f j.castSucc) (fun j => f'' j.castSucc) j1
         (fun j hj' => hne _ (fun e => hj' (Fin.castSucc_injective _ e))) h0 F
@@ -394,8 +394,8 @@ theorem genPer_eta_smul (Q : PolCol ch.G × PolRow ch.G) (c : ℂ) ξ η :
   simp only [Pi.smul_apply, smul_eq_mul, mul_left_comm _ c, integral_const_mul]
 
 theorem genPer_multilinear (hc : ∀ Q ξ η, GenConv ch t a M d y Q ξ η) :
-    ∃ Φ : MultilinearMap ℂ (fun j : Fin D.R.m => PolF D (ch.G.V (.top ((j : ℕ) + 1))).rank (ch.G.V (.top j)).rank)
-      (MultilinearMap ℂ (fun i : Fin D.R.m => PolF D (ch.G.V (.grid i D.R.m)).rank (ch.G.V (.grid ((i : ℕ) + 1) D.R.m)).rank)
+    ∃ Φ : MultilinearMap (RingHom.id ℂ) (fun j : Fin D.R.m => PolF D (ch.G.V (.top ((j : ℕ) + 1))).rank (ch.G.V (.top j)).rank)
+      (MultilinearMap (RingHom.id ℂ) (fun i : Fin D.R.m => PolF D (ch.G.V (.grid i D.R.m)).rank (ch.G.V (.grid ((i : ℕ) + 1) D.R.m)).rank)
         (Module.Dual ℂ (GlobalTheory.IndefiniteRowSideFullHecke.LevelPlusSubgroup.coefPlus ch.G ch.W.θ).W →ₗ[ℂ] Module.Dual ℂ R.cX.W →ₗ[ℂ] ℂ)),
       ∀ Q ξ η, Φ Q.1 Q.2 ξ η = genPer ch t a M d y Q ξ η := by
   refine ⟨

@@ -26,18 +26,18 @@ theorem map_ofFn_prod_eq {G M : Type*} [Group G] [Monoid M] (φ : G →* M) :
     ∀ {r : ℕ} (a : Fin r → G) (i : Fin r), (∀ j, j ≠ i → φ (a j) = 1) → φ (List.ofFn a).prod = φ (a i)
   | 0, _, i, _ => i.elim0
   | r + 1, a, i, h => by
-    rw [List.ofFn_succ, List.prod_cons, map_mul]
-    by_cases hi : i = 0
-    · subst hi
+    rw [List.ofFn_succ, List.prod_cons, φ.map_mul]
+    cases i using Fin.cases with
+    | zero =>
       have h1 : φ (List.ofFn fun j : Fin r => a j.succ).prod = 1 := by
-        rw [map_list_prod, List.map_ofFn]
+        rw [φ.map_list_prod, List.map_ofFn]
         apply List.prod_eq_one
         intro x hx
         rw [List.mem_ofFn] at hx
         obtain ⟨j, rfl⟩ := hx
         exact h _ (Fin.succ_ne_zero j)
       rw [h1, mul_one]
-    · obtain ⟨i', rfl⟩ := Fin.exists_succ_eq_of_ne_zero hi
+    | succ i' =>
       rw [h 0 (Fin.succ_ne_zero i').symm, one_mul]
       exact map_ofFn_prod_eq φ (fun j => a j.succ) i' fun j hj => h _ fun e => hj (Fin.succ_injective _ e)
 

@@ -116,7 +116,9 @@ theorem GlobalTheory.Discrepancy.neg_one_lt_discrep_add_ord_of_logRes : ∀ (X :
   have hd : discrep E' (EtaleKlt.ratPull p s n η) m (fnPull s g / fnPull s f ^ m) =
       discrep E η m g + E.ord f := by
     simp only [discrep]
-    rw [GlobalTheory.T.form_order_birational_pullback ℂ X Y p s hres.bir E' E hE'E n η hη, div_eq_mul_inv (fnPull s g), E'.ord_mul, E'.ord_inv,
+    have hform := GlobalTheory.T.form_order_birational_pullback ℂ X Y p s hres.bir E' E hE'E n η hη
+    change E'.formOrd (EtaleKlt.ratPull p s n η) = E.formOrd η at hform
+    rw [hform, div_eq_mul_inv (fnPull s g), E'.ord_mul, E'.ord_inv,
       E'.ord_pow, GlobalTheory.T.ord_functionField_pullback_primeDivisor_over ℂ X Y p s hres.bir E' E hE'E g,
       GlobalTheory.T.ord_functionField_pullback_primeDivisor_over ℂ X Y p s hres.bir E' E hE'E f]
     have hm' : (m : ℚ) ≠ 0 := by exact_mod_cast hm.ne'

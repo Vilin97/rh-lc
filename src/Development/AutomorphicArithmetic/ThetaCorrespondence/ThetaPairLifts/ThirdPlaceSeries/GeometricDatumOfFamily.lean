@@ -94,12 +94,25 @@ end
 set_option maxHeartbeats 1000000 in
 theorem GlobalTheory.MiTop.linkDown_of_ok : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex) (u : D.what₂.Word), _root_.GlobalTheory.Fam.PackageHypotheses W → ∀ f : _root_.GlobalTheory.Fam.FamilyCharacter W u, f.RowOK → _root_.GlobalTheory.MiTop.LinkDescends f := by
   intro D L hT Gi Gl Kc Yd cX ex W u hP f hR n h t F
-  refine ⟨⟨_root_.GlobalTheory.Fam.leadingLinearMap W t F, _root_.GlobalTheory.T.vector_of_mem_extra_projection W hP t F⟩, rfl, ?_⟩
-  have e1 := _root_.GlobalTheory.RowDescent.down_eq_thDn f t (hR.row t) n h ⟨_root_.GlobalTheory.Fam.leadingLinearMap W t F, _root_.GlobalTheory.T.vector_of_mem_extra_projection W hP t F⟩
+  have hChar := hP.bot.hyp.2.2.2.1
+  obtain ⟨⟨s, hs⟩, -⟩ := hP.lev
+  have hMem : _root_.GlobalTheory.Fam.leadingLinearMap W t F ∈
+      CXP (_root_.GlobalTheory.Fam.pk_z W) (_root_.GlobalTheory.Fam.complexLevelStructure W) t :=
+    GlobalTheory.TopLevelP.mem_CXP_of_good (_root_.GlobalTheory.Fam.pk_z W)
+      hChar.grp.red_R hChar.models.jX hChar.models.cX hs.ok2.irr W.Q.F.P1 W.Q.F.ψ1 t
+      (W.Q.F.eV (_root_.GlobalTheory.MiS.packageCoefficientSpace W).zs t F) ⟨F, rfl⟩
+      ((hP.hTop t).le ⟨_, rfl⟩)
+  refine ⟨⟨_root_.GlobalTheory.Fam.leadingLinearMap W t F, hMem⟩, rfl, ?_⟩
+  have e1 := _root_.GlobalTheory.RowDescent.down_eq_thDn f t (hR.row t) n h ⟨_root_.GlobalTheory.Fam.leadingLinearMap W t F, hMem⟩
     (_root_.GlobalTheory.RowDescent.geometricDatumOfFamily W t F) (_root_.GlobalTheory.RowDescent.apex_eq_toMap_geometricDatum W t F)
   have hC : (_root_.GlobalTheory.Fam.pk_z W).IsChain := RealDat.chain_of_weak W.Q.charW.base.chain hP.ex
   have e2 : _root_.GlobalTheory.MiTop.rowFormOfTuple W t F = PiTensorProduct.lift ((_root_.GlobalTheory.Fam.pk_z W).HE.e ((_root_.GlobalTheory.Fam.pk_z W).Th t (_root_.GlobalTheory.RowDescent.geometricDatumOfFamily W t F))) := rfl
   have e3 := congrArg PiTensorProduct.lift (hC.Th t (_root_.GlobalTheory.RowDescent.geometricDatumOfFamily W t F))
-  have e4 := _root_.GlobalTheory.RowDescent.piTensorProduct_lift_postOn_eq_of_fixed W _ (_root_.GlobalTheory.T.e_zero_theta_descent_eval_alt_alt W hP t F)
+  have hFixed := GlobalTheory.GoodFix.good_fix (W.P.A3.A.fam.R t)
+    (W.P.A3.A.fam.lvl W.Q.F.P1 W.Q.F.ψ1) hs.ok2.irr F
+  have e4 := _root_.GlobalTheory.RowDescent.piTensorProduct_lift_postOn_eq_of_fixed W _ (fun v =>
+    GlobalTheory.GoodFix.goodProjector_fixes_compositeThetaLift_of_fixed
+      GlobalTheory.RapidDecay.cuspRapidDecay (_root_.GlobalTheory.Fam.pk_z W)
+      hChar.lev hChar.models hChar.chain hChar.grp.red_R t _ hFixed v)
   exact e1.trans (e4.symm.trans (e3.symm.trans e2.symm))
 end

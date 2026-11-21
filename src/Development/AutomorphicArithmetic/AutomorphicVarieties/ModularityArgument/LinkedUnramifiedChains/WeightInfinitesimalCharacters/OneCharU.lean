@@ -6,8 +6,6 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuL
 
 @[expose] public section
 
-open private chHom gd_chHom exists_unram isPush_push trace_reducible_three_dim from Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.GaloisRepresentationTypes.OneChar
-
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.MainNotions.N Formalism.BasicNotions Formalism.BasicNotions.Loc GlobalTheory.GalOfCusp Matrix IsLocalRing
 open UpperTheory.V UpperTheory.V.Base UpperTheory.V.HV UpperTheory.V.Alg UpperTheory.V.U3 UpperTheory.V.Z.J
 
@@ -39,16 +37,23 @@ private theorem oneChar_unramU (hC : U3.CohInp) (hLM : LemmaM) (hLM' : LemmaM') 
   have htr : ∀ f, trDiff D.η D.Ψ S.r.hom (galEmb ℚ K Ω σ) f =
       (ρ f σ : Matrix (Fin 3) (Fin 3) (Qbar l)).trace - t := by
     intro f
-    rw [trDiff, trace_reducible_three_dim, ht]
+    let g := galEmb ℚ K Ω σ
+    have htrace : (r0 D.η D.Ψ g).mat.trace = (D.Ψ g : c.O) + 1 + ((D.Ψ g)⁻¹ : c.Oˣ).val := by
+      simp [GG.mat, tor_val, Matrix.trace_diagonal, Fin.sum_univ_three, wt1]
+    rw [trDiff, htrace, ht]
     congr 1
     exact AddMonoidHom.map_trace (f : S.R →+* PadicAlgCl l) _
-  have hadm : ∀ f, TwoPt D.η S.r.hom f → Adm3U ι e N (ρ f) ∨ Af.Adm2 ι e (N * (discr K).natAbs) (ρ f) := by
+  have hadm : ∀ f, TwoPt (η := D.η) S.r.hom f → Adm3U ι e N (ρ f) ∨ Af.Adm2 ι e (N * (discr K).natAbs) (ρ f) := by
     intro f hf
     have hp := isPt_push D hM S f hf.1
+    have hpush {O Γ R κ : Type} [CommRing O] [Group Γ] [CommRing R] [Algebra O R] [CommRing κ]
+        [Algebra O κ] (a : R →ₐ[O] κ) (r : Γ →* GG (m := 3) (R := R)) :
+        IsPush (a.comp (entAlg O r).val) r (push a r) :=
+      fun g => ⟨rfl, fun a b => ⟨Algebra.subset_adjoin ⟨g, a, b, rfl⟩, rfl⟩⟩
     rcases (twoPt_shape S hG.l_odd hM f hf).1 with h | h
-    · exact Or.inl (hAd D hM S f hf.1 (hmult f) ι h (hB U S _ _ _ (isPush_push f _) h))
+    · exact Or.inl (hAd D hM S f hf.1 (hmult f) ι h (hB U S _ _ _ (hpush f _) h))
     · exact Or.inr (admissible_of_typeII hC D hM hp ι h
-        (hW U S _ _ (isPush_push f _) h (typeII_facts hC D hM hp h).1))
+        (hW U S _ _ (hpush f _) h (typeII_facts hC D hM hp h).1))
   obtain ⟨hlen, T, hT, hTo, hle⟩ := model_upper S M hG.l_odd hM hLM (hFin U S)
     (Z.J.ptHyp_ofU hC hK hRI hRII D hM S ι hB hW M.x₀ M.base) (galEmb ℚ K Ω σ) hσ
     fun f hf => by rw [htr]; exact sub_ne_zero.2 (hne _ (hadm f hf))

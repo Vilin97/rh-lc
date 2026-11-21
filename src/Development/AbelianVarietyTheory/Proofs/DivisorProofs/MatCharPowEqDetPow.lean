@@ -75,7 +75,10 @@ theorem matChar_transvection [CharZero K] {i j : Fin n} (hij : i ≠ j) (c : K) 
 theorem matChar_mulSingle (k k' : Fin n) (a : K) :
     χ (diagonal (Pi.mulSingle k a)) = χ (diagonal (Pi.mulSingle k' a)) := by
   rw [← matChar_submatrix χ (Equiv.swap k k') (diagonal (Pi.mulSingle k' a)), submatrix_diagonal_equiv]
-  congr 2
+  apply congrArg χ
+  apply congrArg diagonal
+  funext x
+  simp only [Function.comp_apply]
   by_cases hx : x = k
   · subst hx; simp
   · by_cases hx' : x = k'

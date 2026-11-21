@@ -20,7 +20,7 @@ open scoped TensorProduct Classical
 
 private theorem ray_lv {K : Type} [Field K] [NumberField K] {μ₂ : Measure (G1 K 2)} {τ₁ τ₂ : Submodule ℂ (L2 μ₂)}
     {f : G1 K (2 + 2) → ℂ} (hf : IsSec τ₁ τ₂ f) (t : ℝ) (g : G1 K (2 + 2)) : f (lv 1 1 t * g) = f g := by
-  refine hf.ray ⟨Real.exp t, Real.exp_pos t⟩ _ g ?_
+  refine hf.ray ⟨Real.exp t, Real.exp_pos t⟩ ?_ g ?_
   have h : (⟨Real.exp (-t), Real.exp_pos _⟩ : {r : ℝ // 0 < r}) = (⟨Real.exp t, Real.exp_pos t⟩ : {r : ℝ // 0 < r})⁻¹ :=
     Subtype.ext (Real.exp_neg t)
   rw [Subgroup.coe_mul, blkLaws.1, Subgroup.coe_one, one_mul, one_mul, zt, zt, h]

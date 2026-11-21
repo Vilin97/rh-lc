@@ -31,7 +31,7 @@ open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.LocGL ValuativeRel
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-
+variable (k) in
 abbrev uc (a : ℂˣ) : IrrGL (k := k) := IrrGL.ofChar (unrChar k a) (isSmoothChar_of_isUnram (isUnram_unrChar k a))
 
 theorem eq_first_of_isLSeg {Δ : Segment k} {y : IrrGL (k := k)} (h : IsLSeg Δ y.rep) (h1 : Δ.len = 1) : y = Δ.first := by
@@ -54,13 +54,13 @@ theorem isSpherical_prodIrr_uc {c N : ℕ} (β : Fin c → ℂˣ) (hd : ∑ i, (
     let u : r.V := (1 : ℂ)
     have hu : u ≠ 0 := show (1 : ℂ) ≠ 0 from one_ne_zero
     refine ⟨e u, fun h0 => hu (e.toLinearEquiv.injective (h0.trans (map_zero _).symm)), fun g hg => ?_⟩
+    change GL (Fin 1) k at g
     have h1 := e.toIntertwiningMap.isIntertwining _ _ g u
     refine h1.symm.trans (congrArg e ?_)
     have h4 : unrChar k (β i) (Matrix.GeneralLinearGroup.det g) = 1 :=
       isUnram_unrChar k (β i) _ (GlobalTheory.StepData.valuation_det_of_mem_KO hg)
     show ((ofChar (detChar (Fin 1) (unrChar k (β i)))) g) (1 : ℂ) = (1 : ℂ)
-    simp [ofChar, twist, detChar_apply]
-    exact h4
+    simp [detChar_apply, h4]
   choose v hv0 hvK using hv
   obtain ⟨f, hf, hf1⟩ := GlobalTheory.SatInd.exists_fixed_apply_one (stdBlocks (fun i => (uc k (β i)).1) hd)
     (ρ := piTensor fun i => (uc k (β i)).rep) (x := PiTensorProduct.tprod ℂ v) fun g hg => by

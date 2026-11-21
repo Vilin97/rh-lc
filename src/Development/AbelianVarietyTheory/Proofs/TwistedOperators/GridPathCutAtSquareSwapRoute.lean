@@ -100,14 +100,19 @@ theorem exists_of_last {m : ℕ} {t : T} {i j : ℕ} {X : Node} : ∀ {Y : Node}
 
 theorem exists_cut {m : ℕ} {t : T} {i j : ℕ} {X : Node} : ∀ {Y : Node} (p : Path T X Y), OnGrid m t p →
     [GlobalTheory.SplitFlip.Edge.theta i j, GlobalTheory.SplitFlip.Edge.ex i j] <:+: edges p →
-    ∃ (A : Path T X (.grid i (j + 1))) (Bp : Path T (.grid (i + 1) j) Y), p = (A.comp (routeSmall t i j)).comp Bp
-  | _, .nil, _, h => by simp [edges, Path.arrows] at h
-  | _, .snoc a q, hp, h => by
+    ∃ (A : Path T X (.grid i (j + 1))) (Bp : Path T (.grid (i + 1) j) Y), p = (A.comp (routeSmall t i j)).comp Bp := by
+  intro Y p
+  induction p with
+  | nil =>
+    intro _ h
+    simp [edges, Path.arrows] at h
+  | snoc a q ih =>
+    intro hp h
     rw [onGrid_snoc] at hp
     have he : edges (.snoc a q) = edges q ++ [edgeOf a] := by simp [edges, Path.arrows]
     rw [he] at h
     rcases infix_concat' h with h | ⟨l, hl, ha⟩
-    · obtain ⟨A, Bq, rfl⟩ := exists_cut (m := m) (t := t) (i := i) (j := j) q hp.1 h
+    · obtain ⟨A, Bq, rfl⟩ := ih hp.1 h
       exact ⟨A, .snoc a Bq, rfl⟩
     · have ha' : a = Arrow.right i j := eq_right (m := m) (t := t) hp.2 ha
       subst a

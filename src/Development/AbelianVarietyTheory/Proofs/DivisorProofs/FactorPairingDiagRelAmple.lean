@@ -47,7 +47,7 @@ theorem act_nsmul {S : Scheme.{0}} {A : Over S} [GrpObj A] [IsCommMonObj A] {O :
     exact (mul_left_cancel e').symm
   induction n with
   | zero => rw [zero_smul, pow_zero, h0]
-  | succ n ih => rw [succ_nsmul, ρ.map_add (f := _), ih, pow_succ]; exact (Hom.mul_def _ _).symm
+  | succ n ih => rw [succ_nsmul, ρ.map_add, ih, pow_succ]; exact (Hom.mul_def _ _).symm
 
 theorem lam_push {S S' : Scheme.{0}} {G : Over S} {H : Over S'} [GrpObj G] [IsCommMonObj G] [GrpObj H]
     [IsCommMonObj H] {f : S' ⟶ S} {φ : H.left ⟶ G.left} (hp : IsGrpPullback H G f φ) (c : Pic G.left)

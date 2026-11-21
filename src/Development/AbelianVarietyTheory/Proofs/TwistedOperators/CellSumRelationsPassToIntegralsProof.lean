@@ -47,6 +47,7 @@ lemma niter_sub (p : ι → Prop) [DecidablePred p] {R : ∀ i, Subgroup (H i)} 
       NIter ρ μ f (l.map Subtype.val) (extPt p h₀ g) z
   | [], g, z, hz => by simpa [NIter] using hz
   | j :: l, g, z, hz => by
+    simp only [List.map_cons, NIter] at hz ⊢
     obtain ⟨F, hF, hF'⟩ := hz
     refine ⟨F, hF, fun x => ?_⟩
     rw [← extPt_update]

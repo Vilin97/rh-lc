@@ -82,27 +82,22 @@ theorem reads_rename {B : Base} {X : PreX B.toPre} {I : TC B X} {u : B.Word} {a 
     {st : ∀ c, (I.stp u a i).Stab c → GL (Fin (B.R.N i)) B.host.E} {k : C₀ → TC.GA B (B.R.N i)}
     (h : I.Reads u a i chOf₀ Lb U chi y st k) (chOf : (I.stp u a i).Cl → C) (φ : C → C₀) (hφ : ∀ c, chOf₀ c = φ (chOf c))
     (hinj : Function.Injective φ) (hon : Function.Surjective chOf) :
-    I.Reads u a i chOf (fun β => Lb (φ β)) (fun β => U (φ β)) (fun β => chi (φ β)) y st (fun β => k (φ β)) where
-  key c c' := by rw [← h.key, hφ, hφ, hinj.eq_iff]
-  onto := hon
-  lb β := h.lb (φ β)
-  k_std β := h.k_std (φ β)
-  k_off β := h.k_off (φ β)
-  k_T β := h.k_T (φ β)
-  pt c := by
-    have := h.pt c
-    rwa [hφ] at this
-  lev c x q := by
-    have := h.lev c x q
-    rwa [hφ] at this
-  chr c := by
+    I.Reads u a i chOf (fun β => Lb (φ β)) (fun β => U (φ β)) (fun β => chi (φ β)) y st (fun β => k (φ β)) := by
+  refine ⟨?_, hon, fun β => h.lb (φ β), fun β => h.k_std (φ β), fun β => h.k_off (φ β),
+    fun β => h.k_T (φ β), ?_, ?_, ?_, h.stab⟩
+  · intro c c'
+    simpa only [hφ, hinj.eq_iff] using h.key c c'
+  · intro c
+    simpa only [hφ] using h.pt c
+  · intro c x q
+    simpa only [hφ] using h.lev c x q
+  · intro c
     have key : ∀ γ, chOf₀ c = γ → ∀ (x : U γ) (κ : (I.stp u a i).G c.1), (I.stp u a i).gam c.1 κ = 1 →
         TC.PtOf (y c * x.1 * k γ) ((I.stp u a i).act c.1 κ ((I.stp u a i).rep c)).1.1 →
         ((chi γ x : ℂˣ) : ℂ) = B.embLL (((I.stp u a i).chr c.1 κ : B.LLˣ) : B.LL) := by
       rintro _ rfl
       exact h.chr c
     exact key _ (hφ c)
-  stab := h.stab
 
 variable {B : Base} {X : PreX B.toPre}
 

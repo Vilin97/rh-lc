@@ -173,6 +173,7 @@ theorem shape_dbl : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field
     intro x u hx hx0 hu1
     have key := GlobalTheory.T.hermitian_tensor_local_vanish hcm (t.comp σ) X.J W.J hp.herm.herm hp.skew.skew x u hx0 (by rw [hts]; exact hu1)
     rw [hts] at key
+    dsimp [cA, incM] at key
     unfold symp
     rw [GlobalTheory.T.adelicTrace_supportedAtSplitPlace hcm v t _ (at_hTens _ _ x u hx)]
     rw [map_mul, map_mul, map_neg, map_neg, map_one, map_one, neg_one_mul, neg_one_mul, ← neg_add, add_comm, key]
@@ -293,7 +294,8 @@ theorem shape_dbl : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field
           show xY (Y * (locMatD t c p).valᵀ) * Pinvᵀ * Pᵀ = _
           rw [Matrix.mul_assoc, hinv2, Matrix.mul_one]
         have eb : actB (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) p (uM l) = uM l * Pᵀ := rfl
-        rw [ea, eb] at hs
+        change symp _ _ _ _ ((xY (Y * (locMatD t c p).valᵀ) * Pinvᵀ) * Pᵀ) (uM l * Pᵀ) = _ at hs
+        rw [Matrix.mul_assoc, hinv2, Matrix.mul_one] at hs
         have hx0 : (xY (Y * (locMatD t c p).valᵀ) * Pinvᵀ).map (piW (t.comp σ)) = 0 := by
           rw [Matrix.map_mul]; simp only [xY, hU1, Matrix.zero_mul]
         rw [hs, hMu l _ (hatR _ _ hZ) hx0, hcoH, hcoY, Matrix.mul_assoc, hh', Matrix.mul_one]

@@ -127,7 +127,7 @@ theorem isLocallyGeneratedByNonZeroDivisor_exceptionalProduct_le {k : Type} [Fie
   | i + 1, hi => by
     have hprincipal := h
     unfold IsPrincipalizingSequence at hprincipal
-    obtain ⟨-, -, -, -, -, -, -, -, -, -, -, hsm, -⟩ := hprincipal
+    obtain ⟨_ideal, _boundary, -, -, -, -, -, -, -, -, -, hsm, -⟩ := hprincipal
     have hlt : i < s.length := hi
     have hb : Blowup.IsBlowupAlongIdealSheaf (s.blowupMap i) (s.center i) := s.isBlowup i hlt
     have ih := isLocallyGeneratedByNonZeroDivisor_exceptionalProduct_le h i hlt.le
@@ -148,7 +148,7 @@ theorem gEff : GEff := by
   intro k _ _ X p _ _ _ I L s hI hL hs
   have hprincipal := hs
   unfold IsPrincipalizingSequence at hprincipal
-  obtain ⟨-, -, -, -, -, -, -, -, -, -, htop, -, -⟩ := hprincipal
+  obtain ⟨_ideal, _boundary, -, -, -, -, -, -, -, -, htop, -, -⟩ := hprincipal
   rw [htop]
   exact effCartier_of (isLocallyGeneratedByNonZeroDivisor_exceptionalProduct hs)
 

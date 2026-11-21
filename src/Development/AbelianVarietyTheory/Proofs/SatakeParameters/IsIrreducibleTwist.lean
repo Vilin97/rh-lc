@@ -63,7 +63,7 @@ theorem e_spehLoc (T : WDTie N A) (p : Part A.CG) (w : PlE H) :
   generalize ((p.d : ℝ) - 1) / 2 = s
   have key : ∀ L : List ℝ,
       T.e w (L.foldr (fun j acc => A.lpSum (A.lpTw (A.locG p.π w) (s - j)) acc) (A.lpZero w)) =
-        L.foldr (fun j acc => ((T.e w (A.locG p.π w)).lpTw (s - j)).lpSum acc) (WD.lpZero _) := by
+        L.foldr (fun j acc => ((T.e w (A.locG p.π w)).lpTw (s - j)).lpSum acc) (WD.lpZero) := by
     intro L
     induction L with
     | nil => exact T.zero w

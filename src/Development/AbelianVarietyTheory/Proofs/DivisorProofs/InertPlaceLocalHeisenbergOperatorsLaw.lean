@@ -38,7 +38,10 @@ theorem eq_of_tens_eq {F : Type} [Field F] [NumberField F] (v : Pl (F := F)) {κ
     (h : tens (evFin F v) φ₁ r = tens (evFin F v) φ₂ r) : φ₁ = φ₂ := by
   funext y
   set z : κ → AF F := fun i => GlobalTheory.LatVac.liftV v (y i) with hz
-  have hza : At (evFin F v) z := GlobalTheory.VacAny.at_pi fun i => GlobalTheory.LatVac.at_liftV v _
+  have hza : At (evFin F v) z := by
+    intro u hu
+    funext i
+    exact GlobalTheory.LatVac.at_liftV v _ u hu
   have hrx : r (0 + z) = r 0 := hr 0 z hza
   have hy : (fun i => evFin F v ((0 + z) i)) = y := by
     funext i
@@ -84,7 +87,9 @@ theorem rho_law : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
     have e2 := hA y m
     have e3 := hA (x + y) m
     have hl := darboux_rho_rho G.M'.co B.ψ (κ x) (κ y) (tens (evFin F v) (m : (Fin a' × Fin (a + a') → Fv F v) → ℂ) R)
-    rw [e2, e1, ← map_add (f := _), e3, ← hEq x y] at hl
+    rw [e2, e1, ← map_add (f := _), e3] at hl
+    dsimp only [cA, incM] at hl
+    rw [← hEq x y] at hl
     rw [Module.End.mul_apply, hl, LinearMap.smul_apply, Submodule.coe_smul]
     funext z
     simp only [tens, Pi.smul_apply, smul_eq_mul, mul_assoc]

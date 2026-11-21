@@ -54,8 +54,7 @@ theorem idTower_isCorrOp (l : ℕ) [Fact l.Prime] (g : (HTower.idTower k).Γ) :
   refine ⟨_, (HTower.idTower k).sΩ Ω g, Unit, inferInstance, inferInstance, fun _ => 𝟙 _, Unit, inferInstance,
     fun _ => 𝟙 _, ⟨inferInstance, inferInstance, inferInstance, rfl, fun _ _ => (Category.id_comp _).symm,
       splits_self_of_iso _⟩, splits_self_of_iso _, fun x => ?_⟩
-  simp only [LinearMap.id_apply, Finset.univ_unique, Finset.sum_singleton, Category.id_comp]
-  rfl
+  simp only [LinearMap.id_apply, Finset.univ_unique, Finset.sum_singleton, Category.id_comp] <;> rfl
 
 end GlobalTheory.GalV.GaloisTowerConditions
 

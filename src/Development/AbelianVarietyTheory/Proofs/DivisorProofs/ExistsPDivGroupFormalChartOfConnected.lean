@@ -111,7 +111,7 @@ theorem chart_exists : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgC
       have h1 := isEval_comp ρ (hE₂ (n + 1))
       convert h1 using 1
       funext j
-      rcases j with j | j <;> simp [ρ, hres]
+      rcases j with j | j <;> simp [ρ, AlgHomClass.toAlgHom, hres]
     rw [← hρ, AlgHom.comp_apply, hf]
     exact (CoalgHomClass.map_comp_comul_apply (G.res n) (x (n + 1) i)).trans (by rw [hres])
   have hμ : ∀ i, ∃ g, ∀ n, E₂ n g = Coalgebra.comul (R := O) (x n i) := by

@@ -157,6 +157,7 @@ theorem cd_eq_half_exp : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
           zero_smul, zero_add, ← Matrix.smul_one_eq_diagonal, Matrix.trace_smul, Matrix.trace_one]
         simp [Fintype.card_sum, Fintype.card_fin]
       rw [hf, MultilinearMap.map_update_smul, Function.update_eq_self]
+      rfl
     · intro w _ hw
       rw [atPl_tprod]
       simp only [if_neg hw, map_zero, Matrix.trace_zero, mul_zero, zero_smul, add_zero, LinearMap.zero_apply]

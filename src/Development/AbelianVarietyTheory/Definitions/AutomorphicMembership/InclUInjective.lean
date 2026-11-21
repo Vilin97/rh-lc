@@ -175,14 +175,23 @@ def resR (h : Wt' ⊆ Wt) : RealDat3 X.toD7 (famR X I hX (usedOf I T Wt') z.Xg z
 set_option maxHeartbeats 1000000 in
 theorem newTup (h : Wt' ⊆ Wt) (hc : ConjStable X Wt') :
     Res.NewTup (A3 := famR X I hX (usedOf I T Wt) z.Xg z.tr) (f := inclU I (usedOf_mono I T h))
-      (μ := mu0F (X := X.B.fields) (tuOf I (usedOf I T Wt'))) z.R (z.resMu h) (z.resTw Wt') where
-  sub v hv := (z.mem_twPl v).2 (h ((z.mem_resTw h v).1 hv))
-  conj v := by
+      (μ := mu0F (X := X.B.fields) (tuOf I (usedOf I T Wt'))) z.R (z.resMu h) (z.resTw Wt') := by
+  constructor
+  case sub =>
+    intro v hv
+    exact (z.mem_twPl v).2 (h ((z.mem_resTw h v).1 hv))
+  case conj =>
+    intro v
     rw [z.mem_resTw h, z.mem_resTw h]
     exact hc.symm_mem_iff v
-  on v hv := z.inclU_resMu h ((z.mem_resTw h v).1 hv)
-  off v hv := z.resMu_off h fun hv' => hv ((z.mem_resTw h v).2 hv')
-  used t := z.resMu_used h t
+  case on =>
+    intro v hv
+    exact z.inclU_resMu h ((z.mem_resTw h v).1 hv)
+  case off =>
+    intro v hv
+    exact z.resMu_off h fun hv' => hv ((z.mem_resTw h v).2 hv')
+  case used =>
+    exact z.resMu_used h
 
 end Dat
 

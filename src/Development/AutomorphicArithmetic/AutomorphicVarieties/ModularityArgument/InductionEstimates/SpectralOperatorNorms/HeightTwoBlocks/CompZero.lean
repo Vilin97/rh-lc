@@ -64,6 +64,8 @@ private theorem zt_blk (a : ℝ) : blk (InvariantSubmoduleMonicPolynomial.zt K a
     refine Units.ext ?_
     simp only [blk, scalarUnits_apply, coe_diagUnits, Matrix.fromBlocks_diagonal, Matrix.reindex_apply, Matrix.submatrix_diagonal_equiv]
     congr 1
+    funext i
+    change Sum.elim (fun _ => (u : 𝔸[K])) (fun _ => (u : 𝔸[K])) (finSumFinEquiv.symm i) = _
     cases finSumFinEquiv.symm i <;> rfl
   simp only [InvariantSubmoduleMonicPolynomial.zt, UpperTheory.ConvolutionTheory.BW.zt, centralSection, MonoidHom.comp_apply, h1]
   congr 2
@@ -93,9 +95,9 @@ variable [_root_.NumberField.IsTotallyComplex K]
 private theorem blo_rd {S : Set (Pl K)} (b : Blo S 2) (τ : Submodule ℂ (L2 (mu1 K 2)))
     (h : ((cuspToL2 (mu1 K 2) ⟨b.f.1, b.cusp⟩ : cuspidalL2 (mu1 K 2)) : L2 (mu1 K 2)) ∈ τ) :
     Rd τ fun m : G1 K 2 => b.f.1 (m : AdelicGLn.AdelicGL K 2) := by
-  obtain ⟨hu, hc⟩ := cuspUmg K 2 b.f b.cusp
+  obtain ⟨hu, hc⟩ := UpperTheory.ConvolutionTheory.BW.cuspUmg K 2 b.f b.cusp
   refine ⟨((umgOps K 2).2 _ hu).1.comp continuous_subtype_val, ⟨_, h, ?_⟩, left_gam hu.left, fun m => ?_, ?_⟩
-  · filter_upwards [(quasiMeasurePreserving_mk (Gam K 2) (mu1 K 2)).ae (coeFn_cuspToL2 (mu1 K 2) ⟨b.f.1, b.cusp⟩)] with y hy
+  · filter_upwards [QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K 2) (mu1 K 2)) (coeFn_cuspToL2 (mu1 K 2) ⟨b.f.1, b.cusp⟩)] with y hy
     rw [hy]
     rfl
   · have := hc 1 one_pos one_lt_two (m : AdelicGLn.AdelicGL K 2)
@@ -116,7 +118,7 @@ theorem compZero (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (τ₁ τ₂ :
     ((umgOps K _).2 _ hw.umg).1.comp continuous_subtype_val
   have hΓ := left_gam hw.umg.left
   have hrep : Reps μ (Rop μ a y) fun g : G1 K (2 + 2) => w.1 (g : AdelicGLn.AdelicGL K (2 + 2)) :=
-    ((quasiMeasurePreserving_mk (Gam K (2 + 2)) μ).ae hw.ae).mono fun g hg => hg.trans (out_mk (fun g : G1 K (2 + 2) => w.1 (g : AdelicGLn.AdelicGL K (2 + 2))) hΓ g)
+    (QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K (2 + 2)) μ) hw.ae).mono fun g hg => hg.trans (out_mk (fun g : G1 K (2 + 2) => w.1 (g : AdelicGLn.AdelicGL K (2 + 2))) hΓ g)
   obtain ⟨F, hF, hFu, hFr, -⟩ := ctOps K 2 2 w hw.umg
   have hrat : ∀ γ₁ ∈ Gam K 2, ∀ γ₂ ∈ Gam K 2, ∀ g : G1 K (2 + 2),
       constantTerm 2 w.1 ((lv γ₁ γ₂ 0 * g : G1 K (2 + 2)) : AdelicGLn.AdelicGL K (2 + 2)) = constantTerm 2 w.1 (g : AdelicGLn.AdelicGL K (2 + 2)) := by

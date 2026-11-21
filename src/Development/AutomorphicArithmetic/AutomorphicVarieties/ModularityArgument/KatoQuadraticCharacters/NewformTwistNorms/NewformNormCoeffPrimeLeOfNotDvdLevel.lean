@@ -127,7 +127,8 @@ theorem sum_shift (k : ℕ) (g : Newform k) (p : ℕ) (hp : p.Prime) (z : ℍ) :
     exact hx ⟨n, rfl⟩
   have := (hinj.hasSum_iff hz).mpr hs'
   convert this using 1
-  congr 1
+  funext n
+  simp only [Function.comp_apply, dvd_mul_right, if_true]
   rw [pow_mul, ← Complex.exp_nat_mul, Function.Periodic.qParam]
   congr 2
   have : (p : ℂ) ≠ 0 := by exact_mod_cast hp.ne_zero
@@ -157,7 +158,8 @@ theorem scale (k : ℕ) (g : Newform k) (p : ℕ) (hp : p.Prime) (z : ℍ) :
     exact hx ⟨n, rfl⟩
   refine (hinj.hasSum_iff hz).mp ?_
   convert h0 using 1
-  congr 1
+  funext n
+  simp only [Function.comp_apply, dvd_mul_right, if_true, Nat.mul_div_cancel_left _ hp.pos]
   rw [pow_mul, Function.Periodic.qParam, Function.Periodic.qParam, ← Complex.exp_nat_mul]
   congr 2
   push_cast

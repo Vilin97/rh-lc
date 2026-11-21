@@ -64,7 +64,7 @@ theorem hypotheses_hold (D : D7) (n k : ℕ) (s₁ : ℂ) : ∃ (H : G D n → �
 
 theorem summable_of_rank (A : HSp D) (τ : ℝ) (hτ : (A.rank : ℝ) / 2 < τ) : Summable fun q =>
     ((term (P D A.rank) (GF D A.rank) (iwAbs modP (K D A.rank)) 1 q : ℝ≥0) : ℝ) ^ (τ + (A.rank : ℝ) / 2) := by
-  obtain ⟨μ, hμ, hconj⟩ := ConjElt.exists_isConj D
+  obtain ⟨μ, hμ, hconj⟩ := GlobalTheory.StdUnn.ConjElt.exists_isConj D
   obtain ⟨κ, hκ⟩ := chart_exists D A μ hμ
   obtain ⟨a, ha⟩ := exists_isMaj A
   obtain ⟨p, hp⟩ := hconj A a ha κ hκ

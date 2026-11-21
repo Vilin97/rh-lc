@@ -90,7 +90,7 @@ theorem exists_linear_of_multiadditive : ∀ (k : Type) [CommRing k] (X : Scheme
       rw [Function.update_comp_equiv, Equiv.symm_swap, Equiv.swap_apply_right]
     rw [key, key, key]
     exact h0 _ x y
-  let Mlt : MultilinearMap ℤ (fun _ : Fin (d + 1) => HermLB.IsomClass p) ℝ :=
+  let Mlt : MultilinearMap (RingHom.id ℤ) (fun _ : Fin (d + 1) => HermLB.IsomClass p) ℝ :=
     { toFun := G'
       map_update_add' := by
         intro inst m i x y
@@ -135,8 +135,8 @@ theorem exists_linear_of_multiadditive : ∀ (k : Type) [CommRing k] (X : Scheme
       rw [Finset.prod_univ_sum, Fintype.piFinset_univ, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [Finset.prod_mul_distrib, ← map_prod, prod_X_eq, C_mul', map_smul, hΦ, hφ, smul_eq_mul]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [P.as_sum, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [P.as_sum, map_sum]
     refine Finset.sum_eq_zero fun s hs => ?_
     have hm : monomial s (AddMonoidAlgebra.coeff P s) = AddMonoidAlgebra.coeff P s • monomial s (1 : ℝ) := by rw [smul_monomial, smul_eq_mul, mul_one]
     rw [hm, map_smul, hΦ, smul_eq_mul]

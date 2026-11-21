@@ -229,9 +229,10 @@ theorem charP_residueField_of_irreducible {l : ℕ} [Fact l.Prime] (LL : FinExt 
   have hl : l.Prime := Fact.out
   have : Algebra.IsIntegral ℤ_[l] ↥(OL LL) := ⟨fun x => integralClosure.isIntegral x⟩
   rw [CharP.charP_iff_prime_eq_zero hl, ← map_natCast (IsLocalRing.residue ↥(OL LL)), IsLocalRing.residue_eq_zero_iff]
-  have hmax := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := ℤ_[l]) (IsLocalRing.maximalIdeal ↥(OL LL))
+  have hmax := Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := ℤ_[l]) (IsLocalRing.maximalIdeal ↥(OL LL))
   have heq := IsLocalRing.eq_maximalIdeal hmax
   have hmem : (l : ℤ_[l]) ∈ (IsLocalRing.maximalIdeal ↥(OL LL)).comap (algebraMap ℤ_[l] ↥(OL LL)) := by
+    change (l : ℤ_[l]) ∈ (IsLocalRing.maximalIdeal ↥(OL LL)).under ℤ_[l]
     rw [heq, PadicInt.maximalIdeal_eq_span_p]
     exact Ideal.mem_span_singleton_self _
   simpa using hmem

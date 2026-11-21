@@ -400,27 +400,27 @@ structure CopyTw (D D' : D7) (ι : D.what₂.LL →+* D'.what₂.LL) (e : ↥D'.
 
 namespace CopyTw
 
-theorem refl (D : D7) : CopyTw D D (RingHom.id _) (RingEquiv.refl _) where
-  toSameExport := GlobalTheory.TwistChoice.SameExport.refl D
-  sp := HEq.rfl
-  Tau := rfl
-  eTau := HEq.rfl
-  hc := HEq.rfl
-  embLL _ := rfl
-  LL0 _ := rfl
-  emb0 _ _ h _ := by cases h; rfl
-  emb0b _ _ h _ := by cases h; rfl
-  inW1 _ _ h := by cases h; rfl
-  delta := HEq.rfl
-  B := HEq.rfl
-  acgB := HEq.rfl
-  modB := HEq.rfl
-  Theta := HEq.rfl
-  hk := HEq.rfl
-  Bsup := HEq.rfl
-  embB := HEq.rfl
-  thU := HEq.rfl
-  delU := HEq.rfl
+theorem refl (D : D7) : CopyTw D D (RingHom.id _) (RingEquiv.refl _) :=
+  { GlobalTheory.TwistChoice.SameExport.refl D with
+    sp := HEq.rfl
+    Tau := rfl
+    eTau := HEq.rfl
+    hc := HEq.rfl
+    embLL _ := rfl
+    LL0 _ := rfl
+    emb0 _ _ h _ := by cases h; rfl
+    emb0b _ _ h _ := by cases h; rfl
+    inW1 _ _ h := by cases h; rfl
+    delta := HEq.rfl
+    B := HEq.rfl
+    acgB := HEq.rfl
+    modB := HEq.rfl
+    Theta := HEq.rfl
+    hk := HEq.rfl
+    Bsup := HEq.rfl
+    embB := HEq.rfl
+    thU := HEq.rfl
+    delU := HEq.rfl }
 
 variable {D D' : D7} {ι : D.what₂.LL →+* D'.what₂.LL} {e : ↥D'.LL0 ≃+* ↥D.LL0} (h : CopyTw D D' ι e)
 include h

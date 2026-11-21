@@ -115,7 +115,7 @@ theorem evc_mu_symm {P : LB (A ⊗ A).left} (hP : P.IsLB) (hPs : LBIso P (P.pull
       Category.comp_id, comp_pow, Category.comp_id, powR, powL]
   have lx : la ≫ x = la ≫ mu := by
     apply hQ'.eq_of_evc
-    rw [evc_swap hQl hs, evc_swap hQl hs, key]
+    simpa only [evc_swap hQl hs] using key _ (fst B A) (snd B A)
   have xd : x ^ d = mu ^ d := by
     have e₁ : (𝟙 B ^ d) ≫ x = x ^ d := by rw [MonObj.pow_comp, Category.id_comp]
     have e₂ : (𝟙 B ^ d) ≫ mu = mu ^ d := by rw [MonObj.pow_comp, Category.id_comp]

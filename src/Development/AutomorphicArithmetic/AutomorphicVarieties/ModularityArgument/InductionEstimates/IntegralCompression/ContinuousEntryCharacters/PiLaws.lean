@@ -70,11 +70,12 @@ private theorem int_κ {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] (f
     ∫ k, f k ∂C.κ₂ = ∫ m, f ((C.Φ 2).symm m) ∂(Measure.pi fun _ : ι => μK) :=
   (C.Φ 2).symm.toHomeomorph.measurableEmbedding.integral_map f
 
-private theorem idemA (n : ι → ℕ) (q : ι → ℤ) : IdemA C.κ₂ (C.p n q) where
-  haar := (coLaws K ι C).1
-  cont := continuous_finset_prod _ fun i _ => (T_cont _ _).comp ((continuous_apply i).comp (C.Φ 2).continuous)
-  star k := by simp only [Co.p, map_inv, Pi.inv_apply, T_inv, map_prod]
-  idem k := by
+private theorem idemA (n : ι → ℕ) (q : ι → ℤ) : IdemA C.κ₂ (C.p n q) := by
+  refine { haar := (coLaws K ι C).1, cont := ?_, star := ?_, idem := ?_ }
+  · exact continuous_finsetProd _ fun i _ => (T_cont _ _).comp ((continuous_apply i).comp (C.Φ 2).continuous)
+  · intro k
+    simp only [Co.p, map_inv, Pi.inv_apply, T_inv, map_prod]
+  · intro k
     rw [int_κ]
     have e : ∀ m : ι → U2, C.p n q ((C.Φ 2).symm m) * C.p n q (((C.Φ 2).symm m)⁻¹ * k) =
         ∏ i, (T (n i) (q i) (m i) * T (n i) (q i) ((m i)⁻¹ * C.Φ 2 k i)) := by
@@ -193,7 +194,7 @@ private theorem cS_cont (S : Finset ι) : Continuous (cS C S) :=
     · simpa [Finset.piecewise, hi] using continuous_const)
 
 private theorem wS_cont (S : Finset ι) (v : H) : Continuous (wS C ρ n q S v) :=
-  (continuous_finset_prod _ fun i _ => (T_cont _ _).comp (continuous_apply i)).smul
+  (continuous_finsetProd _ fun i _ => (T_cont _ _).comp (continuous_apply i)).smul
     ((ρ.continuous_orbit v).comp (continuous_arch_compact_inclusion.comp (cS_cont C S)))
 
 private noncomputable def AS (S : Finset ι) (v : H) : H := ∫ m, wS C ρ n q S v m ∂(Measure.pi fun _ : ι => μK)

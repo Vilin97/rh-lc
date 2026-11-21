@@ -43,17 +43,18 @@ theorem grpAt_up {Z : w.Lt} (S' : SStage B w.C Z.W) (N : ∀ u, Submodule (𝓞 
 
 set_option maxHeartbeats 1000000 in
 theorem muIsW_up {Z : w.Lt} {Wt : Set B.places.Pl} (S' : SStage B w.C Z.W) (N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V)
-    (h : B.Word → ℝ) (x : V4.MuIsW (w.st Z) f T Wt w.I.xi) : V4.MuIsW (w.st (SRe.upL Z S' N h)) f T Wt w.I.xi where
-  inj := (by with_unfolding_all exact (x.inj :))
-  range := (by with_unfolding_all exact (x.range :))
-  mu0 := (by with_unfolding_all exact (x.mu0 :))
-  star := (by with_unfolding_all exact (x.star :))
-  star' := (by with_unfolding_all exact (x.star' :))
-  tw := (by with_unfolding_all exact (x.tw :))
-  on := (by with_unfolding_all exact (x.on :))
-  off := (by with_unfolding_all exact (x.off :))
-  sub := (by with_unfolding_all exact (x.sub :))
-  supp := (by with_unfolding_all exact (x.supp :))
+    (h : B.Word → ℝ) (x : V4.MuIsW (w.st Z) f T Wt w.I.xi) : V4.MuIsW (w.st (SRe.upL Z S' N h)) f T Wt w.I.xi := by
+  exact
+    { inj := by with_unfolding_all exact (x.inj :)
+      range := by with_unfolding_all exact (x.range :)
+      mu0 := by with_unfolding_all exact (x.mu0 :)
+      star := by with_unfolding_all exact (x.star :)
+      star' := by with_unfolding_all exact (x.star' :)
+      tw := by with_unfolding_all exact (x.tw :)
+      on := by with_unfolding_all exact (x.on :)
+      off := by with_unfolding_all exact (x.off :)
+      sub := by with_unfolding_all exact (x.sub :)
+      supp := by with_unfolding_all exact (x.supp :) }
 
 
 set_option maxHeartbeats 1000000 in

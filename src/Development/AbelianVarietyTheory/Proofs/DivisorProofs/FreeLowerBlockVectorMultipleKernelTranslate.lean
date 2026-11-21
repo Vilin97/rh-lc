@@ -617,7 +617,9 @@ theorem val_eq_of_notMem_sq {K : Type} [Field K] [NumberField K] {P : HeightOneS
 theorem prime_absNorm {Q : Finset (Pl D.host.E)} (hQ : IsTwistPlaces D.host.g Q) {PP : Pl D.host.E} (h : PP ∈ Q) :
     (Ideal.absNorm PP.asIdeal).Prime ∧ ((Ideal.absNorm PP.asIdeal : ℕ) : 𝓞 D.host.E) ∉ PP.asIdeal ^ 2 := by
   obtain ⟨⟨q, hq, hc, hn, -⟩, -⟩ := hQ PP h
-  have e : Ideal.absNorm PP.asIdeal = q := hc
+  have e : Ideal.absNorm PP.asIdeal = q := by
+    rw [Ideal.absNorm_eq_natCard]
+    exact hc
   rw [e]
   exact ⟨hq, hn⟩
 
@@ -640,7 +642,7 @@ theorem exists_unif {Q : Finset (Pl D.host.E)} (hQ : IsTwistPlaces D.host.g Q) :
 
 theorem inv_natPow_rpow_neg_half_even_eq_pow {ι : Type} (s : Finset ι) (q : ι → ℕ) (o : ι → ℤ) (t r : ℕ) (ho : ∀ i ∈ s, o i = t) :
     (∏ i ∈ s, (q i : ℝ) ^ (-o i)) ^ ((r : ℝ) / 2) = ∏ i ∈ s, ((Real.sqrt (q i))⁻¹ ^ r) ^ t := by
-  rw [← Real.finset_prod_rpow _ _ fun i _ => zpow_nonneg (Nat.cast_nonneg _) _]
+  rw [← Real.finsetProd_rpow _ _ (fun i _ => zpow_nonneg (Nat.cast_nonneg _) _) _]
   refine Finset.prod_congr rfl fun i hi => ?_
   rw [ho i hi, Real.sqrt_eq_rpow, ← Real.rpow_neg (Nat.cast_nonneg _), ← Real.rpow_intCast, ← Real.rpow_natCast,
     ← Real.rpow_natCast, ← Real.rpow_mul (Nat.cast_nonneg _), ← Real.rpow_mul (Nat.cast_nonneg _),

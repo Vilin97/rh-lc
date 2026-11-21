@@ -28,7 +28,7 @@ theorem exists_isPullback_pow {S S' : Scheme.{0}} (g : S' ⟶ S) (G : Over S) (A
       simp only [Over.mk_hom, Category.assoc]
       rw [h.w, ← Category.assoc, Over.w])
   have hψ : ∀ k, ψ.left ≫ pr G N k = (q k).left ≫ φ₀ := fun k => by
-    have : ψ ≫ Pi.π (fun _ => G) k = _ := Pi.lift_π _ k
+    have : ψ ≫ Pi.π (fun _ => G) k = _ := Pi.lift_comp_π _ k
     exact congrArg (fun t => Over.Hom.left t) this
   have hw : ψ.left ≫ (pow G N).hom = B.hom ≫ g := Over.w ψ
   have hpr : ∀ k, pr G N k ≫ G.hom = (pow G N).hom := fun k => Over.w (Pi.π (fun _ => G) k)

@@ -55,14 +55,16 @@ theorem isMonHom_of_coords {X : Over S} [MonObj X] (f : X ⟶ Zob A B)
     (fun j => by
       haveI := hb j
       rw [Category.assoc, IsMonHom.one_hom (f := f ≫ pb A B j), IsMonHom.one_hom (f := pb A B j)])
-  mul_hom := zob_ext A B (fun i => by
-      haveI := ha i
-      rw [Category.assoc, IsMonHom.mul_hom (f := f ≫ pa A B i), Category.assoc,
-        IsMonHom.mul_hom (f := pa A B i), ← Category.assoc, tensorHom_comp_tensorHom])
-    (fun j => by
-      haveI := hb j
-      rw [Category.assoc, IsMonHom.mul_hom (f := f ≫ pb A B j), Category.assoc,
-        IsMonHom.mul_hom (f := pb A B j), ← Category.assoc, tensorHom_comp_tensorHom])
+  mul_hom := by
+    apply zob_ext A B
+    · intro i
+      have := ha i
+      simp only [Category.assoc, IsMonHom.mul_hom (f := f ≫ pa A B i),
+        IsMonHom.mul_hom (f := pa A B i), MonoidalCategory.tensorHom_comp_tensorHom_assoc]
+    · intro j
+      have := hb j
+      simp only [Category.assoc, IsMonHom.mul_hom (f := f ≫ pb A B j),
+        IsMonHom.mul_hom (f := pb A B j), MonoidalCategory.tensorHom_comp_tensorHom_assoc]
 
 theorem isMonHom_incZ : IsMonHom (incZ A B) := by
   apply isMonHom_of_coords

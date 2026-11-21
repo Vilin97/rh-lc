@@ -45,24 +45,24 @@ structure TwLev (R : RealDat D A Ks) (χ : Formalism.L2.Host.HChar D.host.E) (xi
   guard : ∀ PP ∈ Q, ((D.host.QS * D.host.q * Ideal.absNorm D.host.ccK : ℕ) : 𝓞 D.host.E) ∉ PP.asIdeal
 
 theorem twLev_of_core {R : RealDat D A Ks} {F : Face D A} (hC : GlobalTheory.Hk3.Core R F) (hG : QGuard R) (t : T0) :
-    TwLev R (R.xiH t) (R.xi t) (R.Q t) (R.xiR t) where
-  xi := hC.lev.xi t
-  xi_fin := hC.lev.xi_fin t
-  xi_triv := hC.lev.xi_triv t
-  xi_tame := hC.lev.xi_tame t
-  Q_pl := hC.lev.Q_pl t
-  Q_off := hC.lev.Q_off t
-  Q_de p hp := by
-    obtain ⟨𝔭, h𝔭⟩ := hC.lev.Q_de p hp
-    exact ⟨𝔭, h𝔭, h𝔭 t⟩
-  Q_ram := hC.lev.Q_ram t
-  xiR := hC.lev.xiR t
-  roots PP hPP := hC.fam.roots t PP (Or.inr hPP)
-  muVal i P hP := by
-    obtain ⟨g, c0R, c0L, ht⟩ := hC.fam.tie
-    exact ⟨A.muVal i t P, hC.fam.muVal i t P ((ht.ok t P).2 hP)⟩
-  half := hG.1 t
-  guard := hG.2 t
+    TwLev R (R.xiH t) (R.xi t) (R.Q t) (R.xiR t) :=
+  { xi := hC.lev.xi t
+    xi_fin := hC.lev.xi_fin t
+    xi_triv := hC.lev.xi_triv t
+    xi_tame := hC.lev.xi_tame t
+    Q_pl := hC.lev.Q_pl t
+    Q_off := hC.lev.Q_off t
+    Q_de := fun p hp => by
+      obtain ⟨𝔭, h𝔭⟩ := hC.lev.Q_de p hp
+      exact ⟨𝔭, h𝔭, h𝔭 t⟩
+    Q_ram := hC.lev.Q_ram t
+    xiR := hC.lev.xiR t
+    roots := fun PP hPP => hC.fam.roots t PP (Or.inr hPP)
+    muVal := fun i P hP => by
+      obtain ⟨g, c0R, c0L, ht⟩ := hC.fam.tie
+      exact ⟨A.muVal i t P, hC.fam.muVal i t P ((ht.ok t P).2 hP)⟩
+    half := hG.1 t
+    guard := hG.2 t }
 
 end Lev
 

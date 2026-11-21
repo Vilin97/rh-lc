@@ -155,6 +155,7 @@ namespace GlobalTheory.CompanionTheory.Ar.Flat.Cmp
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} {l : Level H}
   {Xo : Moduli D l} {c : Coeff l}
 
+open GlobalTheory.CompanionTheory.Ar.GlobalTheory.CompanionTheory.Ar (dualMap) in
 def vecAt {S : Scheme.{0}} {G : Over S} {R R' : Type} [CommRing R] [CommRing R'] (χ : R →+* R') {x : Sp R ⟶ S}
     {y : Sp R' ⟶ S} (e : spMap χ ≫ x = y) (v : epsAt x ⟶ G) : epsAt y ⟶ G :=
   Over.homMk (spMap (dualMap χ) ≫ v.left) (by
@@ -190,7 +191,8 @@ theorem ext_frames {Y : Model Xo c β} {U : Set (Xo.XF c)} (Z : CptOver Y U) {τ
     ∀ (y : Sp ℂ ⟶ Xo.XF c) (v : Vecs y D.p) (w : Vecs y D.q), IsFramed U τ σ y v w → φ ℂ y v w = κ₀ * Φ y v w := by
   intro y₀ v₀ w₀ hf
   obtain ⟨U', hU', hdom⟩ := GlobalTheory.T.component_open_stalks_domain _ H D l Xo c O β Y U Z hO
-  obtain ⟨V₀, hV₀, c₁, c₂, vR, wR, hy₀, l₁, s₁, l₂, s₂, hfr⟩ := GlobalTheory.T.component_point_value_holomorphic _ H D l Xo c O β Y U Z τ σ y₀ hO hτ hf.1 hf.2.1
+  have hframes := LocFrames.exists_local_eigenframes _ H D l Xo c O β Y U Z τ σ y₀ hO hτ hf.1 hf.2.1
+  obtain ⟨V₀, hV₀, c₁, c₂, vR, wR, hy₀, l₁, s₁, l₂, s₂, hfr⟩ := hframes
   obtain ⟨α, hα⟩ := ha c₁ l₁ s₁
   obtain ⟨κ', hκ'⟩ := hb c₂ l₂ s₂
   have eU : ∀ χ : Γ(Xo.XF c, V₀) →+* ℂ, spMap χ ≫ under hV₀.fromSpec = under (spMap χ ≫ hV₀.fromSpec) :=

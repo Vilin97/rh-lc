@@ -18,7 +18,7 @@ namespace GlobalTheory.FlagPush
 theorem exists_isPull : ∀ (Z V : Scheme.{0}) [IsIntegral Z] [IsIntegral V] (q : Z ⟶ V) [IsDominant q]
     (E : CartierDiv V), ∃ D : CartierDiv Z, IsPull q D E := by
   intro Z V _ _ q _ E
-  obtain ⟨D, -, hD⟩ := exists_pullback_cartierDiv V Z q E
+  obtain ⟨D, -, hD⟩ := GlobalTheory.Cartier.exists_pullback_cartierDiv V Z q E
   exact ⟨D, fun y b hb x hx => hD x b (hx ▸ hb)⟩
 
 end GlobalTheory.FlagPush

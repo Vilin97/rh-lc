@@ -125,7 +125,7 @@ theorem summable_of_isoPlane (hKP : GlobalTheory.ThK.KP) (F E : Type) [Field F] 
   obtain ⟨C, hC0, hC⟩ := GlobalTheory.T.eigen_intertwiner_double_restriction hKP F E σ B n d d₁ X W W₁ M M₁ H' i₀ i₁ hH' hM₁ e₀ he₀ n₁ X₁ H j₀ j₁ M₂ hH hM₂ e he
   obtain ⟨μ, 𝓕, hμ, h𝓕, h1⟩ := GlobalTheory.T.unipotent_quotient_unit_volume F E σ B hP.base d d₁ W W₁ H' hP.skew.skew hiso
   have hS := (GlobalTheory.T.eigen_intertwiner_restriction_character hKP F E σ B n d d₁ X W W₁ M M₁ H' i₀ i₁ hH' hM₁ e₀ he₀ χX χW om r s r' s' hP μ 𝓕 hμ h𝓕 h1 Ψ hΨ).1
-  have hS' := (hS.subtype {x : Fin n → E | x ≠ 0 ∧ form σ X.J x x = 0}).mul_left C⁻¹
+  have hS' := (hS.subtype (fun x : Fin n → E => x ≠ 0 ∧ form σ X.J x x = 0)).mul_left C⁻¹
   refine hS'.congr fun x => ?_
   simp only [Function.comp_apply]
   rw [hC χX χW om r s r' s' hP μ 𝓕 hμ h𝓕 h1 Ψ hΨ x.1 x.2.1 x.2.2 (γ x) (hγ x).1 (hγ x).2, ← mul_assoc, inv_mul_cancel₀ hC0, one_mul]

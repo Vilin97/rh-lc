@@ -57,8 +57,8 @@ private theorem pullback_mulSecOfEq (hL : L.IsLB) (G : X.Modules) {n m k : ℤ} 
     rw [Iso.inv_comp_eq, ← Category.assoc, Iso.eq_comp_inv]
     exact e
   rw [e', ← Category.assoc, ← Category.assoc]
-  congr 1
-  exact (mulSecOfEq_naturality σ h _).symm
+  exact congrArg (fun a => a ≫ (projZIso f hL ((Scheme.Modules.pullback f).obj G) k).inv)
+    (mulSecOfEq_naturality σ h ((Scheme.Modules.pullbackPushforwardAdjunction f).unit.app G)).symm
 
 end CutPull
 

@@ -98,7 +98,11 @@ theorem jointSm_der (H : IsLieData σ j s) (Y : L) {Ψ : ℝ → G → ℂ} (hΨ
   convert contDiff_deriv_param hK using 1
   congr 1
   funext r
-  rw [mul_assoc, H.mul _ _ (hu _) (DerLinear.exp_unitary H _)]
+  change deriv (fun t => Ψ r.1 ((g * s (c r.2)) * expMap j s (t • Y))) 0 = _
+  congr 1
+  funext t
+  change Ψ r.1 ((g * s (c r.2)) * s (NormedSpace.exp (j (t • Y)))) = _
+  rw [H.mul _ _ (hu _) (DerLinear.exp_unitary H _), mul_assoc]
 
 theorem hasDerivAt_der (H : IsLieData σ j s) (Y : L) {Ψ Ψ' : ℝ → G → ℂ} (hΨ : JointSm σ s Ψ)
     (hd : ∀ t x, HasDerivAt (fun t => Ψ t x) (Ψ' t x) t) (t : ℝ) (x : G) :

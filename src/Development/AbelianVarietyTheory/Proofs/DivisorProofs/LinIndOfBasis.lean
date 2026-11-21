@@ -110,12 +110,12 @@ theorem exists_reading (P : ClassPres ι S σ ρ J χ) {C M : Type} [Field C] [A
     exact h3
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [hrd, hA, dcOp, map_sum, map_sum]
-    refine Finset.sum_congr rfl fun s hs' => ?_
-    have e : Λ s⁻¹ = 1 := by
-      have := map_mul Λ s⁻¹ s
-      rw [h1 s hs', mul_one, inv_mul_cancel, map_one] at this
-      exact this.symm
-    rw [hrd, mul_inv_rev, map_mul, e, one_mul]
+      refine Finset.sum_congr rfl fun s hs' => ?_
+      have e : Λ s⁻¹ = 1 := by
+        have := map_mul Λ s⁻¹ s
+        rw [h1 s hs', mul_one, inv_mul_cancel, map_one] at this
+        exact this.symm
+      rw [hrd, mul_inv_rev, map_mul, e, one_mul]
   · rw [hrd, P.ext_rep]
 
 end GlobalTheory.FrameRead

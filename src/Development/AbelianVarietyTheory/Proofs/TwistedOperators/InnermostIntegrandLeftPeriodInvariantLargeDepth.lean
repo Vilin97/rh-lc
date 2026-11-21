@@ -196,9 +196,12 @@ theorem jPer_congr_window (M : GlobalTheory.FunObj.Vol G) (t : T) (C C' : BiFam 
     · have hCj : C j = C' j := hC j he (by omega) (by omega)
       simp only [jPer]
       rw [← hCj]
-      refine jPer_congr_window M t C C' F k hk4 hC hpres hwin σ (j + 1 + 1) _ _ ?_ hk ?_ (hpres j he hlt φ hφ)
-      · obtain ⟨a, ha⟩ := he; exact ⟨a + 1, by omega⟩
-      · obtain ⟨a, ha⟩ := he; obtain ⟨b, hb⟩ := hk; omega
+      have hle : j + 1 + 1 ≤ k := by
+        obtain ⟨a, ha⟩ := he
+        obtain ⟨b, hb⟩ := hk
+        omega
+      exact jPer_congr_window M t C C' F k hk4 hC hpres hwin σ (j + 1 + 1) _ _
+        he.add_one.add_one hk hle (hpres j he hlt φ hφ)
     · have hj2 : j + 2 * (σ + 1) + 2 = D.R.m := by simpa using hj
       obtain rfl : j = k := by omega
       rcases σ with _ | σ'

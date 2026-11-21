@@ -86,7 +86,7 @@ theorem periodRel_of_adj : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing
   · obtain ⟨g', ha, hg'⟩ := hφ y _ (GlobalTheory.TorusExt.isIota_iota hB y)
     have h1 := ha.1
     rw [hg'.1, (GlobalTheory.TorusExt.isIota_iota hB y).1] at h1
-    rw [← hφk]
+    rw [← hφk y]
     refine GlobalTheory.Mum.Two.Fac.pt_ext R D₀.toPre Ω _ _ ?_
     simpa only [Category.assoc] using h1
   · obtain ⟨u, hu, -⟩ := C χ

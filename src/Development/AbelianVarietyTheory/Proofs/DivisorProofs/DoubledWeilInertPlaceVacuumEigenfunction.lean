@@ -218,6 +218,7 @@ theorem dbl_line {σ : E →ₐ[F] E} {n d : ℕ} {X : Spc F E n} {Y : Spc F E d
     intro γ₁ h₁ γ₂ h₂
     have e₁ := hvac γ₁ h₁ R hR
     have e₂ := hvac γ₂ h₂ R hR
+    simp only [cA, incM] at e₁ e₂
     rw [GlobalTheory.VacTransport.tens_smul] at e₁ e₂
     simp only [Darboux.rho] at e₁ e₂
     rw [Darboux.rho, hdd, hΦ, GlobalTheory.InertDbl.dblFun, schr_box ψ hn, e₁, e₂]
@@ -236,8 +237,10 @@ theorem dbl_line {σ : E →ₐ[F] E} {n d : ℕ} {X : Spc F E n} {Y : Spc F E d
       rw [← he, Matrix.mul_assoc, ← Matrix.transpose_mul, e, Matrix.transpose_one, Matrix.mul_one]
     have hsy : cf (Matrix.fromCols δ₁ δ₂) = cf (Matrix.fromCols γ₁ γ₂) := by
       simp only [cf]
+      change ψ (⅟(2 : AF F) * symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (inclR (AF F) (θ : E)) (incM F X.J) (dbl (incM F Y.J)) _ _) = ψ (⅟(2 : AF F) * symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (inclR (AF F) (θ : E)) (incM F X.J) (dbl (incM F Y.J)) _ _)
       rw [← he, GlobalTheory.VacTransport.symp_mul_transpose (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) _ _ _ (GlobalTheory.InertDbl.matD g⁻¹) (g⁻¹).2]
     have h := hS.impl g (Matrix.fromCols δ₁ δ₂) Φ hΦs
+    simp only [actB] at hback h
     rw [hback, h1 δ₁ k₁ δ₂ k₂, map_smul, hsy] at h
     exact h.symm
 

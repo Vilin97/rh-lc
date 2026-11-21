@@ -134,11 +134,14 @@ def loc (i : ℕ) (hi : i + 1 ≤ D.R.m) : LocIn X0 u w hg (Z.lv Fl ht) i (Z.Fo 
       (fun i hi => (Z.Fo i hi).Ch) (fun i hi β => (Z.S i hi).chart β) i hi β)
     (Z.S i hi).B
 
-theorem loc_Uloc (i : ℕ) (hi : i + 1 ≤ D.R.m) : (Z.loc Fl ht i hi).Uloc = fun β => ulocOf (Z.Fo i hi) β := rfl
+theorem loc_Uloc (i : ℕ) (hi : i + 1 ≤ D.R.m) : (Z.loc Fl ht i hi).Uloc = fun β => ulocOf (Z.Fo i hi) β := by
+  set_option backward.isDefEq.respectTransparency false in
+    rfl
 
 theorem frRat (i : ℕ) (hi : i + 1 ≤ D.R.m) (β : (Z.Fo i hi).Ch) : FrRatJ ((Z.loc Fl ht i hi).t β) (Z.loc Fl ht i hi).B := by
-  intro w' h
-  rfl
+  set_option backward.isDefEq.respectTransparency false in
+    intro w' h
+    rfl
 
 theorem sameU (i : ℕ) (hi : i + 1 ≤ D.R.m) (β : (Z.Fo i hi).Ch) :
     SameUlocJ hi ((Z.Fo i hi).K β).lev ((Z.loc Fl ht i hi).Uloc β) := by
@@ -270,12 +273,13 @@ theorem formsInMem_mid (F : FormsTiedSym D u Ch chOf) (dt : MemDt F) (i : ℕ) (
 
 theorem formsInMem_fin [∀ i, Finite (Ch i)] (F : FormsTiedSym D u Ch chOf) (dt : MemDt F) (i : ℕ) (hi : i + 1 ≤ D.R.m) :
     Finite (formsInMem F dt i hi).Ch := by
-  by_cases h : i + 1 = D.R.m
-  · rw [formsInMem_top F dt i hi h]
-    exact (inferInstance : Finite Unit)
-  · have h' : i + 1 + 1 ≤ D.R.m := by omega
-    rw [formsInMem_mid F dt i hi h']
-    exact (inferInstance : Finite (Ch (i + 1)))
+  set_option backward.isDefEq.respectTransparency false in
+    by_cases h : i + 1 = D.R.m
+    · rw [formsInMem_top F dt i hi h]
+      exact (inferInstance : Finite Unit)
+    · have h' : i + 1 + 1 ≤ D.R.m := by omega
+      rw [formsInMem_mid F dt i hi h']
+      exact (inferInstance : Finite (Ch (i + 1)))
 
 end Mem2
 
@@ -475,21 +479,23 @@ section Rec
 
 theorem formsInMem_bad {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i} (F : FormsTiedSym D u Ch chOf)
     (dt : MemDt F) (i : ℕ) (hi : i + 1 ≤ D.R.m) : (formsInMem F dt i hi).bad = badG D := by
-  by_cases h : i + 1 = D.R.m
-  · rw [formsInMem_top F dt i hi h]
-    try rfl
-  · have h' : i + 1 + 1 ≤ D.R.m := by omega
-    rw [formsInMem_mid F dt i hi h']
-    try rfl
+  set_option backward.isDefEq.respectTransparency false in
+    by_cases h : i + 1 = D.R.m
+    · rw [formsInMem_top F dt i hi h]
+      try rfl
+    · have h' : i + 1 + 1 ≤ D.R.m := by omega
+      rw [formsInMem_mid F dt i hi h']
+      try rfl
 
 theorem formsInMem_ok {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i} (F : FormsTiedSym D u Ch chOf)
     (dt : MemDt F) (i : ℕ) (hi : i + 1 ≤ D.R.m) (w : D.what₂.places.Pl) : (formsInMem F dt i hi).okW w := by
-  by_cases h : i + 1 = D.R.m
-  · rw [formsInMem_top F dt i hi h]
-    exact trivial
-  · have h' : i + 1 + 1 ≤ D.R.m := by omega
-    rw [formsInMem_mid F dt i hi h']
-    exact trivial
+  set_option backward.isDefEq.respectTransparency false in
+    by_cases h : i + 1 = D.R.m
+    · rw [formsInMem_top F dt i hi h]
+      exact trivial
+    · have h' : i + 1 + 1 ≤ D.R.m := by omega
+      rw [formsInMem_mid F dt i hi h']
+      exact trivial
 
 variable {L : SizeData₂ D} {hT : GatTies D} {Gi : G.Inst D L} {Gl : G.LatInst D} {Kc : G.Consts} {Dx : DivX D} {cX : ExtraC}
   {ex : Extra D L hT Gi Gl Kc Dx cX}

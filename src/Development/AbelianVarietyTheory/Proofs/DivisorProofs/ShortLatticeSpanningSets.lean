@@ -100,8 +100,8 @@ theorem lrd_bounds (K : Type) [Field K] [NumberField K] : 0 ≤ lrd K ∧ lrd K 
     rw [← Int.cast_abs]; exact_mod_cast h
   have hdpos : (0 : ℝ) < |(discr K : ℝ)| := lt_of_lt_of_le one_pos hd
   have e : lrd K = Real.log |(discr K : ℝ)| / (Module.finrank ℚ K : ℝ) := by
-    unfold lrd NumberField.rootDiscr
-    rw [Int.cast_abs, Real.log_rpow hdpos]
+    unfold lrd
+    rw [NumberField.rootDiscr_def, Int.cast_abs, Real.log_rpow hdpos]
     ring
   refine ⟨?_, ?_⟩
   · rw [e]; exact div_nonneg (Real.log_nonneg hd) (Nat.cast_nonneg _)

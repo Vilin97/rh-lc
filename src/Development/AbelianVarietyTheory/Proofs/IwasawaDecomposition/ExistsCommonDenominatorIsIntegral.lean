@@ -5,7 +5,7 @@ public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.MonoS
 
 @[expose] public section
 
-open ReciprocityTheory.ChartRestriction.G.FD NumberField GlobalTheory.UnipKill
+open ReciprocityTheory.ChartRestriction.G.FD NumberField
 
 namespace GlobalTheory
 

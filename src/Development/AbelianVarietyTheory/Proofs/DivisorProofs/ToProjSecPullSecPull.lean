@@ -85,7 +85,7 @@ theorem fib : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R], Base R �
     letI := io'.toAlgebra
     have : Algebra.IsIntegral W W' := ⟨fun a => hiof.to_isIntegral a⟩
     exact PrimeSpectrum.ext (IsLocalRing.eq_maximalIdeal
-      (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal W')))
+      (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) hiof.to_isIntegral (maximalIdeal W')))
   have hres0 : (spMap (residue W')) (closedPoint (ResidueField W')) = closedPoint W' :=
     IsLocalRing.comap_closedPoint (residue W')
   have hpt0 : (spMap (residue W') ≫ spMap io' ≫ ξ) (closedPoint (ResidueField W')) = x (closedPoint Ω) := by

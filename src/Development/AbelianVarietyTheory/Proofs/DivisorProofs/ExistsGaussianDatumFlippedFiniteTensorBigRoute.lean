@@ -64,14 +64,26 @@ theorem schr_slice (co : Darboux B κ) (ψ : AddChar (AF F) ℂ) {v : HeightOneS
   conv_rhs => rw [← h]
   simp only [Darboux.rho, schr]
   congr 1
-  · have hat : At (evFin F v) ((y + fun k => liftV v (ξ k)) ⬝ᵥ (co.e γ).2 + ⅟(2 : AF F) * ((co.e γ).1 ⬝ᵥ (co.e γ).2)) :=
-      GlobalTheory.VacAny.at_add (GlobalTheory.VacAny.at_sum _ fun k _ => GlobalTheory.VacAny.at_mul_left _ (h2 k))
-        (GlobalTheory.VacAny.at_mul_left _ (GlobalTheory.VacAny.at_sum _ fun k _ => GlobalTheory.VacAny.at_mul_left _ (h2 k)))
+  · have hat : At (evFin F v) ((y + fun k => liftV v (ξ k)) ⬝ᵥ (co.e γ).2 + ⅟(2 : AF F) * ((co.e γ).1 ⬝ᵥ (co.e γ).2)) := by
+      intro u hu
+      simp only [smul_eq_mul, mul_add, dotProduct, Finset.mul_sum, ← mul_assoc]
+      have hz : ∀ a : AF F, ∀ k, u * a * (co.e γ).2 k = 0 := by
+        intro a k
+        rw [mul_right_comm, show u * (co.e γ).2 k = 0 from h2 k u hu, zero_mul]
+      have hz' : ∀ a b : AF F, ∀ k, u * a * b * (co.e γ).2 k = 0 := by
+        intro a b k
+        rw [mul_assoc u a b, hz]
+      simp only [hz', hz, Finset.sum_const_zero, add_zero]
     rw [← hl _ hat]
     refine congrArg (fun z => ψ (liftV v z)) ?_
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [dotProduct, map_add (f := _), map_sum, map_mul, GlobalTheory.VacAny.evFin_invOf_two, Pi.add_apply, hy, zero_add,
+      simp only [dotProduct, map_add (f := _), map_sum, map_mul, Pi.add_apply, hy, zero_add,
       GlobalTheory.LatVac.evFin_liftV]
+    have hi : evFin F v (⅟(2 : AF F)) = ⅟(2 : Fv F v) := by
+      refine (invOf_eq_right_inv ?_).symm
+      have hh : evFin F v (2 * ⅟(2 : AF F)) = 1 := by rw [mul_invOf_self, map_one]
+      rwa [map_mul, map_ofNat] at hh
+    rw [hi]
     rfl
   · congr 1
     funext k

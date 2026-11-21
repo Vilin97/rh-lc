@@ -20,10 +20,10 @@ namespace GlobalTheory.BCT.UnitProd
 private theorem equivalence_twisted_conj {G : Type} [Group G] (θ : G →* G) :
     Equivalence (fun x y : G => ∃ g, y = g⁻¹ * x * θ g) where
   refl x := ⟨1, by simp⟩
-  symm {x y} := by
+  symm := fun {_ _} => by
     rintro ⟨g, rfl⟩
     exact ⟨g⁻¹, by rw [map_inv]; group⟩
-  trans {x y z} := by
+  trans := fun {_ _ _} => by
     rintro ⟨g, rfl⟩ ⟨h, rfl⟩
     exact ⟨g * h, by rw [map_mul]; group⟩
 

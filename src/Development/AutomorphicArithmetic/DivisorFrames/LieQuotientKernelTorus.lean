@@ -319,6 +319,52 @@ theorem UpperTheory.lie_quotient_kernel_torus :
     change (unitSec _ ≫ _) y ∈ V
     rw [unitSec_comp hφ]
     exact y.2
-  have hd := DualExact.shortExact_dual S _ _ hS (isFrame_dlogChar S (Module.Free.chooseBasis ℤ X)).isVB
+  open GlobalTheory.QCoh GlobalTheory.DualExact GlobalTheory.Twist in
+  have shortExact_dual : ∀ (X : Scheme.{0}) (S : ShortComplex X.Modules) (s : ℕ),
+      S.ShortExact → IsVB S.X₃ s → (ShortComplex.mk (GlobalTheory.CompanionTheory.Ar.dualMap S.g) (GlobalTheory.CompanionTheory.Ar.dualMap S.f)
+        (by rw [← dualMap_comp, S.zero, dualMap_zero])).ShortExact := by
+    intro X S s hS h₃
+    have := hS.mono_f
+    have := hS.epi_g
+    have hex (W : X.Opens) (t : Γ(S.X₂, W)) (ht : S.g.app W t = 0) : ∃ u, S.f.app W u = t :=
+      (QCoh.exact_app_of_exact_of_mono hS.exact W t).1 ht
+    have hz (W : X.Opens) (u : Γ(S.X₁, W)) : S.g.app W (S.f.app W u) = 0 :=
+      (QCoh.exact_app_of_exact_of_mono hS.exact W _).2 ⟨u, rfl⟩
+    have hinj (W : X.Opens) : Function.Injective (appLinear S.f W) :=
+      QCoh.injective_app_of_mono S.f W
+    refine ShortComplex.ShortExact.mk' (DualExact.exact_of_locally _ fun V x hx => ?_)
+      (mono_dualMap S.g) (QCoh.epi_of_locally_app_surjective _ fun V x hx => ?_)
+    · obtain ⟨U, hU, hxU, σ, hσ, hg⟩ := DualExact.exists_local_section S.g h₃ hx
+      refine ⟨U, hU, hxU, fun (l : Γ(dual S.X₂, U)) (hl : (GlobalTheory.CompanionTheory.Ar.dualMap S.f).app U l = 0) =>
+        ⟨dualMk (fun W h => dualApp l h ∘ₗ σ W h) fun W W' h h' t => ?_, ?_⟩⟩
+      · rw [LinearMap.comp_apply, LinearMap.comp_apply, hσ W W' h h', dualApp_resM]
+      · refine dual_ext fun W h t => ?_
+        change dualApp l h (σ W h (S.g.app W t)) = _
+        obtain ⟨u, hu⟩ := hex W (t - σ W h (S.g.app W t)) (by rw [map_sub, hg, sub_self])
+        have := dualApp_dualMap S.f l h u
+        rw [hl, hu, map_sub, dualApp_zero, LinearMap.zero_apply, eq_comm, sub_eq_zero] at this
+        exact this.symm
+    · obtain ⟨U, hU, hxU, σ, hσ, hg⟩ := DualExact.exists_local_section S.g h₃ hx
+      let ρ (W : X.Opens) (h : W ≤ U) : Γ(S.X₂, W) →ₗ[Γ(X, W)] Γ(S.X₁, W) :=
+        LinearMap.codRestrictOfInjective (LinearMap.id - σ W h ∘ₗ appLinear S.g W)
+          (appLinear S.f W) (hinj W) fun t => hex W _ (by
+            change S.g.app W (t - σ W h (S.g.app W t)) = 0
+            rw [map_sub, hg, sub_self])
+      have hρ (W : X.Opens) (h : W ≤ U) (t : Γ(S.X₂, W)) :
+          S.f.app W (ρ W h t) = t - σ W h (S.g.app W t) :=
+        LinearMap.codRestrictOfInjective_comp_apply _ (appLinear S.f W) _ _ t
+      refine ⟨U, hxU, hU, fun (l : Γ(dual S.X₁, U)) =>
+        ⟨dualMk (fun W h => dualApp l h ∘ₗ ρ W h) fun W W' h h' t => ?_, ?_⟩⟩
+      · rw [LinearMap.comp_apply, LinearMap.comp_apply, ← dualApp_resM]
+        congr 1
+        apply hinj W'
+        rw [appLinear_apply, appLinear_apply, app_resM, hρ, hρ, map_sub, app_resM, hσ W W' h h']
+      · refine dual_ext fun W h u => ?_
+        change dualApp l h (ρ W h (S.f.app W u)) = _
+        congr 1
+        apply hinj W
+        rw [appLinear_apply, appLinear_apply, hρ, hz, map_zero, sub_zero]
+
+  have hd := shortExact_dual S _ _ hS (isFrame_dlogChar S (Module.Free.chooseBasis ℤ X)).isVB
   have := hd.mono_f
   exact ⟨hd.epi_g, ⟨IsLimit.conePointUniqueUpToIso (kernelIsKernel _) hd.exact.fIsKernel⟩⟩

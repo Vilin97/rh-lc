@@ -342,7 +342,7 @@ theorem value_at_torsion : LL → TwistBCSpanStatement → TWM.VRatioGtStatement
       let q : QkPt D.toPre F (n * m) := TorusExt.qkMk D.tau_bimult (m • p.y) p.g (by
         rw [mul_nsmul, TorusExt.qk_nsmul D.tau_bimult p, map_nsmul])
       have hq : QkToAkU U.toUnifPre F (n * m) q x :=
-        ((GlobalTheory.LevelCompat.qkToAkU_level hL V _ hA D A G hG U F n m _ hn hm rfl p q x).1 rfl rfl).1 hx
+        ((GlobalTheory.LevelCompat.qkToAkU_level hL V _ hA D A G hG U F n m _ hn hm rfl p q x).1 (by simp [q]) (by simp [q])).1 hx
       obtain ⟨κ, hκ, Hκ⟩ := EvalLevel.value_at_level hL V hcpl ϖ hϖ D Q hQ F v hv A G hG U w₀ ρ hN (n * m)
         (Nat.mul_pos hn hm) q x hq e he.2.1 (Ω _) (hΩ _)
       refine ⟨κ, hκ, ?_⟩

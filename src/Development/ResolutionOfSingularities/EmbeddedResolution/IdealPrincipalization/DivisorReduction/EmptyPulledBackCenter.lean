@@ -260,9 +260,7 @@ theorem divisorFamily_isPullbackBlowupSequence (hres : FunctorialResolution.Blow
         Set.not_nonempty_iff_eq_empty.mp hcs'
       have hlen' : (((canonicalAlgorithmRules hres).divisorFamily L j
           ((T.pullbackAlong Y q h).withBoundary E')).toSequenceOfBlowups).length = 0 := by
-        refine divisorFamily_canonicalAlgorithmRules_length_eq_zero hres n L j _ hV' hdim' hO' hDB' hjE ?_
-        rw [hmult]
-        exact hempty
+        exact divisorFamily_canonicalAlgorithmRules_length_eq_zero hres n L j _ hV' hdim' hO' hDB' hjE hempty
       exact hdel.isPullbackSeq_of_coSupport_empty T hV hj Y q h hq E' hV' hcs hempty _ hlen'
   · have hempty : orderAtLeastLocus T.ideal T.mult = ∅ := Set.not_nonempty_iff_eq_empty.mp hcs
     have hempty' : orderAtLeastLocus ((T.pullbackAlong Y q h).withBoundary E').ideal T.mult = ∅ := by
@@ -272,9 +270,7 @@ theorem divisorFamily_isPullbackBlowupSequence (hres : FunctorialResolution.Blow
       divisorFamily_canonicalAlgorithmRules_length_eq_zero hres n L j T hV hdim hO hbal hj hempty
     have hlen' : (((canonicalAlgorithmRules hres).divisorFamily L j
         ((T.pullbackAlong Y q h).withBoundary E')).toSequenceOfBlowups).length = 0 := by
-      refine divisorFamily_canonicalAlgorithmRules_length_eq_zero hres n L j _ hV' hdim' hO' hDB' hjE ?_
-      rw [hmult]
-      exact hempty'
+      exact divisorFamily_canonicalAlgorithmRules_length_eq_zero hres n L j _ hV' hdim' hO' hDB' hjE hempty'
     exact hdel.isPullbackSeq_of_length_eq_zero T.scheme Y h _ _ hlen' hlen
 
 end DivisorReduction

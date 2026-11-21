@@ -64,7 +64,7 @@ theorem psi_trivial_on_scaledInt : ∀ (F : Type) [Field F] [NumberField F] (ψ 
   have hGc : Continuous G := by
     refine hψ.1.comp ?_
     refine Continuous.prodMk continuous_const ?_
-    exact continuous_finset_sum _ fun i _ => (continuous_apply i).mul continuous_const
+    exact continuous_finsetSum _ fun i _ => (continuous_apply i).mul continuous_const
   have hU : IsOpen ((GlobalTheory.EvAdm.scaledInt F κ a : Set (κ → FiniteAdeleRing (𝓞 F) F)) ∩ G ⁻¹' {1}ᶜ) :=
     (GlobalTheory.EvAdm.isOpen_scaledInt a).inter (isOpen_compl_singleton.preimage hGc)
   have hd : DenseRange (fun ξ : κ → F => fun i => algebraMap F (FiniteAdeleRing (𝓞 F) F) (ξ i)) :=

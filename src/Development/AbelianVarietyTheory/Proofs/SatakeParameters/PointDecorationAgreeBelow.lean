@@ -275,7 +275,8 @@ theorem globLat_le_localization_globLat (Lb : Submodule (𝓞 E) (Fin n → E)) 
   have hfin : ∀ g, Module.Finite (𝓞 E) (Formalism.UG.CS.globLat g Lb) := fun g => Module.Finite.iff_fg.2 (hlat g).fg
   have hq : Q.under (𝓞 F) = v := HeightOneSpectrum.ext hQ.symm
   intro z hz
-  refine mem_localization_of_mem_localLattice F E n v _ (hfin x₁) (hlat x₁).span_eq_top z ?_ Q hq
+  letI := Formalism.UG.P.csGlob_lattice (F := F) Lb hf hs x₁
+  refine mem_localization_of_mem_localLattice F E n v _ (hfin x₁) Submodule.IsFullLattice.span_eq_top z ?_ Q hq
   have hz' : (fun i => Formalism.UG.inclE (F := F) (v.adicCompletion F) (z i)) ∈ GlobalTheory.IndefiniteRowSideFullHecke.SplittingProjection.locLat v (Formalism.UG.CS.globLat x Lb) :=
     Submodule.subset_span ⟨z, hz, rfl⟩
   rw [mem_locLat_iff_adelic v _ (hfin x₁), mem_latS_globLat_iff Lb hf hs]

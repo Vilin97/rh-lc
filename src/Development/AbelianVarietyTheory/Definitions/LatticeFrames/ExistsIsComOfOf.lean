@@ -38,9 +38,9 @@ theorem comb_conv (c c' : WO S T →₀ ℂ) (f : WO S T → ℂ) :
     comb ψ S T (conv ψ S T c c') f = comb ψ S T c (comb ψ S T c' f) := by
   have h0 := fun u => zero_smul ℂ (heisO ψ S T u f)
   have h1 := fun u (a b : ℂ) => add_smul a b (heisO ψ S T u f)
-  rw [GlobalTheory.HeisComb.comb_comb, GlobalTheory.HeisComb.comb_eq_sum, conv, ← Finsupp.sum_finset_sum_index h0 h1]
+  rw [GlobalTheory.HeisComb.comb_comb, GlobalTheory.HeisComb.comb_eq_sum, conv, ← Finsupp.sum_finsetSum_index h0 h1]
   refine Finset.sum_congr rfl fun x _ => ?_
-  rw [← Finsupp.sum_finset_sum_index h0 h1]
+  rw [← Finsupp.sum_finsetSum_index h0 h1]
   refine Finset.sum_congr rfl fun y _ => ?_
   rw [Finsupp.sum_single_index (h0 _), GlobalTheory.WeilVacMove.heisO_heisO, smul_smul]
 
@@ -60,9 +60,12 @@ variable {ψ S T}
 theorem mem_support_conv {c c' : WO S T →₀ ℂ} {w : WO S T} (hw : w ∈ (conv ψ S T c c').support) :
     ∃ x ∈ c.support, ∃ y ∈ c'.support, w = x + y := by
   classical
-  obtain ⟨x, hx, h2⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum hw)
-  obtain ⟨y, hy, h3⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum h2)
-  exact ⟨x, hx, y, hy, Finset.mem_singleton.1 (Finsupp.support_single_subset h3)⟩
+  rw [Finsupp.mem_support_iff, conv, Finsupp.finsetSum_apply] at hw
+  obtain ⟨x, hx, h2⟩ := Finset.exists_ne_zero_of_sum_ne_zero hw
+  rw [Finsupp.finsetSum_apply] at h2
+  obtain ⟨y, hy, h3⟩ := Finset.exists_ne_zero_of_sum_ne_zero h2
+  have h4 : w ∈ (Finsupp.single (x + y) (c x * c' y * ψ (symplOH S T x y))).support := Finsupp.mem_support_iff.mpr h3
+  exact ⟨x, hx, y, hy, Finset.mem_singleton.1 (Finsupp.support_single_subset h4)⟩
 
 theorem support_convList {p : WO S T → Prop} (h0 : p 0) (hadd : ∀ x y, p x → p y → p (x + y)) {l : List (WO S T →₀ ℂ)}
     (hl : ∀ c ∈ l, ∀ x ∈ c.support, p x) : ∀ w ∈ (convList ψ S T l).support, p w := by

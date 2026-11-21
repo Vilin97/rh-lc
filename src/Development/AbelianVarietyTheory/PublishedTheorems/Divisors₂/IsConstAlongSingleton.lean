@@ -137,8 +137,13 @@ theorem isAutOn_empty {K : Subgroup (GAd σ J)} {φ : GAd σ J → ℂ} : IsAutO
       h.mod.level, h.mod.cont, h.mod.smooth, h.mod.growth, h.kfin, h.zfin⟩⟩
 
 theorem isSqIntOn_empty {φ : GAd σ J → ℂ} : IsSqIntOn σ J X Y ∅ φ ↔ IsSqInt σ J φ := by
-  unfold IsSqIntOn
+  let P : Subgroup (GAd σ J) → Prop := fun H =>
+    ∀ (μ : Measure H) (𝓕 : Set H), μ.IsHaarMeasure →
+      IsFundamentalDomain ((ratPts σ J).subgroupOf H) 𝓕 μ → ∀ g,
+        IntegrableOn (fun m : H => ‖φ (m * g)‖ ^ 2) 𝓕 μ
+  change P (leviOne σ J X Y ∅) ↔ _
   rw [leviOne_empty]
+  dsimp only [P]
   let t : (⊤ : Subgroup (GAd σ J)) ≃ₜ* GAd σ J :=
     { Subgroup.topEquiv with continuous_toFun := continuous_subtype_val, continuous_invFun := continuous_id.subtype_mk _ }
   refine ⟨fun h μ 𝓕 h1 h2 => ?_, fun h μ 𝓕 h1 h2 g => ?_⟩
@@ -264,9 +269,8 @@ theorem unip_singleton (hW : IsWittFrame σ J X Y) (k : Fin r) : unip σ J X {k}
 
 theorem isConstAlong_singleton (hW : IsWittFrame σ J X Y) (k : Fin r) {φ c : GAd σ J → ℂ} :
     IsConstAlong σ J X {k} φ c ↔ IsConstTerm σ J (initCols X k) φ c := by
-  unfold IsConstAlong
+  change IsConstTermOn σ J (unip σ J X {k}) φ c ↔ IsConstTermOn σ J (unipRad σ J (initCols X k)) φ c
   rw [unip_singleton hW]
-  rfl
 
 end Single
 

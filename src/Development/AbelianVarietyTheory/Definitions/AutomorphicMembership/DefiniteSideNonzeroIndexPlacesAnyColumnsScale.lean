@@ -152,13 +152,13 @@ def resGeo (h : Wt' ⊆ Wt) : GlobalTheory.RealGeo.GeoHalf z.core (z.resR h).toR
 
 
 set_option maxHeartbeats 2000000 in
-theorem levOf_resR (h : Wt' ⊆ Wt) : LevOf X I (usedOf I T Wt') (z.resR h).toLevCh where
-  is := Res.levCh_is (L := z.R.toLevCh) (inclU_injective (usedOf_mono I T h)) z.lev.is
-  C := z.lev.C
-  xiH t := z.lev.xiH (inclU I (usedOf_mono I T h) t)
-  Pg := z.lev.Pg
-  Q t := z.lev.Q (inclU I (usedOf_mono I T h) t)
-  beta := z.lev.beta
+theorem levOf_resR (h : Wt' ⊆ Wt) : LevOf X I (usedOf I T Wt') (z.resR h).toLevCh :=
+  ⟨Res.levCh_is (L := z.R.toLevCh) (inclU_injective (usedOf_mono I T h)) z.lev.is,
+    z.lev.C,
+    fun t => z.lev.xiH (inclU I (usedOf_mono I T h) t),
+    z.lev.Pg,
+    fun t => z.lev.Q (inclU I (usedOf_mono I T h) t),
+    z.lev.beta⟩
 
 end Dat
 

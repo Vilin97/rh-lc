@@ -34,6 +34,8 @@ theorem eigen_eq_one_of_diag : ∀ (F E : Type) [Field F] [NumberField F] [Field
       (diagCols (Fin a) : Matrix (Fin a ⊕ Fin a) (Fin a) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * (t : Matrix (Fin a) (Fin a) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) := ht₀
   have hF := hT.base.cm.1
   set Ψ := tens (evFin F v) (G.M.vac v) r with hΨ
+  change omd p (boxFun Ψ (fun x => star (Ψ x))) =
+    μ • boxFun Ψ (fun x => star (Ψ x)) at hμ
   have hS := GlobalTheory.SchwartzBox.boxFun_mem_schA F _ _ Ψ hr.2 _ (GlobalTheory.SchAConj.star_mem_schA F _ Ψ hr.2)
   have hl := lDiag_box_ne_zero hF hr.2 h0
   have hS0 : (boxFun Ψ fun x => star (Ψ x)) ≠ 0 := fun h => hl (by rw [h, map_zero])
@@ -73,7 +75,10 @@ theorem eigen_eq_one_of_diag : ∀ (F E : Type) [Field F] [NumberField F] [Field
       exact congrFun (congrFun e2 (Sum.inl i)) j
     · have hz' := hp.2 (Sum.elim z z) ⟨hz, hz⟩
       exact ⟨hvec p _ ht z ▸ hz'.1.1, hvec p⁻¹ _ ht' z ▸ hz'.2.1⟩
-  rw [hμ, map_smul, smul_eq_mul, hβ, Circle.coe_one, one_mul] at hrule
+  have he := congrArg (DiagForm.lDiag F (Fin a × Fin (a + a'))) hμ
+  rw [map_smul, smul_eq_mul] at he
+  have hrule := he.symm.trans hrule
+  rw [hβ, Circle.coe_one, one_mul] at hrule
   have hμ' := mul_right_cancel₀ hl hrule
   rw [hμ', Complex.norm_real, Real.norm_of_nonneg (Real.rpow_nonneg (NNReal.coe_nonneg _) _)] at hn
   rw [hμ', hn, Complex.ofReal_one]

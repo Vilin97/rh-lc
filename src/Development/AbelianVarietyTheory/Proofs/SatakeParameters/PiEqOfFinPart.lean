@@ -211,7 +211,7 @@ theorem mem_latO_iff (h : Chart e σ π) (hσ : ∀ x, Valued.v (σ x) = Valued.
       rw [Matrix.map_zero _ π.map_zero, Matrix.mul_zero, Matrix.zero_mul, smul_zero]
       exact fun i j => zero_mem _
     | add x y _ _ hx hy =>
-      rw [Matrix.map_add _ π.map_add (f := _), Matrix.mul_add, Matrix.add_mul, smul_add]
+      rw [Matrix.map_add _ π.map_add, Matrix.mul_add, Matrix.add_mul, smul_add]
       exact fun i j => add_mem (hx i j) (hy i j)
     | neg x _ hx =>
       rw [Matrix.map_neg _ π.map_neg, Matrix.mul_neg, Matrix.neg_mul, smul_neg]
@@ -261,7 +261,7 @@ theorem kap_pi (h : Chart e σ π) (x : Matrix (Fin T.rank) (Fin S.rank) (LP D P
 
 theorem kap_add (h : Chart e σ π) (x y : Matrix (Fin T.rank) (Fin S.rank) (LP D P)) :
     kap h βS βT c (x + y) = kap h βS βT c x + kap h βS βT c y := by
-  rw [kap, Matrix.mul_add, Matrix.add_mul, smul_add, Matrix.map_add _ h.sec.map_add (f := _)]
+  rw [kap, Matrix.mul_add, Matrix.add_mul, smul_add, Matrix.map_add _ h.sec.map_add]
   rfl
 
 theorem kap_zero (h : Chart e σ π) : kap h βS βT c 0 = 0 := by

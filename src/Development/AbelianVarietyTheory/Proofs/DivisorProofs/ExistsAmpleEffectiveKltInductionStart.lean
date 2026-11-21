@@ -83,6 +83,7 @@ theorem exists_ample_eff_kltAt_start : GlobalTheory.Published.Principalisation �
   · intro y
     have k := (kltAt_lcAt_of_le_coeff X p n hp hn Δ (qWeil E₀ 1) (1 / q) c₀ y hB h1).1 (hc₀k y)
     convert k using 2
-    ring
+    ext z
+    simp [qWeil, div_eq_mul_inv, mul_comm]
 
 end GlobalTheory.PairStep

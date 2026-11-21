@@ -169,8 +169,8 @@ theorem form_comp_invT [Invertible (2 : k)] (ψ : AddChar k ℂ) (hψ : Continuo
     intro X
     funext q
     show ∑ q', G q q' * X q'.1 q'.2 = (X * (T⁻¹).valᵀ) q.1 q.2
-    rw [Fintype.sum_prod_type, mul_apply]
-    simp [G, kroneckerMap_apply, one_apply, mul_comm]
+    rw [Fintype.sum_prod_type, Matrix.mul_apply]
+    simp [G, kroneckerMap_apply, Matrix.one_apply, mul_comm]
   have h1 : (g⁻¹).val * (diagCols β : Matrix (β ⊕ β) β k) = (diagCols β : Matrix (β ⊕ β) β k) * (T⁻¹).val := by
     have := congrArg (fun N => (g⁻¹).val * N * (T⁻¹).val) h
     simp only [← Matrix.mul_assoc, Units.inv_mul, Matrix.one_mul] at this
@@ -267,7 +267,7 @@ theorem exists_siegel (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) {d : ℕ} {J
     have := congrArg (fun M => M.map (piW t)) (show Pᵀ * dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) J) * P.map (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) = dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) J) from p.2)
     have e1 : (dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) J)).map (piW t) = fromBlocks (J.map t) 0 0 (-J.map t) := by
       rw [← incM_map_piW]
-      ext (i | i) (j | j) <;> simp [dbl]
+      ext (i | i) (j | j) <;> simp [dbl, incM]
     have e2 : (P.map (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ)).map (piW t) = P.map (piW (t.comp σ)) := Matrix.ext fun i j => piW_cA σ t _
     simpa only [Matrix.map_mul, Matrix.transpose_map, e1, e2] using this
   have hd : ∀ τ : E →ₐ[F] Fv F v, ∀ {β : Type} [Fintype β] [DecidableEq β] (Z : Matrix β β (AE F E)),
@@ -283,6 +283,7 @@ theorem exists_siegel (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) {d : ℕ} {J
     fun τ => diagCols_map (τ : E →+* Fv F v)
   have hN := adelic_intertwine h t (g := P) (P := (diagCols (Fin d) : Matrix (Fin d ⊕ Fin d) (Fin d) E)) hp hu'
     (by rw [m1, hΔ]; exact h1) (by rw [m2, hΔ]; exact h2)
+  change P * ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) (diagCols (Fin d) : Matrix (Fin d ⊕ Fin d) (Fin d) E)) = ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) (diagCols (Fin d) : Matrix (Fin d ⊕ Fin d) (Fin d) E)) * (1 + u) at hN
   rw [show (_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) (diagCols (Fin d) : Matrix (Fin d ⊕ Fin d) (Fin d) E) = diagCols (Fin d) from
     diagCols_map (inclR (F := F) (E := E) (AF F) : E →+* AE F E)] at hN
   have hNu : IsUnit (1 + u).det := by
@@ -320,6 +321,7 @@ theorem psi_symp (h : IsCMExt F E σ) (ψ : AddChar (AF F) ℂ) (t : E →ₐ[F]
     simp only [Finset.smul_sum, ← smul_mul_assoc, h0, zero_mul, Finset.sum_const_zero, mul_zero, map_zero]
   rw [GlobalTheory.VacAny.eq_atPlace_of_at v _ hA]
   show GlobalTheory.LatVac.psiAt ψ v (evFin F v _) = _
+  change GlobalTheory.LatVac.psiAt ψ v (evFin F v (symp (cA σ) (-1) (incM F J) (incM F K) x z)) = _
   rw [GlobalTheory.LinCoords.splitTrace' h v t J K hJ hK x z hx, hz]
   simp
 
@@ -403,8 +405,10 @@ theorem scalar_siegel : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [F
       exacts [congrFun (congrFun (hx₁ a ha) i) j, congrFun (congrFun (hx₂ a ha) i) j]
     have key := hι.mult _ (hat z hz) (by rw [fromCols_map, z1, fromCols_zero]) φ hφ φ₁ hφ₁ ha _ hx
       (by rw [fromCols_map, a2, b2, fromCols_zero])
-    rw [fromCols_map, a1, b1, hco, symp_dbl_diag, psi_symp hcm B.ψ t hP.herm.herm hP.skew.skew
-      (fun a ha => by rw [smul_sub, hx₁ a ha, hx₂ a ha, sub_zero]) z1, Matrix.map_sub _ (map_sub _), a1, b1, z2,
+    rw [fromCols_map, a1, b1, hco, symp_dbl_diag] at key
+    change ιd φ₁ (Y₁.fromCols Y₂) = B.ψ (symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W.J) (x₁ - x₂) z) * _ at key
+    rw [psi_symp hcm B.ψ t hP.herm.herm hP.skew.skew
+      (fun a ha => by simp [smul_sub, hx₁ a ha, hx₂ a ha]) z1, Matrix.map_sub _ (map_sub _), a1, b1, z2,
       ← Matrix.sub_mul, ← Matrix.mul_sub, pairing_mul] at key
     rw [key, toCols₁_fromCols, toCols₂_fromCols]
     have e2 : b.valᵀ * -(X.J.map t * -((X.J.map t)⁻¹ * ((b⁻¹).valᵀ * D * (c⁻¹).val) * ((W.J.map t)⁻¹)ᵀ) * (W.J.map t)ᵀ) *
@@ -419,6 +423,7 @@ theorem scalar_siegel : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [F
   obtain ⟨φ₁, hφ₁, ha⟩ := hloc p hp φ₀ hφ₀
   have k1 := hW.2.2 _ GlobalTheory.DiagForm.lDiag_adm (fun z Φ hΦ => by rw [mul_diagCols]; exact hinv z Φ hΦ) p N hN _
     (hR φ₀ hφ₀).2
+  change (GlobalTheory.DiagForm.lDiag F (Fin n × Fin d)) (omd p (tens (evFin F v) φ₀ R)) = _ at k1
   rw [ha R (hR φ₀ hφ₀), GlobalTheory.ModuNorm.modu_norm_eq_absE F E hcm.1, hdet, Fintype.card_fin,
     char_idl hcm χX hP.resX, ← hlam, ← hlam, ← hm _ hφ₁, hcd p hp φ₀ hφ₀ φ₁ hφ₁ ha, map_smul,
     form_comp_invT _ (GlobalTheory.SchrSB.continuous_psiAt _ hstd.1 v) (GlobalTheory.PsiNontriv.psiAt_ne_one _ hstd v) m htr hmu _ T₀ hT

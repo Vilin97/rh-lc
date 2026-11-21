@@ -48,6 +48,7 @@ open ReciprocityTheory.ChartRestriction.G.FD Formalism.BasicNotions.TH
 
 namespace GlobalTheory.CovTop.DescentMaps
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem mapsCore {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Geo.Tor.Host E} {Dw : Datum H} {l : Level H}
     {Xo : Moduli Dw l} {c : Coeff l} {r : ℕ} {U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r} {D : D7} {x : ℝ}
     {V : (c.F →+* ℂ) → HSp D} {dict : ∀ σ, GA D (V σ) → Σ k, Frame ((U σ).X k).Ψ r}

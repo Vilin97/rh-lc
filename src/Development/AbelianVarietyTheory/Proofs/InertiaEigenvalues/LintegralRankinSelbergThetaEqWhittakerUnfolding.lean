@@ -170,9 +170,9 @@ theorem good_fW {ℓ : Fin a} (hℓ : (ℓ : ℕ) + 1 = a) (ψ : AddChar (Ad E) 
     (hv : ∀ r, 0 < r → r ≤ a - 1 → ∀ g : GA E a,
       avg (ratV E (UnipotentBlockColumnIndex a r (a - 1))) (fun x => F ((blkU x : GA E a) * g)) = 0)
     {Φ : (Fin a → Cinf E) → ℂ} (hΦc : Continuous Φ) (hΦt : tsupport Φ ⊆ GlobalTheory.RSTheta.rowSet E ℓ) :
-    Good ψ (a - 1) (fW ℓ Φ F) where
-  cont := by
-    have hy := continuous_yInf (E := E) ℓ
+    Good ψ (a - 1) (fW ℓ Φ F) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · have hy := continuous_yInf (E := E) ℓ
     refine continuous_iff_continuousAt.2 fun g => ?_
     by_cases hp : yInf ℓ g ∈ tsupport Φ
     · have h1 : ContinuousAt (fun g => g * sInv ℓ g) g :=
@@ -183,17 +183,17 @@ theorem good_fW {ℓ : Fin a} (hℓ : (ℓ : ℕ) + 1 = a) (ψ : AddChar (Ad E) 
     · refine (continuousAt_const (y := (0 : ℂ))).congr ?_
       filter_upwards [hy.continuousAt.eventually (notMem_tsupport_iff_eventuallyEq.1 hp)] with q hq
       simp [fW, hq]
-  left γ hγ g := by
+  · intro γ hγ g
     rw [fW_mul (ratGL_row_of_isMir hℓ hγ), hl]
     rfl
-  law k hk y g := by
+  · intro k hk y g
     have : IsEmpty (UnipotentBlockColumnIndex a k k) := ⟨fun t => by have := t.2; have := t.1.2.isLt; omega⟩
     have hy : y = 0 := Subsingleton.elim _ _
     subst hy
     have e1 : (blkU (0 : UnipotentBlockColumnIndex a k k → Ad E) : GA E a) = 1 := posU_zero _
     rw [e1, one_mul]
     simp [dot]
-  van r hr hra g := by
+  · intro r hr hra g
     have e : (fun x : UnipotentBlockColumnIndex a r (a - 1) → Ad E => fW ℓ Φ F ((blkU x : GA E a) * g)) =
         fun x => ((Real.sqrt ‖Φ (yInf ℓ g)‖ : ℝ) : ℂ) * F ((blkU x : GA E a) * (g * sInv ℓ g)) := by
       funext x
@@ -236,6 +236,7 @@ theorem GlobalTheory.RSUnfold.lintegral_theta_eq_whit : ∀ (E : Type) [Field E]
     rw [← hφF]
     exact h
   haveI : DiscreteTopology (ratMirU E a (a - 1)) := GlobalTheory.MirTower.discrete_of_le_range (Subgroup.map_le_range _ _)
+  have := GlobalTheory.CuspRep.CuspidalL2GL.secondCountableTopology_GA E a
   obtain ⟨𝓕P, h𝓕P⟩ := GlobalTheory.FundDomDiscrete.exists_isFundamentalDomain (ratMirU E a (a - 1)) μ
   have hℓ' : (⟨a - 1, Nat.sub_lt ha Nat.one_pos⟩ : Fin a) = ℓ := Fin.ext (by simp only; omega)
   have hdet : ∀ (γ : GL (Fin a) E) (g : GA E a), (ideleModule E (GeneralLinearGroup.det (ratGL E a γ * g)) : ℝ) =

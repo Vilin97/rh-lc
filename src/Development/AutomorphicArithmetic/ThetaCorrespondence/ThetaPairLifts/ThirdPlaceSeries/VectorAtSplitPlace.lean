@@ -37,7 +37,8 @@ theorem vector_at_split_place (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (D :
     (hρ : CategoryTheory.Simple ρ) (hocc : PairedCharacterCondition.RT.Occurs i PI k v (idemOf D k ρ)) :
     ∃ x, IsBlockVec (S i s.w hw).mu ((S i s.w hw).rep PI).π x ∧ NotKilled ((S i s.w hw).rep PI).π (idemOf D k ρ) x := by
   classical
-  obtain ⟨c, T, hc, hcs, -, -, -⟩ := hT.rep i s hw PI
+  have hrep := hT.rep i s hw PI
+  rcases hrep with ⟨c, T, hc, hcs, -, -, -⟩
   obtain ⟨F, hF, hne⟩ := hocc
   set z := idemOf D k ρ with hz
   have hzc : ∀ b, z * b = b * z := by

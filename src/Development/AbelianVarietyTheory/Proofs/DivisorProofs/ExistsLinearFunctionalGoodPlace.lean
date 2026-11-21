@@ -116,6 +116,12 @@ theorem exists_isLinW : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [F
   intro _ F E _ _ _ _ _ σ B a a' G X om om' hTr v hv
   obtain ⟨t⟩ := nonempty_emb_of_splitsFully hTr.base.cm v hv.2
   obtain ⟨uT, uM, hT, hM, hspan, hsymp⟩ := (GlobalTheory.T.local_unipotent_embeddings_exist) F E σ B a a' G X om om' hTr v t
+  change ∀ (x u : Matrix (Fin a) (Fin (a + a')) (AE F E)),
+    At (evFin F v) x → At (evFin F v) u →
+    evFin F v (symp (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA σ) (-1)
+      (incM F G.V.J) (incM F G.W.J) x u) =
+      ∑ i, ∑ j, x.map (piW t) i j * coW G t u i j -
+        ∑ i, ∑ j, coW G t x i j * u.map (piW t) i j at hsymp
   have hψc : Continuous (GlobalTheory.LatVac.psiAt B.ψ v) := GlobalTheory.VacAny.continuous_psiV hTr.base.std.1 v
   have hunr : PsiUnr B.ψ v := GlobalTheory.StdCharUnrF.psiUnr_of_not_le F B.ψ hTr.base.std v
     (GlobalTheory.SplitFullyUnr.not_le_differentIdeal v hv.2)
@@ -130,15 +136,18 @@ theorem exists_isLinW : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [F
     ((GlobalTheory.LatVac.locCo G.M.co v).comp uT) ((GlobalTheory.LatVac.locCo G.M.co v).comp uM)
     (fun Y Y' => by
       simp only [AddMonoidHom.comp_apply]
-      rw [locCo_form, hsymp _ _ (hT Y).1 (hT Y').1, hcoT, hcoT]
+      rw [locCo_form]
+      rw [hsymp _ _ (hT Y).1 (hT Y').1, hcoT, hcoT]
       simp)
     (fun z z' => by
       simp only [AddMonoidHom.comp_apply]
-      rw [locCo_form, hsymp _ _ (hM z).1 (hM z').1, (hM z).2.1, (hM z').2.1]
+      rw [locCo_form]
+      rw [hsymp _ _ (hM z).1 (hM z').1, (hM z).2.1, (hM z').2.1]
       simp)
     (fun Y z => by
       simp only [AddMonoidHom.comp_apply]
-      rw [locCo_form, hsymp _ _ (hT Y).1 (hM z).1, (hT Y).2.2, (hM z).2.2, hcoT, (hM z).2.1]
+      rw [locCo_form]
+      rw [hsymp _ _ (hT Y).1 (hM z).1, (hT Y).2.2, (hM z).2.2, hcoT, (hM z).2.1]
       simp)
     (fun w => by
       obtain ⟨u, hu, rfl⟩ := locCo_surj G.M.co v w
@@ -172,7 +181,8 @@ theorem exists_isLinW : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [F
       exact h
     subst hY
     rw [map_zero, zero_add] at e1 ⊢
-    rw [co_one, e1, GlobalTheory.VacIndic.psi_of_at B.ψ (at_symp _ _ _ x (uM z) hx), hsymp x (uM z) hx (hM z).1,
+    rw [co_one, e1, GlobalTheory.VacIndic.psi_of_at B.ψ (at_symp _ _ _ x (uM z) hx)]
+    rw [hsymp x (uM z) hx (hM z).1,
       coW_eq_zero G t x hx0, (hM z).2.1, (hM z).2.2]
     have h2 := congrFun (hmu z φ hφ) (x.map (piW t))
     simp only [AddMonoidHom.comp_apply] at h2

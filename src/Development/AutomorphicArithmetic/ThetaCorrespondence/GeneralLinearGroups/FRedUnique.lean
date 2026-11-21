@@ -230,8 +230,10 @@ theorem UpperTheory.Lit.Full.redUnique :
   have hfin : {x : IrrGL (k := k) | FirstIn x {ρ} ∧ s x = T}.Finite := (hc T).1.subset fun x hx => hx.2
   have hxm : x ∈ {x : IrrGL (k := k) | FirstIn x {ρ} ∧ s x = T} := ⟨hxF, (hs _ _).1 hx⟩
   have hpos := (Set.ncard_pos hfin).2 ⟨x, hxm⟩
+  have hfinm : {𝔪 : Multiset (Segment k) | (∀ D ∈ 𝔪, D.first = ρ) ∧ msupp 𝔪 = T}.Finite :=
+    (hc T).2.1.subset fun x hx => hx.2
   have hle : {𝔪 : Multiset (Segment k) | (∀ D ∈ 𝔪, D.first = ρ) ∧ msupp 𝔪 = T}.ncard ≤ 1 :=
-    (Set.ncard_le_one ((hc T).2.1.subset fun x hx => hx.2)).2 fun a ha b hb =>
+    (Set.ncard_le_one hfinm).2 fun a ha b hb =>
       start_unique hρ ha.1 hb.1 (ha.2.trans hb.2.symm)
   refine ⟨?_, fun x' hx' hF' => ?_⟩
   · obtain ⟨𝔪, h1, h2⟩ := Set.nonempty_of_ncard_ne_zero (key ▸ hpos.ne' :

@@ -22,7 +22,7 @@ theorem pairing_eq {K : Type} [Field K] (c n : ℕ) (g : (Fin c → K) →ₗ[K]
   rw [h]
   conv_lhs => rw [← (Pi.basisFun K (Fin n)).sum_repr F]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [dotProduct, map_sum, Basis.dualBasis_repr, mul_comm]
+    simp [dotProduct, map_sum, Basis.dualBasis_repr]
 
 theorem continuous_cnorm {ι : Type} [Fintype ι] : Continuous (Formalism.HermitianLatticesTheory.cnorm : (ι → ℂ) → ℝ) := by
   unfold Formalism.HermitianLatticesTheory.cnorm
@@ -104,7 +104,7 @@ theorem opNormAt_pairing_sq_le : ∀ (K : Type) [Field K] [NumberField K] [StarR
   set w : Fin c → ℂ := WithLp.ofLp ξ with hw
   set m : Fin n → ℂ := M *ᵥ w with hm
   have hTx : ‖LinearMap.toContinuousLinearMap (Matrix.toEuclideanLin M) ξ‖ = Formalism.HermitianLatticesTheory.cnorm m := by
-    simp [LinearMap.coe_toContinuousLinearMap', Matrix.toEuclideanLin_apply, EuclideanSpace.norm_eq,
+    simp [LinearMap.coe_toContinuousLinearMap', Matrix.toLpLin_apply, EuclideanSpace.norm_eq,
       Formalism.HermitianLatticesTheory.cnorm, hm, hw]
   have hξ : ‖ξ‖ = Formalism.HermitianLatticesTheory.cnorm w := by
     simp [EuclideanSpace.norm_eq, Formalism.HermitianLatticesTheory.cnorm, hw]

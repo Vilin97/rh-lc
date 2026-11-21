@@ -53,7 +53,8 @@ theorem exists_specialise_ne_zero : ∀ (F S T : Type) [Field F] [Infinite F] (R
     | mul_X p i hp =>
       rw [map_mul, map_mul, map_mul, hp]
       cases i <;> simp
-  rw [← coeff_map, ← key, h, coeff_zero]
+  rw [← coeff_map, ← key, h]
+  simp
 
 theorem irreducible_of_map {F L : Type} [Field F] [Field L] [Algebra F L] {σ : Type} (f : MvPolynomial σ F)
     (h : Irreducible (MvPolynomial.map (algebraMap F L) f)) : Irreducible f := by

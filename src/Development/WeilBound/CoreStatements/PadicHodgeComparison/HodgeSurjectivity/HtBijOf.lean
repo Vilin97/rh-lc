@@ -44,7 +44,7 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.OneResOf
 
 namespace CrystallineSemistableComparison.Onto
 
-theorem parts  : Parts where
+theorem parts : Parts := {
   mv := GlobalTheory.CompanionTheory.Onto.mvBij
   surj := GlobalTheory.CompanionTheory.OneSurjC.oneSurj
   cov := GlobalTheory.CompanionTheory.CovDescent.covDesc
@@ -79,6 +79,7 @@ theorem parts  : Parts where
     GlobalTheory.CompanionTheory.OntoForms.formLaws chartLaws_pf
   onto := ontoOf3_pf
   slant := GlobalTheory.CompanionTheory.KunGlue.slantOf topRes_pf
+}
 
 theorem htBij_of  (hH : HT.HodgeTateMapExists) (hS : SqEx3) (hD : DiagEt3) (hF : EtFin) : HTBij :=
   htBij_of_parts (parts ) rank_equality hH hS hD hF

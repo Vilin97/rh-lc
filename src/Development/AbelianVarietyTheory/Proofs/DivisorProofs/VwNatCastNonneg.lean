@@ -41,7 +41,8 @@ def topDl (G : GridData L sc) (δ : ℕ → ℝ) (C1 b : ℝ) (w : PlL D) : ℝ 
 theorem vw_natCast_nonneg (w : PlL D) (n : ℕ) : 0 ≤ vw w ((n : ℕ) : D.what₂.LL) := by
   have e : FractionalIdeal.spanSingleton (nonZeroDivisors (𝓞 D.what₂.LL)) ((n : ℕ) : D.what₂.LL) =
       ((Ideal.span {((n : ℕ) : 𝓞 D.what₂.LL)} : Ideal (𝓞 D.what₂.LL)) : FractionalIdeal (nonZeroDivisors (𝓞 D.what₂.LL)) D.what₂.LL) := by
-    rw [FractionalIdeal.coeIdeal_span_singleton, map_natCast]
+    rw [FractionalIdeal.coeIdeal_span_singleton,
+      map_natCast (algebraMap (𝓞 D.what₂.LL) D.what₂.LL)]
   unfold vw
   rw [e]
   exact FractionalIdeal.count_coe_nonneg _ _ _

@@ -48,8 +48,11 @@ theorem scal_of_one {M C : Type} [AddCommGroup M] [Module ℂ M] (f : M → M) (
 set_option maxHeartbeats 1000000 in
 theorem iff_of_pin (R : RealDat3 D A3 Ks) (h : R.eigenvalue_at_base_of_scalar) :
     R.PThmA ↔ ∀ i t p, ∃ l : ℝ, ∀ x ∈ R.Wp3 i p, R.thG i t (LinearMap.adjoint (R.thG i t) x) = (l : ℂ) • x := by
-  refine ⟨fun hA i t p => ⟨_, hA i t p⟩, fun hA i t p => ?_⟩
-  exact apply_eq_smul_of_unique_eigenvalue (fun x => R.thG i t (LinearMap.adjoint (R.thG i t) x)) (by simp only [map_zero]) (R.Wp3 i p) _ (h i t p) (hA i t p)
+  constructor
+  · intro hA i t p
+    exact ⟨R.lam3 i t p A3.A.v0, hA i t p⟩
+  · intro hA i t p
+    exact apply_eq_smul_of_unique_eigenvalue (fun x => R.thG i t (LinearMap.adjoint (R.thG i t) x)) (by simp only [map_zero]) (R.Wp3 i p) _ (h i t p) (hA i t p)
 
 def OnePart (R : RealDat3 D A3 Ks) : Prop := ∀ i p c c', R.Carries p c → R.Carries p c' → R.Wc' i c = R.Wc' i c'
 

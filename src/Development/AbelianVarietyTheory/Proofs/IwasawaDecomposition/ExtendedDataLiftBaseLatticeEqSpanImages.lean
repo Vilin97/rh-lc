@@ -41,8 +41,10 @@ theorem lift_Mj_base : GlobalTheory.Published.DiscreteSeriesCover → GlobalTheo
         ∀ φ : (w.st Z).toD7.what₂.LL →+* (w'.st Z').toD7.what₂.LL, (∀ x, (w'.st Z').toD7.what₂.embLL (φ x) = (w.st Z).toD7.what₂.embLL x) →
         (z'.R.FW j').Mj (z'.F.lv2.lvl false).P (z'.F.lv2.lvl false).ψ⁻¹ (fun g => (idemOf (famR (w'.st Z') w'.I hX' (usedOf w'.I T' {v | B'.places.resChar v ∈ T'.pl}) z'.Xg z'.tr).A.X).coeff g) = Submodule.span (𝓞 (w'.st Z').toD7.what₂.LL) {x' | ∃ x ∈ (z.R.FW j).Mj (z.F.lv2.lvl false).P (z.F.lv2.lvl false).ψ⁻¹ (fun g => (idemOf (famR (w.st Z) w.I hX (usedOf w.I T Wt) z.Xg z.tr).A.X).coeff g), ∀ (k : Fin (z.R.nW j)) (k' : Fin (z'.R.nW j')), (k : ℕ) = k' → x' k' = φ (x k)}) := by
   intro h1 h2 h3 h4 h5 h6 h7
+  have hGoodForms := GlobalTheory.Mem.R3.Rw.goodForms_lift_bc h1 h2 h3 h4 h5 h6 h7
+  have hSupLattice := GlobalTheory.Mem.R3.MKExt.mk_ext h1 h2 h3 h4 h5 h6 h7
   refine StepW.trans (StepW.and (StepW.of_all fun _ _ _ _ _ _ _ hp => hp)
-    (StepW.and (GlobalTheory.T.goodForms_lift_baseLevel_extension_span h1 h2 h3 h4 h5 h6 h7) (GlobalTheory.T.supLattice_extendedData_eq_coordinatewiseImage h1 h2 h3 h4 h5 h6 h7))) (StepW.of_all ?_)
+    (StepW.and hGoodForms hSupLattice)) (StepW.of_all ?_)
   rintro K B' f' T' w' - - ⟨-, H1, H2⟩ B f T w hE hf hP hpx Z hX Wt z hG hGA hF hH Z' hX' hG' hGA' hV z' hF' e j j' hj φ hφ
   have hW := H1 B f T w hE hf hP hpx Z hX Wt z hG hGA hF hH Z' hX' hG' hGA' hV z' hF' e j j' hj φ hφ
   have hK := H2 B f T w hE hf hP hpx Z hX Wt z hG hGA hF hH Z' hX' hG' hGA' hV z' hF' e j j' hj φ hφ
@@ -55,7 +57,7 @@ theorem lift_Mj_base : GlobalTheory.Published.DiscreteSeriesCover → GlobalTheo
       Submodule.restrictScalars_mem, and_assoc]
   · congr 1
     ext x'
-    simp only [Set.mem_setOf_eq, Arith.FormsL.Mj, Arith.FormsL.Mall, RealDat.WL, Arith.FormsL.Wgood, Submodule.mem_inf,
+    simp only [Set.mem_ofPred_eq, Arith.FormsL.Mj, Arith.FormsL.Mall, RealDat.WL, Arith.FormsL.Wgood, Submodule.mem_inf,
       Submodule.restrictScalars_mem, and_assoc]
 
 end GlobalTheory.Mem.R3.LiftForms

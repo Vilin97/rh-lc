@@ -92,7 +92,7 @@ theorem eq_of_levelMaps {l l₂ : Level H} {Xo : Moduli Dw l} {Xo₂ : Moduli Dw
 theorem formallyUnramified_spQ (l : Level H) : FormallyUnramified (spMap (algebraMap ℚ (KA l))) := by
   rw [HasRingHomProperty.Spec_iff (P := @FormallyUnramified)]
   have := GlobalTheory.LevelUp.finiteDimensional_KA l
-  exact Algebra.FormallyUnramified.of_isSeparable ℚ (KA l)
+  exact RingHom.formallyUnramified_algebraMap.mpr (Algebra.FormallyUnramified.of_isSeparable ℚ (KA l))
 
 theorem locallyOfFiniteType_spQ (l : Level H) : LocallyOfFiniteType (spMap (algebraMap ℚ (KA l))) := by
   rw [HasRingHomProperty.Spec_iff (P := @LocallyOfFiniteType)]
@@ -161,7 +161,11 @@ theorem GlobalTheory.CoverGood.exists_good_cover : ∀ (E : Type) [Field E] [Num
     have hx₀ : (j ≫ pullback.fst _ _) ≫ Xo.s = sOf c K := by
       rw [Category.assoc, pullback.condition, ← Category.assoc, hjs, sOf, spMap, spMap, ← Spec.map_comp]
       rfl
-    obtain ⟨y, hy⟩ := GlobalTheory.NonIntegralFrameExample.exists_framed _ hx₀
+    have hex : ∃ y : FrPt Xo c K, y.x = j ≫ pullback.fst _ _ := by
+      choose u hu using fun τ => GlobalTheory.IntFramesCompare.exists_eigenBasisAt (c := c) hx₀ τ
+      obtain ⟨s, hs⟩ := gfp_gen GlobalTheory.abelianSchemeLaws_all.2.secTwist (j ≫ pullback.fst _ _)
+      exact ⟨⟨_, hx₀, u, fun τ => (hu τ).1, fun τ => (hu τ).2.1, fun τ => (hu τ).2.2, s, hs⟩, rfl⟩
+    obtain ⟨y, hy⟩ := hex
     obtain ⟨y₂, hy₂⟩ := hlift K hk y
     have hyr : y₂.x ≫ d.r = y.x := hy₂.1
     have hgood : y₂.x ≫ d.r ≫ Xo.s = y₂.x ≫ d.Xo₂.s ≫ spMap jK := by

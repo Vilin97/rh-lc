@@ -181,12 +181,11 @@ private theorem main_lemma_3 (n : ℕ) : ∃ U : Matrix (Fin n) (Fin n) ℤ,
   have hPP : Pᵀ * P = 1 := by
     ext a b
     simp [hP, Matrix.mul_apply, Matrix.one_apply]
-    exact if_congr eq_comm rfl rfl
+    exact if_congr (by simp [eq_comm]) rfl rfl
   have hC : Cm ℤ n = Bᵀ * B := by
     ext r c
     simp [Cm, Jm, hB, Matrix.mul_apply, Matrix.one_apply, mul_sub, sub_mul, Finset.sum_sub_distrib,
-      Fin.succ_ne_zero]
-    exact if_congr eq_comm rfl rfl
+      Fin.succ_ne_zero, Function.swap, eq_comm]
   have hsumP : ∑ k ∈ Finset.range (n + 1), P ^ k = Z * Y := by
     rw [hP, main_lemma_2]
     ext a b

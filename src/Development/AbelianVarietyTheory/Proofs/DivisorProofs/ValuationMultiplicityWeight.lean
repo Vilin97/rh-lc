@@ -314,7 +314,7 @@ variable {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r)
 theorem mul_mem_cusp (hC : ∀ la, CuspIso X Z U la) {a : AllWt.Weight Dw} (θ : secZ Xo c (exOf Dw a 0))
     (s : H0 (str₀ X Z) (L₀ X Z a) ⊤) (hs : restr le_top s = sec₀ X Z _ θ) (b : AllWt.Weight Dw) {f : Rul Xo c}
     (hf : f ∈ Cusp Z U b) : θ.1 * f ∈ Cusp Z U (a + b) := by
-  obtain ⟨s', hs', e'⟩ := (hC b).1 ⟨f, hf⟩
+  obtain ⟨s', hs', e'⟩ := (hC b).1 (⟨f, hf⟩ : Cusp Z U b)
   have h := (exOf_add_zero (Dw := Dw) a b).symm
   let C := ((commonLL X).addChart h).pull (inc₀ X Z)
   have hm : C.mul s s' ∈ vanBd X Z (a + b) := by

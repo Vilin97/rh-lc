@@ -107,7 +107,7 @@ theorem continuous_hR {X : Type} [TopologicalSpace X] (σ : E →ₐ[F] E) {M : 
     {f g : X → Fin M → K ⊗[F] E} (hf : Continuous f) (hg : Continuous g) :
     Continuous fun t => hR K σ J (f t) (g t) := by
   unfold hR Formalism.UG.hform
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   exact (((continuous_sigR K σ).comp ((continuous_apply i).comp hf)).mul continuous_const).mul
     ((continuous_apply j).comp hg)
 

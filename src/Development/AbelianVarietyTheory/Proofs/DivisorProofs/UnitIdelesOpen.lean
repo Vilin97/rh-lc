@@ -30,7 +30,7 @@ theorem isOpen_integral_everywhere : IsOpen {z : AE F E | ∀ v : Pl F, compFin 
   let S : AddSubgroup (AE F E) :=
     { carrier := {z | ∀ v : Pl F, compFin F E v z ∈ intLoc F E v}
       zero_mem' := fun v => by rw [map_zero]; exact zero_mem _
-      add_mem' := fun ha hb v => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha v) (hb v)
+      add_mem' := fun ha hb v => by rw [map_add]; exact add_mem (ha v) (hb v)
       neg_mem' := fun ha v => by rw [map_neg]; exact neg_mem (ha v) }
   let b := integralBasis E
   let φ : (Module.Free.ChooseBasisIndex ℤ (𝓞 E) → AF F) →ₗ[AF F] AE F E :=

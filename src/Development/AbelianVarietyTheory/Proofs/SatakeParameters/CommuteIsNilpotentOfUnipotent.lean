@@ -49,7 +49,7 @@ theorem tensV_stRep (hf : ∀ g v, f (ρ g v) = ρ' g (f v)) (g : ↥(GK K)) (x 
     tensV P f (stRep P ρ g x) = stRep P ρ' g (tensV P f x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | tmul v b => simp [hf]
+  | tmul v b => simp [tensV, hf]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 variable {ρ ρ' f}

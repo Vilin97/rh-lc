@@ -100,7 +100,7 @@ theorem cotPre_isSheaf (R : Type) [CommRing R] (q N : ℕ) (I : Cx R) (n : ℤ) 
     Presheaf.IsSheaf Scheme.etaleTopology.{0} (cotPre R q N I n) := by
   rw [Presheaf.isSheaf_iff_isSheaf_forget _ _ (forget (ModuleCat.{1} (ULift.{1} R))), isSheaf_iff_isSheaf_of_type]
   have hQ : ∀ s, Presieve.IsSheaf Scheme.etaleTopology.{0} ((I.X s).obj ⋙ forget (ModuleCat.{1} (ULift.{1} R))) :=
-    fun s => (isSheaf_iff_isSheaf_of_type _ _).1 ((Presheaf.isSheaf_iff_isSheaf_forget _ _ (forget _)).1 (I.X s).cond)
+    fun s => (isSheaf_iff_isSheaf_of_type _ _).1 ((Presheaf.isSheaf_iff_isSheaf_forget _ _ (forget _)).1 (I.X s).property)
   have sres_res : ∀ (s : ℤ) {V W W' : Scheme.{0}} (k : W ⟶ V) (g : W' ⟶ W) (v : Sec (I.X s) V),
       Sec.res g (Sec.res k v) = Sec.res (g ≫ k) v := fun s V W W' k g v =>
     (ConcreteCategory.congr_hom (((I.X s).obj).map_comp k.op g.op) v).symm

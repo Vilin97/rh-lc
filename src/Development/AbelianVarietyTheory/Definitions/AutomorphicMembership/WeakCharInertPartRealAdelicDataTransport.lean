@@ -186,9 +186,15 @@ theorem weakCharInertPart_realAdelicDataTransport (s : SameGrp a b) (h : R.WeakC
   constructor
   case base => exact (by with_unfolding_all exact ((baseW_tr b s h.base) :))
   case inert => exact (by with_unfolding_all exact ((isInert_tr b h.inert) :))
-  case fullY => tr_clause a b h.fullY
-  case fullX => tr_clause a b h.fullX
-  case fullP => tr_clause a b h.fullP
+  case fullY =>
+    intro t k hk
+    exact (by with_unfolding_all exact (weilFull_imp b _ _ _ _ _ _ (h.fullY t k hk) :))
+  case fullX =>
+    intro t
+    exact (by with_unfolding_all exact (weilFull_imp b _ _ _ _ _ _ (h.fullX t) :))
+  case fullP =>
+    intro i t
+    exact (by with_unfolding_all exact (weilFull_imp b _ _ _ _ _ _ (h.fullP i t) :))
   case scal => exact (by with_unfolding_all exact ((isScal_tr b h.scal) :))
   case tup => exact (by with_unfolding_all exact ((isTup_tr b h.tup) :))
   case phase => exact (by with_unfolding_all exact (h.phase :))
@@ -200,7 +206,7 @@ theorem pins_tr (s : SameGrp a b) {cG : G0 R.Pg a.D.R.r ≃* G0g a.D.nd} (h : Pi
   case char => exact (by with_unfolding_all exact ((weakCharInertPart_realAdelicDataTransport b s h.char) :))
   case keep => exact (by with_unfolding_all exact ((keep_tr b s h.keep) :))
   case phs => exact (by with_unfolding_all exact (h.phs :))
-  case trSem => tr_via (fun P : type_of% (R.TrISem F) => (∃ tr, P tr ∧ SepWith A tr) → P A.trI ∧ A.fam3.TrISep) (trISem_eq b R F) h.trSem
+  case trSem => exact (by with_unfolding_all exact (cast (congrArg (fun P : type_of% (R.TrISem F) => (∃ tr, P tr ∧ SepWith A tr) → P A.trI ∧ A.fam3.TrISep) (trISem_eq b R F)) h.trSem :))
 
 theorem holds_tr (h : Holds R F) : letI := alg b iK; Holds (real3 b R) (face3 b F) := by
   letI := alg b iK

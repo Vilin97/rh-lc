@@ -127,8 +127,12 @@ theorem finPart_sub_mean_le_deg : ∀ (F V : Type) [Field F] [NumberField F] [Ad
     intro σ
     rw [GlobalTheory.T.hermFam_gram_det_eq_normSq_basis_det_mul F V nm σ r b v, ← hδ]
     have hpos : 0 < (nm.gram σ ⇑b).det.re := by
-      have := (nm.posDef σ r b b.linearIndependent).det_pos
-      exact (Complex.pos_iff.mp this).1
+      open scoped ComplexOrder in
+      have hp := nm.posDef σ r b b.linearIndependent
+      unfold HermFam.gram
+      rw [hp.isHermitian.det_eq_prod_eigenvalues, ← RCLike.ofReal_prod]
+      change 0 < ∏ i, hp.isHermitian.eigenvalues i
+      exact Finset.prod_pos fun i _ => hp.eigenvalues_pos i
     have hn0 : 0 < Complex.normSq (σ δ) := Complex.normSq_pos.mpr ((map_ne_zero σ).mpr hδ0)
     rw [Complex.re_ofReal_mul, Real.log_mul hn0.ne' hpos.ne']
   have hsum := ds_sum_log_normSq_embeddings δ hδ0

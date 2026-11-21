@@ -167,7 +167,8 @@ theorem mulVec_lamHat_bound : ∀ {D : D7} (V V' : HSp D) (X : Matrix (Fin V'.ra
     exact h
   have := hV' _ hw
   convert this using 1
-  push_cast
+  funext j
+  simp only [Pi.smul_apply, smul_eq_mul, nsmul_eq_mul, Nat.cast_mul]
   ring
 
 end GlobalTheory.LatMatch

@@ -129,8 +129,8 @@ theorem exists_eigenline {E K O L V I : Type} [Field E] [NumberField E] [IsCMFie
       ring
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_sub, h.conj_symm, map_sum]
-      congr 1
-      exact Finset.sum_congr rfl fun i _ => by simp [_root_.mul_comm]
+        congr 1
+        exact Finset.sum_congr rfl fun i _ => by simp [_root_.mul_comm]
     · simp only [hΦ]
       simp only [hc, h.smul_right, hev, he, mul_sub, Finset.mul_sum, map_mul]
       congr 1
@@ -179,6 +179,8 @@ theorem exists_eigenline {E K O L V I : Type} [Field E] [NumberField E] [IsCMFie
     | smul t u _ hu =>
       rw [map_smul, map_smul, hu, ← map_smul]
       congr 1
+      funext i
+      simp only [Pi.smul_apply, smul_eq_mul]
       ring
   have hmap : Submodule.span (𝓞 K) (Set.range c) =
       (Submodule.span (𝓞 K) (Set.range ev)).map (Φ.restrictScalars (𝓞 K)) := by
@@ -233,7 +235,8 @@ theorem two_mul_deg_eigLat : ThetaUnifAV → Out.Laws → ∀ (E : Type) [Field 
       simp only [map_mul, map_add (f := _), map_one, map_ofNat] at h3 h4
       linear_combination (h3 - h4 + hσ) / 2
     obtain ⟨m, rfl, -⟩ := existsUnique_coord H k
-    simp only [map_add (f := _), map_mul, map_intCast, ← hw]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add (f := _), map_mul, map_intCast, ← hw]
     simp [wK]
   obtain ⟨𝔞, e, β, h𝔞, he, hrange, hβc, hβ, hform, hnorm⟩ := GlobalTheory.T.exists_fractionalIdeal_traceForm_rank_one E H D ε hK hrk hKF hpos
   obtain ⟨k, hk, hku, -, -, -, -, N, xs, ys, hdual⟩ := GlobalTheory.T.exists_unique_cmHermitianLatticeForm E H D ε
@@ -258,11 +261,6 @@ theorem two_mul_deg_eigLat : ThetaUnifAV → Out.Laws → ∀ (E : Type) [Field 
       rw [hcou _ _ hu]
       clear hu hz
       induction z' with
-      | zero =>
-        have := cosmul 0 0
-        rw [zero_smul, zero_smul] at this
-        rw [this]
-        exact zero_mem _
       | tmul a m =>
         rw [show TensorProduct.tmul (OK H) a m = a • TensorProduct.tmul (OK H) 1 m by
           simp [TensorProduct.smul_tmul'], cosmul]

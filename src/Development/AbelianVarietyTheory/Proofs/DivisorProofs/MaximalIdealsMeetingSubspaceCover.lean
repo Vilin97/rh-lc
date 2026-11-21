@@ -121,7 +121,7 @@ private theorem forms_fin : ∀ (l : ℕ) [Fact l.Prime] (ι : Type) [Fintype ι
     obtain ⟨γ, hγ, s, hs, κ, hκ, e⟩ := hS (Quotient.out c)
     refine ⟨⟨s, hs⟩, ?_⟩
     show DoubleCoset.mk F.Γ F.K s = c
-    rw [← DoubleCoset.out_eq' F.Γ F.K c]
+    rw [← DoubleCoset.out_eq' c]
     exact (@DoubleCoset.eq _ _ F.Γ F.K s _).2 ⟨γ, hγ, κ, hκ, e⟩
   exact Formalism.UG.P.automorphic_forms_level_finite_holds F.G F.Γ F.K F.O (NablaT F.O N lam) _ ‹_›
 

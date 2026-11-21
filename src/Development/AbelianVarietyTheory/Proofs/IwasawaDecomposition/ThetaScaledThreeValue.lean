@@ -15,7 +15,7 @@ public import Development.AbelianVarietyTheory.Definitions.Degenerations.Admissi
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry NumberField
 open scoped CategoryTheory.Obj
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open Formalism.L2.Pj GlobalTheory.RayEv GlobalTheory.RayHoriz GlobalTheory.RayRos GlobalTheory.RayRosEx
+open Formalism.L2.Pj GlobalTheory.RayEv
 attribute [local instance] Over.cartesianMonoidalCategory
 
 set_option autoImplicit false

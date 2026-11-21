@@ -129,8 +129,9 @@ private theorem entry_le {K : Type} [Field K] [NumberField K] {n : ℕ} (γ : GL
   · refine Finset.prod_le_prod₀ (fun _ _ => by positivity) fun w _ => ?_
     refine pow_le_pow_left₀ (by positivity) (max_le ?_ (one_le_locHeight _)) _
     refine le_trans (le_of_eq ?_) (norm_apply_le_locHeight (infAt w (AdelicGLn.diagonal K n γ)) i j)
-    exact (InfinitePlace.Completion.norm_coe w _).symm
-  · refine finprod_le_finprod ((finite_mulSupport_locHeight_finAt (AdelicGLn.diagonal K n γ)).subset fun v hv h1 => hv ?_)
+    rw [infAt_apply, AdelicGLn.diagonal_apply, ← GroundTheory.Global.norm_algebraMap_apply]
+    rfl
+  · refine finprod_le_finprod₀ ((finite_mulSupport_locHeight_finAt (AdelicGLn.diagonal K n γ)).subset fun v hv h1 => hv ?_)
       (fun _ => le_max_of_le_right zero_le_one) (finite_mulSupport_locHeight_finAt _) hf
     exact le_antisymm ((hf v).trans_eq h1) (le_max_right _ _)
 
@@ -163,7 +164,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.sumHt :
   have hF1 : ∀ γ, 1 ≤ F γ := fun γ => one_le_height _
   have hb : BddBelow (Set.range F) := ⟨1, Set.forall_mem_range.2 hF1⟩
   have hi : 1 ≤ ⨅ γ, F γ := le_ciInf hF1
-  obtain ⟨γ₀, h₀⟩ := exists_lt_of_ciInf_lt (f := F) (a := 2 * ⨅ γ, F γ) (by linarith)
+  obtain ⟨γ₀, h₀⟩ := exists_lt_of_ciInf_lt (f := F) (b := 2 * ⨅ γ, F γ) (by linarith)
   rw [← (Equiv.mulRight γ₀⁻¹).tsum_eq fun γ : Gam K n =>
     ENNReal.ofReal (AutomorphicForm.height ((γ : G1 K n) : AdelicGLn.AdelicGL K n) ^ M)⁻¹, ← ENNReal.tsum_mul_left]
   refine ENNReal.tsum_le_tsum fun γ => ?_

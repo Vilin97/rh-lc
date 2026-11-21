@@ -508,9 +508,18 @@ theorem Killed.mixS_eq_zero (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {τ 
     simp [mulVec, dotProduct, hx]
   · exact ⟨theta_zero, by simp [_root_.I195MixedCoordinates_4b9bfdc47a8dedbccd461140.source, heisO]⟩
   · intro F G _ _ hF hG
-    exact ⟨theta_add hF.1 hG.1, by rw [GlobalTheory.Unf.DoubleSum.mixS_add d v hψ hF.1 hG.1, Pi.add_apply, hF.2, hG.2, add_zero]⟩
+    refine ⟨theta_add hF.1 hG.1, ?_⟩
+    change (_root_.I195MixedCoordinates_6edf13e9c2ea736a34004c3c.source d) W ψ v.μ v.𝓕 (F + G) x 0 = 0
+    rw [GlobalTheory.Unf.DoubleSum.mixS_add d v hψ hF.1 hG.1, Pi.add_apply]
+    change (_root_.I195MixedCoordinates_4b9bfdc47a8dedbccd461140.source d) W ψ v.μ v.𝓕 F x 0 +
+      (_root_.I195MixedCoordinates_4b9bfdc47a8dedbccd461140.source d) W ψ v.μ v.𝓕 G x 0 = 0
+    rw [hF.2, hG.2, add_zero]
   · intro c F _ hF
-    exact ⟨theta_smul c hF.1, by rw [GlobalTheory.Unf.DoubleSum.mixS_smul d v, Pi.smul_apply, hF.2, smul_zero]⟩
+    refine ⟨theta_smul c hF.1, ?_⟩
+    change (_root_.I195MixedCoordinates_6edf13e9c2ea736a34004c3c.source d) W ψ v.μ v.𝓕 (c • F) x 0 = 0
+    rw [GlobalTheory.Unf.DoubleSum.mixS_smul d v, Pi.smul_apply]
+    change c • (_root_.I195MixedCoordinates_4b9bfdc47a8dedbccd461140.source d) W ψ v.μ v.𝓕 F x 0 = 0
+    rw [hF.2, smul_zero]
 
 end Theta
 

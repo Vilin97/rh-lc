@@ -111,12 +111,10 @@ theorem firstChern_cocycle_all_levels (H : RIn l) (r : Roots l) (M : Model l K) 
   h.elim fun D' h => h.elim fun π h => h.elim fun L h => h.elim fun x h =>
     firstChern_cocycle_untwisted H r M D D' π h.1 L h.2.1 n (x n) (h.2.2.1 n) (v.lev n) (h.2.2.2 n) C G Λ
 
-theorem etP_eFam (H : RIn l) (r : Roots l) (K : IntermediateField ℚ_[l] (PadicAlgCl l)) : EtP (eFam lcNat H r K) where
-  good := good_eFam H r K
-  one M n := eM_one H r M n
-  one_ex M := one_ex r M
-  first_chern_class_exists M D r' := etale_firstChern_exists M D r'
-  c1 M D r' v h C _ G Λ n := firstChern_cocycle_all_levels H r M D v (roots_eq r' r ▸ h) C G Λ n
+theorem etP_eFam (H : RIn l) (r : Roots l) (K : IntermediateField ℚ_[l] (PadicAlgCl l)) : EtP (eFam lcNat H r K) :=
+  ⟨good_eFam H r K, eM_one H r, one_ex r, etale_firstChern_exists,
+    fun M D r' v h C _ G Λ n =>
+      firstChern_cocycle_all_levels H r M D v (roots_eq r' r ▸ h) C G Λ n⟩
 
 theorem etP (l : ℕ) [Fact l.Prime] (K : IntermediateField ℚ_[l] (PadicAlgCl l)) : ∃ e : E.EtFam l K, EtP e :=
   (rootsEx l).elim fun r => ⟨_, etP_eFam (CrystallineSemistableComparison.R.forE l) r K⟩

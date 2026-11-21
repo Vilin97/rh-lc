@@ -33,13 +33,17 @@ theorem mem_ker_reduction_iff {a : ℕ} (I : Ideal R) (g : GL (Fin a) R) :
     have := congrFun (congrFun h i) j
     rw [GeneralLinearGroup.map_apply] at this
     rw [← Ideal.Quotient.eq, this]
-    by_cases hij : i = j <;> simp [hij, one_apply]
+    by_cases hij : i = j
+    · subst j; simp [one_apply]
+    · simp [hij, one_apply]
   · intro h
     ext i j
     rw [GeneralLinearGroup.map_apply]
     have := Ideal.Quotient.eq.2 (h i j)
     rw [this]
-    by_cases hij : i = j <;> simp [hij, one_apply]
+    by_cases hij : i = j
+    · subst j; simp [one_apply]
+    · simp [hij, one_apply]
 
 theorem exists_eq_one_add_smul' {a : ℕ} (c : R) (g : GL (Fin a) R)
     (hg : g ∈ (Matrix.GeneralLinearGroup.map (n := Fin a) (Ideal.Quotient.mk (Ideal.span {c}))).ker) :

@@ -27,7 +27,7 @@ namespace GlobalTheory.SizeSqIntegral
 theorem sz_nat_val (l : ℕ) [Fact l.Prime] (lam : algebraicClosure ℚ ℂ →+* ℂ_[l]) (D : ℕ) :
     Sz l lam (-(padicValNat l D : ℝ)) (D : ℂ) := by
   have h := GlobalTheory.SizeRat.sz_ratCast l lam (D : ℚ) (-(padicValNat l D : ℝ)) (by
-    rw [padicValRat.of_nat]; simp)
+    rw [padicValRat.of_nat, Nat.padicValNat_def]; simp)
   simpa using h
 
 theorem sz_zero_of_isIntegral (l : ℕ) [hl : Fact l.Prime] (lam : algebraicClosure ℚ ℂ →+* ℂ_[l]) (x : ℂ)
@@ -43,7 +43,7 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (lam : algebraicClosure ℚ ℂ →+
     convert h using 1
     ring
   · have h1 := sz_nat_val l lam (l ^ padicValNat l D)
-    rw [padicValNat.prime_pow] at h1
+    rw [Nat.padicValNat_def, Nat.multiplicity_prime_pow] at h1
     have h2 : Sz l lam 0 (M : ℂ) := sz_zero_of_isIntegral l lam _ (by simpa using (isIntegral_algebraMap (R := ℤ) (A := ℂ) (x := (M : ℤ))))
     have h := GlobalTheory.SzRules.sz_mul h2 h1
     rw [zero_add, ← Nat.cast_mul] at h

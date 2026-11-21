@@ -61,13 +61,13 @@ theorem cube_le_gap (k r : ℕ) : ((2 * r + k + 1 : ℕ) : ℝ) ^ 3 ≤ gapY k r
     (one_le_pow₀ (by exact_mod_cast (by omega : 1 ≤ 2 * r + 2)))) (mul_le_gapY k r)
 
 theorem hypType_of (hk : 1 ≤ k) {lam : Fin (2 * r + k + 1) → ℝ} {u : Fin k → ℝ} {b : ℝ} (hlam : IsHCParam lam)
-    (hu : IsHCParam u) (hI : InterlaceS (by omega) u lam) (hb : ∀ i, |u i| ≤ b) : HypType k r lam (lamN u) b where
-  half := fun i h1 h2 => by
+    (hu : IsHCParam u) (hI : InterlaceS (by omega) u lam) (hb : ∀ i, |u i| ≤ b) : HypType k r lam (lamN u) b := by
+  refine { half := ?_, inter := ?_, u_le := ?_ }
+  · intro i h1 h2
     obtain ⟨j, rfl⟩ : ∃ j, i = j + 1 := ⟨i - 1, by omega⟩
     rw [lamN_succ u ⟨j, by omega⟩]
     exact hu.2 _
-  inter := by
-    refine ⟨fun s t hst => hlam.1 (by simpa using hst), fun s => ⟨fun hs => ?_, fun hs => ?_⟩⟩
+  · refine ⟨fun s t hst => hlam.1 (by simpa using hst), fun s => ⟨fun hs => ?_, fun hs => ?_⟩⟩
     · have hs' : (s : ℕ) < k := by simpa using hs
       rw [lamN_succ u ⟨s, hs'⟩]
       by_cases h : (s : ℕ) + 1 < k
@@ -81,7 +81,7 @@ theorem hypType_of (hk : 1 ≤ k) {lam : Fin (2 * r + k + 1) → ℝ} {u : Fin k
         omega
       rw [show (s : ℕ) + 2 = (s + 1) + 1 from rfl, lamN_succ u ⟨s + 1, hs'⟩]
       exact (hI.1 s hs').2
-  u_le := fun i h1 h2 => by
+  · intro i h1 h2
     obtain ⟨j, rfl⟩ : ∃ j, i = j + 1 := ⟨i - 1, by omega⟩
     rw [lamN_succ u ⟨j, by omega⟩]
     exact hb _

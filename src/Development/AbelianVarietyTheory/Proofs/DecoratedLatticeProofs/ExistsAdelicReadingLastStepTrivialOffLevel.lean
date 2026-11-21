@@ -57,29 +57,23 @@ theorem reads_move' (I : TC B X) {u : B.Word} {a : I.ι} {i : ℕ} {Ch : Type}
     (hT : ∀ β (P : (B.primes X).vT u) (r j : Fin (B.R.N i)), r.1 + 1 = B.R.N i →
       HasRes P.1 (adAt B.host.F P.1 ((((k' β)⁻¹ * k β)⁻¹ : TC.GA B (B.R.N i)).1 r j))
         (if j = r then Ideal.Quotient.mk P.1.asIdeal (B.fields.conjO (X.piT u)) else 0)) :
-    I.Reads u a i chOf Lb U' chi' (fun c => y c * k' (chOf c)) st (fun β => (k' β)⁻¹ * k β) where
-  key := R.key
-  onto := R.onto
-  lb := R.lb
-  k_std := hstd
-  k_off := hoff
-  k_T := hT
-  pt := fun c => by
+    I.Reads u a i chOf Lb U' chi' (fun c => y c * k' (chOf c)) st (fun β => (k' β)⁻¹ * k β) := by
+  refine ⟨R.key, R.onto, R.lb, hstd, hoff, hT, ?_, ?_, ?_, R.stab⟩
+  · intro c
     have e : y c * k' (chOf c) * ((k' (chOf c))⁻¹ * k (chOf c)) = y c * k (chOf c) := by group
     rw [e]
     exact R.pt c
-  lev := fun c x q hq => by
+  · intro c x q hq
     have e : y c * k' (chOf c) * x * ((k' (chOf c))⁻¹ * k (chOf c)) = y c * (k' (chOf c) * x * (k' (chOf c))⁻¹) * k (chOf c) := by
       group
     rw [e] at hq
     exact (hU (chOf c) x).trans (R.lev c _ q hq)
-  chr := fun c x κ hκ hq => by
+  · intro c x κ hκ hq
     have e : y c * k' (chOf c) * x.1 * ((k' (chOf c))⁻¹ * k (chOf c)) =
         y c * (k' (chOf c) * x.1 * (k' (chOf c))⁻¹) * k (chOf c) := by group
     rw [e] at hq
     rw [hchi]
     exact R.chr c _ κ hκ hq
-  stab := R.stab
 
 section Gen
 

@@ -104,7 +104,7 @@ theorem finLat_latO {S T : HSp D} {LS : Lat S} {LT : Lat T} (hS : Submodule.IsLa
   refine finLat_of (fun a ha => latO_mxAt ha) ⟨{a | ∀ i j, finPart D (incA D (K : D.host.E)⁻¹ * a i j) ∈ intAE D}, ?_, ?_, ?_⟩
     (C := (fun z => Matrix.of fun i j => incA D (M : D.host.E)⁻¹ * s (z i j)) ''
       {z : Matrix (Fin T.rank) (Fin S.rank) _ | ∀ i j, z i j ∈ intAE D}) (IsCompact.image ?_ ?_) fun a ha => ?_
-  · simp only [Set.setOf_forall]
+  · simp only [Set.ofPred_forall]
     exact isOpen_iInter_of_finite fun i => isOpen_iInter_of_finite fun j => (GlobalTheory.SchwartzBruhatTensor.isOpen_intAE D).preimage
       ((GlobalTheory.Member.continuous_finPart D).comp (continuous_const.mul (continuous_id.matrix_elem i j)))
   · intro i j
@@ -323,13 +323,14 @@ abbrev homL (P : GlobalTheory.FinPl.Pl D → Prop) : AddSubgroup (WO V W) :=
 abbrev pcs (ψ : AddChar (AF D.host.F) ℂ) : Pieces V₀ W W₀ ρ σ :=
   piecesOf dV dW ψ (homL dV dW LV₀ LW₀ 𝔟 𝔠 fun _ => True) (homL dV dW LV₀ LW₀ 𝔟 𝔠 fun _ => True)
 
-theorem stdAt_pcs (v : GlobalTheory.FinPl.Pl D) : StdAt dV dW (pcs dV dW LV₀ LW₀ 𝔟 𝔠 ψ) (splitL dV LV₀ 𝔟) (splitL dW LW₀ 𝔠) v where
-  a _ ha := mem_latO_at (mxAt_mul' ha dV.pX)
-  a' a ha := ⟨idem D (· = v) • a, fun i j => (mem_idOff_iff _ _).2 (by
-      rw [Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul, mul_sub, ← mul_assoc, idem_mul_self, sub_self]), by
-    rw [HypDec.extX_apply, Matrix.smul_mul]
-    exact idem_mem_latO ha⟩
-  b _ ha := mem_latO_at (mxAt_mul' (mxAt_mul dW.jX ha) dV.p0)
+theorem stdAt_pcs (v : GlobalTheory.FinPl.Pl D) : StdAt dV dW (pcs dV dW LV₀ LW₀ 𝔟 𝔠 ψ) (splitL dV LV₀ 𝔟) (splitL dW LW₀ 𝔠) v := by
+  exact
+    { a _ ha := mem_latO_at (mxAt_mul' ha dV.pX)
+      a' a ha := ⟨idem D (· = v) • a, fun i j => (mem_idOff_iff _ _).2 (by
+            rw [Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul, mul_sub, ← mul_assoc, idem_mul_self, sub_self]), by
+          rw [HypDec.extX_apply, Matrix.smul_mul]
+          exact idem_mem_latO ha⟩
+      b _ ha := mem_latO_at (mxAt_mul' (mxAt_mul dW.jX ha) dV.p0) }
 
 variable {dV dW LV₀ LW₀ 𝔟 𝔠} (hψ : IsStdChar D ψ (-1)) (hV : IsSelfDualC V (splitL dV LV₀ 𝔟)) (hV₀ : IsSelfDualC V₀ LV₀)
   (hW : IsSelfDualC W (splitL dW LW₀ 𝔠)) (hW₀ : IsSelfDualC W₀ LW₀) {x : Mx D W.rank ρ} {y : Mx D V₀.rank σ}
@@ -347,29 +348,30 @@ include hV₀ hW₀
 
 theorem is_pcs (uni : ∀ u : UX D ρ, MxAt (fun _ => True) (u.1.1 - 1) →
       dV.extX W (x ⬝ u.1.1 - x) ∈ homL dV dW LV₀ LW₀ 𝔟 𝔠 (fun _ => True) → psiUni ψ u.1 = 1) :
-    (pcs dV dW LV₀ LW₀ 𝔟 𝔠 ψ).Is dV dW x ψ where
-  a₁ := finLat_comap (finLat_latO hV.1 hW.1) _ (A := 1) (A' := 1) (fun a => by rw [Matrix.one_mul]; rfl) (Matrix.one_mul _) dV.pX_jX
-  a₂ := by
-    rw [pcs_A₂ hψ hV hW]
-    exact finLat_comap (finLat_latO hV.1 hW.1) _ (A := 1) (A' := 1) (fun a => by rw [Matrix.one_mul]; rfl) (Matrix.one_mul _) dV.pY_jY
-  b₁ := finLat_comap (finLat_latO hV.1 hW.1) _ (fun _ => rfl) dW.pX_jX dV.p0_j0
-  b₂ := finLat_comap (finLat_latO hV.1 hW.1) _ (fun _ => rfl) dW.pY_jY dV.p0_j0
-  dualA a ha := by
-    rw [pcs_A₂ hψ hV hW]
-    exact dualX hV hW hψ ha
-  dualA' a ha := by
-    rw [pcs_A₂ hψ hV hW]
-    exact dualY hV hW hψ ha
-  dualB a ha := (wittExtendByZero_mem_completedHomLattice hV hV₀ hW).trans ((dualX' hW hV₀ hψ ha).trans
-    (forall_congr' fun _ => imp_congr_left (wittExtendByZero_mem_completedHomLattice hV hV₀ hW).symm))
-  dualB' a ha := (wittExtendByZero_mem_completedHomLattice hV hV₀ hW).trans ((dualY' hW hV₀ hψ ha).trans
-    (forall_congr' fun _ => imp_congr_left (wittExtendByZero_mem_completedHomLattice hV hV₀ hW).symm))
-  uni := uni
-  fin₀ u hu := latO_mxAt ((wittCoreInclusion_mem_completedHomLattice hW hW₀ hV₀).1 ((wittExtendByZero_mem_completedHomLattice hV hV₀ hW).1 hu))
-  vac₀ := by
-    obtain ⟨f, hf, f0⟩ := exists_vac hψ hV₀ hW₀
-    exact ⟨f, ⟨hf.1, fun u hu => hf.2.1 u ((wittCoreInclusion_mem_completedHomLattice hW hW₀ hV₀).1 ((wittExtendByZero_mem_completedHomLattice hV hV₀ hW).1 hu)),
-      fun e he u hu => hf.2.2 e he u ((wittCoreInclusion_mem_completedHomLattice hW hW₀ hV₀).1 ((wittExtendByZero_mem_completedHomLattice hV hV₀ hW).1 hu))⟩, f0⟩
+    (pcs dV dW LV₀ LW₀ 𝔟 𝔠 ψ).Is dV dW x ψ := by
+  exact
+    { a₁ := finLat_comap (finLat_latO hV.1 hW.1) _ (A := 1) (A' := 1) (fun a => by rw [Matrix.one_mul]; rfl) (Matrix.one_mul _) dV.pX_jX
+      a₂ := by
+        rw [pcs_A₂ hψ hV hW]
+        exact finLat_comap (finLat_latO hV.1 hW.1) _ (A := 1) (A' := 1) (fun a => by rw [Matrix.one_mul]; rfl) (Matrix.one_mul _) dV.pY_jY
+      b₁ := finLat_comap (finLat_latO hV.1 hW.1) _ (fun _ => rfl) dW.pX_jX dV.p0_j0
+      b₂ := finLat_comap (finLat_latO hV.1 hW.1) _ (fun _ => rfl) dW.pY_jY dV.p0_j0
+      dualA a ha := by
+        rw [pcs_A₂ hψ hV hW]
+        exact dualX hV hW hψ ha
+      dualA' a ha := by
+        rw [pcs_A₂ hψ hV hW]
+        exact dualY hV hW hψ ha
+      dualB a ha := (wittExtendByZero_mem_completedHomLattice hV hV₀ hW).trans ((dualX' hW hV₀ hψ ha).trans
+        (forall_congr' fun _ => imp_congr_left (wittExtendByZero_mem_completedHomLattice hV hV₀ hW).symm))
+      dualB' a ha := (wittExtendByZero_mem_completedHomLattice hV hV₀ hW).trans ((dualY' hW hV₀ hψ ha).trans
+        (forall_congr' fun _ => imp_congr_left (wittExtendByZero_mem_completedHomLattice hV hV₀ hW).symm))
+      uni := uni
+      fin₀ u hu := latO_mxAt ((wittCoreInclusion_mem_completedHomLattice hW hW₀ hV₀).1 ((wittExtendByZero_mem_completedHomLattice hV hV₀ hW).1 hu))
+      vac₀ := by
+        obtain ⟨f, hf, f0⟩ := exists_vac hψ hV₀ hW₀
+        exact ⟨f, ⟨hf.1, fun u hu => hf.2.1 u ((wittCoreInclusion_mem_completedHomLattice hW hW₀ hV₀).1 ((wittExtendByZero_mem_completedHomLattice hV hV₀ hW).1 hu)),
+          fun e he u hu => hf.2.2 e he u ((wittCoreInclusion_mem_completedHomLattice hW hW₀ hV₀).1 ((wittExtendByZero_mem_completedHomLattice hV hV₀ hW).1 hu))⟩, f0⟩ }
 
 variable (hx : idem D (fun _ => True) • dV.extX W x ∈ homL dV dW LV₀ LW₀ 𝔟 𝔠 fun _ => True)
   (hy : idem D (fun _ => True) • dW.incAdj V₀ y ∈ latO V₀ W (LV₀ : Set _) (splitL dW LW₀ 𝔠 : Set _) fun _ => True)
@@ -415,7 +417,7 @@ end Pcs
 
 theorem exists_uni {ρ : ℕ} {N : Mx D ρ ρ} (h2 : ∀ i j, j ≤ i → N i j = 0) : ∃ u : UX D ρ, u.1.1 = 1 + N := by
   have hd : (1 + N).det = 1 := by
-    rw [Matrix.det_of_upperTriangular fun i j (h : j < i) => by
+    rw [Matrix.det_of_isUpperTriangular fun i j (h : j < i) => by
       rw [Matrix.add_apply, h2 i j h.le, Matrix.one_apply_ne h.ne', add_zero]]
     exact Finset.prod_eq_one fun i _ => by rw [Matrix.add_apply, h2 i i le_rfl, Matrix.one_apply_eq, add_zero]
   obtain ⟨u, hu⟩ : IsUnit (1 + N) := (Matrix.isUnit_iff_isUnit_det _).2 (hd ▸ isUnit_one)

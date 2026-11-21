@@ -161,13 +161,13 @@ theorem core_room (St : Std C0 Cde CE1 CE2 1 X) (hc : 1 ≤ X.c) (j : Fin (numSe
     (i : Fin (segS X.TT j)) :
     (X.c : ℝ) * (ka1 X + 2 * X.Q + 3 * X.k) + 4 ≤
       X.de C0 Cde / 4 * (coarseA X.p (X.seg C0 CE1 CE2 j) b i : ℝ) := by
-  have H := segHyp_of St j
   obtain ⟨hP0, -, -, hQ, hPQ⟩ := St.levels j i
   have hcb := coarse_bounds (X.bT (segPos X.TT j i)) (X.p ^ (segG X.TT j - (segDists X.TT j).get i)) (b.rz i)
     (fun c => (hdig.1 i c).1) (hdig.2.1 i).1 (hdig.2.1 i).2
   have hAP : (X.bT (segPos X.TT j i) : ℝ) - X.k * ((X.p ^ (segG X.TT j - (segDists X.TT j).get i) : ℕ) : ℝ) <
       (coarseA X.p (X.seg C0 CE1 CE2 j) b i : ℝ) * ((X.p ^ (segG X.TT j - (segDists X.TT j).get i) : ℕ) : ℝ) := hcb.2
-  have hbT : X.b' * (1 - _root_.Formalism.MainNotions.ColumnSystems.Pf.be X C0) ≤ (X.bT (segPos X.TT j i) : ℝ) := (H.bT i).1
+  have hbT : X.b' * (1 - _root_.Formalism.MainNotions.ColumnSystems.Pf.be X C0) ≤ (X.bT (segPos X.TT j i) : ℝ) :=
+    (St.winB _ (pos_mem X.TT j i).1).1
   have hc1 : (1 : ℝ) ≤ (X.c : ℝ) := by exact_mod_cast hc
   exact core_roomR St.bpos hAP hbT St.be18 St.eps0 St.de6 St.forty_epsilon_le_delta St.eps_ge St.k5 St.Q1 hP0 (hPQ.trans hQ) St.N1k
     St.N2 St.Y1 St.Hc hc1 (Nat.cast_nonneg _) (Nat.cast_nonneg _) rfl
@@ -578,7 +578,8 @@ theorem keptPair_thr : RestPairS :=
 
 theorem keptBlocks : KeptBlocksBeyondThreshold := kept_blocks_of_S_line keptPair_thr
 
-theorem closed_of_bounds {D : Formalism.BasicNotions.D7} (h3 : adm3 D) (hU : RestUp) (hL : RestLow) (hL1 : PartnersToFactors)
+theorem closed_of_bounds {D : Formalism.BasicNotions.D7} (h3 : adm3 D)
+    (hU : Formalism.MainNotions.ColumnSystems.Pf.RestUp) (hL : Formalism.MainNotions.ColumnSystems.Pf.RestLow) (hL1 : PartnersToFactors)
     (hLift : RestLift) : Closed (ExtendedAllConclusions D) :=
   have hA2 : RemainderSegmentBoundSecond D := restAlt2_of (restSegLow_of hL) (dimHH_of h3) charZeroAt
   closed_of_rests (fun _ _ _ => segment_statement_holds D _ _ _) (restFree D) (remainderSegmentBoundFirst D) (rest2 D) (restAlt3 D)
@@ -612,7 +613,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.G Formal
 theorem tools : ExtremalProjectorTools where
   extremalProjectorAlt := ExtremalProjector.extremal_projector_statement
 
-theorem inputs : Loc8All where
+theorem inputs : Loc8All := {
   p13B := flipOneThree.Pf.theorem_I_closed_form_holds
   p13A := GramWindowAlt.theorem_A_closed_form_holds
   p15 := tensor_closed
@@ -637,6 +638,7 @@ theorem inputs : Loc8All where
   thresholdClauseOne := CountingStatementReduction.positivity_condition_eventually
   thresholdClauseThree := CountingStatementReduction.exponent_bound_eventually
   instanceClauseEight := fun D X => PolBridge.combined_weight_of_nested_sets D X (GLWeightTheory.weight_condition_from_integral_form D) (ColumnFamilies.Top.b15 D)
+}
 
 theorem rangeOne_abs :
     ∃ (T0 : ℝ) (T2 C : ℝ → ℝ), 0 < T0 ∧ ∀ C₀ : ℝ, T0 ≤ C₀ → 0 < T2 C₀ ∧ 0 < C C₀ ∧ ∀ CH : ℝ, T2 C₀ ≤ CH →

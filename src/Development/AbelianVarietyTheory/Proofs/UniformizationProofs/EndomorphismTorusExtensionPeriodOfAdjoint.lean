@@ -116,15 +116,17 @@ theorem main : LL → TwistBCSpanStatement → TWM.VRatioGtStatement → TWState
   have h0 : k • torusPt D.toPre F (Additive.ofMul t) = 0 := by
     rw [← map_nsmul, ← ofMul_pow, ht, ofMul_one, map_zero]
   let q : QkPt D.toPre F k := qkMk hB 0 (torusPt D.toPre F (Additive.ofMul t)) (h0.trans (map_zero _).symm)
-  have hq : IsTor t q.g := (isTor_iff _ _).2 (isTorusPtF_torusPt t)
+  have hq : IsTor t q.g := by
+    apply (isTor_iff _ _).2
+    simpa [q] using (isTorusPtF_torusPt t)
   obtain ⟨q', e₁, e₂⟩ := key E' hE' k hk q (f q) ((hf.1 _ _).2 rfl) (a' q.g) ((ha' _ _).2 rfl)
   have hq' : IsTor (t.comp (AddMonoidHom.toMultiplicative E'.h)) q'.g :=
     (ec E' E' E').2.2.1 t q.g q'.g hq ((ha' _ _).2 e₁)
   have hq0 : q'.y = 0 := by
     refine inj _ _ (0 : GtPtF D.toPre F) ((isIota_iff_eq hB _ _).2 ?_) ((isIota_iff_eq hB _ _).2 (map_zero _).symm)
     rw [← qk_nsmul hB q', e₁, ← map_nsmul]
-    exact ((congrArg a' h0).trans (map_zero _)).symm
-  have w₁ := (hf.2.2.2.2 _ _ _).1 (weilQkIs_swap ((wp q p').2 t rfl hq))
+    simpa [q] using ((congrArg a' h0).trans (map_zero _)).symm
+  have w₁ := (hf.2.2.2.2 _ _ _).1 (weilQkIs_swap ((wp q p').2 t (by simp [q]) hq))
   rw [hpp', weilIs_comp_iff_of_rosatiAdj hL _ A E.aA E'.aA E.homA E'.homA ros F _ k _ _ (tor p) (tor q),
     (hf.1 _ _).1 e₂] at w₁
   have w₂ := weilQkIs_swap ((hf.2.2.2.2 _ _ _).2 w₁)

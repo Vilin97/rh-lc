@@ -166,8 +166,8 @@ theorem fockDeg_le_span_eigen : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
     congr 1
     have e1 : tensL R (A v) = om (1, k) (tensL R v) := (hA v R (hR v)).symm
     have e2 := hunit (tensL R v) (hR v).2
-    rw [eLpNorm_eq_lintegral_rpow_enorm two_ne_zero ENNReal.ofNat_ne_top,
-      eLpNorm_eq_lintegral_rpow_enorm two_ne_zero ENNReal.ofNat_ne_top]
+    rw [eLpNorm_eq_lintegral_rpow_eNorm_toReal two_ne_zero ENNReal.ofNat_ne_top (hmem _).aestronglyMeasurable,
+      eLpNorm_eq_lintegral_rpow_eNorm_toReal two_ne_zero ENNReal.ofNat_ne_top (hmem _).aestronglyMeasurable]
     show (∫⁻ x, ‖tensL R (A v) x‖ₑ ^ (2 : ENNReal).toReal ∂μ) ^ (1 / (2 : ENNReal).toReal) = _
     rw [e1]
     simp only [ENNReal.toReal_ofNat, ENNReal.rpow_two]

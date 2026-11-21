@@ -15,4 +15,4 @@ theorem _root_.GlobalTheory.T.full_rank_zeta_kernel : ∀ (k : Type) [Field k] [
     ∀ Ψ ∈ GlobalTheory.FullRankCoinv.fullRk k n d,
     (∀ h : GL (Fin d) k, smallF (haarVol (GlobalTheory.SplitWeil.KO k (Fin n))) ν Ψ (GlobalTheory.FullRankCoinv.Y0 k n d * h.val) = 0) →
       Ψ ∈ GlobalTheory.FullRankCoinv.augRk n d ν := by
-  first | exact @GlobalTheory.FullRankCoinv.mem_augRk_of_fibre_eq_zero | exact GlobalTheory.FullRankCoinv.mem_augRk_of_fibre_eq_zero | (intros; apply GlobalTheory.FullRankCoinv.mem_augRk_of_fibre_eq_zero <;> assumption)
+  exact @GlobalTheory.FullRankCoinv.mem_augRk_of_fibre_eq_zero

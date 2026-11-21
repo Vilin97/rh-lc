@@ -18,6 +18,7 @@ theorem schwartz_family_uniform_bound : ∀ (V : Type) [NormedAddCommGroup V] [N
       ‖lam i f‖ ≤ C * (T.sup (schwartzSeminormFamily ℂ V ℂ)) f * w i ^ N := by
   intro V _ _ _ I lam w hw hb
   haveI : (𝓤 𝓢(V, ℂ)).IsCountablyGenerated := IsUniformAddGroup.uniformity_countably_generated
+  haveI : CompleteSpace 𝓢(V, ℂ) := SchwartzComplete.completeSpace
   haveI : BaireSpace 𝓢(V, ℂ) := inferInstance
   let S : ℕ × ℕ → Set 𝓢(V, ℂ) := fun p => {f | ∀ i, ‖lam i f‖ ≤ (p.2 : ℝ) * w i ^ p.1}
   have hS : ∀ p, IsClosed (S p) := by

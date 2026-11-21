@@ -81,13 +81,13 @@ theorem exists_kill [TopologicalSpace K] [IsTopologicalGroup K] [CompactSpace K]
     rw [smul_smul, Units.mul_inv, one_smul]
   choose s hs using fun w : O => (hO w).1 w.2
   refine ⟨∑ w : O, MonoidAlgebra.single (s w) ((ψ (s w))⁻¹ : ℂˣ).val, ?_, ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [aug_single, Units.inv_mul]
     have : O.Nonempty := ⟨z, (hO z).2 ⟨1, by simp⟩⟩
     simpa using this.ne_empty
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum, LinearMap.sum_apply, ← hz, ← Finset.sum_coe_sort O]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply, ← hz, ← Finset.sum_coe_sort O]
     refine Finset.sum_congr rfl fun w _ => ?_
     rw [Representation.asAlgebraHom_single, LinearMap.smul_apply]
     exact hs w

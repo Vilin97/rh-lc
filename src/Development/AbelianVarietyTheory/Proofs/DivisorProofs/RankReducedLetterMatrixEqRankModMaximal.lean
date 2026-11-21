@@ -35,7 +35,7 @@ theorem mat_identity {S M M' : Type} [CommRing S] [AddCommGroup M] [Module S M] 
   ext r k
   have h := congrArg (fun z => B'.repr z r) (hX k)
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [hv, hv', hY, map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
+    simp only [hv, hv', hY, map_sum, map_smul, Finset.sum_apply', Finsupp.smul_apply,
     Module.Basis.repr_self, Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
     Finset.mem_univ, if_true] at h
   simp only [Matrix.mul_apply]
@@ -233,9 +233,7 @@ theorem exists_unit_tie (T : LocLat G Qp LL O) (hT : IsCrys PD T.ρ) {n : ℕ}
   rw [← E.jD_span T, Submodule.span_le]
   rintro _ ⟨x, rfl⟩
   refine (W.N_base T hT).inductionOn x
-    (fun x => E.jD T x ∈ Submodule.span RW' (Set.range fun k => E.jD T (b k : W.DD T))) ?_ ?_ ?_ ?_
-  · rw [map_zero]
-    exact Submodule.zero_mem _
+    (motive := fun x => E.jD T x ∈ Submodule.span RW' (Set.range fun k => E.jD T (b k : W.DD T))) ?_ ?_ ?_
   · intro y
     set_option synthInstance.maxHeartbeats 100000 in
       rw [← b.sum_repr y, map_sum, map_sum]

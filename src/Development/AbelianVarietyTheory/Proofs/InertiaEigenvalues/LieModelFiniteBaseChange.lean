@@ -117,10 +117,11 @@ theorem exists_bound {π' : CuspSub E a} (hπ : π'.IsUnitary) {φ' : GA E a →
   refine le_trans (le_of_eq ?_) (ENNReal.ofReal_le_ofReal hle)
   rw [ENNReal.ofReal_tsum_of_nonneg (fun _ => norm_nonneg _) hs]
   refine tsum_congr fun ξ => ?_
-  rw [ofReal_norm, enorm_mul, enorm_pow]
+  rw [ofReal_norm, eNorm_mul, eNorm_pow]
 
 end Bound
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem lintegral_low_ne_top : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (m : ℕ) (π' : CuspSub E (m + 1)), π'.IsUnitary →
     ∀ φ' ∈ GlobalTheory.JSW.mspanR π', ∀ G ∈ GroundTheory.Automorphic.GJMatrix.schwartzBruhatPi (K := E) (ι := Fin (m + 1)),
     ∀ (μ : Measure (GA E (m + 1))) [μ.IsHaarMeasure] (𝓕 : Set (GA E (m + 1))),
@@ -133,7 +134,7 @@ theorem lintegral_low_ne_top : ∀ (E : Type) [Field E] [NumberField E] [_root_.
   refine ne_top_of_le_ne_top (hi.const_mul C).2.ne (lintegral_mono fun g => ?_)
   have hδ := GlobalTheory.RSnm.detAbs_pos g
   refine (mul_le_mul_left (hC g) _).trans ?_
-  rw [mul_comm, ← ENNReal.ofReal_mul (Real.rpow_nonneg hδ.le _), Real.enorm_eq_ofReal_abs]
+  rw [mul_comm, ← ENNReal.ofReal_mul (Real.rpow_nonneg hδ.le _), Real.eNorm_eq_ofReal_abs]
   refine ENNReal.ofReal_le_ofReal (le_trans (le_of_eq ?_) (le_abs_self _))
   beta_reduce
   rw [Real.rpow_sub_one hδ.ne']

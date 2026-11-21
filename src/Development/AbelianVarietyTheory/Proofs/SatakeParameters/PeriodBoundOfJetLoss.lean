@@ -71,11 +71,12 @@ theorem sum_nuW_nonneg {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Wo
   rw [← h3, ← h1]
   omega
 
-theorem recWts_ok {D : D7} (EX : ErrX D) : (recWts EX).Ok where
-  row_ok τ := ⟨D.hc τ, rfl⟩
-  hc_row := recWts_row EX
-  u_first u u' τ h := (D.hcW_first u τ h).trans (D.hcW_first u' τ h).symm
-  u_last u u' τ h := (D.hcW_last u τ (by omega)).trans (D.hcW_last u' τ (by omega)).symm
+theorem recWts_ok {D : D7} (EX : ErrX D) : (recWts EX).Ok := by
+  exact
+    { row_ok τ := ⟨D.hc τ, rfl⟩
+      hc_row := recWts_row EX
+      u_first u u' τ h := (D.hcW_first u τ h).trans (D.hcW_first u' τ h).symm
+      u_last u u' τ h := (D.hcW_last u τ (by omega)).trans (D.hcW_last u' τ (by omega)).symm }
 
 theorem emb_star_piG {D : D7} (EX : ErrX D) (i : Fin 2) (τ : D.what₂.Tau) :
     (recFields D).emb τ (@star _ (recFields D).starE.toStar (((recPrimes EX).piG i : 𝓞 D.host.E) : D.host.E)) = tauPib EX i τ := by

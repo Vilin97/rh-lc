@@ -69,12 +69,14 @@ namespace GlobalTheory.SqStepArith
 open Formalism.L2.Host in
 theorem levelLe_mul {L : Type} [Field L] [NumberField L] {a b : HChar L} {w : HeightOneSpectrum (𝓞 L)} {n : ℕ}
     (ha : a.LevelLe w n) (hb : b.LevelLe w n) : (a * b).LevelLe w n := fun x hx h => by
-  rw [HChar.loc_mul, ha x hx h, hb x hx h, one_mul]
+  change a.loc w x * b.loc w x = 1
+  rw [ha x hx h, hb x hx h, one_mul]
 
 open Formalism.L2.Host in
 theorem levelLe_inv {L : Type} [Field L] [NumberField L] {a : HChar L} {w : HeightOneSpectrum (𝓞 L)} {n : ℕ}
     (ha : a.LevelLe w n) : (a⁻¹).LevelLe w n := fun x hx h => by
-  rw [HChar.loc_inv, ha x hx h, inv_one]
+  change (a.loc w x)⁻¹ = 1
+  rw [ha x hx h, inv_one]
 
 open Formalism.L2.Host in
 theorem levelLe_mono {L : Type} [Field L] [NumberField L] {a : HChar L} {w : HeightOneSpectrum (𝓞 L)} {m n : ℕ}
@@ -180,8 +182,9 @@ theorem nuH_loc_mem {D : D7} {T : Type} {Lc : LevCh D T} {sc : Consts} {G : Grid
   have h2 : _ ∈ D.what₂.embLL.fieldRange := RingHom.mem_fieldRange.2 (hN.chars.xi t w y)
   have h3 : _ ∈ D.what₂.embLL.fieldRange := RingHom.mem_fieldRange.2 (hN.chars.chi _ hm.1 hm.2 w y)
   refine RingHom.mem_fieldRange.1 ?_
-  rw [nuH, div_eq_mul_inv, HChar.loc_mul, HChar.loc_mul, HChar.loc_inv, Units.val_mul, Units.val_mul,
-    Units.val_inv_eq_inv_val]
+  change (((Lc.C.mu0 j).loc w y * (Lc.xiH t).loc w y *
+    ((G.ch.chiH (D.R.m - i)).loc w y)⁻¹ : ℂˣ) : ℂ) ∈ D.what₂.embLL.fieldRange
+  rw [Units.val_mul, Units.val_mul, Units.val_inv_eq_inv_val]
   exact mul_mem (mul_mem h1 h2) (inv_mem h3)
 
 

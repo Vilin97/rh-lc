@@ -55,6 +55,9 @@ theorem pk_frame_places_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre}
   intro B X I l Z L hT Gi Gl Kc Yd cX ex W hW t PP hPP j hj
   have hl : (_root_.GlobalTheory.Fam.pk_z W).toLevCh.Is W.P.A3.A.μ0 := hW.pk.bot.hyp.2.2.2.1.lev
   refine ⟨⟨_, hl.βY j hj⟩, fun PP' hPP' e => ?_⟩
-  exact ((_root_.GlobalTheory.PkPlaces.pk_places_alt W hW.pk).2 t).2.1 PP' hPP' PP hPP e
+  have hApart := GlobalTheory.StepLifts.places_apart _ hl t
+  rcases GlobalTheory.GoodPrimes.eq_or_conj_of_under_eq e.symm with hEq | hConj
+  · exact Finset.disjoint_left.1 hApart.2 hPP' (hEq ▸ hPP)
+  · exact hApart.1 PP' hPP' PP (Or.inr hPP) (GlobalTheory.GoodPrimes.isConjPl_iff.2 hConj)
 end GlobalTheory.PkFrame
 end

@@ -46,7 +46,8 @@ theorem lieScalarD : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
     rw [mul_one] at this
     exact (mul_eq_left₀ (hν0 1 h1m)).mp this.symm
   beta_reduce at h3
-  rw [hγ0, hν1, map_one, Module.End.one_apply, one_mul] at h3
+  set_option backward.isDefEq.respectTransparency false in
+    rw [hγ0, hν1, map_one, Module.End.one_apply, one_mul] at h3
   refine h3.congr_deriv ?_
   have e2 : sumPl (fun w => fockAct2 (P w) (Q w) (R w) (S w) (Y w) +
         (((fun w => c₀ w + k w) w) * (Y w).trace) • (1 : Module.End ℂ _)) =

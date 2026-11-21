@@ -83,6 +83,7 @@ end Maj
 
 theorem form_self_re_nonneg {K V : Type} [Field K] [AddCommGroup V] [Module K V] (nm : HermFam K V)
     (σ : K →+* ℂ) (x : V) : 0 ≤ (nm.form σ x x).re := by
+  open scoped ComplexOrder in
   by_cases hx : x = 0
   · subst hx
     have h0 : nm.form σ 0 0 = 0 := by
@@ -133,6 +134,7 @@ theorem deg_eq_neg_log_ht : ∀ (K V : Type) [Field K] [NumberField K] [AddCommG
   have hne := he.relIndex_ne_zero hL
   have hgram : ∀ v, Formalism.HN.gramPl b X v e = nm.gram v.embedding e := by
     intro v; ext a c; simp [Formalism.HN.gramPl, HermFam.gram, hform]
+  open scoped ComplexOrder in
   have hpos : ∀ σ, 0 < (nm.gram σ e).det.re := fun σ =>
     (Complex.pos_iff.1 (Matrix.PosDef.det_pos (nm.posDef σ _ e he.2.1))).1
   have hsum : ∑ σ : K →+* ℂ, Real.log (nm.gram σ e).det.re =

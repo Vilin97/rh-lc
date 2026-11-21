@@ -250,8 +250,8 @@ theorem ioExt_ofFive : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : T
     (fun k => R.ωP i A.μ0 (1, atTau R.θ (Wc D i) τ (((R.MW i (sg0 D A)).fr τ)⁻¹ * k * (R.MW i (sg0 D A)).fr τ)))
     (fun k hk v u hu => hK τ k hk v u hu w) v hv0
     (u - cexp (((∑ j, extWt (R.MW i (sg0 D A)) τ j * a j : ℝ) : ℂ) * I) • v τ) (by
-      rw [MultilinearMap.map_update_sub, MultilinearMap.map_update_smul, Function.update_eq_self, map_sub, map_smul, ← h1,
-        sub_self])
+      rw [MultilinearMap.map_update_sub, MultilinearMap.map_update_smul, Function.update_eq_self, map_sub, map_smul, ← h1]
+      simp)
   exact congrArg (fun y : lowT (R.MW i (sg0 D A)) τ => ((y : (R.MW i (sg0 D A)).sm τ) : (R.MW i (sg0 D A)).H τ))
     (sub_eq_zero.1 h2)
 
@@ -535,7 +535,8 @@ theorem class_scalar_value_ofFive : ∀ (D : D7) (G : Type) [Group G] [Fintype G
         · exact hQ (hbad Q (Or.inr a))
         · rw [(GlobalTheory.IdemSupport.isConjPl_iff _ _).1 a', GlobalTheory.IdemSupport.mem_cP, map_natCast] at hQ
           exact hQ (hbad Q' (Or.inr a))
-      rw [Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_inv, a1 x hx, a2 x hx,
+      change (R.C.mu0 i).loc Q x * (R.xiH (tup t)).loc Q x * ((R.C.eta).loc Q x)⁻¹ = 1
+      rw [a1 x hx, a2 x hx,
         R.C.isEta.unr Q x hx, inv_one, one_mul, one_mul])
     (fun Q hQ x => by
       rw [Formalism.L2.Host.HChar.resFin_mul, Formalism.L2.Host.HChar.resFin_mul, Formalism.L2.Host.HChar.resFin_inv,
@@ -1126,6 +1127,7 @@ theorem io_eq_phase_smul_ofFive : ∀ (D : D7) (G : Type) [Group G] [Fintype G] 
         a • PT t (toF O.c' lt (O.io v)) := fun lt hl => by
     have hsm : ∀ (a : O.c'.F) P, toF O.c' lt (a • P) = (a : ℂ) • toF O.c' lt P := fun a P => by
       rw [MvPolynomial.smul_eq_C_mul, map_mul, toF_C, MvPolynomial.smul_eq_C_mul]
+    set_option synthInstance.maxHeartbeats 200000 in
     obtain ⟨B₀, hB₀⟩ := exists_ext O.c0' n4
       { toFun := fun v => toF O.c' lt (O.io v)
         map_add' := fun v w => by rw [map_add (f := _), map_add (f := _)]
@@ -1358,8 +1360,8 @@ theorem equivAt_of_ccIs_ofFive : Formalism.MainNotions.ModuliIntegralCharts.H1.C
       obtain ⟨ρ, ν, -, hν, hm⟩ := mvPt_spec hact.total g y
       exact ⟨ρ, ν, _, hν, hm, evalAt_actL hact (h.evalWD _ hj) frMap_trans_id g hs.1 y⟩) p
   have h1 := chi_mul_mu hR.lev i hmu hk
-  change u * cc (O.dict p).1 * O.mu p * rdU _ _ (O.dict p).1 (O.dict p).2 =
-    _ * (u * cc (O.dict (p * k)).1 * O.mu (p * k) * rdU _ f (O.dict (p * k)).1 (O.dict (p * k)).2)
+  change u * cc (O.dict p).1 * O.mu p * rdU (T.U ((i : ℕ) + 1) O.s0) _ (O.dict p).1 (O.dict p).2 =
+    _ * (u * cc (O.dict (p * k)).1 * O.mu (p * k) * rdU (T.U ((i : ℕ) + 1) O.s0) f (O.dict (p * k)).1 (O.dict (p * k)).2)
   rw [hmul]
   linear_combination u * O.mu p * key - u * O.mu p * cc (O.dict (p * k)).1 *
     rdU (T.U ((i : ℕ) + 1) O.s0) f (O.dict (p * k)).1 (O.dict (p * k)).2 * h1

@@ -101,7 +101,9 @@ theorem exists_normal_model : ∀ (K Ω : Type) [Field K] [NumberField K] [Field
   refine ⟨Y, ‹_›, ν ≫ p, ν ≫ g, (SmallSec.fnMap ν hη).comp ψ, by rw [Category.assoc, hgp], har, hnY,
     hbij.comp hψ, fun a => ?_, fun k l i h => ?_⟩
   · have e₁ : ν.app ⊤ (algX p ⊤ a) = algX (ν ≫ p) ⊤ a := by
-      simp [algX, Scheme.Hom.appLE]
+      simp only [algX, RingHom.comp_apply]
+      rw [← Scheme.Hom.appLE_comp_appLE ν p ⊤ ⊤ ⊤ (by simp) (by simp)]
+      rw [Scheme.Hom.app_eq_appLE ν]
       rfl
     rw [RingHom.comp_apply, hK, SmallSec.fnMap_fnOf ν hη _ (Opens.mem_top _), e₁]
     rfl

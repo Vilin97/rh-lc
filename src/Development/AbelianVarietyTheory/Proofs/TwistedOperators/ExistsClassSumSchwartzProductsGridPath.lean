@@ -84,8 +84,8 @@ theorem exists_classSum_schwartzProducts_pathInduction {μ₀ : T} (hL : L.Is μ
   | _, .snoc a p, hg, hnd, U, K, hK1, hK2 => by
     have ⟨hnot, hnd1⟩ : edgeOf a ∉ edges p ∧ (edges p).Nodup := by
       simpa only [edges_snoc, ← List.concat_eq_append, List.nodup_concat] using hnd
-    have ha := hg.last
-    have hArrow := arrow_sb B ρ hL (t := t) he n ha (Y := ArgT G p × U)
+    have ha : IsGridArrow D.R.m t a := hg.last
+    have hArrow := arrow_sb B ρ hL (t := t) he n (a := a) ha (Y := ArgT G p × U)
       (fun x (z : ArgT G p × U) => K (fun w => Function.update (pathArgs B t w p z.1) (edgeOf a) (locArg B t w a x)) z.2)
       (fun x u (z : ArgT G p × U) hu => by
         have e1 : (fun w => Function.update (pathArgs B t w p z.1) (edgeOf a) (locArg B t w a (x + u))) =

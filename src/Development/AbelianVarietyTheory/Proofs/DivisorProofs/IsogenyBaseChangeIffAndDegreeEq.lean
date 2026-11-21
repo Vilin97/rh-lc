@@ -41,8 +41,8 @@ theorem isIsogeny_bcMap_iff_and_deg_bcMap : ∀ (K : Type) [Field K] (L : Type) 
   have hs : Surjective (spMap (algebraMap K L)) := GlobalTheory.LevelMap.surjective_spMap _
   have hf : Flat (spMap (algebraMap K L)) := GlobalTheory.LevelMap.flat_spMap _
   have hq : QuasiCompact (spMap (algebraMap K L)) := by unfold spMap; infer_instance
-  have hQ : (@Surjective ⊓ @Flat ⊓ @QuasiCompact : MorphismProperty Scheme.{0}) (pullback.fst B.X.hom (spMap (algebraMap K L))) :=
-by
+  have hQ : (@Surjective ⊓ @Flat ⊓ @QuasiCompact : MorphismProperty Scheme.{0})
+      (pullback.fst B.X.hom (spMap (algebraMap K L))) := by
     refine ⟨⟨?_, ?_⟩, ?_⟩
     · exact MorphismProperty.of_isPullback (P := @Surjective) hB.flip hs
     · exact MorphismProperty.of_isPullback (P := @Flat) hB.flip hf

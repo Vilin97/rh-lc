@@ -29,7 +29,7 @@ theorem sum_padicValNat_log_le (N : ℕ) (S : Finset ℕ) (hS : ∀ q ∈ S, q.P
     ∑ q ∈ S, (padicValNat q N : ℝ) * Real.log q ≤ Real.log N := by
   rw [Real.log_nat_eq_sum_factorization, Finsupp.sum]
   calc ∑ q ∈ S, (padicValNat q N : ℝ) * Real.log q = ∑ q ∈ S, (N.factorization q : ℝ) * Real.log q :=
-        Finset.sum_congr rfl fun q hq => by rw [Nat.factorization_def N (hS q hq)]
+        Finset.sum_congr rfl fun q hq => by rw [Nat.factorization_def N (hS q hq), Nat.padicValNat_def]
     _ ≤ ∑ q ∈ S ∪ N.factorization.support, (N.factorization q : ℝ) * Real.log q :=
         Finset.sum_le_sum_of_subset_of_nonneg Finset.subset_union_left fun q _ _ =>
           mul_nonneg (Nat.cast_nonneg _) (Real.log_natCast_nonneg _)

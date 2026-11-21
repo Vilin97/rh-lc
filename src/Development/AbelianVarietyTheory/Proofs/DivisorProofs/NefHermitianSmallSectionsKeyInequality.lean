@@ -55,7 +55,7 @@ theorem key_ineq : GlobalTheory.Published.ArCalc → AmpleHS → SemiPull → �
     exact ⟨_, ((hA.arIso k Y q D hvarY).2 PUnit _ Φ hΦ).1 PUnit.unit⟩
 
   have hN : ∀ j, n j ≤ ∑ i, n i := fun j => Finset.single_le_sum (fun _ _ => Nat.zero_le _) (Finset.mem_univ j)
-  have hchain := GlobalTheory.T.boxFamily_movingParts_chain_bound hA hAmp hSP k Y q D hvarY (φ ∘ x) Δ hx' hΔ (∑ i, n i) J (φ ∘ e) n M μ he' hN
+  have hchain := GlobalTheory.HSNef.chain_moving_parts hA hAmp hSP k Y q D hvarY (φ ∘ x) Δ hx' hΔ (∑ i, n i) J (φ ∘ e) n M μ he' hN
     (hbox ▸ htot) (hbox ▸ hM) hμ
 
   set s : ℝ := Real.log (Fintype.card (J × Finset (Fin D))) / 2 with hs
@@ -76,7 +76,7 @@ theorem key_ineq : GlobalTheory.Published.ArCalc → AmpleHS → SemiPull → �
   have hA2 := GlobalTheory.NefShift.isNef_shift_nonneg k Y q D hvarY _ Δ hΔ.le hA1
   have hM2 := GlobalTheory.NefShift.isNef_shift_nonneg k Y q D hvarY M Δ hΔ.le hMnef
 
-  obtain ⟨hg, hgs⟩ := GlobalTheory.T.geometricDegree_pull_birationalModel hA k X Y p q D hX hvarY π rfl φ hmod B
+  obtain ⟨hg, hgs⟩ := GlobalTheory.HSNef.gdeg_pull_model hA k X Y p q D hX hvarY π rfl φ hmod B
   have h1 := hgs β s hβ
   have h2 := hA.arShift k Y q D hvarY _ _ Δ h1
   have h3 := hA.arShift k Y q D hvarY M μ Δ hμ

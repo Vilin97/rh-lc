@@ -176,8 +176,10 @@ theorem chain_props (hP : GlobalTheory.Published.CuspRapidDecay) (G : GridData L
     exact step_cusp G Wl t hM j (by omega) (besDecAt G j 0 hj) (rowJac G (j + 1) (by omega) 0 (by omega)) _ _ (hst j (by omega) _
       (last_cusp G Wl t M j _ (hst (j + 1) (by omega)) D.R.m (by omega) F hF))
   | σ + 1, j, hj, vN => by
-    obtain ⟨h1, h2⟩ := chain_props hP G Wl hθ t hM d F hF hst σ (j + 1 + 1) (by omega)
-      (GlobalTheory.Unf.Inhab.nonempty_volN _).some
+    have hj' : (j + 1 + 1) + 2 * σ + 2 = D.R.m := by omega
+    have hrec := chain_props hP G Wl hθ t hM d F hF hst σ (j + 1 + 1) hj'
+      (GlobalTheory.Unf.Inhab.nonempty_volN (besDecAt G (j + 1 + 1) σ hj')).some
+    rcases hrec with ⟨h1, h2⟩
     have h3 := step_cusp G Wl t hM (j + 1) (by omega)
       (rowJac G (j + 1) (by omega) (σ + 1) (by omega)) (besDecAt G (j + 1 + 1) σ (by omega))
       (getD t D.R.m D.R.m d (j + 1) (by omega)) _ (hst (j + 1) (by omega) _ h1)

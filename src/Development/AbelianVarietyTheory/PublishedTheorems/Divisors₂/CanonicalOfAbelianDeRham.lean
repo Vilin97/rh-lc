@@ -123,7 +123,7 @@ theorem LiftHom.exists_iso_iff (H : LiftHom κ π) (h : IsGrpPullback A₀ A (sp
 
 theorem crysRedMor (κ : DividedPowers I) (hI : RingHom.ker π = I) (A₀ : Over (Sp R₀)) [GrpObj A₀] :
     GrpMor κ (spMap π) A₀ (dp0 R₀) (𝟙 _) A₀ π (𝟙 _) (Over.Hom.left (𝟙 A₀)) := by
-  refine GrpMor.of_hom ?_ (Category.id_comp _).symm (𝟙 A₀)
+  apply GrpMor.of_hom _ (Category.id_comp _).symm (𝟙 A₀)
   have z : ∀ a ∈ I, π a = 0 := fun a ha ↦ RingHom.mem_ker.1 (hI ▸ ha)
   refine (isDPMorphism_iff _ _ _).2 ⟨Ideal.map_le_iff_le_comap.2 fun a ha ↦ z a ha, fun n hn a ha ↦ ?_⟩
   rw [z a ha, z _ (κ.dpow_mem hn ha), dpow_eval_zero _ hn]

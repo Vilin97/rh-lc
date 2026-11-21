@@ -75,7 +75,6 @@ theorem corr_of_isBC {R₀ R₁ R₂ : Type} [CommRing R₀] [CommRing R₁] [Co
   intro q
   obtain ⟨w, rfl⟩ := hm.2 q
   induction w with
-  | zero => simp
   | add u v hu hv => simp only [map_add (f := _), hu, hv]
   | tmul r q =>
     rw [liftSemi_tmul, LinearMap.map_smulₛₗ, map_smul, map_smul, e, smul_eq_mul, smul_eq_mul, map_mul]

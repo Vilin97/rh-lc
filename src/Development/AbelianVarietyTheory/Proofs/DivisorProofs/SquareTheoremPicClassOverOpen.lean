@@ -37,7 +37,8 @@ theorem pull_mul_add_pull_mul_inv_of_opens : ∀ (S : Scheme.{0}) [IsLocallyNoet
       exact pullback.lift_snd _ _ _), ?_⟩
     apply Over.OverMorphism.ext
     simp only [pushHom, pushPt, τ, MonoidHom.mk'_apply, Over.homMk_left, Over.comp_left]
-    exact (Category.id_comp _).symm
+    rw [pullback.lift_fst]
+    exact (Category.id_comp p.left).symm
   have key : ∀ (p : Y ⟶ A) (p' : Y' ⟶ A'), pushHom h Y' p' = τ ≫ p → l p = p'.left ≫ e.inv := by
     intro p p' hp
     rw [← cancel_mono (A.hom ⁻¹ᵁ U).ι, hl, Category.assoc, he]

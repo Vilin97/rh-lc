@@ -258,9 +258,8 @@ theorem term_reads (hc : D.host.ccK = ⊤) (hs : Setup ψ θ S T ⊤ δ 1) {v : 
     have h8 : ∀ x w : WO S T, symplOH S T x (2 • w) = symplO S T x w := fun x w => by
       rw [two_nsmul, symplOH, symplO_add_right, mul_add, ← add_mul, ← RingHom.map_add (f := _), add_halves, RingHom.map_one, one_mul]
     rw [h8]
-    refine ((GlobalTheory.PlaceModel.isBichar_symplO S T ψ).nsmul (2 * n) _ _).symm.trans ?_
-    rw [← smul_comm]
-    exact char_sympl_eq_one hs.std (sdC_std hs.gS) (sdC_std hs.gT) hx hl
+    exact ((GlobalTheory.PlaceModel.isBichar_symplO S T ψ).nsmul (2 * n) _ _).symm.trans
+      (by rw [← smul_comm]; exact char_sympl_eq_one hs.std (sdC_std hs.gS) (sdC_std hs.gT) hx hl)
   rw [h6, h7, one_smul]
 
 

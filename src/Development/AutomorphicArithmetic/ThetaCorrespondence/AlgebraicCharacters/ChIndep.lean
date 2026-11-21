@@ -219,7 +219,9 @@ private theorem wdPst_indep {P Q : LocPrime l} {AP : LocAinf l P} {AQ : LocAinf 
   have h2 : ∀ v, e (wdN P ι ρ v) = (ι (a : Om l) • wdN Q ι ρ) (e v) := fun v => by
     have : Φ.comp (wdN P ι ρ) = (ι (a : Om l) • wdN Q ι ρ).comp Φ :=
       LinearMap.ext_on_range (span_wdMk P ι ρ) fun x => by
-        simp only [LinearMap.comp_apply, LinearMap.smul_apply, wdN_mk, hΦ, hN, wdMk_smul]
+        simp only [LinearMap.comp_apply, LinearMap.smul_apply, wdN_mk, hΦ, hN]
+        change wdMk Q ι ρ ((Dpst Q ρ).module.toSMul.smul a (monD Q ρ (T x))) = _
+        exact wdMk_smul Q ι ρ a _
     exact LinearMap.congr_fun this v
   have ha' : ι (a : Om l) ≠ 0 := (_root_.map_ne_zero ι).mpr fun h0 => ha (Subtype.ext h0)
   rw [wdPst_of_isPst ι B h hj hV, wdPst_of_isPst ι B h hj hV']

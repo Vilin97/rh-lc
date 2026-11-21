@@ -60,9 +60,9 @@ theorem mat_emb (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v
   have e1 : ∀ t, GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.tensNU (LinearMap.inr F (Ainf F) (Af F)) (fun _ _ => Prod.ext (mul_zero _).symm rfl)
       (GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.tensNU (E := E) (singleFin v) (singleFin_mul v) t) = putAt v t := fun t => by
     induction t using TensorProduct.induction_on with
-    | zero => simp only [map_zero]; rfl
+    | zero => simp only [map_zero]
     | tmul b e => rfl
-    | add x y hx hy => simp only [map_add (f := _), hx, hy]; rfl
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   change (HA.mat (AF F) σ J (ofFin σ J (embLocFin σ J v k))).1 r s = _
   erw [GlobalTheory.AutFunCompare.mat_extH]
   rw [embLocFin, GlobalTheory.AutFunCompare.mat_extH, map_add (f := _)]

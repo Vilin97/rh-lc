@@ -28,9 +28,11 @@ theorem exists_hasNonzeroSec_pow_of_ample_sub_ample : ∀ (k : Type) [Field k] [
       smul_add]
 
   have hv : DiffVanish (d + 1 + 1) (chiPic k (structureModule X)) := by
-    apply diffVanish_chiPic_of_isProjOver (f := strHom k X) (algebraMap_eq_strHom k X) _ hX
-    unfold QCoh.suppDim
-    exact (topologicalKrullDim_subspace_le _ _).trans hdim
+    exact diffVanish_chiPic_of_isProjOver (f := strHom k X) (algebraMap_eq_strHom k X)
+      (structureModule X) hX
+      (by
+        unfold QCoh.suppDim
+        exact (topologicalKrullDim_subspace_le _ _).trans hdim)
   have hprod : (∏ _i : Fin (d + 1), (m : ℤ)) = (m : ℤ) ^ (d + 1) := by simp
   have hP : ∀ i, ((Fin.cons B fun _ : Fin d => L : Fin (d + 1) → LB X) i).IsLB := by
     intro i
@@ -47,11 +49,11 @@ theorem exists_hasNonzeroSec_pow_of_ample_sub_ample : ∀ (k : Type) [Field k] [
       (m : ℤ) ^ (d + 1) * interNum k (structureModule X)
         (Fin.cons B fun _ : Fin d => L : Fin (d + 1) → LB X) := by
     rw [← hprod]
-    refine hv.interNum_of_cls_eq_zsmul hP hQ (fun _ => (m : ℤ)) ?_
-    intro i
-    refine Fin.cases ?_ (fun j => ?_) i
-    · exact (CechPic.cls_lbPow hB.isLB m _).trans (natCast_zsmul _ _).symm
-    · exact (CechPic.cls_lbPow hL.isLB m _).trans (natCast_zsmul _ _).symm
+    exact hv.interNum_of_cls_eq_zsmul hP hQ (fun _ => (m : ℤ)) (by
+      intro i
+      refine Fin.cases ?_ (fun j => ?_) i
+      · exact (CechPic.cls_lbPow hB.isLB m _).trans (natCast_zsmul _ _).symm
+      · exact (CechPic.cls_lbPow hL.isLB m _).trans (natCast_zsmul _ _).symm)
   have hT : topSelfIntersection k (lbPow L m) (d + 1) = (m : ℤ) ^ (d + 1) * topSelfIntersection k L (d + 1) := by
     rw [topSelf_def, topSelf_def, ← hprod]
     exact hv.interNum_of_cls_eq_zsmul (fun _ => hL.isLB) (fun _ => hLm.isLB) (fun _ => (m : ℤ))

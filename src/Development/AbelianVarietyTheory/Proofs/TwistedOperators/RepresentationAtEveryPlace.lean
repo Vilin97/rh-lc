@@ -415,7 +415,8 @@ theorem bes_par {D : D7} {K : Type} [Field K] (π : AE D →+* K) {A B : HSp D} 
     (l : Fin σ → D.host.E) (hl : ∀ a, l a ≠ 0)
     {b b' : Matrix (Fin A.rank) (Fin A.rank) K} (hb : b * b' = 1) {u : Fin (2 * σ + 1) → K}
     {Γ : Matrix (Fin A.rank ⊕ Fin (2 * σ + 1)) (Fin B.rank) K} (h1 : Γ * sumCols d π b u = 1) (h2 : sumCols d π b u * Γ = 1)
-    (Φ : GA D B →* GL (Fin A.rank ⊕ Fin (2 * σ + 1)) K) (hΦ : ∀ g, (Φ g).val = Γ * ((mt B g).map π * sumCols d π b u)) :
+    (Φ : GA D B →* GL (Fin A.rank ⊕ Fin (2 * σ + 1)) K)
+    (hΦ : ∀ g : GA D B, let M := Γ * ((mt B g).map π * sumCols d π b u); (Φ g).val = M) :
     besGrp (diagDec (besDec d rfl) l hl) (GlobalTheory.OrthSumExists.orthDecHsum D _ _) ≤
       (ParabolicEntries.parGroup K (Fin A.rank) (σ + 1) fun i : Fin (2 * σ + 1) => i.val + 1).comap Φ := by
   have hσ : σ ≤ 2 * σ + 1 := by omega

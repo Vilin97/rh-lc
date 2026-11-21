@@ -56,20 +56,18 @@ def chiInf (emb : ∀ w : InfinitePlace F, GlobalTheory.AdelicU.EmbOver E w) : (
 
 theorem chiInf_apply (emb : ∀ w : InfinitePlace F, GlobalTheory.AdelicU.EmbOver E w) (z : (AF F ⊗[F] E)ˣ) :
     ((chiInf emb z : ℂˣ) : ℂ) = ∏ w, (piInf (emb w) z / ((‖piInf (emb w) z‖ : ℝ) : ℂ)) := by
-  rw [chiInf, MonoidHom.finset_prod_apply, Units.coe_prod]
-  rfl
+  simp [chiInf, phase_val]
 
 theorem continuous_chiInf (emb : ∀ w : InfinitePlace F, GlobalTheory.AdelicU.EmbOver E w) : Continuous (chiInf emb) := by
   have e : ⇑(chiInf emb) = fun z => ∏ w, phase (Units.map (piInf (emb w)).toMonoidHom z) :=
-    funext fun z => by rw [chiInf, MonoidHom.finset_prod_apply]; rfl
+    funext fun z => by simp [chiInf]
   rw [e]
-  exact continuous_finset_prod _ fun w _ =>
+  exact continuous_finsetProd _ fun w _ =>
     continuous_phase.comp (Continuous.units_map _ (GlobalTheory.ContMapReal.continuous_piInf (emb w)))
 
 theorem norm_chiInf (emb : ∀ w : InfinitePlace F, GlobalTheory.AdelicU.EmbOver E w) (z : (AF F ⊗[F] E)ˣ) :
     ‖((chiInf emb z : ℂˣ) : ℂ)‖ = 1 := by
-  rw [chiInf, MonoidHom.finset_prod_apply, Units.coe_prod, norm_prod]
-  exact Finset.prod_eq_one fun w _ => norm_phase _
+  simp [chiInf, norm_prod, norm_phase]
 
 theorem exists_weil_char : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E),
     B.IsGood σ → ∃ ξ : (AF F ⊗[F] E)ˣ →* Circle, IsHeckeCharF ξ ∧ HasExp B.emb ξ (fun _ => 1) := by

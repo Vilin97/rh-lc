@@ -27,7 +27,7 @@ theorem ker_leftE {ψ : AddChar (AF D.host.F) ℂ} (Wf : WeilFun D ψ) (hW : Wf.
   have e : Wf.om V W χ χ' (γ * g, h) = Wf.om V W χ χ' (γ, 1) * Wf.om V W χ χ' (g, h) := by
     rw [← map_mul, Prod.mk_mul_mk, one_mul]
   unfold WeilFun.ker
-  rw [e, Module.End.mul_apply]
+  rw [e, mul_apply_eq_comp]
   exact ha.elim (fun ha => Wf.om_aut V W χ χ' ha γ hγ 1 (one_mem _) _)
     fun ha => (hW.weil V W χ χ' ha).aut γ hγ 1 (one_mem _) _
 
@@ -96,7 +96,7 @@ abbrev recXE : ThetaX D where
   actR_one V τ := LinearMap.ext fun F => Subtype.ext <| funext fun x => by
     rw [actReal_apply hθ V τ (by simp [Formalism.QuantumDeterminants.UH]), (GlobalTheory.PointAtPlaceHom.atTau_laws D θ hθ V τ).2.1, mul_one]; rfl
   actR_mul V τ g hg h hh := LinearMap.ext fun F => Subtype.ext <| funext fun x => by
-    rw [Module.End.mul_apply, actReal_apply hθ V τ hg, actReal_apply hθ V τ hh, actReal_apply hθ V τ (mul_mem_UH hg hh),
+    rw [mul_apply_eq_comp, actReal_apply hθ V τ hg, actReal_apply hθ V τ hh, actReal_apply hθ V τ (mul_mem_UH hg hh),
       (GlobalTheory.PointAtPlaceHom.atTau_laws D θ hθ V τ).2.2.1 g hg h hh, mul_assoc]
   actR_cusp V τ g hg F hF := by
     rw [actReal, dite_eq_left hg]; exact trE_cusp hθ V _ _ F hF
@@ -223,19 +223,19 @@ abbrev recWE : WeilTied D (recXE hP hT hB hL hE hθ hψ Wf hW Tw Rc) (recTE hP h
   om_tw :=
     { twW_up := fun V W χ χ' ν h h1 h2 h3 g k x hx => by
         have := Wf.twW V W _ _ ν.1 (adm χ χ' h.ne h1 h2) (mem_chrGrp.1 ν.2) h3 g k x hx
-        rw [if_pos h] at this
+        rw [ite_eq_left h] at this
         exact this
       twV_up := fun V W χ χ' ν h h1 h2 h3 g k x hx => by
         have := Wf.twV V W _ _ ν.1 (adm χ χ' h.ne h1 h2) (mem_chrGrp.1 ν.2) h3 g k x hx
-        rw [if_pos h] at this
+        rw [ite_eq_left h] at this
         exact this
       twW_dn := fun V W χ χ' ν h h1 h2 h3 g k x hx => by
         have := Wf.twW V W _ _ ν.1 (adm χ χ' h.ne' h1 h2) (mem_chrGrp.1 ν.2) h3 g k x hx
-        rw [if_neg h.not_gt] at this
+        rw [ite_eq_right h.not_gt] at this
         exact this
       twV_dn := fun V W χ χ' ν h h1 h2 h3 g k x hx => by
         have := Wf.twV V W _ _ ν.1 (adm χ χ' h.ne' h1 h2) (mem_chrGrp.1 ν.2) h3 g k x hx
-        rw [if_neg h.not_gt] at this
+        rw [ite_eq_right h.not_gt] at this
         exact this }
   om_swap V W χ χ' h h1 h2 := Wf.om_swap V W _ _ (adm χ χ' h h1 h2)
   th V W χ χ' h h1 h2 hV μ 𝓕 hμ Φ F x := congrArg (fun z => (Rc.petC V : ℂ) * z) <|
@@ -271,7 +271,7 @@ def recBE : BesselTied D (recXE hP hT hB hL hE hθ hψ Wf hW Tw Rc) (recTE hP hT
     · obtain ⟨u, hu⟩ := hp
       exact absurd hu (inr_ne A B ι x _)
 
-theorem realisesE : RealisesE (θ := θ) (recBE hP hT hB hL hE hθ hψ Wf hW Tw Rc) Wf Tw Rc where
+theorem realisesE : RealisesE (θ := θ) (recBE hP hT hB hL hE hθ hψ Wf hW Tw Rc) Wf Tw Rc := {
   inf := hθ
   eqRank := hW
   forms V := Set.ext fun φ => ⟨fun ⟨x, hx⟩ => hx ▸ aut hθ x, fun h => ⟨⟨φ, Submodule.subset_span h⟩, rfl⟩⟩
@@ -311,6 +311,7 @@ theorem realisesE : RealisesE (θ := θ) (recBE hP hT hB hL hE hθ hψ Wf hW Tw 
     rcases p with f | x
     · exact Or.inl (besGlobE_inl hP hT hB hL hE hθ hψ Wf hW Tw Rc ho hA hι f)
     · exact Or.inr ⟨x.1, inr_eq A A' ι x⟩
+}
 
 end Record
 

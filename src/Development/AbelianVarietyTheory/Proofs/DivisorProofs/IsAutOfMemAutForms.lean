@@ -81,7 +81,7 @@ theorem mem_of_mem_center (R : RealPoints θ V) {W : Submodule ℂ (GA D V → �
     induction hz using Algebra.adjoin_induction with
     | mem x hx => obtain ⟨k, rfl⟩ := hx; intro f hf; rw [← hg]; exact hs τ k _ hf
     | algebraMap r => intro f hf; rw [AlgHom.commutes]; exact W.smul_mem r hf
-    | add x y _ _ hx hy => intro f hf; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx f hf) (hy f hf)
+    | add x y _ _ hx hy => intro f hf; simpa only [map_add, LinearMap.add_apply, Submodule.coe_add] using add_mem (hx f hf) (hy f hf)
     | mul x y _ _ hx hy => intro f hf; rw [map_mul]; exact hx _ (hy f hf)
   rw [GlobalTheory.EnvCentre.center_directSum D.what₂.Tau (fun τ => ℂ ⊗[ℝ] LieAt V τ) (fun τ => envIncl V τ)
     (fun τ x => envIncl_ι τ x)] at hu
@@ -90,7 +90,7 @@ theorem mem_of_mem_center (R : RealPoints θ V) {W : Submodule ℂ (GA D V → �
     obtain ⟨τ, z, hz, rfl⟩ := Set.mem_iUnion.1 hx |>.imp fun τ h => h
     intro f hf; rw [envRepAll_envIncl]; exact hloc τ z hz f hf
   | algebraMap r => intro f hf; rw [AlgHom.commutes]; exact W.smul_mem r hf
-  | add x y _ _ hx hy => intro f hf; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx f hf) (hy f hf)
+  | add x y _ _ hx hy => intro f hf; simpa only [map_add, LinearMap.add_apply, Submodule.coe_add] using add_mem (hx f hf) (hy f hf)
   | mul x y _ _ hx hy => intro f hf; rw [map_mul]; exact hx _ (hy f hf)
 
 theorem exists_center (hθ : IsInfFam θ) (R : RealPoints θ V) {z : List (ℝ → GA D V) →₀ ℂ}

@@ -34,7 +34,7 @@ theorem inCoefLat_pow' (R : RealDat D A Ks) (i : Fin D.R.m) {β : GL (Fin (Vc D 
     ∃ m : ℕ, ∀ l, m ≤ l → ∀ h w, InCoefLat R i h w → InCoefLat R i (h * k) (((p : ℂ) ^ l) • w) := by
   obtain ⟨m₁, h₁⟩ := exists_pow_hat hβ.choose_spec.1 hk ha
   obtain ⟨m₂, h₂⟩ := exists_pow_hat hβ.choose_spec.1 (GlobalTheory.SplitLinear.suppAt_inv hk) ha
-  refine ⟨(m₁ + m₂) * GlobalTheory.NabScale.scaleExp (lamV D i), fun l hl h w hw => ?_⟩
+  refine ⟨(m₁ + m₂) * GlobalTheory.NabScale.scaleExp (Formalism.IndefR.FWT.lamV D i), fun l hl h w hw => ?_⟩
   obtain ⟨d, rfl⟩ := Nat.exists_eq_add_of_le hl
   obtain ⟨gramR, c0R, c0L, hT, P, hP, rfl⟩ := hw
   refine ⟨gramR, c0R, c0L, hT, ?_⟩
@@ -42,7 +42,7 @@ theorem inCoefLat_pow' (R : RealDat D A Ks) (i : Fin D.R.m) {β : GL (Fin (Vc D 
   have e2 := smul_mem_hLat hβ (k := k⁻¹) (by rw [inv_inv]; exact h₁ (m₁ + m₂) (Nat.le_add_right _ _)) (h * k)
   rw [mul_inv_cancel_right] at e2
   have e3 := Submodule.smul_mem _ ((p ^ d : ℕ) : 𝓞 D.what₂.LL)
-    (nabAtr_scale (labLL D) (lamV D i) _ (GlobalTheory.RepsCompare.isLattice_hLat _ _) e1 e2 P hP)
+    (nabAtr_scale (labLL D) (Formalism.IndefR.FWT.lamV D i) _ (GlobalTheory.RepsCompare.isLattice_hLat _ _) e1 e2 P hP)
   refine ⟨_, e3, ?_⟩
   rw [Nat.cast_smul_eq_nsmul, map_nsmul, map_smulₛₗ, ← Nat.cast_smul_eq_nsmul ℂ, smul_smul]
   congr 1

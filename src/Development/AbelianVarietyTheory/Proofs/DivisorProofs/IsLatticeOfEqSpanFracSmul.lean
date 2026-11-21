@@ -42,10 +42,8 @@ theorem isLattice_comap_equiv {K V W : Type} [Field K] [NumberField K] [AddCommG
     rw [Submodule.map_comap_eq_of_surjective
       (f := (e : W →ₗ[K] V).restrictScalars (𝓞 K)) e.surjective]
     exact hN.fg
-  · apply Submodule.map_injective_of_injective (f := (e : W →ₗ[K] V)) e.injective
-    rw [Submodule.map_span, Submodule.map_top, LinearEquiv.range, ← hN.span_eq_top]
-    congr 1
-    exact Set.image_preimage_eq _ e.surjective
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 
 theorem nuLat_comap_isLattice : ∀ (D : D7) (L : SizeData₂ D), Formalism.BasicNotions.DV.NprimeDef D L → ∀ u, Submodule.IsLattice D.what₂.LL (D.div.Nu u).L → ∀ (d : ℕ) (e : (Fin d → D.what₂.LL) ≃ₗ[D.what₂.LL] (D.div.Nu u).V), Submodule.IsLattice D.what₂.LL ((L.NuLat u).comap ((e : (Fin d → D.what₂.LL) →ₗ[D.what₂.LL] (D.div.Nu u).V).restrictScalars (𝓞 D.what₂.LL))) := by
   intro D L hdef u hL d e

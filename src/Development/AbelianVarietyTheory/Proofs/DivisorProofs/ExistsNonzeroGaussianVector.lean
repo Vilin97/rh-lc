@@ -22,7 +22,7 @@ theorem tprod_one_ne_zero (ι : Type) [Fintype ι] (P Q R S : ℕ) :
     (PiTensorProduct.tprod ℂ (fun _ : ι => (1 : Formalism.BasicNotions.TH.Pol P Q R S))) ≠ 0 := by
   intro h
   let l : Formalism.BasicNotions.TH.Pol P Q R S →ₗ[ℂ] ℂ := MvPolynomial.lcoeff ℂ 0
-  let m : MultilinearMap ℂ (fun _ : ι => Formalism.BasicNotions.TH.Pol P Q R S) ℂ :=
+  let m : MultilinearMap (RingHom.id ℂ) (fun _ : ι => Formalism.BasicNotions.TH.Pol P Q R S) ℂ :=
     (MultilinearMap.mkPiAlgebra ℂ ι ℂ).compLinearMap (fun _ => l)
   have h1 := congrArg (PiTensorProduct.lift m) h
   rw [PiTensorProduct.lift.tprod, map_zero] at h1

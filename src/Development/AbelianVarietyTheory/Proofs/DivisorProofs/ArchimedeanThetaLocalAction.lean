@@ -39,7 +39,8 @@ theorem slice {κ : Type} [Fintype κ] (c : κ → Af F) :
   | mem x hx =>
     obtain ⟨f, g, -, rfl⟩ := hx
     refine ⟨g c • f, fun s => ?_⟩
-    simp [pureA, mk, mul_comm]
+    simp only [pureA, mk, RingEquiv.apply_symm_apply, SchwartzMap.smul_apply, smul_eq_mul,
+      mul_comm]
   | zero => exact ⟨0, fun s => rfl⟩
   | add x y _ _ hx hy =>
     obtain ⟨f1, h1⟩ := hx

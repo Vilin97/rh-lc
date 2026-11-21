@@ -26,10 +26,10 @@ theorem monic_eval_capP : ∀ (n : ℕ) (p : ℂ[X]), p.Monic → p.natDegree = 
       rw [eq_one_of_monic_natDegree_zero hm hd]
       simp [Formalism.QuantumDeterminants.capP]⟩
   | n + 1, p, hm, hd => by
-      have hdeg : p.degree ≠ 0 := by
+      have hdeg : 0 < p.degree := by
         rw [degree_eq_natDegree hm.ne_zero, hd]
-        exact_mod_cast Nat.succ_ne_zero n
-      obtain ⟨z, hz⟩ := IsAlgClosed.exists_root p hdeg
+        exact_mod_cast Nat.succ_pos n
+      obtain ⟨z, hz⟩ := Complex.exists_root hdeg
       have hq : (X - C z) * (p /ₘ (X - C z)) = p := mul_divByMonic_eq_iff_isRoot.2 hz
       have hqm : (p /ₘ (X - C z)).Monic := (monic_X_sub_C z).of_mul_monic_left (hq.symm ▸ hm)
       have hqd : (p /ₘ (X - C z)).natDegree = n := by
@@ -45,13 +45,27 @@ theorem exists_char {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     (E : Fin n → Fin n → Module.End ℂ V) (h : ∀ u, ∃ c : ℂ, qdet E u = c • (1 : Module.End ℂ V)) :
     ∃ χ : Fin n → ℂ, ∀ Y : ℂ,
       qdet E (Y + ((n : ℂ) - 1) / 2) = Formalism.QuantumDeterminants.capP χ Y • (1 : Module.End ℂ V) := by
-  obtain ⟨c, h1, h2, h3, -⟩ := GlobalTheory.CentreFin.exists_coef E (-(((n : ℂ) - 1) / 2))
-    (B := (⊥ : Subalgebra ℂ (Module.End ℂ V))) (fun u => by
-      obtain ⟨c, hc⟩ := h u
-      exact Algebra.mem_bot.2 ⟨c, by rw [hc, Algebra.algebraMap_eq_smul_one]⟩)
+  let A := Module.End ℂ V
+  let s : ℂ := ((n : ℂ) - 1) / 2
+  have hexpand : ∃ c : ℕ → A, c n = 1 ∧
+      ∀ Y : ℂ, qdet E (Y + s) = ∑ j ∈ Finset.range (n + 1), Y ^ j • c j := by
+    cases n with
+    | zero => exact ⟨fun _ => 1, rfl, fun Y => by simp [qdet, Formalism.REAL.qminor]⟩
+    | succ m =>
+      obtain ⟨c, _, hc, _, heval⟩ :=
+        GlobalTheory.T.shifted_capelli_determinant_subleading_coeff_trace A m E (-s)
+      exact ⟨c, hc, fun Y => by simpa only [sub_neg_eq_add] using heval Y⟩
+  obtain ⟨c, hlead, heval⟩ := hexpand
+  let B : Subalgebra ℂ A := ⊥
+  have hmem : ∀ j ≤ n, c j ∈ B := by
+    refine fun j hj => GlobalTheory.coeff_mem_of_poly_values_mem A B.toSubmodule
+      (n + 1) c (fun Y => ?_) j (Nat.lt_succ_of_le hj)
+    rw [← heval]
+    obtain ⟨d, hd⟩ := h (Y + s)
+    exact Algebra.mem_bot.2 ⟨d, by rw [hd, Algebra.algebraMap_eq_smul_one]⟩
   have hd : ∀ j, ∃ d : ℂ, j ≤ n → c j = d • (1 : Module.End ℂ V) := fun j => by
     by_cases hj : j ≤ n
-    · obtain ⟨d, hd⟩ := Algebra.mem_bot.1 (h2 j hj)
+    · obtain ⟨d, hd⟩ := Algebra.mem_bot.1 (hmem j hj)
       exact ⟨d, fun _ => by rw [← hd, Algebra.algebraMap_eq_smul_one]⟩
     · exact ⟨0, fun h => absurd h hj⟩
   choose d hd using hd
@@ -68,11 +82,10 @@ theorem exists_char {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
   obtain ⟨χ, hχ⟩ := monic_eval_capP n (X ^ n + q) (monic_X_pow_add hq)
     (natDegree_eq_of_degree_eq_some hdg)
   refine ⟨χ, fun Y => ?_⟩
-  have e := h3 Y
-  rw [sub_neg_eq_add] at e
   have e2 : ∀ j ∈ Finset.range n, Y ^ j • c j = (d j * Y ^ j) • (1 : Module.End ℂ V) := fun j hj => by
     rw [hd j (Finset.mem_range.1 hj).le, smul_smul, mul_comm]
-  rw [e, Finset.sum_range_succ, h1, Finset.sum_congr rfl e2, ← hχ]
+  change qdet E (Y + s) = _
+  rw [heval Y, Finset.sum_range_succ, hlead, Finset.sum_congr rfl e2, ← hχ]
   simp only [q, eval_add, eval_pow, eval_X, eval_finsetSum, eval_mul, eval_C, add_smul, Finset.sum_smul]
   rw [add_comm]
 

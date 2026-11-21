@@ -87,7 +87,7 @@ theorem scalar_eq (hψ : ∀ a, ‖ψ a‖ = 1) (μ : Measure (WOF F E nS nT)) (
   haveI : IsFiniteMeasure (μ.restrict 𝓕) := ⟨by
     rw [Measure.restrict_apply_univ]
     exact GlobalTheory.measure_addFundamentalDomain_lt_top_of_cocompact (G := WOF F E nS nT) (ratLF F E nS nT) hK hKc μ h𝓕⟩
-  have hb : ∀ g ∈ GlobalTheory.WeilPartsF.thetaSubF σ JS JT ξ₀ ψ, ∃ C : ℝ, ∀ w, ‖g w‖ ≤ C :=
+  have hb : ∀ (g : WOF F E nS nT → ℂ), g ∈ GlobalTheory.WeilPartsF.thetaSubF σ JS JT ξ₀ ψ → ∃ C : ℝ, ∀ w, ‖g w‖ ≤ C :=
     fun g (hg : IsThetaFunOF σ JS JT ξ₀ ψ g) => by
       have hp : ∀ γ ∈ ratLF F E nS nT, ∀ w, ‖g (γ + w)‖ = ‖g w‖ := by
         rintro _ ⟨γ, rfl⟩ w

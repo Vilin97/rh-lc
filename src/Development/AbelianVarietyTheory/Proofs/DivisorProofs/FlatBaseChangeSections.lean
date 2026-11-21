@@ -67,7 +67,7 @@ theorem exists_sum_secPull : ∀ (R R' : Type) [CommRing R] [CommRing R'] (φ : 
     apply E.injective
     apply Subtype.ext
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [← hxy, map_sum, map_sum, map_sum, AddSubmonoid.coe_finset_sum,
+      rw [← hxy, map_sum, map_sum, map_sum, Submodule.coe_sum,
       ← Finset.sum_coe_sort S, ← e.symm.sum_comp]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [AbLaw.CechOne.secKerEquiv_smul, LinearMap.baseChange_tmul]

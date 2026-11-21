@@ -90,7 +90,11 @@ theorem isFockVacAt_of_reads : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ
     congr 1
     funext t
     have h0 : (w + lineAt θ τ u t).map (finPart D) = 0 := by
-      rw [Matrix.map_add _ (finPart D).map_add (f := _), hw', (WeilVacMove.isLineAt_lineAt hθ τ u).2.1 t, add_zero]
+      ext i j
+      have h1 := congrFun (congrFun hw' i) j
+      have h2 := congrFun (congrFun ((WeilVacMove.isLineAt_lineAt hθ τ u).2.1 t) i) j
+      simp only [Matrix.map_apply, Matrix.zero_apply] at h1 h2
+      simp only [Matrix.map_apply, Matrix.add_apply, Matrix.zero_apply, map_add, h1, h2, add_zero]
     rw [heisO, GlobalTheory.AdThSympl.psi_symplOH_eq_of_isONFr D ψ θ V W r g hr X bas idx hψ hθ hV hev hm hs x hx0 w _ hw', hR.2 _ h0, hadd, hline]
   have hI : ∀ a b : Fin g → ℂ, hx X bas idx x (I • a) b = I * hx X bas idx x a b := fun a b => by
     simp only [hH, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]

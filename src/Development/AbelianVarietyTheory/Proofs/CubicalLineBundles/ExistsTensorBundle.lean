@@ -59,7 +59,7 @@ theorem gramForm_pure (ha : ∀ c x y, β (c • x) y = β x (br c • y)) (hb :
     {x y : W} {u v : V} {s s' : I → O} (hx : ∀ i, p i x = s i • u) (hy : ∀ i, p i y = s' i • v) :
     gramForm β p g x y = β ((∑ k : I × I, br (s' k.2) * (g k.1 k.2 * s k.1)) • u) v := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [Finset.sum_smul, map_sum, AddMonoidHom.finset_sum_apply]
+    rw [Finset.sum_smul, map_sum, AddMonoidHom.finsetSum_apply]
   exact Finset.sum_congr rfl fun k _ => by rw [hx, hy, mul_smul (br _), ha (br _), hb, mul_smul]
 
 theorem hermitian_expand {M : Type} [AddCommGroup M] [Module O M] (h : M →ₗ[O] M →+ O)
@@ -68,7 +68,7 @@ theorem hermitian_expand {M : Type} [AddCommGroup M] [Module O M] (h : M →ₗ[
   have sm : ∀ c x y, h x (c • y) = br c * h x y := fun c x y => by
     rw [hh (c • y) x, map_smul, AddMonoidHom.smul_apply, smul_eq_mul, map_mul, ← hh]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum h, AddMonoidHom.finset_sum_apply, Fintype.sum_prod_type]
+    rw [map_sum h, AddMonoidHom.finsetSum_apply, Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun i _ => ?_
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum]

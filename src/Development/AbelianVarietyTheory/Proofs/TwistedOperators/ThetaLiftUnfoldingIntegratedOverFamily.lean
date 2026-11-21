@@ -44,8 +44,7 @@ theorem tot_continuous (a : Gen ψ V V₀ W ρ Y) (ha : a.Is) (G : GA D W → �
     ha.cont.comp (continuous_fst.snd.prodMk hpos)
   have hM : Continuous fun p : (GA D W × Y) × UX D ρ × Mx D ρ V₀.rank =>
       a.d.mixS W ψ a.vS.μ a.vS.𝓕 (a.om (a.d.emb0 (a.g p.1.2), p.1.1) Φ) ((rat a.x₀ : Mx D W.rank ρ) ⬝ p.2.1.1.1)
-        ((rat a.x₀ : Mx D W.rank ρ) ⬝ p.2.2) :=
-by
+        ((rat a.x₀ : Mx D W.rank ρ) ⬝ p.2.2) := by
     have h1 : Continuous fun p : (GA D W × Y) × UX D ρ × Mx D ρ V₀.rank => a.d.emb0 (a.g p.1.2) :=
       a.d.continuous_embed.comp (ha.g.comp continuous_fst.snd)
     have h2 : Continuous fun p : (GA D W × Y) × UX D ρ × Mx D ρ V₀.rank =>

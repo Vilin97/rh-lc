@@ -75,7 +75,7 @@ theorem taylor_two_var (f : PowerSeries O) :
     (MvPowerSeries.X 1 : MvPowerSeries (Fin 2) O) ^ 2 ∣
       PowerSeries.subst (MvPowerSeries.X 0 + MvPowerSeries.X 1 : MvPowerSeries (Fin 2) O) f -
         PowerSeries.subst (MvPowerSeries.X 0 : MvPowerSeries (Fin 2) O) f -
-        PowerSeries.subst (MvPowerSeries.X 0 : MvPowerSeries (Fin 2) O) (derivative O f) *
+        PowerSeries.subst (MvPowerSeries.X 0 : MvPowerSeries (Fin 2) O) (PowerSeries.derivative (R := O) f) *
           MvPowerSeries.X 1 := by
   classical
   rw [MvPowerSeries.X_pow_dvd_iff]
@@ -103,7 +103,7 @@ theorem taylor_two_var (f : PowerSeries O) :
     ring
 
 theorem taylor2 (f D : PowerSeries O) (hD : constantCoeff D = 0) :
-    ∃ Q, subst (X + D) f = f + D * derivative O f + D ^ 2 * Q := by
+    ∃ Q, subst (X + D) f = f + D * PowerSeries.derivative (R := O) f + D ^ 2 * Q := by
   obtain ⟨Q, hQ⟩ := taylor_two_var f
   let b : Fin 2 → MvPowerSeries Unit O := ![(X : PowerSeries O), D]
   have hb : MvPowerSeries.HasSubst b := by
@@ -170,7 +170,7 @@ theorem choose_rec (r : R) (k : ℕ) :
     linear_combination h2 + h3 - r * e
 
 theorem bs_ode (r : R) :
-    (1 + X) * derivative O (binomialSeries O r) =
+    (1 + X) * PowerSeries.derivative (R := O) (binomialSeries O r) =
       algebraMap O (PowerSeries O) (algebraMap R O r) * binomialSeries O r := by
   ext k
   rw [add_mul, one_mul, map_add (f := _), ← Algebra.smul_def, map_smul, smul_eq_mul]
@@ -188,9 +188,9 @@ theorem bs_ode (r : R) :
 variable [IsDomain O] [CharZero O]
 
 theorem ode_unique (c : O) {F G : PowerSeries O} (h0 : constantCoeff F = constantCoeff G)
-    (hF : (1 + X) * derivative O F = algebraMap O (PowerSeries O) c * F)
-    (hG : (1 + X) * derivative O G = algebraMap O (PowerSeries O) c * G) : F = G := by
-  have hH : (1 + X) * derivative O (F - G) = algebraMap O (PowerSeries O) c * (F - G) := by
+    (hF : (1 + X) * PowerSeries.derivative (R := O) F = algebraMap O (PowerSeries O) c * F)
+    (hG : (1 + X) * PowerSeries.derivative (R := O) G = algebraMap O (PowerSeries O) c * G) : F = G := by
+  have hH : (1 + X) * PowerSeries.derivative (R := O) (F - G) = algebraMap O (PowerSeries O) c * (F - G) := by
     rw [map_sub]; linear_combination hF - hG
   have key : ∀ k, coeff k (F - G) = 0 := by
     intro k
@@ -201,7 +201,7 @@ theorem ode_unique (c : O) {F G : PowerSeries O} (h0 : constantCoeff F = constan
       have e := congrArg (coeff k) hH
       rw [add_mul, one_mul, map_add (f := _), ← Algebra.smul_def, map_smul, smul_eq_mul, ih, mul_zero,
         coeff_derivative] at e
-      have hx : coeff k (X * derivative O (F - G)) = 0 := by
+      have hx : coeff k (X * PowerSeries.derivative (R := O) (F - G)) = 0 := by
         rcases k with _ | j
         · exact coeff_zero_X_mul _
         · rw [coeff_succ_X_mul, coeff_derivative, ih, zero_mul]
@@ -230,23 +230,23 @@ theorem subst_bs (l : ℕ) (hl : 1 ≤ l) (r : R) :
   rw [← hσ]
   apply ode_unique (algebraMap R O ((l : R) * r))
   · rw [cc_map σ hσ0, binomialSeries_constantCoeff, binomialSeries_constantCoeff]
-  · have hd : derivative O ((1 + X) ^ l - 1 : PowerSeries O) = (l : PowerSeries O) * (1 + X) ^ (l - 1) := by
+  · have hd : PowerSeries.derivative (R := O) ((1 + X) ^ l - 1 : PowerSeries O) = (l : PowerSeries O) * (1 + X) ^ (l - 1) := by
       simp only [map_sub, derivative_pow, map_add (f := _), derivative_X, derivative_one, zero_add, mul_one,
         sub_zero]
     have h1 : (1 + X : PowerSeries O) * (1 + X) ^ (l - 1) = (1 + X) ^ l := by
       rw [← pow_succ']; congr 1; omega
     have h2 : σ (1 + X) = (1 + X) ^ l := by rw [map_add (f := _), map_one, hσX]; ring
-    have h3 : (1 + X) ^ l * σ (derivative O (binomialSeries O r)) =
+    have h3 : (1 + X) ^ l * σ (PowerSeries.derivative (R := O) (binomialSeries O r)) =
         algebraMap O (PowerSeries O) (algebraMap R O r) * σ (binomialSeries O r) := by
       have := congrArg σ (bs_ode (O := O) r)
       rw [map_mul, map_mul, h2, AlgHom.commutes] at this
       exact this
-    have hdG : derivative O (σ (binomialSeries O r)) =
-        σ (derivative O (binomialSeries O r)) * ((l : PowerSeries O) * (1 + X) ^ (l - 1)) := by
+    have hdG : PowerSeries.derivative (R := O) (σ (binomialSeries O r)) =
+        σ (PowerSeries.derivative (R := O) (binomialSeries O r)) * ((l : PowerSeries O) * (1 + X) ^ (l - 1)) := by
       rw [hσ, hσ, derivative_subst hs, hd]
     rw [hdG, map_mul, map_natCast, map_mul, map_natCast]
-    calc (1 + X) * (σ (derivative O (binomialSeries O r)) * ((l : PowerSeries O) * (1 + X) ^ (l - 1)))
-        = (l : PowerSeries O) * ((1 + X) ^ l * σ (derivative O (binomialSeries O r))) := by
+    calc (1 + X) * (σ (PowerSeries.derivative (R := O) (binomialSeries O r)) * ((l : PowerSeries O) * (1 + X) ^ (l - 1)))
+        = (l : PowerSeries O) * ((1 + X) ^ l * σ (PowerSeries.derivative (R := O) (binomialSeries O r))) := by
           rw [← h1]; ring
       _ = _ := by rw [h3]; ring
   · exact bs_ode _
@@ -258,7 +258,7 @@ theorem func_unique (φ₀ : PowerSeries O →ₐ[O] PowerSeries O) (l : ℕ) (h
   have hW0 : constantCoeff ((1 + X) ^ l - 1 : PowerSeries O) = 0 := by simp
   obtain ⟨q, hq⟩ := X_dvd_iff.mpr hW0
   have hq0 : constantCoeff q = (l : O) := by
-    have e := congrArg (coeff 0 ∘ derivative O) hq
+    have e := congrArg (coeff 0 ∘ PowerSeries.derivative (R := O)) hq
     simp only [Function.comp_apply, map_sub, derivative_pow, map_add (f := _), derivative_X, derivative_one,
       zero_add, mul_one, sub_zero, Derivation.leibniz, smul_eq_mul] at e
     simp at e
@@ -373,18 +373,18 @@ theorem aut_core (c m : R) (k : ℕ) (hc : c = 1 + (l : R) ^ k * m)
     rw [hDdef, this, hc, binomialSeries_add, hB1, ← phi_pow_bs φ₀ l hl hφ k m, hBm]
     ring
   have hD0 : constantCoeff D = 0 := by rw [hDdef, map_sub, h0, constantCoeff_X, sub_zero]
-  have hτf : ∀ f, ∃ Q, τ f = f + D * derivative O f + D ^ 2 * Q := by
+  have hτf : ∀ f, ∃ Q, τ f = f + D * PowerSeries.derivative (R := O) f + D ^ 2 * Q := by
     intro f
     obtain ⟨Q, hQ⟩ := taylor2 f D hD0
     exact ⟨Q, by rw [algHom_eq_subst τ h0, show τ X = X + D by rw [hDdef]; ring, hQ]⟩
   refine ⟨fun f => ?_, fun P Rr hPR => ?_⟩
   · obtain ⟨Q, hQ⟩ := hτf f
-    exact ⟨(1 + X) * (M + Z * E') * (derivative O f + D * Q), by rw [hQ, hD]; ring⟩
+    exact ⟨(1 + X) * (M + Z * E') * (PowerSeries.derivative (R := O) f + D * Q), by rw [hQ, hD]; ring⟩
   · obtain ⟨Q, hQ⟩ := hτf P
     have hN : 1 ≤ l ^ k := Nat.one_le_pow _ _ (by omega)
-    have hL : (1 + X) * (P * derivative O Rr + Rr * derivative O P) =
+    have hL : (1 + X) * (P * PowerSeries.derivative (R := O) Rr + Rr * PowerSeries.derivative (R := O) P) =
         ((l ^ k : ℕ) : PowerSeries O) * (1 + P * Rr) := by
-      have e : derivative O (P * Rr) = P * derivative O Rr + Rr * derivative O P := by
+      have e : PowerSeries.derivative (R := O) (P * Rr) = P * PowerSeries.derivative (R := O) Rr + Rr * PowerSeries.derivative (R := O) P := by
         rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
       have h1' : (1 + X : PowerSeries O) * (1 + X) ^ (l ^ k - 1) = (1 + X) ^ (l ^ k) := by
         rw [← pow_succ']; congr 1; omega
@@ -396,9 +396,9 @@ theorem aut_core (c m : R) (k : ℕ) (hc : c = 1 + (l : R) ^ k * m)
       rw [hc, map_add (f := _), map_mul, map_pow, map_natCast, map_one, map_add (f := _), map_one, map_mul, map_pow,
         map_natCast, hM]; push_cast; ring
     rw [← hPR] at hD
-    refine ⟨((l ^ k : ℕ) : PowerSeries O) * M * Rr - (1 + X) * M * derivative O Rr +
-      (1 + X) * Rr ^ 2 * E' * derivative O P + (1 + X) ^ 2 * (M + P * Rr * E') ^ 2 * Rr ^ 2 * Q, ?_⟩
-    linear_combination hQ - P * hcc + (derivative O P + (D + (1 + X) * (M * (P * Rr) + (P * Rr) ^ 2 * E')) * Q) * hD + (M * P) * hL
+    refine ⟨((l ^ k : ℕ) : PowerSeries O) * M * Rr - (1 + X) * M * PowerSeries.derivative (R := O) Rr +
+      (1 + X) * Rr ^ 2 * E' * PowerSeries.derivative (R := O) P + (1 + X) ^ 2 * (M + P * Rr * E') ^ 2 * Rr ^ 2 * Q, ?_⟩
+    linear_combination hQ - P * hcc + (PowerSeries.derivative (R := O) P + (D + (1 + X) * (M * (P * Rr) + (P * Rr) ^ 2 * E')) * Q) * hD + (M * P) * hL
 
 end Aut
 

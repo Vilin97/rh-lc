@@ -76,7 +76,8 @@ theorem at_symp_self {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
   have h0 := GlobalTheory.LatVac.symp_smul_smul σ JA JB ξ 0 1 w w
   rw [hw u hu, mul_one] at h1
   rw [zero_smul, zero_mul, zero_mul] at h0
-  rw [smul_eq_mul, ← h1, h0]
+  change u * symp (cA σ) ξ JA JB w w = 0
+  rw [← h1, h0]
 
 end GlobalTheory.DblVacLine
 

@@ -58,11 +58,14 @@ theorem val_symm {G₀ : WTZ E} (s : TwSec U x Z G₀) (he : evI y' (idem Z) = 1
 
 theorem exists_pow {e : ℤ} (s : TwSec U x Z (wtOf Dw 0 e)) (he : evI y' (idem Z) = 1)
     (hs : vV T.V (evI y' s.sig) = 0) : ∀ n : ℕ, ∃ t : TwSec U x Z (wtOf Dw 0 ((n : ℤ) * e)),
-      vV T.V (evI y' t.sig) = 0
-  | 0 => ⟨(s.mul s.symm).copy (by rw [add_neg_cancel, Nat.cast_zero, zero_mul, wtOf_zero]),
+      vV T.V (evI y' t.sig) = 0 := by
+  intro n
+  induction n with
+  | zero =>
+    exact ⟨(s.mul s.symm).copy (by rw [add_neg_cancel, Nat.cast_zero, zero_mul, wtOf_zero]),
       val_mul y' s s.symm he hs (val_symm y' s he hs)⟩
-  | n + 1 => by
-    obtain ⟨t, ht⟩ := exists_pow s he hs n
+  | succ n ih =>
+    obtain ⟨t, ht⟩ := ih
     exact ⟨(t.mul s).copy (by rw [← wtOf_add, add_zero]; push_cast; ring_nf), val_mul y' t s he ht hs⟩
 
 theorem exists_zpow (s : TwSec U x Z (wtOf Dw 0 1)) (he : evI y' (idem Z) = 1)

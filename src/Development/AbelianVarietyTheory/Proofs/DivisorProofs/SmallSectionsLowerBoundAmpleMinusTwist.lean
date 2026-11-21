@@ -25,7 +25,7 @@ theorem main : GlobalTheory.Published.ArCalc → AmpleHS → ∀ (k : Type) [Com
       α n / (n : ℝ) ^ (D + 1) / ((D + 1).factorial : ℝ) :=
     (hlim.div_const ((D + 1).factorial : ℝ)).eventually (lt_mem_nhds (by linarith))
   obtain ⟨n, ⟨hn1, hn2⟩, hn0⟩ := ((h1.and h2).and (eventually_gt_atTop 0)).exists
-  have h3 := GlobalTheory.T.arithHilbertSamuel_lowerBound_nef_plus_ample hC hHS k X p D hX P c n (α n) hn0 hnef hsemi hG.ample hG.nef.semiPos (hα n) (ε / 3) hε3
+  have h3 := GlobalTheory.HSNef.lowerBound_along_div hC hHS k X p D hX P c n (α n) hn0 hnef hsemi hG.ample hG.nef.semiPos (hα n) (ε / 3) hε3
   filter_upwards [hn1, h3] with M hM1 hM3
   have hM : (0 : ℝ) ≤ (M : ℝ) ^ (D + 1) := by positivity
   rw [div_right_comm] at hM3

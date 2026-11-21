@@ -76,7 +76,6 @@ theorem minpoly_coeff_bdd_of_a_one (p : ℕ) [Fact p.Prime] (G : HTGroup p) (ha 
         have := congrArg (starRingEnd ℂ) hr
         rw [map_zero, Polynomial.hom_eval₂] at this
         convert this using 2
-        exact RingHom.ext fun x => rfl
       simpa using hbd _ _ hr'
   have := Polynomial.coeff_bdd_of_roots_le φ (minpoly.monic hint) (IsAlgClosed.splits _) hdeg hroots k
   rwa [Polynomial.coeff_map] at this

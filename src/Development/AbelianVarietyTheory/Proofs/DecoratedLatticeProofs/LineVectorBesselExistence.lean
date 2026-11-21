@@ -119,12 +119,16 @@ theorem besF_norm (b0 : BesAt (D.sp.Y 0) (D.sp.X 0) D.R.rS)
     (b' : ∀ j ρ, j + 2 * ρ + 2 = D.R.m → BesAt (Yc D j) (D.sp.X j) ρ) (c N : D.host.E)
     (h0 : star b0.ζ ⬝ᵥ b0.L.gram *ᵥ b0.ζ = c)
     (h' : ∀ j ρ h, star (b' j ρ h).ζ ⬝ᵥ (b' j ρ h).L.gram *ᵥ (b' j ρ h).ζ * N ^ (j / 2) = c) :
-    ∀ j ρ h, star (besF b0 b' j ρ h).ζ ⬝ᵥ (besF b0 b' j ρ h).L.gram *ᵥ (besF b0 b' j ρ h).ζ * N ^ (j / 2) = c
-  | 0, ρ, h => by
-    obtain rfl : D.R.rS = ρ := by show D.R.m / 2 - 1 = ρ; omega
-    rw [besF_zero b0 b' h, Nat.zero_div, pow_zero, mul_one]
-    exact h0
-  | j + 1, ρ, h => h' (j + 1) ρ h
+    ∀ j ρ h, star (besF b0 b' j ρ h).ζ ⬝ᵥ (besF b0 b' j ρ h).L.gram *ᵥ (besF b0 b' j ρ h).ζ * N ^ (j / 2) = c := by
+  intro j ρ h
+  cases j with
+  | zero =>
+    have hρ : D.R.rS = ρ := by
+      show D.R.m / 2 - 1 = ρ
+      omega
+    subst ρ
+    simpa only [besF_zero b0 b' h, Nat.zero_div, pow_zero, mul_one] using! h0
+  | succ j => exact h' (j + 1) ρ h
 
 theorem sbes_norm {X : Formalism.L2.SG.HidaSetting.HidaSetting D} {h : X.B.I = Formalism.L2.SG.InstExistsPf.instOf D} {u : D.what₂.Word}
     {ψ : AddChar (AF D.host.F) ℂ} (B : GlobalTheory.Core.Mi.SBes X h u ψ (D.sp.X 0)) (hE : GlobalTheory.Core.Mi.IdE X)

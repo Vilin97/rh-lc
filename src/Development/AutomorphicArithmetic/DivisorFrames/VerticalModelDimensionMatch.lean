@@ -56,7 +56,7 @@ private theorem diffVanish_pull {k : Type} [Field k] {X X' : Scheme.{0}} [IsLoca
     intro F _ hF S hS hFS hn
     have hS0 : IsEmpty S := by
       rw [← topologicalKrullDim_eq_bot_iff]
-      exact (WithBot.lt_zero_iff_eq_bot _).1 hn
+      exact WithBot.lt_zero_iff_eq_bot.1 hn
     have h0 : support F = ∅ := Set.eq_empty_iff_forall_notMem.2 fun x hx => hS0.false ⟨_, hFS x hx⟩
     rw [diffVanish_zero_iff]
     funext c
@@ -214,7 +214,7 @@ private theorem ord_pos {X : Scheme.{0}} [IsIntegral X] [IsLocallyNoetherian X] 
     exact (map_ne_zero_iff _ (IsFractionRing.injective _ _)).2 h₀
   obtain ⟨m, hm⟩ := ENat.ne_top_iff_exists.1 (Ring.ord_ne_top (mem_nonZeroDivisors_of_ne_zero h₀))
   have h₄ : Scheme.ord (l : X.functionField) z = m := by
-    rw [Scheme.ord_eq_iff hz h₃, Scheme.ordHom, h₂, Ring.ordFrac_eq_ord _ h₀]
+    rw [Scheme.ord_eq_iff hz h₃, Scheme.ordHom, h₂, Ring.ordFrac_eq_ord _]
     exact Ring.ordMonoidWithZeroHom_eq_coe _ (mem_nonZeroDivisors_of_ne_zero h₀) hm.symm
   rw [h₄]
   refine Int.natCast_pos.2 (Nat.pos_of_ne_zero fun e => h₁ ?_)

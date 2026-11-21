@@ -15,7 +15,7 @@ open Finset
 
 theorem sum_log_le (M : ℕ) :
     ∑ p ∈ (range (M + 1)).filter Nat.Prime, Real.log p ≤ M * Real.log 4 := by
-  have h := primorial_le_4_pow M
+  have h := primorial_le_four_pow M
   unfold primorial at h
   have h' : (∏ p ∈ (range (M + 1)).filter Nat.Prime, (p:ℝ)) ≤ (4:ℝ) ^ M := by
     rw [← Nat.cast_prod]

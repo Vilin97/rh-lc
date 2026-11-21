@@ -33,12 +33,12 @@ theorem idemOf_props {K : Type} [Field K] [NumberField K] {G : Type} [Group G] [
     exact b.isIntegral_coe
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [coeff_idemOf, coeff_idemOf, map_sum, map_sum, map_sum]
-    refine Finset.sum_congr rfl fun χ hχ => ?_
-    have h1 := (hX χ hχ).map_inv σ 1
-    have h2 := (hX χ hχ).map_inv σ g
-    rw [inv_one] at h1
-    simp only [map_mul, map_div₀, map_natCast, inv_inv, h2, Complex.conj_conj]
-    rw [← h1]
+      refine Finset.sum_congr rfl fun χ hχ => ?_
+      have h1 := (hX χ hχ).map_inv σ 1
+      have h2 := (hX χ hχ).map_inv σ g
+      rw [inv_one] at h1
+      simp only [map_mul, map_div₀, map_natCast, inv_inv, h2, Complex.conj_conj]
+      rw [← h1]
 
 end GlobalTheory.TieIdem
 

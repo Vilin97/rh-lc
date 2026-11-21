@@ -22,7 +22,7 @@ theorem exists_idealSheaf_comap_eq_of_approx : ∀ (o Ω : Type) [CommRing o] [F
   refine ⟨D.idealSheaf.map π, le_antisymm (Scheme.IdealSheafData.comap_map_le _ _) ?_⟩
   haveI : QuasiCompact M.s := M.qc
   haveI : CompactSpace M.Z := QuasiCompact.compactSpace_of_compactSpace M.s
-  apply GlobalTheory.T.effectiveCartier_idealSheaf_le_of_closedPoints M.Z D
+  refine GlobalTheory.T.effectiveCartier_idealSheaf_le_of_closedPoints M.Z D _ ?_
   intro x hx
   have hz : IsClosed ({π x} : Set M₁.Z) := by
     have := π.isClosedMap _ hx
@@ -42,5 +42,6 @@ theorem exists_idealSheaf_comap_eq_of_approx : ∀ (o Ω : Type) [CommRing o] [F
   have hgI := GlobalTheory.T.mem_map_idealSheaf_of_forall_div_localEquation o Ω M₁ M π hπ hprop D V g (by rw [hg]; exact hV)
   obtain ⟨W, h, hxW, hW⟩ := GlobalTheory.T.localEquation_mem_comap_map_idealSheaf_near_point o Ω M₁ M π hπ D V g x i hzV hi hgI (by rw [hg]; exact hG0) (by rw [hg]; exact hfG)
   exact ⟨W, i, h, hxW, hW⟩
+
 
 end GlobalTheory.Poinc

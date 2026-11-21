@@ -126,8 +126,9 @@ theorem adapted_index_vector_compatibility : ∀ (F E : Type) [Field F] [NumberF
       rw [incM_one, Matrix.transpose_one, Matrix.mul_one] at hγ'
       have e1 : symp (R := AF F) (cA σ) (inclR (F := F) (AF F) (θ : E)) (incM F X.J) (incM F W.J) (incM F H.ι * γ) (incM F H.ι * γ) =
           symp (R := AF F) (cA σ) (inclR (F := F) (AF F) (θ : E)) (incM F X₁.J) (incM F W.J) γ γ := by
-        rw [symp, ← frame_iota, hTens_frame hB hX hH]
-        simp [symp]
+        have hsub : (what₂ γ 0 0).submatrix Sum.inl id = γ := rfl
+        rw [symp, ← frame_iota, hTens_frame hB hX hH, hsub]
+        simp [symp, what₂, Sum.elim]
       funext y
       have := congrFun (E0 _ hγ') (Function.extend j y 0)
       rw [e1, chi_indep hB hX₁ hW hθ hθ₁ hγ] at this
@@ -153,8 +154,8 @@ theorem adapted_index_vector_compatibility : ∀ (F E : Type) [Field F] [NumberF
       have hg := lat_map (X₁ := X) (W₁ := W) (mask_mem hH hQ 0 1 0) hW1 hγ
       have em : mask (AE F E) n₁ 0 1 0 * w = what₂ (0 : Matrix (Fin n₁) (Fin d) (AE F E)) (w (.inr 0)) 0 := by
         ext (i | i) l
-        · simp [mask]
-        · fin_cases i <;> simp [mask]
+        · simp [mask, Matrix.diagonal_mul, what₂, Sum.elim]
+        · fin_cases i <;> simp [mask, Matrix.diagonal_mul, what₂, Sum.elim]
       have eg := frame_alt (F := F) (H := H) (w (.inr 0))
       rw [incM_one, Matrix.transpose_one, Matrix.mul_one, incM_mul, incM_mul, incM_mask, Matrix.mul_assoc, Matrix.mul_assoc, ← hw,
         em, eg] at hg
@@ -168,7 +169,7 @@ theorem adapted_index_vector_compatibility : ∀ (F E : Type) [Field F] [NumberF
       have h4 : symp (R := AF F) (cA σ) (inclR (F := F) (AF F) (θ : E)) (incM F X.J) (incM F W.J)
           (Matrix.vecMulVec (incV F H.x) (w (.inr 0))) (Matrix.vecMulVec (incV F H.x) (w (.inr 0))) = 0 := by
         rw [symp, ← eg, hTens_frame hB hX hH]
-        simp [hTens]
+        simp [hTens, what₂, Sum.elim]
       have l1 : (locCo co v (Matrix.vecMulVec (incV F H.x) (w (.inr 0)))).1 = 0 := funext fun k => by simp [locCo, (hx _).1]
       have l2 : x ⬝ᵥ (locCo co v (Matrix.vecMulVec (incV F H.x) (w (.inr 0)))).2 =
           a ⬝ᵥ (locCo co v (Matrix.vecMulVec (incV F H.x) (w (.inr 0)))).2 := by

@@ -155,7 +155,7 @@ theorem exists_isCompact_entries_of_anisotropic :
   have hhc : Continuous fun x : Fin M → K ⊗[F] E => hR K σ J x x := by
     show Continuous fun x => Formalism.UG.hform (sigR K σ) (JR K J) x x
     unfold Formalism.UG.hform
-    exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+    exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
       ((hs.comp (continuous_apply i)).mul continuous_const).mul (continuous_apply j)
   let Q : (Fin (Module.finrank K (Fin M → K ⊗[F] E)) → K) → (Fin (Module.finrank K (K ⊗[F] E)) → K) :=
     fun y => ψ (hR K σ J (φ.symm y) (φ.symm y))

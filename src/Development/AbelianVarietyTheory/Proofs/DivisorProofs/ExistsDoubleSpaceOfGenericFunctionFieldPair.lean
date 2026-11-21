@@ -29,7 +29,7 @@ theorem exists_dbl_of_genPair : ∀ (F : Type) [Field F] (Y : Var F) (K : Type) 
     · rw [Category.assoc, Limits.pullback.lift_fst]; exact hζ₁.trans (Limits.pullback.lift_fst _ _ _).symm
     · rw [Category.assoc, Limits.pullback.lift_snd]; exact hζ₂.trans (Limits.pullback.lift_snd _ _ _).symm
   have hmem : Limits.pullback.diagonal Y.str (genericPoint Y.X) ∈ Set.range (Limits.pullback.lift p₁ p₂ hZ) := by
-    have hcl : IsClosed (Set.range (Limits.pullback.lift p₁ p₂ hZ)) := hci.base_closed.isClosed_range
+    have hcl : IsClosed (Set.range (Limits.pullback.lift p₁ p₂ hZ)) := hci.isClosedEmbedding.isClosed_range
     refine hsp.mem_closed hcl ⟨ζ (IsLocalRing.closedPoint K), ?_⟩
     rw [← hcomp]
     first | rfl | exact (Scheme.Hom.comp_apply _ _ _).symm | simp

@@ -82,7 +82,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.halfTerm_pf :
 
   have hFj : Continuous (Function.uncurry F) := by
     refine (hψc.comp (continuous_fst.comp continuous_snd)).mul ?_
-    refine continuous_finset_sum _ fun i _ => ?_
+    refine continuous_finsetSum _ fun i _ => ?_
     refine Continuous.inner ?_ ?_
     · exact (s.vecs.cont i).1.comp ((hacc.comp continuous_fst).mul continuous_const)
     · exact m.Uπ.continuous.comp ((s.vecs.cont i).2.comp continuous_snd)

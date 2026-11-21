@@ -60,42 +60,33 @@ theorem exists_hom_le (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.Is
 theorem exists_le_hom (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT) :
     ∃ k : ℕ, 0 < k ∧ ∀ x ∈ latRat S T ΛS ΛT, k • x ∈ homLat ΛS ΛT := by
   classical
-  obtain ⟨M, hM, h1⟩ := exists_den_latRat (S := S) (T := T) hS.fg hT.fg
-  obtain ⟨N, hN, h2⟩ := exists_den_fg_pi hS.fg
-  have h3 : ∀ y : Fin T.rank → D.host.E, ∃ k : ℕ, 0 < k ∧ k • y ∈ ΛT := fun y => by
-    have hy : y ∈ Submodule.span D.host.E (ΛT : Set (Fin T.rank → D.host.E)) := hT.span_eq_top ▸ Submodule.mem_top
-    induction hy using Submodule.span_induction with
-    | mem x hx => exact ⟨1, one_pos, by rwa [one_nsmul]⟩
-    | zero => exact ⟨1, one_pos, by simp⟩
-    | add x y _ _ hx hy =>
-      obtain ⟨a, ha, hx⟩ := hx
-      obtain ⟨b, hb, hy⟩ := hy
-      refine ⟨a * b, Nat.mul_pos ha hb, ?_⟩
-      rw [nsmul_add]
-      exact add_mem (by rw [mul_nsmul]; exact nsmul_mem hx _) (by rw [mul_nsmul']; exact nsmul_mem hy _)
-    | smul c x _ hx =>
-      obtain ⟨a, ha, hx⟩ := hx
-      obtain ⟨b, hb, c', hc⟩ := GlobalTheory.AdIdem.exists_nat_mul_integral _ c
-      refine ⟨b * a, Nat.mul_pos hb ha, ?_⟩
-      convert ΛT.smul_mem c' hx using 1
-      funext i
-      change (b * a) • (c * x i) = algebraMap _ D.host.E c' * (a • x i)
-      rw [hc, nsmul_eq_mul, nsmul_eq_mul]
-      push_cast
-      ring
-  choose K hK h3 using fun i : Fin T.rank => h3 (Pi.single i 1)
-  refine ⟨(∏ i, K i) * (M * N), Nat.mul_pos (Finset.prod_pos fun i _ => hK i) (Nat.mul_pos hM hN), fun x hx y hy => ?_⟩
-  rw [pi_eq_sum_univ' (_ *ᵥ y)]
-  refine sum_mem fun i _ => ?_
-  obtain ⟨c, hc⟩ : ∑ j, (M * x i j) * (N * y j) ∈ Formalism.UG.intOE D.host.E :=
-    sum_mem fun j _ => mul_mem (h1 x hx i j) (h2 y hy j)
-  convert ΛT.smul_mem c (nsmul_mem (h3 i) (∏ j ∈ Finset.univ.erase i, K j)) using 1
-  rw [← Finset.prod_erase_mul _ _ (Finset.mem_univ i)]
-  funext l
-  change (∑ j, (((∏ j ∈ Finset.univ.erase i, K j) * K i * (M * N)) • x i j) * y j) * (Pi.single i 1 : _ → D.host.E) l =
-    algebraMap _ D.host.E c * ((∏ j ∈ Finset.univ.erase i, K j) • K i • (Pi.single i 1 : _ → D.host.E) l)
-  simp only [hc, nsmul_eq_mul, Nat.cast_mul, Finset.sum_mul]
-  exact Finset.sum_congr rfl fun _ _ => by ring
+  obtain ⟨A, hA, ha⟩ := exists_den_fg (Λ := (D.host.AA : Submodule (𝓞 D.host.E) D.host.E))
+    (FractionalIdeal.fg_of_isNoetherianRing le_rfl _) LinearMap.id
+  obtain ⟨B, hB, hb⟩ := exists_den_fg_pi hS.fg
+  obtain ⟨C, hC, hc⟩ := exists_den_matrix (Formalism.UG.intOE D.host.E)
+    (GlobalTheory.AdIdem.exists_nat_mul_integral _) S.gram
+  refine ⟨A * B * B * C, by positivity, fun x hx => ?_⟩
+  induction hx using AddSubgroup.closure_induction with
+  | mem x hx =>
+    obtain ⟨a, ha', s, hs, t, ht, rfl⟩ := hx
+    intro y hy
+    have hi : ∀ j k, ((A : D.host.E) * a) * (star ((B : D.host.E) * s k)) *
+        ((C : D.host.E) * S.gram k j) * ((B : D.host.E) * y j) ∈ Formalism.UG.intOE D.host.E :=
+      fun j k => mul_mem (mul_mem (mul_mem (ha a ⟨a, ha', rfl⟩) (star_mem_intOE (hb s hs k))) (hc k j)) (hb y hy j)
+    have hz : (∑ j, ∑ k, ((A : D.host.E) * a) * (star ((B : D.host.E) * s k)) *
+        ((C : D.host.E) * S.gram k j) * ((B : D.host.E) * y j)) ∈ Formalism.UG.intOE D.host.E :=
+      sum_mem fun j _ => sum_mem fun k _ => hi j k
+    obtain ⟨c, hc'⟩ := hz
+    convert ΛT.smul_mem c ht using 1
+    funext i
+    change (((A * B * B * C) • genMap S T a s t) *ᵥ y) i = (c : D.host.E) * t i
+    simp only [Matrix.smul_apply, Matrix.mulVec, dotProduct, genMap, Matrix.of_apply,
+      Pi.smul_apply, smul_eq_mul, hc', nsmul_eq_mul, Nat.cast_mul, star_mul', star_natCast,
+      Finset.sum_mul, Finset.mul_sum]
+    exact Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => by ring
+  | zero => simp
+  | add x y _ _ hx hy => rw [nsmul_add]; exact add_mem hx hy
+  | neg x _ hx => rw [neg_nsmul]; exact neg_mem hx
 
 theorem isSBHalf_cosInd (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT) {e : AE D}
     (he : e * e = e) (hinf : infPart D e = 0) {𝔪 : Ideal (𝓞 D.host.E)} (h𝔪 : 𝔪 ≠ ⊥) (κ : Cos ΛS ΛT 𝔪) :

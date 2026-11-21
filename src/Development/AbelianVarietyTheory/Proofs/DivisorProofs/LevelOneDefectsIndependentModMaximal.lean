@@ -37,6 +37,8 @@ theorem map_formalGroupLawCoboundaryOne_square (θ : B →+* O) (Θ : Q →+* C)
     map Θ (cob1 (up Q μ) f) = cob1 (up C ν) (map Θ f) := by
   rw [← ExtCoeff.map_formalGroupLawCoboundaryOne_eq Θ (up Q μ) f (fun i => by simp [up, hμ])]
   congr 1
+  funext i
+  simp only [up]
   rw [map_up θ Θ hΘ, hν]
 
 theorem map_defect (θ : B →+* O) (Θ : Q →+* C) (hΘ : ∀ b, Θ (algebraMap B Q b) = algebraMap O C (θ b))

@@ -36,7 +36,7 @@ noncomputable section
 
 open AlgebraicGeometry CategoryTheory Limits NumberField TopologicalSpace
 open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.PullbackSections Formalism.L2.Pj Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.ModuliIntegralCharts GlobalTheory.ShFam GlobalTheory.LocM
-open GlobalTheory.LieMet GlobalTheory.LocM.FrameBC GlobalTheory.LocM.MapComp GlobalTheory.LocM.CommonMod
+open GlobalTheory.LieMet GlobalTheory.LocM.FrameBC
 
 namespace GlobalTheory.LocM.StepOfFrame
 

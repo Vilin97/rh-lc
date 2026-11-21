@@ -91,8 +91,8 @@ theorem eval_stepT {ψ : Gm →+ MvPolynomial (BVar N ι) k} (h : Semi O lam ψ)
   let ev := eval (fun p : BVar N ι => if p.2.1 = p.2.2 then (1 : k) else 0)
   let θ : MvPolynomial Empty O →ₐ[O] k := aeval fun _ => 0
   refine Eq.trans ?_ (sum_unit c hc (ev.toAddMonoidHom.comp ψ) (fun r z => ?_) θ τ z)
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [stepT_apply, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [stepT_apply, map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [map_mul]
     refine congrArg (· * _) ?_

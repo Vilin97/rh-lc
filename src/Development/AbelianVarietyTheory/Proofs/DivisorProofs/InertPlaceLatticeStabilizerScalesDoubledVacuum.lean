@@ -184,7 +184,9 @@ theorem eigen_box : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Number
       rw [h0, Matrix.transpose_zero, Matrix.mul_zero, sub_eq_zero] at h1
       exact h1
     have h2 := hspl.impl g (u • w') Φ hΦ
-    simp only [Darboux.rho, he, hact] at h2
+    simp only [Darboux.rho] at h2
+    set_option backward.isDefEq.respectTransparency false in
+      rw [hact, he] at h2
     exact h2
   obtain ⟨Tl, hTl⟩ := locality_op v B.ψ (omd g) hT.base.std (fun Φ hΦ => hspl.pres g Φ hΦ)
     (fun μ hμ Φ hΦ => hspl.unit μ hμ g Φ hΦ) hcomm
@@ -195,7 +197,8 @@ theorem eigen_box : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Number
     intro γ hγ
     rw [hV₀, hvac γ hγ r hr]
     funext x
-    simp [tens, mul_assoc]
+    set_option backward.isDefEq.respectTransparency false in
+      simp [tens, mul_assoc, cA, incM]
   have hSeig : ∀ γ ∈ latDbl G.V G.W v, dd.rho B.ψ γ S =
       B.ψ (⅟(2 : AF F) * symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (inclR (F := F) (AF F) (θ : E)) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) G.V.J) (dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) G.W.J)) γ γ) • S :=
     fun γ hγ => GlobalTheory.T.heisenbergEigen_doubledCoords_productFunction (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) (inclR (F := F) (AF F) (θ : E)) _ _ G.M.co dd hdc B.ψ hψ1 _ V₀ hV₀eig γ hγ.1 hγ.2
@@ -212,9 +215,14 @@ theorem eigen_box : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Number
           (((g⁻¹ : GlobalTheory.DblVac.UD σ G.W) : GL (Fin (a + a') ⊕ Fin (a + a')) (AE F E)) :
             Matrix (Fin (a + a') ⊕ Fin (a + a')) (Fin (a + a') ⊕ Fin (a + a')) (AE F E)) = 1 := by
         rw [← Units.val_mul, ← Subgroup.coe_mul, mul_inv_cancel, Subgroup.coe_one, Units.val_one]
-      rw [e, Matrix.transpose_one, Matrix.mul_one]
-    rw [h2] at h1
-    rw [← h1, hSeig (actB (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) g⁻¹ γ) hK, map_smul, GlobalTheory.T.traceSymplecticForm_unitaryGroupAction_invariant]
+      set_option backward.isDefEq.respectTransparency false in
+        rw [e, Matrix.transpose_one, Matrix.mul_one]
+    set_option backward.isDefEq.respectTransparency false in
+      rw [h2] at h1
+    refine h1.symm.trans ?_
+    set_option backward.isDefEq.respectTransparency false in
+      rw [hSeig (actB (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) g⁻¹ γ) hK, map_smul, GlobalTheory.T.traceSymplecticForm_unitaryGroupAction_invariant]
+    rfl
 
   let Λd := (latDbl G.V G.W v).map (GlobalTheory.LatVac.locCo dd v)
   let χ : (((Fin a × Fin (a + a')) ⊕ (Fin a × Fin (a + a')) → Fv F v) × ((Fin a × Fin (a + a')) ⊕ (Fin a × Fin (a + a')) → Fv F v)) → ℂ :=

@@ -81,7 +81,7 @@ theorem stHomot : GlobalTheory.PsCo.Pc1.StHomot := by
       field_simp
     have hDc : Continuous D := by
       rw [hD]
-      refine continuous_finset_sum _ fun x _ => continuous_finset_sum _ fun j _ => ?_
+      refine continuous_finsetSum _ fun x _ => continuous_finsetSum _ fun j _ => ?_
       exact ((hc _).mul continuous_const).add ((hc _).mul continuous_const)
     have hftc := intervalIntegral.integral_eq_sub_of_hasDerivAt hder (hDc.intervalIntegrable _ _)
     have hint : ∫ s in (1:ℝ)..t, D s = ∑ x : Mode ε, ∑ j ∈ Finset.range (nMode ε + 1),
@@ -98,7 +98,7 @@ theorem stHomot : GlobalTheory.PsCo.Pc1.StHomot := by
         · intro j _
           exact (((hc _).mul continuous_const).add ((hc _).mul continuous_const)).intervalIntegrable _ _
       · intro x _
-        refine (continuous_finset_sum _ fun j _ => ?_).intervalIntegrable _ _
+        refine (continuous_finsetSum _ fun j _ => ?_).intervalIntegrable _ _
         exact ((hc _).mul continuous_const).add ((hc _).mul continuous_const)
     simp only [Pi.sub_apply, Pi.neg_apply, Finset.sum_apply]
     rw [← hint, hftc]

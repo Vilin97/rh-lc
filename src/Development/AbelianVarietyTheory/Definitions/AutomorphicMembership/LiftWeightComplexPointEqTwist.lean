@@ -291,9 +291,11 @@ theorem exists_isLevelChar (h : R.grp_levels F) : ∃ χ, IsLevelChar R F χ := 
     intro u hu hu'
     have e := congrArg Units.val (key _ _ h0 (mirToGL R u) hu' ((mem_pi_unip_iff R _).2 ⟨u, hu, rfl⟩))
     refine Eq.trans e ?_
-    refine (congrArg Units.val (MonoidHom.finset_prod_apply (fun v : R.Pg =>
+    letI : IsOneApply ((Subgroup.pi Set.univ fun v : R.Pg => unip (kP v.1) D.R.r) →* ℂˣ) := ⟨by intros; rfl⟩
+    letI : IsMulApply ((Subgroup.pi Set.univ fun v : R.Pg => unip (kP v.1) D.R.r) →* ℂˣ) := ⟨by intros; rfl⟩
+    refine (congrArg Units.val (prod_apply Finset.univ (fun v : R.Pg =>
       (addCharHom (ψ v.1) (supHom (kP v.1) D.R.r)).comp (LevelP.prj (fun v : R.Pg => unip (kP v.1) D.R.r) v))
-        Finset.univ _)).trans ?_
+        _)).trans ?_
     rw [Units.coe_prod]
     refine Finset.prod_congr rfl fun v _ => ?_
     rw [← edgeSum_glCast (rank_eq D.R)]
@@ -581,7 +583,11 @@ theorem leafYBound {L : SizeData₂ D} (Q : ParameterChoice' D L) : LeafYBound (
     linarith
   have hfk : (D.R.f : ℝ) ≤ D.R.k := by exact_mod_cast D.R.f_le_k
   have hf : (1 : ℝ) ≤ D.R.f := by
-    have : 0 < D.R.f := by unfold Ranks.f Ranks.n; positivity
+    have : 0 < D.R.f := by
+      have hm := D.R.two_le_m
+      have hmf := D.R.m_le_f
+      unfold Ranks.f Ranks.n
+      omega
     exact_mod_cast this
   have hk : (1 : ℝ) ≤ D.R.k := hf.trans hfk
   have hmin : Y ≤ ((min (D.host.g 0) (D.host.g 1) : ℕ) : ℝ) := by

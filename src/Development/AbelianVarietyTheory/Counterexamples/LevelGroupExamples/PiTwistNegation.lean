@@ -28,6 +28,7 @@ theorem halfEX_iff_le (T : Core D) (h : LawsM T) (X : ErrX D) :
     fin_cases i
     · exact Ideal.mul_le_left
     · exact Ideal.mul_le_right
+  change (∀ i, barE D (X.piG i) ∈ halfI T i) ↔ _
   refine forall_congr' fun i => ⟨fun hb => ?_, fun hM => ?_⟩
   · rw [← (piOf_eq_bar_iff T h X i).2 hb, span_piOf T h]; exact hle i
   · by_contra hb

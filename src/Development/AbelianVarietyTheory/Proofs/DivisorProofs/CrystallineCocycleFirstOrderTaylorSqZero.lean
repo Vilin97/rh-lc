@@ -301,13 +301,15 @@ theorem ev_sub_ev_eq : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : Ide
   have e1 : ev f β = ψ.φ (ev f (inlHom S hI U)) + ev f ψ := by
     rw [← ev_comp]
     congr 1
-    refine Thick.hom_ext fun b ↦ ?_
+    apply Thick.Hom.ext'
+    ext b
     change β.φ b = β.φ b + θ 0
     rw [map_zero, add_zero]
   have e2 : ev f α = ψ.φ (ev f (derHom S hI U)) + ev f ψ := by
     rw [← ev_comp]
     congr 1
-    refine Thick.hom_ext fun b ↦ ?_
+    apply Thick.Hom.ext'
+    ext b
     change α.φ b = β.φ (derSec (derP S U) b).fst + θ (show Ω[Sec s₀ U.unop.1⁄R₀] from (derSec (derP S U) b).snd)
     rw [fst_derSec, snd_derSec, derP_apply, hθ.der]
     abel

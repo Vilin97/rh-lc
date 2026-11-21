@@ -62,7 +62,8 @@ theorem leviEmb_liftT (f : (Σ j, Fin (c j)) ≃ Fin t) (hc : c false = 0) (h : 
     | false => exact absurd j.2 (by omega)
     | true =>
       rw [SmGL.leviEmb_apply_same]
-      simp [liftT, val_reindexGL]
+      simp [liftT, val_reindexGL, trueEquiv]
+      rfl
 
 theorem eq_one_of_mem_unipRad (f : (Σ j, Fin (c j)) ≃ Fin t) (hc : c false = 0) {g : GL (Fin t) R}
     (hg : g ∈ SmGL.unipRad R f) : g = 1 := by
@@ -217,6 +218,7 @@ theorem isSpherical_twist_of_empty_block : ∀ (k : Type) [Field k] [ValuativeRe
         · simp [liftT, x]
         · simp [liftT, x, hz _ hg', hdet]
       rw [hfun, MultilinearMap.map_update_smul, Function.update_eq_self]
+      rfl
     have h1 : G (SmGL.jac f π (liftT f hc h) (Submodule.Quotient.mk v)) =
         G ((χ (Matrix.GeneralLinearGroup.det h) : ℂ) • Submodule.Quotient.mk v) := by
       rw [G.isIntertwining, hu, map_smul, hu, htens]

@@ -139,7 +139,13 @@ theorem over_comp : ∀ (D : D7) (j : ℕ) (H : ReciprocityTheory.ChartRestricti
   have hy : (F₂.u (ik₂ k₂) P₀ ≫ d.r) ≫ Xo.s = spMap (σ.comp (IntermediateField.inclusion c.le).toRingHom) := by
     rw [CategoryTheory.Category.assoc, GlobalTheory.ClsVal.Cmp.point_over_of_ne hpq hA d hle,
       ← CategoryTheory.Category.assoc, F₂.over_σ _ P₀ hp₀, GlobalTheory.ClsVal.Cmp.spMap_comp', hinc]
-  obtain ⟨y, hyx⟩ := GlobalTheory.NonIntegralFrameExample.exists_framed (c := c) (S := CAt σ) (F₂.u (ik₂ k₂) P₀ ≫ d.r) hy
+  have hframe {S : Type} [Field S] [Algebra c.F S] (x : Sp S ⟶ Xo.X)
+      (hx : x ≫ Xo.s = sOf c S) : ∃ y : FrPt Xo c S, y.x = x := by
+    choose u hu using fun τ => GlobalTheory.IntFramesCompare.exists_eigenBasisAt (c := c) hx τ
+    obtain ⟨s, hs⟩ := gfp_gen GlobalTheory.abelianSchemeLaws_all.2.secTwist x
+    exact ⟨⟨x, hx, u, fun τ => (hu τ).1, fun τ => (hu τ).2.1, fun τ => (hu τ).2.2, s, hs⟩, rfl⟩
+  obtain ⟨y, hyx⟩ := @hframe (CAt σ) (inferInstanceAs (Field ℂ)) (instAlgebraCAt σ) (F₂.u (ik₂ k₂) P₀ ≫ d.r) (by
+    exact hy)
   obtain ⟨k, x₁, t₁, hb⟩ := hU.2.2.1 y
   obtain ⟨P₁, hP₁, hp₁, hu₁, -⟩ := hper k x₁
   have hu : F₂.u (ik₂ k₂) P₀ ≫ d.r = F.u (ik k) P₁ := by

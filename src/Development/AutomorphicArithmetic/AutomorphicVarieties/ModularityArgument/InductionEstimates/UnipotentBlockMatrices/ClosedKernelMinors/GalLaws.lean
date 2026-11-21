@@ -102,13 +102,13 @@ private theorem act_central (σ : K ≃+* K) (s : {r : ℝ // 0 < r}) :
 private theorem norm_inf (σ : K ≃+* K) (u : InfinitePlace K) (y : (u.comap σ.toRingHom).Completion) :
     ‖CT.infEquiv σ u y‖ = ‖y‖ := by
   have hd : DenseRange (algebraMap K (u.comap σ.toRingHom).Completion) := by
-    refine (((InfinitePlace.Completion.equiv (u.comap σ.toRingHom)).symm.surjective.denseRange).comp
-      (UniformSpace.Completion.denseRange_coe (α := WithAbs (u.comap σ.toRingHom).1))
-      (InfinitePlace.Completion.continuous_ofCompletion _)).mono ?_
+    apply (AbsoluteValue.Completion.denseRange_coe (u.comap σ.toRingHom).1).mono
     rintro _ ⟨x, rfl⟩
-    exact ⟨x.ofAbs, rfl⟩
-  have hn : ∀ (w : InfinitePlace K) (x : K), ‖algebraMap K w.Completion x‖ = w x := fun w x =>
-    InfinitePlace.Completion.norm_coe w (WithAbs.toAbs w.1 x)
+    refine ⟨x.ofAbs, ?_⟩
+    rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply, Algebra.algebraMap_self_apply]
+  have hn : ∀ (w : InfinitePlace K) (x : K), ‖algebraMap K w.Completion x‖ = w x := fun w x => by
+    rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply, Algebra.algebraMap_self_apply]
+    exact AbsoluteValue.Completion.norm_coe _
   refine congrFun (hd.equalizer (continuous_norm.comp (CT.continuous_infEquiv σ u)) continuous_norm
     (funext fun x => ?_)) y
   simp only [Function.comp_apply]
@@ -160,7 +160,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.galLaws :
   intro K _ _ μ _ μ₂ _ σ θ θ₂ h h₂
   have e : ∀ g, ((θ.e g : G1 K (2 + 2)) : AdelicGLn.AdelicGL K (2 + 2)) = act σ g := h
   have e₂ : ∀ g, ((θ₂.e g : G1 K 2) : AdelicGLn.AdelicGL K 2) = act σ g := h₂
-  have hl : ∀ m₁ m₂ t, θ.e (lv m₁ m₂ t) = lv (θ₂.e m₁) (θ₂.e m₂) t := fun m₁ m₂ t => Subtype.ext (by
+  have hl : ∀ (m₁ m₂ : G1 K 2) (t : ℝ), θ.e (lv m₁ m₂ t) = lv (θ₂.e m₁) (θ₂.e m₂) t := fun m₁ m₂ t => Subtype.ext (by
     rw [e, blkLaws.1, blkLaws.1, act_blk, act_mul, act_mul, e₂, e₂, zt, zt, act_central, act_central])
   have hn : ∀ X, θ.e (nn X) = nn fun p => Formalism.L2.Host.CT.adMap σ (X p) := fun X => Subtype.ext (by
     rw [e, coe_unipOne, coe_unipOne, act_unip])

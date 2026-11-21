@@ -90,11 +90,10 @@ theorem dividedPowerFiltration_le {B : Type} [CommRing B] {J : Ideal B} (δ : Di
       · exact Ideal.mul_mem_right _ _ (δ.dpow_mem h0 (hl q List.mem_cons_self))
   exact key l hl (hr.trans h)
 
-theorem tfBase_field (K : Type) [Field K] [CharZero K] {s : ℕ} (hs : 1 ≤ s) : TFBase (dividedPowersBot K) 1 s := {
+theorem tfBase_field (K : Type) [Field K] [CharZero K] {s : ℕ} (hs : 1 ≤ s) : TFBase (dividedPowersBot K) 1 s where
   nil := le_bot_iff.1 (dividedPowerFiltration_le _ hs)
   tf r x hx := by simpa using hx
   dv n hn := ⟨0, (n : K)⁻¹, by rw [pow_zero, mul_inv_cancel₀ (Nat.cast_ne_zero.2 hn)]⟩
-}
 
 theorem kFin_of (hF : FinO) : KFin := by
   intro K _ _ X q _ _ a n
@@ -169,7 +168,7 @@ theorem oneH_eq (q : X ⟶ Spec (CommRingCat.of K)) :
 
 end Form
 
-theorem kForm : KForm := {
+theorem kForm : KForm where
   bilin q _ _ _ _ _ _ ha h := CrystallineSemistableComparison.P.cup_bilin (grOk (smFun _ q) ha).pair h
   pull_id q u hu e a n x := by subst e; exact pull_id' q hu a n x
   pull_comp u hu v hv h a n x := pull_comp' u hu v hv h a n x
@@ -192,6 +191,5 @@ theorem kForm : KForm := {
         obtain ⟨z, hz, rfl⟩ := sq_surj _ _ z
         rw [pair_mk, pair_mk, pair_mk, pair_mk]
         exact mk_congr _ _ (mul_assoc _ _ _) _ _) e₁ e₂ e₃ e₄ x y z
-}
 
 end CrystallineSemistableComparison.HT

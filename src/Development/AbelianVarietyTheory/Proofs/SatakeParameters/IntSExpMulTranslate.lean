@@ -75,7 +75,7 @@ theorem endoDatum_of_model (d : ℕ) (L : PeriodPair) (hmod : d % 4 = 3) (hCM : 
     simp
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [← map_sub, ← map_mul, ← map_mul, hs2C, map_sum]
-    simp [E.AnaSysW.xc]
+      simp [E.AnaSysW.xc]
 
 theorem jets_phW_three (d : ℕ) (L : PeriodPair) (hmod : d % 4 = 3) (h3 : d % 3 = 2) (hCM : HasCMBy d L)
     (ι : ℂ ≃+* ℂ_[3]) (W : WeierstrassCurve ℂ_[3]) (hU : Unif 3 L ι W) (hW : IntCurve W)

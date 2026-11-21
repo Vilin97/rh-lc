@@ -44,16 +44,14 @@ theorem exists_hom_open (V : S.Opens) (Y : Over S) (h : ∀ z, Y.hom z ∈ V) : 
   exact h z
 
 theorem isChart_of_rep (V : S.Opens) {B : Over S} (b : B ⟶ Over.mk V.ι) {P : LB (A ⊗ B).left} (h : Rep A b P) :
-    IsChart A P where
-  fam := h.fam
-  inj := by
-    intro Y u u' hs
+    IsChart A P := by
+  refine ⟨h.fam, ?_, ?_⟩
+  · intro Y u u' hs
     have hA : (ev P (fst A Y) (snd A Y ≫ u)).IsLB := pull_isLB h.fam.isLB _
     have hB : (ev P (fst A Y) (snd A Y ≫ u')).IsLB := pull_isLB h.fam.isLB _
     obtain ⟨x, -, hx⟩ := h.univ Y (u ≫ b) _ (fam_pull h.fam u)
     rw [hx u ⟨rfl, LBIso.trans hA hB hA hs (LBIso.symm hs)⟩, hx u' ⟨hom_open_eq V _ _, hs⟩]
-  chart := by
-    intro T N hN
+  · intro T N hN
     refine ⟨T.hom ⁻¹ᵁ V, fun Y y => ⟨?_, ?_⟩⟩
     · rintro ⟨u, -⟩ z
       have hb : b.left ≫ V.ι = B.hom := Over.w b

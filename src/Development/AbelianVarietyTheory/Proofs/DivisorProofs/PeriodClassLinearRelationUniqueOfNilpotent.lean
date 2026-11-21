@@ -34,7 +34,7 @@ theorem _root_.GlobalTheory.AnPer.perClD_relation_unique : ∀ {g : ℕ} {Λ : T
   let q'' : Λ →+ R := q' - ∑ i ∈ S, d i • q i
   have hq'' : ∀ m, q'' m = q' m - ∑ i ∈ S, d i * q i m := by
     intro m
-    simp [q'', AddMonoidHom.finset_sum_apply, smul_eq_mul]
+    simp [q'', smul_eq_mul]
   have hcl : K₀.perClD et M q'' = 0 := by
     have hc : ∀ p : Λ →+ R, K₀.perClD et M p =
         _root_.GlobalTheory.CatCoh.H1.mk _
@@ -42,7 +42,12 @@ theorem _root_.GlobalTheory.AnPer.perClD_relation_unique : ∀ {g : ℕ} {Λ : T
     simp only [hc] at hrel ⊢
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [q'', map_sub, map_sum, map_smul, hrel, sub_self]
-  obtain ⟨G, hG0, hGsh⟩ := _root_.GlobalTheory.ChartCobd.coboundary_on_charts K₀ et M hnil het q'' hcl
+  have hG : ∃ G : ∀ k, R ⊗[ℂ] _root_.GlobalTheory.AnPer.Hol (K₀.W k),
+      (∀ k a, LinearMap.lTensor R (_root_.GlobalTheory.AnPer.dw (W := K₀.W k) a).toLinearMap (G k) = 0) ∧
+      ∀ l k k' (h : K₀.le l k' k), G k' - Algebra.TensorProduct.map (AlgHom.id ℂ R)
+        (_root_.GlobalTheory.AnPer.Charts.shA h) (G k) = q'' l ⊗ₜ[ℂ] 1 :=
+    _root_.GlobalTheory.ChartCobd.coboundary_on_charts K₀ et M hnil het q'' hcl
+  obtain ⟨G, hG0, hGsh⟩ := hG
   have hzero : q'' l = 0 := by
     rw [← Module.forall_dual_apply_eq_zero_iff ℂ]
     intro φ
@@ -53,12 +58,16 @@ theorem _root_.GlobalTheory.AnPer.perClD_relation_unique : ∀ {g : ℕ} {Λ : T
       intro k r h
       simp [Φ]
     have hΦd : ∀ k a y, _root_.GlobalTheory.AnPer.dw a (Φ k y) =
-        Φ k (LinearMap.lTensor R (_root_.GlobalTheory.AnPer.dw a).toLinearMap y) := by
+        Φ k (LinearMap.lTensor R (_root_.GlobalTheory.AnPer.dw (W := K₀.W k) a).toLinearMap y) := by
       intro k a y
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | tmul r h => simp [hΦ]
-      | add y z hy hz => simp only [map_add (f := _), hy, hz]
+      | tmul r h =>
+        set_option synthInstance.maxHeartbeats 400000 in
+          simp [hΦ]
+      | add y z hy hz =>
+        set_option synthInstance.maxHeartbeats 400000 in
+          simp only [map_add (f := _), hy, hz]
     have hΦs : ∀ {m k k'} (h : K₀.le m k' k) y,
         Φ k' (Algebra.TensorProduct.map (AlgHom.id ℂ R)
           (_root_.GlobalTheory.AnPer.Charts.shA h) y) =
@@ -67,8 +76,11 @@ theorem _root_.GlobalTheory.AnPer.perClD_relation_unique : ∀ {g : ℕ} {Λ : T
       induction y using TensorProduct.induction_on with
       | zero => simp
       | tmul r b =>
-        simp [hΦ, ← _root_.GlobalTheory.AnPer.Charts.shA_apply]
-      | add y z hy hz => simp only [map_add (f := _), hy, hz]
+        set_option synthInstance.maxHeartbeats 400000 in
+          simp [hΦ, ← _root_.GlobalTheory.AnPer.Charts.shA_apply]
+      | add y z hy hz =>
+        set_option synthInstance.maxHeartbeats 400000 in
+          simp only [map_add (f := _), hy, hz]
     have hfsh : ∀ m k k' (h : K₀.le m k' k),
         _root_.GlobalTheory.AnPer.Charts.sh h (Φ k (G k)) =
           Φ k' (G k') + K₀.cst k' (algebraMap ℂ _ (-(φ (q'' m)))) := by

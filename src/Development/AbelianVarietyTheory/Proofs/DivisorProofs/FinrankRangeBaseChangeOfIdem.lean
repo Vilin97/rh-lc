@@ -188,7 +188,7 @@ theorem idempotent_split_of_isLocalRing (G : PDivGroup p O) (u : G ⟶ G) (hu : 
   obtain ⟨hfac, hcan⟩ := factor_closedImmersion p O K G i (fun n => (hi n).1)
   obtain ⟨q, hq⟩ := hfac G u (fun n => by rw [(hi n).2, hker n])
   have hiv : i ≫ v = 0 := by
-    refine hom_ext fun n => BialgHom.ext fun b => ?_
+    refine Hom.ext (funext fun n => BialgHom.ext fun b => ?_)
     have h := (kerIdeal_le_ker_iff (v.app n) (i.app n : G.A n →ₐ[O] K.A n)).1 (hi n).2.ge b
     change i.app n (v.app n b) = (1 : WithConv (G.A n →ₐc[O] K.A n)).ofConv b
     refine Eq.trans h ?_

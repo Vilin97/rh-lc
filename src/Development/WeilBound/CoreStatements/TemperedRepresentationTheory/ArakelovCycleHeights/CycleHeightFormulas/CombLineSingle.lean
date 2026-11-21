@@ -127,10 +127,11 @@ theorem vertical_eq (h₃ : PtDict) (hV : VertEq) (II : IntersectionSystem) (N :
     (fun a => RingHom.congr_fun (Subsingleton.elim (algebraMap (ZMod l) Γ(Z, ⊤))
       ((algebraMap κ Γ(Z, ⊤)).comp (algebraMap (ZMod l) κ))) a) (N.B.pull i) d
   have e₁ := hV m n N A hN (MP ℤ m n) (𝟙 _) Z i l d hd
-  have e₂ : topSelfIntersection (ZMod l) (N.B.pull (i ≫ 𝟙 _)) d = topSelfIntersection (ZMod l) ((N.B.pull (𝟙 _)).pull i) d :=
-    topSelf_congr (ZMod l) (N.restr (i ≫ 𝟙 _)).isLB ((N.pull (𝟙 _) (Category.id_comp _)).restr i).isLB
-      (N.refines_pull_comp (𝟙 _) (Category.id_comp _) i rfl (by rw [Category.assoc, Category.id_comp])).lbIso d
-  rw [Category.comp_id] at e₂
+  have pullIso : LBIso (N.B.pull i) ((N.B.pull (𝟙 _)).pull i) := by
+    refine LBIso.chartPull (chartPullPull N.B i) (chartPullPull (N.B.pull (𝟙 _)) i) ?_
+    exact iso_of_chart (LB.isLB_pull N.isLB _) (chartPullUnpull N.B _ rfl)
+  have e₂ : topSelfIntersection (ZMod l) (N.B.pull i) d = topSelfIntersection (ZMod l) ((N.B.pull (𝟙 _)).pull i) d :=
+    topSelf_congr (ZMod l) (N.restr i).isLB ((N.pull (𝟙 _) (Category.id_comp _)).restr i).isLB pullIso d
   have e₃ : (𝟙 (MP ℤ m n) : _ ⟶ _) (i (genericPoint Z)) = i (genericPoint Z) := by simp
   rw [e₃] at e₁
   haveI : Fintype κ := Fintype.ofFinite κ
@@ -176,18 +177,19 @@ theorem rec_pow (h₅ : ExistsRat) (h₆ : CycleOfRat) (h₇ : ArchIntEq) (h₈ 
 theorem exists_height (h₃ : PtDict) (h₄ : CodimOne) (h₅ : ExistsRat) (h₆ : CycleOfRat) (h₇ : ArchIntEq)
     (h₈ : ArchIntegrableOn) (hV : VertEq) (hPt : PtLen) (hC : CurveInt) (hR : RatRStatement) (II : IntersectionSystem)
     (hII : IsFullIntersectionSystem II) (N : HermLB (mpStr ℤ m n)) (A : HermLine (Bk n)) (hN : IsHermRep N A)
-    (hA : IsSmoothHerm A) : N.IsArithHeight (htFn II A) where
-  vertical Z i _ _ κ _ _ _ d hd := by
+    (hA : IsSmoothHerm A) : N.IsArithHeight (htFn II A) := by
+  refine { vertical := ?_, point := ?_, recursion := ?_ }
+  · intro Z i _ _ κ _ _ _ d hd
     rw [htFn_eq II A ((dim_of_generic i).trans hd)]
     exact vertical_eq h₃ hV II N A hN Z i κ d hd
-  point Z i _ _ _ hc hd r hr := by
+  · intro Z i _ _ _ hc hd r hr
     have hd' : topologicalKrullDim Z = ((0 + 1 : ℕ) : _) := by simpa using hd
     have hZ : GlobalTheory.IsArithVar (i ≫ mpStr ℤ m n) 0 := (mp_var m n).of_isClosedImmersion i hc hd'
     obtain ⟨-, hp₃, hp₄, -⟩ := h₃ m n Z i 1 hd'
     rw [htFn_eq II A ((dim_of_generic i).trans hd'),
       curve_eq h₃ h₄ h₅ h₆ h₇ hPt hC hR II hII N A hN hA Z i hZ (hp₄ (hp₃.2 hc)) r hr]
     rfl
-  recursion Z i _ _ _ hc e he hd mm r hr := by
+  · intro Z i _ _ _ hc e he hd mm r hr
     have hZ : GlobalTheory.IsArithVar (i ≫ mpStr ℤ m n) e := (mp_var m n).of_isClosedImmersion i hc hd
     obtain ⟨-, hp₃, hp₄, -⟩ := h₃ m n Z i (e + 1) hd
     obtain ⟨h₁, h₂⟩ := rec_pow h₅ h₆ h₇ h₈ hR II hII N A hN hA Z i e hZ (hp₄ (hp₃.2 hc)) mm r hr
@@ -240,7 +242,7 @@ theorem expand_comb (A : κ → HermLine ι) (sA : ∀ o, IsSmoothHerm (A o))
     intro x j b c
     simp only [up, PolarProof.combLine_add]
     exact hF _ j _ _ (fun _ => sC _) (sC _) (sC _)
-  let M : MultilinearMap ℤ (fun _ : Fin e => κ → ℤ) ℝ :=
+  let M : (Π _ : Fin e, κ → ℤ) →ₘₗ[ℤ] ℝ :=
     { toFun := fun x => F fun i => combLine A (x i)
       map_update_add' := by
         intro inst x j b c
@@ -260,6 +262,7 @@ theorem expand_comb (A : κ → HermLine ι) (sA : ∀ o, IsSmoothHerm (A o))
     rw [h₂, M.map_sum (fun _ o => a o • (Pi.single o 1 : κ → ℤ))]
   refine Finset.sum_congr rfl fun f _ => ?_
   rw [M.map_smul_univ (fun j => a (f j)) (fun j => (Pi.single (f j) 1 : κ → ℤ))]
+  simp only [RingHom.id_apply]
   have h₃ : M (fun j => (Pi.single (f j) 1 : κ → ℤ)) = F (A ∘ f) := by
     change F (fun i => combLine A (Pi.single (f i) 1)) = F (A ∘ f)
     congr 1

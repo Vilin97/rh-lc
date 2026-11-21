@@ -165,7 +165,8 @@ theorem stepX {ch : Choice R} (hW : ch.W.Over R) (hch : R.IsChain) (hmod : R.IsM
 theorem col_ind {ch : Choice R} (hW : ch.W.Over R) (hch : R.IsChain) (hmod : R.IsModels) {t : T}
     {q : ∀ j : ℕ, PolF D (ch.G.V (.grid 0 (j + 1))).rank (ch.G.V (.grid 0 j)).rank} (hq : ChainPols ch q)
     {M : Vol ch.G} (hM : M.Is t) : ∀ n, n + 1 ≤ D.R.m → ∀ (g : ∀ j : Fin n, Sch ch.G (.down t 0 j)),
-    (∀ j : Fin n, ∃ fj, HEq fj (R.vY t j) ∧ g j = ch.W.fock (.mu t 0 j) fj (q j)) →
+    (∀ j : Fin n, ∃ fj : Sch ch.G (.down t 0 j),
+      HEq fj (R.vY t j) ∧ g j = ch.W.fock (.mu t 0 j) fj (q j)) →
     ∀ (F : Fn ch.G (.grid 0 n)) (F₀ : R.CC t n) (v : SmT (R.MY n)), HEq F (F₀.1 v) →
     PathConv ch.W M (downPath t 0 n) (downFam t 0 n g) F ∧
       HEq (liftP ch.W M (downPath t 0 n) (downFam t 0 n g) F) (ch.cv.dnFun t n (F₀.1 v))
@@ -201,7 +202,8 @@ theorem formX_inv (hmod : R.IsModels) (d : ChainVec R) (t : T) (y : (R.HX t).H) 
 theorem col_ind' {ch : Choice R} (hW : ch.W.Over R) (hch : R.IsChain) (hmod : R.IsModels) {t : T}
     {q : ∀ j : ℕ, PolF D (ch.G.V (.grid 0 (j + 1))).rank (ch.G.V (.grid 0 j)).rank} (hq : ChainPols ch q)
     {M : Vol ch.G} (hM : M.Is t) {n n' : ℕ} (hn : n = n') (hn1 : n + 1 ≤ D.R.m) (g : ∀ j : Fin n, Sch ch.G (.down t 0 j))
-    (hg : ∀ j : Fin n, ∃ fj, HEq fj (R.vY t j) ∧ g j = ch.W.fock (.mu t 0 j) fj (q j))
+    (hg : ∀ j : Fin n, ∃ fj : Sch ch.G (.down t 0 j),
+      HEq fj (R.vY t j) ∧ g j = ch.W.fock (.mu t 0 j) fj (q j))
     (F : Fn ch.G (.grid 0 n)) (F₀ : R.CC t n') (v : SmT (R.MY n')) (hF : HEq F (F₀.1 v)) :
     PathConv ch.W M (downPath t 0 n) (downFam t 0 n g) F ∧
       HEq (liftP ch.W M (downPath t 0 n) (downFam t 0 n g) F) (ch.cv.dnFun t n' (F₀.1 v)) := by
@@ -211,8 +213,10 @@ theorem col_ind' {ch : Choice R} (hW : ch.W.Over R) (hch : R.IsChain) (hmod : R.
 theorem col_top {ch : Choice R} (hW : ch.W.Over R) (hch : R.IsChain) (hmod : R.IsModels) {t : T}
     {q : ∀ j : ℕ, PolF D (ch.G.V (.grid 0 (j + 1))).rank (ch.G.V (.grid 0 j)).rank} (hq : ChainPols ch q)
     {M : Vol ch.G} (hM : M.Is t) (y : (R.HX t).H) : ∀ N, N = D.R.m → ∀ (g : ∀ j : Fin N, Sch ch.G (.down t 0 j)),
-    (∀ j : Fin N, ((j : ℕ) + 1 < D.R.m → ∃ fj, HEq fj (R.vY t j) ∧ g j = ch.W.fock (.mu t 0 j) fj (q j)) ∧
-      ((j : ℕ) + 1 = D.R.m → ∃ fj, HEq fj (R.vX t) ∧ g j = ch.W.fock (.mu t 0 j) fj (q j))) →
+    (∀ j : Fin N, ((j : ℕ) + 1 < D.R.m → ∃ fj : Sch ch.G (.down t 0 j),
+      HEq fj (R.vY t j) ∧ g j = ch.W.fock (.mu t 0 j) fj (q j)) ∧
+      ((j : ℕ) + 1 = D.R.m → ∃ fj : Sch ch.G (.down t 0 j),
+        HEq fj (R.vX t) ∧ g j = ch.W.fock (.mu t 0 j) fj (q j))) →
     ∀ F : Fn ch.G (.grid 0 N), HEq F (ch.cv.formX t y) →
     PathConv ch.W M (downPath t 0 N) (downFam t 0 N g) F ∧
       HEq (liftP ch.W M (downPath t 0 N) (downFam t 0 N g) F) (ch.cv.lift t y)

@@ -173,7 +173,9 @@ theorem etaLawsT (hT : UpperTheory.Zero.LLC.RecTExists) (D : D7) {χ : HChar D.h
     have := hχ.unitary x
     change ‖(((χ.1 x)⁻¹ : ℂˣ) : ℂ)‖ = 1
     rw [Units.val_inv_eq_inv_val, norm_inv, this, inv_one]
-  have hu : ∀ w, (χ⁻¹).UnrAt w := fun w x hx => by rw [HChar.loc_inv, hχ.unr w x hx, inv_one]
+  have hu : ∀ w, (χ⁻¹).UnrAt w := fun w x hx => by
+    have loc_inv : (χ⁻¹).loc w x = (χ.loc w x)⁻¹ := rfl
+    rw [loc_inv, hχ.unr w x hx, inv_one]
   have P := fun w => locParT_unr hT χ (D.nd.plOm.2 w) (hχ.unr w)
   have Q := fun w => locParT_unr hT χ⁻¹ (D.nd.plOm.2 w) (hu w)
   refine ⟨⟨CG.ofChar χ, CG.isUnitary_ofChar hχ.unitary⟩, ⟨CG.ofChar χ⁻¹, CG.isUnitary_ofChar hi⟩, rfl, rfl,

@@ -25,7 +25,7 @@ private theorem dual_eps {K K' : Type} [CommRing K] [CommRing K'] (ψ : K →+* 
   rw [← Category.assoc, ← Category.assoc, sp_sp, sp_sp]
   congr 2
   refine RingHom.ext fun z => ?_
-  ext <;> simp [Formalism.L2.Pj.dualMap, epsMul, _root_.mul_comm]
+  ext <;> simp [Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, TrivSqZeroExt.fst_map, TrivSqZeroExt.snd_map, smul_eq_mul, _root_.mul_comm]
 
 private theorem map_inv_nat {K K' : Type} [CommRing K] [CommRing K'] (ψ : K →+* K') (N : ℕ) (h : IsUnit (N : K)) :
     ψ (Ring.inverse (N : K)) = Ring.inverse (N : K') := by

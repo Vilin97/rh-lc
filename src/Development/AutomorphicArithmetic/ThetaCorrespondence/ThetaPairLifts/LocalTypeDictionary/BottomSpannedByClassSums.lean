@@ -51,10 +51,10 @@ theorem classSums_span_bottom : ∀ {D : D7} {T : Type} [Finite T] {L : LevCh D 
           ∑ h' ∈ H, ∑ k' ∈ K, c h' k' * X.I W.ψ W.θ t (MvPolynomial.monomial k' 1) h' := by
   intro D T _ L μ₀ sc G W i j A A' WW X hP hI hL hX
   classical
-  obtain ⟨K, hK⟩ := _root_.GlobalTheory.T.bottomClassSum_finite_support hP hI hL hX
-  obtain ⟨M₁, hM₁, hr⟩ := _root_.GlobalTheory.T.realTranslate_preserves_rationalAction hP hI hL hX
-  obtain ⟨J, M₂, hJ, hM₂, hl⟩ := _root_.GlobalTheory.T.bottomForm_rightTranslate_level hP hI hL hX
-  obtain ⟨H, hH, hc⟩ := _root_.GlobalTheory.T.bottomClasses_finite hP hI hL hX J hJ
+  obtain ⟨K, hK⟩ := _root_.GlobalTheory.T.bottomClassSum_finite_support (X := X) (W := W) (i := i) (j := j) hP hI hL hX
+  obtain ⟨M₁, hM₁, hr⟩ := _root_.GlobalTheory.T.realTranslate_preserves_rationalAction (X := X) (W := W) (i := i) (j := j) hP hI hL hX
+  obtain ⟨J, M₂, hJ, hM₂, hl⟩ := _root_.GlobalTheory.T.bottomForm_rightTranslate_level (X := X) (W := W) (i := i) (j := j) hP hI hL hX
+  obtain ⟨H, hH, hc⟩ := _root_.GlobalTheory.T.bottomClasses_finite (X := X) (W := W) (i := i) (j := j) hP hI hL hX J hJ
   refine ⟨H, K, M₁ ⊔ M₂, IntermediateField.finiteDimensional_sup M₁ M₂, hH, ?_⟩
   intro t h hh k
   obtain ⟨γ, hγ, r, hrI, h₀, hh₀, κ, hκJ, hκf, rfl⟩ := hc h hh

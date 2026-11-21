@@ -239,8 +239,8 @@ theorem exists_change {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Re
       congr 2
       exact ι.comp_algebraMap.symm
   choose a ha using fun i => (y'.basis σ (z.u σ i) (hzy ▸ z.tan σ i) (z.eig σ i)).exists
-  choose w hw1 hw2 hw3 using h.1
-  choose w' hw1' hw2' hw3' using h'.1
+  choose w hw1 hw2 hw3 using (fun i => h.1 i)
+  choose w' hw1' hw2' hw3' using (fun i => h'.1 i)
   have hbt := (isTanBasis_bc he (ι.toRingHom.comp φ)).1
   have hq2 : ∀ j, (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι.toRingHom) ≫ w j) ≫ Y.oF.t.G.hom =
       spMap (algebraMap k (DualNumber k)) ≫ GlobalTheory.AllWt.ptF z := fun j => by
@@ -304,7 +304,7 @@ theorem value_map : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : 
   have k1 := hL.2 k z y' hy'Z hzy a₁ a₂ ha₁ ha₂
   rw [GlobalTheory.FlagTan.evR_frMap hL.1 hm] at k1
   have k2 : (M₁'.submatrix id I).det = a₁.det * ι (M₁.submatrix id I).det := by
-    rw [AlgHom.map_det, ← Matrix.det_mul, hM₁]; rfl
+    rw [hM₁, AlgHom.map_det, ← Matrix.det_mul]; rfl
   have k3 : ι (C₂.submatrix J id).det = (C₂'.submatrix J id).det * a₂.det := by
     rw [AlgHom.map_det, ← Matrix.det_mul]
     congr 1
@@ -333,7 +333,7 @@ theorem images_eigenBasis {E : Type} [Field E] [NumberField E] [IsCMField E] {H 
           (w ≫ Y.m0.toSABMap.φ)) := by
   let _ := io.toAlgebra
   obtain ⟨G₂, ⟨m⟩⟩ : ∃ G : SAB H (Sp T.V), Nonempty (SABMap G Y.t xV) := by
-    obtain ⟨PP', cub, sym, adj, prim, m, -⟩ := sabPull ReciprocityTheory.ChartRestriction.G.Out.CubePf.cubePull xV Y.t
+    obtain ⟨PP', cub, sym, adj, prim, m, -⟩ := ReciprocityTheory.ChartRestriction.G.Geo.Tor.sabPull ReciprocityTheory.ChartRestriction.G.Out.CubePf.cubePull xV Y.t
     exact ⟨_, ⟨m⟩⟩
   obtain ⟨t₂, n₀, n₂, m', -, h2⟩ := GlobalTheory.ThetaFrameCheck.genFibre_tied Xo c T _ _ Y xV yy hxV G₂ m
   obtain ⟨n₁, hn₁⟩ := sabComp pullCubComp E H _ _ _ Xo.univ.t Y.oF.t t₂ _ yy Y.m0.toSABMap m'

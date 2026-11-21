@@ -166,7 +166,7 @@ theorem thJet_change : ∀ (K : Type) [Field K] (P : PolAV (Sp K)) (hp rig hr th
     obtain ⟨i, rfl⟩ : ∃ i : P.L.ι, j = fun _ => i := ⟨j 0, funext fun k => congrArg j (Subsingleton.elim _ _)⟩
     have h := LB.wchart_le P.L (fun _ : Fin 1 => (snd (baseOver (Sp K)) P.A).left) (fun _ => i) 0
     exact (hθ' i h).trans ((congrArg _ (hs i)).trans (polAVSectionInverseImage_mulConstant P _ th θ a hθ i h).symm)
-  have ht : ∀ i j, (t' i).f j = cF (baseOver (Sp K) ⊗ P.A).hom _ a * (t i).f j := fun i j => by
+  have ht : ∀ i j, (t' i).f j = constFn (baseOver (Sp K) ⊗ P.A).hom _ a * (t i).f j := fun i j => by
     obtain ⟨α, s₁, h1, h2, h3, h4⟩ := (hU i).2
     exact tr_unique P rig hm hθ₁ (hU' i).1 (hU i).1 (hU' i).2 (t' := cMul _ a (t i))
       ⟨α, cMul _ a s₁, h1, h2, twist_cMul _ _ _ _ _ _ _ _ _ _ h3, twist_cMul _ _ _ _ _ _ _ _ _ _ h4⟩ j

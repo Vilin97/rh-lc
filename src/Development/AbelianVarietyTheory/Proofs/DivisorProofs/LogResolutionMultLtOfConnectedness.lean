@@ -119,8 +119,11 @@ theorem mult_lt_of_connected : ∀ (X : Scheme.{0}) [IsIntegral X] [IsLocallyNoe
     have h1 := GlobalTheory.T.discrepancy_formula_divisor ℂ Y (s ≫ p) n (EtaleKlt.ratPull p s n η) hη' K (pullCart s G) m hm
       hres.div E' w (fnPull s g) hw (isEqn_pullCart s hg)
     have h2 : discrep E' (EtaleKlt.ratPull p s n η) m (fnPull s g) = discrep E η m g := by
+      have hform : E'.formOrd (EtaleKlt.ratPull p s n η) = E.formOrd η := by
+        simpa only [DivOver.formOrd] using
+          (GlobalTheory.T.form_order_birational_pullback ℂ X Y p s hbir E' E hE'E n η hη)
       unfold discrep
-      rw [GlobalTheory.T.form_order_birational_pullback ℂ X Y p s hbir E' E hE'E n η hη, GlobalTheory.T.ord_functionField_pullback_primeDivisor_over ℂ X Y p s hbir E' E hE'E g]
+      rw [hform, GlobalTheory.T.ord_functionField_pullback_primeDivisor_over ℂ X Y p s hbir E' E hE'E g]
     rw [h2] at h1
     rw [h1] at hd
     have hmq : (0 : ℚ) < m := by exact_mod_cast hm

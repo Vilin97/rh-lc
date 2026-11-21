@@ -49,11 +49,13 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {r : ℕ} {U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r} {x : ℝ}
   {Z : Comp Xo c}
 
-theorem exists_twPow (s : TwSec U x Z (wtOf Dw 0 1)) : ∀ n : ℕ, Nonempty (TwSec U x Z (wtOf Dw 0 (n : ℤ)))
-  | 0 => ⟨(TwSec.const x s.pts 1 one_ne_zero).copy (by rw [Nat.cast_zero, wtOf_zero])⟩
-  | n + 1 => by
-    obtain ⟨t⟩ := exists_twPow s n
-    exact ⟨(t.mul s).copy (by rw [← wtOf_add, add_zero]; push_cast; rfl)⟩
+theorem exists_twPow (s : TwSec U x Z (wtOf Dw 0 1)) : ∀ n : ℕ, Nonempty (TwSec U x Z (wtOf Dw 0 (n : ℤ))) := by
+  intro n
+  induction n with
+  | zero => exact ⟨(TwSec.const x s.pts 1 one_ne_zero).copy (by rw [Nat.cast_zero, wtOf_zero])⟩
+  | succ n ih =>
+    obtain ⟨t⟩ := ih
+    exact ⟨(t.mul s).copy (by rw [← wtOf_add, add_zero, Nat.cast_succ])⟩
 
 
 set_option maxHeartbeats 1000000 in

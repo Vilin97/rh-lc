@@ -243,6 +243,8 @@ theorem dRep_eq_fderiv (hG : IsUnit G) {k : ℕ} {B : Fin k → Matrix (Fin n) (
   refine ⟨_, fun c => Eq.trans ?_ (h4.comp_hasDerivAt_of_eq 0 (h5 c) (by simp)).deriv⟩
   unfold dRep
   congr 1
+  funext t
+  simp [Finset.smul_sum, smul_smul]
 
 theorem dRep_sum_all (hG : IsUnit G) {k : ℕ} {B : Fin k → Matrix (Fin n) (Fin n) ℂ} (hB : ∀ i, B i ∈ lie G)
     {y : H} (hy : y ∈ smoothAll G ρ) (c : Fin k → ℝ) :
@@ -294,7 +296,7 @@ theorem continuous_word (hG : IsUnit G) (hρ : IsURepOn (Formalism.QuantumDeterm
       exact e2
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [e, map_sum, map_smul]
-    refine continuous_finset_sum _ fun i _ => Continuous.smul ?_ (hc (f ∘ₗ dOp hG hρ (b i).2))
+    refine continuous_finsetSum _ fun i _ => Continuous.smul ?_ (hc (f ∘ₗ dOp hG hρ (b i).2))
     exact Complex.continuous_ofReal.comp ((b.coord i).continuous_of_finiteDimensional.comp (h1.subtype_mk h2))
 
 theorem continuous_word_orbit (hG : IsUnit G) (hρ : IsURepOn (Formalism.QuantumDeterminants.UH G) ρ)
@@ -483,7 +485,7 @@ theorem eq_zero_of_translates [CompleteSpace H] (hσ : IsURepOn (UJset ε) σ) (
   obtain ⟨m, S, Λ, hS, hΛ⟩ := exists_factor hG hρ hℓ
   have hF : Continuous fun g : Formalism.REAL.UJ ε => ℓ (σ (umat g) w) := by
     simp only [fun g : Formalism.REAL.UJ ε => hΛ _ (htr w hw (umat g) g.2)]
-    exact continuous_finset_sum _ fun i _ => (Λ i).continuous.comp (hcont _ (hS i) w hw)
+    exact continuous_finsetSum _ fun i _ => (Λ i).continuous.comp (hcont _ (hS i) w hw)
   have key := eq_zero_of_bumps hF fun φ hφ hφc => ?_
   · have e : σ (umat (1 : Formalism.REAL.UJ ε)) = 1 := hσ.1.1
     rwa [e] at key
@@ -519,7 +521,8 @@ theorem eq_zero_of_translates [CompleteSpace H] (hσ : IsURepOn (UJset ε) σ) (
 
   have hbd : Continuous fun x => ℓ (γ x) := by
     simp only [fun x => hΛ _ (hγs x)]
-    refine continuous_finset_sum _ fun i _ => (Λ i).continuous.comp ?_
+    refine continuous_finsetSum _ fun i _ => (Λ i).continuous.comp ?_
+
     obtain ⟨L, hL⟩ := exists_word hG hρ (S i) (hS i)
     let A : H →ₗ[ℂ] H := (smooth G ρ).subtype ∘ₗ L ∘ₗ γ.codRestrict _ hγs
     have hA : ∀ x, A x = (S i).foldr (dRep ρ) (γ x) := fun x => hL _

@@ -237,4 +237,5 @@ theorem GlobalTheory.TwistRamified.twist_ne : ∀ (E : Type) [Field E] [NumberFi
     congr 2
     exact CuspSub.chiDet_locGL η v k
   have h0 := GlobalTheory.TwistRamified.no_eigvec p ha η v hη hx hx0 _ hy
-  exact hx0 ((p.toTwist η).injective (T.injective (h0.trans (map_zero T).symm) |>.trans (map_zero _).symm))
+  have ht : p.toTwist η x = 0 := T.injective (h0.trans T.map_zero.symm)
+  exact hx0 ((p.toTwist η).injective (ht.trans (p.toTwist η).map_zero.symm))

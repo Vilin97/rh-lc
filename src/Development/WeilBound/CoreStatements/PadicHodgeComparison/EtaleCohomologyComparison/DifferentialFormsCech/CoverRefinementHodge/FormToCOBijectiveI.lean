@@ -27,7 +27,7 @@ def bridgeI (hB : type_of% (@CrystallineSemistableComparison.Om.Cech.formToCO_bi
     (formCos q U.U a).cx.H j ≃ₗ[K] CO q U.U a j :=
   LinearEquiv.ofBijective
     { toFun := formToCO q U.U a j
-      map_add' := map_add _
+      map_add' := (formToCO q U.U a j).map_add'
       map_smul' := hS q U.U a j }
     (hB q U.U (cov_aff U) a j)
 

@@ -50,7 +50,7 @@ theorem galoisReps_of_cgTrue_alt_alt : ∀ hL : _root_.UpperTheory.Zero.LLC.RecT
   have := host_isCMField D.host
   have ha : 1 ≤ D.R.r := by
     have := D.R.two_le_m; have := D.R.m_add_three_le_k; unfold Ranks.r; omega
-  have hr' : (C.e _ π).1.IsRegAlg := (GlobalTheory.CuspRep.CG.isRegAlg_iff _).2 fun τ => by
+  have hr' : (C.e D.R.r π).1.IsRegAlg := (GlobalTheory.CuspRep.CG.isRegAlg_iff (C.e D.R.r π).1).2 fun τ => by
     have := (D.naut.ralg_def π).1 hr τ
     rwa [C.inf] at this
   obtain ⟨r, h1, h2, h3⟩ := _root_.UpperTheory.GalS.exists_aw_alt hL hF hG D.nd.Om ι ha (C.e _ π).1 ((C.csd _ π).1 hc) hr'
@@ -71,3 +71,4 @@ theorem galoisReps_of_cgTrue_alt_alt : ∀ hL : _root_.UpperTheory.Zero.LLC.RecT
 end GlobalTheory.GalAway
 end
 end
+

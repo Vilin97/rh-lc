@@ -139,12 +139,14 @@ theorem isGLIndMap_frob
     (hE₁ : ∀ g x F, (E₁ (σ g F) : GL (Fin (a + b)) k → ℂ) x = (E₁ F : GL (Fin (a + b)) k → ℂ) (x * g))
     {ξ₁ ξ₂ : kˣ →* ℂˣ} {φ : indSp a (b + 2) α β →ₗ[ℂ] indSp a b α β}
     (hφ : JacLine.IsJacMap a b α β (fun x => (ξ₁ x : ℂ)) (fun x => (ξ₂ x : ℂ)) φ) :
-    IsGLIndMap (part3 a b) π σ ξ₁ ξ₂ (frob π E E₁ φ) where
-  right g x h := by rw [frob_apply, frob_apply, map_mul, Module.End.mul_apply]
-  unip u hu x h := by
+    IsGLIndMap (part3 a b) π σ ξ₁ ξ₂ (frob π E E₁ φ) := by
+  refine { right := ?_, unip := ?_, levi := ?_ }
+  · intro g x h
+    rw [frob_apply, frob_apply, map_mul, Module.End.mul_apply]
+  · intro u hu x h
     rw [frob_apply, frob_apply, map_mul, Module.End.mul_apply,
       hφ.1 u _ _ (unip_shape hu) (E (π h x)) (E (π u (π h x))) fun y => hE u y _]
-  levi l x h := by
+  · intro l x h
     rw [frob_apply, frob_apply, map_mul π, Module.End.mul_apply, LinearEquiv.symm_apply_eq, map_smul]
     refine Subtype.ext (funext fun y => ?_)
     rw [hφ.2 _ _ _ _ (levi_shape l) (E (π h x)) (E (π (leviEmb k (part3 a b) l) (π h x))) (fun y => hE _ y _) y,
@@ -180,7 +182,7 @@ theorem jacMap_line : GlobalTheory.ThK.KP → ∀ (k : Type) [Field k] [Valuativ
   refine key.imp (fun h => LinearMap.ext fun f => ?_) fun ⟨c, h⟩ => ⟨c, LinearMap.ext fun f => ?_⟩
   · refine (frob_one (pRep ν β a (b + 2)) (scalEquiv ν β a (b + 2)) (scalEquiv ν β a b) φ f).trans ?_
     rw [h]
-    exact map_zero _
+    exact (scalEquiv ν β a b).toLinearMap.map_zero
   · refine (frob_one (pRep ν β a (b + 2)) (scalEquiv ν β a (b + 2)) (scalEquiv ν β a b) φ' f).trans ?_
     rw [h]
     exact (map_smul _ c _).trans (congrArg (c • ·)

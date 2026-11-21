@@ -27,7 +27,7 @@ theorem UpperTheory.V.Z.IntegralApplyAeEq.shNull :
       rw [Real.sqrt_zero, zero_mul] at h2
       refine h2.congr fun T => ?_
       rw [Function.comp_apply, ← (cutLaws (V := V) _ univ measurableSet_Iic .univ).2.2.2.2.2.2.2.2 u', Real.sqrt_sq (norm_nonneg _)]
-    rw [NormedAddCommGroup.tendsto_nhds_zero]
+    rw [NormedAddGroup.tendsto_nhds_zero]
     intro ε hε
     obtain ⟨T, hT⟩ := (h2.eventually (gt_mem_nhds (half_pos hε))).exists
     have h3 : Tendsto (fun t => ‖⟪u', cut V (Ioi (-T)) (sh V t u)⟫_ℂ‖) atTop (𝓝 0) := by

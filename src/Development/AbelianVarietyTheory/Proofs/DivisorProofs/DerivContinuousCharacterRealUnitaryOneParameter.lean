@@ -177,6 +177,7 @@ theorem deriv_charD :
     fun t w => by
       rw [he]; simp only
       rw [← hY t w, Matrix.mul_assoc, hC' w, Matrix.mul_one]
+      rfl
   have heU : ∀ t, e t ∈ U := fun t w => by
     rw [form_iff]
     set g := ((γ (Multiplicative.ofAdd t)).1 : Matrix β β (AE F E)).map (piInf (τ w)) with hg

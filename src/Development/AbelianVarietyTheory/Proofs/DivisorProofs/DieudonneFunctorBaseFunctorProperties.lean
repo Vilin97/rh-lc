@@ -66,7 +66,7 @@ theorem finrank_M (G : PDivGroup p k) (hG : P k G) :
   haveI := B.finite G hG
   obtain ⟨_, h5⟩ := finrank_eq_of_semilinear_surjective (WittVector.constantCoeff_surjective p)
     (p_eq_zero p k) (B.red G hG) (B.red_surjective G hG) fun m => (B.red_eq_zero G hG m).1
-  exact h5.symm.trans (rigExt_field_of_charP p k (p_eq_zero p k) G).2.1
+  exact h5.symm.trans (GlobalTheory.T.finrank_rigidExtensions_eq_height_and_dim_add_dual p k (p_eq_zero p k) G).2.2.1
 
 theorem eq_zero_of_pow_smul {G : PDivGroup p k} (hG : P k G) (n : ℕ) (m : B.M G hG) (h : p ^ n • m = 0) :
     m = 0 := by

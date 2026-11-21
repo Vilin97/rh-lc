@@ -108,7 +108,11 @@ theorem chart_of_member : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok �
     rw [hlat c'.1]
     refine (K.y_lat (e.symm c'.1) x).trans ?_
     show _ ↔ ((((K.y (e.symm c'.1)).1 * (κ (e.symm c'.1)).1)⁻¹).1 *ᵥ x ∈ _)
-    rw [_root_.mul_inv_rev, Units.val_mul, ← Matrix.mulVec_mulVec]
+    have hm : ∀ (g h : GL (Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N 0)) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E ⊗[(_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F] FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)),
+        ((g * h)⁻¹).1 *ᵥ x = (h⁻¹).1 *ᵥ ((g⁻¹).1 *ᵥ x) := by
+      intro g h
+      rw [_root_.mul_inv_rev, Units.val_mul, Matrix.mulVec_mulVec]
+    rw [hm (K.y (e.symm c'.1)).1 (κ (e.symm c'.1)).1]
     exact (inv_mem (hL _)).2 _
   · intro c' γ
     have h1 : γ ∈ ((MemChart.stM (Chart0.lvG I a) (Chart0.lvQ I a) ((I.Tp a).pref u 0) (I.pref u a 0) c'.1).codRestrict _ (hmem c'.1)).range ↔

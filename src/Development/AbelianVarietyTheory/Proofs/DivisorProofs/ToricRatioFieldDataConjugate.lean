@@ -32,6 +32,8 @@ theorem twisted_value {E : Type} [Field E] [NumberField E] [IsCMField E] {I : Ty
       (∀ y, finPart ξ y = ψc (QuotientGroup.mk y)) ∧
       (∀ ψ, IsTwistedSum φ s κ (condQ 𝔣 (belowSet Q)) χ ψ (T ψ)) ∧ Λ s = T ψc := by
   classical
+  have hloc (a b : HChar E) (v : HeightOneSpectrum (𝓞 E)) (x : (v.adicCompletion E)ˣ) :
+      (a * b).loc v x = a.loc v x * b.loc v x := rfl
   have hp : ∀ x, ξ.1 x ^ m = 1 := fun x => by
     have := congrArg (fun c : HChar E => c.1 x) hord
     simpa using this
@@ -46,10 +48,10 @@ theorem twisted_value {E : Type} [Field E] [NumberField E] [IsCMField E] {I : Ty
     · rw [HChar.inf_mul, GlobalTheory.ToricDistribution.inf_of_pow hm hp, mul_one]
       exact hχ.2.2.1 k
     · intro x hx hx1
-      rw [HChar.loc_mul, hχu v hv P hP x hx, htame P x hx hx1, one_mul]
+      rw [hloc, hχu v hv P hP x hx, htame P x hx hx1, one_mul]
     · rw [← (hχ.2.2.2 v P hP).2 (Finset.notMem_empty v) n]
       refine forall_congr' fun x => forall_congr' fun hx => ?_
-      rw [HChar.loc_mul, hξu v hv P hP x hx, mul_one]
+      rw [hloc, hξu v hv P hP x hx, mul_one]
   obtain ⟨P₀⟩ : Nonempty (HeightOneSpectrum (𝓞 E)) := by
     obtain ⟨M, hM⟩ := Ideal.exists_maximal (𝓞 E)
     exact ⟨⟨M, hM.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hM (RingOfIntegers.not_isField _)⟩⟩
@@ -66,7 +68,7 @@ theorem twisted_value {E : Type} [Field E] [NumberField E] [IsCMField E] {I : Ty
   · intro q hq h
     refine (hram (Pq q)).1 (fun x hx => ?_) (hPq q hq).1
     have := h x hx
-    rwa [HChar.loc_mul, hχu q hq _ (hPq q hq).2 x hx, one_mul] at this
+    rwa [hloc, hχu q hq _ (hPq q hq).2 x hx, one_mul] at this
   have hker : princ ⊔ hatOUnits (condQ 𝔣 (belowSet Q)) ≤ (finPart ξ).ker := by
     refine sup_le ?_ fun y hy => ?_
     · rintro _ ⟨k, rfl⟩
@@ -85,7 +87,7 @@ theorem twisted_value {E : Type} [Field E] [NumberField E] [IsCMField E] {I : Ty
 
 theorem dvd_cond0 {D : D7} {T : Type} {Lc : Formalism.IndefR.Links.LevCh D T} (P : GlobalTheory.ChiGrid.Places Lc) (v : HeightOneSpectrum (OF D.host.E))
     (h : v.asIdeal ∣ GlobalTheory.FunObj.SqNum.condF P) : v.asIdeal ∣ GlobalTheory.LamTie.cond0 D.host (P.w P.v0) := by
-  obtain ⟨u, hu, hd⟩ := (v.prime.dvd_finset_prod_iff _).1 h
+  obtain ⟨u, hu, hd⟩ := (v.prime.dvd_finsetProd_iff _).1 h
   have e : v = u := HeightOneSpectrum.ext
     (associated_iff_eq.1 ((v.irreducible.dvd_irreducible_iff_associated u.irreducible).1 (v.prime.dvd_of_dvd_pow hd)))
   subst e

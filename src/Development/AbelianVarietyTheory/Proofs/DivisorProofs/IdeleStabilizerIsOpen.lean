@@ -27,7 +27,7 @@ theorem isOpen_stab (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
     (RestrictedProduct.isOpen_forall_mem fun v : HeightOneSpectrum (𝓞 F) =>
       Valued.isOpen_valuationSubring (v.adicCompletion F)).preimage continuous_snd
   have hOadd : ∀ a b, a ∈ O → b ∈ O → a + b ∈ O := fun a b ha hb v => by
-    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha v) (hb v)
+    rw [map_add]; exact add_mem (ha v) (hb v)
   have hOmul : ∀ a b, a ∈ O → b ∈ O → a * b ∈ O := fun a b ha hb v => by
     rw [map_mul]; exact mul_mem (ha v) (hb v)
   have hO0 : (0 : AF F) ∈ O := fun v => by rw [map_zero]; exact zero_mem _

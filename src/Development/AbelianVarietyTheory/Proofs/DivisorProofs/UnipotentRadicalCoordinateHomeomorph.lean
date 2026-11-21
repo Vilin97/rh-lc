@@ -194,7 +194,7 @@ theorem Hyp.u_form (h : Hyp σ J J₁ H) (β : Fin b → AE F E) (c : AE F E) (h
   rw [uMat_mulVec, uMat_mulVec]
   simp only [fA_add_left, fA_sub_left, fA_smul_left, fA_add_right, fA_sub_right, fA_smul_right]
   simp only [h.pp]
-  simp only [h.vp, h.pw, h.px, h.xp, h.fxx, h.ix, h.xi, fA_flip h.invol h.herm w (incV F H.x), map_zero]
+  simp only [h.vp, h.pw, h.fxx, h.xi, fA_flip h.invol h.herm w (incV F H.x), map_zero]
   linear_combination (fA σ J v (incV F H.x) * cA σ (fA σ J w (incV F H.x))) * hc
 
 theorem fA_mat (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (M : Matrix (Fin n) (Fin n) (AE F E))
@@ -349,8 +349,10 @@ theorem Hyp.unip_iota (h : Hyp σ W.J J₁ H) {n : UA σ W.J} (hn : n ∈ unip �
   have h1 : fA σ W.J (mat n *ᵥ (incM F H.ι *ᵥ z)) (incV F H.y) = e := by
     rw [he, fA_add_left, fA_smul_left, h.iy, h.fxy]; ring
   have h2 : fA σ W.J (mat n *ᵥ (incM F H.ι *ᵥ z)) (incV F H.y) = z ⬝ᵥ coA σ W.J H n := by
-    rw [Matrix.mulVec_mulVec, fA_mulVec_left]
-    congr 1
+    rw [Matrix.mulVec_mulVec, fA_mulVec_left, dotProduct]
+    apply Finset.sum_congr rfl
+    intro j hj
+    simp only [coA, Matrix.mulVec_mulVec]
   rw [he, ← h1, h2]
 
 theorem Hyp.unip_y (h : Hyp σ W.J J₁ H)

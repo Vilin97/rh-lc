@@ -73,7 +73,7 @@ theorem equiv_of_values (hθ : IsInfFam R.θ) (he : R.models_HW) {i : Fin D.R.m}
 
 theorem chiIs_of_values {i : Fin D.R.m} (h1 : ∀ g, ∃ a, D.what₂.embLL a = (chiC R i g : ℂ)) : ChiIs R i (chiTop R i) := by
   choose a ha using h1
-  have hne : ∀ g, a g ≠ 0 := fun g h0 => (chiC R i g).ne_zero (by rw [← ha, h0, map_zero])
+  have hne : ∀ g : G, a g ≠ 0 := fun g h0 => (chiC R i g).ne_zero (by rw [← ha, h0, map_zero])
   have hex : ∃ chi, ChiIs R i chi :=
     ⟨MonoidHom.mk' (fun g => Units.mk0 (a g) (hne g)) fun g g' => Units.ext (D.what₂.embLL.injective (by
       simp only [Units.val_mk0, Units.val_mul, map_mul, ha, chiC_mul])), ha⟩
@@ -82,7 +82,7 @@ theorem chiIs_of_values {i : Fin D.R.m} (h1 : ∀ g, ∃ a, D.what₂.embLL a = 
 
 theorem coe_chiC (i : Fin D.R.m) (g : G) : (chiC R i g : ℂ) =
     ∏ PP : R.Pg, ((R.chi ((i : ℕ) + 1) PP.1 (Matrix.GeneralLinearGroup.det (R.eG g PP)) : ℂˣ) : ℂ) := by
-  rw [chiC, Units.coe_prod]
+  simp only [chiC, Units.coe_prod]
 
 end
 
@@ -102,7 +102,7 @@ theorem reading_equivariant : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0
   intro D G _ _ Pl0 T0 A T _ R κ v₀ O hθ he ht i hl hq ρC hρ σ hσ g f
   have hV : T.V ((i : ℕ) + 1) (res T σ) = Wc D i := ht.laws.spaceW _ (inR i) _ hσ
   by_cases hj : JEvAt T R κ v₀ i σ hV
-  · have hq' := hq _ hσ hV
+  · have hq' : EqAt T R κ (O i) (res T σ) hV (T.cE ((i : ℕ) + 1) (res T σ)) := hq (res T σ) hσ hV
     have hc : ChiIs R i (chiTop R i) := chiIs_of_values R fun g' => by
       obtain ⟨-, y, hy, -⟩ := hq' g' _ (hl g').choose_spec 0 (zero_mem _)
       exact ⟨_, hy.trans (coe_chiC R i g').symm⟩

@@ -230,19 +230,16 @@ theorem locFin_sumF {E1 E2 : Fin n → Fin n → Module.End ℂ V} {F1 F2 : Fin 
 
 theorem admissible_direct_sum_cone {lam : Fin n → ℤ} {lev : Fin n → ℕ} {E1 E2 : Fin n → Fin n → Module.End ℂ V}
     (hV : AdmFor lam lev E1 E2) (M : Model lam lev) (hN : ∀ ν, IsSecondTypeWeight lam lev ν → hwSp M.F1 M.F2 ν = ⊥) :
-    AdmFor lam lev (sumF E1 M.F1) (sumF E2 M.F2) where
-  gl1 := glRel_sumF hV.gl1 M.gl1
-  gl2 := glRel_sumF hV.gl2 M.gl2
-  comm := comm_sumF hV.comm M.comm
-  unitK := unit_sumF hV.unitK M.unitK
-  locFin := locFin_sumF hV.locFin M.locFin
-  ch1 m x := by
+    AdmFor lam lev (sumF E1 M.F1) (sumF E2 M.F2) := by
+  refine ⟨glRel_sumF hV.gl1 M.gl1, glRel_sumF hV.gl2 M.gl2, comm_sumF hV.comm M.comm,
+    unit_sumF hV.unitK M.unitK, locFin_sumF hV.locFin M.locFin, ?_, ?_, ?_⟩
+  · intro m x
     rw [gelA_sumF]
     exact y_ext (hV.ch1 m _) (M.ch1 m _)
-  ch2 m x := by
+  · intro m x
     rw [barF_sumF, gelA_sumF]
     exact y_ext (hV.ch2 m _) (M.ch2 m _)
-  no_second_type_weight ν hν := by
+  · intro ν hν
     rw [Submodule.eq_bot_iff]
     intro y hy
     have h1 : y.ofLp.1 = 0 := by

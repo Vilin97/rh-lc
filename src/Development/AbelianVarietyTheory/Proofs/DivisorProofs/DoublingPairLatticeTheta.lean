@@ -20,8 +20,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MeasurableTh
 open scoped TensorProduct NNReal Matrix
 open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
 open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK
-open GlobalTheory.Doubling GlobalTheory.ThK.DblKer
-open GlobalTheory.DblDatum
+open GlobalTheory.Doubling
 
 noncomputable section
 
@@ -50,7 +49,7 @@ theorem lintegral_eq_ofReal (μ : Measure (κ → AF F)) (hμ : μ.IsAddHaarMeas
   rw [ofReal_integral_eq_lintegral_ofReal (integrable_normSq μ hμ hφ) (Filter.Eventually.of_forall fun x => by positivity)]
   congr 1
   funext x
-  rw [ENNReal.ofReal_pow (norm_nonneg _), ofReal_norm_eq_enorm]
+  rw [ENNReal.ofReal_pow (norm_nonneg _), ofReal_norm]
 
 theorem integral_mul_star_eq (μ : Measure (κ → AF F)) (hμ : μ.IsAddHaarMeasure) (T : Module.End ℂ ((κ → AF F) → ℂ))
     (hp : ∀ φ ∈ schA F κ, T φ ∈ schA F κ)
@@ -64,7 +63,8 @@ theorem integral_mul_star_eq (μ : Measure (κ → AF F)) (hμ : μ.IsAddHaarMea
       (integral_nonneg fun x => by positivity)).1 h
   have hm : ∀ f ∈ schA F κ, ∀ g ∈ schA F κ, ∀ c : ℂ, f + c • g ∈ schA F κ := fun f hf g hg c =>
     (schA F κ).add_mem hf ((schA F κ).smul_mem c hg)
-  have pol : ∀ f ∈ schA F κ, ∀ g ∈ schA F κ, ∫ x, f x * star (g x) ∂μ =
+  have pol : ∀ (f : (κ → AF F) → ℂ), f ∈ schA F κ →
+      ∀ (g : (κ → AF F) → ℂ), g ∈ schA F κ → ∫ x, f x * star (g x) ∂μ =
       (((∫ x, ‖(f + (1 : ℂ) • g) x‖ ^ 2 ∂μ : ℝ) : ℂ) - ((∫ x, ‖(f + (-1 : ℂ) • g) x‖ ^ 2 ∂μ : ℝ) : ℂ) +
         Complex.I * ((∫ x, ‖(f + Complex.I • g) x‖ ^ 2 ∂μ : ℝ) : ℂ) -
         Complex.I * ((∫ x, ‖(f + (-Complex.I) • g) x‖ ^ 2 ∂μ : ℝ) : ℂ)) / 4 := fun f hf g hg => by
@@ -79,7 +79,9 @@ theorem integral_mul_star_eq (μ : Measure (κ → AF F)) (hμ : μ.IsAddHaarMea
     · exact (hi _).sub (hi _)
     · exact (hi _).const_mul _
     congr 1
-      map_neg, map_one, Complex.conj_I, Complex.star_def]
+    funext x
+    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, ← Complex.normSq_eq_norm_sq, ← Complex.mul_conj,
+      map_add, map_mul, map_neg, map_one, Complex.conj_I, Complex.star_def]
     linear_combination ((f x * (starRingEnd ℂ) (g x)) / 2 - (g x * (starRingEnd ℂ) (f x)) / 2) * Complex.I_mul_I
   rw [pol _ (hp _ h₁) _ (hp _ h₂), pol _ h₁ _ h₂]
   simp only [← hn _ (hm _ h₁ _ h₂ _), map_add (f := _), map_smul]

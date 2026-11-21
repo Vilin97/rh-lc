@@ -184,7 +184,12 @@ theorem _root_.GlobalTheory.T.exists_integral_projective_closure_of_linearSystem
     refine ProjSpace.fnOn_top_bijective.1 ?_
     refine (hφ ⊤ trivial le_top (((Scheme.ΓSpecIso (.of K)).inv ≫ (j ≫ PSpace.str K m).appTop).hom a)).trans ?_
     have e : g ≫ j ≫ PSpace.str K m = spMap (algebraMap K Ω) := by
-      rw [reassoc_of% hgj, ProjSpace.pt_str]
+      rw [reassoc_of% hgj]
+      change ProjSpace.pt (algebraMap K Ω) y hy ≫ PSpace.str K m = _
+      rw [ProjSpace.pt, PSpace.str, ProjPoint.ofHom_toSpecZero_assoc, ← Spec.map_comp]
+      congr 1
+      ext1
+      exact RingHom.ext fun r => MvPolynomial.eval₂Hom_C (algebraMap K Ω) y r
     have e' : (j ≫ PSpace.str K m).appTop ≫ g.appTop = (spMap (algebraMap K Ω)).appTop := by
       rw [← Scheme.Hom.comp_appTop, e]
     have e'' := Scheme.ΓSpecIso_inv_naturality (CommRingCat.ofHom (algebraMap K Ω))

@@ -166,7 +166,7 @@ private theorem isIrreducible_of_occurs (hBZ : GlobalTheory.Published.BernsteinZ
     have h3 := h2.trans hjm
     norm_num at h3
   have hwf := ((hasFiniteLength_iff_wellFounded π).mp hfl).2
-  haveI : IsAtomic (Subrepresentation π) := isAtomic_of_orderBot_wellFounded_lt hwf.wf
+  haveI : IsAtomic (Subrepresentation π) := isAtomic_of_orderBot_wellFounded_lt hwf
   haveI : Nontrivial (Subrepresentation π) := by
     obtain ⟨v, hv⟩ := exists_ne (0 : V)
     refine ⟨⟨⊥, ⊤, ?_⟩⟩

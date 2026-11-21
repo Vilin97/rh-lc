@@ -195,7 +195,7 @@ theorem inStrictNormalCrossingPositionAt_coverMaxContactIdeal (T : MarkedIdealWi
     · intro r _hr s _hs t hrt _hst
       simp at hrt
     · intro r hr _hnone
-      have hr1 : r < 1 := by simpa using hr
+      have hr1 : r < 1 := hr
       have hr0 : r = 0 := by omega
       subst hr0
       exact keyU
@@ -209,13 +209,13 @@ theorem inStrictNormalCrossingPositionAt_coverMaxContactIdeal (T : MarkedIdealWi
       ⟨MaxContactOpenCover.coverTripleOpen T hv i, hxi, n, MaxContactOpenCover.coverEtaleChart T hv i c, fun _ => some j,
         ?_, ?_, ?_⟩
     · intro r hr s hs t _hrt _hst
-      have hr1 : r < 1 := by simpa using hr
-      have hs1 : s < 1 := by simpa using hs
+      have hr1 : r < 1 := hr
+      have hs1 : s < 1 := hs
       omega
     · intro r _hr hnone
       simp at hnone
     · intro r hr t hrt
-      have hr1 : r < 1 := by simpa using hr
+      have hr1 : r < 1 := hr
       have hr0 : r = 0 := by omega
       subst hr0
       obtain rfl : j = t := Option.some.inj hrt

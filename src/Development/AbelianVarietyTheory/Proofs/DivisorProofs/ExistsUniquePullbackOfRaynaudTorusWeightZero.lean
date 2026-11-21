@@ -77,7 +77,8 @@ theorem q_props (Y : Ray oa) : Flat Y.q.left ∧ Surjective Y.q.left ∧ QuasiCo
 def chrUnit {S : Type} [CommRing S] {φ : R →+* S} (τ : Over.mk (spMap φ) ⟶ splitTorus (Sp R) (GlobalTheory.RayEv.Chr Q))
     (χ : GlobalTheory.RayEv.Chr Q) : Sˣ :=
   Units.map (Scheme.ΓSpecIso (CommRingCat.of S)).hom.hom.toMonoidHom
-    (IsUnit.of_mul_eq_one ((coord τ).hom (AddMonoidAlgebra.single (-χ) 1)) (by
+    (IsUnit.of_mul_eq_one (a := (coord τ).hom (AddMonoidAlgebra.single χ 1))
+      ((coord τ).hom (AddMonoidAlgebra.single (-χ) 1)) (by
       rw [← map_mul, AddMonoidAlgebra.single_mul_single, add_neg_cancel, _root_.mul_one]
       exact map_one _)).unit
 

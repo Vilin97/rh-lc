@@ -124,7 +124,9 @@ theorem vecAll_unique {W : G.Weil} (ρ : RealMatch W) {μ₀ : T} (hL : L.Is μ�
       VecAll ρ e p φ d → VecAll ρ e p φ' d → φ = φ'
   | _, .nil, _, _, _, _, _, _ => rfl
   | _, .snoc a p, hg, φ, φ', d, h, h' => by
-    obtain ⟨Tm, h1, h2, -⟩ := exists_arrowModel (t := t) ρ hL he (a := a) (OnGrid.last hg)
+    have ha : IsGridArrow D.R.m t a := OnGrid.last hg
+    have hModel := exists_arrowModel ρ hL he ha
+    rcases hModel with ⟨Tm, h1, h2, -⟩
     obtain ⟨a1, a2⟩ := (h1 _ _).1 h.2
     obtain ⟨b1, b2⟩ := (h1 _ _).1 h'.2
     refine Prod.ext (vecAll_unique ρ hL he p hg.init φ.1 φ'.1 d.1 h.1 h'.1) (sub_eq_zero.1 (h2 _ ?_ ?_))
@@ -160,7 +162,8 @@ theorem exists_append {S : Arrow T → Type} {X Y : Node} (p : Path T X Y) :
     ∀ {Z : Node} (q : Path T Y Z) (z : (p.comp q).Fam S), ∃ (x : p.Fam S) (y : q.Fam S), z = x.append y
   | _, .nil, z => ⟨z, (), rfl⟩
   | _, .snoc a q, z => by
-    obtain ⟨x, y, h⟩ := exists_append (S := S) p q z.1
+    have ih := exists_append (S := S) p q (show (p.comp q).Fam S from z.1)
+    rcases ih with ⟨x, y, h⟩
     exact ⟨x, (y, z.2), Prod.ext h rfl⟩
 
 theorem edges_comp {X Y Z : Node} (p : Path T X Y) (q : Path T Y Z) : edges (p.comp q) = edges p ++ edges q := by
@@ -174,7 +177,9 @@ theorem edges_bound {m : ℕ} {t : T} {i j : ℕ} : ∀ {Y : Node} (p : Path T (
       ∀ b ∈ edges p, i ≤ b.src.1 ∧ b.tgt.1 ≤ i' ∧ j' ≤ b.tgt.2 ∧ b.src.2 ≤ j
   | _, .nil, _ => ⟨i, j, rfl, le_rfl, le_rfl, List.nodup_nil, fun _ h => absurd h List.not_mem_nil⟩
   | _, .snoc a p, hg => by
-    obtain ⟨i', j', h1, h2, h3, h4, h5⟩ := edges_bound (m := m) (t := t) p (OnGrid.init hg)
+    have hp : OnGrid m t p := OnGrid.init hg
+    have ih := edges_bound (m := m) (t := t) p hp
+    rcases ih with ⟨i', j', h1, h2, h3, h4, h5⟩
     rw [edges_snoc]
     rcases hg.last with ⟨k, l, -, -, rfl⟩ | ⟨k, l, -, -, rfl⟩
     · obtain ⟨rfl, rfl⟩ : k = i' ∧ l = j' := Node.grid.inj h1

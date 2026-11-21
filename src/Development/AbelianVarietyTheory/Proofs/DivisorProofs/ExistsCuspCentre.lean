@@ -48,7 +48,7 @@ theorem poleSolve' (hI : MeasInvStatement (E := E)) (r : ℕ) (X : Data E r) (G 
   set S : Set (V (nd X)) := rhF X x0 ⁻¹' Set.Icc (ε / 2) ε with hS
   have hSm : MeasurableSet S := measurable_rhF X x0 measurableSet_Icc
   have hfin : muF X x0 S < ⊤ :=
-    (measure_mono fun z hz => hz.2).trans_lt (SublevelFin.muF_sublevel_lt_top hI r X x0 h0 ε)
+    (measure_mono fun z (hz : z ∈ S) => hz.2).trans_lt (SublevelFin.muF_sublevel_lt_top hI r X x0 h0 ε)
   refine ⟨χ, ENNReal.ofReal (K * Real.exp (A + C + bb * ε)) * muF X x0 S, hχ.continuous, h1, h2, h3,
     ENNReal.mul_lt_top ENNReal.ofReal_lt_top hfin, fun δ ψ hψ => ?_⟩
   obtain ⟨hψs, hψl⟩ := hψ.2.2.1 x0 h0

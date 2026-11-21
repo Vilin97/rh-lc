@@ -33,7 +33,7 @@ theorem tensD_top {ι : Type} [Fintype ι] [DecidableEq ι] {σ : ι → Type}
     | insert w₀ s hw₀ ih =>
       intro f hf
       let S : Submodule ℂ (MvPolynomial (σ w₀) ℂ) :=
-        N.comap ((PiTensorProduct.tprod ℂ : MultilinearMap ℂ (fun w : ι => MvPolynomial (σ w) ℂ)
+        N.comap ((PiTensorProduct.tprod ℂ : (∀ w : ι, MvPolynomial (σ w) ℂ) →ₘₗ[ℂ]
           (⨂[ℂ] w : ι, MvPolynomial (σ w) ℂ)).toLinearMap f w₀)
       have hS1 : (1 : MvPolynomial (σ w₀) ℂ) ∈ S := by
         show PiTensorProduct.tprod ℂ (Function.update f w₀ 1) ∈ N

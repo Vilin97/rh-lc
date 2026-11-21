@@ -23,7 +23,7 @@ theorem toBlocks₁₁_mul_of_toBlocks₂₁_eq_zero (M N : Matrix (ν ⊕ ν) (
   simp
 
 theorem toBlocks₁₁_one' : (1 : Matrix (ν ⊕ ν) (ν ⊕ ν) E).toBlocks₁₁ = 1 := by
-  ext i j; simp [toBlocks₁₁, one_apply]
+  ext i j; simp [toBlocks₁₁, Matrix.one_apply]
 
 theorem toBlocks₁₂_one' : (1 : Matrix (ν ⊕ ν) (ν ⊕ ν) E).toBlocks₁₂ = 0 := by
   ext i j; simp [toBlocks₁₂, one_apply]

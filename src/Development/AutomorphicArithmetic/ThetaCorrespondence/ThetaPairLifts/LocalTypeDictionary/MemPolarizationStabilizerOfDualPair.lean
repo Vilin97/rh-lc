@@ -45,7 +45,8 @@ theorem mem_polarizationStabilizer_of_dualPair (hP : _root_.GlobalTheory.FunPr.T
     have hloc := locFin_sumPl _ _ _ (fun w => locFin_compact P Q R S (Y w) (hKC w) (c w * (Y w).trace))
     obtain ⟨U, -, hSA⟩ := GlobalTheory.ExpAct.expAct_fock F κ _ Φ _ (om.comp γ) hloc
       (fun t l hl => hs.adm _ l hl) (fun T => hact γ hγ Y hY T)
-    rw [MonoidHom.comp_apply, hγ1] at hSA
+    change ∀ T, SA (om (γ (Multiplicative.ofAdd 1))) (Φ T) (Φ (U T)) at hSA
+    rw [hγ1] at hSA
     exact opOn_of_sa hΦ.1 U _ (map_zero _) hSA
 theorem polarization_acts_of_isDualPair : _root_.GlobalTheory.FunPr.ThetaLocalInputs → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E) (B : Base F E) (n d : ℕ) (X : Spc F E n) (W : Spc F E d) (M : Model σ X W) (χX χW : Chr F E)

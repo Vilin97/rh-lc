@@ -54,7 +54,9 @@ theorem frBall_subset_chartExp_image : ∀ (E : Type) [Field E] [NumberField E] 
   let U : Set (realLie Ψ G) := {X | ‖X‖ < δ ∧ ∀ τ, ‖cj X.1 τ‖ < ρ}
   have hU : U ∈ nhds 0 := by
     refine IsOpen.mem_nhds ?_ ?_
-    · refine (isOpen_lt continuous_norm continuous_const).inter ?_
+    · change IsOpen ({X : realLie Ψ G | ‖X‖ < δ} ∩
+        {X : realLie Ψ G | ∀ τ, ‖cj X.1 τ‖ < ρ})
+      refine (isOpen_lt continuous_norm continuous_const).inter ?_
       change IsOpen {X : realLie Ψ G | ∀ τ, ‖cj X.1 τ‖ < ρ}
       rw [Set.setOf_forall]
       exact isOpen_iInter_of_finite fun τ =>

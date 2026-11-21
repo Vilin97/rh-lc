@@ -258,7 +258,7 @@ theorem exists_approx (hv : ∀ x : K, vLa la' (algebraMap K K' x) = vLa la x) {
       ⟨0, by simpa using (WithZero.le_exp_log (x := la'.valuation K' a)).trans (WithZero.exp_le_exp.2 (le_neg.1 hN))⟩
     rcases le_total N (-WithZero.log (la'.valuation K' a)) with h | h
     · exact h0 N h
-    induction N, h using Int.le_induction with
+    induction N, h using Int.leInduction with
     | base => exact h0 _ le_rfl
     | succ n _ ih =>
       obtain ⟨x, hx⟩ := ih
@@ -314,8 +314,8 @@ theorem inV_of_forall_emb [la'.asIdeal.LiesOver la.asIdeal] {d : ℕ} {b : Fin d
     have h3 := (GoodPtsModel.inV_iff_vV T' ((map_ne_zero i).2 h0)).1 ((GoodPtsModel.inV_iff_val T' _).2 key)
     rw [hv'] at h3
     exact (GoodPtsModel.inV_iff_vV T h0).2 ((mul_nonneg_iff_of_pos_left (by exact_mod_cast he')).1 h3)
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [hQl.over, Ideal.under_def, Ideal.mem_comap, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [hQl.over, Ideal.under_def, Ideal.mem_comap, map_sum]
     simpa only [Algebra.smul_def, map_mul, ← IsScalarTower.algebraMap_apply] using hc
   · let σ : K' →+* T'.Fr := (σ₁.comp (g : L →+* L)).comp (algebraMap K' L)
     obtain ⟨e'', ho''⟩ := exists_overLa_of_mem (la := la') (io := σ) hT' fun a => by
@@ -351,6 +351,7 @@ theorem exists_intFr_ext (hle : c.F ≤ c'.F) {T : CDVR} {io : c.F →+* T.Fr} (
 
 end Forms
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem supSet_descent : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (r : ℕ) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r), (∀ σ, GoodEmb c σ → IsUnf (U σ)) → ∀ (la : HeightOneSpectrum (𝓞 c.F)) (p : ℕ), p.Prime → (p : 𝓞 c.F) ∈ la.asIdeal → l.GoodAt p → ∀ (c' : Coeff l) (hle : c.F ≤ c'.F) (la' : HeightOneSpectrum (𝓞 c'.F)), (∀ x : c.F, vLa la' (incF c c' hle x) = vLa la x) → CuspBC hle U → ∀ (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ), Dom a n → FiniteDimensional c.F (cusp Xo c U a n) → ∀ f' ∈ cusp Xo c' (unfBC hle U) a n, BddAll Xo c' la' 1 f' → ∃ (m : ℕ) (as : Fin m → c'.F) (fs : Fin m → Rul Xo c), (∀ i, la'.valuation c'.F (as i) ≤ 1) ∧ (∀ i, fs i ∈ supSet Xo c la (cusp Xo c U a n)) ∧ IsBC hle f' as fs := by
   intro E _ _ _ H Dw l Xo c r U hU la p hp hpl hgood c' hle la' hv hBC a n hD _ f' hf' hb
   obtain ⟨m, as, fs, hfs, hIs⟩ := hBC a n f' hf'

@@ -53,10 +53,10 @@ theorem exists_finExt_root_emb (E : Type) [Field E] [NumberField E] (l : ℕ) [F
   · exact IsPrimitiveRoot.of_map_of_injective (f := K.val) (by simpa using hζ) K.val.injective
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [← b.sum_repr x, map_sum]
-    refine sum_mem fun i _ => ?_
-    rw [map_rat_smul]
-    exact SubfieldClass.qsmul_mem K _ (hT _ (Finset.mem_insert_of_mem
-      (Finset.mem_image.2 ⟨(τ, i), Finset.mem_univ _, rfl⟩)))
+      refine sum_mem fun i _ => ?_
+      rw [map_rat_smul]
+      exact SubfieldClass.qsmul_mem K _ (hT _ (Finset.mem_insert_of_mem
+        (Finset.mem_image.2 ⟨(τ, i), Finset.mem_univ _, rfl⟩)))
 
 theorem finext_joint : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (l : ℕ) [Fact l.Prime] (n a t : ℕ) (r : G E Ω →* GL (Fin n) (PadicAlgCl l)) (ρ : G E Ω →* GL (Fin a) (PadicAlgCl l)) (χ : Fin t → G E Ω →* (PadicAlgCl l)ˣ), Continuous r → Continuous ρ → (∀ s, Continuous (GlobalTheory.TripleGal.rk1 (χ s))) → ∃ LL : FinExt l, (∃ ζ : ↥LL.1, IsPrimitiveRoot ζ l) ∧ (∀ (τ : E →+* PadicAlgCl l) (x : E), τ x ∈ LL.1) ∧ (∀ g i j, (r g : Matrix (Fin n) (Fin n) (PadicAlgCl l)) i j ∈ LL.1) ∧ (∀ g i j, (ρ g : Matrix (Fin a) (Fin a) (PadicAlgCl l)) i j ∈ LL.1) ∧ ∀ s g, ((χ s g : (PadicAlgCl l)ˣ) : PadicAlgCl l) ∈ LL.1 := by
   intro E Ω _ _ _ _ _ l _ n a t r ρ χ hr hρ hχ

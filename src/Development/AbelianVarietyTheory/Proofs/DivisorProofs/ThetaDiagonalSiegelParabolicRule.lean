@@ -85,7 +85,7 @@ theorem isCovolOne_map {m n m' n' : ℕ} {μ : Measure (Mx D m n)} {𝓕 : Set (
         left_inv := fun γ => Subtype.ext (e.apply_symm_apply _)
         right_inv := fun γ => Subtype.ext (e.symm_apply_apply _) }
     refine h.2.1.image_of_equiv e.toEquiv ?_ g fun γ x => ?_
-    · refine ⟨he'.measurable, ?_⟩
+    · refine ⟨he'.measurable.aemeasurable, ?_⟩
       have : (μ.map e).map e.symm = μ := by
         rw [Measure.map_map he'.measurable he.measurable]
         have : (e.symm ∘ e : Mx D m n → Mx D m n) = id := funext e.symm_apply_apply
@@ -135,7 +135,7 @@ theorem diag_eq_mixT (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (ν : Measur
     (fun x hx => ratMx_mul (rat_mem _) (ratMx_transpose hx))
     (fun x hx => ratMx_transpose (ratMx_mul (rat_mem _) hx))
   refine ⟨_, _, hc, fun f => ?_⟩
-  simp only [_root_.I195MixedCoordinates_7b6bb7feeb7e0cab6de7cdc9.target, HypDec.integrandT_eq]
+  simp only [HypDec.mixT, HypDec.integrandT_eq]
   simp only [map_zero, add_zero, symplOH_zero_right, AddChar.map_zero_eq_one, one_mul]
   rw [hemb.setIntegral_map, Set.preimage_image_eq _ (gramT T S.rank).injective]
   simp only [incX_gramT]
@@ -210,6 +210,7 @@ theorem mixT_law (hP : GlobalTheory.Published.WeilRepresentationUnitaryPair) (ψ
   have e1 : ωd (1, h) f = ωd (1, (dblDec T).levi a) (ωd (1, (dblDec T).nC c) f) := by
     rw [hp, ← Module.End.mul_apply, ← map_mul, Prod.mk_mul_mk, one_mul]
   have hq : (dblDec T).qT S c 0 = 0 := by rw [HypDec.qT, map_zero, symplOH_zero_left]
+  change _root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.target (dblDec T) S ψ μ 𝓕 (ωd (1, h) f) 0 0 = _ * _root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.target (dblDec T) S ψ μ 𝓕 f 0 0
   rw [e1, h1, Matrix.zero_mul, h2, hq, AddChar.map_zero_eq_one, one_smul, Pi.smul_apply, smul_eq_mul,
     ruleFac_eq χS S.rank a t (haP.symm.trans ht)]
 

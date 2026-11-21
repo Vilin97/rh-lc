@@ -119,7 +119,7 @@ theorem dlog_eq_sum_lin [Fact p.Prime] (χ : G.dual.Tate) (u : MvPowerSeries (Fi
   rw [e1, c.dUnit_ev_of_two n (u - 1 - g) ?_, add_zero, map_one, hev]
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [PDiv.dUnit, AugCot.d_one, zero_add, map_sum, map_smul]
-    rfl
+      rfl
   intro α hα
   have hcg : ∀ i, coeff (Finsupp.single i 1) g = lin u i := fun i => by
     set_option synthInstance.maxHeartbeats 100000 in

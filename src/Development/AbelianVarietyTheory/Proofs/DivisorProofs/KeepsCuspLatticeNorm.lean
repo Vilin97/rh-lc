@@ -154,7 +154,7 @@ theorem exists_induces (V : HSp D) {ι : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank
     exact ⟨-w, neg_mem hw, by rw [neg_nsmul, ← e, neg_sub]; exact (add_sub_cancel _ _).symm⟩
 
 
-set_option maxHeartbeats 1000000 in
+set_option maxHeartbeats 4000000 in
 theorem petE_transl {Xo : Moduli Dw l} {c : Coeff l} {σ : c.F →+* ℂ} {r : ℕ} {U : Unf Xo c σ r} {V : HSp D}
     (hs : V.SigOK) (hr : V.rank = r) {dict : GA D V → Σ k, Frame (U.X k).Ψ r}
     {ι : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E)} {g : ℕ}
@@ -175,12 +175,35 @@ theorem petE_transl {Xo : Moduli Dw l} {c : Coeff l} {σ : c.F →+* ℂ} {r : �
     pnorm_eq_of_unit _ _ _ _ (hu g)
   unfold petE
   simp only [hN]
-  rw [← eLpNorm_right V hs κ (fun g => ‖rdU U f (dict g).1 (dict g).2‖) fun a ha h => by
+  have hΦ : ∀ a ∈ GQ V, ∀ h, ‖rdU U f (dict (a * h)).1 (dict (a * h)).2‖ =
+      ‖rdU U f (dict h).1 (dict h).2‖ := fun a ha h => by
     obtain ⟨a', ha', e₁⟩ := hD.1 a ha h
     have := (GlobalTheory.CuspSecFin.mem_SS_of_mem_holSub _ _ hfc (dict h).1).1.1.2.2 a' ha' _ (hD.2.2.2.1 h)
     rw [hχ _ _ ha', one_mul] at this
     rw [e₁]
-    exact congrArg norm this]
+    exact congrArg norm this
+  have hright : eLpNorm' (fun q : AutQ V => ‖rdU U f (dict (q.out * κ)).1 (dict (q.out * κ)).2‖) 2 (muQ1 V) =
+      eLpNorm' (fun q : AutQ V => ‖rdU U f (dict q.out).1 (dict q.out).2‖) 2 (muQ1 V) := by
+    obtain ⟨hP, hV⟩ := GlobalTheory.FinalJoin2.volPairEx_and_finVol D V hs
+    have hR := ((GlobalTheory.CoreLawsCompare.invProb_iff V hP hV _).2 rfl).2
+    have hmap : (muQ1 V).map (rightEquiv V κ) = muQ1 V := Measure.ext fun s hs => by
+      rw [MeasurableEquiv.map_apply]
+      exact hR κ _ (fun _ => rfl) s hs
+    have hout : ∀ g, ‖rdU U f (dict (autMk V g).out).1 (dict (autMk V g).out).2‖ =
+        ‖rdU U f (dict g).1 (dict g).2‖ := fun g => by
+      have e : (QuotientGroup.rightRel (GQ V)) g (autMk V g).out := Quotient.exact (Quotient.out_eq (autMk V g)).symm
+      rw [QuotientGroup.rightRel_apply] at e
+      rw [← hΦ _ e g, inv_mul_cancel_right]
+    unfold eLpNorm'
+    conv_rhs => rw [← hmap, lintegral_map_equiv]
+    congr 1
+    apply lintegral_congr
+    intro q
+    dsimp only
+    have he : rightEquiv V κ q = autMk V (q.out * κ) := by
+      exact (congrArg (rightEquiv V κ) (Quotient.out_eq q)).symm
+    rw [he, hout]
+  rw [← hright]
   congr 1
   funext q
   obtain ⟨hx, δ, hc, e₁⟩ := GlobalTheory.StabMove.exists_carries (V := V) (W := V) rfl rfl rfl (dict := dict) ι hU hW hL hth
@@ -235,6 +258,6 @@ theorem GlobalTheory.LevelIsometry.keeps_cusp_lattice_norm : ∀ (D : D7) (T : C
     obtain ⟨x₀, -, _, g', e, F, ik, φ, th', hth', hL⟩ := hpin _ hσ
     have := GlobalTheory.LevelIsometry.petE_transl (D.sp.W_sig j) hr hσ (hY.unf _ hσ) hpq hA hW hι hL hth' hD (hY.unit _ hσ) hG
       (hχ _ hσ) γ⁻¹ (AllWt.mem_cuspW.1 f.2).1 ((AllWt.mem_cuspW.1 f.2).2 _ hσ)
-    show _ * (AllWt.petE _ _ _ _ (rdU _ (g : Rul Y.d.Xo₂ Y.d.c₂))).toReal = _
+    show _ * (AllWt.petE _ _ _ _ (rdU (Y.U (goodOf Y.d.c₂ σ)) (g : Rul Y.d.Xo₂ Y.d.c₂))).toReal = _
     rw [hg]
     exact congrArg (fun t : ENNReal => AllWt.lieFacZ (T.Q.Dw j) (xiR D) G * t.toReal) this

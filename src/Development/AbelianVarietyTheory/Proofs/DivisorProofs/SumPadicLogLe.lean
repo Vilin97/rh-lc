@@ -20,7 +20,7 @@ namespace GlobalTheory.ConjLoss
 theorem sum_padic_log_le (P : Finset ℕ) (hP : ∀ p ∈ P, p.Prime) (n : ℕ) :
     ∑ p ∈ P, Real.log p * (padicValNat p n : ℝ) ≤ Real.log n := by
   rcases Nat.eq_zero_or_pos n with rfl | hn
-  · simp
+  · simp [Nat.padicValNat_def]
   · have hd : ∏ p ∈ P, p ^ padicValNat p n ∣ n := by
       refine Finset.prod_dvd_of_isRelPrime ?_ fun p _ => (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
       intro p hp q hq hpq

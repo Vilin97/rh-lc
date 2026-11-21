@@ -48,12 +48,17 @@ theorem exists_place_over (E : Type) [Field E] [NumberField E] (l : ℕ) [Fact l
     rw [this]; exact zero_mem _
   obtain ⟨Q, hQ, hQc⟩ := Ideal.exists_ideal_over_maximal_of_isIntegral (S := 𝓞 E) _ hker
   have hl : ((l : ℕ) : 𝓞 E) ∈ Q := by
-    have : (l : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 E)) := by rw [hQc]; exact Ideal.mem_span_singleton_self _
+    have : (l : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 E)) := by
+      change (l : ℤ) ∈ Ideal.under ℤ Q
+      rw [hQc]
+      exact Ideal.mem_span_singleton_self _
     simpa using this
   refine ⟨⟨Q, hQ.isPrime, fun h => ?_⟩, hl⟩
   rw [h] at hQc
   have h0 : (l : ℤ) ∈ Ideal.span {(l : ℤ)} := Ideal.mem_span_singleton_self _
-  rw [← hQc, Ideal.comap_bot_of_injective _ (algebraMap ℤ (𝓞 E)).injective_int] at h0
+  rw [← hQc] at h0
+  change (l : ℤ) ∈ Ideal.comap (algebraMap ℤ (𝓞 E)) ⊥ at h0
+  rw [Ideal.comap_bot_of_injective _ (algebraMap ℤ (𝓞 E)).injective_int] at h0
   have := (Fact.out : l.Prime).ne_zero
   simp_all
 

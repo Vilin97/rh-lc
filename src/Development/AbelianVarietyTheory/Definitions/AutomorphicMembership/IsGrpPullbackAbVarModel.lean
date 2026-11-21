@@ -76,7 +76,28 @@ theorem existsUnique_corr_dual : (∀ y : specO O (DualNumber O) ⟶ P.G, ∃! x
   have hp₀ : ¬ IsUnit (p : O) := Fact.out
   have hp : ¬ IsUnit (p : DualNumber O) := fun h => hp₀ (by
     simpa using h.map (TrivSqZeroExt.fstHom O O O))
-  have hc := isAdicComplete_dualNumber (O := O) p
+  have hc : IsAdicComplete (Ideal.span {(p : DualNumber O)}) (DualNumber O) := by
+    have h : IsAdicComplete (Ideal.span {(p : O)}) O := inferInstance
+    refine { haus' := ?_, toIsPrecomplete := ?_ }
+    · intro x hx
+      simp only [SModEq.zero, mem_pow_iff, dual_dvd_iff] at hx
+      refine TrivSqZeroExt.ext (h.toIsHausdorff.haus' x.fst fun n => ?_)
+        (h.toIsHausdorff.haus' x.snd fun n => ?_)
+      · rw [SModEq.zero, mem_pow_iff]
+        exact (hx n).1
+      · rw [SModEq.zero, mem_pow_iff]
+        exact (hx n).2
+    · constructor
+      intro f hf
+      simp only [SModEq.sub_mem, mem_pow_iff, dual_dvd_iff] at hf ⊢
+      obtain ⟨a, ha⟩ := h.toIsPrecomplete.prec' (fun n => (f n).fst) fun {m n} hmn => by
+        rw [SModEq.sub_mem, mem_pow_iff]
+        exact (hf hmn).1
+      obtain ⟨b, hb⟩ := h.toIsPrecomplete.prec' (fun n => (f n).snd) fun {m n} hmn => by
+        rw [SModEq.sub_mem, mem_pow_iff]
+        exact (hf hmn).2
+      simp only [SModEq.sub_mem, mem_pow_iff] at ha hb
+      exact ⟨TrivSqZeroExt.inl a + TrivSqZeroExt.inr b, fun n => ⟨by simpa using ha n, by simpa using hb n⟩⟩
   exact ⟨existsUnique_left (P := P) hp hc, existsUnique_right (P := P) hp hc⟩
 
 theorem exists_lieCmp : ∃ e : LieG P.Gt ≃ LieG P.G, ∀ x, Corr P x.1 (e x).1 := by
@@ -114,14 +135,8 @@ variable {p : ℕ} (C : SCF p)
 
 abbrev fldVal : Valuation ↥C.S ℝ≥0 := NormedField.valuation (K := ↥C.S)
 
-theorem integers_intO : (fldVal C).Integers ↥(intO ↥C.S) where
-  hom_inj := Subtype.val_injective
-  map_le_one x := by
-    rw [NormedField.valuation_apply, ← NNReal.coe_le_coe]
-    exact x.2
-  exists_of_le_one r hr := ⟨⟨r, by
-    rw [NormedField.valuation_apply, ← NNReal.coe_le_coe] at hr
-    exact hr⟩, rfl⟩
+theorem integers_intO : (fldVal C).Integers ↥(intO ↥C.S) :=
+  Valuation.integer.integers (fldVal C)
 
 variable [Fact p.Prime]
 

@@ -197,6 +197,7 @@ theorem main : LL → TwistBCSpanStatement → TWM.VRatioGtStatement → TWState
       rw [e₁, e₂]
       simp only [AddMonoidHom.smul_apply, AddMonoidHom.add_apply, AddMonoidHom.comp_apply, Int.coe_castAddHom,
         smul_eq_mul, nsmul_eq_mul]
+      simp only [p₁, qkMk_y]
       show _ - (k : ℚ) * (l m + (k : ℚ)⁻¹ * ((QForm.bHom hϖ D hQ (p₀.y + k • z) m : ℤ) : ℚ)) = _
       field_simp
       ring

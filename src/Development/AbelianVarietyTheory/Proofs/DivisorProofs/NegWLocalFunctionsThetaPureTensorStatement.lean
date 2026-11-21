@@ -21,9 +21,9 @@ theorem _root_.GlobalTheory.T.negW_local_functions_theta_pure_tensor : ∀ {D : 
     ∀ (e : Num G i j) (Bs : Base D.host.F D.host.E) (Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j) (X : Chars D.host.F D.host.E)
       (om : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep D.sp.cm.sig Γ.V Γ.W) (om' : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep D.sp.cm.sig Γ.V' Γ.W), IsTripleOf W M t i j e Bs Γ X →
       GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsTriple Bs Γ X om om' → IsTied t i j e Bs Γ X → ∀ (ρ : RealMatch W) f₀,
-      GlobalTheory.SquareAgree.IsDatum Γ.M W.ψ (ptA e) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f₀ Γ.M.vac) (vacA ρ i j) →
-      ∀ ι : ∀ w, ToA G t i j w, (∀ w ∈ locPl G t, IsLinModelA W B t e Γ w (ι w)) →
-      ∀ ε, IsIdemSum ε (locPl G t) → ∀ Ξ F, IsLinA B t i j ρ ε Ξ F →
+      GlobalTheory.SquareAgree.IsDatum Γ.M W.ψ (_root_.GlobalTheory.TopFlip.ptA e) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f₀ Γ.M.vac) (_root_.GlobalTheory.TopFlip.vacA ρ i j) →
+      ∀ ι : ∀ w, ToA G t i j w, (∀ w ∈ locPl G t, _root_.GlobalTheory.TopFlip.IsLinModelA W B t e Γ w (ι w)) →
+      ∀ ε, IsIdemSum ε (locPl G t) → ∀ Ξ F, _root_.GlobalTheory.TopFlip.IsLinA B t i j ρ ε Ξ F →
       ∀ φ, IsFinPart Γ.M X.T φ → (∀ w ∈ locPl G t, ι w (φ (w.under (𝓞 D.host.F))) = Ξ w) →
-        GlobalTheory.SquareAgree.IsDatum Γ.M W.ψ (ptA e) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure ((∏ w ∈ locPl G t, ι w (Γ.M.vac _) 0) • f₀) φ) F := by
-  first | exact @GlobalTheory.TopFlip.LinGlob.isDatum_linA | exact GlobalTheory.TopFlip.LinGlob.isDatum_linA | (intros; apply GlobalTheory.TopFlip.LinGlob.isDatum_linA <;> assumption)
+        GlobalTheory.SquareAgree.IsDatum Γ.M W.ψ (_root_.GlobalTheory.TopFlip.ptA e) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure ((∏ w ∈ locPl G t, ι w (Γ.M.vac _) 0) • f₀) φ) F := by
+  exact @GlobalTheory.TopFlip.LinGlob.isDatum_linA

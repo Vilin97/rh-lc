@@ -57,9 +57,17 @@ def eTT {X : HidaSetting D} (Y : Full X) (u u' : D.what₂.Word) : TT Y u u' ≃
   right_inv t := (Eq.refl t)
 
 
+set_option smartUnfolding false in
 set_option maxHeartbeats 4000000 in
 def eCure {X : HidaSetting D} {Y : Full X} (h : FinX Y) (h' : FinX (reY Z Y)) (u : D.what₂.Word) :
-    ColT (h.shInj u) ≃ₗᵢ[ℂ] ColT (h'.shInj (wd Z u)) := by kexactB LinearIsometryEquiv.refl ℂ (ColT (h.shInj u))
+    ColT (h.shInj u) ≃ₗᵢ[ℂ] ColT (h'.shInj (wd Z u)) where
+  toFun x := by with_unfolding_all exact x
+  invFun x := by with_unfolding_all exact x
+  left_inv _ := rfl
+  right_inv _ := rfl
+  map_add' _ _ := by rfl'
+  map_smul' _ _ := by rfl'
+  norm_map' _ := by rfl'
 
 end GlobalTheory.Mem.SRe
 

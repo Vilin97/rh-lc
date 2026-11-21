@@ -166,7 +166,7 @@ theorem valuation_up (hr : Module.finrank F E = 2)
     rw [Ideal.ramificationIdx'_eq_ramificationIdx (p := (Q.under (𝓞 F)).asIdeal) (q := Q.asIdeal) hv0]
     exact he
   have hwv := IsDedekindDomain.HeightOneSpectrum.valuation_liesOver (K := F) E (Q.under (𝓞 F)) Q x
-  rw [he', pow_one] at hwv
+  rw [he, pow_one] at hwv
   exact hwv.symm
 
 theorem split_prod (hF : ∀ x : F, star (algebraMap F E x) = algebraMap F E x) (hr : Module.finrank F E = 2)

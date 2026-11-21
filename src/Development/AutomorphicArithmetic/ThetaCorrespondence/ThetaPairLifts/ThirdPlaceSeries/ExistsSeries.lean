@@ -153,7 +153,7 @@ theorem realBase_le_baseLat_of_fit_can (hr : p.PointConditions') (hm : RecTies p
       congr 1
       exact mul_right_eq_self₀.2 (Or.inl (map_one (ρ.e _ _)))
     | zero => rw [map_zero, map_zero, smul_zero]; exact (congrArg Ψ rd.map_zero).trans Ψ.map_zero
-    | add u v _ _ hu hv => rw [map_add (f := _), map_add (f := _), smul_add, ← hu, ← hv, ← Ψ.map_add (f := _)]; exact congrArg Ψ (rd.map_add _ _)
+    | add u v _ _ hu hv => rw [map_add (f := _), map_add (f := _), smul_add, ← hu, ← hv, ← Ψ.map_add]; exact congrArg Ψ (rd.map_add _ _)
     | smul c u _ hu =>
       rw [map_smul, evW_smul, smul_comm, ← hu, ← he1, hΨ, ← readExt_smul]
       exact congrArg _ (rd.map_smulₛₗ _ _)
@@ -170,7 +170,7 @@ theorem realBase_le_baseLat_of_fit_can (hr : p.PointConditions') (hm : RecTies p
     | add _ _ _ _ h1 h2 =>
       obtain ⟨t, m1, e1⟩ := h1
       obtain ⟨t', m2, e2⟩ := h2
-      exact ⟨t + t', add_mem m1 m2, by rw [Ψ.map_add (f := _), e1, e2]; exact (LinearMap.map_add _ _ _).symm⟩
+      exact ⟨t + t', add_mem m1 m2, by rw [Ψ.map_add, e1, e2]; exact (LinearMap.map_add _ _ _).symm⟩
     | smul a Q _ h1 =>
       obtain ⟨t, m1, e1⟩ := h1
       obtain ⟨_, o, rfl⟩ := a

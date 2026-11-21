@@ -41,6 +41,9 @@ theorem blkN_eq (N : Matrix ι ι A) :
   rw [fromRows_mul, transpose_fromRows, fromRows_mul_fromCols, ← fromBlocks_one, fromBlocks_add, blkN]
   simp [sub_eq_add_neg]
 
+-- Select matrix multiplication explicitly to avoid the `CStarMatrix` default instance.
+local infixl:70 " ⬝ₘ " => @HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid
+
 theorem blkN_anti (N : Matrix ι ι A) : blkN N ⬝ₘ fromRows (1 : Matrix ι ι A) (-1) = fromRows 1 (-1) := by
   rw [blkN, fromBlocks_mul_fromRows]
   congr 1 <;> noncomm_ring

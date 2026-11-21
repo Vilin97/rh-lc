@@ -58,7 +58,7 @@ theorem exists_twisted_sum_ne_zero : ∀ {G Y X : Type} [AddCommGroup G] [Fintyp
     have e : ∑ s : S, (s : AddChar G ℂ) a = θ w a * ∑ s : S, (s : AddChar G ℂ) a := by
       rw [Finset.mul_sum]
       exact (Fintype.sum_equiv (Equiv.mulLeft s₀) (fun s => θ w a * (s : AddChar G ℂ) a)
-        (fun s => (s : AddChar G ℂ) a) (fun s => by simp [s₀, AddChar.mul_apply])).symm
+        (fun s => (s : AddChar G ℂ) a) (fun s => by simp [s₀])).symm
     have h2 : (1 - θ w a) * ∑ s : S, (s : AddChar G ℂ) a = 0 := by rw [sub_mul, one_mul, ← e, sub_self]
     exact (mul_eq_zero.mp h2).resolve_left (sub_ne_zero.mpr (Ne.symm hw))
   have hsum : ∀ s : S, ∑ a, (s : AddChar G ℂ) a • c a = 0 := by
@@ -146,7 +146,7 @@ theorem exists_schr_eigen : ∀ {F : Type} [Field F] [NumberField F] (v : Global
       map_add' := fun a b => by simp [add_smul, Finset.sum_add_distrib] }
   have hlamc : Continuous lamH := by
     show Continuous fun a : M → v.adicCompletionIntegers F => ∑ m, (a m : Fv F v) • u m
-    exact continuous_finset_sum _ fun m _ => by fun_prop
+    fun_prop
   have hχ0 : χ 0 = 1 := hker 0 (by simp)
   have hco' : ∀ a b, χ (a + b) = χ a * χ b *
       (ψ (⅟(2 : Fv F v) * ((lamH a).1 ⬝ᵥ (lamH b).2 - (lamH b).1 ⬝ᵥ (lamH a).2)))⁻¹ := fun a b => by
@@ -251,7 +251,7 @@ theorem exists_schr_eigen : ∀ {F : Type} [Field F] [NumberField F] (v : Global
   have hθadd : ∀ w w', θ (w + w') = θ w * θ w' := by
     intro w w'
     ext q
-    rw [AddChar.mul_apply, hθ, hθ, hθ, AddSubgroup.coe_add, hβadd']
+    rw [mul_apply, hθ, hθ, hθ, AddSubgroup.coe_add, hβadd']
   have hθsep : ∀ q, (∀ w, θ w q = 1) → q = 0 := by
     intro q hq
     induction q using QuotientAddGroup.induction_on with | H a => ?_

@@ -241,6 +241,7 @@ theorem evFin_of_at {v w : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorMod
   rw [smul_eq_mul, map_mul, GlobalTheory.LatVac.evFin_liftV, one_mul, map_zero] at this
   exact this
 
+attribute [local instance] Classical.decEq
 
 theorem pure_split (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)) (f : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F κ)
     (φ ρ : ∀ w : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F), (κ → Fv F w) → ℂ) (x : κ → AF F)

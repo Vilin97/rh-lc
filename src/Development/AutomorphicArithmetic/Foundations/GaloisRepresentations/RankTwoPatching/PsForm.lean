@@ -47,7 +47,7 @@ theorem psForm {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a} 
     refine eq_of_unram χ' (χ * absPow k 1) ?_ ?_
     · have he : χ' * (χ * absPow k 1)⁻¹ = (χ * χ'⁻¹)⁻¹ * (absPow k 1)⁻¹ := by
         simp only [mul_inv, inv_inv]
-        exact congrArg (fun x => χ' * x) (mul_comm _ _)
+        rw [← mul_assoc, mul_comm χ' χ⁻¹]
       rw [he]
       exact isUnram_mul (isUnram_inv h1) (isUnram_inv (isUnram_absPow k 1))
     · refine Units.ext ?_

@@ -24,7 +24,6 @@ open scoped commutatorElement
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 open UpperTheory.Zero.LLC UpperTheory.GalStar UpperTheory.GalS PositivityTheory.Rg.DzCount
-open private UpperTheory.Zero.LLC.AbC.dim_one from Development.AutomorphicArithmetic.Foundations.LocalLanglands.LocalCentralUnits.AbConv
 
 namespace UpperTheory.Gal.Int.Row
 
@@ -43,10 +42,36 @@ theorem isTameWD_of_tmW {y : WD h} (k : TmW y) : IsTameWD y := by
 theorem dim_one_of_dvd {y : WD h} (hy : IsIrrWD y) (k : ∀ s t : Weil h, ∃ m : ℕ, y.charPol ⁅s, t⁆ ∣ (X - 1 : ℂ[X]) ^ m) :
     y.lpDim = 1 := by
   obtain ⟨n, b, rfl, hb⟩ := hy
-  have hn : n = 1 := UpperTheory.Zero.LLC.AbC.dim_one b hb fun σ t => by
-    obtain ⟨m, hm⟩ := k σ (ineIncl h t)
+  have hcomm (s t : Weil h) : Commute (b.ρ s) (b.ρ t) := by
+    obtain ⟨m, hm⟩ := k s t
     rw [WD.charPol_mk] at hm
-    exact ⟨m, hm⟩
+    have hone : (b.ρ ⁅s, t⁆) ^ 1 = 1 := pow_eq_one_of_roots (b.semisimple _) fun z hz => by
+      have hr := (hz.dvd hm).eq_zero
+      rw [eval_pow, eval_sub, eval_X, eval_one] at hr
+      rw [pow_one]
+      exact sub_eq_zero.mp (eq_zero_of_pow_eq_zero hr)
+    have he : b.ρ ⁅s, t⁆ = 1 := by simpa only [pow_one] using hone
+    have hst : ⁅s, t⁆ * (t * s) = s * t := by simp [commutatorElement_def, mul_assoc]
+    show b.ρ s * b.ρ t = b.ρ t * b.ρ s
+    rw [← map_mul, ← map_mul, ← hst, map_mul, he, one_mul]
+  let r : Representation ℂ (MonoidHom.mrange b.ρ) (Fin n → ℂ) := (MonoidHom.mrange b.ρ).subtype
+  have : IsMulCommutative (MonoidHom.mrange b.ρ) := .of_setLike_mul_comm fun a ha c hc => by
+    obtain ⟨s, hs⟩ := MonoidHom.mem_mrange.mp ha
+    obtain ⟨t, ht⟩ := MonoidHom.mem_mrange.mp hc
+    rw [← hs, ← ht]
+    exact hcomm s t
+  have : r.IsIrreducible := by
+    have hne : (⊤ : Submodule ℂ (Fin n → ℂ)) ≠ ⊥ :=
+      fun e => top_ne_bot (α := Subrepresentation b.ρ) (Subrepresentation.toSubmodule_injective e)
+    refine { exists_pair_ne := ⟨⊤, ⊥, fun e => hne (congrArg Subrepresentation.toSubmodule e)⟩
+             eq_bot_or_eq_top := ?_ }
+    intro S
+    let T : Subrepresentation b.ρ := ⟨S.toSubmodule, fun g v hv =>
+      S.apply_mem_toSubmodule (b.ρ.mrangeRestrict g) (v := v) hv⟩
+    refine (hb.eq_bot_or_eq_top T).imp ?_ ?_ <;> intro e <;>
+      exact Subrepresentation.toSubmodule_injective
+        (congrArg (fun U : Subrepresentation b.ρ => U.toSubmodule) e)
+  have hn := Representation.IsIrreducible.finrank_eq_one_of_isMulCommutative r
   rw [WD.lpDim_mk]
   simpa using hn
 

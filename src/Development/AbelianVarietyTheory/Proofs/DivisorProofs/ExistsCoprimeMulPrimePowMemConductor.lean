@@ -67,7 +67,7 @@ theorem exists_mem_condQ : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   · intro h
     rcases (Nat.Prime.dvd_mul hl).1 h with h | h
     · exact hM₁ h
-    · obtain ⟨q, -, hq⟩ := (Prime.dvd_finset_prod_iff hl.prime _).1 h
+    · obtain ⟨q, -, hq⟩ := (Prime.dvd_finsetProd_iff hl.prime _).1 h
       exact hN q hq
   · have h3 : (∏ q ∈ Q, (N q : OF E)) ∈ ∏ q ∈ Q, q.asIdeal := Ideal.prod_mem_prod fun q hq => hNq q hq
     have h4 := Ideal.mul_mem_mul h1 h3

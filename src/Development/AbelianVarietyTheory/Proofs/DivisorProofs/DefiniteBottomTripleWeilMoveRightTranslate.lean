@@ -36,8 +36,8 @@ theorem compAt_mt_of_suppAt {e : AE D} (he : infPart D e = 0) (hce : infPart D (
   have e1 : Formalism.L2.Theta.mt V g i j = (e + cA D e) * (Formalism.L2.Theta.mt V g - 1) i j + (1 : Matrix (Fin V.rank) (Fin V.rank) (AE D)) i j := by
     rw [h1, Matrix.sub_apply, sub_add_cancel]
   simp only [compAt, Matrix.map_apply]
-  rw [e1, (infPart D).map_add (f := _), (infPart D).map_mul, (infPart D).map_add (f := _), he, hce, add_zero, zero_mul, (θ τ).map_add (f := _),
-    (θ τ).map_zero, zero_add]
+  rw [e1]
+  simp only [map_add, map_mul, he, hce, add_zero, zero_mul, map_zero, zero_add]
   rcases eq_or_ne i j with rfl | hij
   · simp
   · simp [Matrix.one_apply_ne hij]

@@ -23,7 +23,7 @@ private theorem reps_fg {V : Type} [AddCommGroup V] [Module ℚ V] [Module.Finit
     (hn : 0 < n) : ∃ R : Finset V, R.card ≤ n ^ Module.finrank ℚ V ∧ ∀ u ∈ M, ∃ r ∈ R, ∃ v ∈ M, u = r + n • v := by
   classical
   haveI : Module.Finite ℤ M := Module.Finite.iff_fg.2 hM
-  haveI : IsAddTorsionFree V := IsAddTorsionFree.of_module_rat V
+  haveI : HasUniqueDiv V := HasUniqueDiv.of_module_rat V
   haveI : Module.Free ℤ M := inferInstance
   let b := Module.finBasis ℤ M
   have h1 : LinearIndependent ℤ (fun i => (b i : V)) := b.linearIndependent.map' M.subtype M.ker_subtype
@@ -93,7 +93,7 @@ private theorem reps_latO (S T : HSp D) (LS : Submodule (𝓞 D.host.E) (Fin S.r
       obtain ⟨a, ha, s, hs, t, ht, rfl⟩ := hx
       exact AddSubgroup.subset_closure ⟨1, h1, fun v h => absurd trivial h, a, ha, s, hs, t, ht, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul c x _ hx => rw [map_zsmul]; exact zsmul_mem hx c
   have key : ∀ u ∈ Λ, ∃ x ∈ M, ∃ v ∈ Λ, u = φ x + n • v := fun u hu => by
     induction hu using AddSubgroup.closure_induction with
@@ -247,7 +247,7 @@ private theorem depth_le {k : ℕ} (hk : 0 < k) (h : ∀ l : ℕ, l.Prime → pa
     (mul_ne_zero (D.host.g_prime 0).ne_zero (D.host.g_prime 1).ne_zero) D.host.pde_prime.ne_zero) D.host.pde'_prime.ne_zero)
   refine Nat.le_of_dvd (Nat.pos_of_ne_zero (pow_ne_zero _ hP0)) ?_
   refine (Nat.factorization_prime_le_iff_dvd hk.ne' (pow_ne_zero _ hP0)).1 fun l hl => ?_
-  rw [Nat.factorization_def _ hl, Nat.factorization_pow]
+  rw [Nat.factorization_def _ hl, Nat.factorization_pow, ← Nat.padicValNat_def]
   refine (h l hl).trans (Finset.sup_le fun w hw => ?_)
   obtain ⟨hw, hlw⟩ := Finset.mem_filter.1 hw
   obtain ⟨v, hv, rfl⟩ : ∃ v ∈ G.pl.S0, G.pl.w v = w := by simpa [Places.W0] using hw

@@ -29,8 +29,14 @@ theorem exists_quasiInverse_isogeny : ∀ (K : Type) [Field K] (A B : AbVar K) (
   obtain ⟨h, hh, hfh, hhf⟩ := GlobalTheory.IsogenyQuasiInverse.exists_quasiInverse K A.X B.X B.dim A.ab B.ab hA hB
     f.hom inferInstance n hn hker
   let g : B ⟶ A := Hom.mk (A := B) (B := A) h (h := hh)
-  have e1 : f ≫ g = n • 𝟙 A := hom_ext (by simp [g, hfh])
-  have e2 : g ≫ f = n • 𝟙 B := hom_ext (by simp [g, hhf])
+  have e1 : f ≫ g = n • 𝟙 A := by
+    apply Subtype.ext
+    change (f ≫ g).hom = (n • 𝟙 A).hom
+    simp [g, hfh]
+  have e2 : g ≫ f = n • 𝟙 B := by
+    apply Subtype.ext
+    change (g ≫ f).hom = (n • 𝟙 B).hom
+    simp [g, hhf]
   refine ⟨n, g, hn, ?_, e1, e2⟩
   have hm : IsIsogeny ((n : ℤ) • 𝟙 B) := (GlobalTheory.T.abelianVariety_intCast_smul_isogeny_degree K B n (by exact_mod_cast hn.ne')).1
   rw [natCast_zsmul, ← e2] at hm

@@ -131,7 +131,7 @@ theorem exists_scale : Laws → Laws2 → ∀ (o Ω : Type) [CommRing o] [Field 
     have e₀ : f q = f q₀ := (f₃ _ _).2 ((equiv_iff hB _ _).2 ⟨-z, by
       rw [smul_neg, hz', add_neg_cancel]; rfl, rfl⟩)
     obtain ⟨q', x', hy', hx', hpow, hval⟩ :=
-      (key q₀ (x a) ((f₁ _ _).2 (((f₁ _ _).1 hq₁).trans e₀))).2 n hn hnm rfl
+      (key q₀ (x a) ((f₁ _ _).2 (((f₁ _ _).1 hq₁).trans e₀))).2 n hn hnm (by simp only [q₀, qkMk_y])
     obtain ⟨a', rfl⟩ := xonto x' (hx' w₀ hw₀.1).1
     have := A.isAb.comm
     let X : Multiplicative S.Gam →* (TFK (R := V) F ⟶ A.A) :=

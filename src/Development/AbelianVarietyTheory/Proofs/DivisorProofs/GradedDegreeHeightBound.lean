@@ -214,5 +214,5 @@ private theorem ht_eq {D : D7} (O : Setup D) (x : ToroidalCompactificationData O
 
 end SlopeTestRemainingChoices
 
-open NumberField Formalism.BasicNotions Formalism.MainNotions ReciprocityTheory.GeometryOfNumbersTheory GlobalTheory.CovTop GlobalTheory.CovHt GlobalTheory.Mean4 GlobalTheory.Mean4O GlobalTheory.LieHt GlobalTheory.HeightParts
+open NumberField Formalism.BasicNotions Formalism.MainNotions ReciprocityTheory.GeometryOfNumbersTheory GlobalTheory.CovTop GlobalTheory.CovHt GlobalTheory.Mean4 GlobalTheory.Mean4O GlobalTheory.LieHt
 open GlobalTheory.ShFam GlobalTheory.ShFam.Pad GlobalTheory.LieRead

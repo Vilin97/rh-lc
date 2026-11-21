@@ -9,7 +9,6 @@ open NumberField IsDedekindDomain Matrix Filter Topology
 open GlobalTheory.CuspRep GlobalTheory.PRep Formalism.UG Formalism.BasicNotions GlobalTheory.UnitaryBC Formalism.L2.Host GlobalTheory.LFun UpperTheory.V.Z.Tf.GlobalTraceComparison UpperTheory.V.Z.Tf.GlobalTraceComparison.Cusp
 open UpperTheory.V.Cj.S
 open GroundTheory.Automorphic GroundTheory.Automorphic.AutomorphicForm
-open private kgl_eq loc_comm from Development.AutomorphicArithmetic.AutomorphicVarieties.ConjugateRepresentations.CuspidalSupport.LocComm
 
 private theorem rt_eig {E : Type} [Field E] [NumberField E] [IsCMField E] {a : ℕ} {bad : Set (UpperTheory.V.Cj.S.Pl E)}
     {K K' : Subgroup (GL (Fin a) (Af E))} {W W' : Submodule ℂ (Kinf E a → ℂ)} (hle : K' ≤ K)
@@ -21,7 +20,13 @@ private theorem rt_eig {E : Type} [Field E] [NumberField E] [IsCMField E] {a : �
     rwa [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, map_zero, Module.End.one_apply] at this)
   set kf := GeneralLinearGroup.map (pFin E) k with hkf
   have hmem : ∀ w, GeneralLinearGroup.map (pLoc E w) kf ∈ KGL w (n := a) := fun w => by
-    rw [← kgl_eq]
+    have hGL : GroundTheory.Automorphic.GLnLocal.integralGL (w.adicCompletion E) a =
+        KGL w (n := a) := by
+      change GLint (Fin a) (ValuativeRel.valuation (w.adicCompletion E)).integer =
+        GLint (Fin a) (w.adicCompletionIntegers E).toSubring
+      exact congrArg (GLint (Fin a))
+        (Subring.ext fun x => GroundTheory.Global.mem_valuationInteger_iff w x)
+    rw [← hGL]
     have e : GeneralLinearGroup.map (pLoc E w) kf = Reduction.finAt w k := by
       ext i j : 2
       rfl
@@ -66,8 +71,21 @@ private theorem rt_eig {E : Type} [Field E] [NumberField E] [IsCMField E] {a : �
     rw [← e] at hne ⊢
     refine hw.map (rt E a k') (fun g y => ?_) hne
     change rt E a k' (rt E a (finGL E a (locGL E a w g)) y) = rt E a (finGL E a (locGL E a w g)) (rt E a k' y)
+    have hloc : u * locGL E a w g = locGL E a w g * u := by
+      have hproj (v : Pl E) :
+          GeneralLinearGroup.map (pLoc E v) (u * locGL E a w g) =
+            GeneralLinearGroup.map (pLoc E v) (locGL E a w g * u) := by
+        rw [map_mul (GeneralLinearGroup.map (pLoc E v)) u (locGL E a w g),
+          map_mul (GeneralLinearGroup.map (pLoc E v)) (locGL E a w g) u]
+        by_cases hv : v = w
+        · subst hv
+          rw [hu1, one_mul, mul_one]
+        · rw [pLoc_locGL_of_ne hv, mul_one, one_mul]
+      ext i j : 2
+      exact FiniteAdeleRing.ext _ fun v =>
+        congrArg (fun x : GL (Fin a) (v.adicCompletion E) => x i j) (hproj v)
     have hcm : k' * finGL E a (locGL E a w g) = finGL E a (locGL E a w g) * k' := by
-      rw [hk', mul_assoc, ← map_mul (finGL E a), loc_comm w g hu1, map_mul (finGL E a), ← mul_assoc, ← mul_assoc,
+      rw [hk', mul_assoc, ← map_mul (finGL E a), hloc, map_mul (finGL E a), ← mul_assoc, ← mul_assoc,
         infGL_comm _ (locGL E a w g)]
     rw [← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul (rt E a), ← map_mul (rt E a), hcm]
 

@@ -30,7 +30,8 @@ private theorem l_not_mem_base_prime {l : ℕ} [Fact l.Prime] {L Ω : Type} [Fie
   intro h
   have h1 : ((s.p : ℕ) : 𝓞 (Lp L)) ∈ s.v0.asIdeal := by
     rw [← s.norm_v0_eq_one]
-    exact Ideal.absNorm_mem s.v0.asIdeal
+    simpa [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using
+      Ideal.absNorm_mem s.v0.asIdeal
   have hc : IsCoprime (s.p : 𝓞 (Lp L)) (l : 𝓞 (Lp L)) :=
     ((Nat.coprime_primes s.p_prime Fact.out).2 s.p_ne).cast
   obtain ⟨a, b, hab⟩ := hc

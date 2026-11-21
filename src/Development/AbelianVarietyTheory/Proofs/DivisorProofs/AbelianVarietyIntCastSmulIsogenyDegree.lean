@@ -21,7 +21,7 @@ namespace GlobalTheory.MulIsogeny
 
 theorem bcMap_natCast_smul_id (K : Type) [Field K] (L : Type) [Field L] [Algebra K L] (A : AbVar K) (n : ℕ) :
     bcMap L ((n : ℤ) • 𝟙 A) = (n : ℤ) • 𝟙 (baseChange L A) := by
-  ext1
+  apply Subtype.ext
   simp only [bcMap, mk_hom, zsmul_hom, id_hom, zpow_natCast]
   exact GlobalTheory.MulFiniteFlat.pullback_map_mulA _ A.X n
 

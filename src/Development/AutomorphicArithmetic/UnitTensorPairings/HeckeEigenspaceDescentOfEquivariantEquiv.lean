@@ -189,6 +189,6 @@ theorem UpperTheory.heckeEigenspace_descent_of_equivariant_equiv :
         simp only [sys]
         rw [hhk i j b h1 h2 k P _ a4 a3 a2, map_smul, hΨ, ← hh, h3, hc, mul_smul]
       · rw [map_zero]; exact zero_mem _
-      · intro y z hy hz; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+      · intro y z hy hz; rw [map_add]; exact add_mem hy hz
     · rw [map_zero]; exact zero_mem _
-    · intro y z hy hz; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+    · intro y z hy hz; rw [map_add]; exact add_mem hy hz

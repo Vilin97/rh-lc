@@ -47,7 +47,7 @@ theorem finsum_dc_translate {H : Type} [Group H] (A B K : Subgroup H) (u : H)
   rw [h12]
   apply hF
   rw [DoubleCoset.out_eq']
-  conv_rhs => rw [← DoubleCoset.out_eq' A K q]
+  conv_rhs => rw [← DoubleCoset.out_eq' q]
   rfl
 
 theorem card_eq_of_conj {Γ : Type} [Group Γ] (S T : Subgroup Γ) (v : Γ) (h : ∀ w, w ∈ T ↔ v⁻¹ * w * v ∈ S) :

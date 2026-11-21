@@ -214,6 +214,8 @@ theorem charpoly_rho_eq_map_pol (G : HTGroup p) (P : DPair G) (w : Fin G.m) :
     have := linearIndependent_pow (K := G.F) γ
     rw [hdeg] at this
     exact this
+  letI : Module.Free G.F (G.Fw w) := Module.Free.of_divisionRing G.F (G.Fw w)
+  letI : Module.Flat G.F (G.Fw w) := Module.Flat.of_free
   have hT : LinearIndependent (G.Fw w) (fun i : Fin G.n => (1 : G.Fw w) ⊗ₜ[G.F] (γ ^ (i : ℕ))) :=
     Module.Flat.linearIndependent_one_tmul hli
   have hM : LinearIndependent (G.Fw w) (fun i : Fin G.n => (G.rho w γ) ^ (i : ℕ)) := by

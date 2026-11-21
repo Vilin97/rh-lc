@@ -264,18 +264,24 @@ theorem petAt_mul_le (V : HSp D) (dict : GA D V → Σ k, Frame (U.X k).Ψ r) (h
     {G G₀ : WTZ D.host.E} (hG : Even G.2) (hG₀ : Even G₀.2) {f u : Rul Xo c} (hf : rdU U f ∈ holSub U.X (modelWt U G))
     {B : ℝ} (hB : 0 ≤ B) (hu : ∀ z, homN U x G₀ u z ≤ B) :
     petAt U x V dict (muQ1 V) (G + G₀) (f * u) ≤ B * petAt U x V dict (muQ1 V) G f := by
-  have hfin : eLpNorm (fun q : AutQ V => homN U x G f (dict q.out)) 2 (muQ1 V) ≠ ⊤ := by
+  have hfin : eLpNorm' (fun q : AutQ V => homN U x G f (dict q.out)) 2 (muQ1 V) ≠ ⊤ := by
     have : (fun q : AutQ V => homN U x G f (dict q.out)) =
       lieFacZ Dw x G • fun q : AutQ V => ptN (modelWt U G) (rdU U f) (dict q.out) := rfl
-    rw [this, eLpNorm_const_smul]
+    rw [this, eLpNorm'_const_smul _ (by norm_num)]
     exact ENNReal.mul_ne_top enorm_ne_top
       (petE_ne_top V dict _ (muPart_univ V dict ▸ muPart_univ_le V dict Set.univ) hd hf)
   rw [petAt_eq, petAt_eq, ← ENNReal.toReal_ofReal hB, ← ENNReal.toReal_mul]
-  refine ENNReal.toReal_mono (ENNReal.mul_ne_top ENNReal.ofReal_ne_top hfin)
-    (eLpNorm_le_mul_eLpNorm_of_ae_le_mul (Filter.Eventually.of_forall fun q => ?_) 2)
-  rw [Real.norm_of_nonneg (homN_nonneg _ _ _ _ _), Real.norm_of_nonneg (homN_nonneg _ _ _ _ _),
-    homN_mul U x hG hG₀ _ _ _ (hd _), mul_comm]
-  exact mul_le_mul_of_nonneg_right (hu _) (homN_nonneg _ _ _ _ _)
+  apply ENNReal.toReal_mono (ENNReal.mul_ne_top ENNReal.ofReal_ne_top hfin)
+  have hle : ∀ q : AutQ V, ‖homN U x (G + G₀) (f * u) (dict q.out)‖ ≤ B * ‖homN U x G f (dict q.out)‖ := by
+    intro q
+    rw [Real.norm_of_nonneg (homN_nonneg _ _ _ _ _), Real.norm_of_nonneg (homN_nonneg _ _ _ _ _),
+      homN_mul U x hG hG₀ _ _ _ (hd _), mul_comm]
+    exact mul_le_mul_of_nonneg_right (hu _) (homN_nonneg _ _ _ _ _)
+  have hh := eLpNorm'_le_nnreal_smul_eLpNorm'_of_ae_le_mul
+      (μ := muQ1 V) (c := ⟨B, hB⟩) (Filter.Eventually.of_forall fun q => by exact_mod_cast hle q) (p := 2) (by norm_num)
+  set_option backward.isDefEq.respectTransparency false in
+    rw [ENNReal.smul_def, smul_eq_mul, ENNReal.coe_nnreal_eq] at hh
+  exact hh
 
 end One
 

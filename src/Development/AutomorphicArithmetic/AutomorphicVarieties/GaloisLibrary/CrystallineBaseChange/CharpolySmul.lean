@@ -19,10 +19,6 @@ open NumberField IsDedekindDomain Neutral.B1 Formalism.L2.Host Formalism.Conjuga
 open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.Pst GlobalTheory.LocLanglands GlobalTheory.LocGL GlobalTheory.GalOfCusp Formalism.WeaklyAdmissibleFiltrations
 open scoped Matrix
 
-open private UpperTheory.V.Af.infOf_of_weights UpperTheory.V.Af.exists_over from Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.LevelQ
-open private UpperTheory.V.Af.NewformAutomorphy.ev_not_mem UpperTheory.V.Af.NewformAutomorphy.scale_charpoly
-  UpperTheory.V.Af.NewformAutomorphy.ss_of_tw from Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TemperedLocalComponents.NewformAut
-
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 namespace UpperTheory.V.Br.AutomorphicNewformFromAlmostEverywhere
@@ -67,15 +63,21 @@ private theorem dual_det {Γ k : Type} [Group Γ] [Field k] (r : Γ →* GL (Fin
     DualTw r (Matrix.GeneralLinearGroup.det.comp r) := by
   refine ⟨⟨!![0, 1; -1, 0], !![0, -1; 1, 0], by simp [Matrix.one_fin_two], by simp [Matrix.one_fin_two]⟩, fun s => ?_⟩
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, Matrix.det_fin_two] <;> ring
+  fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two, Matrix.det_fin_two] <;> ring
 
 private theorem ss_tw {Γ k : Type} [Group Γ] [Field k] {n : ℕ} (r : Γ →* GL (Fin n) k) (χ : Γ →* kˣ)
     (h : IsSSRep r) : IsSSRep (tw r χ) := by
-  refine UpperTheory.V.Af.NewformAutomorphy.ss_of_tw _ χ⁻¹ ?_
-  convert h
-  ext s : 2
-  rw [tw_val, tw_val, smul_smul]
-  simp
+  have hinv (W : Submodule k (Fin n → k)) : IsInv (tw r χ) W ↔ IsInv r W := by
+    constructor
+    · intro hW g v hv
+      have hsmul := W.smul_mem ((χ g : k)⁻¹) (hW g v hv)
+      rwa [tw_val, Matrix.smul_mulVec, smul_smul, inv_mul_cancel₀ (Units.ne_zero _), one_smul] at hsmul
+    · intro hW g v hv
+      rw [tw_val, Matrix.smul_mulVec]
+      exact W.smul_mem _ (hW g v hv)
+  intro W hW
+  obtain ⟨W', hW', hcompl⟩ := h W ((hinv W).1 hW)
+  exact ⟨W', (hinv W').2 hW', hcompl⟩
 
 private theorem place_of {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {p : ℕ} [hp : Fact p.Prime]
     {A : ValuationSubring Ω} (hA : A.valuation (p : Ω) < 1) {w : HeightOneSpectrum (𝓞 ℚ)} (hw : (p : 𝓞 ℚ) ∈ w.asIdeal) :
@@ -117,11 +119,21 @@ private theorem cyc_inf {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ �
 private theorem charpoly_smul {k : Type} [Field k] (φ : k →+* ℂ) (M : Matrix (Fin 2) (Fin 2) k) (c : k) (hc : c ≠ 0)
     (B : Multiset ℂ) (h : M.charpoly.map φ = (B.map fun b => X - C b).prod) :
     (c • M).charpoly.map φ = (B.map fun b => X - C (φ c * b)).prod := by
-  have hc' : φ c ≠ 0 := by simpa using hc
-  have := UpperTheory.V.Af.NewformAutomorphy.scale_charpoly φ (c • M) c⁻¹ (inv_ne_zero hc) (B.map (φ c * ·)) (by
-    rw [smul_smul, inv_mul_cancel₀ hc, one_smul, h, Multiset.map_map]
-    simp only [Function.comp_def, map_inv₀, inv_mul_cancel_left₀ hc'])
-  rwa [Multiset.map_map] at this
+  have hcard : B.card = 2 := by
+    simpa only [natDegree_map, Matrix.charpoly_natDegree_eq_dim, Fintype.card_fin,
+      natDegree_multiset_prod_X_sub_C_eq_card] using (congrArg natDegree h).symm
+  obtain ⟨x, y, rfl⟩ := Multiset.card_eq_two.1 hcard
+  rw [Matrix.charpoly_fin_two] at h ⊢
+  simp only [Multiset.insert_eq_cons, Multiset.map_cons, Multiset.map_singleton, Multiset.prod_cons,
+    Multiset.prod_singleton, Polynomial.map_add, Polynomial.map_sub, Polynomial.map_mul, Polynomial.map_pow,
+    map_X, map_C, Matrix.trace_smul, Matrix.det_smul, smul_eq_mul, map_mul, map_pow, Fintype.card_fin] at h ⊢
+  have hzero := congrArg (eval 0) h
+  have hone := congrArg (eval 1) h
+  simp only [eval_add, eval_sub, eval_mul, eval_pow, eval_X, eval_C] at hzero hone
+  have hdet : φ M.det = x * y := by linear_combination hzero
+  have htrace : φ M.trace = x + y := by linear_combination hzero - hone
+  rw [hdet, htrace]
+  simp only [C_mul, C_add]
+  ring
 
 end UpperTheory.V.Br.AutomorphicNewformFromAlmostEverywhere
-

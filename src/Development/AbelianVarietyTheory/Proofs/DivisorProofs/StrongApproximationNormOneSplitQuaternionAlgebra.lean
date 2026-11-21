@@ -153,7 +153,7 @@ theorem Ψ_cont : Continuous (Ψ φ) := by
       fun m => ∑ i, ∑ j, m i j • coords (rat (φ.symm (Matrix.single i j 1)) : DA F a b) := by
     funext m; simp only [Function.comp, Ψ, hc, map_sum, map_smul]
   rw [this]
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   exact (continuous_id.matrix_elem i j).smul continuous_const
 
 theorem Ψ_sub_one (m : Matrix (Fin 2) (Fin 2) (AF F)) : Ψ φ (m - 1) = Ψ φ m - 1 := by

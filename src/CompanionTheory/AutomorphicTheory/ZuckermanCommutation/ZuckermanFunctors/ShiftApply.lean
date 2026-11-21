@@ -272,8 +272,7 @@ theorem decW (S : Steps) (Lb : Lib t) (hk : 1 ≤ k) : ∀ (l : ℕ) {μ : Fin (
         linarith
       have hRep : ∃ R' : Rep k r, R'.IsDS ε ν.1 :=
         Lb.exist k r ε μ ν.1 U.R (h - ((m + 1 : ℕ) : ℝ)) hU ν.2.1 ν.2.2 ht'
-      obtain ⟨R', hR'⟩ := hRep
-      exact ⟨mkU R' hR', hR'⟩
+      exact hRep.elim fun R' hR' => ⟨mkU R' hR', hR'⟩
     choose V hV using hex
     have nr : ∀ {ν : Fin (2 * r + k + 1) → ℝ}, (∀ a, ∃ x : ℕ, x ≤ m + 1 ∧ ν a = μ a + x) →
         IsHCParam ν ∧ GapAtLeast ε ν (h - ((m + 1 : ℕ) : ℝ)) := fun hx =>

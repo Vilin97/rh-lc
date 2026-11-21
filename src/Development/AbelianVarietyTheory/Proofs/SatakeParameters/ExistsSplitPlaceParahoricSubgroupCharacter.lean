@@ -46,7 +46,9 @@ def paraSub (hP : NG.LevelPara J χ s r ξ) :
   carrier := {g | NG.ParaRT s r g}
   one_mem' := by
     have h := (hP.mem 1 (trivOutside_one _)).1 J.one_mem
-    simpa using h
+    change NG.ParaRT s r 1
+    rw [map_one] at h
+    exact h
   mul_mem' := by
     intro g h hg hh
     obtain ⟨x, hx, rfl⟩ := GlobalTheory.SplitLift.exists_trivOutside_loc_eq n s g

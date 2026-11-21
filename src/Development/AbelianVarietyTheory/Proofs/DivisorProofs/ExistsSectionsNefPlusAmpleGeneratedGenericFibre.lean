@@ -30,7 +30,12 @@ namespace GlobalTheory.GenFibreGen
 theorem nefFib_pow : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegral X] (p : X ⟶ Sp k) (D : ℕ), IsArithVar p D → ∀ (L : HermLB p) (n : ℕ), NefFib L → NefFib (L.pow n) := by
   intro k _ X _ p D hX L n hL
   rcases Nat.eq_zero_or_pos n with rfl | hn
-  · refine AmpleTwistNef.nefFib_of_cls_eq ?_ (nefFib_of_isNef (HermLB.isNef_triv (p := p) (D := D)))
+  · have htriv : NefFib (HermLB.triv p) := by
+      intro Z i _ _ κ _ _ _ _
+      exact (interNum_eq_zero_of_cls_eq_zero κ _
+        (fun _ => LB.isLB_pull (LB.isLB_triv X) i) 0
+        (by rw [CechPic.cls_pull (LB.isLB_triv X)]; exact map_zero _)).ge
+    refine AmpleTwistNef.nefFib_of_cls_eq ?_ htriv
     erw [CechPic.cls_lbPow L.isLB 0, zero_smul]
     rfl
   · have := hX.finite

@@ -60,11 +60,11 @@ theorem main : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridDa
     · rw [map_mul, (atPl_spec w 1).1, mul_zero]
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_mul, map_mul, (atPl_spec w 1).2, map_sum, map_sum]
-      by_cases hQ : Q = w
-      · subst hQ
-        rw [Pi.single_eq_same, mul_one, Finset.sum_eq_single Q (fun b _ hb => by
-          rw [(atPl_spec b 1).2, Pi.single_eq_of_ne (Ne.symm hb)]) (fun h => absurd hw h),
-          (atPl_spec Q 1).2, Pi.single_eq_same]
-      · rw [Pi.single_eq_of_ne hQ, mul_zero]
+        by_cases hQ : Q = w
+        · subst hQ
+          rw [Pi.single_eq_same, mul_one, Finset.sum_eq_single Q (fun b _ hb => by
+            rw [(atPl_spec b 1).2, Pi.single_eq_of_ne (Ne.symm hb)]) (fun h => absurd hw h),
+            (atPl_spec Q 1).2, Pi.single_eq_same]
+        · rw [Pi.single_eq_of_ne hQ, mul_zero]
 
 end GlobalTheory.IdemAtPl

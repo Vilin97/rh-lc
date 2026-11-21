@@ -44,10 +44,10 @@ theorem heisO_zero (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (u : WO S T) :
 theorem isModel_zero {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (p : Place D k) (ψ : AddChar (AF D.host.F) ℂ) {S T : HSp D} {Y Y' : Type} [Fintype Y] [DecidableEq Y] [Fintype Y']
     [DecidableEq Y'] (FS : Frame k S.rank Y') (FT : Frame k T.rank Y) :
-    p.IsModel ψ FS FT (0 : SB (Matrix Y Y' k) →ₗ[ℂ] (WO S T → ℂ)) where
+    p.IsModel ψ FS FT (0 : SB (Matrix Y Y' k) →ₗ[ℂ] (WO S T → ℂ)) := {
   theta _ := isThetaFunO_zero ψ S T
   trans _ _ _ _ := by simp [heisO_zero]
-  modul _ _ _ _ _ := by simp [heisO_zero]
+  modul _ _ _ _ _ := by simp [heisO_zero] }
 
 theorem model_ne_zero {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (p : Place D k) {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {S T : HSp D} {Y Y' : Type} [Fintype Y]
@@ -67,7 +67,18 @@ theorem exists_adapted_frame : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k
   obtain ⟨gl, h1, h2⟩ := GlobalTheory.T.exists_GL_embedding_unitaryAdelic_splitPlace_basis D k q S Y F.β F.γ F.βγ F.γβ
   let α : GlobalTheory.FinPl.Frame q S Y := ⟨F.β, F.γ, F.βγ, F.γβ, gl, h1, h2⟩
   obtain ⟨Λ, hΛ, hα, -⟩ := GlobalTheory.FinPl.FrameLat.exists_lat D k q S Y α M hM
-  haveI := hΛ
+  have : Λ.IsFullLattice k := by
+    refine { toIsLattice := hΛ, span_eq_top := eq_top_iff.mpr fun x _ => ?_ }
+    obtain ⟨m, s, c, hs, hc, -⟩ := GlobalTheory.FinPl.FrameLat.exists_gen (p := q) hM
+    have hx := congrArg (F.γ *ᵥ ·) (hc (F.β *ᵥ x))
+    simp only [Matrix.mulVec_mulVec, F.γβ, Matrix.one_mulVec, Matrix.mulVec_sum,
+      Matrix.mulVec_smul] at hx
+    rw [hx]
+    refine Submodule.sum_mem _ fun l _ => Submodule.smul_mem _ _ (Submodule.subset_span ?_)
+    apply (hα _).2
+    change (fun i => q.sec ((F.β *ᵥ (F.γ *ᵥ fun a => q.pr (incA D (s l a)))) i)) ∈ _
+    rw [Matrix.mulVec_mulVec, F.βγ, Matrix.one_mulVec]
+    exact GlobalTheory.FinPl.FrameLat.sec_inc_mem (p := q) (hs l)
   obtain ⟨g, hg⟩ := GlobalTheory.LatPair.exists_smul_lat (GlobalTheory.LatPair.stdLat k Y) Λ
   have hgg : g.1 * (g⁻¹).1 = 1 := by rw [← Matrix.GeneralLinearGroup.coe_mul, mul_inv_cancel, Matrix.GeneralLinearGroup.coe_one]
   have hgg' : (g⁻¹).1 * g.1 = 1 := by rw [← Matrix.GeneralLinearGroup.coe_mul, inv_mul_cancel, Matrix.GeneralLinearGroup.coe_one]

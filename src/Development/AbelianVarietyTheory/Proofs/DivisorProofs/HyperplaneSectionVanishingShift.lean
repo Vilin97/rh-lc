@@ -25,7 +25,7 @@ theorem vanishFrom_cut {Y : Scheme.{0}} {L : LB Y} (hL : L.IsLB) (F : Y.Modules)
   intro j hj q hq
   have hS := Twist.shortExact_map (Twist.isLB_lbZPow hL j) (shortExact_cutComplex F hL t)
   have e := Twist.twistZAddIso F hL (show (-1 : ℤ) + j = j - 1 by ring)
-  have h₁ := h (j - 1) (by omega) (q + 1) q.succ_pos
+  letI := h (j - 1) (by omega) (q + 1) q.succ_pos
   exact cohOn.subsingleton₃ hS ⊤ q (h j (by omega) q hq)
     (cohOn.mapIso ℤ ⊤ (q + 1) e).injective.subsingleton
 

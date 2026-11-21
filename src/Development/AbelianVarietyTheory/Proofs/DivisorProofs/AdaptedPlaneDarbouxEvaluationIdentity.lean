@@ -92,8 +92,12 @@ theorem pol_map_ei : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
     obtain ⟨u, u', hu, hu', hr, hcu, hcu1, hcu2⟩ := GlobalTheory.T.darboux_adapted_plane_evaluation F E σ B n d d₁ r s r' s' i₀ i₁ X W W₁ H' M₁ hd hB hX hW hH co h1 h2 h3 ε γ hγ
     refine ⟨(cw co u').2, hcu2, -Complex.I, fun x => ?_⟩
     have e := hε u u' hu hu' hr x
-    rw [hcu, hcu1] at e
-    dsimp only at e
+    have hcu_f : (cw co u).1 = γ := congrArg Prod.fst hcu
+    have hcu_s : (cw co u).2 = 0 := congrArg Prod.snd hcu
+    simp only [hcu_f, hcu_s] at e
+    have heq : dH (cw co u').1 (cw co u').2 ⇑f₀ x = dH 0 (cw co u').2 ⇑f₀ x :=
+      congrArg (fun a => dH a (cw co u').2 ⇑f₀ x) hcu1
+    rw [heq] at e
     linear_combination Complex.I * e + dH γ 0 ⇑f₀ x * Complex.I_sq
   have P1cl : ∀ (a b : Fin n × Fin d₁ → mixedEmbedding.mixedSpace F), ∀ g ∈ M₁.Pol B.ψ B.emb,
       ∀ g₁ : SInf F (Fin n × Fin d₁), ⇑g₁ = dH a b ⇑g → g₁ ∈ M₁.Pol B.ψ B.emb := by

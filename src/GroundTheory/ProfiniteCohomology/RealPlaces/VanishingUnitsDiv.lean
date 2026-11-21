@@ -13,6 +13,8 @@ open CategoryTheory NumberField IsDedekindDomain GroundTheory.Global DirectSum
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 theorem exists_two_mem_place (K : FiniteSubfield) :
     ∃ v : HeightOneSpectrum (𝓞 K.1), ((2 : ℕ) : 𝓞 K.1) ∈ v.asIdeal := by
   have hnu : ¬ IsUnit ((2 : ℕ) : 𝓞 K.1) := by
@@ -110,7 +112,7 @@ section Div
 variable (h2S : ∀ v : HeightOneSpectrum (𝓞 K.1), ((2 : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
 
 
-set_option maxHeartbeats 2000000 in
+set_option maxHeartbeats 8000000 in
 include h2S in
 theorem exists_realUnitsRes_two_eq
     (t : ∀ w : {v : InfinitePlace K.1 // v.IsReal}, cohomology (realUnits w) 2) :

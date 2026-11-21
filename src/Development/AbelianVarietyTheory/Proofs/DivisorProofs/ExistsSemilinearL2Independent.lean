@@ -80,20 +80,29 @@ theorem exists_semilinear_L2_independent (hS : Out.SecBaseChangeSt) (U : ∀ σ 
   have hhol : ∀ f : GlobalTheory.AllWt.cuspW Xo c U G,
       rdU (U σ) (f : Rul Xo c) ∈ holSub (U σ).X (GlobalTheory.AllWt.modelWt (U σ) G) := fun f =>
     (GlobalTheory.AllWt.mem_cuspW.1 f.2).2 σ hσ
-  have heq : ∀ P : FDSec (U σ).X,
+  have heq : ∀ P : holSub (U σ).X (GlobalTheory.AllWt.modelWt (U σ) G),
       eLpNorm (onQ V (adel V dict mu P)) 2 (muQ1 V) =
         GlobalTheory.AllWt.petE V dict (muQ1 V) (GlobalTheory.AllWt.modelWt (U σ) G) P := by
     intro P
     unfold GlobalTheory.AllWt.petE
-    refine eLpNorm_congr_norm_ae (Filter.Eventually.of_forall fun q => ?_)
-    show ‖mu q.out * P (dict q.out).1 (dict q.out).2‖ = _
-    rw [norm_mul, hmu1, one_mul, Real.norm_of_nonneg (GlobalTheory.AllWt.ptN_nonneg _ _ _), GlobalTheory.AllWt.ptN,
-      pnorm_eq_of_unit _ _ _ _ (hunit q.out)]
+    have hp : ∀ q : AutQ V, ‖mu q.out * (P : FDSec (U σ).X) (dict q.out).1 (dict q.out).2‖ =
+        GlobalTheory.AllWt.ptN (GlobalTheory.AllWt.modelWt (U σ) G) P (dict q.out) := by
+      intro q
+      rw [norm_mul, hmu1, one_mul, GlobalTheory.AllWt.ptN,
+        pnorm_eq_of_unit _ _ _ _ (hunit q.out)]
+    have hf := aesm_of_holSub hm _ P.2
+    have hg := hf.norm.congr (Filter.Eventually.of_forall hp)
+    have hh := eLpNorm_congr_norm_ae (p := 2) hf hg (Filter.Eventually.of_forall fun q => by
+      rw [Real.norm_of_nonneg (GlobalTheory.AllWt.ptN_nonneg _ _ _)]
+      exact hp q)
+    rw [eLpNorm_eq_eLpNorm' (by norm_num) (by simp) hg] at hh
+    simpa using hh
   have hmem : ∀ P : holSub (U σ).X (GlobalTheory.AllWt.modelWt (U σ) G),
       MemLp (onQ V (adel V dict mu (P : FDSec (U σ).X))) 2 (muQ1 V) := fun P =>
-    ⟨aesm_of_holSub hm _ P.2, by
-      rw [heq]
-      exact lt_top_iff_ne_top.2 (GlobalTheory.AllWt.petE_ne_top V dict (muQ1 V) prob_le_one hd P.2)⟩
+    by
+      change eLpNorm _ _ _ < ⊤
+      rw [heq P]
+      exact lt_top_iff_ne_top.2 (GlobalTheory.AllWt.petE_ne_top V dict (muQ1 V) prob_le_one hd P.2)
   let L : holSub (U σ).X (GlobalTheory.AllWt.modelWt (U σ) G) →ₗ[ℂ] Lp ℂ 2 (muQ1 V) :=
     { toFun := fun P => (hmem P).toLp _
       map_add' := fun P Q => by

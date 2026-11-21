@@ -75,7 +75,7 @@ structure Bundle (D : D7) (O : Obj D) (c : ℝ) : Type 1 where
 
 variable {𝒜 : FamClass} (σ : RawSel Bundle 𝒜)
 
-def sel : Formalism.L2.TSel 𝒜 := fun Fm hc => ⟨Fm.x1, fun x hx _ i => (σ Fm hc x hx i).R⟩
+def sel : Formalism.L2.TSel 𝒜 := fun Fm hc => (⟨Fm.x1, fun x hx _ i => (σ Fm hc x hx i).R⟩ : Formalism.L2.TSelF Fm)
 
 def selS : SelS 𝒜 (sel σ) := fun Fm hc x hx _ i => (σ Fm hc x hx i).S
 

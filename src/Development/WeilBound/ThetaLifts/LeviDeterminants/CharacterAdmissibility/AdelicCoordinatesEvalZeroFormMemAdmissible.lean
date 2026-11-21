@@ -114,20 +114,26 @@ theorem box_adm (κ κ' : Type) [Fintype κ] [Fintype κ'] : ∀ φ₂ ∈ schA 
     rw [GlobalTheory.SchwartzBox.boxFun_smul_right, map_smul, ← hT]
     rfl
 
-theorem axB (hψ : IsStd ψ) : AxB (adeleClass F) ψ where
-  schr κ _ := (GlobalTheory.T.theta_distribution_heisenberg_invariant F κ ψ hψ.1 (isStd_ne_one hψ) hψ.2.1).1
-  ne κ _ := by
+theorem axB (hψ : IsStd ψ) : AxB (adeleClass F) ψ := by
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · intro κ _
+    exact (GlobalTheory.T.theta_distribution_heisenberg_invariant F κ ψ hψ.1 (isStd_ne_one hψ) hψ.2.1).1
+  · intro κ _
     obtain ⟨φ, h, h0⟩ := GlobalTheory.SchANonzero.exists_mem_schA_ne_zero F κ
     exact ⟨φ, h, fun e => h0 (congrFun e 0)⟩
-  ev0 κ _ := adelicCoordinatesEvalZeroForm_mem_admissible κ
-  res κ₁ κ _ _ j hj φ hφ := GlobalTheory.RestrSchA.mem_schA_comp_extend F j hj φ hφ
-  res_adm κ₁ κ _ _ j hj l hl g hg := by
+  · intro κ _
+    exact adelicCoordinatesEvalZeroForm_mem_admissible κ
+  · intro κ₁ κ _ _ j hj φ hφ
+    exact GlobalTheory.RestrSchA.mem_schA_comp_extend F j hj φ hφ
+  · intro κ₁ κ _ _ j hj l hl g hg
     obtain ⟨T, hT⟩ := hl _ (GlobalTheory.RestrSchA.sb_comp_extend F hj hg)
     refine ⟨T.comp (GlobalTheory.RestrSchA.restrS F hj), fun f => ?_⟩
     rw [ContinuousLinearMap.comp_apply, ← hT]
     exact congrArg l (funext fun y => GlobalTheory.RestrSchA.pureA_extend F hj f g y)
-  box κ κ' _ _ := GlobalTheory.SchwartzBox.boxFun_mem_schA F κ κ'
-  box_adm κ κ' _ _ := box_adm κ κ'
+  · intro κ κ' _ _
+    exact GlobalTheory.SchwartzBox.boxFun_mem_schA F κ κ'
+  · intro κ κ' _ _
+    exact box_adm κ κ'
 
 theorem axDelta_of (h : LagLine) (hψ : IsStd ψ) : AxDelta (adeleClass F) ψ := by
   intro κ _ l hl hinv

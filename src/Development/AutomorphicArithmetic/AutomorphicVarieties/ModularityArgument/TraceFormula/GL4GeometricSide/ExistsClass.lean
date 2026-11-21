@@ -53,6 +53,7 @@ theorem UpperTheory.V.Z.GSp4Splitting.petEx :
     rw [← e, GlobalTheory.CompanionTheory.OnlyStab.thetaA_invol] at e2
     exact (hv _ x).trans e2
   have ev : ∀ φ ψ, (B + (B.comp T).compl₂ T) φ ψ = B φ ψ + B (T φ) (T ψ) := fun _ _ => rfl
+  simp only [IsPet]
   refine ⟨B + (B.comp T).compl₂ T, fun φ ψ => ?_, fun φ hφ => ?_, fun X φ ψ => ?_, fun g φ ψ φ' ψ' h h' => ?_,
     fun φ ψ φ' ψ' h h' => ?_⟩
   · rw [ev, ev, map_add (f := _), hc, hc]

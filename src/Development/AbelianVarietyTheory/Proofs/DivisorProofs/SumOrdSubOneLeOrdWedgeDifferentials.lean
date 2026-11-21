@@ -91,6 +91,7 @@ theorem sum_ord_sub_one_le_formOrd_dOn : ∀ {k : Type} [Field k] [PerfectField 
     (congrArg WithZero.log (Ring.ordFrac_irreducible (K := X.functionField) ht)).trans
       (WithZero.log_exp 1)
   have horda : 0 ≤ E.ord (Units.mk0 _ ha0) := (E.ord_nonneg_iff _).2 a.2
+  change (∑ j, E.ord (u j) - 1) ≤ E.formOrd (formOf U (gen_mem hy) (dOn p z))
   rw [IsFormOrd.formOrd_eq hz0 ⟨ω, hω, f, hf, rfl⟩]
   simp only [f, E.ord_mul, E.ord_inv, hsum, hordt]
   omega

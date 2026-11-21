@@ -214,6 +214,7 @@ private theorem exists_etaleChart_comap_restrictIdeal_eq_coordIdeal (p : X ⟶ S
   refine ⟨V, d, EtaleChart.ofCoords (h ≫ p) V v hEt, hVU, hV, hyV, ?_, ?_, ?_⟩
   · intro j
     refine (hcoordEq j).trans ((hψX j).trans ?_)
+    change (h.appLE W V e).hom ((c.restrictCompat hWU).coord j) = _
     rw [EtaleChart.coord_restrict c hWU j]
     have h5 := congrArg (fun φ : Γ(X, U) ⟶ Γ(Y, V) => φ.hom (c.coord j))
       (appLE_eq_map_comp_appLE h hWU e hVU)

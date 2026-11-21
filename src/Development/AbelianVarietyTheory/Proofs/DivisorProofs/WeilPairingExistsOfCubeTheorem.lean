@@ -33,17 +33,17 @@ def ev (x : A →ₐ[R] D) (z : B →ₐ[R] D) : A ⊗[R] B →ₐ[R] D :=
   Algebra.TensorProduct.lift x z fun _ _ => Commute.all _ _
 
 theorem ev_comp_left (x : A →ₐ[R] D) (z : B →ₐ[R] D) : (ev x z).comp Algebra.TensorProduct.includeLeft = x :=
-  AlgHom.ext fun a => by simp
+  AlgHom.ext fun a => by simp [ev]
 
 theorem ev_comp_right (x : A →ₐ[R] D) (z : B →ₐ[R] D) : (ev x z).comp Algebra.TensorProduct.includeRight = z :=
-  AlgHom.ext fun a => by simp
+  AlgHom.ext fun a => by simp [ev]
 
 theorem tensorToHom_ev (f : A →ₐ[R] D) (g : B →ₐ[R] E) (u : A ⊗[R] B) (φ : CartierDual R E) :
     tensorToHom R D E (ev (Algebra.TensorProduct.includeLeft.comp f) (Algebra.TensorProduct.includeRight.comp g) u) φ =
       f (tensorToHom R A B u (transpose g.toLinearMap φ)) := by
   induction u with
   | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, hs, ht]
-  | tmul a b => simp
+  | tmul a b => simp [ev, tensorToHom_apply]
 
 theorem tensorToHom_mul_right (u v : A ⊗[R] B) (φ ψ : CartierDual R B) :
     tensorToHom R A (B ⊗[R] B)
@@ -57,7 +57,7 @@ theorem tensorToHom_mul_right (u v : A ⊗[R] B) (φ ψ : CartierDual R B) :
   | tmul a b =>
     induction v with
     | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, mul_add, hs, ht]
-    | tmul a' b' => simp [mul_smul, smul_comm (φ.ofConv b)]
+    | tmul a' b' => simp [ev, tensorToHom_apply, mul_smul, smul_comm (φ.ofConv b)]
 
 theorem tensorToHom_mul_left [Module.Finite R B] [Module.Projective R B] (u v : A ⊗[R] B) (φ : CartierDual R B) :
     tensorToHom R (A ⊗[R] A) B
@@ -77,9 +77,9 @@ theorem tensorToHom_mul_left [Module.Finite R B] [Module.Projective R B] (u v : 
             pair R B B t (b ⊗ₜ b') • (a ⊗ₜ a') := fun t => by
         induction t with
         | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, add_smul, hs, ht]
-        | tmul f g => simp [← smul_tmul', smul_smul, mul_comm]
+        | tmul f g => simp [tensorToHom_apply, ← smul_tmul', smul_smul, mul_comm]
       rw [key, pair_comul_tmul]
-      simp
+      simp [ev, tensorToHom_apply]
 
 end Values
 
@@ -115,9 +115,10 @@ def IsBimul.hom : CartierDual R B →ₐc[R] A where
       induction v with
       | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, hs, ht]
       | tmul a b =>
-        have : φ.ofConv (algebraMap R B (Coalgebra.counit a) * b) = Coalgebra.counit a * φ.ofConv b := by
-          rw [← Algebra.smul_def, map_smul, smul_eq_mul]
-        simpa [mul_comm] using this.symm
+        change Coalgebra.counit (φ.ofConv b • a) =
+          φ.ofConv (algebraMap R B (Coalgebra.counit a) * b)
+        rw [← Algebra.smul_def, map_smul, map_smul]
+        exact mul_comm _ _
     exact (k u).trans (congrArg φ.ofConv e')
   map_comp_comul := LinearMap.ext fun φ => by
     have e := h.mul_left ((A ⊗[R] A) ⊗[R] B)
@@ -135,7 +136,9 @@ def IsBimul.hom : CartierDual R B →ₐc[R] A where
         ev (AlgHom.id R A) (1 : WithConv (B →ₐ[R] A)).ofConv v := fun v => by
       induction v with
       | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, hs, ht]
-      | tmul a b => simp [Algebra.smul_def, mul_comm]
+      | tmul a b =>
+        change (Coalgebra.counit (R := R) b) • a = a * algebraMap R A (Coalgebra.counit b)
+        rw [Algebra.smul_def, mul_comm]
     exact (k u).trans e'
   map_mul' φ ψ := by
     have e := h.mul_right (A ⊗[R] (B ⊗[R] B)) Algebra.TensorProduct.includeLeft

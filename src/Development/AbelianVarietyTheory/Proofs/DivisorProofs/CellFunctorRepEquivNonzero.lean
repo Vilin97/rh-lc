@@ -207,6 +207,7 @@ private theorem sigmaC_mk_scalar : ∀ {k : Type} [Field k] [ValuativeRel k] [To
   simp only [← Units.val_mul]
   congr 1
   rw [relDeltaHalf_apply, relDeltaHalf_apply, Fintype.prod_bool, Fintype.prod_bool]
+  set_option backward.isDefEq.respectTransparency false in
   simp only [deltaHalf_apply, Fintype.prod_bool, relEmb_apply, det_leviEmb, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, hs,
     e0, d00, d01, det_relProj_tf, map_one, mul_one, one_mul, map_mul, MonoidHom.mul_apply, Int.cast_zero, zero_div,
     absPow_zero, MonoidHom.one_apply, Int.cast_one, Int.cast_neg, Int.cast_natCast]

@@ -60,9 +60,9 @@ theorem exists_at_evI_piInf_eq (F E : Type) [Field F] [NumberField F] [Field E] 
       TensorProduct.zero_tmul, TensorProduct.zero_tmul, add_zero]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, Finset.sum_eq_single w]
-    · rw [map_add (f := _), hp, hp, Pi.single_eq_same, Pi.single_eq_same, map_one, mul_one, hab]
-    · intro v _ hv
-      rw [map_add (f := _), hp, hp, Pi.single_eq_of_ne hv.symm, Pi.single_eq_of_ne hv.symm, map_zero, zero_mul, zero_mul, add_zero]
-    · simp
+      · rw [map_add (f := _), hp, hp, Pi.single_eq_same, Pi.single_eq_same, map_one, mul_one, hab]
+      · intro v _ hv
+        rw [map_add (f := _), hp, hp, Pi.single_eq_of_ne hv.symm, Pi.single_eq_of_ne hv.symm, map_zero, zero_mul, zero_mul, add_zero]
+      · simp
 
 end GlobalTheory.ThK

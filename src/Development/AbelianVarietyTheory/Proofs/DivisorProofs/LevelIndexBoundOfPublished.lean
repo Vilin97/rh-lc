@@ -36,7 +36,7 @@ theorem card_levelQuotientGroup_le_prod_absNorm_pow_sq (Pg : Finset (Pl E)) (r :
     Nat.card (G0 Pg r) ≤ (∏ PP ∈ Pg, Ideal.absNorm PP.asIdeal) ^ (r ^ 2) := by
   rw [Nat.card_pi, ← Finset.prod_pow, ← Finset.prod_coe_sort Pg]
   refine Finset.prod_le_prod' fun PP _ => ?_
-  exact card_GL_le (kP PP.1) r
+  simpa only [Ideal.absNorm_eq_natCard] using card_GL_le (kP PP.1) r
 
 theorem prod_absNorm_le (Pg : Finset (Pl E)) {N : ℕ} (hN : N ≠ 0) (h : ∀ PP ∈ Pg, ((N : ℕ) : 𝓞 E) ∈ PP.asIdeal) :
     ∏ PP ∈ Pg, Ideal.absNorm PP.asIdeal ≤ N ^ Module.finrank ℚ E := by

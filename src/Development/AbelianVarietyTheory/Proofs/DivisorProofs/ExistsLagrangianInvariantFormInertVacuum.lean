@@ -66,7 +66,7 @@ theorem acts_unique {κ : Type} [Fintype κ] (v : Pl (F := F)) (T : ((κ → AF 
   have hev : (fun i => evFin F v (GlobalTheory.LatVac.liftV v (y i))) = y := funext fun i => GlobalTheory.LatVac.evFin_liftV v (y i)
   rw [hev] at hy
   have hRx : R (fun i => GlobalTheory.LatVac.liftV v (y i)) = R 0 := by
-    have := (hR φ hφ).1 0 (fun i => GlobalTheory.LatVac.liftV v (y i)) (GlobalTheory.VacAny.at_pi fun i => GlobalTheory.LatVac.at_liftV v (y i))
+    have := (hR φ hφ).1 0 (fun i => GlobalTheory.LatVac.liftV v (y i)) (fun u hu => funext fun i => GlobalTheory.LatVac.at_liftV v (y i) u hu)
     simpa using this
   rw [hRx] at hy
   exact mul_right_cancel₀ hR0 hy
@@ -112,6 +112,7 @@ theorem exists_lagr_inv_vac : ∀ (F E : Type) [Field F] [NumberField F] [Field 
   have hiso : ∀ x ∈ Λ, ∀ x' ∈ Λ, x.1 ⬝ᵥ x'.2 - x'.1 ⬝ᵥ x.2 = 0 := by
     rintro _ ⟨u, hu, rfl⟩ _ ⟨u', hu', rfl⟩
     have h0 := GlobalTheory.T.symplecticForm_eq_zero_of_lagrangianAtPlace σ G.V'.J G.W v C hLag (-1) u u' hu hu'
+    change symp (cA σ) (-1) (incM F G.V'.J) (incM F G.W.J) u u' = 0 at h0
     rw [co.form] at h0
     have h1 := congrArg (evFin F v) h0
     set_option synthInstance.maxHeartbeats 100000 in

@@ -87,7 +87,7 @@ theorem locSmall_locTop (hm : R.m = m2 + 2) (hc : cst.Ok) (hs : cst.sharp = true
       have h0 : Formalism.L2.Col.cOf R (m2 + 1) = 0 := by unfold Formalism.L2.Col.cOf; omega
       refine (GlobalTheory.SymLevelDatum.locSmall_phiGS X.E X.K P.1 _ _ _ _ _ _ _ R.m _ _ 0 _ hq0 (Ideal.absNorm_mem _)
         ?_ ?_ ?_ ?_ ?_).2.2 σ _
-      · rw [h0, rank_add_mul_eq_penultimate_rank hm, add_zero]
+      · simp only [h0, rank_add_mul_eq_penultimate_rank hm, add_zero]
       · rw [h0, hN, hN, hm, show m2 + 2 = m2 + 1 + 1 from rfl, add_mul (m2 + 1) 1]; omega
       · rw [hN]; omega
       · rw [hN]; omega

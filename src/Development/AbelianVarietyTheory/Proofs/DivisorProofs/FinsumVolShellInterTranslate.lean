@@ -63,9 +63,9 @@ theorem _root_.GlobalTheory.PureMatch.ShellVolume.finsum_vol_shell_inter_transla
     intro m
     unfold _root_.GlobalTheory.GLDoubling.cell _root_.GlobalTheory.SplitFlip.shellSet
     congr 1
-    ext : 1
-    rw [_root_.GlobalTheory.GLDoubling.val_torusElt, _root_.GlobalTheory.SplitFlip.diagGL_val]
-    simp
+    apply Units.ext
+    simp only [_root_.GlobalTheory.GLDoubling.val_torusElt, _root_.GlobalTheory.SplitFlip.diagGL_val,
+      Units.val_zpow_eq_zpow_val]
   simp only [hshell]
   have hSopen : IsOpen S := _root_.GlobalTheory.PureMatch.ShellVolume.isOpen_translate u u'
   have hSeq : S = (fun x => u⁻¹ * x * u'⁻¹) '' (K : Set (GL (Fin a) k)) := by

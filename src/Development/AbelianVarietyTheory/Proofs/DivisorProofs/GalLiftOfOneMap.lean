@@ -143,7 +143,7 @@ theorem exists_ev (ev : H →ₗ[ℂ] P) {κ : ℂ} (hκ : ‖κ‖ = 1) {n : �
     rw [map_smul, map_sum, ← inv_smul_smul₀ hκ0 θ, hθ]
   simp only [map_smul]
 
-def evL {I : Type} {M : I → Type} [∀ τ, AddCommGroup (M τ)] [∀ τ, Module ℂ (M τ)] (e : H →ₗ[ℂ] MultilinearMap ℂ M P)
+def evL {I : Type} {M : I → Type} [∀ τ, AddCommGroup (M τ)] [∀ τ, Module ℂ (M τ)] (e : H →ₗ[ℂ] MultilinearMap (RingHom.id ℂ) M P)
     (v : ∀ τ, M τ) : H →ₗ[ℂ] P where
   toFun y := e y v
   map_add' x y := by rw [map_add (f := _)]; rfl

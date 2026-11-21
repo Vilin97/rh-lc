@@ -27,6 +27,7 @@ theorem word_col {K A : Type} [Field K] [AddCommGroup A] [Module K A] {N n t : �
     rw [MultilinearMap.map_sum]
   refine Finset.sum_congr rfl fun e _ => ?_
   rw [MultilinearMap.map_smul_univ, hΦ]
+  rfl
 
 theorem linSubst_coordP {K A : Type} [Field K] [AddCommGroup A] [Module K A] {N n B t : ℕ}
     (mul : (Fin N → K) →ₗ[K] Module.End K A) (w : Matrix (Fin N) (Fin n) K) (c : A →ₗ[K] K)
@@ -38,8 +39,8 @@ theorem linSubst_coordP {K A : Type} [Field K] [AddCommGroup A] [Module K A] {N 
         ∏ i, (X (β i, g i) : MvPolynomial (Fin B × Fin n) K)) =
       ∑ g : Fin t → Fin n, ∑ e : Fin t → Fin N, C (c (word mul (fun i => Pi.single (e i) 1) x)) *
         ((∏ i, C (w (e i) (g i))) * ∏ i, (X (β i, g i) : MvPolynomial (Fin B × Fin n) K)) from ?_]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [linSubst, coordP, map_sum, map_mul, aeval_C, map_prod, aeval_X, algebraMap_eq]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      simp only [linSubst, coordP, map_sum, map_mul, aeval_C, map_prod, aeval_X, algebraMap_eq]
     simp_rw [Fintype.prod_sum, Finset.mul_sum, ← Finset.prod_mul_distrib]
     exact Finset.sum_comm
   · refine Finset.sum_congr rfl fun g _ => ?_
@@ -71,12 +72,15 @@ theorem GlobalTheory.HSShort.colCoeff_mem : ∀ (F A : Type) [Field F] [NumberFi
     obtain ⟨z, hz, hzeq⟩ := tr _ κ.add y hy
     exact ⟨z, hz, hzeq.trans hyeq⟩
   choose Y hY hYeq using key
-  choose s hs using fun g : Fin κ.t → Fin S.n =>
-    prod_X_monomial (K := F) (fun i => (κ.β i, g i))
+  have hex : ∀ g : Fin κ.t → Fin S.n, ∃ s,
+      (∏ i, (X (κ.β i, g i) : MvPolynomial (Fin _ × Fin S.n) F)) = monomial s 1 := by
+    intro g
+    exact GlobalTheory.HSShort.CoeffInt.prod_X_monomial (K := F) (fun i => (κ.β i, g i))
+  choose s hs using hex
   have hcoef : ∀ i, AddMonoidAlgebra.coeff (linSubst S.w (coordP S.mul (c i) κ.β (κ.x : A))) m =
       ∑ g, b.repr (Y g) i * (if s g = m then 1 else 0) := by
     intro i
-    rw [linSubst_coordP, coeff_sum]
+    rw [GlobalTheory.HSShort.CoeffInt.linSubst_coordP, coeff_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
     rw [coeff_C_mul, hs g, coeff_monomial, ← hYeq g, hco]
   simp_rw [hcoef, Finset.sum_smul]

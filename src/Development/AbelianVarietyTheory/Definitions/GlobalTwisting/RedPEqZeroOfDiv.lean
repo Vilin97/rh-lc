@@ -492,7 +492,33 @@ theorem exists_liftFr {d : Deco E n ST SG} (hd : d.Ok) (w : SG) : ∃ f, IsLiftF
     · replace e : f x = r • s • y := e
       rw [map_smul, e, smul_smul r s, ← algebraMap_smul E (r * s), smul_smul, inv_mul_cancel₀ h0, one_smul]
   have hsurj : Function.Surjective f := by
-    rw [← LinearMap.range_eq_top, eq_top_iff, ← hd.lat.span_eq_top, Submodule.span_le]
+    have hspan : Submodule.span E (d.N : Set (Sp E n)) = ⊤ := by
+      let W := Submodule.span E (d.N : Set (Sp E n))
+      change W = ⊤
+      by_contra h
+      let e : Sp E n ≃ₗ⋆[E] Sp E n := starLinearEquiv E
+      let g : Sp E n →ₗ[E] Module.Dual E W :=
+        (LinearMap.domRestrict' W).comp ((hStd E n).comp e.toLinearMap)
+      have hdim : finrank E (Module.Dual E W) < finrank E (Sp E n) := by
+        rw [Subspace.dual_finrank_eq]
+        exact Submodule.finrank_lt h
+      obtain ⟨x, hx, hx₀⟩ :=
+        Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+      have hsmul (a : E) : a • e x ∈ d.N := by
+        rw [← hd.uni, dualBasic_mem_dual]
+        intro y hy
+        apply hStd_mem_one_symm
+        have hxy : hStd E n (e x) y = 0 :=
+          congrArg (fun f : Module.Dual E W => f ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+        simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
+      let i : E →ₗ[𝓞 E] d.N :=
+        ((LinearMap.toSpanSingleton E _ (e x)).restrictScalars (𝓞 E)).codRestrict d.N hsmul
+      let : Module.Finite (𝓞 E) d.N := Module.Finite.iff_fg.mpr hd.lat.fg
+      let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
+        smul_left_injective E (fun hzero => hx₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
+      exact RingOfIntegers.not_isField E
+        (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+    rw [← LinearMap.range_eq_top, eq_top_iff, ← hspan, Submodule.span_le]
     intro y hy
     obtain ⟨x, -, e⟩ := h3 y (le_locP _ _ hy)
     exact ⟨x, e⟩

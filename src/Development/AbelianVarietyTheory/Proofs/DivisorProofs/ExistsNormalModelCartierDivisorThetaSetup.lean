@@ -133,9 +133,10 @@ theorem glue : ∀ (g n : ℕ) (o : Type) [CommRing o] (ζ : o) (F : SFam g n ζ
     exact e ▸ M.top_le_preimage_pt hV (x := spMap γ w) trivial
   refine Exists.elim (GlobalTheory.Poinc.TraitGlue.exists_effCartier_of_orders M.Z hN V
     (fun A a => ∃ (T : Trait F) (ξ : Sp T.V ⟶ M.Z) (γ : Ω →+* FractionRing T.V), A = toA T ξ ∧
-      jK T.V ≫ ξ = spMap γ ≫ M.pt ∧ T.y = spMap γ ≫ y₀ ∧ (a : ℝ) = ι * φ.evalZ T.β) ?_ ?_ ?_) fun D ⟨hD, hord⟩ => ?_
+      jK T.V ≫ ξ = spMap γ ≫ M.pt ∧ T.y = spMap γ ≫ y₀ ∧ (a : ℝ) = ι * φ.evalZ T.β) ?_ ?_ ?_) fun D hDhord => ?_
   rotate_right
-  · refine ⟨D, hD, fun T ξ γ h₁ h₂ => ?_⟩
+  · obtain ⟨hD, hord⟩ := hDhord
+    refine ⟨D, hD, fun T ξ γ h₁ h₂ => ?_⟩
     obtain ⟨k, hk⟩ := hloc (ξ (closedPoint T.V))
     obtain ⟨a, ha, -⟩ := hk T ξ γ h₁ h₂ specializes_rfl
     exact ⟨a, ha, hord (toA T ξ) a (hgen T ξ γ h₁) ⟨T, ξ, γ, rfl, h₁, h₂, ha⟩⟩

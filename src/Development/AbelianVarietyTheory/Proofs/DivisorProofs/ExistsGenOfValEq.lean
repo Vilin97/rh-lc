@@ -130,9 +130,9 @@ theorem Ch.of_formEq (hA : IsAbelianScheme A) (hL : L.IsLB) {φ : K → ((A ⊗ 
   obtain ⟨a, ha⟩ := AbPackage.exists_unit_ratio hL hσ' ht'
   obtain ⟨b, hb⟩ := exists_unit_base hA a
   intro Z q w J hJ
-  rw [ha _ _ _ _ hJ, ha _ _ _ _ hJ, hvt _ _ _ _ hJ, hvt _ _ _ _ hJ, h Z q w J hJ, hb, hb,
-    Category.assoc, ← Over.comp_left, tr_snd]
-  exact mul_left_comm _ _ _
+  rw [ha _ _ _ _ hJ, ha _ _ _ _ hJ, hvt _ _ _ _ hJ, hvt _ _ _ _ hJ, h Z q w J hJ, hb, hb]
+  have htr : tr y ≫ snd A T = snd A T := by simp [tr]
+  simp only [Category.assoc, ← Over.comp_left, htr, mul_left_comm]
 
 theorem Ch.mul {φ : K → ((A ⊗ T).left ⟶ X)} {ε : K → ℤ} {φ' : K' → ((A ⊗ T).left ⟶ X)} {ε' : K' → ℤ}
     {σ : LB.Gen (LB.LinComb L φ ε)} {σ' : LB.Gen (LB.LinComb L φ' ε')} {y : T ⟶ A} {u u' : Γ(T.left, ⊤)ˣ}
@@ -144,8 +144,9 @@ theorem Ch.mul {φ : K → ((A ⊗ T).left ⟶ X)} {ε : K → ℤ} {φ' : K' �
 theorem Ch.comp {φ : K → ((A ⊗ T).left ⟶ X)} {ε : K → ℤ} {σ : LB.Gen (LB.LinComb L φ ε)} {y y' : T ⟶ A}
     {u u' : Γ(T.left, ⊤)ˣ} (h : Ch σ y u) (h' : Ch σ y' u') : Ch σ (y * y') (u * u') := by
   intro Z q w J hJ
-  rw [tr_mul, Over.comp_left, ← Category.assoc, h' Z _ w J hJ, h Z q w J hJ, Category.assoc,
-    ← Over.comp_left, tr_snd, map_mul]
+  rw [tr_mul, Over.comp_left, ← Category.assoc, h' Z _ w J hJ, h Z q w J hJ]
+  have htr : tr y ≫ snd A T = snd A T := by simp [tr]
+  simp only [Category.assoc, ← Over.comp_left, htr, map_mul]
   ac_rfl
 
 theorem Ch.one {φ : K → ((A ⊗ T).left ⟶ X)} {ε : K → ℤ} (σ : LB.Gen (LB.LinComb L φ ε)) :
@@ -210,6 +211,7 @@ theorem exists_gen_of_val_eq (hL : L.IsLB) {E F : Scheme.{0}} (π : E ⟶ F) (hF
         exact hψ
       · simp only [J, if_neg hψ]
         exact (exists_chart hL (ψ z)).choose_spec
+    set_option synthInstance.maxHeartbeats 200000 in
     have hj : ∀ (g : Z ⟶ E), g z ∈ π ⁻¹ᵁ (L.pull φ).U j → (fun k : PUnit => J (g ≫ (π ≫ φ))) = j := by
       intro g hg
       funext k

@@ -156,7 +156,8 @@ private theorem prim_case (hR : Rec) (Ω : Type) [Field Ω] [Algebra ℚ Ω] [Is
       rw [shT_congr _ δ (F' := f * l) (fun A => over_lev A l f m hD.pos)] at hc
       exact hc.trans (IsDiscreteValuationRing.addVal_le_iff_dvd.mpr hza)
   · push_neg at hex
-    rw [exc Ω l c.O h2 _ hex ?_, Module.length_bot]
+    set_option synthInstance.maxHeartbeats 200000 in
+      rw [exc Ω l c.O h2 _ hex ?_, Module.length_bot]
     · exact zero_le
     · intro A hA g hg
       rw [hαg g (hχ A hA g hg)]

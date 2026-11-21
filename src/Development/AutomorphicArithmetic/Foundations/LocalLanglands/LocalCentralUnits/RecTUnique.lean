@@ -20,12 +20,13 @@ variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAl
 
 private theorem par_of_laws {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLocalArtin h a}
     {rc : IrrGL (k := w.adicCompletion E) → WD h} (L : LawsT a ha rc) {y : IrrGL (k := w.adicCompletion E)}
-    (hc : y.IsCusp) (hG : Good y) (hd : DZ y) : Par a y (rc y) where
-  irr := L.cusp y hc
-  dim := L.dim y
-  tame := L.depth y hG hd
-  central ω hω := L.central y ω hG hω
-  type := (typeIff E Ω A w h rc).1 L.type y
+    (hc : y.IsCusp) (hG : Good y) (hd : DZ y) : Par a y (rc y) := by
+  exact
+    { irr := L.cusp y hc
+      dim := L.dim y
+      tame := L.depth y hG hd
+      central ω hω := L.central y ω hG hω
+      type := (typeIff E Ω A w h rc).1 L.type y }
 
 end UpperTheory.Zero.LLC
 

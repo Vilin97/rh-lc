@@ -28,6 +28,8 @@ namespace GlobalTheory.SplitSatLoc
 section Local
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
 
+local notation3 "L⁺" => NumberField.maximalRealSubfield L
+
 def rtHom (n : ℕ) (W : Type) [AddCommGroup W] [Module ℂ W] : GAf L n →* Module.End ℂ (GAf L n → W) where
   toFun x := NG.rt L n x
   map_one' := LinearMap.ext fun f => funext fun g => by simp [NG.rt]
@@ -78,6 +80,8 @@ end Local
 
 section Key
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
+
+local notation3 "L⁺" => NumberField.maximalRealSubfield L
 
 def locAct (n : ℕ) (W : Type) [AddCommGroup W] [Module ℂ W] (s : SplitPlace L)
     (c : s.v.adicCompletion L⁺ ≃+* s.w.adicCompletion L) (e : GL (Fin n) (s.v.adicCompletion L⁺) →* GAf L n) :

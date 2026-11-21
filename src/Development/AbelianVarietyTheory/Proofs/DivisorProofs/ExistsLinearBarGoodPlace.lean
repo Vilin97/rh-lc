@@ -94,15 +94,21 @@ theorem exists_isLinBar_at : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Typ
     ((GlobalTheory.LatVac.locCo G.M'.co v).comp uT) ((GlobalTheory.LatVac.locCo G.M'.co v).comp uM)
     (fun Y Y' => by
       simp only [AddMonoidHom.comp_apply]
-      rw [locCo_form', hsymp _ _ (hT Y).1 (hT Y').1, (hT Y).2.1, (hT Y').2.1]
+      rw [locCo_form']
+      unfold GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA incM
+      rw [hsymp _ _ (hT Y).1 (hT Y').1, (hT Y).2.1, (hT Y').2.1]
       simp)
     (fun z z' => by
       simp only [AddMonoidHom.comp_apply]
-      rw [locCo_form', hsymp _ _ (hM z).1 (hM z').1, hcoM, hcoM]
+      rw [locCo_form']
+      unfold GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA incM
+      rw [hsymp _ _ (hM z).1 (hM z').1, hcoM, hcoM]
       simp)
     (fun Y z => by
       simp only [AddMonoidHom.comp_apply]
-      rw [locCo_form', hsymp _ _ (hT Y).1 (hM z).1, (hT Y).2.1, (hT Y).2.2, (hM z).2.2, hcoM]
+      rw [locCo_form']
+      unfold GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA incM
+      rw [hsymp _ _ (hT Y).1 (hM z).1, (hT Y).2.1, (hT Y).2.2, (hM z).2.2, hcoM]
       simp)
     (fun w => by
       obtain ⟨u, hu, rfl⟩ := locCo_surj' G.M'.co v w
@@ -137,7 +143,9 @@ theorem exists_isLinBar_at : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Typ
     subst hY
     rw [map_zero, zero_add] at e1 ⊢
     show ι φ₁ (coAt G t x) = _ * ι φ (coAt G t x)
-    rw [e1, GlobalTheory.VacIndic.psi_of_at B.ψ (at_symp' _ _ _ x (uM z) hx), hsymp x (uM z) hx (hM z).1, hx0, hcoM,
+    rw [e1, GlobalTheory.VacIndic.psi_of_at B.ψ (at_symp' _ _ _ x (uM z) hx)]
+    conv_rhs => unfold GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA incM
+    rw [hsymp x (uM z) hx (hM z).1, hx0, hcoM,
       (hM z).2.2]
     have h2 := congrFun (hmu z φ hφ) (coAt G t x)
     simp only [AddMonoidHom.comp_apply] at h2
