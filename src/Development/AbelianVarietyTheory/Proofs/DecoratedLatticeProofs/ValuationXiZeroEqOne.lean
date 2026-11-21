@@ -80,19 +80,7 @@ theorem exists_orthSum {S A B : HSp D} (o : OrthDec S A B) {LA : Lat A} {LB : La
   refine ⟨LA.map fA ⊔ LB.map fB, ⟨⟨(hA.1.fg.map _).sup (hB.1.fg.map _), ?_⟩, fun y => ⟨fun hy x hx => ?_, fun h => ?_⟩⟩,
     fun v y => ⟨fun hy => ⟨rat_mulVec_mem _ (fun x hx => ((hmem x).1 hx).1) hy,
       rat_mulVec_mem _ (fun x hx => ((hmem x).1 hx).2) hy⟩, fun h => ?_⟩⟩
-  · rw [eq_top_iff]
-    intro y _
-    have key : ∀ {C : HSp D} (m : Matrix (Fin S.rank) (Fin C.rank) D.host.E) (LC : Lat C), IsSelfDualC C LC →
-        (∀ x ∈ LC, m *ᵥ x ∈ LA.map fA ⊔ LB.map fB) → ∀ z, m *ᵥ z ∈ Submodule.span D.host.E
-          ((LA.map fA ⊔ LB.map fB : Lat S) : Set (Fin S.rank → D.host.E)) := by
-      intro C m LC hC hm z
-      have hz : z ∈ Submodule.span D.host.E (LC : Set (Fin C.rank → D.host.E)) := by rw [hC.1.span_eq_top]; trivial
-      have : Submodule.span D.host.E (LC : Set (Fin C.rank → D.host.E)) ≤ Submodule.comap (mulVecLin m)
-          (Submodule.span D.host.E ((LA.map fA ⊔ LB.map fB : Lat S) : Set (Fin S.rank → D.host.E))) :=
-        Submodule.span_le.2 fun x hx => Submodule.subset_span (hm x hx)
-      exact this hz
-    rw [hsum y]
-    exact add_mem (key _ LA hA hiA _) (key _ LB hB hiB _)
+  · exact (Submodule.IsLattice.of_fg D.host.E ((hA.1.fg.map fA).sup (hB.1.fg.map fB))).linearIndepOn
   · obtain ⟨_, ⟨a, ha, rfl⟩, _, ⟨b, hb, rfl⟩, rfl⟩ := Submodule.mem_sup.1 hx
     obtain ⟨c, hc⟩ := (hA.2 _).1 ((hmem y).1 hy).1 a ha
     obtain ⟨d, hd⟩ := (hB.2 _).1 ((hmem y).1 hy).2 b hb
@@ -108,8 +96,11 @@ theorem exists_orthSum {S A B : HSp D} (o : OrthDec S A B) {LA : Lat A} {LB : La
     · have := h _ (hiB b hb)
       have e2 : star (o.iB *ᵥ b) ⬝ᵥ S.gram *ᵥ y = star b ⬝ᵥ B.gram *ᵥ (o.qB *ᵥ y) := pair_iA o.symm b y
       rwa [dsum_eq, e2, ← dsum_eq] at this
-  · have e : y = o.jA *ᵥ (o.pA *ᵥ y) + o.jB *ᵥ (o.pB *ᵥ y) := by
-      rw [mulVec_mulVec, mulVec_mulVec, ← add_mulVec, o.sum_eq_one, one_mulVec]
+  · have hs : o.jA * o.pA + o.jB * o.pB = 1 := by
+      simp only [OrthDec.jA, OrthDec.jB, OrthDec.pA, OrthDec.pB, rat, ← Matrix.map_mul,
+        ← Matrix.map_add _ (map_add (incA D)), o.iA_qA_add, Matrix.map_one _ (map_zero _) (map_one _)]
+    have e : y = o.jA *ᵥ (o.pA *ᵥ y) + o.jB *ᵥ (o.pB *ᵥ y) := by
+      rw [mulVec_mulVec, mulVec_mulVec, ← add_mulVec, hs, one_mulVec]
     rw [e]
     exact add_mem (rat_mulVec_mem _ hiA h.1) (rat_mulVec_mem _ hiB h.2)
 

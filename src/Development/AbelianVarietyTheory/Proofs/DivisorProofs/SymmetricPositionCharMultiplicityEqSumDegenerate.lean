@@ -223,7 +223,8 @@ def tailHom (F : Type) [Field F] (r k : ℕ) : tailUnip F r k →* Multiplicativ
     (fun x hx y hy i j h => by
       obtain ⟨h1, h2⟩ := h
       have hij : i ≠ j := fun e => by rw [e] at h1; omega
-      rw [Units.val_mul, mul_apply, Finset.sum_eq_add i j hij, hx.2 i h2, hy.2 j (by omega), one_mul, mul_one, add_comm]
+      rw [Units.val_mul, Matrix.mul_apply, Finset.sum_eq_add i j hij, hx.2 i h2, hy.2 j (by omega),
+        one_mul, mul_one, add_comm]
       · rintro l _ ⟨hli, hlj⟩
         have a1 : l.val ≠ i.val := fun e => hli (Fin.ext e)
         have a2 : l.val ≠ j.val := fun e => hlj (Fin.ext e)

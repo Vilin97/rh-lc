@@ -52,10 +52,10 @@ theorem mulSub_open {p : ℕ} {O : Type} [CommRing O] [IsDomain O] [IsDiscreteVa
   let f : (s → O) →ₗ[O] M := Fintype.linearCombination O (fun i : s => (i : M))
   have hfc : Continuous f := by
     show Continuous fun v : s → O => ∑ i, v i • (i : M)
-    exact continuous_finset_sum _ fun i _ => (continuous_apply i).smul continuous_const
+    exact continuous_finsetSum _ fun i _ => (continuous_apply i).smul continuous_const
   have hfs : Function.Surjective f := by
     rw [← LinearMap.range_eq_top, Fintype.range_linearCombination, Subtype.range_coe_subtype,
-      Finset.setOf_mem, hs]
+      Finset.setOfPred_mem, hs]
   have hq : Topology.IsQuotientMap f :=
     (hfc.isClosedMap).isQuotientMap hfc hfs
 
@@ -156,12 +156,12 @@ theorem isOpen_integers {l : ℕ} [Fact l.Prime] (LL : Formalism.BasicNotions.Lo
   (GlobalTheory.LitGood.litGoodO l LL).2.2.2.2
 
 theorem elem : ReciprocityTheory.ChartRestriction.T2.Elem where
-  padicInt := padicInt_coeff
-  mulSub := @fun _ _ _ _ _ _ _ _ _ _ _ hM hO _ ha => mulSub_open hM hO ha
-  contQuot := fun h T hT => contAction_quotient h T hT
-  swapCob := fun D x t c hc hcz => pr_eq_zero_of_coboundary D x t c hc hcz
-  shapeEquiv := fun Hc F Hc' F' d e h => quotShape_of_equiv Hc F Hc' F' d e h
-  memOL := fun LL x => mem_integers_iff_norm_le_one LL x
-  openOL := fun LL => isOpen_integers LL
+  padicInt := @padicInt_coeff
+  mulSub := @mulSub_open
+  contQuot := @contAction_quotient
+  swapCob := @pr_eq_zero_of_coboundary
+  shapeEquiv := @quotShape_of_equiv
+  memOL := @mem_integers_iff_norm_le_one
+  openOL := @isOpen_integers
 
 end GlobalTheory.LocElem

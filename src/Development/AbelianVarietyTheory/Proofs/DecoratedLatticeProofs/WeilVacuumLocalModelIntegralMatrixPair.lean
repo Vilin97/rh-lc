@@ -69,7 +69,18 @@ theorem om_sum_scale_eq : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : H
       rintro _ ⟨γ, rfl⟩ w
       exact (congrArg norm (hf.quasi γ w)).trans (by rw [norm_mul, hψ.2.1, one_mul]))
   have hn : nrm2 μ 𝓕 (c' • f) = 1 := hc' μ 𝓕 hμ.1 hμ.2.1 hμ.2.2
-  have hcf := GlobalTheory.WeilVacMove.isTheta_smul c' hf
+  have hcf : IsThetaFunO ψ S T (c' • f) := {
+    quasi γ w := by
+      rw [Pi.smul_apply, Pi.smul_apply, hf.quasi, smul_eq_mul, smul_eq_mul, mul_left_comm]
+    level := by
+      obtain ⟨U, hU, h1⟩ := hf.level
+      refine ⟨U, hU, fun u hu h0 => ?_⟩
+      funext w
+      have e1 := congrFun (h1 u hu h0) w
+      unfold heisO at e1 ⊢
+      rw [Pi.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul, mul_left_comm, e1]
+    cont := hf.cont.const_smul c'
+    smooth k L h1 h2 w := contDiff_const.mul (hf.smooth k L h1 h2 w) }
   have h1 : ω (g, h) (c' • f) = ((r : ℂ) * c) • ∑ u ∈ R, heisO ψ S T u (c' • f) := by
     rw [map_smul, hom, smul_comm, Finset.smul_sum]
     simp only [heisO_smul]

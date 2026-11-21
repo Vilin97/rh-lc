@@ -106,8 +106,9 @@ variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 
 variable {F : Type} [CommRing F]
 
-theorem intLift_of_mem (v : HeightOneSpectrum (𝓞 L⁺)) (y : v.adicCompletion L⁺)
-    (h : y ∈ v.adicCompletionIntegers L⁺) : intLift v y = ⟨y, h⟩ := by
+theorem intLift_of_mem (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L)))
+    (y : v.adicCompletion (maximalRealSubfield L))
+    (h : y ∈ v.adicCompletionIntegers (maximalRealSubfield L)) : intLift v y = ⟨y, h⟩ := by
   unfold intLift
   rw [dite_eq_left h]
 

@@ -65,7 +65,7 @@ theorem incl_eq_mul [StarRing E] (hc : CMData F E) (v : HeightOneSpectrum (𝓞 
     change star ((t' : E) * (a : E) + (t : E) * star (a : E)) = (t' : E) * (a : E) + (t : E) * star (a : E)
     rw [ht', star_add, star_mul', star_mul', star_star, star_star, add_comm])
   have hint : IsIntegral ℤ b₀ := by
-    rw [← isIntegral_algebraMap_iff , hb₀]
+    rw [← isIntegral_algebraMap_iff (B := E), hb₀]
     exact RingOfIntegers.isIntegral_coe _
   let b : 𝓞 F := ⟨b₀, hint⟩
   have hb : algebraMap (𝓞 F) (𝓞 E) b = t' * a + t * a' := RingOfIntegers.ext hb₀

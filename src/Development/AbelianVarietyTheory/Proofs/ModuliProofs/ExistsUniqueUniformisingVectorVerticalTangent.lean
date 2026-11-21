@@ -67,22 +67,23 @@ theorem differentiableAt_val (z : Fin g → ℂ) (O : A.left.Opens) (f : Γ(A.le
   exact hD.differentiableAt (hO.mem_nhds h)
 
 theorem ptDer_fderiv (z w : Fin g → ℂ) :
-    PtDer (u.ex z).left (fun O f => fderiv ℂ (fun z' => valAt' (u.ex z').left O f) z w) where
-  add O h f f' := by
+    PtDer (u.ex z).left (fun O f => fderiv ℂ (fun z' => valAt' (u.ex z').left O f) z w) := by
+  constructor
+  · intro O h f f'
     have e : (fun z' => valAt' (u.ex z').left O (f + f')) =
         (fun z' => valAt' (u.ex z').left O f) + fun z' => valAt' (u.ex z').left O f' := by
       funext z'
       exact valAt'_add' _ _ _ _
     rw [e, fderiv_add (differentiableAt_val u z O f h) (differentiableAt_val u z O f' h)]
     rfl
-  mul O h f f' := by
+  · intro O h f f'
     have e : (fun z' => valAt' (u.ex z').left O (f * f')) =
         (fun z' => valAt' (u.ex z').left O f) * fun z' => valAt' (u.ex z').left O f' := by
       funext z'
       exact valAt'_mul_of_top_le_preimage_open _ _ _ _
     rw [e, fderiv_mul (differentiableAt_val u z O f h) (differentiableAt_val u z O f' h)]
     simp only [add_apply, smul_apply, smul_eq_mul]
-  res O O' hle h f := by
+  · intro O O' hle h f
     have hev : (fun z' => valAt' (u.ex z').left O' (resG A.left hle f)) =ᶠ[nhds z]
         fun z' => valAt' (u.ex z').left O f := by
       filter_upwards [(u.hol O' (resG A.left hle f)).1.mem_nhds h] with z' hz'

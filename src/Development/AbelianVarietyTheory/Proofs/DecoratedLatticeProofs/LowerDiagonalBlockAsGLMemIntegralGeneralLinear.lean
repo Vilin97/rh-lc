@@ -30,7 +30,7 @@ theorem isIntM_neg {m n : Type} {M : Matrix m n k} (hM : IsIntM M) : IsIntM (-M)
 theorem isIntM_zero {m n : Type} : IsIntM (0 : Matrix m n k) := fun _ _ => zero_mem _
 
 theorem isIntM_one {n : Type} [DecidableEq n] : IsIntM (1 : Matrix n n k) := fun i j => by
-  rw [one_apply]; split_ifs
+  rw [Matrix.one_apply]; split_ifs
   exacts [one_mem _, zero_mem _]
 
 theorem isIntM_fromBlocks_iff {a b c d : Type} {P : Matrix a c k} {Q : Matrix a d k} {R : Matrix b c k}
@@ -146,7 +146,7 @@ theorem nmat_mem {u : Matrix A D k} (hu : IsIntM u) : nmat u ∈ parahoric k A D
 theorem mtor_eq_dg (ϖ : kˣ) (e : D → ℤ) : mtor (A := A) ϖ e = dg A (torusElt k D ϖ e) := by
   ext1
   rw [mtor, val_torusElt, val_dg, val_torusElt]
-  ext (i | i) (j | j) <;> simp [diagonal_apply, one_apply]
+  ext (i | i) (j | j) <;> simp [diagonal_apply, Matrix.one_apply]
 
 end GlobalTheory.ParHeckeSource
 

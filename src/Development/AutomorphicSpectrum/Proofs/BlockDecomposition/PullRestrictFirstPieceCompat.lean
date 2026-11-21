@@ -27,7 +27,7 @@ variable {R R' : Type} [CommRing R] [CommRing R'] {C C' : Type 1} [Category.{0} 
 
 section Cuts
 
-variable {d : ℕ} (E : Frame Φ (d + 1)) (E' : Frame Φ' (d + 1)) (e : E.D ⟶ m.G.obj E'.D)
+variable {d : ℕ} (E : Frame (Φ := Φ) (d + 1)) (E' : Frame (Φ := Φ') (d + 1)) (e : E.D ⟶ m.G.obj E'.D)
   (he : m.Fr E E' e) (hρ : ∀ T, Function.Injective (m.ρ T)) (Q : Poly Φ) (Q' : Poly Φ')
 
 theorem le_cover_restrict_compat {c : R'} {a : IdF Φ.A} {a' : IdF Φ'.A} (h : m.LeC c a a') :
@@ -47,7 +47,7 @@ theorem pull_restrict_first_piece_compat (c : R') {a b : IdF Φ.A} {a' b' : IdF 
   have h := CrystallineSemistableComparison.P.prism μ₁ μ₂ (eta m E E' e he hρ Q Q') (fun T x => rfl) j x
   exact (CrystallineSemistableComparison.P.pull_comp _ _ j x).1.symm.trans (h.trans (CrystallineSemistableComparison.P.pull_comp _ _ j x).1)
 
-def alpha {d : ℕ} {E : Frame Φ (d + 1)} (Q : Poly Φ) (a b : IdF Φ.A) : Pt.U E ⋙ sq a b ⟶ Cut.P0 Q ⋙ Cut.U E ⋙ sq a b :=
+def alpha {d : ℕ} {E : Frame (Φ := Φ) (d + 1)} (Q : Poly Φ) (a b : IdF Φ.A) : Pt.U E ⋙ sq a b ⟶ Cut.P0 Q ⋙ Cut.U E ⋙ sq a b :=
   Functor.whiskerRight (Cut.jNat (E := E) Q) (sq a b)
 
 theorem alpha_τ (c : R') {a b : IdF Φ.A} {a' b' : IdF Φ'.A} (ha : m.LeC c a a') (hb : m.LeC c b b') (X : Pt E')

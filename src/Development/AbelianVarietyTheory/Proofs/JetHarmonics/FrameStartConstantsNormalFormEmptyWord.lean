@@ -27,11 +27,8 @@ private lemma prod_ofFn_mul_prod_ofFn_eq_one {A : Type} [Ring A] :
     have hrest : (List.ofFn fun i : Fin n => f i.succ).prod *
         (List.ofFn fun i : Fin n => g i.succ).prod = 1 :=
       prod_ofFn_mul_prod_ofFn_eq_one _ _ (fun i => h i.succ) (fun i j => hc i.succ j.succ)
-    have hcomm : Commute (List.ofFn fun i : Fin n => f i.succ).prod (g 0) := by
-      refine Commute.list_prod_left _ _ ?_
-      intro b hb
-      obtain ⟨i, rfl⟩ := List.mem_ofFn.mp hb
-      exact hc i.succ 0
+    have hcomm : Commute (List.ofFn fun i : Fin n => f i.succ).prod (g 0) :=
+      Commute.list_prod_left _ _ (List.forall_mem_ofFn_iff.mpr fun i => hc i.succ 0)
     calc f 0 * (List.ofFn fun i : Fin n => f i.succ).prod *
           (g 0 * (List.ofFn fun i : Fin n => g i.succ).prod)
         = f 0 * ((List.ofFn fun i : Fin n => f i.succ).prod * g 0) *
@@ -51,11 +48,8 @@ private lemma levelConstants_commute {A : Type} [Ring A] [Algebra ℂ A] {r : �
 
 open MeasureTheory in
 private lemma commute_prod_ofFn {A : Type} [Ring A] {n : ℕ} (a : A) (f : Fin n → A)
-    (h : ∀ i, Commute a (f i)) : Commute a (List.ofFn f).prod := by
-  refine Commute.list_prod_right _ _ ?_
-  intro b hb
-  obtain ⟨i, rfl⟩ := List.mem_ofFn.mp hb
-  exact h i
+    (h : ∀ i, Commute a (f i)) : Commute a (List.ofFn f).prod :=
+  Commute.list_prod_right _ _ (List.forall_mem_ofFn_iff.mpr h)
 
 
 open MeasureTheory in

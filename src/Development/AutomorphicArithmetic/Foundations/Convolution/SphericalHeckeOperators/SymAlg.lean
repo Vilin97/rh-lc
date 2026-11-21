@@ -7,8 +7,10 @@ public import Development.AutomorphicArithmetic.Foundations.Convolution.Spherica
 open MeasureTheory GroundTheory.Automorphic GroundTheory.Automorphic.Spherical GroundTheory.Automorphic.GLnLocal GroundTheory.Automorphic.Iwasawa UpperTheory.ConvolutionTheory.H
 
 theorem UpperTheory.ConvolutionTheory.H.symAlg :
-    ∀ (n l : ℕ) (y : LaurentRing n), symSum y ∈ symmetricLaurent n ∧ bc l (symSum y) = symSum (bc l y) ∧
-      (∀ p ∈ symmetricLaurent n, symSum (y * p) = symSum y * p) ∧ (y ∈ symmetricLaurent n → bc l y ∈ symmetricLaurent n) ∧
+    ∀ (n l : ℕ) (y : LaurentRing n),
+      symSum y ∈ symmetricLaurent (n := n) ∧ bc l (symSum y) = symSum (bc l y) ∧
+      (∀ p ∈ symmetricLaurent (n := n), symSum (y * p) = symSum y * p) ∧
+      (y ∈ symmetricLaurent (n := n) → bc l y ∈ symmetricLaurent (n := n)) ∧
       ∀ z : Fin n → ℂˣ, evalAt z (bc l y) = evalAt (z ^ l) y := by
   intro n l y
   have hb : ∀ (a : Fin n → ℤ) (c : ℂ), bc l (AddMonoidAlgebra.single a c : LaurentRing n) = AddMonoidAlgebra.single ((l : ℤ) • a) c := by
@@ -22,11 +24,11 @@ theorem UpperTheory.ConvolutionTheory.H.symAlg :
   refine ⟨fun τ => ?_, ?_, fun p hp => ?_, fun hy σ => ?_, fun z => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [symSum, map_sum]
-    simp only [permAct_permAct]
-    exact Fintype.sum_equiv (Equiv.mulLeft τ) _ _ fun σ => rfl
+      simp only [permAct_permAct]
+      exact Fintype.sum_equiv (Equiv.mulLeft τ) _ _ fun σ => rfl
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [symSum, symSum, map_sum]
-    exact Finset.sum_congr rfl fun σ _ => hc σ y
+      exact Finset.sum_congr rfl fun σ _ => hc σ y
   · rw [symSum, symSum, Finset.sum_mul]
     exact Finset.sum_congr rfl fun σ _ => by rw [map_mul, hp σ]
   · rw [← hc, hy σ]

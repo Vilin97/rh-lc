@@ -107,9 +107,9 @@ theorem fractionalIdealCompletion_xi0Span_eq_unit_at_splitPlace (p : SplitPt D k
 theorem AA_eq_one (p : SplitPt D k) (hp : p.UnitAA) : idV D.host.AA p.v = idV 1 p.v := by
   let L : HSp D := Examples₂.posSpace (E := D.host.E) Examples₂.star_isIntegral 1
   let ζ : Fin L.rank → D.host.E := fun _ => 1
-  have hζ : ζ ≠ 0 := fun e => one_ne_zero (congrFun e ⟨0, by change 0 < 1; omega⟩)
+  have hζ : ζ ≠ 0 := fun e => one_ne_zero (congrFun e (0 : Fin 1))
   have e : GlobalTheory.FinPl.latA L (GlobalTheory.SeeSaw.LiftModel.lineLat L ζ 1) (· = p.v) =
-      GlobalTheory.FinPl.latV L (GlobalTheory.SeeSaw.LiftModel.lineLat L ζ D.host.AA) (· = p.v) := by
+      latV L (GlobalTheory.SeeSaw.LiftModel.lineLat L ζ D.host.AA) (· = p.v) := by
     unfold GlobalTheory.FinPl.latA GlobalTheory.FinPl.latV GlobalTheory.FinPl.latMul
     congr 1
     ext y

@@ -101,7 +101,7 @@ theorem isBounded_ballSet
       Set.pi Set.univ fun w => ell fun i => (w.1.embedding (h (b i) (b i))).re :=
     ((psi K (Fin (finrank K V))).toContinuousLinearEquiv.image_symm_eq_preimage _).symm
   rw [h1]
-  exact (psi K (Fin (finrank K V))).toContinuousLinearEquiv.symm.lipschitz.isBounded_image
+  exact (psi K (Fin (finrank K V))).toContinuousLinearEquiv.symm.lipschitzWith.isBounded_image
     (Bornology.IsBounded.pi fun w => isBounded_ell (hA w))
 
 omit [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in

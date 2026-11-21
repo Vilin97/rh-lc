@@ -53,6 +53,7 @@ theorem _root_.GlobalTheory.AdicSum.sumI_unique [IsNoetherianRing R] (hI : I ≤
     have hy' : y = ⟨s - s', hmem⟩ := Subtype.ext hyeq
     rwa [← hy']
   have h0 : (⟨s - s', hmem⟩ : M) = 0 := by
+    rw [Ideal.jacobson_bot] at hI
     have hK := Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := M) I hI
     rw [← Submodule.mem_bot R, ← hK, Submodule.mem_iInf]
     exact hpow

@@ -43,12 +43,24 @@ variable {D : D7} {K : Type} [Field K] [ValuativeRel K] [TopologicalSpace K] [Is
 include hq
 
 theorem val_lt_of_pr {y : D.host.E} (hy : valuation K (q.pr (incA D y)) < 1) : PP.valuation D.host.E y < 1 := by
+  have val_lt_one_iff (x : 𝓞 D.host.E) :
+      valuation K (q.pr (incA D (x : D.host.E))) < 1 ↔ x ∈ PP.asIdeal := by
+    by_cases hx : x = 0
+    · subst hx; simp
+    have h0 : (q.pr.comp (incA D)) (x : D.host.E) ≠ 0 := (map_ne_zero _).2 (RingOfIntegers.coe_ne_zero_iff.2 hx)
+    rw [hq.2 x hx, ← q.sec_pr, ← q.int_iff]
+    change valuation K ((q.pr.comp (incA D)) x) < 1 ↔ ¬ valuation K ((q.pr.comp (incA D)) (x : D.host.E)⁻¹) ≤ 1
+    rw [map_inv₀, map_inv₀, not_le, one_lt_inv₀ (zero_lt_iff.2 ((map_ne_zero _).2 h0))]
+  have val_le_one (x : 𝓞 D.host.E) : valuation K (q.pr (incA D (x : D.host.E))) ≤ 1 := by
+    have h := GlobalTheory.FinPl.SplitApprox.val_le q 1 one_pos (incA D (x : D.host.E)) (finPart D (incA D (x : D.host.E)))
+      (GlobalTheory.FinPl.SplitApprox.tmul_mem (a := 1) (fun v => by rw [map_one]; exact one_mem _) x.2) (by simp)
+    simpa using h
   by_cases hle : PP.valuation D.host.E y ≤ 1
   · obtain ⟨r, d, e⟩ := PP.exists_primeCompl_mul_eq_of_integer y hle
     have hd : valuation K (q.pr (incA D ((d : 𝓞 D.host.E) : D.host.E))) = 1 :=
-      le_antisymm (LevelTest.val_le_one q _) (not_lt.1 fun h' => d.2 ((LevelTest.val_lt_one_iff q hq _).1 h'))
+      le_antisymm (val_le_one _) (not_lt.1 fun h' => d.2 ((val_lt_one_iff _).1 h'))
     have hr : r ∈ PP.asIdeal := by
-      refine (LevelTest.val_lt_one_iff q hq r).1 ?_
+      refine (val_lt_one_iff r).1 ?_
       rw [show ((r : 𝓞 D.host.E) : D.host.E) = y * ((d : 𝓞 D.host.E) : D.host.E) from e.symm, map_mul, map_mul, map_mul, hd,
         mul_one]
       exact hy

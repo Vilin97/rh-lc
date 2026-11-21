@@ -45,8 +45,11 @@ lemma exists_indep {n : ℕ} : ∀ (d : ℕ) (U : Submodule (LaurentSeries F) (F
       LinearIndependent F (fun b => red (y b))
   | 0, U, _ => ⟨Fin.elim0, fun b => b.elim0, linearIndependent_empty_type⟩
   | d+1, U, hd => by
-    obtain ⟨u, huU, hu0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot (p := U) (by
-      intro h; rw [h, finrank_bot] at hd; omega)
+    have hU : U ≠ ⊥ := by
+      intro h
+      rw [h, finrank_bot] at hd
+      omega
+    obtain ⟨u, huU, hu0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hU
     obtain ⟨i, y0, hy0, hy0i⟩ := exists_primitive u hu0
     let f : U →ₗ[LaurentSeries F] LaurentSeries F := (LinearMap.proj i).comp U.subtype
     let U' : Submodule (LaurentSeries F) (Fin n → LaurentSeries F) := (LinearMap.ker f).map U.subtype
@@ -94,7 +97,8 @@ lemma greedy {n : ℕ} (V : ℕ → Submodule (LaurentSeries F) (Fin n → Laure
       LinearIndependent F (fun j => red (c j))
   | 0, _ => ⟨Fin.elim0, fun j => j.elim0, linearIndependent_empty_type⟩
   | m+1, hm => by
-    obtain ⟨c, hcV, hci⟩ := greedy V hV m (by omega)
+    have hm' : m ≤ n := Nat.le_of_succ_le hm
+    obtain ⟨c, hcV, hci⟩ := greedy V hV m hm'
     obtain ⟨y, hyV, hyi⟩ := exists_indep (Module.finrank (LaurentSeries F) (V m)) (V m) le_rfl
     have : ∃ b, red (y b) ∉ Submodule.span F (Set.range fun j => red (c j)) := by
       by_contra h; push_neg at h

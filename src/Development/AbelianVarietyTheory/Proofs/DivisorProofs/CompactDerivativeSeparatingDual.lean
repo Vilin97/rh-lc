@@ -24,7 +24,7 @@ theorem continuous_multilinear {ι : Type} [Fintype ι] {V G : Type} [NormedAddC
     set_option synthInstance.maxHeartbeats 100000 in
       rw [MultilinearMap.map_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
-    rw [← MultilinearMap.map_smul_univ]
+    simpa only [RingHom.id_apply] using f.map_smul_univ (fun i => b.coord (r i) (x i)) (fun i => b (r i))
   rw [show (f : (ι → V) → G) = fun x => ∑ r : ι → Fin (Module.finrank ℝ V), (∏ i, b.coord (r i) (x i)) • f (fun i => b (r i))
     from funext h]
   refine continuous_finsetSum _ fun r _ => (continuous_finsetProd _ fun i _ => ?_).smul continuous_const
