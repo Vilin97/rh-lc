@@ -88,6 +88,7 @@ def wtPart (j : X) : Submodule O (MvPowerSeries σ O) where
   smul_mem' c f hf n hn := by rw [map_smul, hf n hn, smul_zero]
 
 
+open Classical in
 def wcomp (j : X) : MvPowerSeries σ O →ₗ[O] MvPowerSeries σ O where
   toFun f := fun n => if Finsupp.weight wt n = j then coeff n f else 0
   map_add' f g := funext fun n => by
@@ -150,7 +151,7 @@ structure WPres (O X R : Type) [CommRing O] [AddCommGroup X] [CommRing R] [Algeb
   wt : σ → X
   π : MvPowerSeries σ O →ₐ[O] R
   surj : Function.Surjective π
-  homog : IsHomog O wt (RingHom.ker π)
+  homog : IsHomog O (wt := wt) (RingHom.ker π)
 
 attribute [instance] WPres.fin
 
@@ -291,7 +292,7 @@ def Lift.map (f : R →ₐ[O] R') (r : Lift O rbar R) : Lift O rbar R' where
       rw [← res_eq_zero_iff O, res_map, res_eq_zero_iff]
       exact hy
     exact (r.cont a b N).comp (Ideal.quotientMap _ (f : R →+* R') hle)
-  red g a b := (res_map f _).trans (r.red g a b)
+  red g a b := (res_map (O := O) (R := R) (R' := R') f _).trans (r.red g a b)
 
 @[simp] theorem Lift.map_hom (f : R →ₐ[O] R') (r : Lift O rbar R) (g : Γ) (a b : ι) :
     (r.map f).hom g a b = f (r.hom g a b) := rfl
@@ -303,7 +304,9 @@ def Lift.comap {H : Type} [Group H] [TopologicalSpace H] (φ : H →* Γ) (hφ :
   red g a b := r.red (φ g) a b
 
 
-def Cond : Type 1 := ∀ (R : Type) [CommRing R] [Algebra O R] [IsCO O R], Lift O rbar R → Prop
+def Cond (O : Type) [CommRing O] [IsLocalRing O] {Γ ι : Type} [Group Γ] [TopologicalSpace Γ]
+    [Fintype ι] [DecidableEq ι] (rbar : Γ →* Matrix ι ι (ResidueField O)) : Type 1 :=
+  ∀ (R : Type) [CommRing R] [Algebra O R] [IsCO O R], Lift O rbar R → Prop
 
 def Represents (P : Cond O rbar) (r : Lift O rbar R) : Prop :=
   ∀ (R' : Type) [CommRing R'] [Algebra O R'] [IsCO O R'],
@@ -315,13 +318,13 @@ def Lift.Generates (r : Lift O rbar R) : Prop :=
 variable {X : Type} [AddCommGroup X] (w : ι → X)
 
 
-def IsTorusConj (t : Multiplicative X →* Rˣ) (r r' : Lift O rbar R) : Prop :=
+def IsTorusConj (w : ι → X) (t : Multiplicative X →* Rˣ) (r r' : Lift O rbar R) : Prop :=
   ∀ g a b, r'.hom g a b = t (Multiplicative.ofAdd (w a - w b)) * r.hom g a b
 
 def Lift.TStable (r : Lift O rbar R) : Prop :=
   ∀ (R' : Type) [CommRing R'] [Algebra O R'] [IsCO O R'] (f : R →ₐ[O] R') (t : Multiplicative X →* R'ˣ),
     (∀ j, res O R' (t j) = 1) → ∃ f' : R →ₐ[O] R',
-      IsTorusConj rbar w t (Lift.map (O := O) (rbar := rbar) (R := R) (R' := R') f r)
+      IsTorusConj w t (Lift.map (O := O) (rbar := rbar) (R := R) (R' := R') f r)
         (Lift.map (O := O) (rbar := rbar) (R := R) (R' := R') f' r)
 
 

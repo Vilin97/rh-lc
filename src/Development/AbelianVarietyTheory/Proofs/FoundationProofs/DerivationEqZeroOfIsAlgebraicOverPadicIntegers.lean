@@ -44,7 +44,7 @@ theorem der_eval₂ (E : Derivation ℤ Ω Ω)
 
 theorem der_algZp : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω], IsClo p Ω →
     ∀ E : Derivation ℤ Ω Ω, (∀ r : ℤ_[p], E (algebraMap (O0 p) Ω (algebraMap ℤ_[p] (O0 p) r)) = 0) →
-    ∀ x : Ω, IsAlgZp p x → E x = 0 := by
+    ∀ x : Ω, IsAlgZp (p := p) x → E x = 0 := by
   intro p _ Ω _ _ hC E hE x hx
   haveI : CharZero Ω := GlobalTheory.K5.Basic.charZero_of_isClo hC
   obtain ⟨P, hP0, hPx⟩ := hx

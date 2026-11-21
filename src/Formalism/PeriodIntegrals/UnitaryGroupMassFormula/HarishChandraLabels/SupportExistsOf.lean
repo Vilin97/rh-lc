@@ -1,7 +1,6 @@
 module
 
 public import Mathlib
-public import Formalism.PadicSubsetSums.CentralIdempotents.IsConstituent
 public import Formalism.PadicSubsetSums.CentralIdempotents.GaloisConjCentralIdempotent
 
 @[expose] public section

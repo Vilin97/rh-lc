@@ -48,10 +48,10 @@ def theta {T : Scheme.{0}} (g : T ⟶ Spec (CommRingCat.of A)) (U : T.Opens) :
     (fun _ _ => Commute.all _ _)).toRingHom
 
 theorem theta_tmul {T : Scheme.{0}} (g : T ⟶ Spec (CommRingCat.of A)) (U : T.Opens) (c : Γ(T, U)) (b : B) :
-    letI := (secAlg A g U).toAlgebra
-    theta A B g U (c ⊗ₜ[A] b) = ((pullback.snd (str A B) g).app U).hom c *
-      ((pullback.fst (str A B) g).appLE ⊤ ((pullback.snd (str A B) g) ⁻¹ᵁ U) (by simp)).hom
-        ((Scheme.ΓSpecIso (CommRingCat.of B)).inv.hom b) := by
+    (letI := (secAlg A g U).toAlgebra
+     theta A B g U (c ⊗ₜ[A] b) = ((pullback.snd (str A B) g).app U).hom c *
+       ((pullback.fst (str A B) g).appLE ⊤ ((pullback.snd (str A B) g) ⁻¹ᵁ U) (by simp)).hom
+         ((Scheme.ΓSpecIso (CommRingCat.of B)).inv.hom b)) := by
   letI := (secAlg A g U).toAlgebra
   letI : Algebra A Γ(pullback (str A B) g, (pullback.snd (str A B) g) ⁻¹ᵁ U) :=
     (((pullback.snd (str A B) g).app U).hom.comp (secAlg A g U)).toAlgebra
@@ -59,16 +59,19 @@ theorem theta_tmul {T : Scheme.{0}} (g : T ⟶ Spec (CommRingCat.of A)) (U : T.O
 
 theorem kappa_apply {T : Scheme.{0}} (g : T ⟶ Spec (CommRingCat.of A))
     (I : (pullback (str A B) g).IdealSheafData) (U : T.Opens) :
-    letI := (secAlg A g U).toAlgebra
-    ∀ x : Γ(T, U) ⊗[A] B, kappa A B g I U x =
-      (I.subschemeι.app ((pullback.snd (str A B) g) ⁻¹ᵁ U)).hom (theta A B g U x) := by
+    (letI := (secAlg A g U).toAlgebra
+     ∀ x : Γ(T, U) ⊗[A] B, kappa A B g I U x =
+       (I.subschemeι.app ((pullback.snd (str A B) g) ⁻¹ᵁ U)).hom (theta A B g U x)) := by
   letI := (secAlg A g U).toAlgebra
   intro x
-  induction x using TensorProduct.induction_on with
-  | zero => rw [map_zero, map_zero, map_zero]; rfl
+  induction x using TensorProduct.inductionOn with
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]; rfl
   | tmul c b =>
-    rw [kappa_tmul, theta_tmul, map_mul]
+    change ((I.subschemeι ≫ pullback.snd (str A B) g).app U).hom c *
+      ((I.subschemeι ≫ pullback.fst (str A B) g).appLE ⊤
+        ((I.subschemeι ≫ pullback.snd (str A B) g) ⁻¹ᵁ U) (by simp)).hom
+        ((Scheme.ΓSpecIso (CommRingCat.of B)).inv.hom b) = _
+    rw [theta_tmul, map_mul]
     have e : (pullback.fst (str A B) g).appLE ⊤ ((pullback.snd (str A B) g) ⁻¹ᵁ U) (by simp) ≫
         I.subschemeι.app ((pullback.snd (str A B) g) ⁻¹ᵁ U) =
         (I.subschemeι ≫ pullback.fst (str A B) g).appLE ⊤ ((I.subschemeι ≫ pullback.snd (str A B) g) ⁻¹ᵁ U)

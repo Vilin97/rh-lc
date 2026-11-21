@@ -32,10 +32,8 @@ theorem UpperTheory.V.FW.embCyc :
     · exact (Nat.div_pos (Nat.le_of_dvd (Nat.pos_of_ne_zero hM0) hNM) (Nat.pos_of_ne_zero hN0)).ne'
   have hsp : Polynomial.Splits ((Polynomial.X ^ N - 1 : Polynomial ℚ).map (algebraMap ℚ L)) := by
     simpa using Polynomial.X_pow_sub_one_splits hpN
-  haveI hC : IsCyclotomicExtension {N} ℚ (CyclotomicField N ℚ) := by
-    convert CyclotomicField.isCyclotomicExtension N ℚ
-    · rfl
-    · exact Subsingleton.elim _ _
+  have : IsCyclotomicExtension {N} ℚ (CyclotomicField N ℚ) :=
+    CyclotomicField.isCyclotomicExtension N ℚ
   haveI := IsCyclotomicExtension.isSplittingField_X_pow_sub_one N ℚ (CyclotomicField N ℚ)
   let ψ : CyclotomicField N ℚ →ₐ[ℚ] L :=
     Polynomial.IsSplittingField.lift (CyclotomicField N ℚ) (Polynomial.X ^ N - 1) hsp

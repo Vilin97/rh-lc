@@ -293,7 +293,9 @@ theorem ibd_icmap {H : Type} [Group H] (f : G →* H) (m : ℕ) (z : HC G (m + 1
   congr 1
   refine Finset.sum_congr rfl fun j _ => ?_
   congr 2
-  split_ifs <;> simp
+  funext i
+  simp only [Fin.contractNth]
+  split_ifs <;> simp [map_mul]
 
 theorem icmap_comp {H K : Type} [Group H] [Group K] (f : G →* H) (g : H →* K) (m : ℕ) (z : HC G m) :
     icmap (g.comp f) m z = icmap g m (icmap f m z) := by

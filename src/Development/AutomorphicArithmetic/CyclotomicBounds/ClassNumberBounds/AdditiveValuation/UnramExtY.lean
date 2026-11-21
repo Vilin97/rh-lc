@@ -31,7 +31,11 @@ theorem adjoinRoot_unramified (hϖ : Irreducible ϖ) {f : O[X]} (hf : f.Monic)
     Ideal.Quotient.maximal_of_isField _ (e.toMulEquiv.isField (Field.toIsField _))
   have huniq : ∀ M : Ideal (AdjoinRoot f), M.IsMaximal → M = J := by
     intro M hM
-    have h1 := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := O) M
+    letI : M.IsMaximal := hM
+    have h1 := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal
+      (algebraMap O (AdjoinRoot f)) (by
+        intro x
+        exact IsIntegral.of_finite O x) M
     have h2 : J ≤ M := by
       rw [Ideal.map_le_iff_le_comap, ← AdjoinRoot.algebraMap_eq, eq_maximalIdeal h1]
     exact (hJ.eq_of_le hM.ne_top h2).symm

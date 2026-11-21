@@ -63,15 +63,16 @@ theorem relIndex_glMap (g : GL (Fin r) K) (M L : Submodule O (Fin r → K)) :
   exact AddSubgroup.relIndex_map_map_of_injective (f :=
     (Matrix.toLin' (g : Matrix (Fin r) (Fin r) K)).toAddMonoidHom) M.toAddSubgroup L.toAddSubgroup hinj
 
-theorem glMap_isLattice (g : GL (Fin r) K) (L : Lat O K r) : (glMap g L.1).IsFullLattice K where
-  toIsLattice := Submodule.IsLattice.of_fg K (L.2.fg.map _)
-  span_eq_top := by
-    have : (glMap g L.1 : Set (Fin r → K))
-        = Matrix.toLin' (g : Matrix (Fin r) (Fin r) K) '' (L.1 : Set (Fin r → K)) := rfl
-    rw [this, Submodule.span_image, L.2.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
-    intro y
-    refine ⟨Matrix.toLin' ((g⁻¹ : GL (Fin r) K) : Matrix (Fin r) (Fin r) K) y, ?_⟩
-    simp [Matrix.toLin'_apply, Matrix.mulVec_mulVec]
+theorem glMap_isLattice (g : GL (Fin r) K) (L : Lat O K r) : (glMap g L.1).IsFullLattice K := by
+  refine {
+    toIsLattice := Submodule.IsLattice.of_fg K (L.2.fg.map _)
+    span_eq_top := ?_ }
+  have : (glMap g L.1 : Set (Fin r → K))
+      = Matrix.toLin' (g : Matrix (Fin r) (Fin r) K) '' (L.1 : Set (Fin r → K)) := rfl
+  rw [this, Submodule.span_image, L.2.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+  intro y
+  refine ⟨Matrix.toLin' ((g⁻¹ : GL (Fin r) K) : Matrix (Fin r) (Fin r) K) y, ?_⟩
+  simp [Matrix.toLin'_apply, Matrix.mulVec_mulVec]
 
 def glLat (g : GL (Fin r) K) (L : Lat O K r) : Lat O K r := ⟨glMap g L.1, glMap_isLattice g L⟩
 

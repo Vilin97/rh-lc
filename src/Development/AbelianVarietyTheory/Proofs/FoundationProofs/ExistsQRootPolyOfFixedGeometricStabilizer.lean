@@ -9,16 +9,18 @@ open Polynomial IntermediateField
 
 namespace GlobalTheory.K5.Span
 
-variable {p : ℕ} [Fact p.Prime] {Ω : Type} [Field Ω] [Algebra (O0 p) Ω]
-
+variable (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω]
 
 def baseField : Subfield Ω :=
-  Subfield.closure (Set.range (algebraMap (O0 p) Ω) ∪ {x | IsAlgZp p x})
+  Subfield.closure (Set.range (algebraMap (O0 p) Ω) ∪ {x | IsAlgZp (p := p) x})
+
+variable {p Ω}
 
 theorem algebraMap_mem_baseField (a : O0 p) : algebraMap (O0 p) Ω a ∈ baseField p Ω :=
   Subfield.subset_closure (Or.inl ⟨a, rfl⟩)
 
-theorem ggeo_fix_baseField {g : Gal p Ω} (hg : g ∈ Ggeo p Ω) {x : Ω} (hx : x ∈ baseField p Ω) :
+theorem ggeo_fix_baseField {g : Gal p Ω} (hg : g ∈ Ggeo (p := p) Ω) {x : Ω}
+    (hx : x ∈ baseField p Ω) :
     g x = x := by
   have hle : baseField p Ω ≤ RingHom.eqLocusField (g : Ω →+* Ω) (RingHom.id Ω) := by
     refine Subfield.closure_le.2 ?_
@@ -50,10 +52,10 @@ theorem isAlgebraic_baseField (h : IsClo p Ω) : Algebra.IsAlgebraic (baseField 
 
 end GlobalTheory.K5.Span
 
-
+open GlobalTheory.K5.Span in
 theorem GlobalTheory.K5.span_fixed_ggeo_stab : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω], IsClo p Ω →
-  ∀ (T : Tower p Ω) (N : ℕ) (y : Ω), (∀ g ∈ Ggeo p Ω ⊓ MulAction.stabilizer (Gal p Ω) (T.qq N), g y = y) →
-  ∃ c : ℕ → Ω, (∀ j, ∀ g ∈ Ggeo p Ω, g (c j) = c j) ∧
+  ∀ (T : Tower p Ω) (N : ℕ) (y : Ω), (∀ g ∈ Ggeo (p := p) Ω ⊓ MulAction.stabilizer (Gal p Ω) (T.qq N), g y = y) →
+  ∃ c : ℕ → Ω, (∀ j, ∀ g ∈ Ggeo (p := p) Ω, g (c j) = c j) ∧
     y = ∑ j ∈ Finset.range (p ^ N), c j * T.qq N ^ j := by
   intro p _ Ω _ _ h T N y hy
   haveI : CharZero Ω := Basic.charZero_of_isClo h

@@ -34,7 +34,7 @@ theorem theta_comm {T : Scheme.{0}} (g : T ⟶ Spec (CommRingCat.of A)) (U : T.O
   rw [h2, secAlg, RingHom.comp_apply, ← CommRingCat.comp_apply, key, CommRingCat.comp_apply]
 
 def theta {T : Scheme.{0}} (g : T ⟶ Spec (CommRingCat.of A)) (U : T.Opens) :
-    letI := (secAlg A g U).toAlgebra
+    letI := (secAlg A g U).toAlgebra;
     Γ(T, U) ⊗[A] B →+* Γ(pullback (str A B) g, (pullback.snd (str A B) g) ⁻¹ᵁ U) :=
   letI := (secAlg A g U).toAlgebra
   letI : Algebra A Γ(pullback (str A B) g, (pullback.snd (str A B) g) ⁻¹ᵁ U) :=
@@ -48,7 +48,7 @@ def theta {T : Scheme.{0}} (g : T ⟶ Spec (CommRingCat.of A)) (U : T.Opens) :
 
 theorem theta_tmul {T : Scheme.{0}} (g : T ⟶ Spec (CommRingCat.of A)) (U : T.Opens)
     (c : Γ(T, U)) (b : B) :
-    letI := (secAlg A g U).toAlgebra
+    letI := (secAlg A g U).toAlgebra;
     theta A B g U (c ⊗ₜ[A] b) = ((pullback.snd (str A B) g).app U).hom c *
       ((pullback.fst (str A B) g).appLE ⊤ ((pullback.snd (str A B) g) ⁻¹ᵁ U)
         (by simp)).hom ((Scheme.ΓSpecIso (CommRingCat.of B)).inv.hom b) := by
@@ -62,10 +62,17 @@ theorem kappa_apply_eq {T : Scheme.{0}} (g : T ⟶ Spec (CommRingCat.of A))
     kappa A B g I U x =
       (I.subschemeι.app ((pullback.snd (str A B) g) ⁻¹ᵁ U)).hom (theta A B g U x) := by
   letI := (secAlg A g U).toAlgebra
-  induction x using TensorProduct.induction_on with
-  | zero => simp only [map_zero]; rfl
+  induction x using TensorProduct.inductionOn with
   | tmul c b =>
-    rw [kappa_tmul, theta_tmul, map_mul]
+    have hk : kappa A B g I U (c ⊗ₜ[A] b) =
+        ((I.subschemeι ≫ pullback.snd (str A B) g).app U).hom c *
+          ((I.subschemeι ≫ pullback.fst (str A B) g).appLE ⊤
+            ((I.subschemeι ≫ pullback.snd (str A B) g) ⁻¹ᵁ U) (by simp)).hom
+            ((Scheme.ΓSpecIso (CommRingCat.of B)).inv.hom b) := by
+      letI : Algebra A Γ(I.subscheme, (I.subschemeι ≫ pullback.snd (str A B) g) ⁻¹ᵁ U) :=
+        (((I.subschemeι ≫ pullback.snd (str A B) g).app U).hom.comp (secAlg A g U)).toAlgebra
+      exact Algebra.TensorProduct.lift_tmul _ _ _ _ _
+    rw [hk, theta_tmul, map_mul]
     congr 1
     have e : (pullback.fst (str A B) g).appLE ⊤ ((pullback.snd (str A B) g) ⁻¹ᵁ U) (by simp) ≫
         I.subschemeι.app ((pullback.snd (str A B) g) ⁻¹ᵁ U) =

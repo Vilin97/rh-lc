@@ -59,7 +59,9 @@ def extendOnClosure : closureInCp E → ℂ_[p] :=
 
 
 def extendToClosure (x : ℂ_[p]) : ℂ_[p] :=
-  if hx : x ∈ closureInCp E then extendOnClosure E R ⟨x, hx⟩ else 0
+  by
+    classical
+    exact if hx : x ∈ closureInCp E then extendOnClosure E R ⟨x, hx⟩ else 0
 
 variable {E R}
 
@@ -134,6 +136,7 @@ theorem extendToClosure_induction {P : ℂ_[p] → ℂ_[p] → Prop}
   exact h y y.2
 
 
+omit hadd hbound in
 theorem sub_mem_closureInCp {x x' : ℂ_[p]} (hx : x ∈ closureInCp E) (hx' : x' ∈ closureInCp E) :
     x - x' ∈ closureInCp E :=
   map_mem_closure₂ continuous_sub hx hx' (by
@@ -196,7 +199,9 @@ variable {k : IntermediateField ℚ_[p] (PadicAlgCl p)} [FiniteDimensional ℚ_[
   (hkE : k ≤ E) (hmaps : ∀ y ∈ E, R y ∈ k) (hfix : ∀ a ∈ k, R a = a)
   (hmul : ∀ a ∈ k, ∀ y ∈ E, R (a * y) = a * R y)
 
+include hkE hmaps hfix hmul
 
+omit hkE hfix hmul in
 theorem extendToClosure_mem {x : ℂ_[p]} (hx : x ∈ closureInCp E) :
     extendToClosure E R x ∈ ((↑) : PadicAlgCl p → ℂ_[p]) '' (k : Set (PadicAlgCl p)) :=
   extendToClosure_induction hadd hbound
@@ -204,11 +209,13 @@ theorem extendToClosure_mem {x : ℂ_[p]} (hx : x ∈ closureInCp E) :
     ((isClosed_image_coe k).preimage continuous_snd) (fun y hy => ⟨R y, hmaps y hy, rfl⟩) x hx
 
 
+omit [FiniteDimensional ℚ_[p] k] hmaps hmul in
 theorem extendToClosure_coe_of_mem {a : PadicAlgCl p} (ha : a ∈ k) :
     extendToClosure E R (a : ℂ_[p]) = a := by
   rw [extendToClosure_coe hadd hbound (hkE ha), hfix a ha]
 
 
+omit hadd hbound [FiniteDimensional ℚ_[p] k] hmaps hfix hmul in
 theorem mul_mem_closureInCp {a : PadicAlgCl p} (ha : a ∈ k) {x : ℂ_[p]}
     (hx : x ∈ closureInCp E) : (a : ℂ_[p]) * x ∈ closureInCp E :=
   map_mem_closure (continuous_const.mul continuous_id) hx (by
@@ -216,6 +223,7 @@ theorem mul_mem_closureInCp {a : PadicAlgCl p} (ha : a ∈ k) {x : ℂ_[p]}
     exact ⟨a * y, mul_mem (hkE ha) hy, UniformSpace.Completion.coe_mul a y⟩)
 
 
+omit [FiniteDimensional ℚ_[p] k] hmaps hfix in
 theorem extendToClosure_mul {a : PadicAlgCl p} (ha : a ∈ k) {x : ℂ_[p]}
     (hx : x ∈ closureInCp E) :
     extendToClosure E R ((a : ℂ_[p]) * x) = (a : ℂ_[p]) * extendToClosure E R x := by
@@ -243,6 +251,7 @@ section Galois
 variable {K₀ : IntermediateField ℚ_[p] (PadicAlgCl p)}
 
 
+omit hadd hbound in
 theorem smul_mem_closureInCp (σ : Gal(PadicAlgCl p/K₀)) (hσ : ∀ y ∈ E, σ y ∈ E) {x : ℂ_[p]}
     (hx : x ∈ closureInCp E) : σ • x ∈ closureInCp E :=
   map_mem_closure (continuous_const_smul σ) hx (by

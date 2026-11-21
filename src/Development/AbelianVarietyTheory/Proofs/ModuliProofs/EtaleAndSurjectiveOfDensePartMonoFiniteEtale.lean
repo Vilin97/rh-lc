@@ -96,7 +96,7 @@ theorem etale_and_surjective_of_densePart_mono_finiteEtale : ∀ (S S₀ Y Y₀ 
   constructor
   · have : IsZariskiLocalAtSource @Etale := HasRingHomProperty.instIsZariskiLocalAtSource
     rw [IsZariskiLocalAtSource.iff_of_iSup_eq_top (P := @Etale) _
-      (GlobalTheory.IsNormalScheme.iSup_component Y)]
+      (GlobalTheory.IsNormalScheme.iSup_component (X := Y))]
     intro W
     have : IsDominant (j' ∣_ GlobalTheory.IsNormalScheme.component W) :=
       IsZariskiLocalAtTarget.restrict (P := @IsDominant) ‹IsDominant j'› _

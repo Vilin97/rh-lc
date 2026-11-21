@@ -54,8 +54,8 @@ end PGaussConstant
 
 theorem GaussConstant.proof : GaussConstant.Statement := by
   intro n hn
-  rw [rhs_eq, gaussShellConst]
-  have key := exp_part n hn
+  rw [PGaussConstant.rhs_eq, gaussShellConst]
+  have key := PGaussConstant.exp_part n hn
   have hc : 0 ≤ √2 ^ n * 3 ^ n * √(n : ℝ) ^ n := by positivity
   calc √2 ^ n * (2 * (3 ^ n * √(n : ℝ) ^ n * Real.exp √(n : ℝ) * Real.exp ((n : ℝ) / (2 * π))))
       = (√2 ^ n * 3 ^ n * √(n : ℝ) ^ n) *

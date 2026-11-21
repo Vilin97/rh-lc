@@ -12,24 +12,25 @@ open GlobalTheory.K5 GlobalTheory.KumDlog
 namespace GlobalTheory.KumDlog
 
 theorem kaehler_rel_isInt (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω]
-    (n : ℕ) (ι : On p n →ₐ[O0 p] Ω) (S : Subalgebra (O0 p) Ω) (hS : ∀ x ∈ S, IsInt p x)
-    (hι : ∀ x, ι x ∈ S) (D : Ω → Ω) (hD : IsDer S D) (a b c x y z : On p n)
+    (n : ℕ) (ι : On p n →ₐ[O0 p] Ω) (S : Subalgebra (O0 p) Ω)
+    (hS : ∀ x ∈ S, IsInt (p := p) x)
+    (hι : ∀ x, ι x ∈ S) (D : Ω → Ω) (hD : GlobalTheory.KumDlog.IsDer S D) (a b c x y z : On p n)
     (hrel : a • KaehlerDifferential.D (O0 p) (On p n) x =
       b • KaehlerDifferential.D (O0 p) (On p n) y + c • KaehlerDifferential.D (O0 p) (On p n) z) :
-    IsInt p (ι a * D (ι x) - ι b * D (ι y) - ι c * D (ι z)) := by
+    IsInt (p := p) (ι a * D (ι x) - ι b * D (ι y) - ι c * D (ι z)) := by
   letI : Module (On p n) Ω := Module.compHom Ω ι.toRingHom
   have hsm : ∀ (r : On p n) (w : Ω), r • w = ι r * w := fun _ _ => rfl
   haveI : IsScalarTower (O0 p) (On p n) Ω := ⟨fun r s w => by
     rw [hsm, hsm, map_smul, smul_mul_assoc]⟩
   let N : Submodule (On p n) Ω :=
-    { carrier := {w | IsInt p w}
+    { carrier := {w | IsInt (p := p) w}
       add_mem' := fun ha hb => int_add ha hb
       zero_mem' := int_zero
       smul_mem' := fun r w hw => by
-        show IsInt p (r • w)
+        show IsInt (p := p) (r • w)
         rw [hsm]; exact int_mul (hS _ (hι r)) hw }
-  have memN : ∀ w, w ∈ N ↔ IsInt p w := fun _ => Iff.rfl
-  have key : ∀ w w' : Ω, IsInt p (w - w') → N.mkQ w = N.mkQ w' := fun w w' h =>
+  have memN : ∀ w, w ∈ N ↔ IsInt (p := p) w := fun _ => Iff.rfl
+  have key : ∀ w w' : Ω, IsInt (p := p) (w - w') → N.mkQ w = N.mkQ w' := fun w w' h =>
     (Submodule.Quotient.eq N).2 h
   let L : On p n →ₗ[O0 p] Ω ⧸ N :=
     { toFun := fun u => N.mkQ (D (ι u))

@@ -5,7 +5,7 @@ public import Formalism.SharpRestriction.CuspSpanNormBounds.FractionFieldToGener
 
 @[expose] public section
 
-open ValuativeRel MeasureTheory ComplexConjugate Formalism.MainNotions.S.Loc GlobalTheory.SgLoc
+open ValuativeRel MeasureTheory ComplexConjugate Formalism.MainNotions.S.Loc
 open scoped ComplexOrder
 
 namespace GlobalTheory.SgLoc

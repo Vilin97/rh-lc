@@ -1,7 +1,6 @@
-module
 
-public import Mathlib
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JpUnif
+import Mathlib
+import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JpUnif
 
 @[expose] public section
 

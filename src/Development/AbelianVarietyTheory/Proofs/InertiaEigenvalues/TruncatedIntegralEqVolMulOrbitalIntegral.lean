@@ -66,7 +66,7 @@ theorem GlobalTheory.JR.truncated_integral_eq_vol_mul_orbL : ∀ (F E : Type) [N
     refine ⟨?_, hu⟩
     have h3 := congrArg A.absK h2
     rw [habs (x : A.K) a', habs a (s ^ 2), pow_two, habs s s, habs1 s s' hs hs' hss, mul_one, mul_one] at h3
-    rw [eq_div_iff (absK_ne_zero A hx), ← h3]; ring
+    rw [eq_div_iff (TruncInt.absK_ne_zero A hx), ← h3]; ring
   set f : A.L → A.K := fun y => (x : A.K) * A.NL y - a with hf
   have hfc : Continuous f := (continuous_const.mul (EtMeas.continuous_NL A)).sub continuous_const
   have hSu : ∀ y, f y ∈ (D : Set A.K) → IsUnit y := fun y hy => hNu1 y (habsT _ hy).2
@@ -74,7 +74,7 @@ theorem GlobalTheory.JR.truncated_integral_eq_vol_mul_orbL : ∀ (F E : Type) [N
   show ∫ y, h y ∂(m.μL x) = _
   have hDcl : IsClosed (D : Set A.K) := AddSubgroup.isClosed_of_isOpen D hDo
   have hTest : IsTest h := by
-    refine ⟨hφ.1.mul ((isLocallyConstant_indicator ⟨hDcl, hDo⟩ (1 : ℂ)).comp_continuous hfc), ?_⟩
+    refine ⟨hφ.1.mul ((TruncInt.isLocallyConstant_indicator ⟨hDcl, hDo⟩ (1 : ℂ)).comp_continuous hfc), ?_⟩
     exact hφ.2.mul_right
   have hsupp : tsupport h ⊆ {y | IsUnit y} := by
     refine (closure_minimal ?_ (hDcl.preimage hfc)).trans ?_
@@ -84,8 +84,9 @@ theorem GlobalTheory.JR.truncated_integral_eq_vol_mul_orbL : ∀ (F E : Type) [N
     · intro y hy
       exact hSu y hy
   have hμ := (GlobalTheory.JR.exists_meas_and_scale F E A ψ hψ).2 m x
-  rw [hμ, integral_smul_measure, ENNReal.toReal_ofReal (absK_nonneg A _)]
-  have hxa : A.absK a / A.absK x ≠ 0 := div_ne_zero (absK_ne_zero A ha) (absK_ne_zero A hx)
+  rw [hμ, integral_smul_measure, ENNReal.toReal_ofReal (TruncInt.absK_nonneg A _)]
+  have hxa : A.absK a / A.absK x ≠ 0 :=
+    div_ne_zero (TruncInt.absK_ne_zero A ha) (TruncInt.absK_ne_zero A hx)
   have hxaC : ((A.absK a / A.absK x : ℝ) : ℂ) ≠ 0 := by exact_mod_cast hxa
   have hpt : ∀ y, h y = ((A.absK a / A.absK x : ℝ) : ℂ) * (h y * ((A.absK (A.NL y) : ℂ))⁻¹) := by
     intro y
@@ -167,9 +168,9 @@ theorem GlobalTheory.JR.truncated_integral_eq_vol_mul_orbL : ∀ (F E : Type) [N
       ∫ a' in T, A.orbL m.ν φ y₀ * (((A.absK a / A.absK x : ℝ) : ℂ))⁻¹ ∂m.μK :=
     setIntegral_congr_fun hTm (fun a' hb => by simp only [(habsT a' hb).1])
   rw [hI3, setIntegral_const, Measure.real, hT, hvol m.μK m.sdK.1 x a _ hDo.measurableSet, ENNReal.toReal_mul,
-    ENNReal.toReal_ofReal (inv_nonneg.2 (absK_nonneg A _))]
-  have hx0 : A.absK x ≠ 0 := absK_ne_zero A hx
-  have ha0 : A.absK a ≠ 0 := absK_ne_zero A ha
+    ENNReal.toReal_ofReal (inv_nonneg.2 (TruncInt.absK_nonneg A _))]
+  have hx0 : A.absK x ≠ 0 := TruncInt.absK_ne_zero A hx
+  have ha0 : A.absK a ≠ 0 := TruncInt.absK_ne_zero A ha
   simp only [Complex.real_smul]
   have hx0C : ((A.absK x : ℝ) : ℂ) ≠ 0 := by exact_mod_cast hx0
   have ha0C : ((A.absK a : ℝ) : ℂ) ≠ 0 := by exact_mod_cast ha0

@@ -23,7 +23,35 @@ instance overPullback_additive : (J.overPullback AddCommGrpCat.{v} U).Additive w
   map_add := rfl
 
 instance overPullback_isRightAdjoint : (J.overPullback AddCommGrpCat.{v} U).IsRightAdjoint :=
-  ⟨_, ⟨GroundTheory.Arith.SchemeCoh.sheafShriekAdjunction J U⟩⟩
+  ⟨_, ⟨((Adjunction.mkOfHomEquiv
+    { homEquiv := fun P Q =>
+        { toFun := shriekHomToRestrict
+          invFun := shriekHomOfRestrict
+          left_inv := fun α => by
+            ext X : 2
+            apply AddCommGrpCat.hom_ext
+            apply DirectSum.addHom_ext
+            intro s x
+            exact (shriekHomOfRestrictApp_of (shriekHomToRestrict α) X s x).trans rfl
+          right_inv := fun β => by
+            ext V x
+            exact shriekHomOfRestrictApp_of β (op V.unop.left) V.unop.hom x }
+      homEquiv_naturality_left_symm := fun {P P' Q} f g => by
+        ext X : 2
+        apply AddCommGrpCat.hom_ext
+        apply DirectSum.addHom_ext
+        intro s x
+        refine (shriekHomOfRestrictApp_of (f ≫ g) X s x).trans ?_
+        refine Eq.trans ?_ (congrArg (shriekHomOfRestrictApp g X)
+          (shriekPresheafMap_app_of f X s x).symm)
+        exact (shriekHomOfRestrictApp_of g X s _).symm
+      homEquiv_naturality_right := fun {P Q Q'} f g => rfl }).comp
+    (sheafificationAdjunction J AddCommGrpCat.{v})).restrictFullyFaithful
+    (iC := sheafToPresheaf (J.over U) AddCommGrpCat.{v}) (iD := 𝟭 _)
+    (fullyFaithfulSheafToPresheaf _ _) (Functor.FullyFaithful.id _)
+    (Functor.rightUnitor _).symm
+    (Functor.leftUnitor _ ≪≫ ((Over.forget U).sheafPushforwardContinuousCompSheafToPresheafIso
+      AddCommGrpCat.{v} (J.over U) J).symm)⟩⟩
 
 instance overPullback_preservesFiniteLimits :
     PreservesFiniteLimits (J.overPullback AddCommGrpCat.{v} U) := inferInstance

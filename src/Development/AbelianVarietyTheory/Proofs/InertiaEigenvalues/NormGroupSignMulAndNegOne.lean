@@ -91,7 +91,9 @@ theorem norms_of_isField {F E : Type} [NontriviallyNormedField F] [NontriviallyN
     obtain ⟨vK, tK, hKloc, -⟩ := GroundTheory.LocalField.exists_isNonarchimedeanLocalField_valuativeExtension F A.K
     exact @mul_norm_of_not_norm A.K A.L _ vK tK hKloc _ _ _ hKL s t hs ht
   · obtain ⟨vE, hEloc, hEv⟩ := exists_valuativeRel_of_normed E
-    haveI : ValuativeExtension F E := ⟨fun a b => by rw [hEv, hFv, norm_algebraMap', norm_algebraMap']⟩
+    haveI : ValuativeExtension F E := ⟨by
+      intro a b
+      rw [hEv, hFv, norm_algebraMap', norm_algebraMap']⟩
     obtain ⟨z, hz⟩ := GlobalTheory.T.exists_norm_eq_neg_one_of_unramified_values F E (fun y => by
       obtain ⟨x, hx⟩ := hU.unram y
       exact ⟨x, by rw [hEv, norm_algebraMap', hx], by rw [hEv, norm_algebraMap', hx]⟩)

@@ -51,8 +51,6 @@ theorem modF_princ (k : Eˣ) :
   rw [h1, WithZeroMulInt.toNNReal_neg_apply _ h0]
   push_cast
   congr 1
-  conv_lhs => rw [← WithZero.coe_unzero h0]
-  rfl
 
 end GlobalTheory.CMVal.IdeleModule
 

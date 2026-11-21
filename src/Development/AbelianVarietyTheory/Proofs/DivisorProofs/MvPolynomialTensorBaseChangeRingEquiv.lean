@@ -11,8 +11,7 @@ namespace GlobalTheory
 theorem mvPolynomial_tensor_baseChange_ringEquiv :
     ∀ (S B K τ : Type) [CommRing S] [CommRing B] [CommRing K] [Algebra S B] [Algebra S K]
       [Algebra (MvPolynomial τ S) K] [IsScalarTower S (MvPolynomial τ S) K],
-      letI : Algebra (MvPolynomial τ S) (MvPolynomial τ B) :=
-        MvPolynomial.algebraMvPolynomial
+      letI : Algebra (MvPolynomial τ S) (MvPolynomial τ B) := MvPolynomial.algebraMvPolynomial;
       Nonempty (MvPolynomial τ B ⊗[MvPolynomial τ S] K ≃+* B ⊗[S] K) := by
   intro S B K τ _ _ _ _ _ _ _
   let : Algebra (MvPolynomial τ S) (MvPolynomial τ B) := MvPolynomial.algebraMvPolynomial
