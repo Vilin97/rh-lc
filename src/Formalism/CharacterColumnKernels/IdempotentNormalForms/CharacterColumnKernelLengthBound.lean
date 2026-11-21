@@ -1,9 +1,5 @@
-module
-
-public import Formalism.CharacterColumnKernels.Statement
-public import Formalism.CharacterColumnKernels.CharacterColumnKernelLengthBound
-
-@[expose] public section
+import Formalism.CharacterColumnKernels.Statement
+import Formalism.CharacterColumnKernels.CharacterColumnKernelLengthBound
 
 open Finset
 
@@ -12,7 +8,8 @@ namespace Formalism.NG
 private lemma padicValInt_eq_emultiplicity (l : ℕ) [hl : Fact l.Prime] {z : ℤ} (hz : z ≠ 0) :
     (padicValInt l z : ℕ∞) = emultiplicity (l : ℤ) z := by
   have hz' : z.natAbs ≠ 0 := Int.natAbs_ne_zero.mpr hz
-  rw [show padicValInt l z = padicValNat l z.natAbs from rfl, padicValNat_eq_emultiplicity hz',
+  change (multiplicity l z.natAbs : ℕ∞) = emultiplicity (l : ℤ) z
+  rw [multiplicity_eq_emultiplicity hz',
     ← Int.natCast_emultiplicity, Int.natCast_natAbs]
   rcases abs_choice z with h | h
   · rw [h]
@@ -46,7 +43,7 @@ private lemma padicValInt_pow_sub_one_eq_add (l : ℕ) [hl : Fact l.Prime] (s₀
       rw [one_pow] at this
       rw [this, hE1]
   have hfin : emultiplicity (l : ℤ) (x ^ n - 1) = ((s₀ + padicValNat l n : ℕ) : ℕ∞) := by
-    rw [hE, ← padicValNat_eq_emultiplicity hn0]
+    rw [hE, ← multiplicity_eq_emultiplicity hn0, Nat.padicValNat_def]
     norm_cast
   have hne : x ^ n - 1 ≠ 0 := by
     intro h

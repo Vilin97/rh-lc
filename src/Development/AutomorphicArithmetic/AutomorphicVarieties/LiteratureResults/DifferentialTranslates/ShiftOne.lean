@@ -1,8 +1,4 @@
-module
-
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.DifferentialTranslates.IntegralityGoodReduction
-
-@[expose] public section
+import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.DifferentialTranslates.IntegralityGoodReduction
 
 noncomputable section
 
@@ -66,7 +62,7 @@ theorem shiftOne : ShiftOne := by
       abel
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_sub, hex.apply_apply_eq_zero, sub_zero, map_sum]
-      simp only [map_smul, hy]
+        simp only [map_smul, hy]
   have := hli.cardinal_le_rank
   simpa using this
 

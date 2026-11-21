@@ -334,8 +334,7 @@ theorem reesDegreeZeroRingHom_surjective (I : Ideal R) :
   ext i
   rcases eq_or_ne i 0 with rfl | hi
   · simp
-  · simp [Polynomial.coeff_monomial, Ne.symm hi]
-    exact (hco i hi).symm
+  · simpa [Polynomial.coeff_C, hi] using (hco i hi).symm
 
 theorem reesDegreeZeroRingHom_bijective (I : Ideal R) :
     Function.Bijective (reesDegreeZeroRingHom I) :=

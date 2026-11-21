@@ -193,7 +193,6 @@ open scoped ComplexOrder
 
 namespace Formalism.IrreducibleCountingLemmas.GaloisIrreducibility
 
-attribute [-instance] AddCommGroup.toIntModule in
 
 end Formalism.IrreducibleCountingLemmas.GaloisIrreducibility
 end

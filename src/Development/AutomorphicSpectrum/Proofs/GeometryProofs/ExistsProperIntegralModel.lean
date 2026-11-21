@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.CoordsAt
-
-@[expose] public section
+import Mathlib
+import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.CoordsAt
 
 noncomputable section
 
@@ -70,7 +66,7 @@ def comp (i : ℕ) (f : rees o x) : grading o x i :=
       · exact Submodule.zero_mem _⟩, by
     intro k hk
     change (Polynomial.monomial i ((f : (Polynomial Ω)).coeff i)).coeff k = 0
-    rw [Polynomial.coeff_monomial, if_neg (Ne.symm hk)]⟩
+    exact Polynomial.coeff_monomial_of_ne _ hk⟩
 
 lemma coeff_coeAddMonoidHom (y : DirectSum ℕ fun i => grading o x i) (n : ℕ) :
     ((DirectSum.coeAddMonoidHom (grading o x) y : rees o x) : (Polynomial Ω)).coeff n =
@@ -118,8 +114,8 @@ instance gradedRing : GradedRing (grading o x) where
   mul_mem := by
     intro i j a b ha hb k hk
     change ((a : (Polynomial Ω)) * (b : (Polynomial Ω))).coeff k = 0
-    rw [coe_eq_monomial ha, coe_eq_monomial hb, Polynomial.monomial_mul_monomial,
-      Polynomial.coeff_monomial, if_neg (Ne.symm hk)]
+    rw [coe_eq_monomial ha, coe_eq_monomial hb, Polynomial.monomial_mul_monomial]
+    exact Polynomial.coeff_monomial_of_ne _ hk
   decompose' := (Equiv.ofBijective _ bijective_coeAddMonoidHom).symm
   left_inv := (Equiv.ofBijective _ bijective_coeAddMonoidHom).apply_symm_apply
   right_inv := (Equiv.ofBijective _ bijective_coeAddMonoidHom).symm_apply_apply
@@ -142,7 +138,7 @@ lemma ev_apply (f : rees o x) : ev f = (f : Polynomial Ω).eval 1 := rfl
 lemma ev_of_mem {n : ℕ} {f : rees o x} (hf : f ∈ grading o x n) :
     ev f = (f : Polynomial Ω).coeff n := by
   rw [ev_apply, coe_eq_monomial hf, Polynomial.eval_monomial, one_pow, mul_one,
-    Polynomial.coeff_monomial, if_pos rfl]
+    Polynomial.coeff_monomial_same]
 
 lemma eq_zero_of_ev {n : ℕ} {f : rees o x} (hf : f ∈ grading o x n) (h : ev f = 0) : f = 0 := by
   rw [ev_of_mem hf] at h
@@ -163,7 +159,7 @@ def coord (c : κ) : rees o x :=
 lemma coord_mem (c : κ) : coord (o := o) (x := x) c ∈ grading o x 1 := by
   intro i hi
   change (Polynomial.monomial 1 (x c)).coeff i = 0
-  rw [Polynomial.coeff_monomial, if_neg (Ne.symm hi)]
+  exact Polynomial.coeff_monomial_of_ne _ hi
 
 lemma ev_coord (c : κ) : ev (coord (o := o) (x := x) c) = x c := by
   rw [ev_apply]

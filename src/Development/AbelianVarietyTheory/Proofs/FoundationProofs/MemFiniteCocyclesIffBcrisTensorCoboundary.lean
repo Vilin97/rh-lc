@@ -258,10 +258,6 @@ variable {V : Type} [AddCommGroup V] [Module LL V] [Module Qp V] [IsScalarTower 
     {ρ : Representation LL G V} {ρ' : Representation LL' G V'}
     {E : V' ≃ₗ[LL] (ι → V)} {L : Lattice (O := O) ρ} {L' : Lattice (O := O') ρ'}
 
-omit [TopologicalSpace G] [TopologicalSpace V] [ContinuousAdd V] [ContinuousConstSMul LL V]
-  [TopologicalSpace V'] [ContinuousAdd V'] [ContinuousConstSMul LL' V'] [Fintype ι]
-  [DecidableEq ι] in
-
 end One
 
 section Two
@@ -285,11 +281,6 @@ variable {V₁ : Type} [AddCommGroup V₁] [Module LL V₁] [Module Qp V₁] [Is
     {ρ₂ : Representation LL G V₂} {ρ₂' : Representation LL' G V₂'}
     {E₂ : V₂' ≃ₗ[LL] (ι → V₂)} {L₂ : Lattice (O := O) ρ₂} {L₂' : Lattice (O := O') ρ₂'}
     (F : LatHom L₁ L₂) (F' : LatHom L₁' L₂')
-
-omit [TopologicalSpace G] [Fintype ι] [DecidableEq ι] [ContinuousAdd V₁] [ContinuousConstSMul LL V₁]
-  [ContinuousAdd V₁'] [ContinuousConstSMul LL' V₁'] [ContinuousAdd V₂] [ContinuousConstSMul LL V₂]
-  [ContinuousAdd V₂'] [ContinuousConstSMul LL' V₂'] [Module O V₁'] [IsScalarTower O LL V₁']
-  [Module O V₂'] [IsScalarTower O LL V₂'] in
 
 end Two
 

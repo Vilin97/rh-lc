@@ -1,20 +1,15 @@
-module
-
-public import Mathlib
-public import Development.ResolutionOfSingularities.Foundations.Blowup.BlowupExistence
-public import Development.ResolutionOfSingularities.Foundations.Blowup.StrictTransform
-public import Development.ResolutionOfSingularities.EmbeddedResolution.IdealPrincipalization.OrderReductionProperties
-public import Development.ResolutionOfSingularities.EmbeddedResolution.IdealPrincipalization.MarkedOrderReduction.SequencePrefix
-public import Development.ResolutionOfSingularities.EmbeddedResolution.IdealPrincipalization.MonomialCase.MonomialPrincipalization
-public import Development.ResolutionOfSingularities.EmbeddedResolution.IdealPrincipalization.MarkedBlowupSequence.BlowupSequenceData
-public import Development.ResolutionOfSingularities.EmbeddedResolution.IdealPrincipalization.MarkedBlowupSequence.Append
-public import Development.ResolutionOfSingularities.EmbeddedResolution.IdealPrincipalization.MarkedBlowupSequence.IdealBlowupSequence
-public import Development.ResolutionOfSingularities.EmbeddedResolution.IdealPrincipalization.MarkedBlowupSequence.SingleBlowup
-public import Development.ResolutionOfSingularities.Foundations.BlowupUniversalProperty
-public import Development.ResolutionOfSingularities.EmbeddedResolution.ResolutionOfSingularities
-
-@[expose] public section
-
+import Mathlib
+import Development.ResolutionOfSingularities.Foundations.Blowup.BlowupExistence
+import Development.ResolutionOfSingularities.Foundations.Blowup.StrictTransform
+import Development.ResolutionOfSingularities.EmbeddedResolution.IdealPrincipalization.OrderReductionProperties
+import Development.ResolutionOfSingularities.EmbeddedResolution.IdealPrincipalization.MarkedOrderReduction.SequencePrefix
+import Development.ResolutionOfSingularities.EmbeddedResolution.IdealPrincipalization.MonomialCase.MonomialPrincipalization
+import Development.ResolutionOfSingularities.EmbeddedResolution.IdealPrincipalization.MarkedBlowupSequence.BlowupSequenceData
+import Development.ResolutionOfSingularities.EmbeddedResolution.IdealPrincipalization.MarkedBlowupSequence.Append
+import Development.ResolutionOfSingularities.EmbeddedResolution.IdealPrincipalization.MarkedBlowupSequence.IdealBlowupSequence
+import Development.ResolutionOfSingularities.EmbeddedResolution.IdealPrincipalization.MarkedBlowupSequence.SingleBlowup
+import Development.ResolutionOfSingularities.Foundations.BlowupUniversalProperty
+import Development.ResolutionOfSingularities.EmbeddedResolution.ResolutionOfSingularities
 universe u
 
 open CategoryTheory AlgebraicGeometry
@@ -193,7 +188,9 @@ theorem isStationaryAt_monomialStallIndex (hinv : ComapIsoInvariance.{u}) (p : X
     (I : X.IdealSheafData) (m : ℕ) (E : List X.IdealSheafData)
     (hex : ∃ n : ℕ, MarkedBlowupSequenceData.IsStationaryAt hinv (emptyMarkedBlowupSequenceData p I m E) n) :
     MarkedBlowupSequenceData.IsStationaryAt hinv (emptyMarkedBlowupSequenceData p I m E) (monomialStallIndex hinv p I m E) := by
-  exact Nat.sInf_mem hex
+  exact Nat.sInf_mem
+    (s := {n : ℕ | MarkedBlowupSequenceData.IsStationaryAt hinv (emptyMarkedBlowupSequenceData p I m E) n})
+    hex
 
 theorem isAdmissibleCenter_of_lt_monomialStallIndex (hinv : ComapIsoInvariance.{u})
     (p : X ⟶ Spec (CommRingCat.of k)) (I : X.IdealSheafData) (m : ℕ)
@@ -217,13 +214,13 @@ theorem monomialStallIndex_eq_of_isStationaryAt (hinv : ComapIsoInvariance.{u})
     (hstep : ∀ j < n, MarkedBlowupSequenceData.IsAdmissibleCenter
       (MarkedBlowupSequenceData.monomialBlowupIterate hinv (emptyMarkedBlowupSequenceData p I m E) j)) :
     monomialStallIndex hinv p I m E = n := by
-  have hne : ∃ j : ℕ, MarkedBlowupSequenceData.IsStationaryAt hinv (emptyMarkedBlowupSequenceData p I m E) j := ⟨n, hstall⟩
   have h1 : monomialStallIndex hinv p I m E ≤ n := Nat.sInf_le hstall
   refine le_antisymm h1 ?_
   by_contra hlt
   have hlt' : monomialStallIndex hinv p I m E < n := lt_of_not_ge hlt
   have hmem : MarkedBlowupSequenceData.IsStationaryAt hinv (emptyMarkedBlowupSequenceData p I m E)
-      (monomialStallIndex hinv p I m E) := Nat.sInf_mem hne
+      (monomialStallIndex hinv p I m E) :=
+    isStationaryAt_monomialStallIndex hinv p I m E ⟨n, hstall⟩
   exact ((MarkedBlowupSequenceData.isStationaryAt_iff_not_isAdmissibleCenter hinv _ _).mp hmem) (hstep _ hlt')
 
 theorem monomialBlowupSeq_eq_monomialBlowupIterate (hinv : ComapIsoInvariance.{u}) (p : X ⟶ Spec (CommRingCat.of k))

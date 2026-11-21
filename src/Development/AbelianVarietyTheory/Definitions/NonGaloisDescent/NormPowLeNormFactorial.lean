@@ -54,7 +54,6 @@ theorem norm_natCast_le_of_dvd {a b : ℕ} (h : a ∣ b) : ‖(b : K)‖ ≤ ‖
   rw [Nat.cast_mul, norm_mul]
   exact mul_le_of_le_one_right (norm_nonneg _) (IsUltrametricDist.norm_natCast_le_one K c)
 
-variable (K) in
 
 def wS (e n : ℕ) : ℝ := ‖((n / e).factorial : K)‖
 
@@ -166,7 +165,6 @@ theorem mem_R {l : ℕ} {k : ℝ} {f : K⟦X⟧} :
     f ∈ R O K l k ↔ Tendsto (fun n => ‖coeff n f‖ * rad l k ^ n) atTop (𝓝 0) :=
   PowerSeries.isRestricted_iff' _ _
 
-variable {K} in
 
 def normR (l : ℕ) (k : ℝ) (f : K⟦X⟧) : ℝ := ⨆ n, ‖coeff n f‖ * rad l k ^ n
 
@@ -230,7 +228,6 @@ instance (B : Subalgebra O K⟦X⟧) [HasK B] : IsScalarTower O K B :=
 
 instance (B : Subalgebra O K⟦X⟧) (s : B) [HasU B] : HasU (away B s) := ⟨le_away B s HasU.X_mem⟩
 
-variable (K) in
 
 def E (l e : ℕ) : K⟦X⟧ := X ^ e + (l : K⟦X⟧)
 
@@ -253,12 +250,10 @@ abbrev invE (l e : ℕ) (B : Subalgebra O K⟦X⟧) [HasU B] : Subalgebra O K⟦
 theorem away_mono {B B' : Subalgebra O K⟦X⟧} (h : B ≤ B') {s : B} {s' : B'}
     (hs : (s : K⟦X⟧) = s') : away B s ≤ away B' s' := fun _ ⟨n, hn⟩ => ⟨n, hs ▸ h hn⟩
 
-variable (K) in
 
 def frob (l : ℕ) [Fact l.Prime] : K⟦X⟧ →ₐ[K] K⟦X⟧ :=
   PowerSeries.expand l (Fact.out : l.Prime).ne_zero
 
-variable (K) in
 
 def N : Derivation K K⟦X⟧ K⟦X⟧ := (X : K⟦X⟧) • PowerSeries.derivative (R := K)
 
@@ -456,7 +451,6 @@ omit [IsUltrametricDist K] in
 theorem norm_natCast_eq (n : ℕ) : ‖(n : K)‖ = ‖(n : ℚ_[l])‖ := by
   rw [← map_natCast (algebraMap ℚ_[l] K), norm_algebraMap']
 
-omit [IsUltrametricDist K] in
 
 theorem norm_l : ‖(l : K)‖ = (l : ℝ)⁻¹ := by rw [norm_natCast_eq l, Padic.norm_p]
 
@@ -471,7 +465,6 @@ theorem l_ne_zero : (l : K) ≠ 0 := natCast_ne_zero' l (Fact.out : l.Prime).ne_
 omit [IsUltrametricDist K] in
 theorem norm_l_lt_one : ‖(l : K)‖ < 1 := by rw [norm_natCast_eq l]; exact Padic.norm_p_lt_one
 
-omit [IsUltrametricDist K] in
 
 theorem norm_pow_le_norm_factorial (m : ℕ) : ‖(l : K)‖ ^ m ≤ ‖(m.factorial : K)‖ := by
   rw [norm_l, norm_natCast_eq l, Padic.norm_eq_zpow_neg_valuation (by
@@ -554,7 +547,6 @@ theorem invL_le {B B' : Subalgebra O K⟦X⟧} [HasK B'] (h : B ≤ B') : invL l
   rw [h2, ← map_pow, ← mul_assoc, ← map_mul, inv_mul_cancel₀ (pow_ne_zero _ (l_ne_zero l)),
     map_one, one_mul]
 
-variable (K) in
 
 def Ediv (e i : ℕ) : K⟦X⟧ := C ((i.factorial : K)⁻¹) * E K l e ^ i
 
@@ -584,12 +576,10 @@ theorem Ediv_mem_S (e : ℕ) [NeZero e] (i : ℕ) : Ediv K l e i ∈ S O K e := 
     inv_mul_cancel₀ (norm_ne_zero_iff.2 (hf k)), one_mul]
   exact h1
 
-variable (O K) in
 
 def FilPre (e j : ℕ) : Ideal (S O K e) :=
   Ideal.span {x | ∃ i, j ≤ i ∧ (x : K⟦X⟧) = Ediv K l e i}
 
-variable (O K) in
 
 def Fil (e j : ℕ) : Ideal (S O K e) :=
   ⨅ n : ℕ, (FilPre O K l e j ⊔ Ideal.span {(l : S O K e) ^ n})

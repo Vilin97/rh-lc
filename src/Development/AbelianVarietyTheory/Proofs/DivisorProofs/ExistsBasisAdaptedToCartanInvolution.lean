@@ -4,7 +4,6 @@ open scoped ComplexOrder
 
 namespace GlobalTheory
 
-open scoped MatrixOrder in
 
 theorem posDef_exists_invertible_conjTranspose_mul_self {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ)
     (hP : P.PosDef) :

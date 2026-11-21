@@ -9,7 +9,6 @@ section OpNorm
 
 variable {m n : Type*} [Fintype m] [Fintype n] [DecidableEq m] [DecidableEq n]
 
-omit [DecidableEq m] in
 
 theorem norm_dotProduct_mulVec_star_le (A : Matrix n n ℂ) (x : n → ℂ) :
     ‖x ⬝ᵥ A *ᵥ star x‖ ≤ ‖A‖ * ∑ k, ‖x k‖ ^ 2 := by

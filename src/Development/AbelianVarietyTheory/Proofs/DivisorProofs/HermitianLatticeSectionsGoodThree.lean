@@ -34,7 +34,6 @@ open scoped ENNReal Classical
 open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi GlobalTheory.Points GlobalTheory.ChartGlue GlobalTheory.CechPic GlobalTheory.CxPts GlobalTheory.Cartier
 open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
 
-attribute [-instance] GlobalTheory.CompHS.cuspAddCommGroup in
 
 private theorem chart_bound {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
     {Dw : Datum H} {l : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H} {Xo : Moduli Dw l} {c : Coeff l} {r : ℕ}
@@ -96,4 +95,3 @@ private theorem chart_bound {E : Type} [Field E] [NumberField E] [IsCMField E] {
   rw [e3, ← hκn, e1, norm_mul, mul_pow, mul_pow, norm_pow, ← pow_mul, ← pow_mul, mul_comm τ 2, ← mul_assoc, mul_comm]
   exact mul_le_mul_of_nonneg_right hb (pow_nonneg (norm_nonneg _) _)
 
-attribute [-instance] GlobalTheory.CompHS.cuspAddCommGroup in

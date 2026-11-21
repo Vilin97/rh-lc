@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsHeisTrivial
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsHeisTrivial
 
 open Classical GlobalTheory.FinWeil
 open scoped BigOperators
@@ -25,8 +21,8 @@ theorem intertwiner_fixes_of_local_vacuum {R X M : Type} [CommRing R] [AddCommGr
     | H s ih =>
       intro e he hfix
       by_cases hall : ∀ i ∈ s, P (x i) ∈ A
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [map_sum]
+      · set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_congr rfl fun i hi => ?_
         have h1 := h.comp (x i - P (x i)) (P (x i)) (e i)
         rw [he i _ (hall i hi), sub_add_cancel] at h1

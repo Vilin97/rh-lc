@@ -1,8 +1,4 @@
-module
-
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.ArithmeticGapBounds.Arith
-
-@[expose] public section
+import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.ArithmeticGapBounds.Arith
 
 noncomputable section
 
@@ -27,6 +23,11 @@ theorem coe_qel (π : 𝓞 L) (hπ : π ≠ 0) :
   show (diagonal fun i : Fin N => if (i : ℕ) = 0 then (π : L) else 1) = dg L N π 1
   unfold dg
   congr 1
+  funext i
+  by_cases hi : (i : ℕ) = 0
+  · simp [hi]
+  · have hi' : ¬ (i : ℕ) < 1 := by omega
+    simp [hi, hi']
 
 theorem coe_toK_toGL (a : Matrix.SpecialLinearGroup (Fin N) (𝓞 L)) :
     ((toK L N (Matrix.SpecialLinearGroup.toGL a) : GK L N) : Matrix (Fin N) (Fin N) L) =

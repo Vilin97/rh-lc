@@ -204,9 +204,7 @@ lemma map_comp_apply (f : F ⟶ G) (g : G ⟶ H) (x : F.H' n U) :
 
 lemma map_add_apply (f g : F ⟶ G) (x : F.H' n U) :
     map (f + g) n U x = map f n U x + map g n U x := by
-  change ((((Sheaf.cohomologyPresheafFunctor J n).map (f + g)).app (.op U)).hom) x = _
-  rw [Functor.map_add (f := f) (g := g)]
-  simp only [AddCommGrpCat.Hom.hom_add]
+  simp [map, Sheaf.cohomologyPresheafFunctor, Functor.flip]
 
 lemma map_zero_apply (x : F.H' n U) : map (0 : F ⟶ G) n U x = 0 := by
   simp only [map, Functor.map_zero]; rfl
@@ -231,7 +229,8 @@ def endAction : End F →+* AddMonoid.End (F.H' n U) where
   map_zero' := AddMonoidHom.ext (fun x => map_zero_apply x)
   map_add' f g := AddMonoidHom.ext (fun x => map_add_apply f.asHom g.asHom x)
 
-lemma endAction_apply (f : End F) (x : F.H' n U) : endAction F n U f x = map f.asHom n U x := rfl
+lemma endAction_apply (f : End F) (x : F.H' n U) :
+    endAction (F := F) (n := n) (U := U) f x = map f.asHom n U x := rfl
 
 end SiteCoh
 

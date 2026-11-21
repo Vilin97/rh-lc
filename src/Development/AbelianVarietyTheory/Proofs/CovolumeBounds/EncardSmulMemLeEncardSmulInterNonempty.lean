@@ -12,7 +12,6 @@ variable {G X : Type*} [Group G] [MulAction G X]
 variable [MeasurableSpace X] {μ : Measure X} [MeasurableConstSMul G X]
   [SMulInvariantMeasure G X μ] [Countable G] {B D : Set X}
 
-omit [MeasurableSpace X] [MeasurableConstSMul G X] [Countable G] in
 
 @[to_additive
 ]
@@ -80,7 +79,6 @@ theorem setLIntegral_le_mul_of_ae_covers (hD : ∀ᵐ x ∂μ, ∃ g : G, g • 
         lintegral_mono' (sum_restrict_preimage_smul_le hB hm) le_rfl
     _ = m * ∫⁻ x in D, u x ∂μ := by rw [lintegral_smul_measure, smul_eq_mul]
 
-omit [MeasurableConstSMul G X] [SMulInvariantMeasure G X μ] in
 
 @[to_additive ae_encard_vadd_mem_le_one
 ]

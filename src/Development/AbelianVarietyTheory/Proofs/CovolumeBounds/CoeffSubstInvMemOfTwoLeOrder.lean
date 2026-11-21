@@ -440,7 +440,6 @@ theorem coeff_substInv_mem (hu : ∀ i, constantCoeff (u i) = 0) {S : Subring R}
   mem_coeffsInDeg.1 (approxLimit_mem_coeffsInDeg hu hB
     (fun i => higherPart_mem_coeffsInDeg (hu i) (mem_coeffsInDeg.2 (huS i))) i) d hd
 
-omit [Fintype σ] in
 
 theorem two_le_order_sub_X_iff :
     (∀ i, (2 : ℕ∞) ≤ (u i - X i).order) ↔

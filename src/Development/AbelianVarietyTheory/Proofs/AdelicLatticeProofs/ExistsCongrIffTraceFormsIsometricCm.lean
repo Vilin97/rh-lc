@@ -305,6 +305,5 @@ theorem isotropic_of_indefinite (H : GlobalTheory.Published.HasseNormSt) (F : Ty
 theorem landherr_of_hasseNormSt (H : GlobalTheory.Published.HasseNormSt) : GlobalTheory.Published.Landherr :=
   landherr_of_isotropy fun F _ _ _ _ a hι ha hr => isotropic_of_indefinite H F a hι ha hr
 
-universe u v w in
 
 end GlobalTheory.LocalQuad

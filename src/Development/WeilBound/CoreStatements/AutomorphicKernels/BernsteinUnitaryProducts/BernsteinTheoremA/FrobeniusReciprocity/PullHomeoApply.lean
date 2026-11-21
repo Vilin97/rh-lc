@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Foundations.MatrixMeasurableSpace
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.Foundations.MatrixMeasurableSpace
 
 noncomputable section
 
@@ -84,8 +80,12 @@ def fibHomeo {p : X → G ⧸ H} (hp : ∀ (g : G) (x : X), p (g • x) = g • 
     Fib p ≃ₜ Fib p where
   toFun := fibSmul hp h
   invFun := fibSmul hp h⁻¹
-  left_inv z := Subtype.ext (by simp [smul_smul])
-  right_inv z := Subtype.ext (by simp [smul_smul])
+  left_inv z := Subtype.ext (by
+    change (h : G)⁻¹ • ((h : G) • z.1) = z.1
+    rw [smul_smul, inv_mul_cancel, one_smul])
+  right_inv z := Subtype.ext (by
+    change (h : G) • ((h : G)⁻¹ • z.1) = z.1
+    rw [smul_smul, mul_inv_cancel, one_smul])
   continuous_toFun := ((continuous_const_smul (h : G)).comp continuous_subtype_val).subtype_mk _
   continuous_invFun :=
     ((continuous_const_smul ((h⁻¹ : H) : G)).comp continuous_subtype_val).subtype_mk _

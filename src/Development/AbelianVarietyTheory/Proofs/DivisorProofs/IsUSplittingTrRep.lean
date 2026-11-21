@@ -41,7 +41,7 @@ def IsGoodInt [TopologicalSpace R] (C : TestClass R) (ψ : AddChar R ℂ) (d d�
 
 section Dbl
 
-variable {E : Type} [CommRing E] [Algebra R E] {c : E →ₐ[R] E} {α β : Type} [Fintype α] [DecidableEq α] [Fintype β]
+variable {E : Type} [CommRing E] [Algebra R E] (c : E →ₐ[R] E) {α β : Type} [Fintype α] [DecidableEq α] [Fintype β]
   [DecidableEq β]
 
 

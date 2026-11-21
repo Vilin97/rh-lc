@@ -171,7 +171,6 @@ def altRestrictScalars (ω : M [⋀^Fin D]→ₗ[B] N) : M [⋀^Fin D]→ₗ[A] 
 
 variable {A} {L : Type*} [AddCommGroup L] [Module A L]
 
-variable (B D) in
 
 noncomputable def exteriorPowerMapOver (φ : L →ₗ[A] M) : (⋀[A]^D L) →ₗ[A] (⋀[B]^D M) :=
   exteriorPower.alternatingMapLinearEquiv
@@ -207,7 +206,6 @@ theorem dWedge_mul_sub_mem (I : Ideal A) (h : A) (g : Fin D → A) (hg : ∀ k, 
     dWedge R (fun k => h * g k) - h ^ D • dWedge R g ∈ I • (⊤ : Submodule A (⋀[A]^D Ω[A⁄R])) :=
   form_d_mul_sub_mem _ _ I h g hg
 
-variable (A D) in
 
 variable {R}
 

@@ -1,18 +1,14 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.HasQExpansionModularForm
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.HasQExpansionModularForm
 
 open UpperHalfPlane ModularForm Complex Function Filter PowerSeries
 open scoped Topology MatrixGroups Manifold Real ArithmeticFunction.sigma
 
-local notation "𝕢" => Periodic.qParam
-
 noncomputable section
 
 namespace GlobalTheory
+
+local notation "𝕢" => Periodic.qParam
 
 def modularJ (τ : ℍ) : ℂ := E₄ τ ^ 3 / discriminant τ
 

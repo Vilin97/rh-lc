@@ -1,11 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.TranslateMemIndOrder
-public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.DualOrder
-
-@[expose] public section
-
+import Mathlib
+import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.TranslateMemIndOrder
+import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.DualOrder
 open GlobalTheory.CompanionTheory.Ar.BT TensorProduct
 
 namespace PositivityTheory.HtPt.Twhopf
@@ -147,12 +142,20 @@ theorem ind_hopf : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGrou
         exact OrderApi.mul_mem_prodSpan (hext_mem c a ha) (hext_mem c' b hb)
       | zero =>
         convert (prodSpan (indOrder ι A)).zero_mem using 1
+        funext z
+        simp
       | add x y _ _ hx hy =>
         convert (prodSpan (indOrder ι A)).add_mem hx hy using 1
-        split_ifs <;> simp
+        funext z
+        by_cases h1 : (QuotientGroup.mk z.1 : T ⧸ ι.range) = c <;>
+          by_cases h2 : (QuotientGroup.mk z.2 : T ⧸ ι.range) = c' <;>
+          simp [h1, h2]
       | smul r x _ hx =>
         convert (prodSpan (indOrder ι A)).smul_mem r hx using 1
-        split_ifs <;> simp
+        funext z
+        by_cases h1 : (QuotientGroup.mk z.1 : T ⧸ ι.range) = c <;>
+          by_cases h2 : (QuotientGroup.mk z.2 : T ⧸ ι.range) = c' <;>
+          simp [h1, h2]
     have hsum : (fun z : T × T => f (z.1 * z.2)) = ∑ c : T ⧸ ι.range, ∑ c' : T ⧸ ι.range,
         (fun z : T × T => if (QuotientGroup.mk z.1 : T ⧸ ι.range) = c ∧
           (QuotientGroup.mk z.2 : T ⧸ ι.range) = c' then

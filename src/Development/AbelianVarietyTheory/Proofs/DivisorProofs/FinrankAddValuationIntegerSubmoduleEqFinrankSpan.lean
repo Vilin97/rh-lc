@@ -16,8 +16,18 @@ theorem finrank_addValuationInteger_submodule_eq_finrank_span : ∀ (C : Type) [
     intro x y h; funext i; exact Subtype.ext (congrFun h i)
   let L : X →ₗ[Int0 v] (Fin N → C) := ι ∘ₗ X.subtype
   have hL : Function.Injective L := hι.comp Subtype.val_injective
-  haveI : Module.IsTorsionFree (Int0 v) X := inferInstance
-  haveI : Module.Free (Int0 v) X := free_of_finite_of_isTorsionFree_of_valuationRing
+  have hInt : v.toValuation.Integers (Int0 v) := by
+    refine ⟨Subtype.val_injective, ?_, ?_⟩
+    · intro x
+      change 0 ≤ v (x : C)
+      exact (mem_addValuationIntegerRing_iff v _).mp x.property
+    · intro x hx
+      change 0 ≤ v x at hx
+      exact ⟨⟨x, (mem_addValuationIntegerRing_iff v x).mpr hx⟩, rfl⟩
+  have : ValuationRing (Int0 v) := ValuationRing.of_integers _ hInt
+  have : IsFractionRing (Int0 v) C := hInt.isFractionRing
+  have : Module.IsTorsionFree (Int0 v) X := inferInstance
+  have : Module.Free (Int0 v) X := free_of_finite_of_isTorsionFree_of_valuationRing
   let b := Module.Free.chooseBasis (Int0 v) X
   have hli : LinearIndependent (Int0 v) (L ∘ b) :=
     b.linearIndependent.map' L (LinearMap.ker_eq_bot.mpr hL)

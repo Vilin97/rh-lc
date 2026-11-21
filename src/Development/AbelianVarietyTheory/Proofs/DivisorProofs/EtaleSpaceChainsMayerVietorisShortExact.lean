@@ -43,8 +43,6 @@ private theorem nonempty_iso_shortComplex_map_of_squares {A B : Type*} [Category
         biprod.inr_desc_assoc, ← Functor.map_comp_assoc, hg]
   exact ⟨ShortComplex.isoMk iW (T.mapBiprod X Y ≪≫ biprod.mapIso iX iY) iZ h₁ h₂⟩
 
-open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex in
-universe u in
 
 theorem _root_.GlobalTheory.EtC.mv_map_shortExact {A B : Type*} [Category A] [Category B] [Abelian A] [Abelian B] (T : A ⥤ B) [T.Additive]
     {W X Y Z : A} {a : W ⟶ X} {b : W ⟶ Y} {f : X ⟶ Z} {g : Y ⟶ Z}
@@ -57,8 +55,6 @@ theorem _root_.GlobalTheory.EtC.mv_map_shortExact {A B : Type*} [Category A] [Ca
   ShortComplex.shortExact_of_iso
     (Classical.choice (nonempty_iso_shortComplex_map_of_squares T iW iX iY iZ ha hb hf hg w w')).symm h
 
-open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex in
-universe u in
 
 theorem _root_.GlobalTheory.EtC.chainsXIso_naturality (R : Type) [CommRing R] {E E' : _root_.GlobalTheory.EtC.Spc} (f : E ⟶ E') (p : ℕ) :
     ((_root_.GlobalTheory.EtC.chains R).map f).f (-(p : ℤ)) ≫ (_root_.GlobalTheory.EtC.chainsXIso R E' p).hom =
@@ -70,8 +66,6 @@ theorem _root_.GlobalTheory.EtC.chainsXIso_naturality (R : Type) [CommRing R] {E
   erw [Category.assoc, Category.assoc, Iso.inv_hom_id, Category.comp_id]
   rfl
 
-open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex in
-universe u in
 
 theorem _root_.GlobalTheory.EtC.chains_isZero_pos (R : Type) [CommRing R] (E : _root_.GlobalTheory.EtC.Spc) (i : ℤ) (hi : 0 < i) : IsZero (((_root_.GlobalTheory.EtC.chains R).obj E).X i) := by
   apply HomologicalComplex.isZero_extend_X
@@ -240,8 +234,6 @@ private theorem freeSheaf_pullback_shortExact (R : Type) [CommRing R]
     exact @mono_comp _ _ _ _ _ e.inv.τ₁ inferInstance _ this
   exact mono_of_mono _ e.inv.τ₂
 
-open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex in
-universe u in
 
 theorem _root_.GlobalTheory.EtC.mv_shortExact : ∀ (R : Type) [CommRing R] {U V E : _root_.GlobalTheory.EtC.Spc} (f : U ⟶ E) (g : V ⟶ E), _root_.GlobalTheory.EtC.Cover2 R f g → ∃ w, (ShortComplex.mk (biprod.lift ((_root_.GlobalTheory.EtC.chains R).map (pullback.fst f g)) (-(_root_.GlobalTheory.EtC.chains R).map (pullback.snd f g))) (biprod.desc ((_root_.GlobalTheory.EtC.chains R).map f) ((_root_.GlobalTheory.EtC.chains R).map g)) w).ShortExact := by
   intro R _ U V E f g hcov

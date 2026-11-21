@@ -361,7 +361,7 @@ theorem exists_monic_lift (F : (etaleColimit R K)[X]) (hF : F.Monic) :
 
 theorem henselianLocalRing (hK : Function.Surjective (toK : etaleColimit R K →+* K)) :
     HenselianLocalRing (etaleColimit R K) := by
-  refine ((HenselianLocalRing.TFAE (etaleColimit R K)).out 0 2).2 ?_
+  refine ((HenselianLocalRing.TFAE (etaleColimit R K)).out 1 3).2 ?_
   intro K' _ φ hφ F hF a₀ h₁ h₂
 
   have hker : RingHom.ker φ = RingHom.ker toK := by

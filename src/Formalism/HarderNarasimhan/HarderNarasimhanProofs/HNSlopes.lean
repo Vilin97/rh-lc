@@ -86,7 +86,6 @@ theorem eq_zero_of_abs_le_mul (a : ℝ) (n : ℕ) (h : ∀ t : ℝ, 0 < t → |a
     exact div_mul_cancel₀ _ (by positivity)
   nlinarith [mul_nonneg htpos.le (Nat.cast_nonneg n)]
 
-universe u v w in
 
 theorem hnSlopes_of (h1 : HNStep.{u, v, w}) (h2 : MuChar.{u, v, w})
     (h3 : DegSupermod.{u, v, w}) (h4 : SatBasic.{u, v, w}) : HNSlopes.{u, v, w} := by

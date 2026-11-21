@@ -53,7 +53,6 @@ theorem ratM_iff (d : SD σ) (X : Mx F E d.m d.n) :
     rw [← e2]
     exact AddSubgroup.subset_closure ⟨_, rfl⟩
 
-attribute [-instance] Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.measAF in
 
 theorem integral_cov_gen {G : Type} [AddCommGroup G] [TopologicalSpace G] [IsTopologicalAddGroup G] [LocallyCompactSpace G]
     [SecondCountableTopology G] {mG : MeasurableSpace G} [hBor : BorelSpace G] {ι : Type} [Fintype ι] (Γ : AddSubgroup G) [Countable Γ]

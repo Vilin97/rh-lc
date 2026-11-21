@@ -10,7 +10,7 @@ theorem UpperTheory.V.AlgebraTools.smith_zero_one :
   haveI : Submodule.IsFullLattice F Z :=
     Submodule.IsFullLattice.of_finrank_le F Z (by
       rw [← Submodule.IsLattice.finrank_span_eq_finrank F Z]
-      exact Submodule.finrank_le _)
+      exact Submodule.finrank_mono (show Submodule.span F (Z : Set V) ≤ ⊤ from le_top))
   have hfr : Module.finrank A Z = Module.finrank F V := by
     apply Module.finrank_eq_of_rank_eq
     rw [Submodule.IsLattice.rank' F Z, Module.finrank_eq_rank]
@@ -34,7 +34,7 @@ theorem UpperTheory.V.AlgebraTools.smith_zero_one :
     have := congrArg (fun m => b'.repr m i) hx
     simp [x, Finsupp.single_apply, Finset.sum_apply'] at this
     exact ⟨ab'.repr x i, by rw [this, mul_comm]⟩
-  let B := b'.extendOfIsLattice F
+  let B := b'.extendOfIsFullLattice F
   let S : Finset (Fin (Module.finrank F V)) := Finset.univ.filter fun i => ¬ IsUnit (a i)
   refine ⟨B, S, ?_, ?_⟩
   · have h1 : Submodule.map Z.subtype (⊤ : Submodule A Z) = Z := by simp

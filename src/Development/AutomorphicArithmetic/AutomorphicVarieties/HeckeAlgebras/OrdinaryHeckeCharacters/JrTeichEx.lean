@@ -181,4 +181,3 @@ private theorem jr_surj {l : ℕ} [Fact l.Prime] {F : GFrame l} {O : Type} [Comm
 
 end Abstract
 
-attribute [-instance] UpperTheory.V.GradeZeroInterpolatingElement.instIsLocalRingSubtypePadicAlgClMemSubalgebraPadicIntO in

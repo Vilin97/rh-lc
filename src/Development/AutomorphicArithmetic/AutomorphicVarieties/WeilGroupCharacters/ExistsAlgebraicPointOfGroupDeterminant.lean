@@ -1,11 +1,7 @@
-module
-
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.Inertia
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.LocalRingsCompletion.nakayama
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AlgebraicPointIntegral
-public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FinitelyGeneratedModPow
-
-@[expose] public section
+import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.Inertia
+import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.LocalRingsCompletion.nakayama
+import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AlgebraicPointIntegral
+import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FinitelyGeneratedModPow
 
 open IsLocalRing UpperTheory.V.Alg UpperTheory.V.W
 
@@ -40,7 +36,8 @@ private theorem algpt_finite {O S : Type} [CommRing O] [IsLocalRing O] [IsAdicCo
     have h1 : maximalIdeal O ≤ P.comap (algebraMap O S) := Ideal.map_le_iff_le_comap.1 hJP
     have h2 : P.comap (algebraMap O S) = maximalIdeal O :=
       ((maximalIdeal.isMaximal O).eq_of_le (Ideal.comap_ne_top _ hP.ne_top) h1).symm
-    have h3 : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := O) P
+    have h3 : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap
+      (algebraMap O S) (algebraMap_isIntegral_iff.mpr ‹Algebra.IsIntegral O S›) P
       (h2 ▸ maximalIdeal.isMaximal O)
     exact (eq_maximalIdeal h3).ge
   obtain ⟨n, hn⟩ := Ideal.exists_pow_le_of_le_radical_of_fg hrad (IsNoetherian.noetherian _)
