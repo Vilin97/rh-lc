@@ -79,9 +79,8 @@ theorem norm_le_of_forall_altSum_le (hD : IsAddFundamentalDomain L D ν) (hD1 : 
       rw [integral_sub hi0' (integrableOn_const hfin.ne)]
       simp only [zero_add, hmean, setIntegral_const, measureReal_def, hD1, ENNReal.toReal_one,
         one_smul, zero_sub]
-    calc ‖h 0‖ = ‖∫ y in D, (h (0 + y) - h 0) ∂ν‖ := by rw [hkey, norm_neg]
-      _ ≤ B * ν.real D := norm_setIntegral_le_of_norm_le_const hfin hstep
-      _ = B := by simp [measureReal_def, hD1]
+    have hbound := norm_setIntegral_le_of_norm_le_const hfin hstep
+    simpa only [hkey, norm_neg, measureReal_def, hD1, ENNReal.toReal_one, mul_one] using hbound
 
 end Abstract
 

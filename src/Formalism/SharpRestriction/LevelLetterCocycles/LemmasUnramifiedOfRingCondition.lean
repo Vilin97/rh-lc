@@ -125,10 +125,12 @@ theorem tools1 (hR : RingP W) :
   obtain ⟨w, hw⟩ := hR.2.2.2.2.2.1
   exact ⟨w, w.isUnit, by rw [hw, eat_qP]⟩
 
-theorem φpow_π₀ (hR : RingP W) : ∀ s : ℕ, ∃ a, (W.φA ^ s) W.π₀ = W.π₀ * a
-  | 0 => ⟨1, by simp⟩
-  | s + 1 => by
-    obtain ⟨a, ha⟩ := φpow_π₀ hR s
+theorem φpow_π₀ (hR : RingP W) : ∀ s : ℕ, ∃ a, (W.φA ^ s) W.π₀ = W.π₀ * a := by
+  intro s
+  induction s with
+  | zero => exact ⟨1, by simp⟩
+  | succ s ih =>
+    obtain ⟨a, ha⟩ := ih
     obtain ⟨w, hw⟩ := hR.2.2.2.2.2.1
     rw [eat_qP] at hw
     exact ⟨(w : LetA O n) * qP W ^ (PD.p - 1) * W.φA a, by
@@ -221,10 +223,12 @@ theorem w_AΔ (hR : RingP W) (hp0 : ((PD.p : ℕ) : O) ≠ 0) {w : (LetA O n)ˣ}
     exact φ_AΔ hR.1
 
 theorem modp (hR : RingP W) (hp0 : ((PD.p : ℕ) : O) ≠ 0) : ∀ s : ℕ, ∃ v ∈ W.AΔ, IsUnit v ∧
-    ∃ r : LetA O n, (W.φA ^ s) W.π₀ = v * W.π₀ ^ (PD.p ^ s) + ((PD.p : ℕ) : LetA O n) * r
-  | 0 => ⟨1, W.AΔ.one_mem, isUnit_one, 0, by simp⟩
-  | s + 1 => by
-    obtain ⟨v, hvΔ, hvu, r, hr⟩ := modp hR hp0 s
+    ∃ r : LetA O n, (W.φA ^ s) W.π₀ = v * W.π₀ ^ (PD.p ^ s) + ((PD.p : ℕ) : LetA O n) * r := by
+  intro s
+  induction s with
+  | zero => exact ⟨1, W.AΔ.one_mem, isUnit_one, 0, by simp⟩
+  | succ s ih =>
+    obtain ⟨v, hvΔ, hvu, r, hr⟩ := ih
     obtain ⟨w, hw⟩ := hR.2.2.2.2.2.1
     rw [eat_qP] at hw
     have hwΔ := w_AΔ hR hp0 hw
