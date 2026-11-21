@@ -66,7 +66,10 @@ noncomputable def mvIso {C D : Type*} [Category C] [Category D] [Preadditive C] 
   exact ShortComplex.isoMk (Iso.refl _) (G.mapBiprod A B) (Iso.refl _)
     (by show 𝟙 _ ≫ biprod.lift (G.map a) (-G.map b) = G.map (biprod.lift a (-b)) ≫ (G.mapBiprod A B).hom
         rw [biprod.map_lift_mapBiprod, Functor.map_neg, Category.id_comp])
-    (by dsimp; rw [← biprod.mapBiprod_inv_map_desc]; erw [Iso.hom_inv_id_assoc]; simp; exact (Category.comp_id _).symm)
+    (by
+      show (G.mapBiprod A B).hom ≫ biprod.desc (G.map c) (G.map d) =
+        G.map (biprod.desc c d) ≫ 𝟙 _
+      rw [Category.comp_id, biprod.mapBiprod_hom_desc])
 
 theorem mono_f_of_iso {C : Type*} [Category C] [HasZeroMorphisms C] {S T : ShortComplex C}
     (e : S ≅ T) [Mono S.f] : Mono T.f := by

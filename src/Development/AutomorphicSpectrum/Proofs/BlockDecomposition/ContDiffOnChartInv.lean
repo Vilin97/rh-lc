@@ -10,7 +10,7 @@ noncomputable section
 open MeasureTheory Matrix Finset Filter Topology
 open scoped ContDiff ComplexConjugate InnerProductSpace
 open PositivityTheory.RgTw (Mat G)
-open PositivityTheory.RgBcC PositivityTheory.RgBcC.Calc2 PositivityTheory.RgBcC.Calc2.L
+open PositivityTheory.RgBcC
 
 namespace GlobalTheory.CompanionTheory.MatInv
 

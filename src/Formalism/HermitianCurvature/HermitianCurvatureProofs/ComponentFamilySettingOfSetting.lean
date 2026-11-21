@@ -443,15 +443,21 @@ theorem RRop_step (hQ : ∀ Y a b, Z0 (QQ Y a b)) (l : Wd.Letter ℂ S) (w : Lis
 
 theorem residue_operator_at_first (hQ : ∀ Y a b, Z0 (QQ Y a b)) :
     ∀ (w : List (Wd.Letter ℂ S)), Wd.Good w → ∀ F : X,
-      ap (RRop QQ w Wd.e1 Wd.e1) F = w.reverse.foldr (fun l H => ap (QQ l.pt 0 0) H) F
-  | [], _, F => by rw [RRop_nil, if_pos rfl]; rfl
-  | l :: w, hG, F => by
+      ap (RRop QQ w Wd.e1 Wd.e1) F = w.reverse.foldr (fun l H => ap (QQ l.pt 0 0) H) F := by
+  intro w
+  induction w with
+  | nil =>
+    intro _ F
+    rw [RRop_nil, if_pos rfl]
+    rfl
+  | cons l w ih =>
+    intro hG F
     obtain ⟨hN, hS, hP⟩ := hG
     have hN' := hN
     rw [List.map_cons, List.nodup_cons] at hN'
     rw [List.pairwise_cons] at hP
     have hGw : Wd.Good w := ⟨hN'.2, fun l' h => hS l' (List.mem_cons_of_mem _ h), hP.2⟩
-    rw [RRop_step hQ l w hN hP.1, ap_mul, residue_operator_at_first hQ w hGw]
+    rw [RRop_step hQ l w hN hP.1, ap_mul, ih hGw]
     simp [List.reverse_cons, List.foldr_append]
 
 end alg2

@@ -65,7 +65,8 @@ private theorem sat_two {V : Type} [AddCommGroup V] [Module ℂ V] {ρ : Represe
       h.2.2.2 _ (unif_spec w) 1 (by norm_num)]
     congr 1
     rw [Complex.ofReal_cpow (by positivity)]
-    have : qV F w = normV w := rfl
+    have : qV F w = normV w := by
+      simp [normV, qV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
     simp [satEig, Multiset.esymm, Multiset.powersetCard_one, this]
     norm_num [add_comm]
   · have h2 := h.2.2.2 _ (unif_spec w) 2 le_rfl
@@ -150,7 +151,9 @@ theorem mem_iff (v : Pl ℚ) (n : ℕ) : (n : 𝓞 ℚ) ∈ v.asIdeal ↔ normV 
   exact Ideal.mul_mem_right _ _ (Ideal.absNorm_mem _)
 
 theorem normV_prime (v : Pl ℚ) : (normV v).Prime := by
-  have h1 : 1 < normV v := NumberField.HeightOneSpectrum.one_lt_absNorm v
+  have h1 : 1 < normV v := by
+    rw [normV_eq]
+    exact NumberField.HeightOneSpectrum.one_lt_absNorm v
   refine Nat.prime_def.2 ⟨h1, fun m hm => ?_⟩
   obtain ⟨c, hc⟩ := hm
   have h2 := (mem_iff v _).2 dvd_rfl

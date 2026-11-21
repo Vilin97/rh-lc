@@ -88,12 +88,22 @@ theorem commute_tor {z : GG (m := 3) (R := R)} (hz : z.mat.IsDiag) (t : Rˣ) : C
   have h : sgnAct (m := 3) (R := R) z.right (tor (R := R) t) = tor (R := R) t := by
     rcases Int.units_eq_one_or z.right with h | h
     · rw [h, sgnAct_one]
-    · rw [h, sgnAct_neg_one, theta_tor]
+    · rw [h, sgnAct_neg_one]
+      apply Units.ext
+      rw [theta_val, ← map_inv]
+      change (Jmat (R := R) 3 * (Matrix.diagonal (fun i => (((t⁻¹) ^ wt1 i : Rˣ) : R)))ᵀ * Jmat (R := R) 3) =
+        Matrix.diagonal (fun i => ((t ^ wt1 i : Rˣ) : R))
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [Matrix.mul_apply, Fin.sum_univ_three, Jmat, wt1, Matrix.diagonal, Fin.rev]
   refine SemidirectProduct.ext ?_ (by simp)
   simp only [SemidirectProduct.mul_left, SemidirectProduct.left_inl, SemidirectProduct.right_inl, sgnAct_one, h]
   apply Units.ext
   have hz' : z.left.val = diagonal z.left.val.diag := (Matrix.IsDiag.diagonal_diag hz).symm
-  rw [Units.val_mul, Units.val_mul, hz', tor_val, Matrix.diagonal_mul_diagonal, Matrix.diagonal_mul_diagonal]
+  rw [Units.val_mul, Units.val_mul, hz']
+  change Matrix.diagonal (fun i => ((t ^ wt1 i : Rˣ) : R)) * diagonal z.left.val.diag =
+    diagonal z.left.val.diag * Matrix.diagonal (fun i => ((t ^ wt1 i : Rˣ) : R))
+  rw [Matrix.diagonal_mul_diagonal, Matrix.diagonal_mul_diagonal]
   congr 1
   funext i
   exact mul_comm _ _
@@ -103,7 +113,9 @@ theorem map_tor {S : Type} [CommRing S] (f : R →+* S) (t : Rˣ) :
   apply Units.ext
   ext a b
   show f ((tor (R := R) t).val a b) = _
-  rw [tor_val, tor_val, Matrix.diagonal_apply, Matrix.diagonal_apply]
+  change f (Matrix.diagonal (fun i => ((t ^ wt1 i : Rˣ) : R)) a b) =
+    Matrix.diagonal (fun i => (((Units.map f.toMonoidHom t) ^ wt1 i : Sˣ) : S)) a b
+  rw [Matrix.diagonal_apply, Matrix.diagonal_apply]
   split_ifs
   · rw [← map_zpow]; rfl
   · exact map_zero f
@@ -153,7 +165,7 @@ theorem grMat_GG_mul [Finite R] {z w : GG (m := 3) (R := R)} (hz : GrMat 𝒜 z.
     exact grMat_inv 𝒜 hw _ _
 
 theorem grMat_tor (t : Oˣ) : GrMat 𝒜 (tor (R := R) (Units.map (algebraMap O R).toMonoidHom t)).val := by
-  rw [tor_val]
+  change GrMat 𝒜 (Matrix.diagonal (fun i => (((Units.map (algebraMap O R).toMonoidHom t) ^ wt1 i : Rˣ) : R)))
   refine grMat_diagonal 𝒜 fun a => ?_
   rw [← map_zpow]
   exact SetLike.algebraMap_mem_graded 𝒜 _
@@ -165,7 +177,7 @@ abbrev chr {O D : Type} [CommRing O] [Group D] (Ψ : D →* Oˣ) (A : Type) [Com
 
 theorem tor_chr_apply {O D : Type} [CommRing O] [Group D] (Ψ : D →* Oˣ) (A : Type) [CommRing A] [Algebra O A]
     (g : D) : (tor (R := A) (chr Ψ A g)).val = diagonal fun a => algebraMap O A (psi Ψ a g) := by
-  rw [tor_val]
+  change Matrix.diagonal (fun i => (((chr Ψ A g) ^ wt1 i : Aˣ) : A)) = _
   congr 1
   funext a
   show (((Units.map (algebraMap O A).toMonoidHom (Ψ g)) ^ wt1 a : Aˣ) : A) = _

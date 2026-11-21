@@ -18,6 +18,9 @@ private theorem map_qdet_conj {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ} (f :
     simp only [Formalism.REAL.qdet, Formalism.REAL.qminor, map_sum, map_mul, map_intCast, map_list_prod, List.map_ofFn]
   refine Finset.sum_congr rfl fun σ _ => ?_
   congr 3
+  funext k
+  simp only [Function.comp_apply, id_eq, Formalism.REAL.Tm, map_add, hX]
+  split_ifs <;> simp [hf, map_sub]
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyReal E] {a : ℕ}
 
@@ -54,7 +57,7 @@ private theorem conjOp_mem {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) :
     rw [conjOp_cap]
     exact Algebra.subset_adjoin ⟨τ, _, rfl⟩
   | algebraMap c => rw [conjOp_algebraMap]; exact Subalgebra.algebraMap_mem _ _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
 private theorem fin_of_conj {s t : Set (Sm E a)} (h : FiniteDimensional ℂ (Submodule.span ℂ s))

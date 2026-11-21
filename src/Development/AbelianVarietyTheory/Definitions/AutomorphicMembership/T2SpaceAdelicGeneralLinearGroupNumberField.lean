@@ -301,8 +301,8 @@ theorem memL2_iff_isSqInt (hc : Continuous φ) (h : ∀ γ g, φ (ratGL E a γ *
   have hl := leftInv_latticeGL h h'
   have key : ∀ (ν : Measure (GA E a)) (𝓕 : Set (GA E a)),
       MemLp φ 2 (ν.restrict 𝓕) ↔ ∫⁻ g in 𝓕, ‖φ g‖ₑ ^ 2 ∂ν < ⊤ := fun ν 𝓕 => by
-    rw [MemLp, and_iff_right hc.aestronglyMeasurable,
-      eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top two_ne_zero ENNReal.ofNat_ne_top]
+    rw [memLp_iff, eLpNorm_lt_top_iff_lintegral_rpow_eNorm_lt_top two_ne_zero
+      ENNReal.ofNat_ne_top hc.aestronglyMeasurable]
     simp
   have hd := isFundamentalDomain_stdDom (latticeGL E a) μ
   refine ⟨fun hm => ⟨h', μ, _, inferInstance, hd, (key _ _).1 ((memL2_iff_fundamental_domain hd).1 hm).2⟩, ?_⟩
@@ -380,8 +380,6 @@ end L2
 
 section RankOne
 
-
-omit [IsTotallyComplex E] in
 variable {μ : Measure (GA E 1)} [μ.IsHaarMeasure]
 
 theorem memL2_of_rank_one {φ : GA E 1 → ℂ} (hc : Continuous φ) (h : LeftInv (latticeGL E 1) φ) : MemL2Quotient (latticeGL E 1) μ φ := by

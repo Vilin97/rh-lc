@@ -37,6 +37,8 @@ variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberFi
 variable [Fact (IsFixF K F)]
 variable {m : Type} [Fintype m] [DecidableEq m]
 
+local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
+
 abbrev fm {A : Type*} [CommRing A] [StarRing A] (H : Matrix m m A) (x y : m → A) : A :=
   star x ⬝ᵥ (H *ᵥ y)
 
@@ -76,7 +78,13 @@ theorem card_vec_succ (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {𝔭
     refine Matrix.ext fun a b => ?_
     simp only [Matrix.conjTranspose_apply, Matrix.of_apply]
     rw [idealPowerSpanBounds.star_def]
-    exact conjO_map hF n
+    apply RingOfIntegers.ext
+    have hn : ((ι n : 𝓞 K) : K) = algebraMap F K (n : F) :=
+      (IsScalarTower.algebraMap_apply (𝓞 F) (𝓞 K) K n).symm.trans
+        (IsScalarTower.algebraMap_apply (𝓞 F) F K n)
+    change star ((ι n : 𝓞 K) : K) = ((ι n : 𝓞 K) : K)
+    rw [hn]
+    exact (hF _).mpr ⟨_, rfl⟩
   have RC'' : ∀ X : Matrix m Unit (𝓞 K), (fun X => p' (fun i => X i ())) (X.map (mkk K 𝔭 k)) →
       (∀ a b, (Xᴴ * H * X - T) a b ∈ extP K 𝔭 ^ k) → ∀ S : Matrix Unit Unit (𝓞 K),
       (∀ a b, S a b ∈ extP K 𝔭 ^ k) → (∀ a b, (Sᴴ - S) a b ∈ extP K 𝔭 ^ (k + 1)) →
@@ -258,7 +266,15 @@ theorem exists_notMem_of_sol {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {H
   have h3 : ∀ i, ι D * x i ∈ extP K 𝔭 ^ (c + 1) := by
     intro i
     have h4 := conjO_mem_pow hF 𝔭 (c + 1) _ (h1 i)
-    rw [map_mul, conjO_map hF, ← idealPowerSpanBounds.star_def, star_star] at h4
+    have hDconj : conjO K (ι D) = ι D := by
+      apply RingOfIntegers.ext
+      have hDcoe : ((ι D : 𝓞 K) : K) = algebraMap F K (D : F) :=
+        (IsScalarTower.algebraMap_apply (𝓞 F) (𝓞 K) K D).symm.trans
+          (IsScalarTower.algebraMap_apply (𝓞 F) F K D)
+      change star ((ι D : 𝓞 K) : K) = ((ι D : 𝓞 K) : K)
+      rw [hDcoe]
+      exact (hF _).mpr ⟨_, rfl⟩
+    rw [map_mul, hDconj, ← idealPowerSpanBounds.star_def, star_star] at h4
     exact h4
   have h5 : ι D * fm H x x ∈ extP K 𝔭 ^ (d + v + 1) := by
     rw [fm_eq]
@@ -278,8 +294,14 @@ theorem exists_notMem_of_sol {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {H
       ring
     rw [e]
     exact Ideal.sub_mem _ h5 h7
-  rw [mem_pow_iff] at h8
-  exact idealPowerSpanBounds.mul_notMem h𝔭.isPrime (idealPowerSpanBounds.ne_bot h𝔭) hDd hn h8
+  have hDn : D * n ∈ 𝔭 ^ (d + v + 1) := by
+    change ι (D * n) ∈ (Ideal.map ι 𝔭) ^ (d + v + 1) at h8
+    rw [← Ideal.map_pow] at h8
+    have hcomap : Ideal.comap ι (Ideal.map ι (𝔭 ^ (d + v + 1))) = 𝔭 ^ (d + v + 1) :=
+      Ideal.comap_map_eq_self_of_faithfullyFlat _
+    rw [← hcomap]
+    exact Ideal.mem_comap.mpr h8
+  exact idealPowerSpanBounds.mul_notMem h𝔭.isPrime (idealPowerSpanBounds.ne_bot h𝔭) hDd hn hDn
 
 theorem nkM_eq_nkQ {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {H : Matrix m m (𝓞 K)}
     (hH : Hᴴ = H) {D n : 𝓞 F} (hD : H.det = ι D) {d v c k : ℕ} (hDd : D ∉ 𝔭 ^ (d + 1))

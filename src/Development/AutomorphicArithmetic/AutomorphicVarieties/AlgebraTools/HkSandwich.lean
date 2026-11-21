@@ -72,7 +72,7 @@ private theorem symm_of_eigen {R : Type} [CommRing R] [IsDomain R] {n : ℕ} {q 
     rw [Perm.coe_mul, ← rename_rename, ih, hs a c h]
 
 private theorem rename_rev_NN {R : Type} [CommRing R] (n : ℕ) (q : R) :
-    rename (Fin.revPerm : Perm (Fin n)) (NN R n q) = ∏ p ∈ pairs n, (X p.1 - C q * X p.2) := by
+    rename (Fin.revPerm : Perm (Fin n)) (NN n q) = ∏ p ∈ pairs n, (X p.1 - C q * X p.2) := by
   rw [NN, map_prod]
   refine Finset.prod_nbij' (fun p => (p.2.rev, p.1.rev)) (fun p => (p.2.rev, p.1.rev)) ?_ ?_ ?_ ?_ ?_
   · intro p hp
@@ -116,7 +116,7 @@ private theorem coeff_eq {R : Type} [CommRing R] [IsDomain R] {n : ℕ} {K : Typ
   rw [h1, hr, map_div₀, hφ, hφ, rename_rename, rename_rename, Perm.coe_mul]
 
 theorem UpperTheory.V.AlgebraTools.hkSandwich :
-    ∀ (R : Type) [CommRing R] [IsDomain R] (n : ℕ) (q : R) (H : Type) [Ring H] [Algebra R H] (b : Bern n q H), b.Faithful → ∀ x : MvPolynomial (Fin n) R, b.one * b.th x * b.one = b.th (dd (NN R n q * x)) * b.one := by
+    ∀ (R : Type) [CommRing R] [IsDomain R] (n : ℕ) (q : R) (H : Type) [Ring H] [Algebra R H] (b : Bern n q H), b.Faithful → ∀ x : MvPolynomial (Fin n) R, b.one * b.th x * b.one = b.th (dd (NN n q * x)) * b.one := by
   intro R _ _ n q H _ _ b hb x
   let K := FractionRing (MvPolynomial (Fin n) R)
   choose f hf hfw hf0 using UpperTheory.V.AlgebraTools.hkAct R n q H b K
@@ -157,13 +157,13 @@ theorem UpperTheory.V.AlgebraTools.hkSandwich :
     obtain ⟨y, hy, e⟩ := hsum x
     refine ⟨y, symm_of_eigen b hb y fun a c h => ?_, e⟩
     rw [← hy, ← mul_assoc, ← mul_assoc, simple_one b h, smul_mul_assoc, smul_mul_assoc])
-    (NN R n q) (De R n) Fin.revPerm (by
+    (NN n q) (De R n) Fin.revPerm (by
     rw [Finset.sum_eq_single Fin.revPerm (fun w _ hw => hf0 w _ hw.symm (hlt w hw).le) (by simp), hfw, hrev,
       rename_rev_NN, rename_rev_De, map_prod, map_prod, Finset.prod_div_distrib])
   obtain ⟨y, hy, e⟩ := hsum x
   have hinj := IsFractionRing.injective (MvPolynomial (Fin n) R) K
   have hD' : algebraMap _ K (De R n) ≠ 0 := fun h => hD (hinj (by rw [h, map_zero]))
-  have : y = dd (NN R n q * x) := by
+  have : y = dd (NN n q * x) := by
     apply mul_left_cancel₀ hD
     apply hinj
     set_option synthInstance.maxHeartbeats 100000 in

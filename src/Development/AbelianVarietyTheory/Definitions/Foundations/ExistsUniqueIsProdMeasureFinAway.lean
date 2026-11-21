@@ -157,14 +157,17 @@ theorem isCompact_of_ext {X : Type} [TopologicalSpace X] {s t : Set X} (h : IsCo
 
 variable [Submodule.IsLattice E L]
 
-theorem isRestrGroup_GAd : IsRestrGroup (projArch σ J) (proj σ J) (stabLoc σ J L) where
-  cont_p := continuous_projArch σ J
-  cont_q := continuous_proj σ J
-  isOpen_K := isOpen_stabLoc σ J L
-  isOpen_all := by
-    convert isOpen_levelOpen σ J L using 1
+theorem isRestrGroup_GAd : IsRestrGroup (projArch σ J) (proj σ J) (stabLoc σ J L) := by
+  refine {
+    cont_p := continuous_projArch σ J
+    cont_q := continuous_proj σ J
+    isOpen_K := isOpen_stabLoc σ J L
+    isOpen_all := ?_
+    isCompact_cyl := ?_
+    exists_comp := ?_ }
+  · convert isOpen_levelOpen σ J L using 1
     exact Set.ext fun _ => mem_levelOpen.symm
-  isCompact_cyl S A B hA hB := by
+  · intro S A B hA hB
     have hc := ((((isCompact_univ_pi hA).image (continuous_embArchPi σ J)).image (continuous_ofInf σ J)).mul
       ((isCompact_univ_pi fun v : S => hB v v.2).image (continuous_embAt σ J S))).mul (isCompact_levelOff σ J L S)
     refine isCompact_of_ext hc fun g => ?_
@@ -184,23 +187,28 @@ theorem isRestrGroup_GAd : IsRestrGroup (projArch σ J) (proj σ J) (stabLoc σ 
       · rw [map_mul, e1, mem_finPts_iff_forall.1 k1, mul_one]; exact ha w trivial
       · rw [map_mul, e2 ⟨v, hv⟩, k2 v hv, mul_one]; exact hb ⟨v, hv⟩ trivial
       · rw [map_mul, e3 v hv, one_mul]; exact k3 v hv
-  exists_comp S x y := ⟨_, (comp_glue x y).1, (comp_glue x y).2.1, fun v hv => by
-    rw [(comp_glue x y).2.2 v hv]; exact one_mem _⟩
+  · intro S x y
+    exact ⟨_, (comp_glue x y).1, (comp_glue x y).2.1, fun v hv => by
+      rw [(comp_glue x y).2.2 v hv]; exact one_mem _⟩
 
 theorem isRestrGroup_GFin :
-    IsRestrGroup (H := fun _ : Empty => Unit) (fun _ => 1) (projFinLoc σ J) (stabLoc σ J L) where
-  cont_p e := e.elim
-  cont_q := continuous_projFinLoc σ J
-  isOpen_K := isOpen_stabLoc σ J L
-  isOpen_all := by simpa using (isRestrGroup_GAd σ J L).isOpen_all.preimage (continuous_ofFin σ J)
-  isCompact_cyl S A B _ hB := by
+    IsRestrGroup (H := fun _ : Empty => Unit) (fun _ => 1) (projFinLoc σ J) (stabLoc σ J L) := by
+  refine {
+    cont_p := fun e => e.elim
+    cont_q := continuous_projFinLoc σ J
+    isOpen_K := isOpen_stabLoc σ J L
+    isOpen_all := ?_
+    isCompact_cyl := ?_
+    exists_comp := ?_ }
+  · simpa using (isRestrGroup_GAd σ J L).isOpen_all.preimage (continuous_ofFin σ J)
+  · intro S A B _ hB
     have := (Function.LeftInverse.isClosedEmbedding (projFin_ofFin σ J) (continuous_projFin σ J)
       (continuous_ofFin σ J)).isCompact_preimage
       ((isRestrGroup_GAd σ J L).isCompact_cyl S (fun _ => {1}) B (fun _ => isCompact_singleton) hB)
     convert this using 1
     ext g
     simp [mem_cyl]
-  exists_comp S _ y := by
+  · intro S _ y
     obtain ⟨g, -, h2, h3⟩ := (isRestrGroup_GAd σ J L).exists_comp S 1 y
     exact ⟨projFin σ J g, fun e => e.elim, by simpa using h2, by simpa using h3⟩
 

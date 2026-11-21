@@ -24,6 +24,11 @@ section Ad
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
+local notation "𝔸" => FiniteAdeleRing (𝓞 F) F
+local notation "𝒜" => E ⊗[F] 𝔸
+local notation "𝒮" => tensInt (F := F) 𝔸 (intOE E) (intAd F)
+local notation "ιA" => inclE (F := F) (E := E) 𝔸
+
 theorem mat_denom {n : ℕ} (M : Matrix (Fin n) (Fin n) 𝒜) : ∃ d : ℕ, 0 < d ∧ d • M ∈ matIn 𝒮 n := by
   choose m hm0 hm using fun ij : Fin n × Fin n => denom (M ij.1 ij.2)
   refine ⟨∏ ij, m ij, Finset.prod_pos fun ij _ => hm0 ij, fun i j => ?_⟩

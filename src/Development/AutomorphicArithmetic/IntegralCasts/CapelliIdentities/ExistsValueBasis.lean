@@ -70,9 +70,6 @@ private theorem Chart.cancel {R : CommRingCat.{0}} {g g' : C.B ⟶ R}
   haveI := C.mono
   exact Spec.map_injective ((cancel_mono C.j).1 h)
 
-#check Chart
-#print Chart.Rep
-#check C
 variable {R : Type} [CommRing R]
 
 private theorem Chart.rep_inj {φ : X.presheaf.stalk p →+* R} {c c' : Fin C.n → R}

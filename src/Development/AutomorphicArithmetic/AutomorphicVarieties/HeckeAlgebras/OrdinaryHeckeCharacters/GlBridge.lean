@@ -80,7 +80,9 @@ private theorem br_basis (U : Subgroup (GL (Fin n) k)) (hU : IsOpen (U : Set (GL
   refine exists_subset_nhds_of_isCompact' (V := fun c => (Kc k n c : Set (GL (Fin n) k)))
     (directed_of_isDirected_le fun _ _ h => br_Kc_anti h)
     (fun c => GlobalTheory.SplitFlip.isCompact_KO.of_isClosed_subset (Subgroup.isClosed_of_isOpen _ (br_Kc_open c))
-      fun g hg => (br_memKc.1 hg).1) (fun c => Subgroup.isClosed_of_isOpen _ (br_Kc_open c)) fun g hg => ?_
+      fun g hg => (br_memKc.1 hg).1) (fun c => Subgroup.isClosed_of_isOpen _ (br_Kc_open c)) ?_
+  apply mem_nhdsSet_iff_forall.mpr
+  intro g hg
   have : g = 1 := by
     ext i j
     by_contra h
@@ -189,7 +191,8 @@ private theorem iwahori_z_eq_product : (glIwa k n).z = ((List.range n).map (al k
     induction m with
     | zero =>
       rw [upow, List.range_zero, List.map_nil, List.prod_nil, ← (diagT k (Fin n)).map_one]
-      congr 1
+      simp
+      exact ((diagT k (Fin n)).map_one).symm
     | succ m ih =>
       rw [List.range_succ, List.map_append, List.prod_append, ih, List.map_singleton, List.prod_singleton, al, upow, upow,
         upow, ← map_mul]

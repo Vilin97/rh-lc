@@ -80,6 +80,8 @@ theorem mem_mcPts_span_iff {γ : MRing ι} {w : (Σ k, ι k) → ℂ} :
 
 variable {M : ℕ}
 
+local notation "𝔅" => (fun _ : Unit => Fin M)
+
 section Forms
 
 variable {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (y' : (Σ _ : Unit, Fin M) → Ω) {G : Fin M → MRing ι} {g : K → ℕ}

@@ -242,6 +242,7 @@ theorem hkFrob_of_tripleAtt_n : ∀ (D : D7) (bkP : BlochKatoReduction.BK D) (i 
     rw [coeff_charpolyRev_map, Matrix.map_smul' _ _ _ (map_mul _), map_pow (rd i ι) _ D.R.t, heps, key, map_mul,
       map_mul, map_pow, map_pow, map_neg, map_one, map_natCast, ← hq, hes, Multiset.map_map, Multiset.map_map]
     congr 2
+    congr 1
     apply Multiset.map_congr rfl
     intro a _
     simp only [Function.comp]

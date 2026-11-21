@@ -49,6 +49,10 @@ section Ad
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
+local notation "𝔸" => FiniteAdeleRing (𝓞 F) F
+local notation "𝒜" => E ⊗[F] 𝔸
+local notation "𝒮" => tensInt (F := F) 𝔸 (intOE E) (intAd F)
+
 theorem exists_mult {n : ℕ} (Λ : Submodule (𝓞 E) (Fin n → E)) (hfin : Module.Finite (𝓞 E) Λ)
     (hspan : Submodule.span E (Λ : Set (Fin n → E)) = ⊤) :
     ∃ m : ℕ, 0 < m ∧ ∀ Y ∈ matIn 𝒮 n, ∀ u ∈ latS (F := F) 𝔸 𝒮 Λ,
@@ -56,9 +60,12 @@ theorem exists_mult {n : ℕ} (Λ : Submodule (𝓞 E) (Fin n → E)) (hfin : Mo
   obtain ⟨c₁, hc₁, h₁⟩ := adelstabL_lower (F := F) Λ hspan
   obtain ⟨c₂, hc₂, h₂⟩ := adelstabL_upper (F := F) Λ hfin
   obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.1 (Ideal.absNorm_mem (Ideal.span {c₁ * c₂}))
+  have hcast (m : ℕ) : levelafC (F := F) E (m : 𝓞 F) = (m : 𝒜) := by
+    rw [levelafC, map_natCast]
+    exact map_natCast (Algebra.TensorProduct.includeRight : 𝔸 →ₐ[F] 𝒜) m
   refine ⟨Ideal.absNorm (Ideal.span {c₁ * c₂}), Nat.pos_of_ne_zero ?_, fun Y hY u hu => ?_⟩
   · rw [Ne, Ideal.absNorm_eq_zero_iff, Ideal.span_singleton_eq_bot]; exact mul_ne_zero hc₁ hc₂
-  · rw [← levelafC_nat, ← hc, levelafC_mul, levelafC_mul]
+  · rw [← hcast, ← hc, levelafC_mul, levelafC_mul]
     have e : (levelafC E c * (levelafC E c₁ * levelafC E c₂)) • (Y *ᵥ u) =
         fun i => levelafC E c₁ * ∑ j, levelafC E c * Y i j * (levelafC E c₂ * u j) := by
       ext i
@@ -78,7 +85,13 @@ theorem eps_mem_latS_iff : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
   generalize Ideal.absNorm v.asIdeal = p at hpv hp
   refine ⟨p * m, Nat.mul_pos hp hm0, fun k X hX h u => ?_⟩
   rw [← Nat.cast_smul_eq_nsmul (E ⊗[F] FiniteAdeleRing (𝓞 F) F), Nat.cast_mul] at h
-  rw [eps_mulVec _ _ _ (afsplit_eps_idem v) k X h u, eps_mul_nat]
+  have heps : afsplitEps E v * (p : E ⊗[F] FiniteAdeleRing (𝓞 F) F) =
+      (1 : E) ⊗ₜ[F] afsplitI v p := by
+    rw [← afsplit_decomp, map_natCast, ← afsplitIE_tmul]
+    congr 1
+    exact (map_natCast (Algebra.TensorProduct.includeRight :
+      v.adicCompletion F →ₐ[F] E ⊗[F] v.adicCompletion F) p).symm
+  rw [eps_mulVec _ _ _ (afsplit_eps_idem v) k X h u, heps]
   let a : intAd F := ⟨afsplitI v p, afsplitI_mem_intAd v _ (natCast_mem _ _)⟩
   exact mem_iff_one_add _ _ _ (natCast_mem _ _) hm (incInt a)
     (unit_of_integral _ incInt_integral a (unit_intAd v p hpv a rfl)) X hX _

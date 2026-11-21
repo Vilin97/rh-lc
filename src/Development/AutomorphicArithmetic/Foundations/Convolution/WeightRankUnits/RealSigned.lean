@@ -49,6 +49,26 @@ theorem UpperTheory.ConvolutionTheory.G2.realSigned : ∀ (a b : ℕ) (lam : Dom
     rfl
   · intro Q₁ Q₂ h1 h2 hd1 hd2 hsep hroot
     beta_reduce
+    have exists_eq_prod_X_sub_C : ∀ (n : ℕ) (Q : ℂ[X]), Q.Monic → Q.natDegree = n →
+        ∃ α : Fin n → ℂ, Q = ∏ i, (X - C (α i)) := by
+      intro n
+      induction n with
+      | zero =>
+        intro Q hm hd
+        exact ⟨Fin.elim0, by rw [Fin.prod_univ_zero]; exact Polynomial.eq_one_of_monic_natDegree_zero hm hd⟩
+      | succ n ih =>
+        intro Q hm hd
+        obtain ⟨r, hr⟩ := IsAlgClosed.exists_root Q (by
+          rw [degree_eq_natDegree hm.ne_zero, hd]; exact_mod_cast Nat.succ_ne_zero n)
+        have hdiv : (X - C r) * (Q /ₘ (X - C r)) = Q := mul_divByMonic_eq_iff_isRoot.mpr hr
+        have hm' : (Q /ₘ (X - C r)).Monic := (monic_X_sub_C r).of_mul_monic_left (by rw [hdiv]; exact hm)
+        have hd' : (Q /ₘ (X - C r)).natDegree = n := by
+          rw [natDegree_divByMonic _ (monic_X_sub_C r), hd, natDegree_X_sub_C]; rfl
+        obtain ⟨α, hα⟩ := ih _ hm' hd'
+        refine ⟨Fin.cons r α, ?_⟩
+        rw [Fin.prod_univ_succ, Fin.cons_zero]
+        simp only [Fin.cons_succ]
+        rw [← hα, hdiv]
     obtain ⟨α, rfl⟩ := exists_eq_prod_X_sub_C a Q₁ h1 hd1
     obtain ⟨β, rfl⟩ := exists_eq_prod_X_sub_C b Q₂ h2 hd2
     have hprod : (∏ i, (X - C (α i))) * ∏ j, (X - C (β j)) = ∏ i, (X - C (Fin.addCases α β i)) := by
