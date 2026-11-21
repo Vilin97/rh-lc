@@ -148,7 +148,7 @@ theorem isometric_case (p q : ℕ) (T : GrpData p q)
     exact hpos Y hY
   have hcont : Continuous Φ := by
     rw [show Φ = _ from funext hΦ2]
-    refine continuous_finset_sum _ fun l _ => continuous_finset_sum _ fun i _ => ?_
+    refine continuous_finsetSum _ fun l _ => continuous_finsetSum _ fun i _ => ?_
     exact (continuous_const.inner (π₁.7 _)).mul (continuous_const.inner (π₂.7 _)).star
   have hΦi : MeasureTheory.Integrable Φ T.haar := by
     rw [show Φ = _ from funext hΦ2]

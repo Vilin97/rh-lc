@@ -67,7 +67,8 @@ theorem exists_colAdd_fixed_of_stable (n n' : ℕ) (N : Submodule ℂ (MvPolynom
   obtain ⟨_, ⟨v, hv, rfl⟩, hv0, hkill⟩ := exists_killed_of_rowDivClosed M hcl hne
   refine ⟨v, hv, fun e => hv0 (by rw [e, map_zero]), fun l j hlj c => hinj ?_⟩
   have hC : rowGen ℂ l j (rename Prod.swap v) = Polynomial.C (rename Prod.swap v) := by
-    ext1 k
+    apply Polynomial.ext
+    intro k
     rcases Nat.eq_zero_or_pos k with rfl | hk
     · rw [rowGen_coeff_zero_eq, Polynomial.coeff_C_zero]
     · rw [Polynomial.coeff_C_of_ne_zero hk.ne']

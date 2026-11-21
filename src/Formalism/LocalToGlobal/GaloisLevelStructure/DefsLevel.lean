@@ -33,21 +33,21 @@ def supDiag (s : SplitPlace L) (r : ℕ) (h : GL (Fin n) (s.v.adicCompletion L�
   ∑ a : Fin n, ∑ b : Fin n, if a.val + 1 = b.val ∧ b.val < r then h.val a b else 0
 
 def IsProdLevel (J : Subgroup (GAf L n)) : Prop :=
-  ∀ κ ∈ J, ∀ v, ∃ κ' ∈ J, TrivOutside L {v} κ' ∧
+  ∀ κ ∈ J, ∀ v, ∃ κ' ∈ J, TrivOutside (L := L) {v} κ' ∧
     (κ'.1 : Matrix (Fin n) (Fin n) (AL L)).map (compAt L v) = (κ.1 : Matrix (Fin n) (Fin n) (AL L)).map (compAt L v)
 
 structure LevelPara (J : Subgroup (GAf L n)) (χ : J →* ℂˣ) (s : SplitPlace L) (r : ℕ)
     (ξ : (s.v.adicCompletion L⁺)ˣ →* ℂˣ) : Prop where
-  mem : ∀ κ, TrivOutside L {s.v} κ → (κ ∈ J ↔ ParaRT s r (SplitPlace.loc L s n κ))
-  chr : ∀ κ (h : κ ∈ J), TrivOutside L {s.v} κ → ∀ u : (s.v.adicCompletion L⁺)ˣ,
-    (u : s.v.adicCompletion L⁺) = detDD s r (SplitPlace.loc L s n κ) → χ ⟨κ, h⟩ = ξ u
+  mem : ∀ κ, TrivOutside (L := L) {s.v} κ → (κ ∈ J ↔ ParaRT s r (s.loc n κ))
+  chr : ∀ κ (h : κ ∈ J), TrivOutside (L := L) {s.v} κ → ∀ u : (s.v.adicCompletion L⁺)ˣ,
+    (u : s.v.adicCompletion L⁺) = detDD s r (s.loc n κ) → χ ⟨κ, h⟩ = ξ u
 
 structure LevelUni (J : Subgroup (GAf L n)) (χ : J →* ℂˣ) (s : SplitPlace L) (r : ℕ)
     (ψ₀ : AddChar (s.v.adicCompletion L⁺) ℂ) (ξ : (s.v.adicCompletion L⁺)ˣ →* ℂˣ) : Prop where
-  mem : ∀ κ, TrivOutside L {s.v} κ → (κ ∈ J ↔ UniRT s r (SplitPlace.loc L s n κ))
-  chr : ∀ κ (h : κ ∈ J), TrivOutside L {s.v} κ → ∀ u : (s.v.adicCompletion L⁺)ˣ,
-    (u : s.v.adicCompletion L⁺) = detDD s r (SplitPlace.loc L s n κ) →
-    ((χ ⟨κ, h⟩ : ℂˣ) : ℂ) = ψ₀ (supDiag s r (SplitPlace.loc L s n κ)) * ξ u
+  mem : ∀ κ, TrivOutside (L := L) {s.v} κ → (κ ∈ J ↔ UniRT s r (s.loc n κ))
+  chr : ∀ κ (h : κ ∈ J), TrivOutside (L := L) {s.v} κ → ∀ u : (s.v.adicCompletion L⁺)ˣ,
+    (u : s.v.adicCompletion L⁺) = detDD s r (s.loc n κ) →
+    ((χ ⟨κ, h⟩ : ℂˣ) : ℂ) = ψ₀ (supDiag s r (s.loc n κ)) * ξ u
 
 def IsCompAt (χ : Host.HChar L) (s : SplitPlace L) (ξ : (s.v.adicCompletion L⁺)ˣ →* ℂˣ) : Prop :=
   (∃ N : ℕ, ∀ u : (s.v.adicCompletion L⁺)ˣ,

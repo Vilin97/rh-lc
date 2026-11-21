@@ -93,11 +93,8 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E]
 def stdLat (N : ℕ) : Submodule (𝓞 E) (Fin N → E) :=
   Submodule.span (𝓞 E) (Set.range (Pi.basisFun E (Fin N)))
 
-theorem stdLat_isLattice (N : ℕ) : Submodule.IsLattice E (stdLat (E := E) N) where
-  fg := Submodule.fg_span (Set.finite_range _)
-  span_eq_top := by
-    rw [stdLat, Submodule.span_span_of_tower]
-    exact (Pi.basisFun E (Fin N)).span_eq
+theorem stdLat_isLattice (N : ℕ) : Submodule.IsLattice E (stdLat (E := E) N) :=
+  Submodule.IsLattice.of_fg E (Submodule.fg_span (Set.finite_range _))
 
 theorem star_isIntegral (x : E) (hx : IsIntegral ℤ x) : IsIntegral ℤ (star x) :=
   hx.map (starRingEnd E).toIntAlgHom
@@ -455,7 +452,7 @@ def spacesExample : Spaces R0 F E where
   hypF := fun _ => 0
   hyp_ee := fun _ _ => by simp
   hyp_ff := fun _ _ => by simp
-  hyp_ef := fun i _ => absurd i.isLt (by simp)
+  hyp_ef := fun i _ => (Nat.not_lt_zero _ i.isLt).elim
   hyp_orthX := fun _ _ => ⟨by simp, by simp⟩
   hyp_orthz := fun _ => ⟨by simp, by simp⟩
   baseSpace_signature_eq := fun _ => rfl

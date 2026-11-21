@@ -96,7 +96,7 @@ theorem isLieEigen_of_gen (𝔐 : HodgeCpt Y S y) {L : Type} [Field L] [NumberFi
     (σ : L →+* ℂ) {V : Type} [AddCommGroup V] [Module (𝓞 L) V] (MB : LieModel 𝔐.t.G z V) (x : V)
     (hx : x ∈ subGens 𝔐.M U z MB)
     (w : epsAt (spMap (σ.comp (algebraMap (𝓞 L) L)) ≫ z) ⟶ 𝔐.t.G)
-    (hw : MB.Lifts (σ.comp (algebraMap (𝓞 L) L)) (𝟙 𝔐.t.G.left) x w) :
+    (hw : (w.left ≫ (𝟙 𝔐.t.G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (MB.pt x).left)) :
     IsLieEigen 𝔐.t.act (spMap (σ.comp (algebraMap (𝓞 L) L)) ≫ z)
       ((σ.comp ((Scheme.stalkClosedPointTo (spMap (algebraMap (𝓞 L) L) ≫ z)).hom.comp g₀)).comp (labelEmb c s)) w := by
   obtain ⟨e, he, v, hval, hl⟩ := hx
@@ -140,8 +140,8 @@ theorem orthAt_subFib : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
   intro u hu u' hu'
   let w := epsBase (σ.comp (algebraMap (𝓞 L) L)) rfl ≫ MB.pt u
   let w' := epsBase (σ.comp (algebraMap (𝓞 L) L)) rfl ≫ MB.pt u'
-  have hl : MB.Lifts (σ.comp (algebraMap (𝓞 L) L)) (𝟙 𝔐.t.G.left) u w := Category.comp_id _
-  have hl' : MB.Lifts (σ.comp (algebraMap (𝓞 L) L)) (𝟙 𝔐.t.G.left) u' w' := Category.comp_id _
+  have hl : (w.left ≫ (𝟙 𝔐.t.G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (MB.pt u).left) := Category.comp_id _
+  have hl' : (w'.left ≫ (𝟙 𝔐.t.G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (MB.pt u').left) := Category.comp_id _
   have e1 := isLieEigen_of_gen 𝔐 z hp g₀ hg s U hU σ MB u hu w hl
   have e2 := isLieEigen_of_gen 𝔐 z hp g₀ hg s' U' hU' σ MB u' hu' w' hl'
   exact (hF σ u u' w w' hl hl').trans (hO _ _ _ w w' hne e1 e2)

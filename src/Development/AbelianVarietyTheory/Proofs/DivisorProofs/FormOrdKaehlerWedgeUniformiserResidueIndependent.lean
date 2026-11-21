@@ -19,7 +19,7 @@ theorem formOrd_dForm_cons_of_ord_eq_one : ∀ {K : Type} [Field K] (cK : ℂ �
   F.ord π = 1 → (∀ i, y i ∈ F.ring) →
   (∀ P : MvPolynomial (Fin m) ℂ, P ≠ 0 → MvPolynomial.eval₂ cK y P ≠ 0 ∧ (MvPolynomial.eval₂ cK y P)⁻¹ ∈ F.ring) →
   TrBasis cK (Fin.cons π y : Fin (m + 1) → K) →
-  F.formOrd (dForm cK (Fin.cons π y : Fin (m + 1) → K)) = 0 := by
+  (fun ω => @dite ℤ (∃ a, F.IsFormOrd ω a) (Classical.propDecidable _) (fun h => h.choose) (fun _ => 0)) (dForm cK (Fin.cons π y : Fin (m + 1) → K)) = 0 := by
   intro K _ cK F m π y hπ hy hP hB
   have hπ0 : π ≠ 0 := by
     rintro rfl

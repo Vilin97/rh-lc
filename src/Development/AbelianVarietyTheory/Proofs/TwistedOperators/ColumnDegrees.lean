@@ -304,7 +304,7 @@ theorem column_degrees (σ : Type) [Fintype σ] [DecidableEq σ] (k l n : ℕ)
         (mem_support_iff.1 hm0)
       intro h
       exact (Finset.mem_erase.1 hD).1 (by exact_mod_cast h.symm)
-    have hQ0 : Q ≠ 0 := fun h => hQm0 (by rw [h, coeff_zero])
+    have hQ0 : Q ≠ 0 := fun h => hQm0 (by simp [h])
     have hEQ : E Q = (zdeg m0 : ℂ) • Q := by
       ext m
       rw [hcoeffE, coeff_smul, smul_eq_mul]

@@ -56,7 +56,7 @@ private theorem joinedIn_setOf_eval_ne_zero {d : ℕ} (q : MvPolynomial (Fin d) 
   have h0 : (0 : ℂ) ∈ {t : ℂ | MvPolynomial.eval (a + t • (b - a)) q = 0}ᶜ := by simpa using ha
   have h1 : (1 : ℂ) ∈ {t : ℂ | MvPolynomial.eval (a + t • (b - a)) q = 0}ᶜ := by simpa using hb
   have hf : Continuous fun t : ℂ => a + t • (b - a) := by fun_prop
-  have hj := (hpc.joinedIn 0 h0 1 h1).map hf
+  have hj := (hpc.joinedIn 0 h0 1 h1).map hf.continuousOn
   simp only [zero_smul, add_zero, one_smul, add_sub_cancel] at hj
   refine hj.mono ?_
   rintro _ ⟨t, ht, rfl⟩

@@ -23,7 +23,7 @@ theorem covers_opE_finite : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologic
     (fun w _ => Set.mem_iUnion.2 ⟨w, by simp [J.one_mem]⟩)
   let rep : GL (n ⊕ Fin c) k → GL (n ⊕ Fin c) k := fun w => Quotient.out (DoubleCoset.mk (R k n c p) J w)
   have hrep : ∀ w, DoubleCoset.mk (R k n c p) J (rep w) = DoubleCoset.mk (R k n c p) J w :=
-    fun w => DoubleCoset.out_eq' _ _ _
+    fun w => DoubleCoset.out_eq' _
   refine ⟨F.image rep, ?_, ?_⟩
   · intro a ha b hb hab
     simp only [Finset.coe_image, Set.mem_image] at ha hb

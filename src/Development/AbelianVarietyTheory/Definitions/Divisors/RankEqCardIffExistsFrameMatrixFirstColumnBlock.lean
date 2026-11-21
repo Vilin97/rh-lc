@@ -320,7 +320,7 @@ def matLat (Λ : Submodule 𝒪[k] (D → k)) : Submodule 𝒪[k] (Matrix A D k)
   zero_mem' _ := Λ.zero_mem
   smul_mem' c _ hX i := Λ.smul_mem c (hX i)
 
-theorem mem_matLat {Λ : Submodule 𝒪[k] (D → k)} {X : Matrix A D k} : X ∈ matLat Λ ↔ ∀ i, X.row i ∈ Λ := Iff.rfl
+theorem mem_matLat {Λ : Submodule 𝒪[k] (D → k)} {X : Matrix A D k} : X ∈ matLat A Λ ↔ ∀ i, X.row i ∈ Λ := Iff.rfl
 
 def diagLat (c : D → kˣ) : Submodule 𝒪[k] (D → k) where
   carrier := {x | ∀ j, valuation k (x j) ≤ valuation k (c j : k)}
@@ -337,10 +337,10 @@ theorem mem_diagLat {c : D → kˣ} {x : D → k} :
 variable (k D) in
 def stdLat : Submodule 𝒪[k] (D → k) := diagLat 1
 
-theorem mem_stdLat {x : D → k} : x ∈ stdLat ↔ ∀ j, x j ∈ 𝒪[k] := by
+theorem mem_stdLat {x : D → k} : x ∈ stdLat k D ↔ ∀ j, x j ∈ 𝒪[k] := by
   simp [stdLat, mem_diagLat, Valuation.mem_integer_iff]
 
-theorem mem_matLat_stdLat {X : Matrix A D k} : X ∈ matLat (stdLat) ↔ ∀ i j, X i j ∈ 𝒪[k] :=
+theorem mem_matLat_stdLat {X : Matrix A D k} : X ∈ matLat A (stdLat k D) ↔ ∀ i j, X i j ∈ 𝒪[k] :=
   forall_congr' fun _ => mem_stdLat
 
 theorem smul_diagLat (u : kˣ) (c : D → kˣ) : u • diagLat c = diagLat fun j => u * c j := by
@@ -404,7 +404,7 @@ theorem dualLat_diagLat (c : D → kˣ) : dualLat (diagLat c) = diagLat fun j =>
     exact (mul_le_mul' (h j) (hy j)).trans (inv_mul_cancel₀ (h0 j).ne').le
 
 def IsPrimFrame [Fintype A] (Λ : Submodule 𝒪[k] (D → k)) (X : Matrix A D k) : Prop :=
-  X.rank = Fintype.card A ∧ X ∈ matLat Λ ∧
+  X.rank = Fintype.card A ∧ X ∈ matLat A Λ ∧
     Submodule.span 𝒪[k] (Set.range X.row) = (Submodule.span k (Set.range X.row)).restrictScalars 𝒪[k] ⊓ Λ
 
 variable [DecidableEq D]
@@ -430,8 +430,8 @@ def glLatCong (c : kˣ) (Λ : Submodule 𝒪[k] (D → k)) : Subgroup (GL D k) w
       vecMul_neg, ← vecMul_vecMul]
     exact neg_mem (hh' _ (((glLat Λ).inv_mem hh x).2 hx))
 
-theorem glLat_stdLat : glLat (stdLat) = KO k D := by
-  have key : ∀ h : GL D k, (∀ x ∈ stdLat, x ᵥ* h.val ∈ stdLat) ↔ ∀ i j, h.val i j ∈ 𝒪[k] := fun h => by
+theorem glLat_stdLat : glLat (stdLat k D) = KO k D := by
+  have key : ∀ h : GL D k, (∀ x ∈ stdLat k D, x ᵥ* h.val ∈ stdLat k D) ↔ ∀ i j, h.val i j ∈ 𝒪[k] := fun h => by
     constructor
     · intro hh i j
       simpa using mem_stdLat.1 (hh (Pi.single i 1) (mem_stdLat.2 fun l => by
@@ -456,7 +456,7 @@ def blockLat (ϖ : kˣ) (e : ℕ) (P : Finset D) : Submodule 𝒪[k] (D → k) :
 def blockScale (ϖ : kˣ) (e : ℕ) (P : Finset D) : GL D k := diagGL (blockUnits ϖ e P)
 
 theorem vecMul_blockScale_mem (ϖ : kˣ) (e : ℕ) (P : Finset D) (x : D → k) :
-    x ᵥ* (blockScale ϖ e P).val ∈ blockLat ϖ e P ↔ x ∈ stdLat := by
+    x ᵥ* (blockScale ϖ e P).val ∈ blockLat ϖ e P ↔ x ∈ stdLat k D := by
   rw [mem_stdLat]
   refine forall_congr' fun j => ?_
   have h0 : 0 < valuation k (blockUnits ϖ e P j : k) := zero_lt_iff.2 (by simp)
@@ -477,7 +477,7 @@ theorem latA_blockLat (ϖ : kˣ) (e : ℕ) (P : Finset D) : latA ϖ e (blockLat 
 omit [Fintype D] [DecidableEq D]
 
 def HasDepth (ϖ : kˣ) (e : ℕ) (Λ : Submodule 𝒪[k] (D → k)) (Φ : Matrix A D k → ℂ) : Prop :=
-  (∀ X, X ∉ matLat Λ → Φ X = 0) ∧ ∀ X, ∀ Z ∈ matLat (ϖ ^ e • Λ), Φ (X + Z) = Φ X
+  (∀ X, X ∉ matLat A Λ → Φ X = 0) ∧ ∀ X, ∀ Z ∈ matLat A (ϖ ^ e • Λ), Φ (X + Z) = Φ X
 
 
 variable (A) in
@@ -487,7 +487,7 @@ def depthSpace (ϖ : kˣ) (e : ℕ) (Λ : Submodule 𝒪[k] (D → k)) : Submodu
   zero_mem' := ⟨fun _ _ => rfl, fun _ _ _ => rfl⟩
   smul_mem' c _ h := ⟨fun X hX => by simp [h.1 X hX], fun X Z hZ => by simp [h.2 X Z hZ]⟩
 
-def IsNatDatum (ϖ : kˣ) (e : ℕ) (Φ : Matrix A D k → ℂ) : Prop := HasDepth ϖ e (stdLat) Φ
+def IsNatDatum (ϖ : kˣ) (e : ℕ) (Φ : Matrix A D k → ℂ) : Prop := HasDepth ϖ e (stdLat k D) Φ
 
 theorem pow_smul_le {ϖ : kˣ} (hϖ : IsUnif ϖ) (e : ℕ) (Λ : Submodule 𝒪[k] (D → k)) : ϖ ^ e • Λ ≤ Λ := by
   intro x hx
@@ -498,10 +498,10 @@ theorem pow_smul_le {ϖ : kˣ} (hϖ : IsUnif ϖ) (e : ℕ) (Λ : Submodule 𝒪[
   exact Λ.smul_mem ⟨_, h⟩ hy
 
 theorem hasDepth_indicator {ϖ : kˣ} (hϖ : IsUnif ϖ) (e : ℕ) (Λ : Submodule 𝒪[k] (D → k)) :
-    HasDepth ϖ e Λ ((↑(matLat (A := A) Λ) : Set (Matrix A D k)).indicator 1) := by
+    HasDepth ϖ e Λ ((matLat A Λ : Set (Matrix A D k)).indicator 1) := by
   refine ⟨fun X hX => Set.indicator_of_notMem hX _, fun X Z hZ => ?_⟩
-  have hZ' : Z ∈ matLat Λ := fun i => pow_smul_le hϖ e Λ (hZ i)
-  by_cases hX : X ∈ matLat Λ
+  have hZ' : Z ∈ matLat A Λ := fun i => pow_smul_le hϖ e Λ (hZ i)
+  by_cases hX : X ∈ matLat A Λ
   · rw [Set.indicator_of_mem (add_mem hX hZ'), Set.indicator_of_mem hX]; rfl
   · rw [Set.indicator_of_notMem hX, Set.indicator_of_notMem (fun h => hX ((add_mem_cancel_right hZ').1 h))]
 
@@ -872,8 +872,8 @@ theorem pathAct_mul (s : Assignment) (γ : List Edge) (g g' : G.VertexGroup) (T 
   simp only [pathAct, h1, h2, List.prod_map_mul, mul_assoc]
 
 def IsTensor (ϖ : kˣ) (e : ℕ) (γ : List Edge) (T : G.Args → ℂ) : Prop :=
-  DependsOn T {b | b ∈ γ} ∧ (∀ x : G.Args, ∀ b ∈ γ, x b ∉ matLat (stdLat) → T x = 0) ∧
-    ∀ x z : G.Args, (∀ b, z b ∈ matLat (ϖ ^ e • stdLat)) → T (x + z) = T x
+  DependsOn T {b | b ∈ γ} ∧ (∀ x : G.Args, ∀ b ∈ γ, x b ∉ matLat _ (stdLat k _) → T x = 0) ∧
+    ∀ x z : G.Args, (∀ b, z b ∈ matLat _ (ϖ ^ e • stdLat k _)) → T (x + z) = T x
 
 
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
@@ -962,10 +962,10 @@ theorem isOpen_detCong (c : kˣ) (n : Type*) [Fintype n] [DecidableEq n] : IsOpe
 
 theorem mul_mul_mem_matLat_iff {m n : Type*} [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n]
     {g : GL m k} {h : GL n k} (hg : g ∈ KO k m) (hh : h ∈ KO k n) (X : Matrix m n k) :
-    g.val * X * h.val ∈ matLat (stdLat) ↔ X ∈ matLat (stdLat) := by
+    g.val * X * h.val ∈ matLat m (stdLat k n) ↔ X ∈ matLat m (stdLat k n) := by
   have key : ∀ {g : GL m k} {h : GL n k}, g ∈ KO k m → h ∈ KO k n →
-      ∀ (X : Matrix m n k), X ∈ matLat (stdLat) →
-      g.val * X * h.val ∈ matLat (stdLat) := fun hg hh X hX =>
+      ∀ (X : Matrix m n k), X ∈ matLat m (stdLat k n) →
+      g.val * X * h.val ∈ matLat m (stdLat k n) := fun hg hh X hX =>
     mem_matLat_stdLat.2 fun i j => Subring.sum_mem _ fun l _ => mul_mem (Subring.sum_mem _ fun l' _ =>
       mul_mem (((mem_KO_iff _).1 hg).1 _ _) (mem_matLat_stdLat.1 hX _ _)) (((mem_KO_iff _).1 hh).1 _ _)
   refine ⟨fun H => ?_, key hg hh X⟩

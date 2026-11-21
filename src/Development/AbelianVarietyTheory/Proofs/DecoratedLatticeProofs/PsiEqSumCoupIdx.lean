@@ -22,7 +22,7 @@ theorem psi_eq_sum_coupIdx : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologi
     simp_rw [hc, mul_ite, mul_one, mul_zero]
     rw [Finset.sum_ite_eq]
     split_ifs with hm
-    · exact (Chain.xiPen_mk hA hg y x₀).symm
+    · exact (T.xiPen_mk hA hg y x₀).symm
     · by_contra hne
       exact hm (Finset.mem_coe.1 (hS ⟨y, (hA g hg x₀ y).1 hne, rfl, g, hg, x₀, hne⟩))
   refine ⟨key, fun η => ?_⟩

@@ -89,7 +89,7 @@ def LeafImgHom : Prop := ∀ (S R : Type) [CommRing S] [CommRing R] (I : Cx S) (
 def LeafImg : Prop := ∀ (S R : Type) [CommRing S] [CommRing R] (I : Cx S) (J : Cx R) (ρ : SemiMap I J),
   ∃ T : ∀ (E : Spc) (n : ℤ), Cochain ((chains S).obj E) I n →+ Cochain ((chains R).obj E) J n,
     (∀ (E : Spc) (n : ℤ) (α : Cochain ((chains S).obj E) I n) (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0})
-      (x : Sx E p U), ev (T E n α) p s h U x = ρ.app U s (ev α p s h U x)) ∧
+      (x : Sx E p U), ev (R := R) (T E n α) p s h U x = ρ.app U s (ev (R := S) α p s h U x)) ∧
     (∀ (E : Spc) (n m : ℤ) (α : Cochain ((chains S).obj E) I n), T E m (δ n m α) = δ n m (T E n α)) ∧
     ∀ (E E' : Spc) (f : E ⟶ E') (n : ℤ) (α : Cochain ((chains S).obj E') I n),
       T E n (pb ((chains S).map f) α) = pb ((chains R).map f) (T E' n α)

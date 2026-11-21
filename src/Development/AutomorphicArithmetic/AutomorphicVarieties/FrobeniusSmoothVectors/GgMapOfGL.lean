@@ -29,14 +29,12 @@ private theorem res_dual (O : Type) [CommRing O] [IsLocalRing O] [IsCO O (DualNu
   rfl
 
 private theorem of_unique {l : ℕ} [Fact l.Prime] {k : Type} [Field k] {F : Frame l k} {n : ℕ} {C : Type}
-    [CommRing C] {B : UpperTheory.V.Fr.Box F n C} {ρ ρ' : UpperTheory.V.Fr.NRep F n C}
-    (h : B.Of ρ) (h' : B.Of ρ') : ρ = ρ' := by
+    [CommRing C] {B : Box F n C} {ρ ρ' : NRep F n C} (h : B.Of ρ) (h' : B.Of ρ') : ρ = ρ' := by
   have e : ρ.r = ρ'.r := MonoidHom.ext fun s => (h.res s).symm.trans (h'.res s)
   refine NRep.ext e (funext fun v => funext fun i => MonoidHom.ext fun s => Units.ext ?_)
   rw [← h.psi, ← h'.psi, e]
 
-private theorem conj_mat {m : ℕ} {C : Type} [CommRing C] (h : GL (Fin m) C)
-    (x : GG (m := m) (R := C)) (hx : x.right = 1) :
+private theorem conj_mat {m : ℕ} {C : Type} [CommRing C] (h : GL (Fin m) C) (x : GG m C) (hx : x.right = 1) :
     (GG.ofGL h * x * (GG.ofGL h)⁻¹).left = h * x.left * h⁻¹ := by
   rw [← map_inv]
   simp [hx]
@@ -62,7 +60,7 @@ private theorem dual_snd {K : Type} [Field K] {m : ℕ} (X A : Matrix (Fin m) (F
   simp [Matrix.mul_apply, TrivSqZeroExt.snd_sum]
 
 theorem UpperTheory.V.Fr.pr_tor :
-    ∀ {l : ℕ} [Fact l.Prime] {k : Type} [Field k] [CharP k l] {F : Frame l k} {C₀ n : ℕ}, F.Ok C₀ → ∀ (O : Type) [CommRing O] [IsLocalRing O], ∀ (R : Type) [CommRing R] [Algebra O R] [IsCO O R] (ρ : UpperTheory.V.Fr.NRep F n R) (B : UpperTheory.V.Fr.Box F n R), ρ.Univ O → B.Of ρ → B.Cont (maximalIdeal R) → (ρ.bar O).Good → thetaLie (lieT (ResidueField O) n) = lieT (ResidueField O) n → ∃ D ∈ Tan O R, ∀ s, B.tanCo O D s = (B.bar O).ad s (lieT _ n) - lieT _ n := by
+    ∀ {l : ℕ} [Fact l.Prime] {k : Type} [Field k] [CharP k l] {F : Frame l k} {C₀ n : ℕ}, F.Ok C₀ → ∀ (O : Type) [CommRing O] [IsLocalRing O], ∀ (R : Type) [CommRing R] [Algebra O R] [IsCO O R] (ρ : NRep F n R) (B : Box F n R), ρ.Univ O → B.Of ρ → B.Cont (maximalIdeal R) → (ρ.bar O).Good → thetaLie (lieT (ResidueField O) n) = lieT (ResidueField O) n → ∃ D ∈ Tan O R, ∀ s, B.tanCo O D s = (B.bar O).ad s (lieT _ n) - lieT _ n := by
   intro l _ k _ _ F C₀ n hF O _ _ R _ _ _ ρ B hU hB hC _ hT
   haveI := (co_res O).2
   let K := ResidueField O

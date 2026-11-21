@@ -13,6 +13,8 @@ noncomputable section
 
 variable {n : ℕ}
 
+local notation "𝔼" => EuclideanSpace ℝ (Fin n)
+
 theorem contDiff_dT {f : 𝔼 → ℂ} (hf : ContDiff ℝ ∞ f) {k : ℕ} (v : Fin k → 𝔼) :
     ContDiff ℝ ∞ (dT v f) := by
   have h : ContDiff ℝ ∞ (iteratedFDeriv ℝ k f) := by

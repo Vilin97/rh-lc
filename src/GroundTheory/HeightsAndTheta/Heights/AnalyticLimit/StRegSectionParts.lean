@@ -160,7 +160,6 @@ def BdComparison.Statement : Prop :=
 section Inhabitants
 
 open ReciprocityTheory.AnForm.M (p1 holoOn_const)
-open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Regular (projLineChartData)
 
 end Inhabitants
 

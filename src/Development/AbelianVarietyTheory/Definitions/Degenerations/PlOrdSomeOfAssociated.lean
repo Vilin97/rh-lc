@@ -14,8 +14,8 @@ namespace GlobalTheory.SS
 open ReciprocityTheory.ChartRestriction.G.Out GlobalTheory.AbLaw
 
 def FrobG {k : Type} [Field k] (G : Over (Sp k)) [GrpObj G] (F : End G) (q : ℕ) : Prop :=
-  IsMonHom (show G ⟶ G from F) ∧ ∀ U : G.left.Opens, IsAffineOpen U → ∀ f : Γ(G.left, U), ∃ m : ℕ, 1 ≤ m ∧
-    ∃ h : U = (show G ⟶ G from F ^ m).left ⁻¹ᵁ U, ((show G ⟶ G from F ^ m).left.appLE U U h.le).hom f = f ^ (q ^ m)
+  IsMonHom F.asHom ∧ ∀ U : G.left.Opens, IsAffineOpen U → ∀ f : Γ(G.left, U), ∃ m : ℕ, 1 ≤ m ∧
+    ∃ h : U = (F ^ m).asHom.left ⁻¹ᵁ U, ((F ^ m).asHom.left.appLE U U h.le).hom f = f ^ (q ^ m)
 
 def AmpleCub {S : Scheme.{0}} (G : Over S) [GrpObj G] (L : LB G.left) : Prop :=
   L.IsLB ∧ (∃ t : LB.Gen (Theta G L), t.IsGen) ∧

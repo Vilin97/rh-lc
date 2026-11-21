@@ -19,7 +19,7 @@ variable {X : Type} [TopologicalSpace X] [T2Space X] [LocallyCompactSpace X]
   [TotallyDisconnectedSpace X] in
 theorem _root_.GlobalTheory.SBExtend.exists_isCompact_isClopen_between {K W : Set X} (hK : IsCompact K)
     (hW : IsOpen W) (hKW : K ⊆ W) : ∃ V : Set X, IsCompact V ∧ IsClopen V ∧ K ⊆ V ∧ V ⊆ W := by
-  have hB := loc_compact_Haus_tot_disc_of_zero_dim (H := X)
+  have hB := loc_compact_Haus_tot_disc_of_zero_dim (X := X)
   have h : ∀ x ∈ K, ∃ U : Set X, (IsClopen U ∧ IsCompact U) ∧ x ∈ U ∧ U ⊆ W := by
     intro x hx
     obtain ⟨C, hCx, hCW, hC⟩ := local_compact_nhds (hW.mem_nhds (hKW hx))

@@ -194,7 +194,7 @@ theorem const_H : ∀ {R : Type} [CommRing R] {C : Type u} [Category.{v} C] (F :
   let G : C ⥤ E.Elements :=
     { obj := fun T => E.elementsMk T PUnit.unit
       map := fun φ => ⟨φ, rfl⟩ }
-  let m : CH.Mor F (CH.elF E F) (RingHom.id R) := CH.Mor.restrict F (CategoryOfElements.π E)
+  let m : CH.Mor F (CH.elF E F) (RingHom.id R) := CH.Mor.restrict F (Functor.Elements.π E)
   have hb : ∀ k, Function.Bijective (m.hom.f k) := by
     intro k
     constructor
@@ -248,15 +248,28 @@ theorem tupI_val (s : ComposableArrows (CH.cech (idxπ U hU) p).Elements q) (k :
 
 def tupL (s : ComposableArrows (CH.cech (idxπ U hU) p).Elements q) :
     ComposableArrows (capT U (tupI U hU s)).FullSubcategory q :=
-  (capT U (tupI U hU s)).lift (s ⋙ CategoryOfElements.π _) fun k a =>
+  (capT U (tupI U hU s)).lift (s ⋙ Functor.Elements.π _) fun k a =>
     hU _ (s.map (homOfLE (Fin.zero_le k))).1 ((s.obj 0).2.1 a).2
 
 theorem tup_eval (f : CH.Cn (CH.elF (CH.cech (idxπ U hU) p) F) q)
     (s : ComposableArrows (CH.cech (idxπ U hU) p).Elements q) :
-    @Eq (F.obj (s.obj (Fin.last q)).1) (f (tupL U hU s ⋙ tupF U hU (tupI U hU s))) (f s) :=
-  ExtensionDiagram.mk_congr F f (s ⋙ CategoryOfElements.π _)
-    (y := fun k => ((tupL U hU s ⋙ tupF U hU (tupI U hU s)).obj k).2) (y' := fun k => (s.obj k).2)
-    (fun φ => ((tupL U hU s ⋙ tupF U hU (tupI U hU s)).map φ).2) (fun φ => (s.map φ).2)
+    @Eq (F.obj (s.obj (Fin.last q)).1) (f (tupL U hU s ⋙ tupF U hU (tupI U hU s))) (f s) := by
+  let E := CH.cech (idxπ U hU) p
+  let c := s ⋙ Functor.Elements.π E
+  let liftDiagram (y : ∀ k, E.obj (c.obj k))
+      (hy : ∀ {a b : Fin (q + 1)} (φ : a ⟶ b), E.map (c.map φ) (y a) = y b) :
+      ComposableArrows E.Elements q :=
+    { obj k := E.elementsMk (c.obj k) (y k)
+      map φ := Functor.Elements.homMk (c.map φ) (hy φ)
+      map_id k := Functor.Elements.hom_ext (c.map_id k)
+      map_comp φ ψ := Functor.Elements.hom_ext (c.map_comp φ ψ) }
+  have eval_eq {y y' : ∀ k, E.obj (c.obj k)} hy hy' (e : y = y') :
+      @Eq (F.obj (c.obj (Fin.last q))) (f (liftDiagram y hy)) (f (liftDiagram y' hy')) := by
+    subst y'
+    rfl
+  let t := tupL U hU s ⋙ tupF U hU (tupI U hU s)
+  exact eval_eq (y := fun k => (t.obj k).val) (y' := fun k => (s.obj k).val)
+    (fun φ => (t.map φ).2) (fun φ => (s.map φ).2)
     (funext fun k => Subtype.ext (funext fun a => Subtype.ext (tupI_val U hU s k a)))
 
 theorem tup_bij : ∀ {R : Type} [CommRing R] {C : Type u} [Category.{v} C] {ι : Type} (U : ι → ObjectProperty C) (hU : ∀ α, Cosieve (U α)) (F : C ⥤ ModuleCat.{w} R) (p q : ℕ), Function.Bijective (fun (x : CH.Cn (CH.elF (CH.cech (idxπ U hU) p) F) q) (i : Fin (p + 1) → ι) => (tupM U hU F i).pullC q x) := by

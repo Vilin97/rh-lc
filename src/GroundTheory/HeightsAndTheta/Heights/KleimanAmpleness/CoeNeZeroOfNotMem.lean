@@ -19,7 +19,7 @@ section ResidueMap
 variable {S : Type*} [CommRing S] {Ω : Type*} [Field Ω] [Algebra S Ω] {K : Type} {ι : K → Type}
   (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (p : Ideal (chartRingOver S y c)) [hp : p.IsPrime]
 
-open IndefiniteRowSideFullHecke.Kleiman2 (ResField residue resImage)
+open IndefiniteRowSideFullHecke.Kleiman2 (ResField)
 
 instance resField.isFractionRing : IsFractionRing (chartRingOver S y c ⧸ p) (ResField S y c p) :=
   inferInstanceAs (IsFractionRing (chartRingOver S y c ⧸ p) (FractionRing (chartRingOver S y c ⧸ p)))
@@ -73,7 +73,7 @@ theorem resq_mul (a b : (chartRingOver S y c)) : resq y c p (a * b) = resq y c p
   simp [resq, map_mul]
 
 theorem resq_add (a b : (chartRingOver S y c)) : resq y c p (a + b) = resq y c p a + resq y c p b := by
-  simp [resq, map_add (f := _)]
+  simp only [resq, RingHom.map_add]
 
 theorem resq_div_eq {a b a' b' : (chartRingOver S y c)} (hb : b ∉ p) (hb' : b' ∉ p) (h : (a : Ω) / b = (a' : Ω) / b') :
     resq y c p a / resq y c p b = resq y c p a' / resq y c p b' := by

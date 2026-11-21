@@ -170,8 +170,11 @@ theorem infIdele_neg_one_not_mem :
     simp only [Units.val_mul, Prod.fst_mul, Pi.mul_apply] at this
     exact this
   have hemb : ∀ (w' : InfinitePlace E) (hw' : w'.IsReal), InfinitePlace.embedding_of_isReal hw' (k : E) =
-      InfinitePlace.Completion.ringEquivRealOfIsReal hw' (algebraMap E w'.Completion (k : E)) := fun w' hw' =>
-    (InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hw' ((WithAbs.equiv w'.1).symm (k : E))).symm
+      InfinitePlace.Completion.ringEquivRealOfIsReal hw' (algebraMap E w'.Completion (k : E)) := fun w' hw' => by
+    rw [InfinitePlace.Completion.ringEquivRealOfIsReal_apply,
+      AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+      Algebra.algebraMap_self_apply, InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe]
+    simp
   have hpos' : ∀ (w' : InfinitePlace E) (hw' : w'.IsReal),
       0 < InfinitePlace.Completion.ringEquivRealOfIsReal hw' (((z⁻¹ : Ideles E) : AdeleRing (𝓞 E) E).1 w') :=
     fun w' hw' => pos_of_mem_conn hw' hinf

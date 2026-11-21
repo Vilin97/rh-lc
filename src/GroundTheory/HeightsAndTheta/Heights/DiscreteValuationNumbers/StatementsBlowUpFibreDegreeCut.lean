@@ -31,7 +31,7 @@ section Lemmas
 def HomLocRingLocal.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
-    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (hP : IsMultiProjPrime P) (c : K → ℕ) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
+    (P : Ideal (MRing ι O)) (hP : IsMultiProjPrime P) (c : K → ℕ) (x : MRing ι O),
     IsMultiHomog x c → x ∉ P →
     ∀ W : Ideal (MRing ι O), W ∈ (P ⊔ Ideal.span {x}).minimalPrimes → IsRelevant W →
       haveI := hP.isPrime
@@ -41,13 +41,13 @@ def HomLocRingLocal.Statement : Prop :=
 def DivCycleHomLoc.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
-    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (hP : IsMultiProjPrime P) (c : K → ℕ) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
+    (P : Ideal (MRing ι O)) (hP : IsMultiProjPrime P) (c : K → ℕ) (x : MRing ι O),
     IsMultiHomog x c → x ∉ P →
     ∀ (W : Ideal (MRing ι O)) (hW : W ∈ (P ⊔ Ideal.span {x}).minimalPrimes), IsRelevant W →
     ∀ g : MRing ι O, IsMultiHomog g c → g ∉ W →
       haveI := hP.isPrime
-      ∀ hz : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (Ideal.Quotient.mk P x) /
-          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (Ideal.Quotient.mk P g) ∈
+      ∀ hz : algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (Ideal.Quotient.mk P x) /
+          algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (Ideal.Quotient.mk P g) ∈
             homLocRing P W,
       haveI : W.IsPrime := hW.1.1
       multAt (P ⊔ Ideal.span {x}) W =
@@ -76,8 +76,8 @@ def BlowUpFibreSemilocal.Statement : Prop :=
       IsRelevant W →
     ∀ g : MRing ι O, IsMultiHomog g c → g ∉ W →
       haveI := hP.multiProj.isPrime
-      ∀ hz : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (Ideal.Quotient.mk P x) /
-          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (Ideal.Quotient.mk P g) ∈
+      ∀ hz : algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (Ideal.Quotient.mk P x) /
+          algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (Ideal.Quotient.mk P g) ∈
             homLocRing P W,
       ∃ (B : Type u) (_ : CommRing B) (_ : IsDomain B) (_ : Algebra (homLocRing P W) B),
         Module.Finite (homLocRing P W) B ∧ Function.Injective (algebraMap (homLocRing P W) B) ∧
@@ -88,8 +88,8 @@ def BlowUpFibreSemilocal.Statement : Prop :=
           ∀ 𝔫 : {𝔫 : Ideal B // 𝔫.IsMaximal},
             (haveI := 𝔫.2.isPrime
              Module.length (Localization.AtPrime 𝔫.1)
-               (Localization.AtPrime 𝔫.1 ⧸ Ideal.span {algebraMap B (Localization.AtPrime 𝔫.1)
-                 (algebraMap (homLocRing P W) B ⟨_, hz⟩)})) =
+               (Localization.AtPrime 𝔫.1 ⧸ Ideal.span {(algebraMap B (Localization.AtPrime 𝔫.1)
+                 (algebraMap (homLocRing P W) B ⟨_, hz⟩))})) =
               ((divCycle (blowUpOf P u) (liftForm x) (e 𝔫).1).toNat : ℕ∞) ∧
             𝔫.1.inertiaDeg (homLocRing P W) = specialRelDeg (e 𝔫).1
 

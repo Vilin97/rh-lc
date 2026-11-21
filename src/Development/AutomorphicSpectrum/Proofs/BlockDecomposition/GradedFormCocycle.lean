@@ -33,11 +33,11 @@ theorem alt_sum {B : Type*} [CommRing B] {j : ℕ} (w : Fin j → Fin (j + 2) �
   have hT0 : T (Fin.castSucc 0) = P 0 := by
     refine Finset.prod_congr rfl fun k _ => ?_
     simp only [Nat.not_lt_zero, if_false]
-    refine cg k ?_ ?_ <;> fa
+    refine cg k ?_ ?_ <;> simp only [sa_val, Fin.val_succ, Fin.val_castSucc, Fin.val_zero, Fin.val_last] <;> split_ifs <;> omega
   have hTl : T (Fin.last (j + 1)) = P j := by
     refine Finset.prod_congr rfl fun k _ => ?_
     simp only [k.2, if_true]
-    refine cg k ?_ ?_ <;> fa
+    refine cg k ?_ ?_ <;> simp only [sa_val, Fin.val_succ, Fin.val_castSucc, Fin.val_zero, Fin.val_last] <;> split_ifs <;> omega
   have hTi : ∀ i : Fin j, T i.succ.castSucc = P (i + 1) + P i := by
     intro i
     have hPa : P (i + 1) = u i * ∏ k ∈ Finset.univ.erase i, (if (k : ℕ) < i + 1 then u k else v k) := by
@@ -56,12 +56,12 @@ theorem alt_sum {B : Type*} [CommRing B] {j : ℕ} (w : Fin j → Fin (j + 2) �
       · have e : u i + v i = w i i.succ.succ - w i i.castSucc.castSucc := by
           rw [hu, hv]; ring
         rw [e]
-        refine cg i ?_ ?_ <;> fa
+        refine cg i ?_ ?_ <;> simp only [sa_val, Fin.val_succ, Fin.val_castSucc, Fin.val_zero, Fin.val_last] <;> split_ifs <;> omega
       · refine Finset.prod_congr rfl fun k hk => ?_
         have hki : (k : ℕ) ≠ i := fun h => Finset.ne_of_mem_erase hk (Fin.ext h)
         split_ifs with h
-        · refine cg k ?_ ?_ <;> fa
-        · refine cg k ?_ ?_ <;> fa
+        · refine cg k ?_ ?_ <;> simp only [sa_val, Fin.val_succ, Fin.val_castSucc, Fin.val_zero, Fin.val_last] <;> split_ifs <;> omega
+        · refine cg k ?_ ?_ <;> simp only [sa_val, Fin.val_succ, Fin.val_castSucc, Fin.val_zero, Fin.val_last] <;> split_ifs <;> omega
     have hE : ∏ k ∈ Finset.univ.erase i, (if (k : ℕ) < i + 1 then u k else v k) =
         ∏ k ∈ Finset.univ.erase i, (if (k : ℕ) < i then u k else v k) := by
       refine Finset.prod_congr rfl fun k hk => ?_
@@ -103,15 +103,19 @@ theorem face_wz {d j : ℕ} (u : Fin d → ∀ T : C, Φ.A.obj T) (I : Fin j →
     (s : ComposableArrows C (j + 1)) (i : Fin (j + 2)) :
     (Φ.A.map (toLast i s)).hom (wz u I (face i s)) =
       ∏ k : Fin j, (vt (u (I k)) s (i.succAbove k.succ) - vt (u (I k)) s (i.succAbove k.castSucc)) := by
+  have map_map {X Y Z : C} (g : X ⟶ Y) (f : Y ⟶ Z) (y : Φ.A.obj X) :
+      (Φ.A.map f).hom ((Φ.A.map g).hom y) = (Φ.A.map (g ≫ f)).hom y := by
+    simp
   unfold wz
   rw [map_prod]
   refine Finset.prod_congr rfl fun k _ => ?_
-  rw [GlobalTheory.CompanionTheory.CocProd.map_map]
+  simp only [map_sub]
+  rw [map_map]
   have e : (face i s).map (homOfLE (Fin.le_last k.succ)) ≫ toLast i s =
       s.map (homOfLE (Fin.le_last (i.succAbove k.succ))) := by
     change s.map _ ≫ s.map _ = _
     rw [← s.map_comp]; rfl
-  rw [e, map_sub, GlobalTheory.CompanionTheory.CocProd.map_map]
+  rw [e, map_map, e, map_map]
   have e2 : (face i s).map (homOfLE (Fin.castSucc_lt_succ (i := k)).le) ≫
       s.map (homOfLE (Fin.le_last (i.succAbove k.succ))) =
       s.map (homOfLE (Fin.le_last (i.succAbove k.castSucc))) := by

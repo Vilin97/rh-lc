@@ -18,7 +18,7 @@ namespace GlobalTheory.EtC.KumPic.PostVal
 
 theorem ev_comp_ofHom {E : Spc} {I J : Cx ℤ} {n : ℤ} (α : Cochain ((chains ℤ).obj E) I n) (m : I ⟶ J)
     (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U) :
-    ev ℤ (α.comp (Cochain.ofHom m) (add_zero n)) p s h U x = Sec.map (m.f s) (ev ℤ α p s h U x) := by
+    ev (α.comp (Cochain.ofHom m) (add_zero n)) p s h U x = Sec.map (m.f s) (ev α p s h U x) := by
   unfold ev
   rw [Cochain.comp_zero_cochain_v, Cochain.ofHom_v]
   rfl
@@ -34,31 +34,31 @@ theorem resι_resMap {C G : Shv ℤ} (φ : C ⟶ G) : resι ℤ C ≫ (resMap �
 theorem post_eq_picClass (C : Shv ℤ) (qb : C ⟶ Gm) (E : Spc) (L : E ⟶ ofCat (glCat 1))
     (a : Cocycle ((chains ℤ).obj E) (sgl C) 1)
     (ha : ∀ (U : Scheme.{0}) (x : Sx E 1 U), ∃ c : Sec C U, Sec.map qb c = unitSec (lineUnit L x) ∧
-      ev ℤ a.1 1 0 (by simp) U x = Sec.map (sglι C) c) :
+      ev a.1 1 0 (by simp) U x = Sec.map (sglι C) c) :
     HK.post ℤ _ qb 1 (CohomologyClass.mk (zcomp a (Cocycle.ofHom (resAug C)) (add_zero 1))) = picClass L := by
   let β := zcomp (zcomp a (Cocycle.ofHom (resAug C)) (add_zero 1))
     (Cocycle.ofHom (resMap ℤ qb)) (add_zero 1)
   change CohomologyClass.mk β = picClass L
-  have hβ₀ (U : Scheme.{0}) (x : Sx E 0 U) : ev ℤ β.1 0 1 (by simp) U x = 0 := by
-    change ev ℤ ((a.1.comp (Cochain.ofHom (resAug C)) (add_zero 1)).comp
+  have hβ₀ (U : Scheme.{0}) (x : Sx E 0 U) : ev β.1 0 1 (by simp) U x = 0 := by
+    change ev ((a.1.comp (Cochain.ofHom (resAug C)) (add_zero 1)).comp
       (Cochain.ofHom (resMap ℤ qb)) (add_zero 1))
       0 1 _ U x = 0
     rw [ev_comp_ofHom, ev_comp_ofHom,
-      GlobalTheory.EtC.PicSpec.sec_eq_zero (HomologicalComplex.isZero_single_obj_X _ _ _ _ (by decide)) (ev ℤ a.1 0 1 _ U x),
+      GlobalTheory.EtC.PicSpec.sec_eq_zero (HomologicalComplex.isZero_single_obj_X _ _ _ _ (by decide)) (ev a.1 0 1 _ U x),
       GlobalTheory.EtC.PicSpec.sec_map_zero, GlobalTheory.EtC.PicSpec.sec_map_zero]
   have hβ₁ (U : Scheme.{0}) (x : Sx E 1 U) :
-      ev ℤ β.1 1 0 (by simp) U x = Sec.map (resι ℤ Gm) (unitSec (lineUnit L x)) := by
+      ev β.1 1 0 (by simp) U x = Sec.map (resι ℤ Gm) (unitSec (lineUnit L x)) := by
     obtain ⟨c, hc, hv⟩ := ha U x
-    change ev ℤ ((a.1.comp (Cochain.ofHom (resAug C)) (add_zero 1)).comp
+    change ev ((a.1.comp (Cochain.ofHom (resAug C)) (add_zero 1)).comp
       (Cochain.ofHom (resMap ℤ qb)) (add_zero 1))
       1 0 _ U x = _
     rw [ev_comp_ofHom, ev_comp_ofHom, hv, GlobalTheory.EtC.PicSpec.sec_map_comp, GlobalTheory.EtC.PicSpec.sec_map_comp, ← hc,
       GlobalTheory.EtC.PicSpec.sec_map_comp, ← Category.assoc, sglι_resAug, resι_resMap]
   let P (c : H ℤ E Gm 1) : Prop :=
     ∃ γ : Cocycle ((chains ℤ).obj E) (res ℤ Gm) 1, CohomologyClass.mk γ = c ∧
-      (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev ℤ γ.1 0 1 (by simp) U x = 0) ∧
+      (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev γ.1 0 1 (by simp) U x = 0) ∧
       ∀ (U : Scheme.{0}) (x : Sx E 1 U),
-        ev ℤ γ.1 1 0 (by simp) U x = Sec.map (resι ℤ Gm) (unitSec (lineUnit L x))
+        ev γ.1 1 0 (by simp) U x = Sec.map (resι ℤ Gm) (unitSec (lineUnit L x))
   have hspec : P (picClass L) := by
     change P (pick P)
     exact pick_spec ⟨_, β, rfl, hβ₀, hβ₁⟩

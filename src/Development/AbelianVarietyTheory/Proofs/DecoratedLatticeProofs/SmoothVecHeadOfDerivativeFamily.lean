@@ -123,7 +123,7 @@ theorem hasFDerivAt_of_partials :
         ((hc 0).comp continuous_cons_pair)
     have cf₂ : Continuous ↿f₂ := by
       show Continuous fun p : ℝ × (Fin k → ℝ) => ∑ j, (ContinuousLinearMap.proj j : (Fin k → ℝ) →L[ℝ] ℝ).smulRight (d j.succ (Fin.cons p.1 p.2))
-      refine continuous_finset_sum _ fun j _ => ?_
+      refine continuous_finsetSum _ fun j _ => ?_
       exact (ContinuousLinearMap.smulRightL ℝ (Fin k → ℝ) E
         (ContinuousLinearMap.proj j)).continuous.comp ((hc j.succ).comp continuous_cons_pair)
     let ι : (Fin (k+1) → ℝ) →L[ℝ] ℝ × (Fin k → ℝ) :=
@@ -167,8 +167,10 @@ theorem prod_update (Xs : Fin k → Mx n) (t : Fin k → ℝ) (i : Fin k) (s : �
       ((facs Xs).map (· t)).set i (NormedSpace.exp (s • Xs i)) := by
     rw [facs, List.map_ofFn, List.map_ofFn, ← ofFn_update_eq_set]
     congr 1
-    split_ifs with hj
-    · subst hj; rfl
+    funext j
+    simp only [Function.comp_apply, Function.update_apply]
+    split_ifs with h
+    · subst j; rfl
     · rfl
   rw [e, List.prod_set, if_pos (by simp [facs]), List.map_drop]
 

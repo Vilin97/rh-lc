@@ -145,7 +145,7 @@ theorem _root_.GlobalTheory.StepData.NormalForm.normalFormModN : ∀ (k : Type) 
     ext i j
     rw [Units.val_mul, _root_.GlobalTheory.SplitFlip.diagGL_val, _root_.GlobalTheory.SplitFlip.diagGL_val,
       diagonal_mul_diagonal, Units.val_one]
-    simp [diagonal_apply, one_apply]
+    simp [diagonal_apply, Matrix.one_apply]
   have hv0 : valuation k (ϖ : k) ≠ 0 := (map_ne_zero _).mpr hϖ0
   have hval : ∀ i, valuation k (εv i : k) = 1 := by
     rintro (i | i)

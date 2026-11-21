@@ -30,5 +30,5 @@ theorem _root_.GlobalTheory.T.sum_ord_sub_one_le_ord_wedgeDifferentials : ∀ {k
     (hy : y ∈ U), E.Through y → ∀ (z : Fin n → Γ(X, U)), formOf U (gen_mem hy) (dOn p z) ≠ 0 →
     ∀ {J : Type} [Fintype J] (e : J → Fin n), Function.Injective e → ∀ (u : J → X.functionFieldˣ),
     (∀ j, (u j : X.functionField) = fnOf U (gen_mem hy) (z (e j))) →
-    ∑ j, E.ord (u j) - 1 ≤ E.formOrd (formOf U (gen_mem hy) (dOn p z)) := by
+    ∑ j, E.ord (u j) - 1 ≤ (fun ω => @dite ℤ (∃ a, E.IsFormOrd ω a) (Classical.propDecidable _) (fun h => h.choose) (fun _ => 0)) (formOf U (gen_mem hy) (dOn p z)) := by
   first | exact @GlobalTheory.Discrepancy.DivOver.sum_ord_sub_one_le_formOrd_dOn | exact GlobalTheory.Discrepancy.DivOver.sum_ord_sub_one_le_formOrd_dOn | (intros; apply GlobalTheory.Discrepancy.DivOver.sum_ord_sub_one_le_formOrd_dOn <;> assumption)

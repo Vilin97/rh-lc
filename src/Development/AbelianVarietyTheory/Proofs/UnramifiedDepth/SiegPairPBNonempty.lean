@@ -32,7 +32,7 @@ theorem siegPairPB_nonempty : ReciprocityTheory.ChartRestriction.G.Pdiv.StSiegPu
       geomConnected := by
         have := o.ab.geomConnected
         show GeometricallyConnected (Limits.pullback.snd _ _); infer_instance }
-  have hP := pull_isLB o.isLB (PullbackComparison.pφ₂ f o.A)
+  have hP := LB.isLB_pull o.isLB (PullbackComparison.pφ₂ f o.A)
   obtain ⟨t₁, ht₁⟩ := o.rig₁
   obtain ⟨t₂, ht₂⟩ := o.rig₂
   exact ⟨{

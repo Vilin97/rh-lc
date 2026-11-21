@@ -65,20 +65,20 @@ def residueBasis : Module.Basis (Module.Free.ChooseBasisIndex 𝒪[K] 𝒪[L]) �
         IsUnramified.finrank_residueField K L])
 
 theorem residueBasis_apply (i : Module.Free.ChooseBasisIndex 𝒪[K] 𝒪[L]) :
-    residueBasis i = residue 𝒪[L] (Module.Free.chooseBasis 𝒪[K] 𝒪[L] i) := by
+    residueBasis K L i = residue 𝒪[L] (Module.Free.chooseBasis 𝒪[K] 𝒪[L] i) := by
   simp [residueBasis]
 
 theorem residueBasis_repr (y : 𝒪[L]) (i : Module.Free.ChooseBasisIndex 𝒪[K] 𝒪[L]) :
-    (residueBasis).repr (residue 𝒪[L] y) i =
+    (residueBasis K L).repr (residue 𝒪[L] y) i =
       residue 𝒪[K] ((Module.Free.chooseBasis 𝒪[K] 𝒪[L]).repr y i) := by
   have h : residue 𝒪[L] y = ∑ j, residue 𝒪[K] ((Module.Free.chooseBasis 𝒪[K] 𝒪[L]).repr y j) •
-      residueBasis j := by
+      residueBasis K L j := by
     simp only [residueBasis_apply]
     exact residue_eq_sum_repr y
-  rw [h, (residueBasis).repr_sum_self]
+  rw [h, (residueBasis K L).repr_sum_self]
 
 theorem leftMulMatrix_residueBasis (y : 𝒪[L]) :
-    Algebra.leftMulMatrix (residueBasis) (residue 𝒪[L] y) =
+    Algebra.leftMulMatrix (residueBasis K L) (residue 𝒪[L] y) =
       (Algebra.leftMulMatrix (Module.Free.chooseBasis 𝒪[K] 𝒪[L]) y).map (residue 𝒪[K]) := by
   ext i j
   rw [Algebra.leftMulMatrix_eq_repr_mul, Matrix.map_apply, Algebra.leftMulMatrix_eq_repr_mul,
@@ -88,13 +88,13 @@ theorem residue_norm (y : 𝒪[L]) :
     residue 𝒪[K] (Algebra.norm 𝒪[K] y) = Algebra.norm 𝓀[K] (residue 𝒪[L] y) := by
   classical
   rw [Algebra.norm_eq_matrix_det (Module.Free.chooseBasis 𝒪[K] 𝒪[L]),
-    Algebra.norm_eq_matrix_det (residueBasis), leftMulMatrix_residueBasis, RingHom.map_det]
+    Algebra.norm_eq_matrix_det (residueBasis K L), leftMulMatrix_residueBasis, RingHom.map_det]
   rfl
 
 theorem residue_trace (y : 𝒪[L]) :
     residue 𝒪[K] (Algebra.trace 𝒪[K] 𝒪[L] y) = Algebra.trace 𝓀[K] 𝓀[L] (residue 𝒪[L] y) := by
   rw [Algebra.trace_eq_matrix_trace (Module.Free.chooseBasis 𝒪[K] 𝒪[L]),
-    Algebra.trace_eq_matrix_trace (residueBasis), leftMulMatrix_residueBasis]
+    Algebra.trace_eq_matrix_trace (residueBasis K L), leftMulMatrix_residueBasis]
   exact AddMonoidHom.map_trace (residue 𝒪[K]).toAddMonoidHom _
 
 theorem irreducible_algebraMap_of_isUnramified {ϖ : 𝒪[K]} (hϖ : Irreducible ϖ) :

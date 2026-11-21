@@ -902,7 +902,6 @@ def typeChain (ϖ : kˣ) (P : TypeDatum k (κ ⊕ Fin (s + 1))) (μ : ℕ → k�
 
 
 variable (s t κ) in
-variable (κ t s) in
 def twistChain (δ : kˣ →* ℂˣ) (hδ : IsTame δ) (ν : ℕ → kˣ →* ℂˣ) :
     Chain k s (XIx κ t) (Ix (κ ⊕ Fin (s + 1)) t (s + 2)) :=
   Chain.ofTwist δ hδ ν (fun j c h => plainFrame (stdOrd κ t j c h)) (LatFrame.refl k _)

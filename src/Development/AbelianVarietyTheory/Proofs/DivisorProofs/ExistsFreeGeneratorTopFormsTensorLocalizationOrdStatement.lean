@@ -26,6 +26,6 @@ theorem _root_.GlobalTheory.T.exists_freeGenerator_topForms_tensorLocalization_o
     IsUnit q ∧
     dForm (algebraMap ℂ L) (Fin.append (fun i => algebraMap (K ⊗[ℂ] κ') L (1 ⊗ₜ τ' i))
         (fun i => algebraMap (K ⊗[ℂ] κ') L (x i ⊗ₜ 1))) =
-      ((q : L) * (algebraMap (K ⊗[ℂ] κ') L ((t : K) ⊗ₜ 1)) ^ E.formOrd (dForm (algebraMap ℂ K) x)) •
+      ((q : L) * (algebraMap (K ⊗[ℂ] κ') L ((t : K) ⊗ₜ 1)) ^ (fun ω => @dite ℤ (∃ a, E.IsFormOrd ω a) (Classical.propDecidable _) (fun h => h.choose) (fun _ => 0)) (dForm (algebraMap ℂ K) x)) •
         dForm (algebraMap ℂ L) (fun i => (y i : L)) := by
   first | exact @GlobalTheory.GraphLocal.exists_isFreeGen_locAt_formOrd | exact GlobalTheory.GraphLocal.exists_isFreeGen_locAt_formOrd | (intros; apply GlobalTheory.GraphLocal.exists_isFreeGen_locAt_formOrd <;> assumption)

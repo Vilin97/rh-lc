@@ -59,7 +59,7 @@ theorem trBasis_uniformiser_cons : ∀ {L K : Type} [Field L] [Field K] (cL : �
     Function.Surjective ψ → (∀ a, ψ (S.const a) = cK a) → Irreducible f →
     TrBasis cK (fun i => ψ (w i)) →
     TrBasis cL (Fin.cons (f : L) (fun i => (w i : L)) : Fin (n + 1) → L) ∧
-      S.formOrd (dForm cL (Fin.cons (f : L) (fun i => (w i : L)) : Fin (n + 1) → L)) = 0 ∧
+      (fun ω => @dite ℤ (∃ a, S.IsFormOrd ω a) (Classical.propDecidable _) (fun h => h.choose) (fun _ => 0)) (dForm cL (Fin.cons (f : L) (fun i => (w i : L)) : Fin (n + 1) → L)) = 0 ∧
       S.ord (f : L) = 1 ∧ ∀ g : S.ring, ψ g ≠ 0 → S.ord (g : L) = 0 := by
   intro L K _ _ cL cK n S ψ f w hψ hc hf hwK
   letI : Algebra ℂ S.ring := S.const.toAlgebra

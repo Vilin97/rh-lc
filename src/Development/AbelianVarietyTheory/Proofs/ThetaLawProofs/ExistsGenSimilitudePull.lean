@@ -70,7 +70,7 @@ theorem sum_quad_rows_add (h0 : q 0 = 0) (hq : ∀ x y, q (x + y) = q x + q y + 
   simp only [hq, hξ, add_zero, Finset.sum_add_distrib, sum_quad_rows h0 hq h2 al m hal y]
   have e : ∑ r, B (∑ c, al r c • y c) (ξ r) = 0 := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_zsmul, AddMonoidHom.finset_sum_apply, AddMonoidHom.zsmul_apply]
+      simp only [map_sum, map_zsmul, AddMonoidHom.finsetSum_apply, AddMonoidHom.zsmul_apply]
     rw [Finset.sum_comm]
     refine Finset.sum_eq_zero fun c _ => ?_
     set_option synthInstance.maxHeartbeats 100000 in

@@ -65,7 +65,7 @@ def SmIrr.triv : SmIrr G where
   smooth v := by simp
   irred := (isIrreducible_iff _).2 ⟨inferInstance, fun W _ => eq_bot_or_eq_top W⟩
 
-instance : Inhabited (Irr G) := ⟨Quotient.mk (@SmIrr.setoid G _ _) SmIrr.triv⟩
+instance : Inhabited (Irr G) := ⟨Quotient.mk (@SmIrr.setoid G _ _) (SmIrr.triv G)⟩
 
 variable [IsTopologicalGroup G]
 
@@ -90,6 +90,6 @@ def Irr.twist (σ : Irr G) (χ : G →* ℂˣ) (hχ : IsOpen {g | χ g = 1}) : I
     exact congrArg _ (LinearMap.congr_fun (e.isIntertwining' g) v)⟩) σ
 
 def Irr.ofChar (χ : G →* ℂˣ) (hχ : IsOpen {g | χ g = 1}) : Irr G :=
-  Quotient.mk (@SmIrr.setoid G _ _) (SmIrr.triv.twist χ hχ)
+  Quotient.mk (@SmIrr.setoid G _ _) ((SmIrr.triv G).twist χ hχ)
 
 end GlobalTheory.CuspRep

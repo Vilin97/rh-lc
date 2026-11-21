@@ -150,6 +150,8 @@ private lemma thetaConst_zero_zero_eq_eta_mul_weberF_sq (hTP : _root_.GlobalTheo
       (∏' n : ℕ, (1 - (-q) ^ (n + 1))) ^ 2 := by
     refine ((hΘ.mul hA).unique ?_).trans (sq _).symm
     convert hB.mul hB using 1
+    funext n
+    rw [Odd.neg_pow (⟨n, by ring⟩ : Odd (2 * n + 1)),
       Even.neg_pow (⟨n + 1, by ring⟩ : Even (2 * n + 2)), ← pow_mul]
     ring
   have e₂ : cexp (2 * ↑Real.pi * I * (((τ : ℂ) + 1) / 2)) = -q := by
@@ -226,7 +228,7 @@ private lemma thetaConst_one_zero_eq_eta_mul_weberF₂_sq (hTP : _root_.GlobalTh
   have hg : HasProd (fun n : ℕ => 1 + q ^ (2 * n))
       (2 * ∏' k : ℕ, (1 + q ^ (2 * k + 2))) := by
     have h := HasProd.zero_mul (f := fun n : ℕ => 1 + q ^ (2 * n)) (by
-      convert hC using 2 with n; ring_nf)
+      convert hC using 2 with n)
     convert h using 1; norm_num
   have hA := hasProd_one_sub_pow_succ_of_norm_lt_one (y := q ^ 2) (by rw [norm_pow]; nlinarith [norm_nonneg q])
   have hD := hasProd_one_sub_pow_succ_of_norm_lt_one (y := q ^ 4) (by

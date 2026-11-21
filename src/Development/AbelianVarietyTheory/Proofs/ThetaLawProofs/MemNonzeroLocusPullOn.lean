@@ -82,7 +82,7 @@ theorem main : Out.Laws → ∀ (R : Type) [CommRing R] [IsNoetherianRing R] (P 
   have h := isGrpPullback_pullback P.A (spMap f)
   let φ : ((Over.pullback (spMap f)).obj P.A).left ⟶ P.A.left := pullback.fst P.A.hom (spMap f)
   change IsGrpPullback _ _ _ φ at h
-  have hL' := pull_isLB P.isLB φ
+  have hL' := LB.isLB_pull P.isLB φ
   have hw := (isGen_iff _).1 (idIso_isGen hL')
   let P' : Out.PolAV (Sp R') :=
     { A := (Over.pullback (spMap f)).obj P.A

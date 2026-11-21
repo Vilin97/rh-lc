@@ -45,6 +45,10 @@ theorem realSignHom_apply {G : Type*} [Group G] (c : G) (hc : c * c = 1) (x : â„
 variable {K L : Type*} [Field K] [Field L] [Algebra K L] {v : InfinitePlace K}
   (w : InfinitePlace L) [w.LiesOver v]
 
+local instance instFiniteDimensionalLocalSymbolCompletion :
+    FiniteDimensional v.Completion w.Completion :=
+  Module.finite_of_finrank_pos (finrank_completion_pos (v := v) w)
+
 section Degree
 
 theorem finrank_completion_eq_two_iff :

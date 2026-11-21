@@ -31,8 +31,10 @@ private lemma posDef_det_one_exists_unitary_exp_diagonal_sum_zero {ι : Type} [F
   · conv_lhs => rw [hP.1.spectral_theorem]
     rw [Unitary.conjStarAlgAut_apply, Matrix.star_eq_conjTranspose]
     congr 3
-    rw [mul_div_cancel₀ _ two_ne_zero, Real.exp_log (hP.eigenvalues_pos i)]
-    rfl
+    funext i
+    change (hP.1.eigenvalues i : ℂ) = (Real.exp (2 * (Real.log (hP.1.eigenvalues i) / 2)) : ℂ)
+    rw [show 2 * (Real.log (hP.1.eigenvalues i) / 2) = Real.log (hP.1.eigenvalues i) by ring,
+      Real.exp_log (hP.eigenvalues_pos i)]
 
 open Matrix in
 open scoped Kronecker ComplexOrder TensorProduct MatrixOrder in

@@ -120,7 +120,7 @@ theorem terms_vanish [IsDiscreteValuationRing R] {ϖ : R} (hϖ : Irreducible ϖ)
     ∀ mu, mu ≠ 0 → ∀ j, (pullback.fst D.toPre.P.A.hom (thick R I 0)).app _ ((g mu).f j) = 0 := by
   subst hI
   classical
-  choose Q hQ using QForm.exists_QVal (ϖ := ϖ) D
+  choose Q hQ using QForm.exists_QVal hϖ D
   have hQ' : QForm.IsQ D.toPre ϖ Q := hQ
   let castVal : ℕ∞ →+o WithTop ℚ :=
     { toFun := WithTop.map (Nat.cast : ℕ → ℚ)
@@ -164,8 +164,8 @@ theorem terms_vanish [IsDiscreteValuationRing R] {ϖ : R} (hϖ : Irreducible ϖ)
   have e01 : (0 : D.toPre.X) + 1 • mu = mu := by simp
   rw [e01] at hm
   have hb0 : QForm.bOf D.toPre Q mu 0 = 0 := by
-    simp [QForm.bOf, QForm.Q_zero D hQ']
-  have hq1 : 1 ≤ Q mu := QForm.Q_pos D hQ' hmu
+    simp [QForm.bOf, QForm.Q_zero hϖ D hQ']
+  have hq1 : 1 ≤ Q mu := QForm.Q_pos hϖ D hQ' hmu
   obtain ⟨N, a, σ, σF, hσF, hva, hsum⟩ := hm
   have hab : ∀ i, ∃ b : R, a i = algebraMap R (FractionRing R) (ϖ * b) := by
     intro i

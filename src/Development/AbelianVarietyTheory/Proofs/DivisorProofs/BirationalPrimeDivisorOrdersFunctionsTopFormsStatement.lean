@@ -23,5 +23,5 @@ theorem _root_.GlobalTheory.T.birational_primeDivisor_orders_functions_topForms 
     topologicalKrullDim X = n → ∀ (s : Y ⟶ X) [IsDominant s], Function.Bijective (functionFieldMap s) →
     ∀ (E : DivOver p) (E' : DivOver (s ≫ p)), DivOver.Over s E' E →
       (∀ g : X.functionFieldˣ, E'.ord (fnPull s g) = E.ord g) ∧
-      ∀ η : RatForms p n, η ≠ 0 → E'.formOrd (ratPull p s n η) = E.formOrd η := by
+      ∀ η : RatForms p n, η ≠ 0 → (fun ω => @dite ℤ (∃ a, E'.IsFormOrd ω a) (Classical.propDecidable _) (fun h => h.choose) (fun _ => 0)) (ratPull p s n η) = (fun ω => @dite ℤ (∃ a, E.IsFormOrd ω a) (Classical.propDecidable _) (fun h => h.choose) (fun _ => 0)) η := by
   first | exact @GlobalTheory.BirOrd.ord_and_formOrd_of_over | exact GlobalTheory.BirOrd.ord_and_formOrd_of_over | (intros; apply GlobalTheory.BirOrd.ord_and_formOrd_of_over <;> assumption)

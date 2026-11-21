@@ -366,12 +366,13 @@ variable {V K H : Type*} [CommRing V] [Field K] [Algebra V K] [CommRing H]
 variable [HopfAlgebra V H] [IsFractionRing V K] (J : Ideal (K ⊗[V] H)) [J.IsHopfIdeal K]
 
 theorem isHopfIdeal_closureIdeal_of_flat [Module.Flat V (H ⧸ closureIdeal K J)] :
-    (closureIdeal K J).IsHopfIdeal V where
-  counit_eq_zero x hx := by
+    (closureIdeal K J).IsHopfIdeal V := by
+  refine { counit_eq_zero := ?_, map_mkQ_comul_eq_zero := ?_, antipode_mem := ?_ }
+  · intro x hx
     have h := Submodule.IsCoideal.counit_eq_zero (I := J.restrictScalars K) hx
     apply IsFractionRing.injective V K
     simpa [Algebra.smul_def] using h
-  map_mkQ_comul_eq_zero x hx := by
+  · intro x hx
     have h := Submodule.IsCoideal.map_mkQ_comul_eq_zero (I := J.restrictScalars K) hx
     let Q := (K ⊗[V] H) ⧸ J.restrictScalars K
     let P := H ⧸ closureIdeal K J
@@ -402,7 +403,7 @@ theorem isHopfIdeal_closureIdeal_of_flat [Module.Flat V (H ⧸ closureIdeal K J)
     | tmul a b =>
       simp only [CommSemiring.comul_apply, TensorProduct.map_tmul, TensorProduct.AlgebraTensorModule.tensorTensorTensorComm_tmul]
       rfl
-  antipode_mem x hx := by
+  · intro x hx
     have h := Ideal.IsHopfIdeal.antipode_mem (R := K) (I := J) hx
     simpa using h
 
@@ -420,9 +421,9 @@ end Surjections
 section Examples
 
 theorem isHopfIdeal_ker_counit (R H : Type*) [CommRing R] [CommRing H] [HopfAlgebra R H] :
-    (RingHom.ker (counitAlgHom R H)).IsHopfIdeal R where
-  counit_eq_zero _ hx := hx
-  map_mkQ_comul_eq_zero x hx := by
+    (RingHom.ker (counitAlgHom R H)).IsHopfIdeal R := by
+  refine { counit_eq_zero := fun _ hx ↦ hx, map_mkQ_comul_eq_zero := ?_, antipode_mem := ?_ }
+  · intro x hx
     have hx' : counit (R := R) x = 0 := hx
     set π := ((RingHom.ker (counitAlgHom R H)).restrictScalars R).mkQ with hπ
     have h1 : ∀ y, π y = counit (R := R) y • π 1 := fun y ↦ by
@@ -439,7 +440,7 @@ theorem isHopfIdeal_ker_counit (R H : Type*) [CommRing R] [CommRing H] [HopfAlge
           TensorProduct.lid_tmul, map_smul]
     rw [h2, rTensor_counit_comul, TensorProduct.lid_tmul, one_smul, h1 x, hx', zero_smul,
       TensorProduct.tmul_zero]
-  antipode_mem x hx := by
+  · intro x hx
     have hx' : counit (R := R) x = 0 := hx
     change counit (R := R) (antipode R x) = 0
     simpa using hx'

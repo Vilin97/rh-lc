@@ -40,12 +40,12 @@ theorem smul_mem_of_int {Λ : Submodule 𝒪[k] (D → k)} {c : k} (hc : c ∈ �
     c • x ∈ Λ := Λ.smul_mem ⟨c, hc⟩ hx
 
 theorem vecMul_mem_of_int {A : Type*} [Fintype A] {Λ : Submodule 𝒪[k] (D → k)} {Y : Matrix A D k}
-    (hY : Y ∈ matLat Λ) {c : A → k} (hc : ∀ i, c i ∈ 𝒪[k]) : c ᵥ* Y ∈ Λ := by
+    (hY : Y ∈ matLat A Λ) {c : A → k} (hc : ∀ i, c i ∈ 𝒪[k]) : c ᵥ* Y ∈ Λ := by
   rw [vecMul_eq_sum]
   exact Λ.sum_mem fun i _ => smul_mem_of_int (hc i) (hY i)
 
 theorem isPrimFrame_iff [Fintype D] {A : Type*} [Fintype A] {Λ : Submodule 𝒪[k] (D → k)} {Y : Matrix A D k} :
-    IsPrimFrame Λ Y ↔ Y ∈ matLat Λ ∧ ∀ c : A → k, c ᵥ* Y ∈ Λ → ∀ i, c i ∈ 𝒪[k] := by
+    IsPrimFrame Λ Y ↔ Y ∈ matLat A Λ ∧ ∀ c : A → k, c ᵥ* Y ∈ Λ → ∀ i, c i ∈ 𝒪[k] := by
   have hli : Y.rank = Fintype.card A ↔ LinearIndependent k Y.row := by
     rw [rank_eq_finrank_span_row, linearIndependent_iff_card_eq_finrank_span, eq_comm]; rfl
   have hv : ∀ c : A → k, c ᵥ* Y = ∑ i, c i • Y.row i := fun c => vecMul_eq_sum _ _
@@ -159,8 +159,8 @@ theorem det_consBlock (u : k) (c : Fin n → k) (γ : Matrix (Fin n) (Fin n) k) 
   rfl
 
 theorem consBlock_mul_mem {Λ : Submodule 𝒪[k] (D → k)} (u : k) (c : Fin n → k) (γ : Matrix (Fin n) (Fin n) k)
-    (Y : Matrix (Fin (n + 1)) D k) : consBlock u c γ * Y ∈ matLat Λ ↔
-      γ * Y.submatrix Fin.succ id ∈ matLat Λ ∧ u • Y.row 0 + c ᵥ* Y.submatrix Fin.succ id ∈ Λ := by
+    (Y : Matrix (Fin (n + 1)) D k) : consBlock u c γ * Y ∈ matLat (Fin (n + 1)) Λ ↔
+      γ * Y.submatrix Fin.succ id ∈ matLat (Fin n) Λ ∧ u • Y.row 0 + c ᵥ* Y.submatrix Fin.succ id ∈ Λ := by
   rw [mem_matLat, mem_matLat, Fin.forall_fin_succ, and_comm, ← cons_vecMul_rows]
   refine and_congr (forall_congr' fun i => ?_) Iff.rfl
   have : (consBlock u c γ * Y).row i.succ = (γ * Y.submatrix Fin.succ id).row i := by
@@ -175,7 +175,7 @@ theorem exists_comb_isPrimFrame.{u} {k : Type u} [Field k] [ValuativeRel k] [Top
     [IsNonarchimedeanLocalField k] [Fintype D] {ϖ : kˣ} (hϖ : IsUnif ϖ) (Λ : Submodule 𝒪[k] (D → k)) (n : ℕ) :
     ∃ (ι : Type u) (_ : Fintype ι) (m : ι → ℂ) (γ : ι → Matrix (Fin n) (Fin n) k) (j : ι → ℕ),
       (∀ i, (γ i).det = ((ϖ : k)⁻¹) ^ j i) ∧
-      (∀ Y : Matrix (Fin n) D k, ∑ i, m i * (if γ i * Y ∈ matLat Λ then 1 else 0) =
+      (∀ Y : Matrix (Fin n) D k, ∑ i, m i * (if γ i * Y ∈ matLat (Fin n) Λ then 1 else 0) =
         if IsPrimFrame Λ Y then 1 else 0) ∧
       ∀ x : ℂ, ∑ i, m i * x ^ j i = ∏ i ∈ Finset.range n, (1 - (resCard k : ℂ) ^ i * x) := by
   induction n with
@@ -195,7 +195,7 @@ theorem exists_comb_isPrimFrame.{u} {k : Type u} [Field k] [ValuativeRel k] [Top
       simp only [Sum.elim_inl, Sum.elim_inr, consBlock_mul_mem, smul_vecMul, ← smul_add, one_smul, zero_vecMul,
         add_zero, Finset.sum_mul, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun i _ => ?_
-      by_cases h : γ i * Y.submatrix Fin.succ id ∈ matLat Λ
+      by_cases h : γ i * Y.submatrix Fin.succ id ∈ matLat (Fin n) Λ
       · simp only [h, true_and, if_true, mul_one, mul_sub, Finset.mul_sum, neg_mul, Finset.sum_neg_distrib]
         ring
       · simp [h]
@@ -233,7 +233,7 @@ variable [Fintype D] [DecidableEq D]
 theorem exists_translates_eq_primFrame_lat {ϖ : kˣ} (hϖ : IsUnif ϖ) (ν α : kˣ →* ℂˣ)
     (Λ : Submodule 𝒪[k] (D → k)) (a' : ℕ) :
     ∃ z : GL (Fin a') k →₀ ℂ,
-      (z.sum fun g c => c • omB ν α g 1 ((matLat (A := Fin a') Λ : Set (Matrix (Fin a') D k)).indicator 1)) =
+      (z.sum fun g c => c • omB ν α g 1 ((matLat (Fin a') Λ : Set (Matrix (Fin a') D k)).indicator 1)) =
         {Y : Matrix (Fin a') D k | IsPrimFrame Λ Y}.indicator 1 ∧
       (z.sum fun _ c => c) = ∏ i ∈ Finset.range a',
         (1 - (resCard k : ℂ) ^ i * ((ν ϖ : ℂ) * (resCard k : ℂ) ^ (-(Fintype.card D : ℂ) / 2))) := by

@@ -28,8 +28,8 @@ theorem kosD_apply_map {k K : Type} [CommRing k] [CommRing K] (f : k →+* K) {g
       f (kosD (d := 0) m (fun _ => 0) p q) := by
   rcases p with p | a
   · rcases q with q | a
-    set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [kosD, map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        simp only [kosD, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       split_ifs <;> simp
     · exact a.elim0

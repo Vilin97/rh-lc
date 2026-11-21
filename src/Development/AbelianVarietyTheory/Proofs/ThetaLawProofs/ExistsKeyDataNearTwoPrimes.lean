@@ -32,7 +32,7 @@ theorem exists_keyIn_polPB {R R₁ R' : Type} [CommRing R] [CommRing R₁] [Comm
   have h := isGrpPullback_pullback Q.A (spMap f)
   let φ : ((Over.pullback (spMap f)).obj Q.A).left ⟶ Q.A.left := pullback.fst Q.A.hom (spMap f)
   change IsGrpPullback _ _ _ φ at h
-  have hL' := pull_isLB Q.isLB φ
+  have hL' := LB.isLB_pull Q.isLB φ
   have hw := (isGen_iff _).1 (idIso_isGen hL')
   let P' : Out.PolAV (Sp R') :=
     { A := (Over.pullback (spMap f)).obj Q.A

@@ -8,7 +8,6 @@ public import Development.EtaleCohomology.KummerTheory.InjSlice
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
-open LateralTheory.EWeil.ArtinCut LateralTheory.EWeil.LerayCut LateralTheory.EWeil.PushPf LateralTheory.EWeil.PushCxTPf
 
 namespace LateralTheory.EWeil.AcycPf
 

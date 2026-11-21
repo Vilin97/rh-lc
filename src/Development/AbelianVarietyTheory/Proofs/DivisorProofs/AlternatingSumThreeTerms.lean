@@ -65,7 +65,7 @@ theorem freePresheaf_obj_map_freeMk (R : Type) [CommRing R] (P : PSh) {U V : Sch
   ModuleCat.free_map_apply _ _
 
 theorem val_map (R : Type) [CommRing R] {P Q : PSh} {F : Shv R} (α : P ⟶ Q) (s : (free R).obj Q ⟶ F) (U : Scheme.{0})
-    (x : P.obj (op U)) : val R ((free R).map α ≫ s) U x = val R s U (α.app (op U) x) := by
+    (x : P.obj (op U)) : val ((free R).map α ≫ s) U x = val s U (α.app (op U) x) := by
   unfold val freeGen
   have h : ((toSheafify Scheme.etaleTopology ((freeP R).obj Q)).app (op U)).hom
       ((((freeP R).map α).app (op U)).hom (ModuleCat.freeMk (ULift.up x))) =
@@ -78,7 +78,7 @@ theorem val_map (R : Type) [CommRing R] {P Q : PSh} {F : Shv R} (α : P ⟶ Q) (
   rfl
 
 theorem val_nat (R : Type) [CommRing R] {P : PSh} {F : Shv R} (s : (free R).obj P ⟶ F) {U V : Scheme.{0}} (g : V ⟶ U)
-    (x : P.obj (op U)) : val R s V (P.map g.op x) = Sec.pull g (val R s U x) := by
+    (x : P.obj (op U)) : val s V (P.map g.op x) = Sec.pull g (val s U x) := by
   unfold val freeGen Sec.pull
   have h1 : ((toSheafify Scheme.etaleTopology ((freeP R).obj P)).app (op V)).hom
       ((((freeP R).obj P).map g.op).hom (ModuleCat.freeMk (ULift.up x))) =
@@ -141,16 +141,16 @@ theorem cechPt_congr {Y X : Scheme.{0}} (f : Y ⟶ X) (k : ℕ) {Z : Scheme.{0}}
   rfl
 
 theorem val_add (R : Type) [CommRing R] {P : PSh} {F : Shv R} (s s' : (free R).obj P ⟶ F) (U : Scheme.{0}) (x : P.obj (op U)) :
-    val R (s + s') U x = val R s U x + val R s' U x := by
+    val (s + s') U x = val s U x + val s' U x := by
   simp [val]
 
 theorem val_zero (R : Type) [CommRing R] {P : PSh} {F : Shv R} (U : Scheme.{0}) (x : P.obj (op U)) :
-    val R (0 : (free R).obj P ⟶ F) U x = 0 := by
+    val (0 : (free R).obj P ⟶ F) U x = 0 := by
   simp [val]
 
 def valHom (R : Type) [CommRing R] {P : PSh} (F : Shv R) (U : Scheme.{0}) (x : P.obj (op U)) :
     ((free R).obj P ⟶ F) →+ Sec F U where
-  toFun s := val R s U x
+  toFun s := val s U x
   map_zero' := val_zero R U x
   map_add' s s' := val_add R s s' U x
 
@@ -162,11 +162,11 @@ theorem alternating_sum_three_terms {M : Type*} [AddCommGroup M] (p q r : M) :
   simp [sub_eq_add_neg]
 
 theorem val_coboundary_first_level (R : Type) [CommRing R] (F : Shv R) (t : (free R).obj ((cech (fB A B)).obj (op ⦋0⦌)) ⟶ F) :
-    val R (cobd R t) (Spec (CommRingCat.of (B ⊗[A] B))) (P1 A B) =
+    val (cobd t) (Spec (CommRingCat.of (B ⊗[A] B))) (P1 A B) =
       ((onRings F).map (CommRingCat.ofHom (Algebra.TensorProduct.includeRight : B →ₐ[A] B ⊗[A] B).toRingHom)).hom
-        (val R t (Spec (CommRingCat.of B)) (P0 A B)) -
+        (val t (Spec (CommRingCat.of B)) (P0 A B)) -
       ((onRings F).map (CommRingCat.ofHom (Algebra.TensorProduct.includeLeft : B →ₐ[A] B ⊗[A] B).toRingHom)).hom
-        (val R t (Spec (CommRingCat.of B)) (P0 A B)) := by
+        (val t (Spec (CommRingCat.of B)) (P0 A B)) := by
   have e : ∀ i : Fin 2, ((cech (fB A B)).δ i).app (op (Spec (CommRingCat.of (B ⊗[A] B)))) (P1 A B) =
       ((cech (fB A B)).obj (op ⦋0⦌)).map (y1 A B (i.succAbove 0)).op (P0 A B) := by
     intro i
@@ -178,7 +178,7 @@ theorem val_coboundary_first_level (R : Type) [CommRing R] (F : Shv R) (t : (fre
     · funext j
       fin_cases j
       simp
-  change valHom R F _ (P1 A B) (cobd R t) = _
+  change valHom R F _ (P1 A B) (cobd t) = _
   unfold cobd
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum, Fin.sum_univ_two]
@@ -195,13 +195,13 @@ def g2 : Fin 3 → (Spec (CommRingCat.of (B ⊗[A] (B ⊗[A] B))) ⟶ Spec (Comm
       (Algebra.TensorProduct.includeLeft : B →ₐ[A] B ⊗[A] B)).toRingHom)]
 
 theorem val_coboundary_second_level (R : Type) [CommRing R] (F : Shv R) (s : (free R).obj ((cech (fB A B)).obj (op ⦋1⦌)) ⟶ F) :
-    val R (cobd R s) (Spec (CommRingCat.of (B ⊗[A] (B ⊗[A] B)))) (P2 A B) =
+    val (cobd s) (Spec (CommRingCat.of (B ⊗[A] (B ⊗[A] B)))) (P2 A B) =
       ((onRings F).map (CommRingCat.ofHom
-        (Algebra.TensorProduct.includeRight : B ⊗[A] B →ₐ[A] B ⊗[A] (B ⊗[A] B)).toRingHom)).hom (val R s (Spec (CommRingCat.of (B ⊗[A] B))) (P1 A B)) -
+        (Algebra.TensorProduct.includeRight : B ⊗[A] B →ₐ[A] B ⊗[A] (B ⊗[A] B)).toRingHom)).hom (val s (Spec (CommRingCat.of (B ⊗[A] B))) (P1 A B)) -
       ((onRings F).map (CommRingCat.ofHom (Algebra.TensorProduct.map (AlgHom.id A B)
-        (Algebra.TensorProduct.includeRight : B →ₐ[A] B ⊗[A] B)).toRingHom)).hom (val R s (Spec (CommRingCat.of (B ⊗[A] B))) (P1 A B)) +
+        (Algebra.TensorProduct.includeRight : B →ₐ[A] B ⊗[A] B)).toRingHom)).hom (val s (Spec (CommRingCat.of (B ⊗[A] B))) (P1 A B)) +
       ((onRings F).map (CommRingCat.ofHom (Algebra.TensorProduct.map (AlgHom.id A B)
-        (Algebra.TensorProduct.includeLeft : B →ₐ[A] B ⊗[A] B)).toRingHom)).hom (val R s (Spec (CommRingCat.of (B ⊗[A] B))) (P1 A B)) := by
+        (Algebra.TensorProduct.includeLeft : B →ₐ[A] B ⊗[A] B)).toRingHom)).hom (val s (Spec (CommRingCat.of (B ⊗[A] B))) (P1 A B)) := by
   have e : ∀ i : Fin 3, ((cech (fB A B)).δ i).app (op (Spec (CommRingCat.of (B ⊗[A] (B ⊗[A] B))))) (P2 A B) =
       ((cech (fB A B)).obj (op ⦋1⦌)).map (g2 A B i).op (P1 A B) := by
     intro i
@@ -218,7 +218,7 @@ theorem val_coboundary_second_level (R : Type) [CommRing R] (F : Shv R) (s : (fr
         refine (spec_comp _ _ _ ?_).symm
         ext b
         simp [Algebra.TensorProduct.one_def]
-  change valHom R F _ (P2 A B) (cobd R s) = _
+  change valHom R F _ (P2 A B) (cobd s) = _
   unfold cobd
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum, Fin.sum_univ_three]
@@ -229,10 +229,10 @@ theorem val_coboundary_second_level (R : Type) [CommRing R] (F : Shv R) (s : (fr
 
 theorem val_cech_map_first_level (R : Type) [CommRing R] (F : Shv R) {B' : Type} [CommRing B'] [Algebra A B'] (φ : B →ₐ[A] B')
     (s : (free R).obj ((cech (fB A B)).obj (op ⦋1⦌)) ⟶ F) :
-    val R ((free R).map ((cechMap (fB A B) (fB A B') _ (spec_algHom φ)).app (op ⦋1⦌)) ≫ s)
+    val ((free R).map ((cechMap (fB A B) (fB A B') _ (spec_algHom φ)).app (op ⦋1⦌)) ≫ s)
         (Spec (CommRingCat.of (B' ⊗[A] B'))) (P1 A B') =
       ((onRings F).map (CommRingCat.ofHom (Algebra.TensorProduct.map φ φ).toRingHom)).hom
-        (val R s (Spec (CommRingCat.of (B ⊗[A] B))) (P1 A B)) := by
+        (val s (Spec (CommRingCat.of (B ⊗[A] B))) (P1 A B)) := by
   rw [val_map]
   have e1 : ((cechMap (fB A B) (fB A B') _ (spec_algHom φ)).app (op ⦋1⦌)).app (op (Spec (CommRingCat.of (B' ⊗[A] B'))))
       (P1 A B') = cechPt (fB A B) 1 (Spec.map (CommRingCat.ofHom (algebraMap A (B' ⊗[A] B'))))

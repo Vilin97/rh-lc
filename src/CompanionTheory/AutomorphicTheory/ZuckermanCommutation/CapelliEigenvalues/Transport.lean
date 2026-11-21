@@ -104,7 +104,9 @@ theorem capelli_localization : PI.UnitaryGroupMassFormula.CapelliEig.Loc := by
 theorem capelli_transport : PI.UnitaryGroupMassFormula.CapelliEig.CapTransport := by
   intro n ε E _ _ H P Q F u g hQP hPQ hH hsm hg
   have hg' := ioh_inUJ ε H P Q g hPQ hH hg
-  obtain ⟨x, hx⟩ := io_rep_mk hsm
+  let x : _root_.Formalism.QuantumDeterminants.ioS ε E := ⟨fun y => F (Q * y.1 * P), by
+    exact io_smooth_congr (fun y hy => (ioExt_at (φ := fun z => F (Q * z.1 * P)) hy).symm) hsm⟩
+  have hx : IORep (fun y => F (Q * y * P)) x.1 := fun y hy => rfl
   have h1 := ioh_qminor_rep (ioh_repr (ε := ε) (E := E) P Q) id id u hx _ hg'
   have h2 := io_qminor_rep id id u hx _ hg'
   have hc := (Formalism.FourierDecayAlt.P.contractions_covariant (Module.End ℂ (ioS ε E)) n (ioE ε E) P Q (io_gl ε E)

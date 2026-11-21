@@ -54,7 +54,7 @@ theorem main_thm : ∀ (G : Type) [inst : Group G] [inst_1 : TopologicalSpace G]
     exact Set.disjoint_left.1 (hdisj hne) hj (mem_doubleCoset_self J J (x j))
   have hcls : ∀ i, Quotient.out (DoubleCoset.mk J J (x i)) ∈ doubleCoset (x i) (J : Set G) J := by
     intro i
-    obtain ⟨u, w, hu, hw, e⟩ := DoubleCoset.mk_out_eq_mul J J (x i)
+    obtain ⟨u, hu, w, hw, e⟩ := DoubleCoset.mk_out_eq_mul J J (x i)
     exact mem_doubleCoset.2 ⟨u, hu, w, hw, e⟩
   have hzero : ∀ c ∉ Set.range (fun i => DoubleCoset.mk J J (x i)),
       (m.real (doubleCoset (Quotient.out c) (J : Set G) J) : ℂ) * F (Quotient.out c) = 0 := by
@@ -63,7 +63,7 @@ theorem main_thm : ∀ (G : Type) [inst : Group G] [inst_1 : TopologicalSpace G]
     obtain ⟨i, hi⟩ := hsupp _ (right_ne_zero_of_mul h)
     refine hc ⟨i, ?_⟩
     show DoubleCoset.mk J J (x i) = c
-    rw [← DoubleCoset.out_eq' J J c]
+    rw [← DoubleCoset.out_eq' c]
     exact (DoubleCoset.mk_eq_of_doubleCoset_eq (doubleCoset_eq_of_mem hi)).symm
   refine (hinj.hasSum_iff hzero).1 ?_
   convert hsumI using 1

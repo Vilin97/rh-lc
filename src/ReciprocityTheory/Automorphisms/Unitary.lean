@@ -155,6 +155,6 @@ def TrivOutside {n : ℕ} (T : Set (HeightOneSpectrum (𝓞 L⁺))) (x : GA L n)
 variable {L} in
 noncomputable def Level {n : ℕ} {ι : Type*} (s : ι → SplitPlace L)
     (H : ∀ a, Subgroup (GL (Fin n) ((s a).v.adicCompletion L⁺))) : Subgroup (GA L n) :=
-  Umax L n ⊓ ⨅ a, (H a).comap (SplitPlace.loc L (s a) n)
+  Umax L n ⊓ ⨅ a, (H a).comap (SplitPlace.loc (s a) n)
 
 end ReciprocityTheory.Aut

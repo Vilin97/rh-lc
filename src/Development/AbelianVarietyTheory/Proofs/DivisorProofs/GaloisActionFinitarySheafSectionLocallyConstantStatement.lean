@@ -13,7 +13,7 @@ open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
 open GlobalTheory.EtC.GalSmooth in
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.galoisAction_finitarySheafSection_locallyConstant :
-    ∀ (R : Type) [CommRing R] (F : Shv R), Finitary R F →
+    ∀ (R : Type) [CommRing R] (F : Shv R), Finitary F →
       ∀ (K Ω : Type) [Field K] [Field Ω] [Algebra K Ω] [Algebra.IsAlgebraic K Ω]
         (x : Sec F (Spec (CommRingCat.of Ω))),
         IsLocallyConstant (fun τ : Ω ≃ₐ[K] Ω =>

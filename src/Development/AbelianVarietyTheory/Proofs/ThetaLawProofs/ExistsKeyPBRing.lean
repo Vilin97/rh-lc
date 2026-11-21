@@ -25,7 +25,7 @@ theorem exists_keyPB_ring {R R' : Type} [CommRing R] [CommRing R'] (x : KeyIn R)
   have h := isGrpPullback_pullback x.P.A (spMap f)
   let φ : ((Over.pullback (spMap f)).obj x.P.A).left ⟶ x.P.A.left := pullback.fst x.P.A.hom (spMap f)
   change IsGrpPullback _ _ _ φ at h
-  have hL' := pull_isLB x.P.isLB φ
+  have hL' := LB.isLB_pull x.P.isLB φ
   have hw := (isGen_iff _).1 (idIso_isGen hL')
   let P' : Out.PolAV (Sp R') :=
     { A := (Over.pullback (spMap f)).obj x.P.A

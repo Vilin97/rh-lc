@@ -35,7 +35,7 @@ theorem finrank_lieModel_of_algebra (X : Scheme.{0}) (G : Over X) [GrpObj G] [Sm
       map_smul' := fun c e => MV.inj (by
         rw [RingHom.id_apply, hsm, LieModel.pt_smul, hf, hf, LieModel.pt_smul, ← Category.assoc,
           LieTangent.base_scale, Category.assoc]) }
-  have hl : ∀ e, M₀.Lifts (algebraMap A K) (𝟙 G.left) e (MV.pt (j e)) := fun e => by
+  have hl : ∀ e, ((MV.pt (j e)).left ≫ (𝟙 G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A K)) ≫ (M₀.pt e).left) := fun e => by
     change (MV.pt (f e)).left ≫ 𝟙 G.left = _
     rw [hf, Category.comp_id]
     rfl

@@ -26,7 +26,7 @@ theorem map_eq_self_of_fd (Γ : Subgroup N) [Countable Γ] (ν : Measure N) [ν.
   have hc := Measure.isMulLeftInvariant_eq_smul (ν.map φ) ν
   set c := Measure.haarScalarFactor (ν.map φ) ν
   have hq : Measure.QuasiMeasurePreserving φ ν ν :=
-    ⟨φ.continuous.measurable, by rw [hc]; exact Measure.smul_absolutelyContinuous⟩
+    ⟨φ.continuous.measurable.aemeasurable, by rw [hc]; exact Measure.smul_absolutelyContinuous⟩
   have h𝓝' : IsFundamentalDomain Γ (φ ⁻¹' 𝓝) ν := h𝓝.preimage_of_equiv hq he fun g x => hφ g x
   have hm : ν (φ ⁻¹' 𝓝) = ν 𝓝 := h𝓝'.measure_eq h𝓝
   have h0 : ν 𝓝 ≠ 0 := h𝓝.measure_ne_zero (NeZero.ne ν)
@@ -53,7 +53,7 @@ theorem invInv_of_rightInv (ν : Measure N) [ν.IsHaarMeasure] [ν.IsMulRightInv
   have h0 : ν K ≠ 0 := (Measure.measure_pos_of_nonempty_interior ν K.interior_nonempty).ne'
   have hf : ν K ≠ ⊤ := K.isCompact.measure_lt_top.ne
   have h2 : ν = (c * c) • ν := by
-    have h : (c • ν).inv = c • ν.inv := Measure.map_smul _ _ _
+    have h : (c • ν).inv = c • ν.inv := Measure.map_smul _ (continuous_inv.measurable.aemeasurable)
     rw [mul_smul, ← hc, ← h, ← hc, Measure.inv_inv]
   have h3 : ((c * c : ℝ≥0) : ℝ≥0∞) * ν K = 1 * ν K := by
     rw [one_mul]; conv_rhs => rw [h2]
@@ -74,7 +74,7 @@ theorem eq_smul_of_rightInv (κ l : Measure N) [κ.IsHaarMeasure] [κ.IsMulRight
   generalize Measure.haarScalarFactor l.inv κ = c at hc
   rw [← Measure.inv_inv l, hc]
   conv_rhs => rw [← Measure.inv_eq_self κ]
-  exact Measure.map_smul _ _ _
+  exact Measure.map_smul _ (continuous_inv.measurable.aemeasurable)
 
 
 omit [LocallyCompactSpace N] [SecondCountableTopology N] [T2Space N] in

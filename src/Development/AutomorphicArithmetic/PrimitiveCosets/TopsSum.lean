@@ -18,7 +18,7 @@ private theorem tops_sum_coset {H : Type} [AddCommGroup H] [Fintype H] (A0 : Add
       rw [e, AddChar.map_add_eq_mul, h0 _ (A0.neg_mem hg), mul_one]
     · rfl
   have eqv : A0 ≃ {g : H // t - g ∈ A0} :=
-    { toFun := fun s => ⟨t - s, by simpa using s.2⟩
+    { toFun := fun s => ⟨t - s, by simp⟩
       invFun := fun g => ⟨t - g, g.2⟩
       left_inv := fun s => by ext; simp
       right_inv := fun g => by ext; simp }

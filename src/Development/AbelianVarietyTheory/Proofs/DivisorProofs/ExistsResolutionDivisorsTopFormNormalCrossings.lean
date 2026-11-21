@@ -39,7 +39,7 @@ theorem formOrd_ratPull_eq_zero {W Y : Scheme.{0}} [IsIntegral W] [IsIntegral Y]
     [SmoothOfRelativeDimension n q] (s : Y ⟶ W) [IsDominant s] [SmoothOfRelativeDimension n (s ≫ q)]
     (V : Y.Opens) (hV : Etale (V.ι ≫ s)) (ω : RatForms q n) (hω : ω ≠ 0) (K : CartierDiv W)
     (hK : IsDivOfForm K ω) (v : Y) (hv : v ∈ V) (hvK : s v ∉ K.supp) (F : DivOver (s ≫ q))
-    (hF : F.IsAt v) : F.formOrd (ratPull q s n ω) = 0 := by
+    (hF : F.IsAt v) : (fun ω => @dite ℤ (∃ a, F.IsFormOrd ω a) (Classical.propDecidable _) (fun h => h.choose) (fun _ => 0)) (ratPull q s n ω) = 0 := by
   obtain ⟨E, hE, -, hform⟩ := GlobalTheory.EtaleDiv.exists_isAt_ord_formOrd Y W q s n V hV v hv F hF
   rw [hform ω hω, DivOver.formOrd_eq_mult_of_isDivOfForm ℂ W q n ω hω K hK E (s v) hE]
   have h1 : K.IsEqn (s v) 1 := not_not.1 hvK
@@ -82,7 +82,7 @@ theorem exists_resolution_supp : GlobalTheory.Published.Principalisation → ∀
       (∀ (y v : Y) (g : X.functionFieldˣ), v ⤳ y → Order.coheight v = 1 → v ∉ B → D₀.IsEqn (s y) g →
         Scheme.ord (fnPull s g : Y.functionField) v = 0) ∧
       (∀ (v : Y) (F : DivOver (s ≫ p)), Order.coheight v = 1 → v ∉ B → F.IsAt v →
-        F.formOrd (ratPull p s n η) = 0) := by
+        (fun ω => @dite ℤ (∃ a, F.IsFormOrd ω a) (Classical.propDecidable _) (fun h => h.choose) (fun _ => 0)) (ratPull p s n η) = 0) := by
   intro hP X _ _ p n hp hdim η G D₀ hη
   obtain ⟨W, s₁, U, hW, hsm₁, hpr₁, hU, hiso₁⟩ := GlobalTheory.WeakRes.weak_resolution hP ℂ X p n hp hdim
   haveI := hW

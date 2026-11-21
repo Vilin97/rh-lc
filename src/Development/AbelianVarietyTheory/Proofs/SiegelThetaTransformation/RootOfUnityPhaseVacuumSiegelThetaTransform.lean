@@ -68,7 +68,18 @@ theorem vac_trans {σ : Matrix (ι ⊕ ι) (ι ⊕ ι) ℚ} (hσ : σ ∈ Matrix
   refine ⟨A.map T.toAddMonoidHom, fun y => ε (T.symm y), ?_, ?_, ?_, ?_, ?_, hψ, ?_⟩
   · obtain ⟨S, hS⟩ := h.fg
     classical
-    exact ⟨S.image T, by rw [← hS, AddMonoidHom.map_closure]; simp⟩
+    let e := A.equivMapOfInjective T.toAddMonoidHom T.injective
+    refine ⟨S.image e, ?_⟩
+    apply top_unique
+    intro y _
+    obtain ⟨x, rfl⟩ := e.surjective y
+    have hx : x ∈ AddSubsemigroup.closure (S : Set A) := by rw [hS]; trivial
+    induction hx using AddSubsemigroup.closure_induction with
+    | mem x hx =>
+        apply AddSubsemigroup.subset_closure
+        exact Finset.mem_coe.mpr (Finset.mem_image.mpr ⟨x, hx, rfl⟩)
+    | add x y hx hy ihx ihy =>
+        simpa only [map_add] using AddSubsemigroup.add_mem _ (ihx (by trivial)) (ihy (by trivial))
   · intro y
     rw [mem, h.dual]
     constructor

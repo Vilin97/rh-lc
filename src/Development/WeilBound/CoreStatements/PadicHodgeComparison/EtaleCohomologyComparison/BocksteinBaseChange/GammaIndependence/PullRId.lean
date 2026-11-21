@@ -55,7 +55,7 @@ theorem smMor_id_functor {K : Type} [CommRing K] {X : Scheme.{0}} (p : X ⟶ Spe
   · funext j; exact j.elim
 
 theorem pullR_id {K : Type} [CommRing K] {X : Scheme.{0}} (p : X ⟶ Spec (CommRingCat.of K)) (n : ℕ)
-    (h : 𝟙 X ≫ p = p) : pullR n (𝟙 X) h = LinearMap.id :=
+    (h : 𝟙 X ≫ p = p) : pullR p n (𝟙 X) h = LinearMap.id :=
   catH_pull_eq_id _ (smMor_id_functor p h) (fun _ _ => HEq.rfl) n
 
 theorem genMap_id {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)} (M : Model l K)
@@ -63,8 +63,8 @@ theorem genMap_id {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (Padic
   apply pullback.hom_ext <;> simp [Model.genMap]
 
 theorem pullR_genMap_id {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)} (M : Model l K) (n : ℕ)
-    (h : 𝟙 M.X ≫ M.p = M.p) : pullR n (Model.genMap (𝟙 M.X) h) (Model.genMap_q _ h) = LinearMap.id := by
-  have key : ∀ (f : M.gen ⟶ M.gen) (_ : f = 𝟙 _) (h' : f ≫ M.q = M.q), pullR n f h' = LinearMap.id := by
+    (h : 𝟙 M.X ≫ M.p = M.p) : pullR M.q n (Model.genMap (𝟙 M.X) h) (Model.genMap_q _ h) = LinearMap.id := by
+  have key : ∀ (f : M.gen ⟶ M.gen) (_ : f = 𝟙 _) (h' : f ≫ M.q = M.q), pullR M.q n f h' = LinearMap.id := by
     rintro f rfl h'
     exact pullR_id _ n h'
   exact key _ (genMap_id M h) _

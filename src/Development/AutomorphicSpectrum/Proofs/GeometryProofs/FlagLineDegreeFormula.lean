@@ -31,7 +31,7 @@ theorem gram_eq {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Sp Ω ⟶ X} {K : 
     (h : LieMetric M y) {L : Type} [Field L] [NumberField L] {z : Sp (𝓞 L) ⟶ X} {B : HermitianBundle.{0} L}
     {MB : LieModel G z B.carrier} (hfib : IsFibre (fun z v w c => c = h.ip z v w) z B MB) (σ : L →+* ℂ) {n : ℕ}
     (g : Fin n → B.carrier) (v : Fin n → (epsAt (spMap (σ.comp (algebraMap (𝓞 L) L)) ≫ z) ⟶ G))
-    (hl : ∀ a, MB.Lifts (σ.comp (algebraMap (𝓞 L) L)) (𝟙 G.left) (g a) (v a)) :
+    (hl : ∀ a, ((v a).left ≫ (𝟙 G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (MB.pt (g a)).left)) :
     B.gramDet σ g = (gramAt h _ v).det := by
   unfold HermitianBundle.gramDet gramAt
   congr 1

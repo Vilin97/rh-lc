@@ -135,8 +135,8 @@ def EtaleChart.ofIso {k : Type u} [Field k] {X Y : Scheme.{u}}
     (q : Y ⟶ Spec (CommRingCat.of k)) (e : X ≅ Y) {U : Y.Opens} {m : ℕ}
     (c : EtaleChart q U m) : EtaleChart (e.hom ≫ q) ((Opens.map e.hom.base).obj U) m where
   map := e.hom.resLE U ((Opens.map e.hom.base).obj U) le_rfl ≫ c.map
-  comp_struct := ofIso_map_comp_affineSpaceFinToSpec q e c
-  isEtale := etale_resLE_comp_map_of_iso q e c
+  comp_struct := by exact ofIso_map_comp_affineSpaceFinToSpec q e c
+  isEtale := by exact etale_resLE_comp_map_of_iso q e c
 
 theorem EtaleChart.ofIso_coordIdeal {k : Type u} [Field k] {X Y : Scheme.{u}}
     (q : Y ⟶ Spec (CommRingCat.of k)) (e : X ≅ Y) {U : Y.Opens} {m : ℕ}
@@ -173,11 +173,12 @@ theorem hasStrictNormalCrossingsWith_comap_iso {k : Type u} [Field k] {X Y : Sch
     rw [hmap, restrictIdeal_comap, h3 i hi' t hai, EtaleChart.ofIso_coordIdeal]
   · rw [restrictIdeal_comap, h4, EtaleChart.ofIso_coordIdeal]
 
-theorem comapIsoInvariance : ComapIsoInvariance.{u} where
-  coSupport_comap := fun e J n => orderAtLeastLocus_comap_iso_hom_eq_preimage e J n
-  hasSNCWith_comap := fun q e Z F h => hasStrictNormalCrossingsWith_comap_iso q e Z F h
-  smooth_comap := fun q e Z h => smooth_comap_iso q e Z h
-  strictTransform_comap := fun π e Z D => strictTransform_comp_iso_hom π e Z D
+theorem comapIsoInvariance : ComapIsoInvariance.{u} := by
+  exact
+    { coSupport_comap := fun e J n => orderAtLeastLocus_comap_iso_hom_eq_preimage e J n
+      hasSNCWith_comap := fun q e Z F h => hasStrictNormalCrossingsWith_comap_iso q e Z F h
+      smooth_comap := fun q e Z h => smooth_comap_iso q e Z h
+      strictTransform_comap := fun π e Z D => strictTransform_comp_iso_hom π e Z D }
 
 end FunctorialResolution.EmbeddedResolution
 

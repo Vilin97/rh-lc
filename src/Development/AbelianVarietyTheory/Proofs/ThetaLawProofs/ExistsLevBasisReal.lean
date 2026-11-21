@@ -69,7 +69,7 @@ theorem exists_levBasis_real (g : ℕ) (a b : Fin g → ℝ) {l : ℕ} (hl : 0 <
     ∃ Th : Fin (l ^ g) → (Fin g → Fin g → ℂ) → (Fin g → ℂ) → ℂ, LevBasis (ofRealVec a) (ofRealVec b) l Th := by
   let e : Fin (l ^ g) ≃ (Fin g → Fin l) := finFunctionFinEquiv.symm
   let r : Fin (l ^ g) → Fin g → ℤ := fun k i => ((e k i : ℕ) : ℤ)
-  have hr : Function.Bijective fun k i => (r k i : ZMod l) := (@bijective_fin_zmod (Fin g) l hl).comp e.bijective
+  have hr : Function.Bijective fun k i => (r k i : ZMod l) := (@GlobalTheory.bijective_fin_zmod (Fin g) l hl).comp e.bijective
   refine ⟨fun k p => levelTheta a b l (per p) (r k), fun k => holFam_levelTheta a b hl _, fun p hp =>
     ⟨fun k => (isLevel_iff _ _ _ _ _).2 (levelTheta_mem hp hl _), fun F hF => ?_⟩⟩
   let B := thetaLevelCharBasis a b (τ := per p) hp hl hr

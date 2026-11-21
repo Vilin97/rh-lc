@@ -86,7 +86,7 @@ def IsLinPtOf [IsScalarTower (𝓞 L) L V] (z : Sp (𝓞 L) ⟶ 𝔐.X) (P : AbP
     P.IsCochars MV A.I ∧ IsPrincipal P.tB ∧
     ∃ (t' : SAB H (Sp (𝓞 L))) (m' : SABMap P.tB t' (spMap (algebraMap (𝓞 L) L)))
       (MB : LieModel t'.G (𝟙 _) A.Bq.carrier), IsFibre (HodgeIP t'.G t'.PP.L) (𝟙 _) A.Bq MB ∧
-      ∀ x : A.Λ, MB.Lifts (algebraMap (𝓞 L) L) m'.φ (A.f x) (MV.pt x ≫ P.τ.q ≫ P.e.hom)
+      ∀ x : A.Λ, ((MV.pt x ≫ P.τ.q ≫ P.e.hom).left ≫ m'.φ = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ (MB.pt (A.f x)).left)
 
 end HodgeCpt
 

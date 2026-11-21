@@ -48,7 +48,17 @@ variable {La : Type} [AddCommGroup La] {EF : LinearMap.BilinForm ℤ La} {ζ : �
 
 theorem lab_pow (H : Labels N EF ζ lab) {k : ℕ} (hk : 0 < k) (x : La) (m : ℕ) :
     N.QEq (lab k x ^ (m + 1)) (lab k ((m + 1) • x)) := by
-  have E := N.qEq_equivalence k
+  have equiv : ∀ k, Equivalence (N.QEq (k := k)) := by
+    intro k
+    exact {
+      refl := fun p => ⟨0, by simp, by simp⟩
+      symm := by
+        rintro p p' ⟨z, h, h'⟩
+        exact ⟨-z, by rw [h, smul_neg, add_neg_cancel_right], by rw [h', N.io_neg, mul_inv_cancel_right]⟩
+      trans := by
+        rintro p p' p'' ⟨z, h, h'⟩ ⟨w, e, e'⟩
+        exact ⟨z + w, by rw [e, h, smul_add, add_assoc], by rw [e', h', N.io_add, _root_.mul_assoc]⟩ }
+  have E := equiv k
   induction m with
   | zero => rw [zero_add, pow_one, one_smul]; exact E.refl _
   | succ m ih =>
@@ -59,8 +69,18 @@ theorem lab_incl (H : Labels N EF ζ lab) {k k' : ℕ} (hk : 0 < k) (hk' : k' �
     (q : N.QT (k * k')) (a : q.1.1 = p.1.1 ^ k') (b : q.1.2 = p.1.2) :
     N.QEq (lab k x) p ↔ N.QEq (lab (k * k') (k' • x)) q := by
   have hk0 : 0 < k' := Nat.pos_of_ne_zero hk'
-  have E := N.qEq_equivalence k
-  have E' := N.qEq_equivalence (k * k')
+  have equiv : ∀ k, Equivalence (N.QEq (k := k)) := by
+    intro k
+    exact {
+      refl := fun p => ⟨0, by simp, by simp⟩
+      symm := by
+        rintro p p' ⟨z, h, h'⟩
+        exact ⟨-z, by rw [h, smul_neg, add_neg_cancel_right], by rw [h', N.io_neg, mul_inv_cancel_right]⟩
+      trans := by
+        rintro p p' p'' ⟨z, h, h'⟩ ⟨w, e, e'⟩
+        exact ⟨z + w, by rw [e, h, smul_add, add_assoc], by rw [e', h', N.io_add, _root_.mul_assoc]⟩ }
+  have E := equiv k
+  have E' := equiv (k * k')
   let p₀ : N.QT k := ⟨((lab (k * k') x).1.1, (lab (k * k') x).1.2 ^ k'), by
     have h : (lab (k * k') x).1.2 ^ (k * k') = _ := N.mem_QT.1 (lab (k * k') x).2
     rw [NumD.mem_QT, ← pow_mul, ← h, mul_comm k' k]⟩
@@ -85,8 +105,26 @@ end
 
 theorem exists_match : ∀ (C : Type) [NormedField C] (N N' : NumD C) (La : Type) [AddCommGroup La] (EF : LinearMap.BilinForm ℤ La) (ζ ζ' : ℕ → Cˣ) (lab : ∀ k : ℕ, La → N.QT k) (lab' : ∀ k : ℕ, La → N'.QT k) (n : ℕ), n.Prime → Odd n → (∀ (k : ℕ) (x : La), 0 < k → k • x = 0 → x = 0) → Labels N EF ζ lab → Labels N' EF ζ' lab' → (∀ k m, 0 < k → 0 < m → ζ (k * m) ^ m = ζ k) → (∀ k m, 0 < k → 0 < m → ζ' (k * m) ^ m = ζ' k) → (∀ j, ζ' (n ^ j) = ζ (n ^ j)) → ∀ c₀ : C, c₀ ≠ 0 → (∀ j x, N'.tx (n ^ j) (lab' _ x) = c₀ * N.tx (n ^ j) (lab _ x)) → ∃ mt : GlobalTheory.Ex.Match N N' n, ∀ j p p', mt.r (n ^ j) p p' ↔ ∃ x, N.QEq (lab _ x) p ∧ N'.QEq (lab' _ x) p' := by
   intro C _ N N' La _ EF ζ ζ' lab lab' n _ hn _ H H' hζ hζ' hζn c₀ hc htx
-  have E := N.qEq_equivalence
-  have E' := N'.qEq_equivalence
+  have E : ∀ k, Equivalence (N.QEq (k := k)) := by
+    intro k
+    exact {
+      refl := fun p => ⟨0, by simp, by simp⟩
+      symm := by
+        rintro p p' ⟨z, h, h'⟩
+        exact ⟨-z, by rw [h, smul_neg, add_neg_cancel_right], by rw [h', N.io_neg, mul_inv_cancel_right]⟩
+      trans := by
+        rintro p p' p'' ⟨z, h, h'⟩ ⟨w, e, e'⟩
+        exact ⟨z + w, by rw [e, h, smul_add, add_assoc], by rw [e', h', N.io_add, _root_.mul_assoc]⟩ }
+  have E' : ∀ k, Equivalence (N'.QEq (k := k)) := by
+    intro k
+    exact {
+      refl := fun p => ⟨0, by simp, by simp⟩
+      symm := by
+        rintro p p' ⟨z, h, h'⟩
+        exact ⟨-z, by rw [h, smul_neg, add_neg_cancel_right], by rw [h', N'.io_neg, mul_inv_cancel_right]⟩
+      trans := by
+        rintro p p' p'' ⟨z, h, h'⟩ ⟨w, e, e'⟩
+        exact ⟨z + w, by rw [e, h, smul_add, add_assoc], by rw [e', h', N'.io_add, _root_.mul_assoc]⟩ }
   have hpos : ∀ j, 0 < n ^ j := fun j => pow_pos hn.pos j
   have tr : ∀ k, 0 < k → ∀ a b, N.QEq (lab k a) (lab k b) ↔ N'.QEq (lab' k a) (lab' k b) := fun k hk a b =>
     (H.2.1 k hk a b).trans (H'.2.1 k hk a b).symm

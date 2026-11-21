@@ -75,8 +75,7 @@ theorem iCycles_cyclesMap_apply (φ : K ⟶ L) (i : ι) (z : K.cycles i) :
 
 theorem homologyMap_homologyπ_apply (φ : K ⟶ L) (i : ι) (z : K.cycles i) :
     (HomologicalComplex.homologyMap φ i).hom ((K.homologyπ i).hom z) =
-      (L.homologyπ i).hom ((HomologicalComplex.cyclesMap φ i).hom z) :=
-by
+      (L.homologyπ i).hom ((HomologicalComplex.cyclesMap φ i).hom z) := by
   rw [← LinearMap.comp_apply, ← ModuleCat.hom_comp, HomologicalComplex.homologyπ_naturality]
   rfl
 

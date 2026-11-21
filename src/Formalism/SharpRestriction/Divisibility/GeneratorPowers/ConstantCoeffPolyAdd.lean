@@ -62,16 +62,14 @@ theorem coeff_foldr {σ κ R : Type} [CommRing R] (φ : κ → σ) (m : κ → �
       (List.nodup_cons.1 hnd).2 (fun a ha b hb => hinj a (List.mem_cons_of_mem _ ha) b (List.mem_cons_of_mem _ hb))]
     · rw [List.map_cons, List.prod_cons, List.map_cons, List.sum_cons]
       have hf : (∏ t ∈ Finset.range (m p), ((0 + t + 1 : ℕ) : R)) = ((m p).factorial : R) := by
-        rw [← Finset.prod_range_add_one_eq_factorial]
-        push_cast
-        refine Finset.prod_congr rfl fun t _ => ?_
-        ring
-      rw [hf, add_assoc]
-      ring
+        simpa only [zero_add, Nat.cast_prod] using
+          congrArg (fun k : ℕ => (k : R)) (Finset.prod_range_add_one_eq_factorial (m p))
+      rw [hf, add_assoc, mul_assoc]
     · intro q hq
       have hpq : φ q ≠ φ p := fun h => (List.nodup_cons.1 hnd).1
         (hinj q (List.mem_cons_of_mem _ hq) p (List.mem_cons_self ..) h ▸ hq)
-      simp [hN q (List.mem_cons_of_mem _ hq), hpq.symm]
+      simp only [Finsupp.add_apply, Finsupp.smul_apply, Finsupp.single_eq_of_ne hpq,
+        hN q (List.mem_cons_of_mem _ hq), smul_zero, add_zero]
 
 theorem dAdd_single {S : Type} [CommRing S] {d n : ℕ} (j : Fin d) (b : Fin n) (G : Germ.PS S n d) :
     TB.dAdd (Pi.single j 1) b G = pderiv (R := S) (b, j) G := by

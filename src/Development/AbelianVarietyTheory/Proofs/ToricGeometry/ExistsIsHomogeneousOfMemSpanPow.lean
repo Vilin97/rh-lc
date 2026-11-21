@@ -297,6 +297,7 @@ theorem exists_succ_le_mul_of_integral {ι : Type} [Finite ι] (R : ℕ → Subm
   haveI : IsDomain B := NoZeroDivisors.to_isDomain _
   haveI : Algebra.FiniteType ℂ A :=
     (Subalgebra.fg_iff_finiteType _).1 (Subalgebra.fg_def.2 ⟨_, Set.finite_range _, rfl⟩)
+  set_option synthInstance.maxHeartbeats 200000 in
   haveI : FaithfulSMul A B := (faithfulSMul_iff_algebraMap_injective A B).2
     fun a b hab => Subtype.ext (congrArg (Subtype.val : B → (ℂ × E → ℂ)) hab)
   haveI : Algebra.IsIntegral A B := Algebra.IsIntegral.adjoin (by
@@ -322,6 +323,7 @@ theorem exists_succ_le_mul_of_integral {ι : Type} [Finite ι] (R : ℕ → Subm
       refine ⟨a * b, a' * b', mul_ne_zero ha hb, ?_⟩
       push_cast
       rw [← h, ← h']; ring
+  set_option synthInstance.maxHeartbeats 200000 in
   have hF : Module.Finite A B := hfin A B fun b => by
     obtain ⟨a, a', ha, h⟩ := hfrac b b.2
     exact ⟨a, a', ha, Subtype.ext h⟩

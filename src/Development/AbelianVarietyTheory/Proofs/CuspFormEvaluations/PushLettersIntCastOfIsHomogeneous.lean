@@ -55,7 +55,7 @@ theorem basisComponent_sum (b : Module.Basis ι R S) (J : Finset ι) (Q : ι →
 variable {T : Type*} {p q : ℕ} {κ : Type*} [Fintype κ] {c : T → Fin p → ℕ} {c' : T → Fin q → ℕ}
 
 theorem basisComponent_mem_rowHighest (b : Module.Basis ι R S) (i : ι) {P : Poly S T p q κ}
-    (hP : P ∈ rowHighest c c') : basisComponent b i P ∈ rowHighest c c' := by
+    (hP : P ∈ rowHighest S c c') : basisComponent b i P ∈ rowHighest R c c' := by
   classical
   obtain ⟨h₁, h₂, h₃⟩ := mem_rowHighest_iff_rowAdd.1 hP
   obtain ⟨J, hJ⟩ := exists_eq_sum_basisComponent b P
@@ -88,7 +88,7 @@ theorem basisComponent_mem_rowHighest (b : Module.Basis ι R S) (i : ι) {P : Po
 variable (R S c c') in
 theorem span_map_rowHighest [Module.Free R S] :
     Submodule.span S (MvPolynomial.map (algebraMap R S) ''
-      (rowHighest (R := R) (κ := κ) c c' : Set (Poly R T p q κ))) = rowHighest c c' := by
+      (rowHighest R (κ := κ) c c' : Set (Poly R T p q κ))) = rowHighest S c c' := by
   apply le_antisymm
   · rw [Submodule.span_le]
     rintro _ ⟨P, hP, rfl⟩
@@ -126,7 +126,7 @@ noncomputable def symO (τ : T → E →+* K) (Λ : Submodule (𝓞 E) (Fin n �
 
 noncomputable def Ha (τ : T → E →+* K) (c : T → Fin p → ℕ) (c' : T → Fin q → ℕ)
     (Λ : Submodule (𝓞 E) (Fin n → E)) : Submodule (𝓞 K) (Poly K T p q (Fin n)) :=
-  (rowHighest (R := K) c c').restrictScalars (𝓞 K) ⊓ Subalgebra.toSubmodule (symO τ Λ)
+  (rowHighest (R := K) c c').restrictScalars (𝓞 K) ⊓ Subalgebra.toSubmodule (symO p q τ Λ)
 
 variable (τ : T → E →+* K) {c : T → Fin p → ℕ} {c' : T → Fin q → ℕ}
   {Λ Λ' : Submodule (𝓞 E) (Fin n → E)} {P : Poly K T p q (Fin n)}

@@ -372,7 +372,7 @@ theorem iso_of_short (h : IsType Ψ) {n D : ℕ} (hD : 0 < D) {G : Matrix (Fin n
     have h2 := Module.finrank_pos (R := ℚ) (M := E)
     exact (Finset.card_pos.1 (by omega)).to_subtype
   have h2 : ∏ τ : Ψ, ‖τ.1 (D * (V * G * Vᴴ) 0 0)‖ < ∏ _τ : Ψ, (1 : ℝ) := by
-    refine Finset.prod_lt_prod_of_nonempty (fun τ _ => norm_pos_iff.2 ((_root_.map_ne_zero _).2 hne')) (fun τ _ => ?_)
+    refine Finset.prod_lt_prod_of_nonempty₀ (fun τ _ => norm_pos_iff.2 ((_root_.map_ne_zero _).2 hne')) (fun τ _ => ?_)
       Finset.univ_nonempty
     have h3 := gram_le (hH τ).1 (by rw [← map_conj, hG]) (det_map_ne τ.1 h0) (hH τ).2 _ _
       (le_of_eq (hval_eq H τ (V 0)).symm) (le_of_eq (hval_eq H τ (V 0)).symm)

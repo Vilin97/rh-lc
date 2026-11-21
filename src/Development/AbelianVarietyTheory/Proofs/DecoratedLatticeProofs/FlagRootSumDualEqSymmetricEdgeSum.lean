@@ -55,7 +55,7 @@ theorem mul_flagGram (K : Type) [CommRing K] {ρ k n : ℕ} (hn : n = 2 * ρ + k
 theorem flagGram_mul_self (K : Type) [CommRing K] {ρ k n : ℕ} (hn : n = 2 * ρ + k + 1) :
     flagGram K n ρ k * flagGram K n ρ k = 1 := by
   ext i j
-  rw [flagGram_mul K hn, flagGram_apply K hn, tau_tau, one_apply, sgn_tau]
+  rw [flagGram_mul K hn, flagGram_apply K hn, tau_tau, Matrix.one_apply, sgn_tau]
   split_ifs with h h' h'
   · exact sgn_mul_self K ρ k i
   · exact absurd h.symm h'

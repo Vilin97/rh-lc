@@ -167,7 +167,7 @@ def cupTensor :
 
 variable (A B p q) in
 def cup : groupCohomology A p ⊗ groupCohomology B q ⟶ groupCohomology (A ⊗ B) (p + q) :=
-  ModuleCat.ofHom cupTensor
+  ModuleCat.ofHom (cupTensor A B p q)
 
 theorem map_π_apply {A' : Rep k G} (φ : A ⟶ A') (z : cocycles A n) :
     map (MonoidHom.id G) φ n (π A n z) = π A' n (cocyclesMap (MonoidHom.id G) φ n z) := by

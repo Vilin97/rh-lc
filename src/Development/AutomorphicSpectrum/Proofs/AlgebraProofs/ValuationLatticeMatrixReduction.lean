@@ -18,17 +18,15 @@ section Lemmas
 variable {C : Type} [Field C] {w : Valuation C ℝ≥0} {S W : Type} [AddCommGroup W] [Module C W]
 
 theorem isFiltration_kerFil (a : S → w.valuationSubring) (N : ℕ)
-    (g : S → (Fin N → C) →ₗ[C] W) : IsFiltration a (kerFil a N g) where
-  le := fun _ hx => hx.1
-  stable := by
-    rintro x ⟨hx, h0⟩
+    (g : S → (Fin N → C) →ₗ[C] W) : IsFiltration a (kerFil a N g) := by
+  refine ⟨fun _ hx => hx.1, ?_, ?_⟩
+  · rintro x ⟨hx, h0⟩
     refine ⟨fun i => ?_, fun s => ?_⟩
     · obtain ⟨f, hf⟩ := hx i
       exact ⟨Polynomial.X * f, fun s => by simp [unif, hf s]⟩
     · show g s ((a s : C) • x s) = 0
       rw [map_smul, h0 s, smul_zero]
-  saturated := by
-    rintro x hx c hc ⟨-, h0⟩
+  · rintro x hx c hc ⟨-, h0⟩
     refine ⟨hx, fun s => ?_⟩
     have hc' : (c : C) ≠ 0 := fun e => hc (Subtype.ext e)
     have h1 := h0 s

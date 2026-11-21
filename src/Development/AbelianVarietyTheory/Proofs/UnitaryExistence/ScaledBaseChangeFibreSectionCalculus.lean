@@ -53,6 +53,7 @@ theorem ppx_le {S T : Type} [CommRing S] [CommRing T] {x : Sp S ⟶ Xo.X} {x' : 
   have hp' : ∀ k, p ∈ (snd (Over.mk x') Xo.univ.t.G).left.base ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _) :=
     Set.mem_iInter.1 hp
   have e := congrArg (fun f : Gx x' ⟶ Xo.univ.t.G.left => f.base p) hs
+  dsimp only [Formalism.L2.PjFree.gxFst] at e
   show pm.base p ∈ ⋂ k, (snd (Over.mk x) Xo.univ.t.G).left.base ⁻¹' (Xo.univ.t.PP.L.U (i k) : Set _)
   refine Set.mem_iInter.2 fun k => ?_
   show (pm ≫ (snd (Over.mk x) Xo.univ.t.G).left).base p ∈ (Xo.univ.t.PP.L.U (i k) : Set _)

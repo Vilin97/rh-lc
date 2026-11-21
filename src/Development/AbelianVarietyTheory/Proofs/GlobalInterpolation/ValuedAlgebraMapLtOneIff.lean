@@ -280,7 +280,8 @@ theorem map_eq_primeOf (p : E ⊗[F] v.adicCompletion F →+* v.adicCompletion F
       intro h; rw [h, map_zero] at hu; exact zero_ne_one hu
     obtain ⟨y, hy, hy1, hy2⟩ := hsur (p x / π') 0 (by
       rw [map_div₀, hv, div_le_one₀ (by simp)]
-      exact WithZero.lt_mul_exp_iff_le (by simp) |>.1 (by simpa using hx')) (by simp)
+      exact WithZero.lt_mul_exp_iff_le (by simp) |>.1 (by
+        rw [← WithZero.exp_add]; norm_num; exact hx')) (by simp)
     obtain ⟨z, hz, hz1, hz2⟩ := hsur 0 (q x / q ((a : E) ⊗ₜ[F] (1 : v.adicCompletion F))) (by simp) (by
       rw [map_div₀, hu, div_one]; exact hq _ x.2)
     have : x = ⟨y, hy⟩ * GlobalTheory.IndefiniteRowSideFullHecke.OverPlaceIntegralForm.toIntV E v (algebraMap (𝓞 F) (𝓞 E) π) +

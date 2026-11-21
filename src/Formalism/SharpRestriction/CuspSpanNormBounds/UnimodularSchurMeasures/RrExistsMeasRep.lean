@@ -102,12 +102,12 @@ theorem rr_exists_meas_rep [Countable Γ] (h : rr_FD μ Γ D) :
   exact Measurable.find (f := fun n y => ((e n : Γ) : G) * y) (p := fun n y => ((e n : Γ) : G) * y ∈ D)
     (fun n => measurable_const_mul _) (fun n => measurable_const_mul _ h.meas) hex
 
-theorem rr_FD_right [μ.IsMulRightInvariant] (h : rr_FD μ Γ D) (g : G) : rr_FD μ Γ ((fun x => x * g) ⁻¹' D) where
-  meas := (measurable_mul_const g) h.meas
-  cov := fun y => by
+theorem rr_FD_right [μ.IsMulRightInvariant] (h : rr_FD μ Γ D) (g : G) : rr_FD μ Γ ((fun x => x * g) ⁻¹' D) := by
+  refine ⟨(measurable_mul_const g) h.meas, ?_, ?_⟩
+  · intro y
     obtain ⟨γ, hγ, hD⟩ := h.cov (y * g)
     exact ⟨γ, hγ, by simpa [mul_assoc] using hD⟩
-  disj := fun γ hγ h1 => by
+  · intro γ hγ h1
     have : (fun y => γ * y) '' ((fun x => x * g) ⁻¹' D) ∩ (fun x => x * g) ⁻¹' D ⊆
         (fun x => x * g) ⁻¹' ((fun y => γ * y) '' D ∩ D) := by
       rintro _ ⟨⟨y, hy, rfl⟩, h2⟩

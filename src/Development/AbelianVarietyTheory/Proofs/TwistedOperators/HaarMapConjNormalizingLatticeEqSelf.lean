@@ -47,7 +47,7 @@ theorem map_conj_eq_self (H : Type) [Group H] [TopologicalSpace H] [IsTopologica
   set c := Measure.haarScalarFactor (κ.map e) κ
 
   have hqmp : Measure.QuasiMeasurePreserving e κ κ :=
-    ⟨e.continuous.measurable, by rw [hsm]; exact Measure.smul_absolutelyContinuous⟩
+    ⟨e.continuous.measurable.aemeasurable, by rw [hsm]; exact Measure.smul_absolutelyContinuous⟩
   have hpre : IsFundamentalDomain (Γ.subgroupOf N) (e ⁻¹' 𝓝) κ := by
     refine h𝓝.preimage_of_equiv hqmp (e := fun g : Γ.subgroupOf N =>
       (⟨⟨γ⁻¹ * (g : H) * γ⁻¹⁻¹, hN γ⁻¹ (Γ.inv_mem hγ) _ (g : N).2⟩,

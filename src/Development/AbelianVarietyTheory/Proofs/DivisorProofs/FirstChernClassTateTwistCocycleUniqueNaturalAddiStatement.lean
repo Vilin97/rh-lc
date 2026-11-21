@@ -16,12 +16,12 @@ theorem _root_.GlobalTheory.T.firstChernClassTateTwist_cocycle_unique_natural_ad
       (∀ {E : Spc} (L : E ⟶ ofCat (glCat 1)), Inv q E →
         ∃ γ : Cocycle ((chains (ZMod q)).obj E) (res _ (tw q 1)) 2,
           CohomologyClass.mk γ = c1 q L ∧
-          (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev (ZMod q) γ.1 0 2 (by simp) U x = 0) ∧
+          (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev (R := ZMod q) γ.1 0 2 (by simp) U x = 0) ∧
           (∀ (U : Scheme.{0}) (x : Sx E 1 U) (v : (Γ(U, ⊤))ˣ), v ^ q = lineUnit L x →
-            ev (ZMod q) γ.1 1 1 (by simp) U x = Sec.map ((res _ (tw q 1)).d 0 1) (kumT q U v)) ∧
+            ev (R := ZMod q) γ.1 1 1 (by simp) U x = Sec.map ((res _ (tw q 1)).d 0 1) (kumT q U v)) ∧
           ∀ (U : Scheme.{0}) (x : Sx E 2 U) (v w : (Γ(U, ⊤))ˣ),
             v ^ q = lineUnit L (x.sub 0 1 (by omega)) → w ^ q = lineUnit L (x.sub 1 1 (by omega)) →
-            ev (ZMod q) γ.1 2 0 (by simp) U x = kumT q U v + kumT q U w - kumT q U (v * w)) ∧
+            ev (R := ZMod q) γ.1 2 0 (by simp) U x = kumT q U v + kumT q U w - kumT q U (v * w)) ∧
       (∀ {E E' : Spc} (f : E ⟶ E') (L : E' ⟶ ofCat (glCat 1)), Inv q E' →
         pull _ f _ _ (c1 q L) = c1 q (f ≫ L)) ∧
       ∀ {E : Spc} (L M N : E ⟶ ofCat (glCat 1)), Inv q E →
@@ -33,8 +33,8 @@ theorem _root_.GlobalTheory.T.firstChernClassTateTwist_cocycle_unique_natural_ad
   have exists_single {E : Spc} {I : Cx (ZMod q)} {n : ℤ} (p₀ : ℕ) (s₀ : ℤ) (h₀ : -(p₀ : ℤ) + n = s₀)
       (b : ∀ U : Scheme.{0}, Sx E p₀ U → Sec (I.X s₀) U)
       (hb : ∀ (V U : Scheme.{0}) (g : V ⟶ U) (x : Sx E p₀ U), Sec.res g (b U x) = b V (x.res g)) :
-      ∃ α : Cochain ((chains (ZMod q)).obj E) I n, (∀ U x, ev (ZMod q) α p₀ s₀ h₀ U x = b U x) ∧
-        ∀ p s h U x, p ≠ p₀ → ev (ZMod q) α p s h U x = 0 := by
+      ∃ α : Cochain ((chains (ZMod q)).obj E) I n, (∀ U x, ev (R := ZMod q) α p₀ s₀ h₀ U x = b U x) ∧
+        ∀ p s h U x, p ≠ p₀ → ev (R := ZMod q) α p s h U x = 0 := by
     subst h₀
     obtain ⟨α, hα⟩ := exists_cochain_ev_eq_of_natural (ZMod q) (E := E) (I := I) (n := n)
       (fun p s h U x => if hp : p = p₀ then (by subst hp; subst h; exact b U x) else 0) (by
@@ -51,10 +51,10 @@ theorem _root_.GlobalTheory.T.firstChernClassTateTwist_cocycle_unique_natural_ad
     · rw [hα]
       simp only [dite_eq_right hp]
   have differential_eq_zero {E : Spc} {I : Cx (ZMod q)} {n m : ℤ} (hm : n + 1 = m) (α : Cochain ((chains (ZMod q)).obj E) I n)
-      (h₀ : ∀ (U : Scheme.{0}) (x : Sx E 0 U), Sec.map (I.d n m) (ev (ZMod q) α 0 n (by simp) U x) = 0)
+      (h₀ : ∀ (U : Scheme.{0}) (x : Sx E 0 U), Sec.map (I.d n m) (ev (R := ZMod q) α 0 n (by simp) U x) = 0)
       (h₁ : ∀ (U : Scheme.{0}) (p : ℕ) (s t : ℤ) (hs : -((p + 1 : ℕ) : ℤ) + n = s) (ht : -(p : ℤ) + n = t) (x : Sx E (p + 1) U),
-        Sec.map (I.d s t) (ev (ZMod q) α (p + 1) s hs U x) +
-          m.negOnePow • ∑ i : Fin (p + 2), (-1 : ℤ) ^ (i : ℕ) • ev (ZMod q) α p t ht U (x.face i) = 0) : δ n m α = 0 := by
+        Sec.map (I.d s t) (ev (R := ZMod q) α (p + 1) s hs U x) +
+          m.negOnePow • ∑ i : Fin (p + 2), (-1 : ℤ) ^ (i : ℕ) • ev (R := ZMod q) α p t ht U (x.face i) = 0) : δ n m α = 0 := by
     refine CupSpec.ev_ext _ _ fun p t ht U x => ?_
     rw [CupSpec.ev_zero]
     cases p with
@@ -65,12 +65,12 @@ theorem _root_.GlobalTheory.T.firstChernClassTateTwist_cocycle_unique_natural_ad
   have exists_cocycle {t : ∀ U : Scheme.{0}, (Γ(U, ⊤))ˣ → Sec ((res _ (tw q 1)).X 0) U} (ht : IsKum q t)
       {E : Spc} (hE : Inv q E) (L : E ⟶ ofCat (glCat 1)) :
       ∃ γ : Cocycle ((chains (ZMod q)).obj E) (res _ (tw q 1)) 2,
-      (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev (ZMod q) γ.1 0 2 (by simp) U x = 0) ∧
+      (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev (R := ZMod q) γ.1 0 2 (by simp) U x = 0) ∧
       (∀ (U : Scheme.{0}) (x : Sx E 1 U) (v : (Γ(U, ⊤))ˣ), v ^ q = lineUnit L x →
-        ev (ZMod q) γ.1 1 1 (by simp) U x = Sec.map ((res _ (tw q 1)).d 0 1) (t U v)) ∧
+        ev (R := ZMod q) γ.1 1 1 (by simp) U x = Sec.map ((res _ (tw q 1)).d 0 1) (t U v)) ∧
       ∀ (U : Scheme.{0}) (x : Sx E 2 U) (v w : (Γ(U, ⊤))ˣ), v ^ q = lineUnit L (x.face 2) →
         w ^ q = lineUnit L (x.face 0) →
-        ev (ZMod q) γ.1 2 0 (by simp) U x = t U v + t U w - t U (v * w) := by
+        ev (R := ZMod q) γ.1 2 0 (by simp) U x = t U v + t U w - t U (v * w) := by
     have hq₁ : ∀ (U : Scheme.{0}) (_ : Sx E 1 U), IsUnit (q : Γ(U, ⊤)) := fun U x => hE U ⟨x.face 0⟩
     have hq₂ : ∀ (U : Scheme.{0}) (_ : Sx E 2 U), IsUnit (q : Γ(U, ⊤)) := fun U x => hq₁ U (x.face 0)
     have hf : ∀ (i : Fin 3) (V U : Scheme.{0}) (g : V ⟶ U) (x : Sx E 2 U),
@@ -108,11 +108,11 @@ theorem _root_.GlobalTheory.T.firstChernClassTateTwist_cocycle_unique_natural_ad
       abel
     obtain ⟨α, a₁, a₂⟩ := exists_single (I := res _ (tw q 1)) (n := 2) 1 1 (by simp) b hb
     obtain ⟨β, b₁, b₂⟩ := exists_single (I := res _ (tw q 1)) (n := 2) 2 0 (by simp) e he
-    have c₀ : ∀ p s h U x, p ≠ 1 → p ≠ 2 → ev (ZMod q) (α + β) p s h U x = 0 := fun p s h U x h₁ h₂ => by
+    have c₀ : ∀ p s h U x, p ≠ 1 → p ≠ 2 → ev (R := ZMod q) (α + β) p s h U x = 0 := fun p s h U x h₁ h₂ => by
       rw [CupSpec.ev_add, a₂ _ _ _ _ _ h₁, b₂ _ _ _ _ _ h₂, add_zero]
-    have c₁ : ∀ h U x, ev (ZMod q) (α + β) 1 1 h U x = b U x := fun h U x => by
+    have c₁ : ∀ h U x, ev (R := ZMod q) (α + β) 1 1 h U x = b U x := fun h U x => by
       rw [CupSpec.ev_add, a₁, b₂ _ _ _ _ _ (by decide), add_zero]
-    have c₂ : ∀ h U x, ev (ZMod q) (α + β) 2 0 h U x = e U x := fun h U x => by
+    have c₂ : ∀ h U x, ev (R := ZMod q) (α + β) 2 0 h U x = e U x := fun h U x => by
       rw [CupSpec.ev_add, b₁, a₂ _ _ _ _ _ (by decide), zero_add]
     have hs : (3 : ℤ).negOnePow = -1 := rfl
     refine ⟨Cocycle.mk (α + β) 3 rfl (differential_eq_zero (m := 3) rfl _ (fun U x => ?_) (fun U p s t hs' ht' x => ?_)),
@@ -143,12 +143,12 @@ theorem _root_.GlobalTheory.T.firstChernClassTateTwist_cocycle_unique_natural_ad
           Finset.sum_eq_zero fun i _ => by rw [c₀ _ _ _ _ _ (by omega) (by omega), smul_zero], smul_zero]
   intro E L hE
   refine pick_spec (P := fun c : Ht q E 2 1 => ∃ γ : Cocycle _ _ 2, CohomologyClass.mk γ = c ∧
-    (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev (ZMod q) γ.1 0 2 (by simp) U x = 0) ∧
+    (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev (R := ZMod q) γ.1 0 2 (by simp) U x = 0) ∧
     (∀ (U : Scheme.{0}) (x : Sx E 1 U) (v : (Γ(U, ⊤))ˣ), v ^ q = lineUnit L x →
-      ev (ZMod q) γ.1 1 1 (by simp) U x = Sec.map ((res _ (tw q 1)).d 0 1) (kumT q U v)) ∧
+      ev (R := ZMod q) γ.1 1 1 (by simp) U x = Sec.map ((res _ (tw q 1)).d 0 1) (kumT q U v)) ∧
     ∀ (U : Scheme.{0}) (x : Sx E 2 U) (v w : (Γ(U, ⊤))ˣ), v ^ q = lineUnit L (x.sub 0 1 (by omega)) →
       w ^ q = lineUnit L (x.sub 1 1 (by omega)) →
-      ev (ZMod q) γ.1 2 0 (by simp) U x = kumT q U v + kumT q U w - kumT q U (v * w)) ?_
+      ev (R := ZMod q) γ.1 2 0 (by simp) U x = kumT q U v + kumT q U w - kumT q U (v * w)) ?_
   rcases kumT_cases q with h | h
   · obtain ⟨γ, h₀, h₁, h₂⟩ := exists_cocycle h hE L
     exact ⟨_, γ, rfl, h₀, h₁, fun U x v w hv hw => h₂ U x v w (by rw [hv, sub_zero_one]) (by rw [hw, sub_one_one])⟩

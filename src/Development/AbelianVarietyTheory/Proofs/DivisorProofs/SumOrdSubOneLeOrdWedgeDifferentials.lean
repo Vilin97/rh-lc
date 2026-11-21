@@ -29,7 +29,7 @@ theorem sum_ord_sub_one_le_formOrd_dOn : ∀ {k : Type} [Field k] [PerfectField 
     (hy : y ∈ U), E.Through y → ∀ (z : Fin n → Γ(X, U)), formOf U (gen_mem hy) (dOn p z) ≠ 0 →
     ∀ {J : Type} [Fintype J] (e : J → Fin n), Function.Injective e → ∀ (u : J → X.functionFieldˣ),
     (∀ j, (u j : X.functionField) = fnOf U (gen_mem hy) (z (e j))) →
-    ∑ j, E.ord (u j) - 1 ≤ E.formOrd (formOf U (gen_mem hy) (dOn p z)) := by
+    ∑ j, E.ord (u j) - 1 ≤ (fun ω => @dite ℤ (∃ a, E.IsFormOrd ω a) (Classical.propDecidable _) (fun h => h.choose) (fun _ => 0)) (formOf U (gen_mem hy) (dOn p z)) := by
   intro k _ _ X _ p _ n hn E U y hy hE z hz0 J _ e he u hu
   classical
   letI := (Cartier.constFn p).toAlgebra

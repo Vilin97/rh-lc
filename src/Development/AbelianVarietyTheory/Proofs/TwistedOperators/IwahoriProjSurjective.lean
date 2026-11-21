@@ -177,7 +177,9 @@ theorem iwahori_factor : ∀ g ∈ iwahori k n, ∃ d ∈ torusO k n, ∃ x ∈ 
   obtain ⟨u, hu, e⟩ := exists_levi_mul_unip 𝒪[k] (points n) ⟨_, hb⟩
   obtain ⟨d, hd⟩ := (leviTorus 𝒪[k] n).surjective (leviProj 𝒪[k] (points n) ⟨_, hb⟩)
   rw [← hd] at e
-  have e' : h * L = diagT 𝒪[k] n d * u := e
+  have e' : h * L = diagT 𝒪[k] n d * u := by
+    change h * L = diagT 𝒪[k] n d * u at e
+    exact e
   have hLl : L ∈ unipBLower 𝒪[k] n :=
     (mem_unipB (n := nᵒᵈ) 𝒪[k]).2 ⟨fun i j hij => hL0 i j hij, hL1⟩
   have hLi := (mem_unipB (n := nᵒᵈ) 𝒪[k]).1 (inv_mem hLl)
@@ -252,7 +254,7 @@ theorem iwahoriProj_surjective (k : Type) [Field k] [ValuativeRel k] [Topologica
     [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL n k) V) (hπ : IsAdmissible π) :
     Function.Surjective (iwahoriProj π) := by
   rintro ⟨y, hy⟩
-  obtain ⟨v, hv, e⟩ := exists_fixed_mk_eq hπ (isOpen_iwahori k n) (isCompact_iwahori k n) (diagT k n)
+  obtain ⟨v, hv, e⟩ := exists_fixed_mk_eq (π := π) (I := iwahori k n) (M := n → kˣ) hπ (isOpen_iwahori k n) (isCompact_iwahori k n) (diagT k n)
     (N := unipB k n) (fun _ => leviEmb_mem_normalizer k (points n) _) (torusO k n)
     (fun _ => diagT_mem_iwahori) (lowerInt k n) (iwahori_factor k n) (lowerInt_contract k n) y hy
   exact ⟨⟨v, hv⟩, Subtype.ext e⟩

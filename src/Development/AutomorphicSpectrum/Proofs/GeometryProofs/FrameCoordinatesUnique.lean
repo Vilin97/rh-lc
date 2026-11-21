@@ -50,7 +50,7 @@ theorem isVec_existsUnique : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
     simpa [pullEps] using this
   let v : epsAt (emb σ) ⟶ D.t.G := Over.homMk _ hw
   have hvl : v.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (D.MB.pt x).left := rfl
-  have hlift : D.MB.Lifts (σ.comp (algebraMap (𝓞 L) L)) (𝟙 D.t.G.left) x v := by
+  have hlift : (v.left ≫ (𝟙 D.t.G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (D.MB.pt x).left) := by
     show v.left ≫ 𝟙 _ = _
     rw [Category.comp_id]
     exact hvl

@@ -53,10 +53,7 @@ theorem isProjOver_descends_to_subring :
       spMap (Subring.inclusion hBC) ≫ spMap (Subring.inclusion hAB) = spMap (Subring.inclusion hAC) := by
     intro A B C hAB hBC hAC
     rw [← spMap_comp, hincl]
-  obtain ⟨L, -, M, s, hv⟩ := (ProjSpace.isProjBy_iff_isProjOver f).2 hP
-  obtain ⟨hs, hci⟩ := (ProjSpace.veryAmpleBy_iff f s).1 hv
-  set i := ProjSpace.toProj f s hs with hi
-  have hif : i ≫ PSpace.str S M = f := ProjSpace.toProj_str f s hs
+  obtain ⟨M, i, hci, hif⟩ := hP
   have : LocallyOfFinitePresentation (PSpace.str R₀ M) := locallyOfFinitePresentation_pspace_str R₀ M
   have hφ : (i ≫ ProjSpace.baseChange M R₀.subtype) ≫ PSpace.str R₀ M = π ≫ f₀ := by
     rw [Category.assoc, ProjSpace.baseChange_str, ← Category.assoc, hif, hX.w]

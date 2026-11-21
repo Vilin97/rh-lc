@@ -203,7 +203,7 @@ theorem fib_inter {V K : Type} [MeasurableSpace V] (m : Measure V) (q : V → K)
   refine measure_congr ?_
   filter_upwards [h] with X hX
   have : q X = b := hX.1
-  exact propext ⟨fun h => h.2, fun h => ⟨this, h⟩⟩
+  exact ⟨fun h => h.2, fun h => ⟨this, h⟩⟩
 
 theorem localDensity_iff :
     GlobalTheory.IndefiniteRowSideFullHecke.SelfDualUnramifiedPlaces.LocalDensity ↔ GlobalTheory.IndefiniteRowSideFullHecke.PlaceSplittingTypes.SelfDualLatticeDensity := by

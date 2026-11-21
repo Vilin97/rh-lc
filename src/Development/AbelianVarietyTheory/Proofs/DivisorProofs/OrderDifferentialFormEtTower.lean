@@ -245,7 +245,7 @@ theorem formOrd_dForm_append_eq_zero : ∀ {K L : Type} [Field K] [Field L] (cK 
     (ι : R →+* T) (ψ : T →+* R) (τ : Fin r → T) (x : Fin n → R) (P : Place cL),
   IsEtTower cK R cL T ι ψ τ → TrBasis cK (fun i => (x i : K)) → P.IsPrimeOf T →
   (∀ g : R, g ≠ 0 → P.ord (ι g : L) = 0) →
-  P.formOrd (dForm cL (Fin.append (fun i => (τ i : L)) (fun i => (ι (x i) : L)))) = 0 := by
+  (fun ω => @dite ℤ (∃ a, P.IsFormOrd ω a) (Classical.propDecidable _) (fun h => h.choose) (fun _ => 0)) (dForm cL (Fin.append (fun i => (τ i : L)) (fun i => (ι (x i) : L)))) = 0 := by
   intro K L _ _ cK cL n r R T ι ψ τ x P hT hx hP h0
 
   letI : Algebra ℂ K := cK.toAlgebra

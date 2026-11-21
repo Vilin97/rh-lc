@@ -309,6 +309,7 @@ theorem exists_isCompact_forall_of_pos_le_height {ε : ℝ} (hε : 0 < ε) :
     rw [← heq, inv_mul_cancel_left]
 
 
+variable (K n) in
 abbrev rationalGLOne : Subgroup (normOneGL (K := K) (n := n)) :=
   (AdelicGLn.rationalGL K n).subgroupOf (normOneGL (K := K) (n := n))
 

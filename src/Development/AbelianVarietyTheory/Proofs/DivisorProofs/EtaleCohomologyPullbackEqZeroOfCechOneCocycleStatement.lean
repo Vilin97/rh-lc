@@ -12,9 +12,9 @@ set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.etaleCohomologyPullback_eq_zero_of_cechOneCocycle :
     ∀ (R : Type) [CommRing R] (F : Shv R) {Y X : Scheme.{0}} (f : Y ⟶ X)
       (s : (free R).obj ((cech f).obj (op ⦋1⦌)) ⟶ F),
-      cobd R (E := cech f) (n := 1) s = 0 →
+      cobd (R := R) (E := cech f) (n := 1) s = 0 →
       ∀ x : H R (sch.obj X) F ((1 : ℕ) : ℤ),
-        IsCls R (E := cech f) (n := 1) s (pull R (cechAug f) F ((1 : ℕ) : ℤ) x) →
+        IsCls (R := R) (E := cech f) (n := 1) s (pull R (cechAug f) F ((1 : ℕ) : ℤ) x) →
         pull R (sch.map f) F ((1 : ℕ) : ℤ) x = 0 := by
   intro R _ F Y X f s hs x hx
   have hc := congrArg (fun t => (free R).map ((cechDiag f).app (op ⦋2⦌)) ≫ t) hs

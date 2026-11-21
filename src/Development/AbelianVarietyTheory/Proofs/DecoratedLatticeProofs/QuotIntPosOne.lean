@@ -105,7 +105,7 @@ theorem quotInt_posOne : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalS
     rw [hflat, h0, PosOneCell.app_zero, LinearMap.zero_apply]
   obtain ⟨-, hiff⟩ := GlobalTheory.T.isQuotInt_cells_alt k n c 1 le_rfl hc ν (rescale ν b m) μG L.J hJ _ hinv hmod T hcov
   refine (hiff _).2 (Finset.sum_congr rfl fun h _ => ?_)
-  obtain ⟨-, -, -, -, hm⟩ := (GlobalTheory.UnfoldedEntries.entries_wellDefined k ψ ν hψc hν).2.2.1 n c hc L.J hJ h
+  obtain ⟨-, -, -, -, hm⟩ := GlobalTheory.UnfoldedEntries.cosetMeasure (ν := ν) n c hc L.J hJ h
   obtain ⟨-, -, -, hresc, -⟩ := hm m inferInstance
   have hvc : volCell ν (rescale ν b m) 1 L.J h = volR ν (rescale ν b m) (Cgrp L.J h) := by
     unfold volCell volR

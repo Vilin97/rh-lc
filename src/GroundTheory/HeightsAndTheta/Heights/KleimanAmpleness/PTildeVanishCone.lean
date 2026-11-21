@@ -134,7 +134,9 @@ variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : 
 
 def FinGradedSub.coneSubE : Submodule (Poly S N) (ConeE S x E) where
   carrier := {w | ∀ c, coeffE S x E c w ∈ M.piece c}
-  add_mem' ha hb c := by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha c) (hb c)
+  add_mem' ha hb c := by
+    rw [(coeffE S x E c).map_add]
+    exact add_mem (ha c) (hb c)
   zero_mem' c := by rw [map_zero]; exact zero_mem _
   smul_mem' p w hw c := by
     change coeffE S x E c (p • w) ∈ M.piece c
@@ -209,7 +211,9 @@ theorem FinGradedSub.coneSubE_finite : Module.Finite (Poly S N) M.coneSubE := by
         rw [this]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
       · rw [map_zero]; exact zero_mem _
-      · intro a b _ _ ha hb; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+      · intro a b _ _ ha hb
+        rw [(singleE S x E c).map_add]
+        exact add_mem ha hb
       · intro s a _ ha; rw [map_smul]; exact Submodule.smul_of_tower_mem _ s ha
     · rintro _ ⟨j, rfl⟩
       exact M.singleE_mem_coneSubE (hgen j)

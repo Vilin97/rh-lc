@@ -64,7 +64,7 @@ theorem chainsXIso_nat {E E' : Spc} (f : E' ⟶ E) (n : ℕ) :
 theorem δ_cls {E : Spc} {F : Shv R} {n : ℕ} (s : (free R).obj (E.obj (op ⦋n⦌)) ⟶ F) :
     δ (n : ℤ) ((n + 1 : ℕ) : ℤ) (Cochain.single (p := -(n : ℤ)) (q := 0) ((chainsXIso R E n).hom ≫ s ≫ resι R F) n) =
       (((n + 1 : ℕ) : ℤ)).negOnePow • Cochain.single (p := -((n + 1 : ℕ) : ℤ)) (q := 0)
-        ((chainsXIso R E (n + 1)).hom ≫ cobd R s ≫ resι R F) ((n + 1 : ℕ) : ℤ) := by
+        ((chainsXIso R E (n + 1)).hom ≫ cobd s ≫ resι R F) ((n + 1 : ℕ) : ℤ) := by
   rw [Cochain.δ_single _ (n : ℤ) ((n + 1 : ℕ) : ℤ) (by push_cast; ring) (-((n + 1 : ℕ) : ℤ)) 1 (by push_cast; ring) rfl]
   rw [Category.assoc, Category.assoc, resι_d, comp_zero, comp_zero, Cochain.single_zero, zero_add]
   congr 2
@@ -79,15 +79,15 @@ theorem δ_cls {E : Spc} {F : Shv R} {n : ℕ} (s : (free R).obj (E.obj (op ⦋n
 end GlobalTheory.EtC.ClsBasic
 
 theorem GlobalTheory.EtC.isCls_basic : ∀ (R : Type) [CommRing R] (F : Shv R) (E : Spc) (n : ℕ),
-    (∀ s : (free R).obj (E.obj (op ⦋n⦌)) ⟶ F, cobd R s = 0 → ∃ x : H R E F n, IsCls R s x) ∧
+    (∀ s : (free R).obj (E.obj (op ⦋n⦌)) ⟶ F, cobd s = 0 → ∃ x : H R E F n, IsCls s x) ∧
     (∀ (s s' : (free R).obj (E.obj (op ⦋n⦌)) ⟶ F) (x x' : H R E F n),
-      IsCls R s x → IsCls R s' x' → IsCls R (s + s') (x + x')) ∧
+      IsCls s x → IsCls s' x' → IsCls (s + s') (x + x')) ∧
     (∀ (s : (free R).obj (E.obj (op ⦋n⦌)) ⟶ F) (x x' : H R E F n),
-      IsCls R s x → IsCls R s x' → x = x') ∧
+      IsCls s x → IsCls s x' → x = x') ∧
     (∀ (t : (free R).obj (E.obj (op ⦋n⦌)) ⟶ F) (x : H R E F ((n + 1 : ℕ) : ℤ)),
-      IsCls R (cobd R t) x → x = 0) ∧
+      IsCls (cobd t) x → x = 0) ∧
     ∀ (E' : Spc) (f : E' ⟶ E) (s : (free R).obj (E.obj (op ⦋n⦌)) ⟶ F) (x : H R E F n),
-      IsCls R s x → IsCls R ((free R).map (f.app (op ⦋n⦌)) ≫ s) (pull R f F n x) := by
+      IsCls s x → IsCls ((free R).map (f.app (op ⦋n⦌)) ≫ s) (pull R f F n x) := by
   intro R _ F E n
   refine ⟨fun s hs => ?_, fun s s' x x' hx hx' => ?_, fun s x x' hx hx' => ?_, fun t x hx => ?_, fun E' f s x hx => ?_⟩
   · refine ⟨CohomologyClass.mk (Cocycle.mk (Cochain.single (p := -(n : ℤ)) (q := 0) ((chainsXIso R E n).hom ≫ s ≫ resι R F) n)

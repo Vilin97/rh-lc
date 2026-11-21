@@ -12,8 +12,8 @@ namespace GlobalTheory.CechOne
 
 theorem cobd_of_isCls_zero :
     ∀ (R : Type) [CommRing R] (F : Shv R) (E : Spc) (s : (free R).obj (E.obj (op ⦋1⦌)) ⟶ F),
-      IsCls R s (0 : H R E F ((1 : ℕ) : ℤ)) →
-        ∃ t : (free R).obj (E.obj (op ⦋0⦌)) ⟶ F, s = cobd R (E := E) (n := 0) t := by
+      IsCls (R := R) s (0 : H R E F ((1 : ℕ) : ℤ)) →
+        ∃ t : (free R).obj (E.obj (op ⦋0⦌)) ⟶ F, s = cobd (R := R) (E := E) (n := 0) t := by
   intro R _ F E s hs
   obtain ⟨-, hneg, hmono, ⟨w, hex⟩, -, hpos⟩ := GlobalTheory.T.chosenInjectiveResolutionEtaleSheaf_basic_properties R F
   obtain ⟨z, hz0, hz⟩ := hs

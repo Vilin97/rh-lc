@@ -16,7 +16,7 @@ namespace Formalism.L2.Th1.A
 def WpCleared : Prop :=
   ∀ (K : Type u) [Field K] [CharZero K] (W : WeierstrassCurve K),
     constantCoeff (wpReg W) = 0 ∧ (∀ n : ℕ, Odd n → coeff n (wpReg W) = 0) ∧
-    (-2 + X ^ 3 * derivative K (wpReg W)) ^ 2 =
+    (-2 + X ^ 3 * derivative (wpReg W)) ^ 2 =
       4 * (1 + X ^ 2 * wpReg W) ^ 3 - C (g₂ W) * X ^ 4 * (1 + X ^ 2 * wpReg W) - C (g₃ W) * X ^ 6
 
 def WpInU : Prop :=

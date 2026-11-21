@@ -143,7 +143,8 @@ theorem isSplitAt_of_isSquare : ∀ (L : Type) [Field L] [NumberField L] [IsCMFi
   have : w.asIdeal.LiesOver u.asIdeal := ⟨rfl⟩
   have hlt : w.valuation L (x * IsCMField.complexConj L x) < 1 := by
     rw [hprod, ← HeightOneSpectrum.valuation_liesOver L u w]
-    exact pow_lt_one₀ zero_le hc (Ideal.IsDedekindDomain.ramificationIdx'_ne_zero_of_liesOver w.asIdeal u.ne_bot)
+    exact pow_lt_one₀ zero_le hc
+      (Ideal.ramificationIdx_pos_of_isDedekindDomain' w.asIdeal u.ne_bot).ne'
   have heq := valuation_complexConj_of_not_split w hw x
   rw [map_mul, heq] at hlt
   have hx1 : w.valuation L x < 1 := by

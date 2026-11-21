@@ -58,7 +58,7 @@ def fu : R⟦X⟧ :=
 
 def om : R⟦X⟧ := invOfUnit (fw W) 1
 
-def D : Derivation R R⟦X⟧ R⟦X⟧ := fw W • derivative R
+def D : Derivation R R⟦X⟧ R⟦X⟧ := fw W • PowerSeries.derivative (R := R)
 
 def DL (f : LaurentSeries R) : LaurentSeries R := toL (fw W) * dL f
 

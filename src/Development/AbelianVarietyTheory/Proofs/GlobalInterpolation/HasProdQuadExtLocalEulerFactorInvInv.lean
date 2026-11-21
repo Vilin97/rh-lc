@@ -17,8 +17,6 @@ namespace GlobalTheory.EtaEulerProduct
 open scoped TensorProduct Pointwise
 open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.IndefiniteRowSideFullHecke.LocalDualIndex GlobalTheory.SelfDualLatticeCompare
 
-open private euler_factor_log_bound partial_sums_log_euler_factor_le from Formalism.GL3MeanSquares.HookFormulaTorsion.SumWeightsOverPrimeLeHalfDegree
-
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [StarRing E]
 
 open scoped TensorProduct Pointwise in
@@ -505,12 +503,11 @@ theorem _root_.GlobalTheory.EtaEulerProduct.hasProd_eulerInv_inv : ∀ (F E : Ty
   refine ⟨show 0 < _root_.Formalism.HermitianLatticesTheory.lValEta E M from ?_, ?_⟩
   · rw [hval]
     exact Real.exp_pos S
-  ·
-  rw [hval]
-  have hsig : HasProd (g ∘ e) (Real.exp S) := (e.hasProd_iff).mpr hprod
-  refine hsig.sigma (fun v => ?_)
-  have := (hfib v).1
-  rw [← (_root_.GlobalTheory.EtaEulerProduct.fibreEquiv v).hasProd_iff] at this
-  exact this
+  · rw [hval]
+    have hsig : HasProd (g ∘ e) (Real.exp S) := (e.hasProd_iff).mpr hprod
+    refine hsig.sigma (fun v => ?_)
+    have := (hfib v).1
+    rw [← (_root_.GlobalTheory.EtaEulerProduct.fibreEquiv v).hasProd_iff] at this
+    exact this
 
 end GlobalTheory.EtaEulerProduct

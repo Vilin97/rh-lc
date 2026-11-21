@@ -12,9 +12,103 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CotDComp
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
 open GlobalTheory.EtC.CupSpec GlobalTheory.EtC.DiscCoch in
 set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.discrete_projBundleModel_cohomology_equiv_prod_fibre : ∀ (R : Type) [CommRing R] (q N : ℕ) (I : Cx R) (F : PSh) (n : ℤ), ∃ e : CohomologyClass ((chains R).obj (disc.obj F)) (Jcx R q N I) n ≃+ CohomologyClass ((chains R).obj (disc.obj F ⨯ fibQ q N)) I n, ∀ (β : Cocycle ((chains R).obj (disc.obj F)) (Jcx R q N I) n) (γ : Cocycle ((chains R).obj (disc.obj F ⨯ fibQ q N)) I n), (∀ (p : ℕ), 0 < p → ∀ (s : ℤ) (h : -(p : ℤ) + n = s), β.1.v (-(p : ℤ)) s h = 0) → (∀ (U : Scheme.{0}) (x : F.obj (op U)), ∃ c : Cochain ((chains R).obj (sch.obj U ⨯ fibQ q N)) I n, ev (R := R) β.1 0 n (by simp) U x = Jsec c ∧ ∀ (k : ℕ) (s : ℤ) (hs : -(k : ℤ) + n = s) (V : Scheme.{0}) (y : Sx (sch.obj U ⨯ fibQ q N) k V), ev (R := R) c k s hs V y = ev (R := R) γ.1 k s hs V (Sx.map (prod.map (disc.map (yonedaEquiv.symm x)) (𝟙 (fibQ q N))) y)) → e (CohomologyClass.mk β) = CohomologyClass.mk γ := by
+theorem _root_.GlobalTheory.T.discrete_projBundleModel_cohomology_equiv_prod_fibre :
+    ∀ (R : Type) [CommRing R] (q N : ℕ) (I : Cx R) (F : PSh) (n : ℤ),
+      ∃ e : CohomologyClass ((chains R).obj (disc.obj F)) (Jcx R q N I) n ≃+
+          CohomologyClass ((chains R).obj (disc.obj F ⨯ fibQ q N)) I n,
+        ∀ (β : Cocycle ((chains R).obj (disc.obj F)) (Jcx R q N I) n)
+          (γ : Cocycle ((chains R).obj (disc.obj F ⨯ fibQ q N)) I n),
+          (∀ (p : ℕ), 0 < p → ∀ (s : ℤ) (h : -(p : ℤ) + n = s), β.1.v (-(p : ℤ)) s h = 0) →
+          (∀ (U : Scheme.{0}) (x : F.obj (op U)),
+            ∃ c : Cochain ((chains R).obj (sch.obj U ⨯ fibQ q N)) I n,
+              ev (R := R) β.1 0 n (by simp) U x = Jsec c ∧
+              ∀ (k : ℕ) (s : ℤ) (hs : -(k : ℤ) + n = s) (V : Scheme.{0})
+                (y : Sx (sch.obj U ⨯ fibQ q N) k V),
+                ev (R := R) c k s hs V y =
+                  ev (R := R) γ.1 k s hs V
+                    (Sx.map (prod.map (disc.map (yonedaEquiv.symm x)) (𝟙 (fibQ q N))) y)) →
+          e (CohomologyClass.mk β) = CohomologyClass.mk γ := by
   intro R _ q N I F n
-  have ev_zero_of_v {E : Spc} {L : Cx R} {n : ℤ} {n : ℤ} (β : Cochain ((chains R).obj E) L n) (p : ℕ) (s : ℤ)
+  -- Evaluate cochains on the free generators of the sheaves of chains.
+  have ev_def {E : Spc} {L : Cx R} {n : ℤ} (α : Cochain ((chains R).obj E) L n)
+      (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U) :
+      ev (R := R) α p s h U x = Sec.map ((chainsXIso R E p).inv ≫ α.v _ _ h) (freeGen R _ U x) := rfl
+  have ev_ext {E : Spc} {L : Cx R} {n : ℤ} (α β : Cochain ((chains R).obj E) L n)
+      (h : ∀ p s h U x, ev (R := R) α p s h U x = ev (R := R) β p s h U x) : α = β := by
+    ext p s hs : 1
+    by_cases hp : p ≤ 0
+    · obtain ⟨k, rfl⟩ : ∃ k : ℕ, p = -(k : ℤ) := ⟨(-p).toNat, by omega⟩
+      rw [← cancel_epi (chainsXIso R E k).inv]
+      exact free_ext _ _ (fun U x => h k s hs U x)
+    · exact (isZero_chains E p (by omega)).eq_of_src _ _
+  have ev_exists {E : Spc} {L : Cx R} {n : ℤ}
+      (a : ∀ (p : ℕ) (s : ℤ), -(p : ℤ) + n = s → ∀ U : Scheme.{0}, Sx E p U → Sec (L.X s) U)
+      (ha : ∀ p s h (V U : Scheme.{0}) (g : V ⟶ U) (x : Sx E p U), Sec.res g (a p s h U x) = a p s h V (x.res g)) :
+      ∃ α : Cochain ((chains R).obj E) L n, ∀ p s h U x, ev (R := R) α p s h U x = a p s h U x := by
+    have key : ∀ (i j : ℤ) (hij : i + n = j), ∃ φ : ((chains R).obj E).X i ⟶ L.X j, ∀ (p : ℕ) (hp : i = -(p : ℤ)) U x,
+        Sec.map ((chainsXIso R E p).inv ≫ eqToHom (congrArg ((chains R).obj E).X hp.symm) ≫ φ) (freeGen R _ U x) =
+          a p j (hp ▸ hij) U x := by
+      intro i j hij
+      by_cases hi : i ≤ 0
+      · obtain ⟨k, rfl⟩ : ∃ k : ℕ, i = -(k : ℤ) := ⟨(-i).toNat, by omega⟩
+        obtain ⟨φ, hφ⟩ := free_exists (R := R) _ _ (a k j hij) (ha k j hij)
+        refine ⟨(chainsXIso R E k).hom ≫ φ, fun p hp U x => ?_⟩
+        obtain rfl : k = p := by omega
+        rw [eqToHom_refl, Category.id_comp, Iso.inv_hom_id_assoc]
+        exact hφ U x
+      · exact ⟨0, fun p hp => by omega⟩
+    choose φ hφ using key
+    refine ⟨Cochain.mk φ, fun p s h U x => ?_⟩
+    have := hφ _ _ h p rfl U x
+    rw [eqToHom_refl, Category.id_comp] at this
+    exact this
+  have ev_res {E : Spc} {L : Cx R} {n : ℤ} (α : Cochain ((chains R).obj E) L n)
+      (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) {V U : Scheme.{0}} (g : V ⟶ U)
+      (x : Sx E p U) : Sec.res g (ev (R := R) α p s h U x) = ev (R := R) α p s h V (x.res g) := by
+    rw [ev_def, map_res, freeGen_res]
+    rfl
+  have ev_add {E : Spc} {L : Cx R} {n : ℤ} (a b : Cochain ((chains R).obj E) L n)
+      (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U) :
+      ev (R := R) (a + b) p s h U x = ev (R := R) a p s h U x + ev (R := R) b p s h U x := by
+    simp [_root_.GlobalTheory.EtC.ev, Cochain.add_v]
+  let evHom {E : Spc} (I : Cx R) (n : ℤ) (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U) :
+      Cochain ((chains R).obj E) I n →+ Sec (I.X s) U :=
+    AddMonoidHom.mk' (fun a => ev (R := R) a p s h U x) (fun a b => ev_add a b p s h U x)
+  have ev_zero {E : Spc} {L : Cx R} {n : ℤ} (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U) :
+      ev (R := R) (0 : Cochain ((chains R).obj E) L n) p s h U x = 0 := map_zero (evHom L n p s h U x)
+  have ev_pull {E : Spc} {L : Cx R} {n : ℤ} {E' : Spc} (f : E' ⟶ E) (α : Cochain ((chains R).obj E) L n)
+      (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s)
+      (U : Scheme.{0}) (x : Sx E' p U) :
+      ev (R := R) ((Cochain.ofHom ((chains R).map f)).comp α (zero_add n)) p s h U x = ev (R := R) α p s h U (x.map f) := by
+    rw [ev_def, ev_def, Cochain.zero_cochain_comp_v, Cochain.ofHom_v, ← Category.assoc, chains_map, Category.assoc]
+    change Sec.map ((chainsXIso R E p).inv ≫ α.v _ _ h) (Sec.map ((free R).map _) (freeGen R _ U x)) = _
+    rw [freeGen_map]
+    rfl
+  have ev_δ_zero {E : Spc} {L : Cx R} {n : ℤ} {m : ℤ} (hm : n + 1 = m)
+      (α : Cochain ((chains R).obj E) L n) (U : Scheme.{0}) (s t : ℤ)
+      (hs : -((0 : ℕ) : ℤ) + n = s) (ht : -((0 : ℕ) : ℤ) + m = t) (x : Sx E 0 U) :
+      ev (R := R) (δ n m α) 0 t ht U x = Sec.map (L.d s t) (ev (R := R) α 0 s hs U x) := by
+    rw [ev_def, δ_v n m hm α _ t ht s 1 (by omega) (by simp),
+      (isZero_chains E 1 one_pos).eq_of_tgt (((chains R).obj E).d _ 1) 0, zero_comp, smul_zero, add_zero]
+    rfl
+  have ev_δ_succ {E : Spc} {L : Cx R} {n : ℤ} {m : ℤ} (hm : n + 1 = m)
+      (α : Cochain ((chains R).obj E) L n) (U : Scheme.{0}) (p : ℕ) (s t : ℤ)
+      (hs : -((p + 1 : ℕ) : ℤ) + n = s) (ht : -((p + 1 : ℕ) : ℤ) + m = t) (x : Sx E (p + 1) U) :
+      ev (R := R) (δ n m α) (p + 1) t ht U x = Sec.map (L.d s t) (ev (R := R) α (p + 1) s hs U x) +
+        m.negOnePow • ∑ i : Fin (p + 2), (-1 : ℤ) ^ (i : ℕ) • ev (R := R) α p t (by omega) U (x.face i) := by
+    rw [ev_def, δ_v n m hm α _ t ht s (-(p : ℤ)) (by omega) (by omega), Preadditive.comp_add, Units.smul_def,
+      Preadditive.comp_zsmul, ← Category.assoc _ (((chains R).obj E).d _ _), chains_d, Category.assoc, Preadditive.sum_comp]
+    refine (map_add (mapHom _ _ (freeGen R _ U x)) _ _).trans ?_
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zsmul, map_sum, Units.smul_def]
+    refine congrArg₂ (· + ·) rfl (congrArg _ (Finset.sum_congr rfl fun i _ => ?_))
+    rw [Preadditive.zsmul_comp, map_zsmul]
+    congr 1
+    change Sec.map ((chainsXIso R E p).inv ≫ α.v _ _ _) (Sec.map ((free R).map _) (freeGen R _ U x)) = _
+    rw [freeGen_map]
+    rfl
+  have ev_zero_of_v {E : Spc} {L : Cx R} {n : ℤ} (β : Cochain ((chains R).obj E) L n)
+      (p : ℕ) (s : ℤ)
     (h : -(p : ℤ) + n = s) (hβ : β.v (-(p : ℤ)) s h = 0) (U : Scheme.{0}) (x : Sx E p U) : ev (R := R) β p s h U x = 0 := by
     rw [ev_def, hβ, comp_zero]
     rfl
@@ -28,11 +122,13 @@ theorem _root_.GlobalTheory.T.discrete_projBundleModel_cohomology_equiv_prod_fib
       have hf : ∀ i, Sx.face x i = x := fun i => rfl
       simp [Fin.sum_univ_two, hf]
     | succ p => simp [hβ]
+
+  -- Lift the pullbacks to a cochain supported in simplicial degree zero.
   have exS {n : ℤ} (γ : Cochain ((chains R).obj (disc.obj F ⨯ fibQ q N)) I n) :
     ∃ β : Cochain ((chains R).obj (disc.obj F)) (Jcx R q N I) n,
       (∀ (U : Scheme.{0}) (x : F.obj (op U)), ev (R := R) β 0 n (by simp) U x = Jsec (ptPull γ x)) ∧
       ∀ (p : ℕ) s h U x, ev (R := R) β (p + 1) s h U x = 0 := by
-    obtain ⟨β, hβ⟩ := ev_exists (E := disc.obj F) (I := Jcx R q N I) (n := n) (aS γ) (by
+    obtain ⟨β, hβ⟩ := ev_exists (E := disc.obj F) (L := Jcx R q N I) (n := n) (aS γ) (by
       intro p s h V U g x
       cases p with
       | zero =>

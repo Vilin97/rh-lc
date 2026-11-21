@@ -105,7 +105,7 @@ theorem exists_isLogEqn_of_form' [PerfectField k] [LocallyOfFiniteType p]
   · exact ⟨1, fun z _ F _ => (hE ⟨F⟩).elim⟩
 
 theorem exists_nhds_isLogEqn' [IsLocallyNoetherian X] [CompactSpace X]
-    (hfin : {z : X | ∃ E : DivOver p, E.IsAt z ∧ E.formOrd η ≠ 0}.Finite)
+    (hfin : {z : X | ∃ E : DivOver p, E.IsAt z ∧ (fun ω => @dite ℤ (∃ a, E.IsFormOrd ω a) (Classical.propDecidable _) (fun h => h.choose) (fun _ => 0)) η ≠ 0}.Finite)
     (hΔ : (Function.support Δ).Finite) (hg : IsLogEqn p Δ η x m g) :
     ∃ U : X.Opens, x ∈ U ∧ ∀ y ∈ U, IsLogEqn p Δ η y m g := by
   set B : Set X := {z | ∃ E : DivOver p, E.IsAt z ∧ (m : ℚ) * (E.formOrd η + Δ z) ≠ E.ord g}

@@ -458,7 +458,7 @@ noncomputable def totalTensorEquiv [Finite ι] [Finite κ] (A : Cube.{v} ι K) (
     (LinearEquiv.piCongrRight fun s => TensorProduct.piRight K K (A.obj s) fun t => B.obj t) ≪≫ₗ
     (LinearEquiv.piCurry K fun (s : Finset ι) (t : Finset κ) => A.obj s ⊗[K] B.obj t).symm ≪≫ₗ
     (LinearEquiv.piCongrLeft K (fun x : Σ _ : Finset ι, Finset κ => A.obj x.1 ⊗[K] B.obj x.2)
-      partsEquiv).symm
+      (partsEquiv ι κ)).symm
 
 variable [Finite ι] [Finite κ] (A : Cube.{v} ι K) (B : Cube.{v} κ K)
 
@@ -538,7 +538,7 @@ variable {A B}
 
 noncomputable def extTensorMap {A' : Cube.{v} ι K} {B' : Cube.{v} κ K} (φ : A ⟶ A') (ψ : B ⟶ B') :
     extTensor A B ⟶ extTensor A' B' :=
-  homMk (A := extTensor A B) (B := extTensor A' B')
+  homMk (ι ⊕ₗ κ) K (A := extTensor A B) (B := extTensor A' B')
     (fun w => TensorProduct.map (φ.app (part (inlEmb ι κ) w)).hom (ψ.app (part (inrEmb ι κ) w)).hom)
     fun {w w'} h x => by
       have : TensorProduct.map (φ.app (part (inlEmb ι κ) w')).hom
@@ -603,7 +603,7 @@ theorem nonempty_trunc₂_iso_extTensor (C : Cube.{v} (ι ⊕ₗ κ) K)
         ((res_res C _ _ _).trans (res_res C _ _ _).symm)
     exact LinearMap.congr_fun this x
   let φ : supp (extTensor A B) _ hP ⟶ C :=
-    homMk (fun w => if hw : _ then ν w hw ∘ₗ (suppEquiv _ hP hw).toLinearMap else 0)
+    homMk (ι ⊕ₗ κ) K (fun w => if hw : _ then ν w hw ∘ₗ (suppEquiv _ hP hw).toLinearMap else 0)
       fun {w w'} h x => by
         by_cases hw : w ∈ partsIn (inlEmb ι κ) (inrEmb ι κ) {s | s.Nonempty} {t | t.Nonempty}
         · have hw' := isUpperSet_partsIn_nonempty _ _ h hw

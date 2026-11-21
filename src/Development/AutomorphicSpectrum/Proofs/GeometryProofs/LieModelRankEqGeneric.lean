@@ -84,7 +84,7 @@ theorem epsPull_comp_left (G : Over S) {R R' : Type} [CommRing R] [CommRing R'] 
 theorem exists_lift (G : Over S) [GrpObj G] {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R']
     (x : Sp R ⟶ S) {E E' : Type} [AddCommGroup E] [Module R E] [AddCommGroup E'] [Module R' E'] [Module R E']
     [IsScalarTower R R' E'] (M : LieModel G x E) (M' : LieModel G (spMap (algebraMap R R') ≫ x) E') :
-    ∃ j : E →ₗ[R] E', ∀ e, M.Lifts (algebraMap R R') (𝟙 G.left) e (M'.pt (j e)) := by
+    ∃ j : E →ₗ[R] E', ∀ e, ((M'.pt (j e)).left ≫ (𝟙 G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R R')) ≫ (M.pt e).left) := by
   have hex : ∀ e, ∃ e', M'.pt e' = epsPull (algebraMap R R') x ≫ M.pt e := fun e =>
     M'.onto _ (isTanAt_pull G _ x _ (M.tan e))
   choose f hf using hex
@@ -100,7 +100,7 @@ theorem exists_lift (G : Over S) [GrpObj G] {R R' : Type} [CommRing R] [CommRing
     rw [spMap, ← Spec.map_comp, ← Spec.map_comp]
     congr 1
     exact CommRingCat.hom_ext (dualMap_comp_epsMul (algebraMap R R') r)
-  have hl : ∀ e, M.Lifts (algebraMap R R') (𝟙 G.left) e (M'.pt (f e)) := fun e => by
+  have hl : ∀ e, ((M'.pt (f e)).left ≫ (𝟙 G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R R')) ≫ (M.pt e).left) := fun e => by
     unfold LieModel.Lifts
     rw [hf, Category.comp_id, epsPull_comp_left]
   exact ⟨⟨⟨f, hadd⟩, hsmul⟩, hl⟩

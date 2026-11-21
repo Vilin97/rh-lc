@@ -129,7 +129,7 @@ theorem exists_matrix_dFun {K : Type} [Field K] (c₀ : ℂ →+* K) {n : ℕ} (
     (x : Fin n → K) (hx : TrBasis (c₀) x) :
     ∃ c : Matrix (Fin n) (Fin n) K,
       (∀ i, dFun (c₀) (x i) = ∑ j, c i j • (dFun (c₀) (z j : K) : Omega (c₀))) ∧
-      c.det ≠ 0 ∧ E.formOrd (dForm (c₀) x) = E.ord c.det := by
+      c.det ≠ 0 ∧ (fun ω => @dite ℤ (∃ a, E.IsFormOrd ω a) (Classical.propDecidable _) (fun h => h.choose) (fun _ => 0)) (dForm (c₀) x) = E.ord c.det := by
   obtain ⟨b', hb'⟩ : ∃ b' : Module.Basis (Fin n) K (Omega (c₀)),
       ∀ j, b' j = dFun (c₀) (z j : K) := by
     letI := E.const.toAlgebra
@@ -191,7 +191,7 @@ theorem exists_isFreeGen_locAt_formOrd : ∀ {K κ' L : Type} [Field K] [Field �
     IsUnit q ∧
     dForm (algebraMap ℂ L) (Fin.append (fun i => algebraMap (K ⊗[ℂ] κ') L (1 ⊗ₜ τ' i))
         (fun i => algebraMap (K ⊗[ℂ] κ') L (x i ⊗ₜ 1))) =
-      ((q : L) * (algebraMap (K ⊗[ℂ] κ') L ((t : K) ⊗ₜ 1)) ^ E.formOrd (dForm (algebraMap ℂ K) x)) •
+      ((q : L) * (algebraMap (K ⊗[ℂ] κ') L ((t : K) ⊗ₜ 1)) ^ (fun ω => @dite ℤ (∃ a, E.IsFormOrd ω a) (Classical.propDecidable _) (fun h => h.choose) (fun _ => 0)) (dForm (algebraMap ℂ K) x)) •
         dForm (algebraMap ℂ L) (fun i => (y i : L)) := by
   intro K κ' L _ _ _ _ _ _ _ _ _ n k' x τ' E 𝔭 _ t hc hx hτ _ ht
   have hinj : Function.Injective (algebraMap (K ⊗[ℂ] κ') L) := IsFractionRing.injective _ _

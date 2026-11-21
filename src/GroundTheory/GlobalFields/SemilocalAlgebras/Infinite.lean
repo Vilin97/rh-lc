@@ -108,7 +108,7 @@ theorem finrank_completion_pos (w : InfinitePlace L) [w.LiesOver v] :
 
 instance finiteDimensional_completion (w : InfinitePlace L) [w.LiesOver v] :
     FiniteDimensional v.Completion w.Completion :=
-  Module.finite_of_finrank_pos (finrank_completion_pos v w)
+  Module.finite_of_finrank_pos (finrank_completion_pos (v := v) w)
 
 open scoped Classical in
 instance instFintypePlacesOver [NumberField L] : Fintype (v.placesOver L) :=

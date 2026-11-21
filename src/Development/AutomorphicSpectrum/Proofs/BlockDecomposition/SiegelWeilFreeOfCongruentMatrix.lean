@@ -122,7 +122,7 @@ theorem free_rmul (σ : E →ₐ[F] E) (hσ : IsCMExt F E σ) {M : ℕ} (J : Mat
     intro h
     refine continuous_pi fun b => continuous_pi fun i => ?_
     simp only [rmul]
-    refine continuous_finset_sum _ fun k _ => ?_
+    refine continuous_finsetSum _ fun k _ => ?_
     have h1 : Continuous fun Y : Fin n → Fin M → R ⊗[F] E => Y k i :=
       (continuous_apply i).comp (continuous_apply k)
     exact h1.mul continuous_const

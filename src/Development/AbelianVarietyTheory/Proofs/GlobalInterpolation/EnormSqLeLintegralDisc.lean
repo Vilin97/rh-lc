@@ -47,7 +47,7 @@ theorem norm_sq_le_integral_square :
   rw [hvr] at key
   have hmono : ∫ z in Metric.ball ρ r, ‖f z‖ ^ 2 ≤ ∫ z in S, ‖f z‖ ^ 2 :=
     setIntegral_mono_set hint (Filter.Eventually.of_forall fun z => by positivity)
-      hball.eventuallyLE
+      (Filter.Eventually.of_forall hball)
   have hp := Complex.volume_preserving_equiv_real_prod.symm
   have he := Complex.measurableEquivRealProd.symm.measurableEmbedding
   have hpre : Complex.measurableEquivRealProd.symm ⁻¹' S =

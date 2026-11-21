@@ -117,7 +117,7 @@ theorem suppEquiv_suppMapApp (φ : A ⟶ B) {s : Finset ι} (hs : s ∈ P) (hs' 
 noncomputable def suppMap (φ : A ⟶ B) (hP : P.OrdConnected) (hP' : P'.OrdConnected)
     (h : ∀ ⦃s t : Finset ι⦄, s ⊆ t → s ∈ P → t ∈ P' → (t ∈ P ↔ s ∈ P')) :
     supp A P hP ⟶ supp B P' hP' :=
-  homMk (suppMapApp φ hP hP') fun {s t} hst x => by
+  Cube.homMk ι R (suppMapApp φ hP hP') fun {s t} hst x => by
     by_cases hs : s ∈ P
     · refine supp_ext fun ht' => ?_
       by_cases ht : t ∈ P
@@ -164,14 +164,15 @@ open Classical in
 noncomputable def suppIncl (A : Cube.{v} ι R) (hP : P.OrdConnected) (hU : IsUpperSet P) :
     supp A P hP ⟶ A := by
   classical
-  exact homMk (fun s => if hs : s ∈ P then (suppEquiv A hP hs).toLinearMap else 0) fun {s t} hst x => by
-    by_cases hs : s ∈ P
-    · have ht : t ∈ P := hU hst hs
-      simp only [dif_pos hs, dif_pos ht, LinearEquiv.coe_coe]
-      exact suppEquiv_res hst hs ht x
-    · have := subsingleton_supp A hP hs
-      rw [Subsingleton.elim x 0]
-      simp only [map_zero]
+  refine Cube.homMk ι R (fun s => if hs : s ∈ P then (suppEquiv A hP hs).toLinearMap else 0) ?_
+  intro s t hst x
+  by_cases hs : s ∈ P
+  · have ht : t ∈ P := hU hst hs
+    simp only [dif_pos hs, dif_pos ht, LinearEquiv.coe_coe]
+    exact suppEquiv_res hst hs ht x
+  · have := subsingleton_supp A hP hs
+    rw [Subsingleton.elim x 0]
+    simp only [map_zero]
 
 theorem suppIncl_app (A : Cube.{v} ι R) (hP : P.OrdConnected) (hU : IsUpperSet P) {s : Finset ι}
     (hs : s ∈ P) : ((suppIncl A hP hU).app s).hom = (suppEquiv A hP hs).toLinearMap :=

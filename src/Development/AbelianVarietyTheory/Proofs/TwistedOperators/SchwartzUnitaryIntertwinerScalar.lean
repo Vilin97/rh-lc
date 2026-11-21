@@ -69,14 +69,14 @@ theorem integral_conj_mul_eq (U : Sch l →ₗ[ℂ] Sch l)
     ∫ x, conj (U f x) * U g x = ∫ x, conj (f x) * g x := by
   have hn : ∀ h : Sch l, ‖(U h).toLp 2‖ = ‖h.toLp 2‖ := fun h => by
     rw [SchwartzMap.norm_toLp, SchwartzMap.norm_toLp,
-      eLpNorm_eq_lintegral_rpow_enorm (by norm_num) (by norm_num),
-      eLpNorm_eq_lintegral_rpow_enorm (by norm_num) (by norm_num)]
+      eLpNorm_eq_lintegral_rpow_eNorm_toReal (by norm_num) (by norm_num) (U h).continuous.aestronglyMeasurable,
+      eLpNorm_eq_lintegral_rpow_eNorm_toReal (by norm_num) (by norm_num) h.continuous.aestronglyMeasurable]
     simp only [ENNReal.toReal_ofNat, ENNReal.rpow_two, hU]
   have hlin : ∀ (b : ℂ) (u v : Sch l), u.toLp 2 volume + b • v.toLp 2 volume = (u + b • v).toLp 2 volume := fun b u v => by
     have := (SchwartzMap.toLpCLM ℂ ℂ 2 (volume : Measure (EuclideanSpace ℝ l))).map_add u (b • v)
     rw [(SchwartzMap.toLpCLM ℂ ℂ 2 (volume : Measure (EuclideanSpace ℝ l))).map_smul] at this
     exact this.symm
-  have key : ∀ b : ℂ, ‖(U f).toLp 2 + b • (U g).toLp 2‖ = ‖f.toLp 2 + b • g.toLp 2‖ := fun b => by
+  have key : ∀ b : ℂ, ‖(U f).toLp 2 volume + b • (U g).toLp 2 volume‖ = ‖f.toLp 2 volume + b • g.toLp 2 volume‖ := fun b => by
     rw [hlin, hlin, ← map_smul, ← map_add (f := _), hn]
   have k1 := key 1
   have k2 := key (-1)

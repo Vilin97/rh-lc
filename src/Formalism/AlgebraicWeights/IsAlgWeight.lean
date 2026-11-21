@@ -56,9 +56,9 @@ abbrev Forms {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ
   Formalism.UG.AMF ℂ (GQ L n) U ρ
 
 def tSet (s : SplitPlace L) (ϖ : s.v.adicCompletion L⁺) (j : ℕ) : Set (GAf L n) :=
-  {x | TrivOutside L {s.v} x ∧ ∃ a ∈ Formalism.UG.GLint (Fin n) (s.v.adicCompletionIntegers L⁺).toSubring,
+  {x | TrivOutside (L := L) {s.v} x ∧ ∃ a ∈ Formalism.UG.GLint (Fin n) (s.v.adicCompletionIntegers L⁺).toSubring,
     ∃ b ∈ Formalism.UG.GLint (Fin n) (s.v.adicCompletionIntegers L⁺).toSubring,
-      ((SplitPlace.loc L s n x : GL (Fin n) (s.v.adicCompletion L⁺)) : Matrix (Fin n) (Fin n) _) =
+      ((s.loc n x : GL (Fin n) (s.v.adicCompletion L⁺)) : Matrix (Fin n) (Fin n) _) =
         (a : Matrix (Fin n) (Fin n) _) * Formalism.UG.diagJ n ϖ j * (b : Matrix (Fin n) (Fin n) _)}
 
 

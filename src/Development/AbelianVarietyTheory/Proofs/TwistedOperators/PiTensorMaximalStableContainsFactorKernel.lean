@@ -78,7 +78,7 @@ theorem position_mem_of_maximal_stable : ∀ {ι : Type} [DecidableEq ι] {M₀ 
   intro ι _ M₀ _ _ M _ _ Op₀ Op i Rel K hlen hmax hK hKst N' hRel hN'st hN'max x hx x₀ y
   let φ : M i →ₗ[ℂ] (M₀ ⊗[ℂ] (⨂[ℂ] j, M j)) ⧸ N' :=
     N'.mkQ ∘ₗ (TensorProduct.mk ℂ M₀ (⨂[ℂ] j, M j) x₀) ∘ₗ
-      ((PiTensorProduct.tprod ℂ : MultilinearMap ℂ M (⨂[ℂ] j, M j)).toLinearMap y i)
+      ((PiTensorProduct.tprod ℂ : (∀ j, M j) →ₘₗ[ℂ] (⨂[ℂ] j, M j)).toLinearMap y i)
   have hφ : ∀ z, φ z = N'.mkQ (x₀ ⊗ₜ[ℂ] PiTensorProduct.tprod ℂ (Function.update y i z)) := by
     intro z
     simp [φ, MultilinearMap.toLinearMap_apply]

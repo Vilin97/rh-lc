@@ -218,19 +218,19 @@ def cotMap (f : C →ₐc[R] A) : Cot (R := R) (A := C) →ₗ[R] Cot (R := R) (
 
 theorem cotMap_comp (g : A →ₐc[R] B) (f : C →ₐc[R] A) :
     cotMap (g.comp f) = cotMap g ∘ₗ cotMap f :=
-  AugCot.hom_ext (counitAlgHom R C) fun c => by simp
+  AugCot.hom_ext fun c => by simp
 
 @[simp] theorem cotMap_id : cotMap (BialgHom.id R A) = LinearMap.id :=
-  AugCot.hom_ext (counitAlgHom R A) fun c => by simp
+  AugCot.hom_ext fun c => by simp
 
 theorem cotMap_one [IsCocomm R C] : cotMap (1 : WithConv (C →ₐc[R] A)).ofConv = 0 :=
-  AugCot.hom_ext (counitAlgHom R C) fun c => by
+  AugCot.hom_ext fun c => by
     rw [cotMap_d]
     exact AugCot.d_algebraMap _ _
 
 theorem cotMap_mul [IsCocomm R C] (f g : WithConv (C →ₐc[R] A)) :
     cotMap (f * g).ofConv = cotMap f.ofConv + cotMap g.ofConv :=
-  AugCot.hom_ext (counitAlgHom R C) fun c => by
+  AugCot.hom_ext fun c => by
     have r := Coalgebra.Repr.arbitrary R c
     have h : (f * g).ofConv c = ∑ i ∈ r.index, f.ofConv (r.left i) * g.ofConv (r.right i) :=
       r.convMul_apply (toConv f.ofConv.toLinearMap) (toConv g.ofConv.toLinearMap)

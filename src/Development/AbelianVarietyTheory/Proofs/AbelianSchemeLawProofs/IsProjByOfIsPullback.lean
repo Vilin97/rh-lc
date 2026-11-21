@@ -87,16 +87,16 @@ theorem ap_compat (s : LB.Sec H) (i j : H.ι) {W : P.Opens} (h₁ : W ≤ p ⁻�
   have e' := congrArg (ap p h) e
   simpa only [ap_rs, map_mul] using e'
 
-theorem isLB_box (hH : H.IsLB) (hK : K.IsLB) : (box p q H K).IsLB where
-  cover := by
-    refine top_le_iff.1 fun y _ => ?_
+theorem isLB_box (hH : H.IsLB) (hK : K.IsLB) : (box p q H K).IsLB := by
+  refine ⟨?_, ?_, ?_⟩
+  · refine top_le_iff.1 fun y _ => ?_
     obtain ⟨i, hi⟩ := TopologicalSpace.Opens.mem_iSup.1 (show p y ∈ ⨆ i, H.U i by rw [hH.cover]; trivial)
     obtain ⟨j, hj⟩ := TopologicalSpace.Opens.mem_iSup.1 (show q y ∈ ⨆ i, K.U i by rw [hK.cover]; trivial)
     exact TopologicalSpace.Opens.mem_iSup.2 ⟨(i, j), hi, hj⟩
-  g_self := fun a => by
+  · intro a
     refine Units.ext ((rs_mul p q _ _ _ _ _).trans ?_)
     rw [ap_g_self p hH, ap_g_self q hK, _root_.mul_one, Units.val_one]
-  cocycle := fun a b c => by
+  · intro a b c
     refine Units.ext ((congrArg₂ (· * ·) (rs_mul p q _ _ _ _ _) (rs_mul p q _ _ _ _ _)).trans
       (Eq.trans ?_ (rs_mul p q _ _ _ _ _).symm))
     exact (mul_mul_mul_comm _ _ _ _).trans

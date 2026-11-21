@@ -82,6 +82,9 @@ theorem partial_fourier_inversion : ∀ (k : Type) [Field k] [ValuativeRel k] [T
         (Filter.Eventually.of_forall fun q => (Circle.norm_coe _).le)
     rw [integral_prod _ hi]
     congr 1
+    funext x
+    simp only
+    rw [integral_mul_const, dotProduct_comm l x]
   simp only [hF]
   refine ⟨?_, ?_⟩
   · have := FourierPi.fourier_mem_SB μI hc hg

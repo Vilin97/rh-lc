@@ -62,7 +62,7 @@ theorem _root_.GlobalTheory.ZeroDetect.sum_initial (f : ℕ → ℂ) (D : ℕ) (
       ((∑ d ∈ n.divisors.filter (fun d => d ≤ D), (moebius d : ℤ) : ℤ) : ℂ) * f n = f 1 := by
   have hsum : ∀ n, ∑ d ∈ n.divisors, (moebius d : ℤ) = if n = 1 then 1 else 0 := by
     intro n
-    rw [← coe_mul_zeta_apply, moebius_mul_coe_zeta, one_apply]
+    rw [← coe_mul_zeta_apply, moebius_mul_coe_zeta, ArithmeticFunction.one_apply]
   rw [Finset.sum_eq_single 1]
   · simp [Finset.filter_singleton, hD]
   · intro n hn hn1

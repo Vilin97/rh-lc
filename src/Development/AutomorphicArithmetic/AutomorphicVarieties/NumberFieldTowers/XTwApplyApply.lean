@@ -36,8 +36,28 @@ def IsGen (γ : G k Ω) : Prop :=
 variable [U.Normal]
 
 def dRep : Representation ℤ_[l] (G k Ω) (Dinf l N U) :=
-  (funRep ℤ_[l] (QZ l) (cycU l U)).subrepresentation (Dinf l N U) fun g _ h =>
-    (funRepMem k Ω N (cycU l U) ℤ_[l] (QZ l)).1 g _ h
+  (funRep (R := ℤ_[l]) (M := QZ l) (cycU l U)).subrepresentation (Dinf l N U) fun g φ hφ => by
+    have hLift : IsLift (RingEquiv.refl k) g.toRingEquiv := fun x => g.commutes x
+    have hApply (u : cycU l U) :
+        funRep (R := ℤ_[l]) (M := QZ l) (cycU l U) g φ u = φ (conjHom (cycU l U) g u) := rfl
+    have hConj (u : cycU l U) : (conjHom (cycU l U) g u).1 = conjGal hLift u.1 := rfl
+    have hComap (A : ValuationSubring Ω) (x : Ω) :
+        g.toRingEquiv x ∈ A ↔ x ∈ A.comap g.toRingEquiv.toRingHom := Iff.rfl
+    obtain ⟨hLocal, hMul, hIne, hDec⟩ := hφ
+    refine ⟨hLocal.comp_continuous (continuous_conjHom (cycU l U) g), ?_, ?_, ?_⟩
+    · intro a b
+      rw [hApply, hApply, hApply, map_mul, hMul]
+    · intro A u hu
+      rw [hApply]
+      apply hIne (A.comap g.toRingEquiv.toRingHom)
+      rw [hConj]
+      exact conjGal_mem_Ine hLift (hComap A) hu
+    · intro A hN u hu
+      rw [hApply]
+      refine hDec (A.comap g.toRingEquiv.toRingHom) ?_ _ ?_
+      · rwa [← val_lt_one (hComap A), map_natCast]
+      · rw [hConj]
+        exact conjGal_mem_Dec hLift (hComap A) hu
 
 def xRep : Representation ℤ_[l] (G k Ω) (Xinf l N U) :=
   Representation.linHom (dRep l N U) (Representation.trivial ℤ_[l] (G k Ω) (QZ l))

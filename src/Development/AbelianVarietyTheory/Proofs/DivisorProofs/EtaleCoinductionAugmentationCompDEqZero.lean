@@ -47,7 +47,7 @@ theorem coindCx_d (φ : R →+* S) (J : Shv R) (n : ℕ) :
 
 abbrev homOfLin {A B : ModuleCat.{1} (ULift.{1} R)} (f : A →ₗ[ULift.{1} R] B) : A ⟶ B := ModuleCat.ofHom f
 
-def coindToHom (φ : R →+* S) (J : Shv R) : (restr R φ).obj ((coind φ).obj J) ⟶ (homSh J).obj (op (scalarsMod φ)) :=
+def coindToHom (φ : R →+* S) (J : Shv R) : (restr φ).obj ((coind φ).obj J) ⟶ (homSh J).obj (op (scalarsMod φ)) :=
   ⟨{ app := fun U => homOfLin
       { toFun := fun (g : (ModuleCat.coextendScalars.{1, 1, 1} (liftHom φ)).obj (J.obj.obj U)) =>
           homOfLin (ModuleCat.CoextendScalars.equiv (liftHom φ) _ g)
@@ -68,7 +68,7 @@ theorem etaleCoinductionAugmentation_comp_d_eq_zero (φ : R →+* S) (J : Shv R)
     zero_comp, op_zero, Functor.map_zero, comp_zero]
 
 def coindAug (φ : R →+* S) (J : Shv R) :
-    (CochainComplex.single₀ (Shv R)).obj ((restr R φ).obj ((coind φ).obj J)) ⟶ coindCx φ J :=
+    (CochainComplex.single₀ (Shv R)).obj ((restr φ).obj ((coind φ).obj J)) ⟶ coindCx φ J :=
   HomologicalComplex.mkHomFromSingle (coindToHom φ J ≫ (homSh J).map
     ((scalarsRes φ).π.f 0 ≫ (HomologicalComplex.singleObjXSelf (ComplexShape.down ℕ) 0 (scalarsMod φ)).hom).op) (by
     rintro k rfl

@@ -130,7 +130,7 @@ def AutRep.Iso (π π' : AutRep L n) : Prop := π.toAlgWt.Iso π'.toAlgWt ∧ Is
 def AutRep.mult (π : AutRep L n) : ℕ := multRep π.ρ π.S
 
 def AutRep.SphAt (π : AutRep L n) (v : HeightOneSpectrum (𝓞 L⁺)) : Prop :=
-  ∃ f ∈ π.S, f ≠ 0 ∧ ∀ κ ∈ Umax L n, TrivOutside L {v} κ → rt L n κ f = f
+  ∃ f ∈ π.S, f ≠ 0 ∧ ∀ κ ∈ Umax L n, TrivOutside (L := L) {v} κ → rt L n κ f = f
 
 def OverPl (w : HeightOneSpectrum (𝓞 L)) (v : HeightOneSpectrum (𝓞 L⁺)) : Prop :=
   w.asIdeal.comap (algebraMap (𝓞 L⁺) (𝓞 L)) = v.asIdeal
@@ -147,7 +147,7 @@ def TypeSp (ρ : Representation ℂ (GQ L n) W) (J : Subgroup (GAf L n)) (χ : J
     exact ⟨Submodule.smul_mem _ c h1, fun κ => by rw [map_smul, h2, smul_comm]⟩
 
 def HypOutside (J : Subgroup (GAf L n)) (χ : J →* ℂˣ) (B : Set (HeightOneSpectrum (𝓞 L⁺))) : Prop :=
-  ∀ κ : GAf L n, TrivOutside L Bᶜ κ → (κ ∈ J ↔ κ ∈ Umax L n) ∧ ∀ h : κ ∈ J, χ ⟨κ, h⟩ = 1
+  ∀ κ : GAf L n, TrivOutside (L := L) Bᶜ κ → (κ ∈ J ↔ κ ∈ Umax L n) ∧ ∀ h : κ ∈ J, χ ⟨κ, h⟩ = 1
 
 
 open Classical in

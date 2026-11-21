@@ -50,8 +50,9 @@ theorem piTensor_scalar {α : Type} [Fintype α] {Γ X : α → Type} [∀ a, Gr
   induction y using PiTensorProduct.induction_on with
   | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | smul_tprod r x =>
-    rw [map_smul, smul_comm, piTensor_tprod, ← MultilinearMap.map_smul_univ]
-    simp only [h]
+    rw [map_smul, piTensor_tprod]
+    simp only [h, MultilinearMap.map_smul_univ, RingHom.id_apply]
+    rw [smul_comm]
 
 theorem deltaHalf_scalar {α : Type} (m : α → Type) [Fintype α] [LinearOrder α] [∀ a, Fintype (m a)]
     [∀ a, DecidableEq (m a)] (z : kˣ) :
@@ -84,13 +85,21 @@ theorem multiProd_scalar {α n : Type} {m : α → Type} [Fintype α] [LinearOrd
     obtain ⟨⟨b, j⟩, rfl⟩ := e.surjective j
     by_cases hab : a = b
     · subst hab
-      rw [leviEmb_apply_same]
-      simp [GeneralLinearGroup.scalar, diagonal_apply]
-    · rw [leviEmb_apply_ne k e _ hab]
-      simp [GeneralLinearGroup.scalar, diagonal_apply, hab]
+      simp [leviEmb, blockDiagonal'_apply_eq, GeneralLinearGroup.scalar, diagonal_apply]
+    · simp [leviEmb, blockDiagonal'_apply_ne _ _ _ hab, GeneralLinearGroup.scalar,
+        diagonal_apply, hab]
   refine Subtype.ext (Subtype.ext (funext fun x => ?_))
-  have h2 := parInd_law e _ f ⟨_, leviEmb_mem_parab k e fun a => GeneralLinearGroup.scalar (m a) z⟩ x
-  rw [leviProj_leviEmb, deltaHalf_scalar, piTensor_scalar ρ _ _ fun a => h a z] at h2
+  have hm : leviEmb k e (fun a => GeneralLinearGroup.scalar (m a) z) ∈ parab k e := by
+    apply mem_parab_iff.2
+    intro a b i j hab
+    rw [h1]
+    simp [GeneralLinearGroup.scalar, diagonal_apply, hab.ne']
+  have hp : leviProj k e ⟨_, hm⟩ = (fun a => GeneralLinearGroup.scalar (m a) z) := by
+    funext a
+    ext i j
+    simp [leviProj, diagBlock, leviEmb, GeneralLinearGroup.scalar, diagonal_apply]
+  have h2 := parInd_law e _ f ⟨_, hm⟩ x
+  rw [hp, deltaHalf_scalar, piTensor_scalar ρ _ _ fun a => h a z] at h2
   have h3 : x * GeneralLinearGroup.scalar n z = GeneralLinearGroup.scalar n z * x := by
     ext i j
     simp [GeneralLinearGroup.scalar, mul_comm]

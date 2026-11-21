@@ -8,7 +8,7 @@ noncomputable section
 
 namespace DeRhamTwist.Twist
 
-open Formalism.Per6 GroundTheory.PAdicHodge DeRhamPotentiallySemistable.DRPst PfDRPst
+open Formalism.Per6 GroundTheory.PAdicHodge DeRhamPotentiallySemistable.DRPst
 
 variable {l : ℕ} [Fact l.Prime]
 

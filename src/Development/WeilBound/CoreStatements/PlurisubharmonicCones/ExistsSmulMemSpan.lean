@@ -141,7 +141,7 @@ theorem inf_norm (hρ : MB.IsActOf t'.act.act ρM) (hfib : IsFibre (HodgeIP t'.G
     have hpt : spMap ((s.comp e).comp (algebraMap (𝓞 L) L)) ≫ 𝟙 _ =
         spMap s ≫ spMap (e.comp (algebraMap (𝓞 L) L)) := (Category.comp_id _).trans hx.symm
     choose vv hvv using fun z => exists_push n hpt (wK z)
-    have hl : ∀ z, MB.Lifts ((s.comp e).comp (algebraMap (𝓞 L) L)) (𝟙 t'.G.left) z (vv z) := fun z =>
+    have hl : ∀ z, ((vv z).left ≫ (𝟙 t'.G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((s.comp e).comp (algebraMap (𝓞 L) L))) ≫ (MB.pt z).left) := fun z =>
       (Category.comp_id _).trans ((hvv z).symm.trans (k1 z))
     have h3 := Gram.gram_eq _ Xo.univ.t.G Xo.univ.t.PP.L _ m (fun k => wec (x k)) Γ
       (Matrix.of fun i j => (B.metric.form (s.comp e)).inner ((1 : ComplexAt (s.comp e)) ⊗ₜ[𝓞 L] x i)

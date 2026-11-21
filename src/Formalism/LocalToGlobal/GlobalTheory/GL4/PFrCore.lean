@@ -19,6 +19,8 @@ open Formalism.UG Formalism.UG.CS Formalism.UG.P Formalism.BasicNotions Formalis
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {n : Type} [Fintype n] [DecidableEq n]
 
+local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
+local notation "ιA" => inclE (F := F) (E := E) (FiniteAdeleRing (𝓞 F) F)
 
 variable (F) in
 def vi (x : n → E) : n → 𝒜 := fun i => ιA (x i)
@@ -28,8 +30,7 @@ theorem vi_mem_hat {Λ : Submodule (𝓞 E) (n → E)} {x : n → E} (hx : x ∈
 
 theorem gmv (G : Matrix n n E) (x : n → E) : (G.map ιA) *ᵥ vi F x = vi F (G *ᵥ x) := by
   funext i
-  set_option synthInstance.maxHeartbeats 100000 in
-    simp [vi, Matrix.mulVec, dotProduct, map_sum, map_mul]
+  exact (RingHom.map_mulVec ιA G x i).symm
 
 theorem hat_fwd (G : Matrix n n E) {Λ Λ' : Submodule (𝓞 E) (n → E)} (h : ∀ x ∈ Λ, G *ᵥ x ∈ Λ')
     (u : n → 𝒜) (hu : u ∈ hat F Λ) : (G.map ιA) *ᵥ u ∈ hat F Λ' := by

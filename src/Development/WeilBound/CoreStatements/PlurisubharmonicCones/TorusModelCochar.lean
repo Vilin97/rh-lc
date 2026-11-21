@@ -106,7 +106,7 @@ theorem adj_model (t' : SAB H (Sp (𝓞 L))) (tB : SAB H (Sp L)) (m' : SABMap tB
     (B.metric.form eC).inner ((1 : ComplexAt eC) ⊗ₜ[𝓞 L] ρ' a x) ((1 : ComplexAt eC) ⊗ₜ[𝓞 L] y) =
       (B.metric.form eC).inner ((1 : ComplexAt eC) ⊗ₜ[𝓞 L] x) ((1 : ComplexAt eC) ⊗ₜ[𝓞 L] ρ' (H.bar a) y) := by
   let w := fun u : B.carrier => LieTangent.epsBase (eC.comp (algebraMap (𝓞 L) L)) rfl ≫ MB.pt u
-  have hl : ∀ u, MB.Lifts (eC.comp (algebraMap (𝓞 L) L)) (𝟙 t'.G.left) u (w u) := fun u => Category.comp_id _
+  have hl : ∀ u, ((w u).left ≫ (𝟙 t'.G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap (eC.comp (algebraMap (𝓞 L) L))) ≫ (MB.pt u).left) := fun u => Category.comp_id _
   have ht : ∀ u, IsTanAt t'.G _ (w u) := fun u => LieTangent.isTanAt_base _ rfl (MB.tan u)
   have ha : ∀ b u, w (ρ' b u) = w u ≫ t'.act.act b := fun b u => by
     simp only [w]
@@ -150,7 +150,7 @@ theorem exists_lin {Ψ : Type} {X : Scheme.{0}} (t : SAB H X) (z : Sp (𝓞 L) �
         (MV.pt x).left ≫ P.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ v.left) ∧
       P.IsCochars MV A.I ∧
       (∃ (MB : LieModel t'.G (𝟙 _) A.Bq.carrier), IsFibre (HodgeIP t'.G t'.PP.L) (𝟙 _) A.Bq MB ∧
-        ∀ x : A.Λ, MB.Lifts (algebraMap (𝓞 L) L) m'.φ (A.f x) (MV.pt x ≫ P.τ.q ≫ P.e.hom)) ∧
+        ∀ x : A.Λ, ((MV.pt x ≫ P.τ.q ≫ P.e.hom).left ≫ m'.φ = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ (MB.pt (A.f x)).left)) ∧
       Module.finrank (𝓞 L) A.Bq.carrier ≤ Module.finrank L V := by
   letI := P.τ.addCommGroup
   letI := P.τ.grpB

@@ -64,6 +64,8 @@ omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem trdeg_eq_of_le_of_isAlgebraic {L₁ L₂ : IntermediateField ℚ Ω} (h : L₁ ≤ L₂)
     (halg : ∀ t ∈ L₂, IsAlgebraic L₁ t) : Algebra.trdeg ℤ L₂ = Algebra.trdeg ℤ L₁ := by
   letI : Algebra L₁ L₂ := (IntermediateField.inclusion h).toRingHom.toAlgebra
+  letI : FaithfulSMul L₁ L₂ :=
+    (faithfulSMul_iff_algebraMap_injective L₁ L₂).2 (RingHom.injective _)
   let f : L₂ →ₐ[L₁] Ω :=
     { toRingHom := L₂.val.toRingHom
       commutes' := fun _ => rfl }

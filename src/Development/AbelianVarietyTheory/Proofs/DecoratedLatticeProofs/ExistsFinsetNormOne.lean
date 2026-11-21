@@ -14,8 +14,8 @@ namespace GlobalTheory.HeckeSplitAll.Approx
 variable {F : Type} [Field F] [NumberField F]
 
 theorem norm_alg_inf (w : InfinitePlace F) (x : F) : ‖algebraMap F w.Completion x‖ = w x := by
-  rw [show algebraMap F w.Completion x = (x : w.Completion) from rfl]
-  simp only [InfinitePlace.Completion.norm_ofCompletion, UniformSpace.Completion.norm_coe]; rfl
+  rw [AbsoluteValue.Completion.algebraMap_def, AbsoluteValue.Completion.norm_coe]
+  rfl
 
 theorem norm_le_one_iff_int (v : HeightOneSpectrum (𝓞 F)) (x : v.adicCompletion F) :
     ‖x‖ ≤ 1 ↔ x ∈ v.adicCompletionIntegers F := by

@@ -28,7 +28,7 @@ theorem exists_schwartz_one (l : Type) [Fintype l] : ∃ f : Sch l, f 0 = 1 := b
 
 theorem lintegral_sq_eq (l : Type) [Fintype l] (f : Sch l) :
     ∫⁻ x, ‖f x‖ₑ ^ 2 = eLpNorm (⇑(f.toLp 2 : L2 l)) 2 volume ^ 2 := by
-  rw [eLpNorm_congr_ae (f.coeFn_toLp 2 volume), eLpNorm_eq_eLpNorm' two_ne_zero ENNReal.ofNat_ne_top]
+  rw [eLpNorm_congr_ae (f.coeFn_toLp 2 volume), eLpNorm_eq_eLpNorm' two_ne_zero ENNReal.ofNat_ne_top f.continuous.aestronglyMeasurable]
   have := lintegral_rpow_enorm_eq_rpow_eLpNorm' (f := ⇑f) (μ := volume) (q := 2) two_pos
   simpa [ENNReal.toReal_ofNat] using this
 
@@ -37,7 +37,7 @@ theorem continuous_eval (l : Type) [Fintype l] (x : EuclideanSpace ℝ l) : Cont
 
 theorem continuous_rhoFun (l : Type) [Fintype l] (w : l ⊕ l → ℝ) {f : EuclideanSpace ℝ l → ℂ} (hf : Continuous f) :
     Continuous (rhoFun w f) :=
-  (continuous_phase w).mul (hf.comp (continuous_add_right _))
+  (continuous_phase w).mul (hf.comp (continuous_id.add continuous_const))
 
 theorem intertwine_fun (l : Type) [Fintype l] (M : Matrix (l ⊕ l) (l ⊕ l) ℝ) (U : L2 l ≃ₗᵢ[ℂ] L2 l)
     (S : Sch l →L[ℂ] Sch l) (h3 : ∀ (w : l ⊕ l → ℝ) (f : L2 l), U (rho w f) = rho (M *ᵥ w) (U f))
