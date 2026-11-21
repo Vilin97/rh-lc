@@ -58,17 +58,42 @@ theorem tHeis : THeis := by
   intro F E _ _ _ _ _ σ d Φ hΦ Z X
   have h := d.ok.dbl
   have hψ : IsStd d.B.ψ := d.ok.good.std
-  obtain ⟨t0, -, hBx, hf, -⟩ := frameData d
+  obtain ⟨t0, ht0'⟩ := d.ok.frame.2
+  have ht0 : d.b.1.toCols₁ = (diagCols (Fin d.n) : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n) E) * t0.1 := ht0'
+  have hBx : incM F d.b.1.toCols₁ =
+      (diagCols (Fin d.n) : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n) (AE F E)) * incM F t0.1 := by
+    rw [ht0, Tpar.incM_mul, incM_diagCols]
+  have hf : ((diagCols (Fin d.n) : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n) (AE F E)) * incM F t0.1)ᵀ *
+      dbl (incM F d.Y.J) * (incM F d.b.1.toCols₂).map (cA σ) = 1 := by
+    rw [← hBx]
+    exact frame_xy_A d.ok.frame
+  have rho_rho' (a b : Matrix (Fin d.m) (Fin d.n ⊕ Fin d.n) (AE F E)) (φ : d.Fn) :
+      d.dd.rho d.B.ψ a (d.dd.rho d.B.ψ b φ) =
+        d.B.ψ (⅟(2 : AF F) * symp (cA σ) (-1) (incM F d.A.J) (dbl (incM F d.Y.J)) a b) •
+          d.dd.rho d.B.ψ (a + b) φ := by
+    rw [d.dd.form]
+    funext x
+    simp only [Darboux.rho, schr, map_add (f := _), Pi.smul_apply, smul_eq_mul, ← mul_assoc,
+      ← AddChar.map_add_eq_mul, Prod.fst_add, Prod.snd_add, add_assoc, add_dotProduct, dotProduct_add]
+    congr 2
+    linear_combination (-((d.dd.e a).1 ⬝ᵥ (d.dd.e b).2)) * invOf_mul_self (2 : AF F)
   constructor
   · simp only [SD.T]
-    rw [rho_rho, map_smul, smul_eq_mul, symp_cols, frame_yy_A d.ok.frame, Matrix.mul_zero, Matrix.zero_mul,
+    rw [rho_rho', map_smul, smul_eq_mul, symp_cols, frame_yy_A d.ok.frame, Matrix.mul_zero, Matrix.zero_mul,
       Matrix.zero_mul, Matrix.trace_zero, neg_zero, map_zero, mul_zero, AddChar.map_zero_eq_one, one_mul, ← Matrix.add_mul]
   · simp only [SD.T, SD.tt, SD.gram]
-    rw [hBx, Matrix.transpose_mul, ← Matrix.mul_assoc, rho_rho, map_smul, smul_eq_mul, add_comm,
-      l_shift h hψ _ _ hΦ, ← mul_assoc, ← AddChar.map_add_eq_mul]
+    have shift := l_shift h hψ (Z * (incM F t0.1)ᵀ) (X * (incM F d.b.1.toCols₂)ᵀ) hΦ
+    change d.l (d.dd.rho d.B.ψ (Z * (incM F t0.1)ᵀ * (diagCols (Fin d.n) : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n) (AE F E))ᵀ + X * (incM F d.b.1.toCols₂)ᵀ) Φ) =
+      d.B.ψ (-(⅟(2 : AF F) * symp (cA σ) (-1) (incM F d.A.J) (dbl (incM F d.Y.J))
+        (Z * (incM F t0.1)ᵀ * (diagCols (Fin d.n) : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n) (AE F E))ᵀ) (X * (incM F d.b.1.toCols₂)ᵀ))) *
+      d.l (d.dd.rho d.B.ψ (X * (incM F d.b.1.toCols₂)ᵀ) Φ) at shift
+    rw [hBx, Matrix.transpose_mul, ← Matrix.mul_assoc, rho_rho', map_smul, smul_eq_mul, add_comm]
+    set_option backward.isDefEq.respectTransparency false in
+      rw [shift, ← mul_assoc, ← AddChar.map_add_eq_mul]
     congr 2
-    rw [darboux_anti d.dd, Matrix.mul_assoc Z, ← Matrix.transpose_mul, symp_cols, hf, Matrix.mul_one, trace_gram,
-      map_neg]
+    set_option backward.isDefEq.respectTransparency false in
+      rw [darboux_anti d.dd, Matrix.mul_assoc Z, ← Matrix.transpose_mul, symp_cols, hf, Matrix.mul_one, trace_gram,
+        map_neg]
     linear_combination (Algebra.trace (AF F) (AE F E) (Matrix.trace (Z * (X.map (cA σ))ᵀ * (incM F d.A.J)ᵀ))) *
       (invOf_two_add_invOf_two : (⅟(2 : AF F) + ⅟2 = 1))
 

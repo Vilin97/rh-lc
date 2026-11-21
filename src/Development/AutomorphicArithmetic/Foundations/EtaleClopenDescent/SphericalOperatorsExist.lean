@@ -182,11 +182,11 @@ private theorem exists_Tj_op (R : Subring ℂ) {ϖ : w.adicCompletion E} (hϖ : 
     · exact R.zero_mem
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [opOf_eq, map_sum, GlobalTheory.LFun.heckeVec, finsum_eq_sum_of_support_subset (s := hfin.toFinset)]
-    · simp only [Finsupp.linearCombination_single]
-    · intro c hc
-      simp only [Function.mem_support] at hc
-      simp only [Set.Finite.coe_toFinset, Set.mem_setOf_eq]
-      exact fun h0 => hc (by simp [h0])
+      · simp only [Finsupp.linearCombination_single]
+      · intro c hc
+        simp only [Function.mem_support] at hc
+        simp only [Set.Finite.coe_toFinset, Set.mem_setOf_eq]
+        exact fun h0 => hc (by simp [h0])
 
 private theorem heckeVec_Ta {ϖ : w.adicCompletion E} {c : GL (Fin a) (w.adicCompletion E)}
     (hc : (c : Matrix (Fin a) (Fin a) (w.adicCompletion E)) = ϖ • 1)

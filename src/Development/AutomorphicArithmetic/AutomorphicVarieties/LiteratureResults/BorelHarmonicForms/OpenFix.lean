@@ -42,7 +42,7 @@ theorem UpperTheory.V.Lit.Bor.sqMem :
     rw [mulChi_apply, mulChi_apply, map_mul, chiDet_ratGL, one_mul, h.left]
   | zero =>
     rw [map_zero]
-    exact ⟨by simp, fun _ _ _ => rfl, MeasureTheory.MemLp.zero⟩
+    exact ⟨by simpa only [map_zero, Set.setOf_true] using (isOpen_univ : IsOpen (Set.univ : Set (GL (Fin a) (Af E)))), fun _ _ _ => rfl, MeasureTheory.MemLp.zero⟩
   | add φ ψ _ _ h h' =>
     rw [map_add (f := _)]
     refine ⟨open_fix (finRep E a) _ (h.1.inter h'.1) ⟨by simp, by simp⟩ ?_,

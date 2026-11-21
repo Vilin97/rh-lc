@@ -190,8 +190,8 @@ theorem cechBc_lift (h𝓜 : KH.IsMGraded S ι 𝓜) (h𝓜'' : KH.IsMGraded S �
     have hx0 : x = 0 := (Submodule.mem_bot S).mp hx
     exact ⟨0, zero_mem _, by rw [hx0, map_zero]⟩
   | n + 1, x, hx => by
-    change x ∈ (KH.cechCc ι 𝓜'' c n).map ((KH.cechD S ι M'' n).restrictScalars S) at hx
-    obtain ⟨y, hy, rfl⟩ := Submodule.mem_map.mp hx
+    change ∃ y ∈ KH.cechCc ι 𝓜'' c n, KH.cechD S ι M'' n y = x at hx
+    obtain ⟨y, hy, rfl⟩ := hx
     obtain ⟨z, hz, rfl⟩ := cechMap_lift h𝓜 h𝓜'' hh hsurj (c := c) (n := n) hy
     exact ⟨KH.cechD S ι M n z, ⟨z, hz, rfl⟩, (KHTheoremS.cechD_cechMap h n z).symm⟩
 

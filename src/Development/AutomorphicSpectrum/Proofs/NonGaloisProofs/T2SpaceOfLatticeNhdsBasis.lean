@@ -81,8 +81,9 @@ theorem toV_mk (L : Lattice (O := O) ρ) (c : ↥(latticeCocycles L)) :
 
 theorem isLocalized_toV [IsDomain O] [IsFractionRing O LL] (L : Lattice (O := O) ρ) {ϖ : O} (h0 : ϖ ≠ 0)
     (hInt : ∀ c : G → V, Continuous c → ∃ n : ℕ, ∀ g, ϖ ^ n • c g ∈ L.T) :
-    IsLocalizedModule (nonZeroDivisors O) (toV L) where
-  map_units s := by
+    IsLocalizedModule (nonZeroDivisors O) (toV L) := by
+  constructor
+  · intro s
     have hs : algebraMap O LL (s : O) ≠ 0 :=
       IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors s.2
     rw [Module.End.isUnit_iff]
@@ -95,15 +96,14 @@ theorem isLocalized_toV [IsDomain O] [IsFractionRing O LL] (L : Lattice (O := O)
       refine ⟨(algebraMap O LL (s : O))⁻¹ • y, ?_⟩
       change (s : O) • ((algebraMap O LL (s : O))⁻¹ • y) = y
       rw [← algebraMap_smul LL (s : O), smul_smul, mul_inv_cancel₀ hs, one_smul]
-  surj y := by
+  · intro y
     obtain ⟨c, rfl⟩ := Submodule.Quotient.mk_surjective _ y
     obtain ⟨n, hn⟩ := hInt (c : G → V) c.2.1
     have hz : ϖ ^ n • (c : G → V) ∈ latticeCocycles L :=
       ⟨(continuousCocycles ρ).restrictScalars O |>.smul_mem _ c.2, fun g _ => hn g⟩
     refine ⟨⟨Submodule.Quotient.mk ⟨_, hz⟩, ⟨ϖ ^ n, pow_mem (mem_nonZeroDivisors_of_ne_zero h0) n⟩⟩, ?_⟩
     rfl
-  exists_of_eq := by
-    intro x₁ x₂ h
+  · intro x₁ x₂ h
     obtain ⟨a, rfl⟩ := Submodule.Quotient.mk_surjective _ x₁
     obtain ⟨b, rfl⟩ := Submodule.Quotient.mk_surjective _ x₂
     rw [toV_mk, toV_mk, Submodule.Quotient.eq] at h

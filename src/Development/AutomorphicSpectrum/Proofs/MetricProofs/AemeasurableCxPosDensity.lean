@@ -289,7 +289,8 @@ theorem cxPosDens_aemeasurable_of_finite {S : Set ((Σ k, ι k) → ℂ)}
     intro m
     have : T m = B m ∩ ⋂ m' ∈ Finset.range m, (B m' ∩ {y | σ m' y = σ m y})ᶜ := by
       ext y
-      simp [hTdef]
+      simp only [hTdef, Set.mem_ofPred_eq, Set.mem_inter_iff, Set.mem_iInter,
+        Finset.mem_range, Set.mem_compl_iff]
     rw [this]
     exact (hBo m).measurableSet.inter (Finset.measurableSet_biInter _ fun m' _ =>
       ((hBo m').measurableSet.inter (measurableSet_eq_fun (hσm m') (hσm m))).compl)

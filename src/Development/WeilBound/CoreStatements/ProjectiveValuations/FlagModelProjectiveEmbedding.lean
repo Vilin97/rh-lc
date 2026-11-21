@@ -102,7 +102,10 @@ theorem exists_iso (M : FlagModel Y) : ∃ h : M.YY ⟶ Z, IsIso h ∧ h ≫ π 
   have : LocallyQuasiFinite h := GlobalTheory.locallyQuasiFinite_of_finite_geometric_points h fun Ω _ _ y => by
     rcases isEmpty_or_nonempty {x : Spec (.of Ω) ⟶ M.YY // x ≫ h = y} with h0 | ⟨⟨z, hz⟩⟩
     · infer_instance
-    · exact ((M.fin Ω z).subset fun z' (hz' : z' ≫ h = y) => two Ω z z' (hz'.trans hz.symm)).to_subtype
+    · have hf : {z' : Sp Ω ⟶ M.YY | z' ≫ h = y}.Finite := (M.fin Ω z).subset (by
+        intro z' hz'
+        exact two Ω z z' (hz'.trans hz.symm))
+      exact hf.to_subtype
   have : IsProper Y.s := projProper _ _ _ Y.proj
   have : IsLocallyNoetherian Z := LocallyOfFiniteType.isLocallyNoetherian (π ≫ Y.s)
   have : IsReduced M.YY := isReduced_flag M.toFlagCover

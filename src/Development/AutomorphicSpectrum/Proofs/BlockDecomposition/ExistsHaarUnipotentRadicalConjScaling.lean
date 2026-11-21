@@ -124,7 +124,22 @@ theorem exists_radN_measure (D : D7) (B W : HSp D) (t : ℕ) (d : HypDec B W t) 
     rw [this]
     exact (Ψ.continuous.comp ((hf₁.prodMap hf₂).comp Ψ.symm.continuous)).measurable
   have hk := GlobalTheory.T.haar_skew_matrices_conj_scaling D t κ hκ a
-  have hb := map_lr a (matHom W g⁻¹) (GlobalTheory.CompanionTheory.HyperbolicDecompositionLaw.absA_det_matHom g⁻¹) β hβ
+  have hdet : absA D (Matrix.GeneralLinearGroup.det (matHom W g⁻¹)) = 1 := by
+    have hg : (gA W).det * (giA W).det = 1 := by rw [← Matrix.det_mul, gA_mul_giA, Matrix.det_one]
+    have h := congrArg Matrix.det (mt_unitary W g⁻¹)
+    rw [Matrix.det_mul, Matrix.det_mul] at h
+    have hadj : (adj (mt W g⁻¹)).det = cA D (mt W g⁻¹).det := by
+      rw [adj, Matrix.det_transpose, RingHom.map_det]; rfl
+    rw [hadj] at h
+    have hu : conjUnit D.sp.cm.sig (Matrix.GeneralLinearGroup.det (matHom W g⁻¹)) *
+        Matrix.GeneralLinearGroup.det (matHom W g⁻¹) = 1 := by
+      apply Units.ext
+      change cA D (mt W g⁻¹).det * (mt W g⁻¹).det = 1
+      linear_combination (giA W).det * h + (1 - cA D (mt W g⁻¹).det * (mt W g⁻¹).det) * hg
+    have hh := congrArg (absE D.host.F D.host.E) hu
+    rw [map_mul, absE_conjUnit, map_one, ← sq] at hh
+    exact (pow_eq_one_iff_of_nonneg zero_le (n := 2) (by norm_num)).1 hh
+  have hb := map_lr a (matHom W g⁻¹) hdet β hβ
   rw [Measure.map_map hcm Ψ.continuous.measurable]
   have hc : (fun n : radN d => MulAut.conjNormal m n) ∘ Ψ = Ψ ∘ Prod.map f₁ f₂ := by
     funext p
@@ -134,5 +149,6 @@ theorem exists_radN_measure (D : D7) (B W : HSp D) (t : ℕ) (d : HypDec B W t) 
   change (((κ.map (skewConj a.1)).prod (β.map _)).map Ψ) = _
   rw [hk, hb, Measure.prod_smul_left, Measure.prod_smul_right, Measure.map_smul, Measure.map_smul, smul_smul,
     absDet_eq d m g a hm, pow_add, mul_inv, mul_comm]
+  all_goals exact Ψ.continuous.measurable.aemeasurable
 
 end GlobalTheory.CompanionTheory.QKAvg.RadMeas

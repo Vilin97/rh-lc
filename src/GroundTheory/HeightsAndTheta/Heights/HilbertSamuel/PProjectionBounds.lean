@@ -39,7 +39,8 @@ theorem pnorm_smul (e : Fin (D + 1) → Ix κ) (c : ℂ) (z : Ix κ → ℂ) :
 theorem pnorm_eq_sqN (e : Fin (D + 1) → Ix κ) (z : Ix κ → ℂ) : pnorm e z = Real.sqrt (sqN (z ∘ e)) := by
   simp [pnorm, sqN]
 
-theorem fs_rho_eq (t : Fin (D + 1) → ℂ) : (fsMetric (Fin (D + 1))).ρ t = Real.sqrt (sqN t) := by
+theorem fs_rho_eq (t : Fin (D + 1) → ℂ) :
+    (fsMetric (ι := Fin (D + 1))).ρ t = Real.sqrt (sqN t) := by
   simp [fsMetric, sqN, EuclideanSpace.norm_eq]
 
 theorem pnorm_pos {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} (hfr : IsProjFrame x e) {z : Ix κ → ℂ}
@@ -242,7 +243,7 @@ theorem ProjectionBounds.proof (hR : ResChiBounds.Statement) : ProjectionBounds.
             mul_le_mul h1 (hCE l z hz) (norm_nonneg _) (le_trans (norm_nonneg _) h1)
         _ = (c * ∑ l, Sl l) * (pnorm e z ^ n * pnorm e z ^ (kχ + k₀)) := by ring
     have hb := trace_le hfr (f * E l) g (hf.mul (hEh l)) hg htr' hS t
-    have hρt : 0 < (fsMetric (Fin (D + 1))).ρ t := (fsMetric _).pos t ht
+    have hρt : 0 < fsMetric.ρ t := fsMetric.pos t ht
     rw [ptNorm, div_le_iff₀ (pow_pos hρt _), fs_rho_eq]
     rw [fs_rho_eq] at hρt
     calc _ ≤ (projDeg d.x e : ℝ) * (c * ∑ l, Sl l) * Real.sqrt (sqN t) ^ (n + (kχ + k₀)) := hb
@@ -257,9 +258,9 @@ theorem ProjectionBounds.proof (hR : ResChiBounds.Statement) : ProjectionBounds.
     have hze : z ∘ e ≠ 0 := by
       obtain ⟨j, hj⟩ := exists_proj_ne_zero hfr hz
       exact fun h0 => hj (congrFun h0 j)
-    have hfsz : (fsMetric (Fin (D + 1))).ρ (z ∘ e) = pnorm e z := by rw [fs_rho_eq, pnorm_eq_sqN]
+    have hfsz : fsMetric.ρ (z ∘ e) = pnorm e z := by rw [fs_rho_eq, pnorm_eq_sqN]
     have hc0 : ∀ l, 0 ≤ c l := fun l => le_trans
-      (div_nonneg (norm_nonneg _) (pow_nonneg ((fsMetric _).pos _ hze).le _)) (hc l (z ∘ e) hze)
+      (div_nonneg (norm_nonneg _) (pow_nonneg (fsMetric.pos _ hze).le _)) (hc l (z ∘ e) hze)
     have hQb : ∀ l, ‖eval (z ∘ e) (map (Int.castRingHom ℂ) (Q l))‖ ≤
         c l * pnorm e z ^ (n - (kχ + k₀)) := fun l => by
       have := hc l (z ∘ e) hze

@@ -52,14 +52,29 @@ theorem UpperTheory.V.Ws.Eb.rootsNear :
       MonoidAlgebra.mapRingHom F.G₀ f (MonoidAlgebra.single g 1) = MonoidAlgebra.single g 1 := by
     intro A A' _ _ f
     simp [MonoidAlgebra.mapRingHom]
+  have hrep : ∀ {A G : Type} [CommRing A] [Group G] (ρ : G →* Matrix (Fin n) (Fin n) A) (g : G),
+      (W.GDet.ofRep ρ).chi (MonoidAlgebra.single g 1) = (ρ g).charpoly := by
+    intro A G _ _ ρ g
+    have hs (B : Type) [CommRing B] [Algebra A B] (g : G) (r : B) :
+        W.GDet.repAlg ρ B (MonoidAlgebra.single g r) = r • (ρ g).map (algebraMap A B) := by
+      unfold W.GDet.repAlg
+      rw [MonoidAlgebra.lift_single]
+      rfl
+    change (W.GDet.repAlg ρ A[X] _).det = _
+    rw [map_sub, MonoidAlgebra.mapRingHom_single, hs, hs]
+    simp only [map_one, one_smul]
+    rw [Matrix.charpoly]
+    congr 1
+    ext i j
+    by_cases h : i = j <;> simp [Matrix.charmatrix_apply, Matrix.one_apply, h]
   set Q := B.u.D.chi (MonoidAlgebra.single g 1) with hQ
   have hx : (W.mat ρ g).charpoly = Q.map (x : B.B →+* PadicAlgCl l) := by
     have h1 := (AlgebraTools.Det.mapApi B.u.D (x : B.B →+* PadicAlgCl l)).1 (MonoidAlgebra.single g 1)
-    rw [hsing, hD, (AlgebraTools.Det.repApi (W.mat ρ)).2.1] at h1
+    rw [hsing (x : B.B →+* PadicAlgCl l), hD, hrep (W.mat ρ) g] at h1
     exact h1
   have hred : Q.map (res c.O B.B : B.B →+* ResidueField c.O) = (X - C (residue c.O a)) ^ n := by
     have h1 := (AlgebraTools.Det.mapApi B.u.D (res c.O B.B : B.B →+* ResidueField c.O)).1 (MonoidAlgebra.single g 1)
-    rw [hsing, B.u.red, W.Resid.Dbar, (AlgebraTools.Det.repApi _).2.1] at h1
+    rw [hsing (res c.O B.B : B.B →+* ResidueField c.O), B.u.red, W.Resid.Dbar, hrep] at h1
     rw [← h1]
     show (Matrix.diagonal _).charpoly = _
     rw [Matrix.charpoly_diagonal]

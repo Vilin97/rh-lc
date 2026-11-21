@@ -28,14 +28,49 @@ theorem MainStatements.WeightKernel.Dec.derVan : MainStatements.WeightKernel.Dec
   have hfc := GlobalTheory.Orb.continuous_of_mem_ccAd (σ := σ) (J := J) hf
   have hf'c := GlobalTheory.Orb.continuous_of_mem_ccAd (σ := σ) (J := J) (hDer F E σ h n J hJ f hf b hb)
   have hs := hSm F E σ h n J hJ f hf
-  have hbc : Continuous b := GlobalTheory.RealLineCont.continuous_of_isRealLine F E σ h n J b hb
+  have hbc : Continuous b := by
+    obtain ⟨w, τ, Z, _, hy⟩ := hb
+    choose z hz hzy using hy
+    have hc : Continuous z := by
+      rw [(GlobalTheory.Orb.isEmbedding_archMat J h τ).continuous_iff]
+      have e : (GlobalTheory.Orb.matCoord (GlobalTheory.Orb.archMat σ J τ) ∘ z) = fun t i j => NormedSpace.exp (t • Z) i j := by
+        funext t i j; simp only [Function.comp_apply, GlobalTheory.Orb.matCoord, hzy t]
+      rw [e]
+      have hexp : Continuous fun t : ℝ => NormedSpace.exp (t • Z) := by
+        letI : NormedRing (Matrix (Fin n) (Fin n) ℂ) := Matrix.linftyOpNormedRing
+        letI : NormedAlgebra ℂ (Matrix (Fin n) (Fin n) ℂ) := Matrix.linftyOpNormedAlgebra
+        letI : NormedAlgebra ℚ (Matrix (Fin n) (Fin n) ℂ) := NormedAlgebra.restrictScalars ℚ ℂ _
+        exact NormedSpace.exp_continuous.comp (continuous_id.smul continuous_const)
+      exact continuous_pi fun i => continuous_pi fun j => (continuous_apply j).comp ((continuous_apply i).comp hexp)
+    have e : b = fun t => embArch σ J w (z t) := funext hz
+    rw [e]
+    exact (continuous_embArch σ J w).comp hc
   have hK : IsCompact (tsupport f ∪ tsupport (lineDer b f)) := IsCompact.union hfc.2 hf'c.2
   have hS : IsCompact ((fun p : GAd σ J × ℝ => x⁻¹ * p.1 * (y * b p.2)⁻¹) ''
       ((tsupport f ∪ tsupport (lineDer b f)) ×ˢ Metric.closedBall (0 : ℝ) 1)) :=
     (hK.prod (isCompact_closedBall 0 1)).image
       ((continuous_const.mul continuous_fst).mul ((continuous_const.mul (hbc.comp continuous_snd)).inv))
   have hC := hN.isClosedEmbedding_subtypeVal.isCompact_preimage hS
-  have key := GlobalTheory.LaurentAut.hasDerivAt_integral_cpt (𝕜 := ℝ) ν (x₀ := 0)
+  have integral_cpt {Φ Φ' : ℝ → N → ℂ} {C : Set N} (hC : IsCompact C)
+      (hc : ∀ t, Continuous (Φ t)) (hc' : Continuous fun p : ℝ × N => Φ' p.1 p.2)
+      (h0 : ∀ t ∈ Metric.closedBall (0 : ℝ) 1, ∀ y ∉ C, Φ t y = 0 ∧ Φ' t y = 0)
+      (hd : ∀ t y, HasDerivAt (Φ · y) (Φ' t y) t) :
+      HasDerivAt (fun t => ∫ y, Φ t y ∂ν) (∫ y, Φ' 0 y ∂ν) 0 := by
+    obtain ⟨B, hB⟩ := ((isCompact_closedBall (0 : ℝ) 1).prod hC).exists_bound_of_continuousOn hc'.continuousOn
+    have hx : (0 : ℝ) ∈ Metric.closedBall 0 1 := Metric.mem_closedBall_self zero_le_one
+    have hc0 : Continuous (Φ' 0) := hc'.comp (continuous_const.prodMk continuous_id)
+    refine (hasDerivAt_integral_of_dominated_loc_of_deriv_le (bound := C.indicator fun _ => B)
+      (Metric.closedBall_mem_nhds 0 one_pos) ?_
+      ((hc 0).integrable_of_hasCompactSupport (.intro hC fun y hy => (h0 0 hx y hy).1))
+      (hc0.integrable_of_hasCompactSupport (.intro hC fun y hy => (h0 0 hx y hy).2)).aestronglyMeasurable
+      (.of_forall fun y t ht => ?_) ?_ (.of_forall fun y t _ => hd t y)).2
+    · filter_upwards [Metric.closedBall_mem_nhds (0 : ℝ) one_pos] with t ht
+      exact ((hc t).integrable_of_hasCompactSupport (.intro hC fun y hy => (h0 t ht y hy).1)).aestronglyMeasurable
+    · by_cases hy : y ∈ C
+      · rw [Set.indicator_of_mem hy]; exact hB (t, y) ⟨ht, hy⟩
+      · rw [Set.indicator_of_notMem hy, (h0 t ht y hy).2, norm_zero]
+    · exact (integrable_indicator_iff hC.measurableSet).2 (integrableOn_const hC.measure_lt_top.ne)
+  have key := integral_cpt
     (Φ := fun t (m : N) => f (x * m * (y * b t))) (Φ' := fun t (m : N) => lineDer b f (x * m * (y * b t))) hC ?_ ?_ ?_ ?_
   · have h0 : (fun t : ℝ => ∫ m : N, f (x * m * (y * b t)) ∂ν) = fun _ => 0 := funext fun t => hV ν x (y * b t)
     rw [h0] at key

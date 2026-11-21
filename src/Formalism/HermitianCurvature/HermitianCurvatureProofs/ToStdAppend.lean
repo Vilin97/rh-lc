@@ -15,10 +15,12 @@ def fs (r : ℕ) (g : ℝ) (b s : ℕ) (t : ℂ) : ℂ :=
   (((g / (2 * Real.pi)) ^ S6.nuBlock (r : ℤ) (b : ℤ) (s : ℤ) : ℝ) : ℂ) * Complex.I ^ (s - 1) * t
 
 theorem toStd_append' (r : ℕ) (g : ℝ) : ∀ (P Q : C.LPt) (b : ℕ),
-    D.toStd r g b (P ++ Q) = D.toStd r g b P ++ D.toStd r g (b + D.ptSize P) Q
-  | [], Q, b => by simp [D.toStd, D.ptSize]
-  | (s, t) :: rest, Q, b => by
-    have ih := toStd_append' r g rest Q (b + s)
+    D.toStd r g b (P ++ Q) = D.toStd r g b P ++ D.toStd r g (b + D.ptSize P) Q := by
+  intro P Q b
+  induction P generalizing b with
+  | nil => simp [D.toStd, D.ptSize]
+  | cons p rest ih =>
+    obtain ⟨s, t⟩ := p
     simp only [List.cons_append, D.toStd, ih, D.ptSize, List.map_cons, List.sum_cons, add_assoc]
 
 theorem toStd_germPts (r : ℕ) (g : ℝ) (h : C.LPt) (s : ℕ) (t c z : ℂ) :

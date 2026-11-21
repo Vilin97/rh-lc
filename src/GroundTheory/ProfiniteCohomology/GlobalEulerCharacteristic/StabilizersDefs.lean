@@ -95,12 +95,15 @@ end Restrict
 
 section Real
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
   (ιr : ∀ v : {v : InfinitePlace K.1 // v.IsReal}, ℚ̄ →ₐ[K.1] AlgebraicClosure v.1.Completion)
   {L : FiniteSubfield} [Fact (K ≤ L)] [Normal K.1 L.1]
   (hL : ∀ x : L.1, algebraMap L.1 ℚ̄ x ∈ maxUnramifiedOutside K.1 ℚ̄ S)
 
 def gsRealDecompGroup (v : {v : InfinitePlace K.1 // v.IsReal}) : Subgroup (L.1 ≃ₐ[K.1] L.1) :=
+  haveI : IsScalarTower K.1 L.1 ℚ̄ := IsScalarTower.of_algebraMap_eq fun _ => rfl
   ((gsRestrictGal hL).comp (gsRealFamily S ιr v).toMonoidHom).range
 
 end Real

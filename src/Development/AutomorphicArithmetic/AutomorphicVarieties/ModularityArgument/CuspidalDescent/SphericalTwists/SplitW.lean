@@ -71,7 +71,9 @@ variable {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [NumberField L] [IsCMF
   {s : HidaSetting l L Ω} {n : ℕ} {V : s.Lev} {Q : QData V} {c : Coef l} {r : Resid V.frame c.O n} {ι : Qbar l ≃+* ℂ} {B : UniversalOrdinaryDeterminantRing r}
 
 private theorem split_w {v : Plc (Lp L)} (hv : v ∈ s.S) : IsSplitAt (s.w v) :=
-  UpperTheory.isSplitAt_of_decomposition_le_restriction_range L Ω (s.A v) v (s.hA v) (s.split v hv) _ (under_w v)
+  UpperTheory.isSplitAt_of_decomposition_le_restriction_range L Ω (s.A v) v (s.hA v) (s.split v hv) _ (by
+    ext z
+    exact ((s.hw v) (algebraMap _ _ z)).symm.trans ((s.hA v) z))
 
 private theorem types (hn : 1 ≤ n) (x : B.Pt) {σ : Submodule ℂ (UA L n → ℂ)} {ρ : G L Ω →* GL (Fin n) (Qbar l)} (hσ : IsAutRepU σ)
     (hs : Formalism.MainNotions.N.IsSSRep ρ) (hx : x.IsRep ρ) (hSt : StEq s ι σ ρ)
@@ -81,7 +83,10 @@ private theorem types (hn : 1 ≤ n) (x : B.Pt) {σ : Submodule ℂ (UA L n → 
         ((t i).comp (V.pr.comp (Ine (F := L) (s.A u)).subtype))) (rc (algNorm τ)) := by
   have hw : IsSplitAt (s.w u) := split_w (Or.inr (Or.inl u.2))
   have hu : ((l : ℕ) : 𝓞 L) ∉ (s.w u).asIdeal := fun h => s.St_l u u.2 (by
-    rw [← under_w (s := s) u]
+    have huw : (s.w u).under (𝓞 (Lp L)) = u := by
+      ext z
+      exact ((s.hw u) (algebraMap _ _ z)).symm.trans ((s.hA u) z)
+    rw [← huw]
     change algebraMap _ (𝓞 L) _ ∈ (s.w u).asIdeal
     rwa [map_natCast])
   obtain ⟨τ, hτ⟩ := comp_ex hσ hw

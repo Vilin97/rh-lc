@@ -245,7 +245,41 @@ theorem LieTie.unique {Y S : Scheme.{0}} {ψ : P.A.A.left ⟶ Y} {s : Y ⟶ S} {
   haveI := HodgeTateCompare.isLocalRing_dualNumber (O := O)
   have hp : ¬ IsUnit (p : DualNumber O) := fun h => (Fact.out : ¬ IsUnit (p : O)) (by
     simpa using h.map (TrivSqZeroExt.fstHom O O O))
-  exact Subtype.ext ((existsUnique_left hp (isAdicComplete_dualNumber p) xG.1).unique h1 (e2 ▸ h1'))
+  have mem_pow (a : O) (n : ℕ) (x : O) :
+      x ∈ (Ideal.span {a} ^ n • ⊤ : Submodule O O) ↔ a ^ n ∣ x := by
+    rw [Ideal.span_singleton_pow, smul_eq_mul, Ideal.mul_top, Ideal.mem_span_singleton]
+  have dual_mem_pow (n : ℕ) (x : DualNumber O) :
+      x ∈ (Ideal.span {(p : DualNumber O)} ^ n • ⊤ : Submodule (DualNumber O) (DualNumber O)) ↔
+        (p : O) ^ n ∣ x.fst ∧ (p : O) ^ n ∣ x.snd := by
+    rw [Ideal.span_singleton_pow, smul_eq_mul, Ideal.mul_top, Ideal.mem_span_singleton]
+    have e : (p : DualNumber O) ^ n = TrivSqZeroExt.inl ((p : O) ^ n) := by
+      rw [← TrivSqZeroExt.inl_pow, TrivSqZeroExt.inl_natCast]
+    rw [e]
+    constructor
+    · rintro ⟨y, rfl⟩
+      exact ⟨⟨y.fst, by simp⟩, ⟨y.snd, by simp⟩⟩
+    · rintro ⟨⟨a, ha⟩, b, hb⟩
+      exact ⟨TrivSqZeroExt.inl a + TrivSqZeroExt.inr b, by ext <;> simp [ha, hb]⟩
+  have hc : IsAdicComplete (Ideal.span {(p : DualNumber O)}) (DualNumber O) := by
+    have hbase : IsAdicComplete (Ideal.span {(p : O)}) O := inferInstance
+    refine { haus' := ?_, toIsPrecomplete := ?_ }
+    · intro x hx
+      simp only [SModEq.zero, dual_mem_pow] at hx
+      refine TrivSqZeroExt.ext (hbase.toIsHausdorff.haus' x.fst fun n => ?_)
+        (hbase.toIsHausdorff.haus' x.snd fun n => ?_)
+      · rw [SModEq.zero, mem_pow]; exact (hx n).1
+      · rw [SModEq.zero, mem_pow]; exact (hx n).2
+    ·
+      constructor
+      intro f hf
+      simp only [SModEq.sub_mem, dual_mem_pow] at hf ⊢
+      obtain ⟨a, ha⟩ := hbase.toIsPrecomplete.prec' (fun n => (f n).fst) fun {m n} hmn => by
+        rw [SModEq.sub_mem, mem_pow]; exact (hf hmn).1
+      obtain ⟨b, hb⟩ := hbase.toIsPrecomplete.prec' (fun n => (f n).snd) fun {m n} hmn => by
+        rw [SModEq.sub_mem, mem_pow]; exact (hf hmn).2
+      simp only [SModEq.sub_mem, mem_pow] at ha hb
+      exact ⟨TrivSqZeroExt.inl a + TrivSqZeroExt.inr b, fun n => ⟨by simpa using ha n, by simpa using hb n⟩⟩
+  exact Subtype.ext ((existsUnique_left hp hc xG.1).unique h1 (e2 ▸ h1'))
 
 
 

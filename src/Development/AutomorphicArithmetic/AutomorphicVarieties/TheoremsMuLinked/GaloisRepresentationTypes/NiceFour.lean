@@ -16,7 +16,10 @@ private theorem exists_place_above_prime_alt (K : Type) [Field K] [NumberField K
   obtain ⟨Q, hQ, hc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral_of_isDomain (S := 𝓞 K) (Ideal.span {(l : ℤ)})
     (by rw [(RingHom.injective_iff_ker_eq_bot (algebraMap ℤ (𝓞 K))).1 (RingHom.injective_int _)]; exact bot_le)
   have hm : ((l : ℕ) : 𝓞 K) ∈ Q := by
-    have : (l : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 K)) := hc ▸ Ideal.mem_span_singleton_self _
+    have : (l : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 K)) := by
+      change (l : ℤ) ∈ Ideal.under ℤ Q
+      rw [hc]
+      exact Ideal.mem_span_singleton_self _
     simpa using this
   refine ⟨⟨Q, hQ, fun h => ?_⟩, hm⟩
   rw [h, Ideal.mem_bot] at hm
@@ -51,7 +54,7 @@ private theorem continuous_linear_closed {G κ : Type} [TopologicalSpace G] [Fie
     simp
   have hc : Continuous fun g => f (a g) := by
     rw [h]
-    exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => (ha.matrix_elem i j).mul continuous_const
+    exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => (ha.matrix_elem i j).mul continuous_const
   exact isClosed_singleton.preimage hc
 
 private theorem absolute_irreducible_rank_four (l : ℕ) [Fact l.Prime] (hl : l ≠ 2) (F : W.GFrame l) (O : Type) [CommRing O] [IsLocalRing O] [Algebra ℤ_[l] O]

@@ -57,12 +57,12 @@ private theorem exists_trace_dual_integral_projector {E : Type} [Field E] [Numbe
       simp only [smul_mul_assoc, map_sum, map_zsmul, hF, smul_eq_mul]
     conv_lhs => rw [← B.sum_repr y]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Finset.mul_sum, mul_smul_comm, map_sum, map_zsmul, Finsupp.coe_finset_sum, Finset.sum_apply,
+      simp only [Finset.mul_sum, mul_smul_comm, map_sum, map_zsmul, Finset.sum_apply',
       Finsupp.smul_apply, smul_eq_mul]
     refine Finset.sum_congr rfl fun k _ => ?_
     ring
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [Finset.sum_mul, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_mul, map_sum]
     simp only [_root_.mul_assoc, hF]
     rw [← zsmul_eq_mul, map_zsmul, smul_eq_mul, Algebra.trace_eq_matrix_trace B, Matrix.trace, Finset.mul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
@@ -484,8 +484,8 @@ theorem fibSandwich : FibSandwich := by
       show ‖j ((p : ℕ) : L)‖₊ < 1
       rw [← NNReal.coe_lt_coe, coe_nnnorm, NNReal.coe_one]
       exact hpnorm
-    obtain ⟨t1, t2, -⟩ := PositivityTheory.HtPt.Gh.hodge_tate_free_sandwich E H D l Xo c _ _ Y S Ω K J y 𝔐 (p : ℕ) hpS κ hfree hsand
-      L v V hv hvp z (Fin g → L) MC ρC s σ κz hact hσ hκ
+    obtain ⟨t1, t2, -⟩ := (PositivityTheory.HtPt.Gh.hodge_tate_free_sandwich E H D l Xo c _ _ Y S Ω K J y 𝔐 (p : ℕ) hpS κ hfree hsand
+      L v V hv hvp z (Fin g → L) MC ρC s σ κz hact hσ hκ)
     have hVq := hVS hpS
     have hDV : ∀ h : genPt 𝔐.ξ ⤳ centre z,
         ∀ e ∈ 𝔐.M.htDual 𝔐.t.PP.L ((p : ℕ) ^ 𝔐.R p) 𝔐.ρ (𝔐.emb s) ⟨centre z, h⟩, e ∈ 𝔐.V s ⟨centre z, h⟩ := by

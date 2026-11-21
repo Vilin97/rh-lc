@@ -61,7 +61,9 @@ private theorem exists_der (O T : Type) [CommRing O] [CommRing T] [IsLocalRing T
     rw [hf, zero_sub]
     rfl
   show m.cotangentEquivIdeal.symm (d t) = _
-  rw [hd, map_neg]
+  rw [hd]
+  change m.cotangentEquivIdeal.symm.toLinearMap (-⟨Ideal.Quotient.mk (m ^ 2) t, hmem t ht⟩) = _
+  rw [m.cotangentEquivIdeal.symm.toLinearMap.map_neg]
   congr 1
   exact m.cotangentEquivIdeal_symm_apply t ht
 

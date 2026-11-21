@@ -41,19 +41,19 @@ private theorem multi_fin (n : ℕ) : ∀ (Γ : Fin n → Type) [∀ i, Group (�
     ∀ (Y : Type) [AddCommGroup Y] [Module ℂ Y] [Nontrivial Y] (ρ : ∀ i, Representation ℂ (Γ i) Y),
     (∀ i j, i ≠ j → ∀ a b y, ρ i a (ρ j b y) = ρ j b (ρ i a y)) →
     (∀ i, (⨆ f : {f : X i →ₗ[ℂ] Y // ∀ g v, f (σ i g v) = ρ i g (f v)}, LinearMap.range f.1) = ⊤) →
-    ∃ μ : MultilinearMap ℂ X Y, μ ≠ 0 ∧
+    ∃ μ : MultilinearMap (RingHom.id ℂ) X Y, μ ≠ 0 ∧
       ∀ i g (x : ∀ i, X i), μ (Function.update x i (σ i g (x i))) = ρ i g (μ x) := by
   induction n with
   | zero =>
     intro Γ _ X _ _ _ σ _ Y _ _ _ ρ _ _
     obtain ⟨y, hy⟩ := exists_ne (0 : Y)
-    refine ⟨MultilinearMap.constOfIsEmpty ℂ X y, fun h => hy ?_, fun i => i.elim0⟩
+    refine ⟨MultilinearMap.constOfIsEmpty (RingHom.id ℂ) X y, fun h => hy ?_, fun i => i.elim0⟩
     simpa using DFunLike.congr_fun h 0
   | succ n ih =>
     intro Γ _ X _ _ _ σ hσ Y _ _ _ ρ hc hiso
     have hc' : ∀ k : Fin n, ∀ a b y, ρ k.castSucc a (ρ (Fin.last n) b y) =
         ρ (Fin.last n) b (ρ k.castSucc a y) := fun k => hc _ _ (Fin.castSucc_lt_last k).ne
-    haveI : Nontrivial (eqv (σ (Fin.last n)) (ρ (Fin.last n))) := by
+    have : Nontrivial (eqv (σ (Fin.last n)) (ρ (Fin.last n))) := by
       by_contra hn
       rw [not_nontrivial_iff_subsingleton] at hn
       have h1 := hiso (Fin.last n)
@@ -91,17 +91,17 @@ private theorem multi_fin (n : ℕ) : ∀ (Γ : Fin n → Type) [∀ i, Group (�
         exact congrArg (fun f : eqv (σ (Fin.last n)) (ρ (Fin.last n)) => f.1 (x (Fin.last n))) this
 
 theorem UpperTheory.exists_multilinear_intertwiner_of_commuting_subgroups :
-    ∀ (G I : Type) [Group G] [Finite I] [DecidableEq I] (H : I → Subgroup G), (∀ i j, i ≠ j → ∀ a ∈ H i, ∀ b ∈ H j, a * b = b * a) → ∀ (X : I → Type) [∀ i, AddCommGroup (X i)] [∀ i, Module ℂ (X i)] [∀ i, FiniteDimensional ℂ (X i)] (σ : ∀ i, Representation ℂ (H i) (X i)), (∀ i, (σ i).IsIrreducible) → ∀ (Y : Type) [AddCommGroup Y] [Module ℂ Y] [Nontrivial Y] (ρ : Representation ℂ G Y), (∀ i, (⨆ f : {f : X i →ₗ[ℂ] Y // ∀ (g : H i) v, f (σ i g v) = ρ g (f v)}, LinearMap.range f.1) = ⊤) → ∃ μ : MultilinearMap ℂ X Y, μ ≠ 0 ∧ ∀ i (g : H i) (x : ∀ i, X i), μ (Function.update x i (σ i g (x i))) = ρ g (μ x) := by
+    ∀ (G I : Type) [Group G] [Finite I] [DecidableEq I] (H : I → Subgroup G), (∀ i j, i ≠ j → ∀ a ∈ H i, ∀ b ∈ H j, a * b = b * a) → ∀ (X : I → Type) [∀ i, AddCommGroup (X i)] [∀ i, Module ℂ (X i)] [∀ i, FiniteDimensional ℂ (X i)] (σ : ∀ i, Representation ℂ (H i) (X i)), (∀ i, (σ i).IsIrreducible) → ∀ (Y : Type) [AddCommGroup Y] [Module ℂ Y] [Nontrivial Y] (ρ : Representation ℂ G Y), (∀ i, (⨆ f : {f : X i →ₗ[ℂ] Y // ∀ (g : H i) v, f (σ i g v) = ρ g (f v)}, LinearMap.range f.1) = ⊤) → ∃ μ : MultilinearMap (RingHom.id ℂ) X Y, μ ≠ 0 ∧ ∀ i (g : H i) (x : ∀ i, X i), μ (Function.update x i (σ i g (x i))) = ρ g (μ x) := by
   intro G I _ _ _ H hH X _ _ _ σ hσ Y _ _ _ ρ hiso
   obtain ⟨n, ⟨e⟩⟩ := Finite.exists_equiv_fin I
   obtain ⟨μ, hμ, hμe⟩ := multi_fin n (fun k => H (e.symm k)) (fun k => X (e.symm k))
     (fun k => σ (e.symm k)) (fun k => hσ _) Y (fun k => ρ.comp (H (e.symm k)).subtype)
     (fun i j hij a b y => by
       change ρ a.1 (ρ b.1 y) = ρ b.1 (ρ a.1 y)
-      rw [← Module.End.mul_apply, ← map_mul, hH _ _ (fun h => hij (e.symm.injective h)) _ a.2 _ b.2,
-        map_mul, Module.End.mul_apply])
+      rw [← mul_apply_eq_comp, ← map_mul, hH _ _ (fun h => hij (e.symm.injective h)) _ a.2 _ b.2,
+        map_mul, mul_apply_eq_comp])
     (fun k => hiso _)
-  refine ⟨(MultilinearMap.domDomCongrLinearEquiv' ℂ ℂ X Y e).symm μ,
+  refine ⟨(MultilinearMap.domDomCongrLinearEquiv' ℂ (RingHom.id ℂ) X Y e).symm μ,
     fun h => hμ ((LinearEquiv.map_eq_zero_iff _).1 h), fun i => ?_⟩
   obtain ⟨k, rfl⟩ := e.symm.surjective i
   intro g x

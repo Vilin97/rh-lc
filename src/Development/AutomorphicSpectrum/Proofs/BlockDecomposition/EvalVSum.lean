@@ -18,7 +18,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 theorem eSF_eq (S : Finset (Pl F)) : eSF S = ((1, ∑ v ∈ S, singleFin v 1) : AF F) := by
   simp only [eSF, LinearMap.inl_apply, LinearMap.inr_apply, Prod.mk_add_mk, add_zero, zero_add]
-  rfl
 
 open Classical in
 theorem evalV_sum (S : Finset (Pl F)) (u : Pl F) :

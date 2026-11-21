@@ -36,4 +36,4 @@ theorem UpperTheory.Gal.Int.Geo.totCont_of :
     congr 1
     exact DirectSum.lmap_lof (fun n => galHQ l Ω p n 0 σ) n (v n)
   simp_rw [hv]
-  exact continuous_finset_sum _ fun n _ => hDC l k Ω p inferInstance inferInstance n 0 (hfin n) (v n) _
+  exact continuous_finsetSum _ fun n _ => hDC l k Ω p inferInstance inferInstance n 0 (hfin n) (v n) _

@@ -7,17 +7,6 @@ public import GroundTheory.ArithmeticGeometry.AbelianVarieties.TateCharpoly
 
 @[expose] public section
 
-abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
-  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
-  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
-  one_mem' z hz := by simpa only [one_mul] using hz
-  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
-  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
-  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
-
-abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
-    (σ : K →+* ℂ) : Subring ℂ :=
-  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global
@@ -82,6 +71,7 @@ theorem latticeEnd_eq_cmRing_of_lattice_eq {L : PeriodPair} {𝔞 : (FractionalI
     (h : L.lattice = idealLattice σ₀ 𝔞) : periodLatticeEnd L = cmRingOfEmbedding σ₀ := by
   rw [latticeEnd_eq_of_lattice_eq (L' := idealPeriodPair σ₀ hK 𝔞)
     (h.trans (lattice_idealPeriodPair σ₀ hK 𝔞).symm), latticeEnd_idealPeriodPair]
+  rfl
 
 
 include hK in
@@ -101,7 +91,7 @@ theorem exists_unit_of_forall_mem_iff (J : (FractionalIdeal (𝓞 K)⁰ K)ˣ) {c
   have hc0 : c ≠ 0 := by
     rintro rfl
     exact hz₀ ((hc z₀).2 (by rw [zero_mul]; exact zero_mem _))
-  have mult : ∀ d : ℂ, (∀ l ∈ idealLattice σ₀ J, d * l ∈ idealLattice σ₀ J) → d ∈ cmRingOfEmbedding σ₀ := by
+  have mult : ∀ d : ℂ, (∀ l ∈ idealLattice σ₀ J, d * l ∈ idealLattice σ₀ J) → d ∈ cmRing σ₀ := by
     intro d hd
     rw [← hPend]
     intro l hl
@@ -162,7 +152,7 @@ theorem exists_unit_pointMap_vcPoint (𝔞 𝔟 : (FractionalIdeal (𝓞 K)⁰ K
     congr 1
     funext x
     ring
-  obtain ⟨u, -, hu⟩ := exists_unit_of_homConstSet_eq σ₀ hK L L' hLend 𝔟⁻¹ hL'' ψ hψ
+  obtain ⟨u, -, hu⟩ := exists_unit_of_homConstSet_eq σ₀ L L' hLend 𝔟⁻¹ hL'' ψ hψ
   refine ⟨u, fun z ↦ ?_⟩
   have h1 := hu z
   rw [isogOfHom_toHom, TateCharpoly.homPt_homComp, TateCharpoly.homPt_homComp, AddMonoidHom.comp_apply,

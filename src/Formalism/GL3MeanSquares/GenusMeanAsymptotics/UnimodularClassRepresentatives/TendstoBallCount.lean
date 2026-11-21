@@ -31,7 +31,9 @@ theorem tendsto_ballCount (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
   obtain ⟨b, hbL, ho⟩ := BallB.exists_orth_basis_mem hK hs hd hL
   have hBL : Submodule.span (𝓞 K) (Set.range b) ≤ L :=
     Submodule.span_le.mpr (by rintro _ ⟨i, rfl⟩; exact hbL i)
-  obtain ⟨N, hN, hNx⟩ := LocF.exists_zsmul_le hL (BallB.isLattice_span b)
+  have hSpan : Submodule.IsLattice K (Submodule.span (𝓞 K) (Set.range b)) :=
+    Submodule.IsLattice.of_fg K (Submodule.fg_span (Set.finite_range b))
+  obtain ⟨N, hN, hNx⟩ := LocF.exists_zsmul_le hL hSpan
   have hlat1 : BallD.lat b (Submodule.span (𝓞 K) (Set.range b)) =
       Submodule.span ℤ (Set.range (BallC.piBasis K (Fin (finrank K V)))) := BallD.lat_span b
   have hle : Submodule.span ℤ (Set.range (BallC.piBasis K (Fin (finrank K V)))) ≤ BallD.lat b L := by

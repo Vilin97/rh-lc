@@ -45,7 +45,8 @@ private theorem chi_map_single {n : ℕ} {A B G : Type} [CommRing A] [CommRing B
   have e : MonoidAlgebra.mapRingHom G (F : A[X] →+* B[X])
       (MonoidAlgebra.single 1 X - MonoidAlgebra.single g 1) =
       MonoidAlgebra.single 1 X - MonoidAlgebra.single g 1 := by
-    simp [F]
+    change MonoidAlgebra.mapRingHom G (Polynomial.mapRingHom f) _ = _
+    simp
   rw [e] at h
   simp only [W.GDet.chi, W.GDet.map, map_sub, MonoidAlgebra.mapRingHom_single, map_one]
   exact h
@@ -67,7 +68,20 @@ theorem UpperTheory.V.Ws.auRep :
   rw [W.UniversalOrdinaryDeterminantRing.Pt.D.eq_1]
   apply CA.d_gext
   intro g i _ _
-  rw [W.GDet.lam.eq_1, W.GDet.lam.eq_1, (AlgebraTools.Det.repApi _).2.1]
+  rw [W.GDet.lam.eq_1]
+  rw [W.GDet.lam.eq_1]
+  let ρ := W.mat (Af.tw ((X.P.map (y : X.A →+* PadicAlgCl l)).r.comp (resLe T.F_le)).toHomUnits (W.pushCh (algebraMap c'.O (PadicAlgCl l)) (K.κ * K.β ^ n)))
+  have hre : (W.GDet.ofRep ρ).chi (MonoidAlgebra.single g 1) = (ρ g).charpoly := by
+    unfold W.GDet.chi
+    change (W.GDet.repAlg ρ _ _).det = _
+    rw [← Polynomial.algebraMap_eq, map_sub, MonoidAlgebra.mapRingHom_single, map_one]
+    simp only [W.GDet.repAlg, map_sub, MonoidAlgebra.lift_single, map_one, one_smul]
+    rw [Matrix.charpoly]
+    congr 1
+    ext i j
+    by_cases h : i = j <;> simp [Matrix.charmatrix_apply, Matrix.one_apply, h]
+  erw [hre]
+  dsimp only [ρ]
   erw [chi_comap_single, chi_map_single]
   congr 2
   have hxφ : (x : B.B →+* PadicAlgCl l) =
@@ -81,8 +95,8 @@ theorem UpperTheory.V.Ws.auRep :
   rw [hxφ, ← Polynomial.map_map]
   erw [hφ.1 g]
   rw [scale_point (algebraMap X.B X.A) X.inj (y : X.A →+* PadicAlgCl l) _ (X.P.r _) (X.cp_map _), e]
-  · congr 1
-    simp [W.mat.eq_1, Af.tw_val, W.pushCh.eq_1, PD.map.eq_1]
+  · apply congrArg (fun (M : Matrix (Fin 4) (Fin 4) (PadicAlgCl l)) => M.charpoly.coeff)
+    simp only [W.mat.eq_1, Af.tw_val, W.pushCh.eq_1, PD.map.eq_1, MonoidHom.comp_apply, Units.coeHom_apply, map_mul, map_pow]
     rfl
   · rw [e]
     have u := (Units.map (algebraMap c'.O (PadicAlgCl l) : c'.O →* PadicAlgCl l) (K.κ g * K.β g ^ n)).ne_zero

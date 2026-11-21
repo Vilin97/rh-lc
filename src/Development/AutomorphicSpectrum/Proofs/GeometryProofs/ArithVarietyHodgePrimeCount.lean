@@ -169,7 +169,7 @@ theorem lat_eq_span [Smooth 𝔐.t.G.hom] (P : ChartPack G O c') (q : Cpt 𝔐.�
       (LieVB.cast (R := 𝔐.X.presheaf.stalk q.1) h1.symm Mq) b' fun e =>
         (LieVB.cast_left (R := 𝔐.X.presheaf.stalk q.1) h1.symm Mq (b' e)).trans (hb₀ e)
   have hsp : ∀ z : Fq, jq z ∈ Submodule.span (regAt 𝔐.ξ q) (Set.range P.toLi) := fun z =>
-    hbc.inductionOn z (fun z => jq z ∈ Submodule.span (regAt 𝔐.ξ q) (Set.range P.toLi)) (by simp)
+    hbc.inductionOn z
       (fun m => Submodule.subset_span ⟨m, (hcomp m).symm⟩)
       (fun (s : 𝔐.X.presheaf.stalk q.1) n h => by
         have h5 : jq (s • n) = genMap 𝔐.ξ q s • jq n := jq.map_smulₛₗ s n
@@ -283,7 +283,7 @@ theorem mem_range_toLi_iff [Smooth 𝔐.t.G.hom] (P : ChartPack G O c') (hpt : D
         exact (regAt 𝔐.ξ q).mul_mem s.2 hx
     have hsum : ∀ w : 𝔐.Li, w = ∑ i, Fi i w • P.toLi (f (Pi.single i 1)) := by
       intro w
-      refine P.toLi_bc.inductionOn w (fun w => w = ∑ i, Fi i w • P.toLi (f (Pi.single i 1))) (by simp) ?_ ?_ ?_
+      refine P.toLi_bc.inductionOn w ?_ ?_ ?_
       · intro m
         conv_lhs => rw [hv m]
         set_option synthInstance.maxHeartbeats 100000 in
@@ -416,7 +416,7 @@ theorem exists_form [CharZero Ω] (P : ChartPack G O c')
         rfl) }
   have hju : ∀ w, P.j u w = Ψ w := by
     intro w
-    refine P.toLi_bc.inductionOn w (fun w => P.j u w = Ψ w) (by simp) (fun v => ?_) (fun t n hn => ?_)
+    refine P.toLi_bc.inductionOn w (fun v => ?_) (fun t n hn => ?_)
       (fun a a' ha ha' => ?_)
     · rw [P.j_apply]
       rfl

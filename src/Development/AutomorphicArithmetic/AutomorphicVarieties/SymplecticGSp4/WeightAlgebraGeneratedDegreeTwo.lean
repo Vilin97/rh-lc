@@ -166,6 +166,7 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.aW :
   have hz : ∀ s, M.W.z s ∈ maximalIdeal M.R := fun s => by
     rw [← res_eq_zero_iff c.O, ← res_map (M.W.origin M.org), WPres.z, M.W.origin_π, MvPowerSeries.constantCoeff_X,
       map_zero]
+  set_option synthInstance.maxHeartbeats 200000 in
   refine ⟨?_, ?_, ?_⟩
   · haveI := wPres_gr_zero_isCO_of_mem_maximalIdeal c.O (ℤ × ℤ) M.R M.W hz
     let p : M.W.gr 0 →ₐ[c.O] M.gr 0 :=

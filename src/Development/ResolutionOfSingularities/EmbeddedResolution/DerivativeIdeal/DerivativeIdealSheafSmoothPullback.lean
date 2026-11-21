@@ -119,7 +119,13 @@ private theorem exists_affineOpen_derivIdealSheaf_comap_ideal_eq (k : Type u) [F
     SmoothEtaleChart.exists_isAffineOpen_etale_resLE_le h y W₀ hxW₀ ⊤ (by trivial)
   refine ⟨V, hV, hyV, ?_⟩
   have : Etale g := hgE
-  let c : EtaleChart p W m := c₀.restrict hWW₀
+  let c : EtaleChart p W m := {
+    map := X.homOfLE hWW₀ ≫ c₀.map
+    comp_struct := by
+      rw [Category.assoc, c₀.comp_struct, ← Category.assoc, Scheme.homOfLE_ι]
+    isEtale := by
+      have := c₀.isEtale
+      infer_instance }
   let instkS : Algebra k Γ(X, W) := sectionsAlgebra k p W
   let instkT : Algebra k Γ(Y, V) := sectionsAlgebra k (h ≫ p) V
   let instPS : Algebra (MvPolynomial (ULift.{u} (Fin m)) k) Γ(X, W) := c.algebra

@@ -62,7 +62,7 @@ private theorem exists_irreducible_subrep_le_of_ne_bot {G V : Type} [Group G] [A
     {ρ : Representation ℂ G V} (hwf : WellFoundedLT (Subrepresentation ρ))
     (T : Subrepresentation ρ) (hT : T.toSubmodule ≠ ⊥) :
     ∃ S' : Subrepresentation ρ, S'.toRepresentation.IsIrreducible ∧ S'.toSubmodule ≤ T.toSubmodule := by
-  obtain ⟨S, ⟨hS0, hST⟩, hmin⟩ := hwf.wf.has_min
+  obtain ⟨S, ⟨hS0, hST⟩, hmin⟩ := hwf.has_min
     {S : Subrepresentation ρ | S.toSubmodule ≠ ⊥ ∧ S.toSubmodule ≤ T.toSubmodule} ⟨T, hT, le_rfl⟩
   refine ⟨S, ?_, hST⟩
   let img : Subrepresentation S.toRepresentation → Subrepresentation ρ := fun U =>

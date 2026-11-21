@@ -614,8 +614,55 @@ theorem form_overlap (hp : p.Prime) (hpS : p ∈ S) (hs : mseg y s ≠ 0) (ht : 
   obtain ⟨β₁, hβ₁⟩ := LieFin.exists_tr _ _ (algebraMap (CR O y s) (ovl O y s t)) rfl P₁.M M'
   obtain ⟨β₂, hβ₂⟩ := LieFin.exists_tr _ _ (algebraMap (CR O y t) (ovl O y s t)) hz P₂.M M'
   obtain ⟨τ, hτ⟩ := LieFin.exists_tr _ _ (algebraMap (ovl O y s t) Ω) hx M' 𝔐.M
-  have hspan : Submodule.span (ovl O y s t) (Set.range β₁) = ⊤ :=
-    GlobalTheory.T.lie_model_base_change_span 𝔐.X 𝔐.t.G (CR O y s) (ovl O y s t) _ P₁.x P₁.L L' P₁.M M' β₁ hβ₁
+  have hspan : Submodule.span (ovl O y s t) (Set.range β₁) = ⊤ := by
+    let c := algebraMap (CR O y s) (ovl O y s t)
+    letI : Algebra (CR O y s) (ovl O y s t) := c.toAlgebra
+    letI : Module (CR O y s) L' := Module.compHom L' c
+    haveI : IsScalarTower (CR O y s) (ovl O y s t) L' :=
+      ⟨fun r r' e => by
+        show (c r * r') • e = c r • (r' • e)
+        exact mul_smul _ _ _⟩
+    let h : epsAt (spMap c ≫ P₁.x) ⟶ epsAt P₁.x :=
+      Over.homMk (Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap c))) (by
+        show Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap c)) ≫
+            Spec.map (CommRingCat.ofHom (algebraMap _ (DualNumber _))) ≫ P₁.x =
+          Spec.map (CommRingCat.ofHom (algebraMap _ (DualNumber _))) ≫
+            Spec.map (CommRingCat.ofHom c) ≫ P₁.x
+        rw [← Category.assoc, ← Category.assoc, ← Spec.map_comp, ← Spec.map_comp]
+        congr 2
+        ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl, CommRingCat.hom_comp,
+          CommRingCat.hom_ofHom])
+    have hl : h.left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap c)) := rfl
+    have hpt : ∀ e, M'.pt (β₁ e) = h ≫ P₁.M.pt e := fun e =>
+      Over.OverMorphism.ext (by rw [Over.comp_left, hl]; exact hβ₁ e)
+    have hadd : ∀ a b, β₁ (a + b) = β₁ a + β₁ b := by
+      intro a b
+      apply M'.inj
+      rw [M'.add, hpt, hpt, hpt, P₁.M.add, MonObj.comp_mul]
+    have hsmul : ∀ (r : CR O y s) (e : P₁.L), β₁ (r • e) = c r • β₁ e := by
+      intro r e
+      apply M'.inj
+      apply Over.OverMorphism.ext
+      rw [M'.smul, hpt, hpt, Over.comp_left, Over.comp_left, P₁.M.smul, hl,
+        ← Category.assoc, ← Category.assoc, ← Spec.map_comp, ← Spec.map_comp]
+      congr 2
+      ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, smul_eq_mul, TrivSqZeroExt.algebraMap_eq_inl,
+        CommRingCat.hom_comp, CommRingCat.hom_ofHom]
+    let β : P₁.L →ₗ[CR O y s] L' :=
+      { toFun := β₁, map_add' := hadd, map_smul' := fun r e => hsmul r e }
+    obtain ⟨-, -, hbc⟩ := LieProj.lie_finite_projective_baseChange 𝔐.X 𝔐.t.G (CR O y s) P₁.x P₁.L P₁.M
+    have hb : IsBaseChange (ovl O y s t) β := hbc (ovl O y s t) L' M' β (fun e => hβ₁ e)
+    rw [eq_top_iff]
+    rintro z -
+    obtain ⟨v, rfl⟩ := hb.equiv.surjective z
+    induction v using TensorProduct.induction_on with
+    | zero => simp
+    | tmul a e =>
+      rw [hb.equiv_tmul]
+      exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨e, rfl⟩)
+    | add a b ha hb' =>
+      rw [map_add (f := _)]
+      exact Submodule.add_mem _ ha hb'
   have c₁ := tr_toLi P₁ (ovl O y s t) algL_coe M' β₁ hβ₁ τ hτ
   have c₂ := tr_toLi P₂ (ovl O y s t) algR_coe M' β₂ hβ₂ τ hτ
   have hmem : ∀ e', P₁.j u (τ e') ∈ ovl O y s t := by
@@ -652,7 +699,7 @@ theorem form_overlap (hp : p.Prime) (hpS : p ∈ S) (hs : mseg y s ≠ 0) (ht : 
   · have := congrArg Subtype.val (e1 a)
     simpa [algL_coe, algR_coe] using this
   · refine LinearMap.ext fun w => ?_
-    refine P₂.toLi_bc.inductionOn w (fun w => P₂.j u₂ w = ((mseg y s / mseg y t) ^ m • P₁.j u) w) (by simp) ?_ ?_ ?_
+    refine P₂.toLi_bc.inductionOn (motive := fun w => P₂.j u₂ w = ((mseg y s / mseg y t) ^ m • P₁.j u) w) w ?_ ?_ ?_
     · intro e
       rw [P₂.j_apply]
       have := congrArg Subtype.val (e3 e)

@@ -144,7 +144,51 @@ theorem UpperTheory.V.Loc.crUnr :
   intro l _ G _ _ _ φ hφ A _ _ _ _ V _ _ _ _ _ _ _ _ _ ρ hρ w hI
   obtain ⟨K, e, -, he, hφe, hr, -⟩ := openField φ hφ
   obtain ⟨T⟩ := tiedP l
-  obtain ⟨hc, -, hq⟩ := cycFacts l l
+  have hc : Continuous (cyc l l) := cyclotomicCharacter.continuous l ℚ_[l] (Om l)
+  have cf_toZModPow (v l : ℕ) [Fact v.Prime] [Fact l.Prime] (g : GQ v) (m a : ℕ)
+      (h : ∀ ζ : Om v, IsPrimitiveRoot ζ (l ^ m) → g ζ = ζ ^ a) :
+      PadicInt.toZModPow m ((cyc v l g : ℤ_[l]ˣ) : ℤ_[l]) = (a : ZMod (l ^ m)) := by
+    have hl : l.Prime := Fact.out
+    haveI : NeZero (l ^ m) := ⟨pow_ne_zero _ hl.ne_zero⟩
+    obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot (Om v) (l ^ m)
+    have hs := cyclotomicCharacter.spec l (n := m)
+      (MulSemiringAction.toRingAut (GQ v) (Om v) g) ζ hζ.pow_eq_one
+    set c : ℤ_[l] := ((cyc v l g : ℤ_[l]ˣ) : ℤ_[l]) with hc
+    have hs' : g ζ = ζ ^ (PadicInt.toZModPow m c).val := hs
+    have h3 := hs'.symm.trans (h ζ hζ)
+    have h4 : (PadicInt.toZModPow m c).val ≡ a [MOD l ^ m] := by
+      have := (hζ.isOfFinOrder (NeZero.ne _)).pow_eq_pow_iff_modEq.mp h3
+      rwa [← hζ.eq_orderOf] at this
+    rw [← (ZMod.natCast_eq_natCast_iff _ _ _).mpr h4, ZMod.natCast_zmod_val]
+  have hq (g : GQ l) :
+      (((PP l).χQ g : ℚ_[l]ˣ) : ℚ_[l]) = (((cyc l l g : ℤ_[l]ˣ) : ℤ_[l]) : ℚ_[l]) := by
+    have hl : l.Prime := Fact.out
+    have key : ∀ m : ℕ, ‖(((PP l).χQ g : ℚ_[l]ˣ) : ℚ_[l]) -
+        (((cyc l l g : ℤ_[l]ˣ) : ℤ_[l]) : ℚ_[l])‖ ≤ (l : ℝ) ^ (-(m : ℤ)) := by
+      intro m
+      haveI : NeZero (l ^ m) := ⟨pow_ne_zero _ hl.ne_zero⟩
+      obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot (Om l) (l ^ m)
+      obtain ⟨a, ha, hga⟩ := (PP l).χQ_cyc g m ζ hζ.pow_eq_one
+      have h4 := cf_toZModPow l l g m a (fun ξ hξ => by
+        obtain ⟨i, -, rfl⟩ := hζ.eq_pow_of_pow_eq_one hξ.pow_eq_one
+        rw [map_pow, hga, ← pow_mul, ← pow_mul, mul_comm])
+      set c : ℤ_[l] := ((cyc l l g : ℤ_[l]ˣ) : ℤ_[l]) with hc
+      have h5 : PadicInt.toZModPow m ((a : ℤ_[l]) - c) = 0 := by
+        rw [map_sub, map_natCast, h4, sub_self]
+      have h6 : ‖(a : ℤ_[l]) - c‖ ≤ (l : ℝ) ^ (-(m : ℤ)) := by
+        rw [PadicInt.norm_le_pow_iff_mem_span_pow, ← PadicInt.ker_toZModPow]
+        exact h5
+      have h7 : ‖(a : ℚ_[l]) - (c : ℚ_[l])‖ ≤ (l : ℝ) ^ (-(m : ℤ)) := by
+        have : (((a : ℤ_[l]) - c : ℤ_[l]) : ℚ_[l]) = (a : ℚ_[l]) - (c : ℚ_[l]) := by push_cast; rfl
+        rw [← this]; exact h6
+      have h8 := IsUltrametricDist.norm_add_le_max ((((PP l).χQ g : ℚ_[l]ˣ) : ℚ_[l]) - a) ((a : ℚ_[l]) - c)
+      rw [sub_add_sub_cancel] at h8
+      exact h8.trans (max_le ha h7)
+    rw [← sub_eq_zero, ← norm_le_zero_iff]
+    have hlt : ((l : ℝ))⁻¹ < 1 := inv_lt_one_of_one_lt₀ (by exact_mod_cast hl.one_lt)
+    refine ge_of_tendsto' (tendsto_pow_atTop_nhds_zero_of_lt_one (by positivity) hlt) fun m => ?_
+    have := key m
+    rwa [zpow_neg, zpow_natCast, ← inv_pow] at this
   have hφ' : ∀ g : ↥(GK K), φ (e.symm g) = g := fun g => by
     rw [← hφe]
     simp

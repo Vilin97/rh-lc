@@ -34,7 +34,7 @@ theorem prod_map_X_eq_monomial_toFinsupp {n : ℕ} (s : Multiset (Fin n)) :
   | empty => simp
   | cons a s ih =>
     rw [Multiset.map_cons, Multiset.prod_cons, ih, ← Multiset.singleton_add, map_add (f := _),
-      Multiset.toFinsupp_singleton, MvPolynomial.X, MvPolynomial.monomial_mul, one_mul]
+      Multiset.toFinsupp_singleton, MvPolynomial.X, MvPolynomial.monomial_mul_monomial, one_mul]
 
 theorem sum_toFinsupp_fin {n : ℕ} (s : Multiset (Fin n)) :
     ∑ i, Multiset.toFinsupp s i = Multiset.card s := by

@@ -39,7 +39,7 @@ variable {ι G : Type} {Γ Hs : ι → Type} [Fintype ι] [dec : DecidableEq ι]
 def stage (e : ∀ i, Γ i →* G) (δ : ∀ i, Γ i →* (Hs i →L[ℂ] Hs i)) (ρ : G →* (K →L[ℂ] K)) (s : Finset ι) :
     Submodule ℂ (ContinuousMultilinearMap ℂ Hs K) where
   carrier := {Φ | (∀ i ∈ s, ∀ g y, Φ (Function.update y i (δ i g (y i))) = ρ (e i g) (Φ y)) ∧
-    ∀ i ∉ s, ∀ y, Φ y = ⟪unitVec (Hs i), y i⟫_ℂ • Φ (Function.update y i (unitVec (Hs i)))}
+    ∀ i ∉ s, ∀ y, Φ y = ⟪unitVec (H := Hs i), y i⟫_ℂ • Φ (Function.update y i (unitVec (H := Hs i)))}
   add_mem' := fun h h' => ⟨fun i hi g y => by simp [h.1 i hi g y, h'.1 i hi g y],
     fun i hi y => by simp only [ContinuousMultilinearMap.add_apply]; rw [h.2 i hi y, h'.2 i hi y, smul_add]⟩
   zero_mem' := ⟨fun i _ g y => by simp, fun i _ y => by simp⟩
@@ -51,7 +51,7 @@ variable {e : ∀ i, Γ i →* G} {δ : ∀ i, Γ i →* (Hs i →L[ℂ] Hs i)} 
 
 theorem mem_stage : Φ ∈ stage e δ ρ s ↔
     (∀ i ∈ s, ∀ g y, Φ (Function.update y i (δ i g (y i))) = ρ (e i g) (Φ y)) ∧
-    ∀ i ∉ s, ∀ y, Φ y = ⟪unitVec (Hs i), y i⟫_ℂ • Φ (Function.update y i (unitVec (Hs i))) := Iff.rfl
+    ∀ i ∉ s, ∀ y, Φ y = ⟪unitVec (H := Hs i), y i⟫_ℂ • Φ (Function.update y i (unitVec (H := Hs i))) := Iff.rfl
 
 theorem isClosed_stage : IsClosed (stage e δ ρ s : Set (ContinuousMultilinearMap ℂ Hs K)) := by
   have h1 : ∀ (a b : ∀ i, Hs i) (T : K →L[ℂ] K),
@@ -64,11 +64,11 @@ theorem isClosed_stage : IsClosed (stage e δ ρ s : Set (ContinuousMultilinearM
       (((ContinuousMultilinearMap.apply ℂ Hs K b).continuous).const_smul c)
   have : (stage e δ ρ s : Set (ContinuousMultilinearMap ℂ Hs K)) =
       (⋂ i ∈ s, ⋂ g, ⋂ y, {Φ | Φ (Function.update y i (δ i g (y i))) = ρ (e i g) (Φ y)}) ∩
-      ⋂ i ∉ s, ⋂ y, {Φ | Φ y = ⟪unitVec (Hs i), y i⟫_ℂ • Φ (Function.update y i (unitVec (Hs i)))} := by
+      ⋂ i ∉ s, ⋂ y, {Φ | Φ y = ⟪unitVec (H := Hs i), y i⟫_ℂ • Φ (Function.update y i (unitVec (H := Hs i)))} := by
     ext Φ; simp [mem_stage]
   rw [this]
   exact (isClosed_biInter fun i _ => isClosed_iInter fun g => isClosed_iInter fun y => h1 _ _ _).inter
-    (isClosed_biInter fun i _ => isClosed_iInter fun y => h2 _ _ _)
+    (isClosed_iInter fun i => isClosed_iInter fun _ : i ∉ s => isClosed_iInter fun y => h2 _ _ _)
 
 theorem comp_mem_stage (hΦ : Φ ∈ stage e δ ρ s) {g : G} (hg : ∀ i ∈ s, ∀ a, Commute g (e i a)) :
     (ρ g).compContinuousMultilinearMap Φ ∈ stage e δ ρ s := by
@@ -80,7 +80,7 @@ theorem comp_mem_stage (hΦ : Φ ∈ stage e δ ρ s) {g : G} (hg : ∀ i ∈ s,
     rw [hΦ.2 i hi y, map_smul]
 
 theorem apply_eq_prod_smul (hΦ : Φ ∈ stage e δ ρ s) (y : ∀ i, Hs i) {t : Finset ι} (ht : Disjoint t s) :
-    Φ y = (∏ i ∈ t, ⟪unitVec (Hs i), y i⟫_ℂ) • Φ (t.piecewise (fun i => unitVec (Hs i)) y) := by
+    Φ y = (∏ i ∈ t, ⟪unitVec (H := Hs i), y i⟫_ℂ) • Φ (t.piecewise (fun i => unitVec (H := Hs i)) y) := by
   induction t using Finset.induction_on with
   | empty => simp
   | insert j t hj ih =>
@@ -97,9 +97,38 @@ omit [Fintype ι] dec [∀ i, Group (Γ i)] [∀ i, TopologicalSpace (Γ i)] [To
 theorem norm_apply_eq_of {Γ₀ H₀ : Type} [Group Γ₀] [NormedAddCommGroup H₀] [InnerProductSpace ℂ H₀] [CompleteSpace H₀]
     {π : Γ₀ →* (H₀ →L[ℂ] H₀)} {ρ₀ : Γ₀ →* (K →L[ℂ] K)} (h1 : ∀ g x, ‖π g x‖ = ‖x‖) (h2 : IsTopIrreducible π)
     (h3 : ∀ g x, ‖ρ₀ g x‖ = ‖x‖) {T : H₀ →L[ℂ] K} (hT : T ∈ homIn π ρ₀ ⊤) (x : H₀) :
-    ‖T x‖ = ‖T (unitVec H₀)‖ * ‖x‖ := by
-  have h := inner_eq_be_of_norm h1 h2 h3 hT hT x x
-  rw [be_self, inner_self_eq_norm_sq_to_K, inner_self_eq_norm_sq_to_K, ← mul_pow] at h
+    ‖T x‖ = ‖T (unitVec (H := H₀))‖ * ‖x‖ := by
+  letI : TopologicalSpace Γ₀ := ⊥
+  haveI : DiscreteTopology Γ₀ := ⟨rfl⟩
+  have hπ : IsUnitaryRep π := ⟨h1, fun _ => continuous_of_discreteTopology⟩
+  have hρ₀ : IsUnitaryRep ρ₀ := ⟨h3, fun _ => continuous_of_discreteTopology⟩
+  obtain ⟨c, hc⟩ := GlobalTheory.hilbert_schur H₀ Γ₀ π h1
+    (fun W hW hstable => h2.2 W ⟨hW, hstable⟩) (T.adjoint ∘L T) fun g => by
+      refine ContinuousLinearMap.ext fun v => ext_inner_left ℂ fun w => ?_
+      change ⟪w, π g (T.adjoint (T v))⟫_ℂ = ⟪w, T.adjoint (T (π g v))⟫_ℂ
+      calc
+        _ = ⟪π g⁻¹ w, T.adjoint (T v)⟫_ℂ := by
+          simpa only [inv_inv] using (hπ.inner_apply_left g⁻¹ w (T.adjoint (T v))).symm
+        _ = _ := by
+          rw [ContinuousLinearMap.adjoint_inner_right, hT.2, hρ₀.inner_apply_left, inv_inv,
+            ← hT.2, ContinuousLinearMap.adjoint_inner_right]
+  have inner_eq (v : H₀) : ⟪T v, T v⟫_ℂ = c * ⟪v, v⟫_ℂ := by
+    have hv : T.adjoint (T v) = c • v := by
+      simpa using DFunLike.congr_fun hc v
+    rw [← ContinuousLinearMap.adjoint_inner_right, hv, inner_smul_right]
+  let u := unitVec (H := H₀)
+  have : Nontrivial H₀ := h2.1
+  have hu : ‖u‖ = 1 := by
+    have hex := exists_norm_eq H₀ zero_le_one
+    change ‖unitVec (H := H₀)‖ = 1
+    rw [unitVec, dite_eq_left hex]
+    exact hex.choose_spec
+  have hscalar : ⟪T u, T u⟫_ℂ = c := by
+    rw [inner_eq, inner_self_eq_norm_sq_to_K, hu]
+    simp
+  have h := inner_eq x
+  rw [← hscalar, inner_self_eq_norm_sq_to_K (T x), inner_self_eq_norm_sq_to_K (T u),
+    inner_self_eq_norm_sq_to_K x, ← mul_pow] at h
   exact (pow_left_inj₀ (norm_nonneg _) (by positivity) two_ne_zero).1
     (Complex.ofReal_injective (by push_cast; exact h))
 
@@ -107,12 +136,12 @@ omit [Fintype ι] in
 theorem norm_apply_eq_on (hδ : ∀ i, IsIrrUnitary (δ i)) (hρ : IsUnitaryRep ρ)
     (hΦ : ∀ i ∈ s, ∀ g y, Φ (Function.update y i (δ i g (y i))) = ρ (e i g) (Φ y)) (y : ∀ i, Hs i)
     {t : Finset ι} (ht : t ⊆ s) :
-    ‖Φ y‖ = ‖Φ (t.piecewise (fun i => unitVec (Hs i)) y)‖ * ∏ i ∈ t, ‖y i‖ := by
+    ‖Φ y‖ = ‖Φ (t.piecewise (fun i => unitVec (H := Hs i)) y)‖ * ∏ i ∈ t, ‖y i‖ := by
   induction t using Finset.induction_on with
   | empty => simp
   | insert j t hj ih =>
     have hjs : j ∈ s := ht (Finset.mem_insert_self j t)
-    set z := t.piecewise (fun i => unitVec (Hs i)) y
+    set z := t.piecewise (fun i => unitVec (H := Hs i)) y
     have hT : Φ.toContinuousLinearMap z j ∈ homIn (δ j) (ρ.comp (e j)) ⊤ :=
       mem_homIn_top.2 fun g x => by
         have := hΦ j hjs g (Function.update z j x)
@@ -125,30 +154,34 @@ theorem norm_apply_eq_on (hδ : ∀ i, IsIrrUnitary (δ i)) (hρ : IsUnitaryRep 
     ring
 
 theorem norm_apply_eq (hδ : ∀ i, IsIrrUnitary (δ i)) (hρ : IsUnitaryRep ρ) (hΦ : Φ ∈ stage e δ ρ s)
-    (y : ∀ i, Hs i) : ‖Φ y‖ = ‖Φ fun i => unitVec (Hs i)‖ * (∏ i ∈ s, ‖y i‖) *
-      ∏ i ∈ sᶜ, ‖⟪unitVec (Hs i), y i⟫_ℂ‖ := by
+    (y : ∀ i, Hs i) : ‖Φ y‖ = ‖Φ fun i => unitVec (H := Hs i)‖ * (∏ i ∈ s, ‖y i‖) *
+      ∏ i ∈ sᶜ, ‖⟪unitVec (H := Hs i), y i⟫_ℂ‖ := by
   rw [apply_eq_prod_smul hΦ y disjoint_compl_left, norm_smul, norm_prod,
     norm_apply_eq_on hδ hρ hΦ.1 _ (subset_refl s)]
-  have h1 : s.piecewise (fun i => unitVec (Hs i)) (sᶜ.piecewise (fun i => unitVec (Hs i)) y) =
-      fun i => unitVec (Hs i) := by
+  have h1 : s.piecewise (fun i => unitVec (H := Hs i)) (sᶜ.piecewise (fun i => unitVec (H := Hs i)) y) =
+      fun i => unitVec (H := Hs i) := by
     funext i
     by_cases hi : i ∈ s
     · rw [Finset.piecewise_eq_of_mem _ _ _ hi]
     · rw [Finset.piecewise_eq_of_notMem _ _ _ hi, Finset.piecewise_eq_of_mem _ _ _ (Finset.mem_compl.2 hi)]
-  have h2 : ∏ i ∈ s, ‖sᶜ.piecewise (fun i => unitVec (Hs i)) y i‖ = ∏ i ∈ s, ‖y i‖ :=
+  have h2 : ∏ i ∈ s, ‖sᶜ.piecewise (fun i => unitVec (H := Hs i)) y i‖ = ∏ i ∈ s, ‖y i‖ :=
     Finset.prod_congr rfl fun i hi => by
       rw [Finset.piecewise_eq_of_notMem _ _ _ (fun h => Finset.mem_compl.1 h hi)]
   rw [h1, h2]
   ring
 
 theorem norm_le_apply_unit (hδ : ∀ i, IsIrrUnitary (δ i)) (hρ : IsUnitaryRep ρ) (hΦ : Φ ∈ stage e δ ρ s) :
-    ‖Φ‖ ≤ ‖Φ fun i => unitVec (Hs i)‖ := by
+    ‖Φ‖ ≤ ‖Φ fun i => unitVec (H := Hs i)‖ := by
   refine ContinuousMultilinearMap.opNorm_le_bound (norm_nonneg _) fun y => ?_
   rw [norm_apply_eq hδ hρ hΦ y, mul_assoc, ← Finset.prod_mul_prod_compl s fun i => ‖y i‖]
   refine mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left (Finset.prod_le_prod₀ (fun i _ => norm_nonneg _)
     fun i _ => ?_) (Finset.prod_nonneg fun i _ => norm_nonneg _)) (norm_nonneg _)
-  have := (hδ i).irred.1
-  exact (norm_inner_le_norm _ _).trans (by rw [norm_unitVec, one_mul])
+  have : Nontrivial (Hs i) := (hδ i).irred.1
+  have hunit : ‖unitVec (H := Hs i)‖ = 1 := by
+    have hex := exists_norm_eq (Hs i) zero_le_one
+    rw [unitVec, dite_eq_left hex]
+    exact hex.choose_spec
+  exact (norm_inner_le_norm _ _).trans (by rw [hunit, one_mul])
 
 end Norm
 
@@ -182,22 +215,30 @@ theorem invariant_vals (hcomm : ∀ i j, i ≠ j → ∀ a b, Commute (e i a) (e
   | mul x y _ _ hx hy => rw [map_mul, ContinuousLinearMap.mul_apply]; exact hx (hy hv)
 
 noncomputable def pureMap (v : K) : ContinuousMultilinearMap ℂ Hs K :=
-  (ContinuousMultilinearMap.mkPiRing ℂ ι v).compContinuousLinearMap fun i => innerSL ℂ (unitVec (Hs i))
+  (ContinuousMultilinearMap.mkPiRing ℂ ι v).compContinuousLinearMap fun i => innerSL ℂ (unitVec (H := Hs i))
 
-theorem pureMap_apply (v : K) (y : ∀ i, Hs i) : pureMap v y = (∏ i, ⟪unitVec (Hs i), y i⟫_ℂ) • v := by
+theorem pureMap_apply (v : K) (y : ∀ i, Hs i) : pureMap v y = (∏ i, ⟪unitVec (H := Hs i), y i⟫_ℂ) • v := by
   simp [pureMap]
 
 theorem pureMap_mem_stage [∀ i, Nontrivial (Hs i)] (v : K) : pureMap v ∈ stage e δ ρ ∅ := by
   refine ⟨fun i hi => absurd hi (Finset.notMem_empty i), fun j _ y => ?_⟩
+  have hunit : ‖unitVec (H := Hs j)‖ = 1 := by
+    have hex := exists_norm_eq (Hs j) zero_le_one
+    rw [unitVec, dite_eq_left hex]
+    exact hex.choose_spec
   rw [pureMap_apply, pureMap_apply, smul_smul, ← Finset.mul_prod_erase _ _ (Finset.mem_univ j),
     ← Finset.mul_prod_erase _ _ (Finset.mem_univ j), Function.update_self, inner_self_eq_norm_sq_to_K,
-    norm_unitVec]
+    hunit]
   congr 2
   simp only [RCLike.ofReal_one, Complex.ofReal_one, one_pow, one_mul]
   exact Finset.prod_congr rfl fun i hi => by rw [Function.update_of_ne (Finset.ne_of_mem_erase hi)]
 
-theorem pureMap_unit [∀ i, Nontrivial (Hs i)] (v : K) : pureMap (Hs := Hs) v (fun i => unitVec (Hs i)) = v := by
-  simp [pureMap_apply, inner_self_eq_norm_sq_to_K, norm_unitVec]
+theorem pureMap_unit [∀ i, Nontrivial (Hs i)] (v : K) : pureMap (Hs := Hs) v (fun i => unitVec (H := Hs i)) = v := by
+  have hunit (i : ι) : ‖unitVec (H := Hs i)‖ = 1 := by
+    have hex := exists_norm_eq (Hs i) zero_le_one
+    rw [unitVec, dite_eq_left hex]
+    exact hex.choose_spec
+  simp [pureMap_apply, inner_self_eq_norm_sq_to_K, hunit]
 
 theorem vals_empty [∀ i, Nontrivial (Hs i)] : vals e δ ρ ∅ = ⊤ :=
   eq_top_iff.2 fun v _ => pureMap_unit (Hs := Hs) v ▸ apply_mem_vals (pureMap_mem_stage v) _
@@ -221,8 +262,8 @@ noncomputable def insertMap (σ : ι) (u : Hs σ) (B : Hs σ →L[ℂ] Continuou
         obtain rfl : inst = dec := Subsingleton.elim _ _
         by_cases hi : i = σ
         · subst hi
-          simp only [Function.update_self, Function.update_idem, map_smul, ContinuousMultilinearMap.smul_apply]
-        · simp only [Function.update_comm hi, ContinuousMultilinearMap.map_update_smul]
+          simp only [Function.update_self, Function.update_idem, map_smul, smul_apply, RingHom.id_apply]
+        · simp only [Function.update_comm hi, ContinuousMultilinearMap.map_update_smul, RingHom.id_apply]
           rw [Function.update_of_ne (Ne.symm hi), Function.update_of_ne (Ne.symm hi)] }
     (‖B‖ * ‖u‖) fun y => by
       change ‖B (y σ) (Function.update y σ u)‖ ≤ _
@@ -242,7 +283,7 @@ theorem insertMap_apply (σ : ι) (u : Hs σ) (B : Hs σ →L[ℂ] ContinuousMul
 theorem insertMap_mem_stage {σ : ι} (hσ : σ ∉ s) {B : Hs σ →L[ℂ] ContinuousMultilinearMap ℂ Hs K}
     (hB : ∀ x, B x ∈ stage e δ ρ s)
     (hBint : ∀ g x, B (δ σ g x) = (ρ (e σ g)).compContinuousMultilinearMap (B x)) :
-    insertMap σ (unitVec (Hs σ)) B ∈ stage e δ ρ (insert σ s) := by
+    insertMap σ (unitVec (H := Hs σ)) B ∈ stage e δ ρ (insert σ s) := by
   refine ⟨fun i hi g y => ?_, fun i hi y => ?_⟩
   · rw [insertMap_apply, insertMap_apply]
     rcases Finset.mem_insert.1 hi with rfl | hi
@@ -250,7 +291,7 @@ theorem insertMap_mem_stage {σ : ι} (hσ : σ ∉ s) {B : Hs σ →L[ℂ] Cont
       rfl
     · have hne : i ≠ σ := fun h => hσ (h ▸ hi)
       rw [Function.update_of_ne (Ne.symm hne), Function.update_comm hne]
-      have := (hB (y σ)).1 i hi g (Function.update y σ (unitVec (Hs σ)))
+      have := (hB (y σ)).1 i hi g (Function.update y σ (unitVec (H := Hs σ)))
       rwa [Function.update_of_ne hne] at this
   · have hne : i ≠ σ := fun h => hi (h ▸ Finset.mem_insert_self σ s)
     have his : i ∉ s := fun h => hi (Finset.mem_insert_of_mem h)
@@ -283,7 +324,7 @@ theorem exists_stage_insert (hδ : ∀ i, IsIrrUnitary (δ i)) (hρ : IsUnitaryR
         (Submodule.isClosed_orthogonal _)
     have h2 := Submodule.mem_orthogonal_singleton_iff_inner_right.1 (h1 (x := S x0) (hvals ▸ Submodule.mem_top))
     exact hx0 (inner_self_eq_zero.1 h2)
-  set u : ∀ i, Hs i := fun i => unitVec (Hs i)
+  set u : ∀ i, Hs i := fun i => unitVec (H := Hs i)
   set y0 := sᶜ.piecewise u y with hy0def
   have hy0c : ∀ i ∉ s, y0 i = u i := fun i hi => Finset.piecewise_eq_of_mem _ _ _ (Finset.mem_compl.2 hi)
   have hy0s : ∀ i ∈ s, y0 i = y i := fun i hi =>
@@ -298,7 +339,13 @@ theorem exists_stage_insert (hδ : ∀ i, IsIrrUnitary (δ i)) (hρ : IsUnitaryR
   have hc : 0 < c := Finset.prod_pos fun i hi => norm_pos_iff.2 (hy0ne i hi)
   have hbound : ∀ Ψ ∈ stage e δ ρ s, ‖Ψ‖ ≤ c⁻¹ * ‖Ψ y0‖ := fun Ψ hΨ => by
     rw [norm_apply_eq hδ hρ hΨ y0, Finset.prod_eq_one (s := sᶜ) fun i hi => by
-      rw [hy0c i (Finset.mem_compl.1 hi), inner_self_eq_norm_sq_to_K, norm_unitVec]; simp, mul_one,
+      have hunit : ‖u i‖ = 1 := by
+        have hex := exists_norm_eq (Hs i) zero_le_one
+        change ‖unitVec (H := Hs i)‖ = 1
+        rw [unitVec, dite_eq_left hex]
+        exact hex.choose_spec
+      rw [hy0c i (Finset.mem_compl.1 hi), inner_self_eq_norm_sq_to_K, hunit]
+      simp, mul_one,
       show ∏ i ∈ s, ‖y0 i‖ = c from rfl, mul_left_comm, inv_mul_cancel₀ hc.ne', mul_one]
     exact norm_le_apply_unit hδ hρ hΨ
   have hinj : ∀ Ψ ∈ stage e δ ρ s, ∀ Ψ' ∈ stage e δ ρ s, Ψ y0 = Ψ' y0 → Ψ = Ψ' := fun Ψ hΨ Ψ' hΨ' h => by

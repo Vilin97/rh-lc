@@ -50,12 +50,12 @@ section Algebra
 variable {ι : Type} {P Y K : ι → Type} [∀ i, AddCommGroup (P i)] [∀ i, Module ℂ (P i)] [∀ i, AddCommGroup (Y i)]
   [∀ i, Module ℂ (Y i)] [∀ i, AddCommGroup (K i)] [∀ i, Module ℂ (K i)] {Z : Type} [AddCommGroup Z] [Module ℂ Z]
 
-def slice (B : MultilinearMap ℂ P (MultilinearMap ℂ Y Z)) (i : ι) (p : ∀ j, P j) (y : ∀ j, Y j) :
+def slice (B : (∀ j, P j) →ₘₗ[ℂ] (∀ j, Y j) →ₘₗ[ℂ] Z) (i : ι) (p : ∀ j, P j) (y : ∀ j, Y j) :
     P i →ₗ[ℂ] Y i →ₗ[ℂ] Z :=
   LinearMap.mk₂ ℂ (fun x z => B (Function.update p i x) (Function.update y i z)) (fun _ _ _ => by simp)
     (fun _ _ _ => by simp) (fun _ _ _ => by simp) fun _ _ _ => by simp
 
-theorem slice_apply (B : MultilinearMap ℂ P (MultilinearMap ℂ Y Z)) (i : ι) (p : ∀ j, P j) (y : ∀ j, Y j) (x : P i)
+theorem slice_apply (B : (∀ j, P j) →ₘₗ[ℂ] (∀ j, Y j) →ₘₗ[ℂ] Z) (i : ι) (p : ∀ j, P j) (y : ∀ j, Y j) (x : P i)
     (z : Y i) : slice B i p y x z = B (Function.update p i x) (Function.update y i z) := rfl
 
 def IsContr (i : ι) (L : (⨂[ℂ] j, K j) →ₗ[ℂ] K i) : Prop := ∀ f : Module.End ℂ (K i), L ∘ₗ intersection_update_fsHerm_neg_one i f = f ∘ₗ L
@@ -74,8 +74,8 @@ theorem eq_zero_of_isContr (i : ι) {x : ⨂[ℂ] j, K j} (h : ∀ L, IsContr i 
   exact MultilinearMap.map_coord_zero _ i this
 
 theorem exists_factor {G : ι → Type} (c : ∀ i, G i → Module.End ℂ (P i)) (a : ∀ i, G i → Module.End ℂ (K i))
-    (ha : ∀ i, AbsIrr (a i)) (I : MultilinearMap ℂ P (MultilinearMap ℂ Y (⨂[ℂ] j, K j)))
-    (B : MultilinearMap ℂ P (MultilinearMap ℂ Y Z)) (h0 : ∃ p y, I p y ≠ 0)
+    (ha : ∀ i, AbsIrr (a i)) (I : (∀ j, P j) →ₘₗ[ℂ] (∀ j, Y j) →ₘₗ[ℂ] (⨂[ℂ] j, K j))
+    (B : (∀ j, P j) →ₘₗ[ℂ] (∀ j, Y j) →ₘₗ[ℂ] Z) (h0 : ∃ p y, I p y ≠ 0)
     (he : ∀ i g p y, I (Function.update p i (c i g (p i))) y = intersection_update_fsHerm_neg_one i (a i g) (I p y))
     (hk : ∀ i L, IsContr i L → ∀ p y, (slice I i p y).compr₂ L ≠ 0 →
       (∀ L', IsContr i L' → ∀ p' y', KerLe (fun x z => (slice I i p y).compr₂ L x z)
@@ -216,9 +216,9 @@ theorem mem_span_of_average {P Z : Type} [AddCommGroup P] [Module ℂ P] [AddCom
       · rw [Function.update_of_ne e]; exact hv ρ (by simp [e, hρ])
   induction x using PiTensorProduct.induction_on with
   | smul_tprod r v => rw [map_smul]; exact Submodule.smul_mem _ _ (key Finset.univ φ v (by simp))
-  | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b ha hb => rw [(G φ).map_add]; exact add_mem ha hb
 
-def glueM (D : D7) (a b : ℕ) : MultilinearMap ℂ (fun _ : D.what₂.Tau => LPol b a) (PolF D b a) :=
+def glueM (D : D7) (a b : ℕ) : (D.what₂.Tau → LPol b a) →ₘₗ[ℂ] PolF D b a :=
   (MultilinearMap.mkPiAlgebra ℂ D.what₂.Tau (PolF D b a)).compLinearMap fun τ =>
     (MvPolynomial.rename (fun s => (τ, s)) : LPol b a →ₐ[ℂ] PolF D b a).toLinearMap
 
@@ -230,7 +230,7 @@ theorem srcOp_glue (τ : D.what₂.Tau) (aT : ℚ) (X : Matrix (Fin V.rank) (Fin
   simp only [srcOp, sOp, LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply,
     ((GlueProof.glueLaw D _ _).2 τ _ _ p).1]
   simp only [← glueM_apply, MultilinearMap.map_update_add,
-    MultilinearMap.map_update_smul, Function.update_eq_self]
+    MultilinearMap.map_update_smul, RingHom.id_apply, Function.update_eq_self]
 
 theorem tgtOp_glue (τ : D.what₂.Tau) (aS : ℚ) (Y : Matrix (Fin W.rank) (Fin W.rank) ℂ)
     (p : D.what₂.Tau → LPol W.rank V.rank) :
@@ -238,10 +238,10 @@ theorem tgtOp_glue (τ : D.what₂.Tau) (aS : ℚ) (Y : Matrix (Fin W.rank) (Fin
   simp only [tgtOp, tOp, LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply,
     ((GlueProof.glueLaw D _ _).2 τ _ _ p).2]
   simp only [← glueM_apply, MultilinearMap.map_update_add,
-    MultilinearMap.map_update_smul, Function.update_eq_self]
+    MultilinearMap.map_update_smul, RingHom.id_apply, Function.update_eq_self]
 
 def multi {Z : Type} [AddCommGroup Z] [Module ℂ Z] (A : PolF D W.rank V.rank →ₗ[ℂ] KT M' →ₗ[ℂ] Z) :
-    MultilinearMap ℂ (fun _ : D.what₂.Tau => LPol W.rank V.rank) (MultilinearMap ℂ (fun τ => kFin M' τ) Z) :=
+    (D.what₂.Tau → LPol W.rank V.rank) →ₘₗ[ℂ] (∀ τ, kFin M' τ) →ₘₗ[ℂ] Z :=
   (PiTensorProduct.lift.symm.toLinearMap ∘ₗ A).compMultilinearMap (glueM D _ _)
 
 theorem multi_apply {Z : Type} [AddCommGroup Z] [Module ℂ Z] (A : PolF D W.rank V.rank →ₗ[ℂ] KT M' →ₗ[ℂ] Z)
@@ -383,7 +383,8 @@ theorem exists_mult (hG : GlobalTheory.IndefiniteRowSideFullHecke.KTypeExtension
     | add _ _ _ _ a b => intro c; rw [smul_add]; exact h3 _ _ (a c) (b c)
     | smul a _ _ h => intro c; rw [smul_smul]; exact h _
   have hg : ∀ x, IsCuspGrow θ V (T x) := fun x => GlobalTheory.Chain.CuspGrowSpace.isCuspGrow_of_mem_span D θ V _ (hind (fun x => T x ∈ _)
-    (fun φ y => Submodule.subset_span (hT φ y ▸ hBg _ _)) (fun x y a b => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem a b) x)
+    (fun φ y => Submodule.subset_span (hT φ y ▸ hBg _ _))
+    (fun x y a b => by rw [T.map_add]; exact add_mem a b) x)
   obtain ⟨μ, 𝓕, hμ, h𝓕⟩ := GlobalTheory.Ker.HypModel.exists_haar_fundDom D V
   obtain ⟨E, hE0, -⟩ := GlobalTheory.Chain.CuspL2.exists_embedding_skew hdec D θ V μ 𝓕 hθ hμ h𝓕
   obtain ⟨U, ⟨hU, hUe⟩, -⟩ := hG θ hθ V S M J χ μ 𝓕 hμ h𝓕 (T.compMultilinearMap (PiTensorProduct.tprod ℂ))

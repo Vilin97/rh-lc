@@ -49,16 +49,18 @@ open Classical in
 def kapNew (S : RealDat3 D A3 Ks) : ℝ := if h : ∃ κ, KapFixed S κ then h.choose else S.kap
 
 theorem kapNew_eq (S : RealDat3 D A3 Ks) {κ : ℝ} (h : KapFixed S κ) : kapNew S = κ := by
-  have h' : ∃ κ, KapFixed S κ := ⟨κ, h⟩
+  have h' : ∃ κ, KapFixed (D := D) (A3 := A3) (Ks := Ks) S κ := ⟨κ, h⟩
   unfold kapNew
   rw [dite_eq_left h']
   obtain ⟨t, p, hp, hl⟩ := h.2
   exact Lift.IsKap.unique h'.choose_spec.1 h.1 t p hp hl
 
-theorem kapNew_of_not (S : RealDat3 D A3 Ks) (h : ¬ ∃ κ, KapFixed S κ) : kapNew S = S.kap := dif_neg h
+theorem kapNew_of_not (S : RealDat3 D A3 Ks) (h : ¬ ∃ κ, KapFixed S κ) : kapNew S = S.kap := by
+  unfold kapNew
+  exact dif_neg h
 
 theorem kapNew_of_scal (S : RealDat3 D A3 Ks) (h : S.scal_kap) : kapNew S = S.kap := by
-  by_cases h' : ∃ κ, KapFixed S κ
+  by_cases h' : ∃ κ, KapFixed (D := D) (A3 := A3) (Ks := Ks) S κ
   · obtain ⟨κ, hκ⟩ := h'
     exact (kapNew_eq S hκ).trans (h κ hκ.1 hκ.2).symm
   · exact kapNew_of_not S h'

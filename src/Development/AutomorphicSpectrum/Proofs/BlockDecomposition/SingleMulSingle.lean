@@ -343,8 +343,17 @@ theorem pj_mul_pj_eq_zero (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hW : IsWitt
     (hp : p ∈ minPar σ J X) {α β : Idx r} (hr : rk β < rk α) :
     Pj σ J X Y α * (matHom _ σ J p).1 * Pj σ J X Y β = 0 := by
   obtain ⟨B, L, h1, h2, h3, h4⟩ := par_data h hJ hW hp
-  have hfr := fr_adMat h hJ hW
-  exact pr_mul_pr_eq_zero hfr.xx hfr.yx hfr.xy h1 h2 h3 h4 hr
+  have hgram (P Q : Matrix (Fin n) (Fin r) E) :
+      cT (sigR (AF F) σ) (adMat F P) * JR (F := F) (AF F) J * adMat F Q =
+        (cT (σ : E →+* E) P * J * Q).map (inclR (F := F) (AF F)) := by
+    rw [Matrix.map_mul, Matrix.map_mul, map_cT_inclR]
+    rfl
+  have hyx : cT (σ : E →+* E) Y * J * X = 1 :=
+    (show Sieg.Fr (σ : E →+* E) J X Y from ⟨sigma_sigma h, Matrix.ext fun i j => hJ.1 i j, hW.xx, hW.yy, hW.xy⟩).yx
+  apply pr_mul_pr_eq_zero _ _ _ h1 h2 h3 h4 hr
+  · rw [hgram, hW.xx, Matrix.map_zero _ (map_zero _)]
+  · rw [hgram, hyx, Matrix.map_one _ (map_zero _) (map_one _)]
+  · rw [hgram, hW.xy, Matrix.map_one _ (map_zero _) (map_one _)]
 
 theorem dl_neg (s : Fin r → ℝ) (α : Idx r) : dl (-s) α = - dl s α := by
   rcases α with i | u | i <;> simp [dl]
@@ -356,7 +365,7 @@ def Psi (q : (Idx r → Idx r → ℝ) × GAd σ J) : Matrix (Fin n) (Fin n) (AF
 
 theorem continuous_Psi [IsTotallyReal F] : Continuous (Psi σ J X Y) := by
   have := GlobalTheory.Doubling.isTopologicalRing_tens (F := F) (E := E) (R := AF F)
-  refine continuous_finset_sum _ fun α _ => continuous_finset_sum _ fun β _ => ?_
+  refine continuous_finsetSum _ fun α _ => continuous_finsetSum _ fun β _ => ?_
   have h1 : Continuous fun q : (Idx r → Idx r → ℝ) × GAd σ J => eA F E (q.1 α β) :=
     continuous_eA.comp ((continuous_apply β).comp ((continuous_apply α).comp continuous_fst))
   have h2 : Continuous fun q : (Idx r → Idx r → ℝ) × GAd σ J =>

@@ -48,12 +48,12 @@ theorem exists_pull (A : HodgeCpt Y S y) (B : HodgeCpt Y S y') (h : B.X ⟶ A.X)
   have hgen := A.tie.gen
   have hgen' := B.tie.gen
   obtain ⟨mh, -⟩ := GlobalTheory.CompanionTheory.Ar.CoverLie.cancel hf A.m B.m
-  obtain ⟨j, hj⟩ := GlobalTheory.CompanionTheory.Ar.CoverLie.Move.exists_hom hdom mh.cart A.M B.M
+  obtain ⟨j, hj⟩ := GlobalTheory.T.lie_model_pullback_map A.X B.X Ω Ω' A.ξ B.ξ h i A.t.G B.t.G mh.φ A.Li B.Li A.M B.M hdom mh.cart
   have hsm : Smooth A.t.G.hom := A.t.semi.smooth
   obtain ⟨hext, hspan, hlat⟩ := GlobalTheory.T.lie_lattice_dominant_compat A.X B.X Ω Ω' A.ξ B.ξ h i A.t.G B.t.G mh.φ A.Li B.Li A.M B.M j hgen hgen' hdom
     mh.cart hsm hj
-  have hρj : ∀ a e, j (A.ρ a e) = B.ρ a (j e) := fun a e =>
-    GlobalTheory.CompanionTheory.Ar.CoverLie.Move.map_diff mh.cart (mh.act a) hj (A.act a) (B.act a) e
+  have hρj := GlobalTheory.T.lie_model_pullback_action A.X B.X Ω Ω' A.ξ B.ξ h i A.t.G B.t.G mh.φ A.Li B.Li A.M B.M j (𝓞 E) A.t.act.act B.t.act.act A.ρ B.ρ
+    hdom mh.cart hj A.act B.act (fun a => mh.act a)
   obtain ⟨jd, hjd⟩ := GlobalTheory.T.dual_map_of_field_extension Ω Ω' i A.Li B.Li j hext hspan
   have hW : ∀ s, eigSp B.ρ ((i.comp A.cst).comp (labelEmb c s)) = Submodule.span Ω' (j '' (A.Vgen s : Set A.Li)) := fun s =>
     GlobalTheory.T.eigenspace_field_extension E Ω Ω' i A.Li B.Li j A.ρ B.ρ (A.emb s) hext hspan hρj

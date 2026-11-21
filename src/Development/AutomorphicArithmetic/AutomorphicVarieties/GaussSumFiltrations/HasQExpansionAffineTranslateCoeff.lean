@@ -126,8 +126,8 @@ theorem hasQ_aff : ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (k
     rw [weightSlash_hilbertAffine_apply]
     have hc := (Equiv.hasSum_iff (Units.mulRight ε⁻¹)).mpr hs
     convert hc using 1
-    rw [← div_eq_mul_inv, div_mul_cancel₀ _ hε0]
-    ring
+    funext ξ
+    simp [Function.comp_def, div_eq_mul_inv, mul_assoc, mul_comm, mul_left_comm, hε0]
 
 end GlobalTheory.HilbertThetaSeries.QAff
 

@@ -99,6 +99,7 @@ theorem nuT_cov : ∀ (D : D7) (n t : ℕ) (B W : HSp D) (d : HypDec B W t) (hn 
   rw [Measure.map_map hT hπ, hcomp, ← Measure.map_map hπ hτm]
   unfold Q0
   rw [hτ, Measure.map_smul, ← pow_add, add_comm t]
+  exact hπ.aemeasurable
 
 end GlobalTheory.CompanionTheory.ColumnSplitting.Cov
 

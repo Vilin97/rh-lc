@@ -45,10 +45,12 @@ theorem isHolTo_chart (c : AlgChart s (RingHom.id ℂ) D) (W : X.Opens)
       ((isOpen_ptsIn (p := s) (σ := RingHom.id ℂ) W).inter (isOpen_ptsIn U))).preimage ψ.continuous
     rw [hset] at ho
     exact ho
-  · have hd := ((c.holo U f).comp ψ.differentiableOn (fun b hb => hb)).mono
-      (fun b (hb : b ∈ {b | b ∈ ψ ⁻¹' (c.e.target ∩ c.e.symm ⁻¹' ptsIn s (RingHom.id ℂ) W) ∧
-        ⊤ ≤ (Opens.map (c.e.symm (ψ b)).1.base).obj U}) => (⟨hb.1.1, hb.2⟩ :
-          ψ b ∈ c.e.target ∩ c.e.symm ⁻¹' ptsIn s (RingHom.id ℂ) U))
+  · have hd : DifferentiableOn ℂ ((fun v => ev s (RingHom.id ℂ) U f (c.e.symm v)) ∘ ψ)
+        {b | b ∈ ψ ⁻¹' (c.e.target ∩ c.e.symm ⁻¹' ptsIn s (RingHom.id ℂ) W) ∧
+          ⊤ ≤ (Opens.map (c.e.symm (ψ b)).1.base).obj U} := by
+      apply (c.holo U f).comp ψ.differentiableOn
+      intro b hb
+      exact ⟨hb.1.1, hb.2⟩
     refine hd.congr ?_
     intro b _
     exact valAt'_eq_ev U f _

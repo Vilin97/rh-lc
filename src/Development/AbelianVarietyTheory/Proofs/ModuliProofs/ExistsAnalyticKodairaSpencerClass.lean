@@ -37,18 +37,31 @@ theorem const_zero {R : Type} [CommRing R] {X : Scheme.{0}} (p : X ⟶ Sp R) (U 
   rw [map_zero, map_zero]
 
 theorem ptDer_add {X : Scheme.{0}} {y : Sp ℂ ⟶ X} {δ δ' : ∀ W : X.Opens, Γ(X, W) → ℂ} (h : PtDer y δ) (h' : PtDer y δ') :
-    PtDer y (fun W f => δ W f + δ' W f) where
-  add W hW f f' := by rw [h.add W hW, h'.add W hW]; ring
-  mul W hW f f' := by rw [h.mul W hW, h'.mul W hW]; ring
-  res W W' e hW f := by rw [h.res W W' e hW, h'.res W W' e hW]
+    PtDer y (fun W f => δ W f + δ' W f) := by
+  constructor
+  · intro W hW f f'
+    rw [h.add W hW, h'.add W hW]
+    ring
+  · intro W hW f f'
+    rw [h.mul W hW, h'.mul W hW]
+    ring
+  · intro W W' e hW f
+    rw [h.res W W' e hW, h'.res W W' e hW]
 
 theorem locDer_sub {R : Type} [CommRing R] {Y X : Scheme.{0}} {q : Y ⟶ Sp ℂ} {p : X ⟶ Sp R} {m : Y ⟶ X} {D : R → ℂ}
     {W₀ W₁ : X.Opens} {d d' : ∀ W : X.Opens, Γ(X, W) → Γ(Y, m ⁻¹ᵁ W)} (h : LocDer q p m D W₀ d)
-    (h' : LocDer q p m D W₁ d') : LocDer q p m (fun _ => 0) (W₀ ⊓ W₁) (fun W f => d W f - d' W f) where
-  add W hW f f' := by rw [h.add W (hW.trans inf_le_left), h'.add W (hW.trans inf_le_right)]; ring
-  mul W hW f f' := by rw [h.mul W (hW.trans inf_le_left), h'.mul W (hW.trans inf_le_right)]; ring
-  res W W' e hW f := by rw [h.res W W' e (hW.trans inf_le_left), h'.res W W' e (hW.trans inf_le_right), map_sub]
-  base W hW r := by rw [h.base W (hW.trans inf_le_left), h'.base W (hW.trans inf_le_right), sub_self, const_zero]
+    (h' : LocDer q p m D W₁ d') : LocDer q p m (fun _ => 0) (W₀ ⊓ W₁) (fun W f => d W f - d' W f) := by
+  constructor
+  · intro W hW f f'
+    rw [h.add W (hW.trans inf_le_left), h'.add W (hW.trans inf_le_right)]
+    ring
+  · intro W hW f f'
+    rw [h.mul W (hW.trans inf_le_left), h'.mul W (hW.trans inf_le_right)]
+    ring
+  · intro W W' e hW f
+    rw [h.res W W' e (hW.trans inf_le_left), h'.res W W' e (hW.trans inf_le_right), map_sub]
+  · intro W hW r
+    rw [h.base W (hW.trans inf_le_left), h'.base W (hW.trans inf_le_right), sub_self, const_zero]
 
 variable {g : ℕ} {A₀ : Over (Sp ℂ)} [GrpObj A₀] {L₀ : LB A₀.left} (u : HolUnif A₀ L₀ g) {X : Scheme.{0}}
   (m : A₀.left ⟶ X)
@@ -64,7 +77,7 @@ theorem dom_inf {W W' : X.Opens} {z : Fin g → ℂ} : z ∈ dom u m (W ⊓ W') 
   top_le_preimage_inf _ _ _
 
 theorem dom_per (l : u.Λ) (W : X.Opens) (z : Fin g → ℂ) : z + l ∈ dom u m W ↔ z ∈ dom u m W := by
-  simp only [dom, Set.mem_setOf_eq, ex_per]
+  simp only [dom, Set.mem_ofPred_eq, ex_per]
 
 theorem val_hol (W : X.Opens) (c : Γ(A₀.left, m ⁻¹ᵁ W)) :
     DifferentiableOn ℂ (fun z => valAt' (u.ex z).left (m ⁻¹ᵁ W) c) (dom u m W) := (u.hol (m ⁻¹ᵁ W) c).2
@@ -87,18 +100,24 @@ theorem fderiv_res {W W' : X.Opens} (h : W' ≤ W) (f : Γ(X, W)) {z : Fin g →
 
 theorem fderiv_per (l : u.Λ) (W : X.Opens) (f : Γ(X, W)) (z : Fin g → ℂ) :
     fderiv ℂ (fn u m W f) (z + l) = fderiv ℂ (fn u m W f) z := by
-  rw [← fderiv_comp_add_right]
-  congr 1
+  have h : (fun x => fn u m W f (x + l)) = fn u m W f := by
+    funext x
+    simp only [fn, ex_per]
+  rw [← fderiv_comp_add_right, h]
 
 theorem ptDer_fderiv (z w : Fin g → ℂ) :
-    PtDer ((u.ex z).left ≫ m) (fun W f => fderiv ℂ (fn u m W f) z w) where
-  add W hW f f' := by
+    PtDer ((u.ex z).left ≫ m) (fun W f => fderiv ℂ (fn u m W f) z w) := by
+  constructor
+  · intro W hW f f'
     have : fn u m W (f + f') = fn u m W f + fn u m W f' := funext fun y => valAt'_add _ _ _ _
-    rw [this, fderiv_add (fn_diffAt u m f hW) (fn_diffAt u m f' hW)]; rfl
-  mul W hW f f' := by
+    rw [this, fderiv_add (fn_diffAt u m f hW) (fn_diffAt u m f' hW)]
+    rfl
+  · intro W hW f f'
     have : fn u m W (f * f') = fn u m W f * fn u m W f' := funext fun y => valAt'_mul _ _ _ _
-    rw [this, fderiv_mul (fn_diffAt u m f hW) (fn_diffAt u m f' hW)]; rfl
-  res W W' h hW f := by rw [fderiv_res u m h f hW]
+    rw [this, fderiv_mul (fn_diffAt u m f hW) (fn_diffAt u m f' hW)]
+    rfl
+  · intro W W' h hW f
+    rw [fderiv_res u m h f hW]
 
 theorem fderiv_const_eq {R : Type} [CommRing R] {x₀ : R →+* ℂ} {p : X ⟶ Sp R} (hm : m ≫ p = A₀.hom ≫ spMap x₀)
     (r : R) (z w : Fin g → ℂ) : fderiv ℂ (fn u m ⊤ (constFn p ⊤ r)) z w = 0 := by
@@ -125,14 +144,15 @@ theorem ev_eq (hd : LocDer A₀.hom p m D W₀ d) {z : Fin g → ℂ} {W W' : X.
   exact (valAt'_res (u.ex z).left (V := m ⁻¹ᵁ W') _ _ hz).symm
 
 theorem ptDer_ev (hd : LocDer A₀.hom p m D W₀ d) {z : Fin g → ℂ} (hz : z ∈ dom u m W₀) :
-    PtDer ((u.ex z).left ≫ m) (ev u m W₀ d z) where
-  add W hW f f' := by
+    PtDer ((u.ex z).left ≫ m) (ev u m W₀ d z) := by
+  constructor
+  · intro W hW f f'
     simp only [ev, map_add (f := _), hd.add _ inf_le_right, valAt'_add]
-  mul W hW f f' := by
+  · intro W hW f f'
     have h : z ∈ dom u m (W ⊓ W₀) := (dom_inf u m).2 ⟨hW, hz⟩
     simp only [ev, map_mul, hd.mul _ inf_le_right, valAt'_add, valAt'_mul, valAt'_comp]
     rw [valAt'_res _ _ f h, valAt'_res _ _ f' h]
-  res W W' e hW f := by
+  · intro W W' e hW f
     have h : z ∈ dom u m (W' ⊓ W₀) := (dom_inf u m).2 ⟨hW, hz⟩
     rw [ev_eq u m hd (inf_le_left.trans e) inf_le_right h f, ev, res_res]
 

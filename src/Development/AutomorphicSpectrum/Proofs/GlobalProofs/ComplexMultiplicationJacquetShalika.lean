@@ -6,18 +6,6 @@ public import GroundTheory.GlobalFields.ComplexMultiplication.HilbertClassField
 
 @[expose] public section
 
-abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
-  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
-  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
-  one_mem' z hz := by simpa only [one_mul] using hz
-  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
-  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
-  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
-
-abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
-    (σ : K →+* ℂ) : Subring ℂ :=
-  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
-
 open NumberField IsDedekindDomain IntermediateField GroundTheory.Global GroundTheory.Global.Elliptic
 open scoped nonZeroDivisors
 
@@ -91,7 +79,7 @@ theorem lattice_eq_idealLattice {𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ} {L : 
 
 theorem latticeEnd_eq_cmRing [_root_.NumberField.IsTotallyComplex K] (hK : Module.finrank ℚ K = 2)
     {𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ} {L : PeriodPair} (h : GlobalTheory.Published.IsIdealLattice 𝔞 L) :
-    periodLatticeEnd L = cmRingOfEmbedding (algebraMap K ℂ) := by
+    GroundTheory.Global.Elliptic.periodLatticeEnd L = cmRingOfEmbedding (algebraMap K ℂ) := by
   rw [← latticeEnd_ideal (algebraMap K ℂ) hK 𝔞]
   ext α
   show (∀ l ∈ L.lattice, α * l ∈ L.lattice) ↔

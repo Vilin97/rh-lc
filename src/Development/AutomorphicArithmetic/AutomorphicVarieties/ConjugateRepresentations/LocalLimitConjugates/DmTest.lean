@@ -83,8 +83,10 @@ theorem UpperTheory.V.Cj.H.dmTest :
   intro E _ _ _ a μ _ f hf
   let F : CompactlySupportedContinuousMap (GA E a) ℂ := ⟨⟨f.1, ((testOps E a f).1 hf.2).1⟩, hf.1⟩
   obtain ⟨n, φ, ψ, h, e⟩ := GroundTheory.Automorphic.ProdSmooth.exists_sum_conv _ (spl E a) μ F (smooth_of f hf.2)
-  choose u hu eu using fun i => test_of (φ i) (h i).1
-  choose v hv ev using fun i => test_of (ψ i) (h i).2
+  have hφ : ∀ i, ∃ u : Sm E a, IsTest u ∧ u.1 = φ i := fun i => test_of (φ i) (h i).1
+  have hψ : ∀ i, ∃ v : Sm E a, IsTest v ∧ v.1 = ψ i := fun i => test_of (ψ i) (h i).2
+  choose u hu eu using hφ
+  choose v hv ev using hψ
   refine ⟨n, u, v, fun i => ⟨hu i, hv i⟩, funext fun x => ?_⟩
   have := congrArg (fun G : CompactlySupportedContinuousMap (GA E a) ℂ => G x) e
   simp only [CompactlySupportedContinuousMap.sum_apply, GroundTheory.Automorphic.conv_apply] at this

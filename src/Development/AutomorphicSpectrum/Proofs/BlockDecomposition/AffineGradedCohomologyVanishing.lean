@@ -80,10 +80,12 @@ theorem dividedPowerFiltration_bot {K : Type} [CommRing K] {s : ℕ} (hs : 0 < s
   rw [List.prod_eq_zero (List.mem_map.2 ⟨p, hp, h0⟩)]
   exact Ideal.zero_mem _
 
-theorem tfBase {K : Type} [Field K] [CharZero K] {s : ℕ} (hs : 0 < s) : TFBase (dividedPowersBot K) 1 s where
-  nil := dividedPowerFiltration_bot hs
-  tf r x h := by simpa using h
-  dv n hn := ⟨0, (n : K)⁻¹, by simp; exact mul_inv_cancel₀ (Nat.cast_ne_zero.2 hn)⟩
+theorem tfBase {K : Type} [Field K] [CharZero K] {s : ℕ} (hs : 0 < s) : TFBase (dividedPowersBot K) 1 s := by
+  refine ⟨dividedPowerFiltration_bot hs, ?_, ?_⟩
+  · intro r x h
+    simpa only [Nat.cast_one, one_mul] using h
+  · intro n hn
+    exact ⟨0, (n : K)⁻¹, by rw [pow_zero, mul_inv_cancel₀ (Nat.cast_ne_zero.2 hn)]⟩
 
 def zeroSerre (K : Type) [CommRing K] : Serre.{1} K where
   P M _ _ := Subsingleton M

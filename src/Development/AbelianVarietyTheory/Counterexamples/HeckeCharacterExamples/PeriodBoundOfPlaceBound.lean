@@ -12,7 +12,7 @@ noncomputable section
 
 namespace GlobalTheory.Survey.PeriodBoundOfPlaceBound
 
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.G NumberField IsDedekindDomain GlobalTheory.IndefiniteRowSideFullHecke.PeriodLowerBounds
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.G NumberField IsDedekindDomain
 open scoped BigOperators
 
 theorem vAdd_unit (D : D7) (w : D.what₂.places.Pl) (s : 𝓞 D.what₂.LL) (hs : s ∉ (D.plEq w).asIdeal) :

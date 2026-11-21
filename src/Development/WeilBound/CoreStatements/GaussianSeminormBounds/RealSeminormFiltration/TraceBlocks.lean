@@ -120,12 +120,22 @@ theorem fock_data (h : IsCMExt F E σ) (hfr : Framed τ JA JB a b A C) {Φ : Ten
   choose C' h1 h2 using fun w => frame_inv (hfr.2.2 w)
   choose A' a1 a2 using fun w => frame_inv (hfr.2.1 w)
   have hg : ∀ (t : ℝ) w, ((γ (Multiplicative.ofAdd t)).1 : Matrix β β (AE F E)).map (piInf (τ w)) =
-      C w * NormedSpace.exp (t • Y w) * C' w := fun t w => by rw [← hY, Matrix.mul_assoc, h1, Matrix.mul_one]
+      C w * NormedSpace.exp (t • Y w) * C' w := fun t w => by
+    rw [← hY, Matrix.mul_assoc, h1, Matrix.mul_one]
+    rfl
   have hu : ∀ w, Y w ∈ upq R S := fun w => lie_of_exp _ _ fun t => (frame_iff_smul (hfr.2.2 w) (hY t w)).1 (by
     have := congrArg (fun X : Matrix β β (AE F E) => X.map (piInf (τ w))) (γ (Multiplicative.ofAdd t)).2
     simp only [map_form h] at this
     exact this)
-  obtain ⟨L, -, hL, hL'⟩ := exists_lf h τ α β
+  obtain ⟨s, hs, hs'⟩ := exists_section h τ
+  let L : (InfinitePlace F → Matrix α β ℂ) → Matrix α β (AE F E) :=
+    fun z => Matrix.of fun i j => s fun w => z w i j
+  have hL : ∀ z, At (evI F) (L z) := fun z a ha => by
+    ext i j
+    exact (hs' _).1 a ha
+  have hL' : ∀ z w, (L z).map (piInf (τ w)) = z w := fun z w => by
+    ext i j
+    exact (hs' _).2 w
   let U : InfinitePlace F → Matrix (Ix P Q) (Ix R S) ℂ → Matrix α β (AE F E) := fun w c =>
     L fun w' => A w' * (Pi.single w c : InfinitePlace F → Matrix (Ix P Q) (Ix R S) ℂ) w' * (C w')ᵀ
   have hU : ∀ w c T, D (U w c) (Φ T) = Φ (atL w (heisOp c) T) := fun w c T => by
@@ -162,13 +172,13 @@ theorem fock_data (h : IsCMExt F E σ) (hfr : Framed τ JA JB a b A C) {Φ : Ten
     rw [← Matrix.mul_assoc (C w)ᵀ, ← Matrix.transpose_mul, h2, Matrix.transpose_one, Matrix.one_mul]
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [hU, ← map_add (f := _), ← map_sum, ← map_smul]
-    congr 1
-    rw [Fintype.sum_prod_type, sumPl, LinearMap.sum_apply, Finset.smul_sum]
-    refine Finset.sum_congr rfl fun w _ => ?_
-    rw [atL_eq, ← fock_eq (hu w)]
-    set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_smul, map_sum, map_add (f := _), atL_mul, LinearMap.smul_apply, LinearMap.sum_apply, LinearMap.add_apply,
-      Module.End.mul_apply]
+      congr 1
+      rw [Fintype.sum_prod_type, sumPl, LinearMap.sum_apply, Finset.smul_sum]
+      refine Finset.sum_congr rfl fun w _ => ?_
+      rw [atL_eq, ← fock_eq (hu w)]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_smul, map_sum, map_add (f := _), atL_mul, LinearMap.smul_apply, LinearMap.sum_apply, LinearMap.add_apply,
+        Module.End.mul_apply]
 
 theorem sumPl_add (Φ : Tens F P Q R S →ₗ[ℂ] SInf F κ) (L : InfinitePlace F → Module.End ℂ (Formalism.BasicNotions.TH.Pol P Q R S))
     (s : InfinitePlace F → ℂ) (T : Tens F P Q R S) :
@@ -202,7 +212,9 @@ theorem exists_dbl {γ γ' : Multiplicative ℝ →* UG (cA σ) JB} (h : γ ∈ 
     have e1 := h.2 t u hu
     have e2 := h'.2 t u hu
     rw [smul_sub, sub_eq_zero] at e1 e2 ⊢
-    rw [← Matrix.fromBlocks_one, Matrix.fromBlocks_smul, Matrix.fromBlocks_smul, e1, e2]
+    rw [← Matrix.fromBlocks_one, Matrix.fromBlocks_smul, Matrix.fromBlocks_smul]
+    exact congrArg₂ (fun X Y => Matrix.fromBlocks X (u • (0 : Matrix β β (AE F E)))
+      (u • (0 : Matrix β β (AE F E))) Y) e1 e2
 
 theorem at_det {g : Matrix β β (AE F E)} (hg : At (evI F) (g - 1)) : At (evI F) (g.det - 1) := fun u hu => by
   let J : Ideal (AE F E) := LinearMap.ker (LinearMap.mul (AE F E) (AE F E) (algebraMap (AF F) (AE F E) u))

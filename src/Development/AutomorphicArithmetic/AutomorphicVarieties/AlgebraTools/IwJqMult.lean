@@ -160,9 +160,9 @@ private theorem row {n : ℕ} {c : Fin n → Fin n → Type} [∀ i j, Fintype (
       ∏ j, ψ (w j) (GeneralLinearGroup.det (p (w j) j)) := by
     rw [torusChar_apply, ← Equiv.prod_comp w]
     refine Finset.prod_congr rfl fun j _ => congrArg _ ?_
-    refine (det_leviEmb k (f (w j)) (p (w j))).trans (Finset.prod_eq_single j (fun i _ hi => ?_) (by simp))
-    have := hw (w j) i (fun h => hi (w.injective h).symm)
-    rw [Subsingleton.elim (p (w j) i) 1, map_one]
+    refine (det_leviEmb k (f (w j)) (p (w j))).trans (Finset.prod_eq_single j (fun i _ hi => by
+      have := hw (w j) i (fun h => hi (w.injective h).symm)
+      rw [Subsingleton.elim (p (w j) i) 1, map_one]) (by simp))
   rw [relJac_mk, d2, inv_one, Units.val_one, one_smul, hρ, e, ← smul_eq_mul, Submodule.Quotient.mk_smul]
 
 private theorem col {n : ℕ} {c : Fin n → Fin n → Type} [∀ i j, Fintype (c i j)] [∀ i j, DecidableEq (c i j)]

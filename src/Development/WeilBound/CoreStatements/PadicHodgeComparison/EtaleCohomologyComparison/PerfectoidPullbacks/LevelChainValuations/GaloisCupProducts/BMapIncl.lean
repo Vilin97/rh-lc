@@ -27,7 +27,7 @@ end LevelChangeComparison
 variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)}
 
 section
-variable (S : LevSys (per l K)) (hS : S.Good) (m : ℕ) (M : Model l K)
+variable (S : LevSys (CrystallineSemistableComparison.per l K)) (hS : S.Good) (m : ℕ) (M : Model l K)
 
 def nmLevA : NMor (S.L (m + 1)).γ M.p (κA (OK l K) (S.L (m + 1)).I) (S.L m).γ M.p (κA (OK l K) (S.L m).I) (S.dA m) :=
   nmK (S.L (m + 1)).γ (S.L m).γ M.p M.p (S.dA m) (hS.ddp m) (hS.dO m) (𝟙 M.X) (Category.id_comp _)
@@ -41,7 +41,7 @@ end LevelChangeComparison
 
 end
 
-theorem bMap_incl {m : ℕ} {L : Lev (per l K) m} (hL : L.Good) (M : Model l K) {s s' : ℕ} (h : s ≤ s')
+theorem bMap_incl {m : ℕ} {L : Lev (CrystallineSemistableComparison.per l K) m} (hL : L.Good) (M : Model l K) {s s' : ℕ} (h : s ≤ s')
     (hQ : ∀ T, QB L M s T → QA L M s (((nmB M hL).mor 0).obj T))
     (hQ' : ∀ T, QB L M s' T → QA L M s' (((nmB M hL).mor 0).obj T)) (j : ℕ) (z : HO (QA L M s') j) :
     (incl (ts_le L.γB M.q 1 h {⊤})).o.pull j (bMap M s' hL hQ' j z) =

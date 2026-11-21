@@ -245,8 +245,9 @@ private theorem algX_strHom_top {κ : Type} [Field κ] {Z : Scheme.{0}} [Algebra
     algX (strHom κ Z) ⊤ = algebraMap κ Γ(Z, ⊤) := by
   ext r
   rw [algebraMap_eq_strHom]
-  simp [algX, Scheme.Hom.appLE, Scheme.Hom.appTop]
-  rfl
+  have h : (strHom κ Z).appLE ⊤ ⊤ le_top = (strHom κ Z).appTop := by
+    exact Scheme.Hom.appLE_eq_app _
+  simp [algX, h, Scheme.Hom.appTop]
 
 private theorem evaluation_genericPoint_eq_zero_iff {Z : Scheme.{0}} [IsIntegral Z] {U : Z.Opens}
     (hU : genericPoint Z ∈ U) (a : Γ(Z, U)) :

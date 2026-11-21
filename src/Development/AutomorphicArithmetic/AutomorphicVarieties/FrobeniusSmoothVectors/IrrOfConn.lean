@@ -108,6 +108,7 @@ theorem UpperTheory.V.Fr.types :
     ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [IsCoef l O] {F : Frame l (ResidueField O)} {C₀ : ℕ} {n : ℕ}, F.Ok C₀ → (n = 2 ∨ n = 3) → ∀ S : Space O F n, ∀ (K : Type) [Field K] (f : S.A →+* K), (MatIrr ⊤ (S.u.map f).r ↔ S.u.TI (RingHom.ker f)) ∧ (S.mB ≤ S.π (RingHom.ker f) → S.u.triP ≤ RingHom.ker f ∨ S.u.triM ≤ RingHom.ker f) := by
   intro l _ O _ _ _ _ F C₀ n hF hn S K _ f
   obtain ⟨hco, hm⟩ := co_B hF hn S
+  letI : IsCO O S.B := hco
   obtain ⟨hcone, hint⟩ := cone_u hF hn S
   have hle : ∀ Q : Fin n → Fin n → Prop,
       Ideal.span {x | ∃ g i j, Q i j ∧ x = S.u.r g i j} ≤ RingHom.ker f ↔

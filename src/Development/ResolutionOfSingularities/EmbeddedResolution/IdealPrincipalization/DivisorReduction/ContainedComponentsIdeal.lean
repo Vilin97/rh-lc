@@ -166,13 +166,13 @@ theorem exists_etaleChart_containedComponentsIdeal (T : MarkedIdealWithBoundary.
       refine restrictIdeal_eq_top_of_le _ hUle ?_
       simpa only [List.get_eq_getElem] using hnone i hi hai
     · intro i hi t hai
-      refine restrictIdeal_eq_restrict_coordIdeal_of_le hUle c _ {t} ?_
-      simpa only [List.get_eq_getElem] using hsome i hi t hai
+      exact restrictIdeal_eq_restrict_coordIdeal_of_le hUle c _ {t}
+        (by simpa only [List.get_eq_getElem] using hsome i hi t hai)
     · intro i i' hi hi' t h4 h5
       exact hinj i hi i' hi' t h4 h5
     · rw [hrestr]
-      refine restrictIdeal_eq_restrict_coordIdeal_of_le hUle c _ {b} ?_
-      simpa only [List.get_eq_getElem] using hsome j hj b hb
+      exact restrictIdeal_eq_restrict_coordIdeal_of_le hUle c _ {b}
+        (by simpa only [List.get_eq_getElem] using hsome j hj b hb)
   · exfalso
     rw [containedComponentsIdeal_eq_top_of_not_isOpen T j hj hopen] at hx
     exact (mem_support_iff_stalkIdeal_ne_top (⊤ : T.scheme.IdealSheafData) x).1 hx

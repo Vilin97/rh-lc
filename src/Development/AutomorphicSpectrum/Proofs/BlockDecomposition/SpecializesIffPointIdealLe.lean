@@ -27,8 +27,10 @@ theorem closure_ratio (N : ℕ) (i : Fin (N + 1)) : Subring.closure (Set.range (
   clear hs
   obtain ⟨p, rfl⟩ := aeval_ratio_surjective ℤ N i s
   induction p using MvPolynomial.induction_on with
-  | C a => simpa using intCast_mem _ a
-  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+  | C a => simp
+  | add p q hp hq =>
+    rw [map_add]
+    exact add_mem hp hq
   | mul_X p j hp =>
     rw [map_mul, aeval_X]
     exact mul_mem hp (Subring.subset_closure ⟨j, rfl⟩)
@@ -97,13 +99,14 @@ theorem range_sup_range_eq_top {X Y : Scheme.{0}} (f : X ⟶ Spec (.of ℤ)) (g 
   refine eq_top_iff.2 fun s hs => ?_
   clear hs
   obtain ⟨t, rfl⟩ := hsurj s
-  induction t using TensorProduct.induction_on with
-  | zero => simp
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  induction t using TensorProduct.inductionOn with
   | tmul u v =>
     have : ψ (u ⊗ₜ v) = a.hom u * b.hom v := by simp [ψ]
     rw [this]
     exact mul_mem ((le_sup_left : a.hom.range ≤ _) ⟨u, rfl⟩) ((le_sup_right : b.hom.range ≤ _) ⟨v, rfl⟩)
+  | add x y hx hy =>
+    rw [map_add]
+    exact add_mem hx hy
 
 end GlobalTheory.CompanionTheory.MPDict.Spec
 
@@ -130,8 +133,11 @@ theorem closure_mratio_of_eq (c : ∀ k, Bk n k) {W : (MP ℤ m n).Opens} (hW : 
   exact h
 
 theorem isAffineOpen_mchart_and_closure : ∀ (m : ℕ) (n : Fin (m + 1) → ℕ) (c : ∀ k, Bk n k),
-    IsAffineOpen (mchart c) ∧ Subring.closure (Set.range (mratio c)) = ⊤
-  | 0, n, c => by
+    IsAffineOpen (mchart c) ∧ Subring.closure (Set.range (mratio c)) = ⊤ := by
+  intro m
+  induction m with
+  | zero =>
+    intro n c
     let W : (MP ℤ 0 n).Opens := chart ℤ (n 0) (c 0)
     have e : W = mchart c := by
       apply Opens.ext
@@ -147,9 +153,10 @@ theorem isAffineOpen_mchart_and_closure : ∀ (m : ℕ) (n : Fin (m + 1) → ℕ
     refine Subring.subset_closure ⟨⟨0, j⟩, ?_⟩
     simp only [pullRatio, W]
     exact appLE_id_apply _ _ _
-  | m + 1, n, c => by
+  | succ m ih =>
+    intro n c
     let c' : ∀ k, Bk (Fin.tail n) k := fun j => c j.succ
-    obtain ⟨hV, hG⟩ := isAffineOpen_mchart_and_closure m (Fin.tail n) c'
+    obtain ⟨hV, hG⟩ := ih (Fin.tail n) c'
     have hU := isAffineOpen_chart ℤ (n 0) (c 0)
     let f := toSpecBase ℤ (n 0)
     let g := mpStr ℤ m (Fin.tail n)
@@ -204,7 +211,7 @@ theorem mratio_self (c : ∀ k, Bk n k) (k : Fin (m + 1)) : mratio c ⟨k, c k�
 theorem evaluation_resG' {X : Scheme.{0}} {U V : X.Opens} (h : V ≤ U) (x : X) (hx : x ∈ V) (s : Γ(X, U)) :
     X.evaluation V x hx (resG X h s) = X.evaluation U x (h hx) s := by
   rw [← Scheme.germ_residue, ← Scheme.germ_residue]
-  simp only [CommRingCat.hom_comp, RingHom.comp_apply, CommRingCat.comp_apply]
+  simp only [CommRingCat.hom_comp, RingHom.comp_apply]
   rw [TopCat.Presheaf.germ_res_apply]
 
 theorem ptCoord_ne_zero_iff (x : MP ℤ m n) (k : Fin (m + 1)) (i : Bk n k) :
@@ -244,7 +251,7 @@ theorem mCoordIdeal_le_of_scale {Ω : Type} [Field Ω] (y r : (Σ k, Bk n k) →
   have e : (Geo.mConeMap y).toRingHom = S.toRingHom.comp (Geo.mConeMap r).toRingHom := by
     refine MvPolynomial.ringHom_ext (fun a => ?_) fun p => ?_
     · simp
-    · simp [Geo.mConeMap, S, h p, mul_comm, mul_left_comm, mul_assoc]
+    · simp [Geo.mConeMap, S, h p, mul_comm, mul_left_comm]
   have := RingHom.congr_fun e f
   simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe] at this
   rw [this, hf, map_zero]
@@ -297,9 +304,8 @@ theorem ptIdeal_le_of_specializes {x y : MP ℤ m n} (h : x ⤳ y) : ptIdeal x �
   rw [mem_ptIdeal_iff _ hx] at hf
   rw [mem_ptIdeal_iff _ hy]
   ext a
-  rw [coeff_map, coeff_zero]
   have := congrArg (AddMonoidAlgebra.coeff · a) hf
-  rw [coeff_map, coeff_zero] at this
+  simp only [coeff_map, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at this ⊢
   exact evaluation_eq_zero_of_specializes h hx hy _ this
 
 def mono (c : ∀ k, Bk n k) (a : Fin (m + 1) → ℕ) : Geo.MRing (Bk n) := ∏ k, X ⟨k, c k⟩ ^ a k

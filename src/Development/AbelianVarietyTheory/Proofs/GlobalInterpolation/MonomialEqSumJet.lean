@@ -110,7 +110,7 @@ theorem dirDer_sum {σ ι : Type} [Fintype σ] (s : Finset ι) (c : ι → ℂ_[
   | insert a s ha ih => rw [Finset.sum_insert ha, Finset.sum_insert ha, dirDer_add, dirDer_smul, ih]
 
 theorem dirDer_single {σ : Type} [Fintype σ] [DecidableEq σ] (v : σ) (F : MvPowerSeries σ ℂ_[p]) :
-    dirDer (Pi.single v 1) F = pderiv ℂ_[p] v F := by
+    dirDer (Pi.single v 1) F = MvPowerSeries.pderiv (R := ℂ_[p]) v F := by
   rw [dirDer_apply, Finset.sum_eq_single v]
   · simp
   · intro b _ hb

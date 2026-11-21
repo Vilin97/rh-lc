@@ -340,7 +340,8 @@ theorem continuationOrderCertificate_of_mult_eq_one (hstar : MaxContactCoverProp
               (separateAllBoundary T h.valid hinv A).length) :=
     MaxContactCoverData.derivedTriple_boundary _ _ _ _ _
   have hjlen : 0 < (reduceAlongHypersurfaceTriple T h.valid hinv A hft).boundary.length := by
-    rw [hbd]; simp
+    rw [hbd]
+    with_unfolding_all exact Nat.zero_lt_succ _
   obtain ⟨D, b, hDsm, hD0, hcenter, hbtrue, hDsucc, _hDfin, hJsh⟩ :=
     (hspec 0).shape (reduceAlongHypersurfaceTriple T h.valid hinv A hft) hV' hP' hOB hbalanced hjlen
   have hmu : FunctorialResolution.EmbeddedResolution.tuningExponent (MaxContactCoverData.coverTriple T h.valid).mult

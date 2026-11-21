@@ -157,7 +157,9 @@ theorem form_cons_mul {a : ℕ} (g₀ u f : A) (v : Fin a → A) :
   have h3 := (exteriorPower.ιMulti A (a + 1) (M := Ω[A⁄K])).toMultilinearMap.cons_smul
     (fun k => KaehlerDifferential.D K A (v k)) f (KaehlerDifferential.D K A u)
   simp only [AlternatingMap.coe_multilinearMap] at h1 h2 h3
-  rw [h1, h2, h3, smul_add, smul_comm g₀ u, smul_comm g₀ f]
+  rw [h1, h2, h3, smul_add]
+  simp only [RingHom.id_apply]
+  rw [smul_comm g₀ u, smul_comm g₀ f]
 
 theorem wedge_mul (hFL : FormLaws) {a : ℕ} (u f : A) (wuf wf wu : Om K A a →ₗ[A] Om K A (a + 1))
     (huf : ∀ g₀ (g : Fin a → A), wuf (form K g₀ g) = form K g₀ (Fin.cons (u * f) g))

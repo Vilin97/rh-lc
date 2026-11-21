@@ -118,12 +118,12 @@ theorem sB_cond_k (b : Fin L.n → AE F E) : _root_.PositivityTheory.SiegelWeilF
   ext i j
   rcases _root_.PositivityTheory.SiegelWeilFormula.Act.C5.idx_k L i with rfl | ⟨k, rfl⟩ <;> rcases _root_.PositivityTheory.SiegelWeilFormula.Act.C5.idx_k L j with rfl | ⟨l, rfl⟩ <;>
     simp only [Matrix.transpose_apply, Matrix.neg_apply, Matrix.smul_apply, Matrix.map_apply, _root_.PositivityTheory.SiegelWeilFormula.Act.C5.sB_i0i0_k, _root_.PositivityTheory.SiegelWeilFormula.Act.C5.sB_i0em_k, _root_.PositivityTheory.SiegelWeilFormula.Act.C5.section_entry_embedded_row,
-      _root_.PositivityTheory.SiegelWeilFormula.Act.C5.sB_emem_k, map_zero, smul_zero, neg_zero, smul_eq_mul, map_neg, map_mul, _root_.PositivityTheory.SiegelWeilFormula.Act.C5.cA_eA_k, _root_.PositivityTheory.SiegelWeilFormula.Act.C5.cc_k d, _root_.PositivityTheory.SiegelWeilFormula.Act.C5.eA_eq_k]
+      _root_.PositivityTheory.SiegelWeilFormula.Act.C5.sB_emem_k, map_zero, smul_zero, neg_zero, smul_eq_mul, map_neg, map_mul, _root_.PositivityTheory.SiegelWeilFormula.Act.C5.cc_k d, _root_.PositivityTheory.SiegelWeilFormula.Act.C5.eA_eq_k]
   all_goals (try simp only [map_intCast])
   all_goals first | (simp; done) | (simp only [mul_neg, neg_neg, neg_mul]; rw [← mul_assoc, e2, one_mul])
 theorem continuous_sB_k : Continuous (_root_.PositivityTheory.SiegelWeilFormula.Act.C5.sB_k R L) := by
   unfold _root_.PositivityTheory.SiegelWeilFormula.Act.C5.sB_k
-  refine continuous_finset_sum _ fun j _ => Continuous.add ?_ ?_
+  refine continuous_finsetSum _ fun j _ => Continuous.add ?_ ?_
   · have e : (fun b : Fin L.n → AE F E => Matrix.single L.i₀ (L.em j) (b j)) =
         fun b => b j • Matrix.single L.i₀ (L.em j) (1 : AE F E) := by
       funext b; rw [Matrix.smul_single, smul_eq_mul, mul_one]
@@ -140,13 +140,16 @@ theorem inFrame_sM'_k (b : Fin L.n → AE F E) : inFrame d.b (_root_.PositivityT
   rw [dite_eq_left hex]
   exact hex.choose_spec
 theorem sig_delta_k (h : _root_.PositivityTheory.SiegelWeilFormula.Act.C5.Hyp_k L nb uM nb' w₁ cM δ) : σ δ = -(((R.ε : ℤ) : E)) * δ := by
+  have cA_inclR (x : E) : cA σ (inclR (F := F) (AF F) x) = inclR (F := F) (AF F) (σ x) := by
+    show Algebra.TensorProduct.map _ _ ((1 : AF F) ⊗ₜ[F] x) = (1 : AF F) ⊗ₜ[F] σ x
+    simp
   have hx : inFrame d.b (cM (0, 1)) = kfour.nM (_root_.PositivityTheory.SiegelWeilFormula.Act.C5.aB_k L δ 1) := by
     rw [_root_.PositivityTheory.SiegelWeilFormula.Act.C5.inFrame_cM_k h]
     simp [_root_.PositivityTheory.SiegelWeilFormula.Act.C5.uA_k, kfour.nM, Matrix.transpose_one]
   have hc := kfour.cond_of_inFrame R.hε (cM (0, 1)) _ hx
   have e := congrFun (congrFun hc L.i₀) L.i₀
   simp only [_root_.PositivityTheory.SiegelWeilFormula.Act.C5.aB_k, Matrix.transpose_apply, Matrix.neg_apply, Matrix.smul_apply, Matrix.map_apply, Matrix.single_apply_same,
-    one_smul, smul_eq_mul, GlobalTheory.EisBL.DoubledUnipotentRadical.cA_inclR] at e
+    one_smul, smul_eq_mul, cA_inclR] at e
   have e' : inclR (F := F) (AF F) δ = inclR (F := F) (AF F) (-(((R.ε : ℤ) : E) * σ δ)) := by
     rw [e, map_neg, map_mul, map_intCast]
   have hδ := Algebra.TensorProduct.includeRight_injective (AdeleRing.algebraMap_injective (𝓞 F) F) e'

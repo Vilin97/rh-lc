@@ -6,7 +6,7 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.Continuo
 
 @[expose] public section
 
-open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes IsDedekindDomain NumberField GlobalTheory.Published Sa2 GlobalTheory.CompanionTheory.SaGen
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes IsDedekindDomain NumberField GlobalTheory.Published GlobalTheory.CompanionTheory.SaGen
 open scoped TensorProduct Topology
 
 noncomputable section

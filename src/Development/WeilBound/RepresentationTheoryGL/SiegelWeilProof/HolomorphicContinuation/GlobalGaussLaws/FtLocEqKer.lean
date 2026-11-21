@@ -41,7 +41,57 @@ theorem integrand_eq {θ : InfFam D} (hθ : IsInfFam θ) {ψ : AddChar (AF D.hos
       ψ (trA (Matrix.trace (inner V x (y - sIns τ fr (piF θ τ fr y))))) *
         ψ (trA (Matrix.trace (inner V x (sIns τ fr (piF θ τ fr y))))) := by
     rw [hsplit, Matrix.trace_add, GlobalTheory.CompanionTheory.EisCovar.Weyl.trA_add, AddChar.map_add_eq_mul]
-  rw [hψ2, psi_inner_sIns hθ hl hfr]
+  have map_inner_local (V : HSp D) (τ : D.what₂.Tau) (x y : Mx D V.rank n) :
+      (inner V x y).map (psiT D τ) = (x.map (psiT D τ))ᴴ * (gramAt D V τ * y.map (psiT D τ)) := by
+    have h1 : (adj x).map (psiT D τ) = (x.map (psiT D τ))ᴴ := by
+      ext i j
+      simp only [adj, Matrix.map_apply, Matrix.transpose_apply, Matrix.conjTranspose_apply]
+      exact Formalism.IndefR.Eqv.psiT_sigR D τ (x j i)
+    have h2 : (gA V).map (psiT D τ) = gramAt D V τ := by
+      ext i j
+      simp only [gA, rat, Matrix.map_apply, gramAt]
+      exact Formalism.IndefR.Eqv.psiT_inclR D τ _
+    show (adj x * (gA V * y)).map (psiT D τ) = _
+    rw [Matrix.map_mul, Matrix.map_mul, h1, h2]
+  have psiT_trace_local {a : ℕ} (τ : D.what₂.Tau) (M : Matrix (Fin a) (Fin a) (AE D)) :
+      psiT D τ (Matrix.trace M) = Matrix.trace (M.map (psiT D τ)) := by
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum]
+  have finPart_trace_local {a : ℕ} (M : Matrix (Fin a) (Fin a) (AE D)) :
+      finPart D (Matrix.trace M) = Matrix.trace (M.map (finPart D)) := by
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum]
+  have finMap_inner_local (V : HSp D) (x y : Mx D V.rank n) (hy : y.map (finPart D) = 0) :
+      (inner V x y).map (finPart D) = 0 := by
+    show (adj x * (gA V * y)).map (finPart D) = 0
+    rw [Matrix.map_mul, Matrix.map_mul, hy, Matrix.mul_zero, Matrix.mul_zero]
+  
+  have psi_inner_sIns_local (x : Mx D V.rank n) (u : Fin V.rank → Fin n → ℂ) :
+      ψ (trA (Matrix.trace (inner V x (sIns τ fr u)))) =
+        Complex.exp (Complex.I * ((2 * tLoc l τ : ℝ) : ℂ) *
+          (((Matrix.of (piF θ τ fr x))ᴴ * Matrix.diagonal (sgn ε) * Matrix.of u).trace.re : ℂ)) := by
+    have hins : ∀ τ', (sIns (D := D) τ fr u).map (psiT D τ') = if τ' = τ then fr * Matrix.of u else 0 := by
+      intro τ'
+      have := compAt_insT (D := D) hθ τ τ' (fr * Matrix.of u)
+      rw [eq_thetaC D hθ] at this
+      exact this
+    rw [psi_trA_tau hθ hl τ]
+    · congr 2
+      · simp only [tLoc]; push_cast; ring
+      · rw [psiT_trace_local, map_inner_local, hins, if_pos rfl]
+        congr 2
+        obtain ⟨hdet, hg, -⟩ := hfr
+        have hx : Matrix.of (piF θ τ fr x) = fr⁻¹ * x.map (psiT D τ) := by
+          rw [eq_thetaC D hθ] ; rfl
+        rw [hx, ← hg, Matrix.conjTranspose_mul]
+        have hinv : (fr⁻¹)ᴴ * frᴴ = 1 := by
+          rw [← Matrix.conjTranspose_mul, Matrix.mul_nonsing_inv _ hdet, Matrix.conjTranspose_one]
+        simp only [Matrix.mul_assoc]
+        rw [← Matrix.mul_assoc (fr⁻¹)ᴴ frᴴ, hinv, Matrix.one_mul]
+    · intro τ' hne
+      rw [psiT_trace_local, map_inner_local, hins, if_neg hne, Matrix.mul_zero, Matrix.mul_zero, Matrix.trace_zero]
+    · rw [finPart_trace_local, finMap_inner_local V x (sIns τ fr u) (finMap_insT τ (fr * Matrix.of u)), Matrix.trace_zero]
+  rw [hψ2, psi_inner_sIns_local]
   have hp : (fr⁻¹ * compAt θ τ y : Matrix (Fin V.rank) (Fin n) ℂ) = piF θ τ fr y := rfl
   unfold Bw tens ker
   rw [hp]

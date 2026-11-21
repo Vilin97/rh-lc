@@ -236,12 +236,12 @@ theorem uni_part {K V : Type} [Field K] [StarRing K] [AddCommGroup V] [Module K 
     obtain ⟨a, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 hw
     have hne : ∀ p : {i // e i = e i₀}, (p : ι) ≠ j := fun p hq => hj (hq ▸ p.2)
     constructor
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sum, LinearMap.sum_apply]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, LinearMap.sum_apply]
       exact Finset.sum_eq_zero fun p _ => by
         rw [map_smulₛₗ, LinearMap.smul_apply, hbP, ho _ _ (hne p), smul_zero]
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_eq_zero fun p _ => by
         rw [map_smul, hbP, ho _ _ (hne p).symm, smul_zero]
   have hoc : ∀ i j, i ≠ j → h (c i) (c j) = 0 := by

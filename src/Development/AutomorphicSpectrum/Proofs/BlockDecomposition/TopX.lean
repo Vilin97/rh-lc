@@ -41,7 +41,9 @@ theorem topX : PositivityTheory.Rg.Rsw.Em.TopX := by
   have hC : IsClosed {z : Mx D a r × Mx D a t | e • z.1 = z.1 ∧ e • z.2 = z.2} :=
     (isClosed_eq c1 continuous_fst).inter (isClosed_eq c2 continuous_snd)
   have hE := hC.isClosedEmbedding_subtypeVal
-  exact ⟨inferInstance, hE.locallyCompactSpace, TopologicalSpace.Subtype.secondCountableTopology _,
+  exact ⟨inferInstance, hE.locallyCompactSpace,
+    TopologicalSpace.Subtype.secondCountableTopology
+      {z : Mx D a r × Mx D a t | e • z.1 = z.1 ∧ e • z.2 = z.2},
     Subtype.borelSpace _, bP, MeasurableEmbedding.subtype_coe hC.measurableSet, s4, s3, s1⟩
 
 end GlobalTheory.CompanionTheory.RswEmTop

@@ -96,7 +96,7 @@ theorem rdU_eq_of_reads' {σ : c.F →+* ℂ} (U : Unf Xo c σ r) (h : GenFrEx X
     (hm : FrMap φ (genFr h Z) y') (hb : FrBor t (U.un k x) y') (u : (E →+* ℂ) × ℕ → ℕ) (n : ℕ) :
     ∃ w : ℂ, w ≠ 0 ∧ ∀ f ∈ Formalism.L2.Pj.sec Xo c u n, w * rdU U f k x = toC (φ (evC h Z f)) := by
   letI : Field (CAt σ) := inferInstanceAs (Field ℂ)
-  obtain ⟨hL, -, -, -⟩ := GlobalTheory.Reg.evLaws_genFr_atlas E H Dw l Xo c
+  have hL := (GlobalTheory.Reg.evLaws_genFr_atlas E H Dw l Xo c).1
   have h3 : wchar (ex Dw u n) t ≠ 0 :=
     Finset.prod_ne_zero_iff.2 fun i _ => pow_ne_zero _ (t i).ne_zero
   refine ⟨toC (wchar (ex Dw u n) t), h3, fun f hf => ?_⟩

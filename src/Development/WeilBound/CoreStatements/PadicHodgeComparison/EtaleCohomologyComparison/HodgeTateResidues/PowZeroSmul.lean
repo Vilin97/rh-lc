@@ -15,7 +15,7 @@ open CategoryTheory Limits AlgebraicGeometry GlobalTheory.LogCris DividedPowers
 
 namespace CrystallineSemistableComparison.HT
 
-open Pb Mul
+open Pb _root_.CrystallineSemistableComparison.HT.Mul
 
 variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)} {Y : CB l K} {m : ℕ} (L : Lv Y m) (M : Model l K)
 
@@ -103,11 +103,12 @@ end Rat
 end Mul
 
 variable (l K) in
-theorem mulRho : MulRho l K where
-  sh L M _ _ _ k h x w hr := rho_sh L M k h x w hr
-  sh_μ L M _ _ _ k h a ha y := mu_sh L.γB M.q (L.QB M) L.tB_mem k h a ha y
-  cup L M _ _ _ _ _ h x y w w' hr hr' := rho_cup L M h x y w w' hr hr'
-  cup_μ L M _ _ _ _ _ _ _ _ h ha h1 h2 y y' := mu_cup L.γB M.q (L.QB M) L.tB_mem h ha h1 h2 y y'
-  one L M := rho_one L M
+theorem mulRho : MulRho l K := by
+  exact {
+    sh := rho_sh
+    sh_μ := fun L M => mu_sh L.γB M.q (L.QB M) L.tB_mem
+    cup := rho_cup
+    cup_μ := fun L M => mu_cup L.γB M.q (L.QB M) L.tB_mem
+    one := rho_one }
 
 end CrystallineSemistableComparison.HT

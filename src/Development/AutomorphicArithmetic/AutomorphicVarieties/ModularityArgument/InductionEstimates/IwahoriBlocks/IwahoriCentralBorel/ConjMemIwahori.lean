@@ -100,10 +100,11 @@ private theorem conj_mem_iwahori {ν : Fin n → ℤ} (hν : Antitone ν) {b : G
   have hle : ∀ i j, j ≤ i → valuation F
       (((GLnLocal.uniformizer F : 𝒪[F]) : F) ^ (ν j - ν i) * (b : Matrix (Fin n) (Fin n) F) i j) ≤
         valuation F ((b : Matrix (Fin n) (Fin n) F) i j) := fun i j hij => by
-    have := Parabolic.valuation_zpow_mul_le_pow_mul (F := F)
-      (x := (b : Matrix (Fin n) (Fin n) F) i j) (e := 0) (z := ν j - ν i)
-      (by have := hν hij; simp only [Nat.cast_zero]; omega)
-    simpa using this
+    have hz : 0 ≤ ν j - ν i := by have := hν hij; omega
+    obtain ⟨d, hd⟩ := Int.eq_ofNat_of_zero_le hz
+    rw [hd, zpow_natCast, map_mul, map_pow]
+    rw [mul_comm]
+    exact mul_le_of_le_one_right' (pow_le_one' (GLnLocal.valuation_uniformizer_lt_one F).le d)
   refine (GLnLocal.mem_iwahori_iff F n).2 ⟨fun i j => ?_, fun i j hij => ?_, fun i => ?_⟩
   · rw [conj_apply]
     rcases lt_or_ge i j with h | h
@@ -174,10 +175,13 @@ private theorem local_inj {V : Type} [AddCommGroup V] [Module ℂ V]
     exact h1
   have hfix : (⟨v, hvZ⟩ : Z) ∈ fixed π (iwahori F (Fin n)) :=
     GlobalTheory.IwahoriInj.mem_fixed.2 fun h hh => Subtype.ext (hv h (iwahori_le h hh))
-  have h2 := (injective_iff_map_eq_zero _).1
-    (GlobalTheory.IwahoriInj.iwahoriProj_injective F (Fin n) Z π hsmooth) ⟨_, hfix⟩
-    (Subtype.ext ((Submodule.Quotient.mk_eq_zero _).2 hker))
-  exact congrArg (fun a : fixed π (iwahori F (Fin n)) => ((a : Z) : V)) h2
+  obtain ⟨m, hm⟩ := (GlobalTheory.IwahoriInj.eventually_mem_twKer hker).exists
+  have h2 : (⟨v, hvZ⟩ : Z) = 0 :=
+    GlobalTheory.IwahoriInj.inj_chambers hsmooth
+      (GlobalTheory.IwahoriInj.chamber_ray 0) (GlobalTheory.IwahoriInj.chamber_ray m) _
+      (GlobalTheory.IwahoriInj.mem_fixed.2 fun h hh =>
+        GlobalTheory.IwahoriInj.mem_fixed.1 hfix h (GlobalTheory.IwahoriInj.grp_ray_zero_le hh)) hm
+  exact congrArg Subtype.val h2
 
 end Local
 

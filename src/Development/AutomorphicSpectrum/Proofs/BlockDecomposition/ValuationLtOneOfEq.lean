@@ -151,7 +151,11 @@ theorem continuous_unitChar : Continuous (unitChar (Ω := Ω) hπ hf) :=
 theorem apply_eq_smul (g : Ω ≃ₐ[K] Ω) {n : ℕ} {x : IdealPoint Ω (lubinTateFormalGroup hπ hf)}
     (hx : x ∈ lubinTateTorsion Ω hf n) :
     g x.val = (((unitChar hπ hf g : 𝒪[K]ˣ) : 𝒪[K]) • x).val := by
-  have h := lubinTateLimitGalEquiv_apply hπ hf (unitChar hπ hf g) hx
+  have h : ((lubinTateLimitGalEquiv (Ω := Ω) hπ hf (unitChar hπ hf g)
+      ⟨x.val, lubinTateField_le_lubinTateLimit hπ hf n (val_mem_lubinTateField hπ hf hx)⟩ :
+        lubinTateLimit Ω hπ) : Ω) = (((unitChar hπ hf g : 𝒪[K]ˣ) : 𝒪[K]) • x).val :=
+    lubinTateChar_spec hπ hf _ _ hx _ (by
+      rw [lubinTateChar_lubinTateLimitGalEquiv, coe_unitsMk])
   have h2 : lubinTateLimitGalEquiv (Ω := Ω) hπ hf (unitChar hπ hf g) =
       AlgEquiv.restrictNormalHom (lubinTateLimit Ω hπ) g :=
     (lubinTateLimitGalEquiv (Ω := Ω) hπ hf).apply_symm_apply _
@@ -168,7 +172,7 @@ variable {l : ℕ} [Fact l.Prime]
 local instance finDim (K : FinExt l) : FiniteDimensional ℚ_[l] ↥K.1 := K.2
 
 local instance valExt (K : FinExt l) : ValuativeExtension ↥K.1 (Om l) :=
-  ⟨fun a b => by rw [CyclNorms.vle_iff_norm_le, subfield_vle_iff_norm_le]; rfl⟩
+  ⟨fun {a b} => by rw [CyclNorms.vle_iff_norm_le, subfield_vle_iff_norm_le]; rfl⟩
 
 theorem mem_integer_iff (K : FinExt l) (x : ↥K.1) : x ∈ 𝒪[↥K.1] ↔ ‖(x : Om l)‖ ≤ 1 := by
   rw [integer_eq_normInteger K.1, mem_normInteger]
@@ -216,7 +220,10 @@ theorem map_ltSeries (K : FinExt l) {π : 𝒪[↥K.1]} (hπ : Irreducible π) :
     PowerSeries.map ((intEquiv K : ↥(OL K) ≃+* 𝒪[↥K.1]) : ↥(OL K) →+* 𝒪[↥K.1])
       (ltSeries ((intEquiv K).symm π)) = (ltPoly π : PowerSeries 𝒪[↥K.1]) := by
   rw [ltSeries, card_quot K hπ, ltPoly]
-  simp
+  simp only [Polynomial.coe_add, Polynomial.coe_mul, Polynomial.coe_C, Polynomial.coe_X,
+    Polynomial.coe_pow, RingHom.map_add, RingHom.map_mul, RingHom.map_pow,
+    PowerSeries.map_C, PowerSeries.map_X,
+    RingEquiv.coe_toRingHom, RingEquiv.apply_symm_apply]
 
 theorem norm_unit (K : FinExt l) (u : 𝒪[↥K.1]ˣ) : ‖(((u : 𝒪[↥K.1]) : ↥K.1) : Om l)‖ = 1 := by
   have ha : ‖(((u : 𝒪[↥K.1]) : ↥K.1) : Om l)‖ ≤ 1 :=

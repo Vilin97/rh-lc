@@ -186,7 +186,9 @@ theorem monic_gelf_block {c N : ℕ} (n : Fin c → ℕ) (h : ∑ i, n i = N) (X
   have hcomm : ∀ x ∈ s, ∀ y ∈ s, x * y = y * x := by
     rintro _ ⟨u, rfl⟩ _ ⟨v, rfl⟩
     exact (qdet_commute hEg u v).eq
-  letI : CommRing (Algebra.adjoin ℂ s) := Algebra.adjoinCommRingOfComm ℂ hcomm
+  letI : IsMulCommutative (Algebra.adjoin ℂ s) :=
+    Algebra.isMulCommutative_adjoin ℂ (fun a ha b hb _ => hcomm a ha b hb)
+  letI : CommRing (Algebra.adjoin ℂ s) := open scoped IsMulCommutative in inferInstance
   have hpres : Algebra.adjoin ℂ s ≤ pres := by
     rw [Algebra.adjoin_le_iff]
     rintro _ ⟨u, rfl⟩

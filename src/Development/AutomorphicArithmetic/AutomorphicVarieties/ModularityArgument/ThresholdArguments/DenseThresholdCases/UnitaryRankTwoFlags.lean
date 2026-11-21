@@ -41,7 +41,6 @@ noncomputable section
 attribute [-instance] UpperTheory.V.Pr.IsCD.toIsDomain UpperTheory.V.Pr.IsCD.toIsDiscreteValuationRing
 open NumberField Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.GalOfCusp IsLocalRing UpperTheory.V UpperTheory.V.HV UpperTheory.V.U3 UpperTheory.V.Base UpperTheory.V.Af UpperTheory.V.Alg
 open UpperTheory.V.W UpperTheory.V.Pr UpperTheory.V.J
-open private UpperTheory.V.J.oe_big UpperTheory.V.J.oe_res from Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.DerivativeDivisibility.OpenEx
 namespace UpperTheory.Gal.projectedFormsSystemPart
 def OpenEx2EAlt : Prop :=
   ∀ (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (c : Coef l)
@@ -100,10 +99,50 @@ theorem openEx2E_alt :
   obtain ⟨κ, hκ⟩ := hTw K Ω hD.quad l hok.l_odd hdisc ι σ hD.cc
   obtain ⟨hk3, hk2⟩ := UpperTheory.V.Pr.kaOf hCyc hRes Ω l ι c N e ψ η σ g₁ B M H L Φ k
   obtain ⟨ka, hk2, hka⟩ := hk2 K hker κ hκ
-  obtain ⟨c₂, hcc, hAc⟩ := UpperTheory.V.J.oe_big c A
+  have hcoef : ∃ c₂ : Coef l, c.O ≤ c₂.O ∧ ∀ x ∈ A, x ∈ c₂.O := by
+    have : Module.Finite ℤ_[l] A := Module.Finite.trans c.O A
+    let inclusion := A.val.restrictScalars ℤ_[l]
+    obtain ⟨t, ht⟩ := Module.Finite.fg_top (R := ℤ_[l]) (M := A)
+    have := (t.finite_toSet.image inclusion).to_subtype
+    let E := IntermediateField.adjoin ℚ_[l] (inclusion '' (t : Set A))
+    have hmem (a : A) : inclusion a ∈ E := by
+      have ha : a ∈ Submodule.span ℤ_[l] (t : Set A) := ht ▸ Submodule.mem_top
+      induction ha using Submodule.span_induction with
+      | mem y hy => exact IntermediateField.subset_adjoin _ _ ⟨y, hy, rfl⟩
+      | zero => rw [map_zero]; exact zero_mem _
+      | add a b _ _ ha hb => rw [map_add (f := inclusion)]; exact add_mem ha hb
+      | smul a b _ hb =>
+        rw [map_smul, ← algebraMap_smul ℚ_[l] a]
+        exact IntermediateField.smul_mem _ hb
+    obtain ⟨c₂, hc₂⟩ := UpperTheory.V.X.So.coefOf l E
+    have hAc₂ (x : PadicAlgCl l) (hx : x ∈ A) : x ∈ c₂.O := by
+      have hxInt : IsIntegral ℤ_[l] x :=
+        (Algebra.IsIntegral.isIntegral (R := ℤ_[l]) (⟨x, hx⟩ : A)).map inclusion
+      refine (hc₂ x).2 ⟨hmem ⟨x, hx⟩, ?_⟩
+      have hxQ : IsIntegral ℚ_[l] x := Algebra.IsIntegral.isIntegral x
+      change spectralValue (minpoly ℚ_[l] x) ≤ 1
+      rw [spectralValue_le_one_iff (minpoly.monic hxQ)]
+      intro n
+      rw [minpoly.isIntegrallyClosed_eq_field_fractions' ℚ_[l] hxInt, Polynomial.coeff_map]
+      exact PadicInt.norm_le_one _
+    exact ⟨c₂, fun x hx => hAc₂ x (A.algebraMap_mem (⟨x, hx⟩ : c.O)), hAc₂⟩
+  obtain ⟨c₂, hcc, hAc⟩ := hcoef
   obtain ⟨c₁, hle₁, hL, hv3, hv2, -⟩ := UpperTheory.V.Pr.coefEx l c₂ L Ω _ _ hk3.alg.1 hk2.alg.1
   have hle : c.O ≤ c₁.O := hcc.trans hle₁
-  obtain ⟨f, hf⟩ := UpperTheory.V.J.oe_res hle
+  have hres : ∃ f : ResidueField c.O →+* ResidueField c₁.O,
+      ∀ (a : c.O) (b : c₁.O), a.1 = b.1 → f (residue c.O a) = residue c₁.O b := by
+    let i : c.O →+* c₁.O := (Subalgebra.inclusion hle).toRingHom
+    have hi : i.IsIntegral := by
+      have hcomp : i.comp (algebraMap ℤ_[l] c.O) = algebraMap ℤ_[l] c₁.O :=
+        (Subalgebra.inclusion hle).comp_algebraMap
+      refine RingHom.IsIntegral.tower_top (algebraMap ℤ_[l] c.O) i ?_
+      rw [hcomp]
+      exact fun x => Algebra.IsIntegral.isIntegral x
+    have : IsLocalHom i := hi.isLocalHom (Subalgebra.inclusion_injective hle)
+    exact ⟨ResidueField.map i, fun a b h => by
+      rw [ResidueField.map_residue]
+      exact congrArg _ (Subtype.ext h)⟩
+  obtain ⟨f, hf⟩ := hres
   haveI hco := UpperTheory.V.Pr.coefIs l c₁
   obtain ⟨R₂⟩ := UpperTheory.V.Pr.cRealEx hA hLoc hLev hB0 Ω l ι c N e ψ η σ g₁ B M H L Φ k c₁ f 2 ka C₀ (Or.inl rfl)
     hok hbig hle hf hk2 hv2

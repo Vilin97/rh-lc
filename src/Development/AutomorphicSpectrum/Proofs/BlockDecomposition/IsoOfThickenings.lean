@@ -182,7 +182,6 @@ theorem over_pullback_fst {S T : Scheme.{0}} (t : T ⟶ S) {P Q : Over S} (g : P
 theorem over_pullback_snd {S T : Scheme.{0}} (t : T ⟶ S) {P Q : Over S} (g : P ⟶ Q) :
     ((Over.pullback t).map g).left ≫ pullback.snd Q.hom t = pullback.snd P.hom t := by
   simp
-  exact pullback.lift_snd _ _ _
 
 theorem isIso_pullback_conj {S T : Scheme.{0}} (t : T ⟶ S) {P Q P' Q' : Over S} (g : P ⟶ Q)
     (eP : P ≅ P') (eQ : Q ≅ Q') (h : IsIso ((Over.pullback t).map g).left) :

@@ -16,6 +16,11 @@ namespace GlobalTheory.BSP.DiscZero
 
 variable {l : ℕ} [hl : Fact l.Prime] {k : Type} [Field k] [CharP k l] [PerfectRing k l]
 
+local notation "𝕎k" => WittVector l k
+local notation "Pk" => PreDisc l (0 : 𝕎k) 1
+local notation "Dk" => Disc l (0 : 𝕎k) 1
+local notation "sI" => (IsLocalization.Away.invSelf (l : 𝕎k) : Pk)
+
 omit [Field k] [CharP k l] [PerfectRing k l] in
 theorem l_pos : (0 : ℝ) < l := Nat.cast_pos.2 hl.out.pos
 

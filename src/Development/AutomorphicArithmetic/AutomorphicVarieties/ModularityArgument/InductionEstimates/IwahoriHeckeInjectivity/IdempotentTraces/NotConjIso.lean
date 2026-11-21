@@ -40,9 +40,9 @@ private theorem pow_val {K : Type} [Field K] [NumberField K] {χ : HChar K} {s :
       unif_spec v
     refine (pow_loc h v (atFin v (unif v))).trans ?_
     rw [FinitePlace.norm_def, hx', WithZeroMulInt.toNNReal_neg_apply _ WithZero.exp_ne_zero]
-    have e : Multiplicative.toAdd (WithZero.unzero (WithZero.exp_ne_zero (a := (-1 : ℤ)))) = -1 := rfl
-    have e' : normV v = Ideal.absNorm v.asIdeal := rfl
-    rw [e, e', zpow_neg_one, NNReal.coe_inv, Complex.ofReal_inv, NNReal.coe_natCast, Complex.ofReal_natCast,
+    have e' : normV v = Ideal.absNorm v.asIdeal := by
+      rw [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
+    rw [WithZero.log_exp, e', zpow_neg_one, NNReal.coe_inv, Complex.ofReal_inv, NNReal.coe_natCast, Complex.ofReal_natCast,
       Complex.inv_cpow _ _ (by rw [Complex.natCast_arg]; exact Real.pi_ne_zero.symm), Complex.cpow_neg]
 
 private theorem exists_place (E : Type) [Field E] [NumberField E] : Nonempty (HeightOneSpectrum (𝓞 E)) := by
@@ -63,7 +63,8 @@ private theorem absC_pow (E : Type) [Field E] [NumberField E] [_root_.NumberFiel
   have hb1 : b = 1 := by
     obtain ⟨w⟩ := exists_place E
     have h1 := (pow_val (hgen 1) w).2
-    have e' : normV w = Ideal.absNorm w.asIdeal := rfl
+    have e' : normV w = Ideal.absNorm w.asIdeal := by
+      rw [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
     rw [PositivityTheory.Rg.Rs.StrStepB.absC_val, e'] at h1
     have h0 : 1 < (Ideal.absNorm w.asIdeal : ℕ) := NumberField.HeightOneSpectrum.one_lt_absNorm w
     have h2 := congrArg norm h1
@@ -98,7 +99,8 @@ private theorem norm_deg (w : HeightOneSpectrum (𝓞 E)) :
   have : w.asIdeal.LiesOver (w.under (𝓞 F)).asIdeal := ⟨rfl⟩
   have := w.isMaximal
   have := (w.under (𝓞 F)).isMaximal
-  exact (Ideal.absNorm_pow_inertiaDeg (w.under (𝓞 F)).asIdeal w.asIdeal).symm
+  simpa only [normV, ← Submodule.cardQuot_apply, ← Ideal.absNorm_apply] using
+    (Ideal.absNorm_pow_inertiaDeg (w.under (𝓞 F)).asIdeal w.asIdeal).symm
 
 private theorem deg_sum (h2 : Module.finrank F E = 2) (v : HeightOneSpectrum (𝓞 F))
     (T : Finset (v.asIdeal.primesOver (𝓞 E))) : ∑ q ∈ T, q.1.inertiaDeg (𝓞 F) ≤ 2 := by

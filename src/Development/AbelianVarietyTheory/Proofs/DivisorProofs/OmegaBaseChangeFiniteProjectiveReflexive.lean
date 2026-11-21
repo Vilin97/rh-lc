@@ -30,9 +30,7 @@ theorem isAdicComplete_fin_pi [IsAdicComplete (Ideal.span {a}) S] (k : ℕ) :
     rw [SModEq.sub_mem, mem_span_singleton_pow_smul_top_iff_exists] at h ⊢
     obtain ⟨y, hy⟩ := h
     exact ⟨y i, by simpa using congrFun hy i⟩
-  toIsPrecomplete := by
-    constructor
-    intro f hf
+  prec' f hf := by
     have key : ∀ i, ∃ L : S, ∀ n,
         f n i ≡ L [SMOD (Ideal.span {a} ^ n • ⊤ : Submodule S S)] := fun i =>
       IsPrecomplete.prec (inferInstance : IsPrecomplete (Ideal.span {a}) S) fun {m n} hmn => by
@@ -60,9 +58,7 @@ theorem isAdicComplete_of_retraction {N F : Type*} [AddCommGroup N] [Module S N]
     have h3 := LinearMap.congr_fun h x
     rw [LinearMap.comp_apply, h1, map_zero, LinearMap.id_apply] at h3
     exact h3.symm
-  toIsPrecomplete := by
-    constructor
-    intro f hf
+  prec' f hf := by
     obtain ⟨L, hL⟩ := IsPrecomplete.prec (f := fun n => i (f n))
       (inferInstance : IsPrecomplete (Ideal.span {a}) F) fun {m n} hmn => by
         have h2 := hf hmn

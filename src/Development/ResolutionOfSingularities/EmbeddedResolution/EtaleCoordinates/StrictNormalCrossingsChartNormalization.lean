@@ -372,8 +372,9 @@ theorem exists_etaleChart_on_open_of_hasStrictNormalCrossingsWith (q : W ⟶ Spe
   have hnotS : ∀ (i : ℕ) (hi : i < E.length) (t : Fin m), a i = some t → t ∉ S := by
     intro i hi t hat htS
     have hEle : (E[i]'hi).ideal ⟨U₀, hU₀aff⟩ ≤ Z.ideal ⟨U₀, hU₀aff⟩ := by
-      rw [(c.restrict hU₀le).ideal_eq_span_coord hU₀aff _ _ (hE₀some i hi t hat),
-        (c.restrict hU₀le).ideal_eq_span_coord hU₀aff _ _ hZU₀,
+      have hEeq := (c.restrict hU₀le).ideal_eq_span_coord hU₀aff _ _ (hE₀some i hi t hat)
+      have hZeq := (c.restrict hU₀le).ideal_eq_span_coord hU₀aff _ _ hZU₀
+      rw [hEeq, hZeq,
         Finset.coe_singleton, Set.image_singleton, Ideal.span_singleton_le_iff_mem]
       exact Ideal.subset_span ⟨t, Finset.mem_coe.mpr htS, rfl⟩
     refine hcomp (E[i]'hi) (List.getElem_mem hi) (irreducibleComponent y)

@@ -23,6 +23,8 @@ theorem phase_tg (w : l ⊕ l → ℝ) : (phase w).HasTemperateGrowth := by
   have h : (fun x : EuclideanSpace ℝ l => ⟪qPart w, x⟫ + ⟪pPart w, qPart w⟫ / 2).HasTemperateGrowth :=
     (innerSL ℝ (qPart w)).hasTemperateGrowth.add (Function.HasTemperateGrowth.const _)
   convert Der.chirp_tg (-1) h using 1
+  funext x
+  simp only [phase, Der.chirp]
   congr 1
   push_cast
   ring

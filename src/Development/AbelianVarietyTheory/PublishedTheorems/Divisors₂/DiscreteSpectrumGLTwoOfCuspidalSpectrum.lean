@@ -48,7 +48,8 @@ theorem IsDiscreteWith.apply (h : IsDiscreteWith ω V) {φ : Sm E a} (hφ : φ �
   rw [CuspRep.scalar_comm]
   exact congrFun (congrArg Subtype.val (h.central z φ hφ)) g
 
-theorem enorm_ofReal_norm (z : ℂ) : ‖((‖z‖ : ℝ) : ℂ)‖ₑ = ‖z‖ₑ := by simp [enorm]
+theorem enorm_ofReal_norm (z : ℂ) : ‖((‖z‖ : ℝ) : ℂ)‖ₑ = ‖z‖ₑ := by
+  rw [← ofReal_norm, Complex.norm_of_nonneg (norm_nonneg z), ofReal_norm]
 
 theorem isDiscreteWith_of_isDiscrete (h : IsDiscrete V) (hc : ∀ z : Neutral.B1.Ideles E, ∀ φ ∈ V,
     rt E a (GeneralLinearGroup.scalar (Fin a) z) φ = ((ω.1 z : ℂˣ) : ℂ) • φ) : IsDiscreteWith ω V :=
@@ -61,7 +62,7 @@ theorem isSqInt_of_bounded {f : GA E a → ℂ} (h : ∀ t g, f (splitCentre E a
   have hf := GlobalTheory.CovolGL.isFiniteMeasure_quotMeasure E a Measure.haar
   refine ⟨h, Measure.haar, _, inferInstance, hd, ?_⟩
   refine (lintegral_mono (g := fun _ => ENNReal.ofReal C ^ 2) fun g => ?_).trans_lt ?_
-  · exact pow_le_pow_left' ((ofReal_norm_eq_enorm _).symm.trans_le (ENNReal.ofReal_le_ofReal (hC g))) 2
+  · exact pow_le_pow_left' ((ofReal_norm _).symm.trans_le (ENNReal.ofReal_le_ofReal (hC g))) 2
   · rw [setLIntegral_const, ← quotMeasure_univ hd]
     exact ENNReal.mul_lt_top (ENNReal.pow_lt_top ENNReal.ofReal_lt_top) (measure_lt_top _ _)
 

@@ -68,7 +68,7 @@ theorem ses_of_subQuot {G V₁ V₂ V₃ : Type} [Group G] [AddCommGroup V₁] [
       rw [hf1, e₁.symm_apply_apply, q.symm_apply_apply]
 
 theorem ses_of_mext (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-    (n : ℕ) (A B C : MRep k n) : MExt A B C → Ses A.ρ B.ρ C.ρ := by
+    (n : ℕ) (A B C : GlobalTheory.BZMir.MRep k n) : MExt A B C → Ses A.ρ B.ρ C.ρ := by
   rintro ⟨S, ⟨e₁⟩, ⟨e₂⟩⟩
   exact ses_of_subQuot S e₁ e₂
 

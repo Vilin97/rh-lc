@@ -22,8 +22,8 @@ theorem fam_ev {U T : Over S} {M : LB (A ⊗ U).left} (h : Fam A M) (u : T ⟶ U
     Fam A (ev M (fst A T) (snd A T ≫ u)) := by
   have hM : (ev M (fst A T) (snd A T ≫ u)).IsLB := pull_isLB h.isLB _
   refine ⟨hM, (isAdditive_iff hM).2 fun Y a a' t ↦ ?_⟩
-  simp only [evc_ev h.isLB, lift_fst, lift_snd_assoc]
-  exact (isAdditive_iff h.isLB).1 h.add Y a a' _
+  simpa only [evc_ev h.isLB, lift_fst, lift_snd_assoc] using
+    (isAdditive_iff h.isLB).1 h.add Y a a' (t ≫ u)
 
 theorem rep_ext {B S' Y : Over S} {b : B ⟶ S'} {P : LB (A ⊗ B).left} (h : Rep A b P) {u u' : Y ⟶ B}
     (hb : u ≫ b = u' ≫ b) (e : Same A P P u u') : u = u' := by

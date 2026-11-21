@@ -23,7 +23,7 @@ variable {R : Type*} [CommRing R] [TopologicalSpace R] [DiscreteTopology R]
 theorem twDual_comp_apply (h : χ.comp φ = χ') (g : D) (y : TDual R M) :
     ((twDual χ ρ).comp φ) g y = ((twDual χ' (ρ.comp φ)).comp (MonoidHom.id D)) g y := by
   subst h
-  ext m
+  refine DFunLike.ext _ _ fun m => ?_
   simp only [MonoidHom.comp_apply, MonoidHom.id_apply, twDual_apply, map_inv]
 
 def GlobalTheory.CompanionTheory.Ar.dualMap (h : χ.comp φ = χ') :

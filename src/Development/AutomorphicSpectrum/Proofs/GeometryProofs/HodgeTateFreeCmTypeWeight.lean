@@ -305,6 +305,28 @@ namespace GlobalTheory.CompanionTheory.Ar.Flat
 set_option maxHeartbeats 2000000 in
 theorem exactModLat_hodgeTate : FarguesHodgeTate → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (S : Finset ℕ) (Ω : Type) [Field Ω] (K : Type) [Fintype K] (J : K → Type) [∀ k, Fintype (J k)] (y : (Σ k, J k) → Ω) (𝔐 : HodgeCpt Y S y) (p : ℕ) [Fact p.Prime], p ∈ S → 0 < D.p + D.q → HTFree 𝔐 p → ∀ τ : CMType H, ExactModLat (𝔐.V (.inl τ)) (𝔐.V (.inr τ)) (p : Ω) (D.p + D.q) := by
   intro hF E _ _ _ H D l Xo c O _ β Y S Ω _ K _ J _ y 𝔐 p _ hpS hpq hfree τ
+  have overZp_of_inFibre {p : ℕ} (hp : p.Prime) (q : Cpt 𝔐.ξ) (hq : InFibre 𝔐.ξ p q) : OverZp 𝔐 p q := by
+    intro r hr hrq
+    by_contra hne
+    have hloc : IsLocalRing (GlobalTheory.CompanionTheory.Ar.regAt 𝔐.ξ q) :=
+      IsLocalRing.of_surjective' (GlobalTheory.CompanionTheory.Ar.genMap 𝔐.ξ q).rangeRestrict
+        (GlobalTheory.CompanionTheory.Ar.genMap 𝔐.ξ q).rangeRestrict_surjective
+    have key : ∀ n : ℕ, InFibre 𝔐.ξ n q → ¬ IsUnit ((n : GlobalTheory.CompanionTheory.Ar.regAt 𝔐.ξ q)) := by
+      intro n hn hu
+      apply hn
+      obtain ⟨u, hu'⟩ := hu
+      have h1 : (n : Ω) * (((u⁻¹ : (GlobalTheory.CompanionTheory.Ar.regAt 𝔐.ξ q)ˣ) : GlobalTheory.CompanionTheory.Ar.regAt 𝔐.ξ q) : Ω) = 1 := by
+        have h2 := congrArg (fun x : GlobalTheory.CompanionTheory.Ar.regAt 𝔐.ξ q => (x : Ω)) u.mul_inv
+        simpa [hu'] using h2
+      have h0 : (n : Ω) ≠ 0 := left_ne_zero_of_mul_eq_one h1
+      refine ⟨h0, natCast_mem _ n, ?_⟩
+      rw [← eq_inv_of_mul_eq_one_right h1]
+      exact SetLike.coe_mem _
+    have hcop : Nat.Coprime r p := (Nat.coprime_primes hr hp).2 hne
+    obtain ⟨a, b, hab⟩ := (Nat.isCoprime_iff_coprime.2 hcop).map (Int.castRingHom (GlobalTheory.CompanionTheory.Ar.regAt 𝔐.ξ q))
+    rcases IsLocalRing.isUnit_or_isUnit_of_add_one hab with h | h
+    · exact key r hrq (by simpa using isUnit_of_mul_isUnit_right h)
+    · exact key p hq (by simpa using isUnit_of_mul_isUnit_right h)
   obtain ⟨o, ho⟩ := HTL.exists_zp Ω p
   obtain ⟨Dc, hfam, htest⟩ := GlobalTheory.T.hodge_tate_free_flag_lattice_lower E H D l Xo c O β Y S Ω K J y 𝔐 p hpS hpq o ho
   obtain ⟨hproj, hdiff, κ, hκ, hκs⟩ := GlobalTheory.T.hodge_tate_free_flag_lattice_upper E H D l Xo c O β Y S Ω K J y 𝔐 p hpS hpq o ho Dc hfam hfree
@@ -355,7 +377,11 @@ theorem exactModLat_hodgeTate : FarguesHodgeTate → ∀ (E : Type) [Field E] [N
       (Module.Dual Ω 𝔐.Li) (Dc s) κs m hdiv (htest s κs hPt hκ) (hproj s).1
     obtain ⟨i, hi1, hi2⟩ := hseq σ ds ds' hds2 hds2' ((hproj s).2 σ) ((hproj s).2 _)
     have hact : ∀ (a : 𝓞 E) (w : Module.Dual Ω 𝔐.Li), (Dc s).ρΩ a w = w ∘ₗ 𝔐.ρ (RingOfIntegers.mapRingEquiv (cmConj E) a) := fun a w => by
-      rw [HT.ModelTest.bar_eq H a]
+      have hbar : RingOfIntegers.mapRingEquiv (cmConj E) a = H.bar a := by
+        apply RingOfIntegers.ext
+        rw [H.bar_eq a]
+        rfl
+      rw [hbar]
       exact hfam.act s a w
     obtain ⟨Jc, hJ⟩ := HTL.chart_pack (chartRing o (mseg y) s.1) Ω E (cmConj E) hc p (𝔐.R p) (D.p + D.q) 𝔐.Li (Dc s) 𝔐.ρ hact σ ds m i
       (HTL.ne_zero_of_gen _ Ω E σ ds hds2) hi2 hi1 ((hproj s).2 σ)
@@ -385,7 +411,7 @@ theorem exactModLat_hodgeTate : FarguesHodgeTate → ∀ (E : Type) [Field E] [N
       (∀ e ∈ 𝔐.V (.inl τ) q, ∀ l, (Jc s e l - Jc t e l) / (p : Ω) ∈ regAt 𝔐.ξ q) ∧
       (∀ e ∈ 𝔐.V (.inr τ) q, ∀ l, (J' s e l - J' t e l) / (p : Ω) ∈ regAt 𝔐.ξ q) := by
     intro s t q hs ht hq
-    have hZ := HT.ModelTest.overZp_of_inFibre 𝔐 (Fact.out : p.Prime) q hq
+    have hZ := overZp_of_inFibre (Fact.out : p.Prime) q hq
     have hls := GlobalTheory.T.hodge_component_integral_over_ring E H D l Xo c O β Y S Ω K J y 𝔐 p o ho s.1 q hs hZ
     have hlt := GlobalTheory.T.hodge_component_integral_over_ring E H D l Xo c O β Y S Ω K J y 𝔐 p o ho t.1 q ht hZ
     obtain ⟨b, hb⟩ := hκd s
@@ -498,7 +524,7 @@ theorem exactModLat_hodgeTate : FarguesHodgeTate → ∀ (E : Type) [Field E] [N
   obtain ⟨_, hqc⟩ := (hU q.1).1 hqU
   have hqc' : InChart 𝔐.ξ (mseg y) (sx x).1 q := hqc
   have hqF : InFibre 𝔐.ξ p q := hq
-  have hZ := HT.ModelTest.overZp_of_inFibre 𝔐 (Fact.out : p.Prime) q hqF
+  have hZ := overZp_of_inFibre (Fact.out : p.Prime) q hqF
   have hls := GlobalTheory.T.hodge_component_integral_over_ring E H D l Xo c O β Y S Ω K J y 𝔐 p o ho (sx x).1 q hqc' hZ
   obtain ⟨k1, -, ⟨R1, hR1, hR1'⟩, ⟨R2, hR2, hR2'⟩, k5⟩ := hpack (sx x) _ hls
   have hl := fun e => GlobalTheory.T.hodge_component_residue_integrality E H D l Xo c O β Y S Ω K J y 𝔐 p o ho Dc hfam hpS τ σ hσ (sx x) (ds (sx x)) (hgd _) q hqc' hqF e

@@ -20,16 +20,16 @@ theorem UpperTheory.V.Lit.Bor.indep :
         (∑ j ∈ t, f j) X = ∑ j ∈ t, f j X := fun t f => by
       induction t using Finset.cons_induction with
       | empty => rfl
-      | cons j t hj ih => rw [Finset.sum_cons, Finset.sum_cons, AlternatingMap.add_apply, ih]
+      | cons j t hj ih => rw [Finset.sum_cons, Finset.sum_cons, add_apply, ih]
     have h1 : ∑ j, c j • cmp k (ω j X) = 0 := by
       have h2 := congrArg (fun η => cmp k (η X)) hc
       set_option synthInstance.maxHeartbeats 100000 in
-        simpa only [h, map_sum, AlternatingMap.smul_apply, map_smul, AlternatingMap.zero_apply, map_zero] using h2
-    exact (iSupIndep_iff_finset_sum_eq_zero_imp_eq_zero _).1 hind Finset.univ (fun j => c j • cmp k (ω j X))
+        simpa only [h, map_sum, smul_apply, map_smul, zero_apply, map_zero] using h2
+    exact (iSupIndep_iff_finsetSum_eq_zero_imp_eq_zero _).1 hind Finset.univ (fun j => c j • cmp k (ω j X))
       (fun j _ => Submodule.smul_mem _ _ (mem_tens.1 (hV j X) k)) h1 i (Finset.mem_univ i)
   funext i
   by_contra hci
   refine h0 i (AlternatingMap.ext fun X => ?_)
-  rw [← sum_cmp (ω i X), AlternatingMap.zero_apply]
+  rw [← sum_cmp (ω i X), zero_apply]
   refine Finset.sum_eq_zero fun k _ => ?_
   rw [(smul_eq_zero.1 (key X k i)).resolve_left hci, TensorProduct.zero_tmul]

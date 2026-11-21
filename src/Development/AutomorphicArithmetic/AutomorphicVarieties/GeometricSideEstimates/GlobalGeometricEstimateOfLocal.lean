@@ -28,9 +28,10 @@ private theorem key {E : Type} [Field E] [NumberField E] {a : ℕ} (g : GA E a) 
       have := congrArg (infEval w) e
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_sum] at this
-      refine Eq.trans this (Finset.sum_congr rfl fun j _ => ?_)
-      rw [map_mul, map_mul, ← infAt_inv]
-      rfl
+      refine Eq.trans ?_ (Eq.trans this (Finset.sum_congr rfl fun j _ => ?_))
+      · simp only [infEval_apply, AdeleRing.algebraMap_fst_apply]
+      · rw [map_mul, map_mul, ← infAt_inv]
+        simp only [infEval_apply, AdeleRing.algebraMap_fst_apply, infAt_apply]
     rw [h1]
     calc _ ≤ ∑ _j : Fin a, ‖(c : w.Completion)‖ * r * locHeight (infAt w g) := by
           refine norm_sum_le_of_le _ fun j _ => ?_
@@ -38,7 +39,7 @@ private theorem key {E : Type} [Field E] [NumberField E] {a : ℕ} (g : GA E a) 
           exact mul_le_mul (mul_le_mul_of_nonneg_left (hr j w) (norm_nonneg _))
             (norm_inv_apply_le_locHeight _ j i) (norm_nonneg _) (by positivity)
       _ = _ := by simp; ring
-  · refine finprod_le_finprod (Filter.eventually_cofinite.1 (eventually_norm_eq_one hcx)) (fun _ => norm_nonneg _)
+  · refine finprod_le_finprod₀ (Filter.eventually_cofinite.1 (eventually_norm_eq_one hcx)) (fun _ => norm_nonneg _)
       (finite_mulSupport_locHeight_finAt g) fun p => ?_
     have h1 : ((c * x : E) : p.adicCompletion E) =
         ∑ j, (algebraMap E (Ad E) c * y j).2 p * ((finAt p g)⁻¹).val j i := by

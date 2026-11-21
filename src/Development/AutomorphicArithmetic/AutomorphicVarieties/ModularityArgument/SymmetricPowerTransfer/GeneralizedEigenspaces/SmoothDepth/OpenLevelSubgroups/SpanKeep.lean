@@ -34,7 +34,40 @@ theorem UpperTheory.V.Z.Sym.Al.spanKeep :
         (∀ (R : Representation ℂ (InfinitePlace L → GL (Fin n) ℂ) V) (A : Subgroup (UA L n)), A ≤ away n w → IsAF R A φ → IsAF R A φ') ∧
         ∀ w' : Plc L, IsSplitAt w' → w'.under (𝓞 (Lp L)) ≠ w.under (𝓞 (Lp L)) → ∀ W d c, EigAt φ w' W d c → EigAt φ' w' W d c := by
   intro L _ _ _ n V _ _ w φ φ' h
-  obtain ⟨h1, -, h3, h4, -, -⟩ := UpperTheory.V.Z.Sym.Al.factor L n w
+  have hfin : ∀ {x : UA L n}, x ∈ locU n w → cInf x = 1 := fun hx => (Subgroup.mem_inf.1 hx).1
+  have hout : ∀ {x : UA L n}, x ∈ locU n w → ∀ u : Plc L, u.under (𝓞 (Lp L)) ≠ w.under (𝓞 (Lp L)) →
+      cLoc u x = 1 := fun hx u hu =>
+    MonoidHom.mem_ker.1 (Subgroup.mem_iInf.1 (Subgroup.mem_iInf.1 (Subgroup.mem_inf.1 hx).2 u) hu)
+  have hin : ∀ {y : UA L n}, y ∈ away n w → ∀ u : Plc L, u.under (𝓞 (Lp L)) = w.under (𝓞 (Lp L)) →
+      cLoc u y = 1 := fun hy u hu =>
+    MonoidHom.mem_ker.1 (Subgroup.mem_iInf.1 (Subgroup.mem_iInf.1 hy u) hu)
+  have haway : ∀ {y : UA L n}, (∀ u : Plc L, u.under (𝓞 (Lp L)) = w.under (𝓞 (Lp L)) → cLoc u y = 1) →
+      y ∈ away n w := fun h =>
+    Subgroup.mem_iInf.2 fun u => Subgroup.mem_iInf.2 fun hu => MonoidHom.mem_ker.2 (h u hu)
+  have h1 : ∀ x ∈ locU n w, ∀ y ∈ away n w, x * y = y * x := by
+    intro x hx y hy
+    have ua_ext {g h : UA L n} (h1 : cInf g = cInf h) (h2 : ∀ u, cLoc u g = cLoc u h) : g = h := by
+      refine Subtype.ext (ga_ext h1 ?_)
+      refine Units.ext (GlobalTheory.SplitPts.matAf_ext fun u => ?_)
+      exact congrArg Units.val (h2 u)
+    refine ua_ext ?_ fun u => ?_
+    · rw [map_mul, map_mul, hfin hx, one_mul, mul_one]
+    · rw [map_mul, map_mul]
+      by_cases hu : u.under (𝓞 (Lp L)) = w.under (𝓞 (Lp L))
+      · rw [hin hy u hu, one_mul, mul_one]
+      · rw [hout hx u hu, one_mul, mul_one]
+  have h3 : ∀ w' : Plc L, w'.under (𝓞 (Lp L)) ≠ w.under (𝓞 (Lp L)) → locU n w' ≤ away n w := by
+    intro w' hw' x hx
+    refine haway fun u hu => ?_
+    exact MonoidHom.mem_ker.1 (Subgroup.mem_iInf.1 (Subgroup.mem_iInf.1 (Subgroup.mem_inf.1 hx).2 u)
+      (by rw [hu]; exact hw'.symm))
+  have h4 : infU L n ≤ away n w := by
+    intro x hx
+    refine haway fun u _ => ?_
+    have h : Matrix.GeneralLinearGroup.map (pFin L) x.1 = 1 := hx
+    have h' := congrArg (Matrix.GeneralLinearGroup.map (pLoc L u)) h
+    rw [map_one] at h'
+    exact h'
   refine ⟨fun π hπ hc => ?_, fun R A hA hf => ?_, fun w' hs hne W d c he => ?_⟩
   · refine Submodule.span_induction (p := fun ψ _ => CoefIn ψ π) ?_ ?_ ?_ ?_ h
     · rintro _ ⟨x, hx, rfl⟩ f

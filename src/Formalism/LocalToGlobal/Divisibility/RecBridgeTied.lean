@@ -145,19 +145,21 @@ abbrev rowsTtoF {eps : ℝ} {Fm : FamP eps} (Rt : Σ' x0 : ℝ, ∀ x, Fm.x1 < x
   ⟨Rt.1, fun x hx h i => (Rt.2 x hx h i).toF⟩
 
 theorem BridgeRowsT.toF {eps : ℝ} {Fm : FamP eps} {Rt : Σ' x0 : ℝ, ∀ x, Fm.x1 < x → x0 ≤ x → ∀ i : Fm.Ix x, DivisionRowsColumns (Fm.L x i)}
-    {Cabs CH : ℝ} (B : BridgeRowsT Fm Rt Cabs CH) : BridgeRowsF Fm (rowsTtoF Rt) Cabs CH where
-  pkg := fun hN => by
-    obtain ⟨C, x0, h⟩ := B.pkg hN
-    exact ⟨C, x0, fun x hx0 hx h' i => (h x hx0 hx h' i).map DivisionPackageColumns.toDivisionPackageFace⟩
-  adm2 := B.adm2
-  cut := B.cut
-  c3 := B.c3
-  hh := B.hh
-  c2 := B.c2
-  c5 := B.c5
-  bu := B.bu
-  rr := B.rr
-  la := B.la
+    {Cabs CH : ℝ} (B : BridgeRowsT Fm Rt Cabs CH) : BridgeRowsF Fm (rowsTtoF Rt) Cabs CH := by
+  refine {
+    pkg := ?_
+    adm2 := B.adm2
+    cut := B.cut
+    c3 := B.c3
+    hh := B.hh
+    c2 := B.c2
+    c5 := B.c5
+    bu := B.bu
+    rr := B.rr
+    la := B.la }
+  intro hN
+  obtain ⟨C, x0, h⟩ := B.pkg hN
+  exact ⟨C, x0, fun x hx0 hx h' i => (h x hx0 hx h' i).map DivisionPackageColumns.toDivisionPackageFace⟩
 
 theorem linkDIVt_of_rowsT {eps : ℝ} (Fm : FamP eps)
     (Rt : Σ' x0 : ℝ, ∀ x, Fm.x1 < x → x0 ≤ x → ∀ i : Fm.Ix x, DivisionRowsColumns (Fm.L x i)) (Cabs CH : ℝ)

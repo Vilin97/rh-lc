@@ -245,7 +245,7 @@ theorem evI_sum {ι : Type} (s : Finset ι) (g : ι → AF F) : evI F (∑ i ∈
   | insert i s hi ih => rw [Finset.sum_insert hi, Finset.sum_insert hi, evI_add, ih]
 
 theorem evI_realAd (t : ℝ) : evI F (realAd F t) = algebraMap ℝ (mixedEmbedding.mixedSpace F) t := by
-  simp [evI, realAd]
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply _
 
 def linForm (B : κ → mixedEmbedding.mixedSpace F) : (κ → mixedEmbedding.mixedSpace F) →L[ℝ] ℝ :=
   LinearMap.toContinuousLinearMap

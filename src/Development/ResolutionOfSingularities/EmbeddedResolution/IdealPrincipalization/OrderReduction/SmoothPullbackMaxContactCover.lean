@@ -204,8 +204,8 @@ theorem isSmoothDivisor_coverMaxContactIdeal (_hpb : OrderReduction.ValidPullbac
     (MaxContactCoverGeometry.inStrictNormalCrossingPositionAt_of_isMaxContactCover T hv hgood x).exists_etaleChart
   refine ⟨U, hxU, m, c, ?_⟩
   rcases ha : a 0 with _ | t
-  · exact Or.inl (hnone 0 (by simp) ha)
-  · exact Or.inr ⟨t, hsome 0 (by simp) t ha⟩
+  · exact Or.inl (hnone 0 (Nat.zero_lt_succ 0) ha)
+  · exact Or.inr ⟨t, hsome 0 (Nat.zero_lt_succ 0) t ha⟩
 
 end MaxContactCoverData
 

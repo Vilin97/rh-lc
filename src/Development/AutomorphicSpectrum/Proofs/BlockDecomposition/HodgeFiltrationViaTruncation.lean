@@ -131,12 +131,12 @@ theorem dividedPowerFiltration_bot {r : ℕ} (hr : 1 ≤ r) : pdP (dividedPowers
   rw [e]
   exact (dividedPowersBot K).dpow_eval_zero h0
 
-theorem tfBase [CharZero K] {s : ℕ} (hs : 1 ≤ s) : TFBase (dividedPowersBot K) 1 s where
-  nil := dividedPowerFiltration_bot hs
-  tf r x h := by simpa using h
-  dv n hn := ⟨0, (n : K)⁻¹, by
-    have : (n : K) ≠ 0 := Nat.cast_ne_zero.2 hn
-    simp [this]⟩
+theorem tfBase [CharZero K] {s : ℕ} (hs : 1 ≤ s) : TFBase (dividedPowersBot K) 1 s := by
+  refine ⟨dividedPowerFiltration_bot hs, ?_, ?_⟩
+  · intro r x h
+    simpa using h
+  · intro n hn
+    exact ⟨0, (n : K)⁻¹, by rw [pow_zero, mul_inv_cancel₀ (Nat.cast_ne_zero.2 hn)]⟩
 
 theorem dpow_mem_pow {B : Type} [CommRing B] {J : Ideal B} (δ : DividedPowers J) (hu : ∀ n : ℕ, n ≠ 0 → IsUnit (n : B))
     (n : ℕ) {x : B} (hx : x ∈ J) : δ.dpow n x ∈ J ^ n := by
@@ -181,6 +181,9 @@ end Concrete
 
 section Loc
 variable {K : Type} [Field K] [CharZero K] {X : Scheme.{0}} (q : X ⟶ Spec (CommRingCat.of K))
+
+local notation "LL" => nlFun (dividedPowersBot K) 0 X q (Ideal.Quotient.mk ⊥)
+local notation "TFs" => (TF 1 : ℕ → ObjectProperty (Thick LL))
 
 theorem loc_vanish (hG : KH.LocGr) (hP : KH.PolyTf) {V : X.Opens} {d : ℕ} (c : Coord q V d) (r s' : ℕ) (hd : d < r)
     (hs : r + 1 ≤ s') (j : ℕ) : Subsingleton (CH.H (gr (sFil (St (TFs s') {V})) (r : ℤ)) j) := by

@@ -18,18 +18,21 @@ open Formalism.QuantumDeterminants Formalism.FourierDecayAlt.B Formalism.Fourier
 variable {k r : ℕ} {Wp : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [FiniteDimensional ℂ Wp]
 
 theorem isHaarOn_smul {U : Set (Mat k r)} {μ : Measure (Mt k r)} (h : IsHaarOn U μ) {c : ℝ≥0} (hc : 0 < c) :
-    IsHaarOn U ((c : ℝ≥0∞) • μ) where
-  conc := by simp [h.conc]
-  left a ha := by rw [Measure.map_smul, h.left a ha]
-  right a ha := by rw [Measure.map_smul, h.right a ha]
-  finite_compact K hK := ENNReal.mul_lt_top ENNReal.coe_lt_top (h.finite_compact K hK)
-  ne_zero := by
-    intro h0
-    have h1 : (c : ℝ≥0∞) * μ Set.univ = 0 := by
-      rw [← smul_eq_mul, ← Measure.smul_apply, h0]; rfl
-    rcases mul_eq_zero.1 h1 with h2 | h2
-    · exact absurd h2 (by exact_mod_cast hc.ne')
-    · exact h.ne_zero (Measure.measure_univ_eq_zero.1 h2)
+    IsHaarOn U ((c : ℝ≥0∞) • μ) := by
+  have hof : Continuous (fun x : Mt k r => (Matrix.of x : Mat k r)) := continuous_id
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · rw [smul_apply, h.conc, smul_zero]
+  · intro a ha
+    have hm : Continuous (lmulM (k := k) (r := r) a) := continuous_const.matrix_mul hof
+    rw [Measure.map_smul _ hm.measurable.aemeasurable, h.left a ha]
+  · intro a ha
+    have hm : Continuous (rmulF a) := hof.matrix_mul continuous_const
+    rw [Measure.map_smul _ hm.measurable.aemeasurable, h.right a ha]
+  · intro K hK
+    rw [smul_apply, smul_eq_mul]
+    exact ENNReal.mul_lt_top ENNReal.coe_lt_top (h.finite_compact K hK)
+  · intro h0
+    exact h.ne_zero ((Measure.ennreal_smul_eq_zero.1 h0).resolve_left (by exact_mod_cast hc.ne'))
 
 def rescale (D : RealPlaceData k r Wp Wp) {c : ℝ≥0} (hc : 0 < c) : RealPlaceData k r Wp Wp :=
   { D with μG := (c : ℝ≥0∞) • D.μG, haarG := isHaarOn_smul D.haarG hc }

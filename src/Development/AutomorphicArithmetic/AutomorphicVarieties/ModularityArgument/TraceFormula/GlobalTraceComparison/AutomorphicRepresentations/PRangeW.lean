@@ -28,7 +28,7 @@ private theorem test_trM {E : Type} [Field E] [NumberField E] [IsCMField E] {n :
     funext y
     simp [trM, Finset.sum_apply]
   constructor
-  · exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => (hΦ i j).1.mul continuous_const
+  · exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => (hΦ i j).1.mul continuous_const
   · rw [e]
     exact HasCompactSupport.finset_sum fun i _ => HasCompactSupport.finset_sum fun j _ => (hΦ i j).2.mul_right
 

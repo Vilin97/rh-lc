@@ -38,21 +38,50 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.Cha
 namespace GlobalTheory.CompanionTheory.NefLower
 
 
-open PositivityTheory.HtPt.Siua in
 theorem num_lower {M : Type} [AddCommGroup M] (d : ℕ)
-    (f : MultilinearMap ℤ (fun _ : Fin (d + 1) => M) ℤ) (μ e : M) (δ : ℚ) (hδ : 0 < δ) :
+    (f : MultilinearMap (RingHom.id ℤ) (fun _ : Fin (d + 1) => M) ℤ) (μ e : M) (δ : ℚ) (hδ : 0 < δ) :
     ∃ t : ℚ, 0 < t ∧ ∀ (a : ℕ) (m : ℤ), 1 ≤ a → (m : ℚ) = a * t →
       ((f (fun _ => μ) : ℚ) - δ) * (a : ℚ) ^ (d + 1) ≤
         (f (fun _ => a • μ + m • e) : ℚ) - ((d + 1 : ℕ) : ℚ) *
           (f (Fin.snoc (α := fun _ => M) (fun _ : Fin d => a • μ + m • e) (m • e)) : ℚ) := by
+  let form (u v : Fin (d + 1) → ℚ) : ℚ :=
+    ∑ s : Finset (Fin (d + 1)), (∏ i, if i ∈ s then u i else v i) * (f (fun i => if i ∈ s then μ else e) : ℚ)
+  have form_cast (u v : Fin (d + 1) → ℤ) :
+      (f (fun i => u i • μ + v i • e) : ℚ) = form (fun i => u i) (fun i => v i) := by
+    change (f ((fun i => u i • μ) + (fun i => v i • e)) : ℚ) = _
+    rw [f.map_add_univ]
+    push_cast
+    refine Finset.sum_congr rfl fun s _ => ?_
+    have hpw : s.piecewise (fun i => u i • μ) (fun i => v i • e) =
+        fun i => (if i ∈ s then u i else v i) • (if i ∈ s then μ else e) := by
+      funext i
+      by_cases hi : i ∈ s <;> simp [Finset.piecewise, hi]
+    simp only [hpw, f.map_smul_univ, RingHom.id_apply, smul_eq_mul]
+    push_cast
+    congr 1
+  have form_smul (u v : Fin (d + 1) → ℚ) (a : ℚ) :
+      form (fun i => a * u i) (fun i => a * v i) = a ^ (d + 1) * form u v := by
+    simp only [form, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun s _ => ?_
+    simp only [← mul_ite, Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ,
+      Fintype.card_fin, mul_assoc]
+  have form_cont (u v : Fin (d + 1) → ℚ) : Continuous fun t : ℚ => form u (fun i => v i * t) := by
+    unfold form
+    refine continuous_finsetSum _ fun s _ => ?_
+    refine Continuous.mul (continuous_finsetProd _ fun i _ => ?_) continuous_const
+    by_cases hi : i ∈ s
+    · simp only [hi, ite_true]
+      exact continuous_const
+    · simp only [hi, ite_false]
+      exact continuous_const.mul continuous_id
   let x : Fin (d + 1) → ℤ := Fin.snoc (α := fun _ => ℤ) (fun _ : Fin d => 1) 0
-  let g : ℚ → ℚ := fun t => form f μ e (fun _ => 1) (fun _ => 1 * t) -
-    ((d + 1 : ℕ) : ℚ) * form f μ e (fun i => x i) (fun _ => 1 * t)
+  let g : ℚ → ℚ := fun t => form (fun _ => 1) (fun _ => 1 * t) -
+    ((d + 1 : ℕ) : ℚ) * form (fun i => x i) (fun _ => 1 * t)
   have hg : Continuous g :=
-    (form_cont f μ e (fun _ => 1) (fun _ => 1)).sub (continuous_const.mul (form_cont f μ e _ _))
+    (form_cont (fun _ => 1) (fun _ => 1)).sub (continuous_const.mul (form_cont _ _))
   have hg0 : (f (fun _ => μ) : ℚ) - δ < g 0 := by
-    have h1 := form_cast f μ e (fun _ => 1) (fun _ => 0)
-    have h2 := form_cast f μ e x (fun _ => 0)
+    have h1 := form_cast (fun _ => 1) (fun _ => 0)
+    have h2 := form_cast x (fun _ => 0)
     have h3 : f (fun i => x i • μ + (0 : ℤ) • e) = 0 :=
       f.map_coord_zero (Fin.last d) (by simp [x])
     rw [h3] at h2
@@ -70,17 +99,17 @@ theorem num_lower {M : Type} [AddCommGroup M] (d : ℕ)
     refine Fin.lastCases ?_ (fun j => ?_) i <;> simp [x]
   have e2 : (fun _ : Fin (d + 1) => a • μ + m • e) = fun _ => (a : ℤ) • μ + m • e := by
     funext i; simp
-  have h1 := form_cast f μ e (fun i => (a : ℤ) * x i) (fun _ => m)
-  have h2 := form_cast f μ e (fun _ => (a : ℤ)) (fun _ => m)
-  have h3 := form_smul f μ e (fun i => x i) (fun _ => 1 * t) a
-  have h4 := form_smul f μ e (fun _ => 1) (fun _ => 1 * t) a
-  have h5 : form f μ e (fun i => (((a : ℤ) * x i : ℤ) : ℚ)) (fun _ => ((m : ℤ) : ℚ)) =
-      form f μ e (fun i => (a : ℚ) * x i) (fun _ => (a : ℚ) * (1 * t)) := by
+  have h1 := form_cast (fun i => (a : ℤ) * x i) (fun _ => m)
+  have h2 := form_cast (fun _ => (a : ℤ)) (fun _ => m)
+  have h3 := form_smul (fun i => x i) (fun _ => 1 * t) a
+  have h4 := form_smul (fun _ => 1) (fun _ => 1 * t) a
+  have h5 : form (fun i => (((a : ℤ) * x i : ℤ) : ℚ)) (fun _ => ((m : ℤ) : ℚ)) =
+      form (fun i => (a : ℚ) * x i) (fun _ => (a : ℚ) * (1 * t)) := by
     congr 1 <;> funext i <;> push_cast
     · rfl
     · rw [hm]; ring
-  have h6 : form f μ e (fun _ => (((a : ℤ) : ℤ) : ℚ)) (fun _ => ((m : ℤ) : ℚ)) =
-      form f μ e (fun _ => (a : ℚ) * 1) (fun _ => (a : ℚ) * (1 * t)) := by
+  have h6 : form (fun _ => (((a : ℤ) : ℤ) : ℚ)) (fun _ => ((m : ℤ) : ℚ)) =
+      form (fun _ => (a : ℚ) * 1) (fun _ => (a : ℚ) * (1 * t)) := by
     congr 1 <;> funext i <;> push_cast
     · ring
     · rw [hm]; ring
@@ -187,7 +216,9 @@ end Sections
 
 
 open GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Kleiman2 GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization in
-theorem count_lower (hK : VeryAmpleNefPlusAmple.Statement) (hS : SectionCount.Statement)
+theorem count_lower
+    (hK : GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Kleiman2.VeryAmpleNefPlusAmple.Statement)
+    (hS : GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Kleiman2.SectionCount.Statement)
     (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] [CharZero Ω]
     (y : (Σ k, ι k) → Ω) (d : ℕ) (a : K → ℤ) (hV : IsArithVar (mCoordIdeal y) (d + 1 + 1))
     (hN : NefOnGenericDeg (mCoordIdeal y) a) (δ : ℚ) (hδ : 0 < δ) :
@@ -259,7 +290,9 @@ theorem count_lower (hK : VeryAmpleNefPlusAmple.Statement) (hS : SectionCount.St
 
 
 open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Kleiman2 in
-theorem lower_of_pos (hK : VeryAmpleNefPlusAmple.Statement) (hS : SectionCount.Statement)
+theorem lower_of_pos
+    (hK : GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Kleiman2.VeryAmpleNefPlusAmple.Statement)
+    (hS : GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Kleiman2.SectionCount.Statement)
     (hKod : KodairaGeneric.Statement)
     (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] [CharZero Ω]
     (y : (Σ k, ι k) → Ω) (d : ℕ) (a b : K → ℤ) (hV : IsArithVar (mCoordIdeal y) (d + 1 + 1))

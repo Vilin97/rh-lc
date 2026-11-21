@@ -312,7 +312,7 @@ theorem div_const_on {P W : Ideal (MRing ι)} (hP : P.IsPrime) (hH : IsHorizonta
   have hnd : ¬ p ∣ m' := by
     intro hd
     refine pow_succ_padicValNat_not_dvd (p := p) hm.ne' ?_
-    rw [pow_succ]
+    rw [← Nat.padicValNat_def, pow_succ]
     conv_rhs => rw [hm']
     exact Nat.mul_dvd_mul_left _ hd
   have e : (C (m : ℤ) : MRing ι) = C (p : ℤ) ^ padicValNat p m * C (m' : ℤ) := by

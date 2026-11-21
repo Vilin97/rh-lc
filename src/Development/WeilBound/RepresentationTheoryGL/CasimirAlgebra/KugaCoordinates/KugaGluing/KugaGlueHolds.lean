@@ -56,7 +56,8 @@ theorem kugaGlue_holds : KugaGlue := by
       rw [kgA_comm, hbr i j, show toL (∑ k, c i j k • iM (fr k).1) = kgL (∑ k, c i j k • iM (fr k).1) from rfl,
       map_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
-    rw [map_smul, map_smul, ← algebraMap_smul ℂ (c i j k)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_smul, ← algebraMap_smul ℂ (c i j k)]
     rfl
   have hbrR : ∀ i j, (kgR π Ξ σ).comp kgH (fr i) * (kgR π Ξ σ).comp kgH (fr j) -
       (kgR π Ξ σ).comp kgH (fr j) * (kgR π Ξ σ).comp kgH (fr i) =
@@ -67,7 +68,8 @@ theorem kugaGlue_holds : KugaGlue := by
       rw [kgR_comm, hbr i j, show toL (∑ k, c i j k • iM (fr k).1) = kgL (∑ k, c i j k • iM (fr k).1) from rfl,
       map_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
-    rw [map_smul, map_smul, ← algebraMap_smul ℂ (c i j k)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_smul, ← algebraMap_smul ℂ (c i j k)]
     rfl
   have hDk : ∀ k j, kgD _ (hZ k) (fr j) = ∑ i, c i j k • fr i := fun k j => Subtype.ext (by
     rw [kgD_val, Submodule.coe_sum]

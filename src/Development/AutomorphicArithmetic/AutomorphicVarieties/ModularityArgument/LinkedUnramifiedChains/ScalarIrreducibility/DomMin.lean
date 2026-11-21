@@ -9,6 +9,9 @@ open NumberField Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.
 theorem UpperTheory.V.J.domMin :
     ∀ (A : Type) [CommRing A] (q : Ideal A) [q.IsPrime], IsDomain (Localization.AtPrime q) → ∀ P ∈ minimalPrimes A, P ≤ q → ∀ a ∈ P, ∃ s ∉ P, s * a = 0 := by
   intro A _ q _ hD P hP hPq a ha
+  let : Nontrivial (Localization.AtPrime q) := hD.toNontrivial
+  let : NoZeroDivisors (Localization.AtPrime q) :=
+    isCancelMulZero_iff_noZeroDivisors.mp hD.toIsCancelMulZero
   have hK : (RingHom.ker (algebraMap A (Localization.AtPrime q))).IsPrime := RingHom.ker_isPrime _
   have hle : RingHom.ker (algebraMap A (Localization.AtPrime q)) ≤ P := by
     intro x hx

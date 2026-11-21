@@ -18,8 +18,8 @@ variable {K F V : Type} [Field K] [NumberField K] [StarRing K] [Field F] [Number
 
 theorem isLattice_span {ι' : Type} [Finite ι'] (β : ι' → V)
     (hβ : Submodule.span K (Set.range β) = ⊤) :
-    Submodule.IsLattice K (Submodule.span (𝓞 K) (Set.range β)) where
-  fg := Submodule.fg_span (Set.finite_range β)
+    Submodule.IsFullLattice K (Submodule.span (𝓞 K) (Set.range β)) where
+  toIsLattice := Submodule.IsLattice.of_fg K (Submodule.fg_span (Set.finite_range β))
   span_eq_top := by rw [Submodule.span_span_of_tower]; exact hβ
 
 def rdualF (h : V →ₗ⋆[K] V →ₗ[K] K) (𝔭 : Ideal (𝓞 F)) (y : V) : Submodule (𝓞 K) V :=

@@ -64,3 +64,4 @@ theorem UpperTheory.exists_haar_restrict_range_eq_smul_map_of_invariant :
     simp [H]
     rfl
   rw [hres, hμH, Measure.map_smul, hlamval]
+  exact hme.measurable.aemeasurable

@@ -71,8 +71,7 @@ theorem sum_liftP_eq_zero {μ₀ : T} (hL : L.Is μ₀) (M : Vol G) (ρ : RealMa
     rw [← Finset.sum_smul, h0, zero_smul]
   | _, .snoc a p, hg, ι, s, c, φ, d, hv, hsum, P, F, hF => by
     classical
-    have hModel := exists_arrowModel (t := t) (e := e) (a := a) ρ hL he (OnGrid.last hg)
-    obtain ⟨Tm, h1, -, h3⟩ := hModel
+    obtain ⟨Tm, h1, -, h3⟩ := exists_arrowModel ρ hL he hg.last
     have hmem : ∀ k ∈ s, (φ k).2 ∈ LocTensor.sbSpace e (latA G a) := fun k hk => ((h1 _ _).1 (hv k hk).2).1
     have hd2 : ∀ k ∈ s, (d k).2 = Tm (φ k).2 := fun k hk => ((h1 _ _).1 (hv k hk).2).2
     let b := Module.Basis.ofVectorSpace ℂ (LocTensor.sbSpace e (latA G a))

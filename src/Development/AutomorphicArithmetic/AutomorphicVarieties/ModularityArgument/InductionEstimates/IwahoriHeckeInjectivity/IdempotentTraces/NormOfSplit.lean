@@ -29,7 +29,7 @@ private theorem norm_of_split {K M : Type} [Field K] [NumberField K] [Field M] [
     have hb : Function.Bijective (Algebra.linearMap ((w.under (𝓞 K)).adicCompletion K) (w.adicCompletion M)) :=
       ⟨(completionMap (w.under (𝓞 K)) w).injective, hs⟩
     rw [← (LinearEquiv.ofBijective _ hb).finrank_eq, Module.finrank_self]
-  show Ideal.absNorm w.asIdeal = Ideal.absNorm (w.under (𝓞 K)).asIdeal
+  simp only [Formalism.ConjugateSelfDual.normV, ← Submodule.cardQuot_apply, ← Ideal.absNorm_apply]
   rw [← Ideal.absNorm_relNorm (𝓞 K) (𝓞 M) w.asIdeal,
     Ideal.relNorm_eq_pow_of_isMaximal w.asIdeal (w.under (𝓞 K)).asIdeal, Nat.eq_one_of_mul_eq_one_left h1, pow_one]
 
@@ -44,7 +44,9 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E.sysOf :
   obtain rfl : j = 1 := by omega
   rw [pow_one] at hP
   filter_upwards [hW, hη.2, (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.tendsto_under K M).eventually (R.decomp K M hp)] with w hw hg hd
-  have hq : 1 < Formalism.ConjugateSelfDual.normV (w.under (𝓞 K)) := NumberField.HeightOneSpectrum.one_lt_absNorm _
+  have hq : 1 < Formalism.ConjugateSelfDual.normV (w.under (𝓞 K)) := by
+    simpa only [Formalism.ConjugateSelfDual.normV, ← Submodule.cardQuot_apply, ← Ideal.absNorm_apply] using
+      NumberField.HeightOneSpectrum.one_lt_absNorm (w.under (𝓞 K))
   refine ⟨fun w' hne hu => ?_, fun hn => ?_⟩
   · have hn : Formalism.ConjugateSelfDual.normV w = Formalism.ConjugateSelfDual.normV (w.under (𝓞 K)) := by
       rcases hd with hd | hd

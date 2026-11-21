@@ -16,6 +16,8 @@ namespace GlobalTheory.GcdGen
 
 variable {K : Type} [NormedField K] [IsUltrametricDist K]
 
+local notation "𝒪" => Valuation.valuationSubring (NormedField.valuation (K := K))
+
 theorem mem_ball (x : K) : x ∈ 𝒪 ↔ ‖x‖ ≤ 1 := by
   rw [Valuation.mem_valuationSubring_iff, NormedField.valuation_apply, ← NNReal.coe_le_coe]
   simp
@@ -75,12 +77,6 @@ theorem isUnit_of_norm_eq_one (x : 𝒪) (hx : ‖(x : K)‖ = 1) : IsUnit x := 
     intro h; rw [h, norm_zero] at hx; exact zero_ne_one hx
   refine IsUnit.of_mul_eq_one (⟨(x : K)⁻¹, (mem_ball _).2 (by rw [norm_inv, hx, inv_one])⟩ : 𝒪) ?_
   exact Subtype.ext (by simp [hx0])
-
-end GlobalTheory.GcdGen
-
-namespace GlobalTheory.GcdGen
-
-variable {K : Type} [NormedField K] [IsUltrametricDist K]
 
 theorem wdiv [CompleteSpace K] (g h : K⟦X⟧) (d : ℕ) (hg1 : ∀ n, ‖coeff n g‖ ≤ 1)
     (hgd : ‖coeff d g‖ = 1) (hlt : ∀ n < d, ‖coeff n g‖ < 1) (hh : ∀ n, ‖coeff n h‖ ≤ 1) :

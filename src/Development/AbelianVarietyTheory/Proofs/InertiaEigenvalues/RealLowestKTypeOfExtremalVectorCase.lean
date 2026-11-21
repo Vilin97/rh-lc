@@ -49,6 +49,7 @@ theorem thetaInner_add_right (hψ : IsStdChar D ψ (-1)) {μ : Measure (WO S T')
   unfold thetaIP
   rw [← integral_add (integrable_star_mul hψ h1 hf hg) (integrable_star_mul hψ h1 hf hh)]
   congr 1
+  simp only [Pi.add_apply, mul_add]
 
 theorem thetaInner_add_left (hψ : IsStdChar D ψ (-1)) {μ : Measure (WO S T')} {𝓕 : Set (WO S T')} (h1 : μ 𝓕 = 1)
     {f g h : WO S T' → ℂ} (hf : IsThetaFunO ψ S T' f) (hg : IsThetaFunO ψ S T' g) (hh : IsThetaFunO ψ S T' h) :
@@ -56,6 +57,7 @@ theorem thetaInner_add_left (hψ : IsStdChar D ψ (-1)) {μ : Measure (WO S T')}
   unfold thetaIP
   rw [← integral_add (integrable_star_mul hψ h1 hf hh) (integrable_star_mul hψ h1 hg hh)]
   congr 1
+  simp only [Pi.add_apply, star_add, add_mul]
 
 end GlobalTheory.RawLift.RealLowRed
 
@@ -66,7 +68,7 @@ open Formalism.IndefR.FWT
 variable {D : D7}
 
 def prodR {W : HSp D} {S' : D.what₂.Tau → SPar} (θ : InfFam D) (M : DSModel W S') (a : ∀ ρ, M.H ρ) :
-    MultilinearMap ℂ (fun ρ => lowT M ρ) (GA D W → ℂ) :=
+    (∀ ρ, lowT M ρ) →ₘₗ[ℂ] (GA D W → ℂ) :=
   MultilinearMap.pi fun g => (MultilinearMap.mkPiAlgebra ℂ D.what₂.Tau ℂ).compLinearMap fun ρ =>
     (innerₛₗ ℂ (a ρ)).comp ((M.rep ρ (infMat D.sp.cm.sig W.gram (θ ρ) g)).toLinearMap.comp
       ((M.sm ρ).subtype.comp (lowT M ρ).subtype))
@@ -77,7 +79,7 @@ theorem prodR_apply {W : HSp D} {S' : D.what₂.Tau → SPar} (θ : InfFam D) (M
   simp [prodR, MultilinearMap.pi_apply, MultilinearMap.compLinearMap_apply, MultilinearMap.mkPiAlgebra_apply]
 
 def prodL {W : HSp D} {S' : D.what₂.Tau → SPar} (θ : InfFam D) (M : DSModel W S') (b : ∀ ρ, M.H ρ) :
-    MultilinearMap ℂ (fun ρ => lowT M ρ) (GA D W → ℂ) :=
+    (∀ ρ, lowT M ρ) →ₘₗ[ℂ] (GA D W → ℂ) :=
   MultilinearMap.pi fun g => (MultilinearMap.mkPiAlgebra ℂ D.what₂.Tau ℂ).compLinearMap fun ρ =>
     (innerₛₗ ℂ (M.rep ρ (infMat D.sp.cm.sig W.gram (θ ρ) g) (b ρ))).comp
       ((M.sm ρ).subtype.comp (lowT M ρ).subtype)
@@ -107,8 +109,8 @@ variable {D : D7} {V W : HSp D} {S' : D.what₂.Tau → SPar} {ψ : AddChar (AF 
   {ω : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)} {μ : Measure (WO V W)} {𝓕 : Set (WO V W)}
 
 def thR (hω : IsWeilDatumO ψ V W χV χW ω) (h1 : μ 𝓕 = 1) {M : DSModel W S'}
-    (J : MultilinearMap ℂ (fun ρ => lowT M ρ) (WO V W → ℂ)) (hJ : ∀ v, IsThetaFunO ψ V W (J v))
-    (f : WO V W → ℂ) (hf : IsThetaFunO ψ V W f) : MultilinearMap ℂ (fun ρ => lowT M ρ) (GA D W → ℂ) where
+    (J : (∀ ρ, lowT M ρ) →ₘₗ[ℂ] (WO V W → ℂ)) (hJ : ∀ v, IsThetaFunO ψ V W (J v))
+    (f : WO V W → ℂ) (hf : IsThetaFunO ψ V W f) : (∀ ρ, lowT M ρ) →ₘₗ[ℂ] (GA D W → ℂ) where
   toFun v g := thetaIP μ 𝓕 f (ω (1, g) (J v))
   map_update_add' m ρ x y := by
     funext g
@@ -117,18 +119,18 @@ def thR (hω : IsWeilDatumO ψ V W χV χW ω) (h1 : μ 𝓕 = 1) {M : DSModel W
     exact thetaInner_add_right hω.std h1 hf (hω.om_pres _ _ (hJ _)) (hω.om_pres _ _ (hJ _))
   map_update_smul' m ρ a x := by
     funext g
-    simp only [Pi.smul_apply, smul_eq_mul]
-    rw [J.map_update_smul, map_smul]
+    simp only [RingHom.id_apply, Pi.smul_apply, smul_eq_mul]
+    rw [J.map_update_smul, RingHom.id_apply, map_smul]
     exact thetaInner_smul_right _ _ _ _ _
 
 theorem thR_apply (hω : IsWeilDatumO ψ V W χV χW ω) (h1 : μ 𝓕 = 1) {M : DSModel W S'}
-    (J : MultilinearMap ℂ (fun ρ => lowT M ρ) (WO V W → ℂ)) (hJ : ∀ v, IsThetaFunO ψ V W (J v))
+    (J : (∀ ρ, lowT M ρ) →ₘₗ[ℂ] (WO V W → ℂ)) (hJ : ∀ v, IsThetaFunO ψ V W (J v))
     (f : WO V W → ℂ) (hf : IsThetaFunO ψ V W f) (v : ∀ ρ, lowT M ρ) (g : GA D W) :
     thR hω h1 J hJ f hf v g = thetaIP μ 𝓕 f (ω (1, g) (J v)) := rfl
 
 def thL (hω : IsWeilDatumO ψ V W χV χW ω) (h1 : μ 𝓕 = 1) {M : DSModel W S'}
-    (J : MultilinearMap ℂ (fun ρ => lowT M ρ) (WO V W → ℂ)) (hJ : ∀ v, IsThetaFunO ψ V W (J v))
-    (f : WO V W → ℂ) (hf : IsThetaFunO ψ V W f) : MultilinearMap ℂ (fun ρ => lowT M ρ) (GA D W → ℂ) where
+    (J : (∀ ρ, lowT M ρ) →ₘₗ[ℂ] (WO V W → ℂ)) (hJ : ∀ v, IsThetaFunO ψ V W (J v))
+    (f : WO V W → ℂ) (hf : IsThetaFunO ψ V W f) : (∀ ρ, lowT M ρ) →ₘₗ[ℂ] (GA D W → ℂ) where
   toFun v g := star (thetaIP μ 𝓕 (J v) (ω (1, g) f))
   map_update_add' m ρ x y := by
     funext g
@@ -136,11 +138,11 @@ def thL (hω : IsWeilDatumO ψ V W χV χW ω) (h1 : μ 𝓕 = 1) {M : DSModel W
     rw [J.map_update_add, thetaInner_add_left hω.std h1 (hJ _) (hJ _) (hω.om_pres _ _ hf), star_add]
   map_update_smul' m ρ a x := by
     funext g
-    simp only [Pi.smul_apply, smul_eq_mul]
-    rw [J.map_update_smul, thetaInner_smul_left, star_mul', star_star]
+    simp only [RingHom.id_apply, Pi.smul_apply, smul_eq_mul]
+    rw [J.map_update_smul, RingHom.id_apply, thetaInner_smul_left, star_mul', star_star]
 
 theorem thL_apply (hω : IsWeilDatumO ψ V W χV χW ω) (h1 : μ 𝓕 = 1) {M : DSModel W S'}
-    (J : MultilinearMap ℂ (fun ρ => lowT M ρ) (WO V W → ℂ)) (hJ : ∀ v, IsThetaFunO ψ V W (J v))
+    (J : (∀ ρ, lowT M ρ) →ₘₗ[ℂ] (WO V W → ℂ)) (hJ : ∀ v, IsThetaFunO ψ V W (J v))
     (f : WO V W → ℂ) (hf : IsThetaFunO ψ V W f) (v : ∀ ρ, lowT M ρ) (g : GA D W) :
     thL hω h1 J hJ f hf v g = star (thetaIP μ 𝓕 (J v) (ω (1, g) f)) := rfl
 
@@ -158,7 +160,7 @@ open Classical in
 set_option maxHeartbeats 4000000 in
 theorem of_ext (θ : InfFam D) (hθ : IsInfFam θ) (M : DSModel W S') (hLS : LowSm M) (hLI : GlobalTheory.IndefiniteRowSideFullHecke.HolomorphicLowestType.LowIrr M)
     (hω : IsWeilDatumO ψ V W χV χW ω) (hcv : IsCovolOne (ratL W V) μ 𝓕)
-    (J : MultilinearMap ℂ (fun ρ => lowT M ρ) (WO V W → ℂ)) (hJ : ∀ v, IsThetaFunO ψ V W (J v))
+    (J : (∀ ρ, lowT M ρ) →ₘₗ[ℂ] (WO V W → ℂ)) (hJ : ∀ v, IsThetaFunO ψ V W (J v))
     (hK : ∀ τ, ∀ k ∈ Formalism.REAL.Kset (M.ε τ), ∀ (v : ∀ ρ, lowT M ρ) (u : lowT M τ),
       ((u : M.sm τ) : M.H τ) = M.σ τ k ((v τ : M.sm τ) : M.H τ) →
       J (Function.update v τ u) = ω (1, atTau θ W τ ((M.fr τ)⁻¹ * k * M.fr τ)) (J v))

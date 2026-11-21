@@ -17,12 +17,12 @@ variable {O F Y : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [F
   [IsFractionRing O F] [AddCommGroup Y] [Module F Y] [Module O Y] [IsScalarTower O F Y]
 
 omit [IsDiscreteValuationRing O] in
-theorem span_range_extend {κ : Type} {L : Submodule O Y} [Submodule.IsLattice F L] (b : Basis κ O L) :
-    Submodule.span O (Set.range (b.extendOfIsLattice F)) = L := by
-  have h1 : Set.range (b.extendOfIsLattice F) = L.subtype '' Set.range b := by
+theorem span_range_extend {κ : Type} {L : Submodule O Y} [Submodule.IsFullLattice F L] (b : Basis κ O L) :
+    Submodule.span O (Set.range (b.extendOfIsFullLattice F)) = L := by
+  have h1 : Set.range (b.extendOfIsFullLattice F) = L.subtype '' Set.range b := by
     rw [← Set.range_comp]
     congr 1
-    exact funext fun i => b.extendOfIsLattice_apply F i
+    exact funext fun i => b.extendOfIsFullLattice_apply F i
   rw [h1, ← Submodule.map_span, b.span_eq, Submodule.map_top, Submodule.range_subtype]
 
 theorem exists_equiv_map_eq (M L : Submodule O Y) [Submodule.IsFullLattice F M] [Submodule.IsFullLattice F L] :
@@ -44,7 +44,7 @@ theorem exists_equiv_map_eq (M L : Submodule O Y) [Submodule.IsFullLattice F M] 
 
 
 omit [IsDiscreteValuationRing O] in
-theorem exists_smul_mem (Λ : Submodule O Y) [h : Submodule.IsLattice F Λ] (y : Y) :
+theorem exists_smul_mem (Λ : Submodule O Y) [h : Submodule.IsFullLattice F Λ] (y : Y) :
     ∃ s : O, s ≠ 0 ∧ s • y ∈ Λ := by
   have hy : y ∈ Submodule.span F (Λ : Set Y) := by rw [h.span_eq_top]; trivial
   obtain ⟨t, ht⟩ := multiple_mem_span_of_mem_localization_span (nonZeroDivisors O) F _ y hy
@@ -159,7 +159,7 @@ variable {O F Y : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [F
 
 theorem exists_adapted {q : O} (hq : Irreducible q) {X : Submodule F Y} {a : Fin c → Y}
     (p : Y →ₗ[F] X) (φ : Fin c → Y →ₗ[F] F) (ha : ∀ i j, φ i (a j) = if j = i then 1 else 0)
-    (hy : ∀ y, y = p y + ∑ i, φ i y • a i) (Λ : Submodule O Y) [hΛ : Submodule.IsLattice F Λ] :
+    (hy : ∀ y, y = p y + ∑ i, φ i y • a i) (Λ : Submodule O Y) [hΛ : Submodule.IsFullLattice F Λ] :
     ∃ (e : Fin c → ℤ) (u : Fin c → Y), (∀ i, φ i (u i) = 1) ∧ (∀ i j, i < j → φ j (u i) = 0) ∧
       Λ = Λ ⊓ X.restrictScalars O ⊔ ⨆ i, Submodule.span O {(algebraMap O F q) ^ (e i) • u i} := by
   have hq0 : algebraMap O F q ≠ 0 := by
@@ -235,7 +235,7 @@ theorem moveBy_sup_iSup (g : Y ≃ₗ[F] Y) (M : Submodule O Y) (v : Fin c → Y
   rfl
 
 omit [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O F] in
-theorem finiteDimensional_of_isLattice (Λ : Submodule O Y) [hΛ : Submodule.IsLattice F Λ] :
+theorem finiteDimensional_of_isLattice (Λ : Submodule O Y) [hΛ : Submodule.IsFullLattice F Λ] :
     FiniteDimensional F Y := by
   obtain ⟨s, hs⟩ := hΛ.fg
   refine ⟨⟨s, ?_⟩⟩
@@ -298,8 +298,8 @@ theorem latticeNormalForm : LatticeNormalForm := by
       exact ⟨hx, x.2⟩
     · rintro ⟨h1, h2⟩
       exact ⟨⟨y, h2⟩, h1, rfl⟩
-  haveI : Submodule.IsLattice F M := by
-    constructor
+  haveI : Submodule.IsFullLattice F M := by
+    refine { toIsLattice := Submodule.IsLattice.of_fg F ?_, span_eq_top := ?_ }
     · refine Submodule.fg_of_fg_map_injective (X.subtype.restrictScalars O) X.injective_subtype ?_
       have : (inY X M).FG := by
         rw [hM]

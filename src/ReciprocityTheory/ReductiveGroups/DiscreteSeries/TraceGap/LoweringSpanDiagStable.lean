@@ -37,8 +37,8 @@ theorem loweringWord_weight {μ : Fin n → ℝ} {y : X} (hy : ∀ a, A a a y = 
       A a a (lowWord A y l) = (lowWt μ l a : ℂ) • lowWord A y l
   | [], _, a => by simpa [lowWord, lowWt] using hy a
   | p :: l, hl, a => by
-    obtain ⟨c, d⟩ := p
-    have hcd : IsKLow ε (c, d) := hl _ (List.mem_cons_self ..)
+    obtain ⟨c, d⟩ := (p : Fin n × Fin n)
+    have hcd : IsKLow ε (c, d) := hl _ List.mem_cons_self
     have hl' : ∀ p ∈ l, IsKLow ε p := fun p hp => hl p (List.mem_cons_of_mem _ hp)
     have h := congrArg (fun Y : Module.End ℂ X => Y (lowWord A y l)) (hK a a c d rfl hcd.2)
     simp only [LinearMap.sub_apply, Module.End.mul_apply] at h
@@ -83,8 +83,8 @@ theorem loweringWord_raise_mem_span {μ : Fin n → ℝ} {y : X} (hy : IsKHWVec 
     rw [hy.2 a b hab hε]
     exact Submodule.zero_mem _
   | p :: l, hl, a, b, hab, hε => by
-    obtain ⟨c, d⟩ := p
-    have hcd : IsKLow ε (c, d) := hl _ (List.mem_cons_self ..)
+    obtain ⟨c, d⟩ := (p : Fin n × Fin n)
+    have hcd : IsKLow ε (c, d) := hl _ List.mem_cons_self
     have hl' : ∀ p ∈ l, IsKLow ε p := fun p hp => hl p (List.mem_cons_of_mem _ hp)
     have ih := loweringWord_raise_mem_span hy l hl'
     have key : ∀ a' b' : Fin n, ε a' = ε b' → A a' b' (lowWord A y l) ∈ kLowSpan ε A y := by

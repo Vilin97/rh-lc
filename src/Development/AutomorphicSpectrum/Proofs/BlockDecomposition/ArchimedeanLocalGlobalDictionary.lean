@@ -37,24 +37,15 @@ theorem ext_algebraMap [IsTotallyReal F] (w : InfinitePlace E) (a : (w.comap (al
   have c1 : Continuous fun a : (w.comap (algebraMap F E)).Completion =>
       InfinitePlace.Completion.extensionEmbedding w (algebraMap _ w.Completion a) :=
     (InfinitePlace.Completion.isometry_extensionEmbedding w).continuous.comp
-      (NumberField.LiesOver.continuous_completionMap (v := w.comap (algebraMap F E)) (w := w))
+      (continuous_algebraMap _ _)
   have c2 := (InfinitePlace.Completion.isometry_extensionEmbedding (w.comap (algebraMap F E))).continuous
   refine congrFun ((InfinitePlace.Completion.denseRange_coe (w.comap (algebraMap F E))).equalizer c1 c2
     (funext fun x => ?_)) a
-  obtain ⟨k, rfl⟩ := (WithAbs.equiv (w.comap (algebraMap F E)).1).symm.surjective x
-  change InfinitePlace.Completion.extensionEmbedding w (algebraMap _ w.Completion
-      (algebraMap F (w.comap (algebraMap F E)).Completion k)) =
-    InfinitePlace.Completion.extensionEmbedding (w.comap (algebraMap F E))
-      (algebraMap F (w.comap (algebraMap F E)).Completion k)
-  rw [← IsScalarTower.algebraMap_apply, IsScalarTower.algebraMap_apply F E]
-  have e1 : InfinitePlace.Completion.extensionEmbedding w (algebraMap E w.Completion (algebraMap F E k)) =
-      w.embedding (algebraMap F E k) :=
-    InfinitePlace.Completion.extensionEmbedding_coe w ((WithAbs.equiv w.1).symm (algebraMap F E k))
-  have e2 : InfinitePlace.Completion.extensionEmbedding (w.comap (algebraMap F E))
-      (algebraMap F (w.comap (algebraMap F E)).Completion k) = (w.comap (algebraMap F E)).embedding k :=
-    InfinitePlace.Completion.extensionEmbedding_coe _ ((WithAbs.equiv (w.comap (algebraMap F E)).1).symm k)
-  rw [e1, e2]
-  exact RingHom.congr_fun (embedding_comp w) k
+  change InfinitePlace.Completion.extensionEmbedding w (algebraMap _ w.Completion (x : (w.comap (algebraMap F E)).Completion)) =
+    InfinitePlace.Completion.extensionEmbedding (w.comap (algebraMap F E)) (x : (w.comap (algebraMap F E)).Completion)
+  rw [InfinitePlace.Completion.algebraMap_coe, InfinitePlace.Completion.extensionEmbedding_coe,
+    InfinitePlace.Completion.extensionEmbedding_coe]
+  simpa [WithAbs.algebraMap_left_apply, WithAbs.algebraMap_right_apply] using RingHom.congr_fun (embedding_comp w) (WithAbs.equiv _ x)
 
 theorem phi_eqv [IsTotallyReal F] (w : InfinitePlace E) (z : AE F E) :
     (adStd E).φ w (eqv F E z) = piInf (embOf w) z := by
@@ -69,7 +60,9 @@ theorem phi_eqv [IsTotallyReal F] (w : InfinitePlace E) (z : AE F E) :
       InfinitePlace.Completion.extensionEmbedding (w.comap (algebraMap F E)) (a.1 (w.comap (algebraMap F E))) * w.embedding x
     rw [ext_algebraMap, mul_comm]
     congr 1
-    exact InfinitePlace.Completion.extensionEmbedding_coe w ((WithAbs.equiv w.1).symm x)
+    change InfinitePlace.Completion.extensionEmbedding w (algebraMap E w.Completion x) = _
+    rw [InfinitePlace.Completion.algebraMap_apply, InfinitePlace.Completion.extensionEmbedding_coe]
+    rfl
 
 theorem piInf_cA [IsTotallyReal F] {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w)
     (z : AE F E) : piInf τ (cA σ z) = starRingEnd ℂ (piInf τ z) := by

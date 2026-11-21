@@ -51,14 +51,14 @@ attribute [local instance] MvPolynomial.weightedGradedAlgebra
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem isWeightedHomogeneous_of_isMultiHomog [DecidableEq K] {s : MRingOver ℂ ι} {a : K → ℕ}
-    (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a) : IsWeightedHomogeneous (blkW ι) s a := by
+    (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a) : IsWeightedHomogeneous blkW s a := by
   intro d hd
   funext k
   rw [weight_blkW]
   exact hs d (mem_support_iff.2 hd) k
 
 theorem cone_homog [DecidableEq K] {Q : Ideal (MRingOver ℂ ι)} (hQ : ReciprocityTheory.AnForm.R.IsMultiHomogIdeal Q) :
-    Q.IsHomogeneous (weightedHomogeneousSubmodule ℂ (blkW ι)) := by
+    Q.IsHomogeneous (weightedHomogeneousSubmodule ℂ blkW) := by
   obtain ⟨S, hS, rfl⟩ := hQ
   refine Ideal.homogeneous_span _ _ ?_
   intro f hf
@@ -93,8 +93,8 @@ theorem cone_segre_rel {e : ℕ} {Q : Ideal (MRingOver ℂ ι)} (hP : Reciprocit
   obtain ⟨a, ha, b, hb, hab⟩ := Submodule.mem_sup.mp hmem
   obtain ⟨c, rfl⟩ := Ideal.mem_span_range_iff_exists_fun.mp hb
   let D : K → ℕ := fun _ => r0
-  let comp := weightedHomogeneousComponent (R := ℂ) (blkW ι) (D + fun _ => 1)
-  have hpow : IsWeightedHomogeneous (blkW ι) (segMono ι i ^ (r0 + 1)) (D + fun _ => 1) := by
+  let comp := weightedHomogeneousComponent (R := ℂ) (blkW (ι := ι)) (D + fun _ => 1)
+  have hpow : IsWeightedHomogeneous blkW (segMono ι i ^ (r0 + 1)) (D + fun _ => 1) := by
     have := (segMono_homog (ι := ι) i).pow (r0 + 1)
     convert this using 1
     funext k; simp [D]
@@ -103,7 +103,7 @@ theorem cone_segre_rel {e : ℕ} {Q : Ideal (MRingOver ℂ ι)} (hP : Reciprocit
     rw [map_add (f := _), map_sum, weightedHomogeneousComponent_eq_self hpow] at hcomp
   simp only [comp, comp_mul_homog (psiPoly_homog Ψ _)] at hcomp
   have hcd : ∀ j, ∃ G : MvPolynomial ((k : K) → ι k) ℂ, G.totalDegree ≤ r0 ∧
-      ∀ z : (Σ k, ι k) → ℂ, eval z (weightedHomogeneousComponent (blkW ι) D (c j)) =
+      ∀ z : (Σ k, ι k) → ℂ, eval z (weightedHomogeneousComponent blkW D (c j)) =
         eval (segre z) G :=
     fun j => diag_of_homog r0 (weightedHomogeneousComponent_isWeightedHomogeneous _ _)
   choose G hG hGz using hcd

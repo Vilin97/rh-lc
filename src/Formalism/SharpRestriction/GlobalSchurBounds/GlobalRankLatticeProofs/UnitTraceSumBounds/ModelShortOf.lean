@@ -7,8 +7,6 @@ public import Formalism.SharpRestriction.GlobalSchurBounds.TaylorLogMetric
 
 @[expose] public section
 
-open Formalism.MainNotions.FormalGroupJets
-
 namespace Formalism.MainNotions.Ext
 
 end Formalism.MainNotions.Ext

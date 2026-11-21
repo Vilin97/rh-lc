@@ -72,7 +72,8 @@ theorem mem_eig_wdPst {LL : FinExt l} {V : Type} [AddCommGroup V] [Module ↥LL.
   have he : (wdRep P ι Bw h hj ρ).ρ σ (wdMk P ι ρ x) = ι (s : Om l) • wdMk P ι ρ x := by
     have h1 := LinearMap.congr_fun (hu σ) (wdMk P ι ρ x)
     rw [hu1, one_zpow, Units.val_one, mul_one] at h1
-    rw [← h1, wdRho_mk, hs, wdMk_smul]
+    rw [← h1, wdRho_mk, hs]
+    exact wdMk_smul P ι ρ s x
   rw [wdPst_of_isPst ι Bw h hj hV, WD.eig_mk, mem_roots (LinearMap.charpoly_monic _).ne_zero,
     ← End.hasEigenvalue_iff_isRoot_charpoly]
   exact End.hasEigenvalue_of_hasEigenvector ⟨End.mem_eigenspace_iff.mpr he, hv⟩
@@ -120,7 +121,11 @@ theorem mem_eig_of_period {LL : FinExt l} {V : Type} [AddCommGroup V] [Module �
     | succ n ih => rw [pow_succ', End.mul_apply, ih, map_smul, hx1, smul_smul, pow_succ]
   have hxz := zpow_apply_eig (phiU P ρ) x c hc hx1
   have hv : wdMk P ι ρ x ≠ 0 := fun h0 => hx0
-    (GlobalTheory.PstFaithful.eq_zero_of_wdMk_phiD_pow l P ι _ LL _ _ _ fun n => by rw [hxn, wdMk_smul, h0, smul_zero])
+    (GlobalTheory.PstFaithful.eq_zero_of_wdMk_phiD_pow l P ι _ LL _ _ _ fun n => by
+      rw [hxn]
+      have hs := wdMk_smul P ι ρ (c ^ n) x
+      rw [h0, smul_zero] at hs
+      exact hs)
   exact mem_eig_wdPst P ι Bw h hj ρ x h1 hV hv σ _ (by
     rw [weilD_apply, End.mul_apply, hxz, map_smul, hs, mul_smul])
 

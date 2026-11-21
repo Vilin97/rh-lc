@@ -35,7 +35,7 @@ private theorem der_fg [IsNoetherianRing B] {x : B →ₐ[O] O} {δ : B →ₗ[O
     induction hp using Submodule.span_induction with
     | mem a ha => exact Submodule.subset_span ⟨a, ha, rfl⟩
     | zero => simp
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
     | smul r a ha0 ha =>
       rw [hs] at ha0
       have : x a = 0 := ha0
@@ -74,7 +74,7 @@ private theorem der_zero [IsNoetherianRing B] [IsLocalRing O] [IsLocalRing B] [I
     refine Submodule.mul_induction_on hb (fun m hm k hk => ?_) (fun m k hm hk => ?_)
     · rw [h]
       exact add_mem (Submodule.smul_mem_smul (hx m hm) ⟨k, rfl⟩) (Submodule.smul_mem_smul (hx k hk) ⟨m, rfl⟩)
-    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hm hk
+    · rw [map_add]; exact add_mem hm hk
   have := Submodule.eq_bot_of_le_smul_of_le_jacobson_bot (maximalIdeal O) _ (der_fg h) hle
     (maximalIdeal_le_jacobson _)
   have hb : δ b ∈ LinearMap.range δ := ⟨b, rfl⟩
@@ -143,8 +143,8 @@ private theorem det_trick [IsDomain O] [IsNoetherianRing B] (x : B →ₐ[O] O) 
     refine Submodule.mul_induction_on hy (fun m hm k hk => ?_) (fun m k hm hk => ?_)
     · rw [← smul_eq_mul, map_smul]
       exact Submodule.smul_mem_smul hm ⟨k, hk, rfl⟩
-    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hm hk
-  obtain ⟨p, hp, -, hco, hev⟩ := LinearMap.exists_monic_and_coeff_mem_pow_and_aeval_eq_zero_of_range_le_smul B φ P hφ
+    · rw [map_add]; exact add_mem hm hk
+  obtain ⟨p, hp, -, hco, hev⟩ := LinearMap.exists_monic_and_natDegree_eq_and_coeff_mem_pow_and_aeval_eq_zero B φ P hφ
   refine ⟨p.eval (algebraMap O B c), ?_, fun a ha => ?_⟩
   · have e : p.map (x : B →+* O) = Polynomial.X ^ p.natDegree := by
       ext k

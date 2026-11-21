@@ -70,7 +70,7 @@ theorem formal_equivalence_agree : SimeqAgree := by
     rw [← expMv_eq_mvExp h0] at h1
     exact h1
 
-theorem dX_eq (f : PowerSeries ℂ_[p]) : dX f = derivative ℂ_[p] f := by
+theorem dX_eq (f : PowerSeries ℂ_[p]) : dX f = derivative f := by
   ext n
   simp [dX, PowerSeries.coeff_derivative, mul_comm]
 
@@ -100,7 +100,7 @@ theorem omegaW_eq {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]} (h :
   have key : Formalism.L2.Th1.A.fw W * (-(2 : PowerSeries ℂ_[p]) * wq - X * dX wq) =
       wq * (C W.a₁ * X + C W.a₃ * X ^ 3 * wq - 2) := by
     apply mul_left_cancel₀ (pow_ne_zero 3 (X_ne_zero (R := ℂ_[p])))
-    have hder : derivative ℂ_[p] (X ^ 3 * wq) = 3 * X ^ 2 * wq + X ^ 3 * derivative ℂ_[p] wq := by
+    have hder : derivative (X ^ 3 * wq) = 3 * X ^ 2 * wq + X ^ 3 * derivative wq := by
       rw [Derivation.leibniz, Derivation.leibniz_pow, derivative_X]
       simp only [smul_eq_mul, nsmul_eq_mul]
       push_cast

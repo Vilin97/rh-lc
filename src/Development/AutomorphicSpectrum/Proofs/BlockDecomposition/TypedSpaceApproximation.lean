@@ -106,7 +106,7 @@ theorem step {β : archGroup K n → ℝ} (hβ : Ker ν β) {ι : Type} {f : ι 
   have b : UBnd (fun i => An.ctn r (sm ν β (f i))) (Function.update m r (max (m r - 1) κ)) :=
     ubnd_mono (fun s _ _ => GlobalTheory.CompanionTheory.AnBoot.update_le_update m r (le_max_right _ _) s) hct
   have c := ubnd_add a b
-  simpa using c
+  simpa only [sub_add_cancel] using c
 
 theorem iter_fam {β : archGroup K n → ℝ} (hβ : Ker ν β) {ι : Type} {f : ι → AdelicGLn.AdelicGL K n → ℂ}
     (hf : UFam f) (j : ℕ) : UFam (fun i => (sm ν β)^[j] (f i)) := by
@@ -580,6 +580,7 @@ theorem conc : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (N : ℕ) 
       nlinarith) ω hω hωB (max 0 (-Real.log t)) (1 / 8) h8
   refine ⟨Ω, hΩ, fun V ψ hV hψ hT hI hE hs hn => ?_⟩
   let i : ι := ⟨ψ, V, hV, hψ, hT, hI, hE, hs, hn⟩
+  set_option synthInstance.maxHeartbeats 200000 in
   exact half_of_cover (latticeGL E N) μ hF hΩ (fun g => JSqIntGlue.exists_mem_slab hS hL ht hsieg g)
     (hcont i) ((iter_fam ν hβ hfam k).cont i) (hleft i) (iter_left ν (hleft i) k) hn
     (hβψ _ (hcont i) (hleft i) (hrep i) hn) (hΩf i)

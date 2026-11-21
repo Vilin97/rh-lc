@@ -45,13 +45,13 @@ variable {G : Type} [Group G]
 
 def twR (θ : G →* G) (x y : G) : Prop := ∃ g, y = g⁻¹ * x * θ g
 
-theorem twR_equiv (θ : G →* G) : Equivalence (twR θ) where
-  refl x := ⟨1, by simp⟩
-  symm := by
-    rintro x y ⟨g, rfl⟩
+theorem twR_equiv (θ : G →* G) : Equivalence (twR θ) := by
+  constructor
+  · intro x
+    exact ⟨1, by simp⟩
+  · rintro x y ⟨g, rfl⟩
     exact ⟨g⁻¹, by rw [map_inv]; group⟩
-  trans := by
-    rintro x y z ⟨g, rfl⟩ ⟨h, rfl⟩
+  · rintro x y z ⟨g, rfl⟩ ⟨h, rfl⟩
     exact ⟨g * h, by rw [map_mul]; group⟩
 
 def cls (θ : G →* G) (x : G) : TwCl θ := Quot.mk (twR θ) x

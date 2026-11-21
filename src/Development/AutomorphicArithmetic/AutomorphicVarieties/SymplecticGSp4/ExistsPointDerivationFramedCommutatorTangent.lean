@@ -106,11 +106,15 @@ private theorem adicCont_mul {Γ R : Type} [TopologicalSpace Γ] [CommRing R] (I
     (hf : AdicCont I f) (hg : AdicCont I g) : AdicCont I (fun x => f x * g x) := by
   intro N
   convert (hf N).mul (hg N) using 1
+  ext x
+  simp
 
 private theorem adicCont_add {Γ R : Type} [TopologicalSpace Γ] [CommRing R] (I : Ideal R) (f g : Γ → R)
     (hf : AdicCont I f) (hg : AdicCont I g) : AdicCont I (fun x => f x + g x) := by
   intro N
   convert (hf N).add (hg N) using 1
+  ext x
+  simp
 
 private theorem adicCont_const {Γ R : Type} [TopologicalSpace Γ] [CommRing R] (I : Ideal R) (c : R) :
     AdicCont I (fun _ : Γ => c) := by

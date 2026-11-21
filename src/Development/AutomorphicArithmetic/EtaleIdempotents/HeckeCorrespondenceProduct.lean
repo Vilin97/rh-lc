@@ -17,6 +17,7 @@ private theorem pow_mul_int (l : ℕ) [Fact l.Prime] (q : ℚ_[l]) :
   obtain ⟨s, hs⟩ := pow_unbounded_of_one_lt ‖q‖ hl
   have hpos : (0 : ℝ) < (l : ℝ) ^ s := by positivity
   refine ⟨s, ⟨((l ^ s : ℕ) : ℚ_[l]) * q, ?_⟩, rfl⟩
+  rw [PadicInt.mem_subring_iff]
   rw [norm_mul]
   push_cast
   rw [norm_pow, Padic.norm_p, inv_pow, inv_mul_le_one₀ hpos]

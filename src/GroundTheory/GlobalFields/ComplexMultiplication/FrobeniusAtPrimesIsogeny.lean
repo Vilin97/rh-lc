@@ -6,18 +6,6 @@ public import GroundTheory.GlobalFields.ComplexMultiplication.DualDescent
 
 @[expose] public section
 
-private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
-  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
-  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
-  one_mem' z hz := by simpa only [one_mul] using hz
-  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
-  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
-  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
-
-abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
-    (σ : K →+* ℂ) : Subring ℂ :=
-  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
-
 namespace GroundTheory.Global
 namespace Elliptic
 
@@ -341,7 +329,7 @@ theorem exists_isogeny_homConstSet_eq {E E' : CMCurve K} (v : HeightOneSpectrum 
   obtain ⟨c, hc, hset⟩ := homConstSet_of_smul σ₀ hK h
   rw [primeUnit_inv_val] at hset
   have h1 : (1 : ℂ) ∈ idealLattice σ₀ (v.asIdeal : FractionalIdeal (𝓞 K)⁰ K)⁻¹ := by
-    simpa using map_mem_idealLattice σ₀ (FractionalIdeal.one_mem_inv_coe_ideal v.ne_bot)
+    simpa using map_mem_idealLattice σ₀ (FractionalIdeal.one_mem_inv_coeIdeal v.ne_bot)
   have hcmem : c ∈ homConstSet E.curve E'.curve := by
     have h' : c ∈ (homConstSet E.curve E'.curve : Set ℂ) := by
       rw [hset]; exact ⟨1, h1, mul_one c⟩

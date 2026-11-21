@@ -120,7 +120,7 @@ private theorem sgE_mem_Oh_pk {y : Fv F v ⊗[F] E} (hy : y ∈ intLoc F E v) : 
     change (PositivityTheory.ThKH.Iwas.sg v a) ⊗ₜ[F] (x : E) = (PositivityTheory.ThKH.Iwas.sg v a * 1) ⊗ₜ[F] (x : E)
     rw [mul_one]
   · rw [map_zero]; exact zero_mem _
-  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+  · rw [map_add]; exact add_mem hy hz
   · rw [map_neg]; exact neg_mem hy
 private theorem mem_Oh_pk {x : AE F E} (hx : At (evFin F v) x) (h : compFin F E v x ∈ intLoc F E v) : x ∈ Oh E v := by
   have h1 := hx (1 - PositivityTheory.ThKH.Iwas.sg v 1) (by rw [map_sub, map_one, PositivityTheory.ThKH.Iwas.ev_sg, sub_self])

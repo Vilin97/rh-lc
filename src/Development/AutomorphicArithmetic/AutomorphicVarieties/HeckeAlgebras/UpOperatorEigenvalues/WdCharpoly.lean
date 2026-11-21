@@ -104,7 +104,46 @@ include hx
 
 theorem chi_pt (g : Γ) : (B.u.D.chi (MonoidAlgebra.single (p g) 1)).map (x : B.B →+* Qbar l) =
     (ρ g : Matrix (Fin n) (Fin n) (Qbar l)).charpoly := by
-  have e := (AlgebraTools.Det.repApi (W.mat ρ)).2.1 g
+  have chi_eq_local {A G : Type} [CommRing A] [Group G] (σ : G →* Matrix (Fin n) (Fin n) A)
+      (y : MonoidAlgebra A G) : (W.GDet.ofRep σ).chi y = (W.GDet.repAlg σ A y).charpoly := by
+    have single (B : Type) [CommRing B] [Algebra A B] (g : G) (a : B) :
+        W.GDet.repAlg σ B (MonoidAlgebra.single g a) = a • (σ g).map (algebraMap A B) := by
+      unfold W.GDet.repAlg
+      rw [MonoidAlgebra.lift_single]
+      rfl
+    have rep_map (B : Type) [CommRing B] [Algebra A B] (z : MonoidAlgebra A G) :
+        W.GDet.repAlg σ B (MonoidAlgebra.mapRingHom G (algebraMap A B) z) =
+          (W.GDet.repAlg σ A z).map (algebraMap A B) := by
+      induction z using MonoidAlgebra.induction_on with
+      | of g => simp [MonoidAlgebra.of_apply, single]
+      | add a b ha hb =>
+        rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _)]
+        ext i j
+        simp
+      | smul a z hz =>
+        have ha : a • z = MonoidAlgebra.single 1 a * z := by
+          rw [Algebra.smul_def]
+          rfl
+        have hm : MonoidAlgebra.mapRingHom G (algebraMap A B) (MonoidAlgebra.single 1 a) =
+            MonoidAlgebra.single 1 (algebraMap A B a) := by
+          ext g
+          simp [MonoidAlgebra.coeff_single, Finsupp.single_apply]
+        rw [ha, map_mul, map_mul, map_mul, hz, Matrix.map_mul, hm, single, single, map_one]
+        congr 1
+        ext i j
+        by_cases h : i = j <;> simp [Matrix.one_apply, h]
+    unfold W.GDet.chi
+    change (W.GDet.repAlg σ A[X] _).det = _
+    rw [← Polynomial.algebraMap_eq, map_sub, single, rep_map, map_one]
+    rw [Matrix.charpoly]
+    congr 1
+    ext i j
+    by_cases h : i = j <;> simp [Matrix.charmatrix_apply, Matrix.one_apply, h]
+  have chi_single_local {A G : Type} [CommRing A] [Group G] (σ : G →* Matrix (Fin n) (Fin n) A) (g : G) :
+      (W.GDet.ofRep σ).chi (MonoidAlgebra.single g 1) = (σ g).charpoly := by
+    rw [chi_eq_local]
+    simp [W.GDet.repAlg, MonoidAlgebra.lift_single]
+  have e := chi_single_local (W.mat ρ) g
   rw [← hx, chi_comap] at e
   rw [← (AlgebraTools.Det.mapApi B.u.D (x : B.B →+* Qbar l)).1]
   simp only [MonoidAlgebra.mapRingHom_single, map_one]
@@ -125,6 +164,45 @@ theorem diag_pt (hn : 1 ≤ n) (hs : Formalism.MainNotions.N.IsSSRep ρ) (t : Fi
     (hI : ∀ g ∈ I, p g ∈ F.Iu u) : ∃ P : GL (Fin n) (Qbar l), ∀ g : I,
       ((P * ρ g * P⁻¹ : GL (Fin n) (Qbar l)) : Matrix (Fin n) (Fin n) (Qbar l)) =
         Matrix.diagonal fun i => (W.pushCh (algebraMap c.O (Qbar l)) ((t i).comp (p.comp I.subtype)) g : Qbar l) := by
+  have chi_eq_local {A G : Type} [CommRing A] [Group G] (σ : G →* Matrix (Fin n) (Fin n) A)
+      (y : MonoidAlgebra A G) : (W.GDet.ofRep σ).chi y = (W.GDet.repAlg σ A y).charpoly := by
+    have single (B : Type) [CommRing B] [Algebra A B] (g : G) (a : B) :
+        W.GDet.repAlg σ B (MonoidAlgebra.single g a) = a • (σ g).map (algebraMap A B) := by
+      unfold W.GDet.repAlg
+      rw [MonoidAlgebra.lift_single]
+      rfl
+    have rep_map (B : Type) [CommRing B] [Algebra A B] (z : MonoidAlgebra A G) :
+        W.GDet.repAlg σ B (MonoidAlgebra.mapRingHom G (algebraMap A B) z) =
+          (W.GDet.repAlg σ A z).map (algebraMap A B) := by
+      induction z using MonoidAlgebra.induction_on with
+      | of g => simp [MonoidAlgebra.of_apply, single]
+      | add a b ha hb =>
+        rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _)]
+        ext i j
+        simp
+      | smul a z hz =>
+        have ha : a • z = MonoidAlgebra.single 1 a * z := by
+          rw [Algebra.smul_def]
+          rfl
+        have hm : MonoidAlgebra.mapRingHom G (algebraMap A B) (MonoidAlgebra.single 1 a) =
+            MonoidAlgebra.single 1 (algebraMap A B a) := by
+          ext g
+          simp [MonoidAlgebra.coeff_single, Finsupp.single_apply]
+        rw [ha, map_mul, map_mul, map_mul, hz, Matrix.map_mul, hm, single, single, map_one]
+        congr 1
+        ext i j
+        by_cases h : i = j <;> simp [Matrix.one_apply, h]
+    unfold W.GDet.chi
+    change (W.GDet.repAlg σ A[X] _).det = _
+    rw [← Polynomial.algebraMap_eq, map_sub, single, rep_map, map_one]
+    rw [Matrix.charpoly]
+    congr 1
+    ext i j
+    by_cases h : i = j <;> simp [Matrix.charmatrix_apply, Matrix.one_apply, h]
+  have chi_single_local {A G : Type} [CommRing A] [Group G] (σ : G →* Matrix (Fin n) (Fin n) A) (g : G) :
+      (W.GDet.ofRep σ).chi (MonoidAlgebra.single g 1) = (σ g).charpoly := by
+    rw [chi_eq_local]
+    simp [W.GDet.repAlg, MonoidAlgebra.lift_single]
   obtain ⟨-, hfin, -⟩ := UpperTheory.V.abelian₂.dvr_finite l c.O
   refine diag_of_cong (N := Nat.card (ResidueField c.O) - 1) ?_ _ (fun i g => ?_) (ρ.comp I.subtype) (fun g hg => ?_) fun g k => ?_
   · have h1 : IsUnit ((Nat.card (ResidueField c.O) - 1 : ℕ) : c.O) := by
@@ -140,7 +218,12 @@ theorem diag_pt (hn : 1 ≤ n) (hs : Formalism.MainNotions.N.IsSSRep ρ) (t : Fi
       have h2 : (t i (p g) : c.O) = 1 := Subtype.ext (congrArg Units.val (hg i))
       rw [← (ht i _).1, h2, map_one, Units.val_one])⟩
     have h2 := congrArg x (B.u.I u _ h1 (p h))
-    have h3 := (AlgebraTools.Det.repApi (W.mat ρ)).2.2.1 hn (MonoidAlgebra.single h 1 * (MonoidAlgebra.single (g : Γ) 1 - 1))
+    have h3 : (W.GDet.ofRep (W.mat ρ)).tr (MonoidAlgebra.single h 1 * (MonoidAlgebra.single (g : Γ) 1 - 1)) =
+        (W.GDet.repAlg (W.mat ρ) (Qbar l) (MonoidAlgebra.single h 1 * (MonoidAlgebra.single (g : Γ) 1 - 1))).trace := by
+      haveI : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
+      unfold W.GDet.tr W.GDet.lam
+      rw [chi_eq_local, Matrix.trace_eq_neg_charpoly_coeff, Fintype.card_fin]
+      ring
     rw [← hx, W.GDet.tr, W.GDet.lam, chi_comap] at h3
     have h4 := (AlgebraTools.Det.mapApi B.u.D (x : B.B →+* Qbar l)).2.1 1 (MonoidAlgebra.single (p h) 1 * (MonoidAlgebra.single (p g) 1 - 1))
     rw [W.GDet.lam] at h4
@@ -152,7 +235,7 @@ theorem diag_pt (hn : 1 ≤ n) (hs : Formalism.MainNotions.N.IsSSRep ρ) (t : Fi
     rw [mul_sub, mul_one, Matrix.trace_sub, sub_eq_zero, ← map_mul] at h5
     simpa [W.mat] using h5
   · have := chi_cong x p ρ hx g (∏ i, (X - C (t i (p g) : c.O))) (by
-      rw [Resid.Dbar, (AlgebraTools.Det.repApi _).2.1, Polynomial.map_prod]
+      rw [Resid.Dbar, chi_single_local _, Polynomial.map_prod]
       simp only [Polynomial.map_sub, map_X, map_C, (ht _ _).1]
       exact Matrix.charpoly_diagonal _) k
     simp only [Polynomial.map_prod, Polynomial.map_sub, map_X, map_C] at this

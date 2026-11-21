@@ -13,7 +13,7 @@ open scoped TensorProduct
 namespace UpperTheory.V.Lit.Dr
 
 private theorem cont_multi {V F ι : Type} [Fintype ι] [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V]
-    [NormedAddCommGroup F] [NormedSpace ℝ F] (f : MultilinearMap ℝ (fun _ : ι => V) F) : Continuous f := by
+    [NormedAddCommGroup F] [NormedSpace ℝ F] (f : (ι → V) →ₘₗ[ℝ] F) : Continuous f := by
   classical
   let b := Module.finBasis ℝ V
   have h : (f : (ι → V) → F) = fun v => ∑ r : ι → Fin (Module.finrank ℝ V),
@@ -23,9 +23,9 @@ private theorem cont_multi {V F ι : Type} [Fintype ι] [NormedAddCommGroup V] [
     conv_lhs => rw [e]
     set_option synthInstance.maxHeartbeats 100000 in
       rw [f.map_sum]
-    exact Finset.sum_congr rfl fun r _ => f.map_smul_univ _ _
+    exact Finset.sum_congr rfl fun r _ => by simpa only [RingHom.id_apply] using f.map_smul_univ _ _
   rw [h]
-  exact continuous_finset_sum _ fun r _ => (continuous_finset_prod _ fun i _ =>
+  exact continuous_finsetSum _ fun r _ => (continuous_finsetProd _ fun i _ =>
     (b.coord (r i)).continuous_of_finiteDimensional.comp (continuous_apply i)).smul continuous_const
 
 variable {E : Type} [Field E] [NumberField E] {a : ℕ}
@@ -97,7 +97,7 @@ theorem UpperTheory.V.Lit.Dr.corrFwd :
   classical
   intro E _ _ _ a U Ξ q α hα hU
   refine ⟨fun s p => if h : p ∈ cone E a then altL Ξ α h.choose s.out else 0, fun g x X => ?_,
-    fun s p hp => dif_neg hp⟩
+    fun s p hp => dite_eq_right hp⟩
   have hp : sand g (hOne E a) ∈ cone E a := ⟨g, rfl⟩
   obtain ⟨k, hk⟩ := exists_unitary hp.choose_spec.symm
   obtain ⟨u, hu⟩ := QuotientGroup.mk_out_eq_mul U x

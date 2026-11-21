@@ -72,7 +72,7 @@ variable {R : Type} [CommRing R] {G : Over (Spec (CommRingCat.of R))} [GrpObj G]
 
 end Cast
 
-open GlobalTheory.FamGerm GlobalTheory.IndefiniteRowSideFullHecke.IntegralGermPointData
+open GlobalTheory.FamGerm
 
 section Data
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {V : Type} [CommRing V] [IsDomain V]

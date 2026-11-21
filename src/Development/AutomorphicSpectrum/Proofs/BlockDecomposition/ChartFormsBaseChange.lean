@@ -281,7 +281,6 @@ theorem isBaseChange_relOm {K P Q R₀ R : Type} [CommRing K] [CommRing P] [Comm
   have hD : ∀ ω : Ω[R⁄K], ω ∈ Submodule.span R (Set.range fun h => KaehlerDifferential.D K R (θ h)) := by
     intro ω
     induction ω using h1.inductionOn with
-    | zero => exact Submodule.zero_mem _
     | smul s n h => exact Submodule.smul_mem _ s h
     | add a b ha hb => exact Submodule.add_mem _ ha hb
     | tmul m =>

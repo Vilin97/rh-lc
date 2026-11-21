@@ -97,9 +97,15 @@ section LastBlock
 variable {K : Type*} [Zero K]
 
 theorem last_row : ∀ (bs : List (K × ℕ)) (N : ℕ), (∀ b ∈ bs, 1 ≤ b.2) → (bs.map Prod.snd).sum = N + 1 →
-    bs.getLast? = some (pTau bs N, pSz bs N) ∧ pSt bs N + pSz bs N = N + 1 ∧ pSig bs N = pSt bs N
-  | [], N, _, h => by simp at h
-  | (t, s) :: bs, N, hpos, h => by
+    bs.getLast? = some (pTau bs N, pSz bs N) ∧ pSt bs N + pSz bs N = N + 1 ∧ pSig bs N = pSt bs N := by
+  intro bs
+  induction bs with
+  | nil =>
+    intro N _ h
+    simp at h
+  | cons b bs ih =>
+    obtain ⟨t, s⟩ := b
+    intro N hpos h
     simp only [List.map_cons, List.sum_cons] at h
     by_cases hlt : N < s
     · have hs : s = N + 1 := by
@@ -120,7 +126,7 @@ theorem last_row : ∀ (bs : List (K × ℕ)) (N : ℕ), (∀ b ∈ bs, 1 ≤ b.
       have hpos' : ∀ b ∈ bs, 1 ≤ b.2 := fun b hb => hpos b (List.mem_cons_of_mem _ hb)
       have hsum : (bs.map Prod.snd).sum = (N - s) + 1 := by
         have := hpos (t, s) List.mem_cons_self; omega
-      obtain ⟨ih1, ih2, ih3⟩ := last_row bs (N - s) hpos' hsum
+      obtain ⟨ih1, ih2, ih3⟩ := ih (N - s) hpos' hsum
       have hne : bs ≠ [] := by rintro rfl; simp at hsum
       simp only [pTau, pSz, pSt, pSig, if_neg hlt]
       refine ⟨?_, by omega, by rw [ih3]⟩

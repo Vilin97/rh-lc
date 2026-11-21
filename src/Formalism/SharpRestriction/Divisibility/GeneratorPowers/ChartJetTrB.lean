@@ -52,7 +52,7 @@ theorem xL_snd (m : ℕ) : xL I xT m ≫ I.t'.G.hom = spMap (algebraMap T.Fr (Je
 
 def xP (m : ℕ) : jOG (𝟙 (Sp T.Fr)) d m 1 ⟶ I.t'.G :=
   Over.homMk (xL I xT m) (by
-    show xL I xT m ≫ I.t'.G.hom = spMap _ ≫ 𝟙 _
+    show xL I xT m ≫ I.t'.G.hom = spMap (algebraMap T.Fr (Jet T.Fr (Fin 1 × Fin d) m)) ≫ 𝟙 _
     rw [xL_snd, Category.comp_id])
 
 def xU (m : ℕ) : (letI := io.toAlgebra; jO y.1 d m 1) ⟶ Xo.univ.t.G :=

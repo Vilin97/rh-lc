@@ -122,17 +122,9 @@ theorem coverBaseChangeMap_condition (A : MarkedIdealWithBoundary.{u}) (hv : A.I
       = pullback.snd (MaxContactCoverData.coverTriple A hv).structMap
           (specMapOfFieldHom (MaxContactCoverData.coverTriple A hv).base L (coverBaseFieldHom A hv L f))
         ≫ specMapOfFieldHom A.base L f :=
-  comp_assoc_eq_of_eq_comp
-    (pullback.fst (MaxContactCoverData.coverTriple A hv).structMap
-      (specMapOfFieldHom (MaxContactCoverData.coverTriple A hv).base L (coverBaseFieldHom A hv L f)))
-    (MaxContactCoverData.coverTriple A hv).structMap
-    (MaxContactCoverData.coverMap A hv)
-    A.structMap
-    (pullback.snd (MaxContactCoverData.coverTriple A hv).structMap
-      (specMapOfFieldHom (MaxContactCoverData.coverTriple A hv).base L (coverBaseFieldHom A hv L f)))
-    (specMapOfFieldHom A.base L f)
-    (coverTriple_structureMorphism_eq A hv)
-    pullback.condition
+  by
+    erw [Category.assoc, ← coverTriple_structureMorphism_eq A hv]
+    exact pullback.condition
 
 def coverBaseChangeMap (A : MarkedIdealWithBoundary.{u}) (hv : A.IsAdmissible) (L : Type u) [Field L]
     (f : A.base →+* L) :

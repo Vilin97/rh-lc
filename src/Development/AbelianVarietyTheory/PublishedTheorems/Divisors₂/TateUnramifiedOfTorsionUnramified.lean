@@ -186,9 +186,9 @@ theorem NeronOggShafarevichSt.iff_tateUnramified (h : NeronOggShafarevichSt) [Pe
     (hV : IsAbove R K V.toSubring) (hA : IsAbelianScheme A) (l : ℕ) [Fact l.Prime]
     (hl : (l : ResidueField R) ≠ 0) : HasGoodReduction R K A ↔ TateUnramified A V l := by
   have t := h R K Ω V hV A hA
-  have t01 : HasGoodReduction R K A ↔ ∀ m : ℕ, (m : ResidueField R) ≠ 0 → TorsionUnramified A V m := t.out 0 1
+  have t01 : HasGoodReduction R K A ↔ ∀ m : ℕ, (m : ResidueField R) ≠ 0 → TorsionUnramified A V m := t.out 1 2
   have t03 : HasGoodReduction R K A ↔
-      ∃ (l : ℕ) (_ : Fact l.Prime), (l : ResidueField R) ≠ 0 ∧ TateUnramified A V l := t.out 0 3
+      ∃ (l : ℕ) (_ : Fact l.Prime), (l : ResidueField R) ≠ 0 ∧ TateUnramified A V l := t.out 1 4
   exact ⟨fun hg => tateUnramified_of_torsionUnramified fun n =>
     t01.1 hg (l ^ n) (by rw [Nat.cast_pow]; exact pow_ne_zero _ hl), fun ht => t03.2 ⟨l, _, hl, ht⟩⟩
 

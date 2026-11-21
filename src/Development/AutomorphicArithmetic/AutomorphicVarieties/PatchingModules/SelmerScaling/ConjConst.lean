@@ -160,12 +160,26 @@ private theorem conj_const {l : ℕ} [Fact l.Prime] (S : Ctx l) (R : Type) [Comm
     (hc : ∀ g, T * (S.U.vr g).map θ * T' = (S.ρ S.F g).map (algebraMap S.F R)) (b : S.Bh) :
     θ (algebraMap S.Bh S.U.AA b) = algebraMap S.F R (S.rF b) := by
   obtain ⟨r1, -, r3, r4, r5⟩ := vrRel l S
-  obtain ⟨-, -, t3, t4, -⟩ := testVal l S R e θ hθ
+  have hpr : ∀ b : S.Bh, S.pr0 (algebraMap S.Bh S.U.AA b) = b := by
+    intro b
+    have h1 := (Ctx.exists_pr S (algebraMap S.Bh S.U.AA b)).choose_spec
+    have h2 : algebraMap S.Bh S.U.AA b - algebraMap S.Bh S.U.AA (S.pr0 (algebraMap S.Bh S.U.AA b)) ∈ (1 : Submodule S.Bh S.U.AA) := by
+      rw [← map_sub]
+      exact Submodule.mem_one.mpr ⟨_, rfl⟩
+    have h4 := (Submodule.disjoint_def.mp S.U.compl.disjoint) _ h2 h1
+    rw [← map_sub] at h4
+    exact (sub_eq_zero.mp (S.U.inj (h4.trans (map_zero _).symm))).symm
   have he : ∀ b : S.B, e (θ (algebraMap S.B S.U.AA b)) = algebraMap S.x.A S.F (S.P.f b) := by
     intro b
-    have := ((prAdd l S).2.1 (algebraMap S.B S.Bh b) 0).1
-    rw [Submodule.coe_zero, add_zero] at this
-    rw [hθ.res, IsScalarTower.algebraMap_apply S.B S.Bh S.U.AA, this, S.rF_f]
+    rw [hθ.res, IsScalarTower.algebraMap_apply S.B S.Bh S.U.AA, hpr, S.rF_f]
+  have t3 : θ (algebraMap S.B S.U.AA S.P.s) = algebraMap S.F R (algebraMap S.x.A S.F S.x.t) := by
+    obtain ⟨o, ho⟩ := S.ordinaryPointSection
+    rw [IsScalarTower.algebraMap_apply S.B S.Bh S.U.AA, ← ho, hθ.oo o, ho, S.rF_f, S.P.f_s]
+  have t4 : ∀ v i g, e (θ (algebraMap S.B S.U.AA (S.u.ψ v i g))) = algebraMap S.x.A S.F (S.x.ψ v i g) := by
+    intro v i g
+    rw [he]
+    have h := congrArg (fun χ => ((χ g : S.x.Aˣ) : S.x.A)) (S.P.maps.2 v i)
+    exact congrArg _ h
   have key : ∀ (b : S.B) (c : S.F), θ (algebraMap S.B S.U.AA b) = algebraMap S.F R c →
       θ (algebraMap S.B S.U.AA b) = algebraMap S.F R (algebraMap S.x.A S.F (S.P.f b)) := by
     intro b c hb
@@ -210,12 +224,18 @@ private theorem conj_const {l : ℕ} [Fact l.Prime] (S : Ctx l) (R : Type) [Comm
       rw [map_list_prod, map_zero, List.map_ofFn] at h1
       rw [← h1]
       congr 2
-      rw [hφ3, Matrix.map_mul, Matrix.map_mul, Ctx.ρ, hp]
+      funext k
+      simp only [Function.comp_apply, RingHom.coe_comp, map_sub, hφ1, hφ2, AlgHom.commutes,
+        hφ3, Matrix.map_mul, Ctx.ρ, hp]
+      change _ = φ1 _ - φ1 _
+      rw [hφ3, φ1.commutes]
   · refine key _ _ ((hU j i).1 ?_)
     have h1 := congrArg φ (r3 j)
     rw [map_list_prod, map_zero, List.map_ofFn] at h1
     rw [← h1]
     congr 2
+    funext k
+    simp only [Function.comp_apply, map_sub, hφ1, hφ2]
   · refine key _ 0 (((hU j i).2 _ ?_).trans (map_zero _).symm)
     have h1 := congrArg φ (r4 j i)
     have h2 : S.ρ S.F (S.P.ta j) = 1 := by
@@ -264,7 +284,10 @@ theorem UpperTheory.V.Pa.alInj :
     rw [← hA]
     refine Matrix.ext fun i j => ?_
     change _ = (DD.C (S.ρ S.F g i j) : DD S.F 1) + E _ i j
-    rw [Matrix.map_apply, hv, (prVr l S g i j).1]
+    have hp : S.rF (S.pr0 (S.U.vr g i j)) = S.ρ S.F g i j := by
+      have hn : S.U.vr g i j - algebraMap S.Bh S.U.AA (S.pr0 (S.U.vr g i j)) ∈ S.U.N := (S.pr1 _).2
+      exact S.U.red g i j _ hn
+    rw [Matrix.map_apply, hv, hp]
     ext <;> simp [E]
   have h0 := conj_const S (DD S.F 1) (DD.aug S.F 1) θ hθ (1 + E Y) (1 - E Y)
     (by rw [mul_sub, mul_one, add_mul, one_mul, hEE, add_zero, add_sub_cancel_right])
@@ -287,7 +310,13 @@ theorem UpperTheory.V.Pa.alInj :
       simp)
   ext b
   have h1 := congrArg (fun u => DD.ep' u 0) ((hv _).symm.trans (h0 b))
-  have h2 := ((prAdd l S).2.1 b 0).1
-  rw [Submodule.coe_zero, add_zero] at h2
+  have h2 : S.pr0 (algebraMap S.Bh S.U.AA b) = b := by
+    have h := (Ctx.exists_pr S (algebraMap S.Bh S.U.AA b)).choose_spec
+    have hm : algebraMap S.Bh S.U.AA b - algebraMap S.Bh S.U.AA (S.pr0 (algebraMap S.Bh S.U.AA b)) ∈ (1 : Submodule S.Bh S.U.AA) := by
+      rw [← map_sub]
+      exact Submodule.mem_one.mpr ⟨_, rfl⟩
+    have hz := (Submodule.disjoint_def.mp S.U.compl.disjoint) _ hm h
+    rw [← map_sub] at hz
+    exact (sub_eq_zero.mp (S.U.inj (hz.trans (map_zero _).symm))).symm
   simp only [h2] at h1
   exact h1

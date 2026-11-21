@@ -475,7 +475,9 @@ theorem baseChange_app_ratioOn {U : (PSpace R N).Opens} {i : Fin (N + 1)} (hi : 
     (j : Fin (N + 1)) :
     ((baseChange N φ).app U).hom (ratioOn U i hi j) =
       ratioOn (baseChange N φ ⁻¹ᵁ U) i (baseChange_preimage_le φ hi) j :=
-  (map_app_frac (gradedMap N φ) (irrelevant_le_map N φ) U _ _ _ _ hi).trans (frac_eq (by simp))
+  (map_app_frac (gradedMap N φ) (irrelevant_le_map N φ) U _ _ _ _ hi).trans (frac_eq (by
+    change MvPolynomial.map φ (X j) * X i = X j * MvPolynomial.map φ (X i)
+    simp))
 
 
 variable {N} in
@@ -484,7 +486,9 @@ theorem baseChange_app_formOn {U : (PSpace R N).Opens} {i : Fin (N + 1)} (hi : U
     ((baseChange N φ).app U).hom (formOn U i hi n f hf) =
       formOn (baseChange N φ ⁻¹ᵁ U) i (baseChange_preimage_le φ hi) n (MvPolynomial.map φ f) (hf.map φ) :=
   (map_app_frac (gradedMap N φ) (irrelevant_le_map N φ) U _ _ _ _ (le_basicOpen_X_pow hi n)).trans
-    (frac_eq (by simp))
+    (frac_eq (by
+      change MvPolynomial.map φ f * X i ^ n = MvPolynomial.map φ f * MvPolynomial.map φ (X i ^ n)
+      simp))
 
 
 variable {N} in

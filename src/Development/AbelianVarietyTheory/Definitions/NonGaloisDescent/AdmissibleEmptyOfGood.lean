@@ -234,7 +234,41 @@ def IsAdmFam (u : UnivTwist D C) (Q : Finset (Pl D.host.E))
 omit [Fintype C] in
 theorem isAdmFam_univFam (u : UnivTwist D C) (Q : Finset (Pl D.host.E))
     (β : ∀ PP : Pl D.host.E, DetBases (kP PP) T.rank S.rank) : IsAdmFam u Q (univFam u β) :=
-  fun PP _ => isAdmissible_univCoef (β PP) (u.kap PP)
+  fun PP _ => by
+    let k := kP PP
+    let r := T.rank
+    let n := S.rank
+    let β := β PP
+    let κ := u.kap PP
+    change IsAdmissible κ (univCoef β κ)
+    refine {
+    den c y := by
+      have hq : (Nat.card k : ℚ) ≠ 0 := Nat.cast_ne_zero.2 Nat.card_pos.ne'
+      refine ⟨r * (n - r), Nat.card {U : Planes k r n // ∃ u : kˣ, (u : k) = dU β U y ∧ Multiplicative.toAdd (κ u) = c}, ?_⟩
+      rw [univCoef_eq, mul_comm, mul_inv_cancel_left₀ (pow_ne_zero _ hq)]
+      rfl
+    equiv g c y := by
+      rw [univCoef_eq, univCoef_eq]
+      congr 2
+      apply Nat.card_congr
+      apply Equiv.subtypeEquivRight
+      intro U
+      set a := GeneralLinearGroup.det g
+      have hd : dU β U (((g⁻¹ : GL (Fin r) k) : Matrix (Fin r) (Fin r) k) * y) = ((a⁻¹ : kˣ) : k) * dU β U y := by
+        rw [dU_mul]
+        congr 1
+      rw [hd]
+      constructor
+      · rintro ⟨u, hu, hc⟩
+        refine ⟨a * u, ?_, ?_⟩
+        · rw [Units.val_mul, hu, ← mul_assoc, ← Units.val_mul, mul_inv_cancel, Units.val_one, one_mul]
+        · rw [map_mul, toAdd_mul, hc, add_comm]
+      · rintro ⟨u, hu, hc⟩
+        refine ⟨a⁻¹ * u, ?_, ?_⟩
+        · rw [Units.val_mul, hu]
+        · rw [map_mul, toAdd_mul, hc, map_inv, toAdd_inv]
+          abel
+    }
 
 end Univ
 
@@ -394,8 +428,49 @@ theorem exists_frame_good (S T : HSp D) (hS : S.SigOK) (hpos : S.IsPosDef) (hT :
   choose BT hBT using fun τ => GlobalTheory.GalLift.Vec.exists_isONBasis (hsT τ) (hT (tauE D τ))
   have dS := GlobalTheory.PlaceModel.isSelfDualC_latFrame S
   have dT := GlobalTheory.PlaceModel.isSelfDualC_latFrame T
-  obtain ⟨βS, hβS⟩ := GlobalTheory.AdelicFrame.exists_isFrame (F := D.host.F) _ dS.1.fg dS.1.span_eq_top
-  obtain ⟨βT, hβT⟩ := GlobalTheory.AdelicFrame.exists_isFrame (F := D.host.F) _ dT.1.fg dT.1.span_eq_top
+  have hsp (V : HSp D) (hd : IsSelfDualC V (GlobalTheory.PlaceModel.latFrame V)) :
+      Submodule.span D.host.E (GlobalTheory.PlaceModel.latFrame V : Set (Fin V.rank → D.host.E)) = ⊤ := by
+    let M := GlobalTheory.PlaceModel.latFrame V
+    apply top_unique
+    intro y _
+    let pairing (x z : Fin V.rank → D.host.E) :=
+      ∑ a, ∑ b, star (x a) * V.gram a b * z b
+    obtain ⟨s, hgen⟩ := hd.1.fg
+    obtain ⟨d, hdint⟩ := IsLocalization.exist_integer_multiples (nonZeroDivisors (𝓞 D.host.E)) s (pairing · y)
+    have hd0 : (d : 𝓞 D.host.E) ≠ 0 := mem_nonZeroDivisors_iff_ne_zero.mp d.property
+    have hdE : (d : 𝓞 D.host.E) • y ∈ M := by
+      apply (hd.2 _).2
+      intro x hx
+      show IsLocalization.IsInteger (𝓞 D.host.E) (pairing x ((d : 𝓞 D.host.E) • y))
+      have hscale (z : Fin V.rank → D.host.E) :
+          pairing z ((d : 𝓞 D.host.E) • y) = (d : 𝓞 D.host.E) • pairing z y := by
+        simp only [pairing, Pi.smul_apply, Algebra.smul_def, Finset.mul_sum, Finset.sum_mul,
+          mul_assoc, mul_left_comm, mul_comm]
+      rw [hscale]
+      refine Submodule.span_induction
+        (p := fun z _ => IsLocalization.IsInteger (𝓞 D.host.E) ((d : 𝓞 D.host.E) • pairing z y))
+        ?_ ?_ ?_ ?_ (hgen.symm ▸ hx)
+      · intro z hz
+        exact hdint z hz
+      · simp [pairing, IsLocalization.isInteger_zero]
+      · intro z z' _ _ hz hz'
+        convert IsLocalization.isInteger_add hz hz' using 1
+        simp only [pairing, Pi.add_apply, star_add, add_mul, Finset.sum_add_distrib, smul_add]
+      · intro a z _ hz
+        have ha : IsLocalization.IsInteger (𝓞 D.host.E) (star (a : D.host.E)) := by
+          refine ⟨⟨star (a : D.host.E), ?_⟩, rfl⟩
+          exact a.2.map (starRingEnd D.host.E).toIntAlgHom
+        convert IsLocalization.isInteger_mul ha hz using 1
+        simp only [pairing, Pi.smul_apply, Algebra.smul_def, star_mul', Finset.mul_sum,
+          mul_assoc, mul_left_comm, mul_comm]
+    have hspan := Submodule.subset_span (R := D.host.E) hdE
+    have hn : ((d : 𝓞 D.host.E) : D.host.E) ≠ 0 := by exact_mod_cast hd0
+    have hy := (Submodule.span D.host.E (M : Set (Fin V.rank → D.host.E))).smul_mem
+      (((d : 𝓞 D.host.E) : D.host.E)⁻¹) hspan
+    rwa [← IsScalarTower.algebraMap_smul D.host.E (d : 𝓞 D.host.E) y,
+      smul_smul, inv_mul_cancel₀ hn, one_smul] at hy
+  obtain ⟨βS, hβS⟩ := GlobalTheory.AdelicFrame.exists_isFrame (F := D.host.F) _ dS.1.fg (hsp S dS)
+  obtain ⟨βT, hβT⟩ := GlobalTheory.AdelicFrame.exists_isFrame (F := D.host.F) _ dT.1.fg (hsp T dT)
   obtain ⟨f₀, hf₀⟩ := GlobalTheory.Member.vacuum_oriented_exists D ψ θ hψ hθ S T (fun _ => 1) sT hS hT
     (fun τ => GlobalTheory.GalLift.Vec.isCartanInv_one (hBS τ)) hsT _ _ dS dT
   exact ⟨⟨ψ, θ, sT, BS, BT, _, _, βS, βT, f₀⟩, hr, hBS, hsT, hBT, dS, dT, hβS, hβT, hf₀⟩

@@ -25,7 +25,7 @@ theorem UpperTheory.Gal.InertialTypesAlt.G.varTrace :
     UpperTheory.Gal.InertialTypesAlt.G.VarTrace := by
   intro F E _ _ _ _ _ _ _ _ σ hσ hp n hn π P hP hW v w hv _ _ _ _ mF mE hmF hmE τ τ' hτ hτ' s I hs hI
   let μE : Measure (normOneGL (K := E) (n := n)) := Measure.haar
-  obtain ⟨χ', ⟨z₀, hz'⟩, V, hV⟩ := UpperTheory.ConvolutionTheory.Dp.exTwist E n μE P hn
+  obtain ⟨χ', ⟨z₀, hz'⟩, V, hV⟩ := Dp.exTwist E n μE P hn
   obtain ⟨hex, htw⟩ := T.powTwist F E
   obtain ⟨χ, hz⟩ := (hex z₀).1
   obtain ⟨hi, hi', h1⟩ := htw z₀ χ χ' hz hz'

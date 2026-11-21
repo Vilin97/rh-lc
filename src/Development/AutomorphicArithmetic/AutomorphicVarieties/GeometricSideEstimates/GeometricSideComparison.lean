@@ -15,8 +15,7 @@ theorem UpperTheory.geometric_side_comparison :
   classical
   haveI : IsAddTorsionFree V := by
     constructor
-    intro n hn x y hxy
-    simp only at hxy
+    intro n hn x y _ hxy
     have h : ((n : ℝ)) • x = ((n : ℝ)) • y := by simpa [Nat.cast_smul_eq_nsmul] using hxy
     exact smul_right_injective V (Nat.cast_ne_zero.mpr hn) h
   have hfin : {x : A | ‖φ x‖ < 1}.Finite := by

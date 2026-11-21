@@ -5,17 +5,6 @@ public import GroundTheory.GlobalFields.ComplexMultiplication.HilbertClassFieldA
 
 @[expose] public section
 
-private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
-  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
-  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
-  one_mem' z hz := by simpa only [one_mul] using hz
-  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
-  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
-  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
-
-abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
-    (σ : K →+* ℂ) : Subring ℂ :=
-  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global
@@ -42,7 +31,7 @@ theorem mem_fixingSubgroup_adjoin_simple_iff {F E : Type*} [Field F] [Field E] [
       rw [adjoin_simple_le_iff, mem_fixedField_iff]
       intro f hf
       exact (Subgroup.zpowers_le.2 hst) hf
-    exact (le_iff_le _ _).1 hle (Subgroup.mem_zpowers τ)
+    exact (le_fixedField_iff_le_fixingSubgroup _ _).1 hle (Subgroup.mem_zpowers τ)
 
 
 include hK in

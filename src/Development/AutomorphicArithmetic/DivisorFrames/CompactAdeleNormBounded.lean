@@ -12,7 +12,6 @@ open scoped TensorProduct NNReal Matrix
 open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
 open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK
 open GlobalTheory.Doubling (absE)
-open GlobalTheory.ConeSmallUnf
 
 open GroundTheory.Global GroundTheory.Global.IdeleGroup in
 open scoped nonZeroDivisors in

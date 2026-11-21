@@ -27,6 +27,8 @@ theorem rs_add (σ : (D.what₂.Tau → ℂ) →+ AE D) (s t : ℝ) : rs σ (s +
   unfold rs
   rw [← map_add (f := _)]
   congr 1
+  funext x
+  simp
 
 theorem rs_zero (σ : (D.what₂.Tau → ℂ) →+ AE D) : rs σ 0 = 0 := by
   unfold rs

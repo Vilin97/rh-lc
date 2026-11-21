@@ -61,7 +61,11 @@ private theorem denseRange_unitsR : DenseRange (Units.map (diagR E).toMonoidHom)
 private theorem diagR_mk (φ : E →+* ℂ) (k : E) : ((diagR E k (InfinitePlace.mk φ) : ℝ) : ℂ) = φ k := by
   have hr := IsTotallyReal.isReal (InfinitePlace.mk φ)
   have e : diagR E k (InfinitePlace.mk φ) = InfinitePlace.embedding_of_isReal hr k :=
-    InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hr (WithAbs.toAbs _ k)
+    by
+      change InfinitePlace.Completion.extensionEmbeddingOfIsReal hr
+        ((algebraMap E (Ad E) k).1 (InfinitePlace.mk φ)) = _
+      rw [AdeleRing.algebraMap_fst_apply]
+      simpa using InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hr (WithAbs.toAbs _ k)
   rw [e, InfinitePlace.embedding_of_isReal_apply,
     InfinitePlace.embedding_mk_eq_of_isReal (InfinitePlace.isReal_mk_iff.1 hr)]
 
@@ -119,7 +123,7 @@ private theorem charEig_cyc_pow {F Ω : Type} [Field F] [NumberField F] [Field �
     rw [map_inv, Units.val_inv_eq_inv_val, MonoidHom.pow_apply, Units.val_pow_eq_pow_val, h2,
       (Model.absPow_isAbsPow F k).2.1 w, Complex.cpow_neg, Complex.ofReal_natCast, Complex.cpow_natCast, map_inv₀,
       map_pow, map_natCast]
-    rfl
+    rw [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
 
 private theorem attR_tw_cyc {F Ω : Type} [Field F] [NumberField F] [IsTotallyReal F] [Field Ω] [Algebra F Ω]
     [IsAlgClosure F Ω] {l : ℕ} [Fact l.Prime] {ι : Qbar l ≃+* ℂ} {n : ℕ} {r : G F Ω →* GL (Fin n) (Qbar l)}

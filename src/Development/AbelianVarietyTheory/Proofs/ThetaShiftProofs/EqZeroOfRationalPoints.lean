@@ -59,6 +59,7 @@ theorem sec_eq_zero {S : Scheme.{0}} (P : Out.PolAV S) {k : Type} [Field k] [IsA
     apply pullback.hom_ext
     · exact fib_fst a
     · rw [hx]
+      exact pullback.lift_snd _ _ _
   have := h a j fun p hp => Set.mem_iInter.1 (hU hp) 0
   rw [e] at this
   exact this

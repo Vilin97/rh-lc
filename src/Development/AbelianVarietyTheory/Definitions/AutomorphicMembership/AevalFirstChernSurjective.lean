@@ -510,8 +510,7 @@ def vDeg (d : ℕ) : Z.VDivZ →+ (PicSym Z.X →ₗ[ℚ] ℚ) :=
 theorem vDeg_apply (d : ℕ) (D : Z.VDivZ) (x : PicSym Z.X) : Z.vDeg d D x =
     ∑ C ∈ Finset.univ.filter fun C : Z.Comp => (Z.comp C).relDim = d,
       (Z.comp C).vDeg (Z.vRes C D) (picSymPull (Z.compι C) x) := by
-  rw [vDeg, AddMonoidHom.finset_sum_apply, LinearMap.sum_apply]
-  rfl
+  simp [vDeg]
 
 theorem vDeg_eq_zero {d n : ℕ} (D : Z.VDivZ) (hn : n ≠ d) {x : PicSym Z.X} (hx : x ∈ symDeg (SmallPic Z.X) n) :
     Z.vDeg d D x = 0 := by

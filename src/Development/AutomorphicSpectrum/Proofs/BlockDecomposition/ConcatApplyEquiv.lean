@@ -53,7 +53,8 @@ theorem concat_dec_topCut (Δ : Segment k) {s : ℕ} (c : Fin s → ℕ) (hc : �
   have hj : (j : ℕ) < c a := j.2
   simp only [dec, Segment.term, topCut, Segment.first_ofFirst, IrrGL.nu_nu]
   congr 1
-  simp only [Fin.val_rev, Fin.val_cast, Segment.len_ofFirst]
+  change ((∑ b ∈ Finset.univ.filter (fun b => a < b), c b : ℕ) : ℂ) +
+    ((c a - (j + 1) : ℕ) : ℂ) = ((Δ.len - (i + 1) : ℕ) : ℂ)
   have key : Δ.len - (i + 1) = (∑ b ∈ Finset.univ.filter (fun b => a < b), c b) + (c a - (j + 1)) := by
     rw [← h]; omega
   rw [key]

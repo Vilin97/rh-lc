@@ -69,6 +69,8 @@ theorem glInv (hB : MirEq π (m + 1) h s B) (g : GL (Fin (m + 1)) k) (v w : V) :
   rw [det_glEmb, blkAt_glEmb] at this
   exact this
 
+local notation "P" => avg (1 : AddChar k Circle) h π 0
+
 theorem one_zero_dot (a : Fin (m + 1) → k) : (1 : AddChar k Circle) ((0 : Fin (m + 1) → k) ⬝ᵥ a) = 1 := by
   simp
 
@@ -110,6 +112,9 @@ section AtomCons
 
 variable {m N : ℕ} {h : m + 2 ≤ N} {V : Type} [AddCommGroup V] [Module ℂ V]
   {π : Representation ℂ (GL (Fin N) k) V} {s : ℝ} {B : V →ₗ[ℂ] V →ₗ⋆[ℂ] ℂ}
+
+local notation "P" => avg (1 : AddChar k Circle) h π 0
+local notation "LT" => {A : AddSubgroup (Fin (m + 1) → k) // IsLat A}
 
 variable (hπ : IsSmooth π) (hpsd : IsPsd B) (hB : MirEq π (m + 1) h s B)
 include hπ hpsd hB
@@ -199,6 +204,9 @@ section AtomProps
 
 variable {m N : ℕ} {h : m + 2 ≤ N} {V : Type} [AddCommGroup V] [Module ℂ V]
   {π : Representation ℂ (GL (Fin N) k) V} {s : ℝ} {B : V →ₗ[ℂ] V →ₗ⋆[ℂ] ℂ}
+
+local notation "P" => avg (1 : AddChar k Circle) h π 0
+local notation "LT" => {A : AddSubgroup (Fin (m + 1) → k) // IsLat A}
 
 variable (hπ : IsSmooth π) (hpsd : IsPsd B) (hB : MirEq π (m + 1) h s B)
 include hπ hpsd hB

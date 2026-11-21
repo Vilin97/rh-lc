@@ -23,24 +23,25 @@ theorem goodAt_of_mul {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Re
   exact (GlobalTheory.HostProbe.goodAt_iff l hp).1 (hl p hp) i hi
 
 theorem levLaws (D : D7) (T : CoreJ D) (j : ℕ) (Y : Deep T.toCore j) (e : ℕ) (o : ℝ) (hT : LawsJ T) (hj : InR D j)
-    (hG : Y.Good e o) : GlobalTheory.LevGeo.Laws D j Y.d.Xo₂ Y.d.c₂ Y.U Y.dict where
-  inR := hj
-  host := hT.toLawsM.pins.1
-  dat := hT.toLawsM.pins.2.2.2 j hj
-  levA := hG.lev.2
-  unf := hG.unf
-  chiTriv := hG.chiTriv
-  dictU := by
-    intro σ hσ
-    obtain ⟨th, hr, hth, hd⟩ := hG.dictU σ hσ
-    refine ⟨Y.Kf, th, hr, ?_, hth, hd, hG.unit σ hσ⟩
-    have h₁ := hG.lev.1
-    unfold DeltaDat.IsLev at h₁
-    have h₂ := hT.toLawsM.pins.2.1
-    unfold Par.PinLevel at h₂
-    rw [h₁.2.1, h₂.1]
-    exact hG.levelK
-  modelW := hG.modelW
+    (hG : Y.Good e o) : GlobalTheory.LevGeo.Laws D j Y.d.Xo₂ Y.d.c₂ Y.U Y.dict := by
+  refine {
+    inR := hj
+    host := hT.toLawsM.pins.1
+    dat := hT.toLawsM.pins.2.2.2 j hj
+    levA := hG.lev.2
+    unf := hG.unf
+    chiTriv := hG.chiTriv
+    dictU := ?_
+    modelW := hG.modelW }
+  intro σ hσ
+  obtain ⟨th, hr, hth, hd⟩ := hG.dictU σ hσ
+  refine ⟨Y.Kf, th, hr, ?_, hth, hd, hG.unit σ hσ⟩
+  have h₁ := hG.lev.1
+  unfold DeltaDat.IsLev at h₁
+  have h₂ := hT.toLawsM.pins.2.1
+  unfold Par.PinLevel at h₂
+  rw [h₁.2.1, h₂.1]
+  exact hG.levelK
 
 theorem laws_deep : ∀ (D : D7) (T : CoreJ D) (j : ℕ) (Y : Deep T.toCore j) (e : ℕ) (o : ℝ),
     LawsJ T → InR D j → Y.Good e o → Laws Y.U (xiR D) := by

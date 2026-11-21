@@ -47,6 +47,7 @@ theorem mdisc_update_const {e : ℕ} (G H : Matrix (Fin (e + 1)) (Fin (e + 1)) �
       mdisc (Fin.cons G (fun _ : Fin e => H) : Fin (e + 1) → _) := by
   rw [← mdisc_comp_perm (Fin.cons G (fun _ : Fin e => H) : Fin (e + 1) → _) (Equiv.swap 0 i)]
   congr 1
+  funext k
   by_cases hki : k = i
   · subst hki
     simp
@@ -55,7 +56,7 @@ theorem mdisc_update_const {e : ℕ} (G H : Matrix (Fin (e + 1)) (Fin (e + 1)) �
       apply hki
       have := congrArg (Equiv.swap 0 i) h
       simpa using this
-    simp [hki, this]
+    simp [hki, cons_const_apply', this]
 
 theorem maDens_log_all {e : ℕ} (p : (Fin (e + 1) → ℂ) → ℝ) (y : Fin (e + 1) → ℂ)
     (hp : ContDiffAt ℝ 2 p y) (hpos : 0 < p y) :
@@ -357,7 +358,7 @@ theorem varLelongAnnulus : VarLelongAnnulus.Statement := by
     by_contra hle
     replace hle := not_lt.1 hle
     apply hz
-    rw [Set.indicator_of_notMem (fun h => h.2 ((mem_euclBall_iff_sq x hr z).2 (by linarith))), mul_zero]
+    rw [Set.indicator_of_notMem (fun (h : z ∈ euclBall x s \ euclBall x r) => h.2 ((mem_euclBall_iff_sq x hr z).2 (by linarith))), mul_zero]
   have hR : Tendsto (fun k => ∫ y, chartDens J A (fun z => r ^ (2 * (d + 1)) * s ^ (2 * (d + 1)) *
         (radialTransform (d + 1) (hk k) (euclPot (z - x) / s ^ 2) -
           radialTransform (d + 1) (hk k) (euclPot (z - x) / r ^ 2)))

@@ -134,7 +134,8 @@ private theorem toFunctionField_mem_divOver_ring {k : Type} [Field k] {X : Schem
   have : toFunctionField p a = Cartier.constFn p a := by
     simp [toFunctionField, Cartier.constFn, Cartier.fnOf, DVR.FlatBC.algX, Scheme.Hom.appLE,
       Scheme.Hom.appTop]
-    rfl
+    symm
+    exact X.presheaf.germ_res_apply _ _ _ _
   rw [this]
   exact E.const_mem a
 

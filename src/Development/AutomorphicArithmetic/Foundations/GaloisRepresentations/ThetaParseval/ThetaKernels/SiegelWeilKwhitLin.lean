@@ -31,8 +31,9 @@ def linRhoL_k (v : Mx F E d.m d.n) : d.Fn →ₗ[ℂ] d.Fn where
     ring
 theorem lin_T_sum_k {ι : Type} (s : Finset ι) (c : ι → ℂ) (Φs : ι → d.Fn) (X : Mx F E d.m d.n) :
     d.T (∑ i ∈ s, c i • Φs i) X = ∑ i ∈ s, c i * d.T (Φs i) X := by
+  have hT (Φ : d.Fn) : d.T Φ X = d.l (linRhoL_k d X Φ) := rfl
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [_root_.PositivityTheory.SiegelWeilFormula.KWhit.lin_T_eq_k, map_sum, map_smul, smul_eq_mul]
+    simp only [hT, map_sum, map_smul, smul_eq_mul]
 theorem constantTerm_finsetSum {ι : Type} (s : Finset ι) (c : ι → ℂ) (Φs : ι → d.Fn) (x : d.G) :
     d.sec0 (∑ i ∈ s, c i • Φs i) x = ∑ i ∈ s, c i * d.sec0 (Φs i) x := by
   set_option synthInstance.maxHeartbeats 100000 in
@@ -92,7 +93,7 @@ theorem lin_fc_sum_k (hLB : _root_.PositivityTheory.SiegelWeilFormula.LamBd_k) (
   have hfun : ∀ s : Finset ι, (∑ i ∈ s, c i • f i) = fun a => ∑ i ∈ s, c i * f i a := by
     intro s; funext a; simp [Finset.sum_apply]
   have hcs : ∀ s : Finset ι, Continuous (∑ i ∈ s, c i • f i) := by
-    intro s; rw [hfun s]; exact continuous_finset_sum s fun i _ => continuous_const.mul (hc i)
+    intro s; rw [hfun s]; exact continuous_finsetSum s fun i _ => continuous_const.mul (hc i)
   have his : ∀ s : Finset ι, ∀ γ ∈ rat2 σ d.Y, ∀ g, (∑ i ∈ s, c i • f i) (γ * g) = (∑ i ∈ s, c i • f i) g := by
     intro s γ hγ g; rw [hfun s]; exact Finset.sum_congr rfl fun i _ => by rw [hi i γ hγ g]
   induction s using Finset.induction_on with

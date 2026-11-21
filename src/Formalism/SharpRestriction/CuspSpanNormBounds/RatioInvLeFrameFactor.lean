@@ -54,17 +54,17 @@ theorem ptEntry_scaleBlocks (acc : ℕ) (bs : List (ℂ × ℕ)) (i j : ℕ)
     simp only [List.map_cons, List.sum_cons] at h
     simp only [scaleBlocks, ptEntry]
     by_cases h1 : i < s ∧ j < s
-    · rw [if_pos h1, if_pos h1]
+    · rw [ite_eq_left h1, ite_eq_left h1]
       by_cases h2 : i + j + 1 = s
-      · rw [if_pos h2, if_pos h2]
+      · rw [ite_eq_left h2, ite_eq_left h2]
         have e : 2 * (r + 1 - (acc + s)) + (s - 1) = (r - (acc + i)) + (r - (acc + j)) := by omega
         rw [e, tF, tF, pow_add]; push_cast; ring
-      · rw [if_neg h2, if_neg h2, mul_zero]
-    · rw [if_neg h1, if_neg h1]
+      · rw [ite_eq_right h2, ite_eq_right h2, mul_zero]
+    · rw [ite_eq_right h1, ite_eq_right h1]
       by_cases h3 : s ≤ i ∧ s ≤ j
-      · rw [if_pos h3, if_pos h3, ih (acc + s) (i - s) (j - s) (by omega),
+      · rw [ite_eq_left h3, ite_eq_left h3, ih (acc + s) (i - s) (j - s) (by omega),
           show acc + s + (i - s) = acc + i by omega, show acc + s + (j - s) = acc + j by omega]
-      · rw [if_neg h3, if_neg h3, mul_zero]
+      · rw [ite_eq_right h3, ite_eq_right h3, mul_zero]
 
 theorem ptMat_ptTr (hκ : 0 < κ) (hτ : 0 < τ) (γ : Point ℂ (r + 1)) (a b : Fin (r + 1)) :
     ptMat (ptTr κ τ hκ hτ γ) a b = ((tF r κ τ a * tF r κ τ b : ℝ) : ℂ) * ptMat γ a b := by
@@ -136,29 +136,36 @@ def frStart : List (ℂ × ℕ) → ℕ → ℕ
   | [], _ => 0
   | (_, s) :: bs, p => if p < s then 0 else s + frStart bs (p - s)
 
-theorem frStart_le : ∀ (bs : List (ℂ × ℕ)) (p : ℕ), frStart bs p ≤ p
-  | [], p => Nat.zero_le p
-  | (t, s) :: bs, p => by
+theorem frStart_le : ∀ (bs : List (ℂ × ℕ)) (p : ℕ), frStart bs p ≤ p := by
+  intro bs
+  induction bs with
+  | nil => intro p; exact Nat.zero_le p
+  | cons block bs ih =>
+    obtain ⟨t, s⟩ := block
+    intro p
     simp only [frStart]
     split_ifs with h
     · exact Nat.zero_le p
-    · have := frStart_le bs (p - s); omega
+    · have hle := ih (p - s)
+      omega
 
 theorem blockIdx_eq_iff : ∀ (bs : List (ℂ × ℕ)) (a b : ℕ), a < b →
-    (blockIdx bs a = blockIdx bs b ↔ frStart bs b ≤ a)
-  | [], a, b, _ => by simp [blockIdx, frStart]
-  | (t, s) :: bs, a, b, hab => by
-    simp only [blockIdx, frStart]
+    (blockIdx bs a = blockIdx bs b ↔ frStart bs b ≤ a) := by
+  intro bs
+  induction bs with
+  | nil => simp [blockIdx, frStart]
+  | cons block bs ih =>
+    obtain ⟨t, s⟩ := block
+    intro a b hab
     by_cases hb : b < s
     · have ha : a < s := by omega
-      rw [if_pos ha, if_pos hb, if_pos hb]; simp
+      simp [blockIdx, frStart, ha, hb]
     · by_cases ha : a < s
-      · rw [if_pos ha, if_neg hb, if_neg hb]; constructor <;> intro h <;> omega
-      · rw [if_neg ha, if_neg hb, if_neg hb]
-        have := blockIdx_eq_iff bs (a - s) (b - s) (by omega)
-        constructor
-        · intro h; have := this.mp (by omega); omega
-        · intro h; have := this.mpr (by omega); omega
+      · simp only [blockIdx, frStart, ite_eq_left ha, ite_eq_right hb]
+        constructor <;> intro h <;> omega
+      · simp only [blockIdx, frStart, ite_eq_right ha, ite_eq_right hb, Nat.add_left_cancel_iff]
+        rw [ih (a - s) (b - s) (by omega)]
+        omega
 
 theorem sum_rootPat (g : ℕ → ℕ → ℕ) (γ : Point ℂ (r + 1)) :
     ∑ p ∈ rootPat γ, g p.1.val p.2.val = ∑ b ∈ range (r + 1), ∑ a ∈ Ico (frStart γ.1 b) b, g a b := by
@@ -177,8 +184,8 @@ theorem sum_rootPat (g : ℕ → ℕ → ℕ) (γ : Point ℂ (r + 1)) :
       · rintro ⟨h1, h2⟩; exact ⟨(blockIdx_eq_iff γ.1 a b h1).mp h2, h1⟩
       · rintro ⟨h1, h2⟩; exact ⟨h2, (blockIdx_eq_iff γ.1 a b h2).mpr h1⟩
     by_cases h : a < b ∧ blockIdx γ.1 a.val = blockIdx γ.1 b.val
-    · rw [if_pos h, if_pos (hiff.mp h)]
-    · rw [if_neg h, if_neg (fun h' => h (hiff.mpr h'))]
+    · rw [ite_eq_left h, ite_eq_left (hiff.mp h)]
+    · rw [ite_eq_right h, ite_eq_right (fun h' => h (hiff.mpr h'))]
   rw [rootPat, Finset.sum_filter, ← Finset.univ_product_univ, Finset.sum_product_right,
     Finset.sum_range (fun b => ∑ a ∈ Ico (frStart γ.1 b) b, g a b)]
   exact Finset.sum_congr rfl fun b _ => key b

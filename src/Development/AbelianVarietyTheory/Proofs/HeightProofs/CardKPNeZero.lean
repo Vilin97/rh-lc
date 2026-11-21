@@ -19,13 +19,15 @@ theorem not_unrAt_mul {L : Type} [Field L] [NumberField L] {d ψ : HChar L} {v :
   apply hψ
   intro x hx
   have := h x hx
-  rw [HChar.loc_mul, hd x hx, one_mul] at this
+  change d.loc v x * ψ.loc v x = 1 at this
+  rw [hd x hx, one_mul] at this
   exact this
 
 theorem unrAt_mul {L : Type} [Field L] [NumberField L] {d ψ : HChar L} {v : HeightOneSpectrum (𝓞 L)}
     (hd : d.UnrAt v) (hψ : ψ.UnrAt v) : (d * ψ).UnrAt v := by
   intro x hx
-  rw [HChar.loc_mul, hd x hx, hψ x hx, one_mul]
+  change d.loc v x * ψ.loc v x = 1
+  rw [hd x hx, hψ x hx, one_mul]
 
 theorem card_residueField_ne_zero {L : Type} [Field L] [NumberField L] (Q : HeightOneSpectrum (𝓞 L)) : Nat.card (kP Q) ≠ 0 := by
   have h : Nat.card (kP Q) = Ideal.absNorm Q.asIdeal := by

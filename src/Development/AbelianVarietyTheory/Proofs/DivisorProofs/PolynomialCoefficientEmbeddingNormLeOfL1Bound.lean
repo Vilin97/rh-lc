@@ -400,6 +400,7 @@ theorem harm_short : ∀ (D : D7) (T : CoreJ D) (j : ℕ) (Y : Deep T.toCore j) 
 end GlobalTheory.CovGmin.PrismSpan
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 open GlobalTheory.CovGmin.PrismSpan in
 theorem GlobalTheory.CovGmin.span_thFam : ∃ C : ℝ, 0 ≤ C ∧ ∀ (D : D7) (T : CoreJ D) (j : ℕ) (Y : Deep T.toCore j) (e : ℕ) (o Lb : ℝ) (a : (D.host.E →+* ℂ) × ℕ → ℕ) (n : ℕ), GlobalTheory.CovGmin.Hyp D T j Y e o Lb a n → ∀ [StarRing (𝓞 D.host.E)] (nab : NabV Y.d.Xo₂ Y.d.c₂), IsNab Y.d.Xo₂ Y.d.c₂ nab → Submodule.span Y.d.c₂.F (GlobalTheory.CovGmin.thFam Y nab a n (Real.exp (C * ((D.R.f : ℝ) * D.R.r * Lb) ^ 2 * sizeK (T.Q.Dw j) a n))) = ⊤ := by
   refine ⟨20000, by norm_num, ?_⟩

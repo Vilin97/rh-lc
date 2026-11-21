@@ -37,7 +37,7 @@ theorem btEmb_localData (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed
       IsOpenImmersion (U.ι ≫ j') ∧ Γ'.TranslatesCover (Γ'.btOrder ⊤) j' U ∧
       ∀ x : Γ'.G.left, Spec.map (CommRingCat.ofHom (algebraMap R' (Γ'.btOrder ⊤))) (j' x) =
         IsLocalRing.closedPoint R' → x ∈ U := by
-  have hA := GlobalTheory.T.btOrder_isHopfOrder_noetherian R T Γ
+  have hA := GlobalTheory.CompanionTheory.Relay.btOrder_isHopfOrder_noetherian R T Γ
   have hinj : Function.Injective (algebraMap R R') := by
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro r hr
@@ -99,7 +99,7 @@ theorem btEmb_localData (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed
     refine IsPullback.of_bot ?_ hw hsq
     rw [hj'.isOver, hj.isOver]
     exact hbc.cart
-  obtain ⟨ho, hTC⟩ := GlobalTheory.T.btOrder_embedding_open_cover R' T Γ' U hU j' hj'
+  obtain ⟨ho, hTC⟩ := GlobalTheory.CompanionTheory.Ar.BT.EmbSub.openImmersion_translatesCover R' T Γ' U hU j' hj'
   refine ⟨Γ', F, j', ψ, U, hψ, hsq, hsq2, ho, hTC, fun x hx => hUcl x ?_⟩
   rw [← hj'.isOver]
   simpa using hx
@@ -109,7 +109,7 @@ theorem btEmb_specMap_asIdeal {A B : Type} [CommRing A] [CommRing B] (φ : A →
 
 theorem isOpenImmersion_emb_and_translatesCover : ∀ (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed R] [IsNoetherianRing R] (T : Type) [CommGroup T] [Finite T] (Γ : QFGroup R T) (j : Γ.G.left ⟶ Spec (CommRingCat.of (Γ.btOrder ⊤))), Γ.IsEmb (Γ.btOrder ⊤) j → IsOpenImmersion j ∧ Γ.TranslatesCover (Γ.btOrder ⊤) j ⊤ := by
   intro R _ _ _ _ T _ _ Γ j hj
-  have hA := GlobalTheory.T.btOrder_isHopfOrder_noetherian R T Γ
+  have hA := GlobalTheory.CompanionTheory.Relay.btOrder_isHopfOrder_noetherian R T Γ
   refine ⟨?_, ?_⟩
   · haveI := hA.finite
     haveI : LocallyOfFiniteType (Spec.map (CommRingCat.ofHom (algebraMap R (Γ.btOrder ⊤)))) := by

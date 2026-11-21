@@ -28,8 +28,8 @@ private theorem orth {K : Type} [Field K] [NumberField K] {n : ℕ} {μ : Measur
 private theorem repsRight {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (G1 K n)) [μ.IsHaarMeasure]
     {v : L2 μ} {φ : G1 K n → ℂ} (h : Reps μ v φ) (g : G1 K n) :
     Reps μ (rightRegularRep (Gam K n) μ g v) (fun y => φ (y * g)) := by
-  have h1 := (quasiMeasurePreserving_mk (Gam K n) μ).ae (coeFn_rightRegularRep (Gam K n) μ g v)
-  have h2 := (measurePreserving_mul_right μ g).quasiMeasurePreserving.ae h
+  have h1 := MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (coeFn_rightRegularRep (Gam K n) μ g v)
+  have h2 := MeasureTheory.QuasiMeasurePreserving.ae (measurePreserving_mul_right μ g).quasiMeasurePreserving h
   filter_upwards [h1, h2] with y e1 e2
   rw [e1]
   exact e2
@@ -57,7 +57,7 @@ private theorem classOf {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Mea
       rw [hFb]
       exact hb y)
   refine ⟨hm.toLp _, ?_⟩
-  filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae hm.coeFn_toLp] with y hy
+  filter_upwards [MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) hm.coeFn_toLp] with y hy
   rw [hy, hFb]
 
 private theorem intW {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (G1 K n)) [μ.IsHaarMeasure]
@@ -68,6 +68,7 @@ private theorem intW {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measur
   have h' : Integrable (w : RightCosetSpace (Gam K n) → ℂ) (Measure.map (mk (Gam K n)) (fd μ)) := h
   exact h'.comp_measurable (measurable_mk _)
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.KX.sliceRep :
     ∀ {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (G1 K n)) [μ.IsHaarMeasure] (τ : Submodule ℂ (L2 μ)), CuspIrr μ τ →
       ∀ φ : G1 K n → ℂ, Continuous φ → (∃ C : ℝ, ∀ m, ‖φ m‖ ≤ C) → (∀ γ ∈ Gam K n, ∀ m, φ (γ * m) = φ m) → (∃ v ∈ τ, Reps μ v φ) →

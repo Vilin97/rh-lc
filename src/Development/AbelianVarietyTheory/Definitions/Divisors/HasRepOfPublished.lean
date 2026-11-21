@@ -22,8 +22,8 @@ theorem Fam.ev {T Y : Over S} {N : LB (A ⊗ T).left} (h : Fam A N) (y : Y ⟶ T
     Fam A (ev N (fst A Y) (snd A Y ≫ y)) := by
   have hN' : (GlobalTheory.AbDual.ev N (fst A Y) (snd A Y ≫ y)).IsLB := pull_isLB h.isLB _
   refine ⟨hN', (isAdditive_iff hN').2 fun Z a a' t => ?_⟩
-  simp only [evc_ev h.isLB (fst A Y) (snd A Y ≫ y) hN', lift_fst, lift_snd_assoc]
-  exact (isAdditive_iff h.isLB).1 h.add Z a a' (t ≫ y)
+  simpa only [evc_ev h.isLB (fst A Y) (snd A Y ≫ y) hN', lift_fst, lift_snd_assoc] using
+    (isAdditive_iff h.isLB).1 h.add Z a a' (t ≫ y)
 
 
 end GlobalTheory.DualCon

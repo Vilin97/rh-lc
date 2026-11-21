@@ -59,7 +59,7 @@ def sSub (h : V →ₗ⋆[K] V →ₗ[K] K) (A : Submodule (𝓞 K) V) (𝔭 : I
     refine ⟨inv_mem ha, fun x hx y hy => ?_⟩
     have := (pK K 𝔭 k).neg_mem (ha' _ (apply_mem (inv_mem ha) hx) _ (apply_mem (inv_mem ha) hy))
     have e : ∀ z : V, a (a⁻¹ z) = z := fun z => by
-      rw [← LinearEquiv.mul_apply, mul_inv_cancel]
+      rw [← mul_apply_eq_comp, mul_inv_cancel]
       rfl
     simpa [e] using this
 
@@ -76,7 +76,7 @@ def nSub (A : Submodule (𝓞 K) V) (𝔭 : Ideal (𝓞 F)) (k : ℕ) : Subgroup
     refine ⟨inv_mem ha, fun x hx => ?_⟩
     have := (extP K 𝔭 ^ k • A).neg_mem (apply_mem_smul (inv_mem ha) _ (ha' x hx))
     have e : ∀ z : V, a⁻¹ (a z) = z := fun z => by
-      rw [← LinearEquiv.mul_apply, inv_mul_cancel]
+      rw [← mul_apply_eq_comp, inv_mul_cancel]
       rfl
     simpa [e] using this
 

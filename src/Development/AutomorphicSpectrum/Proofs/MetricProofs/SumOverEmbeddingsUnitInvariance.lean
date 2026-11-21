@@ -59,7 +59,7 @@ theorem sum_log_unit_mul_mass_eq_zero : ArithIntersectionSystemStatement → Pts
   obtain ⟨B, hB0, hBs, hBl⟩ := exists_smooth_weight_const_near_embeddings K ι Ω F y
     (fun sg => ‖sg x‖) (fun sg => norm_pos_iff.mpr ((map_ne_zero sg).mpr hx0)) hex
   obtain ⟨A, hAa, hA⟩ : ∃ A : HermLine ι, (∀ k, A.a k = d k) ∧ IsSmoothHerm A :=
-    ⟨HermLine.ofMetrics (fun k => fsMetric (ι k)) (fun k => (d k : ℤ)), fun _ => rfl,
+    ⟨HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) (fun k => (d k : ℤ)), fun _ => rfl,
       GroundTheory.Heights₂.Heights.Inter.isSmoothHerm_ofMetrics_fs _⟩
   have hAB : IsSmoothHerm (A.tensor B) := ContDiffOn.mul hA hBs
   have hABa : ∀ k, (A.tensor B).a k = d k := fun k => by

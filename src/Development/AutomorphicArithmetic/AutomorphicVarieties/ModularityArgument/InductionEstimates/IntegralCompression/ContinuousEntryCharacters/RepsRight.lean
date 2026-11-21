@@ -72,18 +72,20 @@ private theorem reps_sum' {ι : Type} (s : Finset ι) (c : ι → ℂ) {v : ι �
   classical
   induction s using Finset.induction_on with
   | empty =>
-    filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae (Lp.coeFn_zero ℂ 2 (quotientMeasure (Gam K n) μ))] with y hy
-    simpa using hy
+    filter_upwards [QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_zero ℂ 2 (quotientMeasure (Gam K n) μ))] with y hy
+    simpa only [Finset.sum_empty, Function.comp_apply, Pi.zero_apply] using hy
   | insert a s ha ih =>
-    filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae (Lp.coeFn_add (c a • v a) (∑ i ∈ s, c i • v i)),
-      (quasiMeasurePreserving_mk (Gam K n) μ).ae (Lp.coeFn_smul (c a) (v a)), h a (Finset.mem_insert_self _ _),
+    filter_upwards [QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_add (c a • v a) (∑ i ∈ s, c i • v i)),
+      QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_smul (c a) (v a)), h a (Finset.mem_insert_self _ _),
       ih fun i hi => h i (Finset.mem_insert_of_mem hi)] with y h1 h2 h3 h4
+    simp only [Function.comp_apply] at h1 h2
     rw [Finset.sum_insert ha, Finset.sum_insert ha, h1, Pi.add_apply, h2, h4, Pi.smul_apply, h3, smul_eq_mul]
 
 private theorem reps_right' {v : L2 μ} {φ : G1 K n → ℂ} (hv : Reps μ v φ) (g : G1 K n) :
     Reps μ (rightRegularRep (Gam K n) μ g v) fun y => φ (y * g) := by
-  filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae (coeFn_rightRegularRep (Gam K n) μ g v),
-    (measurePreserving_mul_right μ g).quasiMeasurePreserving.ae hv] with y h1 h2
+  filter_upwards [QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk (Gam K n) μ) (coeFn_rightRegularRep (Gam K n) μ g v),
+    QuasiMeasurePreserving.ae (measurePreserving_mul_right μ g).quasiMeasurePreserving hv] with y h1 h2
+  simp only [Function.comp_apply] at h1
   rw [h1, rightMul_mk, h2]
 
 private theorem reps_int {X : Type} [TopologicalSpace X] [CompactSpace X] [TopologicalSpace.MetrizableSpace X] [Nonempty X]
@@ -117,7 +119,7 @@ private theorem reps_int {X : Type} [TopologicalSpace X] [CompactSpace X] [Topol
   have hPl : ∀ y, Tendsto (fun i => P i y) atTop (𝓝 (∫ k, a k * φ (y * u k) ∂ν)) := fun y =>
     simp_lim ν s hs (fun k => a k * φ (y * u k)) (ha.mul (hφ.comp (continuous_const.mul hu)))
   obtain ⟨ns, hmono, hns⟩ := (tendstoInMeasure_of_tendsto_Lp hWl).exists_seq_tendsto_ae
-  have h1 := (quasiMeasurePreserving_mk (Gam K n) μ).ae hns
+  have h1 := QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) hns
   have h2 : ∀ᵐ y ∂μ, ∀ i, (W i : RightCosetSpace (Gam K n) → ℂ) (mk (Gam K n) y) = P i y := ae_all_iff.2 hW
   filter_upwards [h1, h2] with y hy1 hy2
   simp only [hy2] at hy1
@@ -154,8 +156,8 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA.ptPi :
     have h0' : (∫ m, T n q m • rightRegularRep (Gam K 2) μ (C.un i m) v ∂μK) = 0 := h0
     rw [h0'] at hr
     have hz : Reps μ (0 : LL μ) fun _ => 0 := by
-      filter_upwards [(quasiMeasurePreserving_mk (Gam K 2) μ).ae (Lp.coeFn_zero ℂ 2 (quotientMeasure (Gam K 2) μ))] with y hy
-      simpa using hy
+      filter_upwards [QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk (Gam K 2) μ) (Lp.coeFn_zero ℂ 2 (quotientMeasure (Gam K 2) μ))] with y hy
+      simpa only [Function.comp_apply, Pi.zero_apply] using hy
     have he : (fun y => ∫ m, T n q m * φ (y * C.un i m) ∂μK) = fun _ => 0 := by
       refine cont_ae_eq (μ := μ) hc continuous_const ?_
       filter_upwards [hr, hz] with y h1 h2

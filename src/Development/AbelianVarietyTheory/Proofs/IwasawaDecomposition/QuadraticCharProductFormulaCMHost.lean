@@ -268,6 +268,8 @@ open GlobalTheory.Mem.Chr
 
 variable (K : Type) [Field K] [NumberField K] [IsCMField K]
 
+local notation3 "K⁺" => maximalRealSubfield K
+
 theorem val_under (w : HeightOneSpectrum (𝓞 K)) (v : HeightOneSpectrum (𝓞 K⁺))
     (hwv : w.under (𝓞 K⁺) = v)
     (h : (Ideal.primesOver v.asIdeal (𝓞 K)).ncard = 2 ∨
@@ -287,7 +289,6 @@ theorem val_under (w : HeightOneSpectrum (𝓞 K)) (v : HeightOneSpectrum (𝓞 
     · rw [h, h'] at hf
       omega
   rw [← HeightOneSpectrum.valuation_liesOver K (w.under (𝓞 K⁺)) w x,
-    Ideal.ramificationIdx'_eq_ramificationIdx _ _ (w.under (𝓞 K⁺)).ne_bot,
     ← Ideal.ramificationIdxIn_eq_ramificationIdx (w.under (𝓞 K⁺)).asIdeal w.asIdeal (K ≃ₐ[K⁺] K),
     he, pow_one]
 

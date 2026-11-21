@@ -137,6 +137,8 @@ theorem UpperTheory.V.Af.Rs.zDiff :
     show (∑' x, if cls L x = v' then ker s x z else 0) = _
     rw [← (Equiv.addRight a).tsum_eq (fun x => if cls L x = v' then ker s x z else 0)]
     congr 1
+    funext x
+    simp [hg', hcls]
   have hd : ∀ x, |g x - g' x| ≤ C * L * z.im ^ 3 * (‖x‖ ^ (-3 : ℝ) + ‖x + a‖ ^ (-3 : ℝ)) := by
     intro x
     have hnn : 0 ≤ C * L * z.im ^ 3 * (‖x‖ ^ (-3 : ℝ) + ‖x + a‖ ^ (-3 : ℝ)) := by positivity

@@ -104,7 +104,11 @@ theorem seq_holds : GlobalTheory.CompanionTheory.Ar.HT.FarguesHodgeTate → ∀ 
   obtain ⟨i₀, hDm, hEx⟩ := hseq σ 1 1 (hgd σ) (hgd _) (hpH t σ hσ) (hpH t.swap _ hσ')
   have hact : ∀ (a : 𝓞 E) (w : Module.Dual Ω 𝔐.Li), P.Dh.ρΩ a w = w ∘ₗ 𝔐.ρ (RingOfIntegers.mapRingEquiv (HT.cmConj E) a) :=
     fun a w => by
-      rw [HT.ModelTest.bar_eq H a]
+      have hbar : RingOfIntegers.mapRingEquiv (HT.cmConj E) a = H.bar a := by
+        apply RingOfIntegers.ext
+        rw [H.bar_eq a]
+        rfl
+      rw [hbar]
       exact P.Dh_act a w
   have hV : ∀ (s : CMType H ⊕ CMType H) (τ : E →+* Ω), (∀ a : 𝓞 E, τ (a : E) = 𝔐.emb s a) →
       Submodule.span Ω (Set.range (b s)) = HT.eigSp 𝔐.ρ τ := by

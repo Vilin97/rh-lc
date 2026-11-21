@@ -9,7 +9,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsLineReps
 @[expose] public section
 
 open scoped TensorProduct NNReal ENNReal Matrix ComplexConjugate
-open NumberField MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.EisRes GlobalTheory.StdPar GlobalTheory.EisUnfold
+open NumberField MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.StdPar
 open GlobalTheory.Doubling (absE)
 open GlobalTheory.EisMidHt (adVec)
 open Matrix

@@ -84,9 +84,9 @@ instance firstCountableTopology_adelicGL : FirstCountableTopology (AdelicGLn.Ade
   have h1 : SecondCountableTopology (Matrix (Fin n) (Fin n) 𝔸[K]) := inferInstance
   have h2 : SecondCountableTopology (Matrix (Fin n) (Fin n) 𝔸[K])ᵐᵒᵖ :=
     (MulOpposite.opHomeomorph (M := Matrix (Fin n) (Fin n) 𝔸[K])).symm.isEmbedding.secondCountableTopology
-  have : SecondCountableTopology (AdelicGLn.AdelicGL K n) :=
+  have hGL : SecondCountableTopology (AdelicGLn.AdelicGL K n) :=
     Units.isEmbedding_embedProduct.secondCountableTopology
-  infer_instance
+  exact @TopologicalSpace.SecondCountableTopology.to_firstCountableTopology _ _ hGL
 
 theorem continuous_stepCoeff (k : ℕ) {F : AdelicGLn.AdelicGL K n → ℂ} (hF : Continuous F) :
     Continuous (stepCoeff k F) := by

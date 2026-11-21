@@ -41,7 +41,7 @@ theorem FamTie.comap {B : FamReal D A cR cL lR lL} {pl : Pl0 → Pl D.host.E} {S
     {gramR : Matrix (Fin D.sp.X'.rank) (Fin D.sp.X'.rank) D.host.E}
     {c0R : VV D.what₂.LL lamR →ₛₗ[D.what₂.embLL] cR.W} {c0L : ∀ i : Fin m, VV D.what₂.LL (lamL i) →ₛₗ[D.what₂.embLL] (cL i).W}
     (h : FamTie B pl S Qt tauL lamR lamL gramR c0R c0L) (f : T → T') (t0 : T) :
-    FamTie (B.comap f t0) pl S (fun t => Qt (f t)) tauL lamR lamL gramR c0R c0L := {
+    FamTie (B.comap f t0) pl S (fun t => Qt (f t)) tauL lamR lamL gramR c0R c0L where
   ranks := h.ranks
   v0 := h.v0
   tauL_ok := h.tauL_ok
@@ -54,7 +54,6 @@ theorem FamTie.comap {B : FamReal D A cR cL lR lL} {pl : Pl0 → Pl D.host.E} {S
   mapL := h.mapL
   coefR t := h.coefR (f t)
   coefL i t := h.coefL i (f t)
-}
 
 end Formalism.IndefR.Bridge
 
@@ -88,7 +87,7 @@ def LevCh.comap {T T' : Type} (L : LevCh D T') (f : T → T') : LevCh D T where
   βW := L.βW
 
 theorem LevCh.comap_is {T T' : Type} {L : LevCh D T'} {μ0 : T'} (h : L.Is μ0) {f : T → T'} (hf : Function.Injective f) {t0 : T}
-    (h0 : f t0 = μ0) : (L.comap f).Is t0 := {
+    (h0 : f t0 = μ0) : (L.comap f).Is t0 where
   mu0 := h.mu0
   eta := h.eta
   xi t := h.xi (f t)
@@ -112,7 +111,6 @@ theorem LevCh.comap_is {T T' : Type} {L : LevCh D T'} {μ0 : T'} (h : L.Is μ0) 
   βX := h.βX
   βV := h.βV
   βW := h.βW
-}
 
 variable {G : Type} [Group G] [Fintype G] {Pl0 I0 T T' : Type} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 

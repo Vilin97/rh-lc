@@ -33,7 +33,6 @@ theorem mem_closure_of_isPushout {R A B C : CommRingCat.{0}} {f : R ⟶ A} {g : 
   haveI : Algebra.IsPushout R B A C := CommRingCat.isPushout_iff_isPushout.mp h.flip
   obtain ⟨t, rfl⟩ := (Algebra.IsPushout.equiv R B A C).surjective c
   induction t with
-  | zero => simp
   | tmul b a =>
     rw [Algebra.IsPushout.equiv_tmul]
     exact AddSubmonoid.subset_closure ⟨a, b, mul_comm _ _⟩

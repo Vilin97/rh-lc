@@ -79,7 +79,7 @@ theorem exists_inducedZeta_natDegree (hσ : IsSmooth σ) [σ.IsIrreducible] (hc 
     (μG : Measure (GL (Fin n) F)) [μG.IsHaarMeasure] :
     ∃ s₀ : ℝ, ∃ D : ℂ[X], D.eval 0 = 1 ∧ D.natDegree ≤ n ∧
       ∀ Φ : Matrix (Fin n) (Fin n) F → ℂ, IsSchwartzBruhat Φ →
-        ∀ φ ∈ parabolicIndSpace F n β σ, ∀ ℓ ∈ smoothVectors (Representation.dual σ),
+        ∀ φ ∈ Parabolic.parabolicIndSpace F n β σ, ∀ ℓ ∈ smoothVectors (Representation.dual σ),
           (∀ s : ℂ, s₀ < s.re → Integrable (fun g : GL (Fin n) F =>
             Φ (g : Matrix (Fin n) (Fin n) F) * detPow g s * ℓ (φ g)) μG) ∧
           ∃ (N : ℕ) (P : ℂ[X]), ∀ s : ℂ, s₀ < s.re →
@@ -131,6 +131,18 @@ theorem exists_inducedZeta_natDegree (hσ : IsSmooth σ) [σ.IsIrreducible] (hc 
   have hcont : ∀ s, Continuous (inducedIntegrand Φ φ ℓ s) := fun s =>
     continuous_inducedIntegrand hΦ hφ.2 ℓ s
 
+  have hparabolic_mul (s : ℂ) {y : GL (Fin n) F} (hy : y ∈ integralGL F n)
+      (m : levi F n β) (u : UnipotentIndex n β → F) :
+      inducedIntegrand Φ φ ℓ s (((parabolicMk β m u : blockUpper F n β) : GL (Fin n) F) * y) =
+        Φ ((((m : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) + unipMatrix F u) *
+            (y : Matrix (Fin n) (Fin n) F)) *
+          (detPow (m : GL (Fin n) F) s * (sqrtModular F n β (leviIncl m) * ℓ (σ m (φ y)))) := by
+    have h1 := hφ.1 (parabolicMk β m u) y
+    rw [inflateTwist_apply, ← sqrtModular_leviProj, leviProj_parabolicMk] at h1
+    rw [inducedIntegrand, Units.val_mul, coe_parabolicMk, detPow_mul_of_mem_integralGL _ hy,
+      detPow_parabolicMk, h1, map_smul, smul_eq_mul]
+    ring
+
   have hintP : ∀ s : ℂ, s₀ < s.re → ∀ z ∈ integralGL F n,
       Integrable (fun p : blockUpper F n β => inducedIntegrand Φ φ ℓ s ((p : GL (Fin n) F) * z))
         (haarParabolic (parabolicMeasure β μ𝔪 μ𝔫)) := by
@@ -139,7 +151,38 @@ theorem exists_inducedZeta_natDegree (hσ : IsSmooth σ) [σ.IsIrreducible] (hc 
     refine ⟨((hcont s).comp (continuous_subtype_val.mul continuous_const)).aestronglyMeasurable, ?_⟩
     show ∫⁻ p, ‖inducedIntegrand Φ φ ℓ s ((p : GL (Fin n) F) * z)‖ₑ
       ∂(haarParabolic (parabolicMeasure β μ𝔪 μ𝔫)) < ⊤
-    rw [lintegral_inducedIntegrand_mul μ𝔪 μ𝔫 hΦ hφ ℓ s hz]
+    have hlintegral :
+        ∫⁻ p, ‖inducedIntegrand Φ φ ℓ s ((p : GL (Fin n) F) * z)‖ₑ
+            ∂(haarParabolic (parabolicMeasure β μ𝔪 μ𝔫)) =
+          ∫⁻ m, ‖leviIntegrand σ θ
+            (fun X => ∫ u, ((‖Φ ((X + unipMatrix F u) * (z : Matrix (Fin n) (Fin n) F))‖ : ℝ) : ℂ) ∂μ𝔫)
+            (φ z) ℓ s m‖ₑ ∂(haarLevi β μ𝔪) := by
+      dsimp only [θ]
+      have hmeas : Measurable fun p : blockUpper F n β =>
+          ‖inducedIntegrand Φ φ ℓ s ((p : GL (Fin n) F) * z)‖ₑ :=
+        ((hcont s).comp (continuous_subtype_val.mul continuous_const)).eNorm.measurable
+      rw [lintegral_haarParabolic μ𝔪 μ𝔫 hmeas]
+      refine lintegral_congr fun m => ?_
+      have hΦy := hΦ.comp_mulRight z
+      have hint := integrable_add_unipMatrix μ𝔫 hΦy (X := ((m : GL (Fin n) F) : Matrix (Fin n) (Fin n) F))
+        (mem_levi.1 m.2)
+      have hmu : Measurable fun u : UnipotentIndex n β → F =>
+          ‖Φ ((((m : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) + unipMatrix F u) *
+            (z : Matrix (Fin n) (Fin n) F))‖ₑ :=
+        (hΦy.1.continuous.comp (continuous_const.add continuous_unipMatrix)).eNorm.measurable
+      simp_rw [hparabolic_mul s hz m, eNorm_mul]
+      rw [lintegral_mul_const _ hmu, ← ofReal_integral_norm_eq_lintegral_eNorm hint]
+      have hI : 0 ≤ ∫ u, ‖Φ ((((m : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) + unipMatrix F u) *
+          (z : Matrix (Fin n) (Fin n) F))‖ ∂μ𝔫 := integral_nonneg fun _ => norm_nonneg _
+      have hI' : (∫ u, ((‖Φ ((((m : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) + unipMatrix F u) *
+          (z : Matrix (Fin n) (Fin n) F))‖ : ℝ) : ℂ) ∂μ𝔫) =
+          ((∫ u, ‖Φ ((((m : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) + unipMatrix F u) *
+          (z : Matrix (Fin n) (Fin n) F))‖ ∂μ𝔫 : ℝ) : ℂ) := integral_complex_ofReal
+      simp only [leviIntegrand, eNorm_mul, MonoidHom.mul_apply]
+      rw [hI', enorm_ofReal_complex hI, enorm_coe_nnreal, ← coe_leviSqrtModular, enorm_coe_nnreal,
+        ENNReal.coe_mul]
+      ring
+    rw [hlintegral]
     exact ((hM _ hΨz (φ z) ℓ hℓ).1 s hs).2
 
   have hP0 : haarParabolic (parabolicMeasure β μ𝔪 μ𝔫)
@@ -152,7 +195,7 @@ theorem exists_inducedZeta_natDegree (hσ : IsSmooth σ) [σ.IsIrreducible] (hc 
     intro s hs
     refine ⟨(hcont s).aestronglyMeasurable, ?_⟩
     have hC := lintegral_eq_sum_parabolic (β := β) μG (haarParabolic (parabolicMeasure β μ𝔪 μ𝔫))
-      μK (hcont s).enorm.measurable (fun g k hk => by rw [hinv s g k hk])
+      μK (hcont s).eNorm.measurable (fun g k hk => by rw [hinv s g k hk])
     have hlt : μG (integralGL F n) * (μK ((congruenceSubgroup F n (max r₁ r₂)).subgroupOf
         (integralGL F n)) * ∑ q : Q, ∫⁻ p, ‖inducedIntegrand Φ φ ℓ s
           ((p : GL (Fin n) F) * y q)‖ₑ ∂(haarParabolic (parabolicMeasure β μ𝔪 μ𝔫))) < ⊤ :=
@@ -181,8 +224,15 @@ theorem exists_inducedZeta_natDegree (hσ : IsSmooth σ) [σ.IsIrreducible] (hc 
       (hintG s hs) (hinv s) (hintP s hs)
     have hB : ∀ q : Q, ∫ p, inducedIntegrand Φ φ ℓ s ((p : GL (Fin n) F) * y q)
         ∂(haarParabolic (parabolicMeasure β μ𝔪 μ𝔫)) =
-        ∫ m, leviIntegrand σ θ (Ψ q) (φ (y q)) ℓ s m ∂(haarLevi β μ𝔪) := fun q =>
-      integral_inducedIntegrand_mul μ𝔪 μ𝔫 hφ ℓ s (hy q) (hintP s hs _ (hy q))
+        ∫ m, leviIntegrand σ θ (Ψ q) (φ (y q)) ℓ s m ∂(haarLevi β μ𝔪) := by
+      intro q
+      rw [integral_haarParabolic μ𝔪 μ𝔫 (hintP s hs _ (hy q))]
+      refine integral_congr_ae (Filter.Eventually.of_forall fun m => ?_)
+      simp_rw [hparabolic_mul s (hy q) m]
+      rw [integral_mul_const]
+      simp only [leviIntegrand, Ψ, θ, MonoidHom.mul_apply, NNReal.coe_mul, Complex.ofReal_mul,
+        coe_leviSqrtModular]
+      ring
     rw [Finset.sum_congr rfl fun q _ => hB q] at hC
     rw [Complex.real_smul, Complex.real_smul, Complex.real_smul] at hC
     have hκC : (κ : ℂ) ≠ 0 := Complex.ofReal_ne_zero.2 hκ0
@@ -243,7 +293,75 @@ theorem exists_zeta_core_natDegree [π.IsIrreducible] (hπ : IsAdmissible π)
 
   obtain ⟨lam, hlamK, hlam⟩ := exists_extend_dual hπ.1 (isSmooth_parabolicInd σ) ι hι hKc hKo hℓK
   obtain ⟨R, hR₀, hR⟩ := exists_reps_congruenceSubgroup F n m
-  obtain ⟨ℓx, hℓxK, hdec⟩ := exists_eval_decomposition hσs hR₀ hR lam
+  have hdecomposition :
+      ∃ ℓx : GL (Fin n) F → Module.Dual ℂ W,
+        (∀ x, ℓx x ∈ fixedVectors (Representation.dual σ) (K.subgroupOf (levi F n β))) ∧
+        ∀ ψ ∈ fixedVectors (parabolicInd F n β σ) K,
+          lam ψ = ∑ x ∈ R, ℓx x ((ψ : GL (Fin n) F → W) x) := by
+    have : LocallyCompactSpace (levi F n β) :=
+      isClosed_levi.isClosedEmbedding_subtypeVal.locallyCompactSpace
+    set KM : Subgroup (levi F n β) := K.subgroupOf (levi F n β)
+    have hKMc : IsCompact (KM : Set (levi F n β)) := isCompact_subgroupOf_levi hKc
+    have hKMo : IsOpen (KM : Set (levi F n β)) := isOpen_subgroupOf_levi hKo
+    set e := fixedProj σ hσs hKMc hKMo
+
+    let E : fixedVectors (parabolicInd F n β σ) K →ₗ[ℂ] (R → W) :=
+      LinearMap.pi fun x : R =>
+        (LinearMap.proj (R := ℂ) (φ := fun _ : GL (Fin n) F => W) (x : GL (Fin n) F)) ∘ₗ
+          (parabolicIndSpace F n β σ).subtype ∘ₗ (fixedVectors (parabolicInd F n β σ) K).subtype
+    have hE : ∀ ψ, E ψ = 0 → ψ = 0 := by
+      intro ψ hψ
+      apply Subtype.ext
+      apply Subtype.ext
+      funext g
+      obtain ⟨p, hp, k, hk, rfl⟩ := exists_blockUpper_mul_integralGL' (β := β) g
+      obtain ⟨x, hxR, hxk⟩ := hR k hk
+      have h0 : ((ψ : parabolicIndSpace F n β σ) : GL (Fin n) F → W) x = 0 := by
+        have := congrFun hψ ⟨x, hxR⟩
+        simpa [E] using this
+      have hfix := ψ.2 (x⁻¹ * k) hxk
+      have h1 : ((ψ : parabolicIndSpace F n β σ) : GL (Fin n) F → W) (p * k) =
+          ((ψ : parabolicIndSpace F n β σ) : GL (Fin n) F → W) (p * x) := by
+        have := congrArg (fun f : parabolicIndSpace F n β σ => (f : GL (Fin n) F → W) (p * x)) hfix
+        simp only [coe_indRep_apply] at this
+        rw [← this, mul_assoc, mul_inv_cancel_left]
+      rw [h1, ((ψ : parabolicIndSpace F n β σ).2.1 ⟨p, hp⟩ x), h0]
+      simp
+    have hker : LinearMap.ker E = ⊥ := LinearMap.ker_eq_bot'.2 hE
+    obtain ⟨E', hE'⟩ := LinearMap.exists_leftInverse_of_injective (K := ℂ)
+      (V := fixedVectors (parabolicInd F n β σ) K) (V' := R → W) E hker
+    let L := lam ∘ₗ (fixedVectors (parabolicInd F n β σ) K).subtype ∘ₗ E'
+    refine ⟨fun x => if hx : x ∈ R then
+        L ∘ₗ LinearMap.single ℂ (fun _ : R => W) ⟨x, hx⟩ ∘ₗ (fixedVectors σ KM).subtype ∘ₗ e
+      else 0, fun x => ?_, fun ψ hψ => ?_⟩
+    · by_cases hx : x ∈ R
+      · dsimp only
+        rw [dite_eq_left hx, mem_fixedVectors_dual]
+        intro k hk w
+        simp only [LinearMap.coe_comp, Function.comp_apply, Submodule.coe_subtype]
+        rw [fixedProj_apply_act hσs hKMc hKMo hk]
+      · dsimp only
+        rw [dite_eq_right hx]
+        exact zero_mem _
+    · have hval : ∀ x ∈ R, ((fixedProj σ hσs hKMc hKMo ((ψ : GL (Fin n) F → W) x) :
+          fixedVectors σ KM) : W) = (ψ : GL (Fin n) F → W) x := fun x hx =>
+        fixedProj_apply_of_mem hσs hKMc hKMo
+          (apply_mem_fixedVectors (f := ⟨ψ, hψ⟩) (hR₀ x hx))
+      have hEψ : E ⟨ψ, hψ⟩ = ∑ x : R, LinearMap.single ℂ (fun _ : R => W) x
+          ((ψ : GL (Fin n) F → W) x) := by
+        funext y
+        simp [E, Finset.sum_apply, Pi.single_apply]
+      have hlam : lam ψ = L (E ⟨ψ, hψ⟩) := by
+        simp only [L, LinearMap.coe_comp, Function.comp_apply, Submodule.coe_subtype]
+        rw [← LinearMap.comp_apply E' E, hE', LinearMap.id_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hlam, hEψ, map_sum, ← Finset.sum_coe_sort R]
+      refine Finset.sum_congr rfl fun x _ => ?_
+      dsimp only
+      rw [dite_eq_left x.2]
+      simp only [LinearMap.coe_comp, Function.comp_apply, Submodule.coe_subtype]
+      rw [hval x x.2]
+  obtain ⟨ℓx, hℓxK, hdec⟩ := hdecomposition
   set φ : parabolicIndSpace F n β σ := ι v with hφdef
   have hφK : φ ∈ fixedVectors (parabolicInd F n β σ) K := fun k hk => by
     rw [hφdef, ← ι.isIntertwining, hvK k hk]
@@ -301,7 +419,7 @@ theorem exists_zeta_core_natDegree [π.IsIrreducible] (hπ : IsAdmissible π)
   have hcont : ∀ H : GL (Fin n) F → ℂ, (∀ g, ∀ k ∈ K, H (g * k) = H g) → Continuous H :=
     fun H hH => (isLocallyConstant_of_mul_right hKo hH).continuous
   have hfr : ∀ g, ∀ k ∈ K, lam (parabolicInd F n β σ (g * k) φ) = lam (parabolicInd F n β σ g φ) :=
-    fun g k hk => by rw [map_mul, Module.End.mul_apply, show parabolicInd F n β σ k φ = φ from hφK k hk]
+    fun g k hk => by rw [map_mul, mul_apply_eq_comp, hφK k hk]
   have hφr : ∀ x g, ∀ k ∈ K, (φ : GL (Fin n) F → W) (x * (g * k)) = (φ : GL (Fin n) F → W) (x * g) :=
     fun x g k hk => by
       have := congrArg (fun ψ : parabolicIndSpace F n β σ => (ψ : GL (Fin n) F → W) (x * g)) (hφK k hk)
@@ -334,6 +452,141 @@ theorem exists_zeta_core_natDegree [π.IsIrreducible] (hπ : IsAdmissible π)
     split_ifs with hk
     · rw [detPow_eq_qs_zpow, hk]; ring
     · simp
+
+  have hcoeffIntegral {H : GL (Fin n) F → ℂ}
+      (hh : HasCompactSupport H) (hhl : ∀ k ∈ K, ∀ g, H (k * g) = H g)
+      (hhr : ∀ k ∈ K, ∀ g, H (g * k) = H g) :
+      ∫ g, H g * lam (parabolicInd F n β σ g φ) ∂μ =
+        ∑ x ∈ R, ∫ g, H g * ℓx x ((φ : GL (Fin n) F → W) (x * g)) ∂μ := by
+    let Ko : OpenSubgroup (GL (Fin n) F) := ⟨K, hKo⟩
+
+    have hfin : (QuotientGroup.mk '' tsupport H : Set (GL (Fin n) F ⧸ K)).Finite :=
+      finite_image_mk_tsupport Ko hh
+
+    have hL : ∫ g, H g * lam (parabolicInd F n β σ g φ) ∂μ = μ.real (K : Set (GL (Fin n) F)) •
+        ∑ᶠ c : GL (Fin n) F ⧸ K, H c.out * lam (parabolicInd F n β σ c.out φ) := by
+      refine integral_eq_smul_finsum_coset μ Ko hKc (hh.mul_right) fun g k hk => ?_
+      show H (g * k) * lam (parabolicInd F n β σ (g * k) φ) = H g * lam (parabolicInd F n β σ g φ)
+      rw [hhr k hk, map_mul, mul_apply_eq_comp, hφK k hk]
+    have hEval : ∀ x ∈ R, ∫ g, H g * ℓx x ((φ : GL (Fin n) F → W) (x * g)) ∂μ =
+        μ.real (K : Set (GL (Fin n) F)) •
+          ∑ᶠ c : GL (Fin n) F ⧸ K, H c.out * ℓx x ((φ : GL (Fin n) F → W) (x * c.out)) := by
+      intro x _
+      refine integral_eq_smul_finsum_coset μ Ko hKc (hh.mul_right) fun g k hk => ?_
+      show H (g * k) * ℓx x ((φ : GL (Fin n) F → W) (x * (g * k))) =
+        H g * ℓx x ((φ : GL (Fin n) F → W) (x * g))
+      rw [hhr k hk, hφr x g k hk]
+
+    set ψ : parabolicIndSpace F n β σ := ∑ᶠ c : GL (Fin n) F ⧸ K, H c.out • parabolicInd F n β σ c.out φ
+      with hψdef
+    have hψsupp : (Function.support fun c : GL (Fin n) F ⧸ K =>
+        H c.out • parabolicInd F n β σ c.out φ).Finite :=
+      hfin.subset fun c hc => ⟨c.out, subset_tsupport H fun h0 => hc (by simp [h0]),
+        QuotientGroup.out_eq' c⟩
+    have hψK : ψ ∈ fixedVectors (parabolicInd F n β σ) K := by
+      intro k hk
+      rw [hψdef, map_finsum (parabolicInd F n β σ k) hψsupp]
+      have hterm : ∀ c : GL (Fin n) F ⧸ K,
+          parabolicInd F n β σ k (H c.out • parabolicInd F n β σ c.out φ) =
+          (fun c : GL (Fin n) F ⧸ K => H c.out • parabolicInd F n β σ c.out φ)
+            (MulAction.toPerm k c) := by
+        intro c
+        have hmk : (QuotientGroup.mk (k * c.out) : GL (Fin n) F ⧸ K) = MulAction.toPerm k c := by
+          show QuotientGroup.mk (k * c.out) = k • c
+          conv_rhs => rw [← QuotientGroup.out_eq' c]
+          rfl
+        obtain ⟨j, hj, hjeq⟩ : ∃ j ∈ K, k * c.out = (MulAction.toPerm k c).out * j := by
+          refine ⟨((MulAction.toPerm k c).out)⁻¹ * (k * c.out), ?_, by group⟩
+          have := QuotientGroup.eq.1 ((QuotientGroup.out_eq' (MulAction.toPerm k c)).trans hmk.symm)
+          simpa using this
+        have hhc : H c.out = H (MulAction.toPerm k c).out := by
+          rw [← hhl k hk c.out, hjeq, hhr j hj]
+        dsimp only
+        rw [map_smul, ← mul_apply_eq_comp, ← map_mul, hjeq, map_mul, mul_apply_eq_comp,
+          hφK j hj, hhc]
+      rw [finsum_congr hterm]
+      exact finsum_comp_equiv (MulAction.toPerm k) (f := fun c : GL (Fin n) F ⧸ K =>
+        H c.out • parabolicInd F n β σ c.out φ)
+
+    have h1 : lam ψ = ∑ᶠ c : GL (Fin n) F ⧸ K, H c.out * lam (parabolicInd F n β σ c.out φ) := by
+      rw [hψdef, map_finsum lam hψsupp]
+      simp only [map_smul, smul_eq_mul]
+    have h2 : ∀ x ∈ R, ℓx x ((ψ : GL (Fin n) F → W) x) =
+        ∑ᶠ c : GL (Fin n) F ⧸ K, H c.out * ℓx x ((φ : GL (Fin n) F → W) (x * c.out)) := by
+      intro x _
+      let ev : parabolicIndSpace F n β σ →ₗ[ℂ] W :=
+        LinearMap.proj (R := ℂ) (φ := fun _ : GL (Fin n) F => W) x ∘ₗ
+          (parabolicIndSpace F n β σ).subtype
+      have hev : (ψ : GL (Fin n) F → W) x = ev ψ := rfl
+      rw [hev, hψdef, map_finsum ev hψsupp, map_finsum (ℓx x)]
+      · refine finsum_congr fun c => ?_
+        simp [ev, coe_indRep_apply]
+      · exact hfin.subset fun c hc => ⟨c.out, subset_tsupport H fun h0 => hc (by simp [h0]),
+          QuotientGroup.out_eq' c⟩
+    rw [hL, ← h1, hdec ψ hψK, Finset.smul_sum]
+    refine Finset.sum_congr rfl fun x hx => ?_
+    rw [hEval x hx, h2 x hx]
+
+  have hcoeffNorm {H : GL (Fin n) F → ℂ}
+      (hh : HasCompactSupport H) (hhl : ∀ k ∈ K, ∀ g, H (k * g) = H g)
+      (hhr : ∀ k ∈ K, ∀ g, H (g * k) = H g)
+      (hhf : Integrable (fun g => ‖H g * lam (parabolicInd F n β σ g φ)‖) μ)
+      (hint : ∀ x ∈ R, Integrable (fun g => ‖H g‖ * ‖ℓx x ((φ : GL (Fin n) F → W) (x * g))‖) μ) :
+      ∫⁻ g, ENNReal.ofReal ‖H g * lam (parabolicInd F n β σ g φ)‖ ∂μ ≤
+        ∑ x ∈ R, ∫⁻ g, ENNReal.ofReal (‖H g‖ * ‖ℓx x ((φ : GL (Fin n) F → W) (x * g))‖) ∂μ := by
+    let f : GL (Fin n) F → ℂ := fun g => lam (parabolicInd F n β σ g φ)
+    have hfl : ∀ k ∈ K, ∀ g, f (k * g) = f g := fun k hk g => by
+      simp only [f, map_mul, mul_apply_eq_comp, hlamK k hk]
+
+    let u : GL (Fin n) F → ℂ := fun g => if H g * f g = 0 then 0 else
+      (starRingEnd ℂ) (H g * f g) / (‖H g * f g‖ : ℂ)
+    have hu1 : ∀ g, ‖u g‖ ≤ 1 := fun g => by
+      simp only [u]
+      split_ifs with h0
+      · simp
+      · rw [norm_div, Complex.norm_conj, Complex.norm_real, Real.norm_eq_abs,
+          abs_of_nonneg (norm_nonneg _), div_self (norm_ne_zero_iff.2 h0)]
+    have huf : ∀ g, u g * H g * f g = (‖H g * f g‖ : ℂ) := fun g => by
+      simp only [u]
+      split_ifs with h0
+      · simp [h0]
+      · have hne : ((‖H g * f g‖ : ℝ) : ℂ) ≠ 0 := by exact_mod_cast norm_ne_zero_iff.2 h0
+        rw [mul_assoc, div_mul_eq_mul_div, Complex.conj_mul', sq, mul_div_assoc, div_self hne,
+          mul_one]
+    let h' : GL (Fin n) F → ℂ := fun g => u g * H g
+    have hh' : HasCompactSupport h' := hh.mul_left
+    have hul : ∀ k ∈ K, ∀ g, u (k * g) = u g := fun k hk g => by
+      simp only [u, hhl k hk, hfl k hk]
+    have hur : ∀ k ∈ K, ∀ g, u (g * k) = u g := fun k hk g => by
+      have hfg : f (g * k) = f g := hfr g k hk
+      simp only [u, hhr k hk, hfg]
+    have key := hcoeffIntegral hh'
+      (fun k hk g => by simp only [h', hul k hk, hhl k hk])
+      (fun k hk g => by simp only [h', hur k hk, hhr k hk])
+
+    have hL : ∫ g, h' g * f g ∂μ = ((∫ g, ‖H g * f g‖ ∂μ : ℝ) : ℂ) := by
+      rw [← integral_complex_ofReal]
+      exact integral_congr_ae (Filter.Eventually.of_forall fun g => by
+        simp only [h']; exact huf g)
+    have hineq : ∫ g, ‖H g * f g‖ ∂μ ≤
+        ∑ x ∈ R, ∫ g, ‖H g‖ * ‖ℓx x ((φ : GL (Fin n) F → W) (x * g))‖ ∂μ := by
+      have h1 : ‖∫ g, h' g * f g ∂μ‖ = ∫ g, ‖H g * f g‖ ∂μ := by
+        rw [hL, Complex.norm_real, Real.norm_eq_abs,
+          abs_of_nonneg (integral_nonneg fun g => norm_nonneg _)]
+      rw [← h1, key]
+      refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun x hx => ?_)
+      refine (norm_integral_le_integral_norm _).trans (integral_mono_of_nonneg
+        (Filter.Eventually.of_forall fun g => norm_nonneg _) (hint x hx)
+        (Filter.Eventually.of_forall fun g => ?_))
+      simp only [h', norm_mul]
+      exact mul_le_mul_of_nonneg_right (mul_le_of_le_one_left (norm_nonneg _) (hu1 g))
+        (norm_nonneg _)
+    rw [← ofReal_integral_eq_lintegral_ofReal hhf (Filter.Eventually.of_forall fun g => norm_nonneg _)]
+    rw [Finset.sum_congr rfl fun x hx => (ofReal_integral_eq_lintegral_ofReal (hint x hx)
+      (Filter.Eventually.of_forall fun g => mul_nonneg (norm_nonneg _) (norm_nonneg _))).symm,
+      ← ENNReal.ofReal_sum_of_nonneg fun x _ => integral_nonneg fun g =>
+        mul_nonneg (norm_nonneg _) (norm_nonneg _)]
+    exact ENNReal.ofReal_le_ofReal hineq
 
   have hZint : ∀ s : ℂ, s₀ < s.re → Integrable (fun g : GL (Fin n) F =>
       Φ (g : Matrix (Fin n) (Fin n) F) * matrixCoeff π v ℓ g * detPow g s) μ := by
@@ -369,14 +622,14 @@ theorem exists_zeta_core_natDegree [π.IsIrreducible] (hπ : IsAdmissible π)
         lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
       simp_rw [← lintegral_indicator (measurableSet_shell k), e2]
       simp_rw [lintegral_const_mul' _ _ ENNReal.ofReal_ne_top, ← Finset.mul_sum]
-      exact mul_le_mul' le_rfl (lintegral_norm_mul_coeff_le μ hKc hKo hlamK hφK hdec (hhcs k)
+      exact mul_le_mul' le_rfl (hcoeffNorm (hhcs k)
         (hhl k) (hhr k) (hhf k) (hhint k))
     calc ∑' k : ℤ, ∫⁻ g in {g : GL (Fin n) F | ordDet g = k}, ENNReal.ofReal
           ‖Φ (g : Matrix (Fin n) (Fin n) F) * matrixCoeff π v ℓ g * detPow g s‖ ∂μ
         ≤ ∑' k : ℤ, ∑ x ∈ R, ∫⁻ g in {g : GL (Fin n) F | ordDet g = k},
-            ENNReal.ofReal ‖T x s g‖ ∂μ := ENNReal.tsum_le_tsum hterm
+            ENNReal.ofReal ‖T x s g‖ ∂μ := tsum_le_tsum hterm
       _ = ∑ x ∈ R, ∫⁻ g, ENNReal.ofReal ‖T x s g‖ ∂μ := by
-          rw [Summable.tsum_finsetSum fun _ _ => ENNReal.summable]
+          rw [Summable.tsum_finsetSum fun _ _ => CompleteLattice.summable]
           exact Finset.sum_congr rfl fun x _ => (lintegral_eq_tsum_shell μ _).symm
       _ < ∞ := by
           refine ENNReal.sum_lt_top.2 fun x hx => ?_
@@ -395,7 +648,7 @@ theorem exists_zeta_core_natDegree [π.IsIrreducible] (hπ : IsAdmissible π)
     intro k
     rw [← integral_indicator (measurableSet_shell k)]
     simp_rw [hshellZ s k]
-    rw [integral_const_mul, integral_mul_coeff_eq μ hKc hKo hφK hdec (hhcs k) (hhl k) (hhr k),
+    rw [integral_const_mul, hcoeffIntegral (hhcs k) (hhl k) (hhr k),
       Finset.mul_sum]
     refine Finset.sum_congr rfl fun x _ => ?_
     rw [← integral_indicator (measurableSet_shell k)]

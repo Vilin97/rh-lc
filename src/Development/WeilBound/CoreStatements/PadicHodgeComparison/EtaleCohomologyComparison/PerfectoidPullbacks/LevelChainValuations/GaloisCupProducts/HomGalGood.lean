@@ -62,7 +62,29 @@ theorem homGal_good_of_galRed (hr : GalRed hL g M s rH) : (homGal hL g M s hQ rH
   r n j x := hr n j x
   red n j z := nmHM_redM _ l s none n j z
   b j z := nmHO_nmGB_bMap hL g M s hQ j z
-  μ j v := (nm_muB (nmGB hL g M) (Category.id_comp _) 1 s (hL.σB_K g) j v).trans (congrArg _ (pullR_id' M.q j v))
+  μ j v := by
+    let baseChange := (smO L.γB M.q 1 s {⊤}).o
+    let action := (nmS (nmGB hL g M) 1 s).o
+    have : RingHomCompTriple (algebraMap K L.B) (L.σB g) (algebraMap K L.B) :=
+      ⟨RingHom.ext (hL.σB_K g)⟩
+    let composite := baseChange.comp (σ'' := algebraMap K L.B) action
+    let η : composite.G ⟶ baseChange.G :=
+      { app := fun T => ObjectProperty.homMk (mkH (RingHom.id T.obj.B)
+          (fun k => congrArg T.obj.i (hL.σB_K g k))
+          (DPMorphism.id T.obj.δ).isDPMorphism (fun _ h => h) (by
+            refine Subtype.ext (Prod.ext (Ideal.Quotient.ringHom_ext (RingHom.ext fun k => ?_)) ?_)
+            · refine (LevelPullbackIdentities.qid _ (fun _ h => h) _).trans ?_
+              exact ((composite.G.obj T).obj.w k).trans
+                ((congrArg (Ideal.Quotient.mk T.obj.J) (congrArg T.obj.i (hL.σB_K g k))).trans
+                  ((baseChange.G.obj T).obj.w k).symm)
+            · refine (LevelPullbackIdentities.spec_qid _ (fun _ h => h) _).trans ?_
+              show (T.obj.y.1.2 ≫ 𝟙 M.gen) ≫ 𝟙 M.gen = T.obj.y.1.2 ≫ 𝟙 M.gen
+              simp))
+        naturality := fun _ _ f =>
+          ObjectProperty.hom_ext _ (CrystallineSemistableComparison.Pb.hom_ext rfl) }
+    let x := resK M.q (TO M.q 1 s {⊤}) j v
+    have hμ := CrystallineSemistableComparison.P.prism composite baseChange η (fun T y => rfl) j x
+    exact (CrystallineSemistableComparison.pull_pull (algebraMap K L.B) baseChange action j x).trans hμ
 
 end
 

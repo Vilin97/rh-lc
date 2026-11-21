@@ -444,6 +444,17 @@ theorem UpperTheory.V.Hi.point_rep_unramified_at_auxiliary_place {l : ℕ} [Fact
       MonoidAlgebra.mapRingHom V.frame.G₀ f (MonoidAlgebra.single (ψ0 t) 1) = MonoidAlgebra.single (ψ0 t) 1 := by
     intro A' _ f t
     simp [MonoidAlgebra.mapRingHom]
+  have hrep : ∀ {A G : Type} [CommRing A] [Group G] (R : G →* Matrix (Fin n) (Fin n) A) (g : G),
+      (GDet.ofRep R).chi (MonoidAlgebra.single g 1) = (R g).charpoly := by
+    intro A G _ _ R g
+    change (GDet.repAlg R A[X] (MonoidAlgebra.single 1 X -
+      MonoidAlgebra.mapRingHom G Polynomial.C (MonoidAlgebra.single g 1))).det = _
+    rw [MonoidAlgebra.mapRingHom_single, map_one, map_sub]
+    simp only [GDet.repAlg, MonoidAlgebra.lift_single, map_one, one_smul]
+    rw [Matrix.charpoly]
+    congr 1
+    ext i j
+    by_cases h : i = j <;> simp [Matrix.charmatrix_apply, Matrix.one_apply, h]
   have key := jv_local (p := s.p) (l := l) s.p_ne φ hφo c B.B x (ρ.comp ψ0) (hρ.comp hψc)
     ((r.chib i0).comp ψ0) hκ hω (fun t => B.u.D.chi (MonoidAlgebra.single (ψ0 t) 1)) ?_ ?_
   · have hdD : resP L Ω d ∈ Dec (Loc.placeJ j) := by
@@ -464,7 +475,7 @@ theorem UpperTheory.V.Hi.point_rep_unramified_at_auxiliary_place {l : ℕ} [Fact
   · intro t
     have e := (AlgebraTools.Det.mapApi B.u.D (x : B.B →+* PadicAlgCl l)).1 (MonoidAlgebra.single (ψ0 t) 1)
     rw [hs, hx] at e
-    rw [← e, (AlgebraTools.Det.repApi (mat ρ)).2.1]
+    rw [← e, hrep (mat ρ) (ψ0 t)]
     rfl
   · intro t
     have e := (AlgebraTools.Det.mapApi B.u.D (Alg.res c.O B.B : B.B →+* ResidueField c.O)).1
@@ -472,7 +483,7 @@ theorem UpperTheory.V.Hi.point_rep_unramified_at_auxiliary_place {l : ℕ} [Fact
     rw [hs, B.u.red] at e
     rw [← e]
     delta Resid.Dbar
-    rw [(AlgebraTools.Det.repApi (diagRep r.chib)).2.1]
+    rw [hrep (diagRep r.chib) (ψ0 t)]
     change (Matrix.diagonal fun i => ((r.chib i (ψ0 t) : (ResidueField c.O)ˣ) : ResidueField c.O)).charpoly = _
     rw [Matrix.charpoly_diagonal]
     have hc : ∀ i, r.chib i (ψ0 t) = r.chib i0 (ψ0 t) := fun i => hDeq _ (hD0 t) i i0

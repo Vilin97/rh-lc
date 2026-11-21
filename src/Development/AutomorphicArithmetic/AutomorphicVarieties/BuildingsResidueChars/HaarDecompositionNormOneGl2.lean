@@ -36,10 +36,21 @@ theorem UpperTheory.haar_decomposition_norm_one_gl2 :
   obtain ⟨α, β, -, -, hdec, -, hA, hF⟩ := UpperTheory.maximalCompact_unique_arch_finite_decomposition (K := K) 2
   obtain ⟨-, -, hcomm, harc, -⟩ := UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.IwahoriBlocks.levLaws (K := K) 2 ∅
 
+  haveI : CompactSpace (AdelicGLn.integralFiniteGL K 2) :=
+    isCompact_iff_compactSpace.1 (AdelicGLn.isCompact_integralFiniteGL K 2)
+  haveI : WeaklyLocallyCompactSpace (AdelicGLn.integralFiniteGL K 2) :=
+    ⟨fun _ => ⟨Set.univ, isCompact_univ, Filter.univ_mem⟩⟩
   let ν₀ : Measure (AdelicGLn.integralFiniteGL K 2) := Measure.haarMeasure ⊤
   haveI : IsProbabilityMeasure ν₀ := ⟨by simpa using Measure.haarMeasure_self (K₀ := (⊤ : TopologicalSpace.PositiveCompacts (AdelicGLn.integralFiniteGL K 2)))⟩
   let ν : Measure (AdelicGLn.integralFiniteGL K 2) := ν₀.inv
-  haveI hνp : IsProbabilityMeasure ν := Measure.isProbabilityMeasure_map measurable_inv.aemeasurable
+  haveI hνp : IsProbabilityMeasure ν := by
+    change IsProbabilityMeasure (Measure.map (fun x => x⁻¹) ν₀)
+    infer_instance
+  haveI : IsFiniteMeasure ν := ⟨by rw [measure_univ]; exact ENNReal.one_lt_top⟩
+  haveI : SigmaFinite ν := IsFiniteMeasure.toSigmaFinite ν
+  haveI : SFinite ν := by
+    set_option synthInstance.maxHeartbeats 400000 in
+      exact inferInstance
   have hνo : ν.IsOpenPosMeasure := continuous_inv.isOpenPosMeasure_map inv_surjective
   have hνr : ∀ d, MeasurePreserving (· * d) ν ν := fun d => measurePreserving_mul_right ν d
 
@@ -59,7 +70,7 @@ theorem UpperTheory.haar_decomposition_norm_one_gl2 :
       simp [fin1]
     rw [e1, e2, mul_assoc, mul_assoc, ← mul_assoc (fin1 (x.2 : FA K 2)), (hcomm y.1 (x.2 : FA K 2)).symm.eq, mul_assoc]
   haveI : IsProbabilityMeasure (κ₂.prod ν) := inferInstance
-  refine ⟨ν, Measure.map p (κ₂.prod ν), hνp, hνo, Measure.isProbabilityMeasure_map hpm.aemeasurable,
+  refine ⟨ν, Measure.map p (κ₂.prod ν), hνp, hνo, inferInstance,
     map_right_inv κ₂ ν p hpm (continuous_mul.measurable) hps hmul hκ.right hνr, ?_⟩
   intro F hFc
   have hc : Continuous fun x => F (p x : G1 K 2) := hFc.comp hpc

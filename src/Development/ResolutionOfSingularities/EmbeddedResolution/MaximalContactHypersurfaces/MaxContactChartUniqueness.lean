@@ -217,12 +217,18 @@ private theorem map_le_map_and_sub_mem_of_etaleCoordinates_shift (kk : Type u) [
     (∀ M J : Ideal R, b ∈ M → M * derivIdeal kk J ≤ J → Ideal.map φ' J ≤ Ideal.map φ J)
       ∧ (∀ Iid : Ideal B, φ b ∈ Iid → ∀ f : R, φ f - φ' f ∈ Iid) := by
   classical
-  have hD1 : (EtaleCoordinates.partialDeriv kk ι R j) (EtaleCoordinates.coord kk ι R j) = 1 :=
-    EtaleCoordinates.partialDeriv_coord_self kk ι R j
-  have hD0 : ∀ i : ι, i ≠ j →
-      (EtaleCoordinates.partialDeriv kk ι R j) (EtaleCoordinates.coord kk ι R i) = 0 :=
-    fun i hi => EtaleCoordinates.partialDeriv_coord_of_ne kk ι R j i (Ne.symm hi)
-  have hderivConst : ∀ c : kk, (EtaleCoordinates.partialDeriv kk ι R j)
+  let D : Derivation kk R R :=
+    ((Finsupp.lapply j).comp (EtaleCoordinates.basisKaehler kk ι R).repr.toLinearMap).compDer
+      (KaehlerDifferential.D kk R)
+  have hD (i : ι) : D (EtaleCoordinates.coord kk ι R i) = if i = j then 1 else 0 := by
+    change (EtaleCoordinates.basisKaehler kk ι R).repr
+      (KaehlerDifferential.D kk R (EtaleCoordinates.coord kk ι R i)) j = _
+    rw [← EtaleCoordinates.basisKaehler_apply, Module.Basis.repr_self, Finsupp.single_apply]
+  have hD1 : D (EtaleCoordinates.coord kk ι R j) = 1 := by simp [hD]
+  have hD0 : ∀ i : ι, i ≠ j → D (EtaleCoordinates.coord kk ι R i) = 0 := by
+    intro i hi
+    simp [hD, hi]
+  have hderivConst : ∀ c : kk, D
       (algebraMap (MvPolynomial ι kk) R (MvPolynomial.C c)) = 0 := by
     intro c
     have hmap : algebraMap (MvPolynomial ι kk) R (MvPolynomial.C c) = algebraMap kk R c := by
@@ -231,7 +237,7 @@ private theorem map_le_map_and_sub_mem_of_etaleCoordinates_shift (kk : Type u) [
     rw [hmap]
     exact Derivation.map_algebraMap _ c
   have hvar : ∀ (i : ι) (N : ℕ), 1 ≤ N →
-      TaylorExpansion.truncatedSeries φ (EtaleCoordinates.partialDeriv kk ι R j) (φ b) N
+      TaylorExpansion.truncatedSeries φ D (φ b) N
           (algebraMap (MvPolynomial ι kk) R (MvPolynomial.X i)) -
         φ' (algebraMap (MvPolynomial ι kk) R (MvPolynomial.X i))
           ∈ IsLocalRing.maximalIdeal B ^ N := by
@@ -261,14 +267,14 @@ private theorem map_le_map_and_sub_mem_of_etaleCoordinates_shift (kk : Type u) [
           hne i hij, sub_self]
         exact Submodule.zero_mem _
   have hrep := isTaylorExpansionOn_mvPolynomial (k := kk) (ι := ι) φ φ'
-    (EtaleCoordinates.partialDeriv kk ι R j) (φ b) hβ hconst hderivConst hvar
+    D (φ b) hβ hconst hderivConst hvar
   have : Algebra.FormallyUnramified (MvPolynomial ι kk) R := inferInstance
   refine ⟨fun M J hbM hMJ => ?_, fun Iid hbI f => ?_⟩
   · exact map_le_map_of_pow_mul_iterate_deriv_mem (MvPolynomial ι kk) φ φ'
-      (EtaleCoordinates.partialDeriv kk ι R j) (φ b) b J hcong hβ hrep rfl
-      (pow_mul_iterate_deriv_mem_of_mul_derivIdeal_le kk M J (EtaleCoordinates.partialDeriv kk ι R j) b hMJ hbM)
+      D (φ b) b J hcong hβ hrep rfl
+      (pow_mul_iterate_deriv_mem_of_mul_derivIdeal_le kk M J D b hMJ hbM)
   · exact sub_mem_of_isTaylorExpansionOn (MvPolynomial ι kk) φ φ'
-      (EtaleCoordinates.partialDeriv kk ι R j) (φ b) hcong hβ hrep Iid hbI f
+      D (φ b) hcong hβ hrep Iid hbI f
 
 private theorem map_le_map_and_sub_mem_of_etaleChart_coord_shift (k : Type u) [Field k] [CharZero k] {X : Scheme.{u}}
     (p : X ⟶ Spec (CommRingCat.of k)) [AlgebraicGeometry.Smooth p] [LocallyOfFiniteType p]

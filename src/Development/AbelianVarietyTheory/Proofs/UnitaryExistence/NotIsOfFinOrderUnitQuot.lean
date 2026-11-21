@@ -62,7 +62,8 @@ def conjMod (M : Submodule (𝓞 E) E) : Submodule (𝓞 E) E where
   zero_mem' := by simp
   add_mem' := fun {a b} ha hb => by
     show IsCMField.complexConj E (a + b) ∈ M
-    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    rw [map_add (IsCMField.complexConj E)]
+    exact M.add_mem ha hb
   smul_mem' := fun o x hx => by
     show IsCMField.complexConj E (o • x) ∈ M
     rw [conj_smul]; exact M.smul_mem _ hx

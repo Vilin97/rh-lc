@@ -22,7 +22,7 @@ theorem posDef_ofReal {Y : Matrix (Fin k) (Fin k) ℝ} (hY : Y.PosDef) : (Y.map 
   have h3 : Y.map Complex.ofReal = (S.map Complex.ofReal)ᴴ * S.map Complex.ofReal := by
     rw [hS]
     ext i j
-    simp [mul_apply]
+    simp [Matrix.mul_apply, Matrix.conjTranspose_apply, Complex.ofReal_sum, Complex.ofReal_mul]
   have h4 : (Y.map Complex.ofReal).PosSemidef := by rw [h3]; exact posSemidef_conjTranspose_mul_self _
   refine h4.posDef_iff_det_ne_zero.2 ?_
   have h5 := Complex.ofRealHom.map_det Y

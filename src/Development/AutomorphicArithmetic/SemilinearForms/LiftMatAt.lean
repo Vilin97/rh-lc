@@ -46,7 +46,7 @@ theorem forms_of_semilinear_at (φ : K →+* K') (e : G ≃* G') (B : BlockDat K
     ext i
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [Matrix.mulVec, dotProduct, hCe, Basis.equivFun_symm_apply, hbv, map_sum, map_smul,
-      Basis.equivFun_apply, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, Pi.smul_apply,
+      Basis.equivFun_apply, Finset.sum_apply, Pi.smul_apply,
       smul_eq_mul, mul_comm]
   have hL : ∀ f, L f = bv.equivFun.symm (fun k => φ (B.S.basis.equivFun f k)) := by
     intro f
