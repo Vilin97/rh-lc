@@ -29,7 +29,7 @@ def AlgC : Prop :=
     ∃ c ∈ P, ∀ h, ‖ι.symm (1 - c h)‖ ^ 2 ≤ ‖((l : ℕ) : Qbar l)‖
 
 def LocOp : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (a : ℕ), ∃ C : ℝ, ∀ p ∈ symmetricLaurent a,
+  ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (a : ℕ), ∃ C : ℝ, ∀ p ∈ symmetricLaurent (n := a),
     ∃ h : GL (Fin a) (w.adicCompletion E) →₀ ℂ, (∀ g ∈ h.support, ∀ g' ∈ h.support, g⁻¹ * g' ∈ GlobalTheory.LFun.KGL w (n := a) → g = g') ∧
       ∑ g ∈ h.support, ‖h g‖ ^ 2 ≤ C * ∫ θ : Fin a → UnitAddCircle, ‖evalAt (pt θ) p‖ ^ 2 ∧
       ∀ (σ : SmIrr (GL (Fin a) (w.adicCompletion E))) (z : Fin a → ℂˣ), GlobalTheory.LFun.HasSatGL w σ.ρ (Finset.univ.val.map z) →
@@ -37,7 +37,7 @@ def LocOp : Prop :=
 
 def GlobOp : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a : ℕ) (K : Subgroup (UA E a)) (w : HeightOneSpectrum (𝓞 E)),
-    IsSplitAt w → HypAt K w → ∃ C : ℝ, ∀ p ∈ symmetricLaurent a,
+    IsSplitAt w → HypAt K w → ∃ C : ℝ, ∀ p ∈ symmetricLaurent (n := a),
     ∃ h : UA E a →₀ ℂ, (∀ g ∈ h.support, g ∈ locU a w) ∧ (∀ g ∈ h.support, ∀ g' ∈ h.support, g⁻¹ * g' ∈ K → g = g') ∧
       ∑ g ∈ h.support, ‖h g‖ ^ 2 ≤ C * ∫ θ : Fin a → UnitAddCircle, ‖evalAt (pt θ) p‖ ^ 2 ∧
       ∀ U, IsAutRepU U → ∀ z, SatAt U w z → ∀ φ ∈ U, (∀ x ∈ K, RU E a x φ = φ) → opOf (RU E a) h φ = evalAt z p • φ

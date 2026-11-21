@@ -91,7 +91,7 @@ theorem continuous_phe (B : RowsAut) (d : InfinitePlace B.I.F → ℝ) (hd : IsD
   have hph : Continuous (ph B d) := by
     unfold ph
     exact continuous_const.mul
-      (continuous_star.comp (continuous_finset_prod _ fun v _ => continuous_const.inner (hv v)))
+      (continuous_star.comp (continuous_finsetProd _ fun v _ => continuous_const.inner (hv v)))
   unfold phe
   exact (hph.comp continuous_fst).mul (he.comp continuous_snd)
 

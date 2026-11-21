@@ -178,7 +178,11 @@ theorem lineProj_mem : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topol
   have hmdec : ∀ r, m r = (o.jA *ᵥ (o.pA *ᵥ m)) r + c * incA D (vecB o ζ r) := by
     intro r
     have h : m = o.jA *ᵥ (o.pA *ᵥ m) + o.jB *ᵥ (o.pB *ᵥ m) := by
-      rw [Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, ← Matrix.add_mulVec, o.sum_eq_one, Matrix.one_mulVec]
+      have hs : o.jA * o.pA + o.jB * o.pB = 1 := by
+        rw [OrthDec.jA, OrthDec.jB, OrthDec.pA, OrthDec.pB, rat, rat, rat, rat,
+          ← Matrix.map_mul, ← Matrix.map_mul, ← Matrix.map_add _ (map_add (incA D)),
+          o.iA_qA_add, Matrix.map_one _ (map_zero _) (map_one _)]
+      rw [Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, ← Matrix.add_mulVec, hs, Matrix.one_mulVec]
     conv_lhs => rw [h]
     rw [Pi.add_apply, hjB]
   rw [hjB]

@@ -372,7 +372,7 @@ theorem isDS_transfer (he : ∀ a, ε' a = ε a.rev) (T : H' ≃ₗᵢ⋆[ℂ] H
       rw [inner_conj_map T.symm, inner_conj_symm]
       rfl
     rw [hfun]
-    exact hm.congr_norm (Complex.continuous_conj.comp_aestronglyMeasurable hm.1)
+    exact hm.congr_norm (Complex.continuous_conj.comp_aestronglyMeasurable hm.aestronglyMeasurable)
       (Filter.Eventually.of_forall fun g => by simp)
   · obtain hK := ktype_transfer (sg_symm he) T.symm hinv hS0
     exact ⟨_, by rw [lowK_rev he]; exact hK⟩

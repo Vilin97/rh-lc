@@ -110,8 +110,7 @@ theorem decomp_exists : ∀ (D : D7) (V V' W : HSp D) (r : ℕ) (C : Matrix (Fin
         Matrix.mul_zero, add_zero, zero_add]
   have cont : ∀ {k l m : ℕ} (Q : Mx D l m), Continuous fun z : Mx D k l => z * Q := by
     intro k l m Q
-    refine (GlobalTheory.MixModel.continuous_sandwich (1 : Mx D k k) Q).congr fun z => ?_
-    rw [GlobalTheory.MixModel.sandwich_apply, Matrix.one_mul]
+    exact continuous_id.matrix_mul continuous_const
   haveI := (GlobalTheory.MixModel.lattice_Mx D W.rank V.rank).1
   let e : (Mx D W.rank r × Mx D W.rank r × WO V' W) ≃ₜ+ WO V W :=
     { toFun := fun q => isoPart V W C' q.1 + isoPart V W C q.2.1 + midPart V V' W B q.2.2
@@ -140,16 +139,25 @@ theorem decomp_exists : ∀ (D : D7) (V V' W : HSp D) (r : ℕ) (C : Matrix (Fin
   rw [fwd, hVr, hV'r]
   have hr : ∀ {k l : ℕ} (X : Matrix (Fin k) (Fin l) D.host.E), X.map f ∈ GlobalTheory.MixModel.ratMx D k l :=
     fun X => GlobalTheory.MixModel.rat_mem X
+  have hmul : ∀ {k l m : ℕ} {X : Mx D k l} {Y : Mx D l m},
+      X ∈ GlobalTheory.MixModel.ratMx D k l → Y ∈ GlobalTheory.MixModel.ratMx D l m →
+      X * Y ∈ GlobalTheory.MixModel.ratMx D k m := by
+    intro k l m X Y hX hY
+    obtain ⟨A, rfl⟩ := hX
+    obtain ⟨B, rfl⟩ := hY
+    change A.map f * B.map f ∈ GlobalTheory.MixModel.ratMx D k m
+    rw [m1]
+    exact hr (A * B)
   constructor
   · intro h
     obtain ⟨b1, b2, b3⟩ := back t y x
     refine ⟨?_, ?_, ?_⟩
-    · rw [← b1]; exact GlobalTheory.MixModel.ratMx_mul h (hr C)
-    · rw [← b2]; exact GlobalTheory.MixModel.ratMx_mul h (hr C')
-    · rw [← b3]; exact GlobalTheory.MixModel.ratMx_mul h (hr B)
+    · rw [← b1]; exact hmul h (hr C)
+    · rw [← b2]; exact hmul h (hr C')
+    · rw [← b3]; exact hmul h (hr B)
   · rintro ⟨ht, hy, hx⟩
-    exact add_mem (add_mem (GlobalTheory.MixModel.ratMx_mul ht (hr _)) (GlobalTheory.MixModel.ratMx_mul hy (hr _)))
-      (GlobalTheory.MixModel.ratMx_mul hx (hr _))
+    exact add_mem (add_mem (hmul ht (hr _)) (hmul hy (hr _)))
+      (hmul hx (hr _))
 
 end GlobalTheory.TwistDecomp
 

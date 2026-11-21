@@ -43,9 +43,13 @@ theorem exists_fin_add_real (w : WO S T) :
 theorem isTheta_heisO {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {f : WO S T → ℂ}
     (hf : IsThetaFunO ψ S T f) (w : WO S T) : IsThetaFunO ψ S T (heisO ψ S T w f) := by
   obtain ⟨u, v, hu, hv, rfl⟩ := exists_fin_add_real w
-  have h := GlobalTheory.FinTranslate.isTheta_heisO_fin hψ.1 hu (GlobalTheory.WeilVacMove.isTheta_heisO_real hψ hv hf)
-  rwa [GlobalTheory.WeilVacMove.heisO_heisO, (GlobalTheory.WeilVacMove.symplOH_fin_real S T u v hu hv).1, AddChar.map_zero_eq_one,
+  have h : IsThetaFunO ψ S T (heisO ψ S T u (heisO ψ S T v f)) := by
+    simpa using GlobalTheory.FinTranslate.isTheta_sum_heisO_fin D ψ S T hψ.1
+      (heisO ψ S T v f) (GlobalTheory.WeilVacMove.isTheta_heisO_real hψ hv hf)
+      Unit Finset.univ (fun _ => u) (fun _ => 1) (by intro i hi; exact hu)
+  rw [GlobalTheory.WeilVacMove.heisO_heisO, (GlobalTheory.WeilVacMove.symplOH_fin_real S T u v hu hv).1, AddChar.map_zero_eq_one,
     one_smul] at h
+  exact h
 
 theorem actO_one (h : GA D T) (w : WO S T) : actO S T 1 h w =
     HMul.hMul (Formalism.L2.Theta.mt T h) (w : Matrix (Fin T.rank) (Fin S.rank) (AE D)) := by

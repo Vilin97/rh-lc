@@ -62,7 +62,8 @@ variable [IsCommMonObj G] [IsCommMonObj H] [IsCommMonObj K]
 instance : AddCommGroup (Cochar G) := inferInstanceAs (AddCommGroup (Additive (cocharSubgroup G)))
 
 def map (u : G ⟶ H) [IsMonHom u] : Cochar G →+ Cochar H :=
-  AddMonoidHom.mk' (fun l => ⟨l.1 ≫ u, inferInstance⟩) fun l m => ext (MonObj.mul_comp l.1 m.1 u)
+  AddMonoidHom.mk' (fun l => ⟨l.1 ≫ u, inferInstance⟩) fun l m =>
+    Subtype.ext (MonObj.mul_comp l.1 m.1 u)
 
 end Basic
 
@@ -103,9 +104,12 @@ theorem pullTorus_mul (h : IsGrpPullback G' G f φ) (i j : splitTorus S X ⟶ G)
 
 theorem bcMap_comp (g : S'' ⟶ S') (f : S' ⟶ S) : bcMap (g ≫ f) X = bcMap g X ≫ bcMap f X := by
   apply pullback.hom_ext
-  · have e : (bcMap g X ≫ bcMap f X) ≫ Rosenlicht.torusFst S X = Rosenlicht.torusFst S'' X := by
-      rw [Category.assoc, SplitTorus.bcMap_torusFst, SplitTorus.bcMap_torusFst]
-    exact (SplitTorus.bcMap_torusFst _ _).trans e.symm
+  · have h {T U : Scheme.{0}} (a : T ⟶ U) :
+        bcMap a X ≫ Rosenlicht.torusFst U X = Rosenlicht.torusFst T X :=
+      pullback.lift_fst _ _ _
+    have e : (bcMap g X ≫ bcMap f X) ≫ Rosenlicht.torusFst S X = Rosenlicht.torusFst S'' X := by
+      rw [Category.assoc, h f, h g]
+    exact (h (g ≫ f)).trans e.symm
   · have e : (bcMap g X ≫ bcMap f X) ≫ (splitTorus S X).hom = (splitTorus S'' X).hom ≫ g ≫ f := by
       rw [Category.assoc, SplitTorus.bcMap_hom, SplitTorus.bcMap_hom_assoc]
     exact (SplitTorus.bcMap_hom _ _).trans e.symm
@@ -152,7 +156,8 @@ variable [IsCommMonObj G] [IsCommMonObj G'] [IsCommMonObj G'']
 namespace Cochar
 
 def pull (h : IsGrpPullback G' G f φ) : Cochar G →+ Cochar G' :=
-  AddMonoidHom.mk' (fun l => ⟨pullTorus h l.1, inferInstance⟩) fun l m => ext (pullTorus_mul h l.1 m.1)
+  AddMonoidHom.mk' (fun l => ⟨pullTorus h l.1, inferInstance⟩) fun l m =>
+    Subtype.ext (pullTorus_mul h l.1 m.1)
 
 end Cochar
 
@@ -209,7 +214,7 @@ theorem torusCochar_add (l m : X →+ ℤ) :
   rw [torusCochar, torusCochar, torusCochar, AddMonoidHom.comp_add, SplitTorus.torusMap_add]
 
 def ofTorus (i : splitTorus S X ⟶ G) [IsMonHom i] : (X →+ ℤ) →+ Cochar G :=
-  AddMonoidHom.mk' (fun l => ⟨torusCochar S l ≫ i, inferInstance⟩) fun l m => Cochar.ext
+  AddMonoidHom.mk' (fun l => ⟨torusCochar S l ≫ i, inferInstance⟩) fun l m => Subtype.ext
     ((congrArg (· ≫ i) (torusCochar_add l m)).trans (MonObj.mul_comp _ _ i))
 
 theorem ofTorus_injective [Nonempty S] (i : splitTorus S X ⟶ G) [IsMonHom i] [Mono i] :
@@ -220,7 +225,7 @@ theorem ofTorus_injective [Nonempty S] (i : splitTorus S X ⟶ G) [IsMonHom i] [
 theorem mem_range_ofTorus [ConnectedSpace S] (i : splitTorus S X ⟶ G) [IsMonHom i] (l : Cochar G)
     (u : Gm S ⟶ splitTorus S X) [IsMonHom u] (e : u ≫ i = l.1) : ∃ m, ofTorus i m = l := by
   obtain ⟨v, rfl⟩ := SplitTorus.exists_eq_torusMap u
-  exact ⟨(AddEquiv.ulift : ULift.{0} ℤ ≃+ ℤ).toAddMonoidHom.comp v, Cochar.ext e⟩
+  exact ⟨(AddEquiv.ulift : ULift.{0} ℤ ≃+ ℤ).toAddMonoidHom.comp v, Subtype.ext e⟩
 
 theorem ofTorus_id_bijective [ConnectedSpace S] :
     Function.Bijective (ofTorus (𝟙 (splitTorus S X))) :=

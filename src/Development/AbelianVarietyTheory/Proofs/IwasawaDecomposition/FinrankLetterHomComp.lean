@@ -62,8 +62,12 @@ theorem finrank_letterHom_comp {F' : Type} [Field F'] (g : F ≃+* F') (s : L �
       left_inv := fun f => Subtype.ext (AddMonoidHom.ext fun x => by simp)
       right_inv := fun f => Subtype.ext (AddMonoidHom.ext fun x => by simp)
       map_add' := fun f f' => Subtype.ext (AddMonoidHom.ext fun x => by simp) }
-  rw [finrank, finrank, rank_eq_of_equiv_equiv g j g.bijective fun c f =>
-    Subtype.ext (AddMonoidHom.ext fun x => by simp [j])]
+  have h : Module.rank F ↥(letterHom m s τ) = Module.rank F' ↥(letterHom m s' τ') :=
+    rank_eq_of_equiv_equiv g j g.bijective fun c f =>
+      Subtype.ext (AddMonoidHom.ext fun x => by
+        change g (c * f.1 x) = g c * g (f.1 x)
+        exact g.map_mul _ _)
+  rw [finrank, finrank, h]
 
 theorem finrank_letterHom_frob (φ : End L D) (hφ : Function.Bijective φ) (σ : U → U)
     (hσ : ∀ c, φ * m c = m (σ c) * φ) (hσ' : Function.Surjective σ) (s : L →+* F) (τ τ' : U →+* F)

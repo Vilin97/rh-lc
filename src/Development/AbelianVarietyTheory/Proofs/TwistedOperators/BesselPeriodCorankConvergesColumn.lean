@@ -153,7 +153,24 @@ theorem bplusConv_col : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G
   have hι := (G.rowDec 0 (by have := D.R.two_le_m; omega)).isom
   have hs : ∀ h, EmbRel _ _ (G.rowDec 0 (by have := D.R.two_le_m; omega)).ι (embTop G h) h :=
     fun h => (embRel_iff _ h _).2 rfl
-  have hQ := bes_inv W.ψ_std hι G.besTop hs hφ hF
+  have hQ : IsRatInv (G.rowDec 0 (by have := D.R.two_le_m; omega)).ι G.besTop.e
+      (fun h n => star (star (pairVec _ ξ Ψ) h) * F (n * embTop G h * (G.besTop.y : GA D _)) *
+        star (besChar W.ψ G.besTop n)) := by
+    refine ⟨?_, ?_, ?_⟩
+    · intro δ γ h n hn
+      exact (GlobalTheory.BesselChar.besChar_conj W.ψ G.besTop δ γ h n hn).1
+    · intro g n hn γ hγ hq
+      rw [GlobalTheory.BesselChar.besChar_mul W.ψ G.besTop γ n hγ hn,
+        GlobalTheory.BesselChar.besChar_rat W.ψ W.ψ_std.1 G.besTop γ hγ hq, one_mul,
+        mul_assoc γ, mul_assoc γ, hF.left γ hq]
+    · intro g n hn γ hγ δ hδ
+      obtain ⟨s₀, -, hrel, hq⟩ := GlobalTheory.Mem.UnitaryEmb.exists_embHom D _ _ _ hι
+      have he : embTop G = s₀ := funext fun h => (hrel h _).1 (hs h)
+      have hc : F (δ * n * δ⁻¹ * embTop G (γ * g) * G.besTop.y) =
+          F (n * embTop G g * G.besTop.y) := by
+        rw [he, (hrel _ _).1 hδ, ← hF.left _ (hq γ hγ) (n * s₀ g * G.besTop.y)]
+        simp only [map_mul, mul_assoc, inv_mul_cancel_left]
+      rw [(GlobalTheory.BesselChar.besChar_conj W.ψ G.besTop δ γ hδ n hn).2, hc, hφ.left γ hγ]
   obtain ⟨hμ, h𝓕⟩ := hM.top.haar_fund
   obtain ⟨-, -, -, -, _, -, -⟩ := GlobalTheory.Mem.AdelicGroupTop.adelic_unitary_topology D (G.V (.grid D.R.m 0))
   have H := integrable_of_haar hQ G.besTop.e_iso hι hA

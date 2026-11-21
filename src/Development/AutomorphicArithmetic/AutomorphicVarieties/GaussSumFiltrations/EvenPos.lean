@@ -123,6 +123,7 @@ variable (F κ) in
 def LL : AddSubgroup (κ → F) := AddSubgroup.pi Set.univ fun _ => (integralClosure ℤ F).toSubring.toAddSubgroup
 
 
+variable (κ) in
 def aL (a : F) : AddSubgroup (κ → F) := (LL F κ).map (DistribSMul.toAddMonoidHom (κ → F) a)
 
 

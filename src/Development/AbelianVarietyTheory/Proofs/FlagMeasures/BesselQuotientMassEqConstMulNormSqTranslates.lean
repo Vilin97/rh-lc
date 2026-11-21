@@ -55,6 +55,7 @@ theorem continuous_Lp_two_of_const_norm_pointwise_continuous {ι : Type} [Topolo
       rw [hE]
       exact ENNReal.ofReal_le_ofReal (Real.le_sqrt_of_sq_le (hb i hi)))
     (fun i => (Lp.aestronglyMeasurable _).congr (he i))
+    ((Lp.aestronglyMeasurable (F j + F j)).congr (he j))
     (hc.mono fun x hx => ((hx.tendsto j).add_const _).mono_left inf_le_left)
   rw [hE, ENNReal.ofReal_le_ofReal_iff (Real.sqrt_nonneg _), ← two_smul ℂ, norm_smul] at h1
   obtain ⟨i, hi⟩ := hfr.exists
@@ -74,7 +75,7 @@ theorem integral_norm_inner_le (f g : Lp V 2 ν) : ∫ x, ‖⟪f x, g x⟫_ℂ�
     rw [h1, h2]
     simp [mul_comm]
   have h1 := real_inner_le_norm (hf.toLp _) (hg.toLp _)
-  rw [e, Lp.norm_toLp, Lp.norm_toLp, eLpNorm_norm, eLpNorm_norm, ← Lp.norm_def, ← Lp.norm_def] at h1
+  rw [e, Lp.norm_toLp, Lp.norm_toLp, eLpNorm_norm _ (Lp.aestronglyMeasurable f), eLpNorm_norm _ (Lp.aestronglyMeasurable g), ← Lp.norm_def, ← Lp.norm_def] at h1
   refine le_trans (integral_mono (L2.integrable_inner (𝕜 := ℂ) f g).norm (hf.integrable_mul hg)
     fun x => norm_inner_le_norm _ _) h1
 
@@ -168,6 +169,7 @@ theorem closable (hσ : IsURepOn (UJset ε) σ) (D : Submodule ℂ H) (a : H →
             _ = c * ‖A w‖ := by rw [integral_mul_const, hcdef, mul_assoc]
         · rw [integral_congr_ae e, ← integral_integral_swap (f := fun g x => K (g, x)) hK]
           congr 1
+          funext g
           rw [integral_smul, ← integral_congr_ae (hae g), ← L2.inner_def, ← h1 g _ (hD g⁻¹ v hv) w hw, hmul]
       have hsub : ∀ w w' x, p (w - w') x = p w x - p w' x := fun w w' x => by
         simp only [p, gard_eq hσ hφ, map_sub, Pi.sub_apply, inner_sub_right]
@@ -178,6 +180,7 @@ theorem closable (hσ : IsURepOn (UJset ε) σ) (D : Submodule ℂ H) (a : H →
       have hfat : ∀ i, ∫ x, ‖p (u i) x‖ ∂ν ≤ c * ‖A (u i) - f‖ := fun i => by
         have h2 := Lp.eLpNorm_lim_le_liminf_eLpNorm (μ := ν) (p := 1) (f := fun j => p (u i - u j))
           (fun j => (hP _ (D.sub_mem (hu i) (hu j))).1.aestronglyMeasurable) (p (u i))
+          (hP _ (hu i)).1.aestronglyMeasurable
           (hlim.mono fun x hx => by simpa only [hsub, sub_zero] using hx.const_sub (p (u i) x))
         simp only [eLpNorm_one_eq_lintegral_enorm] at h2
         have h3 : Tendsto (fun j => ENNReal.ofReal (c * ‖A (u i - u j)‖)) atTop
@@ -402,7 +405,6 @@ theorem besselQuotientMass_eq_const_mul_norm_sq_translates : ∀ (k r : ℕ) (ε
     induction hv using Submodule.span_induction with
     | mem y hy =>
       obtain ⟨g, hg, rfl⟩ := hy
-      refine ⟨hmeas _ (hsm w hw g hg), ?_⟩
       rw [hinv w hw g hg]
       rw [hl2 w hw] at hfin
       exact lt_top_iff_ne_top.2 fun h => hfin (by rw [h]; simp)
@@ -496,7 +498,7 @@ theorem besselQuotientMass_eq_const_mul_norm_sq_translates : ∀ (k r : ℕ) (ε
     · rw [max_eq_right h, zero_mul]
       exact le_antisymm (sq_nonneg _) (h3 ▸ mul_nonpos_of_nonpos_of_nonneg h (sq_nonneg _))
   rw [h2, hl2 v (hDs v hv), hAn v hv, ENNReal.ofReal_pow ENNReal.toReal_nonneg,
-    ENNReal.ofReal_toReal (hmem v hv).2.ne]
+    ENNReal.ofReal_toReal (hmem v hv).ne]
 
 end GlobalTheory.BesselIsometry
 

@@ -9,6 +9,13 @@ public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.
 
 noncomputable section
 
+open NumberField Formalism.BasicNotions Formalism.MainNotions.TaylorLogMetric MeasureTheory in
+private local instance (D : D7) (N N' : ℕ) :
+    VAddInvariantMeasure (VC D N N') (VC D N N') volume := by
+  have : (volume : Measure (VC D N N')).IsAddLeftInvariant :=
+    (Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.instHaarVC D N N').toIsAddLeftInvariant
+  exact Measure.IsAddLeftInvariant.vaddInvariantMeasure
+
 namespace Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.IL
 
 open NumberField Formalism.BasicNotions Formalism.MainNotions.TaylorLogMetric MeasureTheory
@@ -43,18 +50,16 @@ theorem mem_vadd_iff {La : AddSubgroup (VC D N N')} (g : La) (s : Set (VC D N N'
 theorem unionFd_fd {M La : AddSubgroup (VC D N N')} (hle : M ≤ La)
     [Finite (La ⧸ M.addSubgroupOf La)] {s : Set (VC D N N')}
     (hs : IsAddFundamentalDomain La s volume) :
-    IsAddFundamentalDomain M (unionFd M La s) volume where
-  nullMeasurableSet := NullMeasurableSet.iUnion fun q => hs.nullMeasurableSet_vadd _
-  ae_covers := by
-    filter_upwards [hs.ae_covers] with x hx
+    IsAddFundamentalDomain M (unionFd M La s) volume := by
+  refine ⟨NullMeasurableSet.iUnion (fun q => hs.nullMeasurableSet_vadd (Quotient.out q)), ?_, ?_⟩
+  · filter_upwards [hs.ae_covers] with x hx
     obtain ⟨g, hg⟩ := hx
     refine ⟨⟨_, out_mem M La g⟩, Set.mem_iUnion.2 ⟨QuotientAddGroup.mk (-g), ?_⟩⟩
     rw [mem_vadd_iff]
     convert hg using 1
     simp only [AddSubgroup.vadd_def, vadd_eq_add, AddSubgroup.coe_add]
     abel
-  aedisjoint := by
-    intro a b hab
+  · intro a b hab
     change volume ((a +ᵥ unionFd M La s) ∩ (b +ᵥ unionFd M La s)) = 0
     let a' : La := ⟨a, hle a.2⟩
     let b' : La := ⟨b, hle b.2⟩

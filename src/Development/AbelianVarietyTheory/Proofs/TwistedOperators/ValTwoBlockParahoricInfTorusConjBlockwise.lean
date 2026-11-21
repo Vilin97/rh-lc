@@ -143,7 +143,9 @@ theorem val_inv_torusElt {n : Type} [Fintype n] [DecidableEq n] (ϖ : kˣ) (f : 
     apply Units.ext
     rw [Units.val_mul, val_torusElt, val_torusElt, diagonal_mul_diagonal, Units.val_one, ← diagonal_one]
     congr 1
-    exact inv_mul_cancel₀ (zpow_ne_zero _ ϖ.ne_zero)
+    funext i
+    simpa only [Pi.mul_apply, Pi.neg_apply, Pi.one_apply, _root_.zpow_neg] using
+      inv_mul_cancel₀ (zpow_ne_zero (f i) ϖ.ne_zero)
   rw [this, val_torusElt]
   rfl
 

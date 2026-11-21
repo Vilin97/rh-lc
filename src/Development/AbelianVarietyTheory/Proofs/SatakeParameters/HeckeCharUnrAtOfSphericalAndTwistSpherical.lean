@@ -60,7 +60,7 @@ theorem unrAt_of_isSpherical_twist : ∀ (E : Type) [Field E] [NumberField E] [I
     rw [CuspSub.locRep_eq, CuspSub.op_toTwist, opAdd, zero_smul, add_zero, map_smul, opMul, CuspSub.chiDet_locGL]
     rfl
   obtain ⟨y, rfl⟩ := (π.toTwist ξ).surjective z
-  have hy0 : y ≠ 0 := fun h => hz0 (by rw [h, map_zero])
+  have hy0 : y ≠ 0 := fun h => hz0 (by rw [h]; exact (π.toTwist ξ).toLinearMap.map_zero)
   have hy : ∀ k ∈ GlobalTheory.LFun.KGL w (n := a), π.locRep w k y =
       (((ξ.loc w (Matrix.GeneralLinearGroup.det k))⁻¹ : ℂˣ) : ℂ) • y := by
     intro k hk

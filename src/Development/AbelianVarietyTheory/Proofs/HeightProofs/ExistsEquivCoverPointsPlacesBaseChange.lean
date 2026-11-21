@@ -263,7 +263,7 @@ theorem exists_equiv_pts_places_baseChange : ∀ (R R' F F' : Type) [CommRing R]
   haveI : ∀ c, Finite (ValPl.PlacesOver R (L c)) := fun c => by
     haveI := integralClosure.isDedekindDomain R F (L c)
     haveI := integralClosure.isFractionRing_of_finite_extension (A := R) F (L c)
-    exact (ValPl.placesOver_finite (O := R) (L := L c)).to_subtype
+    exact (ValPl.placesOver_finite (O := R) (F := F) (L := L c)).to_subtype
   have hZsurj : Function.Surjective Z := by
     refine CoverPlaces.surjective_of_detect hϖ Z fun x hx => ?_
     refine CoverPlaces.isIntegral_of_forall Ψ hinj x fun c => (hw2 c _).2 fun w => ?_

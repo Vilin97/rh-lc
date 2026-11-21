@@ -114,11 +114,9 @@ theorem e_smul (d : Darboux B κ) (r : AF F) (u : W) : d.e (r • u) = (r • (d
 
 theorem realAd_add (s h : ℝ) : realAd F (s + h) = realAd F s + realAd F h := by
   simp only [realAd, map_add (f := _)]
-  rfl
 
 theorem realAd_zero : realAd F 0 = 0 := by
   simp only [realAd, map_zero]
-  rfl
 
 theorem rho_line_add (d : Darboux B κ) (ψ : AddChar (AF F) ℂ) (u : W) (s h : ℝ) (Ψ : (κ → AF F) → ℂ)
     (z : κ → AF F) :
@@ -184,6 +182,9 @@ theorem pureA_add (f : (κ → mixedEmbedding.mixedSpace F) → ℂ) (g : (κ �
         g (fun i => algebraMap F (FiniteAdeleRing (𝓞 F) F) (ξ i) + Prod.snd (y i)) := by
   unfold pureA
   congr 2
+  funext i
+  change InfiniteAdeleRing.ringEquiv_mixedSpace F ((algebraMap F (AF F) (ξ i) + y i).1) =
+    mixedEmbedding F (ξ i) + evI F (y i)
   rw [show ((algebraMap F (AF F) (ξ i) + y i) : AF F).1 = (algebraMap F (AF F) (ξ i)).1 + (y i).1 from rfl, map_add (f := _),
     InfiniteAdeleRing.mixedEmbedding_eq_algebraMap_comp]
   rfl
@@ -329,7 +330,8 @@ theorem GlobalTheory.HeisLineTheta.hasDerivAt_thetaSum_line : ∀ {F : Type} [Fi
     intro Ψ ξ t
     rw [norm_rho hψ, norm_rho hψ, e_smul]
     congr 2
-    rfl
+    funext i
+    simp [hy, ha, ha', Pi.add_apply, Pi.smul_apply, smul_eq_mul, add_assoc]
   obtain ⟨c, hc, hcb⟩ := majorant hΦ' (fun i => Prod.snd (a' i)) R
   obtain ⟨c0, hc0, hcb0⟩ := majorant hΦ (fun i => Prod.snd (a' i)) R
   have hmem : (0 : ℝ) ∈ Set.Ioo (-1 : ℝ) 1 := ⟨by norm_num, by norm_num⟩

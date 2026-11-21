@@ -90,6 +90,7 @@ theorem finiteIndex_of_isOpen {G : Type} [Group G] [TopologicalSpace G] [IsTopol
     (K : Subgroup G) {C : Set G} (hC : IsCompact C) (hKC : (K : Set G) ⊆ C) (H : Subgroup K)
     (hH : IsOpen (H : Set K)) : H.FiniteIndex := by
   classical
+  open scoped Pointwise in
   obtain ⟨W, hWo, hWH⟩ := isOpen_induced_iff.1 hH
   have h1 : (1 : G) ∈ W := by
     have : (1 : K) ∈ (H : Set K) := H.one_mem

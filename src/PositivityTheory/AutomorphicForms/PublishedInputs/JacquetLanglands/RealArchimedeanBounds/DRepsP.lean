@@ -73,7 +73,6 @@ theorem absF_loc (w : Pl F) (g : GL (Fin 2) (w.adicCompletion F))
     FinitePlace.norm_def, unif_spec, WithZeroMulInt.toNNReal_neg_apply _ WithZero.exp_ne_zero]
 
   simp [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
-  rw [show Multiplicative.toAdd (WithZero.unzero _) = (-1 : ℤ) from rfl, zpow_neg_one]
 
 theorem step {c : Pl F → ℕ} {w : Pl F} {W : List (Pl F)} {ι κ : Type} [Fintype ι] [Fintype κ] {b : ι → GF F}
     (hb : IsReps c W b) (r : κ → GL (Fin 2) (w.adicCompletion F))

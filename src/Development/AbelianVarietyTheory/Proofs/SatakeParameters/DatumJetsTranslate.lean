@@ -41,7 +41,10 @@ theorem exists_denom {E W : Type} [Field E] [NumberField E] [AddCommGroup W] [Mo
       · rw [h1, Int.cast_neg, Int.cast_natCast, neg_smul, neg_mem_iff] at hz1; exact hz1
     obtain ⟨Q, hQ, hQp, hQc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (Ideal.span {(p : ℤ)}) I hI
     have hpQ : (p : 𝓞 E) ∈ Q := by
-      have : (p : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 E)) := hQc ▸ Ideal.mem_span_singleton_self _
+      have : (p : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 E)) := by
+        change (p : ℤ) ∈ Ideal.under ℤ Q
+        rw [hQc]
+        exact Ideal.mem_span_singleton_self _
       simpa using this
     have hQ0 : Q ≠ ⊥ := by
       rintro rfl

@@ -252,7 +252,10 @@ theorem Eop_pull (τ : F →+* ℂ) (i k : Fin a) (φ : Sm F a) :
       toL (Matrix.single i k (atEmb τ z)) := fun z => by
     rw [← cinf_atEmb j τ z]
     exact Matrix.map_single i k _ (cinf j)
-  simp only [Eop, lieS_apply, LinearMap.smul_apply, LinearMap.sub_apply, lie_pull, h, map_smul, map_sub]
+  have hsub (x y : Sm F a) : pull a j (x - y) = pull a j x - pull a j y :=
+    (pull a j).toLinearMap.map_sub x y
+  simp only [Eop, lieS_apply, LinearMap.smul_apply, LinearMap.sub_apply, lie_pull, h,
+    LinearEquiv.map_smul, hsub]
 
 theorem cap_pull (τ : F →+* ℂ) (u : ℂ) (φ : Sm F a) :
     cap (τ.comp (j : E →+* F)) u (pull a j φ) = pull a j (cap τ u φ) := by
@@ -301,28 +304,32 @@ theorem height_le (y : GL (Fin a) (Cinf E)) : height (GeneralLinearGroup.map (ci
   unfold height
   linarith [h1 y]
 
-theorem isAutForm_pull {φ : Sm F a} (h : IsAutForm φ) : IsAutForm (pull a j φ) where
-  left γ g := by rw [pull_apply, map_mul, gaMap_ratGL, h.left, pull_apply]
-  level := by
+theorem isAutForm_pull {φ : Sm F a} (h : IsAutForm φ) : IsAutForm (pull a j φ) := by
+  constructor
+  case left =>
+    intro γ g
+    rw [pull_apply, map_mul, gaMap_ratGL, h.left, pull_apply]
+  case level =>
     have hc : Continuous (GeneralLinearGroup.map (n := Fin a) (finMap j)) :=
       Continuous.units_map _ (continuous_id.matrix_map (continuous_finMap j))
     convert h.level.preimage hc using 1
     ext k
     exact (Eq.congr_left (act_pull j (.fin k) φ)).trans (pull a j).injective.eq_iff
-  kfin := by
+  case kfin =>
     have := h.kfin
     refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ (Set.range fun k => cptRep F a k φ)).map
       (pull a j).toLinearMap) (Submodule.span_le.2 ?_)
     rintro _ ⟨k, rfl⟩
     exact ⟨_, Submodule.subset_span ⟨_, rfl⟩, (act_pull j (.cpt k) φ).symm⟩
-  zfin := by
+  case zfin =>
     have := h.zfin
     refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ ((fun z : Module.End ℂ (Sm F a) => z φ) ''
       Zalg F a)).map (pull a j).toLinearMap) (Submodule.span_le.2 ?_)
     rintro _ ⟨z, hz, rfl⟩
     obtain ⟨z', h1, h2⟩ := Zalg_pull j hz
     exact ⟨_, Submodule.subset_span ⟨z', h1, rfl⟩, (h2 φ).symm⟩
-  growth g := by
+  case growth =>
+    intro g
     obtain ⟨C, N, h1⟩ := h.growth (gaMap a j g)
     refine ⟨|C|, N, fun y => ?_⟩
     rw [pull_apply, map_mul, gaMap_infGL]

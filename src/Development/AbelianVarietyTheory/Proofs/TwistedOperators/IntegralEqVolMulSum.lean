@@ -108,11 +108,11 @@ theorem isReps_out (V : HSp D) (K : Subgroup (GL (Fin V.rank) (Lev.EAf D))) :
     Bridge.IsReps ((finPt V).comp (GQ V).subtype) (K.comap (finG V)) (fun c : FinCl V K => Quotient.out c) := by
   intro h
   refine ⟨DoubleCoset.mk _ _ h, ?_, ?_⟩
-  · obtain ⟨r, hr, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 (DoubleCoset.out_eq' _ _ (DoubleCoset.mk (ratFin V) (K.comap (finG V)) h))
+  · obtain ⟨r, hr, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 (DoubleCoset.out_eq' (DoubleCoset.mk (ratFin V) (K.comap (finG V)) h))
     obtain ⟨γ, hγ, rfl⟩ := (mem_ratFin V r).1 hr
     exact ⟨⟨γ, hγ⟩, ⟨k, hk⟩, e⟩
   · rintro c ⟨γ, k, e⟩
-    rw [← DoubleCoset.out_eq' _ _ c]
+    rw [← DoubleCoset.out_eq' c]
     refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨finPt V γ, (mem_ratFin V _).2 ⟨γ, γ.2, rfl⟩, k, k.2, e⟩
 
 theorem card_stab (V : HSp D) (K : Subgroup (GL (Fin V.rank) (Lev.EAf D))) (x : GfC V) :

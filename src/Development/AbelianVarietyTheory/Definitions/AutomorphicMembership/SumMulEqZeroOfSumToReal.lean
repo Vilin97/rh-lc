@@ -74,7 +74,7 @@ def pullBal (r : X →ₗ[O] X₁) : balForms bar X₁ →ₗ[ℤ] balForms bar 
 
 variable (bar) in
 def pullBalEquiv (e : X ≃ₗ[O] X₁) : balForms bar X₁ ≃ₗ[ℤ] balForms bar X :=
-  LinearEquiv.ofLinear (pullBal bar e.toLinearMap) (pullBal bar e.symm.toLinearMap)
+  LinearEquiv.ofLinearMap (pullBal bar e.toLinearMap) (pullBal bar e.symm.toLinearMap)
     (by ext β a b; exact congrArg₂ (fun y z => β.1 y z) (e.symm_apply_apply a) (e.symm_apply_apply b))
     (by ext β a b; exact congrArg₂ (fun y z => β.1 y z) (e.apply_symm_apply a) (e.apply_symm_apply b))
 
@@ -223,7 +223,9 @@ theorem isPartOfBasis_comp {v : Fin m → L} (h : IsPartOfBasis v) (s : Fin m' �
   let f : Fin m' ↪ Fin m ⊕ Fin n := s.trans ⟨Sum.inl, Sum.inl_injective⟩
   let e : Fin m' ⊕ Fin _ ≃ Fin m ⊕ Fin n :=
     ((Equiv.ofInjective f f.injective).sumCongr (Fintype.equivFin _).symm).trans (Equiv.Set.sumCompl (Set.range f))
-  exact ⟨_, b.reindex e.symm, fun i => by simp [e, f, hb]⟩
+  refine ⟨_, b.reindex e.symm, fun i => ?_⟩
+  rw [Module.Basis.reindex_apply, Equiv.symm_symm]
+  exact hb (s i)
 
 end Part
 
@@ -428,27 +430,28 @@ theorem IsPolFanOn.exists_nat (h : IsPolFanOn bar φ X) {β : LinearMap.BilinFor
   lift n to ℕ using by exact_mod_cast this
   exact ⟨n, by simpa using hn⟩
 
-theorem IsPolFanOn.of_equiv (h : IsPolFanOn bar φ X) (e : X ≃ₗ[O] X₁) : IsPolFanOn bar φ X₁ where
-  homog B hB t ht := by
+theorem IsPolFanOn.of_equiv (h : IsPolFanOn bar φ X) (e : X ≃ₗ[O] X₁) : IsPolFanOn bar φ X₁ := by
+  constructor
+  · intro B hB t ht
     rw [← evalR_pullR φ (r := e.toLinearMap) e.surjective, ← evalR_pullR φ (r := e.toLinearMap) e.surjective B]
     exact h.homog _ (pullR_mem_psdCone e.surjective hB) t ht
-  superadd B hB B' hB' := by
+  · intro B hB B' hB'
     simp only [← evalR_pullR φ (r := e.toLinearMap) e.surjective]
     exact h.superadd _ (pullR_mem_psdCone e.surjective hB) _ (pullR_mem_psdCone e.surjective hB')
-  integral β hβ hp := by
+  · intro β hβ hp
     rw [← evalZ_pull φ (r := e.toLinearMap) e.surjective]
     exact h.integral _ (pull_mem _ hβ) fun y => hp _
-  pos β hβ hp h0 := by
+  · intro β hβ hp h0
     rw [← evalZ_pull φ (r := e.toLinearMap) e.surjective]
     refine h.pos _ (pull_mem _ hβ) (fun y => hp _) fun h1 => h0 ?_
     rw [← pull_symm_pull e β, h1]; rfl
-  face m m' γ s hγ := by simpa using (h.face _ _ _ s (hγ.pull_equiv e)).pull_equiv e.symm
-  cover B hB := by
+  · intro m m' γ s hγ
+    simpa using (h.face _ _ _ s (hγ.pull_equiv e)).pull_equiv e.symm
+  · intro B hB
     obtain ⟨m, γ, c, hγ, hc, hs⟩ := h.cover _ (pullR_mem_psdCone (r := e.toLinearMap) e.surjective hB)
     refine ⟨m, _, c, hγ.pull_equiv e.symm, hc, LinearMap.ext₂ fun a b => ?_⟩
     simpa [LinearMap.sum_apply] using LinearMap.congr_fun₂ hs (e.symm a) (e.symm b)
-  finite := by
-    obtain ⟨S, hS, h1⟩ := h.finite
+  · obtain ⟨S, hS, h1⟩ := h.finite
     refine ⟨_, hS.image (pull e.symm.toLinearMap), fun m γ hγ => ?_⟩
     obtain ⟨g, hg⟩ := h1 m _ (hγ.pull_equiv e)
     exact ⟨e.symm.trans (g.trans e), fun i => ⟨_, hg i, rfl⟩⟩
@@ -509,9 +512,13 @@ theorem eq_smul_mulForm (β : LinearMap.BilinForm ℤ ℤ) : β = β 1 1 • mul
 theorem evalR_minVal_int {B : ℤ →ₗ[ℤ] ℤ →ₗ[ℤ] ℝ} (h : 0 ≤ B 1 1) : evalR (InvFun.minVal ℤ) B = B 1 1 := by
   rw [evalR, TorCheck.minVal_eval]
   rcases h.eq_or_lt with h | h
-  · rw [← h]
-    convert Real.sInf_empty
-    exact Set.eq_empty_of_forall_notMem fun x ⟨⟨y, e⟩, h'⟩ => h' (by rw [← e, real_apply_int, ← h]; simp)
+  · have hEmpty : {x : ℝ | (∃ y : ℤ, B y y = x) ∧ x ≠ B 0 0} = ∅ := by
+      apply Set.eq_empty_of_forall_notMem
+      rintro x ⟨⟨y, rfl⟩, hy⟩
+      apply hy
+      rw [real_apply_int B y y, ← h]
+      simp
+    rw [hEmpty, Real.sInf_empty, h]
   · refine IsLeast.csInf_eq ⟨⟨⟨1, rfl⟩, by simpa using h.ne'⟩, ?_⟩
     rintro x ⟨⟨y, rfl⟩, hy⟩
     have h0 : y ≠ 0 := fun e => hy (by rw [e])
@@ -525,15 +532,15 @@ theorem evalZ_minVal_int {β : LinearMap.BilinForm ℤ ℤ} (h : 0 ≤ β 1 1) :
 theorem isCone_mulForm : IsCone id (InvFun.minVal ℤ) ![mulForm] := by
   have hm : mulForm ∈ balForms (id : ℤ → ℤ) ℤ := mem_balForms_int.2 mul_comm
   let ev : LinearMap.BilinForm ℤ ℤ →ₗ[ℤ] ℤ := LinearMap.applyₗ 1 ∘ₗ LinearMap.applyₗ 1
-  let e : balForms (id : ℤ → ℤ) ℤ ≃ₗ[ℤ] ℤ := LinearEquiv.ofLinear (ev ∘ₗ Submodule.subtype _)
-    (LinearMap.toSpanSingleton ℤ _ ⟨mulForm, hm⟩) (by ext; simp [ev])
+  let e : balForms (id : ℤ → ℤ) ℤ ≃ₗ[ℤ] ℤ := LinearEquiv.ofLinearMap (ev ∘ₗ Submodule.subtype _)
+    (LinearMap.toSpanSingleton ℤ _ ⟨mulForm, hm⟩) (by ext; simp [ev, mulForm])
     (LinearMap.ext fun β => Subtype.ext (eq_smul_mulForm β.1).symm)
-  refine ⟨fun i => by simpa using hm, fun i y => by simpa using mul_self_nonneg y,
+  refine ⟨fun i => by simpa using hm, fun i y => by simpa [mulForm] using mul_self_nonneg y,
     ⟨0, ((Module.Basis.singleton (Fin 1) ℤ).map e.symm).reindex (Equiv.sumEmpty _ _).symm, fun i => ?_⟩,
     TorCheck.minVal_linearOn _, 1, ev, one_pos, fun i => ?_, fun β _ hp => ?_, fun β _ hp _ => ?_⟩
   · apply Subtype.ext
     simp [e]
-  · simp [ev, evalZ_minVal_int]
+  · simpa [ev] using (evalZ_minVal_int (β := mulForm) (by simp [mulForm])).symm
   · simp [ev, evalZ_minVal_int (hp 1)]
   · refine ⟨1, ![(β 1 1).toNat], one_pos, ?_⟩
     rw [one_smul, Fin.sum_univ_one, ← natCast_zsmul]
@@ -563,28 +570,30 @@ theorem IsCone.eq_mulForm {φ : InvFun ℤ} {m : ℕ} {γ : Fin m → LinearMap.
   have := h.nonneg i 1
   rw [eq_smul_mulForm (γ i), show γ i 1 1 = 1 by rcases Int.isUnit_iff.1 hu with h | h <;> omega, one_smul]
 
-theorem isPolFanOn_minVal_int : IsPolFanOn id (InvFun.minVal ℤ) ℤ where
-  homog B hB t ht := by
+theorem isPolFanOn_minVal_int : IsPolFanOn id (InvFun.minVal ℤ) ℤ := by
+  constructor
+  · intro B hB t ht
     have := nonneg_of_mem_psdCone hB 1
     rw [evalR_minVal_int this, evalR_minVal_int (mul_nonneg ht this)]; rfl
-  superadd B hB B' hB' := by
+  · intro B hB B' hB'
     have h := nonneg_of_mem_psdCone hB 1
     have h' := nonneg_of_mem_psdCone hB' 1
     rw [evalR_minVal_int h, evalR_minVal_int h', evalR_minVal_int (add_nonneg h h')]; rfl
-  integral β _ hp := ⟨_, evalZ_minVal_int (hp 1)⟩
-  pos β _ hp h0 := by
+  · exact fun β _ hp => ⟨_, evalZ_minVal_int (hp 1)⟩
+  · intro β _ hp h0
     rw [evalZ_minVal_int (hp 1)]
     exact_mod_cast (hp 1).lt_of_ne fun h => h0 (by rw [eq_smul_mulForm β, ← h, zero_smul])
-  face m m' γ s hγ := by
+  · intro m m' γ s hγ
     rcases isEmpty_or_nonempty (Fin m') with h | ⟨⟨i⟩⟩
     · exact isCone_empty_int _
     · let e : Fin m' ≃ Fin 1 := ⟨fun _ => 0, fun _ => i, fun j => s.injective (hγ.injective
         ((hγ.eq_mulForm _).trans (hγ.eq_mulForm _).symm)), fun _ => Subsingleton.elim _ _⟩
       convert isCone_mulForm.reindex e with j
       exact hγ.eq_mulForm _
-  cover B hB := ⟨1, ![mulForm], ![B 1 1], isCone_mulForm, fun i => by simpa using nonneg_of_mem_psdCone hB 1,
-    LinearMap.ext₂ fun a b => by simpa using real_apply_int B a b⟩
-  finite := ⟨{mulForm}, Set.finite_singleton _, fun m γ hγ => ⟨LinearEquiv.refl _ _, fun i => hγ.eq_mulForm i⟩⟩
+  · intro B hB
+    exact ⟨1, ![mulForm], ![B 1 1], isCone_mulForm, fun i => by simpa using nonneg_of_mem_psdCone hB 1,
+      LinearMap.ext₂ fun a b => by simpa [mulForm] using real_apply_int B a b⟩
+  · exact ⟨{mulForm}, Set.finite_singleton _, fun m γ hγ => ⟨LinearEquiv.refl _ _, fun i => hγ.eq_mulForm i⟩⟩
 
 theorem subsingleton_or_equiv_int (X : Type) [AddCommGroup X] [Module ℤ X] [Module.Finite ℤ X] [Module.Projective ℤ X]
     (h : Module.finrank ℤ X ≤ 1) : Subsingleton X ∨ Nonempty (ℤ ≃ₗ[ℤ] X) := by

@@ -37,6 +37,8 @@ theorem negM_herm (T : HSp D) (q : ℕ) : (negM T q)ᴴ = negM T q := by
   unfold negM
   rw [Matrix.diagonal_conjTranspose]
   congr 1
+  funext a
+  simp
 
 theorem compAt_eq (θ : InfFam D) (ρ : D.what₂.Tau) (h : GA D T) :
     compAt θ ρ (Formalism.L2.Theta.mt T h) = infMat D.sp.cm.sig T.gram (θ ρ) h := rfl

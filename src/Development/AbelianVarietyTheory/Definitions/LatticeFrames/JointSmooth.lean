@@ -114,7 +114,7 @@ structure JacAt (W W₀ : HSp D) (ρ : ℕ) where
 @[reducible] def JacAt.lev {W W₀ : HSp D} {ρ : ℕ} (b : JacAt W W₀ ρ) (v0 : Vol W₀) : JacLev D ρ :=
   ⟨W, W₀, b.d, b.cpt, v0, b.vN⟩
 
-open GlobalTheory.ChainOnto (Com PiLocalization₂ Reach)
+open GlobalTheory.ChainOnto (Com PiLocalization₂)
 
 structure StAt (V : HSp D) where
   par : D.what₂.Tau → SPar

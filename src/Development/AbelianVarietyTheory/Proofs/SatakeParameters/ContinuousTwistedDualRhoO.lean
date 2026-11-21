@@ -123,7 +123,7 @@ theorem locC_eq_map {k : ℕ} (M : GE D.nd →* Matrix (Fin k) (Fin k) (D.nd.O i
     TruncatedSeriesCountingIdentities.locC Cx M g = (mapM (toK D.nd i) M (decS D.nd w (Br.iota D.nbr i w hw g))).map (phiK i w hw Cx) := by
   refine Matrix.ext fun a b => ?_
   change Cx.inc ((D.nbr i w hw).toLL (M _ a b)) = Cx.inc (Br.toLLK (D.nbr i w hw) (toK D.nd i (M _ a b)))
-  rw [GlobalTheory.WordJumpsCompare.toLLK_toK]
+  rw [Br.toLLK_alg]
   rfl
 
 theorem mapM_rDuO (h : GE D.nd) :

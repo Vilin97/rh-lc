@@ -78,15 +78,47 @@ theorem finPart_surj (z : Af D.host.F ⊗[D.host.F] D.host.E) : ∃ a : AE D, fi
 
 theorem idem_mul_mem (V : HSp D) {a : AE D} (ha : a * a = a) {y : Fin V.rank → AE D}
     (hy : (fun i => finPart D (y i)) ∈ LamHat V) : (fun i => finPart D (a * y i)) ∈ LamHat V := by
-  have h := GlobalTheory.SplitHeckeLabel.smul_mem_latHat (GlobalTheory.PlaceModel.latFrame V) (x := finPart D a)
-    (y := fun i => finPart D (y i))
+  let Λ := GlobalTheory.PlaceModel.latFrame V
+  have hs : ∀ b ∈ intAE D, ∀ z ∈ latHat D.host.F D.host.E
+      (Λ : Set (Fin V.rank → D.host.E)),
+      (fun i => b * z i) ∈ latHat D.host.F D.host.E (Λ : Set (Fin V.rank → D.host.E)) := by
+    intro b hb z hz
+    change z ∈ GlobalTheory.AdLat.hat D.host.F (Λ : Set (Fin V.rank → D.host.E)) at hz
+    change _ ∈ GlobalTheory.AdLat.hat D.host.F (Λ : Set (Fin V.rank → D.host.E))
+    induction hb using AddSubgroup.closure_induction with
+    | mem b hb =>
+      obtain ⟨s, hs, o, rfl⟩ := hb
+      induction hz using AddSubgroup.closure_induction with
+      | mem z hz =>
+        obtain ⟨t, ht, x, hx, rfl⟩ := hz
+        refine AddSubgroup.subset_closure ⟨s * t, fun v => mul_mem (hs v) (ht v), o • x,
+          Λ.smul_mem o hx, ?_⟩
+        funext i
+        rw [Algebra.TensorProduct.tmul_mul_tmul]
+        rfl
+      | zero =>
+        simp only [Pi.zero_apply, mul_zero]
+        exact zero_mem _
+      | add u w _ _ hu hw =>
+        simp only [Pi.add_apply, mul_add]
+        exact add_mem hu hw
+      | neg u _ hu =>
+        simp only [Pi.neg_apply, mul_neg]
+        exact neg_mem hu
+    | zero =>
+      simp only [zero_mul]
+      exact zero_mem _
+    | add u w _ _ hu hw =>
+      simp only [add_mul]
+      exact add_mem hu hw
+    | neg u _ hu =>
+      simp only [neg_mul]
+      exact neg_mem hu
+  have h := hs (finPart D a)
     (GlobalTheory.AdIdem.idempotent_mem_intAE D _ (by rw [← RingHom.map_mul, ha]))
-    (by rw [GlobalTheory.PlaceModel.coe_latFrame]; exact hy)
+    (fun i => finPart D (y i)) (by rw [GlobalTheory.PlaceModel.coe_latFrame]; exact hy)
   rw [GlobalTheory.PlaceModel.coe_latFrame] at h
-  have e : (fun i => finPart D (a * y i)) = finPart D a • fun i => finPart D (y i) :=
-    funext fun i => RingHom.map_mul _ _ _
-  rw [e]
-  exact h
+  simpa only [RingHom.map_mul] using h
 
 theorem finMat_eq (V : HSp D) (g : GA D V) : finMat D.sp.cm.sig V.gram g = (mt V g).map (finPart D) := rfl
 

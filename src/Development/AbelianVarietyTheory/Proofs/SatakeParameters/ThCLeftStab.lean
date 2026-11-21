@@ -433,8 +433,8 @@ theorem thC_left_stab : ∀ (D : D7) (X : Fields) (s : Seam D X) (cc : Ideal (�
       change reidx s a b ((reidx s a b).symm y) ∈ _
       rwa [LinearEquiv.apply_symm_apply]
     rw [e]
-    obtain ⟨S, hS⟩ := f1
-    exact ⟨S.image _, by rw [Finset.coe_image, ← AddMonoidHom.map_closure, hS]⟩
+    letI := f1
+    infer_instance
   exact core (ambOf s B χ cD) (fun τ x => by
       change s.σ₀ (X.emb τ (star x)) = starRingEnd ℂ (s.σ₀ (X.emb τ x))
       rw [hok.1, hok.1, hok.2, GlobalTheory.InertSign.embT_conj]) (delta_ne_zero B) hc hSS

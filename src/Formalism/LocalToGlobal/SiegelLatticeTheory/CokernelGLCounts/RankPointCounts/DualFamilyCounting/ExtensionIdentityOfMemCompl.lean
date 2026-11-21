@@ -96,19 +96,22 @@ theorem push_span (X : Submodule K V) (s : Set ↥X) :
   Submodule.map_span (incl X) s
 
 theorem isLatIn_push_iff_isLattice {X : Submodule K V} (L : Submodule (𝓞 K) ↥X) :
-    IsLatIn X (push X L) ↔ Submodule.IsLattice K L := by
+    IsLatIn X (push X L) ↔ Submodule.IsFullLattice K L := by
   have hspan : Submodule.span K ((push X L : Submodule (𝓞 K) V) : Set V) =
       (Submodule.span K (L : Set ↥X)).map X.subtype := by
     rw [Submodule.map_span]
     congr 1
   constructor
   · rintro ⟨hfg, hsp⟩
-    refine ⟨Submodule.fg_of_fg_map_injective _ (incl_injective X) hfg, ?_⟩
+    refine
+      { toIsLattice := Submodule.IsLattice.of_fg K
+          (Submodule.fg_of_fg_map_injective _ (incl_injective X) hfg)
+        span_eq_top := ?_ }
     apply Submodule.map_injective_of_injective X.injective_subtype
     rw [← hspan, hsp, Submodule.map_subtype_top]
-  · rintro ⟨hfg, hsp⟩
-    refine ⟨hfg.map _, ?_⟩
-    rw [hspan, hsp, Submodule.map_subtype_top]
+  · intro hL
+    refine ⟨hL.toIsLattice.fg.map _, ?_⟩
+    rw [hspan, hL.span_eq_top, Submodule.map_subtype_top]
 
 theorem isIntegralLat_push {h : V →ₗ⋆[K] V →ₗ[K] K} {X : Submodule K V} (L : Submodule (𝓞 K) ↥X) :
     Formalism.HermitianLatticesTheory.IsIntegralLat h (push X L) ↔ Formalism.HermitianLatticesTheory.IsIntegralLat (formOn h X) L := by

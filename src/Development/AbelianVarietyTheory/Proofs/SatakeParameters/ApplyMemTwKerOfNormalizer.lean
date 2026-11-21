@@ -337,11 +337,11 @@ theorem red_sub_apply {a : GL (Fin n) 𝒪[k]} {i j : Fin n} (h : ((incl k n a).
   have h1 : ((a.val i j : 𝒪[k]) : k) = (((1 : Matrix (Fin n) (Fin n) 𝒪[k]) i j : 𝒪[k]) : k) := by
     rw [Matrix.sub_apply, sub_eq_zero] at h
     refine h.trans ?_
-    simp only [one_apply]; split_ifs <;> simp
+    simp only [Matrix.one_apply]; split_ifs <;> simp
   have h2 : a.val i j = (1 : Matrix (Fin n) (Fin n) 𝒪[k]) i j := Subtype.ext h1
   show (IsLocalRing.residue 𝒪[k] (a.val i j)) - (1 : Matrix (Fin n) (Fin n) 𝓀[k]) i j = 0
   rw [h2, sub_eq_zero]
-  simp only [one_apply]; split_ifs <;> simp
+  simp only [Matrix.one_apply]; split_ifs <;> simp
 
 theorem intM_incl (a : GL (Fin n) 𝒪[k]) : IntM (incl k n a).val := fun i j => (a.val i j).2
 
@@ -365,7 +365,7 @@ variable {e : (Σ a, Fin (d a)) ≃ Fin n} {T : Finset (Fin s)} {c : k} {hc : c 
 
 theorem one_apply_blk (a : Fin s) (i j : Fin (d a)) :
     (1 : Matrix (Fin n) (Fin n) k) (e ⟨a, i⟩) (e ⟨a, j⟩) = (1 : Matrix (Fin (d a)) (Fin (d a)) k) i j := by
-  simp only [one_apply, EmbeddingLike.apply_eq_iff_eq, Sigma.mk.injEq, heq_eq_eq, true_and]
+  simp only [Matrix.one_apply, EmbeddingLike.apply_eq_iff_eq, Sigma.mk.injEq, heq_eq_eq, true_and]
 
 theorem mem_unipRad_of {g : GL (Fin n) k} (h : ∀ i j, ¬ blk e i < blk e j → (g.val - 1) i j = 0) :
     g ∈ unipRad k e := by
@@ -770,7 +770,7 @@ theorem eventually_mem_twKer {v : V} (hv : v ∈ twKer π (unipRad k e) 1) :
   | zero => simp
   | add x y _ _ hx hy =>
     filter_upwards [hx, hy] with M h1 h2
-    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+    rw [map_add]; exact add_mem h1 h2
   | smul a x _ hx =>
     filter_upwards [hx] with M h1
     rw [map_smul]; exact Submodule.smul_mem _ a h1

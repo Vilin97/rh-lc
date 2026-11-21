@@ -137,15 +137,13 @@ theorem IsAmpleLB.exists_cover_mul (h : IsAmpleLB L) :
     exact ha i
 
 theorem isAmpleLB_of_cover (hL : L.IsLB) {n : ℕ} (hn : 1 ≤ n) {ι : Type*} [Finite ι] (s : ι → (lbPow L n).Sec)
-    (hs : ⨆ i, nonzeroLocus (s i) = ⊤) (ha : ∀ i, IsAffineOpen (nonzeroLocus (s i))) : IsAmpleLB L where
-  isLB := hL
-  compactSpace := ⟨by
-    have e : (Set.univ : Set X) = ⋃ i, (nonzeroLocus (s i) : Set X) := by
+    (hs : ⨆ i, nonzeroLocus (s i) = ⊤) (ha : ∀ i, IsAffineOpen (nonzeroLocus (s i))) : IsAmpleLB L := by
+  refine ⟨hL, ⟨?_⟩, fun x => ?_⟩
+  · have e : (Set.univ : Set X) = ⋃ i, (nonzeroLocus (s i) : Set X) := by
       rw [← Opens.coe_iSup, hs, Opens.coe_top]
     rw [e]
-    exact isCompact_iUnion fun i => (ha i).isCompact⟩
-  exists_affine x := by
-    obtain ⟨i, hi⟩ := Opens.mem_iSup.1 (hs.ge (Set.mem_univ x))
+    exact isCompact_iUnion fun i => (ha i).isCompact
+  · obtain ⟨i, hi⟩ := Opens.mem_iSup.1 (hs.ge (Set.mem_univ x))
     exact ⟨n, hn, s i, hi, ha i⟩
 
 theorem IsAmpleLB.exists_isGenerated_pow (h : IsAmpleLB L) : ∃ n, 1 ≤ n ∧ IsGenerated (lbPow L n) := by
@@ -259,8 +257,9 @@ theorem isAmpleLB_triv_iff : IsAmpleLB (LB.triv X) ↔ X.IsQuasiAffine := by
 theorem isGenerated_O1 (R : Type) [CommRing R] (N : ℕ) : IsGenerated (ProjSpace.O1 R N) :=
   ⟨N + 1, ProjSpace.coord R N, ProjSpace.iSup_nonzeroLocus_coord R N⟩
 
-theorem isAmple_projective_O_one (R : Type) [CommRing R] (N : ℕ) : IsAmpleLB (ProjSpace.O1 R N) :=
-  isAmpleLB_of_cover (ProjSpace.O1_isLB R N) le_rfl (fun k => secToPow (ProjSpace.coord R N k) 1)
+theorem isAmple_projective_O_one (R : Type) [CommRing R] (N : ℕ) : IsAmpleLB (ProjSpace.O1 R N) := by
+  have hL := (isGenerated_O1 R N).isLB
+  exact isAmpleLB_of_cover hL le_rfl (fun k => secToPow (ProjSpace.coord R N k) 1)
     (by simp only [nonzeroLocus_secToPow _ le_rfl, ProjSpace.iSup_nonzeroLocus_coord])
     fun k => by
       rw [nonzeroLocus_secToPow _ le_rfl, ProjSpace.nonzeroLocus_coord]

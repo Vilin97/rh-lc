@@ -22,7 +22,8 @@ theorem ex_smul_act (F : FamilyUnif Xo σ ty) (i : Fin F.n) (P : (F.Di i).La →
     F.ex i P (c • P (r • v)) = F.ex i P (c • P v) ≫ Xo.univ.t.act.act r := by
   rw [← F.ex_lin i P hP]
   congr 1
-  ring
+  ext k
+  rw [Pi.smul_apply, hP.1, Pi.smul_apply, smul_eq_mul, smul_eq_mul, mul_left_comm]
 
 theorem inv_smul_natCast {La : Type} [AddCommGroup La] [Module (𝓞 E) La] (P : La →+ (Fin g → ℂ)) {n : ℕ}
     (hn : n ≠ 0) (w : La) : ((n : ℂ))⁻¹ • P ((n : 𝓞 E) • w) = P w := by

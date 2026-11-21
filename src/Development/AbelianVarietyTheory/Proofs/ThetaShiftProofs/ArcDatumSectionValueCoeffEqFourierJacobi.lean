@@ -91,7 +91,7 @@ theorem gtTanR_of_isArcFr (hG : Out.GlobalFnsSt) {O : Type} [CommRing O] {β : O
   · refine Eq.trans ?_ e2
     rw [← h0, Category.assoc, h2, ← Category.assoc, ← Category.assoc, sp_comp, sp_comp]
     congr 2
-    exact RingHom.ext fun x => by simp [dualMap]
+    exact RingHom.ext fun x => by simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 section Ev
 

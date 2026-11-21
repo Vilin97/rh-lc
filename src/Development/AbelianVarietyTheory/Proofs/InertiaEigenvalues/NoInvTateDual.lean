@@ -110,9 +110,11 @@ theorem local_noInv (AI : LocAinf l P) (T : LocTied l P AI) {m : ℕ} (r r' : �
   refine Submodule.eq_of_le_of_finrank_eq (inf_le_inf_left _ ?_) ?_
   · rintro _ ⟨z, rfl⟩
     induction z using TensorProduct.induction_on with
-    | zero => simp
+    | zero =>
+      set_option synthInstance.maxHeartbeats 200000 in
+        simp
     | tmul v b => exact ⟨v ⊗ₜ[ℚ_[l]] ⟨b.1, (P.PD Bw.Kw).Fil_anti 0 b.2⟩, rfl⟩
-    | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => simp only [map_add]; exact Submodule.add_mem _ hx hy
   · unfold multV at hm
     omega
 

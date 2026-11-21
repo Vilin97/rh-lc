@@ -123,5 +123,6 @@ theorem local_mass_le : ∀ (B : RowsAut) (U : Set B.I.GA), 1 ≤ B.I.n → IsCo
     eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num), ← ENNReal.rpow_natCast,
     ← ENNReal.rpow_mul]
   norm_num
+  exact Lp.aestronglyMeasurable y
 
 end GlobalTheory.LocMass

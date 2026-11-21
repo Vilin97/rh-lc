@@ -221,8 +221,8 @@ theorem isSelfDualC_crdLat (Y : HSp D) {Λ : Submodule (𝓞 D.host.E) Y.V} (h :
   have hm : ∀ y, crd Y y ∈ crdLat Y Λ ↔ y ∈ Λ := fun y =>
     ⟨fun ⟨x, hx, hxy⟩ => (crd Y).injective hxy ▸ hx, fun hy => ⟨y, hy, rfl⟩⟩
   refine ⟨⟨h.fg.map _, ?_⟩, fun y => ?_⟩
-  · have h1 : (crdLat Y Λ : Set (Fin Y.rank → D.host.E)) = Y.frame.equivFun.toLinearMap '' (Λ : Set Y.V) := rfl
-    rw [h1, ← Submodule.map_span, h.span_eq_top, Submodule.map_top, LinearEquiv.range]
+  · intro s _ hs
+    exact (LinearIndependent.iff_fractionRing (𝓞 D.host.E) D.host.E).mp hs
   · obtain ⟨y, rfl⟩ := (crd Y).surjective y
     rw [hm, hd]
     constructor

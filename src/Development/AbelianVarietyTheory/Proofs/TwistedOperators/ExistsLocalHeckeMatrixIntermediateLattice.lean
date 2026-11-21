@@ -274,6 +274,8 @@ theorem exists_local_matrix : ∀ (D : D7) (P : Formalism.L2.DIV.Pl D.host.E) (e
     have hz' : finPart D e • (fun i => finPart D (incA D (ϖ : D.host.E)) * finPart D (s (u i))) ∈
         GlobalTheory.AdLat.hat D.host.F (M : Set (Fin n → D.host.E)) := by
       convert hz using 1
+      ext i
+      simp only [Pi.smul_apply, smul_eq_mul]
       rw [mul_left_comm]
       rfl
     have e2 : (fun l => π (finPart D (incA D (ϖ : D.host.E)) * finPart D (s (u l)))) = w • u := by

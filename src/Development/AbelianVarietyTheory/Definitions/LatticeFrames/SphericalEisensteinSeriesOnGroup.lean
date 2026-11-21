@@ -31,7 +31,7 @@ def Lvl.K {V : HSp D} (l : Lvl V) : Subgroup (GA D V) := levelAll D.sp.cm.sig V.
 def Lvl.Good {V : HSp D} (l : Lvl V) : Prop :=
   Submodule.IsLattice D.host.E l.L ∧ (∀ v, IsSelfDualAt D.sp.cm.sig V.gram l.L v) ∧ IsMaj V l.c
 
-def Lvl.form {V : HSp D} (l : Lvl V) : Mx D V.rank V.rank := adj (l.c⁻¹).1 ⬝ (l.c⁻¹).1
+def Lvl.form {V : HSp D} (l : Lvl V) : Mx D V.rank V.rank := adj (l.c⁻¹).1 * (l.c⁻¹).1
 
 theorem Lvl.Good.isCompact_K {V : HSp D} {l : Lvl V} (h : l.Good) : IsCompact (l.K : Set (GA D V)) :=
   haveI := h.1
@@ -58,10 +58,10 @@ section Ops
 variable {n : ℕ}
 
 def projS {T : HSp D} {K : Subgroup (GA D T)} (ν : Measure K) (Φ : Mx D T.rank n → ℂ) : Mx D T.rank n → ℂ :=
-  fun x => ∫ k, Φ (mt T (k : GA D T)⁻¹ ⬝ x) ∂ν
+  fun x => ∫ k, Φ (mt T (k : GA D T)⁻¹ * x) ∂ν
 
 def ikS {T T' : HSp D} {t : ℕ} (d : HypDec T T' t) (μ : Measure (Mx D t n)) (Φ : Mx D T.rank n → ℂ) : Mx D T'.rank n → ℂ :=
-  fun a => ∫ x, Φ (d.jX ⬝ x + d.j0 ⬝ a) ∂μ
+  fun a => ∫ x, Φ (d.jX * x + d.j0 * a) ∂μ
 
 variable (θ : InfFam D) (τ : D.what₂.Tau)
 

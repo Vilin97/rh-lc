@@ -22,7 +22,7 @@ theorem mem_valO_of_below {K L : Type} [Field K] [NumberField K] [Field L] [Numb
   haveI : W.asIdeal.LiesOver Q.asIdeal := ⟨Ideal.ext fun r => h r⟩
   rw [mem_valO, mem_valO, show j x = algebraMap K L x from rfl,
     ← HeightOneSpectrum.valuation_liesOver L Q W x]
-  exact pow_le_one_iff (Ideal.IsDedekindDomain.ramificationIdx'_ne_zero_of_liesOver W.asIdeal Q.ne_bot)
+  exact pow_le_one_iff (Ideal.ramificationIdx_pos_of_isDedekindDomain' W.asIdeal Q.ne_bot).ne'
 
 theorem mem_Ow_iff_valO (D : D7) (w : D.what₂.places.Pl) (x : D.what₂.LL) : x ∈ Ow D w ↔ x ∈ valO (D.plEq w) :=
   D.val_nonneg_iff w x

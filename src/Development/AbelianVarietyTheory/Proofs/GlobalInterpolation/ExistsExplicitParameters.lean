@@ -106,7 +106,7 @@ theorem exists_sizeData_explicit : ∀ (eps : ℝ) (C : FC) (cD ch : ℝ), 0 < e
     exact_mod_cast (by omega : 0 < D.R.m)
   have hnp : (0 : ℝ) < D.R.n := by
     unfold Ranks.n
-    positivity
+    exact_mod_cast D.R.ord_pos
   have hxp : 0 < s.x := lt_trans one_pos s.one_lt_alt
   have hh0 : (0 : ℝ) < (h0v s ch : ℝ) := by
     have : 0 < ⌈s.x ^ ch⌉₊ := Nat.ceil_pos.mpr (Real.rpow_pos_of_pos hxp _)

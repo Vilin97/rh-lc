@@ -117,6 +117,8 @@ theorem fou_om (μ : kˣ →* ℂˣ) (gk : GL (Fin n) k) (hk : GL (Fin r) k) (Φ
       A * ∫ y, F ((gk⁻¹ : GL (Fin n) k).val * y * hk.val) ∂(volM ν (Fin n) (Fin r)) := by
     rw [fou, ← integral_const_mul]
     congr 1
+    funext y
+    simp only [om, hA, hF, htr]
     ring
   have hFint : ∫ z, F z ∂(volM ν (Fin n) (Fin r)) =
       fou ψ ν n r Φ ((hk⁻¹ : GL (Fin r) k).val * x * gk.val) := rfl
@@ -165,6 +167,8 @@ theorem fouL_surjective (hψ : Continuous ψ) (h1 : ψ ≠ 1) (hν : IsSelfDual 
   simp only [GlobalTheory.IndefiniteRowSideFullHecke.FourierJacobiAverage.hat, Function.comp_apply, Homeomorph.symm_apply_apply] at h2
   rw [fou_eq_pi, ← h2]
   congr 1
+  funext z
+  simp only [Function.comp_apply, Homeomorph.apply_symm_apply, dotProduct_comm]
 
 end GlobalTheory.LinearModelFourier
 

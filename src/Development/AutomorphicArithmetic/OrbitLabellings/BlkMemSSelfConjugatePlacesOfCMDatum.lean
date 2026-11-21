@@ -353,18 +353,18 @@ end P2
 section P3
 open Formalism.IncomingBounds Formalism.L2.Pj MvPolynomial
 
+private def trueT (hd : ZMod d) (g : Fin 2) (s : ZMod d) : ZMod d :=
+  if g = 0 then s else s + hd
+
 section Fam
 
 variable {C : Type} [Field C] {V : VF C} {T : Type} {r : T → ℕ} {cc : T → T} {a : T → ℕ → ℕ}
   {Orb : Type} [Fintype Orb] {tau : Orb → ZMod d → T} {gm : Orb → ZMod d → Matrix (Fin 2) (Fin 2) C}
   {J : Orb → Fin 2 → Type} [∀ o g, Fintype (J o g)]
-  {X : ∀ o, RowData C V d (fun _ => IIs r tau o) (J o)} {F : ∀ o, Flag (X o)}
+  {X : ∀ o, RowData C V d (fun _ => Σ t : ZMod d, Fin (r (tau o t))) (J o)}
+  {F : ∀ o, Flag (X o)}
   {gaC : Orb → ZMod d → ℕ → ℕ} {N : ℕ} {L : Orb → List (GlobalTheory d × ℝ)}
   {pl : (Σ o, Σ i : Fin (L o).length, Fin (rowsAt X L o i)) → Fin N} {n : ℕ} (plc : Fin N × Fin 2 ↪ Fin n)
-
-
-variable (hd) in
-private def trueT (g : Fin 2) (s : ZMod d) : ZMod d := if g = 0 then s else s + hd
 
 private theorem SelfConjugatePlaceSetting.en_fst (H : SelfConjugatePlaceSetting hd r cc a tau gm X F gaC N L pl) (o : Orb) (g : Fin 2) (s : ZMod d)
     (q : Fin ((X o).rkF g s)) : ((F o).en g s q).1 = trueT hd g s := by
@@ -780,7 +780,8 @@ section Fam
 variable {C : Type} [Field C] {V : VF C} {T : Type} {r : T → ℕ} {cc : T → T} {a : T → ℕ → ℕ}
   {Orb : Type} [Fintype Orb] {tau : Orb → ZMod d → T} {gm : Orb → ZMod d → Matrix (Fin 2) (Fin 2) C}
   {J : Orb → Fin 2 → Type} [∀ o g, Fintype (J o g)]
-  {X : ∀ o, RowData C V d (fun _ => IIs r tau o) (J o)} {F : ∀ o, Flag (X o)}
+  {X : ∀ o, RowData C V d (fun _ => Σ t : ZMod d, Fin (r (tau o t))) (J o)}
+  {F : ∀ o, Flag (X o)}
   {gaC : Orb → ZMod d → ℕ → ℕ} {N : ℕ} {L : Orb → List (GlobalTheory d × ℝ)}
   {pl : (Σ o, Σ i : Fin (L o).length, Fin (rowsAt X L o i)) → Fin N}
 

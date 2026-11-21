@@ -178,20 +178,4 @@ namespace RawDat
 
 end RawDat
 
-section ReplLemmas
-
-variable (d : RawDat S C) (Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (eQ : Formalism.L2.DIV.Pl D.host.E → AE D)
-  (ΦQ : Formalism.L2.DIV.Pl D.host.E → WO S.V S.W → ℂ)
-  (hdisj : Disjoint Q (S.Pg ∪ S.Pd ∪ S.Pl))
-  (hlev : ∀ PP ∈ Q, SplitLevPl S PP)
-  (hat : ∀ PP ∈ Q, Formalism.L2.NTheta.IsIdemAt (eQ PP) PP)
-  (hidem : IsIdemSum (eTot S (d.P1 ∪ Q) (d.esR Q eQ)) (S.Pg ∪ S.Pd ∪ (d.P1 ∪ Q)))
-  (hloc : ∀ PP ∈ Q, ∀ x : WO S.V S.W, ΦQ PP x = ΦQ PP (x.map (cA D (eQ PP) * ·)))
-  (R' : Subring ℂ) (hO : ∀ PP ∈ Q, ∀ x, ΦQ PP x ∈ R')
-  (φ' : WO S.V S.W → ℂ)
-  (hvec : IsThetaAt S.ψ (symplO S.V S.W) (heisO S.ψ S.V S.W) (cA D (eTot S (d.P1 ∪ Q) (d.esR Q eQ)))
-      (latO S.V S.W S.ΛV S.ΛW fun _ => True) 1 S.f₀ (PhiTot S (d.P1 ∪ Q) (d.esR Q eQ) (d.ΦlR Q ΦQ)) φ')
-
-end ReplLemmas
-
 end Formalism.IndefR.NX

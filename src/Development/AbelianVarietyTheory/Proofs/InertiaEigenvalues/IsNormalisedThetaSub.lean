@@ -322,18 +322,22 @@ theorem kfin_pull {φ : Sm E a} (h : FiniteDimensional ℂ (Submodule.span ℂ (
   rintro _ ⟨k, rfl⟩
   exact ⟨_, Submodule.subset_span ⟨_, rfl⟩, (act_pull (.cpt k) φ).symm⟩
 
-theorem isAutForm_pull {φ : Sm E a} (h : IsAutForm φ) : IsAutForm (pull E a φ) where
-  left γ g := by rw [pull_apply, map_mul, thetaA_ratGL, h.left, pull_apply]
-  level := level_pull h.level
-  kfin := kfin_pull h.kfin
-  zfin := by
+theorem isAutForm_pull {φ : Sm E a} (h : IsAutForm φ) : IsAutForm (pull E a φ) := by
+  constructor
+  case left =>
+    intro γ g
+    rw [pull_apply, map_mul, thetaA_ratGL, h.left, pull_apply]
+  case level => exact level_pull h.level
+  case kfin => exact kfin_pull h.kfin
+  case zfin =>
     have := h.zfin
     refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ ((fun z : Module.End ℂ (Sm E a) => z φ) ''
       Zalg E a)).map (pull E a).toLinearMap) (Submodule.span_le.2 ?_)
     rintro _ ⟨z, hz, rfl⟩
     obtain ⟨z', h1, h2⟩ := Zalg_pull hz
     exact ⟨_, Submodule.subset_span ⟨z', h1, rfl⟩, (h2 φ).symm⟩
-  growth g := by
+  case growth =>
+    intro g
     obtain ⟨C, N, h1⟩ := h.growth (thetaA E a g)
     refine ⟨C, N, fun y => ?_⟩
     rw [pull_apply, map_mul, thetaA_infGL, ← height_theta]
@@ -491,8 +495,10 @@ theorem isAbsPow_thetaChar {χ : HChar E} {s : ℝ} (h : χ.IsAbsPow s) : (theta
   · obtain ⟨v, rfl⟩ := hs v
     have e : Ideal.absNorm (conjSrc (IsCMField.complexConj E).toRingEquiv v).asIdeal = Ideal.absNorm v.asIdeal := by
       rw [(GlobalTheory.Mem.Chr.conjPl_iff_comap _ _ _).1 (conjPl_conjSrc (IsCMField.complexConj E).toRingEquiv v)]
-      exact Nat.card_congr (Ideal.quotientEquiv _ _ (RingOfIntegers.mapRingEquiv _)
-        (Ideal.map_comap_of_surjective _ (RingEquiv.surjective _) _).symm).toEquiv
+      simp only [Ideal.absNorm_eq_natCard]
+      let c := RingOfIntegers.mapRingEquiv (IsCMField.complexConj E).toRingEquiv
+      exact Nat.card_congr (Ideal.quotientEquiv _ _ c
+        (Ideal.map_comap_of_surjective (c : 𝓞 E →+* 𝓞 E) c.surjective v.asIdeal).symm).toEquiv
     have hu : ∀ x, IsUnifAt (conjSrc (IsCMField.complexConj E).toRingEquiv v) x →
         IsUnifAt v (Units.map (conjLoc _ v).toMonoidHom x) := fun x hx => ((conjLoc_spec _ v).2.2 x.val).trans hx
     rw [HChar.val, HChar.locK, MonoidHom.comp_apply, hl, χ.val_eq (h.1 v) _ (hu _ (unif_spec _)), Units.val_inv_eq_inv_val, h.2.1, e,
@@ -533,15 +539,24 @@ theorem blocks_sign (h : ∑ _ : Fin d, a = N) (b : Fin d) (i j : Fin a) :
 theorem thetaGL_leviEmb (h : ∑ _ : Fin d, a = N) (c : R →+* R) (m : Fin d → GL (Fin a) R) :
     thetaGL N c (leviEmb R (stdBlocks (fun _ : Fin d => a) h) m) =
       leviEmb R (stdBlocks (fun _ : Fin d => a) h) fun b => thetaGL a c (m b.rev) := by
+  have entry_same (g : Fin d → GL (Fin a) R) (b : Fin d) (i j : Fin a) :
+      (leviEmb R (stdBlocks (fun _ : Fin d => a) h) g).val
+        (stdBlocks (fun _ : Fin d => a) h ⟨b, i⟩) (stdBlocks (fun _ : Fin d => a) h ⟨b, j⟩) =
+      (g b).val i j := by
+    simp [leviEmb, Matrix.blockDiagonal'_apply_eq]
+  have entry_ne (g : Fin d → GL (Fin a) R) {b b' : Fin d} (hne : b ≠ b') (i j : Fin a) :
+      (leviEmb R (stdBlocks (fun _ : Fin d => a) h) g).val
+        (stdBlocks (fun _ : Fin d => a) h ⟨b, i⟩) (stdBlocks (fun _ : Fin d => a) h ⟨b', j⟩) = 0 := by
+    simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hne]
   ext i j
   obtain ⟨⟨b, i⟩, rfl⟩ := (stdBlocks (fun _ : Fin d => a) h).surjective i
   obtain ⟨⟨b', j⟩, rfl⟩ := (stdBlocks (fun _ : Fin d => a) h).surjective j
   rw [thetaGL_apply, blocks_rev, blocks_rev, ← map_inv]
   by_cases e : b = b'
   · subst e
-    rw [leviEmb_apply_same, leviEmb_apply_same, thetaGL_apply, blocks_sign]
+    rw [entry_same, entry_same, thetaGL_apply, blocks_sign]
     rfl
-  · rw [leviEmb_apply_ne _ _ _ e, leviEmb_apply_ne _ _ _ (fun e' => e (Fin.rev_injective e').symm), map_zero, mul_zero]
+  · rw [entry_ne _ e, entry_ne _ (fun e' => e (Fin.rev_injective e').symm), map_zero, mul_zero]
 
 theorem thetaGL_mem_unipRad (h : ∑ _ : Fin d, a = N) (c : R →+* R) {u : GL (Fin N) R}
     (hu : u ∈ unipRad R (stdBlocks (fun _ : Fin d => a) h)) :

@@ -50,10 +50,13 @@ theorem dual_frame {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {Λ : Submodul
     ∃ β' : GL (Fin V.rank) (Lev.EAf D), Formalism.UG.cT (cjA D) β.val * V.gram.map (inc D) * β'.val = 1 ∧
       (∀ i j, (β⁻¹ * β').1 i j ∈ OA D) ∧ (∀ i j, (β'⁻¹ * β).1 i j ∈ OA D) := by
   have hL := GlobalTheory.DiagLiftFix.isLattice_of_isFrame hβ
-  have hΛ := GlobalTheory.StdFrames.eq_lat hβ hL
   obtain ⟨β', h1, -⟩ := exists_dual_frame V β
-  have e : GlobalTheory.NormSum.AdLattice.lat β' = Λ := by rw [← dualL_lat_eq h1, ← hΛ, hd]
-  have h' : IsFrame β' Λ := e ▸ GlobalTheory.StdFrames.isFrame_lat β'
+  have h' : IsFrame β' Λ := by
+    intro y
+    rw [← hd, ← mem_hat, mem_hat_dualL_iff hL]
+    rw [← dual_frame_gen (OA D) (cjA D) (fun _ => cjA_mem) h1]
+    refine forall_congr' fun x => ?_
+    rw [mem_hat, hβ, ← cjA_mem_iff, cjA_hA, hA_eq]
   exact ⟨β', h1, frame_change hβ h', frame_change h' hβ⟩
 
 end GlobalTheory.ConjPlaceUnitary

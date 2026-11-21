@@ -358,7 +358,7 @@ end Comparison₂
 
 section Move
 
-open GlobalTheory.PartsOccurProof Formalism.IndefR.Lev Formalism.L2.DIV
+open Formalism.IndefR.Lev Formalism.L2.DIV
 
 variable {Pg Pg' : Finset (Pl D.host.E)} (pl : LevelCuspCharacters.Sq D.host ≃ ↥Pg)
   (red : ∀ v : LevelCuspCharacters.Sq D.host, kP (pl v).1 ≃+* ZMod (D.host.g v.1))

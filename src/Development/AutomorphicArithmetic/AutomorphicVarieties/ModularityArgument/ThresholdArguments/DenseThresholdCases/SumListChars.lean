@@ -36,7 +36,8 @@ private def Cj.pull {γ : ℂ ≃+* ℂ} {π : Representation ℂ G V} {π' : Re
   ⟨{ carrier := {v | f v ∈ S.toSubmodule}
      add_mem' := fun {a b} ha hb => by
        show f (a + b) ∈ S.toSubmodule
-       rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+       rw [map_add f]
+       exact add_mem ha hb
      zero_mem' := by
        show f 0 ∈ S.toSubmodule
        rw [map_zero]; exact zero_mem _

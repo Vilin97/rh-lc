@@ -76,7 +76,7 @@ theorem sup_bounds_le_Gc : ∀ (D : D7) (B : WeightFamilies.Prov D) (large₂ : 
   have hf : (2 : ℝ) ≤ D.R.f := by
     have : 2 ≤ D.R.f := by
       unfold Ranks.f Ranks.n
-      have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity)
+      have := And.intro (Nat.one_le_two_pow (n := D.R.e)) D.R.ord_pos
       omega
     exact_mod_cast this
   have hr : (6 : ℝ) ≤ D.R.r := by

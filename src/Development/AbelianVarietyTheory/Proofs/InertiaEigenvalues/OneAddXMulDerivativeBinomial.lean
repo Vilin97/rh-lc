@@ -22,9 +22,9 @@ section Algebra
 
 theorem one_add_X_mul_derivative_binomial {l : ℕ} [Fact l.Prime] (L : Type) [Field L] [CharZero L]
     [Algebra ℤ_[l] L] (c : ℤ_[l]) :
-    (1 + X) * d⁄dX L (binomialSeries L c) = C (algebraMap ℤ_[l] L c) * binomialSeries L c := by
+    (1 + X) * PowerSeries.derivative (binomialSeries L c) = C (algebraMap ℤ_[l] L c) * binomialSeries L c := by
   have hc : ∀ (f : L⟦X⟧) (n : ℕ),
-      coeff n ((1 + X) * d⁄dX L f) = coeff (n + 1) f * (n + 1) + coeff n f * n := by
+      coeff n ((1 + X) * PowerSeries.derivative f) = coeff (n + 1) f * (n + 1) + coeff n f * n := by
     intro f n
     rw [add_mul, one_mul, map_add (f := _), coeff_derivative]
     cases n with
@@ -44,15 +44,15 @@ theorem one_add_X_mul_derivative_binomial {l : ℕ} [Fact l.Prime] (L : Type) [F
   linear_combination -h2
 
 theorem derivative_rescale_exp (L : Type) [Field L] [Algebra ℚ L] (a : L) :
-    d⁄dX L (rescale a (exp L)) = C a * rescale a (exp L) := by
+    PowerSeries.derivative (rescale a (exp L)) = C a * rescale a (exp L) := by
   ext n
   have h := congrArg (coeff n) (derivative_exp L)
   rw [coeff_derivative] at h
   rw [coeff_derivative, coeff_C_mul, coeff_rescale, coeff_rescale, ← h]
   ring
 
-theorem ode_unique {L : Type} [Field L] [CharZero L] (a : L) {f g : L⟦X⟧} (hf : d⁄dX L f = C a * f)
-    (hg : d⁄dX L g = C a * g) (h0 : constantCoeff f = constantCoeff g) : f = g := by
+theorem ode_unique {L : Type} [Field L] [CharZero L] (a : L) {f g : L⟦X⟧} (hf : PowerSeries.derivative f = C a * f)
+    (hg : PowerSeries.derivative g = C a * g) (h0 : constantCoeff f = constantCoeff g) : f = g := by
   ext n
   induction n with
   | zero => simpa using h0
@@ -100,8 +100,8 @@ theorem map_binomial_of_exp (f : O⟦X⟧ →ₐ[O] L⟦X⟧) (m : L) (hf : f X 
   refine ode_unique _ ?_ (derivative_rescale_exp L _) ?_
   · have h2 := congrArg g (one_add_X_mul_derivative_binomial L w)
     rw [map_mul, map_mul, map_add (f := _), map_one, gX, gC] at h2
-    have h3 : d⁄dX L (g (binomialSeries L w)) =
-        g (d⁄dX L (binomialSeries L w)) * (C m * rescale m (exp L)) := by
+    have h3 : PowerSeries.derivative (g (binomialSeries L w)) =
+        g (PowerSeries.derivative (binomialSeries L w)) * (C m * rescale m (exp L)) := by
       rw [e, e, derivative_subst hs, map_sub, derivative_rescale_exp]; simp
     rw [h3, map_mul]
     linear_combination (C m) * h2

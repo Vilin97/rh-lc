@@ -17,7 +17,7 @@ namespace GlobalTheory.BSP
 theorem le_one_of_mul_pow_le_one (c : ℝ) (n : ℕ) (h : ∀ t : ℝ≥0, t < 1 → c * (t : ℝ) ^ n ≤ 1) : c ≤ 1 := by
   have ht : Filter.Tendsto (fun t : ℝ≥0 => c * (t : ℝ) ^ n) (nhdsWithin (1 : ℝ≥0) (Set.Iio 1)) (nhds (c * ((1 : ℝ≥0) : ℝ) ^ n)) :=
     ((continuous_const.mul ((NNReal.continuous_coe).pow n)).tendsto 1).mono_left nhdsWithin_le_nhds
-  have : (nhdsWithin (1 : ℝ≥0) (Set.Iio 1)).NeBot := nhdsWithin_Iio_self_neBot' ⟨0, zero_lt_one⟩
+  have : (nhdsWithin (1 : ℝ≥0) (Set.Iio 1)).NeBot := nhdsLT_neBot_of_exists_lt ⟨0, zero_lt_one⟩
   have h2 := le_of_tendsto ht (eventually_nhdsWithin_of_forall fun t (hti : t ∈ Set.Iio 1) => h t hti)
   simpa using h2
 
@@ -53,7 +53,7 @@ theorem disc_bdd_isSeries : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK
     have e : ((a n).comp (R : bk.DS ρ' →+ bk.DS ρ)) = a' n :=
       (GlobalTheory.T.closedDiscGaugeCompletion_basic_properties l bk.S (X : bk.S) ρ').2.2.1 _ htor _ _ ((hcont ρ hρ a ha2 n).comp hRc)
         (hcont ρ' hρ' a' ha2' n) fun x => by
-          simp only [AddMonoidHom.coe_comp, AddMonoidHom.coe_coe, Function.comp_apply]
+          simp only [AddMonoidHom.coe_comp, AddMonoidHom.coe_ofClass, Function.comp_apply]
           rw [hR.ext x, RingHom.id_apply, ha1, ha1']
     have e2 : a n y = a' n y' := by rw [← hRy, ← e]; rfl
     rw [e2]

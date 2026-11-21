@@ -145,7 +145,10 @@ theorem exists_eq_embedding [IsTotallyReal F] (lam : InfinitePlace F → ℝ)
 
 theorem extensionEmbedding_algebraMap (w : InfinitePlace F) (x : F) :
     InfinitePlace.Completion.extensionEmbedding w (algebraMap F (Ainf F) x w) = w.embedding x :=
-  InfinitePlace.Completion.extensionEmbedding_coe w _
+  by
+    rw [InfiniteAdeleRing.algebraMap_apply, ← InfinitePlace.Completion.algebraMap_apply,
+      AbsoluteValue.Completion.algebraMap_def, InfinitePlace.Completion.extensionEmbedding_coe]
+    simp [WithAbs.algebraMap_right_apply]
 
 theorem exists_scaling [IsTotallyReal F] {ψ : AddChar (AF F) ℂ} (h : IsCharAF F ψ) :
     ∃ a : F, a ≠ 0 ∧ ∀ x : Ainf F, psiInf F ψ x = Complex.exp (2 * Real.pi * Complex.I *

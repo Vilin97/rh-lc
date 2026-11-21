@@ -52,8 +52,9 @@ def gvO : (Fin X.B.I.n → X.B.I.E) →ₛₗ[sO' X] (VS D).V where
       (algebraMap_smul D.host.E (sO' X c) _).symm
     rw [hc, ← map_smul]
     congr 1
-    rw [Algebra.smul_def, map_mul]
-    rfl
+    funext i
+    change X.ιE ((c : X.B.I.E) * v i) = X.ιE (c : X.B.I.E) * X.ιE (v i)
+    exact map_mul X.ιE _ _
 
 def gvE : (Fin X.B.I.n → X.B.I.E) →ₛₗ[sE X] (VS D).V where
   toFun := gv X
@@ -68,7 +69,9 @@ def gvE : (Fin X.B.I.n → X.B.I.E) →ₛₗ[sE X] (VS D).V where
     show X.bas.equivFun.symm (fun i => X.ιE ((c • v) i)) = (sE X c) • X.bas.equivFun.symm (fun i => X.ιE (v i))
     rw [← map_smul]
     congr 1
-    rfl
+    funext i
+    change X.ιE (c * v i) = X.ιE c * X.ιE (v i)
+    exact map_mul X.ιE _ _
 
 end LatticeCoordinateLemmas
 
@@ -76,10 +79,9 @@ end LatticeCoordinateLemmas
 open LatticeCoordinateLemmas in
 theorem latOfLattice_holds {D : D7} (X : HidaSetting D) (u : D.what₂.Word) : LatOfLattice X u := by
   intro h
-  haveI : RingHomSurjective (sO' X) := ⟨(RingOfIntegers.mapRingEquiv X.ιE).surjective⟩
-  haveI : RingHomSurjective (sE X) := ⟨X.ιE.surjective⟩
-  obtain ⟨hfg, hspan⟩ := PIW.AdelClassFin.mLat_of PIW.AdelClassFin.lattice_intersection'
-    PIW.AdelClassFin.lattice_denominator X.B.I ((h : X.B.I.Gf) * X.xu u)
+  have : RingHomSurjective (sO' X) := ⟨(RingOfIntegers.mapRingEquiv X.ιE).surjective⟩
+  have hfg := (PIW.AdelClassFin.mLat_of PIW.AdelClassFin.lattice_intersection'
+    PIW.AdelClassFin.lattice_denominator X.B.I ((h : X.B.I.Gf) * X.xu u)).1
   refine ⟨(PIW.AdelClassFin.abelian₂ X.B.I ((h : X.B.I.Gf) * X.xu u)).map (gvO X), ?_, ?_⟩
   · ext y
     constructor
@@ -89,9 +91,6 @@ theorem latOfLattice_holds {D : D7} (X : HidaSetting D) (u : D.what₂.Word) : L
       exact hv
     · intro hy
       exact ⟨X.crd y, hy, gv_crd X y⟩
-  · refine ⟨hfg.map _, ?_⟩
-    rw [Submodule.map_coe, show ⇑(gvO X) = ⇑(gvE X) from rfl, Submodule.span_image, hspan,
-      Submodule.map_top, LinearMap.range_eq_top]
-    exact fun y => ⟨X.crd y, gv_crd X y⟩
+  · exact Submodule.IsLattice.of_fg D.host.E (hfg.map (gvO X))
 
 end Formalism.L2.SG.PoincareInHH.Cut

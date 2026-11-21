@@ -89,11 +89,10 @@ theorem prim_prod (c : prim κ t (A ⊗ B)) : c.1 = pullOver κ t (fst A B) (pri
 theorem grpMor_prod {σ : R →+* R'} {b : S' ⟶ S} {f : A'.left ⟶ A.left} {g : B'.left ⟶ B.left}
     (m : GrpMor κ t A κ' t' A' σ b f) (n : GrpMor κ t B κ' t' B' σ b g) {h : (A' ⊗ B').left ⟶ (A ⊗ B).left}
     (h₁ : h ≫ (fst A B).left = (fst A' B').left ≫ f) (h₂ : h ≫ (snd A B).left = (snd A' B').left ≫ g) :
-    GrpMor κ t (A ⊗ B) κ' t' (A' ⊗ B') σ b h where
-  dp := m.dp
-  base := m.base
-  w := by rw [← Over.w (fst A B), ← Category.assoc, h₁, Category.assoc, m.w, ← Category.assoc, Over.w]
-  mul T x y x₀ y₀ hx hy := by
+    GrpMor κ t (A ⊗ B) κ' t' (A' ⊗ B') σ b h := by
+  refine ⟨m.dp, m.base, ?_, ?_⟩
+  · rw [← Over.w (fst A B), ← Category.assoc, h₁, Category.assoc, m.w, ← Category.assoc, Over.w]
+  · intro T x y x₀ y₀ hx hy
     refine Limits.pullback.hom_ext ?_ ?_
     · change (x₀ * y₀).left ≫ (fst A B).left = ((x * y).left ≫ h) ≫ (fst A B).left
       rw [Category.assoc, h₁, ← Category.assoc, ← Over.comp_left, ← Over.comp_left, MonObj.mul_comp,
@@ -115,7 +114,7 @@ theorem IsCorrForm.pull {P : LB (A ⊗ B).left} {φ : Crys κ t A →ₗ[R] Crys
   obtain ⟨N, a, c, hc, hφ⟩ := H
   have k := grpMor_prod m n h₁ h₂
   refine ⟨tensorForm κ' t' A' B' (fun i ↦ m.pull (a i)) fun i ↦ n.pull (c i),
-    ⟨N, _, _, (isChern_existsUnique_and_iso R' _ κ' _ _).2 _ _ (pull_isLB hP h) hP' e _ ?_,
+    ⟨N, _, _, (isChern_existsUnique_and_iso R' _ κ' _ _).2 _ _ (LB.isLB_pull hP h) hP' e _ ?_,
       tensorForm_apply _ _ _ _ _ _⟩, fun x x' y y' hx hy ↦ ?_⟩
   · have := isChern_pull k.isMor hc
     set_option synthInstance.maxHeartbeats 100000 in
@@ -124,9 +123,13 @@ theorem IsCorrForm.pull {P : LB (A ⊗ B).left} {φ : Crys κ t A →ₗ[R] Crys
     rw [IsMor.pullCohomologyTwo_cup]
     congr 1
     · congr 1
-      exact (IsMor.pullback1_comp _ _ (m.comp (homMor κ' t' (fst A' B'))).isMor (fun _ ↦ rfl) rfl _).trans
+      have mf : IsMor κ (A.hom ≫ t) κ' ((A' ⊗ B').hom ≫ t') σ ((fst A' B').left ≫ f) :=
+        ⟨m.dp, by rw [Category.assoc, m.isMor.w, ← Category.assoc, ← Category.assoc, Over.w]⟩
+      exact (IsMor.pullback1_comp _ _ mf (fun _ ↦ rfl) rfl _).trans
         (IsMor.pullback1_comp _ _ _ (fun _ ↦ rfl) h₁ _).symm
-    · exact (IsMor.pullback1_comp _ _ (n.comp (homMor κ' t' (snd A' B'))).isMor (fun _ ↦ rfl) rfl _).trans
+    · have ng : IsMor κ (B.hom ≫ t) κ' ((A' ⊗ B').hom ≫ t') σ ((snd A' B').left ≫ g) :=
+        ⟨n.dp, by rw [Category.assoc, n.isMor.w, ← Category.assoc, ← Category.assoc, Over.w]⟩
+      exact (IsMor.pullback1_comp _ _ ng (fun _ ↦ rfl) rfl _).trans
         (IsMor.pullback1_comp _ _ _ (fun _ ↦ rfl) h₂ _).symm
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [tensorForm_apply, hφ, map_sum, map_mul, hx _, hy _]
@@ -175,12 +178,12 @@ theorem exists_isCorrForm (C : CupSquare κ t (A ⊗ B)) {P : LB (A ⊗ B).left}
   let r : Cris.H1 κ ((A ⊗ B).hom ≫ t) → prim κ t B := fun c ↦ primPull κ t (inr A B) ⟨c, hm c⟩
   have d : ∀ c, c = pullOver κ t (fst A B) (l c).1 + pullOver κ t (snd A B) (r c).1 := fun c ↦ prim_prod ⟨c, hm c⟩
   have z₁ : ∑ k, cup _ (pullOver κ t (fst A B) (l (u k)).1) (pullOver κ t (fst A B) (l (v k)).1) = 0 := by
-    have e := eq_zero_of_triv (pull_isLB hP _) h₂ (isChern_pull (homMor κ t (inl A B)).isMor hz)
+    have e := eq_zero_of_triv (LB.isLB_pull hP _) h₂ (isChern_pull (homMor κ t (inl A B)).isMor hz)
     rw [crystallinePull2_sum_cup] at e
     rw [← crystallinePull2_sum_cup _ (homMor κ t (fst A B)).isMor]
     exact (congrArg _ e).trans (map_zero _)
   have z₂ : ∑ k, cup _ (pullOver κ t (snd A B) (r (u k)).1) (pullOver κ t (snd A B) (r (v k)).1) = 0 := by
-    have e := eq_zero_of_triv (pull_isLB hP _) h₁ (isChern_pull (homMor κ t (inr A B)).isMor hz)
+    have e := eq_zero_of_triv (LB.isLB_pull hP _) h₁ (isChern_pull (homMor κ t (inr A B)).isMor hz)
     rw [crystallinePull2_sum_cup] at e
     rw [← crystallinePull2_sum_cup _ (homMor κ t (snd A B)).isMor]
     exact (congrArg _ e).trans (map_zero _)
@@ -203,11 +206,11 @@ theorem IsCorrForm.adjoint {A₁ B₁ : Over S} [GrpObj A₁] [GrpObj B₁] (C :
     [IsMonHom v] (e : LBIso (ev P (fst A B₁) (snd A B₁ ≫ v)) (ev P₁ (fst A B₁ ≫ u) (snd A B₁)))
     (x : Crys κ t A) (y : Crys κ t B₁) : φ x (push κ t v y) = φ₁ (push κ t u x) y := by
   obtain ⟨χ, hχ, k⟩ := H.pull hP (homMor κ t (𝟙 A)) (homMor κ t v) (by simp only [← Over.comp_left, lift_fst, lift_snd, Category.comp_id])
-    (by simp only [← Over.comp_left, lift_fst, lift_snd, Category.comp_id]) (pull_isLB hP₁ _) e
+    (by simp only [← Over.comp_left, lift_fst, lift_snd, Category.comp_id]) (LB.isLB_pull hP₁ _) e
   obtain ⟨χ₁, hχ₁, k₁⟩ := H₁.pull hP₁ (homMor κ t u) (homMor κ t (𝟙 B₁))
     (h := (lift (fst A B₁ ≫ u) (snd A B₁)).left) (by simp only [← Over.comp_left, lift_fst, lift_snd, Category.comp_id]) (by simp only [← Over.comp_left, lift_fst, lift_snd, Category.comp_id])
-    (pull_isLB hP₁ _) (ChernExists.lbIso_refl (pull_isLB hP₁ _))
-  obtain rfl := hχ.unique C (pull_isLB hP₁ _) hχ₁
+    (LB.isLB_pull hP₁ _) (ChernExists.lbIso_refl (LB.isLB_pull hP₁ _))
+  obtain rfl := hχ.unique C (LB.isLB_pull hP₁ _) hχ₁
   have e₁ := k (push κ t (𝟙 A) x) x (push κ t v y) y (fun _ ↦ rfl) fun _ ↦ rfl
   have e₂ := k₁ (push κ t u x) x (push κ t (𝟙 B₁) y) y (fun _ ↦ rfl) fun _ ↦ rfl
   have e₃ : φ (push κ t (𝟙 A) x) (push κ t v y) = φ₁ (push κ t u x) (push κ t (𝟙 B₁) y) := e₁.symm.trans e₂

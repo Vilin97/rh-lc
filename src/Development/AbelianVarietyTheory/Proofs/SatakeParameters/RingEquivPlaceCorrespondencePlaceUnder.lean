@@ -198,7 +198,8 @@ theorem qV_eq (h : Over e v w) : Formalism.UG.qV M w = Formalism.UG.qV K v := by
   have e1 : w.asIdeal = v.asIdeal.map (RingOfIntegers.mapRingEquiv e : 𝓞 K →+* 𝓞 M) := by
     rw [show v.asIdeal = w.asIdeal.comap (RingOfIntegers.mapRingEquiv e : 𝓞 K →+* 𝓞 M) from Ideal.ext h]
     exact (Ideal.map_comap_of_surjective _ (RingEquiv.surjective _) _).symm
-  exact (Nat.card_congr (Ideal.quotientEquiv _ _ (RingOfIntegers.mapRingEquiv e) e1).toEquiv).symm
+  simpa [Formalism.UG.qV, Ideal.absNorm_eq_natCard] using
+    (Nat.card_congr (Ideal.quotientEquiv _ _ (RingOfIntegers.mapRingEquiv e) e1).toEquiv).symm
 
 def cFin (e : K ≃+* M) : Af K →+* Af M :=
   letI := e.toRingHom.toAlgebra

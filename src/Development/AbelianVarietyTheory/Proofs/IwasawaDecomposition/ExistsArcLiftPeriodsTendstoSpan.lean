@@ -76,7 +76,7 @@ theorem eventually_eq_of_lattice {B La V : Type} [TopologicalSpace B] [AddCommGr
   choose c hc using hc
   let T : B → V →L[ℝ] V := fun b => ∑ i, (LinearMap.toContinuousLinearMap (bR.coord i)).smulRight (P b (c i))
   have hT : ∀ b x, T b x = ∑ i, bR.repr x i • P b (c i) := fun b x => by simp [T]
-  have hTc : Continuous T := continuous_finset_sum _ fun i _ =>
+  have hTc : Continuous T := continuous_finsetSum _ fun i _ =>
     (ContinuousLinearMap.smulRightL ℝ V V (LinearMap.toContinuousLinearMap (bR.coord i))).continuous.comp (hP _)
   have hT0 : T b₀ = ContinuousLinearMap.id ℝ V := by
     ext x
@@ -149,7 +149,7 @@ theorem continuous_perFr {E : Type} [Field E] [NumberField E] [IsCMField E] {r :
     exact continuousAt_inv₀ (hx b _).1
   · exact continuous_const
   · simp only [ReciprocityTheory.ChartRestriction.G.FD.hermC]
-    exact continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun c _ =>
+    exact continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun c _ =>
       (((hm _).matrix_elem _ _).mul continuous_const).mul continuous_const
   · exact continuous_const
   · exact continuous_const

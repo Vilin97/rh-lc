@@ -305,7 +305,7 @@ theorem pairN_nat {D : D7} {N N' r : ℕ} (Ω : ℂ_[p]) (b : Fin r → Matrix (
 
 theorem continuous_pairN {D : D7} {N N' r : ℕ} (Ω : ℂ_[p]) (b : Fin r → Matrix (Fin N') (Fin N) D.host.E)
     (y : Matrix (Fin N') (Fin N) D.host.E) : Continuous (TaylorLogMetric.pairN D lam Ω b y) :=
-  continuous_const.mul (continuous_finset_sum _ fun i _ => (continuous_zc.comp (continuous_apply i)).mul continuous_const)
+  continuous_const.mul (continuous_finsetSum _ fun i _ => (continuous_zc.comp (continuous_apply i)).mul continuous_const)
 
 theorem lamC_prod {κ : Type} (m : κ →₀ ℕ) (f : κ → ℂ) (hf : ∀ k, f k ∈ TaylorLogMetric.Qbar) :
     (m.prod fun k n => f k ^ n) ∈ TaylorLogMetric.Qbar ∧
@@ -424,7 +424,7 @@ theorem ptMom : ∀ (D : D7) (X : Fields) (s : Seam D X) (cc : Ideal (𝓞 D.hos
             rw [Nat.cast_smul_eq_nsmul]; exact nsmul_mem (hβ i) _
     obtain ⟨l, γ, yy, hγ1, hγ2⟩ := GlobalTheory.MonoJet.monomial_eq_sum_jet D p a b lam (m.mapDomain fun v => (s.iT v.1, v.2))
     let G : Fin l → C(Fin r → ℤ_[p], ℂ_[p]) := fun i =>
-      g₀ * ⟨fun c => ∏ j, TaylorLogMetric.pairN D lam Ω bb (yy i j) c, continuous_finset_prod _ fun j _ => continuous_pairN lam Ω bb _⟩
+      g₀ * ⟨fun c => ∏ j, TaylorLogMetric.pairN D lam Ω bb (yy i j) c, continuous_finsetProd _ fun j _ => continuous_pairN lam Ω bb _⟩
     have hG := fun i => hJ _ (yy i) (G i) fun c => by
       change g₀ _ * _ = _
       rw [hg₀]

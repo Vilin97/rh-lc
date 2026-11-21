@@ -93,8 +93,16 @@ theorem dbl_line_coord {σ : E →ₐ[F] E} {n d : ℕ} {X : Spc F E n} {Y : Spc
       rw [← he, Matrix.mul_assoc, ← Matrix.transpose_mul, e, Matrix.transpose_one, Matrix.mul_one]
     have hsy : cf (Matrix.fromCols δ₁ δ₂) = cf (Matrix.fromCols γ₁ γ₂) := by
       simp only [cf]
-      rw [← he, GlobalTheory.VacTransport.symp_mul_transpose (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) _ _ _ (GlobalTheory.InertDbl.matD g⁻¹) (g⁻¹).2]
+      rw [← he]
+      congr 2
+      exact GlobalTheory.VacTransport.symp_mul_transpose
+        (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ)
+        (inclR (F := F) (AF F) θ) (X.J.map (inclR (F := F) (AF F)))
+        (dbl (Y.J.map (inclR (F := F) (AF F))))
+        (GlobalTheory.InertDbl.matD g⁻¹) (g⁻¹).2 (Matrix.fromCols γ₁ γ₂) (Matrix.fromCols γ₁ γ₂)
     have h := hS.impl g (Matrix.fromCols δ₁ δ₂) Φ hΦs
+    change omd g (dd.rho ψ (Matrix.fromCols δ₁ δ₂) Φ) =
+      dd.rho ψ (actB (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) g (Matrix.fromCols δ₁ δ₂)) (omd g Φ) at h
     rw [hback, h1 δ₁ k₁ δ₂ k₂, map_smul, hsy] at h
     exact h.symm
 

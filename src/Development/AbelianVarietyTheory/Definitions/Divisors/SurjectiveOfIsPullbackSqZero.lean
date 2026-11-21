@@ -78,8 +78,8 @@ def thickHom {U V : AffOp X₀} (a : U ⟶ V) (α : S.F.obj U →ₐ[R] S'.F.obj
 def thick : AffOp X₀ ⥤ Thick (divided₂ hI) (s₀ ≫ spMap π) where
   obj := S.thickObj hI
   map a := S.thickHom S hI a (mp S.F a) (S.nat a)
-  map_id U := Thick.hom_ext (mp_id S.F U)
-  map_comp a b := Thick.hom_ext (mp_comp S.F a b)
+  map_id U := Thick.Hom.ext' (AlgHom.ext (mp_id S.F U))
+  map_comp a b := Thick.Hom.ext' (AlgHom.ext (mp_comp S.F a b))
 
 def coef : CoefMap (RingHom.id R) (O (divided₂ hI) (s₀ ≫ spMap π)) S.F where
   G := S.thick hI
@@ -171,12 +171,11 @@ def Sys.LocIso.IsDefect {S S' : Sys I π s₀} (Φ : S.LocIso S')
 def Sys.LocIso.refl (S : Sys I π s₀) : S.LocIso S := ⟨fun _ ↦ AlgEquiv.refl, fun _ _ ↦ rfl⟩
 
 theorem redMor (hI : I ^ 2 = 0) (hk : RingHom.ker π = I) (s₀ : X₀ ⟶ Sp R₀) :
-    IsMor (divided₂ hI) (s₀ ≫ spMap π) (dp0 R₀) s₀ π (𝟙 X₀) where
-  dp := by
-    have z : ∀ a ∈ I, π a = 0 := fun a ha ↦ RingHom.mem_ker.1 (hk ▸ ha)
-    refine (isDPMorphism_iff _ _ _).2 ⟨Ideal.map_le_iff_le_comap.2 fun a ha ↦ z a ha, fun n hn a ha ↦ ?_⟩
-    rw [z a ha, z _ ((divided₂ hI).dpow_mem hn ha), dpow_eval_zero _ hn]
-  w := Category.id_comp _
+    IsMor (divided₂ hI) (s₀ ≫ spMap π) (dp0 R₀) s₀ π (𝟙 X₀) := by
+  refine ⟨?_, Category.id_comp _⟩
+  have z : ∀ a ∈ I, π a = 0 := fun a ha ↦ RingHom.mem_ker.1 (hk ▸ ha)
+  refine (isDPMorphism_iff _ _ _).2 ⟨Ideal.map_le_iff_le_comap.2 fun a ha ↦ z a ha, fun n hn a ha ↦ ?_⟩
+  rw [z a ha, z _ ((divided₂ hI).dpow_mem hn ha), dpow_eval_zero _ hn]
 
 def rho (hI : I ^ 2 = 0) (hk : RingHom.ker π = I) (s₀ : X₀ ⟶ Sp R₀) : Cr hI π s₀ →ₛₗ[π] FirstDeRham s₀ :=
   (redMor hI hk s₀).pull1

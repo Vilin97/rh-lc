@@ -29,10 +29,7 @@ namespace PI.IwaMeasEx.KV
 
 open MeasureTheory
 open scoped ENNReal
-open Formalism.MainNotions.S Formalism.MainNotions.BridgeLemma Formalism.MainNotions.LeviCoordinates Formalism.L2.S.S7.DensDefs Formalism.L2.S.S7.WittLeviSubgroups
-  Formalism.L2.S.S7.PositiveOrthantChangeOfVariables
-open Formalism.HermitianLatticeCounting.S7 (dimN Vsph)
-open PI.IwaMeasEx.Sk
+open Formalism.MainNotions.S Formalism.MainNotions.BridgeLemma Formalism.MainNotions.LeviCoordinates
 
 end PI.IwaMeasEx.KV
 

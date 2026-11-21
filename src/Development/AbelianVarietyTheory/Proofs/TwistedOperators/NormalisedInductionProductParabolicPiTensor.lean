@@ -278,8 +278,11 @@ theorem relInd_piTensor : ∀ (k : Type) [Field k] [ValuativeRel k] [Topological
     ext v
     show (relDeltaHalf k c (relProj k f p) : ℂ) • piTensor σ (relProj k f p) (PiTensorProduct.tprod ℂ v) =
       piTensor τ _ (PiTensorProduct.tprod ℂ v)
-    rw [piTensor_tprod, piTensor_tprod, relDeltaHalf_apply, Units.coe_prod, ← MultilinearMap.map_smul_univ]
-    rfl
+    rw [piTensor_tprod, piTensor_tprod, relDeltaHalf_apply, Units.coe_prod]
+    simpa [τ, relProj, twist_apply] using
+      ((PiTensorProduct.tprod ℂ).map_smul_univ
+        (fun i => (deltaHalf k (c i) (relProj k f p i) : ℂ))
+        (fun i => σ i (relProj k f p i) (v i))).symm
   have hbij : Function.Bijective (tensorMap τ ρ hρ) := ⟨tensorMap_injective τ ρ hρ,
     tensorMap_surjective τ ρ hρ (K := fun i => KO k (m i))
       (fun i => isSmooth_comp (isSmooth_twist (hσ i) (isSmoothChar_deltaHalf k)) _ (facts i).2.2.2.2.2.1)

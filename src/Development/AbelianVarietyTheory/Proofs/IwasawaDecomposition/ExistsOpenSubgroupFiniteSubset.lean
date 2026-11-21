@@ -97,7 +97,7 @@ theorem exists_open_subgroup_finite_subset : ∀ (D : D7) (V : HSp D), ∀ N ∈
     obtain ⟨c, hc⟩ := Nat.factorial_dvd_factorial hmn
     exact ⟨c • w, nsmul_mem hw c, by rw [e, hc, mul_smul]⟩
   obtain ⟨n, hn⟩ := exists_subset_nhds_of_isCompact' (U := N) hanti.directed_ge hK3 (fun n => (hK3 n).isClosed)
-    (fun x hx => by
+    (mem_nhdsSet_iff_forall.2 fun x hx => by
       rw [Set.mem_iInter] at hx
       rwa [GlobalTheory.AutFunCounterexample.GfC_inf_GinfC V (hx 0).2 (mem_GinfC_of_cong V x fun n => (hK1 n x).1 (hx n).1)])
   exact ⟨K n, hK2 n, fun k hk hf => hn ⟨hk, hf⟩⟩

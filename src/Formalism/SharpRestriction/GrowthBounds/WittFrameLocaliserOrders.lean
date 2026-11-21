@@ -128,8 +128,8 @@ theorem exists_map_of_inWj0 {P : MvPolynomial σ (KK O)} (hP : InWj w P 0) :
     ∃ h : MvPolynomial σ O, MvPolynomial.map (algebraMap O (KK O)) h = P ∧ h.vars ⊆ P.vars := by
   choose a ha using hP
   refine ⟨∑ m ∈ P.support, monomial m (a m), ?_, ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     conv_rhs => rw [P.as_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [map_monomial, ha]; simp
@@ -137,10 +137,10 @@ theorem exists_map_of_inWj0 {P : MvPolynomial σ (KK O)} (hP : InWj w P 0) :
     have := vars_sum_subset P.support (fun m => monomial m (a m)) hv
     rw [Finset.mem_biUnion] at this
     obtain ⟨m, hm, hvm⟩ := this
-    obtain ⟨d, hd, hvd⟩ := (mem_vars v).1 hvm
+    obtain ⟨d, hd, hvd⟩ := (mem_vars_iff_mem_support v).1 hvm
     have hdm : d = m := Finset.mem_singleton.1 (support_monomial_subset hd)
     subst hdm
-    exact (mem_vars v).2 ⟨d, hm, hvd⟩
+    exact (mem_vars_iff_mem_support v).2 ⟨d, hm, hvd⟩
 
 end InWj
 
@@ -1350,8 +1350,8 @@ theorem inWPow_weighted_component {w : O} (d : Fin n' → ℕ) {P : MvPolynomial
 theorem onTops_weighted_component {r : ℕ} (Fr : Frames n' r) (d : Fin n' → ℕ) {P : MvPolynomial (TV n' k) (KK O)}
     (hP : OnTops Fr P) : OnTops Fr (weightedHomogeneousComponent (coordinatePositionWeight n' k) d P) := by
   intro v hv
-  obtain ⟨m, hm, hvm⟩ := (mem_vars v).1 hv
-  refine hP v ((mem_vars v).2 ⟨m, ?_, hvm⟩)
+  obtain ⟨m, hm, hvm⟩ := (mem_vars_iff_mem_support v).1 hv
+  refine hP v ((mem_vars_iff_mem_support v).2 ⟨m, ?_, hvm⟩)
   rw [mem_support_iff] at hm ⊢
   rw [coeff_weightedHomogeneousComponent] at hm
   split_ifs at hm
@@ -1646,7 +1646,7 @@ theorem subst_true_coordinates (w : O) (r : ℕ) {g : Matrix (Fin k) (Fin k) (WF
   congr 1
   refine Finset.prod_congr rfl fun i hi => ?_
   rw [map_pow, substitute_new_coordinate w r hg hn, newVar, if_neg]
-  exact hh i (vars_map _ _ ((mem_vars i).2 ⟨d, hd, hi⟩))
+  exact hh i (vars_map _ _ ((mem_vars_iff_mem_support i).2 ⟨d, hd, hi⟩))
 
 end B4e
 
@@ -1752,7 +1752,7 @@ theorem bs_top_hTrue (g : Matrix (Fin k) (Fin k) (WF p n')) (h : MvPolynomial (T
   rw [bs_hTrue_eq]
   refine sum_mem fun d hd => mul_mem (Subalgebra.algebraMap_mem _ _) (prod_mem fun i hi => pow_mem ?_ _)
   refine bs_top_newCoord Fr g i (hh i ?_)
-  rw [mem_vars]
+  rw [mem_vars_iff_mem_support]
   exact ⟨d, support_map_subset _ _ hd, hi⟩
 
 theorem bs_top_minorI {L₁ N₁ : ℕ} (hV : Fr.Valid L₁ N₁) (g : Matrix (Fin k) (Fin k) (WF p n')) (j : ℤ)
@@ -3950,7 +3950,7 @@ theorem bx_onTops_subst (w : O) {r : ℕ} (Fr : Frames n' r) (g : Matrix (Fin k)
         unfold subst; exact (liftSubst p n' O w r (LLT n') g).commutes _
       rw [this]; exact Subalgebra.algebraMap_mem _ _
     · rw [map_pow]
-      exact pow_mem (hX i (hF i ((mem_vars i).2 ⟨d, hd, hi⟩))) _
+      exact pow_mem (hX i (hF i ((mem_vars_iff_mem_support i).2 ⟨d, hd, hi⟩))) _
   intro v hv
   exact (mem_supported.1 hmem) (Finset.mem_coe.2 hv)
 
@@ -4153,16 +4153,19 @@ section Absorb
 variable {p n' r k : ℕ} [Fact p.Prime] [NeZero n'] {O : Type} [CommRing O] [IsDomain O] [Algebra (WF p n') O]
   (w : O) (Fr : Frames n' r) (Q : ℕ) (g : Matrix (Fin k) (Fin k) (WF p n'))
 
-def bc_agen (J : ℕ) (_E : ℕ) : Set PP := {z | ∃ A1 H : PP, bc_KP w Fr Q g A1 J ∧ bc_IT Fr H ∧ z = A1 * H}
+def bc_agen (J : ℕ) (_E : ℕ) : Set (MvPolynomial (TV n' k) (KK O)) :=
+  {z | ∃ A1 H : MvPolynomial (TV n' k) (KK O), bc_KP w Fr Q g A1 J ∧ bc_IT Fr H ∧ z = A1 * H}
 
-theorem bc_agen_mul : ∀ (i j : ℕ) (E E' : ℕ) (a b : PP), a ∈ bc_agen w Fr Q g i E → b ∈ bc_agen w Fr Q g j E' →
+theorem bc_agen_mul : ∀ (i j : ℕ) (E E' : ℕ) (a b : MvPolynomial (TV n' k) (KK O)),
+    a ∈ bc_agen w Fr Q g i E → b ∈ bc_agen w Fr Q g j E' →
     a * b ∈ bc_agen w Fr Q g (i + j) (E + E') := by
   rintro i j E E' _ _ ⟨A1, H1, h1, h2, rfl⟩ ⟨A2, H2, h3, h4, rfl⟩
   exact ⟨A1 * A2, H1 * H2, isKeyProduct_mul h1 h3, bc_IT_mul h2 h4, by ring⟩
 
-theorem bc_agen_one : (1 : PP) ∈ bc_agen w Fr Q g 0 0 := ⟨1, 1, isKeyProduct_one w Fr Q g, bc_IT_one, by simp⟩
+theorem bc_agen_one : (1 : MvPolynomial (TV n' k) (KK O)) ∈ bc_agen w Fr Q g 0 0 :=
+  ⟨1, 1, isKeyProduct_one w Fr Q g, bc_IT_one, by simp⟩
 
-theorem bc_mono_absorb (DD1 : PP)
+theorem bc_mono_absorb (DD1 : MvPolynomial (TV n' k) (KK O))
     (hD1 : ∀ v : TV n' k, IsNormal r v → v.1 ∈ Fr.TT →
       C (algebraMap O (KK O) w) * X v * DD1 ∈ AddSubmonoid.closure (bc_agen w Fr Q g 1 0))
     (ν : TV n' k →₀ ℕ) (hν : ∀ v ∈ ν.support, IsNormal r v ∧ v.1 ∈ Fr.TT) :
@@ -4183,17 +4186,19 @@ theorem bc_mono_absorb (DD1 : PP)
 
 variable (hrk : r ≤ k) (c' o mu la L : ℕ)
 
-def bc_Phi (X : PP) : Prop :=
-  ∃ (l : List (Term n' k O × ℕ × ℕ)) (ρ : PP), InWj w ρ (o + c') ∧
+def bc_Phi (X : MvPolynomial (TV n' k) (KK O)) : Prop :=
+  ∃ (l : List (Term n' k O × ℕ × ℕ)) (ρ : MvPolynomial (TV n' k) (KK O)), InWj w ρ (o + c') ∧
     X = (l.map fun y => y.1.sym p n' w Fr hrk g c' y.2.1 y.2.2).sum + ρ ∧
     ∀ y ∈ l, y.1.Valid p n' w n' r Q g ∧ y.1.InTops Fr ∧ L < y.1.level ∧ y.1.level < o + c' ∧
       (y.2.1 : ℤ) = (mu : ℤ) - (2 * (Q : ℤ) + 1) * ((y.1.level : ℤ) - L) ∧
       (y.2.2 : ℤ) = (la : ℤ) - ((y.1.level : ℤ) - L)
 
-theorem bc_Phi_rho {ρ : PP} (h : InWj w ρ (o + c')) : bc_Phi w Fr Q g hrk c' o mu la L ρ :=
+theorem bc_Phi_rho {ρ : MvPolynomial (TV n' k) (KK O)} (h : InWj w ρ (o + c')) :
+    bc_Phi w Fr Q g hrk c' o mu la L ρ :=
   ⟨[], ρ, h, by simp, by simp⟩
 
-theorem bc_Phi_add {X Y : PP} (hX : bc_Phi w Fr Q g hrk c' o mu la L X) (hY : bc_Phi w Fr Q g hrk c' o mu la L Y) :
+theorem bc_Phi_add {X Y : MvPolynomial (TV n' k) (KK O)}
+    (hX : bc_Phi w Fr Q g hrk c' o mu la L X) (hY : bc_Phi w Fr Q g hrk c' o mu la L Y) :
     bc_Phi w Fr Q g hrk c' o mu la L (X + Y) := by
   obtain ⟨l1, ρ1, h1, rfl, h3⟩ := hX
   obtain ⟨l2, ρ2, k1, rfl, k3⟩ := hY
@@ -4203,7 +4208,8 @@ theorem bc_Phi_add {X Y : PP} (hX : bc_Phi w Fr Q g hrk c' o mu la L X) (hY : bc
   · exact h3 y h
   · exact k3 y h
 
-theorem bc_sym_of_KP (mu' la' i' : ℕ) {A H : PP} {s : ℕ} (hA : bc_KP w Fr Q g A s) (hH : bc_IT Fr H) :
+theorem bc_sym_of_KP (mu' la' i' : ℕ) {A H : MvPolynomial (TV n' k) (KK O)} {s : ℕ}
+    (hA : bc_KP w Fr Q g A s) (hH : bc_IT Fr H) :
     ∃ τ' : Term n' k O, τ'.Valid p n' w n' r Q g ∧ τ'.InTops Fr ∧ τ'.level = i' + s ∧
       τ'.sym p n' w Fr hrk g c' mu' la' = C (algebraMap O (KK O) (w ^ i')) * A *
         (subst p n' O w n' r g (R0 p n' O Fr g)) ^ c' *
@@ -4235,8 +4241,9 @@ theorem bc_DtopProd_pow (hrk : r ≤ k) (n : ℕ) :
   simp only [pow_one]
   rw [Finset.prod_pow]
 
-theorem bc_inWj_monomial (ν : TV n' k →₀ ℕ) : InWj w (monomial ν 1 : PP) 0 := by
-  have : (monomial ν 1 : PP) = MvPolynomial.map (algebraMap O (KK O)) (monomial ν 1) := by
+theorem bc_inWj_monomial (ν : TV n' k →₀ ℕ) : InWj w (monomial ν 1 : MvPolynomial (TV n' k) (KK O)) 0 := by
+  have : (monomial ν 1 : MvPolynomial (TV n' k) (KK O)) =
+      MvPolynomial.map (algebraMap O (KK O)) (monomial ν 1) := by
     rw [map_monomial, (algebraMap O (KK O)).map_one]
   rw [this]; exact inWj_map _
 
@@ -4246,9 +4253,10 @@ theorem bc_absorb (hrk : r ≤ k) (c' o mu la L : ℕ)
     (hD1 : ∀ v : TV n' k, IsNormal r v → v.1 ∈ Fr.TT →
       C (algebraMap O (KK O) w) * X v * subst p n' O w n' r g (DtopProd p n' O Fr hrk g 1) ∈
         AddSubmonoid.closure (bc_agen w Fr Q g 1 0))
-    (i a : ℕ) (hL : L = i + a) {Hh : PP} (hh : bc_IT Fr Hh)
+    (i a : ℕ) (hL : L = i + a) {Hh : MvPolynomial (TV n' k) (KK O)} (hh : bc_IT Fr Hh)
     (hmu : (2 * Q + 1) * (o + c' - 1 - L) ≤ mu) (hla : o + c' - 1 - L ≤ la)
-    (β : ℕ → ℕ) (hβ : ∀ j : ℕ, β j = alpha p Fr k (j : ℤ) * c') {γ : PP}
+    (β : ℕ → ℕ) (hβ : ∀ j : ℕ, β j = alpha p Fr k (j : ℤ) * c')
+    {γ : MvPolynomial (TV n' k) (KK O)}
     (hγ : γ ∈ bc_gen w Fr Q g (fun j : ℕ => subst p n' O w n' r g (Del p n' O Fr g (j : ℤ))) (a, β) 1) :
     bc_Phi w Fr Q g hrk c' o mu la L (C (algebraMap O (KK O) (w ^ i)) * γ *
       (∏ j ∈ Finset.range Fr.J, (subst p n' O w n' r g (Del p n' O Fr g j)) ^ la) *
@@ -4360,7 +4368,8 @@ theorem bc_IT_of_supp (h : MvPolynomial (TV n' k) O) (hh : h ∈ supported O (bc
   rw [mem_supported] at hh
   exact ⟨h, fun v hv => (hh (Finset.mem_coe.2 hv)).1, fun v hv => (hh (Finset.mem_coe.2 hv)).2, rfl⟩
 
-theorem bc_IT_of_K {P : PP} (h0 : InWj w P 0) (hP : P ∈ supported (KK O) (bc_St Fr k)) : bc_IT Fr P := by
+theorem bc_IT_of_K {P : MvPolynomial (TV n' k) (KK O)}
+    (h0 : InWj w P 0) (hP : P ∈ supported (KK O) (bc_St Fr k)) : bc_IT Fr P := by
   obtain ⟨h, rfl, hv⟩ := exists_map_of_inWj0 h0
   rw [mem_supported] at hP
   exact ⟨h, fun v hv' => (hP (Finset.mem_coe.2 (hv hv'))).1, fun v hv' => (hP (Finset.mem_coe.2 (hv hv'))).2, rfl⟩
@@ -4602,11 +4611,11 @@ theorem bc_restTail (D : Formalism.BasicNotions.D7) : bc_RestTail D := by
     by_cases h : o + 1 ≤ normDeg r m
     · obtain ⟨c, hc⟩ := hc2 m; exact ⟨_, c, h, le_rfl, hc⟩
     · obtain ⟨c, hc⟩ := hc1 m; exact ⟨_, c, le_rfl, by omega, hc⟩
-  have hmv : ∀ v ∈ m.support, v.1 ∈ Fr.TT := fun v hv => hTop v ((mem_vars v).2 ⟨m, hm, hv⟩)
+  have hmv : ∀ v ∈ m.support, v.1 ∈ Fr.TT := fun v hv => hTop v ((mem_vars_iff_mem_support v).2 ⟨m, hm, hv⟩)
   have hmon : ∀ v ∈ (monomial (m.filter fun v => ¬ IsNormal r v) c : MvPolynomial (TV n' k) O).vars,
       v ∈ (m.filter fun v => ¬ IsNormal r v).support := by
     intro v hv
-    obtain ⟨d, hd, hvd⟩ := (mem_vars v).1 hv
+    obtain ⟨d, hd, hvd⟩ := (mem_vars_iff_mem_support v).1 hv
     have hdm := Finset.mem_singleton.1 (support_monomial_subset hd)
     subst hdm
     exact hvd
@@ -4987,7 +4996,7 @@ theorem determinant_coefficients_units : DeterminantCoefficientsUnits := by
   refine ⟨?_, ?_⟩
   · intro h0
     have h1 := hcoeff 1
-    rw [h0, coeff_zero] at h1
+    rw [h0, MvPolynomial.coeff_zero] at h1
     exact (hunit 1).ne_zero h1.symm
   · intro μ hμ
     by_cases hex : ∃ s0, mu s0 = μ
@@ -5453,6 +5462,8 @@ open Formalism.MainNotions.G Formalism.MainNotions.SourceCleaning
 section BaseChange
 
 variable (R0 : Type) [CommRing R0] [IsDomain R0] (n : ℕ)
+
+local notation "K0" => FractionRing R0
 
 def polyRingMap : MvPolynomial (Fin n × Fin n) R0 →+* MvPolynomial (Fin n × Fin n) K0 :=
   MvPolynomial.map (algebraMap R0 K0)

@@ -83,6 +83,7 @@ theorem coeff_eq_zero_of_vanish_on_invBl : ∀ (E : Type) [Field E] [NumberField
     rfl
   have := congrArg (AddMonoidAlgebra.coeff · μ) hP
   rw [MvPolynomial.coeff_sum, MvPolynomial.coeff_zero] at this
+  change (∑ i, (MvPolynomial.C (a i) * coefPoly ι d.jj (arcNum (evR Xo c (F i) d.yF))).coeff μ) = 0 at this
   rw [← this]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [MvPolynomial.coeff_C_mul, coeff_coefPoly]

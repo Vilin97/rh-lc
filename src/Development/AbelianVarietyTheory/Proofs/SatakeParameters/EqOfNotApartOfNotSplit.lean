@@ -99,7 +99,7 @@ theorem eq_one_of_cLoc_eq_one {w : HeightOneSpectrum (𝓞 E)} {x : UA E a} (hx 
       have := congrArg (fun g : GL (Fin a) (u.adicCompletion E) => g.val i j) (hall u)
       simp only [Units.val_one, Matrix.one_apply] at this
       refine this.trans ?_
-      split_ifs with hij <;> simp [hij]
+      split_ifs with hij <;> simp [hij] <;> rfl
 
 theorem eq_of_cLoc_eq {w : HeightOneSpectrum (𝓞 E)} {x y : UA E a} (hx : x ∈ locU a w) (hy : y ∈ locU a w)
     (h : cLoc w x = cLoc w y) : x = y := by

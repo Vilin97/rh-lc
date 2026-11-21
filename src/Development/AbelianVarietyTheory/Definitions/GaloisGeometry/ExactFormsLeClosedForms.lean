@@ -20,21 +20,80 @@ variable {M M' M'' : Type} [TopologicalSpace M] [TopologicalSpace M'] [Topologic
 
 def closedForms (k : ℕ) : Submodule ℂ A.Fld where
   carrier := {α | A.IsForm α ∧ A.IsDeg k α ∧ A.dExt α = 0}
-  add_mem' ha hb := ⟨A.forms.add_mem ha.1 hb.1, fun x => (ha.2.1 x).add (hb.2.1 x),
-    by rw [dExt_add ha.1 hb.1, ha.2.2, hb.2.2, add_zero]⟩
-  zero_mem' := ⟨A.forms.zero_mem, fun _ => .zero k, A.dExt_zero⟩
-  smul_mem' c _ ha := ⟨A.forms.smul_mem ha.1 c, fun x => (ha.2.1 x).smul c, by rw [dExt_smul c ha.1, ha.2.2, smul_zero]⟩
+  add_mem' := by
+    intro α β ha hb
+    have hForm : A.IsForm (α + β) := by
+      refine ⟨fun i S => ?_, fun x x' h => ?_⟩
+      · exact ((ha.1.smooth i S).add (hb.1.smooth i S)).congr fun v hv => by
+          have hLoc : A.loc (α + β) i v = A.loc α i v + A.loc β i v := by
+            simp only [loc, dite_eq_left hv]
+            rfl
+          rw [hLoc, map_add (f := _), Finsupp.add_apply]
+      · change α x + β x = pull _ (α x' + β x')
+        rw [map_add (f := _), ← ha.1.compat x x' h, ← hb.1.compat x x' h]
+    exact ⟨hForm, fun x => (ha.2.1 x).add (hb.2.1 x),
+      by rw [dExt_add ha.1 hb.1, ha.2.2, hb.2.2, add_zero]⟩
+  zero_mem' := by
+    have hForm : A.IsForm 0 := by
+      refine ⟨fun i S => ?_, fun x x' _ => ?_⟩
+      · exact (contDiffOn_const (c := (0 : ℂ))).congr fun v hv => by
+          have hLoc : A.loc 0 i v = 0 := by
+            rw [loc, dite_eq_left hv]
+            rfl
+          rw [hLoc, map_zero, Finsupp.zero_apply]
+      · change (0 : Alt n) = pull _ 0
+        rw [map_zero]
+    exact ⟨hForm, fun _ => .zero k, A.dExt_zero⟩
+  smul_mem' c α ha := by
+    have hForm : A.IsForm (c • α) := by
+      refine ⟨fun i S => ?_, fun x x' h => ?_⟩
+      · exact ((ha.1.smooth i S).const_smul c).congr fun v hv => by
+          have hLoc : A.loc (c • α) i v = c • A.loc α i v := by
+            simp only [loc, dite_eq_left hv]
+            rfl
+          rw [hLoc, map_smul, Finsupp.smul_apply, smul_eq_mul]
+      · change c • α x = pull _ (c • α x')
+        rw [map_smul, ← ha.1.compat x x' h]
+    exact ⟨hForm, fun x => (ha.2.1 x).smul c, by rw [dExt_smul c ha.1, ha.2.2, smul_zero]⟩
 
 def exactForms (k : ℕ) : Submodule ℂ A.Fld where
   carrier := {α | A.IsDeg k α ∧ ∃ η, A.IsForm η ∧ α = A.dExt η}
   add_mem' ha hb := by
     obtain ⟨h₁, η, hη, rfl⟩ := ha
     obtain ⟨h₂, η', hη', rfl⟩ := hb
-    exact ⟨fun x => (h₁ x).add (h₂ x), η + η', A.forms.add_mem hη hη', (dExt_add hη hη').symm⟩
-  zero_mem' := ⟨fun _ => .zero k, 0, A.forms.zero_mem, A.dExt_zero.symm⟩
+    have hForm : A.IsForm (η + η') := by
+      refine ⟨fun i S => ?_, fun x x' h => ?_⟩
+      · exact ((hη.smooth i S).add (hη'.smooth i S)).congr fun v hv => by
+          have hLoc : A.loc (η + η') i v = A.loc η i v + A.loc η' i v := by
+            simp only [loc, dite_eq_left hv]
+            rfl
+          rw [hLoc, map_add (f := _), Finsupp.add_apply]
+      · change η x + η' x = pull _ (η x' + η' x')
+        rw [map_add (f := _), ← hη.compat x x' h, ← hη'.compat x x' h]
+    exact ⟨fun x => (h₁ x).add (h₂ x), η + η', hForm, (dExt_add hη hη').symm⟩
+  zero_mem' := by
+    have hForm : A.IsForm 0 := by
+      refine ⟨fun i S => ?_, fun x x' _ => ?_⟩
+      · exact (contDiffOn_const (c := (0 : ℂ))).congr fun v hv => by
+          have hLoc : A.loc 0 i v = 0 := by
+            rw [loc, dite_eq_left hv]
+            rfl
+          rw [hLoc, map_zero, Finsupp.zero_apply]
+      · change (0 : Alt n) = pull _ 0
+        rw [map_zero]
+    exact ⟨fun _ => .zero k, 0, hForm, A.dExt_zero.symm⟩
   smul_mem' c _ ha := by
     obtain ⟨h₁, η, hη, rfl⟩ := ha
-    exact ⟨fun x => (h₁ x).smul c, c • η, A.forms.smul_mem hη c, (dExt_smul c hη).symm⟩
+    have hForm : A.IsForm (c • η) := by
+      refine ⟨fun i S => ?_, fun x x' h => ?_⟩
+      · exact ((hη.smooth i S).const_smul c).congr fun v hv => by
+          have hLoc : A.loc (c • η) i v = c • A.loc η i v := by
+            simp only [loc, dite_eq_left hv]
+            rfl
+          rw [hLoc, map_smul, Finsupp.smul_apply, smul_eq_mul]
+      · change c • η x = pull _ (c • η x')
+        rw [map_smul, ← hη.compat x x' h]
+    exact ⟨fun x => (h₁ x).smul c, c • η, hForm, (dExt_smul c hη).symm⟩
 
 variable {A}
 

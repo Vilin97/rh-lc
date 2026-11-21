@@ -100,7 +100,7 @@ theorem integral_prod_eq {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [
   have hi : Integrable φ (volume.restrict F) := Integrable.of_integral_ne_zero (hm ▸ hV)
   set P : Set (Fin n → Fin g → ℂ) := Set.univ.pi fun _ : Fin n => F with hP
   let Φ : (Fin n → Fin g → ℂ) → ℝ := fun z => ∏ b, φ (z b)
-  have hΦc : Continuous Φ := continuous_finset_prod _ fun b _ => hc.comp (continuous_apply b)
+  have hΦc : Continuous Φ := by fun_prop
   have hΦ0 : ∀ z, 0 ≤ Φ z := fun z => Finset.prod_nonneg fun b _ => h0 _
   have h1 : ∫⁻ z in P, ENNReal.ofReal (Φ z) = volume P := by
     have e1 : volume.restrict P = Measure.pi fun _ : Fin n => volume.restrict F := restrict_pi_pi _ _
@@ -115,7 +115,7 @@ theorem integral_prod_eq {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [
   have : (volume : Measure (Fin n → Fin g → ℂ)).IsAddHaarMeasure := pi.isAddHaarMeasure _
   obtain ⟨c, hc'⟩ : ∃ c : NNReal, μ.map e = c • volume := ⟨_, isAddLeftInvariant_eq_smul _ _⟩
   have hme := e.toHomeomorph.measurableEmbedding
-  have hq : QuasiMeasurePreserving e μ volume := ⟨e.continuous.measurable, by
+  have hq : QuasiMeasurePreserving e μ volume := ⟨e.continuous.measurable.aemeasurable, by
     rw [hc']; exact smul_absolutelyContinuous⟩
   let Bn := AddSubgroup.pi Set.univ fun _ : Fin n => A
   let B : AddSubgroup V := Bn.comap e.toLinearEquiv.toAddEquiv.toAddMonoidHom
@@ -330,7 +330,7 @@ theorem vac_eq_unit_mul : ∀ (D : D7) (S T : HSp D) (r g : ℕ) (hr : T.rank = 
         rw [mul_smul]
         exact nsmul_mem (hN' _ (hΛ ▸ hy b)) _
       | zero => simp
-      | add u u' _ _ hu hu' => exact fun b => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hu b) (hu' b)
+      | add u u' _ _ hu hu' => exact fun b => by simpa only [map_add, Pi.add_apply] using add_mem (hu b) (hu' b)
       | neg u _ hu => exact fun b => by rw [map_neg]; exact neg_mem (hu b)) hFd
   have h3 := hN Fd hFd (fun u => ((‖a‖ ^ 2 * ∏ b, φ (e u b) : ℝ) : ℂ)) fun p hp => by
     rw [Complex.mul_conj, Complex.normSq_eq_norm_sq, hfp p hp, norm_mul, mul_pow, norm_sq_gauss_prod, hJ]

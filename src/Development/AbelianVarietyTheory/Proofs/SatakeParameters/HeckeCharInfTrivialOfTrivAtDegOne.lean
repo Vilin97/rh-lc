@@ -168,7 +168,7 @@ theorem inf_trivial_of_trivAt_degOne : ∀ (F E : Type) [Field F] [NumberField F
         · haveI := v.isPrime
           haveI := v.isMaximal
           have hdeg1 : DegOne F v := GlobalTheory.T.residue_degree_one_of_linear_mem' (𝓞 F) (𝓞 E) v.asIdeal θ D b 1
-            (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal v.asIdeal) hDspan
+            (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := 𝓞 F) v.asIdeal) hDspan
             (fun h => he0v (Ideal.mul_mem_right _ _ h))
             (by rw [map_one]; exact fun h => v.isPrime.ne_top ((Ideal.eq_top_iff_one _).2 h))
             (by rwa [map_one, one_mul])

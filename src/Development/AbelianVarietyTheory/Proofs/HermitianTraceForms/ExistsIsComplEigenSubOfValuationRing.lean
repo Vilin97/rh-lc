@@ -666,22 +666,22 @@ theorem eigenBundle_of_injective {E : Type*} [Field E] [NumberField E]
       have e : (algebraMap A K).comp (σ i)
           = (algebraMap V K).comp ((algebraMap A V).comp (σ i)) := by
         rw [← RingHom.comp_assoc, ← IsScalarTower.algebraMap_eq]
-      refine ⟨extendTensor_injective A V K N, isBaseChange_extendTensor K, ?_, ?_,
+      refine ⟨extendTensor_injective A V K N, isBaseChange_extendTensor A V K N, ?_, ?_,
         finrank_eigenSub_of_charZero hσ hc (mk_equivariant K ρ)
           (TensorProduct.isBaseChange A N K) i⟩
       · rw [e]
         exact eigenSub_eq_comap (extendTensor_equivariant V K ρ) (extendTensor_injective A V K N) _
       · rw [e]
         exact (eigenSub_eq_span_of_flat (extendTensor_equivariant V K ρ)
-          (isBaseChange_extendTensor K) _).symm
+          (isBaseChange_extendTensor A V K N) _).symm
     · rintro V' _ _ _ _ _ _ _ P' hP'
       have := flat_of_valuationRing V V'
       rw [IsScalarTower.algebraMap_eq A V V', RingHom.comp_assoc] at hP'
       subst hP'
       exact ⟨(eigenSub_eq_span_of_flat (extendTensor_equivariant V V' ρ)
-          (isBaseChange_extendTensor V') _).symm,
+          (isBaseChange_extendTensor A V V' N) _).symm,
         (isBaseChange_eigenMapAlgebra_of_flat (extendTensor_equivariant V V' ρ)
-          (isBaseChange_extendTensor V') _).equiv, fun x => by simp [eigenMapAlgebra]⟩
+          (isBaseChange_extendTensor A V V' N) _).equiv, fun x => by simp [eigenMapAlgebra]⟩
   · intro V _ _ _ M M' _ _ _ _ τ τ' e he χ
     have he' : IsEquivariant τ τ' (e : M →ₗ[V] M') := he
     refine ⟨he'.map_eigenSub χ, fun K _ _ _ n c c' F F' hc hc' hF => ?_⟩

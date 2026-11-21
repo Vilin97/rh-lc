@@ -149,7 +149,7 @@ theorem fixed_comb_eq_opOf : ∀ {D : D7} (V : HSp D) (P : Pl D.host.E), ∀ e f
     fun k hk => hw k (by rw [hK]; exact hk)
   rw [Finsupp.sum]
   refine (fixed_comb a.support id (fun g => rep V P (d g)) (fun g hg => hd g (ha g hg)) a π u hu' hw').trans ?_
-  rw [opOf, ← Finsupp.sum_finset_sum_index (fun _ => by simp) (fun _ _ _ => by rw [add_smul]), LinearMap.sum_apply]
+  rw [opOf, ← Finsupp.sum_finsetSum_index (fun _ => by simp) (fun _ _ _ => by rw [add_smul]), LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun g _ => ?_
   rw [Finsupp.sum_single_index (by simp), LinearMap.smul_apply, LinearMap.sum_apply]
 

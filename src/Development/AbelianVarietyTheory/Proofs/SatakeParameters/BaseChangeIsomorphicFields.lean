@@ -221,7 +221,9 @@ theorem Eop_pull (τ : M →+* ℂ) (i j : Fin a) (φ : Sm M a) :
       rw [Matrix.single_apply, Matrix.single_apply]
       split_ifs <;> simp
     rw [lieS_apply, lie_pull, e', cInf_atEmb, lieS_apply]
-  simp only [Eop, LinearMap.smul_apply, LinearMap.sub_apply, h2, map_smul, map_sub]
+  have hsub (x y : Sm M a) : pull a e (x - y) = pull a e x - pull a e y :=
+    (pull a e).toLinearMap.map_sub x y
+  simp only [Eop, LinearMap.smul_apply, LinearMap.sub_apply, h2, (pull a e).map_smul, hsub]
 
 theorem cap_pull (τ : M →+* ℂ) (u : ℂ) (φ : Sm M a) :
     cap (τ.comp e.toRingHom) u (pull a e φ) = pull a e (cap τ u φ) := by
@@ -276,26 +278,25 @@ theorem height_map (y : GL (Fin a) (Cinf K)) : height (GeneralLinearGroup.map (c
   refine le_antisymm (height_map_le e y) (le_of_eq_of_le ?_ (height_map_le e.symm _))
   exact congrArg height (Units.ext (Matrix.ext fun i j => (cInf_symm e _).symm))
 
-theorem isAutForm_pull {φ : Sm M a} (h : IsAutForm φ) : IsAutForm (pull a e φ) where
-  left γ g := by rw [pull_apply, map_mul, mapA_ratGL, h.left, pull_apply]
-  level := by
-    convert h.level.preimage (continuous_mapGL (cFin e) (continuous_cFin e)) using 1
+theorem isAutForm_pull {φ : Sm M a} (h : IsAutForm φ) : IsAutForm (pull a e φ) := by
+  refine { left := ?_, level := ?_, kfin := ?_, zfin := ?_, growth := ?_ }
+  · intro γ g
+    rw [pull_apply, map_mul, mapA_ratGL, h.left, pull_apply]
+  · convert h.level.preimage (continuous_mapGL (cFin e) (continuous_cFin e)) using 1
     ext k
     exact (Eq.congr_left (act_pull e (.fin k) φ)).trans (pull a e).injective.eq_iff
-  kfin := by
-    have := h.kfin
+  · have := h.kfin
     refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ (Set.range fun k => cptRep M a k φ)).map
       (pull a e).toLinearMap) (Submodule.span_le.2 ?_)
     rintro _ ⟨k, rfl⟩
     exact ⟨_, Submodule.subset_span ⟨_, rfl⟩, (act_pull e (.cpt k) φ).symm⟩
-  zfin := by
-    have := h.zfin
+  · have := h.zfin
     refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ ((fun z : Module.End ℂ (Sm M a) => z φ) ''
       Zalg M a)).map (pull a e).toLinearMap) (Submodule.span_le.2 ?_)
     rintro _ ⟨z, hz, rfl⟩
     obtain ⟨z', h1, h2⟩ := Zalg_pull e hz
     exact ⟨_, Submodule.subset_span ⟨z', h1, rfl⟩, (h2 φ).symm⟩
-  growth g := by
+  · intro g
     obtain ⟨C, N, h1⟩ := h.growth (mapA a e g)
     refine ⟨C, N, fun y => ?_⟩
     rw [pull_apply, map_mul, mapA_infGL, ← height_map e]

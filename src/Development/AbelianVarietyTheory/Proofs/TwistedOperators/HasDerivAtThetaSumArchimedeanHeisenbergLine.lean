@@ -121,13 +121,14 @@ theorem bound_aux {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] (h : V �
 end Helpers
 
 theorem realAd_add (t s : ℝ) : realAd F (t + s) = realAd F t + realAd F s := by
-  unfold realAd; rw [map_add (f := _), map_add (f := _), map_add (f := _)]; rfl
+  unfold realAd; rw [map_add (f := _), map_add (f := _), map_add (f := _)]
 
 theorem realAd_zero : realAd F 0 = 0 := by
-  unfold realAd; rw [map_zero, map_zero, map_zero]; rfl
+  unfold realAd; rw [map_zero, map_zero, map_zero]
 
 theorem evI_realAd (t : ℝ) : evI F (realAd F t) = algebraMap ℝ _ t := by
-  simp [evI, realAd]
+  change (InfiniteAdeleRing.ringEquiv_mixedSpace F) ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (algebraMap ℝ _ t)) = _
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply _
 
 theorem at_realAd_smul {V : Type} [AddCommGroup V] [Module (AF F) V] (t : ℝ) (x : V) :
     At (evI F) (realAd F t • x) := by
@@ -232,7 +233,10 @@ theorem hasDerivAt_thetaSum_heisLine : ∀ {F E : Type} [Field F] [NumberField F
     show ‖h (fun i => evI F ((z + c + realAd F t • (M.co.e u).1) i)) * r (z + c + realAd F t • (M.co.e u).1)‖ = _
     rw [hz, norm_mul]
     congr 3
+    funext i
+    change evI F (z i + c i + realAd F t * (M.co.e u).1 i) = _
     rw [evI_add, evI_mul, evI_realAd, ← Algebra.smul_def]
+    rfl
 
   let R' : (Fin n × Fin d → FiniteAdeleRing (𝓞 F) F) → ℂ := fun y =>
     ∏ᶠ v, φ v fun i => Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v (y i + (c i).2)

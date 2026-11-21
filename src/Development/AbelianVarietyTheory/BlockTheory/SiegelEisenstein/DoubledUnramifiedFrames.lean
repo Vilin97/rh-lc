@@ -83,7 +83,7 @@ def zV {ρ : ℕ} (B : BesLev D ρ) : Fin B.V.rank → AE D := B.d.j0 *ᵥ ratV 
 structure IsBesFrame (ψ : AddChar (AF D.host.F) ℂ) (χ : AddChar k Circle) {ρ : ℕ} (B : BesLev D ρ) (α : Frame p B.A n)
     (β : Frame p B.V (n ⊕ Fin c)) : Prop where
   card : c = 2 * ρ + 1
-  core : ∀ i, vec β (.inl i) = (B.d.j0 ⬝ B.o.jA).map p.pr *ᵥ vec α i
+  core : ∀ i, vec β (.inl i) = (B.d.j0 * B.o.jA).map p.pr *ᵥ vec α i
   lines : OnLines B.d β
   mid : ∀ l : Fin c, l.val = ρ → ∃ s : k, vec β (.inr l) = s • atW p (zV B)
   char : ∀ u ∈ RootEx.N k n c (ρ + 1), psiBes ψ B.d 1 (vecB B.o B.ζ) (β.gl u) = (χ (RootEx.simpleSum u) : ℂ)
@@ -197,7 +197,7 @@ structure End (ψ : AddChar (AF D.host.F) ℂ) (X' : HSp D) where
   o : OrthDec Xm X' Z
   rk : Z.rank = 1
   τ : Matrix (Fin B.L.rank) (Fin Z.rank) D.host.E
-  norm : τᴴ ⬝ (B.L.gram ⬝ τ) = (-(D.host.xi0 * star D.host.xi0)) • Z.gram
+  norm : τᴴ * (B.L.gram * τ) = (-(D.host.xi0 * star D.host.xi0)) • Z.gram
   b₀ : Base B.V
   M₀ : Lat B.V₀
   L₀ : Lat B.A
@@ -233,7 +233,7 @@ def Unr (v : Pl D) : Prop := UnrAt X.t.s v ∧ CharUnramAt D X.t.χS v ∧ CharU
 
 structure GoodAt (v : Pl D) : Prop where
     (w ∈ latO X.t.J.W X.Z (X.L₁ : Set _) (X.Lz' : Set _) (· = v) ↔
-      GlobalTheory.IndefiniteRowSideFullHecke.SkewGramHalfModule.ofAdj X.B.L X.t.J.W ((rat X.τ : Mx D X.B.L.rank X.Z.rank) ⬝ w) ∈
+      GlobalTheory.IndefiniteRowSideFullHecke.SkewGramHalfModule.ofAdj X.B.L X.t.J.W ((rat X.τ : Mx D X.B.L.rank X.Z.rank) * w) ∈
         latO X.B.L X.t.J.W (X.Lz : Set _) (X.L₁ : Set _) (· = v))
 
 structure Frames (K : LocF) (n₀ n₁ n₂ u : Type) [Fintype n₀] [DecidableEq n₀] [Fintype n₁] [DecidableEq n₁] [Fintype n₂]

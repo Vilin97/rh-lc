@@ -80,7 +80,7 @@ theorem exists_mulHeight_coeff_minpoly_le : ∀ (F E : Type) [Field F] [NumberFi
       exact le_antisymm ((hle v).trans (by rw [hv', one_pow])) (le_max_right _ _)
     rw [e]
     calc (∏ᶠ v : HeightOneSpectrum (𝓞 F), max (FinitePlace.mk v c) 1) ≤ ∏ᶠ v, B v ^ m :=
-          finprod_le_finprod hf (fun v => le_trans zero_le_one (le_max_right _ _)) hBm hle
+          finprod_le_finprod₀ hf (fun v => le_trans zero_le_one (le_max_right _ _)) hBm hle
       _ = (∏ᶠ v, B v) ^ m := (finprod_pow hBfin m).symm
       _ ≤ (∏ᶠ v, B v) ^ (2 * m) := pow_le_pow_right₀ (one_le_finprod fun v => hB v) (by omega)
   rw [NumberField.mulHeight₁_eq, hht, mul_pow, ← mul_assoc]

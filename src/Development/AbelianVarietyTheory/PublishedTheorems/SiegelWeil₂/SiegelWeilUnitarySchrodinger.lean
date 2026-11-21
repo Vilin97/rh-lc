@@ -54,17 +54,17 @@ abbrev trA (z : AE D) : AF D.host.F := Algebra.trace (AF D.host.F) (AE D) z
 
 def halfTr (z : AE D) : AF D.host.F := algebraMap D.host.F (AF D.host.F) (1 / 2) * trA z
 
-def inner (V : HSp D) (x y : Mx D V.rank n) : Mx D n n := adj x ⬝ (gA V ⬝ y)
+def inner (V : HSp D) (x y : Mx D V.rank n) : Mx D n n := adj x * (gA V * y)
 
 structure IsWeilSch (ψ : AddChar (AF D.host.F) ℂ) (χ : (AE D)ˣ →* Circle) (θ : InfFam D) (V : HSp D)
     (μ : Measure (Mx D V.rank n)) (ω : G D n →* Module.End ℂ (schwartzA θ V.rank n)) : Prop where
 
   levi : ∀ (g : G D n) (a : GL (Fin n) (AE D)), mat g = blk4 a.1 0 0 (adj (a⁻¹).1) → ∀ Φ x,
     (ω g Φ).1 x = (χ (Matrix.GeneralLinearGroup.det a) : ℂ) *
-      npow (absA D (Matrix.GeneralLinearGroup.det a)) ((V.rank : ℂ) / 2) * Φ.1 (x ⬝ a.1)
+      npow (absA D (Matrix.GeneralLinearGroup.det a)) ((V.rank : ℂ) / 2) * Φ.1 (x * a.1)
 
   unip : ∀ (g : G D n) (b : Mx D n n), mat g = blk4 1 b 0 1 → ∀ Φ x,
-    (ω g Φ).1 x = ψ (halfTr (Matrix.trace (b ⬝ inner V x x : Mx D n n))) * Φ.1 x
+    (ω g Φ).1 x = ψ (halfTr (Matrix.trace (b * inner V x x : Mx D n n))) * Φ.1 x
 
   weyl : ∀ g : G D n, mat g = blk4 0 1 (-1) 0 → ∀ Φ x,
     (ω g Φ).1 x = ∫ y, Φ.1 y * ψ (trA (Matrix.trace (inner V x y))) ∂μ
@@ -97,7 +97,7 @@ def sect (H : G D n → ℝ≥0) (Φ : schwartzA θ V.rank n) (s : ℂ) (g : G D
   npow (H g) (s - s0 V n) * (ω g Φ).1 0
 
 def theta (Φ : schwartzA θ V.rank n) (g : G D n) (h : GA D V) : ℂ :=
-  ∑' ξ : Matrix (Fin V.rank) (Fin n) D.host.E, (ω g Φ).1 (mt V h⁻¹ ⬝ (rat ξ : Mx D V.rank n))
+  ∑' ξ : Matrix (Fin V.rank) (Fin n) D.host.E, (ω g Φ).1 (mt V h⁻¹ * (rat ξ : Mx D V.rank n))
 
 def thetaInt (ν : Measure (GA D V)) (Φ : schwartzA θ V.rank n) (g : G D n) : ℂ :=
   ⨍ q, AutomorphicL2Unitary.descend (GQ V) (theta ω Φ g) q ∂autMeasure V ν

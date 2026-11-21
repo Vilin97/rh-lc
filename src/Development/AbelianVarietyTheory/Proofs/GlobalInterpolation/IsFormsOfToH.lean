@@ -54,7 +54,8 @@ theorem coAt_sum (x : S.Forms) :
   conv_lhs => rw [← S.basis.sum_repr x]
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [coAt, AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, map_sum,
-    map_smul, Finsupp.coe_finset_sum, Finsupp.coe_smul, smul_eq_mul, map_mul]
+    map_smul, smul_eq_mul]
+  simp
 
 theorem coAt_indep : LinearIndependent ℂ fun i => fun p : S.Cl × S.ιV => coAt S v (S.basis i : S.Cl → S.V) p.1 p.2 := by
   letI : Algebra K ℂ := v.embedding.toAlgebra
@@ -129,8 +130,8 @@ theorem pairAt_rho (g : T.G) (x : T.V) : T.pairAt v (T.ρ g x) (T.ρ g x) = T.pa
     funext c k
     conv_rhs => rw [← T.bV.sum_repr x]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [u, Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, Finsupp.coe_finset_sum, Finsupp.coe_smul,
-      smul_eq_mul, map_mul]
+      simp only [u, Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, smul_eq_mul]
+    simp
   rw [e1, e2] at h1
   rw [pairAt_eq, pairAt_eq, h1]
   simp only [wForm, Finset.univ_unique, Finset.sum_singleton, Nat.cast_one, inv_one, one_mul]

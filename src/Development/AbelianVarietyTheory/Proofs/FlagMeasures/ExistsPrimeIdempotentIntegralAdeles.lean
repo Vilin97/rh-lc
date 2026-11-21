@@ -195,7 +195,7 @@ theorem epsV_lift (v : HeightOneSpectrum (𝓞 F)) (g : ℕ) (hg : (g : 𝓞 F) 
 theorem epsV_unit (v : HeightOneSpectrum (𝓞 F)) (g : ℕ) (hg : (g : 𝓞 F) ∈ v.asIdeal) (r : IntAf F E) :
     ∃ s, epsV E v * (1 - g * r) * s = epsV E v := by
   have hH := henselian_locInt (E := E) v g hg
-  have h1 := Ideal.mem_jacobson_bot.1 (hH.jac (Ideal.mem_span_singleton_self _)) (-prInt E v r)
+  have h1 := Ring.mem_jacobson_iff.1 (hH.jac (Ideal.mem_span_singleton_self _)) (-prInt E v r)
   obtain ⟨d, hd⟩ := h1.exists_right_inv
   obtain ⟨s, rfl⟩ := prInt_surj v d
   have h2 := epsV_mul_eq v (x := (1 - (g : IntAf F E) * r) * s) (y := 1) (by

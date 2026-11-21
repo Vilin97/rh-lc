@@ -35,7 +35,7 @@ theorem vol_dcell_and_disjoint : ∀ (k : Type) [Field k] [ValuativeRel k] [Topo
     unfold sumAbs; exact Equiv.sum_comp (blkEquiv l t).symm (fun i => |e i|)
   have hm1 : m.real (parahoric k (Fin r) (Blocks l t) : Set _) = 1 := by simp [Measure.real, hm]
   have hK1 : μK.real (KO k (Fin (l * t)) : Set _) = 1 := by simp [Measure.real, hμK]
-  rw [dcell, h1, cell, h2, hm1, hK1, GlobalTheory.T.relIndex_twoBlockParahoric_conj_torusDiagElement k ϖ hϖ, GlobalTheory.T.relIndex_conj_uniformizerPowerDiagonalGL_reindex k ϖ _ _ (blkEquiv l t), hs]
+  rw [dcell, h1, cell, h2, hm1, hK1, GlobalTheory.T.relIndex_twoBlockParahoric_conj_torusDiagElement k ϖ hϖ, GlobalTheory.ReindexTorus.relIndex_conj_torusElt_reindex k ϖ _ _ (blkEquiv l t), hs]
   simp
 
 end GlobalTheory.ChainCells

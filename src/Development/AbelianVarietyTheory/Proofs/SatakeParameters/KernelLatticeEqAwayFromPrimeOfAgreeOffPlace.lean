@@ -125,14 +125,14 @@ theorem smul_latK_of_smul_latAd : ∀ {R : Ranks} {F E : Type} [Field F] [Number
       ring
     rw [e1]; exact key
   have hc' : compan (sp := sp) J a (latAd x Lb) ≤
-      (compan (sp := sp) J a (latAd x' Lb)).comap (DistribMulAction.toLinearMap (𝓞 E) (Fin N → E) c) := by
+      (compan (sp := sp) J a (latAd x' Lb)).comap (LinearMap.lsmul (𝓞 E) (Fin N → E) c) := by
     unfold compan
     refine sup_le (fun y hy => ?_) (Submodule.smul_le.2 fun r hr n hn => ?_)
     · exact Submodule.mem_sup_left (h1 y hy)
     · have hn' : c • n ∈ Submodule.span (𝓞 E) (dualSet (sp.cm.sig : E →+* E) J (latAd x' Lb)) := by
         have : Submodule.span (𝓞 E) (dualSet (sp.cm.sig : E →+* E) J (latAd x Lb)) ≤
             (Submodule.span (𝓞 E) (dualSet (sp.cm.sig : E →+* E) J (latAd x' Lb))).comap
-              (DistribMulAction.toLinearMap (𝓞 E) (Fin N → E) c) :=
+              (LinearMap.lsmul (𝓞 E) (Fin N → E) c) :=
           Submodule.span_le.2 fun y hy => Submodule.subset_span (hd y hy)
         exact this hn
       rw [Submodule.mem_comap]

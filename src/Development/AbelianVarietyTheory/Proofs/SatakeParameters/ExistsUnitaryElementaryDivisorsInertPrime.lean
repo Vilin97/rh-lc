@@ -115,7 +115,12 @@ theorem exists_antiFrame [Algebra.Unramified (𝓞 (maximalRealSubfield E)) (�
         (Formalism.UG.antiJ E n).map (inclR (Fv (maximalRealSubfield E) v)) * h.1 = 1 ∧
       (∀ i j, h.1 i j ∈ ordAt E v) ∧ ∀ i j, (h⁻¹).1 i j ∈ ordAt E v := by
   obtain ⟨h, h1, h2⟩ := exists_orthonormal_frame (antiJ_herm n) (antiJ_det_ne_zero n)
-    ⟨Formalism.L2.Col.stdLat_lattice.fg, Formalism.L2.Col.stdLat_lattice.span_eq_top⟩ (selfDual_antiJ n) v
+    ⟨Formalism.L2.Col.stdLat_lattice.fg, by
+      rw [Formalism.L2.Col.stdLat_eq_span, Submodule.span_span_of_tower]
+      convert (Pi.basisFun E (Fin n)).span_eq using 1
+      congr 2
+      ext i
+      exact congrFun (Pi.basisFun_apply E (Fin n) i).symm _⟩ (selfDual_antiJ n) v
   have hs : ∀ j, (Pi.single j (1 : LocAlg v) : Fin n → LocAlg v) ∈ locLattice v (Formalism.L2.Col.stdLat E n) := by
     intro j
     refine Submodule.subset_span ⟨Pi.single j 1, ?_, ?_⟩

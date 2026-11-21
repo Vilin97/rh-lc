@@ -74,19 +74,53 @@ theorem exists_inertDatum : ∀ (D : D7) (n : ℕ) (v : HeightOneSpectrum (𝓞 
   have key : ∀ x ∈ w.asIdeal, IsCMField.ringOfIntegersComplexConj D.host.E x ∈ w.asIdeal := by
     intro x hx
     by_contra hc
-    obtain ⟨s, hs⟩ := GlobalTheory.SplitConjPlace.exists_splitPlace w x hx hc
-    exact hv s (hs.trans (HeightOneSpectrum.ext hov))
+    have hspl : IsSplitPl D.host w := ⟨x, hx, fun y hy hym => hc (by
+      have : y = IsCMField.ringOfIntegersComplexConj D.host.E x := by
+        apply RingOfIntegers.ext
+        rw [hy, IsCMField.coe_ringOfIntegersComplexConj, GlobalTheory.SplitPlaceOver.host_conj_eq']
+      simpa [this] using hym)⟩
+    obtain ⟨s, ϖ, hs, hϖ⟩ := GlobalTheory.SplitConjPlace.splitEx_all D w hspl
+    apply hv s
+    apply HeightOneSpectrum.ext
+    rw [← s.w_under, ← hov]
+    ext a
+    have ha : D.host.conj ((algebraMap (𝓞 (maximalRealSubfield D.host.E)) (𝓞 D.host.E) a : 𝓞 D.host.E) : D.host.E) =
+        ((algebraMap (𝓞 (maximalRealSubfield D.host.E)) (𝓞 D.host.E) a : 𝓞 D.host.E) : D.host.E) := by
+      rw [GlobalTheory.SplitPlaceOver.host_conj_eq']
+      exact congrArg (fun z : 𝓞 D.host.E => (z : D.host.E)) ((IsCMField.ringOfIntegersComplexConj_eq_self_iff D.host.E _).2 ⟨a, rfl⟩)
+    exact (hs _ _ ha.symm).symm
   have hnsp : ¬ IsSplitPl D.host w := by
     rintro ⟨x, hx, hy⟩
     exact hy _ (by rw [IsCMField.coe_ringOfIntegersComplexConj, GlobalTheory.SplitPlaceOver.host_conj_eq']) (key x hx)
   have hnsa : ¬ GlobalTheory.UnitaryBC.IsSplitAt w := by
     rintro ⟨u, hne, hu⟩
-    rcases GlobalTheory.SplitConjPlace.eq_or_eq_conjPlE w u (congrArg HeightOneSpectrum.asIdeal hu) with e | e
-    · exact hne e
-    · apply hne
-      rw [e]
-      exact (HeightOneSpectrum.ext (w.isMaximal.eq_of_le
-        (GlobalTheory.SplitConjPlace.conjPlE w).isPrime.ne_top fun x hx => key x hx)).symm
+    apply hne
+    apply HeightOneSpectrum.ext
+    apply u.isMaximal.eq_of_le w.isPrime.ne_top
+    intro x hx
+    by_contra hxw
+    have hfix : IsCMField.ringOfIntegersComplexConj D.host.E (x * IsCMField.ringOfIntegersComplexConj D.host.E x) =
+        x * IsCMField.ringOfIntegersComplexConj D.host.E x := by
+      apply RingOfIntegers.ext
+      simp [IsCMField.coe_ringOfIntegersComplexConj, mul_comm]
+    obtain ⟨a, ha⟩ := (IsCMField.ringOfIntegersComplexConj_eq_self_iff D.host.E _).1 hfix
+    have hcom := congrArg HeightOneSpectrum.asIdeal hu
+    change u.asIdeal.comap (algebraMap (𝓞 (maximalRealSubfield D.host.E)) (𝓞 D.host.E)) =
+      w.asIdeal.comap (algebraMap (𝓞 (maximalRealSubfield D.host.E)) (𝓞 D.host.E)) at hcom
+    have hp : a ∈ u.asIdeal.comap (algebraMap (𝓞 (maximalRealSubfield D.host.E)) (𝓞 D.host.E)) := by
+      change algebraMap _ _ a ∈ u.asIdeal
+      rw [ha]; exact u.asIdeal.mul_mem_right _ hx
+    rw [hcom] at hp
+    change algebraMap _ _ a ∈ w.asIdeal at hp
+    rw [ha] at hp
+    rcases w.isPrime.mem_or_mem hp with h | h
+    · exact hxw h
+    · apply hxw
+      have hh := key _ h
+      have he : IsCMField.ringOfIntegersComplexConj D.host.E (IsCMField.ringOfIntegersComplexConj D.host.E x) = x := by
+        apply RingOfIntegers.ext
+        simp [IsCMField.coe_ringOfIntegersComplexConj]
+      rwa [he] at hh
   have hw : Formalism.UG.IsInertAt (maximalRealSubfield D.host.E) D.host.E v w := by
     have h := GlobalTheory.InertPlaceConj.isInertAt_of_not_split w (GlobalTheory.DefiniteBC.host_unramified D.host w) hnsa
     rwa [hunder] at h

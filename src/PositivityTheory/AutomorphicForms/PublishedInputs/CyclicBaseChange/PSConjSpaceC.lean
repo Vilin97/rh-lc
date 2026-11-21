@@ -491,26 +491,25 @@ theorem height_map_le : ∃ K : ℝ, 1 ≤ K ∧ ∀ y : GL (Fin a) (Cinf E),
   have n2 := norm_nonneg (toL (y⁻¹).val)
   nlinarith
 
-theorem isAutForm_pull {φ : Sm E a} (h : IsAutForm φ) : IsAutForm (pull d a φ) where
-  left γ g := by rw [pull_apply, map_mul, SA_ratGL, h.left, pull_apply]
-  level := by
-    convert h.level.preimage (GlobalTheory.BarPull.continuous_mapGL d.c.toRingHom (by exact d.contc)) using 1
+theorem isAutForm_pull {φ : Sm E a} (h : IsAutForm φ) : IsAutForm (pull d a φ) := by
+  refine { left := ?_, level := ?_, kfin := ?_, zfin := ?_, growth := ?_ }
+  · intro γ g
+    rw [pull_apply, map_mul, SA_ratGL, h.left, pull_apply]
+  · convert h.level.preimage (GlobalTheory.BarPull.continuous_mapGL d.c.toRingHom (by exact d.contc)) using 1
     ext k
     exact (Eq.congr_left (act_pull d (.fin k) φ)).trans (pull d a).injective.eq_iff
-  kfin := by
-    have := h.kfin
+  · have := h.kfin
     refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ (Set.range fun k => cptRep E a k φ)).map
       (pull d a).toLinearMap) (Submodule.span_le.2 ?_)
     rintro _ ⟨k, rfl⟩
     exact ⟨_, Submodule.subset_span ⟨_, rfl⟩, (act_pull d (.cpt k) φ).symm⟩
-  zfin := by
-    have := h.zfin
+  · have := h.zfin
     refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ ((fun z : Module.End ℂ (Sm E a) => z φ) ''
       Zalg E a)).map (pull d a).toLinearMap) (Submodule.span_le.2 ?_)
     rintro _ ⟨z, hz, rfl⟩
     obtain ⟨z', h1, h2⟩ := Zalg_pull d hz
     exact ⟨_, Submodule.subset_span ⟨z', h1, rfl⟩, (h2 φ).symm⟩
-  growth g := by
+  · intro g
     obtain ⟨C, N, h1⟩ := h.growth (SA d a g)
     obtain ⟨K, hK1, hK⟩ := height_map_le (a := a) d
     refine ⟨C * K ^ N, N, fun y => ?_⟩

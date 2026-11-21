@@ -34,9 +34,11 @@ theorem tMat_single (ϖ : L) (n' : ℕ) (k : Fin (n' / 2)) :
     tMat ϖ n' (n' / 2) (Pi.single k 1) = Matrix.diagonal (fun i => ϖ ^ ex n' k i) := by
   unfold tMat
   congr 1
+  funext i
   have hk := k.2
   have hi := i.2
-  split_ifs <;> first | (exfalso; omega) | simp_all
+  simp only [ex, Pi.single_apply, lo, Fin.ext_iff, Fin.val_rev]
+  split_ifs <;> simp_all <;> omega
 
 variable {σ : L →+* L} {δ : L} {ψ : AddChar L ℂ} {n n' : ℕ}
 

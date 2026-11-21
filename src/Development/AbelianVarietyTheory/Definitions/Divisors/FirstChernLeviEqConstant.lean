@@ -91,7 +91,7 @@ structure Calc {e : ℕ} (M : Man e) where
   [grp : AddCommGroup V]
   [mod : Module ℝ V]
 
-  num : MultilinearMap ℝ (fun _ : Fin (e + 1) => V) ℝ
+  num : (Fin (e + 1) → V) →ₘₗ[ℝ] ℝ
   symm : ∀ (v : Fin (e + 1) → V) (π : Equiv.Perm (Fin (e + 1))), num (v ∘ π) = num v
 
   c1 : V → M.Pot
@@ -163,9 +163,6 @@ structure Ht where
   falt : Y.Pt → ℝ
 
 variable (H : Ht Y)
-
-variable {T} (P : T.Pts)
-
 
 variable (Y) in
 def midWt : Wt Y := fun _ i => if (i : ℕ) < Y.j then 1 else 0

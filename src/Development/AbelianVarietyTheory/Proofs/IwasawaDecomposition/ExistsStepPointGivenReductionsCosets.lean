@@ -116,7 +116,8 @@ theorem cosetIn_eq {cst : LocCst X (rowSG Pr sel mu)} (q : PtAt R sel mu cst u j
     (hY : q.1.2 = {z | z - y ∈ locLat (rowSG Pr sel mu) q.1.1.deco.1.N (fun P => if P.1 ∈ Pr.vGs then 0 else (cst.M : ℤ))})
     (P : rowSG Pr sel mu) (hP : P.1 ∉ Pr.vGs) :
     cosetIn q P = {z | ((qOf P.1 : X.E) ^ cst.M)⁻¹ • (z - (frsF sel mu q.1.1 P).symm y) ∈ stdAt X.E (R.N j) P.1} := by
-  ext z
+  apply Set.ext
+  intro z
   simp only [cosetIn, if_neg hP, hY, Set.mem_setOf_eq]
   constructor
   · rintro ⟨y0, hy0, hz⟩

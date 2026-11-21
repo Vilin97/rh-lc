@@ -12,6 +12,8 @@ namespace Formalism.HermitianLattices.Ext.L3.unitaryAbsoluteValueBounds
 
 variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberField F] [Algebra F K]
 
+local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
+
 theorem mem_pow_iff_le_vF {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {n : 𝓞 F} (hn : n ≠ 0) (e : ℕ) :
     n ∈ 𝔭 ^ e ↔ e ≤ vF 𝔭 n := by
   have hbdd : BddAbove {e : ℕ | n ∈ 𝔭 ^ e} := by

@@ -104,20 +104,22 @@ variable {ι ι' σ σ' Z : Type} {n p q : ℕ} {A : Mn n → (Z → ℂ) → (Z
 theorem Side.comp {pt : MvPolynomial ι ℂ → (Z → ℂ)} {pt' : MvPolynomial ι' ℂ → (Z → ℂ)}
     {κ : MvPolynomial ι ℂ ≃ₗ[ℂ] MvPolynomial σ ℂ} {a : Mat p q →ₗ[ℂ] Module.End ℂ (MvPolynomial σ ℂ)}
     (h : Side A pt κ φ c a) (ς : MvPolynomial ι' ℂ ≃ₗ[ℂ] MvPolynomial ι ℂ) (hς : ∀ P, pt' P = pt (ς P)) :
-    Side A pt' (ς.trans κ) φ c a where
-  der Y hY P P' := by
+    Side A pt' (ς.trans κ) φ c a := by
+  refine ⟨?_, ?_⟩
+  · intro Y hY P P'
     have e : PolDer A pt' (φ Y) P P' ↔ PolDer A pt (φ Y) (ς P) (ς P') := by simp only [PolDer, hς]
     rw [e]
     exact h.der Y hY (ς P) (ς P')
-  wt μ P := by
+  · intro μ P
     simp only [hς]
     exact h.wt μ (ς P)
 
 theorem Side.trans {pt : MvPolynomial ι ℂ → (Z → ℂ)} {κ : MvPolynomial ι ℂ ≃ₗ[ℂ] MvPolynomial σ ℂ}
     {a : Mat p q →ₗ[ℂ] Module.End ℂ (MvPolynomial σ ℂ)} {a' : Mat p q →ₗ[ℂ] Module.End ℂ (MvPolynomial σ' ℂ)}
     (h : Side A pt κ φ c a) (w : MvPolynomial σ ℂ ≃ₗ[ℂ] MvPolynomial σ' ℂ) (hw : ∀ Y P, w (a Y P) = a' Y (w P)) :
-    Side A pt (κ.trans w) φ c a' where
-  der Y hY P P' := by
+    Side A pt (κ.trans w) φ c a' := by
+  refine ⟨?_, ?_⟩
+  · intro Y hY P P'
     rw [h.der Y hY P P']
     simp only [LinearEquiv.trans_apply]
     constructor
@@ -126,7 +128,7 @@ theorem Side.trans {pt : MvPolynomial ι ℂ → (Z → ℂ)} {κ : MvPolynomial
     · intro e
       apply w.injective
       rw [e, map_add (f := _), map_smul, hw]
-  wt μ P := by
+  · intro μ P
     rw [← h.wt μ P]
     simp only [LinearEquiv.trans_apply, wtSub, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply,
       LinearMap.smul_apply, LinearMap.id_apply]
@@ -195,11 +197,11 @@ structure Reads {ι Z : Type} {n n' p q r s : ℕ} (G : Mn n) (G' : Mn n') (A : 
 theorem Reads.swap {ι Z : Type} {n n' p q r s : ℕ} {G : Mn n} {G' : Mn n'} {A : Mn n → (Z → ℂ) → (Z → ℂ)}
     {B : Mn n' → (Z → ℂ) → (Z → ℂ)} {pt : MvPolynomial ι ℂ → (Z → ℂ)} {IP : ((Z → ℂ) → (Z → ℂ) → ℂ) → Prop}
     {φ : Mat p q → Mn n} {φ' : Mat r s → Mn n'} {c c' : ℚ} {κ : MvPolynomial ι ℂ ≃ₗ[ℂ] Pol p q r s}
-    (h : Reads G G' A B pt IP φ φ' c c' κ) : Reads G' G B A pt IP φ' φ c' c (κ.trans (swp _ _)) where
-  gr := h.gr.trans (graded_swp _ _)
-  s₁ := h.s₂.trans (swp _ _) fun Y P => by rw [swp_apply, swp_apply, GlobalTheory.FockSwap.rename_fockAct2]
-  s₂ := h.s₁.trans (swp _ _) fun Y P => by rw [swp_apply, swp_apply, GlobalTheory.FockSwap.rename_fockAct1]
-  l2 ip hip := by
+    (h : Reads G G' A B pt IP φ φ' c c' κ) : Reads G' G B A pt IP φ' φ c' c (κ.trans (swp _ _)) := by
+  refine ⟨h.gr.trans (graded_swp _ _), ?_, ?_, ?_⟩
+  · exact h.s₂.trans (swp _ _) fun Y P => by rw [swp_apply, swp_apply, GlobalTheory.FockSwap.rename_fockAct2]
+  · exact h.s₁.trans (swp _ _) fun Y P => by rw [swp_apply, swp_apply, GlobalTheory.FockSwap.rename_fockAct1]
+  · intro ip hip
     obtain ⟨N, Θ, hF, h1, h2⟩ := h.l2 ip hip
     refine ⟨N, Θ, ⟨hF.1, fun P Q => ?_⟩, h2, h1⟩
     rw [hF.2 P Q, LinearEquiv.trans_apply, LinearEquiv.trans_apply, fockIp_swp]

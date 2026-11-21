@@ -60,7 +60,14 @@ theorem exists_section (he : e * e = e) (hπ : Chart e v π) :
     rw [Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, RingHom.map_mul, chart_e he hπ, one_mul, Matrix.map_apply, hs]
   exact ⟨AddMonoidHom.mk' (fun w => e • w.map s) fun w w' => chart_inj hπ (isHalf_smul' he _)
     (GlobalTheory.SplitScalar.isHalf_add (isHalf_smul' he _) (isHalf_smul' he _)) (by
-      rw [Matrix.map_add _ π.map_add (f := _), p1, p1, p1]), p1, fun w => isHalf_smul' he _⟩
+      calc
+        _ = w + w' := p1 _
+        _ = _ := by
+          apply Matrix.ext
+          intro i j
+          simpa [Matrix.map_apply, RingHom.map_add] using
+            congrArg₂ (· + ·) (congrFun (congrFun (p1 w).symm i) j)
+              (congrFun (congrFun (p1 w').symm i) j)), p1, fun w => isHalf_smul' he _⟩
 
 theorem chart_det (he : e * e = e) (hπ : Chart e v π) {V : HSp D} {k : GA D V} {z : (AE D)ˣ} (hz : IsDetAt e V k z) :
     ((mt V k).map π).det = π z := by

@@ -54,14 +54,16 @@ variable {Y : Type} [Fintype Y] [DecidableEq Y] {F : Frame k V.rank Y} {gl : GL 
 theorem map_one' {n : ℕ} : (1 : Matrix (Fin n) (Fin n) (AE D)).map q.pr = 1 := Matrix.map_one _ (map_zero _) (map_one _)
 
 theorem continuous_mt_gl (h : ∀ g, (ofSplit q).IsLoc F (gl g) g) : Continuous fun g => Formalism.L2.Theta.mt V (gl g) := by
-  haveI := (Formalism.IndefR.Eqv.ae_facts D).1
+  haveI : IsTopologicalRing (AE D) := by
+    obtain ⟨h1, h2, h3⟩ := Formalism.IndefR.Eqv.G5.af_facts D.host.F
+    exact (Formalism.IndefR.Eqv.G5.tens_facts (AF D.host.F) D.sp.cm.deg2).1
   have h2 : ∀ g, (Formalism.L2.Theta.mt V (gl g)).map q.pr = F.β * g.val * F.γ := fun g => (h g).2
   have e1 : ∀ g, (Formalism.L2.Theta.mt V (gl g) - 1).map q.pr = F.β * g.val * F.γ - 1 := fun g => by
     rw [Matrix.map_sub _ (map_sub q.pr), map_one', h2]
   have e2 : ∀ g, (adj (Formalism.L2.Theta.mt V (gl g) - 1)).map q.pr =
       (gA V).map q.pr * (F.β * (g⁻¹).val * F.γ) * (giA V).map q.pr - 1 := fun g => by
     have inv : adj (Formalism.L2.Theta.mt V (gl g)) = gA V * Formalism.L2.Theta.mt V (gl g)⁻¹ * giA V := by
-      rw [GlobalTheory.MixModel.mt_inv, gA_giA_cancel, Matrix.mul_assoc, gA_mul_giA, Matrix.mul_one]
+      rw [GlobalTheory.MixModel.mt_inv, ← Matrix.mul_assoc (gA V), gA_mul_giA, Matrix.one_mul, Matrix.mul_assoc, gA_mul_giA, Matrix.mul_one]
     rw [adj_sub, adj_one, Matrix.map_sub _ (map_sub q.pr), map_one', inv, Matrix.map_mul, Matrix.map_mul, ← map_inv, h2]
   have c1 : Continuous fun g : GL Y k => F.β * g.val * F.γ - 1 :=
     ((continuous_const.matrix_mul Units.continuous_val).matrix_mul continuous_const).sub continuous_const
@@ -98,7 +100,9 @@ def comp (x : GA D V) : GL Y k :=
     key x x⁻¹ (mul_inv_cancel x), key x⁻¹ x (inv_mul_cancel x)⟩
 
 theorem continuous_comp : Continuous (comp q F) := by
-  haveI := (Formalism.IndefR.Eqv.ga_facts D V).1
+  haveI : IsTopologicalGroup (GA D V) := by
+    obtain ⟨h1, h2, h3⟩ := Formalism.IndefR.Eqv.G5.af_facts D.host.F
+    exact (Formalism.IndefR.Eqv.G5.ha_facts (AF D.host.F) D.sp.cm.deg2 D.sp.cm.sig V.gram).1
   have c0 : Continuous (Formalism.L2.Theta.mt V) := Units.continuous_val.comp continuous_subtype_val
   have c : Continuous fun x : GA D V => F.γ * (Formalism.L2.Theta.mt V x).map q.pr * F.β :=
     (continuous_const.matrix_mul (c0.matrix_map q.cont_pr)).matrix_mul continuous_const
@@ -113,7 +117,9 @@ theorem comp_gl (h : ∀ g, (ofSplit q).IsLoc F (gl g) g) (g : GL Y k) : comp q 
   rw [F.γβ, Matrix.mul_one, ← Matrix.mul_assoc, F.γβ, Matrix.one_mul]
 
 theorem isClosedEmbedding_gl (h : ∀ g, (ofSplit q).IsLoc F (gl g) g) : Topology.IsClosedEmbedding gl := by
-  haveI := (Formalism.IndefR.Eqv.ga_facts D V).2.1
+  haveI : T2Space (GA D V) := by
+    obtain ⟨h1, h2, h3⟩ := Formalism.IndefR.Eqv.G5.af_facts D.host.F
+    exact (Formalism.IndefR.Eqv.G5.ha_facts (AF D.host.F) D.sp.cm.deg2 D.sp.cm.sig V.gram).2.1
   exact Function.LeftInverse.isClosedEmbedding (f := comp q F) (comp_gl q h) (continuous_comp q) (continuous_gl q h)
 
 theorem gl_mem (h : ∀ g, (ofSplit q).IsLoc F (gl g) g) (g : GL Y k) : gl g ∈ grpAt V (· = q.v) :=

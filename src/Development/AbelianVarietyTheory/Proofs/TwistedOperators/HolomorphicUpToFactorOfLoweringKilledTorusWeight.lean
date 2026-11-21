@@ -71,6 +71,7 @@ theorem holUpTo_of_lowKilled : ∀ (D : D7) (S T : HSp D) (C : Ctx S T) (B : C.B
         simp only [s]; push_cast; ring
       rw [hb, hA]
       field_simp [dNe a, Complex.exp_ne_zero]
+      <;> ring
     · rw [hk2]
       show _ = B ρ * (diagonal fun c => cexp ((t (C.m.e ρ) c : ℂ) * I)).map (starRingEnd ℂ) * (B ρ)⁻¹
       rw [diagonal_map (map_zero _)]
@@ -88,15 +89,20 @@ theorem holUpTo_of_lowKilled : ∀ (D : D7) (S T : HSp D) (C : Ctx S T) (B : C.B
     (((GlobalTheory.SmoothForms.isSmoothInf_iff φ).1 ((GlobalTheory.SmoothForms.smooth_iff R φ).1 hL.1) (g * a)).differentiable
       (by simp)) 0
   let L : Frame C.X.Ψ T.rank →L[ℝ] GlobalTheory.SmoothForms.LieN T := LinearMap.toContinuousLinearMap (toLieC C R B)
-  let lam : GlobalTheory.SmoothForms.LieN T →L[ℝ] ℂ := trCL T m
+  let lam : GlobalTheory.SmoothForms.LieN T →L[ℝ] ℂ :=
+    { toLinearMap := trLin T m
+      cont := by
+        change Continuous (fun Y : GlobalTheory.SmoothForms.LieN T => ∑ ρ, (m ρ : ℂ) * trace (Y ρ).1)
+        fun_prop }
   let f : GlobalTheory.SmoothForms.LieN T → ℂ := fun Y =>
     (detPow C.θ T m a)⁻¹ * (φ (g * a * GlobalTheory.SmoothForms.expInf C.θ T Y) * cexp (-lam Y))
   have key : ∀ Z ∈ unitLie C.X, Q (rmul (C.xB (C.mvB a B)) (expFr Z)) = f (L Z) := by
     intro Z hZ
     have he := GlobalTheory.SmoothForms.isExpFam_expInf R (L Z)
     rw [← xB_mvB_mul C B hB a _ _ fun ρ => ?_, hQ _ (mul_mem ha he.1), dMul, dExp]
-    · simp only [f, lam, trCL_apply, mul_assoc, Complex.exp_neg]
+    · simp only [f, lam, mul_assoc, Complex.exp_neg]
       field_simp [dNe a]
+      rfl
     · show infMat _ _ (C.θ ρ) _ = _
       rw [he.2 ρ]
       change NormedSpace.exp ((toLieC C R B Z ρ).1) = _
@@ -123,7 +129,10 @@ theorem holUpTo_of_lowKilled : ∀ (D : D7) (S T : HSp D) (C : Ctx S T) (B : C.B
   have hℓ : ∀ W : Frame C.X.Ψ T.rank, ((detPow C.θ T m a)⁻¹ • (φ (g * a * GlobalTheory.SmoothForms.expInf C.θ T 0) •
       (cexp (-lam 0) • -lam) + cexp (-lam 0) • Dφ)).comp L W = (detPow C.θ T m a)⁻¹ *
       (φ (g * a * GlobalTheory.SmoothForms.expInf C.θ T 0) * (cexp (-lam 0) * -trLin T m (toLieC C R B W)) +
-        cexp (-lam 0) * Dφ (toLieC C R B W)) := fun W => rfl
+        cexp (-lam 0) * Dφ (toLieC C R B W)) := by
+    intro W
+    simp [L, lam, ContinuousLinearMap.comp_apply, mul_assoc]
+    <;> ring
   rw [hℓ, hℓ]
   linear_combination ((detPow C.θ T m a)⁻¹ * cexp (-lam 0)) * hD -
     ((detPow C.θ T m a)⁻¹ * φ (g * a * GlobalTheory.SmoothForms.expInf C.θ T 0) * cexp (-lam 0)) * hT

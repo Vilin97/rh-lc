@@ -138,10 +138,9 @@ theorem minor_other (hj : j ≤ N) (hb : (b : ℕ) = a + 1) (hab : (b : ℕ) < j
     (t : R) {i : Fin N} (hi : i ≠ a) :
     minorIJ (h * (1 + Matrix.single cb ca t)) I (stepCols N j i) = minorIJ h I (stepCols N j i) := by
   rw [MinorCalc.minorIJ_mul_of_support _ _ _ _ fun k c hc hk => ?_]
-  · rw [MinorCalc.minorIJ_eq_det (1 + Matrix.single cb ca t) _ _ _ rfl rfl, Matrix.det_of_lowerTriangular
+  · rw [MinorCalc.minorIJ_eq_det (1 + Matrix.single cb ca t) _ _ _ rfl rfl, Matrix.det_of_isLowerTriangular
       ((1 + Matrix.single cb ca t).submatrix _ _) (fun x x' hx =>
-        (elem_lowerUni hcb t).2 _ _ (((stepCols N j i).orderEmbOfFin rfl).strictMono (by exact hx))),
-]
+        (elem_lowerUni hcb t).2 _ _ (((stepCols N j i).orderEmbOfFin rfl).strictMono hx))]
     have hone : ∀ x, (1 + Matrix.single cb ca t).submatrix ((stepCols N j i).orderEmbOfFin rfl)
         ((stepCols N j i).orderEmbOfFin rfl) x x = 1 := fun x => (elem_lowerUni hcb t).1 _
     simp only [hone, Finset.prod_const_one, mul_one]
@@ -259,7 +258,7 @@ theorem image_snd (hb : (b : ℕ) = a + 1) (hab : (b : ℕ) < j ∨ j ≤ (a : �
     have hdiag : ∀ c, B τ c c ≠ 0 := fun c h0 => by
       have h1 : (M.g τ).det * (B τ).det = 1 := by rw [← det_mul, (hB τ).2.2.det]
       have h2 : ∏ i, B τ i i = 0 := Finset.prod_eq_zero (Finset.mem_univ c) h0
-      rw [det_of_upperTriangular (hB τ).2.1, h2, mul_zero] at h1
+      rw [det_of_isUpperTriangular (hB τ).2.1, h2, mul_zero] at h1
       exact zero_ne_one h1
     have hden : φ (B τ cb cb) - RatFunc.X * φ (B τ ca cb) ≠ 0 := fun h0 => by
       have h3 : algebraMap (Polynomial Φ) (RatFunc Φ)

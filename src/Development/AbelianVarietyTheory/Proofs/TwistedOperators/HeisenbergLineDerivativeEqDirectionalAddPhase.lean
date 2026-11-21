@@ -31,7 +31,8 @@ theorem evI_dot {κ : Type} [Fintype κ] (v w : κ → AF F) :
     evI F (v ⬝ᵥ w) = (fun i => evI F (v i)) ⬝ᵥ fun i => evI F (w i) :=
   RingHom.map_dotProduct (evIHom F) v w
 
-theorem evI_realAd (t : ℝ) : evI F (realAd F t) = algebraMap ℝ _ t := by simp [evI, realAd]
+theorem evI_realAd (t : ℝ) : evI F (realAd F t) = algebraMap ℝ _ t := by
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply _
 
 theorem snd_realAd (t : ℝ) : (realAd F t).2 = 0 := by simp [realAd]
 
@@ -40,7 +41,8 @@ variable (F) in
 def ofInf (y : mixedEmbedding.mixedSpace F) : AF F :=
   (((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm y, 0) : InfiniteAdeleRing F × FiniteAdeleRing (𝓞 F) F)
 
-theorem evI_ofInf (y : mixedEmbedding.mixedSpace F) : evI F (ofInf F y) = y := by simp [evI, ofInf]
+theorem evI_ofInf (y : mixedEmbedding.mixedSpace F) : evI F (ofInf F y) = y := by
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply y
 
 theorem snd_ofInf (y : mixedEmbedding.mixedSpace F) : (ofInf F y).2 = 0 := rfl
 

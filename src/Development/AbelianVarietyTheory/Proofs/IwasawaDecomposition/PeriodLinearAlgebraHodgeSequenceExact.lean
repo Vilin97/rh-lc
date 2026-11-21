@@ -189,8 +189,8 @@ theorem goodPer_of_form (c : Coeff l) (σ : c.F →+* ℂ) (τ : E →+* ℂ) (D
     set_option synthInstance.maxHeartbeats 100000 in
       · simp only [part, Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, perMat, Finset.sum_mul, Finset.mul_sum,
         map_sum, map_mul, Complex.conj_conj, ← Finset.sum_neg_distrib]
-      rw [Finset.sum_comm]
-      exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
+        rw [Finset.sum_comm]
+        exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
 theorem goodPer_of_basis (c : Coeff l) (σ : c.F →+* ℂ) (τ : E →+* ℂ) (Di : Datum H) {g : ℕ} (e : Fin g ≃ Letter Dw)
     (Q : Di.La →+ (Letter Dw → ℂ)) (P : Di.La →+ (Fin g → ℂ)) (W : Letter Dw → Fin g → ℂ)

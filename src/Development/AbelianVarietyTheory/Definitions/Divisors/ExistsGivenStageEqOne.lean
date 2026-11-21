@@ -233,8 +233,48 @@ instance (G : GridData L sc) : Nonempty (Frames G) := by
   have h : ∀ i j, ∃ β : GL (Fin (G.sp.Vs i j).sp.rank) (Formalism.IndefR.Lev.EAf D),
       1 ≤ i → i ≤ D.R.m → j ≤ D.R.m → IsFrame β (G.sp.Vs i j).lat := fun i j => by
     by_cases h : 1 ≤ i ∧ i ≤ D.R.m ∧ j ≤ D.R.m
-    · have hl := (G.sp.V_is i j h.1 h.2.1 h.2.2).sd.1
-      obtain ⟨β, hβ⟩ := GlobalTheory.AdelicFrame.exists_isFrame D.host.F _ hl.fg hl.span_eq_top
+    · have hs := (G.sp.V_is i j h.1 h.2.1 h.2.2).sd
+      let M := (G.sp.Vs i j).lat
+      have hsp : Submodule.span D.host.E (M : Set (Fin (G.sp.Vs i j).sp.rank → D.host.E)) = ⊤ := by
+        apply top_unique
+        intro y _
+        let pairing (x z : Fin (G.sp.Vs i j).sp.rank → D.host.E) :=
+          ∑ a, ∑ b, star (x a) * (G.sp.Vs i j).sp.gram a b * z b
+        obtain ⟨s, hgen⟩ := hs.1.fg
+        obtain ⟨d, hd⟩ := IsLocalization.exist_integer_multiples (𝓞 D.host.E)⁰ s (pairing · y)
+        have hd0 : (d : 𝓞 D.host.E) ≠ 0 := mem_nonZeroDivisors_iff_ne_zero.mp d.property
+        have hdE : (d : 𝓞 D.host.E) • y ∈ M := by
+          apply (hs.2 _).2
+          intro x hx
+          show IsLocalization.IsInteger (𝓞 D.host.E) (pairing x ((d : 𝓞 D.host.E) • y))
+          have hscale (z : Fin (G.sp.Vs i j).sp.rank → D.host.E) :
+              pairing z ((d : 𝓞 D.host.E) • y) = (d : 𝓞 D.host.E) • pairing z y := by
+            simp only [pairing, Pi.smul_apply, Algebra.smul_def, Finset.mul_sum,
+              mul_assoc, mul_left_comm, mul_comm]
+          rw [hscale]
+          refine Submodule.span_induction
+            (p := fun z _ => IsLocalization.IsInteger (𝓞 D.host.E) ((d : 𝓞 D.host.E) • pairing z y))
+            ?_ ?_ ?_ ?_ (hgen.symm ▸ hx)
+          · intro z hz
+            exact hd z hz
+          · simp [pairing, IsLocalization.isInteger_zero]
+          · intro z z' _ _ hz hz'
+            convert IsLocalization.isInteger_add hz hz' using 1
+            simp only [pairing, Pi.add_apply, star_add, add_mul, Finset.sum_add_distrib, smul_add]
+          · intro a z _ hz
+            have ha : IsLocalization.IsInteger (𝓞 D.host.E) (star (a : D.host.E)) := by
+              refine ⟨⟨star (a : D.host.E), ?_⟩, rfl⟩
+              exact a.2.map (starRingEnd D.host.E).toIntAlgHom
+            convert IsLocalization.isInteger_mul ha hz using 1
+            simp only [pairing, Pi.smul_apply, Algebra.smul_def, star_mul', Finset.mul_sum,
+              mul_assoc, mul_left_comm, mul_comm]
+        have hspan := Submodule.subset_span (R := D.host.E) hdE
+        have hn : ((d : 𝓞 D.host.E) : D.host.E) ≠ 0 := by exact_mod_cast hd0
+        have hy := (Submodule.span D.host.E (M : Set (Fin (G.sp.Vs i j).sp.rank → D.host.E))).smul_mem
+          (((d : 𝓞 D.host.E) : D.host.E)⁻¹) hspan
+        rwa [← IsScalarTower.algebraMap_smul D.host.E (d : 𝓞 D.host.E) y,
+          smul_smul, inv_mul_cancel₀ hn, one_smul] at hy
+      obtain ⟨β, hβ⟩ := GlobalTheory.AdelicFrame.exists_isFrame D.host.F _ hs.1.fg hsp
       exact ⟨β, fun _ _ _ => hβ⟩
     · exact ⟨1, fun a b c => absurd ⟨a, b, c⟩ h⟩
   choose β hβ using h
@@ -278,6 +318,7 @@ theorem ixFin_val (j : ℕ) : (∀ a, (ixFin G t w j (.inl a)).val = a.val) ∧
     ∀ c b, (ixFin G t w j (.inr (c, b))).val = D.R.r + (b.val + D.R.t * c.val) := ⟨fun _ => rfl, fun _ _ => rfl⟩
 
 
+variable (L) in
 open Classical in
 def stepGroup (j : ℕ) : Subgroup (GL (Ix (Fin D.R.r) (Fin D.R.t) j) (Kw w)) :=
   if w ∈ L.Pg then
@@ -285,6 +326,7 @@ def stepGroup (j : ℕ) : Subgroup (GL (Ix (Fin D.R.r) (Fin D.R.t) j) (Kw w)) :=
   else if w ∈ L.Q t then (parahoric (k := Kw w) (Fin D.R.r) (Fin j × Fin D.R.t) 1 fun _ _ => rfl).J else KO (Kw w) _
 
 
+variable (L) in
 open Classical in
 def stepFn (j : ℕ) : Matrix (Ix (Fin D.R.r) (Fin D.R.t) (j + 1)) (Ix (Fin D.R.r) (Fin D.R.t) j) (Kw w) → ℂ :=
   if w ∈ L.Pg then

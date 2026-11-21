@@ -71,13 +71,51 @@ theorem exists_split {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T) (Λ : LV D)
       (∀ y ∈ Λ, phiG G (∑ i, (∑ k, c i k * phiG G y k) • l i) = phiG G y) := by
   set Q : Submodule (𝓞 D.host.E) (Fin D.R.rS → D.host.E) :=
     Λ.map ((phiG G).restrictScalars (𝓞 D.host.E)) with hQ
-  have hQl : Submodule.IsLattice D.host.E Q := by
-    refine ⟨hΛ.fg.map _, ?_⟩
-    rw [hQ, Submodule.map_coe]
-    have e1 : (⇑((phiG G).restrictScalars (𝓞 D.host.E)) : (VS D).V → _) = ⇑(phiG G) := rfl
-    rw [e1, Submodule.span_image, hΛ.span_eq_top, Submodule.map_top, phiG_surj]
+  have hQl : Submodule.IsLattice D.host.E Q :=
+    Submodule.IsLattice.of_fg D.host.E (hΛ.fg.map _)
   obtain ⟨m, g, ψ, hψ⟩ := GlobalTheory.HL.PlacesRec.exists_dual_basis Q hQl
-  choose c hc using fun i => GlobalTheory.HL.PlacesRec.exists_coeffs Q hQl.span_eq_top (ψ i)
+  let W := Submodule.span D.host.E (Q : Set (Fin D.R.rS → D.host.E))
+  let f : Q →ₗ[𝓞 D.host.E] W := Q.subtype.codRestrict (W.restrictScalars (𝓞 D.host.E))
+    (fun x => Submodule.subset_span x.2)
+  haveI : IsLocalizedModule (nonZeroDivisors (𝓞 D.host.E)) f := by
+    refine ⟨?_, ?_, ?_⟩
+    · intro a
+      have := isLocalizedModule_id (nonZeroDivisors (𝓞 D.host.E)) W D.host.E
+      exact IsLocalizedModule.map_units (S := nonZeroDivisors (𝓞 D.host.E)) (LinearMap.id : W →ₗ[𝓞 D.host.E] W) a
+    · intro y
+      obtain ⟨t, ht⟩ := multiple_mem_span_of_mem_localization_span
+        (nonZeroDivisors (𝓞 D.host.E)) D.host.E (Q : Set (Fin D.R.rS → D.host.E)) y.1 y.2
+      rw [Submodule.span_eq] at ht
+      exact ⟨(⟨_, ht⟩, t), Subtype.ext rfl⟩
+    · intro x y hxy
+      refine ⟨1, ?_⟩
+      have he : (x : Fin D.R.rS → D.host.E) = y := congrArg (fun z : W => (z : Fin D.R.rS → D.host.E)) hxy
+      simpa using Subtype.ext he
+  have hu : ∀ a : nonZeroDivisors (𝓞 D.host.E),
+      IsUnit (algebraMap (𝓞 D.host.E) (Module.End (𝓞 D.host.E) D.host.E) a) :=
+    fun a => IsLocalizedModule.map_units (S := nonZeroDivisors (𝓞 D.host.E))
+      (Algebra.linearMap (𝓞 D.host.E) D.host.E) a
+  have hcoeff : ∀ i, ∃ c : Fin D.R.rS → D.host.E, ∀ y : Q,
+      ∑ k, c k * (y : Fin D.R.rS → D.host.E) k = (ψ i y : D.host.E) := by
+    intro i
+    let φ : W →ₗ[D.host.E] D.host.E :=
+      (IsLocalizedModule.lift (nonZeroDivisors (𝓞 D.host.E)) f
+        (Algebra.linearMap (𝓞 D.host.E) D.host.E ∘ₗ ψ i) hu).extendScalarsOfIsLocalization
+          (nonZeroDivisors (𝓞 D.host.E)) D.host.E
+    obtain ⟨F, hF⟩ := LinearMap.exists_extend φ
+    refine ⟨fun k => F (Pi.single k 1), fun y => ?_⟩
+    have hs := LinearMap.pi_apply_eq_sum_univ F (y : Fin D.R.rS → D.host.E)
+    simp only [smul_eq_mul] at hs
+    have hp (k : Fin D.R.rS) : Pi.single k (1 : D.host.E) = (fun j => if k = j then (1 : D.host.E) else 0) := by
+      funext j
+      simp [Pi.single_apply, eq_comm]
+    simp only [hp, mul_comm]
+    rw [← hs]
+    have he := LinearMap.congr_fun hF (f y)
+    change F (y : Fin D.R.rS → D.host.E) = φ (f y) at he
+    rw [he]
+    exact IsLocalizedModule.lift_apply (nonZeroDivisors (𝓞 D.host.E)) f _ hu y
+  choose c hc using hcoeff
   have hlift : ∀ i, ∃ l ∈ Λ, phiG G l = (g i : Fin D.R.rS → D.host.E) := by
     intro i
     obtain ⟨l, hl, he⟩ := Submodule.mem_map.1 (g i).2

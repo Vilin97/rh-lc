@@ -140,7 +140,7 @@ theorem intSub_span (n : ℕ) : Submodule.span D.host.E (intSub D n : Set (Fin n
   · subst h; simp only [Pi.single_eq_same]; exact isIntegral_one
   · rw [Pi.single_eq_of_ne' h]; exact isIntegral_zero
 
-instance intSub_isLattice (n : ℕ) : Submodule.IsLattice D.host.E (intSub D n) := ⟨intSub_fg n, intSub_span n⟩
+instance intSub_isLattice (n : ℕ) : Submodule.IsLattice D.host.E (intSub D n) := Submodule.IsLattice.of_fg D.host.E (intSub_fg n)
 
 theorem sum_swap_one (n : ℕ) (x y : Fin n → D.host.E) :
     ∑ i, ∑ j, star (x i) * (1 : Matrix (Fin n) (Fin n) D.host.E) i j * y j =
@@ -214,7 +214,7 @@ theorem hat_move (V : HSp D) (g : GA D V) (N : Submodule (𝓞 D.host.E) (Fin V.
 theorem selfDual_move (V : HSp D) (hV : V.gram = 1) (g : GA D V) (N : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E))
     (hN : Moves V rfl g N) : IsSelfDualC V N := by
   obtain ⟨hfg, hsp, -⟩ := exists_eq_latOf V g N hN
-  refine ⟨⟨hfg, hsp⟩, fun y => ?_⟩
+  refine ⟨Submodule.IsLattice.of_fg D.host.E hfg, fun y => ?_⟩
   obtain ⟨-, -, -, -, c2, -⟩ := GlobalTheory.Member.latHat_eq_hat_and_gram D V
   have hU := GlobalTheory.RepsCompare.isUnA_gf V (Formalism.IndefR.FWT.fin V g)
   rw [hV, Matrix.transpose_one] at hU

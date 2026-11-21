@@ -23,7 +23,7 @@ theorem inverseHalfDifferent_local_trivial_at_prime_norm {R : Ranks} (H : Host R
   have hnot : ¬ H.𝔟 ≤ P.asIdeal := fun hle => hnd (by
     rw [H.𝔟_spec.1]
     exact (Ideal.dvd_iff_le.2 hle).mul_right _)
-  obtain ⟨z, hz, hzP⟩ := SetLike.not_le_iff_exists.1 hnot
+  obtain ⟨z, hz, hzP⟩ := IsConcreteLE.not_le_iff_exists.1 hnot
   have hB : ((H.𝔟 : Ideal (𝓞 H.E)) : FractionalIdeal (nonZeroDivisors (𝓞 H.E)) H.E) ≠ 0 :=
     FractionalIdeal.coeIdeal_ne_zero.2 fun h => by
       have h3 := H.𝔟_spec.2

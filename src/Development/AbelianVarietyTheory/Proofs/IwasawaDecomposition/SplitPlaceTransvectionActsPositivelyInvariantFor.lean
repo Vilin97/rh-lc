@@ -225,8 +225,27 @@ theorem eq_zero_of_small (hψ : IsStdChar D ψ (-1)) {ξ : Fin T.rank → D.host
   obtain ⟨ι, _, _, σ, hσ⟩ := exists_invariant_sum (fun s => heisO ψ S T (α s) g) (α ⁻¹' U)
     (hαc.continuousAt.preimage_mem_nhds (by rw [hα0]; exact hUo.mem_nhds U.zero_mem))
     fun u hu a => by rw [hαa, hU _ hu (half_fin he' (hαh u))]
+  have theta_zero : IsThetaFunO ψ S T 0 := {
+    quasi γ w := by simp only [Pi.zero_apply, mul_zero]
+    level := ⟨⊤, isOpen_univ, fun u _ _ => by funext w; simp only [heisO, Pi.zero_apply, mul_zero]⟩
+    cont := continuous_const
+    smooth k L _ _ w := contDiff_const }
+  have theta_add {f g : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (hg : IsThetaFunO ψ S T g) :
+      IsThetaFunO ψ S T (f + g) := {
+    quasi γ w := by simp only [Pi.add_apply, hf.quasi, hg.quasi, mul_add]
+    level := by
+      obtain ⟨U, hU, h1⟩ := hf.level
+      obtain ⟨U', hU', h2⟩ := hg.level
+      refine ⟨U ⊓ U', hU.inter hU', fun u hu h0 => ?_⟩
+      funext w
+      have e1 := congrFun (h1 u hu.1 h0) w
+      have e2 := congrFun (h2 u hu.2 h0) w
+      unfold heisO at e1 e2 ⊢
+      rw [Pi.add_apply, Pi.add_apply, mul_add, e1, e2]
+    cont := hf.cont.add hg.cont
+    smooth k L h1 h2 w := (hf.smooth k L h1 h2 w).add (hg.smooth k L h1 h2 w) }
   have hth : IsThetaFunO ψ S T (∑ i, heisO ψ S T (α (σ i)) g) :=
-    Finset.sum_induction _ _ (fun _ _ => GlobalTheory.OrientedHeis.theta_add) GlobalTheory.OrientedHeis.theta_zero
+    Finset.sum_induction _ _ (fun _ _ => theta_add) theta_zero
       fun i _ => hcl g hg _
   have h0 : ∑ i, heisO ψ S T (α (σ i)) g = 0 := by
     refine GlobalTheory.T.theta_function_zero_of_invariant_functionals D ψ hψ S T e he _ hth fun m hm t ht => ?_
@@ -273,8 +292,20 @@ theorem transvection_pos : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : 
     ext i k
     show a * (_ * 0) = 0
     rw [mul_zero, mul_zero]
+  have theta_smul (c : ℂ) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ S T (c • f) := {
+    quasi γ w := by
+      rw [Pi.smul_apply, Pi.smul_apply, hf.quasi, smul_eq_mul, smul_eq_mul, mul_left_comm]
+    level := by
+      obtain ⟨U, hU, h1⟩ := hf.level
+      refine ⟨U, hU, fun u hu h0 => ?_⟩
+      funext w
+      have e1 := congrFun (h1 u hu h0) w
+      unfold heisO at e1 ⊢
+      rw [Pi.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul, mul_left_comm, e1]
+    cont := hf.cont.const_smul c
+    smooth k L h1 h2 w := contDiff_const.mul (hf.smooth k L h1 h2 w) }
   have := eq_zero_of_small (ξ := ξ) hW.std he
-    (GlobalTheory.OrientedHeis.theta_sub (hW.om_pres (1, z) f hf) (GlobalTheory.OrientedHeis.theta_smul r hf))
+    (GlobalTheory.OrientedHeis.theta_sub (hW.om_pres (1, z) f hf) (theta_smul r hf))
     (hc.continuousAt.preimage_mem_nhds (x := 0) (t := U) (by rw [h0]; exact hUo.mem_nhds U.zero_mem))
     (fun m hm' t ht hrow => ?_) ℓ hℓ
   · rwa [map_sub, map_smul, sub_eq_zero] at this

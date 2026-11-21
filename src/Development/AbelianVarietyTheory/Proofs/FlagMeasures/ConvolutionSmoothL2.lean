@@ -33,7 +33,8 @@ theorem integrableOn_of_sq {X : Type} [MeasurableSpace X] (μ : Measure X) (U : 
     refine ENNReal.rpow_le_rpow (le_trans (le_of_eq ?_) hb) (by norm_num)
     refine lintegral_congr fun g => ?_
     rw [← ENNReal.rpow_natCast]
-    norm_num [enorm]
+    simp [eNorm_eq_nnNorm]
+    exact hm.restrict
   have e2 := eLpNorm_le_eLpNorm_mul_rpow_measure_univ (μ := μ.restrict U) (p := 1) (q := 2)
     (f := h) (by norm_num) hm.restrict
   rw [Measure.restrict_apply_univ] at e2
@@ -48,7 +49,8 @@ theorem integrableOn_of_sq {X : Type} [MeasurableSpace X] (μ : Measure X) (U : 
   have hi : IntegrableOn h U μ := ⟨hm.restrict, lt_of_le_of_lt e3 ENNReal.ofReal_lt_top⟩
   refine ⟨hi, ?_⟩
   rw [integral_norm_eq_lintegral_enorm hm.restrict]
-  exact ENNReal.toReal_le_of_le_ofReal (by positivity) e3
+  · exact ENNReal.toReal_le_of_le_ofReal (by positivity) e3
+  · exact hm.restrict
 
 theorem integrable_mul_of_support {X : Type} [MeasurableSpace X] (μ : Measure X) (U : Set X)
     (hU : MeasurableSet U) (h φ : X → ℂ) (hφ : AEStronglyMeasurable φ μ) (M : ℝ) (hM : ∀ x, ‖φ x‖ ≤ M)
