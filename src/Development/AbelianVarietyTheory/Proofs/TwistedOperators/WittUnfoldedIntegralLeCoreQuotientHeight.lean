@@ -15,6 +15,22 @@ public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.Mix
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ThetaRestrictionInvariantRationalLeviGL
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.FlatMapIntegrableAndBoundedLinearForm
 
+namespace I195MixedCoordinates_a5bfad30f3dc46236d3fbec8
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open Formalism.L2.Theta Formalism.IndefR.Datum GlobalTheory.MixModel MeasureTheory
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+public noncomputable abbrev source
+    {D : D7} {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (T : HSp D)
+    (ψ : AddChar (AF D.host.F) ℂ) (μ : Measure (Mx D T.rank ρ))
+    (𝓕 : Set (Mx D T.rank ρ)) (f : WO S T → ℂ) (x : Mx D T.rank ρ) : WO S₀ T → ℂ :=
+  fun w₀ => ∫ a in 𝓕, heisO ψ S T (a * d.pY)
+    (heisO ψ S T (x * d.pX) (heisO ψ S T (w₀ * d.p0) f)) 0 ∂μ
+
+end I195MixedCoordinates_a5bfad30f3dc46236d3fbec8
+
 @[expose] public section
 
 open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Datum Formalism.IndefR.Links MeasureTheory IsDedekindDomain NumberField Matrix
@@ -100,10 +116,10 @@ theorem inner_inv {ψ : AddChar (AF D.host.F) ℂ} {V V₀ W : HSp D} {ρ : ℕ}
     (hγ : γ ∈ GQ V₀) (x : Mx D W.rank ρ) :
     ∫⁻ b in vb.𝓕, ‖d.mixS W ψ vS.μ vS.𝓕 (om (d.emb0 γ, 1) Ψ) x (rat x₀ ⬝ b)‖ₑ ∂vb.μ =
       ∫⁻ b in vb.𝓕, ‖d.mixS W ψ vS.μ vS.𝓕 Ψ x (rat x₀ ⬝ b)‖ₑ ∂vb.μ := by
-  set F := d.mixS W ψ vS.μ vS.𝓕 Ψ x with hFdef
+  set F := (_root_.I195MixedCoordinates_a5bfad30f3dc46236d3fbec8.source d) W ψ vS.μ vS.𝓕 Ψ x with hFdef
   have hF : IsThetaFunO ψ V₀ W F := GlobalTheory.MixValues.mixS_theta D ψ hW.std V V₀ W ρ d vS.μ vS.𝓕 vS.covol Ψ hΨ x
   have hcore := (GlobalTheory.MixSourceFormulas.mixed_source D ψ V V₀ W ρ d χV χW om om' hW hW' vS.μ vS.𝓕 vS.covol Ψ hΨ).core γ x
-  have hsub : ∀ w, d.mixS W ψ vS.μ vS.𝓕 (om (d.emb0 γ, 1) Ψ) x w = F (w ⬝ Formalism.L2.Theta.mt V₀ γ) := by
+  have hsub : ∀ w, (_root_.I195MixedCoordinates_a5bfad30f3dc46236d3fbec8.source d) W ψ vS.μ vS.𝓕 (om (d.emb0 γ, 1) Ψ) x w = F (w ⬝ Formalism.L2.Theta.mt V₀ γ) := by
     intro w
     rw [hcore]
     have h := GlobalTheory.Unf.om_rat_mul D ψ V₀ W χV χW om' hW' F hF γ hγ 1 (one_mem _) 1 1 w

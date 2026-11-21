@@ -65,6 +65,22 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaKernelI
 public import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaCI
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.CapelliIdentity.Expand
 
+namespace I195MixedCoordinates_4b9bfdc47a8dedbccd461140
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open Formalism.L2.Theta Formalism.IndefR.Datum GlobalTheory.MixModel MeasureTheory
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+public noncomputable abbrev source
+    {D : D7} {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (T : HSp D)
+    (ψ : AddChar (AF D.host.F) ℂ) (μ : Measure (Mx D T.rank ρ))
+    (𝓕 : Set (Mx D T.rank ρ)) (f : WO S T → ℂ) (x : Mx D T.rank ρ) : WO S₀ T → ℂ :=
+  fun w₀ => ∫ a in 𝓕, heisO ψ S T (a * d.pY)
+    (heisO ψ S T (x * d.pX) (heisO ψ S T (w₀ * d.p0) f)) 0 ∂μ
+
+end I195MixedCoordinates_4b9bfdc47a8dedbccd461140
+
 @[expose] public section
 
 noncomputable section
@@ -426,7 +442,7 @@ theorem Killed.om {χS χT : (Formalism.L2.Theta.AE D)ˣ →* Circle} {om : GA D
 theorem mixS_dRho (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {V₀ : HSp D} {ρ : ℕ} (d : HypDec V V₀ ρ)
     (v : GlobalTheory.Unf.VolM D W.rank ρ) (τ : D.what₂.Tau) (z : Matrix (Fin W.rank) (Fin ρ) ℂ) {f : WO V W → ℂ}
     (hf : IsThetaFunO ψ V W f) (x : Mx D W.rank ρ) (hx : ((compAt θ τ x)ᴴ * gramAt D W τ * z).trace = 0) :
-    d.mixS W ψ v.μ v.𝓕 (Formalism.IndefR.Datum.dRho (heisO ψ V W) θ τ (z * compAt θ τ d.pY) f) x 0 = 0 := by
+    (_root_.I195MixedCoordinates_4b9bfdc47a8dedbccd461140.source d) W ψ v.μ v.𝓕 (Formalism.IndefR.Datum.dRho (heisO ψ V W) θ τ (z * compAt θ τ d.pY) f) x 0 = 0 := by
   have hL := GlobalTheory.OrientedHeis.isLineAt_lineAt (m := W.rank) (n := ρ) hθ τ z
   have hL' : IsLineAt θ τ (z * compAt θ τ d.pY) ((d.extY W).comp (lineAt θ τ z)) := by
     refine ⟨?_, fun t => ?_, fun t τ' => ?_⟩
@@ -470,7 +486,7 @@ theorem mixS_dRho (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {V₀ : HSp D}
 theorem Killed.mixS_eq_zero (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {τ : D.what₂.Tau} {Φ : WO V W → ℂ}
     (h : Killed ψ θ τ V W Φ) {V₀ : HSp D} {ρ : ℕ} (d : HypDec V V₀ ρ) {μ : Measure (Mx D W.rank ρ)}
     {𝓕 : Set (Mx D W.rank ρ)} (hμ : IsCovolOne (ratMx D W.rank ρ) μ 𝓕) (x : Mx D W.rank ρ) (i : Fin ρ)
-    (hx : ∀ j, compAt θ τ x j i = 0) : d.mixS W ψ μ 𝓕 Φ x 0 = 0 := by
+    (hx : ∀ j, compAt θ τ x j i = 0) : (_root_.I195MixedCoordinates_4b9bfdc47a8dedbccd461140.source d) W ψ μ 𝓕 Φ x 0 = 0 := by
   have e : compAt θ τ d.pY * compAt θ τ d.jY = 1 := by
     rw [← GlobalTheory.OrientedHeis.compAt_mul]
     have : HMul.hMul d.pY d.jY = (1 : Matrix _ _ (Formalism.L2.Theta.AE D)) := d.pY_jY
@@ -481,8 +497,8 @@ theorem Killed.mixS_eq_zero (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {τ 
     simp only [vecMul_vecMul, e, vecMul_one, zero_vecMul] at this
     simpa using congrFun this i
   let v : GlobalTheory.Unf.VolM D W.rank ρ := ⟨μ, 𝓕, hμ⟩
-  suffices H : IsThetaFunO ψ V W Φ ∧ d.mixS W ψ v.μ v.𝓕 Φ x 0 = 0 from H.2
-  refine Submodule.span_induction (p := fun F _ => IsThetaFunO ψ V W F ∧ d.mixS W ψ v.μ v.𝓕 F x 0 = 0)
+  suffices H : IsThetaFunO ψ V W Φ ∧ (_root_.I195MixedCoordinates_4b9bfdc47a8dedbccd461140.source d) W ψ v.μ v.𝓕 Φ x 0 = 0 from H.2
+  refine Submodule.span_induction (p := fun F _ => IsThetaFunO ψ V W F ∧ (_root_.I195MixedCoordinates_4b9bfdc47a8dedbccd461140.source d) W ψ v.μ v.𝓕 F x 0 = 0)
     ?_ ?_ ?_ ?_ (h _ hv)
   · rintro _ ⟨w, Ψ, hΨ, rfl⟩
     refine ⟨theta_dRho hθ hψ τ _ hΨ, ?_⟩
@@ -490,7 +506,7 @@ theorem Killed.mixS_eq_zero (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {τ 
     refine mixS_dRho hψ hθ d v τ _ hΨ x ?_
     rw [mul_vecMulVec, trace_vecMulVec, dotProduct_single_one, ← mulVec_mulVec]
     simp [mulVec, dotProduct, hx]
-  · exact ⟨theta_zero, by simp [HypDec.mixS, heisO]⟩
+  · exact ⟨theta_zero, by simp [_root_.I195MixedCoordinates_4b9bfdc47a8dedbccd461140.source, heisO]⟩
   · intro F G _ _ hF hG
     exact ⟨theta_add hF.1 hG.1, by rw [GlobalTheory.Unf.DoubleSum.mixS_add d v hψ hF.1 hG.1, Pi.add_apply, hF.2, hG.2, add_zero]⟩
   · intro c F _ hF

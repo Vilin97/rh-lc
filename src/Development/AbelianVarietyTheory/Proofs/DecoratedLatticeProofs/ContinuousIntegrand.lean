@@ -7,6 +7,22 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.InfPartOn
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AdelicUnitaryTopology
 public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.EncardSmulMemLeEncardSmulInterNonempty
 
+namespace I195MixedCoordinates_18f638bfe5f22e80269acda3
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open Formalism.L2.Theta Formalism.IndefR.Datum GlobalTheory.MixModel MeasureTheory
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+public noncomputable abbrev source
+    {D : D7} {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (T : HSp D)
+    (ψ : AddChar (AF D.host.F) ℂ) (μ : Measure (Mx D T.rank ρ))
+    (𝓕 : Set (Mx D T.rank ρ)) (f : WO S T → ℂ) (x : Mx D T.rank ρ) : WO S₀ T → ℂ :=
+  fun w₀ => ∫ a in 𝓕, heisO ψ S T (a * d.pY)
+    (heisO ψ S T (x * d.pX) (heisO ψ S T (w₀ * d.p0) f)) 0 ∂μ
+
+end I195MixedCoordinates_18f638bfe5f22e80269acda3
+
 @[expose] public section
 
 noncomputable section
@@ -136,12 +152,12 @@ variable {B Z : Type} [TopologicalSpace B] [TopologicalSpace Z] [FirstCountableT
 
 theorem tame_mixS (hψ : IsStdChar D ψ (-1)) {S S₀ T : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (v : VolM D T.rank ρ)
     (x : Mx D T.rank ρ) {F : B → Z → WO S T → ℂ} (h : Tame fun b (q : Z × WO S T) => F b q.1 q.2) :
-    Tame fun b (q : Z × WO S₀ T) => d.mixS T ψ v.μ v.𝓕 (F b q.1) x q.2 := by
+    Tame fun b (q : Z × WO S₀ T) => (_root_.I195MixedCoordinates_18f638bfe5f22e80269acda3.source d) T ψ v.μ v.𝓕 (F b q.1) x q.2 := by
   obtain ⟨i1, -, i3, -⟩ := lattice_Mx D T.rank S₀.rank
   have : FirstCountableTopology (WO S₀ T) := TopologicalSpace.SecondCountableTopology.to_firstCountableTopology _
   obtain ⟨j1, -⟩ := lattice_Mx D T.rank S.rank
   have : BorelSpace (Mx D T.rank ρ) := ⟨rfl⟩
-  simp only [HypDec.mixS, HypDec.integrandS_eq]
+  simp only [_root_.I195MixedCoordinates_18f638bfe5f22e80269acda3.source, HypDec.integrandS_eq]
   refine Tame.integral v.μ v.𝓕 (by rw [v.covol.2.2]; exact ENNReal.one_lt_top) ?_
   have hY : Continuous (d.extY T) := continuous_id.matrix_mul continuous_const
   have h0 : Continuous (d.ext0 T) := continuous_id.matrix_mul continuous_const

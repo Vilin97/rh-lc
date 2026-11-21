@@ -24,7 +24,7 @@ variable {K : Type} [Field K] [NumberField K] {n : ℕ}
 
 abbrev FA (K : Type) [Field K] [NumberField K] (n : ℕ) : Type := AdelicGLn.FiniteAdelicGL K n
 
-abbrev fin1 (h : FA K n) : G1 K n := MultiplicityOne.finProj K n h
+abbrev fin1 (h : FA K n) : G1 K n := MultiplicityOne.finProj (K := K) (n := n) h
 
 abbrev arc1 (k : archCompact K n) : G1 K n := archP K n (k : archGroup K n)
 

@@ -18,6 +18,22 @@ public import Development.AbelianVarietyTheory.Definitions.HeightFunctions.Integ
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IsThetaFam
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsNatMulSelfDualLatticeAtPlaceIntegral
 
+namespace I195MixedCoordinates_39dd6a9be11eb0710edd25cf
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open Formalism.L2.Theta Formalism.IndefR.Datum GlobalTheory.MixModel MeasureTheory
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+public noncomputable abbrev source
+    {D : D7} {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (T : HSp D)
+    (ψ : AddChar (AF D.host.F) ℂ) (μ : Measure (Mx D T.rank ρ))
+    (𝓕 : Set (Mx D T.rank ρ)) (f : WO S T → ℂ) (x : Mx D T.rank ρ) : WO S₀ T → ℂ :=
+  fun w₀ => ∫ a in 𝓕, heisO ψ S T (a * d.pY)
+    (heisO ψ S T (x * d.pX) (heisO ψ S T (w₀ * d.p0) f)) 0 ∂μ
+
+end I195MixedCoordinates_39dd6a9be11eb0710edd25cf
+
 @[expose] public section
 
 open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.MainNotions.S MeasureTheory IsDedekindDomain NumberField Matrix
@@ -103,7 +119,7 @@ theorem mixS_support_integral : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ), I
     ∃ M : ℕ, 0 < M ∧ ∀ n : ℕ, 0 < n → ∀ Ψ : WO V X → ℂ, IsThetaFunO ψ V X Ψ →
       (∀ u ∈ K₀, u.map (infPart D) = 0 → heisO ψ V X (n • u) Ψ = Ψ) →
       ∀ (ξ : Matrix (Fin X.rank) (Fin r) D.host.E) (x : Mx D X.rank r),
-        x.map (finPart D) = (ξ.map (incA D) : Mx D X.rank r).map (finPart D) → d.mixS X ψ μ' 𝓕' Ψ x 0 ≠ 0 →
+        x.map (finPart D) = (ξ.map (incA D) : Mx D X.rank r).map (finPart D) → (_root_.I195MixedCoordinates_39dd6a9be11eb0710edd25cf.source d) X ψ μ' 𝓕' Ψ x 0 ≠ 0 →
         ∀ i j, IsIntegral ℤ (((M * n : ℕ) : D.host.E) * ξ i j) := by
   intro D ψ hψ V X S₀ r d μ' 𝓕' hμ K₀ hK₀ _
   obtain ⟨U, hUo, hU⟩ := GlobalTheory.MixSumBound.finite_points_in_nhds D X.rank V.rank K₀ hK₀
@@ -155,7 +171,7 @@ theorem mixS_support_integral : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ), I
       have h2 := congrFun (hmix x (n • g k l c)) 0
       rw [map_nsmul, hfx, Pi.smul_apply, smul_eq_mul] at h2
       have h3 : ψ (symplO V X (d.extX X x) (n • d.extY X (g k l c))) = 1 := by
-        have hne' : d.mixS X ψ v.μ v.𝓕 Ψ x 0 ≠ 0 := hne
+        have hne' : (_root_.I195MixedCoordinates_39dd6a9be11eb0710edd25cf.source d) X ψ v.μ v.𝓕 Ψ x 0 ≠ 0 := hne
         exact mul_right_cancel₀ hne' (h2.symm.trans (one_mul _).symm)
       rw [← map_nsmul (d.extY X), ← map_nsmul (g k l), show g k l (n • c) = Matrix.single k l (cA D (n • c)) from rfl,
         GlobalTheory.AnnihBox.symplO_extX_extY_single] at h3

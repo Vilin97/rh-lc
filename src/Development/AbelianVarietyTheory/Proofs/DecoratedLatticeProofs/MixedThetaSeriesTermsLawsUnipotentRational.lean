@@ -14,6 +14,22 @@ public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.Hei
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.WeilDatumThetaJointlyContinuousStatement
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FlagUnipotentFourierJacobiGroupStructure
 
+namespace I195MixedCoordinates_071817f88d1fbc2886640714
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open Formalism.L2.Theta Formalism.IndefR.Datum GlobalTheory.MixModel MeasureTheory
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+public noncomputable abbrev source
+    {D : D7} {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (T : HSp D)
+    (ψ : AddChar (AF D.host.F) ℂ) (μ : Measure (Mx D T.rank ρ))
+    (𝓕 : Set (Mx D T.rank ρ)) (f : WO S T → ℂ) (x : Mx D T.rank ρ) : WO S₀ T → ℂ :=
+  fun w₀ => ∫ a in 𝓕, heisO ψ S T (a * d.pY)
+    (heisO ψ S T (x * d.pX) (heisO ψ S T (w₀ * d.p0) f)) 0 ∂μ
+
+end I195MixedCoordinates_071817f88d1fbc2886640714
+
 @[expose] public section
 
 noncomputable section
@@ -50,17 +66,17 @@ variable {ψ : AddChar (AF D.host.F) ℂ} {V V₀ W : HSp D} {ρ : ℕ} (d : Hyp
 
 theorem mixS_levi_uni (hF : GlobalTheory.IndefiniteRowSideFullHecke.SkewGramHalfModule.FormulasS d ψ χW om om' μ 𝓕 f) {u : GL (Fin ρ) (AE D)}
     (hu : u ∈ UX D ρ) (x : Mx D W.rank ρ) :
-    d.mixS W ψ μ 𝓕 (om (d.levi u, 1) f) x = d.mixS W ψ μ 𝓕 f (x ⬝ u.1) := by
+    (_root_.I195MixedCoordinates_071817f88d1fbc2886640714.source d) W ψ μ 𝓕 (om (d.levi u, 1) f) x = (_root_.I195MixedCoordinates_071817f88d1fbc2886640714.source d) W ψ μ 𝓕 f (x ⬝ u.1) := by
   rw [hF.levi, det_uni hu, halfMod_uni _ hu, map_one, inv_one]
   simp
 
 theorem mixS_nB_zero (hF : GlobalTheory.IndefiniteRowSideFullHecke.SkewGramHalfModule.FormulasS d ψ χW om om' μ 𝓕 f) (b : Mx D ρ V₀.rank)
-    (x : Mx D W.rank ρ) : d.mixS W ψ μ 𝓕 (om (d.nB b, 1) f) x 0 = d.mixS W ψ μ 𝓕 f x (x ⬝ b) := by
+    (x : Mx D W.rank ρ) : (_root_.I195MixedCoordinates_071817f88d1fbc2886640714.source d) W ψ μ 𝓕 (om (d.nB b, 1) f) x 0 = (_root_.I195MixedCoordinates_071817f88d1fbc2886640714.source d) W ψ μ 𝓕 f x (x ⬝ b) := by
   rw [hF.unip]
   simp only [heisO, zero_add, GlobalTheory.MixModel.symplOH_zero_left, AddChar.map_zero_eq_one, one_mul]
 
 theorem mixS_nC (hF : GlobalTheory.IndefiniteRowSideFullHecke.SkewGramHalfModule.FormulasS d ψ χW om om' μ 𝓕 f) (c : skewA D ρ) (x : Mx D W.rank ρ)
-    (w : WO V₀ W) : d.mixS W ψ μ 𝓕 (om (d.nC c, 1) f) x w = ψ (d.qS W c x) * d.mixS W ψ μ 𝓕 f x w := by
+    (w : WO V₀ W) : (_root_.I195MixedCoordinates_071817f88d1fbc2886640714.source d) W ψ μ 𝓕 (om (d.nC c, 1) f) x w = ψ (d.qS W c x) * (_root_.I195MixedCoordinates_071817f88d1fbc2886640714.source d) W ψ μ 𝓕 f x w := by
   rw [hF.centre]
   rfl
 
@@ -176,7 +192,7 @@ end GlobalTheory.Unf.TermLaw
 
 namespace GlobalTheory.Unf.TermLaw
 
-theorem term_laws : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (V V₀ W : HSp D) (ρ : ℕ) (d : HypDec V V₀ ρ) (χV χW : (AE D)ˣ →* Circle) (om : Om V W) (om' : Om V₀ W), IsWeilDatumO ψ V W χV χW om → IsWeilDatumO ψ V₀ W χV χW om' → ∀ (vS : VolM D W.rank ρ) (Ψ : WO V W → ℂ), IsThetaFunO ψ V W Ψ → (∀ (x : Matrix (Fin W.rank) (Fin ρ) D.host.E) b (u : UX D ρ) c, term ψ d W vS (om (d.nC c * (d.nB b * d.levi u.1), 1) Ψ) x = ψ (d.qS W c (rat x)) * d.mixS W ψ vS.μ vS.𝓕 Ψ (rat x ⬝ u.1.1) (rat x ⬝ b)) ∧ (∀ γ ∈ GQ V, γ ∈ flagN d → ∀ x x' : Matrix (Fin W.rank) (Fin ρ) D.host.E, (rat x' : Mx D W.rank ρ) = rat x ⬝ blockX d γ → term ψ d W vS (om (γ, 1) Ψ) x = term ψ d W vS Ψ x') ∧ (∀ δ ∈ GQ W, ∀ x x' : Matrix (Fin W.rank) (Fin ρ) D.host.E, mt W δ ⬝ (rat x' : Mx D W.rank ρ) = rat x → term ψ d W vS (om (1, δ) Ψ) x = term ψ d W vS Ψ x') ∧ (∀ x, Continuous fun p : GA D V × GA D W => term ψ d W vS (om p Ψ) x) ∧ HasSum (term ψ d W vS Ψ) (Ψ 0) := by
+theorem term_laws : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (V V₀ W : HSp D) (ρ : ℕ) (d : HypDec V V₀ ρ) (χV χW : (AE D)ˣ →* Circle) (om : Om V W) (om' : Om V₀ W), IsWeilDatumO ψ V W χV χW om → IsWeilDatumO ψ V₀ W χV χW om' → ∀ (vS : VolM D W.rank ρ) (Ψ : WO V W → ℂ), IsThetaFunO ψ V W Ψ → (∀ (x : Matrix (Fin W.rank) (Fin ρ) D.host.E) b (u : UX D ρ) c, term ψ d W vS (om (d.nC c * (d.nB b * d.levi u.1), 1) Ψ) x = ψ (d.qS W c (rat x)) * (_root_.I195MixedCoordinates_071817f88d1fbc2886640714.source d) W ψ vS.μ vS.𝓕 Ψ (rat x ⬝ u.1.1) (rat x ⬝ b)) ∧ (∀ γ ∈ GQ V, γ ∈ flagN d → ∀ x x' : Matrix (Fin W.rank) (Fin ρ) D.host.E, (rat x' : Mx D W.rank ρ) = rat x ⬝ blockX d γ → term ψ d W vS (om (γ, 1) Ψ) x = term ψ d W vS Ψ x') ∧ (∀ δ ∈ GQ W, ∀ x x' : Matrix (Fin W.rank) (Fin ρ) D.host.E, mt W δ ⬝ (rat x' : Mx D W.rank ρ) = rat x → term ψ d W vS (om (1, δ) Ψ) x = term ψ d W vS Ψ x') ∧ (∀ x, Continuous fun p : GA D V × GA D W => term ψ d W vS (om p Ψ) x) ∧ HasSum (term ψ d W vS Ψ) (Ψ 0) := by
   intro D ψ V V₀ W ρ d χV χW om om' hW hW' vS Ψ hΨ
   have hstd : IsStdChar D ψ (-1) := hW.std
   have hMS := GlobalTheory.T.mixedModelFormulasWittSource_proof D ψ V V₀ W ρ d χV χW om om' hW hW' vS.μ vS.𝓕 vS.covol
@@ -218,7 +234,7 @@ theorem term_laws : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (V V₀ W : HS
     have hterm : (fun p => term ψ d W vS (om p Ψ) x) = fun p => ∫ a in vS.𝓕,
         ψ (symplOH V W (d.extY W a) (d.extX W (rat x))) * om p Ψ (d.extY W a + d.extX W (rat x) + d.ext0 W 0) ∂vS.μ := by
       funext p
-      simp only [term, HypDec.mixS]
+      simp only [term, _root_.I195MixedCoordinates_071817f88d1fbc2886640714.source]
       exact integral_congr_ae (Filter.Eventually.of_forall fun a => d.integrandS_eq _ _ _ _)
     rw [hterm]
     refine continuous_periodic_integral vS.covol

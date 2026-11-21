@@ -15,6 +15,22 @@ public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.Mix
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.DoubledFlatSectionEqTranslateStandardSection
 public import Formalism.LocalRingCardinality.SpanPowerMembership.Spaces
 
+namespace I195MixedCoordinates_ab9bc99651030a1661b1bb9c
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open Formalism.L2.Theta Formalism.IndefR.Datum GlobalTheory.MixModel MeasureTheory
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+public noncomputable abbrev source
+    {D : D7} {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (T : HSp D)
+    (ψ : AddChar (AF D.host.F) ℂ) (μ : Measure (Mx D T.rank ρ))
+    (𝓕 : Set (Mx D T.rank ρ)) (f : WO S T → ℂ) (x : Mx D T.rank ρ) : WO S₀ T → ℂ :=
+  fun w₀ => ∫ a in 𝓕, heisO ψ S T (a * d.pY)
+    (heisO ψ S T (x * d.pX) (heisO ψ S T (w₀ * d.p0) f)) 0 ∂μ
+
+end I195MixedCoordinates_ab9bc99651030a1661b1bb9c
+
 @[expose] public section
 
 open scoped Matrix NNReal ComplexConjugate TensorProduct
@@ -31,7 +47,7 @@ theorem continuous_mixS_joint {D : D7} (ψ : AddChar (AF D.host.F) ℂ) {S T S�
     {χS χT : (AE D)ˣ →* Circle} {om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)}
     (hω : IsWeilDatumO ψ S T χS χT om) {μ : Measure (Mx D T.rank ρ)} {𝓕 : Set (Mx D T.rank ρ)}
     (hμ : IsCovolOne (ratMx D T.rank ρ) μ 𝓕) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (w₀ : WO S₀ T) :
-    Continuous fun u : GA D S × Mx D T.rank ρ => d.mixS T ψ μ 𝓕 (om (u.1, 1) f) u.2 w₀ := by
+    Continuous fun u : GA D S × Mx D T.rank ρ => (_root_.I195MixedCoordinates_ab9bc99651030a1661b1bb9c.source d) T ψ μ 𝓕 (om (u.1, 1) f) u.2 w₀ := by
   have cY : Continuous (d.extY T) := continuous_id.matrix_mul continuous_const
   have cX : Continuous (d.extX T) := continuous_id.matrix_mul continuous_const
   refine GlobalTheory.Core.Rk.IP.continuous_covolOne_integral hμ

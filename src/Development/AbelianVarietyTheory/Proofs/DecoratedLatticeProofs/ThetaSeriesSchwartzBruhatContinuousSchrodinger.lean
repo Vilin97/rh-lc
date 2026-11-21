@@ -8,6 +8,22 @@ public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.RealSizeNonneg
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.HeckeFormNSOfHeckeForm
 
+namespace I195MixedCoordinates_b252ee61f962e28100fad012
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open Formalism.L2.Theta Formalism.IndefR.Datum GlobalTheory.MixModel MeasureTheory
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+public noncomputable abbrev source
+    {D : D7} {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (T : HSp D)
+    (ψ : AddChar (AF D.host.F) ℂ) (μ : Measure (Mx D T.rank ρ))
+    (𝓕 : Set (Mx D T.rank ρ)) (f : WO S T → ℂ) (x : Mx D T.rank ρ) : WO S₀ T → ℂ :=
+  fun w₀ => ∫ a in 𝓕, heisO ψ S T (a * d.pY)
+    (heisO ψ S T (x * d.pX) (heisO ψ S T (w₀ * d.p0) f)) 0 ∂μ
+
+end I195MixedCoordinates_b252ee61f962e28100fad012
+
 @[expose] public section
 
 open scoped ComplexConjugate Matrix NNReal ENNReal
@@ -106,7 +122,7 @@ theorem theta_series (hψ : IsStdChar D ψ (-1)) (d : HypDec S S₀ ρ) (T : HSp
     (hf : ∀ w : WO S T, f w = ψ (-(symplOH S T (d.extX T (w ⬝ d.jX)) (d.extY T (w ⬝ d.jY)))) *
       ∑' ξ : Matrix (Fin T.rank) (Fin ρ) D.host.E,
         ψ (symplO S T (d.extX T (w ⬝ d.jX + rat ξ)) (d.extY T (w ⬝ d.jY))) * φ (w ⬝ d.jX + rat ξ)) :
-    Continuous f ∧ ∀ x, d.mixS T ψ μ 𝓕 f x 0 = φ x := by
+    Continuous f ∧ ∀ x, (_root_.I195MixedCoordinates_b252ee61f962e28100fad012.source d) T ψ μ 𝓕 f x 0 = φ x := by
   obtain ⟨hc, hb⟩ := bound_translates hψ hφ
   have hψc : Continuous ψ := hψ.1.1
   have hn : ∀ t, ‖ψ t‖ = 1 := hψ.1.2.1
@@ -153,7 +169,7 @@ theorem theta_series (hψ : IsStdChar D ψ (-1)) (d : HypDec S S₀ ρ) (T : HSp
     have hF := hasSum_integral_of_summable_integral_norm (μ := μ.restrict 𝓕)
       (F := fun (ξ : Matrix (Fin T.rank) (Fin ρ) D.host.E) a =>
         ψ (symplO S T (d.extX T (rat ξ)) (d.extY T a)) * φ (x + rat ξ)) (fun ξ => ?_) ?_
-    · rw [HypDec.mixS]
+    · rw [_root_.I195MixedCoordinates_b252ee61f962e28100fad012.source]
       simp only [key]
       refine hF.unique ?_
       have h0 : ∫ a in 𝓕, ψ (symplO S T (d.extX T (rat 0)) (d.extY T a)) * φ (x + rat 0) ∂μ = φ x := by

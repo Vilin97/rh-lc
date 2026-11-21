@@ -17,6 +17,22 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.Continuou
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeisThetaLaws
 public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.MixedModelTargetHeisenbergAnisotropicPart
 
+namespace I195MixedCoordinates_41e0c4a6f0d84a965825a95e
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open Formalism.L2.Theta Formalism.IndefR.Datum GlobalTheory.MixModel MeasureTheory
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+public noncomputable abbrev source
+    {D : D7} {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (T : HSp D)
+    (ψ : AddChar (AF D.host.F) ℂ) (μ : Measure (Mx D T.rank ρ))
+    (𝓕 : Set (Mx D T.rank ρ)) (f : WO S T → ℂ) (x : Mx D T.rank ρ) : WO S₀ T → ℂ :=
+  fun w₀ => ∫ a in 𝓕, heisO ψ S T (a * d.pY)
+    (heisO ψ S T (x * d.pX) (heisO ψ S T (w₀ * d.p0) f)) 0 ∂μ
+
+end I195MixedCoordinates_41e0c4a6f0d84a965825a95e
+
 @[expose] public section
 
 open scoped Matrix NNReal TensorProduct Classical
@@ -211,9 +227,9 @@ variable {S T T' : HSp D} {ρ t : ℕ} (e : HypDec S (zeroSp D) ρ) (d : HypDec 
 
 theorem integrable_slice (hψ : IsStdChar D ψ (-1)) (v : GlobalTheory.Unf.VolM D T.rank ρ) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f)
     {μ : Measure (Mx D t ρ)} {𝓕 : Set (Mx D t ρ)} (hμ : IsCovolOne (ratMx D t ρ) μ 𝓕) :
-    Continuous (fun x : Mx D t ρ => e.mixS T ψ v.μ v.𝓕 f (d.jX ⬝ x) 0) ∧
-      Integrable (fun x : Mx D t ρ => e.mixS T ψ v.μ v.𝓕 f (d.jX ⬝ x) 0) μ := by
-  have hc : Continuous (fun x : Mx D t ρ => e.mixS T ψ v.μ v.𝓕 f (d.jX ⬝ x) 0) :=
+    Continuous (fun x : Mx D t ρ => (_root_.I195MixedCoordinates_41e0c4a6f0d84a965825a95e.source e) T ψ v.μ v.𝓕 f (d.jX ⬝ x) 0) ∧
+      Integrable (fun x : Mx D t ρ => (_root_.I195MixedCoordinates_41e0c4a6f0d84a965825a95e.source e) T ψ v.μ v.𝓕 f (d.jX ⬝ x) 0) μ := by
+  have hc : Continuous (fun x : Mx D t ρ => (_root_.I195MixedCoordinates_41e0c4a6f0d84a965825a95e.source e) T ψ v.μ v.𝓕 f (d.jX ⬝ x) 0) :=
     (GlobalTheory.Core.Rk.SchInt.mixS_continuous_integrable hψ e v hf 0).1.comp (continuous_const.matrix_mul continuous_id)
   refine ⟨hc, ?_⟩
   obtain ⟨θ, hθ⟩ := GlobalTheory.DualPairCompare.exists_infFam D
@@ -246,7 +262,7 @@ theorem integrable_slice (hψ : IsStdChar D ψ (-1)) (v : GlobalTheory.Unf.VolM 
 theorem hasSum_recon (hψ : IsStdChar D ψ (-1)) (v : GlobalTheory.Unf.VolM D T.rank ρ) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f)
     (x y : Mx D T.rank ρ) :
     HasSum (fun η : Matrix (Fin T.rank) (Fin ρ) D.host.E =>
-      ψ (symplO S T (e.extX T (rat η + x)) (e.extY T y)) * e.mixS T ψ v.μ v.𝓕 f (rat η + x) 0)
+      ψ (symplO S T (e.extX T (rat η + x)) (e.extY T y)) * (_root_.I195MixedCoordinates_41e0c4a6f0d84a965825a95e.source e) T ψ v.μ v.𝓕 f (rat η + x) 0)
       (ψ (symplOH S T (e.extX T x) (e.extY T y)) * f (e.extX T x + e.extY T y)) := by
   have hH := (GlobalTheory.HeisThetaLaws.heis_theta_laws D ψ hψ S T).1
   have h5 := (GlobalTheory.HeisMixSource.heis_mixS D ψ hψ S (zeroSp D) T ρ e v _
@@ -287,8 +303,8 @@ theorem inner_mean (hψ : IsStdChar D ψ (-1)) (v : GlobalTheory.Unf.VolM D T.ra
     {μ : Measure (Mx D t ρ)} {𝓕 : Set (Mx D t ρ)} (hμ : IsCovolOne (ratMx D t ρ) μ 𝓕)
     {ν : Measure (Mx D T'.rank ρ)} {𝓨 : Set (Mx D T'.rank ρ)} (hν : IsCovolOne (ratMx D T'.rank ρ) ν 𝓨) (u : Mx D t ρ) :
     ∫ (z : Mx D t ρ) in 𝓕, ∫ (b : Mx D T'.rank ρ) in 𝓨, f (d.jX ⬝ (u ⬝ e.pX + z ⬝ e.pY) + d.j0 ⬝ (b ⬝ e.pY)) ∂ν ∂μ =
-      ∑' γ : Matrix (Fin t) (Fin ρ) D.host.E, e.mixS T ψ v.μ v.𝓕 f (d.jX ⬝ (rat γ + u)) 0 := by
-  set G : Matrix (Fin T.rank) (Fin ρ) D.host.E → ℂ := fun η => e.mixS T ψ v.μ v.𝓕 f (rat η + d.jX ⬝ u) 0 with hG
+      ∑' γ : Matrix (Fin t) (Fin ρ) D.host.E, (_root_.I195MixedCoordinates_41e0c4a6f0d84a965825a95e.source e) T ψ v.μ v.𝓕 f (d.jX ⬝ (rat γ + u)) 0 := by
+  set G : Matrix (Fin T.rank) (Fin ρ) D.host.E → ℂ := fun η => (_root_.I195MixedCoordinates_41e0c4a6f0d84a965825a95e.source e) T ψ v.μ v.𝓕 f (rat η + d.jX ⬝ u) 0 with hG
   have hs : Summable fun η => ‖G η‖ := by
     have h := summable_norm_iff.2 (hasSum_recon e hψ v hf (d.jX ⬝ u) 0).summable
     simpa only [norm_mul, hψ.1.2.1, one_mul] using h
@@ -328,7 +344,7 @@ theorem at_zero (hψ : IsStdChar D ψ (-1)) (v : GlobalTheory.Unf.VolM D T.rank 
     {μ₁ : Measure (Mx D t S.rank)} {𝓕₁ : Set (Mx D t S.rank)} (h₁ : IsCovolOne (ratMx D t S.rank) μ₁ 𝓕₁)
     {μ : Measure (Mx D t ρ)} {𝓕 : Set (Mx D t ρ)} (hμ : IsCovolOne (ratMx D t ρ) μ 𝓕)
     {ν : Measure (Mx D T'.rank ρ)} {𝓨 : Set (Mx D T'.rank ρ)} (hν : IsCovolOne (ratMx D T'.rank ρ) ν 𝓨) :
-    e.mixS T' ψ ν 𝓨 (ikeda ψ d μ₁ 𝓕₁ f) 0 0 = ∫ x : Mx D t ρ, e.mixS T ψ v.μ v.𝓕 f (d.jX ⬝ x) 0 ∂μ := by
+    (_root_.I195MixedCoordinates_41e0c4a6f0d84a965825a95e.source e) T' ψ ν 𝓨 (ikeda ψ d μ₁ 𝓕₁ f) 0 0 = ∫ x : Mx D t ρ, (_root_.I195MixedCoordinates_41e0c4a6f0d84a965825a95e.source e) T ψ v.μ v.𝓕 f (d.jX ⬝ x) 0 ∂μ := by
   obtain ⟨i1, i2, i3, i4, i5, -⟩ := lattice_Mx D t S.rank
   obtain ⟨j1, j2, j3, j4, j5, -⟩ := lattice_Mx D T'.rank ρ
   haveI : BorelSpace (Mx D t S.rank) := ⟨rfl⟩

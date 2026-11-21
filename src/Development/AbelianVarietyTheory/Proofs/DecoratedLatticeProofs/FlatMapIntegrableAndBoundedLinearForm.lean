@@ -15,6 +15,30 @@ public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.Hei
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.HeisenbergSupSobolevSeminormThetaLawsStatement
 public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.GinfCSecondCountable
 
+namespace I195MixedCoordinates_4dbac5b45bba9ccd847c7fca
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open Formalism.L2.Theta Formalism.IndefR.Datum GlobalTheory.MixModel MeasureTheory
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+public noncomputable abbrev source
+    {D : D7} {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (T : HSp D)
+    (ψ : AddChar (AF D.host.F) ℂ) (μ : Measure (Mx D T.rank ρ))
+    (𝓕 : Set (Mx D T.rank ρ)) (f : WO S T → ℂ) (x : Mx D T.rank ρ) : WO S₀ T → ℂ :=
+  fun w₀ => ∫ a in 𝓕, heisO ψ S T (a * d.pY)
+    (heisO ψ S T (x * d.pX) (heisO ψ S T (w₀ * d.p0) f)) 0 ∂μ
+
+public noncomputable abbrev target
+    {D : D7} {T T₀ : HSp D} {ρ : ℕ} (d : HypDec T T₀ ρ) (S : HSp D)
+    (ψ : AddChar (AF D.host.F) ℂ) (μ : Measure (Mx D ρ S.rank))
+    (𝓕 : Set (Mx D ρ S.rank)) (f : WO S T → ℂ) (y : Mx D S.rank ρ) : WO S T₀ → ℂ :=
+  fun w₀ => ∫ ξ in 𝓕, heisO ψ S T (d.jX * ξ)
+    (heisO ψ S T (d.jY * (incA D (-D.host.xi0⁻¹) • (adj y * gA S)))
+      (heisO ψ S T (d.j0 * w₀) f)) 0 ∂μ
+
+end I195MixedCoordinates_4dbac5b45bba9ccd847c7fca
+
 @[expose] public section
 
 noncomputable section
@@ -39,7 +63,7 @@ variable {V V₀ W W₀ : HSp D} {ρ σ : ℕ} (dV : HypDec V V₀ ρ) (dW : Hyp
 theorem enorm_evalAt_le (hψ : IsStdChar D ψ (-1)) (hT : μT 𝓕T = 1) (f : WO V W → ℂ) (x : Mx D W.rank ρ) (M : ℝ≥0∞)
     (hM : ∀ w', ‖dV.mixS W ψ μS 𝓕S f x w'‖ₑ ≤ M) (y : Mx D V₀.rank σ) (w : WO V₀ W₀) :
     ‖evalAt ψ dV dW μS 𝓕S μT 𝓕T f x y w‖ₑ ≤ M := by
-  unfold evalAt HypDec.mixT
+  unfold evalAt _root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target
   refine (enorm_integral_le_lintegral_enorm _).trans ((lintegral_mono (g := fun _ => M) fun ξ => ?_).trans (le_of_eq ?_))
   · rw [HypDec.integrandT_eq, enorm_mul, enorm_psi hψ, one_mul]; exact hM _
   · rw [setLIntegral_const, hT, mul_one]
@@ -81,7 +105,7 @@ theorem integrable_integrandT (hψ : IsStdChar D ψ (-1)) (hT : μT 𝓕T = 1) (
 
 theorem continuous_evalAt (hψ : IsStdChar D ψ (-1)) (hT : μT 𝓕T = 1) (f : WO V W → ℂ) (B : ℝ)
     (hB : ∀ x w', ‖dV.mixS W ψ μS 𝓕S f x w'‖ ≤ B)
-    (hc : Continuous fun p : Mx D W.rank ρ × WO V₀ W => dV.mixS W ψ μS 𝓕S f p.1 p.2) (y : Mx D V₀.rank σ)
+    (hc : Continuous fun p : Mx D W.rank ρ × WO V₀ W => (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV) W ψ μS 𝓕S f p.1 p.2) (y : Mx D V₀.rank σ)
     (w : WO V₀ W₀) : Continuous fun x => evalAt ψ dV dW μS 𝓕S μT 𝓕T f x y w := by
   haveI : SecondCountableTopology (AE D) := (Formalism.IndefR.Eqv.ae_facts D).2.2.2.1
   haveI : SecondCountableTopology (Mx D W.rank ρ) := inferInstanceAs (SecondCountableTopology (Fin W.rank → Fin ρ → AE D))
@@ -91,12 +115,12 @@ theorem continuous_evalAt (hψ : IsStdChar D ψ (-1)) (hT : μT 𝓕T = 1) (f : 
   have hcX : Continuous (dW.incX V₀) := continuous_const.matrix_mul continuous_id
   have hj : Continuous (Function.uncurry fun (x : Mx D W.rank ρ) (ξ : Mx D σ V₀.rank) =>
       ψ (symplOH V₀ W (dW.incX V₀ ξ) (dW.incAdj V₀ y)) *
-        dV.mixS W ψ μS 𝓕S f x (dW.incX V₀ ξ + dW.incAdj V₀ y + dW.inc0 V₀ w)) :=
+        (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV) W ψ μS 𝓕S f x (dW.incX V₀ ξ + dW.incAdj V₀ y + dW.inc0 V₀ w)) :=
     (hψ.1.1.comp (GlobalTheory.OrientedHeis.continuous_symplOH (hcX.comp continuous_snd) continuous_const)).mul
-      (Continuous.comp (g := fun q : Mx D W.rank ρ × WO V₀ W => dV.mixS W ψ μS 𝓕S f q.1 q.2)
+      (Continuous.comp (g := fun q : Mx D W.rank ρ × WO V₀ W => (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV) W ψ μS 𝓕S f q.1 q.2)
         (f := fun p : Mx D W.rank ρ × Mx D σ V₀.rank => (p.1, dW.incX V₀ p.2 + dW.incAdj V₀ y + dW.inc0 V₀ w)) hc
         (continuous_fst.prodMk (((hcX.comp continuous_snd).add continuous_const).add continuous_const)))
-  unfold evalAt HypDec.mixT
+  unfold evalAt _root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target
   simp only [HypDec.integrandT_eq]
   refine continuous_of_dominated (bound := fun _ => B)
     (fun x => (hj.uncurry_left x).aestronglyMeasurable)
@@ -137,18 +161,18 @@ variable {V V₀ W W₀ : HSp D} {ρ σ : ℕ} (dV : HypDec V V₀ ρ) (dW : Hyp
 
 theorem mixS_add (hψ : IsStdChar D ψ (-1)) (hS : IsCovolOne (ratMx D W.rank ρ) μS 𝓕S) {f g : WO V W → ℂ}
     (hf : IsThetaFunO ψ V W f) (hg : IsThetaFunO ψ V W g) (x : Mx D W.rank ρ) :
-    dV.mixS W ψ μS 𝓕S (f + g) x = dV.mixS W ψ μS 𝓕S f x + dV.mixS W ψ μS 𝓕S g x := by
+    (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV) W ψ μS 𝓕S (f + g) x = (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV) W ψ μS 𝓕S f x + (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV) W ψ μS 𝓕S g x := by
   funext w'
   have h1 := dV.integrableOn_mixS hψ.1.1 hS hf x w'
   have h2 := dV.integrableOn_mixS hψ.1.1 hS hg x w'
   simp only [HypDec.integrandS_eq] at h1 h2
-  simp only [HypDec.mixS, HypDec.integrandS_eq, Pi.add_apply, mul_add]
+  simp only [_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source, HypDec.integrandS_eq, Pi.add_apply, mul_add]
   exact integral_add h1 h2
 
 theorem mixS_smul (c : ℂ) (f : WO V W → ℂ) (x : Mx D W.rank ρ) :
-    dV.mixS W ψ μS 𝓕S (c • f) x = c • dV.mixS W ψ μS 𝓕S f x := by
+    (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV) W ψ μS 𝓕S (c • f) x = c • (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV) W ψ μS 𝓕S f x := by
   funext w'
-  simp only [HypDec.mixS, HypDec.integrandS_eq, Pi.smul_apply, smul_eq_mul]
+  simp only [_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source, HypDec.integrandS_eq, Pi.smul_apply, smul_eq_mul]
   rw [← integral_const_mul]
   congr 1; funext a; ring
 
@@ -157,13 +181,13 @@ theorem mixT_add (g₁ g₂ : WO V₀ W → ℂ) (y : Mx D V₀.rank σ) (w : WO
       g₁ (dW.incX V₀ ξ + dW.incAdj V₀ y + dW.inc0 V₀ w)) (μT.restrict 𝓕T))
     (h₂ : Integrable (fun ξ => ψ (symplOH V₀ W (dW.incX V₀ ξ) (dW.incAdj V₀ y)) *
       g₂ (dW.incX V₀ ξ + dW.incAdj V₀ y + dW.inc0 V₀ w)) (μT.restrict 𝓕T)) :
-    dW.mixT V₀ ψ μT 𝓕T (g₁ + g₂) y w = dW.mixT V₀ ψ μT 𝓕T g₁ y w + dW.mixT V₀ ψ μT 𝓕T g₂ y w := by
-  simp only [HypDec.mixT, HypDec.integrandT_eq, Pi.add_apply, mul_add]
+    (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target dW) V₀ ψ μT 𝓕T (g₁ + g₂) y w = (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target dW) V₀ ψ μT 𝓕T g₁ y w + (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target dW) V₀ ψ μT 𝓕T g₂ y w := by
+  simp only [_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target, HypDec.integrandT_eq, Pi.add_apply, mul_add]
   exact integral_add h₁ h₂
 
 theorem mixT_smul (c : ℂ) (g : WO V₀ W → ℂ) (y : Mx D V₀.rank σ) (w : WO V₀ W₀) :
-    dW.mixT V₀ ψ μT 𝓕T (c • g) y w = c * dW.mixT V₀ ψ μT 𝓕T g y w := by
-  simp only [HypDec.mixT, HypDec.integrandT_eq, Pi.smul_apply, smul_eq_mul]
+    (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target dW) V₀ ψ μT 𝓕T (c • g) y w = c * (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target dW) V₀ ψ μT 𝓕T g y w := by
+  simp only [_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.target, HypDec.integrandT_eq, Pi.smul_apply, smul_eq_mul]
   rw [← integral_const_mul]
   congr 1; funext a; ring
 
@@ -224,7 +248,7 @@ theorem flatAt_isSobForm : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdC
   have hB : ∀ Ψ, IsThetaFunO ψ V W Ψ → ∃ B : ℝ, ∀ x' w', ‖dV.mixS W ψ vS.μ vS.𝓕 Ψ x' w'‖ ≤ B :=
     fun Ψ hΨ => mixS_bounded hψ hθ dV vS hΨ
   have hc : ∀ Ψ, IsThetaFunO ψ V W Ψ →
-      Continuous fun p : Mx D W.rank ρ × WO V₀ W => dV.mixS W ψ vS.μ vS.𝓕 Ψ p.1 p.2 :=
+      Continuous fun p : Mx D W.rank ρ × WO V₀ W => (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV) W ψ vS.μ vS.𝓕 Ψ p.1 p.2 :=
     fun Ψ hΨ => (GlobalTheory.T.heisenbergOperator_thetaFunctional_mixedSourceModel D ψ hψ V V₀ W ρ dV vS Ψ hΨ).2.2.2.1
   have hmeas : ∀ Ψ, IsThetaFunO ψ V W Ψ → ∀ w,
       AEStronglyMeasurable (flatFun ψ dV dW vS.μ vS.𝓕 vT.μ vT.𝓕 (rat x) y Ψ w) vU.ν := by
@@ -242,11 +266,11 @@ theorem flatAt_isSobForm : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdC
 
   have hTint : ∀ Ψ, IsThetaFunO ψ V W Ψ → ∀ x' w,
       Integrable (fun ξ => ψ (symplOH V₀ W (dW.incX V₀ ξ) (dW.incAdj V₀ y)) *
-        dV.mixS W ψ vS.μ vS.𝓕 Ψ x' (dW.incX V₀ ξ + dW.incAdj V₀ y + dW.inc0 V₀ w)) (vT.μ.restrict vT.𝓕) := by
+        (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV) W ψ vS.μ vS.𝓕 Ψ x' (dW.incX V₀ ξ + dW.incAdj V₀ y + dW.inc0 V₀ w)) (vT.μ.restrict vT.𝓕) := by
     intro Ψ hΨ x' w
     obtain ⟨B, hB'⟩ := hB Ψ hΨ
     exact integrable_integrandT dW hψ hT _ B (hB' x')
-      (Continuous.uncurry_left (f := fun a b => dV.mixS W ψ vS.μ vS.𝓕 Ψ a b) x' (hc Ψ hΨ)) y w
+      (Continuous.uncurry_left (f := fun a b => (_root_.I195MixedCoordinates_4dbac5b45bba9ccd847c7fca.source dV) W ψ vS.μ vS.𝓕 Ψ a b) x' (hc Ψ hΨ)) y w
   have hadd : ∀ f g, IsThetaFunO ψ V W f → IsThetaFunO ψ V W g → ∀ w u,
       flatFun ψ dV dW vS.μ vS.𝓕 vT.μ vT.𝓕 (rat x) y (f + g) w u =
         flatFun ψ dV dW vS.μ vS.𝓕 vT.μ vT.𝓕 (rat x) y f w u + flatFun ψ dV dW vS.μ vS.𝓕 vT.μ vT.𝓕 (rat x) y g w u := by

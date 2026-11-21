@@ -6,6 +6,30 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForm
 public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.AdmissibleDiscreteSeriesOfHasParam
 public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.HarishChandraModulesOn
 
+namespace I195MixedCoordinates_234e4f75c563de28cf3cb155
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open Formalism.L2.Theta Formalism.IndefR.Datum GlobalTheory.MixModel MeasureTheory
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+public noncomputable abbrev source
+    {D : D7} {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (T : HSp D)
+    (ψ : AddChar (AF D.host.F) ℂ) (μ : Measure (Mx D T.rank ρ))
+    (𝓕 : Set (Mx D T.rank ρ)) (f : WO S T → ℂ) (x : Mx D T.rank ρ) : WO S₀ T → ℂ :=
+  fun w₀ => ∫ a in 𝓕, heisO ψ S T (a * d.pY)
+    (heisO ψ S T (x * d.pX) (heisO ψ S T (w₀ * d.p0) f)) 0 ∂μ
+
+public noncomputable abbrev target
+    {D : D7} {T T₀ : HSp D} {ρ : ℕ} (d : HypDec T T₀ ρ) (S : HSp D)
+    (ψ : AddChar (AF D.host.F) ℂ) (μ : Measure (Mx D ρ S.rank))
+    (𝓕 : Set (Mx D ρ S.rank)) (f : WO S T → ℂ) (y : Mx D S.rank ρ) : WO S T₀ → ℂ :=
+  fun w₀ => ∫ ξ in 𝓕, heisO ψ S T (d.jX * ξ)
+    (heisO ψ S T (d.jY * (incA D (-D.host.xi0⁻¹) • (adj y * gA S)))
+      (heisO ψ S T (d.j0 * w₀) f)) 0 ∂μ
+
+end I195MixedCoordinates_234e4f75c563de28cf3cb155
+
 @[expose] public section
 
 open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.Datum MeasureTheory IsDedekindDomain NumberField Matrix
@@ -18,17 +42,17 @@ variable {D : D7}
 
 theorem mixS_smul {V V₀ : HSp D} {ρ : ℕ} (d : HypDec V V₀ ρ) (T : HSp D) (ψ : AddChar (AF D.host.F) ℂ)
     (μ : Measure (Mx D T.rank ρ)) (𝓕 : Set (Mx D T.rank ρ)) (a : ℂ) (f : WO V T → ℂ) (x : Mx D T.rank ρ) :
-    d.mixS T ψ μ 𝓕 (a • f) x = a • d.mixS T ψ μ 𝓕 f x := by
+    (_root_.I195MixedCoordinates_234e4f75c563de28cf3cb155.source d) T ψ μ 𝓕 (a • f) x = a • (_root_.I195MixedCoordinates_234e4f75c563de28cf3cb155.source d) T ψ μ 𝓕 f x := by
   funext w₀
-  simp only [HypDec.mixS, Pi.smul_apply, smul_eq_mul, HypDec.integrandS_eq]
+  simp only [_root_.I195MixedCoordinates_234e4f75c563de28cf3cb155.source, Pi.smul_apply, smul_eq_mul, HypDec.integrandS_eq]
   rw [← integral_const_mul]
   congr 1; funext a'; ring
 
 theorem mixT_smul {W W₀ : HSp D} {ρ : ℕ} (d : HypDec W W₀ ρ) (S : HSp D) (ψ : AddChar (AF D.host.F) ℂ)
     (μ : Measure (Mx D ρ S.rank)) (𝓕 : Set (Mx D ρ S.rank)) (a : ℂ) (f : WO S W → ℂ) (y : Mx D S.rank ρ) :
-    d.mixT S ψ μ 𝓕 (a • f) y = a • d.mixT S ψ μ 𝓕 f y := by
+    (_root_.I195MixedCoordinates_234e4f75c563de28cf3cb155.target d) S ψ μ 𝓕 (a • f) y = a • (_root_.I195MixedCoordinates_234e4f75c563de28cf3cb155.target d) S ψ μ 𝓕 f y := by
   funext w₀
-  simp only [HypDec.mixT, Pi.smul_apply, smul_eq_mul, HypDec.integrandT_eq]
+  simp only [_root_.I195MixedCoordinates_234e4f75c563de28cf3cb155.target, Pi.smul_apply, smul_eq_mul, HypDec.integrandT_eq]
   rw [← integral_const_mul]
   congr 1; funext a'; ring
 

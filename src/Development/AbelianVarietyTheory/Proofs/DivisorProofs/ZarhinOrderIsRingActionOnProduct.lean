@@ -176,6 +176,7 @@ theorem actZ_add (N N' : ord d) : actZ A B d la mu (N + N') = actZ A B d la mu N
   refine hom_ext A B (fun i => ?_) (fun i => ?_)
   · rw [MonObj.mul_comp, actZ_pa, actZ_pa, actZ_pa, ← E_add]
     congr 1
+    funext j
     exact Int.add_ediv_of_dvd_left (N.2 j i)
   · rw [MonObj.mul_comp, actZ_pb, actZ_pb, actZ_pb, ← E_add]
     congr 1 <;> funext j <;> simp

@@ -123,11 +123,15 @@ theorem StepTies.twUnit (S : StepTies hj Fo Lc Gt c) (K : CmpTied D X0 T Gt c) (
     (fun x => c.embW_int u w h x) lat
 
 theorem StepTies.chX (S : StepTies hj Fo Lc Gt c) : ChX (stepInOf hj Fo Lc (Gt.gat_pos u w h)) := by
-  have charts : ChX (stepInOf hj Fo Lc (Gt.gat_pos u w h)) :=
-    { hypC := fun β => locHypC_locJ hj (Lc.t β) Lc.B (Fo.K β).lev (S.sameU β) (S.frRat β) (S.hypC β)
-      inj := fun β a => gamI_inj_locJ hj (Lc.t β) Lc.B a
-      onto := fun β a => gamOnto_locJ hj (Lc.t β) Lc.B (Fo.K β).lev (S.sameU β) a
-      cinj := fun β => compInj_locJ hj (Lc.t β) Lc.B (Fo.K β).lev (S.sameU β) }
+  have charts : ChX (stepInOf hj Fo Lc (Gt.gat_pos u w h)) := by
+    refine { hypC := ?_, inj := ?_, onto := ?_, cinj := ?_ }
+    all_goals
+      intro β
+      let : Fintype (Lc.cmpt β) := Lc.fin β
+    · exact locHypC_locJ hj (Lc.t β) Lc.B (Fo.K β).lev (S.sameU β) (S.frRat β) (S.hypC β)
+    · exact fun a => gamI_inj_locJ hj (Lc.t β) Lc.B a
+    · exact fun a => gamOnto_locJ hj (Lc.t β) Lc.B (Fo.K β).lev (S.sameU β) a
+    · exact compInj_locJ hj (Lc.t β) Lc.B (Fo.K β).lev (S.sameU β)
   exact charts
 
 end Step

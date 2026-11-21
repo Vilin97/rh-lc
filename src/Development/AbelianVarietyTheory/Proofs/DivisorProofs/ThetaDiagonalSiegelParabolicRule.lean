@@ -13,6 +13,23 @@ public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.Mix
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModulusOfNormEqAbs
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsThetaFunctionThetaTransformRationalDarboux
 
+namespace I195MixedCoordinates_7b6bb7feeb7e0cab6de7cdc9
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open Formalism.L2.Theta Formalism.IndefR.Datum GlobalTheory.MixModel MeasureTheory
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+public noncomputable abbrev target
+    {D : D7} {T T₀ : HSp D} {ρ : ℕ} (d : HypDec T T₀ ρ) (S : HSp D)
+    (ψ : AddChar (AF D.host.F) ℂ) (μ : Measure (Mx D ρ S.rank))
+    (𝓕 : Set (Mx D ρ S.rank)) (f : WO S T → ℂ) (y : Mx D S.rank ρ) : WO S T₀ → ℂ :=
+  fun w₀ => ∫ ξ in 𝓕, heisO ψ S T (d.jX * ξ)
+    (heisO ψ S T (d.jY * (incA D (-D.host.xi0⁻¹) • (adj y * gA S)))
+      (heisO ψ S T (d.j0 * w₀) f)) 0 ∂μ
+
+end I195MixedCoordinates_7b6bb7feeb7e0cab6de7cdc9
+
 @[expose] public section
 
 open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta
@@ -118,7 +135,7 @@ theorem diag_eq_mixT (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (ν : Measur
     (fun x hx => ratMx_mul (rat_mem _) (ratMx_transpose hx))
     (fun x hx => ratMx_transpose (ratMx_mul (rat_mem _) hx))
   refine ⟨_, _, hc, fun f => ?_⟩
-  simp only [HypDec.mixT, HypDec.integrandT_eq]
+  simp only [_root_.I195MixedCoordinates_7b6bb7feeb7e0cab6de7cdc9.target, HypDec.integrandT_eq]
   simp only [map_zero, add_zero, symplOH_zero_right, AddChar.map_zero_eq_one, one_mul]
   rw [hemb.setIntegral_map, Set.preimage_image_eq _ (gramT T S.rank).injective]
   simp only [incX_gramT]

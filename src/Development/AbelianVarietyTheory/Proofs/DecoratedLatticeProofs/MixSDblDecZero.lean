@@ -3,6 +3,22 @@ module
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IntegrandSZero
 public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.WittDecompSymplInclIsotropicInclAnisotropic
 
+namespace I195MixedCoordinates_38e171c1cdbf76962db34e8f
+
+open Formalism.BasicNotions Formalism.BasicNotions.TH
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open Formalism.L2.Theta Formalism.IndefR.Datum GlobalTheory.MixModel MeasureTheory
+attribute [local instance] Formalism.BasicNotions.Host.cmStar
+
+public noncomputable abbrev source
+    {D : D7} {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (T : HSp D)
+    (ψ : AddChar (AF D.host.F) ℂ) (μ : Measure (Mx D T.rank ρ))
+    (𝓕 : Set (Mx D T.rank ρ)) (f : WO S T → ℂ) (x : Mx D T.rank ρ) : WO S₀ T → ℂ :=
+  fun w₀ => ∫ a in 𝓕, heisO ψ S T (a * d.pY)
+    (heisO ψ S T (x * d.pX) (heisO ψ S T (w₀ * d.p0) f)) 0 ∂μ
+
+end I195MixedCoordinates_38e171c1cdbf76962db34e8f
+
 @[expose] public section
 
 open scoped ComplexConjugate Matrix NNReal
@@ -82,7 +98,7 @@ theorem mixS_dblDec_zero (A B : HSp D) (ψ : AddChar (AF D.host.F) ℂ) (ν : Me
     have h := GlobalTheory.OrientedHeis.symplOH_add_right (S := dblSp A) (T := B) y 0 0
     rw [add_zero] at h
     exact left_eq_add.1 h
-  unfold HypDec.mixS GlobalTheory.IndefiniteRowSideFullHecke.SphericalZero.evZero
+  unfold _root_.I195MixedCoordinates_38e171c1cdbf76962db34e8f.source GlobalTheory.IndefiniteRowSideFullHecke.SphericalZero.evZero
   congr 1
   funext a
   rw [HypDec.integrandS_eq, map_zero, map_zero, hz, AddChar.map_zero_eq_one, one_mul, add_zero, add_zero,
