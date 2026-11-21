@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 namespace GlobalTheory
 
@@ -67,7 +63,7 @@ theorem jetWedge_shear (ω : M [⋀^Fin D]→ₗ[A] N) (h : A) (u : M) (v : Fin 
         congr 1
         simp
         ring
-  exact congrArg (fun F : MultilinearMap (RingHom.id A) (fun _ : Fin (D + 1) => A × M) N => F v) key
+  exact congrArg (fun F => F v) key
 
 theorem alternating_map_sum_smul_eq_det_smul {n : ℕ} (ω : M [⋀^Fin n]→ₗ[A] N)
     (a : Matrix (Fin n) (Fin n) A) (w : Fin n → M) :
@@ -175,15 +171,18 @@ def altRestrictScalars (ω : M [⋀^Fin D]→ₗ[B] N) : M [⋀^Fin D]→ₗ[A] 
 
 variable {A} {L : Type*} [AddCommGroup L] [Module A L]
 
+variable (B D) in
 
 noncomputable def exteriorPowerMapOver (φ : L →ₗ[A] M) : (⋀[A]^D L) →ₗ[A] (⋀[B]^D M) :=
   exteriorPower.alternatingMapLinearEquiv
     ((altRestrictScalars A (exteriorPower.ιMulti B D (M := M))).compLinearMap φ)
 
 @[simp] theorem exteriorPowerMapOver_ιMulti (φ : L →ₗ[A] M) (v : Fin D → L) :
-    exteriorPowerMapOver (B := B) (D := D) φ (exteriorPower.ιMulti A D v)
+    exteriorPowerMapOver B D φ (exteriorPower.ιMulti A D v)
       = exteriorPower.ιMulti B D (fun k => φ (v k)) := by
-  rw [exteriorPowerMapOver, exteriorPower.alternatingMapLinearEquiv_apply_ιMulti]
+  simp only [exteriorPowerMapOver,
+    exteriorPower.alternatingMapLinearEquiv_apply_ιMulti,
+    AlternatingMap.compLinearMap_apply]
   rfl
 
 end RestrictScalars
@@ -208,21 +207,20 @@ theorem dWedge_mul_sub_mem (I : Ideal A) (h : A) (g : Fin D → A) (hg : ∀ k, 
     dWedge R (fun k => h * g k) - h ^ D • dWedge R g ∈ I • (⊤ : Submodule A (⋀[A]^D Ω[A⁄R])) :=
   form_d_mul_sub_mem _ _ I h g hg
 
+variable (A D) in
 
 variable {R}
 
 theorem map_jac (S B : Type*) [CommRing S] [CommRing B] [Algebra R S] [Algebra S B] [Algebra R B]
     [Algebra A B] [IsScalarTower R A B] [IsScalarTower R S B] [SMulCommClass S A B]
     (f : Fin (D + 1) → A) :
-    exteriorPowerMapOver (B := B) (D := D) (KaehlerDifferential.map R S A B) (jac R f)
+    exteriorPowerMapOver B D (KaehlerDifferential.map R S A B) (jac R f)
       = jac S (fun i => algebraMap A B (f i)) := by
   set_option synthInstance.maxHeartbeats 100000 in
     rw [jac, jac, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, dWedge, exteriorPowerMapOver_ιMulti, ← algebraMap_smul B]
   simp [dWedge]
-
-variable (R A D)
 
 end Jac
 

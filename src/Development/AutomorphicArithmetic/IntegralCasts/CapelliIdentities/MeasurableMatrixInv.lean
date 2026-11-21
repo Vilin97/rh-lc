@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 theorem UpperTheory.measurable_matrix_inv :
     ∀ n : ℕ, Measurable (fun x : Fin n → Fin n → ℂ => (Matrix.of.symm ((Matrix.of x : Matrix (Fin n) (Fin n) ℂ)⁻¹) : Fin n → Fin n → ℂ)) := by
@@ -17,4 +13,6 @@ theorem UpperTheory.measurable_matrix_inv :
     (hc.matrix_adjugate.matrix_elem i j).measurable
   have h := hdet.inv.mul hadj
   convert h using 1
+  funext x
+  simp only [Matrix.of_symm_apply, Matrix.inv_def, Matrix.smul_apply, Ring.inverse_eq_inv,
     smul_eq_mul, Pi.mul_apply, Pi.inv_apply]

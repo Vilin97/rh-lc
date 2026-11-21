@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Counterexamples.LevelGroupExamples.RightInvariantOfCovolume
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Counterexamples.LevelGroupExamples.RightInvariantOfCovolume
 
 noncomputable section
 open MeasureTheory
@@ -106,7 +102,8 @@ theorem exists_strict_domain [MeasurableMul G] [Countable Γ] (μ : Measure G) [
   · rw [Set.preimage_compl, preimage_image_cls]
     have h4 : ∀ᵐ x ∂μ, ∀ γ : Γ, ((γ : G) * x ∈ F → (γ : G) * x ∈ E) := by
       refine ae_all_iff.2 fun γ => ?_
-      exact (measurePreserving_mul_left μ (γ : G)).quasiMeasurePreserving.ae h3.symm.le
+      exact ((measurePreserving_mul_left μ (γ : G)).quasiMeasurePreserving.ae h3.symm).mono
+        fun _ hx => hx.mp
     have h5 : ∀ᵐ x ∂μ, x ∈ ⋃ γ : Γ, (fun x => (γ : G) * x) ⁻¹' E := by
       filter_upwards [h4, hF.ae_covers] with x hx ⟨γ, hγ⟩
       exact Set.mem_iUnion.2 ⟨γ, hx γ hγ⟩
@@ -180,7 +177,7 @@ theorem invariant_prob_eq : ∀ (G : Type) [Group G] [TopologicalSpace G] [IsTop
     rw [Measure.inv_inv] at this
     rw [this]
     show Measure.map _ _ = _
-    rw [Measure.map_smul]
+    rw [Measure.map_smul (c := c) (hf := measurable_inv.aemeasurable)]
     exact congrArg (c • ·) (Measure.inv_inv μ)
   have hT := measurableSet_image_cls Γ hE
   have hnull : ν (cls Γ '' E)ᶜ = 0 := by

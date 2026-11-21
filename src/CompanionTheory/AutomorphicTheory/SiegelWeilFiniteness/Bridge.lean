@@ -1,10 +1,6 @@
-module
-
-public import Formalism.UnipotentAdelicQuotients.SiegelWeilUnitaryConvergent
-public import GroundTheory.AutomorphicForms.HermitianExistenceLocal
-public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.Statements
-
-@[expose] public section
+import Formalism.UnipotentAdelicQuotients.SiegelWeilUnitaryConvergent
+import GroundTheory.AutomorphicForms.HermitianExistenceLocal
+import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.Statements
 
 namespace CompanionTheory.SWFin
 

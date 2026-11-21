@@ -1,8 +1,4 @@
-module
-
-public import Development.AutomorphicArithmetic.DedekindLFunctions.CharFamily
-
-@[expose] public section
+import Development.AutomorphicArithmetic.DedekindLFunctions.CharFamily
 
 open Complex MeasureTheory Set Filter Topology
 
@@ -32,7 +28,7 @@ def WindowHypU (g : ℝ → ℝ) (θ δ : ℝ) : Prop :=
     (∀ u ∈ Icc U ((1 + δ) * U), 0 ≤ R u ∧ g u ≤ R u) ∧
     ∫ u in Icc U ((1 + δ) * U), R u * Real.exp (-θ * u) ≤ Real.exp (η * U)
 
-
+open Classical
 
 end Deduction
 

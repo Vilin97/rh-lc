@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.XSmulMemWeightedHomogeneousSubmodule
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.XSmulMemWeightedHomogeneousSubmodule
 
 open Polynomial Filter Module
 
@@ -157,11 +153,10 @@ theorem exists_isHilbertPoly_quotPiece [Fintype ι] {I : Ideal (MvPolynomial ι 
     push_cast
     ring
 
+open Classical in
 
 noncomputable def idealHilbertPoly (I : Ideal (MvPolynomial ι k)) : ℚ[X] :=
-  by
-    classical
-    exact if h : ∃ P, IsHilbertPoly (quotPiece I) P then h.choose else 0
+  if h : ∃ P, IsHilbertPoly (quotPiece I) P then h.choose else 0
 
 theorem isHilbertPoly_idealHilbertPoly [Finite ι] {I : Ideal (MvPolynomial ι k)}
     (hI : I.IsHomogeneous (homogeneousSubmodule ι k)) :

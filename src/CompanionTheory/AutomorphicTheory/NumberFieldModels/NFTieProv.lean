@@ -1,10 +1,6 @@
-module
-
-public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGaugeCut
-public import Formalism.HermitianCurvature.RealInputsClosedAdmissibleSettings
-public import Formalism.HermitianCurvature.StatementTL
-
-@[expose] public section
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGaugeCut
+import Formalism.HermitianCurvature.RealInputsClosedAdmissibleSettings
+import Formalism.HermitianCurvature.StatementTL
 
 open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt Formalism.FourierDecayAlt.P.CutMP.Gauge
 

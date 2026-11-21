@@ -230,7 +230,8 @@ lemma W_toPresheaf_iff (φ : M ⟶ N) :
 end
 
 
-abbrev W : MorphismProperty (PresheafOfModules.{u} (R ⋙ forget₂ CommRingCat RingCat)) :=
+abbrev W (J : GrothendieckTopology C) (R : Cᵒᵖ ⥤ CommRingCat.{u}) :
+    MorphismProperty (PresheafOfModules.{u} (R ⋙ forget₂ CommRingCat RingCat)) :=
   J.W.inverseImage (PresheafOfModules.toPresheaf _)
 
 variable [J.WEqualsLocallyBijective AddCommGrpCat.{u}]

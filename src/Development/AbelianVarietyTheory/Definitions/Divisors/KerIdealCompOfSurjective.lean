@@ -80,40 +80,41 @@ def postcomp (C : Type*) [CommRing C] [Bialgebra R C] [IsCocomm R C] (h : A →�
 def mulBy [IsCocomm R A] (n : ℕ) : A →ₐc[R] A := (toConv (BialgHom.id R A) ^ n).ofConv
 
 theorem comp_mulBy_pts [IsCocomm R A] {E : Type*} [CommRing E] [Algebra R E] (x : A →ₐ[R] E)
-    (n : ℕ) : x.comp (mulBy R A n : A →ₐ[R] A) = (toConv x ^ n).ofConv := by
+    (n : ℕ) : x.comp (mulBy (R := R) (A := A) n : A →ₐ[R] A) = (toConv x ^ n).ofConv := by
   have h := map_pow ((ptsPush A x).comp toPts) (toConv (BialgHom.id R A)) n
   exact congrArg ofConv h
 
 theorem comp_mulBy [IsCocomm R C] (f : C →ₐc[R] A) (n : ℕ) :
-    f.comp (mulBy R C n) = (toConv f ^ n).ofConv :=
+    f.comp (mulBy (R := R) (A := C) n) = (toConv f ^ n).ofConv :=
   congrArg ofConv (map_pow (postcomp C f) (toConv (BialgHom.id R C)) n)
 
 theorem mulBy_comp [IsCocomm R C] [IsCocomm R A] (f : C →ₐc[R] A) (n : ℕ) :
-    (mulBy R A n).comp f = (toConv f ^ n).ofConv :=
+    (mulBy (R := R) (A := A) n).comp f = (toConv f ^ n).ofConv :=
   congrArg ofConv (map_pow (precomp A f) (toConv (BialgHom.id R A)) n)
 
 theorem map_mulBy [IsCocomm R C] [IsCocomm R A] (f : C →ₐc[R] A) (n : ℕ) (c : C) :
-    f (mulBy R C n c) = mulBy R A n (f c) :=
+    f (mulBy (R := R) (A := C) n c) = mulBy (R := R) (A := A) n (f c) :=
   DFunLike.congr_fun ((comp_mulBy f n).trans (mulBy_comp f n).symm) c
 
 theorem mulBy_mulBy [IsCocomm R A] (m n : ℕ) (a : A) :
-    mulBy R A m (mulBy R A n a) = mulBy R A (m * n) a := by
-  have h := comp_mulBy (mulBy R A m) n
+    mulBy (R := R) (A := A) m (mulBy (R := R) (A := A) n a) =
+      mulBy (R := R) (A := A) (m * n) a := by
+  have h := comp_mulBy (mulBy (R := R) (A := A) m) n
   rw [mulBy, toConv_ofConv, ← pow_mul] at h
   exact DFunLike.congr_fun h a
 
 theorem mulBy_groupLike [IsCocomm R A] (n : ℕ) {u : A} (hu : IsGroupLikeElem R u) :
-    mulBy R A n u = u ^ n := by
+    mulBy (R := R) (A := A) n u = u ^ n := by
   have h := DFunLike.congr_fun (comp_mulBy_pts (AlgHom.id R A) n) u
   exact h.trans (convPow_apply_groupLike (toConv (AlgHom.id R A)) hu n)
 
 
 abbrev augIdeal : Ideal A := RingHom.ker (counitAlgHom R A)
 
-abbrev kerIdeal (f : C →ₐc[R] A) : Ideal A := Ideal.map (f : C →ₐ[R] A) (augIdeal R C)
+abbrev kerIdeal (f : C →ₐc[R] A) : Ideal A := Ideal.map (f : C →ₐ[R] A) (augIdeal (R := R) (A := C))
 
 
-abbrev torsionIdeal [IsCocomm R A] (n : ℕ) : Ideal A := kerIdeal (mulBy R A n)
+abbrev torsionIdeal [IsCocomm R A] (n : ℕ) : Ideal A := kerIdeal (mulBy (R := R) (A := A) n)
 
 theorem kerIdeal_le_ker_iff (f : C →ₐc[R] A) {E : Type*} [CommRing E] [Algebra R E]
     (x : A →ₐ[R] E) :
@@ -130,7 +131,7 @@ theorem kerIdeal_le_ker_iff (f : C →ₐc[R] A) {E : Type*} [CommRing E] [Algeb
     simp [RingHom.mem_ker, h, hc']
 
 theorem torsionIdeal_le_ker_iff [IsCocomm R A] (n : ℕ) {E : Type*} [CommRing E] [Algebra R E]
-    (x : A →ₐ[R] E) : torsionIdeal R A n ≤ RingHom.ker x ↔ toConv x ^ n = 1 := by
+    (x : A →ₐ[R] E) : torsionIdeal (R := R) (A := A) n ≤ RingHom.ker x ↔ toConv x ^ n = 1 := by
   rw [kerIdeal_le_ker_iff]
   have h := comp_mulBy_pts x n
   constructor
@@ -141,7 +142,7 @@ theorem torsionIdeal_le_ker_iff [IsCocomm R A] (n : ℕ) {E : Type*} [CommRing E
     exact DFunLike.congr_fun h c
 
 theorem kerIdeal_of_surjective {f : C →ₐc[R] A} (hf : Function.Surjective f) :
-    kerIdeal f = augIdeal R A := by
+    kerIdeal f = augIdeal (R := R) (A := A) := by
   refine le_antisymm ((kerIdeal_le_ker_iff f _).2 fun c => by simp) fun a ha => ?_
   obtain ⟨c, rfl⟩ := hf a
   refine Ideal.mem_map_of_mem _ ?_
@@ -157,15 +158,18 @@ theorem kerIdeal_comp_of_surjective (g : A →ₐc[R] B) {f : C →ₐc[R] A}
 
 theorem map_torsionIdeal [IsCocomm R C] [IsCocomm R A] {f : C →ₐc[R] A}
     (hf : Function.Surjective f) (n : ℕ) :
-    Ideal.map (f : C →ₐ[R] A) (torsionIdeal R C n) = torsionIdeal R A n := by
+    Ideal.map (f : C →ₐ[R] A) (torsionIdeal (R := R) (A := C) n) =
+      torsionIdeal (R := R) (A := A) n := by
   rw [← kerIdeal_comp, comp_mulBy, ← mulBy_comp, kerIdeal_comp_of_surjective _ hf]
 
 theorem torsionIdeal_le_of_dvd [IsCocomm R A] {m n : ℕ} (h : m ∣ n) :
-    torsionIdeal R A n ≤ torsionIdeal R A m := by
+    torsionIdeal (R := R) (A := A) n ≤ torsionIdeal (R := R) (A := A) m := by
   obtain ⟨k, rfl⟩ := h
-  have h1 := (torsionIdeal_le_ker_iff m (Ideal.Quotient.mkₐ R (torsionIdeal R A m))).1
+  have h1 := (torsionIdeal_le_ker_iff m
+    (Ideal.Quotient.mkₐ R (torsionIdeal (R := R) (A := A) m))).1
     fun a ha => Ideal.Quotient.eq_zero_iff_mem.2 ha
-  have h2 := (torsionIdeal_le_ker_iff (m * k) (Ideal.Quotient.mkₐ R (torsionIdeal R A m))).2
+  have h2 := (torsionIdeal_le_ker_iff (m * k)
+    (Ideal.Quotient.mkₐ R (torsionIdeal (R := R) (A := A) m))).2
     (by rw [pow_mul, h1, one_pow])
   exact fun a ha => Ideal.Quotient.eq_zero_iff_mem.1 (h2 ha)
 
@@ -201,38 +205,39 @@ def liftSurj (i : A →ₐc[R] B) (hi : Function.Surjective i) (f : A →ₐc[R]
 abbrev Cot : Type _ := AugCot (counitAlgHom R A)
 
 
-abbrev dUnit (a : A) : Cot R A := AugCot.d (counitAlgHom R A) a
+abbrev dUnit (a : A) : Cot (R := R) (A := A) := AugCot.d (counitAlgHom R A) a
 
-def cotMap (f : C →ₐc[R] A) : Cot R C →ₗ[R] Cot R A :=
+def cotMap (f : C →ₐc[R] A) : Cot (R := R) (A := C) →ₗ[R] Cot (R := R) (A := A) :=
   AugCot.map (f : C →ₐ[R] A) (BialgHomClass.counitAlgHom_comp f)
 
-@[simp] theorem cotMap_d (f : C →ₐc[R] A) (c : C) : cotMap f (dUnit R c) = dUnit R (f c) :=
+@[simp] theorem cotMap_d (f : C →ₐc[R] A) (c : C) : cotMap f (dUnit c) = dUnit (f c) :=
   AugCot.map_d _ _ c
 
 theorem cotMap_comp (g : A →ₐc[R] B) (f : C →ₐc[R] A) :
     cotMap (g.comp f) = cotMap g ∘ₗ cotMap f :=
-  AugCot.hom_ext fun c => by simp
+  AugCot.hom_ext (counitAlgHom R C) fun c => by simp
 
 @[simp] theorem cotMap_id : cotMap (BialgHom.id R A) = LinearMap.id :=
-  AugCot.hom_ext fun c => by simp
+  AugCot.hom_ext (counitAlgHom R A) fun c => by simp
 
 theorem cotMap_one [IsCocomm R C] : cotMap (1 : WithConv (C →ₐc[R] A)).ofConv = 0 :=
-  AugCot.hom_ext fun c => by
+  AugCot.hom_ext (counitAlgHom R C) fun c => by
     rw [cotMap_d]
     exact AugCot.d_algebraMap _ _
 
 theorem cotMap_mul [IsCocomm R C] (f g : WithConv (C →ₐc[R] A)) :
     cotMap (f * g).ofConv = cotMap f.ofConv + cotMap g.ofConv :=
-  AugCot.hom_ext fun c => by
+  AugCot.hom_ext (counitAlgHom R C) fun c => by
     have r := Coalgebra.Repr.arbitrary R c
     have h : (f * g).ofConv c = ∑ i ∈ r.index, f.ofConv (r.left i) * g.ofConv (r.right i) :=
       r.convMul_apply (toConv f.ofConv.toLinearMap) (toConv g.ofConv.toLinearMap)
-    have h1 := congrArg (fun x => dUnit R (g.ofConv x)) (Coalgebra.sum_counit_smul r)
+    have h1 := congrArg (fun x => dUnit (R := R) (A := A) (g.ofConv x))
+      (Coalgebra.sum_counit_smul r)
     have h2 : ∑ i ∈ r.index, counit (R := R) (r.right i) • r.left i = c := by
       have := congrArg (TensorProduct.rid R C) (Coalgebra.sum_tmul_counit_eq r)
       set_option synthInstance.maxHeartbeats 100000 in
         simpa only [map_sum, TensorProduct.rid_tmul, one_smul] using this
-    have h3 := congrArg (fun x => dUnit R (f.ofConv x)) h2
+    have h3 := congrArg (fun x => dUnit (R := R) (A := A) (f.ofConv x)) h2
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_smul] at h1 h3
     set_option synthInstance.maxHeartbeats 100000 in
@@ -249,7 +254,8 @@ theorem cotMap_pow [IsCocomm R C] (f : WithConv (C →ₐc[R] A)) (n : ℕ) :
   | succ n ih => rw [pow_succ, cotMap_mul, ih, succ_nsmul]
 
 theorem dUnit_mul_groupLike {u v : A} (hu : IsGroupLikeElem R u) (hv : IsGroupLikeElem R v) :
-    dUnit R (u * v) = dUnit R u + dUnit R v := by
+    dUnit (R := R) (A := A) (u * v) =
+      dUnit (R := R) (A := A) u + dUnit (R := R) (A := A) v := by
   rw [dUnit, AugCot.d_mul]
   simp [hu.counit_eq_one, hv.counit_eq_one, add_comm]
 
@@ -280,8 +286,11 @@ def dualMonoidHom :
     rfl
 
 
-theorem dual_mulBy (n : ℕ) : CartierDual.map (mulBy R A n) = mulBy R (CartierDual R A) n :=
-  congrArg ofConv (map_pow (dualMonoidHom R A A) (toConv (BialgHom.id R A)) n)
+theorem dual_mulBy (n : ℕ) :
+    _root_.GlobalTheory.CartierDual.map (mulBy (R := R) (A := A) n) =
+      mulBy (R := R) (A := CartierDual R A) n :=
+  congrArg ofConv (map_pow (dualMonoidHom (R := R) (A := A) (C := A))
+    (toConv (BialgHom.id R A)) n)
 
 end Dual
 
@@ -318,23 +327,24 @@ def muPoint (u : B) (hu : u ^ m = 1) : AddMonoidAlgebra R (ZMod m) →ₐ[R] B :
         rw [toAdd_mul, ZMod.val_add, ← pow_eq_pow_mod _ hu, pow_add] }
 
 theorem muPoint_single (u : B) (hu : u ^ m = 1) (k : ZMod m) :
-    muPoint R u hu (AddMonoidAlgebra.single k 1) = u ^ k.val := by
+    muPoint (R := R) (m := m) u hu (AddMonoidAlgebra.single k 1) = u ^ k.val := by
   simp [muPoint]
 
-@[simp] theorem muPoint_muT (u : B) (hu : u ^ m = 1) : muPoint R u hu (muT R m) = u := by
+@[simp] theorem muPoint_muT (u : B) (hu : u ^ m = 1) :
+    muPoint (R := R) (m := m) u hu (muT R m) = u := by
   have h : (1 : ZMod m).val = 1 % m := by rw [← ZMod.val_natCast, Nat.cast_one]
   rw [muT, muPoint_single, h, ← pow_eq_pow_mod _ hu, pow_one]
 
 def muChar {A : Type*} [CommRing A] [Bialgebra R A] (u : A) (hg : IsGroupLikeElem R u)
     (hu : u ^ m = 1) : AddMonoidAlgebra R (ZMod m) →ₐc[R] A :=
-  .ofAlgHom (muPoint R u hu)
+  .ofAlgHom (muPoint (R := R) (m := m) u hu)
     (mu_algHom_ext (by simp [hg.counit_eq_one, (isGroupLikeElem_muT R m).counit_eq_one]))
     (mu_algHom_ext (by
       simp [hg.comul_eq_tmul_self, (isGroupLikeElem_muT R m).comul_eq_tmul_self]))
 
 @[simp] theorem muChar_muT {A : Type*} [CommRing A] [Bialgebra R A] (u : A)
     (hg : IsGroupLikeElem R u) (hu : u ^ m = 1) : muChar u hg hu (muT R m) = u :=
-  muPoint_muT u hu
+  muPoint_muT (R := R) (m := m) u hu
 
 theorem mu_bialgHom_ext {A : Type*} [CommRing A] [Bialgebra R A]
     {x y : AddMonoidAlgebra R (ZMod m) →ₐc[R] A} (h : x (muT R m) = y (muT R m)) : x = y :=

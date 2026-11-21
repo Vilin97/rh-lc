@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.ToAbSheafPreservesFiniteLimits
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.ToAbSheafPreservesFiniteLimits
 
 open CategoryTheory AlgebraicGeometry TopologicalSpace Opposite Limits
 
@@ -59,6 +55,7 @@ instance instModule (F : X.Modules) (U : X.Opens) (n : ℕ) : Module R (cohOn F 
   { WithAction.instModule (action F U n) R with
     smul := fun r x ↦ action F U n (algebraMap R Γ(X, ⊤) r) x }
 
+variable {R} in
 
 lemma toH'_smul {F : X.Modules} {U : X.Opens} {n : ℕ} (r : R) (x : cohOn F U n) :
     toH' F U n (r • x) =
@@ -93,12 +90,14 @@ lemma toH'_res (h : V ≤ U) (x : cohOn F U n) :
 lemma smul_eq_map (r : R) (x : cohOn F U n) :
     r • x = map R (smulHom F (algebraMap R Γ(X, ⊤) r)) U n x := rfl
 
+variable (F U n) in
 
 @[simp] lemma map_id : map R (𝟙 F) U n = LinearMap.id := by
   ext x
   apply (toH' F U n).injective
   rw [toH'_map, CategoryTheory.Functor.map_id, SiteCoh.map_id_apply, LinearMap.id_apply]
 
+variable (U n) in
 
 lemma map_comp (φ : F ⟶ G) (ψ : G ⟶ H) :
     map R (φ ≫ ψ) U n = map R ψ U n ∘ₗ map R φ U n := by
@@ -111,6 +110,7 @@ lemma map_map (φ : F ⟶ G) (ψ : G ⟶ H) (x : cohOn F U n) :
     map R ψ U n (map R φ U n x) = map R (φ ≫ ψ) U n x := by
   rw [map_comp]; rfl
 
+variable (U n) in
 
 lemma map_add_hom (φ ψ : F ⟶ G) : map R (φ + ψ) U n = map R φ U n + map R ψ U n := by
   ext x
@@ -118,22 +118,29 @@ lemma map_add_hom (φ ψ : F ⟶ G) : map R (φ + ψ) U n = map R φ U n + map R
   rw [LinearMap.add_apply, map_add (f := _), toH'_map, toH'_map, toH'_map, Functor.map_add (f := _),
     SiteCoh.map_add_apply]
 
+variable (F G U n) in
 
   AddMonoidHom.mk' (fun φ ↦ map R φ U n) (map_add_hom R U n)
 
+variable (F G U n) in
 
 @[simp] lemma map_zero_hom : map R (0 : F ⟶ G) U n = 0 := map_zero (mapAddHom R F G U n)
 
+variable (U n) in
 
 lemma map_neg_hom (φ : F ⟶ G) : map R (-φ) U n = -map R φ U n := map_neg (mapAddHom R F G U n) φ
 
+variable (U n) in
 
+variable (U n) in
 
 lemma map_sum_hom {ι : Type t} (s : Finset ι) (φ : ι → (F ⟶ G)) :
     map R (∑ i ∈ s, φ i) U n = ∑ i ∈ s, map R (φ i) U n :=
   map_sum (mapAddHom R F G U n) φ s
 
+variable (U n) in
 
+variable (F U n) in
 
 @[simp] lemma res_refl : res R F (le_refl U) n = LinearMap.id := by
   ext x
@@ -141,6 +148,7 @@ lemma map_sum_hom {ι : Type t} (s : Finset ι) (φ : ι → (F ⟶ G)) :
   rw [toH'_res, show homOfLE (le_refl U) = 𝟙 U from rfl, SiteCoh.res_id_apply,
     LinearMap.id_apply]
 
+variable (F n) in
 
 lemma res_comp_res (h : V ≤ U) (h' : W ≤ V) :
     res R F h' n ∘ₗ res R F h n = res R F (h'.trans h) n := by
@@ -154,12 +162,16 @@ lemma res_map (φ : F ⟶ G) (h : V ≤ U) (x : cohOn F U n) :
   apply (toH' G V n).injective
   rw [toH'_res, toH'_map, toH'_map, toH'_res, SiteCoh.res_map_apply]
 
+variable (n) in
 
+variable (U n) in
 
   LinearEquiv.ofLinearMap (map R e.hom U n) (map R e.inv U n)
     (by rw [← map_comp, e.inv_hom_id, map_id]) (by rw [← map_comp, e.hom_inv_id, map_id])
 
+variable (U n) in
 
+variable (F n) in
 
 end Module
 
@@ -169,6 +181,7 @@ lemma subsingleton_of_isZero {F : X.Modules} (h : IsZero F) (U : X.Opens) (n : �
     have h₁ : map ℤ (𝟙 F) U n x = x := by rw [map_id]; rfl
     rw [← h₁, h.eq_of_src (𝟙 F) 0, map_zero_hom]; rfl
 
+open ZeroObject in
 
 section Products
 
@@ -242,6 +255,7 @@ instance instModule (F : X.Modules) (U : X.Opens) : Module R (sectionsOn F U) :=
   { WithAction.instModule (action F U) R with
     smul := fun r x ↦ action F U (algebraMap R Γ(X, ⊤) r) x }
 
+variable {R} in
 
 lemma toΓ_smul {F : X.Modules} {U : X.Opens} (r : R) (x : sectionsOn F U) :
     toΓ F U (r • x) = restrictGlobal X U (algebraMap R Γ(X, ⊤) r) • toΓ F U x := rfl
@@ -266,15 +280,19 @@ variable {F G H : X.Modules} {U V W : X.Opens}
 @[simp] lemma toΓ_res (h : V ≤ U) (x : sectionsOn F U) :
     toΓ F V (res R F h x) = F.presheaf.map (homOfLE h).op (toΓ F U x) := rfl
 
+variable (F U) in
 
 @[simp] lemma map_id : map R (𝟙 F) U = LinearMap.id := rfl
 
+variable (U) in
 
 lemma map_comp (φ : F ⟶ G) (ψ : G ⟶ H) : map R (φ ≫ ψ) U = map R ψ U ∘ₗ map R φ U := rfl
 
+variable (U) in
 
 lemma map_add_hom (φ ψ : F ⟶ G) : map R (φ + ψ) U = map R φ U + map R ψ U := rfl
 
+variable (F U) in
 
 @[simp] lemma res_refl : res R F (le_refl U) = LinearMap.id := by
   ext x
@@ -282,6 +300,7 @@ lemma map_add_hom (φ ψ : F ⟶ G) : map R (φ + ψ) U = map R φ U + map R ψ 
   rw [toΓ_res, show homOfLE (le_refl U) = 𝟙 U from rfl, op_id, CategoryTheory.Functor.map_id]
   rfl
 
+variable (F) in
 
 lemma res_comp_res (h : V ≤ U) (h' : W ≤ V) : res R F h' ∘ₗ res R F h = res R F (h'.trans h) := by
   ext x
@@ -294,12 +313,14 @@ lemma res_map (φ : F ⟶ G) (h : V ≤ U) (x : sectionsOn F U) :
     res R G h (map R φ U x) = map R φ V (res R F h x) :=
   (ConcreteCategory.congr_hom (φ.mapPresheaf.naturality (homOfLE h).op) x).symm
 
+variable (F U) in
 
 def equivOfSMul [Module R Γ(F, U)]
     (h : ∀ (r : R) (x : Γ(F, U)), r • x = restrictGlobal X U (algebraMap R Γ(X, ⊤) r) • x) :
     sectionsOn F U ≃ₗ[R] Γ(F, U) :=
   { toΓ F U with map_smul' := fun r x ↦ (toΓ_smul r x).trans (h r _).symm }
 
+variable (F) in
 
 def topEquiv : sectionsOn F ⊤ ≃ₗ[Γ(X, ⊤)] Γ(F, ⊤) :=
   equivOfSMul Γ(X, ⊤) F ⊤ fun r x ↦ by rw [restrictGlobal_top]; rfl
@@ -328,6 +349,7 @@ lemma toΓ_zeroEquiv (x : cohOn F U 0) :
     sectionsOn.toΓ F U (zeroEquiv R F U x) =
       SiteCoh.zeroEquiv ((toAbSheaf X).obj F) U (toH' F U 0 x) := rfl
 
+variable (F U) in
 
 def zeroEquivSpec {A : CommRingCat.{u}} (F : (Spec A).Modules) (U : (Spec A).Opens) :
     cohOn F U 0 ≃ₗ[A] Γ(F, U) :=

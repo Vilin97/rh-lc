@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open MvPolynomial
 
@@ -12,12 +8,14 @@ section Eval
 
 variable {k A : Type*} [CommSemiring k] [Semiring A] [Algebra k A] {σ ι κ : Type*}
 
-
 open scoped IsMulCommutative in
+
 noncomputable def commEval (k : Type*) [CommSemiring k] [Algebra k A] (a : σ → A)
     (ha : ∀ i j, Commute (a i) (a j)) : MvPolynomial σ k →ₐ[k] A :=
   haveI : IsMulCommutative (Algebra.adjoin k (Set.range a)) :=
-    Algebra.isMulCommutative_adjoin k (by rintro _ ⟨i, rfl⟩ _ ⟨j, rfl⟩ _; exact ha i j)
+    Algebra.isMulCommutative_adjoin k (by
+      rintro _ ⟨i, rfl⟩ _ ⟨j, rfl⟩ _
+      exact ha i j)
   (Algebra.adjoin k (Set.range a)).val.comp
     (aeval fun i => (⟨a i, Algebra.subset_adjoin ⟨i, rfl⟩⟩ : Algebra.adjoin k (Set.range a)))
 
@@ -85,8 +83,8 @@ theorem multiChoose_mul_sub (n β : σ →₀ ℕ) (i : σ) :
   calc _ = (n i).choose (β i) * (n i - β i) * multiChoose n (β.erase i) := by ring
     _ = _ := by rw [← this]; ring
 
-
 variable (R) in
+
 noncomputable def dividedDeriv (β : σ →₀ ℕ) : Module.End R (MvPolynomial σ R) :=
   (basisMonomials σ R).constr R fun n => multiChoose n β • monomial (n - β) 1
 
@@ -201,11 +199,11 @@ theorem rowContraction_X_inl_mul (γ : ι → κ → R) (i i' : ι) (P : MvPolyn
 
 variable [Fintype ι]
 
+open scoped Classical in
 
 noncomputable def dividedContraction (γ : ι → κ → R) (n : ℕ) :
-    Module.End R (MvPolynomial (ι ⊕ κ) R) := by
-  classical
-  exact ∑ α ∈ (Finset.univ : Finset ι).finsuppAntidiag n,
+    Module.End R (MvPolynomial (ι ⊕ κ) R) :=
+  ∑ α ∈ (Finset.univ : Finset ι).finsuppAntidiag n,
     commEval R (rowContraction γ) (commute_rowContraction γ) (monomial α 1) *
       dividedDeriv R (α.mapDomain Sum.inl)
 

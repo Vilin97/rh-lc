@@ -1,14 +1,10 @@
-module
-
-public import Mathlib
-
-@[expose] public section
-
+import Mathlib
 open Matrix
 open scoped ComplexOrder
 
 namespace GlobalTheory
 
+open scoped MatrixOrder in
 
 theorem posDef_exists_invertible_conjTranspose_mul_self {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ)
     (hP : P.PosDef) :
@@ -70,8 +66,8 @@ theorem hermitian_involution_unitary_blocks {n : ℕ} (t : Matrix (Fin n) (Fin n
       ext a b
       simp [Matrix.mul_apply]
     rw [h1, hD, submatrix_diagonal_equiv]
-    ext (a | a) (b | b) <;> simp [diagonal_apply, he1, he2, one_apply]
-    all_goals (split_ifs <;> simp)
+    ext (a | a) (b | b) <;> simp [diagonal_apply, he1, he2, Matrix.one_apply]
+    split_ifs <;> simp
 
 theorem exists_basis_adapted_to_cartan_involution :
     ∀ (n : ℕ) (G s : Matrix (Fin n) (Fin n) ℂ), s * s = 1 → sᴴ * G * s = G → (G * s).PosDef →

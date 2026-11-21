@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 namespace GlobalTheory.ClosedResidueExt
 
@@ -106,7 +102,8 @@ private lemma isUnit_one_add_algebraMap_mul_of_not_isUnit [IsLocalRing W] {π : 
     (by rwa [Ne, Ideal.span_singleton_eq_top])
   haveI : Algebra.IsIntegral W N :=
     ⟨fun x => (isIntegral_algHom_iff N.val Subtype.val_injective).1 (hN x x.2)⟩
-  have hmax : (m.comap (algebraMap W N)).IsMaximal := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal m
+  have hmax : (m.comap (algebraMap W N)).IsMaximal :=
+    Ideal.isMaximal_under_of_isIntegral_of_isMaximal m
   have hc : m.comap (algebraMap W N) = IsLocalRing.maximalIdeal W := IsLocalRing.eq_maximalIdeal hmax
   have hπm : algebraMap W N π ∈ m := by
     rw [← Ideal.mem_comap, hc]; exact hπ
@@ -199,6 +196,8 @@ private lemma eq_pow_mul_unit_of_mem_adjoin [IsLocalRing W] {π : W}
     exact N.mul_mem hvN (memN B)
   · rw [← hg, hgeq, map_mul, map_pow, aeval_C, IsScalarTower.algebraMap_apply W M Ω]
 
+open Polynomial IsLocalRing in
+variable {W Ω : Type} [CommRing W] [Field Ω] [Algebra W Ω] in
 
 theorem _root_.GlobalTheory.ClosedResidueExt.exists_unramified_ext (W : Type) [CommRing W] [IsDomain W]
     [IsDiscreteValuationRing W] {π : W} (hπ : Irreducible π) :
@@ -282,6 +281,8 @@ theorem _root_.GlobalTheory.ClosedResidueExt.exists_unramified_ext (W : Type) [C
     exact Subtype.ext h
   rw [← hfp, Polynomial.eval_map, Polynomial.eval₂_hom, hev, map_zero]
 
+open Polynomial IsLocalRing in
+variable {W Ω : Type} [CommRing W] [Field Ω] [Algebra W Ω] in
 
 theorem _root_.GlobalTheory.ClosedResidueExt.exists_integral_ext_isAlgClosed_residueField : ∀ (W : Type) [CommRing W] [IsDomain W]
     [IsDiscreteValuationRing W] [IsAdicComplete (IsLocalRing.maximalIdeal W) W] [CharZero W],

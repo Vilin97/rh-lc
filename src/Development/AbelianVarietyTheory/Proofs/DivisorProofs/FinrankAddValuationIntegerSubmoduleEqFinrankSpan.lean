@@ -1,12 +1,7 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.MultiplicationKernelIdentity
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PreEig
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsSaturatedSubmoduleIffExistsIsComplOfValuationR
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.MultiplicationKernelIdentity
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PreEig
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsSaturatedSubmoduleIffExistsIsComplOfValuationR
 open GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity GlobalTheory.HermitianPreEigenvalues Polynomial Module
 
 namespace GlobalTheory
@@ -22,7 +17,7 @@ theorem finrank_addValuationInteger_submodule_eq_finrank_span : ∀ (C : Type) [
   let L : X →ₗ[Int0 v] (Fin N → C) := ι ∘ₗ X.subtype
   have hL : Function.Injective L := hι.comp Subtype.val_injective
   haveI : Module.IsTorsionFree (Int0 v) X := inferInstance
-  haveI : Module.Free (Int0 v) X := free_of_finite_of_isTorsionFree_of_valuationRing (Int0 v) X
+  haveI : Module.Free (Int0 v) X := free_of_finite_of_isTorsionFree_of_valuationRing
   let b := Module.Free.chooseBasis (Int0 v) X
   have hli : LinearIndependent (Int0 v) (L ∘ b) :=
     b.linearIndependent.map' L (LinearMap.ker_eq_bot.mpr hL)

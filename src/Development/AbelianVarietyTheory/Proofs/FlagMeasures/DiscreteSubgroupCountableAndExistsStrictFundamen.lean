@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open MeasureTheory Set TopologicalSpace
 
@@ -30,15 +26,16 @@ theorem discreteSubgroup_countable_and_exists_strict_fundamentalDomain : ∀ {G 
   let S : Set (Set G) := {W | W ∈ countableBasis G ∧ P W}
   have hcover : ∀ g : G, ∃ W ∈ S, g ∈ W := by
     intro g
-    let N : Set G := (fun x => x * g⁻¹) ⁻¹' (V ∩ V⁻¹)
-    have hNo : IsOpen N := (hVo.inter hVo.inv).preimage (continuous_mul_const _)
+    let N : Set G := (fun x => x * g⁻¹) ⁻¹' (V ∩ (fun x => x⁻¹) ⁻¹' V)
+    have hNo : IsOpen N :=
+      (hVo.inter (hVo.preimage continuous_inv)).preimage (continuous_mul_const g⁻¹)
     have hgN : g ∈ N := by simp [N, hV1]
     obtain ⟨W, hWb, hgW, hWN⟩ := (isBasis_countableBasis G).exists_subset_of_mem_open hgN hNo
     refine ⟨W, ⟨hWb, ?_⟩, hgW⟩
     intro x hx y hy hxy
     have hx' := hWN hx
     have hy' := hWN hy
-    simp only [N, mem_preimage, mem_inter_iff, Set.mem_inv] at hx' hy'
+    simp only [N, mem_preimage, mem_inter_iff] at hx' hy'
     have h1 : (x * g⁻¹) * (y * g⁻¹)⁻¹ ∈ U := hVU _ hx'.1 _ hy'.2
     have h2 : (x * g⁻¹) * (y * g⁻¹)⁻¹ = x * y⁻¹ := by group
     rw [h2] at h1

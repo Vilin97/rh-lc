@@ -38,7 +38,7 @@ theorem mvPowerSeries_eq_zero_of_pderiv_mem_span (S : Set (MvPowerSeries σ R))
         have h1 := ih _ (hd F hF i) m' (by
           rw [map_add (f := _), Finsupp.degree_single] at hm; omega)
         rw [MvPowerSeries.coeff_pderiv, add_comm m', mul_comm, ← Nat.cast_succ, ← nsmul_eq_mul,
-          smul_eq_zero_iff_right (Nat.succ_ne_zero _)] at h1
+          nsmul_eq_zero_iff_right (Nat.succ_ne_zero _)] at h1
         exact h1
       | zero => intro m _; simp
       | add F G _ _ hF hG => intro m hm; rw [map_add (f := _), hF m hm, hG m hm, add_zero]
@@ -274,6 +274,7 @@ theorem taylorDir_eq_zero_iff (hu : Submodule.span ℂ (Set.range u) = ⊤)
   exact h2.unique hasSum_zero
 
 
+variable (W) in
 def analyticAtZero : Subalgebra ℂ (W → ℂ) where
   carrier := {f | AnalyticAt ℂ f 0}
   mul_mem' hf hg := hf.mul hg

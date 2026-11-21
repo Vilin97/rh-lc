@@ -81,8 +81,8 @@ theorem aeval_eq_zero_of_mem_elimIdeal {G : Type*} [CommRing G] [IsDomain G] [Al
     refine incidenceIdeal_le.2 ⟨fun g hg => ?_, fun i => ?_⟩
     · simpa [ev, RingHom.mem_ker] using hξ g hg
     set_option synthInstance.maxHeartbeats 100000 in
-      · rw [RingHom.mem_ker, genericForm_eq, map_sum, ← ht i]
-      exact Finset.sum_congr rfl fun j _ => by simp [ev, mul_comm]
+      · rw [RingHom.mem_ker, genericForm_eq, map_sum]
+        simpa [ev, mul_comm] using ht i
   have h := hle (hm j)
   have h2 : ev (map C f) = aeval t f := by
     have : ev.comp (map C) = (aeval t : _ →ₐ[K] G).toRingHom := by
@@ -94,10 +94,10 @@ theorem aeval_eq_zero_of_mem_elimIdeal {G : Type*} [CommRing G] [IsDomain G] [Al
 
 theorem rename_mem_elimIdeal (e : β → β') {p : Ideal (MvPolynomial σ K)}
     {f : MvPolynomial (β × σ) K} (hf : f ∈ elimIdeal (β := β) p) :
-    rename (Prod.map e id) f ∈ elimIdeal β' p := by
+    rename (Prod.map e id) f ∈ elimIdeal (β := β') p := by
   obtain ⟨m, hm⟩ := hf
   refine ⟨m, fun j => ?_⟩
-  have hle : incidenceIdeal (β := β) p ≤ (incidenceIdeal β' p).comap
+  have hle : incidenceIdeal (β := β) p ≤ (incidenceIdeal (β := β') p).comap
       (rename (Prod.map e id : β × σ → β' × σ) : _ →ₐ[MvPolynomial σ K] _) := by
     refine incidenceIdeal_le.2 ⟨fun g hg => ?_, fun i => ?_⟩
     · simpa [Ideal.mem_comap] using C_mem_incidenceIdeal hg
@@ -107,7 +107,7 @@ theorem rename_mem_elimIdeal (e : β → β') {p : Ideal (MvPolynomial σ K)}
   rwa [Ideal.mem_comap, map_mul, rename_C, ← map_rename] at this
 
 theorem map_rename_elimIdeal (e : β ≃ β') (p : Ideal (MvPolynomial σ K)) :
-    (elimIdeal (β := β) p).map (rename (Prod.map e id) : _ →ₐ[K] _) = elimIdeal β' p := by
+    (elimIdeal (β := β) p).map (rename (Prod.map e id) : _ →ₐ[K] _) = elimIdeal (β := β') p := by
   refine le_antisymm (Ideal.map_le_iff_le_comap.2 fun f hf => rename_mem_elimIdeal e hf) ?_
   intro f hf
   have := Ideal.mem_map_of_mem (rename (Prod.map e id : β × σ → β' × σ) : _ →ₐ[K] _)
@@ -384,7 +384,7 @@ theorem exists_isWeightedHomogeneous_of_dvd (w : τ → M) {f : MvPolynomial τ 
   have hne : weightedHomogeneousComponent w (Finsupp.weight w d) f ≠ 0 := by
     intro h0
     have := coeff_weightedHomogeneousComponent (w := w) (Finsupp.weight w d) f d
-    rw [h0, if_pos rfl, coeff_zero] at this
+    rw [h0, if_pos rfl, AddMonoidAlgebra.coeff_zero] at this
     exact hd this.symm
   have hle : (weightedHomogeneousComponent w (Finsupp.weight w d) f).totalDegree ≤
       f.totalDegree := by

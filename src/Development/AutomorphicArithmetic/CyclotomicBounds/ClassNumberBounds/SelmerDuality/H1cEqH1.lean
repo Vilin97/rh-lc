@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 namespace KStar.Selmer
 
@@ -14,7 +10,6 @@ variable {R : Type*} [CommRing R] {m n : Type*}
 
 def minorIdeal (k : ℕ) (A : Matrix m n R) : Ideal R :=
   Ideal.span {x | ∃ (r : Fin k → m) (c : Fin k → n), x = (A.submatrix r c).det}
-
 
 end Minors
 

@@ -30,6 +30,8 @@ def projDeg (x : κ → Ω) (e : Fin (D + 1) → κ) : ℕ :=
 
 
 def scaleOff (e : Fin (D + 1) → κ) (m : ℕ) (x : κ → Ω) : κ → Ω :=
-  fun i => if i ∈ Set.range e then x i else (m : Ω) * x i
+  by
+    classical
+    exact fun i => if i ∈ Set.range e then x i else (m : Ω) * x i
 
 end ReciprocityTheory.ChartRestriction.G.ArakelovGeometry

@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open NumberField Module
 open scoped NumberTheorySymbols
@@ -155,11 +151,12 @@ theorem ncard_dvd {J : Ideal (𝓞 K)} (hJ : J ≠ ⊥) (k : ℕ) :
       exact ⟨I', Nat.eq_of_mul_eq_mul_left hN h1, rfl⟩
     · rintro ⟨I', h1, rfl⟩
       exact ⟨by rw [map_mul, h1], dvd_mul_right _ _⟩
-  · convert Set.ncard_empty (Ideal (𝓞 K))
-    ext I
-    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
-    rintro rfl h'
-    exact h (map_dvd _ h')
+  · have hEmpty : {I : Ideal (𝓞 K) | Ideal.absNorm I = k ∧ J ∣ I} = ∅ := by
+      ext I
+      simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_and]
+      rintro rfl h'
+      exact h (map_dvd _ h')
+    rw [hEmpty, Set.ncard_empty]
 
 theorem int_dvd_of_mem {p : ℕ} {P : Ideal (𝓞 K)} (hP : P.under ℤ = .span {(p : ℤ)}) (x : ℤ) :
     (x : 𝓞 K) ∈ P ↔ (p : ℤ) ∣ x := by

@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open scoped TensorProduct
 
@@ -127,11 +123,13 @@ def mk : ↥(I ^ a • ⊤ : Submodule R M) →ₗ[R] powGr I M a := Submodule.m
 
 theorem mk_surjective : Function.Surjective (mk I M a) := Submodule.mkQ_surjective _
 
+variable {I M a} in
 
 theorem mk_eq_zero (x : ↥(I ^ a • ⊤ : Submodule R M)) :
     mk I M a x = 0 ↔ (x : M) ∈ (I ^ (a + 1) • ⊤ : Submodule R M) :=
   Submodule.Quotient.mk_eq_zero _
 
+variable {I M a} in
 
 theorem pow_succ_smul_le : (I ^ (a + 1) • ⊤ : Submodule R M) ≤ I ^ a • ⊤ :=
   Submodule.smul_mono_left (Ideal.pow_le_pow_right (Nat.le_succ a))
@@ -145,6 +143,7 @@ theorem isTorsionBySet : Module.IsTorsionBySet R (powGr I M a) I := by
 
 instance module : Module (R ⧸ I) (powGr I M a) := (isTorsionBySet I M a).module
 
+variable {I M a} in
 
 instance isScalarTower {A : Type*} [Semiring A] [SMul A R] [IsScalarTower A R R] [Module A M]
     [IsScalarTower A R M] : IsScalarTower A (R ⧸ I) (powGr I M a) where
@@ -152,6 +151,7 @@ instance isScalarTower {A : Type*} [Semiring A] [SMul A R] [IsScalarTower A R R]
     obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective r
     exact smul_assoc s r x
 
+variable {M} in
 
 def map {N : Type*} [AddCommGroup N] [Module R N] (g : M →ₗ[R] N) :
     powGr I M a →ₗ[R ⧸ I] powGr I N a :=
@@ -160,21 +160,23 @@ def map {N : Type*} [AddCommGroup N] [Module R N] (g : M →ₗ[R] N) :
       (g.restrict fun _ hx => Submodule.smul_top_le_comap_smul_top (I ^ a) g hx)
       fun _ hx => Submodule.smul_top_le_comap_smul_top (I ^ (a + 1)) g hx
 
-
+variable {M} in
 
 def toQuot : powGr I M a →ₗ[R] M ⧸ (I ^ (a + 1) • ⊤ : Submodule R M) :=
   Submodule.mapQ _ _ (Submodule.subtype _) le_rfl
 
+variable {I M a} in
 
 @[simp] theorem toQuot_mk (x : ↥(I ^ a • ⊤ : Submodule R M)) :
-    toQuot I M a (mk I M a x) = Submodule.Quotient.mk (x : M) := rfl
+    toQuot (I := I) (M := M) (a := a) (mk I M a x) = Submodule.Quotient.mk (x : M) := rfl
 
-theorem toQuot_injective : Function.Injective (toQuot I M a) := by
+theorem toQuot_injective : Function.Injective (toQuot (I := I) (M := M) (a := a)) := by
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
   obtain ⟨x, rfl⟩ := mk_surjective I M a x
   rwa [toQuot_mk, Submodule.Quotient.mk_eq_zero, ← mk_eq_zero] at hx
 
+variable {I a} in
 
 def mulElem (r : R) (hr : r ∈ I ^ a) : (M ⧸ (I • ⊤ : Submodule R M)) →ₗ[R ⧸ I] powGr I M a :=
   LinearMap.extendScalarsOfSurjective Ideal.Quotient.mk_surjective <|
@@ -185,9 +187,10 @@ def mulElem (r : R) (hr : r ∈ I ^ a) : (M ⧸ (I • ⊤ : Submodule R M)) →
         rw [pow_succ, mul_smul]
         exact Submodule.smul_mem_smul hr hx
 
+variable {I M a} in
 
 theorem mulElem_mk (r : R) (hr : r ∈ I ^ a) (x : M) :
-    mulElem I M a r hr (Submodule.Quotient.mk x) =
+    mulElem M r hr (Submodule.Quotient.mk x) =
       mk I M a ⟨r • x, Submodule.smul_mem_smul hr trivial⟩ := rfl
 
 end powGr
@@ -208,13 +211,13 @@ variable (M : Type*) [AddCommGroup M] [Module R M]
 noncomputable def monoToPowGr (f : ι → R) (a : ℕ) :
     (MonoDeg ι a → M ⧸ (Ideal.span (Set.range f) • ⊤ : Submodule R M)) →ₗ[R ⧸
       Ideal.span (Set.range f)] powGr (Ideal.span (Set.range f)) M a :=
-  ∑ α : MonoDeg ι a, powGr.mulElem _ M a (monoVal f α.1) (monoVal_mem_pow f α) ∘ₗ LinearMap.proj α
+  ∑ α : MonoDeg ι a, powGr.mulElem M (monoVal f α.1) (monoVal_mem_pow f α) ∘ₗ LinearMap.proj α
 
 variable {M}
 
 theorem monoToPowGr_apply (f : ι → R) (a : ℕ)
     (c : MonoDeg ι a → M ⧸ (Ideal.span (Set.range f) • ⊤ : Submodule R M)) :
-    monoToPowGr M f a c = ∑ α, powGr.mulElem _ M a (monoVal f α.1) (monoVal_mem_pow f α) (c α) := by
+    monoToPowGr M f a c = ∑ α, powGr.mulElem M (monoVal f α.1) (monoVal_mem_pow f α) (c α) := by
   simp only [monoToPowGr, LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.proj_apply]
 
 theorem monoToPowGr_mk (f : ι → R) (a : ℕ) (c : MonoDeg ι a → M) :
@@ -228,6 +231,7 @@ theorem monoToPowGr_mk (f : ι → R) (a : ℕ) (c : MonoDeg ι a → M) :
   ext
   simp
 
+variable (M) in
 
 theorem monoToPowGr_surjective (f : ι → R) (a : ℕ) : Function.Surjective (monoToPowGr M f a) := by
   intro x
@@ -242,7 +246,7 @@ theorem monoToPowGr_injective_iff (f : ι → R) (a : ℕ) :
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   constructor
   · intro h c hc α
-    have := h _ ((monoToPowGr_mk f a c).trans ((powGr.mk_eq_zero _ M a _).mpr hc))
+    have := h _ ((monoToPowGr_mk f a c).trans ((powGr.mk_eq_zero _).mpr hc))
     exact (Submodule.Quotient.mk_eq_zero _).mp (congrFun this α)
   · intro h c hc
     choose d hd using fun α => Submodule.Quotient.mk_surjective _ (c α)
@@ -257,7 +261,7 @@ theorem isQuasiRegularSeq_iff_injective (f : ι → R) :
 theorem isQuasiRegularSeq_iff_bijective (f : ι → R) :
     IsQuasiRegularSeq M f ↔ ∀ a, Function.Bijective (monoToPowGr M f a) :=
   (isQuasiRegularSeq_iff_injective f).trans <| forall_congr' fun a =>
-    ⟨fun h => ⟨h, monoToPowGr_surjective (M := M) f a⟩, fun h => h.1⟩
+    ⟨fun h => ⟨h, monoToPowGr_surjective M f a⟩, fun h => h.1⟩
 
 theorem isQuasiRegularSeq_self_iff (f : ι → R) :
     IsQuasiRegularSeq R f ↔ ∀ (a : ℕ) (p : MvPolynomial ι R), p.IsHomogeneous a →
@@ -396,7 +400,8 @@ theorem monoToPowGr_injective_iff_lTensor (f : ι → R) (a : ℕ) :
       LinearEquiv.piCongrRight fun _ => TensorProduct.tensorQuotEquivQuotSMul M I
   let e₂ := TensorProduct.tensorQuotEquivQuotSMul M (I ^ (a + 1))
   have hsq : e₂.toLinearMap ∘ₗ (monoToQuotPow f a).lTensor M =
-      (powGr.toQuot I M a ∘ₗ (monoToPowGr M f a).restrictScalars R) ∘ₗ e₁.toLinearMap := by
+      (powGr.toQuot (I := I) (M := M) (a := a) ∘ₗ
+        (monoToPowGr M f a).restrictScalars R) ∘ₗ e₁.toLinearMap := by
     refine TensorProduct.ext' fun m c => ?_
     choose d hd using fun α => Ideal.Quotient.mk_surjective (c α)
     obtain rfl : c = fun α => Ideal.Quotient.mk I (d α) := funext fun α => (hd α).symm
@@ -410,9 +415,10 @@ theorem monoToPowGr_injective_iff_lTensor (f : ι → R) (a : ℕ) :
     refine (TensorProduct.tensorQuotEquivQuotSMul_tmul_mk _ m _).trans ?_
     simp [Finset.sum_smul, mul_smul]
   have hfun : e₂ ∘ (monoToQuotPow f a).lTensor M =
-      (powGr.toQuot I M a ∘ monoToPowGr M f a) ∘ e₁ := congrArg DFunLike.coe hsq
+      (powGr.toQuot (I := I) (M := M) (a := a) ∘ monoToPowGr M f a) ∘ e₁ :=
+    congrArg DFunLike.coe hsq
   rw [← e₂.injective.of_comp_iff, hfun, Function.Injective.of_comp_iff' _ e₁.bijective,
-    (powGr.toQuot_injective I M a).of_comp_iff]
+    (powGr.toQuot_injective (I := I) (M := M) (a := a)).of_comp_iff]
 
 theorem isQuasiRegularSeq_iff_lTensor (f : ι → R) :
     IsQuasiRegularSeq M f ↔ ∀ a, Function.Injective ((monoToQuotPow f a).lTensor M) :=

@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 noncomputable section
 
@@ -58,6 +54,7 @@ theorem norm_natCast_le_of_dvd {a b : ℕ} (h : a ∣ b) : ‖(b : K)‖ ≤ ‖
   rw [Nat.cast_mul, norm_mul]
   exact mul_le_of_le_one_right (norm_nonneg _) (IsUltrametricDist.norm_natCast_le_one K c)
 
+variable (K) in
 
 def wS (e n : ℕ) : ℝ := ‖((n / e).factorial : K)‖
 
@@ -169,6 +166,7 @@ theorem mem_R {l : ℕ} {k : ℝ} {f : K⟦X⟧} :
     f ∈ R O K l k ↔ Tendsto (fun n => ‖coeff n f‖ * rad l k ^ n) atTop (𝓝 0) :=
   PowerSeries.isRestricted_iff' _ _
 
+variable {K} in
 
 def normR (l : ℕ) (k : ℝ) (f : K⟦X⟧) : ℝ := ⨆ n, ‖coeff n f‖ * rad l k ^ n
 
@@ -232,6 +230,7 @@ instance (B : Subalgebra O K⟦X⟧) [HasK B] : IsScalarTower O K B :=
 
 instance (B : Subalgebra O K⟦X⟧) (s : B) [HasU B] : HasU (away B s) := ⟨le_away B s HasU.X_mem⟩
 
+variable (K) in
 
 def E (l e : ℕ) : K⟦X⟧ := X ^ e + (l : K⟦X⟧)
 
@@ -254,14 +253,16 @@ abbrev invE (l e : ℕ) (B : Subalgebra O K⟦X⟧) [HasU B] : Subalgebra O K⟦
 theorem away_mono {B B' : Subalgebra O K⟦X⟧} (h : B ≤ B') {s : B} {s' : B'}
     (hs : (s : K⟦X⟧) = s') : away B s ≤ away B' s' := fun _ ⟨n, hn⟩ => ⟨n, hs ▸ h hn⟩
 
+variable (K) in
 
 def frob (l : ℕ) [Fact l.Prime] : K⟦X⟧ →ₐ[K] K⟦X⟧ :=
   PowerSeries.expand l (Fact.out : l.Prime).ne_zero
 
+variable (K) in
 
-def N : Derivation K K⟦X⟧ K⟦X⟧ := (X : K⟦X⟧) • PowerSeries.derivative K
+def N : Derivation K K⟦X⟧ K⟦X⟧ := (X : K⟦X⟧) • PowerSeries.derivative (R := K)
 
-theorem N_apply (f : K⟦X⟧) : N K f = X * PowerSeries.derivative K f := rfl
+theorem N_apply (f : K⟦X⟧) : N K f = X * PowerSeries.derivative f := rfl
 
 theorem coeff_N (f : K⟦X⟧) (n : ℕ) : coeff n (N K f) = n * coeff n f := by
   cases n with
@@ -378,16 +379,16 @@ theorem A_le_R (l : ℕ) [Fact l.Prime] {k : ℝ} (hk : 0 < k) : A O K ≤ R O K
     (tendsto_pow_atTop_nhds_zero_of_lt_one (rad_nonneg l k) (rad_lt_one l hk))
 
 theorem norm_coeff_derivative_le (f : K⟦X⟧) (n : ℕ) :
-    ‖coeff n (PowerSeries.derivative K f)‖ ≤ ‖coeff (n + 1) f‖ := by
+    ‖coeff n (PowerSeries.derivative f)‖ ≤ ‖coeff (n + 1) f‖ := by
   rw [coeff_derivative, norm_mul]
   exact mul_le_of_le_one_right (norm_nonneg _)
     (by exact_mod_cast IsUltrametricDist.norm_natCast_le_one K (n + 1))
 
-theorem derivative_mem_A {f : K⟦X⟧} (hf : f ∈ A O K) : PowerSeries.derivative K f ∈ A O K :=
+theorem derivative_mem_A {f : K⟦X⟧} (hf : f ∈ A O K) : PowerSeries.derivative f ∈ A O K :=
   fun n => (norm_coeff_derivative_le f n).trans (hf _)
 
 theorem derivative_mem_R (l : ℕ) [Fact l.Prime] {k : ℝ} {f : K⟦X⟧} (hf : f ∈ R O K l k) :
-    PowerSeries.derivative K f ∈ R O K l k := by
+    PowerSeries.derivative f ∈ R O K l k := by
   have h := ((mem_R.1 hf).comp (tendsto_add_atTop_nat 1)).mul_const (rad l k)⁻¹
   rw [zero_mul] at h
   refine mem_R.2 <| squeeze_zero
@@ -397,8 +398,8 @@ theorem derivative_mem_R (l : ℕ) [Fact l.Prime] {k : ℝ} {f : K⟦X⟧} (hf :
     _ = _ := by simp only [Function.comp]; field_simp; ring
 
 theorem derivative_mem_S {e : ℕ} {f : K⟦X⟧} (hf : f ∈ S O K e) :
-    PowerSeries.derivative K f ∈ S O K e := by
-  have key : ∀ n, ‖coeff n (PowerSeries.derivative K f)‖ * wS K e n ≤
+    PowerSeries.derivative f ∈ S O K e := by
+  have key : ∀ n, ‖coeff n (PowerSeries.derivative f)‖ * wS K e n ≤
       ‖coeff (n + 1) f‖ * wS K e (n + 1) := fun n => by
     rw [coeff_derivative, norm_mul, mul_assoc]
     refine mul_le_mul_of_nonneg_left ?_ (norm_nonneg _)
@@ -420,8 +421,8 @@ theorem derivative_mem_S {e : ℕ} {f : K⟦X⟧} (hf : f ∈ S O K e) :
 
 omit [IsUltrametricDist K] [IsUnitBall O K] in
 theorem derivative_mem_away {B : Subalgebra O K⟦X⟧} (s : B)
-    (hB : ∀ f ∈ B, PowerSeries.derivative K f ∈ B) {f : K⟦X⟧} (hf : f ∈ away B s) :
-    PowerSeries.derivative K f ∈ away B s := by
+    (hB : ∀ f ∈ B, PowerSeries.derivative f ∈ B) {f : K⟦X⟧} (hf : f ∈ away B s) :
+    PowerSeries.derivative f ∈ away B s := by
   obtain ⟨n, hn⟩ := hf
   refine ⟨n + 1, ?_⟩
   have h1 := B.mul_mem s.2 (hB _ hn)
@@ -433,7 +434,7 @@ theorem derivative_mem_away {B : Subalgebra O K⟦X⟧} (s : B)
   | succ n => simp only [smul_eq_mul, Nat.add_sub_cancel]; ring
 
 omit [IsUltrametricDist K] [IsUnitBall O K] in
-theorem N_mem {B : Subalgebra O K⟦X⟧} [HasU B] {f : K⟦X⟧} (hf : PowerSeries.derivative K f ∈ B) :
+theorem N_mem {B : Subalgebra O K⟦X⟧} [HasU B] {f : K⟦X⟧} (hf : PowerSeries.derivative f ∈ B) :
     N K f ∈ B := B.mul_mem HasU.X_mem hf
 
 omit [IsUltrametricDist K] [IsUnitBall O K] in
@@ -455,6 +456,7 @@ omit [IsUltrametricDist K] in
 theorem norm_natCast_eq (n : ℕ) : ‖(n : K)‖ = ‖(n : ℚ_[l])‖ := by
   rw [← map_natCast (algebraMap ℚ_[l] K), norm_algebraMap']
 
+omit [IsUltrametricDist K] in
 
 theorem norm_l : ‖(l : K)‖ = (l : ℝ)⁻¹ := by rw [norm_natCast_eq l, Padic.norm_p]
 
@@ -469,6 +471,7 @@ theorem l_ne_zero : (l : K) ≠ 0 := natCast_ne_zero' l (Fact.out : l.Prime).ne_
 omit [IsUltrametricDist K] in
 theorem norm_l_lt_one : ‖(l : K)‖ < 1 := by rw [norm_natCast_eq l]; exact Padic.norm_p_lt_one
 
+omit [IsUltrametricDist K] in
 
 theorem norm_pow_le_norm_factorial (m : ℕ) : ‖(l : K)‖ ^ m ≤ ‖(m.factorial : K)‖ := by
   rw [norm_l, norm_natCast_eq l, Padic.norm_eq_zpow_neg_valuation (by
@@ -480,7 +483,7 @@ theorem norm_factorial_le (m : ℕ) : ‖(m.factorial : K)‖ ≤ ‖(l : K)‖ 
   rw [← norm_pow, ← Nat.cast_pow]
   refine norm_natCast_le_of_dvd (Dvd.dvd.trans ?_
     (Nat.factorial_dvd_factorial (Nat.mul_div_le m l)))
-  rw [(by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (Nat.factorial_ne_zero _), padicValNat_factorial_mul]
+  rw [multiplicity_dvd_iff_le (Nat.factorial_ne_zero _), multiplicity_factorial_mul]
   omega
 
 theorem tendsto_wS (e : ℕ) [NeZero e] : Tendsto (wS K e) atTop (𝓝 0) :=
@@ -551,6 +554,7 @@ theorem invL_le {B B' : Subalgebra O K⟦X⟧} [HasK B'] (h : B ≤ B') : invL l
   rw [h2, ← map_pow, ← mul_assoc, ← map_mul, inv_mul_cancel₀ (pow_ne_zero _ (l_ne_zero l)),
     map_one, one_mul]
 
+variable (K) in
 
 def Ediv (e i : ℕ) : K⟦X⟧ := C ((i.factorial : K)⁻¹) * E K l e ^ i
 
@@ -580,10 +584,12 @@ theorem Ediv_mem_S (e : ℕ) [NeZero e] (i : ℕ) : Ediv K l e i ∈ S O K e := 
     inv_mul_cancel₀ (norm_ne_zero_iff.2 (hf k)), one_mul]
   exact h1
 
+variable (O K) in
 
 def FilPre (e j : ℕ) : Ideal (S O K e) :=
   Ideal.span {x | ∃ i, j ≤ i ∧ (x : K⟦X⟧) = Ediv K l e i}
 
+variable (O K) in
 
 def Fil (e j : ℕ) : Ideal (S O K e) :=
   ⨅ n : ℕ, (FilPre O K l e j ⊔ Ideal.span {(l : S O K e) ^ n})
@@ -605,8 +611,6 @@ theorem FilPre_le_Fil (e j : ℕ) : FilPre O K l e j ≤ Fil O K l e j :=
 theorem Ediv_mem_Fil (e : ℕ) [NeZero e] {j i : ℕ} (h : j ≤ i) :
     (⟨Ediv K l e i, Ediv_mem_S l e i⟩ : S O K e) ∈ Fil O K l e j :=
   FilPre_le_Fil l e j (Ideal.subset_span ⟨i, h, rfl⟩)
-
-
 
 end Padic
 

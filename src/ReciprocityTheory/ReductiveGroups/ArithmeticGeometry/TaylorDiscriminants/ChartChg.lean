@@ -44,7 +44,7 @@ def LogDerivSt : Prop :=
     comp1 ℓ (G.add (pt k (n := 2) d 0) (pt k (n := 2) d 1)) =
       comp1 ℓ (pt k (n := 2) d 0) + comp1 ℓ (pt k (n := 2) d 1) →
     ∀ (u : Fin d → k) (g : PS k 1 d),
-      Dof G.F u (ev (n := 1) ![ℓ] g) = ev (n := 1) ![ℓ] (∑ j, C (u j) * pderiv k ((0 : Fin 1), j) g)
+      Dof G.F u (ev (n := 1) ![ℓ] g) = ev (n := 1) ![ℓ] (∑ j, C (u j) * pderiv ((0 : Fin 1), j) g)
 
 def ConstSt : Prop :=
   ∀ (k : Type) [CommRing k] (d : ℕ) (φ : Pt k 1 d), (∀ i, constantCoeff (φ i) = 0) →

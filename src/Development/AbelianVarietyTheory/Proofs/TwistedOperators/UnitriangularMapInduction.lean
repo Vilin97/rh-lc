@@ -144,7 +144,7 @@ theorem _root_.GlobalTheory.UnipChange.smul_map_mulVec_pi (M : Matrix κ κ F) (
         ext
         simp [hu, det_mul]
       rw [hcomp, ← Measure.map_map (hmeas A) (hmeas B), hPB (Units.mk0 _ hB) rfl,
-        Measure.map_smul, hPA (Units.mk0 _ hA) rfl, smul_smul, hu', _root_.mul_inv_rev, map_mul,
+        Measure.map_smul (hmeas A).aemeasurable, hPA (Units.mk0 _ hA) rfl, smul_smul, hu', _root_.mul_inv_rev, map_mul,
         mul_comm]
   rw [key u hu]
   ext s hs
@@ -152,8 +152,6 @@ theorem _root_.GlobalTheory.UnipChange.smul_map_mulVec_pi (M : Matrix κ κ F) (
     ← ENNReal.coe_mul, ← map_mul, mul_inv_cancel, map_one, ENNReal.coe_one, one_mul]
 
 end Linear
-
-open GlobalTheory.IndefiniteRowSideFullHecke.AdjointRadical
 
 section Algebra
 

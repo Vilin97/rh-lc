@@ -1,10 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.OneAddXMulDerivativeBin
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DvdSubOfDvdSubX
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.OneAddXMulDerivativeBin
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DvdSubOfDvdSubX
 
 noncomputable section
 
@@ -118,16 +114,16 @@ def lvlPoly (l : ℕ) (O : Type) [CommRing O] (k : ℕ) : Polynomial O :=
 
 theorem coe_lvlPoly (l : ℕ) (O : Type) [CommRing O] (k : ℕ) :
     ((lvlPoly l O k : Polynomial O) : O⟦X⟧) = lvl l O k := by
-  have := map_sum (Polynomial.coeToPowerSeries.ringHom (R := O))
-    (fun i => ((1 + Polynomial.X : Polynomial O) ^ l ^ k) ^ i) (Finset.range l)
+  unfold lvlPoly GlobalTheory.CycFr.lvl
+  change Polynomial.coeToPowerSeries.ringHom _ = _
+  rw [map_sum]
   simp only [map_pow, map_add (f := _), map_one, Polynomial.coeToPowerSeries.ringHom_apply,
-    Polynomial.coe_X] at this
-  exact this
+    Polynomial.coe_X]
 
 theorem algHom_lvl (l : ℕ) {O R : Type} [CommRing O] [CommRing R] [Algebra O R] (k : ℕ)
     (f : O⟦X⟧ →ₐ[O] R) : f (lvl l O k) = ∑ i ∈ Finset.range l, (f (1 + X) ^ l ^ k) ^ i := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [lvl, map_sum, map_pow]
+    simp only [GlobalTheory.CycFr.lvl, map_sum, map_pow]
 
 theorem lvlPoly_monic {l : ℕ} (hl : l.Prime) (O : Type) [CommRing O] [Nontrivial O] (k : ℕ) :
     (lvlPoly l O k).Monic := by

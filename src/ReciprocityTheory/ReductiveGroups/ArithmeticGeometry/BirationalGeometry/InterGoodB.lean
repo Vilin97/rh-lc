@@ -84,9 +84,9 @@ theorem ratHom_mk (P : Ideal (MvPolynomial σ ℤ)) (f : MvPolynomial σ ℤ) :
     ratHom P (Ideal.Quotient.mk P f) = Ideal.Quotient.mk (qIdeal P) (qmap f) := rfl
 
 theorem ratHom_isLocalization (P : Ideal (MvPolynomial σ ℤ)) :
-    letI := (ratHom P).toAlgebra
-    IsLocalization (Algebra.algebraMapSubmonoid (MvPolynomial σ ℤ ⧸ P) (nonZeroDivisors ℤ))
-      (MvPolynomial σ ℚ ⧸ qIdeal P) := by
+    (letI := (ratHom P).toAlgebra
+     IsLocalization (Algebra.algebraMapSubmonoid (MvPolynomial σ ℤ ⧸ P) (nonZeroDivisors ℤ))
+       (MvPolynomial σ ℚ ⧸ qIdeal P)) := by
   let _ := (ratHom P).toAlgebra
   have hcast : ∀ n : ℤ, algebraMap (MvPolynomial σ ℤ ⧸ P) (MvPolynomial σ ℚ ⧸ qIdeal P)
       (algebraMap ℤ (MvPolynomial σ ℤ ⧸ P) n) = algebraMap ℚ (MvPolynomial σ ℚ ⧸ qIdeal P) n := by

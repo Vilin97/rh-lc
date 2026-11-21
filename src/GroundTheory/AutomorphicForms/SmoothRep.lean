@@ -65,6 +65,7 @@ theorem map_coinvariantsKer_le {W : Type*} [AddCommGroup W] [Module ℂ W]
   exact sub_mem_coinvariantsKer h.2 (f v)
 
 
+variable {ρ} in
 theorem coinvariantsKer_le_ker_of_invariant {W : Type*} [AddCommGroup W] [Module ℂ W]
     {K : Subgroup G} {f : V →ₗ[ℂ] W} (hf : ∀ k ∈ K, ∀ v, f (ρ k v) = f v) :
     coinvariantsKer ρ K ≤ LinearMap.ker f := by
@@ -311,6 +312,7 @@ theorem isCompl_fixedVectors_coinvariantsKer (hρ : IsSmooth ρ) (hKc : IsCompac
     codisjoint_fixedVectors_coinvariantsKer hρ hKc hKo⟩
 
 
+variable (ρ) in
 def fixedProj (hρ : IsSmooth ρ) (hKc : IsCompact (K : Set G)) (hKo : IsOpen (K : Set G)) :
     V →ₗ[ℂ] fixedVectors ρ K :=
   Submodule.projectionOnto _ _ (isCompl_fixedVectors_coinvariantsKer hρ hKc hKo)
@@ -358,7 +360,9 @@ theorem eq_of_invariant_of_eqOn {W : Type*} [AddCommGroup W] [Module ℂ W] {f g
   rw [e1, e2, h _ (fixedProj ρ hρ hKc hKo v).2]
 
 
+omit hρ hKc hKo in
 theorem fixedProj_map {W : Type*} [AddCommGroup W] [Module ℂ W] {σ : Representation ℂ G W}
+    (hKc : IsCompact (K : Set G)) (hKo : IsOpen (K : Set G))
     (hρ : IsSmooth ρ) (hσ : IsSmooth σ) (f : Representation.IntertwiningMap ρ σ) (v : V) :
     fixedProj σ hσ hKc hKo (f v) = fixedMap ρ f K (fixedProj ρ hρ hKc hKo v) := by
   rw [fixedProj_eq_iff, coe_fixedMap_apply, ← map_sub]

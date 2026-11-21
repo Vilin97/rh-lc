@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.DiagMemCongruencePairs
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.DiagMemCongruencePairs
 
 noncomputable section
 
@@ -25,6 +21,9 @@ private theorem one_le_inv_differentIdeal :
     (by simp [differentIdeal_ne_bot]) FractionalIdeal.coeIdeal_le_one
   simpa using h
 
+open NumberField Matrix in
+open scoped nonZeroDivisors in
+variable {E : Type} [Field E] [NumberField E] in
 
 theorem _root_.GlobalTheory.SgGlob.Iota.one_mem_dInv (j : ℕ) : (1 : E) ∈ _root_.GlobalTheory.SgGlob.dInv E j := by
   unfold _root_.GlobalTheory.SgGlob.dInv
@@ -36,14 +35,9 @@ section Pair
 
 variable {g : ℕ} {Λ : Submodule (𝓞 E) (Fin n → E)} {P P' : Matrix (Fin n) (Fin (r + 1)) E}
 
-
-
 end Pair
 
 section Gram
-
-
-
 
 end Gram
 

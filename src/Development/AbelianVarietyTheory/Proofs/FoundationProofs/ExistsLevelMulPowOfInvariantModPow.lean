@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DiagMod
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DiagMod
 
 open scoped MatrixGroups TensorProduct
 open Matrix GlobalTheory.KZ GlobalTheory.KZ.ES
@@ -84,7 +80,8 @@ theorem exists_invariant {H A : Type} [Group H] [CommGroup A] (s : H → A →* 
   choose g hg using hf
   have hwd : ∀ a b : H, (a : H ⧸ D) = b → s a f = s b f := by
     intro a b hab
-    have h1 : a * (a⁻¹ * b) * a⁻¹ ∈ D := Subgroup.Normal.conj_mem ‹_› _ (QuotientGroup.eq.1 hab) a
+    have h1 : a * (a⁻¹ * b) * a⁻¹ ∈ D :=
+      Subgroup.Normal.conj_mem (a⁻¹ * b) (QuotientGroup.eq.1 hab) a
     have h2 : b = (a * (a⁻¹ * b) * a⁻¹) * a := by group
     conv_rhs => rw [h2, hs, hD _ h1]
   set F : A := ∏ x : H ⧸ D, s x.out f with hF
@@ -116,6 +113,7 @@ end GlobalTheory.KZ.ES.CongruenceDescent
 
 namespace GlobalTheory.KZ.ES
 
+open CongruenceDescent CongruenceSubgroup in
 
 theorem exists_lev_mul_pow_of_invariant_mod_pow :
     ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (ε : Ω →+* ℂ) (X : Tower Ω ε), ∀ (l n M e : ℕ), l.Prime → 0 < M → ∀ f : X.Kˣ, Lev X (M ^ e) f → (∀ γ ∈ CongruenceSubgroup.Gamma M, ∃ g : X.Kˣ, X.sl (ofSL γ) (f : X.K) = f * (g : X.K) ^ (l ^ n)) → ∃ (k : ℕ) (h : X.Kˣ), Lev X (M * l ^ k) ((f : X.K) * (h : X.K) ^ (l ^ n)) := by

@@ -150,24 +150,24 @@ theorem fn_cst (k : K.K) (f : Hol F.V) {p : Tot I g} (hp : p ∈ K.W k) : (K.cst
 variable {K}
 
 theorem fn_sh {l : Λ} {k k' : K.K} (h : K.le l k' k) (f : Hol (K.W k)) {p : Tot I g} (hp : p ∈ K.W k') :
-    (sh h f).fn p = f.fn (F.shift l p) := by
+    (K.sh h f).fn p = f.fn (F.shift l p) := by
   exact Hol.fn_comap _ _ _ f hp
 
-theorem sh_refl {k : K.K} (h : K.le 0 k k) (f : Hol (K.W k)) : sh h f = f := by
+theorem sh_refl {k : K.K} (h : K.le 0 k k) (f : Hol (K.W k)) : K.sh h f = f := by
   refine Hol.ext_fn fun p hp ↦ ?_
   rw [fn_sh h f hp, F.shift_zero]
 
 theorem sh_sh {l m : Λ} {k k' k'' : K.K} (h : K.le l k' k) (h' : K.le m k'' k') (h'' : K.le (l + m) k'' k)
-    (f : Hol (K.W k)) : sh h' (sh h f) = sh h'' f := by
+    (f : Hol (K.W k)) : K.sh h' (K.sh h f) = K.sh h'' f := by
   refine Hol.ext_fn fun p hp ↦ ?_
   rw [fn_sh h' _ hp, fn_sh h f (K.maps h' p hp), fn_sh h'' f hp, F.shift_add]
 
-theorem sh_cst {l : Λ} {k k' : K.K} (h : K.le l k' k) (f : Hol F.V) : sh h (K.cst k f) = K.cst k' f := by
+theorem sh_cst {l : Λ} {k k' : K.K} (h : K.le l k' k) (f : Hol F.V) : K.sh h (K.cst k f) = K.cst k' f := by
   refine Hol.ext_fn fun p hp ↦ ?_
   rw [fn_sh h _ hp, K.fn_cst k f (K.maps h p hp), K.fn_cst k' f hp]
   rfl
 
-theorem dw_sh {l : Λ} {k k' : K.K} (h : K.le l k' k) (a : Fin g) (f : Hol (K.W k)) : dw a (sh h f) = sh h (dw a f) := by
+theorem dw_sh {l : Λ} {k k' : K.K} (h : K.le l k' k) (a : Fin g) (f : Hol (K.W k)) : dw a (K.sh h f) = K.sh h (dw a f) := by
   refine Hol.ext_fn fun p hp ↦ ?_
   have hb : p.1 ∈ F.V := K.base k' p hp
   have hD : HasFDerivAt (F.τ l) (fderiv ℂ (F.τ l) p.1) p.1 :=
@@ -220,7 +220,7 @@ structure Hom (T T' : K.Obj) where
   deg : Λ
   le : K.le deg T'.k T.k
   mem : ∀ c ∈ T.J, φ c ∈ T'.J
-  close : Close T'.J (T'.ρ.comp (sh le)) ((φ : T.C →+* T'.C).comp T.ρ)
+  close : Close T'.J (T'.ρ.comp (K.sh le)) ((φ : T.C →+* T'.C).comp T.ρ)
 
 theorem Hom.ext' {T T' : K.Obj} {f f' : Hom T T'} (h : ∀ c, f.φ c = f'.φ c) (h' : f.deg = f'.deg) : f = f' := by
   obtain ⟨φ, d, le, mem, cl⟩ := f
@@ -232,10 +232,10 @@ theorem Hom.ext' {T T' : K.Obj} {f f' : Hom T T'} (h : ∀ c, f.φ c = f'.φ c) 
 instance : Category K.Obj where
   Hom := Hom
   id T := ⟨AlgHom.id _ _, 0, K.le_refl _, fun _ h ↦ h, by
-    rw [show T.ρ.comp (sh (K.le_refl T.k)) = T.ρ from RingHom.ext fun f ↦ congrArg T.ρ (sh_refl _ f)]
+    rw [show T.ρ.comp (K.sh (K.le_refl T.k)) = T.ρ from RingHom.ext fun f ↦ congrArg T.ρ (sh_refl _ f)]
     exact Relation.ReflTransGen.refl⟩
   comp {T T' T''} f f' := ⟨f'.φ.comp f.φ, f.deg + f'.deg, K.le_trans f.le f'.le, fun c h ↦ f'.mem _ (f.mem c h), by
-    rw [show T''.ρ.comp (sh (K.le_trans f.le f'.le)) = (T''.ρ.comp (sh f'.le)).comp (sh f.le) from
+    rw [show T''.ρ.comp (K.sh (K.le_trans f.le f'.le)) = (T''.ρ.comp (K.sh f'.le)).comp (K.sh f.le) from
       RingHom.ext fun h ↦ congrArg T''.ρ (sh_sh f.le f'.le _ h).symm]
     exact Relation.ReflTransGen.trans (f'.close.comap (sh f.le) (dw_sh f.le)) (f.close.map (f'.φ : T'.C →+* T''.C) f'.mem)⟩
   id_comp f := Hom.ext' (fun _ ↦ rfl) (zero_add _)

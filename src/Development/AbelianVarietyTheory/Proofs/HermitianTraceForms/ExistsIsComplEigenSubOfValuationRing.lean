@@ -1,12 +1,8 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.MemSaturatedOrderIsoSubspaceSpanSymmApply
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.MapSpanBaseChangeEquivSubmoduleOf
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsSaturatedSubmoduleIffExistsIsComplOfValuationR
-public import Development.AbelianVarietyTheory.Proofs.HermitianTraceForms.IsLocallyConstantRankAtStalkEigenSub
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.MemSaturatedOrderIsoSubspaceSpanSymmApply
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.MapSpanBaseChangeEquivSubmoduleOf
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsSaturatedSubmoduleIffExistsIsComplOfValuationR
+import Development.AbelianVarietyTheory.Proofs.HermitianTraceForms.IsLocallyConstantRankAtStalkEigenSub
 
 open scoped TensorProduct NumberField
 open Polynomial
@@ -81,9 +77,10 @@ theorem eigenSub_eq_comap (hf : ∀ a x, f (ρ a x) = ρ' a (f x)) (hi : Functio
 theorem isEquivariant_equiv (hf : ∀ a x, f (ρ a x) = ρ' a (f x)) (hb : IsBaseChange R' f) :
     IsEquivariant (baseChangeAction R' ρ) ρ' (hb.equiv : R' ⊗[R] N →ₗ[R'] M) := by
   intro a t
-  induction t using TensorProduct.induction_on with
-  | zero => simp
-  | tmul r x => simp [hf]
+  induction t using TensorProduct.inductionOn with
+  | tmul r x =>
+    change hb.equiv (r ⊗ₜ[R] ρ a x) = ρ' a (hb.equiv (r ⊗ₜ[R] x))
+    simp [hf]
   | add s t hs ht => simp only [map_add (f := _), hs, ht]
 
 theorem charpoly_of_isBaseChange [Module.Free R N] [Module.Finite R N] [Module.Free R' M]
@@ -93,10 +90,14 @@ theorem charpoly_of_isBaseChange [Module.Free R N] [Module.Finite R N] [Module.F
   congr 1
   ext y
   obtain ⟨t, rfl⟩ := hb.equiv.surjective y
+  have hAction : baseChangeAction R' ρ a = (ρ a).baseChange R' :=
+    TensorProduct.AlgebraTensorModule.ext fun _ _ => rfl
+  rw [← hAction]
   simpa using (isEquivariant_equiv hf hb a t).symm
 
 variable [Module.Finite ℤ O] [Module.Flat R R']
 
+variable (R' ρ) in
 
 theorem eigenSub_baseChangeAction_of_flat (χ : O →+* R) :
     eigenSub (baseChangeAction R' ρ) ((algebraMap R R').comp χ)
@@ -108,12 +109,15 @@ theorem eigenSub_baseChangeAction_of_flat (χ : O →+* R) :
   congr 1
   ext x
   simp [TensorProduct.tmul_sub]
+  rfl
 
 theorem isBaseChange_eigenMapAlgebra_of_flat (hf : ∀ a x, f (ρ a x) = ρ' a (f x))
     (hb : IsBaseChange R' f) (χ : O →+* R) : IsBaseChange R' (eigenMapAlgebra hf χ) :=
   IsBaseChange.of_equiv (baseChangeEquiv R' (eigenSub ρ χ) ≪≫ₗ
     LinearEquiv.ofEq _ _ (eigenSub_baseChangeAction_of_flat R' ρ χ).symm ≪≫ₗ
-    (isEquivariant_equiv hf hb).eigenLinearEquiv _) fun x => Subtype.ext (by simp)
+    (isEquivariant_equiv hf hb).eigenLinearEquiv _) fun x => Subtype.ext (by
+      change hb.equiv (1 ⊗ₜ[R] (x : N)) = f x
+      simp)
 
 theorem eigenSub_eq_span_of_flat (hf : ∀ a x, f (ρ a x) = ρ' a (f x))
     (hb : IsBaseChange R' f) (χ : O →+* R) :
@@ -139,6 +143,7 @@ variable (A : Type*) [CommRing A] (S : Type*) [CommRing S] (T : Type*) [CommRing
 noncomputable def extendTensor : S ⊗[A] N →ₗ[S] T ⊗[A] N :=
   TensorProduct.AlgebraTensorModule.map (Algebra.linearMap S T) LinearMap.id
 
+variable {A S N} in
 
 theorem isBaseChange_extendTensor : IsBaseChange T (extendTensor A S T N) :=
   isBaseChange_tensorProduct_map T (IsBaseChange.linearMap S T)
@@ -147,9 +152,8 @@ variable {A N} in
 theorem extendTensor_equivariant {O : Type*} [CommRing O] (ρ : O →+* Module.End A N) (a : O)
     (x : S ⊗[A] N) : extendTensor A S T N (baseChangeAction S ρ a x)
       = baseChangeAction T ρ a (extendTensor A S T N x) := by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
-  | tmul r x => simp
+  induction x using TensorProduct.inductionOn with
+  | tmul r x => rfl
   | add s t hs ht => simp only [map_add (f := _), hs, ht]
 
 theorem extendTensor_injective [Module.Flat A N] [FaithfulSMul S T] :
@@ -165,15 +169,18 @@ variable {O : Type*} [CommRing O] [Module.Finite ℤ O] {A : Type*} [CommRing A]
   {ι : Type*} [Fintype ι] {σ : ι → O →+* A}
   {N : Type*} [AddCommGroup N] [Module A N] [Module.Finite A N] {ρ : O →+* Module.End A N}
 
+omit [Module.Finite ℤ O] in
 
 theorem isSplitting_comp_of_injective
     (h : IsSplitting fun i => (algebraMap A (FractionRing A)).comp (σ i))
     {L : Type*} [Field L] {g : A →+* L} (hg : Function.Injective g) :
     IsSplitting fun i => g.comp (σ i) := by
+  classical
   convert h.map (IsFractionRing.lift (K := FractionRing A) hg) using 2 with i
   ext a
   simp
 
+omit [Module.Finite ℤ O] in
 
 theorem isSplitting_fractionRing_of_injective
     (h : IsSplitting fun i => (algebraMap A (FractionRing A)).comp (σ i))
@@ -185,6 +192,7 @@ theorem isSplitting_fractionRing_of_injective
 variable (h : IsSplitting fun i => (algebraMap A (FractionRing A)).comp (σ i))
 include h
 
+variable (ρ) in
 
 theorem charpoly_eq_prod_of_isDomain [Module.Free A N] (a : O) :
     (ρ a).charpoly = ∏ i, (X - C (σ i a)) ^ Module.finrank A (eigenSub ρ (σ i)) := by
@@ -221,7 +229,6 @@ private theorem charpoly_eq_prod_local [IsLocalRing S] [Module.Free S M] [Module
   have hf' : ∀ a x, hB.lift f (baseChangeAction B ρ a x) = ρ' a (hB.lift f x) := by
     intro a x
     induction x using hB.inductionOn with
-    | zero => simp
     | tmul x => rw [← mk_equivariant, hB.lift_eq, hB.lift_eq, hf]
     | smul s x hx =>
       rw [map_smul, map_smul, map_smul, hx, ← algebraMap_smul S s, ← algebraMap_smul S s, map_smul]
@@ -241,7 +248,7 @@ theorem charpoly_eq_prod_of_isBaseChange [Module.Free S M] [Module.Finite S M]
   let T := Localization.AtPrime m
   have hT := TensorProduct.isBaseChange S M T
   have h1 := charpoly_eq_prod_local h (ρ := ρ) (ρ' := baseChangeAction T ρ')
-    (fun a x => by simp [hf]) (hb.comp hT) a
+    (fun a x => by simpa [hf] using mk_equivariant T ρ' a (f x)) (hb.comp hT) a
   rw [charpoly_of_isBaseChange (mk_equivariant T ρ') hT] at h1
   have h2 : (∏ i, (X - C (algebraMap A S (σ i a))) ^ Module.finrank A (eigenSub ρ (σ i))).map
       (algebraMap S T) = ∏ i, (X - C (algebraMap A T (σ i a)))
@@ -266,6 +273,7 @@ theorem rankAtStalk_eigenSub (hS : IsSplitting fun i => (algebraMap A S).comp (�
     (hf : ∀ a x, f (ρ a x) = ρ' a (f x)) (hb : IsBaseChange S f) (i : ι) (p : PrimeSpectrum S) :
     Module.rankAtStalk (eigenSub ρ' ((algebraMap A S).comp (σ i))) p
       = Module.finrank A (eigenSub ρ (σ i)) := by
+  classical
   let T := Localization.AtPrime p.asIdeal
   have hT := TensorProduct.isBaseChange S M T
   have e : ∀ i, (algebraMap S T).comp ((algebraMap A S).comp (σ i))
@@ -274,7 +282,8 @@ theorem rankAtStalk_eigenSub (hS : IsSplitting fun i => (algebraMap A S).comp (�
   have hs := hS.map (algebraMap S T)
   simp only [e] at hs
   rw [Module.rankAtStalk_eq_finrank_tensorProduct, (eigenBaseChangeEquiv T ρ' hS i).finrank_eq, e]
-  exact finrank_eigenSub_of_isLocalRing h hs (fun a x => by simp [hf]) (hb.comp hT) i
+  exact finrank_eigenSub_of_isLocalRing h hs
+    (fun a x => by simpa [hf] using mk_equivariant T ρ' a (f x)) (hb.comp hT) i
 
 theorem finrank_eigenSub_of_isDomain [IsDomain S]
     (hS : IsSplitting fun i => (algebraMap S (FractionRing S)).comp ((algebraMap A S).comp (σ i)))
@@ -288,7 +297,8 @@ theorem finrank_eigenSub_of_isDomain [IsDomain S]
     rw [← RingHom.comp_assoc, ← IsScalarTower.algebraMap_eq]
   have hs : IsSplitting fun i => (algebraMap A T).comp (σ i) := by simpa only [← e] using hS
   rw [← finrank_eigenSub_of_flat (mk_equivariant T ρ') hT, e]
-  exact finrank_eigenSub_of_isLocalRing h hs (fun a x => by simp [hf]) (hb.comp hT) i
+  exact finrank_eigenSub_of_isLocalRing h hs
+    (fun a x => by simpa [hf] using mk_equivariant T ρ' a (f x)) (hb.comp hT) i
 
 end Determinant
 
@@ -308,7 +318,7 @@ private theorem eigenSub_eq_span_of_isBaseChange {hf : ∀ a x, f (ρ a x) = ρ'
   refine le_antisymm (fun y hy => ?_) (Submodule.span_le.2 ?_)
   · change ((⟨y, hy⟩ : eigenSub ρ' ((algebraMap A S).comp χ)) : M) ∈ _
     refine hb.inductionOn ⟨y, hy⟩
-      (fun z => (z : M) ∈ Submodule.span S (f '' eigenSub ρ χ)) (Submodule.zero_mem _)
+      (motive := fun z => (z : M) ∈ Submodule.span S (f '' eigenSub ρ χ))
       (fun x => Submodule.subset_span ⟨x, x.2, rfl⟩) (fun s _ hz => Submodule.smul_mem _ s hz)
       fun _ _ h₁ h₂ => Submodule.add_mem _ h₁ h₂
   · rintro _ ⟨x, hx, rfl⟩
@@ -327,7 +337,6 @@ theorem eigenSub_eq_span_of_factor (B : Type*) [CommRing B] [Algebra A B] [Modul
   have hf' : ∀ a x, hN.lift f (baseChangeAction B ρ a x) = ρ' a (hN.lift f x) := by
     intro a x
     induction x using hN.inductionOn with
-    | zero => simp
     | tmul x => rw [← mk_equivariant, hN.lift_eq, hN.lift_eq, hf]
     | smul s x hx =>
       rw [map_smul, map_smul, map_smul, hx, ← algebraMap_smul S s, ← algebraMap_smul S s, map_smul]
@@ -345,6 +354,7 @@ section Valuation
 variable {O : Type*} [CommRing O] {V : Type*} [CommRing V] [IsDomain V] [ValuationRing V]
   {M : Type*} [AddCommGroup M] [Module V M]
 
+variable (V) in
 
 theorem flat_of_valuationRing (V' : Type*) [CommRing V'] [IsDomain V'] [Algebra V V']
     [FaithfulSMul V V'] : Module.Flat V V' :=
@@ -416,6 +426,7 @@ theorem exists_triangular_of_mem_span [FaithfulSMul R K]
     fun k => (b'.sum_toMatrix_smul_self b k).symm,
     fun _ hg => eq_map_toMatrix_of_eq_sum b b' j hli hg⟩
 
+omit [Fintype ι] [LinearOrder ι] in
 
 theorem linearIndependent_of_isBaseChange [Module.Flat R K] {f : P →ₗ[R] W}
     (hb : IsBaseChange K f) {v : ι → P} (hv : LinearIndependent R v) :
@@ -450,7 +461,7 @@ theorem IsEquivariant.exists_triangular [FaithfulSMul R K] [Module.Flat R K] {e 
       rw [← hc'] at this
       exact this
   refine ⟨g, h1, h2, fun k => ?_, h4⟩
-  simpa using congrArg Subtype.val (h3 k)
+  simpa [IsEquivariant.eigenLinearEquiv] using congrArg Subtype.val (h3 k)
 
 end Frames
 
@@ -459,6 +470,7 @@ section Integers
 variable {E : Type*} [Field E] [NumberField E] {A : Type*} [CommRing A] [IsDomain A] [CharZero A]
   {ι : Type*} [Fintype ι] {σ : ι → 𝓞 E →+* A}
 
+omit [CharZero A] in
 
 theorem flat_int_iff_charZero : Module.Flat ℤ A ↔ CharZero A := by
   rw [Module.Flat.flat_iff_torsion_eq_bot_of_isBezout,
@@ -483,8 +495,9 @@ variable (hσ : Function.Injective σ) (hc : Fintype.card ι = Module.finrank �
 include hσ hc
 
 theorem isSplitting_fractionRing :
-    IsSplitting fun i => (algebraMap A (FractionRing A)).comp (σ i) :=
-  isSplitting_of_isDomain hσ hc _ (isUnit_discr_of_charZero _)
+    IsSplitting fun i => (algebraMap A (FractionRing A)).comp (σ i) := by
+  classical
+  exact isSplitting_of_isDomain hσ hc _ (isUnit_discr_of_charZero _)
 
 variable {N : Type*} [AddCommGroup N] [Module A N] {ρ : 𝓞 E →+* Module.End A N}
   {S : Type*} [CommRing S] [Algebra A S]
@@ -494,6 +507,7 @@ variable {N : Type*} [AddCommGroup N] [Module A N] {ρ : 𝓞 E →+* Module.End
 theorem eigenSub_eq_span_of_isUnit_discr (hu : IsUnit (NumberField.discr E : S))
     (hf : ∀ a x, f (ρ a x) = ρ' a (f x)) (hb : IsBaseChange S f) (i : ι) :
     eigenSub ρ' ((algebraMap A S).comp (σ i)) = Submodule.span S (f '' eigenSub ρ (σ i)) := by
+  classical
   have hu' : IsUnit (algebraMap A S (NumberField.discr E : A)) := by rwa [map_intCast]
   let B := Localization.Away (NumberField.discr E : A)
   let : Algebra B S := (IsLocalization.Away.lift (NumberField.discr E : A) hu').toAlgebra
@@ -512,7 +526,8 @@ theorem eigenSub_eq_saturation [IsDomain S] [CharZero S] [Module.IsTorsionFree S
     (IsLocalizedModule.injective_iff_isRegular (nonZeroDivisors S) _).2 fun c =>
       smul_right_injective M (nonZeroDivisors.coe_ne_zero c)
   have h1 := eigenSub_eq_span_of_isUnit_discr hσ hc (ρ := ρ) (ρ' := baseChangeAction K ρ')
-    (isUnit_discr_of_charZero K) (fun a x => by simp [hf]) (hb.comp hK) i
+    (isUnit_discr_of_charZero K) (fun a x => by simpa [hf] using mk_equivariant K ρ' a (f x))
+    (hb.comp hK) i
   rw [saturation_eq_comap_localized' K (TensorProduct.mk S K M 1), Submodule.localized'_eq_span,
     ← Submodule.map_coe, Submodule.map_span, Submodule.span_span_of_tower, Set.image_image,
     eigenSub_eq_comap (mk_equivariant K ρ') hi,
@@ -524,8 +539,9 @@ variable [Module.Finite A N] [Module.Flat A N]
 theorem finrank_eigenSub_of_charZero [IsDomain S] [CharZero S]
     (hf : ∀ a x, f (ρ a x) = ρ' a (f x)) (hb : IsBaseChange S f) (i : ι) :
     Module.finrank S (eigenSub ρ' ((algebraMap A S).comp (σ i)))
-      = Module.finrank A (eigenSub ρ (σ i)) :=
-  finrank_eigenSub_of_isDomain (isSplitting_fractionRing hσ hc)
+      = Module.finrank A (eigenSub ρ (σ i)) := by
+  classical
+  exact finrank_eigenSub_of_isDomain (isSplitting_fractionRing hσ hc)
     (isSplitting_of_isDomain hσ hc ((algebraMap S (FractionRing S)).comp (algebraMap A S))
       (isUnit_discr_of_charZero _)) hf hb i
 
@@ -534,6 +550,7 @@ theorem eq_finrank_of_charpoly [Module.Free S M] [Module.Finite S M]
     (hf : ∀ a x, f (ρ a x) = ρ' a (f x)) (hb : IsBaseChange S f) (r : ι → ℕ)
     (hr : ∀ a, (ρ' a).charpoly = ∏ i, (X - C (algebraMap A S (σ i a))) ^ r i) (i : ι) :
     r i = Module.finrank A (eigenSub ρ (σ i)) := by
+  classical
   let T := Localization.Away (NumberField.discr E : S)
   have : Nontrivial T := not_subsingleton_iff_nontrivial.1 fun h =>
     hd ((IsLocalization.subsingleton_iff (M := Submonoid.powers (NumberField.discr E : S))).1 h)
@@ -550,6 +567,7 @@ end EigenSplit
 
 universe u v
 
+open EigenSplit in
 
 theorem eigenBundle_of_injective {E : Type*} [Field E] [NumberField E]
     {A : Type u} [CommRing A] [IsDomain A] [CharZero A] {ι : Type*} [Fintype ι] [DecidableEq ι]
@@ -645,28 +663,29 @@ theorem eigenBundle_of_injective {E : Type*} [Field E] [NumberField E]
       have e : (algebraMap A K).comp (σ i)
           = (algebraMap V K).comp ((algebraMap A V).comp (σ i)) := by
         rw [← RingHom.comp_assoc, ← IsScalarTower.algebraMap_eq]
-      refine ⟨extendTensor_injective A V K N, isBaseChange_extendTensor A V K N, ?_, ?_,
+      refine ⟨extendTensor_injective A V K N, isBaseChange_extendTensor K, ?_, ?_,
         finrank_eigenSub_of_charZero hσ hc (mk_equivariant K ρ)
           (TensorProduct.isBaseChange A N K) i⟩
       · rw [e]
         exact eigenSub_eq_comap (extendTensor_equivariant V K ρ) (extendTensor_injective A V K N) _
       · rw [e]
         exact (eigenSub_eq_span_of_flat (extendTensor_equivariant V K ρ)
-          (isBaseChange_extendTensor A V K N) _).symm
+          (isBaseChange_extendTensor K) _).symm
     · rintro V' _ _ _ _ _ _ _ P' hP'
       have := flat_of_valuationRing V V'
       rw [IsScalarTower.algebraMap_eq A V V', RingHom.comp_assoc] at hP'
       subst hP'
       exact ⟨(eigenSub_eq_span_of_flat (extendTensor_equivariant V V' ρ)
-          (isBaseChange_extendTensor A V V' N) _).symm,
+          (isBaseChange_extendTensor V') _).symm,
         (isBaseChange_eigenMapAlgebra_of_flat (extendTensor_equivariant V V' ρ)
-          (isBaseChange_extendTensor A V V' N) _).equiv, fun x => by simp⟩
+          (isBaseChange_extendTensor V') _).equiv, fun x => by simp [eigenMapAlgebra]⟩
   · intro V _ _ _ M M' _ _ _ _ τ τ' e he χ
     have he' : IsEquivariant τ τ' (e : M →ₗ[V] M') := he
     refine ⟨he'.map_eigenSub χ, fun K _ _ _ n c c' F F' hc hc' hF => ?_⟩
     have := flat_of_valuationRing V K
     exact he'.exists_triangular c c' hc hc' hF
 
+open EigenSplit in
 
 theorem eigenBundle {E : Type*} [Field E] [NumberField E]
     {L : Type*} [Field L] [CharZero L] [Fintype (E →+* L)] [DecidableEq (E →+* L)]
@@ -732,6 +751,5 @@ theorem eigenBundle {E : Type*} [Field E] [NumberField E]
   eigenBundle_of_injective
     (conjugateHom_injective Function.injective_id (card_embeddings_of_splits hL))
     (card_embeddings_of_splits hL) ρ
-
 
 end GlobalTheory

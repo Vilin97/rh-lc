@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.CharacterTheory.RootsCharpolyPowEqMapPow
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.CharacterTheory.RootsCharpolyPowEqMapPow
 
 open NumberField IsDedekindDomain Polynomial
 
@@ -14,18 +10,15 @@ namespace GlobalTheory.LocBounded
 theorem isIntegral_mul_of_commute {R A : Type} [CommRing R] [Ring A] [Algebra R A] {x y : A}
     (hc : Commute x y) (hx : IsIntegral R x) (hy : IsIntegral R y) : IsIntegral R (x * y) := by
   let S := Algebra.adjoin R ({x, y} : Set A)
-  letI : CommRing S := Algebra.isMulCommutative_adjoin R (by
-    intro a ha b hb
-    simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at ha hb
-    rcases ha with rfl | rfl <;> rcases hb with rfl | rfl
-    exacts [rfl, hc.eq, hc.eq.symm, rfl])
+  letI : IsMulCommutative S :=
+    Algebra.isMulCommutative_adjoin R (Set.pairwise_pair.2 fun _ => ⟨hc, hc.symm⟩)
   have hx' : x ∈ S := Algebra.subset_adjoin (by simp)
   have hy' : y ∈ S := Algebra.subset_adjoin (by simp)
   have h1 : IsIntegral R (⟨x, hx'⟩ : S) :=
     (isIntegral_algHom_iff S.val Subtype.val_injective).1 hx
   have h2 : IsIntegral R (⟨y, hy'⟩ : S) :=
     (isIntegral_algHom_iff S.val Subtype.val_injective).1 hy
-  exact (h1.mul h2).map S.val
+  exact open scoped IsMulCommutative in (h1.mul h2).map S.val
 
 theorem isIntegral_trace_of_isIntegral {R K : Type} [CommRing R] [Field K] [Algebra R K] {n : ℕ}
     (M : Matrix (Fin n) (Fin n) K) (hM : IsIntegral R M) : IsIntegral R M.trace := by

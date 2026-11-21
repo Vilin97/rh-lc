@@ -133,13 +133,13 @@ private theorem linearIndependent_algebraMap_C_fractionRing
       simpa only [mul_comm] using hsum
     have h0 := congrArg (AddMonoidAlgebra.coeff · m) hsum'
     simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_C_mul, MvPolynomial.coeff_map,
-      MvPolynomial.coeff_zero] at h0
+      AddMonoidAlgebra.coeff_zero] at h0
     have h1 : ∑ j, AddMonoidAlgebra.coeff (a j) m • e j = 0 := by
-      simpa only [Algebra.smul_def, mul_comm] using h0
+      simpa [Algebra.smul_def, mul_comm] using h0
     exact Fintype.linearIndependent_iff.mp he (fun j => AddMonoidAlgebra.coeff (a j) m) h1
   have hai : a i = 0 := by
     ext m
-    rw [hcoeff m i, MvPolynomial.coeff_zero]
+    simpa using hcoeff m i
   have h2 := ha i
   rw [hai, _root_.map_zero] at h2
   have hβ : algebraMap (MvPolynomial σ L) (FractionRing (MvPolynomial σ L)) (b : MvPolynomial σ L) ≠ 0 :=

@@ -407,7 +407,11 @@ theorem gen (n s : ℕ) : ∀ (k : ℕ) (r c : Fin (k+1) → Fin n),
   | 0, r, c => by
     rw [pow_zero, one_mul, det_fin_one, det_fin_one]
     have hx : ((Mg K n).submatrix r c) 0 0 = X (Sum.inl (r 0, c 0)) := rfl
-    rw [hx, ← mul_one (X _), diffOp_X_mul, diffOp_one, pderiv_pow, ddet]
+    have hX : diffOp (X (Sum.inl (r 0, c 0))) ((Mg K n).det ^ (s+1)) =
+        pderiv (Sum.inl (r 0, c 0)) ((Mg K n).det ^ (s+1)) := by
+      simpa only [mul_one, diffOp_one] using
+        diffOp_X_mul (Sum.inl (r 0, c 0)) 1 ((Mg K n).det ^ (s+1))
+    rw [hx, hX, pderiv_pow, ddet]
     simp [mul_assoc]
   | k+1, r, c => by
     rw [omega_step, Finset.mul_sum]

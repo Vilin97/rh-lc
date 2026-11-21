@@ -72,7 +72,9 @@ theorem isDPMorphism_of_eq_bot (δ : DividedPowers J) (hJ : J = ⊥) (δ' : Divi
   · rw [δ.dpow_eval_zero hn, δ'.dpow_eval_zero hn, map_zero]
 
 
-def divided₂ (h : J ^ 2 = 0) : DividedPowers J := OfSquareZero.dividedPowers h
+def divided₂ (h : J ^ 2 = 0) : DividedPowers J := by
+  classical
+  exact OfSquareZero.dividedPowers h
 
 theorem squareZeroDividedPowers_dpow (h : J ^ 2 = 0) {n : ℕ} (hn : 2 ≤ n) (a : B) : (divided₂ h).dpow n a = 0 := by
   classical
@@ -199,7 +201,7 @@ theorem ev_comp {γ : DividedPowers I} {s : X ⟶ Sp R} (f : Z1 (O γ s)) {T T' 
 theorem ev_sq {γ : DividedPowers I} {s : X ⟶ Sp R} (f : Z1 (O γ s)) {T₁ T₂ T₃ T₄ : Thick γ s}
     (a : T₁ ⟶ T₂) (p : T₂ ⟶ T₄) (q : T₁ ⟶ T₃) (b : T₃ ⟶ T₄) (h : ∀ c, p.φ (a.φ c) = b.φ (q.φ c)) :
     p.φ (ev f a) + ev f p = b.φ (ev f q) + ev f b := by
-  have e : a ≫ p = q ≫ b := Thick.hom_ext fun c ↦ h c
+  have e : a ≫ p = q ≫ b := Thick.Hom.ext' (AlgHom.ext h)
   rw [← ev_comp, ← ev_comp, e]
 
 abbrev H1 (γ : DividedPowers I) (s : X ⟶ Sp R) : Type 1 := CatCoh.H1 (O γ s)
@@ -615,7 +617,8 @@ theorem val_const (x : Sp E.B ⟶ X) (hx : x ≫ s = spMap (algebraMap R E.B)) (
           spMap (E.i : E.B →+* E.C) ≫ x = spMap (E.i : E.B →+* E.C) ≫ x
       rw [RingHom.id_comp, ← Category.assoc (spMap (E.π : E.C →+* E.B)), ← spMap_comp, hpi,
         spMap_id, Category.id_comp])
-  have k : E.secHom (E.red_w hy) E.i E.π_i = lam ≫ E.idHom hy := Thick.hom_ext fun _ ↦ rfl
+  have k : E.secHom (E.red_w hy) E.i E.π_i = lam ≫ E.idHom hy :=
+    Thick.Hom.ext' (AlgHom.ext fun _ ↦ rfl)
   rw [val_apply, k, ev_comp, show ev f.1 lam = 0 from f.2 lam rfl rfl, map_zero, zero_add,
     sub_self]
 

@@ -1,11 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Divisors.HilbertNinetyQuotientHomEqIff
-public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SchwartzBruhatMatrixTranslationModulationIrreduc
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.Divisors.HilbertNinetyQuotientHomEqIff
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SchwartzBruhatMatrixTranslationModulationIrreduc
 open ValuativeRel
 open scoped Matrix Topology
 
@@ -37,10 +32,9 @@ theorem mem_of_sep {G β : Type} [AddCommGroup G] (e : β → G → ℂ) (B : Se
       rcases Finset.mem_insert.1 hp with rfl | hp
       · exact absurd (by simp [he, hb1 u hu]) ht
       · exact ⟨p, hp, u, hu, rfl⟩
-    have h2 := W.smul_mem (e b s - 1)⁻¹ (add_mem h1 (hW f hf b hbB))
-    convert h2 using 1
-    field_simp
-    ring
+    have h2 : (e b s - 1) • f ∈ W := by
+      simpa only [sub_smul, one_smul, sub_add_sub_cancel] using add_mem h1 (hW f hf b hbB)
+    simpa only [inv_smul_smul₀ hne'] using W.smul_mem (e b s - 1)⁻¹ h2
 
 theorem mem_span_of_vanish : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k]
     {Y Y' : Type} [Fintype Y] [DecidableEq Y] [Fintype Y'] [DecidableEq Y'] (ψ0 : AddChar k ℂ), Continuous ψ0 →

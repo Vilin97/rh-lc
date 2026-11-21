@@ -146,8 +146,11 @@ theorem LiesOver.valuation_algebraMap {w : Place k K'} {v : Place k K} (h : w.Li
   have : IsScalarTower v.ring w.ring K' := IsScalarTower.of_algebraMap_eq fun _ => rfl
   have : w.heightOneSpectrum.asIdeal.LiesOver v.heightOneSpectrum.asIdeal :=
     inferInstanceAs ((IsLocalRing.maximalIdeal w.ring).LiesOver (IsLocalRing.maximalIdeal v.ring))
-  exact IsDedekindDomain.HeightOneSpectrum.valuation_liesOver K' v.heightOneSpectrum
+  have hv := IsDedekindDomain.HeightOneSpectrum.valuation_liesOver K' v.heightOneSpectrum
     w.heightOneSpectrum x
+  rw [← Ideal.ramificationIdx'_eq_ramificationIdx v.heightOneSpectrum.asIdeal
+    w.heightOneSpectrum.asIdeal v.heightOneSpectrum.ne_bot] at hv
+  simpa only [Place.valuation, Place.heightOneSpectrum] using hv
 
 theorem LiesOver.ramificationIdx'_eq {w : Place k K'} {v : Place k K} (h : w.LiesOver v) :
     letI := h.algebra

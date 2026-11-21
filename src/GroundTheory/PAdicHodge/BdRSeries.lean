@@ -198,14 +198,14 @@ theorem log_subst_one_add_X_pow_sub_one (k : ℕ) :
   have hg : constantCoeff ((1 + X) ^ k - 1 : ℚ⟦X⟧) = 0 := by simp
   have hS := HasSubst.of_constantCoeff_zero' hg
   apply derivative.ext
-  · set G : ℚ⟦X⟧ := mk (fun n => algebraMap ℚ ℚ ((-1) ^ n)) with hG
+  · set G : ℚ⟦X⟧ := mk (fun n => (-1 : ℚ) ^ n) with hG
     have hsub : ((1 + X : ℚ⟦X⟧) ^ k) * G.subst ((1 + X) ^ k - 1 : ℚ⟦X⟧) = 1 := by
       have h := congrArg (substAlgHom hS) one_add_X_mul_geom
       rw [map_mul, map_one, map_add (f := _), map_one, coe_substAlgHom, subst_X hS, add_sub_cancel] at h
       exact h
-    rw [derivative_subst hS, deriv_log, ← hG]
-    have hd : d⁄dX ℚ ((k : ℚ⟦X⟧) * log ℚ) = (k : ℚ⟦X⟧) * G := by
-      rw [Derivation.leibniz, deriv_log, ← hG, Derivation.map_natCast, smul_zero, add_zero,
+    rw [derivative_subst hS, derivative_log, ← hG]
+    have hd : d⁄dX ((k : ℚ⟦X⟧) * log ℚ) = (k : ℚ⟦X⟧) * G := by
+      rw [Derivation.leibniz, derivative_log, ← hG, Derivation.map_natCast, smul_zero, add_zero,
         smul_eq_mul]
     rw [hd, map_sub, derivative_pow, derivative_one, sub_zero, map_add (f := _), derivative_one,
       derivative_X, zero_add, mul_one]
@@ -235,7 +235,7 @@ def logOnePlus (z : B) (hz : z ∈ I) : B :=
   seriesEval I z hz (log ℚ)
 
 theorem logOnePlus_sub_sum_mem {z : B} (hz : z ∈ I) (n : ℕ) :
-    logOnePlus I z hz - ∑ i ∈ Finset.Ico 1 n, algebraMap ℚ B ((-1) ^ (i + 1) / i) * z ^ i ∈
+    logOnePlus z hz - ∑ i ∈ Finset.Ico 1 n, algebraMap ℚ B ((-1) ^ (i + 1) / i) * z ^ i ∈
       I ^ n := by
   have hs : ∑ i ∈ Finset.Ico 1 n, algebraMap ℚ B ((-1) ^ (i + 1) / i) * z ^ i =
       ∑ i ∈ Finset.range n, algebraMap ℚ B (coeff i (log ℚ)) * z ^ i := by
@@ -249,7 +249,7 @@ theorem logOnePlus_sub_sum_mem {z : B} (hz : z ∈ I) (n : ℕ) :
   rw [hs]
   exact seriesEval_sub_sum_mem hz (log ℚ) n
 
-theorem logOnePlus_eq_mul {z : B} (hz : z ∈ I) : ∃ u, u - 1 ∈ I ∧ logOnePlus I z hz = z * u := by
+theorem logOnePlus_eq_mul {z : B} (hz : z ∈ I) : ∃ u, u - 1 ∈ I ∧ logOnePlus z hz = z * u := by
   set h : ℚ⟦X⟧ := mk fun n => coeff (n + 1) (log ℚ)
   have hlog : log ℚ = X * h := by
     conv_lhs => rw [eq_X_mul_shift_add_const (log ℚ)]
@@ -261,7 +261,7 @@ theorem logOnePlus_eq_mul {z : B} (hz : z ∈ I) : ∃ u, u - 1 ∈ I ∧ logOne
   · rw [logOnePlus, hlog, map_mul, seriesEval_X]
 
 theorem logOnePlus_pow {z : B} (hz : z ∈ I) (k : ℕ) (hk : (1 + z) ^ k - 1 ∈ I) :
-    logOnePlus I ((1 + z) ^ k - 1) hk = k * logOnePlus I z hz := by
+    logOnePlus ((1 + z) ^ k - 1) hk = k * logOnePlus z hz := by
   have hg : constantCoeff ((1 + X) ^ k - 1 : ℚ⟦X⟧) = 0 := by simp
   rw [logOnePlus, seriesEval_subst hz hg hk (by simp), log_subst_one_add_X_pow_sub_one, map_mul,
     map_natCast, logOnePlus]

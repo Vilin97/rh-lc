@@ -19,7 +19,7 @@ noncomputable def liftY : FractionRing (MvPolynomial σ L) →+* FractionRing (M
 theorem basis_extend [FiniteDimensional L E] {n : Type} [Fintype n] [DecidableEq n]
     (b : Module.Basis n L E) :
     letI : Algebra (FractionRing (MvPolynomial σ L)) (FractionRing (MvPolynomial σ E)) :=
-      (liftY (L := L) (E := E) (σ := σ)).toAlgebra;
+      (liftY (L := L) (E := E) (σ := σ)).toAlgebra
     ∃ b' : Module.Basis n (FractionRing (MvPolynomial σ L)) (FractionRing (MvPolynomial σ E)),
       (∀ i, b' i = algebraMap (MvPolynomial σ E) (FractionRing (MvPolynomial σ E))
         (MvPolynomial.C (b i))) ∧

@@ -55,7 +55,7 @@ variable (K V F : Type*) [CommRing K] [CommRing V] [CommRing F] [Algebra K V] [A
   [Algebra K F] [IsScalarTower K V F] (p : ℕ)
 
 noncomputable def formMap : (⋀[V]^p Ω[V⁄K]) →ₗ[V] (⋀[F]^p Ω[F⁄K]) :=
-  exteriorPowerMapOver F p (KaehlerDifferential.map K K V F)
+  exteriorPowerMapOver (B := F) (D := p) (KaehlerDifferential.map K K V F)
 
 noncomputable def regForms : Submodule V (⋀[F]^p Ω[F⁄K]) :=
   LinearMap.range (formMap K V F p)
@@ -156,13 +156,14 @@ variable (V : Type*) {F : Type*} [CommRing V] [IsDomain V] [IsDiscreteValuationR
   [Algebra V F] [IsFractionRing V F]
 
 
-noncomputable def ordTop_vw (f : F) : WithTop ℤ :=
-  if f = 0 then ⊤ else (WithZero.log (Ring.ordFrac V f) : ℤ)
+noncomputable def ordTop_vw (f : F) : WithTop ℤ := by
+  classical
+  exact if f = 0 then ⊤ else (WithZero.log (Ring.ordFrac V f) : ℤ)
 
-@[simp] theorem ordTop_vw_zero : ordTop_vw V (0 : F) = ⊤ := if_pos rfl
+@[simp] theorem ordTop_vw_zero : ordTop_vw V (0 : F) = ⊤ := by simp [ordTop_vw]
 
 theorem ordTop_vw_of_ne_zero {f : F} (hf : f ≠ 0) :
-    ordTop_vw V f = (WithZero.log (Ring.ordFrac V f) : ℤ) := if_neg hf
+    ordTop_vw V f = (WithZero.log (Ring.ordFrac V f) : ℤ) := by simp [ordTop_vw, hf]
 
 variable {V}
 
@@ -223,6 +224,7 @@ end Order
 section Existence
 
 
+open scoped IntermediateField.algebraAdjoinAdjoin in
 theorem exists_basis_kaehler_of_algebraicIndependent {K F ι : Type*} [Field K] [Field F]
     [Algebra K F] {v : ι → F} (hv : AlgebraicIndependent K v)
     [Algebra.IsSeparable (IntermediateField.adjoin K (Set.range v)) F] :

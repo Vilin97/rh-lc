@@ -10,10 +10,10 @@ namespace FunctorialResolution.Blowup
 
 variable {R : Type*} [CommRing R]
 
-private theorem mem_pow_one (I : Ideal R) {a : R} (ha : a ∈ I) : a ∈ I ^ 1 := by
+theorem mem_pow_one (I : Ideal R) {a : R} (ha : a ∈ I) : a ∈ I ^ 1 := by
   rwa [pow_one]
 
-private theorem mem_pow_zero (I : Ideal R) (r : R) : r ∈ I ^ 0 := by
+theorem mem_pow_zero (I : Ideal R) (r : R) : r ∈ I ^ 0 := by
   rw [pow_zero, Ideal.one_eq_top]
   exact Submodule.mem_top
 
@@ -40,7 +40,7 @@ theorem mem_reesGrading_iff_coeff (I : Ideal R) (n : ℕ) (p : ↥(reesAlgebra I
   rw [key]
   constructor
   · rintro ⟨r, hr⟩ i hi
-    rw [← hr, Polynomial.coeff_monomial, if_neg (Ne.symm hi)]
+    simpa [Polynomial.coeff_monomial, Ne.symm hi] using congrArg (fun q : R[X] => q.coeff i) hr.symm
   · intro h
     refine ⟨(p : R[X]).coeff n, ?_⟩
     ext i
@@ -99,7 +99,7 @@ private theorem monomial_mem_reesGrading (I : Ideal R) {n : ℕ} {r : R} (hr : r
       ∈ reesGrading I n := by
   refine (mem_reesGrading_iff_coeff I n _).2 fun i hi => ?_
   show (Polynomial.monomial n r : R[X]).coeff i = 0
-  rw [Polynomial.coeff_monomial, if_neg (Ne.symm hi)]
+  simp [Polynomial.coeff_monomial, Ne.symm hi]
 
 theorem reesGrading_iSup_eq_top (I : Ideal R) : (⨆ n : ℕ, reesGrading I n) = ⊤ := by
   refine Submodule.eq_top_iff'.2 fun p => ?_
@@ -117,16 +117,16 @@ theorem reesGrading_isInternal (I : Ideal R) : DirectSum.IsInternal (reesGrading
   exact (DirectSum.isInternal_submodule_iff_iSupIndep_and_iSup_eq_top (reesGrading I)).2
     ⟨reesGrading_iSupIndep I, reesGrading_iSup_eq_top I⟩
 
-private noncomputable def directSumReesGradingEquiv (I : Ideal R) :
+noncomputable def directSumReesGradingEquiv (I : Ideal R) :
     DirectSum ℕ (fun n => ↥(reesGrading I n)) ≃ ↥(reesAlgebra I) :=
   Equiv.ofBijective (DirectSum.coeAddMonoidHom (reesGrading I)) (reesGrading_isInternal I)
 
-private theorem leftInverse_coeAddMonoidHom_reesGrading (I : Ideal R) :
+theorem leftInverse_coeAddMonoidHom_reesGrading (I : Ideal R) :
     Function.LeftInverse (DirectSum.coeAddMonoidHom (reesGrading I))
       ⇑(directSumReesGradingEquiv I).symm :=
   fun x => (directSumReesGradingEquiv I).apply_symm_apply x
 
-private theorem rightInverse_coeAddMonoidHom_reesGrading (I : Ideal R) :
+theorem rightInverse_coeAddMonoidHom_reesGrading (I : Ideal R) :
     Function.RightInverse (DirectSum.coeAddMonoidHom (reesGrading I))
       ⇑(directSumReesGradingEquiv I).symm :=
   fun x => (directSumReesGradingEquiv I).symm_apply_apply x
@@ -177,7 +177,7 @@ private theorem reesComponent_coe (I : Ideal R) (p : ↥(reesAlgebra I)) (i : �
 private theorem reesComponent_mem_reesGrading (I : Ideal R) (p : ↥(reesAlgebra I)) (i : ℕ) :
     reesMonomialOfCoeff I p i ∈ reesGrading I i := by
   refine (mem_reesGrading_iff_coeff I i _).2 fun j hj => ?_
-  rw [reesComponent_coe, Polynomial.coeff_monomial, if_neg (Ne.symm hj)]
+  simp [reesComponent_coe, Polynomial.coeff_monomial, Ne.symm hj]
 
 private theorem eq_sum_reesComponent (I : Ideal R) (p : ↥(reesAlgebra I)) :
     p = ∑ i ∈ (p : R[X]).support, reesMonomialOfCoeff I p i := by
@@ -278,24 +278,24 @@ noncomputable def reesDegreeZeroMonomial (I : Ideal R) (r : R) : ↥(reesGrading
   ⟨reesMonomial I 0 r (mem_pow_zero I r),
     reesMonomial_mem_reesGrading I (mem_pow_zero I r)⟩
 
-private theorem reesDegreeZeroMonomial_one (I : Ideal R) : reesDegreeZeroMonomial I 1 = 1 := by
+theorem reesDegreeZeroMonomial_one (I : Ideal R) : reesDegreeZeroMonomial I 1 = 1 := by
   refine Subtype.ext (Subtype.ext ?_)
   show (Polynomial.monomial 0 (1 : R) : R[X]) = _
   exact Polynomial.monomial_zero_one
 
-private theorem reesDegreeZeroMonomial_mul (I : Ideal R) (r s : R) :
+theorem reesDegreeZeroMonomial_mul (I : Ideal R) (r s : R) :
     reesDegreeZeroMonomial I (r * s) = reesDegreeZeroMonomial I r * reesDegreeZeroMonomial I s := by
   refine Subtype.ext (Subtype.ext ?_)
   show (Polynomial.monomial 0 (r * s) : R[X])
       = (Polynomial.monomial 0 r : R[X]) * (Polynomial.monomial 0 s : R[X])
   exact (Polynomial.monomial_mul_monomial 0 0 r s).symm
 
-private theorem reesDegreeZeroMonomial_zero (I : Ideal R) : reesDegreeZeroMonomial I 0 = 0 := by
+theorem reesDegreeZeroMonomial_zero (I : Ideal R) : reesDegreeZeroMonomial I 0 = 0 := by
   refine Subtype.ext (Subtype.ext ?_)
   show (Polynomial.monomial 0 (0 : R) : R[X]) = 0
   rw [map_zero]
 
-private theorem reesDegreeZeroMonomial_add (I : Ideal R) (r s : R) :
+theorem reesDegreeZeroMonomial_add (I : Ideal R) (r s : R) :
     reesDegreeZeroMonomial I (r + s) = reesDegreeZeroMonomial I r + reesDegreeZeroMonomial I s := by
   refine Subtype.ext (Subtype.ext ?_)
   show (Polynomial.monomial 0 (r + s) : R[X])
@@ -334,7 +334,7 @@ theorem reesDegreeZeroRingHom_surjective (I : Ideal R) :
   ext i
   rcases eq_or_ne i 0 with rfl | hi
   · simp
-  · rw [Polynomial.coeff_monomial, if_neg (Ne.symm hi)]
+  · simp [Polynomial.coeff_monomial, Ne.symm hi]
     exact (hco i hi).symm
 
 theorem reesDegreeZeroRingHom_bijective (I : Ideal R) :

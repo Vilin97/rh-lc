@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open Polynomial Matrix
 
@@ -88,7 +84,7 @@ theorem real_pos {d : ℕ} (G : Matrix (Fin d) (Fin d) ℤ) (hs : ∀ i j, G i j
     refine Matrix.PosSemidef.of_dotProduct_mulVec_nonneg ?_ fun y => ?_
     · ext i j; simp [hM, hs i j]
     · rw [key]; exact real_nonneg G hG y
-  have h0 : M *ᵥ x = 0 := (hp.dotProduct_mulVec_zero_iff x).1 (by rw [key, hx])
+  have h0 : M *ᵥ x = 0 := (hp.dotProduct_mulVec_zero_iff).1 (by rw [key, hx])
   by_contra hne
   have : M.det = 0 := Matrix.exists_mulVec_eq_zero_iff.1 ⟨x, hne, h0⟩
   rw [hM, ← RingHom.mapMatrix_apply, ← RingHom.map_det] at this
@@ -254,7 +250,7 @@ theorem similitude_algebraic : ∀ (Λ : Type) [AddCommGroup Λ] (Q : Λ → ℤ
   have hf'd : f'.natDegree < d := lt_of_le_of_lt natDegree_map_le hfd
   have hconj : Pc = (X - C ((starRingEnd ℂ) β)) * f' := by
     have : Pc.map (starRingEnd ℂ) = Pc := by
-      rw [hPc, Polynomial.map_map]; congr 1; exact RingHom.ext_int _ _
+      rw [hPc, Polynomial.map_map]; congr 1
     rw [← this, hf]; simp [hf']
   have e1 : X * f = β • f + Pc := by rw [hf, smul_eq_C_mul]; ring
   have e2 : X * f' = (starRingEnd ℂ) β • f' + Pc := by rw [hconj, smul_eq_C_mul]; ring

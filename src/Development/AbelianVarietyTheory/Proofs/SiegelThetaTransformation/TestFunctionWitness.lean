@@ -7,6 +7,7 @@ public import Development.AbelianVarietyTheory.Definitions.SpanningFamilies.IMem
 @[expose] public section
 
 open Matrix Complex
+open scoped Classical
 namespace GlobalTheory.SW
 
 private theorem intM_add_iff_of_intM_right {K : Type} [Field K] {κ ι : Type} {x y : Matrix κ ι K} (hy : IntM y) :

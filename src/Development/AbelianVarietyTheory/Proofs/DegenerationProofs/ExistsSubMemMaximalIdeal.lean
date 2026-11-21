@@ -1,9 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
-
+import Mathlib
 universe u_1
 open Polynomial IsLocalRing
 open scoped Pointwise
@@ -18,7 +13,9 @@ theorem isLocalRing_of_isInvariant {A B G : Type*} [CommRing A] [CommRing B] [Is
   haveI : Algebra.IsIntegral A B := Algebra.IsInvariant.isIntegral A B G
   obtain ⟨Q, hQ⟩ := Ideal.exists_maximal B
   have hunder : ∀ P : Ideal B, P.IsMaximal → P.under A = maximalIdeal A := fun P hP =>
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P)
+    IsLocalRing.eq_maximalIdeal
+      (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap A B)
+        (fun x => Algebra.IsIntegral.isIntegral x) P)
   suffices hs : ∀ σ : G, σ • Q = Q by
     refine IsLocalRing.of_unique_max_ideal ⟨Q, hQ, fun P hP => ?_⟩
     haveI := hP.isPrime
@@ -91,7 +88,8 @@ theorem isLocalRing_of_isInvariant {A B G : Type*} [CommRing A] [CommRing B] [Is
     · intro δ _; rfl
   have hlift : f ∈ Polynomial.lifts (algebraMap A B) :=
     f.lifts_iff_coeff_lifts.mpr fun n =>
-      Algebra.IsInvariant.isInvariant (G := G) _ fun σ => by rw [← coeff_smul, hfinv]
+      Algebra.IsInvariant.isInvariant (G := G) _ fun σ => by
+        rw [← AddMonoidAlgebra.coeff_smul_apply, hfinv]
   obtain ⟨p, hp1, -, hp2⟩ := Polynomial.lifts_and_natDegree_eq_and_monic hlift hfm
   have hfφ : f.map φ = (X - 1) * X ^ (O.erase γ).card := by
     rw [hf, ← Finset.mul_prod_erase O _ hγO, Polynomial.map_mul, Polynomial.map_prod,
@@ -206,13 +204,16 @@ theorem exists_pow_eq_of_isGalois {R : Type*} (K L M : Type*) [CommRing R] [IsDo
   set T := integralClosure R M
   set S := integralClosure R L
   haveI : FaithfulSMul R M := FaithfulSMul.trans R K M
+  haveI : FaithfulSMul K M :=
+    (faithfulSMul_iff_algebraMap_injective K M).mpr (RingHom.injective (algebraMap K M))
   haveI : FaithfulSMul R T := FaithfulSMul.tower_bot R T M
   haveI : Algebra.IsInvariant R T (M ≃ₐ[K] M) := ⟨fun x hx => by
     have h1 : (x : M) ∈ (⊥ : IntermediateField K M) :=
       (IsGalois.mem_bot_iff_fixed _).mpr fun σ => congrArg Subtype.val (hx σ)
     obtain ⟨z, hz⟩ := IntermediateField.mem_bot.mp h1
     have h2 : IsIntegral R z := by
-      rw [← isIntegral_algebraMap_iff , hz]; exact x.2
+      rw [← (isIntegral_algebraMap_iff (R := R) (A := K) (B := M)), hz]
+      exact x.2
     obtain ⟨r, hr⟩ := IsIntegrallyClosed.isIntegral_iff.mp h2
     refine ⟨r, Subtype.ext ?_⟩
     rw [← hz, ← hr]; rfl⟩
@@ -222,13 +223,16 @@ theorem exists_pow_eq_of_isGalois {R : Type*} (K L M : Type*) [CommRing R] [IsDo
   have hι : ∀ x : S, ((ι x : T) : M) = algebraMap L M x := fun _ => rfl
   have hunit : ∀ x : S, IsUnit (ι x) → IsUnit x := by
     intro x hx
+    haveI : FaithfulSMul L M :=
+      (faithfulSMul_iff_algebraMap_injective L M).mpr (RingHom.injective (algebraMap L M))
     obtain ⟨z, hz⟩ := hx.exists_right_inv
     have hz' : algebraMap L M x * (z : M) = 1 := congrArg Subtype.val hz
     have hx0 : (x : L) ≠ 0 := fun h => by simp [h] at hz'
     have h3 : algebraMap L M (x : L)⁻¹ = z := by
       rw [map_inv₀]; exact inv_eq_of_mul_eq_one_right hz'
     have h4 : IsIntegral R (x : L)⁻¹ := by
-      rw [← isIntegral_algebraMap_iff , h3]; exact z.2
+      rw [← (isIntegral_algebraMap_iff (R := R) (A := L) (B := M)), h3]
+      exact z.2
     exact IsUnit.of_mul_eq_one (⟨_, h4⟩ : S) (Subtype.ext (mul_inv_cancel₀ hx0))
   haveI : IsLocalRing S := IsLocalRing.of_isUnit_or_isUnit_one_sub_self fun x => by
     rcases IsLocalRing.isUnit_or_isUnit_one_sub_self (ι x) with h | h

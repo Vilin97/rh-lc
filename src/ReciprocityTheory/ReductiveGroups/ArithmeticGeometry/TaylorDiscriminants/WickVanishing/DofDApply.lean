@@ -15,10 +15,10 @@ namespace ReciprocityTheory.ChartRestriction.G.TB.GE
 variable {k : Type} [CommRing k] {d : ℕ}
 
 def dofCoef (F : Fin d → PS k 2 d) (v : Fin d → k) (j : Fin d) : PS k 1 d :=
-  ∑ i : Fin d, C (v i) * ev (n := 1) ![pt k d 0, 0] (pderiv k ((1 : Fin 2), i) (F j))
+  ∑ i : Fin d, C (v i) * ev (n := 1) ![pt k d 0, 0] (pderiv ((1 : Fin 2), i) (F j))
 
 def dofD (F : Fin d → PS k 2 d) (v : Fin d → k) : Derivation k (PS k 1 d) (PS k 1 d) :=
-  ∑ j : Fin d, dofCoef F v j • pderiv k ((0 : Fin 1), j)
+  ∑ j : Fin d, dofCoef F v j • pderiv ((0 : Fin 1), j)
 
 theorem dofD_apply (F : Fin d → PS k 2 d) (v : Fin d → k) (f : PS k 1 d) :
     dofD F v f = Dof F v f := by

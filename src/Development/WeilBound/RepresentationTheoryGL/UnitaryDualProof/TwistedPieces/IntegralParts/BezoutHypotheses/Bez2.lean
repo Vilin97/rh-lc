@@ -1,8 +1,4 @@
-module
-
-public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.CompactOrbits.NilpotentOrbits.NilpotentHypotheses.AevalProdLinearFactors
-
-@[expose] public section
+import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.CompactOrbits.NilpotentOrbits.NilpotentHypotheses.AevalProdLinearFactors
 
 noncomputable section
 
@@ -46,7 +42,5 @@ theorem bez2 {M : Type*} [AddCommGroup M] [Module ℂ M] (K : Submodule ℂ M) (
   · rw [aeval_prod_lin R γ b]; exact h1
   · rw [aeval_prod_linear_factors R β γ a]
     convert hQ using 3
-    refine List.map_congr_left fun x _ => ?_
-    rfl
 
 end PositivityTheory.RgUd.TP.Nil.Asm

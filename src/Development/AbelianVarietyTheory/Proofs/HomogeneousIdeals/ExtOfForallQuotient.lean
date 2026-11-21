@@ -31,14 +31,14 @@ theorem hom_ext {A : Type} [CommRing A] {f g : AddMonoidAlgebra L ℤ →+* A}
   exact AddMonoidAlgebra.ringHom_ext h₀ fun n ↦ DFunLike.congr_fun this (Multiplicative.ofAdd n)
 
 
-noncomputable def var : (AddMonoidAlgebra R ℤ)ˣ where
+noncomputable def var (R : Type) [CommRing R] : (AddMonoidAlgebra R ℤ)ˣ where
   val := single 1 1
   inv := single (-1) 1
   val_inv := by simp [single_mul_single, one_def]
   inv_val := by simp [single_mul_single, one_def]
 
 
-noncomputable def svar : (LaurentSeries R)ˣ where
+noncomputable def svar (R : Type) [CommRing R] : (LaurentSeries R)ˣ where
   val := HahnSeries.single 1 1
   inv := HahnSeries.single (-1) 1
   val_inv := by simp [HahnSeries.single_mul_single]
@@ -53,10 +53,12 @@ theorem svar_zpow (n : ℤ) : ((svar R ^ n : (LaurentSeries R)ˣ) : LaurentSerie
     rw [zpow_sub_one, Units.val_mul, ih]; simp [svar, HahnSeries.single_mul_single, sub_eq_add_neg]
 
 
-noncomputable def atZero : AddMonoidAlgebra R ℤ →+* LaurentSeries R := evalAt HahnSeries.C (svar R)
+noncomputable def atZero (R : Type) [CommRing R] : AddMonoidAlgebra R ℤ →+* LaurentSeries R :=
+  evalAt HahnSeries.C (svar R)
 
 
-noncomputable def atInf : AddMonoidAlgebra R ℤ →+* LaurentSeries R := evalAt HahnSeries.C (svar R)⁻¹
+noncomputable def atInf (R : Type) [CommRing R] : AddMonoidAlgebra R ℤ →+* LaurentSeries R :=
+  evalAt HahnSeries.C (svar R)⁻¹
 
 theorem evalAt_const {A : Type} [CommRing A] (r : L →+* A) (u : Aˣ) (c : L) :
     evalAt r u (algebraMap L _ c) = r c := by

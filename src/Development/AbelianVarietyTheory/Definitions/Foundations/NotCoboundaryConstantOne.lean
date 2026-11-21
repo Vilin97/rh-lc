@@ -65,7 +65,7 @@ def IsEmb (T : Tower p Ω) (n : ℕ) (ι : On p n →ₐ[O0 p] Ω) : Prop :=
 def IsInt (x : Ω) : Prop := IsIntegral (O0 p) x
 
 
-def Cong (k : ℕ) (x y : Ω) : Prop := ∃ z : Ω, IsInt p z ∧ x - y = (p : Ω) ^ k * z
+def Cong (k : ℕ) (x y : Ω) : Prop := ∃ z : Ω, IsInt (p := p) z ∧ x - y = (p : Ω) ^ k * z
 
 def IsKum (T : Tower p Ω) (n : ℕ) (H : Subgroup (Gal p Ω)) (r : Ω) (a : Gal p Ω → ZMod (p ^ n)) : Prop :=
   ∀ g ∈ H, g r = T.ζ n ^ (a g).val * r
@@ -76,7 +76,7 @@ def IsAlgZp (x : Ω) : Prop :=
 
 
 def Ggeo (Ω : Type*) [Field Ω] [Algebra (O0 p) Ω] : Subgroup (Gal p Ω) where
-  carrier := {g | ∀ x : Ω, IsAlgZp p x → g x = x}
+  carrier := {g | ∀ x : Ω, IsAlgZp (p := p) x → g x = x}
   one_mem' := fun _ _ => rfl
   mul_mem' := fun {a b} ha hb x hx => by
     show a (b x) = x
@@ -87,13 +87,13 @@ def Ggeo (Ω : Type*) [Field Ω] [Algebra (O0 p) Ω] : Subgroup (Gal p Ω) where
     exact a.symm_apply_apply x
 
 def LocallyConstantOneCochain (k : ℕ) (w : Gal p Ω → Ω) : Prop :=
-  (∀ g, IsInt p (w g)) ∧ ∀ g, ∃ S : Finset Ω, ∀ h : Gal p Ω, (∀ x ∈ S, h x = g x) → Cong p k (w h) (w g)
+  (∀ g, IsInt (p := p) (w g)) ∧ ∀ g, ∃ S : Finset Ω, ∀ h : Gal p Ω, (∀ x ∈ S, h x = g x) → Cong (p := p) k (w h) (w g)
 
 def Cob2 (k : ℕ) (H : Subgroup (Gal p Ω)) (ξ : Gal p Ω → Gal p Ω → Ω) : Prop :=
-  ∃ w : Gal p Ω → Ω, LocallyConstantOneCochain k w ∧ ∀ g ∈ H, ∀ h ∈ H, Cong p k (ξ g h) (g (w h) - w (g * h) + w g)
+  ∃ w : Gal p Ω → Ω, LocallyConstantOneCochain k w ∧ ∀ g ∈ H, ∀ h ∈ H, Cong (p := p) k (ξ g h) (g (w h) - w (g * h) + w g)
 
 def Cob1 (k : ℕ) (H : Subgroup (Gal p Ω)) (c : Gal p Ω → Ω) : Prop :=
-  ∃ x : Ω, IsInt p x ∧ ∀ g ∈ H, Cong p k (c g) (g x - x)
+  ∃ x : Ω, IsInt (p := p) x ∧ ∀ g ∈ H, Cong (p := p) k (c g) (g x - x)
 
 end GlobalTheory.K5
 
@@ -340,51 +340,51 @@ theorem exists_isEmb (T : Tower p Ω) (n : ℕ) : ∃ ι : On p n →ₐ[O0 p] �
 theorem mem_gn (T : Tower p Ω) (n : ℕ) (g : Gal p Ω) :
     g ∈ Gn T n ↔ g (T.ζ n) = T.ζ n ∧ g (T.qq n) = T.qq n := Iff.rfl
 
-theorem isInt_gal (g : Gal p Ω) {x : Ω} (hx : IsInt p x) : IsInt p (g x) :=
+theorem isInt_gal (g : Gal p Ω) {x : Ω} (hx : IsInt (p := p) x) : IsInt (p := p) (g x) :=
   IsIntegral.map g.toAlgHom hx
 
-theorem isInt_intCast (m : ℤ) : IsInt p (m : Ω) := by
+theorem isInt_intCast (m : ℤ) : IsInt (p := p) (m : Ω) := by
   rw [IsInt, ← map_intCast (algebraMap (O0 p) Ω)]
   exact isIntegral_algebraMap
 
-theorem cong_refl (k : ℕ) (x : Ω) : Cong p k x x :=
+theorem cong_refl (k : ℕ) (x : Ω) : Cong (p := p) k x x :=
   ⟨0, isIntegral_zero, by simp⟩
 
-theorem cong_trans {k : ℕ} {x y z : Ω} (h : Cong p k x y) (h' : Cong p k y z) : Cong p k x z := by
+theorem cong_trans {k : ℕ} {x y z : Ω} (h : Cong (p := p) k x y) (h' : Cong (p := p) k y z) : Cong (p := p) k x z := by
   obtain ⟨a, ha, e⟩ := h
   obtain ⟨b, hb, e'⟩ := h'
   exact ⟨a + b, IsIntegral.add ha hb, by linear_combination e + e'⟩
 
-theorem cong_add {k : ℕ} {x y x' y' : Ω} (h : Cong p k x y) (h' : Cong p k x' y') :
-    Cong p k (x + x') (y + y') := by
+theorem cong_add {k : ℕ} {x y x' y' : Ω} (h : Cong (p := p) k x y) (h' : Cong (p := p) k x' y') :
+    Cong (p := p) k (x + x') (y + y') := by
   obtain ⟨a, ha, e⟩ := h
   obtain ⟨b, hb, e'⟩ := h'
   exact ⟨a + b, IsIntegral.add ha hb, by linear_combination e + e'⟩
 
-theorem cong_sub {k : ℕ} {x y x' y' : Ω} (h : Cong p k x y) (h' : Cong p k x' y') :
-    Cong p k (x - x') (y - y') := by
+theorem cong_sub {k : ℕ} {x y x' y' : Ω} (h : Cong (p := p) k x y) (h' : Cong (p := p) k x' y') :
+    Cong (p := p) k (x - x') (y - y') := by
   obtain ⟨a, ha, e⟩ := h
   obtain ⟨b, hb, e'⟩ := h'
   exact ⟨a - b, IsIntegral.sub ha hb, by linear_combination e - e'⟩
 
-theorem cong_mul_right {k : ℕ} {x y c : Ω} (h : Cong p k x y) (hc : IsInt p c) :
-    Cong p k (x * c) (y * c) := by
+theorem cong_mul_right {k : ℕ} {x y c : Ω} (h : Cong (p := p) k x y) (hc : IsInt (p := p) c) :
+    Cong (p := p) k (x * c) (y * c) := by
   obtain ⟨a, ha, e⟩ := h
   exact ⟨a * c, IsIntegral.mul ha hc, by linear_combination c * e⟩
 
-theorem cong_gal {k : ℕ} {x y : Ω} (g : Gal p Ω) (h : Cong p k x y) : Cong p k (g x) (g y) := by
+theorem cong_gal {k : ℕ} {x y : Ω} (g : Gal p Ω) (h : Cong (p := p) k x y) : Cong (p := p) k (g x) (g y) := by
   obtain ⟨a, ha, e⟩ := h
   refine ⟨g a, isInt_gal g ha, ?_⟩
   rw [← map_sub, e, map_mul, map_pow, map_natCast]
 
-theorem cong_natCast {k a b : ℕ} (h : a ≡ b [MOD p ^ k]) : Cong p k (a : Ω) (b : Ω) := by
+theorem cong_natCast {k a b : ℕ} (h : a ≡ b [MOD p ^ k]) : Cong (p := p) k (a : Ω) (b : Ω) := by
   obtain ⟨c, hc⟩ := h.symm.dvd
   refine ⟨(c : Ω), isInt_intCast c, ?_⟩
   have := congrArg (Int.cast : ℤ → Ω) hc
   push_cast at this
   exact this
 
-theorem not_cong_one_zero (h : IsClo p Ω) (k : ℕ) (hk : k ≠ 0) : ¬ Cong p k (1 : Ω) 0 := by
+theorem not_cong_one_zero (h : IsClo p Ω) (k : ℕ) (hk : k ≠ 0) : ¬ Cong (p := p) k (1 : Ω) 0 := by
   rintro ⟨z, hz, h1⟩
   haveI : FaithfulSMul (O0 p) (integralClosure (O0 p) Ω) :=
     (faithfulSMul_iff_algebraMap_injective _ _).2 fun a b hab => h.inj (congrArg Subtype.val hab)

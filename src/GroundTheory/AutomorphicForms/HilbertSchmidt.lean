@@ -80,6 +80,7 @@ theorem tsum_enorm_sq_eq_adjoint {ι κ : Type*} (b : HilbertBasis ι 𝕜 H)
         congr 1; ext j; exact (enorm_sq_eq_tsum b _).symm
 
 
+variable (𝕜 H) in
 def stdHilbertBasis : HilbertBasis (exists_hilbertBasis 𝕜 H).choose 𝕜 H :=
   (exists_hilbertBasis 𝕜 H).choose_spec.choose
 
@@ -191,7 +192,7 @@ def hilbertSchmidt : Submodule 𝕜 (H →L[𝕜] K) where
 
 theorem IsHilbertSchmidt.add {S T : H →L[𝕜] K} (hS : IsHilbertSchmidt S)
     (hT : IsHilbertSchmidt T) : IsHilbertSchmidt (S + T) :=
-  (hilbertSchmidt 𝕜 H K).add_mem hS hT
+  (hilbertSchmidt (𝕜 := 𝕜) (H := H) (K := K)).add_mem hS hT
 
 theorem IsHilbertSchmidt.hasSum_norm_sq {T : H →L[𝕜] K} (hT : IsHilbertSchmidt T) {ι : Type*}
     (b : HilbertBasis ι 𝕜 H) : HasSum (fun i => ‖T (b i)‖ ^ 2) (hsNorm T ^ 2) := by

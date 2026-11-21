@@ -64,11 +64,11 @@ def diag : Idx D s M ⥤ CommRingCat.{0} where
   map_id a := by
     ext : 1
     refine IsLocalization.ringHom_ext (Submonoid.powers a.e) (RingHom.ext fun x => ?_)
-    simp
+    simp [show (𝟙 a : a ⟶ a).1 = 𝟙 a.j from rfl]
   map_comp {a b c} φ ψ := by
     ext : 1
     refine IsLocalization.ringHom_ext (Submonoid.powers a.e) (RingHom.ext fun x => ?_)
-    simp
+    simp [show (φ ≫ ψ).1 = φ.1 ≫ ψ.1 from rfl]
 
 end GlobalTheory.IndEtaleLoc
 
@@ -91,7 +91,8 @@ instance [IsFiltered J] : IsFiltered (Idx D s M) := by
   · let h := IsFiltered.coeqHom φ.1 ψ.1
     refine ⟨⟨IsFiltered.coeq φ.1 ψ.1, (D.map h).hom b.e, by rw [app_map_apply]; exact b.mem⟩,
       ⟨h, 1, mul_one _⟩, Subtype.ext ?_⟩
-    simpa using IsFiltered.coeq_condition φ.1 ψ.1
+    change φ.1 ≫ h = ψ.1 ≫ h
+    exact IsFiltered.coeq_condition φ.1 ψ.1
 
 end GlobalTheory.IndEtaleLoc
 

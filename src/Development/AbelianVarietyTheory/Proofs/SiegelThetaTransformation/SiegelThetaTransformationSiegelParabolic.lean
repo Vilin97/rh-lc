@@ -1,11 +1,7 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.SpanningFamilies.IMemSiegel
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.RationalSchwartzBruhatAlgebraIntegralLinearStatement
-public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SchwartzBruhatInvariantIntegralMatrixMulStatement
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.SpanningFamilies.IMemSiegel
+import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.RationalSchwartzBruhatAlgebraIntegralLinearStatement
+import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.SchwartzBruhatInvariantIntegralMatrixMulStatement
 
 open Matrix Complex GlobalTheory.SW
 open scoped ComplexConjugate Real
@@ -155,6 +151,8 @@ private lemma parabolic_exponent_term_eq {ι : Type} [Fintype ι] (A B : Matrix 
     dotProduct_mulVec, vecMul_transpose, dotProduct_mulVec _ (_root_.GlobalTheory.SW.qm A) z]
   ring
 
+open Matrix Complex in
+open scoped ComplexConjugate Real in
 
 theorem _root_.GlobalTheory.SW.Parab.trans_parabolic : ∀ (κ ι : Type) [Fintype κ] [Fintype ι] [DecidableEq ι]
     (σ : Matrix (ι ⊕ ι) (ι ⊕ ι) ℚ), Even (Fintype.card κ) → σ ∈ Matrix.symplecticGroup ι ℚ →
@@ -193,8 +191,7 @@ theorem _root_.GlobalTheory.SW.Parab.trans_parabolic : ∀ (κ ι : Type) [Finty
     have hqD : (_root_.GlobalTheory.SW.qm D)⁻¹ = _root_.GlobalTheory.SW.qm Aᵀ := by
       refine Matrix.inv_eq_right_inv ?_
       rw [← _root_.GlobalTheory.SW.Parab.qm_mul', hDA]
-      ext i j
-      by_cases hij : i = j <;> simp [_root_.GlobalTheory.SW.qm, one_apply, hij]
+      exact Matrix.map_one (Rat.castHom ℂ) (map_zero _) (map_one _)
     have h0 : _root_.GlobalTheory.SW.qm σ.toBlocks₂₁ = 0 := by
       rw [hC]
       ext i j
@@ -205,6 +202,8 @@ theorem _root_.GlobalTheory.SW.Parab.trans_parabolic : ∀ (κ ι : Type) [Finty
       mul_zero, Complex.exp_zero, mul_one, hqD, Pi.smul_apply, smul_eq_mul]
     conv_rhs => rw [← e.tsum_eq, ← tsum_mul_left]
     congr 1
+    funext x
+    simp only [e, Equiv.coe_fn_mk, _root_.GlobalTheory.SW.Parab.qv_row_mul, parabolic_exponent_term_eq,
       Finset.sum_add_distrib]
     unfold _root_.GlobalTheory.SW.Parab.parChar
     rw [Rat.cast_sum, mul_add, Complex.exp_add, Complex.exp_neg]

@@ -41,8 +41,6 @@ namespace GDet
 
 variable {n : ℕ} {A G : Type} [CommRing A] [Group G] (D : GDet n A G)
 
-  cases D; cases D'; congr; funext B _ _; exact MonoidHom.ext (h B)
-
 def map {A' : Type} [CommRing A'] (f : A →+* A') : GDet n A' G where
   D B _ _ := letI : Algebra A B := ((algebraMap A' B).comp f).toAlgebra; D.D B
   nat B B' _ _ _ _ g x :=
@@ -121,6 +119,8 @@ structure PG where
   [t2 : T2Space G]
   [td : TotallyDisconnectedSpace G]
 
+instance : CoeSort PG Type := ⟨PG.G⟩
+
 attribute [instance] PG.grp PG.top PG.tgrp PG.cpt PG.t2 PG.td
 
 structure Frame where
@@ -138,15 +138,15 @@ structure Frame where
   Vl : Type
   [iVl : Fintype Vl]
   Gv : Vl → PG
-  Gv_phi : ∀ v, PhiFin l (Gv v)
-  Mu : ∀ v, Subgroup (Gv v)
-  psib : ∀ v, Fin n → (Gv v →* (ResidueField O)ˣ)
+  Gv_phi : ∀ v, PhiFin l (Gv v).G
+  Mu : ∀ v, Subgroup (Gv v).G
+  psib : ∀ v, Fin n → (Gv v).G →* (ResidueField O)ˣ
   St : Type
   [iSt : Fintype St]
   Iu : St → PG
-  Iu_phi : ∀ u, PhiFin l (Iu u)
+  Iu_phi : ∀ u, PhiFin l (Iu u).G
 
-  Lk : ∀ v, Set (Fin n × Gv v × MvPowerSeries (Fin d0) O)
+  Lk : ∀ v, Set (Fin n × (Gv v).G × MvPowerSeries (Fin d0) O)
   Lk_gen : TopGen (MvPowerSeries (Fin d0) O)
     (Set.range (MvPowerSeries.C : O →+* MvPowerSeries (Fin d0) O) ∪ {a | ∃ v i g, (i, g, a) ∈ Lk v})
   Lk_mu : ∀ v i, ∀ g ∈ Mu v, ∃ θ : O, θ - 1 ∈ maximalIdeal O ∧ (i, g, MvPowerSeries.C θ) ∈ Lk v
@@ -166,21 +166,21 @@ end Frame
 
 structure PolGp (Φ : Frame) where
   Γ : PG
-  sig : Γ →* Γ
+  sig : Γ.G →* Γ.G
   sig_cont : Continuous sig
   sig_sig : ∀ g, sig (sig g) = g
-  mu : Γ →* Φ.Oˣ
+  mu : Γ.G →* Φ.Oˣ
   mu_cont : ContM Φ.O (fun g => ((mu g : Φ.Oˣ) : Φ.O))
   mu_sig : ∀ g, mu (sig g) = mu g
-  iv : ∀ v, Φ.Gv v →* Γ
+  iv : ∀ v, (Φ.Gv v).G →* Γ.G
   iv_cont : ∀ v, Continuous (iv v)
-  iu : ∀ u, Φ.Iu u →* Γ
+  iu : ∀ u, (Φ.Iu u).G →* Γ.G
   iu_cont : ∀ u, Continuous (iu u)
-  chi : Fin Φ.n → (Γ →* Φ.kˣ)
-  chi_open : ∀ i, IsOpen ((chi i).ker : Set Γ)
+  chi : Fin Φ.n → (Γ.G →* Φ.kˣ)
+  chi_open : ∀ i, IsOpen ((chi i).ker : Set Γ.G)
   chi_inj : Function.Injective chi
 
-  fg : PhiFin Φ.l Γ
+  fg : PhiFin Φ.l Γ.G
 
 abbrev DetG (n : ℕ) (Γ B : Type) [Group Γ] [CommRing B] : Type 1 := GDet n B Γ
 
@@ -217,11 +217,11 @@ structure IsCNL {O B : Type} [CommRing O] [IsLocalRing O] [CommRing B] [IsLocalR
 section Elements
 variable {Φ : Frame} (G : PolGp Φ) {B : Type} [CommRing B]
 
-def star (j : Φ.O →+* B) (x : MonoidAlgebra B G.Γ) : MonoidAlgebra B G.Γ :=
+def star (j : Φ.O →+* B) (x : MonoidAlgebra B G.Γ.G) : MonoidAlgebra B G.Γ.G :=
   x.coeff.sum (fun g a => MonoidAlgebra.single (G.sig g)⁻¹ (a * j ((G.mu g : Φ.Oˣ) : Φ.O)))
 
-def oEl (v : Φ.Vl) (ψ : Fin Φ.n → (Φ.Gv v →* Bˣ)) (g : Fin Φ.n → Φ.Gv v) : MonoidAlgebra B G.Γ :=
-  (List.ofFn fun i => gp B (G.iv v (g i)) - sc G.Γ ((ψ i (g i) : Bˣ) : B)).prod
+def oEl (v : Φ.Vl) (ψ : Fin Φ.n → ((Φ.Gv v).G →* Bˣ)) (g : Fin Φ.n → (Φ.Gv v).G) : MonoidAlgebra B G.Γ.G :=
+  (List.ofFn fun i => gp B (G.iv v (g i)) - sc G.Γ.G ((ψ i (g i) : Bˣ) : B)).prod
 
 end Elements
 
@@ -231,18 +231,18 @@ structure Pair {Φ : Frame} (G : PolGp Φ) where
   lam : Φ.abelian₂ →+* B
   lam_loc : IsLocalHom lam
   cnl : IsCNL (lam.comp (MvPowerSeries.C : Φ.O →+* Φ.abelian₂))
-  D : DetG Φ.n G.Γ B
-  psi : ∀ v, Fin Φ.n → (Φ.Gv v →* Bˣ)
+  D : DetG Φ.n G.Γ.G B
+  psi : ∀ v, Fin Φ.n → ((Φ.Gv v).G →* Bˣ)
   cont : DetCont D
   lift : DetLifts (lam.comp (MvPowerSeries.C : Φ.O →+* Φ.abelian₂)) D G.chi
   psi_cont : ∀ v i, ContM B (fun g => ((psi v i g : Bˣ) : B))
   psi_lift : ∀ v i g, Red (lam.comp (MvPowerSeries.C : Φ.O →+* Φ.abelian₂)) ((psi v i g : Bˣ) : B)
     ((Φ.psib v i g : Φ.kˣ) : Φ.k)
   link : ∀ v i g a, (i, g, a) ∈ Φ.Lk v → ((psi v i g : Bˣ) : B) = lam a
-  relP : ∀ (g : G.Γ) (i : ℕ),
+  relP : ∀ (g : G.Γ.G) (i : ℕ),
     D.lam i (star G (lam.comp (MvPowerSeries.C : Φ.O →+* Φ.abelian₂)) (gp B g)) = D.lam i (gp B g)
-  relO : ∀ v (g : Fin Φ.n → Φ.Gv v) (h : G.Γ), D.tr (gp B h * oEl G v (psi v) g) = 0
-  relI : ∀ u (g : Φ.Iu u) (h : G.Γ), D.tr (gp B h * (gp B (G.iu u g) - 1)) = 0
+  relO : ∀ v (g : Fin Φ.n → (Φ.Gv v).G) (h : G.Γ.G), D.tr (gp B h * oEl G v (psi v) g) = 0
+  relI : ∀ u (g : (Φ.Iu u).G) (h : G.Γ.G), D.tr (gp B h * (gp B (G.iu u g) - 1)) = 0
 
 attribute [instance] Pair.iB Pair.iL
 

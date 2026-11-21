@@ -1,9 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
-
+import Mathlib
 open IsLocalRing
 
 namespace GlobalTheory.PurityDisc
@@ -137,8 +132,7 @@ theorem formallyUnramified_of_dual (R A : Type) [CommRing R] [CommRing A] [Algeb
           congr 2
           ring_nf
       _ = ∑ j, b j ⊗ₜ[R] (s * d j) := by simp_rw [hexp]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · rw [map_sum]
     simp_rw [Algebra.TensorProduct.lmul'_apply_tmul]
     rw [← sub_eq_zero]
     refine hnd _ fun k => ?_

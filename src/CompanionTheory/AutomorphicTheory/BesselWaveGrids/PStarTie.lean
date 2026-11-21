@@ -1,10 +1,6 @@
-module
-
-public import Formalism.HermitianCurvature.LetterProductDoubleDegreeCount
-public import Formalism.FormalDegreeBessel.StatementDS
-public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.NqMovedExample
-
-@[expose] public section
+import Formalism.HermitianCurvature.LetterProductDoubleDegreeCount
+import Formalism.FormalDegreeBessel.StatementDS
+import CompanionTheory.AutomorphicTheory.BesselWaveGrids.NqMovedExample
 
 namespace CompanionTheory.WaveGrid
 

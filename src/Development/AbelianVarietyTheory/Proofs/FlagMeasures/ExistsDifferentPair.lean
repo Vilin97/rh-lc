@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.FrameLats
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.FrameLats
 
 noncomputable section
 
@@ -101,11 +97,5 @@ theorem gq_zero (σ : E →+* E) (g : ℕ) :
     Gq (r := 0) σ 1 (1 + 2 * g) !![-1 - (g : E)] = (g : E) ^ 2 := by
   simp [Gq, lead]
   ring
-
-
-
-
-
-
 
 end GlobalTheory.SgGlob.Inhab

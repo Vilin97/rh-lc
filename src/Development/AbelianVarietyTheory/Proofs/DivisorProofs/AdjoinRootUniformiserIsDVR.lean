@@ -1,9 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
-
+import Mathlib
 open IsLocalRing
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 1000000
@@ -39,8 +34,13 @@ theorem adjoinRoot_uniformiser_isDVR : ∀ (R : Type) [CommRing R] [IsDomain R] 
   have hπm : π ∈ maximalIdeal R := (mem_maximalIdeal _).2 hπ.not_isUnit
 
   have hcomap : ∀ M : Ideal (AdjoinRoot f), M.IsMaximal →
-      M.comap (algebraMap R (AdjoinRoot f)) = maximalIdeal R := fun M hM =>
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal M)
+      M.comap (algebraMap R (AdjoinRoot f)) = maximalIdeal R := by
+    intro M hM
+    letI : M.IsMaximal := hM
+    exact IsLocalRing.eq_maximalIdeal
+      (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal
+        (algebraMap R (AdjoinRoot f))
+        (algebraMap_isIntegral_iff.mpr (inferInstance : Algebra.IsIntegral R (AdjoinRoot f))) M)
   have hxM : ∀ M : Ideal (AdjoinRoot f), M.IsMaximal → x ∈ M := by
     intro M hM
     have : algebraMap R _ π ∈ M := by

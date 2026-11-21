@@ -1,11 +1,7 @@
-module
-
-public import Mathlib
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.TopNilDefs
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.FiniteMaximalSpectrumOfFiniteOfIsLocalRing
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsUniqueAlgEquivOfCompatibleQuotient
-
-@[expose] public section
+import Mathlib
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.TopNilDefs
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.FiniteMaximalSpectrumOfFiniteOfIsLocalRing
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsUniqueAlgEquivOfCompatibleQuotient
 
 open Filter UpperTheory.V.AlgebraTools
 open scoped TensorProduct
@@ -42,10 +38,30 @@ private theorem complete_of_finite (R : Type) [CommRing R] [IsLocalRing R] [IsNo
       ((maximalIdeal.isMaximal R).eq_of_le (Ideal.comap_ne_top _ h2.ne_top)
         (Ideal.map_le_iff_le_comap.1 h1)).symm
     have h4 : P.IsMaximal :=
-      Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := R) P (h3 ▸ maximalIdeal.isMaximal R)
+      Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (algebraMap R R')
+        (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) P
+        (h3 ▸ maximalIdeal.isMaximal R)
     exact (eq_maximalIdeal h4).ge
   obtain ⟨e, he⟩ := Ideal.exists_pow_le_of_le_radical_of_fg hrad (IsNoetherian.noetherian _)
-  have h0 : IsAdicComplete (maximalIdeal R) R' := GlobalTheory.isAdicComplete_of_finite _ R'
+  have h0 : IsAdicComplete (maximalIdeal R) R' := by
+    let I := maximalIdeal R
+    have hb : Function.Bijective (AdicCompletion.of I R) :=
+      AdicCompletion.of_bijective_iff.2 (show IsAdicComplete I R from inferInstance)
+    let φ : R ≃ₗ[R] AdicCompletion I R := LinearEquiv.ofBijective (AdicCompletion.of I R) hb
+    let e : R' ≃ₗ[R] AdicCompletion I R ⊗[R] R' :=
+      (TensorProduct.lid R R').symm.trans (TensorProduct.congr φ (LinearEquiv.refl R R'))
+    have h1 : AdicCompletion.of I R 1 = 1 := by
+      ext n
+      simp
+    have hfac : ⇑(AdicCompletion.of I R') =
+        ⇑(AdicCompletion.ofTensorProduct I R') ∘ ⇑e := by
+      funext x
+      have he : e x = (1 : AdicCompletion I R) ⊗ₜ[R] x := by
+        simp [e, φ, h1]
+      simp [he]
+    apply AdicCompletion.of_bijective_iff.1
+    rw [hfac]
+    exact (AdicCompletion.ofTensorProduct_bijective_of_finite_of_isNoetherian I R').comp e.bijective
   have hP : IsPrecomplete (maximalIdeal R') R' :=
     prec_cofinal hle he (IsPrecomplete.map_algebraMap_iff.2 h0.toIsPrecomplete)
   exact { toIsHausdorff := inferInstance, toIsPrecomplete := hP }

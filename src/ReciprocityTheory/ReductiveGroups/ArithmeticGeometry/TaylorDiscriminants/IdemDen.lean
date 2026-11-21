@@ -23,9 +23,10 @@ def evAt {E : Type} [Field E] {C : Type} [Field C] [Algebra ℚ E] [Algebra ℚ 
   Algebra.TensorProduct.productMap (σ.toRatAlgHom) (AlgHom.id ℚ C)
 
 
-def IdemEvalSt : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] (C : Type) [Field C] [CharZero C] [IsAlgClosed C] (ι : Type) [Fintype ι]
-    [DecidableEq ι] (b : Module.Basis ι ℚ E) (τ σ : E →+* C),
+def IdemEvalSt : Prop := by
+  classical
+  exact ∀ (E : Type) [Field E] [NumberField E] (C : Type) [Field C] [CharZero C] [IsAlgClosed C] (ι : Type)
+    [Fintype ι] [DecidableEq ι] (b : Module.Basis ι ℚ E) (τ σ : E →+* C),
     evAt σ (idemOf b τ) = if σ = τ then 1 else 0
 
 def DualDiffSt : Prop :=

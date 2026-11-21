@@ -1,10 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.TopNilDefs
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.TnFree
-
-@[expose] public section
+import Mathlib
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.TopNilDefs
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.TnFree
 
 open Filter UpperTheory.V.AlgebraTools
 open scoped TensorProduct
@@ -13,7 +9,8 @@ private theorem topNil_map_mem {R M M' κ : Type} [CommRing R] [AddCommGroup M] 
     [AddCommGroup M'] [Module R M'] (I : Ideal R) (T : κ → Module.End R M)
     (T' : κ → Module.End R M') (f : M →ₗ[R] M') (hf : ∀ i x, f (T i x) = T' i (f x))
     {x : M} (hx : x ∈ topNil I T) : f x ∈ topNil I T' := by
-  rw [mem_topNil] at hx ⊢
+  change ∀ i (j : ℕ), ∀ᶠ r : ℕ in atTop, (T i ^ r) x ∈ (I ^ j • ⊤ : Submodule R M) at hx
+  change ∀ i (j : ℕ), ∀ᶠ r : ℕ in atTop, (T' i ^ r) (f x) ∈ (I ^ j • ⊤ : Submodule R M')
   intro i j
   have hpow : ∀ r : ℕ, f ((T i ^ r) x) = (T' i ^ r) (f x) := by
     intro r
@@ -33,7 +30,7 @@ theorem UpperTheory.V.AlgebraTools.topNil_map :
       (topNil (IsLocalRing.maximalIdeal R) T).map f = topNil (IsLocalRing.maximalIdeal R) T' ⊓ LinearMap.range f ∧
       ∀ I : Ideal R, LinearMap.ker f = I • ⊤ → LinearMap.ker f ⊓ topNil (IsLocalRing.maximalIdeal R) T = I • topNil (IsLocalRing.maximalIdeal R) T := by
   intro R _ _ _ _ κ M _ _ M' _ _ _ _ T T' hT hT' f hf
-  obtain ⟨_, hsmul, -, -⟩ := topNil_free R κ M T hT
+  have hsmul := (topNil_free R κ M T hT).2.1
   refine ⟨le_antisymm ?_ ?_, fun I hI => by rw [hI]; exact hsmul I⟩
   · rw [Submodule.map_le_iff_le_comap]
     intro x hx

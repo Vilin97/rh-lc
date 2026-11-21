@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open MeasureTheory Topology Matrix
 open scoped ComplexOrder ENNReal Pointwise

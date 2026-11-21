@@ -29,7 +29,7 @@ variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteS
 section Abs
 
 theorem isSelfAdjoint_of_nonneg {A : H →L[ℂ] H} (hA : 0 ≤ A) : IsSelfAdjoint A :=
-  ((nonneg_iff_isPositive A).1 hA).isSelfAdjoint
+  (nonneg_iff_isPositive.1 hA).isSelfAdjoint
 
 theorem adjoint_eq_of_nonneg {A : H →L[ℂ] H} (hA : 0 ≤ A) : A† = A :=
   (isSelfAdjoint_of_nonneg hA).adjoint_eq

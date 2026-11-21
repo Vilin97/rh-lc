@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.StabiliserCardinality
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.StabiliserCardinality
 
 namespace GlobalTheory.Proof.DoubleCosetCountGlobalInterpolation
 
@@ -20,7 +16,7 @@ theorem card_fiber_mul_card_stab {G : Type} [Group G] (Γ U K : Subgroup G) (hUK
     rintro ⟨d, hd⟩
     obtain ⟨a, ha, k, hk, h⟩ := (@DoubleCoset.eq _ _ Γ K _ _).1 hd.symm
     refine ⟨⟨k, hk⟩, ?_⟩
-    refine Eq.trans ?_ (DoubleCoset.out_eq' Γ U d)
+    refine Eq.trans ?_ (DoubleCoset.out_eq' (H := Γ) (K := U) d)
     exact (@DoubleCoset.eq _ _ Γ U _ _).2 ⟨a, ha, 1, U.one_mem, by rw [h]; group⟩
   choose κ hκ using hex
   rw [← Nat.card_prod, Subgroup.relIndex, Subgroup.index]
@@ -50,7 +46,7 @@ theorem card_fiber_mul_card_stab {G : Type} [Group G] (Γ U K : Subgroup G) (hUK
     | H k =>
       have hd : DoubleCoset.mk Γ K (DoubleCoset.mk Γ U (y * k)).out = DoubleCoset.mk Γ K y := by
         obtain ⟨a, ha, u, hu, h⟩ := (@DoubleCoset.eq _ _ Γ U _ _).1
-          (DoubleCoset.out_eq' Γ U (DoubleCoset.mk Γ U (y * k))).symm
+          (DoubleCoset.out_eq' (H := Γ) (K := U) (DoubleCoset.mk Γ U (y * k))).symm
         symm
         exact (@DoubleCoset.eq _ _ Γ K _ _).2
           ⟨a, ha, k * u, K.mul_mem k.2 (hUK hu), h.trans (by group)⟩

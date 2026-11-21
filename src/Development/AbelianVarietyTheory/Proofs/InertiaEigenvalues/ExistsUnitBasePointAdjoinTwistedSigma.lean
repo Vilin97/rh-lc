@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.UnitLemmaGroup
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.UnitLemmaGroup
 
 noncomputable section
 
@@ -165,8 +161,11 @@ theorem maximal_finite {K : UQ} (B : InvAlg K) (hint : IsIntegral K.O B.g) :
   refine (Algebra.QuasiFinite.finite_primesOver (IsLocalRing.maximalIdeal K.O)).subset ?_
   intro M hM
   have hM' : M.IsMaximal := hM
+  letI : M.IsMaximal := hM'
   have hc : (M.comap (algebraMap K.O (Algebra.adjoin K.O {B.g}))).IsMaximal :=
-    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal M
+    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal
+      (algebraMap K.O (Algebra.adjoin K.O {B.g}))
+      (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) M
   exact ⟨hM'.isPrime, ⟨(IsLocalRing.eq_maximalIdeal hc).symm⟩⟩
 
 theorem exists_unit_base : ∀ (K : UQ) (B : InvAlg K), B.g * B.σ B.g = 1 → B.P.Separable → IsIntegral K.O B.g →

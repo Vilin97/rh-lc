@@ -1,10 +1,5 @@
-module
-
-public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.TwConj
-public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.FourierMatch
-
-@[expose] public section
-
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.TwConj
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.FourierMatch
 open GlobalTheory.Tw Matrix
 
 namespace GlobalTheory.Tw.PhiConjugateTranspose
@@ -27,7 +22,7 @@ theorem phi_mul_transpose : Phi n R * (Phi n R)ᵀ = 1 := by
   ext i j
   have h := this i j
   rw [Matrix.mul_one] at h
-  rw [h, one_apply, one_apply]
+  rw [h, Matrix.one_apply, Matrix.one_apply]
   by_cases hij : i = j
   · subst hij; simp [← mul_pow]
   · simp [hij]
@@ -36,7 +31,7 @@ theorem phi_transpose_mul : (Phi n R)ᵀ * Phi n R = 1 := mul_eq_one_comm.mp phi
 
 theorem phi_mul_phi : Phi n R * Phi n R = ((-1 : R) ^ (n - 1)) • (1 : Matrix (Fin n) (Fin n) R) := by
   ext i k
-  simp only [Matrix.mul_apply, phi_apply, Matrix.smul_apply, one_apply, smul_eq_mul, ite_mul, zero_mul,
+  simp only [Matrix.mul_apply, phi_apply, Matrix.smul_apply, Matrix.one_apply, smul_eq_mul, ite_mul, zero_mul,
     Finset.sum_ite_eq', Finset.mem_univ, if_true, Fin.rev_rev]
   by_cases h : k = i
   · subst h

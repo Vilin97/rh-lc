@@ -1,11 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.FiniteResidueFieldPadicInt
-public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.QBinomialSumCardQuotientSubspacesStatement
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.FiniteResidueFieldPadicInt
+import Development.AbelianVarietyTheory.Proofs.SatakeParameters.QBinomialSumCardQuotientSubspacesStatement
 open GlobalTheory.LatHecke
 
 namespace GlobalTheory.LatHecke
@@ -67,7 +62,7 @@ theorem sum_alt_card_subElem_ge : ∀ (O K : Type) [CommRing O] [IsDomain O] [Is
     exact zero_mem _
   have hΦA : ∀ W, A ≤ Φ W := fun W => hPA ▸ Submodule.map_mono (hPC W)
   have hΦL : ∀ W, Φ W ≤ L.1 := fun W => Submodule.map_subtype_le _ _
-  have hlat : ∀ W, (Φ W).IsLattice K := fun W => by
+  have hlat : ∀ W, (Φ W).IsFullLattice K := fun W => by
     haveI := (maxMul L).2
     exact Submodule.IsLattice.of_le_of_isLattice_of_fg K
       (show (maxMul L).1 ≤ Φ W from le_trans le_sup_right (hΦA W)) (L.2.fg.of_le (hΦL W))

@@ -1,11 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Foundations.NotCoboundaryConstantOne
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsPowDivPrimeZpowIntegralClosureUnitStatement
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.Foundations.NotCoboundaryConstantOne
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsPowDivPrimeZpowIntegralClosureUnitStatement
 open GlobalTheory.K5
 
 namespace GlobalTheory.K5.ResidueIndep
@@ -53,8 +48,7 @@ theorem field_indep {k : Type} [Field k] (p : ℕ) [hp : Fact p.Prime] [CharP k 
     exact absurd (Nat.pow_le_pow_right hp.out.pos hNn) (not_le.2 h4)
   intro j hj
   have h1 : P.coeff j = c' j := by
-    simp only [P, finsetSum_coeff, coeff_monomial]
-    rw [Finset.sum_ite_eq' , if_pos (Finset.mem_range.2 hj)]
+    simp [P, coeff_monomial, Finsupp.single_apply] <;> omega
   rw [hP0, coeff_zero] at h1
   have h2 := congrArg Subtype.val h1
   simp only [c', dif_pos hj] at h2
@@ -170,7 +164,9 @@ theorem residue_indep : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Alg
       rintro _ ⟨y, hy, rfl⟩ hb
       refine hq y hy y.2 ?_
       rw [← ht]
-      have := (hmem (y ^ p - t ^ p ^ N)).1 (by rw [map_sub, map_pow, map_pow, hb, sub_self])
+      have hz : Ideal.Quotient.mk M (y ^ p - t ^ p ^ N) = 0 := by
+        rw [RingHom.map_sub, RingHom.map_pow, RingHom.map_pow, hb, sub_self]
+      have := (hmem (y ^ p - t ^ p ^ N)).1 hz
       exact this)
     (fun j => Ideal.Quotient.mk M (d' j))
     (fun j hj => ⟨d' j, by

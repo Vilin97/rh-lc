@@ -1,11 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ImportsBis
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ImportsBisFurther
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ImportsBis
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ImportsBisFurther
 open scoped BigOperators
 
 namespace GlobalTheory.CommTriang
@@ -100,23 +95,25 @@ variable {k : Type} [Field k] {n : ℕ}
 
 theorem blockOne_mul (Q R : Matrix (Fin n) (Fin n) k) : blockOne Q * blockOne R = blockOne (Q * R) := by
   ext a b
-  cases a using Fin.cases <;> cases b using Fin.cases <;> simp [Matrix.mul_apply, Fin.sum_univ_succ]
+  cases a using Fin.cases <;> cases b using Fin.cases <;>
+    simp [blockOne, Matrix.mul_apply, Fin.sum_univ_succ]
 
 theorem blockOne_one : blockOne (1 : Matrix (Fin n) (Fin n) k) = 1 := by
   ext a b
-  cases a using Fin.cases <;> cases b using Fin.cases <;> simp [Matrix.one_apply, Fin.succ_ne_zero] <;> exact (Fin.succ_ne_zero _).symm
+  cases a using Fin.cases <;> cases b using Fin.cases <;>
+    simp [blockOne, Matrix.one_apply] <;> exact (Fin.succ_ne_zero _).symm
 
 theorem conj_succ_succ (R Q : Matrix (Fin n) (Fin n) k) (S : Matrix (Fin (n+1)) (Fin (n+1)) k) (a b : Fin n) :
     (blockOne R * S * blockOne Q) a.succ b.succ = (R * S.submatrix Fin.succ Fin.succ * Q) a b := by
-  simp [Matrix.mul_apply, Fin.sum_univ_succ]
+  simp [blockOne, Matrix.mul_apply, Fin.sum_univ_succ]
 
 theorem conj_succ_zero (R Q : Matrix (Fin n) (Fin n) k) (S : Matrix (Fin (n+1)) (Fin (n+1)) k) (a : Fin n) :
     (blockOne R * S * blockOne Q) a.succ 0 = ∑ c, R a c * S c.succ 0 := by
-  simp [Matrix.mul_apply, Fin.sum_univ_succ]
+  simp [blockOne, Matrix.mul_apply, Fin.sum_univ_succ]
 
 theorem conj_zero_zero (R Q : Matrix (Fin n) (Fin n) k) (S : Matrix (Fin (n+1)) (Fin (n+1)) k) :
     (blockOne R * S * blockOne Q) 0 0 = S 0 0 := by
-  simp [Matrix.mul_apply, Fin.sum_univ_succ]
+  simp [blockOne, Matrix.mul_apply, Fin.sum_univ_succ]
 
 end
 

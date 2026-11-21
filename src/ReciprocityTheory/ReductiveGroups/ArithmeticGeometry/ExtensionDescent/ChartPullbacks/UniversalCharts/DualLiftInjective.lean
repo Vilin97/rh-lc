@@ -30,7 +30,8 @@ theorem inr_mem_kerD (t : R) : (TrivSqZeroExt.inr t : DualNumber R) ∈ RingHom.
   TrivSqZeroExt.fst_inr R t
 
 def dualLift {n : ℕ} (c : Fin n → R) : JetR R (Fin n) 1 →ₐ[R] DualNumber R :=
-  jetLift R (RingHom.ker (fstD R)) kerD_sq (fun j => TrivSqZeroExt.inr (c j)) (fun j => inr_mem_kerD _)
+  jetLift (R := R) (RingHom.ker (fstD R)) kerD_sq (fun j => TrivSqZeroExt.inr (c j))
+    (fun j => inr_mem_kerD (c j))
 
 theorem dualLift_zR {n : ℕ} (c : Fin n → R) (j : Fin n) : dualLift c (zR 1 j) = TrivSqZeroExt.inr (c j) :=
   jetLift_zR _ _ _ _ j

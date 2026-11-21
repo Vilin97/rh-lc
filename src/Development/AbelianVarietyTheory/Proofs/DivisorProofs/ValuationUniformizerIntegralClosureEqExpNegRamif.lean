@@ -1,9 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
-
+import Mathlib
 open IsDedekindDomain
 
 namespace GlobalTheory
@@ -30,7 +25,7 @@ theorem valuation_uniformizer_integralClosure (R K L : Type) [CommRing R] [IsDom
     have hne : P.asIdeal.under R ≠ ⊥ := Ideal.under_ne_bot R P.ne_bot
     exact ((IsLocalRing.eq_maximalIdeal (Ideal.IsPrime.isMaximal inferInstance hne))).symm
   have h1 := HeightOneSpectrum.valuation_liesOver L v P (algebraMap R K π)
-  rw [← h1, Ideal.ramificationIdx'_eq_ramificationIdx _ _ v.ne_bot, HeightOneSpectrum.valuation_of_algebraMap,
+  rw [← h1, HeightOneSpectrum.valuation_of_algebraMap,
     HeightOneSpectrum.intValuation_singleton v hπ.ne_zero hπ.maximalIdeal_eq, ← WithZero.exp_nsmul]
   congr 1
   simp

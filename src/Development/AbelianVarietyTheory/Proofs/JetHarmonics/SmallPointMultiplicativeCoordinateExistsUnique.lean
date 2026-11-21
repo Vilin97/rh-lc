@@ -1,12 +1,8 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Jets.CmLatticeCommutatorPairingPowEqOneOfGoodLift
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.UwEllipticFlow
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.RingHomPointBijective
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CpTransportedTaylorSeriesInChartRingHomLaws
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.Jets.CmLatticeCommutatorPairingPowEqOneOfGoodLift
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.UwEllipticFlow
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.RingHomPointBijective
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CpTransportedTaylorSeriesInChartRingHomLaws
 
 open PowerSeries GlobalTheory.MomOne
 open scoped ComplexConjugate BigOperators Topology
@@ -388,7 +384,10 @@ theorem at_exists_unique : ∀ (q : ℕ) [Fact q.Prime] (M : Mdl q) (ω : ℂ_[q
   obtain ⟨h, hℓ0, hbd, hc1⟩ := hch
   have hu0 : M.u 0 = 0 := by unfold Mdl.u; simp [zero_mem]
   have hg0 : constantCoeff (hat M.ι (C ω * logS) M.u) = 0 := by
-    rw [(TaylorRead.hat_laws q M.ι _ hℓ0).2.2.2.1 M.u, hu0, map_zero]
+    unfold hat
+    apply PowerSeries.constantCoeff_subst_eq_zero hℓ0
+    rw [← coeff_zero_eq_constantCoeff_apply, coeff_map]
+    simp [tay, hu0]
   have hev0 : ev (hat M.ι (C ω * logS) M.u) 0 = 0 := by rw [ev_zero, hg0]
   have hAt : ∀ ζ p, M.At ω ζ p ↔ M.Small p ∧ ‖ζ - 1‖ < 1 ∧
       ev (hat M.ι (C ω * logS) M.u) (ζ - 1) = M.ι (M.u p) := fun ζ p => Iff.rfl

@@ -40,6 +40,7 @@ def augIdeal (A : Subalgebra R (T → R)) : Ideal A := RingHom.ker (evalAt A 1)
 abbrev omega (A : Subalgebra R (T → R)) : Type := (augIdeal A).Cotangent
 
 
+open scoped Classical in
 noncomputable def dlogChar (A : Subalgebra R (T → R)) (χ : T →* Rˣ) : omega A :=
   if h : (fun t => ((χ t : Rˣ) : R)) ∈ A then
     (augIdeal A).toCotangent ⟨⟨_, h⟩ - 1, by simp [augIdeal, evalAt, RingHom.mem_ker]⟩

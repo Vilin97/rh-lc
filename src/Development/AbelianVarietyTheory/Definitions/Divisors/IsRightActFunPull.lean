@@ -160,6 +160,7 @@ theorem autRed_qProj (h : I ≤ J) (γ : QAut N I) (q : QMod N I) : autRed h γ 
   endRed_qProj h _ q
 
 
+variable (N I J) in
 def trivMod : Subgroup (QAut N I) where
   carrier := {γ | ∀ q, γ q - q ∈ J • (⊤ : Submodule O (QMod N I))}
   one_mem' := fun q => by simp

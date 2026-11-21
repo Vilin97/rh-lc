@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open NumberField
 
@@ -84,10 +80,9 @@ variable [Module.Finite (𝓞 E) Y] [Module.Projective (𝓞 E) Y]
 noncomputable def pairing (l : Exponent E Y) (β : balancedForms E Y) : ℝ :=
   (Classical.choice (nonempty_dualSystem E Y)).pairing l β
 
-def pairingValues (β : balancedForms E Y) : Set ℝ := Set.range fun l : Exponent E Y => pairing l β
+noncomputable def pairingValues (β : balancedForms E Y) : Set ℝ := Set.range fun l : Exponent E Y => pairing l β
 
 def IsPhiC (β : balancedForms E Y) (r : ℝ) : Prop := IsLeast (pairingValues β) r
-
 
 end Forms
 

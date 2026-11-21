@@ -1,8 +1,4 @@
-module
-
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDefs
-
-@[expose] public section
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDefs
 
 open MvPolynomial Equiv UpperTheory.V.AlgebraTools.Hk
 
@@ -21,7 +17,7 @@ private theorem nn_ne (R : Type) [CommRing R] [IsDomain R] (n : ℕ) (q : R) : N
   have hlt : p.1 < p.2 := by simpa [pairs] using hp
   intro h
   have hc := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single p.2 1)) h
-  rw [coeff_sub, coeff_C_mul, coeff_X, coeff_X', coeff_zero] at hc
+  rw [coeff_sub, coeff_C_mul, coeff_X, coeff_X'] at hc
   simp [Finsupp.single_left_inj one_ne_zero, hlt.ne] at hc
 
 theorem UpperTheory.V.AlgebraTools.hkDe :

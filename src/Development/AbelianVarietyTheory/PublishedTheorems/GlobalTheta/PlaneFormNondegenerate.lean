@@ -26,6 +26,14 @@ instance : Mul (Heisenberg B) := ⟨fun g h => ⟨g.vec + h.vec, g.cen + h.cen +
 instance : One (Heisenberg B) := ⟨⟨0, 0⟩⟩
 instance : Inv (Heisenberg B) := ⟨fun g => ⟨-g.vec, -g.cen + B g.vec g.vec / 2⟩⟩
 
+@[local simp] private theorem mul_vec (g h : Heisenberg B) : (g * h).vec = g.vec + h.vec := rfl
+@[local simp] private theorem mul_cen (g h : Heisenberg B) :
+    (g * h).cen = g.cen + h.cen + B g.vec h.vec / 2 := rfl
+@[local simp] private theorem one_vec : (1 : Heisenberg B).vec = 0 := rfl
+@[local simp] private theorem one_cen : (1 : Heisenberg B).cen = 0 := rfl
+@[local simp] private theorem inv_vec (g : Heisenberg B) : g⁻¹.vec = -g.vec := rfl
+@[local simp] private theorem inv_cen (g : Heisenberg B) : g⁻¹.cen = -g.cen + B g.vec g.vec / 2 := rfl
+
 instance : Group (Heisenberg B) :=
   Group.ofLeftAxioms
     (fun a b c => by ext <;> simp [add_assoc]; ring)
@@ -328,9 +336,15 @@ def transl (c : W → W → ℂ) (x : W) : Module.End ℂ (W → ℂ) where
   map_add' f g := by funext z; simp [mul_add]
   map_smul' r f := by funext z; simp; ring
 
-theorem ops_transl (h : Alt c) : Ops c (transl c) where
-  zero v := by funext z; simp [transl, h.zero_right]
-  mul x y v := by funext z; simp [transl, h.left, h.right, add_assoc]; ring
+theorem ops_transl (h : Alt c) : Ops c (transl c) := by
+  constructor
+  · intro v
+    funext z
+    simp [transl, h.zero_right]
+  · intro x y v
+    funext z
+    simp [transl, h.left, h.right, add_assoc]
+    ring
 
 theorem transl_indicator (hα : Splits c A α) (a : W) (ha : a ∈ A) :
     transl c a ((A : Set W).indicator α) = α a • (A : Set W).indicator α := by
@@ -398,10 +412,14 @@ theorem eventually_psi' {ψ : AddChar F ℂ} (hψ : Continuous ψ) : ∀ᶠ z in
 variable {W : Type} [AddCommGroup W] [Module F W] {B : LinearMap.BilinForm F W}
 
 omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
-theorem alt_psi (hB : B.IsAlt) (ψ : AddChar F ℂ) : Alt fun x y => ψ (B x y / 2) where
-  left x y z := by rw [← AddChar.map_add_eq_mul, ← add_div]; simp
-  right x y z := by rw [← AddChar.map_add_eq_mul, ← add_div]; simp
-  self x := by rw [hB.self_eq_zero]; simp
+theorem alt_psi (hB : B.IsAlt) (ψ : AddChar F ℂ) : Alt fun x y => ψ (B x y / 2) := by
+  constructor
+  · intro x y z
+    rw [← AddChar.map_add_eq_mul, ← add_div, B.add_left]
+  · intro x y z
+    rw [← AddChar.map_add_eq_mul, ← add_div, B.add_right]
+  · intro x
+    simp [hB.self_eq_zero]
 
 omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
 theorem psi_sq (h2 : (2 : F) ≠ 0) (ψ : AddChar F ℂ) (t : F) : ψ (t / 2) ^ 2 = ψ t := by
@@ -509,15 +527,20 @@ variable {F W M : Type} [Field F] [AddCommGroup W] [Module F W] {B : LinearMap.B
 theorem apply_eq (hπ : ∀ t v, π ⟨0, t⟩ v = ψ t • v) (g : Heisenberg B) (v : M) : π g v = ψ g.cen • π ⟨g.vec, 0⟩ v := by
   rw [← hπ, ← Module.End.mul_apply, ← map_mul]
   congr 2
-  ext <;> simp
+  ext <;> simp [mul_vec, mul_cen]
 
-theorem ops_of_central (hπ : ∀ t v, π ⟨0, t⟩ v = ψ t • v) : Ops (fun x y => ψ (B x y / 2)) fun x => π ⟨x, 0⟩ where
-  zero v := by rw [hπ]; simp
-  mul x y v := by rw [← Module.End.mul_apply, ← map_mul, apply_eq hπ]; simp
+theorem ops_of_central (hπ : ∀ t v, π ⟨0, t⟩ v = ψ t • v) : Ops (fun x y => ψ (B x y / 2)) fun x => π ⟨x, 0⟩ := by
+  constructor
+  · intro v
+    rw [hπ]
+    simp
+  · intro x y v
+    rw [← Module.End.mul_apply, ← map_mul, apply_eq hπ]
+    simp [mul_vec, mul_cen]
 
 def funRep (hB : B.IsAlt) (ψ : AddChar F ℂ) : Representation ℂ (Heisenberg B) (W → ℂ) where
   toFun g := ψ g.cen • transl (fun x y => ψ (B x y / 2)) g.vec
-  map_one' := LinearMap.ext fun v => by simp [(ops_transl (alt_psi hB ψ)).zero]
+  map_one' := LinearMap.ext fun v => by simp [one_cen, one_vec, (ops_transl (alt_psi hB ψ)).zero]
   map_mul' g k := LinearMap.ext fun v => by
     simp only [mul_cen, mul_vec, AddChar.map_add_eq_mul, LinearMap.smul_apply, Module.End.mul_apply, map_smul,
       (ops_transl (alt_psi hB ψ)).mul, smul_smul]
@@ -570,7 +593,7 @@ variable (hB : B.IsAlt) {A : AddSubgroup W} {α : W → ℂ} (hα : Splits (fun 
   (h3 : ∀ w, ∀ᶠ u in 𝓝 (0 : W), ψ (B u w / 2) ^ 2 = 1)
 
 omit [ValuativeRel F] [IsNonarchimedeanLocalField F] [FiniteDimensional F W] [IsModuleTopology F W] in
-include hB hA hα h1 h2 h3 in
+include hB hα h1 h2 in
 theorem exists_eigen_mem (hπ : ∀ t v, π ⟨0, t⟩ v = ψ t • v) (hs : PRep.IsSmooth π) (P : Subrepresentation π) (hP : P ≠ ⊥) :
     ∃ e ∈ P.toSubmodule, e ≠ 0 ∧ ∀ a ∈ A, π ⟨a, 0⟩ e = α a • e := by
   have : P.toSubmodule ≠ ⊥ := fun h => hP (Subrepresentation.toSubmodule_injective h)
@@ -579,7 +602,7 @@ theorem exists_eigen_mem (hπ : ∀ t v, π ⟨0, t⟩ v = ψ t • v) (hs : PRe
   exact exists_eigen (alt_psi hB ψ) (ops_of_central hπ) hα T (fun u hu => (hT hu).1.2) P.toSubmodule
     (fun x m hm => P.apply_mem_toSubmodule _ hm) v hv hv0 fun u hu => (hT hu).2
 
-
+include hB hα hA h1 h2 h3 in
 theorem irr_of_span (hψ : Continuous ψ) (hπ : ∀ t v, π ⟨0, t⟩ v = ψ t • v) {e : M} (he0 : e ≠ 0)
     (he : ∀ a ∈ A, π ⟨a, 0⟩ e = α a • e) (hsp : Submodule.span ℂ (Set.range fun x => π ⟨x, 0⟩ e) = ⊤) : IsIrrSmoothOf ψ π := by
   have hs : PRep.IsSmooth π := by
@@ -608,7 +631,7 @@ theorem irr_of_span (hψ : Continuous ψ) (hπ : ∀ t v, π ⟨0, t⟩ v = ψ t
   rintro _ ⟨x, rfl⟩
   exact P.apply_mem_toSubmodule _ heP
 
-
+include hB hα hA h1 h2 h3 in
 theorem exists_irr_sub (hψ : Continuous ψ) (hπ : ∀ t v, π ⟨0, t⟩ v = ψ t • v) {e : M} (he0 : e ≠ 0)
     (he : ∀ a ∈ A, π ⟨a, 0⟩ e = α a • e) :
     ∃ P : Subrepresentation π, e ∈ P.toSubmodule ∧ IsIrrSmoothOf ψ P.toRepresentation := by

@@ -1,10 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.ExistsPowMulPowEqOfIsZeroCechH
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.CubeComplexAcyclicIffQuasiIsoCechAug
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.ExistsPowMulPowEqOfIsZeroCechH
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.CubeComplexAcyclicIffQuasiIsoCechAug
 
 open CategoryTheory AlgebraicGeometry Limits TopologicalSpace Opposite
 
@@ -80,7 +76,8 @@ include hP hs in
 private theorem cubeComplex_presheafCube_exactAt_one (V : Opens T) (U : ι → Opens T) :
     (_root_.GlobalTheory.cubeComplex (_root_.GlobalTheory.presheafCube P V U)).ExactAt 1 := by
   have h : ∀ s, _root_.GlobalTheory.cechOpen (V ⊓ ⨆ i, U i) U s ≤ _root_.GlobalTheory.cechOpen V U s :=
-    fun s => _root_.GlobalTheory.cechOpen_mono inf_le_left (fun _ => le_rfl) s
+    fun s => _root_.GlobalTheory.cechOpen_mono (V := V) (U := U) (hV := inf_le_left)
+      (hU := fun _ => le_rfl) s
   refine cubeComplex_exactAt_one_of_hom_surj_empty_inj_nonempty (_root_.GlobalTheory.presheafCubeRes P h) ?_ ?_
     (_root_.GlobalTheory.presheafCube_exactAt_zero_one hP (V := V ⊓ ⨆ i, U i) (U := U) inf_le_right).2
   · rintro s rfl
@@ -138,11 +135,14 @@ private theorem cubeComplex_presheafCube_exactAt_add_one_of_card (n : ℕ) :
       · exact (ih hcard' (V ⊓ U i) (fun k => U (e k)) p).of_iso
           ((_root_.GlobalTheory.cubeFunctor _ R).mapIso (_root_.GlobalTheory.presheafCubeUpperFaceIso P V U e i)).symm
 
+open CategoryTheory AlgebraicGeometry Limits TopologicalSpace Opposite in
+variable {T : TopCat.{w}} {ι : Type} in
+variable [LinearOrder ι] [Finite ι] (F : TopCat.Sheaf AddCommGrpCat.{w} T) [F.IsFlasque] in
 
 theorem _root_.GlobalTheory.subsingleton_cechAbH_succ_of_isFlasque (V : Opens T) (U : ι → Opens T) (p : ℕ) :
     Subsingleton (_root_.GlobalTheory.cechAbH F.obj V U (p + 1)) := by
   have := Fintype.ofFinite ι
-  have hP := _root_.GlobalTheory.isSheaf_comp_abToIntModule F.cond
+  have hP := _root_.GlobalTheory.isSheaf_comp_abToIntModule F.property
   have hs : ∀ ⦃W W' : Opens T⦄ (h : W' ≤ W),
       Function.Surjective (_root_.GlobalTheory.presheafRes (F.obj ⋙ _root_.GlobalTheory.abToIntModule) h) := by
     intro W W' h

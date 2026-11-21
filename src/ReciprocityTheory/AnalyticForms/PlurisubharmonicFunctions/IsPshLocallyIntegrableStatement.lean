@@ -46,7 +46,9 @@ def coordDiv (S : Finset (Fin D)) : Set (Fin D → ℂ) :=
 
 
 def limsupExt (U A : Set (Fin D → ℂ)) (v : (Fin D → ℂ) → ℝ) (z : Fin D → ℂ) : ℝ :=
-  if z ∈ A then limsup v (𝓝[U \ A] z) else v z
+  by
+    classical
+    exact if z ∈ A then limsup v (𝓝[U \ A] z) else v z
 
 def PshExtensionStatement : Prop :=
   ∀ (D : ℕ) (S : Finset (Fin D)) (U : Set (Fin D → ℂ)) (u : (Fin D → ℂ) → ℝ) (C : ℝ),

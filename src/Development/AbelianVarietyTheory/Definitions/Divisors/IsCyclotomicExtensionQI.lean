@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 noncomputable section
 
@@ -111,8 +107,7 @@ def bcMap {R R' : Type} [CommRing R] [Algebra ℚ R] [CommRing R'] [Algebra ℚ 
     Gpts F H R →* Gpts F H R' :=
   simMap ((Algebra.TensorProduct.map f (AlgHom.id ℚ F)).toRingHom) (f : R →+* R')
     (fun x => by
-      induction x using TensorProduct.induction_on with
-      | zero => simp
+      induction x using TensorProduct.inductionOn with
       | tmul r y => rfl
       | add x y hx hy => simp only [map_add (f := _), hx, hy])
     (fun a => rfl)
@@ -286,8 +281,7 @@ def ubcMap {R R' : Type} [CommRing R] [Algebra ℚ R] [CommRing R'] [Algebra ℚ
     UPts star R →* UPts star R' :=
   uMap ((Algebra.TensorProduct.map f (AlgHom.id ℚ C)).toRingHom) (f : R →+* R')
     (fun x => by
-      induction x using TensorProduct.induction_on with
-      | zero => simp
+      induction x using TensorProduct.inductionOn with
       | tmul r y =>
         simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, Algebra.TensorProduct.map_tmul, AlgHom.id_apply,
           starT_tmul]
@@ -411,6 +405,8 @@ abbrev GAf : Type := UPts G.star (AfP p)
 abbrev GQp : Type := UPts G.star ℚ_[p]
 
 abbrev GQbar : Type := UPts G.star (AlgebraicClosure ℚ)
+
+abbrev MuIdx : Type := {τ : G.F →+* PadicAlgCl p // LiesOver G.Kq G.u τ}
 
 def a : ℕ := Fintype.card {v : InfinitePlace G.F // sigPosH (G.gram_herm v) = 1}
 

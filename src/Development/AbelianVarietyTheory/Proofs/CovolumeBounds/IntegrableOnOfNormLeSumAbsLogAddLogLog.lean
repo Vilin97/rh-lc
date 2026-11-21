@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.EnormPowLeInvMeasureMulLintegralBall
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.EnormPowLeInvMeasureMulLintegralBall
 
 open MeasureTheory Metric Set Filter Topology
 open scoped ENNReal Real
@@ -15,7 +11,7 @@ section Holomorphic
 theorem log_norm_le_circleAverage_log_norm {g : ℂ → ℂ} (hg : AnalyticOnNhd ℂ g (closedBall 0 1))
     (h0 : g 0 ≠ 0) : Real.log ‖g 0‖ ≤ Real.circleAverage (fun z => Real.log ‖g z‖) 0 1 := by
   have hg' : AnalyticOnNhd ℂ g (closedBall 0 |(1 : ℝ)|) := by simpa using hg
-  rw [hg'.circleAverage_log_norm one_ne_zero h0, le_add_iff_nonneg_left]
+  rw [hg'.circleAverage_log_norm h0, le_add_iff_nonneg_left]
   refine finsum_nonneg fun u => ?_
   by_cases hu : u ∈ closedBall (0 : ℂ) |(1 : ℝ)|
   · refine mul_nonneg (by exact_mod_cast MeromorphicOn.AnalyticOnNhd.divisor_nonneg hg' u) ?_
@@ -135,7 +131,8 @@ theorem integrableOn_log_norm_ball_zero (μ : Measure E) [μ.IsAddHaarMeasure] {
   rw [hA] at hB
   have hC : ∫⁻ z in ball 0 r, logGap M (F z) ∂μ < ∞ :=
     (ENNReal.lt_top_of_mul_ne_top_left hB.ne (ENNReal.ofReal_pos.2 h2).ne')
-  have hFf : F =ᵐ[μ.restrict (ball 0 r)] f := piecewise_ae_eq_restrict measurableSet_ball
+  have hFf : F =ᵐ[μ.restrict (ball 0 r)] f :=
+    piecewise_ae_eq_restrict measurableSet_ball.nullMeasurableSet
   have hne : ∀ᵐ z ∂(μ.restrict (ball 0 r)), f z ≠ 0 := by
     filter_upwards [ae_lt_top ((measurable_logGap M).comp hFm) hC.ne, hFf] with z hz hz' h
     simp [hz', logGap, h] at hz
@@ -149,7 +146,7 @@ theorem integrableOn_log_norm_ball_zero (μ : Measure E) [μ.IsAddHaarMeasure] {
     refine ⟨aestronglyMeasurable_const.sub hmeas, ?_⟩
     refine lt_of_eq_of_lt (lintegral_congr_ae ?_) hC
     filter_upwards [hne, hFf, ae_restrict_mem measurableSet_ball] with z hz hz' hzb
-    rw [hz', logGap, if_neg hz, Real.enorm_eq_ofReal]
+    rw [hz', logGap, ite_eq_right hz, Real.eNorm_eq_ofReal]
     exact sub_nonneg.2 (Real.log_le_log (norm_pos_iff.2 hz) (hM z hzb))
   exact (hc.sub hsub).congr (Eventually.of_forall fun z => by simp)
 

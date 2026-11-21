@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 namespace GlobalTheory.FixedOfPower
 open Polynomial
@@ -14,7 +10,7 @@ theorem fix_of_pow {k : Type} [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k 
   let f : ZMod p →+* k := ZMod.castHom (dvd_refl p) k
   have hc' : ∃ a, f a = c := by
     by_contra hcon
-    have hP0 : (X ^ p - X : k[X]) ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero k hp1
+    have hP0 : (X ^ p - X : k[X]) ≠ 0 := X_pow_sub_X_ne_zero (R := k) hp1
     have hsub : insert c (Finset.univ.image f) ⊆ (X ^ p - X : k[X]).roots.toFinset := by
       intro x hx
       rw [Multiset.mem_toFinset, mem_roots hP0]

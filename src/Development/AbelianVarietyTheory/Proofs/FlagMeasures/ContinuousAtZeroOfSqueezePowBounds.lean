@@ -1,10 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.UpperDens
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.FlagMeasures.UpperDens
 open MeasureTheory Filter Topology
 open scoped ENNReal NNReal
 
@@ -17,12 +12,16 @@ theorem squeeze_continuousAt_zero (V : Type) [NormedAddCommGroup V] [NormedSpace
     f 0 = c ∧ ContinuousAt f 0 := by
   have h1 : Tendsto (fun ε : ℝ => (1 + ε)⁻¹ ^ d) (𝓝 0) (𝓝 1) := by
     have : ContinuousAt (fun ε : ℝ => (1 + ε)⁻¹ ^ d) 0 :=
-      ((continuous_const.add continuous_id).continuousAt.inv₀ (by norm_num)).pow d
+      ((continuous_const.add continuous_id).continuousAt.inv₀ (by
+        change (1 + 0 : ℝ) ≠ 0
+        simpa only [add_zero] using (one_ne_zero : (1 : ℝ) ≠ 0))).pow d
     simpa using this.tendsto
   have h2 : Tendsto (fun ε : ℝ => ((1 + ε) / (1 - ε)) ^ d) (𝓝 0) (𝓝 1) := by
     have : ContinuousAt (fun ε : ℝ => ((1 + ε) / (1 - ε)) ^ d) 0 :=
       ((continuous_const.add continuous_id).continuousAt.div
-        (continuous_const.sub continuous_id).continuousAt (by norm_num)).pow d
+        (continuous_const.sub continuous_id).continuousAt (by
+          change (1 - 0 : ℝ) ≠ 0
+          simpa only [sub_zero] using (one_ne_zero : (1 : ℝ) ≠ 0))).pow d
     simpa using this.tendsto
   have hL : Tendsto (fun ε : ℝ => ENNReal.ofReal ((1 + ε)⁻¹ ^ d) * c) (𝓝 0) (𝓝 c) := by
     have := ENNReal.Tendsto.mul_const (ENNReal.tendsto_ofReal h1) (Or.inr hc)

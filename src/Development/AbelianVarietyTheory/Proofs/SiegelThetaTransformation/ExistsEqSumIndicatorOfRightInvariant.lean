@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open Matrix
 
@@ -54,8 +50,6 @@ theorem exists_matrix_of_span_eq_top_field {k W n : Type*} [Field k] [AddCommGro
     rw [Fintype.linearCombination_apply_single, one_smul] at this
     rw [← this]
     simp [Fintype.linearCombination_apply, LinearMap.toMatrix'_apply]
-
-
 
 end LatticeIndicator
 

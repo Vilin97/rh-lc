@@ -38,7 +38,9 @@ theorem exists_linear_injOn (T : Finset (Fin n → ℂ)) :
     simp only [p, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero] at hc
     rw [Finset.sum_eq_single j] at hc
     · simpa [sub_eq_zero] using hc
-    · intro b _ hb; rw [if_neg]; exact fun h => hb (Fin.ext h)
+    · intro b _ hb
+      have hbj : (b : ℕ) ≠ (j : ℕ) := fun h => hb (Fin.ext h)
+      simp [Finsupp.single_apply, hbj]
     · simp
   have hev : ∀ x x' (t : ℂ), (p x x').eval t = ∑ j : Fin n, (x j - x' j) * t ^ (j : ℕ) := by
     intro x x' t

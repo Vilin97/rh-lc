@@ -175,7 +175,8 @@ theorem dvd_of_lgCurve_low (G : LogFGL v d) {α β : Fin d → PowerSeries C}
       ∀ a, (PowerSeries.X : PowerSeries C) ^ N ∣ α a - β a
   | 0, _, a => by simp
   | N + 1, h, a => by
-      have ih := dvd_of_lgCurve_low G hα hβ N (fun a j hj => h a j (by omega))
+      have ih : ∀ a, (PowerSeries.X : PowerSeries C) ^ N ∣ α a - β a :=
+        dvd_of_lgCurve_low G hα hβ N (fun a j hj => h a j (by omega))
       have h1 := PowerSeries.X_pow_dvd_iff.1 (lgCurve_sub_dvd G hα hβ N ih a) N (by omega)
       rw [map_sub, map_sub, h a N (by omega), sub_self, zero_sub, neg_eq_zero] at h1
       rw [PowerSeries.X_pow_dvd_iff]

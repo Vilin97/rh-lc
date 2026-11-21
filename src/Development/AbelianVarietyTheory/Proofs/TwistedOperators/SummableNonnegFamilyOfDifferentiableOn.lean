@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open Filter Topology
 
@@ -26,7 +22,7 @@ theorem summable_nonneg_family_of_differentiableOn {ι : Type} (c : ι → ℝ) 
     exact Complex.summable_ofReal.mp h
   have hfib : ∀ m : ℕ, Summable (fun i : n ⁻¹' {m} => c i) := by
     intro m
-    have h1 := (hsum0.subtype (n ⁻¹' {m})).mul_right (t0 ^ m)⁻¹
+    have h1 := (hsum0.subtype (fun i => n i = m)).mul_right (t0 ^ m)⁻¹
     refine h1.congr fun i => ?_
     have hi : n i.val = m := i.2
     simp only [Function.comp_apply]

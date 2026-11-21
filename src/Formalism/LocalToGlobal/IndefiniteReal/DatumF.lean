@@ -35,11 +35,11 @@ def matHomF (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) : GAF 
 def mtF (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (g : GAF σ J) : Matrix (Fin n) (Fin n) (AEF F E) :=
   (matHomF σ J g).1
 
-
+variable (F E) in
 def infPartF : AEF F E →+* Ainf F ⊗[F] E :=
   (Algebra.TensorProduct.map (fstA F) (AlgHom.id F E)).toRingHom
 
-
+variable (F E) in
 def finPartF : AEF F E →+* Af F ⊗[F] E :=
   (Algebra.TensorProduct.map (sndA F) (AlgHom.id F E)).toRingHom
 
@@ -57,13 +57,13 @@ def IsStdCharF {Tau : Type} [Fintype Tau] (tauE : Tau → (E →+* ℂ)) (ψ : A
   IsCharAF F ψ ∧ AllSome (IsInfFamF (F := F) tauE) fun θ =>
     ∀ x : Ainf F, psiInf F ψ x = Complex.exp (2 * Real.pi * Complex.I * s * ∑ ρ, θ ρ (x ⊗ₜ[F] (1 : E)))
 
-
+variable (F E) in
 def idFF : (AF F)ˣ →* (AEF F E)ˣ := Units.map (algebraMap (AF F) (AEF F E)).toMonoidHom
 
 def IsHeckeCharF (χ : (AEF F E)ˣ →* Circle) : Prop :=
   Continuous χ ∧ ∀ x : Eˣ, χ (Units.map (incAF F E).toMonoidHom x) = 1
 
-
+variable (E) in
 def IsEtaF (η : (AF F)ˣ →* Circle) : Prop :=
   Continuous η ∧ (∀ a : Fˣ, η (Units.map (algebraMap F (AF F)).toMonoidHom a) = 1) ∧
     (∀ x : (AEF F E)ˣ, η (Units.map (Algebra.norm (AF F) : AEF F E →* AF F) x) = 1) ∧ η ≠ 1
@@ -71,7 +71,7 @@ def IsEtaF (η : (AF F)ˣ →* Circle) : Prop :=
 def ResEtaF (χ : (AEF F E)ˣ →* Circle) (n : ℕ) : Prop :=
   AllSome (IsEtaF E) fun η => ∀ a, χ (idFF F E a) = η a ^ n
 
-
+variable (F) in
 def IsPlaceIdemF (v : HeightOneSpectrum (𝓞 F)) (ε : AF F) : Prop :=
   ∃ α : Af F, ε = pairA F 0 α ∧ evalV F v α = 1 ∧ ∀ v', v' ≠ v → evalV F v' α = 0
 
@@ -98,7 +98,7 @@ scoped instance measWOF (nS nT : ℕ) : MeasurableSpace (WOF F E nS nT) := borel
 
 def ratWF (γ : Matrix (Fin nT) (Fin nS) E) : WOF F E nS nT := γ.map (incAF F E)
 
-
+variable (F E nS nT) in
 def ratLF : AddSubgroup (WOF F E nS nT) :=
   ((incAF F E).toAddMonoidHom.mapMatrix (m := Fin nT) (n := Fin nS)).range
 

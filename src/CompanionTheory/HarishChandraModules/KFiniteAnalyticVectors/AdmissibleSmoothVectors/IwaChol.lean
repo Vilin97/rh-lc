@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 namespace CompanionTheory.D.gk.admitted.CholeskyDecomposition
 

@@ -105,11 +105,14 @@ def HasExpansion (𝔞 𝔟 : Frac F) (k : ℕ) (g : (Emb F → ℂ) → ℂ) : 
         (2 : ℂ)⁻¹ ^ Module.finrank ℚ F * Z (1 - (k : ℂ)) + ∑' c, qClass 𝔞 𝔟 k z c
 
 
-def wirt {Φ : Type} [Fintype Φ] (τ : Φ) (bar : Bool) (g : (Φ → ℂ) → ℂ) : (Φ → ℂ) → ℂ := fun z =>
-  (fderiv ℝ g z (Pi.single τ 1) + (if bar then I else -I) * fderiv ℝ g z (Pi.single τ I)) / 2
+def wirt {Φ : Type} [Fintype Φ] (τ : Φ) (bar : Bool) (g : (Φ → ℂ) → ℂ) : (Φ → ℂ) → ℂ := by
+  classical
+  exact fun z =>
+    (fderiv ℝ g z (Pi.single τ 1) + (if bar then I else -I) * fderiv ℝ g z (Pi.single τ I)) / 2
 
-def wirtWord {Φ : Type} [Fintype Φ] (ws : List (Φ × Bool)) (g : (Φ → ℂ) → ℂ) : (Φ → ℂ) → ℂ :=
-  ws.foldr (fun w h => wirt w.1 w.2 h) g
+def wirtWord {Φ : Type} [Fintype Φ] (ws : List (Φ × Bool)) (g : (Φ → ℂ) → ℂ) : (Φ → ℂ) → ℂ := by
+  classical
+  exact ws.foldr (fun w h => wirt w.1 w.2 h) g
 
 theorem wirtWord_nil {Φ : Type} [Fintype Φ] (g : (Φ → ℂ) → ℂ) : wirtWord [] g = g := rfl
 

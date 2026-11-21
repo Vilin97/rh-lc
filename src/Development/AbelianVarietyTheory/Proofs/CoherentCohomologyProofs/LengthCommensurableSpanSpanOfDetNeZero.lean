@@ -1,15 +1,11 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.LengthCommensurableMapIffOfInjective
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsDualNeZeroCompEqZero
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.LengthQuotientSpanSingleton
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.LengthSelfEqTop
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.Imports
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.RelLengthSpanEqAddValDet
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.RelLengthSpanMatrix
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.LengthCommensurableMapIffOfInjective
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsDualNeZeroCompEqZero
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.LengthQuotientSpanSingleton
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.LengthSelfEqTop
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.Imports
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.RelLengthSpanEqAddValDet
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.RelLengthSpanMatrix
 
 open Module IsDiscreteValuationRing
 
@@ -112,7 +108,7 @@ theorem ordFrac_algebraMap_eq_exp {x : R} {n : ℕ} (h : addVal R x = n) :
   have hx : x ≠ 0 := by
     rintro rfl
     simp at h
-  rw [Ring.ordFrac_eq_ord R hx, Ring.ordMonoidWithZeroHom_eq_coe R
+  rw [Ring.ordFrac_eq_ord R, Ring.ordMonoidWithZeroHom_eq_coe R
     (mem_nonZeroDivisors_of_ne_zero hx) ((Ring.ord_eq_addVal x).trans h)]
   rfl
 
@@ -143,9 +139,6 @@ private theorem span_range_coe_basis {A : Submodule R V} (a : Basis ι R A) :
   conv_rhs => rw [← Submodule.map_subtype_top A, ← a.span_eq, Submodule.map_span,
     ← Set.range_comp]
   rfl
-
-
-
 
 end Lattice
 

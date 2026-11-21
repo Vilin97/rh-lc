@@ -16,7 +16,7 @@ variable {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]
   {N : Type*} [AddCommGroup N] [Module A N] [Module B N] [IsScalarTower A B N]
   {N' : Type*} [AddCommGroup N'] [Module A N'] [Module B N'] [IsScalarTower A B N']
 
-
+variable (A B N) in
 def act : B ⊗[A] N →ₗ[B] N := LinearMap.liftBaseChange B (LinearMap.id : N →ₗ[A] N)
 
 @[simp] theorem act_tmul (b : B) (n : N) : act A B N (b ⊗ₜ n) = b • n := by
@@ -33,25 +33,23 @@ def invariants (θ : N →ₗ[B] B ⊗[A] N) : Submodule A N :=
     n ∈ invariants θ ↔ θ n = 1 ⊗ₜ n := by
   simp [invariants, sub_eq_zero]
 
-
+variable (B) in
 def canonical (M : Type*) [AddCommGroup M] [Module A M] :
     B ⊗[A] M →ₗ[B] B ⊗[A] (B ⊗[A] M) :=
   (TensorProduct.mk A B M 1).baseChange B
 
-
+variable (B) in
 theorem isDescentDatum_canonical (M : Type*) [AddCommGroup M] [Module A M] :
     IsDescentDatum (canonical (A := A) B M) := by
   constructor <;> intro x
-  · induction x using TensorProduct.induction_on with
-    | zero => simp
+  · induction x using TensorProduct.inductionOn with
+    | tmul b m => simp [canonical, smul_tmul']
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
-    | tmul b m => simp [smul_tmul']
-  · induction x using TensorProduct.induction_on with
-    | zero => simp
+  · induction x using TensorProduct.inductionOn with
+    | tmul b m => simp [canonical]
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
-    | tmul b m => simp
 
-
+variable (B) in
 def extend (P : Submodule A N) : B ⊗[A] P →ₗ[B] N := LinearMap.liftBaseChange B P.subtype
 
 @[simp] theorem extend_tmul (P : Submodule A N) (b : B) (n : P) :
@@ -60,17 +58,15 @@ def extend (P : Submodule A N) : B ⊗[A] P →ₗ[B] N := LinearMap.liftBaseCha
 
 theorem act_lTensor_subtype (P : Submodule A N) (x : B ⊗[A] P) :
     act A B N (P.subtype.lTensor B x) = extend B P x := by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
-  | add x y hx hy => simp only [map_add (f := _), hx, hy]
+  induction x using TensorProduct.inductionOn with
   | tmul b m => simp
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem apply_extend (θ : N →ₗ[B] B ⊗[A] N) (x : B ⊗[A] invariants θ) :
     θ (extend B _ x) = (invariants θ).subtype.lTensor B x := by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
-  | add x y hx hy => simp only [map_add (f := _), hx, hy]
+  induction x using TensorProduct.inductionOn with
   | tmul b m => simp [mem_invariants.1 m.2, smul_tmul']
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem IsDescentDatum.bijective_extend [Module.Flat A B] {θ : N →ₗ[B] B ⊗[A] N}
     (h : IsDescentDatum θ) : Function.Bijective (extend B (invariants θ)) := by
@@ -97,7 +93,7 @@ section Amitsur
 variable (B) (M : Type*) [AddCommGroup M] [Module A M]
 
 def toInvariants : M →ₗ[A] invariants (canonical (A := A) B M) :=
-  (TensorProduct.mk A B M 1).codRestrict _ fun m => by simp
+  (TensorProduct.mk A B M 1).codRestrict _ fun m => by simp [canonical]
 
 theorem bijective_toInvariants [Module.FaithfullyFlat A B] :
     Function.Bijective (toInvariants (A := A) B M) := by
@@ -105,10 +101,9 @@ theorem bijective_toInvariants [Module.FaithfullyFlat A B] :
     ← Function.Bijective.of_comp_iff' (isDescentDatum_canonical (A := A) B M).bijective_extend]
   convert Function.bijective_id
   ext x
-  induction x using TensorProduct.induction_on with
-  | zero => simp
+  induction x using TensorProduct.inductionOn with
+  | tmul b m => simp [toInvariants, smul_tmul']
   | add x y hx hy => simp_all
-  | tmul b m => simp [smul_tmul']
 
 def amitsurDiff : B ⊗[A] M →ₗ[A] B ⊗[A] (B ⊗[A] M) :=
   (canonical B M).restrictScalars A - TensorProduct.mk A B (B ⊗[A] M) 1
@@ -133,7 +128,7 @@ section Morphisms
 variable {M M' : Type*} [AddCommGroup M] [Module A M] [AddCommGroup M'] [Module A M']
 
 
-
+variable (B) in
 theorem bijective_baseChange_iff [Module.FaithfullyFlat A B] (g : M →ₗ[A] M') :
     Function.Bijective (g.baseChange B) ↔ Function.Bijective g :=
   Module.FaithfullyFlat.lTensor_bijective_iff_bijective A B g
@@ -159,7 +154,7 @@ theorem invertible_of_isBaseChange [Module.FaithfullyFlat A B] {M : Type*} [AddC
   rw [he]
   exact e.bijective
 
-
+variable (B) in
 theorem IsDescentDatum.invertible_invariants [Module.FaithfullyFlat A B]
     {θ : N →ₗ[B] B ⊗[A] N} (h : IsDescentDatum θ) [Module.Invertible B N] :
     Module.Invertible A (invariants θ) :=

@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.LatIntZero
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.LatIntZero
 
 open GlobalTheory.MomOne GlobalTheory.MomN PowerSeries
 open scoped ComplexConjugate
@@ -41,7 +37,7 @@ theorem pullCLM_apply {q : ℕ} [Fact q.Prime] {X Y : Type} [TopologicalSpace X]
 
 def monoC {q : ℕ} [Fact q.Prime] {κ : Type} {k : ℕ} (σ : Fin k → κ) : C(κ → ℤ_[q], ℂ_[q]) :=
   ⟨fun x => ∏ l, zc (x (σ l)), by
-    refine continuous_finset_prod _ fun l _ => zc_continuous'.comp (continuous_apply (σ l))⟩
+    exact continuous_finsetProd _ fun l _ => zc_continuous'.comp (continuous_apply (σ l))⟩
 
 theorem momInt_push (q : ℕ) [Fact q.Prime] (ι : ℂ ≃+* ℂ_[q]) (V : Type) [NormedAddCommGroup V] [NormedSpace ℂ V]
     (κ κ' : Type) [Fintype κ] [Fintype κ'] (v : κ → V) (w : κ' → V) (c : κ' → κ → ℂ) (a : κ' → κ → ℤ_[q])

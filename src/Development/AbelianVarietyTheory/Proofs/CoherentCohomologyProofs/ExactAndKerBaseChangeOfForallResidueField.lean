@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsFiniteProjectiveComplexQuasiIso
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsFiniteProjectiveComplexQuasiIso
 
 open TensorProduct Function
 
@@ -218,7 +214,6 @@ universe u
 
 variable {R : Type u} [CommRing R] (S : Type u) [CommRing S] [Algebra R S]
   {ι : Type*} {c : ComplexShape ι}
-
 
 end Explicit
 

@@ -75,13 +75,13 @@ theorem isGlRep_prod (hE₁ : IsGlRep E₁) (hE₂ : IsGlRep E₂) : IsGlRep (pr
     change prFst _ = prFst _
     simp only [LinearMap.sub_apply, Module.End.mul_apply, map_sub, prFst_prodE]
     rw [h]
-    split_ifs <;> simp <;> rfl
+    split_ifs <;> (try simp) <;> rfl
   · have h := congrArg (fun X : Module.End ℂ M₂ => X (prSnd x)) (hE₂ a b c d)
     simp only [LinearMap.sub_apply, Module.End.mul_apply] at h
     change prSnd _ = prSnd _
     simp only [LinearMap.sub_apply, Module.End.mul_apply, map_sub, prSnd_prodE]
     rw [h]
-    split_ifs <;> simp <;> rfl
+    split_ifs <;> (try simp) <;> rfl
 
 end Prod
 

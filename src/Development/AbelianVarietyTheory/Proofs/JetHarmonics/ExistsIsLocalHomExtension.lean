@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 namespace GlobalTheory.LocalHomExtension
 
@@ -51,7 +47,8 @@ theorem exists_isLocalHom_extension {A B O C : Type} [CommRing A] [IsDomain A] [
   have hp : (((IsLocalRing.maximalIdeal O).comap ι').comap (algebraMap A B)).IsMaximal := by
     rw [Ideal.comap_comap, show ι'.comp (algebraMap A B) = ι from hcomp, hA]
     exact IsLocalRing.maximalIdeal.isMaximal A
-  have hpm := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap ((IsLocalRing.maximalIdeal O).comap ι') hp
+  have hpm := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (algebraMap A B)
+    (show (algebraMap A B).IsIntegral from hint) ((IsLocalRing.maximalIdeal O).comap ι') hp
   exact ((IsLocalRing.local_hom_tfae ι').out 1 5).mpr (IsLocalRing.eq_maximalIdeal hpm)
 
 end GlobalTheory.LocalHomExtension

@@ -1,15 +1,11 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ScaledBasisMemChainLattice
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsEqActStdLat
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsLatticeStdLatAndAct
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsLatticeChainLatAndComap
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsIsRepsOfFg
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.StabiliserFiniteCosetsMod
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsUnipotent
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ScaledBasisMemChainLattice
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsEqActStdLat
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsLatticeStdLatAndAct
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsLatticeChainLatAndComap
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsIsRepsOfFg
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.StabiliserFiniteCosetsMod
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsUnipotent
 
 open MeasureTheory ValuativeRel Matrix
 open scoped Pointwise

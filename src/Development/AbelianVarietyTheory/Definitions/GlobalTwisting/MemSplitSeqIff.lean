@@ -1,10 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.SubClosed
-public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.PermRepSingle
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.SubClosed
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.PermRepSingle
 
 noncomputable section
 
@@ -49,6 +45,10 @@ instance (p : ℕ) : MulAction (GL (Fin n) R) (SplitSet R n p) where
     change l.1.map (pairAct R n (g * h)) = (l.1.map (pairAct R n h)).map (pairAct R n g)
     rw [List.map_map]
     congr 1
+    funext x
+    apply Prod.ext
+    · simp [pairAct, Matrix.mulVec_mulVec]
+    · simp [pairAct, Matrix.vecMul_vecMul])
 
 theorem smul_val {p : ℕ} (g : GL (Fin n) R) (l : SplitSet R n p) : (g • l).1 = l.1.map (pairAct R n g) := rfl
 

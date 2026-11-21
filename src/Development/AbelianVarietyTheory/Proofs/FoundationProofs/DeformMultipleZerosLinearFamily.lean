@@ -1,10 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.NewtonPowerSeriesSurjectiveLinearizationSolutionStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.PowerSeriesTaylorSubstFirstOrderStatement
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.NewtonPowerSeriesSurjectiveLinearizationSolutionStatement
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.PowerSeriesTaylorSubstFirstOrderStatement
 
 open Polynomial
 
@@ -147,8 +143,8 @@ theorem deform : ∀ (k J I : Type) [Field k] [CharZero k] [Fintype J] [Fintype 
     rcases e with _ | ⟨i, l⟩
     set_option synthInstance.maxHeartbeats 100000 in
       · simp [sys, map_sum, h0]
-    set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [sys, map_sum, map_mul, PowerSeries.constantCoeff_C, Sum.elim_inl, Sum.elim_inr]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        simp only [sys, map_sum, map_mul, PowerSeries.constantCoeff_C, Sum.elim_inl, Sum.elim_inr]
       have h' : ∀ j, PowerSeries.constantCoeff (((PowerSeries.derivativeFun)^[l.1] (s i j)).subst
           (PowerSeries.C ((0 : I → k) i)) : PowerSeries k) = (l.1.factorial : k) * PowerSeries.coeff l.1 (s i j) := by
         intro j; rw [cc_subst _ _ (by simp), hA]

@@ -1,8 +1,4 @@
-module
-
-public import Formalism.HermitianCurvature.StatementJF
-
-@[expose] public section
+import Formalism.HermitianCurvature.StatementJF
 
 open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt Matrix
 open scoped ContDiff

@@ -1,10 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Foundations.SgC
-public import Development.AbelianVarietyTheory.Definitions.Foundations.MultipliableAndSgNeZero
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.Foundations.SgC
+import Development.AbelianVarietyTheory.Definitions.Foundations.MultipliableAndSgNeZero
 
 noncomputable section
 
@@ -19,8 +15,9 @@ theorem isOpen_Hs : IsOpen Hs :=
 
 theorem neBot_Hs : (Filter.codiscreteWithin Hs).NeBot := by
   have hI : Complex.I ∈ Hs := by simp [Hs]
-  have hloc : nhdsWithin Complex.I (Hs \ {Complex.I}) = nhdsWithin Complex.I {Complex.I}ᶜ :=
-    nhdsWithin_inter_of_mem (mem_nhdsWithin_of_mem_nhds (isOpen_Hs.mem_nhds hI))
+  have hloc : nhdsWithin Complex.I (Hs \ {Complex.I}) = nhdsWithin Complex.I {Complex.I}ᶜ := by
+    rw [Set.sdiff_eq]
+    exact nhdsWithin_inter_of_mem (mem_nhdsWithin_of_mem_nhds (isOpen_Hs.mem_nhds hI))
   have hne : (nhdsWithin Complex.I (Hs \ {Complex.I})).NeBot := by
     rw [hloc]
     infer_instance

@@ -1,9 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
-
+import Mathlib
 open MeasureTheory
 
 namespace GlobalTheory
@@ -36,14 +31,12 @@ def schwartzJet (K N : ℕ) : SchwartzMap V ℂ →ₗ[ℂ] SchwartzJetSpace V N
   map_add' f g := by
     funext n; ext x : 1
     simp only [schwartzJetFun_apply, Pi.add_apply, BoundedContinuousFunction.coe_add]
-    have e : (⇑(f + g) : V → ℂ) = ⇑f + ⇑g := rfl
-    rw [e, iteratedFDeriv_add_apply ((f.smooth ⊤).of_le (by exact_mod_cast le_top)).contDiffAt
+    rw [iteratedFDeriv_add_apply ((f.smooth ⊤).of_le (by exact_mod_cast le_top)).contDiffAt
       ((g.smooth ⊤).of_le (by exact_mod_cast le_top)).contDiffAt, smul_add]
   map_smul' c f := by
     funext n; ext x : 1
     simp only [schwartzJetFun_apply, Pi.smul_apply, BoundedContinuousFunction.coe_smul, RingHom.id_apply]
-    have e : (⇑(c • f) : V → ℂ) = c • ⇑f := rfl
-    rw [e, iteratedFDeriv_const_smul_apply ((f.smooth ⊤).of_le (by exact_mod_cast le_top)).contDiffAt, smul_comm]
+    rw [iteratedFDeriv_const_smul_apply ((f.smooth ⊤).of_le (by exact_mod_cast le_top)).contDiffAt, smul_comm]
 
 lemma schwartzJet_apply (K N : ℕ) (f : SchwartzMap V ℂ) (n : Fin (N + 1)) (x : V) :
     schwartzJet K N f n x = ((1 + ‖x‖) ^ K : ℝ) • iteratedFDeriv ℝ (n : ℕ) f x := rfl

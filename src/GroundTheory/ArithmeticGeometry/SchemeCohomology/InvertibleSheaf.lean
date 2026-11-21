@@ -14,28 +14,48 @@ universe u
 namespace GroundTheory.Arith.SchemeCoh
 variable {X : Scheme.{u}}
 
+abbrev PMod (X : Scheme.{u}) := PresheafOfModulesOfCommRing.{u} X.sheaf.obj
+
+private theorem schemeModules_W_whiskerRight {M N : PMod X} {φ : M ⟶ N}
+    (hφ : ModulesTensor.W (J := Opens.grothendieckTopology X) (R := X.sheaf.obj) φ)
+    (P : PMod X) :
+    ModulesTensor.W (J := Opens.grothendieckTopology X) (R := X.sheaf.obj) (φ ▷ P) := by
+  rw [ModulesTensor.W, MorphismProperty.inverseImage_iff, ModulesTensor.W_toPresheaf_iff] at hφ ⊢
+  exact ⟨ModulesTensor.whiskerRight_zeroSieve_mem P φ hφ.1 hφ.2,
+    ModulesTensor.whiskerRight_imSieve_mem P φ hφ.2⟩
+
+local instance :
+    (ModulesTensor.W (J := Opens.grothendieckTopology X) (R := X.sheaf.obj)).IsMonoidal where
+  whiskerLeft P _ _ φ hφ :=
+    ((ModulesTensor.W (J := Opens.grothendieckTopology X) (R := X.sheaf.obj)).arrow_mk_iso_iff
+      (Arrow.isoMk (β_ P _) (β_ P _) (by simp))).2 (schemeModules_W_whiskerRight hφ P)
+  whiskerRight φ hφ P := schemeModules_W_whiskerRight hφ P
+
 noncomputable instance : MonoidalCategory X.Modules :=
-  sheafModulesMonoidal (Opens.grothendieckTopology X) X.sheaf
+  inferInstanceAs (MonoidalCategory (LocalizedMonoidal
+    (modulesSheafification (Opens.grothendieckTopology X) X.sheaf)
+    (ModulesTensor.W (J := Opens.grothendieckTopology X) (R := X.sheaf.obj))
+    (sheafificationUnitIso (Opens.grothendieckTopology X) X.sheaf)))
 
 noncomputable instance : SymmetricCategory X.Modules :=
-  sheafModulesSymmetric (Opens.grothendieckTopology X) X.sheaf
+  inferInstanceAs (SymmetricCategory (LocalizedMonoidal
+    (modulesSheafification (Opens.grothendieckTopology X) X.sheaf)
+    (ModulesTensor.W (J := Opens.grothendieckTopology X) (R := X.sheaf.obj))
+    (sheafificationUnitIso (Opens.grothendieckTopology X) X.sheaf)))
 
 instance isIso_ringSheafId_scheme : IsIso (ringSheafId (Opens.grothendieckTopology X) X.sheaf) :=
   inferInstanceAs (IsIso (𝟙 (X.sheaf.obj ⋙ forget₂ CommRingCat RingCat)))
 
 
-abbrev PMod := PresheafOfModules.{u} (X.sheaf.obj ⋙ forget₂ CommRingCat RingCat)
-
-
-noncomputable abbrev sheafifyMod : PMod X ⥤ X.Modules :=
+noncomputable abbrev sheafifyMod (X : Scheme.{u}) : PMod X ⥤ X.Modules :=
   modulesSheafification (Opens.grothendieckTopology X) X.sheaf
 
 
-noncomputable abbrev preMod : X.Modules ⥤ PMod X :=
+noncomputable abbrev preMod (X : Scheme.{u}) : X.Modules ⥤ PMod X :=
   SheafOfModules.forget _ ⋙ PresheafOfModules.restrictScalars (ringSheafId _ X.sheaf)
 
 
-noncomputable abbrev sheafifyModAdj : sheafifyMod X ⊣ preMod X :=
+noncomputable abbrev sheafifyModAdj (X : Scheme.{u}) : sheafifyMod X ⊣ preMod X :=
   PresheafOfModules.sheafificationAdjunction (J := Opens.grothendieckTopology X)
     (R₀ := X.sheaf.obj ⋙ forget₂ CommRingCat RingCat) (R := X.ringCatSheaf) (ringSheafId _ X.sheaf)
 
@@ -44,7 +64,10 @@ instance isIso_sheafifyModAdj_counit : IsIso (sheafifyModAdj X).counit :=
     (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).counit)
 
 noncomputable instance : (sheafifyMod X).Monoidal :=
-  modulesSheafificationMonoidal (Opens.grothendieckTopology X) X.sheaf
+  inferInstanceAs (Localization.Monoidal.toMonoidalCategory
+    (modulesSheafification (Opens.grothendieckTopology X) X.sheaf)
+    (ModulesTensor.W (J := Opens.grothendieckTopology X) (R := X.sheaf.obj))
+    (sheafificationUnitIso (Opens.grothendieckTopology X) X.sheaf)).Monoidal
 
 noncomputable def tensorIso (M N : X.Modules) :
     (sheafifyMod X).obj ((preMod X).obj M ⊗ (preMod X).obj N) ≅ M ⊗ N :=
@@ -66,7 +89,7 @@ lemma tensorToSheaf_tensorLift {M N G : X.Modules}
     ← Adjunction.homEquiv_unit, Equiv.apply_symm_apply]
 
 lemma W_tensorToSheaf (M N : X.Modules) :
-    ModulesTensor.W (Opens.grothendieckTopology X) X.sheaf.obj (tensorToSheaf M N) := by
+    ModulesTensor.W (J := Opens.grothendieckTopology X) (R := X.sheaf.obj) (tensorToSheaf M N) := by
   refine MorphismProperty.comp_mem _ _ _ ?_ (MorphismProperty.of_isIso _ _)
   change (Opens.grothendieckTopology X).W ((PresheafOfModules.toPresheaf _).map _)
   rw [PresheafOfModules.toPresheaf_map_sheafificationAdjunction_unit_app]
@@ -141,7 +164,7 @@ def IsBasisOn (P : PMod X) (U : X.Opens) (s : P.obj (op U)) : Prop :=
     (fun r : (X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (op V) => r • resM P h s)
 
 theorem IsBasisOn.map_of_alt {P : PMod X} {F : X.Modules} (φ : P ⟶ (preMod X).obj F)
-    (hφ : ModulesTensor.W (Opens.grothendieckTopology X) X.sheaf.obj φ)
+    (hφ : ModulesTensor.W (J := Opens.grothendieckTopology X) (R := X.sheaf.obj) φ)
     {U : X.Opens} {s : P.obj (op U)} (hs : IsBasisOn P U s) :
     IsBasisOn ((preMod X).obj F) U (φ.app _ s) := by
   obtain ⟨hinj, hsurj⟩ := (ModulesTensor.W_toPresheaf_iff φ).1 hφ
@@ -232,15 +255,16 @@ lemma IsBasisOn.tmul {P Q : PMod X} {U : X.Opens} {s : P.obj (op U)} {t : Q.obj 
   have e : resM (P ⊗ Q) h (s ⊗ₜ t : (P ⊗ Q).obj (op U)) =
       (resM P h s ⊗ₜ resM Q h t : (P ⊗ Q).obj (op V)) := rfl
   rw [e]
-  let eP := LinearEquiv.ofBijective (LinearMap.toSpanSingleton (ringOn X V) _ (resM P h s)) (hs V h)
-  let eQ := LinearEquiv.ofBijective (LinearMap.toSpanSingleton (ringOn X V) _ (resM Q h t)) (ht V h)
-  let E := (TensorProduct.lid (ringOn X V) (ringOn X V)).symm ≪≫ₗ TensorProduct.congr eP eQ
-  have hE : ∀ r : ringOn X V, E r = r • (resM P h s ⊗ₜ resM Q h t) := by
+  let R := X.sheaf.obj.obj (op V)
+  let eP := LinearEquiv.ofBijective (LinearMap.toSpanSingleton R _ (resM P h s)) (hs V h)
+  let eQ := LinearEquiv.ofBijective (LinearMap.toSpanSingleton R _ (resM Q h t)) (ht V h)
+  let E := (TensorProduct.lid R R).symm ≪≫ₗ TensorProduct.congr eP eQ
+  have hE : ∀ r : R, E r = r • (resM P h s ⊗ₜ[R] resM Q h t) := by
     intro r
-    change eP 1 ⊗ₜ eQ r = _
-    change ((1 : ringOn X V) • resM P h s) ⊗ₜ (r • resM Q h t) = _
+    change eP 1 ⊗ₜ[R] eQ r = _
+    change ((1 : R) • resM P h s) ⊗ₜ[R] (r • resM Q h t) = _
     rw [one_smul, TensorProduct.tmul_smul]
-  have : (fun r : ringOn X V => r • (resM P h s ⊗ₜ resM Q h t : (P ⊗ Q).obj (op V))) = E := by
+  have : (fun r : R => r • (resM P h s ⊗ₜ[R] resM Q h t)) = E := by
     funext r
     exact (hE r).symm
   have hb := E.bijective

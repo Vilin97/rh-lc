@@ -1,12 +1,8 @@
-module
-
-public import Mathlib
-public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.EtaleLocalizationAtPrimeTensorOfLowHeight
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.RegAtIsLocalRingIsFractionRingStalk
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenMapStalkSpecializes
-public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenMapGermEqGenMapGerm
-
-@[expose] public section
+import Mathlib
+import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.EtaleLocalizationAtPrimeTensorOfLowHeight
+import Development.AutomorphicSpectrum.Proofs.GeometryProofs.RegAtIsLocalRingIsFractionRingStalk
+import Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenMapStalkSpecializes
+import Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenMapGermEqGenMapGerm
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj GlobalTheory.CompanionTheory.Ar
 
@@ -270,7 +266,9 @@ theorem local_step [CharZero Ω] [IsLocallyNoetherian X] (hξ : IsCptGen ξ) (S 
       noetherianSpace_of_isAffineOpen U₂ hU₂aff
     have hcpt := hN.isCompact (Subtype.val ⁻¹' C : Set (U₂ : Set X))
     have := Subtype.isCompact_iff.1 hcpt
-    rwa [Subtype.image_preimage_coe, Set.inter_eq_right.2 (fun x hx => hx.1)] at this
+    have hCU : C ⊆ (U₂ : Set X) := fun x hx => hx.1
+    rw [Subtype.image_preimage_coe, Set.inter_eq_right.2 hCU] at this
+    exact this
   have key : ∀ x ∈ C, ∃ W : X.Opens, x ∈ W ∧ ∃ m : ℕ, m ≠ 0 ∧ ∀ q : Cpt ξ, q.1 ∈ W → ¬ InFibre ξ l q →
       (∀ n : ℕ, n.Prime → n ∣ m → ¬ InFibre ξ n q) →
       L₀ q = Submodule.span (regAt ξ q) (Set.range b) := by

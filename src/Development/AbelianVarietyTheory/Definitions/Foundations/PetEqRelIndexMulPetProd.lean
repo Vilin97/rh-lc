@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 noncomputable section
 
@@ -96,6 +92,8 @@ theorem petProd_smul_left (Γ : Subgroup SL(2, ℤ)) [Γ.FiniteIndex] (k : ℤ) 
   refine Finset.sum_congr rfl fun γ _ => ?_
   rw [← integral_const_mul]
   congr 1
+  ext z
+  simp [petersson]
   ring
 
 theorem petProd_smul_right (Γ : Subgroup SL(2, ℤ)) [Γ.FiniteIndex] (k : ℤ) (c : ℂ) (f g : ℍ → ℂ) :
@@ -106,6 +104,8 @@ theorem petProd_smul_right (Γ : Subgroup SL(2, ℤ)) [Γ.FiniteIndex] (k : ℤ)
   refine Finset.sum_congr rfl fun γ _ => ?_
   rw [← integral_const_mul]
   congr 1
+  ext z
+  simp [petersson]
   ring
 
 theorem petProd_level_one (Γ : Subgroup SL(2, ℤ)) [Γ.FiniteIndex] (k : ℤ) {f g : ℍ → ℂ}

@@ -51,7 +51,7 @@ def logS : ℂ_[q]⟦X⟧ := PowerSeries.mk fun n => if n = 0 then 0 else (-1) ^
 
 def mulS (a : ℤ_[q]) : ℂ_[q]⟦X⟧ := PowerSeries.mk fun n => if n = 0 then 0 else zc (Ring.choose a n)
 
-def DT (f : ℂ_[q]⟦X⟧) : ℂ_[q]⟦X⟧ := (1 + X) * derivative ℂ_[q] f
+def DT (f : ℂ_[q]⟦X⟧) : ℂ_[q]⟦X⟧ := (1 + X) * PowerSeries.derivative f
 
 def Bd (C : ℝ) (f : ℂ_[q]⟦X⟧) : Prop := ∀ n, ‖coeff n f‖ ≤ C
 
@@ -88,9 +88,11 @@ def y (z : ℂ) : ℂ :=
   (M.L.derivWeierstrassP z / M.c ^ 3 - M.ι.symm M.W.a₁ * M.x z - M.ι.symm M.W.a₃) / 2
 
 
+open Classical in
 def u (z : ℂ) : ℂ := if z ∈ M.L.lattice then 0 else -M.x z / M.y z
 
 
+open Classical in
 def w (z : ℂ) : ℂ := if z ∈ M.L.lattice then 0 else -1 / M.y z
 
 def Small (z : ℂ) : Prop := z ∈ M.L.lattice ∨ 1 < ‖M.ι (M.x z)‖
@@ -218,7 +220,7 @@ private theorem cardinal_padicComplex_eq_continuum (q : ℕ) [Fact q.Prime] : #�
 theorem _root_.GlobalTheory.MomOne.Basic.nonempty_iso (q : ℕ) [Fact q.Prime] :
     Nonempty (ℂ ≃+* ℂ_[q]) := by
   refine IsAlgClosed.ringEquiv_of_equiv_of_charZero ?_ ?_
-  · rw [Cardinal.mk_complex]; exact aleph0_lt_continuum
+  · rw [Cardinal.mk_complex]; exact Cardinal.aleph0_lt_continuum
   · exact Cardinal.eq.1 (by rw [Cardinal.mk_complex, cardinal_padicComplex_eq_continuum])
 
 
@@ -265,7 +267,7 @@ theorem hasDerivAt_u (M : Mdl q) (hc : M.c ≠ 0) : HasDerivAt M.u M.c 0 := by
   by_cases hz : z = 0
   · subst hz; simp [Mdl.u]
   · have : z ∉ M.L.lattice := fun h => h3 ⟨h, hz⟩
-    simp only [Mdl.u, if_neg this, hx z hz, hy z hz, Pi.mul_apply, id]
+    simp only [Mdl.u, ite_eq_right this, hx z hz, hy z hz, Pi.mul_apply, id]
     field_simp
 
 theorem exists_chart (M : Mdl q) (h : M.Ok) : ∃ ℓ, M.Chart ℓ ∧ hat M.ι ℓ M.u = X := by

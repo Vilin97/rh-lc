@@ -211,10 +211,12 @@ end LocData
 
 
 noncomputable def lenAt {R : Type*} [CommRing R] (J W : Ideal R) : ℕ∞ :=
-  if h : W.IsPrime then
-    haveI := h
-    Module.length (Localization.AtPrime W) (LocalizedModule W.primeCompl (R ⧸ J))
-  else 0
+  by
+    classical
+    exact if h : W.IsPrime then
+      haveI := h
+      Module.length (Localization.AtPrime W) (LocalizedModule W.primeCompl (R ⧸ J))
+    else 0
 
 theorem lenAt_eq {R : Type*} [CommRing R] (J W : Ideal R) [hW : W.IsPrime] :
     lenAt J W = Module.length (Localization.AtPrime W) (LocalizedModule W.primeCompl (R ⧸ J)) := by

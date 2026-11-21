@@ -1,11 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.MultiplicationKernelIdentity
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PreEig
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.MultiplicationKernelIdentity
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PreEig
 open GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity GlobalTheory.HermitianPreEigenvalues Polynomial Module
 
 noncomputable section

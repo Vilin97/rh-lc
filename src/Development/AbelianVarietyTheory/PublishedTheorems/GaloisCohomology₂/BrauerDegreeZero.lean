@@ -8,7 +8,7 @@ noncomputable section
 
 namespace GlobalTheory.Published
 
-
+open scoped Classical in
 def indFun {G : Type} [Group G] [Fintype G] (H : Subgroup G) (f : H → ℂ) (g : G) : ℂ :=
   (Nat.card H : ℂ)⁻¹ * ∑ x : G, if hx : x⁻¹ * g * x ∈ H then f ⟨x⁻¹ * g * x, hx⟩ else 0
 

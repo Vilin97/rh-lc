@@ -69,8 +69,7 @@ theorem locQuot_finiteType_formallyUnramified (R : Type) [CommRing R] (A : Type)
       algebraMap _ (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h))) x ∈ Φ.range := by
     intro x
     obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective x
-    induction b using TensorProduct.induction_on with
-    | zero => simp
+    induction b using TensorProduct.inductionOn with
     | tmul w a =>
       refine ⟨MvPolynomial.C w ⊗ₜ algebraMap A _ a, ?_⟩
       show Φ (MvPolynomial.C w ⊗ₜ algebraMap A _ a) = _

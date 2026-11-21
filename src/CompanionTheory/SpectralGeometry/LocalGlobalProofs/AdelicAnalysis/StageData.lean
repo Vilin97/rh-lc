@@ -36,6 +36,7 @@ def schurM (σ : E →ₐ[F] E) {n : ℕ} (t : F) (a : R → Rˣ)
     sigR R σ (cvec R t a S i) * inclR R (algebraMap F E t) * cvec R t a S j
 
 
+open scoped Classical in
 def schur (σ : E →ₐ[F] E) {n : ℕ} (t : F) (a : R → Rˣ) (S : HermR R σ (n + 1)) : HermR R σ n :=
   if h : schurM R σ t a (S : Matrix (Fin (n + 1)) (Fin (n + 1)) (R ⊗[F] E)) ∈ HermR R σ n then ⟨_, h⟩ else 0
 

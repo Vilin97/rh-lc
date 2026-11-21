@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open Matrix
 open scoped Matrix.Norms.L2Operator ComplexOrder
@@ -13,6 +9,7 @@ section OpNorm
 
 variable {m n : Type*} [Fintype m] [Fintype n] [DecidableEq m] [DecidableEq n]
 
+omit [DecidableEq m] in
 
 theorem norm_dotProduct_mulVec_star_le (A : Matrix n n ℂ) (x : n → ℂ) :
     ‖x ⬝ᵥ A *ᵥ star x‖ ≤ ‖A‖ * ∑ k, ‖x k‖ ^ 2 := by
@@ -83,7 +80,6 @@ theorem posDef_one_add {E : Matrix n n ℂ} (hE : E.IsHermitian) (hE1 : ‖E‖ 
   rw [Complex.pos_iff]
   exact ⟨h, (hH.im_star_dotProduct_mulVec_self x).symm⟩
 
-
 end Inertia
 
 section Exp
@@ -104,9 +100,6 @@ theorem norm_exp_sub_one_sub_le {A : Type*} [NormedRing A] [NormedAlgebra ℂ A]
   exact norm_pow_le' x (by omega)
 
 variable {m n : Type*} [Fintype m] [Fintype n] [DecidableEq m] [DecidableEq n]
-
-
-
 
 end Exp
 

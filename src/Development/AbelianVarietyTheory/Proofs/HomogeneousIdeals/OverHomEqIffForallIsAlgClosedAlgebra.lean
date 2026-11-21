@@ -261,7 +261,8 @@ instance isElliptic_baseChange [W.IsElliptic] (A : Type*) [CommRing A] [Algebra 
 
 def zeroOver (A : Type u) [CommRing A] [Algebra R A] :
     Over.mk (Spec.map (CommRingCat.ofHom (algebraMap R A))) ⟶ schemeOver W :=
-  Over.homMk (Spec.map (CommRingCat.ofHom (algebraMap R A)) ≫ zero W) (by simp)
+  Over.homMk (Spec.map (CommRingCat.ofHom (algebraMap R A)) ≫ zero W)
+    (by simp [zero_toSpec])
 
 theorem zeroOver_eq_ptOver (A : Type u) [CommRing A] [Algebra R A] :
     zeroOver W A = ptOver W (A := A) ![0, 1, 0] (isUnimodularSol_zero _) :=

@@ -20,7 +20,7 @@ section Pair
 variable {k : Type} [CommRing k] {σ : Type}
 
 theorem coeff_iter_pderiv (i : σ) (c : ℕ) (g : MvPowerSeries σ k) (n : σ →₀ ℕ) :
-    coeff n ((pderiv k i)^[c] g) =
+    coeff n ((pderiv i)^[c] g) =
       coeff (n + c • Finsupp.single i 1) g * ((n i + 1).ascFactorial c : k) := by
   induction c generalizing n g with
   | zero => simp
@@ -35,7 +35,7 @@ theorem coeff_iter_pderiv (i : σ) (c : ℕ) (g : MvPowerSeries σ k) (n : σ �
 
 theorem coeff_fold {ι : Type} (cd : ι → σ) (hc : Function.Injective cd) (m : ι → ℕ) (f : MvPowerSeries σ k) :
     ∀ (L : List ι), L.Nodup → ∀ n : σ →₀ ℕ,
-      coeff n (L.foldr (fun l g => (pderiv k (cd l))^[m l] g) f) =
+      coeff n (L.foldr (fun l g => (pderiv (cd l))^[m l] g) f) =
         coeff (n + (L.map fun l => m l • Finsupp.single (cd l) 1).sum) f *
           (L.map fun l => ((n (cd l) + 1).ascFactorial (m l) : k)).prod := by
   intro L
@@ -51,7 +51,7 @@ theorem coeff_fold {ι : Type} (cd : ι → σ) (hc : Function.Injective cd) (m 
       apply List.map_congr_left
       intro l' hl'
       have hne : cd l ≠ cd l' := fun h => hnd.1 (by rw [hc h]; exact hl')
-      simp [Finsupp.single_apply, hne]
+      simp [hne]
     rw [hprod, List.map_cons, List.sum_cons, List.map_cons, List.prod_cons, add_assoc]
     ring
 

@@ -1,11 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Foundations.ExistsRootOfIsAlgClosed
-public import Development.AbelianVarietyTheory.Definitions.Foundations.EeProd
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.Foundations.ExistsRootOfIsAlgClosed
+import Development.AbelianVarietyTheory.Definitions.Foundations.EeProd
 open GlobalTheory.KZ GlobalTheory.CyclotomicQExpansion GlobalTheory.Glue
 open scoped MatrixGroups
 
@@ -19,7 +14,12 @@ theorem tensor_padic_cls_eq {G : Type} [CommGroup G] (l : ℕ) [Fact l.Prime] (n
     ∃ u : G, f' = f * u ^ (l ^ n) := by
   classical
   let M := Additive G
-  let P : Submodule ℤ M := LinearMap.range (DistribMulAction.toLinearMap ℤ M (((l : ℤ)) ^ n))
+  let ψ : M →ₗ[ℤ] M := {
+    toFun := fun x : M => (((l : ℤ) ^ n) • x)
+    map_add' := fun x y => by simp
+    map_smul' := fun (k : ℤ) x => by simp [smul_smul, mul_comm]
+  }
+  let P : Submodule ℤ M := LinearMap.range ψ
   haveI : NeZero (l ^ n) := ⟨pow_ne_zero _ (Fact.out : l.Prime).ne_zero⟩
   have hkill : ∀ q : M ⧸ P, (l ^ n) • q = 0 := by
     intro q

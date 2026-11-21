@@ -1,14 +1,10 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.ExistsAwayFracOfMemHomLoc
-public import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.HomologyRestrictScalarsBijective
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.CubeComplexExactAtOfMonomialBasis
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.TopClassSurjective
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsMonomialBasisCechCubePolynomialGrading
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.CubeComplexPolyGradingFiniteExact
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.ExistsAwayFracOfMemHomLoc
+import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.HomologyRestrictScalarsBijective
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.CubeComplexExactAtOfMonomialBasis
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.TopClassSurjective
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsMonomialBasisCechCubePolynomialGrading
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.CubeComplexPolyGradingFiniteExact
 
 set_option autoImplicit false
 
@@ -169,7 +165,7 @@ theorem nonempty_basis_polyGrading :
   obtain ⟨b, -⟩ := exists_basis_grCube_polyGrading (Fin (N + 1)) R n
   have h : ∀ a : Fin (N + 1) → ℤ, Finset.univ.filter (fun i => a i < 0) ⊆ ∅ ↔ ∀ i, 0 ≤ a i :=
     fun a => by simp [Finset.filter_eq_empty_iff]
-  exact ⟨((b ∅).map (homLocEmptyEquiv (Fin (N + 1)) _ n).symm).reindex
+  exact ⟨((b ∅).map (homLocEmptyEquiv (ι := Fin (N + 1)) _ n).symm).reindex
     { toFun := fun a => ⟨fun i => (a.1.1 i).toNat, by
         rw [Finset.sum_congr rfl fun i _ => Int.toNat_of_nonneg ((h _).1 a.2 i), a.1.2]⟩
       invFun := fun a => ⟨⟨fun i => a.1 i, a.2⟩, (h _).2 fun i => Int.natCast_nonneg _⟩
@@ -187,8 +183,12 @@ theorem cube_exactAt {p : ℕ} (hp : p ≠ N + 1) :
   exact cubeComplex_exactAt_of_monomialBasis _ R _ _ _ b hb p (by simpa using hp)
 
 theorem grAug_bijective (hN : 1 ≤ N) :
-    Function.Bijective (grAug (Fin (N + 1)) (polyGrading (Fin (N + 1)) R) n) :=
-  (grAug_bijective_iff _ n).2 ⟨cube_exactAt R N n (by omega), cube_exactAt R N n (by omega)⟩
+    Function.Bijective (grAug (ι := Fin (N + 1)) (ℳ := polyGrading (Fin (N + 1)) R) n) := by
+  let A := grCube (Fin (N + 1)) (polyGrading (Fin (N + 1)) R) n
+  have hA : IsIso (cechAugHomology A) := (isIso_cechAugHomology_iff A).2
+    ⟨cube_exactAt R N n (by omega), cube_exactAt R N n (by omega)⟩
+  have hLoc := (homLocEmptyEquiv (ι := Fin (N + 1)) (polyGrading (Fin (N + 1)) R) n).bijective
+  exact ((ConcreteCategory.isIso_iff_bijective _).1 hA).comp hLoc
 
 theorem isZero_grH_poly {p : ℕ} (h0 : p ≠ 0) (hp : p ≠ N) :
     IsZero (grH (Fin (N + 1)) (polyGrading (Fin (N + 1)) R) n p) := by

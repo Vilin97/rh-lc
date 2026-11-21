@@ -50,11 +50,10 @@ theorem mem_perp (hs : IsSq σ h) (e w : V) : w ∈ perp hs e ↔ h e w = 0 := b
   exact LinearMap.mem_ker
 
 theorem perp_isHS (hs : IsHS σ h) (e : V) (he : h e e ≠ 0) :
-    IsHS σ (fun w w' : perp hs.toIsSq e => h w w') where
-  add_right x y z := hs.add_right x y z
-  smul_right c x y := hs.smul_right c x y
-  herm x y := hs.herm x y
-  nondeg w hw := by
+    IsHS σ (fun w w' : perp hs.toIsSq e => h w w') := by
+  refine ⟨⟨fun x y z => hs.add_right x y z, fun c x y => hs.smul_right c x y,
+    fun x y => hs.herm x y⟩, ?_⟩
+  · intro w hw
     have hq := hs.toIsSq
     apply Subtype.ext
     apply hs.nondeg

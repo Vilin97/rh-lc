@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.IsWeightedHomogeneousOfMemOrbitSpan
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.IsWeightedHomogeneousOfMemOrbitSpan
 
 open MvPolynomial Matrix
 
@@ -86,13 +82,12 @@ theorem pderiv_rowForm [DecidableEq T] (t t' : T) (r r' : Fin p ⊕ Fin q) (k : 
   split_ifs with h
   · obtain ⟨rfl, rfl⟩ := h
     simp [rowForm_apply, pderiv_X, Pi.single_apply]
-  · set_option synthInstance.maxHeartbeats 100000 in
-      rw [rowForm_apply, map_sum]
-      refine Finset.sum_eq_zero fun l _ => ?_
-      rw [pderiv_C_mul, pderiv_X_of_ne, mul_zero]
-      intro e
-      simp only [Prod.mk.injEq] at e
-      exact h ⟨e.1, e.2.1⟩
+  · rw [rowForm_apply, map_sum]
+    refine Finset.sum_eq_zero fun l _ => ?_
+    rw [pderiv_C_mul, pderiv_X_of_ne, mul_zero]
+    intro e
+    simp only [Prod.mk.injEq] at e
+    exact h ⟨e.1, e.2.1⟩
 
 theorem isHarmonic_rowForm (t : T) (r : Fin p ⊕ Fin q) (v : κ → R) :
     IsHarmonic (rowForm t r v : Poly R T p q κ) := fun t' a b => by
@@ -273,7 +268,6 @@ theorem laplacian_colAct (g : T → GL κ R) (t : T) (a : Fin p) (b : Fin q) (P 
 theorem IsHarmonic.colAct (g : T → GL κ R) {P : Poly R T p q κ} (hP : IsHarmonic P) :
     IsHarmonic (colAct R T p q κ g P) := fun t a b => by
   rw [laplacian_colAct, hP, map_zero]
-
 
 end Action
 

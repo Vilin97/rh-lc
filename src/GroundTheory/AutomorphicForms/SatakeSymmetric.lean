@@ -15,6 +15,16 @@ namespace Spherical
 
 variable {n : ℕ}
 
+def monomial (l : Fin n → ℤ) : LaurentRing (n := n) := single l 1
+
+def evalAt (w : Fin n → ℂˣ) : LaurentRing (n := n) →ₐ[ℂ] ℂ :=
+  AddMonoidAlgebra.lift ℂ ℂ (Fin n → ℤ) (pointHom w)
+
+theorem evalAt_single (w : Fin n → ℂˣ) (l : Fin n → ℤ) (c : ℂ) :
+    evalAt w (single l c) = c * monomialChar l w := by
+  rw [evalAt, AddMonoidAlgebra.lift_single, smul_eq_mul]
+  rfl
+
 def permCoord (σ : Equiv.Perm (Fin n)) : (Fin n → ℤ) →+ (Fin n → ℤ) where
   toFun l := l ∘ σ.symm
   map_zero' := rfl
@@ -23,7 +33,7 @@ def permCoord (σ : Equiv.Perm (Fin n)) : (Fin n → ℤ) →+ (Fin n → ℤ) w
 theorem permCoord_apply (σ : Equiv.Perm (Fin n)) (l : Fin n → ℤ) : permCoord σ l = l ∘ σ.symm :=
   rfl
 
-def permAct (σ : Equiv.Perm (Fin n)) : LaurentRing n →ₐ[ℂ] LaurentRing n :=
+def permAct (σ : Equiv.Perm (Fin n)) : LaurentRing (n := n) →ₐ[ℂ] LaurentRing (n := n) :=
   mapDomainAlgHom ℂ ℂ (permCoord σ)
 
 theorem permAct_single (σ : Equiv.Perm (Fin n)) (l : Fin n → ℤ) (c : ℂ) :
@@ -36,12 +46,12 @@ theorem permAct_mul (σ τ : Equiv.Perm (Fin n)) :
   rw [AlgHom.comp_apply, permAct_single, permAct_single, permAct_single]
   congr 1
 
-theorem permAct_one : permAct (1 : Equiv.Perm (Fin n)) = AlgHom.id ℂ (LaurentRing n) := by
+theorem permAct_one : permAct (1 : Equiv.Perm (Fin n)) = AlgHom.id ℂ (LaurentRing (n := n)) := by
   refine AddMonoidAlgebra.algHom_ext (fun l => ?_) (Subsingleton.elim _ _)
   rw [permAct_single, AlgHom.id_apply]
   rfl
 
-theorem evalAt_permAct (w : Fin n → ℂˣ) (σ : Equiv.Perm (Fin n)) (p : LaurentRing n) :
+theorem evalAt_permAct (w : Fin n → ℂˣ) (σ : Equiv.Perm (Fin n)) (p : LaurentRing (n := n)) :
     evalAt w (permAct σ p) = evalAt (w ∘ σ) p := by
   have : (evalAt w).comp (permAct σ) = evalAt (w ∘ σ) := by
     refine AddMonoidAlgebra.algHom_ext (fun l => ?_) (Subsingleton.elim _ _)
@@ -52,7 +62,7 @@ theorem evalAt_permAct (w : Fin n → ℂˣ) (σ : Equiv.Perm (Fin n)) (p : Laur
   exact AlgHom.congr_fun this p
 
 
-def symmetricLaurent : Subalgebra ℂ (LaurentRing n) where
+def symmetricLaurent : Subalgebra ℂ (LaurentRing (n := n)) where
   carrier := {p | ∀ σ, permAct σ p = p}
   mul_mem' {a b} ha hb σ := by
     change permAct σ (a * b) = a * b
@@ -62,8 +72,9 @@ def symmetricLaurent : Subalgebra ℂ (LaurentRing n) where
     rw [map_add (f := _), ha σ, hb σ]
   algebraMap_mem' c σ := AlgHom.commutes _ c
 
-theorem monomial_const_mem (c : ℤ) : monomial (fun _ : Fin n => c) ∈ symmetricLaurent n := by
+theorem monomial_const_mem (c : ℤ) : monomial (fun _ : Fin n => c) ∈ symmetricLaurent (n := n) := by
   intro σ
+  change permAct σ (single (fun _ : Fin n => c) 1) = single (fun _ : Fin n => c) 1
   rw [permAct_single]
   rfl
 
@@ -84,14 +95,14 @@ theorem natToInt_injective : Function.Injective (natToInt (n := n)) := fun s t h
   exact Int.ofNat_inj.1 (congrFun h i)
 
 
-def polyEmb : MvPolynomial (Fin n) ℂ →ₐ[ℂ] LaurentRing n :=
+def polyEmb : MvPolynomial (Fin n) ℂ →ₐ[ℂ] LaurentRing (n := n) :=
   mapDomainAlgHom ℂ ℂ natToInt
 
 theorem polyEmb_monomial (s : Fin n →₀ ℕ) (c : ℂ) :
-    polyEmb n (MvPolynomial.monomial s c) = single (natToInt s) c := by
+    polyEmb (n := n) (MvPolynomial.monomial s c) = single (natToInt s) c := by
   simp [polyEmb, mapDomainAlgHom, MvPolynomial.monomial, mapDomain_single]
 
-theorem polyEmb_X (i : Fin n) : polyEmb n (X i) = monomial (Pi.single i 1) := by
+theorem polyEmb_X (i : Fin n) : polyEmb (n := n) (X i) = monomial (Pi.single i 1) := by
   rw [X, polyEmb_monomial]
   congr 1
   funext j
@@ -101,32 +112,44 @@ theorem polyEmb_X (i : Fin n) : polyEmb n (X i) = monomial (Pi.single i 1) := by
     simp
   · simp [h, Ne.symm h]
 
-theorem polyEmb_injective : Function.Injective (polyEmb n) :=
+theorem polyEmb_injective : Function.Injective (polyEmb (n := n)) :=
   mapDomain_injective natToInt_injective
 
 theorem polyEmb_rename (σ : Equiv.Perm (Fin n)) (Q : MvPolynomial (Fin n) ℂ) :
-    polyEmb n (rename σ Q) = permAct σ (polyEmb n Q) := by
-  have : (polyEmb n).comp (rename σ) = (permAct σ).comp (polyEmb n) := by
+    polyEmb (n := n) (rename σ Q) = permAct σ (polyEmb (n := n) Q) := by
+  have : (polyEmb (n := n)).comp (rename σ) = (permAct σ).comp (polyEmb (n := n)) := by
     refine MvPolynomial.algHom_ext fun i => ?_
-    rw [AlgHom.comp_apply, AlgHom.comp_apply, rename_X, polyEmb_X, polyEmb_X, permAct_single]
+    rw [AlgHom.comp_apply, AlgHom.comp_apply, rename_X, polyEmb_X, polyEmb_X]
+    change single (Pi.single (σ i) 1) 1 = permAct σ (single (Pi.single i 1) 1)
+    rw [permAct_single]
     congr 1
+    funext j
+    simp only [Pi.single_apply, Function.comp_apply]
+    by_cases h : j = σ i
+    · subst j
+      simp
+    · have h' : σ.symm j ≠ i := by
+        intro hj
+        apply h
+        simpa using congrArg σ hj
+      simp [h, h']
   exact AlgHom.congr_fun this Q
 
-theorem mem_range_polyEmb {q : LaurentRing n} (hq : ∀ l ∈ q.coeff.support, ∀ i, 0 ≤ l i) :
-    q ∈ (polyEmb n).range := by
+theorem mem_range_polyEmb {q : LaurentRing (n := n)} (hq : ∀ l ∈ q.coeff.support, ∀ i, 0 ≤ l i) :
+    q ∈ (polyEmb (n := n)).range := by
   classical
   rw [← AddMonoidAlgebra.sum_coeff_single q]
   refine Subalgebra.sum_mem _ fun l hl => ?_
   refine ⟨MvPolynomial.monomial (Finsupp.equivFunOnFinite.symm fun i => (l i).toNat) (q.coeff l), ?_⟩
-  change polyEmb n _ = _
+  change polyEmb (n := n) _ = _
   rw [polyEmb_monomial]
   congr 1
   funext i
   simp [natToInt_apply, Int.toNat_of_nonneg (hq l hl i)]
 
-theorem symmetricLaurent_le {A : Subalgebra ℂ (LaurentRing n)}
-    (he : ∀ k, polyEmb n (esymm (Fin n) ℂ k) ∈ A) (hinv : monomial (fun _ => (-1 : ℤ)) ∈ A) :
-    symmetricLaurent n ≤ A := by
+theorem symmetricLaurent_le {A : Subalgebra ℂ LaurentRing}
+    (he : ∀ k, polyEmb (n := n) (esymm (Fin n) ℂ k) ∈ A) (hinv : monomial (fun _ => (-1 : ℤ)) ∈ A) :
+    symmetricLaurent (n := n) ≤ A := by
   classical
   intro p hp
   obtain ⟨N, hN⟩ : ∃ N : ℕ, ∀ l ∈ p.coeff.support, ∀ i, -(N : ℤ) ≤ l i := by
@@ -138,9 +161,9 @@ theorem symmetricLaurent_le {A : Subalgebra ℂ (LaurentRing n)}
     rw [Int.natCast_natAbs] at h3
     have h4 := neg_abs_le (l i)
     linarith
-  set c : LaurentRing n := monomial (fun _ => (N : ℤ))
+  set c : LaurentRing (n := n) := monomial (fun _ => (N : ℤ))
   set q := c * p
-  have hq : q ∈ symmetricLaurent n := Subalgebra.mul_mem _ (monomial_const_mem _) hp
+  have hq : q ∈ symmetricLaurent (n := n) := Subalgebra.mul_mem _ (monomial_const_mem _) hp
   have hqs : ∀ l ∈ q.coeff.support, ∀ i, 0 ≤ l i := by
     intro l hl i
     have hsub := AddMonoidAlgebra.support_coeff_mul_subset c p hl
@@ -153,7 +176,7 @@ theorem symmetricLaurent_le {A : Subalgebra ℂ (LaurentRing n)}
     simp only [Pi.add_apply]
     omega
   obtain ⟨Q, hQ⟩ := mem_range_polyEmb hqs
-  change polyEmb n Q = q at hQ
+  change polyEmb (n := n) Q = q at hQ
   have hQsym : Q ∈ symmetricSubalgebra (Fin n) ℂ := by
     rw [mem_symmetricSubalgebra]
     intro σ
@@ -164,29 +187,49 @@ theorem symmetricLaurent_le {A : Subalgebra ℂ (LaurentRing n)}
     rw [← esymmAlgHom_apply, hP]
   have hqA : q ∈ A := by
     rw [← hQ, hQP, ← AlgHom.comp_apply, comp_aeval]
-    have : aeval (fun i : Fin n => polyEmb n (esymm (Fin n) ℂ (i + 1))) P ∈
-        (aeval fun i : Fin n => polyEmb n (esymm (Fin n) ℂ (i + 1))).range :=
+    have : aeval (fun i : Fin n => polyEmb (n := n) (esymm (Fin n) ℂ (i + 1))) P ∈
+        (aeval fun i : Fin n => polyEmb (n := n) (esymm (Fin n) ℂ (i + 1))).range :=
       AlgHom.mem_range_self _ _
     rw [aeval_range] at this
     exact Algebra.adjoin_le (Set.range_subset_iff.2 fun i => he _) this
   have hp' : p = monomial (fun _ => (-1 : ℤ)) ^ N * q := by
-    rw [AddMonoidAlgebra.single_pow, one_pow, ← mul_assoc, AddMonoidAlgebra.single_mul_single,
-      one_mul]
-    have : (N • fun _ : Fin n => (-1 : ℤ)) + (fun _ => (N : ℤ)) = 0 := by
-      funext i
-      simp
-    rw [this, ← AddMonoidAlgebra.one_def, one_mul]
+    change p = single (fun _ : Fin n => (-1 : ℤ)) 1 ^ N *
+      (single (fun _ : Fin n => (N : ℤ)) 1 * p)
+    have hpow : single (fun _ : Fin n => (-1 : ℤ)) 1 ^ N =
+        single (N • fun _ : Fin n => (-1 : ℤ)) 1 := by
+      simp [AddMonoidAlgebra.single_pow]
+    have hprod : single (N • fun _ : Fin n => (-1 : ℤ)) 1 *
+        single (fun _ : Fin n => (N : ℤ)) 1 = 1 := by
+      rw [AddMonoidAlgebra.single_mul_single]
+      have hz : (N • fun _ : Fin n => (-1 : ℤ)) + (fun _ => (N : ℤ)) = 0 := by
+        funext i
+        simp
+        ring_nf
+      rw [hz]
+      ext l
+      simp [AddMonoidAlgebra.single, Finsupp.single_apply]
+    calc
+      p = (single (N • fun _ : Fin n => (-1 : ℤ)) 1 *
+          single (fun _ : Fin n => (N : ℤ)) 1) * p := by
+        simpa using congrArg (fun x : LaurentRing (n := n) => x * p) hprod.symm
+      _ = single (fun _ : Fin n => (-1 : ℤ)) 1 ^ N *
+          (single (fun _ : Fin n => (N : ℤ)) 1 * p) := by
+        calc
+          _ = (single (fun _ : Fin n => (-1 : ℤ)) 1 ^ N *
+              single (fun _ : Fin n => (N : ℤ)) 1) * p :=
+            congrArg (fun x => (x * single (fun _ : Fin n => (N : ℤ)) 1) * p) hpow.symm
+          _ = _ := by rw [mul_assoc]
   rw [hp']
   exact Subalgebra.mul_mem _ (Subalgebra.pow_mem _ hinv _) hqA
 
-def orbitSum (ν : Fin n → ℤ) : LaurentRing n :=
+def orbitSum (ν : Fin n → ℤ) : LaurentRing (n := n) :=
   ∑ σ : Equiv.Perm (Fin n), monomial (ν ∘ σ.symm)
 
-theorem orbitSum_mem (ν : Fin n → ℤ) : orbitSum ν ∈ symmetricLaurent n := by
+theorem orbitSum_mem (ν : Fin n → ℤ) : orbitSum ν ∈ symmetricLaurent (n := n) := by
   intro τ
   set_option synthInstance.maxHeartbeats 100000 in
     rw [orbitSum, map_sum]
-  simp only [permAct_single]
+  simp only [monomial, permAct_single]
   exact Fintype.sum_equiv (Equiv.mulLeft τ) _ _ fun σ => by congr 1
 
 theorem coeff_orbitSum (ν l : Fin n → ℤ) :
@@ -195,6 +238,7 @@ theorem coeff_orbitSum (ν l : Fin n → ℤ) :
   classical
   rw [orbitSum, AddMonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply, Finset.card_filter,
     Nat.cast_sum]
+  simp only [monomial]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [AddMonoidAlgebra.coeff_single, Finsupp.single_apply]
   split_ifs <;> simp

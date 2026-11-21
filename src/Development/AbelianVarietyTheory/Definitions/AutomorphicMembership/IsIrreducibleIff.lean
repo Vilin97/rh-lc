@@ -36,7 +36,7 @@ theorem isIrreducible_iff {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : Repre
 variable [TopologicalSpace G]
 
 
-structure SmIrr where
+structure SmIrr (G : Type) [Group G] [TopologicalSpace G] where
 
   V : Type
   [acg : AddCommGroup V]
@@ -54,7 +54,7 @@ instance SmIrr.setoid : Setoid (SmIrr G) where
   iseqv := ⟨fun σ => ⟨.refl σ.ρ⟩, fun ⟨e⟩ => ⟨e.symm⟩, fun ⟨e⟩ ⟨e'⟩ => ⟨e.trans e'⟩⟩
 
 
-def Irr : Type 1 := Quotient (SmIrr.setoid G)
+def Irr (G : Type) [Group G] [TopologicalSpace G] : Type 1 := Quotient (@SmIrr.setoid G _ _)
 
 
 def SmIrr.triv : SmIrr G where
@@ -63,7 +63,7 @@ def SmIrr.triv : SmIrr G where
   smooth v := by simp
   irred := (isIrreducible_iff _).2 ⟨inferInstance, fun W _ => eq_bot_or_eq_top W⟩
 
-instance : Inhabited (Irr G) := ⟨Quotient.mk _ (SmIrr.triv G)⟩
+instance : Inhabited (Irr G) := ⟨Quotient.mk (@SmIrr.setoid G _ _) SmIrr.triv⟩
 
 variable [IsTopologicalGroup G]
 
@@ -81,12 +81,13 @@ def SmIrr.twist (σ : SmIrr G) (χ : G →* ℂˣ) (hχ : IsOpen {g | χ g = 1})
     exact (W.smul_mem_iff (Units.ne_zero (χ g))).1 (hW g v hv)
 
 def Irr.twist (σ : Irr G) (χ : G →* ℂˣ) (hχ : IsOpen {g | χ g = 1}) : Irr G :=
-  Quotient.map (sa := SmIrr.setoid G) (sb := SmIrr.setoid G) (fun σ : SmIrr G => σ.twist χ hχ) (fun σ σ' ⟨e⟩ => ⟨.mk e.toLinearEquiv fun g => by
+  Quotient.map (sa := @SmIrr.setoid G _ _) (sb := @SmIrr.setoid G _ _) (fun σ : SmIrr G => σ.twist χ hχ) (fun σ σ' ⟨e⟩ => ⟨.mk e.toLinearEquiv fun g => by
     ext v
     change e (((χ g : ℂˣ) : ℂ) • σ.ρ g v) = ((χ g : ℂˣ) : ℂ) • σ'.ρ g (e v)
     rw [map_smul]
     exact congrArg _ (LinearMap.congr_fun (e.isIntertwining' g) v)⟩) σ
 
-def Irr.ofChar (χ : G →* ℂˣ) (hχ : IsOpen {g | χ g = 1}) : Irr G := Quotient.mk _ ((SmIrr.triv G).twist χ hχ)
+def Irr.ofChar (χ : G →* ℂˣ) (hχ : IsOpen {g | χ g = 1}) : Irr G :=
+  Quotient.mk (@SmIrr.setoid G _ _) (SmIrr.triv.twist χ hχ)
 
 end GlobalTheory.CuspRep

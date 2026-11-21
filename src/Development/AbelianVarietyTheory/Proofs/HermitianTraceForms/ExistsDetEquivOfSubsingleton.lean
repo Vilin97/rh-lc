@@ -18,8 +18,7 @@ noncomputable def wedgeMul (a b : ℕ) : (⋀[R]^a H) ⊗[R] (⋀[R]^b H) →ₗ
   LinearMap.codRestrict _
     (LinearMap.mul' R (ExteriorAlgebra R H) ∘ₗ
       TensorProduct.map (⋀[R]^a H).subtype (⋀[R]^b H).subtype) fun t => by
-    induction t using TensorProduct.induction_on with
-    | zero => simp
+    induction t using TensorProduct.inductionOn with
     | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | tmul x y =>
       simp only [LinearMap.comp_apply, TensorProduct.map_tmul, LinearMap.mul'_apply,
@@ -38,13 +37,13 @@ theorem coe_map (n : ℕ) (i : F →ₗ[R] H) (x : ⋀[R]^n F) :
 
 noncomputable def wedgeMap (i : F →ₗ[R] H) (s : L →ₗ[R] H) (a b : ℕ) :
     (⋀[R]^a F) ⊗[R] (⋀[R]^b L) →ₗ[R] ⋀[R]^(a + b) H :=
-  wedgeMul R H a b ∘ₗ TensorProduct.map (exteriorPower.map a i) (exteriorPower.map b s)
+  wedgeMul a b ∘ₗ TensorProduct.map (exteriorPower.map a i) (exteriorPower.map b s)
 
 theorem coe_wedgeMap_tmul (i : F →ₗ[R] H) (s : L →ₗ[R] H) {a b : ℕ} (x : ⋀[R]^a F)
     (y : ⋀[R]^b L) : (wedgeMap i s a b (x ⊗ₜ y) : ExteriorAlgebra R H) =
       ExteriorAlgebra.map i (x : ExteriorAlgebra R F) *
         ExteriorAlgebra.map s (y : ExteriorAlgebra R L) := by
-  simp [wedgeMap, coe_map]
+  simp [wedgeMap, wedgeMul]
 
 theorem range_pow_eq_map (i : F →ₗ[R] H) (n : ℕ) :
     LinearMap.range (ExteriorAlgebra.ι R ∘ₗ i) ^ n =

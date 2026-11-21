@@ -93,12 +93,12 @@ end General
 
 variable {R : Type*} [CommRing R] {T : Type*} {p q : ℕ} {κ : Type*}
 
-
+variable (R p q) in
 noncomputable def colDer (t : T) (k l : κ) : Derivation R (Poly R T p q κ) (Poly R T p q κ) :=
   ∑ a : Fin p, (X (xVar t a k) : Poly R T p q κ) • pderiv (xVar t a l) -
     ∑ b : Fin q, (X (yVar t b l) : Poly R T p q κ) • pderiv (yVar t b k)
 
-
+variable (R p q) in
 noncomputable def colLie (t : T) (k l : κ) : Module.End R (Poly R T p q κ) :=
   (colDer R p q t k l).toLinearMap
 
@@ -167,7 +167,7 @@ theorem colLie_monomial (t : T) (k : κ) (m : Var T p q κ →₀ ℕ) (c : R) :
   simp only [colLie_apply, X_mul_pderiv_monomial, colWeight, Int.cast_sub, Int.cast_sum,
     Int.cast_natCast, sub_smul, Finset.sum_smul, Nat.cast_smul_eq_nsmul]
 
-
+variable (R T p q κ) in
 theorem iSup_iInf_eigenspace_colLie :
     ⨆ μ : T → κ → ℤ, (⨅ t, ⨅ k, Module.End.eigenspace (colLie R p q t k k) (μ t k : R)) = ⊤ := by
   rw [eq_top_iff]

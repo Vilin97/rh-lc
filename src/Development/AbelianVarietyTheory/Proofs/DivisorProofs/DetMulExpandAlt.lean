@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 namespace GlobalTheory.DeterminantExpansion
 
@@ -14,8 +10,7 @@ theorem det_mul_expand {V : Type} [inst : CommRing V] {m g : ℕ}
   have h : (M * C : Matrix (Fin m) (Fin m) V) = fun i => ∑ k : Fin g, M i k • C k := by
     ext i j
     simp [Matrix.mul_apply, Finset.sum_apply]
-  let f : MultilinearMap V (fun _ : Fin m => Fin m → V) V :=
-    (Matrix.detRowAlternating : (Fin m → V) [⋀^Fin m]→ₗ[V] V).toMultilinearMap
+  let f : (Fin m → Fin m → V) →ₘₗ[V] V := Matrix.detRowAlternating.toMultilinearMap
   have hf : ∀ A : Matrix (Fin m) (Fin m) V, Matrix.det A = f A := fun A => rfl
   set_option synthInstance.maxHeartbeats 100000 in
     rw [hf, h, f.map_sum (fun i k => M i k • C k)]

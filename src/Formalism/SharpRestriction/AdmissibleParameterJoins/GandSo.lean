@@ -55,7 +55,9 @@ theorem cc_dg {a : PowerSeries R} (ha : PowerSeries.constantCoeff a = 0) (i : ι
 
 theorem hs_dg {a : PowerSeries R} (ha : PowerSeries.constantCoeff a = 0) :
     HasSubst (diagS a : ι → MvPowerSeries ι R) where
-  const_coeff s := by rw [cc_dg ha]; exact IsNilpotent.zero
+  const_coeff s := by
+    rw [cc_dg ha]
+    exact IsNilpotent.zero
   coeff_zero d := by
     classical
     refine (d.support.finite_toSet).subset ?_

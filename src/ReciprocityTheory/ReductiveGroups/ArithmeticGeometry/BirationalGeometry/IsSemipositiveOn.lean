@@ -51,22 +51,22 @@ structure ConeMetric where
   smul : ∀ (c : C) (z : ι → C), ρ (c • z) = ‖c‖ * ρ z
 
 
-def maxMetric [Fintype ι] : ConeMetric C ι where
+def maxMetric [Fintype ι] : ConeMetric (C := C) (ι := ι) where
   ρ z := ‖z‖
   pos _ hz := norm_pos_iff.mpr hz
   smul c z := norm_smul c z
 
 
-def fsMetric [Fintype ι] : ConeMetric ℂ ι where
+def fsMetric [Fintype ι] : ConeMetric (C := ℂ) (ι := ι) where
   ρ z := ‖WithLp.toLp 2 z‖
   pos _ hz := norm_pos_iff.mpr (by simpa using hz)
   smul c z := by rw [WithLp.toLp_smul, norm_smul]
 
-def ptNorm (m : ConeMetric C ι) (σ : o →+* C) (d : ℕ) (f : MvPolynomial (ι) o)
+def ptNorm (m : ConeMetric (C := C) (ι := ι)) (σ : o →+* C) (d : ℕ) (f : MvPolynomial (ι) o)
     (z : ι → C) : ℝ :=
   ‖eval z (map σ f)‖ / m.ρ z ^ d
 
-def IsConjInvariant (m : ConeMetric ℂ ι) : Prop :=
+def IsConjInvariant (m : ConeMetric (C := ℂ) (ι := ι)) : Prop :=
   ∀ z, m.ρ (fun i => (starRingEnd ℂ) (z i)) = m.ρ z
 
 end Points
@@ -82,13 +82,13 @@ section Curvature
 
 variable {ι : Type*} [Fintype ι]
 
-def IsSmoothMetric (m : ConeMetric ℂ ι) : Prop :=
+def IsSmoothMetric (m : ConeMetric (C := ℂ) (ι := ι)) : Prop :=
   ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) m.ρ {z | z ≠ 0}
 
 def leviForm (φ : (ι → ℂ) → ℝ) (z w : ι → ℂ) : ℝ :=
   (fderiv ℝ (fderiv ℝ φ) z w w + fderiv ℝ (fderiv ℝ φ) z (Complex.I • w) (Complex.I • w)) / 4
 
-def IsSemipositive (m : ConeMetric ℂ ι) : Prop :=
+def IsSemipositive (m : ConeMetric (C := ℂ) (ι := ι)) : Prop :=
   IsSmoothMetric m ∧ ∀ z, z ≠ 0 → ∀ w, 0 ≤ leviForm (fun z => Real.log (m.ρ z)) z w
 
 end Curvature
@@ -140,7 +140,7 @@ variable {o : Type*} [CommRing o] {ι : Type*} [Fintype ι]
 def IsConeTangent (σ : o →+* ℂ) (I : Ideal (MvPolynomial ι o)) (z w : ι → ℂ) : Prop :=
   ∀ f ∈ I, ∑ i, eval z (pderiv i (map σ f)) * w i = 0
 
-def IsSemipositiveOn (m : ConeMetric ℂ ι) (σ : o →+* ℂ) (I : Ideal (MvPolynomial ι o))
+def IsSemipositiveOn (m : ConeMetric (C := ℂ) (ι := ι)) (σ : o →+* ℂ) (I : Ideal (MvPolynomial ι o))
     (S : Set (ι → ℂ)) : Prop :=
   IsSmoothMetric m ∧
     ∀ z ∈ S, z ≠ 0 → ∀ w, IsConeTangent σ I z w → 0 ≤ leviForm (fun z => Real.log (m.ρ z)) z w
@@ -174,14 +174,14 @@ open NumberField ComplexConjugate
 
 variable {ι : Type*} {r : ℕ}
 
-def realGram {K : Type*} [Field K] [NumberField K] (m : InfinitePlace K → ConeMetric ℂ ι)
+def realGram {K : Type*} [Field K] [NumberField K] (m : InfinitePlace K → ConeMetric (C := ℂ) (ι := ι))
     (μ : InfinitePlace K → MeasureTheory.Measure (ι → ℂ)) (d : ℕ)
     (b : Fin r → MvPolynomial ι K) : Matrix (Fin r) (Fin r) ℝ :=
   fun k l => ∑ w : InfinitePlace K, (w.mult : ℝ) *
     (∫ z, eval z (map w.embedding (b k)) * conj (eval z (map w.embedding (b l))) /
       (((m w).ρ z ^ (2 * d) : ℝ) : ℂ) ∂μ w).re
 
-def l2Degree {K : Type*} [Field K] [NumberField K] (m : InfinitePlace K → ConeMetric ℂ ι)
+def l2Degree {K : Type*} [Field K] [NumberField K] (m : InfinitePlace K → ConeMetric (C := ℂ) (ι := ι))
     (μ : InfinitePlace K → MeasureTheory.Measure (ι → ℂ)) (d : ℕ)
     (b : Fin r → MvPolynomial ι K) : ℝ :=
   -(Real.log (realGram m μ d b).det / 2) / Height.totalWeight K

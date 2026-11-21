@@ -1,10 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Foundations.IsDCReps
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.Foundations.IsDCReps
 open GlobalTheory.HeckeFamilyMatrices Polynomial UpperHalfPlane
 open scoped MatrixGroups ModularForm
 open scoped Manifold
@@ -41,5 +36,7 @@ theorem eichler_finset_sum (w : ℕ) {ι : Type} [Fintype ι] (g : ι → ℍ �
     rw [← Finset.sum_mul, ← map_sum, ← Finset.mul_sum,
     ← intervalIntegral.integral_finsetSum fun i _ => eichler_integrand_intervalIntegrable (hg i) τ (w - j)]
   congr 4
+  funext t
+  simp only [Function.comp_apply, Finset.sum_apply, Finset.sum_mul]
 
 end GlobalTheory.EichlerSum

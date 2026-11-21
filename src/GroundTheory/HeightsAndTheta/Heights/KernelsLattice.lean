@@ -52,11 +52,11 @@ variable {n : ℕ}
 def degree (F : HermLattice K n) : ℝ :=
   subDegree F.lattice F.metric (fun j : Fin n => (Pi.single j 1 : Fin n → K))
 
-def slope (F : HermLattice K n) : ℝ := normalise K F.degree / n
+def slope (F : HermLattice K n) : ℝ := normalise (K := K) F.degree / n
 
 def lineDegree (F : HermLattice K n) (K' : Type*) [Field K'] [NumberField K'] [Algebra K K']
     (v : Fin n → K') : ℝ :=
-  normalise K' (subDegree
+  normalise (K := K') (subDegree
     (Submodule.span (𝓞 K') ((fun w : Fin n → K => fun j => algebraMap K K' (w j)) '' F.lattice))
     (fun σ' => F.metric (σ'.comp (algebraMap K K'))) (fun _ : Fin 1 => v))
 

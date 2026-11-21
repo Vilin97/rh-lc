@@ -1,10 +1,6 @@
-module
-
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.NormOneIsCoboundaryUnramifiedQuadratic
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.LocalOrbitCounts.Descent
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.LocalOrbitCounts.SqrtO
-
-@[expose] public section
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.NormOneIsCoboundaryUnramifiedQuadratic
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.LocalOrbitCounts.Descent
+import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.SymmetricPowerTransfer.LocalHermitianForms.LocalOrbitCounts.SqrtO
 
 open QuadraticAlgebra UpperTheory.V.Z.Sym UpperTheory.V.Z.Sym.Loc Matrix
 
@@ -406,10 +402,10 @@ private theorem vanish_split {O K : Type} [CommRing O] [IsDomain O] [IsDiscreteV
     intro z
     rw [hφ₁, hφ₂]
     apply QuadraticAlgebra.ext
-    · simp [he, QuadraticAlgebra.algebraMap_eq]
+    · simp [he, - algebraMap_eq]
       field_simp
       ring
-    · simp [he, QuadraticAlgebra.algebraMap_eq]
+    · simp [he, - algebraMap_eq]
       field_simp
       ring
   have intcrit : ∀ z : Lsq K Δ, φ₁ z ∈ (algebraMap O K).range →
@@ -471,7 +467,7 @@ private theorem vanish_split {O K : Type} [CommRing O] [IsDomain O] [IsDiscreteV
 
 private theorem vanish_sigL_mul {K : Type} [Field K] {Δ τ : K} (x y : EL Δ τ) : sigL (x * y) = sigL x * sigL y := by
   have hτ : star ((algebraMap K (Lsq K Δ)) τ) = (algebraMap K (Lsq K Δ)) τ := by
-    ext <;> simp [QuadraticAlgebra.algebraMap_eq]
+    ext <;> simp [- algebraMap_eq]
   apply QuadraticAlgebra.ext
   · simp [sigL, star_mul', star_add, star_neg, star_one]
   · simp [sigL, star_mul', star_add, hτ]

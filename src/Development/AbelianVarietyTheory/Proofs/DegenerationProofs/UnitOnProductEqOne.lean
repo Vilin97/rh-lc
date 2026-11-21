@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open TensorProduct CategoryTheory AlgebraicGeometry Limits
 
@@ -42,8 +38,8 @@ theorem exists_primitive (t : F ⊗[K] A) (ht : t ≠ 0) :
     · exact ⟨0, fun h => (hi h).elim⟩
   choose g hg using hg
   refine ⟨x i₀, ∑ i ∈ x.support, g i ⊗ₜ[K] b i, ?_, ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum, Finset.mul_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum]
     conv_lhs => rw [← bF.linearCombination_repr t, Finsupp.linearCombination_apply, Finsupp.sum]
     refine Finset.sum_congr rfl fun i hi => ?_
     simp only [Algebra.TensorProduct.map_tmul, IsScalarTower.coe_toAlgHom', hg i hi,

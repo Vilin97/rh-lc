@@ -1,10 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsTestRep
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsTestRep
 open GlobalTheory.JR Matrix MeasureTheory Filter Topology
 
 namespace GlobalTheory.TransportSD
@@ -14,7 +9,11 @@ theorem map_map_equiv_left {α β γ : Type} [MeasurableSpace α] [MeasurableSpa
   by_cases hg : AEMeasurable g (μ.map e)
   · exact AEMeasurable.map_map_of_aemeasurable hg e.measurable.aemeasurable
   · have hg' : ¬ AEMeasurable (g ∘ e) μ := by rwa [← aemeasurable_map_equiv_iff e]
-    rw [Measure.map_of_not_aemeasurable hg, Measure.map_of_not_aemeasurable hg']
+    by_cases hμ : μ = 0
+    · simp [hμ]
+    · have heμ : Measure.map e μ ≠ 0 := (Measure.map_ne_zero_iff e.measurable.aemeasurable).mpr hμ
+      rw [Measure.map_of_not_aemeasurable_of_ne_zero hg heμ,
+        Measure.map_of_not_aemeasurable_of_ne_zero hg' hμ]
 
 theorem map_map_equiv_right {α β γ : Type} [MeasurableSpace α] [MeasurableSpace β] [MeasurableSpace γ]
     (μ : Measure α) (T : α → β) (e : β ≃ᵐ γ) : (μ.map T).map e = μ.map (e ∘ T) := by
@@ -25,7 +24,11 @@ theorem map_map_equiv_right {α β γ : Type} [MeasurableSpace α] [MeasurableSp
       apply hT
       have := e.symm.measurable.comp_aemeasurable h
       simpa [Function.comp_def] using this
-    rw [Measure.map_of_not_aemeasurable hT, Measure.map_of_not_aemeasurable hT', Measure.map_zero]
+    by_cases hμ : μ = 0
+    · simp [hμ]
+    · rw [Measure.map_of_not_aemeasurable_of_ne_zero hT hμ]
+      simp only [Measure.map_of_not_aemeasurable_of_ne_zero hT' hμ]
+      simp
 
 end GlobalTheory.TransportSD
 

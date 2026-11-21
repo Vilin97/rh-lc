@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open TensorProduct Module
 open scoped DirectSum
@@ -13,14 +9,10 @@ namespace SymAlg
 variable {R : Type*} [CommRing R] {M M' M'' : Type*} [AddCommGroup M] [Module R M]
   [AddCommGroup M'] [Module R M'] [AddCommGroup M''] [Module R M'']
 
-
-
 section BaseChange
 
 variable {S : Type*} [CommRing S] [Algebra R S] {W : Type*} [AddCommGroup W] [Module R W]
   [Module S W] [IsScalarTower R S W]
-
-
 
 theorem isBaseChange_dual [Module.Finite R M] [Module.Projective R M] {j : M →ₗ[R] W}
     (h : IsBaseChange S j) : IsBaseChange S h.toDual := by

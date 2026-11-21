@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 noncomputable section
 
@@ -68,6 +64,7 @@ structure Fr (l : ℕ) (O : Type) [CommRing O] where
 
 attribute [instance] Fr.eeRing Fr.eeAlgA Fr.eeAlgO Fr.eeTow
 
+open Classical
 
 namespace Fr
 

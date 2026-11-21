@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Divisors.IsFlatLift
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsFlatLift
 
 open GlobalTheory GlobalTheory.DI
 
@@ -84,7 +80,7 @@ theorem exists_isPhi : ∀ {K : Type} [CommRing K] {V : Type} [AddCommGroup V] [
       (∀ (c : K) (x : ExteriorAlgebra K V), Φ (c • x) = c ^ p • Φ x) ∧
         ∀ (a : ℕ) (v : Fin a → V), Φ (ExteriorAlgebra.ιMulti K a v) = alt f h a v := by
     letI tw : Module K (Finset ι → ExteriorAlgebra K V) := Module.compHom _ (frobenius K p)
-    let P : ∀ a : ℕ, MultilinearMap K (fun _ : Fin a => V) (Finset ι → ExteriorAlgebra K V) := fun a =>
+    let P : ∀ a : ℕ, (Fin a → V) →ₘₗ[K] (Finset ι → ExteriorAlgebra K V) := fun a =>
       { toFun := fun v => prodL f h (List.ofFn v)
         map_update_add' := fun v i x x' => by
           obtain rfl : ‹DecidableEq (Fin a)› = instDecidableEqFin a := Subsingleton.elim _ _

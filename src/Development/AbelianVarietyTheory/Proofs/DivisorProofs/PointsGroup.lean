@@ -16,15 +16,17 @@ variable {R A B X Y : Type} [CommRing R] [CommRing A] [CommRing B] [CommRing X] 
   __ := (inferInstance : Monoid (WithConv (A →ₐ[R] X)))
   inv f := toConv <| f.ofConv.comp (HopfAlgebra.antipodeAlgHom R A)
   inv_mul_cancel f := by
-    have H : (lmul' R).comp (Algebra.TensorProduct.map f.ofConv f.ofConv) =
-      f.ofConv.comp (lmul' R) := by ext <;> simp
-    trans toConv <| ((lmul' R).comp (Algebra.TensorProduct.map f.ofConv f.ofConv)).comp
+    have H : (Algebra.TensorProduct.lmul' R).comp (Algebra.TensorProduct.map f.ofConv f.ofConv) =
+      f.ofConv.comp (Algebra.TensorProduct.lmul' R) := by ext <;> simp
+    trans toConv <|
+      ((Algebra.TensorProduct.lmul' R).comp (Algebra.TensorProduct.map f.ofConv f.ofConv)).comp
       ((Algebra.TensorProduct.map
-      (HopfAlgebra.antipodeAlgHom R A) (.id _ _)).comp (comulAlgHom R A))
+        (HopfAlgebra.antipodeAlgHom R A) (.id _ _)).comp (Bialgebra.comulAlgHom R A))
     · rw [AlgHom.comp_assoc, ← AlgHom.comp_assoc (Algebra.TensorProduct.map f.ofConv f.ofConv),
         ← Algebra.TensorProduct.map_comp]; rfl
     rw [H, AlgHom.comp_assoc, WithConv.ext_iff, ← AlgHom.toLinearMap_injective.eq_iff]
-    change f.ofConv.toLinearMap.comp (toConv (antipode R (A := A)) * toConv LinearMap.id).ofConv =
+    change f.ofConv.toLinearMap.comp
+      (toConv (HopfAlgebra.antipode R (A := A)) * toConv LinearMap.id).ofConv =
       ofConv (1 : WithConv <| A →ₗ[R] X)
     rw [LinearMap.antipode_mul_id]
     ext

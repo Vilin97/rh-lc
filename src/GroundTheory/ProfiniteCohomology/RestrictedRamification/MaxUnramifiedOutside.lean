@@ -31,6 +31,6 @@ noncomputable def maxUnramifiedOutside (S : Set (HeightOneSpectrum (𝓞 F))) :
 
 
 abbrev galUnramifiedOutside (S : Set (HeightOneSpectrum (𝓞 F))) :=
-  Gal(maxUnramifiedOutside F Ω S / F)
+  Gal(maxUnramifiedOutside (F := F) (Ω := Ω) S / F)
 
 end GroundTheory.ProfCoh

@@ -28,6 +28,7 @@ def evalCone {F : Type*} [CommRing F] (z : Cone n F) (f : MvPolynomial (Coord n)
 
 def BlockNonzero {F : Type*} [Zero F] (z : Cone n F) : Prop := ∀ k, z k ≠ 0
 
+variable (n) in
 
 structure ArithVariety where
 
@@ -49,6 +50,7 @@ def ZariskiDense (P : ArithVariety n) (S : Set (Cone n (AlgebraicClosure ℚ))) 
   ∀ (m : ι → ℕ) (f : MvPolynomial (Coord n) ℤ), IsWeightedHomogeneous (coordDeg n) f m →
     (∀ z ∈ S, evalCone z f = 0) → f ∈ P.ideal
 
+variable (n) in
 
 def whole : ArithVariety n where
   ideal := ⊥
@@ -64,6 +66,7 @@ def whole : ArithVariety n where
 
 end ArithVariety
 
+variable (n) in
 
 structure HermLine where
 
@@ -102,6 +105,7 @@ theorem contDiffOn_l2Norm_block (k : ι) :
 
 namespace HermLine
 
+variable (n) in
 
 def standard : HermLine n where
   deg _ := 1
@@ -180,6 +184,7 @@ namespace IntegralSection
 
 variable {P : ArithVariety n} {a : ι → ℤ}
 
+variable (P) in
 
 def chartSection (c : (k : ι) → Fin (n k + 1)) : IntegralSection P (fun _ ↦ 1) where
   num := chartMonomial c 1

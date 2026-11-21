@@ -1,8 +1,4 @@
-module
-
-public import Formalism.FlagUnipotentLattices.CardSubmodulesAndLinearEquivBounds
-
-@[expose] public section
+import Formalism.FlagUnipotentLattices.CardSubmodulesAndLinearEquivBounds
 
 open Module Matrix Formalism.HermitianLatticeCounting.LatticeSumBounds
 open scoped BigOperators ComplexConjugate
@@ -22,7 +18,7 @@ theorem prodMaxLeProdMaxDiv : PThreshold := by
   intro ι _ x H hH hx
   have hH0 : 0 < H := by linarith
   rw [← Finset.card_univ, ← Finset.prod_const, ← Finset.prod_mul_distrib]
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro v _; exact zero_le_one.trans (le_max_left _ _)
   · intro v _
     have e : H * (x v / H) = x v := by field_simp

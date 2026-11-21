@@ -1,9 +1,4 @@
-module
-
-public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.FourierMatch
-
-@[expose] public section
-
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.FourierMatch
 open GlobalTheory.JR Matrix MeasureTheory Filter Topology
 
 namespace GlobalTheory.LatL
@@ -88,8 +83,10 @@ theorem exists_glO_pair {F : Type} [NormedField F] [IsUltrametricDist F] (r : �
       rw [norm_mul]
       exact mul_le_one₀ (hv _) (norm_nonneg _) (hw _)
   refine ⟨k, fun i j => ⟨by simpa [k, K] using hcol j i, by simpa [k, L] using hrow i j⟩, ?_, ?_⟩
-  · ext a
-    simp [k, K, col, Matrix.mulVec_single]
+  · rw [Matrix.mulVec_single_one]
+    funext a
+    change col (Fin.last r) a = v a
+    simp [col]
   · ext b
     rw [show (w ᵥ* (k : Matrix _ _ F)) b = row (Fin.last r) ⬝ᵥ col b by
       simp [k, K, row, Matrix.vecMul, dotProduct]]

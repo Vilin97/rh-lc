@@ -1,10 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OriginIdeal
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OriginIdeal
 open IsLocalRing Polynomial
 open scoped TensorProduct
 
@@ -79,7 +74,10 @@ theorem tensor_isLocalRing_of_unique_prime_over : ∀ (P T L : Type) [CommRing P
   have key : ∀ 𝔫 : Ideal (TensorProduct P T L), 𝔫.IsMaximal → 𝔫 = RingHom.ker ψ := by
     intro 𝔫 h𝔫
     have hLmax : (𝔫.comap (algebraMap L (TensorProduct P T L))).IsMaximal :=
-      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := L) 𝔫
+      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal
+        (algebraMap L (TensorProduct P T L)) (by
+          intro x
+          exact hint.isIntegral x) 𝔫
     have hL : 𝔫.comap (algebraMap L (TensorProduct P T L)) = maximalIdeal L :=
       IsLocalRing.eq_maximalIdeal hLmax
     let iT : T →+* TensorProduct P T L := Algebra.TensorProduct.includeLeftRingHom

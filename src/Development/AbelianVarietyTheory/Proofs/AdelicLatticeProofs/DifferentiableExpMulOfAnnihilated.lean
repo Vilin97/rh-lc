@@ -1,13 +1,9 @@
-module
-
-public import Mathlib
-
-@[expose] public section
-
+import Mathlib
 open Matrix
 
 namespace GlobalTheory
 
+open Matrix in
 
 theorem _root_.GlobalTheory.differentiable_exp_mul_of_annihilated :
     ∀ (g : ℕ) (Hm : Matrix (Fin g) (Fin g) ℂ), Hm.IsHermitian → ∀ f : (Fin g → ℂ) → ℂ, Differentiable ℝ f → (∀ w z : Fin g → ℂ, (fderiv ℝ f w z + Real.pi * Complex.I * ((w ⬝ᵥ Hm.mulVec (star z)).im : ℂ) * f w) + Complex.I * (fderiv ℝ f w (Complex.I • z) + Real.pi * Complex.I * ((w ⬝ᵥ Hm.mulVec (star (Complex.I • z))).im : ℂ) * f w) = 0) → Differentiable ℂ fun w : Fin g → ℂ => Complex.exp (Real.pi / 2 * (w ⬝ᵥ Hm.mulVec (star w))) * f w := by
@@ -66,7 +62,7 @@ theorem _root_.GlobalTheory.differentiable_exp_mul_of_annihilated :
           simp only [Pi.smul_apply, Pi.add_apply, smul_eq_mul, Complex.real_smul]
           conv_lhs => rw [← Complex.re_add_im c]
           ring
-        rw [hc, T.map_add (f := _), T.map_smul, T.map_smul, key, RingHom.id_apply]
+        rw [hc, T.map_add, T.map_smul, T.map_smul, key, RingHom.id_apply]
         simp only [Complex.real_smul, smul_eq_mul]
         conv_rhs => rw [← Complex.re_add_im c]
         ring }

@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 noncomputable def UpperTheory.Reformulated.B.Yzd4.cT :
     {A : Type} →

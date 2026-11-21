@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Divisors.HilbertNinetyQuotientHomEqIff
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.Divisors.HilbertNinetyQuotientHomEqIff
 
 noncomputable section
 
@@ -20,7 +16,7 @@ def adeleJoin (x : κ → mixedEmbedding.mixedSpace F) (y : κ → FiniteAdeleRi
 theorem pureA_adeleJoin (f : (κ → mixedEmbedding.mixedSpace F) → ℂ) (g : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ)
     (x : κ → mixedEmbedding.mixedSpace F) (y : κ → FiniteAdeleRing (𝓞 F) F) :
     GlobalTheory.WeilM.pureA F f g (adeleJoin F x y) = f x * g y := by
-  simp [GlobalTheory.WeilM.pureA, adeleJoin]
+  simp only [GlobalTheory.WeilM.pureA, adeleJoin, RingEquiv.apply_symm_apply]
 
 theorem exists_slice [Fintype κ] {Φ : (κ → AdeleRing (𝓞 F) F) → ℂ} (hΦ : Φ ∈ GlobalTheory.WeilM.schA F κ)
     (y : κ → FiniteAdeleRing (𝓞 F) F) :

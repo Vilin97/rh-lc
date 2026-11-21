@@ -54,7 +54,7 @@ def stableUnitsAction : MulDistribMulAction Gal(L/K) V where
     simp [unitVal]))
 
 theorem unitVal_smul (σ : Gal(L/K)) (u : V) :
-    letI := stableUnitsAction V hV;
+    letI := stableUnitsAction V hV
     unitVal ((σ • u : V) : 𝒪[L]ˣ) = σ (unitVal u) :=
   (hV σ u u.2).choose_spec.2
 

@@ -21,17 +21,11 @@ def cokerMap (f : A →+ B) (fD : ∀ a, f (DA a) = DB (f a)) : B ⧸ f.range �
 theorem ses_coker (hf : Injective f)
     (fD : ∀ a, f (DA a) = DB (f a)) (fN : ∀ a, f (NA a) = NB (f a))
     (DN : ∀ b, DB (NB b) = 0) (ND : ∀ b, NB (DB b) = 0) :
-    SES DA NA DB NB (cokerMap f fD) (cokerMap f fN) f (QuotientAddGroup.mk' f.range) where
-  inj := hf
-  exact := fun b => by
-    rw [QuotientAddGroup.mk'_apply, QuotientAddGroup.eq_zero_iff]; rfl
-  surj := QuotientAddGroup.mk'_surjective _
-  fD := fD
-  fN := fN
-  gD := fun _ => rfl
-  gN := fun _ => rfl
-  DN := DN
-  ND := ND
+    SES DA NA DB NB (cokerMap f fD) (cokerMap f fN) f (QuotientAddGroup.mk' f.range) := by
+  refine ⟨hf, ?_, QuotientAddGroup.mk'_surjective _, fD, fN, fun _ => rfl, fun _ => rfl, DN, ND⟩
+  intro b
+  rw [QuotientAddGroup.mk'_apply, QuotientAddGroup.eq_zero_iff]
+  rfl
 
 theorem isFin_iff_of_finiteIndex (hf : Injective f) (hfi : f.range.FiniteIndex)
     (fD : ∀ a, f (DA a) = DB (f a)) (fN : ∀ a, f (NA a) = NB (f a))

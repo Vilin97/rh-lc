@@ -165,13 +165,13 @@ theorem lTensor_counit_comulTw [Coalgebra.IsCocomm K H] (c : H ⊗[K] H) (hu : I
 
 def Twisted (_c : H ⊗[K] H) : Type := H
 
-instance (c : H ⊗[K] H) : AddCommGroup (Twisted K H c) := inferInstanceAs (AddCommGroup H)
-instance (c : H ⊗[K] H) : Module K (Twisted K H c) := inferInstanceAs (Module K H)
-instance (c : H ⊗[K] H) [Module.Finite K H] : Module.Finite K (Twisted K H c) :=
+instance (c : H ⊗[K] H) : AddCommGroup (Twisted c) := inferInstanceAs (AddCommGroup H)
+instance (c : H ⊗[K] H) : Module K (Twisted c) := inferInstanceAs (Module K H)
+instance (c : H ⊗[K] H) [Module.Finite K H] : Module.Finite K (Twisted c) :=
   inferInstanceAs (Module.Finite K H)
 
 def twistedCoalgebra [Coalgebra.IsCocomm K H] (c : H ⊗[K] H) (hu : IsUnit c) (hc : IsCocycle c)
-    (hs : Algebra.TensorProduct.comm K H H c = c) : Coalgebra K (Twisted K H c) where
+    (hs : Algebra.TensorProduct.comm K H H c = c) : Coalgebra K (Twisted c) where
   comul := comulTw (K := K) (H := H) c
   counit := (kappa c)⁻¹ • counit (R := K) (A := H)
   coassoc := LinearMap.ext fun x => comulTw_coassoc c hc x
@@ -189,11 +189,11 @@ theorem exists_twisted_groupLike : ∀ (K H : Type) [Field K] [IsAlgClosed K] [C
     Algebra.TensorProduct.comm K H H c = c →
     ∃ u : H, u ≠ 0 ∧ c * Coalgebra.comul (R := K) u = u ⊗ₜ[K] u := by
   intro K H _ _ _ _ _ _ c hu hc hs
-  letI := twistedCoalgebra c hu hc hs
-  haveI : Coalgebra.IsCocomm K (Twisted K H c) :=
+  letI := TwistedGroupLike.twistedCoalgebra c hu hc hs
+  haveI : Coalgebra.IsCocomm K (Twisted c) :=
     ⟨LinearMap.ext fun x => (LinearMap.comp_apply _ _ _).trans (comm_comulTw c hs x)⟩
-  let A := CartierDual K (Twisted K H c)
-  have h1 : (1 : A).ofConv (show Twisted K H c from (1 : H)) = (kappa c)⁻¹ := by
+  let A := CartierDual K (Twisted c)
+  have h1 : (1 : A).ofConv (show Twisted c from (1 : H)) = (kappa c)⁻¹ := by
     rw [LinearMap.convOne_apply]
     show (kappa c)⁻¹ • counit (R := K) (1 : H) = _
     simp
@@ -204,20 +204,20 @@ theorem exists_twisted_groupLike : ∀ (K H : Type) [Field K] [IsAlgClosed K] [C
   obtain ⟨M, hM⟩ := Ideal.exists_maximal A
   letI := Ideal.Quotient.field M
   let χ : A →ₐ[K] K := (IsAlgClosed.lift : (A ⧸ M) →ₐ[K] K).comp (Ideal.Quotient.mkₐ K M)
-  let u : Twisted K H c := (Module.evalEquiv K (Twisted K H c)).symm
-    (χ.toLinearMap ∘ₗ (CartierDual.toDual K (Twisted K H c)).symm.toLinearMap)
+  let u : Twisted c := (Module.evalEquiv K (Twisted c)).symm
+    (χ.toLinearMap ∘ₗ (CartierDual.toDual K (Twisted c)).symm.toLinearMap)
   have hu' : ∀ φ : A, φ.ofConv u = χ φ := by
     intro φ
-    have h := (Module.evalEquiv K (Twisted K H c)).apply_symm_apply
-        (χ.toLinearMap ∘ₗ (CartierDual.toDual K (Twisted K H c)).symm.toLinearMap)
+    have h := (Module.evalEquiv K (Twisted c)).apply_symm_apply
+        (χ.toLinearMap ∘ₗ (CartierDual.toDual K (Twisted c)).symm.toLinearMap)
     exact LinearMap.congr_fun h φ.ofConv
   have hg : IsGroupLikeElem K u := (CartierDual.isGroupLikeElem_iff_mul u).2
     ⟨by rw [hu', map_one], fun φ ψ => by rw [hu', hu', hu', map_mul]⟩
   have h2 : comulTw c u = u ⊗ₜ[K] u := hg.comul_eq_tmul_self
   refine ⟨u, ?_, h2⟩
   intro h0
-  have h3 : (counit (R := K) (A := Twisted K H c)) u = 0 := by
-    rw [show u = (0 : Twisted K H c) from h0]
+  have h3 : (counit (R := K) (A := Twisted c)) u = 0 := by
+    rw [show u = (0 : Twisted c) from h0]
     exact map_zero _
   rw [hg.counit_eq_one] at h3
   exact one_ne_zero h3

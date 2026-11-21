@@ -1,10 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.QuotientEigenDifference
-public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.MultiplicationKernelIdentity
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.QuotientEigenDifference
+import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.MultiplicationKernelIdentity
 
 open scoped NNReal
 open GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity Classical

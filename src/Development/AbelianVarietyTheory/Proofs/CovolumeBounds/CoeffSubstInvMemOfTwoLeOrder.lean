@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open MvPowerSeries Finsupp
 
@@ -444,6 +440,7 @@ theorem coeff_substInv_mem (hu : ∀ i, constantCoeff (u i) = 0) {S : Subring R}
   mem_coeffsInDeg.1 (approxLimit_mem_coeffsInDeg hu hB
     (fun i => higherPart_mem_coeffsInDeg (hu i) (mem_coeffsInDeg.2 (huS i))) i) d hd
 
+omit [Fintype σ] in
 
 theorem two_le_order_sub_X_iff :
     (∀ i, (2 : ℕ∞) ≤ (u i - X i).order) ↔
@@ -483,7 +480,7 @@ theorem constantCoeff_sumFamily [Finite τ] [Finite τ'] {a : σ → MvPowerSeri
     {a' : σ' → MvPowerSeries τ' R} (ha : ∀ i, constantCoeff (a i) = 0)
     (ha' : ∀ j, constantCoeff (a' j) = 0) (s : σ ⊕ σ') :
     constantCoeff (sumFamily a a' s) = 0 := by
-  cases s <;> simp [ha, ha']
+  cases s <;> simp [sumFamily, ha, ha']
 
 def groupWeight (σ σ' : Type*) : Bool → σ ⊕ σ' → ℕ
   | true => Sum.elim (fun _ => 1) (fun _ => 0)

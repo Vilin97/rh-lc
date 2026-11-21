@@ -103,6 +103,8 @@ structure PointedEtale where
 
   pt : carrier →ₐ[R] K
 
+instance : CoeSort (PointedEtale R K) (Type u) := ⟨PointedEtale.carrier⟩
+
 namespace PointedEtale
 
 attribute [instance] commRing algebra etale
@@ -181,13 +183,15 @@ abbrev StdIndex (R K : Type u) [CommRing R] [Field K] [Algebra R K] := Σ P : St
 noncomputable abbrev stdObj (i : StdIndex R K) : PointedEtale R K := ⟨i.1.Ring, i.2⟩
 
 
-abbrev Std := InducedCategory (PointedEtale R K) (stdObj (R := R) (K := K))
+abbrev Std (R K : Type u) [CommRing R] [Field K] [Algebra R K] :=
+  InducedCategory (PointedEtale R K) (stdObj (R := R) (K := K))
 
 
-noncomputable abbrev incl : Std R K ⥤ PointedEtale R K := inducedFunctor _
+noncomputable abbrev incl (R K : Type u) [CommRing R] [Field K] [Algebra R K] :
+    PointedEtale.Std R K ⥤ PointedEtale R K := inducedFunctor _
 
 theorem exists_hom_incl (X : PointedEtale R K) :
-    ∃ j : Std R K, Nonempty (X ⟶ (incl R K).obj j) := by
+    ∃ j : PointedEtale.Std R K, Nonempty (X ⟶ (incl R K).obj j) := by
   let q := RingHom.ker X.pt
   have : q.IsPrime := RingHom.ker_isPrime _
   obtain ⟨s, hs, hstd⟩ := Algebra.IsEtaleAt.exists_isStandardEtale (R := R) q
@@ -195,7 +199,7 @@ theorem exists_hom_incl (X : PointedEtale R K) :
   let P : StandardEtalePresentation R (Localization.Away s) :=
     hstd.nonempty_standardEtalePresentation.some
   let Y := X.away s hu
-  let j : Std R K := ⟨P.P, Y.pt.comp P.equivRing.symm.toAlgHom⟩
+  let j : PointedEtale.Std R K := ⟨P.P, Y.pt.comp P.equivRing.symm.toAlgHom⟩
   have hc : (Y.pt.comp P.equivRing.symm.toAlgHom).comp P.equivRing.toAlgHom = Y.pt := by
     ext y
     simp
@@ -219,7 +223,7 @@ theorem exists_hom_root (X : PointedEtale R K) (q : X[X]) (hq : q.Monic) (a₀ :
   · exact Q.hasMap_X.1
   · exact Q.lift_X a₀ hmap
 
-instance isFiltered_std : IsFiltered (Std R K) :=
+instance isFiltered_std : IsFiltered (PointedEtale.Std R K) :=
   IsFiltered.of_exists_of_isFiltered_of_fullyFaithful (incl R K) exists_hom_incl
 
 instance final_incl : (incl R K).Final :=
@@ -234,7 +238,8 @@ namespace PointedEtale
 variable {R : Type u} [CommRing R] {K : Type u} [CommRing K] [Algebra R K]
 
 
-noncomputable def diagram : PointedEtale R K ⥤ CommRingCat.{u} where
+noncomputable def diagram (R : Type u) [CommRing R] (K : Type u) [CommRing K]
+    [Algebra R K] : PointedEtale R K ⥤ CommRingCat.{u} where
   obj X := CommRingCat.of X
   map f := CommRingCat.ofHom f.alg.toRingHom
 
@@ -247,10 +252,10 @@ variable (R : Type u) [CommRing R] (K : Type u) [Field K] [Algebra R K]
 open PointedEtale
 
 noncomputable def etaleColimit : CommRingCat.{u} :=
-  colimit (incl R K ⋙ diagram R K)
+  colimit (incl R K ⋙ diagram (R := R) (K := K))
 
-noncomputable def etaleCocone : Cocone (diagram R K) :=
-  Functor.Final.extendCocone.obj (colimit.cocone (incl R K ⋙ diagram R K))
+noncomputable def etaleCocone : Cocone (diagram (R := R) (K := K)) :=
+  Functor.Final.extendCocone.obj (colimit.cocone (incl R K ⋙ diagram (R := R) (K := K)))
 
 noncomputable def etaleCoconeIsColimit : IsColimit (etaleCocone R K) :=
   (Functor.Final.isColimitExtendCoconeEquiv _ _).symm (colimit.isColimit _)
@@ -266,10 +271,10 @@ theorem of_map {X Y : PointedEtale R K} (f : X ⟶ Y) (x : X) : of Y (f.alg x) =
   congr($((etaleCocone R K).w f) x)
 
 theorem exists_of (y : etaleColimit R K) : ∃ (X : PointedEtale R K) (x : X), of X x = y := by
-  obtain ⟨j, x, hx⟩ := Concrete.colimit_exists_rep (incl R K ⋙ diagram R K) y
+  obtain ⟨j, x, hx⟩ := Concrete.colimit_exists_rep (incl R K ⋙ diagram (R := R) (K := K)) y
   refine ⟨(incl R K).obj j, x, ?_⟩
-  have := Functor.Final.extendCocone_obj_ι_app' (G := diagram R K)
-    (colimit.cocone (incl R K ⋙ diagram R K)) (𝟙 ((incl R K).obj j))
+  have := Functor.Final.extendCocone_obj_ι_app' (G := diagram (R := R) (K := K))
+    (colimit.cocone (incl R K ⋙ diagram (R := R) (K := K))) (𝟙 ((incl R K).obj j))
   rw [← hx]
   change ((etaleCocone R K).ι.app ((incl R K).obj j)).hom x = _
   simp only [etaleCocone, this, CategoryTheory.Functor.map_id, Category.id_comp]
@@ -289,7 +294,7 @@ theorem exists_of_finset (s : Finset (etaleColimit R K)) :
     · obtain ⟨x, rfl⟩ := hX z hz
       exact ⟨(IsFiltered.leftToMax X Y).alg x, of_map _ _⟩
 
-noncomputable def ptCocone : Cocone (diagram R K) where
+noncomputable def ptCocone : Cocone (diagram (R := R) (K := K)) where
   pt := CommRingCat.of K
   ι := { app X := CommRingCat.ofHom X.pt.toRingHom
          naturality X Y f := by ext x; exact pt_alg f x }
@@ -383,11 +388,11 @@ theorem henselianLocalRing (hK : Function.Surjective (toK : etaleColimit R K →
   · apply e.injective
     rw [he, toK_of, hbY]
 
-theorem of_incl_eq (j : Std R K) (a : (incl R K).obj j) :
-    of ((incl R K).obj j) a = (colimit.ι (incl R K ⋙ diagram R K) j).hom a := by
-  have h := Functor.Final.extendCocone_obj_ι_app' (colimit.cocone (incl R K ⋙ diagram R K))
+theorem of_incl_eq (j : PointedEtale.Std R K) (a : (incl R K).obj j) :
+    of ((incl R K).obj j) a = (colimit.ι (incl R K ⋙ diagram (R := R) (K := K)) j).hom a := by
+  have h := Functor.Final.extendCocone_obj_ι_app' (colimit.cocone (incl R K ⋙ diagram (R := R) (K := K)))
     (𝟙 ((incl R K).obj j))
-  change ((Functor.Final.extendCocone.obj (colimit.cocone (incl R K ⋙ diagram R K))).ι.app
+  change ((Functor.Final.extendCocone.obj (colimit.cocone (incl R K ⋙ diagram (R := R) (K := K)))).ι.app
     ((incl R K).obj j)).hom a = _
   rw [h]
   rfl
@@ -397,7 +402,7 @@ theorem exists_hom_eq_of_of_eq {X : PointedEtale R K} {x y : X} (h : of X x = of
   obtain ⟨j, ⟨e⟩⟩ := exists_hom_incl X
   rw [← of_map e x, ← of_map e y, of_incl_eq, of_incl_eq] at h
   obtain ⟨k, f, g, hfg⟩ :=
-    Concrete.colimit_exists_of_rep_eq (incl R K ⋙ diagram R K) (e.alg x) (e.alg y) h
+    Concrete.colimit_exists_of_rep_eq (incl R K ⋙ diagram (R := R) (K := K)) (e.alg x) (e.alg y) h
   refine ⟨(incl R K).obj (IsFiltered.coeq f g), e ≫ (incl R K).map (f ≫ IsFiltered.coeqHom f g), ?_⟩
   have h2 : ((incl R K).map (IsFiltered.coeqHom f g)).alg (((incl R K).map f).alg (e.alg x)) =
       ((incl R K).map (IsFiltered.coeqHom f g)).alg (((incl R K).map g).alg (e.alg y)) :=

@@ -15,7 +15,7 @@ section Diagonal
 variable {R S B : Type} [CommRing R] [CommRing S] [CommRing B] [Algebra R S] [Algebra S B]
   [Algebra R B] [IsScalarTower R S B]
 
-
+variable (R S B) in
 noncomputable def mu : S ⊗[R] B →ₐ[S] B :=
   Algebra.TensorProduct.lift (Algebra.ofId S B) (AlgHom.id R B) fun _ _ => Commute.all _ _
 
@@ -113,7 +113,7 @@ theorem _root_.GlobalTheory.DiscrJacobian.mem_span_of_mu_eq_zero {ι : Type} [Fi
     intro M hM
     haveI : M.IsMaximal := hM.2
     have hMc : (M.comap (algebraMap S (S ⊗[R] B))).IsMaximal :=
-      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal M
+      Ideal.isMaximal_under_of_isIntegral_of_isMaximal M
     have h2 := hx j
     unfold Ideal.jacobson at h2
     exact Ideal.mem_sInf.mp h2 ⟨bot_le, hMc⟩
@@ -152,6 +152,8 @@ theorem _root_.GlobalTheory.DiscrJacobian.der_mul (D : Derivation R S S) (y z : 
 end Diagonal
 
 section Socle
+
+open IsLocalRing
 
 variable {R B C : Type} [CommRing R] [CommRing B] [CommRing C] [Algebra R B] [Algebra R C]
 
@@ -201,7 +203,7 @@ theorem _root_.GlobalTheory.DiscrJacobian.isUnit_det_of_productMap_ne_zero [IsLo
     obtain ⟨P, hP, hwP⟩ := Ideal.exists_le_maximal (Ideal.span {w})
       (by rwa [Ne, Ideal.span_singleton_eq_top])
     have hPc : P.comap (algebraMap R B) = maximalIdeal R :=
-      IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P)
+      IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal P)
     have hmP : (maximalIdeal R).map (algebraMap R B) ≤ P := by
       rw [Ideal.map_le_iff_le_comap, hPc]
     have hν : w - algebraMap R B c ∈ P :=
@@ -279,7 +281,7 @@ theorem _root_.GlobalTheory.DiscrJacobian.map_mem_radical {R S B : Type} [CommRi
   have hm : (P.comap (algebraMap R B)).IsMaximal := by
     rw [hcomap]; exact maximalIdeal.isMaximal R
   haveI : Algebra.IsIntegral R B := Algebra.IsIntegral.of_finite R B
-  haveI hPmax : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap P hm
+  haveI hPmax : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under P hm
   have hmax : (P.comap (algebraMap S B)).IsMaximal := Ideal.comap_isMaximal_of_surjective _ hsurj
   unfold Ideal.jacobson at hx
   exact Ideal.mem_sInf.mp hx ⟨bot_le, hmax⟩

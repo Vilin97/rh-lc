@@ -1,10 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.AllPositions
-public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.TypeChainPrincipalEntryNeZero
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.AllPositions
+import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.TypeChainPrincipalEntryNeZero
 
 open MeasureTheory ValuativeRel Matrix GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.StepData GlobalTheory.SymChain
 
@@ -56,11 +52,15 @@ theorem mem_R_of_pattern (r : GL (n ⊕ Fin c) k)
     rcases a with x | i
     · rcases b with x' | j
       · have := congrFun (congrFun e2 x) x'
-        simpa [Matrix.mul_apply, Fintype.sum_sum_type, toBlocks₁₁, one_apply] using this
+        simpa [Matrix.mul_apply, Fintype.sum_sum_type, toBlocks₁₁, Matrix.one_apply] using this
       · have hj : j.val + 1 ≤ p := by simpa [lev] using hab
         simp [Matrix.mul_apply, Fintype.sum_sum_type, hz _ _ hj]
-    · have := hr (.inr i) b hab (by simp)
-      simpa [Matrix.mul_apply, Fintype.sum_sum_type, one_apply] using this
+    · rw [Matrix.mul_apply, Fintype.sum_sum_type]
+      simp only [fromBlocks_apply₂₁, fromBlocks_apply₂₂, Matrix.zero_apply, zero_mul,
+        Finset.sum_const_zero, zero_add]
+      change ((1 : Matrix (Fin c) (Fin c) k) *ᵥ (fun j => r.val (.inr j) b)) i = _
+      rw [Matrix.one_mulVec]
+      exact hr (.inr i) b hab (by simp)
   have : r = embX c γ * ((embX c γ)⁻¹ * r) := by group
   rw [this]
   exact mul_mem (Subgroup.mem_sup_left ⟨γ, rfl⟩) (Subgroup.mem_sup_right (Subgroup.subset_closure hm))

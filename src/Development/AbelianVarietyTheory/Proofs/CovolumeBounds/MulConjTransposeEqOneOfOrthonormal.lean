@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open Matrix
 
@@ -39,7 +35,7 @@ theorem alternatingMap_apply_eq_sum_minors {n : Type*} [Fintype n] [LinearOrder 
     exteriorPower.alternatingMapLinearEquiv_apply_ιMulti]
   congr 2
   ext a
-  simp [b, subsetEnum, Set.powersetCard.ofFinEmbEquiv_symm_apply]
+  simp [b, subsetEnum, Set.powersetCard.ofFinEmbEquiv_symm_apply, Pi.basisFun_apply]
 
 theorem det_mul_eq_sum_minors {n : Type*} [Fintype n] [LinearOrder n] {i : ℕ}
     (A : Matrix (Fin i) n R) (B : Matrix n (Fin i) R) :

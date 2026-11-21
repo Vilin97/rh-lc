@@ -1,9 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
-
+import Mathlib
 open IsLocalRing
 
 namespace GlobalTheory
@@ -11,10 +6,8 @@ namespace GlobalTheory
 private lemma mem_colon_span_range_iff {B : Type*} [CommRing B] {P : Ideal B} {ι : Type*}
     (g : ι → B) (r : B) :
     r ∈ P.colon (Ideal.span (Set.range g) : Set B) ↔ ∀ i, r * g i ∈ P := by
-  rw [Submodule.mem_colon, SetLike.coe_subset_coe]
-  change Submodule.span B (Set.range g) ≤ _ ↔ _
-  rw [Submodule.span_le, Set.range_subset_iff]
-  simp [smul_eq_mul]
+  rw [Ideal.colon_span, Submodule.mem_colon]
+  simp only [Set.forall_mem_range, smul_eq_mul]
 
 theorem _root_.GlobalTheory.ideal_map_colon_eq_of_flat : ∀ {A R : Type} [CommRing A] [IsNoetherianRing A] [CommRing R]
     (φ : A →+* R), φ.Flat → ∀ I J : Ideal A, (I.colon J).map φ = (I.map φ).colon (J.map φ) := by

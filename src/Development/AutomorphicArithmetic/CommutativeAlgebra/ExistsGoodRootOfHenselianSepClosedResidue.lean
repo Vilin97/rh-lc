@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.GoodRoot
-
-@[expose] public section
+import Mathlib
+import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.GoodRoot
 
 noncomputable section
 open IsLocalRing UpperTheory.Et
@@ -74,6 +70,6 @@ theorem UpperTheory.exists_goodRoot_of_henselian_sepClosed_residue :
     have key := split_of_units q ζ hq0 hζq
       (fun i hi j hj hij => hunits i (Finset.mem_range.1 hi) j (Finset.mem_range.1 hj) hij)
     have h := congrArg (Polynomial.eval₂ φ x) key
-    simpa [Polynomial.eval₂_finset_prod, Polynomial.eval₂_pow, Polynomial.eval₂_C] using h
+    simpa [Polynomial.eval₂_finsetProd, Polynomial.eval₂_pow, Polynomial.eval₂_C] using h
 
 end

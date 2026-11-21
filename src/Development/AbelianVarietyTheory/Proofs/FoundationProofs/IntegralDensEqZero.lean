@@ -132,6 +132,8 @@ theorem inter_mem_fixedBy (hH : IsHerm H) {A₁ A₂ : AddSubgroup V} [Finite (A
       ← mul_assoc (α s), alpha_sq hs₂ s.2, one_mul]
 
 
+local instance (p : Prop) : Decidable p := Classical.propDecidable p
+
 theorem sum_chi (hH : IsHerm H) {A₁ A₂ : AddSubgroup V} [Fintype (A₁ ⧸ A₂.addSubgroupOf A₁)]
     (hd₁ : IsSelfDual H A₁) (hd₂ : IsSelfDual H A₂) {y : V} (hy : y ∈ A₂) :
     ∑ c : A₁ ⧸ A₂.addSubgroupOf A₁, chi H ((Quotient.out c : A₁) : V) y =
@@ -328,19 +330,26 @@ theorem discrete_of_selfDual (hH : IsHerm H) {A : AddSubgroup W} (hd : IsSelfDua
     simp only [Set.mem_preimage, Set.mem_iInter, Set.mem_setOf_eq, Set.mem_singleton_iff]
     constructor
     · intro h
-      have h0 : ∀ y ∈ A, altE H x y = 0 := by
-        intro y hy
-        rw [← hs] at hy
-        induction hy using AddSubgroup.closure_induction with
+      have h0' : ∀ z : A, altE H x z = 0 := by
+        intro z
+        have hz : z ∈ AddSubsemigroup.closure (↑s : Set A) := by
+          rw [hs]
+          exact Set.mem_univ _
+        induction hz using AddSubsemigroup.closure_induction with
         | mem y hy =>
-          obtain ⟨m, hm⟩ := hd.ge x.2 y (hs ▸ AddSubgroup.subset_closure hy)
+          obtain ⟨m, hm⟩ := hd.ge x.2 y y.2
           have := h y hy
           rw [hm] at this ⊢
           have : |m| < 1 := by exact_mod_cast this
           exact_mod_cast Int.abs_lt_one_iff.1 this
-        | zero => simp [altE]
-        | add a b _ _ ha hb => simp only [altE, map_add (f := _), add_im] at ha hb ⊢; rw [ha, hb, add_zero]
-        | neg a _ ha => simp only [altE, map_neg, neg_im] at ha ⊢; rw [ha, neg_zero]
+        | add a b _ _ ha hb =>
+          change ((H (x : W)) ((a : W) + (b : W))).im = 0
+          rw [map_add]
+          simp only [add_im]
+          change altE H (x : W) (a : W) + altE H (x : W) (b : W) = 0
+          rw [ha, hb]
+          simp
+      have h0 : ∀ y ∈ A, altE H x y = 0 := fun y hy => h0' ⟨y, hy⟩
       by_contra hx
       have hx' : (x : W) ≠ 0 := fun h => hx (Subtype.ext h)
       have hm : ∀ t : ℝ, t • (x : W) ∈ A := fun t => hd.le fun y hy =>

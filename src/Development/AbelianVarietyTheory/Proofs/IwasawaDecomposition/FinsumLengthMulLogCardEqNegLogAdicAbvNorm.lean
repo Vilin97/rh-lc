@@ -1,10 +1,6 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsDiscreteValuationRingLocalizationOfIsDedekindD
-public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.OrdFracEqValuationInvOfIsLocalization
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsDiscreteValuationRingLocalizationOfIsDedekindD
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.OrdFracEqValuationInvOfIsLocalization
 
 open NumberField IsDedekindDomain IsLocalRing IsDiscreteValuationRing
 
@@ -23,6 +19,5 @@ theorem length_quot_ringEquiv {T U : Type*} [CommRing T] [CommRing U] (e : T ≃
   exact Module.length_eq_of_surjective e.surjective
 
 end OrderNorm
-
 
 end GlobalTheory

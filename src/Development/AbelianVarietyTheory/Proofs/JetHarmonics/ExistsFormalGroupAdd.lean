@@ -1,13 +1,9 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Jets.CmLatticeCommutatorPairingPowEqOneOfGoodLift
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.UwEllipticFlow
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CpTransportedTaylorSeriesInChartRingHomLaws
-public import Development.AbelianVarietyTheory.BlockTheory.JetGauges.NodalSeriesPeriods
-public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.NatCastMulCoeffOfPderivEq
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.Jets.CmLatticeCommutatorPairingPowEqOneOfGoodLift
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.UwEllipticFlow
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CpTransportedTaylorSeriesInChartRingHomLaws
+import Development.AbelianVarietyTheory.BlockTheory.JetGauges.NodalSeriesPeriods
+import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.NatCastMulCoeffOfPderivEq
 
 noncomputable section
 
@@ -156,6 +152,8 @@ end Algebra
 section Series
 
 open MvPowerSeries
+
+local notation:max "pderiv" r:arg i:arg => MvPowerSeries.pderiv (R := r) i
 
 variable {R : Type} [CommRing R] {σ : Type}
 
@@ -460,7 +458,7 @@ theorem exists_formalGroup {R k : Type} [CommRing R] [IsDomain R] [Field k] [Cha
     obtain ⟨a1, -, a3⟩ := hw i
     have := congrArg constantCoeff a3
     rw [map_mul, cc_fu (constantCoeff_X i) a1, cc_fu hF hG, one_mul,
-      ← coeff_zero_eq_constantCoeff_apply, coeff_pderiv] at this
+      ← coeff_zero_eq_constantCoeff_apply, coeff_pderiv (R := R)] at this
     simpa using this
   have hinj : Function.Injective (map φ : MvPowerSeries (Fin 3) R → MvPowerSeries (Fin 3) k) := by
     intro a b h
@@ -491,6 +489,8 @@ section Model
 open PowerSeries GlobalTheory.MomOne
 open scoped ComplexConjugate BigOperators Topology
 
+local notation:max "derivative" r:arg => PowerSeries.derivative (R := r)
+
 def anRing : Subring (ℂ → ℂ) where
   carrier := {f | AnalyticAt ℂ f 0}
   mul_mem' ha hb := AnalyticAt.mul ha hb
@@ -511,11 +511,17 @@ variable {q : ℕ} [Fact q.Prime]
 def tayHom (ι : ℂ ≃+* ℂ_[q]) : anRing →+* ℂ_[q]⟦X⟧ where
   toFun f := hat ι X f
   map_one' := by
-    exact ((TaylorRead.hat_laws q ι X constantCoeff_X).2.1 1).trans (by simp)
-  map_mul' a b := ((TaylorRead.hat_laws q ι X constantCoeff_X).1 a b a.2 b.2).2.1
+    change hat ι X (fun _ => (1 : ℂ)) = 1
+    simp [hat, X_subst, TaylorRead.tay_const]
+  map_mul' a b := by
+    change hat ι X (fun z => a.val z * b.val z) = hat ι X a * hat ι X b
+    simp only [hat, X_subst, TaylorRead.tay_mul a.2 b.2, map_mul]
   map_zero' := by
-    exact ((TaylorRead.hat_laws q ι X constantCoeff_X).2.1 0).trans (by simp)
-  map_add' a b := ((TaylorRead.hat_laws q ι X constantCoeff_X).1 a b a.2 b.2).1
+    change hat ι X (fun _ => (0 : ℂ)) = 0
+    simp [hat, X_subst, TaylorRead.tay_const]
+  map_add' a b := by
+    change hat ι X (fun z => a.val z + b.val z) = hat ι X a + hat ι X b
+    simp only [hat, X_subst, TaylorRead.tay_add a.2 b.2, map_add]
 
 theorem series_flow (M : Mdl q) (h : M.Ok) :
     constantCoeff (hat M.ι X M.u) = 0 ∧ constantCoeff (hat M.ι X M.w) = 0 ∧
@@ -523,9 +529,16 @@ theorem series_flow (M : Mdl q) (h : M.Ok) :
     derivative ℂ_[q] (hat M.ι X M.u) = C (M.ι M.c) * fu (M.W.map C) (hat M.ι X M.u) (hat M.ι X M.w) := by
   obtain ⟨-, -, -, -, u0, w0, -, -, hs⟩ := uw_elliptic_flow q M h
   obtain ⟨au, aw, -, -, -, hev⟩ := hs 0 (Or.inl M.L.lattice.zero_mem)
-  obtain ⟨l1, l2, -, l4, l5, -⟩ := TaylorRead.hat_laws q M.ι X constantCoeff_X
   set V : WeierstrassCurve anRing := M.W.map (anConst.comp (M.ι.symm : ℂ_[q] →+* ℂ)) with hV
-  have hc : ∀ c, tayHom M.ι (anConst c) = C (M.ι c) := l2
+  have hc (c : ℂ) : tayHom M.ι (anConst c) = C (M.ι c) := by
+    change hat M.ι X (fun _ => c) = C (M.ι c)
+    simp only [hat, X_subst, TaylorRead.tay_const, map_C]
+    rfl
+  have hcc (f : ℂ → ℂ) : constantCoeff (hat M.ι X f) = M.ι (f 0) := by
+    rw [hat, X_subst, ← coeff_zero_eq_constantCoeff_apply, coeff_map]
+    simp [tay]
+  have hcongr {f g : ℂ → ℂ} (hfg : f =ᶠ[𝓝 0] g) : hat M.ι X f = hat M.ι X g := by
+    simp only [hat, TaylorRead.tay_congr hfg]
   have hmap : V.map (tayHom M.ι) = M.W.map C := by
     rw [hV, WeierstrassCurve.map_map]
     congr 1
@@ -534,17 +547,24 @@ theorem series_flow (M : Mdl q) (h : M.Ok) :
   have e1 := map_eqn (tayHom M.ι) V ⟨M.u, au⟩ ⟨M.w, aw⟩
   have e2 := map_fu (tayHom M.ι) V ⟨M.u, au⟩ ⟨M.w, aw⟩
   rw [hmap] at e1 e2
-  refine ⟨by rw [l4, u0, map_zero], by rw [l4, w0, map_zero], ?_, ?_⟩
+  refine ⟨by rw [hcc, u0, map_zero], by rw [hcc, w0, map_zero], ?_, ?_⟩
   · refine e1.symm.trans (Eq.trans ?_ (map_zero (tayHom M.ι)))
-    refine (l1 _ _ (eqn V ⟨M.u, au⟩ ⟨M.w, aw⟩).2 (0 : anRing).2).2.2.1 ?_
-    filter_upwards [nhdsWithin_le_nhds hev] with z hz
+    apply hcongr
+    filter_upwards [hev] with z hz
     have := hz.1
     simp [eqn, hV, anConst]
     linear_combination -this
-  · rw [l5 _ au, derivative_X, one_mul, ← hc]
+  · have hd : derivative ℂ_[q] (hat M.ι X M.u) = hat M.ι X (deriv M.u) := by
+      ext n
+      simp only [hat, X_subst, coeff_derivative, coeff_map, tay, coeff_mk,
+        iteratedDeriv_succ', Nat.factorial_succ, map_div₀, map_natCast]
+      push_cast
+      have hn : (n + 1 : ℂ_[q]) ≠ 0 := by exact_mod_cast n.succ_ne_zero
+      field_simp
+    rw [hd, ← hc]
     refine Eq.trans ?_ ((map_mul _ _ _).trans (congrArg _ e2))
-    refine (l1 _ _ au.deriv (anConst M.c * fu V ⟨M.u, au⟩ ⟨M.w, aw⟩).2).2.2.1 ?_
-    filter_upwards [nhdsWithin_le_nhds hev] with z hz
+    apply hcongr
+    filter_upwards [hev] with z hz
     exact hz.2.1
 
 theorem exists_formalGroup_add : ∀ (q : ℕ) [Fact q.Prime] (M : Mdl q), M.Ok → IsAlgebraic ℚ M.W.a₁ → IsAlgebraic ℚ M.W.a₂ → IsAlgebraic ℚ M.W.a₃ → IsAlgebraic ℚ M.W.a₄ → IsAlgebraic ℚ M.W.a₆ → ∃ F : FormalGroup 𝓞_ℂ_[q], (∃ K : IntermediateField ℚ_[q] ℂ_[q], FiniteDimensional ℚ_[q] K ∧ ∀ m : Fin 2 →₀ ℕ, ((MvPowerSeries.coeff m F.toPowerSeries : 𝓞_ℂ_[q]) : ℂ_[q]) ∈ K) ∧ MvPowerSeries.subst (![PowerSeries.subst (MvPowerSeries.X 0 : MvPowerSeries (Fin 2) ℂ_[q]) (PowerSeries.map (M.ι : ℂ →+* ℂ_[q]) (tay M.u)), PowerSeries.subst (MvPowerSeries.X 1 : MvPowerSeries (Fin 2) ℂ_[q]) (PowerSeries.map (M.ι : ℂ →+* ℂ_[q]) (tay M.u))] : Fin 2 → MvPowerSeries (Fin 2) ℂ_[q]) (MvPowerSeries.map (algebraMap 𝓞_ℂ_[q] ℂ_[q]) F.toPowerSeries) = PowerSeries.subst (MvPowerSeries.X 0 + MvPowerSeries.X 1 : MvPowerSeries (Fin 2) ℂ_[q]) (PowerSeries.map (M.ι : ℂ →+* ℂ_[q]) (tay M.u)) := by

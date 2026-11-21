@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.IrreducibleSpacePrimeSpectrumAway
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.IrreducibleSpacePrimeSpectrumAway
 
 open PowerSeries IsLocalRing
 
@@ -133,6 +129,7 @@ theorem two_le_ringKrullDim : 2 ≤ ringKrullDim O⟦X⟧ := by
   have h := ringKrullDim_succ_le_ringKrullDim_powerseries (R := O)
   rwa [IsDiscreteValuationRing.ringKrullDim_eq_one, one_add_one_eq_two] at h
 
+variable (O) in
 
 theorem ringKrullDim_eq_two : ringKrullDim O⟦X⟧ = 2 :=
   le_antisymm ((ringKrullDim_le_spanFinrank_maximalIdeal _).trans
@@ -276,12 +273,6 @@ theorem connected_dense_away_X (U : Type*) [CommRing U]
   ⟨connectedSpace_primeSpectrum_away (X_ne_zero (R := O)) U,
     denseRange_comap_away (X_ne_zero (R := O)) U⟩
 
-local instance isDiscreteValuationRing_localization_span_X :
-    IsDiscreteValuationRing (Localization.AtPrime (Ideal.span {X} : Ideal O⟦X⟧)) :=
-  IsDiscreteValuationRing.ofHasUnitMulPowIrreducibleFactorization
-    ⟨_, (prime_algebraMap_X_atPrime (O := O) _).irreducible,
-      fun hz => exists_associated_X_pow_atPrime (O := O) _ hz⟩
-
 theorem powerSeries_completeDVR (O : Type*) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     [IsAdicComplete (maximalIdeal O) O] (K : Type*) [Field K] [Algebra O K] [IsFractionRing O K]
     {π : O} (hπ : Irreducible π) :
@@ -309,8 +300,8 @@ theorem powerSeries_completeDVR (O : Type*) [CommRing O] [IsDomain O] [IsDiscret
       IsPrincipalIdealRing (Localization.Away (C π : O⟦X⟧)) ∧
       ringKrullDim (Localization.Away (C π : O⟦X⟧)) = 1) ∧
 
-    (∀ a : ℕ, (Ideal.span {(algebraMap O⟦X⟧
-        (Localization.AtPrime (Ideal.span {X} : Ideal O⟦X⟧)) X ^ a)}).comap (algebraMap O⟦X⟧ _) =
+    (∀ a : ℕ, (Ideal.span {((algebraMap O⟦X⟧
+        (Localization.AtPrime (Ideal.span {X} : Ideal O⟦X⟧)) X) ^ a)}).comap (algebraMap O⟦X⟧ _) =
       Ideal.span {(X : O⟦X⟧) ^ a}) ∧
 
     ((ConnectedSpace (PrimeSpectrum (Localization.Away (C π * X : O⟦X⟧))) ∧
@@ -326,7 +317,7 @@ theorem powerSeries_completeDVR (O : Type*) [CommRing O] [IsDomain O] [IsDiscret
         IsDiscreteValuationRing.addVal (Localization.AtPrime (Ideal.span {X} : Ideal O⟦X⟧))
           (algebraMap O⟦X⟧ _ f) = f.order) :=
   ⟨⟨inferInstance, inferInstance, inferInstance, inferInstance, inferInstance,
-      ringKrullDim_eq_two, maximalIdeal_eq_span hπ, maximalIdeal_eq_span_X_sub_C hπ⟩,
+      ringKrullDim_eq_two O, maximalIdeal_eq_span hπ, maximalIdeal_eq_span_X_sub_C hπ⟩,
     ⟨isAdicComplete_span_C_X hπ, inferInstance⟩,
     ⟨X_prime, prime_C hπ, not_associated_X_C hπ⟩,
     ⟨ev_X hπ, continuous_ev hπ, eq_ev hπ, ev_surjective hπ, ker_ev hπ, inferInstance,
@@ -335,8 +326,7 @@ theorem powerSeries_completeDVR (O : Type*) [CommRing O] [IsDomain O] [IsDiscret
     ⟨isDomain_away_C hπ _, isPrincipalIdealRing_away_C hπ _, ringKrullDim_away_C hπ _⟩,
     comap_span_X_pow_atPrime _,
     ⟨connected_dense_away_C_mul_X hπ _, connected_dense_away_X _⟩,
-    ⟨residueFieldSpanXEquiv (O := O) K, fun f => by
-      rw [algebraMap_residueField_span_X, AlgEquiv.commutes]⟩,
+    ⟨residueFieldSpanXEquiv O K, residueFieldSpanXEquiv_algebraMap K⟩,
     map_algebraMap_injective K,
     fun f => ⟨order_map_algebraMap K f, addVal_algebraMap_atPrime_X _ f⟩⟩
 

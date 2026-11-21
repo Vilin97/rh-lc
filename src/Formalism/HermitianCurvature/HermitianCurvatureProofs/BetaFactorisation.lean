@@ -1,8 +1,4 @@
-module
-
-public import Formalism.HermitianCurvature.StatementSz
-
-@[expose] public section
+import Formalism.HermitianCurvature.StatementSz
 
 namespace Formalism.FourierDecayAlt.P
 
@@ -479,7 +475,7 @@ theorem Sz6.positionsBefore_of (H1 : PositionBefore) (H2 : ProdOneAddTwoDivLeSqr
   have hk4 : (4:ℝ) ≤ c.k := by exact_mod_cast h.hk
   have step1 : ∏ i ∈ Ico 1 l, c.rho de de' (-Y) i ≤
       ∏ i ∈ Ico 1 l, (fun j : ℕ => (1 + 2 / (4 * (j : ℝ) - 1))) (l - i) := by
-    apply prod_le_prod
+    apply Finset.prod_le_prod₀
     · intro i hi
       rw [mem_Ico] at hi
       have hnt : ¬ (c.top = true ∧ i + 1 = c.k) := by rintro ⟨_, h2⟩; omega

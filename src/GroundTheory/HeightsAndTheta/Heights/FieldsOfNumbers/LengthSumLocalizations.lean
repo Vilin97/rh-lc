@@ -18,16 +18,17 @@ variable {B : Type*} [CommRing B]
 
 theorem algebraMap_quot_maximalIdeal_surjective (𝔪 : Ideal B) [𝔪.IsMaximal] (C : Type*)
     [CommRing C] [Algebra B C] [IsLocalization.AtPrime C 𝔪] :
-    have : IsLocalRing C := IsLocalization.AtPrime.isLocalRing C 𝔪
+    letI : IsLocalRing C := IsLocalization.AtPrime.isLocalRing C 𝔪
     Function.Surjective (algebraMap B (C ⧸ IsLocalRing.maximalIdeal C)) := by
-  intro _ y
+  have : IsLocalRing C := IsLocalization.AtPrime.isLocalRing C 𝔪
+  intro y
   obtain ⟨x, hx⟩ := (IsLocalization.AtPrime.equivQuotMaximalIdeal 𝔪 C).surjective y
   obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective x
   exact ⟨b, by rw [← hx]; rfl⟩
 
 theorem isSimpleModule_quot_maximalIdeal (𝔪 : Ideal B) [𝔪.IsMaximal] (C : Type*) [CommRing C]
     [Algebra B C] [IsLocalization.AtPrime C 𝔪] :
-    have : IsLocalRing C := IsLocalization.AtPrime.isLocalRing C 𝔪
+    letI : IsLocalRing C := IsLocalization.AtPrime.isLocalRing C 𝔪
     IsSimpleModule B (C ⧸ IsLocalRing.maximalIdeal C) := by
   have : IsLocalRing C := IsLocalization.AtPrime.isLocalRing C 𝔪
   let : Field (C ⧸ IsLocalRing.maximalIdeal C) := Ideal.Quotient.field _

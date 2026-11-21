@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open scoped PowerSeries LaurentSeries Topology ENNReal NNReal ContDiff
 open Filter Metric
@@ -267,7 +263,9 @@ theorem eventually_sum_eval (P : Polynomial convSeries) (a : convSeries) :
       (fun i => sum (P.coeff i : convSeries) * sum a ^ i) (Finset.range (P.natDegree + 1))
     simp only [map_mul, map_pow, Germ.coe_coeRingHom] at this
     rw [← this]
-    congr 1
+    apply Germ.coe_eq.2
+    filter_upwards [] with v
+    simp
   exact Germ.coe_eq.1 h
 
 theorem exists_isRoot (P : Polynomial convSeries) (z₀ : ℂ)
@@ -530,7 +528,6 @@ theorem eventually_lsum_ne_zero {f : ℂ⸨X⸩} (hf : f ∈ convLaurent) (h0 : 
 section Expand
 
 variable (k : ℕ) (hk : k ≠ 0)
-
 
 end Expand
 

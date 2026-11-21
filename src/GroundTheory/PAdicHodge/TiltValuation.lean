@@ -108,20 +108,22 @@ def tiltNorm : MulRingNorm (PreTilt (normInteger K) p) where
 
 instance normedCommRing_preTilt : NormedCommRing (PreTilt (normInteger K) p) where
   __ := RingNorm.toNormedRing
-    { tiltNorm K p with mul_le' := fun x y => (map_mul (tiltNorm K p) x y).le }
+    { tiltNorm (K := K) (p := p) with
+      mul_le' := fun x y => (map_mul (tiltNorm (K := K) (p := p)) x y).le }
   mul_comm := mul_comm
 
 theorem preTilt_norm_def (x : PreTilt (normInteger K) p) :
     ‖x‖ = ‖((x.untilt : normInteger K) : K)‖ := rfl
 
 instance : NormMulClass (PreTilt (normInteger K) p) :=
-  ⟨fun x y => map_mul (tiltNorm K p) x y⟩
+  ⟨fun x y => map_mul (tiltNorm (K := K) (p := p)) x y⟩
 
 instance : NormOneClass (PreTilt (normInteger K) p) :=
-  ⟨map_one (tiltNorm K p)⟩
+  ⟨map_one (tiltNorm (K := K) (p := p))⟩
 
 instance : IsUltrametricDist (PreTilt (normInteger K) p) :=
-  IsUltrametricDist.isUltrametricDist_of_forall_norm_add_le_max_norm norm_untilt_add_le
+  IsUltrametricDist.isUltrametricDist_of_forall_norm_add_le_max_norm fun x y => by
+    simpa only [preTilt_norm_def] using norm_untilt_add_le x y
 
 theorem preTilt_norm_le_one (x : PreTilt (normInteger K) p) : ‖x‖ ≤ 1 :=
   norm_untilt_le_one x

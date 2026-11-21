@@ -1,9 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
-
+import Mathlib
 open IsLocalRing
 
 namespace GlobalTheory
@@ -21,7 +16,7 @@ theorem etale_localization_atPrime_of_height_one :
   set P : Ideal R := q.comap (algebraMap R (Localization.AtPrime p)) with hPdef
   haveI : P.IsPrime := Ideal.comap_isPrime _ _
   have hP : P.height = 1 := by
-    rw [← hq, ← IsLocalization.height_comap p.primeCompl q]
+    rw [← hq, ← IsLocalization.height_under p.primeCompl q]
   haveI := H P hP
   haveI : IsLocalization.AtPrime (Localization.AtPrime q) P :=
     IsLocalization.isLocalization_atPrime_localization_atPrime p.primeCompl q

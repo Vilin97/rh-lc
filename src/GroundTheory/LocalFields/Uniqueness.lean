@@ -121,8 +121,7 @@ theorem vlt_map_iff (f : L →ₐ[K] M) (x y : L) : f x <ᵥ f y ↔ x <ᵥ y :=
   rw [← not_vle, vle_map_iff, not_vle]
 
 theorem valuativeExtension_algHom (f : L →ₐ[K] M) :
-    letI := f.toRingHom.toAlgebra;
-    ValuativeExtension L M :=
+    letI := f.toRingHom.toAlgebra; ValuativeExtension L M :=
   letI := f.toRingHom.toAlgebra
   ⟨fun {a b} => vle_map_iff f a b⟩
 

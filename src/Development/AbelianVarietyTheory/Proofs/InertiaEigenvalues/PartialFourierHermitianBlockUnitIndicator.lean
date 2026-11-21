@@ -1,9 +1,4 @@
-module
-
-public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsTestRep
-
-@[expose] public section
-
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsTestRep
 open GlobalTheory.JR Matrix MeasureTheory Filter Topology
 
 noncomputable section
@@ -121,7 +116,9 @@ theorem fourU_unitU : ∀ (F E : Type) [NontriviallyNormedField F] [Nontrivially
         obtain ⟨i, hi⟩ := hc
         have e1 : unitU r F E (X.1, c, X.2.2) = 0 := by
           simp only [unitU]
-          exact Set.indicator_of_notMem (fun h => (not_le.2 hi) (h.2.1 i)) _
+          apply Set.indicator_of_notMem
+          intro h
+          exact (not_le.2 hi) (h.2.1 i)
         rw [e1, zero_mul]
         refine (Finset.prod_eq_zero (Finset.mem_univ i) ?_).symm
         exact Set.indicator_of_notMem (fun h => (not_le.2 hi) (mem_closedBall_zero_iff.1 h)) _
@@ -133,7 +130,9 @@ theorem fourU_unitU : ∀ (F E : Type) [NontriviallyNormedField F] [Nontrivially
     simp [h0.1, h0.2]
   · have e : ∀ c : Fin r → E, unitU r F E (X.1, c, X.2.2) = 0 := fun c => by
       simp only [unitU]
-      exact Set.indicator_of_notMem (fun h => h0 ⟨h.1, h.2.2⟩) _
+      apply Set.indicator_of_notMem
+      intro h
+      exact h0 ⟨h.1, h.2.2⟩
     simp_rw [e, zero_mul, integral_zero]
 
 end GlobalTheory.JR.FourUnit

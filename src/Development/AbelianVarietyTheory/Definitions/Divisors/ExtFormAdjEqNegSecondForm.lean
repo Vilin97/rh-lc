@@ -573,7 +573,7 @@ section Sub
 variable [Fintype m] [Fintype l] [DecidableEq m] [DecidableEq l]
 
 def secondForm (H : E → Matrix (m ⊕ l) (m ⊕ l) ℂ) (z ξ : E) : Matrix l m ℂ :=
-  blockQS (conn H z ξ)
+  quotMap (m := m) (l := l) * conn H z ξ * incl (m := m) (l := l)
 
 def secondFormAdj (H : E → Matrix (m ⊕ l) (m ⊕ l) ℂ) (z η : E) : Matrix m l ℂ :=
   adj (subGram (H z)) (quotGram (H z)) (secondForm H z η)
@@ -593,7 +593,7 @@ omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] [Fintype m] [Fintype l] [Deci
   [DecidableEq l] in
 
 theorem MContDiffAt.subGram (h : MContDiffAt k H z) : MContDiffAt k (fun x => subGram (H x)) z :=
-  h.submatrix Sum.inl Sum.inl
+  fun a b => h (Sum.inl a) (Sum.inl b)
 
 
 theorem MContDiffAt.quotGram (h : MContDiffAt k H z) (hu : IsUnit (HermFrame.subGram (H z)).det) :
@@ -616,7 +616,10 @@ theorem IsPosFrame.sub (h : IsPosFrame U H) : IsPosFrame U fun x => subGram (H x
 
 
 theorem secondForm_eq (H : E → Matrix (m ⊕ l) (m ⊕ l) ℂ) (z ξ : E) :
-    secondForm H z ξ = (conn H z ξ).toBlocks₂₁ := blockQS_eq _
+    secondForm H z ξ = (conn H z ξ).toBlocks₂₁ := by
+  rw [secondForm]
+  conv_lhs => rw [← fromBlocks_toBlocks (conn H z ξ)]
+  simp [quotMap, incl, fromCols_mul_fromBlocks, fromCols_mul_fromRows]
 
 theorem extForm_eq_neg_mdbar (H : E → Matrix (m ⊕ l) (m ⊕ l) ℂ) (z η : E) :
     extForm H z η = -mdbar (fun x => orthCoeff (H x)) z η := by

@@ -1,20 +1,15 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.Foundations.ApplyEqOfMemAdjoin
-public import Development.AbelianVarietyTheory.Definitions.Foundations.IsTopWTopWOfExists
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsBasisOnZetaPowMulQPow
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsIsDlog
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsDlogCoef
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.TowerLevelEmbeddingInjectiveRangeAdjoinRootsStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsIntPrimeDivRootOfUnitySubOnePowStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.EvalSeriesAndDerivUniqueOfCoefficientsStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.EvalSeriesCongIffCoeffAndIsUnitStatement
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.EvOfFintype
-public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsAlgZpOfPow
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.Foundations.ApplyEqOfMemAdjoin
+import Development.AbelianVarietyTheory.Definitions.Foundations.IsTopWTopWOfExists
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsBasisOnZetaPowMulQPow
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsIsDlog
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsDlogCoef
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.TowerLevelEmbeddingInjectiveRangeAdjoinRootsStatement
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsIntPrimeDivRootOfUnitySubOnePowStatement
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.EvalSeriesAndDerivUniqueOfCoefficientsStatement
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.EvalSeriesCongIffCoeffAndIsUnitStatement
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.EvOfFintype
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsAlgZpOfPow
 open scoped MatrixGroups
 open GlobalTheory.KZ GlobalTheory.Glue GlobalTheory.K5 GlobalTheory.KummerEisensteinGalois
 
@@ -28,6 +23,7 @@ section Coef
 
 open Polynomial GlobalTheory.K5.DlogCoef GlobalTheory.K5.DlogUniq
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem deriv_sum' {n N M : ℕ} (J : Ideal (On p n)) (D : Derivation (O0 p) (On p n) (On p n ⧸ J))
     (cx cy : On p n) (hx : D (xn p n) = Ideal.Quotient.mk J (cx * xn p n))
     (hy : D (yn p n) = Ideal.Quotient.mk J (cy * yn p n)) (a : Fin N → Fin M → O0 p) :
@@ -44,6 +40,7 @@ theorem deriv_sum' {n N M : ℕ} (J : Ideal (On p n)) (D : Derivation (O0 p) (On
   congr 1
   ring
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem coef {N M : ℕ} (m : ℕ) (a : Fin N → Fin M → O0 p) (w α β : On p (m + 1))
     (hsum : w = ∑ i : Fin N, ∑ j : Fin M,
       algebraMap (O0 p) (On p (m + 1)) (a i j) * xn p (m + 1) ^ (i : ℕ) * yn p (m + 1) ^ (j : ℕ))

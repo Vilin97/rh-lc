@@ -124,7 +124,7 @@ theorem ev_zero' {m n d : ℕ} (a : Fin m → Pt R n d) : ev a (0 : PS R m d) = 
   | simp [ev, MvPowerSeries.subst]
 
 theorem dof_addF {g : ℕ} (v : Fin g → R) (f : PS R 1 g) :
-    Dof (addF R g) v f = ∑ j, C (v j) * pderiv R ((0 : Fin 1), j) f := by
+    Dof (addF R g) v f = ∑ j, C (v j) * MvPowerSeries.pderiv ((0 : Fin 1), j) f := by
   classical
   unfold Dof
   refine Finset.sum_congr rfl fun j _ => ?_
@@ -185,7 +185,7 @@ theorem dof_tay {θ : (Fin g → ℂ) → ℂ} (hθ : ContDiffAt ℂ ω θ 0) (v
   classical
   rw [dof_addF]
   ext n
-  have key : ∀ j : Fin g, coeff n (C (v j) * pderiv ℂ ((0 : Fin 1), j) (tay θ s)) =
+  have key : ∀ j : Fin g, coeff n (C (v j) * MvPowerSeries.pderiv ((0 : Fin 1), j) (tay θ s)) =
       v j * mD θ 0 (Pi.single j 1 ::ₘ (dirs n + s)) / fct n := by
     intro j
     have h1 : ((n ((0 : Fin 1), j) : ℂ) + 1) ≠ 0 := Nat.cast_add_one_ne_zero _

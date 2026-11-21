@@ -72,12 +72,12 @@ def realAlg [TopologicalSpace X] (hadd : ∀ (a b : B) (x : X), χ (a + b) x = �
     intro f g hf hg
     have := span_mul χ hadd hf hg
     show (fun x => (((f * g) x : ℝ) : ℂ)) ∈ Submodule.span ℂ (Set.range χ)
-    convert this using 1
+    convert this using 1 <;> ext x <;> simp
   add_mem' := by
     intro f g hf hg
     have := (Submodule.span ℂ (Set.range χ)).add_mem hf hg
     show (fun x => (((f + g) x : ℝ) : ℂ)) ∈ Submodule.span ℂ (Set.range χ)
-    convert this using 1
+    convert this using 1 <;> ext x <;> simp
   algebraMap_mem' := by
     intro r
     have h : χ 0 ∈ Submodule.span ℂ (Set.range χ) := Submodule.subset_span ⟨0, rfl⟩

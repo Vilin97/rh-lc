@@ -1,8 +1,4 @@
-module
-
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.PermutationSigns.PStab
-
-@[expose] public section
+import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.PermutationSigns.PStab
 
 noncomputable section
 
@@ -33,7 +29,7 @@ theorem tp_mul (A B : Matrix ι ι ℂ) : tp q (A * B) = tp q A * tp q B := by
 omit [Fintype ι] in
 theorem tp_one [DecidableEq ι] : tp q (1 : Matrix ι ι ℂ) = 1 := by
   ext I J
-  simp only [tp, of_apply, one_apply]
+  change (∏ i, (if I i = J i then (1 : ℂ) else 0)) = (if I = J then (1 : ℂ) else 0)
   by_cases h : I = J
   · subst h; simp
   · rw [if_neg h]
@@ -96,8 +92,8 @@ theorem blk_mul (d e : W → Matrix (Fin m) (Fin m) ℂ) : blk d * blk e = blk f
 
 theorem blk_one : blk (fun _ : W => (1 : Matrix (Fin m) (Fin m) ℂ)) = 1 := by
   ext x y
-  simp only [blk, of_apply, one_apply, Prod.ext_iff]
-  by_cases h : x.1 = y.1 <;> simp [h]
+  by_cases h₁ : x.1 = y.1 <;> by_cases h₂ : x.2 = y.2 <;>
+    simp [blk, Matrix.one_apply, Prod.ext_iff, h₁, h₂]
 
 theorem blk_transpose (d : W → Matrix (Fin m) (Fin m) ℂ) : (blk d)ᵀ = blk fun w => (d w)ᵀ := by
   ext x y

@@ -89,8 +89,9 @@ lemma dslopeIter_congr {p : ℂ} {g₁ g₂ : ℂ → ℂ} (h : g₁ =ᶠ[𝓝 p
     · rw [dslope_of_ne _ hzp, dslope_of_ne _ hzp, slope_def_field, slope_def_field, hz, hp]
 
 
-def meromorphicShift (f : ℂ → ℂ) (p : ℂ) : ℕ :=
-  if h : MeromorphicAt f p then Nat.find h else 0
+def meromorphicShift (f : ℂ → ℂ) (p : ℂ) : ℕ := by
+  classical
+  exact if h : MeromorphicAt f p then Nat.find h else 0
 
 lemma analyticAt_pow_meromorphicShift_mul {f : ℂ → ℂ} {p : ℂ} (hf : MeromorphicAt f p) :
     AnalyticAt ℂ (fun z ↦ (z - p) ^ meromorphicShift f p * f z) p := by

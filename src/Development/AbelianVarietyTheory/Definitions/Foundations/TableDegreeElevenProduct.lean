@@ -133,7 +133,7 @@ def muM : ℝ := Real.log (2) + N.lh + 2 * N.f * (N.r * N.r + 1) * N.lM + N.f * 
 
 def P7 : ℝ := 2 + (N.D : ℝ) * Real.log (510 * N.r * N.r) + 4 * N.f * N.f * N.r * N.r * (Real.log (5 * N.f * N.r) + 1.5 * N.lrd + (max (0) (N.lM + Real.log (8 * N.f * N.w) + N.ld / 2))) + N.muM
 
-def tableDegreeTwoSeven : ℝ := 2 + lf N.DX + (N.DX : ℝ) * Real.log ((max (4) (16 * N.f * N.r * N.w))) + 4 * N.f * N.f * N.r * N.r * (Real.log (7 * N.f * N.r) + 1.5 * N.lrd + (max (0) (N.lM + Real.log (8 * N.f * N.w) + N.ld / 2 + Real.log (1.77)))) + N.MU + N.f * N.r * N.r * Real.log (1 + 16 * N.w)
+def tableDegreeTwoSeven : ℝ := 2 + lf N.DX + (N.DX : ℝ) * Real.log ((max (4) (16 * N.f * N.r * N.w))) + 4 * N.f * N.f * N.r * N.r * (Real.log (7 * N.f * N.r) + 1.5 * N.lrd + (max (0) (N.lM + Real.log (8 * N.f * N.w) + N.ld / 2 + Real.log (1.77)))) + N.muM + N.f * N.r * N.r * Real.log (1 + 16 * N.w)
 
 def sizeConstantAtParamsWeight : ℝ := (max (90 * (N.f * N.r + 1)) (max (360 * N.f * N.m ^ 3) (max (2 * (3 * N.r + 3 + N.r * Real.log (N.r))) (max (N.nW) (max (1250 * N.r) (max (N.f * N.r * N.r + 6) (11)))))))
 

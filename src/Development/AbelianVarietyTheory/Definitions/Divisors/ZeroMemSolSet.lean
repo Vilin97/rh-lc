@@ -23,7 +23,9 @@ def symb (m : ℕ) (a : (n : ℕ) → (Fin n → Fin d) → E d → ℂ) (x ξ :
 def oneSys (m : ℕ) (a : (n : ℕ) → (Fin n → Fin d) → E d → ℂ) : Sys d Unit := ⟨fun _ => m, fun _ => a⟩
 
 
-def ext0 (U : Set (E d)) (u : U → ℂ) (x : E d) : ℂ := if hx : x ∈ U then u ⟨x, hx⟩ else 0
+def ext0 (U : Set (E d)) (u : U → ℂ) (x : E d) : ℂ := by
+  classical
+  exact if hx : x ∈ U then u ⟨x, hx⟩ else 0
 
 def solSet {ι : Type} (P : Sys d ι) (U : Set (E d)) : Set (U →ᵇ ℂ) := {u | WeakSol P U (ext0 U u)}
 

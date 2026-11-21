@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open MeasureTheory Module
 open scoped InnerProductSpace BigOperators
@@ -113,7 +109,7 @@ theorem finrank_le_of_finite' [IsFiniteMeasure μ] [FiniteDimensional ℂ V]
     (finrank ℂ V : ℝ) ≤ r * C * μ.real Set.univ := by
   rw [← integral_sum_eq_finrank' l hint hnorm (stdOrthonormalBasis ℂ V)]
   calc _ ≤ ∫ _x, (r * C : ℝ) ∂μ := by
-        refine integral_mono (integrable_finset_sum _ fun i _ => hint _) (integrable_const _) ?_
+        refine integral_mono (integrable_finsetSum _ fun i _ => hint _) (integrable_const _) ?_
         intro x
         refine (sum_norm_sq_le _ (l x) hC fun f => h f x).trans ?_
         have : (finrank ℂ (E x) : ℝ) ≤ r := by exact_mod_cast hr x
@@ -135,7 +131,7 @@ theorem finite_and_finrank_le' [IsFiniteMeasure μ]
         (fun f => hint f) (fun f => hnorm f) hC (fun f x => h f x)
       rw [hW] at this
       exact Nat.le_floor this
-    exact Module.rank_lt_aleph0_iff.1 (hrank.trans_lt (Cardinal.nat_lt_aleph0 _))
+    exact Module.rank_lt_aleph0_iff.1 (hrank.trans_lt Cardinal.natCast_lt_aleph0)
   exact ⟨hfin, finrank_le_of_finite' hr l hint hnorm hC h⟩
 
 theorem sum_eq_finrank_of_homogeneous' [IsProbabilityMeasure μ] {ι : Type*} [Fintype ι]

@@ -17,6 +17,7 @@ variable (F E : Type*) [Field F] [NumberField F] [IsTotallyReal F] [Field E] [Nu
   [IsTotallyComplex E] [Algebra F E] [Algebra.IsQuadraticExtension F E]
 
 
+include F in
 theorem isCMField : IsCMField E := IsCMField.ofCMExtension F E
 
 noncomputable def complexConjOver : E ≃ₐ[F] E :=
@@ -28,8 +29,8 @@ noncomputable def complexConjOver : E ≃ₐ[F] E :=
     exact IsCMField.complexConj_apply_eq_self E _
 
 theorem complexConjOver_apply (x : E) :
-    haveI := isCMField F E
-    complexConjOver F E x = IsCMField.complexConj E x := rfl
+    (haveI := isCMField F E;
+      complexConjOver F E x = IsCMField.complexConj E x) := rfl
 
 variable {F E}
 
@@ -59,8 +60,8 @@ theorem conj_ne_one : conj F E ≠ 1 := by
   exact hx (mem_range_of_conj_eq (by rw [h]; rfl))
 
 theorem conj_eq_complexConj (x : E) :
-    haveI := isCMField F E
-    conj F E x = IsCMField.complexConj E x := by
+    (haveI := isCMField F E;
+      conj F E x = IsCMField.complexConj E x) := by
   haveI := isCMField F E
   have hcard : Nat.card (E ≃ₐ[F] E) = 2 := by
     rw [IsGalois.card_aut_eq_finrank, Algebra.IsQuadraticExtension.finrank_eq_two]

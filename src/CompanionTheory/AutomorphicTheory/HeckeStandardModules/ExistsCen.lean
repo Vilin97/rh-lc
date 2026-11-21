@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 open NumberField IsDedekindDomain IntermediateField
 open scoped Pointwise
@@ -49,6 +45,7 @@ instance cen_prime (A : ValuationSubring Ω) : (cen A).IsPrime where
 theorem val_eq_one {A : ValuationSubring Ω} {s : 𝓞 Ω} (h : s ∉ cen A) : A.valuation (s : Ω) = 1 :=
   le_antisymm (int_le A s) (not_lt.1 h)
 
+variable (E) in
 
 theorem frac [Algebra.IsAlgebraic E Ω] (A : ValuationSubring Ω) {x : Ω} (hx : x ∈ A) :
     ∃ b s : 𝓞 Ω, s ∉ cen A ∧ x * s = b := by
@@ -176,7 +173,9 @@ theorem lift [IsGalois E Ω] (L : IntermediateField E Ω) [FiniteDimensional E L
         show θ (u (Ideal.Quotient.mk Q (algebraMap (𝓞 L) (𝓞 Ω) (τ • y)))) =
           Ideal.Quotient.mk Q (algebraMap (𝓞 L) (𝓞 Ω) (τ • y))
         rw [hu, hg'L, hτ] }
-  have hmax : (Q.under (𝓞 L)).IsMaximal := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal Q
+  have hmax : (Q.under (𝓞 L)).IsMaximal :=
+    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap (𝓞 L) (𝓞 Ω))
+      (algebraMap_isIntegral_iff.mpr this) Q
   let _ : Field (𝓞 L ⧸ Q.under (𝓞 L)) := Ideal.Quotient.field _
   have hbij : Function.Bijective ψ := Algebra.IsAlgebraic.algHom_bijective ψ
   obtain ⟨k, hk⟩ := Ideal.Quotient.stabilizerHom_surjective_of_profinite (G := G) (Q.under (𝓞 L)) Q

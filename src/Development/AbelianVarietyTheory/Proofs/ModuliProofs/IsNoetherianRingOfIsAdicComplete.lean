@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsGradedRingKernelLift
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsGradedRingKernelLift
 
 open Polynomial
 
@@ -82,7 +78,7 @@ theorem exists_leading_generators {R : Type} [CommRing R] (I : Ideal R) (hI : I.
   · convert hz n using 1
     simp only [AddSubgroupClass.coe_sub, AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul,
       coeff_sub, finsetSum_coeff, coeff_mul_monomial_eq_ite, ite_mul, zero_mul]
-    rw [coeff_monomial, if_pos rfl]
+    rw [coeff_monomial_same]
 
 theorem mem_span_of_leading {R : Type} [CommRing R] (I : Ideal R) [hc : IsAdicComplete I R]
     (J : Ideal R) {ι : Type} [Fintype ι] (f : ι → R) (d : ι → ℕ) (hf : ∀ i, f i ∈ J)

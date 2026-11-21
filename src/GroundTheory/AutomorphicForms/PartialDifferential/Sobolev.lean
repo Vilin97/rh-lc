@@ -26,6 +26,7 @@ theorem toTemperedDistribution_injective :
   exact this h
 
 
+variable (E F) in
 def sobolevSubmodule (s : ℝ) : Submodule ℂ 𝓢'(E, F) where
   carrier := {u | MemSobolev s 2 u}
   add_mem' hu hv := hu.add hv
@@ -50,6 +51,7 @@ theorem memSobolev_besselPotential_neg (s : ℝ) (f : Lp F 2 (volume : Measure E
   ⟨f, by simp⟩
 
 
+variable (E F) in
 def sobolevEquivLp (s : ℝ) : sobolevSubmodule E F s ≃ₗ[ℂ] Lp F 2 (volume : Measure E) where
   toFun := sobolevToLp
   map_add' u v := by
@@ -75,6 +77,7 @@ theorem sobolevEquivLp_apply {s : ℝ} (u : sobolevSubmodule E F s) :
   (besselPotential_eq_sobolevToLp u).symm
 
 
+variable (E F) in
 def SobolevSpace (s : ℝ) : Type _ := sobolevSubmodule E F s
 
 namespace SobolevSpace
@@ -154,6 +157,7 @@ theorem exists_toDistribution_eq_iff (u : 𝓢'(E, F)) :
   ⟨fun ⟨v, hv⟩ ↦ hv ▸ memSobolev_toDistribution v, fun hu ↦ ⟨mk u hu, rfl⟩⟩
 
 
+variable (E F s) in
 def toDistributionCLM : SobolevSpace E F s →L[ℂ] 𝓢'(E, F) :=
   besselPotential E F (-s) ∘L Lp.toTemperedDistributionCLM F (volume : Measure E) 2 ∘L
     (besselₗᵢ (E := E) (F := F) s).toContinuousLinearEquiv.toContinuousLinearMap

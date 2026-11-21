@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 noncomputable section
 
@@ -22,5 +18,5 @@ def Z1 (γ : G →* Eˣ) : Submodule E (G → E) where
     rintro t a ⟨ha, ha'⟩
     exact ⟨continuous_const.mul ha, fun g h => by simp only [Pi.smul_apply, smul_eq_mul, ha']; ring⟩
 
-
-end GlobalTheory.OrdLoc
+end OrdLoc
+end GlobalTheory

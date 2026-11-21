@@ -176,13 +176,11 @@ theorem exists_norm_mem_Ioo_of_exists_pow_eq
     exact hc1
 
 theorem of_isAlgClosed (p : ℕ) [Fact p.Prime] [CompleteSpace K] [IsAlgClosed K]
-    (hp : ‖(p : K)‖ < 1) : IsPerfectoidField K p where
-  complete := inferInstance
-  norm_natCast_lt_one := hp
-  exists_norm_mem_Ioo :=
-    exists_norm_mem_Ioo_of_exists_pow_eq fun x _ hn => IsAlgClosed.exists_pow_nat_eq x hn
-  surjective_pow := surjective_pow_modP_of_exists_pow_eq (Fact.out : p.Prime).ne_zero
-    fun x _ => IsAlgClosed.exists_pow_nat_eq x (Fact.out : p.Prime).pos
+    (hp : ‖(p : K)‖ < 1) : IsPerfectoidField K p := by
+  refine ⟨inferInstance, hp, ?_, ?_⟩
+  · exact exists_norm_mem_Ioo_of_exists_pow_eq fun x _ hn => IsAlgClosed.exists_pow_nat_eq x hn
+  · exact surjective_pow_modP_of_exists_pow_eq (Fact.out : p.Prime).ne_zero
+      fun x _ => IsAlgClosed.exists_pow_nat_eq x (Fact.out : p.Prime).pos
 
 instance padicComplex (p : ℕ) [Fact p.Prime] : IsPerfectoidField ℂ_[p] p :=
   of_isAlgClosed p (by

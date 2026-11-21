@@ -32,11 +32,12 @@ variable {E F : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 theorem free_of_fg {V : Type*} [AddCommGroup V] [Module ℝ V] {L : Submodule ℤ V} (h : L.FG) :
     Module.Free ℤ L := by
   have : Module.Finite ℤ L := .of_fg h
-  have : IsAddTorsionFree V := .of_isTorsionFree ℝ V
+  have : HasUniqueDiv V := .of_isTorsionFree ℝ V
   infer_instance
 
 
 noncomputable def spanCovol (L : Submodule ℤ E) : ℝ :=
+  letI : Decidable L.FG := Classical.propDecidable _
   if h : L.FG then
     haveI : Module.Finite ℤ L := .of_fg h
     haveI : Module.Free ℤ L := free_of_fg h

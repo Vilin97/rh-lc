@@ -1,23 +1,18 @@
-module
-
-public import Mathlib
-public import Development.ResolutionOfSingularities.Foundations.Blowup.BlowupBasic
-public import Development.ResolutionOfSingularities.Foundations.Blowup.BlowupIsoOffCenter
-public import Development.ResolutionOfSingularities.Foundations.Blowup.BlowupProperties
-public import Development.ResolutionOfSingularities.EmbeddedResolution.IteratedBlowups.ClopenRestriction
-public import Development.ResolutionOfSingularities.EmbeddedResolution.IteratedBlowups.BlowupSequenceBasic
-public import Development.ResolutionOfSingularities.EmbeddedResolution.IteratedBlowups.StrictTransform
-public import Development.ResolutionOfSingularities.EmbeddedResolution.AlgebraicPreliminaries.GenericPointImage
-public import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.DetachedLocus
-public import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.EmbeddedBlowupSequence
-public import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.EmbeddedStrictTransform
-public import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.DiscardedLocus
-public import Development.ResolutionOfSingularities.Foundations.BlowupUniversalProperty
-public import Development.ResolutionOfSingularities.EmbeddedResolution.ResolutionOfSingularities
-public import Development.ResolutionOfSingularities.EmbeddedResolution.EtaleCoordinates.StrictNormalCrossings
-
-@[expose] public section
-
+import Mathlib
+import Development.ResolutionOfSingularities.Foundations.Blowup.BlowupBasic
+import Development.ResolutionOfSingularities.Foundations.Blowup.BlowupIsoOffCenter
+import Development.ResolutionOfSingularities.Foundations.Blowup.BlowupProperties
+import Development.ResolutionOfSingularities.EmbeddedResolution.IteratedBlowups.ClopenRestriction
+import Development.ResolutionOfSingularities.EmbeddedResolution.IteratedBlowups.BlowupSequenceBasic
+import Development.ResolutionOfSingularities.EmbeddedResolution.IteratedBlowups.StrictTransform
+import Development.ResolutionOfSingularities.EmbeddedResolution.AlgebraicPreliminaries.GenericPointImage
+import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.DetachedLocus
+import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.EmbeddedBlowupSequence
+import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.EmbeddedStrictTransform
+import Development.ResolutionOfSingularities.EmbeddedResolution.StrongResolution.DiscardedLocus
+import Development.ResolutionOfSingularities.Foundations.BlowupUniversalProperty
+import Development.ResolutionOfSingularities.EmbeddedResolution.ResolutionOfSingularities
+import Development.ResolutionOfSingularities.EmbeddedResolution.EtaleCoordinates.StrictNormalCrossings
 universe u
 
 open CategoryTheory AlgebraicGeometry TopologicalSpace
@@ -246,8 +241,8 @@ theorem exists_irreducibleComponent_isGenericPoint_strictTransformMap [Algebraic
     obtain ⟨w, hw⟩ := he''
     have hsp2 : (Scheme.Opens.ι (S.ambientCenterSupportCompl i)).base
           ((S.blowdown i ∣_ S.ambientCenterSupportCompl i).base w)
-        ∈ closure ({(Scheme.Opens.ι (S.ambientCenterSupportCompl i)).base
-          ((S.blowdown i ∣_ S.ambientCenterSupportCompl i).base x)} : Set ↥(S.schemeAt i)) := by
+        ∈ closure ({((Scheme.Opens.ι (S.ambientCenterSupportCompl i)).base
+          ((S.blowdown i ∣_ S.ambientCenterSupportCompl i).base x))} : Set ↥(S.schemeAt i)) := by
       rw [hgcomm w, hgcomm x, hx, hw]
       exact hsp
     have hsp3 := IsOpenMap.mem_closure_singleton_of_apply hιopen hιinj hsp2

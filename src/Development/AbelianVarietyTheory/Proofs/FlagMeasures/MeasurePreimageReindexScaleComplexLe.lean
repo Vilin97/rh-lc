@@ -1,8 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
+import Mathlib
 
 namespace GlobalTheory.CoordScale
 open MeasureTheory
@@ -70,12 +66,14 @@ theorem measure_preimage_reindex_scale_le : ∀ (ι ι' κ κ' : Type) [Fintype 
       (Measure.pi fun _ : κ' => C • (volume : Measure ℂ)) =
       Measure.pi fun q : κ => w q • (volume : Measure ℂ) := by
     refine map_pi_reindex_eq_pi_of_map_eq f (C • (volume : Measure ℂ)) (fun q => w q • (volume : Measure ℂ))
-      (fun q z => ((ρ : ℂ) ^ d q)⁻¹ * z) (fun q => measurable_id.const_mul _) (fun q => ?_)
+      (fun q z => ((ρ : ℂ) ^ d q)⁻¹ * z) (fun q => measurable_const.mul measurable_id) (fun q => ?_)
     show Measure.map (fun z : ℂ => ((ρ : ℂ) ^ d q)⁻¹ * z) (C • volume) = w q • volume
     have hfun : (fun z : ℂ => ((ρ : ℂ) ^ d q)⁻¹ * z) = fun z => (((ρ ^ d q : ℝ) : ℂ))⁻¹ * z := by
       funext z
       rw [Complex.ofReal_pow]
-    rw [Measure.map_smul, hfun, (measurePreserving_inv_mul (ρ ^ d q) (pow_pos hρ0 _)).map_eq,
+    rw [hfun, Measure.map_smul (R := ENNReal) C
+      (hf := (measurable_const_mul _).aemeasurable),
+      (measurePreserving_inv_mul (ρ ^ d q) (pow_pos hρ0 _)).map_eq,
       smul_smul]
   set K : ENNReal := ∏ q, w q with hKdef
   have hKt : K ≠ ⊤ := ENNReal.prod_ne_top (fun q _ => hwt q)

@@ -49,18 +49,19 @@ theorem mapSubmodule_mapSubmodule_inv (g : GL (Fin n) F) (L : Submodule 𝒪[F] 
   rw [← mapSubmodule_mul, mul_inv_cancel, mapSubmodule_one]
 
 theorem isLattice_mapSubmodule (g : GL (Fin n) F) (L : Submodule 𝒪[F] (Fin n → F))
-    [L.IsFullLattice F] : (mapSubmodule F n g L).IsFullLattice F where
-  toIsLattice := Submodule.IsLattice.of_fg F ((Submodule.IsLattice.fg F L).map _)
-  span_eq_top := by
-    have : ((mapSubmodule F n g L : Submodule 𝒪[F] (Fin n → F)) : Set (Fin n → F)) =
-        Matrix.toLin' (g : Matrix (Fin n) (Fin n) F) '' (L : Set (Fin n → F)) := by
-      rw [mapSubmodule, Submodule.map_coe]
-      rfl
-    rw [this, Submodule.span_image, Submodule.IsFullLattice.span_eq_top, Submodule.map_top,
-      LinearMap.range_eq_top]
-    intro v
-    refine ⟨((g⁻¹ : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) *ᵥ v, ?_⟩
-    rw [Matrix.toLin'_apply, Matrix.mulVec_mulVec, Units.mul_inv, Matrix.one_mulVec]
+    [L.IsFullLattice F] : (mapSubmodule F n g L).IsFullLattice F := by
+  have : (mapSubmodule F n g L).IsLattice F :=
+    Submodule.IsLattice.of_fg F ((Submodule.IsLattice.fg F L).map (glLin F n g))
+  refine { span_eq_top := ?_ }
+  have hImage : (mapSubmodule F n g L : Set (Fin n → F)) =
+      Matrix.toLin' (g : Matrix (Fin n) (Fin n) F) '' (L : Set (Fin n → F)) := by
+    rw [mapSubmodule, Submodule.map_coe]
+    rfl
+  rw [hImage, Submodule.span_image, Submodule.IsFullLattice.span_eq_top, Submodule.map_top,
+    LinearMap.range_eq_top]
+  intro v
+  refine ⟨((g⁻¹ : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) *ᵥ v, ?_⟩
+  rw [Matrix.toLin'_apply, Matrix.mulVec_mulVec, Units.mul_inv, Matrix.one_mulVec]
 
 def standardLattice : Submodule 𝒪[F] (Fin n → F) where
   carrier := {v | ∀ i, v i ∈ 𝒪[F]}

@@ -14,7 +14,7 @@ def mix {V : Type*} {n : ℕ} (k : ℕ) (x y : V) : Fin n → V :=
   fun i => if (i : ℕ) < k then x else y
 
 def IsSymmForm {V : Type*} [AddCommGroup V] [Module ℝ V] {n : ℕ}
-    (I : MultilinearMap ℝ (fun _ : Fin n => V) ℝ) : Prop :=
+    (I : MultilinearMap (RingHom.id ℝ) (fun _ : Fin n => V) ℝ) : Prop :=
   ∀ (σ : Equiv.Perm (Fin n)) (v : Fin n → V), I (v ∘ σ) = I v
 
 def word {VW : Type*} (D k i : ℕ) (x₁ x₂ a : VW) : Fin D → VW :=
@@ -36,13 +36,13 @@ structure FibreSquare (D : ℕ) where
   VW : Type u
   [acgW : AddCommGroup VW]
   [modW : Module ℝ VW]
-  I : MultilinearMap ℝ (fun _ : Fin (D + 1) => V) ℝ
-  IW : MultilinearMap ℝ (fun _ : Fin (D + 2) => VW) ℝ
+  I : MultilinearMap (RingHom.id ℝ) (fun _ : Fin (D + 1) => V) ℝ
+  IW : MultilinearMap (RingHom.id ℝ) (fun _ : Fin (D + 2) => VW) ℝ
   p₁ : V →ₗ[ℝ] VW
   p₂ : V →ₗ[ℝ] VW
   ξ : V
   A : V
-  Φ : MultilinearMap ℝ (fun _ : Fin D => VW) ℝ
+  Φ : MultilinearMap (RingHom.id ℝ) (fun _ : Fin D => VW) ℝ
   symm : IsSymmForm I
   symmW : IsSymmForm IW
   comp_right_eq_zero_alt : ∀ v : Fin (D + 2) → V, IW (fun j => p₂ (v j)) = 0

@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.TendstoUniformlyOnDoublingLogOfContraction
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.TendstoUniformlyOnDoublingLogOfContraction
 
 open Filter Topology Set
 
@@ -261,7 +257,6 @@ section Torsion
 
 variable (K : Type*) [DivisionRing K] [CharZero K] {M : Type*} [AddCommGroup M] [Module K M]
   (Λ : Submodule ℤ M) (n : ℕ) [NeZero n]
-
 
 end Torsion
 

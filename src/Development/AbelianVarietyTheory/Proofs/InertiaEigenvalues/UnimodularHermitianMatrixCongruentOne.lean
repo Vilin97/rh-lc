@@ -1,12 +1,7 @@
-module
-
-public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.FourierMatch
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsMulStarEqOfNormOneUnramifiedQuadraticStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.UnramifiedQuadraticIntegralTraceFormPerfectStatement
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NormOneAddEqOne
-
-@[expose] public section
-
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.FourierMatch
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsMulStarEqOfNormOneUnramifiedQuadraticStatement
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.UnramifiedQuadraticIntegralTraceFormPerfectStatement
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NormOneAddEqOne
 open GlobalTheory.JR Matrix MeasureTheory Filter Topology
 
 noncomputable section
@@ -45,7 +40,7 @@ theorem intg_conjT [StarRing E] (hs : ∀ y : E, ‖star y‖ = ‖y‖) {n m : 
 
 theorem intg_one {n : Type} [DecidableEq n] : Intg (1 : Matrix n n E) := by
   intro i j
-  rw [one_apply]
+  rw [Matrix.one_apply]
   split_ifs <;> simp
 
 theorem norm_det_conjT [StarRing E] (hs : ∀ y : E, ‖star y‖ = ‖y‖) {n : Type} [Fintype n] [DecidableEq n]
@@ -78,7 +73,8 @@ theorem intg_sub {n m : Type} {A B : Matrix n m E} (hA : Intg A) (hB : Intg B) :
 
 theorem intg_neg {n m : Type} {A : Matrix n m E} (hA : Intg A) : Intg (-A) := by
   intro i j
-  rw [neg_apply, norm_neg]
+  change ‖-(A i j)‖ ≤ 1
+  rw [norm_neg]
   exact hA i j
 
 theorem intg_zero {n m : Type} : Intg (0 : Matrix n m E) := by

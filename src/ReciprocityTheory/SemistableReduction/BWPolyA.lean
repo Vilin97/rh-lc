@@ -13,7 +13,8 @@ theorem bwp_poly_eq_of_eval_eq_off (P Q : ℂ[X]) (E : Set ℂ) (hE : E.Finite)
   apply Polynomial.eq_of_infinite_eval_eq
   refine Set.Infinite.mono (fun t ht => h t ht) hE.infinite_compl
 
-theorem bwp_finite_eval_eq_zero {P : ℂ[X]} (hP : P ≠ 0) : {t : ℂ | P.eval t = 0}.Finite := Polynomial.finite_setOf_isRoot hP
+theorem bwp_finite_eval_eq_zero {P : ℂ[X]} (hP : P ≠ 0) : {t : ℂ | P.eval t = 0}.Finite :=
+  Polynomial.finite_setOfPred_isRoot hP
 
 theorem bwp_exists_nodes (E : Set ℂ) (hE : E.Finite) (k : ℕ) :
     ∃ S : Finset ℂ, S.card = k + 1 ∧ ∀ c ∈ S, c ∉ E := by
@@ -45,7 +46,7 @@ theorem bwp_sepPoly_fin (k : ℕ) : ∀ (n : ℕ) (G : (Fin n → ℂ) → ℂ),
   | 0, G, _ => ⟨MvPolynomial.C (G 0), fun y => by
       rw [MvPolynomial.eval_C, Subsingleton.elim y 0]⟩
   | n + 1, G, hG => by
-    obtain ⟨S, hS, -⟩ := bwp_exists_nodes ∅ Set.finite_empty k
+    obtain ⟨S, hS⟩ := Infinite.exists_subset_card_eq ℂ (k + 1)
     have hsub : ∀ c : ℂ, ∃ F : MvPolynomial (Fin n) ℂ,
         ∀ y', G (Fin.cons c y') = MvPolynomial.eval y' F := by
       intro c

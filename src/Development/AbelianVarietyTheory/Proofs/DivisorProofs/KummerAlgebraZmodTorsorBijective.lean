@@ -15,7 +15,7 @@ open GlobalTheory.KummerAlg
 
 section
 variable {B : Type} [CommRing B] {L : Type} [AddCommGroup L] [Module B L] {n : ℕ}
-  (φ : MultilinearMap B (fun _ : Fin (n + 1) => L) B)
+  (φ : (Π _ : Fin (n + 1), L) →ₘₗ[B] B)
 
 theorem gen_pow (f : L) : gen φ f ^ (n + 1) = algebraMap B (Alg φ) (φ fun _ => f) := by
   rw [← prod_gen, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
@@ -76,7 +76,7 @@ end
 
 section
 variable {B : Type} [CommRing B] {L : Type} [AddCommGroup L] [Module B L] {n : ℕ}
-  (φ : MultilinearMap B (fun _ : Fin (n + 1) => L) B)
+  (φ : (Π _ : Fin (n + 1), L) →ₘₗ[B] B)
 
 theorem T_shift
     (hsw : ∀ e ℓ : L, (gen φ e ⊗ₜ[B] gen φ ℓ : Alg φ ⊗[B] Alg φ) = gen φ ℓ ⊗ₜ gen φ e)
@@ -178,7 +178,7 @@ end
 
 section
 variable {B : Type} [CommRing B] {L : Type} [AddCommGroup L] [Module B L] {n : ℕ}
-  (φ : MultilinearMap B (fun _ : Fin (n + 1) => L) B)
+  (φ : (Π _ : Fin (n + 1), L) →ₘₗ[B] B)
 
 theorem tw_neg_mul (ζ : B) (hζ : ζ ^ (n + 1) = 1) (g h : ZMod (n + 1)) :
     tw ζ (-h) * tw ζ g = tw ζ (g - h) := by
@@ -258,7 +258,7 @@ end
 
 section
 variable {B : Type} [CommRing B] {L : Type} [AddCommGroup L] [Module B L] {n : ℕ}
-  (φ : MultilinearMap B (fun _ : Fin (n + 1) => L) B)
+  (φ : (Π _ : Fin (n + 1), L) →ₘₗ[B] B)
 
 theorem bijective_succ (hq : IsUnit ((n + 1 : ℕ) : B))
     (hφ : ∀ p : Ideal B, p.IsPrime → ∃ e : L, φ (fun _ => e) ∉ p) (ζ : B) (hζ : ζ ^ (n + 1) = 1)

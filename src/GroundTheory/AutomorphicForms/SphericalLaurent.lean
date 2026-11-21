@@ -15,7 +15,7 @@ open AddMonoidAlgebra
 variable {n : ℕ}
 
 
-abbrev LaurentRing : Type := AddMonoidAlgebra ℂ (Fin n → ℤ)
+abbrev LaurentRing (n : ℕ) : Type := AddMonoidAlgebra ℂ (Fin n → ℤ)
 
 abbrev monomial (l : Fin n → ℤ) : LaurentRing n := single l 1
 
@@ -143,7 +143,7 @@ theorem exists_ker_evalAt_comp_eq {A : Type*} [CommRing A] [Algebra ℂ A]
   refine ⟨w, Ideal.ext fun a => ?_⟩
   rw [RingHom.mem_ker, AlgHom.comp_apply, ← hw, hker]
   have h1 : Φ a = algebraMap Φ.range (LaurentRing n) (e a) := rfl
-  rw [h1, ← Ideal.mem_comap, hQP]
+  rw [h1, ← Ideal.mem_under, hQP]
   change e.symm (e a) ∈ I ↔ a ∈ I
   rw [AlgEquiv.symm_apply_apply]
 

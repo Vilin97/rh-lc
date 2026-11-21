@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsPsCharOne
-
-@[expose] public section
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsPsCharOne
 
 namespace GlobalTheory.PsChar
 
@@ -41,7 +37,7 @@ theorem alt_update_smul_add (T : R →ₗ[A] A) :
       ring
 
 noncomputable def altMultilinear (T : R →ₗ[A] A) (n : ℕ) :
-    MultilinearMap A (fun _ : Fin n => R) A :=
+    MultilinearMap (RingHom.id A) (fun _ : Fin n => R) A :=
   MultilinearMap.mk' (alt (fun r => T r) n)
     (fun x i u v => by simpa using alt_update_smul_add T n x i 1 u v)
     (fun x i a u => by

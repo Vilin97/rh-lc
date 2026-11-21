@@ -1,9 +1,4 @@
-module
-
-public import Mathlib
-
-@[expose] public section
-
+import Mathlib
 open scoped TensorProduct
 
 namespace GlobalTheory
@@ -84,7 +79,8 @@ theorem truncMono_eq_zero {p : ℕ} [Fact p.Prime] {k A : Type} [Field k] [CommR
     by_contra hc
     have hlt := (hs m (mem_support_iff.mpr hc)).1 i
     have hcoef := coeff_pderiv (i := i) F (m - Finsupp.single i 1)
-    rw [Finsupp.sub_add_single_one_cancel hi, hpd i, coeff_zero] at hcoef
+    rw [Finsupp.sub_add_single_one_cancel hi, hpd i] at hcoef
+    simp at hcoef
     have hmi : (m - Finsupp.single i 1 : Fin d →₀ ℕ) i + 1 = m i := by
       simp only [Finsupp.coe_tsub, Pi.sub_apply, Finsupp.single_eq_same]; omega
     have hunit : IsUnit (((m - Finsupp.single i 1 : Fin d →₀ ℕ) i : B) + 1) := by
@@ -96,7 +92,11 @@ theorem truncMono_eq_zero {p : ℕ} [Fact p.Prime] {k A : Type} [Field k] [CommR
       rw [Ne, CharP.cast_eq_zero_iff k p]
       intro hdvd
       exact hi (Nat.eq_zero_of_dvd_of_lt hdvd hlt)
-    exact hc ((hunit.mul_left_eq_zero).mp hcoef.symm)
+    have hcoef' : F.coeff m * (((m - Finsupp.single i 1 : Fin d →₀ ℕ) i : B) + 1) = 0 := by
+      have hmi' : m i - 1 = (m - Finsupp.single i 1 : Fin d →₀ ℕ) i := by
+        omega
+      simpa only [← hmi'] using hcoef.symm
+    exact hc ((hunit.mul_left_eq_zero).mp hcoef')
 
 end GlobalTheory
 
@@ -140,8 +140,12 @@ theorem truncMono_linearIndependent : ∀ (p : ℕ) [Fact p.Prime] (k A : Type) 
     simp [toF, (a i).isLt.le]
   intro a
   have := hcoeff (toF a)
-  rw [hF0, coeff_zero] at this
+  rw [hF0] at this
+  simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at this
   simp_rw [hinj.eq_iff] at this
+  have hsum : (∑ b : Fin d → Fin p, if b = a then g b else 0) = g a := by
+    simp
+  rw [hsum] at this
   simpa using this.symm
 
 end GlobalTheory

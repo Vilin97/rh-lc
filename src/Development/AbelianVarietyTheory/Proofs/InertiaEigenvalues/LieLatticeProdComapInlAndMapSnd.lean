@@ -1,12 +1,7 @@
-module
-
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.UnitLemmaGroup
-public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.LinearDescent
-public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ClearDenominators
-
-@[expose] public section
-
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.UnitLemmaGroup
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.LinearDescent
+import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ClearDenominators
 open GlobalTheory.UnitLemma Polynomial
 
 namespace GlobalTheory.UnitLemma.LinPair
@@ -37,9 +32,20 @@ theorem GlobalTheory.UnitLemma.InvAlg.lin_fst_snd : ∀ (K : UQ) (B₁ B₂ : In
   ·
     apply Submodule.fg_of_fg_map_injective (LinearMap.inl K.O B₁.A B₂.A) LinearMap.inl_injective
     exact isNoetherian_submodule.1 (isNoetherian_of_fg_of_noetherian M hfg) _ (Submodule.map_comap_le _ _)
-  ·
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  · rw [Submodule.eq_top_iff']
+    intro y
+    have hy : (y, (0 : B₂.A)) ∈ Submodule.span K.E (M : Set (B₁.A × B₂.A)) := by
+      rw [hspan]
+      exact Submodule.mem_top
+    obtain ⟨d, hd, hdy⟩ := exists_smul_mem_of_mem_span K M hy
+    have hdE : algebraMap K.O K.E d ≠ 0 := by
+      rw [Ne, ← (algebraMap K.O K.E).map_zero]
+      exact fun h => hd (IsFractionRing.injective K.O K.E h)
+    have hmem : d • y ∈ M.comap (LinearMap.inl K.O B₁.A B₂.A) := by
+      simpa [Submodule.mem_comap] using hdy
+    refine (Submodule.smul_mem_iff _ hdE).mp ?_
+    rw [algebraMap_smul]
+    exact Submodule.subset_span hmem
   · intro y hy
     have := hg' _ hy
     simpa [Submodule.mem_comap] using this

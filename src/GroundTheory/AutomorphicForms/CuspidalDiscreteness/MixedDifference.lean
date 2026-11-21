@@ -39,8 +39,10 @@ theorem norm_altSum_le : ∀ (k : ℕ) {ρ : E → F}, ContDiff ℝ k ρ → ∀
     have hg : ContDiff ℝ k (fun t => ρ (t + v 0) - ρ t) :=
       ((hρ.of_le (by exact_mod_cast Nat.le_succ k)).comp (contDiff_id.add contDiff_const)).sub
         (hρ.of_le (by exact_mod_cast Nat.le_succ k))
-    exact norm_altSum_le k hg (fun w => norm_iteratedFDeriv_sub_translate_le hρ hB (v 0) w)
-      (Fin.tail v) z
+    simpa [mul_assoc, Fin.tail] using
+      (norm_altSum_le k hg
+        (fun w => norm_iteratedFDeriv_sub_translate_le hρ hB (v 0) w)
+        (Fin.tail v) z)
 
 theorem exists_norm_altSum_le {ρ : E → F} (hρ : ContDiff ℝ (⊤ : ℕ∞) ρ)
     (hc : HasCompactSupport ρ) (k : ℕ) :
