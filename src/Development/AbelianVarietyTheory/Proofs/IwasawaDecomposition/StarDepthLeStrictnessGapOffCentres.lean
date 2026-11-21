@@ -35,7 +35,7 @@ theorem starDepth_le_gap : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   have hfan := hψ X hX
   obtain ⟨-, hge, heq⟩ := hsw
 
-  have hmem : toReal β ∈ psdCone H.bar X := by
+  have hmem : toReal β ∈ psdCone (bar := H.bar) (X := X) := by
     have := ConeSub.sum_smul_toReal_mem_psdCone (𝓞 E) H.bar X 1 ![β] ![1] (fun i => by fin_cases i; exact hβ)
       (fun i y => by fin_cases i; exact hp y) (fun i => by fin_cases i; norm_num)
     simpa using this

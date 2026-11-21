@@ -21,7 +21,7 @@ theorem exists_cell {O : Type} [CommRing O] [IsDedekindDomain O] [CharZero O] [M
     [AddCommGroup X] [Module O X] [Module.Finite O X] (hfan : IsPolyFanOn bar ψ X)
     {β : LinearMap.BilinForm ℤ X} (hβ : β ∈ balForms bar X) (hp : ∀ y, 0 ≤ β y y) :
     ∃ (m : ℕ) (γ : Fin m → LinearMap.BilinForm ℤ X), IsCell bar ψ γ ∧ InRCone γ β := by
-  have hmem : toReal β ∈ psdCone bar X := by
+  have hmem : toReal β ∈ psdCone (bar := bar) (X := X) := by
     have := ConeSub.sum_smul_toReal_mem_psdCone O bar X 1 ![β] ![1] (fun i => by fin_cases i; exact hβ)
       (fun i y => by fin_cases i; exact hp y) (fun i => by fin_cases i; norm_num)
     simpa using this

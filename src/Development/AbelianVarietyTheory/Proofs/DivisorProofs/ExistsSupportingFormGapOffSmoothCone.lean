@@ -108,7 +108,7 @@ theorem exists_ray_bound (hF : IsPolFanOn bar φ X) :
 theorem exists_cone_nat [IsDedekindDomain O] [CharZero O] [Module.Finite ℤ O] (hF : IsPolFanOn bar φ X)
     {β : LinearMap.BilinForm ℤ X} (hβ : β ∈ balForms bar X) (hp : ∀ y, 0 ≤ β y y) :
     ∃ (s : ℕ) (δ : Fin s → LinearMap.BilinForm ℤ X) (n : Fin s → ℕ), IsCone bar φ δ ∧ β = ∑ i, n i • δ i := by
-  have hB : toReal β ∈ psdCone bar X := by
+  have hB : toReal β ∈ psdCone (bar := bar) (X := X) := by
     simpa using ConeSub.sum_smul_toReal_mem_psdCone O bar X 1 ![β] ![1] (by simp [hβ]) (by simp [hp]) (by simp)
   obtain ⟨m, γ, c, hγ, hc, hsum⟩ := hF.cover _ hB
   obtain ⟨nZ, hnZ⟩ := Cover.coeff_int hγ.mem hγ.basis hβ hsum

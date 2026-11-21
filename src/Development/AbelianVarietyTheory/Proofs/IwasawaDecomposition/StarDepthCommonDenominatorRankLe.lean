@@ -188,7 +188,7 @@ theorem module_den (hX : IsPolyFanOn bar ψ X)
     (hu : ∀ (m : ℕ) (γ : Fin m → LinearMap.BilinForm ℤ X), IsCell bar ψ γ →
       ∀ β ∈ balForms bar X, (∀ y, 0 ≤ β y y) → ∀ β' ∈ balForms bar X, (∀ y, 0 ≤ β' y y) →
         w.evalZ β = 1 → w.evalZ β' = 1 → InRCone γ β → InRCone γ β' → β = β') :
-    ∃ D : ℕ, 0 < D ∧ ∀ β : LinearMap.BilinForm ℤ X, toReal β ∈ psdCone bar X →
+    ∃ D : ℕ, 0 < D ∧ ∀ β : LinearMap.BilinForm ℤ X, toReal β ∈ psdCone (bar := bar) (X := X) →
       ∃ n : ℤ, (D : ℝ) * (starDepth bar ψ w).evalZ β = n := by
   classical
   obtain ⟨S, hS, hcov⟩ := hX.finite

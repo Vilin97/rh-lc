@@ -173,31 +173,31 @@ def psdCone : Set (X →ₗ[ℤ] X →ₗ[ℤ] ℝ) :=
     (B₁ : X₁ →ₗ[ℤ] X₁ →ₗ[ℤ] ℝ), Function.Surjective r ∧ B₁ ∈ realForms bar X₁ ∧ IsPosDef B₁ ∧
     ∀ a b, B a b = B₁ (r a) (r b)}
 
-theorem mem_realForms_of_mem_psdCone {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} (h : B ∈ psdCone bar X) : B ∈ realForms bar X := by
+theorem mem_realForms_of_mem_psdCone {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} (h : B ∈ psdCone (bar := bar) (X := X)) : B ∈ realForms bar X := by
   obtain ⟨X₁, _, _, _, r, B₁, -, h1, -, h2⟩ := h
   exact ⟨fun y z => by rw [h2, h2, h1.1], fun a y z => by rw [h2, h2, r.map_smul, r.map_smul, h1.2]⟩
 
-theorem nonneg_of_mem_psdCone {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} (h : B ∈ psdCone bar X) (y : X) : 0 ≤ B y y := by
+theorem nonneg_of_mem_psdCone {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} (h : B ∈ psdCone (bar := bar) (X := X)) (y : X) : 0 ≤ B y y := by
   obtain ⟨X₁, _, _, _, r, B₁, -, -, h1, h2⟩ := h
   exact h2 y y ▸ h1.nonneg _
 
 theorem IsPosDef.mem_psdCone [Module.Projective O X] {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} (h : IsPosDef B) (hB : B ∈ realForms bar X) :
-    B ∈ psdCone bar X := ⟨X, _, _, inferInstance, LinearMap.id, B, Function.surjective_id, hB, h, fun _ _ => rfl⟩
+    B ∈ psdCone (bar := bar) (X := X) := ⟨X, _, _, inferInstance, LinearMap.id, B, Function.surjective_id, hB, h, fun _ _ => rfl⟩
 
 theorem mem_psdCone_of_comp {r : X →ₗ[O] X₁} (hr : Function.Surjective r) {B₁ : X₁ →ₗ[ℤ] X₁ →ₗ[ℤ] ℝ}
-    (h : B₁ ∈ psdCone bar X₁) {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} (hB : ∀ a b, B a b = B₁ (r a) (r b)) : B ∈ psdCone bar X := by
+    (h : B₁ ∈ psdCone (bar := bar) (X := X₁)) {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} (hB : ∀ a b, B a b = B₁ (r a) (r b)) : B ∈ psdCone (bar := bar) (X := X) := by
   obtain ⟨X₂, _, _, _, s, B₂, hs, h1, h2, h3⟩ := h
   exact ⟨X₂, _, _, inferInstance, s ∘ₗ r, B₂, hs.comp hr, h1, h2, fun a b => by rw [hB, h3]; rfl⟩
 
 theorem pullR_mem_psdCone {r : X →ₗ[O] X₁} (hr : Function.Surjective r) {B₁ : X₁ →ₗ[ℤ] X₁ →ₗ[ℤ] ℝ}
-    (h : B₁ ∈ psdCone bar X₁) : pullR r B₁ ∈ psdCone bar X := mem_psdCone_of_comp hr h fun _ _ => rfl
+    (h : B₁ ∈ psdCone (bar := bar) (X := X₁)) : pullR r B₁ ∈ psdCone (bar := bar) (X := X) := mem_psdCone_of_comp hr h fun _ _ => rfl
 
-theorem zero_mem_psdCone : (0 : X →ₗ[ℤ] X →ₗ[ℤ] ℝ) ∈ psdCone bar X :=
+theorem zero_mem_psdCone : (0 : X →ₗ[ℤ] X →ₗ[ℤ] ℝ) ∈ psdCone (bar := bar) (X := X) :=
   ⟨PUnit, _, _, inferInstance, 0, 0, fun _ => ⟨0, rfl⟩, zero_mem _, fun n x hx c hc => by
     obtain ⟨i, -⟩ := Function.ne_iff.1 hc
     exact (hx.ne_zero i rfl).elim, fun _ _ => rfl⟩
 
-theorem smul_mem_psdCone {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} (h : B ∈ psdCone bar X) {t : ℝ} (ht : 0 ≤ t) : t • B ∈ psdCone bar X := by
+theorem smul_mem_psdCone {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} (h : B ∈ psdCone (bar := bar) (X := X)) {t : ℝ} (ht : 0 ≤ t) : t • B ∈ psdCone (bar := bar) (X := X) := by
   rcases ht.eq_or_lt with rfl | ht
   · rw [zero_smul]; exact zero_mem_psdCone
   obtain ⟨X₁, _, _, _, r, B₁, hr, h1, h2, h3⟩ := h
@@ -384,9 +384,9 @@ variable {O : Type} [CommRing O] (bar : O → O) (φ : InvFun O) (X : Type) [Add
 
 structure IsPolFanOn : Prop where
 
-  homog : ∀ B ∈ psdCone bar X, ∀ t : ℝ, 0 ≤ t → evalR φ (t • B) = t * evalR φ B
+  homog : ∀ B ∈ psdCone (bar := bar) (X := X), ∀ t : ℝ, 0 ≤ t → evalR φ (t • B) = t * evalR φ B
 
-  superadd : ∀ B ∈ psdCone bar X, ∀ B' ∈ psdCone bar X, evalR φ B + evalR φ B' ≤ evalR φ (B + B')
+  superadd : ∀ B ∈ psdCone (bar := bar) (X := X), ∀ B' ∈ psdCone (bar := bar) (X := X), evalR φ B + evalR φ B' ≤ evalR φ (B + B')
 
   integral : ∀ β ∈ balForms bar X, (∀ y, 0 ≤ β y y) → ∃ n : ℤ, φ.evalZ β = n
 
@@ -395,7 +395,7 @@ structure IsPolFanOn : Prop where
   face : ∀ (m m' : ℕ) (γ : Fin m → LinearMap.BilinForm ℤ X) (s : Fin m' ↪ Fin m), IsCone bar φ γ →
     IsCone bar φ fun i => γ (s i)
 
-  cover : ∀ B ∈ psdCone bar X, ∃ (m : ℕ) (γ : Fin m → LinearMap.BilinForm ℤ X) (c : Fin m → ℝ), IsCone bar φ γ ∧
+  cover : ∀ B ∈ psdCone (bar := bar) (X := X), ∃ (m : ℕ) (γ : Fin m → LinearMap.BilinForm ℤ X) (c : Fin m → ℝ), IsCone bar φ γ ∧
     (∀ i, 0 ≤ c i) ∧ B = ∑ i, c i • toReal (γ i)
 
   finite : ∃ S : Set (LinearMap.BilinForm ℤ X), S.Finite ∧ ∀ (m : ℕ) (γ : Fin m → LinearMap.BilinForm ℤ X),

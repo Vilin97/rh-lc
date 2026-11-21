@@ -495,7 +495,7 @@ theorem onModule (hD : ∀ (X : Type) [AddCommGroup X] [Module O X] [Module.Fini
       · rintro β ⟨hβ, pβ, β₀, hβ₀, k, n, hk, hn, h⟩
         exact Set.mem_biUnion hβ₀ ⟨hβ, pβ, k, n, hk, hn, h⟩
     · intro m γ hγ
-      have hB : ∑ j, toReal (γ j) ∈ psdCone bar X := by
+      have hB : ∑ j, toReal (γ j) ∈ psdCone (bar := bar) (X := X) := by
         have := ConeSub.sum_smul_toReal_mem_psdCone O bar X m γ (fun _ => 1) hγ.mem hγ.nonneg (fun _ => zero_le_one)
         simpa using this
       obtain ⟨e, m', δ, c, hδ, hδS, hc, hBe⟩ := hS0 _ hB

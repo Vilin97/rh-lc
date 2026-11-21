@@ -159,7 +159,7 @@ theorem isCell_comp : ∀ (O : Type) [CommRing O] [IsDedekindDomain O] [CharZero
   have key : ∀ L : ℝ, (C : ℝ) * (B0 + 1) + C ≤ L → ∀ β ∈ balForms bar X, (∀ y, 0 ≤ β y y) →
       L * (N * ψ.evalZ β) ≤ L * ℓ β + h β := by
     intro L hL β hβ hp
-    have hB : toReal β ∈ psdCone bar X := by
+    have hB : toReal β ∈ psdCone (bar := bar) (X := X) := by
       have := GlobalTheory.PolFan.ConeSub.sum_smul_toReal_mem_psdCone O bar X 1 (fun _ => β) (fun _ => 1)
         (fun _ => hβ) (fun _ => hp) (fun _ => zero_le_one)
       simpa using this

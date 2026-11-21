@@ -48,7 +48,7 @@ theorem evalZ_eq_mul : ∀ (g n : ℕ) (o : Type) [CommRing o] (ζ : o), 2 ≤ n
     Function.injective_id hl inferInstance hK (fun _ => rfl) (by rw [hid, Category.id_comp, hy]) T'.ϖ m 1 T'.irr hm
     (by rw [pow_one]; rfl)
   have hon := hφ T.D.toPre.X (finrank_le hn hζ T)
-  have hc : toReal T.β ∈ psdCone (id : ℤ → ℤ) T.D.toPre.X :=
+  have hc : toReal T.β ∈ psdCone (bar := (id : ℤ → ℤ)) (X := T.D.toPre.X) :=
     GlobalTheory.PolFan.TameZ.toReal_mem_psdCone_int (mem_balForms_int.2 T.symm) fun x => by simpa using T.mono.nonneg 0 x
   rw [← evalR_toReal φ T.β, ← hon.homog _ hc m m.cast_nonneg,
     ← evalZ_pull φ (r := e.toIntLinearEquiv.toLinearMap) e.surjective, ← evalR_toReal]

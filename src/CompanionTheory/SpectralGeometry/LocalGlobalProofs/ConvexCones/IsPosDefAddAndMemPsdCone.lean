@@ -65,7 +65,7 @@ theorem sum_nonneg_of_isPosDef {Y ι : Type} [AddCommGroup Y] [Fintype ι] (b : 
   · exact ((isPosDef_iff_basis b B).1 h _ hd).le
 
 theorem sum_nonneg_of_mem_psdCone (O : Type) [CommRing O] [IsDomain O] [CharZero O] [Module.Finite ℤ O] {bar : O → O}
-    {X : Type} [AddCommGroup X] [Module O X] [Module.Finite O X] {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} (hB : B ∈ psdCone bar X)
+    {X : Type} [AddCommGroup X] [Module O X] [Module.Finite O X] {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} (hB : B ∈ psdCone (bar := bar) (X := X))
     {n : ℕ} (x : Fin n → X) (c : Fin n → ℝ) : 0 ≤ ∑ i, ∑ j, c i * c j * B (x i) (x j) := by
   obtain ⟨X₁, _, _, _, r, B₁, hr, -, h1, h2⟩ := hB
   have : Module.Finite O X₁ := Module.Finite.of_surjective r hr
@@ -75,8 +75,8 @@ theorem sum_nonneg_of_mem_psdCone (O : Type) [CommRing O] [IsDomain O] [CharZero
 
 theorem isPosDef_add_and_mem_psdCone (O : Type) [CommRing O] [IsDedekindDomain O] [CharZero O] [Module.Finite ℤ O]
     (bar : O → O) (X : Type) [AddCommGroup X] [Module O X] [Module.Finite O X] [Module.Projective O X]
-    (B B₀ : X →ₗ[ℤ] X →ₗ[ℤ] ℝ) (hB : B ∈ psdCone bar X) (hB₀ : B₀ ∈ realForms bar X) (h₀ : IsPosDef B₀) :
-    IsPosDef (B + B₀) ∧ B + B₀ ∈ psdCone bar X := by
+    (B B₀ : X →ₗ[ℤ] X →ₗ[ℤ] ℝ) (hB : B ∈ psdCone (bar := bar) (X := X)) (hB₀ : B₀ ∈ realForms bar X) (h₀ : IsPosDef B₀) :
+    IsPosDef (B + B₀) ∧ B + B₀ ∈ psdCone (bar := bar) (X := X) := by
   have hpos : IsPosDef (B + B₀) := fun n x hx c hc => by
     have h1 := sum_nonneg_of_mem_psdCone O hB x c
     have h2 := h₀ n x hx c hc

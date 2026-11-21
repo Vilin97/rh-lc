@@ -39,7 +39,7 @@ theorem pullR_mem_contact {r : X →ₗ[O] X₁} (hr : Function.Surjective r) {B
   ⟨pullR_mem_psdCone hr h.1, fun i => (isMin2_pullR_iff hr B (a i)).2 (h.2 i)⟩
 
 theorem mem_contact_of_pullR {r : X →ₗ[O] X₁} (hr : Function.Surjective r) {B : X₁ →ₗ[ℤ] X₁ →ₗ[ℤ] ℝ} {ι : Type} {a : ι → X}
-    (hB : B ∈ psdCone bar X₁) (h : pullR r B ∈ contact bar a) : B ∈ contact bar fun i => r (a i) :=
+    (hB : B ∈ psdCone (bar := bar) (X := X₁)) (h : pullR r B ∈ contact bar a) : B ∈ contact bar fun i => r (a i) :=
   ⟨hB, fun i => (isMin2_pullR_iff hr B (a i)).1 (h.2 i)⟩
 
 end Pull

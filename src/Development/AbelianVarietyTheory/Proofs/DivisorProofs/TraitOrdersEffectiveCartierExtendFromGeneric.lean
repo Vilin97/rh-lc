@@ -48,9 +48,9 @@ theorem evalZ_prop {g n : ℕ} (hn : 2 ≤ n) {F : SFam g n (zetaAway n)} {φ : 
     (e : T.D.toPre.X ≃+ T'.D.toPre.X) (m s : ℕ) (he : ∀ a b, (m : ℤ) * T'.β (e a) (e b) = s * T.β a b) :
     (m : ℝ) * φ.evalZ T'.β = s * φ.evalZ T.β := by
   have hon := hφ T.D.toPre.X (Trait.finrank_le g n hn F T)
-  have hc : toReal T.β ∈ psdCone (id : ℤ → ℤ) T.D.toPre.X :=
+  have hc : toReal T.β ∈ psdCone (bar := (id : ℤ → ℤ)) (X := T.D.toPre.X) :=
     GlobalTheory.PolFan.TameZ.toReal_mem_psdCone_int (mem_balForms_int.2 T.symm) fun x => by simpa using T.mono.nonneg 0 x
-  have hc' : toReal (pull e.toIntLinearEquiv.toLinearMap T'.β) ∈ psdCone (id : ℤ → ℤ) T.D.toPre.X :=
+  have hc' : toReal (pull e.toIntLinearEquiv.toLinearMap T'.β) ∈ psdCone (bar := (id : ℤ → ℤ)) (X := T.D.toPre.X) :=
     GlobalTheory.PolFan.TameZ.toReal_mem_psdCone_int (mem_balForms_int.2 fun a b => T'.symm _ _) fun x => by
       simpa using T'.mono.nonneg 0 (e x)
   rw [← evalR_toReal φ T.β, ← hon.homog _ hc s s.cast_nonneg,

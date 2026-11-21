@@ -27,7 +27,7 @@ theorem inRCone_of_add : ∀ (O : Type) [CommRing O] [IsDedekindDomain O] [CharZ
   have hsp : ∀ y, 0 ≤ (β + x) y y := fun y => add_nonneg (hβp y) (hxp y)
   have hne : {k : ℕ | ∃ (m : ℕ) (γ : Fin m → LinearMap.BilinForm ℤ X), IsCell bar ψ γ ∧ InRCone γ (β + x) ∧
       genRank γ = k}.Nonempty := by
-    have hR : toReal (β + x) ∈ psdCone bar X := by
+    have hR : toReal (β + x) ∈ psdCone (bar := bar) (X := X) := by
       simpa using GlobalTheory.PolFan.ConeSub.sum_smul_toReal_mem_psdCone O bar X 1 ![β + x] ![1] (by simp [hs])
         (by simpa using hsp) (by simp)
     obtain ⟨S, -, hcov⟩ := (hψ X hX).finite

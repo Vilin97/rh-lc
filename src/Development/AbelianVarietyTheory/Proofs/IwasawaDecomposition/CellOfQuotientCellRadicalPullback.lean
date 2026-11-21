@@ -151,7 +151,7 @@ theorem cell_of_quot_cell : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
     rw [pull_apply, pull_apply, hb.1 (t _) (t _), ← e2, hb.1 b (t ((orad (O := 𝓞 E) β).mkQ a)), ← e1]
   have hbK : ∀ k ∈ (orad (O := 𝓞 E) β), ∀ y, β k y = 0 := fun k hk y => by simpa using (mem_orad.1 hk) 1 y
 
-  have hmem : toReal β ∈ psdCone H.bar X := by
+  have hmem : toReal β ∈ psdCone (bar := H.bar) (X := X) := by
     have := ConeSub.sum_smul_toReal_mem_psdCone (𝓞 E) H.bar X 1 ![β] ![1] (fun i => by fin_cases i; exact hβ)
       (fun i y => by fin_cases i; exact hp y) (fun i => by fin_cases i; norm_num)
     simpa using this

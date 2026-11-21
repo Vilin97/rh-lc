@@ -73,7 +73,7 @@ theorem isCell_vorFun_of_contact : ∀ (O : Type) [CommRing O] [IsDedekindDomain
       refine (hval _ (hreal β hβ)).2.1 ?_
       rw [evalR_toReal, ← hℓ]
       exact_mod_cast he
-    have hpc : toReal β ∈ psdCone bar X := by
+    have hpc : toReal β ∈ psdCone (bar := bar) (X := X) := by
       simpa using ConeSub.sum_smul_toReal_mem_psdCone O bar X 1 ![β] ![1] (by simp [hb]) (by simp [hβ]) (by simp)
     exact exists_nat_comb_of_toReal_mem_rcone X m γ β (hsub ⟨hpc, hmin⟩)
 

@@ -101,7 +101,7 @@ theorem transport [Module.Finite O X] [Module.Finite O X₁] (e : X ≃ₗ[O] X�
   · exact hp i k _ (by rw [← (pullBalEquiv bar e).symm_apply_apply ⟨δ i, h.mem i⟩, e0, hk, map_nsmul])
 
 theorem perModule [Module.Finite O X] (hF : IsPolyFanOn bar φ X)
-    (hpsd : ∀ β ∈ balForms bar X, (∀ y, 0 ≤ β y y) → toReal β ∈ psdCone bar X) :
+    (hpsd : ∀ β ∈ balForms bar X, (∀ y, 0 ≤ β y y) → toReal β ∈ psdCone (bar := bar) (X := X)) :
     ∃ C : ℕ, ∀ (m : ℕ) (δ : Fin m → LinearMap.BilinForm ℤ X) (h : IsCell bar φ δ), LinearIndependent ℤ δ →
       (∀ i, IsPrim bar (⟨δ i, h.mem i⟩ : balForms bar X)) → cellMult bar (fun i => (⟨δ i, h.mem i⟩ : balForms bar X)) ≤ C := by
   classical
@@ -119,7 +119,7 @@ theorem perModule [Module.Finite O X] (hF : IsPolyFanOn bar φ X)
     rw [mul_smul, h1, mul_smul, h2, smul_comm]
   obtain ⟨C, hC⟩ := cellMult_le_of_finite T hT
   refine ⟨C, fun m δ h hl hp => ?_⟩
-  have hB : toReal (∑ i, δ i) ∈ psdCone bar X := hpsd _ (Submodule.sum_mem _ fun i _ => h.mem i) fun y => by
+  have hB : toReal (∑ i, δ i) ∈ psdCone (bar := bar) (X := X) := hpsd _ (Submodule.sum_mem _ fun i _ => h.mem i) fun y => by
     simp only [LinearMap.sum_apply]; exact Finset.sum_nonneg fun i _ => h.nonneg i y
   obtain ⟨e, n, γ, c, hγ, hγS, hc, hrel⟩ := hcov _ hB
   obtain ⟨h', hl', hp', hm⟩ := transport e h hl hp

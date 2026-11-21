@@ -21,7 +21,7 @@ variable {O X : Type} [CommRing O] [AddCommGroup X] [Module O X]
 
 theorem hasRedCover_of_fintype (bar : O → O) {ι : Type} [Fintype ι] (f : ι → LinearMap.BilinForm ℤ X)
     (h1 : ∀ i y z, f i y z = f i z y) (h2 : ∀ i y, 0 ≤ f i y y)
-    (h : ∀ B ∈ psdCone bar X, ∃ (e : X ≃ₗ[O] X) (c : ι → ℝ), (∀ i, 0 ≤ c i) ∧
+    (h : ∀ B ∈ psdCone (bar := bar) (X := X), ∃ (e : X ≃ₗ[O] X) (c : ι → ℝ), (∀ i, 0 ≤ c i) ∧
       pullR e.toLinearMap B = ∑ i, c i • toReal (f i)) : HasRedCover bar X := by
   let q := Fintype.equivFin ι
   refine ⟨1, fun _ => Fintype.card ι, fun _ i => f (q.symm i), fun _ i => h1 _, fun _ i => h2 _, fun B hB => ?_⟩

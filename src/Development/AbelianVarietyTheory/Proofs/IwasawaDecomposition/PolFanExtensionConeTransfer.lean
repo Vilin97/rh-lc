@@ -259,7 +259,7 @@ theorem extFun_homog (hpol : IsPolFan H.bar q φ) (htw : IsTwInv H φ) (n k : �
 
 variable (H q φ) in
 theorem evalR_extFun {X : Type} [AddCommGroup X] [Module (𝓞 E) X] [Module.Finite (𝓞 E) X]
-    (hX : Module.finrank (𝓞 E) X ≤ q) {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} (hB : B ∈ psdCone H.bar X) :
+    (hX : Module.finrank (𝓞 E) X ≤ q) {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} (hB : B ∈ psdCone (bar := H.bar) (X := X)) :
     evalR (extFun H q φ) B = evalR φ B := by
   obtain ⟨n, r, hr⟩ := Module.Finite.exists_fin' (𝓞 E) X
   unfold evalR
@@ -274,12 +274,12 @@ theorem evalR_extFun {X : Type} [AddCommGroup X] [Module (𝓞 E) X] [Module.Fin
   exact ⟨X₁, _, _, inferInstance, s ∘ₗ r, B₁, hs.comp hr, hrk, hB₁, hd, fun a b => he _ _⟩
 
 theorem toReal_mem_psdCone {X : Type} [AddCommGroup X] [Module (𝓞 E) X] [Module.Finite (𝓞 E) X]
-    {β : LinearMap.BilinForm ℤ X} (hβ : β ∈ balForms H.bar X) (hp : ∀ y, 0 ≤ β y y) : toReal β ∈ psdCone H.bar X := by
+    {β : LinearMap.BilinForm ℤ X} (hβ : β ∈ balForms H.bar X) (hp : ∀ y, 0 ≤ β y y) : toReal β ∈ psdCone (bar := H.bar) (X := X) := by
   have := GlobalTheory.T.nonneg_sum_smul_intBilinFormToReal_mem_psdCone (𝓞 E) H.bar X 1 ![β] ![1] (by simp [hβ]) (by simp [hp]) (by simp)
   simpa using this
 
 theorem isCone_of_agree {X : Type} [AddCommGroup X] [Module (𝓞 E) X] [Module.Finite (𝓞 E) X] {φ₁ φ₂ : InvFun (𝓞 E)}
-    (h : ∀ B ∈ psdCone H.bar X, evalR φ₁ B = evalR φ₂ B) {m : ℕ} {γ : Fin m → LinearMap.BilinForm ℤ X}
+    (h : ∀ B ∈ psdCone (bar := H.bar) (X := X), evalR φ₁ B = evalR φ₂ B) {m : ℕ} {γ : Fin m → LinearMap.BilinForm ℤ X}
     (hc : IsCone H.bar φ₁ γ) : IsCone H.bar φ₂ γ := by
   have hz : ∀ β ∈ balForms H.bar X, (∀ y, 0 ≤ β y y) → φ₁.evalZ β = φ₂.evalZ β := fun β hβ hp => by
     rw [← evalR_toReal, ← evalR_toReal]
@@ -300,7 +300,7 @@ theorem isCone_extFun_iff {X : Type} [AddCommGroup X] [Module (𝓞 E) X] [Modul
 
 theorem isPolFanOn_extFun {X : Type} [AddCommGroup X] [Module (𝓞 E) X] [Module.Finite (𝓞 E) X]
     (hX : Module.finrank (𝓞 E) X ≤ q) (h : IsPolFanOn H.bar φ X) : IsPolFanOn H.bar (extFun H q φ) X := by
-  have agree := fun B (hB : B ∈ psdCone H.bar X) => evalR_extFun H q φ hX hB
+  have agree := fun B (hB : B ∈ psdCone (bar := H.bar) (X := X)) => evalR_extFun H q φ hX hB
   have hz : ∀ β ∈ balForms H.bar X, (∀ y, 0 ≤ β y y) → (extFun H q φ).evalZ β = φ.evalZ β := fun β hβ hp => by
     rw [← evalR_toReal, ← evalR_toReal]
     exact agree _ (toReal_mem_psdCone hβ hp)
@@ -308,7 +308,7 @@ theorem isPolFanOn_extFun {X : Type} [AddCommGroup X] [Module (𝓞 E) X] [Modul
     fun m m' γ s hγ => ?_, fun B hB => ?_, ?_⟩
   · rw [agree _ (smul_mem_psdCone hB ht), agree _ hB]
     exact h.homog B hB t ht
-  · have hsum : B + B' ∈ psdCone H.bar X := by
+  · have hsum : B + B' ∈ psdCone (bar := H.bar) (X := X) := by
       obtain ⟨m, γ, c, hγ, hc, rfl⟩ := h.cover B hB
       obtain ⟨m', γ', c', hγ', hc', rfl⟩ := h.cover B' hB'
       have := GlobalTheory.T.nonneg_sum_smul_intBilinFormToReal_mem_psdCone (𝓞 E) H.bar X (m + m') (Fin.append γ γ') (Fin.append c c')

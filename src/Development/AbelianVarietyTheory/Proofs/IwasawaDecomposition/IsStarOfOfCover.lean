@@ -72,7 +72,7 @@ theorem isStarOf_of_cover (hcover : ∀ (X : Type) [AddCommGroup X] (m : ℕ) (�
   refine ⟨h1, h2, ?_⟩
   intro X _ _ _ _ hX n γ' hγ'
   set B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ := ∑ j, (1 : ℝ) • toReal (γ' j) with hBdef
-  have hB : B ∈ psdCone H.bar X :=
+  have hB : B ∈ psdCone (bar := H.bar) (X := X) :=
     ConeSub.sum_smul_toReal_mem_psdCone (𝓞 E) H.bar X n γ' _ hγ'.mem hγ'.nonneg fun _ => zero_le_one
   obtain ⟨S, -, hfin⟩ := (hψ X hX).finite
   obtain ⟨e, m, γ, c, hγ, -, hc, he⟩ := hfin B hB

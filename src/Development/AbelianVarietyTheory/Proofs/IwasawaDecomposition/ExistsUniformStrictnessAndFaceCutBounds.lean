@@ -28,7 +28,7 @@ theorem toReal_nsmul (k : ℕ) (β : LinearMap.BilinForm ℤ X) : toReal (k • 
   LinearMap.ext₂ fun a b => by simp [toReal]
 
 theorem toReal_mem_psdCone {β : LinearMap.BilinForm ℤ X} (hβ : β ∈ balForms bar X) (hp : ∀ y, 0 ≤ β y y) :
-    toReal β ∈ psdCone bar X := by
+    toReal β ∈ psdCone (bar := bar) (X := X) := by
   have := ConeSub.sum_smul_toReal_mem_psdCone O bar X 1 ![β] ![1] (fun i => by fin_cases i; simpa using hβ)
     (fun i y => by fin_cases i; simpa using hp y) (fun i => by fin_cases i; simp)
   simpa using this
@@ -143,7 +143,7 @@ theorem perModule_bound (hP : IsPolyFanOn bar φ X) : ∃ N₀ : ℕ, ∀ (m : �
   let D : Finset (LinearMap.BilinForm ℤ X) → ℕ := fun T =>
     if h : ∃ (N : ℕ) (ℓ : LinearMap.BilinForm ℤ X →ₗ[ℤ] ℤ), 0 < N ∧ StrictWith bar φ N ℓ (uT T) then h.choose else 0
   refine ⟨hS.toFinset.powerset.sup D, fun m δ hδ => ?_⟩
-  have hB : ∑ i, (1 : ℝ) • toReal (δ i) ∈ psdCone bar X :=
+  have hB : ∑ i, (1 : ℝ) • toReal (δ i) ∈ psdCone (bar := bar) (X := X) :=
     ConeSub.sum_smul_toReal_mem_psdCone O bar X m δ (fun _ => 1) hδ.mem hδ.nonneg (fun _ => zero_le_one)
   obtain ⟨e, m', γ, c, hγ, hγS, hc, hsum⟩ := hcov _ hB
   set γ' : Fin m' → LinearMap.BilinForm ℤ X := fun j => pull e.symm.toLinearMap (γ j) with hγ'def

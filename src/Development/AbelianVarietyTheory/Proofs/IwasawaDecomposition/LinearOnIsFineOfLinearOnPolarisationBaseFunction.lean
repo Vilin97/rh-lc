@@ -27,15 +27,15 @@ theorem sum_le_evalR {φ : InvFun ℤ} (h : IsPolFanOn (id : ℤ → ℤ) φ X) 
     (h1 : ∀ i, γ i ∈ balForms (id : ℤ → ℤ) X) (h2 : ∀ i y, 0 ≤ γ i y y) {c : Fin m → ℝ} (hc : ∀ i, 0 ≤ c i) :
     ∑ i, c i * φ.evalZ (γ i) ≤ evalR φ (∑ i, c i • toReal (γ i)) := by
   classical
-  have hmem : ∀ d : Fin m → ℝ, (∀ i, 0 ≤ d i) → ∑ i, d i • toReal (γ i) ∈ psdCone (id : ℤ → ℤ) X :=
+  have hmem : ∀ d : Fin m → ℝ, (∀ i, 0 ≤ d i) → ∑ i, d i • toReal (γ i) ∈ psdCone (bar := (id : ℤ → ℤ)) (X := X) :=
     fun d hd => GlobalTheory.PolFan.ConeSub.sum_smul_toReal_mem_psdCone ℤ id X m γ d h1 h2 hd
-  have hsub : ∀ s : Finset (Fin m), ∑ i ∈ s, c i • toReal (γ i) ∈ psdCone (id : ℤ → ℤ) X := fun s => by
+  have hsub : ∀ s : Finset (Fin m), ∑ i ∈ s, c i • toReal (γ i) ∈ psdCone (bar := (id : ℤ → ℤ)) (X := X) := fun s => by
     have := hmem (fun i => if i ∈ s then c i else 0) fun i => by
       split_ifs
       · exact hc i
       · exact le_rfl
     simpa [ite_smul, Finset.sum_ite_mem] using this
-  have hone : ∀ a, toReal (γ a) ∈ psdCone (id : ℤ → ℤ) X := fun a => by
+  have hone : ∀ a, toReal (γ a) ∈ psdCone (bar := (id : ℤ → ℤ)) (X := X) := fun a => by
     have := hmem (Pi.single a 1) fun i => by
       by_cases e : i = a
       · subst e; simp

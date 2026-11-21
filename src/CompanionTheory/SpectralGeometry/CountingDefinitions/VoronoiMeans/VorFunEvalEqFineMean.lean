@@ -118,7 +118,7 @@ def IsMin2 (B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ) (y : X) : Prop := ∀ x : X, B 
 def Covers2 {ι : Type} (a : ι → X) : Prop := ∀ y : X, ∃ (i : ι) (x : X), y = a i + (x + x)
 
 def contact {O : Type} [CommRing O] (bar : O → O) [Module O X] {ι : Type} (a : ι → X) : Set (X →ₗ[ℤ] X →ₗ[ℤ] ℝ) :=
-  {B | B ∈ psdCone bar X ∧ ∀ i, IsMin2 B (a i)}
+  {B | B ∈ psdCone (bar := bar) (X := X) ∧ ∀ i, IsMin2 B (a i)}
 
 def IsSpanned {O : Type} [CommRing O] (bar : O → O) [Module O X] (K : Set (X →ₗ[ℤ] X →ₗ[ℤ] ℝ)) : Prop :=
   ∃ (m : ℕ) (γ : Fin m → LinearMap.BilinForm ℤ X), (∀ i, γ i ∈ balForms bar X) ∧ (∀ i y, 0 ≤ γ i y y) ∧

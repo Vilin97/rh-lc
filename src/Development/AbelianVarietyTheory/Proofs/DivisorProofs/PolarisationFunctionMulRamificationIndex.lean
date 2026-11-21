@@ -32,7 +32,7 @@ theorem evalZ_eq_mul : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
   have hon : IsPolFanOn H.bar φ T.P.D.toPre.X := by
     haveI : Module.Projective (𝓞 E) T.P.D.toPre.X := GlobalTheory.Forms.projective_of_int (𝓞 E) T.P.D.toPre.X
     exact hφ _ (GlobalTheory.UPoinc.UTrait.finrank_le_min E H Dw l Xo c T)
-  have hc : toReal T.be ∈ psdCone H.bar T.P.D.toPre.X :=
+  have hc : toReal T.be ∈ psdCone (bar := H.bar) (X := T.P.D.toPre.X) :=
     GlobalTheory.PolFan.StrictData.toReal_mem_psdCone ((balForms_eq_levelForms H T.P.D.toPre.X).symm ▸ T.lev)
       fun y => by simpa using T.mono.nonneg 0 y
   rw [← evalR_toReal φ T.be, ← hon.homog _ hc m m.cast_nonneg,

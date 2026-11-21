@@ -71,7 +71,7 @@ theorem perModule {E : Type} [Field E] [NumberField E] [IsCMField E] (H : Host E
       (Subtype.ext (by simpa using key))
     exact congrArg Subtype.val this
   refine ⟨⋃ s ∈ S, U s, hS.biUnion fun s _ => (hU s).finite, fun m δ h hli hprim => ?_⟩
-  have hB : ∑ i, (1 : ℝ) • toReal (δ i) ∈ psdCone H.bar X :=
+  have hB : ∑ i, (1 : ℝ) • toReal (δ i) ∈ psdCone (bar := H.bar) (X := X) :=
     ConeSub.sum_smul_toReal_mem_psdCone (𝓞 E) H.bar X m δ (fun _ => 1) h.mem h.nonneg (fun _ => zero_le_one)
   obtain ⟨e, m', γ, c, hγ, hγS, hc, hsum⟩ := hcov _ hB
   set γ' : Fin m' → LinearMap.BilinForm ℤ X := fun j => pull e.symm.toLinearMap (γ j) with hγ'def

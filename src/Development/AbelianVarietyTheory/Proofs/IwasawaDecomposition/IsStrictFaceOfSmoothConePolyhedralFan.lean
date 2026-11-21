@@ -67,7 +67,7 @@ theorem exists_decomp_bounded : ∀ (O : Type) [CommRing O] [IsDedekindDomain O]
   classical
   obtain ⟨S, hS, hcov⟩ := hP.finite
   refine ⟨∑ x ∈ hS.toFinset, |φ.evalZ x|, fun β hβ hp => ?_⟩
-  have hR : toReal β ∈ psdCone bar X := by
+  have hR : toReal β ∈ psdCone (bar := bar) (X := X) := by
     simpa using ConeSub.sum_smul_toReal_mem_psdCone O bar X 1 ![β] ![1] (fun i => by fin_cases i; simpa using hβ)
       (fun i y => by fin_cases i; simpa using hp y) (fun i => by fin_cases i; simp)
   obtain ⟨e, n, γ', c, hcell, hS', hc, he⟩ := hcov _ hR

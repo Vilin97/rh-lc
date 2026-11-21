@@ -216,15 +216,15 @@ structure IsCell (γ : Fin m → LinearMap.BilinForm ℤ X) : Prop where
 
 structure IsPolyFanOn : Prop where
 
-  homog : ∀ B ∈ psdCone bar X, ∀ t : ℝ, 0 ≤ t → evalR φ (t • B) = t * evalR φ B
+  homog : ∀ B ∈ psdCone (bar := bar) (X := X), ∀ t : ℝ, 0 ≤ t → evalR φ (t • B) = t * evalR φ B
 
-  superadd : ∀ B ∈ psdCone bar X, ∀ B' ∈ psdCone bar X, evalR φ B + evalR φ B' ≤ evalR φ (B + B')
+  superadd : ∀ B ∈ psdCone (bar := bar) (X := X), ∀ B' ∈ psdCone (bar := bar) (X := X), evalR φ B + evalR φ B' ≤ evalR φ (B + B')
 
   integral : ∀ β ∈ balForms bar X, (∀ y, 0 ≤ β y y) → ∃ n : ℤ, φ.evalZ β = n
 
   pos : ∀ β ∈ balForms bar X, (∀ y, 0 ≤ β y y) → β ≠ 0 → 0 < φ.evalZ β
 
-  finite : ∃ S : Set (LinearMap.BilinForm ℤ X), S.Finite ∧ ∀ B ∈ psdCone bar X, ∃ (e : X ≃ₗ[O] X) (m : ℕ)
+  finite : ∃ S : Set (LinearMap.BilinForm ℤ X), S.Finite ∧ ∀ B ∈ psdCone (bar := bar) (X := X), ∃ (e : X ≃ₗ[O] X) (m : ℕ)
     (γ : Fin m → LinearMap.BilinForm ℤ X) (c : Fin m → ℝ), IsCell bar φ γ ∧ (∀ i, γ i ∈ S) ∧ (∀ i, 0 ≤ c i) ∧
       pullR e.toLinearMap B = ∑ i, c i • toReal (γ i)
 
@@ -261,7 +261,7 @@ variable {O : Type} [CommRing O] (bar : O → O) (X : Type) [AddCommGroup X] [Mo
 def HasRedCover : Prop :=
   ∃ (k : ℕ) (n : Fin k → ℕ) (P : ∀ j, Fin (n j) → LinearMap.BilinForm ℤ X),
     (∀ j i y z, P j i y z = P j i z y) ∧ (∀ j i y, 0 ≤ P j i y y) ∧
-    ∀ B ∈ psdCone bar X, ∃ (e : X ≃ₗ[O] X) (j : Fin k) (c : Fin (n j) → ℝ), (∀ i, 0 ≤ c i) ∧
+    ∀ B ∈ psdCone (bar := bar) (X := X), ∃ (e : X ≃ₗ[O] X) (j : Fin k) (c : Fin (n j) → ℝ), (∀ i, 0 ≤ c i) ∧
       pullR e.toLinearMap B = ∑ i, c i • toReal (P j i)
 
 def Dominates : Prop :=

@@ -238,7 +238,6 @@ section Separable
 variable (K L) [Algebra.IsSeparable K L]
 
 
-variable (K L) in
 theorem exists_trace_integer_ne_zero : ∃ z : 𝒪[L], Algebra.trace 𝒪[K] 𝒪[L] z ≠ 0 := by
   obtain ⟨w, hw⟩ : ∃ w : L, Algebra.trace K L w ≠ 0 := by
     by_contra h
@@ -269,7 +268,6 @@ theorem exists_trace_integer_ne_zero : ∃ z : 𝒪[L], Algebra.trace 𝒪[K] �
   exact mul_ne_zero (pow_ne_zero _ hϖ0) hw h2
 
 
-variable (K L) in
 theorem exists_unitFiltrationUnits_le_range_normUnits :
     ∃ n, unitFiltrationUnits K n ≤ (normUnits K L).range := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[K]
@@ -293,13 +291,11 @@ theorem exists_unitFiltrationUnits_le_range_normUnits :
   rw [coe_normUnits, Units.val_mk0, ← hN, coe_unitsIncl]
 
 
-variable (K L) in
 theorem isOpen_range_normUnits : IsOpen ((normUnits K L).range : Set Kˣ) := by
   obtain ⟨n, hn⟩ := exists_unitFiltrationUnits_le_range_normUnits K L
   exact Subgroup.isOpen_mono hn (isOpen_unitFiltrationUnits n)
 
 
-variable (K L) in
 theorem finiteIndex_range_normUnits : (normUnits K L).range.FiniteIndex := by
   obtain ⟨n, hn⟩ := exists_unitFiltrationUnits_le_range_normUnits K L
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[K]

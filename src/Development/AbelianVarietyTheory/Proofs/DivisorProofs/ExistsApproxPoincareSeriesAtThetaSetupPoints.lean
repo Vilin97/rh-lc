@@ -49,7 +49,7 @@ theorem sc_evalZ_eq_of_equiv {φ : InvFun ℤ} {X Y : Type} [AddCommGroup X] [Ad
     [Module.Finite ℤ Y] (hP : IsPolFanOn id φ X) {β : LinearMap.BilinForm ℤ X} (hs : ∀ a b, β a b = β b a)
     (hp : ∀ x, 0 ≤ β x x) {β' : LinearMap.BilinForm ℤ Y} {s s' : ℝ} (hs0 : 0 ≤ s) (hs' : 0 < s') (e : X ≃ₗ[ℤ] Y)
     (he : ∀ a b, s * β a b = s' * β' (e a) (e b)) : s * φ.evalZ β = s' * φ.evalZ β' := by
-  have hmem : toReal β ∈ psdCone (id : ℤ → ℤ) X :=
+  have hmem : toReal β ∈ psdCone (bar := (id : ℤ → ℤ)) (X := X) :=
     StrictData.toReal_mem_psdCone (mem_balForms_int.2 hs) hp
   have hform : toReal (pull e.toLinearMap β') = (s / s') • toReal β := by
     refine LinearMap.ext₂ fun a b => ?_

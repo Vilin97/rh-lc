@@ -87,7 +87,7 @@ theorem isCell_comp : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H 
   have est : ∀ L : ℝ, C * (B0 + 1) + C ≤ L → ∀ β ∈ balForms H.bar X, (∀ y, 0 ≤ β y y) →
       L * (N * ψ.evalZ β) ≤ L * ℓ β + h β := by
     intro L hL β hβ hp
-    have hmem : toReal β ∈ psdCone H.bar X := by
+    have hmem : toReal β ∈ psdCone (bar := H.bar) (X := X) := by
       have e1 := ConeSub.sum_smul_toReal_mem_psdCone (𝓞 E) H.bar X 1 ![β] ![1]
         (fun i => by fin_cases i; simpa using hβ) (fun i y => by fin_cases i; simpa using hp y)
         (fun i => by fin_cases i; simp)

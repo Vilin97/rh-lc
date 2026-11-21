@@ -122,7 +122,7 @@ theorem exists_cone : ∀ (O : Type) [CommRing O] (bar : O → O) (φ : InvFun O
       (c : Fin r → ℕ), IsCone bar φ γ ∧ 0 < k ∧ (∀ j, 0 < c j) ∧ k • β = ∑ j, c j • γ j := by
   intro O _ bar φ X _ _ _ _ _ _ hF β hβ hp
   classical
-  have hB : toReal β ∈ psdCone bar X :=
+  have hB : toReal β ∈ psdCone (bar := bar) (X := X) :=
     (isPosDef_toReal_of_pos hβ.1 hp).mem_psdCone (toReal_mem hβ)
   obtain ⟨m, γ, c, hγ, hc, hsum⟩ := hF.cover _ hB
   obtain ⟨nZ, hnZ⟩ := coeff_int hγ.mem hγ.basis hβ hsum

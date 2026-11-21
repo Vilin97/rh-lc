@@ -54,7 +54,7 @@ theorem sc_evalZ_eq_of_equiv {O : Type} [CommRing O] [IsDedekindDomain O] [CharZ
     [Module.Finite O Y] (hP : IsPolFanOn bar φ X) {β : LinearMap.BilinForm ℤ X} (hβ : β ∈ balForms bar X)
     (hp : ∀ x, 0 ≤ β x x) {β' : LinearMap.BilinForm ℤ Y} {s s' : ℝ} (hs0 : 0 ≤ s) (hs' : 0 < s') (e : X ≃ₗ[O] Y)
     (he : ∀ a b, s * β a b = s' * β' (e a) (e b)) : s * φ.evalZ β = s' * φ.evalZ β' := by
-  have hmem : toReal β ∈ psdCone bar X := StrictData.toReal_mem_psdCone hβ hp
+  have hmem : toReal β ∈ psdCone (bar := bar) (X := X) := StrictData.toReal_mem_psdCone hβ hp
   have hform : toReal (pull e.toLinearMap β') = (s / s') • toReal β := by
     refine LinearMap.ext₂ fun a b => ?_
     have := he a b
