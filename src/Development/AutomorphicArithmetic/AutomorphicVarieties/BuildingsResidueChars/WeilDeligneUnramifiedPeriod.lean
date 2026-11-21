@@ -51,7 +51,6 @@ theorem UpperTheory.weilDeligne_unramified_period :
   obtain ⟨W, hW, hWg, hWφ⟩ := UpperTheory.crystalline_frobenius_algebraic_elements l K n M hMc (fun g hg => by
     rw [← map_one M]
     ext i j
-    apply PadicInt.ext
     rw [hM, hM, map_one]
     congr 2
     change (η g : ↥L.1) * e j = e j
@@ -72,9 +71,9 @@ theorem UpperTheory.weilDeligne_unramified_period :
     exact C_eq_zero.1 (eq_zero e (fun i => (C (W i j₀) : Bst (V.Loc.PP l))) h0 i)
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum]
-    simp only [stRep_tmul, actSt_C]
-    exact hk g _ (hWg g)
+      simp only [stRep_tmul, actSt_C]
+      exact hk g _ (hWg g)
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, Finset.smul_sum]
-    simp only [phiV_pow, smul_tmul']
-    exact hk g _ (hWφ g k hg)
+      simp only [phiV_pow, smul_tmul']
+      exact hk g _ (hWφ g k hg)

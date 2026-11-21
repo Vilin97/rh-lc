@@ -78,11 +78,13 @@ private theorem smooth_vanishingIdealAssignment_restrict_opens :
     (smooth_comap_subschemeι_of_isOpenImmersion U.ι
       (Scheme.IdealSheafData.vanishingIdeal T) p hT)
 
-theorem smoothVanishingHypotheses_vanishingIdealAssignment : SmoothVanishingHypotheses (vanishingIdealAssignment.{u}) where
-  orderAt_vanishing_eq_one := orderAt_vanishingIdealAssignment_eq_one
-  smooth_opens_ι_comp := smooth_opens_ι_comp_of_smooth
-  smooth_vanishing_hypersurface := smooth_vanishingIdealAssignment_of_isSmoothDivisor
-  smooth_vanishing_opens := smooth_vanishingIdealAssignment_restrict_opens
+theorem smoothVanishingHypotheses_vanishingIdealAssignment :
+    SmoothVanishingHypotheses (vanishingIdealAssignment.{u}) := by
+  exact
+    { orderAt_vanishing_eq_one := orderAt_vanishingIdealAssignment_eq_one
+      smooth_opens_ι_comp := smooth_opens_ι_comp_of_smooth
+      smooth_vanishing_hypersurface := smooth_vanishingIdealAssignment_of_isSmoothDivisor
+      smooth_vanishing_opens := smooth_vanishingIdealAssignment_restrict_opens }
 
 theorem smoothOrderOneCentersIsolated_vanishingIdealAssignment_of_principalizationCertificate {k : Type u} [Field k] [CharZero k]
     {W : Scheme.{u}} {p : W ⟶ Spec (CommRingCat.of k)} {I : W.IdealSheafData} {m : ℕ}

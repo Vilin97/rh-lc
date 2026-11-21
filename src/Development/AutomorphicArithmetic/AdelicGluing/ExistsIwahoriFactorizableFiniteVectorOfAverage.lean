@@ -141,7 +141,8 @@ private theorem iwSet_test (q : Pl F) :
   constructor
   · rw [← LocallyConstant.coe_charFn ℂ ⟨isClosed_iwSet q, isOpen_iwSet q⟩]
     exact LocallyConstant.isLocallyConstant _
-  · refine HasCompactSupport.of_support_subset_isCompact (isCompact_iwSet q) fun g hg => ?_
+  · set_option synthInstance.maxHeartbeats 200000 in
+    refine HasCompactSupport.of_support_subset_isCompact (isCompact_iwSet q) fun g hg => ?_
     by_contra h
     exact hg (Set.indicator_of_notMem h _)
 

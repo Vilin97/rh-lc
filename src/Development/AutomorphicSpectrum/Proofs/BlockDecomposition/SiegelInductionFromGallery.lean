@@ -19,11 +19,15 @@ theorem isHt_mono {Γ K P P' : Subgroup G} {η : G → ℝ} (h : IsHt Γ K P η)
   ⟨fun p hp g => h.left p (hP hp) g, h.right, fun γ hγ hp => h.rat γ hγ (hP hp), h.cont⟩
 
 theorem isHt_lin {Γ K P : Subgroup G} {η θ : G → ℝ} (x y : ℝ) (h₁ : IsHt Γ K P η) (h₂ : IsHt Γ K P θ) :
-    IsHt Γ K P fun g => x * η g + y * θ g where
-  left p hp g := by simp only [h₁.left p hp g, h₂.left p hp g]; ring
-  right g k hk := by simp only [h₁.right g k hk, h₂.right g k hk]
-  rat γ hγ hp := by simp only [h₁.rat γ hγ hp, h₂.rat γ hγ hp]; ring
-  cont := (continuous_const.mul h₁.cont).add (continuous_const.mul h₂.cont)
+    IsHt Γ K P fun g => x * η g + y * θ g := by
+  refine ⟨?_, ?_, ?_, (continuous_const.mul h₁.cont).add (continuous_const.mul h₂.cont)⟩
+  · intro p hp g
+    simp only [h₁.left p hp g, h₂.left p hp g]
+    ring
+  · intro g k hk
+    simp only [h₁.right g k hk, h₂.right g k hk]
+  · intro γ hγ hp
+    simp only [h₁.rat γ hγ hp, h₂.rat γ hγ hp, mul_zero, add_zero]
 
 theorem isHt_congr {Γ K P : Subgroup G} {η θ : G → ℝ} (h : IsHt Γ K P η) (e : ∀ g, θ g = η g) : IsHt Γ K P θ := by
   rwa [show θ = η from funext e]

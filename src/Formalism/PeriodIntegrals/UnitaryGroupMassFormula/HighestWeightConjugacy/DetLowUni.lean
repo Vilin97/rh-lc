@@ -44,7 +44,9 @@ theorem exists_LU : ∀ (n : ℕ) (g : Matrix (Fin n) (Fin n) ℂ),
     have hAk : ∀ k (hk : k < n), (A.submatrix (Fin.castLE hk.le) (Fin.castLE hk.le)).det ≠ 0 := by
       intro k hk
       exact hg k (Nat.lt_succ_of_lt hk)
-    obtain ⟨L', U', hL', hU', hLU⟩ := exists_LU n A hAk
+    obtain ⟨L', U', hL', hU', hLU⟩ :
+        ∃ L U : Matrix (Fin n) (Fin n) ℂ, LowUni L ∧ UpTri U ∧ A = L * U :=
+      exists_LU n A hAk
     have hdetA : A.det ≠ 0 := by
       exact hg n (Nat.lt_succ_self n)
     have hdL : L'.det = 1 := det_lowUni hL'

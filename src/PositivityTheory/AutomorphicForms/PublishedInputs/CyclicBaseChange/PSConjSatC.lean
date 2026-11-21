@@ -178,8 +178,11 @@ theorem UpperTheory.CBC.SConjSatC_holds : UpperTheory.CBC.SConjSatC := by
   intro K M _ _ _ _ _ _ σ s hs n P P' hsp
   have hc : ∀ x : K, σ.toRingEquiv.symm (algebraMap K M x) = algebraMap K M x := fun x => σ.symm.commutes x
   refine ⟨conjSrc σ.toRingEquiv.symm, conjSrc_injective _, fun w => GlobalTheory.DefU.ClassFin.under_conjSrc _ hc w,
-    fun w => GlobalTheory.UnrEuler.ConjFac.absNorm_conjSrc _ w, Filter.Eventually.of_forall fun w B hB => ?_⟩
-  have h := UpperTheory.CBC.SConjSatCAux.main σ.toRingEquiv s hs P P' hsp (conjSrc σ.toRingEquiv.symm w)
-    ((CG.hasSat_mk _ _ _).1 hB)
-  rw [UpperTheory.CBC.SConjSatCAux.conjSrc_conjSrc_symm] at h
-  exact (CG.hasSat_mk _ _ _).2 h
+    fun w => ?_, Filter.Eventually.of_forall fun w B hB => ?_⟩
+  · have h := GlobalTheory.UnrEuler.ConjFac.absNorm_conjSrc σ.toRingEquiv.symm w
+    rw [Ideal.absNorm_apply, Ideal.absNorm_apply, Submodule.cardQuot_apply, Submodule.cardQuot_apply] at h
+    exact h
+  · have h := UpperTheory.CBC.SConjSatCAux.main σ.toRingEquiv s hs P P' hsp (conjSrc σ.toRingEquiv.symm w)
+      ((CG.hasSat_mk _ _ _).1 hB)
+    rw [UpperTheory.CBC.SConjSatCAux.conjSrc_conjSrc_symm] at h
+    exact (CG.hasSat_mk _ _ _).2 h

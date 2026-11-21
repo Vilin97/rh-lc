@@ -197,8 +197,78 @@ theorem inducedBlowups_isomorphic (P : ChartPushforward S S') [AlgebraicGeometry
 
 theorem inducedBlowupsWithoutIso_isomorphic (P : ChartPushforward S S') [AlgebraicGeometry.IsReduced Y]
     (h : S.TransitionsAreBlowups) (h' : S'.TransitionsAreBlowups) :
-    (S.inducedBlowupsWithoutIso h).Isomorphic (S'.inducedBlowupsWithoutIso h') :=
-  (P.inducedBlowups_isomorphic h h').withoutIsoBlowups
+    (S.inducedBlowupsWithoutIso h).Isomorphic (S'.inducedBlowupsWithoutIso h') := by
+  let B := S.inducedBlowups h
+  let B' := S'.inducedBlowups h'
+  have he : B.Isomorphic B' := P.inducedBlowups_isomorphic h h'
+  obtain ⟨hlen, e, hzero, hstep, hcen⟩ := he
+  have htop : ∀ i : ℕ, i < B'.length → (B.center i = ⊤ ↔ B'.center i = ⊤) := by
+    intro i hi
+    have hi' : i < B.length := by rwa [hlen]
+    constructor
+    · intro ht
+      have hc := (hcen i hi').trans ht
+      have hc' := congrArg (fun I => I.comap (e i hi'.le).inv) hc
+      simpa only [comap_hom_comap_inv, Scheme.IdealSheafData.comap_top] using hc'
+    · intro ht
+      rw [← hcen i hi', ht, Scheme.IdealSheafData.comap_top]
+  have hindex := SequenceOfBlowups.nontrivialIndex_congr B B' hlen htop
+  have hlength := SequenceOfBlowups.lengthWithoutIsoBlowups_congr B B' hlen htop
+  let retainedHom (i : ℕ) (hi : i ≤ B.lengthWithoutIsoBlowups) :
+      B.schemeAt (B.nontrivialIndex i) ⟶ B'.schemeAt (B'.nontrivialIndex i) :=
+    (e (B.nontrivialIndex i) (B.nontrivialIndex_le_length hi)).hom ≫
+      eqToHom (congrArg B'.schemeAt (hindex i))
+  let retainedIso (i : ℕ) (hi : i ≤ B.withoutIsoBlowups.length) :
+      B.withoutIsoBlowups.schemeAt i ≅ B'.withoutIsoBlowups.schemeAt i := by
+    have hi' : i ≤ B.lengthWithoutIsoBlowups := B.withoutIsoBlowups_length ▸ hi
+    change B.schemeAt (B.nontrivialIndex i) ≅ B'.schemeAt (B'.nontrivialIndex i)
+    exact (e (B.nontrivialIndex i) (B.nontrivialIndex_le_length hi')).trans
+      (eqToIso (congrArg B'.schemeAt (hindex i)))
+  change B.withoutIsoBlowups.Isomorphic B'.withoutIsoBlowups
+  refine ⟨hlength, retainedIso, ?_, ?_, ?_⟩
+  · have projection_eq {a b : ℕ} (hab : a = b) :
+        eqToHom (congrArg B'.schemeAt hab) ≫ B'.projectionToBase b = B'.projectionToBase a := by
+      subst b
+      simp
+    rw [B.withoutIsoBlowups_isoObjZero, B'.withoutIsoBlowups_isoObjZero,
+      B.objNontrivialIndexZeroIso_hom, B'.objNontrivialIndexZeroIso_hom]
+    have hi := B.nontrivialIndex_le_length (Nat.zero_le B.lengthWithoutIsoBlowups)
+    let e0 := (e (B.nontrivialIndex 0) hi).hom
+    change (e0 ≫ eqToHom (congrArg B'.schemeAt (hindex 0))) ≫
+      B'.projectionToBase (B'.nontrivialIndex 0) = B.projectionToBase (B.nontrivialIndex 0)
+    rw [Category.assoc, projection_eq (hindex 0)]
+    exact SequenceOfBlowups.iso_hom_comp_projectionToBase B B' B.length e hstep hzero
+      (B.nontrivialIndex 0) hi
+  · intro i hi
+    have transition_eq {a b a' b' : ℕ} (ha : a = a') (hb : b = b') (hab : a ≤ b)
+        (hab' : a' ≤ b') :
+        eqToHom (congrArg B'.schemeAt hb) ≫ B'.transitionMap hab' =
+          B'.transitionMap hab ≫ eqToHom (congrArg B'.schemeAt ha) := by
+      subst a'
+      subst b'
+      simp
+    rw [B.withoutIsoBlowups_blowupMorphism, B'.withoutIsoBlowups_blowupMorphism]
+    have hi' : i < B.lengthWithoutIsoBlowups := B.withoutIsoBlowups_length ▸ hi
+    have hle := B.nontrivialIndex_monotone (Nat.le_succ i)
+    have hle' := B'.nontrivialIndex_monotone (Nat.le_succ i)
+    change retainedHom (i + 1) hi' ≫ B'.transitionMap hle' =
+      B.transitionMap hle ≫ retainedHom i hi'.le
+    have hcomm := SequenceOfBlowups.iso_hom_comp_transitionMap B B' B.length e hstep
+      (B.nontrivialIndex i) (B.nontrivialIndex (i + 1)) hle (B.nontrivialIndex_le_length hi')
+    dsimp only [retainedHom]
+    rw [Category.assoc, transition_eq (hindex i) (hindex (i + 1)) hle hle', ← Category.assoc,
+      hcomm, Category.assoc]
+  · intro i hi
+    have center_eq {a b : ℕ} (hab : a = b) :
+        (B'.center b).comap (eqToHom (congrArg B'.schemeAt hab)) = B'.center a := by
+      subst b
+      simp
+    have hi' : i < B.lengthWithoutIsoBlowups := B.withoutIsoBlowups_length ▸ hi
+    change (B'.center (B'.nontrivialIndex i)).comap (retainedHom i hi'.le) =
+      B.center (B.nontrivialIndex i)
+    dsimp only [retainedHom]
+    rw [Scheme.IdealSheafData.comap_comp, center_eq (hindex i)]
+    exact hcen _ (B.nontrivialIndex_lt_length hi)
 
 end ChartPushforward
 

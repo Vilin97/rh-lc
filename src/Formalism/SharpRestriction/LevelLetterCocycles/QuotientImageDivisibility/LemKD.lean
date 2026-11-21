@@ -33,8 +33,9 @@ theorem lemK_D (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (((h1.2.2.2.2.2.2.2.2.1 _ (Formalism.MainNotions.LiftingTheory.gen_one_crys ((HW l).W K 1 LL hA'.2.2))) hs hp).2.2
       (Formalism.MainNotions.UnusedSlot80.finrank_K0_eq_one_of_le_Kur hA'.1)).1
   have tie := ((Cm l).C K 1 LL hA'.2.2).tie
-  obtain ⟨hN, hAg⟩ := gam_of_tie _ hs tie
-  exact lemK_of _ inferInstance (Formalism.MainNotions.UnusedSlot80.BCF.isFrac_OL LL) h1.1 h1.2.2.1 (hL l K LL hA' h5)
+  set_option synthInstance.maxHeartbeats 800000 in
+   obtain ⟨hN, hAg⟩ := gam_of_tie _ hs tie
+   exact lemK_of _ inferInstance (Formalism.MainNotions.UnusedSlot80.BCF.isFrac_OL LL) h1.1 h1.2.2.1 (hL l K LL hA' h5)
     h1.2.2.2.2.1 h11.2.2 hring hN hAg (gamΔ_of_tie _ tie) (ptTrans_rec D HW F hP9 l K LL hA' h5)
 
 end Formalism.MainNotions.N.Pv.LocalLengthBound

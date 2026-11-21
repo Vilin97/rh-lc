@@ -85,18 +85,18 @@ private theorem exists_dual_map {G K Γ V W : Type} [Group G] [TopologicalSpace 
     exact hw0 (by simpa [f, hc] using ht.symm)
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [hψ, hψ, map_sum]
-    refine (Fintype.sum_equiv (Equiv.mulLeft (q k)⁻¹) _ _ fun γ => ?_)
-    have e : π (ι (s γ)) v0 = π (ι k) (π (ι (s ((q k)⁻¹ * γ))) v0) := by
-      have hu : q ((k * s ((q k)⁻¹ * γ))⁻¹ * s γ) = 1 := by
-        simp [hs]
-      have e2 : ι (s γ) = ι (k * s ((q k)⁻¹ * γ)) * ι ((k * s ((q k)⁻¹ * γ))⁻¹ * s γ) := by
-        rw [← map_mul]
-        congr 1
-        group
-      rw [e2, map_mul π, Module.End.mul_apply, hv0' _ hu, map_mul ι, map_mul π, Module.End.mul_apply]
-    simp only [Equiv.coe_mulLeft]
-    rw [map_smul, ← e, Representation.dual_apply, map_mul, Module.End.mul_apply]
-    rfl
+      refine (Fintype.sum_equiv (Equiv.mulLeft (q k)⁻¹) _ _ fun γ => ?_)
+      have e : π (ι (s γ)) v0 = π (ι k) (π (ι (s ((q k)⁻¹ * γ))) v0) := by
+        have hu : q ((k * s ((q k)⁻¹ * γ))⁻¹ * s γ) = 1 := by
+          simp [hs]
+        have e2 : ι (s γ) = ι (k * s ((q k)⁻¹ * γ)) * ι ((k * s ((q k)⁻¹ * γ))⁻¹ * s γ) := by
+          rw [← map_mul]
+          congr 1
+          group
+        rw [e2, map_mul π, Module.End.mul_apply, hv0' _ hu, map_mul ι, map_mul π, Module.End.mul_apply]
+      simp only [Equiv.coe_mulLeft]
+      rw [map_smul, ← e, Representation.dual_apply, map_mul, Module.End.mul_apply]
+      rfl
 
 section Finite
 

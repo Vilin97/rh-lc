@@ -29,6 +29,8 @@ attribute [local instance] tensorTopology finite_of_isQuadraticExtension isModul
 variable {κ : Type*} [Fintype κ] [DecidableEq κ] (b : Basis κ K E)
 variable (R : Type*) [CommRing R] [Algebra K R] [TopologicalSpace R] [IsTopologicalRing R]
 
+local notation "𝒩" => Fintype.card (ι × κ)
+
 theorem continuous_coords : Continuous (coords b R) :=
   (tensorCoordsHomeomorph R b).continuous
 
@@ -89,13 +91,20 @@ theorem map_baseMap_mul (f : R →ₐ[K] R') (X Y : Matrix ι ι (R ⊗[K] E)) :
 
 theorem cstar_baseMap (f : R →ₐ[K] R') (X : Matrix ι ι (R ⊗[K] E)) :
     cstar (X.map (baseMap f)) = (cstar X).map (baseMap f) := by
+  have commute (z : R ⊗[K] E) :
+      conjBase K E R' (tensorMap E f z) = tensorMap E f (conjBase K E R z) := by
+    induction z using TensorProduct.inductionOn with
+    | tmul r e => rfl
+    | add x y hx hy => simp only [map_add, hx, hy]
   ext i j
-  simp only [cstar, transpose_apply, Matrix.map_apply, baseMap_eq_tensorMap, tensorMap_conjBase]
+  simp only [cstar, transpose_apply, Matrix.map_apply, baseMap_eq_tensorMap, commute]
 
 theorem baseMatrix_baseMap (f : R →ₐ[K] R') :
     (baseMatrix K H R).map (baseMap f) = baseMatrix K H R' := by
   ext i j
-  simp only [baseMatrix, Matrix.map_apply, baseMap_eq_tensorMap, tensorMap_includeRight]
+  simp only [baseMatrix, Matrix.map_apply, baseMap_eq_tensorMap, tensorMap,
+    Algebra.TensorProduct.includeRight_apply, Algebra.TensorProduct.map_tmul, map_one,
+    AlgHom.id_apply]
 
 theorem cstar_mul_baseMatrix_map (f : R →ₐ[K] R') (X : Matrix ι ι (R ⊗[K] E)) :
     (cstar X * baseMatrix K H R * X).map (baseMap f) =

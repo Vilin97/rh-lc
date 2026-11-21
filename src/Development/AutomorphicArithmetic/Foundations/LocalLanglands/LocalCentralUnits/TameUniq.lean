@@ -194,7 +194,7 @@ theorem UpperTheory.Zero.LLC.tameUniq :
         Module.finrank ℂ (Fin m → ℂ) = n := by
       intro m b hb
       have e := congrArg Polynomial.natDegree (charpoly_of_inFor b hb t₀)
-      rwa [LinearMap.charpoly_natDegree, natDegree_finset_prod_X_sub_C_eq_card, Finset.card_range] at e
+      rwa [LinearMap.charpoly_natDegree, natDegree_finsetProd_X_sub_C_eq_card, Finset.card_range] at e
     have hm := hdim a hV
     have hm' := hdim a' hV'
     obtain ⟨hc, hirr⟩ := h1 m a hat

@@ -25,10 +25,11 @@ lemma smulHom_comp_smulHom (F : X.Modules) (r s : Γ(X, ⊤)) :
   rw [smul_comm]
 
 lemma smulHom_sum (F : X.Modules) {ι : Type*} (s : Finset ι) (r : ι → Γ(X, ⊤)) :
-    smulHom F (∑ i ∈ s, r i) = ∑ i ∈ s, smulHom F (r i) :=
-  map_sum (smulRingHom F) r s
+    smulHom F (∑ i ∈ s, r i) = ∑ i ∈ s, smulHom F (r i) := by
+  simp only [← smulRingHom_apply, map_sum, End.sum_asHom]
 
-lemma smulHom_one (F : X.Modules) : smulHom F 1 = 𝟙 F := map_one (smulRingHom F)
+lemma smulHom_one (F : X.Modules) : smulHom F 1 = 𝟙 F := by
+  rw [← smulRingHom_apply, map_one, End.one_asHom]
 
 def imageMapOf {P₁ P₂ G : X.Modules} (f₁ : P₁ ⟶ G) (f₂ : P₂ ⟶ G) (φ : G ⟶ G) (h : P₁ ⟶ P₂)
     (w : f₁ ≫ φ = h ≫ f₂) : kernel (cokernel.π f₁) ⟶ kernel (cokernel.π f₂) :=

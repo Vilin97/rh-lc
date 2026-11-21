@@ -42,7 +42,7 @@ theorem dbl_inr_map_assoc {P' P : Arrow Spc} (φ : P' ⟶ P) {Z : Spc} (h : dbl 
 def dbl_cofan {A : Type} {P : Arrow Spc} (Q : A → Arrow Spc) (φ : ∀ a, Q a ⟶ P)
     (hl : IsColimit (Cofan.mk P.left fun a => (φ a).left)) (hr : IsColimit (Cofan.mk P.right fun a => (φ a).right)) :
     IsColimit (Cofan.mk (dbl P) fun a => dbl.map (φ a)) := by
-  refine mkCofanColimit _ (fun s => pushout.desc (Cofan.IsColimit.desc hr fun a => dbl.inl (Q a) ≫ s.inj a)
+  refine Cofan.IsColimit.mk _ (fun s => pushout.desc (Cofan.IsColimit.desc hr fun a => dbl.inl (Q a) ≫ s.inj a)
       (Cofan.IsColimit.desc hr fun a => dbl.inr (Q a) ≫ s.inj a) ?_) ?_ ?_
   · refine Cofan.IsColimit.hom_ext hl _ _ fun a => ?_
     have w := Arrow.w (φ a)
@@ -52,13 +52,13 @@ def dbl_cofan {A : Type} {P : Arrow Spc} (Q : A → Arrow Spc) (φ : ∀ a, Q a 
       Cofan.IsColimit.fac hr _ a
     change ((φ a).left ≫ P.hom) ≫ _ = ((φ a).left ≫ P.hom) ≫ _
     rw [w, Category.assoc, Category.assoc, f1, f2, ← Category.assoc, ← Category.assoc]
-    exact congrArg (· ≫ s.inj a) (pushout.condition)
+    exact congrArg (· ≫ s.inj a) (pushout.condition (f := (Q a).hom) (g := (Q a).hom))
   · intro s a
     have f1 : (φ a).right ≫ Cofan.IsColimit.desc hr (fun a => dbl.inl (Q a) ≫ s.inj a) = dbl.inl (Q a) ≫ s.inj a := by
       simpa using Cofan.IsColimit.fac hr (fun a => dbl.inl (Q a) ≫ s.inj a) a
     have f2 : (φ a).right ≫ Cofan.IsColimit.desc hr (fun a => dbl.inr (Q a) ≫ s.inj a) = dbl.inr (Q a) ≫ s.inj a := by
       simpa using Cofan.IsColimit.fac hr (fun a => dbl.inr (Q a) ≫ s.inj a) a
-    apply pushout.hom_ext
+    apply pushout.hom_ext (f := (Q a).hom) (g := (Q a).hom)
     · exact (dbl_inl_map_assoc (φ a) _).trans ((congrArg _ (pushout.inl_desc _ _ _)).trans f1)
     · exact (dbl_inr_map_assoc (φ a) _).trans ((congrArg _ (pushout.inr_desc _ _ _)).trans f2)
   · intro s m hm

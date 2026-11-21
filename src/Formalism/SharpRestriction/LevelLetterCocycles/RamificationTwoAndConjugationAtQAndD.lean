@@ -138,11 +138,11 @@ theorem exists_lin_lift (Y : Submodule O V) (hfg : Y.FG)
 theorem exists_quot_embed (T : Submodule O V) (hfg : T.FG)
     (hsp : Submodule.span LL (T : Set V) = ⊤) :
     ∃ E : V →ₗ[O] (Fin (finrank O T) → KO O), LinearMap.ker E = T := by
-  have : Submodule.IsLattice LL T := ⟨hfg, hsp⟩
+  have : Submodule.IsFullLattice LL T := { toIsLattice := Submodule.IsLattice.of_fg LL hfg, span_eq_top := hsp }
   have : Module.Free O T := Submodule.IsLattice.free LL T
   have : Module.Finite O T := Module.Finite.iff_fg.mpr hfg
   let b := Module.finBasis O T
-  let bV := b.extendOfIsLattice LL
+  let bV := b.extendOfIsFullLattice LL
   have hb : ∀ i, bV i = (b i : V) := fun i => by simp [bV]
   obtain ⟨κ₀⟩ := exists_quotKO O LL
   let κ : LL →ₗ[O] KO O := κ₀.toLinearMap ∘ₗ (OL O LL).mkQ

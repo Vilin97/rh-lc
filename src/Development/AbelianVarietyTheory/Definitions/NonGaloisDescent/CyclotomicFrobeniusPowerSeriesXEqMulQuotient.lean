@@ -109,15 +109,16 @@ theorem map_gam {R' : Type} [CommRing R'] [Algebra ℤ_[l] R'] (h : R →+* R')
   · exact eq_zero_of_pow_dvd (by simp [map_binomialSeries h hh])
 
 private theorem coeff_ode (f : ℤ_[l]⟦X⟧) (n : ℕ) :
-    coeff n ((1 + X) * d⁄dX ℤ_[l] f) = coeff (n + 1) f * (n + 1) + coeff n f * n := by
+    coeff n ((1 + X) * PowerSeries.derivative f) =
+      coeff (n + 1) f * (n + 1) + coeff n f * n := by
   rw [add_mul, one_mul, map_add (f := _), coeff_derivative]
   cases n with
   | zero => simp
   | succ n => rw [coeff_succ_X_mul, coeff_derivative]; simp
 
 private theorem ode_binomial (c : ℤ_[l]) :
-    (1 + X) * d⁄dX ℤ_[l] (binomialSeries ℤ_[l] c) = C c * binomialSeries ℤ_[l] c := by
-  ext n
+    (1 + X) * PowerSeries.derivative (binomialSeries ℤ_[l] c) = C c * binomialSeries ℤ_[l] c := by
+  refine PowerSeries.ext fun n => ?_
   rw [coeff_ode, coeff_C_mul]
   simp only [binomialSeries_coeff, smul_eq_mul, mul_one]
   have h1 := Ring.descPochhammer_eq_factorial_smul_choose c (n + 1)
@@ -128,9 +129,11 @@ private theorem ode_binomial (c : ℤ_[l]) :
   apply mul_left_cancel₀ h0
   linear_combination -h1
 
-private theorem ode_unique (c : ℤ_[l]) {f g : ℤ_[l]⟦X⟧} (hf : (1 + X) * d⁄dX ℤ_[l] f = C c * f)
-    (hg : (1 + X) * d⁄dX ℤ_[l] g = C c * g) (h0 : constantCoeff f = constantCoeff g) : f = g := by
-  ext n
+private theorem ode_unique (c : ℤ_[l]) {f g : ℤ_[l]⟦X⟧}
+    (hf : (1 + X) * PowerSeries.derivative f = C c * f)
+    (hg : (1 + X) * PowerSeries.derivative g = C c * g)
+    (h0 : constantCoeff f = constantCoeff g) : f = g := by
+  refine PowerSeries.ext fun n => ?_
   induction n with
   | zero => simpa using h0
   | succ n ih =>
@@ -152,11 +155,12 @@ theorem gam_binomialSeries (c c' : ℤ_[l]) :
     · have h1 := congrArg (gam ℤ_[l] c) (ode_binomial c')
       rw [map_mul, map_mul, map_add (f := _), map_one, gam_X, gam_C] at h1
       have h2 := ode_binomial c
-      have h3 : d⁄dX ℤ_[l] (gam ℤ_[l] c (binomialSeries ℤ_[l] c')) =
-          gam ℤ_[l] c (d⁄dX ℤ_[l] (binomialSeries ℤ_[l] c')) * d⁄dX ℤ_[l] (binomialSeries ℤ_[l] c) := by
+      have h3 : PowerSeries.derivative (gam ℤ_[l] c (binomialSeries ℤ_[l] c')) =
+          gam ℤ_[l] c (PowerSeries.derivative (binomialSeries ℤ_[l] c')) *
+            PowerSeries.derivative (binomialSeries ℤ_[l] c) := by
         rw [e, e, derivative_subst hs]; simp
       rw [h3, map_mul]
-      linear_combination (gam ℤ_[l] c (d⁄dX ℤ_[l] (binomialSeries ℤ_[l] c'))) * h2 + C c * h1
+      linear_combination (gam ℤ_[l] c (PowerSeries.derivative (binomialSeries ℤ_[l] c'))) * h2 + C c * h1
     · obtain ⟨b, hb⟩ : (X : ℤ_[l]⟦X⟧) ∣ binomialSeries ℤ_[l] c' - 1 := X_dvd_iff.2 (by simp)
       rw [sub_eq_iff_eq_add.1 hb]
       simp

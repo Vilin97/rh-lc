@@ -49,7 +49,8 @@ def semiPre {S R : Type} [CommRing S] [CommRing R] {T K : Cx S} {K' : Cx R} (u :
 
 theorem ev_comp_ofHom {R : Type} [CommRing R] {E : Spc} {I K : Cx R} {n : ℤ} (α : Cochain ((chains R).obj E) I n) (u : I ⟶ K)
     (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U) :
-    ev (α.comp (Cochain.ofHom u) (add_zero n)) p s h U x = Sec.map (u.f s) (ev α p s h U x) := by
+    ev (R := R) (α.comp (Cochain.ofHom u) (add_zero n)) p s h U x =
+      Sec.map (u.f s) (ev (R := R) α p s h U x) := by
   simp only [ev, Cochain.comp_zero_cochain_v, Cochain.ofHom_v]
   rfl
 
@@ -62,7 +63,7 @@ theorem semiPre_op {S R : Type} [CommRing S] [CommRing R] {T K : Cx S} {K' : Cx 
   rw [(GlobalTheory.T.exists_image_cocycle_semilinearSheafComplexMap S R ρ).2 E n _ β hβ]
   refine (GlobalTheory.T.exists_image_cocycle_semilinearSheafComplexMap S R (semiPre u ρ)).2 E n α β (fun p s h U y => ?_)
   rw [hβ p s h U y]
-  change ρ.app U s (ev (α.1.comp (Cochain.ofHom u) (add_zero n)) p s h U y) = _
+  change ρ.app U s (ev (R := S) (α.1.comp (Cochain.ofHom u) (add_zero n)) p s h U y) = _
   rw [ev_comp_ofHom]
   rfl
 

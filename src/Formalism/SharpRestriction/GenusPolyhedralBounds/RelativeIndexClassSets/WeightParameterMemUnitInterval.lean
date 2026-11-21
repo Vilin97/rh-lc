@@ -876,7 +876,7 @@ theorem l3a : ValuationMulRamificationIndex K0 K := fun v a ha => by
   have := liesOver_under (K0 := K0) v
   have ha' : algebraMap K0 K a ≠ 0 := by simpa using ha
   rw [← PI.LatIdxDetW.neg_log_valuation v ha', ← PI.LatIdxDetW.neg_log_valuation (v.under (𝓞 K0)) ha,
-    ← HeightOneSpectrum.valuation_liesOver K (v.under (𝓞 K0)) v a, WithZero.log_pow, ram_eq]
+    ← HeightOneSpectrum.valuation_liesOver K (v.under (𝓞 K0)) v a, WithZero.log_pow]
   simp
 
 theorem lw_eq (v : HeightOneSpectrum (𝓞 K)) :

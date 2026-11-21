@@ -145,7 +145,7 @@ theorem localReciprocityLimit_baseUnitsEquiv
 
 theorem of_abelianRestrict_localReciprocityLimit (L : IntermediateField K Ω) [FiniteDimensional K L]
     [IsGalois K L] [IsMulCommutative (L ≃ₐ[K] L)] (x : Kˣ) :
-    Abelianization.of (abelianRestrict L (localReciprocityLimit K Ω x)) =
+    Group.Abelianization.of (abelianRestrict L (localReciprocityLimit K Ω x)) =
       (localReciprocity L).symm (x : Kˣ ⧸ (normUnits K L).range) := by
   haveI := isDiscreteModule_units (K := K) (Ω := Ω)
   obtain ⟨a, rfl⟩ := (baseUnitsEquiv (K := K) (Ω := Ω)).surjective x
@@ -156,7 +156,7 @@ theorem of_abelianRestrict_localReciprocityLimit (L : IntermediateField K Ω) [F
   set q := ((localClassFieldData K Ω).reciprocityAbelianEquiv (classFieldAxiom_units K Ω) hM).symm
     (a : tateZero Ωˣ _ _) with hq
   have e : ((localClassFieldData K Ω).reciprocityAbEquiv (le_top : fixingOpenSubgroup L ≤ ⊤)
-      (classFieldAxiom_units K Ω)).symm (a : tateZero Ωˣ _ _) = Abelianization.of q := by
+      (classFieldAxiom_units K Ω)).symm (a : tateZero Ωˣ _ _) = Group.Abelianization.of q := by
     rw [MulEquiv.symm_apply_eq, ClassFieldData.reciprocityAbEquiv_of, hq,
       ← (localClassFieldData K Ω).reciprocityAbelianEquiv_apply (classFieldAxiom_units K Ω) hM,
       MulEquiv.apply_symm_apply]
@@ -300,9 +300,9 @@ variable (L : IntermediateField K Ω) [FiniteDimensional K L] [IsGalois K L]
 omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [IsSepClosure K Ω]
   [FiniteDimensional K L] [IsGalois K L] in
 theorem bijective_abelianizationOf :
-    Function.Bijective (Abelianization.of : (L ≃ₐ[K] L) →* Abelianization (L ≃ₐ[K] L)) := by
+    Function.Bijective (Group.Abelianization.of : (L ≃ₐ[K] L) →* Group.Abelianization (L ≃ₐ[K] L)) := by
   refine ⟨(injective_iff_map_eq_one _).2 fun σ hσ => ?_, QuotientGroup.mk_surjective⟩
-  rw [← MonoidHom.mem_ker, Abelianization.ker_of, commutator,
+  rw [← MonoidHom.mem_ker, Group.Abelianization.ker_of, commutator,
     Subgroup.commutator_eq_bot_iff_le_centralizer.2 (fun x _ y _ => mul_comm' y x)] at hσ
   exact hσ
 
@@ -310,7 +310,7 @@ noncomputable def localReciprocityAbelian : (L ≃ₐ[K] L) ≃* Kˣ ⧸ (normUn
   (MulEquiv.ofBijective _ (bijective_abelianizationOf L)).trans (localReciprocity L)
 
 theorem of_localReciprocityAbelian_symm (x : Kˣ ⧸ (normUnits K L).range) :
-    Abelianization.of ((localReciprocityAbelian L).symm x) = (localReciprocity L).symm x := by
+    Group.Abelianization.of ((localReciprocityAbelian L).symm x) = (localReciprocity L).symm x := by
   rw [MulEquiv.eq_symm_apply]
   exact (localReciprocityAbelian L).apply_symm_apply x
 

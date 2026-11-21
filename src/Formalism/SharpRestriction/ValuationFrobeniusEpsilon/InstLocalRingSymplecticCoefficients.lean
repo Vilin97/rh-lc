@@ -27,7 +27,11 @@ abbrev GQ : Type := Formalism.ConjugateSelfDual.G ℚ QbarQ
 
 abbrev QbarL (l : ℕ) [Fact l.Prime] : Type := Formalism.ConjugateSelfDual.Qbar l
 
-instance (R : Ranks) : NeZero (4 * R.n) := ⟨Nat.pos_iff_ne_zero.mp (by simp only [Ranks.n]; positivity)⟩
+instance (R : Ranks) : NeZero (4 * R.n) := ⟨by
+  unfold Ranks.n
+  have hm := R.two_le_m
+  have hord := R.m_le_f
+  omega⟩
 
 def condV (D : XV) : ℕ := D.host.QS * D.host.q * D.host.d
 
@@ -780,7 +784,7 @@ def unitIncl (v : s.Vl) : (HeightOneSpectrum.adicCompletionIntegers s.L (s.vt v)
     (HeightOneSpectrum.adicCompletion s.L (s.vt v))ˣ :=
   Units.map (HeightOneSpectrum.adicCompletionIntegers s.L (s.vt v)).subtype.toMonoidHom
 
-abbrev ArtAt : Type := ∀ v : s.Vl, (HeightOneSpectrum.adicCompletion s.L (s.vt v))ˣ →* Abelianization (s.Gv v)
+abbrev ArtAt : Type := ∀ v : s.Vl, (HeightOneSpectrum.adicCompletion s.L (s.vt v))ˣ →* Group.Abelianization (s.Gv v)
 
 end HidaSetting
 
@@ -828,8 +832,8 @@ def oT (mm : Ideal H.Tbig) [mm.IsMaximal] : s.O →+* H.T mm :=
     (algebraMap s.O s.Lamf)))
 
 def epsT (mm : Ideal H.Tbig) [mm.IsMaximal] (v : s.Vl) (j : Fin s.n) :
-    Abelianization (s.Gv v) →* (H.T mm)ˣ :=
-  Abelianization.lift (((Units.map (H.zT mm).toMonoidHom).comp
+    Group.Abelianization (s.Gv v) →* (H.T mm)ˣ :=
+  Group.Abelianization.lift (((Units.map (H.zT mm).toMonoidHom).comp
     ((Formalism.MainNotions.V.Lang.cycZ s.L TV.QbarQ s.l).comp (s.Gv v).subtype)) ^ (1 - ((j : ℕ) + 1 : ℤ)))
 
 def brkT (mm : Ideal H.Tbig) [mm.IsMaximal] (t : s.TT) : H.T mm :=
@@ -844,15 +848,15 @@ structure Loc {s : HidaSetting} (H : Sys s) (mm : Ideal H.Tbig) [mm.IsMaximal] (
   psi : ∀ (v : s.Vl) (j : Fin s.n), s.Gv v →* (H.T mm)ˣ
 
   psi_unit : ∀ v j (x : (HeightOneSpectrum.adicCompletionIntegers s.L (s.vt v))ˣ),
-    ((Abelianization.lift (psi v j) (art v (s.unitIncl v x)) : (H.T mm)ˣ) : H.T mm) *
+    ((Group.Abelianization.lift (psi v j) (art v (s.unitIncl v x)) : (H.T mm)ˣ) : H.T mm) *
         H.brkT mm (s.ej v j x) *
         (if s.case = .D ∧ (j : ℕ) = 1 then
-          H.oT mm (((Abelianization.lift (s.nuG.comp (s.Gv v).subtype) (art v (s.unitIncl v x)))⁻¹ : s.Oˣ) : s.O)
+          H.oT mm (((Group.Abelianization.lift (s.nuG.comp (s.Gv v).subtype) (art v (s.unitIncl v x)))⁻¹ : s.Oˣ) : s.O)
         else 1) =
       ((H.epsT mm v j (art v (s.unitIncl v x)) : (H.T mm)ˣ) : H.T mm)
 
   psi_unif : ∀ v j,
-    ((Abelianization.lift (psi v j) (art v (s.unif v)) : (H.T mm)ˣ) : H.T mm) =
+    ((Group.Abelianization.lift (psi v j) (art v (s.unif v)) : (H.T mm)ˣ) : H.T mm) =
       ((H.epsT mm v j (art v (s.unif v)) : (H.T mm)ˣ) : H.T mm) * H.uT mm v j
 
   rx : (H.T mm →+* TV.QbarL s.l) → (s.GL_ →* GL (Fin s.n) (TV.QbarL s.l))
@@ -909,35 +913,59 @@ end HidaSetting
 
 structure Resid (s : HidaSetting) where
   chib : Fin s.n → (s.GL_ →* s.kkˣ)
+  chib_cont : ∀ i, @Continuous _ _ _ ⊥ (chib i)
+  chib_unr : ∀ i (A : ValuationSubring TV.QbarQ), Formalism.MainNotions.V.Lang.IsFinitePlace (Lp s.L) A →
     (∀ v : HeightOneSpectrum (𝓞 (Lp s.L)), Formalism.ConjugateSelfDual.IsPlaceOver (F := Lp s.L) A v → ¬ s.InS v) →
     ∀ σ ∈ Formalism.MainNotions.V.Lang.Ine (F := s.L) A, chib i σ = 1
+  chib_inj : Function.Injective chib
 
+  Dstar : s.case = .U → ∀ (m : ℕ) (g : Fin m → s.GL_),
     Formalism.MainNotions.V.Lang.PsR.detPoly (fun i => ((s.omk (g i) ^ (1 - (s.n : ℤ)) : s.kkˣ) : s.kk) •
               HidaSetting.diagRep chib (s.conjL (g i))⁻¹) =
       Formalism.MainNotions.V.Lang.PsR.detPoly (fun i => HidaSetting.diagRep chib (g i))
   psib : ∀ v : s.Vl, Fin s.n → (s.Gv v →* s.kkˣ)
+  psib_cont : ∀ v i, @Continuous _ _ _ ⊥ (psib v i)
 
 structure Pair {s : HidaSetting} (r : Resid s) (art : s.ArtAt) (S' : Set (HeightOneSpectrum (𝓞 (Lp s.L))))
     (A : Type) [CommRing A] [IsLocalRing A] (j : s.O →+* A) (hj : IsLocalHom j)
     (D : Formalism.MainNotions.V.Lang.PsR.Det s.n A (MonoidAlgebra A s.GL_) A)
     (ψ : ∀ v : s.Vl, Fin s.n → (s.Gv v →* Aˣ)) : Prop where
-    MvPolynomial.coeff α (D.D m (fun i => MonoidAlgebra.single (g i) 1)))
+  cont : ∀ (m : ℕ) (α : Fin m →₀ ℕ), HidaSetting.ContM A (fun g : Fin m → s.GL_ =>
+    AddMonoidAlgebra.coeff (D.D m (fun i => MonoidAlgebra.single (g i) 1)) α)
+  lift : ∀ (m : ℕ) (g : Fin m → s.GL_),
     MvPolynomial.map (IsLocalRing.residue A) (D.D m (fun i => MonoidAlgebra.single (g i) 1)) =
       MvPolynomial.map (s.kTo j hj) (Formalism.MainNotions.V.Lang.PsR.detPoly (fun i => HidaSetting.diagRep r.chib (g i)))
+  unr : ∀ A' : ValuationSubring TV.QbarQ, s.OutS S' A' → ∀ σ ∈ Formalism.MainNotions.V.Lang.Ine (F := s.L) A',
     D.Kills (MonoidAlgebra.single σ 1 - 1)
-    Abelianization.lift (ψ v i) (art v (s.unitIncl v ζ)) = Units.map j.toMonoidHom (s.t0 (s.ej v i ζ))⁻¹
+  psi_cont : ∀ v i, HidaSetting.ContM A (fun g : s.Gv v => ((ψ v i g : Aˣ) : A))
+  psi_lift : ∀ v i g, IsLocalRing.residue A ((ψ v i g : Aˣ) : A) = s.kTo j hj ((r.psib v i g : s.kkˣ) : s.kk)
+  psi_mu : s.case = .U → ∀ v i (ζ : (HeightOneSpectrum.adicCompletionIntegers s.L (s.vt v))ˣ), (∃ m : ℕ, ζ ^ (s.l ^ m) = 1) →
+    Group.Abelianization.lift (ψ v i) (art v (s.unitIncl v ζ)) = Units.map j.toMonoidHom (s.t0 (s.ej v i ζ))⁻¹
 
-    Abelianization.lift (ψ v i) (art v (s.unitIncl v ζ)) = Units.map j.toMonoidHom ((s.t0 (s.ej v i ζ))⁻¹ *
-      (if (i : ℕ) = 1 then Abelianization.lift (s.nuG.comp (s.Gv v).subtype) (art v (s.unitIncl v ζ)) else 1))
+  psi_muD : s.case = .D → ∀ v i (ζ : (HeightOneSpectrum.adicCompletionIntegers s.L (s.vt v))ˣ), (∃ m : ℕ, ζ ^ (s.l ^ m) = 1) →
+    Group.Abelianization.lift (ψ v i) (art v (s.unitIncl v ζ)) = Units.map j.toMonoidHom ((s.t0 (s.ej v i ζ))⁻¹ *
+      (if (i : ℕ) = 1 then Group.Abelianization.lift (s.nuG.comp (s.Gv v).subtype) (art v (s.unitIncl v ζ)) else 1))
 
+  P : s.case = .U → ∀ (g : s.GL_) (i : ℕ), D.lam i (s.starEl j (MonoidAlgebra.single g 1)) = D.lam i (MonoidAlgebra.single g 1)
+
+  detD : s.case = .D → ∀ g : s.GL_, D.val (MonoidAlgebra.single g 1) = j (((s.epsO g)⁻¹ * s.nuG g : s.Oˣ) : s.O)
+
+  O : ∀ (v : s.Vl) (g : Fin s.n → s.Gv v) (h : s.GL_),
     D.tr (MonoidAlgebra.single h 1 * s.oEl v (ψ v) g) = 0
 
+  I : ∀ (u : s.St) (g : s.GL_), g ∈ s.Ip u → ∀ h : s.GL_,
     D.tr (MonoidAlgebra.single h 1 * (MonoidAlgebra.single g 1 - 1)) = 0
 
 structure UniversalOrdinaryDeterminantRing {s : HidaSetting} (r : Resid s) (art : s.ArtAt) (S' : Set (HeightOneSpectrum (𝓞 (Lp s.L)))) where
   B : Type
   [instB : CommRing B]
   [instBL : IsLocalRing B]
+  jB : s.O →+* B
+  test : s.TestRing B jB
+  D : Formalism.MainNotions.V.Lang.PsR.Det s.n B (MonoidAlgebra B s.GL_) B
+  ψ : ∀ v : s.Vl, Fin s.n → (s.Gv v →* Bˣ)
+  ok : Pair r art S' B jB test.loc D ψ
+  univ : ∀ (A : Type) [CommRing A] [IsLocalRing A] (j : s.O →+* A) (hA : s.TestRing A j)
     (D' : Formalism.MainNotions.V.Lang.PsR.Det s.n A (MonoidAlgebra A s.GL_) A) (ψ' : ∀ v : s.Vl, Fin s.n → (s.Gv v →* Aˣ)),
     Pair r art S' A j hA.loc D' ψ' →
     ∃! φ : B →+* A, IsLocalHom φ ∧ φ.comp jB = j ∧ D.IsMap D' φ ∧
@@ -1316,20 +1344,20 @@ structure VData (D : D7) extends VDataX ⟨D.R, D.host⟩ where
 
   artLoc : ∀ (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 F)) (A : ValuationSubring Ω), Formalism.ConjugateSelfDual.IsPlaceOver (F := F) A v →
-    (v.adicCompletion F)ˣ →* Abelianization (Formalism.MainNotions.V.Lang.Dec (F := F) A)
+    (v.adicCompletion F)ˣ →* Group.Abelianization (Formalism.MainNotions.V.Lang.Dec (F := F) A)
 
   artLoc_units : ∀ (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 F)) (A : ValuationSubring Ω) (h : Formalism.ConjugateSelfDual.IsPlaceOver (F := F) A v),
     ((artLoc F Ω v A h).comp
         (Units.map (v.adicCompletionIntegers F).toSubring.subtype.toMonoidHom)).range =
       ((Formalism.MainNotions.V.Lang.Ine (F := F) A).subgroupOf (Formalism.MainNotions.V.Lang.Dec (F := F) A)).map
-        Abelianization.of
+        Group.Abelianization.of
 
   artLoc_unif : ∀ (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω]
     (v : IsDedekindDomain.HeightOneSpectrum (𝓞 F)) (A : ValuationSubring Ω) (h : Formalism.ConjugateSelfDual.IsPlaceOver (F := F) A v)
     (ϖ : (v.adicCompletion F)ˣ), Valued.v (ϖ : v.adicCompletion F) < 1 →
     (∀ x : v.adicCompletion F, Valued.v x < 1 → Valued.v x ≤ Valued.v (ϖ : v.adicCompletion F)) →
-    ∃ σ : Formalism.MainNotions.V.Lang.Dec (F := F) A, artLoc F Ω v A h ϖ = Abelianization.of σ ∧
+    ∃ σ : Formalism.MainNotions.V.Lang.Dec (F := F) A, artLoc F Ω v A h ϖ = Group.Abelianization.of σ ∧
       Formalism.ConjugateSelfDual.IsFrob (F := F) A (Formalism.ConjugateSelfDual.normV v) ((σ : Formalism.ConjugateSelfDual.G F Ω)⁻¹)
 
   DdR : ∀ (l : ℕ) [Fact l.Prime] (n : ℕ), (TV.GQ →* GL (Fin n) (TV.QbarL l)) → Type
@@ -1460,17 +1488,17 @@ namespace VData
 
 variable {D : D7} (V : VData D)
 
-def artA : (ZMod (TV.condV D))ˣ →* TV.GalE D where
+def artA : (ZMod (TV.condV ⟨D.R, D.host⟩))ˣ →* TV.GalE ⟨D.R, D.host⟩ where
   toFun a := V.artG a⁻¹
   map_one' := by simp
   map_mul' a b := by rw [mul_inv, map_mul]
 
-def chiO (l : ℕ) [Fact l.Prime] (χ : TV.Chi D) (σ : TV.GalE D) : V.Ol l :=
+def chiO (l : ℕ) [Fact l.Prime] (χ : TV.Chi ⟨D.R, D.host⟩) (σ : TV.GalE ⟨D.R, D.host⟩) : V.Ol l :=
   V.zetaO l ^ (Multiplicative.toAdd (χ σ)).val
 
 abbrev zO (l : ℕ) [Fact l.Prime] : ℤ_[l] →+* V.Ol l := algebraMap ℤ_[l] (V.Ol l)
 
-def psi (l : ℕ) [Fact l.Prime] (e : ℕ) (χ : TV.Chi D) (g : TV.GQ) : V.Ol l :=
+def psi (l : ℕ) [Fact l.Prime] (e : ℕ) (χ : TV.Chi ⟨D.R, D.host⟩) (g : TV.GQ) : V.Ol l :=
   V.zO l (TV.eps l g : ℤ_[l]) ^ e * V.chiO l χ (V.resE g)
 
 abbrev GK (K : IntermediateField ℚ TV.QbarQ) : Subgroup TV.GQ := K.fixingSubgroup

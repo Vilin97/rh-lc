@@ -70,11 +70,9 @@ def phi : Cocycle (LateralTheory.E.LocSecPf.pt R X) (res R F) n →+ (S X F n).m
       have h := cyc_add X F n e he 0 0
       rw [add_zero] at h
       exact (add_eq_left.mp h.symm)
-    rw [this, map_zero]
-    rfl
+    rw [this, (LinearMap.range (S X F n).moduleCatToCycles).mkQ.map_zero]
   map_add' z w := by
-    rw [cyc_add, map_add (f := _)]
-    rfl
+    rw [cyc_add, (LinearMap.range (S X F n).moduleCatToCycles).mkQ.map_add]
 
 theorem phi_eq_zero_iff (z : Cocycle (LateralTheory.E.LocSecPf.pt R X) (res R F) n) :
     phi X F n e he z = 0 ↔ z ∈ coboundaries _ _ _ := by

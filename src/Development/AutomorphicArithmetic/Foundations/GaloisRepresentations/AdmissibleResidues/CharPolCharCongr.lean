@@ -38,8 +38,9 @@ variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAl
 theorem WDN.charpoly (hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal) (k : WDN ι r y) (g : ↥(Weil h)) :
     (r g : Matrix (Fin n) (Fin n) (Qbar l)).charpoly.map ι.toRingHom = y.charPol g := by
   obtain ⟨x, hx, k⟩ := k
-  have e := hx.wdOf_eq hl
-  obtain ⟨t, ht, φ, hφ, N, b, hN, -⟩ := hx
-  rw [← hN.charPol_wdOf hl ht ι g, e, k.pol]
+  obtain ⟨t, ht, φ, hφ, N, b, hN, hb, rfl⟩ := hx
+  rw [← k.pol g, WD.charPol_mk, hb.charpoly_eq,
+    charpoly_toEndC, hN.charpoly_wdMat hl ht]
+
 
 end UpperTheory.GalN.V

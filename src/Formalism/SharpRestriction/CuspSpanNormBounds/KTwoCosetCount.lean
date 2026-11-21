@@ -38,7 +38,7 @@ theorem sg_rpow_le (H1 : ℝ) {j : ℕ} (hj : j ≤ D.R.rS) (δ : ℕ → D.host
   have step1 : ∏ l ∈ KappaEndpoints.k2ends D j δ, σ ^ (-(3 : ℝ)) ≤
       ∏ l ∈ KappaEndpoints.k2ends D j δ,
         (max 1 (absReal D.host.rdE (embS D τ) D.R.rS l (δ l) / (2 * H1) ^ (2 * D.R.rS))) ^ (-(3 : ℝ)) := by
-    apply Finset.prod_le_prod
+    apply Finset.prod_le_prod₀
     · intro l _; exact Real.rpow_nonneg (by linarith) _
     · intro l hl
       exact Real.rpow_le_rpow_of_nonpos (lt_of_lt_of_le one_pos (le_max_left _ _)) (hle l hl) (by norm_num)

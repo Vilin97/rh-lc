@@ -332,7 +332,7 @@ def ActRatOf (S : StepIn M i hi G) (e : D.what₂.LL →+* G.Kf) : Prop :=
 theorem actRat_of_core {S : StepIn M i hi G} {e : D.what₂.LL →+* G.Kf} {β : S.Ch} (H : S.Core e β) (hS : BlockRationalityField)
     (a : S.cmpt β) (L : (Hc S β).P.Tup) : ActRat (Hc S β) e a L := by
   intro γ _ Q hQ
-  obtain ⟨κ, hκ⟩ := (H.toHyp hS).away a γ
+  obtain ⟨κ, hκ⟩ := awayEx_of H.good (S.K β).lev H.gam a γ
   obtain ⟨r, -, hr⟩ := H.chi a γ κ hκ
   have hχ : algebraMap G.O G.Kf (((Hc S β).lev a).χ γ : G.O) = e r⁻¹ := by
     rw [map_inv₀]

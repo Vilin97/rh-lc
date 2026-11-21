@@ -268,6 +268,7 @@ theorem UpperTheory.local_zeta_integral_shell_mean :
     obtain ⟨C, hC, hCw⟩ := hcpt w ℓ hℓ
     obtain ⟨T, hT, hTC⟩ := exists_isCompact_ordDet_eq_centralUnif_zpow_mul_mem C hC k
     exact ⟨T, hT, fun g hg hne => hTC g hg (hCw g hne)⟩
+  open scoped Pointwise in
   have hT2 : ∀ w, ∃ T : Set (GL (Fin m) F), IsCompact T ∧
       ∀ g, ordDet g = k → ℓ (σ (g⁻¹, 1) w) ≠ 0 → g ∈ T := by
     intro w

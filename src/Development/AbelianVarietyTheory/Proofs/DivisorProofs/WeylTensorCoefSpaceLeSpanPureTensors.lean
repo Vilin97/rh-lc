@@ -16,7 +16,7 @@ namespace GlobalTheory
 
 theorem multilinear_mem_span_of_mem_span {K ι M N : Type} [Field K] [Fintype ι]
     [AddCommGroup M] [Module K M] [AddCommGroup N] [Module K N]
-    (m : MultilinearMap K (fun _ : ι => M) N) (S : ι → Set M) (f : ι → M)
+    (m : (ι → M) →ₘₗ[K] N) (S : ι → Set M) (f : ι → M)
     (hf : ∀ τ, f τ ∈ Submodule.span K (S τ)) :
     m f ∈ Submodule.span K {P | ∃ g : ι → M, (∀ τ, g τ ∈ S τ) ∧ P = m g} := by
   classical
@@ -62,7 +62,7 @@ theorem coefSpace_le_span_pure_tensors (K : Type) [Field K] {ι : Type} [Fintype
     VV K lam ≤ Submodule.span K
       {P | ∃ f : ι → MvPolynomial (Fin n × Fin n) K, (∀ τ, f τ ∈ S τ) ∧ P = ten f} := by
   classical
-  let m : MultilinearMap K (fun _ : ι => MvPolynomial (Fin n × Fin n) K)
+  let m : (ι → MvPolynomial (Fin n × Fin n) K) →ₘₗ[K]
       (MvPolynomial (ι × Fin n × Fin n) K) :=
     (MultilinearMap.mkPiAlgebra K ι (MvPolynomial (ι × Fin n × Fin n) K)).compLinearMap
       (fun τ => (Formalism.GradedWeylDivisibility.blockEmb K τ).toLinearMap)

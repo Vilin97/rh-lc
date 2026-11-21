@@ -264,7 +264,8 @@ theorem frobpin_finrank_sup {l : ℕ} [Fact l.Prime] (F : IntermediateField ℚ_
     (hint : IsIntegral F y) :
     finrank ℚ_[l] ↥(F ⊔ IntermediateField.adjoin ℚ_[l] {y}) = finrank ℚ_[l] ↥F * (minpoly F y).natDegree := by
   rw [← IntermediateField.restrictScalars_adjoin_eq_sup, ← IntermediateField.adjoin.finrank hint]
-  exact (Module.finrank_mul_finrank ℚ_[l] ↥F ↥(IntermediateField.adjoin F {y})).symm
+  set_option synthInstance.maxHeartbeats 200000 in
+    exact (Module.finrank_mul_finrank ℚ_[l] ↥F ↥(IntermediateField.adjoin F {y})).symm
 
 theorem frobpin_sK_pos {l : ℕ} [Fact l.Prime] (hl : l ≠ 2) (K LL : FinExt l) (hG : Good K 1 LL) :
     1 ≤ sK l K := by

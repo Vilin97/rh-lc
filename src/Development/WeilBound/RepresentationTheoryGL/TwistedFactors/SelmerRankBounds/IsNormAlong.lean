@@ -90,8 +90,7 @@ def unitSet (v : HeightOneSpectrum (𝓞 F)) : Set (GL (Fin n) (CompletionsOver 
   {g | ∀ w : PlacesOver E v, mapGL n (Pi.evalRingHom (fun w : PlacesOver E v => w.1.adicCompletion E) w) g ∈
     GLnLocal.integralGL (w.1.adicCompletion E) n}
 
-def IsGalTwist (σ : E ≃ₐ[F] E) {μ : Measure (G1 E n)} [μ.IsHaarMeasure]
-    (θ : PositivityTheory.Rg.Tf.Core.Twist μ) : Prop :=
+def IsGalTwist (σ : E ≃ₐ[F] E) {μ : Measure (G1 E n)} [μ.IsHaarMeasure] (θ : Twist μ) : Prop :=
   ∀ g : G1 E n, ((θ.e g : G1 E n) : AdelicGLn.AdelicGL E n) = mapGL n (galAd σ) (g : AdelicGLn.AdelicGL E n)
 
 def EllElt (σ : E ≃ₐ[F] E) (δ : GL (Fin n) E) : Prop :=

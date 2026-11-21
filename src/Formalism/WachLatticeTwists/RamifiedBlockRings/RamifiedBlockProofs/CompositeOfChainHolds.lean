@@ -73,7 +73,8 @@ theorem displayFree (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRin
     exact h
   refine free_of_bound O X D.X' T D.T' Z D.p D.q D.b d D.R' D.T' G D.r D.χ D.E D.e₁ D.δ D.π' D.ρπ t ht bl
     D.ρk D.sE D.tE D.δO hT fun ι _ _ colIdx Dd j Kc k0 hφ => ?_
-  obtain ⟨g, n, hn⟩ := Module.Finite.exists_fin (R := D.R')
+  set_option synthInstance.maxHeartbeats 400000 in
+   obtain ⟨g, n, hn⟩ := Module.Finite.exists_fin (R := D.R')
     (M := ColNNJ D.r D.χ D.E D.e₁ D.δ (fun l => Dd (colIdx l)) (fun l => j (colIdx l)) Kc k0)
   rw [hpπ]
   exact lemma_five_three_any_residue_field O X d G t ht bl T r₀ π χ₁ ε g₀ eB e₁ s hP hA hI hX D hD Z _ g n hn hφ

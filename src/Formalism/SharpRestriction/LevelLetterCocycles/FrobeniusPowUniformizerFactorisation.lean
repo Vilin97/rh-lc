@@ -272,16 +272,16 @@ theorem partR_coreHval {K : FinExt l} {s : ℕ} {LL : FinExt l} (h : Good K s LL
     rw [map_sub, map_one, partR_zpow h z hz, zpow_natCast, Units.val_pow_eq_pow_val, pow_mul]
     unfold u₁
     rw [P.PD_p K]
-  rw [hu, zl_map_O, v_zl P LL _ hne, hval, hs1, padicValInt.of_nat,
-    (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by omega) (by omega),
-    padicValNat.eq_zero_of_not_dvd (fun hd => by have := Nat.le_of_dvd (by omega) hd; omega), zero_add]
+  have hnd : ¬ l ∣ l - 1 := Nat.not_dvd_of_pos_of_lt (by omega) (by omega)
+  rw [hu, zl_map_O, v_zl P LL _ hne, hval, hs1, padicValInt.of_nat, Nat.padicValNat_def,
+    Nat.multiplicity_mul (p := l) (a := l - 1) (b := r) (by omega) (by omega),
+    multiplicity_eq_zero_of_not_dvd hnd, zero_add]
 
 theorem partR_coreHleg (p : ℕ) (hp : p.Prime) : coreHleg p := by
-  haveI := Fact.mk hp
   intro r
   have hp1 : (1 : ℚ) < p := by exact_mod_cast hp.one_lt
   have key : (p - 1) * padicValNat p r.factorial ≤ r := by
-    rw [sub_one_mul_padicValNat_factorial]
+    rw [Nat.padicValNat_def, hp.sub_one_mul_multiplicity_factorial]
     exact Nat.sub_le _ _
   have key' : ((p : ℚ) - 1) * (padicValNat p r.factorial : ℚ) ≤ r := by
     have h := (Nat.cast_le (α := ℚ)).2 key
@@ -948,17 +948,21 @@ theorem gamma_equation_hypotheses_hold (W : LocWach PD LL O v n) (hO1 : ∀ y : 
     (hO3 : Function.Injective (algebraMap O LL)) (h9 : P9π₀ W) (T : LocLat G Qp LL O)
     (hm : Formalism.MainNotions.DeltaInvariantLattices.wachModuleOverLetters W T W.π₀) (hval : coreHval W) (i : ZMod n) {d : ℕ}
     (b : Fin d → W.DD T) (hb : IsFrameΔ W T i b) :
-    GammaEquationHypotheses v PD.p W.π₀ (u₁ W) (W.γ T) (NΔi W T i) b where
-  hp := PD.hp
-  inj := hO3
-  v_p := W.v_l
-  v_int := hO1
-  v_O := hO2
-  precomp_injective := uniformizer_smul_injective W h9 T
-  P_N := fun x hx => ⟨invariant_smul_mem_invariants' W T _ h9.1 x hx.1, (W.Nl T i).smul_mem _ hx.2⟩
-  b_N := hb.1
-  dec := by
-    intro x hx
+    GammaEquationHypotheses v PD.p W.π₀ (u₁ W) (W.γ T) (NΔi W T i) b := by
+  refine
+    { hp := PD.hp
+      inj := hO3
+      v_p := W.v_l
+      v_int := hO1
+      v_O := hO2
+      precomp_injective := uniformizer_smul_injective W h9 T
+      P_N := fun x hx => ⟨invariant_smul_mem_invariants' W T _ h9.1 x hx.1, (W.Nl T i).smul_mem _ hx.2⟩
+      b_N := hb.1
+      dec := ?_
+      uniq := ?_
+      gr := first_H_clause_of_uniformizer W T i h9 hm
+      val := hval }
+  · intro x hx
     obtain ⟨a, ⟨ha, hxa⟩, -⟩ := hb.2 x hx
     have hsp := fun m => invariants_eq_constants_add_uniformizer W h9 (a m) (ha m).1
     choose a₀ t ht hat using hsp
@@ -979,8 +983,7 @@ theorem gamma_equation_hypotheses_hold (W : LocWach PD LL O v n) (hO1 : ∀ y : 
         rw [smul_smul, h1, mul_smul, hE, algebraMap_smul]
       conv_lhs => rw [hat m]
       rw [add_smul, h2, mul_smul]
-  uniq := by
-    intro y ⟨x', hx', hyx⟩
+  · intro y ⟨x', hx', hyx⟩
     obtain ⟨a', ⟨ha', hxa'⟩, -⟩ := hb.2 x' hx'
     have hX : InNΔi W T i (h3β b y) :=
       (NΔi W T i).sum_mem fun m _ => (NΔi W T i).smul_mem _ (hb.1 m)
@@ -1004,8 +1007,6 @@ theorem gamma_equation_hypotheses_hold (W : LocWach PD LL O v n) (hO1 : ∀ y : 
     have h3 : (W.π₀ * a' m) i = W.π₀ i * a' m i := rfl
     rw [h2, h3, PowerSeries.constantCoeff_C, map_mul, uniformizer_constantCoeff_zero W h9, zero_mul] at h1
     exact h1
-  gr := first_H_clause_of_uniformizer W T i h9 hm
-  val := hval
 
 theorem coreH_sol_exists (W : LocWach PD LL O v n) (hO1 : ∀ y : O, 0 ≤ v (algebraMap O LL y))
     (hO2 : ∀ x : LL, 0 ≤ v x → ∃ y : O, algebraMap O LL y = x)
@@ -1610,7 +1611,7 @@ theorem coreH_sol_bound (W : LocWach PD LL O v n) (T : LocLat G Qp LL O) (i : ZM
     cases r with
     | zero =>
       intro m
-      simpa [Formalism.RepresentationBoundsCohomology.N2.aH] using hc0 m
+      simpa [Formalism.RepresentationBoundsCohomology.N2.aH, Nat.padicValNat_def] using hc0 m
     | succ s =>
       intro m₀
       set a := Formalism.RepresentationBoundsCohomology.N2.aH PD.p s with ha
@@ -2181,7 +2182,8 @@ theorem desc_val_g (K K' : FinExt l) (hKK : K'.1 ≤ K.1) (h0 : K0 K ≤ K'.1)
   rw [hg, Nat.mul_div_cancel_left _ hb]
   rw [hd, hg, hb', mul_assoc] at hc
   have h1 : l - 1 = b' * g := Nat.eq_of_mul_eq_mul_left ha hc
-  apply padicValNat.eq_zero_of_not_dvd
+  rw [Nat.padicValNat_def]
+  apply multiplicity_eq_zero_of_not_dvd
   intro hdv
   have h2 : l ∣ l - 1 := h1 ▸ Dvd.dvd.mul_left hdv b'
   have h3 := Nat.le_of_dvd (by omega) h2
@@ -4615,8 +4617,8 @@ theorem phii_finite (W : LocWach PD LL O v n) (T : LocLat G Qp LL O) (hT : IsCry
     Module.Finite W.EE (W.DD T) := by
   obtain ⟨S, hS⟩ := W.N_fg T
   refine ⟨⟨S, top_le_iff.1 fun y _ => ?_⟩⟩
-  refine (W.N_base T hT).inductionOn y (fun y => y ∈ Submodule.span W.EE (S : Set (W.DD T)))
-    (Submodule.zero_mem _) (fun m => ?_) (fun e y hy => Submodule.smul_mem _ e hy)
+  refine (W.N_base T hT).inductionOn y (motive := fun y => y ∈ Submodule.span W.EE (S : Set (W.DD T)))
+    (fun m => ?_) (fun e y hy => Submodule.smul_mem _ e hy)
     (fun y₁ y₂ h₁ h₂ => Submodule.add_mem _ h₁ h₂)
   have hm : (m : W.DD T) ∈ Submodule.span (LetA O n) (S : Set (W.DD T)) := by rw [hS]; exact m.2
   exact Submodule.span_le_restrictScalars (LetA O n) W.EE (S : Set (W.DD T)) hm
@@ -4650,8 +4652,8 @@ theorem phii_basis (W : LocWach PD LL O v n) (T : LocLat G Qp LL O) (hT : IsCrys
     rwa [smul_smul, Units.inv_mul, one_smul] at h3
   have hsurj : Function.Surjective L := by
     intro y
-    exact (W.N_base T hT).inductionOn y (fun y => y ∈ LinearMap.range L)
-      (Submodule.zero_mem _) (fun m => hN m m.2) (fun e y hy => Submodule.smul_mem _ e hy)
+    exact (W.N_base T hT).inductionOn y (motive := fun y => y ∈ LinearMap.range L)
+      (fun m => hN m m.2) (fun e y hy => Submodule.smul_mem _ e hy)
       (fun y₁ y₂ h₁ h₂ => Submodule.add_mem _ h₁ h₂)
   have hinj : Function.Injective (L ∘ₗ β.equivFun.toLinearMap) :=
     OrzechProperty.injective_of_surjective_endomorphism _

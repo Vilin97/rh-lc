@@ -25,10 +25,10 @@ def yon0 (G : Shv R) (X : Scheme.{0}) (z : Sec G X) : (freeP R).obj (yoneda.obj 
     rfl
 
 def yon (G : Shv R) (X : Scheme.{0}) (z : Sec G X) : (free R).obj (yoneda.obj X) ⟶ G :=
-  ⟨sheafifyLift Scheme.etaleTopology (yon0 R G X z) G.cond⟩
+  ⟨sheafifyLift Scheme.etaleTopology (yon0 R G X z) G.property⟩
 
 theorem yon_gen (G : Shv R) (X : Scheme.{0}) (z : Sec G X) : Sec.map (yon R G X z) (freeGen R _ X (𝟙 X)) = z := by
-  have h := toSheafify_sheafifyLift Scheme.etaleTopology (yon0 R G X z) G.cond
+  have h := toSheafify_sheafifyLift Scheme.etaleTopology (yon0 R G X z) G.property
   have := congrArg (fun φ => (φ.app (op X)).hom (ModuleCat.freeMk (ULift.up (𝟙 X)))) h
   refine this.trans ?_
   dsimp only [yon0]
@@ -44,7 +44,7 @@ theorem yon_ext {G : Shv R} {X : Scheme.{0}} (φ ψ : (free R).obj (yoneda.obj X
       simp
     rw [hg, ← LateralTheory.E.LeafKumSpecPf.sec_res_map, ← LateralTheory.E.LeafKumSpecPf.sec_res_map, h]
   have hv : φ.hom = ψ.hom := by
-    apply sheafify_hom_ext Scheme.etaleTopology _ _ G.cond
+    apply sheafify_hom_ext Scheme.etaleTopology _ _ G.property
     refine NatTrans.ext (funext fun U => ?_)
     apply ModuleCat.free_hom_ext (R := ULift.{1} R)
     rintro ⟨g⟩

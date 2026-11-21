@@ -17,9 +17,8 @@ theorem UpperTheory.V.CA.finE :
     refine ⟨s, hs, fun y => ?_⟩
     obtain ⟨z, hz, hyz⟩ := hy y
     refine ⟨z, hz, ?_⟩
-    refine (TwoSidedIdeal.span_le.2 ?_) hyz
+    apply TwoSidedIdeal.span_mono ?_ hyz
     intro x hx
-    apply TwoSidedIdeal.subset_span
     rcases hx with (hx | hx) | hx
     · exact Or.inl (Or.inl (Or.inl hx))
     · exact Or.inl (Or.inr hx)

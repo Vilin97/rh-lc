@@ -55,7 +55,7 @@ def coordMap {F : HermLattice K i} (b : Module.Basis T ℤ (dualLattice F))
 omit [Fintype T] [DecidableEq T] in
 theorem dualLine_h_eq {F : HermLattice K i} (b : Module.Basis T ℤ (dualLattice F))
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b))) (z : (Σ _ : Unit, T) → ℂ) :
-    (dualLine F b hb).h z = (fsMetric ((K →+* ℂ) × Fin i)).ρ (coordMap b hb z) := by
+    (dualLine F b hb).h z = (fsMetric (ι := (K →+* ℂ) × Fin i)).ρ (coordMap b hb z) := by
   show Real.sqrt (dualNormSq b hb fun t => z ⟨(), t⟩) = ‖WithLp.toLp 2 (coordMap b hb z)‖
   rw [EuclideanSpace.norm_eq]
   congr 1
@@ -73,14 +73,14 @@ theorem DualLineSemipositive.proof : DualLineSemipositive.Statement := by
   intro K _ _ i F T _ _ b hb
   set τc : ((Σ _ : Unit, T) → ℂ) →L[ℂ] ((K →+* ℂ) × Fin i → ℂ) :=
     LinearMap.toContinuousLinearMap (coordMap b hb) with hτc
-  have hh : ∀ z, (dualLine F b hb).h z = (fsMetric ((K →+* ℂ) × Fin i)).ρ (τc z) :=
+  have hh : ∀ z, (dualLine F b hb).h z = (fsMetric (ι := (K →+* ℂ) × Fin i)).ρ (τc z) :=
     dualLine_h_eq b hb
   have hne : ∀ z : (Σ _ : Unit, T) → ℂ, (∀ k, ∃ j, z ⟨k, j⟩ ≠ 0) → τc z ≠ 0 := by
     intro z hz h0
     have hp := (dualLine F b hb).pos z hz
     rw [hh, h0] at hp
     simp [fsMetric] at hp
-  have hfun : (dualLine F b hb).h = (fsMetric ((K →+* ℂ) × Fin i)).ρ ∘ τc := funext hh
+  have hfun : (dualLine F b hb).h = (fsMetric (ι := (K →+* ℂ) × Fin i)).ρ ∘ τc := funext hh
   refine ⟨?_, fun z hz w _ => ?_⟩
   · intro z hz
     rw [hfun]
@@ -88,13 +88,17 @@ theorem DualLineSemipositive.proof : DualLineSemipositive.Statement := by
       (τc.restrictScalars ℝ).contDiff.contDiffAt).contDiffWithinAt
   · change 0 ≤ ReciprocityTheory.AnForm.levi (fun z => Real.log ((dualLine F b hb).h z)) z w
     have hlog : (fun z => Real.log ((dualLine F b hb).h z)) =
-        (fun u => Real.log ((fsMetric ((K →+* ℂ) × Fin i)).ρ u)) ∘ τc := by
+        (fun u => Real.log ((fsMetric (ι := (K →+* ℂ) × Fin i)).ρ u)) ∘ τc := by
       funext y
       simp only [Function.comp_apply, hh]
-    rw [hlog, ReciprocityTheory.AnForm.levi_comp w (τc.analyticAt z)
-      (ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.adens_contDiffAt_logρ_id HilbertSamuel.ProjLine.isSmoothMetric_fs
-        (hne z hz.1))]
-    exact HilbertSamuel.ProjLine.leviForm_log_fs_nonneg (hne z hz.1) _
+    have hz0 := hne z hz.1
+    have hρ : ContDiffAt ℝ 2 (fsMetric (ι := (K →+* ℂ) × Fin i)).ρ (τc z) :=
+      (HilbertSamuel.ProjLine.isSmoothMetric_fs.contDiffAt (isOpen_ne.mem_nhds hz0)).of_le
+        (WithTop.coe_le_coe.2 le_top)
+    have hlog₀ : ContDiffAt ℝ 2 (fun u => Real.log ((fsMetric (ι := (K →+* ℂ) × Fin i)).ρ u)) (τc z) :=
+      hρ.log ((fsMetric (ι := (K →+* ℂ) × Fin i)).pos _ hz0).ne'
+    rw [hlog, ReciprocityTheory.AnForm.levi_comp w (τc.analyticAt z) hlog₀]
+    exact HilbertSamuel.ProjLine.leviForm_log_fs_nonneg hz0 _
 
 end
 

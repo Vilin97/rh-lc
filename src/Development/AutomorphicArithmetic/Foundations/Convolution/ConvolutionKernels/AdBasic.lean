@@ -18,14 +18,11 @@ private theorem finiteAdele_apply_congr {K X : Type} [Field K] [NumberField K] [
 
 private theorem infDense {K : Type} [Field K] (u : InfinitePlace K) :
     DenseRange (algebraMap K u.Completion) := by
-  have h1 : DenseRange (fun x : WithAbs u.1 => (x : UniformSpace.Completion (WithAbs u.1))) :=
-    UniformSpace.Completion.denseRange_coe
-  have h2 : DenseRange (InfinitePlace.Completion.ofCompletion : _ → u.Completion) :=
-    (InfinitePlace.Completion.equiv u).symm.surjective.denseRange
-  have h3 := h2.comp h1 (InfinitePlace.Completion.continuous_ofCompletion u)
-  refine h3.mono ?_
+  refine (AbsoluteValue.Completion.denseRange_coe u.1).mono ?_
   rintro _ ⟨x, rfl⟩
-  exact ⟨x.ofAbs, rfl⟩
+  refine ⟨x.ofAbs, ?_⟩
+  rw [AbsoluteValue.Completion.algebraMap_def]
+  congr 1
 
 private theorem infiniteAdele_apply_congr {K X : Type} [Field K] [NumberField K] [TopologicalSpace X] [T2Space X]
     {w₁ w₂ : InfinitePlace K} (h : w₁ = w₂) (f : w₁.Completion → X) (g : w₂.Completion → X)

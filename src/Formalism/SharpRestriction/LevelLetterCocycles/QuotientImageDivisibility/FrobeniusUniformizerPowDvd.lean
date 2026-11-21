@@ -126,8 +126,8 @@ theorem ker_NDl [IsDomain O] (c : ZMod n) (h3 : Formalism.MainNotions.DeltaInvar
     fun δ hδ => ?_, ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum]
-    exact Finset.sum_congr rfl fun k _ =>
-      (Formalism.MainNotions.UnusedSlot80.SatW.smul_mem_NΔ W T (hgΔ k) (hb.1 k).1).2 δ hδ
+      exact Finset.sum_congr rfl fun k _ =>
+        (Formalism.MainNotions.UnusedSlot80.SatW.smul_mem_NΔ W T (hgΔ k) (hb.1 k).1).2 δ hδ
   · rw [pow_one, hxa, Finset.smul_sum]
     exact Finset.sum_congr rfl fun k _ => by rw [hg k, mul_smul]
 

@@ -44,8 +44,14 @@ theorem induct (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) �
       · refine finsum_mem_congr rfl fun W hW => ?_
         congr 1
         split_ifs with hWh
-        · have hWa : IsArithVar W n :=
-            (divSuppArith K ι P n C (secOf i b) W hP ⟨b, hC, hs, hsP⟩ hW).1 hWh
+        · have hWa : IsArithVar W n := by
+            obtain ⟨hWmin, hWrel⟩ := hW
+            have hWmh := isMultiHomogIdeal_of_mem_minimalPrimes hP.2.1.2.1 hs hWmin
+            refine ⟨hP.1, ⟨hWmin.1.1, hWmh, hWrel⟩, hWh, ?_⟩
+            have := hPp
+            have hdim := dim_quot_minimal_add_one P W (secOf i b) hsP hWmin
+            rw [hP.2.2.2, show n + 1 + Fintype.card K = n + Fintype.card K + 1 by omega] at hdim
+            exact withBot_eq_of_add_one hdim
           have hPW : P ≤ W := le_trans le_sup_left hW.1.1.2
           exact induct I hI n W (Fin.init L) (Fin.init L') hWa (fun j => hL j.castSucc)
             (fun j => hL' j.castSucc) (fun j => ha j.castSucc)

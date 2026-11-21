@@ -76,10 +76,10 @@ theorem lev_q_X (a : ZMod n) (ζ : LL) (hζ : IsPrimitiveRoot ζ PD.p) :
   refine ⟨R, ?_, hR⟩
   intro hR0
 
-  have hD : derivative LL F = F := by
+  have hD : derivative (R := LL) F = F := by
     rw [hF, Derivation.leibniz, hED]
     simp
-  have hd := congrArg (fun f => constantCoeff (derivative LL f)) hL
+  have hd := congrArg (fun f => constantCoeff (derivative (R := LL) f)) hL
   rw [map_sub, Derivation.leibniz_pow, hD, Derivation.map_one_eq_zero, sub_zero] at hd
   obtain ⟨R', hR'⟩ := X_dvd_iff.mpr hR0
   have hLq2 : Lq = X ^ 2 * R' := by rw [hR, hR']; ring
