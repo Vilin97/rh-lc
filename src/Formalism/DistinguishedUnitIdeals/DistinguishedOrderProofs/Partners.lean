@@ -725,6 +725,8 @@ def semilinearMatrixLattice (B : Base O) (n : ℕ) {r : ℕ} (Gi : Matrix (Fin r
     change Gi.mulVec (fun m => B.γ ((a • v) m)) = B.γ a • Gi.mulVec (fun m => B.γ (v m))
     rw [← Matrix.mulVec_smul]
     congr 1
+    funext m
+    simp only [Pi.smul_apply, smul_eq_mul, map_mul]
   comm := fun _ _ => by rw [AddMonoidHom.zero_apply, AddMonoidHom.zero_apply, map_zero]
   N _ := ⊤
 

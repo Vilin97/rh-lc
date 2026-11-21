@@ -191,7 +191,7 @@ theorem energy_diff_ineq : ∀ {n : ℕ} {W : Type} [NormedAddCommGroup W] [Inne
         have h4 : 1 ≤ ℓ y + C * s - r := by linarith
         simp only [Ψ, cw, hχ1 _ h4, zero_mul]⟩ (hm p)
   have I_sum : Integrable (fun y : G n => (1 / 2 : ℝ) * ∑ p : Ix n, Rr (hm p) (Ψ p s) y.val) μ :=
-    (integrable_finset_sum _ fun p _ => I_rr p).const_mul _
+    (integrable_finsetSum _ fun p _ => I_rr p).const_mul _
   calc ∫ y : G n, dt ρ s y.val ∂μ
       = ∫ y : G n, (dt ρ s y.val - (1 / 2 : ℝ) * ∑ p : Ix n, Rr (hm p) (Ψ p s) y.val) ∂μ := by
         rw [integral_sub I_dt I_sum, integral_const_mul,

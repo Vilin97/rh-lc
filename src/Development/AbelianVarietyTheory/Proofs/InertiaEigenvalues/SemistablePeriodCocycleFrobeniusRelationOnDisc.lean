@@ -21,7 +21,7 @@ open scoped Formalism.Per NNReal
 
 namespace GlobalTheory.BKLim.KappaFrob
 
-theorem main : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (τ : Ainf l), bk.IsPer τ → ∀ (d : ℕ) (ρ : ↥(GK K) → Matrix (Fin d) (Fin d) ℤ_[l]), (∀ g, IsUnit (ρ g)) → ∀ (s : WSeed bk d ρ τ) (g : ↥(GK K)) (G Φ : bk.DA bk.ρ₀ →+* bk.DA bk.ρ₀), IsDiscMap (Per.σA (g : GQ l)) G → IsDiscMap WittVector.frobenius Φ → s.κ g * s.F.map (bk.iS.comp C) = s.F.map (bk.iS.comp C) * (s.κ g).map Φ := by
+theorem main : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (τ : Ainf l), bk.IsPer τ → ∀ (d : ℕ) (ρ : ↥(GK K) → Matrix (Fin d) (Fin d) ℤ_[l]), (∀ g, IsUnit (ρ g)) → ∀ (s : WSeed bk d ρ τ) (g : ↥(GK K)) (G Φ : bk.DA bk.ρ₀ →+* bk.DA bk.ρ₀), IsDiscMap (l := _) (u := _) (ρ := _) (Per.σA (g : GQ l)) G → IsDiscMap (l := _) (u := _) (ρ := _) WittVector.frobenius Φ → s.κ g * s.F.map (bk.iS.comp C) = s.F.map (bk.iS.comp C) * (s.κ g).map Φ := by
   intro l hl K bk τ hτ d ρ _ s g G Φ hG hΦ
   have hl1 : (1 : ℝ≥0) < l := by exact_mod_cast hl.out.one_lt
   have h0 : 0 < bk.ρ₀ := NNReal.rpow_pos (zero_lt_one.trans hl1)
@@ -57,10 +57,10 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (τ : Ain
     have e : (WittVector.frobenius : Ainf l →+* Ainf l).comp (Per.σA (g : GQ l)) =
         (Per.σA (g : GQ l)).comp WittVector.frobenius :=
       RingHom.ext fun x => (GlobalTheory.GalPhi.σA_frobenius _ x).symm
-    have k1 : IsDiscMap ((WittVector.frobenius : Ainf l →+* Ainf l).comp (Per.σA (g : GQ l))) (Φ.comp G) :=
+    have k1 : IsDiscMap (l := _) (u := _) (ρ := _) ((WittVector.frobenius : Ainf l →+* Ainf l).comp (Per.σA (g : GQ l))) (Φ.comp G) :=
       ⟨fun x => by rw [RingHom.comp_apply, hG.ext, hΦ.ext, RingHom.comp_apply],
         fun x => (hΦ.norm_le _).trans (hG.norm_le _)⟩
-    have k2 : IsDiscMap ((Per.σA (g : GQ l)).comp WittVector.frobenius) (G.comp Φ) :=
+    have k2 : IsDiscMap (l := _) (u := _) (ρ := _) ((Per.σA (g : GQ l)).comp WittVector.frobenius) (G.comp Φ) :=
       ⟨fun x => by rw [RingHom.comp_apply, hΦ.ext, hG.ext, RingHom.comp_apply],
         fun x => (hG.norm_le _).trans (hΦ.norm_le _)⟩
     rw [e] at k1

@@ -37,7 +37,7 @@ variable {E R : Type} [Field E] [CommRing R] [TopologicalSpace R] [IsTopological
   [LocallyCompactSpace R] [SecondCountableTopology R]
 
 
-open Classical in
+open scoped Classical in
 theorem wallQ (hTr : Transfer) (hTop : GrpTop) (hPar : ParLaw) (hLQ : LeviQ) (A : Ad E R) (hA : A.Good) (ε : ℤˣ)
     {ι : Type} [Fintype ι] [DecidableEq ι] (s : Set ι) (hI : Iwa (A.uQ ε s ⊓ A.uQ ε Set.univ) (A.uK ε ι))
     (hSg : A.Sg ε (sᶜ : Set ι)) {W : Type} [NormedAddCommGroup W] [NormedSpace ℂ W] [FiniteDimensional ℂ W]
@@ -128,8 +128,8 @@ theorem wallsS (hTr : Transfer) (hTw : Twist) (hTop : GrpTop) (hPar : ParLaw) (h
   exact ⟨X₁.2.1 (T₁.2.1 m₁), X₂.1 (T₂.1 m₂), X₁.2.2 (T₁.2.2 m₃)⟩
 
 
-open Classical in
 theorem sgStep : Gallery → Transfer → Twist → GrpTop → ParLaw → LeviS → LeviQ → ConvGrOf → ConvU → SgStep := by
+  classical
   intro hGal hTr hTw hTop hPar hLS hLQ hCG hCU E R _ _ _ _ _ _ _ A hA hMir ε ι _ _ hN hIH hS W _ _ _ ρ hρ
   obtain ⟨i₀⟩ : Nonempty ι := Fintype.card_pos_iff.1 (by omega)
   obtain ⟨π, j, -, -, hIw, -⟩ := hLS E R A hA ι ε hS

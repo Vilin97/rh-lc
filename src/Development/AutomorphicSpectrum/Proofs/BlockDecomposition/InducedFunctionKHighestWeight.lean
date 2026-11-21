@@ -285,8 +285,17 @@ theorem Qf_skew (y : Fin n → ℤ) {g : Mat n} (hg : g ∈ GLs n) {X : Mat n} (
     have h5 : HasDerivAt ((fun z : ℂ => z ^ y j) ∘ fun t : ℝ => gm j (g + t • (g * X))) 0 0 := by
       simpa using hz.scomp (0 : ℝ) h0
     exact h5
-  have h3 := HasDerivAt.finset_prod h2
-  simp only [smul_zero, Finset.sum_const_zero] at h3
+  have h3 : HasDerivAt (∏ j : Fin n, fun t : ℝ => gm j (g + t • (g * X)) ^ y j) 0 0 := by
+    have hp : ∀ s : Finset (Fin n), HasDerivAt (∏ j ∈ s, fun t : ℝ => gm j (g + t • (g * X)) ^ y j) 0 0 := by
+      intro s
+      induction s using Finset.induction_on with
+      | empty =>
+        simp only [Finset.prod_empty]
+        change HasDerivAt (fun _ : ℝ => (1 : ℂ)) 0 0
+        exact hasDerivAt_const _ _
+      | @insert a s ha ih =>
+        simpa [Finset.prod_insert, ha] using (h2 a (Finset.mem_univ a)).mul ih
+    simpa using hp univ
   have e : (fun t : ℝ => Qf y (g + t • (g * X))) = ∏ j, fun t : ℝ => gm j (g + t • (g * X)) ^ y j := by
     funext t
     simp [Qf, Finset.prod_apply]
@@ -371,15 +380,14 @@ theorem Kf_fRaw {d y : Fin n → ℤ} (hd : ∀ j : Fin n, (j : ℕ) + 1 < n →
 end GlobalTheory.CompanionTheory.ModelS.Fhw
 
 
-open GlobalTheory.CompanionTheory.ModelS.Fhw in
 theorem GlobalTheory.CompanionTheory.ModelS.f_highest (n : ℕ) (lam : Fin n → ℤ) (hl : Antitone lam) (lev : Fin n → ℕ) (hv : IsLev lam lev)
     (F : GlobalTheory.CompanionTheory.ModelS.SmF n) (hF : F.1 = GlobalTheory.CompanionTheory.ModelS.fRaw lam lev) :
     (∀ a b : Fin n, a < b → GlobalTheory.CompanionTheory.ModelS.Kf a b F = 0) ∧
       ∀ a : Fin n, GlobalTheory.CompanionTheory.ModelS.Kf a a F = (GlobalTheory.CompanionTheory.ModelS.muZ lam lev a : ℂ) • F := by
   have hd : ∀ j : Fin n, (j : ℕ) + 1 < n → 0 ≤ GlobalTheory.CompanionTheory.ModelS.dif (GlobalTheory.CompanionTheory.ModelS.muZ lam lev) j :=
-    fun j hj => dif_nonneg (muZ_antitone hl hv) j hj
-  have hP : ∀ x ∈ GLs n, F.1 x = Pf (GlobalTheory.CompanionTheory.ModelS.dif (GlobalTheory.CompanionTheory.ModelS.muZ lam lev)) x *
-      Qf (GlobalTheory.CompanionTheory.ModelS.dif (GlobalTheory.CompanionTheory.ModelS.yZ lam lev)) x := by
+    fun j hj => GlobalTheory.CompanionTheory.ModelS.Fhw.dif_nonneg (GlobalTheory.CompanionTheory.ModelS.Fhw.muZ_antitone hl hv) j hj
+  have hP : ∀ x ∈ GLs n, F.1 x = GlobalTheory.CompanionTheory.ModelS.Fhw.Pf (GlobalTheory.CompanionTheory.ModelS.dif (GlobalTheory.CompanionTheory.ModelS.muZ lam lev)) x *
+      GlobalTheory.CompanionTheory.ModelS.Fhw.Qf (GlobalTheory.CompanionTheory.ModelS.dif (GlobalTheory.CompanionTheory.ModelS.yZ lam lev)) x := by
     intro x hx
     rw [hF, GlobalTheory.CompanionTheory.ModelS.fRaw, Set.indicator_of_mem hx, Finset.prod_mul_distrib]
     rfl
@@ -387,13 +395,13 @@ theorem GlobalTheory.CompanionTheory.ModelS.f_highest (n : ℕ) (lam : Fin n →
   · apply Subtype.ext
     funext g
     by_cases hg : g ∈ GLs n
-    · rw [Kf_fRaw hd F hP a b hg, Pf_lt hd hg hab, zero_mul]
+    · rw [GlobalTheory.CompanionTheory.ModelS.Fhw.Kf_fRaw hd F hP a b hg, GlobalTheory.CompanionTheory.ModelS.Fhw.Pf_lt hd hg hab, zero_mul]
       rfl
     · exact (GlobalTheory.CompanionTheory.ModelS.Kf a b F).2.2 g hg
   · apply Subtype.ext
     funext g
     by_cases hg : g ∈ GLs n
-    · rw [Kf_fRaw hd F hP a a hg, Pf_eq hd hg a, Submodule.coe_smul, Pi.smul_apply, hP g hg, smul_eq_mul,
-        sum_dif]
+    · rw [GlobalTheory.CompanionTheory.ModelS.Fhw.Kf_fRaw hd F hP a a hg, GlobalTheory.CompanionTheory.ModelS.Fhw.Pf_eq hd hg a, Submodule.coe_smul, Pi.smul_apply, hP g hg, smul_eq_mul,
+        GlobalTheory.CompanionTheory.ModelS.Fhw.sum_dif]
       ring
     · rw [(GlobalTheory.CompanionTheory.ModelS.Kf a a F).2.2 g hg, Submodule.coe_smul, Pi.smul_apply, F.2.2 g hg, smul_zero]

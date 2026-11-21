@@ -78,9 +78,9 @@ theorem GlobalTheory.BSP.Height.rel_gal : ∀ (l : ℕ) [Fact l.Prime] (K : FinE
     (GlobalTheory.T.norm_breuilKisinHom_uniformizer_frobenius_le l K bk (ainfObj K) bk.ι ((ainfHom K g).comp bk.ι)).1
   set i : bk.DS bk.ρ₀ →+* bk.DA bk.ρ₀ := Disc.map bk.ev h0 with hi_def
   set G : bk.DA bk.ρ₀ →+* bk.DA bk.ρ₀ := Disc.map (Per.σA (g : GQ l)) h1 with hG_def
-  have hi : IsDiscMap bk.ev i := isDiscMap_map _ _
-  have hG : IsDiscMap (Per.σA (g : GQ l)) G := isDiscMap_map _ _
-  have hFg : IsDiscMap (BK.hf ((ainfHom K g).comp bk.ι)) (G.comp i) :=
+  have hi : IsDiscMap (l := _) (u := _) (ρ := _) bk.ev i := isDiscMap_map _ _
+  have hG : IsDiscMap (l := _) (u := _) (ρ := _) (Per.σA (g : GQ l)) G := isDiscMap_map _ _
+  have hFg : IsDiscMap (l := _) (u := _) (ρ := _) (BK.hf ((ainfHom K g).comp bk.ι)) (G.comp i) :=
     ⟨fun a => by
       change G (i (toDisc l X bk.ρ₀ a)) = toDisc l (bk.ev X) bk.ρ₀ (Per.σA (g : GQ l) (bk.ev a))
       rw [hi.ext, hG.ext], fun x => (hG.norm_le _).trans (hi.norm_le x)⟩

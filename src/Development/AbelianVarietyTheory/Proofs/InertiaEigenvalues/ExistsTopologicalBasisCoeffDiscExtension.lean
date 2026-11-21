@@ -135,7 +135,7 @@ theorem norm_discCoeff_le (y : Disc l (s u) ρ) : ‖discCoeff l s u ρ c hc y�
   rw [discCoeff_ofPre, norm_ofPre, norm_ofPre]
   exact norm_preCoeff_le hc q
 
-theorem discCoeff_mul {j : Disc l u ρ →+* Disc l (s u) ρ} (hj : IsDiscMap s j) (x : Disc l u ρ)
+theorem discCoeff_mul {j : Disc l u ρ →+* Disc l (s u) ρ} (hj : IsDiscMap (l := _) (u := _) (ρ := _) s j) (x : Disc l u ρ)
     (y : Disc l (s u) ρ) : discCoeff l s u ρ c hc (j x * y) = x * discCoeff l s u ρ c hc y := by
   have hjc : Continuous j :=
     AddMonoidHomClass.continuous_of_bound j 1 fun x => (hj.norm_le x).trans (one_mul _).ge
@@ -156,7 +156,7 @@ end GlobalTheory.BSP.DiscCoeff
 
 
 open GlobalTheory.BSP.DiscCoeff in
-theorem GlobalTheory.BSP.exists_discCoeff : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (A : Type) [CommRing A] (s : bk.S →+* A) (ι : Type) (TB : TopBasis s bk.J ι) (ρ : ℝ≥0), 0 < ρ → ρ < 1 → ∀ j : bk.DS ρ →+* Disc l (s X) ρ, IsDiscMap s j → ∃ cD : ι → (Disc l (s X) ρ →+ bk.DS ρ), (∀ i a, cD i (toDisc l (s X) ρ a) = toDisc l (X : bk.S) ρ (TB.c i a)) ∧ (∀ i x y, cD i (j x * y) = x * cD i y) ∧ (∀ i y, ‖cD i y‖ ≤ ‖y‖) := by
+theorem GlobalTheory.BSP.exists_discCoeff : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (A : Type) [CommRing A] (s : bk.S →+* A) (ι : Type) (TB : TopBasis s bk.J ι) (ρ : ℝ≥0), 0 < ρ → ρ < 1 → ∀ j : bk.DS ρ →+* Disc l (s X) ρ, IsDiscMap (l := _) (u := _) (ρ := _) s j → ∃ cD : ι → (Disc l (s X) ρ →+ bk.DS ρ), (∀ i a, cD i (toDisc l (s X) ρ a) = toDisc l (X : bk.S) ρ (TB.c i a)) ∧ (∀ i x y, cD i (j x * y) = x * cD i y) ∧ (∀ i y, ‖cD i y‖ ≤ ‖y‖) := by
   intro l _ K bk A _ s ι TB ρ _ _ j hj
   exact ⟨fun i => discCoeff l s X ρ (TB.c i) (TB.c_mul i), fun i a => discCoeff_toDisc (TB.c_mul i) a,
     fun i x y => discCoeff_mul (TB.c_mul i) hj x y, fun i y => norm_discCoeff_le (TB.c_mul i) y⟩

@@ -53,7 +53,7 @@ theorem isDomain : IsDomain (bk.DA bk.ρ₀) := by
 variable {bk}
 
 theorem comm_phi (γ : Per.Acris l →+* bk.DA bk.ρ₀) (hγ : ∀ a : Ainf l, γ (algebraMap (Ainf l) (Per.Acris l) a) = bk.iA a)
-    (hn : ∀ x, ‖γ x‖ ≤ 1) (Φ : bk.DA bk.ρ₀ →+* bk.DA bk.ρ₀) (hΦ : IsDiscMap WittVector.frobenius Φ) (x : Per.Acris l) :
+    (hn : ∀ x, ‖γ x‖ ≤ 1) (Φ : bk.DA bk.ρ₀ →+* bk.DA bk.ρ₀) (hΦ : IsDiscMap (l := _) (u := _) (ρ := _) WittVector.frobenius Φ) (x : Per.Acris l) :
     Φ (γ x) = γ (phiA l x) := by
   have h := GlobalTheory.T.acris_disc_ringHom_ext_of_ainf l K bk (Φ.comp γ) (γ.comp (phiA l)) (fun a => by
       simp only [RingHom.comp_apply, hγ, phiA_alg]
@@ -61,7 +61,7 @@ theorem comm_phi (γ : Per.Acris l →+* bk.DA bk.ρ₀) (hγ : ∀ a : Ainf l, 
   exact RingHom.congr_fun h x
 
 theorem comm_sig (γ : Per.Acris l →+* bk.DA bk.ρ₀) (hγ : ∀ a : Ainf l, γ (algebraMap (Ainf l) (Per.Acris l) a) = bk.iA a)
-    (hn : ∀ x, ‖γ x‖ ≤ 1) (g : Per.Gq l) (G : bk.DA bk.ρ₀ →+* bk.DA bk.ρ₀) (hG : IsDiscMap (Per.σA g) G)
+    (hn : ∀ x, ‖γ x‖ ≤ 1) (g : Per.Gq l) (G : bk.DA bk.ρ₀ →+* bk.DA bk.ρ₀) (hG : IsDiscMap (l := _) (u := _) (ρ := _) (Per.σA g) G)
     (x : Per.Acris l) : G (γ x) = γ (sigA g x) := by
   have h := GlobalTheory.T.acris_disc_ringHom_ext_of_ainf l K bk (G.comp γ) (γ.comp (sigA g)) (fun a => by
       simp only [RingHom.comp_apply, hγ, sigA_alg]

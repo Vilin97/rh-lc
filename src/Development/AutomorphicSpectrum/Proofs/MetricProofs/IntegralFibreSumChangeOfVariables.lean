@@ -58,7 +58,7 @@ theorem integrable_mInt_fibreSum {e : ℕ} {X : Type} [TopologicalSpace X] [Comp
     intro j
     refine setIntegral_congr_set (ae_eq_set.mpr ⟨?_, ?_⟩)
     · exact measure_mono_null (target_diff_goodT_subset A q S hq j) (hS j)
-    · rw [Set.sdiff_eq_empty.mpr fun u hu => hu.1]; exact measure_empty
+    · rw [Set.sdiff_eq_empty.mpr fun u (hu : u ∈ goodT A q j) => hu.1]; exact measure_empty
   have hterm : ∀ j x, x ∈ (A.chart j).source → x ∉ S →
       hj j (A.chart j x) / jacN (q ∘ (A.chart j).symm) (A.chart j x) =
         Pt.χ j x * (G x * pushDens A Φ q x) := by

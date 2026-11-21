@@ -79,8 +79,8 @@ theorem bc_laur : ∀ (p : ℕ) [Fact p.Prime] (A : Type) [CommRing A](B : Type)
         one_mul, mul_one, ← Algebra.smul_def, TensorProduct.smul_tmul,
         ← Algebra.algebraMap_eq_smul_one]
   have hmap : (Ideal.span {LaurentPolynomial.C f - LaurentPolynomial.T 1 * LaurentPolynomial.C g} :
-      Ideal A[T;T⁻¹]).map j = Ideal.span {LaurentPolynomial.C (algebraMap A K f) -
-        LaurentPolynomial.T 1 * LaurentPolynomial.C (algebraMap A K g)} := by
+      Ideal A[T;T⁻¹]).map j = Ideal.span {(LaurentPolynomial.C (algebraMap A K f) -
+        LaurentPolynomial.T 1 * LaurentPolynomial.C (algebraMap A K g))} := by
     rw [Ideal.map_span, Set.image_singleton, map_sub, map_mul, hjC, hjC, hjT]
   refine ⟨i₁, ?_, hC, hT⟩
   rw [← hmap]

@@ -40,7 +40,7 @@ theorem sup_sq_bound : SobG → ∀ (n : ℕ) [MeasurableSpace (G n)] [BorelSpac
     set K := Rw w h with hK
     have hm : MemLp (fun y : G n => K y.val) 2 μ := hL w
     have hφ : Integrable (fun y : G n => ‖K y.val‖ ^ 2) μ :=
-      (memLp_two_iff_integrable_sq_norm hm.1).1 hm
+      (memLp_two_iff_integrable_sq_norm hm.aestronglyMeasurable).1 hm
     have hψ : Integrable (fun y : G n => ‖K (g.val * y.val)‖ ^ 2) μ := by
       simpa only [Units.val_mul] using hφ.comp_mul_left g
     have e1 : ∫ y : G n, ‖K (g.val * y.val)‖ ^ 2 ∂μ = ∫ y : G n, ‖K y.val‖ ^ 2 ∂μ := by

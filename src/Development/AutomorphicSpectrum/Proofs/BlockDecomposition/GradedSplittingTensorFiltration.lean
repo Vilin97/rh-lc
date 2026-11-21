@@ -119,7 +119,8 @@ theorem piLeft_symm_single (i : Fin m) (n : S.N i) (x : Γ) :
 theorem tensEquiv_single (i : Fin m) (n : S.N i) (x : Γ) :
     tensEquiv S Γ (Pi.single i (n ⊗ₜ x)) = S.ν i n ⊗ₜ x := by
   simp only [tensEquiv, LinearEquiv.trans_apply, piLeft_symm_single]
-  simp [sumMap_single]
+  change sumMap S (Pi.single i n) ⊗ₜ[O] x = _
+  rw [sumMap_single]
 
 def coord (i : Fin m) : A →ₗ[O] S.N i := (LinearMap.proj i).comp (sumEquiv S).symm.toLinearMap
 

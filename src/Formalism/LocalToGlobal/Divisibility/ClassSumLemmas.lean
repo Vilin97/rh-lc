@@ -69,7 +69,7 @@ theorem DGam_pos : 0 < S.DGam := by
 
 theorem basis_eq (h : S.HasRatBasis) : S.basis = h.choose := by
   unfold basis
-  exact dif_pos h
+  exact dite_eq_left h
 
 theorem basis_rat (h : S.HasRatBasis) (i : Fin S.dim) : S.IsRat (S.basis i : S.Cl → S.V) := by
   rw [S.basis_eq h]

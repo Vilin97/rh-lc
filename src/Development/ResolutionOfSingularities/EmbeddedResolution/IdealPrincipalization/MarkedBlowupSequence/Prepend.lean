@@ -425,6 +425,7 @@ private theorem ne_projectionToBase_of_forall_prependIndex_ne {φ : X' ⟶ X} {d
   rw [← prepend_toSequenceOfBlowups_projectionToBase_succ Z hZ d n]
   exact heq
 
+@[no_expose]
 def prepend {φ : X' ⟶ X} {d' : BlowupSequenceData X'} {d : BlowupSequenceData X}
     (c : SequenceOfBlowupsPullback φ d'.toSequenceOfBlowups d.toSequenceOfBlowups) (Z : X.IdealSheafData)
     (hZ : Blowup.IsBlowupAlongIdealSheaf (𝟙 X) Z) (hZ' : Blowup.IsBlowupAlongIdealSheaf (𝟙 X') (Z.comap φ)) (hne : Z.comap φ ≠ ⊤) :
@@ -591,6 +592,7 @@ private theorem ne_projectionToBase_of_forall_succIndex_ne {φ : X' ⟶ X} {d' :
       rw [← prepend_toSequenceOfBlowups_projectionToBase_succ Z hZ d n]
       exact heq
 
+@[no_expose]
 def prependOfComapEqTop {φ : X' ⟶ X} {d' : BlowupSequenceData X'} {d : BlowupSequenceData X}
     (c : SequenceOfBlowupsPullback φ d'.toSequenceOfBlowups d.toSequenceOfBlowups) (Z : X.IdealSheafData)
     (hZ : Blowup.IsBlowupAlongIdealSheaf (𝟙 X) Z) (htop : Z.comap φ = ⊤) :

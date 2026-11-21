@@ -78,11 +78,11 @@ theorem addHom_ext (N : Type) [NormedAddCommGroup N] (hN : ∀ z : N, l • z = 
 
 theorem isDiscMap_comp {A' A'' : Type} [CommRing A'] [CommRing A''] {u' : A'} {u'' : A''} {ρ' ρ'' : ℝ≥0}
     {f : A →+* A'} {f' : A' →+* A''} {F : Disc l u ρ →+* Disc l u' ρ'} {F' : Disc l u' ρ' →+* Disc l u'' ρ''}
-    (hF : IsDiscMap f F) (hF' : IsDiscMap f' F') : IsDiscMap (f'.comp f) (F'.comp F) :=
+    (hF : IsDiscMap (l := _) (u := _) (ρ := _) f F) (hF' : IsDiscMap (l := _) (u := _) (ρ := _) f' F') : IsDiscMap (l := _) (u := _) (ρ := _) (f'.comp f) (F'.comp F) :=
   ⟨fun a => by rw [RingHom.comp_apply, hF.ext, hF'.ext, RingHom.comp_apply],
     fun x => (hF'.norm_le _).trans (hF.norm_le x)⟩
 
-theorem disc_basic : ∀ (l : ℕ) [Fact l.Prime] (A : Type) [CommRing A] (u : A) (ρ : ℝ≥0), IsUltrametricDist (Disc l u ρ) ∧ (∀ y : Disc l u ρ, ‖((l : ℕ) : Disc l u ρ) * y‖ = ‖y‖ / l) ∧ (∀ (N : Type) [NormedAddCommGroup N], (∀ z : N, l • z = 0 → z = 0) → ∀ F G : Disc l u ρ →+ N, Continuous F → Continuous G → (∀ a, F (toDisc l u ρ a) = G (toDisc l u ρ a)) → F = G) ∧ ∀ (A' A'' : Type) [CommRing A'] [CommRing A''] (u' : A') (u'' : A'') (ρ' ρ'' : ℝ≥0) (f : A →+* A') (f' : A' →+* A'') (F : Disc l u ρ →+* Disc l u' ρ') (F' : Disc l u' ρ' →+* Disc l u'' ρ''), IsDiscMap f F → IsDiscMap f' F' → IsDiscMap (f'.comp f) (F'.comp F) :=
+theorem disc_basic : ∀ (l : ℕ) [Fact l.Prime] (A : Type) [CommRing A] (u : A) (ρ : ℝ≥0), IsUltrametricDist (Disc l u ρ) ∧ (∀ y : Disc l u ρ, ‖((l : ℕ) : Disc l u ρ) * y‖ = ‖y‖ / l) ∧ (∀ (N : Type) [NormedAddCommGroup N], (∀ z : N, l • z = 0 → z = 0) → ∀ F G : Disc l u ρ →+ N, Continuous F → Continuous G → (∀ a, F (toDisc l u ρ a) = G (toDisc l u ρ a)) → F = G) ∧ ∀ (A' A'' : Type) [CommRing A'] [CommRing A''] (u' : A') (u'' : A'') (ρ' ρ'' : ℝ≥0) (f : A →+* A') (f' : A' →+* A'') (F : Disc l u ρ →+* Disc l u' ρ') (F' : Disc l u' ρ' →+* Disc l u'' ρ''), IsDiscMap (l := _) (u := _) (ρ := _) f F → IsDiscMap (l := _) (u := _) (ρ := _) f' F' → IsDiscMap (l := _) (u := _) (ρ := _) (f'.comp f) (F'.comp F) :=
   fun l _ A _ u ρ => ⟨isUltrametricDist_disc l u ρ, norm_l_mul l u ρ,
     fun N _ hN F G hF hG h => addHom_ext l u ρ N hN F G hF hG h,
     fun _ _ _ _ _ _ _ _ _ _ _ _ hF hF' => isDiscMap_comp l u ρ hF hF'⟩

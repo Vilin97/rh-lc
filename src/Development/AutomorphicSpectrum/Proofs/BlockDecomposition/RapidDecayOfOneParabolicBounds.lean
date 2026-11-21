@@ -146,7 +146,7 @@ theorem rapid_decay_of_one_parabolic_bounds : ∀ (K : Type) [Field K] [NumberFi
       have h1 : (fun i => posIdele (K := K) (r i) (hr i)) = 1 := by
         funext i
         have h2 : (⟨r i, hr i⟩ : {x : ℝ // 0 < x}) = 1 := Subtype.ext (hr1 i)
-        change posIdeleHom K ⟨r i, hr i⟩ = 1
+        change posIdeleHom (K := K) ⟨r i, hr i⟩ = 1
         rw [h2, map_one]
       rw [h1, map_one]
     have hP : ∏ i, r i ^ lam i = 1 :=

@@ -39,7 +39,7 @@ theorem exists_form_limit_ideal (R : Type) [CommRing R] (I : Ideal R) (hI : IsAd
   have hs0 : (s 0).1 = F := rfl
   have hsn : ∀ n, (s (n + 1)).1 = (s n).1 - G (e + n) (s n).1 (s n).2.1 (s n).2.2 :=
     fun n => rfl
-  have hd : ∀ d m n, m ≤ n → coeff d (s m).1 - coeff d (s n).1 ∈ I ^ (e + m + 1) := by
+  have hd : ∀ d m n, m ≤ n → AddMonoidAlgebra.coeff (s m).1 d - AddMonoidAlgebra.coeff (s n).1 d ∈ I ^ (e + m + 1) := by
     intro d m n hmn
     induction n, hmn using Nat.le_induction with
     | base => simp
@@ -50,10 +50,10 @@ theorem exists_form_limit_ideal (R : Type) [CommRing R] (I : Ideal R) (hI : IsAd
   have hmem : ∀ (n : ℕ) (z : R), z ∈ (I ^ n • ⊤ : Submodule R R) ↔ z ∈ I ^ n := by
     intro n z
     rw [Ideal.smul_eq_mul, Ideal.mul_top]
-  have hlim : ∀ d, ∃ L : R, ∀ m, coeff d (s m).1 - L ∈ I ^ (e + m + 1) := by
+  have hlim : ∀ d, ∃ L : R, ∀ m, AddMonoidAlgebra.coeff (s m).1 d - L ∈ I ^ (e + m + 1) := by
     intro d
     obtain ⟨L, hL⟩ := IsPrecomplete.prec (I := I) (M := R) hI.toIsPrecomplete
-      (f := fun n => coeff d (s n).1) (by
+      (f := fun n => AddMonoidAlgebra.coeff (s n).1 d) (by
         intro m n hmn
         rw [SModEq.sub_mem, hmem]
         exact Ideal.pow_le_pow_right (by omega) (hd d m n hmn))

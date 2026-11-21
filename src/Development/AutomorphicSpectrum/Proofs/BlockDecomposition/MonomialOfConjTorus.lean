@@ -45,6 +45,7 @@ theorem mem_tor_of_offDiag {N : ℕ} (x : GL (Fin N) k)
       · rw [h i l hl, zero_mul]
   refine ⟨fun a => Units.map (algebraMap k (Matrix (Fin (ones N a)) (Fin (ones N a)) k)).toMonoidHom
     (Units.mk0 _ (hd a)), ?_⟩
+
   apply Units.ext
   ext i j
   by_cases hij : i = j

@@ -69,7 +69,7 @@ theorem ker_each (hB : ∀ j, ((B j).map (fun x : ℤ => (x : ℝ))).PosSemidef)
   have hnn : ∀ i ∈ Finset.univ, 0 ≤ v ⬝ᵥ ((B i).map (fun x : ℤ => (x : ℝ)) *ᵥ v) := fun i _ => by
     simpa using (hB i).dotProduct_mulVec_nonneg v
   have h1 := (Finset.sum_eq_zero_iff_of_nonneg hnn).1 h0 j (Finset.mem_univ j)
-  exact ((hB j).dotProduct_mulVec_zero_iff v).1 (by simpa using h1)
+  exact ((hB j).dotProduct_mulVec_zero_iff).1 (by simpa using h1)
 
 theorem lower_at_centre (h : IsChart L bas A T0 B c ρ) (v : Fin g → ℝ)
     (hv : (∑ j, B j).map (fun x : ℤ => (x : ℝ)) *ᵥ v = 0) :

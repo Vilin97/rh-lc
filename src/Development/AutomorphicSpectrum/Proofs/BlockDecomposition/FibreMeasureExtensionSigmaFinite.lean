@@ -118,13 +118,13 @@ theorem cont_double_free : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
   have hUc : IsCompact ((Units.val : Rˣ → R) ⁻¹' N) := by
     rw [hval.isInducing.isCompact_iff, Set.image_preimage_eq_of_subset hNs]
     exact hNc
-  have hNi : IsCompact ((Units.val : Rˣ → R) '' ((Units.val : Rˣ → R) ⁻¹' N)⁻¹) :=
-    hUc.inv.image Units.continuous_val
+  have hNi : IsCompact ((Units.val : Rˣ → R) '' ((fun u : Rˣ => u⁻¹) '' ((Units.val : Rˣ → R) ⁻¹' N))) :=
+    (hUc.image continuous_inv).image Units.continuous_val
   obtain ⟨Dc, hDc, hDn⟩ := exists_compact_mem_nhds S₀
   let C₁ : Set (Fin 1 → Fin (M + 1) → R ⊗[F] E) :=
     (fun p : R × (Fin (n + 1) → Fin (M + 1) → R ⊗[F] E) =>
       scl (p.1 ⊗ₜ[F] (1 : E)) (fun _ : Fin 1 => p.2 0)) ''
-        (((Units.val : Rˣ → R) '' ((Units.val : Rˣ → R) ⁻¹' N)⁻¹) ×ˢ tsupport φ)
+        (((Units.val : Rˣ → R) '' ((fun u : Rˣ => u⁻¹) '' ((Units.val : Rˣ → R) ⁻¹' N))) ×ˢ tsupport φ)
   have hC₁c : IsCompact C₁ := by
     refine (hNi.prod hφc).image ?_
     refine continuous_pi fun _ => continuous_pi fun i => ?_

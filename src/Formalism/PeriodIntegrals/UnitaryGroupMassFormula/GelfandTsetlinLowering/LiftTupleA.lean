@@ -54,8 +54,8 @@ theorem rowGen_gmin {r c m : ℕ} (a b : Fin r) (ρ : Fin m → Fin r) (κ : Fin
   rw [Finset.sum_comm, Finset.powerset_univ]
   refine Finset.sum_congr rfl fun S _ => ?_
   split_ifs with hS
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [h2, map_sum, Finset.mul_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun σ _ => ?_
     have hBS : ∏ i ∈ S, B σ i =
         Polynomial.X ^ S.card * Polynomial.C (∏ i ∈ S, (X (a, κ (σ i)) : MvPolynomial (Fin r × Fin c) ℤ)) := by
@@ -193,7 +193,7 @@ theorem rowDiv_prod {r c n K : ℕ} (e : Fin n → Fin r) (sz : Fin K → ℕ)
         Polynomial.monomial (∑ k, (F k).card) (C0 * ∏ k, G k (upd (I k) (F k) a)) by
       rw [← Polynomial.C_mul_X_pow_eq_monomial, map_mul]
       ring]
-    rw [Polynomial.coeff_monomial]
+    rw [Polynomial.coeff_monomial_apply]
     have hA' : ∀ k, ∀ p ∈ F k, I k p = b := fun k => hA k (Finset.mem_univ k)
     by_cases hs : ∑ k, (F k).card = t
     · rw [if_pos hs, if_pos ⟨hA', hs⟩]
@@ -260,9 +260,7 @@ theorem applyWord_comb {r c n K : ℕ} (e : Fin n → Fin r) (sz : Fin K → ℕ
   | x :: w, hw, d => by
     have hx : x.1 ≠ x.2.1 := hw x List.mem_cons_self
     have hw' : OffDiag w := fun y hy => hw y (List.mem_cons_of_mem _ hy)
-    show rowDiv ℤ (e x.1) (e x.2.1) x.2.2 (applyWord ℤ (w.map fun x => (e x.1, e x.2.1, x.2.2))
-        (Finsupp.linearCombination ℤ (fun J => C0 * ∏ k, G k (J k)) d)) = _
-    rw [applyWord_comb e sz G hG C0 hC w hw' d, rowDiv_comb e sz G hG C0 x.1 x.2.1 (hC _ _ hx)]
-    rfl
+    rw [List.map_cons, applyWord_cons, twd, LinearMap.comp_apply,
+      applyWord_comb e sz G hG C0 hC w hw' d, rowDiv_comb e sz G hG C0 x.1 x.2.1 (hC _ _ hx)]
 
 end PI.WGL.LTA

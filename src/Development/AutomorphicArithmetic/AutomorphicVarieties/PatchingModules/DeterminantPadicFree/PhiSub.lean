@@ -7,7 +7,8 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingMod
 open Matrix IsLocalRing UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.Pa
 
 theorem UpperTheory.V.Pa.Det.phiSub :
-    ∀ (l : ℕ) {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] (H : Subgroup G), IsOpen (H : Set G) → PhiCond G l → PhiCond H l := by
+    ∀ (l : ℕ) {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] (H : Subgroup G),
+      IsOpen (H : Set G) → PhiCond (Γ := G) l → PhiCond (Γ := H) l := by
   intro l G _ _ _ H hH hG
   unfold PhiCond at *
   intro K hK

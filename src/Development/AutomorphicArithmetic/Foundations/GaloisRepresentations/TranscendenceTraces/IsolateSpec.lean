@@ -257,7 +257,7 @@ def PhiEx : Prop := ∀ (Q : ℕ) {Z S : Scheme.{0}} (p : Z ⟶ S) [IsFinite p],
 
 def Rp {R : Type} [CommRing R] {I : Cx R} {X : Scheme.{0}} {n : ℤ} (x : CohomologyClass ((chains R).obj (sch.obj X)) I n)
     (a : Sec (I.X n) X) : Prop :=
-  ∃ α : Cocycle ((chains R).obj (sch.obj X)) I n, CohomologyClass.mk α = x ∧ ev α.1 0 n (by simp) X (𝟙 X) = a
+  ∃ α : Cocycle ((chains R).obj (sch.obj X)) I n, CohomologyClass.mk α = x ∧ ev R α.1 0 n (by simp) X (𝟙 X) = a
 
 def RpBasic : Prop := ∀ (R : Type) [CommRing R] (I : Cx R) (X : Scheme.{0}) (n : ℤ),
   (∀ x : CohomologyClass ((chains R).obj (sch.obj X)) I n, ∃ a, Rp x a) ∧

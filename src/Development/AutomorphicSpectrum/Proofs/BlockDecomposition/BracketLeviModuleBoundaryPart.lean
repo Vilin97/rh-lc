@@ -318,7 +318,7 @@ theorem br_dm_gen (haa : ∀ i j, a i * a j + a j * a i = 0) (hcc : ∀ i j, c i
     exact sum_congr rfl fun i _ => sum_congr rfl fun l _ => sum_congr rfl fun m _ => by rw [mul_comm]
   have h3 : br (Dm a c A) (Dm a c B) =
       (∑ m, ∑ l, B m l • ((∑ x, A l x • c x) * a m)) - ∑ m, ∑ l, B m l • (c l * ∑ i, A i m • a i) := by
-    conv_lhs => rw [Dm.eq_1 a c B]
+    change br (Dm a c A) (∑ i, ∑ k, B i k • (c k * a i)) = _
     simp only [br_sum_right, br_smul_right, br_mul, dm_a haa hac, dm_c hcc hac, mul_neg, smul_add, smul_neg,
       sum_add_distrib, sum_neg_distrib, sub_eq_add_neg]
   rw [h3, h1, h2]

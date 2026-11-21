@@ -154,7 +154,6 @@ theorem lbIso_descend (hG : GlobalFnsSt) {K C : Type} [Field K] [Field C] (κ : 
 end GlobalTheory.PolIsoDescent
 
 
-open GlobalTheory.PolIsoDescent GlobalTheory.GenSpread in
 theorem GlobalTheory.polAV_iso_descends_of_ratTors : Laws → Laws2 → GlobalTheory.LN.HomExtSt → ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R], GlobalTheory.LN.CDvr R → ∀ (C : Type) [Field C] [IsAlgClosed C] [Algebra (FractionRing R) C] (B B' : PolAV (Sp R)), RatTors B C 3 → RatTors B' C 3 → ∀ (φ : TF (R := R) C ⊗ B.A ≅ TF (R := R) C ⊗ B'.A) (g : (TF (R := R) C ⟶ B.A) ≃* (TF (R := R) C ⟶ B'.A)), φ.hom ≫ fst _ _ = fst _ _ → (∀ x, lift (𝟙 _) x ≫ φ.hom = lift (𝟙 _) (g x)) → LBIso (B.L.pull (snd (TF (R := R) C) B.A).left) (B'.L.pull (φ.hom ≫ snd (TF (R := R) C) B'.A).left) → ∃ Ψ : B'.A ≅ B.A, IsMonHom Ψ.hom ∧ LBIso B'.L (B.L.pull Ψ.hom.left) ∧ ∀ x, g x ≫ Ψ.hom = x := by
   intro hL hL₂ hext R _ _ _ ⟨_, _, _⟩ C _ _ _ B B' rB rB' φ g hφ hg hl
   have : CharZero (FractionRing R) := charZero_of_injective_algebraMap (IsFractionRing.injective R _)
@@ -195,8 +194,6 @@ theorem GlobalTheory.polAV_iso_descends_of_ratTors : Laws → Laws2 → GlobalTh
   have one : ∀ P : PolAV (Sp R), (1 : TF (R := R) C ⟶ P.A).left = (κ ≫ jK R) ≫ eSec P.A := fun _ => rfl
   have hf : IsGrpPullback Q B.A (κ ≫ jK R) f := by
     refine isGrpPullback_of_one hL B.isAb hQ hfp ((pt 1 _ ?_ (Over.w η[Q])).trans (one B))
-    rw [map_one, one, ← Category.assoc]
-    erw [PolExtend.eSec_fst κ X, Category.assoc, PolExtend.eSec_fst (jK R) B'.A, Category.assoc]
   have hl' : LBIso (B'.L.pull (π ≫ p)) (B.L.pull f) := lbIso_pull_comp (c.hom ≫ φ.inv.left)
     (by rw [Category.assoc, ← Over.comp_left, Iso.inv_hom_id_assoc, c₁]) rfl hl.symm
   have wf : f ≫ B.A.hom = (Q.hom ≫ κ) ≫ jK R := by rw [hfp.w, Category.assoc]

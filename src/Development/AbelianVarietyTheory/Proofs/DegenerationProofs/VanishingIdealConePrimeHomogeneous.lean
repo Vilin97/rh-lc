@@ -65,7 +65,7 @@ theorem coeff_coneHom (c : k →+* A) (r : J → A) (f : MvPolynomial J k) (n : 
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum, Polynomial.finsetSum_coeff]
   simp only [coneHom_of_isHomogeneous c r (MvPolynomial.homogeneousComponent_isHomogeneous _ f),
-    Polynomial.coeff_monomial]
+    Polynomial.coeff_monomial, Finsupp.single_apply]
   rw [Finset.sum_ite_eq']
   split_ifs with h
   · rfl
@@ -147,7 +147,8 @@ theorem ringKrullDim_quotient_ker {k J A : Type} [Field k] [Fintype J] [CommRing
       exact (hC a).mul ((hT _ hX1).pow n)
   obtain ⟨n, h1, h2⟩ := ReciprocityTheory.CA.exists_dim_trdeg_field (K := k) (A := Polynomial A)
   rw [Polynomial.ringKrullDim_of_isNoetherianRing, hg] at h1
-  rw [← trdeg_add_eq k T, trdeg_eq_zero (R := T) (A := Polynomial A), add_zero] at h2
+  set_option synthInstance.maxHeartbeats 200000 in
+    rw [← trdeg_add_eq k T, trdeg_eq_zero (R := T) (A := Polynomial A), add_zero] at h2
   rw [ReciprocityTheory.CA.ringKrullDim_eq_of_trdeg_eq_field n h2, ← h1]
   simp
 

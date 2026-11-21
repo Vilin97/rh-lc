@@ -202,8 +202,8 @@ theorem exists_ratio_of_weight_sums : ∀ (k : Type) [Field k] [IsAlgClosed k] (
       hun _, hun _⟩, ?_, hinj U' hU' ?_⟩
   · rw [hinj U' hU' (hb.trans (hu none).1.symm)]
     exact (hu none).2 hp'
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_mul, hb, ev_res g₀ hle _ (hg U hU), ← ev_congr hone U (hgt 1 U hU), hφ, map_sum, ← hε]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, hb, ev_res g₀ hle _ (hg U hU), ← ev_congr hone U (hgt 1 U hU), hφ, map_sum, ← hε]
     exact Finset.sum_congr rfl fun j _ => (hu (some (Sum.inl j))).1.symm
 
 end GlobalTheory.SS.WtRat

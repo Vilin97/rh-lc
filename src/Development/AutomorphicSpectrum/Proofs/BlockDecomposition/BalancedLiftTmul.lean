@@ -46,7 +46,7 @@ def gmap {p : ∀ i, N i → M i → P} (hp : Bal R p) : (∀ i, N i ⊗[R] M i)
 theorem gmap_single {p : ∀ i, N i → M i → P} (hp : Bal R p) (i : ι) (t : N i ⊗[R] M i) :
     gmap hp (Pi.single i t) = lift1 hp i t := by
   unfold gmap
-  rw [AddMonoidHom.finset_sum_apply, Finset.sum_eq_single i]
+  rw [AddMonoidHom.finsetSum_apply, Finset.sum_eq_single i]
   · simp
   · intro k _ hk
     simp [Pi.single_eq_of_ne hk]

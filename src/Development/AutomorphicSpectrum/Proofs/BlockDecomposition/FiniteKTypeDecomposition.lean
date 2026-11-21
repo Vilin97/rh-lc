@@ -134,7 +134,7 @@ theorem rho_cont (hV : ∀ v ∈ V, ∀ k : K, (fun x => v (x * (k : G))) ∈ V)
   intro a
   refine continuous_pi fun i => ?_
   simp only [rho_apply]
-  refine continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun j _ => ?_
   exact (cont_coef hV hc ((Module.finBasis ℂ V).coord j) _).mul continuous_const
 
 end Cont

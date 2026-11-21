@@ -237,7 +237,6 @@ theorem isHeckeOn_heckeOn (g : G) : IsHeckeOn π K g (heckeOn π hπ hKc g) :=
   fun v l hl => by rw [heckeOn_apply, form_eK hπ hKc l hl]
 
 
-include hπ hKc in
 theorem IsHeckeOn.unique {g : G} {T T' : Module.End ℂ (fixed π K)}
     (hT : IsHeckeOn π K g T) (hT' : IsHeckeOn π K g T') : T = T' := by
   refine LinearMap.ext fun v => Subtype.ext ?_
@@ -254,7 +253,6 @@ theorem IsHeckeOn.unique {g : G} {T T' : Module.End ℂ (fixed π K)}
   rw [map_sub, h, sub_self]
 
 
-include hπ hKc in
 theorem existsUnique_isHeckeOn (g : G) : ∃! T : Module.End ℂ (fixed π K), IsHeckeOn π K g T :=
   ⟨heckeOn π hπ hKc g, isHeckeOn_heckeOn hπ hKc g,
     fun _ hT => hT.unique hπ hKc (isHeckeOn_heckeOn hπ hKc g)⟩

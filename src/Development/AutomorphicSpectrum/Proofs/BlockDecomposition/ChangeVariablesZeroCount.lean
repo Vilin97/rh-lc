@@ -26,7 +26,7 @@ theorem abs_det_restrictScalars_toEuclideanCLM {d : ℕ} (M : Matrix (Fin d) (Fi
       Algebra.norm ℝ (LinearMap.det (Matrix.toEuclideanLin M : V d →ₗ[ℂ] V d)) := by
     rw [← LinearMap.det_restrictScalars]
     rfl
-  rw [h1, Matrix.toLpLin_eq_toLin, LinearMap.det_toLin, Algebra.norm_complex_eq]
+  rw [h1, Matrix.toEuclideanLin_eq_toLin_orthonormal, LinearMap.det_toLin, Algebra.norm_complex_eq]
   simp [Complex.normSq_eq_norm_sq]
 
 theorem area_formula_neg_comb (d : ℕ) (β : Type) [Fintype β] (U A : Set (V d)) (f : β → V d → ℂ)

@@ -170,7 +170,7 @@ theorem irred_of_comm [IsDomain o] (hc : Fintype.card S.J = S.N ^ S.g)
       S.prim.pow (pow_pos (NeZero.pos _) 2) (sq _)
     have : NeZero ((S.r * S.N : ℕ) : F) := ⟨by simpa only [map_natCast] using (S.unit.map y).ne_zero⟩
     rw [← Polynomial.isRoot_cyclotomic_iff, ← Polynomial.map_cyclotomic _ y]
-    exact (hω.isRoot_cyclotomic (NeZero.pos _)).map
+    exact (hω.isRoot_cyclotomic (NeZero.pos _)).map y
   have hζ : y S.ζ ≠ 0 := ((S.prim.isUnit (pow_ne_zero _ (NeZero.ne (S.r * S.N)))).map y).ne_zero
   let ψ : ZMod (S.r * S.N) → F := fun x => y (S.ζ ^ (S.r * S.N)) ^ x.val
   have ψinj : Function.Injective ψ := fun x x' h =>
@@ -266,12 +266,11 @@ end GlobalTheory.WeightIrred
 namespace GlobalTheory
 
 
-open WeightIrred in
 theorem weightSpace_irreducible_residue : GlobalTheory.UT.LL → ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] [ArithBase o Ω] (S : ThetaSys o Ω) (ρ : S.Real) (p : ℕ) [Fact p.Prime] (y : o →+* OO p) (T : AddSubgroup S.Gam), S.IsoFree T → ∀ (c : T →+ ZMod S.N) (W : Submodule (kb p) (S.J → kb p)), (∀ v ∈ W, ((S.proj T c).map fun a => IsLocalRing.residue (OO p) (y a)).mulVec v = v) → (∀ h ∈ S.perp T, ∀ v ∈ W, ((S.ρ h).map fun a => IsLocalRing.residue (OO p) (y a)).mulVec v ∈ W) → W = ⊥ ∨ ∀ v, ((S.proj T c).map fun a => IsLocalRing.residue (OO p) (y a)).mulVec v = v → v ∈ W := by
   intro hL o Ω _ _ _ hA S ρ p _ y T hT c W hW hst
   have : IsDomain o := hA.inj.isDomain _
-  exact irred_of_comm ρ.card
-    (rho_comm (by rw [ρ.N_eq]; exact ρ.n_odd.pow.pow) (rho_mul_rho hL.1 ρ))
+  exact WeightIrred.irred_of_comm ρ.card
+    (WeightIrred.rho_comm (by rw [ρ.N_eq]; exact ρ.n_odd.pow.pow) (WeightIrred.rho_mul_rho hL.1 ρ))
     ((IsLocalRing.residue (OO p)).comp y) hT c W hW hst
 
 end GlobalTheory

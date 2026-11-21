@@ -246,7 +246,7 @@ theorem isDegreeOff_of_correspondence : ∀ (K : Type) [Fintype K] (ι : K → T
         exact ⟨R'.lift x x, R'.mem x x (R'.mem_U x), rfl, hgr x x₀ (by rw [hπs, hxs])⟩
     rw [himg] at hc
     rw [← hc]
-    refine (Set.ncard_image_of_injOn ?_).symm
+    refine (Set.InjOn.ncard_image ?_).symm
     intro x hx x' _ hxx
     have hxs : h x = s := hx
     have hxJ : R'.lift x x ∉ mcPts J' := fun hzJ =>

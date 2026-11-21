@@ -17,7 +17,6 @@ noncomputable section
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
-omit [∀ k, Fintype (ι k)] in
 theorem hermLine_eq_of {A B : HermLine ι} (ha : A.a = B.a) (hh : A.h = B.h) : A = B := by
   cases A
   cases B
@@ -43,7 +42,7 @@ theorem isSmoothHerm_hermZpow {A : HermLine ι} (hA : IsSmoothHerm A) (m : ℤ) 
     exact (hA.pow n).inv fun z hz => (pow_pos (A.pos z hz) n).ne'
 
 def famExt (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) (P : Ideal (MRing ι)) (n : ℕ)
-    (e : Fin 2 → HermLine ι) : MultilinearMap ℝ (fun _ : Fin n => Fin 2 → ℝ) ℝ :=
+    (e : Fin 2 → HermLine ι) : MultilinearMap (RingHom.id ℝ) (fun _ : Fin n => Fin 2 → ℝ) ℝ :=
   ∑ s : Fin n → Fin 2,
     I P n (e ∘ s) • (MultilinearMap.mkPiAlgebra ℝ (Fin n) ℝ).compLinearMap fun j => LinearMap.proj (s j)
 
@@ -52,13 +51,11 @@ section Family
 variable {I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ} {P : Ideal (MRing ι)} {n : ℕ}
 
 
-omit [∀ k, Fintype (ι k)] in
 theorem famExt_apply (e : Fin 2 → HermLine ι) (v : Fin n → Fin 2 → ℝ) :
     famExt I P n e v = ∑ s : Fin n → Fin 2, I P n (e ∘ s) * ∏ j, v j (s j) := by
   simp [famExt, MultilinearMap.compLinearMap_apply, MultilinearMap.mkPiAlgebra_apply]
 
 
-omit [∀ k, Fintype (ι k)] in
 theorem famExt_basis (e : Fin 2 → HermLine ι) (t : Fin n → Fin 2) :
     famExt I P n e (fun j => Pi.single (t j) 1) = I P n (e ∘ t) := by
   rw [famExt_apply, Finset.sum_eq_single t]

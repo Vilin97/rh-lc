@@ -74,7 +74,7 @@ theorem main : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] [ArithBa
     refine isUnit_of_dvd_unit (Nat.cast_dvd_cast ?_) h1
     rw [ρ.N_eq, ← pow_mul]
     exact Dvd.dvd.mul_left (dvd_pow_self _ (by have := ρ.two_le; omega)) _
-  · choose Q hQ using QForm.exists_QVal hϖ u.D
+  · choose Q hQ using QForm.exists_QVal (ϖ := ϖ) u.D
     have h0 := norm_pos_of_irreducible (F := PadicAlgCl p) hϖ
     have h1 := norm_lt_one_of_irreducible u.norm_le hϖ
     obtain ⟨v, hv1, hv2⟩ := GlobalTheory.PadicVal.exists_addValuation_le_iff_eq_iff p _ h0 h1

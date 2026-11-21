@@ -94,14 +94,14 @@ noncomputable def dividedDeriv (β : σ →₀ ℕ) : Module.End R (MvPolynomial
   (basisMonomials σ R).constr R fun n => multiChoose n β • monomial (n - β) 1
 
 theorem dividedDeriv_monomial (β n : σ →₀ ℕ) (c : R) :
-    dividedDeriv β (monomial n c) = multiChoose n β • monomial (n - β) c := by
+    dividedDeriv R β (monomial n c) = multiChoose n β • monomial (n - β) c := by
   have h : (monomial n c : MvPolynomial σ R) = c • basisMonomials σ R n := by
     simp [smul_monomial]
   rw [h, map_smul, dividedDeriv, Module.Basis.constr_basis, smul_comm, smul_monomial, smul_eq_mul,
     mul_one]
 
 theorem coeff_dividedDeriv (β m : σ →₀ ℕ) (P : MvPolynomial σ R) :
-    AddMonoidAlgebra.coeff (dividedDeriv β P) m = multiChoose (m + β) β • AddMonoidAlgebra.coeff P (m + β) := by
+    AddMonoidAlgebra.coeff (dividedDeriv R β P) m = multiChoose (m + β) β • AddMonoidAlgebra.coeff P (m + β) := by
   classical
   induction P using MvPolynomial.induction_on' with
   | monomial n c =>
@@ -117,11 +117,11 @@ theorem coeff_dividedDeriv (β m : σ →₀ ℕ) (P : MvPolynomial σ R) :
   | add P Q hP hQ =>
     rw [map_add]
     rw [AddMonoidAlgebra.coeff_add]
-    change ((dividedDeriv β P).coeff m + (dividedDeriv β Q).coeff m) =
+    change ((dividedDeriv R β P).coeff m + (dividedDeriv R β Q).coeff m) =
       multiChoose (m + β) β • (P.coeff (m + β) + Q.coeff (m + β))
     rw [hP, hQ, smul_add]
 
-@[simp] theorem dividedDeriv_zero : dividedDeriv (0 : σ →₀ ℕ) =
+@[simp] theorem dividedDeriv_zero : dividedDeriv R (0 : σ →₀ ℕ) =
     (1 : Module.End R (MvPolynomial σ R)) := by
   apply LinearMap.ext
   intro P
@@ -130,7 +130,7 @@ theorem coeff_dividedDeriv (β m : σ →₀ ℕ) (P : MvPolynomial σ R) :
   simp [coeff_dividedDeriv]
 
 theorem pderiv_dividedDeriv (β : σ →₀ ℕ) (i : σ) (P : MvPolynomial σ R) :
-    pderiv i (dividedDeriv β P) = (β i + 1) • dividedDeriv (β + Finsupp.single i 1) P := by
+    pderiv i (dividedDeriv R β P) = (β i + 1) • dividedDeriv R (β + Finsupp.single i 1) P := by
   induction P using MvPolynomial.induction_on' with
   | monomial n c =>
     rw [dividedDeriv_monomial, dividedDeriv_monomial, map_nsmul, pderiv_monomial, smul_smul,
@@ -139,7 +139,7 @@ theorem pderiv_dividedDeriv (β : σ →₀ ℕ) (i : σ) (P : MvPolynomial σ R
   | add P Q hP hQ => simp only [map_add (f := _), hP, hQ, smul_add]
 
 theorem dividedDeriv_single_one (i : σ) (P : MvPolynomial σ R) :
-    dividedDeriv (Finsupp.single i 1) P = pderiv i P := by
+    dividedDeriv R (Finsupp.single i 1) P = pderiv i P := by
   simpa [dividedDeriv_zero] using (pderiv_dividedDeriv 0 i P).symm
 
 theorem pderiv_pderiv_comm (i j : σ) (P : MvPolynomial σ R) :
@@ -155,8 +155,8 @@ theorem commute_pderiv (i j : σ) :
   LinearMap.ext fun P => pderiv_pderiv_comm i j P
 
 theorem dividedDeriv_add_single_X_mul (β : σ →₀ ℕ) (i : σ) (P : MvPolynomial σ R) :
-    dividedDeriv (β + Finsupp.single i 1) (X i * P) =
-      X i * dividedDeriv (β + Finsupp.single i 1) P + dividedDeriv β P := by
+    dividedDeriv R (β + Finsupp.single i 1) (X i * P) =
+      X i * dividedDeriv R (β + Finsupp.single i 1) P + dividedDeriv R β P := by
   induction P using MvPolynomial.induction_on' with
   | monomial n c =>
     have hX (m : σ →₀ ℕ) : X i * monomial m c = monomial (m + Finsupp.single i 1) c := by
@@ -170,7 +170,7 @@ theorem dividedDeriv_add_single_X_mul (β : σ →₀ ℕ) (i : σ) (P : MvPolyn
   | add P Q hP hQ => simp only [mul_add, map_add (f := _), hP, hQ]; abel
 
 theorem dividedDeriv_X_mul_of_eq_zero {β : σ →₀ ℕ} {i : σ} (h : β i = 0) (P : MvPolynomial σ R) :
-    dividedDeriv β (X i * P) = X i * dividedDeriv β P := by
+    dividedDeriv R β (X i * P) = X i * dividedDeriv R β P := by
   induction P using MvPolynomial.induction_on' with
   | monomial n c =>
     have hX (m : σ →₀ ℕ) : X i * monomial m c = monomial (m + Finsupp.single i 1) c := by
@@ -221,7 +221,7 @@ noncomputable def dividedContraction (γ : ι → κ → R) (n : ℕ) :
     classical
     exact ∑ α ∈ (Finset.univ : Finset ι).finsuppAntidiag n,
       commEval R (rowContraction γ) (commute_rowContraction γ) (monomial α 1) *
-        dividedDeriv (α.mapDomain Sum.inl)
+        dividedDeriv R (α.mapDomain Sum.inl)
 
 theorem dividedContraction_succ_rename_inr (γ : ι → κ → R) (n : ℕ) (q : MvPolynomial κ R) :
     dividedContraction γ (n + 1) (rename Sum.inr q) = 0 := by
@@ -230,7 +230,7 @@ theorem dividedContraction_succ_rename_inr (γ : ι → κ → R) (n : ℕ) (q :
   refine Finset.sum_eq_zero fun α hα => ?_
   have hne : α ≠ 0 := by rintro rfl; simp at hα
   obtain ⟨i, hi⟩ := Finsupp.ne_iff.mp hne
-  suffices dividedDeriv (α.mapDomain Sum.inl) (rename (Sum.inr : κ → ι ⊕ κ) q) = 0 by
+  suffices dividedDeriv R (α.mapDomain Sum.inl) (rename (Sum.inr : κ → ι ⊕ κ) q) = 0 by
     rw [Module.End.mul_apply, this, map_zero]
   induction q using MvPolynomial.induction_on' with
   | monomial t c =>
@@ -257,10 +257,10 @@ theorem dividedContraction_succ_X_inl_mul (γ : ι → κ → R) (n : ℕ) (i : 
       (b := LinearMap.mulLeft R (X (Sum.inl i)))
       (fun i' => LinearMap.ext fun Q => (rowContraction_X_inl_mul γ i' i Q).symm) p).eq Q).symm
   have key (α : ι →₀ ℕ) :
-      E (monomial α 1) (dividedDeriv (α.mapDomain Sum.inl) (X (Sum.inl i) * P)) =
-        X (Sum.inl i) * E (monomial α 1) (dividedDeriv (α.mapDomain Sum.inl) P) +
+      E (monomial α 1) (dividedDeriv R (α.mapDomain Sum.inl) (X (Sum.inl i) * P)) =
+        X (Sum.inl i) * E (monomial α 1) (dividedDeriv R (α.mapDomain Sum.inl) P) +
           if α i = 0 then 0 else rowContraction γ i (E (monomial (α - Finsupp.single i 1) 1)
-            (dividedDeriv ((α - Finsupp.single i 1).mapDomain Sum.inl) P)) := by
+            (dividedDeriv R ((α - Finsupp.single i 1).mapDomain Sum.inl) P)) := by
     split_ifs with h
     · rw [dividedDeriv_X_mul_of_eq_zero (by rwa [Finsupp.mapDomain_apply_of_injective Sum.inl_injective]), hX,
         add_zero]

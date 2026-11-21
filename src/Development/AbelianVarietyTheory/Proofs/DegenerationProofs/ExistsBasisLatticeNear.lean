@@ -151,15 +151,14 @@ end GlobalTheory.ZH.FreeNear
 namespace GlobalTheory.ZH
 
 
-open FreeNear in
 theorem exists_basis_lattice_near :
     ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] [ArithBase o Ω] (S : ThetaSys o Ω) (M : RatModel o Ω) (U₀ : M.Z.Opens), S.admitted M U₀ → ((∀ ξ : M.Z, S.IsoFree (S.TT M ξ) ∧ S.perp (S.TT M ξ) = S.HH M ξ) ∧ (∀ ξ z : M.Z, ξ ⤳ z → S.supI M z ⊆ S.supI M ξ) ∧ (∀ ξ ∈ U₀, S.TT M ξ = ⊥) ∧ (∀ (ξ : M.Z) (W : M.Z.Opens), ξ ∈ W → ∃ x ∈ W, IsClosed ({x} : Set M.Z) ∧ ξ ⤳ x ∧ S.supI M x = S.supI M ξ)) → (∀ (ξ : M.Z) (c : S.TT M ξ →+ ZMod S.N), S.FF (S.TT M ξ) c ≠ 0) → (∀ z : M.Z, ∃ (b : Matrix S.J S.J Ω) (W : M.Z.Opens), z ∈ W ∧ b.det ≠ 0 ∧ ∀ x ∈ W, Submodule.span (M.O x) {v | ∃ (c : S.TT M z →+ ZMod S.N) (k : _) (x₀ : S.Gam) (i : S.J), M.Div (S.FF (S.TT M z) c) k z ∧ x₀ ∈ S.supI M z ∧ v = fun j => S.th x₀ / S.FF _ c k * algebraMap o Ω (S.proj _ c j i)} = Submodule.span (M.O x) (Set.range b)) := by
   intro o Ω _ _ _ hA S M U₀ hAdm h0 hne z
   haveI : IsDomain o := hA.inj.isDomain
   have hT := (h0.1 z).1
-  haveI := finite_char S (S.TT M z)
+  haveI := FreeNear.finite_char S (S.TT M z)
   haveI := Fintype.ofFinite (S.TT M z →+ ZMod S.N)
-  obtain ⟨hmul, hsum⟩ := proj_orthogonal S _ hT
+  obtain ⟨hmul, hsum⟩ := FreeNear.proj_orthogonal S _ hT
   obtain ⟨x₁, hx₁⟩ := hAdm.1.div z
   choose k₁ hk₁ using fun c => hAdm.2 _ c hT (hne z c) z
   obtain ⟨κ, col, hdet, hspan⟩ := exists_basis_adapted_to_idempotents (M.O z) S.J (S.TT M z →+ ZMod S.N)
@@ -182,7 +181,7 @@ theorem exists_basis_lattice_near :
   suffices h : ∃ W : M.Z.Opens, z ∈ W ∧ ∀ x ∈ W, _ = Submodule.span (M.O x) (Set.range b) by
     obtain ⟨W, hz, hW⟩ := h
     exact ⟨b, W, hz, hb, hW⟩
-  refine exists_opens_span_eq M b _ ?_ ?_ z ?_
+  refine FreeNear.exists_opens_span_eq M b _ ?_ ?_ z ?_
   · refine (Set.finite_range fun q : (S.TT M z →+ ZMod S.N) × (S.J × (S.TT M z → ZMod ((S.r * S.N) ^ 2))) ×
       S.Gam × S.J => fun j => S.th q.2.2.1 / S.FF _ q.1 q.2.1 * algebraMap o Ω (S.proj _ q.1 j q.2.2.2)).subset ?_
     rintro _ ⟨c, k, x₀, i, -, -, rfl⟩
@@ -200,6 +199,8 @@ theorem exists_basis_lattice_near :
         exact Submodule.subset_span ⟨i', rfl⟩
       | zero =>
         convert Submodule.zero_mem (Submodule.span (M.O z) (Set.range b)) using 1
+        funext j
+        simp
       | add a a' _ _ ha ha' =>
         convert Submodule.add_mem _ ha ha' using 1
         funext j

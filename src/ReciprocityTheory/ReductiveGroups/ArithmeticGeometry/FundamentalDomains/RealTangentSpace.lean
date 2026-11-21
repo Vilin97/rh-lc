@@ -19,10 +19,8 @@ def Usub (z : Frame X.Ψ r) (ξ : Fin r → E) : Submodule ℝ (X.Ψ → Fin r �
   add_mem' := MajorantOperators.add_mem
   zero_mem' := MajorantOperators.zero_mem z ξ
   smul_mem' c u hu := by
-    have h := MajorantOperators.smul_fam_mem (fun _ => (c : ℂ)) hu
-    convert h using 1
-    funext τ
-    exact (Complex.coe_smul c (u τ)).symm
+    simpa only [Complex.coe_smul, Pi.smul_apply] using
+      (MajorantOperators.smul_fam_mem (fun _ => (c : ℂ)) hu)
 
 def VT (z : Frame X.Ψ r) (ξ : Fin r → E) : Type := ↥(Usub (X := X) z ξ)
 

@@ -127,7 +127,7 @@ variable (l ρ R) in
 def cMap [Fact l.Prime] : Disc l (0 : R) 1 →+* Disc l (X : R⟦X⟧) ρ :=
   Disc.map (u := (0 : R)) (ρ := 1) (C : R →+* R⟦X⟧) norm_C_zero
 
-theorem isDiscMap_cMap [Fact l.Prime] : IsDiscMap (C : R →+* R⟦X⟧) (cMap l R ρ) := isDiscMap_map _ _
+theorem isDiscMap_cMap [Fact l.Prime] : IsDiscMap (l := _) (u := _) (ρ := _) (C : R →+* R⟦X⟧) (cMap l R ρ) := isDiscMap_map _ _
 
 theorem div_disc [hl : Fact l.Prime] (hρ0 : 0 < ρ)
     (hm : ∀ (b : ℕ) (a : R⟦X⟧), Div l ρ E e ((ρ : ℝ) ^ b / (ρ : ℝ) ^ e) (algebraMap R⟦X⟧ _ (X ^ b * a)))
@@ -135,7 +135,7 @@ theorem div_disc [hl : Fact l.Prime] (hρ0 : 0 < ρ)
       y = toDisc l X ρ E * q + ∑ i, cMap l R ρ (c i) * toDisc l X ρ (X ^ (i : ℕ)) := by
   have h0 : (0 : ℝ) < ρ := hρ0
   set ι : Disc l (0 : R) 1 →+* Disc l (X : R⟦X⟧) ρ := cMap l R ρ with hι
-  have hιm : IsDiscMap C ι := isDiscMap_cMap
+  have hιm : IsDiscMap (l := _) (u := _) (ρ := _) C ι := isDiscMap_cMap
   have hιp : ∀ x, ι (ofPre l (0 : R) 1 x) = ofPre l X ρ (preMap l (0 : R) 1 (X : R⟦X⟧) ρ C x) := by
     have e : ι.comp (ofPre l (0 : R) 1) = (ofPre l X ρ).comp (preMap l (0 : R) 1 (X : R⟦X⟧) ρ C) :=
       IsLocalization.ringHom_ext (Submonoid.powers (l : R)) (RingHom.ext fun a =>

@@ -80,7 +80,7 @@ theorem exponent_eq_order_polynomial : ∀ (m e : ℕ) (I : Ideal (MvPolynomial 
       · exact hs' h
       rcases hp.dvd_or_dvd h with h | h
       · exact hp.not_unit (isUnit_of_dvd_unit h u.isUnit)
-      · obtain ⟨j, hj, hd'⟩ := (Prime.dvd_finset_prod_iff hp _).mp h
+      · obtain ⟨j, hj, hd'⟩ := (Prime.dvd_finsetProd_iff hp _).mp h
         have hd'' := hp.dvd_of_dvd_pow hd'
         have hji : j ≠ i := (Finset.mem_erase.mp hj).1
         exact hnon i j hji.symm (hp.associated_of_dvd (hprime j) hd'')

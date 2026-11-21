@@ -45,7 +45,7 @@ def IsChern {q : ℕ} (P : Collected q) {E : Spc} (h : Inv q E) {N : ℕ} (V : E
     P.deg1 (inv_of (PB.pr V) h) (c1 q (PB.line V)) ^ (N - j) = 0
 
 def newton {A : Type 1} [CommRing A] (c : ℕ → A) (k : ℕ) : A :=
-  PowerSeries.coeff k (-(PowerSeries.X * PowerSeries.derivative A (PowerSeries.mk c)) * (PowerSeries.mk c).invOfUnit 1)
+  PowerSeries.coeff k (-(PowerSeries.X * PowerSeries.derivative (PowerSeries.mk c)) * (PowerSeries.mk c).invOfUnit 1)
 
 def LeafA6nat : Prop := DivisorNaturality
 

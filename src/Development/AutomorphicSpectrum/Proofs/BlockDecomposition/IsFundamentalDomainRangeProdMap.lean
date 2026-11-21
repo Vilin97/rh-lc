@@ -75,8 +75,9 @@ theorem isMulRightInvariant_GA (E : Type) [Field E] [NumberField E] [IsTotallyCo
   haveI := CuspidalL2GL.t2Space_GA E a
   haveI := CuspidalL2GL.locallyCompactSpace_GA E a
   haveI := CuspidalL2GL.secondCountableTopology_GA E a
+  letI := h2
   rw [Measure.isMulLeftInvariant_eq_smul μ ν]
-  infer_instance
+  exact MeasureTheory.isMulRightInvariant_smul (μ := ν) _
 
 theorem prodDom : RatProper → ProdDom := by
   intro _ E _ _ _ a b _ _ _ _ μ₁ _ μ₂ _ F₁ F₂ h₁ h₂

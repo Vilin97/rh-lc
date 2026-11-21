@@ -114,7 +114,7 @@ theorem gram_col {κ' : Type*} (A : Matrix (Fin n) κ ℂ) (B : Matrix (Fin n) �
 theorem toEuclideanLin_col (M : Matrix (Fin n) (Fin n) ℂ) (A : Matrix (Fin n) κ ℂ) (a : κ) :
     Matrix.toEuclideanLin M (col A a) = col (M * A) a := by
   ext i
-  simp [col, Matrix.toEuclideanLin_apply, Matrix.mul_apply, Matrix.mulVec, dotProduct]
+  simp [col, Matrix.toLpLin_apply, Matrix.mul_apply, Matrix.mulVec, dotProduct]
 
 theorem col_injective {A B : Matrix (Fin n) κ ℂ} (h : ∀ a, col A a = col B a) : A = B := by
   ext i a
@@ -131,7 +131,7 @@ theorem exists_unitary_commuting {n r : ℕ} (T : Matrix (Fin n) (Fin n) ℂ) (h
       fun y => by ext i; simp [col]
     rw [e x, toEuclideanLin_col, toEuclideanLin_col, ← Matrix.mul_assoc, hT2, Matrix.one_mul]
   obtain ⟨u, hu1, hu2, hu3⟩ := exists_commuting_of_gram (Matrix.toEuclideanLin T)
-    (fun x y => (Matrix.isHermitian_iff_isSymmetric.1 hT) x y) hinv (col A) (col A')
+    (fun x y => (Matrix.isSymmetric_toEuclideanLin_iff.mpr hT) x y) hinv (col A) (col A')
     (fun a b => by rw [← gram_col, ← gram_col, h1])
     (fun a b => by rw [toEuclideanLin_col, toEuclideanLin_col, ← gram_col, ← gram_col, h2])
   set U : Matrix (Fin n) (Fin n) ℂ := Matrix.toEuclideanLin.symm u with hUdef

@@ -17,7 +17,7 @@ private theorem dual_zero (F M : Type) [Field F] [AddCommGroup M] [Module F M] (
     (h : ∀ f : Module.Dual F M, f x = 0) : x = 0 := (Module.forall_dual_apply_eq_zero_iff F x).1 h
 
 private theorem frat (l : ℕ) [Fact l.Prime] {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
-    [CompactSpace G] [TotallyDisconnectedSpace G] (hP : PhiCond G l) (H : Subgroup G) (hH : IsOpen (H : Set G)) :
+    [CompactSpace G] [TotallyDisconnectedSpace G] (hP : PhiCond (Γ := G) l) (H : Subgroup G) (hH : IsOpen (H : Set G)) :
     ∃ U : OpenNormalSubgroup G, ∀ u ∈ U, ∃ hu : u ∈ H, ∀ (M : Type) [AddCommGroup M], (∀ x : M, l • x = 0) →
       ∀ ψ : H →* Multiplicative M, IsOpen (ψ.ker : Set H) → ψ ⟨u, hu⟩ = 1 := by
   classical
@@ -175,7 +175,7 @@ private theorem kills_of_bot {n : ℕ} {A G : Type} [CommRing A] [Group G] (D : 
   exact h1
 
 theorem UpperTheory.V.CA.u_tan :
-    ∀ (l : ℕ) [Fact l.Prime] {n : ℕ} {k G : Type} [Field k] [Finite k] [CharP k l] [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G] (Dbar : GDet n k G), PhiCond G l → Dbar.IsCont (maximalIdeal k) → Module.Finite k (Dbar.CHQuot ∅) → ∃ U : OpenNormalSubgroup G, ∀ D : GDet n (DualNumber k) G, D.IsCont (maximalIdeal (DualNumber k)) → D.map (TrivSqZeroExt.fstHom k k k : DualNumber k →+* k) = Dbar → ∀ u ∈ U, D.Kills (MonoidAlgebra.single u 1 - 1) := by
+    ∀ (l : ℕ) [Fact l.Prime] {n : ℕ} {k G : Type} [Field k] [Finite k] [CharP k l] [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G] (Dbar : GDet n k G), PhiCond (Γ := G) l → Dbar.IsCont (maximalIdeal k) → Module.Finite k (Dbar.CHQuot ∅) → ∃ U : OpenNormalSubgroup G, ∀ D : GDet n (DualNumber k) G, D.IsCont (maximalIdeal (DualNumber k)) → D.map (TrivSqZeroExt.fstHom k k k : DualNumber k →+* k) = Dbar → ∀ u ∈ U, D.Kills (MonoidAlgebra.single u 1 - 1) := by
   intro l _ n k G _ _ _ _ _ _ _ _ Dbar hP _ hfin
   haveI hQ : Finite (closureIdeal (maximalIdeal k) (Dbar.CH ∪ ∅)).ringCon.Quotient :=
     Module.finite_of_finite k (M := Dbar.CHQuot ∅)

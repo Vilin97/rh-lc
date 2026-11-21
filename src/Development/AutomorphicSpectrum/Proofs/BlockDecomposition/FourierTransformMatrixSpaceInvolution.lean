@@ -44,7 +44,11 @@ theorem hasTemperateGrowth_chirp (k : ℝ) : Function.HasTemperateGrowth (chirp 
   have h1 : Function.HasTemperateGrowth (fun u : V => 2 * Real.pi * k * ‖u‖ ^ 2) := by fun_prop
   have h2 := hasTemperateGrowth_expI.comp h1
   convert h2 using 1
-  congr 1; push_cast; ring
+  funext u
+  simp only [chirp, Function.comp_apply]
+  congr 1
+  push_cast
+  ring
 
 def chirpS (k : ℝ) (f : 𝓢(V, ℂ)) : 𝓢(V, ℂ) := SchwartzMap.smulLeftCLM ℂ (chirp k) f
 

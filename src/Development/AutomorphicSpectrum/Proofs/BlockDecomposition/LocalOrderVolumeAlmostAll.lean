@@ -26,9 +26,12 @@ theorem lam_map_mul {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum 
   obtain ⟨i1, i2, i3, i4, -⟩ := GlobalTheory.T.completion_is_local_ring F v
   have hu : IsUnit x := hx.isUnit
   have hc : ((distribHaarChar (Fv F v) hu.unit : ℝ≥0) : ℝ) = ‖x‖ := by
-    have := GlobalTheory.GaugeProdFormula.modu_finite F v x hx
-    rw [GlobalTheory.GaugeEx.modu, dite_eq_left hu] at this
-    exact this
+    have h := GlobalTheory.CompanionTheory.SW.ProdFormula.distribHaarChar_eq_nnnorm v x hx
+    have he : Units.mk0 x hx = hu.unit := by
+      ext
+      simp
+    rw [he] at h
+    exact congrArg (fun z : ℝ≥0 => (z : ℝ)) h
   have hc' : distribHaarChar (Fv F v) hu.unit⁻¹ = (‖x‖₊)⁻¹ := by
     rw [map_inv]
     apply NNReal.coe_injective

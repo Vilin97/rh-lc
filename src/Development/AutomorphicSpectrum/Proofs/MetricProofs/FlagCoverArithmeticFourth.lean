@@ -79,8 +79,9 @@ theorem exists_isArithVar [CharZero Ω] [Nonempty K] (y : (Σ k, ι k) → Ω) (
   induction e using ENat.recTopCoe with
   | top =>
     exfalso
-    have h1 : (1 : WithBot ℕ∞) + (Nat.card (Σ k, ι k) : WithBot ℕ∞) =
+    have h1 : (1 : WithBot ℕ∞) + ((Nat.card (Σ k, ι k) : ℕ∞) : WithBot ℕ∞) =
         (((1 + Nat.card (Σ k, ι k) : ℕ) : ℕ∞) : WithBot ℕ∞) := by push_cast; rfl
+    rw [ENat.card_eq_coe_natCard] at hle
     rw [h1, WithBot.coe_le_coe] at hle
     simp only [top_add] at hle
     exact ENat.natCast_ne_top _ (top_le_iff.1 hle)

@@ -37,7 +37,7 @@ theorem free_hom_ext (R : Type) [CommRing R] (P : PSh) (G : Shv R) (f g : (free 
   exact h U.unop x.down
 theorem cochain0_ext (R : Type) [CommRing R] (F : Shv R) (E : Spc)
     (α β : Cochain ((chains R).obj E) (res R F) 0)
-    (h : ∀ (U : Scheme.{0}) (x : Sx E 0 U), ev α 0 0 (by simp) U x = ev β 0 0 (by simp) U x) : α = β := by
+    (h : ∀ (U : Scheme.{0}) (x : Sx E 0 U), ev R α 0 0 (by simp) U x = ev R β 0 0 (by simp) U x) : α = β := by
   apply Cochain.ext
   intro p q hpq
   rcases lt_trichotomy p 0 with hp | rfl | hp
@@ -51,7 +51,7 @@ theorem cochain0_ext (R : Type) [CommRing R] (F : Shv R) (E : Spc)
 
 def LeafCochain0Ext : Prop := ∀ (R : Type) [CommRing R] (F : Shv R) (E : Spc)
   (α β : Cochain ((chains R).obj E) (res R F) 0),
-  (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev α 0 0 (by simp) U x = ev β 0 0 (by simp) U x) → α = β
+  (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev R α 0 0 (by simp) U x = ev R β 0 0 (by simp) U x) → α = β
 
 theorem leafCochain0Ext_pf : LeafCochain0Ext := fun R _ F E α β h => cochain0_ext R F E α β h
 
@@ -93,7 +93,7 @@ theorem LeafOneSpec_of (hA : LeafOneExists) (hP : LeafPrimCover) : LeafOneSpec :
   obtain ⟨α₀, h₀⟩ := hA q E hE
   obtain ⟨α₁, h₁, hα₁⟩ := pick_spec (P := fun c : Ht q E 0 0 => ∃ α : Cocycle ((chains (ZMod q)).obj E) (res _ (tw q 0)) 0,
     CohomologyClass.mk α = c ∧ ∀ (U : Scheme.{0}) (x : Sx E 0 U) (ζ : Prim q Γ(U, ⊤)),
-      ev α.1 0 0 (by simp) U x = resGen 0 ζ) ⟨CohomologyClass.mk α₀, α₀, rfl, h₀⟩
+      ev (ZMod q) α.1 0 0 (by simp) U x = resGen 0 ζ) ⟨CohomologyClass.mk α₀, α₀, rfl, h₀⟩
   change pick _ = _
   rw [← h₁, one_cocycle_eq hB hC q E hE α₁ α hα₁ hα]
 

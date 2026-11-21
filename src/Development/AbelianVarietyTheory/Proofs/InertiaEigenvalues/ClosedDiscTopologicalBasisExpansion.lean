@@ -113,7 +113,7 @@ theorem isClosed_expand {D D' ι : Type} [NormedCommRing D] [NormedCommRing D'] 
 
 theorem disc_expand (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (A : Type) [CommRing A] (s : bk.S →+* A)
     (ι : Type) (TB : TopBasis s bk.J ι) (ρ : ℝ≥0) (h0 : 0 < ρ) (h1 : ρ < 1) (j : bk.DS ρ →+* Disc l (s X) ρ)
-    (hj : IsDiscMap s j) (cD : ι → (Disc l (s X) ρ →+ bk.DS ρ))
+    (hj : IsDiscMap (l := _) (u := _) (ρ := _) s j) (cD : ι → (Disc l (s X) ρ →+ bk.DS ρ))
     (hc : (∀ i a, cD i (toDisc l (s X) ρ a) = toDisc l (X : bk.S) ρ (TB.c i a)) ∧
       (∀ i x y, cD i (j x * y) = x * cD i y) ∧ (∀ i y, ‖cD i y‖ ≤ ‖y‖)) (y : Disc l (s X) ρ) :
     Filter.Tendsto (fun i => cD i y) Filter.cofinite (nhds 0) ∧

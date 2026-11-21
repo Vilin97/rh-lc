@@ -109,7 +109,7 @@ theorem s0a (I : Ideal R) {A : C} (P : Powers j A) (hG : P.Good j F I) (a : R) (
   intro x hx
   obtain ⟨-, hex, t0, g, -, halm⟩ := hG
   have h1 : (F.map g).hom ((F.map P.f).hom x) = 0 := by
-    have := congrFun hx (ComposableArrows.mk₀ (⟨t0, P.f ≫ g⟩ : (pts j A).Elements))
+    have := congrFun hx (ComposableArrows.mk₀ ((pts j A).elementsMk t0 (P.f ≫ g)))
     rw [ptsAug_eval, F.map_comp] at this
     exact this
   have h2 := (halm a ha).1 _ h1
@@ -133,7 +133,9 @@ variable {R : Type} [CommRing R] {C : Type u} [Category.{v} C] {T : Type u'} [Ca
 noncomputable def initB {B : C} (t0 : T) (g : B ⟶ j.obj t0) (hg : ∀ (t : T) (y : B ⟶ j.obj t), ∃! φ : t0 ⟶ t, g ≫ j.map φ = y) :
     Limits.IsInitial ((pts j B).elementsMk t0 g) :=
   Limits.IsInitial.ofUniqueHom (fun (Y : (pts j B).Elements) => ⟨(hg Y.1 Y.2).exists.choose, (hg Y.1 Y.2).exists.choose_spec⟩)
-    (fun (Y : (pts j B).Elements) m => Subtype.ext ((hg Y.1 Y.2).unique m.2 (hg Y.1 Y.2).exists.choose_spec))
+    (fun (Y : (pts j B).Elements) m => by
+      apply Functor.Elements.hom_ext
+      exact (hg Y.1 Y.2).unique (el_hom j m) (hg Y.1 Y.2).exists.choose_spec)
 
 theorem cmk (E : T ⥤ Type v) (s : ComposableArrows E.Elements 0) : s = ComposableArrows.mk₀ (s.obj 0) :=
   ComposableArrows.ext₀ rfl
@@ -343,8 +345,9 @@ noncomputable def init0 (t0 : T) (g : P.B ⟶ j.obj t0) (hg : ∀ (t : T) (y : P
   Limits.IsInitial.ofUniqueHom
     (fun (Y : (cech (pmap j P) 0).Elements) => ⟨(hg Y.1 (Y.2.1 0)).exists.choose, Subtype.ext (funext fun i => by
       rw [Fin.fin_one_eq_zero i]; exact (hg Y.1 (Y.2.1 0)).exists.choose_spec)⟩)
-    (fun (Y : (cech (pmap j P) 0).Elements) m =>
-      Subtype.ext ((hg Y.1 (Y.2.1 0)).unique (cech_hom j P m 0) (hg Y.1 (Y.2.1 0)).exists.choose_spec))
+    (fun (Y : (cech (pmap j P) 0).Elements) m => by
+      apply Functor.Elements.hom_ext
+      exact (hg Y.1 (Y.2.1 0)).unique (cech_hom j P m 0) (hg Y.1 (Y.2.1 0)).exists.choose_spec)
 
 theorem cech_column_zero_exact (t0 : T) (g : P.B ⟶ j.obj t0) (hg : ∀ (t : T) (y : P.B ⟶ j.obj t), ∃! φ : t0 ⟶ t, g ≫ j.map φ = y)
     (q : ℕ) (s : R) :

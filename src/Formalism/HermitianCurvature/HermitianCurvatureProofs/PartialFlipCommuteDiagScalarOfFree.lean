@@ -84,6 +84,7 @@ theorem kap_eq (q : K → K) (w : List (Letter K S)) :
     ∀ L : List (Letter K S), DualOK q w L → kap q w L = kapF q w L
   | [], _ => rfl
   | l :: L, h => by
+    rw [DualOK] at h
     obtain ⟨h1, h2, h3⟩ := h
     rw [kap, kapF, mul_div_assoc, kap_step q w l L (reg_left h1) h2, kap_eq q w L h3, mul_assoc]
     rfl

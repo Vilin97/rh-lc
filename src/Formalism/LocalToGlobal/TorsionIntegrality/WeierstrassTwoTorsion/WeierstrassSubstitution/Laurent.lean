@@ -103,7 +103,7 @@ theorem dL_uPow_mul (m : ℤ) (f : LaurentSeries R) :
   push_cast
   ring
 
-theorem dL_toL (f : R⟦X⟧) : dL (toL f) = toL (derivative R f) := by
+theorem dL_toL (f : R⟦X⟧) : dL (toL f) = toL (derivative f) := by
   ext n
   rw [dL_coeff]
   rcases lt_or_ge n 0 with hn | hn
@@ -133,7 +133,7 @@ theorem dL_mul (f g : LaurentSeries R) : dL (f * g) = f * dL g + g * dL f := by
     rw [Int.cast_add, map_add (f := _)]
   rw [e, dL_uPow_mul, dL_toL, Derivation.leibniz]
   simp only [dL_uPow_mul, dL_toL, Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul]
-  linear_combination (toL F * toL (derivative R G) + toL G * toL (derivative R F)) * h0
+  linear_combination (toL F * toL (derivative G) + toL G * toL (derivative F)) * h0
     + (toL F * toL G * uPow (m + k - 1)) * h3
     + (HahnSeries.C ((m : ℤ) : R) * toL F * toL G) * h1
     + (HahnSeries.C ((k : ℤ) : R) * toL F * toL G) * h2

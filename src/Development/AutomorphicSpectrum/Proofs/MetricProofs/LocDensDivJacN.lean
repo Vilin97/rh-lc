@@ -93,7 +93,8 @@ theorem sum_fibSum_ae (A : FinHolAtlas e X) (q : X → Fin e → ℂ) (S : Set X
     rw [goodT_fibre_eq A q S hq j (hy j),
       finsum_mem_image ((A.chart j).injOn.mono Set.inter_subset_left)]
     refine (finsum_mem_congr (g := fun x => Pt.χ j x * T x) rfl
-      fun x hx => hterm j x hx.1 hx.2.2).trans ?_
+      fun x (hx : x ∈ (A.chart j).source ∩ (q ⁻¹' {y} \ S)) =>
+        hterm j x hx.1 hx.2.2).trans ?_
     refine finsum_mem_inter_support_eq' _ _ _ fun x hx => ?_
     have hχ : Pt.χ j x ≠ 0 := left_ne_zero_of_mul hx
     have hxs : x ∈ (A.chart j).source := Pt.tsupport_subset j (subset_tsupport _ hχ)

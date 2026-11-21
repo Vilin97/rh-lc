@@ -151,12 +151,11 @@ theorem mem_smallIdeal {F Ω : Type} [Field F] [NormedField Ω] [IsUltrametricDi
     (σ : F →+* Ω) (x : 𝓞 F) : x ∈ smallIdeal σ ↔ ‖σ x‖ < 1 := Iff.rfl
 
 theorem smallIdeal_isPrime {F Ω : Type} [Field F] [NormedField Ω] [IsUltrametricDist Ω]
-    (σ : F →+* Ω) : (smallIdeal σ).IsPrime where
-  ne_top' := by
-    rw [Ideal.ne_top_iff_one, mem_smallIdeal]
+    (σ : F →+* Ω) : (smallIdeal σ).IsPrime := by
+  refine Ideal.isPrime_iff.mpr ⟨?_, ?_⟩
+  · rw [Ideal.ne_top_iff_one, mem_smallIdeal]
     simp
-  mem_or_mem' := by
-    intro x y h
+  · intro x y h
     simp only [mem_smallIdeal] at *
     by_contra h'
     push Not at h'

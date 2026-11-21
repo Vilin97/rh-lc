@@ -14,11 +14,17 @@ namespace GlobalTheory.DensityProductCompare
 open scoped TensorProduct
 open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
 
+open private euler_factor_log_bound partial_sums_log_euler_factor_le from Formalism.GL3MeanSquares.HookFormulaTorsion.SumWeightsOverPrimeLeHalfDegree
 
 theorem multipliable_eulerFac (E : Type) [Field E] [NumberField E] [StarRing E]
     (hE : Formalism.HermitianLatticesTheory.IsCMUnram E) (M : ℕ) (hM : 2 ≤ M) :
     Multipliable (fun P : {P : Ideal (𝓞 E) // P.IsMaximal} => Formalism.HermitianLatticesTheory.eulerFac E M P.1) := by
-  exact Formalism.HermitianLattices.Ext.L3.multipliable_eulerFac hE M hM
+  have hpos : ∀ P : {P : Ideal (𝓞 E) // P.IsMaximal}, 0 < Formalism.HermitianLatticesTheory.eulerFac E M P.1 :=
+    fun P => (euler_factor_log_bound E hE M (by omega) P.1 P.2).1
+  have habs : Summable (fun P : {P : Ideal (𝓞 E) // P.IsMaximal} =>
+      |Real.log (Formalism.HermitianLatticesTheory.eulerFac E M P.1)|) :=
+    summable_of_sum_le (fun P => abs_nonneg _) (partial_sums_log_euler_factor_le E hE M hM)
+  exact Real.multipliable_of_summable_log hpos habs.of_abs
 
 section Defs
 
