@@ -103,7 +103,7 @@ end GlobalTheory.OrdLoc.RootConjugation
 
 open GlobalTheory.OrdLoc.RootConjugation in
 theorem GlobalTheory.OrdLoc.rtConj :
-    LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : D.Univ) (C : Type) [CommRing C] [Algebra O C] [IsCO O C] (r : GQ l →* GG 3 C) (h : GL (Fin 3) C), UpperTheory.V.UnitaryThreeInertia.InHat h → GlobalTheory.OrdLoc.On D U r → GlobalTheory.OrdLoc.On D U (conjBy h r) := by
+    LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : _root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition O D.η D.Ψ)) (C : Type) [CommRing C] [Algebra O C] [IsCO O C] (r : GQ l →* GG 3 C) (h : GL (Fin 3) C), UpperTheory.V.UnitaryThreeInertia.InHat h → GlobalTheory.OrdLoc.On D U r → GlobalTheory.OrdLoc.On D U (conjBy h r) := by
   intro hP l _ O _ _ _ _ _ _ _ D U C _ _ _ r h hh hr
   obtain ⟨f, rfl, hf⟩ := hr
   obtain ⟨hpr, hprime, hl, hIt, -, -, -⟩ := GlobalTheory.T.ordinaryComponent_unique_prime_dim_thirteen_near_base hP D U

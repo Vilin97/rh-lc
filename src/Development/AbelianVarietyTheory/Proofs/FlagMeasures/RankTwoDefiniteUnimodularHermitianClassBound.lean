@@ -44,16 +44,16 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E]
 def LineRel (X Y : E × Submodule (𝓞 E) E) : Prop :=
   ∃ c : E, c ≠ 0 ∧ star c * Y.1 * c = X.1 ∧ ∀ y, c * y ∈ Y.2 ↔ y ∈ X.2
 
-theorem lineRel_equivalence : Equivalence (LineRel (E := E)) where
-  refl X := ⟨1, one_ne_zero, by simp, by simp⟩
-  symm := by
-    rintro X Y ⟨c, hc, h1, h2⟩
+theorem lineRel_equivalence : Equivalence (LineRel (E := E)) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro X
+    exact ⟨1, one_ne_zero, by simp, by simp⟩
+  · rintro X Y ⟨c, hc, h1, h2⟩
     have hs : star c ≠ 0 := by simpa using hc
     refine ⟨c⁻¹, inv_ne_zero hc, ?_, fun y => ?_⟩
     · rw [← h1, star_inv₀]; field_simp
     · rw [← h2, mul_inv_cancel_left₀ hc]
-  trans := by
-    rintro X Y Z ⟨c, hc, h1, h2⟩ ⟨d, hd, k1, k2⟩
+  · rintro X Y Z ⟨c, hc, h1, h2⟩ ⟨d, hd, k1, k2⟩
     refine ⟨d * c, mul_ne_zero hd hc, ?_, fun y => ?_⟩
     · rw [← h1, ← k1, star_mul]; ring
     · rw [← h2, ← k2, mul_assoc]

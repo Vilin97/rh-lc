@@ -97,7 +97,7 @@ private theorem zl_inj (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] [IsDomai
   exact IsDiscreteValuationRing.not_a_field O (IsLocalRing.eq_maximalIdeal h2).symm
 
 theorem UpperTheory.V.Loc.locGood :
-    LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : D.Univ), LocGood U (D.It U) := by
+    LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : _root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition O D.η D.Ψ)), LocGood U (D.It U) := by
   intro hP l _ O _ _ _ _ _ _ _ D U
   refine ⟨?_, ?_⟩
   · rintro R _ _ _ r r' h hh e ⟨f, hf, hI⟩

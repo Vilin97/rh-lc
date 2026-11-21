@@ -222,7 +222,7 @@ private theorem triangular_in_iff_triangular_form {O A C D : Type} [CommRing O] 
 end UpperTheory.V.Loc
 
 theorem UpperTheory.V.Loc.lemma2c :
-    LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : D.Univ) (K : Type) [Field K] [Algebra O K] (r : GQ l →* GG 3 K), D.On U r → ∃ (K' : Type) (_ : Field K') (_ : Algebra K K') (_ : Algebra O K') (_ : IsScalarTower O K K') (_ : FiniteDimensional K K') (h : GL (Fin 3) K'), UpperTheory.V.UnitaryThreeInertia.TriIn D.η D.Ψ (Iq l) ((GG.map (algebraMap K K')).comp r) h := by
+    LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : _root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition O D.η D.Ψ)) (K : Type) [Field K] [Algebra O K] (r : GQ l →* GG 3 K), D.On U r → ∃ (K' : Type) (_ : Field K') (_ : Algebra K K') (_ : Algebra O K') (_ : IsScalarTower O K K') (_ : FiniteDimensional K K') (h : GL (Fin 3) K'), UpperTheory.V.UnitaryThreeInertia.TriIn D.η D.Ψ (Iq l) ((GG.map (algebraMap K K')).comp r) h := by
   intro hP l _ O _ _ _ _ _ _ _ D U K _ _ r ⟨f, hr, hf⟩
   obtain ⟨-, hp, hl, -⟩ := UpperTheory.V.Loc.rtBasic hP D U
   haveI : IsDomain (D.Rt U) := Ideal.Quotient.isDomain _

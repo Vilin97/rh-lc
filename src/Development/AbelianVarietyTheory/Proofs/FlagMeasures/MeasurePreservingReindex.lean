@@ -22,12 +22,15 @@ theorem prod_ofFn_single {M : Type*} [Monoid M] : ∀ {m : ℕ} (g : Fin m → M
   | 0, _, a, _ => a.elim0
   | m + 1, g, a, h => by
     rw [List.ofFn_succ, List.prod_cons]
-    refine Fin.cases (fun h => ?_) (fun a h => ?_) a h
-    · rw [List.prod_eq_one, mul_one]
-      intro x hx
-      obtain ⟨i, rfl⟩ := (List.mem_ofFn' _ _).1 hx
-      exact h _ (Fin.succ_ne_zero i)
-    · rw [h 0 (Fin.succ_ne_zero a).symm, one_mul]
+    cases a using Fin.cases
+    · have hprod : (List.ofFn fun i : Fin m => g i.succ).prod = 1 := by
+        apply List.prod_eq_one
+        intro x hx
+        obtain ⟨i, rfl⟩ := (List.mem_ofFn' _ _).1 hx
+        exact h _ (Fin.succ_ne_zero i)
+      rw [hprod, mul_one]
+    · rename_i a
+      rw [h 0 (Fin.succ_ne_zero a).symm, one_mul]
       exact prod_ofFn_single (fun i => g i.succ) a fun i hi => h _ fun e => hi (Fin.succ_injective _ e)
 
 theorem prod_ofFn_block {M : Type*} [Monoid M] {m k : ℕ} (g : Fin m → Fin k → M) (a : Fin m)

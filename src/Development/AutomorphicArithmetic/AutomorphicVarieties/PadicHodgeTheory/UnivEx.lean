@@ -18,7 +18,7 @@ private theorem UpperTheory.V.Loc.adicCont_zpow {Γ R : Type} [TopologicalSpace 
   rfl
 
 theorem UpperTheory.V.Loc.univEx :
-    ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : D.Univ), ∃! x, IsBase D.η D.Ψ U.r.hom x := by
+    ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : _root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition O D.η D.Ψ)), ∃! x, IsBase D.η D.Ψ U.r.hom x := by
   intro l _ O _ _ _ _ _ _ _ D U
   have hΨ : ∀ j : ℤ, AdicCont (maximalIdeal O) fun g => ((D.Ψ g ^ j : Oˣ) : O) :=
     fun j => adicCont_zpow _ _ D.Ψ_cont j

@@ -21,9 +21,15 @@ open Formalism.L2.SG.RealObj
 
 theorem ptEntry_row_zero {K : Type*} [Zero K] :
     ∀ (bs : List (K × ℕ)) (a b : ℕ), a < b → b < (bs.map Prod.snd).sum →
-      blkOf bs a = blkOf bs b → ∃ c, c < b ∧ ∀ j, j ≤ c → Formalism.MainNotions.S.ptEntry bs c j = 0
-  | [], a, b, _, hb, _ => by simp at hb
-  | (t, s) :: rest, a, b, hab, hb, hbl => by
+      blkOf bs a = blkOf bs b → ∃ c, c < b ∧ ∀ j, j ≤ c → Formalism.MainNotions.S.ptEntry bs c j = 0 := by
+  intro bs
+  induction bs with
+  | nil =>
+    intro a b hab hb hbl
+    simp at hb
+  | cons block rest ih =>
+    obtain ⟨t, s⟩ := block
+    intro a b hab hb hbl
     by_cases ha : a < s
     · by_cases hbs : b < s
       · refine ⟨0, by omega, fun j hj => ?_⟩
@@ -38,7 +44,7 @@ theorem ptEntry_row_zero {K : Type*} [Zero K] :
       simp only [blkOf, ha, hbs, if_false] at hbl
       have hbl' : blkOf rest (a - s) = blkOf rest (b - s) := by omega
       have hb' : b - s < (rest.map Prod.snd).sum := by simp at hb; omega
-      obtain ⟨c, hc, hz⟩ := ptEntry_row_zero rest (a - s) (b - s) (by omega) hb' hbl'
+      obtain ⟨c, hc, hz⟩ := ih (a - s) (b - s) (by omega) hb' hbl'
       refine ⟨c + s, by omega, fun j hj => ?_⟩
       simp only [Formalism.MainNotions.S.ptEntry]
       rw [if_neg (by omega)]

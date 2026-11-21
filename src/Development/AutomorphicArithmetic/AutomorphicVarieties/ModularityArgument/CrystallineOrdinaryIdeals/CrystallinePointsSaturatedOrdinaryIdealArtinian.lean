@@ -17,7 +17,7 @@ noncomputable section
 namespace GlobalTheory.OrdLoc.CriticalPoints
 
 variable {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O]
-  [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : D.Univ)
+  [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : _root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition O D.η D.Ψ))
 
 def sub (E₀ E B : Type) [Field E₀] [Field E] [Algebra E₀ E] [CommRing B] [Algebra E B] [Algebra E₀ B]
     [IsScalarTower E₀ E B] (π : B →ₐ[E] E) : Subalgebra E₀ B where
@@ -118,7 +118,7 @@ end GlobalTheory.OrdLoc.CriticalPoints
 
 
 open GlobalTheory.OrdLoc.CriticalPoints in
-theorem GlobalTheory.OrdLoc.crPts_IY : LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : D.Univ), GlobalTheory.OrdLoc.CrPts D U (GlobalTheory.OrdLoc.IY D U) := by
+theorem GlobalTheory.OrdLoc.crPts_IY : LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : _root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition O D.η D.Ψ)), GlobalTheory.OrdLoc.CrPts D U (GlobalTheory.OrdLoc.IY D U) := by
   intro hP l _ O _ _ _ _ _ _ _ D U
   intro E _ _ _ _ _ _ _ B _ _ _ _ _ _ _ _ _ _ π hπ f hD
   have hi : Function.Injective (algebraMap ℤ_[l] O) := by

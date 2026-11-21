@@ -116,7 +116,7 @@ private theorem exists_inertia_distinct_characters {l : ℕ} [Fact l.Prime] {O :
 end UpperTheory.V.Loc
 
 theorem UpperTheory.V.Loc.lemma2b :
-    LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : D.Univ) (K : Type) [Field K] [CharZero K] [Algebra O K] (r : GQ l →* GG 3 K), D.On U r → (∃ h, UpperTheory.V.UnitaryThreeInertia.TriIn D.η D.Ψ (Iq l) r h) ∧ ∀ h h', UpperTheory.V.UnitaryThreeInertia.TriIn D.η D.Ψ (Iq l) r h → UpperTheory.V.UnitaryThreeInertia.TriIn D.η D.Ψ (Iq l) r h' → ∀ a b, wt a b < 0 → ((h⁻¹ * h' : GL (Fin 3) K) : Matrix (Fin 3) (Fin 3) K) a b = 0 := by
+    LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : _root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition O D.η D.Ψ)) (K : Type) [Field K] [CharZero K] [Algebra O K] (r : GQ l →* GG 3 K), D.On U r → (∃ h, UpperTheory.V.UnitaryThreeInertia.TriIn D.η D.Ψ (Iq l) r h) ∧ ∀ h h', UpperTheory.V.UnitaryThreeInertia.TriIn D.η D.Ψ (Iq l) r h → UpperTheory.V.UnitaryThreeInertia.TriIn D.η D.Ψ (Iq l) r h' → ∀ a b, wt a b < 0 → ((h⁻¹ * h' : GL (Fin 3) K) : Matrix (Fin 3) (Fin 3) K) a b = 0 := by
   intro hP l _ O _ _ _ _ _ _ _ D U K _ _ _ r hr
   obtain ⟨hch, hpr⟩ := UpperTheory.V.Loc.lemma2a hP D U K r hr
   have hm : ∀ g, D.η g = 1 → (r g).right = 1 := by

@@ -141,7 +141,7 @@ private theorem map_mem_finiteCocycles_adRep_of_continuous {l : ℕ} [Fact l.Pri
 
 private theorem fin_case (hP : LocalPublishedTheorems) {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O]
     [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O]
-    [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : D.Univ) (E : Type) [Field E] [Algebra ℚ_[l] E]
+    [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : _root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition O D.η D.Ψ)) (E : Type) [Field E] [Algebra ℚ_[l] E]
     [Module.Finite ℚ_[l] E] [Algebra O E] [Algebra ℤ_[l] E] [IsScalarTower ℤ_[l] O E] [IsScalarTower ℤ_[l] ℚ_[l] E]
     [TopologicalSpace E] [IsModuleTopology ℚ_[l] E] [IsTopologicalRing E] [ContinuousInv₀ E]
     (F : U.R →ₐ[O] DualNumber E) (hF : D.It U ≤ RingHom.ker F) :
@@ -167,7 +167,7 @@ end UpperTheory.V.Loc.RootDualTransport
 
 open UpperTheory.V.Loc.RootDualTransport in
 theorem UpperTheory.V.Loc.rtDual :
-    LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : D.Univ) [Algebra O (PadicAlgCl l)] [IsScalarTower ℤ_[l] O (PadicAlgCl l)] (F : U.R →ₐ[O] DualNumber (PadicAlgCl l)), D.It U ≤ RingHom.ker F → IsLocPt (dualFst F) → tanCoc F U.r.hom ∈ finiteCocycles (MonoidHom.id _) (adRep (push (dualFst F) U.r.hom)) := by
+    LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : _root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition O D.η D.Ψ)) [Algebra O (PadicAlgCl l)] [IsScalarTower ℤ_[l] O (PadicAlgCl l)] (F : U.R →ₐ[O] DualNumber (PadicAlgCl l)), D.It U ≤ RingHom.ker F → IsLocPt (dualFst F) → tanCoc F U.r.hom ∈ finiteCocycles (MonoidHom.id _) (adRep (push (dualFst F) U.r.hom)) := by
   intro hP l _ O _ _ _ _ _ _ _ D U _ _ F hF hloc
   obtain ⟨⟨K, hfin⟩, hE⟩ := ptFin U.R F hloc
   haveI : FiniteDimensional ℚ_[l] ↥K := hfin

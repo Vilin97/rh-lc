@@ -14,6 +14,7 @@ noncomputable section
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField Matrix
 open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.PullbackSections Formalism.L2.Pj GlobalTheory.CxPts
+open GlobalTheory.CompanionTheory.Ar (dualMap)
 open scoped ComplexOrder
 
 namespace GlobalTheory.LieMet
@@ -205,8 +206,8 @@ theorem exists_isBlockMetric (y : Sp ℂ ⟶ X) : ∃ h : TanM y t.G →ₗ[ℂ]
   have hf : ∀ v w, (∑ τ, (g.compl₂ (e τ)).comp (e τ)) v w = ∑ τ, g (e τ v) (e τ w) := fun v w => by
     simp [LinearMap.sum_apply]
   refine ⟨∑ τ, (g.compl₂ (e τ)).comp (e τ), fun v w => ?_, fun v hv => ?_, fun ρ ρ' v w h hv hw => ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [hf, hf, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [hf, hf, map_sum]
     exact Finset.sum_congr rfl fun τ _ => diagForm_symm _ _ _ _
   · obtain ⟨τ, hτ⟩ : ∃ τ, e τ v ≠ 0 := by
       by_contra! h

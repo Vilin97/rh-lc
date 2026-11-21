@@ -51,15 +51,16 @@ variable (F : Type) [Field F] [NumberField F] {E : Type} [Field E] [NumberField 
 
 theorem exists_normInf_le (w : InfinitePlace F) (J : Matrix n m (w.Completion ⊗[F] E))
     (P : Matrix m n (w.Completion ⊗[F] E)) (K : Matrix n n (w.Completion ⊗[F] E)) :
-    ∃ c : ℝ≥0, 1 ≤ c ∧ ∀ (x : Matrix m m (w.Completion ⊗[F] E)) (h : ℝ≥0), 1 ≤ h → normInf F w x ≤ h →
-      normInf F w (J * x * P + K) ≤ c * h := by
+    ∃ c : ℝ≥0, 1 ≤ c ∧ ∀ (x : Matrix m m (w.Completion ⊗[F] E)) (h : ℝ≥0),
+      1 ≤ h → GlobalTheory.AdelicU.normInf F w x ≤ h →
+        GlobalTheory.AdelicU.normInf F w (J * x * P + K) ≤ c * h := by
   classical
   have hτ : ∀ τ : EmbOver E w, ∃ c : ℝ≥0, ∀ (x : Matrix m m ℂ) (h : ℝ≥0), 1 ≤ h → opNorm x ≤ h →
       opNorm (J.map (infEmb τ) * x * P.map (infEmb τ) + K.map (infEmb τ)) ≤ c * h :=
     fun τ => GlobalTheory.EmbHeight.exists_opNorm_le _ _ _
   choose c hc using hτ
   refine ⟨max 1 (Finset.univ.sup c), le_max_left _ _, fun x h h1 hx => ?_⟩
-  rw [normInf_le_iff] at hx ⊢
+  rw [GlobalTheory.AdelicU.normInf_le_iff] at hx ⊢
   intro τ
   rw [Matrix.map_add _ (map_add _), Matrix.map_mul, Matrix.map_mul]
   refine (hc τ _ h h1 (hx τ)).trans ?_
@@ -115,11 +116,12 @@ theorem exists_heightGL_le (J : Matrix n m (AF F ⊗[F] E)) (P : Matrix m n (AF 
       (X : Matrix n n (AF F ⊗[F] E)) = J * (x : Matrix m m (AF F ⊗[F] E)) * P + K →
       ((X⁻¹ : GL n (AF F ⊗[F] E)) : Matrix n n (AF F ⊗[F] E)) =
         J * ((x⁻¹ : GL m (AF F ⊗[F] E)) : Matrix m m (AF F ⊗[F] E)) * P + K →
-      heightGL F X ≤ C * heightGL F x := by
+      GlobalTheory.AdelicU.heightGL F X ≤ C * GlobalTheory.AdelicU.heightGL F x := by
   classical
   have hinf : ∀ w : InfinitePlace F, ∃ c : ℝ≥0, 1 ≤ c ∧ ∀ (x : Matrix m m (w.Completion ⊗[F] E)) (h : ℝ≥0),
-      1 ≤ h → normInf F w x ≤ h →
-        normInf F w (J.map (compInf F E w) * x * P.map (compInf F E w) + K.map (compInf F E w)) ≤ c * h :=
+      1 ≤ h → GlobalTheory.AdelicU.normInf F w x ≤ h →
+        GlobalTheory.AdelicU.normInf F w
+          (J.map (compInf F E w) * x * P.map (compInf F E w) + K.map (compInf F E w)) ≤ c * h :=
     fun w => GlobalTheory.EmbHeight.exists_normInf_le F w _ _ _
   choose c hc1 hc using hinf
   let M : HeightOneSpectrum (𝓞 F) → ℝ≥0 := fun v =>
@@ -148,7 +150,7 @@ theorem exists_heightGL_le (J : Matrix n m (AF F ⊗[F] E)) (P : Matrix m n (AF 
       (∏ᶠ v, M v) * ∏ᶠ v, htFin F v (Formalism.UG.bc (compFin F E v) x) := by
     rw [← finprod_mul_distrib hMfin hfinx]
     exact finprod_le_finprod' hfinX ((hMfin.union hfinx).subset (Function.mulSupport_mul _ _)) fun v => key_fin v
-  unfold heightGL
+  unfold GlobalTheory.AdelicU.heightGL
   calc _ ≤ ((∏ w, c w) * ∏ w, htInf F w (Formalism.UG.bc (compInf F E w) x)) *
         ((∏ᶠ v, M v) * ∏ᶠ v, htFin F v (Formalism.UG.bc (compFin F E v) x)) := mul_le_mul' hI hF
     _ = _ := by ring

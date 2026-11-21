@@ -139,6 +139,9 @@ theorem gp_sv_contDiff1 {M : DSModel V S} {τ : D.what₂.Tau} {v : M.H τ}
   have h := (hv 1 ![X] (fun i => by rw [Fin.fin_one_eq_zero i]; simpa using hX)).comp
     (contDiff_pi.2 fun _ : Fin 1 => contDiff_id : ContDiff ℝ ∞ fun s : ℝ => fun _ : Fin 1 => s)
   convert h using 1
+  funext s
+  simp only [Function.comp_apply, List.ofFn_succ, List.ofFn_zero, Matrix.cons_val_zero,
+    List.prod_cons, List.prod_nil, mul_one]
 
 private theorem rep_mul_of_mem_UH (M : DSModel V S) (τ : D.what₂.Tau) {a b : Matrix (Fin V.rank) (Fin V.rank) ℂ}
     (ha : a ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ)) (hb : b ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ)) (x : M.H τ) :
@@ -693,7 +696,7 @@ theorem gp_foldr_conj (M : DSModel V S) (τ : D.what₂.Tau) {g g' : Matrix (Fin
     have hl' : ∀ Y ∈ l, Y ∈ lieAt V τ := fun Y hY => hl Y (List.mem_cons_of_mem _ hY)
     have hlm : ∀ Y ∈ l.map (fun X => g' * X * g), Y ∈ lieAt V τ := by
       intro Y hY
-      obtain ⟨Z, hZ, rfl⟩ := List.mem_map.1 hY
+      obtain ⟨Z, hZ, rfl⟩ := List.exists_of_mem_map (f := fun Z => g' * Z * g) hY
       exact gp_lie_conj hg hgg' (hl' Z hZ)
     rw [List.foldr_cons, List.map_cons, List.foldr_cons, gp_foldr_conj M τ hg hgg' l hl' hx]
     exact gp_dRep_conj M τ hg hgg' (hl X (by simp)) (gp_sv_foldr _ hlm hx)

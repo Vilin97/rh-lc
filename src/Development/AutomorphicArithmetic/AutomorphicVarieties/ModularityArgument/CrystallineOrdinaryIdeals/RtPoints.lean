@@ -9,7 +9,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.PadicHodgeT
 
 open Formalism.BasicNotions Formalism.BasicNotions.Loc ReciprocityTheory.Gal Module UpperTheory.V.Loc UpperTheory.V.U3 UpperTheory.V.Alg IsLocalRing Polynomial Topology
 
-theorem GlobalTheory.OrdLoc.rtPoints : LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : D.Univ) (B : Type) [CommRing B] [Algebra ℚ_[l] B] [Module.Finite ℚ_[l] B] [Algebra O B] [Algebra ℤ_[l] B] [IsScalarTower ℤ_[l] O B] [IsScalarTower ℤ_[l] ℚ_[l] B] (r : GQ l →* GG 3 B), GlobalTheory.OrdLoc.On D U r → (∀ a b, QCont l fun g => (r g).mat a b) ∧ D.IsLCr r := by
+theorem GlobalTheory.OrdLoc.rtPoints : LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : _root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition O D.η D.Ψ)) (B : Type) [CommRing B] [Algebra ℚ_[l] B] [Module.Finite ℚ_[l] B] [Algebra O B] [Algebra ℤ_[l] B] [IsScalarTower ℤ_[l] O B] [IsScalarTower ℤ_[l] ℚ_[l] B] (r : GQ l →* GG 3 B), GlobalTheory.OrdLoc.On D U r → (∀ a b, QCont l fun g => (r g).mat a b) ∧ D.IsLCr r := by
   intro hP l _ O _ _ _ _ _ _ _ D U B _ _ _ _ _ _ _ r hr
   obtain ⟨f, rfl, hf⟩ := hr
   have hle : GlobalTheory.OrdLoc.Icr D U ≤ GlobalTheory.OrdLoc.It D U := le_sInf fun P hP => hP.1.1.2

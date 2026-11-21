@@ -178,8 +178,8 @@ theorem gram_XY : adj d.jX * (gA S * d.jY) = 1 := by
 
 theorem gram_00 : adj d.j0 * (gA S * d.j0) = gA S₀ := by
   have h := congrArg rat d.iso
-  rw [j0, gA, ← rat_conjTranspose]
-  simpa only [rat, Matrix.map_mul, Matrix.mul_assoc] using h
+  rw [j0, ← rat_conjTranspose]
+  simpa only [gA, rat, Matrix.map_mul, Matrix.mul_assoc] using h
 
 theorem gram_0X : adj d.j0 * (gA S * d.jX) = 0 := by
   have h := congrArg rat d.i₀e
@@ -423,20 +423,20 @@ theorem wittDecomp_anisotropicEmbedding_inclY : mt S (d.emb0 g) * d.jY = d.jY :=
 theorem wittDecomp_projX_anisotropicEmbedding : d.pX * mt S (d.emb0 g) = d.pX := by
   refine d.mat_ext ?_ ?_ ?_ <;>
     simp [Matrix.mul_assoc, wittDecomp_anisotropicEmbedding_inclX,
-      wittDecomp_anisotropicEmbedding_inclAnisotropic, wittDecomp_anisotropicEmbedding_inclY] <;>
-    simp [← Matrix.mul_assoc]
+      wittDecomp_anisotropicEmbedding_inclAnisotropic, wittDecomp_anisotropicEmbedding_inclY]
+  all_goals simp [← Matrix.mul_assoc]
 
 theorem wittDecomp_projAnisotropic_anisotropicEmbedding : d.p0 * mt S (d.emb0 g) = mt S₀ g * d.p0 := by
   refine d.mat_ext ?_ ?_ ?_ <;>
     simp [Matrix.mul_assoc, wittDecomp_anisotropicEmbedding_inclX,
-      wittDecomp_anisotropicEmbedding_inclAnisotropic, wittDecomp_anisotropicEmbedding_inclY] <;>
-    simp [← Matrix.mul_assoc]
+      wittDecomp_anisotropicEmbedding_inclAnisotropic, wittDecomp_anisotropicEmbedding_inclY]
+  all_goals simp [← Matrix.mul_assoc]
 
 theorem wittDecomp_projY_anisotropicEmbedding : d.pY * mt S (d.emb0 g) = d.pY := by
   refine d.mat_ext ?_ ?_ ?_ <;>
     simp [Matrix.mul_assoc, wittDecomp_anisotropicEmbedding_inclX,
-      wittDecomp_anisotropicEmbedding_inclAnisotropic, wittDecomp_anisotropicEmbedding_inclY] <;>
-    simp [← Matrix.mul_assoc]
+      wittDecomp_anisotropicEmbedding_inclAnisotropic, wittDecomp_anisotropicEmbedding_inclY]
+  all_goals simp [← Matrix.mul_assoc]
 
 theorem wittDecomp_anisotropicEmbedding_mem_rationalPoints {g : GA D S₀} (h : g ∈ GQ S₀) : d.emb0 g ∈ GQ S := by
   obtain ⟨A, hA⟩ := mem_ratMx.1 ((mem_GQ_iff S₀ g).1 h)
@@ -464,7 +464,7 @@ theorem images_nB (b : Mx D ρ S₀.rank) : Images S S₀ d.jX (d.j0 + d.jX * b)
   refine ⟨d.gram_XX, ?_, ?_, ?_, ?_, ?_⟩ <;>
     simp only [adj_add, adj_sub, hadj d.jX, hadj d.j0, Matrix.mul_add, Matrix.add_mul, Matrix.mul_sub, Matrix.sub_mul,
       Matrix.mul_assoc, d.gram_XX, d.gram_YY, d.gram_YX, d.gram_XY, d.gram_00, d.gram_0X, d.gram_0Y, d.wittDecomp_gram_X_anisotropic,
-      d.gramR_Y0_eq_TI, hmul d.gram_XX, hmul d.gram_YX, hmul d.gram_00, hmul d.gram_0X, hmul d.wittDecomp_gram_X_anisotropic,
+      hmul d.gram_XX, hmul d.gram_YX, hmul d.gram_00, hmul d.gram_0X, hmul d.wittDecomp_gram_X_anisotropic,
       hmul d.gramR_Y0_eq_TI, Matrix.zero_mul, Matrix.mul_zero, Matrix.one_mul, Matrix.mul_one, add_zero, sub_zero, zero_add,
       gA_plus]
   · rw [adj_smul, cA_half, adj_mul_plus, adj_plus, Matrix.mul_assoc]
@@ -515,38 +515,28 @@ theorem pX_nB : d.pX * mt S (d.nB b) = d.pX + b * d.p0 - (half D • (b * plus S
 
 theorem wittDecomp_projAnisotropic_unipotentMixed : d.p0 * mt S (d.nB b) = d.p0 - plus S₀ b * d.pY := by
   refine d.mat_ext ?_ ?_ ?_ <;>
-    simp [Matrix.mul_assoc, nB_jX,
-      nB_j0, nB_jY, Matrix.mul_add, Matrix.add_mul,
-      Matrix.mul_sub, Matrix.sub_mul] <;>
+    simp [Matrix.mul_assoc, nB_jX, nB_j0, nB_jY, Matrix.mul_add, Matrix.mul_sub, Matrix.sub_mul] <;>
     simp [← Matrix.mul_assoc]
 
 theorem pY_nB : d.pY * mt S (d.nB b) = d.pY := by
   refine d.mat_ext ?_ ?_ ?_ <;>
-    simp [Matrix.mul_assoc, nB_jX,
-      nB_j0, nB_jY, Matrix.mul_add, Matrix.add_mul,
-      Matrix.mul_sub, Matrix.sub_mul] <;>
+    simp [Matrix.mul_assoc, nB_jX, nB_j0, nB_jY, Matrix.mul_add, Matrix.mul_sub] <;>
     simp [← Matrix.mul_assoc]
 
 theorem pX_nC : d.pX * mt S (d.nC c) = d.pX + c.1 * d.pY := by
   refine d.mat_ext ?_ ?_ ?_ <;>
-    simp [Matrix.mul_assoc, nC_jX,
-      nC_j0, nC_jY, Matrix.mul_add, Matrix.add_mul,
-      Matrix.mul_sub, Matrix.sub_mul] <;>
-    simp [← Matrix.mul_assoc]
+    simp [Matrix.mul_assoc, nC_jX, nC_j0, nC_jY, Matrix.mul_add, Matrix.add_mul]
+  all_goals simp [← Matrix.mul_assoc]
 
 theorem wittDecomp_projAnisotropic_unipotentSkew : d.p0 * mt S (d.nC c) = d.p0 := by
   refine d.mat_ext ?_ ?_ ?_ <;>
-    simp [Matrix.mul_assoc, nC_jX,
-      nC_j0, nC_jY, Matrix.mul_add, Matrix.add_mul,
-      Matrix.mul_sub, Matrix.sub_mul] <;>
-    simp [← Matrix.mul_assoc]
+    simp [Matrix.mul_assoc, nC_jX, nC_j0, nC_jY, Matrix.mul_add]
+  all_goals simp [← Matrix.mul_assoc]
 
 theorem pY_nC : d.pY * mt S (d.nC c) = d.pY := by
   refine d.mat_ext ?_ ?_ ?_ <;>
-    simp [Matrix.mul_assoc, nC_jX,
-      nC_j0, nC_jY, Matrix.mul_add, Matrix.add_mul,
-      Matrix.mul_sub, Matrix.sub_mul] <;>
-    simp [← Matrix.mul_assoc]
+    simp [Matrix.mul_assoc, nC_jX, nC_j0, nC_jY, Matrix.mul_add]
+  all_goals simp [← Matrix.mul_assoc]
 
 end Unip
 

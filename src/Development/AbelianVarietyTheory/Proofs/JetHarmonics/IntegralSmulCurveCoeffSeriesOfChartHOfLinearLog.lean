@@ -475,7 +475,7 @@ theorem van_defect {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) :
 
 def invM (X : RawChart C d I κ) (j i : κ) : MvPowerSeries κ C :=
   subst (fun p : Fin 2 × κ => if p.1 = 0 then (MvPowerSeries.X p.2 : MvPowerSeries κ C) else 0)
-    (pderiv C ((1 : Fin 2), i) (addP X (gp C κ (0 : Fin 2)) (gp C κ 1) j))
+    (pderiv (R := C) ((1 : Fin 2), i) (addP X (gp C κ (0 : Fin 2)) (gp C κ 1) j))
 
 theorem axis_const (p : Fin 2 × κ) :
     constantCoeff (if p.1 = 0 then (MvPowerSeries.X p.2 : MvPowerSeries κ C) else 0) = 0 :=
@@ -487,7 +487,7 @@ theorem intS_invM {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) (j i : κ) :
     exacts [intS_X' _, GlobalTheory.RowVal.intS_zero]) (intS_pderiv (h.addInt j) _)
 
 theorem const_pderiv_lg {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) (k j : κ) :
-    constantCoeff (pderiv C j (X.lg k)) = if k = j then 1 else 0 := by
+    constantCoeff (pderiv (R := C) j (X.lg k)) = if k = j then 1 else 0 := by
   rw [← coeff_zero_eq_constantCoeff_apply, coeff_pderiv, zero_add, h.lin k _ (by rw [Finsupp.degree_single]), coeff_X]
   by_cases e : k = j
   · simp [e]
@@ -496,7 +496,7 @@ theorem const_pderiv_lg {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) (k j :
 theorem const_invM {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) (j i : κ) :
     constantCoeff (invM X j i) = if j = i then 1 else 0 := by
   have hA := formalAdd_const h (gp_const (C := C) (κ := κ) (0 : Fin 2)) (gp_const 1)
-  have e := congrArg (fun F => constantCoeff (pderiv C ((1 : Fin 2), i) F))
+  have e := congrArg (fun F => constantCoeff (pderiv (R := C) ((1 : Fin 2), i) F))
     (lg_addP h (gp_const (C := C) (κ := κ) (0 : Fin 2)) (gp_const 1) j)
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_add (f := _), pderiv_subst_eq_zero (gp_const 0) (fun x => pderiv_X_of_ne (by simp)), zero_add,
@@ -512,14 +512,14 @@ theorem const_invM {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) (j i : κ) 
   · rw [pderiv_X_of_ne (by simpa using hji), map_zero]
 
 theorem pderiv_hCv (X : RawChart C d I κ) {γ : κ → PowerSeries C} (hγ : ∀ i, PowerSeries.constantCoeff (γ i) = 0)
-    (j : κ) : pderiv C (some j) (hCv X γ) =
+    (j : κ) : pderiv (R := C) (some j) (hCv X γ) =
       subst (fun p : Fin 2 × κ => if p.1 = 0 then inT κ (γ p.2) else MvPowerSeries.X (some p.2))
-        (pderiv C ((1 : Fin 2), j) X.h) := by
+        (pderiv (R := C) ((1 : Fin 2), j) X.h) := by
   have hP := pair_const (fun x => constantCoeff_inT κ (hγ x))
     (fun x => (constantCoeff_X _ : constantCoeff (MvPowerSeries.X (some x) : MvPowerSeries (Option κ) C) = 0))
   unfold hCv hAt
   rw [FormalCalc.pderiv_subst (hasSubst_of_constantCoeff_zero hP), Fintype.sum_prod_type, Fin.sum_univ_two]
-  have h0 : ∀ x, pderiv C (some j) (inT κ (γ x)) = 0 := fun x =>
+  have h0 : ∀ x, pderiv (R := C) (some j) (inT κ (γ x)) = 0 := fun x =>
     pderiv_subst_eq_zero (fun _ => constantCoeff_X _) (fun _ => pderiv_X_of_ne (by simp)) _
   simp only [if_true, Fin.one_eq_zero_iff, OfNat.ofNat_ne_one, if_false, h0, mul_zero, Finset.sum_const_zero, zero_add]
   rw [Finset.sum_eq_single j, pderiv_X_self, mul_one]
@@ -530,7 +530,7 @@ theorem pderiv_hCv (X : RawChart C d I κ) {γ : κ → PowerSeries C} (hγ : �
 
 theorem intS_invDeriv {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) {γ : κ → PowerSeries C} (hγ : IsCv V γ)
     (i : κ) : IntS V (-inT κ (alongCv γ (X.sg (Pi.single i 1))) -
-      ∑ j, pderiv C (some j) (hCv X γ) * rename some (invM X j i)) := by
+      ∑ j, pderiv (R := C) (some j) (hCv X γ) * rename some (invM X j i)) := by
   have hγ0 := fun i => (hγ i).1
   have hΓ := fun x => constantCoeff_inT κ (hγ0 x)
   let c : Fin 3 × κ → MvPowerSeries (Option κ) C := fun p =>
@@ -557,9 +557,9 @@ theorem intS_invDeriv {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) {γ : κ
       subst_eq_zero_of_van (T := Set.univ) (fun _ => map_zero _) (fun _ _ => rfl) (van_univ (lg_const h y))
     simp only [z, add_zero]
     exact addP_zero h (fun _ => constantCoeff_X _) x
-  have d0 : ∀ x, pderiv C ((2 : Fin 3), i) (gp C κ (0 : Fin 3) x) = 0 := fun x => pderiv_X_of_ne (by simp)
-  have d1 : ∀ x, pderiv C ((2 : Fin 3), i) (gp C κ (1 : Fin 3) x) = 0 := fun x => pderiv_X_of_ne (by simp)
-  have sM : ∀ j, subst c (pderiv C ((2 : Fin 3), i) (addP X (gp C κ (1 : Fin 3)) (gp C κ 2) j)) =
+  have d0 : ∀ x, pderiv (R := C) ((2 : Fin 3), i) (gp C κ (0 : Fin 3) x) = 0 := fun x => pderiv_X_of_ne (by simp)
+  have d1 : ∀ x, pderiv (R := C) ((2 : Fin 3), i) (gp C κ (1 : Fin 3) x) = 0 := fun x => pderiv_X_of_ne (by simp)
+  have sM : ∀ j, subst c (pderiv (R := C) ((2 : Fin 3), i) (addP X (gp C κ (1 : Fin 3)) (gp C κ 2) j)) =
       rename some (invM X j i) := fun j => by
     let e : Fin 2 × κ → MvPowerSeries (Fin 3 × κ) C := fun p => if p.1 = 0 then gp C κ 1 p.2 else gp C κ 2 p.2
     have he : ∀ p, constantCoeff (e p) = 0 := pair_const (gp_const 1) (gp_const 2)
@@ -573,29 +573,31 @@ theorem intS_invDeriv {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) {γ : κ
     simp only [e, if_true, Fin.one_eq_zero_iff, OfNat.ofNat_ne_one, if_false, d1, mul_zero, Finset.sum_const_zero,
       zero_add]
     rw [Finset.sum_eq_single i]
-    · rw [show pderiv C ((2 : Fin 3), i) (gp C κ (2 : Fin 3) i) = 1 from pderiv_X_self, mul_one,
+    · rw [show pderiv (R := C) ((2 : Fin 3), i) (gp C κ (2 : Fin 3) i) = 1 from pderiv_X_self, mul_one,
         subst_comp_subst_apply hE hS, invM, rename_eq_subst,
         subst_comp_subst_apply (hasSubst_of_constantCoeff_zero axis_const) (HasSubst.X_comp _)]
       congr 1
+      funext p
+      dsimp only [e]
       split_ifs
       · rw [s1, subst_X (HasSubst.X_comp _)]
         rfl
       · rw [s2, ← coe_substAlgHom (HasSubst.X_comp _), map_zero]
     · intro x _ hx
-      rw [show pderiv C ((2 : Fin 3), i) (gp C κ (2 : Fin 3) x) = 0 from pderiv_X_of_ne (by simpa using hx), mul_zero]
+      rw [show pderiv (R := C) ((2 : Fin 3), i) (gp C κ (2 : Fin 3) x) = 0 from pderiv_X_of_ne (by simpa using hx), mul_zero]
     · intro h
       exact absurd (Finset.mem_univ _) h
   have h1 := intS_subst hc hci (intS_pderiv h.ph2 ((2 : Fin 3), i))
   have h2 := subst_eq_zero_of_van hc (fun s (hs : s.1 = 2) => by
     rw [show s = (2, s.2) from Prod.ext hs rfl]; exact hc2 _) (van_pderiv_mvExp (van_defect h) ((2 : Fin 3), i))
   rw [subst_sub hS, sub_eq_zero] at h2
-  have t1 : pderiv C ((2 : Fin 3), i) (hAt X (gp C κ (0 : Fin 3)) (gp C κ 1)) = 0 :=
+  have t1 : pderiv (R := C) ((2 : Fin 3), i) (hAt X (gp C κ (0 : Fin 3)) (gp C κ 1)) = 0 :=
     pderiv_subst_eq_zero (pair_const (gp_const 0) (gp_const 1)) (fun p => by
       split_ifs
       exacts [d0 _, d1 _]) _
   have hP := hasSubst_of_constantCoeff_zero (pair_const (gp_const (C := C) (κ := κ) (0 : Fin 3)) hA)
-  have t3 : subst c (pderiv C ((2 : Fin 3), i) (hAt X (gp C κ 0) (addP X (gp C κ 1) (gp C κ 2)))) =
-      ∑ j, pderiv C (some j) (hCv X γ) * rename some (invM X j i) := by
+  have t3 : subst c (pderiv (R := C) ((2 : Fin 3), i) (hAt X (gp C κ 0) (addP X (gp C κ 1) (gp C κ 2)))) =
+      ∑ j, pderiv (R := C) (some j) (hCv X γ) * rename some (invM X j i) := by
     unfold hAt
     rw [FormalCalc.pderiv_subst hP, Fintype.sum_prod_type, Fin.sum_univ_two]
     simp only [if_true, Fin.one_eq_zero_iff, OfNat.ofNat_ne_one, if_false, d0, mul_zero, Finset.sum_const_zero,
@@ -618,13 +620,23 @@ theorem intS_invDeriv {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) {γ : κ
 theorem mm_pderiv_l_smul_hCoef {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) {γ : κ → PowerSeries C}
     (hγ : IsCv V γ) (n : ℕ)
     (hs : ∀ v : κ → C, (∀ i, V.Ge 0 (v i)) → V.MM ((V.l : C) * PowerSeries.coeff n (alongCv γ (X.sg v)))) :
-    ∀ i μ, V.MM (coeff μ (pderiv C i ((V.l : C) • hCoef X γ n))) := by
-  refine mm_of_mul_matrix (D := fun j => pderiv C j ((V.l : C) • hCoef X γ n)) (intS_invM h) (const_invM h)
+    ∀ i μ, V.MM (coeff μ (pderiv (R := C) i ((V.l : C) • hCoef X γ n))) := by
+  refine mm_of_mul_matrix (D := fun j => pderiv (R := C) j ((V.l : C) • hCoef X γ n)) (intS_invM h) (const_invM h)
     fun i μ => ?_
+  have pderiv_coeff (f : MvPowerSeries (Option κ) C) (j : κ) :
+      pderiv j (PowerSeries.coeff n (optionEquivLeft κ C f)) =
+        PowerSeries.coeff n (optionEquivLeft κ C (pderiv (some j) f)) := by
+    ext ν
+    rw [coeff_pderiv, coeff_coeff_optionEquivLeft, coeff_coeff_optionEquivLeft, coeff_pderiv]
+    have hν : (ν + Finsupp.single j 1).optionElim n =
+        ν.optionElim n + Finsupp.single (some j) 1 := by
+      ext t
+      cases t <;> simp [Finsupp.single_apply]
+    rw [hν, Finsupp.optionElim_apply_some]
   have h1 := intS_iff_coeff (intS_invDeriv h hγ i) n μ
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [map_sub, map_neg, map_sum, map_mul, optionEquivLeft_inT, optionEquivLeft_rename_some,
-    PowerSeries.coeff_mul_C, PowerSeries.coeff_map, ← pderiv_coeff_optionEquivLeft,
+    PowerSeries.coeff_mul_C, PowerSeries.coeff_map, ← pderiv_coeff,
     coeff_hCv X fun i => (hγ i).1] at h1
   have h2 := hs (Pi.single i 1) fun j => by
     rw [Pi.single_apply]

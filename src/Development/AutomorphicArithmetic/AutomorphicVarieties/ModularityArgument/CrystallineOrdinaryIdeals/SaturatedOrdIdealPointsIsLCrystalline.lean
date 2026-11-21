@@ -19,7 +19,7 @@ def glPart {G R : Type} [Group G] [CommRing R] {m : ℕ} (H : Subgroup G) (r : G
   map_one' := by simp
   map_mul' g g' := by simp [h g g.2]
 
-theorem ptsCr_IY : LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : D.Univ), GlobalTheory.OrdLoc.PtsCr D U (GlobalTheory.OrdLoc.IY D U) := by
+theorem ptsCr_IY : LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (U : _root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition O D.η D.Ψ)), GlobalTheory.OrdLoc.PtsCr D U (GlobalTheory.OrdLoc.IY D U) := by
   intro hP l _ O _ _ _ _ _ _ _ D U B _ _ _ _ _ _ _ f hf
   obtain ⟨-, -, hemb, -, -⟩ := GlobalTheory.T.galoisSubgroupL_basic_properties D
   have hright : ∀ g ∈ D.HL, (push f U.r.hom g).right = 1 := fun g hg => by

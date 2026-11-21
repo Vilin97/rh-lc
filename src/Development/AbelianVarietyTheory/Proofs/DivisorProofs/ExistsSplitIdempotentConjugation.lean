@@ -6,7 +6,7 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.NormSub
 
 @[expose] public section
 
-open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.CentTorus GlobalTheory.CentAtP
+open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid
 open scoped TensorProduct Classical
 
 noncomputable section
