@@ -206,9 +206,25 @@ theorem main : ∀ (D : D7) (u : D.what₂.Word) (A : AtTTied u) (i : ℕ) (hi :
     have : b = RingOfIntegers.mapRingHom (sigD D : D.host.E →+* D.host.E) a := RingOfIntegers.ext hb
     rw [this]; rfl
   have hlat := bwB_clsCrd_lat D u i hi
+  have hlatFull : ∀ c, Submodule.IsFullLattice D.host.E (clsCrd D u i hi c) := by
+    intro c
+    letI := D.host.cmStar
+    let φ := (D.sp.X i).frame.equivFun.trans
+      (LinearEquiv.funCongrLeft D.host.E D.host.E (finCongr (rankN D i hi)).symm)
+    letI : Submodule.IsLattice D.host.E (clsCrd D u i hi c) := hlat c
+    let hbase : Submodule.IsFullLattice D.host.E (D.clsLat u i c) := D.clsLat_lat u i c
+    constructor
+    change Submodule.span D.host.E (((D.clsLat u i c).map
+      (φ.toLinearMap.restrictScalars (𝓞 D.host.E)) : Submodule (𝓞 D.host.E) (Fin (D.R.N i) → D.host.E)) : Set (Fin (D.R.N i) → D.host.E)) = ⊤
+    rw [show Submodule.span D.host.E (((D.clsLat u i c).map
+        (φ.toLinearMap.restrictScalars (𝓞 D.host.E)) : Submodule (𝓞 D.host.E) (Fin (D.R.N i) → D.host.E)) : Set (Fin (D.R.N i) → D.host.E)) =
+        (Submodule.span D.host.E (D.clsLat u i c : Set _)).map φ.toLinearMap by
+          rw [Submodule.map_span]; rfl,
+      hbase.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+    exact φ.surjective
   obtain ⟨hγL, hγd⟩ := (GlobalTheory.LevelHecke.DualConj.dual_conj_primes _ _ _ _ (A.Pv v) (rlvQ A v) hσσ (bwB_gramN_det D i hi) hJ hPQ _ _
-    (hlat c') (hlat c)).2.2 γ hγ
-  obtain ⟨k1, k2, -⟩ := GlobalTheory.LevelHecke.DualConj.dual_conj_primes _ _ _ _ (A.Pv v) (rlvQ A v) hσσ (bwB_gramN_det D i hi) hJ hPQ _ _ hγL (hlat c)
+    (hlatFull c') (hlatFull c)).2.2 γ hγ
+  obtain ⟨k1, k2, -⟩ := GlobalTheory.LevelHecke.DualConj.dual_conj_primes _ _ _ _ (A.Pv v) (rlvQ A v) hσσ (bwB_gramN_det D i hi) hJ hPQ _ _ hγL (hlatFull c)
   have hdQ := k1 hP
   rw [hγd] at hdQ k2
   have hQ := k2 hdP
@@ -216,11 +232,12 @@ theorem main : ∀ (D : D7) (u : D.what₂.Word) (A : AtTTied u) (i : ℕ) (hi :
   have hU : (K.y c).1⁻¹ * bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) γ * (K.y c').1 ∈
       UPts (sigD D) (gramN D i hi) (FiniteAdeleRing (𝓞 D.host.F) D.host.F) :=
     mul_mem (mul_mem (inv_mem (K.y c).2) (Formalism.UG.P.rational_points_le_holds _ _ _ _ _ _ ⟨γ, hγ, rfl⟩)) (K.y c').2
-  have hLb : Submodule.IsLattice D.host.E K.lev.Lb :=
-    Submodule.IsLattice.of_fg D.host.E ((Submodule.fg_top _).1 K.lev.Lb_fin.fg_top)
+  have hLb : Submodule.IsFullLattice D.host.E K.lev.Lb :=
+    { toIsLattice := Submodule.IsLattice.of_fg D.host.E ((Submodule.fg_top _).1 K.lev.Lb_fin.fg_top)
+      span_eq_top := K.lev.Lb_span }
   have hy : ∀ c, ∀ x, x ∈ latS (F := D.host.F) ((A.eV v).1.adicCompletion D.host.F) (intV D.host.E (A.eV v).1) (Ld D u i hi c) ↔
       ((bc (prV (E := D.host.E) (A.eV v).1) (K.y c).1)⁻¹).1 *ᵥ x ∈ dualV K (A.eV v).1 := fun c =>
-    GlobalTheory.DualCompletion.dual_move _ _ (sigD D) _ (gramN D i hi) (A.eV v).1 _ K.lev.Lb _ (bwB_gramN_det D i hi) (hlat c) hLb
+    GlobalTheory.DualCompletion.dual_move _ _ (sigD D) _ (gramN D i hi) (A.eV v).1 _ K.lev.Lb _ (bwB_gramN_det D i hi) (hlatFull c) hLb
       (Formalism.UG.P.afsplit_bc_mem _ _ _ _ (K.y c).2) (fun x => by
         rw [← map_inv]; exact rlv_yloc (A.eV v).1 (K.y c).1 (K.y_lat c) x)
   rw [K.lev.UlocAlt _ (A.eV v).2]

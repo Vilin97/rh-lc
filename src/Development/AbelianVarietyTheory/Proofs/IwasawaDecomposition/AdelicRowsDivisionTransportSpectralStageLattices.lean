@@ -33,11 +33,16 @@ namespace GlobalTheory.Mem.R3.Rw.Up
 set_option maxHeartbeats 4000000 in
 theorem rows_up_at : ∀ (K : Ctx) (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : ColW B f T) (Z : w.Lt) (Wt : Set B.places.Pl) (p0 : BaseLevelRowSide (w.D Z)) (t : RowsT K w Z Wt p0) (S' : SStage B w.C Z.W) (N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V) (h : B.Word → ℝ), ∃ t' : RowsT K w (SRe.upL Z S' N h) Wt (Tr.baseLevelRowSideTransport (refUp Z S' N h) p0), RowsSame t t' ∧ HEq t'.r.z.geo (geoHalf (a := ⟨Z.W, Z.V, Z.S, Z.N, Z.G⟩) (SRe.upL Z S' N h) (iK := t.r.z.alg) t.r.z.geo) ∧ SRe.pkOf t' = (SRe.pkOf t).up Z S' N h ∧ (Nonempty (RXs t) → Nonempty (RXs t')) := by
   intro K B f T w Z Wt p0 t S' N h
-  obtain ⟨⟨z', hold', Y', Z'', tup'⟩, hz, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15⟩ :=
-    GlobalTheory.T.exists_adelicRowsDivision_over_replacedLaterStages B w.C Z (refUp Z S' N h) _ w.I t.hX T Wt (Equiv.refl _) p0 t.r
+  let ix : w.C.Tup ≃ w.I.ι := by
+    with_unfolding_all exact (Equiv.refl w.C.Tup :)
+  have transported := GlobalTheory.T.exists_adelicRowsDivision_over_replacedLaterStages
+    B w.C Z (refUp Z S' N h) w.px w.I t.hX T Wt ix p0
+    (by with_unfolding_all exact (t.r :))
+  rcases transported with
+    ⟨⟨z', hold', Y', Z'', tup'⟩, hz, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15⟩
   subst hz
   let r' : RowsAre (w.st (SRe.upL Z S' N h)) w.I t.hX T Wt (Equiv.refl _) (Tr.baseLevelRowSideTransport (refUp Z S' N h) p0) :=
-    ⟨_, hold', Y', Z'', tup'⟩
+    ⟨Mv.cpDat (refUp Z S' N h).to (refUp Z S' N h).same t.r.z, hold', Y', Z'', tup'⟩
   have eW1 := Mv.forcedContentPlaces_eq_transport_sameFiniteGroup (refUp Z S' N h).to (refUp Z S' N h).same t.r.z (F0K K.s (w.D (SRe.upL Z S' N h)))
   let t' : RowsT K w (SRe.upL Z S' N h) Wt (Tr.baseLevelRowSideTransport (refUp Z S' N h) p0) :=
     { hX := t.hX
@@ -61,7 +66,7 @@ theorem rows_up_at : ∀ (K : Ctx) (B : Base) (f : Fr B.toPre) (T : TwDat B) (w 
   exact (by with_unfolding_all exact ((congrArg (fun e => ({ (SRe.pkOf t).up Z S' N h with eE := e } : SRe.RowPk (SRe.upL Z S' N h).D)) (eq_of_heq h8)) :))
 
 theorem rows_up : ∀ (K : Ctx) (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : ColW B f T) (Z : w.Lt) (Wt : Set B.places.Pl) (p0 : BaseLevelRowSide (w.D Z)) (t : RowsT K w Z Wt p0) (S' : SStage B w.C Z.W) (N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V) (h : B.Word → ℝ), ∃ (p0' : BaseLevelRowSide (w.D (SRe.upL Z S' N h))) (t' : RowsT K w (SRe.upL Z S' N h) Wt p0'), RowsSame t t' ∧ HEq t'.r.z.geo (geoHalf (a := ⟨Z.W, Z.V, Z.S, Z.N, Z.G⟩) (SRe.upL Z S' N h) (iK := t.r.z.alg) t.r.z.geo) ∧ SRe.pkOf t' = (SRe.pkOf t).up Z S' N h ∧ (Nonempty (RXs t) → Nonempty (RXs t')) := fun K B f T w Z Wt p0 t S' N h =>
-  let ⟨t', h1, h2, h3, h4⟩ := rows_up_at K B f T w Z Wt p0 t S' N h
-  ⟨_, t', h1, h2, h3, h4⟩
+  Exists.elim (rows_up_at K B f T w Z Wt p0 t S' N h) fun t' ht' =>
+    ⟨Tr.baseLevelRowSideTransport (refUp Z S' N h) p0, t', ht'⟩
 
 end GlobalTheory.Mem.R3.Rw.Up

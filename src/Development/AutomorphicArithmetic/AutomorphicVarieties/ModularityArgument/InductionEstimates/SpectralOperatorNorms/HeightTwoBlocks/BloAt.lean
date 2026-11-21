@@ -20,17 +20,21 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.KX.bloAt :
       IsSummand (mu1 E r) V → ((cuspToL2 (mu1 E r) ⟨b.f.1, b.cusp⟩ : cuspidalL2 (mu1 E r)) : LL (mu1 E r)) ∈ V →
       At (mu1 E r) S V (fun τ => Finset.univ.val.map (b.Λ τ)) fun w => (b.sat w).map fun x : ℂˣ => (x : ℂ) := by
   intro E _ _ _ S r b V hV hf
-  obtain ⟨π, hπ, -⟩ := Dp.exCusp E r (mu1 E r) V hV
-  have hc : (⟨b.f.1, b.cusp⟩ : AutomorphicForm.cuspForms E r) ∈ AutomorphicForm.centralCuspForms E r := fun s x => by
-    have := b.cen (Real.log s.1) x
-    unfold zt at this
-    simpa only [Real.exp_log s.2] using this
+  obtain ⟨π, hπ⟩ := (Dp.exCusp E r (mu1 E r) V hV).exists
+  have hc : (⟨b.f.1, b.cusp⟩ : AutomorphicForm.cuspForms E r) ∈ AutomorphicForm.centralCuspForms E r := by
+    intro s x
+    have hs : (⟨Real.exp (Real.log s.1), Real.exp_pos _⟩ : {t : ℝ // 0 < t}) = s :=
+      Subtype.ext (Real.exp_log s.2)
+    have h := b.cen (Real.log s.1) x
+    unfold zt at h
+    rw [hs] at h
+    exact h
   have hm : b.f ∈ π.V := by
     have : (⟨b.f.1, b.cusp⟩ : AutomorphicForm.cuspForms E r) ∈ UpperTheory.V.Cm.carrier π := by
       rw [hπ.carrier_eq]; exact ⟨hc, hf⟩
     exact this
   refine ⟨fun τ => ?_, fun w hw => ?_⟩
-  · obtain ⟨m, h1, -⟩ := Dp.sInfEx E r (mu1 E r) V hV τ
+  · obtain ⟨m, h1⟩ := (Dp.sInfEx E r (mu1 E r) V hV τ).exists
     have h2 : GlobalTheory.UnitaryBC.HasInfCharGL π.V τ m := (Dp.sInfIff E r (mu1 E r) π V hπ τ m).1 h1
     have hs : Submodule.span ℂ {b.f} ≠ ⊥ := by simpa using b.ne
     have e : m = Finset.univ.val.map (b.Λ τ) := by

@@ -98,17 +98,26 @@ theorem mass_nonneg (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submodule (𝓞 K) V
 
 theorem isIntLat_latIn (h : V →ₗ⋆[K] V →ₗ[K] K) {L : Submodule (𝓞 K) V} (hL : IsIntLat h L)
     (U : Submodule K V) : IsIntLat (hRes h U) (latIn U L) := by
-  refine ⟨⟨?_, ?_⟩, fun x hx y hy => hL.2 x hx y hy⟩
-  · apply Submodule.fg_of_fg_map_injective (U.subtype.restrictScalars (𝓞 K)) U.injective_subtype
-    exact hL.1.fg.of_le (Submodule.map_comap_le _ _)
-  · intro s hs hli
-    letI : Submodule.IsLattice K L := hL.1
-    apply LinearIndependent.of_comp U.subtype
-    apply Submodule.IsLattice.linearIndependent K L
-    · intro x
-      exact hs x.2
-    · exact hli.map' (U.subtype.restrictScalars (𝓞 K))
-        (LinearMap.ker_eq_bot.mpr U.injective_subtype)
+  letI : Submodule.IsLattice K (latIn U L) := by
+    refine ⟨?_, ?_⟩
+    · apply Submodule.fg_of_fg_map_injective (U.subtype.restrictScalars (𝓞 K)) U.injective_subtype
+      exact hL.1.fg.of_le (Submodule.map_comap_le _ _)
+    · intro s hs hli
+      letI : Submodule.IsLattice K L := hL.1.toIsLattice
+      apply LinearIndependent.of_comp U.subtype
+      apply Submodule.IsLattice.linearIndependent K L
+      · intro x
+        exact hs x.2
+      · exact hli.map' (U.subtype.restrictScalars (𝓞 K))
+          (LinearMap.ker_eq_bot.mpr U.injective_subtype)
+  refine ⟨{ span_eq_top := ?_ }, fun x hx y hy => hL.2 x hx y hy⟩
+  · letI : Submodule.IsFullLattice K L := hL.1
+    refine eq_top_iff.mpr fun x _ => ?_
+    obtain ⟨a, ha, hax⟩ := exists_ne_zero_smul_mem_of_mem_span_fractionField K
+      (show (x : V) ∈ Submodule.span K (L : Set V) by rw [Submodule.IsFullLattice.span_eq_top]; trivial)
+    have ha' : algebraMap (𝓞 K) K a ≠ 0 := by simpa using ha
+    rw [← Submodule.smul_mem_iff _ ha', algebraMap_smul]
+    exact Submodule.subset_span hax
 
 
 end
@@ -161,7 +170,7 @@ theorem main : MaxMass → ∀ (K V : Type) [Field K] [NumberField K] [StarRing 
   have m2 := mass_nonneg h₂ I₂
   have h1 := orbSum_encard_le (isom h) (Submodule (𝓞 K) V) (Submodule K V) 𝒢 (fun L => primSp h L j n)
     (fun g L U => (GlobalTheory.T.primitive_sublattices_move_with_isometries K V h hK hs hnd g L U j n).1) hst
-    (fun L hL => (GlobalTheory.T.hermitianGenusMass_eq_orbitStabilizerMass K V h hK hs hp L (h𝒢 L hL).1.1).2.2.2.1 L (h𝒢 L hL).1.1) S
+    (fun L hL => (GlobalTheory.T.hermitianGenusMass_eq_orbitStabilizerMass K V h hK hs hp L (h𝒢 L hL).1.1.toIsLattice).2.2.2.1 L (h𝒢 L hL).1.1.toIsLattice) S
     (fun L hL U hU => hcov U hU.1 ⟨latIn U L, isIntLat_latIn h (h𝒢 L hL).1 U, hU.2⟩)
   refine h1.trans ?_
   set X : ℝ := (n : ℝ) * N₀ with hX

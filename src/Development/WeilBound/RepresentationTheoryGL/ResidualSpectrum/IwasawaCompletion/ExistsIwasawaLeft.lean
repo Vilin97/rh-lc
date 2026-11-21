@@ -35,7 +35,8 @@ theorem exists_iwasawa (g : GA E N) :
     intro z
     apply mem_parab_iff.2
     intro a b i j hab
-    simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hab.ne']
+    simp [leviEmb]
+    simp [Matrix.blockDiagonal', hab.ne']
   let P : parab (Cinf E) (stdBlocks n h) := ⟨b, hbp⟩
   let L : parab (Cinf E) (stdBlocks n h) :=
     ⟨leviEmb (Cinf E) (stdBlocks n h) (leviProj (Cinf E) (stdBlocks n h) P),
@@ -70,7 +71,8 @@ theorem exists_iwasawa_left (g : GA E N) :
       ⟨leviEmb (Ad E) (stdBlocks n h) m, by
         apply mem_parab_iff.2
         intro a b i j hab
-        simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hab.ne']⟩
+        simp [leviEmb]
+        simp [Matrix.blockDiagonal', hab.ne']⟩
     obtain ⟨U, hU, hUeq⟩ := Subgroup.mem_map.1 hu
     rw [← hUeq]
     change ((P * U * P⁻¹ : parab (Ad E) (stdBlocks n h)) : GL (Fin N) (Ad E)) ∈ _

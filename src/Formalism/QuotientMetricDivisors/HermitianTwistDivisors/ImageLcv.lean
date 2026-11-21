@@ -149,7 +149,25 @@ theorem imageLcv_gram_ne [_root_.NumberField.IsTotallyComplex K] {d : ℕ}
 
 end Main
 
-theorem imageLcv_of (h : LcvBasis) : ImageLcv := by
+set_option quotPrecheck false in
+local notation "CovolumeViaBasis" =>
+  (∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (d : ℕ)
+    (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ), (∀ v, IsUnit (X v).det) →
+    ∀ L : Submodule (𝓞 K) (Fin d → K), Submodule.IsFullLattice K L →
+    ∀ e : Fin d → Fin d → K, LinearIndependent K e →
+      (Function.support fun w : HeightOneSpectrum (𝓞 K) =>
+        lw w * (idx w (Submodule.span (𝓞 K) (Set.range e)) L : ℝ)).Finite ∧
+      lcv X L = (2 / (finrank ℚ K : ℝ)) * ∑ v, Real.log (gram X v e).det.re +
+        2 * ∑ᶠ w : HeightOneSpectrum (𝓞 K), lw w * (idx w (Submodule.span (𝓞 K) (Set.range e)) L : ℝ))
+
+theorem imageLcv_of (h : CovolumeViaBasis) :
+    ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (d : ℕ)
+      (XS XT : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ), (∀ v, IsUnit (XS v).det) →
+      (∀ v, IsUnit (XT v).det) →
+      ∀ φ : Matrix (Fin d) (Fin d) K, IsUnit φ.det →
+      ∀ L : Submodule (𝓞 K) (Fin d → K), Submodule.IsFullLattice K L →
+        lcv XT (matLat φ L) = lcv XS L +
+          (2 / (finrank ℚ K : ℝ)) * ∑ v, Real.log (detRatio XS XT φ v) := by
   intro K _ _ _ _ d XS XT hXS hXT φ hφ L hL
   classical
   have hu : IsUnit φ := (Matrix.isUnit_iff_isUnit_det φ).mpr hφ
@@ -195,7 +213,12 @@ theorem imageLcv_of (h : LcvBasis) : ImageLcv := by
   simp only [hdet, Finset.sum_sub_distrib]
   ring
 
-theorem idxLcv_of (h : LcvBasis) : IdxLcv := by
+theorem idxLcv_of (h : CovolumeViaBasis) :
+    ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (d : ℕ)
+      (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ), (∀ v, IsUnit (X v).det) →
+      ∀ A B : Submodule (𝓞 K) (Fin d → K), Submodule.IsFullLattice K A → Submodule.IsFullLattice K B →
+        (Function.support fun w : HeightOneSpectrum (𝓞 K) => lw w * (idx w A B : ℝ)).Finite ∧
+        lcv X B = lcv X A + 2 * ∑ᶠ w : HeightOneSpectrum (𝓞 K), lw w * (idx w A B : ℝ) := by
   intro K _ _ _ _ d X hX A B hA hB
   classical
   have hE := imageLcv_std_li (K := K) d

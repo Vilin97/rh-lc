@@ -15,7 +15,6 @@ namespace Formalism.L2.SG.Pf.NcS.KfOrbPf
 
 open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.SG.Sub Formalism.L2.SG.Measures Formalism.L2.SG.LocVol NumberField IsDedekindDomain
   MeasureTheory Topology Filter
-open Formalism.L2.SG.Pf.NcS.FinVolSk
 open scoped TensorProduct
 
 section SlopeTestRemainingChoices
@@ -137,14 +136,24 @@ theorem projV_eq_map (v : HeightOneSpectrum (𝓞 F)) {n : ℕ} (X : Matrix (Fin
 
 end SlopeTestRemainingChoices
 
-theorem finite_orbit_holds : KfOrb := by
+theorem finite_orbit_holds :
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+      (σ : E →ₐ[F] E) (n : ℕ) (J : Matrix (Fin n) (Fin n) E) (a : ℕ) (X0 : Fin a → Fin n → E)
+      (Λ : Set (Fin n → E)),
+      IsCMExt F E σ → IsHermND σ J →
+      (∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsFullLattice E L ∧ (L : Set (Fin n → E)) = Λ) →
+      MeasurableSet {x : Fin a → Fin n → Af F ⊗[F] E | ∃ k ∈ Kf σ J Λ, x = k • ratTup (Af F) X0} ∧
+      ∀ x : Fin a → Fin n → Af F ⊗[F] E, (∃ k ∈ Kf σ J Λ, x = k • ratTup (Af F) X0) ↔
+        ∀ v : HeightOneSpectrum (𝓞 F),
+          projV v x ∈ {X | ∃ k ∈ Formalism.L2.SG.TypedSets.Kv σ J Λ v, X = k • ratTup (Fv F v) X0} := by
   intro F E _ _ _ _ _ σ n J a X0 Λ hCM hJ hLat
   classical
   have : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E
   obtain ⟨L, hL, rfl⟩ := hLat
+  let : Submodule.IsFullLattice E L := hL
   let b := Module.finBasis F E
   set Y := ratTup (F := F) (Af F) X0 with hYdef
-  obtain ⟨hKc, -⟩ := Formalism.L2.SG.Pf.NcS.AdTupPf.kf_compact_open σ J L hL
+  obtain ⟨hKc, -⟩ := Formalism.L2.SG.Pf.NcS.AdTupPf.kf_compact_open σ J L inferInstance
   have hmat : Continuous (fun g : HA (Af F) σ J =>
       ((HA.mat (Af F) σ J g : GL (Fin n) (Af F ⊗[F] E)) : Matrix (Fin n) (Fin n) (Af F ⊗[F] E))) :=
     Units.continuous_val.comp continuous_subtype_val

@@ -24,12 +24,12 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.SplitSwap
 
+open GlobalTheory.CompanionTheory.OrbitCount (dg dg_injective)
 open scoped Pointwise
 
 variable {H : Type} [Group H]
 
 local notation "sw" => MulEquiv.toMonoidHom (MulEquiv.prodComm : H × H ≃* H × H)
-local notation "dg" => MonoidHom.prod (MonoidHom.id H) (MonoidHom.id H)
 
 theorem relIndex_sq (A B : Subgroup H) :
     (A.prod A).relIndex (B.prod B) = A.relIndex B * A.relIndex B := by
@@ -52,12 +52,11 @@ theorem stab_pair (Z C K L : Subgroup H)
     (hL : ∀ x : H, (Z ⊓ L.map (MulAut.conj x).toMonoidHom).relIndex C ≠ 0) (x : H × H) :
     Z.map dg ⊓ (K.prod K).map (MulAut.conj x).toMonoidHom ≤ C.map dg ∧
       (Z.map dg ⊓ (L.prod L).map (MulAut.conj x).toMonoidHom).relIndex (C.map dg) ≠ 0 := by
-  have hinj : Function.Injective dg := fun a b h => congrArg Prod.fst h
   constructor
   · rintro _ ⟨⟨t, ht, rfl⟩, ⟨⟨k₁, k₂⟩, ⟨hk₁, -⟩, he⟩⟩
     refine ⟨t, hK x.1 ⟨ht, k₁, hk₁, congrArg Prod.fst he⟩, rfl⟩
   · have h0 := Subgroup.relIndex_inf_ne_zero (hL x.1) (hL x.2)
-    rw [← Subgroup.relIndex_map_map_of_injective _ _ hinj] at h0
+    rw [← Subgroup.relIndex_map_map_of_injective _ _ (dg_injective (H := H))] at h0
     refine ne_zero_of_dvd_ne_zero h0 (Subgroup.relIndex_dvd_of_le_left _ ?_)
     rintro _ ⟨t, ⟨⟨ht, l₁, hl₁, e₁⟩, ⟨-, l₂, hl₂, e₂⟩⟩, rfl⟩
     refine ⟨⟨t, ht, rfl⟩, (l₁, l₂), ⟨hl₁, hl₂⟩, Prod.ext e₁ e₂⟩

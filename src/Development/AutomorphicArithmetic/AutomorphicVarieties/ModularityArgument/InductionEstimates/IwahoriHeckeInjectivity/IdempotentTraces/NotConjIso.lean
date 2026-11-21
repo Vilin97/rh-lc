@@ -106,7 +106,7 @@ private theorem deg_sum (h2 : Module.finrank F E = 2) (v : HeightOneSpectrum (�
     (T : Finset (v.asIdeal.primesOver (𝓞 E))) : ∑ q ∈ T, q.1.inertiaDeg (𝓞 F) ≤ 2 := by
   have := v.isMaximal
   have : Fintype (v.asIdeal.primesOver (𝓞 E)) := (IsDedekindDomain.primesOver_finite v.asIdeal (𝓞 E)).fintype
-  rw [← h2, Algebra.IsAlgebraic.finrank_of_isFractionRing (𝓞 F) F (𝓞 E) E,
+  rw [← h2, IsFractionRing.finrank_eq (𝓞 F) F (𝓞 E) E,
     ← Ideal.sum_ramification_inertia_eq_finrank v.asIdeal (𝓞 E)]
   refine (Finset.sum_le_sum_of_subset T.subset_univ).trans (Finset.sum_le_sum fun q _ => ?_)
   have := q.2.1
@@ -193,13 +193,16 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E.indCs :
     IndNorm → IndCs := by
   intro hN K M _ _ hK _ _ hM _ h2 π hm hS
   have hq : Algebra.IsQuadraticExtension K M := ⟨h2⟩
+  have hn : 1 ≤ (2 : ℕ) := by decide
   let μ : Measure (normOneGL (K := M) (n := 2)) := Measure.haar
-  obtain ⟨χ, ⟨s, hχ⟩, V, hV⟩ := Dp.exTwist M 2 μ π (by norm_num)
+  obtain ⟨χ, ⟨s, hχ⟩, V, hV⟩ :
+      ∃ χ : HChar M, (∃ s : ℂ, IsPow χ s) ∧ ∃ V, Dp.Carries μ (π.twist χ) V :=
+    Dp.exTwist M 2 μ π hn
   obtain ⟨hex, hpw⟩ := powTwist K M
   obtain ⟨χ₀, hχ₀⟩ := (hex s).1
-  obtain ⟨hi₀, hi, -⟩ := hpw s χ₀ χ hχ₀ hχ
-  have hback := ((hpw s χ₀ χ hχ₀ hχ).2.2 2 (by norm_num)).2.1 π
-  have hCj := ((hpw (-s) χ₀⁻¹ χ⁻¹ hi₀ hi).2.2 2 (by norm_num)).2.2.2.1
+  obtain ⟨hi₀, hi, htw⟩ := hpw s χ₀ χ hχ₀ hχ
+  have hback := (htw 2 hn).2.1 π
+  have hCj := ((hpw (-s) χ₀⁻¹ χ⁻¹ hi₀ hi).2.2 2 hn).2.2.2.1
   have hnorm : GlobalTheory.DiscSpec.IsNormalised (π.twist χ) :=
     (Dp.normIff M 2 _).2 ((Dp.exSummand M 2 μ _ V).1 hV).1
   have hnc : ∀ σ : M ≃ₐ[K] M, σ ≠ 1 → ¬ (UpperTheory.CBC.Cusp.cx (π.twist χ)).ConjIso σ.toRingEquiv := fun σ h1 hc =>

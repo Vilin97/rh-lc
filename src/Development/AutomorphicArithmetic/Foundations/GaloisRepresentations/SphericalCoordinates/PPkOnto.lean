@@ -91,7 +91,7 @@ private theorem dense_top (K : IntermediateField ℚ_[p] (PadicAlgCl p)) {n : �
     rw [Fintype.linearIndependent_iff]
     intro c hc
     by_contra hne
-    push_neg at hne
+    push Not at hne
     obtain ⟨i0, hi0⟩ := hne
     obtain ⟨j, -, hj⟩ := Finset.exists_max_image Finset.univ
       (fun i => ‖(c i : PadicAlgCl p)‖) ⟨i0, Finset.mem_univ _⟩

@@ -42,20 +42,21 @@ theorem conj_embK' {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host 
 theorem ksFamily : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} (hP : GlobalTheory.Published.AbelianDeRham) {S : Type} [CommRing S] [Algebra c.F S]
     (y : FrPt Xo c S) (x' : Sp (DualNumber S) ⟶ Xo.X) (h1 : x' ≫ Xo.s = sOf c (DualNumber S))
     (h2 : spMap (TrivSqZeroExt.fstHom S S S).toRingHom ≫ x' = y.x), ∃ Mx : HIx Dw (psiSet H) → S, ∀ (K : Type) [Field K] [Algebra c.F K] (ψ : S →ₐ[c.F] K) (y' : FrPt Xo c K),
-      FrMap ψ y y' → GlobalTheory.FlagTan.IsKS (psiSet H) y' (spMap (dualMap ψ.toRingHom) ≫ x') (ψ ∘ Mx) := by
+      FrMap ψ y y' → GlobalTheory.FlagTan.IsKS (psiSet H) y' (spMap (Formalism.L2.Pj.dualMap ψ.toRingHom) ≫ x') (ψ ∘ Mx) := by
   intro E _ _ _ H Dw l Xo c hP S _ _ y x' h1 h2
   suffices hM : ∃ M, GlobalTheory.FlagTan.IsKSR (psiSet H) y x' M by
     obtain ⟨M, hM⟩ := hM
-    exact ⟨M, fun K _ _ ψ y' hy => GlobalTheory.FlagTan.isKSR_iff_isKS.mp (GlobalTheory.FlagTan.IsKSR.baseChange hP hy hM)⟩
+    refine ⟨M, fun K _ _ ψ y' hy => GlobalTheory.FlagTan.isKSR_iff_isKS.mp ?_⟩
+    exact GlobalTheory.FlagTan.IsKSR.baseChange hP hy hM
 
-  letI : GrpObj ((Over.pullback x').obj Xo.univ.t.G) := Functor.grpObjObj (F := Over.pullback x')
-  letI : GrpObj ((Over.pullback (GlobalTheory.DeRham.epsRed S)).obj ((Over.pullback x').obj Xo.univ.t.G)) :=
+  let : GrpObj ((Over.pullback x').obj Xo.univ.t.G) := Functor.grpObjObj (F := Over.pullback x')
+  let : GrpObj ((Over.pullback (GlobalTheory.DeRham.epsRed S)).obj ((Over.pullback x').obj Xo.univ.t.G)) :=
     Functor.grpObjObj (F := Over.pullback (GlobalTheory.DeRham.epsRed S))
   have hA' := isGrpPullback_pullback Xo.univ.t.G x'
   have hi := isGrpPullback_pullback ((Over.pullback x').obj Xo.univ.t.G) (GlobalTheory.DeRham.epsRed S)
   have hA : IsGrpPullback ((Over.pullback (GlobalTheory.DeRham.epsRed S)).obj ((Over.pullback x').obj Xo.univ.t.G))
       Xo.univ.t.G y.x (pullback.fst _ _ ≫ pullback.fst _ _) := (hi.comp hA').congr h2 rfl
-  haveI : IsCommMonObj ((Over.pullback (GlobalTheory.DeRham.epsRed S)).obj ((Over.pullback x').obj Xo.univ.t.G)) :=
+  have : IsCommMonObj ((Over.pullback (GlobalTheory.DeRham.epsRed S)).obj ((Over.pullback x').obj Xo.univ.t.G)) :=
     GlobalTheory.PolPull.isCommMonObj_of_isGrpPullback hA
   have hab := GlobalTheory.ObjDim.isAbelianScheme Xo.univ
   have hsm := GlobalTheory.ObjDim.smoothOfRelativeDimension Xo.univ
@@ -91,7 +92,7 @@ theorem ksFamily : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : H
       act (dp0 S) (𝟙 _) a z (hb k) - (algebraMap c.F S).comp (embK c k.1) z • hb k ∈
         Fil ((Over.pullback (GlobalTheory.DeRham.epsRed S)).obj ((Over.pullback x').obj Xo.univ.t.G)) := by
     intro k z
-    haveI := a.hom z
+    have := a.hom z
     have e1 := (hhb k).push (a.act z)
     rw [hubE] at e1
     rw [act_apply]

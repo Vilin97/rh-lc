@@ -156,8 +156,7 @@ theorem planeOK_herm {B : Base F E} (hB : B.IsGood σ) {Y : Spc F E n} {Y₁ : S
     (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hY : Y.IsHerm σ B r s) :
     ∃ ε, PlaneOK (cA σ).toRingHom (incM F Y.J) ε (incV F H.x) (incV F H.y) (incM F H.ι) := by
   obtain ⟨w⟩ : Nonempty (InfinitePlace F) := inferInstance
-  refine ⟨_, planeOK hB hH 1 (fun i j => by simp [hY.herm]) (fun h0 => det_ne_of_sig (hY.sig w) ?_) (full_of_dual_zero hB 1 (fun i j => by simp [hY.herm]) hY.lat
-      (fun y hy => (hY.dual y).2 fun x hx => by rw [hy x hx]; exact isIntegral_zero))⟩
+  refine ⟨_, planeOK hB hH 1 (fun i j => by simp [hY.herm]) (fun h0 => det_ne_of_sig (hY.sig w) ?_) hY.lat⟩
   have := RingHom.map_det (B.emb w).1 Y.J
   rw [h0, map_zero] at this
   exact this.symm
@@ -166,8 +165,7 @@ theorem planeOK_skew {B : Base F E} (hB : B.IsGood σ) {Y : Spc F E n} {Y₁ : S
     (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hY : Y.IsSkew σ B r s) :
     ∃ ε, PlaneOK (cA σ).toRingHom (incM F Y.J) ε (incV F H.x) (incV F H.y) (incM F H.ι) := by
   obtain ⟨w⟩ : Nonempty (InfinitePlace F) := inferInstance
-  refine ⟨_, planeOK hB hH (-1) (fun i j => by simp [hY.skew]) (fun h0 => det_ne_of_sig (hY.sig w) ?_) (full_of_dual_zero hB (-1) (fun i j => by simp [hY.skew]) hY.lat
-      (fun y hy => (hY.dual y).2 fun x hx o => by rw [hy x hx, mul_zero, map_zero]; exact isIntegral_zero))⟩
+  refine ⟨_, planeOK hB hH (-1) (fun i j => by simp [hY.skew]) (fun h0 => det_ne_of_sig (hY.sig w) ?_) hY.lat⟩
   have := RingHom.map_det (B.emb w).1 Y.J
   rw [h0, map_zero] at this
   rw [Matrix.det_smul]

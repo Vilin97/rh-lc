@@ -1,16 +1,18 @@
 module
 
 public import Statements
-public import Supplements.Kernels.MainTheoremsAll
+public import Supplements.Kernels.MainTheorems
 
 @[expose] public section
 
 theorem riemannHypothesis : RiemannHypothesis := rhOfAll
 
-theorem riemannZeta_eq_zero_re : RiemannZetaZerosOnLine := rhOfAll
+theorem riemannZeta_eq_zero_re : RiemannZetaZerosOnLine := riemannHypothesis
 
 theorem LFunction_ne_zero_of_half_lt_re : DirichletLNonvanishingRightOfHalf := allChi
 
 theorem LFunction_eq_zero_re : DirichletLZerosOnLine := claimAll.2.1
 
-theorem LFunction_eq_zero_re_of_isPrimitive : PrimitiveDirichletLZerosOnLine := critAll
+theorem LFunction_eq_zero_re_of_isPrimitive : PrimitiveDirichletLZerosOnLine := by
+  intro N _ χ _ s hs₀ hs₁ hz
+  exact LFunction_eq_zero_re N χ s hs₀ hs₁ hz

@@ -47,7 +47,7 @@ theorem qAt_run : ∃ Cq : ℝ → ℝ → ℝ, ∀ (D : D7) (T : Top D) (h : La
     exact Q.ccK_log
   obtain ⟨hZ, hR⟩ := hroom D large₂ j ka H.CA 7 H.CK Tn (cc D large₂ C2 A2 7 wL) hP.hyp.1 hcc hj hjm h3 hCR hsz hT hc hTc
   obtain ⟨-, -, -, -, -, -, -, -, hdim, -⟩ := GlobalTheory.RunJoin.net_at_run D T h j hj large₂ H C2 A2 CT ka wL wF Tn nP nW h0 hP
-  have hG := GlobalTheory.RunIn.gamAt_of_lawsCore D _ h.toLawsCore
+  have hG := GlobalTheory.RunIn.gamAt_of_lawsCore D T.toCore h.toLawsCore
   have hK := GlobalTheory.T.arithmeticCMKnownTheorems_proof
   have hpp : 1041 * Zb D large₂ ^ 3 ≤ WeightFamilies.PPv D large₂ 1041 3 * ka.size := by
     have e : WeightFamilies.PPv D large₂ 1041 3 = 1041 * Zb D large₂ ^ 3 := by
@@ -57,9 +57,11 @@ theorem qAt_run : ∃ Cq : ℝ → ℝ → ℝ, ∀ (D : D7) (T : Top D) (h : La
     rw [e]
     have hZ' : (1 : ℝ) ≤ Zb D large₂ := hZ
     exact le_mul_of_one_le_right (by positivity) ka.one_le_size
-  have key := GlobalTheory.T.quotientBound_of_kill_detect_constantRoom hK D _ h.toLawsCore j ka 7 Tn (cc D large₂ C2 A2 7 wL) large₂ H.CK 1 4 (C₀ H.CA 7 H.CK) 4 1041 3
-    hG hj hjm hL (GlobalTheory.ArcCM.killQ_of_gamAt hK D _ h.toLawsCore j ka 7 Tn _ hG hj hjm)
-    (GlobalTheory.T.cmFamilyFunctionals_detect_lowCoefficients hK D _ h.toLawsCore j ka 7 Tn _ hG hj hjm h3 hT hc) hZ (hC₀ _ _ _) (by norm_num) hR
+  have key := GlobalTheory.ArcCM.qat_of_kill_detect hK D T.toCore h.toLawsCore j ka 7 Tn
+    (cc D large₂ C2 A2 7 wL) large₂ H.CK 1 4 (C₀ H.CA 7 H.CK) 4 1041 3
+    hG hj hjm hL (GlobalTheory.ArcCM.killQ_of_gamAt hK D T.toCore h.toLawsCore j ka 7 Tn _ hG hj hjm)
+    (GlobalTheory.ArcCM.detectQ_of_known hK D T.toCore h.toLawsCore j ka 7 Tn _ hG hj hjm h3 hT hc)
+    hZ (hC₀ _ _ _) (by norm_num) hR
     (le_trans hdim hpp)
   have e4 : max (4 : ℝ) (max 4 3) = 4 := by norm_num
   rw [e4] at key

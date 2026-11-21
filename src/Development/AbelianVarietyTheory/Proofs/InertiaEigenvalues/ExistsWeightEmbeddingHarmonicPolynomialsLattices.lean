@@ -315,12 +315,7 @@ theorem exists_wtMap : ∀ (D : D7) (S T : HSp D) (B : GlobalTheory.ExportSeries
       | add _ _ _ _ h₁ h₂ => rw [map_add (f := _)]; exact hQadd _ _ h₁ h₂
       | smul k _ _ h₁ => rw [LinearMap.map_smulₛₗ]; exact hQsmul _ _ h₁
     have hlat : Submodule.IsFullLattice (↥D.LL0) (nabAtr (labLL0 D) B.w.lam (B.latAt h)) := by
-      refine (Formalism.L2.DIV.nabDelLattice _ _ _ _ _ fun τ => ?_).1
-      have hτ := Formalism.L2.DIV.tauLatLattice D.host.E (↥D.LL0) D.what₂.Tau S.rank
-        (labLL0 D) τ (B.latAt h) hL.toIsLattice
-      exact {
-        toIsLattice := Formalism.L2.DIV.dualFr_tauLat_isLattice (labLL0 D) τ (B.latAt h) hL.toIsLattice
-        span_eq_top := span_dualFr_eq_top _ hτ.fg }
+      exact Formalism.L2.DIV.nabAtr_isLattice (labLL0 D) B.w.lam (B.latAt h) hL
     have hg : ∀ i, Q (mapK s B.w.lam (bVV (↥D.LL0) B.w.lam i)) := fun i =>
       hspanLL _ (by rw [hlat.span_eq_top]; trivial)
     have hgind : LinearIndependent K₀ fun i => mapK s B.w.lam (bVV (↥D.LL0) B.w.lam i) := by

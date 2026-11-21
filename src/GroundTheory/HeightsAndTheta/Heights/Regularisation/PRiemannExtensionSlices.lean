@@ -53,11 +53,15 @@ theorem cauchy_torus_off_axes : ∀ (n : ℕ) (G : (Fin n → ℂ) → ℂ),
     (∀ z ∈ ball (0 : Fin n → ℂ) 1, ∀ i : Fin n, (∀ j, j ≠ i → z j ≠ 0) →
       ∃ c : ℂ, Tendsto (fun x : ℂ => G (Function.update z i x)) (𝓝[≠] 0) (𝓝 c)) →
     ∀ r : ℝ, 0 < r → r < 1 → ∀ z ∈ ball (0 : Fin n → ℂ) r, (∀ i, z i ≠ 0) →
-    (∯ ζ in T(0, fun _ => r), (∏ i, (ζ i - z i)⁻¹) * G ζ) = (2 * π * I) ^ n * G z
-  | 0, G, _, _, r, _, _, z, _, _ => by
+    (∯ ζ in T(0, fun _ => r), (∏ i, (ζ i - z i)⁻¹) * G ζ) = (2 * π * I) ^ n * G z := by
+  intro n
+  induction n with
+  | zero =>
+    intro G _ _ r _ _ z _ _
     rw [torusIntegral_dim0]
     simp [Subsingleton.elim z 0]
-  | n + 1, G, hd, hlim, r, hr0, hr1, z, hz, hzW => by
+  | succ n ih =>
+    intro G hd hlim r hr0 hr1 z hz hzW
     have hint : TorusIntegrable (fun ζ => (∏ i, (ζ i - z i)⁻¹) * G ζ) 0 (fun _ => r) := by
       refine ContinuousOn.integrableOn_compact isCompact_Icc (Continuous.continuousOn ?_)
       refine Continuous.mul ?_ (continuous_comp_torusMap_zero hd hr0 hr1)
@@ -94,14 +98,14 @@ theorem cauchy_torus_off_axes : ∀ (n : ℕ) (G : (Fin n → ℂ) → ℂ),
           | zero => simpa using hx0
           | succ k => simpa using hwi k (fun h => hj (by rw [h]))
         simpa only [Fin.cons_update] using hlim (Fin.cons x w) (cons_mem_ball_one hx1 hw) i.succ hne
-      have ih := cauchy_torus_off_axes n (fun y => G (Fin.cons x y)) hd' hlim' r hr0 hr1 (Fin.tail z) hz' hzW'
+      have htail := ih (fun y => G (Fin.cons x y)) hd' hlim' r hr0 hr1 (Fin.tail z) hz' hzW'
       have e0 : ((0 : Fin (n + 1) → ℂ) ∘ Fin.succ) = 0 := rfl
       have e1 : ((fun _ : Fin (n + 1) => r) ∘ Fin.succ) = fun _ => r := rfl
       simp only [e0, e1]
       simp only [Fin.prod_univ_succ, Fin.cons_zero, Fin.cons_succ, mul_assoc]
       rw [torusIntegral_const_mul]
-      simp only [Fin.tail] at ih
-      rw [ih]
+      simp only [Fin.tail] at htail
+      rw [htail]
       ring
     rw [circleIntegral.integral_congr hr0.le key, circleIntegral.integral_const_mul]
     obtain ⟨c, hc⟩ : ∃ c : ℂ, Tendsto (fun x : ℂ => G (Function.update z 0 x)) (𝓝[≠] 0) (𝓝 c) :=

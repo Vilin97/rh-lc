@@ -24,7 +24,7 @@ private theorem continuous_heckeVec {G H : Type} [Group G] [NormedAddCommGroup H
     simp only [Set.Finite.coe_toFinset, Function.mem_support]
     exact fun h0 => hc' (by simp [h0])
   rw [e]
-  exact continuous_finset_sum _ fun c _ => (hc _).const_smul _
+  exact continuous_finsetSum _ fun c _ => (hc _).const_smul _
 
 theorem UpperTheory.ConvolutionTheory.Dp.satIff :
     UpperTheory.ConvolutionTheory.Dp.SatIff := by
@@ -71,7 +71,7 @@ theorem UpperTheory.ConvolutionTheory.Dp.satIff :
     have hv' := hdense v fun u hu => GlobalTheory.LGrp.mem_fixed.1 hv.2.1 u hu
     refine ⟨(Submodule.ne_bot_iff _).2 ?_, fun x hx h0 => ?_⟩
     · by_contra hno
-      push_neg at hno
+      push Not at hno
       have hsub : J '' {x | ∀ u ∈ GlobalTheory.LFun.KGL w (n := n), π.locRep w u x = x} ⊆ {0} := by
         rintro _ ⟨x, hx, rfl⟩
         rw [hno x (GlobalTheory.LGrp.mem_fixed.2 hx), map_zero]

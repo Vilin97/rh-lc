@@ -25,7 +25,7 @@ theorem emtTheta_L_alt {hL : _root_.UpperTheory.Zero.LLC.RecTExists} {K : Ctx} {
   intro v i hv y hy n a f h
   with_unfolding_all
     have hOriginal := HEq.trans (heq_of_eq h) (hY.eW i _)
-    exact l.c.th v i hv y hy n a f (eq_of_heq hOriginal)
+    exact (l.c.th v i hv y hy n a f (eq_of_heq hOriginal) :)
 end GlobalTheory.HeightCounting.Fin3
 end
 end

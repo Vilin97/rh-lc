@@ -143,10 +143,10 @@ theorem rlv_coordFacts (i : ℕ) (hi : i ≤ D.R.m) :
     have e2 := K.lat_dual (D.clsLat u i c)
     rw [(hdual c).2.1, e2] at e1
     exact e1.symm
-  · have e2 := K.lat_dual (D.clsLat u i c)
-    have h3 := K.isLat_lat (hdual c).1
-    rw [e2] at h3
-    exact Module.Finite.iff_fg.1 h3.1
+  · have hfg : (K.lat (Formalism.HermitianLatticesTheory.dual (D.sp.X i).hT (D.clsLat u i c))).FG :=
+      (hdual c).1.toIsLattice.fg.map _
+    rw [K.lat_dual] at hfg
+    exact hfg
   · have h := (D.sp.X i).herm.eq (κ.symm a) (κ.symm b)
     rw [hform_eq, hform_eq, LinearEquiv.apply_symm_apply, LinearEquiv.apply_symm_apply] at h
     exact h.symm

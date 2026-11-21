@@ -144,7 +144,7 @@ private theorem isFullLattice_of_gluedIndicator {k : Type} [Field k] [ValuativeR
   let y := q.inv • avec k n' 1 1 + inX k n' 1 P.vec
   have hy : y ∈ gluedS q 1 P.ker P.vec := by
     rw [gluedS]
-    exact le_sup_left (le_sup_right (Submodule.subset_span (Set.mem_singleton y)))
+    exact Submodule.mem_sup_left (Submodule.mem_sup_right (Submodule.subset_span (Set.mem_singleton y)))
   have hy_last : y (Sum.inr 0) = q.inv := by simp [y, avec, inX]
   have hq := (Valuation.Integer.not_isUnit_iff_valuation_lt_one (v := valuation k)).mp q.2.not_isUnit
   have hp := (GroundTheory.LocalField.tendsto_pow_atTop_nhds_zero_iff (q.1 : k)).2 hq
@@ -152,7 +152,8 @@ private theorem isFullLattice_of_gluedIndicator {k : Type} [Field k] [ValuativeR
   refine { span_eq_top := Submodule.eq_top_iff'.2 fun x => ?_ }
   let M := vecMulVec x (Pi.single (Sum.inr (0 : Fin 1) : n' ⊕ Fin 1) (q.1 : k))
   have hMy : M *ᵥ y = x := by
-    rw [M, vecMulVec_mulVec, single_dotProduct, hy_last, Unif.inv, mul_inv_cancel₀ q.ne_zero]
+    dsimp only [M]
+    rw [vecMulVec_mulVec, single_dotProduct, hy_last, Unif.inv, mul_inv_cancel₀ q.ne_zero]
     simp
   obtain ⟨m, hm⟩ := ((hp.zero_smul_const M).eventually (hf.eventually_eq 0)).exists
   rw [hzero, latInd] at hm
@@ -225,7 +226,7 @@ theorem GlobalTheory.FinPl.sourceExact : ∀ D : D7, GlobalTheory.FinPl.SourceEx
   refine ⟨((resCard k : ℝ) ^ Fintype.card n)⁻¹ * (resCard k : ℝ) ^ ((Fintype.card n : ℝ) / 2), 1,
     mul_pos (inv_pos.2 (pow_pos hQ _)) (Real.rpow_pos_of_pos hQ _), ?_⟩
   intro ψ S A L T o ζ hL hA vA χS χT om hW _ hT α α₀ β hsum P Λ _ LS LT f₀ Ξ Ξ' hΞ hΞ' φ hφ
-  haveI : Λ.IsFullLattice k := isFullLattice_of_gluedIndicator q P Λ hΞ.2.2.2.1.1
+  have : Λ.IsFullLattice k := isFullLattice_of_gluedIndicator q P Λ hΞ.2.2.2.1.1
   set χ := resChar χ₀ hχ q with hχχ
   obtain ⟨lS, hlS, hq, hθ⟩ :=
     exists_theta_exact (GlobalTheory.T.linearModel_splitPlace_characterEquivariance D) k p n n' q ψ S A L T o hA vA χS χT om hW α α₀ β hsum

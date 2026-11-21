@@ -44,8 +44,12 @@ theorem exists_isom_congr (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
   have hnMap : algebraMap F K (n : F) = algebraMap (𝓞 K) K (algebraMap (𝓞 F) (𝓞 K) n) :=
     (IsScalarTower.algebraMap_apply (𝓞 F) F K n).symm.trans
       (IsScalarTower.algebraMap_apply (𝓞 F) (𝓞 K) K n)
-  obtain ⟨g, hgI, hgJ, hgS, hgxy⟩ :=
-    WCC.core (K := K) (F := F) (V := V) (A := A₀) (x := x) (y := y)
+  obtain ⟨g, hgI, hgJ, hgS, hgxy⟩ :
+      ∃ g ∈ Formalism.HermitianLatticesTheory.isom h,
+        (∀ z, WCA.InL 𝔭 A₀ 0 z → WCA.InL 𝔭 A₀ (j - 2 * v) (g z - z)) ∧
+        (∀ z, WCA.InL 𝔭 A₀ 0 z → WCA.InL 𝔭 A₀ 0 (g.symm z)) ∧ g x = y :=
+    _root_.Formalism.HermitianLattices.Ext.L3.WCC.core
+      (K := K) (F := F) (V := V) (A := A₀) (x := x) (y := y)
       (v := v) (J := j - 2 * v) hK hF hs han hA₀i h𝔭 hn hv hx0
       (hx.trans hnMap) (hy.trans hnMap) hJ hw
   have hL : ∀ z, z ∈ locF 𝔭 A₀ → g z ∈ locF 𝔭 A₀ := by

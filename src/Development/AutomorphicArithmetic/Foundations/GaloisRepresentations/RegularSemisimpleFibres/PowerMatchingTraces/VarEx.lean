@@ -27,8 +27,9 @@ theorem varEx : VarEx := by
   intro F E _ _ _ _ _ _ _ _ σ hσ hp n hn P hP v w hv
   let μE : Measure (normOneGL (K := E) (n := n)) := Measure.haar
   let μF : Measure (normOneGL (K := F) (n := n)) := Measure.haar
-  have hlocEx := locGalEx F E σ hp n v w hv
-  rcases hlocEx with ⟨hw, s, hs, hloc⟩
+  have hlocEx := UpperTheory.ConvolutionTheory.C.locGalEx F E σ hp n v w hv
+  have hw := hlocEx.1
+  obtain ⟨s, hs, hloc⟩ := hlocEx.2
   refine ⟨s, hs, fun τ' hτ' => ?_⟩
   obtain ⟨χ', ⟨z, hz'⟩, V, hV⟩ := Dp.exTwist E n μE P hn
   obtain ⟨hex, htw⟩ := T.powTwist F E

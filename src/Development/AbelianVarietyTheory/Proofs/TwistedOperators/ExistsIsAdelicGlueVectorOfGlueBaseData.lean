@@ -129,6 +129,7 @@ theorem exists_isGlueVec (D : D7) (u : D.what₂.Word) (π : 𝓞 D.host.E) (hπ
     (f₀ : Pl D.host.E → Fin X.rank → EAf D) (H : IsBasePair X u π L₀ f₀) :
     ∃ f, IsGlueVec X u L₀ f ∧ ∀ w : Pl D.host.E, π ∈ w.asIdeal → idem w • f = f₀ w := by
   classical
+  have hL : Submodule.IsFullLattice D.host.E L₀ := H.1
   have hTO : inc D (Tu D u) ∈ OA D :=
     (inc_mem_iff _).mpr ⟨(((D.mem u).A.T : ℕ) : 𝓞 D.host.E), by simp [Tu]⟩
   have hσT : cjA D (inc D (Tu D u)) = inc D (Tu D u) := by rw [cjA_inc]; simp [Tu]
@@ -145,7 +146,7 @@ theorem exists_isGlueVec (D : D7) (u : D.what₂.Word) (π : 𝓞 D.host.E) (hπ
     intro w hw
     obtain ⟨hf, hTf, hfN, hiff⟩ := HB w hw
     exact local_dual (OA D) (cjA D) cjA_cjA (fun a ha => cjA_mem ha) (hA X) (hA_smul_left X)
-      (hA_smul_right X) (hA_sub_right X) (cjA_hA X) (hat L₀) (fun x hx => mem_hat_of_bidual H.1 hx)
+      (hA_smul_right X) (hA_sub_right X) (cjA_hA X) (hat L₀) (fun x hx => mem_hat_of_bidual hL hx)
       (idem_mem w) (idem_mul_self w) hTO hσT hTTi (fun a ha h => exists_mul_eq_idem u w ha h) hf hTf hfN
       (fun y h1 h2 h3 => ((hiff y).mpr ⟨h1, fun x hx => h2 x hx.1, h3⟩).1)
   choose! g hg using hloc
@@ -200,7 +201,7 @@ theorem exists_isGlueVec (D : D7) (u : D.what₂.Word) (π : 𝓞 D.host.E) (hπ
           rw [T_mem_iff hπ, cP_cP]; tauto
         have hloc := (H.2.1 (cP v) (idem (cP v)) (isPlIdem_idem _) hT (idem (cP v) • y)).mp
           (inCmp_idem _ hy)
-        exact (mem_hat_dualL_iff H.1 _).mp hloc.1 x hx
+        exact (mem_hat_dualL_iff hL _).mp hloc.1 x hx
   · intro y hy
     rw [mem_OA_iff_idem]
     intro v
@@ -246,7 +247,7 @@ theorem exists_isGlueVec (D : D7) (u : D.what₂.Word) (π : 𝓞 D.host.E) (hπ
     refine ⟨∑ w ∈ hSf.toFinset, (idem w * a1 w + idem (cP w) * a2 w), ?_, ?_⟩
     · exact Subring.sum_mem _ (fun w hw => add_mem (mul_mem (idem_mem w) (ha1 w ((hmem w).mp hw)))
         (mul_mem (idem_mem _) (ha2 w ((hmem w).mp hw))))
-    · refine mem_hat_of_idem H.1.fg (fun v => ?_)
+    · refine mem_hat_of_idem hL.fg (fun v => ?_)
       rw [smul_sub, smul_comm (idem v)]
       by_cases h1 : π ∈ v.asIdeal
       · rw [compS v h1]
@@ -268,7 +269,7 @@ theorem exists_isGlueVec (D : D7) (u : D.what₂.Word) (π : 𝓞 D.host.E) (hπ
         · rw [comp0 v h1 h2, smul_zero, sub_zero]
           have hT : (((D.mem u).A.T : ℕ) : 𝓞 D.host.E) ∉ v.asIdeal := by
             rw [T_mem_iff hπ]; tauto
-          have hyd : y ∈ hat (Formalism.L2.Herm.dualL D.sp.cm X L₀) := (mem_hat_dualL_iff H.1 y).mpr hy
+          have hyd : y ∈ hat (Formalism.L2.Herm.dualL D.sp.cm X L₀) := (mem_hat_dualL_iff hL y).mpr hy
           exact ((H.2.1 v (idem v) (isPlIdem_idem v) hT (idem v • y)).mpr (inCmp_idem _ hyd)).1
 
 end GlobalTheory.AdIsom.BaseVec

@@ -317,12 +317,8 @@ theorem bd_rho : ∀ (n : ℕ) (i : Fin (n + 2) → ι),
       rw [lin_rho_zero]
       have hsubset : rangeIn (n := 0) (Set.range i) ⊆ ordFrom (minIdx i) := by
         intro j hj
-        refine mem_ordFrom.2 ⟨strictMono_of_fin_one j, ?_⟩
-        have hrange : Set.range j ⊆ Set.range i := mem_rangeIn.1 hj
-        have hj0 : ∃ a, i a = j 0 := hrange (Set.mem_range_self (f := j) 0)
-        obtain ⟨a, ha⟩ := hj0
-        rw [← ha]
-        exact minIdx_le i a
+        exact ordIn_subset_ordFrom i
+          (mem_ordIn.2 ⟨strictMono_of_fin_one j, mem_rangeIn.1 hj⟩)
       exact Finsupp.supported_mono hsubset (bd_mem_rangeIn (single_mem_rangeIn i 1))
     change bd 0 (ocone (minIdx i) (lin (rho 0) (bd 0 (Finsupp.single i 1)))) = _
     rw [bd_ocone_zero _ hx, lin_rho_zero, aug_bd, zero_smul, sub_zero]

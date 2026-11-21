@@ -74,15 +74,19 @@ end GlobalTheory.CompanionTheory.Rodier.OpenCoinv
 
 namespace GlobalTheory.CompanionTheory.Rodier.OpenCoinv
 
+set_option pp.explicit true in
+#check @GlobalTheory.T.open_cell_jacquet_integral_volume
+set_option pp.explicit true in
+#check @GlobalTheory.T.open_cell_levi_unipotent_conjugation
+set_option pp.explicit true in
+#check @LeviPart.whit_eq
 
 set_option maxHeartbeats 2000000 in
 theorem openFns_whittaker : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (ψ : AddChar k Circle), Continuous ψ → ∀ (h N : ℕ) (d : Fin h → ℕ) (hd : ∑ a, d a = N) {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (Levi k fun a => Fin (d a)) W), IsSmooth ρ → ∃ J : openFns d hd ρ →ₗ[ℂ] W, Function.Surjective J ∧ ∀ f : openFns d hd ρ, J f ∈ twKer ρ (unipM k d) (whitM d ψ) ↔ (f : IndSp (stdBlocks d hd) ρ) ∈ twKer (parInd (stdBlocks d hd) ρ) (unipB k (Fin N)) (whitChar ψ N) := by
   intro k _ _ _ _ ψ hψ h N d hd W _ _ ρ hρ
-  have hJacquet := GlobalTheory.T.open_cell_jacquet_integral_volume k ψ hψ h N d hd ρ hρ
-  rcases hJacquet with ⟨J, vol, hU, hL, hV⟩
+  obtain ⟨J, vol, hU, hL, hV⟩ := GlobalTheory.T.open_cell_jacquet_integral_volume k ψ hψ h N d hd ρ hρ
   obtain ⟨hfac, -⟩ := GlobalTheory.T.unipotent_radical_decomposition_normal k h N d hd
-  have hLevi := GlobalTheory.T.open_cell_levi_unipotent_conjugation k ψ h N d hd
-  rcases hLevi with ⟨hl1, hl2⟩
+  obtain ⟨hl1, hl2⟩ := GlobalTheory.T.open_cell_levi_unipotent_conjugation k ψ h N d hd
   obtain ⟨-, huniq, -⟩ := GlobalTheory.T.open_cell_unipotent_uniqueness_closed k h N d hd
   have hUB : unipU k d hd ≤ unipB k (Fin N) := inf_le_left
   have hLB : unipL k d hd ≤ unipB k (Fin N) := inf_le_left
@@ -104,8 +108,7 @@ theorem openFns_whittaker : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologic
     obtain ⟨a, ha, u, hu, rfl⟩ := hfac n hn
     have hub := hUB hu
     have hab := hLB ha
-    have hLeviA := hl1 a ha hab
-    rcases hLeviA with ⟨m, hm, hθm⟩
+    obtain ⟨m, hm, hθm⟩ := hl1 a ha hab
     let g1 : openFns d hd ρ := ⟨parInd (stdBlocks d hd) ρ u g.1, translate_mem d hd ρ hub g.2⟩
     let g2 : openFns d hd ρ := ⟨parInd (stdBlocks d hd) ρ a g1.1, translate_mem d hd ρ hab g1.2⟩
     have e1 : J g1 = ((whitChar ψ N ⟨u, hub⟩ : ℂˣ) : ℂ) • J g := hU u hu hub g g1 rfl
@@ -209,8 +212,7 @@ theorem openFns_whittaker : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologic
       F.1 ∈ twKer (parInd (stdBlocks d hd) ρ) (unipB k (Fin N)) (whitChar ψ N) ∧ J F = s) ?_ ?_ ?_ ?_ hs
     · rintro _ ⟨m, v, rfl⟩
       obtain ⟨g, rfl⟩ := surj v
-      have hLeviM := hl2 m
-      rcases hLeviM with ⟨a, ha, hm⟩
+      obtain ⟨a, ha, hm⟩ := hl2 m
       have hab := hLB ha
       have hθ : whitChar ψ N ⟨a, hab⟩ = whitM d ψ m :=
         LeviPart.whit_eq (m := m.val) ψ hab m.property hm

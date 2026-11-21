@@ -144,6 +144,33 @@ def newTw (hC : GlobalTheory.Published.DiscreteSeriesCover ∧ GlobalTheory.Publ
   JM := (mj_new lam err hM hW).choose
   mjH := (mj_new lam err hM hW).choose_spec
 
+-- Check the dependent column projections before specializing the ambient data to a row.
+set_option maxHeartbeats 4000000 in
+private theorem newTw_preserves_columns
+    (hC : GlobalTheory.Published.DiscreteSeriesCover ∧ GlobalTheory.Published.HarishChandraModules ∧
+      GlobalTheory.Published.CasselmanWallach ∧ GlobalTheory.Published.HarishChandraFinite ∧
+      GlobalTheory.Published.CuspRapidDecay)
+    (g : GlobalTheory.RealGeo.GeoHalf C R.toRealDat fun _ => 1)
+    (Z' : ReadL (newR R lam err) (reFace F Dc Sp Zsc) ex.p0 Y')
+    (C₀ : ReadC R (reFace F Dc Sp₀ Zsc₀) ex.p0 Y)
+    (sEE : (R.toCx3 F).EE →ₗ⋆[ℂ] (Sp (zsOf R F)).HH)
+    (hP : Pins (newR R lam err) (reFace F Dc Sp Zsc) cG)
+    (hH : Holds (newR R lam err) (reFace F Dc Sp Zsc))
+    (hE : ErrEq (newR R lam err) (reFace F Dc Sp Zsc))
+    (hG : GrpTie D A3.A F.P0 F.ψ0 F.P1 F.ψ1 (R.eG.trans cG))
+    (hA : ∃ J, AmbTie D A3.A ex.p0.s ex.amb0 F.P0 F.ψ0 Y.tup Y.jA0 J)
+    (hM : MjAre Z Yd) (ht : Y'.tup = Y.tup) (hj : HEq Y'.jA Y.jA)
+    (hj0 : HEq Y'.jA0 Y.jA0) (hW : HEq Z'.jW Z.jW) (hg : GlobalTheory.RealGeo.InGeo g) :
+    let x := newTw (R := R) (F := F) (cG := cG) (Y := Y) (Z := Z) (Dc := Dc)
+      (Sp₀ := Sp₀) (Sp := Sp) (Zsc₀ := Zsc₀) (Zsc := Zsc) (Y' := Y')
+      lam err hC g Z' C₀ sEE hP hH hE hG hA hM ht hj hj0 hW
+    HEq x.sEE sEE ∧ HEq x.C.wU C₀.wU ∧ HEq x.C.eNu C₀.eNu ∧ GlobalTheory.RealGeo.InGeo x.geo := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · with_unfolding_all exact (HEq.refl sEE :)
+  · with_unfolding_all exact (HEq.refl C₀.wU :)
+  · with_unfolding_all exact (HEq.refl C₀.eNu :)
+  · with_unfolding_all exact (inGeo_new lam err hg :)
+
 end Tw
 
 end GlobalTheory.Mem.R3.TwistedScalarIndependence
@@ -159,7 +186,7 @@ theorem twArgs_exists : (GlobalTheory.Published.DiscreteSeriesCover ∧ GlobalTh
   obtain ⟨kap, lam, err, hP, hH, hE, rfl, hl, Y', Z', h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13⟩ :=
     GlobalTheory.T.reFace_zero_part_conventions_chosen_again (w.st Z).toD7 _ _ _ _ (famT t) _ t.r.z.R t.r.z.F t.r.z.cG ex.p0 t.r.Y t.r.Z Dc Sp Zsc t.r.z.pins t.r.intersectionNumber_baseChange hp
   let x : TwIn ex := newTw (R := t.r.z.R) (F := t.r.z.F) (cG := t.r.z.cG) (Y := t.r.Y) (Z := t.r.Z) (Dc := Dc) (Sp₀ := Sp₀) (Sp := Sp)
-    (Zsc₀ := Zsc₀) (Zsc := Zsc) (Y' := Y') lam err hC t.r.z.geo Z' ((by with_unfolding_all exact (C₀ :))) sEE hP hH hE hG hA.2 hM h1 h3 h4 h13
+    (Zsc₀ := Zsc₀) (Zsc := Zsc) (Y' := Y') lam err hC t.r.z.geo Z' C₀ sEE hP hH hE hG hA.2 hM h1 h3 h4 h13
   let a : TwArgs ex t :=
     { Dc := Dc, Sp := Sp, Zsc := Zsc, lam := lam, err := err, lam_eq := hl, x := x
       pack := rfl
@@ -180,11 +207,12 @@ theorem twArgs_exists : (GlobalTheory.Published.DiscreteSeriesCover ∧ GlobalTh
       eW := (by with_unfolding_all exact (h11 :))
       jW := (by with_unfolding_all exact (h13 :))
       eRR := (by with_unfolding_all exact (h12 :)) }
-  refine ⟨a, rfl, HEq.rfl, rfl, ?_, ?_, ?_, ?_⟩
-  · with_unfolding_all exact (HEq.refl sEE :)
-  · with_unfolding_all exact (HEq.refl C₀.wU :)
-  · with_unfolding_all exact (HEq.refl C₀.eNu :)
-  · exact (by with_unfolding_all exact (inGeo_new lam err t.inGeo :))
+  have hCols := newTw_preserves_columns (R := t.r.z.R) (F := t.r.z.F) (cG := t.r.z.cG)
+    (Y := t.r.Y) (Z := t.r.Z) (Dc := Dc) (Sp₀ := Sp₀) (Sp := Sp) (Zsc₀ := Zsc₀)
+    (Zsc := Zsc) (Y' := Y') lam err hC t.r.z.geo Z' C₀ sEE hP hH hE hG hA.2 hM h1 h3 h4 h13 t.inGeo
+  refine ⟨a, rfl, HEq.rfl, rfl, ?_⟩
+  change HEq x.sEE sEE ∧ HEq x.C.wU C₀.wU ∧ HEq x.C.eNu C₀.eNu ∧ GlobalTheory.RealGeo.InGeo x.geo
+  exact hCols
 
 end GlobalTheory.Mem.R3
 

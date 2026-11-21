@@ -565,11 +565,12 @@ private theorem covol_bot {E : Type} [Field E] [NumberField E] (hE : IsTotallyCo
       rw [hdet_zero] at hpos
       norm_num at hpos
     obtain ⟨γ, hγ⟩ := exists_gl_one ha0
-    refine ⟨fun w _ _ => w.embedding a, ⟨γ, fun y => ?_, fun w i j => ?_⟩, ?_⟩
+    let aInf : MatInf E 1 := fun w _ _ => w.embedding a
+    refine ⟨aInf, ⟨γ, fun y => ?_, fun w i j => ?_⟩, ?_⟩
     · rw [mulVec_one, hγ, Submodule.mem_bot, Submodule.mem_bot]
       exact ⟨fun h => (smul_eq_zero.mp h).resolve_left ha0, fun h => by simp [h]⟩
     · rw [Subsingleton.elim i 0, Subsingleton.elim j 0, hγ]
-    · have hmul : (fun w _ _ => w.embedding a : MatInf E 1) * x = g (fun w => w.embedding a) := by
+    · have hmul : aInf * x = g (fun w => w.embedding a) := by
         funext w i j
         change (Matrix.of (fun _ _ : Fin 1 => w.embedding a) * Matrix.of (x w)) i j = _
         rw [Subsingleton.elim i 0]

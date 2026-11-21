@@ -589,10 +589,7 @@ theorem member_bundles_large_unramified_exponents_alt : _root_.GlobalTheory.Fc.S
       (_root_.GlobalTheory.T.slot_mv_extension_with_origin_geo_cl hL cDep anyGeometry)⟩
 end GlobalTheory.Fc.StageOneU
 end
-section
-open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.EX GlobalTheory.EX.OB GlobalTheory.Mem GlobalTheory.Mem.Top GlobalTheory.Mem.Top.Bl GlobalTheory.Fc GlobalTheory.Mem.LiteralAutomorphy
-set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.large_unramified_exponent_bundles_exist_alt : _root_.GlobalTheory.Fc.S0.UnitaryGroupThirdPlaceHypotheses → S0.RowRat → ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (cDep : ℝ) (A : GroupRetwisting.AtP), EvLgG A → StandardLattice.SiegelMassRatioCM ∧ MemberE (_root_.GlobalTheory.Mem.Top.Bl.parametersOfExtension (_root_.GlobalTheory.Mem.LiteralAutomorphy.extensionWithAtProperty hL (_root_.GlobalTheory.HeightCounting.Up.extensionWithOrigin hL cDep) A) SExt.none (geoCl anyGeometry)).s ∧ ExBL KPx (IsBuiltE (_root_.GlobalTheory.Mem.Top.Bl.parametersOfExtension (_root_.GlobalTheory.Mem.LiteralAutomorphy.extensionWithAtProperty hL (_root_.GlobalTheory.HeightCounting.Up.extensionWithOrigin hL cDep) A) SExt.none (geoCl anyGeometry)).s) (IsGoodE (_root_.GlobalTheory.Mem.Top.Bl.parametersOfExtension (_root_.GlobalTheory.Mem.LiteralAutomorphy.extensionWithAtProperty hL (_root_.GlobalTheory.HeightCounting.Up.extensionWithOrigin hL cDep) A) SExt.none (geoCl anyGeometry)).s) (_root_.GlobalTheory.Mem.Top.Bl.BundleLinkage (_root_.GlobalTheory.Mem.Top.Bl.parametersOfExtension (_root_.GlobalTheory.Mem.LiteralAutomorphy.extensionWithAtProperty hL (_root_.GlobalTheory.HeightCounting.Up.extensionWithOrigin hL cDep) A) SExt.none (geoCl anyGeometry))) := by
-  first | exact @_root_.GlobalTheory.Fc.StageOneU.member_bundles_large_unramified_exponents_alt | exact _root_.GlobalTheory.Fc.StageOneU.member_bundles_large_unramified_exponents_alt | (intros; apply _root_.GlobalTheory.Fc.StageOneU.member_bundles_large_unramified_exponents_alt <;> assumption)
-end
+
+alias GlobalTheory.T.large_unramified_exponent_bundles_exist_alt :=
+  GlobalTheory.Fc.StageOneU.member_bundles_large_unramified_exponents_alt
 end

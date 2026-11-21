@@ -21,7 +21,11 @@ section QLat
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable {hc : Formalism.BasicNotions.CMData F E} {n : ℕ} [NeZero n] {ST SG Q : Finset (Pl E)} {K : Type} [Field K] {Θ : LevQFam E K n Q}
 
-theorem qdf_frExists : FrExists (n := n) ST SG Q := fun d P => DetChrL.frame_exists P.1 (DecoSet.full_lattice d)
+theorem qdf_frExists : FrExists (n := n) ST SG Q := by
+  intro d P
+  first
+  | exact DetChrL.frame_exists P.1 (DecoSet.full_lattice d)
+  | exact DetChrL.frame_exists P.1 d.2.lat
 
 abbrev qPi (q : QLoc hc n Q Θ) (P : Q) : E ⊗[F] Formalism.L2.Herm.Af F →+* (qv F P.1).adicCompletion F :=
   ((RingHom.fst _ _).comp (q.sp P).toRingHom).comp (prV (E := E) (qv F P.1))

@@ -55,8 +55,6 @@ theorem conj_mem_parabLower {n : GL (Fin N) k} (hn : n ∈ unipB k (Fin N)) :
   rw [hp, hq, GlobalTheory.SmGL.blk_apply, GlobalTheory.SmGL.blk_apply]
   exact hab
 
-variable [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-
 theorem exists_mul {n : GL (Fin N) k} (hn : n ∈ unipB k (Fin N)) :
     ∃ a ∈ unipL k d hd, ∃ u ∈ unipU k d hd, n = a * u := by
   have hc0 := conj_mem_parabLower k d hd hn
@@ -94,8 +92,8 @@ theorem exists_mul {n : GL (Fin N) k} (hn : n ∈ unipB k (Fin N)) :
     · rw [hLentry, ite_eq_left rfl]
       exact ((GlobalTheory.SmGL.mem_unipB k).mp hn).2 p
   refine ⟨P⁻¹ * L * P, ?_, P⁻¹ * v * P, ?_, ?_⟩
-  · simp only [unipL, Subgroup.mem_inf, Subgroup.mem_comap, MulEquiv.coe_toMonoidHom,
-      MulAut.conj_apply]
+  · change P⁻¹ * L * P ∈ unipB k (Fin N) ∧
+      P * (P⁻¹ * L * P) * P⁻¹ ∈ (leviEmb k e).range
     refine ⟨haB, ?_⟩
     show P * (P⁻¹ * L * P) * P⁻¹ ∈ (leviEmb k e).range
     rw [show P * (P⁻¹ * L * P) * P⁻¹ = L by group]

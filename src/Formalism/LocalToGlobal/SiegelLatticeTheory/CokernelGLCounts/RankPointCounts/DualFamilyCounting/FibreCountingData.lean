@@ -85,8 +85,9 @@ theorem unitary_discriminant_model : UDModel := by
     fun Y => ⟨J.E (liftQ Y.1) (hA Y), J.E_isom (liftQ Y.1) (hA Y) (hW Y)⟩
   have hresp : ∀ Y Y' : udPre K 𝔭 k a, Y ≈ Y' → f0 Y = f0 Y' := by
     rintro Y Y' ⟨Z, hZ⟩
-    refine Subtype.ext (J.E_eq_of (liftQ Y.1) (liftQ Y'.1) (hA Y) (hA Y') ((condZ_iff hne hk1 (liftQ Y.1) (liftQ Y'.1)).1 ⟨Z, ?_⟩))
-    rw [liftQ_map, liftQ_map]; exact hZ
+    have hd := (condZ_iff hne hk1 (liftQ Y.1) (liftQ Y'.1)).mp
+      ⟨Z, by simpa only [liftQ_map] using hZ⟩
+    exact Subtype.ext (J.E_eq_of (liftQ Y.1) (liftQ Y'.1) (hA Y) (hA Y') hd)
   let f : udQ K 𝔭 k a → _ := Quotient.lift (s := udSetoid K 𝔭 k a) f0 hresp
   have hinj : Function.Injective f := by
     intro q q'
@@ -101,7 +102,8 @@ theorem unitary_discriminant_model : UDModel := by
     exact ⟨Z, hZ⟩
   have hsurj : Function.Surjective f := by
     rintro ⟨P, hP⟩
-    obtain ⟨Y, hY, hWY, hE⟩ := J.exists_E_eq P hP
+    have hLift := J.exists_E_eq P hP
+    rcases hLift with ⟨Y, hY, hWY, hE⟩
     let Yq : udPre K 𝔭 k a :=
       ⟨Y.map (Ideal.Quotient.mk _), (condP_iff_eqP hne hk1 Y).2 hY, (condW_iff hne hk2 Y).2 hWY⟩
     refine ⟨Quotient.mk _ Yq, Subtype.ext ?_⟩

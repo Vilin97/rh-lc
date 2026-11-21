@@ -43,7 +43,8 @@ theorem span_partLat (hL : A.LatG) (e : Matrix (Fin A.Dg) (Fin A.Dg) K) :
     exact hy.2
   · intro w hw
     have hw' : w ∈ Submodule.span K (A.Rg : Set (Fin A.Dg → K)) := by
-      rw [hL.span_eq_top]
+      letI : Submodule.IsFullLattice K A.Rg := hL
+      rw [Submodule.IsFullLattice.span_eq_top (A := K) (M := A.Rg)]
       exact Submodule.mem_top
     obtain ⟨d, hd, hm⟩ := exists_smul_mem A.Rg w hw'
     have hdK : algebraMap (𝓞 K) K d ≠ 0 := by

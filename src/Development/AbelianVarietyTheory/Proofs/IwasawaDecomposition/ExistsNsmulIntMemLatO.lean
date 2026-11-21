@@ -266,7 +266,67 @@ theorem exists_nsmul_latO_int (hS : ΛS.FG) (hT : ΛT.FG) : ∃ k : ℕ, 0 < k �
   | add x y _ _ hx hy => rw [Matrix.add_apply, RingHom.map_add (f := _), smul_add]; exact add_mem hx hy
   | neg x _ hx => rw [Matrix.neg_apply, RingHom.map_neg, smul_neg]; exact neg_mem hx
 
-theorem exists_nsmul_int_mem_latO (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT) :
+theorem selfDual_isFullLattice : ∀ (V : HSp D) (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)),
+      IsSelfDualC V Λ → Submodule.IsFullLattice D.host.E Λ := by
+  intro V Λ hΛ
+  haveI : Submodule.IsLattice D.host.E Λ := hΛ.1
+  refine ⟨?_⟩
+  obtain ⟨s, hs⟩ := hΛ.1.fg
+  apply eq_top_iff.mpr
+  intro y _
+  let f : (Fin V.rank → D.host.E) → D.host.E := fun x =>
+    ∑ i, ∑ j, star (x i) * V.gram i j * y j
+  obtain ⟨a, ha⟩ := IsLocalization.exist_integer_multiples (nonZeroDivisors (𝓞 D.host.E)) s f
+  have ha0 : (algebraMap (𝓞 D.host.E) D.host.E a) ≠ 0 := by
+    exact (FaithfulSMul.algebraMap_injective _ _).ne (mem_nonZeroDivisors_iff_ne_zero.mp a.2)
+  let P : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E) := {
+    carrier := {x | ∃ b : 𝓞 D.host.E, (b : D.host.E) = (algebraMap (𝓞 D.host.E) D.host.E a) * f x}
+    zero_mem' := by refine ⟨0, ?_⟩; simp [f]
+    add_mem' := by
+      rintro x z ⟨b, hb⟩ ⟨c, hc⟩
+      refine ⟨b + c, ?_⟩
+      change (b : D.host.E) + c = _
+      rw [hb, hc]
+      simp [f, map_add, add_mul, Finset.sum_add_distrib, mul_add]
+    smul_mem' := by
+      rintro c x ⟨b, hb⟩
+      refine ⟨RingOfIntegers.mapRingHom (starRingEnd D.host.E) c * b, ?_⟩
+      simp only [map_mul, hb, f, Pi.smul_apply, Algebra.smul_def, map_mul, RingOfIntegers.mapRingHom_apply, star_mul]
+      simp only [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro i _
+      apply Finset.sum_congr rfl
+      intro j _
+      change star (c : D.host.E) * _ = _
+      ring }
+  have hsP : (s : Set (Fin V.rank → D.host.E)) ⊆ P := by
+    intro x hx
+    obtain ⟨b, hb⟩ := ha x hx
+    exact ⟨b, by simpa [Algebra.smul_def] using hb⟩
+  have hy : (algebraMap (𝓞 D.host.E) D.host.E a) • y ∈ Λ := by
+    apply (hΛ.2 _).2
+    intro x hx
+    have hxP : x ∈ P := (hs ▸ Submodule.span_le.mpr hsP) hx
+    obtain ⟨b, hb⟩ := hxP
+    refine ⟨b, ?_⟩
+    rw [hb]
+    dsimp only [f, Pi.smul_apply]
+    simp only [smul_eq_mul, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    ring
+  have hy' : (algebraMap (𝓞 D.host.E) D.host.E a) • y ∈ Submodule.span D.host.E (Λ : Set (Fin V.rank → D.host.E)) :=
+    Submodule.subset_span hy
+  have := (Submodule.span D.host.E (Λ : Set (Fin V.rank → D.host.E))).smul_mem
+    (algebraMap (𝓞 D.host.E) D.host.E a)⁻¹ hy' 
+  change (algebraMap (𝓞 D.host.E) D.host.E a)⁻¹ •
+    ((algebraMap (𝓞 D.host.E) D.host.E a) • y) ∈ _ at this
+  rw [← smul_assoc, smul_eq_mul, inv_mul_cancel₀ ha0, one_smul] at this
+  exact this
+
+theorem exists_nsmul_int_mem_latO (hS : Submodule.IsFullLattice D.host.E ΛS) (hT : Submodule.IsFullLattice D.host.E ΛT) :
     ∃ k : ℕ, 0 < k ∧ ∀ x : WO S T, x.map (infPart D) = 0 → IsIntM (x.map (toEAf D)) →
       k • x ∈ latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) fun _ => True := by
   obtain ⟨k, hk, h⟩ := exists_common_nsmul _
@@ -289,7 +349,7 @@ theorem exists_nsmul_int_mem_latO (hS : Submodule.IsLattice D.host.E ΛS) (hT : 
   rw [smul_comm]
   exact GlobalTheory.LatticeStable.smul_mem_latO D S T _ _ _ _ (finPart_mem_intAE (hi p.1 p.2)) _ (h p)
 
-theorem exists_nsmul_mem_latO (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT)
+theorem exists_nsmul_mem_latO (hS : Submodule.IsFullLattice D.host.E ΛS) (hT : Submodule.IsFullLattice D.host.E ΛT)
     (x : WO S T) (hx : x.map (infPart D) = 0) : ∃ k : ℕ, 0 < k ∧
       k • x ∈ latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) fun _ => True := by
   obtain ⟨k, hk, h⟩ := exists_nsmul_int_mem_latO hS hT
@@ -337,7 +397,7 @@ theorem placeModel_unique {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ
     {Φ : WO S T → ℂ} (hΦ : IsSBHalf a (latO S T ΛS ΛT fun _ => True) Φ) : T₁ Φ = T₂ Φ := by
   have hdual := (GlobalTheory.LatVac.latO_selfDual_approx_sign D ψ S T _ _ hψ hS hT).1
   have hfin := GlobalTheory.LatFinMod.latO_finite_mod D S T _ _ hS.1.fg hT.1.fg fun _ => True
-  have hmul := exists_nsmul_mem_latO hS.1 hT.1
+  have hmul := exists_nsmul_mem_latO (selfDual_isFullLattice S ΛS hS) (selfDual_isFullLattice T ΛT hT)
   have hsm : ∀ {b : AE D}, b * b = b → ∀ u ∈ (latO S T ΛS ΛT fun _ => True),
       b • u ∈ (latO S T ΛS ΛT fun _ => True) ⊓ half S T b := fun {b} hb u hu =>
     ⟨GlobalTheory.LatticeStable.smul_mem_latO D S T _ _ _ b
@@ -430,7 +490,7 @@ theorem redM_add_nsmul {b c : ℕ} (PP : Formalism.L2.DIV.Pl D.host.E) {n : ℕ}
 
 
 open Classical in
-theorem isSBHalf_of_red (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT) {a : AE D}
+theorem isSBHalf_of_red (hS : Submodule.IsFullLattice D.host.E ΛS) (hT : Submodule.IsFullLattice D.host.E ΛT) {a : AE D}
     (hinf : infPart D a = 0) {b c : ℕ} (G : WO S T → Matrix (Fin b) (Fin c) (EAf D))
     (hG : ∀ x y, G (x + y) = G x + G y)
     (hup : ∃ k : ℕ, 0 < k ∧ ∀ x : WO S T, IsIntM (x.map (toEAf D)) → IsIntM (k • G x))

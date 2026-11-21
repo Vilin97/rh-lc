@@ -83,7 +83,7 @@ theorem basisAt_dualFr_tauLat : ∀ (E K : Type) [Field E] [NumberField E] [Fiel
   intro E K _ _ _ _ ι _ n emb τ w l hl hlw M hM
   have : Fact l.Prime := ⟨hl⟩
   refine ⟨Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.LocB.exists_isLocBasis l E M hM.fg (Submodule.IsFullLattice.span_eq_top (self := hM)),
-    Formalism.L2.DIV.(dualFr_tauLat_isLattice emb τ M hM).toIsLattice, fun B hB => ?_⟩
+    (Formalism.L2.DIV.dualFr_tauLat_isLattice emb τ M hM).toIsLattice, fun B hB => ?_⟩
   exact pb_isBasisAt_dualFr w _ (tauLatticeLattice_holds E K ι n emb τ M hM).fg _
     (isBasisAt_tauLat emb τ w hl hlw M B hB)
 

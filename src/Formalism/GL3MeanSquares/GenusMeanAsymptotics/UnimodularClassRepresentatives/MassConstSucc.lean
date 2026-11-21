@@ -66,7 +66,7 @@ theorem tendsto_left (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : 
   refine tendsto_finsetSum _ fun M hM => ?_
   have hg := hsr.1 M hM
   obtain ⟨hMi, -, hMD⟩ := integral_of_mem_genus hK hF hs hd hL hLi hg
-  have ht := (tendsto_ballCount hK hF hs hd hg.1 hMi).const_mul
+  have ht := (tendsto_ballCount hK hF hs hd hg.1.toIsLattice hMi).const_mul
     ((Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℝ)⁻¹)
   rw [hMD] at ht
   refine ht.congr fun j => ?_
@@ -87,12 +87,13 @@ theorem tendsto_right (hH : HermRepUnram) (hLI : LIStat) (hK : Formalism.Hermiti
   have h1 : Tendsto (fun j : ℕ => Formalism.HermitianLatticesTheory.mass h L /
       (j : ℝ) ^ (2 * Formalism.HermitianLatticesTheory.fDeg K * finrank K V)) atTop (𝓝 0) :=
     tendsto_const_nhds.div_atTop ((tendsto_pow_atTop hexp).comp tendsto_natCast_atTop_atTop)
-  have h2 := (tendsto_singS_sum hK hF hs hd hL hLi hm).const_mul
+  have hLat := hL.toIsLattice
+  have h2 := (tendsto_singS_sum hK hF hs hd (by assumption) hLi hm).const_mul
     (c * lamG F h L * (normD h L)⁻¹)
   refine (h1.add h2).congr fun j => ?_
   rw [add_div]
   congr 1
-  rw [finsum_mem_congr rfl fun n hn => repMass_eq hH hLI hK hF hs hd hL.toIsLattice hLi hm hc hn,
+  rw [finsum_mem_congr rfl fun n hn => repMass_eq hH hLI hK hF hs hd hLat hLi hm hc hn,
     finsum_mem_eq_finite_toFinset_sum _ (A5.boxSet_finite hK hF ((j : ℝ) ^ 2)),
     finsum_mem_eq_finite_toFinset_sum _ (A5.boxSet_finite hK hF ((j : ℝ) ^ 2)),
     ← Finset.mul_sum, zpow_neg, zpow_natCast, ← pow_mul, ← mul_assoc 2, div_eq_mul_inv]

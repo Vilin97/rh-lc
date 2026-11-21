@@ -91,17 +91,37 @@ theorem preAt_congr {Z : w.Lt} {z z' : Dat (w.st Z) w.I P.hX T P.Wt} {Rw Rw' Pq 
 
 section Install
 
-variable {x : St P} {N₁ : TwNew (Dof x)} {kKs : (datTw x N₁).core.Q.c.F →+* ↥(DN x N₁).LL0}
-  {hk : ∀ y, ((kKs y : ↥(DN x N₁).LL0) : (DN x N₁).what₂.LL) = algebraMap (datTw x N₁).core.Q.c.F (DN x N₁).what₂.LL y}
+variable {x : St P} {N₁ : TwNew (Dof x)}
+  {kKs : (Up.datTw x N₁).core.Q.c.F →+* ↥(DN x N₁).LL0}
+  {hk : ∀ y : (Up.datTw x N₁).core.Q.c.F,
+    ((kKs y : ↥(DN x N₁).LL0) : (DN x N₁).what₂.LL) =
+      algebraMap (Up.datTw x N₁).core.Q.c.F (DN x N₁).what₂.LL y}
   {cf : CharFrame (DN x N₁)} {Rw : RowSide (DN x N₁)}
-  {Pq : HeightOneSpectrum (𝓞 (maximalRealSubfield (DN x N₁).host.E)) → PlE (DN x N₁).host} {hf eig θ}
-  {Bs : SideB (DN x N₁) cf Rw (lowAll (DN x N₁)) Pq (ratDatR (datTw x N₁).R (datTw x N₁).cG kKs hk) hf eig θ} {hF}
+  {Pq : HeightOneSpectrum (𝓞 (maximalRealSubfield (DN x N₁).host.E)) → PlE (DN x N₁).host}
+  {hf : ∀ j, ℕ → PlE (DN x N₁).host →
+    Module.End (DN x N₁).what₂.LL ((ratDatR (Up.datTw x N₁).R (Up.datTw x N₁).cG kKs hk).WL j)}
+  {eig : ℕ → (DN x N₁).what₂.FT → ℕ → PlE (DN x N₁).host → ↥(DN x N₁).LL0}
+  {θ : ∀ kk : Fin 2, Multiplicative (ZMod ((DN x N₁).host.g kk)) →* (↥(DN x N₁).LL0)ˣ}
+  {Bs : SideB (DN x N₁) cf Rw (lowAll (DN x N₁)) Pq
+    (ratDatR (Up.datTw x N₁).R (Up.datTw x N₁).cG kKs hk) hf eig θ}
+  {hF : (DN x N₁).host.F = maximalRealSubfield (DN x N₁).host.E}
 
-abbrev kwP (p : PreTie (ysOf Bs) (datTw x N₁).geo.v₀ Bs.exp hF Pq) : TwNew (DN x N₁) := keepTw (DN x N₁) p.Dat (PreTie.th (D := DN x N₁) p) p.lev p.thPsi p.h1 p.thU p.thP p.MtLat p.h2 p.h3 p.nth
+abbrev kwP (p : PreTie (ysOf Bs) (Up.datTw x N₁).geo.v₀ Bs.exp hF Pq) : TwNew (DN x N₁) :=
+  keepTw (DN x N₁) p.Dat (PreTie.th (D := DN x N₁) p) p.lev p.thPsi p.h1 p.thU p.thP p.MtLat p.h2 p.h3 p.nth
 
-def bsP (p : PreTie (ysOf Bs) (datTw x N₁).geo.v₀ Bs.exp hF Pq) : SideB (DN x (nP p)) (((kwP p).cf cf)) (((kwP p).row Rw)) (lowAll (DN x (nP p))) ((Pq)) (sP p) ((hf)) ((eig))
-    ((θ)) :=
-  (by with_unfolding_all exact ((keepSideB (DN x N₁) p.Dat (PreTie.th (D := DN x N₁) p) p.lev p.thPsi p.h1 p.thU p.thP p.MtLat p.h2 p.h3 p.nth p.hU cf Rw _ Pq _ hf eig θ Bs) :))
+theorem kwP_toD7 (p : PreTie (ysOf Bs) (Up.datTw x N₁).geo.v₀ Bs.exp hF Pq) :
+    (kwP p).toD7 = DN x (SerCopy.nP p) := by
+  calc
+    (kwP p).toD7 = (SerCopy.nP p).toD7 := by rfl
+    _ = DN x (SerCopy.nP p) := (Up.dof_oTw x (SerCopy.nP p)).symm
+
+def bsP (p : PreTie (ysOf Bs) (Up.datTw x N₁).geo.v₀ Bs.exp hF Pq) :
+    SideB (DN x (SerCopy.nP p)) (kwP_toD7 p ▸ (kwP p).cf cf)
+      (kwP_toD7 p ▸ (kwP p).row Rw)
+      (lowAll (DN x (SerCopy.nP p))) Pq (SerCopy.sP p) hf eig θ := by
+  with_unfolding_all
+    exact keepSideB (DN x N₁) p.Dat (PreTie.th (D := DN x N₁) p) p.lev p.thPsi
+      p.h1 p.thU p.thP p.MtLat p.h2 p.h3 p.nth p.hU cf Rw _ Pq _ hf eig θ Bs
 
 end Install
 

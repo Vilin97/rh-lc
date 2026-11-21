@@ -102,7 +102,9 @@ theorem mod_lattice_absolute_value : ModXAbs := by
     rw [hco]
     exact hξX
   have hLb := Lb_lattice F' Λ hΛ
-  have hfix := mink_fix (Lb F' Λ) hLb.toIsLattice.fg φ hφL n hn hpow' g hg hcongQ
+  have hfg : (Lb F' Λ).FG := by
+    first | exact hLb.toIsLattice.fg | exact hLb.fg
+  have hfix := mink_fix (Lb F' Λ) hfg φ hφL n hn hpow' g hg hcongQ
   have hall : ∀ q, φ q = q := by
     have hle : Submodule.span E (Lb F' Λ : Set (Qt F')) ≤
         LinearMap.ker (φ - LinearMap.id : Qt F' →ₗ[E] Qt F') := by

@@ -5,5 +5,6 @@ public import Development.AutomorphicArithmetic.Foundations.BaseChangeIdentities
 
 @[expose] public section
 
-theorem UpperTheory.One.vwin_of_row (h : UpperTheory.GalStar.Row0b fun h rc => UpperTheory.Zero.LLC.IsRecT h rc) : UpperTheory.Top.VWin :=
-  UpperTheory.One.Join.automorphic_window_of_inputs (UpperTheory.LiteratureTheorems.OpenImageCondition.mk h) UpperTheory.BaseChangeIdentities.baseChangeN h
+theorem UpperTheory.One.vwin_of_row (h : UpperTheory.V.Z.Win.RowT) : UpperTheory.Top.VWin :=
+  UpperTheory.One.Join.automorphic_window_of_inputs
+    ⟨h⟩ UpperTheory.BaseChangeIdentities.baseChangeN h

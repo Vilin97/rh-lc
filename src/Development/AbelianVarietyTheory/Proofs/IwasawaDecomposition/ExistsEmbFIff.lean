@@ -16,6 +16,7 @@ public import Formalism.LocalToGlobal.Columns.TiedValRat
 public import Formalism.LocalToGlobal.HermitianForms.FramesLemmas
 public import Formalism.LocalToGlobal.GlobalTheory.GL6.FrobeniusNoKernelOfFrobeniusSimilitude
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.UfGLRatHom
+import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.InvSmulMemOfRedL
 
 @[expose] public section
 
@@ -73,8 +74,9 @@ theorem mem_Fi_iff {σ' : E →ₐ[F] E} {J : Matrix (Fin n) (Fin n) E} {T f : �
     (z : S.Cl → Fr emb σ n → ℂ) :
     z ∈ S.Fi emb σ lam ↔ (show S.Cl → Frames (gramC J e) → ℂ from z) ∈ FiC L e lam' y := by
   subst he hl
-  change z ∈ S.Fi emb σ lam ↔ z ∈ FiC L (embAt σ emb) lam y
-  rw [RowTie.mem_FiC_iff L (embAt σ emb) lam y hy z]
+  let zC : S.Cl → Frames (gramC J (embAt σ emb)) → ℂ := z
+  change z ∈ S.Fi emb σ lam ↔ zC ∈ FiC L (embAt σ emb) lam y
+  rw [RowTie.mem_FiC_iff L (embAt σ emb) lam y hy zC]
   refine forall_congr' fun c => and_congr Iff.rfl ⟨fun h γ hγ κ e zz zz' hz => ?_, fun H g => ?_⟩
   · obtain ⟨s, hs⟩ := (hr c ⟨γ, hγ⟩).2 ⟨κ.1⁻¹, inv_mem κ.2, by
       show (y c).1 * κ.1⁻¹ * (y c).1⁻¹ = bc (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) γ
@@ -290,7 +292,10 @@ theorem clsP_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.P
             ((I.rec7 l Z).val_nonneg_iff w) B.wts.sgW Q
           rw [← delStd_shW B.wts.sgW (-((B.R.m : ℤ) * (((B.R.t + 1) / 2 : ℕ) : ℤ)))] at h
           exact h)
-        _ (fun c => RowTie.Lsh_empty _) (fun c => ((I.stX I.mu0).rep c).1.1.deco.2.lat) x }
+        _ (fun c => RowTie.Lsh_empty _) (fun c => by
+          let d := ((I.stX I.mu0).rep c).1.1.deco
+          exact { toIsLattice := d.2.lat
+                  span_eq_top := GlobalTheory.LvT.Pts.span_eq_top_of_unimodular d.1.N d.2.lat d.2.uni }) x }
   refine ⟨KP, W, ⟨fun x => (hLb x).trans (mem_baseL_one B _ x).symm, fun _ => rfl, hpt, hlev, hchr, hst⟩, ?_, ?_⟩
   · intro s x Pc hPc o ho
     refine (MetricTie.norm_step B.fields.emb B.embLL (I.perIn u I.mu0).sgT (I.stX I.mu0) hF hS (l.fmL u I.mu0).famP hnf hsh (hG _)

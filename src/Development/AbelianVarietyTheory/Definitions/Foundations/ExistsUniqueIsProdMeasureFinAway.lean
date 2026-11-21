@@ -156,7 +156,7 @@ end Unfold
 theorem isCompact_of_ext {X : Type} [TopologicalSpace X] {s t : Set X} (h : IsCompact t) (e : ∀ x, x ∈ s ↔ x ∈ t) :
     IsCompact s := (Set.ext e : s = t) ▸ h
 
-variable [Submodule.IsLattice E L]
+variable [Submodule.IsFullLattice E L]
 
 theorem isRestrGroup_GAd : IsRestrGroup (projArch σ J) (proj σ J) (stabLoc σ J L) := by
   refine {
@@ -217,7 +217,7 @@ section Away
 
 variable (T : Finset (HeightOneSpectrum (𝓞 F)))
 
-omit [NumberField E] [Submodule.IsLattice E L] in
+omit [NumberField E] [Submodule.IsFullLattice E L] in
 theorem exists_away (S : Finset {v // v ∉ T}) (x : ∀ w, GArch σ J w) (y : ∀ v : S, GLoc σ J v.1) :
     ∃ g ∈ awayPts σ J T, (∀ w, projArch σ J w g = x w) ∧ (∀ v : S, proj σ J v.1 g = y v) ∧
       ∀ v ∉ S, proj σ J v.1 g ∈ stabLoc σ J L v := by

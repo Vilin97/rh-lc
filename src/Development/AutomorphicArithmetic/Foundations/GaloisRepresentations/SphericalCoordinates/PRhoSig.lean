@@ -136,16 +136,16 @@ private theorem sum_mult {F : Type} [Field F] [NumberField F] (n : ℕ) (hn : 1 
     intro τ
     by_cases h1 : τ = t₀
     · subst h1
-      simp only [typeMult, if_true, if_neg hc0]
+      simp only [typeMult, ite_true, ite_eq_right hc0]
       omega
     by_cases h2 : τ = ComplexEmbedding.conjugate t₀
     · subst h2
-      simp only [typeMult, hinv, if_neg hc0, if_true]
+      simp only [typeMult, hinv, ite_eq_right hc0, ite_true]
       omega
     have h3 : ComplexEmbedding.conjugate τ ≠ t₀ := fun h => h2 (by rw [← h, hinv])
     have h4 : ComplexEmbedding.conjugate τ ≠ ComplexEmbedding.conjugate t₀ := fun h =>
       h1 ((ComplexEmbedding.involutive_conjugate F).injective h)
-    simp only [typeMult, if_neg h1, if_neg h2, if_neg h3, if_neg h4]
+    simp only [typeMult, ite_eq_right h1, ite_eq_right h2, ite_eq_right h3, ite_eq_right h4]
     rw [← Nat.mul_add, eps τ h1 h2, Nat.mul_one]
   have hs : ∑ τ : F →+* ℂ, typeMult n t₀ ε (ComplexEmbedding.conjugate τ) = ∑ τ : F →+* ℂ, typeMult n t₀ ε τ :=
     Equiv.sum_comp (Function.Involutive.toPerm _ (ComplexEmbedding.involutive_conjugate F)) (typeMult n t₀ ε)
@@ -194,8 +194,8 @@ theorem rhoSig_of : RhoSig := by
     unfold epsD
     rw [ComplexEmbedding.conjugate_coe_eq]
     rcases hcase with h | h
-    · rw [h, if_pos rfl, if_neg hne]
-    · rw [h, if_neg hne, Complex.conj_conj, if_pos rfl]
+    · rw [h, ite_eq_left rfl, ite_eq_right hne]
+    · rw [h, ite_eq_right hne, Complex.conj_conj, ite_eq_left rfl]
   have hsum : ∑ τ : D.F →+* ℂ, typeMult D.n t₀ (epsD D) τ = D.g := by
     have h2 := sum_mult D.n D.n_pos t₀ (epsD D) hcx heps
     unfold Datum.g
@@ -205,7 +205,7 @@ theorem rhoSig_of : RhoSig := by
     ⟨(Fintype.equivFinOfCardEq (by simp [hsum])).symm⟩
   let ρ : D.O →+* Matrix (Fin D.g) (Fin D.g) ℂ :=
     (Matrix.diagonalRingHom (Fin D.g) ℂ).comp
-      ((Pi.ringHom fun i => ((E i).1).comp (algebraMap (𝓞 D.F) D.F)).comp (e.symm : D.O →+* 𝓞 D.F))
+      ((RingHom.pi fun i => ((E i).1).comp (algebraMap (𝓞 D.F) D.F)).comp (e.symm : D.O →+* 𝓞 D.F))
   have hρ : ∀ c : 𝓞 D.F, ρ (algebraMap (𝓞 D.F) D.O c) = Matrix.diagonal fun i => (E i).1 (c : D.F) := by
     intro c
     simp only [ρ, RingHom.comp_apply, RingHom.coe_coe, he]

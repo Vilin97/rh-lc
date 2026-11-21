@@ -208,7 +208,10 @@ theorem exists_plane_equiv {B : Base F E} {X : Spc F E n} {W : Spc F E d} {W₁ 
       ∀ p, (co.e (Matrix.vecMulVec b (incV F H'.y))).1 ((idx hd).symm (Sum.inl p)) = 0) :
     ∃ p : (Fin n → AE F E) ≃ₗ[AF F] (Fin n × Fin 2 → AF F),
       ∀ b k, (co.e (Matrix.vecMulVec b (incV F H'.y))).1 ((idx hd).symm (.inr k)) = p b k := by
-  obtain ⟨Q, h1, h2, -⟩ := exists_frame_inv hH hL
+  obtain ⟨Q, h1, h2, -⟩ := by
+    first
+    | exact exists_frame_inv hH hL
+    | exact exists_frame_inv hH hL.toIsLattice
   have hone : ∀ {α : Type} [Fintype α] [DecidableEq α], incM F (1 : Matrix α α E) = 1 :=
     Matrix.map_one _ (map_zero _) (map_one _)
   let p : (Fin n → AE F E) →ₗ[AF F] (Fin n × Fin 2 → AF F) :=

@@ -16,6 +16,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.LiftSys
 
 theorem abelianSchemeLifts_of_abelianHodgeDeRham : AbelianHodgeDeRham → AbelianSchemeLifts :=
-  GlobalTheory.T.abelianSchemeSquareZeroLifts_of_hodgeDeRham GlobalTheory.SmoothLift.crystallineSmoothLift_of_relations
+  abelianSchemeLifts_of_hodgeDeRham
+    GlobalTheory.SmoothLift.crystallineSmoothLift_of_relations
 
 end GlobalTheory.LiftSys

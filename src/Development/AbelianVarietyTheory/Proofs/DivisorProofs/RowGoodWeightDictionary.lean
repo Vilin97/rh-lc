@@ -33,11 +33,14 @@ theorem goodW_core {D : D7} (T : CoreJ D) (hT : LawsJ T) (j : ℕ) (hj : InR D j
   have hl' : FullLat (cuspW (T.Q.Xo j) T.Q.c (T.U j) (wtZ (wtA w) w.n))
       (valSet (T.Q.Xo j) T.Q.c (algCls (T.Q.Xo j) T.Q.c)) fun la => isVal_valSet la :=
     fullLat_congr (cuspW_wtZ _ _).symm hl
-  refine ⟨?_, hl'.fg, Submodule.IsFullLattice.span_eq_top (self := hl')⟩
+  have hlat : Submodule.IsFullLattice T.Q.c.F (latW (T.U j) (wtZ (wtA w) w.n)) := by
+    simpa only [FullLat, latW, supLat] using hl'
+  have hspan := Submodule.IsFullLattice.span_eq_top (self := hlat)
+  refine ⟨?_, hlat.fg, hspan⟩
   haveI : FiniteDimensional T.Q.c.F (cuspW (T.Q.Xo j) T.Q.c (T.U j) (wtZ (wtA w) w.n)) := by
-    obtain ⟨s, hs⟩ := hl'.fg
+    obtain ⟨s, hs⟩ := hlat.fg
     refine ⟨⟨s, ?_⟩⟩
-    rw [← Submodule.IsFullLattice.span_eq_top (self := hl'), ← hs, Submodule.span_span_of_tower]
+    rw [← hspan, ← hs, Submodule.span_span_of_tower]
   refine GlobalTheory.HSApp.hasGram_of_inner _ _ _ fun v => ?_
   set σ := goodOf T.Q.c v.embedding with hσdef
   have hσ : GoodEmb T.Q.c σ := goodEmb_goodOf _ _

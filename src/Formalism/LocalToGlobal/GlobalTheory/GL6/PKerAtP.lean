@@ -77,34 +77,14 @@ section TLd
 
 variable {D : D7} {u : D.what₂.Word}
 
-
-set_option maxHeartbeats 2000000 in
 theorem tld_isLat (i : ℕ) (hi : i ≤ D.R.m) (c : (D.mem u).C.cls i) :
     Formalism.L2.GlobalTheoryTheory.Comp.IsLat (clsCrd D u i hi c) := by
-  letI := D.host.cmStar
-  set κ : (D.sp.X i).V ≃ₗ[D.host.E] (Fin (D.R.N i) → D.host.E) := (D.sp.X i).frame.equivFun.trans
-    (LinearEquiv.funCongrLeft D.host.E D.host.E (finCongr (rankN D i hi)).symm) with hκ
-  have hform_eq : ∀ x y, (D.sp.X i).hT x y = Formalism.UG.hform (D.sp.cm.sig : D.host.E →+* D.host.E) (gramN D i hi) (κ x) (κ y) := by
-    intro x y
-    have hx : (D.sp.X i).hT x y = ∑ a, ∑ b, star ((D.sp.X i).frame.repr x a) * (D.sp.X i).gram a b *
-        (D.sp.X i).frame.repr y b := by
-      conv_lhs => rw [← (D.sp.X i).frame.sum_repr x, ← (D.sp.X i).frame.sum_repr y]
-      set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
-        starRingEnd_apply, HSpace.gram, Finset.mul_sum]
-      rw [Finset.sum_comm]
-      refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
-      simp only [RingHom.id_apply]
-      ring
-    rw [hx]
-    unfold Formalism.UG.hform
-    rw [← (finCongr (rankN D i hi)).symm.sum_comp]
-    refine Finset.sum_congr rfl fun a _ => ?_
-    rw [← (finCongr (rankN D i hi)).symm.sum_comp]
-    refine Finset.sum_congr rfl fun b _ => ?_
-    simp [gramN, hκ, CMData.sig, LinearEquiv.funCongrLeft_apply, LinearMap.funLeft, starRingEnd_apply]
-  let K : Formalism.L2.GlobalTheoryTheory.Comp.Coord D.sp.cm (D.sp.X i) (Fin (D.R.N i)) := ⟨κ, gramN D i hi, hform_eq⟩
-  exact K.isLat_lat (D.clsLat_lat u i c)
+  have hLat := bwB_clsCrd_lat D u i hi c
+  obtain ⟨hDoubleDual, hDualFG, _⟩ := rlv_coordFacts (D := D) (u := u) i hi
+  refine ⟨Module.Finite.iff_fg.2 hLat.fg, ?_⟩
+  rw [← hDoubleDual c]
+  exact LocB.dual_span (sigD D : D.host.E →+* D.host.E) (gramN D i hi) _
+    (Submodule.IsLattice.of_fg _ (hDualFG c))
 
 end TLd
 

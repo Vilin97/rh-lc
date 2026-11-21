@@ -202,9 +202,11 @@ theorem basis_conj [StarRing E] (emb : ι → E →+* K) (τ : ι) (w : HeightOn
     (h : ∀ x, w.valuation K (emb τ (star x)) ≤ 1 ↔ P.valuation E x ≤ 1) {L : Submodule (𝓞 E) (Fin n → E)}
     (hL : Submodule.IsFullLattice E L) {g : GL (Fin n) E} (hg : IsBasisAt P L g) :
     IsBasisAt w (dualFr (tauLat emb τ (dual (hStd E n) L))) (Formalism.UG.bc ((emb τ).comp (starRingEnd E)) g) := by
-  have e := roundLat E K ι n emb (starRingEnd E) τ (fun x => star_star x) 1 (dual (hStd E n) L) L (dual_lattice hL)
+  have hdual := Formalism.HermitianLatticesTheory.dualLattice (𝓞 E) E (Sp E n) (hStd E n)
+    hStd_isSymm hStd_nondeg star_range L hL
+  have e := roundLat E K ι n emb (starRingEnd E) τ (fun x => star_star x) 1 (dual (hStd E n) L) L hdual.1
     (by ext a b; simp [Formalism.UG.cT, Matrix.one_apply, eq_comm]) (fun y => by
-      conv_lhs => rw [← dual_dual hL, mem_dual]
+      conv_lhs => rw [← hdual.2.1, mem_dual]
       refine forall₂_congr fun x _ => ?_
       have : Formalism.UG.hform (starRingEnd E) ((1 : GL (Fin n) E) : Matrix (Fin n) (Fin n) E) x y = hStd E n x y := by
         simp [Formalism.UG.hform, hStd_apply, Matrix.one_apply, starRingEnd_apply]
@@ -276,7 +278,40 @@ theorem delAtr_off {K ι : Type} [Field K] [NumberField K] [Fintype ι] (emb : �
     {d d' : Deco E n ST ∅} (hd : d.Ok) (hd' : d'.Ok) {T : ℕ} (hT : ∀ P ∈ ST, (T : 𝓞 E) ∈ P.asIdeal)
     (h : SameOff ST d.N d'.N) {w : HeightOneSpectrum (𝓞 K)} (hw : (T : 𝓞 K) ∉ w.asIdeal) :
     localization₂ w.asIdeal (delAtr emb lam d.Lsh) = localization₂ w.asIdeal (delAtr emb lam d'.Lsh) := by
-  refine (round_locP_congr emb lam w hd.Lsh_lattice hd'.Lsh_lattice fun τ => ?_).1
+  have full : ∀ {d : Deco E n ST ∅}, d.Ok → Submodule.IsFullLattice E d.Lsh := by
+    intro d hd
+    have hn : Submodule.IsFullLattice E d.N := by
+      let := hd.lat
+      refine { span_eq_top := ?_ }
+      let W := Submodule.span E (d.N : Set (Sp E n))
+      change W = ⊤
+      by_contra h
+      let e : Sp E n ≃ₗ⋆[E] Sp E n := starLinearEquiv E
+      let g : Sp E n →ₗ[E] Module.Dual E W :=
+        (LinearMap.domRestrict' W).comp ((hStd E n).comp e.toLinearMap)
+      have hdim : Module.finrank E (Module.Dual E W) < Module.finrank E (Sp E n) := by
+        rw [Subspace.dual_finrank_eq]
+        exact Submodule.finrank_lt h
+      obtain ⟨x, hx, hx₀⟩ :=
+        Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+      have hsmul (a : E) : a • e x ∈ d.N := by
+        rw [← hd.uni, mem_dual]
+        intro y hy
+        apply hStd_mem_one_symm
+        have hxy : hStd E n (e x) y = 0 :=
+          congrArg (fun k : Module.Dual E W => k ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+        simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
+      let i : E →ₗ[𝓞 E] d.N :=
+        ((LinearMap.toSpanSingleton E _ (e x)).restrictScalars (𝓞 E)).codRestrict d.N hsmul
+      let : Module.Finite (𝓞 E) d.N := Module.Finite.iff_fg.mpr hd.lat.fg
+      let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
+        smul_left_injective E (fun hzero => hx₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
+      exact RingOfIntegers.not_isField E
+        (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+    letI : Submodule.IsFullLattice E d.N := hn
+    letI : Submodule.IsLattice E d.Lsh := hd.Lsh_lattice
+    exact Submodule.IsFullLattice.of_le E hd.N_le_Lsh
+  refine (round_locP_congr emb lam w (full hd) (full hd') fun τ => ?_).1
   have hQ : (T : 𝓞 E) ∉ (bcBelow (emb τ) w).asIdeal := by rwa [bc_mem_below, map_natCast]
   have e : localization₂ (bcBelow (emb τ) w).asIdeal d.Lsh = localization₂ (bcBelow (emb τ) w).asIdeal d'.Lsh := by
     rw [locP_Lsh_off hd hT hQ, locP_Lsh_off hd' hT hQ]

@@ -69,6 +69,7 @@ theorem sphAt_iso {π π' : NG.AutRep L n} (h : π.Iso π') {v} (hs : π.SphAt v
   · have := hT κ ⟨f, hf⟩ ⟨f, hf⟩ (hfix κ hκ ht).symm
     exact this.symm
 
+omit [NumberField L] [IsCMField L] in
 theorem overPl_unique {w : HeightOneSpectrum (𝓞 L)} {v v' : HeightOneSpectrum (𝓞 (maximalRealSubfield L))}
     (h : NG.OverPl w v) (h' : NG.OverPl w v') : v = v' :=
   HeightOneSpectrum.ext (h.symm.trans h')
@@ -107,18 +108,7 @@ namespace GlobalTheory.AutQuot
 section
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
-variable (hL : GlobalTheory.Published.LocalLanglandsGL) (D : D7) (T : GlobalTheory.RowTie.WDTie D.nd D.naut)
-
-end
-
-end GlobalTheory.AutQuot
-
-namespace GlobalTheory.AutQuot
-
-section
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
-
-variable (hL : GlobalTheory.Published.LocalLanglandsGL) (D : D7) (T : GlobalTheory.RowTie.WDTie D.nd D.naut)
+variable (D : D7)
 
 theorem f_sat (π : NG.AutRep D.host.E D.R.nV) (v : HeightOneSpectrum (𝓞 (maximalRealSubfield D.host.E))) (w : PlE D.host)
     (hv : NG.OverPl w v) (Dv : InertDatum D.host.E D.R.nV v w) (hα : ∃ α, NG.SatAt π Dv α) :
@@ -162,8 +152,6 @@ theorem f_infW (a : NG.AlgWt D.host.E D.R.nV) (τ : D.host.E →+* ℂ) (lam : F
   unfold hwOf
   rw [dite_eq_left hex, huniq.unique hex.choose_spec.1 hr]
 
-
 end
 
 end GlobalTheory.AutQuot
-

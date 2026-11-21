@@ -128,9 +128,12 @@ def atTTied (hH : HostHyp d) (u : d.what₂.Word) : CF.AtTTied (D := d.colRec a)
   res_conj := fun v pb hpb h => by
     have h1 : pb = cO d.X.E (d.Pr.piT u) := by
       apply RingOfIntegers.ext
-      rw [hpb, ← att_star_eq]
-      rfl
-    exact (basePi_of_ok d.hX d.hPr u).conj_notMem v.2 (h1 ▸ Ideal.Quotient.eq_zero_iff_mem.1 h)
+      change algebraMap (𝓞 d.X.E) d.X.E pb = algebraMap (𝓞 d.X.E) d.X.E (cO d.X.E (d.Pr.piT u))
+      rw [algebraMap_cO, att_star_eq (d := d)]
+      exact hpb
+    change Ideal.Quotient.mk v.1.asIdeal pb = 0 at h
+    rw [h1] at h
+    exact (basePi_of_ok d.hX d.hPr u).conj_notMem v.2 (Ideal.Quotient.eq_zero_iff_mem.mp h)
   res_v := fun v x => (Ideal.Quotient.eq_zero_iff_mem (I := v.1.asIdeal)).symm
   tauOf := fun w hw v x => by
     have hT : (d.Pr.T u : 𝓞 d.X.K) ∈ (d.plEq w).asIdeal := by

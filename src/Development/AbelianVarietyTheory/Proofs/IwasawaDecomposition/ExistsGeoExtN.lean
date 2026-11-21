@@ -38,7 +38,11 @@ theorem geo_copy {Z Z' : w.Lt} (z₀ : Dat (w.st Z) w.I hX T Wt) (z : Dat (w.st 
     exact (alg_eq y).trans ((by with_unfolding_all exact ((z₀.alg_eq ((by with_unfolding_all exact (y :)))).symm :)))
   subst e
   obtain rfl : R = cpR (a := Z) Z' z₀ := eq_of_heq (h4.trans ((by with_unfolding_all exact ((HEq.refl (cpR (a := Z) Z' z₀)) :))))
-  refine ⟨(by with_unfolding_all exact ((geoHalf (a := Z) Z' (iK := z₀.alg) z₀.geo) :)), (by with_unfolding_all exact ((inGeo_tr (a := Z) Z' (iK := z₀.alg) hg) :)), ?_, ?_⟩
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · with_unfolding_all
+      exact GlobalTheory.Mem.R3.Tr.geoHalf (a := Z) Z' (iK := z₀.alg) z₀.geo
+  · with_unfolding_all
+      exact GlobalTheory.Mem.R3.Tr.inGeo_tr (a := Z) Z' (iK := z₀.alg) hg
   · intro B' f' T' w' Z'' hX' Wt' z' e
     exact
       { H := (by with_unfolding_all exact (e.H :))

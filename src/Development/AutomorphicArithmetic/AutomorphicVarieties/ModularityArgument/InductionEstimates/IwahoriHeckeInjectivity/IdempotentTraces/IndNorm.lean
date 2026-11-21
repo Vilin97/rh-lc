@@ -173,10 +173,18 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E.indNorm :
       obtain ⟨C₁, e₁, c₁⟩ := (Dp.sSatIff M 2 _ π τ₁ hτ₁ w _).1 (hA₁.2 w hwS)
       obtain ⟨C₂, e₂, c₂⟩ := (Dp.sSatIff M 2 _ π' τ₂ hτ₂ w _).1 (hA₂.2 w hwS)
       obtain ⟨C₃, e₃, c₃⟩ := (Dp.sSatIff K (2 + 2) _ P V hP _ _).1 (hA₃.2 _ hw₃)
-      have hq : 1 < Formalism.ConjugateSelfDual.normV (w.under (𝓞 K)) := NumberField.HeightOneSpectrum.one_lt_absNorm _
+      have hnorm : ∀ {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)),
+          Formalism.ConjugateSelfDual.normV v = Ideal.absNorm v.asIdeal := by
+        intro F _ _ v
+        rw [Formalism.ConjugateSelfDual.normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
+      have hq : 1 < Formalism.ConjugateSelfDual.normV (w.under (𝓞 K)) := by
+        rw [hnorm]
+        exact NumberField.HeightOneSpectrum.one_lt_absNorm _
       have hfr : f = resDeg K w := by
         have hpl : Formalism.ConjugateSelfDual.normV w = Formalism.ConjugateSelfDual.normV (w.under (𝓞 K)) ^ resDeg K w :=
-          (UpperTheory.ConvolutionTheory.T.places K M hp).2.2.2.2.1 w
+          by
+            rw [hnorm, hnorm]
+            exact (UpperTheory.ConvolutionTheory.T.places K M hp).2.2.2.2.1 w
         exact Nat.pow_right_injective hq (hf.symm.trans hpl)
       refine ⟨C₃, c₃, ![C₁, C₂], ?_, ?_⟩
       · intro i

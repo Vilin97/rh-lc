@@ -63,15 +63,15 @@ theorem stdSumBasis_elim (K : Type*) [Field K] (m k : ℕ) :
   funext x; cases x <;> rfl
 
 theorem stdLattice_isLattice_example :
-    Submodule.IsFullLattice ℚ ((stdLattice ℚ 1).restrictScalars ℤ) where
-  toIsLattice := Submodule.IsLattice.of_fg ℚ
-    ((Submodule.fg_span (Set.finite_range _)).restrictScalars)
-  span_eq_top := by
-    change Submodule.span ℚ (stdLattice ℚ 1 : Set (Fin 1 → ℚ)) = ⊤
-    rw [stdLattice, Submodule.span_span_of_tower (𝓞 ℚ)]
-    have h : ⇑(Pi.basisFun ℚ (Fin 1)) = fun j => Pi.single j 1 :=
-      funext (Pi.basisFun_apply ℚ (Fin 1))
-    rw [← h, Module.Basis.span_eq]
+    Submodule.IsFullLattice ℚ ((stdLattice ℚ 1).restrictScalars ℤ) := by
+  refine { toIsLattice := Submodule.IsLattice.of_fg ℚ
+             ((Submodule.fg_span (Set.finite_range _)).restrictScalars)
+           span_eq_top := ?_ }
+  change Submodule.span ℚ (stdLattice ℚ 1 : Set (Fin 1 → ℚ)) = ⊤
+  rw [stdLattice, Submodule.span_span_of_tower (𝓞 ℚ)]
+  have h : ⇑(Pi.basisFun ℚ (Fin 1)) = fun j => Pi.single j 1 :=
+    funext (Pi.basisFun_apply ℚ (Fin 1))
+  rw [← h, Module.Basis.span_eq]
 
 end
 

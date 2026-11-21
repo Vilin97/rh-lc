@@ -43,7 +43,7 @@ theorem isNormN {N : TwNew (Dof x)} (N' : TwNew (Dof x)) {j : Fin (DN x N).R.m}
     IsNorm (D := DN x N') (datTw x N').R (datTw x N').geo.v₀ (j := (j)) (@baN K B f T w P x N N' j X) ν := by
   obtain ⟨h0, c, ⟨g, c0R, c0L, hF, u, hu, hh⟩, hn⟩ := h
   exact ⟨h0, c, ⟨(g), (c0R), (c0L),
-    kc% (famTie_imp (a := (oTw x N).Z) (oTw x N').Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ hF), (u), (hu), (hh)⟩, (hn)⟩
+    (by with_unfolding_all exact famTie_imp (a := (oTw x N).Z) (oTw x N').Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ hF), (u), (hu), (hh)⟩, (hn)⟩
 
 variable {N₁ : TwNew (Dof x)} {kKs : (datTw x N₁).core.Q.c.F →+* ↥(DN x N₁).LL0}
   {hk : ∀ y : (datTw x N₁).core.Q.c.F, ((kKs y : ↥(DN x N₁).LL0) : (DN x N₁).what₂.LL) = algebraMap (datTw x N₁).core.Q.c.F (DN x N₁).what₂.LL y}

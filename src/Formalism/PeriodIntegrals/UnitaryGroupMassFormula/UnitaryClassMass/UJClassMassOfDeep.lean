@@ -72,8 +72,9 @@ end
 
 theorem crdBounds : CrdBounds := by
   intro F E _ _ _ _ _ V _ _ _ _ _ M b L0 hL
-  obtain ⟨y1, hy1, h1⟩ := crd_upper b L0 hL.toIsLattice.fg
-  obtain ⟨y2, hy2, h2⟩ := crd_lower b L0 (Submodule.IsFullLattice.span_eq_top (self := hL))
+  let hFull : Submodule.IsFullLattice E L0 := hL
+  obtain ⟨y1, hy1, h1⟩ := crd_upper b L0 hFull.toIsLattice.fg
+  obtain ⟨y2, hy2, h2⟩ := crd_lower b L0 (Submodule.IsFullLattice.span_eq_top (A := E) (M := L0))
   refine ⟨⟨(y1 : 𝓞 F), intCast_ne_zero_OF y1 hy1, fun x hx i => ?_⟩,
     ⟨(y2 : 𝓞 F), intCast_ne_zero_OF y2 hy2, fun i e he => ?_⟩⟩
   · rw [intF_smul]

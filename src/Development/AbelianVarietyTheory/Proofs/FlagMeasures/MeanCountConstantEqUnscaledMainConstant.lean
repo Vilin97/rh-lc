@@ -52,9 +52,9 @@ theorem countConst_eq_unscaledConst : PI.VolStabS.MassDataS.SWXS → ∀ (Cg cb 
   have hStd : Formalism.L2.SG.LocVol.StdHyp X.B.I.cm.sig X.B.I.J ψ :=
     ⟨MassDataVolumesW.stepCM X, MassDataVolumesW.stepHerm X, hI, hS⟩
   have hlat : ∃ L : Submodule (NumberField.RingOfIntegers X.B.I.E) (Fin X.B.I.n → X.B.I.E),
-      Submodule.IsFullLattice X.B.I.E L ∧
+      Submodule.IsLattice X.B.I.E L ∧
       (L : Set (Fin X.B.I.n → X.B.I.E)) = (X.B.I.L : Set (Fin X.B.I.n → X.B.I.E)) :=
-    ⟨X.B.I.L, ⟨Submodule.IsLattice.of_fg X.B.I.E X.B.I.L_fg, X.B.I.L_span⟩, rfl⟩
+    ⟨X.B.I.L, Submodule.IsLattice.of_fg X.B.I.E X.B.I.L_fg, rfl⟩
   have hdet' : (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.gramE X.B.I.cm.sig X.B.I.J
       (Formalism.L2.SG.Sub.tupH (Formalism.L2.SG.TypedSets.frameOf X u'))).det ≠ 0 :=
     Formalism.L2.SG.Pf.Rescale.standard_gram_nondegenerate X.B.I.F X.B.I.E X.B.I.cm.sig X.B.I.n X.B.I.J _ _ _

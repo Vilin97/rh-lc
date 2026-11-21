@@ -271,46 +271,47 @@ def recBE : BesselTied D (recXE hP hT hB hL hE hθ hψ Wf hW Tw Rc) (recTE hP hT
     · obtain ⟨u, hu⟩ := hp
       exact absurd hu (inr_ne A B ι x _)
 
-theorem realisesE : RealisesE (θ := θ) (recBE hP hT hB hL hE hθ hψ Wf hW Tw Rc) Wf Tw Rc where
-  inf := hθ
-  eqRank := hW
-  forms V := Set.ext fun φ => ⟨fun ⟨x, hx⟩ => hx ▸ aut hθ x, fun h => ⟨⟨φ, Submodule.subset_span h⟩, rfl⟩⟩
-  typ V P F := Iff.rfl
-  sch V V' := range_ThS V V'
-  chr μ j := rfl
-  eta := rfl
-  col u μ j φ := rfl
-  row μ j F := rfl
-  phi μ j := rfl
-  phiUp μ j hj x := transp_apply hψ (rank_Y_ne (recXE hP hT hB hL hE hθ hψ Wf hW Tw Rc) j hj) (Rc.Phi μ j) x
-  mY := rfl
-  petF := rfl
-  petR := rfl
-  xs := rfl
-  ys := rfl
-  ysLow := rfl
-  iXYs t j := HEq.rfl
-  iYXm t := HEq.rfl
-  om V V' χ χ' p Φ f h := by
-    obtain rfl : Φ = f := Subtype.ext h
-    rfl
-  thOff V V' χ χ' h := by
-    change (Rc.petC V : ℂ) • (exists_liftE hL hE hθ hψ Wf hW V V' χ.1 χ'.1).choose.compl₂ (cuspEq θ V).toLinearMap = 0
-    rw [(exists_liftE hL hE hθ hψ Wf hW V V' χ.1 χ'.1).choose_spec.1 h]
-    ext
-    simp
-  thEq V V' χ χ' h hV μ 𝓕 hμ Φ F x := congrArg (fun z => (Rc.petC V : ℂ) * z) <|
-    (exists_liftE hL hE hθ hψ Wf hW V V' χ.1 χ'.1).choose_spec.2 (Or.inr h) hV μ 𝓕 hμ Φ (cuspEq θ V F) x
-  fact V V' Φ := Iff.rfl
-  kfin := ⟨recKE hP hT hB hL hE hθ hψ Wf hW Tw Rc, rfl, rfl⟩
-  posDat u ho := ⟨rfl, rfl⟩
-  pos1Val u σ μ 𝓕 hμ ν 𝓝 hν s hs φ F := memberPeriodAtTrivialPosition_spec hB hθ hψ Rc u hμ hν hs φ F
-  besAll A A' ι ho hA hι d hd :=
-    ⟨(.inl fun _ => ⟨d, hd⟩ : PosT A A' ι), rfl, besGlobE_inl hP hT hB hL hE hθ hψ Wf hW Tw Rc ho hA hι fun _ => ⟨d, hd⟩⟩
-  besOnly A A' ι ho hA hι p := by
-    rcases p with f | x
-    · exact Or.inl (besGlobE_inl hP hT hB hL hE hθ hψ Wf hW Tw Rc ho hA hι f)
-    · exact Or.inr ⟨x.1, inr_eq A A' ι x⟩
+theorem realisesE : RealisesE (θ := θ) (recBE hP hT hB hL hE hθ hψ Wf hW Tw Rc) Wf Tw Rc := by
+  exact {
+    inf := hθ
+    eqRank := hW
+    forms V := Set.ext fun φ => ⟨fun ⟨x, hx⟩ => hx ▸ aut hθ x, fun h => ⟨⟨φ, Submodule.subset_span h⟩, rfl⟩⟩
+    typ V P F := Iff.rfl
+    sch V V' := range_ThS V V'
+    chr μ j := rfl
+    eta := rfl
+    col u μ j φ := rfl
+    row μ j F := rfl
+    phi μ j := rfl
+    phiUp μ j hj x := transp_apply hψ (rank_Y_ne (recXE hP hT hB hL hE hθ hψ Wf hW Tw Rc) j hj) (Rc.Phi μ j) x
+    mY := rfl
+    petF := rfl
+    petR := rfl
+    xs := rfl
+    ys := rfl
+    ysLow := rfl
+    iXYs t j := HEq.rfl
+    iYXm t := HEq.rfl
+    om V V' χ χ' p Φ f h := by
+      obtain rfl : Φ = f := Subtype.ext h
+      rfl
+    thOff V V' χ χ' h := by
+      change (Rc.petC V : ℂ) • (exists_liftE hL hE hθ hψ Wf hW V V' χ.1 χ'.1).choose.compl₂ (cuspEq θ V).toLinearMap = 0
+      rw [(exists_liftE hL hE hθ hψ Wf hW V V' χ.1 χ'.1).choose_spec.1 h]
+      ext
+      simp
+    thEq V V' χ χ' h hV μ 𝓕 hμ Φ F x := congrArg (fun z => (Rc.petC V : ℂ) * z) <|
+      (exists_liftE hL hE hθ hψ Wf hW V V' χ.1 χ'.1).choose_spec.2 (Or.inr h) hV μ 𝓕 hμ Φ (cuspEq θ V F) x
+    fact V V' Φ := Iff.rfl
+    kfin := ⟨recKE hP hT hB hL hE hθ hψ Wf hW Tw Rc, rfl, rfl⟩
+    posDat u ho := ⟨rfl, rfl⟩
+    pos1Val u σ μ 𝓕 hμ ν 𝓝 hν s hs φ F := memberPeriodAtTrivialPosition_spec hB hθ hψ Rc u hμ hν hs φ F
+    besAll A A' ι ho hA hι d hd :=
+      ⟨(.inl fun _ => ⟨d, hd⟩ : PosT A A' ι), rfl, besGlobE_inl hP hT hB hL hE hθ hψ Wf hW Tw Rc ho hA hι fun _ => ⟨d, hd⟩⟩
+    besOnly A A' ι ho hA hι p := by
+      rcases p with f | x
+      · exact Or.inl (besGlobE_inl hP hT hB hL hE hθ hψ Wf hW Tw Rc ho hA hι f)
+      · exact Or.inr ⟨x.1, inr_eq A A' ι x⟩ }
 
 end Record
 

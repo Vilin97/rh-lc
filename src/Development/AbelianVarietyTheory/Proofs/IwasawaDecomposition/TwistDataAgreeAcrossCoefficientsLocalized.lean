@@ -87,30 +87,21 @@ theorem SL_heq (n : InRat x.r.Y x.m.z.cG) : HEq (ratL L n.S) (SL L n) := (HEq.re
 
 variable (l : LC hL x)
 
-set_option backward.isDefEq.lazyProjDelta false in
-set_option backward.isDefEq.lazyWhnfCore false in
-def ysL : NExpRealS (datL x L).R (datL x L).cG (SL L l.rat) where
-  fi := (l.b.YS.fi)
-  geq := (l.b.YS.geq)
-  rho := (l.b.YS.rho)
-  chi := (l.b.YS.chi)
-  eF := by
-    intro i j b h1 h2
-    with_unfolding_all exact (l.b.YS.eF i j b h1 h2 :)
-  bsup := by
-    intro i j b h1 h2
-    with_unfolding_all
-      obtain ⟨c, hc, hforward, hback⟩ := l.b.YS.bsup i j b h1 h2
-      refine ⟨c, hc, ?_, ?_⟩
-      · intro y hy
-        dsimp only [Formalism.IndefR.NX.Bsup] at hforward ⊢
-        exact hforward y hy
-      · intro y hy
-        dsimp only [Formalism.IndefR.NX.Bsup] at hback hy
-        exact hback y hy
-  act := by
-    intro i j b h1 h2 g y
-    with_unfolding_all exact (l.b.YS.act i j b h1 h2 g y :)
+set_option maxHeartbeats 8000000 in
+def ysL : NExpRealS (datL x L).R (datL x L).cG (SL L l.rat) := by
+  let Y : NExpRealS (datL x L).R (datL x L).cG (ratL L l.rat.S) := {
+    fi := by with_unfolding_all exact (l.b.YS.fi :)
+    geq := by with_unfolding_all exact (l.b.YS.geq :)
+    rho := by with_unfolding_all exact (l.b.YS.rho :)
+    chi := by with_unfolding_all exact (l.b.YS.chi :)
+    eF := by with_unfolding_all exact (l.b.YS.eF :)
+    bsup := by
+      intro i j b h1 h2
+      with_unfolding_all exact (l.b.YS.bsup i j b h1 h2 :)
+    act := by
+      intro i j b h1 h2 g y
+      with_unfolding_all exact (l.b.YS.act i j b h1 h2 g y :) }
+  with_unfolding_all exact (Y :)
 
 def hkH : NExpRealH x.m.z.R x.m.z.cG l.rat.S l.b.YS where
   hL := l.rat.In.hL
@@ -122,18 +113,20 @@ def hkH : NExpRealH x.m.z.R x.m.z.cG l.rat.S l.b.YS where
   cHk_pow := fun i b k Q => by simp only [pow_one]
   hkEq := by rw [l.b.eF]; exact l.b.Bs.hkEq
 
-set_option backward.isDefEq.lazyProjDelta false in
-set_option backward.isDefEq.lazyWhnfCore false in
-def hkHL : NExpRealH (datL x L).R (datL x L).cG (SL L l.rat) (ysL L l) where
-  hL := ((hkH l).hL)
-  hs := ((hkH l).hs)
-  cHk := ((hkH l).cHk)
-  cHk_zero := ((hkH l).cHk_zero)
-  cHk_unit := ((hkH l).cHk_unit)
-  cHk_pow := ((hkH l).cHk_pow)
-  hkEq := by
-    intro i j b h1 h2 k Q y hQ hsplit hk
-    with_unfolding_all exact ((hkH l).hkEq i j b h1 h2 k Q y hQ hsplit hk :)
+def hkHL : NExpRealH (datL x L).R (datL x L).cG (SL L l.rat) (ysL L l) := by
+  let Y : NExpRealS (datL x L).R (datL x L).cG (ratL L l.rat.S) := by
+    with_unfolding_all exact (ysL L l :)
+  let H : NExpRealH (datL x L).R (datL x L).cG (ratL L l.rat.S) Y := {
+    hL := by with_unfolding_all exact ((hkH l).hL :)
+    hs := by with_unfolding_all exact ((hkH l).hs :)
+    cHk := ((hkH l).cHk)
+    cHk_zero := ((hkH l).cHk_zero)
+    cHk_unit := ((hkH l).cHk_unit)
+    cHk_pow := ((hkH l).cHk_pow)
+    hkEq := by
+      intro i j b h1 h2 k Q y hQ hsplit hk
+      with_unfolding_all exact ((hkH l).hkEq i j b h1 h2 k Q y hQ hsplit hk :) }
+  with_unfolding_all exact (H :)
 
 abbrev cfD (x : St P) (L : LocAll (lay0 (Dof x))) : CharFrame (DL x L) := TC.cf w.I w.l (oL x L).Z
 

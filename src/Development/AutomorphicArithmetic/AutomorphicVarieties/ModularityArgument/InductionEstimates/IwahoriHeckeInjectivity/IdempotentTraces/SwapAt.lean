@@ -18,6 +18,7 @@ open MeasureTheory NumberField IsDedekindDomain Filter Topology
 open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.RightCosetSpace
 open GroundTheory.Automorphic.AutomorphicForm GroundTheory.Automorphic.CuspidalSpectrum GroundTheory.Global GroundTheory.Global.SemiLocal
 open UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.C UpperTheory.ConvolutionTheory.L1 PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Geo PositivityTheory.Rg.Tf.Adel PositivityTheory.Rg.Tf.IntegralApplyAeEq
+open UpperTheory.ConvolutionTheory.Dp (Carries conjCarries exCusp sInfIff sSatIff)
 open GlobalTheory.CuspRep UpperTheory.V.Published
 open scoped ComplexConjugate Classical
 
@@ -29,12 +30,12 @@ private theorem swap_one {E : Type} [Field E] [NumberField E] [_root_.NumberFiel
     (hV : IsSummand μ V) (e : V'.map (θ.U : L2 μ →ₗ[ℂ] L2 μ) = V) :
     (∀ (τ : E →+* ℂ) m, SInf μ V τ m ↔ SInf μ V' (τ.comp σ.toRingHom) m) ∧
       ∀ w B, SSat μ V (plMap σ w) B → SSat μ V' w B := by
-  obtain ⟨π, hπ, -⟩ := Dp.exCusp E n μ V hV
+  obtain ⟨π, hπ⟩ := (exCusp E n μ V hV).exists
   obtain ⟨s, hs⟩ := UpperTheory.CBC.SGalAdEx_holds E σ
   have h1 := UpperTheory.ConvolutionTheory.K.adUnique E σ s.toRingHom hs.1 hs.2.1
   have h2 := UpperTheory.ConvolutionTheory.K.adUnique E σ (adm σ) (continuous_adm σ) (adm_algebraMap σ)
-  have hc : Dp.Carries μ (pullSub σ π) V' := by
-    refine (Dp.conjCarries E n μ θ σ s hs (fun g => by rw [h1]; exact hθ g) π _ V' ?_).2 (e ▸ hπ)
+  have hc : Carries μ (pullSub σ π) V' := by
+    refine (conjCarries E n μ θ σ s hs (fun g => by rw [h1]; exact hθ g) π _ V' ?_).2 (e ▸ hπ)
     rw [h1, ← h2]
     ext f
     constructor
@@ -43,10 +44,10 @@ private theorem swap_one {E : Type} [Field E] [NumberField E] [_root_.NumberFiel
     · rintro ⟨_, ⟨φ, hφ, rfl⟩, rfl⟩
       exact ⟨_, ⟨φ, hφ, rfl⟩, rfl⟩
   refine ⟨fun τ m => ?_, fun w B hB => ?_⟩
-  · rw [Dp.sInfIff E n μ π V hπ, Dp.sInfIff E n μ _ V' hc]
+  · rw [sInfIff E n μ π V hπ, sInfIff E n μ _ V' hc]
     exact (hasInfChar_pullSub σ π τ m).symm
-  · obtain ⟨B', rfl, h⟩ := (Dp.sSatIff E n μ π V hπ _ _).1 hB
-    exact (Dp.sSatIff E n μ _ V' hc _ _).2 ⟨B', rfl, hasSat_pullSub σ h⟩
+  · obtain ⟨B', rfl, h⟩ := (sSatIff E n μ π V hπ (plMap σ w) B).1 hB
+    exact (sSatIff E n μ _ V' hc _ _).2 ⟨B', rfl, hasSat_pullSub σ h⟩
 
 open Formalism.L2.Host.CT in
 private theorem under_plMap {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]

@@ -18,10 +18,8 @@ namespace UpperTheory.Gal.W2.HermitianFrame
 variable {F K : Type} [Field F] [Field K] {n : ℕ}
 
 private theorem map_mulVec' (τ : F →+* K) (M : Matrix (Fin n) (Fin n) F) (v : Fin n → F) :
-    (fun i => τ ((M *ᵥ v) i)) = M.map τ *ᵥ (fun i => τ (v i)) := by
-  funext i
-  set_option synthInstance.maxHeartbeats 100000 in
-    simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+    (fun i => τ ((M *ᵥ v) i)) = M.map τ *ᵥ (fun i => τ (v i)) :=
+  funext (τ.map_mulVec M v)
 
 private theorem transpose_conj {R M S : Matrix (Fin n) (Fin n) K} (hS : S.det ≠ 0) (h : R * S = S * M) :
     Rᵀ * (S⁻¹)ᵀ = (S⁻¹)ᵀ * Mᵀ := by
@@ -37,8 +35,7 @@ private theorem pair_eval (τ : F →+* K) (j : F →+* F) (S B : Matrix (Fin n)
     (h : Bᵀ * S = Q.map τ) (y z : Fin n → F) :
     (B *ᵥ (fun i => τ (j (y i)))) ⬝ᵥ (S *ᵥ (fun i => τ (z i))) = τ ((fun i => j (y i)) ⬝ᵥ (Q *ᵥ z)) := by
   rw [← Matrix.vecMul_transpose, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec, h, ← map_mulVec']
-  set_option synthInstance.maxHeartbeats 100000 in
-    simp [dotProduct, map_sum, map_mul]
+  exact (τ.map_dotProduct (fun i => j (y i)) (Q *ᵥ z)).symm
 
 private theorem conj_form (j : F →+* F) (hj : ∀ x, j (j x) = x) (Q : Matrix (Fin n) (Fin n) F) (hQ : (Q.map j)ᵀ = -Q)
     (y z : Fin n → F) :
@@ -108,20 +105,17 @@ theorem UpperTheory.Gal.W2.pFrameEx_of :
           rw [← K1, hrinv]; simp only [Matrix.mul_one, Matrix.mul_assoc]
       _ = _ := by simp only [Matrix.mul_assoc]
   have hkp' : ∀ c v, kp (L.rep c v) = σ c *ᵥ kp v := hkp
+  let j : G.F →+* G.F := (IsCMField.complexConj G.F).toRingEquiv.toRingHom
   have hcm : ∀ w (M : Matrix (Fin G.n) (Fin G.n) G.F) (v : Fin G.n → G.F),
       (fun i => G.embW w (IsCMField.complexConj G.F ((M *ᵥ v) i)))
         = (M.map (IsCMField.complexConj G.F)).map (G.embW w) *ᵥ (fun i => G.embW w (IsCMField.complexConj G.F (v i))) := by
     intro w M v
-    funext i
-    set_option synthInstance.maxHeartbeats 100000 in
-      simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+    rw [Matrix.map_map]
+    exact map_mulVec' ((G.embW w).comp j) M v
   have hc1 : ∀ (M : Matrix (Fin G.n) (Fin G.n) G.F) (v : Fin G.n → G.F),
       (fun i => IsCMField.complexConj G.F ((M *ᵥ v) i))
-        = M.map (IsCMField.complexConj G.F) *ᵥ (fun i => IsCMField.complexConj G.F (v i)) := by
-    intro M v
-    funext i
-    set_option synthInstance.maxHeartbeats 100000 in
-      simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+        = M.map (IsCMField.complexConj G.F) *ᵥ (fun i => IsCMField.complexConj G.F (v i)) :=
+    map_mulVec' j
   have hdetS : ∀ w, ((S w)⁻¹).det ≠ 0 := by
     intro w
     have : ((S w)⁻¹).det * (S w).det = 1 := by
@@ -148,7 +142,6 @@ theorem UpperTheory.Gal.W2.pFrameEx_of :
         = (fun i => IsCMField.complexConj G.F (v i)) ⬝ᵥ ((A * σ ↑β⁻¹) *ᵥ z) := by
     intro v z
     rw [hc1, ← Matrix.vecMul_transpose, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec, ← hAsh, hβi]
-  let j : G.F →+* G.F := (IsCMField.complexConj G.F).toRingEquiv.toRingHom
   have hjj : ∀ x, j (j x) = x := fun x => by simp [j]
   have hjA : (A.map j)ᵀ = -A := hAc
   let T : VQ D →+ Loc G := AddMonoidHom.mk' (fun x w => S w *ᵥ (fun i => G.embW w (kp x i))) (by

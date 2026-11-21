@@ -336,10 +336,10 @@ private theorem mem_dual_lemma_2 (L : Submodule (𝓞 E) (Sp E n)) (y : Sp E n) 
   simp only [dual, Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap,
     LinearMap.restrictScalars_apply]
 
-theorem DecoSet.full_lattice (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
+theorem DecoSet.full_lattice {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
+    (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
     Submodule.IsFullLattice E d.1.N := by
-  let := d.2.lat
-  refine { span_eq_top := ?_ }
+  refine { toIsLattice := d.2.lat, span_eq_top := ?_ }
   let W := Submodule.span E (d.1.N : Set (Sp E n))
   change W = ⊤
   by_contra h

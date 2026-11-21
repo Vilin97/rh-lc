@@ -14,6 +14,8 @@ public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSp
 
 @[expose] public section
 
+set_option synthInstance.maxHeartbeats 400000
+
 open MeasureTheory NumberField IsDedekindDomain MvPolynomial Filter Topology
 open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.RightCosetSpace
 open GroundTheory.Automorphic.AutomorphicForm GroundTheory.Automorphic.CuspidalSpectrum UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.C UpperTheory.ConvolutionTheory.Ci PositivityTheory.Rg.Fx
@@ -32,16 +34,24 @@ private theorem gl_ext {n : ℕ} {g g' : AdelicGLn.AdelicGL E n} (h1 : ∀ w, in
 private theorem infAt_blk (w : InfinitePlace E) (a b : AdelicGLn.AdelicGL E 2) :
     infAt w (blk a b) = blk (infAt w a) (infAt w b) := by
   refine Units.ext (Matrix.ext fun i j => ?_)
+  change (AdelicGLn.infiniteEquiv E 4 ((AdelicGLn.prodEquiv E 4 (blk a b)).1) w) i j =
+    (blk (AdelicGLn.infiniteEquiv E 2 ((AdelicGLn.prodEquiv E 2 a).1) w)
+      (AdelicGLn.infiniteEquiv E 2 ((AdelicGLn.prodEquiv E 2 b).1) w)) i j
   obtain ⟨i, rfl⟩ := finSumFinEquiv.surjective i
   obtain ⟨j, rfl⟩ := finSumFinEquiv.surjective j
-  rcases i with i | i <;> rcases j with j | j <;> first | rfl | (simp [blk, infAt] <;> rfl)
+  rcases i with i | i <;> rcases j with j | j <;>
+    simp [blk] <;> rfl
 
 private theorem finAt_blk (v : Pl E) (a b : AdelicGLn.AdelicGL E 2) :
     finAt v (blk a b) = blk (finAt v a) (finAt v b) := by
   refine Units.ext (Matrix.ext fun i j => ?_)
+  change (AdelicGLn.finiteRestrictedEquiv E 4 ((AdelicGLn.prodEquiv E 4 (blk a b)).2) v) i j =
+    (blk (AdelicGLn.finiteRestrictedEquiv E 2 ((AdelicGLn.prodEquiv E 2 a).2) v)
+      (AdelicGLn.finiteRestrictedEquiv E 2 ((AdelicGLn.prodEquiv E 2 b).2) v)) i j
   obtain ⟨i, rfl⟩ := finSumFinEquiv.surjective i
   obtain ⟨j, rfl⟩ := finSumFinEquiv.surjective j
-  rcases i with i | i <;> rcases j with j | j <;> first | rfl | simp [blk, finAt]
+  rcases i with i | i <;> rcases j with j | j <;>
+    simp [blk] <;> rfl
 
 private theorem blk_one {R : Type} [CommRing R] : blk (1 : GL (Fin 2) R) (1 : GL (Fin 2) R) = 1 := by
   refine Units.ext ?_
@@ -257,7 +267,7 @@ private theorem qpos {τ : Submodule ℂ (L2 (BW.mu1 E 2))} {φ : G1 E 2 → ℂ
   have hi' : Integrable (fun q : RightCosetSpace (Gam E 2) => ‖φ (Quotient.out q)‖ ^ 2) (quotientMeasure (Gam E 2) (BW.mu1 E 2)) := hi.re
   have hae := (integral_eq_zero_iff_of_nonneg (fun q => by positivity) hi').1 hr
   have hμ : ∀ᵐ y ∂(BW.mu1 E 2), φ y = 0 := by
-    have h2 := (quasiMeasurePreserving_mk (Gam E 2) (BW.mu1 E 2)).ae hae
+    have h2 := QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam E 2) (BW.mu1 E 2)) hae
     refine h2.mono fun y hy => ?_
     have h3 : φ (Quotient.out (mk (Gam E 2) y)) = φ y := by
       rw [out_eq hφ.rat, quotFun_mk]
@@ -314,7 +324,7 @@ private theorem core [_root_.NumberField.IsTotallyComplex E] {S : Set (Pl E)} {�
         refine Finset.sum_congr rfl fun j _ => ?_
         ring
       simp only [hHdef, e1]
-      rw [integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => hi i j]
+      rw [integral_finsetSum _ fun i _ => integrable_finsetSum _ fun j _ => hi i j]
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [integral_finsetSum _ fun j _ => hi i j, Finset.sum_mul]

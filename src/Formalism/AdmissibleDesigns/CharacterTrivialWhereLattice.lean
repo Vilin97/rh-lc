@@ -491,8 +491,8 @@ theorem locS_g (hE : Ev r π Dd) (hN : RepresentationBoundsCohomology.NormAt D.n
     refine (congrArg (· * _) ?_).trans (zero_mul _)
     rw [← h0, Matrix.map_mul]
     congr 1
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, hF, map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, hF, map_sum]
       refine Finset.sum_congr rfl (fun k _ => ?_)
       rw [hE.smul_eval, SubmonoidClass.coe_pow, Pi.pow_apply, hE.r_eval, Polynomial.coeff_map, hsm, hF, ← map_pow]
       rfl

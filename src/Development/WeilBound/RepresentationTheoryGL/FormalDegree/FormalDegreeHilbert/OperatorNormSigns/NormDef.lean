@@ -113,14 +113,12 @@ theorem nd_cPQ {ε : Fin n → Bool} (hq : q0 ε = 0) : cPQ ε = 1 := by
 theorem nd_muCD_univ {ε : Fin n → Bool} (hq : q0 ε = 0) : muCD ε Set.univ = 1 := by
   obtain ⟨s, hs⟩ := nd_const_sign hq
   have := nd_isEmpty hs
-  have h := lintegral_muCD ε (fun _ => 1) measurable_const
-  rw [lintegral_one] at h
-  rw [h, nd_cPQ hq, ENNReal.ofReal_one, one_mul]
-  have hz : ∫⁻ z : PCoord ε → ℂ, ENNReal.ofReal (Jac z) = 1 := by
-    simp only [nd_jac_one hs, ENNReal.ofReal_one, lintegral_one]
-    rw [MeasureTheory.volume_pi, Measure.pi_of_empty]
-    simp
-  simp only [one_mul, hz, lintegral_one, measure_univ]
+  have : IsProbabilityMeasure (fdphNu ε) := ⟨by
+    simp only [fdphNu, withDensity_apply _ MeasurableSet.univ, Measure.restrict_univ,
+      nd_jac_one hs, ENNReal.ofReal_one, lintegral_one, MeasureTheory.volume_pi, Measure.pi_empty_univ]⟩
+  change (ENNReal.ofReal (cPQ ε) • muPolar ε) Set.univ = 1
+  rw [nd_cPQ hq, ENNReal.ofReal_one, one_smul, fdph_apply ε MeasurableSet.univ, Set.preimage_univ]
+  exact measure_univ
 
 theorem nd_finrank {ε : Fin n → Bool} (hq : q0 ε = 0) {lam : Fin n → ℝ} (hl : StrictAnti lam)
     (T : KType ε (lowK ε lam)) : (Module.finrank ℂ T.V : ℝ) = dimVlam lam := by

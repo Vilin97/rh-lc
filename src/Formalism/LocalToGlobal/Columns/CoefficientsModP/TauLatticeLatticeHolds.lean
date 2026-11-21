@@ -77,7 +77,11 @@ theorem du_tl_lattice (φ : E →+* K) (L : Submodule (𝓞 E) (Fin n → E)) (h
     have hj : Pi.single j (1 : E) ∈ Submodule.span E (L : Set (Fin n → E)) := by
       rw [hL.span_eq_top]
       exact Submodule.mem_top
-    simpa [Pi.basisFun_apply, du_f, Pi.single_apply, apply_ite φ] using h1 _ hj
+    have hmap : du_f φ (Pi.single j (1 : E)) = Pi.single j (1 : K) := by
+      funext a
+      simp only [du_f, Pi.single_apply, apply_ite φ, map_one, map_zero]
+    rw [Pi.basisFun_apply, ← hmap]
+    exact h1 _ hj
 
 end TL
 

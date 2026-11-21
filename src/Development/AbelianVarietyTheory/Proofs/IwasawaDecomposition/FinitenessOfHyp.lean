@@ -134,17 +134,42 @@ variable {p0 : BaseLevelRowSide (w.D (oL x L).Z)} (Y : YT x L p0) (hY : YRel L Y
 
 def frameY : Formalism.L2.RowFrame (DL x L) := Formalism.L2.Col.rowFrameOf (DL x L) _ Y.eFT
 
-def rowD : NRow (D := DL x L) (natD l Sp Au ss al hLg) (datL x L).R (datL x L).F (datL x L).cG Y where
-  kKs := kKsL L l.rat
-  hk := hkL L l.rat
-  nexp := ysL L l
-  hecke := hkHL L l
-  grp := grpD l L
-  rowLoc := by
-    with_unfolding_all exact al.loc (frameY Y) (eq_of_heq hY.rep)
-  S_eq := (by with_unfolding_all exact ((SL_heq L l.rat) :))
-  hL_eq := (by with_unfolding_all exact ((HEq.refl l.rat.In.hL) :))
-  rep_eq := (by with_unfolding_all exact (hY.rep.symm :))
+set_option maxHeartbeats 12000000 in
+def rowD : NRow (D := DL x L) (natD l Sp Au ss al hLg) (datL x L).R (datL x L).F (datL x L).cG Y := by
+  let S := ratL L l.rat.S
+  let series : NExpRealS (datL x L).R (datL x L).cG S := {
+    fi := by with_unfolding_all exact l.b.YS.fi
+    geq := by with_unfolding_all exact l.b.YS.geq
+    rho := by with_unfolding_all exact l.b.YS.rho
+    chi := by with_unfolding_all exact l.b.YS.chi
+    eF := by with_unfolding_all exact l.b.YS.eF
+    bsup := by
+      intro i j b h1 h2
+      with_unfolding_all exact l.b.YS.bsup i j b h1 h2
+    act := by
+      intro i j b h1 h2 g y
+      with_unfolding_all exact l.b.YS.act i j b h1 h2 g y }
+  let hecke : NExpRealH (datL x L).R (datL x L).cG S series := {
+    hL := by with_unfolding_all exact (hkH l).hL
+    hs := by with_unfolding_all exact (hkH l).hs
+    cHk := (hkH l).cHk
+    cHk_zero := (hkH l).cHk_zero
+    cHk_unit := (hkH l).cHk_unit
+    cHk_pow := (hkH l).cHk_pow
+    hkEq := by
+      intro i j b h1 h2 k Q y hQ hsplit hk
+      with_unfolding_all exact (hkH l).hkEq i j b h1 h2 k Q y hQ hsplit hk }
+  exact {
+    kKs := kKsL L l.rat
+    hk := hkL L l.rat
+    nexp := by with_unfolding_all exact series
+    hecke := by with_unfolding_all exact hecke
+    grp := grpD l L
+    rowLoc := by
+      with_unfolding_all exact al.loc (frameY Y) (eq_of_heq hY.rep)
+    S_eq := by with_unfolding_all exact (SL_heq L l.rat :)
+    hL_eq := by with_unfolding_all exact (HEq.refl l.rat.In.hL :)
+    rep_eq := by with_unfolding_all exact (hY.rep.symm :) }
 
 
 

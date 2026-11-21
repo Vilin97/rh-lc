@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.GluedHermitianLatticeUnique
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.MemHatGlueLatIffDual
 
 @[expose] public section
@@ -41,7 +42,7 @@ theorem coords_of_mem_hat (h : IsLine Y X ι z u) {L₀ : Lat X} (hL : Submodule
   obtain ⟨e1, e2⟩ := flat_inj h e
   have e3 : a = inc D (t * Tu D u) := by
     rw [RingHom.map_mul, e2, mul_assoc, inc_inv_mul, mul_one]
-  refine ⟨(inc_mem_iff _).1 (e3 ▸ ha), (inc_mem_hat_iff hL _).1 ?_⟩
+  refine ⟨(inc_mem_iff _).1 (e3 ▸ ha), GlobalTheory.GlueUnique.mem_of_inc_mem_hat hL.fg ?_⟩
   change vA X (x - (t * Tu D u) • x₀) ∈ _
   have e4 : vA X (x - (t * Tu D u) • x₀) = x₁ := by
     rw [sub_eq_add_neg, ← neg_smul, vA_add, vA_smul, RingHom.map_neg, ← e3, e1, neg_smul, add_neg_cancel_right]
@@ -135,7 +136,9 @@ theorem isPrim_glueLat (h : IsLine Y X ι z u) {L₀ : Lat X} (hL : Submodule.Is
     (hg : IsGlueVec X u L₀ (vA X x₀)) : IsPrim Y z (glueLat Y X ι z u L₀ x₀) := by
   intro a
   have e : a • z = ι 0 + a • z := by rw [map_zero, zero_add]
-  rw [e, mem_iff_coords h hL, ← inc_mem_hat_iff hL, ← inc_mem_iff, ← inc_mem_iff]
+  have hmem (x : Fin X.rank → D.host.E) : (fun i => inc D (x i)) ∈ hat L₀ ↔ x ∈ L₀ :=
+    ⟨GlobalTheory.GlueUnique.mem_of_inc_mem_hat hL.fg, inc_mem_hat⟩
+  rw [e, mem_iff_coords h hL, ← hmem, ← inc_mem_iff, ← inc_mem_iff]
   change _ ∧ vA X (0 - (a * Tu D u) • x₀) ∈ _ ↔ _
   rw [zero_sub, ← neg_smul, vA_smul, RingHom.map_neg, RingHom.map_mul]
   generalize inc D a = b

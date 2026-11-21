@@ -9,6 +9,7 @@ public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SameA
 public import Formalism.LocalRingCardinality.SpanPowerMembership.Places
 public import Formalism.LocalToGlobal.Columns.TwQCmp
 public import Formalism.LocalToGlobal.Columns.ReferenceActionRationalLevels
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.StandardBaseFlagComplementIntegralLattice
 
 @[expose] public section
 
@@ -204,7 +205,11 @@ theorem cartanInert : ∀ {E : Type} [Field E] [NumberField E] [StarRing E] (n :
     intro M hM v
     rw [SetLike.mem_coe, hM v]
     simp only [Submodule.mem_top, true_and, SetLike.mem_coe, GlobalTheory.UnitarySwap.mem_int, hv]
-  obtain ⟨d, hd0, hd⟩ := exists_smul_le_of_lattice (K := E) hN'.fg hN
+  have hsymm : (hStd E n).IsSymm := ⟨fun x y => hStd_star x y⟩
+  letI : Submodule.IsLattice E N := hN
+  have hNfull : Submodule.IsFullLattice E N :=
+    ⟨GlobalTheory.LoopC.Base.span_eq_top_of_unimodular (hStd E n) hsymm hStd_nondeg hN hNu⟩
+  obtain ⟨d, hd0, hd⟩ := exists_smul_le_of_lattice (K := E) hN'.fg hNfull
   have hdE : algebraMap (𝓞 E) E d ≠ 0 := by rwa [Ne, FaithfulSMul.algebraMap_eq_zero_iff]
   have hV0 : P.valuation E (algebraMap (𝓞 E) E d) ≠ 0 := (Valuation.ne_zero_iff _).2 hdE
   set k : ℕ := (-WithZero.log (P.valuation E (algebraMap (𝓞 E) E d))).toNat with hkdef

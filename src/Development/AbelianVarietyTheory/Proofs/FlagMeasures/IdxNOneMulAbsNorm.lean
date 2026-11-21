@@ -68,10 +68,31 @@ theorem idxN_one_mul_absNorm (I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) 
 variable {ι : Type} [Fintype ι]
 
 theorem isLattice_pi (I : ι → FractionalIdeal (nonZeroDivisors (𝓞 K)) K) (hI : ∀ i, 1 ≤ I i) :
-    Submodule.IsLattice K (Submodule.pi Set.univ fun i => (I i : Submodule (𝓞 K) K)) := by
-  refine ⟨Submodule.fg_pi fun i => FractionalIdeal.fg_of_isNoetherianRing le_rfl _, ?_⟩
-  intro s hs hli
-  exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    Submodule.IsFullLattice K (Submodule.pi Set.univ fun i => (I i : Submodule (𝓞 K) K)) := by
+  haveI : Submodule.IsLattice K (Submodule.pi Set.univ fun i => (I i : Submodule (𝓞 K) K)) := by
+    refine ⟨Submodule.fg_pi fun i => FractionalIdeal.fg_of_isNoetherianRing le_rfl _, ?_⟩
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  refine ⟨?_⟩
+  · apply top_unique
+    intro x _
+    rw [← Finset.univ_sum_single x]
+    apply Submodule.sum_mem
+    intro i _
+    have hi : Pi.single i (1 : K) ∈ Submodule.pi Set.univ
+        (fun i => (I i : Submodule (𝓞 K) K)) := by
+      intro j _
+      by_cases h : j = i
+      · subst j
+        simpa using hI i (FractionalIdeal.one_mem_one _)
+      · simp [Pi.single_apply, h]
+    have := (Submodule.span K (Submodule.pi Set.univ
+      (fun i => (I i : Submodule (𝓞 K) K)) : Set (ι → K))).smul_mem
+        (x i) (Submodule.subset_span hi)
+    have heq : x i • Pi.single i (1 : K) = Pi.single i (x i) := by
+      ext j
+      by_cases h : j = i <;> simp [Pi.single_apply, h]
+    rwa [heq] at this
 variable [StarRing K] {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
 noncomputable def pseudo (v : ι → V) (I : ι → FractionalIdeal (nonZeroDivisors (𝓞 K)) K) : Submodule (𝓞 K) V :=
@@ -123,8 +144,8 @@ theorem latDetH_pseudo [DecidableEq ι] (hK : IsCMUnram K) (h : V →ₗ⋆[K] V
   set P := Submodule.pi Set.univ fun i => (I i : Submodule (𝓞 K) K) with hP
   set P₀ := Submodule.pi Set.univ fun _ : ι =>
     ((1 : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) : Submodule (𝓞 K) K) with hP₀
-  have hPl : Submodule.IsLattice K P := isLattice_pi I hI
-  have hP₀l : Submodule.IsLattice K P₀ := isLattice_pi _ fun _ => le_rfl
+  have hPl : Submodule.IsFullLattice K P := isLattice_pi I hI
+  have hP₀l : Submodule.IsFullLattice K P₀ := isLattice_pi _ fun _ => le_rfl
   have hle : P₀ ≤ P := fun x H i hi => hI i (H i hi)
   have hPi : IsIntLat h' P := ⟨hPl, fun x a y b => hint _ ⟨x, a, rfl⟩ _ ⟨y, b, rfl⟩⟩
   have hP₀i : IsIntLat h' P₀ := ⟨hP₀l, fun x a y b => hPi.2 x (hle a) y (hle b)⟩

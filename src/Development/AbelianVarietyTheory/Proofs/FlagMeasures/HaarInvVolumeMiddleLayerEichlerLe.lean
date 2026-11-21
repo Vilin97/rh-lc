@@ -1067,8 +1067,8 @@ theorem invVol_mid_layer_le : ∀ (K V : Type) [Field K] [NumberField K] [StarRi
   let P : Fin r → AddSubgroup (V ⧸ II N.F N.F') := fun a =>
     Q a ⊔ (prodGrp (N.aa a).toAddSubgroup (flagPairDefinitePartLattice N.F N.F' Λ ⊓ rs (𝓞 K) N.Wt).toAddSubgroup).map φ
   have hM_FG : (Λ ⊓ rs (𝓞 K) N.Wt).FG := by
-    have hlat : Submodule.IsLattice K Λ := ((isUnimod_iff H Λ).1 hU).1
-    have := isNoetherian_of_fg_of_noetherian Λ hlat.fg
+    have hfg : Λ.FG := ((isUnimod_iff H Λ).1 hU).1.1
+    have := isNoetherian_of_fg_of_noetherian Λ hfg
     exact (isNoetherian_submodule.1 this) _ inf_le_left
   have hm := main_lemma_2 N g Λ hlift hS hT hg0 hi0
   set m : ℕ := (Λ ⊓ rs (𝓞 K) N.Wt).toAddSubgroup.relIndex

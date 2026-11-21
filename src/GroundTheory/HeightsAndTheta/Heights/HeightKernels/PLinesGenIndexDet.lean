@@ -12,9 +12,11 @@ namespace GroundTheory.Heights₂.Heights
 namespace KLinesGenIndexDet
 
 theorem span_basis_isLattice {V : Type} [AddCommGroup V] [Module ℚ V] {ι : Type} [Fintype ι]
-    (b : Module.Basis ι ℚ V) : Submodule.IsFullLattice ℚ (Submodule.span ℤ (Set.range b)) where
-  toIsLattice := Submodule.IsLattice.of_fg ℚ (Submodule.fg_span (Set.finite_range b))
-  span_eq_top := by rw [Submodule.span_span_of_tower ℤ, b.span_eq]
+    (b : Module.Basis ι ℚ V) : Submodule.IsFullLattice ℚ (Submodule.span ℤ (Set.range b)) := by
+  have : Submodule.IsLattice ℚ (Submodule.span ℤ (Set.range b)) :=
+    Submodule.IsLattice.of_fg ℚ (Submodule.fg_span (Set.finite_range b))
+  refine { span_eq_top := ?_ }
+  rw [Submodule.span_span_of_tower ℤ, b.span_eq]
 
 end KLinesGenIndexDet
 

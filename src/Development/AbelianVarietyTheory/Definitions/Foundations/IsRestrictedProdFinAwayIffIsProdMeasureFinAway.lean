@@ -120,7 +120,7 @@ theorem isRestrictedProd_iff_isProdMeasure {μ : Measure (GAd σ J)} :
 
 end Unfold
 
-variable [Submodule.IsLattice E L]
+variable [Submodule.IsFullLattice E L]
 
 theorem restrGroup_GFin : RestrMeas.IsRestrGroup (noArch (GFin σ J)) (projFinLoc σ J) (stabLoc σ J L) := by
   refine
@@ -243,7 +243,7 @@ theorem map_map_symm {X Y : Type} [Group X] [Group Y] [TopologicalSpace X] [Topo
   rw [hid, Measure.map_id]
 
 
-omit [Submodule.IsLattice E L] in
+omit [Submodule.IsFullLattice E L] in
 theorem IsRestrictedProdFin.prod [∀ w, (μa w).IsHaarMeasure] {ν : Measure (GFin σ J)}
     (h : IsRestrictedProdFin σ J L μf ν) :
     IsRestrictedProd σ J L μa μf (((Measure.pi μa).prod ν).map (archFinEquiv σ J).symm) := by
@@ -262,7 +262,7 @@ theorem IsRestrictedProd.map_archFin (h : IsRestrictedProd σ J L μa μf μ) {�
   exact map_map_symm (archFinEquiv σ J) _
 
 
-omit [Submodule.IsLattice E L] in
+omit [Submodule.IsFullLattice E L] in
 theorem IsRestrictedProdFin.map_finPts {ν : Measure (GFin σ J)} (h : IsRestrictedProdFin σ J L μf ν) :
     IsRestrictedProdFinPts σ J L μf (ν.map (finPtsEquiv σ J)) := by
   unfold IsRestrictedProdFin IsHaarProdFin at h

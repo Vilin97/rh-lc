@@ -173,7 +173,9 @@ open GlobalTheory.SeriesTie in
 theorem theta_eq (ρ : Setup (Dof x).ntw) :
     (setupL L ρ).theta = fun i j b h P => (by exact ρ.theta i j b h P) := by
   funext i j b h P
-  with_unfolding_all rfl
+  delta GlobalTheory.SeriesTie.Setup.theta GlobalTheory.ExportSeries.Base.theta GlobalTheory.ExportSeries.Base.vecBase GlobalTheory.ExportSeries.Base.vecAt
+    GlobalTheory.ExportSeries.Frame.vec GlobalTheory.ExportSeries.Frame.placeMap
+  congr 1 <;> with_unfolding_all rfl
 
 
 open GlobalTheory.SeriesTie in

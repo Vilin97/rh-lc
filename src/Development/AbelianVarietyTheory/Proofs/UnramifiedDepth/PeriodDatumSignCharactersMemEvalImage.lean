@@ -50,7 +50,8 @@ theorem evLat (D : Dat p g B Tw Dt Oe σ cp) : EvLatStatement D :=
   GlobalTheory.evImg_isLat_subring D
 
 theorem evHopf (D : Dat p g B Tw Dt Oe σ cp) : EvHopfStatement D :=
-  GlobalTheory.EvHopf.evHopf_of_tensorLocal GlobalTheory.isLocalRing_tensorProduct_of_finite_of_points D
+  _root_.GlobalTheory.EvHopf.evHopf_of_tensorLocal
+    GlobalTheory.isLocalRing_tensorProduct_of_finite_of_points D
 
 theorem evAct (D : Dat p g B Tw Dt Oe σ cp) : EvActStatement D :=
   GlobalTheory.EvAct.evImg_act_stable D

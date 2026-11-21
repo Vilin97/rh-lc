@@ -1,7 +1,6 @@
 module
 
 public import Mathlib
-public import Formalism.LocalToGlobal.Columns.CoefficientsModP.TauLatticeLatticeHolds
 public import Development.AbelianVarietyTheory.Definitions.Foundations.IsSelfDualE
 public import Formalism.LocalToGlobal.Columns.CoefficientsModP.PairingNondegenerateHolds
 public import Formalism.LocalToGlobal.Columns.CoefficientsModP.FkPderivBlockEmbNe
@@ -136,11 +135,135 @@ theorem hform_eq {E : Type} [Field E] {n : ℕ} (c : E →+* E) (J : Matrix (Fin
     Formalism.UG.hform c J x y = (fun a => c (x a)) ⬝ᵥ (J *ᵥ y) := by
   simp [Formalism.UG.hform, dotProduct, Matrix.mulVec, Finset.mul_sum, mul_assoc]
 
-theorem tauLatLattice : TauLatLattice := tauLatticeLattice_holds
+theorem tauLatLattice : TauLatLattice := by
+  classical
+  intro E K _ _ _ _ ι n emb τ L hL
+  obtain ⟨m, x, φ, hx, hφ, h⟩ := exists_dual_family L hL
+  have hmem (i : Fin m) : (fun a => emb τ (x i a)) ∈ tauLat emb τ L :=
+    Submodule.subset_span ⟨x i, hx i, rfl⟩
+  have : Submodule.IsLattice K (tauLat emb τ L) := by
+    apply Submodule.IsLattice.of_fg K
+    let s : Finset (Fin n → K) := Finset.univ.image fun i => fun a => emb τ (x i a)
+    have hs (i : Fin m) : (fun a => emb τ (x i a)) ∈ (s : Set (Fin n → K)) := by
+      exact Finset.mem_image.mpr ⟨i, Finset.mem_univ i, rfl⟩
+    refine ⟨s, le_antisymm ?_ ?_⟩
+    · rw [Submodule.span_le]
+      intro v hv
+      obtain ⟨i, -, rfl⟩ := Finset.mem_image.mp hv
+      exact hmem i
+    · unfold tauLat
+      rw [Submodule.span_le]
+      rintro _ ⟨y, hy, rfl⟩
+      change (fun a => emb τ (y a)) ∈ Submodule.span (𝓞 K) (s : Set (Fin n → K))
+      rw [expand_right (emb τ) h (fun a => emb τ (y a))]
+      refine Submodule.sum_mem _ fun i _ => smul_mem_of_integral _ ?_ (Submodule.subset_span (hs i))
+      rw [← map_dot]
+      exact integral_map _ (hφ i y hy)
+  refine { span_eq_top := ?_ }
+  rw [eq_top_iff]
+  intro v _
+  rw [expand_right (emb τ) h v]
+  exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span (hmem i))
 
-theorem tauLatDual : TauLatDual := tauLatticeDual_holds
+theorem tauLatDual : TauLatDual := by
+  intro E K _ _ _ _ _ ι n emb cE τ hc J L L' hJ hL hL'
+  obtain ⟨m, x, φ, hx, hφ, h⟩ := exists_dual_family L hL
+  have hstar : ∀ y : Fin n → E, star (fun a => emb τ (y a)) = fun a => emb τ (cE (y a)) := by
+    intro y; funext a; exact hc _
+  apply le_antisymm
+  · intro v hv
+    have hv' : ∀ i, IsIntegral ℤ ((fun a => emb τ (cE (x i a))) ⬝ᵥ (J.map (emb τ) *ᵥ v)) := by
+      intro i
+      rw [← mem_one_iff, ← hstar]
+      exact hv _ (Submodule.subset_span ⟨x i, hx i, rfl⟩)
+    have e1 := expand_left ((emb τ).comp cE) h (J.map (emb τ) *ᵥ v)
+    have e2 : v = (J⁻¹).map (emb τ) *ᵥ (J.map (emb τ) *ᵥ v) := by
+      rw [Matrix.mulVec_mulVec, ← Matrix.map_mul, Matrix.nonsing_inv_mul _ hJ]
+      simp
+    rw [e2, e1, Matrix.mulVec_sum]
+    refine Submodule.sum_mem _ fun i _ => ?_
+    rw [Matrix.mulVec_smul]
+    refine smul_mem_of_integral _ (hv' i) ?_
+    unfold tauLat
+    refine Submodule.subset_span ⟨J⁻¹ *ᵥ fun a => cE (φ i a), ?_, ?_⟩
+    · rw [SetLike.mem_coe, hL']
+      intro y hy
+      rw [mem_range_iff, hform_eq, Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hJ, Matrix.one_mulVec, ← map_dot,
+        dotProduct_comm]
+      exact integral_map _ (hφ i y hy)
+    · exact map_mulVec _ _ _
+  · unfold tauLat
+    rw [Submodule.span_le]
+    rintro _ ⟨y, hy, rfl⟩ z hz
+    rw [mem_one_iff]
+    induction hz using Submodule.span_induction with
+    | mem z hz =>
+      obtain ⟨u, hu, rfl⟩ := hz
+      have := integral_map (emb τ) ((mem_range_iff _).1 ((hL' y).1 hy u hu))
+      rw [hform_eq, map_dot, map_mulVec] at this
+      rw [hstar]
+      exact this
+    | zero => simpa using isIntegral_zero
+    | add u w _ _ hu hw => rw [star_add, add_dotProduct]; exact hu.add hw
+    | smul c u _ hu =>
+      rw [← algebraMap_smul K c u, star_smul, smul_dotProduct, smul_eq_mul]
+      exact (integral_map (starRingEnd K) c.isIntegral_coe).mul hu
 
-theorem roundLat : RoundLat := roundLattice_holds
+theorem roundLat : RoundLat := by
+  intro E K _ _ _ _ ι n emb cE τ hc Jg L L' hL hH hL'
+  obtain ⟨m, x, φ, hx, hφ, h⟩ := exists_dual_family L hL
+  set J : Matrix (Fin n) (Fin n) E := (Jg : Matrix (Fin n) (Fin n) E) with hJdef
+  have hJ : IsUnit J.det := Matrix.isUnits_det_units Jg
+  have hg : ((invTrK (embGL emb Jg⁻¹) τ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K) = (Jᵀ).map (emb τ) := by
+    rw [map_inv]
+    change (((embGL emb Jg τ)⁻¹⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K)ᵀ = _
+    rw [inv_inv]
+    rfl
+  have hherm : ∀ a b, cE (J a b) = J b a := fun a b => congrFun (congrFun hH b) a
+  have hform' : ∀ u y : Fin n → E, Formalism.UG.hform cE J u y = cE ((Jᵀ *ᵥ fun a => cE (y a)) ⬝ᵥ u) := by
+    intro u y
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Formalism.UG.hform, dotProduct, Matrix.mulVec, Matrix.transpose_apply, map_sum, map_mul, hc, hherm,
+      Finset.sum_mul]
+    refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
+    ring
+  have hJt : IsUnit Jᵀ.det := by rwa [Matrix.det_transpose]
+  apply le_antisymm
+  · intro v hv
+    rw [expand_left (emb τ) h v]
+    refine Submodule.sum_mem _ fun i _ => smul_mem_of_integral _ ?_ ?_
+    · rw [dotProduct_comm, ← mem_one_iff]
+      exact hv _ (Submodule.subset_span ⟨x i, hx i, rfl⟩)
+    · unfold gLat tauLat
+      refine Submodule.mem_map.2 ⟨_, Submodule.subset_span ⟨fun a => cE ((Jᵀ⁻¹ *ᵥ φ i) a), ?_, rfl⟩, ?_⟩
+      · rw [SetLike.mem_coe, hL']
+        intro y hy
+        rw [mem_range_iff, hform']
+        simp only [hc]
+        rw [Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hJt, Matrix.one_mulVec]
+        exact integral_map _ (hφ i y hy)
+      · simp only [LinearMap.restrictScalars_apply, Matrix.mulVecLin_apply, RingHom.comp_apply, hc, hg]
+        rw [← map_mulVec, Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hJt, Matrix.one_mulVec]
+  · unfold gLat
+    rw [Submodule.map_le_iff_le_comap]
+    unfold tauLat
+    rw [Submodule.span_le]
+    rintro _ ⟨y, hy, rfl⟩ z hz
+    rw [mem_one_iff]
+    simp only [LinearMap.restrictScalars_apply, Matrix.mulVecLin_apply, RingHom.comp_apply, hg]
+    induction hz using Submodule.span_induction with
+    | mem z hz =>
+      obtain ⟨u, hu, rfl⟩ := hz
+      have := integral_map cE ((mem_range_iff _).1 ((hL' y).1 hy u hu))
+      rw [hform', hc] at this
+      have := integral_map (emb τ) this
+      rw [map_dot, map_mulVec] at this
+      exact this
+    | zero => simpa using isIntegral_zero
+    | add u w _ _ hu hw => rw [dotProduct_add]; exact hu.add hw
+    | smul c u _ hu =>
+      rw [← algebraMap_smul K c u, dotProduct_smul, smul_eq_mul]
+      exact c.isIntegral_coe.mul hu
 
 theorem tauLat_lattice_dual_round : TauLatLattice ∧ TauLatDual ∧ RoundLat := ⟨tauLatLattice, tauLatDual, roundLat⟩
 

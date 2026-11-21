@@ -15,7 +15,9 @@ private def cpZeroPol {Λ A : Type} [CommRing Λ] [CommRing A] [Algebra Λ A] (�
 
 private theorem cpZeroPol_graded {Λ A : Type} [CommRing Λ] [CommRing A] [Algebra Λ A] (𝒜 : ℤ × ℤ → Submodule Λ A)
     [SetLike.GradedMonoid 𝒜] : SetLike.GradedMonoid (cpZeroPol 𝒜) where
-  one_mem := fun n => by
+  one_mem := by
+    change ∀ n, (1 : A[X]).coeff n ∈ 𝒜 0
+    intro n
     rw [coeff_one]
     split_ifs
     · exact SetLike.one_mem_graded 𝒜

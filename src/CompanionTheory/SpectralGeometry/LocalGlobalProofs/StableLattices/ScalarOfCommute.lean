@@ -21,25 +21,22 @@ open CompanionTheory.D.LK (IsKMod)
 open CompanionTheory.RgExh
 
 theorem monic_eval_capP : ∀ (n : ℕ) (p : ℂ[X]), p.Monic → p.natDegree = n →
-    ∃ χ : Fin n → ℂ, ∀ Y : ℂ, p.eval Y = Formalism.QuantumDeterminants.capP χ Y
-  | 0, p, hm, hd => ⟨Fin.elim0, fun Y => by
-      rw [eq_one_of_monic_natDegree_zero hm hd]
-      simp [Formalism.QuantumDeterminants.capP]⟩
-  | n + 1, p, hm, hd => by
-      have hdeg : 0 < p.degree := by
-        rw [degree_eq_natDegree hm.ne_zero, hd]
-        exact_mod_cast Nat.succ_pos n
-      obtain ⟨z, hz⟩ := IsAlgClosed.exists_root p hdeg.ne'
-      have hq : (X - C z) * (p /ₘ (X - C z)) = p := mul_divByMonic_eq_iff_isRoot.2 hz
-      have hqm : (p /ₘ (X - C z)).Monic := (monic_X_sub_C z).of_mul_monic_left (hq.symm ▸ hm)
-      have hqd : (p /ₘ (X - C z)).natDegree = n := by
-        have := (monic_X_sub_C z).natDegree_mul hqm
-        rw [hq, hd, natDegree_X_sub_C] at this
-        omega
-      obtain ⟨χ, hχ⟩ := monic_eval_capP n _ hqm hqd
-      refine ⟨Fin.cons (-z) χ, fun Y => ?_⟩
-      rw [← hq, eval_mul, hχ]
-      simp [Formalism.QuantumDeterminants.capP, Fin.prod_univ_succ, sub_eq_add_neg]
+    ∃ χ : Fin n → ℂ, ∀ Y : ℂ, p.eval Y = Formalism.QuantumDeterminants.capP χ Y := by
+  intro n p hm hd
+  let roots := p.roots.toList
+  have hlen : roots.length = n := by
+    simpa only [roots, Multiset.length_toList, IsAlgClosed.card_roots_eq_natDegree] using hd
+  rw [← hlen]
+  refine ⟨fun i => -roots[i], fun Y => ?_⟩
+  calc
+    p.eval Y = (p.roots.map (Y - ·)).prod :=
+      (IsAlgClosed.splits p).eval_eq_prod_roots_of_monic hm Y
+    _ = (roots.map (Y - ·)).prod := by
+      simp only [roots, ← Multiset.prod_coe, ← Multiset.map_coe, Multiset.coe_toList]
+    _ = Formalism.QuantumDeterminants.capP (fun i => -roots[i]) Y := by
+      rw [Formalism.QuantumDeterminants.capP, ← List.prod_ofFn]
+      simp only [← sub_eq_add_neg]
+      exact congrArg List.prod (List.ofFn_getElem_eq_map roots (Y - ·)).symm
 
 theorem exists_char {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     (E : Fin n → Fin n → Module.End ℂ V) (h : ∀ u, ∃ c : ℂ, qdet E u = c • (1 : Module.End ℂ V)) :
