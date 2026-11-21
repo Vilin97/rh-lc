@@ -97,7 +97,7 @@ theorem mem_range_j (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) {Ω : Type} [Fi
   exact ⟨v', by rw [Model.j, Scheme.Hom.comp_apply, hv', h1]⟩
 
 theorem splitComps_of_fnAlgClosed (Y : Model Xo c (algebraMap (𝓞 c.F) c.F))
-    (hc : Formalism.L2.Pj.FnAlgClosed Xo c) : SplitComps Y := by
+    (hc : Formalism.L2.Pj.FnAlgClosed (Xo := Xo) (c := c)) : SplitComps Y := by
   intro Ω _ ξ cst hξ hs a ha
   have hmax := CptInh.nogen ξ hξ
   obtain ⟨w₀, hw₀⟩ := mem_range_j Y ξ cst hmax hs

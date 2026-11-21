@@ -122,7 +122,7 @@ theorem exists_fun {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host
     (hx₀ : ∀ τ : D.host.E →+* ℂ, τ (H.rt : D.host.E) = H.rt0 →
       gram τ (-(Matrix.reindex (finCongr hr) (finCongr hr) V.gram).transpose) (x₀ τ) =
         Matrix.diagonal fun a : Fin r => ((sgn Dw.q (a : ℕ) : ℝ) : ℂ))
-    (hlev : d.IsLev) (hA : d.l₂.A = 1) (hcl : FnAlgClosed d.Xo₂ d.c₂)
+    (hlev : d.IsLev) (hA : d.l₂.A = 1) (hcl : FnAlgClosed (Xo := d.Xo₂) (c := d.c₂))
     (xi : (Af D.host.F ⊗[D.host.F] D.host.E)ˣ →* ℂˣ)
     (h1 : ∀ g : GA D V, (∃ w ∈ intAE D, ((Matrix.GeneralLinearGroup.det (finHom V g) :
       (Af D.host.F ⊗[D.host.F] D.host.E)ˣ) : Af D.host.F ⊗[D.host.F] D.host.E) - 1 = d.l₂.M • w) →
@@ -209,7 +209,7 @@ theorem exists_covers_of_halves (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R 
   have hpq := (exists_iotaOK D T.Q hT.pins _ hj).2
   have hpos : 1 ≤ (T.Q.Dw ((i : ℕ) + 1)).p + (T.Q.Dw ((i : ℕ) + 1)).q := by omega
   have hX : ∀ t, ∃ (Xo₂ : Moduli (T.Q.Dw ((i : ℕ) + 1)) (l₂ t)) (c₀ : Coeff (l₂ t)),
-      ∀ c'' : Coeff (l₂ t), c₀.F ≤ c''.F → FnAlgClosed Xo₂ c'' := fun t => by
+      ∀ c'' : Coeff (l₂ t), c₀.F ≤ c''.F → FnAlgClosed (Xo := Xo₂) (c := c'') := fun t => by
     obtain ⟨Xo₂⟩ := GlobalTheory.T.moduliScheme_levelMaps_heckePoints'.1 _ _ (T.Q.Dw ((i : ℕ) + 1)) (l₂ t) hpos
     obtain ⟨c₀, -⟩ := exists_coeff_ge (l₂ t) ⊥
     obtain ⟨c₁, -, h⟩ := (GlobalTheory.GeomIrr.compNe_and_exists_fnAlgClosed _ _ _ _ Xo₂ c₀ hpos).2
@@ -239,7 +239,7 @@ theorem exists_covers_of_halves (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R 
     have hd := GlobalTheory.LevelCover.exists_deltaDat_isLev _ _ _ _ (T.Q.Xo ((i : ℕ) + 1)) c' hpos n (pd t) (I t) (l₂ t) (Xo₂ t) c₂ rfl
       l1 l2 l3 l4 l5
     have hd' : ∃ d : DeltaDat (T.Q.Xo ((i : ℕ) + 1)) c' n, d.pd = pd t ∧ d.I = I t ∧ d.l₂ = l₂ t ∧ d.IsLev ∧ d.l₂.A = 1 ∧
-        FnAlgClosed d.Xo₂ d.c₂ ∧ ∃ _ : StarRing (𝓞 D.host.E), IsNab d.Xo₂ d.c₂ d.nab₂ := by
+        FnAlgClosed (Xo := d.Xo₂) (c := d.c₂) ∧ ∃ _ : StarRing (𝓞 D.host.E), IsNab d.Xo₂ d.c₂ d.nab₂ := by
       obtain ⟨⟨pd', I', l₂', Xo₂', c₂', hF, r, mm, nab, cδ, φ₀⟩, a1, a2, a3, e₁, e₂, -, a4, a5⟩ := hd
       refine ⟨_, a1, a2, a3, a4, a3 ▸ l6, ?_, a5⟩
       dsimp only at a3 e₁ e₂ ⊢

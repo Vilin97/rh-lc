@@ -21,7 +21,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 namespace GlobalTheory.CoreDesc
 theorem fnAlgClosed_core_alt {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D}
     {Kc : Formalism.MainNotions.G.Consts} {Y0 : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y0 cX} {Csz : ℝ} (p : PtAt ex Csz)
-    (hR : _root_.GlobalTheory.CovTop.RowsTAlt p) (j : ℕ) (hj : InR D j) : FnAlgClosed (p.T.Q.Xo j) p.T.Q.c := by
+    (hR : _root_.GlobalTheory.CovTop.RowsTAlt p) (j : ℕ) (hj : InR D j) : FnAlgClosed (Xo := (p.T.Q.Xo j)) (c := p.T.Q.c) := by
   have hc := hR.1.ties.core
   have hpin : p.T.Q.Pins := hc.laws.pins
   have hpos : 0 < D.host.g 0 * D.host.g 1 * D.host.pde :=

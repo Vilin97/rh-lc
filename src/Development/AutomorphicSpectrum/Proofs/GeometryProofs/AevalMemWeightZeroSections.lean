@@ -261,7 +261,7 @@ theorem exists_fn (h : GenFrEx Xo c) (Z : Comp Xo c) (r₀ : kap Z) (hr : IsInte
 
 theorem fnAlgClosed_of_card {σ : c.F →+* ℂ} (V : Unf Xo c σ r) (hσ : GoodEmb c σ) (hV : IsUnf V) (h : GenFrEx Xo c)
     (hone : ∀ k x, FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) (V.un k x))
-    (hgen : GenFromTest Xo c h) (hcard : Nat.card (Comp Xo c) = Fintype.card V.Comp) : FnAlgClosed Xo c := by
+    (hgen : GenFromTest Xo c h) (hcard : Nat.card (Comp Xo c) = Fintype.card V.Comp) : FnAlgClosed (Xo := Xo) (c := c) := by
   classical
   have hlies : ∀ k : V.Comp, ∃ Z : Comp Xo c, ∀ x : (V.X k).dom, GlobalTheory.AllWt.LiesOn Z (V.un k x) :=
     GlobalTheory.UnifComp.exists_liesOn (Formalism.L2.PjFree.Unf.ofPj V) hV
@@ -340,7 +340,7 @@ theorem fnAlgClosed_of_card {σ : c.F →+* ℂ} (V : Unf Xo c σ r) (hσ : Good
 theorem over_unique {U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r} {h : GenFrEx Xo c} {e : Comp Xo c → Rul Xo c}
     (hL : CompLaws U h e) {σ : c.F →+* ℂ} (hσ : GoodEmb c σ) {Z : Comp Xo c} {k k' : (U σ).Comp}
     (hk : Over (U σ) (e Z) k) (hk' : Over (U σ) (e Z) k') : k = k' := by
-  have hF : FnAlgClosed Xo c :=
+  have hF : FnAlgClosed (Xo := Xo) (c := c) :=
     fnAlgClosed_of_card (U c.F.val.toRingHom) rfl (hL.unf _ rfl) h (hL.unTest _ rfl) hL.genT hL.comps
   have hU := hL.unf σ hσ
   have key : ∀ k₁, Over (U σ) (e Z) k₁ → ∃ x : ((U σ).X k₁).dom, ∃ (φ : Om Z →ₐ[c.F] CAt σ)

@@ -152,7 +152,7 @@ theorem exists_good_sized : GlobalTheory.Published.RayClassFieldSt → ∀ (D : 
   haveI : NumberField N := NumberField.mk
   let c' : Coeff T.Q.l := ⟨N, hN, fun τ a => h1 (T.Q.c.conj τ a), h1 T.Q.c.zeta_mem, T.Q.c.le.trans h1⟩
   let c₂ : Coeff l₂ := ⟨N, hN, fun τ a => h1 (T.Q.c.conj τ a), hM' ▸ h2 hz, hKA⟩
-  have hfa : FnAlgClosed Xo₂ c₂ := GlobalTheory.FinalJoin.FieldAlg.fnAlgClosed_of_weberIn D T.Q hQ j hj l₂ Xo₂ c₂ l₂.M
+  have hfa : FnAlgClosed (Xo := Xo₂) (c := c₂) := GlobalTheory.FinalJoin.FieldAlg.fnAlgClosed_of_weberIn D T.Q hQ j hj l₂ Xo₂ c₂ l₂.M
     (by have := l₂.three_le; omega) hM'.dvd (Or.inl (hW N h2))
   have hsize : fieldSz c₂.F ≤ fieldSz T.Q.c.F + 20 * (Real.log ((D.host.g 0 : ℝ) * D.host.g 1 * 15 ^ e) +
       Real.log D.host.d + 1) := by

@@ -71,7 +71,7 @@ theorem eq_of_carries {σ : c.F →+* ℂ} {r : ℕ} {U : Formalism.L2.PjFree.Un
   rw [← ptF_frBor ht, ptF_frMap hw, Scheme.Hom.comp_apply]
   exact liesOn_genFr h Z _
 
-theorem exists_equiv_comp : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (N : ℕ) (U : Formalism.L2.PjFree.Unf Xo c σ N), Formalism.L2.PjFree.GoodEmb c σ → Formalism.L2.PjFree.IsUnf U → (∀ k, (U.X k).dom.Nonempty) → FnAlgClosed Xo c → ∃ q : U.Comp ≃ Comp Xo c, ∀ k (x : (U.X k).dom) (s : Sp (CAt σ)), GlobalTheory.AllWt.ptF (U.un k x) s ∈ (q k).1 := by
+theorem exists_equiv_comp : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (N : ℕ) (U : Formalism.L2.PjFree.Unf Xo c σ N), Formalism.L2.PjFree.GoodEmb c σ → Formalism.L2.PjFree.IsUnf U → (∀ k, (U.X k).dom.Nonempty) → FnAlgClosed (Xo := Xo) (c := c) → ∃ q : U.Comp ≃ Comp Xo c, ∀ k (x : (U.X k).dom) (s : Sp (CAt σ)), GlobalTheory.AllWt.ptF (U.un k x) s ∈ (q k).1 := by
   intro E _ _ _ H Dw l Xo c σ N U hσ hU _ hF
   obtain ⟨-, -, h, -⟩ := GlobalTheory.Reg.evLaws_genFr_atlas E H Dw l Xo c
   choose q hq using exists_liesOn U hU

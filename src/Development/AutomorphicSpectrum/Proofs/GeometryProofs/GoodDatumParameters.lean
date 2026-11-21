@@ -49,7 +49,7 @@ theorem idem_val (h : GenFrEx Xo c) (Z : Comp Xo c) :
     fun Z' hZ => GlobalTheory.AllWt.evC_eq_zero h hZ (GlobalTheory.FlatLine.idem_mem_suppOn Z)⟩
 
 theorem compLaws_of (hN : N1ab) (hN' : N1c) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r)
-    (hpq : 1 ≤ Dw.p + Dw.q) (hg : ∀ p : ℕ, p.Prime → l.GoodAt p) (hF : FnAlgClosed Xo c)
+    (hpq : 1 ≤ Dw.p + Dw.q) (hg : ∀ p : ℕ, p.Prime → l.GoodAt p) (hF : FnAlgClosed (Xo := Xo) (c := c))
     (hU : ∀ σ, GoodEmb c σ → IsUnf (U σ))
     (hT : ∀ σ, GoodEmb c σ → ∀ k x,
       FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) ((U σ).un k x))

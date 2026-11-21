@@ -23,7 +23,7 @@ namespace GlobalTheory.CompanionTheory.Ar.Plug
 
 theorem splitComps_of_fnAlgClosed_model : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l)
-    (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)), FnAlgClosed Xo c → SplitComps Y :=
+    (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)), FnAlgClosed (Xo := Xo) (c := c) → SplitComps Y :=
   fun _ _ _ _ _ _ _ _ _ Y hc => GlobalTheory.CompanionTheory.Ar.SplitEx.splitComps_of_fnAlgClosed Y hc
 
 end GlobalTheory.CompanionTheory.Ar.Plug

@@ -33,7 +33,7 @@ theorem comp_eq {σ : c.F →+* ℂ} {r : ℕ} {U : Unf Xo c σ r} (hσ : GoodEm
   exact congrArg Sigma.fst e
 
 theorem nonempty_flatSec {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (x : ℝ) (hq : Dw.q = 0) (hp : 1 ≤ Dw.p)
-    (hg : ∀ p : ℕ, p.Prime → l.GoodAt p) (hU : ∀ σ, GoodEmb c σ → IsUnf (U σ)) (hF : FnAlgClosed Xo c)
+    (hg : ∀ p : ℕ, p.Prime → l.GoodAt p) (hU : ∀ σ, GoodEmb c σ → IsUnf (U σ)) (hF : FnAlgClosed (Xo := Xo) (c := c))
     (Z : Comp Xo c) (τ : Psi H) : Nonempty (FlatSec U x Z τ) := by
   have hpq : 1 ≤ Dw.p + Dw.q := by omega
   have hP := hasPts U hpq hg hU Z

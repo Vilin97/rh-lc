@@ -116,7 +116,7 @@ open Polynomial GlobalTheory.CompRat.FixedConst in
 theorem fnAlgClosed_of_fixed_points (F : FamilyUnif Xo (algebraMap (KA l) ℂ) ty) (h1 : 1 ≤ D.p + D.q)
     (hty : IsTypeFn H D.p D.q ty) (c : Coeff l)
     (hfix : ∀ τ : ℂ ≃+* ℂ, (∀ x ∈ c.F, τ x = x) → ∀ i, ∃ P, IsPeriod (F.Di i) ty P ∧
-      spMap (τ : ℂ →+* ℂ) ≫ F.u i P = F.u i P) : FnAlgClosed Xo c := by
+      spMap (τ : ℂ →+* ℂ) ≫ F.u i P = F.u i P) : FnAlgClosed (Xo := Xo) (c := c) := by
   intro Z a ha
   obtain ⟨r, rfl⟩ := GlobalTheory.GeomIrr.mem_range_of_isAlgebraic_ratFun a (ha.tower_top (kap Z))
   have hr : IsIntegral c.F r := (isIntegral_algebraMap_iff ).1 ha.isIntegral
@@ -189,7 +189,7 @@ theorem fnAlgClosed_of_fixed_points (F : FamilyUnif Xo (algebraMap (KA l) ℂ) t
   exact (ev_conj x' (τ : ℂ →+* ℂ) f).symm.trans (by rw [hx'])
 
 theorem fnAlgClosed_of_curveOver (Xo : Moduli D l) (c : Coeff l) (hD : 1 ≤ D.p + D.q)
-    (h1 : ∃ D₁ : Datum H, D₁.p = 1 ∧ D₁.q = 0) (hC : CurveOver H c.F l.M') : FnAlgClosed Xo c := by
+    (h1 : ∃ D₁ : Datum H, D₁.p = 1 ∧ D₁.q = 0) (hC : CurveOver H c.F l.M') : FnAlgClosed (Xo := Xo) (c := c) := by
   have hex : ∃ (g : ℕ) (ty : Fin g → (E →+* ℂ)), IsTypeFn H D.p D.q ty := by
     classical
     let m : (E →+* ℂ) → ℕ := fun τ => if τ (H.rt : E) = H.rt0 then D.p else D.q

@@ -225,7 +225,7 @@ theorem exists_fn (h : GenFrEx Xo c) (Z : Comp Xo c) (r₀ : kap Z) (hr : IsInte
 
 theorem fnAlgClosed_of_card {σ : c.F →+* ℂ} (V : Unf Xo c σ r) (hσ : GoodEmb c σ) (hV : IsUnf V) (h : GenFrEx Xo c)
     (hone : ∀ k x, FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) (V.un k x))
-    (hgen : GenFromTest Xo c h) (hcard : Nat.card (Comp Xo c) = Fintype.card V.Comp) : FnAlgClosed Xo c := by
+    (hgen : GenFromTest Xo c h) (hcard : Nat.card (Comp Xo c) = Fintype.card V.Comp) : FnAlgClosed (Xo := Xo) (c := c) := by
   classical
   have hlies : ∀ k : V.Comp, ∃ Z : Comp Xo c, ∀ x : (V.X k).dom, GlobalTheory.AllWt.LiesOn Z (V.un k x) :=
     GlobalTheory.UnifComp.exists_liesOn (Formalism.L2.PjFree.Unf.ofPj V) hV
@@ -307,7 +307,7 @@ end CompOver
 open CompOver in
 theorem comp_over : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (r : ℕ) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (h : GenFrEx Xo c) (e : Comp Xo c → Rul Xo c), CompLaws U h e → ∀ σ, GoodEmb c σ → ∃ κ : Comp Xo c ≃ (U σ).Comp, (∀ Z k, Over (U σ) (e Z) k ↔ k = κ Z) ∧ ∀ Z k, k ≠ κ Z → ∀ y ∈ ((U σ).X k).dom, rdU (U σ) (e Z) k y = 0 ∧ ∀ a, ∀ f ∈ cuspOn U h a Z, rdU (U σ) f k y = 0 := by
   intro E _ _ _ H Dw l Xo c r U h e hL σ hσ
-  have hF : FnAlgClosed Xo c :=
+  have hF : FnAlgClosed (Xo := Xo) (c := c) :=
     fnAlgClosed_of_card (U c.F.val.toRingHom) rfl (hL.unf _ rfl) h (hL.unTest _ rfl) hL.genT hL.comps
   have hU := hL.unf σ hσ
   obtain ⟨κ, hb, ht, -⟩ := GlobalTheory.CompBij.exists_bijection (U σ) hσ hU hF h

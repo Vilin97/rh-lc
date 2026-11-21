@@ -72,7 +72,7 @@ theorem rdU_eq_of_reads (U : Unf Xo c σ r) (h : GenFrEx Xo c) (k : U.Comp)
   rw [h4, ← h1, h2]
   rfl
 
-theorem exists_bijection (U : Unf Xo c σ r) (hσ : GoodEmb c σ) (hU : IsUnf U) (hF : FnAlgClosed Xo c)
+theorem exists_bijection (U : Unf Xo c σ r) (hσ : GoodEmb c σ) (hU : IsUnf U) (hF : FnAlgClosed (Xo := Xo) (c := c))
     (h : GenFrEx Xo c) :
     ∃ κ : Comp Xo c → U.Comp, Function.Bijective κ ∧
       (∀ Z (u : (E →+* ℂ) × ℕ → ℕ) (n : ℕ), Dom u n → ∀ f ∈ sec Xo c u n,

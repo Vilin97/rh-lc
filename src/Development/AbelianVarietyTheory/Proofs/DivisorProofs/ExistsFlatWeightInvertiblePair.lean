@@ -151,7 +151,7 @@ structure NeatUnf (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) : Prop where
   pos : 1 ≤ Dw.p + Dw.q
   lev : l.A = 1
   unf : ∀ σ, GoodEmb c σ → IsUnf (U σ)
-  geo : FnAlgClosed Xo c
+  geo : FnAlgClosed (Xo := Xo) (c := c)
   same : ∀ σ, GoodEmb c σ → ∀ k k', ((U σ).X k).Gm = ((U σ).X k').Gm ∧ ((U σ).X k).ξ0 = ((U σ).X k').ξ0
   chi : ∀ σ, GoodEmb c σ → ∀ a n, Dom a n → ∀ k, ∀ γ ∈ ((U σ).X k).Γ, ((U σ).X k).χ (laU (U σ) a n k) γ = 1
   det : ∀ σ, GoodEmb c σ → ∀ k, ∀ γ ∈ ((U σ).X k).Γ, (γ : Matrix (Fin r) (Fin r) E).det = 1

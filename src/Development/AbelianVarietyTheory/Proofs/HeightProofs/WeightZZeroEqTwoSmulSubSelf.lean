@@ -177,7 +177,7 @@ theorem lawBdd_dat (hcx : ValAtCx h yP)
     ⟨one_mem_sec, supBdd_one fn⟩ ⟨h2S, h2B⟩ (wt_et uL) (weightZ_zero_eq_two_smul_sub_self uL) huta2
 
 theorem exists_htConcl (hgt : GenFromTest Xo c h)
-    (hne : CompNe Xo c) (hfg : FnFG Xo c) (htr : FnTrdeg Xo c Dd) (hac : FnAlgClosed Xo c)
+    (hne : CompNe Xo c) (hfg : FnFG Xo c) (htr : FnTrdeg Xo c Dd) (hac : FnAlgClosed (Xo := Xo) (c := c))
     (hwb : ∀ Z, evC h Z (wR (jc Z)) ≠ 0) (het : NZAt h etR) (hta2 : NZAt h ta2R)
     (huta2 : wtZ uta2.1 uta2.2 = (Dd + 4 : ℕ) • wtZ uL.1 uL.2 - wtZ uF.1 uF.2)
     (hfn : FnNe Xo c fn) (hconj : FnConj Xo c fn yP)

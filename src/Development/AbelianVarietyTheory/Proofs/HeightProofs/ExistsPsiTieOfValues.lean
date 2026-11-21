@@ -235,7 +235,7 @@ theorem exists_psiTie_of_values (V : HSp D) {l : Level H} {Xo : Moduli Dw l} {c 
   · obtain ⟨w, hw, ew⟩ := hlift b hb
     exact ⟨w, hw, sub_eq_iff_eq_add'.1 ew⟩
 
-theorem exists_psiTie_of_xiAt : ∀ (D : D7) (J : CoreJ D), LawsJ J → ∀ j, InR D j → ∀ (p : ℕ) (I : Ideal (𝓞 D.host.E)) (d : DeltaDat (J.Q.Xo j) J.Q.c 0) (xi : (AfE D)ˣ →* ℂˣ), p.Prime → CoverOK d p I → FnAlgClosed d.Xo₂ d.c₂ → XiOK D p xi → XiAt J j d xi → ∃ ψ, ψ ≠ 1 ∧ d.PsiTie ψ := by
+theorem exists_psiTie_of_xiAt : ∀ (D : D7) (J : CoreJ D), LawsJ J → ∀ j, InR D j → ∀ (p : ℕ) (I : Ideal (𝓞 D.host.E)) (d : DeltaDat (J.Q.Xo j) J.Q.c 0) (xi : (AfE D)ˣ →* ℂˣ), p.Prime → CoverOK d p I → FnAlgClosed (Xo := d.Xo₂) (c := d.c₂) → XiOK D p xi → XiAt J j d xi → ∃ ψ, ψ ≠ 1 ∧ d.PsiTie ψ := by
   rintro D J hJ j hj p I d xi hp ⟨rfl, -, hd, hA₂, -⟩ - hxi ⟨hr, U₂, dict₂, hv⟩
   have hσ := J.toCore.good_σ₀
   obtain ⟨_, _, _, _, _, _, _, hL, hI, -⟩ := hJ.adPin j hj J.σ₀ hσ

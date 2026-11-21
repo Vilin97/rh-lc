@@ -226,7 +226,7 @@ theorem isGenerated_pull {W : Scheme.{0}} (ι : W ⟶ X.YY) (g : W ⟶ gen Y) (h
       eq_inv_mul_iff_mul_eq.2 (Units.ext e)
     rw [e₁, mul_zpow, mul_zpow, inv_zpow', neg_neg, mul_left_comm, mul_assoc]
 
-theorem geometricallyConnected_comp (TF : TorFlag Xo c) (Z : Comp Xo c) (hF : FnAlgClosed Xo c) {U : (Xo.XF c).Opens}
+theorem geometricallyConnected_comp (TF : TorFlag Xo c) (Z : Comp Xo c) (hF : FnAlgClosed (Xo := Xo) (c := c)) {U : (Xo.XF c).Opens}
     (hU : (U : Set (Xo.XF c)) = Z.1) : GeometricallyConnected (U.ι ≫ toF Xo c) := by
   obtain ⟨B, j, hB, -⟩ := GenFibreComp.exists_vars E H Dw l Xo c c.F (RingHom.id c.F) TF.Y c.F (RingEquiv.refl _) hF
     (VarFlag.smooth_gen TF.smooth)
@@ -250,7 +250,7 @@ theorem geometricallyConnected_comp (TF : TorFlag Xo c) (Z : Comp Xo c) (hF : Fn
   exact ⟨fun K _ y _ _ _ hp => have := h.1 y _ _ hp; inferInstance⟩
 
 theorem isGenerated_unitWt (hT : Published.ToroidalCompactification) (TF : TorFlag Xo c) (Z : Comp Xo c)
-    (hF : FnAlgClosed Xo c) (τ : Psi H) (a : ℤ) : IsGenerated (L₀ TF.X Z (NefWt.unitWt τ a)) := by
+    (hF : FnAlgClosed (Xo := Xo) (c := c)) (τ : Psi H) (a : ℤ) : IsGenerated (L₀ TF.X Z (NefWt.unitWt τ a)) := by
   have hZ := TrivOrderTieCompare.isClopen_comp Z
   let U : (Xo.XF c).Opens := ⟨Z.1, hZ.isOpen⟩
   obtain ⟨-, s₀, -, -, -, -, h⟩ := DetLine.detLineTrivial_of_toroidal hT E H Dw l Xo c U hZ.isClosed

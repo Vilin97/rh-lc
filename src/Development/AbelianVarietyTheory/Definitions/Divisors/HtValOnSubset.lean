@@ -54,7 +54,7 @@ structure Laws : Prop where
   lev : l.A = 1
   good : ∀ p : ℕ, p.Prime → l.GoodAt p
   unf : ∀ σ, GoodEmb c σ → IsUnf (U σ)
-  geo : FnAlgClosed Xo c
+  geo : FnAlgClosed (Xo := Xo) (c := c)
   xi : ∀ σ, GoodEmb c σ → ∀ k (τ : E →+* ℂ), ‖τ ((U σ).X k).ξ0‖ = x
   chi : ∀ σ, GoodEmb c σ → ∀ a n, Dom a n → ∀ k, ∀ γ ∈ ((U σ).X k).Γ, ((U σ).X k).χ (laU (U σ) a n k) γ = 1
   det : ∀ σ, GoodEmb c σ → ∀ k, ∀ γ ∈ ((U σ).X k).Γ, (γ : Matrix (Fin r) (Fin r) E).det = 1

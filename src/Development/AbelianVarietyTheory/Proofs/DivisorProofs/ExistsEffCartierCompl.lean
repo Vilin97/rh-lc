@@ -299,7 +299,7 @@ theorem exists_iso (T : TorFlag Xo c) (Z : Comp Xo c) (B : Comp Xo c → GlobalT
   refine ⟨h, this, hh, ?_, hR⟩
   rw [← hps, ← Category.assoc, hh, Category.assoc]
 
-theorem exists_flagTor (T : TorFlag Xo c) (hF : FnAlgClosed Xo c) {σ : c.F →+* ℂ} {N : ℕ} (U : Formalism.L2.PjFree.Unf Xo c σ N)
+theorem exists_flagTor (T : TorFlag Xo c) (hF : FnAlgClosed (Xo := Xo) (c := c)) {σ : c.F →+* ℂ} {N : ℕ} (U : Formalism.L2.PjFree.Unf Xo c σ N)
     (hσ : Formalism.L2.PjFree.GoodEmb c σ) (hU : Formalism.L2.PjFree.IsUnf U) :
     ∃ (Φ : FlagTor T.Y (RingEquiv.refl c.F) U) (q : U.Comp ≃ Comp Xo c),
       (∀ k (x : (U.X k).dom) (s : Sp (CAt σ)), GlobalTheory.AllWt.ptF (U.un k x) s ∈ (q k).1) ∧
@@ -366,7 +366,7 @@ theorem topSelf_eq_inter (T : TorFlag Xo c) (Z : Comp Xo c) (C : FlagCpt T.Y (Ri
 
 open Classical in
 theorem topSelf_eq_covol (hM : GlobalTheory.Published.MumfordProportionality) (T : TorFlag Xo c) (hc : ∀ x ∈ genBd T.Y, HasToricChart T.Y x)
-    (hF : FnAlgClosed Xo c) {σ : c.F →+* ℂ} {N : ℕ} (U : Formalism.L2.PjFree.Unf Xo c σ N)
+    (hF : FnAlgClosed (Xo := Xo) (c := c)) {σ : c.F →+* ℂ} {N : ℕ} (U : Formalism.L2.PjFree.Unf Xo c σ N)
     (hσ : Formalism.L2.PjFree.GoodEmb c σ) (hU : Formalism.L2.PjFree.IsUnf U) :
     ∃ q : U.Comp ≃ Comp Xo c, (∀ k (x : (U.X k).dom) (s : Sp (CAt σ)), GlobalTheory.AllWt.ptF (U.un k x) s ∈ (q k).1) ∧
       ∀ k, IsIntegral (Y₀ T.X (q k)) ∧ topologicalKrullDim (Y₀ T.X (q k)) = CompHt.dimFlag Dw ∧ ∀ la : AllWt.Weight Dw,

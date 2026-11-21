@@ -15,7 +15,7 @@ open NumberField IsDedekindDomain Module Formalism.BasicNotions Formalism.L2.Pj 
 
 namespace GlobalTheory.LawsCore
 
-theorem laws_core : ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j, InR D j → FnAlgClosed (T.Q.Xo j) T.Q.c →
+theorem laws_core : ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j, InR D j → FnAlgClosed (Xo := (T.Q.Xo j)) (c := T.Q.c) →
     Laws (T.U j) (xiR D) := by
   intro D T hT j hj hF
   have hg : ∀ p : ℕ, p.Prime → T.Q.l.GoodAt p :=

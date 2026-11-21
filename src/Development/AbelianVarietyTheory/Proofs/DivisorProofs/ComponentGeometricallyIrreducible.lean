@@ -114,7 +114,7 @@ theorem irreducibleSpace_pullback {F : Type} [Field F] [CharZero F] {X : Scheme.
     (fun z hz => hgen z (hVU hz)) k f⟩
 
 theorem algClosed_kap {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
-    {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} (hac : FnAlgClosed Xo c) (Z : Comp Xo c)
+    {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} (hac : FnAlgClosed (Xo := Xo) (c := c)) (Z : Comp Xo c)
     (a : kap Z) (ha : IsAlgebraic c.F a) : a ∈ (algebraMap c.F (kap Z)).range := by
   have hb : IsAlgebraic c.F (algebraMap (kap Z) (Om Z) a) := ha.algebraMap
   obtain ⟨b, hb'⟩ := hac Z _ hb
@@ -127,7 +127,7 @@ end GlobalTheory.GeomIrrComp
 
 open GlobalTheory.GeomIrrComp in
 theorem GlobalTheory.GeomIrrComp.exists_open_irreducibleSpace_baseChange : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H)
-    (Xo : Moduli Dw l) (c : Coeff l), FnAlgClosed Xo c → ∀ Z : Comp Xo c,
+    (Xo : Moduli Dw l) (c : Coeff l), FnAlgClosed (Xo := Xo) (c := c) → ∀ Z : Comp Xo c,
     ∃ U : (Xo.XF c).Opens, (U : Set (Xo.XF c)) = Z ∧ ∀ (k : Type) [Field k] (f : c.F →+* k),
       IrreducibleSpace ↑(pullback (U.ι ≫ pullback.snd Xo.s (spMap (IntermediateField.inclusion c.le).toRingHom)) (spMap f)) := by
   intro E _ _ _ H Dw l Xo c hac Z

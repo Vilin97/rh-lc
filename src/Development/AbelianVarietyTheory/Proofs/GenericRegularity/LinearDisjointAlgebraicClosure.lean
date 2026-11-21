@@ -179,7 +179,7 @@ theorem ReadOn.eq_of_isPreconnected {U : Formalism.L2.PjFree.Unf Xo c σ r} (hσ
     (fun _ _ _ _ _ _ h₁ h₂ k hk => h₂ k (h₁ k hk)) (hmem h) (hmem h')
   exact (key k h).unique hU h'
 
-theorem comp_eq_of_fnAlgClosed : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (r : ℕ) (U : Unf Xo c σ r), GoodEmb c σ → IsUnf U → FnAlgClosed Xo c → ∀ (h : GenFrEx Xo c) (Z : Comp Xo c) (k k' : U.Comp) (x : (U.X k).dom) (x' : (U.X k').dom), (∃ (φ : Om Z →ₐ[c.F] CAt σ) (y' : FrPt Xo c (CAt σ)) (t : Ix Dw → (CAt σ)ˣ), FrMap φ (genFr h Z) y' ∧ FrBor t (U.un k x) y') → (∃ (φ : Om Z →ₐ[c.F] CAt σ) (y' : FrPt Xo c (CAt σ)) (t : Ix Dw → (CAt σ)ˣ), FrMap φ (genFr h Z) y' ∧ FrBor t (U.un k' x') y') → k = k' := by
+theorem comp_eq_of_fnAlgClosed : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (r : ℕ) (U : Unf Xo c σ r), GoodEmb c σ → IsUnf U → FnAlgClosed (Xo := Xo) (c := c) → ∀ (h : GenFrEx Xo c) (Z : Comp Xo c) (k k' : U.Comp) (x : (U.X k).dom) (x' : (U.X k').dom), (∃ (φ : Om Z →ₐ[c.F] CAt σ) (y' : FrPt Xo c (CAt σ)) (t : Ix Dw → (CAt σ)ˣ), FrMap φ (genFr h Z) y' ∧ FrBor t (U.un k x) y') → (∃ (φ : Om Z →ₐ[c.F] CAt σ) (y' : FrPt Xo c (CAt σ)) (t : Ix Dw → (CAt σ)ˣ), FrMap φ (genFr h Z) y' ∧ FrBor t (U.un k' x') y') → k = k' := by
   intro E _ _ _ H Dw l Xo c σ r U hσ hU hac h Z k k' x x' hk hk'
   obtain ⟨hL, -, -, hA⟩ := evLaws_genFr_atlas E H Dw l Xo c
   obtain ⟨-, hmul, hinv, -⟩ := GlobalTheory.Reg.BorelGroupoid.frBor_groupoid E H Dw l Xo c (CAt σ)

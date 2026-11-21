@@ -33,7 +33,7 @@ variable (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F)
 def CoverField : Prop :=
   ∀ (i : Fin D.R.m) (t : T0) (l₂ : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level T.Q.H), T.Q.l.Dvd l₂ → l₂.M = T.Q.l.M * tupPrime R t → l₂.A = 1 →
     ∀ (Xo₂ : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Moduli (T.Q.Dw ((i : ℕ) + 1)) l₂) (c₂ : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Coeff l₂),
-      c₂.F = D.what₂.embLL.toRatAlgHom.fieldRange → FnAlgClosed Xo₂ c₂
+      c₂.F = D.what₂.embLL.toRatAlgHom.fieldRange → FnAlgClosed (Xo := Xo₂) (c := c₂)
 
 variable (κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)) (v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec)
 

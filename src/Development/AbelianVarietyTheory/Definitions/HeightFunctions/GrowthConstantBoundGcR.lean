@@ -33,7 +33,7 @@ structure ParOK (T : Top D) (EX : ErrX D) (p j : ℕ) : Prop where
   bad : 0 < badN D
   own : ∀ n, (T.dδ j n).pd = p
   orient : GlobalTheory.PtTie.Oriented T EX
-  alg : FnAlgClosed (T.Q.Xo j) T.Q.c
+  alg : FnAlgClosed (Xo := (T.Q.Xo j)) (c := T.Q.c)
 
 section Abstract
 

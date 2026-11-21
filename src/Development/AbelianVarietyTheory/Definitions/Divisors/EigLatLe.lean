@@ -94,7 +94,7 @@ structure DefCase : Prop where
   p : 1 ≤ Dw.p
   good : ∀ p : ℕ, p.Prime → l.GoodAt p
   A : l.A = 1
-  geo : FnAlgClosed Xo c
+  geo : FnAlgClosed (Xo := Xo) (c := c)
   unf : ∀ σ, GoodEmb c σ → IsUnf (U σ)
   xi : ∀ σ, GoodEmb c σ → ∀ k (τ : E →+* ℂ), ‖τ ((U σ).X k).ξ0‖ = ξ
 

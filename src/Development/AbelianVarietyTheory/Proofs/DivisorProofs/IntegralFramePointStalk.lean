@@ -194,7 +194,7 @@ open NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G.Geo.Tor R
 theorem twSec_keyRoot_val : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E)
     (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (r : ℕ) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (x : ℝ),
     (∀ σ, GoodEmb c σ → IsUnf (U σ)) → (∀ σ, GoodEmb c σ → ∀ k (τ : E →+* ℂ), ‖τ ((U σ).X k).ξ0‖ = x) →
-    FnAlgClosed Xo c → 1 ≤ Dw.p + Dw.q → (∀ p : ℕ, p.Prime → l.GoodAt p) →
+    FnAlgClosed (Xo := Xo) (c := c) → 1 ≤ Dw.p + Dw.q → (∀ p : ℕ, p.Prime → l.GoodAt p) →
     ∀ Z : Comp Xo c, ∃ t : TwSec U x Z (wtOf Dw 0 1), ∀ (T : CDVR) (io : c.F →+* T.Fr) (y : IntFr Xo c T io),
       (∀ a, io a ∈ (algebraMap T.V T.Fr).range) → evI y (idem Z) ≠ 0 → vV T.V (evI y t.sig) = 0 := by
   intro E _ _ _ H Dw l Xo c r U x hU hx hF hpq hg

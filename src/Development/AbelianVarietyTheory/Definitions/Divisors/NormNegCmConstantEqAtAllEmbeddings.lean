@@ -204,7 +204,7 @@ structure Good (e : ℕ) (o : ℝ) : Prop where
     DictIsUnif (D.sp.W j) (Y.dict σ) Y.Kf th hr
   levelK : IsLevelK (D.sp.W j) (D.host.g 0 * D.host.g 1 * Y.d.pd) Y.Kf
   xiAbs : ∀ σ, GoodEmb Y.d.c₂ σ → ∀ k (τ : D.host.E →+* ℂ), ‖τ ((Y.U σ).X k).ξ0‖ = xiR D
-  geo : FnAlgClosed Y.d.Xo₂ Y.d.c₂
+  geo : FnAlgClosed (Xo := Y.d.Xo₂) (c := Y.d.c₂)
   normal : ∀ s : ℂ ≃+* ℂ, (∀ a ∈ T.Q.c.F, s a = a) → ∀ a ∈ Y.c'.F, s a ∈ Y.c'.F
   size : fieldSz Y.d.c₂.F ≤ o
 
@@ -433,7 +433,7 @@ theorem rank_pos (T : Core D) (hQ : T.Q.Pins) (j : ℕ) (hj : InR D j) : 1 ≤ (
 set_option maxHeartbeats 1000000 in
 theorem exists_good_pin (T : Core D) (hQ : T.Q.Pins) (j : ℕ) (hj : InR D j) (c' : Coeff T.Q.l) (hle : T.Q.c.F ≤ c'.F)
     (d : DeltaDat (T.Q.Xo j) c' 0) (e : ℕ) (a1 : d.pd = 15 ^ e) (a2 : d.IsLev) (a3 : d.l₂.A = 1)
-    (a4 : FnAlgClosed d.Xo₂ d.c₂) (a5 : ∀ s : ℂ ≃+* ℂ, (∀ a ∈ T.Q.c.F, s a = a) → ∀ a ∈ c'.F, s a ∈ c'.F)
+    (a4 : FnAlgClosed (Xo := d.Xo₂) (c := d.c₂)) (a5 : ∀ s : ℂ ≃+* ℂ, (∀ a ∈ T.Q.c.F, s a = a) → ∀ a ∈ c'.F, s a ∈ c'.F)
     (ι : (T.Q.Dw j).La →ₗ[𝓞 D.host.E] (Fin (D.sp.W j).rank → D.host.E)) (hι : GlobalTheory.Member.IotaOK (T.Q.Dw j) (D.sp.W j) ι)
     (x : (d.c₂.F →+* ℂ) → (D.host.E →+* ℂ) → Matrix (Fin D.R.r) (Fin D.R.r) ℂ)
     (hx : ∀ σ, GoodEmb d.c₂ σ → ∃ C : GlobalTheory.Member.Ctx d.Xo₂ d.c₂ σ (D.sp.W j) D.R.r, C.OK ∧ C.ι = ι ∧ C.x₀ = x σ) :
@@ -479,7 +479,7 @@ theorem exists_good_pin (T : Core D) (hQ : T.Q.Pins) (j : ℕ) (hj : InR D j) (c
 
 theorem exists_good_of_cover (T : Core D) (hQ : T.Q.Pins) (j : ℕ) (hj : InR D j) (c' : Coeff T.Q.l) (hle : T.Q.c.F ≤ c'.F)
     (d : DeltaDat (T.Q.Xo j) c' 0) (e : ℕ) (a1 : d.pd = 15 ^ e) (a2 : d.IsLev) (a3 : d.l₂.A = 1)
-    (a4 : FnAlgClosed d.Xo₂ d.c₂) (a5 : ∀ s : ℂ ≃+* ℂ, (∀ a ∈ T.Q.c.F, s a = a) → ∀ a ∈ c'.F, s a ∈ c'.F) :
+    (a4 : FnAlgClosed (Xo := d.Xo₂) (c := d.c₂)) (a5 : ∀ s : ℂ ≃+* ℂ, (∀ a ∈ T.Q.c.F, s a = a) → ∀ a ∈ c'.F, s a ∈ c'.F) :
     ∃ U dict Kf, (⟨c', hle, d, U, dict, Kf⟩ : Deep T j).Good e (fieldSz d.c₂.F) := by
   classical
   obtain ⟨⟨ι, hι⟩, -, -, -⟩ := GlobalTheory.Member.exists_iotaOK D T.Q hQ j hj

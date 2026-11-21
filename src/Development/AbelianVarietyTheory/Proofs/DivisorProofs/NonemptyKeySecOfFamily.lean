@@ -33,7 +33,7 @@ theorem nonempty_keySec_of_family (E : Type) [Field E] [NumberField E] [IsCMFiel
     (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ))
     (F : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom)
       (fun j => Formalism.L2.PjFree.relab c σ (e j).1))
-    (hpq : 1 ≤ Dw.p + Dw.q) (hF : FnAlgClosed Xo c) : Nonempty (KeySec Xo c) := by
+    (hpq : 1 ≤ Dw.p + Dw.q) (hF : FnAlgClosed (Xo := Xo) (c := c)) : Nonempty (KeySec Xo c) := by
   have hB : Out.SecBaseChangeSt := GlobalTheory.lawsFieldsSeparately.2.1
   have hT : Out.SecTwistSt := GlobalTheory.abelianSchemeLaws_all.2.secTwist
   obtain ⟨ξ₀, hcc, hne, him⟩ := GlobalTheory.IsUnfEx.exists_xi H

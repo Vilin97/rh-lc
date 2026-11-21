@@ -77,7 +77,7 @@ theorem x_of_levR (hL : ActLev (Xo := Xo) c lev) (g : G) {S T : Type} [CommRing 
   rw [spMap_algHom_id, Category.id_comp] at h
   exact ⟨ρ, hi, hm.1, h.trans hw.1⟩
 
-theorem exists_comp (hL : ActLev (Xo := Xo) c lev) (hq : Dw.q = 0) (hF : FnAlgClosed Xo c) (g : G) (Z : Comp Xo c) :
+theorem exists_comp (hL : ActLev (Xo := Xo) c lev) (hq : Dw.q = 0) (hF : FnAlgClosed (Xo := Xo) (c := c)) (g : G) (Z : Comp Xo c) :
     ∃ Z' : Comp Xo c, ∀ (S : Type) [CommRing S] [Algebra c.F S] (y y' : FrPt Xo c S), levR (lev g) y y' →
       (LiesOn Z y' ↔ LiesOn Z' y) := by
   obtain ⟨y₀, h₀, h₁⟩ := GlobalTheory.FlatLine.DefinitePoint.main _ H Dw l Xo c hq hF Z
@@ -103,7 +103,7 @@ theorem exists_comp (hL : ActLev (Xo := Xo) c lev) (hq : Dw.q = 0) (hF : FnAlgCl
     rw [e₁, h₄ S y h, ← e₃, Category.assoc, ← e₂, h3]
     rfl
 
-theorem exists_mulAction (hL : ActLev (Xo := Xo) c lev) (hq : Dw.q = 0) (hF : FnAlgClosed Xo c) :
+theorem exists_mulAction (hL : ActLev (Xo := Xo) c lev) (hq : Dw.q = 0) (hF : FnAlgClosed (Xo := Xo) (c := c)) :
     ∃ _ : MulAction G (Comp Xo c), ∀ (g : G) (Z : Comp Xo c) (S : Type) [CommRing S] [Algebra c.F S]
       (y y' : FrPt Xo c S), levR (lev g) y y' → (LiesOn Z y' ↔ LiesOn (g • Z) y) := by
   choose m hm using exists_comp hL hq hF
