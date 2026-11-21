@@ -83,7 +83,13 @@ theorem mem_idlAlong_map_of_flat : ∀ {X Y' : Scheme.{0}} (ρ : Y' ⟶ X) [Quas
     (show ξ (closedPoint R) ∈ (⊤ : X.Opens) from trivial)
   let U : X.affineOpens := ⟨U₀, hU⟩
   have hle : ⊤ ≤ ξ ⁻¹ᵁ (U : X.Opens) := (Scheme.preimage_eq_top_of_closedPoint_mem ξ hx).ge
-  rw [TraitOrder.idlAlong_eq_map (I.map ρ) ξ U hle]
+  have he : idlAlong (I.map ρ) ξ = ((I.map ρ).ideal U).map
+      (ξ.appLE U ⊤ hle ≫ (Scheme.ΓSpecIso (.of R)).hom).hom := by
+    unfold idlAlong
+    rw [ds_stalkId_eq_map (I.map ρ) U _ hx, Ideal.map_map,
+      ← CommRingCat.hom_comp, Scheme.germ_stalkClosedPointTo]
+    congr 2
+  rw [he]
   have hc : IsCompact ((ρ ⁻¹ᵁ (U : X.Opens) : Y'.Opens) : Set Y') :=
     QuasiCompact.isCompact_preimage (f := ρ) _ U.1.isOpen U.2.isCompact
   obtain ⟨Us, hUs, hfin, heq⟩ := Y'.isBasis_affineOpens.exists_finite_of_isCompact hc

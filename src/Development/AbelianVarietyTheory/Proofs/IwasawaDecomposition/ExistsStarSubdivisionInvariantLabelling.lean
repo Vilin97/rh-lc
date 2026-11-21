@@ -67,7 +67,7 @@ theorem exists_isTwInv_simpLab_star : ∀ (E : Type) [Field E] [NumberField E] [
     have hself : ∀ j, InRCone (Fin.cons β₀ fun j => δ (s' j) : Fin (m₂ + 1) → LinearMap.BilinForm ℤ X) (δ (s' j)) :=
       fun j => by simpa using inRCone_self (Fin.cons β₀ fun j => δ (s' j) : Fin (m₂ + 1) → LinearMap.BilinForm ℤ X) j.succ
     refine ⟨m₂ + 1, Fin.cons β₀ fun j => δ (s' j), hcell', ?_, ?_, fun j => ?_⟩
-    · refine LinearIndependent.fin_cons' β₀ _ (hli.comp _ s'.injective) fun c y hy hz => ?_
+    · refine LinearIndependent.finCons' β₀ _ (hli.comp _ s'.injective) fun c y hy hz => ?_
       have h1 : g y = 0 := LinearMap.mem_ker.1 (hsp hy)
       have h2 := congrArg g hz
       rw [map_add (f := _), map_smul, h1, add_zero, map_zero, smul_eq_mul] at h2

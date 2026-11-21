@@ -59,7 +59,8 @@ theorem nonempty_equiv_contra_ofChar {χ : G →* ℂˣ} (hχ : IsSmoothChar χ)
     Nonempty ((ofChar χ⁻¹).Equiv (contra (ofChar χ))) := by
   have key : ∀ (c : ℂ) g, (ofChar χ).dual g (c • LinearMap.id) = ((χ g)⁻¹ * c : ℂ) • LinearMap.id := fun c g =>
     LinearMap.ext fun v => by
-      show c • ofChar χ g⁻¹ v = _
+      show c • ofChar χ (g⁻¹ : G) v = _
+      rw [ofChar_apply]
       simp [mul_left_comm, mul_assoc]
   let f : (ofChar χ⁻¹).IntertwiningMap (contra (ofChar χ)) :=
     { toFun := fun c => ⟨c • LinearMap.id, mem_smoothPart_of_nhds (Filter.mem_of_superset (hχ.mem_nhds (one_mem _))
@@ -83,7 +84,7 @@ theorem isCosocle_of_contra [T2Space G]
   let l : π.IntertwiningMap (ofChar χ) := ⟨(Φ (f 1)).1, fun g => LinearMap.ext fun v => by
     have h1 := congrArg (fun y => (Φ y).1 v) (f.isIntertwining _ _ g⁻¹ 1)
     have h2 := congrArg (fun y => y.1 v) (Φ.toIntertwiningMap.isIntertwining _ _ g⁻¹ (f 1))
-    have h3 : ofChar χ⁻¹ g⁻¹ 1 = (χ g : ℂ) • (1 : ℂ) := by simp
+    have h3 : ofChar χ⁻¹ (g⁻¹ : G) 1 = (χ g : ℂ) • (1 : ℂ) := by rw [ofChar_apply]; simp
     simp only [h3, map_smul] at h1
     rw [contra_apply, inv_inv] at h2
     exact h2.symm.trans h1.symm⟩
@@ -295,7 +296,20 @@ omit [DecidableEq k] in
 theorem law_detLevi (η : kˣ →* ℂˣ) (p : parab k pts) (c : ℂ) :
     twist (ofChar (detLevi pts η)) (deltaHalf k _) (leviProj k pts p) c = (detChar (Fin 2) η p : ℂ) * c := by
   have : GeneralLinearGroup.det (leviEmb k pts (leviProj k pts p)) =
-      GeneralLinearGroup.det (p : GL (Fin 2) k) := by rw [det_leviEmb, det_parab]
+      GeneralLinearGroup.det (p : GL (Fin 2) k) := by
+    classical
+    let g := leviProj k pts p
+    have hm : leviEmb k pts g ∈ parab k pts := by
+      apply mem_parab_iff.2
+      intro a b i j hab
+      simp [leviEmb, Matrix.blockDiagonal'_apply_ne, hab.ne']
+    have hp : leviProj k pts ⟨leviEmb k pts g, hm⟩ = g := by
+      funext a
+      ext i j
+      simp [leviProj, diagBlock, leviEmb, Matrix.blockDiagonal'_apply_eq]
+    have h := det_parab k pts ⟨leviEmb k pts g, hm⟩
+    rw [hp] at h
+    exact h.trans (det_parab k pts p).symm
   simp [detLevi, this, mul_assoc, mul_left_comm (deltaHalf k _ (leviProj k pts p) : ℂ)]
 
 theorem nonempty_equiv_parInd {η : kˣ →* ℂˣ} (hη : IsSmoothChar η) :
@@ -361,7 +375,7 @@ theorem exists_line {η : kˣ →* ℂˣ} (hη : IsSmoothChar η) :
     have h2 := h ∞
     have h3 := h (0 : k)
     have h4 := h (1 : k)
-    simp [ballFn_coe, h1] at h2 h3 h4
+    simp [ballFn, ballFn_coe, h1] at h2 h3 h4
     exact ⟨h3.symm.trans h2, h4.symm.trans h2⟩
   refine ⟨_, _, _, _, f, nonempty_equiv_parInd hη, fun c d h => congrArg (fun F => F.1 ∞) h, fun h => ?_,
     fun S => (const_or_eq_top (subrepTwist _ _ S)).imp
@@ -387,8 +401,10 @@ theorem exists_equiv_prodIrr {θ : Fin 2 → kˣ →* ℂˣ} (hθ : ∀ a, IsSmo
     induction y using PiTensorProduct.induction_on with
     | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
     | smul_tprod c x =>
-      rw [map_smul, smul_comm, piTensor_tprod, hΘ, Units.coe_prod, ← MultilinearMap.map_smul_univ]
-      simp [detRep]
+      rw [map_smul, smul_comm, piTensor_tprod, hΘ, Units.coe_prod]
+      simp only [detRep, ofChar_apply, ← smul_eq_mul]
+      rw [MultilinearMap.map_smul_univ]
+      simp [detChar]
   let φ : (ofChar Θ).Equiv (piTensor fun a => detRep (Fin 1) (θ a)) :=
     .mk (PiTensorProduct.constantBaseRingEquiv (Fin 2) ℂ).toLinearEquiv.symm fun g => LinearMap.ext fun c => by
       simp only [LinearMap.comp_apply]
@@ -425,6 +441,7 @@ theorem isCosocle_detRep_two {η : kˣ →* ℂˣ} (hη : IsSmoothChar η) :
 theorem isL_detRep_two (hχ : IsSmoothChar χ) :
     IsL ({Segment.single _ (IrrGL.isCusp_ofChar χ hχ)} + {Segment.single _ ((IrrGL.isCusp_ofChar χ hχ).nu 1)})
       (detRep (Fin 2) (χ * absPow k (1 / 2))) := by
+  classical
   obtain ⟨hd, ⟨ψ⟩⟩ := exists_equiv_prodIrr (θ := ![χ * absPow k 1, χ])
     (Fin.forall_fin_two.2 ⟨hχ.mul (isSmoothChar_absPow _), hχ⟩)
     (x := ![(IrrGL.ofChar χ hχ).nu 1, IrrGL.ofChar χ hχ])

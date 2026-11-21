@@ -21,7 +21,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)}
 
 def iotaW (hw : Formalism.UG.IsInertAt F E v w) : w.adicCompletion E →+ _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) :=
-  (GlobalTheory.InertLocField.liftT E v).toAddMonoidHom.comp
+  (GlobalTheory.InertLocField.liftT (E := E) v).toAddMonoidHom.comp
     (InertChart.complEquiv hw (under_eq_of_isInertAt hw)).symm.toRingHom.toAddMonoidHom
 
 def conjW (σ : E →ₐ[F] E) (hw : Formalism.UG.IsInertAt F E v w) : w.adicCompletion E →+* w.adicCompletion E :=

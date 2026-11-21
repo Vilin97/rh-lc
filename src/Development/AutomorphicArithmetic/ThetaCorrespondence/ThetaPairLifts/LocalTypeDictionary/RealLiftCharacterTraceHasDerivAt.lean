@@ -24,7 +24,7 @@ theorem deriv_characterTrace_realLift : _root_.GlobalTheory.FunPr.ThetaLocalInpu
         ν (g * h) = ν g * ν h) →
       ContinuousOn ν {g : UG (cA σ) J | At (evI F) ((g.1 : Matrix β β (AE F E)) - 1)} →
       (∀ g : UG (cA σ) J, At (evI F) ((g.1 : Matrix β β (AE F E)) - 1) → ν g ≠ 0) →
-      ∃ k : InfinitePlace F → ℂ, ∀ γ ∈ RLines σ J, ∀ Y, IsGen τ C γ Y →
+      ∃ k : InfinitePlace F → ℂ, ∀ γ ∈ RLines (σ := σ) J, ∀ Y, IsGen τ C γ Y →
         HasDerivAt (fun t : ℝ => ν (γ (Multiplicative.ofAdd t))) (∑ w, k w * (Y w).trace) 0 := by
   intro _ F E _ _ _ _ _ σ β _ _ R S τ J b C hCM hC ν hmul hcont hne
   have := hCM.1
@@ -191,7 +191,7 @@ theorem _root_.GlobalTheory.T.realLift_characterTrace_hasDerivAt : _root_.Global
         ν (g * h) = ν g * ν h) →
       ContinuousOn ν {g : UG (cA σ) J | At (evI F) ((g.1 : Matrix β β (AE F E)) - 1)} →
       (∀ g : UG (cA σ) J, At (evI F) ((g.1 : Matrix β β (AE F E)) - 1) → ν g ≠ 0) →
-      ∃ k : InfinitePlace F → ℂ, ∀ γ ∈ RLines σ J, ∀ Y, IsGen τ C γ Y →
+      ∃ k : InfinitePlace F → ℂ, ∀ γ ∈ RLines (σ := σ) J, ∀ Y, IsGen τ C γ Y →
         HasDerivAt (fun t : ℝ => ν (γ (Multiplicative.ofAdd t))) (∑ w, k w * (Y w).trace) 0 := by
   first | exact @_root_.GlobalTheory.RealLift.CharTrace.deriv_characterTrace_realLift | exact _root_.GlobalTheory.RealLift.CharTrace.deriv_characterTrace_realLift | (intros; apply _root_.GlobalTheory.RealLift.CharTrace.deriv_characterTrace_realLift <;> assumption)
 end

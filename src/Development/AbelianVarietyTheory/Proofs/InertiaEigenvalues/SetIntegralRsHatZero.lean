@@ -52,6 +52,7 @@ theorem setIntegral_mul_right {μ : Measure (GA E a)} [μ.IsHaarMeasure] {𝓕 :
     h𝓕.preimage_of_equiv (measurePreserving_mul_right μ h⁻¹).quasiMeasurePreserving (e := id)
       Function.bijective_id (fun γ x => by simp [Subgroup.smul_def, mul_assoc])
   haveI : DiscreteTopology (latticeGL E a) := GlobalTheory.CuspRep.CuspidalL2GL.discreteTopology_latticeGL
+  haveI : SecondCountableTopology (GA E a) := GlobalTheory.CuspRep.CuspidalL2GL.secondCountableTopology_GA E a
   have hI : GlobalTheory.AutomorphicL2Unitary.LeftInv (latticeGL E a) f := hf
   have A := (GlobalTheory.AutomorphicL2Unitary.integral_quotMeasure h2 (GlobalTheory.AutomorphicL2Unitary.descend (latticeGL E a) f)).trans
     (integral_congr_ae (Eventually.of_forall hI.descend_mk))

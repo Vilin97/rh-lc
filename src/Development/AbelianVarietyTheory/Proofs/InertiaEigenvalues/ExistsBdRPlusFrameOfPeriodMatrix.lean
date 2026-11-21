@@ -57,7 +57,7 @@ theorem fil_sum {ι : Type} (s : Finset ι) {a : ℤ} (f : ι → P.R.BdR) (h : 
   Submodule.sum_mem ((P.PD (botExt l)).Fil a) h
 
 theorem fil_anti {a b : ℤ} (hab : a ≤ b) {x : P.R.BdR} (hx : x ∈ Fil P b) : x ∈ Fil P a := by
-  induction b, hab using Int.le_induction with
+  induction b, hab using Int.leInduction with
   | base => exact hx
   | succ c _ ih => exact ih ((P.PD (botExt l)).Fil_anti c hx)
 

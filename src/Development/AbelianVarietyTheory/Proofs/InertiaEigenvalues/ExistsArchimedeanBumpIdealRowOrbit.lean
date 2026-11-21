@@ -100,7 +100,8 @@ theorem exists_nat_rowGL_mem {a : ℕ} (ℓ : Fin a) {U : Subgroup (GL (Fin a) (
     ∃ N : ℕ, ∀ y : Fin a → w.adicCompletion E,
       (∀ j, Valued.v (y j - (Pi.single ℓ 1 : Fin a → w.adicCompletion E) j) ≤ WithZero.exp (-(N:ℤ))) →
       locGL E a w (rowGL ℓ y) ∈ U ∧ rowGL ℓ y ∈ KGL w (n := a) := by
-  apply exists_nat_of_mem_nhds
+  refine exists_nat_of_mem_nhds ℓ w (V := {y | locGL E a w (rowGL ℓ y) ∈ U ∧
+    rowGL ℓ y ∈ KGL w (n := a)}) ?_
   have ho : IsOpen ((locGL E a w) ⁻¹' (U : Set (GL (Fin a) (Af E))) ∩
       (KGL w (n := a) : Set (GL (Fin a) (w.adicCompletion E)))) :=
     (hU.preimage (GlobalTheory.CuspRep.CuspSub.continuous_locGL w)).inter

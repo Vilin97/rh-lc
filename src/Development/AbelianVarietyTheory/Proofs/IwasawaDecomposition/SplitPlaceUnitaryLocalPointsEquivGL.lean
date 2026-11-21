@@ -76,7 +76,7 @@ theorem eq_one_of_cLoc {w : HeightOneSpectrum (𝓞 E)} (hw : IsSplitAt w) (z : 
     have := congrArg (fun g : GL (Fin n) (u.adicCompletion E) => g.val i j) (hall u)
     simp only [Units.val_one, Matrix.one_apply] at this
     refine this.trans ?_
-    split_ifs with hij <;> simp [hij]
+    split_ifs with hij <;> simp [hij] <;> rfl
 
 def psi (w : HeightOneSpectrum (𝓞 E)) : w.adicCompletion E →+* (conjSrc (conjE E) w).adicCompletion E :=
   (GlobalTheory.Mem.Chr.exists_finCompl_map (conjE E) (conjPl_self_conjSrc w)).choose

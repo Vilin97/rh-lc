@@ -176,8 +176,8 @@ theorem sumPl_add (Φ : Tens F P Q R S →ₗ[ℂ] SInf F κ) (L : InfinitePlace
   simp only [sumPl, atL_eq, map_add (f := _), map_smul, atL_one, Finset.sum_add_distrib, ← Finset.sum_smul, LinearMap.add_apply,
     LinearMap.smul_apply, Module.End.one_apply]
 
-theorem exists_dbl {γ γ' : Multiplicative ℝ →* UG (cA σ) JB} (h : γ ∈ RLines σ JB) (h' : γ' ∈ RLines σ JB) :
-    ∃ δ ∈ RLines σ (dbl JB), ∀ t, ((δ t).1 : Matrix (β ⊕ β) (β ⊕ β) (AE F E)) =
+theorem exists_dbl {γ γ' : Multiplicative ℝ →* UG (cA σ) JB} (h : γ ∈ RLines (σ := σ) JB) (h' : γ' ∈ RLines (σ := σ) JB) :
+    ∃ δ ∈ RLines (σ := σ) (dbl JB), ∀ t, ((δ t).1 : Matrix (β ⊕ β) (β ⊕ β) (AE F E)) =
       Matrix.fromBlocks ((γ t).1 : Matrix β β (AE F E)) 0 0 ((γ' t).1 : Matrix β β (AE F E)) := by
   let φ : Matrix β β (AE F E) × Matrix β β (AE F E) →* Matrix (β ⊕ β) (β ⊕ β) (AE F E) :=
     { toFun := fun X => Matrix.fromBlocks X.1 0 0 X.2

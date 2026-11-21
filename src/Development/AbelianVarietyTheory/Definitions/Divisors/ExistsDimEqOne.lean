@@ -79,8 +79,8 @@ instance : Category (AbVar K) where
 
 instance : Preadditive (AbVar K) where
   homGroup A B := inferInstanceAs (AddCommGroup (Additive (homSub A B)))
-  add_comp _ _ _ f f' g := hom_ext (MonObj.mul_comp f.hom f'.hom g.hom)
-  comp_add _ _ _ f g g' := hom_ext (MonObj.comp_mul f.hom g.hom g'.hom)
+  add_comp _ _ _ f f' g := Subtype.ext (MonObj.mul_comp f.hom f'.hom g.hom)
+  comp_add _ _ _ f g g' := Subtype.ext (MonObj.comp_mul f.hom g.hom g'.hom)
 
 @[simp] theorem add_hom {A B : AbVar K} (f g : A ⟶ B) : Hom.hom (f + g) = f.hom * g.hom := rfl
 

@@ -34,8 +34,8 @@ theorem jumps_finite : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (l 
   refine (Set.finite_iUnion fun τ => ?_).subset hsub
   obtain ⟨i, ζ, hpt⟩ := hP.2.2.1 τ
   obtain ⟨-, hemb, ι, hcomp⟩ := hP.2.1 i ζ τ hpt
-  have hC := GlobalTheory.NL.CompD.component D HW l K s LL h T hcrys i ζ τ ι hcomp hemb
-  have hrank := hC.2.2.2
+  have hrank := (GlobalTheory.Per.LetterDim.tied_letter_component_finrank l _ _
+    (D.locT l) K LL T.V T.ρ).1 hP.2.2.2.2 hcrys (((HW l).W K s LL h).emb i)
   set Dm := Di (HW l) h T i with hDm
   have hDfin : FiniteDimensional ↥LL.1 ↥Dm := by
     rcases Nat.eq_zero_or_pos (Module.finrank ↥LL.1 T.V) with h0 | hpos

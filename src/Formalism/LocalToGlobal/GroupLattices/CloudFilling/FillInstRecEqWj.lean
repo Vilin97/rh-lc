@@ -107,18 +107,18 @@ def levTieG (u : D.what₂.Word) (w : D.what₂.places.Pl) (h : GIdx D.host (D.m
 
 theorem std_of_fills {p : ℕ} (G : GAtP p) (Fl : Fills G) (v : Fin G.P.nV) (hr : 1 ≤ G.P.r) (h2r : 2 * G.P.r ≤ G.P.m + 1)
     (hm : 1 ≤ Fl.mm) :
-    Formalism.MainNotions.FormalGroupSystem.Std p (G.P.n' v) G.P.m Fl.t Fl.mm Fl.c G.P.r (Fl.TT v) (Fl.a v) (Fl.b v) (G.P.lam0 v) (Fl.w v) where
-  prime := (G.P.setting v).prime
-  five_le := (G.P.setting v).five_le
-  two_le := (G.P.setting v).two_le
-  even := (G.P.setting v).even
-  r_pos := hr
-  two_r := h2r
-  m_pos := hm
-  base := Fl.base v
-  dom := G.P.dom v
-  w_low := fun s => ⟨le_trans (le_max_left _ _) (Fl.w_ge v s), le_trans (le_max_right _ _) (Fl.w_ge v s)⟩
-  w_mono := fun s l h1 _ => Fl.w_mono v s l h1
+    Formalism.MainNotions.FormalGroupSystem.Std p (G.P.n' v) G.P.m Fl.t Fl.mm Fl.c G.P.r (Fl.TT v) (Fl.a v) (Fl.b v) (G.P.lam0 v) (Fl.w v) :=
+  { prime := (G.P.setting v).prime
+    five_le := (G.P.setting v).five_le
+    two_le := (G.P.setting v).two_le
+    even := (G.P.setting v).even
+    r_pos := hr
+    two_r := h2r
+    m_pos := hm
+    base := Fl.base v
+    dom := G.P.dom v
+    w_low := fun s => ⟨le_trans (le_max_left _ _) (Fl.w_ge v s), le_trans (le_max_right _ _) (Fl.w_ge v s)⟩
+    w_mono := fun s l h1 _ => Fl.w_mono v s l h1 }
 
 theorem one_le_rSc (k p : ℕ) : 1 ≤ rSc sc k p := by
   unfold rSc rG

@@ -25,7 +25,7 @@ theorem eval_charpolyRev_eq {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) (z : ℂ)
 theorem coeff_charpolyRev_map {n : ℕ} {R : Type} [CommRing R] (f : R →+* ℂ) (M : Matrix (Fin n) (Fin n) R) (k : ℕ) :
     f (M.charpolyRev.coeff k) = (M.map f).charpolyRev.coeff k := by
   rw [← Polynomial.coeff_map]
-  congr 1
+  apply congrArg (fun p : ℂ[X] => p.coeff k)
   rw [Matrix.charpolyRev, Matrix.charpolyRev, ← coe_mapRingHom, RingHom.map_det]
   congr 1
   ext a b : 1

@@ -254,7 +254,7 @@ theorem side_wlie (x t : InfinitePlace F → ℚ) (hp : ∀ w, IsLift (x w) (t w
     (hct : ∀ w, c w = (t w : ℂ) + c' w) (hΨ : Ψ ∘ₗ Φ = LinearMap.id) (hrange : LinearMap.range Φ = M.Pol B.ψ B.emb)
     (C : InfinitePlace F → Matrix (Fin d) (Ix R S) ℂ)
     (hact : ActsBy B.emb C (om.comp (MonoidHom.inr _ _)) Φ (fockAct2 P Q R S) c)
-    (γ : Multiplicative ℝ →* UG (cA σ) (incM F W.J)) (hγ : γ ∈ RLines σ (incM F W.J)) (Yg : InfinitePlace F → Mat R S)
+    (γ : Multiplicative ℝ →* UG (cA σ) (incM F W.J)) (hγ : γ ∈ RLines (σ := σ) (incM F W.J)) (Yg : InfinitePlace F → Mat R S)
     (hY : IsGen B.emb C γ Yg) {f f₁ : SInf F (Fin n × Fin d)} (hf : f ∈ M.Pol B.ψ B.emb)
     (hf₁ : ActsD (evI F) (fun t => om (1, γ (Multiplicative.ofAdd t))) f f₁) :
     (PiTensorProduct.map p ∘ₗ Ψ) f₁ =
@@ -273,7 +273,7 @@ theorem side_wcpt (x t : InfinitePlace F → ℚ) (hp : ∀ w, IsLift (x w) (t w
     (C : InfinitePlace F → Matrix (Fin d) (Ix R S) ℂ)
     (hact : ActsBy B.emb C (om.comp (MonoidHom.inr _ _)) Φ (fockAct2 P Q R S) c)
     (hadm : ∀ g, ∀ l ∈ (adeleClass F).adm (Fin n × Fin d), l ∘ₗ om g ∈ (adeleClass F).adm (Fin n × Fin d))
-    (γ : Multiplicative ℝ →* UG (cA σ) (incM F W.J)) (hγ : γ ∈ RLines σ (incM F W.J)) (Yg : InfinitePlace F → Mat R S)
+    (γ : Multiplicative ℝ →* UG (cA σ) (incM F W.J)) (hγ : γ ∈ RLines (σ := σ) (incM F W.J)) (Yg : InfinitePlace F → Mat R S)
     (hY : IsGen B.emb C γ Yg) (hKC : ∀ w, IsKC (Yg w)) {k : UA σ W.J} (hγ1 : γ (Multiplicative.ofAdd 1) = k)
     {f f₁ : SInf F (Fin n × Fin d)} (hf : f ∈ M.Pol B.ψ B.emb) (hf₁ : Acts (evI F) (om (1, k)) f f₁) :
     ∃ (T : Tens F P Q R S) (L U : Module.End ℂ (Tens F P Q R S)), (PiTensorProduct.map p ∘ₗ Ψ) f = PiTensorProduct.map p T ∧

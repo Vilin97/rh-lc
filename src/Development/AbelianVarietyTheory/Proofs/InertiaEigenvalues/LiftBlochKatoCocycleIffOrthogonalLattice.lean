@@ -294,18 +294,22 @@ theorem lift_iff_orthogonal : ∀ (D : Formalism.BasicNotions.D7) (N : NData D.R
   refine lift_iff (PDv bkP i v hv) Bw.e Bw.e_cont Bw.e_symm_cont hG
     (h.2.2.2.2.2.1 (X.l i) Bw.Kw).2.2 (repV bkP i v hv (Tgl i s)) (repV bkP i v hv ρ)
     (fun g => Tmat i s g.1) (fun g => Tdual i s g.1) (fun g => ((eps0 X i g.1 : (X.O0 i)ˣ) : X.O0 i))
-    (fun g x => ?_) (fun g x => ?_) (GlobalTheory.BKDimNoInv.rep_continuous Bw _ ?_) (GlobalTheory.BKDimNoInv.rep_continuous Bw _ ?_)
+    (fun g x => ?_) (fun g x => ?_) (fun x => ?_) (fun x => ?_)
     (fun g => ?_) (fun g => ?_) ?_ ϖ hϖ y hy hyc
-  · rw [GlobalTheory.BKDimNoInv.rep_apply, MulEquiv.symm_apply_apply, ← Tgl_coe]
+  · change (((Tgl i s (Bw.e.symm (Bw.e g)) : GL (Fin D.R.r) (X.O0 i)) : Matrix (Fin D.R.r) (Fin D.R.r) (X.O0 i)).map Bw.toLL).mulVec x = _
+    rw [MulEquiv.symm_apply_apply, ← Tgl_coe]
     rfl
-  · rw [GlobalTheory.BKDimNoInv.rep_apply, MulEquiv.symm_apply_apply, ← hρ]
+  · change (((ρ (Bw.e.symm (Bw.e g)) : GL (Fin D.R.r) (X.O0 i)) : Matrix (Fin D.R.r) (Fin D.R.r) (X.O0 i)).map Bw.toLL).mulVec x = _
+    rw [MulEquiv.symm_apply_apply, ← hρ]
     rfl
-  · change Continuous fun g : ↥(DecV N v) => ((Tgl i s g.1 : GL (Fin D.R.r) (X.O0 i)) : Matrix (Fin D.R.r) (Fin D.R.r) (X.O0 i))
-    simp_rw [Tgl_coe]
-    exact (GlobalTheory.PrimeToInertia.continuous_Tmat i s).comp continuous_subtype_val
-  · change Continuous fun g : ↥(DecV N v) => ((ρ g.1 : GL (Fin D.R.r) (X.O0 i)) : Matrix (Fin D.R.r) (Fin D.R.r) (X.O0 i))
-    simp_rw [hρ _]
-    exact (GlobalTheory.PrimeToInertia.continuous_Tdual i s).comp continuous_subtype_val
+  · have hr : Continuous (fun g : ↥(DecV N v) => ((Tgl i s g.1 : GL (Fin D.R.r) (X.O0 i)) : Matrix (Fin D.R.r) (Fin D.R.r) (X.O0 i))) := by
+      simp_rw [Tgl_coe]
+      exact (GlobalTheory.PrimeToInertia.continuous_Tmat i s).comp continuous_subtype_val
+    exact ((hr.comp Bw.e_symm_cont).matrix_map (continuous_subtype_val.comp Bw.eO_cont)).matrix_mulVec continuous_const
+  · have hr : Continuous (fun g : ↥(DecV N v) => ((ρ g.1 : GL (Fin D.R.r) (X.O0 i)) : Matrix (Fin D.R.r) (Fin D.R.r) (X.O0 i))) := by
+      simp_rw [hρ _]
+      exact (GlobalTheory.PrimeToInertia.continuous_Tdual i s).comp continuous_subtype_val
+    exact ((hr.comp Bw.e_symm_cont).matrix_map (continuous_subtype_val.comp Bw.eO_cont)).matrix_mulVec continuous_const
   · have h1 := (D.loc (X.l i)).PD_χ Bw.Kw (Bw.e g)
     have h2 := GlobalTheory.Survey.CrystallineCharacterRatio.chi_eq_cyc (D.loc (X.l i)) Bw.j g.1 (Bw.e g : Loc.GQ (X.l i)) (Bw.e_comm g)
     change algebraMap ↥(Loc.OL Bw.LL) ↥Bw.LL.1 (Bw.eO (algebraMap ℤ_[X.l i] (X.O0 i) _)) =

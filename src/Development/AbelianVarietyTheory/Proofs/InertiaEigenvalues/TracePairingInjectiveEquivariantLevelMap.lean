@@ -122,7 +122,7 @@ theorem tracePairingLevelDual_apply (y : ↥LA'.T) (x : ↥LA.T) :
 theorem tracePairingLevelDual_ext {φ φ' : TDual (ZMod (l ^ r)) M}
     (h : ∀ x : ↥LA.T, φ (e (Submodule.Quotient.mk x)) = φ' (e (Submodule.Quotient.mk x))) :
     φ = φ' := by
-  apply TDual.ext
+  apply LinearMap.ext
   intro z
   obtain ⟨q, rfl⟩ := e.surjective z
   obtain ⟨x, rfl⟩ := Submodule.Quotient.mk_surjective _ q

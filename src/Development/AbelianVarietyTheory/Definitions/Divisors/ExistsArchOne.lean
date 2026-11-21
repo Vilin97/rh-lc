@@ -100,7 +100,7 @@ section Point
 open Formalism.BasicNotions Formalism.MainNotions Formalism.L2.DIV Formalism.IndefR Formalism.IndefR.Links GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.CovTop
 
 variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts}
-  {Y : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y cX} {Csz : ℝ} (p : PtAt ex Csz) (i : Fin D.R.m)
+  {Y : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y cX} {Csz : ℝ} (p : _root_.GlobalTheory.BigTop.PtAt ex Csz) (i : Fin D.R.m)
 
 def HalfUnip (H : Subgroup p.P.Gp) : Prop :=
   ∃ k : Fin 2, ∀ g ∈ H, ∀ v : D.nd.PlG k,
@@ -116,11 +116,12 @@ def ModelAt (T : ℕ) : Prop :=
     ((M.p0 = 0 ∨ M.p0 = D.R.r) ∨ (0 < M.p0 ∧ M.p0 < D.R.r ∧ ArchOn M ka T))
 
 def ShareW (y : ℝ) : Prop :=
-  (1 - y) * (p.R.toRealDat.nW i : ℝ) ≤ (Nat.card p.P.P0 : ℝ) * finrank D.what₂.LL (spType p.R.toRealDat p.F.lv2 i)
+  (1 - y) * (p.R.toRealDat.nW i : ℝ) ≤ (Nat.card p.P.P0 : ℝ) * finrank D.what₂.LL (_root_.GlobalTheory.CovTop.spType p.R.toRealDat p.F.lv2 i)
 
 def BadW (del : ℝ) : Prop :=
-  (finrank D.what₂.LL (spType p.R.toRealDat p.F.lv2 i ⊓ LinearMap.ker (eGood p.R.toRealDat i) : Submodule D.what₂.LL _) : ℝ) ≤
-    del * finrank D.what₂.LL (spType p.R.toRealDat p.F.lv2 i)
+  (finrank D.what₂.LL (_root_.GlobalTheory.CovTop.spType p.R.toRealDat p.F.lv2 i ⊓
+    LinearMap.ker (_root_.GlobalTheory.CovTop.eGood p.R.toRealDat i) : Submodule D.what₂.LL _) : ℝ) ≤
+    del * finrank D.what₂.LL (_root_.GlobalTheory.CovTop.spType p.R.toRealDat p.F.lv2 i)
 
 end Point
 

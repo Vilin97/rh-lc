@@ -254,7 +254,7 @@ theorem algebraMap_eq_diag {β : Type} [Fintype β] [DecidableEq β] (x : AE F E
 theorem exists_central_line : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (β : Type)
     [Fintype β] [DecidableEq β] (R S : ℕ) (τ : ∀ w : InfinitePlace F, EmbOver E w) (J : Matrix β β (AE F E))
     (C : InfinitePlace F → Matrix β (Ix R S) ℂ) (w₀ : InfinitePlace F), IsCMExt F E σ →
-    ∃ z : ℝ → (AE F E)ˣ, ∃ γ ∈ RLines σ J,
+    ∃ z : ℝ → (AE F E)ˣ, ∃ γ ∈ RLines (σ := σ) J,
       IsGen τ C γ (fun w => if w = w₀ then Complex.I • (1 : Mat R S) else 0) ∧
       (∀ t : ℝ, ((γ (Multiplicative.ofAdd t)).1 : Matrix β β (AE F E)) = (z t : AE F E) • (1 : Matrix β β (AE F E))) ∧
       (∀ t : ℝ, At (evI F) ((z t : AE F E) - 1)) ∧

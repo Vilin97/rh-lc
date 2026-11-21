@@ -51,12 +51,12 @@ theorem fockSubst_mul (p : D.what₂.Tau → ℕ) (u u' : GLR D n) :
   refine MvPolynomial.algHom_ext fun v => ?_
   rw [AlgHom.comp_apply, fockSubst, fockSubst, fockSubst, aeval_X, aeval_X]
   split_ifs with h
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [map_sum, map_mul, aeval_C, aeval_X, if_pos h, Pi.mul_apply, _root_.mul_inv_rev, Units.val_mul,
+  · set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, aeval_C, aeval_X, ite_eq_left h, Pi.mul_apply, _root_.mul_inv_rev, Units.val_mul,
       Matrix.mul_apply, algebraMap_eq, Finset.mul_sum, Finset.sum_mul, mul_assoc]
     exact Finset.sum_comm
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [map_sum, map_mul, aeval_C, aeval_X, if_neg h, Pi.mul_apply, Units.val_mul,
+  · set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, aeval_C, aeval_X, ite_eq_right h, Pi.mul_apply, Units.val_mul,
       Matrix.mul_apply, algebraMap_eq, Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
@@ -243,12 +243,12 @@ def Weight.first (D : D7) (n : ℕ) (p q : D.what₂.Tau → ℕ) (c : D.what₂
     split_ifs <;> omega⟩
 
 theorem Weight.first_good {p q : D.what₂.Tau → ℕ} (c : D.what₂.Tau → ℤ) (hp : ∀ τ, 0 < p τ) (h : ∀ τ, p τ + q τ ≤ n) :
-    (Weight.first D n p q c).Good where
-  le := h
-  lam_eq τ i := by
-    have := hp τ
-    simp only [Weight.first]
-    split_ifs <;> first | omega | simp
+    (Weight.first D n p q c).Good := by
+  refine ⟨h, ?_⟩
+  intro τ i
+  have := hp τ
+  simp only [Weight.first]
+  split_ifs <;> omega
 
 end GlobalTheory.ExportSeries
 

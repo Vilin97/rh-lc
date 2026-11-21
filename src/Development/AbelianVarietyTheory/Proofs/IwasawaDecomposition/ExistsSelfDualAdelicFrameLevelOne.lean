@@ -109,7 +109,7 @@ theorem mem_integral_adelic_lattice_iff (z : RA F E) :
       have := mul_mem h1 h2
       rwa [Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one] at this
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact neg_mem hx
   · intro hz
     have key : ∀ t ∈ Formalism.L2.Herm.intAf F E, (Algebra.TensorProduct.comm F _ E).symm t ∈
@@ -122,7 +122,7 @@ theorem mem_integral_adelic_lattice_iff (z : RA F E) :
         · exact tmul_mem_adelicCompletion_of_integral F b.2 (FractionalIdeal.one_mem_one _)
       | zero => rw [map_zero]; exact zero_mem _
       | one => rw [map_one]; exact one_tmul_mem_adelicCompletionOfElementSet F (FractionalIdeal.one_mem_one _)
-      | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+      | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
       | neg a _ ha => rw [map_neg]; exact neg_mem ha
       | mul a b _ _ ha hb =>
         rw [map_mul]
@@ -204,9 +204,39 @@ theorem exists_isSDFrame : ∀ (D : D7) (V : HSp D) (Λ : Submodule (𝓞 D.host
   have hl : Λ = GlobalTheory.Member.latC V := SetLike.coe_injective (hΛ.trans (GlobalTheory.Member.coe_selfDualLatticeInFrameCoordinates_eq V).symm)
   have hfg : Λ.FG := hl ▸ V.standardTuple_isLattice.fg.map _
   have hsp : Submodule.span D.host.E (Λ : Set (Fin V.rank → D.host.E)) = ⊤ := by
+    have hfull : Submodule.span D.host.E (V.L0 : Set V.V) = ⊤ := by
+      let W := Submodule.span D.host.E (V.L0 : Set V.V)
+      change W = ⊤
+      by_contra h
+      let e : V.V ≃ₗ⋆[D.host.E] V.V :=
+        (V.frame.equivFun.trans (starLinearEquiv D.host.E)).trans V.frame.equivFun.symm
+      let g : V.V →ₗ[D.host.E] Module.Dual D.host.E W :=
+        (LinearMap.domRestrict' W).comp (V.hT.comp e.toLinearMap)
+      have hdim : Module.finrank D.host.E (Module.Dual D.host.E W) < Module.finrank D.host.E V.V := by
+        rw [Subspace.dual_finrank_eq]
+        exact Submodule.finrank_lt h
+      obtain ⟨x, hx, hx₀⟩ :=
+        Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+      have hsmul (a : D.host.E) : a • e x ∈ V.L0 := by
+        rw [← V.baseLattice_isUnimodular]
+        rw [Formalism.HermitianLatticesTheory.dualBasic_mem_dual]
+        intro y hy
+        have hxy : V.hT (e x) y = 0 :=
+          congrArg (fun f : Module.Dual D.host.E W => f ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+        have hyx : V.hT y (e x) = 0 := by
+          rw [(V.herm.eq (e x) y).symm, hxy, map_zero]
+        simp [hyx]
+      let i : D.host.E →ₗ[𝓞 D.host.E] V.L0 :=
+        ((LinearMap.toSpanSingleton D.host.E _ (e x)).restrictScalars (𝓞 D.host.E)).codRestrict V.L0 hsmul
+      let : Module.Finite (𝓞 D.host.E) V.L0 := Module.Finite.iff_fg.mpr V.standardTuple_isLattice.fg
+      let : Module.Finite (𝓞 D.host.E) D.host.E := Module.Finite.of_injective i fun a b hab =>
+        smul_left_injective D.host.E (fun hzero => hx₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
+      exact RingOfIntegers.not_isField D.host.E
+        (isField_of_isIntegral_of_isField (R := 𝓞 D.host.E) (S := D.host.E)
+          (FaithfulSMul.algebraMap_injective _ _) (Field.toIsField _))
     have h1 : (Λ : Set (Fin V.rank → D.host.E)) = V.frame.equivFun.toLinearMap '' (V.L0 : Set V.V) := by
       rw [hl]; rfl
-    rw [h1, ← Submodule.map_span, V.standardTuple_isLattice.span_eq_top, Submodule.map_top, LinearEquiv.range]
+    rw [h1, ← Submodule.map_span, hfull, Submodule.map_top, LinearEquiv.range]
   obtain ⟨β, hβ⟩ := exists_isFrame D.host.F Λ hfg hsp
   refine ⟨β, 0, hβ, hd, one_pos, fun x hx => ?_, fun x hx => ?_⟩
   · rw [pow_zero, Nat.cast_one, one_smul]

@@ -140,7 +140,7 @@ end Values
 
 theorem injective_emb (σ : 𝓞 F →+* ℂ) : Function.Injective σ :=
   (RingHom.injective_iff_ker_eq_bot σ).2 (Ideal.eq_bot_of_comap_eq_bot (R := ℤ) (by
-    rw [RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
+    rw [Ideal.under_def, RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
     exact RingHom.injective_int _))
 
 def extEmb (σ : 𝓞 F →+* ℂ) : F →+* ℂ := IsFractionRing.lift (injective_emb σ)

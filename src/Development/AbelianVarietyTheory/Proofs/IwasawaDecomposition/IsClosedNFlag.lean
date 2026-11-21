@@ -127,7 +127,7 @@ theorem integral_aut {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGro
   let m : G ≃ᵐ G := c.toHomeomorph.toMeasurableEquiv
   have k1 : (μ.map m).IsHaarMeasure := ContinuousMulEquiv.isHaarMeasure_map μ c
   have hq : Measure.QuasiMeasurePreserving m.symm (μ.map m) μ :=
-    ⟨m.symm.measurable, by rw [MeasurableEquiv.map_symm_map]⟩
+    ⟨m.symm.measurable.aemeasurable, by rw [MeasurableEquiv.map_symm_map]⟩
   let e : Γ → Γ := fun γ => ⟨c.symm γ, (hc _).1 (by simpa using γ.2)⟩
   have he : Function.Bijective e := ⟨fun a b h => Subtype.ext (c.symm.injective (congrArg Subtype.val h)),
     fun b => ⟨⟨c b, (hc _).2 b.2⟩, Subtype.ext (by simp [e])⟩⟩

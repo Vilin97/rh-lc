@@ -389,7 +389,7 @@ theorem reciprocity : Cheb → PoitouTateTotallyComplex → CohDimTwo → TameLo
   have hyI := vanish_NS h hK (Or.inr hρ) hy (S := placesOver D.host.E (X.l i) ∪ Spl (X := X) i)
     fun v hv => ⟨fun e => hv (Or.inl e), fun e => hv (Or.inr e), by simp⟩
   have hyI' : ∀ q v, Over (P q) v → ∀ B, IsPlaceOver B v → ∀ σ ∈ Ine (F := D.host.E) B, y.1 σ = 0 :=
-    fun q v hv B hB σ hσ => (hyI σ (mem_NS (fun e => e.elim (hS0 q v hv).1 (hS0 q v hv).2) hB hσ)).1
+    fun q v hv B hB σ hσ => (hyI σ (mem_NS (fun (e : v ∈ placesOver D.host.E (X.l i) ∪ Spl (X := X) i) => e.elim (hS0 q v hv).1 (hS0 q v hv).2) hB hσ)).1
   let t : ValuationSubring N.Om → ZMod (X.l i ^ 1) := fun A =>
     inv A (Submodule.Quotient.mk (locZ A (cupZ hK hρ lam x y)))
   have h0 : ∑ v ∈ S, t (Av v) = 0 :=

@@ -131,7 +131,7 @@ theorem mul_apply_of_col {R : Type} [CommRing R] {A B : Matrix (Fin n) (Fin n) R
 omit [IsTotallyComplex E] in
 theorem colGL_row_last {R : Type} [CommRing R] (k : ℕ) (y : Fin k → R) {j : Fin n} (hj : j.val + 1 = n) (t : Fin n) :
     (colGL (n := n) k y : Matrix (Fin n) (Fin n) R) j t = (1 : Matrix (Fin n) (Fin n) R) j t := by
-  rw [colGL, coe_uGL, uMat_apply, one_apply]
+  rw [colGL, coe_uGL, uMat_apply, Matrix.one_apply]
   split_ifs with h1 h2
   · rfl
   · exact absurd h2 (by rw [Fin.lt_def]; omega)
@@ -141,7 +141,7 @@ theorem colGL_row_last {R : Type} [CommRing R] (k : ℕ) (y : Fin k → R) {j : 
 omit [IsTotallyComplex E] in
 theorem colGL_col {R : Type} [CommRing R] {k : ℕ} (hk : k ≠ m) (y : Fin k → R) {l : Fin n} (hl : l.val = m)
     (i : Fin n) : (colGL (n := n) k y : Matrix (Fin n) (Fin n) R) i l = (1 : Matrix (Fin n) (Fin n) R) i l := by
-  rw [colGL, coe_uGL, uMat_apply, one_apply]
+  rw [colGL, coe_uGL, uMat_apply, Matrix.one_apply]
   split_ifs with h1 h2
   · rfl
   · rw [colX_apply, dite_eq_right (by simp only; omega)]
@@ -150,12 +150,12 @@ theorem colGL_col {R : Type} [CommRing R] {k : ℕ} (hk : k ≠ m) (y : Fin k �
 omit [IsTotallyComplex E] in
 theorem blockGL_row_last {R : Type} [CommRing R] (hmn : m < n) (h : GL (Fin m) R) {j : Fin n} (hj : j.val + 1 = n)
     (t : Fin n) : (blockGL hmn.le h : Matrix (Fin n) (Fin n) R) j t = (1 : Matrix (Fin n) (Fin n) R) j t := by
-  rw [coe_blockGL, blockMat_apply, dite_eq_right (by omega), one_apply]
+  rw [coe_blockGL, blockMat_apply, dite_eq_right (by omega), Matrix.one_apply]
 
 omit [IsTotallyComplex E] in
 theorem blockGL_col {R : Type} [CommRing R] (hmn : m < n) (h : GL (Fin m) R) {l : Fin n} (hl : l.val = m)
     (i : Fin n) : (blockGL hmn.le h : Matrix (Fin n) (Fin n) R) i l = (1 : Matrix (Fin n) (Fin n) R) i l := by
-  rw [coe_blockGL, blockMat_apply, one_apply]
+  rw [coe_blockGL, blockMat_apply, Matrix.one_apply]
   split_ifs with h1 h2 h3 <;> first | rfl | omega | (subst h3; omega)
 
 omit [IsTotallyComplex E] in
@@ -275,7 +275,7 @@ theorem norm_le_of_inS (hmn : m < n) {φ : GA E n → ℂ} (hφ : φ ∈ goodFns
   rw [hTu] at b1
   have hr : ‖fun i => pInf E (r i)‖ ≤ 1 := by
     refine (pi_norm_le_iff_of_nonneg zero_le_one).2 fun t => ?_
-    simp only [r, one_apply]
+    simp only [r, Matrix.one_apply]
     split_ifs
     · rw [map_one]
       exact (pi_norm_le_iff_of_nonneg zero_le_one).2 fun w => by simp
@@ -367,6 +367,7 @@ variable (m) in
 def colSmooth (F : (Fin m → Ad E) → ℂ) (φ : GA E n → ℂ) (g : GA E n) : ℂ :=
   ∫ x, F x * φ (g * colGL m x) ∂GJMatrix.adeleMeasurePi E
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem continuous_colSmooth {F : (Fin m → Ad E) → ℂ} (hF : F ∈ GJMatrix.schwartzBruhatPi (K := E) (ι := Fin m))
     {φ : GA E n → ℂ} (hc : Continuous φ) {C : ℝ} (hC : ∀ g, ‖φ g‖ ≤ C) : Continuous (colSmooth m F φ) :=
   continuous_of_dominated (bound := fun x => ‖F x‖ * C)

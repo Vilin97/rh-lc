@@ -199,7 +199,7 @@ theorem acts_unique {T : ((Fin n × Fin d → AF F) → ℂ) → (Fin n × Fin d
 
 theorem exp_of_gen (hact : ActsBy B.emb C (om.comp (MonoidHom.inr _ _)) Φ (fockAct2 P Q R S) c)
     (hadm : ∀ g, ∀ l ∈ (adeleClass F).adm (Fin n × Fin d), l ∘ₗ om g ∈ (adeleClass F).adm (Fin n × Fin d))
-    {γ : Multiplicative ℝ →* UG (cA σ) (incM F W.J)} (hγ : γ ∈ RLines σ (incM F W.J)) {Yg : InfinitePlace F → Mat R S}
+    {γ : Multiplicative ℝ →* UG (cA σ) (incM F W.J)} (hγ : γ ∈ RLines (σ := σ) (incM F W.J)) {Yg : InfinitePlace F → Mat R S}
     (hY : IsGen B.emb C γ Yg) (hKC : ∀ w, IsKC (Yg w)) :
     ∃ U : Module.End ℂ (Tens F P Q R S), IsExp (genOp P Q c Yg) U ∧
       ∀ T, Acts (evI F) (om (1, γ (Multiplicative.ofAdd 1))) (Φ T) (Φ (U T)) := by

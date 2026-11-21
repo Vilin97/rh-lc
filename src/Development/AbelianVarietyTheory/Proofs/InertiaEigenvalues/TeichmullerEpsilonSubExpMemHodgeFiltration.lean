@@ -102,7 +102,7 @@ variable {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P}
 
 theorem aeval_mem {x : P.R.BdR} (hx : x ∈ FilB P 0) (f : ℚ_[l][X]) : aeval x f ∈ FilB P 0 := by
   induction f using Polynomial.induction_on' with
-  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+  | add p q hp hq => rw [map_add]; exact add_mem hp hq
   | monomial n a =>
     rw [aeval_monomial]
     exact qB_mul_mem a (by simpa using FilB_pow hx n)
@@ -133,8 +133,8 @@ theorem t_sub_log (T : LocTied l P AI) (M : ℕ) :
         GlobalTheory.CrisIncl.factorial_mul_ev l _ y (GlobalTheory.ThetaTie.isEps AI).1 hy M, sub_self]
     set_option synthInstance.maxHeartbeats 100000 in
       · simp only [map_sub, map_mul, map_natCast, map_sum, map_pow, map_neg, e, io_eq]
-      simp only [map_one]
-      simp only [aDp, mu, RingHom.comp_apply, map_sub, map_one]
+        simp only [map_one]
+        simp only [aDp, mu, RingHom.comp_apply, map_sub, map_one]
   have h0 : ((M.factorial : ℕ) : ℚ_[l]) ≠ 0 := by exact_mod_cast M.factorial_ne_zero
   have := qB_mul_mem ((M.factorial : ℕ) : ℚ_[l])⁻¹ h
   convert this using 1

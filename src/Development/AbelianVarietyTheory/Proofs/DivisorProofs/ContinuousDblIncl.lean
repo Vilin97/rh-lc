@@ -88,8 +88,8 @@ def firstCopy (R S : ℕ) : Ix (R + S) (S + R) → ℂ :=
 def genDbl (R S : ℕ) (w₀ : InfinitePlace F) (w : InfinitePlace F) : Mat (R + S) (S + R) :=
   Matrix.diagonal fun j => if w = w₀ then firstCopy R S j else 0
 
-theorem lines_dbl {JB : Matrix β β (AE F E)} {γ : Multiplicative ℝ →* UG (cA σ) JB} (hγ : γ ∈ RLines σ JB) :
-    (dblIncl (cA σ) JB).comp γ ∈ RLines σ (dbl JB) := by
+theorem lines_dbl {JB : Matrix β β (AE F E)} {γ : Multiplicative ℝ →* UG (cA σ) JB} (hγ : γ ∈ RLines (σ := σ) JB) :
+    (dblIncl (cA σ) JB).comp γ ∈ RLines (σ := σ) (dbl JB) := by
   refine ⟨(continuous_dblIncl (cA σ) JB).comp hγ.1, fun t => ?_⟩
   have h := hγ.2 t
   have e : ((((dblIncl (cA σ) JB).comp γ) t : UG (cA σ) (dbl JB)) : GL (β ⊕ β) (AE F E)).1 - 1 =
@@ -220,7 +220,7 @@ theorem conjS_apply {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] (f : S
 theorem compare_of (hcen : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (β : Type)
     [Fintype β] [DecidableEq β] (R S : ℕ) (τ : ∀ w : InfinitePlace F, EmbOver E w) (J : Matrix β β (AE F E))
     (C : InfinitePlace F → Matrix β (Ix R S) ℂ) (w₀ : InfinitePlace F), IsCMExt F E σ →
-    ∃ z : ℝ → (AE F E)ˣ, ∃ γ ∈ RLines σ J,
+    ∃ z : ℝ → (AE F E)ˣ, ∃ γ ∈ RLines (σ := σ) J,
       IsGen τ C γ (fun w => if w = w₀ then Complex.I • (1 : Mat R S) else 0) ∧
       (∀ t : ℝ, ((γ (Multiplicative.ofAdd t)).1 : Matrix β β (AE F E)) = (z t : AE F E) • (1 : Matrix β β (AE F E))) ∧
       (∀ t : ℝ, At (evI F) ((z t : AE F E) - 1)) ∧

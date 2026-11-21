@@ -109,7 +109,9 @@ theorem fixed_field_deg : ∀ (l : ℕ) [Fact l.Prime] (r : ℕ), 0 < r → ∃ 
     rw [← AlgEquiv.mul_apply, ← pow_succ, pow_succ', AlgEquiv.mul_apply, hc]
   let τ₀ : ↥F →ₐ[ℚ_[l]] ↥F := ((σ : ↥(MaximalUnramifiedExtension l) →ₐ[ℚ_[l]] ↥(MaximalUnramifiedExtension l)).comp F.val).codRestrict F.toSubalgebra
     fun c => hst c c.2
-  let τ : ↥F ≃ₐ[ℚ_[l]] ↥F := AlgEquiv.ofBijective τ₀ (Algebra.IsAlgebraic.algHom_bijective _)
+  let τ : ↥F ≃ₐ[ℚ_[l]] ↥F := by
+    set_option synthInstance.maxHeartbeats 200000 in
+      exact AlgEquiv.ofBijective τ₀ (Algebra.IsAlgebraic.algHom_bijective _)
   have hτ : ∀ (k : ℕ) (c : ↥F), (((τ ^ k) c : ↥F) : ↥(MaximalUnramifiedExtension l)) = fr l k c := fun k c => by
     rw [← sig_pow]
     induction k with

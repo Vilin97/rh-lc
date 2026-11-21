@@ -101,8 +101,8 @@ theorem eval_jetMap (cD : ι → K) (T : (DVar ι a b →₀ ℕ) → K) (Q : Fo
     refine AlgHom.congr_fun (MvPolynomial.algHom_ext fun v => ?_) Q
     simp only [subD, φ, AlgHom.comp_apply, aeval_X]
     split_ifs
-    set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [map_sum, map_mul, aeval_X, Sum.elim_inl, Sum.elim_inr]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, aeval_X, Sum.elim_inl, Sum.elim_inr]
       exact Finset.sum_congr rfl fun β _ => by ring
     · simp
   have h2 : ∀ S, eval (fun v : ι × Fin b × Fin b => y' v.1 v.2.1 v.2.2) (jetLin (fun q => (q.prod fun k n => cD k.1 ^ n) * T q) S) =
@@ -377,12 +377,13 @@ structure Tied (hc : X.Tau → HCParam R) : Prop where
   Nab _ := nabAtr X.emb lam (stdLat X.E n)
   Del _ := delAtr X.emb lam (stdLat X.E n)
 
-theorem exampleDatum_isAdmissible (X : Fields) {n : ℕ} (lam : X.Tau → DomWeight n) : (exampleGSD X lam).Ok where
-  fin_orb := Quotient.finite _
-  fin_stab _ := inferInstance
-  nab_smul _ _ := (Submodule.map_id _).symm
-  del_smul _ _ := (Submodule.map_id _).symm
-  inv _ _ _ := rfl
+theorem exampleDatum_isAdmissible (X : Fields) {n : ℕ} (lam : X.Tau → DomWeight n) : (exampleGSD X lam).Ok := by
+  exact {
+    fin_orb := Quotient.finite _
+    fin_stab := fun _ => inferInstance
+    nab_smul := fun _ _ => (Submodule.map_id _).symm
+    del_smul := fun _ _ => (Submodule.map_id _).symm
+    inv := fun _ _ _ => rfl }
 
 theorem card_stabilizer_units_int (d : Unit) : Nat.card (MulAction.stabilizer ℤˣ d) = 2 := by
   have : MulAction.stabilizer ℤˣ d = ⊤ := by
@@ -410,11 +411,10 @@ def toyExample (hc : X.Tau → HCParam R) : ChSrc X R where
   DG_pos := two_pos
   dvd _ _ _ := (card_stabilizer_units_int _).dvd
 
-theorem exampleChain_compatible (hc : X.Tau → HCParam R) : (toyExample hc).Tied hc where
-  lam_eq _ _ := rfl
-  act i _ _ := ⟨1, 1, fun g x => by
-    rw [MonoidHom.one_apply, MonoidHom.one_apply, map_one, map_one, Units.val_one, one_smul]
-    rfl⟩
+theorem exampleChain_compatible (hc : X.Tau → HCParam R) : (toyExample hc).Tied hc := by
+  refine ⟨fun _ _ => rfl, fun i _ _ => ⟨1, 1, fun g x => ?_⟩⟩
+  rw [MonoidHom.one_apply, MonoidHom.one_apply, map_one, map_one, Units.val_one, one_smul]
+  rfl
 
 def exampleExt (hc : X.Tau → HCParam R) (i : ℕ) : ((toyExample hc).F i).Forms := fun _ => ⟨fun _ => extV X.K (trueWt hc i), fun _ _ => rfl⟩
 

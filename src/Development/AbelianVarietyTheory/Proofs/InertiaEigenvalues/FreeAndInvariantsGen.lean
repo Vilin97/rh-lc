@@ -215,7 +215,36 @@ theorem free_and_invariants (ξ : (↥(OL LL))⟦X⟧)
     ∀ b : (↥(OL LL))⟦X⟧, (∀ δ ∈ (H.W K 1 LL h).DelF, (H.W K 1 LL h).γ₀ δ b = b) ↔
       ∃ g : (↥(OL LL))⟦X⟧, b = g.subst ξ := by
   obtain ⟨_, _, hu⟩ := GlobalTheory.FinExtIntegers.dvr_complete LL
-  obtain ⟨χ, hχ, -⟩ := GlobalTheory.exists_cyclotomicChar_padicInt_units P K LL (H.W K 1 LL h)
+  let W := H.W K 1 LL h
+  have hinj : Function.Injective (algebraMap ℤ_[l] ↥(OL LL)) := by
+    intro a b hab
+    apply (IsFractionRing.injective ℤ_[l] ℚ_[l])
+    apply (algebraMap ℚ_[l] ↥LL.1).injective
+    exact congrArg Subtype.val hab
+  have hex : ∀ g, ∃ y : ℤ_[l], algebraMap ℤ_[l] ↥(OL LL) y = (W.χΓ g : ↥(OL LL)) := by
+    intro g
+    obtain ⟨a, rfl⟩ := W.resΓ_onto g
+    have hm : algebraMap ℚ_[l] ↥LL.1 ((P.PD K).χ a : ℚ_[l]) ∈ OL LL := by
+      rw [← W.χΓ_res a]
+      exact (W.χΓ (W.resΓ a) : ↥(OL LL)).2
+    have hi : IsIntegral ℤ_[l] ((P.PD K).χ a : ℚ_[l]) :=
+      (isIntegral_algHom_iff (IsScalarTower.toAlgHom ℤ_[l] ℚ_[l] ↥LL.1)
+        (algebraMap ℚ_[l] ↥LL.1).injective).mp hm
+    obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.mp hi
+    refine ⟨y, Subtype.ext ?_⟩
+    show algebraMap ℤ_[l] ↥LL.1 y = _
+    rw [IsScalarTower.algebraMap_apply ℤ_[l] ℚ_[l] ↥LL.1, hy, ← W.χΓ_res a]
+    rfl
+  choose y hy using hex
+  have hmul : ∀ g, y g * y g⁻¹ = 1 := fun g => hinj (by
+    rw [map_mul, hy, hy, map_one, ← Units.val_mul, ← map_mul, mul_inv_cancel, map_one, Units.val_one])
+  have hmul' : ∀ g, y g⁻¹ * y g = 1 := fun g => by simpa using hmul g⁻¹
+  let u : W.Gam → ℤ_[l]ˣ := fun g => ⟨y g, y g⁻¹, hmul g, hmul' g⟩
+  let χ : W.Gam →* ℤ_[l]ˣ := by
+    refine { toFun := u, map_one' := ?_, map_mul' := ?_ }
+    · apply Units.ext; apply hinj; simp [u, hy]
+    · intro g k; apply Units.ext; apply hinj; simp [u, hy]
+  have hχ : ∀ g, algebraMap ℤ_[l] ↥(OL LL) (χ g : ℤ_[l]) = (W.χΓ g : ↥(OL LL)) := fun g => hy g
   exact free_and_invariants_gen (H.W K 1 LL h) (P.PD_p K) hu χ hχ ξ hξ hinv
 
 theorem exists_eisenstein (ξ : (↥(OL LL))⟦X⟧)
@@ -237,7 +266,36 @@ theorem trace_param (h1 : Module.finrank ↥(K0 K) ↥K.1 = 1) :
       (Polynomial.X + Polynomial.C ((l : ℕ) : ↥(OL LL))) := by
   have hc := card_eq H h hl
   rw [h1, Nat.div_one] at hc
-  obtain ⟨χ, hχ, -⟩ := GlobalTheory.exists_cyclotomicChar_padicInt_units P K LL (H.W K 1 LL h)
+  let W := H.W K 1 LL h
+  have hinj : Function.Injective (algebraMap ℤ_[l] ↥(OL LL)) := by
+    intro a b hab
+    apply (IsFractionRing.injective ℤ_[l] ℚ_[l])
+    apply (algebraMap ℚ_[l] ↥LL.1).injective
+    exact congrArg Subtype.val hab
+  have hex : ∀ g, ∃ y : ℤ_[l], algebraMap ℤ_[l] ↥(OL LL) y = (W.χΓ g : ↥(OL LL)) := by
+    intro g
+    obtain ⟨a, rfl⟩ := W.resΓ_onto g
+    have hm : algebraMap ℚ_[l] ↥LL.1 ((P.PD K).χ a : ℚ_[l]) ∈ OL LL := by
+      rw [← W.χΓ_res a]
+      exact (W.χΓ (W.resΓ a) : ↥(OL LL)).2
+    have hi : IsIntegral ℤ_[l] ((P.PD K).χ a : ℚ_[l]) :=
+      (isIntegral_algHom_iff (IsScalarTower.toAlgHom ℤ_[l] ℚ_[l] ↥LL.1)
+        (algebraMap ℚ_[l] ↥LL.1).injective).mp hm
+    obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.mp hi
+    refine ⟨y, Subtype.ext ?_⟩
+    show algebraMap ℤ_[l] ↥LL.1 y = _
+    rw [IsScalarTower.algebraMap_apply ℤ_[l] ℚ_[l] ↥LL.1, hy, ← W.χΓ_res a]
+    rfl
+  choose y hy using hex
+  have hmul : ∀ g, y g * y g⁻¹ = 1 := fun g => hinj (by
+    rw [map_mul, hy, hy, map_one, ← Units.val_mul, ← map_mul, mul_inv_cancel, map_one, Units.val_one])
+  have hmul' : ∀ g, y g⁻¹ * y g = 1 := fun g => by simpa using hmul g⁻¹
+  let u : W.Gam → ℤ_[l]ˣ := fun g => ⟨y g, y g⁻¹, hmul g, hmul' g⟩
+  let χ : W.Gam →* ℤ_[l]ˣ := by
+    refine { toFun := u, map_one' := ?_, map_mul' := ?_ }
+    · apply Units.ext; apply hinj; simp [u, hy]
+    · intro g k; apply Units.ext; apply hinj; simp [u, hy]
+  have hχ : ∀ g, algebraMap ℤ_[l] ↥(OL LL) (χ g : ℤ_[l]) = (W.χΓ g : ↥(OL LL)) := fun g => hy g
   obtain ⟨p2, p3, p4⟩ := π₀₁_spec (H.W K 1 LL h) (P.PD_p K) χ hχ hl hc
   obtain ⟨_, _, hu⟩ := GlobalTheory.FinExtIntegers.dvr_complete LL
   exact ⟨hc, p2, p3, eisAt_one (H.W K 1 LL h) hu _ p4 _ h1 (exists_eisenstein H h hl _ p2 p3)⟩

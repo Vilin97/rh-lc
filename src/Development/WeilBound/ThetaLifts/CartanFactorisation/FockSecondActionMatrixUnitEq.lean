@@ -116,7 +116,7 @@ theorem line_at {m P Q R S r s : ℕ} {κ : Type} [Fintype κ] (hcm : IsCMExt F 
     (hC : ∀ w, IsFrame (b • J.map (piInf (τ w))) (C w)) {o : UG (cA σ) J →* Module.End ℂ ((κ → AF F) → ℂ)}
     {Φ : Tens F P Q R S →ₗ[ℂ] SInf F κ} {act : Mat r s →ₗ[ℂ] Module.End ℂ (Formalism.BasicNotions.TH.Pol P Q R S)} {c : InfinitePlace F → ℂ}
     (h : ActsBy τ C o Φ act c) (w : InfinitePlace F) {Z : Mat r s} (hZ : Z ∈ upq r s) :
-    ∃ γ ∈ RLines σ J, ∀ T, ActsD (evI F) (fun t => o (γ (Multiplicative.ofAdd t))) (Φ T)
+    ∃ γ ∈ RLines (σ := σ) J, ∀ T, ActsD (evI F) (fun t => o (γ (Multiplicative.ofAdd t))) (Φ T)
       (Φ (atL w (act Z) T + (c w * Z.trace) • T)) := by
   obtain ⟨γ, hγ, hg⟩ := PositivityTheory.RL.lineEx F E σ (Fin m) r s τ J b C hcm hC (Function.update (fun _ => 0) w Z) fun w' => by
     by_cases e : w' = w

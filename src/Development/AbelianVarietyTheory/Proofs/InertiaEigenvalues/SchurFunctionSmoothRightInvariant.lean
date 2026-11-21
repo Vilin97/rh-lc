@@ -80,8 +80,8 @@ theorem GlobalTheory.SchurExt.schurF_mul_finGL_eq : ∀ (E : Type) [Field E] [Nu
     classical
     have hD : IsUnit (Dof (x : Matrix (Fin (m + r + 1 + 1)) (Fin (m + r + 1 + 1)) (Ad E))).det := by
       by_contra hD
-      exact hF (by rw [schurF, if_neg hD])
-    rw [schurF, if_pos hD] at hF
+      exact hF (by rw [schurF, ite_eq_right hD])
+    rw [schurF, ite_eq_left hD] at hF
     have hβ0 := left_ne_zero_of_mul (left_ne_zero_of_mul (left_ne_zero_of_mul hF))
     have hβ0' := right_ne_zero_of_mul (left_ne_zero_of_mul (left_ne_zero_of_mul hF))
     have hb0 := right_ne_zero_of_mul (left_ne_zero_of_mul hF)
@@ -89,7 +89,7 @@ theorem GlobalTheory.SchurExt.schurF_mul_finGL_eq : ∀ (E : Type) [Field E] [Nu
     have hYint : ∀ i j, pFin E (Yof (x : Matrix (Fin (m + r + 1 + 1)) (Fin (m + r + 1 + 1)) (Ad E)) i j) ∈
         GroundTheory.Global.integralFiniteAdeles (𝓞 E) E := by
       by_contra hY
-      exact hχ0 (by rw [chiF, if_neg hY, mul_zero])
+      exact hχ0 (by rw [chiF, ite_eq_right hY, mul_zero])
     obtain ⟨hdu, hdU, hsU, hyI, hX⟩ := hW k hk (finGL_mem_supS hkS)
       ((Yof (x : Matrix (Fin (m + r + 1 + 1)) (Fin (m + r + 1 + 1)) (Ad E))).map (pFin E)) (fun i j => hYint i j)
     obtain ⟨hSc, hD', eD, eSc, eYi, eYf, eX⟩ := L_bridge E m r x k hD hdu
@@ -108,14 +108,16 @@ theorem GlobalTheory.SchurExt.schurF_mul_finGL_eq : ∀ (E : Type) [Field E] [Nu
       have h2 : ∀ i j, pFin E (Yof ((x * finGL E (m + r + 1 + 1) k : GA E (m + r + 1 + 1)) :
           Matrix (Fin (m + r + 1 + 1)) (Fin (m + r + 1 + 1)) (Ad E)) i j) ∈ GroundTheory.Global.integralFiniteAdeles (𝓞 E) E :=
         fun i j => by rw [eYf]; exact add_mem (hYint i j) (hyI i j)
-      rw [chiF, chiF, h1, if_pos h2, if_pos hYint]
-    rw [schurF, if_pos hD', eD, eSc, hUb _ hdU, hUβ _ hsU, hchi, eX, psi_add, psi_sFin_of_mem hz, mul_one, schurF, if_pos hD]
-  refine ⟨W₀ ∩ W₀⁻¹, Filter.inter_mem hW₀ (inv_mem_nhds_one _ hW₀), ?_⟩
-  intro k hk hkS x hx
-  by_cases h0 : schurF β b₁ χ x = 0
-  · by_cases h1 : schurF β b₁ χ (x * finGL E (m + r + 1 + 1) k) = 0
-    · rw [h0, h1]
-    · have h2 := fwd k⁻¹ hk.2 (by rw [map_inv]; exact supS_inv hkS) _ (supS_mul hx hkS) h1
-      rw [mul_assoc, ← map_mul, mul_inv_cancel, map_one, mul_one] at h2
-      exact absurd (h2.symm.trans h0) h1
-  · exact fwd k hk.1 hkS x hx h0
+      rw [chiF, chiF, h1, ite_eq_left h2, ite_eq_left hYint]
+    rw [schurF, ite_eq_left hD', eD, eSc, hUb _ hdU, hUβ _ hsU, hchi, eX, psi_add, psi_sFin_of_mem hz, mul_one, schurF, ite_eq_left hD]
+  open scoped Pointwise in
+  exact by
+    refine ⟨W₀ ∩ W₀⁻¹, Filter.inter_mem hW₀ (inv_mem_nhds_one _ hW₀), ?_⟩
+    intro k hk hkS x hx
+    by_cases h0 : schurF β b₁ χ x = 0
+    · by_cases h1 : schurF β b₁ χ (x * finGL E (m + r + 1 + 1) k) = 0
+      · rw [h0, h1]
+      · have h2 := fwd k⁻¹ hk.2 (by rw [map_inv]; exact supS_inv hkS) _ (supS_mul hx hkS) h1
+        rw [mul_assoc, ← map_mul, mul_inv_cancel, map_one, mul_one] at h2
+        exact absurd (h2.symm.trans h0) h1
+    · exact fwd k hk.1 hkS x hx h0

@@ -52,7 +52,7 @@ theorem nsmul_dual_mem_loc {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (F
       (y⁻¹).1 *ᵥ x ∈ latS (F := F) (v.adicCompletion F) (intV E v) S.Lb)
     (z : Fin n → E) (hz : z ∈ dualL (σ : E →+* E) J L) :
     ∃ r : 𝓞 F, r ∉ v.asIdeal ∧ algebraMap (𝓞 F) (𝓞 E) r • T • z ∈ L := by
-  have hLb : Submodule.IsLattice E S.Lb := ⟨Module.Finite.iff_fg.mp S.Lb_fin, S.Lb_span⟩
+  have hLb : Submodule.IsLattice E S.Lb := Submodule.IsLattice.of_fg E (Module.Finite.iff_fg.mp S.Lb_fin)
 
   have hT : ∀ x ∈ dualL (σ : E →+* E) J S.Lb, T • x ∈ S.Lb := by
     intro x hx
@@ -71,6 +71,8 @@ theorem nsmul_dual_mem_loc {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (F
   have h4 : (fun a => inclE (F := F) (v.adicCompletion F) ((T • z) a)) ∈
       latS (F := F) (v.adicCompletion F) (intV E v) L := by
     convert h3 using 1
+    funext a
+    simp only [Pi.smul_apply, map_nsmul]
   exact GlobalTheory.T.exists_smul_mem_lattice_of_mem_completion F E v n L hL (T • z) h4
 
 

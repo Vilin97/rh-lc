@@ -46,7 +46,7 @@ theorem exists_unif_of_frame {σ : KA l →+* ℂ} {g : ℕ} {ty : Fin g → (E 
   obtain ⟨w, ⟨hw, hrig⟩, hth⟩ := val_tie Φ.m ht
   obtain ⟨w', hw', hinv⟩ := ConjUnif.exists_inv w hw
   have hL := Φ.T.t.PP.isLB
-  have hM := pull_isLB Xo.univ.t.PP.isLB Φ.m.φ
+  have hM := LB.isLB_pull Xo.univ.t.PP.isLB Φ.m.φ
   have hol := isHolTo_exp F i hP
   let u₁ := fibreUnif Φ.m.cart (F.ex i P) P.range fr (F.ex_add i P hP) (F.ex_onto i P hP) (F.ex_ker i P hP)
     hP.2.2.1 hP.2.2.2.1 hol c₁ c₂ c₃

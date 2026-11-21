@@ -164,7 +164,7 @@ theorem exists_psi (V : HSp D) {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {n
   let ρ : ∀ P : Q, (𝓞 D.host.E ⧸ d.I)ˣ →* (kP P.1)ˣ := fun P =>
     Units.map (Ideal.Quotient.factor (hQ P.1 P.2)).toMonoidHom
   let χ : (𝓞 D.host.E ⧸ d.I)ˣ →* ℂ := ∏ P : Q, (Units.coeHom ℂ).comp ((ch P.1).comp (ρ P))
-  have hχ : ∀ x, χ x = ∏ P : Q, ((ch P.1 (ρ P x) : ℂˣ) : ℂ) := fun x => MonoidHom.finset_prod_apply _ _ _
+  have hχ : ∀ x, χ x = ∏ P : Q, ((ch P.1 (ρ P x) : ℂˣ) : ℂ) := fun x => MonoidHom.finsetProd_apply _ _ _
   have hχF : ∀ x, χ x ∈ c.F := fun x => hχ x ▸ prod_mem fun P _ => hmem P.1 P.2 _
   refine ⟨((χ.codRestrict c.F hχF).toHomUnits).comp δ, fun k s u U hk hlift hU w hw => ?_⟩
   refine (hχ (δ k)).trans (Finset.prod_congr rfl fun P _ => congrArg (fun t => ((ch P.1 t : ℂˣ) : ℂ)) (Units.ext ?_))

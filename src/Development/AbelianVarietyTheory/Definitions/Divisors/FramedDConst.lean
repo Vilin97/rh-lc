@@ -45,7 +45,7 @@ def ActsByD (τ : ∀ w : InfinitePlace F, EmbOver E w) {J : Matrix β β (AE F 
     (Φ : TensD F P Q R S →ₗ[ℂ] SInf F κ)
     (act : ∀ w, Mat (r w) (s w) →ₗ[ℂ] Module.End ℂ (Formalism.BasicNotions.TH.Pol (P w) (Q w) (R w) (S w)))
     (c : InfinitePlace F → ℂ) : Prop :=
-  ∀ γ ∈ RLines σ J, ∀ Y, IsGenD τ C γ Y → ∀ T, SD (fun t => om (γ (Multiplicative.ofAdd t))) (Φ T)
+  ∀ γ ∈ RLines (σ := σ) J, ∀ Y, IsGenD τ C γ Y → ∀ T, SD (fun t => om (γ (Multiplicative.ofAdd t))) (Φ T)
     (Φ (sumPl (fun w => act w (Y w) + (c w * (Y w).trace) • 1) T))
 
 end Adelic

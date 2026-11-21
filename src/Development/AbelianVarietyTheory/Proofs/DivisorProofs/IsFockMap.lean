@@ -101,7 +101,7 @@ def ActsBy (τ : ∀ w : InfinitePlace F, EmbOver E w) {J : Matrix β β (AE F E
     (C : InfinitePlace F → Matrix β (Ix r s) ℂ) (om : UG (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) J →* Module.End ℂ ((κ → AF F) → ℂ))
     (Φ : Tens F P Q R S →ₗ[ℂ] SInf F κ) (act : Mat r s →ₗ[ℂ] Module.End ℂ (Formalism.BasicNotions.TH.Pol P Q R S))
     (c : InfinitePlace F → ℂ) : Prop :=
-  ∀ γ ∈ RLines σ J, ∀ Y, IsGen τ C γ Y → ∀ T, SD (fun t => om (γ (Multiplicative.ofAdd t))) (Φ T)
+  ∀ γ ∈ RLines (σ := σ) J, ∀ Y, IsGen τ C γ Y → ∀ T, SD (fun t => om (γ (Multiplicative.ofAdd t))) (Φ T)
     (Φ (sumPl (fun w => act (Y w) + (c w * (Y w).trace) • 1) T))
 
 end Adelic
@@ -149,13 +149,13 @@ def GenEx : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (β : Type) [Fintype β]
     [DecidableEq β] (R S : ℕ) (τ : ∀ w : InfinitePlace F, EmbOver E w) (J : Matrix β β (AE F E)) (b : ℂ)
     (C : InfinitePlace F → Matrix β (Ix R S) ℂ), IsCMExt F E σ → (∀ w, IsFrame (b • J.map (piInf (τ w))) (C w)) →
-    ∀ γ ∈ RLines σ J, ∃ Y, (∀ w, Y w ∈ upq R S) ∧ IsGen τ C γ Y
+    ∀ γ ∈ RLines (σ := σ) J, ∃ Y, (∀ w, Y w ∈ upq R S) ∧ IsGen τ C γ Y
 
 def LineEx : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (β : Type) [Fintype β]
     [DecidableEq β] (R S : ℕ) (τ : ∀ w : InfinitePlace F, EmbOver E w) (J : Matrix β β (AE F E)) (b : ℂ)
     (C : InfinitePlace F → Matrix β (Ix R S) ℂ), IsCMExt F E σ → (∀ w, IsFrame (b • J.map (piInf (τ w))) (C w)) →
-    ∀ Y : InfinitePlace F → Mat R S, (∀ w, Y w ∈ upq R S) → ∃ γ ∈ RLines σ J, IsGen τ C γ Y
+    ∀ Y : InfinitePlace F → Mat R S, (∀ w, Y w ∈ upq R S) → ∃ γ ∈ RLines (σ := σ) J, IsGen τ C γ Y
 
 def LieScalar : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (α β κ : Type) [Fintype α]
@@ -194,7 +194,7 @@ def KLine : Prop :=
     (C : InfinitePlace F → Matrix β (Ix R S) ℂ) (θ : InfinitePlace F → Matrix β β ℂ), IsCMExt F E σ →
     (∀ w, IsFrame (b • J.map (piInf (τ w))) (C w)) → (∀ w, θ w * C w = C w * Jm R S) → ∀ k : UG (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) J,
     At (evI F) ((k.1 : Matrix β β (AE F E)) - 1) → (∀ w, Commute ((k.1 : Matrix β β (AE F E)).map (piInf (τ w))) (θ w)) →
-    ∃ γ ∈ RLines σ J, ∃ Y, IsGen τ C γ Y ∧ (∀ w, IsKC (Y w)) ∧ γ (Multiplicative.ofAdd 1) = k
+    ∃ γ ∈ RLines (σ := σ) J, ∃ Y, IsGen τ C γ Y ∧ (∀ w, IsKC (Y w)) ∧ γ (Multiplicative.ofAdd 1) = k
 
 def FrameEx : Prop :=
   ∀ (n r s : ℕ) (M θ : Matrix (Fin n) (Fin n) ℂ), HasSig M r s → IsCartan M θ →

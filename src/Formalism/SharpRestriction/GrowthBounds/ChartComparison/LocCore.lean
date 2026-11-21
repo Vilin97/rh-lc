@@ -219,21 +219,36 @@ set_option maxHeartbeats 8000000 in
 theorem core_of {Fo : FormsIn M (i + 1) hi} {Lc : LocIn X u w hg Lv i Fo.Ch}
     {pos : (Σ v : Fin (Fl.Pj (i + 1)).nV, Fin ((Fl.Pj (i + 1)).n' v)) ≃ D.what₂.Tau}
     {e : D.what₂.LL →+* (D.gat u w hg).Kf} {β : Fo.Ch} (H : LocTies hi Fo Lc pos e β) :
-    (stepInOf hi Fo Lc pos).Core e β where
-  good := locGood_locJ hi (Lc.t β) Lc.B
-  int := locInt_locJ hi (Lc.t β) Lc.B
-  hypP := locHyp_locJ hi (Lc.t β) Lc.B (Fo.K β).lev H.sameU H.frRat H.hypT
-  bad_p := H.bad_p
-  comp := comp_locJ hi (Lc.t β) Lc.B (Fo.K β).lev H.sameU
-  gam := gam_locJ hi (Lc.t β) Lc.B (Fo.K β).lev H.sameU
-  gamU := locJ_UJ hi (Lc.t β) Lc.B
-  std := H.std
-  actB := locJ_actB hi (Lc.t β) Lc.B H.frRat
-  pos_emb := H.pos_emb
-  wt := H.wt
-  chi := chi_locJ hi (Lc.t β) Lc.B (Fo.K β).lev e rfl H.psi
-  chiRat := H.chiRat
-  chRat := H.chRat
+    (stepInOf hi Fo Lc pos).Core e β := by
+  have hGood : LocGood (sigD D) (gramN D (i + 1) hi) (locJ hi (Lc.t β) Lc.B) :=
+    { herm := isHerm_re (rankN D (i + 1) hi) _ (D.sp.X (i + 1)).gram _
+        (gramN_apply D (i + 1) hi) (gram_herm D.sp.cm (D.sp.X (i + 1)))
+      det := det_re (rankN D (i + 1) hi) (D.sp.X (i + 1)).gram _
+        (gramN_apply D (i + 1) hi) (gram_det_unit D.sp.cm (D.sp.X (i + 1)))
+      sig := fun v x => (X.g u w hg).spl_sig _ ((X.g u w hg).pl v).2 x
+      yG_mem := fun c => reGL_mem_UPts (rankN D (i + 1) hi) D.sp.cm.sig (D.sp.X (i + 1)).gram _
+        (gramN_apply D (i + 1) hi) _ _ ((Lc.t β).yG c).2
+      yG_p := fun c v => by
+        have hy := (Lc.t β).yG_p c _ ((X.g u w hg).pl v).2
+        have hbc := bc_reGL (rankN D (i + 1) hi) (prV (E := D.host.E) ((X.g u w hg).pl v).1)
+          ((Lc.t β).yG c).1
+        rw [hy, map_one] at hbc
+        exact hbc }
+  exact
+    { good := hGood
+      int := locInt_locJ hi (Lc.t β) Lc.B
+      hypP := locHyp_locJ hi (Lc.t β) Lc.B (Fo.K β).lev H.sameU H.frRat H.hypT
+      bad_p := H.bad_p
+      comp := comp_locJ hi (Lc.t β) Lc.B (Fo.K β).lev H.sameU
+      gam := gam_locJ hi (Lc.t β) Lc.B (Fo.K β).lev H.sameU
+      gamU := locJ_UJ hi (Lc.t β) Lc.B
+      std := H.std
+      actB := locJ_actB hi (Lc.t β) Lc.B H.frRat
+      pos_emb := H.pos_emb
+      wt := H.wt
+      chi := chi_locJ hi (Lc.t β) Lc.B (Fo.K β).lev e rfl H.psi
+      chiRat := H.chiRat
+      chRat := H.chRat }
 
 end Asm
 

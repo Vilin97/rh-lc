@@ -45,6 +45,9 @@ structure Loc where
   g_mem : ∀ k, D.host.g k ∈ ffP
   pde_mem : D.host.pde ∈ ffP ∧ D.host.pde' ∈ ffP
 
+variable {D} in
+def Loc.wt (X : Loc D) (i : D.ntw.Tw) (lam : D.ntw.abelian₂ i) : ℝ :=
+  (X.kap i lam : ℝ) + (D.ntw.s2 i lam : ℝ) * (D.R.f : ℝ)
 
 def ThetaDenominatorValues (X : Loc D) (C : ℝ) : Prop :=
   ∃ n : ∀ i, D.ntw.abelian₂ i → ℕ,

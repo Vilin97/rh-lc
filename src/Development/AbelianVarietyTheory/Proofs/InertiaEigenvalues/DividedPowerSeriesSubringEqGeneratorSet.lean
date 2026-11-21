@@ -69,11 +69,11 @@ theorem sdSet_mul {F G : ZMod a → K⟦X⟧} (hF : F ∈ SdSet t K e) (hG : G �
     · exact (hN' _ (by omega)).mul_left _
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [Pi.mul_apply, coeff_mul, Finset.mul_sum, map_sum, map_sum]
-    refine Finset.sum_congr rfl fun p hp => ?_
-    rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
-    rw [map_nsmul, map_nsmul, nsmul_eq_mul, map_mul, map_mul, ← hF τ p.1, ← hG τ p.2, ← hp, hq p.1 p.2]
-    push_cast
-    ring
+      refine Finset.sum_congr rfl fun p hp => ?_
+      rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
+      rw [map_nsmul, map_nsmul, nsmul_eq_mul, map_mul, map_mul, ← hF τ p.1, ← hG τ p.2, ← hp, hq p.1 p.2]
+      push_cast
+      ring
 
 theorem sd_sub_sdSet : ∀ F ∈ Sd t K e, F ∈ SdSet t K e := by
   let S : Subring (ZMod a → K⟦X⟧) :=

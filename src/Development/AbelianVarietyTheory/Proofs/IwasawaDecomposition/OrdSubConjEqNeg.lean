@@ -105,7 +105,14 @@ theorem prod_val_above (χ : HChar L) (hu : ∀ v, χ.UnrAt v) (ht : χ.TrivOn F
     (hr : ∀ (P : HeightOneSpectrum (𝓞 L)) (k : Fˣ), ordF P (upF F k) = ordF (P.under (𝓞 F)) k)
     (v : HeightOneSpectrum (𝓞 F)) : ∏ P ∈ aboveF (L := L) F v, χ.val P = 1 := by
   have h := ht.1 v (unif v)
-  rw [HChar.resFin, MonoidHom.finset_prod_apply] at h
+  have he (s : Finset (HeightOneSpectrum (𝓞 L))) :
+      (∏ P ∈ s, (χ.locK P).comp (upF F)) (unif v) =
+        ∏ P ∈ s, ((χ.locK P).comp (upF F)) (unif v) := by
+    classical
+    induction s using Finset.induction_on with
+    | empty => simp
+    | insert a s ha ih => simp [ha, ih, MonoidHom.mul_apply]
+  rw [HChar.resFin, he] at h
   rw [← h]
   refine Finset.prod_congr rfl fun P hP => ?_
   have hP' : P.under (𝓞 F) = v := by simpa [aboveF] using hP

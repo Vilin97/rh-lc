@@ -45,8 +45,8 @@ theorem GlobalTheory.PMon.cocycle_rat_coords : ∀ (l : ℕ) [Fact l.Prime] (n :
     rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_add]
     congr 1
     congr 1
-    rw [RingHom.map_mulVec]
-    rfl
+    funext x
+    simp only [Pi.add_apply, map_add, RingHom.map_mulVec, Function.comp_def]
   have inj : (fun x => f (c₀ (g * h) x)) =
       (fun x => f ((c₀ g + (ρ₀ g : Matrix (n × Fin r) (n × Fin r) ℚ_[l]).mulVec (c₀ h)) x)) := by
     have := congrArg (fun v => ((p⁻¹ : GL (n × Fin r) ↥(MaximalUnramifiedExtension l)) : Matrix (n × Fin r) (n × Fin r) ↥(MaximalUnramifiedExtension l)).mulVec v) key

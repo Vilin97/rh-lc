@@ -190,7 +190,7 @@ theorem exists_intertwining_of_minimal {n : ℕ} {V : Type} [AddCommGroup V] [Mo
       funext u
       exact (b.sum_repr (σ u v)).symm
     rw [e]
-    exact continuous_finset_sum _ fun i _ => (hcS (b.coord i) v).smul continuous_const
+    exact continuous_finsetSum _ fun i _ => (hcS (b.coord i) v).smul continuous_const
   let π : Matrix (Fin n) (Fin n) ℂ → (S →L[ℂ] S) := fun g =>
     if hg : g ∈ Matrix.unitaryGroup (Fin n) ℂ then LinearMap.toContinuousLinearMap (σ ⟨g, hg⟩) else 0
   have hπu : ∀ g (hg : g ∈ Matrix.unitaryGroup (Fin n) ℂ) (v : S), π g v = σ ⟨g, hg⟩ v := by

@@ -186,7 +186,7 @@ theorem contCore_of_tied (T : LocTied l P AI) (K : FinExt l) : contCore (P.PD K)
         rw [← map_sum]
       simp [b.sum_repr]
     rw [this]
-    exact continuous_finset_sum _ fun j _ =>
+    exact continuous_finsetSum _ fun j _ =>
       (hLL φ (b j)).comp (IsModuleTopology.continuous_of_linearMap (b.coord j))
   have key : ∀ φ : A.V →ₗ[ℚ_[l]] ℚ_[l], Continuous fun g => φ (f g) := by
     intro φ
@@ -237,7 +237,7 @@ theorem contCore_of_tied (T : LocTied l P AI) (K : FinExt l) : contCore (P.PD K)
   rw [this]
   haveI : ContinuousSMul LL A.V := IsModuleTopology.toContinuousSMul LL A.V
   haveI : ContinuousSMul ℚ_[l] LL := IsModuleTopology.toContinuousSMul ℚ_[l] LL
-  exact continuous_finset_sum _ fun j _ =>
+  exact continuous_finsetSum _ fun j _ =>
     ((continuous_algebraMap ℚ_[l] LL).comp (key (b.coord j))).smul continuous_const
 
 theorem fundamentalExactSequence_continuity_all_theories : ∀ D : D7, Formalism.MainNotions.LocalSituation.adm6 D := fun D l _ K =>

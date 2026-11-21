@@ -36,7 +36,7 @@ theorem mem_of_exp (ι : Qbar l ≃+* ℂ) {n : Type} [Fintype n] [DecidableEq n
   refine S.smul_of_tower_mem _ ?_
   induction i with
   | zero => simpa using hv
-  | succ i ih => rw [pow_succ', Module.End.mul_apply]; exact hS _ ih
+  | succ i ih => rw [pow_succ', mul_apply_eq_comp]; exact hS _ ih
 
 theorem exp_apply_of_eq_zero (ι : Qbar l ≃+* ℂ) {n : Type} [Fintype n] [DecidableEq n]
     {M : Matrix n n (Qbar l)} (hM : IsNilpotent M) {v : n → ℂ} (hv : toEndC ι M v = 0) :
@@ -47,7 +47,7 @@ theorem exp_apply_of_eq_zero (ι : Qbar l ≃+* ℂ) {n : Type} [Fintype n] [Dec
     map_sum, LinearMap.add_apply, LinearMap.sum_apply, Finset.sum_eq_zero]
   · simp
   · intro i _
-    rw [map_rat_smul, LinearMap.smul_apply, map_pow, _root_.pow_succ, Module.End.mul_apply, hv, map_zero,
+    rw [map_rat_smul, LinearMap.smul_apply, map_pow, _root_.pow_succ, mul_apply_eq_comp, hv, map_zero,
       smul_zero]
 
 theorem eq_algebraMap_of_charpoly {V : Type} [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
@@ -107,7 +107,7 @@ variable {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlace
 theorem split_away (hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal) (ι : Qbar l ≃+* ℂ) {a : ℕ}
     (r : G E Ω →* GL (Fin a) (Qbar l))
     (hr : Continuous fun g => ((r g : GL (Fin a) (Qbar l)) : Matrix (Fin a) (Fin a) (Qbar l)))
-    (x y : WD h) (hxy : wdOf h hl ι r = x.lpSum y) :
+    (x y : WD h) (hxy : wdOf (h := h) hl ι r = x.lpSum y) :
     ∃ U U' : Submodule (Qbar l) (Fin a → Qbar l), IsCompl U U' ∧ finrank (Qbar l) U = x.lpDim ∧
       finrank (Qbar l) U' = y.lpDim ∧
       (∀ σ ∈ Ine (F := E) A,
@@ -119,7 +119,12 @@ theorem split_away (hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal) (ι : Qbar l ≃+* 
   induction y using WD.ind with | hP m c => ?_
   have ht := isTameChar_tameL h hl
   obtain ⟨N, hN⟩ := exists_isMonodromy h hl ht hr
-  obtain ⟨z, hz, e⟩ := hN.wdOf_spec hl ht (deg_frob (h := h)) ι
+  obtain ⟨z, hz⟩ := IsMonodromy.exists_isFrobSS hl ht hN (deg_frob (h := h)) ι
+  have e : wdOf (h := h) hl ι r = WD.mk z := by
+    have hz' : IsWDOf ι r (WD.mk z) := ⟨_, ht, _, deg_frob, N, z, hN, hz, rfl⟩
+    have hex : ∃ x : WD h, IsWDOf ι r x := ⟨WD.mk z, hz'⟩
+    rw [wdOf, dite_eq_left hex]
+    exact IsWDOf.unique hl hex.choose_spec hz'
   rw [e, WD.lpSum_mk, WD.mk_eq_mk] at hxy
   obtain ⟨f, hfρ, hfN⟩ := hxy
 
@@ -132,7 +137,7 @@ theorem split_away (hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal) (ι : Qbar l ≃+* 
           exp (tval (tameL h hl) ⟨σ, hσ⟩ • N) := by
       rw [wdMat_ineIncl, mul_assoc, ← exp_add_smul hN.1, neg_add_cancel, zero_smul,
         IsNilpotent.exp_zero, mul_one]
-    rw [hm, map_mul, Module.End.mul_apply, ← hN.rep_apply hl ht deg_frob ι,
+    rw [hm, map_mul, mul_apply_eq_comp, ← hN.rep_apply hl ht deg_frob ι,
       ← hz.ρ_ineIncl (hN.isSmooth_rep hl ht deg_frob ι)]
 
   have stρ2 : ∀ g u, (f u).2 = 0 → (f (z.ρ g u)).2 = 0 := fun g u hu => by

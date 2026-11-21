@@ -262,7 +262,7 @@ theorem lev_q_ne (W : LocWach PD LL O v n) (i : ZMod n) (ζ : LL)
     simpa [letπ, LocWach.q] using W.q₀_def
   have h4 := congrArg (W.lev i ζ) h3
   rw [map_mul, h, mul_zero, map_sub, map_pow, map_add (f := _), map_one, h2] at h4
-  have h5 := congrArg (fun f => PowerSeries.constantCoeff (PowerSeries.derivative LL f)) h4
+  have h5 := congrArg (fun f => PowerSeries.constantCoeff (PowerSeries.derivative (R := LL) f)) h4
   simp [Derivation.leibniz_pow, h0, h1, hz, p_ne W] at h5
 
 theorem root_pow {ζ : LL} {p : ℕ} (hp : p.Prime) (hζ : ∃ j : ℕ, IsPrimitiveRoot ζ (p ^ j)) :

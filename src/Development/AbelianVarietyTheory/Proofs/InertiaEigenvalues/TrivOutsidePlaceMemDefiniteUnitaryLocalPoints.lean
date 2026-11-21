@@ -42,6 +42,7 @@ theorem mem_locU : âˆ€ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : â
   rw [h1]
   simp only [Units.val_one, Matrix.one_apply]
   split_ifs <;> simp
+  rfl
 
 end GlobalTheory.LocMemTransfer
 

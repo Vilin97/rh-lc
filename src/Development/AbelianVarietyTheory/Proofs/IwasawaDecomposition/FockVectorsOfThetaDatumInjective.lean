@@ -211,6 +211,34 @@ theorem dRho_laws (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {f : WO S T �
       Formalism.IndefR.Datum.dRho (heisO ψ S T) θ τ z (Formalism.IndefR.Datum.dRho (heisO ψ S T) θ τ' z' f) =
         Formalism.IndefR.Datum.dRho (heisO ψ S T) θ τ' z' (Formalism.IndefR.Datum.dRho (heisO ψ S T) θ τ z f) +
         (-(2 * Real.pi * Complex.I) * ((if τ = τ' then formAt S T τ z z' else 0 : ℝ) : ℂ)) • f := by
+  have theta_add : ∀ {f g : WO S T → ℂ}, IsThetaFunO ψ S T f → IsThetaFunO ψ S T g → IsThetaFunO ψ S T (f + g) := by
+    intro f g hf hg
+    exact {
+      quasi γ w := by simp only [Pi.add_apply, hf.quasi, hg.quasi, mul_add]
+      level := by
+        obtain ⟨U, hU, h1⟩ := hf.level
+        obtain ⟨U', hU', h2⟩ := hg.level
+        refine ⟨U ⊓ U', hU.inter hU', fun u hu h0 => ?_⟩
+        funext w
+        have e1 := congrFun (h1 u hu.1 h0) w
+        have e2 := congrFun (h2 u hu.2 h0) w
+        unfold heisO at e1 e2 ⊢
+        rw [Pi.add_apply, Pi.add_apply, mul_add, e1, e2]
+      cont := hf.cont.add hg.cont
+      smooth k L h1 h2 w := (hf.smooth k L h1 h2 w).add (hg.smooth k L h1 h2 w) }
+  have theta_smul : ∀ (c : ℂ) {f : WO S T → ℂ}, IsThetaFunO ψ S T f → IsThetaFunO ψ S T (c • f) := by
+    intro c f hf
+    exact {
+      quasi γ w := by rw [Pi.smul_apply, Pi.smul_apply, hf.quasi, smul_eq_mul, smul_eq_mul, mul_left_comm]
+      level := by
+        obtain ⟨U, hU, h1⟩ := hf.level
+        refine ⟨U, hU, fun u hu h0 => ?_⟩
+        funext w
+        have e1 := congrFun (h1 u hu h0) w
+        unfold heisO at e1 ⊢
+        rw [Pi.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul, mul_left_comm, e1]
+      cont := hf.cont.const_smul c
+      smooth k L h1 h2 w := contDiff_const.mul (hf.smooth k L h1 h2 w) }
   obtain ⟨σ, h⟩ := GlobalTheory.RealLineAt.exists_inverse_chart hθ
   have hE : ∀ τ z g, Formalism.IndefR.Datum.dRho (heisO ψ S T) θ τ z g =
       FockCompare.hD (iotaW σ T S) (piW θ T S) (omO S T) (piW θ T S (lineAt θ τ z 1)) g := fun τ z g =>
@@ -247,8 +275,36 @@ def comb (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D) (τ : D.
 
 theorem comb_theta (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) (τ : D.what₂.Tau) (α : ℂ)
     (z z' : Matrix (Fin T.rank) (Fin S.rank) ℂ) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) :
-    IsThetaFunO ψ S T (comb ψ θ S T τ α z z' f) :=
-  theta_add (theta_dRho hθ hψ τ z hf) (theta_smul α (theta_dRho hθ hψ τ z' hf))
+    IsThetaFunO ψ S T (comb ψ θ S T τ α z z' f) := by
+  have theta_add : ∀ {f g : WO S T → ℂ}, IsThetaFunO ψ S T f → IsThetaFunO ψ S T g → IsThetaFunO ψ S T (f + g) := by
+    intro f g hf hg
+    exact {
+      quasi γ w := by simp only [Pi.add_apply, hf.quasi, hg.quasi, mul_add]
+      level := by
+        obtain ⟨U, hU, h1⟩ := hf.level
+        obtain ⟨U', hU', h2⟩ := hg.level
+        refine ⟨U ⊓ U', hU.inter hU', fun u hu h0 => ?_⟩
+        funext w
+        have e1 := congrFun (h1 u hu.1 h0) w
+        have e2 := congrFun (h2 u hu.2 h0) w
+        unfold heisO at e1 e2 ⊢
+        rw [Pi.add_apply, Pi.add_apply, mul_add, e1, e2]
+      cont := hf.cont.add hg.cont
+      smooth k L h1 h2 w := (hf.smooth k L h1 h2 w).add (hg.smooth k L h1 h2 w) }
+  have theta_smul : ∀ (c : ℂ) {f : WO S T → ℂ}, IsThetaFunO ψ S T f → IsThetaFunO ψ S T (c • f) := by
+    intro c f hf
+    exact {
+      quasi γ w := by rw [Pi.smul_apply, Pi.smul_apply, hf.quasi, smul_eq_mul, smul_eq_mul, mul_left_comm]
+      level := by
+        obtain ⟨U, hU, h1⟩ := hf.level
+        refine ⟨U, hU, fun u hu h0 => ?_⟩
+        funext w
+        have e1 := congrFun (h1 u hu h0) w
+        unfold heisO at e1 ⊢
+        rw [Pi.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul, mul_left_comm, e1]
+      cont := hf.cont.const_smul c
+      smooth k L h1 h2 w := contDiff_const.mul (hf.smooth k L h1 h2 w) }
+  exact theta_add (theta_dRho hθ hψ τ z hf) (theta_smul α (theta_dRho hθ hψ τ z' hf))
 
 theorem comb_add (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) (τ : D.what₂.Tau) (α : ℂ)
     (z z' : Matrix (Fin T.rank) (Fin S.rank) ℂ) {f f' : WO S T → ℂ} (hf : IsThetaFunO ψ S T f)
@@ -268,6 +324,19 @@ theorem comb_comm (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) (τ τ' : D.wh
     comb ψ θ S T τ α x x' (comb ψ θ S T τ' β y y' f) = comb ψ θ S T τ' β y y' (comb ψ θ S T τ α x x' f) +
       (if τ = τ' then -(2 * Real.pi * Complex.I) * ((formAt S T τ x y : ℝ) + β * (formAt S T τ x y' : ℝ) +
         α * (formAt S T τ x' y : ℝ) + α * β * (formAt S T τ x' y' : ℝ)) else 0) • f := by
+  have theta_smul : ∀ (c : ℂ) {f : WO S T → ℂ}, IsThetaFunO ψ S T f → IsThetaFunO ψ S T (c • f) := by
+    intro c f hf
+    exact {
+      quasi γ w := by rw [Pi.smul_apply, Pi.smul_apply, hf.quasi, smul_eq_mul, smul_eq_mul, mul_left_comm]
+      level := by
+        obtain ⟨U, hU, h1⟩ := hf.level
+        refine ⟨U, hU, fun u hu h0 => ?_⟩
+        funext w
+        have e1 := congrFun (h1 u hu h0) w
+        unfold heisO at e1 ⊢
+        rw [Pi.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul, mul_left_comm, e1]
+      cont := hf.cont.const_smul c
+      smooth k L h1 h2 w := contDiff_const.mul (hf.smooth k L h1 h2 w) }
   have ht := fun τ z => theta_dRho hθ hψ τ z hf
   have hc := fun τ z => (dRho_laws hψ hθ hf τ z).2.2
   rw [comb.eq_1 ψ θ S T τ' β y y' f, comb.eq_1 ψ θ S T τ α x x' f,
@@ -372,6 +441,34 @@ end Heis
 
 theorem ptOf_injective : ∀ (D : D7) (V W : HSp D) (S S' : D.what₂.Tau → SPar) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (M : DSModel V S) (M' : DSModel W S') (f : WO V W → ℂ), IsStdChar D ψ (-1) → IsInfFam θ → IsVacVec ψ θ M M' f → Function.Injective (ptOf ψ θ M M' f) := by
   intro D V W S S' ψ θ M M' f hψ hθ hf
+  have theta_add : ∀ {f g : WO V W → ℂ}, IsThetaFunO ψ V W f → IsThetaFunO ψ V W g → IsThetaFunO ψ V W (f + g) := by
+    intro f g hf hg
+    exact {
+      quasi γ w := by simp only [Pi.add_apply, hf.quasi, hg.quasi, mul_add]
+      level := by
+        obtain ⟨U, hU, h1⟩ := hf.level
+        obtain ⟨U', hU', h2⟩ := hg.level
+        refine ⟨U ⊓ U', hU.inter hU', fun u hu h0 => ?_⟩
+        funext w
+        have e1 := congrFun (h1 u hu.1 h0) w
+        have e2 := congrFun (h2 u hu.2 h0) w
+        unfold heisO at e1 e2 ⊢
+        rw [Pi.add_apply, Pi.add_apply, mul_add, e1, e2]
+      cont := hf.cont.add hg.cont
+      smooth k L h1 h2 w := (hf.smooth k L h1 h2 w).add (hg.smooth k L h1 h2 w) }
+  have theta_smul : ∀ (c : ℂ) {f : WO V W → ℂ}, IsThetaFunO ψ V W f → IsThetaFunO ψ V W (c • f) := by
+    intro c f hf
+    exact {
+      quasi γ w := by rw [Pi.smul_apply, Pi.smul_apply, hf.quasi, smul_eq_mul, smul_eq_mul, mul_left_comm]
+      level := by
+        obtain ⟨U, hU, h1⟩ := hf.level
+        refine ⟨U, hU, fun u hu h0 => ?_⟩
+        funext w
+        have e1 := congrFun (h1 u hu h0) w
+        unfold heisO at e1 ⊢
+        rw [Pi.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul, mul_left_comm, e1]
+      cont := hf.cont.const_smul c
+      smooth k L h1 h2 w := contDiff_const.mul (hf.smooth k L h1 h2 w) }
   have ot : ∀ α p {g}, IsThetaFunO ψ V W g → IsThetaFunO ψ V W (op M M' ψ θ α p g) :=
     fun α p g hg => comb_theta hψ hθ _ _ _ _ hg
   have oa : ∀ α p {g g'}, IsThetaFunO ψ V W g → IsThetaFunO ψ V W g' →
@@ -380,13 +477,13 @@ theorem ptOf_injective : ∀ (D : D7) (V W : HSp D) (S S' : D.what₂.Tau → SP
   have os : ∀ α p (a : ℂ) {g}, IsThetaFunO ψ V W g → op M M' ψ θ α p (a • g) = a • op M M' ψ θ α p g :=
     fun α p a g hg => comb_smul hψ hθ _ _ _ _ a hg
   refine pure_injective (P := IsThetaFunO ψ V W) (B := op M M' ψ θ Complex.I)
-    (fun _ _ => GlobalTheory.OrientedHeis.theta_add) (fun a _ => GlobalTheory.OrientedHeis.theta_smul a) (fun p g hg => ?_)
+    (fun _ _ => theta_add) (fun a _ => theta_smul a) (fun p g hg => ?_)
     (fun p q g hg => ?_) (fun p g g' hg hg' => ?_) (fun p a g hg => ?_) (fun p _ _ => oa _ p) (fun p a _ => os _ p a)
     (fun p => (fockScale D p.1 : ℂ)⁻¹ *
       (-(2 * Real.pi * Complex.I) * (2 * (tauE D p.1 D.host.xi0).im * (-Complex.I - Complex.I))))
     (fun p => ?_) (fun p q g hg => ?_) hf.theta hf.ne fun p => ?_
   · rw [aPlusAll_eq]
-    exact GlobalTheory.OrientedHeis.theta_smul _ (ot _ _ hg)
+    exact theta_smul _ (ot _ _ hg)
   · simp only [aPlusAll_eq]
     rw [os _ _ _ (ot _ _ hg), os _ _ _ (ot _ _ hg), op_comm M M' hψ hθ _ _ p q hg, sub_self, mul_zero, mul_zero, ite_self,
       zero_smul, add_zero, smul_comm]

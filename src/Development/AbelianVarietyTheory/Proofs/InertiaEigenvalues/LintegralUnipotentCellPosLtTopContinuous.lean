@@ -237,7 +237,7 @@ theorem exists_levelAt_subset (S : Finset (HeightOneSpectrum (𝓞 E))) (U : Sub
     fun κ h v hv i j => (h v (Finset.mem_union_left _ hv) i j).trans (WithZero.exp_le_exp.2 (by simp)),
     fun κ h v hv i j => (h v (Finset.mem_union_right _ hv) i j).trans (WithZero.exp_le_exp.2 (by simp))⟩
   obtain ⟨⟨T, m⟩, hT⟩ := ((AdelicGLn.isCompact_integralFiniteGL E a).diff hU).elim_directed_family_closed t htc (by
-    refine Set.eq_empty_of_forall_notMem fun κ ⟨h1, h2⟩ => h1.2 ?_
+    refine Set.disjoint_left.2 fun κ h1 h2 => h1.2 ?_
     have : κ = 1 := Units.ext (sub_eq_zero.1 (Matrix.ext fun i j => FiniteAdeleRing.ext _ fun v => ?_))
     · exact this ▸ one_mem U
     by_contra h0
@@ -267,14 +267,16 @@ theorem exists_levelAt_subset (S : Finset (HeightOneSpectrum (𝓞 E))) (U : Sub
       (GeneralLinearGroup.map (pLoc E v) x).val i j - pLoc E v ((1 : Matrix (Fin a) (Fin a) (Af E)) i j) :=
     fun x v i j => map_sub (pLoc E v) _ _
   by_contra hn
-  refine Set.eq_empty_iff_forall_notMem.1 hT (h⁻¹ * κ) ⟨⟨mem_integralFiniteGL_iff_KGL.2 fun v => ?_, fun hm => hn ?_⟩,
-    fun v hv i j => ?_⟩
+  refine (Set.disjoint_left.1 hT) (a := h⁻¹ * κ) ⟨mem_integralFiniteGL_iff_KGL.2 fun v => ?_, fun hm => hn ?_⟩
+    (fun v hv i j => ?_)
   · by_cases hv : v ∈ T \ S
     · rw [e1 v hv]; exact one_mem _
     · rw [e2 v hv]; exact hκ.1 v
   · simpa using mul_mem hh hm
   · by_cases hv' : v ∈ T \ S
     · rw [e3, e1 v hv', ← map_one (GeneralLinearGroup.map (n := Fin a) (pLoc E v)), ← e3]
+      simp only [Units.val_one, sub_self, Matrix.zero_apply]
+      change Valued.v (pLoc E v 0) ≤ _
       simp
     · have hS : v ∈ S := by_contra fun hS => hv' (Finset.mem_sdiff.2 ⟨hv, hS⟩)
       rw [e3, e2 v hv', ← e3]

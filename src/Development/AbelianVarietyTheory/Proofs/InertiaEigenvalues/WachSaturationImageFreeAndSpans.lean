@@ -44,7 +44,7 @@ theorem isBaseChange_between (A E : Type) [CommRing A] [CommRing E] [Algebra A E
     intro d
     obtain ⟨x, rfl⟩ := hq d
     have : q x ∈ LinearMap.range Φ := by
-      refine h₁.inductionOn x (fun x => q x ∈ LinearMap.range Φ) (by simp) ?_ ?_ ?_
+      refine h₁.inductionOn x ?_ ?_ ?_
       · intro m
         refine ⟨1 ⊗ₜ ⟨q m, hqS m m.2⟩, ?_⟩
         simp [Φ, LinearMap.liftBaseChange_tmul]
@@ -177,8 +177,16 @@ theorem satM_free_and_spans : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.l
   have hex : Function.Injective (((HW l).W K s LL h).map ι) ∧
       Function.Exact (((HW l).W K s LL h).map ι) (((HW l).W K s LL h).map π) ∧
       Function.Surjective (((HW l).W K s LL h).map π) :=
-    GlobalTheory.EtaleExact.DD_exact D HW F (GlobalTheory.Decompl.fontaine_and_decompletion D HW F) l K s LL h
-      T₀ T₁ T₂ ι π hses
+    by
+      haveI := GlobalTheory.EtaleExact.finite_OL LL
+      haveI : IsNoetherianRing ↥(OL LL) := IsNoetherianRing.of_finite ℤ_[l] ↥(OL LL)
+      have hp : ((D.loc l).PD K).p = l := (D.loc l).PD_p K
+      refine GlobalTheory.EtaleExact.exact_of_tie (((F l).E K s LL h).tie)
+        (GlobalTheory.EtaleExact.map_ne_top_of_tie (((F l).E K s LL h).tie) ?_ ?_) T₀ T₁ T₂ ι π hses
+      · rw [hp]
+        exact GlobalTheory.EtaleExact.isUnit_or_dvd_pow (D.loc l) LL
+      · rw [hp]
+        exact GlobalTheory.EtaleExact.sep_RW LL
   exact satM_free_loc (HW l) K s LL h T₁ T₂ π c1 c2 hex.2.2 hflat
 
 end GlobalTheory.NL.SatFree

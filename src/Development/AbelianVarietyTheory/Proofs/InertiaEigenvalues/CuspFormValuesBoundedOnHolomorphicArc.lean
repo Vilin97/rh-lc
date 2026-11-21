@@ -86,7 +86,12 @@ theorem cusp_values_bounded_on_arc : ∀ (E : Type) [Field E] [NumberField E] [I
   obtain ⟨T1, B1, h1⟩ := GlobalTheory.T.norm_diag_tangent_unitFrame_holomorphicArc_le E H Dw l Xo c r σ (U σ) Uw O β Y a χ W Ha th Θ z hG (hU σ hG) hz
   obtain ⟨T2, B2, h2⟩ := GlobalTheory.T.arc_generator_ratio_bounded_unit_frame E H Dw l Xo c r σ (U σ) Uw O β Y a χ W Ha th Θ z hG (hU σ hG) hz
   obtain ⟨M, hM⟩ := cusp_bounded_at_unitFr E H Dw l Xo c r U σ a' n F hG hF
-  have hev := (GlobalTheory.Reg.evLaws_genFr_atlas E H Dw l Xo c).1
+  have hev : GlobalTheory.Reg.EvLaws Xo c := by
+    have hB : Out.SecBaseChangeSt := GlobalTheory.abelianSchemeLaws_all.1.secBaseChange
+    obtain ⟨-, -, hwd, hwt, -, -⟩ := GlobalTheory.T.framedModuli_algebraicLaws_chart_weight_integrality hB E H Dw l Xo c
+    have hbc : GlobalTheory.Reg.FrBC Xo c := fun S T _ _ _ _ φ y =>
+      GlobalTheory.Frames.FramedBaseChange.exists_frMap hB E H Dw l Xo c S T φ y
+    exact ⟨hwd, GlobalTheory.T.framedPoint_reduced_from_testRing hB E H Dw l Xo c, hwt, hbc⟩
   haveI : IsDomain (CAt σ) := inferInstanceAs (IsDomain ℂ)
   haveI : IsReduced (CAt σ) := inferInstanceAs (IsReduced ℂ)
   set B := max 1 (max B1 B2)

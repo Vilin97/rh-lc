@@ -63,16 +63,16 @@ theorem invariant_iff [FiniteDimensional Qp LL] (act : G → (R ≃ₐ[F] R))
         have h2 : act g (e.coord i v • b) = e.coord i v • act g b := this
         simp only [c, LinearMap.comp_apply, AlgebraTensorModule.map_tmul,
           LinearMap.rTensor_tmul, LinearEquiv.coe_coe, TensorProduct.lid_tmul, h2]
-        simp
+        rfl
       | add a b ha hb => simp only [map_add (f := _), ha, hb]
     rw [hsum x]
     refine Submodule.sum_mem _ fun i _ => ?_
     obtain ⟨k, hk⟩ := hinv (c i x) fun g => by rw [← hc, hx]
-    exact ⟨e i ⊗ₜ k, by simp [hk]⟩
+    exact ⟨e i ⊗ₜ k, by simp [incl, AlgebraTensorModule.map_tmul, hk]⟩
   · rintro ⟨y, rfl⟩ g
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | tmul v b => simp
+    | tmul v b => simp [incl, AlgebraTensorModule.map_tmul]
     | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem exists_eigenline [CharZero Qp] [FiniteDimensional Qp F] (τ : F →ₐ[Qp] LL) :
@@ -276,7 +276,7 @@ theorem finrank_fildR_trivial [CharZero Qp] [FiniteDimensional Qp LL] (τ : K �
     intro c z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | tmul v b => simp [mulVdR]
+    | tmul v b => simp [mulVdR, incl, AlgebraTensorModule.map_tmul]
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hE : DdRE PD (Representation.trivial LL G LL) τ = LL ∙ incl Qp K BdR LL z₀ := by
     ext x
@@ -384,14 +384,14 @@ theorem lift_iff_surjective [FiniteDimensional Qp LL] (h : IsExt ρ ρ' i p) :
       refine ⟨a • mulVB (LL := LL) k y, Submodule.smul_mem _ _ ((GlobalTheory.CrysSub.mem_Dcris PD _ _).2 fun g => ?_), ?_⟩
       · rw [h1, (GlobalTheory.CrysSub.mem_Dcris PD _ _).1 hy]
       · rw [map_smul, h2, hp]
-        simp [mulVB, smul_tmul']
+        simp [mulVB, incl, AlgebraTensorModule.map_tmul, smul_tmul']
     | add a b ha hb =>
       obtain ⟨x, hx, hx'⟩ := ha
       obtain ⟨w, hw, hw'⟩ := hb
       exact ⟨x + w, add_mem hx hw, by rw [map_add (f := _), map_add (f := _), hx', hw']⟩
   · intro hs
     obtain ⟨y, hy⟩ := hs ⟨(1 : LL) ⊗ₜ[Qp] (1 : B), by
-      rw [dcris_trivial]; exact ⟨1 ⊗ₜ 1, by simp⟩⟩
+      rw [dcris_trivial]; exact ⟨1 ⊗ₜ 1, by simp [incl, AlgebraTensorModule.map_tmul]⟩⟩
     exact ⟨y, y.2, congrArg Subtype.val hy⟩
 
 theorem finrank_ext [FiniteDimensional LL V] (h : IsExt ρ ρ' i p) :

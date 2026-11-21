@@ -47,7 +47,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 theorem line_one_eq {β : Type} [Fintype β] [DecidableEq β] {R S : ℕ} (hCM : IsCMExt F E σ)
     (τ : ∀ w : InfinitePlace F, EmbOver E w) {J : Matrix β β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} {b : ℂ} {C : InfinitePlace F → Matrix β (Ix R S) ℂ}
-    (hfr : ∀ w, IsFrame (b • J.map (piInf (τ w))) (C w)) {γ : Multiplicative ℝ →* UG (cA σ) J} (hγ : γ ∈ RLines σ J)
+    (hfr : ∀ w, IsFrame (b • J.map (piInf (τ w))) (C w)) {γ : Multiplicative ℝ →* UG (cA σ) J} (hγ : γ ∈ RLines (σ := σ) J)
     {Y : InfinitePlace F → Mat R S} (hgen : IsGen τ C γ Y) (k : UG (cA σ) J)
     (hk : At (evI F) ((k.1 : Matrix β β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) - 1))
     (hY : ∀ w, C w * NormedSpace.exp (Y w) = (k.1 : Matrix β β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))).map (piInf (τ w)) * C w) :
@@ -84,7 +84,7 @@ theorem kLine_upq {β : Type} [Fintype β] [DecidableEq β] {R S : ℕ} (hCM : I
     (hkθ : ∀ w, Commute ((k.1 : Matrix β β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))).map (piInf (τ w))) (θ w)) :
     ∃ Y : InfinitePlace F → Mat R S, (∀ w, Y w ∈ upq R S) ∧ (∀ w, IsKC (Y w)) ∧
       (∀ w, C w * NormedSpace.exp (Y w) = (k.1 : Matrix β β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))).map (piInf (τ w)) * C w) ∧
-      ∃ γ ∈ RLines σ J, IsGen τ C γ Y ∧ γ (Multiplicative.ofAdd 1) = k := by
+      ∃ γ ∈ RLines (σ := σ) J, IsGen τ C γ Y ∧ γ (Multiplicative.ofAdd 1) = k := by
   have hu : (k.1 : Matrix β β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ * J * (k.1 : Matrix β β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))).map (cA σ) = J := k.2
   have hloc : ∀ w, ∃ Y : Mat R S, Y ∈ upq R S ∧ IsKC Y ∧
       C w * NormedSpace.exp Y = (k.1 : Matrix β β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))).map (piInf (τ w)) * C w := by

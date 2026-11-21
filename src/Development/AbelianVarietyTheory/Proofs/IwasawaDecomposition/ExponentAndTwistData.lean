@@ -269,9 +269,9 @@ def EIdem : Prop :=
   eL D * eL D = eL D ∧ ∀ g : G0g D.nd, eL D * MonoidAlgebra.of _ _ g = MonoidAlgebra.of _ _ g * eL D
 
 theorem eAlgT_eq (i : T.Tw) (b : Bool) :
-    eAlgT D T i b = MonoidAlgebra.mapRangeRingHom (G0g D.nd) (readT D T i b) (eL D) := by
+    eAlgT D T i b = MonoidAlgebra.mapRingHom (G0g D.nd) (readT D T i b) (eL D) := by
   refine MonoidAlgebra.ext (Finsupp.ext fun g => ?_)
-  simp [eAlgT, eL, MonoidAlgebra.mapRangeRingHom]
+  simp [eAlgT, eL, MonoidAlgebra.coeff_ofCoeff]
 
 theorem eAlgT_idem (he : EIdem D) (i : T.Tw) (b : Bool) : eAlgT D T i b * eAlgT D T i b = eAlgT D T i b := by
   rw [eAlgT_eq, ← map_mul, he.1]
@@ -279,11 +279,11 @@ theorem eAlgT_idem (he : EIdem D) (i : T.Tw) (b : Bool) : eAlgT D T i b * eAlgT 
 theorem eAlgT_central (he : EIdem D) (i : T.Tw) (b : Bool) (x : MonoidAlgebra (FractionRing (T.O i)) (G0g D.nd)) :
     eAlgT D T i b * x = x * eAlgT D T i b := by
   rw [eAlgT_eq]
-  refine MonoidAlgebra.induction_on (motive := fun x => MonoidAlgebra.mapRangeRingHom (G0g D.nd) (readT D T i b) (eL D) * x =
-    x * MonoidAlgebra.mapRangeRingHom (G0g D.nd) (readT D T i b) (eL D)) x (fun g => ?_) (fun x y hx hy => ?_) (fun r x hx => ?_)
-  · have h := congrArg (MonoidAlgebra.mapRangeRingHom (G0g D.nd) (readT D T i b)) (he.2 g)
-    have hs : MonoidAlgebra.mapRangeRingHom (G0g D.nd) (readT D T i b) (MonoidAlgebra.of _ _ g) = MonoidAlgebra.of _ _ g := by
-      simp [MonoidAlgebra.of_apply, MonoidAlgebra.mapRangeRingHom]
+  refine MonoidAlgebra.induction_on (motive := fun x => MonoidAlgebra.mapRingHom (G0g D.nd) (readT D T i b) (eL D) * x =
+    x * MonoidAlgebra.mapRingHom (G0g D.nd) (readT D T i b) (eL D)) x (fun g => ?_) (fun x y hx hy => ?_) (fun r x hx => ?_)
+  · have h := congrArg (MonoidAlgebra.mapRingHom (G0g D.nd) (readT D T i b)) (he.2 g)
+    have hs : MonoidAlgebra.mapRingHom (G0g D.nd) (readT D T i b) (MonoidAlgebra.of _ _ g) = MonoidAlgebra.of _ _ g := by
+      simp [MonoidAlgebra.of_apply]
     rw [map_mul, map_mul, hs] at h
     exact h
   · rw [mul_add, add_mul, hx, hy]

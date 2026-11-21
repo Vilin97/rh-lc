@@ -264,7 +264,7 @@ theorem main2 (hLL : LocalLift) (h : IsCMExt F E σ) {ψ : AddChar (AF F) ℂ} (
     (hKJ : ∀ w (g : Matrix β β ℂ), gᴴ * K w * g = K w ↔ gᵀ * JB.map (piInf (τ w)) * g.map star = JB.map (piInf (τ w)))
     {om : UG (cA σ) JB →* Module.End ℂ ((κ → AF F) → ℂ)} (hom : IsUSplitting (adeleClass F) ψ d (actB (cA σ)) om)
     {D} (hD : IsD d D) :
-    ∃ c : InfinitePlace F → ℂ, ∀ γ ∈ RLines σ JB, ∀ Z : InfinitePlace F → Matrix β β ℂ,
+    ∃ c : InfinitePlace F → ℂ, ∀ γ ∈ RLines (σ := σ) JB, ∀ Z : InfinitePlace F → Matrix β β ℂ,
       (∀ (t : ℝ) w, ((γ (Multiplicative.ofAdd t)).1 : Matrix β β (AE F E)).map (piInf (τ w)) = NormedSpace.exp (t • Z w)) →
       ∀ (ι : Type) [Fintype ι] (u v : ι → Matrix α β (AE F E)), (∀ j, At (evI F) (u j)) → (∀ j, At (evI F) (v j)) →
         (∀ x, At (evI F) x → ∀ w, x.map (piInf (τ w)) * (Z w)ᵀ = ∑ j, sB σ JA JB (v j) x • (u j).map (piInf (τ w))) →

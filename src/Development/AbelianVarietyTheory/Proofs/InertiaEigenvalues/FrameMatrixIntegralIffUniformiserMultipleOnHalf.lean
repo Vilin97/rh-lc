@@ -72,7 +72,6 @@ theorem half_int_iff : ∀ (D : D7) (S T : HSp D) (βS : GL (Fin S.rank) (EAf D)
     unfold redM
     rw [dite_eq_left (hN i j), Matrix.zero_apply]
     convert key using 3
-    rw [Matrix.smul_apply, smul_eq_mul]
   · rintro ⟨hN, hR⟩ i j
     have hN' : a * M i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := by
       have := hN i j; rwa [Matrix.smul_apply, smul_eq_mul] at this
@@ -81,8 +80,7 @@ theorem half_int_iff : ∀ (D : D7) (S T : HSp D) (βS : GL (Fin S.rank) (EAf D)
         have h3 := congrFun (congrFun (hR PP hPP) i) j
         unfold redM at h3
         rw [dite_eq_left (hN i j), Matrix.zero_apply] at h3
-        convert h3 using 3
-        rw [Matrix.smul_apply, smul_eq_mul])
+        convert h3 using 3)
     have e1 := hinv i j
     rw [e1] at key
     exact key

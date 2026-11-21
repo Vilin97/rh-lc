@@ -171,15 +171,16 @@ structure IsGraph (ρ : G →* Module.End ℂ V) (H : Subgroup G) (S₁ S₂ : S
 variable {ρ : G →* Module.End ℂ V}
 
 theorem IsGraph.swap {H : Subgroup G} {S₁ S₂ : Submodule ℂ V} {X : Submodule ℂ (V × V)} (h : IsGraph ρ H S₁ S₂ X) :
-    IsGraph ρ H S₂ S₁ (X.comap (LinearEquiv.prodComm ℂ V V).toLinearMap) where
-  ne := by
-    obtain ⟨z, hz, hz0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot h.ne
-    refine (Submodule.ne_bot_iff _).2 ⟨z.swap, hz, fun e => hz0 ?_⟩
-    simpa using congrArg Prod.swap e
-  mem := fun z hz => (h.mem _ hz).symm
-  stab := fun x hx z hz => h.stab x hx _ hz
-  inj₁ := fun u hu => h.inj₂ u hu
-  inj₂ := fun u hu => h.inj₁ u hu
+    IsGraph ρ H S₂ S₁ (X.comap (LinearEquiv.prodComm ℂ V V).toLinearMap) := by
+  refine
+    { ne := ?_
+      mem := fun z hz => (h.mem _ hz).symm
+      stab := fun x hx z hz => h.stab x hx _ hz
+      inj₁ := fun u hu => h.inj₂ u hu
+      inj₂ := fun u hu => h.inj₁ u hu }
+  obtain ⟨z, hz, hz0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot h.ne
+  refine (Submodule.ne_bot_iff _).2 ⟨z.swap, hz, fun e => hz0 ?_⟩
+  simpa using congrArg Prod.swap e
 
 theorem rho_mul (g h : G) (x : V) : ρ (g * h) x = ρ g (ρ h x) := by rw [map_mul]; rfl
 
@@ -454,44 +455,46 @@ def res (ρ : G →* Module.End ℂ V) (C : Submodule ℂ V) (hC : ∀ h, ∀ x 
 
 variable {C : Submodule ℂ V} {hC : ∀ h, ∀ x ∈ C, ρ h x ∈ C}
 
-theorem Irr.res {S : Submodule ℂ V} (h : Irr ρ S) (hS : S ≤ C) : Irr (res ρ C hC) (S.comap C.subtype) where
-  stab := fun g x hx => h.stab g _ hx
-  simple := fun T hT hst => by
-    rcases h.simple (T.map C.subtype) (by rintro _ ⟨x, hx, rfl⟩; exact hT hx)
-      (by rintro g _ ⟨x, hx, rfl⟩; exact ⟨_, hst g x hx, rfl⟩) with e | e
-    · left
-      rw [← Submodule.comap_map_eq_of_injective C.injective_subtype T, e, Submodule.comap_bot, Submodule.ker_subtype]
-    · right
-      rw [← e, Submodule.comap_map_eq_of_injective C.injective_subtype]
+theorem Irr.res {S : Submodule ℂ V} (h : Irr ρ S) (hS : S ≤ C) : Irr (res ρ C hC) (S.comap C.subtype) := by
+  refine { stab := fun g x hx => h.stab g _ hx, simple := ?_ }
+  intro T hT hst
+  rcases h.simple (T.map C.subtype) (by rintro _ ⟨x, hx, rfl⟩; exact hT hx)
+    (by rintro g _ ⟨x, hx, rfl⟩; exact ⟨_, hst g x hx, rfl⟩) with e | e
+  · left
+    rw [← Submodule.comap_map_eq_of_injective C.injective_subtype T, e, Submodule.comap_bot, Submodule.ker_subtype]
+  · right
+    rw [← e, Submodule.comap_map_eq_of_injective C.injective_subtype]
 
 theorem IsGraph.res {H : Subgroup G} {S₁ S₂ : Submodule ℂ V} {X : Submodule ℂ (V × V)} (h : IsGraph ρ H S₁ S₂ X)
     (h₁ : S₁ ≤ C) (h₂ : S₂ ≤ C) :
-    IsGraph (res ρ C hC) H (S₁.comap C.subtype) (S₂.comap C.subtype) (X.comap (C.subtype.prodMap C.subtype)) where
-  ne := by
-    obtain ⟨z, hz, hz0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot h.ne
-    refine (Submodule.ne_bot_iff _).2 ⟨(⟨z.1, h₁ (h.mem z hz).1⟩, ⟨z.2, h₂ (h.mem z hz).2⟩), hz, fun e => hz0 ?_⟩
-    exact Prod.ext (congrArg (fun p : C × C => (p.1 : V)) e) (congrArg (fun p : C × C => (p.2 : V)) e)
-  mem := fun z hz => h.mem _ hz
-  stab := fun x hx z hz => h.stab x hx _ hz
-  inj₁ := fun u hu => Subtype.ext (h.inj₁ _ hu)
-  inj₂ := fun u hu => Subtype.ext (h.inj₂ _ hu)
+    IsGraph (res ρ C hC) H (S₁.comap C.subtype) (S₂.comap C.subtype) (X.comap (C.subtype.prodMap C.subtype)) := by
+  refine
+    { ne := ?_
+      mem := fun z hz => h.mem _ hz
+      stab := fun x hx z hz => h.stab x hx _ hz
+      inj₁ := fun u hu => Subtype.ext (h.inj₁ _ hu)
+      inj₂ := fun u hu => Subtype.ext (h.inj₂ _ hu) }
+  obtain ⟨z, hz, hz0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot h.ne
+  refine (Submodule.ne_bot_iff _).2 ⟨(⟨z.1, h₁ (h.mem z hz).1⟩, ⟨z.2, h₂ (h.mem z hz).2⟩), hz, fun e => hz0 ?_⟩
+  exact Prod.ext (congrArg (fun p : C × C => (p.1 : V)) e) (congrArg (fun p : C × C => (p.2 : V)) e)
 
 theorem IsGraph.of_res {H : Subgroup G} {S₁ S₂ : Submodule ℂ V} {X : Submodule ℂ (C × C)}
     (h : IsGraph (HeckeIso.res ρ C hC) H (S₁.comap C.subtype) (S₂.comap C.subtype) X) :
-    IsGraph ρ H S₁ S₂ (X.map (C.subtype.prodMap C.subtype)) where
-  ne := by
-    obtain ⟨z, hz, hz0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot h.ne
+    IsGraph ρ H S₁ S₂ (X.map (C.subtype.prodMap C.subtype)) := by
+  refine
+    { ne := ?_
+      mem := by rintro _ ⟨z, hz, rfl⟩; exact h.mem z hz
+      stab := by rintro x hx _ ⟨z, hz, rfl⟩; exact ⟨_, h.stab x hx z hz, rfl⟩
+      inj₁ := ?_
+      inj₂ := ?_ }
+  · obtain ⟨z, hz, hz0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot h.ne
     refine (Submodule.ne_bot_iff _).2 ⟨_, ⟨z, hz, rfl⟩, fun e => hz0 ?_⟩
     exact Prod.ext (Subtype.ext (congrArg Prod.fst e)) (Subtype.ext (congrArg Prod.snd e))
-  mem := by rintro _ ⟨z, hz, rfl⟩; exact h.mem z hz
-  stab := by rintro x hx _ ⟨z, hz, rfl⟩; exact ⟨_, h.stab x hx z hz, rfl⟩
-  inj₁ := by
-    rintro u ⟨z, hz, e⟩
+  · rintro u ⟨z, hz, e⟩
     have e1 : z.1 = 0 := Subtype.ext (congrArg Prod.fst e)
     have e2 : z.2 = 0 := h.inj₁ _ (by rw [← e1]; exact hz)
     rw [← show (z.2 : V) = u from congrArg Prod.snd e, e2]; rfl
-  inj₂ := by
-    rintro u ⟨z, hz, e⟩
+  · rintro u ⟨z, hz, e⟩
     have e1 : z.2 = 0 := Subtype.ext (congrArg Prod.snd e)
     have e2 : z.1 = 0 := h.inj₂ _ (by rw [← e1]; exact hz)
     rw [← show (z.1 : V) = u from congrArg Prod.fst e, e2]; rfl

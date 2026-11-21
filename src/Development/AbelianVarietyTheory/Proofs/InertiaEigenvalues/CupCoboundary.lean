@@ -42,6 +42,7 @@ theorem dot_dual {O L : Type} [CommRing O] [CommRing L] (φ : O →+* L) {m : �
     Matrix.mulVec_mulVec, h2, Matrix.one_mulVec]
 
 set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 100000 in
 theorem cup_cob {m : ℕ} (r r' : ↥Gw →* GL (Fin m) O)
     (hr : Continuous fun g => ((r g : GL (Fin m) O) : Matrix (Fin m) (Fin m) O))
     (hr' : Continuous fun g => ((r' g : GL (Fin m) O) : Matrix (Fin m) (Fin m) O))
@@ -56,8 +57,32 @@ theorem cup_cob {m : ℕ} (r r' : ↥Gw →* GL (Fin m) O)
       Bw.toLL (y g ⬝ᵥ ((r' g : GL (Fin m) O) : Matrix (Fin m) (Fin m) O).mulVec (y' h)) =
         Bw.toLL (algebraMap ℤ_[l] O ((cycZ E Ω l (g : Ω ≃ₐ[E] Ω) : ℤ_[l]ˣ) : ℤ_[l])) * f h - f (g * h) + f g := by
   have hG := (GlobalTheory.LocalIntegers.good_integers l Bw.LL).1
-  let A := grepOf Bw r hr
-  let A' := grepOf Bw r' hr'
+  have rep_apply {s : ↥Gw →* GL (Fin m) O} (g : ↥(GK Bw.Kw)) (x : Fin m → ↥Bw.LL.1) :
+      Bw.rep s g x = (((s (Bw.e.symm g) : GL (Fin m) O) : Matrix (Fin m) (Fin m) O).map Bw.toLL).mulVec x := rfl
+  let mkRep (s : ↥Gw →* GL (Fin m) O)
+      (hs : Continuous fun g => ((s g : GL (Fin m) O) : Matrix (Fin m) (Fin m) O)) :
+      GRep ↥(GK Bw.Kw) ℚ_[l] ↥Bw.LL.1 ↥(OL Bw.LL) := by
+    haveI : IsTopologicalRing ↥Bw.LL.1 := hG.2.2.2.1
+    exact { V := Fin m → ↥Bw.LL.1
+            acg := inferInstance
+            modLL := inferInstance
+            modQp := inferInstance
+            towQp := inferInstance
+            modO := inferInstance
+            towO := inferInstance
+            fd := inferInstance
+            top := inferInstance
+            mtop := inferInstance
+            cadd := inferInstance
+            csmul := inferInstance
+            ρ := Bw.rep s
+            cont := by
+              intro x
+              simp only [rep_apply]
+              exact ((hs.comp Bw.e_symm_cont).matrix_map
+                (continuous_subtype_val.comp Bw.eO_cont)).matrix_mulVec continuous_const }
+  let A := mkRep r hr
+  let A' := mkRep r' hr'
   have hA : IsDR (P.PD Bw.Kw) A.ρ := by
     change Module.finrank ↥Bw.LL.1 ↥(DdR (P.PD Bw.Kw) (Bw.rep r)) =
       Module.finrank ℚ_[l] ↥Bw.Kw.1 * Module.finrank ↥Bw.LL.1 (Fin m → ↥Bw.LL.1)

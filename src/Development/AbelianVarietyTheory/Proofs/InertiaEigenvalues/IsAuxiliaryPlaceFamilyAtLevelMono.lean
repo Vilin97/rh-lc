@@ -249,8 +249,36 @@ theorem vK_bounds {S : Type} [CommRing S] [IsDomain S] [IsDiscreteValuationRing 
     rw [mul_zero] at h
     exact ha (IsFractionRing.injective S (FractionRing S) (by rw [h, map_zero]))
   refine ⟨hx, ?_⟩
-  rw [GlobalTheory.NormValExt.vK_eq l hx (a := a) (pow_ne_zero n h0) (by rw [h, map_pow, map_natCast, mul_comm]),
-    nval_l_pow h0 h1]
+  have hmul : ∀ {a b : S}, a ≠ 0 → b ≠ 0 → nval S l (a * b) = nval S l a + nval S l b := by
+    intro a b ha hb
+    unfold nval
+    rw [IsDiscreteValuationRing.addVal_mul,
+      ENat.toNat_add (fun h => ha (IsDiscreteValuationRing.addVal_eq_top_iff.mp h))
+        (fun h => hb (IsDiscreteValuationRing.addVal_eq_top_iff.mp h)), Nat.cast_add, add_div]
+  have hb : (l : S) ^ n ≠ 0 := pow_ne_zero n h0
+  have heq : x * algebraMap S (FractionRing S) ((l : S) ^ n) = algebraMap S (FractionRing S) a := by
+    rw [h, map_pow, map_natCast, mul_comm]
+  unfold vK
+  generalize_proofs hE
+  have hinj := IsFractionRing.injective S (FractionRing S)
+  have key : ∀ q : S × nonZeroDivisors S,
+      x * algebraMap S (FractionRing S) q.2 = algebraMap S (FractionRing S) q.1 →
+      nval S l q.1 - nval S l q.2 = nval S l a - nval S l ((l : S) ^ n) := by
+    intro q hq
+    have hq2 : (q.2 : S) ≠ 0 := nonZeroDivisors.ne_zero q.2.2
+    have hq1 : q.1 ≠ 0 := by
+      intro hzero
+      rw [hzero, map_zero] at hq
+      exact mul_ne_zero hx ((map_ne_zero_iff _ hinj).mpr hq2) hq
+    have hcross : a * q.2 = q.1 * (l : S) ^ n := by
+      apply hinj
+      rw [map_mul, map_mul, ← heq, ← hq]
+      ring
+    have hc := congrArg (nval S l) hcross
+    rw [hmul ha hq2, hmul hq1 hb] at hc
+    linarith
+  rw [← nval_l_pow h0 h1 n]
+  exact key hE.choose hE.choose_spec
 
 theorem exists_level (i : X.Tw) (R Dd nmax M₀ : ℕ) (I J : Type) [Finite I] [Finite J] (μ : ℕ) (v : J → ℕ)
     (F : ∀ M, M₀ ≤ M → I → MvPolynomial (Fin R ⊕ Fin R) (X.O0 i))

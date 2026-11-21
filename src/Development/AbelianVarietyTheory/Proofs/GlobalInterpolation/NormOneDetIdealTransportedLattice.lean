@@ -31,7 +31,8 @@ def pull (I : Submodule (𝓞 E') E') : Submodule (𝓞 E) E where
   zero_mem' := by simp
   add_mem' := fun {a b} ha hb => by
     show e (a + b) ∈ I
-    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    rw [e.map_add]
+    exact I.add_mem ha hb
   smul_mem' := fun c a ha => by
     show e (c • a) ∈ I
     rw [map_osmul]
@@ -60,9 +61,11 @@ theorem pull_norm (c : E → E) (c' : E' → E') (h : ∀ x, e (c x) = c' (e x))
   · rw [Submodule.one_le]
     have h1 : ∀ z ∈ I * J, e.symm z ∈ pull e I * pull e J := by
       intro z hz
-      refine Submodule.mul_induction_on hz (fun a ha b hb => ?_) fun a b ha hb => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
-      rw [map_mul]
-      exact Submodule.mul_mem_mul (by simpa [mem_pull] using ha) (by simpa [mem_pull] using hb)
+      refine Submodule.mul_induction_on hz (fun a ha b hb => ?_) fun a b ha hb => ?_
+      · rw [map_mul]
+        exact Submodule.mul_mem_mul (by simpa [mem_pull] using ha) (by simpa [mem_pull] using hb)
+      · rw [e.symm.map_add]
+        exact add_mem ha hb
     simpa using h1 1 (hIJ ▸ Submodule.mem_one.2 ⟨1, map_one _⟩)
 
 end Pull

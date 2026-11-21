@@ -39,10 +39,14 @@ theorem exists_place (K : Type) [Field K] [NumberField K] (p : ℕ) (hp : p.Prim
   obtain ⟨Q, -, hQ, hQl⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (S := 𝓞 K) (Ideal.span {(p : ℤ)}) ⊥
     (by rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ (algebraMap ℤ (𝓞 K)).injective_int)]; exact bot_le)
   have hpQ : (p : 𝓞 K) ∈ Q := by
-    have : ((p : ℤ)) ∈ Q.comap (algebraMap ℤ (𝓞 K)) := hQl ▸ Ideal.mem_span_singleton_self _
+    have : ((p : ℤ)) ∈ Ideal.under ℤ Q := by
+      rw [hQl]
+      exact Ideal.mem_span_singleton_self _
     simpa using this
   refine ⟨⟨Q, hQ, fun h => ?_⟩, hpQ⟩
-  rw [h, Ideal.comap_bot_of_injective _ (algebraMap ℤ (𝓞 K)).injective_int] at hQl
+  rw [h] at hQl
+  change Ideal.comap (algebraMap ℤ (𝓞 K)) ⊥ = _ at hQl
+  rw [Ideal.comap_bot_of_injective _ (algebraMap ℤ (𝓞 K)).injective_int] at hQl
   have : ((p : ℤ)) ∈ (⊥ : Ideal ℤ) := hQl ▸ Ideal.mem_span_singleton_self _
   exact hp.ne_zero (by exact_mod_cast (Ideal.mem_bot.1 this))
 
@@ -88,7 +92,12 @@ theorem integral_of_eqChar : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
     (by rw [Category.assoc, hy', sp_comp]) hA' y₁ (spMap i ≫ z)
     (by rw [Category.assoc, hz₁, hy₁.1, hφ]) (by rw [Category.assoc, hz₂, sp_comp])
     (by rw [Category.assoc, ← hz₃, ← Category.assoc, ← Category.assoc, sp_comp, sp_comp, e₁])
-  obtain ⟨hE, -⟩ := GlobalTheory.Reg.evLaws_genFr_atlas E H Dw l Xo c
+  have hE : GlobalTheory.Reg.EvLaws Xo c := by
+    have hB : Out.SecBaseChangeSt := GlobalTheory.abelianSchemeLaws_all.1.secBaseChange
+    obtain ⟨-, -, hwd, hwt, hint, -⟩ := GlobalTheory.T.framedModuli_algebraicLaws_chart_weight_integrality hB E H Dw l Xo c
+    have hbc : GlobalTheory.Reg.FrBC Xo c := fun S T _ _ _ _ φ y =>
+      GlobalTheory.Frames.FramedBaseChange.exists_frMap hB E H Dw l Xo c S T φ y
+    exact ⟨hwd, GlobalTheory.T.framedPoint_reduced_from_testRing hB E H Dw l Xo c, hwt, hbc⟩
   have e₂ : evI y₁ f = φ (evI y f) :=
     (GlobalTheory.ArcQ.evR_natural_weight_scaling E H Dw l Xo c hE a n f hf.1 T.Fr).1 _ φ _ _ hy₁
   have e₃ : φ (evI y f) = i (evI y f) := RingHom.congr_fun hφ _

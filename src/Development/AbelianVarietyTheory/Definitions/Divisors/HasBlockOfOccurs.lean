@@ -104,8 +104,10 @@ def IsHecke (jK : F.K →* alg F.O N lam) (W : Type) [AddCommGroup W] [Module F.
   ∀ i (f : Forms F.O (A := alg F.O N lam) F.Γ jK W) (g : F.G), (((X i : F.T) • f : Forms F.O (A := alg F.O N lam) F.Γ jK W) : F.G → W) g =
     F.cst i • ∑ s ∈ F.tr i, (f : F.G → W) (g * s)
 
-def setting (jK : F.K →* alg F.O N lam) [Module F.T (Forms F.O (A := alg F.O N lam) F.Γ jK (NablaT F.O N lam))]
-    [IsScalarTower F.O F.T (Forms F.O (A := alg F.O N lam) F.Γ jK (NablaT F.O N lam))] (m : Ideal F.T) [m.IsPrime] : HidaSetting ι N lam where
+def setting (jK : F.K →* alg F.O N lam)
+    [mT : Module F.T (Forms F.O (A := alg F.O N lam) F.Γ jK (NablaT F.O N lam))]
+    [sT : @IsScalarTower F.O F.T (Forms F.O (A := alg F.O N lam) F.Γ jK (NablaT F.O N lam)) _ mT.toSMul _]
+    (m : Ideal F.T) [m.IsPrime] : HidaSetting ι N lam where
   O := F.O
   A := alg F.O N lam
   G := F.G
@@ -113,6 +115,8 @@ def setting (jK : F.K →* alg F.O N lam) [Module F.T (Forms F.O (A := alg F.O N
   K := F.K
   jK := jK
   T := F.T
+  mT := mT
+  sT := sT
   S := m.primeCompl
 
 def latN : AddSubgroup (NablaT (PadicAlgCl l) N lam) :=

@@ -75,13 +75,15 @@ theorem Bd.eq_sum {M : ℕ} {F : K⟦X⟧⟦X⟧} (h : Bd M F) :
   ext i n
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [map_sum (coeff i), coeff_C_mul_X_pow, Finset.sum_ite_eq, Finset.mem_range]
-  split_ifs with hi
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [map_sum (coeff n), coeff_C_mul_X_pow, Finset.sum_ite_eq, Finset.mem_range]
+  by_cases hi : i < M + 1
+  · simp only [if_pos hi]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum (coeff n), coeff_C_mul_X_pow, Finset.sum_ite_eq, Finset.mem_range]
     split_ifs with hn
     · rfl
     · exact h i n (by omega)
-  · rw [h i n (by omega), map_zero]
+  · simp only [if_neg hi, map_zero]
+    exact h i n (by omega)
 
 theorem map_mem (φ : K⟦X⟧⟦X⟧ →+* K⟦X⟧⟦X⟧) (h1 : ∀ c : K, φ (C (C c)) ∈ fin K)
     (h2 : φ (C X) ∈ fin K) (h3 : φ X ∈ fin K) {F : K⟦X⟧⟦X⟧} (hF : F ∈ fin K) : φ F ∈ fin K := by

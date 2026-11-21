@@ -113,7 +113,11 @@ theorem good_of_extIn {O : Type} [CommRing O] {β : O →+* c.F} (Y : Model Xo c
 theorem inV_of_frBor {a : (E →+* ℂ) × ℕ → ℕ} {n : ℕ} {f : Rul Xo c} (hf : f ∈ sec Xo c a n) {T : CDVR}
     {io : c.F →+* T.Fr} (y y' : IntFr Xo c T io) (t : Ix Dw → T.Frˣ)
     (h : letI := io.toAlgebra; FrBor t y.1 y'.1) : InV T (evI y f) ↔ InV T (evI y' f) := by
-  obtain ⟨hE, hU, -⟩ := GlobalTheory.Reg.evLaws_genFr_atlas E H Dw l Xo c
+  have ⟨hE, hU⟩ : EvLaws Xo c ∧ IntDiagUnit Xo c := by
+    have hB : Out.SecBaseChangeSt := GlobalTheory.abelianSchemeLaws_all.1.secBaseChange
+    obtain ⟨-, -, hwd, hwt, hint, -⟩ := GlobalTheory.T.framedModuli_algebraicLaws_chart_weight_integrality hB E H Dw l Xo c
+    exact ⟨⟨hwd, GlobalTheory.T.framedPoint_reduced_from_testRing hB E H Dw l Xo c, hwt,
+      fun S T _ _ _ _ φ y => GlobalTheory.Frames.FramedBaseChange.exists_frMap hB E H Dw l Xo c S T φ y⟩, hint⟩
   have h1 := unitIndep_of hE.wt hU a n f hf T io y y' t h 1
   have key : ∀ x : T.Fr, InV T x ↔ 0 ≤ nval T.V 1 x := fun x => by
     by_cases h0 : x = 0
@@ -126,7 +130,11 @@ theorem inV_of_extIn (la : HeightOneSpectrum (𝓞 c.F)) (Y : Model Xo c (la.val
     (hf : f ∈ sec Xo c a n) (hb : BddGood Xo c la 1 f) {T : CDVR} {io : c.F →+* T.Fr} {e : ℕ} (ho : OverLa la T.V io e)
     (y : IntFr Xo c T io) (h : letI := io.toAlgebra; ExtIn Y (abLocus Y.t.G) T io y.1.x) : InV T (evI y f) := by
   let _ := io.toAlgebra
-  obtain ⟨hE, hU, -⟩ := GlobalTheory.Reg.evLaws_genFr_atlas E H Dw l Xo c
+  have ⟨hE, hU⟩ : EvLaws Xo c ∧ IntDiagUnit Xo c := by
+    have hB : Out.SecBaseChangeSt := GlobalTheory.abelianSchemeLaws_all.1.secBaseChange
+    obtain ⟨-, -, hwd, hwt, hint, -⟩ := GlobalTheory.T.framedModuli_algebraicLaws_chart_weight_integrality hB E H Dw l Xo c
+    exact ⟨⟨hwd, GlobalTheory.T.framedPoint_reduced_from_testRing hB E H Dw l Xo c, hwt,
+      fun S T _ _ _ _ φ y => GlobalTheory.Frames.FramedBaseChange.exists_frMap hB E H Dw l Xo c S T φ y⟩, hint⟩
   have hev := GlobalTheory.ArcQ.evR_natural_weight_scaling E H Dw l Xo c hE a n f hf
   obtain ⟨J, _, P, hC⟩ := GlobalTheory.Reg.exists_finite_pchart_cover GlobalTheory.abelianSchemeLaws_all.2.secTwist E H Dw l Xo c hE.bc
     (la.valuation c.F).valuationSubring Y hP
@@ -140,7 +148,8 @@ theorem inV_of_extIn (la : HeightOneSpectrum (𝓞 c.F)) (Y : Model Xo c (la.val
   have hzI : Integral T io z := P'.int e' he' T io ψ' (inV_of_overLa ho) hg' z hz'
   rw [inV_of_frBor hf y ⟨z, hE.test _ z, hzI⟩ t ht]
   show InV T (evR Xo c f z)
-  rw [(hev _).1 _ ψ' _ _ hz']
+  set_option synthInstance.maxHeartbeats 200000 in
+    rw [(hev _).1 _ ψ' _ _ hz']
   refine GlobalTheory.T.integral_of_integral_at_algebraic_points_smooth c.F P'.Ω la P'.gens e' P'.frac (P'.es_mem e' he').1 (P'.es_mem e' he').2 (P'.sm e' he')
     (evR Xo c f (P'.y e' he')) (fun T₁ io₁ n₁ ho₁ hfin ψ₁ hk hg₁ => ?_) T io e ho ψ'.toRingHom ψ'.commutes hg'
   let _ := io₁.toAlgebra
@@ -215,7 +224,11 @@ theorem coeff_neg_eq_zero {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Formalism.L2.Pj
   let _ : Algebra (FractionRing ℂ) ℂ := FractionRing.liftAlgebra ℂ ℂ
   have : IsScalarTower ℂ (FractionRing ℂ) ℂ := FractionRing.isScalarTower_liftAlgebra ℂ ℂ
   obtain ⟨h1, h2⟩ := GlobalTheory.abelianSchemeLaws_all
-  obtain ⟨hE, -⟩ := GlobalTheory.Reg.evLaws_genFr_atlas E H Dw l Xo c
+  have hE : EvLaws Xo c := by
+    have hB : Out.SecBaseChangeSt := GlobalTheory.abelianSchemeLaws_all.1.secBaseChange
+    obtain ⟨-, -, hwd, hwt, -, -⟩ := GlobalTheory.T.framedModuli_algebraicLaws_chart_weight_integrality hB E H Dw l Xo c
+    exact ⟨hwd, GlobalTheory.T.framedPoint_reduced_from_testRing hB E H Dw l Xo c, hwt,
+      fun S T _ _ _ _ φ y => GlobalTheory.Frames.FramedBaseChange.exists_frMap hB E H Dw l Xo c S T φ y⟩
   have hY : Mono Y.j := GlobalTheory.ThetaShiftProofs.mono_j Y (mono_spMap_subtype _)
   obtain ⟨Uw⟩ := nonempty_unfWit_of_isUnf E H Dw l Xo c σ r (U σ) (hU σ hσ)
   have hty := (GlobalTheory.Relab.relab_good E H l c _ hσ).2.2.2 Dw Uw.g Uw.e
@@ -273,7 +286,11 @@ theorem exists_value {V : ValuationSubring c.F} (Y : Model Xo c V.subtype) (T : 
       (∀ x, j (algebraMap T.V T.Fr x) = ω (PowerSeries.C x)) → (∀ x, algebraMap c.F L x = j (io x)) →
       ∃ y : FrPt Xo c L, IsArcFr W e th ω y ∧ evR Xo c f y * ω ((PowerSeries.C ϖ * PowerSeries.X) ^ N) = ω h := by
   obtain ⟨h1, h2⟩ := GlobalTheory.abelianSchemeLaws_all
-  obtain ⟨hE, -⟩ := GlobalTheory.Reg.evLaws_genFr_atlas E H Dw l Xo c
+  have hE : EvLaws Xo c := by
+    have hB : Out.SecBaseChangeSt := GlobalTheory.abelianSchemeLaws_all.1.secBaseChange
+    obtain ⟨-, -, hwd, hwt, -, -⟩ := GlobalTheory.T.framedModuli_algebraicLaws_chart_weight_integrality hB E H Dw l Xo c
+    exact ⟨hwd, GlobalTheory.T.framedPoint_reduced_from_testRing hB E H Dw l Xo c, hwt,
+      fun S T _ _ _ _ φ y => GlobalTheory.Frames.FramedBaseChange.exists_frMap hB E H Dw l Xo c S T φ y⟩
   have hY : Mono Y.j := GlobalTheory.ThetaShiftProofs.mono_j Y (mono_spMap_subtype _)
   let d : PowerSeries T.V := PowerSeries.C ϖ * PowerSeries.X
   have hd : d ≠ 0 := mul_ne_zero (fun h => hϖ.ne_zero (PowerSeries.C_injective (h.trans (map_zero _).symm)))
@@ -364,7 +381,11 @@ theorem inV_of_arc {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (hU : �
     (hz₃ : z ≫ Y.j = spMap (algebraMap T.V T.Fr) ≫ y') : InV T (evI y f) := by
   let _ := io.toAlgebra
   obtain ⟨h1, h2, -, hL4, hL5⟩ := GlobalTheory.firstFiveLaws
-  obtain ⟨hE, -⟩ := GlobalTheory.Reg.evLaws_genFr_atlas E H Dw l Xo c
+  have hE : EvLaws Xo c := by
+    have hB : Out.SecBaseChangeSt := GlobalTheory.abelianSchemeLaws_all.1.secBaseChange
+    obtain ⟨-, -, hwd, hwt, -, -⟩ := GlobalTheory.T.framedModuli_algebraicLaws_chart_weight_integrality hB E H Dw l Xo c
+    exact ⟨hwd, GlobalTheory.T.framedPoint_reduced_from_testRing hB E H Dw l Xo c, hwt,
+      fun S T _ _ _ _ φ y => GlobalTheory.Frames.FramedBaseChange.exists_frMap hB E H Dw l Xo c S T φ y⟩
   have hY : Mono Y.j := GlobalTheory.ThetaShiftProofs.mono_j Y (mono_spMap_subtype _)
   have hcpl : IsAdicComplete (Ideal.span {ϖ}) T.V := hϖ.maximalIdeal_eq ▸ T.cpl
   obtain ⟨χ, hχ, hsp⟩ := h4 T.V b ϖ a (Or.inr ⟨inferInstance, hϖ, hcpl⟩)
@@ -490,7 +511,11 @@ theorem bddAll_one {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (hU : �
     (by rw [Category.assoc, hy', sp_comp]) hA y₁ (spMap i ≫ z)
     (by rw [Category.assoc, hz₁, hy₁.1, hφ]) (by rw [Category.assoc, hz₂, sp_comp])
     (by rw [Category.assoc, ← hz₃, ← Category.assoc, ← Category.assoc, sp_comp, sp_comp, e₁])
-  obtain ⟨hE, -⟩ := GlobalTheory.Reg.evLaws_genFr_atlas E H Dw l Xo c
+  have hE : EvLaws Xo c := by
+    have hB : Out.SecBaseChangeSt := GlobalTheory.abelianSchemeLaws_all.1.secBaseChange
+    obtain ⟨-, -, hwd, hwt, -, -⟩ := GlobalTheory.T.framedModuli_algebraicLaws_chart_weight_integrality hB E H Dw l Xo c
+    exact ⟨hwd, GlobalTheory.T.framedPoint_reduced_from_testRing hB E H Dw l Xo c, hwt,
+      fun S T _ _ _ _ φ y => GlobalTheory.Frames.FramedBaseChange.exists_frMap hB E H Dw l Xo c S T φ y⟩
   have e₂ : evI y₁ f = φ (evI y f) :=
     (GlobalTheory.ArcQ.evR_natural_weight_scaling E H Dw l Xo c hE a' n f hf.1 T.Fr).1 _ φ _ _ hy₁
   have e₃ : φ (evI y f) = i (evI y f) := RingHom.congr_fun hφ _

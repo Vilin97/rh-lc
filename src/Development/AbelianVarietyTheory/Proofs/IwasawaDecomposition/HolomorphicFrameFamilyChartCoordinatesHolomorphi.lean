@@ -66,7 +66,7 @@ theorem isHol_chart_framePt : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
     · rw [hS, differentiableOn_euclidean]
       intro a
       have hd := (h4 (j ''ᵁ c'.U) ((j.appIso c'.U).inv.hom (c'.x a))).2
-      refine (hd.mono fun w hw => ⟨hw.1, ?_⟩).congr fun w hw => ?_
+      refine (hd.mono fun w (hw : w ∈ W ∩ P ⁻¹' (cxOf e σ hj '' c'.e.source)) => ⟨hw.1, ?_⟩).congr fun w hw => ?_
       · obtain ⟨hq1, hq2⟩ := hq w (by obtain ⟨y', hy', he⟩ := hw.2; exact ⟨y', hy', he⟩)
         show ⊤ ≤ (P w).1 ⁻¹ᵁ _
         rw [← hq2]

@@ -68,6 +68,6 @@ theorem cont_dR : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l 
   rw [this]
   haveI : ContinuousAdd V := IsModuleTopology.toContinuousAdd ℚ_[l] V
   haveI : ContinuousSMul ℚ_[l] V := IsModuleTopology.toContinuousSMul ℚ_[l] V
-  exact continuous_finset_sum _ fun j _ => (key (b.coord j)).smul continuous_const
+  exact continuous_finsetSum _ fun j _ => (key (b.coord j)).smul continuous_const
 
 end GlobalTheory.ContDR

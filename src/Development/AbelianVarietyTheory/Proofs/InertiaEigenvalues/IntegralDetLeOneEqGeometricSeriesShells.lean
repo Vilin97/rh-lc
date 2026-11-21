@@ -166,7 +166,9 @@ theorem integral_low_geometric : ∀ (E : Type) [Field E] [NumberField E] [IsTot
           rw [hpre]
       _ = ∫ y in (fun y => (e ^ k)⁻¹ * y) ⁻¹' 𝓕, (S 0).indicator f y ∂μ :=
           (measurePreserving_mul_left μ (e ^ k)).setIntegral_preimage_emb (measurableEmbedding_mulLeft _) _ _
-      _ = ∫ y in 𝓕, (S 0).indicator f y ∂μ := (hfd k).setIntegral_eq h𝓕 hG0
+      _ = ∫ y in 𝓕, (S 0).indicator f y ∂μ := by
+          set_option synthInstance.maxHeartbeats 200000 in
+            exact (hfd k).setIntegral_eq h𝓕 hG0
   have hgeo := (hasSum_geometric_of_norm_lt_one hr1).mul_right (∫ g in S 0, f g ∂(μ.restrict 𝓕))
   have hsum2 : HasSum (fun k : ℕ => ∫ g in S k, f g ∂(μ.restrict 𝓕))
       ((1 - r)⁻¹ * ∫ g in S 0, f g ∂(μ.restrict 𝓕)) := by

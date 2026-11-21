@@ -125,6 +125,8 @@ theorem anFib_move_renum : ∀ (D : D7) (H : ReciprocityTheory.ChartRestriction.
       ex_lin := fun a z => by
         rw [← A.ex_lin]
         congr 1
+        funext j
+        simp only [renum_apply, hty]
       hol := fun U f => ?_
       der := fun ℓ => ⟨?_, fun U hU f => ?_⟩
       fr := fun j z => A.fr j (renum q z)

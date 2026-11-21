@@ -89,7 +89,7 @@ private theorem exp_gen_pk {τ : ∀ w : InfinitePlace F, EmbOver E w} {J : Matr
     {c : InfinitePlace F → ℂ} (hact : ActsBy τ C om' Φ act c)
     (hadm : ∀ g, ∀ l ∈ (adeleClass F).adm (Fin n × Fin d), l ∘ₗ om' g ∈ (adeleClass F).adm (Fin n × Fin d))
     (hloc : ∀ (Y : Mat r s) (z : ℂ), LocFin (act Y + z • 1))
-    {γ : Multiplicative ℝ →* UG (cA σ) J} (hγ : γ ∈ RLines σ J) {Y : InfinitePlace F → Mat r s} (hY : IsGen τ C γ Y) :
+    {γ : Multiplicative ℝ →* UG (cA σ) J} (hγ : γ ∈ RLines (σ := σ) J) {Y : InfinitePlace F → Mat r s} (hY : IsGen τ C γ Y) :
     ∃ U : Module.End ℂ (Tens F P Q R S), IsExp (sumPl fun w => act (Y w) + (c w * (Y w).trace) • 1) U ∧
       ∀ T, Acts (evI F) (om' (γ (Multiplicative.ofAdd 1))) (Φ T) (Φ (U T)) := by
   obtain ⟨U, hU, hSA⟩ := Main.i_expact F (Fin n × Fin d) _ Φ _ (om'.comp γ) (Main.i_locfin _ _ _ fun w => hloc _ _)

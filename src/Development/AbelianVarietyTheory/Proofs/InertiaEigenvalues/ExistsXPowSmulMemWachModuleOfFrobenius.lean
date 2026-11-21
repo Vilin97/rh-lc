@@ -62,7 +62,7 @@ theorem mem_N_of_jD (E : EtTie W RA RW inclR φR gR πA) (T : LocLat G Qp LL O)
 
   have hDE : ∀ y : W.DD T, ∃ μ : Fin r → W.EE, y = ∑ j, μ j • b j := by
     intro y
-    refine (W.N_base T hT).inductionOn y _ ⟨0, by simp⟩ ?_ ?_ ?_
+    refine (W.N_base T hT).inductionOn y ?_ ?_ ?_
     · intro z
       obtain ⟨α, hα, -⟩ := hbA z z.2
       refine ⟨fun j => algebraMap _ W.EE (α j), ?_⟩

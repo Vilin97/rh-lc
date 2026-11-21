@@ -41,11 +41,11 @@ private theorem cast_cast {X : Spc} {n i n' i' n'' i'' : ℤ} (h1 : n = n') (h2 
   rfl
 
 private theorem cup_one' [NeZero q] {X : Spc} (hX : Inv q X) {n i : ℤ} (x : Ht q X n i) :
-    cup q x (one q X) = x.cast (by ring) (by ring) := by
+    GlobalTheory.EtC.cup q x (one q X) = x.cast (by ring) (by ring) := by
   rw [GlobalTheory.T.tateTwistCupProduct_graded_comm q X x (one q X), (GlobalTheory.T.tateTwistCup_unit_and_primitiveRoot_classes q).1 X hX x, cast_cast, mul_zero, Int.negOnePow_zero, one_smul]
 
 private theorem cup_one_cast [NeZero q] {X : Spc} (hX : Inv q X) {n i m j : ℤ} (x : Ht q X n i) (hm : 0 = m) (hj : 0 = j) :
-    cup q x ((one q X).cast hm hj) = x.cast (by omega) (by omega) := by
+    GlobalTheory.EtC.cup q x ((one q X).cast hm hj) = x.cast (by omega) (by omega) := by
   subst hm hj
   exact cup_one' hX x
 
@@ -78,7 +78,7 @@ private theorem equiv_first_twist [NeZero q] (E : Spc) (hE : Inv q E) (i : ℤ) 
   have hn : n - 2 * (((0 : Fin 1) : ℕ) : ℤ) = n := by simp
   have hi : i - (((0 : Fin 1) : ℕ) : ℤ) = i := by simp
   have hform : ∀ a : ∀ j : Fin 1, Ht q E (n - 2 * ((j : ℕ) : ℤ)) (i - ((j : ℕ) : ℤ)),
-      ∑ j : Fin 1, ((cup q (pull _ (Sp.fst E (XC 1)) _ _ (a j)) (cpow q (c1 q (Sp.line E (chiX 1))) j)).cast (by ring) (by ring) :
+      ∑ j : Fin 1, ((GlobalTheory.EtC.cup q (pull _ (Sp.fst E (XC 1)) _ _ (a j)) (cpow q (c1 q (Sp.line E (chiX 1))) j)).cast (by ring) (by ring) :
         Ht q (Sp E (XC 1)) n i) =
       Ht.cast hn hi (pull _ (Sp.fst E (XC 1)) _ _ (a 0)) := by
     intro a

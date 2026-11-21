@@ -233,14 +233,14 @@ namespace GlobalTheory.ShFam.BdArc
 theorem exists_lattice_sections : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : Model Xo c β) (σ : c.F →+* ℂ) (A : Type) [CommRing A] (φ : c.F →+* A) (x : Sp A ⟶ gen Z) (fr : EigFrame Z φ (x ≫ genι Z)) (ψ : ℂ → (A →+* ℂ)) (r : ℝ) (g : ℕ) (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ)), IsArc Z σ φ x ψ r → ∃ (ρ : ℝ) (n : ℕ) (lam : Fin n → ℂ → (Fin g → ℂ)), 0 < ρ ∧ ρ ≤ r ∧ (∀ j, ContinuousOn (lam j) (Metric.ball 0 ρ)) ∧ Submodule.span ℂ (Set.range fun j => lam j 0) = ⊤ ∧ ∀ u ∈ Metric.ball (0 : ℂ) ρ, ∀ ex : (Fin g → ℂ) → (Over.mk (spMap (ψ u) ≫ x ≫ genι Z) ⟶ Z.t.G), (∀ z w, ex (z + w) = ex z * ex w) → IsHolTo Set.univ (fun z => (show Sp ℂ ⟶ Z.t.G.left from (ex z).left)) → (∀ j, IsDerivAt0 (fun z => (ex z).left) (Pi.single j 1) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ u)) ≫ fr.v (e j).1 (e j).2)) → ∀ j, ex (lam j u) = 1 := by
   intro E _ _ _ H Dw l Xo c O _ β Z σ A _ φ x fr ψ r g e harc
   obtain ⟨g', ρ, e', hρ, hρr, hol, hexp, hdef⟩ := GlobalTheory.T.exists_semi_abelian_exponential_along_disc Z.X Z.t.G (fun u => spMap (ψ u) ≫ x ≫ genι Z) r
-    Z.t.semi harc.1.1 (isHolTo_spMap harc.1 _)
+    Z.t.semi harc.1.1 (LatSec.isHolTo_spMap harc.1 _)
   have hA : ∀ u ∈ Metric.ball (0 : ℂ) ρ, HolAt (fun z => (e' u z).left) 0 := fun u hu =>
     holAt_of_isHolTo (hexp u hu).2.2.1 trivial
   have hh : ∀ u, ∃ h : (Fin g → ℂ) →L[ℂ] (Fin g' → ℂ), u ∈ Metric.ball (0 : ℂ) ρ → h.IsInvertible ∧
       ∀ j, IsDerivAt (fun z => (e' u z).left) 0 (h (Pi.single j 1))
         (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ u)) ≫ fr.v (e j).1 (e j).2) := fun u => by
     by_cases hu : u ∈ Metric.ball (0 : ℂ) ρ
-    · obtain ⟨D, hD⟩ := exists_lieEquiv Z.t (hexp u hu).1 (hA u hu) (hexp u hu).2.2.2.2
+    · obtain ⟨D, hD⟩ := LatSec.exists_lieEquiv Z.t (hexp u hu).1 (hA u hu) (hexp u hu).2.2.2.2
       obtain ⟨f, hf⟩ := GlobalTheory.T.exists_eigFrame_baseChange' E H Dw l Xo c O β Z A ℂ φ _ fr (ψ u)
       obtain ⟨b, hb⟩ := exists_basis f
       refine ⟨((b.reindex e.symm).equivFun.symm.trans D.symm).toContinuousLinearEquiv, fun _ => ⟨⟨_, rfl⟩, fun j => ?_⟩⟩
@@ -260,7 +260,7 @@ theorem exists_lattice_sections : ∀ (E : Type) [Field E] [NumberField E] [IsCM
       exact congrArg _ (pi_eq_sum_univ' z)
     simp only [this]
     refine tendsto_finsetSum _ fun j _ => ContinuousAt.const_smul ?_ (z j)
-    exact continuousAt_dir hol hu (hexp u hu).2.2.2.2 (fun b hb => (hh b hb).2 j) (continuousAt_snd (fun a =>
+    exact LatSec.continuousAt_dir hol hu (hexp u hu).2.2.2.2 (fun b hb => (hh b hb).2 j) (LatSec.continuousAt_snd (fun a =>
       ((harc.1.2 a).differentiableAt (Metric.isOpen_ball.mem_nhds (Metric.ball_subset_ball hρr hu))).continuousAt) _)
   have h0 : (0 : ℂ) ∈ Metric.ball (0 : ℂ) ρ := Metric.mem_ball_self hρ
   obtain ⟨s, hs, hfin, hspan⟩ : ∃ s ⊆ {z | e' 0 z = 1}, s.Finite ∧ Submodule.span ℂ s = ⊤ := by
@@ -287,7 +287,7 @@ theorem exists_lattice_sections : ∀ (E : Type) [Field E] [NumberField E] [IsCM
     have hkh : k = (h u).toLinearMap := (Pi.basisFun ℂ (Fin g)).ext fun i => by
       have h1 := (isDerivAt0_iff _ _ _).1 (hd i)
       simp only [hk] at h1
-      have h2 := (isDerivAt_comp_iff (hA u (hsub hu)) (LinearMap.toContinuousLinearMap k) _ _).1 h1
+      have h2 := (LatSec.isDerivAt_comp_iff (hA u (hsub hu)) (LinearMap.toContinuousLinearMap k) _ _).1 h1
       rw [Pi.basisFun_apply]
       exact (hu3 (Over.homMk _ h2.over) h2.1).unique ((isDerivAt0_iff _ _ _).2 h2)
         ((isDerivAt0_iff _ _ _).2 ((hh u (hsub hu)).2 i))

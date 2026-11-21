@@ -44,14 +44,8 @@ theorem isHermND_gram (V : HSp D) : IsHermND D.sp.cm.sig V.gram :=
 theorem chart (V : HSp D) {v : HeightOneSpectrum (𝓞 D.host.F)} {w : HeightOneSpectrum (𝓞 D.host.E)}
     (h : w.under (𝓞 D.host.F) = v) (hv : IsSplit (E := D.host.E) v) :
     (∃ e, IsSplitChart D.sp.cm.sig V.gram (frameLat V) h e) ∧ Ideal.absNorm w.asIdeal = Formalism.UG.qV D.host.F v := by
-  have hspan : Submodule.span D.host.E (frameLat V : Set (Fin V.rank → D.host.E)) = ⊤ := by
-    have heq : (frameLat V : Set (Fin V.rank → D.host.E)) =
-        V.frame.equivFun.toLinearMap '' (V.L0 : Set V.V) :=
-      (V.frame.equivFun.toEquiv.image_eq_preimage_symm _).symm
-    rw [heq, ← Submodule.map_span, V.standardTuple_isLattice.span_eq_top,
-      Submodule.map_top, LinearEquiv.range]
   obtain ⟨⟨e, he, -⟩, w', -, -, h1, -⟩ := SplitChart.split_chart_and_places (isCMExt_host D) (isHermND_gram V)
-    (frameLat_fg V) hspan h hv (SelfDual.isSelfDualAt_frameLat D V v)
+    (frameLat_fg V) (SelfDual.isLattice_frameLat V).span_eq_top h hv (SelfDual.isSelfDualAt_frameLat D V v)
   exact ⟨⟨e, he⟩, h1⟩
 
 section Param

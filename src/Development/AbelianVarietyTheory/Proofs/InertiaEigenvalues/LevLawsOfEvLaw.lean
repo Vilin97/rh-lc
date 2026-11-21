@@ -40,8 +40,7 @@ theorem lev_eq_levOne (W : LocWach PD L O v n) (i : ZMod n) (ζ : L) (f : LetA O
 theorem levOne_X (W : LocWach PD L O v n) (i : ZMod n) {ζ : L} (h : ∃ j : ℕ, IsPrimitiveRoot ζ (PD.p ^ j)) :
     levOne W i ζ X = C ζ * exp L - 1 := by
   obtain ⟨E, h0, h1, h2⟩ := W.lev_π i ζ h
-  have hE : E = exp L := Ser.ode_unique 1 (by rw [map_one, one_mul]; exact h1)
-    (by rw [map_one, one_mul]; exact derivative_exp L) (by rw [h0, constantCoeff_exp])
+  have hE : E = exp L := PowerSeries.exp_unique_of_derivative_eq_self h1 h0
   rw [← hE, ← h2, add_sub_cancel_left]
   rfl
 
@@ -91,8 +90,9 @@ theorem levLaws : LevLaws (H.W K s LL h) := by
   convert Ser.evLaw_integers P LL using 1
   exact Algebra.algebra_ext _ _ fun r => PowerSeries.algebraMap_apply
 
-theorem ioLaws_tie : IoLaws (F.E K s LL h).tie :=
-  ⟨GlobalTheory.HWL.Back.ioE_φ (O := ↥(OL LL)) Subtype.val_injective _,
+theorem ioLaws_tie : IoLaws (F.E K s LL h).tie := by
+  set_option synthInstance.maxHeartbeats 100000 in
+    exact ⟨GlobalTheory.HWL.Back.ioE_φ (O := ↥(OL LL)) Subtype.val_injective _,
     GlobalTheory.HWL.Back.ioE_γ (O := ↥(OL LL)) Subtype.val_injective _⟩
 
 theorem one_crys : IsCrys (P.PD K) (H.W K s LL h).one.ρ :=

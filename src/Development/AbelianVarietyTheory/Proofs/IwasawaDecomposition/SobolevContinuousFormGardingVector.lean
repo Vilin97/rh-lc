@@ -67,7 +67,7 @@ theorem sobCont_gard : ∀ (n : ℕ) (ε : Fin n → Bool) (H : Type) [NormedAdd
     have hc : ∀ i, Continuous fun g : Formalism.REAL.UJ ε => ⟪a i, word (trRep σ P) (ls i) (σ (umat g) w)⟫_ℂ :=
       fun i => continuous_const.inner (GlobalTheory.T.smooth_vector_word_action_continuous n ε H σ P G hP h hσ (ls i) (hls i) w hw)
     simp only [e]
-    refine ⟨continuous_finset_sum _ fun i _ => hc i, fun φ hφ => ?_⟩
+    refine ⟨continuous_finsetSum _ fun i _ => hc i, fun φ hφ => ?_⟩
     rw [hrep _ (gard_mem hP h hσ hφ w)]
     simp only [Finset.smul_sum]
     rw [integral_finsetSum _ fun i _ => hφ.integrable (hc i)]

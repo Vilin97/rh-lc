@@ -49,6 +49,9 @@ instance : Module (AEF F E) (XFF F E nS nT) := inferInstanceAs (Module (AEF F E)
 
 @[coe] def XFF.val (x : XFF F E nS nT) : WOF F E nS nT := Subtype.val x
 
+instance : Coe (XFF F E nS nT) (WOF F E nS nT) where
+  coe := XFF.val
+
 def XFF.mk (u : WOF F E nS nT) (hu : u.map (infPartF F E) = 0) : XFF F E nS nT := (⟨u, hu⟩ : finSubF F E nS nT)
 
 theorem XFF.fin (x : XFF F E nS nT) : (x : WOF F E nS nT).map (infPartF F E) = 0 := Subtype.property x

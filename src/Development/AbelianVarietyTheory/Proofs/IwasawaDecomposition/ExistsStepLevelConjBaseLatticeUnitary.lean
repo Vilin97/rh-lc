@@ -74,7 +74,13 @@ theorem exists_stepLevel_conj : ∀ {F E : Type} [Field F] [NumberField F] [Fiel
         exact (mem_map_conj _ _ _).symm
       U_compact := by
         letI := tensTopL (F := F) (E := E) (FiniteAdeleRing (𝓞 F) F)
-        haveI := Formalism.L2.Col.rlt_topRing (F := F) (E := E)
+        letI : Algebra (FiniteAdeleRing (𝓞 F) F) (E ⊗[F] FiniteAdeleRing (𝓞 F) F) := Algebra.TensorProduct.rightAlgebra
+        haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E
+        haveI : Module.Finite (FiniteAdeleRing (𝓞 F) F) (E ⊗[F] FiniteAdeleRing (𝓞 F) F) :=
+          Module.Finite.equiv (Algebra.TensorProduct.commRight F (FiniteAdeleRing (𝓞 F) F) E).toLinearEquiv
+        haveI : IsModuleTopology (FiniteAdeleRing (𝓞 F) F) (E ⊗[F] FiniteAdeleRing (𝓞 F) F) := ⟨rfl⟩
+        haveI : IsTopologicalRing (E ⊗[F] FiniteAdeleRing (𝓞 F) F) :=
+          IsModuleTopology.isTopologicalRing (FiniteAdeleRing (𝓞 F) F) _
         have hc : Continuous (fun x : GL (Fin n) (E ⊗[F] FiniteAdeleRing (𝓞 F) F) => b * x * b⁻¹) :=
           (continuous_const.mul continuous_id).mul continuous_const
         have := S.U_compact.image hc
@@ -83,7 +89,13 @@ theorem exists_stepLevel_conj : ∀ {F E : Type} [Field F] [NumberField F] [Fiel
         rfl
       U_open := by
         letI := tensTopL (F := F) (E := E) (FiniteAdeleRing (𝓞 F) F)
-        haveI := Formalism.L2.Col.rlt_topRing (F := F) (E := E)
+        letI : Algebra (FiniteAdeleRing (𝓞 F) F) (E ⊗[F] FiniteAdeleRing (𝓞 F) F) := Algebra.TensorProduct.rightAlgebra
+        haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E
+        haveI : Module.Finite (FiniteAdeleRing (𝓞 F) F) (E ⊗[F] FiniteAdeleRing (𝓞 F) F) :=
+          Module.Finite.equiv (Algebra.TensorProduct.commRight F (FiniteAdeleRing (𝓞 F) F) E).toLinearEquiv
+        haveI : IsModuleTopology (FiniteAdeleRing (𝓞 F) F) (E ⊗[F] FiniteAdeleRing (𝓞 F) F) := ⟨rfl⟩
+        haveI : IsTopologicalRing (E ⊗[F] FiniteAdeleRing (𝓞 F) F) :=
+          IsModuleTopology.isTopologicalRing (FiniteAdeleRing (𝓞 F) F) _
         haveI : ContinuousMul (UPts σ J (FiniteAdeleRing (𝓞 F) F)) :=
           inferInstanceAs (ContinuousMul (UPts σ J (FiniteAdeleRing (𝓞 F) F)).toSubmonoid)
         let b' : UPts σ J (FiniteAdeleRing (𝓞 F) F) := ⟨b, hb⟩

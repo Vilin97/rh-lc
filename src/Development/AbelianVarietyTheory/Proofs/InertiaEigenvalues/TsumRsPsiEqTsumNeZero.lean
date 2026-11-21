@@ -71,14 +71,14 @@ theorem stronglyMeasurable_rsHat {F F' : Sm E a} (h : Continuous F.1) (h' : Cont
   have h4 : Continuous fun p : GA E a × (Fin a → Cinf E) => rsInf ℓ F.1 F'.1 Φ p.1 p.2 *
       (Real.fourierChar (-∑ i, ∑ w, 2 * (p.2 i w * pInf E (y p.1 i) w).re) : ℂ) := by
     refine (continuous_rsInf h h' hΦ.1.continuous hΦ.2.2).mul (continuous_subtype_val.comp
-      (Real.continuous_fourierChar.comp (Continuous.neg (continuous_finset_sum _ fun i _ =>
-        continuous_finset_sum _ fun w _ => continuous_const.mul (Complex.continuous_re.comp (Continuous.mul ?_ ?_))))))
+      (Real.continuous_fourierChar.comp (Continuous.neg (continuous_finsetSum _ fun i _ =>
+        continuous_finsetSum _ fun w _ => continuous_const.mul (Complex.continuous_re.comp (Continuous.mul ?_ ?_))))))
     · fun_prop
     · exact (continuous_apply w).comp ((h1 i).comp continuous_fst)
   refine ((h4.stronglyMeasurable.integral_prod_right'.mul (Continuous.stronglyMeasurable ?_)).mul
     (h3.comp (continuous_pi h2)).stronglyMeasurable).mul stronglyMeasurable_const
   exact continuous_subtype_val.comp (continuous_finiteAdelicChar.comp
-    (continuous_finset_sum _ fun i _ => continuous_const.mul (h2 i)))
+    (continuous_finsetSum _ fun i _ => continuous_const.mul (h2 i)))
 
 theorem exists_norm_rsHat_le {ι : Type} {S S' : Submodule ℂ (Sm E a)} {g : ι → GA E a} {w : ι → ℝ}
     (hL : ∀ X, ∀ F ∈ S, lie E a X F ∈ S) (hL' : ∀ X, ∀ F ∈ S', lie E a X F ∈ S')

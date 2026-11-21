@@ -217,7 +217,7 @@ theorem main : ∀ (D : D7) (u : D.what₂.Word) (A : AtTTied u) (i : ℕ) (hi :
       UPts (sigD D) (gramN D i hi) (FiniteAdeleRing (𝓞 D.host.F) D.host.F) :=
     mul_mem (mul_mem (inv_mem (K.y c).2) (Formalism.UG.P.rational_points_le_holds _ _ _ _ _ _ ⟨γ, hγ, rfl⟩)) (K.y c').2
   have hLb : Submodule.IsLattice D.host.E K.lev.Lb :=
-    ⟨(Submodule.fg_top _).1 K.lev.Lb_fin.fg_top, K.lev.Lb_span⟩
+    Submodule.IsLattice.of_fg D.host.E ((Submodule.fg_top _).1 K.lev.Lb_fin.fg_top)
   have hy : ∀ c, ∀ x, x ∈ latS (F := D.host.F) ((A.eV v).1.adicCompletion D.host.F) (intV D.host.E (A.eV v).1) (Ld D u i hi c) ↔
       ((bc (prV (E := D.host.E) (A.eV v).1) (K.y c).1)⁻¹).1 *ᵥ x ∈ dualV K (A.eV v).1 := fun c =>
     GlobalTheory.DualCompletion.dual_move _ _ (sigD D) _ (gramN D i hi) (A.eV v).1 _ K.lev.Lb _ (bwB_gramN_det D i hi) (hlat c) hLb

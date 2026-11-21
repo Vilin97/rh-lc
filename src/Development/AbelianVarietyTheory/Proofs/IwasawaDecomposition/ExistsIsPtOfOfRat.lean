@@ -72,16 +72,21 @@ theorem glEquiv_mem_iff {P : HeightOneSpectrum (𝓞 E)} {g : GL (Fin n) (AfE F 
       set A : Matrix (Fin n) (Fin n) E := mat f.symm * (γ : Matrix (Fin n) (Fin n) E) with hA
       have hA1 : ∀ j, Valued.v (algebraMap E (P.adicCompletion E) (A i j)) ≤ 1 := by
         intro j
-        have h2 := valued_symm_le (u := fun l => (g : Matrix (Fin n) (Fin n) (AfE F E)) l j) hf
-          ((carries_globLat g _).2 ((mem_latS_std _).2 fun l => ?_)) i
-        set_option synthInstance.maxHeartbeats 100000 in
-          · simp only [h, ← map_mul, ← map_sum] at h2
-          rw [hA, Matrix.mul_apply]
-          exact h2
-        · simp only [Matrix.mulVec, dotProduct]
+        have hmem : (fun l => (g : Matrix (Fin n) (Fin n) (AfE F E)) l j) ∈
+            Formalism.L2.Herm.hatL (F := F) (Formalism.UG.CS.globLat g (stdLat E n)) := by
+          apply (carries_globLat g _).2
+          apply (mem_latS_std _).2
+          intro l
+          simp only [Matrix.mulVec, dotProduct]
           rw [← Matrix.mul_apply, Units.inv_mul, Matrix.one_apply]
           split_ifs
           exacts [one_mem _, zero_mem _]
+        have h2 := valued_symm_le (u := fun l => (g : Matrix (Fin n) (Fin n) (AfE F E)) l j) hf
+          hmem i
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [h, ← map_mul, ← map_sum] at h2
+        rw [hA, Matrix.mul_apply]
+        exact h2
       have e3 : f.symm (glEquiv γ x) = A *ᵥ x := by
         funext i
         rw [← mat_mulVec, hA, ← Matrix.mulVec_mulVec, glEquiv_apply]

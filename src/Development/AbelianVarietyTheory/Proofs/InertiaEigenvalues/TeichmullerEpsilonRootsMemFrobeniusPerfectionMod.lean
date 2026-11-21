@@ -157,12 +157,12 @@ theorem teich_mem_perfection : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI
   · intro x y
     obtain ⟨r, hr⟩ := teichW_add x y
     refine ⟨rightW LL r, ?_⟩
-    rw [teichR_apply, teichR_apply, teichR_apply, hr, (rightW LL).map_add (f := _), (rightW LL).map_add (f := _),
+    rw [teichR_apply, teichR_apply, teichR_apply, hr, map_add (f := _), map_add (f := _),
       (rightW LL).map_mul, map_natCast (rightW LL)]
   · intro x
     obtain ⟨r, hr⟩ := teichW_neg x
     refine ⟨rightW LL r, ?_⟩
-    rw [teichR_apply, teichR_apply, hr, (rightW LL).map_add (f := _), (rightW LL).map_neg,
+    rw [teichR_apply, teichR_apply, hr, map_add (f := _), (rightW LL).map_neg,
       (rightW LL).map_mul, map_natCast (rightW LL)]
   · rintro u (⟨k, rfl⟩ | ⟨c, hc, m, hm, hlm, hcm, hxb⟩)
     · refine ⟨k, (algebraMap (LetA ↥(OL LL) (Module.finrank ℚ_[l] ↥(K0 K))) W.EE letπ + 1) ^ l ^ s,

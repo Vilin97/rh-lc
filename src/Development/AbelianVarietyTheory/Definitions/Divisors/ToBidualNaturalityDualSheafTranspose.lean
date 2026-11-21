@@ -172,6 +172,7 @@ def homMk (φ : ∀ W : X.Opens, W ≤ V → (Γ(F, W) →ₗ[Γ(X, W)] Γ(G, W)
 @[simp] theorem homApp_homMk (φ : ∀ W : X.Opens, W ≤ V → (Γ(F, W) →ₗ[Γ(X, W)] Γ(G, W))) (hφ)
     (h : W ≤ V) : homApp (homMk φ hφ) h = φ W h := rfl
 
+@[ext] theorem hom_ext {φ ψ : Γ(homMod F G, V)}
     (e : ∀ (W : X.Opens) (h : W ≤ V) (s : Γ(F, W)), homApp φ h s = homApp ψ h s) : φ = ψ := by
   have key := @Subtype.ext _ _ (show homGroup F G V from φ) (show homGroup F G V from ψ)
     (funext fun T => LinearMap.ext (e T.1 T.2))
@@ -232,6 +233,7 @@ def dualMk (l : ∀ W : X.Opens, W ≤ V → (Γ(F, W) →ₗ[Γ(X, W)] Γ(X, W)
       l W' (h'.trans h) (resM F h' s) = resG X h' (l W h s)) : Γ(dual F, V) :=
   homMk (G := structureModule X) l hl
 
+@[ext] theorem dual_ext {l l' : Γ(dual F, V)}
     (e : ∀ (W : X.Opens) (h : W ≤ V) (s : Γ(F, W)), dualApp l h s = dualApp l' h s) : l = l' := by
   exact hom_ext e
 
@@ -285,9 +287,9 @@ theorem dualMap_add (φ ψ : F ⟶ G) : GlobalTheory.CompanionTheory.Ar.dualMap 
   ext l W h s
   rw [dualApp_dualMap, key, key, dualApp_smul, map_smul, LinearMap.smul_apply, key2, key2, resG_resG]
 
-
-  hom := dualMap φ.hom
-  inv := dualMap φ.inv
+@[simps] def dualIso (φ : F ≅ G) : dual G ≅ dual F where
+  hom := GlobalTheory.CompanionTheory.Ar.dualMap φ.hom
+  inv := GlobalTheory.CompanionTheory.Ar.dualMap φ.inv
   hom_inv_id := by rw [← dualMap_comp, φ.inv_hom_id, dualMap_id]
   inv_hom_id := by rw [← dualMap_comp, φ.hom_inv_id, dualMap_id]
 
@@ -605,7 +607,19 @@ theorem lbIso_det_of_frames {L : LB X} (hL : L.IsLB) (e : ∀ i, Fin r → Γ(F,
 theorem IsVB.lbIso_det_of_iso (h : IsVB F r) (φ : F ≅ G) : LBIso (det F r) (det G r) := (lbIso_det_of_frames h.isLB_det _ (fun c => c.isFrame.map_iso φ.hom)
     (fun _ _ => (IsFrame.detUnit_map_iso _ _ _ _ _).symm)).2
 
-theorem IsVB.lbIso_det_dual (h : IsVB F r) : LBIso (CechPic.dual (det F r)) (det (VB.dual F) r) := (lbIso_det_of_frames (CechPic.isLB_dual h.isLB_det) _ (fun c => c.isFrame.dual)
+theorem IsVB.lbIso_det_dual (h : IsVB F r) : LBIso (CechPic.dual (det F r)) (det (VB.dual F) r) := by
+  have hL := h.isLB_det
+  have hDual : (CechPic.dual (det F r)).IsLB := by
+    refine LB.IsLB.mk hL.1 ?_ ?_
+    · intro i
+      have hi := congrArg (·⁻¹) (hL.2 i)
+      simp only [inv_one, ← map_inv] at hi
+      exact hi
+    · intro i j k
+      have hijk := congrArg (·⁻¹) (hL.3 i j k)
+      simp only [mul_inv, ← map_inv] at hijk
+      exact hijk
+  exact (lbIso_det_of_frames hDual _ (fun c => c.isFrame.dual)
     (fun _ _ => (IsFrame.detUnit_dual _ _ _ _).symm)).2
 
 theorem IsVB.lbIso_det_pullback (h : IsVB F r) (f : Y ⟶ X) :
@@ -646,7 +660,10 @@ theorem lbIso_det_toMod {L : LB X} (hL : L.IsLB) : LBIso L (det (toMod L) 1) := 
   have key : resM (toMod L) (inf_le_right : L.U i ⊓ L.U j ≤ L.U j) (LB.chartSec hL j) =
       ((L.g i j : Γ(X, L.U i ⊓ L.U j)ˣ) : Γ(X, L.U i ⊓ L.U j)) •
         resM (toMod L) (inf_le_left : L.U i ⊓ L.U j ≤ L.U i) (LB.chartSec hL i) := by
-    refine LB.sec_ext fun k => ?_
+    have ext {s t : Γ(toMod L, L.U i ⊓ L.U j)}
+        (hst : ∀ k, LB.coord s k = LB.coord t k) : s = t :=
+      Subtype.ext (funext hst)
+    refine ext fun k => ?_
     rw [LB.coord_smul]
     change resG X _ (LB.coord (LB.chartSec hL j) k) =
       resG X _ ((L.g i j : Γ(X, L.U i ⊓ L.U j)ˣ) : Γ(X, L.U i ⊓ L.U j)) * resG X _ (LB.coord (LB.chartSec hL i) k)

@@ -41,4 +41,5 @@ theorem GlobalTheory.JSW.psiLoc_conductor_eventually : ∀ (E : Type) [Field E] 
   show _ ↔ x ∈ w.adicCompletionIntegers E
   rw [← key, ← GroundTheory.Global.forall_localAdelicChar_mul_eq_one_iff]
   refine forall₂_congr fun a _ => ?_
+  change GlobalTheory.JSW.psiLoc w (x * a) = 1 ↔ _
   rw [GlobalTheory.JSW.WhitModel.psiLoc_eq, Circle.coe_eq_one, mul_comm]
