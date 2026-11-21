@@ -12,6 +12,7 @@ public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LieModelPull
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.CompanionTheory.Ar
+open GlobalTheory.CompanionTheory.Ar.GlobalTheory.CompanionTheory.Ar (dualMap)
 
 namespace GlobalTheory.CompanionTheory.Ar.LieJ
 

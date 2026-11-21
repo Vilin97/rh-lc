@@ -110,7 +110,7 @@ def tensorSection : (preMod X).obj M ⟶ (preMod X).obj M ⊗ (preMod X).obj L :
         change ((preMod X).obj L).map (homOfLE (le_top : V.unop ≤ ⊤)).op s =
           ((preMod X).obj L).map g (((preMod X).obj L).map (homOfLE (le_top : U.unop ≤ ⊤)).op s)
         exact PresheafOfModules.map_comp_apply ((preMod X).obj L) (homOfLE (le_top : U.unop ≤ ⊤)).op g s }
-    (fun U r m => (smul_tmul' r m _).symm)
+    (fun U r m => (smul_tmul' (R' := ringOn X U.unop) r m _).symm)
 
 def mulSection : M ⟶ M ⊗ L :=
   homOfPreMod (tensorSection M L s ≫ tensorToSheaf M L)

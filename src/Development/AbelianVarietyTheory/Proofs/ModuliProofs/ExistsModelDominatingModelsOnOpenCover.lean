@@ -41,6 +41,10 @@ theorem cancel_of_eq {S S' S'' : Scheme.{0}} {t : SAB H S} {t' : SAB H S'} {t'' 
   subst e
   exact sabCancel pullCubCancel E H _ _ _ t t' t'' f g m n
 
+#check ReciprocityTheory.ChartRestriction.G.Geo.Tor.sabPull
+#check isGrpPullback_pullback
+#check cubeMapOf
+
 theorem exists_pull {S S' : Scheme.{0}} (f : S' ⟶ S) (t : SAB H S) :
     ∃ t' : SAB H S', Nonempty (SABMap t' t f) := by
   obtain ⟨PP', cub, sym, adj, prim, m, -⟩ := sabPull Out.CubePf.cubePull f t

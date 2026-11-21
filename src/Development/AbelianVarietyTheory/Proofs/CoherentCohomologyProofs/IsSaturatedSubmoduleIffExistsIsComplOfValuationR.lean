@@ -64,7 +64,7 @@ theorem free_of_finite_of_isTorsionFree_of_valuationRing [Module.Finite R M]
 theorem IsSaturatedSubmodule.free_quotient_of_valuationRing [Module.Finite R M]
     {N : Submodule R M} (h : IsSaturatedSubmodule N) : Module.Free R (M ⧸ N) :=
   haveI := h.isTorsionFree_quotient
-  free_of_finite_of_isTorsionFree_of_valuationRing R (M ⧸ N)
+  free_of_finite_of_isTorsionFree_of_valuationRing (R := R) (M := M ⧸ N)
 
 theorem IsSaturatedSubmodule.exists_isCompl_of_valuationRing [Module.Finite R M]
     {N : Submodule R M} (h : IsSaturatedSubmodule N) : ∃ N' : Submodule R M, IsCompl N N' :=
@@ -79,7 +79,7 @@ theorem IsSaturatedSubmodule.finite_of_valuationRing [Module.Finite R M]
 theorem IsSaturatedSubmodule.free_of_valuationRing [Module.Finite R M] [Module.IsTorsionFree R M]
     {N : Submodule R M} (h : IsSaturatedSubmodule N) : Module.Free R N :=
   haveI := h.finite_of_valuationRing
-  free_of_finite_of_isTorsionFree_of_valuationRing R N
+  free_of_finite_of_isTorsionFree_of_valuationRing (R := R) (M := N)
 
 end Valuation
 

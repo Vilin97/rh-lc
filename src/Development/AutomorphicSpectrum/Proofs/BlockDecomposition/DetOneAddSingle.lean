@@ -40,12 +40,14 @@ theorem gm_ne_zero (j : Fin n) {g : Mat n} (hg : g ∈ GLs n) : GlobalTheory.Com
   have hinj : Function.Injective (g.submatrix (GlobalTheory.CompanionTheory.ModelS.ini j) id).vecMul := by
     rw [Matrix.vecMul_injective_iff]
     exact hli.comp _ (Fin.castLE_injective _)
-  have hp := Matrix.PosDef.mul_conjTranspose_self _ hinj
-  exact ((Matrix.isUnit_iff_isUnit_det _).1 hp.isUnit).ne_zero
+  open scoped ComplexOrder in
+  exact (by
+    have hp := Matrix.PosDef.mul_conjTranspose_self _ hinj
+    exact ((Matrix.isUnit_iff_isUnit_det _).1 hp.isUnit).ne_zero)
 
 theorem gm_smooth (j : Fin n) : ContDiff ℝ ∞ (GlobalTheory.CompanionTheory.ModelS.gm j : Mat n → ℂ) := by
   have hent : ∀ a b : Fin n, ContDiff ℝ ∞ (fun x : Mat n => x a b) := fun a b =>
-    (contDiff_apply_apply ℝ ℂ a b).restrict_scalars ℝ
+    (contDiff_apply_apply ℂ a b : ContDiff ℂ ∞ (fun x : Mat n => x a b)).restrict_scalars ℝ
   unfold GlobalTheory.CompanionTheory.ModelS.gm
   refine Cxc.det_smooth.comp ?_
   refine contDiff_pi.2 fun a => contDiff_pi.2 fun b => ?_
@@ -284,7 +286,7 @@ theorem Qf_kill (e : Fin n → ℤ) (X : Mat n) (hX : Xᴴ = -X) {g : Mat n} (hg
       funext s
       simp [Ψ, Finset.prod_apply]
     rw [this]
-    refine DifferentiableAt.finset_prod fun j _ => ?_
+    refine DifferentiableAt.finsetProd fun j _ => ?_
     have hne : M j 0 ≠ 0 := by rw [hM0]; exact gm_ne_zero j hg
     have hD := hMd j
     generalize e j = c

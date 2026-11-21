@@ -20,7 +20,7 @@ noncomputable section
 
 namespace FunctorialResolution.EmbeddedResolution
 
-private theorem isIso_resLE_of_iso {X Y : Scheme.{u}} (e : X ≅ Y) (U : Y.Opens) :
+theorem isIso_resLE_of_iso {X Y : Scheme.{u}} (e : X ≅ Y) (U : Y.Opens) :
     IsIso (e.hom.resLE U ((Opens.map e.hom.base).obj U) le_rfl) := by
   rw [Scheme.Hom.resLE_eq_morphismRestrict]
   infer_instance

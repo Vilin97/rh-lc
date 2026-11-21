@@ -92,6 +92,9 @@ theorem exists_colimit_of_quotient_charts : ∀ {X : Scheme.{0}} (R : X → X �
       exact ⟨U, hex U x hU⟩)
   let j : X ⟶ colimit F := 𝒱.glueMorphisms (fun U ↦ e U ≫ colimit.ι F U) (by
     intro U V
+    change 𝒰 at U V
+    change pullback.fst U.1.ι V.1.ι ≫ (e U ≫ colimit.ι F U) =
+      pullback.snd U.1.ι V.1.ι ≫ (e V ≫ colimit.ι F V)
     apply Scheme.hom_ext_of_forall
     intro x
     have hx : U.1.ι (pullback.fst U.1.ι V.1.ι x) = V.1.ι (pullback.snd U.1.ι V.1.ι x) :=

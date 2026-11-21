@@ -67,10 +67,10 @@ theorem exists_sabMap_constPt : Out.Laws → ∀ (E : Type) [Field E] [NumberFie
   have l : (abelian₂ t.G t.PP.L).IsLB := LB.isLB_linComb t.PP.isLB _ _
   have l' : (abelian₂ t'.G t'.PP.L).IsLB := LB.isLB_linComb t'.PP.isLB _ _
   have key : ∀ a : (G2 t'.G).left ⟶ (G2 t.G).left, LBIso ((abelian₂ t.G t.PP.L).pull a) (P.pull (a ≫ θ₂)) := fun a =>
-    (SiegelPullComp.iso_pull a hiso).trans (pull_isLB l _) (pull_isLB (pull_isLB hP _) _) (pull_isLB hP _)
+    (SiegelPullComp.iso_pull a hiso).trans (LB.isLB_pull l _) (LB.isLB_pull (LB.isLB_pull hP _) _) (LB.isLB_pull hP _)
       (SiegelPullComp.iso_pull_pull hP θ₂ a)
   have hlam : LBIso (abelian₂ t'.G t'.PP.L) ((abelian₂ t.G t.PP.L).pull φ₂) :=
-    (hν.trans l' (pull_isLB l _) (pull_isLB hP _) (key ν₂)).trans l' (pull_isLB hP _) (pull_isLB l _)
+    (hν.trans l' (LB.isLB_pull l _) (LB.isLB_pull hP _) (key ν₂)).trans l' (LB.isLB_pull hP _) (LB.isLB_pull l _)
       (e ▸ (key φ₂).symm)
   have hc : spMap (TrivSqZeroExt.fstHom k k k).toRingHom ≫ constPt x =
       spMap (TrivSqZeroExt.fstHom k k k).toRingHom ≫ x := by
@@ -352,11 +352,11 @@ theorem GlobalTheory.siegClause_of_famCore : GlobalTheory.LN.HomExtSt → Out.La
       IsNoetherianRing S ∧ Flat (spMap (Subring.inclusion l₁)) ∧ IsPreimmersion (spMap (Subring.inclusion l₁)) ∧
         Flat (spMap (Subring.inclusion l₂)) ∧ S ≤ i.range := ⟨_, le_sup_left, le_sup_right, hO, h₁, h₂, h₃, hle⟩
   have hu : IsUnit (N : S) := by
-    have := (isUnit_natCast_of_inv_mem hn.ne_zero (l₁ (Subring.subset_closure (Or.inr (Or.inl rfl))))).pow j
+    have := (GlobalTheory.FamSiegel.isUnit_natCast_of_inv_mem hn.ne_zero (l₁ (Subring.subset_closure (Or.inr (Or.inl rfl))))).pow j
     rwa [← Nat.cast_pow, ← hj] at this
   obtain ⟨t, ν, lv, hlv⟩ := (GlobalTheory.fullObj_pull E H D n N _ _ sM tM lev (pullback.fst sM (spMap (Subring.inclusion l₁)))).1
-  obtain ⟨w, hw, _, _⟩ := core (z := Subring.inclusion l₂) hX hL hL₂ hN hNo F (Subring.inclusion_injective l₁) hu
+  obtain ⟨w, hw, _, _⟩ := GlobalTheory.FamSiegel.core (z := Subring.inclusion l₂) hX hL hL₂ hN hNo F (Subring.inclusion_injective l₁) hu
     (Subtype.ext rfl) hbas hA ν hlv
-  obtain ⟨c, hc⟩ := exists_lift_subring hi hle
-  exact baseChange c (RingHom.ext fun x => hi ((hc ⟨x, l₁ x.2⟩).trans (hb x).symm))
+  obtain ⟨c, hc⟩ := GlobalTheory.FamSiegel.exists_lift_subring hi hle
+  exact GlobalTheory.FamSiegel.baseChange c (RingHom.ext fun x => hi ((hc ⟨x, l₁ x.2⟩).trans (hb x).symm))
     (RingHom.ext fun x => hi ((hc ⟨x, l₂ x.2⟩).trans (hz x).symm)) ν hlv hw κ hT hlvT

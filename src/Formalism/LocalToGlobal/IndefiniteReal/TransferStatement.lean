@@ -29,7 +29,7 @@ def eGood {S : Type*} [Fintype S] {T : S → Type*} [∀ s, AddCommGroup (T s)] 
     (τ : ∀ s, Representation K G (T s)) (ρ : Representation K G V) : V →ₗ[K] V :=
   ∑ s, eS (τ s) ρ
 
-
+open Classical in
 def epP (H : Subgroup G) (χ : H →* (𝓞 K)ˣ) {V : Type*} [AddCommGroup V] [Module K V]
     (ρ : Representation K G V) : V →ₗ[K] V :=
   ((Nat.card H : ℕ) : K)⁻¹ • ∑ h : H, ((((χ h⁻¹ : (𝓞 K)ˣ) : 𝓞 K) : K)) • ρ (h : G)

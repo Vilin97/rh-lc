@@ -49,7 +49,7 @@ lemma exists_inv_card {v : Valuation C NNReal} (hv : v.Integers R) (p : ℕ) [Fa
   exact hv.exists_of_le_one (by rw [map_inv₀, h1, inv_one])
 
 lemma projL_mem (hu : ∃ u : R, algebraMap R C u = (Fintype.card Fˣ : C)⁻¹) (χ : MulChar F R)
-    (S : Submodule R (N → C)) (hS : FStable F S) {g : N → C} (hg : g ∈ S) : projL χ g ∈ S := by
+    (S : Submodule R (N → C)) (hS : FStable (F := F) S) {g : N → C} (hg : g ∈ S) : projL χ g ∈ S := by
   obtain ⟨u, hu⟩ := hu
   have : projL χ g = u • ∑ a : Fˣ, χ⁻¹ (a : F) • (fun x => g ((a : F) • x)) := by
     funext x
@@ -59,8 +59,8 @@ lemma projL_mem (hu : ∃ u : R, algebraMap R C u = (Fintype.card Fˣ : C)⁻¹)
   exact S.smul_mem _ (S.sum_mem fun a _ => S.smul_mem _ (hS _ g hg))
 
 omit [Fintype F] [DecidableEq F] in
-lemma fstable_sq {M : Submodule R (N → C)} (hM : FStable F M) :
-    FStable F (sqIdeal (augIdeal M)) :=
+lemma fstable_sq {M : Submodule R (N → C)} (hM : FStable (F := F) M) :
+    FStable (F := F) (sqIdeal (augIdeal M)) :=
   fun a _ hg => sq_pull (LinearMap.lsmul F N a).toAddMonoidHom M M (hM a) hg
 
 omit [Fintype F] [DecidableEq F] in
@@ -76,7 +76,7 @@ lemma eig_le_aug (M : Submodule R (N → C)) (χ : MulChar F R) : eig M χ ≤ a
   rwa [zero_smul, MulChar.map_zero, map_zero, zero_mul] at this
 
 lemma projL_eig (hu : ∃ u : R, algebraMap R C u = (Fintype.card Fˣ : C)⁻¹) (χ : MulChar F R)
-    {M : Submodule R (N → C)} (hM : FStable F M) {g : N → C} (hg : g ∈ augIdeal M) :
+    {M : Submodule R (N → C)} (hM : FStable (F := F) M) {g : N → C} (hg : g ∈ augIdeal M) :
     projL χ g ∈ eig M χ := by
   rw [mem_aug] at hg
   refine ⟨projL_mem hu χ M hM hg.1, fun a x => ?_⟩

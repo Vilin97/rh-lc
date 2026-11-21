@@ -88,16 +88,16 @@ theorem unipotentOfCoords_mul_eq_left (w v : StrictUpperIndex n → 𝕜) :
     w + (v + strictUpperCoords (strictUpperMatrix w * strictUpperMatrix v))
   rw [add_assoc]
 
-noncomputable def diagScaleLinear (a : PosDiag n) :
+noncomputable def diagScaleLinear (a : PosDiag (n := n)) :
     (StrictUpperIndex n → 𝕜) →ₗ[ℝ] (StrictUpperIndex n → 𝕜) :=
   LinearMap.pi fun p => ((a.1 p.1.1 / a.1 p.1.2) • LinearMap.id).comp (LinearMap.proj p)
 
-theorem diagScaleLinear_apply (a : PosDiag n) (v : StrictUpperIndex n → 𝕜) :
+theorem diagScaleLinear_apply (a : PosDiag (n := n)) (v : StrictUpperIndex n → 𝕜) :
     diagScaleLinear a v = fun p => ((a.1 p.1.1 / a.1 p.1.2 : ℝ) : 𝕜) * v p := by
   funext p
   simp [diagScaleLinear, RCLike.real_smul_eq_coe_mul]
 
-theorem det_diagScaleLinear (a : PosDiag n) :
+theorem det_diagScaleLinear (a : PosDiag (n := n)) :
     LinearMap.det (diagScaleLinear (𝕜 := 𝕜) a) = (iwasawaDelta (diagPosOf a : GL n 𝕜) : ℝ) := by
   rw [diagScaleLinear, LinearMap.det_pi, iwasawaDelta_diagPosOf]
   refine Finset.prod_congr rfl fun p _ => ?_
@@ -117,7 +117,7 @@ theorem isOpen_posDiag : IsOpen {a : n → ℝ | ∀ i, 0 < a i} := by
   rw [setOf_forall]
   exact isOpen_iInter_of_finite fun i => isOpen_lt continuous_const (continuous_apply i)
 
-instance : LocallyCompactSpace (PosDiag n) :=
+instance : LocallyCompactSpace (PosDiag (n := n)) :=
   isOpen_posDiag.locallyCompactSpace
 
 instance : LocallyCompactSpace (diagPosSubgroup n 𝕜) :=
@@ -224,7 +224,8 @@ theorem unipotentLebesgue_map_diagConj (a : diagPosSubgroup n 𝕜) :
     unipotentCoordsHomeomorph.measurable, e, ← Measure.map_map unipotentCoordsHomeomorph.measurable
     (LinearMap.continuous_of_finiteDimensional _).measurable,
     map_linearMap_addHaar_eq_smul_addHaar _ (by rw [det_diagScaleLinear]; exact hδ),
-    Measure.map_smul, det_diagScaleLinear, coe_diagPosHomeomorph]
+    Measure.map_smul _ unipotentCoordsHomeomorph.measurable.aemeasurable,
+    det_diagScaleLinear, coe_diagPosHomeomorph]
   congr 1
   rw [abs_of_pos (inv_pos.2 (lt_of_le_of_ne (NNReal.coe_nonneg _) hδ.symm)), ← NNReal.coe_inv,
     ENNReal.ofReal_coe_nnreal, ENNReal.coe_inv (NNReal.coe_ne_zero.1 hδ)]
@@ -233,7 +234,8 @@ theorem map_diagConj_haar (μ : Measure (upperUnipotentSubgroup n 𝕜)) [μ.IsH
     (a : diagPosSubgroup n 𝕜) :
     Measure.map (diagConj a) μ = ((iwasawaDelta (a : GL n 𝕜) : ℝ≥0∞))⁻¹ • μ := by
   obtain ⟨c, -, rfl⟩ := exists_eq_smul_unipotentLebesgue μ
-  rw [Measure.map_smul, unipotentLebesgue_map_diagConj, smul_comm]
+  rw [Measure.map_smul _ (continuous_diagConj a).measurable.aemeasurable,
+    unipotentLebesgue_map_diagConj, smul_comm]
 
 end Haar
 

@@ -21,8 +21,9 @@ abbrev IOPt {n : ℕ} (ε : Fin n → Bool) : Type := {g : Matrix (Fin n) (Fin n
 
 
 def ioExt {n : ℕ} (ε : Fin n → Bool) {E : Type} [Zero E] (φ : IOPt ε → E) :
-    Matrix (Fin n) (Fin n) ℂ → E :=
-  fun g => if h : inUJ ε g then φ ⟨g, h⟩ else 0
+    Matrix (Fin n) (Fin n) ℂ → E := by
+  classical
+  exact fun g => if h : inUJ ε g then φ ⟨g, h⟩ else 0
 
 section Core
 
@@ -77,6 +78,8 @@ private lemma Jm_conjTranspose_eq_selfFormalDegreeRatio {n : ℕ} (ε : Fin n �
   unfold Jm
   rw [Matrix.diagonal_conjTranspose]
   congr 1
+  funext i
+  simp only [Pi.star_apply]
   split_ifs <;> simp
 
 private lemma inUJ_exp_of_inG_formal_degree_ratio {n : ℕ} {ε : Fin n → Bool} {Y : Matrix (Fin n) (Fin n) ℂ} (hY : inG ε Y) :
@@ -163,6 +166,7 @@ lemma io_eab_zero (a b : Fin n) (g : Matrix (Fin n) (Fin n) ℂ) :
   simp only [EabV, EcV, RdV, deriv_const, smul_zero, add_zero]
 
 
+variable (ε E) in
 def ioS : Submodule ℂ (IOPt ε → E) where
   carrier := {φ | SmoothOnGV ε (ioExt ε φ)}
   add_mem' {φ ψ} hφ hψ :=
@@ -177,6 +181,7 @@ def IORep (F : Matrix (Fin n) (Fin n) ℂ → E) (φ : IOPt ε → E) : Prop :=
   ∀ g (hg : inUJ ε g), F g = φ ⟨g, hg⟩
 
 
+variable (ε) in
 def ioT (a b : Fin n) (φ : IOPt ε → E) : IOPt ε → E := fun g => EabV ε a b (ioExt ε φ) g.1
 
 lemma ioT_rep {F : Matrix (Fin n) (Fin n) ℂ → E} {φ : IOPt ε → E} (h : IORep F φ) (a b : Fin n) :
@@ -206,6 +211,7 @@ lemma ioT_smul {φ : IOPt ε → E} (hφ : φ ∈ ioS ε E) (c : ℂ) (a b : Fin
     io_eab_lin io_smooth_zero hφ c a b g.2, io_eab_zero, zero_add]
 
 
+variable (ε E) in
 def ioE (a b : Fin n) : Module.End ℂ (ioS ε E) where
   toFun x := ⟨ioT ε a b x.1, ioT_mem x.2 a b⟩
   map_add' x y := Subtype.ext (ioT_add x.2 y.2 a b)

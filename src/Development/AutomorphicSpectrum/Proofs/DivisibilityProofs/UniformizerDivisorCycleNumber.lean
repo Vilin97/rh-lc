@@ -55,10 +55,10 @@ theorem GlobalTheory.CompanionTheory.Ar.Num.cycNum_divCycle_const : ∀ (O : Typ
   rw [Finset.mul_sum]
   refine Finset.sum_congr rfl fun μ hμ => ?_
   have hlen : (classList cls μ ++ Q).length = d := by
-    rw [List.length_append, length_classList cls hH hμ, hd]
+    rw [List.length_append, GlobalTheory.CompanionTheory.Ar.Num.ConsPoly.length_classList cls hH hμ, hd]
   have hM' : IsModelOver P (classList cls μ ++ Q).length := by
     rw [hlen]
     exact hM
-  rw [cycList_const hϖ _ hM' u e]
+  rw [GlobalTheory.CompanionTheory.Ar.Num.ConsPoly.cycList_const hϖ _ hM' u e]
   push_cast
   ring

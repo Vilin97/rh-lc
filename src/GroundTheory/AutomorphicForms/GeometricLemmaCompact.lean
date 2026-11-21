@@ -22,7 +22,7 @@ variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchi
 
 section Bounds
 
-
+variable (F) in
 abbrev EntryBound (e : ℕ) (A : Matrix (Fin n) (Fin n) F) : Prop :=
   ∀ i j, (uniformizer F : F) ^ e * A i j ∈ 𝒪[F]
 
@@ -56,12 +56,10 @@ end Bounds
 
 section UnipotentCompact
 
-variable (γ : Fin n → ℕ)
+def unipotentCompactG (γ : Fin n → ℕ) (e : ℕ) : Subgroup (GL (Fin n) F) :=
+  (unipotentCompact (F := F) (n := n) (β := γ) e).map (unipotentRadical F n γ).subtype
 
-def unipotentCompactG (e : ℕ) : Subgroup (GL (Fin n) F) :=
-  (unipotentCompact F n γ e).map (unipotentRadical F n γ).subtype
-
-variable {γ}
+variable {γ : Fin n → ℕ}
 
 theorem unipotentCompactG_le (e : ℕ) :
     unipotentCompactG (F := F) γ e ≤ unipotentRadical F n γ := by

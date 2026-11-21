@@ -16,7 +16,8 @@ variable {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} [IsAlgClosur
 variable {h : IsPlaceOver A w}
 
 
-theorem lpDim_zero : lpDim (lpZero h) = 0 := by simp [lpZero]
+theorem lpDim_zero (h : IsPlaceOver A w) : lpDim (lpZero (h := h)) = 0 := by
+  simp [lpZero]
 
 theorem lpDim_sum (a b : WD h) : lpDim (lpSum a b) = lpDim a + lpDim b := by
   induction a using ind
@@ -35,7 +36,7 @@ theorem lpDim_tensor (a b : WD h) : lpDim (lpChar a b) = lpDim a * lpDim b := by
 theorem lpDim_char (a χ : WD h) (hχ : lpDim χ = 1) : lpDim (lpChar a χ) = lpDim a := by
   rw [lpDim_tensor, hχ, mul_one]
 
-theorem lpSum_zero (a : WD h) : lpSum a (lpZero h) = a := by
+theorem lpSum_zero (a : WD h) : lpSum a (lpZero (h := h)) = a := by
   induction a using ind
   rw [lpZero, lpSum_mk]
   exact sound ⟨LinearEquiv.prodUnique, fun _ _ => rfl, fun _ => rfl⟩

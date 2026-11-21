@@ -57,6 +57,7 @@ def nzOf (σ : Ψ → (𝓞 E →+* ℂ)) (I : Submodule (𝓞 E) Λ) {r : ℕ} 
     ((Submodule.span (𝓞 E) (Set.range v)).toAddSubgroup.relIndex I.toAddSubgroup : ℝ)
 
 
+open scoped Classical in
 def nz (σ : Ψ → (𝓞 E →+* ℂ)) (I : Submodule (𝓞 E) Λ) : ℝ :=
   if h : ∃ r v, IsNzFamily I r v then R.nzOf σ I h.choose_spec.choose else 1
 

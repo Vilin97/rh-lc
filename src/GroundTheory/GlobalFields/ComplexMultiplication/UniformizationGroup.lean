@@ -23,7 +23,7 @@ variable {L : PeriodPair}
 
 theorem exists_weierstrassP_eq (c : ℂ) : ∃ z, z ∉ L.lattice ∧ ℘[L] z = c := by
   by_contra hcon
-  push_neg at hcon
+  push Not at hcon
   have h2 := finsum_toNat_torusOrder_weierstrassP_sub (L := L) c
   have h0 : ∀ x : Torus L, (torusOrder L (fun w ↦ ℘[L] w - c) x).toNat = 0 := by
     intro x
@@ -48,7 +48,7 @@ theorem exists_weierstrassP_eq (c : ℂ) : ∃ z, z ∉ L.lattice ∧ ℘[L] z =
   simp [h0] at h2
 
 
-def toPoint (z : ℂ) : (weierstrassCurve L).toAffine.Point :=
+def toPoint (L : PeriodPair) (z : ℂ) : (weierstrassCurve L).toAffine.Point :=
   haveI := Classical.propDecidable (z ∈ L.lattice)
   if h : z ∈ L.lattice then 0 else
     .some (℘[L] z) (℘'[L] z / 2) (equation_iff_nonsingular.1 (equation_weierstrassP L h))
@@ -175,13 +175,13 @@ theorem toPoint_surjective : Function.Surjective (toPoint L) := by
       (by rw [L.derivWeierstrassP_neg]; linear_combination -h1)
 
 
-def toPointHom : ℂ →+ (weierstrassCurve L).toAffine.Point where
+def toPointHom (L : PeriodPair) : ℂ →+ (weierstrassCurve L).toAffine.Point where
   toFun := toPoint L
   map_zero' := toPoint_zero
   map_add' := toPoint_add
 
 
-def torusToPoint : Torus L →+ (weierstrassCurve L).toAffine.Point :=
+def torusToPoint (L : PeriodPair) : Torus L →+ (weierstrassCurve L).toAffine.Point :=
   QuotientAddGroup.lift L.lattice.toAddSubgroup (toPointHom L) fun _ hl ↦ toPoint_of_mem hl
 
 @[simp]

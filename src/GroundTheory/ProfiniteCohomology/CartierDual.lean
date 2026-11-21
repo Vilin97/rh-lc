@@ -24,7 +24,7 @@ attribute [-instance] ULift.smulLeft ULift.module
 variable {A B : Type*} [AddCommGroup A] [AddCommGroup B] [Module (ULift.{u} ℤ) A]
   [Module (ULift.{u} ℤ) B]
 
-
+variable (A B) in
 def uliftIntLinearEquivAddHom : (A →ₗ[ULift.{u} ℤ] B) ≃+ (A →+ B) where
   toFun f := f.toAddMonoidHom
   invFun g :=
@@ -53,7 +53,7 @@ variable {K L : Type u} [Field K] [Field L] [Algebra K L]
 
 section MonoidHom
 
-
+variable (K L) in
 def cartierDualEquivMonoidHom (M : Rep.{u} (ULift.{u} ℤ) Gal(L/K)) :
     (M →ₗ[ULift.{u} ℤ] galUnits.{u} K L) ≃ (Multiplicative M →* Lˣ) :=
   (uliftIntLinearEquivAddHom M (Additive Lˣ)).toEquiv.trans AddMonoidHom.toMultiplicativeLeft
@@ -96,7 +96,7 @@ theorem bijective_ihom_map_rootsOfUnityToUnits (M : Rep.{u} (ULift.{u} ℤ) Gal(
     refine LinearMap.ext fun m => ?_
     rfl
 
-
+variable (K L) in
 def cartierDualIsoHomRootsOfUnityOfNsmul (M : Rep.{u} (ULift.{u} ℤ) Gal(L/K)) (n : ℕ)
     (hn : ∀ m : M, n • m = 0) :
     (Rep.ihom M).obj (galRootsOfUnity.{u} K L n) ≅ cartierDual K L M :=

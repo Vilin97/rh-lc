@@ -34,6 +34,7 @@ theorem homog_one : IsMultiHomog (1 : MRingOver R ι) 0 := by
   simp
 
 
+open Classical in
 theorem homog_X (k : K) (i : ι k) :
     IsMultiHomog (X ⟨k, i⟩ : MRingOver R ι) (Pi.single k 1) := by
   classical

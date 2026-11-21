@@ -52,7 +52,7 @@ theorem mem_maximalIdeal_integer_iff {x : 𝒪[L]} : x ∈ 𝓂[L] ↔ valuation
   rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
   exact Valuation.Integer.not_isUnit_iff_valuation_lt_one
 
-
+variable (L) in
 theorem isClosed_maximalIdeal_integer : IsClosed ((𝓂[L] : Ideal 𝒪[L]) : Set 𝒪[L]) := by
   have hopen : IsOpen ((𝓂[L] : Ideal 𝒪[L]) : Set 𝒪[L]) := by
     refine (𝓂[L]).toAddSubgroup.isOpen_of_mem_nhds (g := 0) ?_
@@ -68,7 +68,7 @@ theorem coe_psTerm_integer {σ : Type*} (f : MvPowerSeries σ 𝒪[K]) (a : σ �
       psTerm f (fun i => (a i : L)) d := by
   simp [psTerm, Finsupp.prod]
 
-
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [Algebra K L] [ValuativeExtension K L] in
 theorem hasEval_of_mem_maximalIdeal {σ : Type*} [Finite σ] {a : σ → 𝒪[L]} (ha : ∀ i, a i ∈ 𝓂[L]) :
     HasEval a := by
   refine ⟨fun i => ?_, ?_⟩
@@ -81,7 +81,7 @@ theorem hasEval_of_mem_maximalIdeal {σ : Type*} [Finite σ] {a : σ → 𝒪[L]
   · rw [Filter.cofinite_eq_bot]
     exact tendsto_bot
 
-
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem hasSum_psTerm_eval₂ {σ : Type*} [Finite σ] (f : MvPowerSeries σ 𝒪[K]) (a : σ → 𝒪[L])
     (ha : ∀ i, a i ∈ 𝓂[L]) :
     letI : UniformSpace 𝒪[K] := ⊥
@@ -103,7 +103,7 @@ theorem hasSum_psTerm_eval₂ {σ : Type*} [Finite σ] (f : MvPowerSeries σ �
     hs.map (AddSubmonoidClass.subtype 𝒪[L]) continuous_subtype_val
   simpa only [coe_psTerm_integer] using h2
 
-
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem hasSum_psEval {σ : Type*} [Finite σ] (f : MvPowerSeries σ 𝒪[K]) (a : σ → 𝒪[L])
     (ha : ∀ i, a i ∈ 𝓂[L]) :
     HasSum (psTerm f fun i => (a i : L)) (psEval f fun i => (a i : L)) :=
@@ -119,7 +119,7 @@ theorem psEval_eq_eval₂ {σ : Type*} [Finite σ] (f : MvPowerSeries σ 𝒪[K]
   have := t2Space_of_isNonarchimedeanLocalField L
   (hasSum_psTerm_eval₂ f a ha).tsum_eq
 
-
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem psEval_mem_integer {σ : Type*} [Finite σ] (f : MvPowerSeries σ 𝒪[K]) (a : σ → 𝒪[L])
     (ha : ∀ i, a i ∈ 𝓂[L]) :
     psEval f (fun i => (a i : L)) ∈ 𝒪[L] := by
@@ -142,7 +142,7 @@ theorem valuation_psEval_lt_one {σ : Type*} [Finite σ] {f : MvPowerSeries σ �
   · have h := hasSum_psEval f a ha
     rw [HasSum] at h
     rw [(Topology.IsInducing.subtypeVal).tendsto_nhds_iff]
-    convert h using 1
+    simpa only [Function.comp_def, AddSubmonoidClass.coe_finsetSum] using h
   · refine Ideal.sum_mem _ fun d _ => ?_
     have he : (⟨psTerm f (fun i => (a i : L)) d, by
         rw [← coe_psTerm_integer]; exact SetLike.coe_mem _⟩ : 𝒪[L]) =
@@ -158,7 +158,7 @@ theorem valuation_psEval_lt_one {σ : Type*} [Finite σ] {f : MvPowerSeries σ �
       refine Ideal.prod_mem _ (i := i) (Finsupp.mem_support_iff.mpr hi) ?_
       exact Ideal.pow_mem_of_mem _ (ha i) _ (Nat.pos_of_ne_zero hi)
 
-
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem psEval_subst {σ τ : Type*} [Finite σ] [Finite τ] {g : σ → MvPowerSeries τ 𝒪[K]}
     (hg : ∀ s, constantCoeff (g s) = 0) (f : MvPowerSeries σ 𝒪[K]) (a : τ → 𝒪[L])
     (ha : ∀ i, a i ∈ 𝓂[L]) :
@@ -187,7 +187,7 @@ section Algebraic
 variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
 variable {Ω : Type*} [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω]
 
-
+variable (Ω) in
 theorem t2Space_of_isValuativeTopology : T2Space Ω := by
   refine IsTopologicalAddGroup.t2Space_of_zero_sep fun x hx => ?_
   refine ⟨{z | valuation Ω z < valuation Ω x}, ?_, fun h => lt_irrefl (valuation Ω x) h⟩
@@ -196,16 +196,18 @@ theorem t2Space_of_isValuativeTopology : T2Space Ω := by
 
 variable [Algebra K Ω] [ValuativeExtension K Ω]
 
-
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [TopologicalSpace Ω]
+  [IsValuativeTopology Ω] [ValuativeExtension K Ω] in
 theorem valuation_coe_lt_one_iff (E : IntermediateField K Ω) (x : E) :
     valuation Ω (x : Ω) < 1 ↔ valuation E x < 1 := by
   rw [← map_one (valuation Ω), ← (valuation Ω).vlt_iff_lt, ← map_one (valuation E),
     ← (valuation E).vlt_iff_lt]
-  exact not_congr (by simpa using IntermediateField.coe_vle_coe_iff (1 : E) x)
+  exact not_congr (by simpa using IntermediateField.coe_vle_coe_iff (E := E) (1 : E) x)
 
 variable [Algebra.IsAlgebraic K Ω]
 
-
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ω]
+  [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension K Ω] in
 theorem finiteDimensional_adjoin_range {σ : Type*} [Finite σ] (x : σ → Ω) :
     FiniteDimensional K (IntermediateField.adjoin K (Set.range x)) :=
   have : Finite (Set.range x) := Set.finite_range x
@@ -292,12 +294,12 @@ section Basic
 variable {K : Type*} [Field K] [ValuativeRel K] {σ M : Type*} [CommRing M] [Algebra K M]
   [TopologicalSpace M] [T2Space M]
 
-
+omit [T2Space M] in
 @[simp]
 theorem psEval_zero (x : σ → M) : psEval (0 : MvPowerSeries σ 𝒪[K]) x = 0 := by
   simp [psEval, psTerm]
 
-
+omit [T2Space M] in
 @[simp]
 theorem psEval_X (x : σ → M) (i : σ) : psEval (X i : MvPowerSeries σ 𝒪[K]) x = x i := by
   classical
@@ -314,7 +316,7 @@ section Points
 
 variable {K : Type*} [Field K] [ValuativeRel K] {Ω : Type*} [Field Ω] [ValuativeRel Ω]
 
-
+variable (Ω) in
 def IdealPoint (_F : _root_.FormalGroup 𝒪[K]) : Type _ := {x : Ω // valuation Ω x < 1}
 
 variable {F G H : _root_.FormalGroup 𝒪[K]}
@@ -446,7 +448,7 @@ def Hom.pointMap (φ : Hom F G) : IdealPoint Ω F →+ IdealPoint Ω G :=
       apply IdealPoint.ext
       simp only [IdealPoint.val_mk, IdealPoint.val_add]
       have hx := fin_two_valuation_lt_one a b
-      rw [← psEval_powerSeries_subst F.zero_constantCoeff _ _ hx, φ.map_add (f := _),
+      rw [← psEval_powerSeries_subst F.zero_constantCoeff _ _ hx, φ.map_add,
         psEval_subst' _ _ _ hx]
       · congr 1
         funext i
@@ -492,7 +494,7 @@ theorem Hom.pointMap_add [G.IsComm] (f g : Hom F G) (x : IdealPoint Ω F) :
     fin_cases i
     exacts [f.constantCoeff_eq_zero', g.constantCoeff_eq_zero']
 
-
+variable (Ω F) in
 def endPointMap [F.IsComm] : Hom F F →+* AddMonoid.End (IdealPoint Ω F) where
   toFun φ := φ.pointMap
   map_one' := AddMonoidHom.ext fun x => Hom.pointMap_id x
@@ -576,7 +578,7 @@ theorem lubinTateGalPointMap_val (hf : IsLubinTateSeries π f) (τ : Ω ≃ₐ[K
     (x : IdealPoint Ω (lubinTateFormalGroup hπ hf)) :
     (lubinTateGalPointMap hf τ x).val = τ x.val := rfl
 
-
+variable (Ω) in
 noncomputable def lubinTateTorsion (hf : IsLubinTateSeries π f) (n : ℕ) :
     Submodule 𝒪[K] (IdealPoint Ω (lubinTateFormalGroup hπ hf)) :=
   Submodule.torsionBy 𝒪[K] _ (π ^ n)

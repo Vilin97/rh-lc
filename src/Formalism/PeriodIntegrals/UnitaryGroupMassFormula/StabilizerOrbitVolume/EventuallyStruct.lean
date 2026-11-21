@@ -19,7 +19,7 @@ namespace PI.VolStabSW
 
 namespace CompGAux
 
-open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes NumberField IsDedekindDomain PI.VolStabSW.FiniteThetaCoordinates
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes NumberField IsDedekindDomain
 open scoped TensorProduct
 
 section Gen

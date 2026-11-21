@@ -28,14 +28,14 @@ private theorem ctrlOrd_per {A B M : Type} [CommRing A] [CommRing B] [AddCommGro
       simpa using hv
     | succ n ih =>
       intro v hv
-      rw [pow_succ, Module.End.mul_apply]
+      rw [pow_succ, mul_apply_eq_comp]
       exact ih _ (hT v hv)
   refine ⟨h1, fun n j v hv => ?_⟩
   induction j with
   | zero => simp
   | succ j ih =>
     have hx : (T ^ (n * (j + 1))) v - v = (T ^ (n * j)) ((T ^ n) v - v) + ((T ^ (n * j)) v - v) := by
-      rw [Nat.mul_succ, pow_add, Module.End.mul_apply, map_sub]
+      rw [Nat.mul_succ, pow_add, mul_apply_eq_comp, map_sub]
       abel
     rw [hx]
     exact V.add_mem (h1 _ _ hv) ih
@@ -82,7 +82,7 @@ private theorem ctrlOrd_nat (F : Fin m → X.Fn Ω (W.d + 1)) (f : X.Fn O m) (h 
   induction n with
   | zero => simpa using h
   | succ n ih =>
-    rw [pow_succ', pow_succ', Module.End.mul_apply, Module.End.mul_apply, hU, ih,
+    rw [pow_succ', pow_succ', mul_apply_eq_comp, mul_apply_eq_comp, hU, ih,
       (ctrlEq Γ Ga Gp X O Ω W m 1).2.1]
 
 private theorem ctrlOrd_stab (Λ : Submodule O Ω) (F : Fin m → X.Fn Ω (W.d + 1)) (hF : F ∈ X.Lat m W Λ) :
@@ -116,7 +116,7 @@ private theorem ctrlOrd_inj (hinj : Function.Injective (algebraMap O Ω)) (F : F
       exact (mIm O Ω (k + 1)).zero_mem
     have h2 := (ctrlOrd_per (X.Lat m W (mIm O Ω (k + 1))) (X.UF m W ⟨X.I.z, X.I.z_mem⟩)
       (fun v hv => ctrlOrd_stab X W _ v hv)).1 n _ h1
-    rw [← Module.End.mul_apply, ← pow_succ] at h2
+    rw [← mul_apply_eq_comp, ← pow_succ] at h2
     have h3 := Submodule.sub_mem _ h2 hn
     simpa using h3
   have hall : ∀ k, F ∈ X.Lat m W (mIm O Ω k) := by
@@ -141,6 +141,112 @@ private theorem ctrlOrd_inj (hinj : Function.Injective (algebraMap O Ω)) (F : F
   have hv := congrArg (fun v => (W.ξ g.2 : Matrix (Fin (W.d + 1)) (Fin (W.d + 1)) Ω) *ᵥ v) hu
   simpa [Matrix.mulVec_mulVec] using hv
 
+private theorem ctrlOrd_prescribed_values (τ : X.Ub →* GL (Fin m) O) (φ : X.I.T →* Oˣ)
+    (U : Subgroup X.Ub) (c : ℕ) (θ : X.I.T →* Oˣ)
+    (hφ : ∀ t : X.I.T, (t : Gp) ∈ X.I.Tc c → φ t = 1)
+    (hθ : ∀ t : X.I.T, algebraMap O Ω (θ t) = algebraMap O Ω (φ t) * W.χ ⟨t, X.I.T_le t.2⟩)
+    (hfree : X.Free τ θ U) (N : ℕ) (x : Fin N → Ga × Gp)
+    (hcov : ∀ g, ∃ γ i, ∃ u ∈ U, ∃ b ∈ X.I.Iw c, g = X.glob γ * x i * ((u : Ga), b))
+    (huniq : ∀ i j γ, ∀ u ∈ U, ∀ b ∈ X.I.Iw c, x j = X.glob γ * x i * ((u : Ga), b) → i = j)
+    (v : Fin N → Fin m → Fin (W.d + 1) → Ω) :
+    ∃ F ∈ X.ClO m W τ U c φ, ∀ n i k, X.unt m W F i (x n) k = v n i k := by
+  let rhoT {A B Ω m n : Type} [Group A] [Group B] [Field Ω] [Fintype m] [DecidableEq m]
+      [Fintype n] [DecidableEq n] (σ : A →* GL m Ω) (ξ : B →* GL n Ω) (ψ : B →* Ωˣ) :
+      Representation Ω (A × B) (Matrix m n Ω) :=
+    { toFun := fun k =>
+        { toFun := fun v => (ψ k.2 : Ω) • ((σ k.1 : Matrix m m Ω) * v * (ξ k.2 : Matrix n n Ω)ᵀ)
+          map_add' := fun v w => by simp [Matrix.mul_add, Matrix.add_mul]
+          map_smul' := fun c v => by simp [smul_comm c] }
+      map_one' := by
+        refine LinearMap.ext fun v => ?_
+        simp
+      map_mul' := by
+        intro k k'
+        refine LinearMap.ext fun v => ?_
+        simp [Matrix.mul_assoc, smul_smul, mul_comm] }
+  have rhoT_apply {A B Ω m n : Type} [Group A] [Group B] [Field Ω] [Fintype m] [DecidableEq m]
+      [Fintype n] [DecidableEq n] (σ : A →* GL m Ω) (ξ : B →* GL n Ω) (ψ : B →* Ωˣ) (k : A × B)
+      (v : Matrix m n Ω) :
+      rhoT σ ξ ψ k v = (ψ k.2 : Ω) • ((σ k.1 : Matrix m m Ω) * v * (ξ k.2 : Matrix n n Ω)ᵀ) := rfl
+  have mulVec_row {Ω m n : Type} [Field Ω] [Fintype n] (M : Matrix n n Ω) (v : Matrix m n Ω) (i : m) :
+      M *ᵥ v i = (v * Mᵀ) i := by
+    ext k
+    simp [Matrix.mul_apply, mulVec, dotProduct, mul_comm]
+  obtain ⟨ψ, hψ⟩ := UpperTheory.exists_iwahori_character_extending_torus_character Gp X.I Ωˣ c ((Units.map (algebraMap O Ω).toMonoidHom).comp φ)
+    (fun t ht => by simp [hφ t ht])
+  have hle : X.I.Iw c ≤ X.I.Iw 0 := sup_le_sup_left (X.I.Nm_anti (Nat.zero_le c)) _
+  set τ' := (Matrix.GeneralLinearGroup.map (algebraMap O Ω)).comp τ with hτ'
+  let j : U × X.I.Iw c →* Ga × Gp := (X.Ub.subtype.comp U.subtype).prodMap (X.I.Iw c).subtype
+  have hj : ∀ k : U × X.I.Iw c, j k = (((k.1 : X.Ub) : Ga), (k.2 : Gp)) := fun _ => rfl
+  obtain ⟨Φ, h1, h2, h3⟩ := UpperTheory.exists_automorphic_function_with_values_on_coset_reps Γ (Ga × Gp) (U × X.I.Iw c) Ω
+    (Matrix (Fin m) (Fin (W.d + 1)) Ω) (Fin N) X.glob j
+    (rhoT (τ'.comp U.subtype) (W.ξ.comp (X.I.Iw c).subtype) ψ) x
+    (fun g => by
+      obtain ⟨γ, i, u, hu, b, hb, h⟩ := hcov g
+      exact ⟨γ, i, (⟨u, hu⟩, ⟨b, hb⟩), h⟩)
+    (fun i i' γ k h => huniq i i' γ k.1 k.1.2 k.2 k.2.2 h)
+    (fun i γ k h => by
+      obtain ⟨hc, hb, e⟩ := hfree (x i) γ k.1 k.1.2 k.2 (hle k.2.2) h
+      refine LinearMap.ext fun w => ?_
+      have hξ : (W.ξ (k.2 : Gp) : Matrix (Fin (W.d + 1)) (Fin (W.d + 1)) Ω) = (W.χ ⟨k.2, X.I.T_le hb⟩ : Ω) • (1 : Matrix (Fin (W.d + 1)) (Fin (W.d + 1)) Ω) := by
+        ext a b
+        rw [W.central ⟨k.2, X.I.T_le hb⟩ hc a b]
+        simp [Matrix.one_apply]
+      have e' : algebraMap O Ω (θ ⟨k.2, hb⟩) • (τ' (k.1 : X.Ub) : Matrix (Fin m) (Fin m) Ω) = 1 := by
+        ext a b
+        have := congrArg (algebraMap O Ω) (congrFun (congrFun e a) b)
+        simp only [Matrix.smul_apply, smul_eq_mul, map_mul, Matrix.one_apply] at this ⊢
+        rw [apply_ite (algebraMap O Ω), map_one, map_zero] at this
+        exact this
+      rw [hθ] at e'
+      rw [rhoT_apply, (hψ k.2).2.2 hb]
+      show algebraMap O Ω (φ ⟨k.2, hb⟩) • ((τ' (k.1 : X.Ub) : Matrix (Fin m) (Fin m) Ω) * w *
+        (W.ξ (k.2 : Gp) : Matrix (Fin (W.d + 1)) (Fin (W.d + 1)) Ω)ᵀ) = w
+      rw [hξ, transpose_smul, transpose_one, Matrix.mul_smul, Matrix.mul_one, smul_smul,
+        ← Matrix.smul_mul, e', Matrix.one_mul])
+    (fun n => Matrix.of (v n))
+  have h2' : ∀ g (k : U × X.I.Iw c), (ψ k.2 : Ω) • ((τ' (k.1 : X.Ub) : Matrix (Fin m) (Fin m) Ω) *
+      Φ (g * j k) * (W.ξ (k.2 : Gp) : Matrix (Fin (W.d + 1)) (Fin (W.d + 1)) Ω)ᵀ) = Φ g := by
+    intro g k
+    have := congrArg (rhoT (τ'.comp U.subtype) (W.ξ.comp (X.I.Iw c).subtype) ψ k) (h2 g k)
+    rw [← mul_apply_eq_comp, ← map_mul, mul_inv_cancel, map_one] at this
+    exact this
+  have hp : ∀ b : X.I.Iw c, X.rpF Ω (W.d + 1) m b
+      (fun i g => (Φ g * (W.ξ g.2 : Matrix (Fin (W.d + 1)) (Fin (W.d + 1)) Ω)ᵀ) i) =
+      (((ψ b)⁻¹ : Ωˣ) : Ω) • (fun i g => (Φ g * (W.ξ g.2 : Matrix (Fin (W.d + 1)) (Fin (W.d + 1)) Ω)ᵀ) i) := by
+    intro b
+    funext i g
+    show (Φ (g * j (1, b)) * (W.ξ (g.2 * b) : Matrix (Fin (W.d + 1)) (Fin (W.d + 1)) Ω)ᵀ) i =
+      ((((ψ b)⁻¹ : Ωˣ) : Ω) • (Φ g * (W.ξ g.2 : Matrix (Fin (W.d + 1)) (Fin (W.d + 1)) Ω)ᵀ)) i
+    rw [← h2' g (1, b)]
+    simp [smul_smul, Matrix.mul_assoc]
+  refine ⟨fun i g => (Φ g * (W.ξ g.2 : Matrix (Fin (W.d + 1)) (Fin (W.d + 1)) Ω)ᵀ) i, ⟨⟨fun i _ γ g => ?_, fun u hu => ?_⟩,
+    fun b hb => ?_, fun b hb => ?_, fun t => ?_⟩, fun n i k => ?_⟩
+  · show _ = _ *ᵥ (Φ g * (W.ξ g.2 : Matrix (Fin (W.d + 1)) (Fin (W.d + 1)) Ω)ᵀ) i
+    rw [mulVec_row]
+    simp [h1, Matrix.mul_assoc]
+  · funext i g k
+    show ((τ' u : Matrix (Fin m) (Fin m) Ω) *
+      (Φ (g * j (⟨u, hu⟩, 1)) * (W.ξ (g.2 * 1) : Matrix (Fin (W.d + 1)) (Fin (W.d + 1)) Ω)ᵀ)) i k = (Φ g * (W.ξ g.2 : Matrix (Fin (W.d + 1)) (Fin (W.d + 1)) Ω)ᵀ) i k
+    rw [← h2' g (⟨u, hu⟩, 1)]
+    simp [Matrix.mul_assoc]
+  · have hb' : b ∈ X.I.Iw c := Subgroup.mem_sup_left (Subgroup.mem_sup_left hb)
+    have := hp ⟨b, hb'⟩
+    rw [(hψ ⟨b, hb'⟩).1 hb] at this
+    simpa using this
+  · have hb' : b ∈ X.I.Iw c := Subgroup.mem_sup_right hb
+    have := hp ⟨b, hb'⟩
+    rw [(hψ ⟨b, hb'⟩).2.1 hb] at this
+    simpa using this
+  · have hb' : (t : Gp) ∈ X.I.Iw c := Subgroup.mem_sup_left (Subgroup.mem_sup_right t.2)
+    have := hp ⟨t, hb'⟩
+    rw [(hψ ⟨t, hb'⟩).2.2 t.2] at this
+    exact this
+  · rw [Frame.unt_apply]
+    show (_ *ᵥ (Φ (x n) * (W.ξ (x n).2 : Matrix (Fin (W.d + 1)) (Fin (W.d + 1)) Ω)ᵀ) i) k = _
+    rw [mulVec_row, Matrix.mul_assoc, ← transpose_mul, Units.inv_mul, transpose_one, Matrix.mul_one, h3]
+    rfl
+
 private theorem ctrlOrd_approx (hinj : Function.Injective (algebraMap O Ω)) (τ : X.Ub →* GL (Fin m) O) (θ φ : X.I.T →* Oˣ)
     (c : ℕ) (hc : W.c0 ≤ c) (hφ : ∀ t : X.I.T, (t : Gp) ∈ X.I.Tc c → φ t = 1)
     (hθ : ∀ t : X.I.T, algebraMap O Ω (θ t) = algebraMap O Ω (φ t) * W.χ ⟨t, X.I.T_le t.2⟩)
@@ -164,7 +270,7 @@ private theorem ctrlOrd_approx (hinj : Function.Injective (algebraMap O Ω)) (τ
   have hc2' : c2 ≤ c' := by omega
   have hφ' : ∀ t : X.I.T, (t : Gp) ∈ X.I.Tc c' → φ t = 1 := fun t ht => hφ t (X.I.Tc_anti hcc' ht)
   obtain ⟨N, x, hcov, hdis⟩ := UpperTheory.exists_finite_iwahori_doubleCoset_representatives Γ Ga Gp X U hU c'
-  obtain ⟨F', hF', hval⟩ := UpperTheory.exists_automorphicForm_with_prescribed_iwahori_values Γ Ga Gp X O Ω W m τ φ U c' θ hφ' hθ hF N x hcov hdis
+  obtain ⟨F', hF', hval⟩ := ctrlOrd_prescribed_values X W τ φ U c' θ hφ' hθ hF N x hcov hdis
     (fun n i k => if k = 0 then algebraMap O Ω (f (x n) i) else 0)
   have hLat' : F' ∈ X.Lat m W (mIm O Ω 0) := by
     refine UpperTheory.mem_lattice_of_values_at_double_coset_reps Γ Ga Gp X O Ω W m τ φ U c' (le_trans hc hcc') N x hcov F' hF' _ ?_
@@ -185,7 +291,7 @@ private theorem ctrlOrd_approx (hinj : Function.Injective (algebraMap O Ω)) (τ
       have h2 : X.rp O m y f - f ∈ X.valIn O m 1 := by
         rw [ctrlOrd_val]
         intro a i
-        simp only [LinearMap.sub_apply, Pi.sub_apply, hrp]
+        simp only [Pi.sub_apply, hrp]
         exact hc2 y (X.I.Nm_anti hc2' hy) a i
       have h3 := Submodule.sub_mem _ h1 h2
       rw [map_sub]
@@ -283,7 +389,7 @@ theorem UpperTheory.V.Hi.ctrlOrd :
         exact (Submodule.mem_bot O).1 (hL i g k))
       exact sub_eq_zero.1 h0
     · intro v _
-      obtain ⟨F, hFC, hFv⟩ := UpperTheory.exists_automorphicForm_with_prescribed_iwahori_values Γ Ga Gp X O Ω W m τ φ U c θ hφ hθ hF N x hcov hdis
+      obtain ⟨F, hFC, hFv⟩ := ctrlOrd_prescribed_values X W τ φ U c θ hφ hθ hF N x hcov hdis
         (fun n i k => v (n, i, k))
       exact ⟨F, hFC, funext fun p => hFv p.1 p.2.1 p.2.2⟩
   have hint : ∀ F ∈ X.ClO m W τ U c φ, (∀ p, ev F p ∈ mIm O Ω 0) →
@@ -368,7 +474,8 @@ theorem UpperTheory.V.Hi.ctrlOrd :
         · have hd := hdiv 1 (g - ⟨g', hg'Ord⟩) hmem
           rwa [pow_one] at hd
       have hL : L = ⊤ := top_le_iff.1
-        (Submodule.le_of_le_smul_of_le_jacobson_bot hfin.fg_top (IsLocalRing.maximalIdeal_le_jacobson ⊥) hle)
+        (Submodule.le_of_le_smul_of_le_jacobson hfin.fg_top
+          (by simpa only [Ideal.jacobson_bot] using IsLocalRing.maximalIdeal_le_jacobson (⊥ : Ideal O)) hle)
       have hfL : (⟨f, hf⟩ : X.Ord τ θ U) ∈ L := by
         rw [hL]
         trivial

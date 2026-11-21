@@ -139,6 +139,7 @@ def IsBaseChar (p : ℕ) (δ : Chr F E L) : Prop :=
   p.Prime ∧ ∀ v : HeightOneSpectrum (𝓞 F), (plc v = p → InertOrd δ v 15) ∧ (plc v ≠ p → v ∉ Qprime δ)
 
 
+variable (F E) in
 def toRInt : 𝓞 E →+* RInt F E :=
   ((inclE (F := F) (E := E) (FiniteAdeleRing (𝓞 F) F)).comp (algebraMap (𝓞 E) E)).codRestrict (RInt F E)
     fun b => Subring.subset_closure (Or.inl ⟨⟨algebraMap (𝓞 E) E b, b, rfl⟩, rfl⟩)
@@ -152,6 +153,7 @@ def IsResChar (ξ : Chr F E L) (P : HeightOneSpectrum (𝓞 E)) (χ : (𝓞 E �
     ξ (Units.map (RInt F E).subtype.toMonoidHom u) = χ a
 
 
+open scoped Classical in
 def resChar (ξ : Chr F E L) (P : HeightOneSpectrum (𝓞 E)) : (𝓞 E ⧸ P.asIdeal)ˣ →* Lˣ :=
   if h : ∃ χ, IsResChar ξ P χ then h.choose else 1
 
@@ -169,6 +171,7 @@ def h90 (σ : E →ₐ[F] E) : (AfE F E)ˣ →* (AfE F E)ˣ := MonoidHom.id _ / 
 def U1 (σ : E →ₐ[F] E) : Subgroup (AfE F E)ˣ := (MonoidHom.id _ * conjId σ).ker
 
 
+open scoped Classical in
 def tilde (σ : E →ₐ[F] E) (ξ : Chr F E L) : (h90 σ).range →* Lˣ :=
   if h : (h90 σ).ker ≤ ξ.ker then
     (h90 σ).rangeRestrict.liftOfSurjective (h90 σ).rangeRestrict_surjective
@@ -176,6 +179,7 @@ def tilde (σ : E →ₐ[F] E) (ξ : Chr F E L) : (h90 σ).range →* Lˣ :=
   else 1
 
 
+open scoped Classical in
 def detTw (σ : E →ₐ[F] E) (ξ : Chr F E L) {n : ℕ} (g : GL (Fin n) (AfE F E)) : Lˣ :=
   if h : Matrix.GeneralLinearGroup.det g ∈ (h90 σ).range then tilde σ ξ ⟨_, h⟩ else 1
 

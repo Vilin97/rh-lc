@@ -18,11 +18,12 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 section Basis
 
 theorem hasBasis_nhds_zero_valBall :
-    (𝓝 (0 : K)).HasBasis (fun _ : ℤ => True) (fun n => (valBall K n : Set K)) := by
-  refine ⟨fun t => ⟨fun ht => ?_, fun ⟨n, _, hn⟩ => Filter.mem_of_superset (valBall_mem_nhds n) hn⟩⟩
+    (𝓝 (0 : K)).HasBasis (fun _ : ℤ => True) (fun n => (valBall (K := K) n : Set K)) := by
+  have hballs := tendsto_zero_iff_valBall.mp (tendsto_id (x := 𝓝 (0 : K)))
+  refine ⟨fun t => ⟨fun ht => ?_, fun ⟨n, _, hn⟩ => Filter.mem_of_superset (hballs n) hn⟩⟩
   by_contra h
-  have h' : ∀ n : ℤ, ¬ (valBall K n : Set K) ⊆ t := fun n hn => h ⟨n, trivial, hn⟩
-  have hex : ∀ k : ℕ, ∃ x : K, x ∈ valBall K k ∧ x ∉ t := fun k => by
+  have h' : ∀ n : ℤ, ¬ (valBall (K := K) n : Set K) ⊆ t := fun n hn => h ⟨n, trivial, hn⟩
+  have hex : ∀ k : ℕ, ∃ x : K, x ∈ valBall (K := K) k ∧ x ∉ t := fun k => by
     have := h' k
     rw [Set.not_subset] at this
     exact this
@@ -31,7 +32,8 @@ theorem hasBasis_nhds_zero_valBall :
     rw [tendsto_zero_iff_valBall]
     intro N
     filter_upwards [eventually_ge_atTop N.toNat] with k hk
-    exact valBall_antitone (by omega) (hx k)
+    have hval : normalizedValuation K (x k) ≤ WithZero.exp (-(k : ℤ)) := hx k
+    exact hval.trans (WithZero.exp_le_exp.mpr (by omega))
   obtain ⟨k, hk⟩ := (hlim.eventually ht).exists
   exact hxt k hk
 
@@ -59,11 +61,13 @@ theorem setOf_norm_sub_one_lt_mem_nhds :
 
 variable (ψ : AddChar K Circle)
 
-def IsTrivialOn (n : ℤ) : Prop := ∀ x ∈ valBall K n, ψ x = 1
+def IsTrivialOn (n : ℤ) : Prop := ∀ x ∈ valBall (K := K) n, ψ x = 1
 
 variable {ψ} in
 theorem IsTrivialOn.mono {m n : ℤ} (h : IsTrivialOn ψ m) (hmn : m ≤ n) : IsTrivialOn ψ n :=
-  fun x hx => h x (valBall_antitone hmn hx)
+  fun x hx => by
+    have hval : normalizedValuation K x ≤ WithZero.exp (-n) := hx
+    exact h x (hval.trans (WithZero.exp_le_exp.mpr (by omega)))
 
 theorem exists_isTrivialOn (hψ : Continuous ψ) : ∃ n, IsTrivialOn ψ n := by
   have : ψ ⁻¹' {z : Circle | ‖(z : ℂ) - 1‖ < 1 / 2} ∈ 𝓝 (0 : K) := by
@@ -71,17 +75,17 @@ theorem exists_isTrivialOn (hψ : Continuous ψ) : ∃ n, IsTrivialOn ψ n := by
     rw [AddChar.map_zero_eq_one]
     exact setOf_norm_sub_one_lt_mem_nhds
   obtain ⟨n, -, hn⟩ := hasBasis_nhds_zero_valBall.mem_iff.mp this
-  exact ⟨n, fun x hx => eq_one_of_forall_norm_sub_one_lt ψ (valBall K n) (fun y hy => hn hy) hx⟩
+  exact ⟨n, fun x hx => eq_one_of_forall_norm_sub_one_lt ψ (valBall (K := K) n) (fun y hy => hn hy) hx⟩
 
 theorem exists_le_of_isTrivialOn (hψ1 : ψ ≠ 1) : ∃ N, ∀ n, IsTrivialOn ψ n → N ≤ n := by
   obtain ⟨x, hx⟩ : ∃ x, ψ x ≠ 1 := by
     by_contra h
     simp only [not_exists, not_not] at h
-    exact hψ1 (DFunLike.ext _ _ fun a => (h a).trans (AddChar.one_apply a).symm)
+    exact hψ1 (DFunLike.ext _ _ fun a => (h a).trans (one_apply a).symm)
   refine ⟨ord x + 1, fun n hn => ?_⟩
   by_contra hlt
   rw [not_le] at hlt
-  exact hx (hn x (valBall_antitone (by omega : n ≤ ord x) mem_valBall_ord))
+  exact hx (hn.mono (by omega : n ≤ ord x) x mem_valBall_ord)
 
 def addCharConductor : ℤ := sInf {n : ℤ | IsTrivialOn ψ n}
 
@@ -106,7 +110,7 @@ theorem isTrivialOn_mulShift_iff {a : K} (ha : a ≠ 0) (n : ℤ) :
     IsTrivialOn (ψ.mulShift a) n ↔ IsTrivialOn ψ (n + ord a) := by
   constructor
   · intro h y hy
-    have hy' : y ∈ a • (valBall K n : Set K) := by
+    have hy' : y ∈ a • (valBall (K := K) n : Set K) := by
       rw [smul_valBall ha]
       exact hy
     obtain ⟨x, hx, rfl⟩ := hy'
@@ -115,12 +119,12 @@ theorem isTrivialOn_mulShift_iff {a : K} (ha : a ≠ 0) (n : ℤ) :
   · intro h x hx
     rw [AddChar.mulShift_apply]
     apply h
-    have : a • x ∈ a • (valBall K n : Set K) := Set.smul_mem_smul_set hx
+    have : a • x ∈ a • (valBall (K := K) n : Set K) := Set.smul_mem_smul_set hx
     rw [smul_valBall ha] at this
     exact this
 
 theorem isTrivialOn_mulShift_iff_mem (a : K) (n : ℤ) :
-    IsTrivialOn (ψ.mulShift a) n ↔ a ∈ valBall K (addCharConductor ψ - n) := by
+    IsTrivialOn (ψ.mulShift a) n ↔ a ∈ valBall (K := K) (addCharConductor ψ - n) := by
   by_cases ha : a = 0
   · simp [ha, IsTrivialOn]
   rw [isTrivialOn_mulShift_iff ha, isTrivialOn_iff hψ hψ1, mem_valBall_iff_le_ord ha]

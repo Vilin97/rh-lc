@@ -131,18 +131,19 @@ lemma lift_pr : (k : ℕ) → (n : Fin (k + 1) → ℕ) → {T : Scheme.{u}} →
       exact lift_pr k (Fin.tail n) t _ _ j
 
 lemma hom_ext : (k : ℕ) → (n : Fin (k + 1) → ℕ) → {T : Scheme.{u}} → (f g : T ⟶ MP A k n) →
-    (∀ i, f ≫ pr A k n i = g ≫ pr A k n i) → f = g
-  | 0, n, _, f, g, h => by
-    have := h 0
-    rw [pr_zero_zero] at this
-    exact (Category.comp_id f).symm.trans (this.trans (Category.comp_id g))
-  | k + 1, n, _, f, g, h => by
+    (∀ i, f ≫ pr A k n i = g ≫ pr A k n i) → f = g := by
+  intro k
+  induction k with
+  | zero =>
+    intro n T f g h
+    have h₀ : f ≫ 𝟙 (MP A 0 n) = g ≫ 𝟙 (MP A 0 n) := h 0
+    exact (Category.comp_id f).symm.trans (h₀.trans (Category.comp_id g))
+  | succ k ih =>
+    intro n T f g h
     apply pullback.hom_ext
     · exact h 0
-    · refine hom_ext k (Fin.tail n) _ _ fun j => ?_
-      have := h j.succ
-      rw [pr_succ_succ] at this
-      exact (Category.assoc _ _ _).trans (this.trans (Category.assoc _ _ _).symm)
+    · refine ih (Fin.tail n) _ _ fun j => ?_
+      exact (Category.assoc _ _ _).trans ((h j.succ).trans (Category.assoc _ _ _).symm)
 
 end ProjSpace
 

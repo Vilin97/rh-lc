@@ -139,7 +139,9 @@ variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : 
 
 def FinGradedSub.coneSub : Submodule (Poly S N) (ConeLaurent S x) where
   carrier := {w | ∀ c, coeffAt S x c w ∈ M.piece c}
-  add_mem' ha hb c := by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha c) (hb c)
+  add_mem' ha hb c := by
+    rw [(coeffAt S x c).map_add]
+    exact add_mem (ha c) (hb c)
   zero_mem' c := by rw [map_zero]; exact zero_mem _
   smul_mem' p w hw c := by
     change coeffAt S x c (p • w) ∈ M.piece c
@@ -214,7 +216,9 @@ theorem FinGradedSub.coneSub_finite : Module.Finite (Poly S N) M.coneSub := by
         rw [this]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
       · rw [map_zero]; exact zero_mem _
-      · intro a b _ _ ha hb; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+      · intro a b _ _ ha hb
+        rw [(coneSingle S x c).map_add]
+        exact add_mem ha hb
       · intro s a _ ha; rw [map_smul]; exact Submodule.smul_of_tower_mem _ s ha
     · rintro _ ⟨j, rfl⟩
       exact M.coneSingle_mem_coneSub (hgen j)

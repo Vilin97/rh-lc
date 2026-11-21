@@ -76,7 +76,7 @@ theorem isFieldIntersection_intNum (p : ℕ) [Fact p.Prime] :
 end GeoNumTarget
 
 
-open Bridge.GeoNum in
+open GeoNumTarget Bridge.GeoNum in
 theorem geoNumStatement {K : Type} [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] :
     ReciprocityTheory.ChartRestriction.G.AI.I1.GeoNumStatement ι := by
   classical
@@ -96,9 +96,8 @@ theorem geoNumStatement {K : Type} [Fintype K] (ι : K → Type) [∀ k, Fintype
     rw [map_natCast]
     exact hpV
   rw [← Bridge.intNum_map_eq_geoNum p n V hV hC hdim a]
-  exact (IntNumUnique.full (ZMod p) K ι _ (GeoNumTarget.isIntersectionTheory I hI) _
-    (GeoNumTarget.dvrIsMultiProjPrime hproj.1) n
-    ((CutRegular.relDim_eq_natCast_iff _ n).mpr hproj.2) a).symm
+  exact (IntNumUnique.full (ZMod p) K ι _ (isIntersectionTheory I hI) _
+    (dvrIsMultiProjPrime hproj.1) n ((CutRegular.relDim_eq_natCast_iff _ n).mpr hproj.2) a).symm
 
 end
 

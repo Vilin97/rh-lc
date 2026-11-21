@@ -37,8 +37,9 @@ theorem hasDerivAt_orbit {G : Set (Matrix (Fin n) (Fin n) ℂ)} {π : Matrix (Fi
       fun t : ℝ => F (Matrix.of.symm (NormedSpace.exp (t • X))) := by
     funext t
     have hmem : Matrix.of (Matrix.of.symm (NormedSpace.exp (t • X))) ∈ G := by
-      simpa using hX t
-    simpa using hFG _ hmem
+      rw [Matrix.of.apply_symm_apply]
+      exact hX t
+    simpa only [Matrix.of.apply_symm_apply] using hFG _ hmem
   rw [hfun]
   have hdiff : DifferentiableAt ℝ F (Matrix.of.symm (NormedSpace.exp ((0 : ℝ) • X))) :=
     (hF.differentiable (by simp)) _

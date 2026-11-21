@@ -54,13 +54,14 @@ theorem post_eq_picClass (C : Shv ℤ) (qb : C ⟶ Gm) (E : Spc) (L : E ⟶ ofCa
       1 0 _ U x = _
     rw [ev_comp_ofHom, ev_comp_ofHom, hv, GlobalTheory.EtC.PicSpec.sec_map_comp, GlobalTheory.EtC.PicSpec.sec_map_comp, ← hc,
       GlobalTheory.EtC.PicSpec.sec_map_comp, ← Category.assoc, sglι_resAug, resι_resMap]
-  have hspec : ∃ γ : Cocycle ((chains ℤ).obj E) (res ℤ Gm) 1, CohomologyClass.mk γ = picClass L ∧
+  let P (c : H ℤ E Gm 1) : Prop :=
+    ∃ γ : Cocycle ((chains ℤ).obj E) (res ℤ Gm) 1, CohomologyClass.mk γ = c ∧
       (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev ℤ γ.1 0 1 (by simp) U x = 0) ∧
       ∀ (U : Scheme.{0}) (x : Sx E 1 U),
-        ev ℤ γ.1 1 0 (by simp) U x = Sec.map (resι ℤ Gm) (unitSec (lineUnit L x)) := by
-    unfold picClass
-    apply pick_spec
-    exact ⟨_, β, rfl, hβ₀, hβ₁⟩
+        ev ℤ γ.1 1 0 (by simp) U x = Sec.map (resι ℤ Gm) (unitSec (lineUnit L x))
+  have hspec : P (picClass L) := by
+    change P (pick P)
+    exact pick_spec ⟨_, β, rfl, hβ₀, hβ₁⟩
   obtain ⟨γ, hγ, hγ₀, hγ₁⟩ := hspec
   have hEq : β = γ := by
     refine Cocycle.ext (CupSpec.ev_ext β.1 γ.1 fun p s h U x => ?_)

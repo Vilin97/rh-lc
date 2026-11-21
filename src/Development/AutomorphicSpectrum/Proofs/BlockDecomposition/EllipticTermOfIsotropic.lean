@@ -119,9 +119,12 @@ theorem iso_bot_C {n : ℕ} (G B Bi : Matrix (Fin n) (Fin n) ℂ) (hB : B * Bi =
       rw [this, mul_zero]
     exact (mul_eq_zero.1 h3).resolve_left hqz
   apply hv0
-  have h5 := hl0 (Bi *ᵥ v)
-  simp only [l, Matrix.mulVec_mulVec, hB, Matrix.one_mulVec] at h5
-  exact dotProduct_star_self_eq_zero.1 h5
+  have h5 : star v = 0 := by
+    apply dotProduct_eq_zero
+    intro w
+    have h := hl0 (Bi *ᵥ w)
+    simpa only [l, Matrix.mulVec_mulVec, hB, Matrix.one_mulVec] using h
+  simpa using congrArg star h5
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 

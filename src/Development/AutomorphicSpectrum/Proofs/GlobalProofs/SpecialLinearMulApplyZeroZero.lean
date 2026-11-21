@@ -155,6 +155,7 @@ theorem smooth_of_commutant_stable {H : Type} [NormedAddCommGroup H] [InnerProdu
     (hK : ∀ k ∈ maxCpt G, ∀ v, ‖π k v‖ = ‖v‖) (Y : Submodule ℂ H) [FiniteDimensional ℂ Y]
     (hY : ∀ T : H →L[ℂ] H, (∀ k ∈ maxCpt G, ∀ u, T (π k u) = π k (T u)) → ∀ y ∈ Y, T y ∈ Y) :
     ∀ v ∈ Y, IsSmoothVec G π v := by
+  letI : Inv (Set (GT hG hcl)) := Set.inv
   intro v hv
   let μ : Measure (GT hG hcl) := Measure.haar
   obtain ⟨h1, hm⟩ := hrep
@@ -164,7 +165,7 @@ theorem smooth_of_commutant_stable {H : Type} [NormedAddCommGroup H] [InnerProdu
   have hmul : ∀ x y u, ρ (x * y) u = ρ x (ρ y u) := fun x y u => by
     show π (toM x * toM y) u = π (toM x) (π (toM y) u)
     rw [hm (toM x) x.2 (toM y) y.2, ContinuousLinearMap.comp_apply]
-  have hρ1 : ∀ u, ρ 1 u = u := fun u => by simp only [ρ, toM_one, h1, ContinuousLinearMap.one_apply]
+  have hρ1 : ∀ u, ρ 1 u = u := fun u => by simp only [ρ, toM_one, h1, one_apply_eq_self]
   obtain ⟨V, hV, hclose⟩ := exists_nhds_close ρ hρ hρ1 Y
   have hVi : V⁻¹ ∈ 𝓝 (1 : GT hG hcl) := inv_mem_nhds_one _ hV
   rw [emb_toM.isInducing.nhds_eq_comap, mem_comap] at hVi

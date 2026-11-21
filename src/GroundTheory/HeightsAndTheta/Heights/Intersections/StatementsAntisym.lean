@@ -137,12 +137,13 @@ section FS
 variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
 theorem ofMetrics_fs_h (a : K → ℤ) (z : (Σ k, ι k) → ℂ) :
-    (HermLine.ofMetrics (fun k => fsMetric (ι k)) a).h z =
+    (HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) a).h z =
       ∏ k, Real.sqrt (∑ i, ‖z ⟨k, i⟩‖ ^ 2) ^ a k := by
   simp only [HermLine.ofMetrics, fsMetric, EuclideanSpace.norm_eq]
 
-theorem isSmoothHerm_ofMetrics_fs (a : K → ℤ) : IsSmoothHerm (HermLine.ofMetrics (fun k => fsMetric (ι k)) a) := by
-  have hfun : (HermLine.ofMetrics (fun k => fsMetric (ι k)) a).h =
+theorem isSmoothHerm_ofMetrics_fs (a : K → ℤ) :
+    IsSmoothHerm (HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) a) := by
+  have hfun : (HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) a).h =
       fun z => ∏ k, Real.sqrt (∑ i, ‖z ⟨k, i⟩‖ ^ 2) ^ a k := funext (ofMetrics_fs_h a)
   unfold IsSmoothHerm
   rw [hfun]

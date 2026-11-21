@@ -97,12 +97,14 @@ theorem inv_mem_ZP {p m : ℕ} (k : ℕ) (hm : m.Coprime p) : (m : ℂ)⁻¹ ∈
 
 
 theorem isDedekindDomain_ZP {n p : ℕ} (e : ℕ) (hn : n.Prime) (hp : p.Prime) : IsDedekindDomain (ZP p (n ^ e)) := by
+  open GlobalTheory.ZM.CycBase in
   haveI := Fact.mk hn
   have hk : n ^ e ≠ 0 := NeZero.ne _
   haveI : IsCyclotomicExtension {n ^ e} ℚ (CF (n ^ e)) := cyc
   haveI : NumberField (CF (n ^ e)) := IsCyclotomicExtension.numberField {n ^ e} ℚ _
   let io : 𝓞 (CF (n ^ e)) →+* ℂ := (CF (n ^ e)).val.toRingHom.comp (algebraMap _ (CF (n ^ e)))
-  have hio : Function.Injective io := Subtype.val_injective.comp (RingOfIntegers.coe_injective)
+  have hio : Function.Injective io :=
+    Subtype.val_injective.comp (RingOfIntegers.coe_injective (K := CF (n ^ e)))
   letI : Algebra (𝓞 (CF (n ^ e))) (ZP p (n ^ e)) := (io.codRestrict _ (mem_ZP p n e hn)).toAlgebra
   have : IsLocalization (coprimeNat p (𝓞 (CF (n ^ e)))) (ZP p (n ^ e)) := by
     refine isLocalization_of_le_closure hp _ _ (fun x y h => hio (congrArg (fun z : ZP p (n ^ e) => (z : ℂ)) h))

@@ -36,7 +36,7 @@ theorem sum_co_smul (M : Mat n) : ∑ q : Idx n, co q M • bs q = M := by
   simp [Complex.ext_iff]
 
 theorem contDiff_entry (i j : Fin n) : ContDiff ℝ ∞ (fun y : Mat n => y i j) :=
-  contDiff_apply_apply ℝ ℂ i j
+  contDiff_apply_apply ℝ i j
 
 theorem contDiff_det (F : Mat n → Mat n) (h : ∀ i j, ContDiff ℝ ∞ (fun y => F y i j)) :
     ContDiff ℝ ∞ (fun y => (F y).det) := by

@@ -62,14 +62,14 @@ end
 
 def pullTot1 : Tot1 F →ₛₗ[σ] Tot1 F' where
   toFun c := (fun _ T' φ ↦ m.α T' (c.1 _ _ (m.G.map φ)), fun T ↦ q1 m T (c.2 _))
-  map_add' a b := Tot1.ext (by intros; simp) (by intros; simp)
-  map_smul' r a := Tot1.ext (by intros; simp [m.smul]) (by intros; simp)
+  map_add' a b := Tot1.ext (F := F') (by intros; simp) (by intros; simp)
+  map_smul' r a := Tot1.ext (F := F') (by intros; simp [m.smul]) (by intros; simp)
 
 def pullTot2 : Tot2 F →ₛₗ[σ] Tot2 F' where
   toFun c := (fun _ _ T'' φ ψ ↦ m.α T'' (c.1 _ _ _ (m.G.map φ) (m.G.map ψ)),
     fun _ T' φ ↦ q1 m T' (c.2.1 _ _ (m.G.map φ)), fun T ↦ qOm m 2 T (c.2.2 _))
-  map_add' a b := Tot2.ext (by intros; simp) (by intros; simp) (by intros; simp)
-  map_smul' r a := Tot2.ext (by intros; simp [m.smul]) (by intros; simp) (by intros; simp)
+  map_add' a b := Tot2.ext (F := F') (by intros; simp) (by intros; simp) (by intros; simp)
+  map_smul' r a := Tot2.ext (F := F') (by intros; simp [m.smul]) (by intros; simp) (by intros; simp)
 
 section
 variable {T T' T'' : C'} (φ : T ⟶ T') (ψ : T' ⟶ T'')

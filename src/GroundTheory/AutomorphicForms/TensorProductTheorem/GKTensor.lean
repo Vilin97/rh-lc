@@ -63,6 +63,7 @@ theorem _root_.GroundTheory.Automorphic.IsExpLieAlgebra.GKModule.isKFinite {V : 
   ⟨M.locallyFinite, M.hasContinuousCoeff⟩
 
 
+variable (h K) in
 structure GKLModule (L : Type*) [Group L] (V : Type*) [AddCommGroup V] [Module ℂ V] where
 
   gk : h.GKModule K V

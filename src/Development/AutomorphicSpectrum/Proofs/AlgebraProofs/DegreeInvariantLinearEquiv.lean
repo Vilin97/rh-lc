@@ -34,6 +34,8 @@ theorem det_tr (e : V ≃ₗ[K] V') (a b : Module.Basis (Fin (Module.finrank K V
   unfold tr
   rw [Module.Basis.coe_reindex, Module.Basis.det_reindex, Module.Basis.det_map]
   congr 1
+  funext i
+  simp
 
 theorem deg_equiv : ∀ (K : Type) [Field K] (C : ACurve K) (V : Type) [AddCommGroup V] [Module K V]
     [FiniteDimensional K V] (V' : Type) [AddCommGroup V'] [Module K V'] [FiniteDimensional K V']

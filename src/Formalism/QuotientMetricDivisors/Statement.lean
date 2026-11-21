@@ -17,7 +17,7 @@ section Defs
 
 variable {K : Type} [Field K] [NumberField K] [StarRing K]
 
-
+variable (K) in
 def cO : 𝓞 K ≃+* 𝓞 K := RingOfIntegers.mapRingEquiv (starRingAut (R := K))
 
 def conjPl (w : HeightOneSpectrum (𝓞 K)) : HeightOneSpectrum (𝓞 K) where

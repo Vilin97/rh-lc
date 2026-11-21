@@ -29,7 +29,7 @@ namespace GlobalTheory.ModuliEmbed
 theorem mono_of_unramified_of_points {X Y : Scheme.{0}} (f : X ⟶ Y) [FormallyUnramified f] [LocallyOfFiniteType f]
     (h : ∀ (k : Type) [Field k] (y y' : Sp k ⟶ X), y ≫ f = y' ≫ f → y = y') : Mono f := by
   have hs : Surjective (pullback.diagonal f) := by
-    exact ((tfae_universallyInjective f).out 1 3).1 fun (k : Type) [Field k] y y' e => h k y y' e
+    exact ((tfae_universallyInjective f).out 2 4).1 fun (k : Type) [Field k] y y' e => h k y y' e
   have : IsIso (pullback.diagonal f) := (isIso_iff_isOpenImmersion_and_surjective _).2 ⟨inferInstance, hs⟩
   exact (pullback.isIso_diagonal_iff f).1 this
 

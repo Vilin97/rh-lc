@@ -34,11 +34,10 @@ theorem baseTrace_algebraMap (t : R) : baseTrace K E R (algebraMap R (R ⊗[K] E
   rw [Algebra.TensorProduct.algebraMap_apply, Algebra.algebraMap_self, RingHom.id_apply,
     baseTrace_tmul, h1, map_ofNat]
 
-
+omit [Algebra.IsQuadraticExtension K E] in
 theorem baseTrace_tensorMap {S : Type*} [CommRing S] [Algebra K S] (f : R →ₐ[K] S)
-    (z : R ⊗[K] E) : baseTrace K E S (tensorMap E f z) = f (baseTrace K E R z) := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+    (z : R ⊗[K] E) : baseTrace K E S (tensorMap f z) = f (baseTrace K E R z) := by
+  induction z using TensorProduct.inductionOn with
   | tmul r e => rw [tensorMap_tmul, baseTrace_tmul, baseTrace_tmul, map_mul, AlgHom.commutes]
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
@@ -89,8 +88,7 @@ theorem conjBase_algebraMap (c : R) :
     conjBase_tmul, map_one]
 
 theorem conjBase_conjBase (z : R ⊗[K] E) : conjBase K E R (conjBase K E R z) = z := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul r e => rw [conjBase_tmul, conjBase_tmul, conj_conj]
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
@@ -112,7 +110,7 @@ theorem hermTrace_smul_right (c : R) (x y : ι → R ⊗[K] E) :
   rw [hermTrace, ← algebraMap_smul (R ⊗[K] E) c y, hermPair_smul_right, ← Algebra.smul_def,
     map_smul, smul_eq_mul]; rfl
 
-
+variable (K H R) in
 def hermTraceBilin : (ι → R ⊗[K] E) →ₗ[R] (ι → R ⊗[K] E) →ₗ[R] R :=
   LinearMap.mk₂ R (hermTrace K H R) hermTrace_add_left hermTrace_smul_left hermTrace_add_right
     hermTrace_smul_right
@@ -145,10 +143,10 @@ end Invariance
 
 theorem tensorMap_hermPair {S : Type*} [CommRing S] [Algebra K S] (f : R →ₐ[K] S)
     (x y : ι → R ⊗[K] E) :
-    tensorMap E f (hermPair K H R x y) =
-      hermPair K H S (fun i => tensorMap E f (x i)) (fun i => tensorMap E f (y i)) := by
+    tensorMap f (hermPair K H R x y) =
+      hermPair K H S (fun i => tensorMap f (x i)) (fun i => tensorMap f (y i)) := by
   unfold hermPair
-  have h := RingHom.map_dotProduct (tensorMap E f : R ⊗[K] E →+* S ⊗[K] E)
+  have h := RingHom.map_dotProduct (tensorMap (E := E) f : R ⊗[K] E →+* S ⊗[K] E)
     (fun i => conjBase K E R (x i)) (baseMatrix K H R *ᵥ y)
   simp only [RingHom.coe_coe] at h
   rw [h]
@@ -156,7 +154,8 @@ theorem tensorMap_hermPair {S : Type*} [CommRing S] [Algebra K S] (f : R →ₐ[
   · funext i
     exact tensorMap_conjBase f (x i)
   · funext i
-    have := RingHom.map_mulVec (tensorMap E f : R ⊗[K] E →+* S ⊗[K] E) (baseMatrix K H R) y i
+    have := RingHom.map_mulVec (tensorMap (E := E) f : R ⊗[K] E →+* S ⊗[K] E)
+      (baseMatrix K H R) y i
     simp only [RingHom.coe_coe] at this
     rw [Function.comp_apply, this]
     have h2 := map_includeRight_tensorMap (H := H) f
@@ -167,7 +166,7 @@ theorem tensorMap_hermPair {S : Type*} [CommRing S] [Algebra K S] (f : R →ₐ[
 theorem hermTrace_tensorMap {S : Type*} [CommRing S] [Algebra K S] (f : R →ₐ[K] S)
     (x y : ι → R ⊗[K] E) :
     f (hermTrace K H R x y) =
-      hermTrace K H S (fun i => tensorMap E f (x i)) (fun i => tensorMap E f (y i)) := by
+      hermTrace K H S (fun i => tensorMap f (x i)) (fun i => tensorMap f (y i)) := by
   rw [hermTrace, hermTrace, ← tensorMap_hermPair, baseTrace_tensorMap]
 
 end Pairing
@@ -184,7 +183,7 @@ def stdVec (a : ι × κ) : ι → R ⊗[K] E := Pi.single a.1 ((1 : R) ⊗ₜ b
 
 variable {R}
 
-
+omit [Algebra.IsQuadraticExtension K E] in
 theorem sum_coords_smul_stdVec (x : ι → R ⊗[K] E) :
     ∑ a : ι × κ, vecCoords R b x a • stdVec R b a = x := by
   funext i
@@ -193,9 +192,9 @@ theorem sum_coords_smul_stdVec (x : ι → R ⊗[K] E) :
   conv_rhs => rw [← (Algebra.TensorProduct.basis R b).sum_repr (x i)]
   simp [vecCoords, Algebra.TensorProduct.basis_apply]
 
-
+omit [Algebra.IsQuadraticExtension K E] [Fintype ι] [Fintype κ] in
 theorem tensorMap_stdVec (a : ι × κ) :
-    (fun i => tensorMap E (Algebra.ofId K R) (stdVec K b a i)) = stdVec R b a := by
+    (fun i => tensorMap (Algebra.ofId K R) (stdVec K b a i)) = stdVec R b a := by
   funext i
   simp only [stdVec, Pi.single_apply]
   split_ifs with h

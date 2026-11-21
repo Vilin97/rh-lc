@@ -53,7 +53,8 @@ theorem rank_topR (e : c ⊕ d ≃ b) (y : Matrix c a k) : (topR e y).rank = y.r
     have h2 := rank_submatrix_le (topR e y) (fun i => e (.inl i)) (Equiv.refl a)
     rwa [h] at h2
 
-def topEmbR (e : c ⊕ d ≃ b) {κ : ℕ} (y : RankIn k a c {κ}) : RankIn k a b {κ} :=
+def topEmbR (e : c ⊕ d ≃ b) {κ : ℕ} (y : RankIn (k := k) (a := a) (b := c) {κ}) :
+    RankIn (k := k) (a := a) (b := b) {κ} :=
   ⟨topR e y.1, (rank_topR e y.1).trans y.2⟩
 
 theorem range_topEmbR (e : c ⊕ d ≃ b) {κ : ℕ} :
@@ -75,7 +76,8 @@ theorem range_topEmbR (e : c ⊕ d ≃ b) {κ : ℕ} :
 theorem isClosedEmbedding_topEmbR (e : c ⊕ d ≃ b) {κ : ℕ} :
     IsClosedEmbedding (topEmbR (k := k) (a := a) e (κ := κ)) := by
   obtain ⟨_, _⟩ := SplitWeil.Model.secondCountable_and_t2_local_field (k := k)
-  refine ⟨IsEmbedding.of_comp (g := fun x : RankIn k a b {κ} => x.1.submatrix (fun i => e (.inl i)) id)
+  refine ⟨IsEmbedding.of_comp (g := fun x : RankIn (k := k) (a := a) (b := b) {κ} =>
+    x.1.submatrix (fun i => e (.inl i)) id)
     (Continuous.subtype_mk (continuous_matrix fun i l => ?_) _)
     (continuous_subtype_val.matrix_submatrix _ _) ?_, ?_⟩
   · obtain ⟨i | i, rfl⟩ := e.surjective i
@@ -92,7 +94,8 @@ theorem isClosedEmbedding_topEmbR (e : c ⊕ d ≃ b) {κ : ℕ} :
     exact isClosed_iInter fun i => isClosed_iInter fun j =>
       isClosed_eq (continuous_subtype_val.matrix_elem _ _) continuous_const
 
-theorem lAct_topEmbR (e : c ⊕ d ≃ b) {κ : ℕ} (y : RankIn k a c {κ}) (p : parab k (two e)) :
+theorem lAct_topEmbR (e : c ⊕ d ≃ b) {κ : ℕ}
+    (y : RankIn (k := k) (a := a) (b := c) {κ}) (p : parab k (two e)) :
     lAct _ (topEmbR e y) p = topEmbR e (lAct _ y (show GL c k from leviProj k (two e) p false)) := by
   refine Subtype.ext ?_
   rw [lAct_val]
@@ -109,7 +112,8 @@ theorem lAct_topEmbR (e : c ⊕ d ≃ b) {κ : ℕ} (y : RankIn k a c {κ}) (p :
     refine Finset.sum_eq_zero fun m _ => ?_
     rw [(mem_parab_two k).1 (inv_mem p.2), zero_mul]
 
-theorem eq_zero_of_vecMul (e : c ⊕ d ≃ b) {κ : ℕ} (hκ : κ = Fintype.card c) (y : RankIn k a c {κ})
+theorem eq_zero_of_vecMul (e : c ⊕ d ≃ b) {κ : ℕ} (hκ : κ = Fintype.card c)
+    (y : RankIn (k := k) (a := a) (b := c) {κ})
     (v : c → k) (h : v ᵥ* y.1 = 0) : v = 0 := by
   refine GlobalTheory.T.leftColumns_mulVec_injective_of_rank_eq_card k a c d b e (topR e y.1)ᵀ
     ((rank_transpose _).trans (((rank_topR e y.1).trans y.2).trans hκ)) (fun i j => topR_inr e _ j i) v ?_
@@ -117,7 +121,8 @@ theorem eq_zero_of_vecMul (e : c ⊕ d ≃ b) {κ : ℕ} (hκ : κ = Fintype.car
     ext i l; simp
   rw [hs, mulVec_transpose, h]
 
-theorem exists_topEmbR (e : c ⊕ d ≃ b) {κ : ℕ} (hκ : κ = Fintype.card c) (x : RankIn k a b {κ}) :
+theorem exists_topEmbR (e : c ⊕ d ≃ b) {κ : ℕ} (hκ : κ = Fintype.card c)
+    (x : RankIn (k := k) (a := a) (b := b) {κ}) :
     ∃ y, ∃ w ∈ KO k b, x = lAct _ (topEmbR e y) w := by
   obtain ⟨g, hg⟩ := GlobalTheory.T.exists_GL_mul_rightColumns_eq_zero_of_rank k a c d b e x.1ᵀ ((rank_transpose _).trans (x.2.trans hκ))
   obtain ⟨u, hu⟩ := (isUnit_transpose _).2 g.isUnit
@@ -146,8 +151,9 @@ theorem fibStr : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] 
     IsSmoothChar μ → Nonempty ((omegaOn a b μ {κ}).Equiv (indSnd e (fibRep a c d μ κ))) := by
   intro k _ _ _ _ a b c d _ _ _ _ _ _ _ _ e κ hκ μ hμ
   obtain ⟨_, _⟩ := SplitWeil.Model.secondCountable_and_t2_local_field (k := k)
-  obtain ⟨E, hE⟩ := GlobalTheory.T.schwartzBruhat_sweep_smoothly_induced (GL b k) (RankIn k a b {κ}) (RankIn k a c {κ})
-    (SB (RankIn k a c {κ})) (lAct {κ}) (lAct_one _) (lAct_mul _) (continuous_lAct _)
+  obtain ⟨E, hE⟩ := GlobalTheory.T.schwartzBruhat_sweep_smoothly_induced (GL b k)
+    (RankIn (k := k) (a := a) (b := b) {κ}) (RankIn (k := k) (a := a) (b := c) {κ})
+    (SB (RankIn (k := k) (a := a) (b := c) {κ})) (lAct {κ}) (lAct_one _) (lAct_mul _) (continuous_lAct _)
     (topEmbR e) (isClosedEmbedding_topEmbR e) (parab k (two e)) (KO k b) SplitFlip.isCompact_KO
     (exists_topEmbR e hκ)
     (fun y p => lAct _ y (show GL c k from leviProj k (two e) p false)) (lAct_topEmbR e)
@@ -155,7 +161,7 @@ theorem fibStr : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] 
       refine inv_mem_iff.1 ((mem_parab_two k).2 fun j i => ?_)
       have h0 : (fun m => (g⁻¹).val (e (.inr j)) (e (.inl m))) ᵥ* y.1 = 0 := by
         funext l
-        have := congrArg (fun x : RankIn k a b {κ} => x.1 (e (.inr j)) l) h
+        have := congrArg (fun x : RankIn (k := k) (a := a) (b := b) {κ} => x.1 (e (.inr j)) l) h
         simp only [lAct_val] at this
         exact (mul_topR e _ _ _ l).symm.trans (this.trans (topR_inr e _ j l))
       exact congrFun (eq_zero_of_vecMul e hκ y _ h0) i)

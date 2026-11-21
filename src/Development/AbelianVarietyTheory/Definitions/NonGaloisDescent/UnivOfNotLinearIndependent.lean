@@ -63,7 +63,7 @@ def prim (y : Matrix (Fin r) (Fin n) k) : ℚ := if LinearIndependent k y.row th
 def Compl (U : Submodule k (Fin n → k)) (y : Matrix (Fin r) (Fin n) k) : Prop :=
   Submodule.span k (Set.range y.row) ⊔ U = ⊤
 
-
+variable (k r n) in
 abbrev Planes : Type := {U : Submodule k (Fin n → k) // Module.finrank k U + r = n}
 
 instance [Finite k] : Finite (Planes k r n) :=

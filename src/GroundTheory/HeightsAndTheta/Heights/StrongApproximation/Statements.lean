@@ -36,6 +36,7 @@ def inclV (v : HeightOneSpectrum (𝓞 F)) : E →+* Kv E v :=
   (Algebra.TensorProduct.includeRight : E →ₐ[F] Kv E v).toRingHom
 
 
+variable (F) in
 def evalAt (v : HeightOneSpectrum (𝓞 F)) : FiniteAdeleRing (𝓞 F) F →ₐ[F] v.adicCompletion F where
   toFun a := a v
   map_one' := rfl
@@ -48,6 +49,8 @@ def compAt (v : HeightOneSpectrum (𝓞 F)) : AE F E →+* Kv E v :=
   (Algebra.TensorProduct.map (evalAt F v) (AlgHom.id F E)).toRingHom
 
 
+open scoped Classical in
+variable (F) in
 def singleF (v : HeightOneSpectrum (𝓞 F)) : v.adicCompletion F →ₗ[F] FiniteAdeleRing (𝓞 F) F where
   toFun x := ⟨Pi.single v x, by
     filter_upwards [show ({v}ᶜ : Set (HeightOneSpectrum (𝓞 F))) ∈ Filter.cofinite by simp] with w hw

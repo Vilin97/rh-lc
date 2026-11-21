@@ -67,14 +67,28 @@ private theorem one_mem_of_coord_mem_span_singleton_of_ne {k : Type u} [Field k]
   obtain ⟨b, hb⟩ := Ideal.mem_span_singleton'.mp hm2
   have hne' : (ULift.up j₁ : ULift.{u} (Fin m)) ≠ ULift.up j₂ := fun hc =>
     hne (congrArg ULift.down hc)
-  exact one_mem_of_mul_mem_of_dual_derivations I _ _ h a b
-    (EtaleCoordinates.partialDeriv k (ULift.{u} (Fin m)) B (ULift.up j₁))
-    (EtaleCoordinates.partialDeriv k (ULift.{u} (Fin m)) B (ULift.up j₂))
-    hh ha.symm hb.symm
-    (EtaleCoordinates.partialDeriv_coord_self k (ULift.{u} (Fin m)) B (ULift.up j₁))
-    (EtaleCoordinates.partialDeriv_coord_of_ne k (ULift.{u} (Fin m)) B _ _ hne')
-    (EtaleCoordinates.partialDeriv_coord_of_ne k (ULift.{u} (Fin m)) B _ _ hne'.symm)
-    (EtaleCoordinates.partialDeriv_coord_self k (ULift.{u} (Fin m)) B (ULift.up j₂))
+  classical
+  let ι := ULift.{u} (Fin m)
+  have hc : IsBaseChange B (KaehlerDifferential.map k k (MvPolynomial ι k) B) :=
+    KaehlerDifferential.isBaseChange_of_formallyEtale k (MvPolynomial ι k) B
+  let basis : Module.Basis ι B (KaehlerDifferential k B) :=
+    (Algebra.TensorProduct.basis B (KaehlerDifferential.mvPolynomialBasis k ι)).map hc.equiv
+  have hbasis (i : ι) : basis i = KaehlerDifferential.D k B (EtaleCoordinates.coord k ι B i) := by
+    simp only [basis, Module.Basis.map_apply, Algebra.TensorProduct.basis_apply,
+      KaehlerDifferential.mvPolynomialBasis_apply, IsBaseChange.equiv_tmul, one_smul,
+      KaehlerDifferential.map_D]
+    rfl
+  let δ (i : ι) : Derivation k B B :=
+    ((Finsupp.lapply i).comp basis.repr.toLinearMap).compDer (KaehlerDifferential.D k B)
+  have hδ (i j : ι) : δ i (EtaleCoordinates.coord k ι B j) = if i = j then 1 else 0 := by
+    change basis.repr (KaehlerDifferential.D k B (EtaleCoordinates.coord k ι B j)) i = _
+    rw [← hbasis, Module.Basis.repr_self, Finsupp.single_apply]
+    exact if_congr eq_comm rfl rfl
+  exact one_mem_of_mul_mem_of_dual_derivations I
+    (EtaleCoordinates.coord k ι B (ULift.up j₁))
+    (EtaleCoordinates.coord k ι B (ULift.up j₂)) h a b
+    (δ (ULift.up j₁)) (δ (ULift.up j₂)) hh ha.symm hb.symm
+    (by simp [hδ]) (by simp [hδ, hne']) (by simp [hδ, hne'.symm]) (by simp [hδ])
 
 private theorem ideal_eq_bot_of_opens_eq {X : Scheme.{u}} (D : X.IdealSheafData)
     (W₁ W₂ : X.affineOpens) (hW : (W₁ : X.Opens) = (W₂ : X.Opens))

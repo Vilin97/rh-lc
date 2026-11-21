@@ -11,8 +11,10 @@ open NumberField GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar
 namespace GlobalTheory.CompanionTheory.Ar.Fl.LogNorms
 
 theorem norm_integer_le_one (p : ℕ) [Fact p.Prime] {k : Type} [Field k] (ι : k →+* ℂ_[p])
-    (a : 𝓞 k) : ‖ι (a : k)‖ ≤ 1 :=
-  HT.LatBasic.val_le_one (NormedField.valuation (K := ℂ_[p])) ι a
+    (a : 𝓞 k) : ‖ι (a : k)‖ ≤ 1 := by
+  letI : Algebra ℤ ℂ_[p] := Ring.toIntAlgebra _
+  exact (Valuation.integer.integers (NormedField.valuation (K := ℂ_[p]))).isIntegral_iff_v_le_one.1
+    ((map_isIntegral_int ι (RingOfIntegers.isIntegral_coe a)).tower_top)
 
 theorem norm_intCast_eq_one (p : ℕ) [hp : Fact p.Prime] {z : ℤ} (h : ¬ (p : ℤ) ∣ z) :
     ‖(z : ℂ_[p])‖ = 1 := by

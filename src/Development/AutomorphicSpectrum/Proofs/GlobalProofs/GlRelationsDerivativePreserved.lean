@@ -59,7 +59,10 @@ theorem monic_of_shifted_prod {V : Type} [AddCommGroup V] [Module ℂ V] {c : �
   have hcs : ∀ x ∈ s, ∀ y ∈ s, x * y = y * x := by
     rintro _ ⟨p, rfl⟩ _ ⟨q, rfl⟩
     exact (hcomm _ _ _ _).eq
-  letI : CommRing (Algebra.adjoin ℂ s) := Algebra.adjoinCommRingOfComm ℂ hcs
+  letI : IsMulCommutative (Algebra.adjoin ℂ s) :=
+    Algebra.isMulCommutative_adjoin ℂ (fun x hx y hy _ => hcs x hx y hy)
+  letI : CommRing (Algebra.adjoin ℂ s) := by
+    open scoped IsMulCommutative in exact inferInstance
   have hpres : Algebra.adjoin ℂ s ≤ preserving I := by
     rw [Algebra.adjoin_le_iff]
     rintro _ ⟨p, rfl⟩

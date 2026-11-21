@@ -240,13 +240,13 @@ theorem GlobalTheory.CompanionTheory.Ar.Top.eff_lat : ∀ II : IntersectionSyste
   intro II hII hD K _ ι _ Ω _ y e L A s hP hbir hL hA hs0 hs hnef
   haveI hPp : (mCoordIdeal y).IsPrime := hP.2.1.1
   choose c0 hc0 using hP.2.1.2.2
-  have hy0 : ∀ k, y ⟨k, c0 k⟩ ≠ 0 := fun k => y_ne_of_not_mem (hc0 k)
-  obtain ⟨g, h, dg, dh, hg, hh, hd, hhne, e1⟩ := exists_rep hbir hy0 A.a s
+  have hy0 : ∀ k, y ⟨k, c0 k⟩ ≠ 0 := fun k => EffLat.y_ne_of_not_mem (hc0 k)
+  obtain ⟨g, h, dg, dh, hg, hh, hd, hhne, e1⟩ := EffLat.exists_rep hbir hy0 A.a s
   have hgne : aeval y g ≠ 0 := by
     rw [e1]
     exact mul_ne_zero hs0 hhne
-  have hgP := not_mem_of_aeval_ne hgne
-  have hhP := not_mem_of_aeval_ne hhne
+  have hgP := EffLat.not_mem_of_aeval_ne hgne
+  have hhP := EffLat.not_mem_of_aeval_ne hhne
   have hHs : IsSmoothHerm (HermLine.sqMetric (ι := ι) dh) := isSmoothHerm_sqMetric dh
   have hGs := isSmoothHerm_tensor hA hHs
   have secH : IsSectionOn (mCoordIdeal y) (HermLine.sqMetric (ι := ι) dh) h :=
@@ -258,7 +258,7 @@ theorem GlobalTheory.CompanionTheory.Ar.Top.eff_lat : ∀ II : IntersectionSyste
     ring
   have cutG := RootFieldNumerics.points_integral_section_snoc II hII hD K ι (mCoordIdeal y) e L _ g hP hL hGs secG
   have cutH := RootFieldNumerics.points_integral_section_snoc II hII hD K ι (mCoordIdeal y) e L _ h hP hL hHs secH
-  have hadd := deg_tensor II hII (mCoordIdeal y) e L A _ hP hL hA hHs
+  have hadd := EffLat.deg_tensor II hII (mCoordIdeal y) e L A _ hP hL hA hHs
   have hfin : ∀ f : MRing ι, ({W | W ∈ divSupp (mCoordIdeal y) f ∧ IsHorizontal W}).Finite :=
     fun f => (divSupp_finite _ f).subset fun W hW => hW.1
   have hInn : ∀ W, W ∈ divSupp (mCoordIdeal y) g → IsHorizontal W →
@@ -272,11 +272,11 @@ theorem GlobalTheory.CompanionTheory.Ar.Top.eff_lat : ∀ II : IntersectionSyste
     have hrel' := hWrel
     choose c hcW using hWrel
     have hPW : mCoordIdeal y ≤ W := le_sup_left.trans hWmin.1.2
-    have hyc : ∀ k, y ⟨k, c k⟩ ≠ 0 := fun k => y_ne_of_not_mem fun h' => hcW k (hPW h')
+    have hyc : ∀ k, y ⟨k, c k⟩ ≠ 0 := fun k => EffLat.y_ne_of_not_mem fun h' => hcW k (hPW h')
     have hsc : s * ∏ k, y ⟨k, c k⟩ ^ (-(((1 : ℕ) : ℤ) * A.a k)) ∈ chartRingZ y c := hs c hyc
-    obtain ⟨u, r, hrel⟩ := chart_rel hyc hsc hg hh hd e1
+    obtain ⟨u, r, hrel⟩ := EffLat.chart_rel hyc hsc hg hh hd e1
     haveI hWp : W.IsPrime := hWmin.1.1
-    obtain ⟨hm, hle⟩ := len_le_of_rel hgP (mon_not_mem hWp hcW u) hrel hWmin
+    obtain ⟨hm, hle⟩ := EffLat.len_le_of_rel hgP (PositivityTheory.HtPt.Gf.mon_not_mem hWp hcW u) hrel hWmin
     refine ⟨⟨hm, hrel'⟩, ?_⟩
     unfold multAt
     rw [dite_eq_left hWp, dite_eq_left hWp]

@@ -25,7 +25,7 @@ theorem exists_adapted_onb {ι : Type*} [Fintype ι] [DecidableEq ι]
     (orthonormal_subtype_range hon.linearIndependent.injective).2 hon
   obtain ⟨u, bu, hvu, hbu⟩ := hv.exists_orthonormalBasis_extension
   have hcard : Fintype.card u = Fintype.card ι :=
-    (finrank_eq_card_basis bu.toBasis).symm.trans finrank_euclideanSpace
+    (Module.finrank_eq_card_basis bu.toBasis).symm.trans finrank_euclideanSpace
   let e : u ≃ ι := Fintype.equivOfCardEq hcard
   refine ⟨bu.reindex e, e '' {x | (x : EuclideanSpace ℂ ι) ∈ v}, ?_⟩
   have himg : (bu.reindex e) '' (e '' {x | (x : EuclideanSpace ℂ ι) ∈ v}) = v := by

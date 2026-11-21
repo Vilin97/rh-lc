@@ -244,7 +244,9 @@ variable (U M)
 
 def coindRho : Representation R G (coindSub U M) where
   toFun := coindTr
-  map_one' := LinearMap.ext fun f => Subtype.ext (ContinuousMap.ext fun h => by simp)
+  map_one' := LinearMap.ext fun f => Subtype.ext (ContinuousMap.ext fun h => by
+    change f.1 (h * 1) = f.1 h
+    rw [mul_one])
   map_mul' g g' := LinearMap.ext fun f => Subtype.ext (ContinuousMap.ext fun h => by
     show f.1 (h * (g * g')) = f.1 (h * g * g')
     rw [mul_assoc])

@@ -119,7 +119,7 @@ theorem pure_mem {κ : Type} [Fintype κ] (ψ : AddChar (AdeleRing (𝓞 F) F) �
     (fun x => ψ (x ⬝ᵥ y) * pureA F f g (x + x₁)) ∈ schA F κ := by
   let e := InfiniteAdeleRing.ringEquiv_mixedSpace F
   let a : (κ → mixedEmbedding.mixedSpace F) →+ AdeleRing (𝓞 F) F :=
-    { toFun := fun u => (fun i => GroundTheory.Global.infiniteAdeleInl (GroundTheory.Global.mixedToInfinite F (u i))) ⬝ᵥ y
+    { toFun := fun u => (fun i => GroundTheory.Global.infiniteAdeleInl (GroundTheory.Global.mixedToInfinite (u i))) ⬝ᵥ y
       map_zero' := by simp
       map_add' := fun u v => by simp [dotProduct, add_mul, Finset.sum_add_distrib] }
   have ha : Continuous a := by
@@ -140,11 +140,13 @@ theorem pure_mem {κ : Type} [Fintype κ] (ψ : AddChar (AdeleRing (𝓞 F) F) �
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [dotProduct, map_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
-    have : GroundTheory.Global.mixedToInfinite F (e (x i).1) = (x i).1 := e.symm_apply_apply _
+    have : GroundTheory.Global.mixedToInfinite (e (x i).1) = (x i).1 := e.symm_apply_apply _
     rw [this]
     refine Prod.ext (α := InfiniteAdeleRing F) (β := FiniteAdeleRing (𝓞 F) F) ?_ ?_
-    · simp [GroundTheory.Global.adeleRing_add_fst, GroundTheory.Global.infiniteAdeleInl_fst, GroundTheory.Global.finiteAdeleInr_fst]
-    · simp [GroundTheory.Global.adeleRing_add_snd, GroundTheory.Global.infiniteAdeleInl_snd, GroundTheory.Global.finiteAdeleInr_snd]
+    · change _ = (GroundTheory.Global.infiniteAdeleInl (x i).1 * y i).1 + (GroundTheory.Global.finiteAdeleInr ((x i).2 * (y i).2)).1
+      simp
+    · change _ = (GroundTheory.Global.infiniteAdeleInl (x i).1 * y i).2 + (GroundTheory.Global.finiteAdeleInr ((x i).2 * (y i).2)).2
+      simp
   have k2 : (fun i => e ((x + x₁) i).1) = (fun i => e (x i).1) + fun i => e (x₁ i).1 :=
     funext fun i => map_add e (x i).1 (x₁ i).1
   have k3 : (fun i => ((x + x₁) i).2) = (fun i => (x i).2) + fun i => (x₁ i).2 := rfl
@@ -163,17 +165,20 @@ theorem schr_mem_and_thetaSum : ∀ (F : Type) [Field F] [NumberField F] [Locall
       have := (schA F κ).smul_mem (ψ (⅟(2 : AdeleRing (𝓞 F) F) * (w.1 ⬝ᵥ w.2)))
         (pure_mem ψ hψ (norm_eq_one ψ hψ hF) w.1 w.2 f g hg)
       convert this using 1
-      ring
+      funext x
+      simp [schr, AddChar.map_add_eq_mul, mul_comm, mul_left_comm, mul_assoc]
     | zero =>
       convert (schA F κ).zero_mem using 1
       funext x
       simp [schr]
     | add Φ Ψ _ _ h1 h2 =>
       convert (schA F κ).add_mem h1 h2 using 1
-      ring
+      funext x
+      simp [schr, mul_add]
     | smul c Φ _ h =>
       convert (schA F κ).smul_mem c h using 1
-      ring
+      funext x
+      simp [schr, mul_comm, mul_left_comm, mul_assoc]
   · have h2 : ⅟(2 : AdeleRing (𝓞 F) F) = algebraMap F _ 2⁻¹ := by
       apply invOf_eq_right_inv
       rw [← map_ofNat (algebraMap F (AdeleRing (𝓞 F) F)) 2, ← map_mul, mul_inv_cancel₀ two_ne_zero, map_one]
@@ -186,5 +191,7 @@ theorem schr_mem_and_thetaSum : ∀ (F : Type) [Field F] [NumberField F] [Locall
     simp only [schr, dotProduct, h2]
     rw [this, one_mul]
     congr 1
+    funext i
+    simp
 
 end GlobalTheory.CompanionTheory.AdelicHeis

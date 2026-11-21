@@ -27,7 +27,7 @@ section Roots
 variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   {Ω : Type*} [Field Ω] [Algebra K Ω]
 
-
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem algEquiv_pow_apply_of_apply_eq_pow {L : Type*} [Field L] [Algebra K L] {τ : L ≃ₐ[K] L}
     {x : L} {q : ℕ} (h : τ x = x ^ q) (k : ℕ) : (τ ^ k) x = x ^ q ^ k := by
   induction k with
@@ -96,18 +96,18 @@ theorem apply_eq_pow_pow_of_pow_eq_one {n : ℕ} (hn : n ≠ 0) {ζ : Ω}
   obtain ⟨i, -, rfl⟩ := hζ.eq_pow_of_pow_eq_one hξ
   rw [map_pow, ha, ← pow_mul, ← pow_mul, mul_comm]
 
-
+variable (K Ω) in
 class HasUnramifiedRoots : Prop where
   exists_isPrimitiveRoot : ∀ n : ℕ, n ≠ 0 → ∃ ζ : Ω, IsPrimitiveRoot ζ (Nat.card 𝓀[K] ^ n - 1)
 
 instance hasUnramifiedRoots_of_isSepClosed [IsSepClosed Ω] : HasUnramifiedRoots K Ω :=
   ⟨fun _ hn ↦ exists_isPrimitiveRoot_card_pow_sub_one (K := K) hn⟩
 
-
+variable (K Ω) in
 def unramifiedRoots : Set Ω :=
   {ξ | ∃ n : ℕ, n ≠ 0 ∧ ξ ^ (Nat.card 𝓀[K] ^ n - 1) = 1}
 
-
+omit [Algebra K Ω] in
 theorem mem_unramifiedRoots_iff {ξ : Ω} :
     ξ ∈ unramifiedRoots K Ω ↔ ∃ m : ℕ, (m : 𝓀[K]) ≠ 0 ∧ ξ ^ m = 1 := by
   constructor
@@ -128,7 +128,8 @@ theorem mem_unramifiedRoots_iff {ξ : Ω} :
     obtain ⟨c, hc⟩ := hdvd
     rw [hc, pow_mul, hξ, one_pow]
 
-
+variable (K) in
+open Classical in
 def unramifiedCoord (σ : Ω ≃ₐ[K] Ω) (n : ℕ+) : ZMod n :=
   if h : ∃ a : ZMod n, ∀ ξ : Ω, ξ ^ (Nat.card 𝓀[K] ^ (n : ℕ) - 1) = 1 →
       σ ξ = ξ ^ Nat.card 𝓀[K] ^ a.val then h.choose else 0
@@ -143,7 +144,7 @@ theorem natCast_eq_unramifiedCoord_iff {n : ℕ+} {ζ : Ω}
     refine ⟨a₀, fun ξ hξ ↦ apply_eq_pow_pow_of_pow_eq_one hn hζ ?_ hξ⟩
     rw [ha₀, pow_pow_eq_pow_pow_iff hn hζ, ZMod.val_natCast]
     exact (Nat.mod_modEq a₀ n).symm
-  have hc : unramifiedCoord K σ n = hex.choose := dif_pos hex
+  have hc : unramifiedCoord K σ n = hex.choose := dite_eq_left hex
   rw [hc, hex.choose_spec ζ hζ.pow_eq_one, pow_pow_eq_pow_pow_iff hn hζ,
     ← ZMod.natCast_eq_natCast_iff, ZMod.natCast_zmod_val]
   exact eq_comm
@@ -197,7 +198,7 @@ section Degree
 variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   {Ω : Type*} [Field Ω] [Algebra K Ω] [HasUnramifiedRoots K Ω]
 
-
+variable (K Ω) in
 def unramifiedDegree : (Ω ≃ₐ[K] Ω) →* Multiplicative ℤ̂ where
   toFun σ := Multiplicative.ofAdd ⟨fun n ↦ unramifiedCoord K σ n,
     mem_profiniteIntegers.2 fun _ _ h ↦ castHom_unramifiedCoord σ h⟩
@@ -311,10 +312,10 @@ theorem unramifiedDegree_eq_ofAdd_one_iff (σ : Ω ≃ₐ[K] Ω) :
   simp only [Nat.cast_one, pow_one] at this
   exact this
 
-
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [HasUnramifiedRoots K Ω] in
 theorem mem_fixingSubgroup_adjoin_iff {S : Set Ω} {σ : Ω ≃ₐ[K] Ω} :
     σ ∈ (adjoin K S).fixingSubgroup ↔ ∀ x ∈ S, σ x = x := by
-  rw [← Subgroup.zpowers_le, ← le_iff_le, adjoin_le_iff]
+  rw [← Subgroup.zpowers_le, ← le_fixedField_iff_le_fixingSubgroup, adjoin_le_iff]
   refine ⟨fun h x hx ↦ (mem_fixedField_iff _ _).1 (h hx) σ (Subgroup.mem_zpowers σ), fun h x hx ↦ ?_⟩
   refine (mem_fixedField_iff _ _).2 fun τ hτ ↦ ?_
   have hσ : σ ∈ MulAction.stabilizer (Ω ≃ₐ[K] Ω) x := h x hx
@@ -327,17 +328,17 @@ section MaximalUnramified
 variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   {Ω : Type*} [Field Ω] [Algebra K Ω]
 
-
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem pow_sub_one_dvd_pow_sub_one (q : ℕ) {m n : ℕ} (h : m ∣ n) : q ^ m - 1 ∣ q ^ n - 1 := by
   obtain ⟨k, rfl⟩ := h
   rw [pow_mul]
   simpa [one_pow] using Nat.sub_dvd_pow_sub_pow (q ^ m) 1 k
 
-
+variable (K Ω) in
 def maximalUnramifiedExtension : IntermediateField K Ω :=
   ⨆ E : {E : IntermediateField K Ω // IsUnramifiedSubextension E}, E.1
 
-
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem IsUnramifiedSubextension.le_maximalUnramifiedExtension {E : IntermediateField K Ω}
     (hE : IsUnramifiedSubextension E) : E ≤ maximalUnramifiedExtension K Ω :=
   le_iSup (fun E : {E : IntermediateField K Ω // IsUnramifiedSubextension E} ↦ E.1) ⟨E, hE⟩
@@ -469,7 +470,7 @@ theorem unramifiedDegree_maximalUnramifiedExtension_injective :
   rw [ker_unramifiedDegree, ← IntermediateField.restrictNormalHom_ker] at hσ
   exact MonoidHom.mem_ker.1 hσ
 
-
+variable (K Ω) in
 def maximalUnramifiedExtensionGaloisEquiv :
     (maximalUnramifiedExtension K Ω ≃ₐ[K] maximalUnramifiedExtension K Ω) ≃ₜ* Multiplicative ℤ̂ :=
   let e : (maximalUnramifiedExtension K Ω ≃ₐ[K] maximalUnramifiedExtension K Ω) ≃* Multiplicative ℤ̂ :=
@@ -480,7 +481,7 @@ def maximalUnramifiedExtensionGaloisEquiv :
     continuous_invFun :=
       (Continuous.homeoOfEquivCompactToT2 (f := e.toEquiv) continuous_unramifiedDegree).symm.continuous }
 
-
+variable (K Ω) in
 def maximalUnramifiedExtensionFrobenius : maximalUnramifiedExtension K Ω ≃ₐ[K] maximalUnramifiedExtension K Ω :=
   (maximalUnramifiedExtensionGaloisEquiv K Ω).symm (Multiplicative.ofAdd 1)
 
@@ -512,7 +513,8 @@ theorem restrictNormal_eq_maximalUnramifiedExtensionFrobenius_iff (σ : Ω ≃�
   rw [← unramifiedDegree_restrictNormal, ← unramifiedDegree_maximalUnramifiedExtensionFrobenius (K := K) (Ω := Ω)]
   exact unramifiedDegree_maximalUnramifiedExtension_injective.eq_iff.symm
 
-
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [HasUnramifiedRoots K Ω]
+  [IsGalois K Ω] in
 theorem dense_zpowers_ofAdd_one :
     Dense (Subgroup.zpowers (Multiplicative.ofAdd (1 : ℤ̂)) : Set (Multiplicative ℤ̂)) := by
   have h : (Subgroup.zpowers (Multiplicative.ofAdd (1 : ℤ̂)) : Set (Multiplicative ℤ̂)) =

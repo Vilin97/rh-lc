@@ -154,10 +154,10 @@ theorem GlobalTheory.exists_finiteEtale_heckeLists : ∀ (E : Type) [Field E] [N
       ((Scheme.ΓSpecIso (CommRingCat.of (KA l))).inv ≫ s.appTop).hom
     rwa [map_natCast] at this
   have specMap_id₂ : spMap (RingHom.id (KA l)) = 𝟙 _ := Spec.map_id _
-  obtain ⟨Z, b, x, hf, he, hx, huniv⟩ := exists_tuples o.t.G (p ^ 2) n (GlobalTheory.ObjDim.isAbelianScheme o) hu
+  obtain ⟨Z, b, x, hf, he, hx, huniv⟩ := GlobalTheory.HkTuple.exists_tuples o.t.G (p ^ 2) n (GlobalTheory.ObjDim.isAbelianScheme o) hu
   obtain ⟨oZ, ⟨mZ⟩⟩ := GlobalTheory.obj_pull E H D l _ _ (baseKA l) (baseKA l) (RingHom.id _) S Z s (b ≫ s) b rfl rfl
     (by rw [specMap_id₂, Category.comp_id]) o
-  obtain ⟨ρ, e₀⟩ := exists_equiv mZ.cart (𝟙_ (Over Z)) b (Category.id_comp b)
+  obtain ⟨ρ, e₀⟩ := GlobalTheory.HkTuple.exists_equiv mZ.cart (𝟙_ (Over Z)) b (Category.id_comp b)
   let σZ : Fin n → (𝟙_ (Over Z) ⟶ oZ.t.G) := fun j => ρ.symm (x j)
   have eZ : ∀ j, (σZ j).left ≫ mZ.toSABMap.φ = (x j).left := fun j => by
     rw [← e₀, ρ.apply_symm_apply]
@@ -166,7 +166,7 @@ theorem GlobalTheory.exists_finiteEtale_heckeLists : ∀ (E : Type) [Field E] [N
   obtain ⟨oY, ⟨mY⟩⟩ := GlobalTheory.obj_pull E H D l _ _ (baseKA l) (baseKA l) (RingHom.id _) Z V (b ≫ s) ((V.ι ≫ b) ≫ s) V.ι
     rfl rfl (by rw [specMap_id₂, Category.comp_id, Category.assoc]) oZ
   obtain ⟨m, hm⟩ := ((GlobalTheory.ObjMaps.id_comp_cancel E H D l _ _ _ _ _ _ _ _ _ _ _ _ o oZ oY).2 b V.ι mZ).1 mY
-  obtain ⟨ρ', e₀'⟩ := exists_equiv mY.cart (𝟙_ (Over V.toScheme)) V.ι (Category.id_comp _)
+  obtain ⟨ρ', e₀'⟩ := GlobalTheory.HkTuple.exists_equiv mY.cart (𝟙_ (Over V.toScheme)) V.ι (Category.id_comp _)
   let σ : Fin n → (𝟙_ (Over V.toScheme) ⟶ oY.t.G) := fun j => ρ'.symm (toUnit _ ≫ σZ j)
   have tu : (toUnit (Over.mk V.ι)).left = V.ι := by simp
   have eY : ∀ j, (σ j).left ≫ mY.toSABMap.φ = V.ι ≫ (σZ j).left := fun j => by
@@ -175,7 +175,7 @@ theorem GlobalTheory.exists_finiteEtale_heckeLists : ∀ (E : Type) [Field E] [N
     rw [hm, ← eZ]
     exact (Category.assoc _ _ _).symm.trans ((congrArg (· ≫ mZ.toSABMap.φ) (eY j)).trans (Category.assoc _ _ _))
   have hY := fun (k : Type) [Field k] [IsAlgClosed k] (y : Sp k ⟶ V.toScheme) =>
-    (listed_iff D P p i mY.toSABMap σZ σ eY y).2 ((hV k (y ≫ V.ι)).1 (by
+    (GlobalTheory.HkTuple.listed_iff D P p i mY.toSABMap σZ σ eY y).2 ((hV k (y ≫ V.ι)).1 (by
       rintro _ ⟨u, rfl⟩
       rw [Scheme.Hom.comp_apply]
       exact (y u).2))
@@ -184,9 +184,9 @@ theorem GlobalTheory.exists_finiteEtale_heckeLists : ∀ (E : Type) [Field E] [N
     ⟨fun j => ?_, rfl, fun k _ _ y => (hY k y).1⟩, fun k _ _ y => ?_, ?_⟩
   · rw [← map_pow, ← MonObj.comp_pow, pZ, MonObj.comp_one, map_one]
   · obtain ⟨C, h₁, h₂⟩ := (hY k y).2
-    exact ⟨C, fun z => by rw [range_subset_iff, ← h₁]; rfl, h₂⟩
+    exact ⟨C, fun z => by rw [GlobalTheory.HkTuple.range_subset_iff, ← h₁]; rfl, h₂⟩
   · rintro T f t mu τ K' ⟨hτ, rfl, hinj⟩ hK
-    obtain ⟨ρ₂, e₂⟩ := exists_equiv mu.cart (𝟙_ (Over T)) f (Category.id_comp _)
+    obtain ⟨ρ₂, e₂⟩ := GlobalTheory.HkTuple.exists_equiv mu.cart (𝟙_ (Over T)) f (Category.id_comp _)
     obtain ⟨h₀, hh₀, hh₀u⟩ := huniv (Over.mk f) (fun j => ρ₂ (τ j)) (fun j => by rw [← map_pow, hτ, map_one])
     have e₃ : ∀ j, h₀.left ≫ (x j).left = (τ j).left ≫ mu.φ := fun j => by
       rw [← e₂, ← hh₀, Over.comp_left]
@@ -209,10 +209,10 @@ theorem GlobalTheory.exists_finiteEtale_heckeLists : ∀ (E : Type) [Field E] [N
           ((Category.comp_id g).symm.trans ((congrArg (g ≫ ·) w₂.symm).trans (Category.assoc _ _ _).symm))))))
     have hr : Set.range g ⊆ Set.range V.ι := by
       rw [Scheme.Opens.range_ι]
-      refine range_subset_of_geom g _ fun k _ _ y => (hV k (y ≫ g)).2
-        ((listed_iff D P p i mu' σZ τ e₅ y).1 ⟨hinj k y, ?_⟩)
+      refine GlobalTheory.HkTuple.range_subset_of_geom g _ fun k _ _ y => (hV k (y ≫ g)).2
+        ((GlobalTheory.HkTuple.listed_iff D P p i mu' σZ τ e₅ y).1 ⟨hinj k y, ?_⟩)
       obtain ⟨C, h₁, h₂⟩ := hK k y
-      exact ⟨C, Set.ext fun z => (h₁ z).trans (range_subset_iff τ z), h₂⟩
+      exact ⟨C, Set.ext fun z => (h₁ z).trans (GlobalTheory.HkTuple.range_subset_iff τ z), h₂⟩
     refine ⟨IsOpenImmersion.lift V.ι g hr, ⟨by rw [IsOpenImmersion.lift_fac_assoc], fun j => ?_⟩, ?_⟩
     · exact (congrArg (IsOpenImmersion.lift V.ι g hr ≫ ·) (eσ j)).trans
         ((IsOpenImmersion.lift_fac_assoc _ _ _ _).trans (e₄ j))

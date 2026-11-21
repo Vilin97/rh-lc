@@ -1348,9 +1348,9 @@ theorem cp_O_prec {l : O} (hO : IsAdicComplete (Ideal.span {l}) O) (g : ℕ → 
 theorem cp_complete (l : O) (hO : IsAdicComplete (Ideal.span {l}) O) {M : Type}
     [AddCommGroup M] [Module (PowerSeries O) M] {r : ℕ}
     (Φ : M ≃ₗ[PowerSeries O] (Fin r → PowerSeries O)) :
-    IsAdicComplete (Ideal.span {C l, X} : Ideal (PowerSeries O)) M where
-  haus' := by
-    intro x hx
+    IsAdicComplete (Ideal.span {C l, X} : Ideal (PowerSeries O)) M := by
+  refine { toIsHausdorff := ⟨?_⟩, toIsPrecomplete := ⟨?_⟩ }
+  · intro x hx
     apply Φ.injective
     rw [map_zero]
     funext t
@@ -1362,8 +1362,7 @@ theorem cp_complete (l : O) (hO : IsAdicComplete (Ideal.span {l}) O) {M : Type}
     rw [SModEq.zero, cp_mem_equiv _ Φ] at h1
     have h2 := (cp_mem_pow_iff l _ _).1 (h1 t) k (by omega)
     exact (pow_dvd_pow l (by omega)).trans h2
-  prec' := by
-    intro f hf
+  · intro f hf
     have hc : ∀ (t : Fin r) (k m n : ℕ), m ≤ n → k < m →
         l ^ (m - k) ∣ coeff k (Φ (f m) t) - coeff k (Φ (f n) t) := by
       intro t k m n hmn hk

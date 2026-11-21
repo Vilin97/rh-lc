@@ -136,8 +136,10 @@ theorem rho_eq_of_inv_mul_mem (hfix : ∀ h : H, (h : G) ∈ V → ∀ a : A, A.
   rw [e, map_mul, Module.End.mul_apply, hfix (h₁⁻¹ * h₂) (by simpa using h)]
 
 
-noncomputable def summandFun (a : A) (x : G) : A :=
-  if hx : x ∈ H ⊔ V then A.ρ (supSection H V ⟨x, hx⟩) a else 0
+variable (H V) in
+noncomputable def summandFun (a : A) (x : G) : A := by
+  classical
+  exact if hx : x ∈ H ⊔ V then A.ρ (supSection (H := H) (V := V) ⟨x, hx⟩) a else 0
 
 omit [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G] in
 theorem summandFun_mul_left (hfix : ∀ h : H, (h : G) ∈ V → ∀ a : A, A.ρ h a = a) (a : A)
@@ -167,7 +169,7 @@ theorem summandFun_mul_right (hfix : ∀ h : H, (h : G) ∈ V → ∀ a : A, A.�
     apply rho_eq_of_inv_mul_mem hfix
     refine inv_mul_mem_trans (supSection_spec H V ⟨_, hx'⟩) ?_
     have h1 := inv_mul_mem_symm (supSection_spec H V ⟨x, hx⟩)
-    have h2 : (k' : G)⁻¹ * (x⁻¹ * (supSection H V ⟨x, hx⟩ : G)) * k' ∈ V := by
+    have h2 : (k' : G)⁻¹ * (x⁻¹ * (supSection (H := H) (V := V) ⟨x, hx⟩ : G)) * k' ∈ V := by
       have := hVn.conj_mem _ h1 (k' : G)⁻¹
       simpa using this
     simpa [mul_assoc] using h2
@@ -185,7 +187,8 @@ theorem summandFun_mul_right_of_mem (hfix : ∀ h : H, (h : G) ∈ V → ∀ a :
     apply rho_eq_of_inv_mul_mem hfix
     refine inv_mul_mem_trans (supSection_spec H V ⟨_, hx'⟩) ?_
     have h1 := inv_mul_mem_symm (supSection_spec H V ⟨x, hx⟩)
-    have h2 : v⁻¹ * (x⁻¹ * (supSection H V ⟨x, hx⟩ : G)) ∈ V := V.mul_mem (V.inv_mem hv) h1
+    have h2 : v⁻¹ * (x⁻¹ * (supSection (H := H) (V := V) ⟨x, hx⟩ : G)) ∈ V :=
+      V.mul_mem (V.inv_mem hv) h1
     simpa [mul_assoc] using h2
   · have hx' : x * v ∉ H ⊔ V := fun h' => hx (hmem.1 h')
     simp only [summandFun, dif_neg hx, dif_neg hx']

@@ -87,6 +87,8 @@ section Sum
 
 variable [DecidableEq K] [DecidableEq (ResidueField 𝒪)]
 
+local notation "ι" => algebraMap 𝒪 K
+local notation "ρ" => residue 𝒪
 
 theorem add_some_integral {x₁ y₁ x₂ y₂ ℓ : 𝒪} (h₁ : (curveK K W).Nonsingular (ι x₁) (ι y₁))
     (h₂ : (curveK K W).Nonsingular (ι x₂) (ι y₂)) (n₁ : (curveRed W).Nonsingular (ρ x₁) (ρ y₁))
@@ -396,21 +398,51 @@ theorem add_of_notMem_range [IsAdicComplete (maximalIdeal 𝒪) 𝒪] [(W.map ι
         WeierstrassCurve.Affine.Point.some _ _ h₃ ∧ ρ x₃ = ρ x₂ ∧ ρ y₃ = ρ y₂ := by
   have hι := IsFractionRing.injective 𝒪 K
 
-  obtain ⟨z, hzP⟩ : WeierstrassCurve.Affine.Point.some _ _ h₁ ∈ Set.range (pointE K W) := by
-    rw [mem_range_pointE_iff]
-    intro x y h hP
-    rw [WeierstrassCurve.Affine.Point.some.injEq] at hP
-    rw [← hP.1]; exact hX
-  have hz0 : z.val ≠ 0 := by
-    intro h0
-    have : z = 0 := MaxIdealPoint.ext h0
-    rw [this, pointE_zero] at hzP
-    exact WeierstrassCurve.Affine.Point.some_ne_zero h₁ hzP.symm
-  rw [pointE_of_ne_zero K W hz0] at hzP
-  simp only [WeierstrassCurve.Affine.Point.mk, WeierstrassCurve.Affine.Point.some.injEq] at hzP
-  obtain ⟨hX₁, hY₁⟩ := hzP
-  set z' := z.val with hz'
-  have hzm : z' ∈ maximalIdeal 𝒪 := z.val_mem
+  have hcoords : ∃ z ∈ maximalIdeal 𝒪, z ≠ 0 ∧
+      ι z / ι (wVal W z) = X₁ ∧ -1 / ι (wVal W z) = Y₁ := by
+    have hX0 : X₁ ≠ 0 := fun h => hX ⟨0, by rw [h, map_zero]⟩
+    obtain ⟨t, htm, ht⟩ := exists_inv_mem_of_notMem_range K hX
+    have hE := h₁.1
+    rw [WeierstrassCurve.Affine.equation_iff] at hE
+    have hU : Y₁ / X₁ ∉ Set.range ι := by
+      rintro ⟨u, hu⟩
+      have key : ι (u ^ 2 * t + W.a₁ * u * t + W.a₃ * u * t ^ 2 -
+          (1 + W.a₂ * t + W.a₄ * t ^ 2 + W.a₆ * t ^ 3)) = 0 := by
+        simp only [map_sub, map_add (f := _), map_mul, map_pow, map_one, hu, ht]
+        simp only [WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃,
+          WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆] at hE
+        field_simp
+        linear_combination hE
+      have heq := hι (key.trans (map_zero ι).symm)
+      apply one_notMem_maximalIdeal (𝒪 := 𝒪)
+      have h1 : (1 : 𝒪) = u ^ 2 * t + W.a₁ * u * t + W.a₃ * u * t ^ 2 -
+          (W.a₂ * t + W.a₄ * t ^ 2 + W.a₆ * t ^ 3) := by
+        linear_combination -heq
+      rw [h1]
+      refine Ideal.sub_mem _ (Ideal.add_mem _ (Ideal.add_mem _ ?_ ?_) ?_)
+        (Ideal.add_mem _ (Ideal.add_mem _ ?_ ?_) ?_) <;>
+        first
+        | exact Ideal.mul_mem_left _ _ htm
+        | exact Ideal.mul_mem_left _ _ (Ideal.pow_mem_of_mem _ htm _ (by norm_num))
+    have hY0 : Y₁ ≠ 0 := fun h => hU ⟨0, by rw [h, zero_div, map_zero]⟩
+    obtain ⟨s, hsm, hs⟩ := exists_inv_mem_of_notMem_range K hU
+    have hz : -s ∈ maximalIdeal 𝒪 := (Ideal.neg_mem_iff _).2 hsm
+    have hw : -(t * s) ∈ maximalIdeal 𝒪 := (Ideal.neg_mem_iff _).2 (Ideal.mul_mem_right _ _ htm)
+    have hzι : ι (-s) = -X₁ / Y₁ := by rw [map_neg, hs]; field_simp
+    have hwι : ι (-(t * s)) = -1 / Y₁ := by rw [map_neg, map_mul, hs, ht]; field_simp
+    have hzw : zwPoly W (-s) (-(t * s)) = 0 := by
+      apply hι
+      rw [map_zwPoly, hzι, hwι, map_zero]
+      exact zwPoly_of_equation K W h₁.1 hY0
+    have hwv := eq_wVal W hz hw hzw
+    have hz0 : -s ≠ 0 := fun h => by
+      have hzK : ι (-s) = 0 := by rw [h, map_zero]
+      exact (div_ne_zero (neg_ne_zero.2 hX0) hY0) (hzι.symm.trans hzK)
+    refine ⟨-s, hz, hz0, ?_, ?_⟩ <;> rw [← hwv, hwι]
+    · rw [hzι]
+      field_simp
+    · field_simp
+  obtain ⟨z', hzm, hz0, hX₁, hY₁⟩ := hcoords
   set v := vVal W z' with hv
   set w := wVal W z' with hw
   have hwv : w = z' ^ 3 * v := wVal_eq W hzm
@@ -553,7 +585,7 @@ section Reduction
 
 variable [IsAdicComplete (maximalIdeal 𝒪) 𝒪] [(W.map (algebraMap 𝒪 K)).IsElliptic]
 
-
+open Classical in
 def intPart (X : K) : 𝒪 := if h : X ∈ Set.range (algebraMap 𝒪 K) then h.choose else 0
 
 omit [IsDomain 𝒪] [IsDiscreteValuationRing 𝒪] [IsAdicComplete (maximalIdeal 𝒪) 𝒪]
@@ -563,7 +595,7 @@ theorem intPart_algebraMap (x : 𝒪) : intPart K (algebraMap 𝒪 K x) = x := b
   rw [intPart, dite_eq_left h]
   exact IsFractionRing.injective 𝒪 K h.choose_spec
 
-
+open Classical in
 def reducePoint : (curveK K W).Point → (curveRed W).Point
   | .zero => 0
   | @WeierstrassCurve.Affine.Point.some _ _ _ X Y _ =>
@@ -658,22 +690,16 @@ theorem add_mem_and_reduce {P Q : (curveK K W).Point} (hP : P ∈ E0Set K W)
   ·
     rcases point_cases K W Q with rfl | ⟨X₂, Y₂, h₂, rfl, hX₂⟩ | ⟨x₂, y₂, h₂, rfl⟩
     · rw [add_zero, reducePoint_zero, add_zero]; exact ⟨hP, rfl⟩
-    · have h1 : WeierstrassCurve.Affine.Point.some _ _ h₁ ∈ E1 K W := by
-        intro x y h hP'
-        rw [WeierstrassCurve.Affine.Point.some.injEq] at hP'
-        rw [← hP'.1]; exact hX₁
-      have h2 : WeierstrassCurve.Affine.Point.some _ _ h₂ ∈ E1 K W := by
-        intro x y h hP'
-        rw [WeierstrassCurve.Affine.Point.some.injEq] at hP'
-        rw [← hP'.1]; exact hX₂
-      have h12 := (E1 K W).add_mem h1 h2
-      rw [reducePoint_some_notMem K W h₁ hX₁, reducePoint_some_notMem K W h₂ hX₂, add_zero]
+    · rw [reducePoint_some_notMem K W h₁ hX₁, reducePoint_some_notMem K W h₂ hX₂, add_zero]
       rcases point_cases K W (WeierstrassCurve.Affine.Point.some _ _ h₁ +
           WeierstrassCurve.Affine.Point.some _ _ h₂) with h0 | ⟨X, Y, h, hS, hX⟩ | ⟨x, y, h, hS⟩
       · rw [h0]; exact ⟨zero_mem_E0Set K W, rfl⟩
       · rw [hS]; exact ⟨mem_E0Set_some_notMem K W h hX, reducePoint_some_notMem K W h hX⟩
-      · rw [hS] at h12
-        exact absurd ⟨x, rfl⟩ (h12 _ _ h rfl)
+      · have hneg := (WeierstrassCurve.Affine.nonsingular_neg _ _).2 h₁
+        obtain ⟨x₃, y₃, h₃, e, _, _⟩ := add_of_notMem_range K W hneg hX₁ h
+        rw [← hS, ← WeierstrassCurve.Affine.Point.neg_some, ← add_assoc, neg_add_cancel,
+          zero_add, WeierstrassCurve.Affine.Point.some.injEq] at e
+        exact False.elim (hX₂ ⟨x₃, e.1.symm⟩)
     · have n₂ := hQ x₂ y₂ h₂ rfl
       obtain ⟨x₃, y₃, h₃, e, hx, hy⟩ := add_of_notMem_range K W h₁ hX₁ h₂
       refine add_mem_and_reduce_of_exists K W ⟨x₃, y₃, h₃, hx ▸ hy ▸ n₂, e, ?_⟩

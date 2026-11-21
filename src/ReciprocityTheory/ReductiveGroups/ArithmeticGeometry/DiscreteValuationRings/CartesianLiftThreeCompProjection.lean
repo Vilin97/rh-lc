@@ -222,7 +222,8 @@ lemma act_zero' (ra : Out.RingAct A O) : ra.act 0 = 1 := by
 
 lemma act_natCast (ra : Out.RingAct A O) : ∀ n : ℕ, ra.act (n : O) = (𝟙 A) ^ n
   | 0 => by rw [Nat.cast_zero, act_zero', pow_zero]
-  | n + 1 => by rw [Nat.cast_succ, ra.map_add (f := _), padd_eq_mul, act_natCast ra n, ra.map_one, pow_succ]
+  | n + 1 => by
+    rw [Nat.cast_succ, ra.map_add, padd_eq_mul, act_natCast ra n, ra.map_one, pow_succ]
 
 theorem hasGen_pullMul (ra : Out.RingAct A O) (w0 a : O) (N : ℕ) (hN : a * star a = (N : O))
     (uΨ : LB.Gen (LB.LinComb M (K := Fin 4)

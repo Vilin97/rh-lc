@@ -127,7 +127,7 @@ theorem exists_skew_exp_eq (n : ℕ) (k : Matrix.unitaryGroup (Fin n) ℂ) :
     rw [e2] at e
     have e3 : ((expG (V * Matrix.diagonal w * Vᴴ) 1 : G n) : Mat n) =
         NormedSpace.exp (V * Matrix.diagonal w * Vᴴ) := by
-      simp
+      simp [expG]
     rw [e3]
     exact hk.trans e.symm
 

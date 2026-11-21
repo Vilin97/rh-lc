@@ -154,7 +154,7 @@ theorem exists_twisted_algebra (R : Type) [CommRing R] (C : Type) [CommGroup C] 
   have hcomm : ∀ a ∈ Set.range T, ∀ b ∈ Set.range T, a * b = b * a := by
     rintro _ ⟨x, rfl⟩ _ ⟨y, rfl⟩
     rw [hTmul, hTmul, hs, mul_comm x y]
-  have hAc := Algebra.isMulCommutative_adjoin R hcomm
+  have hAc := Algebra.isMulCommutative_adjoin R (fun a ha b hb _ => hcomm a ha b hb)
   set S := Algebra.adjoin R (Set.range T) with hSeq
   let hA : CommRing S :=
     { (inferInstance : Ring S) with mul_comm := fun a b => hAc.is_comm.comm a b }

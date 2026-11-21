@@ -195,7 +195,7 @@ private theorem range_coprod_inl_eq_preimage {A B X : Scheme.{u}} (a : A ⟶ X) 
   · rintro _ ⟨z, rfl⟩
     have h1 : (coprod.desc a b).base ((coprod.inl : A ⟶ A ⨿ B).base z) = a.base z := by
       have h := congrArg (fun f : A ⟶ X => f.base z) (coprod.inl_desc a b)
-      simpa using h
+      exact h
     rw [Set.mem_preimage, h1]
     exact ha z
   · intro z hz
@@ -206,7 +206,7 @@ private theorem range_coprod_inl_eq_preimage {A B X : Scheme.{u}} (a : A ⟶ X) 
     obtain ⟨y, rfl⟩ := hz2
     have h1 : (coprod.desc a b).base ((coprod.inr : B ⟶ A ⨿ B).base y) = b.base y := by
       have h := congrArg (fun f : B ⟶ X => f.base y) (coprod.inr_desc a b)
-      simpa using h
+      exact h
     rw [Set.mem_preimage, h1] at hz
     exact Set.disjoint_left.mp hdisj hz (hb y)
 
@@ -218,7 +218,7 @@ private theorem range_coprod_inr_eq_preimage {A B X : Scheme.{u}} (a : A ⟶ X) 
   · rintro _ ⟨y, rfl⟩
     have h1 : (coprod.desc a b).base ((coprod.inr : B ⟶ A ⨿ B).base y) = b.base y := by
       have h := congrArg (fun f : B ⟶ X => f.base y) (coprod.inr_desc a b)
-      simpa using h
+      exact h
     rw [Set.mem_preimage, h1]
     exact hb y
   · intro z hz
@@ -227,7 +227,7 @@ private theorem range_coprod_inr_eq_preimage {A B X : Scheme.{u}} (a : A ⟶ X) 
     obtain ⟨x, rfl⟩ := hzl
     have h1 : (coprod.desc a b).base ((coprod.inl : A ⟶ A ⨿ B).base x) = a.base x := by
       have h := congrArg (fun f : A ⟶ X => f.base x) (coprod.inl_desc a b)
-      simpa using h
+      exact h
     rw [Set.mem_preimage, h1] at hz
     exact Set.disjoint_left.mp hdisj (ha x) hz
 
@@ -531,11 +531,16 @@ theorem isBlowupAlongIdealSheaf_totalTransition_of_coprod_desc (i : ℕ)
           coprod.map (coprod.desc (S.strictTransformMap i) (S.detachedι i)) (𝟙 (S.detachedCoprod i)) =
         S.totalTransition i := by
     refine coprod.hom_ext ?_ ?_
-    · simp [coprodSwapAssocIso_hom, coprodSwapAssocHom, EmbeddedBlowupSequence.totalTransition,
-        coprod.inl_desc, coprod.inr_desc]
-    · refine coprod.hom_ext ?_ ?_ <;>
-        simp [coprodSwapAssocIso_hom, coprodSwapAssocHom, EmbeddedBlowupSequence.totalTransition,
-          coprod.inl_desc, coprod.inr_desc]
+    · simp only [coprodSwapAssocIso_hom, coprodSwapAssocHom, Category.assoc,
+        coprod.inl_desc_assoc, coprod.inl_map, coprod.inl_desc]
+      exact (S.inl_totalTransition_eq_strictTransformMap_inl i).symm
+    · refine coprod.hom_ext ?_ ?_
+      · simp only [coprodSwapAssocIso_hom, coprodSwapAssocHom, Category.assoc,
+          coprod.inr_desc_assoc, coprod.inl_desc_assoc, coprod.inr_map, Category.comp_id]
+        exact (S.inl_inr_totalTransition i).symm
+      · simp only [coprodSwapAssocIso_hom, coprodSwapAssocHom, Category.assoc,
+          coprod.inr_desc_assoc, coprod.inl_map, coprod.inr_desc]
+        exact (S.inr_inr_totalTransition i).symm
   have hfin := hmap.iso_hom_comp
     (coprodSwapAssocIso (S.strictTransform (i + 1)) (S.detachedScheme i) (S.detachedCoprod i))
   rw [hcomp] at hfin

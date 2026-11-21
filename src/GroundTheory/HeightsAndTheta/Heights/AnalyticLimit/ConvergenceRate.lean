@@ -43,6 +43,7 @@ theorem chart_weight_continuousOn (A : FinHolAtlas D X) (P : ChartPartition A)
   exact continuousOn_const.mul (h.mul (locDensCont A Φ hΦ j))
 
 
+omit [CompactSpace X] [T2Space X] in
 theorem integrableOn_chart_of_part (A : FinHolAtlas D X) (P : ChartPartition A)
     (Φ : Fin D → LocPot X) (hΦ : ∀ i, IsPotential A (Φ i)) (s : ℝ) (j : Fin A.n) (g : X → ℝ)
     (hg : Measurable g) (hi : Integrable g (chartPartMeasure A P Φ s j)) :

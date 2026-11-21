@@ -158,7 +158,7 @@ section Sm
 
 variable {V V' : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] [NormedAddCommGroup V'] [NormedSpace ℂ V']
 
-
+variable (n V) in
 def Sm : Submodule ℂ (Mat n → V) where
   carrier := {f | ContDiffOn ℝ ∞ f (GLs n) ∧ ∀ g, g ∉ GLs n → f g = 0}
   add_mem' := fun {f h} hf hh => ⟨hf.1.add hh.1, fun g hg => by simp [hf.2 g hg, hh.2 g hg]⟩

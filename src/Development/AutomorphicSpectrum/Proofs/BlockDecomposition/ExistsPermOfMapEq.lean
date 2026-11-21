@@ -192,8 +192,8 @@ theorem trHC (n m : ℕ) : ∃ b : FreeAlgebra ℂ (Fin n),
         simp [etr, map_sum, LinearMap.sum_apply, Finset.sum_sub_distrib]
     rw [e]
     exact Submodule.sum_mem (nSub E) fun a _ => diag_mem hE m a x
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [map_sum, bk_val, GlobalTheory.Dec.gelfVal]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, bk_val, GlobalTheory.Dec.gelfVal]
     exact Finset.sum_comm
 
 section Kill

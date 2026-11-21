@@ -217,7 +217,7 @@ theorem spans_dual_base {V : Type} [AddCommGroup V] [Module Qp V] [FiniteDimensi
 variable {LL : Type} [Field LL] [Algebra Qp LL]
     {V : Type} [AddCommGroup V] [Module LL V] [Module Qp V] [IsScalarTower Qp LL V]
 
-
+variable (Qp) in
 def resRep (ρ : Representation LL G V) : Representation Qp G V where
   toFun g := (ρ g).restrictScalars Qp
   map_one' := LinearMap.ext fun x => by simp

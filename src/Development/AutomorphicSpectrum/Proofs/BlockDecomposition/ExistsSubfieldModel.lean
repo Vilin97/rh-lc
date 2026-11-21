@@ -22,7 +22,6 @@ theorem exists_subfield_model : ∀ (F Ω : Type) [Field F] [NumberField F] [Fie
     have h : @Algebra.IsAlgebraic ℚ (AlgebraicClosure ℚ) _ _ (AlgebraicClosure.instAlgebra ℚ) :=
       (AlgebraicClosure.isAlgebraic ℚ)
     convert h
-    exact Subsingleton.elim _ _
   haveI ac : IsAlgClosure σ.fieldRange (AlgebraicClosure ℚ) :=
     ⟨AlgebraicClosure.isAlgClosed ℚ, Algebra.IsAlgebraic.tower_top (K := ℚ) σ.fieldRange⟩
   refine ⟨σ.fieldRange, nf, ac, e.toRingEquiv, IsAlgClosure.equivOfEquiv Ω (AlgebraicClosure ℚ) e.toRingEquiv, fun x => ?_⟩

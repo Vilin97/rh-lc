@@ -253,9 +253,9 @@ theorem exists_etaleChart_coord_eq {X : Scheme.{u}} {k : Type u} [Field k]
     (hX : ∀ i : ULift.{u} (Fin m), f (MvPolynomial.X i) = y i)
     (hf : f.Etale) :
     ∃ c : EtaleChart p U m, ∀ j : Fin m, c.coord j = y (ULift.up j) := by
-  refine ⟨EtaleChart.ofCoords p U (fun i => U.topIso.inv.hom (y i))
-      (etale_homOfVector_of_ringHom_etale p hU y f hC hX hf), fun j => ?_⟩
-  rw [EtaleChart.coord_def, EtaleChart.ofCoords_map, AffineSpace.homOfVector_appTop_coord]
+  refine ⟨⟨AffineSpace.homOfVector (U.ι ≫ p) (fun i => U.topIso.inv.hom (y i)),
+    by simp, etale_homOfVector_of_ringHom_etale p hU y f hC hX hf⟩, fun j => ?_⟩
+  rw [EtaleChart.coord_def, AffineSpace.homOfVector_appTop_coord]
   exact Iso.inv_hom_id_apply U.topIso (y (ULift.up j))
 
 theorem exists_chart_ideal_eq_span_coord {X : Scheme.{u}} {k : Type u} [Field k] [CharZero k]

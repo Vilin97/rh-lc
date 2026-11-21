@@ -32,8 +32,8 @@ variable (n : ι → ℕ)
 
 
 omit [Fintype ι] in
-theorem whole_mkF_X_ne_zero (v : Coord n) : (whole n).mkF (X v) ≠ 0 := fun h ↦
-  X_ne_zero v ((Submodule.mem_bot _).mp (((whole n).mkF_eq_zero_iff _).mp h))
+theorem whole_mkF_X_ne_zero (v : Coord n) : (whole (n := n)).mkF (X v) ≠ 0 := fun h ↦
+  X_ne_zero v (Ideal.mem_bot.mp (((whole (n := n)).mkF_eq_zero_iff _).mp h))
 
 
 
@@ -41,13 +41,14 @@ end ArithVariety
 
 variable (n : ι → ℕ) (k₀ : ι)
 
-def blockAddData : AddBlockData (ArithVariety.whole n) where
+def blockAddData : AddBlockData (ArithVariety.whole (n := n)) where
   deg := Pi.single k₀ 1
   size := n k₀
-  elt j := (ArithVariety.whole n).mkF (X ⟨k₀, j⟩)
+  elt j := (ArithVariety.whole (n := n)).mkF (X ⟨k₀, j⟩)
   elt_deg j := ⟨X ⟨k₀, j⟩, 1, (Pi.single k₀ 1 : ι → ℕ), 0, isWeightedHomogeneous_X ℤ (coordDeg n) ⟨k₀, j⟩,
     isWeightedHomogeneous_one ℤ (coordDeg n), fun k ↦ by simp [single_cast],
-    (Ideal.ne_top_iff_one _).mp (ArithVariety.whole n).isPrime.ne_top, by rw [map_one, div_one]⟩
+    (Ideal.ne_top_iff_one _).mp (ArithVariety.whole (n := n)).isPrime.ne_top,
+    by rw [map_one, div_one]⟩
   chart_mem c _ j := by
     rw [ArithVariety.chartPow, prod_zpow_single]
     exact Subring.subset_closure ⟨⟨k₀, j⟩, rfl⟩

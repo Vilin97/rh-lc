@@ -67,5 +67,6 @@ theorem unit_mul_map_haar : ∀ (F : Type) [Field F] [NumberField F] (e : Ainf F
     have : (e.symm ∘ e : Ainf F → Ainf F) = id := by funext y; simp
     rw [this, Measure.map_id]
   rw [← back (lam.map fun y => t * y), key, Measure.map_smul, back]
+  exact hms.aemeasurable
 
 end GlobalTheory.CompanionTheory.HaarScale

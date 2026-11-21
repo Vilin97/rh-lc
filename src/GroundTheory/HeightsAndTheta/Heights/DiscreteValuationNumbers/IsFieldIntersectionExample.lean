@@ -85,7 +85,8 @@ theorem isIntersectionTheory (hPt : IntNumPoint.Statement.{u})
       ← hPt F K ι P i hP hdim hi]
     obtain ⟨-, h2⟩ := hBase F K ι P hP h0
     rw [h2, FieldNumbers.resDeg, dite_eq_left hP.isPrime]
-  cut P n hP hdim bf bg f g hf hg hfP hgP bs := by
+  cut := by
+    intro P n hP hdim bf bg f g hf hg hfP hgP bs
     have hd := ringKrullDim_eq_of_relDim P (n + 1) hdim
     have hs : IsRatSection P (fun k => (bf k : ℤ) - bg k) f g :=
       ⟨bf, bg, (Objects.isMultiHomog_iff f bf).mp hf, (Objects.isMultiHomog_iff g bg).mp hg,

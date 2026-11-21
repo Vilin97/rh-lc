@@ -684,6 +684,7 @@ def vecS (k : ℕ) : (Fin k → FractionRing O) →ₛₗ[Bw.eO.toRingHom] (Fin 
     rfl
 
 
+set_option synthInstance.maxHeartbeats 100000 in
 def phi (k : ℕ) : KOG O k →ₛₗ[Bw.eO.toRingHom] ((Fin k → LLw Bw) ⧸ stdG (Ow Bw) (LLw Bw) k) :=
   Submodule.mapQ _ _ (vecS Bw k) (by
     rintro _ ⟨u, rfl⟩
@@ -692,6 +693,7 @@ def phi (k : ℕ) : KOG O k →ₛₗ[Bw.eO.toRingHom] ((Fin k → LLw Bw) ⧸ s
     exact (toLLK_alg Bw (u j)).symm)
 
 
+set_option synthInstance.maxHeartbeats 100000 in
 def Phi {k : ℕ} (rho : Representation O ↥Gw (KOG O k)) :
     ↥(Z1 rho) →ₛₗ[Bw.eO.toRingHom] (↥(GK Bw.Kw) → (Fin k → LLw Bw) ⧸ stdG (Ow Bw) (LLw Bw) k) where
   toFun c g := phi Bw k ((c : ↥Gw → KOG O k) (ι Bw g))
@@ -703,6 +705,7 @@ def Phi {k : ℕ} (rho : Representation O ↥Gw (KOG O k)) :
     exact (phi Bw k).map_smulₛₗ c _
 
 
+set_option synthInstance.maxHeartbeats 100000 in
 def bkG (P : LocPrime l) {k : ℕ} (rho : Representation O ↥Gw (KOG O k))
     (M : ↥Gw →* Matrix (Fin k) (Fin k) O) : Submodule O (H1 rho) :=
   ((HfD (P.PD Bw.Kw) (lat Bw M)).comap (Phi Bw rho)).map (Submodule.mkQ _)
@@ -741,6 +744,7 @@ variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] (A : 
   (nb : ∀ w, w ∈ placesOver E l → LocBridge l E Ω (Dec (F := E) (A.1 w)) O)
 
 
+open Classical in
 def LlG {k : ℕ} (M : Formalism.ConjugateSelfDual.G E Ω →* Matrix (Fin k) (Fin k) O) :
     ∀ v, Submodule O (H1 ((WKG M).comp (Dec (F := E) (A.1 v)).subtype)) :=
   fun v => if h : v ∈ placesOver E l then

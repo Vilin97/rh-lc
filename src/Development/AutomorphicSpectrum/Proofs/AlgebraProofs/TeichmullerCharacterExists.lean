@@ -220,7 +220,7 @@ theorem fund_ex_relay : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlg
           exact mul_right_cancel₀ h0 (hx'.trans (one_mul x).symm)
         obtain ⟨i, hi, hix⟩ := hrr.eq_pow_of_pow_eq_one hxn
         exact ⟨some ⟨i, hi⟩, hix⟩
-  let E : Option (Fin n) ≃ S := (Equiv.ofInjective φ hφ).trans (Equiv.setCongr hrange)
+  let E : Option (Fin n) ≃ S := (Equiv.ofInjective φ hφ).trans (by rw [hrange]; exact Equiv.refl _)
   let _instS : Fintype S := Fintype.ofEquiv _ E
   have hcardS : Fintype.card S = Fintype.card F := by
     rw [← Fintype.card_congr E, Fintype.card_option, Fintype.card_fin, hq, hqn]

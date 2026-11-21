@@ -90,7 +90,10 @@ theorem torsion_basis_of_generization (A : Over S) [GrpObj A] (k r : ℕ) (pt : 
         ∃! c : Fin r → ZMod k, Out.linComb (fun i => toB z ≫ pt i) (fun i => (c i).val) = y)
     (K : Type) [Field K] [IsAlgClosed K] (x : Sp K ⟶ S) (y : Over.mk x ⟶ A) (hy : y ^ k = 1) :
     ∃! c : Fin r → ZMod k, Out.linComb (fun i => toB x ≫ pt i) (fun i => (c i).val) = y := by
-  refine torsion_basis_of_dense S A k r pt _ hA hk hu hpt ?_ (fun p hp => hp) K x y hy
+  let Sg : Set S := {p | ∃ (K : Type) (_ : Field K) (_ : IsAlgClosed K) (z : Sp K ⟶ S),
+    p ∈ Set.range z ∧ ∀ y : Over.mk z ⟶ A, y ^ k = 1 →
+      ∃! c : Fin r → ZMod k, Out.linComb (fun i => toB z ≫ pt i) (fun i => (c i).val) = y}
+  refine torsion_basis_of_dense S A k r pt Sg hA hk hu hpt ?_ (fun p hp => hp) K x y hy
   intro p
   obtain ⟨K, _, _, z, hz, H⟩ := h p
   exact (hz (default : PrimeSpectrum K)).mem_closed isClosed_closure

@@ -58,16 +58,16 @@ def FamSmul {k : ℕ} (c : F) (s s' : Fam D F k) : Prop :=
 def FamAdd {k : ℕ} (s s' s'' : Fam D F k) : Prop :=
   ∀ α j, (s''.s α).f j = (s.s α).f j + (s'.s α).f j
 
-
-abbrev TKF : Over (Spec (CommRingCat.of (FractionRing R))) :=
+abbrev TKF (R : Type) [CommRing R] [IsDomain R]
+    (F : Type) [Field F] [Algebra (FractionRing R) F] :
+    Over (Spec (CommRingCat.of (FractionRing R))) :=
   Over.mk (Spec.map (CommRingCat.ofHom (algebraMap (FractionRing R) F)))
 
-variable (P : PolAV (Spec (CommRingCat.of (FractionRing R))))
+abbrev SecA (F : Type) [Field F] [Algebra (FractionRing R) F]
+    (P : PolAV (Spec (CommRingCat.of (FractionRing R)))) (k : ℕ) : Type :=
+  LB.Sec (LPow P.A P.L (k : ℤ) (TKF R F))
 
-
-abbrev SecA (k : ℕ) : Type := LB.Sec (LPow P.A P.L (k : ℤ) (TKF R F))
-
-variable {P}
+variable {P : PolAV (Spec (CommRingCat.of (FractionRing R)))}
 
 structure IsLinBij {k : ℕ} (E : SecA F P k → Fam D F k → Prop) : Prop where
   existsUnique_right : ∀ σ, ∃! s, E σ s

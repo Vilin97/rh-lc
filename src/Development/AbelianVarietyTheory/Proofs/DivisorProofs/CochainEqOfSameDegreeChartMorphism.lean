@@ -20,7 +20,7 @@ variable {I : Type} [Fintype I] {g : ℕ} {Λ : Type} [AddCommGroup Λ] {F : Fam
 theorem cochain_fromTriv_eq (K : Charts F) (h : C1 K.Oc) (l : Λ)
     (H : ∀ (k : K.K) (T : K.Obj) (χ : K.jet k ⟶ T), χ.deg = l → h _ _ (jet0 k ≫ χ) = h _ _ (jet1 k ≫ χ))
     {k : K.K} (T : K.Obj) (hle : K.le l T.k k) (ρ : Hol (K.W k) →+* T.C)
-    (hρ : Close T.J (T.ρ.comp (sh hle)) ρ) :
+    (hρ : Close T.J (T.ρ.comp (K.sh hle)) ρ) :
     ∀ hc : ∀ f, ρ (K.cst k f) = algebraMap (Hol F.V) T.C f,
       h _ _ (fromTriv T hle ρ hc hρ) = h _ _ (ptHom T hle) := by
   induction hρ with
