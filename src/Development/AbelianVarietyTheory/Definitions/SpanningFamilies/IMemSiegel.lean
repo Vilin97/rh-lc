@@ -30,7 +30,9 @@ def haarAt (R : ℕ) (φ : Matrix κ ι K → ℂ) : ℂ :=
     ∑ᶠ q : Matrix κ ι K ⧸ perSub K κ ι R, φ q.out
 
 
-def haar (φ : Matrix κ ι K → ℂ) : ℂ := if h : IsSB φ then haarAt h.choose φ else 0
+def haar (φ : Matrix κ ι K → ℂ) : ℂ := by
+  classical
+  exact if h : IsSB φ then haarAt h.choose φ else 0
 
 def ip (φ ψ : Matrix κ ι K → ℂ) : ℂ := haar fun x => φ x * conj (ψ x)
 

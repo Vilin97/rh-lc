@@ -7,6 +7,7 @@ public import Formalism.DoubleCosetMeasures.Statement
 noncomputable section
 
 open MeasureTheory Matrix Formalism.DoubleCosetMeasures
+open Classical
 open scoped ComplexConjugate
 
 namespace Formalism.FourierDecayAlt.A5

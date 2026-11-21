@@ -206,7 +206,7 @@ theorem ne_zero_of_image {𝔞 : FractionalIdeal (𝓞 K)⁰ K} (h0 : 𝔞 ≠ 0
 theorem absNorm_eq_of_image {𝔞 : FractionalIdeal (𝓞 K)⁰ K} {ω : ℂ} {τ : ℍ} (hω : ω ≠ 0)
     (h : ∀ z, z ∈ σ '' 𝔞 ↔ ∃ m n : ℤ, ω * (m * (τ : ℂ) + n) = z) :
     (absNorm 𝔞 : ℝ) = 2 * ‖ω‖ ^ 2 * τ.im / √d := by
-  obtain ⟨b, e0, e1⟩ := exists_basis_of_image σ hω h
+  obtain ⟨b, e0, e1⟩ := exists_basis_of_image h2 hD σ hω h
   have := absNorm_mul_sqrt h2 hD σ 𝔞 b
   have hd := discr_pos h2 hD
   have hy := τ.im_pos
@@ -228,7 +228,7 @@ theorem hasSum_ideal_of_image (hd : 4 < d) (𝔞 : (FractionalIdeal (𝓞 K)⁰ 
   have hω := ne_zero_of_image σ 𝔞.ne_zero h
   have hd0 := discr_pos h2 hD
   have hy := τ.im_pos
-  obtain ⟨b, e0, e1⟩ := exists_basis_of_image σ hω h
+  obtain ⟨b, e0, e1⟩ := exists_basis_of_image h2 hD σ hω h
   refine hasSum_ideal h2 hD σ hd 𝔞 (by linarith) ?_
   rw [← ((finTwoArrowEquiv ℤ).symm.trans b.equivFun.symm.toEquiv).hasSum_iff,
     ← hasSum_subtype_iff_of_support_subset (s := {p : ℤ × ℤ | p ≠ 0})]

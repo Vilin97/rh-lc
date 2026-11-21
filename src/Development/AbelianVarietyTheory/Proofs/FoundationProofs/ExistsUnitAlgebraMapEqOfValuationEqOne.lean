@@ -122,8 +122,8 @@ theorem exists_unit_algebraMap_eq (hπ : π ≠ 0) {y : A} (hy : IsUnit y) {z : 
   have h' : algebraMap A K (y⁻¹ : Aˣ) = algebraMap S K (z⁻¹ : Sˣ) := by
     refine mul_left_cancel₀ (y.isUnit.map (algebraMap A K)).ne_zero ?_
     rw [← map_mul, Units.mul_inv, map_one, h, ← map_mul, Units.mul_inv, map_one]
-  obtain ⟨r, hr⟩ := exists_algebraMap_eq K hπ h
-  obtain ⟨r', hr'⟩ := exists_algebraMap_eq K hπ h'
+  obtain ⟨r, hr⟩ := exists_algebraMap_eq (A := A) (S := S) (K := K) hπ h
+  obtain ⟨r', hr'⟩ := exists_algebraMap_eq (A := A) (S := S) (K := K) hπ h'
   refine ⟨r, IsUnit.of_mul_eq_one r' (FaithfulSMul.algebraMap_injective R K ?_), hr⟩
   rw [IsScalarTower.algebraMap_apply R A K, map_mul, hr, hr', Units.mul_inv, map_one, map_one]
 

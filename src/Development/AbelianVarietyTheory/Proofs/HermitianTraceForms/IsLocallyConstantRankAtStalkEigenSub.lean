@@ -272,6 +272,7 @@ theorem eigenEquiv_symm_apply [Fintype ι] (v : ∀ i, eigenSub ρ (σ i)) :
   simp [eigenEquiv]
 
 
+include h in
 theorem isInternal_eigenSub [Finite ι] : DirectSum.IsInternal fun i => eigenSub ρ (σ i) := by
   have := Fintype.ofFinite ι
   rw [DirectSum.isInternal_submodule_iff_iSupIndep_and_iSup_eq_top]
@@ -302,7 +303,9 @@ theorem IsEquivariant.eigenMap_surjective {f : N →ₗ[R] N'} (hf : IsEquivaria
   classical
   intro y
   obtain ⟨x, hx⟩ := hs y
-  exact ⟨projTo h ρ i x, Subtype.ext (by simp [hf.proj h, hx, proj_of_mem h y.2])⟩
+  refine ⟨projTo h ρ i x, Subtype.ext ?_⟩
+  change f (EigenSplit.proj h ρ i x) = (y : N')
+  rw [hf.proj h, hx, proj_of_mem h y.2]
 
 theorem IsEquivariant.eigenMap_exact {f : N →ₗ[R] N'} {g : N' →ₗ[R] N''}
     (hf : IsEquivariant ρ ρ' f) (hg : IsEquivariant ρ' ρ'' g) (i : ι)
@@ -313,7 +316,9 @@ theorem IsEquivariant.eigenMap_exact {f : N →ₗ[R] N'} {g : N' →ₗ[R] N''}
   constructor
   · intro hy
     obtain ⟨x, hx⟩ := (he y).1 (congrArg Subtype.val hy)
-    exact ⟨projTo h ρ i x, Subtype.ext (by simp [hf.proj h, hx, proj_of_mem h y.2])⟩
+    refine ⟨projTo h ρ i x, Subtype.ext ?_⟩
+    change f (EigenSplit.proj h ρ i x) = (y : N')
+    rw [hf.proj h, hx, proj_of_mem h y.2]
   · rintro ⟨x, rfl⟩
     exact Subtype.ext ((he _).2 ⟨x, rfl⟩)
 
@@ -389,13 +394,13 @@ theorem isBaseChange_eigenMapAlgebra [Finite ι] (h : IsSplitting σ)
     intro t
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | tmul r x => simp [F, IsBaseChange.equiv_tmul]
+    | tmul r x => simp [F, IsBaseChange.equiv_tmul, eigenMapAlgebra]
     | add s t hs ht => simp [hs, ht]
   have h2 : ∀ t, (F ((projTo h ρ i).baseChange R' t) : M) = proj h' ρ' i (hb.equiv t) := by
     intro t
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | tmul r x => simp [F, IsBaseChange.equiv_tmul, map_proj_algebraMap h hf]
+    | tmul r x => simp [F, IsBaseChange.equiv_tmul, eigenMapAlgebra, map_proj_algebraMap h hf]
     | add s t hs ht => simp [hs, ht]
   have h3 : ∀ t, (projTo h ρ i).baseChange R' ((eigenSub ρ (σ i)).subtype.baseChange R' t) = t := by
     intro t
@@ -420,7 +425,8 @@ noncomputable def baseChangeAction : O →+* Module.End R' (R' ⊗[R] N) :=
 
 theorem mk_equivariant (a : O) (x : N) :
     TensorProduct.mk R R' N 1 (ρ a x) = baseChangeAction R' ρ a (TensorProduct.mk R R' N 1 x) := by
-  simp
+  change 1 ⊗ₜ[R] (ρ a x) = (ρ a).baseChange R' (1 ⊗ₜ[R] x)
+  rw [LinearMap.baseChange_tmul]
 
 noncomputable def eigenBaseChangeEquiv [Finite ι] (h : IsSplitting σ) (i : ι) :
     R' ⊗[R] eigenSub ρ (σ i) ≃ₗ[R']
@@ -499,6 +505,7 @@ theorem exponents_eq_of_isDomain [IsDomain R] {σ : ι → O →+* R} (hσ : Fun
 theorem IsSplitting.exponents_eq [Nontrivial R] {σ : ι → O →+* R} (h : IsSplitting σ)
     (r s : ι → ℕ) (hrs : ∀ a, ∏ i, (X - C (σ i a)) ^ r i = ∏ i, (X - C (σ i a)) ^ s i) :
     r = s := by
+  classical
   obtain ⟨m, hm⟩ := Ideal.exists_maximal R
   refine exponents_eq_of_isDomain (h.map (Ideal.Quotient.mk m)).injective r s fun a => ?_
   have := congrArg (Polynomial.map (Ideal.Quotient.mk m)) (hrs a)
@@ -616,8 +623,8 @@ theorem det_sq_eq_discr_of_isDomain {S : Type*} [CommRing S] [IsDomain S] [CharZ
   have hinj : ∀ i, Function.Injective ((algebraMap S L).comp (σ i)) := by
     intro i
     rw [RingHom.injective_iff_ker_eq_bot]
-    refine Ideal.eq_bot_of_comap_eq_bot (R := ℤ) ?_
-    rw [RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
+    refine Ideal.eq_bot_of_under_eq_bot (R := ℤ) ?_
+    rw [Ideal.under, RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
     exact RingHom.injective_int _
   let φ : ι → E →+* L := fun i => IsFractionRing.lift (hinj i)
   have hφσ : ∀ i (a : 𝓞 E), φ i a = algebraMap S L (σ i a) := fun i a =>

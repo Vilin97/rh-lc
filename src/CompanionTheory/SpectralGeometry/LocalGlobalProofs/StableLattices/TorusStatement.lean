@@ -61,7 +61,7 @@ theorem tor_apply {s : L →+* L} {h : V → V → L} (hH : IsHerm s h) (δ : L)
     (u : Fin l → L) (x : V) :
     tor hH δ e f u x = x + (∑ i, ((u i - 1) * (s δ)⁻¹) • (h (f i) x • e i)) +
       ∑ i, (((s (u i))⁻¹ - 1) * δ⁻¹) • (h (e i) x • f i) := by
-  simp [tor, LinearMap.add_apply, LinearMap.sum_apply]
+  simp [tor, pair, LinearMap.add_apply, LinearMap.sum_apply]
 
 section Frame
 

@@ -21,6 +21,7 @@ theorem card_fibre {K V U : Type} [Field K] [Fintype K] [AddCommGroup V] [Module
   rw [Nat.card_congr e, Module.natCard_eq_pow_finrank (K := K), Nat.card_eq_fintype_card]
 
 
+open scoped Classical in
 theorem card_fibre_compl {K V U : Type} [Field K] [Fintype K] [AddCommGroup V] [Module K V]
     [FiniteDimensional K V] [AddCommGroup U] [Module K U] (φ : V →ₗ[K] U)
     (hφ : Function.Surjective φ) {k : ℕ} (z : Fin k → V) (hz : LinearIndependent K z)

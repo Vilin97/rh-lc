@@ -100,7 +100,7 @@ theorem pairing_le (hδ : IsDelta s δ) (hh : IsHerm s h) {Λ : AddSubgroup V}
 theorem adjoin_integral (hs : IsInv s) (hδ : IsDelta s δ) (hh : IsHerm s h) {Λ : AddSubgroup V}
     (hint : ∀ x ∈ Λ, ‖h x x‖ ≤ 1) {p : L} (hp0 : p ≠ 0) {x : V}
     (hq : ‖h x x‖ ≤ ‖p‖ ^ 2) (hsmall : ∀ y ∈ Λ, ‖h x y‖ ≤ ‖p‖ * ‖δ‖) :
-    ∀ z ∈ adjoin L Λ (p⁻¹ • x), ‖h z z‖ ≤ 1 := by
+    ∀ z ∈ adjoin (L := L) Λ (p⁻¹ • x), ‖h z z‖ ≤ 1 := by
   rintro _ ⟨l, hl, a, ha, rfl⟩
   have hpn : 0 < ‖p‖ := norm_pos_iff.mpr hp0
   rw [herm_add_add hh]
@@ -156,8 +156,8 @@ theorem pairing_of_sandwich : StSandwich → StPairing := by
       have h3 := hunif _ h2
       rw [norm_div, div_le_iff₀ hδn] at h3
       exact h3
-    have hle : Λ ≤ adjoin L Λ (p⁻¹ • x) := fun l hl => ⟨l, hl, 0, by simp, by simp⟩
-    have hL' : IsLat L (adjoin L Λ (p⁻¹ • x)) := by
+    have hle : Λ ≤ adjoin (L := L) Λ (p⁻¹ • x) := fun l hl => ⟨l, hl, 0, by simp, by simp⟩
+    have hL' : IsLat L (adjoin (L := L) Λ (p⁻¹ • x)) := by
       refine hS L V Λ _ p hL hp0 ?_ ?_ ?_
       · rintro _ ⟨l, hl, a, ha, rfl⟩
         have e : p • (l + a • p⁻¹ • x) = p • l + a • x := by

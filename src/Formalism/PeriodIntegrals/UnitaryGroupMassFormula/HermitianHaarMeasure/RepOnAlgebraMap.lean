@@ -207,7 +207,9 @@ instance instStarModule : StarModule ℂ (A hI) where
     rw [ip_smul_left, ip_smul_right, star_star, star_spec]
 
 
-def mk' (f : β → ℂ) : X hI := if hf : f ∈ 𝓕 then Submodule.Quotient.mk ⟨f, hf⟩ else 0
+def mk' (f : β → ℂ) : X hI := by
+  classical
+  exact if hf : f ∈ 𝓕 then Submodule.Quotient.mk ⟨f, hf⟩ else 0
 
 theorem mk'_of {f : β → ℂ} (hf : f ∈ 𝓕) : mk' hI f = Submodule.Quotient.mk ⟨f, hf⟩ := by
   rw [mk', dite_eq_left hf]
@@ -421,8 +423,11 @@ theorem repOn_algebraMap (c : ℂ) : RepOn hI (algebraMap ℂ (A hI) c) (fun f =
   exact repOn_smul hI c (repOn_one hI)
 
 theorem repOn_intCast (n : ℤ) : RepOn hI ((n : A hI)) (fun f => (n : ℂ) • f) := by
-  rw [← map_intCast (algebraMap ℂ (A hI)) n]
-  exact repOn_algebraMap hI (n : ℂ)
+  cases n with
+  | ofNat n =>
+      convert repOn_algebraMap hI (n : ℂ) using 1 <;> simp only [Int.cast_ofNat]
+  | negSucc n =>
+      convert repOn_algebraMap hI (-(n + 1 : ℂ)) using 1 <;> simp only [Int.cast_negSucc, Int.cast_add, Int.cast_one, Int.cast_natCast]
 
 theorem repOn_sum {γ : Type*} (s : Finset γ) {T : γ → A hI} {Φ : γ → (β → ℂ) → β → ℂ}
     (h : ∀ c ∈ s, RepOn hI (T c) (Φ c)) : RepOn hI (∑ c ∈ s, T c) (fun f => ∑ c ∈ s, Φ c f) := by

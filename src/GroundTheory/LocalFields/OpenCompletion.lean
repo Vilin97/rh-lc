@@ -19,7 +19,7 @@ def quotientMapOfLE {H H' : Subgroup G} (h : H ≤ H') : G ⧸ H →* G ⧸ H' :
 
 
 def openCompletion : Subgroup (∀ H : openFiniteIndex G, G ⧸ (H : Subgroup G)) where
-  carrier := {a | ∀ (H H' : openFiniteIndex G) (h : (H : Subgroup G) ≤ H'), quotientMapOfLE h (a H) = a H'}
+  carrier := {a | ∀ (H H' : openFiniteIndex G) (h : (H : Subgroup G) ≤ H'), quotientMapOfLE G h (a H) = a H'}
   one_mem' := fun H H' h => by simp
   mul_mem' := fun ha hb H H' h => by simp [map_mul, ha H H' h, hb H H' h]
   inv_mem' := fun ha H H' h => by simp [map_inv, ha H H' h]

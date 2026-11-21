@@ -34,7 +34,7 @@ variable {n : Type} [Fintype n] [DecidableEq n]
 
 theorem group_law_jacobian_eq (J : Matrix n n T) (hJ : Formalism.UG.cT s J = J) : J.map (t2 θ) = (J.map (t1 θ))ᵀ := by
   ext i j
-  have hij := congrFun (congrFun hJ i) j
+  have hij := congrArg (fun M : Matrix n n T => M i j) hJ
   simp only [Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply] at hij
   simp only [Matrix.map_apply, Matrix.transpose_apply]
   rw [← hij, secondSplit_conj hs]

@@ -13,6 +13,12 @@ noncomputable section
 
 namespace GlobalTheory
 
+local notation "e[" t "]" => Complex.exp (2 * (π : ℂ) * Complex.I * ((t : ℝ) : ℂ))
+
+private theorem norm_latticeFourier_phase (t : ℝ) : ‖e[t]‖ = 1 := by
+  rw [Complex.norm_exp]
+  simp
+
 section Summable
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
@@ -114,10 +120,11 @@ theorem latticeFourierCoeff_tsum_translate [CompleteSpace V] {f : E → V} (hc :
   have : MeasurableVAdd L E := (inferInstance : MeasurableVAdd L.toAddSubgroup E)
   have : VAddInvariantMeasure L E volume :=
     (inferInstance : VAddInvariantMeasure L.toAddSubgroup E volume)
+  have hcontinuous : Continuous (fun v : E ↦ e[-⟪y, v⟫] • f v) := by fun_prop
   have hint : Integrable fun v : E ↦ e[-⟪y, v⟫] • f v :=
     (integrable_of_lattice_translate_dominated L hc hdom).norm.mono'
-      (continuous_cexp_neg_inner_smul hc y).aestronglyMeasurable
-      (.of_forall fun v ↦ by rw [norm_smul, norm_cexp_two_pi_I, one_mul])
+      hcontinuous.aestronglyMeasurable
+      (.of_forall fun v ↦ by rw [norm_smul, norm_latticeFourier_phase, one_mul])
   have hF : 𝓕 f y = ∫ v, e[-⟪y, v⟫] • f v := by
     rw [Real.fourier_eq']
     refine integral_congr_ae (.of_forall fun v ↦ ?_)
@@ -138,7 +145,7 @@ theorem latticeFourierCoeff_tsum_translate [CompleteSpace V] {f : E → V} (hc :
     integrableOn_latticeCell_of_continuous L (by fun_prop)) ?_).tsum_eq.symm
   refine .of_norm_bounded (hg.mul_right (volume.real (latticeCell L))) fun x ↦ ?_
   refine norm_setIntegral_le_of_norm_le_const (volume_latticeCell_lt_top L) fun u hu ↦ ?_
-  rw [norm_norm, norm_smul, norm_cexp_two_pi_I, one_mul]
+  rw [norm_norm, norm_smul, norm_latticeFourier_phase, one_mul]
   exact h x u (hR u hu)
 
 theorem hasSum_poisson_lattice [CompleteSpace V] {f : E → V} (hc : Continuous f)
@@ -222,9 +229,14 @@ theorem poisson_cexp_gaussian_lattice {b : ℂ} (hb : 0 < b.re) (w u : E) :
       (ZLattice.covolume L : ℂ)⁻¹ * b ^ (-(finrank ℝ E / 2 : ℂ)) *
         ∑' y : dualLattice L, Complex.exp (-π * ‖(y : E) - w‖ ^ 2 / b) *
           Complex.exp (2 * π * Complex.I * ⟪(y : E), u⟫) := by
+  letI : IsZLattice ℝ (dualLattice L) := by
+    classical
+    constructor
+    rw [dualLattice_eq_span L (Free.chooseBasis ℤ L)]
+    exact ZSpan.span_top _
   have hs := summable_norm_lattice_cexp_gaussian_div (dualLattice L) hb w
   refine ⟨summable_norm_lattice_cexp_gaussian L hb w u, ?_, ?_⟩
-  · simpa only [norm_mul, norm_cexp_two_pi_I, mul_one] using hs
+  · simpa only [norm_mul, norm_latticeFourier_phase, mul_one] using hs
   have ha : 0 < π * b.re := mul_pos Real.pi_pos hb
   refine (tsum_poisson_lattice L
     (f := fun v : E ↦ Complex.exp (-π * b * ‖v‖ ^ 2 + 2 * π * Complex.I * ⟪w, v⟫)) (by fun_prop)

@@ -25,6 +25,8 @@ variable {L : Type*} [NormedAddCommGroup L] [InnerProductSpace ℂ L] [CompleteS
 
 @[coe] noncomputable def op (π : UnitaryRep G H) (g : G) : H →L[ℂ] H := (π.toHom g : H →L[ℂ] H)
 
+noncomputable instance : CoeFun (UnitaryRep G H) (fun _ => G → H →L[ℂ] H) := ⟨op⟩
+
 variable (π : UnitaryRep G H)
 
 lemma continuous_orbit (v : H) : Continuous fun g => π g v := π.continuous_orbit' v
@@ -123,6 +125,7 @@ lemma isInvariant_range {T : H →L[ℂ] K} (hT : T ∈ π.intertwiners σ) :
   exact ⟨π g v, hT g v⟩
 
 
+variable (π σ) in
 structure Equiv where
 
   toLinearIsometryEquiv : H ≃ₗᵢ[ℂ] K
@@ -130,6 +133,7 @@ structure Equiv where
   map_apply' : ∀ (g : G) (v : H), toLinearIsometryEquiv (π g v) = σ g (toLinearIsometryEquiv v)
 
 
+variable (π σ) in
 def IsEquivalent : Prop := Nonempty (π.Equiv σ)
 
 namespace Equiv

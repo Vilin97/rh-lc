@@ -52,7 +52,7 @@ theorem exists_isRegular_quotSMulTop {R : Type u_1} [CommRing R] [IsNoetherianRi
   have hltQ : 𝔪 • (⊤ : Submodule R (QuotSMulTop y M)) < ⊤ :=
     maximalIdeal_smul_top_lt_top (QuotSMulTop y M)
 
-  have hM := (ModuleCat.exists_isRegular_tfae 𝔪 xs.length (ModuleCat.of R M) hltM).out 3 1
+  have hM := (ModuleCat.exists_isRegular_tfae 𝔪 xs.length (ModuleCat.of R M) hltM).out 4 2
   have hExtM := hM.mp ⟨xs, rfl, hmem, hxs⟩
 
   have hS := IsSMulRegular.smulShortComplex_shortExact (M := ModuleCat.of R M) hreg
@@ -73,7 +73,7 @@ theorem exists_isRegular_quotSMulTop {R : Type u_1} [CommRing R] [IsNoetherianRi
     exact ⟨fun a b => by rw [key a, key b]⟩
 
   have hQ := (ModuleCat.exists_isRegular_tfae 𝔪 n
-    (ModuleCat.of R (QuotSMulTop y M)) hltQ).out 1 3
+    (ModuleCat.of R (QuotSMulTop y M)) hltQ).out 2 4
   obtain ⟨zs, hlen, -, hzs⟩ := hQ.mp hExtQ
   exact ⟨zs, hlen, hzs⟩
 

@@ -339,37 +339,41 @@ variable {R : Type*} [CommRing R]
 
 theorem exists_sup_maximalIdeal_pow_stable [IsNoetherianRing R] [IsLocalRing R]
     (J : ℕ → Ideal R) (hJ : Antitone J) (k : ℕ) :
-    ∃ m, ∀ m' ≥ m, J m' ⊔ maximalIdeal R ^ k = J m ⊔ maximalIdeal R ^ k := by
-  have hdim : Ring.KrullDimLE 0 (R ⧸ maximalIdeal R ^ k) := by
+    ∃ m, ∀ m' ≥ m, J m' ⊔ IsLocalRing.maximalIdeal R ^ k =
+      J m ⊔ IsLocalRing.maximalIdeal R ^ k := by
+  have hdim : Ring.KrullDimLE 0 (R ⧸ IsLocalRing.maximalIdeal R ^ k) := by
     rw [Ring.krullDimLE_zero_iff]
     intro Q hQ
-    have h1 : maximalIdeal R ^ k ≤ Q.comap (Ideal.Quotient.mk (maximalIdeal R ^ k)) :=
+    have h1 : IsLocalRing.maximalIdeal R ^ k ≤
+        Q.comap (Ideal.Quotient.mk (IsLocalRing.maximalIdeal R ^ k)) :=
       fun x hx ↦ by simp [Ideal.Quotient.eq_zero_iff_mem.2 hx]
-    have h2 : maximalIdeal R = Q.comap (Ideal.Quotient.mk (maximalIdeal R ^ k)) :=
-      (maximalIdeal.isMaximal R).eq_of_le (Ideal.IsPrime.ne_top inferInstance)
+    have h2 : IsLocalRing.maximalIdeal R =
+        Q.comap (Ideal.Quotient.mk (IsLocalRing.maximalIdeal R ^ k)) :=
+      (IsLocalRing.maximalIdeal.isMaximal R).eq_of_le (Ideal.IsPrime.ne_top inferInstance)
         (Ideal.IsPrime.le_of_pow_le h1)
-    have h3 : (Q.comap (Ideal.Quotient.mk (maximalIdeal R ^ k))).IsMaximal :=
-      h2 ▸ maximalIdeal.isMaximal R
+    have h3 : (Q.comap (Ideal.Quotient.mk (IsLocalRing.maximalIdeal R ^ k))).IsMaximal :=
+      h2 ▸ IsLocalRing.maximalIdeal.isMaximal R
     have h4 := Ideal.IsMaximal.map_of_surjective_of_ker_le
-      (f := Ideal.Quotient.mk (maximalIdeal R ^ k)) Ideal.Quotient.mk_surjective
-      (m := Q.comap (Ideal.Quotient.mk (maximalIdeal R ^ k))) (by simpa using h1)
+      (f := Ideal.Quotient.mk (IsLocalRing.maximalIdeal R ^ k)) Ideal.Quotient.mk_surjective
+      (m := Q.comap (Ideal.Quotient.mk (IsLocalRing.maximalIdeal R ^ k))) (by simpa using h1)
     rwa [Ideal.map_comap_of_surjective _ Ideal.Quotient.mk_surjective] at h4
-  have hart : IsArtinianRing (R ⧸ maximalIdeal R ^ k) :=
+  have hart : IsArtinianRing (R ⧸ IsLocalRing.maximalIdeal R ^ k) :=
     IsNoetherianRing.isArtinianRing_of_krullDimLE_zero
   obtain ⟨m, hm⟩ := monotone_stabilizes_iff_artinian.2 hart
-    ⟨fun n ↦ OrderDual.toDual ((J n).map (Ideal.Quotient.mk (maximalIdeal R ^ k))),
+    ⟨fun n ↦ OrderDual.toDual ((J n).map (Ideal.Quotient.mk (IsLocalRing.maximalIdeal R ^ k))),
       fun a b hab ↦ Ideal.map_mono (hJ hab)⟩
   refine ⟨m, fun m' hm' ↦ ?_⟩
-  have h : (J m).map (Ideal.Quotient.mk (maximalIdeal R ^ k)) =
-      (J m').map (Ideal.Quotient.mk (maximalIdeal R ^ k)) := hm m' hm'
-  have := congrArg (Ideal.comap (Ideal.Quotient.mk (maximalIdeal R ^ k))) h
+  have h : (J m).map (Ideal.Quotient.mk (IsLocalRing.maximalIdeal R ^ k)) =
+      (J m').map (Ideal.Quotient.mk (IsLocalRing.maximalIdeal R ^ k)) := hm m' hm'
+  have := congrArg (Ideal.comap (Ideal.Quotient.mk (IsLocalRing.maximalIdeal R ^ k))) h
   simpa [Ideal.comap_map_quotientMk, sup_comm] using this.symm
 
 
 theorem exists_le_maximalIdeal_pow_of_iInf_eq_bot [IsNoetherianRing R] [IsLocalRing R]
-    [IsPrecomplete (maximalIdeal R) R] (J : ℕ → Ideal R) (hJ : Antitone J) (h0 : ⨅ m, J m = ⊥)
-    (k : ℕ) : ∃ m, J m ≤ maximalIdeal R ^ k := by
-  set 𝔪 := maximalIdeal R
+    [IsPrecomplete (IsLocalRing.maximalIdeal R) R] (J : ℕ → Ideal R)
+    (hJ : Antitone J) (h0 : ⨅ m, J m = ⊥)
+    (k : ℕ) : ∃ m, J m ≤ IsLocalRing.maximalIdeal R ^ k := by
+  set 𝔪 := IsLocalRing.maximalIdeal R
   choose s hs using exists_sup_maximalIdeal_pow_stable J hJ
   let B : ℕ → Ideal R := fun k ↦ J (s k) ⊔ 𝔪 ^ k
   have hB : ∀ k m, B k ≤ J m ⊔ 𝔪 ^ k := fun k m ↦ by
@@ -402,7 +406,7 @@ theorem exists_le_maximalIdeal_pow_of_iInf_eq_bot [IsNoetherianRing R] [IsLocalR
     intro m
     rw [← Ideal.Quotient.eq_zero_iff_mem, ← Submodule.mem_bot R,
       ← Ideal.iInf_pow_smul_eq_bot_of_isLocalRing (M := R ⧸ J m) 𝔪
-        (maximalIdeal.isMaximal R).ne_top, Submodule.mem_iInf]
+        (IsLocalRing.maximalIdeal.isMaximal R).ne_top, Submodule.mem_iInf]
     intro n
     obtain ⟨y, hy, z, hz, e⟩ := Submodule.mem_sup.1 (hB (k + n) m (hf n))
     have hz' : z - (f n - L) ∈ 𝔪 ^ n :=

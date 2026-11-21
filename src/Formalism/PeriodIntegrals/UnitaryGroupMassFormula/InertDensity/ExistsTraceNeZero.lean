@@ -23,17 +23,20 @@ def conj : L →+* L := (FiniteField.frobeniusAlgHom K L).toRingHom
 omit [Fintype L] in
 theorem frob_add (x y : L) :
     (x + y) ^ Fintype.card K = x ^ Fintype.card K + y ^ Fintype.card K :=
-  map_add (conj K) x y
+  by simpa only [FiniteField.coe_frobeniusAlgHom] using
+    map_add (FiniteField.frobeniusAlgHom K L) x y
 
 omit [Fintype L] in
 theorem frob_sub (x y : L) :
     (x - y) ^ Fintype.card K = x ^ Fintype.card K - y ^ Fintype.card K :=
-  map_sub (conj K) x y
+  by simpa only [FiniteField.coe_frobeniusAlgHom] using
+    map_sub (FiniteField.frobeniusAlgHom K L) x y
 
 omit [Fintype L] in
 theorem frob_sum {ι : Type} (s : Finset ι) (f : ι → L) :
     (∑ i ∈ s, f i) ^ Fintype.card K = ∑ i ∈ s, f i ^ Fintype.card K :=
-  map_sum (conj K) f s
+  by simpa only [FiniteField.coe_frobeniusAlgHom] using
+    map_sum (FiniteField.frobeniusAlgHom K L) f s
 
 omit [Fintype L] in
 theorem frob_algebraMap (a : K) :
@@ -47,7 +50,7 @@ theorem frob_frob (h2 : Module.finrank K L = 2) (x : L) :
 theorem card_fixed [DecidableEq L] : #{x : L | x ^ Fintype.card K = x} = Fintype.card K := by
   have hq := one_lt_q (K := K)
   apply le_antisymm
-  · have hne := FiniteField.X_pow_card_sub_X_ne_zero L hq
+  · have hne := Polynomial.X_pow_sub_X_ne_zero (R := L) hq
     calc #{x : L | x ^ Fintype.card K = x}
         ≤ ((X ^ Fintype.card K - X : L[X]).roots.toFinset).card := by
           apply card_le_card

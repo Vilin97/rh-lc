@@ -5,7 +5,7 @@ public import Formalism.CyclotomicNorms.StatementTW
 
 @[expose] public section
 
-open Finset Polynomial Formalism.CyclotomicNorms Formalism.ResultantValuation
+open Finset Polynomial Formalism.CyclotomicNorms
 
 noncomputable section
 

@@ -9,6 +9,7 @@ open Matrix
 namespace GlobalTheory
 
 
+open scoped Matrix.Norms.L2Operator in
 theorem unitary_submonoid_exists_skewAdjoint_log_polynomial (n : ℕ) (k : Matrix (Fin n) (Fin n) ℂ)
     (hk : k ∈ unitary (Matrix (Fin n) (Fin n) ℂ)) :
     ∃ (X : Matrix (Fin n) (Fin n) ℂ) (p : Polynomial ℂ),

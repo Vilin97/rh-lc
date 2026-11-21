@@ -139,6 +139,7 @@ def rayUnits (m₀ : Ideal (𝓞 K)) (mInf : Set (InfinitePlace K)) : Set (Idele
         Valued.v (algebraMap K (v.adicCompletion K) (x : K))}
 
 
+open scoped Classical in
 def finiteSingle (v : HeightOneSpectrum (𝓞 K)) :
     v.adicCompletion K →* FiniteAdeleRing (𝓞 K) K where
   toFun x := RestrictedProduct.mulSingle

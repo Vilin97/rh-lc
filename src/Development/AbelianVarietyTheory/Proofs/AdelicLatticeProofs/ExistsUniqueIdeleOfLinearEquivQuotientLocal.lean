@@ -627,6 +627,7 @@ theorem exists_adele_of_linearMap {I J : FractionalIdeal R⁰ K} (hI : I ≠ 0) 
 theorem eq_zero_of_forall_mul_mem {J : FractionalIdeal R⁰ K} (hJ : J ≠ 0) {t : 𝔸ᶠ[R, K]}
     (h : ∀ x : K, t * algebraMap K 𝔸ᶠ[R, K] x ∈ adelicIdeal J) : t = 0 := by
   ext1 v
+  change t v = 0
   by_contra hv
   have hv' : Valued.v (t v) ≠ 0 := by simpa using hv
   obtain ⟨x, hx⟩ := v.valuation_surjective K

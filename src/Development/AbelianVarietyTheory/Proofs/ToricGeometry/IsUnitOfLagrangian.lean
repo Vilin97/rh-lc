@@ -295,6 +295,7 @@ theorem _root_.GlobalTheory.SiegelNormalForm.exists_normal_form : (∀ (g : ℕ)
       simp only [mulVec, dotProduct, map_apply, Pi.single_apply]
       have h' : ((∑ i, Y k i * (τ i j).im : ℝ) : ℂ) = ((if k = j then 1 else 0 : ℝ) : ℂ) := by
         rw [h]
+        simp [Matrix.one_apply]
       push_cast at h'
       rw [h']
       split_ifs <;> simp

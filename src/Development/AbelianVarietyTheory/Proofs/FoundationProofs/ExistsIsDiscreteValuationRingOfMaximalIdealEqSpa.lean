@@ -27,7 +27,9 @@ theorem isUnit_of_isUnit_map_of_henselian (I : Ideal B) [HenselianRing B I] (π 
     (hπ : Function.Surjective π) (hI : ∀ b, b ∈ I ↔ π b = 0) {b : B} (hb : IsUnit (π b)) :
     IsUnit b :=
   isUnit_of_isUnit_map_of_ker_le_jacobson π hπ
-    (fun x hx => HenselianRing.jac (I := I) ((hI x).mpr hx)) hb
+    (by
+      rw [Ideal.jacobson_bot]
+      exact fun x hx => HenselianRing.jac (I := I) ((hI x).mpr hx)) hb
 
 theorem isLocalRing_of_surjective_of_henselian [IsLocalRing B] (I : Ideal B) [HenselianRing B I]
     (π : B →+* C) (hπ : Function.Surjective π) (hI : ∀ b, b ∈ I ↔ π b = 0) : IsLocalRing C := by
@@ -115,7 +117,7 @@ theorem henselianLocalRing_of_le_radical [IsLocalRing B] (I : Ideal B) [Henselia
       (Ideal.mem_of_dvd _ hd (Ideal.pow_mem_of_pow_mem _ hn Nat.lt_two_pow_self.le)) (hu.map _)
     refine ⟨b, hb, ?_⟩
     have hle : I ≤ maximalIdeal B :=
-      (HenselianRing.jac (I := I)).trans (jacobson_eq_maximalIdeal ⊥ bot_ne_top).le
+      (HenselianRing.jac (I := I)).trans (ringJacobson_eq_maximalIdeal B).le
     simpa using add_mem (hle hba) ha
 
 end Lift
@@ -173,7 +175,8 @@ theorem nonempty_algHom_of_smooth_of_isSepClosed [IsSepClosed K] [Algebra.Smooth
     refine Ideal.mul_mem_right _ _ ?_
     change algebraMap P S (algebraMap R P _) ∈ p'.asIdeal
     rw [← IsScalarTower.algebraMap_apply, ← Ideal.mem_comap, hp', RingHom.mem_ker,
-      ← MvPolynomial.coeff_map, h₀, MvPolynomial.coeff_zero]
+      ← MvPolynomial.coeff_map, h₀]
+    rfl
   letI := (MvPolynomial.aeval (R := R) b).toAlgebra
   have : IsScalarTower R P K :=
     .of_algebraMap_eq fun r => ((MvPolynomial.aeval (R := R) b).commutes r).symm
@@ -287,7 +290,7 @@ theorem isUnit_adjoinRoot_mk_of_aeval_ne_zero {θ : K} (hθ : IsIntegral (Residu
   by_contra hn
   obtain ⟨M, hM, hgM⟩ := exists_max_ideal_of_mem_nonunits hn
   have hM' : M.comap (algebraMap B (AdjoinRoot μ)) = maximalIdeal B :=
-    eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal M)
+    eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := B) M)
   have hco : IsCoprime (minpoly (ResidueField B) θ) (g.map (residue B)) := by
     rw [(minpoly.irreducible hθ).coprime_iff_not_dvd, minpoly.dvd_iff]
     rwa [← aeval_map_algebraMap (ResidueField B)] at hg

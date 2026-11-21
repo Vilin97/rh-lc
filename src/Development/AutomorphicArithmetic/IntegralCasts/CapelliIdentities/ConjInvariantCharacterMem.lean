@@ -1557,8 +1557,7 @@ theorem UpperTheory.Reformulated.B.Yzd4.blockM_mul_alt :
       @UpperTheory.Reformulated.B.Yzd4.d18 F E inst inst_1 inst_2 R inst_3 inst_4 σ M J inst_5 s →
         @UpperTheory.Reformulated.B.Yzd4.d18 F E inst inst_1 inst_2 R inst_3 inst_4 σ M J inst_5 t →
           @UpperTheory.Reformulated.B.Yzd4.d18 F E inst inst_1 inst_2 R inst_3 inst_4 σ M J inst_5
-            (@Inter.inter (Set (@UpperTheory.Reformulated.B.Yzd4.HA F E inst inst_1 inst_2 R inst_3 inst_4 σ M J))
-              (@Set.instInter (@UpperTheory.Reformulated.B.Yzd4.HA F E inst inst_1 inst_2 R inst_3 inst_4 σ M J)) s t) := by
+            (s ∩ t) := by
   intro F E _ _ _ R _ _ σ M J _ s t hs ht
   letI : TopologicalSpace (TensorProduct F R E) := UpperTheory.Reformulated.B.Yzd4.topTens R
   obtain ⟨a, ha, rfl⟩ := hs

@@ -66,7 +66,9 @@ def basePt (c : ℕ) (x₀ : Matrix n n' k) : Matrix (n ⊕ Fin c) (n' ⊕ Fin (
 
 def affPt (p : ℕ) (x₀ : Matrix n n' k) (e : {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free p rs} → k) :
     Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k :=
-  basePt c x₀ + Matrix.of fun r s => if h : Free p (r, s) then e ⟨(r, s), h⟩ else 0
+  by
+    classical
+    exact basePt c x₀ + Matrix.of fun r s => if h : Free p (r, s) then e ⟨(r, s), h⟩ else 0
 
 def ch (x : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k) : k := ∑ i : Fin c, x (Sum.inr i) (Sum.inr i.succ)
 
@@ -92,7 +94,9 @@ def exDown (ν : Measure k) (p : ℕ) (σ : Representation ℂ (GL (n ⊕ Fin c)
 
 def opE (ψ : AddChar k Circle) (ν : Measure k) (p : ℕ) (Φ : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k → ℂ)
     (x₀ : Matrix n n' k) : ℂ :=
-  ∫ e, Φ (affPt p x₀ e) * (ψ (-ch (affPt p x₀ e)) : ℂ) ∂(Measure.pi fun _ => ν)
+  by
+    classical
+    exact ∫ e, Φ (affPt p x₀ e) * (ψ (-ch (affPt p x₀ e)) : ℂ) ∂(Measure.pi fun _ => ν)
 
 
 def volN (ν : Measure k) (n : Type*) [Fintype n] [DecidableEq n] (c p : ℕ) : Measure (N k n c p) :=

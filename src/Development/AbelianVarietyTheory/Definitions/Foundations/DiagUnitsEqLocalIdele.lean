@@ -6,7 +6,7 @@ public import Development.AbelianVarietyTheory.Definitions.Foundations.ValuedAlg
 @[expose] public section
 
 noncomputable section
-open NumberField IsDedekindDomain
+open NumberField IsDedekindDomain GlobalTheory.Mem.Chr
 namespace GlobalTheory.Mem.Chr.Model
 variable (L : Type) [Field L] [NumberField L]
 

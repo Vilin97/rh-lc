@@ -15,8 +15,9 @@ section Defs
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
 
 
-def covol (L : Submodule ℤ E) : ℝ :=
-  if h : DiscreteTopology L then
+def covol (L : Submodule ℤ E) : ℝ := by
+  classical
+  exact if h : DiscreteTopology L then
     haveI := h
     Real.sqrt (Matrix.gram ℝ (fun i => ((Module.finBasis ℤ L i : L) : E))).det
   else 0

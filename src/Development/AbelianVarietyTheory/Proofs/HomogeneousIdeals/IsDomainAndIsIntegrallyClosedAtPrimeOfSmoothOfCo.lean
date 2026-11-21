@@ -4,7 +4,7 @@ public import Mathlib
 
 @[expose] public section
 
-open TensorProduct
+open TensorProduct AlgebraicGeometry
 
 universe u
 

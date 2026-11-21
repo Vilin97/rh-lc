@@ -11,7 +11,9 @@ namespace GlobalTheory.PlaceModel
 variable {G : Type} [AddCommGroup G]
 
 
-def ind (L : AddSubgroup G) (t : G) : ℂ := if t ∈ L then 1 else 0
+def ind (L : AddSubgroup G) (t : G) : ℂ := by
+  classical
+  exact if t ∈ L then 1 else 0
 
 def wave (χ : G → G → ℂ) (L : AddSubgroup G) (x y : G) : G → ℂ := fun t => χ (t + x) y * ind L (t + x)
 
@@ -339,7 +341,8 @@ theorem mem_of_finite_cosets {K : AddSubgroup G} (hK : ind K ∈ waveSpan χ X Y
       have htr := trans_mem hK (X.neg_mem hwX)
       have hsum := add_mem hΨ (Submodule.smul_mem _ (Φ (s + u0)) htr)
       convert hsum using 1
-      ring
+      funext t
+      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, sub_add_cancel]
     · push Not at hex
       refine ih Φ hΦX hinv fun t ht => ?_
       obtain ⟨s', hs', u, hu, rfl⟩ := hP t ht

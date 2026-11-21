@@ -78,7 +78,10 @@ lemma diagonalSuccIsoFree_inv_single (m : ℕ) (f : Fin m → G) (g : G) (r : k)
   have key₂ := Representation.LinearizeMonoidal.μ_apply_single_single (k := k)
     (X := Action.leftRegular G) (Y := Action.trivial G (Fin m → G)) g f 1 r
   exact ((congrArg (fun z => (Representation.linearizeMap
-    (Action.diagonalSuccIsoTensorTrivial G m).inv) z) key₂).trans key₁).trans (by simp)
+    (Action.diagonalSuccIsoTensorTrivial G m).inv) z) key₂).trans key₁).trans (by
+      rw [one_mul]
+      exact congrArg (fun h => MonoidAlgebra.single h r)
+        (Action.diagonalSuccIsoTensorTrivial_inv_hom_apply g f))
 
 lemma barResolution_π_f_zero_single (v : Fin 0 → G) (g : G) (r : k) :
     ((barResolution k G).π.f 0).hom (Finsupp.single v (MonoidAlgebra.single g r)) = r := by

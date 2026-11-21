@@ -143,9 +143,6 @@ variable [MeasurableConstSMul G X] [SMulInvariantMeasure G X μ] [Countable G]
 
 variable {K : Subgroup G} {H' : Type*} [Group H'] [MulAction H' X] {φ' : K →* H'}
 
-omit [MeasurableSpace X] [MulAction G X] [MulAction H X] [MeasurableConstSMul G X]
-  [SMulInvariantMeasure G X μ] [Countable G] in
-
 end Kernel
 
 section Image

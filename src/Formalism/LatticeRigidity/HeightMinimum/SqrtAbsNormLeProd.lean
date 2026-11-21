@@ -201,7 +201,7 @@ theorem card_box_le (b : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) (hb : b �
       rw [e1, hsX, hXdef]
       field_simp
     have hlt : ∏ w : InfinitePlace E, w (l - l') ^ 2 < ∏ w : InfinitePlace E, (2 * (ρ w / s) ^ 2) :=
-      Finset.prod_lt_prod_of_nonempty
+      Finset.prod_lt_prod_of_nonempty₀
         (fun w _ => by have := (NumberField.InfinitePlace.pos_iff (w := w)).mpr hsub0; positivity)
         (fun w _ => hsmall w) Finset.univ_nonempty
     rw [hprod] at hlt

@@ -126,6 +126,7 @@ theorem addChar_sum {ι A : Type*} [AddCommMonoid A] (χ : AddChar A ℂ) (s : F
 end ChLiftW
 
 
+open Classical in
 def sgl {F : Type} [Field F] (v : InfinitePlace F) (t : v.Completion) : InfiniteAdeleRing F :=
   Pi.single v t
 

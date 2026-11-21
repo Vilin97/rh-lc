@@ -156,7 +156,9 @@ theorem ne_bot_of_cop {M : ℕ} (hM : 2 ≤ M) {I : Ideal (𝓞 K)} (h : IsCopri
 
 
 def rcl (M : ℕ) (I : Ideal (𝓞 K)) : (rayCon K M).Quotient :=
-  if h : I ∈ primeTo K M then (rayCon K M).mk' ⟨I, h⟩ else 1
+  by
+    classical
+    exact if h : I ∈ primeTo K M then (rayCon K M).mk' ⟨I, h⟩ else 1
 
 theorem rcl_of {M : ℕ} {I : Ideal (𝓞 K)} (h : I ∈ primeTo K M) : rcl M I = (rayCon K M).mk' ⟨I, h⟩ := by
   rw [rcl, dite_eq_left h]

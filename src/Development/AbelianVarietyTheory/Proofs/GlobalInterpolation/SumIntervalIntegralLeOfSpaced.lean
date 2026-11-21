@@ -106,7 +106,7 @@ theorem sum_intervalIntegral_le_of_spaced (g : ℝ → ℝ) (hg : Continuous g) 
   rw [← integral_biUnion_finset S (s := fun x => Set.Ioc (p x) (p x + δ))
     (fun _ _ => measurableSet_Ioc) ?_ (fun x _ => hi _ _)]
   · apply setIntegral_mono_set (hi _ _) (Filter.Eventually.of_forall h0)
-    apply LE.le.eventuallyLE
+    apply Filter.Eventually.of_forall
     intro t ht
     simp only [Set.mem_iUnion] at ht
     obtain ⟨x, hx, ht⟩ := ht

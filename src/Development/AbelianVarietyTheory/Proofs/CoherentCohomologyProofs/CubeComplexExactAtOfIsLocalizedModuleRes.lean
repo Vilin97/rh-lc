@@ -18,7 +18,7 @@ variable {ι : Type} [LinearOrder ι] {R : Type u} [CommRing R]
 namespace Cube
 
 
-theorem exists_smul_eq_zero_of_forall [Finite ι] (A : Cube.{v} ι R) (S : Submonoid R) {p : ℕ}
+theorem exists_smul_eq_zero_of_forall [Finite ι] (A : Cube.{max u v} ι R) (S : Submonoid R) {p : ℕ}
     (x : Term A p) (h : ∀ s, ∃ c ∈ S, c • x s = 0) : ∃ c ∈ S, c • x = 0 := by
   classical
   have := Fintype.ofFinite {s : Finset ι // s.card = p}
@@ -27,7 +27,7 @@ theorem exists_smul_eq_zero_of_forall [Finite ι] (A : Cube.{v} ι R) (S : Submo
   rw [Pi.smul_apply, ← Finset.prod_erase_mul _ _ (Finset.mem_univ s), mul_smul, hc, smul_zero,
     Pi.zero_apply]
 
-theorem exists_smul_eq_zero_of_d_eq_zero [Finite ι] (A : Cube.{v} ι R) (S : Submonoid R) (i : ι)
+theorem exists_smul_eq_zero_of_d_eq_zero [Finite ι] (A : Cube.{max u v} ι R) (S : Submonoid R) (i : ι)
     (hA : ∀ s : Finset ι, i ∉ s → ∀ y, res A (Finset.subset_insert i s) y = 0 → ∃ c ∈ S, c • y = 0)
     {p : ℕ} (x : Term A p) (hx : d A p x = 0)
     (h0 : ∀ s : {s : Finset ι // s.card = p}, i ∈ s.1 → x s = 0) : ∃ c ∈ S, c • x = 0 := by
@@ -45,7 +45,7 @@ theorem exists_smul_eq_zero_of_d_eq_zero [Finite ι] (A : Cube.{v} ι R) (S : Su
     · rw [extend_apply_of_ne A x hc, map_zero, smul_zero]
   · simp
 
-theorem exists_smul_eq_d [Finite ι] (A : Cube.{v} ι R) (S : Submonoid R) (i : ι)
+theorem exists_smul_eq_d [Finite ι] (A : Cube.{max u v} ι R) (S : Submonoid R) (i : ι)
     (hA : ∀ s : Finset ι, i ∉ s → ∀ y, res A (Finset.subset_insert i s) y = 0 → ∃ c ∈ S, c • y = 0)
     (hA' : ∀ s : Finset ι, i ∉ s → ∀ z, ∃ c ∈ S, ∃ y,
       res A (Finset.subset_insert i s) y = c • z)
@@ -95,7 +95,7 @@ theorem smul_homologyπ_eq_zero (K : CochainComplex (ModuleCat.{v} R) ℕ) (q p 
   rw [← map_smul, ← h1]
   exact congr(($(K.toCycles_comp_homologyπ q p)).hom y)
 
-theorem cubeComplex_exists_smul_homology_eq_zero [Finite ι] (A : Cube.{v} ι R) (S : Submonoid R)
+theorem cubeComplex_exists_smul_homology_eq_zero [Finite ι] (A : Cube.{max u v} ι R) (S : Submonoid R)
     (i : ι)
     (hA : ∀ s : Finset ι, i ∉ s → ∀ y,
       Cube.res A (Finset.subset_insert i s) y = 0 → ∃ c ∈ S, c • y = 0)
@@ -121,7 +121,7 @@ theorem cubeComplex_exists_smul_homology_eq_zero [Finite ι] (A : Cube.{v} ι R)
     exact h
 
 theorem cubeComplex_exists_smul_homology_eq_zero_of_isLocalizedModule [Finite ι]
-    (A : Cube.{v} ι R) (S : Submonoid R) (i : ι)
+    (A : Cube.{max u v} ι R) (S : Submonoid R) (i : ι)
     (hA : ∀ s : Finset ι, i ∉ s → IsLocalizedModule S (Cube.res A (Finset.subset_insert i s)))
     (p : ℕ) (x : (cubeComplex A).homology p) : ∃ c ∈ S, c • x = 0 := by
   refine cubeComplex_exists_smul_homology_eq_zero A S i (fun s hs y hy => ?_) (fun s hs z => ?_) p x
@@ -131,7 +131,7 @@ theorem cubeComplex_exists_smul_homology_eq_zero_of_isLocalizedModule [Finite ι
   · obtain ⟨⟨y, c⟩, h⟩ := (hA s hs).surj z
     exact ⟨c, c.2, y, h.symm⟩
 
-theorem cubeComplex_exists_pow_smul_homology_eq_zero [Finite ι] (A : Cube.{v} ι R) (a : R) (i : ι)
+theorem cubeComplex_exists_pow_smul_homology_eq_zero [Finite ι] (A : Cube.{max u v} ι R) (a : R) (i : ι)
     (hA : ∀ s : Finset ι, i ∉ s →
       IsLocalizedModule.Away a (Cube.res A (Finset.subset_insert i s)))
     (p : ℕ) (x : (cubeComplex A).homology p) : ∃ n : ℕ, a ^ n • x = 0 := by
@@ -139,7 +139,7 @@ theorem cubeComplex_exists_pow_smul_homology_eq_zero [Finite ι] (A : Cube.{v} �
     cubeComplex_exists_smul_homology_eq_zero_of_isLocalizedModule A (.powers a) i hA p x
   exact ⟨n, h⟩
 
-theorem cubeComplex_exactAt_of_isLocalizedModule_res [Finite ι] (A : Cube.{v} ι R) (f : ι → R)
+theorem cubeComplex_exactAt_of_isLocalizedModule_res [Finite ι] (A : Cube.{max u v} ι R) (f : ι → R)
     (hA : ∀ (i : ι) (s : Finset ι), i ∉ s →
       IsLocalizedModule.Away (f i) (Cube.res A (Finset.subset_insert i s)))
     (hf : Ideal.span (Set.range f) = ⊤) (p : ℕ) : (cubeComplex A).ExactAt p := by
@@ -201,7 +201,7 @@ section Loc
 
 variable {ι : Type} {R : Type u} [CommRing R]
 
-theorem Cube.isLocalizedModule_res_insert [DecidableEq ι] (A : Cube.{v} ι R) (f : ι → R)
+theorem Cube.isLocalizedModule_res_insert [DecidableEq ι] (A : Cube.{max u v} ι R) (f : ι → R)
     {M : Type*} [AddCommGroup M] [Module R M] (g : ∀ s, M →ₗ[R] A.obj s)
     (hg : ∀ s, IsLocalizedModule.Away (∏ i ∈ s, f i) (g s))
     (hres : ∀ {s t : Finset ι} (h : s ⊆ t) (m : M), Cube.res A h (g s m) = g t m)
@@ -216,7 +216,7 @@ theorem Cube.isLocalizedModule_res_insert [DecidableEq ι] (A : Cube.{v} ι R) (
   exact isLocalizedModule_away_of_comp (b := ∏ j ∈ s, f j) (g s) _
 
 theorem cubeComplex_exactAt_of_isLocalizedModule [LinearOrder ι] [Finite ι]
-    (A : Cube.{v} ι R) (f : ι → R)
+    (A : Cube.{max u v} ι R) (f : ι → R)
     {M : Type*} [AddCommGroup M] [Module R M] (g : ∀ s, M →ₗ[R] A.obj s)
     (hg : ∀ s, IsLocalizedModule.Away (∏ i ∈ s, f i) (g s))
     (hres : ∀ {s t : Finset ι} (h : s ⊆ t) (m : M), Cube.res A h (g s m) = g t m)

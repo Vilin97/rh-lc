@@ -37,7 +37,8 @@ theorem eigDim_rank_map {K L : Type} [Field K] [Field L] (φ : K →+* L) {n : T
     rw [← Matrix.map_mul, ← Matrix.map_mul, h]
     simp [← Matrix.submatrix_map, Matrix.fromBlocks_map]
   calc (M.map φ).rank = (V.map φ * M.map φ * U.map φ).rank := by
-        rw [rank_mul_eq_left_of_isUnit_det _ _ hUd, rank_mul_eq_right_of_isUnit_det _ _ hVd]
+        rw [Matrix.rank_mul_eq_left_of_isUnit_det _ _ hUd,
+          Matrix.rank_mul_eq_right_of_isUnit_det _ _ hVd]
     _ = M.rank := by rw [h']; exact rank_submatrix_fromBlocks_one_zero_eq _ _ e
 
 private lemma finrank_ker_toLin'_add_rank_eq_card {L : Type} [Field L] {n : Type} [Fintype n] [DecidableEq n]

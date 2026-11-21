@@ -5,6 +5,7 @@ public import Mathlib
 @[expose] public section
 
 open NumberField IsDedekindDomain MeasureTheory
+open scoped Pointwise
 
 namespace GlobalTheory
 

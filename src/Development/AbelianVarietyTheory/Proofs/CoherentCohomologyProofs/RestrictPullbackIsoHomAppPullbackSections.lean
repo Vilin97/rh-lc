@@ -264,6 +264,8 @@ def pushforwardSpecΓIso :
   NatIso.ofComponents (fun M ↦ LinearEquiv.toModuleIso
     (X₁ := (moduleSpecΓFunctor (R := S) ⋙ ModuleCat.restrictScalars φ.hom).obj M)
     (X₂ := (Scheme.Modules.pushforward (Spec.map φ) ⋙ moduleSpecΓFunctor (R := R)).obj M)
+    (m₁ := ((moduleSpecΓFunctor (R := S) ⋙ ModuleCat.restrictScalars φ.hom).obj M).isModule)
+    (m₂ := ((Scheme.Modules.pushforward (Spec.map φ) ⋙ moduleSpecΓFunctor (R := R)).obj M).isModule)
     { __ := AddEquiv.refl _
       map_smul' := fun r m ↦ by
         change (φ r • (show Γ(M, ⊤) from m) : Γ(M, ⊤)) =
@@ -301,8 +303,8 @@ theorem tildePullbackIso_hom_app_toOpen (M : ModuleCat.{u} R) (m : M) :
 def tildeIsoPullback (M : (Spec R).Modules) [M.IsQuasicoherent] :
     tilde ((ModuleCat.extendScalars φ.hom).obj (moduleSpecΓFunctor.obj M)) ≅
       (Scheme.Modules.pullback (Spec.map φ)).obj M :=
-  haveI := Scheme.Modules.isIso_fromTildeΓ_of_isQuasicoherent M
-  (tildePullbackIso φ).app _ ≪≫ (Scheme.Modules.pullback (Spec.map φ)).mapIso (asIso M.fromTildeΓ)
+  (tildePullbackIso φ).app _ ≪≫ (Scheme.Modules.pullback (Spec.map φ)).mapIso
+    (@asIso _ _ _ _ M.fromTildeΓ (Scheme.Modules.isIso_fromTildeΓ_of_isQuasicoherent M))
 
 theorem isQuasicoherent_pullback_Spec (M : (Spec R).Modules) [M.IsQuasicoherent] :
     ((Scheme.Modules.pullback (Spec.map φ)).obj M).IsQuasicoherent :=
@@ -519,7 +521,7 @@ theorem app_surjective_of_epi_of_isAffineOpen (φ : F ⟶ F') [Epi φ] [F.IsQuas
   have h₄ : Epi ((moduleSpecΓFunctor ⋙ tilde.functor Γ(X, U)).map ψ) := by
     rw [← epi_comp_iff_of_isIso _ ((Scheme.Modules.fromTildeΓNatTrans (R := Γ(X, U))).app
       (F'.restrict hU.fromSpec)), h]
-    infer_instance
+    exact epi_comp _ _
   have h₅ : Epi (moduleSpecΓFunctor.map ψ) := (tilde.functor Γ(X, U)).epi_of_epi_map h₄
   have h₆ : Function.Surjective (φ.app (hU.fromSpec ''ᵁ ⊤)) :=
     (ModuleCat.epi_iff_surjective (moduleSpecΓFunctor.map ψ)).mp h₅

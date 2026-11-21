@@ -71,7 +71,7 @@ def jetLift {κ : Type} {m : ℕ} {A : Type} [CommRing A] [Algebra R A] (J : Ide
 
 theorem jetLift_zR {κ : Type} {m : ℕ} {A : Type} [CommRing A] [Algebra R A] (J : Ideal A)
     (hJ : J ^ (m + 1) = ⊥) (b : κ → A) (hb : ∀ j, b j ∈ J) (j : κ) :
-    jetLift R J hJ b hb (zR m j) = b j := by
+    jetLift (R := R) J hJ b hb (zR m j) = b j := by
   show MvPolynomial.aeval b (MvPolynomial.X j) = b j
   simp
 
@@ -131,7 +131,7 @@ variable [Algebra.FormallyEtale (MvPolynomial (Fin n) R) S] (ε : S →ₐ[R] R)
 
 theorem etale_ext {A : Type} [CommRing A] [Algebra R A] (aug : A →ₐ[R] R)
     (hJ : IsNilpotent (RingHom.ker aug)) (φ₁ φ₂ : S →ₐ[R] A) (h1 : aug.comp φ₁ = ε) (h2 : aug.comp φ₂ = ε)
-    (hs : ∀ j : Fin n, φ₁ (sX (S := S) R j) = φ₂ (sX (S := S) R j)) : φ₁ = φ₂ := by
+    (hs : ∀ j : Fin n, φ₁ (sX (R := R) (S := S) j) = φ₂ (sX (R := R) (S := S) j)) : φ₁ = φ₂ := by
   let ρ : MvPolynomial (Fin n) R →ₐ[R] A := φ₁.comp (IsScalarTower.toAlgHom R (MvPolynomial (Fin n) R) S)
   have hρ2 : φ₂.comp (IsScalarTower.toAlgHom R (MvPolynomial (Fin n) R) S) = ρ := by
     apply MvPolynomial.algHom_ext
@@ -153,8 +153,8 @@ theorem etale_ext {A : Type} [CommRing A] [Algebra R A] (aug : A →ₐ[R] R)
   exact AlgHom.congr_fun this x
 
 theorem etale_exists {A : Type} [CommRing A] [Algebra R A] (aug : A →ₐ[R] R)
-    (hJ : IsNilpotent (RingHom.ker aug)) (b : Fin n → A) (hb : ∀ j, aug (b j) = ε (sX R j)) :
-    ∃ φ : S →ₐ[R] A, aug.comp φ = ε ∧ ∀ j, φ (sX R j) = b j := by
+    (hJ : IsNilpotent (RingHom.ker aug)) (b : Fin n → A) (hb : ∀ j, aug (b j) = ε (sX (R := R) j)) :
+    ∃ φ : S →ₐ[R] A, aug.comp φ = ε ∧ ∀ j, φ (sX (R := R) j) = b j := by
   let ρ : MvPolynomial (Fin n) R →ₐ[R] A := MvPolynomial.aeval b
   letI : Algebra (MvPolynomial (Fin n) R) A := ρ.toRingHom.toAlgebra
   haveI : IsScalarTower R (MvPolynomial (Fin n) R) A := IsScalarTower.of_algebraMap_eq (fun r => (ρ.commutes r).symm)
@@ -176,7 +176,7 @@ theorem etale_exists {A : Type} [CommRing A] [Algebra R A] (aug : A →ₐ[R] R)
           (IsScalarTower.algebraMap_apply R (MvPolynomial (Fin n) R) S r).symm, AlgHom.commutes,
           Algebra.algebraMap_self, RingHom.id_apply]
       · intro j
-        show Ideal.Quotient.mk J (algebraMap R A (ε (sX R j))) = Ideal.Quotient.mk J (ρ (MvPolynomial.X j))
+        show Ideal.Quotient.mk J (algebraMap R A (ε (sX (R := R) j))) = Ideal.Quotient.mk J (ρ (MvPolynomial.X j))
         rw [MvPolynomial.aeval_X, Ideal.Quotient.eq, RingHom.mem_ker, map_sub, AlgHom.commutes,
           Algebra.algebraMap_self, RingHom.id_apply, hb, sub_self]
     exact fun p => RingHom.congr_fun this p

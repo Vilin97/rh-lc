@@ -4,7 +4,7 @@ public import Mathlib
 
 @[expose] public section
 
-open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology
+open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology Polynomial
 
 namespace GlobalTheory
 

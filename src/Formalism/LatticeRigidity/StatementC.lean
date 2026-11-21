@@ -6,7 +6,7 @@ public import Mathlib
 
 namespace Formalism.SA.C
 
-open Finset Real
+open Finset Real NumberField
 
 def RecHyp (r : ℕ) (ε δ M : ℝ) (s m : ℕ → ℝ) : Prop :=
   0 ≤ ε ∧ 0 ≤ δ ∧ s 0 ≤ M ∧ (∀ i, 0 ≤ s i) ∧

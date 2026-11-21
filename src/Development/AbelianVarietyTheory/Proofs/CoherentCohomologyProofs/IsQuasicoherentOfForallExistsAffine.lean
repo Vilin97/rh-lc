@@ -181,9 +181,9 @@ theorem isLocalizedModule_resBasicOpen [F.IsQuasicoherent] (hU : IsAffineOpen U)
 
 
 theorem nonempty_presentation_Spec {R : CommRingCat.{u}} (M : (Spec R).Modules)
-    [M.IsQuasicoherent] : Nonempty M.Presentation :=
-  haveI := Scheme.Modules.isIso_fromTildeΓ_of_isQuasicoherent M
-  ⟨SheafOfModules.Presentation.ofIsIso.{u, u, u} M.fromTildeΓ
+    [M.IsQuasicoherent] : Nonempty M.Presentation := by
+  haveI hIso : IsIso M.fromTildeΓ := Scheme.Modules.isIso_fromTildeΓ_of_isQuasicoherent M
+  exact ⟨@SheafOfModules.Presentation.ofIsIso.{u, u, u} _ _ _ _ M.fromTildeΓ hIso
     (presentationTilde.{u} _ .univ (by simp) _ (Submodule.span_eq _))⟩
 
 set_option backward.isDefEq.respectTransparency false in

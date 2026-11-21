@@ -30,14 +30,13 @@ theorem eq_haarProb (μ : Measure K) [μ.IsHaarMeasure] [IsProbabilityMeasure μ
 
 instance haarProb_isMulRightInvariant : (haarProb K).IsMulRightInvariant := by
   refine ⟨fun g => ?_⟩
-  have : IsProbabilityMeasure (Measure.map (fun x => x * g) (haarProb K)) :=
-    isProbabilityMeasure_map (measurable_mul_const g).aemeasurable
   exact eq_haarProb _
 
 instance haarProb_isInvInvariant : (haarProb K).IsInvInvariant := by
   refine ⟨?_⟩
-  have : IsProbabilityMeasure (haarProb K).inv :=
-    isProbabilityMeasure_map measurable_inv.aemeasurable
+  have : IsProbabilityMeasure (haarProb K).inv := by
+    unfold Measure.inv
+    infer_instance
   have : (haarProb K).inv.IsHaarMeasure := {}
   exact eq_haarProb _
 
@@ -57,7 +56,8 @@ theorem isMulRightInvariant_of_compactSpace (μ : Measure K) [μ.IsHaarMeasure] 
 theorem isInvInvariant_of_compactSpace (μ : Measure K) [μ.IsHaarMeasure] :
     μ.IsInvInvariant := by
   refine ⟨?_⟩
-  rw [eq_smul_haarProb μ, Measure.inv, Measure.map_smul, map_inv_eq_self]
+  rw [eq_smul_haarProb μ, Measure.inv, Measure.map_smul _ measurable_inv.aemeasurable,
+    map_inv_eq_self]
 
 end Haar
 

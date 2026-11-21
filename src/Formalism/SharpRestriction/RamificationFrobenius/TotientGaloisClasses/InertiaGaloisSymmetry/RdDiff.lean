@@ -278,12 +278,15 @@ theorem log_norm_weight (u : ZMod N) (hu : u ≠ 1) :
   exact key
 
 
+local instance (p : Prop) : Decidable p := Classical.propDecidable p
+
 theorem log_rd (U : Subgroup (ZMod N)ˣ)
     (hU : ∀ (σ : L ≃ₐ[ℚ] L) (u : (ZMod N)ˣ), σ ζ = ζ ^ (u : ZMod N).val →
       ((∀ x : E, σ (algebraMap E L x) = algebraMap E L x) ↔ u ∈ U)) :
     Real.log |(discr E : ℝ)| / Module.finrank ℚ E =
       ∑ u ∈ (Finset.univ : Finset (ZMod N)ˣ).filter (fun u => u ∉ U),
         vonMangoldt (addOrderOf ((u : ZMod N) - 1)) / ((addOrderOf ((u : ZMod N) - 1)).totient : ℝ) := by
+  classical
   haveI : FiniteDimensional E L := Module.Finite.of_restrictScalars_finite ℚ E L
   haveI : IsGalois ℚ L := IsCyclotomicExtension.isGalois {N} ℚ L
   have hφ : Module.finrank ℚ L = N.totient :=

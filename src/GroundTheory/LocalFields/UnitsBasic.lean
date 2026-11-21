@@ -69,9 +69,8 @@ end Uniformizer
 section Valuation
 
 noncomputable def normalizedValuation : Valuation K ℤᵐ⁰ :=
-  (valuation K).map
-    (IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt K).toMulEquiv.toMonoidWithZeroHom
-    (IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt K).toOrderIso.monotone
+  let e := IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt K
+  (valuation K).map { e.toMulEquiv.toMonoidWithZeroHom with monotone' := e.toOrderIso.monotone }
 
 variable {K}
 

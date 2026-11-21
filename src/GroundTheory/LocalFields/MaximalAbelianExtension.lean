@@ -71,7 +71,7 @@ theorem commutator_le_ker_of_comm {G M : Type*} [Group G] [Group M] [IsMulCommut
 
 theorem le_maximalAbelianExtension (L : IntermediateField F Ω) [IsAbelianGalois F L] :
     L ≤ maximalAbelianExtension F Ω := by
-  have : T2Space (L ≃ₐ[F] L) := krullTopology_t2
+  have : T1Space (L ≃ₐ[F] L) := @T2Space.t1Space _ _ krullTopology_t2
   rw [maximalAbelianExtension, le_iff_le, ← L.restrictNormalHom_ker]
   refine Subgroup.topologicalClosure_minimal _ (commutator_le_ker_of_comm _) ?_
   exact isClosed_singleton.preimage (InfiniteGalois.restrictNormalHom_continuous L)
@@ -177,12 +177,12 @@ theorem restrictAb_surjective (E : IntermediateField F Ω) [Normal F E]
   obtain ⟨τ, rfl⟩ := AlgEquiv.restrictNormalHom_surjective (F := F) (K₁ := E) (E := Ω) ρ
   exact ⟨_, restrictAb_topologicalAbelianizationEquiv E h τ⟩
 
-
+variable (F Ω) in
 def finiteAbelianExtensions : Set (IntermediateField F Ω) :=
   {L | FiniteDimensional F L ∧ IsAbelianGalois F L}
 
-
-
+omit [IsGalois F Ω] in
+variable (F Ω) in
 noncomputable def restrictAbPi (σ : maximalAbelianExtension F Ω ≃ₐ[F] maximalAbelianExtension F Ω)
     (L : finiteAbelianExtensions F Ω) : (L : IntermediateField F Ω) ≃ₐ[F] (L : IntermediateField F Ω) :=
   have := L.2.2

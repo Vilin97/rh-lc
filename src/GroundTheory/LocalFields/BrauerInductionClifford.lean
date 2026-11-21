@@ -43,11 +43,13 @@ def conjNormal (g : G) : A ≃* A where
 
 theorem conjNormal_mul (g h : G) (a : A) :
     conjNormal A (g * h) a = conjNormal A h (conjNormal A g a) := by
-  ext
+  apply Subtype.ext
+  change (g * h)⁻¹ * (a : G) * (g * h) = h⁻¹ * (g⁻¹ * (a : G) * g) * h
   simp [mul_assoc]
 
 theorem conjNormal_one (a : A) : conjNormal A 1 a = a := by
-  ext
+  apply Subtype.ext
+  change (1 : G)⁻¹ * (a : G) * 1 = (a : G)
   simp
 
 def inertia (θ : A → ℂ) : Subgroup G where

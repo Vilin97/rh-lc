@@ -77,6 +77,7 @@ section Finite
 variable {K}
 
 
+open Classical in
 def finiteAdeleSingle (v : HeightOneSpectrum (𝓞 K)) :
     v.adicCompletion K →* FiniteAdeleRing (𝓞 K) K where
   toFun x := RestrictedProduct.mulSingle
@@ -174,6 +175,7 @@ section Infinite
 variable {K}
 
 
+open Classical in
 def infiniteAdeleSingle (w : InfinitePlace K) : w.Completion →* InfiniteAdeleRing K :=
   MonoidHom.mulSingle (fun u : InfinitePlace K ↦ u.Completion) w
 
@@ -233,8 +235,8 @@ theorem infiniteProj_infiniteEmbedding_of_ne {w u : InfinitePlace K} (h : u ≠ 
 @[simp]
 theorem coe_infiniteProj_diagonal (w : InfinitePlace K) (x : Kˣ) :
     ((infiniteProj w (diagonal K x) : (w.Completion)ˣ) : w.Completion) =
-      ((x : K) : w.Completion) :=
-  rfl
+      ((x : K) : w.Completion) := by
+  rw [coe_infiniteProj, coe_diagonal, AdeleRing.algebraMap_fst_apply]
 
 end Infinite
 

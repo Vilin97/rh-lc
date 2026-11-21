@@ -81,6 +81,7 @@ lemma logDeriv_prod_pow_mul {Z : Finset ℂ} {m : ℂ → ℕ} {φ : ℂ → ℂ
   congr 1
   have h6 := logDeriv_prod (f := fun ρ z => (φ ρ z) ^ (m ρ)) (s := Z) (x := s)
     (fun ρ hρ => pow_ne_zero _ (hφ ρ hρ)) (fun ρ hρ => (hφd ρ hρ).pow _)
+  rw [Finset.prod_fn] at h6
   rw [h6]
   refine Finset.sum_congr rfl fun ρ hρ => ?_
   exact logDeriv_fun_pow (hφd ρ hρ) (m ρ)

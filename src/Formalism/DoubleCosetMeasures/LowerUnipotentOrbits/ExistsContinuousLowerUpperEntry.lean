@@ -258,9 +258,9 @@ theorem suppCompact : Formalism.DoubleCosetMeasures.SuppCompact := by
   intro K _ _ _ _ R hRo hRc s t ψ C _ _ e lam
   let P := pt s t
   let P' := pt s (fun b => (t b)⁻¹)
-  have hPP' : P * P' = 1 := pt_mul_pt s t _ (fun b => Units.mul_inv (t b))
-  have hP'P : P' * P = 1 := pt_mul_pt s _ t (fun b => Units.inv_mul (t b))
-  obtain ⟨Ph, Pu, hPhc, hPuc, hPhu⟩ := lu_rec (K := K) (n := s.sum)
+  have hPP' : P * P' = 1 := Supp.pt_mul_pt s t _ (fun b => Units.mul_inv (t b))
+  have hP'P : P' * P = 1 := Supp.pt_mul_pt s _ t (fun b => Units.inv_mul (t b))
+  obtain ⟨Ph, Pu, hPhc, hPuc, hPhu⟩ := Supp.lu_rec (K := K) (n := s.sum)
   let G : Matrix (Fin s.sum) (Fin s.sum) K → Matrix (Fin s.sum) (Fin s.sum) K :=
     fun M => P * Ph (P' * M) * P'
   let U : Matrix (Fin s.sum) (Fin s.sum) K → Matrix (Fin s.sum) (Fin s.sum) K :=
@@ -278,9 +278,9 @@ theorem suppCompact : Formalism.DoubleCosetMeasures.SuppCompact := by
     rw [hset]
     exact isCompact_univ_pi fun _ => isCompact_univ_pi fun _ => hRc
   have hDc : IsCompact D := hIntc.inter_right
-    (((isClosed_lowUni.preimage hGc).inter (isClosed_lowUni.preimage
+    (((Supp.isClosed_lowUni.preimage hGc).inter (Supp.isClosed_lowUni.preimage
       ((continuous_const.matrix_mul hGc).matrix_mul continuous_const))).inter
-      (isClosed_upUni.preimage hUc))
+      (Supp.isClosed_upUni.preimage hUc))
   have hGdet : ∀ M ∈ D, (G M).det = 1 := fun M hM => isLowUni_det K hM.2.1.1
   have hUdet : ∀ M ∈ D, (U M).det = 1 := fun M hM => isUpUni_det K hM.2.2
   let gU : D → GL (Fin s.sum) K := fun M => ⟨G M.1, (G M.1).adjugate,
@@ -294,7 +294,7 @@ theorem suppCompact : Formalism.DoubleCosetMeasures.SuppCompact := by
   have huU : Continuous uU := Units.continuous_iff.mpr
     ⟨hUc.comp continuous_subtype_val, (hUc.comp continuous_subtype_val).matrix_adjugate⟩
   have hgmem : ∀ M : D, gU M ∈ lowW K s t := fun M =>
-    (mem_lowW_iff s t P' hP'P hPP' (gU M)).mpr ⟨M.2.2.1.1, M.2.2.1.2⟩
+    (Supp.mem_lowW_iff s t P' hP'P hPP' (gU M)).mpr ⟨M.2.2.1.1, M.2.2.1.2⟩
   have humem : ∀ M : D, uU M ∈ upUniG K s.sum := fun M => M.2.2.2
   let F : D → lowW K s t × upUniG K s.sum := fun M => (⟨gU M, hgmem M⟩, ⟨uU M, humem M⟩)
   have hF : Continuous F := (hgU.subtype_mk hgmem).prodMk (huU.subtype_mk humem)
@@ -308,7 +308,7 @@ theorem suppCompact : Formalism.DoubleCosetMeasures.SuppCompact := by
     apply hp
     let gm : Matrix (Fin s.sum) (Fin s.sum) K := g
     let um : Matrix (Fin s.sum) (Fin s.sum) K := u
-    obtain ⟨hgl, hhl⟩ := (mem_lowW_iff s t P' hP'P hPP' g).mp hg
+    obtain ⟨hgl, hhl⟩ := (Supp.mem_lowW_iff s t P' hP'P hPP' g).mp hg
     have hu' : IsUpUni um := hu
     have hM : P' * (gm * P * um) = (P' * gm * P) * um := by
       simp only [Matrix.mul_assoc]
@@ -325,6 +325,6 @@ theorem suppCompact : Formalism.DoubleCosetMeasures.SuppCompact := by
       ⟨hInt, ⟨⟨by rw [Set.mem_ofPred_eq, hGM]; exact hgl, by rw [Set.mem_ofPred_eq, hGM]; exact hhl⟩,
         by rw [Set.mem_ofPred_eq, hUM]; exact hu'⟩⟩
     exact ⟨⟨_, hMD⟩, Prod.ext (Subtype.ext (Units.ext hGM)) (Subtype.ext (Units.ext hUM))⟩
-  rw [phi, if_neg hnot, zero_mul]
+  rw [Formalism.DoubleCosetMeasures.phi, if_neg hnot, zero_mul]
 
 end Formalism.DoubleCosetMeasures.P

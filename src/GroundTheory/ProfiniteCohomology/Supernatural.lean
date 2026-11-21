@@ -16,6 +16,9 @@ def mk (f : Nat.Primes → ℕ∞) : Supernatural := f
 
 def exp (a : Supernatural) (p : Nat.Primes) : ℕ∞ := a p
 
+private theorem exp_ext {a b : Supernatural} (h : ∀ p, a.exp p = b.exp p) : a = b :=
+  funext h
+
 noncomputable instance : CompleteLattice Supernatural := inferInstanceAs (CompleteLattice (Nat.Primes → ℕ∞))
 
 theorem le_def {a b : Supernatural} : a ≤ b ↔ ∀ p, a.exp p ≤ b.exp p := Iff.rfl
@@ -32,10 +35,10 @@ instance : Mul Supernatural := ⟨fun a b => mk fun p => a.exp p + b.exp p⟩
     (a * b).exp p = a.exp p + b.exp p := rfl
 
 instance : CommMonoid Supernatural where
-  mul_assoc a b c := by ext p; simp [add_assoc]
-  one_mul a := by ext p; simp
-  mul_one a := by ext p; simp
-  mul_comm a b := by ext p; simp [add_comm]
+  mul_assoc a b c := by exact exp_ext fun p => add_assoc (a.exp p) (b.exp p) (c.exp p)
+  one_mul a := by exact exp_ext fun p => zero_add (a.exp p)
+  mul_one a := by exact exp_ext fun p => add_zero (a.exp p)
+  mul_comm a b := by exact exp_ext fun p => add_comm (a.exp p) (b.exp p)
 
 theorem dvd_iff_le {a b : Supernatural} : a ∣ b ↔ a ≤ b := by
   constructor
@@ -45,15 +48,14 @@ theorem dvd_iff_le {a b : Supernatural} : a ∣ b ↔ a ≤ b := by
     simp
   · intro h
     refine ⟨mk fun p => b.exp p - a.exp p, ?_⟩
-    ext p
-    simp [add_tsub_cancel_of_le (le_def.mp h p)]
+    exact exp_ext fun p => (add_tsub_cancel_of_le (le_def.mp h p)).symm
 
 def ofNat (n : ℕ) : Supernatural := mk fun p => (n.factorization p : ℕ∞)
 
 @[simp] theorem exp_ofNat (n : ℕ) (p : Nat.Primes) : (ofNat n).exp p = n.factorization p := rfl
 
 theorem ofNat_mul {m n : ℕ} (hm : m ≠ 0) (hn : n ≠ 0) : ofNat (m * n) = ofNat m * ofNat n := by
-  ext p
+  refine exp_ext fun p => ?_
   simp [Nat.factorization_mul hm hn]
 
 theorem ofNat_dvd_ofNat {m n : ℕ} (hm : m ≠ 0) (hn : n ≠ 0) : ofNat m ∣ ofNat n ↔ m ∣ n := by
@@ -99,7 +101,7 @@ theorem ofNat_prime_dvd_iSup_iff (p : Nat.Primes) {ι : Sort*} (f : ι → Super
 theorem iSup_mul_iSup {ι : Sort*} {f g : ι → Supernatural}
     (h : ∀ i j, ∃ k, f i ≤ f k ∧ g j ≤ g k) :
     (⨆ i, f i) * (⨆ i, g i) = ⨆ i, f i * g i := by
-  ext p
+  refine exp_ext fun p => ?_
   simp only [exp_mul, exp_iSup]
   exact ENat.iSup_add_iSup fun i j => (h i j).imp fun k hk =>
     add_le_add (le_def.mp hk.1 p) (le_def.mp hk.2 p)

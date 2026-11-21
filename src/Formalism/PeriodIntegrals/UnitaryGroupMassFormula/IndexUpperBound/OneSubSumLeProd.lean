@@ -53,7 +53,7 @@ theorem inner_bounds (g : ℝ) (hg : 2 ≤ g) (r : ℕ) :
   have hpow1 : ∀ i : ℕ, x ^ i ≤ 1 := fun i => pow_le_one₀ hx0.le hx1
   have hf0 : ∀ i ∈ Ico 1 r, 0 ≤ 1 - x ^ i := fun i _ => sub_nonneg.2 (hpow1 i)
   have hf1 : ∀ i ∈ Ico 1 r, 1 - x ^ i ≤ 1 := fun i _ => by linarith [hpow0 i]
-  refine ⟨Finset.prod_nonneg hf0, Finset.prod_le_one hf0 hf1, ?_⟩
+  refine ⟨Finset.prod_nonneg hf0, Finset.prod_le_one₀ hf0 hf1, ?_⟩
   have hS : (∑ i ∈ Ico 1 r, x ^ i) * (g - 1) ≤ 1 := by
     rcases Nat.eq_zero_or_pos r with rfl | hr
     · simp

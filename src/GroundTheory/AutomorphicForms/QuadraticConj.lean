@@ -134,7 +134,7 @@ theorem conjLinear_conjLinear (x : E) : conjLinear F E (conjLinear F E x) = x :=
     map_mul, map_ofNat]
   ring
 
-
+variable (F E) in
 noncomputable def conj : E ≃ₐ[F] E :=
   AlgEquiv.ofLinearEquiv
     (LinearEquiv.ofInvolutive (conjLinear F E) (fun x => conjLinear_conjLinear x))

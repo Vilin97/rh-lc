@@ -23,7 +23,7 @@ theorem intMv_mul {F G : MvPowerSeries σ ℂ_[p]} (hF : IntegralMv F) (hG : Int
   _root_.UpperTheory.Reformulated.B.IntegralPolynomialSecond.intMv_mul hF hG
 
 theorem intMv_pderiv {F : MvPowerSeries σ ℂ_[p]} (i : σ) (hF : IntegralMv F) :
-    IntegralMv (pderiv ℂ_[p] i F) :=
+    IntegralMv (pderiv (R := ℂ_[p]) i F) :=
   _root_.UpperTheory.Reformulated.B.Gwb7.intMv_pderiv i hF
 
 theorem intMv_inv {F : MvPowerSeries σ ℂ_[p]} (hF : IntegralMv F) (h1 : constantCoeff F = 1) :
@@ -57,7 +57,7 @@ theorem coeff_expMv_eq_expT {f : MvPowerSeries σ ℂ_[p]} (hf : constantCoeff f
     rw [coeff_pow_eq_zero hf (by omega), zero_div]
 
 theorem pderiv_expT (f : MvPowerSeries σ ℂ_[p]) (i : σ) (N : ℕ) :
-    pderiv ℂ_[p] i (expT f (N + 1)) = pderiv ℂ_[p] i f * expT f N := by
+    pderiv (R := ℂ_[p]) i (expT f (N + 1)) = pderiv (R := ℂ_[p]) i f * expT f N := by
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [expT, map_sum, Derivation.map_smul, Finset.mul_sum]
   rw [Finset.sum_range_succ']
@@ -69,16 +69,16 @@ theorem pderiv_expT (f : MvPowerSeries σ ℂ_[p]) (i : σ) (N : ℕ) :
     have h1 : ((n + 1 : ℕ) : ℂ_[p]) ≠ 0 := by exact_mod_cast n.succ_ne_zero
     rw [Nat.factorial_succ, Nat.cast_mul, mul_inv, mul_comm, ← mul_assoc, mul_inv_cancel₀ h1, one_mul]
   rw [hn]
-  calc C ((n + 1).factorial : ℂ_[p])⁻¹ * (C ((n + 1 : ℕ) : ℂ_[p]) * f ^ n * pderiv ℂ_[p] i f)
-      = C (((n + 1).factorial : ℂ_[p])⁻¹ * ((n + 1 : ℕ) : ℂ_[p])) * (f ^ n * pderiv ℂ_[p] i f) := by
+  calc C ((n + 1).factorial : ℂ_[p])⁻¹ * (C ((n + 1 : ℕ) : ℂ_[p]) * f ^ n * pderiv (R := ℂ_[p]) i f)
+      = C (((n + 1).factorial : ℂ_[p])⁻¹ * ((n + 1 : ℕ) : ℂ_[p])) * (f ^ n * pderiv (R := ℂ_[p]) i f) := by
         rw [map_mul]; ring
-    _ = pderiv ℂ_[p] i f * (C (n.factorial : ℂ_[p])⁻¹ * f ^ n) := by rw [key]; ring
+    _ = pderiv (R := ℂ_[p]) i f * (C (n.factorial : ℂ_[p])⁻¹ * f ^ n) := by rw [key]; ring
 
 theorem pderiv_expMv {f : MvPowerSeries σ ℂ_[p]} (hf : constantCoeff f = 0) (i : σ) :
-    pderiv ℂ_[p] i (expMv f) = pderiv ℂ_[p] i f * expMv f := by
+    pderiv (R := ℂ_[p]) i (expMv f) = pderiv (R := ℂ_[p]) i f * expMv f := by
   ext α
-  have h1 : coeff α (pderiv ℂ_[p] i (expMv f)) =
-      coeff α (pderiv ℂ_[p] i (expT f (Finsupp.degree α + 1 + 1))) := by
+  have h1 : coeff α (pderiv (R := ℂ_[p]) i (expMv f)) =
+      coeff α (pderiv (R := ℂ_[p]) i (expT f (Finsupp.degree α + 1 + 1))) := by
     rw [coeff_pderiv, coeff_pderiv, coeff_expMv_eq_expT hf]
     rw [map_add (f := _), Finsupp.degree_single]; omega
   rw [h1, pderiv_expT, coeff_mul, coeff_mul]
@@ -93,9 +93,9 @@ theorem constantCoeff_expMv (f : MvPowerSeries σ ℂ_[p]) : constantCoeff (expM
   simp
 
 theorem L0 {f c : MvPowerSeries σ ℂ_[p]} (i : σ) (hf : constantCoeff f = 0)
-    (hE : IntegralMv (expMv f)) (hc : IntegralMv c) : IntegralMv (c * pderiv ℂ_[p] i f) := by
+    (hE : IntegralMv (expMv f)) (hc : IntegralMv c) : IntegralMv (c * pderiv (R := ℂ_[p]) i f) := by
   obtain ⟨G, hG, hEG⟩ := intMv_inv hE (constantCoeff_expMv f)
-  have : c * pderiv ℂ_[p] i f = c * pderiv ℂ_[p] i (expMv f) * G := by
+  have : c * pderiv (R := ℂ_[p]) i f = c * pderiv (R := ℂ_[p]) i (expMv f) * G := by
     rw [pderiv_expMv hf, mul_assoc, mul_assoc, hEG, mul_one]
   rw [this]
   exact intMv_mul (intMv_mul hc (intMv_pderiv i hE)) hG

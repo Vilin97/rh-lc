@@ -276,8 +276,8 @@ theorem pairwise_disjoint_component :
 
 theorem nonempty_isColimit_component :
     Nonempty (IsColimit (Cofan.mk X fun Z : irreducibleComponents X ↦ (component Z).ι)) :=
-  nonempty_isColimit_cofanMk_of _ (by simpa using iSup_component X)
-    (by simpa [Function.onFun] using pairwise_disjoint_component X)
+  nonempty_isColimit_cofanMk_of _ (by simpa using iSup_component (X := X))
+    (by simpa [Function.onFun] using pairwise_disjoint_component (X := X))
 
 
 end Components

@@ -18,11 +18,13 @@ variable {m : ℕ} [NeZero m] (p : ℕ) [hp : Fact p.Prime] (K : Type*) [Field K
 variable (P : Ideal (𝓞 K)) [P.IsPrime] [P.LiesOver (Ideal.span {(p : ℤ)})]
 
 
+include hp in
 theorem ne_bot_of_liesOver : P ≠ ⊥ :=
   Ideal.ne_bot_of_liesOver_of_ne_bot (p := Ideal.span {(p : ℤ)})
     (by simpa using hp.out.ne_zero) P
 
 
+include hp in
 theorem finite_quotient : Finite (𝓞 K ⧸ P) :=
   have : NeZero P := ⟨ne_bot_of_liesOver p K P⟩
   Ring.HasFiniteQuotients.finiteQuotient (NeZero.ne P)

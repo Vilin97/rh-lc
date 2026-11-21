@@ -144,6 +144,7 @@ theorem sum_le_of_fibres {α ι : Type} [Fintype ι] (a : α → ℝ) (φ : α �
     (hgs : ∀ w, Summable (g w)) (hle : ∀ r, a r ≤ ∏ w, g w (φ r w))
     (hfib : ∀ (T : Finset α) (n : ι → ℤ), (T.filter fun r => φ r = n).card ≤ K) :
     Summable a ∧ ∑' r, a r ≤ K * ∏ w, ∑' k, g w k := by
+  classical
   have key : ∀ T : Finset α, ∑ r ∈ T, a r ≤ K * ∏ w, ∑' k, g w k := by
     intro T
     have hG : ∀ n : ι → ℤ, 0 ≤ ∏ w, g w (n w) :=

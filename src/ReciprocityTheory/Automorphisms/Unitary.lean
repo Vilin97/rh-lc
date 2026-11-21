@@ -49,6 +49,8 @@ end General
 
 variable (L : Type*) [Field L] [NumberField L] [IsCMField L]
 
+local notation3 "L⁺" => maximalRealSubfield L
+
 abbrev AFplus : Type _ := FiniteAdeleRing (𝓞 L⁺) L⁺
 
 abbrev AL : Type _ := L ⊗[L⁺] AFplus L
@@ -149,6 +151,6 @@ def TrivOutside {n : ℕ} (T : Set (HeightOneSpectrum (𝓞 L⁺))) (x : GA L n)
 
 noncomputable def Level {n : ℕ} {ι : Type*} (s : ι → SplitPlace L)
     (H : ∀ a, Subgroup (GL (Fin n) ((s a).v.adicCompletion L⁺))) : Subgroup (GA L n) :=
-  Umax L n ⊓ ⨅ a, (H a).comap ((s a).loc n)
+  Umax L n ⊓ ⨅ a, (H a).comap (SplitPlace.loc L (s a) n)
 
 end ReciprocityTheory.Aut

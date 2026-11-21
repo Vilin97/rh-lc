@@ -104,7 +104,10 @@ def Coh (φ : K → (Y ⟶ X)) (j : K → L.ι) : Prop :=
 
 
 def SameSum (φ : K → (Y ⟶ X)) (ε : K → ℤ) (φ' : K' → (Y ⟶ X)) (ε' : K' → ℤ) : Prop :=
-  ∀ ψ : Y ⟶ X, (∑ k, if φ k = ψ then ε k else 0) = ∑ k', if φ' k' = ψ then ε' k' else 0
+  by
+    classical
+    exact ∀ ψ : Y ⟶ X,
+      (∑ k, if φ k = ψ then ε k else 0) = ∑ k', if φ' k' = ψ then ε' k' else 0
 
 def Gen.Corr (φ : K → (Y ⟶ X)) (ε : K → ℤ) (φ' : K' → (Y ⟶ X)) (ε' : K' → ℤ)
     (t : Gen (LinComb L φ ε)) (t' : Gen (LinComb L φ' ε')) : Prop :=

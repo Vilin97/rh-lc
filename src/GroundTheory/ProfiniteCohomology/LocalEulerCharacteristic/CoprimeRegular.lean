@@ -23,8 +23,9 @@ omit [Group Γ] [Fintype Γ] in
 theorem regularTensorEquiv_single_tmul (g : Γ) (r : k) (n : N) :
     regularTensorEquiv (MonoidAlgebra.single g r ⊗ₜ[k] n) = Finsupp.single g (r • n) := by
   ext γ
-  simp [regularTensorEquiv, finsuppScalarLeft_apply_tmul_apply, MonoidAlgebra.coeffLinearEquiv,
-    MonoidAlgebra.coeff_single, Finsupp.single_apply]
+  simp only [regularTensorEquiv, LinearEquiv.trans_apply, TensorProduct.congr_tmul]
+  rw [finsuppScalarLeft_apply_tmul_apply]
+  simp [Finsupp.single_apply]
 
 
 theorem regularTensorEquiv_tprod_apply (h : Γ) (x : MonoidAlgebra k Γ ⊗[k] N) (γ : Γ) :
@@ -48,7 +49,6 @@ theorem regularTensorEquiv_tprod_apply (h : Γ) (x : MonoidAlgebra k Γ ⊗[k] N
         simp [hg, this]
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), Finsupp.add_apply, hx, hy, map_add (f := _), Finsupp.add_apply, map_add (f := _)]
 
-omit [Fintype Γ] in
 theorem mem_invariants_regular_iff (x : MonoidAlgebra k Γ ⊗[k] N) :
     x ∈ ((leftRegular k Γ).tprod σ).invariants ↔
       ∀ γ, regularTensorEquiv x γ = σ γ (regularTensorEquiv x 1) := by

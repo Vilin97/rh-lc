@@ -131,11 +131,15 @@ theorem term_D (B : Matrix ι ι F) (ρ : InfinitePlace F → (F →+* ℝ)) (P 
       gf *ᵥ fun j => algebraMap F (A F) ((a • x) j) := by
     rw [← Matrix.mulVec_smul]
     congr 1
+    ext j
+    simp
   have h2 : (fun w => ρ w a • gi w *ᵥ fun j => ρ w (x j)) =
       fun w => gi w *ᵥ fun j => ρ w ((a • x) j) := by
     funext w
     rw [← Matrix.mulVec_smul]
     congr 1
+    ext j
+    simp
   rw [h1, h2]
   simp
 

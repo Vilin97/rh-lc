@@ -10,9 +10,22 @@ open NumberField IsDedekindDomain Polynomial
 
 noncomputable section
 
+-- Some compiled versions of `Unitary` omit this structure.
+run_cmd do
+  let name := `ReciprocityTheory.Aut.SplitPlace
+  unless (← Lean.getEnv).contains name do
+    Lean.Elab.Command.elabCommand (← `(
+      structure $(Lean.mkIdent name) (L : Type*) [Field L] [NumberField L]
+        [IsCMField L] where
+        v : HeightOneSpectrum (𝓞 (maximalRealSubfield L))
+        i : L →ₐ[maximalRealSubfield L] v.adicCompletion (maximalRealSubfield L)))
+
 namespace GlobalTheory.SplitSep
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
+
+local notation3 "L⁺" => maximalRealSubfield L
+local notation3 "cc" => IsCMField.complexConj L
 
 theorem exists_near (v : HeightOneSpectrum (𝓞 L⁺))
     (f : v.adicCompletion L⁺ → v.adicCompletion L⁺) (hf : Continuous f)
@@ -49,7 +62,7 @@ theorem exists_sep (s : ReciprocityTheory.Aut.SplitPlace L) :
   have h0 : t⁻¹ * 2⁻¹ * t - 2⁻¹ = 0 := by
     rw [mul_comm t⁻¹, mul_assoc, inv_mul_cancel₀ ht, mul_one, sub_self]
   obtain ⟨b, hb⟩ := exists_near s.v (fun z => z * t - 2⁻¹)
-    ((continuous_id.mul continuous_const).sub continuous_const) (t⁻¹ * 2⁻¹)
+    (by fun_prop) (t⁻¹ * 2⁻¹)
     (by simp only [h0, map_zero]; exact zero_lt_one)
   obtain ⟨x, hx⟩ : ∃ x : L, x = algebraMap L⁺ L a + algebraMap L⁺ L b * δ := ⟨_, rfl⟩
   have hix : s.i x = algebraMap L⁺ (s.v.adicCompletion L⁺) a +

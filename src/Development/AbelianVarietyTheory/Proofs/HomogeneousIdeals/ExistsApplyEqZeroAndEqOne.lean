@@ -22,7 +22,7 @@ theorem exists_comap_eq_of_isIntegral {K A B : Type*} [Field K] [IsAlgClosed K] 
   obtain ⟨Q, hQ, hQp⟩ := Ideal.exists_ideal_over_maximal_of_isIntegral (S := B) (RingHom.ker p) hp
   have hcomp : ∀ a, Ideal.Quotient.mk Q (φ a) = algebraMap K (B ⧸ Q) (p a) := by
     intro a
-    have : a - algebraMap K A (p a) ∈ Q.comap (algebraMap A B) := by
+    have : a - algebraMap K A (p a) ∈ Q.under A := by
       rw [hQp]; simp [RingHom.mem_ker]
     have h2 : φ (a - algebraMap K A (p a)) ∈ Q := this
     rw [map_sub, AlgHom.commutes] at h2

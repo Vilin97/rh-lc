@@ -33,7 +33,7 @@ theorem exists_int_mul {p : ℕ} [Fact p.Prime] (D : ℤ) (x : ℚ_[p]) (hx : x 
   have hnp : ‖(p : ℚ_[p]) ^ (D + 1)‖ = (p : ℝ) ^ (-(D + 1)) := by
     rw [norm_zpow, Padic.norm_p, inv_zpow', zpow_neg]
   refine ⟨⟨x / (p : ℚ_[p]) ^ (D + 1), ?_⟩, ?_⟩
-  · rw [norm_div, hnp, Padic.norm_eq_zpow_neg_valuation h0]
+  · rw [PadicInt.mem_subring_iff, norm_div, hnp, Padic.norm_eq_zpow_neg_valuation h0]
     rw [div_le_one (zpow_pos (by linarith) _)]
     exact zpow_le_zpow_right₀ hp1.le (by omega)
   · show x = (p : ℚ_[p]) ^ (D + 1) * (x / (p : ℚ_[p]) ^ (D + 1))
@@ -41,6 +41,7 @@ theorem exists_int_mul {p : ℕ} [Fact p.Prime] (D : ℤ) (x : ℚ_[p]) (hx : x 
 
 open Classical in
 theorem diagRank : PI.DiagRank := by
+  unfold PI.DiagRank
   intro p _ n m X Y c D h
   have hp0 : (p : ℚ_[p]) ≠ 0 := by exact_mod_cast (Fact.out : p.Prime).ne_zero
   have hpD : (p : ℚ_[p]) ^ D ≠ 0 := zpow_ne_zero _ hp0

@@ -60,7 +60,7 @@ theorem isIntegral_trace {E : Type u_1} [inst : Field E] [NumberField E] (_φ : 
     rw [IsScalarTower.algebraMap_eq (NumberField.RingOfIntegers E) E K, ← Polynomial.map_map,
       aeval_map_algebraMap]
     exact h1
-  rw [← isIntegral_algebraMap_iff ]
+  rw [← isIntegral_algebraMap_iff (B := K)]
   have htr : algebraMap E K M.trace = N.trace := by
     simp [N, Matrix.trace]
   rw [htr, Matrix.trace_eq_sum_roots_charpoly]

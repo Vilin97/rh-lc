@@ -49,8 +49,10 @@ def Jset (J' : Subgroup (GL (Fin a) F)) : Set (Matrix (Fin a) (Fin a) F) :=
 
 def phiU (O : Subring F) (ϖ : F) (J' : Subgroup (GL (Fin a) F)) (ρ : J' →* ℂˣ) :
     Matrix (Fin a ⊕ Fin t) (Fin a) F → ℂ :=
-  fun x => if h : (∃ k : J', ((k : GL (Fin a) F) : Matrix (Fin a) (Fin a) F) = Matrix.toRows₁ x) ∧
-      Matrix.toRows₂ x ∈ IIset O ϖ then ((ρ (Classical.choose h.1) : ℂˣ) : ℂ) else 0
+  by
+    classical
+    exact fun x => if h : (∃ k : J', ((k : GL (Fin a) F) : Matrix (Fin a) (Fin a) F) = Matrix.toRows₁ x) ∧
+        Matrix.toRows₂ x ∈ IIset O ϖ then ((ρ (Classical.choose h.1) : ℂˣ) : ℂ) else 0
 
 end DatumU
 

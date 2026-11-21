@@ -127,7 +127,7 @@ private theorem w_mem {R : Type*} [CommRing R] {O : Subring R} {a₁ a₂ a₃ a
       (mul_mem (mul_mem (C_mem n h₄) (pow_mem hX _)) (pow_mem ih _)))
       (mul_mem (mul_mem (C_mem n h₆) (pow_mem hX _)) (pow_mem ih _))))
 
-private theorem dX_eq {R : Type*} [CommRing R] (f : R⟦X⟧) : dX f = derivative R f := by
+private theorem dX_eq {R : Type*} [CommRing R] (f : R⟦X⟧) : dX f = derivative f := by
   ext n
   rw [coeff_derivative, dX, coeff_mk, mul_comm]
 
@@ -137,7 +137,7 @@ private theorem key {R : Type*} [CommRing R] {a₁ a₂ a₃ a₄ a₆ : R} {w :
     (1 - C a₁ * X - C a₂ * X ^ 2 - 2 * (C a₃ * X ^ 3 * w) - 2 * (C a₄ * X ^ 4 * w)
       - 3 * (C a₆ * X ^ 6 * w ^ 2)) * (-2 * w - X * dX w)
       = w * (C a₁ * X + C a₃ * X ^ 3 * w - 2) := by
-  have h := congrArg (derivative R) hw
+  have h := congrArg (derivative (R := R)) hw
   simp only [map_add (f := _), Derivation.leibniz, Derivation.leibniz_pow, derivative_C, derivative_X,
     Derivation.map_one_eq_zero, smul_eq_mul, nsmul_eq_mul] at h
   rw [dX_eq]

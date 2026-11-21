@@ -130,6 +130,7 @@ theorem int_iff (z : L) :
     exact (ia.mul hie).add (ib.mul hif)
 
 
+include hr e he h0 h1 in
 theorem selfDual_split (x : L) :
     (∀ y : L, IsIntegral 𝒪[K] y → Algebra.trace K L (x * y) ∈ 𝒪[K]) ↔ IsIntegral 𝒪[K] x := by
   have pe := pr_e hr e he h0 h1

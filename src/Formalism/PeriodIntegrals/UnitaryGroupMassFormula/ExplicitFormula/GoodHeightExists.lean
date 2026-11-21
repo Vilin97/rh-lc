@@ -20,7 +20,9 @@ abbrev mult (χ : DirichletCharacter ℂ N) (ρ : ℂ) : ℕ :=
   analyticOrderNatAt (DirichletCharacter.LFunction χ) ρ
 
 
-def eps0 (χ : DirichletCharacter ℂ N) : ℂ := if χ.Even ∧ χ ≠ 1 then 1 else 0
+def eps0 (χ : DirichletCharacter ℂ N) : ℂ := by
+  classical
+  exact if χ.Even ∧ χ ≠ 1 then 1 else 0
 
 
 def del1 (χ : DirichletCharacter ℂ N) : ℂ := if χ = 1 then 1 else 0

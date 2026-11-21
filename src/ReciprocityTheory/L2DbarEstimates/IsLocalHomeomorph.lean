@@ -48,15 +48,17 @@ def Holo {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n) (f : M → �
 
 
 def d {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n) (j : Fin n) (f : M → ℂ) (x : M) :
-    ℂ :=
-  if h : ∃ e : OpenPartialHomeomorph M (V n), IsChart n z e ∧ x ∈ e.source then
+    ℂ := by
+  classical
+  exact if h : ∃ e : OpenPartialHomeomorph M (V n), IsChart n z e ∧ x ∈ e.source then
     wd n j (f ∘ (Classical.choose h).symm) (z x)
   else 0
 
 
 def db {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n) (j : Fin n) (f : M → ℂ) (x : M) :
-    ℂ :=
-  if h : ∃ e : OpenPartialHomeomorph M (V n), IsChart n z e ∧ x ∈ e.source then
+    ℂ := by
+  classical
+  exact if h : ∃ e : OpenPartialHomeomorph M (V n), IsChart n z e ∧ x ∈ e.source then
     wdb n j (f ∘ (Classical.choose h).symm) (z x)
   else 0
 
@@ -86,8 +88,9 @@ def VolAdditive {M : Type*} [MeasurableSpace M] (n : ℕ) (z : M → V n) : Prop
     volFun n z (⋃ i, f i) = ∑' i, volFun n z (f i)
 
 
-def vol {M : Type*} [MeasurableSpace M] (n : ℕ) (z : M → V n) : Measure M :=
-  if h : VolAdditive n z then
+def vol {M : Type*} [MeasurableSpace M] (n : ℕ) (z : M → V n) : Measure M := by
+  classical
+  exact if h : VolAdditive n z then
     Measure.ofMeasurable (fun A _ => volFun n z A) (by simp [volFun]) (fun _ hf hd => h hf hd)
   else 0
 

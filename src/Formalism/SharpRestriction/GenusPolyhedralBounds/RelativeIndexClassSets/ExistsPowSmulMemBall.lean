@@ -31,7 +31,9 @@ attribute [instance] IsDVRAt.isDomain IsDVRAt.isDVR
 
 theorem comap_eq_maximalIdeal (ζ : Pts O A) :
     ζ.asIdeal.comap (algebraMap O ↥(As O A)) = maximalIdeal O :=
-  IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal ζ.asIdeal)
+  IsLocalRing.eq_maximalIdeal
+    (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap O ↥(As O A))
+      (fun x => Algebra.IsIntegral.isIntegral x) ζ.asIdeal)
 
 instance isLocalHom_algebraMap (ζ : Pts O A) : IsLocalHom (algebraMap O (Loc ζ)) := by
   constructor
@@ -54,7 +56,10 @@ def ordAt (ϖ : O) (ζ : Pts O A) (n : ℕ) (a : ↥(As O A)) : WithTop ℤ :=
 
 
 def ord (ϖ : O) (ζ : Pts O A) (x : A) : WithTop ℤ :=
-  if h : ∃ n : ℕ, ϖ ^ n • x ∈ As O A then ordAt ϖ ζ h.choose ⟨ϖ ^ h.choose • x, h.choose_spec⟩ else ⊤
+  by
+    classical
+    exact if h : ∃ n : ℕ, ϖ ^ n • x ∈ As O A then
+      ordAt ϖ ζ h.choose ⟨ϖ ^ h.choose • x, h.choose_spec⟩ else ⊤
 
 
 structure IsUnif (ϖ : O) : Prop where
@@ -66,7 +71,7 @@ structure IsUnif (ϖ : O) : Prop where
   denom : ∀ x : A, ∃ n : ℕ, ϖ ^ n • x ∈ As O A
 
 theorem isUnif_of_field (K : Type*) [Field K] [Algebra O K] [IsFractionRing O K] [Algebra K A]
-    [IsScalarTower O K A] [Algebra.IsIntegral K A] {ϖ : O} (hϖ : Irreducible ϖ) : IsUnif A ϖ where
+    [IsScalarTower O K A] [Algebra.IsIntegral K A] {ϖ : O} (hϖ : Irreducible ϖ) : IsUnif (A := A) ϖ where
   irreducible := hϖ
   isUnit := by
     rw [IsScalarTower.algebraMap_apply O K A]
@@ -125,7 +130,7 @@ section Ord
 
 variable {ϖ : O}
 
-theorem unif_mem_nonZeroDivisors (h : IsUnif A ϖ) :
+theorem unif_mem_nonZeroDivisors (h : IsUnif (A := A) ϖ) :
     algebraMap O ↥(As O A) ϖ ∈ nonZeroDivisors ↥(As O A) := by
   rw [mem_nonZeroDivisors_iff_right]
   intro b hb
@@ -134,23 +139,23 @@ theorem unif_mem_nonZeroDivisors (h : IsUnif A ϖ) :
     simpa using this
   exact Subtype.ext (by simpa using (h.isUnit.mul_left_eq_zero).1 h1)
 
-theorem unif_mem (h : IsUnif A ϖ) (ζ : Pts O A) : algebraMap O ↥(As O A) ϖ ∈ ζ.asIdeal := by
+theorem unif_mem (h : IsUnif (A := A) ϖ) (ζ : Pts O A) : algebraMap O ↥(As O A) ϖ ∈ ζ.asIdeal := by
   rw [← Ideal.mem_comap, comap_eq_maximalIdeal, IsLocalRing.mem_maximalIdeal]
   exact h.irreducible.not_isUnit
 
 variable (ζ : Pts O A) [IsDVRAt ζ]
 
-theorem coe_ep (h : IsUnif A ϖ) : (ep ϖ ζ : ℕ∞) = vL ζ (algebraMap O ↥(As O A) ϖ) :=
+theorem coe_ep (h : IsUnif (A := A) ϖ) : (ep ϖ ζ : ℕ∞) = vL ζ (algebraMap O ↥(As O A) ϖ) :=
   ENat.natCast_toNat (vL_ne_top ζ (unif_mem_nonZeroDivisors h))
 
-theorem ep_pos (h : IsUnif A ϖ) : 0 < ep ϖ ζ := by
+theorem ep_pos (h : IsUnif (A := A) ϖ) : 0 < ep ϖ ζ := by
   rw [Nat.pos_iff_ne_zero]
   intro h0
   have h1 := coe_ep ζ h
   rw [h0, Nat.cast_zero, eq_comm, vL_eq_zero_iff] at h1
   exact h1 (unif_mem h ζ)
 
-theorem ordAt_shift (h : IsUnif A ϖ) (n k : ℕ) (a : ↥(As O A)) :
+theorem ordAt_shift (h : IsUnif (A := A) ϖ) (n k : ℕ) (a : ↥(As O A)) :
     ordAt ϖ ζ (n + k) ((algebraMap O ↥(As O A) ϖ) ^ k * a) = ordAt ϖ ζ n a := by
   unfold ordAt
   rw [vL_mul, vL_pow, ← coe_ep ζ h]
@@ -165,7 +170,7 @@ theorem ordAt_shift (h : IsUnif A ϖ) (n k : ℕ) (a : ↥(As O A)) :
     push_cast
     ring
 
-theorem ordAt_indep (h : IsUnif A ϖ) {x : A} {n m : ℕ} (hn : ϖ ^ n • x ∈ As O A)
+theorem ordAt_indep (h : IsUnif (A := A) ϖ) {x : A} {n m : ℕ} (hn : ϖ ^ n • x ∈ As O A)
     (hm : ϖ ^ m • x ∈ As O A) :
     ordAt ϖ ζ n ⟨ϖ ^ n • x, hn⟩ = ordAt ϖ ζ m ⟨ϖ ^ m • x, hm⟩ := by
   rw [← ordAt_shift ζ h n m ⟨ϖ ^ n • x, hn⟩, ← ordAt_shift ζ h m n ⟨ϖ ^ m • x, hm⟩, add_comm m n]
@@ -176,35 +181,35 @@ theorem ordAt_indep (h : IsUnif A ϖ) {x : A} {n m : ℕ} (hn : ϖ ^ n • x ∈
   rw [this]
   ring
 
-theorem ord_eq (h : IsUnif A ϖ) {x : A} {n : ℕ} (hn : ϖ ^ n • x ∈ As O A) :
+theorem ord_eq (h : IsUnif (A := A) ϖ) {x : A} {n : ℕ} (hn : ϖ ^ n • x ∈ As O A) :
     ord ϖ ζ x = ordAt ϖ ζ n ⟨ϖ ^ n • x, hn⟩ := by
   have hex : ∃ n : ℕ, ϖ ^ n • x ∈ As O A := ⟨n, hn⟩
   rw [ord, dite_eq_left hex]
   exact ordAt_indep ζ h _ _
 
-theorem ord_of_mem (h : IsUnif A ϖ) {x : A} (hx : x ∈ As O A) :
+theorem ord_of_mem (h : IsUnif (A := A) ϖ) {x : A} (hx : x ∈ As O A) :
     ord ϖ ζ x = (vL ζ ⟨x, hx⟩).map (Nat.cast : ℕ → ℤ) := by
   have h0 : ϖ ^ 0 • x ∈ As O A := by simpa using hx
   rw [ord_eq ζ h h0]
   simp [ordAt]
 
-theorem ord_nonneg (h : IsUnif A ϖ) {x : A} (hx : x ∈ As O A) : 0 ≤ ord ϖ ζ x := by
+theorem ord_nonneg (h : IsUnif (A := A) ϖ) {x : A} (hx : x ∈ As O A) : 0 ≤ ord ϖ ζ x := by
   rw [ord_of_mem ζ h hx]
   exact ENat.map_natCast_nonneg
 
-theorem ord_unif (h : IsUnif A ϖ) : ord ϖ ζ (algebraMap O A ϖ) = ((ep ϖ ζ : ℤ) : WithTop ℤ) := by
+theorem ord_unif (h : IsUnif (A := A) ϖ) : ord ϖ ζ (algebraMap O A ϖ) = ((ep ϖ ζ : ℤ) : WithTop ℤ) := by
   have hm : algebraMap O A ϖ ∈ As O A := (algebraMap O ↥(As O A) ϖ).2
   rw [ord_of_mem ζ h hm]
   have : (⟨algebraMap O A ϖ, hm⟩ : ↥(As O A)) = algebraMap O ↥(As O A) ϖ :=
     rfl
   rw [this, ← coe_ep ζ h, ENat.map_natCast]
 
-theorem ord_zero (h : IsUnif A ϖ) : ord ϖ ζ 0 = ⊤ := by
+theorem ord_zero (h : IsUnif (A := A) ϖ) : ord ϖ ζ 0 = ⊤ := by
   rw [ord_of_mem ζ h (As O A).zero_mem]
   have : (⟨0, (As O A).zero_mem⟩ : ↥(As O A)) = 0 := rfl
   rw [this, vL_zero, ENat.map_top]
 
-theorem ord_one (h : IsUnif A ϖ) : ord ϖ ζ 1 = 0 := by
+theorem ord_one (h : IsUnif (A := A) ϖ) : ord ϖ ζ 1 = 0 := by
   rw [ord_of_mem ζ h (As O A).one_mem]
   have : (⟨1, (As O A).one_mem⟩ : ↥(As O A)) = 1 := rfl
   rw [this, vL_one]
@@ -225,7 +230,7 @@ theorem ordAt_mul (n m : ℕ) (a b : ↥(As O A)) :
     ring
   rw [h1, h2, add_add_add_comm]
 
-theorem ord_mul (h : IsUnif A ϖ) (x y : A) : ord ϖ ζ (x * y) = ord ϖ ζ x + ord ϖ ζ y := by
+theorem ord_mul (h : IsUnif (A := A) ϖ) (x y : A) : ord ϖ ζ (x * y) = ord ϖ ζ x + ord ϖ ζ y := by
   obtain ⟨n, hn⟩ := h.denom x
   obtain ⟨m, hm⟩ := h.denom y
   have e : ϖ ^ (n + m) • (x * y) = (ϖ ^ n • x) * (ϖ ^ m • y) := by
@@ -244,7 +249,7 @@ theorem ordAt_add (n : ℕ) (a b : ↥(As O A)) :
   rw [← hm.map_min]
   exact hm (vL_add ζ a b)
 
-theorem ord_add (h : IsUnif A ϖ) (x y : A) :
+theorem ord_add (h : IsUnif (A := A) ϖ) (x y : A) :
     min (ord ϖ ζ x) (ord ϖ ζ y) ≤ ord ϖ ζ (x + y) := by
   obtain ⟨n, hn⟩ := h.denom x
   obtain ⟨m, hm⟩ := h.denom y
@@ -259,7 +264,7 @@ theorem ord_add (h : IsUnif A ϖ) (x y : A) :
   congr 1
   exact Subtype.ext (smul_add _ _ _).symm
 
-theorem ord_ne_top (h : IsUnif A ϖ) {x : A} (hx : x ∈ nonZeroDivisors A) : ord ϖ ζ x ≠ ⊤ := by
+theorem ord_ne_top (h : IsUnif (A := A) ϖ) {x : A} (hx : x ∈ nonZeroDivisors A) : ord ϖ ζ x ≠ ⊤ := by
   obtain ⟨n, hn⟩ := h.denom x
   rw [ord_eq ζ h hn, ordAt]
   have h1 : (⟨ϖ ^ n • x, hn⟩ : ↥(As O A)) ∈ nonZeroDivisors ↥(As O A) := by
@@ -279,18 +284,18 @@ section Ord2
 
 variable {ϖ : O}
 
-theorem ord_pow (ζ : Pts O A) [IsDVRAt ζ] (h : IsUnif A ϖ) (x : A) (k : ℕ) :
+theorem ord_pow (ζ : Pts O A) [IsDVRAt ζ] (h : IsUnif (A := A) ϖ) (x : A) (k : ℕ) :
     ord ϖ ζ (x ^ k) = k • ord ϖ ζ x := by
   induction k with
   | zero => simp [ord_one ζ h]
   | succ k ih => rw [pow_succ, ord_mul ζ h, ih, succ_nsmul]
 
-theorem ord_pow_smul (ζ : Pts O A) [IsDVRAt ζ] (h : IsUnif A ϖ) (k : ℕ) (x : A) :
+theorem ord_pow_smul (ζ : Pts O A) [IsDVRAt ζ] (h : IsUnif (A := A) ϖ) (k : ℕ) (x : A) :
     ord ϖ ζ (ϖ ^ k • x) = (((k : ℤ) * (ep ϖ ζ : ℤ) : ℤ) : WithTop ℤ) + ord ϖ ζ x := by
   rw [Algebra.smul_def, map_pow, ord_mul ζ h, ord_pow ζ h, ord_unif ζ h]
   rw [← WithTop.coe_nsmul, nsmul_eq_mul]
 
-theorem ordAt_nonneg_iff (ζ : Pts O A) [IsDVRAt ζ] (h : IsUnif A ϖ) (n : ℕ) (a : ↥(As O A)) :
+theorem ordAt_nonneg_iff (ζ : Pts O A) [IsDVRAt ζ] (h : IsUnif (A := A) ϖ) (n : ℕ) (a : ↥(As O A)) :
     0 ≤ ordAt ϖ ζ n a ↔ vL ζ ((algebraMap O ↥(As O A) ϖ) ^ n) ≤ vL ζ a := by
   unfold ordAt
   rw [vL_pow, ← coe_ep ζ h]
@@ -311,7 +316,7 @@ theorem ordAt_nonneg_iff (ζ : Pts O A) [IsDVRAt ζ] (h : IsUnif A ϖ) (n : ℕ)
       push_cast at this
       linarith
 
-theorem mem_As_iff [∀ ζ : Pts O A, IsDVRAt ζ] (h : IsUnif A ϖ) (x : A) :
+theorem mem_As_iff [∀ ζ : Pts O A, IsDVRAt ζ] (h : IsUnif (A := A) ϖ) (x : A) :
     x ∈ As O A ↔ ∀ ζ : Pts O A, 0 ≤ ord ϖ ζ x := by
   refine ⟨fun hx ζ => ord_nonneg ζ h hx, fun hx => ?_⟩
   obtain ⟨n, hn⟩ := h.denom x
@@ -344,21 +349,21 @@ def IsGen (e : V) : Prop := Function.Bijective (fun a : A => a • e)
 
 def coord (e v : V) : A := Function.invFun (fun a : A => a • e) v
 
-theorem coord_smul_self {e : V} (he : IsGen A e) (v : V) : (coord e v : A) • e = v :=
+theorem coord_smul_self {e : V} (he : IsGen (A := A) e) (v : V) : (coord e v : A) • e = v :=
   Function.invFun_eq (f := fun a : A => a • e) (he.2 v)
 
-theorem coord_smul_gen {e : V} (he : IsGen A e) (a : A) : coord e (a • e) = a :=
+theorem coord_smul_gen {e : V} (he : IsGen (A := A) e) (a : A) : coord e (a • e) = a :=
   Function.leftInverse_invFun (f := fun a : A => a • e) he.1 a
 
-theorem coord_zero {e : V} (he : IsGen A e) : (coord e (0 : V) : A) = 0 := by
+theorem coord_zero {e : V} (he : IsGen (A := A) e) : (coord e (0 : V) : A) = 0 := by
   simpa using coord_smul_gen he (0 : A)
 
-theorem coord_add {e : V} (he : IsGen A e) (v w : V) :
+theorem coord_add {e : V} (he : IsGen (A := A) e) (v w : V) :
     (coord e (v + w) : A) = coord e v + coord e w := by
   conv_lhs => rw [← coord_smul_self he v, ← coord_smul_self he w, ← add_smul]
   exact coord_smul_gen he _
 
-theorem coord_smul {e : V} (he : IsGen A e) (a : A) (v : V) :
+theorem coord_smul {e : V} (he : IsGen (A := A) e) (a : A) (v : V) :
     (coord e (a • v) : A) = a * coord e v := by
   conv_lhs => rw [← coord_smul_self he v, smul_smul]
   exact coord_smul_gen he _
@@ -376,20 +381,20 @@ def ballO [Module O V] [IsScalarTower O A V] (ϖ : O) (e : V) (c : Pts O A → �
 
 variable {ϖ : O} {e : V} (c : Pts O A → ℤ)
 
-theorem ordV_zero (ζ : Pts O A) [IsDVRAt ζ] (h : IsUnif A ϖ) (he : IsGen A e) :
+theorem ordV_zero (ζ : Pts O A) [IsDVRAt ζ] (h : IsUnif (A := A) ϖ) (he : IsGen (A := A) e) :
     ordV ϖ ζ e c 0 = ⊤ := by
   rw [ordV, coord_zero he, ord_zero ζ h, top_add]
 
-theorem ordV_smul (ζ : Pts O A) [IsDVRAt ζ] (h : IsUnif A ϖ) (he : IsGen A e) (a : A) (v : V) :
+theorem ordV_smul (ζ : Pts O A) [IsDVRAt ζ] (h : IsUnif (A := A) ϖ) (he : IsGen (A := A) e) (a : A) (v : V) :
     ordV ϖ ζ e c (a • v) = ord ϖ ζ a + ordV ϖ ζ e c v := by
   rw [ordV, ordV, coord_smul he, ord_mul ζ h, add_assoc]
 
-theorem ordV_add (ζ : Pts O A) [IsDVRAt ζ] (h : IsUnif A ϖ) (he : IsGen A e) (v w : V) :
+theorem ordV_add (ζ : Pts O A) [IsDVRAt ζ] (h : IsUnif (A := A) ϖ) (he : IsGen (A := A) e) (v w : V) :
     min (ordV ϖ ζ e c v) (ordV ϖ ζ e c w) ≤ ordV ϖ ζ e c (v + w) := by
   rw [ordV, ordV, ordV, coord_add he, min_add_add_right]
   exact add_le_add_left (ord_add ζ h _ _) _
 
-theorem mem_ball_iff [∀ ζ : Pts O A, IsDVRAt ζ] (h : IsUnif A ϖ) (he : IsGen A e) (v : V) :
+theorem mem_ball_iff [∀ ζ : Pts O A, IsDVRAt ζ] (h : IsUnif (A := A) ϖ) (he : IsGen (A := A) e) (v : V) :
     v ∈ ball ϖ e c ↔ ∀ ζ : Pts O A, 0 ≤ ordV ϖ ζ e c v := by
   refine ⟨fun hv => ?_, fun hv => Submodule.subset_span hv⟩
   induction hv using Submodule.span_induction with
@@ -403,11 +408,11 @@ theorem mem_ball_iff [∀ ζ : Pts O A, IsDVRAt ζ] (h : IsUnif A ϖ) (he : IsGe
     exact add_nonneg (ord_nonneg ζ h a.2) (hx ζ)
 
 theorem mem_ballO_iff [Module O V] [IsScalarTower O A V] [∀ ζ : Pts O A, IsDVRAt ζ]
-    (h : IsUnif A ϖ) (he : IsGen A e) (v : V) :
+    (h : IsUnif (A := A) ϖ) (he : IsGen (A := A) e) (v : V) :
     v ∈ ballO ϖ e c ↔ ∀ ζ : Pts O A, 0 ≤ ordV ϖ ζ e c v :=
   mem_ball_iff c h he v
 
-theorem ball_mono [∀ ζ : Pts O A, IsDVRAt ζ] (h : IsUnif A ϖ) (he : IsGen A e)
+theorem ball_mono [∀ ζ : Pts O A, IsDVRAt ζ] (h : IsUnif (A := A) ϖ) (he : IsGen (A := A) e)
     {c c' : Pts O A → ℤ} (hc : c ≤ c') : ball ϖ e c ≤ ball ϖ e c' := by
   intro v hv
   rw [mem_ball_iff _ h he] at hv ⊢
@@ -445,13 +450,13 @@ section OrdZ
 
 variable {ϖ : O} (ζ : Pts O A) [IsDVRAt ζ]
 
-theorem ord_units_add_inv (h : IsUnif A ϖ) (u : Aˣ) :
+theorem ord_units_add_inv (h : IsUnif (A := A) ϖ) (u : Aˣ) :
     ord ϖ ζ (u : A) + ord ϖ ζ ((u⁻¹ : Aˣ) : A) = 0 := by
   rw [← ord_mul ζ h, Units.mul_inv, ord_one ζ h]
 
 def ordZ (ϖ : O) (ζ : Pts O A) (x : A) : ℤ := (ord ϖ ζ x).untopD 0
 
-theorem coe_ordZ (h : IsUnif A ϖ) {x : A} (hx : x ∈ nonZeroDivisors A) :
+theorem coe_ordZ (h : IsUnif (A := A) ϖ) {x : A} (hx : x ∈ nonZeroDivisors A) :
     ((ordZ ϖ ζ x : ℤ) : WithTop ℤ) = ord ϖ ζ x := by
   obtain ⟨z, hz⟩ := WithTop.ne_top_iff_exists.1 (ord_ne_top ζ h hx)
   rw [ordZ, ← hz]

@@ -16,7 +16,7 @@ variable {V F : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [Fie
 
 abbrev valI : Valuation F (WithZero (Multiplicative ℤ)) := (IsDiscreteValuationRing.maximalIdeal V).valuation F
 
-theorem exists_of_valI_le_one {x : F} (h : valI V x ≤ 1) : ∃ a : V, algebraMap V F a = x := by
+theorem exists_of_valI_le_one {x : F} (h : valI (V := V) x ≤ 1) : ∃ a : V, algebraMap V F a = x := by
   have hall : ∀ w : IsDedekindDomain.HeightOneSpectrum V, w = IsDiscreteValuationRing.maximalIdeal V := by
     intro w
     first
@@ -29,7 +29,8 @@ theorem exists_of_valI_le_one {x : F} (h : valI V x ≤ 1) : ∃ a : V, algebraM
 theorem exists_clear_col {n : ℕ} (A : Matrix (Fin (n + 1)) (Fin (n + 1)) F) (hA : A.det ≠ 0) :
     ∃ Q : Matrix (Fin (n + 1)) (Fin (n + 1)) V, IsUnit Q.det ∧
       ∀ i : Fin n, (Q.map (algebraMap V F) * A) i.succ 0 = 0 := by
-  obtain ⟨p, -, hp⟩ := Finset.exists_max_image Finset.univ (fun r => valI V (A r 0)) Finset.univ_nonempty
+  obtain ⟨p, -, hp⟩ := Finset.exists_max_image Finset.univ
+    (fun r => valI (V := V) (A r 0)) Finset.univ_nonempty
   have hcol : ∃ r, A r 0 ≠ 0 := by
     by_contra h
     push Not at h
@@ -39,14 +40,14 @@ theorem exists_clear_col {n : ℕ} (A : Matrix (Fin (n + 1)) (Fin (n + 1)) F) (h
     intro h0
     have := hp r (Finset.mem_univ _)
     rw [h0, map_zero] at this
-    exact hr ((valI V).zero_iff.1 (le_antisymm this zero_le))
+    exact hr ((valI (V := V)).zero_iff.1 (le_antisymm this zero_le))
   let σ : Equiv.Perm (Fin (n + 1)) := Equiv.swap 0 p
   let P : Matrix (Fin (n + 1)) (Fin (n + 1)) V := σ.toPEquiv.toMatrix
   have hc : ∀ i, ∃ a : V, algebraMap V F a = A (σ i) 0 / A p 0 := by
     intro i
     apply exists_of_valI_le_one
     rw [map_div₀]
-    have hpos : valI V (A p 0) ≠ 0 := by simpa using hp0
+    have hpos : valI (V := V) (A p 0) ≠ 0 := by simpa using hp0
     rw [div_le_one₀ (zero_lt_iff.2 hpos)]
     exact hp _ (Finset.mem_univ _)
   choose c hc using hc

@@ -269,7 +269,7 @@ theorem norm_tmul_add_tmul {θ : E} (h0 : θ ≠ 0) (hθ : cc θ = -θ) {d : max
 theorem algebraMap_norm_tensor (z : A ⊗[maximalRealSubfield E] E) :
     algebraMap A (A ⊗[maximalRealSubfield E] E) (Algebra.norm A z) =
       z * Algebra.TensorProduct.map (AlgHom.id A A) (IsCMField.complexConj E).toAlgHom z := by
-  obtain ⟨θ, h0, hθ⟩ := exists_cc_eq_neg E
+  obtain ⟨θ, h0, hθ⟩ := exists_cc_eq_neg (E := E)
   obtain ⟨b, hb0, hb1⟩ := exists_basis_one_imaginary h0 hθ
   obtain ⟨d, hd⟩ := exists_sq_real hθ
   refine algebraMap_norm_of_basis_one_sqrt (Algebra.TensorProduct.basis A b)

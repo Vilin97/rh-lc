@@ -8,6 +8,8 @@ public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.HasQExpa
 open UpperHalfPlane ModularForm Complex Function Filter PowerSeries
 open scoped Topology MatrixGroups Manifold Real ArithmeticFunction.sigma
 
+local notation "𝕢" => Periodic.qParam
+
 noncomputable section
 
 namespace GlobalTheory

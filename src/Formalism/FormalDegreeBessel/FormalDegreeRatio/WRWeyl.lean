@@ -235,18 +235,21 @@ theorem coef_contDiffAt {k : Fin m} {x : Fin m → ℂ} (hx : x ∈ OmX m) (j : 
 
 theorem opL_ev (k : Fin m) (j : Fin 6) (g : (Fin m → ℂ) → E) {x : Fin m → ℂ} (hx : x ∈ OmX m) :
     opL k j g =ᶠ[𝓝 x] fun y => coef k j y • Dop k j g y := by
+  classical
   have hev : ∀ᶠ y in 𝓝 x, y ∈ OmX m := (isOpen_omX m).mem_nhds hx
   match j with
   | 0 =>
     filter_upwards [hev] with y hy
     show pOp k g y = y k • wirt k g y
-    simp [pOp, hy]
+    change (if y ∈ OmX m then y k • wirt k g y else 0) = _
+    rw [if_pos hy]
   | 1 => exact Filter.Eventually.of_forall fun y => rfl
   | 2 => exact Filter.Eventually.of_forall fun y => rfl
   | 3 =>
     filter_upwards [hev] with y hy
     show pbOp k g y = star (y k) • wirtBar k g y
-    simp [pbOp, hy]
+    change (if y ∈ OmX m then star (y k) • wirtBar k g y else 0) = _
+    rw [if_pos hy]
   | 4 => exact Filter.Eventually.of_forall fun y => rfl
   | 5 => exact Filter.Eventually.of_forall fun y => rfl
 
@@ -256,11 +259,12 @@ theorem opL_on (k : Fin m) (j : Fin 6) (g : (Fin m → ℂ) → E) {x : Fin m �
 
 theorem opL_off (k : Fin m) (j : Fin 6) (g : (Fin m → ℂ) → E) {x : Fin m → ℂ} (hx : x ∉ OmX m)
     (h0 : g x = 0) : opL k j g x = 0 := by
+  classical
   match j with
-  | 0 => show pOp k g x = 0; simp [pOp, hx]
+  | 0 => show pOp k g x = 0; change (if x ∈ OmX m then x k • wirt k g x else 0) = 0; rw [if_neg hx]
   | 1 => show x k • g x = 0; rw [h0, smul_zero]
   | 2 => show (x k)⁻¹ • g x = 0; rw [h0, smul_zero]
-  | 3 => show pbOp k g x = 0; simp [pbOp, hx]
+  | 3 => show pbOp k g x = 0; change (if x ∈ OmX m then star (x k) • wirtBar k g x else 0) = 0; rw [if_neg hx]
   | 4 => show star (x k) • g x = 0; rw [h0, smul_zero]
   | 5 => show (star (x k))⁻¹ • g x = 0; rw [h0, smul_zero]
 
@@ -398,6 +402,7 @@ theorem commuting_functional_holds : CommFun := by
       opL_off k j _ hx (opL_off l i f hx (hf.2 x hx))]
 
 theorem weyl_functional_holds : WeylFun := by
+  classical
   intro m E _ _ l f hf
   have hr := reg_of_mem hf
   have h0 : ∀ x, x ∉ OmX m → f x = 0 := hf.2
@@ -426,7 +431,11 @@ theorem weyl_functional_holds : WeylFun := by
       change x l • (wirt l (coef l 1) x • f x + x l • wirt l f x) = x l • pOp l f x + x l • f x
       simp only [pOp, hx, if_true, hw, one_smul]
       rw [smul_add, add_comm]
-    · simp only [Pi.add_apply, pOp, cOp, hx, if_false, h0 x hx, smul_zero, add_zero]
+    · change opL l 0 (opL l 1 f) x = (opL l 1 (opL l 0 f) + opL l 1 f) x
+      rw [opL_off l 0 (opL l 1 f) hx (opL_off l 1 f hx (h0 x hx)),
+        Pi.add_apply, opL_off l 1 (opL l 0 f) hx (opL_off l 0 f hx (h0 x hx)),
+        opL_off l 1 f hx (h0 x hx)]
+      simp
   · funext x
     simp only [cbOp, cbiOp, smul_smul]
     by_cases h : x l = 0
@@ -451,6 +460,10 @@ theorem weyl_functional_holds : WeylFun := by
         star (x l) • pbOp l f x + star (x l) • f x
       simp only [pbOp, hx, if_true, hw, one_smul]
       rw [smul_add, add_comm]
-    · simp only [Pi.add_apply, pbOp, cbOp, hx, if_false, h0 x hx, smul_zero, add_zero]
+    · change opL l 3 (opL l 4 f) x = (opL l 4 (opL l 3 f) + opL l 4 f) x
+      rw [opL_off l 3 (opL l 4 f) hx (opL_off l 4 f hx (h0 x hx)),
+        Pi.add_apply, opL_off l 4 (opL l 3 f) hx (opL_off l 3 f hx (h0 x hx)),
+        opL_off l 4 f hx (h0 x hx)]
+      simp
 
 end Formalism.QuantumDeterminants

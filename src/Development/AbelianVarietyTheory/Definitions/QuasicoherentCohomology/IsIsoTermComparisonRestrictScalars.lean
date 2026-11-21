@@ -366,7 +366,7 @@ def cubeComplexMap {A B : Cube.{v} ι R} (φ : A ⟶ B) : cubeComplex A ⟶ cube
     rw [cubeComplex_d, cubeComplex_d]
     exact ModuleCat.hom_ext (LinearMap.ext fun x => (Cube.termMap_d φ p x).symm)
 
-
+variable (ι R) in
 def cubeFunctor : Cube.{v} ι R ⥤ CochainComplex (ModuleCat.{v} R) ℕ where
   obj := cubeComplex
   map := cubeComplexMap
@@ -386,7 +386,7 @@ theorem cechComplex_d (A : Cube.{v} ι R) (p : ℕ) :
 def cechComplexMap {A B : Cube.{v} ι R} (φ : A ⟶ B) : cechComplex A ⟶ cechComplex B :=
   CochainComplex.truncate.map (cubeComplexMap φ)
 
-
+variable (ι R) in
 def cechFunctor : Cube.{v} ι R ⥤ CochainComplex (ModuleCat.{v} R) ℕ where
   obj := cechComplex
   map := cechComplexMap
@@ -703,6 +703,10 @@ noncomputable def cubeExtendScalarsIso [LinearOrder ι] [Finite ι] {S : Type u'
     (f : R →+* S) (A : Cube.{v} ι R) :
     ((ModuleCat.extendScalars f).mapHomologicalComplex _).obj (cubeComplex A) ≅
       cubeComplex (A ⋙ ModuleCat.extendScalars f) :=
+  haveI : ∀ p, IsIso ((cubeComparison (ModuleCat.extendScalars f) A).f p) :=
+    Cube.isIso_termComparison (ModuleCat.extendScalars f) A
+  haveI := HomologicalComplex.Hom.isIso_of_components
+    (cubeComparison (ModuleCat.extendScalars f) A)
   asIso (cubeComparison _ A)
 
 noncomputable def cechExtendScalarsIso [LinearOrder ι] [Finite ι] {S : Type u'} [CommRing S]

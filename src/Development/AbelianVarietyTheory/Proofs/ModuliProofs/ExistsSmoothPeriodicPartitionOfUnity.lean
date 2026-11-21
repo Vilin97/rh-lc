@@ -5,7 +5,7 @@ public import Mathlib
 @[expose] public section
 
 open Complex Matrix
-open scoped ContDiff BigOperators Real Topology
+open scoped ContDiff BigOperators Real Topology Pointwise Manifold
 
 namespace GlobalTheory.PeriodicPartition
 

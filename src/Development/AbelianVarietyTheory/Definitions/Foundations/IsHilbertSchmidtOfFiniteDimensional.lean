@@ -24,18 +24,18 @@ variable {H K L : Type*}
 def stdIndex : Set H := (exists_hilbertBasis ℂ H).choose
 
 
-def stdBasis : HilbertBasis (stdIndex H) ℂ H := (exists_hilbertBasis ℂ H).choose_spec.choose
+def stdBasis : HilbertBasis (stdIndex (H := H)) ℂ H := (exists_hilbertBasis ℂ H).choose_spec.choose
 
 def IsHilbertSchmidt (T : H →L[ℂ] K) : Prop :=
-  Summable fun i => ‖T (stdBasis H i)‖ ^ 2
+  Summable fun i => ‖T (stdBasis (H := H) i)‖ ^ 2
 
-def hsNormSq (T : H →L[ℂ] K) : ℝ := ∑' i, ‖T (stdBasis H i)‖ ^ 2
+def hsNormSq (T : H →L[ℂ] K) : ℝ := ∑' i, ‖T (stdBasis (H := H) i)‖ ^ 2
 
 def IsTraceClass (T : H →L[ℂ] H) : Prop :=
   ∃ (n : ℕ) (B C : Fin n → (H →L[ℂ] H)),
     (∀ i, IsHilbertSchmidt (B i)) ∧ (∀ i, IsHilbertSchmidt (C i)) ∧ T = ∑ i, B i ∘L C i
 
-def trace (T : H →L[ℂ] H) : ℂ := ∑' i, ⟪stdBasis H i, T (stdBasis H i)⟫_ℂ
+def trace (T : H →L[ℂ] H) : ℂ := ∑' i, ⟪stdBasis (H := H) i, T (stdBasis (H := H) i)⟫_ℂ
 
 def HasTrace (T : H →L[ℂ] H) (c : ℂ) : Prop := IsTraceClass T ∧ trace T = c
 
@@ -65,7 +65,7 @@ theorem hasSum_adjoint (e : HilbertBasis ι ℂ H) (f : HilbertBasis κ ℂ K) {
 
 theorem hasSum_basis (e : HilbertBasis ι ℂ H) (e' : HilbertBasis κ ℂ H) {T : H →L[ℂ] K} {s : ℝ}
     (h : HasSum (fun i => ‖T (e i)‖ ^ 2) s) : HasSum (fun j => ‖T (e' j)‖ ^ 2) s := by
-  simpa using hasSum_adjoint (stdBasis K) e' (hasSum_adjoint e (stdBasis K) h)
+  simpa using hasSum_adjoint (stdBasis) e' (hasSum_adjoint e (stdBasis) h)
 
 theorem isHilbertSchmidt_iff (e : HilbertBasis ι ℂ H) {T : H →L[ℂ] K} :
     IsHilbertSchmidt T ↔ Summable fun i => ‖T (e i)‖ ^ 2 :=
@@ -104,10 +104,10 @@ theorem IsHilbertSchmidt.add {S T : H →L[ℂ] K} (hS : IsHilbertSchmidt S) (hT
     IsHilbertSchmidt (S + T) := by
   refine Summable.of_nonneg_of_le (fun _ => sq_nonneg _) (fun i => ?_)
     ((Summable.add hS hT).mul_left 2)
-  have h1 := norm_add_le (S (stdBasis H i)) (T (stdBasis H i))
+  have h1 := norm_add_le (S (stdBasis (H := H) i)) (T (stdBasis (H := H) i))
   have h2 := pow_le_pow_left₀ (norm_nonneg _) h1 2
   rw [add_apply]
-  nlinarith [sq_nonneg (‖S (stdBasis H i)‖ - ‖T (stdBasis H i)‖)]
+  nlinarith [sq_nonneg (‖S (stdBasis (H := H) i)‖ - ‖T (stdBasis (H := H) i)‖)]
 
 
 theorem IsHilbertSchmidt.smul {T : H →L[ℂ] K} (h : IsHilbertSchmidt T) (c : ℂ) :
@@ -117,7 +117,7 @@ theorem IsHilbertSchmidt.smul {T : H →L[ℂ] K} (h : IsHilbertSchmidt T) (c : 
 
 theorem isHilbertSchmidt_of_finiteDimensional [FiniteDimensional ℂ H] (T : H →L[ℂ] K) :
     IsHilbertSchmidt T := by
-  have : Finite (stdIndex H) := (stdBasis H).orthonormal.linearIndependent.finite
+  have : Finite (stdIndex (H := H)) := (stdBasis).orthonormal.linearIndependent.finite
   exact Summable.of_finite
 
 theorem exists_hasSum_comp (e : HilbertBasis ι ℂ H) (f : HilbertBasis κ ℂ K)
@@ -140,14 +140,14 @@ theorem exists_hasSum_comp (e : HilbertBasis ι ℂ H) (f : HilbertBasis κ ℂ 
 theorem hasSum_trace_comp (e : HilbertBasis ι ℂ H)
     {B : K →L[ℂ] H} {C : H →L[ℂ] K} (hB : IsHilbertSchmidt B) (hC : IsHilbertSchmidt C) :
     HasSum (fun i => ⟪e i, (B ∘L C) (e i)⟫_ℂ) (trace (B ∘L C)) := by
-  obtain ⟨s, h1, h2⟩ := exists_hasSum_comp e (stdBasis K) hB hC
-  obtain ⟨t, h3, h4⟩ := exists_hasSum_comp (stdBasis H) (stdBasis K) hB hC
+  obtain ⟨s, h1, h2⟩ := exists_hasSum_comp e (stdBasis) hB hC
+  obtain ⟨t, h3, h4⟩ := exists_hasSum_comp (stdBasis) (stdBasis) hB hC
   have : trace (B ∘L C) = s := h3.tsum_eq.trans (h4.unique h2)
   rw [this]; exact h1
 
 theorem trace_comp_comm {B : K →L[ℂ] H} {C : H →L[ℂ] K} (hB : IsHilbertSchmidt B)
     (hC : IsHilbertSchmidt C) : trace (B ∘L C) = trace (C ∘L B) := by
-  obtain ⟨t, h3, h4⟩ := exists_hasSum_comp (stdBasis H) (stdBasis K) hB hC
+  obtain ⟨t, h3, h4⟩ := exists_hasSum_comp (stdBasis) (stdBasis) hB hC
   exact h3.tsum_eq.trans h4.tsum_eq.symm
 
 theorem IsTraceClass.hasSum_trace {T : H →L[ℂ] H} (h : IsTraceClass T) (e : HilbertBasis ι ℂ H) :
@@ -160,7 +160,7 @@ theorem IsTraceClass.hasSum_trace {T : H →L[ℂ] H} (h : IsTraceClass T) (e : 
   have h2 : HasSum (fun i => ⟪e i, (∑ k, B k ∘L C k) (e i)⟫_ℂ) (∑ k, trace (B k ∘L C k)) := by
     simpa only [ContinuousLinearMap.sum_apply, inner_sum] using
       hasSum_sum fun k (_ : k ∈ Finset.univ) => hasSum_trace_comp e (hB k) (hC k)
-  rw [show trace (∑ k, B k ∘L C k) = _ from (key (stdBasis H)).tsum_eq]
+  rw [show trace (∑ k, B k ∘L C k) = _ from (key (stdBasis)).tsum_eq]
   exact h2
 
 theorem IsTraceClass.summable_norm {T : H →L[ℂ] H} (h : IsTraceClass T) (e : HilbertBasis ι ℂ H) :
@@ -189,7 +189,7 @@ theorem exists_comp_eq_of_norm_le {C : H →L[ℂ] K} {A : H →L[ℂ] L} (h : �
 theorem norm_sqrt_apply (C : H →L[ℂ] K) (x : H) :
     ‖(CFC.sqrt (adjoint C ∘L C) : H →L[ℂ] H) x‖ = ‖C x‖ := by
   have hp : (0 : H →L[ℂ] H) ≤ adjoint C ∘L C :=
-    (nonneg_iff_isPositive _).2 (isPositive_adjoint_comp_self C)
+    (nonneg_iff_isPositive).2 (isPositive_adjoint_comp_self C)
   set A : H →L[ℂ] H := CFC.sqrt (adjoint C ∘L C)
   have hA : IsSelfAdjoint A := IsSelfAdjoint.of_nonneg (CFC.sqrt_nonneg _)
   have h2 : A * A = adjoint C ∘L C := CFC.sqrt_mul_sqrt_self _ hp
@@ -255,12 +255,12 @@ theorem IsTraceClass.isHilbertSchmidt {T : H →L[ℂ] H} (h : IsTraceClass T) :
 
 theorem trace_add {S T : H →L[ℂ] H} (hS : IsTraceClass S) (hT : IsTraceClass T) :
     trace (S + T) = trace S + trace T := by
-  have := (hS.hasSum_trace (stdBasis H)).add (hT.hasSum_trace (stdBasis H))
+  have := (hS.hasSum_trace (stdBasis)).add (hT.hasSum_trace (stdBasis))
   simpa only [trace, add_apply, inner_add_right] using this.tsum_eq
 
 theorem trace_sum {α : Type*} (s : Finset α) {T : α → (H →L[ℂ] H)}
     (h : ∀ a ∈ s, IsTraceClass (T a)) : trace (∑ a ∈ s, T a) = ∑ a ∈ s, trace (T a) := by
-  have := hasSum_sum fun a (ha : a ∈ s) => (h a ha).hasSum_trace (stdBasis H)
+  have := hasSum_sum fun a (ha : a ∈ s) => (h a ha).hasSum_trace (stdBasis)
   simpa only [trace, ContinuousLinearMap.sum_apply, inner_sum] using this.tsum_eq
 
 theorem trace_smul (c : ℂ) (T : H →L[ℂ] H) : trace (c • T) = c * trace T := by
@@ -358,8 +358,9 @@ def IsRepOp (π : G →* (H →L[ℂ] H)) (μ : Measure G) (f : G → ℂ) (T : 
   ∀ v, Integrable (fun g => f g • π g v) μ ∧ T v = ∫ g, f g • π g v ∂μ
 
 
-def repOp (π : G →* (H →L[ℂ] H)) (μ : Measure G) (f : G → ℂ) : H →L[ℂ] H :=
-  if h : ∃ T, IsRepOp π μ f T then h.choose else 0
+def repOp (π : G →* (H →L[ℂ] H)) (μ : Measure G) (f : G → ℂ) : H →L[ℂ] H := by
+  classical
+  exact if h : ∃ T, IsRepOp π μ f T then h.choose else 0
 
 def repTrace (π : G →* (H →L[ℂ] H)) (μ : Measure G) (f : G → ℂ) : ℂ := trace (repOp π μ f)
 
@@ -662,8 +663,9 @@ theorem isOpen_leftStabilizer [IsTopologicalGroup G] {f : G → ℂ} (hf : IsLoc
 variable [MeasurableSpace G]
 
 
-def smoothOp (ρ : Representation ℂ G V) (μ : Measure G) (f : G → ℂ) : V →ₗ[ℂ] V :=
-  if h : ∃ T : V →ₗ[ℂ] V, ∀ v, T v = lcIntegral μ fun g => f g • ρ g v then h.choose else 0
+def smoothOp (ρ : Representation ℂ G V) (μ : Measure G) (f : G → ℂ) : V →ₗ[ℂ] V := by
+  classical
+  exact if h : ∃ T : V →ₗ[ℂ] V, ∀ v, T v = lcIntegral μ fun g => f g • ρ g v then h.choose else 0
 
 def smoothTrace (ρ : Representation ℂ G V) (μ : Measure G) (f : G → ℂ) : ℂ :=
   finRankTrace (smoothOp ρ μ f)

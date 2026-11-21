@@ -47,7 +47,7 @@ def LabelMapEquivariant {C : LabelConv K} (O : LabelMap K C) : Prop :=
 variable {K} {C : LabelConv K}
 
 def labO (O : LabelMap K C) {κ : Type} [Fintype κ] [DecidableEq κ] (σ : FDRep ℂ (GL κ K)) : K[X] :=
-  O.lab (Fintype.card κ) (transp (Fintype.equivFin κ) σ)
+  O.lab (Fintype.card κ) (transp K (Fintype.equivFin κ) σ)
 
 def HasLabelO (O : LabelMap K C) {ι : Type} [Fintype ι] [DecidableEq ι] (τ : FDRep ℂ (GL ι K))
     (f : K[X]) : Prop :=

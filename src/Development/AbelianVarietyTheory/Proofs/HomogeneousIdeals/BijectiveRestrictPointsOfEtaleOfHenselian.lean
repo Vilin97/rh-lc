@@ -269,14 +269,14 @@ theorem exists_algHom_lift_of_henselian {B A : Type*} {R K : Type u} [CommRing B
   have hc : (π : R →+* K).comp (algebraMap B R) = algebraMap B K := π.comp_algebraMap
   have H := ((HenselianLocalRing.TFAE R).out 1 3).mp ‹HenselianLocalRing R›
   obtain ⟨a, ha, ha'⟩ := H (π : R →+* K) hπ (P.f.map (algebraMap B R)) (P.monic_f.map _) (φ' P.x)
-    (by rw [eval₂_map, hc]; exact hx.1)
-    (by rw [derivative_map, eval₂_map, hc]; exact hx.isUnit_derivative_f.ne_zero)
+    (by rw [Polynomial.eval₂_map, hc]; exact hx.1)
+    (by rw [Polynomial.derivative_map, Polynomial.eval₂_map, hc]; exact hx.isUnit_derivative_f.ne_zero)
   replace ha' : π a = φ' P.x := ha'
   have hloc : IsLocalHom (π : R →+* K) := .of_surjective _ hπ
   have hA : P.HasMap a := by
-    refine ⟨by rwa [aeval_def, ← Polynomial.eval_map], ?_⟩
+    refine ⟨by rwa [Polynomial.aeval_def, ← Polynomial.eval_map], ?_⟩
     refine IsUnit.of_map (π : R →+* K) _ ?_
-    rw [RingHom.coe_coe, ← aeval_algHom_apply, ha']
+    rw [RingHom.coe_coe, ← Polynomial.aeval_algHom_apply, ha']
     exact hx.2
   refine ⟨((P.lift a hA).comp P.equivRing.toAlgHom).comp (IsScalarTower.toAlgHom B A _), ?_⟩
   rw [← hφ', ← AlgHom.comp_assoc]

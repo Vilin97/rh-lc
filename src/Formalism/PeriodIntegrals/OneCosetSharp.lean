@@ -125,8 +125,9 @@ def Allow (k₀ m t N p p' : ℕ) : Prop :=
   else p < k₀ + m - 1 ∨ (p < N ∧ (p - (k₀ + m - 1)) / t ≤ (p' - (k₀ + m - 1)) / t)
 
 
-def PhiS {k : Type} [Field k] (ψ₀ : AddChar k ℂ) (χ : ℕ → kˣ →* ℂˣ) (k₀ m t j n' c n : ℕ) : SF k ℂ (n' + (c + 1)) (n + c) :=
-  fun x =>
+def PhiS {k : Type} [Field k] (ψ₀ : AddChar k ℂ) (χ : ℕ → kˣ →* ℂˣ) (k₀ m t j n' c n : ℕ) : SF k ℂ (n' + (c + 1)) (n + c) := by
+  classical
+  exact fun x =>
     let M := ent k₀ (c + 1) n' c n x
     let r := k₀ + m - 1
     let a := r + (j - 1) * t

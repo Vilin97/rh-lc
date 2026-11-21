@@ -138,9 +138,9 @@ theorem reverse_charpoly_eq_of_trace_pow_eq [CharZero k] (A : Module.End k W)
   have hP : PowerSeries.constantCoeff P = 1 := constantCoeff_reverse_charpoly A
   have hQ : PowerSeries.constantCoeff Q = 1 := constantCoeff_reverse_charpoly B
   have hQQ : Q⁻¹ * Q = 1 := PowerSeries.inv_mul_cancel Q (by rw [hQ]; exact one_ne_zero)
-  have hdP : PowerSeries.derivative k P = -P * D := by
+  have hdP : PowerSeries.derivative P = -P * D := by
     rw [hPdef, PowerSeries.derivative_coe, coe_derivative_reverse_charpoly]
-  have hdQ : PowerSeries.derivative k Q = -Q * D := by
+  have hdQ : PowerSeries.derivative Q = -Q * D := by
     rw [hQdef, PowerSeries.derivative_coe, coe_derivative_reverse_charpoly]
     congr 2
     funext m

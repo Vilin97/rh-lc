@@ -160,6 +160,7 @@ def Hecke (k : Type) [CommRing k] (K : Subgroup G) : Submodule k (G → k) where
   carrier := {f | IsBiInv K f ∧ FinDosetSupp K f}
   zero_mem' := ⟨fun _ _ _ => rfl, ⟨∅, fun g h => (h rfl).elim⟩⟩
   add_mem' := by
+    classical
     rintro f f' ⟨hf, S, hS⟩ ⟨hf', S', hS'⟩
     refine ⟨fun a b g => by simp [hf a b g, hf' a b g], S ∪ S', fun g hg => ?_⟩
     by_cases h : f g = 0

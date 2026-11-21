@@ -78,9 +78,9 @@ theorem Z_ne' (i : Fin m) : Z i (π i) ≠ 0 := (hZ i (π i)).mpr (hπ i).symm
 def Zi : Matrix (Fin m) (Fin m) ℂ := Matrix.of fun b c => if b = π c then (Z c b)⁻¹ else 0
 
 theorem Z_mul_Zi : Z * Zi π Z = 1 := by
-  ext i k
-  simp only [mul_apply, Zi, of_apply, mul_ite, mul_zero, Finset.sum_ite_eq',
-    Finset.mem_univ, if_true, one_apply]
+  refine Matrix.ext fun i k => ?_
+  rw [Matrix.mul_apply, Matrix.one_apply]
+  simp only [Zi, of_apply, mul_ite, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
   by_cases hik : i = k
   · subst hik
     rw [if_pos rfl]

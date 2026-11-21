@@ -268,6 +268,7 @@ theorem LFunction_eq (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q) (hχ :
   rfl
 
 end LLeft
+open LLeft
 
 
 theorem norm_LFunction_le_poly_left :
@@ -276,7 +277,7 @@ theorem norm_LFunction_le_poly_left :
   set Z : ℝ := ∑' n : ℕ, ((n : ℝ) + 1) ^ (-(9 / 8 : ℝ)) with hZ
   have hZ0 : 0 ≤ Z := tsum_nonneg fun n => by positivity
   refine ⟨15 + 64 * Z, by positivity, fun q _ χ hχ s hs => ?_⟩
-  obtain ⟨b, μ₁, μ₂, μ₃, hb, m₁, m₂, m₃, he⟩ := LFunction_eq q χ hχ
+  obtain ⟨b, μ₁, μ₂, μ₃, hb, m₁, m₂, m₃, he⟩ := LLeft.LFunction_eq q χ hχ
   have hq : (1 : ℝ) ≤ q := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne q)
   have hn := norm_nonneg s
   set A : ℝ := (q : ℝ) ^ 4 with hA

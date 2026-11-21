@@ -6,7 +6,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousFo
 @[expose] public section
 
 open MeasureTheory Complex Matrix GlobalTheory.RealWeil
-open scoped RealInnerProductSpace ContDiff Real ComplexOrder
+open scoped RealInnerProductSpace ContDiff Real ComplexOrder MatrixOrder
 
 namespace GlobalTheory
 

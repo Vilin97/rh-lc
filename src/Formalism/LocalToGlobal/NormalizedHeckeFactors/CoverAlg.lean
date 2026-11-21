@@ -10,6 +10,7 @@ noncomputable section
 namespace Formalism.L2.NCov
 
 open Module Module.End
+open scoped IsMulCommutative
 
 section Ops
 
@@ -343,7 +344,10 @@ theorem exists_pt_of_isMaximal [FiniteDimensional K V] (hinj : Function.Injectiv
   obtain ⟨F, hF, htop⟩ := exists_finset_pts hinj hS hsplit hint
   by_contra hne
   push Not at hne
-  letI : CommRing (Algebra.adjoin O S) := Algebra.adjoinCommRingOfComm O fun a ha b hb => (hS a ha b hb).eq
+  letI : IsMulCommutative (Algebra.adjoin O S) :=
+    Algebra.isMulCommutative_adjoin O fun a ha b hb _ => hS a ha b hb
+  letI : CommRing (Algebra.adjoin O S) := by
+    infer_instance
   set F' := F.filter (fun ψ => W _ (pt ψ) ≠ ⊥) with hF'
   have ht : ∃ t ∈ 𝔪, ∀ ψ ∈ F', IsUnit (ψ t) := by
     rcases F'.eq_empty_or_nonempty with h0 | ⟨a, ha⟩
@@ -352,7 +356,9 @@ theorem exists_pt_of_isMaximal [FiniteDimensional K V] (hinj : Function.Injectiv
           ((cls ψ : Ideal (Algebra.adjoin O S)) : Set (Algebra.adjoin O S))) := by
         intro hsub
         obtain ⟨ψ, hψ, hle⟩ :=
-          (Ideal.subset_union_prime a a (fun ψ _ _ _ => (cls_isMaximal ψ).isPrime)).1 hsub
+          (Ideal.subset_union_prime (R := Algebra.adjoin O S) (s := F')
+            (f := fun ψ => cls ψ) (I := 𝔪) a a
+            (fun ψ _ _ _ => (cls_isMaximal ψ).isPrime)).1 hsub
         exact hne ψ (Finset.mem_filter.1 hψ).2 (h𝔪.eq_of_le (cls_isMaximal ψ).ne_top hle).symm
       simp only [Set.not_subset, Set.mem_iUnion, not_exists] at hcov
       obtain ⟨t, htm, ht⟩ := hcov
@@ -401,7 +407,9 @@ theorem exists_pt_of_isMaximal [FiniteDimensional K V] (hinj : Function.Injectiv
   have hunitT : IsUnit t := by
     have h : t * (aeval t P.divX * algebraMap O _ (-↑u⁻¹)) = 1 := by
       rw [← mul_assoc, e, ← map_neg, ← map_mul, neg_mul_neg, Units.mul_inv, map_one]
-    exact ⟨⟨t, _, h, (mul_comm _ t).trans h⟩, rfl⟩
+    exact ⟨⟨t, _, h, calc
+      _ = t * (aeval t P.divX * algebraMap O _ (-↑u⁻¹)) := mul_comm _ _
+      _ = 1 := h⟩, rfl⟩
   exact h𝔪.ne_top (Ideal.eq_top_of_isUnit_mem 𝔪 htm hunitT)
 
 theorem isCompl_part_off [FiniteDimensional K V] (hinj : Function.Injective (algebraMap O K))

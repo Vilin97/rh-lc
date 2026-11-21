@@ -93,7 +93,7 @@ theorem measure_le_of_ae_unique_of_ae_covers [Countable G] [MeasurableConstSMul 
     (hc : ∀ᵐ x ∂μ, x ∈ S → ∃ g : G, g • x ∈ B) : μ S ≤ μ B := by
   classical
   obtain ⟨e, he⟩ := exists_injective_nat G
-  have hq : ∀ g : G, Measure.QuasiMeasurePreserving (g • · : X → X) μ μ := fun g =>
+  have hq : ∀ g : G, QuasiMeasurePreserving (g • · : X → X) μ μ := fun g =>
     (measurePreserving_smul g μ).quasiMeasurePreserving
   let P : G → Set X := fun g => (S ∩ (g • ·) ⁻¹' B) \ ⋃ h, ⋃ (_ : e h < e g), (h • ·) ⁻¹' B
   have hPm : ∀ g, NullMeasurableSet (P g) μ := fun g =>

@@ -15,17 +15,19 @@ variable {K : Type*} [Field K]
 
 
 def HasRationalTorsion (W : WeierstrassCurve K) (L : Type*) [Field L] [Algebra K L] (n : ℕ) :
-    Prop :=
-  ∀ (x y : L) (h : (W.baseChange L).toAffine.Nonsingular x y), n • Point.some x y h = 0 →
+    Prop := by
+  classical
+  exact ∀ (x y : L) (h : (W.baseChange L).toAffine.Nonsingular x y), n • Point.some x y h = 0 →
     x ∈ (algebraMap K L).range ∧ y ∈ (algebraMap K L).range
 
 variable {W : WeierstrassCurve K} {L : Type*} [Field L] [Algebra K L] {m n : ℕ}
 
-theorem hasRationalTorsion_iff [DecidableEq L] : HasRationalTorsion W L n ↔
+theorem hasRationalTorsion_iff [inst : DecidableEq L] : HasRationalTorsion W L n ↔
     ∀ (x y : L) (h : (W.baseChange L).toAffine.Nonsingular x y), n • Point.some x y h = 0 →
       x ∈ (algebraMap K L).range ∧ y ∈ (algebraMap K L).range := by
-  unfold HasRationalTorsion
-  convert Iff.rfl
+  have h : inst = Classical.decEq L := Subsingleton.elim _ _
+  subst inst
+  rfl
 
 theorem HasRationalTorsion.of_dvd (h : HasRationalTorsion W L n) (hmn : m ∣ n) :
     HasRationalTorsion W L m := by

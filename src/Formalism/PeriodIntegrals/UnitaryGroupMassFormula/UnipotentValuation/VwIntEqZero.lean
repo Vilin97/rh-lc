@@ -59,7 +59,7 @@ theorem part1 (w : HeightOneSpectrum (𝓞 K)) (n : ℕ) (hn : n ≠ 0) :
     exact hn (by simpa using hm)
   have hpm : ¬ plc w ∣ m := by
     rintro ⟨c, rfl⟩
-    exact pow_succ_padicValNat_not_dvd hn ⟨c, hm.trans (by ring)⟩
+    exact pow_succ_multiplicity_not_dvd hn ⟨c, hm.trans (by rw [← Nat.padicValNat_def]; ring)⟩
   have hmw : ((m : 𝓞 K)) ∉ w.asIdeal := by
     rw [natCast_mem_iff]
     exact hpm
@@ -78,11 +78,11 @@ theorem part1 (w : HeightOneSpectrum (𝓞 K)) (n : ℕ) (hn : n ≠ 0) :
 
 lemma pv_prime (l g : ℕ) (hl : l.Prime) (hg : g.Prime) :
     padicValNat l g = if l = g then 1 else 0 := by
-  haveI : Fact l.Prime := ⟨hl⟩
+  rw [Nat.padicValNat_def]
   split_ifs with h
   · rw [h]
-    exact padicValNat.self hg.one_lt
-  · exact padicValNat.eq_zero_of_not_dvd fun hd => h ((Nat.prime_dvd_prime_iff_eq hl hg).mp hd)
+    exact Nat.multiplicity_self hg.one_lt
+  · exact multiplicity_eq_zero_of_not_dvd fun hd => h ((Nat.prime_dvd_prime_iff_eq hl hg).mp hd)
 
 theorem part2 (w : HeightOneSpectrum (𝓞 K)) (g₁ g₂ a : ℕ) (h1 : g₁.Prime) (h2 : g₂.Prime)
     (h12 : g₁ ≠ g₂) :
@@ -92,8 +92,9 @@ theorem part2 (w : HeightOneSpectrum (𝓞 K)) (g₁ g₂ a : ℕ) (h1 : g₁.Pr
   haveI : Fact (plc w).Prime := ⟨hp⟩
   have ha1 : g₁ ^ a ≠ 0 := pow_ne_zero _ h1.ne_zero
   have ha2 : g₂ ^ a ≠ 0 := pow_ne_zero _ h2.ne_zero
-  rw [part1 w _ (mul_ne_zero ha1 ha2), (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) ha1 ha2, padicValNat.pow g₁ a,
-    padicValNat.pow g₂ a, pv_prime _ _ hp h1, pv_prime _ _ hp h2]
+  rw [part1 w _ (mul_ne_zero ha1 ha2), Nat.padicValNat_def, Nat.multiplicity_mul ha1 ha2,
+    Nat.multiplicity_pow g₁ a, Nat.multiplicity_pow g₂ a]
+  simp only [← Nat.padicValNat_def, pv_prime _ _ hp h1, pv_prime _ _ hp h2]
   by_cases e1 : plc w = g₁
   · have e2 : plc w ≠ g₂ := fun e => h12 (e1.symm.trans e)
     rw [if_pos e1, if_neg e2, if_pos (Or.inl e1)]

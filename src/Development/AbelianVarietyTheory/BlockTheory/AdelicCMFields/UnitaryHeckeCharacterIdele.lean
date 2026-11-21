@@ -160,8 +160,8 @@ def finiteAdeleMap : FiniteAdeleRing (𝓞 K) K →+* FiniteAdeleRing (𝓞 L) L
     (Eventually.of_forall (finiteCompletionMap_mapsTo K L))
 
 def infiniteAdeleMap : InfiniteAdeleRing K →+* InfiniteAdeleRing L :=
-  Pi.ringHom fun w : InfinitePlace L =>
-    (LiesOver.completionMap (v := w.comap (algebraMap K L)) (w := w)).comp
+  RingHom.pi fun w : InfinitePlace L =>
+    (AbsoluteValue.Completion.map (w.comap (algebraMap K L)).1 w.1).comp
       (Pi.evalRingHom (fun v : InfinitePlace K => v.Completion) (w.comap (algebraMap K L)))
 
 def adeleMap : AdeleRing (𝓞 K) K →+* AdeleRing (𝓞 L) L :=
@@ -175,16 +175,28 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdel
       algebraMap L (AdeleRing (𝓞 L) L) (algebraMap K L x) := by
   refine Prod.ext ?_ ?_
   · funext w
-    exact LiesOver.completionMap_coe _
+    let v := w.comap (algebraMap K L)
+    change AbsoluteValue.Completion.map v.1 w.1 ((algebraMap K (AdeleRing (𝓞 K) K) x).1 v) =
+      (algebraMap L (AdeleRing (𝓞 L) L) (algebraMap K L x)).1 w
+    rw [AdeleRing.algebraMap_fst_apply, AdeleRing.algebraMap_fst_apply]
+    exact AbsoluteValue.Completion.map_coe v.1 w.1 ((WithAbs.equiv v.1).symm x)
   · ext w : 1
     exact _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.finiteCompletionMap_coe K L w x
 
 open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum Filter in
 open scoped RestrictedProduct in
 variable (K L : Type) [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L] in
-theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.continuous_adeleMap : Continuous (_root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.adeleMap K L) :=
-  (continuous_pi fun w => LiesOver.continuous_completionMap.comp (continuous_apply _)).prodMap
-    (RestrictedProduct.mapAlong_continuous _ _ _
+theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.continuous_adeleMap : Continuous (_root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.adeleMap K L) := by
+  have hinf : Continuous (infiniteAdeleMap K L) := by
+    apply continuous_pi
+    intro w
+    let v := w.comap (algebraMap K L)
+    exact (AbsoluteValue.Completion.continuous_map v.1 w.1).comp
+      (continuous_apply (A := fun v : InfinitePlace K => v.Completion) v)
+  exact hinf.prodMap
+    (RestrictedProduct.mapAlong_continuous _ _
+      (A₁ := fun v => (v.adicCompletionIntegers K : Set _))
+      (A₂ := fun w => (w.adicCompletionIntegers L : Set _)) _
       (_root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.tendsto_under K L) _
       (Eventually.of_forall (_root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.finiteCompletionMap_mapsTo K L))
       fun w => _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.continuous_finiteCompletionMap K L w)
@@ -224,6 +236,7 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdel
 variable {E : Type} [Field E] [NumberField E]
 
 
+open scoped Classical in
 def localIdele (P : HeightOneSpectrum (𝓞 E)) : (P.adicCompletion E)ˣ →* Idele E :=
   Units.map ((MonoidHom.inr (InfiniteAdeleRing E) (FiniteAdeleRing (𝓞 E) E)).comp
     { toFun := fun x => RestrictedProduct.mulSingle
@@ -232,6 +245,7 @@ def localIdele (P : HeightOneSpectrum (𝓞 E)) : (P.adicCompletion E)ˣ →* Id
       map_mul' := RestrictedProduct.mulSingle_mul _ _ })
 
 
+variable (E) in
 @[ext]
 structure UnitaryHeckeChar where
 
@@ -275,6 +289,7 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdel
 namespace UnitaryHeckeChar
 
 
+open scoped Classical in
 def valueAt (χ : UnitaryHeckeChar E) (P : HeightOneSpectrum (𝓞 E)) : ℂ :=
   if χ.IsUnramifiedAt P then (χ.localComponent P (exists_isUniformiser P).choose : ℂ) else 0
 
@@ -425,7 +440,9 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdel
       ∏ w : InfinitePlace E, w (x : E) ^ w.mult :=
     Finset.prod_congr rfl fun v _ => by
       congr 1
-      exact InfinitePlace.Completion.norm_coe v ((WithAbs.equiv v.1).symm (x : E))
+      change ‖(algebraMap E (AdeleRing (𝓞 E) E) (x : E)).1 v‖ = v (x : E)
+      rw [AdeleRing.algebraMap_fst_apply]
+      exact AbsoluteValue.Completion.norm_coe ((WithAbs.equiv v.1).symm (x : E))
   have hfin : _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.finiteIdeleNorm (_root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.principalIdele E x) =
       ∏ᶠ w : FinitePlace E, w (x : E) := by
     refine (finprod_congr fun P => ?_).trans (finprod_comp_equiv
@@ -471,6 +488,7 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdel
 namespace UnitaryHeckeChar
 
 
+variable (E) in
 def normPow (t : ℝ) : UnitaryHeckeChar E where
   toHom :=
     { toFun := fun x => Circle.exp (t * Real.log (ideleNorm x))
@@ -516,8 +534,6 @@ private theorem norm_uniformiser_eq_absNorm_inv {P : HeightOneSpectrum (𝓞 E)}
     {ϖ : (P.adicCompletion E)ˣ} (hϖ : _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.IsUniformiser P ϖ) :
     ‖(ϖ : P.adicCompletion E)‖ = (Ideal.absNorm P.asIdeal : ℝ)⁻¹ := by
   rw [FinitePlace.norm_def, hϖ, WithZeroMulInt.toNNReal_neg_apply _ WithZero.exp_ne_zero]
-  simp only [show ∀ hx, Multiplicative.toAdd (WithZero.unzero (x := WithZero.exp (-1 : ℤ)) hx) = -1
-    from fun _ => rfl]
   simp
 
 

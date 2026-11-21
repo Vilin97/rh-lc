@@ -84,7 +84,9 @@ noncomputable def coords (g : MvPolynomial σ R →ₐ[R] A) (p : A →ₐ[R] C)
 omit [TopologicalSpace C] in
 theorem aeval_coords (g : MvPolynomial σ R →ₐ[R] A) (p : A →ₐ[R] C) (q : MvPolynomial σ R) :
     aeval (coords g p) q = p (g q) := by
-  have : (aeval (coords g p) : MvPolynomial σ R →ₐ[R] C) = p.comp g := by ext i; simp
+  have : (aeval (coords g p) : MvPolynomial σ R →ₐ[R] C) = p.comp g := by
+    ext i
+    simp [coords]
   rw [this]; rfl
 
 theorem continuous_coords (g : MvPolynomial σ R →ₐ[R] A) :
@@ -145,7 +147,8 @@ theorem isClosedEmbedding_comap [T1Space C] (φ : A →ₐ[R] B) (hφ : Function
 theorem isClosedEmbedding_coords [T1Space C] [IsTopologicalRing C]
     (g : MvPolynomial σ R →ₐ[R] A) (hg : Function.Surjective g) :
     IsClosedEmbedding (coords g : (A →ₐ[R] C) → σ → C) :=
-  (mvPolynomialHomeomorph R C σ).isClosedEmbedding.comp (isClosedEmbedding_comap g hg)
+  (mvPolynomialHomeomorph (R := R) (C := C) (σ := σ)).isClosedEmbedding.comp
+    (isClosedEmbedding_comap g hg)
 
 end Comm
 

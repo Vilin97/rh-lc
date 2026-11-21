@@ -6,7 +6,7 @@ public import Formalism.GaloisIrreducibility.Statement
 @[expose] public section
 
 open Finset Polynomial
-open scoped ComplexOrder
+open scoped Classical ComplexOrder
 
 noncomputable section
 
@@ -95,7 +95,7 @@ def TypeCountExact : Prop :=
 def CycleTypeProb : Prop :=
   ∀ (N : ℕ) (n : ℕ → ℕ), ∑ d ∈ Finset.Icc 1 N, d * n d = N →
     ((Finset.univ : Finset (Equiv.Perm (Fin N))).filter
-      (fun σ => ∀ d ∈ Finset.Icc 2 N, σ.cycleType.count d = n d)).card *
+      (fun σ : Equiv.Perm (Fin N) => ∀ d ∈ Finset.Icc 2 N, σ.cycleType.count d = n d)).card *
       ∏ d ∈ Finset.Icc 1 N, (d ^ n d * (n d).factorial) = N.factorial
 
 

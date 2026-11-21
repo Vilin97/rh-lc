@@ -107,7 +107,14 @@ theorem denseRange_algebraMap_prod_pi :
     (placeAbv_pairwise_not_isEquiv S T)
   convert hg.comp hd hc using 1
   funext x
-  rfl
+  simp [φ, ψ, e, Function.comp_apply, Homeomorph.sumPiEquivProdPi]
+  constructor
+  · funext v
+    simp [Pi.map, WithAbs.equiv, placeAbv]
+    rfl
+  · funext w
+    simp [Pi.map, placeAbv]
+    exact AbsoluteValue.Completion.algebraMap_def (R := K) (v := w.1.1) x
 
 end Density
 

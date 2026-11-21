@@ -4,7 +4,7 @@ public import Mathlib
 
 @[expose] public section
 
-open Real
+open Real Filter Asymptotics
 
 namespace GlobalTheory
 

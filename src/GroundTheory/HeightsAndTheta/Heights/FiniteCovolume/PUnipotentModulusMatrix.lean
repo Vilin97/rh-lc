@@ -238,7 +238,7 @@ theorem eq_heisMat {b : ι → ℂ} (hb : hForm H b b = 0) (hab : hForm H a b = 
     simp only [hForm_add_right, hForm_add_left, hb, hub, ← hs, huu] at hbb
     linear_combination hbb
   refine ⟨h1, h2, h3, ?_⟩
-  refine eq_of_mulVec_partner hH hab hn (heisMat_unitary hH ha h1 h3) hna hn' ?_ ?_
+  refine eq_of_mulVec_partner hH ha hab hn (heisMat_unitary hH ha h1 h3) hna hn' ?_ ?_
   · intro z hz
     refine ⟨-hForm H y z, ?_⟩
     rw [heisMat_mulVec, hz]

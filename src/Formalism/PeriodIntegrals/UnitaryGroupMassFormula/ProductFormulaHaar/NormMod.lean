@@ -6,14 +6,16 @@ public import Mathlib
 
 noncomputable section
 
-open MeasureTheory ValuativeRel
+open MeasureTheory ValuativeRel NumberField IsDedekindDomain
+open scoped NumberField
 
 namespace PI.ProdFormulaE
 
 
 def modF (K : Type) [Field K] [TopologicalSpace K] [IsTopologicalRing K] [LocallyCompactSpace K]
-    (a : K) : ℝ :=
-  if h : a = 0 then 0 else ((distribHaarChar K (Units.mk0 a h) : NNReal) : ℝ)
+    (a : K) : ℝ := by
+  classical
+  exact if h : a = 0 then 0 else ((distribHaarChar K (Units.mk0 a h) : NNReal) : ℝ)
 
 section
 

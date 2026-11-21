@@ -19,7 +19,8 @@ variable {F : Type} [Field F] [TopologicalSpace F] [IsTopologicalDivisionRing F]
 
 theorem modF_of_ne {a : F} (h : a ≠ 0) :
     modF F a = ((distribHaarChar F (Units.mk0 a h) : ℝ≥0) : ℝ≥0∞) := by
-  rw [modF, dite_eq_right h]
+  rw [modF.eq_1]
+  simp [h]
 
 theorem modF_mul {a b : F} (ha : a ≠ 0) (hb : b ≠ 0) : modF F (a * b) = modF F a * modF F b := by
   rw [modF_of_ne (mul_ne_zero ha hb), modF_of_ne ha, modF_of_ne hb,

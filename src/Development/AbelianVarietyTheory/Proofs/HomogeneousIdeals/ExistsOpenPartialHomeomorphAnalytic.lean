@@ -111,7 +111,7 @@ theorem exists_chart_of_etale (g : MvPolynomial (Fin d) 𝕜 →ₐ[𝕜] A) (hg
     intro q
     refine MvPolynomial.algHom_ext' ?_ ?_
     · ext i
-      simp [ev, j, π, RingHom.algebraMap_toAlgebra]
+      simp [ev, j, π, coords, RingHom.algebraMap_toAlgebra]
     · intro i; simp [ev, j, π]
   have hker : ∀ a, π a = 0 ↔ a ∈ Ideal.span (range P.relation) := by
     intro a
@@ -126,7 +126,7 @@ theorem exists_chart_of_etale (g : MvPolynomial (Fin d) 𝕜 →ₐ[𝕜] A) (hg
       exact this ((hker a).1 ha)
     refine ⟨q, ?_, hq⟩
     ext i
-    · simpa [ev, π, j, RingHom.algebraMap_toAlgebra] using DFunLike.congr_fun hq (C (X i))
+    · simpa [ev, π, j, coords, RingHom.algebraMap_toAlgebra] using DFunLike.congr_fun hq (C (X i))
     · simpa [ev, π, j] using DFunLike.congr_fun hq (X i)
   have hjinj : Function.Injective j := by
     intro q q' h

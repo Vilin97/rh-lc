@@ -24,7 +24,8 @@ variable {κ ι : Type} [Fintype κ] [Fintype ι]
 
 
 def Shape (φ : Matrix κ ι ℚ → ℂ) : Prop :=
-  IsSB φ ∧ ∃ (c : ℂ) (a : Matrix κ ι ℚ) (S : AddSubgroup (Matrix κ ι ℚ)) (f : Matrix κ ι ℚ → ℂ),
+  by classical
+     exact IsSB φ ∧ ∃ (c : ℂ) (a : Matrix κ ι ℚ) (S : AddSubgroup (Matrix κ ι ℚ)) (f : Matrix κ ι ℚ → ℂ),
     Ph c ∧ Quad S f ∧ ∀ x, φ x = if x - a ∈ S then c * f (x - a) else 0
 
 def om (y y' : Matrix κ ι ℚ × Matrix κ ι ℚ) : ℚ := ∑ k, (y.1 k ⬝ᵥ y'.2 k - y'.1 k ⬝ᵥ y.2 k)

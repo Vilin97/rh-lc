@@ -259,7 +259,7 @@ theorem exists_add_mul_sq_eq {R₀ : Type*} [CommRing R₀] (I : Ideal R₀) [He
       simp only [derivative_sub, derivative_X_pow, derivative_X, derivative_C]
       norm_num)
   have hu : IsUnit z := by
-    simpa using Ideal.mem_jacobson_bot.1 (HenselianRing.jac hz1) 1
+    simpa using (Ring.mem_jacobson_iff (R := R₀)).1 (HenselianRing.jac hz1) 1
   obtain ⟨y, hy⟩ := hu.exists_right_inv
   simp only [IsRoot.def, eval_sub, eval_pow, eval_X, eval_C] at hz
   refine ⟨e * y, ?_⟩

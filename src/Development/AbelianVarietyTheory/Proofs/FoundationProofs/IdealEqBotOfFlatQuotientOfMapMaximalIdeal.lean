@@ -113,12 +113,15 @@ theorem relationsLift_pow {π : A} (h : RelationsLift (Ideal.span {π}) M)
       rw [← hreg hm]
       exact Submodule.smul_mem_smul (Ideal.pow_mem_pow (Ideal.mem_span_singleton_self π) k)
         Submodule.mem_top)
-    rw [← lTensor_comp_apply]
-    refine range_lTensor_le _ _ (fun y => ?_) ⟨x₃, rfl⟩
-    have := y.2
-    change f (s y) ∈ Ideal.span {π} ^ (k + 1)
-    rw [← comp_apply, hfs, pow_succ']
-    exact Ideal.mul_mem_mul (Ideal.mem_span_singleton_self π) this
+    let K : Submodule A G := Submodule.comap g (Ideal.span {π} ^ k)
+    let t : K →ₗ[A] F := s ∘ₗ K.subtype
+    refine range_lTensor_le (M := M) (G := K) t
+      (Submodule.comap f (Ideal.span {π} ^ (k + 1))) ?_ ?_
+    · intro y
+      change f (s y) ∈ Ideal.span {π} ^ (k + 1)
+      rw [← comp_apply, hfs, pow_succ']
+      exact Ideal.mul_mem_mul (Ideal.mem_span_singleton_self π) y.2
+    · exact ⟨x₃, lTensor_comp_apply ..⟩
 
 theorem flat_of_relationsLift [IsNoetherianRing A] (B : Type v) [CommRing B] [Algebra A B]
     [IsNoetherianRing B] [Module B M] [IsScalarTower A B M] [Module.Finite B M] {I : Ideal A}
@@ -130,7 +133,8 @@ theorem flat_of_relationsLift [IsNoetherianRing A] (B : Type v) [CommRing B] [Al
   intro x hx
   have : Module.Finite B (M ⊗[A] J) :=
     Module.Finite.equiv (AlgebraTensorModule.cancelBaseChange A B B M J)
-  have key := Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := M ⊗[A] J) _ hI
+  have key := Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := M ⊗[A] J)
+    (I.map (algebraMap A B)) (by rwa [← Ideal.jacobson_bot])
   have hx' : x ∈ (⊥ : Submodule B (M ⊗[A] J)) := by
     rw [← key, Submodule.mem_iInf]
     intro n
@@ -138,7 +142,9 @@ theorem flat_of_relationsLift [IsNoetherianRing A] (B : Type v) [CommRing B] [Al
     obtain ⟨y, rfl⟩ := h (n + k) J J.subtype x (by rw [mem_ker.mp hx]; simp)
     clear hx
     induction y with
-    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b ha hb =>
+      rw [map_add]
+      exact add_mem ha hb
     | tmul m j =>
       obtain ⟨⟨j, hj⟩, hj'⟩ := j
       have h1 : j ∈ I ^ n • (J : Submodule A A) := by

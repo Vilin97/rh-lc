@@ -22,9 +22,11 @@ theorem hom_pos {H : Type} [Group H] (δ : H →* ℝ≥0) (p : H) : 0 < δ p :=
 def IsIwasawa : Prop := (∀ g : G, ∃ p : P, ∃ k ∈ K, g = p * k) ∧ ∀ p : P, (p : G) ∈ K → δ p = 1
 
 
-def iwAbs (g : G) : ℝ≥0 := if h : ∃ p : P, ∃ k ∈ K, g = p * k then δ h.choose else 1
+def iwAbs (g : G) : ℝ≥0 := by
+  classical
+  exact if h : ∃ p : P, ∃ k ∈ K, g = p * k then δ h.choose else 1
 
-theorem iwAbs_pos (g : G) : 0 < iwAbs δ K g := by
+theorem iwAbs_pos (g : G) : 0 < iwAbs (δ := δ) (K := K) g := by
   unfold iwAbs; split_ifs
   · exact hom_pos δ _
   · exact one_pos
@@ -32,7 +34,7 @@ theorem iwAbs_pos (g : G) : 0 < iwAbs δ K g := by
 variable {δ K}
 
 theorem iwAbs_mul_of_triv (h : ∀ p : P, (p : G) ∈ K → δ p = 1) (p : P) {k : G} (hk : k ∈ K) :
-    iwAbs δ K (p * k) = δ p := by
+    iwAbs (δ := δ) (K := K) (p * k) = δ p := by
   have e : ∃ p' : P, ∃ k' ∈ K, (p : G) * k = p' * k' := ⟨p, k, hk, rfl⟩
   rw [iwAbs, dite_eq_left e]
   obtain ⟨k', hk', e'⟩ := e.choose_spec
@@ -47,17 +49,17 @@ namespace IsIwasawa
 variable (h : IsIwasawa δ K)
 include h
 
-theorem iwAbs_mul (p : P) {k : G} (hk : k ∈ K) : iwAbs δ K (p * k) = δ p := iwAbs_mul_of_triv h.2 p hk
+theorem iwAbs_mul (p : P) {k : G} (hk : k ∈ K) : iwAbs (δ := δ) (K := K) (p * k) = δ p := iwAbs_mul_of_triv h.2 p hk
 
-theorem iwAbs_coe (p : P) : iwAbs δ K p = δ p := by simpa using h.iwAbs_mul p (one_mem K)
+theorem iwAbs_coe (p : P) : iwAbs (δ := δ) (K := K) p = δ p := by simpa using h.iwAbs_mul p (one_mem K)
 
-theorem iwAbs_of_mem {k : G} (hk : k ∈ K) : iwAbs δ K k = 1 := by simpa using h.iwAbs_mul 1 hk
+theorem iwAbs_of_mem {k : G} (hk : k ∈ K) : iwAbs (δ := δ) (K := K) k = 1 := by simpa using h.iwAbs_mul 1 hk
 
-theorem iwAbs_left (p : P) (g : G) : iwAbs δ K (p * g) = δ p * iwAbs δ K g := by
+theorem iwAbs_left (p : P) (g : G) : iwAbs (δ := δ) (K := K) (p * g) = δ p * iwAbs (δ := δ) (K := K) g := by
   obtain ⟨p', k, hk, rfl⟩ := h.1 g
   rw [← mul_assoc, ← Subgroup.coe_mul, h.iwAbs_mul _ hk, h.iwAbs_mul _ hk, map_mul]
 
-theorem iwAbs_right (g : G) {k : G} (hk : k ∈ K) : iwAbs δ K (g * k) = iwAbs δ K g := by
+theorem iwAbs_right (g : G) {k : G} (hk : k ∈ K) : iwAbs (δ := δ) (K := K) (g * k) = iwAbs (δ := δ) (K := K) g := by
   obtain ⟨p', k', hk', rfl⟩ := h.1 g
   rw [mul_assoc, h.iwAbs_mul _ (mul_mem hk' hk), h.iwAbs_mul _ hk']
 
@@ -66,6 +68,7 @@ end IsIwasawa
 variable [TopologicalSpace G] [IsTopologicalGroup G]
 
 
+omit [IsTopologicalGroup G] in
 theorem triv_of_isCompact (hP : IsClosed (P : Set G)) (hδ : Continuous δ) (hK : IsCompact (K : Set G)) (p : P)
     (hp : (p : G) ∈ K) : δ p = 1 := by
   obtain ⟨C, hC⟩ := ((hP.isClosedEmbedding_subtypeVal.isCompact_preimage hK).image hδ).bddAbove
@@ -77,7 +80,6 @@ theorem triv_of_isCompact (hP : IsClosed (P : Set G)) (hδ : Continuous δ) (hK 
   have := key p⁻¹ (inv_mem hp)
   rwa [map_inv, inv_le_one₀ (hom_pos δ p)] at this
 
-omit [IsTopologicalGroup G] in
 theorem isIwasawa_of_isCompact (hP : IsClosed (P : Set G)) (hδ : Continuous δ) (hK : IsCompact (K : Set G))
     (h : ∀ g : G, ∃ p : P, ∃ k ∈ K, g = p * k) : IsIwasawa δ K := ⟨h, triv_of_isCompact hP hδ hK⟩
 
@@ -96,7 +98,7 @@ theorem continuous_of_prod (hP : IsClosed (P : Set G)) (hK : IsCompact (K : Set 
     obtain ⟨p, k, hk, rfl⟩ := h g; exact ⟨(p, ⟨k, hk⟩), rfl⟩).continuous_iff.2 hf
 
 theorem IsIwasawa.continuous_iwAbs (h : IsIwasawa δ K) (hP : IsClosed (P : Set G)) (hδ : Continuous δ)
-    (hK : IsCompact (K : Set G)) : Continuous (iwAbs δ K) :=
+    (hK : IsCompact (K : Set G)) : Continuous (iwAbs (δ := δ) (K := K)) :=
   continuous_of_prod hP hK h.1 ((hδ.comp continuous_fst).congr fun x => (h.iwAbs_mul x.1 x.2.2).symm)
 
 end Iwasawa
@@ -176,11 +178,11 @@ def indSpace [TopologicalSpace G] : Submodule ℂ (G → ℂ) where
       simp only [mul_comm _ c] at this
       exact this⟩
 
-def flatSec (Φ : G → ℂ) (s₀ s : ℂ) : G → ℂ := fun g => Φ g * npow (iwAbs δ K g) (s - s₀)
+def flatSec (Φ : G → ℂ) (s₀ s : ℂ) : G → ℂ := fun g => Φ g * npow (iwAbs (δ := δ) (K := K) g) (s - s₀)
 
 variable {δ K χ t}
 
-@[simp] theorem flatSec_self (Φ : G → ℂ) (s₀ : ℂ) : flatSec δ K Φ s₀ s₀ = Φ := funext fun g => by simp [flatSec]
+@[simp] theorem flatSec_self (Φ : G → ℂ) (s₀ : ℂ) : flatSec (δ := δ) (K := K) Φ s₀ s₀ = Φ := funext fun g => by simp [flatSec]
 
 namespace IsIwasawa
 
@@ -188,13 +190,13 @@ variable (h : IsIwasawa δ K)
 include h
 
 theorem indLaw_flatSec {Φ : G → ℂ} {ρ s₀ : ℂ} (hΦ : IndLaw δ χ (s₀ + ρ) Φ) (s : ℂ) :
-    IndLaw δ χ (s + ρ) (flatSec δ K Φ s₀ s) := fun p g => by
+    IndLaw δ χ (s + ρ) (flatSec (δ := δ) (K := K) Φ s₀ s) := fun p g => by
   rw [flatSec, flatSec, hΦ, h.iwAbs_left, npow_mul, show s + ρ = (s₀ + ρ) + (s - s₀) by ring,
     npow_add (hom_pos δ p) _ (s - s₀)]
   ring
 
 theorem norm_le {Φ : G → ℂ} (hΦ : IndLaw δ χ t Φ) {C : ℝ} (hC : ∀ k ∈ K, ‖Φ k‖ ≤ C) (g : G) :
-    ‖Φ g‖ ≤ C * (iwAbs δ K g : ℝ) ^ t.re := by
+    ‖Φ g‖ ≤ C * (iwAbs (δ := δ) (K := K) g : ℝ) ^ t.re := by
   obtain ⟨p, k, hk, rfl⟩ := h.1 g
   rw [hΦ, h.iwAbs_mul _ hk, norm_mul, norm_mul, Circle.norm_coe, one_mul, norm_npow (hom_pos δ p), mul_comm]
   exact mul_le_mul_of_nonneg_right (hC k hk) (by positivity)
@@ -202,13 +204,13 @@ theorem norm_le {Φ : G → ℂ} (hΦ : IndLaw δ χ t Φ) {C : ℝ} (hC : ∀ k
 variable [TopologicalSpace G] [IsTopologicalGroup G]
 
 theorem flatSec_mem (hP : IsClosed (P : Set G)) (hδ : Continuous δ) (hK : IsCompact (K : Set G)) {Φ : G → ℂ}
-    {ρ s₀ : ℂ} (hΦ : Φ ∈ indSpace δ K χ (s₀ + ρ)) (s : ℂ) : flatSec δ K Φ s₀ s ∈ indSpace δ K χ (s + ρ) :=
-  ⟨h.indLaw_flatSec hΦ.1 s, hΦ.2.1.mul (continuous_npow (h.continuous_iwAbs hP hδ hK) (iwAbs_pos δ K) _),
-    hΦ.2.2.mul_invariant (f := fun g => npow (iwAbs δ K g) (s - s₀)) fun g k hk => by rw [h.iwAbs_right g hk]⟩
+    {ρ s₀ : ℂ} (hΦ : Φ ∈ indSpace δ K χ (s₀ + ρ)) (s : ℂ) : flatSec (δ := δ) (K := K) Φ s₀ s ∈ indSpace δ K χ (s + ρ) :=
+  ⟨h.indLaw_flatSec hΦ.1 s, hΦ.2.1.mul (continuous_npow (h.continuous_iwAbs hP hδ hK) (iwAbs_pos (δ := δ) (K := K)) _),
+    hΦ.2.2.mul_invariant (f := fun g => npow (iwAbs (δ := δ) (K := K) g) (s - s₀)) fun g k hk => by rw [h.iwAbs_right g hk]⟩
 
 theorem npow_iwAbs_mem (hP : IsClosed (P : Set G)) (hδ : Continuous δ) (hK : IsCompact (K : Set G)) (t : ℂ) :
     (fun g => npow (iwAbs δ K g) t) ∈ indSpace δ K 1 t :=
-  ⟨fun p g => by simp [h.iwAbs_left, npow_mul], continuous_npow (h.continuous_iwAbs hP hδ hK) (iwAbs_pos δ K) _,
+  ⟨fun p g => by simp [h.iwAbs_left, npow_mul], continuous_npow (h.continuous_iwAbs hP hδ hK) (iwAbs_pos (δ := δ) (K := K)) _,
     .of_invariant fun g k hk => by rw [h.iwAbs_right g hk]⟩
 
 end IsIwasawa

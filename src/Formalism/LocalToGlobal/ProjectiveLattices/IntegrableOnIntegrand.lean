@@ -61,7 +61,9 @@ def OrbInt (act : (Fin N → ℝ) → Ω → Ω) (S : Set Ω) : Submodule ℂ (�
 
 def coefL (act : (Fin N → ℝ) → Ω → Ω) (S : Set Ω) (ph : Fin N → ℝ) :
     OrbInt act S →ₗ[ℂ] (Ω → ℂ) where
-  toFun P := fun x => if x ∈ S then coefFn act ph P x else 0
+  toFun P := by
+    classical
+    exact fun x => if x ∈ S then coefFn act ph P x else 0
   map_add' P Q := by
     funext x
     by_cases hx : x ∈ S

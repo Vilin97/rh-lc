@@ -346,6 +346,7 @@ theorem quasiPeriod_congr {L L' : PeriodPair} (h : L'.lattice = L.lattice) :
   LinearMap.ext fun z => by simpa using (isHomothetic_one_iff.2 h).quasiPeriod_mul z
 
 
+open EisensteinSeries SummationFilter in
 theorem quasiPeriod_ω₁_eq_eisenstein (τ : UpperHalfPlane) (hτ : (τ : ℂ) * L.ω₁ = L.ω₂) :
     quasiPeriod L L.ω₁ = L.ω₁⁻¹ * G2 τ := by
   have h0 : L.ω₁ ≠ 0 := by simpa using L.indep.ne_zero 0
@@ -373,7 +374,6 @@ theorem quasiPeriod_ω₁_eq_eisenstein (τ : UpperHalfPlane) (hτ : (τ : ℂ) 
       (summable_right_one_div_linear_sub_one_div_linear_succ τ m),
       tsum_symmetricIco_linear_sub_linear_add_one_eq_zero] at s2
     convert (s1.sub s2).mul_left L.ω₁⁻¹ using 1
-    · rfl
     · ext n
       simp only [Function.comp_apply, he, zetaTerm_eq, eisSummand, Matrix.cons_val_zero,
         Matrix.cons_val_one, Matrix.cons_val_fin_one]
@@ -724,7 +724,9 @@ theorem IsHomothetic.weierstrassSigma_mul {L L' : PeriodPair} {c : ℂ} (h : IsH
   rw [weierstrassSigma, h.sigmaProd_mul, weierstrassSigma, mul_assoc]
 
 
-def sigmaSign (w : ℂ) : ℂ := if w / 2 ∈ L.lattice then 1 else -1
+def sigmaSign (w : ℂ) : ℂ := by
+  classical
+  exact if w / 2 ∈ L.lattice then 1 else -1
 
 theorem sigmaSign_of_mem {w : ℂ} (h : w / 2 ∈ L.lattice) : sigmaSign L w = 1 := if_pos h
 

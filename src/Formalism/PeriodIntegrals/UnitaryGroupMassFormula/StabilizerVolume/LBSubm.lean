@@ -99,7 +99,7 @@ theorem submLB_holds : SubmLB := by
   rw [← hAdef] at hsurj
   obtain ⟨R, hAR⟩ := exists_clm_rightInverse_of_surjective A hsurj
   have hfd : HasStrictFDerivAt f A x0 := by
-    rw [hAdef]; exact hf.contDiffAt.hasStrictFDerivAt (by norm_num)
+    rw [hAdef]; exact hf.hasStrictFDerivAt (by norm_num)
   obtain ⟨h, hhdef⟩ : ∃ h : (Fin n → ℝ) → (Fin n → ℝ),
       h = fun x => x + R (f x - A x) + (R (A x0) - R (f x0)) := ⟨_, rfl⟩
   have hfh : ∀ x, f x = A (h x) + (f x0 - A x0) := by

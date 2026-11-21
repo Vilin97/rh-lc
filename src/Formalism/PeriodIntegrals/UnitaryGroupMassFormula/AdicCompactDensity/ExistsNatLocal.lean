@@ -63,6 +63,7 @@ theorem exists_nat_adele (a : FiniteAdeleRing (𝓞 F) F) :
 end PI.AdCpctDenWork
 
 
+open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum PI.AdCpctDenWork in
 theorem PI.adCpctDen : PI.AdCpctDen := by
   intro F _ _ C hC
   classical

@@ -36,7 +36,9 @@ def Fr (q : ℕ) : ℕ → ℕ → ℕ → ℤ
   | d, 0, c + 1 => (valZ q d - 1) * (q : ℤ) ^ (2 * c) * Fr q (d - 2) 0 c
 
 
-def ValCount : Prop :=
+def ValCount : Prop := by
+  classical
+  exact
   ∀ (K L : Type) [Field K] [Fintype K] [Field L] [Fintype L] [Algebra K L],
     Module.finrank K L = 2 →
     ∀ (n : ℕ) (M : Matrix (Fin n) (Fin n) L) (W : Submodule L (Fin n → L)),

@@ -6,6 +6,7 @@ public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.ExistsIsFun
 @[expose] public section
 
 open NumberField IsDedekindDomain MeasureTheory
+open scoped Pointwise
 
 namespace GlobalTheory
 

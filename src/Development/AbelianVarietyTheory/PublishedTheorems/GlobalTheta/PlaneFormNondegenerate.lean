@@ -28,9 +28,9 @@ instance : Inv (Heisenberg B) := ⟨fun g => ⟨-g.vec, -g.cen + B g.vec g.vec /
 
 instance : Group (Heisenberg B) :=
   Group.ofLeftAxioms
-    (fun a b c => by ext <;> simp [add_assoc]; ring)
-    (fun a => by ext <;> simp)
-    (fun a => by ext <;> simp; ring)
+    (fun a b c => by cases a; cases b; cases c; ext <;> simp [Heisenberg.instMul, add_assoc] <;> ring)
+    (fun a => by cases a; ext <;> simp [Heisenberg.instMul])
+    (fun a => by cases a; ext <;> simp [Heisenberg.instMul] <;> ring)
 
 instance [TopologicalSpace F] [TopologicalSpace W] : TopologicalSpace (Heisenberg B) :=
   TopologicalSpace.induced (fun g => (g.vec, g.cen)) inferInstance
@@ -509,7 +509,8 @@ variable {F W M : Type} [Field F] [AddCommGroup W] [Module F W] {B : LinearMap.B
 theorem apply_eq (hπ : ∀ t v, π ⟨0, t⟩ v = ψ t • v) (g : Heisenberg B) (v : M) : π g v = ψ g.cen • π ⟨g.vec, 0⟩ v := by
   rw [← hπ, ← Module.End.mul_apply, ← map_mul]
   congr 2
-  ext <;> simp
+  cases g
+  ext <;> simp [Heisenberg.instMul, LinearMap.zero_apply]
 
 theorem ops_of_central (hπ : ∀ t v, π ⟨0, t⟩ v = ψ t • v) : Ops (fun x y => ψ (B x y / 2)) fun x => π ⟨x, 0⟩ where
   zero v := by rw [hπ]; simp
@@ -570,7 +571,7 @@ variable (hB : B.IsAlt) {A : AddSubgroup W} {α : W → ℂ} (hα : Splits (fun 
   (h3 : ∀ w, ∀ᶠ u in 𝓝 (0 : W), ψ (B u w / 2) ^ 2 = 1)
 
 omit [ValuativeRel F] [IsNonarchimedeanLocalField F] [FiniteDimensional F W] [IsModuleTopology F W] in
-include hα h1 h2 in
+include hB hA hα h1 h2 h3 in
 theorem exists_eigen_mem (hπ : ∀ t v, π ⟨0, t⟩ v = ψ t • v) (hs : PRep.IsSmooth π) (P : Subrepresentation π) (hP : P ≠ ⊥) :
     ∃ e ∈ P.toSubmodule, e ≠ 0 ∧ ∀ a ∈ A, π ⟨a, 0⟩ e = α a • e := by
   have : P.toSubmodule ≠ ⊥ := fun h => hP (Subrepresentation.toSubmodule_injective h)

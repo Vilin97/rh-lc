@@ -18,7 +18,8 @@ variable (𝕂 : Type*) [RCLike 𝕂] (𝔸 : Type*) [NormedRing 𝔸] [NormedAl
 theorem contDiff_exp {n : WithTop ℕ∞} : ContDiff 𝕂 n (exp : 𝔸 → 𝔸) :=
   contDiff_iff_contDiffAt.2 fun x => (exp_analytic (𝕂 := 𝕂) x).contDiffAt
 
-
+variable {𝔸} in
+include 𝕂 in
 theorem exp_add_of_commute' {x y : 𝔸} (h : Commute x y) : exp (x + y) = exp x * exp y :=
   exp_add_of_commute_of_mem_ball (𝕂 := 𝕂) h
     (by rw [expSeries_radius_eq_top]; exact edist_lt_top _ _)
@@ -74,7 +75,7 @@ theorem contDiffOn_expPartialHomeomorph_symm {n : WithTop ℕ∞} :
     exact ((contDiff_exp 𝕂 𝔸 (n := 1)).differentiable one_ne_zero _).hasFDerivAt
   · exact (contDiff_exp 𝕂 𝔸).contDiffAt
 
-
+include 𝕂 in
 noncomputable def expUnit (X : 𝔸) : 𝔸ˣ :=
   ⟨exp X, exp (-X), by
     rw [← exp_add_of_commute' 𝕂 (Commute.neg_right (Commute.refl X)), add_neg_cancel, exp_zero],
@@ -106,6 +107,8 @@ section LinearLie
 
 variable {𝔸 : Type*} [NormedRing 𝔸] [NormedAlgebra ℝ 𝔸] [CompleteSpace 𝔸] [FiniteDimensional ℝ 𝔸]
 
+local notation "𝔢" => expPartialHomeomorph ℝ 𝔸
+
 noncomputable def subspaceProj (𝔤 : Submodule ℝ 𝔸) : 𝔸 →L[ℝ] 𝔤 :=
   LinearMap.toContinuousLinearMap
     (Submodule.projectionOnto 𝔤 _ (Submodule.exists_isCompl 𝔤).choose_spec)
@@ -129,7 +132,7 @@ namespace IsExpLieAlgebra
 
 variable {G : Subgroup 𝔸ˣ} {𝔤 : Submodule ℝ 𝔸} (h : IsExpLieAlgebra G 𝔤)
 
-def nhd : Set 𝔸 := h.exists_nhds.choose
+noncomputable def nhd : Set 𝔸 := h.exists_nhds.choose
 
 theorem isOpen_nhd : IsOpen h.nhd := h.exists_nhds.choose_spec.1
 theorem zero_mem_nhd : (0 : 𝔸) ∈ h.nhd := h.exists_nhds.choose_spec.2.1
@@ -137,7 +140,7 @@ theorem nhd_subset : h.nhd ⊆ (𝔢).source := h.exists_nhds.choose_spec.2.2.1
 theorem mem_of_mem_nhd {X : 𝔸} (hX : X ∈ h.nhd) (hG : expUnit ℝ 𝔸 X ∈ G) : X ∈ 𝔤 :=
   h.exists_nhds.choose_spec.2.2.2 X hX hG
 
-def nhdOne : Set 𝔸 := 𝔢 '' h.nhd
+noncomputable def nhdOne : Set 𝔸 := 𝔢 '' h.nhd
 
 theorem isOpen_nhdOne : IsOpen h.nhdOne := (𝔢).isOpen_image_of_subset_source h.isOpen_nhd h.nhd_subset
 
@@ -361,6 +364,8 @@ open Matrix
 open scoped Matrix.Norms.L2Operator
 
 variable (p q : ℕ)
+
+local notation "𝔐" => Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ
 
 theorem mem_indefiniteUnitaryLieAlgebra_iff {X : 𝔐} :
     X ∈ indefiniteUnitaryLieAlgebra p q ↔ Xᴴ = -(indefJ p q * X * indefJ p q) := by

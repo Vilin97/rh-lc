@@ -38,7 +38,8 @@ theorem alternatingMap_apply_eq_sum_minors {n : Type*} [Fintype n] [LinearOrder 
     exteriorPower.basis_apply, exteriorPower.ιMulti_family,
     exteriorPower.alternatingMapLinearEquiv_apply_ιMulti]
   congr 2
-  rfl
+  ext a
+  simp [b, subsetEnum, Set.powersetCard.ofFinEmbEquiv_symm_apply]
 
 theorem det_mul_eq_sum_minors {n : Type*} [Fintype n] [LinearOrder n] {i : ℕ}
     (A : Matrix (Fin i) n R) (B : Matrix n (Fin i) R) :

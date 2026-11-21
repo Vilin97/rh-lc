@@ -539,16 +539,18 @@ theorem exists_isSymplecticFamily_of_isotropic {ι : Type*} [Finite ι] (hB : B.
     rw [← hB.neg_eq, hy]; split_ifs <;> simp
   refine ⟨fun i => y i - ∑ j, (if i < j then B (y i) (y j) else 0) • (v j : M), hvv,
     fun i k => ?_, fun i => ?_, fun i k hik => ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [map_sub, map_sum, map_smul, LinearMap.sub_apply, LinearMap.sum_apply,
-      LinearMap.smul_apply, smul_eq_mul, hvv, hy, hy', mul_zero, Finset.sum_const_zero, sub_zero,
-      mul_ite, mul_one, mul_neg, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_smul, LinearMap.sub_apply, LinearMap.sum_apply,
+        LinearMap.smul_apply, smul_eq_mul, hvv, hy, hy', mul_zero, Finset.sum_const_zero, sub_zero,
+        mul_ite, mul_one, mul_neg, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
     rcases lt_trichotomy i k with h | rfl | h
     · simp [h, h.not_gt]
     · simp [hB.self_eq_zero]
     · simp [h, h.not_gt, ← hB.neg_eq (y i)]
-  · simp [hvv, hy, -ite_smul]
-  · simp [hvv, hy, hik, -ite_smul]
+  · simp only [map_sub, map_sum, map_smul, hvv, smul_zero, Finset.sum_const_zero, sub_zero,
+      hy, ite_true]
+  · simp only [map_sub, map_sum, map_smul, hvv, smul_zero, Finset.sum_const_zero, sub_zero,
+      hy, ite_eq_right hik]
 
 theorem exists_isSymplecticBasis_extend [Module.Free R M] {ι : Type*} [Finite ι] (hB : B.IsAlt)
     (hp : Bijective B) (hI : IsTorsionFree R (M ⧸ I)) (hiso : I ≤ B.orthogonal I)

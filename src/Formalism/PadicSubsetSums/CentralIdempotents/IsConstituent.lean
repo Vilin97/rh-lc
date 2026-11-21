@@ -162,7 +162,7 @@ def HasLabel (C : LabelConv K) {ι : Type} [Fintype ι] [DecidableEq ι] (τ : F
     (f : K[X]) : Prop :=
   ∃ (s : ℕ) (b : ι → Fin s) (lam : ∀ c : Fin s, FDRep ℂ (GL {i // b i = c} K)) (P : Fin s → K[X]),
     Function.Surjective b ∧
-    (∀ c, Simple (lam c) ∧ IsCuspidal K (lam c) ∧ HasCuspLabel C (lam c) (P c)) ∧
+    (∀ c, Simple (lam c) ∧ IsCuspidal K (lam c) ∧ HasCuspLabel K C (lam c) (P c)) ∧
     IsConstituent τ (hcRep K b lam) ∧ f = ∏ c, P c
 
 abbrev q : ℕ := Fintype.card K
@@ -170,12 +170,12 @@ abbrev q : ℕ := Fintype.card K
 def CuspParam (C : LabelConv K) : Prop :=
   ∀ d : ℕ, 1 ≤ d →
     (∀ τ : FDRep ℂ (GL (Fin d) K), Simple τ → IsCuspidal K τ →
-      (∃! P : K[X], HasCuspLabel C τ P) ∧
+      (∃! P : K[X], HasCuspLabel K C τ P) ∧
       (Module.finrank ℂ τ : ℤ) = ∏ i ∈ Finset.Ico 1 d, ((q K : ℤ) ^ i - 1)) ∧
     (∀ P : K[X], P.Monic → Irreducible P → P ≠ X → P.natDegree = d →
-      ∃ τ : FDRep ℂ (GL (Fin d) K), Simple τ ∧ IsCuspidal K τ ∧ HasCuspLabel C τ P) ∧
+      ∃ τ : FDRep ℂ (GL (Fin d) K), Simple τ ∧ IsCuspidal K τ ∧ HasCuspLabel K C τ P) ∧
     (∀ (τ τ' : FDRep ℂ (GL (Fin d) K)) (P : K[X]), Simple τ → IsCuspidal K τ → Simple τ' → IsCuspidal K τ' →
-      HasCuspLabel C τ P → HasCuspLabel C τ' P → Nonempty (τ ≅ τ'))
+      HasCuspLabel K C τ P → HasCuspLabel K C τ' P → Nonempty (τ ≅ τ'))
 
 
 

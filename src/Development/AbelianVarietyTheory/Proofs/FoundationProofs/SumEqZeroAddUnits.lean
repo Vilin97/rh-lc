@@ -115,8 +115,6 @@ theorem sum_norm_units {k : Type} [Field k] [Fintype k] (s : k →+* k) (hs : �
     rw [MonoidHom.card_fiber_eq_of_mem_range N hy' (⟨1, map_one N⟩ : (1 : kˣ) ∈ Set.range N),
       Nat.card_eq_fintype_card, Fintype.card_subtype]
     congr 1
-    ext x
-    simp [MonoidHom.mem_ker]
 
 theorem sum_eq_zero_add_units {k : Type} [Field k] [Fintype k] {M : Type} [AddCommMonoid M]
     (g : k → M) : ∑ x : k, g x = g 0 + ∑ x : kˣ, g x := by

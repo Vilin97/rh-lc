@@ -325,7 +325,8 @@ theorem IsQuasiRegularSeq.isWeaklyRegular [IsNoetherianRing R] [Module.Finite R 
       ih h.quotSMulTop_tail fun i => hf _⟩
     rw [Ideal.span_le]
     rintro _ ⟨i, rfl⟩
-    exact hf i
+    change f i ∈ Ring.jacobson R
+    simpa only [Ideal.jacobson_bot] using hf i
 
 end Main
 

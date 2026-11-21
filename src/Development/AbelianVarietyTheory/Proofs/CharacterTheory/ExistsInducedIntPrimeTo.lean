@@ -97,7 +97,7 @@ theorem _root_.GlobalTheory.exists_induced_int_prime_to : ∀ (G : Type) [Group 
   set o := orderOf c with hodef
   set N := Nat.card (P : Subgroup Z) with hNdef
   have hNP' : Nat.card P' = N := Subgroup.card_subtype Z P
-  obtain ⟨k, hk⟩ := P.2.exists_card_eq
+  obtain ⟨k, hk⟩ := P.isPGroup.exists_card_eq
   have hNo : Nat.Coprime N o := by rw [hNdef, hk]; exact Nat.Coprime.pow_left k hco
   have hb := Nat.gcd_eq_gcd_ab N o
   rw [hNo.gcd_eq_one, Nat.cast_one] at hb
@@ -136,7 +136,7 @@ theorem _root_.GlobalTheory.exists_induced_int_prime_to : ∀ (G : Type) [Group 
     exact ((Commute.zpow_zpow_self c i n).mul_left ((hPc y hy).zpow_left n).symm).eq
   have hl : ∀ y : E, ∃ j : ℕ, y ^ p ^ j ∈ Subgroup.center E := by
     rintro ⟨_, i, _, ⟨z, hz, rfl⟩, rfl⟩
-    obtain ⟨j, hj⟩ := P.2 ⟨z, hz⟩
+    obtain ⟨j, hj⟩ := P.isPGroup ⟨z, hz⟩
     refine ⟨j, hcent _ ⟨i * ((p ^ j : ℕ) : ℤ), ?_⟩⟩
     have h2 : (z : G) ^ p ^ j = 1 := by
       have := congrArg (fun u : (P : Subgroup Z) => ((u : Z) : G)) hj

@@ -238,8 +238,9 @@ instance instBorelGL (n : ℕ) : BorelSpace (GL (Fin n) K) := ⟨rfl⟩
 
 
 def phi (R : Subring K) (s : List ℕ) (t : ℕ → Kˣ) (ψ : AddChar K ℂ) (C : Type) [AddCommGroup C]
-    [Module R C] (e : C) (lam : C →ₗ[R] KR R) (p : lowW K s t × upUniG K s.sum) : ℂ :=
-  (if IsInt R (((p.1 : GL (Fin s.sum) K) : Matrix (Fin s.sum) (Fin s.sum) K) * pt s t * ((p.2 : GL (Fin s.sum) K) : Matrix (Fin s.sum) (Fin s.sum) K))
+    [Module R C] (e : C) (lam : C →ₗ[R] KR R) (p : lowW K s t × upUniG K s.sum) : ℂ := by
+  classical
+  exact (if IsInt R (((p.1 : GL (Fin s.sum) K) : Matrix (Fin s.sum) (Fin s.sum) K) * pt s t * ((p.2 : GL (Fin s.sum) K) : Matrix (Fin s.sum) (Fin s.sum) K))
     then (Nat.card (isoSet R (((p.1 : GL (Fin s.sum) K) : Matrix (Fin s.sum) (Fin s.sum) K) * pt s t *
       ((p.2 : GL (Fin s.sum) K) : Matrix (Fin s.sum) (Fin s.sum) K)) C e lam) : ℂ) else 0) *
     ψ (sLow ((p.1 : GL (Fin s.sum) K) : Matrix (Fin s.sum) (Fin s.sum) K) + sUp ((p.2 : GL (Fin s.sum) K) : Matrix (Fin s.sum) (Fin s.sum) K))

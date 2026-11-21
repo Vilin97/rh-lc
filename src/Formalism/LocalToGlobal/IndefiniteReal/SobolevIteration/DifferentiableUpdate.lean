@@ -86,6 +86,8 @@ lemma pd_update (i j : Fin N) (hij : i ≠ j) (s : ℝ) {g : (Fin N → ℝ) →
       ((hg.comp (differentiable_update j s)) r),
     pd_eq_deriv i _ (hg _)]
   congr 1
+  funext t
+  rw [update_add_single hij r s t]
 
 lemma pds_update (L : List (Fin N)) (j : Fin N) (hL : ∀ i ∈ L, i ≠ j) (s : ℝ) {g : (Fin N → ℝ) → H}
     (hg : ContDiff ℝ ∞ g) :

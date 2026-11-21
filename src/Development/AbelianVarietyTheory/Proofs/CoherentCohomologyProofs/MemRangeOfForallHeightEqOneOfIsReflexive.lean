@@ -176,6 +176,7 @@ theorem mem_range_of_forall_height_eq_one_of_projective [Module.Projective A M]
     (fun _ _ => exists_smul_eq_of_forall_dual_dvd_of_projective) f hf ha hav h
 
 
+omit [IsDomain A] [IsNoetherianRing A] [IsIntegrallyClosed A] in
 theorem isTorsionFree_of_isLocalizedModule (f : M →ₗ[A] V) [IsLocalizedModule A⁰ f] :
     Module.IsTorsionFree A V :=
   ⟨fun r hr => ((Module.End.isUnit_iff _).mp
@@ -269,6 +270,7 @@ theorem mem_range_algebraMap_iff_mem_primeLocalSubalgebra (p : Ideal A) [p.IsPri
 variable [IsNoetherianRing A]
 
 
+variable (K) in
 noncomputable def heightOneOrdHom (p : Ideal A) [p.IsPrime] (hp : p.height = 1) : K →*₀ ℤᵐ⁰ :=
   haveI := IsLocalization.isNoetherianRing p.primeCompl (primeLocalSubalgebra K p) inferInstance
   haveI := krullDimLE_one_of_height_eq_one p hp (primeLocalSubalgebra K p)
@@ -303,7 +305,7 @@ theorem ordFrac_eq_heightOneOrdHom (p : Ideal A) [p.IsPrime] (hp : p.height = 1)
       (map_ne_zero_iff _ (IsLocalization.injective _ p.primeCompl_le_nonZeroDivisors)).mpr ha
     conv_lhs => rw [IsScalarTower.algebraMap_apply A B K]
     conv_rhs => rw [IsScalarTower.algebraMap_apply A (primeLocalSubalgebra K p) K]
-    rw [heightOneOrdHom, Ring.ordFrac_eq_ord _ h1, Ring.ordFrac_eq_ord _ h2,
+    rw [heightOneOrdHom, Ring.ordFrac_eq_ord B, Ring.ordFrac_eq_ord (primeLocalSubalgebra K p),
       Ring.ordMonoidWithZeroHom_eq_ord (mem_nonZeroDivisors_of_ne_zero h1),
       Ring.ordMonoidWithZeroHom_eq_ord (mem_nonZeroDivisors_of_ne_zero h2),
       ← ord_map_ringEquiv e.toRingEquiv (algebraMap A B a)]

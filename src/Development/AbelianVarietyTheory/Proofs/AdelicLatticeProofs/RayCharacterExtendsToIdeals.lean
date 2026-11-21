@@ -5,6 +5,7 @@ public import Mathlib
 @[expose] public section
 
 open NumberField IsDedekindDomain NumberField.mixedEmbedding MeasureTheory Complex Classical
+  UniqueFactorizationMonoid
 open scoped ContDiff nonZeroDivisors
 
 namespace GlobalTheory

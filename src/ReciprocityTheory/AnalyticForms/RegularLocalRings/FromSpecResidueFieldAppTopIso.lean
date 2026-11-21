@@ -19,8 +19,9 @@ def constRes (x : S) : ℂ →+* S.residueField x :=
   (S.evaluation ⊤ x trivial).hom.comp (constSec s ⊤)
 
 
-def valHom (x : S) : S.residueField x → ℂ :=
-  if h : ∃ φ : S.residueField x →+* ℂ, φ.comp (constRes s x) = RingHom.id ℂ then h.choose else fun _ => 0
+def valHom (x : S) : S.residueField x → ℂ := by
+  classical
+  exact if h : ∃ φ : S.residueField x →+* ℂ, φ.comp (constRes s x) = RingHom.id ℂ then h.choose else fun _ => 0
 
 def val {U : S.Opens} (f : Γ(S, U)) (x : S) (hx : x ∈ U) : ℂ :=
   valHom s x (S.evaluation U x hx f)

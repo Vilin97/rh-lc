@@ -25,6 +25,8 @@ variable {L : Type*} [NormedAddCommGroup L] [InnerProductSpace ℂ L] [CompleteS
 
 @[coe] noncomputable def op (π : UnitaryRep G H) (g : G) : H →L[ℂ] H := (π.toHom g : H →L[ℂ] H)
 
+noncomputable instance : CoeFun (UnitaryRep G H) (fun _ => G → H →L[ℂ] H) := ⟨op⟩
+
 variable (π : UnitaryRep G H)
 
 lemma continuous_orbit (v : H) : Continuous fun g => π g v := π.continuous_orbit' v

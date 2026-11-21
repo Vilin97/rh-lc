@@ -68,7 +68,7 @@ theorem eq_C_of_pderiv_eq_zero {K ι : Type*} [Field K] [CharZero K] (P : MvPoly
     push_neg at hc
     exact hm0 (Finsupp.ext hc)
   have hc := congrArg (AddMonoidAlgebra.coeff · (m - Finsupp.single i 1)) (h i)
-  rw [coeff_pderiv, coeff_zero] at hc
+  rw [coeff_pderiv, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at hc
   have hm' : m - Finsupp.single i 1 + Finsupp.single i 1 = m := by
     ext k
     by_cases hk : k = i

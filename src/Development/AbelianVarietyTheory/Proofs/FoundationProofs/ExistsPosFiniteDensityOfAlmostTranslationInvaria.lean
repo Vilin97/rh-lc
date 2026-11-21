@@ -91,7 +91,8 @@ private theorem measure_ball_mul_le_mul_of_forall_measure_ball_le (lam ν : Meas
         lintegral_mono fun x => by
           by_cases hx : x ∈ ball (0 : V) ρ
           · rw [indicator_of_mem hx]
-            exact (measure_mono fun y hy => hy.2).trans (hb x hx)
+            refine le_trans (measure_mono ?_) (hb x hx)
+            exact fun y hy => hy.2
           · rw [indicator_of_notMem hx]
             have hempty : Prod.mk x ⁻¹'
                 {p : V × V | p.1 ∈ ball (0 : V) ρ ∧ p.2 ∈ ball p.1 s} = ∅ :=

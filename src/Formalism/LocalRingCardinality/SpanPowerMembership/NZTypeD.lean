@@ -70,7 +70,8 @@ variable {L : I → Type} [∀ i, Fintype (L i)] [DecidableEq I] (E : ∀ i, L i
   (S : (∀ i, L i) → Prop)
 
 
-def eSum : MonoidAlgebra k (∀ i, G i) := ∑ a : (∀ i, L i), if S a then tens (fun i => E i (a i)) else 0
+def eSum : MonoidAlgebra k (∀ i, G i) :=
+  open Classical in ∑ a : (∀ i, L i), if S a then tens (fun i => E i (a i)) else 0
 
 variable (hidem : ∀ i l, E i l * E i l = E i l) (hcen : ∀ i l a, E i l * a = a * E i l)
   (horth : ∀ i l l', l ≠ l' → E i l * E i l' = 0)

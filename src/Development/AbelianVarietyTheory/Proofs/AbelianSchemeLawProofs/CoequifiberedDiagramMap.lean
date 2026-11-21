@@ -150,6 +150,8 @@ def toQuotPiece (U : Y.affineOpens) : (f ⁻¹ᵁ U.1).toScheme ⟶ quot f g a h
     (cover f g a ha p hp).f U
 
 
+set_option backward.defeqAttrib.useBackward true in
+set_option backward.isDefEq.respectTransparency false in
 def toQuot : X ⟶ quot f g a ha p hp :=
   Scheme.OpenCover.glueMorphismsOfLocallyDirected
     ((directedCover Y).pullback₁ f)
@@ -207,7 +209,8 @@ lemma toQuot_fromQuot : toQuot f g a ha p hp ≫ fromQuot f g a ha p hp = f := b
 set_option backward.isDefEq.respectTransparency false
 
 
-lemma of_charts (P : MorphismProperty Scheme.{0}) [IsZariskiLocalAtTarget P] {ι : Type}
+omit [QuasiCompact f] [QuasiSeparated f] in
+private lemma of_charts_aux (P : MorphismProperty Scheme.{0}) [IsZariskiLocalAtTarget P] {ι : Type}
     (X' Y' : ι → Scheme.{0}) (u : ∀ i, X' i ⟶ X) (v : ∀ i, Y' i ⟶ Y) (f' : ∀ i, X' i ⟶ Y' i)
     [∀ i, IsOpenImmersion (v i)] (hv : ∀ y, ∃ i z, v i z = y)
     (h : ∀ i, IsPullback (f' i) (u i) (v i) f) (hP : ∀ i, P (f' i)) : P f := by
@@ -216,6 +219,12 @@ lemma of_charts (P : MorphismProperty Scheme.{0}) [IsZariskiLocalAtTarget P] {ι
   change P (pullback.snd f (v i))
   rw [← this, MorphismProperty.cancel_left_of_respectsIso P]
   exact hP i
+
+lemma of_charts (P : MorphismProperty Scheme.{0}) [IsZariskiLocalAtTarget P] {ι : Type}
+    (X' Y' : ι → Scheme.{0}) (u : ∀ i, X' i ⟶ X) (v : ∀ i, Y' i ⟶ Y) (f' : ∀ i, X' i ⟶ Y' i)
+    [∀ i, IsOpenImmersion (v i)] (hv : ∀ y, ∃ i z, v i z = y)
+    (h : ∀ i, IsPullback (f' i) (u i) (v i) f) (hP : ∀ i, P (f' i)) : P f :=
+  of_charts_aux f P X' Y' u v f' hv h hP
 
 
 lemma isPullback_of_charts {Z Q : Scheme.{0}} (b : W ⟶ Z) (q : X ⟶ Q) (q' : Z ⟶ Q) {ι : Type}
@@ -274,7 +283,7 @@ lemma exists_fromSpec_eq [IsAffineHom f] (x : X) :
 
 lemma isFinite_fromQuot [IsFinite f] [IsLocallyNoetherian Y] :
     IsFinite (fromQuot f g a ha p hp) := by
-  refine of_charts _ @IsFinite _ _ _ _ _ (fun y ↦ ?_) (isPullback_fromQuot f g a ha p hp)
+  refine of_charts_aux _ @IsFinite _ _ _ _ _ (fun y ↦ ?_) (isPullback_fromQuot f g a ha p hp)
     fun U ↦ ?_
   · exact exists_fromSpec_eq (𝟙 Y) y
   · rw [IsFinite.SpecMap_iff]
@@ -306,10 +315,10 @@ theorem exists_quotient [IsFinite f] [IsAffineHom g] [IsLocallyNoetherian Y]
   · have : IsFinite (toQuot f g a ha p hp ≫ fromQuot f g a ha p hp) := by
       rw [toQuot_fromQuot]; infer_instance
     exact .of_comp _ (fromQuot f g a ha p hp)
-  · exact of_charts _ @Flat _ _ _ _ _ hc
+  · exact of_charts_aux _ @Flat _ _ _ _ _ hc
       (fun U ↦ isPullback_toQuot f g a ha p hp U (U.2.preimage f))
       fun U ↦ ((flat_and_surjective_SpecMap_iff _).2 (H U).1).1
-  · exact of_charts _ @Surjective _ _ _ _ _ hc
+  · exact of_charts_aux _ @Surjective _ _ _ _ _ hc
       (fun U ↦ isPullback_toQuot f g a ha p hp U (U.2.preimage f))
       fun U ↦ ((flat_and_surjective_SpecMap_iff _).2 (H U).1).2
   · refine isPullback_of_charts a p _ _ _ _ _ _ _ (exists_fromSpec_eq f)

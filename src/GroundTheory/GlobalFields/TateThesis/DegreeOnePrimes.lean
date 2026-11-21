@@ -143,7 +143,7 @@ theorem summable_absNorm_rpow_neg_of_not_prime {s : ℝ} (hs : 1 / 2 < s) :
 
 theorem summable_absNorm_rpow_neg_subtype (S : Set (HeightOneSpectrum (𝓞 L))) {s : ℝ}
     (hs : 1 < s) : Summable fun w : S => (Ideal.absNorm w.1.asIdeal : ℝ) ^ (-s) :=
-  (summable_absNorm_rpow_neg hs).subtype S
+  (summable_absNorm_rpow_neg hs).subtype (fun w => w ∈ S)
 
 section relative
 
@@ -199,7 +199,7 @@ theorem primeIdealZetaSum_higherDegreePrimes_le :
   have h1 := summable_indicator_not_prime (L := L) (s := 1) (by norm_num)
   have hs' := (summable_subtype_iff_indicator (s := higherDegreePrimes K L)
     (f := fun w : HeightOneSpectrum (𝓞 L) => (Ideal.absNorm w.asIdeal : ℝ) ^ (-s))).mp
-    (summable_higherDegreePrimes K L (by linarith))
+    (summable_higherDegreePrimes (by linarith))
   rw [Set.primeIdealZetaSum_def, tsum_subtype (higherDegreePrimes K L)
     (fun w : HeightOneSpectrum (𝓞 L) => (Ideal.absNorm w.asIdeal : ℝ) ^ (-s))]
   refine Summable.tsum_le_tsum (fun w => ?_) hs' h1

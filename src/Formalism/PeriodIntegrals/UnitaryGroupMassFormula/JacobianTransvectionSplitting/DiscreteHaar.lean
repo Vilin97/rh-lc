@@ -13,8 +13,9 @@ namespace PI.NglqJacSplitW
 
 
 def modF (F : Type) [Field F] [TopologicalSpace F] [IsTopologicalDivisionRing F]
-    [LocallyCompactSpace F] (a : F) : ℝ≥0∞ :=
-  if h : a = 0 then 0 else ((distribHaarChar F (Units.mk0 a h) : ℝ≥0) : ℝ≥0∞)
+    [LocallyCompactSpace F] (a : F) : ℝ≥0∞ := by
+  classical
+  exact if h : a = 0 then 0 else ((distribHaarChar F (Units.mk0 a h) : ℝ≥0) : ℝ≥0∞)
 
 def LinModulus : Prop :=
   ∀ (F : Type) [Field F] [TopologicalSpace F] [IsTopologicalDivisionRing F] [T2Space F]

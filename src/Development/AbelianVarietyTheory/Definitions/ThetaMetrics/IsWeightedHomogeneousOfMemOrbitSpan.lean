@@ -32,7 +32,7 @@ theorem laplacian_apply (t : T) (a : Fin p) (b : Fin q) (P : Poly R T p q κ) :
 
 def IsHarmonic (P : Poly R T p q κ) : Prop := ∀ t a b, laplacian t a b P = 0
 
-
+variable (R T p q κ) in
 def harmonicSubmodule : Submodule R (Poly R T p q κ) where
   carrier := {P | IsHarmonic P}
   add_mem' hP hQ t a b := by rw [map_add (f := _), hP, hQ, add_zero]
@@ -379,7 +379,7 @@ theorem colActHom_mul (g h : T → GL κ R) :
   rw [colActHom, colActHom, colActHom, colSubst_comp]
   simp only [Pi.mul_apply, _root_.mul_inv_rev, Units.val_mul]
 
-
+variable (R T p q κ) in
 noncomputable def colAct : (T → GL κ R) →* (Poly R T p q κ ≃ₐ[R] Poly R T p q κ) where
   toFun g := AlgEquiv.ofAlgHom (colActHom g) (colActHom g⁻¹)
     (by rw [← colActHom_mul, mul_inv_cancel, colActHom_one])
@@ -388,9 +388,10 @@ noncomputable def colAct : (T → GL κ R) →* (Poly R T p q κ ≃ₐ[R] Poly 
   map_mul' g h := AlgEquiv.ext fun P => DFunLike.congr_fun (colActHom_mul g h) P
 
 theorem colAct_apply (g : T → GL κ R) (P : Poly R T p q κ) :
-    colAct R T p q κ g P = colSubst (fun t => ((g t)⁻¹ : GL κ R)) (fun t => g t) P := rfl
+    colAct R T p q κ g P =
+      colSubst (fun t => ((g t)⁻¹ : GL κ R)) (fun t => (g t : Matrix κ κ R)) P := rfl
 
-
+variable (R T p q κ) in
 noncomputable def colRep : Representation R (T → GL κ R) (Poly R T p q κ) where
   toFun g := (colAct R T p q κ g).toLinearMap
   map_one' := by rw [map_one]; rfl
@@ -412,15 +413,15 @@ end Action
 
 section Base
 
-
+variable (R) in
 def baseCovec (h : p + q ≤ n) (a : Fin p) : Fin n → R :=
   Pi.single (Fin.castLE (by omega) a) 1
 
-
+variable (R) in
 def baseVec (h : p + q ≤ n) (b : Fin q) : Fin n → R :=
   Pi.single (Fin.rev (Fin.castLE (by omega) b)) 1
 
-
+variable (R T) in
 theorem isPerp_base (h : p + q ≤ n) :
     IsPerp (fun _ : T => baseCovec R h) (fun _ => baseVec R h) := fun t a b => by
   have : Fin.castLE (by omega : p ≤ n) a ≠ Fin.rev (Fin.castLE (by omega : q ≤ n) b) := by
@@ -442,12 +443,12 @@ theorem linearIndependent_baseVec (h : p + q ≤ n) : LinearIndependent R (baseV
 
 variable [Fintype T]
 
-
+variable (R) in
 noncomputable def basePoly (h : p + q ≤ n) (c : T → Fin p → ℕ) (c' : T → Fin q → ℕ) :
     Poly R T p q (Fin n) :=
   minorProd c c' (fun _ => baseCovec R h) (fun _ => baseVec R h)
 
-
+variable (R) in
 noncomputable def orbitSpan (h : p + q ≤ n) (c : T → Fin p → ℕ) (c' : T → Fin q → ℕ) :
     Submodule R (Poly R T p q (Fin n)) :=
   Submodule.span R (Set.range fun g : T → GL (Fin n) R =>
@@ -470,7 +471,7 @@ theorem colAct_mem_orbitSpan (g : T → GL (Fin n) R) {P : Poly R T p q (Fin n)}
     have := colAct_basePoly_mem h c c' (g * g')
     rwa [map_mul] at this
   | zero => simp
-  | add P Q _ _ hP hQ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hP hQ
+  | add P Q _ _ hP hQ => rw [map_add (f := _)]; exact add_mem hP hQ
   | smul r P _ hP => rw [map_smul]; exact Submodule.smul_mem _ _ hP
 
 

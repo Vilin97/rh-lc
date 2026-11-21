@@ -231,6 +231,7 @@ theorem trdeg_fractionRing_eq (K F : Type u) [Field K] [Algebra O K] [IsFraction
 
 theorem ringKrullDim_genericFibre_eq (K : Type u) [Field K] [Algebra O K] [IsFractionRing O K]
     {d : ℕ} (hd : Algebra.trdeg O A = d) : ringKrullDim (K ⊗[O] A) = d := by
+  letI : Algebra A (K ⊗[O] A) := Algebra.TensorProduct.rightAlgebra
   have := IsLocalization.tensorRight (S := A) K (nonZeroDivisors O)
   have hle : Algebra.algebraMapSubmonoid A (nonZeroDivisors O) ≤ nonZeroDivisors A :=
     Submonoid.map_le_iff_le_comap.mpr fun x hx ↦ mem_nonZeroDivisors_of_ne_zero
@@ -364,6 +365,24 @@ open AlgebraicGeometry CategoryTheory Topology
 variable {O : Type u} [CommRing O] [IsDomain O]
   {Y : Scheme.{u}} [IsIntegral Y] (f : Y ⟶ Spec (.of O)) [LocallyOfFiniteType f] [Flat f]
 
+private theorem ringKrullDim_genericFibre_eq_of_domain (A : Type u) [CommRing A] [IsDomain A]
+    [Algebra O A] [Algebra.FiniteType O A] [FaithfulSMul O A]
+    (K : Type u) [Field K] [Algebra O K] [IsFractionRing O K]
+    {d : ℕ} (hd : Algebra.trdeg O A = d) : ringKrullDim (K ⊗[O] A) = d := by
+  letI : Algebra A (K ⊗[O] A) := Algebra.TensorProduct.rightAlgebra
+  have := IsLocalization.tensorRight (S := A) K (nonZeroDivisors O)
+  have hle : Algebra.algebraMapSubmonoid A (nonZeroDivisors O) ≤ nonZeroDivisors A :=
+    Submonoid.map_le_iff_le_comap.mpr fun x hx ↦ mem_nonZeroDivisors_of_ne_zero
+      (by simpa using nonZeroDivisors.ne_zero hx)
+  have : IsDomain (K ⊗[O] A) := IsLocalization.isDomain_of_le_nonZeroDivisors _ hle
+  have : FaithfulSMul A (K ⊗[O] A) :=
+    (faithfulSMul_iff_algebraMap_injective _ _).mpr (IsLocalization.injective _ hle)
+  have : Algebra.IsAlgebraic O K := IsLocalization.isAlgebraic _ (nonZeroDivisors O)
+  have : Algebra.IsAlgebraic A (K ⊗[O] A) :=
+    IsLocalization.isAlgebraic _ (Algebra.algebraMapSubmonoid A (nonZeroDivisors O))
+  refine ringKrullDim_eq_of_trdeg_eq K _ ?_
+  rw [← trdeg_eq_of_isAlgebraic_bot O K, trdeg_eq_of_isAlgebraic_top O A, hd]
+
 theorem exists_affine_chart_trdeg_eq (x : Y) :
     letI := (Spec.preimage (Y.fromSpecStalk (genericPoint Y) ≫ f)).hom.toAlgebra
     ∃ (A : Type u) (_ : CommRing A) (_ : IsDomain A) (_ : Algebra O A)
@@ -425,8 +444,10 @@ theorem topologicalKrullDim_preimage_genericPoint_eq {d : ℕ}
       (FaithfulSMul.algebraMap_injective O A))
   · obtain ⟨A, _, _, _, _, _, j, _, hx, hj, hA⟩ := exists_affine_chart_trdeg_eq f x
     refine ⟨Set.range j, j.isOpenEmbedding.isOpen_range, hx, ?_⟩
+    letI : Algebra A (FractionRing O ⊗[O] A) := Algebra.TensorProduct.rightAlgebra
     have := IsLocalization.tensorRight (S := A) (FractionRing O) (nonZeroDivisors O)
-    rw [← ringKrullDim_genericFibre_eq O (FractionRing O) (hA.trans hd),
+    rw [← ringKrullDim_genericFibre_eq_of_domain (A := A) (K := FractionRing O)
+        (hA.trans hd),
       ← PrimeSpectrum.topologicalKrullDim_eq_ringKrullDim]
     refine topologicalKrullDim_eq_of_isEmbedding (j.isOpenEmbedding.isEmbedding.comp
       (PrimeSpectrum.localization_comap_isEmbedding (FractionRing O ⊗[O] A)

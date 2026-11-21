@@ -5,6 +5,7 @@ public import Mathlib
 @[expose] public section
 
 open Matrix
+open scoped Kronecker
 
 noncomputable section
 

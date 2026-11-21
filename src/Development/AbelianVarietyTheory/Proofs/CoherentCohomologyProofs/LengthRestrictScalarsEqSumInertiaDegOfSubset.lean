@@ -187,7 +187,7 @@ variable (R S : Type*) [CommRing R] [CommRing S] [Algebra R S] [IsLocalRing R]
 
 theorem liesOver_maximalIdeal_of_isIntegral [Algebra.IsIntegral R S] (n : Ideal S)
     [n.IsMaximal] : n.LiesOver (maximalIdeal R) :=
-  ⟨(eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := R) n)).symm⟩
+  ⟨(eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := R) n)).symm⟩
 
 theorem finite_maximalSpectrum_of_finite [Module.Finite R S] : Finite (MaximalSpectrum S) := by
   haveI := (Algebra.QuasiFinite.finite_primesOver (S := S) (maximalIdeal R)).to_subtype

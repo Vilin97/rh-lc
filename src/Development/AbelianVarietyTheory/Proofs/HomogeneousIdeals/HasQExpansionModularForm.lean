@@ -7,6 +7,8 @@ public import Mathlib
 open UpperHalfPlane ModularForm Complex Function Filter PowerSeries
 open scoped Topology MatrixGroups Manifold Real
 
+local notation "𝕢" => Periodic.qParam
+
 noncomputable section
 
 namespace GlobalTheory

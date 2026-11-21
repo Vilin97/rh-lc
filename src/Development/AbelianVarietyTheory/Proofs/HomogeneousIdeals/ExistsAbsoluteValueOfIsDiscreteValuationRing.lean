@@ -249,7 +249,8 @@ theorem exists_absoluteValue_of_isDiscreteValuationRing (V K : Type*) [CommRing 
     exact ⟨IsDiscreteValuationRing.exists_lift_of_le_one, fun ⟨y, hy⟩ => hy ▸ v.valuation_le_one y⟩
   · change ((WithZeroMulInt.toNNReal (ne_zero_of_lt hb) (v.valuation K (algebraMap V K a)) :
       NNReal) : ℝ) = r
-    rw [WithZeroMulInt.toNNReal_neg_apply _ h0, ← hm, NNReal.coe_zpow]
+    rw [WithZeroMulInt.toNNReal_neg_apply _ h0, ← WithZero.toAdd_unzero_eq_log h0, ← hm,
+      NNReal.coe_zpow]
     change (r ^ ((m : ℝ)⁻¹)) ^ m = r
     rw [← Real.rpow_intCast, ← Real.rpow_mul hr0.le, inv_mul_cancel₀ (by exact_mod_cast hm0.ne),
       Real.rpow_one]

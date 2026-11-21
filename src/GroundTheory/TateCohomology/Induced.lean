@@ -98,8 +98,9 @@ variable (B : Rep.{u} k (⊥ : Subgroup G))
 
 
 noncomputable def coindBotProj :
-    (coind (⊥ : Subgroup G).subtype B).V →ₗ[k] (coind (⊥ : Subgroup G).subtype B).V :=
-  LinearMap.codRestrict _ ((LinearMap.single k (fun _ : G => B.V) 1) ∘ₗ LinearMap.proj 1 ∘ₗ
+    (coind (⊥ : Subgroup G).subtype B).V →ₗ[k] (coind (⊥ : Subgroup G).subtype B).V := by
+  classical
+  exact LinearMap.codRestrict _ ((LinearMap.single k (fun _ : G => B.V) 1) ∘ₗ LinearMap.proj 1 ∘ₗ
     (Representation.coindV (⊥ : Subgroup G).subtype B.ρ).subtype) fun f => by
       rw [Representation.mem_coindV]
       intro s x
@@ -110,6 +111,7 @@ noncomputable def coindBotProj :
 theorem sum_coindBotProj (f : coind (⊥ : Subgroup G).subtype B) :
     ∑ g : G, (coind (⊥ : Subgroup G).subtype B).ρ g
       (coindBotProj B ((coind (⊥ : Subgroup G).subtype B).ρ g⁻¹ f)) = f := by
+  classical
   apply Subtype.ext
   funext x
   rw [Submodule.coe_sum, Finset.sum_apply]

@@ -6,7 +6,7 @@ public import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.GramSt
 @[expose] public section
 
 open MeasureTheory Topology Matrix
-open scoped ComplexOrder ENNReal Pointwise
+open scoped ComplexOrder ENNReal MatrixOrder Pointwise
 
 namespace GlobalTheory
 
@@ -63,14 +63,14 @@ private lemma exists_one_le_det_one_add_of_posSemidef {n : Type} [Fintype n] [De
     (hR : R.PosSemidef) :
     ∃ c : ℝ, (1 + R).det = c ∧ 1 ≤ c ∧ (c ≤ 1 → R = 0) := by
   refine ⟨∏ i, (1 + hR.1.eigenvalues i), det_one_add_eq_prod_eigenvalues hR, ?_, ?_⟩
-  · exact Finset.one_le_prod fun i _ => le_add_of_nonneg_right (hR.eigenvalues_nonneg i)
+  · exact Finset.one_le_prod₀ fun i _ => le_add_of_nonneg_right (hR.eigenvalues_nonneg i)
   · intro hc
     apply hR.1.eigenvalues_eq_zero_iff.mp
     funext j
     have hj : 1 + hR.1.eigenvalues j ≤ ∏ i, (1 + hR.1.eigenvalues i) := by
       rw [← Finset.mul_prod_erase Finset.univ _ (Finset.mem_univ j)]
       exact le_mul_of_one_le_right (by linarith [hR.eigenvalues_nonneg j])
-        (Finset.one_le_prod fun i _ => le_add_of_nonneg_right (hR.eigenvalues_nonneg i))
+        (Finset.one_le_prod₀ fun i _ => le_add_of_nonneg_right (hR.eigenvalues_nonneg i))
     have := hR.eigenvalues_nonneg j
     simp only [Pi.zero_apply]
     linarith

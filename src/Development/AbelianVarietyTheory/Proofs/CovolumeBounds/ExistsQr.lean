@@ -41,7 +41,7 @@ theorem _root_.GlobalTheory.QRDecomp.exists_qr (n m : ℕ) (A : Matrix (Fin n) (
     simp only [r, Complex.star_def, Complex.conj_ofReal]
     rw [← Complex.ofReal_mul, Real.mul_self_sqrt (hdre i).2.le, ← (hdre i).1]
   have hLt : Lᴴ.BlockTriangular id := fun i j hij => by
-    have h : LDL.lowerInv hS j i = 0 := LDL.lowerInv_triangular hS hij
+    have h : LDL.lowerInv hS j i = 0 := LDL.isLowerTriangular_lowerInv hS hij
     simp [conjTranspose_apply, L, h]
   refine ⟨A * Lᴴ * diagonal (fun i => (r i)⁻¹), diagonal r * (Lᴴ)⁻¹, ?_, ?_, ?_, ?_⟩
   · have h1 : (A * Lᴴ * diagonal fun i => (r i)⁻¹)ᴴ * (A * Lᴴ * diagonal fun i => (r i)⁻¹)

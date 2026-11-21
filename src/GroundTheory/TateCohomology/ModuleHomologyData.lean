@@ -137,7 +137,6 @@ lemma homologyFunctorIso'_moduleLeftHomologyData_apply {ιc : Type*} {c : Comple
   have h1 : (HomologicalComplex.homologyFunctorIso' _ c i j k hi hk).hom.app C =
       ShortComplex.homologyMap e := by
     simp [HomologicalComplex.homologyFunctorIso', e]
-    exact Category.id_comp _
   have h2 : (ShortComplex.homologyMap e).hom ((C.sc j).homologyπ.hom z) =
       (C.sc' i j k).homologyπ.hom ((ShortComplex.cyclesMap e).hom z) :=
     congr(($(ShortComplex.homologyπ_naturality e)).hom z)
@@ -171,7 +170,6 @@ lemma exists_cycles_of_moduleLeftHomologyData {ιc : Type*} {c : ComplexShape ι
   refine h3.trans ?_
   rw [h4]
   simp [e]
-  rfl
 
 end Complexes
 

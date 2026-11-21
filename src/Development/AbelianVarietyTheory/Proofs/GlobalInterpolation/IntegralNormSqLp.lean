@@ -109,7 +109,7 @@ theorem exp_sum (S : Finset ℕ) (a : ℕ → ℂ) (l : ℕ → ℝ) (T : ℝ) (
     with hf
   have hmem : ∀ (p : ENNReal) (n : ℕ),
       MemLp ((Set.Ico (l n - 1 / T) (l n)).indicator (fun _ => a n)) p volume := fun p n =>
-    memLp_indicator_const p measurableSet_Ico _ (Or.inr (by simp))
+    memLp_indicator_const p measurableSet_Ico.nullMeasurableSet _ (Or.inr (by simp))
   have hint : ∀ n, Integrable ((Set.Ico (l n - 1 / T) (l n)).indicator (fun _ => a n)) volume :=
     fun n => memLp_one_iff_integrable.1 (hmem 1 n)
   have hf1 : Integrable f := integrable_finsetSum _ fun n _ => hint n

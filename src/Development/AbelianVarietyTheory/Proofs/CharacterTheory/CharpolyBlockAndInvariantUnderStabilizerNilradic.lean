@@ -5,7 +5,7 @@ public import Development.AbelianVarietyTheory.Definitions.CommutativeAlgebra.In
 
 @[expose] public section
 
-open Polynomial GlobalTheory.CuspGL
+open Polynomial GlobalTheory.CuspGL Module.Basis
 
 namespace GlobalTheory.CuspGL
 

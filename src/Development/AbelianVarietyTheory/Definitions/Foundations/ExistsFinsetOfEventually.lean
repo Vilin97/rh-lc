@@ -20,6 +20,7 @@ def cyl (pa : ∀ w, X → Ya w) (pf : ∀ v, X → Yf v) (K : ∀ v, Set (Yf v)
   {x | (∀ w, pa w x ∈ A w) ∧ (∀ v ∈ S, pf v x ∈ B v) ∧ ∀ v ∉ S, pf v x ∈ K v}
 
 variable {pa : ∀ w, X → Ya w} {pf : ∀ v, X → Yf v} {K K' : ∀ v, Set (Yf v)}
+local instance : DecidableEq V := Classical.decEq V
 
 theorem mem_cyl {S : Finset V} {A : ∀ w, Set (Ya w)} {B : ∀ v, Set (Yf v)} {x : X} :
     x ∈ cyl pa pf K S A B ↔ (∀ w, pa w x ∈ A w) ∧ (∀ v ∈ S, pf v x ∈ B v) ∧ ∀ v ∉ S, pf v x ∈ K v := Iff.rfl
@@ -32,6 +33,7 @@ theorem cyl_self (S : Finset V) (A : ∀ w, Set (Ya w)) :
 
 theorem cyl_eq_of_subset {S T : Finset V} (h : S ⊆ T) (hK : ∀ v ∉ T, K v = K' v) (A : ∀ w, Set (Ya w))
     (B : ∀ v, Set (Yf v)) : cyl pa pf K' S A B = cyl pa pf K T A fun v => if v ∈ S then B v else K' v := by
+  classical
   refine Set.ext fun x => and_congr_right fun _ => ⟨fun ⟨h1, h2⟩ => ⟨fun v _ => ?_, fun v hv => ?_⟩,
     fun ⟨h1, h2⟩ => ⟨fun v hv => ?_, fun v hv => ?_⟩⟩
   · by_cases hv : v ∈ S
@@ -66,14 +68,16 @@ theorem isCylProd_of_large (hK' : ∀ v, MeasurableSet (K' v)) (S₀ : Finset V)
       (∀ w, MeasurableSet (A w)) → (∀ v ∈ S, MeasurableSet (B v)) →
       μ (cyl pa pf K S A B) = (∏ w, μa w (A w)) * ∏ v ∈ S, μf v (B v)) : IsCylProd pa pf K' μa μf μ := by
   classical
+  classical
   refine ⟨eventually_of_finset S₀ h1, fun S hS A B hA hB => ?_⟩
   rw [cyl_eq_of_subset (K := K) (T := S ∪ S₀) Finset.subset_union_left
     (fun v hv => hK v fun h' => hv (Finset.mem_union_right _ h')), h _ Finset.subset_union_right _ _ hA fun v _ => ?_]
   · congr 1
     rw [← Finset.prod_subset Finset.subset_union_left fun v _ hv => by simp only [if_neg hv, hS v hv]]
     exact Finset.prod_congr rfl fun v hv => by simp only [if_pos hv]
-  · split_ifs with hv
-    exacts [hB v hv, hK' v]
+  · by_cases hvS : v ∈ S
+    · simpa [hvS] using hB v hvS
+    · simpa [hvS] using hK' v
 
 theorem IsCylProd.congr (h : IsCylProd pa pf K μa μf μ) (hK' : ∀ v, MeasurableSet (K' v))
     (hK : ∀ᶠ v in cofinite, K v = K' v) : IsCylProd pa pf K' μa μf μ := by
@@ -165,8 +169,10 @@ theorem IsRestrGroup.subgroup [∀ w, T1Space (Ya w)] [∀ v, T1Space (Yf v)] (h
       have : (H : Set X) = (⋂ w ∉ range i, pa w ⁻¹' {1}) ∩ ⋂ v ∉ range j, pf v ⁻¹' {1} :=
         Set.ext fun x => by simpa using hH x
       rw [this]
-      exact (isClosed_biInter fun w _ => isClosed_singleton.preimage (h.continuous_pa w)).inter
-        (isClosed_biInter fun v _ => isClosed_singleton.preimage (h.continuous_pf v))
+      exact (isClosed_iInter fun w => isClosed_iInter fun _ =>
+        isClosed_singleton.preimage (h.continuous_pa w)).inter
+        (isClosed_iInter fun v => isClosed_iInter fun _ =>
+          isClosed_singleton.preimage (h.continuous_pf v))
     have : ∀ w, ∃ D : Set (Ya w), IsCompact D ∧ (∀ u (e : i u = w), D = e ▸ C u) ∧ (w ∉ range i → D = {1}) :=
       fun w => by
         by_cases hw : w ∈ range i
@@ -366,17 +372,16 @@ section Split
 variable {X' : Type} [Group X'] [TopologicalSpace X'] [MeasurableSpace X'] [BorelSpace X'] [IsTopologicalGroup X']
   [LocallyCompactSpace X'] [SecondCountableTopology X']
 
-omit [LocallyCompactSpace X] [SecondCountableTopology X] [∀ w, IsTopologicalGroup (Ya w)] [∀ w, BorelSpace (Ya w)]
-  [∀ w, LocallyCompactSpace (Ya w)] [∀ w, T2Space (Ya w)] [∀ w, SecondCountableTopology (Ya w)] in
-
-omit [LocallyCompactSpace X] [SecondCountableTopology X] [∀ w, T2Space (Ya w)] [∀ v, IsTopologicalGroup (Yf v)]
-  [∀ v, LocallyCompactSpace (Yf v)] [∀ v, SecondCountableTopology (Yf v)] [∀ v, BorelSpace (Yf v)] in
+omit [LocallyCompactSpace X] [SecondCountableTopology X]
+  [∀ w, T2Space (Ya w)] [∀ v, BorelSpace (Yf v)]
+  [∀ v, IsTopologicalGroup (Yf v)] [∀ v, LocallyCompactSpace (Yf v)] [∀ v, SecondCountableTopology (Yf v)] in
 
 theorem IsHaarProdFin.prod_arch {pf' : ∀ v, X' →* Yf v} {ν : Measure X'} (h : IsHaarProdFin pf' K μf ν)
     [ha : ∀ w, (μa w).IsHaarMeasure] (e : ((∀ w, Ya w) × X') ≃ₜ* X)
     (ea : ∀ w p, pa w (e p) = p.1 w) (ef : ∀ v p, pf v (e p) = pf' v p.2) :
     IsHaarProd pa pf K μa μf (((Measure.pi μa).prod ν).map e) := by
   obtain ⟨h2, h3, h4, h5⟩ := isHaarProdFin_iff.1 h
+  letI := h3
   refine ⟨ha, h2, e.isHaarMeasure_map _, h4, fun S hS A B hA hB => ?_⟩
   have e2 : e ⁻¹' cyl (fun w => pa w) (fun v => pf v) (fun v => (K v : Set (Yf v))) S A B =
       univ.pi A ×ˢ {x | (∀ v ∈ S, pf' v x ∈ B v) ∧ ∀ v ∉ S, pf' v x ∈ K v} := by

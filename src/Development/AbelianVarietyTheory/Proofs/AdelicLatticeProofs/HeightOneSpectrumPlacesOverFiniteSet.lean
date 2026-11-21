@@ -39,11 +39,9 @@ theorem _root_.GlobalTheory.QNorm.places_over : ∀ (F E : Type) [Field F] [Numb
       exact Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective (𝓞 F) (𝓞 E))
     exact ⟨⟨P, hmax.isPrime, hne⟩, HeightOneSpectrum.ext hover.over.symm⟩
   · haveI : w.asIdeal.LiesOver (w.under (𝓞 F)).asIdeal := ⟨rfl⟩
-    refine ⟨(w.under (𝓞 F)).asIdeal.ramificationIdx' w.asIdeal, Nat.pos_of_ne_zero ?_,
+    refine ⟨w.asIdeal.ramificationIdx (𝓞 F),
+      Ideal.ramificationIdx_pos_of_isDedekindDomain' w.asIdeal (w.under (𝓞 F)).ne_bot,
       fun x => ?_⟩
-    · refine Ideal.IsDedekindDomain.ramificationIdx'_ne_zero ?_ w.isPrime Ideal.map_comap_le
-      rw [Ne, Ideal.map_eq_bot_iff_of_injective (FaithfulSMul.algebraMap_injective (𝓞 F) (𝓞 E))]
-      exact (w.under (𝓞 F)).ne_bot
-    · exact (HeightOneSpectrum.valuation_liesOver E (w.under (𝓞 F)) w x).symm
+    exact (HeightOneSpectrum.valuation_liesOver E (w.under (𝓞 F)) w x).symm
 
 end GlobalTheory.QNorm

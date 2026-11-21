@@ -210,8 +210,9 @@ def evalV (v : HeightOneSpectrum (𝓞 F)) : Af F →ₐ[F] Fv F v :=
     commutes' := fun _ => rfl }
 
 
-def singleV (v : HeightOneSpectrum (𝓞 F)) (y : Fv F v) : Af F :=
-  RestrictedProduct.single (fun w : HeightOneSpectrum (𝓞 F) => w.adicCompletionIntegers F) v y
+def singleV (v : HeightOneSpectrum (𝓞 F)) (y : Fv F v) : Af F := by
+  classical
+  exact RestrictedProduct.single (fun w : HeightOneSpectrum (𝓞 F) => w.adicCompletionIntegers F) v y
 
 def IsCharAF (ψ : AddChar (AF F) ℂ) : Prop :=
   Continuous ψ ∧ (∀ x, ‖ψ x‖ = 1) ∧ (∀ a : F, ψ (algebraMap F (AF F) a) = 1) ∧ ∃ x, ψ x ≠ 1

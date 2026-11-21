@@ -96,7 +96,7 @@ def fixedSubalgebraMap (f : A →ₐ[R] A') (hf : ∀ (g : G) a, f (g • a) = g
 
 theorem isBaseChange_fixedSubalgebraMap [Finite G] [Module.Flat R S] (f : A →ₐ[R] A')
     (hb : IsBaseChange S f.toLinearMap) (hf : ∀ (g : G) a, f (g • a) = g • f a) :
-    IsBaseChange S (fixedSubalgebraMap G S f hf).toLinearMap :=
+    IsBaseChange S (fixedSubalgebraMap G (S := S) f hf).toLinearMap :=
   isBaseChange_of_forall_eq S (ι := G) (fun g ↦ (MulSemiringAction.toAlgHom R A g).toLinearMap)
     (fun _ ↦ .id) (fun g ↦ (MulSemiringAction.toAlgHom S A' g).toLinearMap) (fun _ ↦ .id)
     f.toLinearMap hb (fun _ ↦ f.toLinearMap) (fun _ ↦ hb) hf (fun _ _ ↦ rfl)
@@ -112,7 +112,6 @@ theorem isInvariant_of_isBaseChange [Finite G] [Module.Flat R S] [Algebra.IsInva
   have key : ∀ z : FixedPoints.subalgebra S A' G, ∃ s, algebraMap S A' s = z := by
     intro z
     induction z using (isBaseChange_fixedSubalgebraMap G f hb hf).inductionOn with
-    | zero => exact ⟨0, map_zero _⟩
     | tmul m =>
       obtain ⟨r, hr⟩ := Algebra.IsInvariant.isInvariant (A := R) (G := G) (m : A) m.2
       refine ⟨algebraMap R S r, ?_⟩
