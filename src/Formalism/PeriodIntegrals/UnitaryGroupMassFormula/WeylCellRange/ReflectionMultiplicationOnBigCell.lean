@@ -115,8 +115,7 @@ theorem prod_eq_Wm (k r : ℕ) (c : Fin r → ℂ) : ∀ L : List (Fin r), L.Nod
         List.toFinset_cons]
       apply reflection_mul_weyl_cell
       intro hm
-      simp only [List.mem_toFinset, List.mem_map] at hm
-      obtain ⟨b, hb, hba⟩ := hm
+      obtain ⟨b, hb, hba⟩ := List.mem_map.mp (List.mem_toFinset.mp hm)
       have hba' : b = a := Fin.ext hba
       subst hba'
       exact (List.nodup_cons.1 h).1 hb

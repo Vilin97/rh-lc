@@ -62,8 +62,8 @@ theorem lbIso_cube_of_dense : Out.GlobalFnsSt → ∀ (S : Scheme.{0}) [IsReduce
       fin_cases i
       exacts [Over.OverMorphism.ext ((Category.id_comp _).trans (Category.comp_id _).symm), Over.OverMorphism.ext hu']
     have a' : (cubeLB G ![𝟙 G, u'] L').IsLB := DVR.linComb_isLB _ hL' _ _
-    obtain ⟨w, hw⟩ := LBIso.trans (pull_isLB hL φ) hL' (pull_isLB hM φ) H.symm
-      (LBIso.trans hL' a' (pull_isLB hM φ) H' i)
+    obtain ⟨w, hw⟩ := LBIso.trans (LB.isLB_pull hL φ) hL' (LB.isLB_pull hM φ) H.symm
+      (LBIso.trans hL' a' (LB.isLB_pull hM φ) H' i)
     exact gen_chartPull (IsoDescent.chartPullDiv _ L _) w hw
   · obtain ⟨c, hc⟩ := hrig
     obtain ⟨c', hc'⟩ := PrimDense.exists_gen_cube_eSec hL u

@@ -42,7 +42,7 @@ theorem tObj_rigid : Out.Laws → ∀ (o : Type) [CommRing o] (g k : ℕ) (J : T
   have h₁ : LBIso (t.L.pull θ.hom.left) (t'.L.pull φ) :=
     LBIso.chartPull (chartPullPull t.L _ θ.hom.left rfl) (chartPullSame t'.L _ _ _ θ.hom.left fun _ => e.symm) hl'
   obtain ⟨w, hw⟩ : LBIso t.L (t.L.pull θ.hom.left) :=
-    LBIso.trans t.isLB (pull_isLB t'.isLB φ) (pull_isLB t.isLB _) hl h₁.symm
+    LBIso.trans t.isLB (LB.isLB_pull t'.isLB φ) (LB.isLB_pull t.isLB _) hl h₁.symm
   have hku : IsUnit (k : Γ(S, ⊤)) := by
     simpa using b.unit.map ((Scheme.ΓSpecIso (CommRingCat.of o)).inv ≫ s.appTop).hom
   have := t.ab.comm

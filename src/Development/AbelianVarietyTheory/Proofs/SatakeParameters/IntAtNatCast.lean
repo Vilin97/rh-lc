@@ -52,8 +52,8 @@ theorem intAt_n1Arg {n c : ℕ} (a : E) (r : Sp E (n + c) ≃ₗ[E] Sp E (n + c)
 
 
 omit [StarRing E] in
-theorem unitV_root {K : Type} [Field K] (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (a : E) (h : LocE.unitV χ a ≠ 0) :
-    ∃ k : ℕ, 0 < k ∧ LocE.unitV χ a ^ k = 1 := by
+theorem unitV_root {K : Type} [Field K] (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (a : E) (h : LocE.unitV P χ a ≠ 0) :
+    ∃ k : ℕ, 0 < k ∧ LocE.unitV P χ a ^ k = 1 := by
   unfold LocE.unitV at h ⊢
   split_ifs at h ⊢ with hu
   · have : Finite (𝓞 E ⧸ P.asIdeal) := Ideal.finiteQuotientOfFreeOfNeBot _ P.ne_bot

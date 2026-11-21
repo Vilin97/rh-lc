@@ -20,6 +20,8 @@ variable {n : ℕ}
 
 namespace GPs
 
+local notation "𝕄f" => Fin n → Fin n → ℂ
+
 lemma contDiff_entry (i j : Fin n) : ContDiff ℂ ∞ (fun z : Matrix (Fin n) (Fin n) ℂ => z i j) := by
   first
     | exact contDiff_apply_apply (𝕜 := ℂ) (n := ∞) i j
@@ -169,12 +171,13 @@ lemma contOn_FD (T : KType ε Λ) (hg : ContDiffOn ℂ ∞ g (Wset n)) :
     ContinuousOn (fun q : Matrix (Fin n) (Fin n) ℂ × KG ε => FD T g q.1 q.2) (Ps1.Uset ε ×ˢ Set.univ) := by
   have hop : Continuous (fun k : KG ε => T.op k) := continuous_subtype_val.comp T.cont
   have hPk : Continuous (Pk T) := (hop.mul continuous_const).mul (hop.comp continuous_inv)
-  rw [continuousOn_clm_apply]
+  refine (continuousOn_clm_apply (𝕜 := ℂ) (E := 𝕄f) (F := T.V →L[ℂ] T.V)).2 ?_
   intro H
   have hc : ContinuousOn (fun q : Matrix (Fin n) (Fin n) ℂ × KG ε => fderiv ℂ g (emb q.1 q.2) (H, 0) • Pk T q.2)
       (Ps1.Uset ε ×ˢ Set.univ) :=
     (((hg.continuousOn_fderiv_of_isOpen isOpen_kappaOpenNeighbourhood (by simp)).comp continuous_emb.continuousOn
-      (fun q hq => emb_mem hq.1 q.2)).clm_apply continuousOn_const).smul (hPk.comp continuous_snd).continuousOn
+      (fun q (hq : q ∈ Ps1.Uset ε ×ˢ (Set.univ : Set (KG ε))) => emb_mem hq.1 q.2)).clm_apply
+      continuousOn_const).smul (hPk.comp continuous_snd).continuousOn
   refine hc.congr fun q hq => ?_
   exact FD_apply T hg q.2 (emb_mem hq.1 q.2) H
 

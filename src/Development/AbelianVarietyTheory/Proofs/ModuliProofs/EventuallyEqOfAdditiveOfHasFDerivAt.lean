@@ -134,9 +134,9 @@ theorem holAt_of_isPullback {S X : Scheme.{0}} {p : Z ⟶ X} {q : Z ⟶ Y} {s : 
     induction hg using Subring.closure_induction with
     | mem x hx =>
       rcases hx with ⟨y, rfl⟩ | ⟨y, rfl⟩
-      · exact ((ha U₁ y).2.mono fun w hw => ⟨hw.1, ((hiff w).1 hw.2).1⟩).congr fun w hw =>
+      · exact ((ha U₁ y).2.mono fun w (hw : w ∈ {w ∈ W | ⊤ ≤ c w ⁻¹ᵁ V}) => ⟨hw.1, ((hiff w).1 hw.2).1⟩).congr fun w hw =>
           valAt'_appLE _ _ _ _ _ _ hw.2
-      · exact ((hb U₂ y).2.mono fun w hw => ⟨hw.1, ((hiff w).1 hw.2).2⟩).congr fun w hw =>
+      · exact ((hb U₂ y).2.mono fun w (hw : w ∈ {w ∈ W | ⊤ ≤ c w ⁻¹ᵁ V}) => ⟨hw.1, ((hiff w).1 hw.2).2⟩).congr fun w hw =>
           valAt'_appLE _ _ _ _ _ _ hw.2
     | zero => simp only [valAt'_zero]; exact differentiableOn_const _
     | one => exact (differentiableOn_const (1 : ℂ)).congr fun w hw => valAt'_one _ hw.2

@@ -120,7 +120,7 @@ theorem exists_prime_of_not_dvd {A : Type*} [CommRing A] [IsDomain A] [IsNoether
     rw [h0, Ideal.mem_bot, ← map_zero (algebraMap A R)] at this
     exact hb (hinj this)
   have : ValuationRing R :=
-    ((IsDiscreteValuationRing.TFAE R hnf).out 4 1).1
+    ((IsDiscreteValuationRing.TFAE R hnf).out 5 2).1
       (show Submodule.IsPrincipal (IsLocalRing.maximalIdeal R) from ⟨⟨_, hmax⟩⟩)
   obtain ⟨z, hz2⟩ := ValuationRing.cond (algebraMap A R a) (algebraMap A R b)
   obtain ⟨⟨r, s⟩, rfl⟩ := IsLocalization.mk'_surjective p.primeCompl z

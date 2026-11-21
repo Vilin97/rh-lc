@@ -216,7 +216,7 @@ theorem existsUnique_comb (hL : Out.Laws) [IsLocallyNoetherian S] {o : Type} [Co
 theorem lbIso_cancel {X Y Z : Scheme.{0}} {L : LB X} {L₁ : LB Y} {L₂ : LB Z} (hL : L.IsLB) (h₁ : L₁.IsLB)
     (h₂ : L₂.IsLB) {ψ₁ : Y ⟶ X} {φ : Z ⟶ Y} {ψ : Z ⟶ X} (e : φ ≫ ψ₁ = ψ) (a : LBIso L₁ (L.pull ψ₁))
     (c : LBIso L₂ (L.pull ψ)) : LBIso L₂ (L₁.pull φ) :=
-  c.trans h₂ (pull_isLB hL _) (pull_isLB h₁ _) (LBIso.chartPull
+  c.trans h₂ (LB.isLB_pull hL _) (LB.isLB_pull h₁ _) (LBIso.chartPull
     (chartPullSame L (fun _ : PUnit => ψ) (fun _ => ψ₁) (fun _ => 1) φ fun _ => e.symm)
     (chartPullPull L₁ φ φ rfl) a.symm)
 
@@ -282,18 +282,26 @@ theorem exists_finiteEtale_level_cover_of_pow_eq_one : Out.Laws → Out.Laws2 �
   let φ : t'.A.left ⟶ P₁.A.left := hψ.lift ψ (t'.A.hom ≫ spMap y₁) (by rw [hp'.1.w, Category.assoc, base])
   have φ₁ : φ ≫ ψ₁ = ψ := hψ.lift_fst _ _ _
   have φ₂ : φ ≫ P₁.A.hom = t'.A.hom ≫ spMap y₁ := hψ.lift_snd _ _ _
-  refine ⟨y₁, ⟨inj ((sc _).trans base), pts, φ, hp.cancel (hp'.congr base.symm φ₁.symm) φ₂,
-    lbIso_cancel P.isLB P₁.isLB t'.isLB φ₁ hb hb', fun i => hψ.hom_ext ?_ ?_, fun j => hψ.hom_ext ?_ ?_⟩,
-    fun y₂ ⟨b₂, p₂, _⟩ => inj ?_⟩
-  · rw [Category.assoc, φ₁, pts, Category.assoc]
-  · show (_ ≫ φ) ≫ _ = (_ ≫ (pt i).left) ≫ _
-    rw [Category.assoc, φ₂, ← Category.assoc, Over.w, Category.assoc, Over.w]
-    exact (Category.id_comp _).trans (Category.comp_id _).symm
-  · show (_ ≫ φ) ≫ _ = (φ ≫ (act₁ j).left) ≫ _
-    rw [Category.assoc, φ₁, ha', Category.assoc, ha, ← Category.assoc, φ₁]
-  · show (_ ≫ φ) ≫ _ = (φ ≫ (act₁ j).left) ≫ _
-    rw [Category.assoc, φ₂, ← Category.assoc, Over.w, Category.assoc, Over.w, φ₂]
-  · let h₂ : Over.mk ((Out.baseOver (Sp R')).hom ≫ spMap y) ⟶ Z := Over.homMk (spMap y₂ ≫ e.hom) (by
+  refine ⟨y₁, ?_, ?_⟩
+  · refine ⟨inj ((sc _).trans base), pts, φ, hp.cancel (hp'.congr base.symm φ₁.symm) φ₂,
+      lbIso_cancel P.isLB P₁.isLB t'.isLB φ₁ hb hb', ?_, ?_⟩
+    · intro i
+      apply hψ.hom_ext
+      · rw [Category.assoc, φ₁, pts, Category.assoc]
+      · show (_ ≫ φ) ≫ _ = (_ ≫ (pt i).left) ≫ _
+        rw [Category.assoc, φ₂, ← Category.assoc, Over.w, Category.assoc, Over.w]
+        exact (Category.id_comp _).trans (Category.comp_id _).symm
+    · intro j
+      apply hψ.hom_ext
+      · show (_ ≫ φ) ≫ _ = (φ ≫ (act₁ j).left) ≫ _
+        rw [Category.assoc, φ₁, ha', Category.assoc, ha, ← Category.assoc, φ₁]
+      · show (_ ≫ φ) ≫ _ = (φ ≫ (act₁ j).left) ≫ _
+        rw [Category.assoc, φ₂, ← Category.assoc, Over.w, Category.assoc, Over.w, φ₂]
+  · intro y₂ hy₂
+    have b₂ := hy₂.1
+    have p₂ := hy₂.2.1
+    apply inj
+    let h₂ : Over.mk ((Out.baseOver (Sp R')).hom ≫ spMap y) ⟶ Z := Over.homMk (spMap y₂ ≫ e.hom) (by
       show (_ ≫ _) ≫ _ = 𝟙 _ ≫ _
       rw [Category.assoc, he, ← sc, b₂, Category.id_comp])
     have : h₂ = h := hu h₂ fun i => Over.OverMorphism.ext (by

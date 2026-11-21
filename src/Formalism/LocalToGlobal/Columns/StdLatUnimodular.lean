@@ -253,76 +253,80 @@ theorem dual_gmap (g : Sp E n ≃ₗ[E] Sp E n) (hg : g ∈ UF E n) (L : Submodu
     simpa using this
 
 theorem Deco.Ok.act {d : Deco E n ST SG} (hd : d.Ok) {ga : Sp E n ≃ₗ[E] Sp E n} (hga : ga ∈ UF E n)
-    (h : GLG (E := E) (n := n) (SG := SG)) : (d.act ga h).Ok where
-  lat := gmap_lattice ga d.N hd.lat
-  uni := by
-    change dual (hStd E n) (gmap ga d.N) = gmap ga d.N
-    rw [dual_gmap ga hga, hd.uni]
-  f_add P x hx y hy := by
-    change d.f P (ga.symm (x + y)) = _
-    rw [map_add (f := _)]
-    exact hd.f_add P _ ((mem_localization_gmap _ _ _ _).1 hx) _ ((mem_localization_gmap _ _ _ _).1 hy)
-  f_smul P a x hx := by
-    change d.f P (ga.symm (a • x)) = _
-    rw [equiv_osmul]
-    exact hd.f_smul P a _ ((mem_localization_gmap _ _ _ _).1 hx)
-  f_off P x hx := hd.f_off P _ fun h' => hx ((mem_localization_gmap _ _ _ _).2 h')
-  f_ne P := by
-    obtain ⟨x, hx, hne⟩ := hd.f_ne P
-    refine ⟨ga x, (mem_gmap _ _ _).2 (by simpa using hx), ?_⟩
-    change d.f P (ga.symm (ga x)) ≠ 0
-    simpa using hne
-  be_add w x hx y hy := by
-    change (h w).1.mulVec (d.be w (ga.symm (x + y))) = _
-    rw [map_add (f := _), hd.be_add w _ ((mem_localization_gmap _ _ _ _).1 hx) _ ((mem_localization_gmap _ _ _ _).1 hy),
-      Matrix.mulVec_add]
-    rfl
-  be_smul w a x hx := by
-    change (h w).1.mulVec (d.be w (ga.symm (a • x))) = _
-    rw [equiv_osmul, hd.be_smul w a _ ((mem_localization_gmap _ _ _ _).1 hx), Matrix.mulVec_smul]
-    rfl
-  be_off w x hx := by
-    change (h w).1.mulVec (d.be w (ga.symm x)) = 0
-    rw [hd.be_off w _ fun h' => hx ((mem_localization_gmap _ _ _ _).2 h'), Matrix.mulVec_zero]
-  be_surj w c := by
-    obtain ⟨x, hx, hc⟩ := hd.be_surj w ((h w)⁻¹.1.mulVec c)
-    refine ⟨ga x, (mem_gmap _ _ _).2 (by simpa using hx), ?_⟩
-    change (h w).1.mulVec (d.be w (ga.symm (ga x))) = c
-    rw [LinearEquiv.symm_apply_apply, hc, Matrix.mulVec_mulVec, ← Units.val_mul, mul_inv_cancel,
-      Units.val_one, Matrix.one_mulVec]
-  be_ker w x hx h0 := by
-    have h1 : d.be w (ga.symm x) = 0 := by
-      have h2 : (h w)⁻¹.1.mulVec ((h w).1.mulVec (d.be w (ga.symm x))) = 0 := by
-        rw [show (h w).1.mulVec (d.be w (ga.symm x)) = 0 from h0, Matrix.mulVec_zero]
-      rwa [Matrix.mulVec_mulVec, ← Units.val_mul, inv_mul_cancel, Units.val_one,
-        Matrix.one_mulVec] at h2
-    have h3 := hd.be_ker w _ ((mem_gmap _ _ _).1 hx) h1
-    change x ∈ w.1.asIdeal • (d.N.map ((ga : Sp E n →ₗ[E] Sp E n).restrictScalars (𝓞 E)))
-    rw [← Submodule.map_smul'']
-    exact ⟨ga.symm x, h3, by simp⟩
+    (h : GLG (E := E) (n := n) (SG := SG)) : (d.act ga h).Ok := by
+  exact {
+    lat := gmap_lattice ga d.N hd.lat
+    uni := by
+      change dual (hStd E n) (gmap ga d.N) = gmap ga d.N
+      rw [dual_gmap ga hga, hd.uni]
+    f_add P x hx y hy := by
+      change d.f P (ga.symm (x + y)) = _
+      rw [map_add (f := _)]
+      exact hd.f_add P _ ((mem_localization_gmap _ _ _ _).1 hx) _ ((mem_localization_gmap _ _ _ _).1 hy)
+    f_smul P a x hx := by
+      change d.f P (ga.symm (a • x)) = _
+      rw [equiv_osmul]
+      exact hd.f_smul P a _ ((mem_localization_gmap _ _ _ _).1 hx)
+    f_off P x hx := hd.f_off P _ fun h' => hx ((mem_localization_gmap _ _ _ _).2 h')
+    f_ne P := by
+      obtain ⟨x, hx, hne⟩ := hd.f_ne P
+      refine ⟨ga x, (mem_gmap _ _ _).2 (by simpa using hx), ?_⟩
+      change d.f P (ga.symm (ga x)) ≠ 0
+      simpa using hne
+    be_add w x hx y hy := by
+      change (h w).1.mulVec (d.be w (ga.symm (x + y))) = _
+      rw [map_add (f := _), hd.be_add w _ ((mem_localization_gmap _ _ _ _).1 hx) _ ((mem_localization_gmap _ _ _ _).1 hy),
+        Matrix.mulVec_add]
+      rfl
+    be_smul w a x hx := by
+      change (h w).1.mulVec (d.be w (ga.symm (a • x))) = _
+      rw [equiv_osmul, hd.be_smul w a _ ((mem_localization_gmap _ _ _ _).1 hx), Matrix.mulVec_smul]
+      rfl
+    be_off w x hx := by
+      change (h w).1.mulVec (d.be w (ga.symm x)) = 0
+      rw [hd.be_off w _ fun h' => hx ((mem_localization_gmap _ _ _ _).2 h'), Matrix.mulVec_zero]
+    be_surj w c := by
+      obtain ⟨x, hx, hc⟩ := hd.be_surj w ((h w)⁻¹.1.mulVec c)
+      refine ⟨ga x, (mem_gmap _ _ _).2 (by simpa using hx), ?_⟩
+      change (h w).1.mulVec (d.be w (ga.symm (ga x))) = c
+      rw [LinearEquiv.symm_apply_apply, hc, Matrix.mulVec_mulVec, ← Units.val_mul, mul_inv_cancel,
+        Units.val_one, Matrix.one_mulVec]
+    be_ker w x hx h0 := by
+      have h1 : d.be w (ga.symm x) = 0 := by
+        have h2 : (h w)⁻¹.1.mulVec ((h w).1.mulVec (d.be w (ga.symm x))) = 0 := by
+          rw [show (h w).1.mulVec (d.be w (ga.symm x)) = 0 from h0, Matrix.mulVec_zero]
+        rwa [Matrix.mulVec_mulVec, ← Units.val_mul, inv_mul_cancel, Units.val_one,
+          Matrix.one_mulVec] at h2
+      have h3 := hd.be_ker w _ ((mem_gmap _ _ _).1 hx) h1
+      change x ∈ w.1.asIdeal • (d.N.map ((ga : Sp E n →ₗ[E] Sp E n).restrictScalars (𝓞 E)))
+      rw [← Submodule.map_smul'']
+      exact ⟨ga.symm x, h3, by simp⟩
+  }
 
-theorem Deco.Ok.dia {d : Deco E n ST SG} (hd : d.Ok) (c : DiaG (E := E) (ST := ST)) : (d.dia c).Ok where
-  lat := hd.lat
-  uni := hd.uni
-  f_add P x hx y hy := by
-    change (c P).1 * d.f P (x + y) = (c P).1 * d.f P x + (c P).1 * d.f P y
-    rw [hd.f_add P x hx y hy, mul_add]
-  f_smul P a x hx := by
-    change (c P).1 * d.f P (a • x) = _ * ((c P).1 * d.f P x)
-    rw [hd.f_smul P a x hx, mul_left_comm]
-  f_off P x hx := by
-    change (c P).1 * d.f P x = 0
-    rw [hd.f_off P x hx, mul_zero]
-  f_ne P := by
-    obtain ⟨x, hx, hne⟩ := hd.f_ne P
-    refine ⟨x, hx, ?_⟩
-    change (c P).1 * d.f P x ≠ 0
-    rwa [Ne, Units.mul_right_eq_zero]
-  be_add := hd.be_add
-  be_smul := hd.be_smul
-  be_off := hd.be_off
-  be_surj := hd.be_surj
-  be_ker := hd.be_ker
+theorem Deco.Ok.dia {d : Deco E n ST SG} (hd : d.Ok) (c : DiaG (E := E) (ST := ST)) : (d.dia c).Ok := by
+  exact {
+    lat := hd.lat
+    uni := hd.uni
+    f_add P x hx y hy := by
+      change (c P).1 * d.f P (x + y) = (c P).1 * d.f P x + (c P).1 * d.f P y
+      rw [hd.f_add P x hx y hy, mul_add]
+    f_smul P a x hx := by
+      change (c P).1 * d.f P (a • x) = _ * ((c P).1 * d.f P x)
+      rw [hd.f_smul P a x hx, mul_left_comm]
+    f_off P x hx := by
+      change (c P).1 * d.f P x = 0
+      rw [hd.f_off P x hx, mul_zero]
+    f_ne P := by
+      obtain ⟨x, hx, hne⟩ := hd.f_ne P
+      refine ⟨x, hx, ?_⟩
+      change (c P).1 * d.f P x ≠ 0
+      rwa [Ne, Units.mul_right_eq_zero]
+    be_add := hd.be_add
+    be_smul := hd.be_smul
+    be_off := hd.be_off
+    be_surj := hd.be_surj
+    be_ker := hd.be_ker
+  }
 
 theorem Deco.act_one (d : Deco E n ST SG) : d.act 1 1 = d := by
   ext1
@@ -574,77 +578,79 @@ theorem mem_localization_standardLattice (P : HeightOneSpectrum (𝓞 E)) (x : S
     rw [e]
     exact single_mem_stdLat i r
 
-theorem Deco.base_ok [NeZero n] : (Deco.base E n ST SG).Ok where
-  lat := stdLat_lattice
-  uni := stdLat_unimodular
-  f_add P x hx y hy := by
-    replace hx : x ∈ localization₂ P.1.asIdeal (stdLat E n) := hx
-    replace hy : y ∈ localization₂ P.1.asIdeal (stdLat E n) := hy
-    have hxy : x + y ∈ localization₂ P.1.asIdeal (stdLat E n) := Submodule.add_mem _ hx hy
-    simp only [Deco.base]
-    rw [if_pos hxy, if_pos hx, if_pos hy]
-    exact reduction_add ((mem_localization_standardLattice _ _).1 hx _) ((mem_localization_standardLattice _ _).1 hy _)
-  f_smul P a x hx := by
-    replace hx : x ∈ localization₂ P.1.asIdeal (stdLat E n) := hx
-    have hax : a • x ∈ localization₂ P.1.asIdeal (stdLat E n) := Submodule.smul_mem _ a hx
-    simp only [Deco.base]
-    rw [if_pos hax, if_pos hx]
-    exact redP_osmul a ((mem_localization_standardLattice _ _).1 hx _)
-  f_off P x hx := by
-    replace hx : x ∉ localization₂ P.1.asIdeal (stdLat E n) := hx
-    simp only [Deco.base]
-    rw [if_neg hx]
-  f_ne P := by
-    have h1 : (Pi.single (lastIdx n) (algebraMap (𝓞 E) E 1) : Sp E n) ∈ stdLat E n := single_mem_stdLat _ 1
-    refine ⟨_, h1, ?_⟩
-    simp only [Deco.base]
-    rw [if_pos (le_locP _ _ h1), Pi.single_eq_same, reduction_coe, map_one]
-    exact one_ne_zero
-  be_add w x hx y hy := by
-    replace hx : x ∈ localization₂ w.1.asIdeal (stdLat E n) := hx
-    replace hy : y ∈ localization₂ w.1.asIdeal (stdLat E n) := hy
-    have hxy : x + y ∈ localization₂ w.1.asIdeal (stdLat E n) := Submodule.add_mem _ hx hy
-    simp only [Deco.base]
-    rw [if_pos hxy, if_pos hx, if_pos hy]
-    funext i
-    exact reduction_add ((mem_localization_standardLattice _ _).1 hx _) ((mem_localization_standardLattice _ _).1 hy _)
-  be_smul w a x hx := by
-    replace hx : x ∈ localization₂ w.1.asIdeal (stdLat E n) := hx
-    have hax : a • x ∈ localization₂ w.1.asIdeal (stdLat E n) := Submodule.smul_mem _ a hx
-    simp only [Deco.base]
-    rw [if_pos hax, if_pos hx]
-    funext i
-    exact redP_osmul a ((mem_localization_standardLattice _ _).1 hx _)
-  be_off w x hx := by
-    replace hx : x ∉ localization₂ w.1.asIdeal (stdLat E n) := hx
-    simp only [Deco.base]
-    rw [if_neg hx]
-  be_surj w c := by
-    choose r hr using fun i => Ideal.Quotient.mk_surjective (c i)
-    have h1 : (fun i => algebraMap (𝓞 E) E (r i) : Sp E n) ∈ stdLat E n :=
-      (mem_stdLat _).2 fun i => ⟨r i, rfl⟩
-    refine ⟨_, h1, ?_⟩
-    simp only [Deco.base]
-    rw [if_pos (le_locP _ _ h1)]
-    funext i
-    rw [reduction_coe, hr]
-  be_ker w x hx h0 := by
-    replace hx : x ∈ stdLat E n := hx
-    simp only [Deco.base] at h0
-    rw [if_pos (le_locP _ _ hx)] at h0
-    have hx' := (mem_stdLat _).1 hx
-    choose r hr using hx'
-    have hmem : ∀ i, r i ∈ w.1.asIdeal := by
-      intro i
-      have := congrFun h0 i
-      rw [← hr i, reduction_coe] at this
-      exact Ideal.Quotient.eq_zero_iff_mem.1 this
-    have : x = ∑ i, r i • (Pi.single i (algebraMap (𝓞 E) E 1) : Sp E n) := by
-      funext j
-      simp [Finset.sum_apply, Pi.single_apply, Algebra.smul_def, hr]
-    rw [this]
-    exact Submodule.sum_mem _ fun i _ =>
-      Submodule.smul_mem_smul (hmem i) (single_mem_stdLat i 1)
+theorem Deco.base_ok [NeZero n] : (Deco.base E n ST SG).Ok := by
+  exact {
+    lat := stdLat_lattice
+    uni := stdLat_unimodular
+    f_add P x hx y hy := by
+      replace hx : x ∈ localization₂ P.1.asIdeal (stdLat E n) := hx
+      replace hy : y ∈ localization₂ P.1.asIdeal (stdLat E n) := hy
+      have hxy : x + y ∈ localization₂ P.1.asIdeal (stdLat E n) := Submodule.add_mem _ hx hy
+      simp only [Deco.base]
+      rw [if_pos hxy, if_pos hx, if_pos hy]
+      exact reduction_add ((mem_localization_standardLattice _ _).1 hx _) ((mem_localization_standardLattice _ _).1 hy _)
+    f_smul P a x hx := by
+      replace hx : x ∈ localization₂ P.1.asIdeal (stdLat E n) := hx
+      have hax : a • x ∈ localization₂ P.1.asIdeal (stdLat E n) := Submodule.smul_mem _ a hx
+      simp only [Deco.base]
+      rw [if_pos hax, if_pos hx]
+      exact redP_osmul a ((mem_localization_standardLattice _ _).1 hx _)
+    f_off P x hx := by
+      replace hx : x ∉ localization₂ P.1.asIdeal (stdLat E n) := hx
+      simp only [Deco.base]
+      rw [if_neg hx]
+    f_ne P := by
+      have h1 : (Pi.single (lastIdx n) (algebraMap (𝓞 E) E 1) : Sp E n) ∈ stdLat E n := single_mem_stdLat _ 1
+      refine ⟨_, h1, ?_⟩
+      simp only [Deco.base]
+      rw [if_pos (le_locP _ _ h1), Pi.single_eq_same, reduction_coe, map_one]
+      exact one_ne_zero
+    be_add w x hx y hy := by
+      replace hx : x ∈ localization₂ w.1.asIdeal (stdLat E n) := hx
+      replace hy : y ∈ localization₂ w.1.asIdeal (stdLat E n) := hy
+      have hxy : x + y ∈ localization₂ w.1.asIdeal (stdLat E n) := Submodule.add_mem _ hx hy
+      simp only [Deco.base]
+      rw [if_pos hxy, if_pos hx, if_pos hy]
+      funext i
+      exact reduction_add ((mem_localization_standardLattice _ _).1 hx _) ((mem_localization_standardLattice _ _).1 hy _)
+    be_smul w a x hx := by
+      replace hx : x ∈ localization₂ w.1.asIdeal (stdLat E n) := hx
+      have hax : a • x ∈ localization₂ w.1.asIdeal (stdLat E n) := Submodule.smul_mem _ a hx
+      simp only [Deco.base]
+      rw [if_pos hax, if_pos hx]
+      funext i
+      exact redP_osmul a ((mem_localization_standardLattice _ _).1 hx _)
+    be_off w x hx := by
+      replace hx : x ∉ localization₂ w.1.asIdeal (stdLat E n) := hx
+      simp only [Deco.base]
+      rw [if_neg hx]
+    be_surj w c := by
+      choose r hr using fun i => Ideal.Quotient.mk_surjective (c i)
+      have h1 : (fun i => algebraMap (𝓞 E) E (r i) : Sp E n) ∈ stdLat E n :=
+        (mem_stdLat _).2 fun i => ⟨r i, rfl⟩
+      refine ⟨_, h1, ?_⟩
+      simp only [Deco.base]
+      rw [if_pos (le_locP _ _ h1)]
+      funext i
+      rw [reduction_coe, hr]
+    be_ker w x hx h0 := by
+      replace hx : x ∈ stdLat E n := hx
+      simp only [Deco.base] at h0
+      rw [if_pos (le_locP _ _ hx)] at h0
+      have hx' := (mem_stdLat _).1 hx
+      choose r hr using hx'
+      have hmem : ∀ i, r i ∈ w.1.asIdeal := by
+        intro i
+        have := congrFun h0 i
+        rw [← hr i, reduction_coe] at this
+        exact Ideal.Quotient.eq_zero_iff_mem.1 this
+      have : x = ∑ i, r i • (Pi.single i (algebraMap (𝓞 E) E 1) : Sp E n) := by
+        funext j
+        simp [Finset.sum_apply, Pi.single_apply, Algebra.smul_def, hr]
+      rw [this]
+      exact Submodule.sum_mem _ fun i _ =>
+        Submodule.smul_mem_smul (hmem i) (single_mem_stdLat i 1)
+  }
 
 
 variable (E n ST SG) in

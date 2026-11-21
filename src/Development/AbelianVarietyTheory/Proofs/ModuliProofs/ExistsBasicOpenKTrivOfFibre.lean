@@ -126,7 +126,16 @@ theorem exists_finite_rep (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (
       ∀ (T : Over (Sp R)) (x : T ⟶ A), MemKL A L x ↔ ∃ z : T ⟶ Z, z ≫ i = x := by
   have := hA.comm
   obtain ⟨d, -, n, s, hs⟩ := (Unif.relAmple_iff_veryAmpleBy R A L hL).1 ha
-  have hp : AbLaw.IsProjBy A.hom := ⟨_, AbLaw.isLB_pw hL _, n, s, hs⟩
+  set_option backward.isDefEq.respectTransparency false in
+  have isLB_pw {X : Scheme.{0}} {H : LB X} (hH : H.IsLB) (t : ℤ) : (AbLaw.pw H t).IsLB := by
+    refine { cover := hH.cover, g_self := ?_, cocycle := ?_ }
+    · intro i
+      have h := congrArg (· ^ t) (hH.g_self i)
+      simpa only [AbLaw.pw, one_zpow, ← map_zpow] using h
+    · intro i j k
+      have h := congrArg (· ^ t) (hH.cocycle i j k)
+      simpa only [AbLaw.pw, mul_zpow, ← map_zpow] using h
+  have hp : AbLaw.IsProjBy A.hom := ⟨_, isLB_pw hL _, n, s, hs⟩
   obtain ⟨hO, -, hK⟩ := UU.TrivTwist.inK_iff_trivial_twist _ A L hL
   obtain ⟨Z, i, hi, hZ⟩ := _root_.GlobalTheory.UU.TwistKer.exists_closed_twist_kernel globalFns_holds R A hA hp L _ hL hO
   exact ⟨Z, i, hi, AmpleStabFinite.isFinite_of_relAmple globalFns_holds R A hA L _ hL hO ha Z i hi hZ,

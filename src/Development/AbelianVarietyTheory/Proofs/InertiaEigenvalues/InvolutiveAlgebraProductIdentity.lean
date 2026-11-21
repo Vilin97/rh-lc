@@ -519,19 +519,23 @@ private theorem sigma_smul' (B : InvAlg K) (a : K.E) (y : B.A) : B.σ (a • y) 
 private theorem dual_dual_eq_and_isLat_dual (hB : (Algebra.traceForm K.E C).Nondegenerate) (M : Submodule K.O C)
     (hM : IsLat K.O K.E M) : dual (dual M) = M ∧ IsLat K.O K.E (dual M) := by
   classical
-  have : Submodule.IsLattice K.E M := ⟨hM.1, hM.2⟩
+  have : Submodule.IsFullLattice K.E M :=
+    { toIsLattice := Submodule.IsLattice.of_fg K.E hM.1, span_eq_top := hM.2 }
+  have : Module.Free K.O M := Submodule.IsLattice.free K.E M
   obtain ⟨ι, _, b, hMb⟩ : ∃ (ι : Type) (_ : Finite ι) (b : Module.Basis ι K.E C),
       M = Submodule.span K.O (Set.range b) := by
     let bM := Module.Free.chooseBasis K.O M
-    refine ⟨_, inferInstance, bM.extendOfIsLattice K.E, ?_⟩
-    have h1 : Set.range (bM.extendOfIsLattice K.E) = M.subtype '' Set.range bM := by
-      rw [← Set.range_comp]; ext x; simp
+    let b := bM.extendOfIsFullLattice K.E
+    refine ⟨_, Module.Finite.finite_basis b, b, ?_⟩
+    have h1 : Set.range b = M.subtype '' Set.range bM := by
+      rw [← Set.range_comp]; ext x; simp [b]
     rw [h1, Submodule.span_image, bM.span_eq, Submodule.map_top, Submodule.range_subtype]
   subst hMb
   refine ⟨LinearMap.BilinForm.dualSubmodule_dualSubmodule_of_basis _ hB (Algebra.traceForm_isSymm K.E) b, ?_⟩
   show IsLat K.O K.E ((Algebra.traceForm K.E C).dualSubmodule _)
   rw [LinearMap.BilinForm.dualSubmodule_span_of_basis _ hB b]
-  exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
+  exact ⟨Submodule.fg_span (Set.finite_range _), by
+    rw [Submodule.span_span_of_tower, Module.Basis.span_eq]⟩
 
 private theorem mem_adjoin_of_mul_eq_one_of_isIntegral {R S : Type} [CommRing R] [CommRing S] [Algebra R S] {v w : S}
     (hvw : v * w = 1) (hv : IsIntegral R v) : v ∈ Algebra.adjoin R ({w} : Set S) := by
@@ -760,16 +764,16 @@ end Half
 theorem Half.prod {C₁ C₂ : Type} [CommRing C₁] [Algebra K.E C₁] [Module.Finite K.E C₁] [CommRing C₂]
     [Algebra K.E C₂] [Module.Finite K.E C₂] {B₁ B₂ : InvAlg K} {e₁ : B₁.A} {e₂ : B₂.A} {π₁ : B₁.A →ₐ[K.E] C₁}
     {π₂ : B₂.A →ₐ[K.E] C₂} (h₁ : Half B₁ e₁ π₁) (h₂ : Half B₂ e₂ π₂) :
-    Half (B₁.prod B₂) ((e₁, e₂) : B₁.A × B₂.A) (π₁.prodMap π₂ : B₁.A × B₂.A →ₐ[K.E] C₁ × C₂) where
-  idem := Prod.ext h₁.idem h₂.idem
-  swap := Prod.ext h₁.swap h₂.swap
-  surj := fun y => by
+    Half (B₁.prod B₂) ((e₁, e₂) : B₁.A × B₂.A) (π₁.prodMap π₂ : B₁.A × B₂.A →ₐ[K.E] C₁ × C₂) := by
+  refine ⟨Prod.ext h₁.idem h₂.idem, Prod.ext h₁.swap h₂.swap, ?_, ?_, ?_⟩
+  · intro y
     obtain ⟨a, ha⟩ := h₁.surj y.1
     obtain ⟨b, hb⟩ := h₂.surj y.2
     exact ⟨(a, b), Prod.ext ha hb⟩
-  ker := fun y => ⟨fun hy => Prod.ext ((h₁.ker y.1).1 (congrArg Prod.fst hy)) ((h₂.ker y.2).1 (congrArg Prod.snd hy)),
-    fun hy => Prod.ext ((h₁.ker y.1).2 (congrArg Prod.fst hy)) ((h₂.ker y.2).2 (congrArg Prod.snd hy))⟩
-  tr := fun y => by
+  · intro y
+    exact ⟨fun hy => Prod.ext ((h₁.ker y.1).1 (congrArg Prod.fst hy)) ((h₂.ker y.2).1 (congrArg Prod.snd hy)),
+      fun hy => Prod.ext ((h₁.ker y.1).2 (congrArg Prod.fst hy)) ((h₂.ker y.2).2 (congrArg Prod.snd hy))⟩
+  · intro y
     have h1 := Algebra.trace_prod_apply (R := K.E) (S := B₁.A) (T := B₂.A)
       (((e₁, e₂) : B₁.A × B₂.A) * (show B₁.A × B₂.A from y))
     have h2 := Algebra.trace_prod_apply (R := K.E) (S := C₁) (T := C₂) ((π₁ y.1, π₂ y.2))

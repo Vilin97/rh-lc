@@ -52,7 +52,8 @@ def chiCris (σ : Gal(PadicAlgCl p/K)) : ACris ℂ_[p] p :=
 theorem isUnit_chiCris (σ : Gal(PadicAlgCl p/K)) : IsUnit (chiCris σ) :=
   ((cycloChar K σ).isUnit.map (IsPerfectoidField.padicIntToWitt p)).map _
 
-theorem gal_smul_periodT (σ : Gal(PadicAlgCl p/K)) {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1) :
+theorem gal_smul_periodT (σ : Gal(PadicAlgCl p/K)) {ε : PreTilt (normInteger ℂ_[p]) p}
+    (hε : PreTilt.untilt ε = 1) :
     σ • periodT hε = chiCris σ * periodT hε := by
   apply iota_injective (K := ℂ_[p]) (p := p)
   rw [iota_gal_smul, iota_periodT, map_mul, iota_periodT, chiCris, iota_padicInt,

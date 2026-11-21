@@ -16,7 +16,7 @@ noncomputable section
 namespace GlobalTheory.IntegralFrameAllCompare
 
 open NumberField IsDedekindDomain IsLocalRing
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.IndefiniteRowSideFullHecke.IntegralFrameAcquisition
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj
 
 section Valuations
 

@@ -59,7 +59,9 @@ def dualSub {E : Type} [Field E] [NumberField E] [StarRing E] (S : HSpace E) (L 
     AddSubgroup S.V where
   carrier := {x | ∀ y ∈ L, S.hT y x ∈ (algebraMap (𝓞 E) E).range}
   zero_mem' := fun y _ => by rw [map_zero]; exact zero_mem _
-  add_mem' := fun {a b} ha hb y hy => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha y hy) (hb y hy)
+  add_mem' := fun {a b} ha hb y hy => by
+    rw [(S.hT y).map_add]
+    exact add_mem (ha y hy) (hb y hy)
   neg_mem' := fun {a} ha y hy => by rw [map_neg]; exact neg_mem (ha y hy)
 
 def LatT {E : Type} [Field E] [NumberField E] [StarRing E] (S : HSpace E) (q : ℕ) (L : Submodule (𝓞 E) S.V) : Prop :=

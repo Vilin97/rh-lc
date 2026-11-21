@@ -573,14 +573,14 @@ def HidaSetting (l : ℕ) (L : LevelData (A P (DQ P)) P.r) (lam : Fin (P.k + 2 *
   P.OK ∧ 1 ≤ l ∧ l ≤ P.k ∧ IsModelLevel P (DQ P) L ∧ C7.LamInterlaces P.k P.r P.u lam ∧
     C7.LamInterlaces P.k P.r P.u' lam ∧ α < β ∧ ∀ Y ∈ Set.Icc α β, I.OnCut P.u P.u' l Y
 
-def hatSet (L : LevelData (A P (DQ P)) P.r) : Set (A P (DQ P)) :=
+noncomputable def hatSet (L : LevelData (A P (DQ P)) P.r) : Set (A P (DQ P)) :=
   Set.range L.Ahat ∪ Set.range L.R0 ∪ Set.range L.Ahatv ∪ Set.range L.R0v
 
 def JDecay (L : LevelData (A P (DQ P)) P.r) (j : M.Ty P → SmQ P.r P.TT) (m : ℕ) : Prop :=
   ∀ w : List (A P (DQ P)), w.length ≤ m → (∀ a ∈ w, a ∈ hatSet P L) → ∀ π,
     Integrable (fun q => ‖evQ P (actA P w.prod j π) q‖ ^ 2) (mu0 P.r P.TT)
 
-def bddSet (L : LevelData (A P (DQ P)) P.r) : Set (A P (DQ P)) :=
+noncomputable def bddSet (L : LevelData (A P (DQ P)) P.r) : Set (A P (DQ P)) :=
   {L.ζi, L.ζbi, L.D * L.Dbi, L.Db * L.Di} ∪ Set.range (kap P (DQ P)) ∪
     (fun i => L.Drb * L.Dri * SS P (DQ P) i) '' Set.Icc 1 (P.k - 1) ∪
     (fun i => star (L.Drb * L.Dri * SS P (DQ P) i)) '' Set.Icc 1 (P.k - 1)

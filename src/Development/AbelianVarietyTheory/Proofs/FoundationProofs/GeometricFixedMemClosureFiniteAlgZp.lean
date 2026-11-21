@@ -51,24 +51,24 @@ def geoField : Subfield Ω :=
   Subfield.closure (Set.range (algebraMap (O0 p) Ω) ∪ {x : Ω | IsAlgZp (p := p) x})
 
 theorem mem_geoField_of_fixed (h : IsClo p Ω) (x : Ω) (hx : ∀ g ∈ Ggeo (p := p) Ω, g x = x) :
-    x ∈ geoField (p := p) := by
+    x ∈ geoField p Ω := by
   haveI := h.clo
   haveI : CharZero Ω := Basic.charZero_of_isClo h
-  have hR : ∀ a : O0 p, algebraMap (O0 p) Ω a ∈ geoField (p := p) := fun a =>
+  have hR : ∀ a : O0 p, algebraMap (O0 p) Ω a ∈ geoField p Ω := fun a =>
     Subfield.subset_closure (Or.inl ⟨a, rfl⟩)
-  let f : O0 p →+* geoField (p := p) := (algebraMap (O0 p) Ω).codRestrict (geoField (p := p)) hR
-  have hf : (algebraMap (geoField (p := p)) Ω).comp f = algebraMap (O0 p) Ω := by ext; rfl
+  let f : O0 p →+* geoField p Ω := (algebraMap (O0 p) Ω).codRestrict (geoField p Ω) hR
+  have hf : (algebraMap (geoField p Ω) Ω).comp f = algebraMap (O0 p) Ω := by ext; rfl
   have hfi : Function.Injective f := fun a b hab => h.inj (congrArg Subtype.val hab)
-  have hAlg : Algebra.IsAlgebraic (geoField (p := p)) Ω := ⟨fun a => by
+  have hAlg : Algebra.IsAlgebraic (geoField p Ω) Ω := ⟨fun a => by
     obtain ⟨P, hP0, hP⟩ := h.alg.isAlgebraic a
     refine ⟨P.map f, (Polynomial.map_ne_zero_iff hfi).2 hP0, ?_⟩
     rw [Polynomial.aeval_def, Polynomial.eval₂_map, hf, ← Polynomial.aeval_def, hP]⟩
-  letI : Algebra.IsAlgebraic (geoField (p := p)) Ω := hAlg
-  haveI : IsAlgClosure (geoField (p := p)) Ω := ⟨h.clo, hAlg⟩
-  haveI : CharZero (geoField (p := p)) := ⟨fun m n e =>
+  letI : Algebra.IsAlgebraic (geoField p Ω) Ω := hAlg
+  haveI : IsAlgClosure (geoField p Ω) Ω := ⟨h.clo, hAlg⟩
+  haveI : CharZero (geoField p Ω) := ⟨fun m n e =>
     CharZero.cast_injective (congrArg Subtype.val e)⟩
-  haveI : IsGalois (geoField (p := p)) Ω := inferInstance
-  have hbot : x ∈ (⊥ : IntermediateField (geoField (p := p)) Ω) := by
+  haveI : IsGalois (geoField p Ω) Ω := inferInstance
+  have hbot : x ∈ (⊥ : IntermediateField (geoField p Ω) Ω) := by
     refine (InfiniteGalois.mem_bot_iff_fixed x).2 fun σ => ?_
     let τ : Ω ≃ₐ[O0 p] Ω := AlgEquiv.ofRingEquiv (f := σ.toRingEquiv)
       (fun a => σ.commutes ⟨_, hR a⟩)

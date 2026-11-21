@@ -102,7 +102,7 @@ instance : CharP (Fq l a) l := (Fq.val l a).charP (Fq.val_injective l a) l
 
 theorem finite_sol (R : Type) [CommRing R] [IsDomain R] : {x : R | x ^ l ^ a = x}.Finite := by
   have h : (Polynomial.X ^ l ^ a - Polynomial.X : Polynomial R) ≠ 0 := fun h => by
-    have := congrArg (Polynomial.coeff · 1) h
+    have := congrArg (fun p : Polynomial R => p.coeff 1) h
     simp [Polynomial.coeff_X_pow, (one_lt_pow_l l a).ne] at this
   refine (Polynomial.finite_setOf_isRoot h).subset fun x hx => ?_
   simpa [sub_eq_zero] using hx

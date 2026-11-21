@@ -17,4 +17,6 @@ theorem _root_.GlobalTheory.T.kernel_eigenfunction_bound : ∀ (E : Type) [Field
   (∃ s : ℂ, δ ≤ ‖s‖ ∧ ∀ x, ∫ y, α y * ψ (x * y) ∂μ = s * ψ x) → (∫⁻ x in F, ‖ψ x‖ₑ ^ 2 ∂μ) = 1 →
   ∀ (x : GA E N) (k : ℕ), {γ : GA E N | γ ∈ latticeGL E N ∧ ∃ a ∈ tsupport α, ∃ b ∈ tsupport α, γ = x * a * b⁻¹ * x⁻¹}.encard ≤ k →
     ‖ψ x‖ ^ 2 ≤ C₀ * k := by
-  first | exact @GlobalTheory.CompanionTheory.Conc.besselPt | exact GlobalTheory.CompanionTheory.Conc.besselPt | (intros; apply GlobalTheory.CompanionTheory.Conc.besselPt <;> assumption)
+  intro E _ _ _ N _ _ μ _ α δ F hα hc hδ hF
+  haveI : Countable (latticeGL E N) := GlobalTheory.DiscreteUnit.countable_latticeGL
+  exact GlobalTheory.CompanionTheory.Conc.BesselPt.pointwise μ (latticeGL E N) hα hc hδ hF

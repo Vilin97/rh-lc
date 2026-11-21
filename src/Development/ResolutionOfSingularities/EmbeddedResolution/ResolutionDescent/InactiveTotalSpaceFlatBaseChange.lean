@@ -73,11 +73,11 @@ theorem reindex_lt_reindex (F : ChartFlatBaseChange S S') {s j : ℕ} (hsj : s <
     (hj : j ≤ S'.length) : F.reindex s < F.reindex j :=
   F.reindex_lt_reindex_of_lt hsj hj
 
-private theorem reindex_le_reindex_succ (F : ChartFlatBaseChange S S') (j : ℕ) (hj : j + 1 ≤ S'.length) :
+theorem reindex_le_reindex_succ (F : ChartFlatBaseChange S S') (j : ℕ) (hj : j + 1 ≤ S'.length) :
     F.reindex j ≤ F.reindex (j + 1) :=
   (F.reindex_lt_succ j (by omega)).le
 
-private theorem reindex_lt_reindex_succ (F : ChartFlatBaseChange S S') (j : ℕ) (hj : j + 1 ≤ S'.length) :
+theorem reindex_lt_reindex_succ (F : ChartFlatBaseChange S S') (j : ℕ) (hj : j + 1 ≤ S'.length) :
     F.reindex j < F.reindex (j + 1) :=
   F.reindex_lt_succ j (by omega)
 

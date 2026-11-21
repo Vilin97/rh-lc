@@ -93,7 +93,7 @@ theorem isUnit_natCast_loc {ℓ : Nat.Primes} {n : ℕ} (hn : ¬ (ℓ : ℕ) ∣
 theorem exists_natCast_mul_eq {ℓ : Nat.Primes} (x : locRing E ℓ) :
     ∃ (n : ℕ) (a : 𝓞 E), ¬ (ℓ : ℕ) ∣ n ∧ (n : locRing E ℓ) * x = ofInt ℓ a := by
   obtain ⟨n, a, hn, ha⟩ := x.2
-  exact ⟨n, a, hn, Subtype.ext (by simpa using ha)⟩
+  exact ⟨n, a, hn, Subtype.ext (by simpa [ofInt, RingOfIntegers.coe_eq_algebraMap] using ha)⟩
 
 theorem comap_injective {ℓ : Nat.Primes} {m m' : Ideal (locRing E ℓ)} (hm' : m'.IsPrime) (hm : m.IsPrime)
     (h : m.comap (ofInt ℓ) = m'.comap (ofInt ℓ)) : m ≤ m' := by
@@ -269,8 +269,17 @@ theorem exists_common_denom {ℓ : Nat.Primes} {ι : Type} [Fintype ι] (f : ι 
   choose n a hn ha using fun i => (f i).2
   refine ⟨∏ i, n i, fun i => ((∏ k ∈ Finset.univ.erase i, n k : ℕ) : 𝓞 E) * a i, ?_, fun i => ?_⟩
   · intro h
-    obtain ⟨i, -, hi⟩ := (Prime.dvd_finset_prod_iff (Nat.Prime.prime ℓ.2) _).1 h
-    exact hn i hi
+    have hprod : ∀ s : Finset ι, ¬ (ℓ : ℕ) ∣ ∏ i ∈ s, n i := by
+      intro s
+      induction s using Finset.induction_on with
+      | empty => simpa using ℓ.2.one_lt.ne'
+      | @insert i s hi ih =>
+        simp only [Finset.prod_insert hi]
+        intro hd
+        rcases (Nat.Prime.dvd_mul ℓ.2).1 hd with hd | hd
+        · exact hn i hd
+        · exact ih hd
+    exact hprod Finset.univ h
   · rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ i), show (((∏ k ∈ Finset.univ.erase i, n k : ℕ) : 𝓞 E) * a i : 𝓞 E).val = ((∏ k ∈ Finset.univ.erase i, n k : ℕ) : E) * (a i : E) by
       simp [RingOfIntegers.coe_eq_algebraMap] , ← ha i]
     push_cast

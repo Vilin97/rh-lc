@@ -43,7 +43,7 @@ scoped instance padicAlgCl_isValuativeTopology : IsValuativeTopology (PadicAlgCl
   exact GroundTheory.LocalField.isValuativeTopology_of_valued
 
 scoped instance padicAlgCl_valuativeExtension : ValuativeExtension ℚ_[p] (PadicAlgCl p) := by
-  refine ⟨fun a b ↦ ?_⟩
+  refine ⟨fun {a b} ↦ ?_⟩
   rw [vle_iff_norm_le, PadicAlgCl.norm_extends, PadicAlgCl.norm_extends,
     Valuation.Compatible.vle_iff_le (v := Padic.mulValuation),
     GroundTheory.LocalField.Padic.mulValuation_le_iff_norm_le]

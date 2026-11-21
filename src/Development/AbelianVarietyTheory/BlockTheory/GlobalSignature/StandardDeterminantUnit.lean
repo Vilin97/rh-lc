@@ -34,8 +34,7 @@ def SplitNonConj (ST : Finset (HeightOneSpectrum (𝓞 E))) : Prop :=
 
 variable (E n ST SG) in
 def HasStdReps : Prop :=
-  ∀ d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG),
-    ∃ ga : UF E n, StdAtAll ⟨d.1.act ga.1 1, d.2.act ga.2 1⟩
+  ∀ d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG), ∃ ga : UF E n, StdAtAll (((ga, 1) : UF E n × GLG (E := E) (n := n) (SG := SG)) • d)
 
 
 end Generic
@@ -43,7 +42,7 @@ end Generic
 def Representatives : Prop :=
   ∀ (X : Fields), X.Ok → ∀ (Pr : Primes X), Pr.Ok → ∀ (u : Pr.Word) (n : ℕ) (SG : Finset (HeightOneSpectrum (𝓞 X.E)))
     (d : DecoSet (E := X.E) (n := n) (ST := Pr.vT u) (SG := SG)), ∃ ga : UF X.E n, ∀ P ∈ Pr.vT u,
-      (d.1.act ga.1 1).at P = stdAt X.E n P
+      ((((ga, 1) : UF X.E n × GLG (E := X.E) (n := n) (SG := SG)) • d).1.at P = stdAt X.E n P)
 
 def RepresentativesSplit : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [StarRing E] (n : ℕ) (ST SG : Finset (HeightOneSpectrum (𝓞 E))),

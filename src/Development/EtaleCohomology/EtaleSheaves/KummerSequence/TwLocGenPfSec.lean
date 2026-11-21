@@ -11,7 +11,7 @@ namespace LateralTheory.E.H2CurveOrder.TwLocGenPfSec
 
 theorem ofRings_sec_res {R : Type} [CommRing R] (M : CommRingCat.{0} ⥤ ModuleCat.{1} (ULift.{1} R)) {V U : Scheme.{0}}
     (g : V ⟶ U) (x : M.obj Γ(U, ⊤)) :
-    Sec.res g (ofRings.sec M U x) = ofRings.sec M V ((M.map g.appTop).hom x) := by
+    Sec.res g (ofRings.sec (R := R) M U x) = ofRings.sec (R := R) M V ((M.map g.appTop).hom x) := by
   have h := congrArg (fun f => f.hom x)
     ((toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ M)).naturality g.op)
   simp only [ModuleCat.hom_comp] at h
@@ -44,7 +44,7 @@ theorem loc_bind {U : Scheme.{0}} {P : ∀ V : Scheme.{0}, (V ⟶ U) → Prop} {
 
 theorem loc_surj {R : Type} [CommRing R] (M : CommRingCat.{0} ⥤ ModuleCat.{1} (ULift.{1} R)) (U : Scheme.{0})
     (y : Sec (ofRings R M) U) :
-    Loc U fun V g => ∃ x : M.obj Γ(V, ⊤), Sec.res g y = ofRings.sec M V x := by
+    Loc U fun V g => ∃ x : M.obj Γ(V, ⊤), Sec.res g y = ofRings.sec (R := R) M V x := by
   have h := Presheaf.imageSieve_mem Scheme.etaleTopology (toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ M)) y
   refine ⟨_, h, fun V g hg => ?_⟩
   obtain ⟨x, hx⟩ := hg

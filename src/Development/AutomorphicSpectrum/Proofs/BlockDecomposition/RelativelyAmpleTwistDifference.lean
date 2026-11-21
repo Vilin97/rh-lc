@@ -100,6 +100,13 @@ theorem exists_secMaps {A B : LB X} (hA : A.IsLB) (hB : B.IsLB) {w : LB.Iso A B}
 
 theorem relAmple_tw_of_roots : ∀ (R : Type) [CommRing R] (X : Over (Spec (CommRingCat.of R))) (Q : LB X.left) (m : ℕ) (ζ : Fin (m + 1) → LB.Sec Q), Q.IsLB → VeryAmpleBy X.hom Q ζ → ∀ (A C : LB X.left) (n : ℕ), 1 ≤ n → A.IsLB → C.IsLB → LBIso (pw A ((n + 1 : ℕ) : ℤ)) Q → LBIso (pw C (n : ℤ)) Q → RelAmple X (tw C A (-1)) := by
   intro R _ X Q m ζ hQ hva A C n hn hA hC hAQ hCQ
+  have isLB_pw : ∀ {H : LB X.left}, H.IsLB → ∀ t : ℤ, (pw H t).IsLB := by
+    intro H hH t
+    exact ⟨hH.cover, (fun i => by
+      have h := congrArg (· ^ t) (hH.g_self i)
+      simpa only [one_zpow, ← map_zpow] using h), (fun i j k => by
+      have h := congrArg (· ^ t) (hH.cocycle i j k)
+      simpa only [mul_zpow, ← map_zpow] using h)⟩
   have hM : (tw C A (-1)).IsLB := isLB_tw hC hA _
   have hD : 1 ≤ n * (n + 1) := Nat.mul_pos hn (Nat.succ_pos n)
   have hP := isLB_pw hM ((n * (n + 1) : ℕ) : ℤ)

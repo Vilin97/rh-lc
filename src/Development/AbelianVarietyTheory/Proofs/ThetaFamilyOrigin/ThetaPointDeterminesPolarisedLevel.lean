@@ -120,6 +120,8 @@ theorem exists_embedding (h : Out.Laws) {g m r N N' : ℕ} (hN : N = m ^ 2) (hN'
   have hu1 : φ ((u⁻¹ : Γ((Out.baseOver (Sp K)).left, ⊤)ˣ) : Γ((Out.baseOver (Sp K)).left, ⊤)) * φ (u : Γ((Out.baseOver (Sp K)).left, ⊤)) = 1 := by
     rw [← map_mul, Units.inv_mul, map_one]
   convert ZH.CrdCalc.crd_smul (Units.map φ.toMonoidHom u⁻¹) hc using 1
+  ext a
+  simp only [Units.coe_map, Units.val_mul, map_mul]
   linear_combination (-(φ ((ze ^ thetaCoordExp m r a c : Γ((Out.baseOver (Sp K)).left, ⊤)ˣ) : Γ((Out.baseOver (Sp K)).left, ⊤)) * φ (v (thetaCoordIdx m r a c)))) * hu1
 
 end GlobalTheory.ThetaDet

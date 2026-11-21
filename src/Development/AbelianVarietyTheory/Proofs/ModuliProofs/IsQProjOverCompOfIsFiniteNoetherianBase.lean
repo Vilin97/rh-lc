@@ -20,7 +20,7 @@ namespace GlobalTheory
 theorem isQProjOver_comp_of_isFinite_general {R : Type} [CommRing R] {X Y : Scheme.{0}} (f : X ⟶ Y) [IsFinite f]
     {s : Y ⟶ Sp R} (h : IsQProjOver s) : IsQProjOver (f ≫ s) := by
   obtain ⟨N, i, hi, hq, rfl⟩ := h
-  have hO : IsAmpleLB (ProjSpace.O1 R N) := isAmpleLB_basic.2.2.2.2.2.2.1 R N
+  have hO : IsAmpleLB (ProjSpace.O1 R N) := isAmple_projective_O_one R N
   have hY : IsAmpleLB ((ProjSpace.O1 R N).pull i) := hO.pull_of_isImmersion i
   have hX : IsAmpleLB (((ProjSpace.O1 R N).pull i).pull f) := hY.pull_of_isFinite f
   have := isProper_str R N

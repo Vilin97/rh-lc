@@ -45,7 +45,9 @@ theorem infinite_adele_haar_scaling_by_unit (F : Type) [Field F] [NumberField F]
   have h := Measure.isAddLeftInvariant_eq_smul li (infiniteAdeleMeasure F)
   rw [h, Measure.map_smul, map_mul_left_infiniteAdeleMeasure, smul_comm, norm_inv_unit F hF n,
     ENNReal.ofReal_coe_nnreal]
-  rfl
+  · rfl
+  · letI := hm
+    exact (continuous_const_mul (n : InfiniteAdeleRing F)).measurable.aemeasurable
 
 end Borel
 

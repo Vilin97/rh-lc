@@ -19,7 +19,7 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 namespace GlobalTheory.CompanionTheory.WaveCp.Rep.Mol.HfSmooth
 
 theorem contDiff_entry {n : ℕ} (i j : Fin n) : ContDiff ℝ ∞ (fun y : Mat n => y i j) :=
-  contDiff_apply_apply ℝ ℂ i j
+  contDiff_apply_apply ℝ i j
 
 theorem contDiff_det {n : ℕ} {M : Mat n → Mat n} (hM : ∀ i j, ContDiff ℝ ∞ (fun y => M y i j)) :
     ContDiff ℝ ∞ (fun y => (M y).det) := by

@@ -237,18 +237,17 @@ theorem exists_period (D : Datum H) (N₁ N₂ : Submodule (𝓞 E) D.La) (hs : 
     linarith
   have nn : ∀ (N : Submodule (𝓞 E) D.La) (t : ℝ), (∀ m ∈ N, 0 ≤ t * D.EF (H.w0 • m) m) →
       ∀ x ∈ W N, 0 ≤ t * D.EF.baseChange ℝ (actR D H.rt x) x := fun N t h x hx => by
-    have := nonneg_span (D.EF.compLeft (DistribMulAction.toLinearMap ℤ D.La H.rt)) (N.restrictScalars ℤ) t
+    have := nonneg_span (D.EF.compLeft (DistribSMul.toLinearMap ℤ D.La H.rt)) (N.restrictScalars ℤ) t
       (fun m hm => by
         show 0 ≤ t * (D.EF (H.rt • m) m : ℝ)
         rw [two]
         push_cast
         linarith [h m hm]) hx
     refine this.trans_eq (congrArg _ ?_)
-    have k : (D.EF.compLeft (DistribMulAction.toLinearMap ℤ D.La H.rt)).baseChange ℝ =
+    have k : (D.EF.compLeft (DistribSMul.toLinearMap ℤ D.La H.rt)).baseChange ℝ =
         (D.EF.baseChange ℝ).compLeft (actR D H.rt) := by
       ext a b
       simp [act]
-      rfl
     rw [k]
     rfl
   have htop : W N₁ ⊔ W N₂ = ⊤ :=

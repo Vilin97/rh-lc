@@ -20,7 +20,7 @@ variable {K : Type} [Field K] [Fintype K] [DecidableEq K]
 
 theorem trace_conj_rep {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V)
     (P g : G) : LinearMap.trace ℂ V (ρ (P * g * P⁻¹)) = LinearMap.trace ℂ V (ρ g) := by
-  let E : V ≃ₗ[ℂ] V := LinearEquiv.ofLinear (ρ P) (ρ P⁻¹)
+  let E : V ≃ₗ[ℂ] V := LinearEquiv.ofLinearMap (ρ P) (ρ P⁻¹)
     (LinearMap.ext fun v => by
       show (ρ P * ρ P⁻¹) v = v
       rw [← map_mul, mul_inv_cancel, map_one]; rfl)
@@ -127,9 +127,17 @@ theorem exists_monotone_same_trace : ∀ (K : Type) [Field K] [Fintype K] [Decid
     rw [Equiv.symm_symm]
     exact Tuple.monotone_sort b
   · rw [trace_hcRep_lamT]
-    have h : (glEquiv K e).symm x = glEquiv K e.symm x := by
+    let P : GL (Fin r) K := ⟨e.toPEquiv.toMatrix, e.symm.toPEquiv.toMatrix,
+      by rw [← PEquiv.toMatrix_trans, ← Equiv.toPEquiv_trans, Equiv.self_trans_symm,
+        Equiv.toPEquiv_refl, PEquiv.toMatrix_refl],
+      by rw [← PEquiv.toMatrix_trans, ← Equiv.toPEquiv_trans, Equiv.symm_trans_self,
+        Equiv.toPEquiv_refl, PEquiv.toMatrix_refl]⟩
+    have h : (glEquiv K e).symm x = P * x * P⁻¹ := by
       apply Units.ext
+      change Matrix.reindex e.symm e.symm (x : Matrix (Fin r) (Fin r) K) =
+        e.toPEquiv.toMatrix * (x : Matrix (Fin r) (Fin r) K) * e.symm.toPEquiv.toMatrix
+      rw [PEquiv.toMatrix_toPEquiv_mul, PEquiv.mul_toMatrix_toPEquiv]
       rfl
-    rw [h, GlobalTheory.SerOSys.TranspLabel.glEquiv_perm, trace_conj_rep]
+    rw [h, trace_conj_rep]
 
 end GlobalTheory.HCSort

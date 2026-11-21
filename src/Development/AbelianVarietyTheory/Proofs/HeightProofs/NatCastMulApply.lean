@@ -44,7 +44,7 @@ theorem local_den (v : HeightOneSpectrum (𝓞 F)) (x : v.adicCompletion F) :
     · refine le_max_of_le_right (le_of_eq ?_)
       apply NNReal.eq
       rw [coe_nnnorm, FinitePlace.norm_def, he, WithZeroMulInt.toNNReal_neg_apply _ WithZero.exp_ne_zero]
-      simp [WithZero.exp]
+      simp only [WithZero.log_exp, zpow_natCast, Nat.cast_pow, NNReal.coe_pow]
     · rw [HeightOneSpectrum.mem_adicCompletionIntegers, map_mul, he, Nat.cast_pow, map_pow]
       calc _ ≤ (WithZero.exp (-1 : ℤ)) ^ k * WithZero.exp (k : ℤ) := by
             gcongr; exact valued_absNorm_le v

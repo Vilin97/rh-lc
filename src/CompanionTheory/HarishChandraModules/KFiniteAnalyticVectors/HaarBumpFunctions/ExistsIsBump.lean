@@ -250,20 +250,26 @@ variable {ι ι' : Type} [Fintype ι] [Fintype ι'] {W : ι → List (Mat n)} {W
   {B : H → H' → ℂ}
 
 omit [CompleteSpace H] [CompleteSpace H'] in
-theorem IsInv.swap (hB : IsInv G σ σ' W W' C B) : IsInv G σ' σ W' W C (fun y x => star (B x y)) where
-  add_left y y' x hy hy' hx := by rw [hB.add_right x y y' hx hy hy', star_add]
-  smul_left a y x hy hx := by rw [hB.smul_right a x y hx hy, star_mul', star_star]
-  add_right y x x' hy hx hx' := by rw [hB.add_left x x' y hx hx' hy, star_add]
-  smul_right a y x hy hx := by rw [hB.smul_left a x y hx hy, star_mul']
-  inv g hg y x hy hx := by rw [hB.inv g hg x y hx hy]
-  bd y x hy hx := by rw [norm_star, mul_right_comm]; exact hB.bd x y hx hy
+theorem IsInv.swap (hB : IsInv G σ σ' W W' C B) : IsInv G σ' σ W' W C (fun y x => star (B x y)) := by
+  exact
+    { add_left := fun y y' x hy hy' hx => by rw [hB.add_right x y y' hx hy hy', star_add]
+      smul_left := fun a y x hy hx => by rw [hB.smul_right a x y hx hy, star_mul', star_star]
+      add_right := fun y x x' hy hx hx' => by rw [hB.add_left x x' y hx hx' hy, star_add]
+      smul_right := fun a y x hy hx => by rw [hB.smul_left a x y hx hy, star_mul']
+      inv := fun g hg y x hy hx => by rw [hB.inv g hg x y hx hy]
+      bd := fun y x hy hx => by
+        rw [norm_star, mul_right_comm]
+        exact hB.bd x y hx hy }
 
 omit [CompleteSpace H] [CompleteSpace H'] in
 theorem IsInv.left (hB : IsInv G σ σ' W W' C B) {y : H'} (hy : IsSm G σ' y) :
-    IsSmForm G σ W (C * ∑ j, ‖dsW σ' (W' j) y‖) (fun x => B x y) where
-  add x x' hx hx' := hB.add_left x x' y hx hx' hy
-  smul a x hx := hB.smul_left a x y hx hy
-  bd x hx := by rw [mul_right_comm]; exact hB.bd x y hx hy
+    IsSmForm G σ W (C * ∑ j, ‖dsW σ' (W' j) y‖) (fun x => B x y) := by
+  exact
+    { add := fun x x' hx hx' => hB.add_left x x' y hx hx' hy
+      smul := fun a x hx => hB.smul_left a x y hx hy
+      bd := fun x hx => by
+        rw [mul_right_comm]
+        exact hB.bd x y hx hy }
 
 theorem IsInv.exists_rep [(haar : Measure (MG G hG)).IsInvInvariant] (θ : Mat n →L[ℝ] Mat n)
     (hθ : ∀ x ∈ G, θ x = x⁻¹) (hB : IsInv G σ σ' W W' C B) (h : RepOn G σ) (h' : RepOn G σ')

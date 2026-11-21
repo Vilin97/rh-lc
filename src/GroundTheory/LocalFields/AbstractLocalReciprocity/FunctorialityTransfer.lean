@@ -184,8 +184,8 @@ theorem zpow_smul_mk_mk_eq_iff (hLK' : L ≤ K') (hK'K : K' ≤ K) (σ x : (K : 
 
 noncomputable def verlagerung (hK'K : K' ≤ K) :
     (K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K →*
-      Abelianization ((K' : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K') :=
-  ((Abelianization.of).comp
+      Group.Abelianization ((K' : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K') :=
+  (Group.Abelianization.of.comp
     (MonoidHom.ofInjective (galRestrict_injective (L := L) hK'K)).symm.toMonoidHom).transfer
 
 end Ver
@@ -297,7 +297,7 @@ theorem reciprocity_mk_conj_pow (hax : ClassFieldAxiom G A) [IsDiscreteModule G 
 
 theorem reciprocity_verlagerung (hax : ClassFieldAxiom G A) [IsDiscreteModule G A] (hLK' : L ≤ K')
     (hK'K : K' ≤ K) (g : (K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K) :
-    Abelianization.lift (D.reciprocity hLK' hax) (verlagerung hK'K g) =
+    Group.Abelianization.lift (D.reciprocity hLK' hax) (verlagerung hK'K g) =
       tateZeroIncl hLK' hK'K (D.reciprocity (hLK'.trans hK'K) hax g) := by
   classical
   have hLK : L ≤ K := hLK'.trans hK'K
@@ -326,8 +326,8 @@ theorem reciprocity_verlagerung (hax : ClassFieldAxiom G A) [IsDiscreteModule G 
       (K' : Subgroup G) := fun q => by
     have := (hper q (Function.minimalPeriod (γ • ·) q.out)).2 dvd_rfl
     rwa [zpow_natCast] at this
-  have hfac : ∀ q : Quotient (orbitRel (Subgroup.zpowers γ) (((K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K) ⧸ H)), ((Abelianization.lift (D.reciprocity hLK' hax)).comp
-      ((Abelianization.of).comp
+  have hfac : ∀ q : Quotient (orbitRel (Subgroup.zpowers γ) (((K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K) ⧸ H)), ((Group.Abelianization.lift (D.reciprocity hLK' hax)).comp
+      (Group.Abelianization.of.comp
         (MonoidHom.ofInjective (galRestrict_injective (L := L) hK'K)).symm.toMonoidHom))
         ⟨(q.out.out)⁻¹ * γ ^ Function.minimalPeriod (γ • ·) q.out * q.out.out,
           QuotientGroup.out_conj_pow_minimalPeriod_mem H γ q.out⟩ =
@@ -337,7 +337,7 @@ theorem reciprocity_verlagerung (hax : ClassFieldAxiom G A) [IsDiscreteModule G 
           (smul_mem_fixedModule π.2 _)⟩) : tateZero A (K' : Subgroup G) (L : Subgroup G)) := by
     intro q
     refine Eq.trans ?_ (reciprocity_mk_conj_pow hax hLK' hK'K s (τ q) (hpos q) (hper q) (hmemf q) hπ)
-    rw [MonoidHom.comp_apply, MonoidHom.comp_apply, Abelianization.lift_apply_of]
+    rw [MonoidHom.comp_apply, MonoidHom.comp_apply, Group.Abelianization.lift_apply_of]
     congr 1
     rw [MulEquiv.coe_toMonoidHom, MulEquiv.symm_apply_eq]
     apply Subtype.ext

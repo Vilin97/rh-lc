@@ -113,7 +113,8 @@ theorem isCompact_sublevel (hz : inWb k r z) (hT : 0 < Tz k r z) (ρ : ℝ) :
     le_csInf (Set.Nonempty.image _ ⟨1, one_mem_Cg⟩) (by rintro _ ⟨c', hc', rfl⟩; exact hmin hc')
   exact ⟨(c, c * g), ⟨hc, show nrm ((c * g).toM - 1) ≤ ρ from le_trans hle hg⟩, by simp⟩
 
-def aT (k r : ℕ) : GH k r := mk (unitary_hermitian_group k r) (dS k r 2) (dS_mem_UH (by norm_num))
+def aT (k r : ℕ) : GH k r :=
+  MG.mk (unitary_hermitian_group k r) (dS k r 2) (dS_mem_UH (by norm_num))
 
 theorem toM_pow (x : GH k r) (m : ℕ) : (x ^ m).toM = x.toM ^ m := by
   induction m with
@@ -124,6 +125,8 @@ theorem dS_pow (s : ℝ) (m : ℕ) : (dS k r s) ^ m = dS k r (s ^ m) := by
   unfold dS
   rw [Matrix.diagonal_pow]
   congr 1
+  funext i
+  simp only [Pi.pow_apply]
   push_cast
   rw [← zpow_natCast ((s : ℂ) ^ fexp k r i) m, ← zpow_natCast (s : ℂ) m, ← _root_.zpow_mul, ← _root_.zpow_mul,
     mul_comm]
@@ -160,7 +163,7 @@ theorem contractV (hz : inWb k r z) (hT : 0 < Tz k r z) (K : Set (GH k r)) (hK :
   filter_upwards [hlim.eventually (eventually_lt_nhds hδ)] with m hm
   intro x hx
   obtain ⟨h, hh, n, hn, hxn⟩ := (hKS hx : x.toM ∈ Sset k r z)
-  set c : GH k r := mk (unitary_hermitian_group k r) h hh.1 with hcdef
+  set c : GH k r := MG.mk (unitary_hermitian_group k r) h hh.1 with hcdef
   have hcC : c ∈ Cg k r z := by show c.toM ∈ UWset k r z; rw [hcdef, toM_mk]; exact hh
   set ν : GH k r := c⁻¹ * x with hνdef
   have hνL : ν ∈ L := ⟨(c, x), ⟨hcC, hx⟩, rfl⟩
@@ -172,7 +175,7 @@ theorem contractV (hz : inWb k r z) (hT : 0 < Tz k r z) (K : Set (GH k r)) (hK :
   have hs0 : (0 : ℝ) < (1 / 2) ^ m := by positivity
   have hs1 : ((1 / 2 : ℝ)) ^ m ≤ 1 := pow_le_one₀ (by norm_num) (by norm_num)
   have hcfix : cjB (aT k r ^ m) c = c := by
-    ext1
+    apply MG.toM_injective
     rw [toM_cjB_aT, dS_inv_eq hs0.ne', hcdef, toM_mk]
     exact dS_conj_UW hs0.ne' hh
   rw [hxe, cjB_mul, hcfix]

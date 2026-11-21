@@ -47,13 +47,10 @@ theorem lemGB_q_unit : IsUnit (algebraMap (LetA O n) W.EE W.q) := by
   obtain ⟨w, hw⟩ := lemGB_q W
   obtain ⟨u, hu⟩ : IsUnit (algebraMap (LetA O n) W.EE (letπ ^ (PD.p - 1))) := by
     rw [map_pow]; exact W.EE_π.pow _
-  haveI := W.EE_complete
-  have hJ : ((PD.p : ℕ) : W.EE) ∈ (⊥ : Ideal W.EE).jacobson := by
-    first
-      | exact IsAdicComplete.le_jacobson_bot _ (Ideal.mem_span_singleton_self _)
-      | exact (IsAdicComplete.le_jacobson_bot (I := Ideal.span {((PD.p : ℕ) : W.EE)}))
-          (Ideal.mem_span_singleton_self _)
-  have h1 := Ideal.mem_jacobson_bot.mp hJ ((↑u⁻¹ : W.EE) * algebraMap (LetA O n) W.EE w)
+  have := W.EE_complete
+  have hJ : ((PD.p : ℕ) : W.EE) ∈ Ring.jacobson W.EE :=
+    IsAdicComplete.le_jacobson (Ideal.span {((PD.p : ℕ) : W.EE)}) (Ideal.mem_span_singleton_self _)
+  have h1 := Ring.mem_jacobson_iff.mp hJ ((↑u⁻¹ : W.EE) * algebraMap (LetA O n) W.EE w)
   rw [hw, map_add (f := _), map_mul, map_natCast, ← hu]
   have he : (u : W.EE) + ((PD.p : ℕ) : W.EE) * algebraMap (LetA O n) W.EE w =
       u * (((PD.p : ℕ) : W.EE) * ((↑u⁻¹ : W.EE) * algebraMap (LetA O n) W.EE w) + 1) := by
@@ -97,7 +94,7 @@ theorem lemG_units (hcase : Formalism.MainNotions.LiftingTheory.CaseA W) (hP9 : 
     exact le_trans (le_min (by rw [hvp]; exact h01.le) (le_of_eq hv1.symm)) (AddValuation.map_add v _ _)
   have hle : v ((PD.p : LL) - 1) ≤ 0 := by
     by_contra hlt
-    push_neg at hlt
+    push Not at hlt
     have hm := AddValuation.map_add v ((PD.p : LL) - 1) (-(PD.p : LL))
     rw [show ((PD.p : LL) - 1) + (-(PD.p : LL)) = -1 by ring, hv1, AddValuation.map_neg, hvp] at hm
     exact absurd hm (not_le.mpr (lt_min hlt h01))

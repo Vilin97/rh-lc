@@ -85,7 +85,7 @@ def parE {N : ℕ} (ρ : (ZMod N)ˣ →* (E ≃ₐ[ℚ] E)) (k : ℕ) : Set (Sub
 variable (Ω : Type) [Field Ω] [Algebra E Ω] [Algebra ℚ Ω] [IsScalarTower ℚ E Ω] [Normal ℚ E]
 
 def psiLen {O : Type} [CommRing O] [Algebra ℤ_[l] O] (e : ℕ) (ψ : (E ≃ₐ[ℚ] E) →* Oˣ) : ℕ∞ :=
-  Module.length O (shaEig (twist₂ l (chiO ℚ Ω l O ^ (-(e : ℤ)))) l (galOf ℚ E Ω) ⊤
+  Module.length O (shaEig (twist₂ l (UpperTheory.V.Base.chiO ℚ Ω l O ^ (-(e : ℤ)))) l (galOf ℚ E Ω) ⊤
     ((ψ.comp (AlgEquiv.restrictNormalHom E)).comp (⊤ : Subgroup (G ℚ Ω)).subtype))
 
 end Psi

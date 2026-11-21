@@ -38,7 +38,7 @@ theorem const_ev {m n : ℕ} (a : Fin m → Pt S n d) (ha : ∀ j i, constantCoe
     rw [Finset.prod_eq_zero (Finsupp.mem_support_iff.mpr hs') (zero_pow hs'), smul_zero]
 
 theorem map_pderiv {σ : Type} (i : σ) (f : MvPowerSeries σ S) :
-    map ψ (pderiv S i f) = pderiv S' i (map ψ f) := by
+    map ψ (pderiv i f) = pderiv i (map ψ f) := by
   ext n
   simp [MvPowerSeries.coeff_pderiv]
 

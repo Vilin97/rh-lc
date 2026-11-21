@@ -31,7 +31,7 @@ theorem exists_embedding {k : Type} [Field k] [IsAlgClosed k] (β : ℂ →+* k)
   have hτ : Function.Injective τ := by
     rw [RingHom.injective_iff_ker_eq_bot]
     refine Ideal.eq_bot_of_comap_eq_bot (R := ℤ) ?_
-    rw [RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
+    rw [Ideal.under_def, RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
     exact RingHom.injective_int _
   have hb : Function.Bijective fun φ : E →+* ℂ => β.comp φ :=
     (Fintype.bijective_iff_injective_and_card _).2 ⟨fun φ ψ h => RingHom.ext fun a => β.injective (DFunLike.congr_fun h a),

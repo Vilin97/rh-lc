@@ -14,7 +14,8 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSm
 open IsLocalRing Matrix UpperTheory.V.Alg UpperTheory.V.U3 UpperTheory.V.Fr
 
 private theorem pol2 {Q : Type} [CommRing Q] (x y z : Q) :
-    (!![z, 0; y, x] : Matrix (Fin 2) (Fin 2) Q) = Jmat Q 2 * (!![x, 0; y, z])ᵀ * Jmat Q 2 := by
+    (!![z, 0; y, x] : Matrix (Fin 2) (Fin 2) Q) =
+      Jmat (R := Q) 2 * (!![x, 0; y, z])ᵀ * Jmat (R := Q) 2 := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [Jmat, Matrix.mul_apply, Fin.sum_univ_two, Matrix.transpose_apply]

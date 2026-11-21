@@ -56,7 +56,8 @@ theorem exists_even_of_desc {Q : TQ G X} (D : Q.Desc P) : ∃ σ : CubTriv P.c Q
   have e : Q.i ≫ Q.q = 1 := Q.isKernel.w
   refine TowerEx.exists_even_pull D.map (e ▸ TorusCompat.of_comp Q.i Q.q : TorusCompat _ _ Q.i 1)
     ⟨s, hs, fun T x y u z J hJ => ?_⟩ fun T x z J hJ => ?_
-  · simp only [v' _ _ z J hJ, MonObj.comp_one, (isCub_cubV D.M.c hJ).face, _root_.mul_one]
+  · simp only [v' _ _ z J hJ, MonObj.comp_one, _root_.mul_one]
+    exact ((isCub_cubV D.M.c (T := T) hJ).face 1 1).symm
   · show val s _ z J = _ * val s _ z J
     rw [v' _ _ z J hJ, v' _ _ z J hJ, MonObj.comp_one, D.M.val_sym_one hJ, _root_.mul_one]
 

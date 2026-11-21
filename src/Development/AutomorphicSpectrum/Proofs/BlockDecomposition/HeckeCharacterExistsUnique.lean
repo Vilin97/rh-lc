@@ -236,6 +236,7 @@ theorem heckeOn_apply (g : G) (v : fixed π K) :
 theorem isHeckeOn_heckeOn (g : G) : IsHeckeOn π K g (heckeOn π hπ hKc g) :=
   fun v l hl => by rw [heckeOn_apply, form_eK hπ hKc l hl]
 
+include hπ hKc in
 
 theorem IsHeckeOn.unique {g : G} {T T' : Module.End ℂ (fixed π K)}
     (hT : IsHeckeOn π K g T) (hT' : IsHeckeOn π K g T') : T = T' := by
@@ -246,12 +247,13 @@ theorem IsHeckeOn.unique {g : G} {T T' : Module.End ℂ (fixed π K)}
       f ∘ₗ (fixed π K).subtype ∘ₗ eK π hπ hKc := by
     intro x hx
     ext y
-    simp only [LinearMap.comp_apply, eK_apply_act hπ hKc hx]
+    exact congrArg (fun z : fixed π K => f (z : V)) (eK_apply_act hπ hKc hx y)
   have h := (hT v _ hinv).symm.trans (hT' v _ hinv)
   simp only [LinearMap.comp_apply, Submodule.subtype_apply,
     eK_apply_of_mem hπ hKc (T v).2, eK_apply_of_mem hπ hKc (T' v).2] at h
   rw [map_sub, h, sub_self]
 
+include hπ hKc in
 
 theorem existsUnique_isHeckeOn (g : G) : ∃! T : Module.End ℂ (fixed π K), IsHeckeOn π K g T :=
   ⟨heckeOn π hπ hKc g, isHeckeOn_heckeOn hπ hKc g,

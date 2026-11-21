@@ -36,9 +36,12 @@ theorem lbIso_cubeLB_of_pairing_adjoint : Out.Laws → ∀ (k : Type) [Field k] 
       apply Additive.ofMul.injective
       simp only [ofMul_mul, ofMul_inv, ofMul_one]
       abel))
-    ((TorsionDense.dense_torsion P hl.irred hl.kerPow).mono (Set.biUnion_subset_biUnion_left
-      fun x hx => hx.elim fun n hx => out _ (exists_gen_fibre hl P a a' n (Nat.cast_ne_zero.2 hx.1.ne') x hx.2
-        fun y c hy => H n x y c hx.1 hx.2 hy)))
+    ((TorsionDense.dense_torsion P hl.irred hl.kerPow).mono (by
+      intro z hz
+      simp only [Set.mem_iUnion] at hz ⊢
+      obtain ⟨x, ⟨n, hn, hxn⟩, q, rfl⟩ := hz
+      exact ⟨x, out _ (exists_gen_fibre hl P a a' n (Nat.cast_ne_zero.2 hn.ne') x hxn
+        fun y c hy => H n x y c hn hxn hy), q, rfl⟩))
     (out _ (exists_gen_of_formEq_zero P.isLB fun U _ h => by
       rw [prod_ros, MonObj.one_comp, _root_.mul_one, _root_.mul_one]
       apply Additive.ofMul.injective

@@ -23,11 +23,11 @@ variable (M : ℕ → Submodule K A) [SetLike.GradedMonoid M]
 
 def mono (e : ℕ) : M e →ₗ[K] polyAlg M where
   toFun a := ⟨monomial e (a : A), fun n => by
-    rw [coeff_monomial]
+    rw [coeff_monomial_apply]
     split_ifs with h
     · exact h ▸ a.2
     · exact (M n).zero_mem⟩
-  map_add' a b := Subtype.ext (by simp)
+  map_add' a b := Subtype.ext ((monomial e).map_add (a : A) (b : A))
   map_smul' c a := Subtype.ext (smul_monomial c e (a : A)).symm
 
 theorem mono_val (e : ℕ) (a : M e) : (mono M e a : A[X]) = monomial e (a : A) := rfl
@@ -56,7 +56,7 @@ theorem coeff_coe (x : DirectSum ℕ fun e => piece M e) (n : ℕ) :
       rw [DirectSum.of_eq_same]
     · rw [DirectSum.of_eq_of_ne _ _ _ (Ne.symm h)]
       obtain ⟨_, a, rfl⟩ := y
-      simp [mono_val, coeff_monomial, h]
+      simp [mono_val, h]
   | add x y hx hy => simp [hx, hy]
 
 theorem isInternal : DirectSum.IsInternal (piece M) := by

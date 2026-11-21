@@ -59,17 +59,25 @@ theorem antitone_zero_one {n j : ℕ} (a : Fin n → ℤ) (ha : Antitone a)
     (h01 : ∀ i, a i = 0 ∨ a i = 1)
     (hS : (Finset.univ.filter fun i => a i = 1).card = j) (i : Fin n) :
     a i = 1 ↔ (i : ℕ) < j := by
-  first
-  | exact @_root_.GlobalTheory.ClosedSubgroupCriterion.main
-  | exact _root_.GlobalTheory.ClosedSubgroupCriterion.main
-  | (apply _root_.GlobalTheory.ClosedSubgroupCriterion.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.ClosedSubgroupCriterion.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.ClosedSubgroupCriterion.main <;> first | assumption | infer_instance)
-  | (intros; exact _root_.GlobalTheory.ClosedSubgroupCriterion.main ..)
+  rw [← hS]
+  refine (Fin.lt_card_filter_univ_iff_apply_of_imp (fun k => a k = 1) ?_).symm
+  intro k l hlk hk
+  have hle := ha hlk
+  rcases h01 l with hl | hl <;> omega
 
 end Adic
 
-theorem mem_doubleCoset_of_subElem : ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (n : ℕ) (ϖ : w.adicCompletion E), IsUnifV E w ϖ → ∀ (j : ℕ), j ≤ n → ∀ (g : GL (Fin n) (w.adicCompletion E)), haveI := GlobalTheory.RowSatakeBound.finite_residue w; glMap g (std (w.adicCompletionIntegers E) (w.adicCompletion E) n).1 ∈ Subtype.val '' subElem j (std (w.adicCompletionIntegers E) (w.adicCompletion E) n) → ∃ a ∈ GLint (Fin n) (Ov E w), ∃ b ∈ GLint (Fin n) (Ov E w), (g : Matrix (Fin n) (Fin n) (w.adicCompletion E)) = (a : Matrix (Fin n) (Fin n) (w.adicCompletion E)) * diagJ n ϖ j * (b : Matrix (Fin n) (Fin n) (w.adicCompletion E)) := by
+theorem mem_doubleCoset_of_subElem :
+    ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E))
+      (n : ℕ) (ϖ : w.adicCompletion E), IsUnifV E w ϖ →
+      ∀ (j : ℕ), j ≤ n → ∀ (g : GL (Fin n) (w.adicCompletion E)),
+        (haveI := GlobalTheory.RowSatakeBound.finite_residue w
+         glMap g (std (w.adicCompletionIntegers E) (w.adicCompletion E) n).1 ∈
+           Subtype.val '' subElem j (std (w.adicCompletionIntegers E) (w.adicCompletion E) n) →
+         ∃ a ∈ GLint (Fin n) (Ov E w), ∃ b ∈ GLint (Fin n) (Ov E w),
+           (g : Matrix (Fin n) (Fin n) (w.adicCompletion E)) =
+             (a : Matrix (Fin n) (Fin n) (w.adicCompletion E)) * diagJ n ϖ j *
+               (b : Matrix (Fin n) (Fin n) (w.adicCompletion E))) := by
   intro E _ _ w n ϖ hϖ j _ g hg
   haveI := GlobalTheory.RowSatakeBound.finite_residue w
   obtain ⟨M₀, hM, hMg⟩ := hg

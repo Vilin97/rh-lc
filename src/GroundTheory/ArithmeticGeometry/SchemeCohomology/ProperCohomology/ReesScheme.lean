@@ -85,8 +85,8 @@ def polyInr (V : X.Opens) : CommRingCat.of (Polynomial A) ⟶
 
 
 theorem isPushout_rees {V : X.Opens} (hV : IsAffineOpen V) :
-    IsPushout (CommRingCat.ofHom (algV V)) (CommRingCat.ofHom (algebraMap A (reesAlgebra I)))
-      ((reesPr I X).app V) (reesInr V) := by
+    IsPushout (CommRingCat.ofHom (algV X V)) (CommRingCat.ofHom (algebraMap A (reesAlgebra I)))
+      ((reesPr I X).app V) (reesInr I V) := by
   refine (isPushout_app_of_isPullback (isPullback_rees I X) hV).of_iso
     (Scheme.ΓSpecIso (.of A)) (Iso.refl _) (Scheme.ΓSpecIso (.of (reesAlgebra I))) (Iso.refl _)
     ?_ ?_ ?_ ?_
@@ -97,8 +97,8 @@ theorem isPushout_rees {V : X.Opens} (hV : IsAffineOpen V) :
 
 
 theorem isPushout_reesPoly {V : X.Opens} (hV : IsAffineOpen V) :
-    IsPushout (CommRingCat.ofHom (algV V)) (CommRingCat.ofHom (Polynomial.C))
-      ((reesPr I X).app V ≫ (reesPolyMap I X).app _) (polyInr V) := by
+    IsPushout (CommRingCat.ofHom (algV X V)) (CommRingCat.ofHom (Polynomial.C))
+      ((reesPr I X).app V ≫ (reesPolyMap I X).app _) (polyInr I V) := by
   have h1 := (isPushout_app_of_isPullback (isPullback_rees I X) hV).flip
   have h2 := (isPushout_app_of_isPullback (isPullback_reesPoly I X) (hV.preimage (reesPr I X))).flip
   have h := (h1.paste_horiz h2).flip

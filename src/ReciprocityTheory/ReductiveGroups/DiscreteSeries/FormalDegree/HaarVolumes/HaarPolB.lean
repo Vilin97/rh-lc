@@ -99,8 +99,7 @@ theorem Lm_strict (ε : Fin n → Bool) :
   have h := (LinearMap.toContinuousLinearMap (cLin ε)).hasStrictFDerivAt.comp (0 : GCo ε)
     (hl.comp (0 : GCo ε) (prod_strict ε))
   refine h.congr_fderiv (ContinuousLinearMap.ext fun s => ?_)
-  simp only [ContinuousLinearMap.coe_comp', Function.comp_apply, ContinuousLinearMap.id_apply,
-    LinearMap.coe_toContinuousLinearMap']
+  simp only [ContinuousLinearMap.id_apply]
   exact cLin_gMat s
 
 end An
@@ -133,15 +132,17 @@ theorem Lm_exp (ε : Fin n → Bool) : ∀ᶠ s in 𝓝 (0 : GCo ε),
     exact this
   have hleft : ∀ᶠ X in 𝓝 (0 : Matrix (Fin n) (Fin n) ℂ), logM (NormedSpace.exp X) = X :=
     hlog.eventually_left_inverse
-  have hright := hlog.eventually_right_inverse
-  rw [NormedSpace.exp_zero] at hright
+  have hright : ∀ᶠ Y in 𝓝 (1 : Matrix (Fin n) (Fin n) ℂ), NormedSpace.exp (logM Y) = Y := by
+    have h := hlog.eventually_right_inverse
+    rw [NormedSpace.exp_zero] at h
+    exact h
   filter_upwards [hP.eventually hright, hΦ.eventually hleft, hJ.eventually hleft]
     with s h1 h2 h3
   have hU : inUJ ε (NormedSpace.exp (logM (NormedSpace.exp (kMat s.1) * NormedSpace.exp (pmat s.2)))) := by
-    exact h1.symm ▸ inUJ_pol s
+    rw [h1]; exact inUJ_pol s
   have hG := inG_of_exp logM hU h2 h3
   show NormedSpace.exp (gMat (cLin ε _)) = _
-  exact (congrArg NormedSpace.exp (gMat_cLin hG)).trans h1
+  rw [gMat_cLin hG, h1]
 
 end An
 
@@ -208,7 +209,7 @@ theorem image_est (ε : Fin n → Bool) {η : ℝ} (hη : 0 < η) : ∃ δ > 0, 
   have hinj : Set.InjOn Lm S := by
     intro x hx y hy hxy
     have h := hAS x hx y hy
-    simp only [A, ContinuousLinearMap.id_apply, hxy, sub_self, zero_sub, norm_neg] at h
+    simp only [ContinuousLinearMap.id_apply, hxy, sub_self, zero_sub, norm_neg] at h
     have h0 : ‖x - y‖ = 0 := by
       have := norm_nonneg (x - y)
       nlinarith
@@ -220,7 +221,7 @@ theorem image_est (ε : Fin n → Bool) {η : ℝ} (hη : 0 < η) : ∃ δ > 0, 
   refine ⟨hS.image_of_continuousOn_injOn hAS.continuousOn hinj, fun s hs => ?_, hc1 S Lm hAS,
     hc2 S Lm hAS⟩
   have h := hB s (hSb hs) 0 (mem_ball_self hδ)
-  simp only [A, ContinuousLinearMap.id_apply, Lm_zero, sub_zero] at h
+  simp only [ContinuousLinearMap.id_apply, Lm_zero, sub_zero] at h
   have := norm_sub_norm_le (Lm s) s
   have := norm_nonneg s
   nlinarith

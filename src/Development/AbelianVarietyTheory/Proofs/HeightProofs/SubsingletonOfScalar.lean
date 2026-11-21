@@ -340,6 +340,7 @@ theorem isProper_of_actsBy {k : Type} [Field k] {G : Over (Sp k)} [GrpObj G] (T 
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
+
 theorem actsBy_of_detCond {k : Type} [Field k] [CharZero k] [IsAlgClosed k] {S : Scheme.{0}} {G : Over S} [GrpObj G]
     [IsCommMonObj G] (D : Datum H) (hq : D.q = 0) (a : OAct (𝓞 E) G) (t : Sp k ⟶ S) (ρ c : k) (hc : 2 * c = 1 + ρ)
     (h : DetCond D a t ρ) : ActsBy G (a.act H.w0) t c := by
@@ -356,10 +357,22 @@ theorem actsBy_of_detCond {k : Type} [Field k] [CharZero k] [IsAlgClosed k] {S :
       have e := congrArg τ H.two_weight_eq_one_add_root
       rw [map_mul, map_add (f := _), map_one, map_ofNat, hτ, ← hc] at e
       exact mul_left_cancel₀ two_ne_zero e
-    · obtain ⟨_, h0⟩ := (DetCompare.hasEigenDim_iff a t τ _).1 ((DetCompare.lieMult_iff a t τ _).1 ((h τ).2 hτ))
-      rw [hq, Submodule.finrank_eq_zero] at h0
-      rw [h0, Submodule.mem_bot] at hz
-      rw [hz, map_zero, smul_zero]
+    · open IndefiniteRowSideFullHecke.LieCharpolyRootPairs in
+      have hzero : EigenSplit.proj hs (TanMod.TanSp.act t a) τ z = 0 := by
+        have hd := (DetCompare.lieMult_iff a t τ _).1 ((h τ).2 hτ)
+        rw [hq] at hd
+        obtain ⟨v, _, _, _, hs⟩ := hd
+        let p := EigenSplit.proj hs (TanMod.TanSp.act t a) τ z
+        let w : Lie G t := ⟨p.pt, Over.OverMorphism.ext (TanMod.unit_of_smT_zero t _ p.tan)⟩
+        have hw : w ∈ eigenspace a t τ := by
+          intro b
+          apply Subtype.ext
+          exact congrArg TanMod.TanSp.pt ((EigenSplit.mem_eigenSub.1 hz) b)
+        obtain ⟨c, _, hc⟩ := hs hw
+        have hc' : w = 1 := by simpa [comb] using hc.symm
+        apply TanMod.TanSp.ext
+        exact congrArg Subtype.val hc'
+      rw [hzero, map_zero, smul_zero]
   intro v hv h0
   have h1 : (1 : Over.mk t ⟶ G).left = t ≫ η[G].left := by
     rw [Hom.one_def, Over.comp_left, Over.toUnit_left]; rfl

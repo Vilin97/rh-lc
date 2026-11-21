@@ -9,7 +9,7 @@ noncomputable section
 
 namespace GlobalTheory.PadicUnfold
 
-open Formalism.L2.Col GlobalTheory.IndefiniteRowSideFullHecke.UnfoldedLatticeData
+open Formalism.L2.Col
 
 variable {g : ℕ} [Fact g.Prime]
 

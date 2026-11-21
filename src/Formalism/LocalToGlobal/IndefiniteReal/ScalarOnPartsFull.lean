@@ -73,7 +73,7 @@ def DSModel.sm (M : DSModel V S) (τ : D.what₂.Tau) : Submodule ℂ (M.H τ) :
 
 abbrev DSModel.Vec (M : DSModel V S) : Type := ∀ τ : D.what₂.Tau, M.sm τ
 
-abbrev MMap (M : DSModel V S) : Type := MultilinearMap ℂ (fun τ : D.what₂.Tau => M.sm τ) (GA D V → ℂ)
+abbrev MMap (M : DSModel V S) : Type := MultilinearMap (RingHom.id ℂ) (fun τ : D.what₂.Tau => M.sm τ) (GA D V → ℂ)
 
 variable (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ))
 

@@ -196,13 +196,22 @@ theorem relAmple_spread : ∀ (R K : Type) [CommRing R] [IsDomain R] [IsNoetheri
     show A.hom (ψ z) ∈ PrimeSpectrum.basicOpen f
     rw [e]
     exact fun hm => (pullback.snd A.hom (spMap φ) z).isPrime.ne_top (Ideal.eq_top_of_isUnit_mem _ hm hu)
-  refine (relAmple_iff_isAmpleLB_of_isAffine _ (LB.isLB_pull hM _)).2
-    (isAmpleLB_of_cover (LB.isLB_pull hM _) hn (fun i => secPowPull (θ i) ψ) (top_le_iff.1 fun z _ => ?_) fun i => ?_)
-  · obtain ⟨i, hi⟩ := Opens.mem_iSup.1 (hc (hD z))
+  have hs : ⨆ i, Out.nonzeroLocus (secPowPull (θ i) ψ) = ⊤ := top_le_iff.1 fun z _ => by
+    obtain ⟨i, hi⟩ := Opens.mem_iSup.1 (hc (hD z))
     exact Opens.mem_iSup.2 ⟨i, (nonzeroLocus_secPowPull (θ i) ψ).ge hi⟩
-  · have e : ψ ⁻¹ᵁ (Out.nonzeroLocus (θ i) ⊓ A.hom ⁻¹ᵁ PrimeSpectrum.basicOpen f) =
+  have ha' : ∀ i, IsAffineOpen (Out.nonzeroLocus (secPowPull (θ i) ψ)) := fun i => by
+    have e : ψ ⁻¹ᵁ (Out.nonzeroLocus (θ i) ⊓ A.hom ⁻¹ᵁ PrimeSpectrum.basicOpen f) =
         Out.nonzeroLocus (secPowPull (θ i) ψ) :=
       (le_antisymm (fun z hz => hz.1) fun z hz => ⟨hz, hD z⟩).trans (nonzeroLocus_secPowPull (θ i) ψ).symm
     exact e ▸ (ha i).preimage ψ
+  refine (relAmple_iff_isAmpleLB_of_isAffine _ (LB.isLB_pull hM _)).2 ?_
+  refine ⟨LB.isLB_pull hM _, ⟨?_⟩, ?_⟩
+  · have e : (Set.univ : Set (pullback A.hom (spMap φ) : Scheme)) = ⋃ i, (Out.nonzeroLocus (secPowPull (θ i) ψ) : Set (pullback A.hom (spMap φ) : Scheme)) := by
+      rw [← Opens.coe_iSup, hs, Opens.coe_top]
+    rw [e]
+    exact isCompact_iUnion fun i => (ha' i).isCompact
+  · intro x
+    obtain ⟨i, hi⟩ := Opens.mem_iSup.1 (hs.ge (Set.mem_univ x))
+    exact ⟨n, hn, secPowPull (θ i) ψ, hi, ha' i⟩
 
 end GlobalTheory.AmpleSpread

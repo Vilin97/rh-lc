@@ -3191,13 +3191,9 @@ theorem top_beta_zero [Subsingleton (Wq →L[ℂ] Wp)] (D : RealPlaceData k r Wp
   simp [hb, ho]
 
 theorem top_hyp (hN : DilN) (hU : DilUW) [Nontrivial (Wq →L[ℂ] Wp)] {D : RealPlaceData k r Wp Wq}
-    {Ξ : Mat k r → NNReal} {A : ℝ} (hA : AB k r ≤ A) (h1 : CoefBound D Ξ A) (h2 : XiInt D Ξ 2) : Hyp D Ξ A where
-  α_nonneg := le_trans (B2.AB_nonneg k r) hA
-  coef := h1
-  xi := h2
-  T0 := exists_norm_eq (Wq →L[ℂ] Wp) zero_le_one
-  dilN := hN
-  dilUW := hU
+    {Ξ : Mat k r → NNReal} {A : ℝ} (hA : AB k r ≤ A) (h1 : CoefBound D Ξ A) (h2 : XiInt D Ξ 2) : Hyp D Ξ A := by
+  exact ⟨le_trans (B2.AB_nonneg k r) hA, h1, h2,
+    exists_norm_eq (Wq →L[ℂ] Wp) zero_le_one, hN, hU⟩
 
 theorem top_regBound (hN : DilN) (hU : DilUW) : StepRegBound := by
   intro k r Wp Wq _ _ _ _ _ _ D Ξ A hA h1 h2
