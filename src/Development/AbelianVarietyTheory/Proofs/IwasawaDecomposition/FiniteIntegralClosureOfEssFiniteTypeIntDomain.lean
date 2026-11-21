@@ -80,6 +80,6 @@ theorem finite_integralClosure_of_essFiniteType_int :
     haveI : Algebra.EssFiniteType S₀ D := .of_isLocalization D M
     haveI : Algebra.EssFiniteType D K := .of_isLocalization K (nonZeroDivisors D)
     haveI : Algebra.EssFiniteType S₀ K := .comp S₀ D K
-    exact finite_integralClosure_of_essFiniteType_field ℤ S₀ K
+    exact GlobalTheory.finite_integralClosure_of_essFiniteType_field ℤ S₀ K
 
 end GlobalTheory

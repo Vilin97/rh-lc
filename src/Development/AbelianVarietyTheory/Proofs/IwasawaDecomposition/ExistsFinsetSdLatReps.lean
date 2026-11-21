@@ -13,7 +13,7 @@ namespace GlobalTheory.Mem.Col2.JetEx
 
 theorem exists_finset_sdLat_reps : ∀ (X : Fields), X.Ok → ∀ n : ℕ, ∃ T : Finset (Submodule (𝓞 X.E) (Sp X.E n)), (∀ N ∈ T, IsSdLat N) ∧ ∀ N : Submodule (𝓞 X.E) (Sp X.E n), IsSdLat N → ∃ N₀ ∈ T, ∃ γ : UF X.E n, N = gmap γ.1 N₀ := by
   intro X hX n
-  obtain ⟨s, hs, H⟩ := unimod_finite (posStar_of_conj hX.conjE) n
+  obtain ⟨s, hs, H⟩ := unimod_finite (E := X.E) (posStar_of_conj hX.conjE) n
   refine ⟨s, hs, fun N hN => ?_⟩
   obtain ⟨N₀, h₀, g, hg, e⟩ := H N hN.1 hN.2
   exact ⟨N₀, h₀, ⟨g, hg⟩, e.symm⟩

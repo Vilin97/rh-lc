@@ -98,29 +98,31 @@ theorem HypLam.lamN_gap (h : HypLam P.k P.r lam c g b) :
   exact h.gap _ _ rfl
 
 theorem lamData_of_hyp (h : HypLam P.k P.r lam c g b) (hu : HypType P.k P.r lam P.u b)
-    (hu' : HypType P.k P.r lam P.u' b) : LamData P (lamN lam) c g b where
-  c_pos := by linarith [h.c_ge]
-  g_ge := by linarith [h.c_ge, h.g_ge]
-  b_ge_three := h.b_ge_three
-  b_ge_k := h.k_le
-  b_ge_c := h.b_ge_c
-  lam_le := h.lamN_le
-  gap := h.lamN_gap
-  inter := fun s h1 h2 => ⟨inter_half h.hc hu s h1 h2, inter_half h.hc hu' s h1 h2⟩
-  u_le := fun i h1 h2 => ⟨hu.u_le i h1 h2, hu'.u_le i h1 h2⟩
+    (hu' : HypType P.k P.r lam P.u' b) : LamData P (lamN lam) c g b := by
+  exact
+    { c_pos := by linarith [h.c_ge]
+      g_ge := by linarith [h.c_ge, h.g_ge]
+      b_ge_three := h.b_ge_three
+      b_ge_k := h.k_le
+      b_ge_c := h.b_ge_c
+      lam_le := h.lamN_le
+      gap := h.lamN_gap
+      inter := fun s h1 h2 => ⟨inter_half h.hc hu s h1 h2, inter_half h.hc hu' s h1 h2⟩
+      u_le := fun i h1 h2 => ⟨hu.u_le i h1 h2, hu'.u_le i h1 h2⟩ }
 
 theorem movedData_of_hyp (h : HypLam P.k P.r lam c g b) (hu : HypType P.k P.r lam P.u b) {l : ℕ} (hl1 : 1 ≤ l)
-    (hlk : l ≤ P.k) (hmv : ∀ i, i ≠ l → P.u' i = P.u i) (hl : |P.u' l| ≤ b) : MovedData P l (lamN lam) c g b where
-  c_pos := by linarith [h.c_ge]
-  g_ge := by linarith [h.c_ge, h.g_ge]
-  b_ge_three := h.b_ge_three
-  b_ge_k := h.k_le
-  b_ge_c := h.b_ge_c
-  lam_le := h.lamN_le
-  gap := h.lamN_gap
-  inter := fun s h1 h2 => inter_half h.hc hu s h1 h2
-  moved := hmv
-  ul_le := ⟨hu.u_le l hl1 hlk, hl⟩
+    (hlk : l ≤ P.k) (hmv : ∀ i, i ≠ l → P.u' i = P.u i) (hl : |P.u' l| ≤ b) : MovedData P l (lamN lam) c g b := by
+  exact
+    { c_pos := by linarith [h.c_ge]
+      g_ge := by linarith [h.c_ge, h.g_ge]
+      b_ge_three := h.b_ge_three
+      b_ge_k := h.k_le
+      b_ge_c := h.b_ge_c
+      lam_le := h.lamN_le
+      gap := h.lamN_gap
+      inter := fun s h1 h2 => inter_half h.hc hu s h1 h2
+      moved := hmv
+      ul_le := ⟨hu.u_le l hl1 hlk, hl⟩ }
 
 end data
 

@@ -163,18 +163,9 @@ theorem brp_starLat_lattice (N : Submodule (𝓞 K) (Fin n → K)) (hN : Submodu
     Submodule.IsLattice K (starLat K N) := by
   classical
   obtain ⟨S, hS⟩ := hN.fg
-  refine ⟨⟨S.image star, ?_⟩, ?_⟩
-  · rw [Finset.coe_image, ← brp_starLat_span, hS]
-  · have hset : ((starLat K N : Submodule (𝓞 K) (Fin n → K)) : Set (Fin n → K)) = star '' (N : Set (Fin n → K)) := by
-      ext x
-      simp only [SetLike.mem_coe, mem_starLat, Set.mem_image]
-      constructor
-      · intro h
-        exact ⟨star x, h, star_star x⟩
-      · rintro ⟨y, hy, rfl⟩
-        rwa [star_star]
-    rw [hset]
-    exact brp_star_span_top K _ hN.span_eq_top
+  apply Submodule.IsLattice.of_fg
+  refine ⟨S.image star, ?_⟩
+  rw [Finset.coe_image, ← brp_starLat_span, hS]
 
 variable [IsTotallyComplex K]
 

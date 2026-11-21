@@ -126,8 +126,12 @@ theorem isHCTypeU_conj {u : Fin k → ℝ} (h : IsHCTypeU k u π) :
     simpa only [e] using this
   · rw [hl, wt_conj]
     convert (wt_rev h3 hv0 hv).2 using 1
+    funext a
+    simp
   · obtain ⟨a1, a2⟩ := wt_rev h3 hx0 (wt_conj.1 hx)
     rw [hl]
     convert cdom_neg_rev (h6 _ _ trivial a1 a2) using 1
+    funext a
+    simp
 
 end GlobalTheory.CoefSpace.Conj

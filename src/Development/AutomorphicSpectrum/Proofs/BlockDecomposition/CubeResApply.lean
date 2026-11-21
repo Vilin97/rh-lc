@@ -137,7 +137,7 @@ def cubeOf (G : Pᵒᵖ ⥤ ModuleCat.{0} R) : Cube.{0} κ R :=
         · rw [cubeRes_empty e G h' _ ht hw])
 
 def cubeOfMap {G G' : Pᵒᵖ ⥤ ModuleCat.{0} R} (φ : G ⟶ G') : cubeOf e G ⟶ cubeOf e G' :=
-  Cube.homMk (fun s ↦ LinearMap.pi fun hs ↦ (φ.app _).hom ∘ₗ
+  Cube.homMk κ R (fun s ↦ LinearMap.pi fun hs ↦ (φ.app _).hom ∘ₗ
       LinearMap.proj (R := R) (φ := fun hs : PLift s.Nonempty ↦ (G.obj (op (s.inf' hs.down e)) : Type)) hs)
     (fun {s t} h x ↦ funext fun ht ↦ by
       by_cases hs : s.Nonempty

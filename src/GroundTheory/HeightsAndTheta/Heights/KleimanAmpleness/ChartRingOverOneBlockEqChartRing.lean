@@ -93,8 +93,35 @@ theorem exists_sum_eq_one {A : Subalgebra S Ω} {m : ℕ} (g : Fin m → Ω) (Q'
   exact y.2
 
 theorem chartRingOver_oneBlock_eq_chartRing {N : ℕ} (x : Fin (N + 1) → Ω) (c : Unit → Fin (N + 1)) (h : x (c ()) ≠ 0) :
-    chartRingOver S (IndefiniteRowSideFullHecke.Kleiman2.oneBlock x) c = Kleiman.chartRing S x (Kleiman.singleChart h) := by
-  rw [← TranslateEq.chartRing.equiv S x h]
+    chartRingOver S (IndefiniteRowSideFullHecke.Kleiman2.oneBlock x) c =
+      Kleiman.chartRing (S := S) (x := x) (Kleiman.singleChart h) := by
+  have hChart : ReciprocityTheory.ChartRestriction.G.Geo.chartRing S x (c ()) =
+      Kleiman.chartRing (S := S) (x := x) (Kleiman.singleChart h) := by
+    apply le_antisymm
+    · rw [ReciprocityTheory.ChartRestriction.G.Geo.chartRing, Algebra.adjoin_le_iff]
+      rintro _ ⟨j, rfl⟩
+      exact ⟨X j, X (c ()), 1, Kleiman.X_mem_monos (Finset.mem_singleton_self _),
+        isHomogeneous_X S j, isHomogeneous_X S (c ()), by simp⟩
+    · rintro _ ⟨f, s, e, hs, hf, hse, rfl⟩
+      have hs₀ := Kleiman.eval_ne_zero_of_mem_monos (Kleiman.singleChart h) hs
+      have hsne : s ≠ 0 := fun he => hs₀ (by rw [he, map_zero])
+      obtain ⟨e', hse', hden⟩ := TranslateEq.pow_div_mem_chartRingI S x
+        (Kleiman.singleChart h) (c ()) hs
+      have he : e = e' := hse.inj_right hse' hsne
+      subst e'
+      change x (c ()) ^ e / aeval x s ∈
+        IndefiniteRowSideFullHecke.Kleiman.chartRingI S x {c ()} at hden
+      rw [IndefiniteRowSideFullHecke.Kleiman.chartRingI_singleton] at hden
+      have hnum : aeval x f / x (c ()) ^ e ∈
+          ReciprocityTheory.ChartRestriction.G.Geo.chartRing S x (c ()) := by
+        rw [← Kleiman.aeval_div_of_isHomogeneous hf, ReciprocityTheory.ChartRestriction.G.Geo.chartRing,
+          ← MvPolynomial.aeval_range]
+        exact ⟨f, rfl⟩
+      have hquot : aeval x f / aeval x s = (aeval x f / x (c ()) ^ e) * (x (c ()) ^ e / aeval x s) := by
+        field_simp
+      rw [hquot]
+      exact mul_mem hnum hden
+  rw [← hChart]
   unfold chartRingOver ReciprocityTheory.ChartRestriction.G.Geo.chartRing
   congr 1
   ext z

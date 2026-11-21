@@ -45,7 +45,10 @@ theorem isVal_vAt {PY : Type} {lies : ∀ (T : CDVR) (ι : c.F →+* T.Fr), IntF
   dsimp only at hg1
   subst hg1
   have h0 : evI y0 (0 : Rul Xo c) = 0 := by
-    rw [← zero_smul c.F (0 : Rul Xo c), evI_smul, map_zero, zero_mul]
+    have h := evI_add y0 (0 : Rul Xo c) 0
+    simp only [add_zero] at h
+    apply add_left_cancel (a := evI y0 0)
+    simpa only [add_zero] using h.symm
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
   · show nval T.V e (evI y0 0) = ⊤
     rw [h0, nval_zero]

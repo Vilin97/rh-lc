@@ -32,7 +32,9 @@ theorem exists_over (K : Type*) [Field K] [NumberField K] (p : ℕ) (hp : p.Prim
     rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective ℤ (𝓞 K)))]
     exact bot_le)
   have hmem : (p : 𝓞 K) ∈ Q := by
-    have : (p : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 K)) := hQc ▸ Ideal.mem_span_singleton_self _
+    have : (p : ℤ) ∈ Ideal.under ℤ Q := by
+      rw [hQc]
+      exact Ideal.mem_span_singleton_self _
     simpa using this
   refine ⟨⟨Q, hQ, ?_⟩, hmem⟩
   rintro rfl

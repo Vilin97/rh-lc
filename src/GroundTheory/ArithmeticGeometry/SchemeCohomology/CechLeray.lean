@@ -81,7 +81,7 @@ structure IsCechShortExact (f : F ⟶ I) (g : I ⟶ Q) : Prop where
 def DeltaRel (f : F ⟶ I) (g : I ⟶ Q) (n : ℕ) (σ : Cochain Q U n) (c : cechH F U (n + 1)) :
     Prop :=
   ∃ (τ : Cochain I U n) (ρ : Cochain F U (n + 1)) (hρ : d F U (n + 1) ρ = 0),
-    push I U g n τ = σ ∧ push F U f (n + 1) ρ = d I U n τ ∧ c = cls ρ hρ
+    push U g n τ = σ ∧ push U f (n + 1) ρ = d I U n τ ∧ c = cls ρ hρ
 
 variable {U} {f : F ⟶ I} {g : I ⟶ Q}
 
@@ -98,29 +98,36 @@ namespace IsCechShortExact
 variable (hS : IsCechShortExact U f g)
 include hS
 
-lemma push_injective' (n : ℕ) : Function.Injective (push F U f n) :=
-  push_injective U f n fun i => hS.injective i
+lemma push_injective' (n : ℕ) : Function.Injective (push U f n) :=
+  fun _ _ h => funext fun i => hS.injective i (congrFun h i)
 
-lemma push_surjective (n : ℕ) (σ : Cochain Q U n) : ∃ τ, push I U g n τ = σ := by
+lemma push_surjective (n : ℕ) (σ : Cochain Q U n) : ∃ τ, push U g n τ = σ := by
   choose τ hτ using fun i => hS.surjective i (σ i)
   exact ⟨τ, funext hτ⟩
 
-lemma push_exact (n : ℕ) (τ : Cochain I U n) (hτ : push I U g n τ = 0) :
-    ∃ α, push F U f n α = τ := by
+lemma push_exact (n : ℕ) (τ : Cochain I U n) (hτ : push U g n τ = 0) :
+    ∃ α, push U f n α = τ := by
   choose α hα using fun i => hS.exact i (τ i) (congrFun hτ i)
   exact ⟨α, funext hα⟩
 
-lemma push_push (n : ℕ) (α : Cochain F U n) : push I U g n (push F U f n α) = 0 := by
-  rw [push_comp, hS.zero, push_zero']
+lemma push_push (n : ℕ) (α : Cochain F U n) : push U g n (push U f n α) = 0 := by
+  funext i
+  change g.app _ (f.app _ (α i)) = 0
+  rw [← ConcreteCategory.comp_apply, ← NatTrans.comp_app, hS.zero]
+  rfl
 
 lemma exists_deltaRel {n : ℕ} (σ : Cochain Q U n) (hσ : d Q U n σ = 0) :
     ∃ c, DeltaRel U f g n σ c := by
+  have hpush {P P' : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} (φ : P ⟶ P') (k : ℕ)
+      (s : Cochain P U k) : push U φ (k + 1) (d P U k s) = d P' U k (push U φ k s) := by
+    funext i
+    simp only [push, AddMonoidHom.coe_mk, ZeroHom.coe_mk, d_apply, map_sum, map_zsmul, app_res]
   obtain ⟨τ, hτ⟩ := hS.push_surjective n σ
-  have h0 : push I U g (n + 1) (d I U n τ) = 0 := by rw [push_d, hτ, hσ]
+  have h0 : push U g (n + 1) (d I U n τ) = 0 := by rw [hpush, hτ, hσ]
   obtain ⟨ρ, hρ⟩ := hS.push_exact (n + 1) _ h0
   have hρc : d F U (n + 1) ρ = 0 := by
     apply hS.push_injective' (n + 2)
-    rw [map_zero, push_d, hρ, d_d]
+    rw [map_zero, hpush, hρ, d_d]
   exact ⟨cls ρ hρc, τ, ρ, hρc, hτ, hρ, rfl⟩
 
 lemma deltaRel_unique {n : ℕ} {σ : Cochain Q U n} {c c' : cechH F U (n + 1)}
@@ -129,9 +136,12 @@ lemma deltaRel_unique {n : ℕ} {σ : Cochain Q U n} {c c' : cechH F U (n + 1)}
   obtain ⟨τ', ρ', hρ', hτ', hρτ', rfl⟩ := h'
   rw [cls_eq_cls_iff, coboundaries_succ]
   obtain ⟨α, hα⟩ := hS.push_exact n (τ' - τ) (by rw [map_sub, hτ, hτ', sub_self])
+  have hpush : push U f (n + 1) (d F U n α) = d I U n (push U f n α) := by
+    funext i
+    simp only [push, AddMonoidHom.coe_mk, ZeroHom.coe_mk, d_apply, map_sum, map_zsmul, app_res]
   refine AddMonoidHom.mem_range.2 ⟨α, ?_⟩
   apply hS.push_injective' (n + 1)
-  rw [push_d, hα, map_sub, map_sub, hρτ, hρτ']
+  rw [hpush, hα, map_sub, map_sub, hρτ, hρτ']
 
 def deltaFun (n : ℕ) (σ : cocycles Q U n) : cechH F U (n + 1) :=
   Classical.choose (hS.exists_deltaRel σ.1 ((mem_cocycles _).1 σ.2))
@@ -150,22 +160,29 @@ lemma delta_spec (n : ℕ) (σ : cocycles Q U n) : DeltaRel U f g n σ.1 (hS.del
   hS.deltaFun_spec n σ
 
 lemma delta_surjective (hI : CechAcyclic I U) (n : ℕ) : Function.Surjective (hS.delta n) := by
+  have hpush {P P' : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} (φ : P ⟶ P') (k : ℕ)
+      (s : Cochain P U k) : push U φ (k + 1) (d P U k s) = d P' U k (push U φ k s) := by
+    funext i
+    simp only [push, AddMonoidHom.coe_mk, ZeroHom.coe_mk, d_apply, map_sum, map_zsmul, app_res]
   intro c
   obtain ⟨ρ, hρ, rfl⟩ := exists_cls c
-  obtain ⟨τ, hτ⟩ := hI n (push F U f (n + 1) ρ) (by rw [← push_d, hρ, map_zero])
-  have hσ : d Q U n (push I U g n τ) = 0 := by rw [← push_d, hτ, hS.push_push]
-  exact ⟨⟨push I U g n τ, (mem_cocycles _).2 hσ⟩,
+  obtain ⟨τ, hτ⟩ := hI n (push U f (n + 1) ρ) (by rw [← hpush, hρ, map_zero])
+  have hσ : d Q U n (push U g n τ) = 0 := by rw [← hpush, hτ, hS.push_push]
+  exact ⟨⟨push U g n τ, (mem_cocycles _).2 hσ⟩,
     hS.deltaRel_unique (hS.delta_spec n _) ⟨τ, ρ, hρ, rfl, hτ.symm, rfl⟩⟩
 
 lemma delta_eq_zero_iff (n : ℕ) (σ : cocycles Q U n) :
-    hS.delta n σ = 0 ↔ ∃ κ : Cochain I U n, d I U n κ = 0 ∧ push I U g n κ = σ := by
+    hS.delta n σ = 0 ↔ ∃ κ : Cochain I U n, d I U n κ = 0 ∧ push U g n κ = σ := by
   constructor
   · intro h0
     obtain ⟨τ, ρ, hρ, hτ, hρτ, hc⟩ := hS.delta_spec n σ
     rw [h0, eq_comm, cls_eq_zero_iff, coboundaries_succ] at hc
     obtain ⟨β, hβ⟩ := AddMonoidHom.mem_range.1 hc
-    refine ⟨τ - push F U f n β, ?_, ?_⟩
-    · rw [map_sub, ← hρτ, ← hβ, push_d, sub_self]
+    have hpush : push U f (n + 1) (d F U n β) = d I U n (push U f n β) := by
+      funext i
+      simp only [push, AddMonoidHom.coe_mk, ZeroHom.coe_mk, d_apply, map_sum, map_zsmul, app_res]
+    refine ⟨τ - push U f n β, ?_, ?_⟩
+    · rw [map_sub, ← hρτ, ← hβ, hpush, sub_self]
     · rw [map_sub, hS.push_push, sub_zero, hτ]
   · rintro ⟨κ, hκ, hgκ⟩
     exact hS.deltaRel_unique (hS.delta_spec n σ)
@@ -174,17 +191,20 @@ lemma delta_eq_zero_iff (n : ℕ) (σ : cocycles Q U n) :
 lemma ker_delta_succ (hI : CechAcyclic I U) (m : ℕ) :
     (hS.delta (m + 1)).ker =
       (coboundaries Q U (m + 1)).addSubgroupOf (cocycles Q U (m + 1)) := by
+  have hpush (s : Cochain I U m) : push U g (m + 1) (d I U m s) = d Q U m (push U g m s) := by
+    funext i
+    simp only [push, AddMonoidHom.coe_mk, ZeroHom.coe_mk, d_apply, map_sum, map_zsmul, app_res]
   ext σ
   rw [AddMonoidHom.mem_ker, hS.delta_eq_zero_iff, AddSubgroup.mem_addSubgroupOf,
     coboundaries_succ]
   constructor
   · rintro ⟨κ, hκ, hgκ⟩
     obtain ⟨θ, hθ⟩ := hI m κ hκ
-    exact AddMonoidHom.mem_range.2 ⟨push I U g m θ, by rw [← push_d, hθ, hgκ]⟩
+    exact AddMonoidHom.mem_range.2 ⟨push U g m θ, by rw [← hpush, hθ, hgκ]⟩
   · intro hσ
     obtain ⟨θ, hθ⟩ := AddMonoidHom.mem_range.1 hσ
     obtain ⟨θ', hθ'⟩ := hS.push_surjective m θ
-    exact ⟨d I U m θ', d_d I U m θ', by rw [push_d, hθ', hθ]⟩
+    exact ⟨d I U m θ', d_d I U m θ', by rw [hpush, hθ', hθ]⟩
 
 def deltaEquiv (hI : CechAcyclic I U) (m : ℕ) :
     cechH Q U (m + 1) ≃+ cechH F U (m + 2) :=
@@ -208,7 +228,7 @@ def globalCocycle : P.obj (op ⊤) →+ cocycles P U 0 where
 variable {P} in
 lemma push_globalCocycle {P' : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} (φ : P ⟶ P')
     (s : P.obj (op ⊤)) :
-    push P U φ 0 (globalCocycle P U s).1 = (globalCocycle P' U (φ.app _ s)).1 :=
+    push U φ 0 (globalCocycle P U s).1 = (globalCocycle P' U (φ.app _ s)).1 :=
   funext fun _ => app_res φ _ s
 
 variable (hP : Presheaf.IsSheaf (Opens.grothendieckTopology X) P) (hU : iSup U = ⊤)
@@ -273,23 +293,29 @@ theorem surjective_of_goodAcyclic (hF : GoodAcyclic B Good S.X₁) (V : Opens X)
   choose x hx using hUO
   have hUV : ∀ a, U a ≤ V := fun a => (hx a).trans (hOV (x a))
   have hsup : iSup U = V := hC.iSup_eq V U hgood
+  have hpush {P P' : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} (φ : P ⟶ P') (k : ℕ)
+      (σ : Cochain P U k) : push U φ (k + 1) (d P U k σ) = d P' U k (push U φ k σ) := by
+    funext i
+    simp only [push, AddMonoidHom.coe_mk, ZeroHom.coe_mk, d_apply, map_sum, map_zsmul, app_res]
   let τ0 : Cochain S.X₂.obj U 0 := fun i =>
     res S.X₂.obj ((inter_le U i 0).trans (hx (i 0))) (t (x (i 0)))
-  have hτ0 : push S.X₂.obj U S.g.hom 0 τ0 = constCochain S.X₃.obj U hUV s := by
+  have hτ0 : push U S.g.hom 0 τ0 = constCochain S.X₃.obj U hUV s := by
     funext i
     simp only [push, τ0, constCochain, AddMonoidHom.coe_mk, ZeroHom.coe_mk]
     rw [app_res, ht]
     exact res_res _ _ _ s
-  have hdτ0 : push S.X₂.obj U S.g.hom 1 (d _ U 0 τ0) = 0 := by
-    rw [push_d, hτ0, d_constCochain]
+  have hdτ0 : push U S.g.hom 1 (d _ U 0 τ0) = 0 := by
+    rw [hpush, hτ0, d_constCochain]
   choose ρ hρ using fun j => app_exact_of_shortExact hS _ _ (congrFun hdτ0 j)
-  have hρ' : push S.X₁.obj U S.f.hom 1 ρ = d _ U 0 τ0 := funext hρ
+  have hρ' : push U S.f.hom 1 ρ = d _ U 0 τ0 := funext hρ
   have hρc : d S.X₁.obj U 1 ρ = 0 := by
-    apply push_injective U S.f.hom 2 (fun j => app_injective_of_shortExact hS _)
-    rw [map_zero, push_d, hρ', d_d]
+    have hinj : Function.Injective (push U S.f.hom 2) :=
+      fun _ _ h => funext fun j => app_injective_of_shortExact hS _ (congrFun h j)
+    apply hinj
+    rw [map_zero, hpush, hρ', d_d]
   obtain ⟨β, hβ⟩ := hF V hV κ U hgood 0 ρ hρc
-  have hc : d S.X₂.obj U 0 (τ0 - push S.X₁.obj U S.f.hom 0 β) = 0 := by
-    rw [map_sub, ← push_d, hβ, hρ', sub_self]
+  have hc : d S.X₂.obj U 0 (τ0 - push U S.f.hom 0 β) = 0 := by
+    rw [map_sub, ← hpush, hβ, hρ', sub_self]
   obtain ⟨t', ht'⟩ := exists_glue S.X₂.obj S.X₂.property U V hUV hsup.ge _ hc
   refine ⟨t', ?_⟩
   apply TopCat.Sheaf.eq_of_locally_eq' S.X₃ U V (fun a => homOfLE (hUV a)) hsup.ge
@@ -298,7 +324,7 @@ theorem surjective_of_goodAcyclic (hF : GoodAcyclic B Good S.X₁) (V : Opens X)
       (S.g.hom.app _ t') =
       res S.X₃.obj ((inter_le U (fun _ : Fin 1 => a) 0).trans (hUV a)) s := by
     rw [← app_res, ht' (fun _ => a), Pi.sub_apply, map_sub]
-    have h1 : S.g.hom.app _ ((push S.X₁.obj U S.f.hom 0 β) (fun _ => a)) = 0 :=
+    have h1 : S.g.hom.app _ ((push U S.f.hom 0 β) (fun _ => a)) = 0 :=
       app_comp_apply_eq_zero _ _
     rw [h1, sub_zero]
     exact congrFun hτ0 (fun _ => a)

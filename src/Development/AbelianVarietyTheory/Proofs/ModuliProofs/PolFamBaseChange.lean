@@ -26,7 +26,7 @@ open GlobalTheory.ThetaObjPull GlobalTheory.PolBaseChange
 theorem polFam_baseChange : ∀ (o : Type) [CommRing o] (g N' : ℕ) (J : Type) (b : TBase o (N' ^ 2)) (Mat : J → Matrix (Fin (2 * g)) (Fin (2 * g)) ℤ) (κ : ℕ) (R : Type) [CommRing R] (β : o →+* R) (v : Ix g (N' ^ 2) → R) (A : Over (Sp R)) [GrpObj A] (L : LB A.left) (act : J → (A ⟶ A)) (Q : Fin (2 * g) → (Out.baseOver (Sp R) ⟶ A)) (R' : Type) [CommRing R'] (ρ : R →+* R'), PolFam b Mat κ β v A L act Q → ∃ act' Q', PolFam b Mat κ (ρ.comp β) (fun a => ρ (v a)) ((Over.pullback (spMap ρ)).obj A) (L.pull (pullback.fst A.hom (spMap ρ))) act' Q' := by
   intro o _ g N' J b Mat κ R _ β v A _ L act Q R' _ ρ ⟨hab, hdim, hL, hrig, hsym, hamp, ⟨hhom, htor, hbij⟩, hfib⟩
   have h := isGrpPullback_pullback A (spMap ρ)
-  have hL' := pull_isLB hL (pullback.fst A.hom (spMap ρ))
+  have hL' := LB.isLB_pull hL (pullback.fst A.hom (spMap ρ))
   have hiso := lbIso_refl hL'
   obtain ⟨hab', hamp', -⟩ := pol_pull _ _ _ _ _ _ _ _ hL hL' hab h hiso
   choose pt hpt using fun i => exists_sec h (Q i)
@@ -72,7 +72,7 @@ theorem polFam_baseChange : ∀ (o : Type) [CommRing o] (g N' : ℕ) (J : Type) 
         have a₂ : (pt i).left ≫ ((Over.pullback (spMap ρ)).obj A).hom = 𝟙 _ := Over.w (pt i)
         rw [Category.assoc, hw, ← Category.assoc, a₁, Category.assoc, a₂]
         exact (Category.id_comp _).trans (Category.comp_id _).symm
-    · exact LBIso.trans t.isLB (pull_isLB hL _) (pull_isLB hL' _) k₂ (lbIso_pull_comp hiso F).symm
+    · exact LBIso.trans t.isLB (LB.isLB_pull hL _) (LB.isLB_pull hL' _) k₂ (lbIso_pull_comp hiso F).symm
 
 end GlobalTheory.ZM.NearBuild
 end

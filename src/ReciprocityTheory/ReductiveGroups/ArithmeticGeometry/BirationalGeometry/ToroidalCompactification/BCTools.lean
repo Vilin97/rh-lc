@@ -103,14 +103,17 @@ private lemma res_res_toroidal_compactification {A : Scheme.{0}} {U V W : A.Open
   simp only [res, Units.coe_map, RingHom.toMonoidHom_eq_coe, MonoidHom.coe_coe]
   exact e.symm
 
-theorem pull_isLB {L : LB X} (hL : L.IsLB) (F : Y ⟶ X) : (L.pull F).IsLB where
-  cover := top_le_iff.1 fun y _ => by
+theorem pull_isLB {L : LB X} (hL : L.IsLB) (F : Y ⟶ X) : (L.pull F).IsLB := by
+  refine { cover := top_le_iff.1 ?_, g_self := ?_, cocycle := ?_ }
+  · intro y _
     obtain ⟨i, hi⟩ := exists_chart hL (F y)
     exact TopologicalSpace.Opens.mem_iSup.2 ⟨fun _ => i, mem_pull.2 hi⟩
-  g_self J := unit_ext fun y hy => by
+  · intro J
+    refine unit_ext fun y hy => ?_
     rw [gm_res (𝟙 Y) y _ hy, map_one, gm_pull_g L F (𝟙 Y) y J J hy hy]
     exact gm_self hL _ y (mem_pull.1 hy)
-  cocycle I J K := unit_ext fun y hy => by
+  · intro I J K
+    refine unit_ext fun y hy => ?_
     rw [map_mul, gm_res (𝟙 Y) y _ hy, gm_res (𝟙 Y) y _ hy, gm_res (𝟙 Y) y _ hy, gm_pull_g L F (𝟙 Y) y I J hy.1.1 hy.1.2,
       gm_pull_g L F (𝟙 Y) y J K hy.1.2 hy.2, gm_pull_g L F (𝟙 Y) y I K hy.1.1 hy.2]
     exact gm_cocycle hL _ y (mem_pull.1 hy.1.1) (mem_pull.1 hy.1.2) (mem_pull.1 hy.2)

@@ -125,7 +125,8 @@ lemma torep_exp_eigen {V : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V] [Co
   have h2 := (NormedSpace.exp_series_hasSum_exp' (𝕂 := ℂ) c).smul_const v
   refine h1.unique ?_
   convert h2 using 1
-    smul_smul, smul_eq_mul]
+  funext m
+  simp [hpow, smul_smul, smul_eq_mul]
 
 lemma torep_diag_sum (d : Fin n → ℂ) :
     Matrix.diagonal d = ∑ a, d a • Matrix.single a a (1 : ℂ) := by
@@ -144,6 +145,8 @@ lemma torep_inK_diag (ε : Fin n → Bool) (d : Fin n → ℂ) (hd : ∀ a, star
   · simp only [inG, Jm, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add]
     rw [show (0 : Matrix (Fin n) (Fin n) ℂ) = Matrix.diagonal (fun _ => 0) from Matrix.diagonal_zero.symm]
     congr 1
+    funext a
+    change star (d a) * _ + _ * d a = 0
     rw [hd a]
     ring
   · simp only [Jm, Matrix.diagonal_mul_diagonal]
@@ -300,6 +303,8 @@ lemma torep_wt_w {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T : KType ε Λ) :
   have hone : Matrix.diagonal (fun b => Complex.exp ((((0 : ℝ) * θ b : ℝ) : ℂ) * Complex.I)) = 1 := by
     rw [← Matrix.diagonal_one]
     congr 1
+    funext b
+    simp
   have h0 : F 0 = 1 := by
     simp only [F, γ]
     rw [torepK_congr_lemma_6 ε (hmem 0) (torep_one_mem ε) hone, torepK_one_lemma_7, map_one]

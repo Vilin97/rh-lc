@@ -173,7 +173,12 @@ theorem hi_exists_conj {I J : Ideal (𝓞 E)} (hJ : ∀ a ∈ J, cO E a ∈ J) (
 
 theorem hi_hStd_conj {a : 𝓞 E} (ha : cO E a = a) (m x : Sp E n) :
     hStd E n (a • m) x = hStd E n m (a • x) := by
-  rw [wmp_hStd_osmul_left, wmp_hStd_osmul_right, ha]
+  have hl : hStd E n (a • m) x = algebraMap (𝓞 E) E (cO E a) * hStd E n m x := by
+    rw [← algebraMap_smul E a m, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, algebraMap_cO]
+    rfl
+  have hr : hStd E n m (a • x) = algebraMap (𝓞 E) E a * hStd E n m x := by
+    rw [← algebraMap_smul E a x, map_smul, smul_eq_mul]
+  rw [hl, hr, ha]
 
 theorem hiCorner_mem_dual {α β : 𝓞 E} (hα : cO E α = α) (hβ : cO E β = β) {M N : Submodule (𝓞 E) (Sp E n)}
     (hM : IsUnimodular (hStd E n) M) (hN : IsUnimodular (hStd E n) N) (x : Sp E n) :
@@ -224,7 +229,7 @@ theorem hiCorner_lattice {α β : 𝓞 E} (hab : α + β = 1) {N e M : Submodule
     (hNi : ∀ x ∈ N, i • x ∈ e) (hej : ∀ y ∈ e, j • y ∈ M) : Submodule.IsLattice E (hiCorner α β M N) := by
   have hD : Submodule.IsLattice E (M ⊔ N) := ⟨hM.fg.sup hN.fg, by
     intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli⟩
   refine lattice_of_smul hN hD (hiCorner_le (fun m hm => Submodule.mem_sup_left (M.smul_mem α hm))
     (fun x hx => Submodule.mem_sup_right (N.smul_mem β hx))) (mul_ne_zero hj hi) fun x hx => ?_
   refine hiCorner_inf hab M N ⟨?_, N.smul_mem _ hx⟩

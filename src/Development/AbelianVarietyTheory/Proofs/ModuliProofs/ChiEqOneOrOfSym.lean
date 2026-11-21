@@ -14,7 +14,7 @@ noncomputable section
 
 namespace GlobalTheory.ThetaUnifCompare
 
-open GlobalTheory.FrameValue GlobalTheory.IndefiniteRowSideFullHecke.HermitianTensorPowers CubeValues SymmetricSemicharacter EigenNorm
+open GlobalTheory.FrameValue CubeValues SymmetricSemicharacter EigenNorm
 
 variable {A : Over (Sp ℂ)} [GrpObj A] {L : LB A.left} {g : ℕ} {u : HolUnif A L g}
   {Hm : Matrix (Fin g) (Fin g) ℂ} {χ : u.Λ → ℂ}

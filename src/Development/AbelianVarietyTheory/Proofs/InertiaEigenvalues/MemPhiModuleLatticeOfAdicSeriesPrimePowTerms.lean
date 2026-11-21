@@ -16,11 +16,11 @@ theorem PhiMod.mem_MM_of_series (O K : Type) [CommRing O] [NormedField K] [IsUlt
     [Algebra O K] [IsUnitBall O K] (l e a : ℕ) (ι : Type) [Fintype ι] [DecidableEq ι] [Fact l.Prime]
     [NormedAlgebra ℚ_[l] K] [NeZero e] (P : PhiMod O K l e a ι) :
     ∀ (w : Vec K a ι) (t : ℕ → Vec K a ι), (∀ n, ∃ v ∈ P.MM, t n = (l : K) ^ n • v) →
-      (∀ m, w - ∑ n ∈ Finset.range m, t n ∈ uPow K a ι m) → w ∈ P.MM := by
+      (∀ m, w - ∑ n ∈ Finset.range m, t n ∈ uPow (K := K) (a := a) (ι := ι) m) → w ∈ P.MM := by
   intro w t ht hw
   choose v hv htv using ht
   have h2 (k : ℕ) : ∃ s ∈ P.MM, ∀ m, ∃ g ∈ P.MM,
-      w - (s + (l : K) ^ k • g) ∈ uPow K a ι m := by
+      w - (s + (l : K) ^ k • g) ∈ uPow (K := K) (a := a) (ι := ι) m := by
     refine ⟨∑ n ∈ Finset.range k, t n,
       sum_mem fun n _ => (htv n) ▸ P.l_pow_smul_mem_MM n (hv n), fun m => ?_⟩
     refine ⟨∑ n ∈ Finset.range m, (l : K) ^ n • v (k + n),

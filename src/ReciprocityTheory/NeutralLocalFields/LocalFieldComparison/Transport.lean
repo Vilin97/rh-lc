@@ -182,6 +182,8 @@ private theorem nonempty_Hn_comp_equiv (e : G ≃ₜ* G') (rho : Representation 
     congr 1
     refine Finset.sum_congr rfl fun j _ => ?_
     congr 2
+    funext i
+    simp only [Fin.contractNth]
     split_ifs <;> simp [map_mul]
   have hZ : (Zn rho (m + 1)).map (φk (m + 1)).toLinearMap = Zn (rho.comp (e : G →* G')) (m + 1) := by
     unfold Zn

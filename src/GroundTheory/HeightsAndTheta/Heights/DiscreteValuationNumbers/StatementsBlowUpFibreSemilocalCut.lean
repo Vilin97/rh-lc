@@ -46,7 +46,7 @@ theorem blowUpEval_liftForm (P : Ideal (MRing ι R)) (u : J → MRing ι R) (f :
   rw [aeval_blowUpSubst_liftForm, Polynomial.eval_C]
 
 theorem homLocRing_le_blowUpOverLoc {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
-    (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime] (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+    (P W : Ideal (MRing ι R)) [P.IsPrime] (u : J → MRing ι R) :
     homLocRing P W ≤ blowUpOverLoc P W u := by
   refine le_iInf₂ fun Q hQ => Subring.closure_le.mpr ?_
   rintro z ⟨b, f, g, hf, hg, hgW, rfl⟩
@@ -55,7 +55,7 @@ theorem homLocRing_le_blowUpOverLoc {K : Type} [Fintype K] [DecidableEq K] {ι :
   rw [blowUpEval_liftForm, blowUpEval_liftForm]
 
 instance blowUpOverLoc.instAlgebra {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
-    (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime] (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+    (P W : Ideal (MRing ι R)) [P.IsPrime] (u : J → MRing ι R) :
     Algebra (homLocRing P W) (blowUpOverLoc P W u) :=
   (Subring.inclusion (homLocRing_le_blowUpOverLoc P W u)).toAlgebra
 

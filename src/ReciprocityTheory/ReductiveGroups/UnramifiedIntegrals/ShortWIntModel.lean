@@ -15,8 +15,10 @@ open PowerSeries Formalism.G Formalism.LT Formalism.L2.Th1.CM
 
 theorem lgS_eq_logSer {K : Type} [Field K] [CharZero K] (g2 g3 : K) :
     lgS g2 g3 = Formalism.L2.Th1.A.logSer (Formalism.L2.Th1.A.shortW g2 g3) := by
-  obtain ⟨h0, -, -, -⟩ := Formalism.L2.Th1.A.logSpec K (Formalism.L2.Th1.A.shortW g2 g3)
-  obtain ⟨-, -, -, h4, -⟩ := Formalism.L2.Th1.A.expSpec K (Formalism.L2.Th1.A.shortW g2 g3)
+  have hlog : Formalism.L2.Th1.A.LogSpec := Formalism.L2.Th1.A.logSpec
+  obtain ⟨h0, -, -, -⟩ := hlog K (Formalism.L2.Th1.A.shortW g2 g3)
+  have hexp : Formalism.L2.Th1.A.ExpSpec := Formalism.L2.Th1.A.expSpec
+  obtain ⟨-, -, -, h4, -⟩ := hexp K (Formalism.L2.Th1.A.shortW g2 g3)
   refine (lgS_unique g2 g3 _ h0 ?_).symm
   rw [Formalism.L2.Th1.A.uSerEq K g2 g3]
   exact h4
@@ -33,8 +35,9 @@ theorem curve_law {K : Type} [NormedField K] [IsUltrametricDist K] [CharZero K] 
     (h2 : ‖g2‖ ≤ 1) (h3 : ‖g3‖ ≤ 1) (h : ‖(2 : K)‖ = 1) :
     LawD (lgS g2 g3) (Formalism.L2.Th1.A.fgl (Formalism.L2.Th1.A.shortW g2 g3)) := by
   rw [lgS_eq_logSer]
+  have hbridge : Formalism.L2.Th1.A.BridgeLaw := Formalism.L2.Th1.A.bridgeLaw
   obtain ⟨⟨hF0, hFi, hl0, hl1, -⟩, -, -⟩ :=
-    Formalism.L2.Th1.A.bridgeLaw K (Formalism.L2.Th1.A.shortW g2 g3) (shortW_intModel g2 g3 h2 h3 h)
+    hbridge K (Formalism.L2.Th1.A.shortW g2 g3) (shortW_intModel g2 g3 h2 h3 h)
   exact ⟨hl0, hl1, hF0, hFi, (Formalism.L2.Th1.A.fglLog K (Formalism.L2.Th1.A.shortW g2 g3)).1⟩
 
 end ReciprocityTheory.ChartRestriction.L1

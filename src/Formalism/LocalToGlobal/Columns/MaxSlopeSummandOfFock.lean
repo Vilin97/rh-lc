@@ -33,7 +33,6 @@ theorem mean_over_places_comap (φ : E →+* K) (G : InfinitePlace E → ℝ) :
     rw [Finset.sum_congr rfl (fun v hv => congrArg G (Finset.mem_filter.1 hv).2), Finset.sum_const, nsmul_eq_mul]
     congr 2
     convert hc w
-    rfl
   have hK : (0 : ℝ) < (nPl K : ℝ) := by
     unfold nPl
     exact_mod_cast Fintype.card_pos

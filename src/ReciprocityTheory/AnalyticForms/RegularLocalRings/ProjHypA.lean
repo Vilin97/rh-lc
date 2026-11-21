@@ -39,7 +39,7 @@ theorem isReduced_gammaChart {P : Ideal (MvPolynomial (Σ k, ι k) ℂ)} (hP : I
     (hrad : P.IsRadical) (p : (k : K) → ι k) :
     _root_.IsReduced Γ(projX P hP, (chartOpen hP p).1) := by
   letI := segreGraded hP
-  have := isReduced_away hP hrad p
+  letI := isReduced_away hP hrad p
   exact isReduced_of_injective _ ((gammaChart hP p).trans (awayEquiv hP p)).injective
 
 theorem qeRing_gammaChart {P : Ideal (MvPolynomial (Σ k, ι k) ℂ)} (hP : IsMultiHomogIdeal P)
@@ -47,7 +47,7 @@ theorem qeRing_gammaChart {P : Ideal (MvPolynomial (Σ k, ι k) ℂ)} (hP : IsMu
   letI : Algebra ℂ Γ(projX P hP, (chartOpen hP p).1) :=
     ((gammaChart hP p).symm.toRingHom.comp (algebraMap ℂ (chartRing P p))).toAlgebra
   let e : chartRing P p ≃ₐ[ℂ] Γ(projX P hP, (chartOpen hP p).1) :=
-    { (gammaChart hP p).symm with commutes' := fun c => rfl }
+    AlgEquiv.ofRingEquiv (f := (gammaChart hP p).symm) (fun c => rfl)
   haveI : Algebra.FiniteType ℂ Γ(projX P hP, (chartOpen hP p).1) :=
     Algebra.FiniteType.equiv inferInstance e
   exact hQE Γ(projX P hP, (chartOpen hP p).1)

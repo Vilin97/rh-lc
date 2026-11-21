@@ -24,8 +24,8 @@ instance isDiscreteRep_uliftIntToIntRep : IsDiscreteRep (uliftIntToIntRep A) :=
 
 def cochainsULiftIntEquiv (n : ℕ) :
     (cochainsComplex A).X n ≃+ (cochainsComplex (uliftIntToIntRep A)).X n where
-  toFun f := mkCochain (A := uliftIntToIntRep A) (cochainOf f) (isLocallyConstant_cochainOf f)
-  invFun f := mkCochain (A := A) (cochainOf f) (isLocallyConstant_cochainOf f)
+  toFun f := mkCochain (A := uliftIntToIntRep A) (cochainOf A f) (isLocallyConstant_cochainOf f)
+  invFun f := mkCochain (A := A) (cochainOf (uliftIntToIntRep A) f) (isLocallyConstant_cochainOf f)
   left_inv _ := rfl
   right_inv _ := rfl
   map_add' _ _ := rfl
@@ -40,7 +40,7 @@ theorem cochainsULiftIntEquiv_d (i : ℕ) (f : (cochainsComplex A).X i) :
       (cochainsComplex (uliftIntToIntRep A)).d i (i + 1) (cochainsULiftIntEquiv A i f) := by
   apply cochainOf_injective
   rw [cochainOf_cochainsULiftIntEquiv, cochainOf_d, cochainOf_d, cochainOf_cochainsULiftIntEquiv]
-  have := inhomogeneousCochains_d_uliftIntToIntRep A i (i + 1) (cochainOf f)
+  have := inhomogeneousCochains_d_uliftIntToIntRep A i (i + 1) (cochainOf A f)
   rw [groupCohomology.inhomogeneousCochains.d_def, groupCohomology.inhomogeneousCochains.d_def] at this
   exact this.symm
 
@@ -81,8 +81,8 @@ noncomputable def kerULiftIntEquiv (n : ℕ) :
     apply (cochainsULiftIntEquiv_d_eq_zero_iff A n _ ((cochainsULiftIntEquiv A n).symm x.1)).1
     rw [AddEquiv.apply_symm_apply]
     exact LinearMap.mem_ker.1 x.2)⟩
-  left_inv _ := rfl
-  right_inv _ := rfl
+  left_inv x := Subtype.ext ((cochainsULiftIntEquiv A n).symm_apply_apply x.1)
+  right_inv x := Subtype.ext ((cochainsULiftIntEquiv A n).apply_symm_apply x.1)
   map_add' x y := Subtype.ext ((cochainsULiftIntEquiv A n).map_add x.1 y.1)
 
 theorem kerULiftIntEquiv_mem_range_iff (n : ℕ) (x : LinearMap.ker ((cochainsComplex A).sc n).g.hom) :
@@ -94,8 +94,9 @@ theorem kerULiftIntEquiv_mem_range_iff (n : ℕ) (x : LinearMap.ker ((cochainsCo
       ((cochainsULiftIntEquiv_eq_d_iff A _ n x.1 z).1 (congrArg Subtype.val hz))⟩
   · rintro ⟨z, hz⟩
     refine ⟨cochainsULiftIntEquiv A _ z, Subtype.ext ?_⟩
-    exact (cochainsULiftIntEquiv_eq_d_iff A _ n x.1 (cochainsULiftIntEquiv A _ z)).2
-      (congrArg Subtype.val hz)
+    apply (cochainsULiftIntEquiv_eq_d_iff A _ n x.1 (cochainsULiftIntEquiv A _ z)).2
+    rw [AddEquiv.symm_apply_apply]
+    exact congrArg Subtype.val hz
 
 noncomputable def homologyDataULiftIntEquiv (n : ℕ) :
     ((cochainsComplex A).sc n).moduleCatLeftHomologyData.H ≃+
@@ -126,7 +127,8 @@ noncomputable def cohomologyULiftIntAddEquiv (n : ℕ) :
 
 theorem cohomologyULiftIntAddEquiv_cohomologyπ {n : ℕ} (z : cocycles A n)
     (z' : cocycles (uliftIntToIntRep A) n)
-    (h : cochainOf (A := uliftIntToIntRep A) (cocycleι z') = cochainOf (A := A) (cocycleι z)) :
+    (h : cochainOf (uliftIntToIntRep A) (cocycleι (uliftIntToIntRep A) n z') =
+      cochainOf A (cocycleι A n z)) :
     cohomologyULiftIntAddEquiv A n (cohomologyπ A n z) = cohomologyπ (uliftIntToIntRep A) n z' := by
   set S₁ := (cochainsComplex A).sc n
   set S₂ := (cochainsComplex (uliftIntToIntRep A)).sc n
@@ -163,14 +165,14 @@ variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   (A : Rep.{0} (ULift.{0} ℤ) G) [IsDiscreteRep A]
 
 noncomputable def cocyclesULiftInt {n : ℕ} (z : cocycles A n) : cocycles (uliftIntToIntRep A) n :=
-  (cochainsComplex (uliftIntToIntRep A)).cyclesMk (cochainsULiftIntEquiv A n (cocycleι z)) (n + 1)
+  (cochainsComplex (uliftIntToIntRep A)).cyclesMk (cochainsULiftIntEquiv A n (cocycleι A n z)) (n + 1)
     (by simp) ((cochainsULiftIntEquiv_d_eq_zero_iff A n (n + 1) _).2
       (congrArg (fun ψ => ψ.hom z) ((cochainsComplex A).iCycles_d n (n + 1))))
 
 @[simp]
 theorem cochainOf_cocycleι_cocyclesULiftInt {n : ℕ} (z : cocycles A n) :
-    cochainOf (A := uliftIntToIntRep A) (cocycleι (cocyclesULiftInt A z)) =
-      cochainOf (A := A) (cocycleι z) :=
+    cochainOf (uliftIntToIntRep A) (cocycleι (uliftIntToIntRep A) n (cocyclesULiftInt A z)) =
+      cochainOf A (cocycleι A n z) :=
   congrArg (cochainOf (A := uliftIntToIntRep A))
     ((cochainsComplex (uliftIntToIntRep A)).i_cyclesMk _ _ _ _)
 

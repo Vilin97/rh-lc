@@ -35,6 +35,20 @@ namespace GlobalTheory.PolNearAmple
 
 theorem relAmple_near_of_polAt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (R : Type) [CommRing R] [IsNoetherianRing R] (t : SAB H (Sp R)), IsProper t.G.hom → ∀ (C : Type) [Field C] (g : R →+* C), GlobalTheory.LN.PolAt t (spMap g) → ∃ s : R, g s ≠ 0 ∧ ∀ (R' : Type) [CommRing R'] (h : R →+* R'), IsUnit (h s) → ∀ (t' : SAB H (Sp R')), SABMap t' t (spMap h) → RelAmple t'.G t'.PP.L := by
   intro E _ _ _ H R _ _ t hprop C _ g hpol
+  have pull_isLB : ∀ {X Y : Scheme.{0}} {L : LB X}, L.IsLB → (F : Y ⟶ X) → (L.pull F).IsLB := by
+    intro X Y L hL F
+    exact {
+      cover := top_le_iff.1 fun y _ => by
+        obtain ⟨i, hi⟩ := exists_chart hL (F y)
+        exact TopologicalSpace.Opens.mem_iSup.2 ⟨fun _ => i, mem_pull.2 hi⟩
+      g_self := fun J => unit_ext fun y hy => by
+        rw [gm_res (𝟙 Y) y _ hy, map_one, gm_pull_g L F (𝟙 Y) y J J hy hy]
+        exact gm_self hL _ y (mem_pull.1 hy)
+      cocycle := fun I J K => unit_ext fun y hy => by
+        rw [map_mul, gm_res (𝟙 Y) y _ hy, gm_res (𝟙 Y) y _ hy, gm_res (𝟙 Y) y _ hy,
+          gm_pull_g L F (𝟙 Y) y I J hy.1.1 hy.1.2,
+          gm_pull_g L F (𝟙 Y) y J K hy.1.2 hy.2, gm_pull_g L F (𝟙 Y) y I K hy.1.1 hy.2]
+        exact gm_cocycle hL _ y (mem_pull.1 hy.1.1) (mem_pull.1 hy.1.2) (mem_pull.1 hy.2) }
   have : Smooth t.G.hom := t.semi.smooth
   have : Flat t.G.hom := inferInstance
   have hL := t.PP.isLB

@@ -25,12 +25,13 @@ theorem rf_asAlgebraHom_eq (a : MonoidAlgebra K A) : ρ.asAlgebraHom a = ∑ t :
 
 theorem rf_coord_act (t : A) (φ : S.EqFun) :
     S.coordOf h S.outSec (ρ t φ) = ((S.toCSD h).actMat (S.repCSD h ρ) t).mulVec (S.coordOf h S.outSec φ) := by
-  have c : ∀ x, S.coordOf h S.outSec x = ⇑((S.toCSD h).basis.repr (S.res h x)) := fun x => rfl
+  have c : ∀ x, S.coordOf h S.outSec x = (S.toCSD h).basis.equivFun (S.res h x) := fun x => rfl
   have e1 : (S.repCSD h ρ) t (S.res h φ) = S.res h (ρ t φ) := by
     show (S.res h) (ρ t ((S.res h).symm (S.res h φ))) = _
     rw [LinearEquiv.symm_apply_apply]
   rw [c, c]
   unfold CSD.actMat
+  simp only [Basis.equivFun_apply]
   rw [LinearMap.toMatrix_mulVec_repr, e1]
 
 theorem rf_coord_ga (a : MonoidAlgebra K A) (φ : S.EqFun) :

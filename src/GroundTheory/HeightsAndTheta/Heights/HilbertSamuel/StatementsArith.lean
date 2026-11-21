@@ -65,7 +65,7 @@ def HermLine.zcomb (A B : HermLine ι) (p q : ℤ) : HermLine ι where
     ring
 
 def fsH (ι : K → Type) [∀ k, Fintype (ι k)] : HermLine ι :=
-  HermLine.ofMetrics (fun k => fsMetric (ι k)) 1
+  HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) 1
 
 structure IsSmallGeneratedDatum {Ω : Type} [Field Ω] (P0 : Ideal (MRing ι)) (y : (Σ k, ι k) → Ω) (D : ℕ)
     (A : HermLine ι) : Prop where
@@ -225,11 +225,11 @@ def ProjectionBounds.Statement : Prop :=
         aeval (d.x ∘ e) g = secTrace d.x e (n + k) (aeval d.x f * aeval d.x (E l)) →
         (∀ z ∈ pts (coordIdeal ℤ d.x), ptNorm d.m (Int.castRingHom ℂ) n f z ≤ c) →
         ∀ t : Fin (D + 1) → ℂ, t ≠ 0 →
-          ptNorm (fsMetric (Fin (D + 1))) (Int.castRingHom ℂ) (n + k) g t ≤ C * c) ∧
+          ptNorm (fsMetric (ι := Fin (D + 1))) (Int.castRingHom ℂ) (n + k) g t ≤ C * c) ∧
       (∀ (n : ℕ) (Q : Fin (projDeg d.x e) → MvPolynomial (Fin (D + 1)) ℤ) (c : Fin (projDeg d.x e) → ℝ),
         k ≤ n → (∀ l, (Q l).IsHomogeneous (n - k)) →
         (∀ l, ∀ t : Fin (D + 1) → ℂ, t ≠ 0 →
-          ptNorm (fsMetric (Fin (D + 1))) (Int.castRingHom ℂ) (n - k) (Q l) t ≤ c l) →
+          ptNorm (fsMetric (ι := Fin (D + 1))) (Int.castRingHom ℂ) (n - k) (Q l) t ≤ c l) →
         ∀ z ∈ pts (coordIdeal ℤ d.x),
           ptNorm d.m (Int.castRingHom ℂ) n (∑ l, rename e (Q l) * E l) z ≤ C * ∑ l, c l) ∧
       (∀ n : ℕ, k + 1 ≤ n →

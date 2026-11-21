@@ -78,16 +78,16 @@ theorem finsum_mul_eq_sum {α : Type*} (D : α →₀ ℤ) (J : α → ℤ) :
 
 theorem isIntersectionTheory (hPt : IntNumPoint.Statement.{u})
     (hBase : FieldNumbers.IntNumBase.Statement.{u}) {I : IFamily F ι}
-    (hI : IsFieldIntersection I) : FieldNumbers.IsIntersectionTheory F I where
-  base P hP h0 := by
+    (hI : IsFieldIntersection I) : FieldNumbers.IsIntersectionTheory F I := by
+  refine ⟨?_, ?_⟩
+  · intro P hP h0
     have hdim := ringKrullDim_eq_of_relDim P 0 (by rw [h0]; rfl)
     choose i hi using hP.relevant
     rw [hI.1 P ![] i ⟨(Objects.isMultiProjPrime_iff P).mp hP, hdim⟩ hi,
       ← hPt F K ι P i hP hdim hi]
     obtain ⟨-, h2⟩ := hBase F K ι P hP h0
     rw [h2, FieldNumbers.resDeg, dite_eq_left hP.isPrime]
-  cut := by
-    intro P n hP hdim bf bg f g hf hg hfP hgP bs
+  · intro P n hP hdim bf bg f g hf hg hfP hgP bs
     have hd := ringKrullDim_eq_of_relDim P (n + 1) hdim
     have hs : IsRatSection P (fun k => (bf k : ℤ) - bg k) f g :=
       ⟨bf, bg, (Objects.isMultiHomog_iff f bf).mp hf, (Objects.isMultiHomog_iff g bg).mp hg,

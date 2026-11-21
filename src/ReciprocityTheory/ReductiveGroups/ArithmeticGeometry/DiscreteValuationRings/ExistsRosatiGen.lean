@@ -77,7 +77,9 @@ theorem tau_val (hQ : IsQ D.toPre ϖ Q) (a b : D.toPre.X) :
     (genHasVal_invGen D.toPre.P.L hL _ _ _ _ _ (rigK_val D))
   have h4 : Q (a + b) + -Q a + -Q b + -0 = bOf D.toPre Q a b := by simp only [bOf]; ring
   rw [h4] at h3
-  exact ⟨_, _, by secTac, h3⟩
+  exact ⟨_, _, sumElim_sec (sumElim_sec (sumElim_sec
+    (fun _ => Over.w (D.toPre.c (a + b))) (fun _ => Over.w (D.toPre.c a)))
+    (fun _ => Over.w (D.toPre.c b))) (fun _ => by rw [Category.id_comp]; exact Over.w η[D.toPre.P.A]), h3⟩
 
 
 include hϖ in
@@ -106,7 +108,8 @@ theorem Q_neg (hQ : IsQ D.toPre ϖ Q) (χ : D.toPre.X) : Q (-χ) = Q χ := by
     (ptK_eq D.toPre χ)
   have h1 := genHasVal_mulGen hϖ D.toPre.P.L hL _ _ _ _ _ _ _ _ _ _ (hQ (-χ)) hsym
   have := QVal_unique hϖ D
-    (genHasVal_corr hϖ D.toPre.P.L hL D.toPre.P.A.hom _ _ _ _ _ _ _ _ (by secTac) (by secTac) _ _ (D.toPre.psi_gen χ) (D.psi_even χ) h1) (hQ χ)
+    (genHasVal_corr hϖ D.toPre.P.L hL D.toPre.P.A.hom _ _ _ _ _ _ _ _ (sumElim_sec (fun _ => Over.w (D.toPre.c (-χ))) (fun k => by
+        fin_cases k <;> simp)) (fun _ => Over.w (D.toPre.c χ)) _ _ (D.toPre.psi_gen χ) (D.psi_even χ) h1) (hQ χ)
   linarith
 
 

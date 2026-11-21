@@ -354,7 +354,7 @@ theorem exists_period_coordinates : ∀ (E : Type) [Field E] [NumberField E] [Is
     have hinv := RiemannRel.differentiableOn_left_inverse (fun b => colMat α (P b)) (fun b => (colMat α (P b))⁻¹)
       (hc α) (fun b hb => nonsing_inv_mul _ (isUnit_iff_ne_zero.2 (hs _ (hnear b hb))))
     refine differentiableOn_pi.2 fun k => ?_
-    simp only [mul_apply, transpose_apply]
+    simp only [Matrix.mul_apply, transpose_apply]
     exact DifferentiableOn.fun_sum fun l _ =>
       (DifferentiableOn.fun_sum fun n _ => (hinv _ _).mul (hc β _ _)).mul_const _
   · intro P P' hP hP' hn hn' hZ

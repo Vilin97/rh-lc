@@ -176,7 +176,7 @@ theorem st_locDens_piece (u : X → ℝ) (hu : A.Smooth u) {y : Fin (e + 1) → 
     have hf2 : ∀ᶠ z in 𝓝 y, ContDiffAt ℝ 2 ((Φ i).φ (x0 i) ∘ (A.chart j).symm) z := by
       filter_upwards [hSn] with z hz
       have hon := (hΦ i).1 (x0 i) j
-      exact ((hon.mono (fun w hw => ⟨hw.1, hw.2.2⟩)).contDiffAt (hSo.mem_nhds hz)).of_le
+      exact ((hon.mono (fun w (hw : w ∈ (A.chart j).target ∩ (A.chart j).symm ⁻¹' (W ∩ (Φ i).U ((A.chart j).symm y) ∩ (Φ i).U (x0 i))) => ⟨hw.1, hw.2.2⟩)).contDiffAt (hSo.mem_nhds hz)).of_le
         two_le_infty_withTop
     have hK : ∀ z ∈ (A.chart j).target ∩ (A.chart j).symm ⁻¹'
         (W ∩ (Φ i).U ((A.chart j).symm y) ∩ (Φ i).U (x0 i)),
@@ -297,11 +297,11 @@ theorem st_symm_piece (hP : ReciprocityTheory.AnForm.A.PartsStatement) (w ψ : X
       ((A.chart j).target ∩ (A.chart j).symm ⁻¹' G) := by
     unfold ReciprocityTheory.AnForm.A.PartsHyp
     refine ⟨hSo, ?_, hKc.of_isClosed_subset (isClosed_tsupport _) hts, hts.trans hKS, ?_, ?_⟩
-    · exact (((hψ j).mono (fun y hy => ⟨hy.1, mem_univ _⟩)).of_le three_le_infty_withTop).congr
+    · exact (((hψ j).mono (fun y (hy : y ∈ (A.chart j).target ∩ (A.chart j).symm ⁻¹' G) => ⟨hy.1, mem_univ _⟩)).of_le three_le_infty_withTop).congr
         (fun y hy => Set.indicator_of_mem hy.1 _)
-    · exact ((hw j).mono (fun y hy => ⟨hy.1, mem_univ _⟩)).of_le three_le_infty_withTop
+    · exact ((hw j).mono (fun y (hy : y ∈ (A.chart j).target ∩ (A.chart j).symm ⁻¹' G) => ⟨hy.1, mem_univ _⟩)).of_le three_le_infty_withTop
     · intro i
-      exact (((hΦ i).1 (x0 i) j).mono (fun y hy => ⟨hy.1, hGU i hy.2⟩)).of_le three_le_infty_withTop
+      exact (((hΦ i).1 (x0 i) j).mono (fun y (hy : y ∈ (A.chart j).target ∩ (A.chart j).symm ⁻¹' G) => ⟨hy.1, hGU i hy.2⟩)).of_le three_le_infty_withTop
   have key := (hP e (fun i => (Φ i).φ (x0 i) ∘ (A.chart j).symm)
     ((A.chart j).target.indicator (ψ ∘ (A.chart j).symm)) (w ∘ (A.chart j).symm)
     ((A.chart j).target ∩ (A.chart j).symm ⁻¹' G) hH).2.2.2.2

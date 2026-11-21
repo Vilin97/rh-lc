@@ -162,7 +162,7 @@ theorem etale_of_birational_adjoin_root_of_unity (O S : Type*) [CommRing O] [IsD
       (fun m m' h => MaximalSpectrum.ext (congrArg Subtype.val h))
     have := m.isMaximal
     exact ⟨(IsLocalRing.eq_maximalIdeal
-      (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := O) m.asIdeal)).symm⟩
+      (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := O) m.asIdeal)).symm⟩
   have hq : (maximalIdeal S).comap (algebraMap (Algebra.adjoin O {z}) S) ≠ ⊥ := by
     intro h
     have hmem : algebraMap O (Algebra.adjoin O {z}) π ∈

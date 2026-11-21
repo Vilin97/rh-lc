@@ -119,7 +119,7 @@ lemma isLocal : IsLocalRing (AdjoinRoot f) := by
   refine IsLocalRing.of_unique_max_ideal ⟨_, J_max f hf hg, fun P hP => ?_⟩
   haveI := hP
   have hc : P.comap (algebraMap V (AdjoinRoot f)) = maximalIdeal V :=
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P)
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := V) P)
   have hle : (maximalIdeal V).map (algebraMap V (AdjoinRoot f)) ≤ P := by
     rw [← hc]
     exact Ideal.map_comap_le

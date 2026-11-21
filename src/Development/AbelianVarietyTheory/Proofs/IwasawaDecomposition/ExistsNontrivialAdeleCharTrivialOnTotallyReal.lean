@@ -50,11 +50,10 @@ theorem _root_.GlobalTheory.GaugeEx.CharZero.exists_isCharAF :
   have hLapply : (L : _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Ainf F → ℂ) = fun a => ∑ v : InfinitePlace F,
       InfinitePlace.Completion.extensionEmbedding v (a v) := by
     ext a
-    simp only [L, AddMonoidHom.finset_sum_apply]
-    rfl
+    simp [L, Pi.evalAddMonoidHom]
   have hL : Continuous L := by
     rw [hLapply]
-    exact continuous_finset_sum _ fun v _ =>
+    exact continuous_finsetSum _ fun v _ =>
       (InfinitePlace.Completion.isometry_extensionEmbedding v).continuous.comp
         (continuous_apply v)
   obtain ⟨ψ, hψ, -⟩ := _root_.GlobalTheory.StdAdelicChar.exists_char_of_trace F L hL (fun x => by

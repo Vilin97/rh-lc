@@ -29,7 +29,8 @@ theorem Jm_conjTranspose (ε : Fin n → Bool) : (Jm ε)ᴴ = Jm ε := by
     | (unfold Jm
        rw [Matrix.diagonal_conjTranspose]
        congr 1
-       split_ifs <;> simp)
+       funext i
+       by_cases h : ε i = true <;> simp [h])
     | (ext i j
        by_cases h : i = j <;> by_cases hε : ε i <;> simp [Jm, Matrix.diagonal_apply, h, hε])
 

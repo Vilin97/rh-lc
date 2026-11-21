@@ -44,8 +44,9 @@ theorem idlAlong_pow {X : Scheme.{0}} (I : X.IdealSheafData) (n : ℕ) {R : Type
     (ξ : Sp R ⟶ X) : idlAlong (I ^ n) ξ = idlAlong I ξ ^ n := by
   obtain ⟨U, hU, hx, -⟩ := Opens.isBasis_iff_nbhd.1 X.isBasis_affineOpens
     (show ξ (closedPoint R) ∈ (⊤ : X.Opens) from trivial)
-  have hle : ⊤ ≤ ξ ⁻¹ᵁ U := (Scheme.preimage_eq_top_of_closedPoint_mem ξ hx).ge
-  rw [TraitOrder.idlAlong_eq_map _ ξ ⟨U, hU⟩ hle, TraitOrder.idlAlong_eq_map _ ξ ⟨U, hU⟩ hle, ← Ideal.map_pow]
-  congr 1
+  unfold idlAlong
+  rw [ds_stalkId_eq_map (I ^ n) ⟨U, hU⟩ _ hx,
+    ds_stalkId_eq_map I ⟨U, hU⟩ _ hx, Scheme.IdealSheafData.ideal_pow,
+    Pi.pow_apply, Ideal.map_pow, Ideal.map_pow]
 
 end GlobalTheory.TorRef

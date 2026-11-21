@@ -23,6 +23,9 @@ def Reframe {S : Type} [CommRing S] [Algebra c.F S]
     (g : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) S) (y y' : FrPt Xo c S) : Prop :=
   y'.x = y.x ∧ ∀ τ i, IsCombAt y.x (y.u τ) (fun j => g τ j i) (y'.u τ i)
 
+-- Prefer the subalgebra instance before searching for a normed algebra structure.
+attribute [local instance 1100] Subalgebra.algebra
+
 structure FChart (h : GenFrEx Xo c) where
   Z : Comp Xo c
   R : Subalgebra c.F (Om Z)

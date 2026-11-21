@@ -120,11 +120,11 @@ theorem st_partsHyp_piece (w ψ : X → ℝ) (hw : A.Smooth w) (hψ : A.Smooth �
     rw [(A.chart j).left_inv hxs]
     exact hψG hx
   refine ⟨hUo, ?_, ?_, htsK.trans hKU, ?_, fun i => ?_⟩
-  · exact (((hψ j).mono fun y hy => ⟨hy.1, Set.mem_univ _⟩).congr
+  · exact (((hψ j).mono fun y (hy : y ∈ (A.chart j).target ∩ (A.chart j).symm ⁻¹' G) => ⟨hy.1, Set.mem_univ _⟩).congr
       fun y hy => Set.indicator_of_mem hy.1 _).of_le h3
   · exact hK.of_isClosed_subset (isClosed_tsupport _) htsK
-  · exact ((hw j).mono fun y hy => ⟨hy.1, Set.mem_univ _⟩).of_le h3
-  · exact (((hΦ i).1 (x0 i) j).mono fun y hy => ⟨hy.1, hGU i hy.2⟩).of_le h3
+  · exact ((hw j).mono fun y (hy : y ∈ (A.chart j).target ∩ (A.chart j).symm ⁻¹' G) => ⟨hy.1, Set.mem_univ _⟩).of_le h3
+  · exact (((hΦ i).1 (x0 i) j).mono fun y (hy : y ∈ (A.chart j).target ∩ (A.chart j).symm ⁻¹' G) => ⟨hy.1, hGU i hy.2⟩).of_le h3
 
 
 include hΦ hGo hG hGU in
@@ -321,7 +321,7 @@ theorem st_byPartsNonpos_of (hP : PartsStatement) (hN : GradDensNonnegStatement)
     refine setIntegral_nonneg hUo.measurableSet fun y hy => mul_nonneg ?_ ?_
     · exact Set.indicator_nonneg (fun z _ => hθ0 m _) y
     · exact hN e _ _ _ hUo
-        (fun i => (((hΦ i).1 (x0 m i) (j m)).mono fun z hz => ⟨hz.1, hGU m i hz.2⟩).of_le h2)
+        (fun i => (((hΦ i).1 (x0 m i) (j m)).mono fun z (hz : z ∈ (A.chart (j m)).target ∩ (A.chart (j m)).symm ⁻¹' G m) => ⟨hz.1, hGU m i hz.2⟩).of_le h2)
         (fun i z hz ξ => hpsh i (x0 m i) (j m) z ⟨hz.1, hGU m i hz.2⟩ ξ) y hy
   rw [hsplit, Finset.sum_congr rfl fun m _ => hpiece m, Finset.sum_add_distrib, hsum2, add_zero,
     Finset.sum_neg_distrib]

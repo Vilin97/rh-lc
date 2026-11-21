@@ -25,14 +25,7 @@ set_option autoImplicit false
 
 theorem GlobalTheory.HodgeSmooth.chart_comp_locconst : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : Model Xo c β) (σ : c.F →+* ℂ) (r : ℕ) (U : Formalism.L2.PjFree.Unf Xo c σ r), Formalism.L2.PjFree.GoodEmb c σ → Formalism.L2.PjFree.IsUnf U → 1 ≤ r → ∀ (n : ℕ) (ch : OpenPartialHomeomorph (GlobalTheory.CxPts (genStr Z) σ) (Fin n → ℂ)), IsHolTo ch.target (fun z => (ch.symm z).1) → ∀ (k₀ : U.Comp) (x₀ : (U.X k₀).dom), cxPt Z (U.un k₀ x₀) ∈ ch.source → ∃ B : Set (Fin n → ℂ), IsOpen B ∧ ch (cxPt Z (U.un k₀ x₀)) ∈ B ∧ ∀ z ∈ B, ∀ (k : U.Comp) (x : (U.X k).dom), cxPt Z (U.un k x) = ch.symm z → k = k₀ := by
   intro E _ _ _ H Dw l Xo c O _ β Z σ r U hσ hU h1 n ch hsy k₀ x₀ hy₀
-  have hex : ∃ W : GlobalTheory.ArcQ.UnfWit U, Function.Injective W.ik := by
-    have hinj := fun (W : GlobalTheory.Dict.UW U) => GlobalTheory.Dict.UW.ik_injective hσ hU h1 W
-    obtain ⟨-, -, -, -, -, g, e, F, ik, φ, hiso, hP⟩ := hU
-    have h := hinj ⟨g, e, F, ik, φ, hiso, hP⟩
-    have hP2 := hP
-    choose Pm h1' h2' h3' h4' h5' using hP2
-    exact ⟨⟨g, e, F, ik, φ, hiso, Pm, h1', h2', fun k x => ⟨h3' k x, h4' k x⟩, h5'⟩, h⟩
-  obtain ⟨W, hinj⟩ := hex
+  obtain ⟨W, hinj⟩ := GlobalTheory.HodgeSmooth.exists_unfWit_inj hσ hU h1
   have := Z.jQ_open
   have hB₀ := (hsy Z.jQ.opensRange 0).1
   set B₀ := {b ∈ ch.target | ⊤ ≤ (ch.symm b).1 ⁻¹ᵁ Z.jQ.opensRange} with hB₀def

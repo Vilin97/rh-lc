@@ -15,17 +15,16 @@ variable {p : ℕ} [Fact p.Prime] {σ : Type} {n : ℕ}
 
 noncomputable def compW (p : ℕ) [Fact p.Prime] (w : (σ →₀ ℕ) → Fin n → ℤ) (μ : Fin n → ℤ) :
     MvPolynomial σ ℚ_[p] →ₗ[ℚ_[p]] MvPolynomial σ ℚ_[p] where
-  toFun x := compP (fun m => w m = μ) x
+  toFun x := AddMonoidAlgebra.ofCoeff (x.coeff.filter (fun m => w m = μ))
   map_add' x y := by
-    ext m; simp only [coeff_compP, MvPolynomial.coeff_add]; split_ifs <;> simp
+    simp only [AddMonoidAlgebra.coeff_add, Finsupp.filter_add, AddMonoidAlgebra.ofCoeff_add]
   map_smul' a x := by
-    ext m; simp only [coeff_compP, coeff_smul, RingHom.id_apply]; split_ifs <;> simp
+    simp only [AddMonoidAlgebra.coeff_smul, Finsupp.filter_smul, AddMonoidAlgebra.ofCoeff_smul,
+      RingHom.id_apply]
 
 theorem coeff_compW (w : (σ →₀ ℕ) → Fin n → ℤ) (μ : Fin n → ℤ) (x : MvPolynomial σ ℚ_[p]) (m : σ →₀ ℕ) :
-    AddMonoidAlgebra.coeff (compW p w μ x) m = if w m = μ then AddMonoidAlgebra.coeff x m else 0 := by
-  show AddMonoidAlgebra.coeff (compP _ x) m = _
-  rw [coeff_compP]
-  split_ifs <;> rfl
+    AddMonoidAlgebra.coeff (compW p w μ x) m = if w m = μ then AddMonoidAlgebra.coeff x m else 0 :=
+  rfl
 
 theorem compW_fix (w : (σ →₀ ℕ) → Fin n → ℤ) (μ ν : Fin n → ℤ) (x : MvPolynomial σ ℚ_[p])
     (hx : ∀ m, AddMonoidAlgebra.coeff x m ≠ 0 → w m = ν) : compW p w μ x = if ν = μ then x else 0 := by
@@ -52,14 +51,14 @@ theorem sum_compW (w : (σ →₀ ℕ) → Fin n → ℤ) (x : MvPolynomial σ �
   split_ifs with h
   · rfl
   · have := congrArg (AddMonoidAlgebra.coeff · d) (hS _ h)
-    rw [coeff_compW, if_pos rfl, coeff_zero] at this
+    rw [coeff_compW, ite_eq_left rfl, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at this
     exact this.symm
 
 theorem compW_dec (w : (σ →₀ ℕ) → Fin n → ℤ) (x : MvPolynomial σ ℚ_[p]) :
     ∀ μ ∉ x.support.image w, compW p w μ x = 0 := by
   intro μ hμ
   ext m
-  rw [coeff_compW, coeff_zero]
+  rw [coeff_compW, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   split_ifs with h
   · by_contra hne
     exact hμ (Finset.mem_image.mpr ⟨m, mem_support_iff.mpr hne, h⟩)

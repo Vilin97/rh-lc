@@ -34,7 +34,7 @@ theorem comp_padd (x : T ⟶ A) (f g : A ⟶ A) : x ≫ padd A f g = (x ≫ f) *
 variable {O : Type} [Ring O] (ρ : RingAct A O)
 
 theorem act_add_apply (x : T ⟶ A) (a b : O) : x ≫ ρ.act (a + b) = (x ≫ ρ.act a) * (x ≫ ρ.act b) := by
-  rw [ρ.map_add (f := _), comp_padd]
+  rw [ρ.map_add, comp_padd]
 
 theorem act_mul_apply (x : T ⟶ A) (a b : O) : x ≫ ρ.act (a * b) = (x ≫ ρ.act b) ≫ ρ.act a := by
   rw [ρ.map_mul, Category.assoc]

@@ -75,7 +75,7 @@ theorem ringKrullDim_le_add {O A : Type} (K : Type) [CommRing O] [IsDomain O] [I
   rw [ringKrullDim_genericFibre_eq O K hd]
   obtain ⟨s, hs⟩ := exists_isTranscendenceBasis O A
   have hc : Cardinal.mk s = d := hs.cardinalMk_eq_trdeg.trans hd
-  have : Finite s := Cardinal.lt_aleph0_iff_finite.1 (hc ▸ Cardinal.nat_lt_aleph0 d)
+  have : Finite s := Cardinal.lt_aleph0_iff_finite.1 (hc ▸ Cardinal.natCast_lt_aleph0)
   let R := Algebra.adjoin O (Set.range ((↑) : s → A))
   have e : MvPolynomial s O ≃+* R := hs.1.aevalEquiv.toRingEquiv
   have : IsNoetherianRing R := isNoetherianRing_of_ringEquiv _ e
@@ -84,7 +84,7 @@ theorem ringKrullDim_le_add {O A : Type} (K : Type) [CommRing O] [IsDomain O] [I
   obtain ⟨t, ht⟩ := Algebra.FiniteType.out (R := R) (A := A)
   have h := ringKrullDim_adjoin_le (R := R) t
   rw [ht, ringKrullDim_eq_of_ringEquiv Subalgebra.topEquiv.toRingEquiv, ← ringKrullDim_eq_of_ringEquiv e,
-    MvPolynomial.ringKrullDim_of_isNoetherianRing, Nat.card, hc, Cardinal.toNat_natCast] at h
+    MvPolynomial.ringKrullDim_of_isNoetherianRing, ENat.card_eq_coe_natCard, ← Cardinal.toNat_mk, hc, Cardinal.toNat_natCast] at h
   exact h
 
 theorem topologicalKrullDim_eq_succ {O K : Type} [CommRing O] [IsDedekindDomain O] (hO : ¬ IsField O) [Field K]

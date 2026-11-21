@@ -21,7 +21,8 @@ theorem latC_full_lattice : ∀ (E : Type) [Field E] [NumberField E] [StarRing E
       simpa using hy
     · intro h
       exact ⟨_, h, W.frame.equivFun.apply_symm_apply x⟩
-  · have h := W.standardTuple_isLattice.span_eq_top
+  · letI := W.standardTuple_isLattice
+    have h : Submodule.span E (W.L0 : Set W.V) = ⊤ := Submodule.IsFullLattice.span_eq_top
     have : ((W.L0.map (W.frame.equivFun.toLinearMap.restrictScalars (𝓞 E)) : Submodule (𝓞 E) (Fin W.rank → E)) :
         Set (Fin W.rank → E)) = W.frame.equivFun.toLinearMap '' (W.L0 : Set W.V) := rfl
     rw [this, ← Submodule.map_span, h, Submodule.map_top, LinearEquiv.range]

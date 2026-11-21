@@ -88,7 +88,7 @@ def IsAbFactor (p : ℕ) {C : Type} [Field C] [Algebra R C] {N : Type} [AddCommG
     (M : Submodule R (N → C)) : Prop :=
   ∃ (A : Over (Spec (CommRingCat.of R))) (_ : GrpObj A) (L : LB A.left), IsAbelianScheme A ∧ L.IsLB ∧
     Out.RelAmple A L ∧ ∃ (T : TorsRep A p) (N' : Type) (_ : AddCommGroup N')
-      (pt : N' → (sp (R₀ := R) R ⟶ A)), IsTorsPts (p := p) pt ∧
+      (pt : N' → (sp (R₀ := R) R ⟶ A)), IsTorsPts A p pt ∧
       ∃ (i : N →+ N') (π : N' →+ N), (∀ x, π (i x) = x) ∧
         (∀ g ∈ torsFun C T pt, (fun x => g (i (π x))) ∈ torsFun C T pt) ∧
         M = (torsFun C T pt).map (LinearMap.funLeft R C (i : N → N'))

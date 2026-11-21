@@ -20,7 +20,7 @@ theorem exists_ringEquiv_prod_of_isIdempotentElem {S : Type*} [CommRing S] {e : 
     rw [Ideal.isCoprime_span_singleton_iff]
     exact ⟨1, 1, by ring⟩
   have hb : (⊥ : Ideal S) = Ideal.span {1 - e} ⊓ Ideal.span {e} := by
-    rw [Ideal.mul_eq_inf_of_isCoprime hc, Ideal.span_singleton_mul_span_singleton, sub_mul,
+    rw [← Ideal.mul_eq_inf_of_isCoprime hc, Ideal.span_singleton_mul_span_singleton, sub_mul,
       one_mul, he.eq, sub_self, Ideal.span_singleton_zero]
   refine ⟨(RingEquiv.quotientBot S).symm.trans ((Ideal.quotEquivOfEq hb).trans
     (Ideal.quotientInfEquivQuotientProd _ _ hc)), fun x => ?_⟩
@@ -33,7 +33,8 @@ theorem exists_local_factor {B S D : Type*} [CommRing B] [HenselianLocalRing B] 
       ∃ ψ : (S ⧸ Ideal.span {1 - e}) →+* D, IsLocalHom ψ ∧
         ∀ x, ψ (Ideal.Quotient.mk _ x) = φ x := by
   have hq : ((maximalIdeal D).comap φ).IsMaximal := by
-    apply Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := B)
+    apply Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (algebraMap B S)
+      (fun x => Algebra.IsIntegral.isIntegral x)
     rw [Ideal.comap_comap, ← (maximalIdeal.isMaximal B).eq_of_le (Ideal.IsPrime.ne_top inferInstance) hφ]
     infer_instance
   obtain ⟨e, he, H⟩ := exists_idempotent_notMem_iff_of_henselian B ((maximalIdeal D).comap φ)

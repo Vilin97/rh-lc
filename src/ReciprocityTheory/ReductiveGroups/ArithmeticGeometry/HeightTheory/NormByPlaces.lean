@@ -212,7 +212,7 @@ private lemma overP_finite (hd : d.AxH 𝒜) (h : d.S1) (c : ι) (p : Ideal (KTp
       (algebraMap (KTp K d.D d.N) (KTf K d.D d.N) x) = d.sH c x := by
     intro x
     exact IsFractionRing.lift_algebraMap (h c) x
-  have hOver : d.OverP c p = HNm.OverR (KTp K d.D d.N) (KTf K d.D d.N) (OmS (Ω c) d.D d.N) p := by
+  have hOver : d.OverP c p = HNm.OverR (R := KTp K d.D d.N) (F := KTf K d.D d.N) (L := OmS (Ω c) d.D d.N) p := by
     ext w
     simp only [Data.OverP, HNm.OverR, Set.mem_setOf_eq, hmap]
   obtain ⟨hprime, hh⟩ := hp
@@ -240,14 +240,14 @@ theorem norm_by_places (hd : d.AxH 𝒜) (h : d.S1) (c : ι) :
     intro x
     exact IsFractionRing.lift_algebraMap (h c) x
   have hOver : ∀ p, d.OverP c p =
-      HNm.OverR (KTp K d.D d.N) (KTf K d.D d.N) (OmS (Ω c) d.D d.N) p := by
+      HNm.OverR (R := KTp K d.D d.N) (F := KTf K d.D d.N) (L := OmS (Ω c) d.D d.N) p := by
     intro p
     ext w
     simp only [Data.OverP, HNm.OverR, Set.mem_setOf_eq, hmap]
   refine ⟨fun p hp => overP_finite d hd h c p hp, fun y hy => ?_⟩
   have hset : {p | p ∈ d.HtOne ∧ ∃ w ∈ d.OverP c p, w y ≠ 0} =
       {p : Ideal (KTp K d.D d.N) | p.IsPrime ∧ p.height = 1 ∧
-        ∃ w ∈ HNm.OverR (KTp K d.D d.N) (KTf K d.D d.N) (OmS (Ω c) d.D d.N) p, w y ≠ 0} := by
+        ∃ w ∈ HNm.OverR (R := KTp K d.D d.N) (F := KTf K d.D d.N) (L := OmS (Ω c) d.D d.N) p, w y ≠ 0} := by
     ext p
     simp only [Set.mem_setOf_eq, Data.HtOne, hOver, and_assoc]
   have hfin : {p | p ∈ d.HtOne ∧ ∃ w ∈ d.OverP c p, w y ≠ 0}.Finite := by

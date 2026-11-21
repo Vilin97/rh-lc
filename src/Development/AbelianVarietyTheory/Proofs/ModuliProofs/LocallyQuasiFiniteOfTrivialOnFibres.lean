@@ -46,8 +46,9 @@ theorem exists_fn {X Z : Scheme.{0}} (L : LB X) (hL : L.IsLB) (N : ℕ)
       (Z.presheaf.map (homOfLE (l₂ j)).op).hom ((t.s (fun _ => j))⁻¹).val ^ N, fun j z hz => ?_⟩
     refine (gs_mul (𝟙 Z) z (V j) hz _ _).trans (congrArg₂ (· * ·) (gs_appLE r z _ _ _ hz _)
       ((gs_pow (𝟙 Z) z (V j) hz _ _).trans ?_))
-    refine congrArg (· ^ N) ((gs_res (𝟙 Z) z _ hz _).trans ?_)
-    exact (gs_unit (𝟙 Z) z _ (l₂ j hz) _).trans (congrArg Units.val (map_inv _ _))
+    erw [gs_res (𝟙 Z) z (l₂ j) hz, gs_unit (𝟙 Z) z _ (l₂ j hz)]
+    exact congrArg (fun x : (Z.presheaf.stalk z)ˣ => x.val ^ N)
+      (map_inv (gm (𝟙 Z) z _ ) (t.s (fun _ => j)))
   have hcov : (⊤ : Z.Opens) ≤ iSup V := fun z _ => by
     obtain ⟨j, hj⟩ := exists_chart hL (r z)
     exact Opens.mem_iSup.2 ⟨j, hj⟩
