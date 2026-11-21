@@ -36,7 +36,7 @@ theorem ProdExact_holds : Formalism.L2.SG.Pf.NcReal.ProdExact := by
   haveI : ∀ v, SigmaFinite (μH' v) := hσH'
   have hU : UnimodLoc := JL.rightInvS_of JL.setCorr_holds (JL.haarCorr_of JL.setCorr_holds)
   have hep : ∀ v a b, hJ (X.B.I.ε v) (eV X v a) (pV X v b) = if a = b then 1 else 0 := fun v a b =>
-    (hJ_X X v _ _).trans (by rw [X.ef]; split_ifs <;> simp)
+    (hJ_X X v _ _).trans (by rw [X.ef]; simp)
   have hpp : ∀ v a b, hJ (X.B.I.ε v) (pV X v a) (pV X v b) = 0 := fun v a b =>
     (hJ_X X v _ _).trans (by rw [X.ff]; simp)
   have hzp : ∀ w v b, hJ (X.B.I.ε v) (zV X w v) (pV X v b) = 0 := fun w v b => by
@@ -75,9 +75,11 @@ theorem ProdExact_holds : Formalism.L2.SG.Pf.NcReal.ProdExact := by
     haveI : SigmaFinite (muHv X u v) := inferInstance
     unfold Formalism.L2.SG.Pf.NcReal.muSL muSv
     rw [hκN v, hκH v, Measure.prod_smul_left, Measure.prod_smul_right, smul_smul, Measure.map_smul]
+    all_goals exact measurable_mul.aemeasurable
   have hSL' : ∀ v, Formalism.L2.SG.Pf.NcReal.muSL (μH' v) (μN' v) = (κN' v * κH' v) • muSv X u' v := fun v => by
     unfold Formalism.L2.SG.Pf.NcReal.muSL muSv
     rw [hκN' v, hκH' v, Measure.prod_smul_left, Measure.prod_smul_right, smul_smul, Measure.map_smul]
+    all_goals exact measurable_mul.aemeasurable
   haveI : ∀ w v, SigmaFinite (muSv X w v) := fun w v => (hSH w v).1.1
   haveI hσS : ∀ v, SigmaFinite (Formalism.L2.SG.Pf.NcReal.muSL (μH v) (μN v)) := fun v => by
     rw [hSL v]; exact sf_smul _ _ (ENNReal.mul_ne_top (hκNT v) (hκHT v))
@@ -159,10 +161,12 @@ theorem ProdExact_holds : Formalism.L2.SG.Pf.NcReal.ProdExact := by
     PiM.pi_map_mul_right _ t fun v => by
       rw [hSL v, Measure.map_smul,
         hU _ _ _ _ _ _ _ _ _ (frameLoc_X X u u' v) _ (hSH u v) (t v) (ht v)]
+      exact (measurable_id.mul measurable_const).aemeasurable
   have hrt' : μP'.map (fun x => x * t') = μP' :=
     PiM.pi_map_mul_right _ t' fun v => by
       rw [hSL' v, Measure.map_smul,
         hU _ _ _ _ _ _ _ _ _ (frameLoc_X X u' u v) _ (hSH u' v) (t' v) (ht' v)]
+      exact (measurable_id.mul measurable_const).aemeasurable
   have hsw : ∫⁻ s, ∫⁻ s', φ (s * hOf X u u' 1 c * s'⁻¹) ∂μP' ∂μP = Fc c := by
     rw [hofe]; exact dc_switch _ _ φ hφ (H c) t t' hrt hrt'
   rw [hW, hmu, hmu', hsw]

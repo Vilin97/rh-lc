@@ -157,7 +157,7 @@ private theorem tens_ec {κF : Measure (archCompact F n)} {eF : archCompact F n 
   have hsk : ∀ kk i, compA D n i (s kk : archGroup E n) = kk i := fun kk i => hgc _ i
   have hes : ∀ kk, e (s kk) = ∏ i, eF (kk i) := fun kk => hSq (s kk) kk fun i => (hsk kk i).symm
   have hcf : Continuous fun k : archCompact E n => e k * ((∏ i, β (compA D n i ((k : archGroup E n)⁻¹ * x)) : ℝ) : ℂ) := by
-    refine hE.cont.mul (Complex.continuous_ofReal.comp (continuous_finset_prod _ fun i _ => hβ.comp ((hccont i).comp ?_)))
+    refine hE.cont.mul (Complex.continuous_ofReal.comp (continuous_finsetProd _ fun i _ => hβ.comp ((hccont i).comp ?_)))
     fun_prop
   unfold ec
   haveI : SecondCountableTopology (archCompact F n) := TopologicalSpace.Subtype.secondCountableTopology _
@@ -227,7 +227,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E.ampEx :
   obtain ⟨νE', _, a, aE, aF, hs⟩ := archPositionEx F E σ 1 D n νF b hbsm hbfin hbn
   have hs' : ArchSlot D νE νF b a aE aF := (hs.meas.trans hν.symm) ▸ hs
   set βE : archGroup E n → ℝ := fun y => ∏ i, β (compA D n i y) with hβE
-  have hβEc : Continuous βE := continuous_finset_prod _ fun i _ => hβc.comp (hccont i)
+  have hβEc : Continuous βE := continuous_finsetProd _ fun i _ => hβc.comp (hccont i)
   have hβEc' : Continuous fun y => (βE y : ℂ) := by fun_prop
   have hbE : ∀ x, ec κ e (fun y => (βE y : ℂ)) x = ∏ i, b (compA D n i x) := fun x => by
     simp only [hbe]

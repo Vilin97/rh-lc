@@ -363,10 +363,12 @@ theorem reindex {P' Q' : Type} [Fintype P'] [DecidableEq P'] [Fintype Q'] [Decid
   pm := by
     rw [Matrix.conjTranspose_submatrix, ← Matrix.submatrix_mul _ _ _ id _ Function.bijective_id, F.pm]
     rfl
-  · rw [Matrix.conjTranspose_submatrix, Matrix.conjTranspose_submatrix, Matrix.submatrix_mul_equiv,
+  sum := by
+    rw [Matrix.conjTranspose_submatrix, Matrix.conjTranspose_submatrix, Matrix.submatrix_mul_equiv,
       Matrix.submatrix_mul_equiv]
     exact F.sum
-  · rw [Matrix.conjTranspose_submatrix, Matrix.conjTranspose_submatrix, Matrix.submatrix_mul_equiv,
+  diff := by
+    rw [Matrix.conjTranspose_submatrix, Matrix.conjTranspose_submatrix, Matrix.submatrix_mul_equiv,
       Matrix.submatrix_mul_equiv]
     exact F.diff
 

@@ -145,6 +145,7 @@ theorem adm_three_iff_representative (D : Formalism.BasicNotions.D7) (X : Sys p)
     rw [← thA_SA X ℂ_[p] (delt X hfin j La.1 La.2) (lsmul_lsmul_inv _ _ _).symm φ, ← MvPolynomial.coeff_smul,
       ← applyD_C_mul, Sys.ThZA, Sys.ThZA, ← subst_C_mul' (hasSubst_coordZA' X ℂ_[p] j)]
     congr 3
+    congr 1
     exact subst_C_mul' (hasSubst_invF ℂ_[p] φ) _ _
   have hn : ∀ j (La : X.Lt j), ‖chiN X ℂ_[p] hfin j La‖ = 1 := fun j La => norm_chiN X E.toCEmb hfin j La
   constructor

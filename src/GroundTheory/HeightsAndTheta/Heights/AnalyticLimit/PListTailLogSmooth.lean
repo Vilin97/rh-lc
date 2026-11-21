@@ -173,7 +173,8 @@ theorem tailLogBound_of_le [CompactSpace X] [T2Space X] {Yo : Set X} (hYo : IsOp
   have hlin := ReciprocityTheory.AnForm.M.mIntLinear A T hpot (-1) gs gb hI' hI
   have h0 := SystemIndependence.mInt_nonneg_on A Yo T hpot hnn (fun x => -1 * gs x + gb x)
     (fun x => by linarith [hg x]) (fun x hx => by
-      rw [hgs, hgb, indicator_of_notMem (fun h => hx h.1), indicator_of_notMem (fun h => hx h.1)]
+      rw [hgs, hgb, indicator_of_notMem (fun (h : x ∈ tail Yo r R₀) => hx h.1),
+        indicator_of_notMem (fun (h : x ∈ tail Yo r' R₀) => hx h.1)]
       ring)
   linarith
 

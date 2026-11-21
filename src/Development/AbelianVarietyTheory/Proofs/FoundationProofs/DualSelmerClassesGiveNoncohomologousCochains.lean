@@ -35,7 +35,10 @@ theorem phi_bijective : ∀ (l : ℕ) [Fact l.Prime] (c : Coef l) (n : ℕ), Fun
     let φ' : Mn c n →ₗ[ZMod (l ^ n)] ZMod (l ^ n) := φ
     obtain ⟨b0, h0⟩ := GlobalTheory.T.exists_eq_ordDualGeneratorPairing_of_additiveMap l c n (φ'.toAddMonoidHom.comp (AddMonoidHom.single (fun _ : Fin 2 => Qn c n) 0))
     obtain ⟨b1, h1⟩ := GlobalTheory.T.exists_eq_ordDualGeneratorPairing_of_additiveMap l c n (φ'.toAddMonoidHom.comp (AddMonoidHom.single (fun _ : Fin 2 => Qn c n) 1))
-    refine ⟨![-b1, b0], TDual.ext fun x => ?_⟩
+    refine ⟨![-b1, b0], ?_⟩
+    apply LinearMap.ext
+    intro x
+    change Phi c n ![-b1, b0] x = φ x
     have e : x = Pi.single 0 (x 0) + Pi.single 1 (x 1) := by
       funext i; fin_cases i <;> simp
     have e2 : φ x = φ' (Pi.single 0 (x 0)) + φ' (Pi.single 1 (x 1)) := by

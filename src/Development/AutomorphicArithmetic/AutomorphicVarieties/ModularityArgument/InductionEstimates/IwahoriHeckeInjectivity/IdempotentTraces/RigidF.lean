@@ -33,7 +33,11 @@ private theorem normV_split {K M : Type} [Field K] [NumberField K] [Field M] [Nu
   have h1 : w.asIdeal.ramificationIdx (𝓞 K) * w.asIdeal.inertiaDeg (𝓞 K) = 1 := by
     rw [← finrank_eq_ramificationIdx_mul_inertiaDeg M (w.under (𝓞 K)) w,
       ← (LinearEquiv.ofBijective _ hb).finrank_eq, Module.finrank_self]
-  show Ideal.absNorm w.asIdeal = Ideal.absNorm (w.under (𝓞 K)).asIdeal
+  have norm_eq {L : Type} [Field L] [NumberField L] (v : HeightOneSpectrum (𝓞 L)) :
+      Formalism.ConjugateSelfDual.normV v = Ideal.absNorm v.asIdeal := by
+    rw [Ideal.absNorm_apply, Submodule.cardQuot_apply]
+    rfl
+  rw [norm_eq, norm_eq]
   rw [← Ideal.absNorm_relNorm (𝓞 K) (𝓞 M) w.asIdeal,
     Ideal.relNorm_eq_pow_of_isMaximal w.asIdeal (w.under (𝓞 K)).asIdeal, Nat.eq_one_of_mul_eq_one_left h1, pow_one]
 

@@ -66,12 +66,13 @@ set_option synthInstance.maxHeartbeats 400000 in
 theorem rowSub_S :
     haveI := Topo.rTop_addGroup_RD i r π g0 eB e₁ s Dd hD
     KRow.RowSub (ρ₁ := rho1 i Dd) i dc r := by
-  haveI := Topo.rTop_addGroup_RD i r π g0 eB e₁ s Dd hD
-  obtain ⟨hr', hsm, hχ⟩ := KLift.ringDef_lift i r Dd hD
-  haveI := (idempotent_part_finite_and_free i r π g0 eB e₁ s Dd hD).1
-  haveI := (idempotent_part_finite_and_free i r π g0 eB e₁ s Dd hD).2
-  intro n _ hn
-  exact rowSub_at i dc r Dd hr' hsm hχ hn
+  set_option maxHeartbeats 16000000 in
+    haveI := Topo.rTop_addGroup_RD i r π g0 eB e₁ s Dd hD
+    obtain ⟨hr', hsm, hχ⟩ := KLift.ringDef_lift i r Dd hD
+    haveI := (idempotent_part_finite_and_free i r π g0 eB e₁ s Dd hD).1
+    haveI := (idempotent_part_finite_and_free i r π g0 eB e₁ s Dd hD).2
+    intro n _ hn
+    exact rowSub_at i dc r Dd hr' hsm hχ hn
 
 
 set_option maxHeartbeats 4000000 in

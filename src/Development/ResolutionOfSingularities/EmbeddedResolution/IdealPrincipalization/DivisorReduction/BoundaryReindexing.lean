@@ -209,7 +209,7 @@ theorem isStrictPullbackBlowupSeq_restrictToBoundaryDivisor_of_get_eq
   have hw : (divisorPullbackMap (T.withBoundary L₁) j₁ hj₁ I₀ E₀ T.scheme (𝟙 T.scheme)
       (L₂.get ⟨j₂, hj₂⟩) hD) ≫ ((T.withBoundary L₁).boundary.get ⟨j₁, hj₁⟩).subschemeι
       = (L₂.get ⟨j₂, hj₂⟩).subschemeι := by
-    simpa using hsq.w
+    exact hsq.w.trans (Category.comp_id _)
   have h2 : ((divisorPullbackMap (T.withBoundary L₁) j₁ hj₁ I₀ E₀ T.scheme (𝟙 T.scheme)
         (L₂.get ⟨j₂, hj₂⟩) hD) ≫ ((T.withBoundary L₁).boundary.get ⟨j₁, hj₁⟩).subschemeι)
         ≫ (T.withBoundary L₁).structMap

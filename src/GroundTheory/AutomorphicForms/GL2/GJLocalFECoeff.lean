@@ -52,7 +52,7 @@ theorem distribHaarChar_mulMulEntries {a b : GL (Fin n) F} (ha : a ∈ integralG
     (hb : b ∈ integralGL F n) :
     distribHaarChar (Fin n × Fin n → F) (mulMulEntries F n a b) = 1 := by
   have key : ∀ {a b : GL (Fin n) F}, a ∈ integralGL F n → b ∈ integralGL F n →
-      ∀ x ∈ box F (Fin n × Fin n), mulMulEntries F n a b x ∈ box F (Fin n × Fin n) := by
+      ∀ x ∈ box (F := F) (ι := Fin n × Fin n), mulMulEntries F n a b x ∈ box (F := F) (ι := Fin n × Fin n) := by
     intro a b ha hb x hx
     rw [mem_box] at hx ⊢
     intro ij
@@ -64,6 +64,8 @@ theorem distribHaarChar_mulMulEntries {a b : GL (Fin n) F} (ha : a ∈ integralG
     rw [LinearEquiv.symm_apply_eq, mulMulEntries_apply, mulMulEntries_apply]
     ext ij
     simp [← mul_assoc]
+    change x ij = entries F n ((entries F n).symm x) ij
+    rw [LinearEquiv.apply_symm_apply]
   rw [this]
   exact key (inv_mem ha) (inv_mem hb) x hx
 

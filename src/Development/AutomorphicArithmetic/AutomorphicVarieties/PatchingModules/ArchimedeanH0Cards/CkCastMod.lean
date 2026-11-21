@@ -135,7 +135,10 @@ private theorem ck_pt (hP : GlobalTheory.Published.PoitouTateNormalised) (F Ω :
       show c (y.1 (M.ρ g m)) = _ * c (y.1 m)
       rw [← e, map_mul, ← ck_castMod]
       rfl
-    · refine Subtype.ext (TDual.ext fun m => c.injective ?_)
+    · apply Subtype.ext
+      apply LinearMap.ext
+      intro m
+      apply c.injective
       exact DFunLike.congr_fun (congrArg Subtype.val h) m
 
 end UpperTheory.V.Pa.B2

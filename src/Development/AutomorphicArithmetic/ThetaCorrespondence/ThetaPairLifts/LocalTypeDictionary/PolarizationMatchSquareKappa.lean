@@ -56,10 +56,10 @@ theorem polarization_match_square_kappa : _root_.GlobalTheory.FunPr.ThetaLocalIn
     refine ⟨m, m', f, φ, f', φ', hφ, hφ', ?_, ?_, hsum⟩
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [hΦ, map_sum]
-      exact Finset.sum_congr rfl fun i _ => hU.1 (f i) (φ i) (hφ i).2.1 (hφ i).2.2
+        exact Finset.sum_congr rfl fun i _ => hU.1 (f i) (φ i) (hφ i).2.1 (hφ i).2.2
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [hΦ', map_sum]
-      exact Finset.sum_congr rfl fun j _ => hU.2 (f' j) (φ' j) (hφ' j).2.1 (hφ' j).2.2
+        exact Finset.sum_congr rfl fun j _ => hU.2 (f' j) (φ' j) (hφ' j).2.1 (hφ' j).2.2
   have split : ∀ (x y : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.UA D.sp.cm.sig Γ.W.J) Φ, om (1, x * y) Φ = om (1, x) (om (1, y) Φ) := by
     intro x y Φ
     rw [show ((1 : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.UA D.sp.cm.sig Γ.V.J), x * y) = (1, x) * (1, y) by simp, map_mul, Module.End.mul_apply]

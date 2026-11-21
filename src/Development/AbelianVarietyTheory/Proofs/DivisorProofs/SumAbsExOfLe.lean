@@ -45,8 +45,8 @@ theorem exists_delta [IsGalois ℚ E] (hv : v.Integers O) {p : ℕ} (hp : p.Prim
   obtain ⟨a, m, hm, hdisc⟩ := Nat.exists_eq_pow_mul_and_not_dvd hd p hp.ne_one
   have hm0 : m ≠ 0 := by rintro rfl; exact hm (dvd_zero _)
   have ha : padicValNat p (discr E).natAbs = a := by
-    rw [hdisc, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hm0, padicValNat.prime_pow,
-      padicValNat.eq_zero_of_not_dvd hm, add_zero]
+    rw [hdisc, Nat.padicValNat_def, Nat.multiplicity_mul (pow_ne_zero _ hp.ne_zero) hm0,
+      Nat.multiplicity_prime_pow, multiplicity_eq_zero_of_not_dvd hm, add_zero]
   rw [ha]
   set σ := embO hv τ
   set P : Ideal (𝓞 E) := (IsLocalRing.maximalIdeal O).comap σ with hP
@@ -148,7 +148,7 @@ theorem pairV_inclT {w : P.V} (hw : w ∈ P.latT) (s : O ⊗[ℤ_[p]] P.T) :
     P.pairV w (P.inclT s) ∈ (algebraMap O C).range := by
   induction s using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
+  | add x y hx hy => simp only [map_add]; exact add_mem hx hy
   | tmul c t =>
     obtain ⟨b, hb⟩ := (P.mem_latT_iff w).1 hw t
     have : (algebraMap O C c ⊗ₜ t : P.V) = algebraMap O C c • (1 : C) ⊗ₜ t := by
@@ -162,7 +162,7 @@ theorem actV_mem (a : Λ) (x : P.V) (hx : x ∈ P.latT) : P.actV a x ∈ P.latT 
   obtain ⟨s, rfl⟩ := hx
   induction s using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
+  | add x y hx hy => simp only [map_add]; exact add_mem hx hy
   | tmul c t => exact ⟨c ⊗ₜ P.actT a t, by rw [P.inclT_tmul, P.inclT_tmul]; rfl⟩
 
 variable [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O]

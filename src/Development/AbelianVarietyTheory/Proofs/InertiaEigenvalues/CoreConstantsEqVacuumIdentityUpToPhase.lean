@@ -164,6 +164,8 @@ theorem exists_theta_ne_zero {E : Type} [Field E] [NumberField E] [IsCMField E] 
   obtain ⟨A, hA⟩ := hg
   have hd := ((GlobalTheory.Dict.reads_existsUnique_theta E H Dw l Xo c r _ _ bas idx _ x.1 _ _ A hb x.2 hsd 1 _).2 Y.θ hA).1
   refine GlobalTheory.FrameEquiv.exists_apply_pv_ne_zero E r _ _ bas idx hb x.1 x.2 _ hd.continuous fun h0 => ?_
+  have h9 := Y.c9
+  simp [h0] at h9
 
 
 set_option maxHeartbeats 1000000 in

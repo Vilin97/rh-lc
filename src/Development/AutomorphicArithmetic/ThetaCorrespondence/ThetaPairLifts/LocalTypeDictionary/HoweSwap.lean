@@ -63,14 +63,14 @@ theorem stageV_alt : _root_.GlobalTheory.FunPr.ThetaLocalInputs → ∀ (F E : T
       · simp only [dif_neg h]; exact (hM.triple.geo.hM.vac v).1
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_sum]
-      exact Finset.sum_congr rfl fun j _ => hL _ _ _ (fun v h => by simp only [dif_pos h]) (fun v h => by simp only [dif_neg h])
+        exact Finset.sum_congr rfl fun j _ => hL _ _ _ (fun v h => by simp only [dif_pos h]) (fun v h => by simp only [dif_neg h])
     · simp
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [LinearMap.mem_ker, map_sum] at ht0
-      rw [Fin.sum_univ_zero, ← ht0]
-      refine Finset.sum_congr rfl fun j _ => ?_
-      rw [TensorProduct.map_tmul, PiTensorProduct.map_tprod]
-      simp
+        rw [Fin.sum_univ_zero, ← ht0]
+        refine Finset.sum_congr rfl fun j _ => ?_
+        rw [TensorProduct.map_tmul, PiTensorProduct.map_tprod]
+        simp
 theorem allV_alt : _root_.GlobalTheory.FunPr.ThetaLocalInputs → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (Bs : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Base F E) (a a' : ℕ) (G : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Geo σ a a') (Xc : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Chars F E)
     (om : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep σ G.V G.W) (om' : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep σ G.V' G.W)

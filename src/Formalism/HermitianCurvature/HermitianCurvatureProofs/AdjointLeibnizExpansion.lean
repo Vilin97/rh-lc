@@ -145,13 +145,13 @@ theorem splits_mem {α : Type*} : ∀ (w : List α), ∀ uv ∈ splits w,
   | X :: w, uv, h => by
     simp only [splits, List.mem_append, List.mem_map] at h
     rcases h with ⟨uv', h', rfl⟩ | ⟨uv', h', rfl⟩
-    · obtain ⟨a, b, c⟩ := ih uv' h'
+    · obtain ⟨a, b, c⟩ := splits_mem w uv' h'
       refine ⟨?_, fun Y hY => List.mem_cons_of_mem _ (b Y hY), by simp; omega⟩
       intro Y hY
       rcases List.mem_cons.1 hY with rfl | hY
       · exact List.mem_cons_self
       · exact List.mem_cons_of_mem _ (a Y hY)
-    · obtain ⟨a, b, c⟩ := ih uv' h'
+    · obtain ⟨a, b, c⟩ := splits_mem w uv' h'
       refine ⟨fun Y hY => List.mem_cons_of_mem _ (a Y hY), ?_, by simp; omega⟩
       intro Y hY
       rcases List.mem_cons.1 hY with rfl | hY

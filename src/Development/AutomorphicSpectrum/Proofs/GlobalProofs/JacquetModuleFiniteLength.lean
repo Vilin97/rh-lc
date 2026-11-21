@@ -112,7 +112,7 @@ theorem jacquetFiniteLength : ∀ (k : Type) [Field k] [ValuativeRel k] [Topolog
     ext x
     simp [e0]
   rw [← he]
-  refine hasFiniteLength_jacU_reindex e0 ψ π ?_
+  apply hasFiniteLength_jacU_reindex e0 ψ π
   let o : α ≃o Fin (Fintype.card α) := (Fintype.orderIsoFinOfCardEq α rfl).symm
   let β : Fin (Fintype.card n) → ℕ := fun i => (o (blk e0 i) : ℕ)
   have hβ : ∀ i j, β i < β j ↔ blk e0 i < blk e0 j := fun i j => by

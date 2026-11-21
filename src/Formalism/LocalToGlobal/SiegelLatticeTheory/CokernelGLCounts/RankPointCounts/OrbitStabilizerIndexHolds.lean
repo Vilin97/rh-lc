@@ -95,7 +95,7 @@ theorem orbitAction_holds : Formalism.L2.SG.Pf.ZsVolOrb.OrbActE M δ u u' F0 wha
     rw [inv_mul_cancel]
     exact Subgroup.one_mem _
   refine ⟨C ⧸ S, inferInstance, ((1 : C) : C ⧸ S), MulAction.stabilizer_quotient S, ⟨?_⟩⟩
-  exact (Equiv.setCongr (MulAction.orbit_eq_univ C ((1 : C) : C ⧸ S))).trans
+  exact (Set.equivOfEq (MulAction.orbit_eq_univ C ((1 : C) : C ⧸ S))).trans
     ((Equiv.Set.univ _).trans (Equiv.ofBijective φ ⟨hinj, hsurj⟩))
 
 theorem orbitStabilizerIndex_holds : OrbStabE M δ u u' F0 what₂ (CZ M δ u u') :=

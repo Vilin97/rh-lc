@@ -636,7 +636,9 @@ theorem block_zero_continuous {ℓ : ℕ} (hO : PadicCoeff ℓ O) (hR : IsFGTop 
     { toFun := fun x => ρk 0 x a b
       map_add' := fun x y => by simp
       map_smul' := fun c x => by simp }
-  have hf : Continuous f := fgTop_continuous_linearMap hR hO f
+  have hf : Continuous f := by
+    set_option synthInstance.maxHeartbeats 100000 in
+      exact fgTop_continuous_linearMap hR hO f
   exact hf.comp hu
 
 end Cont2

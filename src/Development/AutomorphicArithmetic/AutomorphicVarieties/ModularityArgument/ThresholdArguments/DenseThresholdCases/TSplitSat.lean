@@ -45,7 +45,8 @@ theorem UpperTheory.V.Z.Desc.W.splitSat_alt :
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Multiset.coe_mapAddMonoidHom, Multiset.map_map]
   refine Multiset.map_congr rfl fun x _ => ?_
-  have hq : Ideal.absNorm w.asIdeal = normV w := rfl
+  have hq : Ideal.absNorm w.asIdeal = normV w := by
+    simp [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
   simp only [Function.comp_apply, Units.val_mul, coe_qPow, Fin.revPerm_apply, Fin.val_rev, hq]
   congr 2
   rw [Nat.cast_sub k.2]

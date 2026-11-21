@@ -52,8 +52,7 @@ theorem miso_phiN (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [Is
   have h1 : MIso (GlobalTheory.BZMir.MRep.phiM k ψ A) (GlobalTheory.BZMir.MRep.phiM k ψ B) := by
     obtain ⟨e⟩ := h
     unfold GlobalTheory.BZMir.MRep.phiM GlobalTheory.BZMir.phiMinus
-    generalize_proofs hh
-    exact nonempty_twAct_equiv e _ _ _ hh
+    exact nonempty_twAct_equiv e _ _ _ (levi_stab ψ n)
   obtain ⟨e'⟩ := h1
   exact nonempty_twist_equiv e' _
 

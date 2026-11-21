@@ -14,6 +14,7 @@ namespace GlobalTheory.CompanionTheory.Ar.Small
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi
 open Formalism.L2.Pj (FrPt FrMap Rul evR sOf embK Ix FromTest EvalWD IsNatural TRing)
+open Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar (dualMap)
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} {l : Level H}
 
@@ -118,6 +119,7 @@ def ptF (y : FrPt Xo c S) : Sp S ⟶ Xo.XF c :=
   pullback.lift y.x (spMap (algebraMap c.F S)) (by
     rw [y.x_over, sOf, ← Spec.map_comp, ← CommRingCat.ofHom_comp])
 
+@[reassoc (attr := simp)] theorem ptF_fst (y : FrPt Xo c S) : ptF y ≫ pullback.fst _ _ = y.x :=
   pullback.lift_fst _ _ _
 
 @[reassoc (attr := simp)] theorem ptF_snd (y : FrPt Xo c S) :
@@ -136,6 +138,7 @@ def tanF (y : FrPt Xo c S) (τ : E →+* ℂ) (i : Fin (D.mult τ)) : Sp (DualNu
   Y.m0.cart.1.lift (y.u τ i) (spMap (algebraMap S (DualNumber S)) ≫ ptF y) (by
     rw [(y.tan τ i).1, Category.assoc, ptF_fst])
 
+@[reassoc (attr := simp)] theorem tanF_φ (y : FrPt Xo c S) (τ : E →+* ℂ) (i : Fin (D.mult τ)) :
     tanF Y y τ i ≫ Y.m0.toSABMap.φ = y.u τ i :=
   IsPullback.lift_fst _ _ _ _
 

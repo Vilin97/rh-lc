@@ -100,8 +100,11 @@ theorem chain_kills (hB : IsInvForm π B) : ∀ d, d + 1 ≤ N → Kills ψ π (
 include hUA in
 theorem twisted_kernel_forms_nonvanishing (hUS : USplit k) (hB : IsInvForm π B) :
     ∀ e d, d + e + 1 = N → (∃ v, chain hUD hψc hψ1 π hs B d v v ≠ 0) →
-      ∃ n', n' + d + 1 ≤ N ∧ twKer π (derUnip k N n') (derChar k ψ N n') ≠ ⊤
-  | 0, d, hde, ⟨v, hv⟩ => by
+      ∃ n', n' + d + 1 ≤ N ∧ twKer π (derUnip k N n') (derChar k ψ N n') ≠ ⊤ := by
+  intro e
+  induction e with
+  | zero =>
+    rintro d hde ⟨v, hv⟩
     refine ⟨0, by omega, fun htop => hv ?_⟩
     have hK := chain_kills hUD hψc hψ1 π hs B hB d (by omega)
     have e1 : N - d = 1 := by omega
@@ -110,7 +113,8 @@ theorem twisted_kernel_forms_nonvanishing (hUS : USplit k) (hB : IsInvForm π B)
     have hle : twKer π (derUnip k N 0) (derChar k ψ N 0) ≤ twKer π (derUnip k N 1) (lvlChar k ψ N 1) :=
       twKer_mono π _ _ (le_inf inf_le_left (inf_le_left.trans (unipB_le_colFix_one N))) fun u => rfl
     exact hle (htop ▸ Submodule.mem_top)
-  | e + 1, d, hde, ⟨v, hv⟩ => by
+  | succ e ih =>
+    rintro d hde ⟨v, hv⟩
     have hd2 : d + 2 ≤ N := by omega
     by_cases h0 : ∀ w, chain hUD hψc hψ1 π hs B (d + 1) w w = 0
     · have hA := atom_eq_self hUD hUA hψc hψ1 π hs B hUS hB d hd2 h0
@@ -124,8 +128,7 @@ theorem twisted_kernel_forms_nonvanishing (hUS : USplit k) (hB : IsInvForm π B)
       have := hK v hmem v
       rwa [hA] at this
     · have hnext : ∃ w, chain hUD hψc hψ1 π hs B (d + 1) w w ≠ 0 := not_forall.mp h0
-      obtain ⟨n', hn', hne⟩ :=
-        twisted_kernel_forms_nonvanishing hUS hB e (d + 1) (by omega) hnext
+      obtain ⟨n', hn', hne⟩ := ih (d + 1) (by omega) hnext
       exact ⟨n', by omega, hne⟩
 
 theorem chain_ne_of (hB : IsInvForm π B) (d n' : ℕ) (hd : d + 1 ≤ N) (hn' : n' + d < N)

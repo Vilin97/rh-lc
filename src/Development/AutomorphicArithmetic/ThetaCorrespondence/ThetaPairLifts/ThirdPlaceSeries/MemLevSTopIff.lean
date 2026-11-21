@@ -52,7 +52,7 @@ theorem GlobalTheory.TopLevQ.mem_levS_top_iff_alt : ∀ {B : GlobalTheory.Mem.Ba
     have := (a.Q PP ⟨t, hP⟩).hs
     unfold Ranks.r
     omega
-  have hPg := (_root_.GlobalTheory.PkFrame.pk_frame_places_alt W hW t PP hP 0 (by have := (a.Q PP ⟨t, hP⟩).hs; omega)).2
+  have hPg := (_root_.GlobalTheory.PkFrame.pk_frame_places_alt W hW t PP hP 0 (by change 0 < (I.rec7 l Z).R.m; have := (a.Q PP ⟨t, hP⟩).hs; omega)).2
   have hord := GlobalTheory.TopLevQ.blk_iff e he x.val
   rw [← hr] at hord
   rw [GlobalTheory.TopLevQ.mem_levS_iff]

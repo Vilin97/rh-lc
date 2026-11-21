@@ -113,7 +113,11 @@ theorem hermCoord_mem (S : HermR (Ainf X.B.I.F) X.B.I.cm.sig (D.R.rS + 1 + D.R.r
 def hermCoord : HermR (Ainf X.B.I.F) X.B.I.cm.sig (D.R.rS + 1 + D.R.rS) ≃ₜ Wh X where
   toFun S := ⟨matCoord X (Matrix.of.symm (S : Matrix (Fin (D.R.rS + 1 + D.R.rS)) (Fin (D.R.rS + 1 + D.R.rS)) (Ainf X.B.I.F ⊗[X.B.I.F] X.B.I.E))), hermCoord_mem X S⟩
   invFun w := ⟨Matrix.of ((matCoord X).symm w), w.2⟩
-  left_inv S := by apply Subtype.ext; simp
+  left_inv S := by
+    apply Subtype.ext
+    simp only [Homeomorph.symm_apply_apply]
+    ext i j
+    rfl
   right_inv w := by apply Subtype.ext; simp
   continuous_toFun := ((matCoord X).continuous.comp continuous_subtype_val).subtype_mk _
   continuous_invFun := ((matCoord X).symm.continuous.comp continuous_subtype_val).subtype_mk _
@@ -124,7 +128,10 @@ theorem hermCoord_add (S T : HermR (Ainf X.B.I.F) X.B.I.cm.sig (D.R.rS + 1 + D.R
 
 theorem hermCoord_symm_add (x y : Wh X) :
     (hermCoord X).symm (x + y) = (hermCoord X).symm x + (hermCoord X).symm y := by
-  apply (hermCoord X).injective; rw [hermCoord_add]; simp
+  apply (hermCoord X).injective
+  rw [hermCoord_add X]
+  rw [(hermCoord X).apply_symm_apply, (hermCoord X).apply_symm_apply,
+    (hermCoord X).apply_symm_apply]
 
 end Coord
 

@@ -128,126 +128,127 @@ theorem levi_scalar_one : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) 
         e (om (m, 1) Φ) = c • om₁ (g₁, 1) (e Φ)) →
       ∀ (g₁ : UA σ X₁.J) (m : UA σ X.J), IsLevi H 1 g₁ m → ∀ Φ ∈ schA F (Fin n × Fin d),
         e (om (m, 1) Φ) = om₁ (g₁, 1) (e Φ) := by
-  intro _ F E _ _ _ _ _ σ B n d X W M χX χW om r s r' s' hP n₁ X₁ H j₀ j₁ M₁ om₁ r₁ s₁ hH hP₁ e he _ g₁ m hL Φ hΦ
-  obtain ⟨dd, omd, hD⟩ := exists_isDblOf hP
-  obtain ⟨dd₁, omd₁, hD₁⟩ := exists_isDblOf hP₁
-  obtain ⟨et, e₂, hmaps, he₂m, ⟨φ₂, hφ₂, hφ₂0⟩, hbox, hde, hadm, hnz⟩ :=
-    GlobalTheory.T.seesaw_left_restriction_is_pair F E σ B n d X W M χX χW om r s r' s' hP n₁ X₁ H j₀ j₁ M₁ om₁ r₁ s₁ hH hP₁ e he dd omd dd₁ omd₁ hD hD₁
-  obtain ⟨emb, g₀, hcont, hlev, hlevi, hsieg, hdec⟩ :=
-    GlobalTheory.T.seesaw_left_restriction_global F E σ B n d X W M χX χW om r s r' s' hP n₁ X₁ H j₀ j₁ M₁ om₁ r₁ s₁ hH hP₁
-  have hlam0 := fun gd₁ => GlobalTheory.T.seesaw_left_restriction_levi F E σ B n d X W M χX χW om r s r' s' hP n₁ X₁ H j₀ j₁ M₁ om₁ r₁ s₁ hH hP₁ e he
-    dd omd dd₁ omd₁ hD hD₁ et hmaps hde hadm gd₁ (emb gd₁) (hlev gd₁)
-  choose lam hlam using hlam0
-  obtain ⟨d₁', -, hdd₁, hW₁, hres₁⟩ := hD₁
-  obtain ⟨d', -, hdd, hW, hres⟩ := hD
-  have hS := hW.2.1
-  have hS₁ := hW₁.2.1
-  have hR₁ := hW₁.2.2
-  obtain ⟨l₁, hl₁, hl₁inv, ψ₀, hψ₀, hψ₀0⟩ := GlobalTheory.T.exists_diagonalLagrangian_invariant_form F B.ψ (Fin n₁ × Fin d)
-  have hl₁inv' : ∀ z : Matrix (Fin d) (Fin n₁) (AE F E), ∀ φ ∈ schA F ((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)),
-      l₁ (dd₁.rho B.ψ (z * (diagCols (Fin n₁) : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁) (AE F E))ᵀ) φ) = l₁ φ := by
-    intro z φ hφ
-    rw [rho_diag hdd₁]
-    exact hl₁inv _ _ φ hφ
-  obtain ⟨Φ₁, hΦ₁, hΦ₁0⟩ := hnz l₁ hl₁ hl₁inv' ⟨ψ₀, hψ₀, hψ₀0⟩
-  have hetΦ₁ : et Φ₁ ≠ 0 := fun h0 => hΦ₁0 (by rw [h0, map_zero])
-  have inv₁ : ∀ p φ, omd₁ p⁻¹ (omd₁ p φ) = φ := fun p φ => by
-    rw [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply]
-
-  have huniq : ∀ p (a : ℂ), (∀ Ψ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)), et (omd (emb p) Ψ) = a • omd₁ p (et Ψ)) → a = lam p := by
-    intro p a ha
-    have h1 := (ha Φ₁ hΦ₁).symm.trans (hlam p Φ₁ hΦ₁)
-    have hv : omd₁ p (et Φ₁) ≠ 0 := fun h0 => hetΦ₁ (by rw [← inv₁ p (et Φ₁), h0, map_zero])
-    exact smul_left_injective ℂ hv h1
-  have hmul : ∀ p q, lam (p * q) = lam p * lam q := fun p q => (huniq (p * q) _ fun Ψ hΨ => by
-    rw [map_mul, map_mul, Module.End.mul_apply, hlam p _ (hS.pres _ Ψ hΨ), hlam q Ψ hΨ, map_smul, smul_smul,
-      map_mul, Module.End.mul_apply]).symm
-  have hone : lam 1 = 1 := (huniq 1 1 fun Ψ _ => by simp).symm
-  let cM : UG (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J)) →* ℂ := { toFun := lam, map_one' := hone, map_mul' := hmul }
-  let c := cM.toHomUnits
-  have hcv : ∀ p, ((c p : ℂˣ) : ℂ) = lam p := fun p => rfl
-  obtain ⟨x, hx⟩ : ∃ x, et Φ₁ x ≠ 0 := by
-    by_contra h0
-    push_neg at h0
-    exact hetΦ₁ (funext h0)
-  let Lx : ((((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)) → AF F) → ℂ) →ₗ[ℂ] ℂ := LinearMap.proj x
-  have hLx : Lx ∈ (adeleClass F).adm ((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)) := evalPt_mem_adm (F := F) x
-  have hcont_l : Continuous lam := by
-    refine continuous_iff_continuousAt.2 fun p₀ => ?_
-    have hΨ := hS.pres (emb p₀⁻¹) Φ₁ hΦ₁
-    have hN := (hS.cont _ (hadm _ hLx) _ hΨ).comp hcont
-    have hDc := hS₁.cont _ hLx _ (hmaps _ hΨ)
-    have hrel : ∀ p, (Lx ∘ₗ et) (omd (emb p) (omd (emb p₀⁻¹) Φ₁)) =
-        lam p * Lx (omd₁ p (et (omd (emb p₀⁻¹) Φ₁))) := fun p => by
-      simp only [LinearMap.comp_apply]
-      rw [hlam p _ hΨ]
-      simp
-    have hN0 : (Lx ∘ₗ et) (omd (emb p₀) (omd (emb p₀⁻¹) Φ₁)) ≠ 0 := by
-      rw [← Module.End.mul_apply, ← map_mul, ← map_mul, mul_inv_cancel, map_one, map_one, Module.End.one_apply]
-      exact hx
-    have hD0 : Lx (omd₁ p₀ (et (omd (emb p₀⁻¹) Φ₁))) ≠ 0 := by
-      intro h0
-      apply hN0
-      rw [hrel, h0, mul_zero]
-    refine (hN.continuousAt.div hDc.continuousAt hD0).congr ?_
-    filter_upwards [hDc.continuousAt.eventually_ne hD0] with p hp
-    change (Lx ∘ₗ et) (omd (emb p) (omd (emb p₀⁻¹) Φ₁)) / Lx (omd₁ p (et (omd (emb p₀⁻¹) Φ₁))) = lam p
-    rw [hrel p, mul_div_assoc, div_self hp, mul_one]
-  have hcontc : Continuous c := by
-    refine Units.continuous_iff.2 ⟨hcont_l, ?_⟩
-    have : (fun p => ((c p)⁻¹ : ℂˣ).val) = fun p => (lam p)⁻¹ := funext fun p => by
-      rw [Units.val_inv_eq_inv_val, hcv]
-    rw [this]
-    exact hcont_l.inv₀ fun p => by rw [← hcv]; exact (c p).ne_zero
-
-  have hP' : ∀ (p : UG (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J))) (t : GL (Fin n₁) (AE F E)),
-      (p.1.1 : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (AE F E)) * diagCols (Fin n₁) = diagCols (Fin n₁) * t.1 →
-        c p = 1 := fun p t hpt => by
-    obtain ⟨t', ht', hdet⟩ := hsieg p t hpt
-    have hinv' : ∀ z : Matrix (Fin d) (Fin n) (AE F E), ∀ φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
-        (l₁ ∘ₗ et) (dd.rho B.ψ (z * (g₀.1.1 * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E)))ᵀ) φ) =
-          (l₁ ∘ₗ et) φ := by
+  set_option backward.isDefEq.respectTransparency false in
+    intro _ F E _ _ _ _ _ σ B n d X W M χX χW om r s r' s' hP n₁ X₁ H j₀ j₁ M₁ om₁ r₁ s₁ hH hP₁ e he _ g₁ m hL Φ hΦ
+    obtain ⟨dd, omd, hD⟩ := exists_isDblOf hP
+    obtain ⟨dd₁, omd₁, hD₁⟩ := exists_isDblOf hP₁
+    obtain ⟨et, e₂, hmaps, he₂m, ⟨φ₂, hφ₂, hφ₂0⟩, hbox, hde, hadm, hnz⟩ :=
+      GlobalTheory.T.seesaw_left_restriction_is_pair F E σ B n d X W M χX χW om r s r' s' hP n₁ X₁ H j₀ j₁ M₁ om₁ r₁ s₁ hH hP₁ e he dd omd dd₁ omd₁ hD hD₁
+    obtain ⟨emb, g₀, hcont, hlev, hlevi, hsieg, hdec⟩ :=
+      GlobalTheory.T.seesaw_left_restriction_global F E σ B n d X W M χX χW om r s r' s' hP n₁ X₁ H j₀ j₁ M₁ om₁ r₁ s₁ hH hP₁
+    have hlam0 := fun gd₁ => GlobalTheory.T.seesaw_left_restriction_levi F E σ B n d X W M χX χW om r s r' s' hP n₁ X₁ H j₀ j₁ M₁ om₁ r₁ s₁ hH hP₁ e he
+      dd omd dd₁ omd₁ hD hD₁ et hmaps hde hadm gd₁ (emb gd₁) (hlev gd₁)
+    choose lam hlam using hlam0
+    obtain ⟨d₁', -, hdd₁, hW₁, hres₁⟩ := hD₁
+    obtain ⟨d', -, hdd, hW, hres⟩ := hD
+    have hS := hW.2.1
+    have hS₁ := hW₁.2.1
+    have hR₁ := hW₁.2.2
+    obtain ⟨l₁, hl₁, hl₁inv, ψ₀, hψ₀, hψ₀0⟩ := GlobalTheory.T.exists_diagonalLagrangian_invariant_form F B.ψ (Fin n₁ × Fin d)
+    have hl₁inv' : ∀ z : Matrix (Fin d) (Fin n₁) (AE F E), ∀ φ ∈ schA F ((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)),
+        l₁ (dd₁.rho B.ψ (z * (diagCols (Fin n₁) : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁) (AE F E))ᵀ) φ) = l₁ φ := by
       intro z φ hφ
-      obtain ⟨z₁, u, hu, hz⟩ := hdec z
-      simp only [LinearMap.comp_apply]
-      rw [hz, hde _ u hu φ hφ]
-      exact hl₁inv' z₁ _ (hmaps φ hφ)
-    have e1 := siegel_transfer hW g₀ (l₁ ∘ₗ et) (hadm l₁ hl₁) hinv' (emb p) t' ht' Φ₁ hΦ₁
-    have e2 := hR₁ l₁ hl₁ hl₁inv' p t hpt (et Φ₁) (hmaps _ hΦ₁)
-    simp only [LinearMap.comp_apply] at e1
-    rw [hlam p Φ₁ hΦ₁, map_smul, smul_eq_mul, e2, hdet] at e1
-    have hmod : ∀ u : (AF F)ˣ, ((((adeleClass F).modu u : ℝ) ^ ((Fintype.card (Fin d) : ℝ) / 2) : ℝ) : ℂ) ≠ 0 := by
-      intro u
-      have hu : ((adeleClass F).modu u : ℝ) ≠ 0 :=
-        NNReal.coe_ne_zero.2 (IsUnit.map (adeleClass F).modu (Group.isUnit u)).ne_zero
-      exact Complex.ofReal_ne_zero.2 (Real.rpow_pos_of_pos (lt_of_le_of_ne (NNReal.coe_nonneg _) hu.symm) _).ne'
-    have hK : (χW (Matrix.GeneralLinearGroup.det t) : ℂ) *
-        ((((adeleClass F).modu (Units.map (Algebra.norm (AF F) : AE F E →* AF F) (Matrix.GeneralLinearGroup.det t)) : ℝ) ^
-          ((Fintype.card (Fin d) : ℝ) / 2) : ℝ) : ℂ) * l₁ (et Φ₁) ≠ 0 :=
-      mul_ne_zero (mul_ne_zero (Circle.coe_ne_zero _) (hmod _)) hΦ₁0
-    refine Units.ext ?_
-    rw [hcv, Units.val_one]
-    exact mul_right_cancel₀ hK (by rw [one_mul]; exact e1)
-  have hσ : IsCMExt F E σ := hP.base.cm
-  have hJ : ∀ i j, σ (X₁.J j i) = (((1 : ℤˣ) : ℤ) : E) * X₁.J i j := fun i j => by simp [hP₁.herm.herm i j]
-  have hdetJ : X₁.J.det ≠ 0 := det_ne_of_sig B X₁.J hP₁.herm.sig
-  have hc1 := GlobalTheory.T.doubledUnitary_character_trivial_of_siegel F E σ hσ n₁ X₁.J 1 hJ hdetJ c hcontc hP'
-  have hlam1 : ∀ p, lam p = 1 := fun p => by rw [← hcv, hc1]; rfl
+      rw [rho_diag hdd₁]
+      exact hl₁inv _ _ φ hφ
+    obtain ⟨Φ₁, hΦ₁, hΦ₁0⟩ := hnz l₁ hl₁ hl₁inv' ⟨ψ₀, hψ₀, hψ₀0⟩
+    have hetΦ₁ : et Φ₁ ≠ 0 := fun h0 => hΦ₁0 (by rw [h0, map_zero])
+    have inv₁ : ∀ p φ, omd₁ p⁻¹ (omd₁ p φ) = φ := fun p φ => by
+      rw [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply]
 
-  obtain ⟨gd₁, hgd₁⟩ := GlobalTheory.T.exists_unitaryDoubled_blockDiag_one (AF F) (AE F E) (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (Fin n₁) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J) g₁
-  have hmd := hlevi g₁ m hL gd₁ hgd₁
-  have hsp := hP.weil.isUSplitting
-  have e3 := hlam gd₁ (boxFun Φ φ₂) (GlobalTheory.T.productFunctionOnSumCoords_mem_adelicSchwartzSpace F _ _ Φ hΦ φ₂ hφ₂)
-  rw [hres m (emb gd₁) hmd Φ hΦ φ₂ hφ₂, hbox _ (hsp.pres _ Φ hΦ) φ₂ hφ₂, hbox Φ hΦ φ₂ hφ₂,
-    hres₁ g₁ gd₁ hgd₁ (e Φ) (he.maps Φ hΦ) (e₂ φ₂) (he₂m φ₂ hφ₂), hlam1, one_smul] at e3
-  obtain ⟨y, hy⟩ : ∃ y, e₂ φ₂ y ≠ 0 := by
-    by_contra h0
-    push_neg at h0
-    exact hφ₂0 (funext h0)
-  funext z
-  have := congrFun e3 (Sum.elim z y)
-  simp only [boxFun, Sum.elim_comp_inl, Sum.elim_comp_inr] at this
-  exact mul_right_cancel₀ hy this
+    have huniq : ∀ p (a : ℂ), (∀ Ψ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)), et (omd (emb p) Ψ) = a • omd₁ p (et Ψ)) → a = lam p := by
+      intro p a ha
+      have h1 := (ha Φ₁ hΦ₁).symm.trans (hlam p Φ₁ hΦ₁)
+      have hv : omd₁ p (et Φ₁) ≠ 0 := fun h0 => hetΦ₁ (by rw [← inv₁ p (et Φ₁), h0, map_zero])
+      exact smul_left_injective ℂ hv h1
+    have hmul : ∀ p q, lam (p * q) = lam p * lam q := fun p q => (huniq (p * q) _ fun Ψ hΨ => by
+      with_unfolding_all rw [map_mul emb, map_mul omd, Module.End.mul_apply, hlam p _ (hS.pres _ Ψ hΨ), hlam q Ψ hΨ, map_smul, smul_smul,
+        map_mul omd₁, Module.End.mul_apply]).symm
+    have hone : lam 1 = 1 := (huniq 1 1 fun Ψ _ => by simp).symm
+    let cM : UG (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J)) →* ℂ := { toFun := lam, map_one' := hone, map_mul' := hmul }
+    let c := cM.toHomUnits
+    have hcv : ∀ p, ((c p : ℂˣ) : ℂ) = lam p := fun p => rfl
+    obtain ⟨x, hx⟩ : ∃ x, et Φ₁ x ≠ 0 := by
+      by_contra h0
+      push_neg at h0
+      exact hetΦ₁ (funext h0)
+    let Lx : ((((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)) → AF F) → ℂ) →ₗ[ℂ] ℂ := LinearMap.proj x
+    have hLx : Lx ∈ (adeleClass F).adm ((Fin n₁ × Fin d) ⊕ (Fin n₁ × Fin d)) := evalPt_mem_adm (F := F) x
+    have hcont_l : Continuous lam := by
+      refine continuous_iff_continuousAt.2 fun p₀ => ?_
+      have hΨ := hS.pres (emb p₀⁻¹) Φ₁ hΦ₁
+      have hN := (hS.cont _ (hadm _ hLx) _ hΨ).comp hcont
+      have hDc := hS₁.cont _ hLx _ (hmaps _ hΨ)
+      have hrel : ∀ p, (Lx ∘ₗ et) (omd (emb p) (omd (emb p₀⁻¹) Φ₁)) =
+          lam p * Lx (omd₁ p (et (omd (emb p₀⁻¹) Φ₁))) := fun p => by
+        simp only [LinearMap.comp_apply]
+        rw [hlam p _ hΨ]
+        simp
+      have hN0 : (Lx ∘ₗ et) (omd (emb p₀) (omd (emb p₀⁻¹) Φ₁)) ≠ 0 := by
+        with_unfolding_all rw [← Module.End.mul_apply, ← map_mul omd, ← map_mul emb, mul_inv_cancel, map_one, map_one, Module.End.one_apply]
+        exact hx
+      have hD0 : Lx (omd₁ p₀ (et (omd (emb p₀⁻¹) Φ₁))) ≠ 0 := by
+        intro h0
+        apply hN0
+        rw [hrel p₀, h0, mul_zero]
+      refine (hN.continuousAt.div hDc.continuousAt hD0).congr ?_
+      filter_upwards [hDc.continuousAt.eventually_ne hD0] with p hp
+      change (Lx ∘ₗ et) (omd (emb p) (omd (emb p₀⁻¹) Φ₁)) / Lx (omd₁ p (et (omd (emb p₀⁻¹) Φ₁))) = lam p
+      rw [hrel p, mul_div_assoc, div_self hp, mul_one]
+    have hcontc : Continuous c := by
+      refine Units.continuous_iff.2 ⟨hcont_l, ?_⟩
+      have : (fun p => ((c p)⁻¹ : ℂˣ).val) = fun p => (lam p)⁻¹ := funext fun p => by
+        rw [Units.val_inv_eq_inv_val, hcv]
+      rw [this]
+      exact hcont_l.inv₀ fun p => by rw [← hcv]; exact (c p).ne_zero
+
+    have hP' : ∀ (p : UG (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J))) (t : GL (Fin n₁) (AE F E)),
+        (p.1.1 : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (AE F E)) * diagCols (Fin n₁) = diagCols (Fin n₁) * t.1 →
+          c p = 1 := fun p t hpt => by
+      obtain ⟨t', ht', hdet⟩ := hsieg p t hpt
+      have hinv' : ∀ z : Matrix (Fin d) (Fin n) (AE F E), ∀ φ ∈ schA F ((Fin n × Fin d) ⊕ (Fin n × Fin d)),
+          (l₁ ∘ₗ et) (dd.rho B.ψ (z * (g₀.1.1 * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E)))ᵀ) φ) =
+            (l₁ ∘ₗ et) φ := by
+        intro z φ hφ
+        obtain ⟨z₁, u, hu, hz⟩ := hdec z
+        simp only [LinearMap.comp_apply]
+        rw [hz, hde _ u hu φ hφ]
+        exact hl₁inv' z₁ _ (hmaps φ hφ)
+      have e1 := siegel_transfer hW g₀ (l₁ ∘ₗ et) (hadm l₁ hl₁) hinv' (emb p) t' ht' Φ₁ hΦ₁
+      have e2 := hR₁ l₁ hl₁ hl₁inv' p t hpt (et Φ₁) (hmaps _ hΦ₁)
+      simp only [LinearMap.comp_apply] at e1
+      rw [hlam p Φ₁ hΦ₁, map_smul, smul_eq_mul, e2, hdet] at e1
+      have hmod : ∀ u : (AF F)ˣ, ((((adeleClass F).modu u : ℝ) ^ ((Fintype.card (Fin d) : ℝ) / 2) : ℝ) : ℂ) ≠ 0 := by
+        intro u
+        have hu : ((adeleClass F).modu u : ℝ) ≠ 0 :=
+          NNReal.coe_ne_zero.2 (IsUnit.map (adeleClass F).modu (Group.isUnit u)).ne_zero
+        exact Complex.ofReal_ne_zero.2 (Real.rpow_pos_of_pos (lt_of_le_of_ne (NNReal.coe_nonneg _) hu.symm) _).ne'
+      have hK : (χW (Matrix.GeneralLinearGroup.det t) : ℂ) *
+          ((((adeleClass F).modu (Units.map (Algebra.norm (AF F) : AE F E →* AF F) (Matrix.GeneralLinearGroup.det t)) : ℝ) ^
+            ((Fintype.card (Fin d) : ℝ) / 2) : ℝ) : ℂ) * l₁ (et Φ₁) ≠ 0 :=
+        mul_ne_zero (mul_ne_zero (Circle.coe_ne_zero _) (hmod _)) hΦ₁0
+      refine Units.ext ?_
+      rw [hcv, Units.val_one]
+      exact mul_right_cancel₀ hK (by rw [one_mul]; exact e1)
+    have hσ : IsCMExt F E σ := hP.base.cm
+    have hJ : ∀ i j, σ (X₁.J j i) = (((1 : ℤˣ) : ℤ) : E) * X₁.J i j := fun i j => by simp [hP₁.herm.herm i j]
+    have hdetJ : X₁.J.det ≠ 0 := det_ne_of_sig B X₁.J hP₁.herm.sig
+    have hc1 := GlobalTheory.T.doubledUnitary_character_trivial_of_siegel F E σ hσ n₁ X₁.J 1 hJ hdetJ c hcontc hP'
+    have hlam1 : ∀ p, lam p = 1 := fun p => by rw [← hcv, hc1]; rfl
+
+    obtain ⟨gd₁, hgd₁⟩ := GlobalTheory.T.exists_unitaryDoubled_blockDiag_one (AF F) (AE F E) (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (Fin n₁) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J) g₁
+    have hmd := hlevi g₁ m hL gd₁ hgd₁
+    have hsp := hP.weil.isUSplitting
+    have e3 := hlam gd₁ (boxFun Φ φ₂) (GlobalTheory.T.productFunctionOnSumCoords_mem_adelicSchwartzSpace F _ _ Φ hΦ φ₂ hφ₂)
+    rw [hres m (emb gd₁) hmd Φ hΦ φ₂ hφ₂, hbox _ (hsp.pres _ Φ hΦ) φ₂ hφ₂, hbox Φ hΦ φ₂ hφ₂,
+      hres₁ g₁ gd₁ hgd₁ (e Φ) (he.maps Φ hΦ) (e₂ φ₂) (he₂m φ₂ hφ₂), hlam1, one_smul] at e3
+    obtain ⟨y, hy⟩ : ∃ y, e₂ φ₂ y ≠ 0 := by
+      by_contra h0
+      push_neg at h0
+      exact hφ₂0 (funext h0)
+    funext z
+    have := congrFun e3 (Sum.elim z y)
+    simp only [boxFun, Sum.elim_comp_inl, Sum.elim_comp_inr] at this
+    exact mul_right_cancel₀ hy this
 
 end GlobalTheory.MixXChar
 

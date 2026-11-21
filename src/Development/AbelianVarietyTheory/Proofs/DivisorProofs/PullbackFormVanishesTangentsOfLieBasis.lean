@@ -75,14 +75,17 @@ theorem tanVal_pullForm_baseChange {σ : R →+* R'} {A : Over (Sp R)} {B : Over
 
 theorem tanVal_list_prod_eq_zero {A : Over (Sp R)} [GrpObj A] (f : Form (A.hom ≫ 𝟙 _)) :
     ∀ l : List (epsR R ⟶ A), (∀ u ∈ l, IsTangent u ∧ tanVal u f = 0) →
-      IsTangent l.prod ∧ tanVal l.prod f = 0
-  | [], _ => by
+      IsTangent l.prod ∧ tanVal l.prod f = 0 := by
+  intro l
+  induction l with
+  | nil =>
+    intro _
     refine ⟨?_, by rw [List.prod_nil]; exact tanVal_one f⟩
     rw [List.prod_nil, GrpTangent.isTangent_iff, MonObj.comp_one]
-  | u :: l, h => by
-    have hu_mem : u ∈ u :: l := List.mem_cons_self
-    obtain ⟨hu, hu0⟩ := h u hu_mem
-    obtain ⟨hl, hl0⟩ := tanVal_list_prod_eq_zero f l fun w hw => h w (List.mem_cons_of_mem _ hw)
+  | cons u l ih =>
+    intro h
+    obtain ⟨hu, hu0⟩ := h u List.mem_cons_self
+    obtain ⟨hl, hl0⟩ := ih fun w hw => h w (List.mem_cons_of_mem _ hw)
     rw [List.prod_cons]
     refine ⟨?_, by rw [tanVal_mul hu hl, hu0, hl0, add_zero]⟩
     rw [GrpTangent.isTangent_iff] at hu hl ⊢

@@ -42,16 +42,16 @@ theorem exists_fixed_lift {L W W' : Type} [Group L] [AddCommGroup W] [Module ℂ
   refine ⟨((Fintype.card (L ⧸ S) : ℕ) : ℂ)⁻¹ • ∑ x, φ x, ?_, fun l => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_smul, map_sum]
-    have : ∀ x, f (φ x) = f w := fun x => by
-      show f (ρ x.out w) = f w
-      rw [hf, hw]
-    simp only [this, Finset.sum_const, Finset.card_univ]
-    rw [← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hc, one_smul]
+      have : ∀ x, f (φ x) = f w := fun x => by
+        show f (ρ x.out w) = f w
+        rw [hf, hw]
+      simp only [this, Finset.sum_const, Finset.card_univ]
+      rw [← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hc, one_smul]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_smul, map_sum]
-    simp only [key]
-    congr 1
-    exact Equiv.sum_comp (MulAction.toPerm l) φ
+      simp only [key]
+      congr 1
+      exact Equiv.sum_comp (MulAction.toPerm l) φ
 
 section General
 
@@ -208,7 +208,7 @@ theorem cInd_lift (H : Subgroup G) (hH : IsClosed (H : Set G))
     apply hB0
     rintro ⟨a, x, hx, e⟩
     apply hne
-    rw [← DoubleCoset.out_eq' H K d]
+    rw [← DoubleCoset.out_eq' d]
     exact ((@DoubleCoset.eq _ _ H K _ _).2 ⟨a, a.2, x, hx, e⟩).symm
   refine ⟨∑ d ∈ T, B (Quotient.out d), fun g => ?_⟩
   let ev : cIndSpace H ρ →ₗ[ℂ] W :=
@@ -218,7 +218,7 @@ theorem cInd_lift (H : Subgroup G) (hH : IsClosed (H : Set G))
   rw [hsum]
   by_cases hg : DoubleCoset.mk H K g ∈ T
   · rw [Finset.sum_eq_single_of_mem _ hg (fun d _ hd => hoff d g (Ne.symm hd))]
-    obtain ⟨a, ha, x, hx, e⟩ := (@DoubleCoset.eq _ _ H K _ _).1 (DoubleCoset.out_eq' H K (DoubleCoset.mk H K g))
+    obtain ⟨a, ha, x, hx, e⟩ := (@DoubleCoset.eq _ _ H K _ _).1 (DoubleCoset.out_eq' (DoubleCoset.mk H K g))
     have e' : g = ((⟨a, ha⟩ : H) : G) * Quotient.out (DoubleCoset.mk H K g) * x := e
     generalize Quotient.out (DoubleCoset.mk H K g) = c at e'
     rw [e', hB1 _ _ _ hx, hf, hw1, hKinv _ _ hx, hFeq]

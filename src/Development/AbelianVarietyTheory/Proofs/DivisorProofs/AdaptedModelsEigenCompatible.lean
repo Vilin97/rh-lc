@@ -67,7 +67,9 @@ theorem exists_isEv_iso : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Nu
     simp only [LinearMap.smul_apply, LinearMap.comp_apply, LinearMap.funLeft_apply, Function.comp_apply, Pi.smul_apply,
       smul_eq_mul]
     rw [hheis _ Φ hΦ]
-    simp only [Darboux.rho, schr, hι, extend_dot hj, ← extend_add hj, Pi.smul_apply, smul_eq_mul,
+    have hz := hι z
+    change co.e (incM F H.ι * z) = _ at hz
+    simp only [Darboux.rho, schr, hz, extend_dot hj, ← extend_add hj, Pi.smul_apply, smul_eq_mul,
       LinearMap.smul_apply, LinearMap.comp_apply, LinearMap.funLeft_apply, Function.comp_apply]
     ring
   · intro u hu Φ hΦ

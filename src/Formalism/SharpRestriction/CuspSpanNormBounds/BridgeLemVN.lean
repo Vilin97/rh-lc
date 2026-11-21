@@ -46,7 +46,23 @@ theorem card_classReps_le (hK : IsCMUnram K) (h : K →ₗ⋆[K] K →ₗ[K] K) 
     (s : Finset (Submodule (𝓞 K) K)) (hs : IsClassReps h (1 : Submodule (𝓞 K) K) s) :
     s.card ≤ classNumber K * 2 ^ fDeg K := by
   classical
-  have hlat : ∀ M : s, Submodule.IsLattice K (M : Submodule (𝓞 K) K) := fun M => (hs.1 M M.2).1
+  have hlat : ∀ M : s, Submodule.IsFullLattice K (M : Submodule (𝓞 K) K) := by
+    intro M
+    have := (hs.1 M M.2).1
+    obtain ⟨p, hp, -⟩ := Ideal.exists_le_maximal (⊥ : Ideal (𝓞 K)) bot_ne_top
+    obtain ⟨z, hz, hzloc⟩ := exists_local h h1 (hs.1 M M.2) hp
+    have hz0 : z ≠ 0 := by
+      intro e
+      simp [e] at hz
+    have hzm : z ∈ loc (K := K) p (M : Submodule (𝓞 K) K) :=
+      (hzloc z).2 ⟨1, one_mem_locR p, one_mul z |>.symm⟩
+    obtain ⟨r, hr, hrz⟩ := hzm
+    have hr0 : algebraMap (𝓞 K) K r ≠ 0 := by
+      intro e
+      have : r = 0 := (FaithfulSMul.algebraMap_injective (𝓞 K) K) (by simpa using e)
+      subst r
+      exact (hcompl_le_primeCompl hp hr) (Ideal.zero_mem p)
+    exact ⟨span_eq_top_of_ne_zero hrz (by simpa [Algebra.smul_def] using mul_ne_zero hr0 hz0)⟩
   let cl : s → ClassGroup (𝓞 K) := fun M => ClassGroup.mk K (fracU (hlat M))
   let base : s → s := fun M => Classical.choose (⟨M, rfl⟩ : ∃ B : s, cl B = cl M)
   have hbase : ∀ M, cl (base M) = cl M := fun M =>

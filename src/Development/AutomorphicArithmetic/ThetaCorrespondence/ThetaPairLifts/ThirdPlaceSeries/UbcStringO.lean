@@ -26,6 +26,9 @@ theorem GlobalTheory.UbcString.ubc_string_o_alt : GlobalTheory.Published.Automor
   obtain ⟨-, Sig, ⟨P', hP', hB⟩, hgood⟩ := hx
   obtain ⟨π, rfl⟩ := GlobalTheory.T.goodLabels_rank_part_parameter_cuspidal D htie i x Sig ⟨P', hP', hB⟩ hgood
   refine ⟨P', hP', fun w hw => ?_⟩
+  have hq : normV w = Ideal.absNorm w.asIdeal := by
+    rw [Ideal.absNorm_apply, Submodule.cardQuot_apply]
+    rfl
   have hns := GlobalTheory.UbcString.not_isSplitPl_of_inert D.host w hw
   obtain ⟨hunr, hfe⟩ := hB.2.2.2.2.1 w hns
   have e1 : spehLoc D.nd D.naut ⟨D.R.r, D.naut.tw π D.naut.etaTinv, 1⟩ w =
@@ -60,7 +63,6 @@ theorem GlobalTheory.UbcString.ubc_string_o_alt : GlobalTheory.Published.Automor
     rw [List.map_map, Function.comp_def, GlobalTheory.UbcString.sum_singletons (fun a : ℕ => c * ((normV w : ℕ) : ℂ) ^ ((((D.R.t : ℝ) - 1) / 2 - (a : ℝ) : ℝ) : ℂ)), GlobalTheory.DownLift.str, Multiset.range, Multiset.map_coe]
     congr 1
     refine List.map_congr_left fun k _ => ?_
-    have hq : ((normV w : ℕ) : ℂ) = ((Ideal.absNorm w.asIdeal : ℕ) : ℂ) := rfl
     rw [hq]
     push_cast
     ring_nf
@@ -76,6 +78,7 @@ theorem GlobalTheory.UbcString.ubc_string_o_alt : GlobalTheory.Published.Automor
   have hpa := GlobalTheory.LocalInv.part_alg D.nd D.naut hη (GlobalTheory.LocalInv.weightRegular_definite D) i P' _ hB
     ⟨D.R.r, D.naut.tw π D.naut.etaTinv, 1⟩ (by simp [twistIso]) (GlobalTheory.LocalInv.r_odd D.R) odd_one
   intro α hα
+  rw [← hq]
   exact ((_root_.UpperTheory.GalN.tempo' h7 D.R.r _ (GlobalTheory.LocalInv.r_odd D.R).pos hpa.1 hpa.2 w).part_tw hAut ha α hα).1.le_rpow
     (UpperTheory.GalN.one_lt_q w) (UpperTheory.GalN.half_le_r D.R)
 theorem GlobalTheory.EigStrInert.str_inert_tyz : _root_.GlobalTheory.EigStrInert.strInert_tyz := by

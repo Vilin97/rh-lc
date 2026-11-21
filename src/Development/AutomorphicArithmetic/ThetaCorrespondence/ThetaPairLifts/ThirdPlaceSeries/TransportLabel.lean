@@ -28,7 +28,7 @@ theorem is_split_of_hk3_good_transport_label : GlobalTheory.Published.Automorphi
     rw [Formalism.IndefR.principalLevelFrame.pre, dite_eq_left h]
     exact h.choose_spec
   obtain ⟨Ds, d1, d2, d3, d4⟩ := coset_transport (hA.PV j).ψ (GlobalTheory.InertSph.Gv D.host.E D.R.nV sp.v)
-    (Umax D.host.E D.R.nV) (P.M.loc i).J _ α (GlobalTheory.Hk3.rep (Formalism.IndefR.Links.Vc D j) sp.w d)
+    (Umax D.host.E D.R.nV) (P.M.loc i).J {k | k ∈ Formalism.L2.Theta.KsphC (Formalism.IndefR.Links.Vc D j) ∅ ∧ Formalism.IndefR.Mult.SuppF (Formalism.IndefR.Links.Vc D j) f k} α (GlobalTheory.Hk3.rep (Formalism.IndefR.Links.Vc D j) sp.w d)
     (fun x => and_congr ((hA.stdV j).2 x).symm (hsupp x)) (fun k hk => (hA.PV j).onto k hk.1.1)
     (fun x hx => (hJ x hx).1) (Formalism.IndefR.principalLevelFrame.pre (hA.PV j))
     (fun γ hγ => ⟨hpre γ hγ, (hsupp _).1 (by rw [hpre γ hγ]; exact hRs γ hγ)⟩) (fun γ hγ => (hR1 γ hγ).2) hR2

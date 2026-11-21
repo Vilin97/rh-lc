@@ -124,10 +124,11 @@ def nbhd : Set (Mir k n) :=
     Multiplicative.ofAdd (mvec x) ∈ polyBall (k := k) n s}
 
 theorem isOpen_nbhd (hρ : IsSmooth ρ) : IsOpen (nbhd ρ s e) := by
+  unfold nbhd
   have hp := GlobalTheory.CompanionTheory.BZMirFun.continuous_mirProj k n
-  refine (isOpen_intM.preimage hp).inter ((isOpen_intM.preimage (continuous_inv.comp hp)).inter
-    (((hρ e).preimage (continuous_lv.comp hp)).inter ?_))
-  exact (isOpen_polyBall n s).preimage (continuous_ofAdd.comp continuous_mvec)
+  exact (isOpen_intM.preimage hp).inter ((isOpen_intM.preimage (continuous_inv.comp hp)).inter
+    (((hρ e).preimage (continuous_lv.comp hp)).inter
+      ((isOpen_polyBall n s).preimage (continuous_ofAdd.comp continuous_mvec))))
 
 theorem one_mem_nbhd : (1 : Mir k n) ∈ nbhd ρ s e := by
   have hm : mvec (1 : Mir k n) = 0 := by

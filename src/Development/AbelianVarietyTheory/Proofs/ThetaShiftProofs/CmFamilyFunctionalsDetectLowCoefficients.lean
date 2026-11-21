@@ -27,7 +27,7 @@ theorem lowExponentBound_pos_below_last_index (D : D7) {j : ℕ} (CR : ℝ) {Tt 
     omega
   have hf : 0 < D.R.f := by
     unfold Ranks.f Ranks.n
-    positivity
+    exact Nat.mul_pos (by decide) D.R.ord_pos
   have hd : 0 < WeightFamilies.dP D j := by
     unfold WeightFamilies.dP
     positivity

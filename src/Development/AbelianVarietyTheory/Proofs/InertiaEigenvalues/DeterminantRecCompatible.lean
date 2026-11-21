@@ -51,7 +51,7 @@ theorem lawsLit_det : StandardCosocleGL → ∀ (E Ω : Type) [Field E] [NumberF
   refine List.map_congr_left fun j _ => ?_
   simp only [Function.comp_apply]
   show ((rc ((IrrGL.ofChar χ hχ).nu ((((t : ℝ) - 1) / 2 - j : ℝ) : ℂ))).lpTw ((((1 : ℕ) : ℝ) - 1) / 2)).lpChar
-      (WD.lpSp h 1) = _
+      (WD.lpSp (h := h) 1) = _
   have h0 : ((((1 : ℕ) : ℝ) - 1) / 2) = 0 := by norm_num
   rw [h0, (GlobalTheory.T.weilDeligne_charpoly_twist_special E Ω A w h _).1, H.nu_eq_lpTw]
 

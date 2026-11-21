@@ -197,7 +197,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E.sideX :
     rw [← LocallyConstant.coe_charFn ℂ (⟨Subgroup.isClosed_of_isOpen _ hUo, hUo⟩ : IsClopen (𝔢.U : Set (FA E n)))]
     exact LocallyConstant.isLocallyConstant _
   have hcs : HasCompactSupport ((𝔢.U : Set (FA E n)).indicator (1 : FA E n → ℂ)) :=
-    HasCompactSupport.intro hUc fun x hx => Set.indicator_of_notMem hx _
+    HasCompactSupport.intro' hUc (Subgroup.isClosed_of_isOpen _ hUo) fun x hx => Set.indicator_of_notMem hx _
   let φ : TF E n := ⟨⟨(𝔢.U : Set (FA E n)).indicator (1 : FA E n → ℂ), hlc.continuous⟩, hcs⟩
   have hφx : ∀ x, φ x = (𝔢.U : Set (FA E n)).indicator 1 x := fun _ => rfl
   have hoff : ∀ v ∉ insert q L.S, (L.UE v : Set (GL (Fin n) (CompletionsOver E v))) = unitSet E n v := fun v hv =>

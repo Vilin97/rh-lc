@@ -20,8 +20,12 @@ variable {k r : ℕ} {Wp : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ 
 theorem isHaarOn_smul {U : Set (Mat k r)} {μ : Measure (Mt k r)} (h : IsHaarOn U μ) {c : ℝ≥0} (hc : 0 < c) :
     IsHaarOn U ((c : ℝ≥0∞) • μ) where
   conc := by simp [h.conc]
-  left a ha := by rw [Measure.map_smul, h.left a ha]
-  right a ha := by rw [Measure.map_smul, h.right a ha]
+  left a ha := by
+    rw [Measure.map_smul, h.left a ha]
+    exact (by unfold lmulM; fun_prop : Continuous (lmulM a : Mt k r → Mt k r)).measurable.aemeasurable
+  right a ha := by
+    rw [Measure.map_smul, h.right a ha]
+    exact (by unfold rmulF; fun_prop : Continuous (rmulF a : Mt k r → Mt k r)).measurable.aemeasurable
   finite_compact K hK := ENNReal.mul_lt_top ENNReal.coe_lt_top (h.finite_compact K hK)
   ne_zero := by
     intro h0

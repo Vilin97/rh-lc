@@ -136,6 +136,8 @@ theorem exists_isEv_mixedX : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Typ
     simp only [LinearMap.smul_apply, LinearMap.comp_apply, LinearMap.funLeft_apply, Function.comp_apply, Pi.smul_apply,
       smul_eq_mul]
     rw [hheis _ Φ hΦ]
+    change ∀ z, co.e (incM F H.ι * z) =
+      (Function.extend j (M₁.co.e z).1 0, Function.extend j (M₁.co.e z).2 0) at hι
     simp only [Darboux.rho, schr, hι, extend_dot hj, ← extend_add hj, Pi.smul_apply, smul_eq_mul,
       LinearMap.smul_apply, LinearMap.comp_apply, LinearMap.funLeft_apply, Function.comp_apply]
     ring

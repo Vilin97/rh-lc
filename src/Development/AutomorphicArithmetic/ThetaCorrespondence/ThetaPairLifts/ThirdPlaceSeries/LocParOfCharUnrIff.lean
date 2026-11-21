@@ -79,7 +79,8 @@ theorem e_locG_eq_rcAt_ofDet_of_isComp : GlobalTheory.Published.AutomorphicForms
     have u1 := (P.chr.unr_iff π v).1 hv
     have u2 := (unr' v).1 hv
     refine ⟨fun x hx => ?_, ?_⟩
-    · rw [HChar.loc_mul, HChar.loc_inv, u1 x hx, u2 x hx, inv_one, mul_one]
+    · change χ'.loc v x * (χ.loc v x)⁻¹ = 1
+      rw [u2 x hx, u1 x hx, inv_one, mul_one]
     · have hf := P.chr.frob π v u1
       have hf' : D.naut.frobEig (D.naut.locG π v) = {(((χ'.val v)⁻¹ : ℂˣ) : ℂ)} := by
         rw [P.T.frobEig _ _ hv, hloc v]; exact _root_.GlobalTheory.RankOneComp.frobEig_locParT_ofChar_of_unrAt hL χ' _ u2

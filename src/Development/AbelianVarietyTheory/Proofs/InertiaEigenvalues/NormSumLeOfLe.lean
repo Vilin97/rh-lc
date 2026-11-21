@@ -217,7 +217,7 @@ theorem mem_span_locBall
         exact hsum' z)
     have hco := congrArg (fun t => (B.baseChange F').repr t s0) heq
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, Finsupp.coe_finset_sum, Finset.sum_apply, Module.Basis.baseChange_repr_tmul,
+      simp only [map_sum, Finset.sum_apply', Module.Basis.baseChange_repr_tmul,
       Module.Basis.repr_self, Finsupp.single_apply, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq',
       Finset.mem_univ, if_true] at hco
     have h1 : ‖φ' (a' s0 * (algebraMap S.Ks F' ϖ)⁻¹)‖ ≤ 1 := by

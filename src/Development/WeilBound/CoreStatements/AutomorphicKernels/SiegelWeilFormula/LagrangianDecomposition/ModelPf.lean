@@ -28,6 +28,7 @@ theorem tof_adapted {m n : ℕ} {A : Spc F E m} {Y : Spc F E n} {b : GL (Fin n �
     Tof ψ dd (ev0 _) b Φ X = Φ (crdB bs X) := by
   have e := had 0 X
   rw [Matrix.zero_mul, zero_add] at e
+  change dd.e (X * (b.1.toCols₂.map (inclR (AF F)))ᵀ) = _ at e
   simp only [Tof, ev0, LinearMap.coe_mk, AddHom.coe_mk, Darboux.rho, schr, e, Bf_zero_left]
   simp
 

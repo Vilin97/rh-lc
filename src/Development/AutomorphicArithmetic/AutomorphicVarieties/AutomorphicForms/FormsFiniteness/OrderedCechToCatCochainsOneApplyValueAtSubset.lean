@@ -23,7 +23,7 @@ def inc : Matrix (Fin n) (Fin a) R := Matrix.of fun i k => if i = e k then 1 els
 
 theorem inc_tr_mul : (inc e R)ᵀ * inc e R = 1 := by
   ext k l
-  simp [inc, Matrix.mul_apply, Matrix.one_apply, eq_comm]
+  simp [inc, Matrix.mul_apply, Matrix.one_apply, Function.swap, eq_comm]
 
 variable {R}
 
@@ -153,7 +153,6 @@ theorem gen_mem (D : Idem R ι) (l : Matrix (Fin n) (Fin n) R →ₗ[ℝ] A) (τ
     (h : ∀ x, l (Matrix.single i j x) ∈ P) : gen D l τ i j ∈ P := by
   unfold gen
   induction D.e τ with
-  | zero => rw [map_zero]; exact P.zero_mem
   | tmul c x => rw [unitMap_tmul]; exact P.smul_mem c (h x)
   | add x y hx hy => rw [map_add (f := _)]; exact P.add_mem hx hy
 
@@ -164,7 +163,6 @@ theorem gen_inter {m : ℕ} {B : Type} [Ring B] [Algebra ℂ B] [Algebra ℝ B] 
     f (gen D l τ i j) = f' (gen D l' τ i' j') := by
   unfold gen
   induction D.e τ with
-  | zero => simp only [map_zero]
   | tmul c x => simp only [unitMap_tmul, map_smul, h]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 

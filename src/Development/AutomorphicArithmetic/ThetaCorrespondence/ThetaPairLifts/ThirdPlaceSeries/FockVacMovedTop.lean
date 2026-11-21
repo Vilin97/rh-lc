@@ -34,7 +34,8 @@ theorem fock_vac_moved_top_alt : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies 
   have sdY : IsSelfDualC (Yc D (j + 1)) ((_root_.GlobalTheory.Fam.pk_z W).ΛY (j + 1)) :=
     GlobalTheory.SDFrameLattice.isSelfDualC_of_isSDFrame D _ _ _ _ (hLev.βY (j + 1) (by omega))
   have sdX : IsSelfDualC D.sp.X' (_root_.GlobalTheory.Fam.pk_z W).ΛX := GlobalTheory.SDFrameLattice.isSelfDualC_of_isSDFrame D _ _ _ _ hLev.βX
-  have key := GlobalTheory.StepMove.gen (weil_omT (_root_.GlobalTheory.Fam.pk_z W) W.Q.charW.base.chain.ωX W.P.A3.A.μ0 j h) sdY hM' sdX hLT hg hgT (hm _) (hmT _)
+  have key := GlobalTheory.StepMove.gen (θ := (_root_.GlobalTheory.Fam.pk_z W).θ)
+    (sS := cart ((_root_.GlobalTheory.Fam.pk_z W).MY (j + 1))) (sT := cart (_root_.GlobalTheory.Fam.pk_z W).MX) (weil_omT (_root_.GlobalTheory.Fam.pk_z W) W.Q.charW.base.chain.ωX W.P.A3.A.μ0 j h) sdY hM' sdX hLT hg hgT (hm _) (hmT _)
     (onb ((_root_.GlobalTheory.Fam.pk_z W).MY (j + 1))) (onb (_root_.GlobalTheory.Fam.pk_z W).MX) (isVacO_vacT (_root_.GlobalTheory.Fam.pk_z W) W.Q.charW.base.chain.vX W.P.A3.A.μ0 j h)
   refine ⟨fun P => ?_, key.2⟩
   have h1 := key.1 P 1 (one_mem _) 1 (one_mem _)

@@ -97,7 +97,7 @@ theorem GlobalTheory.LabConjPlace.locComp_of_isRc_classMapD_cenLoc : ∀ (hPr : 
   have heta : ∀ σ' : Weil (D.nd.plOm.2 w'), (σ' : Formalism.ConjugateSelfDual.G D.host.E D.nd.Om) ∈ Ine (F := D.host.E) (D.nd.plOm.1 w') →
       P.cf.eta.loc w' (a' σ') = 1 := fun σ' hσ' => loc_artin_ine ha' _ (P.cf.isEta.unr w') σ' hσ'
   have hξ : ∀ σ', ((P.chr.e1 χ).1.loc w') (a' σ') = μH.loc w' (a' σ') * (P.cf.eta.loc w' (a' σ'))⁻¹ := by
-    intro σ'; rw [e1, HChar.loc_mul, HChar.loc_inv]
+    intro σ'; rw [e1]; rfl
   have hwild' : ∀ σ' : Weil (D.nd.plOm.2 w'), (σ' : G _ _) ∈ Wild D.host.E (D.nd.plOm.1 w') →
       (((P.chr.e1 χ).1.loc w').comp a') σ' = 1 := by
     intro σ' hσ'

@@ -586,13 +586,13 @@ theorem cont_shG (i : WlocSk.NB.CI k r) :
   rcases i with p | q | p
   · show Continuous fun mc : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ × (WlocSk.NB.CI k r → ℂ) =>
       ∑ c, if p.1.1 < c then WlocSk.NB.bA mc.1 p.1.1 c * WlocSk.NB.cA mc.2 c p.1.2 else 0
-    refine continuous_finset_sum _ fun c _ => ?_
+    refine continuous_finsetSum _ fun c _ => ?_
     by_cases h : p.1.1 < c
     · simp only [if_pos h]; exact (hent _ _).mul (hcA _ _)
     · simp only [if_neg h]; exact continuous_const
   · show Continuous fun mc : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ × (WlocSk.NB.CI k r → ℂ) =>
       (∑ c, if q.1 < c then WlocSk.NB.bA mc.1 q.1 c * WlocSk.NB.cB mc.2 c q.2 else 0) + WlocSk.NB.bB mc.1 q.1 q.2
-    refine (continuous_finset_sum _ fun c _ => ?_).add (hent _ _)
+    refine (continuous_finsetSum _ fun c _ => ?_).add (hent _ _)
     by_cases h : q.1 < c
     · simp only [if_pos h]; exact (hent _ _).mul (hcB _ _)
     · simp only [if_neg h]; exact continuous_const

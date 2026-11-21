@@ -29,13 +29,15 @@ abbrev SelectionBundle (𝒜 : FamClass) (sel : _root_.Formalism.L2.TwistSelecti
       (_root_.Formalism.L2.Top4.IndefiniteScaleAtPoint sel selP selDH Fm hc x hx h i) (selS Fm hc x hx h i)
 variable {𝒜 : FamClass} {sel : _root_.Formalism.L2.TwistSelection 𝒜} {selS : _root_.Formalism.L2.Top4.SelectionSpectralCondition 𝒜 sel} {selP : _root_.Formalism.L2.Top4.BaseLevelTiedChoiceAlt 𝒜 sel} {selDH : _root_.Formalism.L2.Top3.SelectionDefiniteHeightCondition 𝒜 sel} {selC : _root_.Formalism.L2.Top4.ColumnChoiceCompatibleSelection 𝒜 sel selP}
 def kernelChoiceOfSelection (selB : _root_.Formalism.L2.Top4.SelectionBundle 𝒜 sel selS selP selDH selC) : _root_.Formalism.L2.Top4.KernelSelection 𝒜 sel :=
-  fun Fm hc x hx h i => { Ks := (selB Fm hc x hx h i).T.Q.c.F }
+  fun Fm hc x hx h i => by
+    exact { Ks := (selB Fm hc x hx h i).T.Q.c.F }
 def indefiniteRealisationChoiceOfSelection (selB : _root_.Formalism.L2.Top4.SelectionBundle 𝒜 sel selS selP selDH selC) : _root_.Formalism.L2.Top4.IndefiniteRealisationChoice' 𝒜 sel selS selP selDH selC (_root_.Formalism.L2.Top4.kernelChoiceOfSelection selB) :=
   fun Fm hc x hx h i => (selB Fm hc x hx h i).Q
 def SingleMapCondition (selB : _root_.Formalism.L2.Top4.SelectionBundle 𝒜 sel selS selP selDH selC) {eps : ℝ} (Fm : FamP eps) (hc : 𝒜 Fm) (x : ℝ) (hx : Fm.x1 < x) (h : (sel Fm hc).1 ≤ x)
     (i : Fm.Ix x) : Prop :=
-  ∀ j, Formalism.IndefR.FWT.OneMapRowR (selB Fm hc x hx h i).T (selB Fm hc x hx h i).Q.Rl.toRealDat (selB Fm hc x hx h i).κ
-    (selB Fm hc x hx h i).v₀ (selB Fm hc x hx h i).O (Formalism.IndefR.phEff (selB Fm hc x hx h i).Q.Rl) j
+  let B := selB Fm hc x hx h i
+  letI := B.alg
+  ∀ j, Formalism.IndefR.FWT.OneMapRowR B.T B.Q.Rl.toRealDat B.κ B.v₀ B.O (Formalism.IndefR.phEff B.Q.Rl) j
 end StageB
 section TwPl
 open Formalism.L2 Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows Formalism.IndefR

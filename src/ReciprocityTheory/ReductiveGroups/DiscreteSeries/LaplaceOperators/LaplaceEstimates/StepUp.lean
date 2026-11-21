@@ -29,8 +29,8 @@ theorem stepUp : StepUpStatement := by
   classical
   obtain ⟨T, μ, P, z, c, Vp, _, _, _, π, μW, μN, hμ, hP, hBD, v₁, v₂, ξ, x₀, x, hx₀, hx, hne⟩ := hB
   obtain ⟨hq0, hNeed⟩ := gapNeed k r ε h hp hq hgap
-  obtain ⟨H, _, _, _, σ, D, E, V, ι, hσ, hD, hV, hc, hVK, hcoef⟩ :=
-    LemK.psiDatum (2 * r + k + 1) ε lam h T μ hlam hgl hNeed hq0 hμ
+  have hdatum := LemK.psiDatum (2 * r + k + 1) ε lam h T μ hlam hgl hNeed hq0 hμ
+  obtain ⟨H, _, _, _, σ, D, E, V, ι, hσ, hD, hV, hc, hVK, hcoef⟩ := hdatum
   have hd : IsUnit P.det := (Matrix.isUnit_iff_isUnit_det P).1 hP.1
   have hX₀ : P * x₀ * P⁻¹ ∈ UJset ε := cayley_conj_mem_unitary_group hP hx₀
   have hper : per P μW μN (Formalism.MainNotions.S.psiGen k r z c) π

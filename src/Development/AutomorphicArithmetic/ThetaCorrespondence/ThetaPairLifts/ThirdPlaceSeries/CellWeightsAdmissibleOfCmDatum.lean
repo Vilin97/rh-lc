@@ -68,7 +68,7 @@ theorem cellWt_of_sideRead_of_admTw : _root_.GlobalTheory.HeightCounting.Up.Publ
   obtain ⟨lamC, T', hT'⟩ := GlobalTheory.T.algebraic_weight_dominant_iso_exists (Dof x).host.E (Dof x).R.nV (Dof x).what₂.Tau (Formalism.L2.embT (Dof x)) hinj hcm hcov
     (mtAt l.mt.M v j).wt
   have hT'r : ∀ γ y, T' ((mtAt l.mt.M v j).wt.ρ γ y) =
-      rhoVr (Formalism.L2.embT (Dof x)) lamC (Formalism.L2.Col.mtwRat γ) (T' y) :=
+      rhoVr (Formalism.L2.embT (Dof x)) lamC (Formalism.L2.Col.mtwRat.toFun γ) (T' y) :=
     fun γ y => hT' γ _ (match_mtwRat γ) y
   have hinj' : Function.Injective (Formalism.L2.Col.mtwConj (Formalism.L2.embT (Dof x))) := by
     intro t t' h
@@ -115,7 +115,7 @@ theorem cellWt_of_sideRead_of_admTw : _root_.GlobalTheory.HeightCounting.Up.Publ
     rw [hlamK t, hK t, hC t]
   subst hlam
   have hTK' : ∀ γ y, TK (l.b.Bs.exp.rhoW i (j.1 + 1) b γ y) =
-      rhoVr (NX.kEmb (Dof x) i b) lamK (Formalism.L2.Col.mtwRat γ) (TK y) := fun γ y => hTK γ _ (match_mtwRat γ) y
+      rhoVr (NX.kEmb (Dof x) i b) lamK (Formalism.L2.Col.mtwRat.toFun γ) (TK y) := fun γ y => hTK γ _ (match_mtwRat γ) y
   have hfun : (fun t => (e.comp (NX.toKk (Dof x) i (T.k v))).comp (NX.kEmb (Dof x) i b t)) = Formalism.L2.embT (Dof x) :=
     funext hke
   have h1 := GlobalTheory.T.weightMatrices_match_of_coeffSpace_iso (e.comp (NX.toKk (Dof x) i (T.k v))) (NX.kEmb (Dof x) i b) lamK _ (mtAt l.mt.M v j).wt.ρ TK hTK'
