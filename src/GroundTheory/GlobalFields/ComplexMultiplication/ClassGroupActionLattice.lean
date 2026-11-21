@@ -11,7 +11,7 @@ namespace Elliptic
 
 variable {K : Type*} [Field K] [NumberField K] (σ : K →+* ℂ)
 
-def idealLattice (I : FractionalIdeal (𝓞 K)⁰ K) : Submodule ℤ ℂ :=
+def idealLattice (σ : K →+* ℂ) (I : FractionalIdeal (𝓞 K)⁰ K) : Submodule ℤ ℂ :=
   Submodule.map σ.toIntAlgHom.toLinearMap ((I : Submodule (𝓞 K) K).restrictScalars ℤ)
 
 theorem mem_idealLattice {I : FractionalIdeal (𝓞 K)⁰ K} {z : ℂ} :
