@@ -71,7 +71,9 @@ theorem map_baseChangeEquiv_submoduleOf (A B : Submodule R V) :
   congr 1
   ext1 x
   obtain ⟨y, rfl⟩ := (baseChangeEquiv S A).surjective x
-  simp
+  change (A.subtype.baseChange S) ((baseChangeEquiv S A).symm ((baseChangeEquiv S A) y)) = _
+  rw [LinearEquiv.symm_apply_apply]
+  rfl
 
 noncomputable def baseChangeSubquotEquiv (A B : Submodule R V) :
     S ⊗[R] (A ⧸ B.submoduleOf A) ≃ₗ[S]
@@ -110,34 +112,31 @@ noncomputable def baseChangeToField : S ⊗[R] V →ₗ[S] L ⊗[K] V :=
 
 @[simp]
 theorem baseChangeToField_tmul (s : S) (v : V) :
-    baseChangeToField R K S L V (s ⊗ₜ v) = algebraMap S L s ⊗ₜ[K] v := by
+    baseChangeToField (R := R) (K := K) (S := S) (L := L) (V := V) (s ⊗ₜ v) = algebraMap S L s ⊗ₜ[K] v := by
   simp [baseChangeToField, smul_tmul', Algebra.smul_def]
 
 theorem baseChangeToField_naturality (f : V →ₗ[K] V') (x : S ⊗[R] V) :
-    f.baseChange L (baseChangeToField R K S L V x) =
-      baseChangeToField R K S L V' ((f.restrictScalars R).baseChange S x) := by
+    f.baseChange L (baseChangeToField (R := R) (K := K) (S := S) (L := L) (V := V) x) =
+      baseChangeToField (R := R) (K := K) (S := S) (L := L) (V := V') ((f.restrictScalars R).baseChange S x) := by
   induction x with
   | add x y hx hy => simp [hx, hy]
   | tmul s v => simp
 
 theorem spanBaseChange_eq_map (M : Submodule R V) :
-    spanBaseChange K S L M = (M.baseChange S).map (baseChangeToField R K S L V) := by
+    spanBaseChange K S L M = (M.baseChange S).map (baseChangeToField (R := R) (K := K) (S := S) (L := L) (V := V)) := by
   simp only [spanBaseChange, Submodule.baseChange_eq_span, Submodule.map_span, Submodule.map_coe,
     Set.image_image, TensorProduct.mk_apply, baseChangeToField_tmul, map_one]
-
-omit [Algebra R K] [IsScalarTower R K V] [IsScalarTower R K V'] [Algebra R S] [Algebra R L]
-  [IsScalarTower R K L] [IsScalarTower R S L] in
 
 variable [IsFractionRing R K] [FaithfulSMul S L]
 
 
-theorem baseChangeToField_injective : Function.Injective (baseChangeToField R K S L V) := by
+theorem baseChangeToField_injective : Function.Injective (baseChangeToField (R := R) (K := K) (S := S) (L := L) (V := V)) := by
   have hflat : Module.Flat R V :=
     (Module.flat_iff_of_isLocalization K (nonZeroDivisors R) V).1 inferInstance
   have h1 : Function.Injective ((IsScalarTower.toAlgHom R S L).toLinearMap.rTensor V) :=
     Module.Flat.rTensor_preserves_injective_linearMap _ (FaithfulSMul.algebraMap_injective S L)
   have h2 : ∀ x, IsLocalization.moduleTensorEquiv (nonZeroDivisors R) K L V
-      (baseChangeToField R K S L V x) = (IsScalarTower.toAlgHom R S L).toLinearMap.rTensor V x := by
+      (baseChangeToField (R := R) (K := K) (S := S) (L := L) (V := V) x) = (IsScalarTower.toAlgHom R S L).toLinearMap.rTensor V x := by
     intro x
     induction x with
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
@@ -147,7 +146,7 @@ theorem baseChangeToField_injective : Function.Injective (baseChangeToField R K 
   rw [← h2, ← h2, hxy]
 
 theorem comap_baseChangeToField (W : Submodule K V) :
-    ((W.baseChange L).restrictScalars S).comap (baseChangeToField R K S L V) =
+    ((W.baseChange L).restrictScalars S).comap (baseChangeToField (R := R) (K := K) (S := S) (L := L) (V := V)) =
       (W.restrictScalars R).baseChange S := by
   ext x
   have hker : (W.restrictScalars R).baseChange S =
@@ -155,7 +154,7 @@ theorem comap_baseChangeToField (W : Submodule K V) :
     (ker_baseChange_mkQ S (W.restrictScalars R)).symm
   rw [Submodule.mem_comap, Submodule.restrictScalars_mem, ← ker_baseChange_mkQ L W, hker,
     LinearMap.mem_ker, LinearMap.mem_ker, baseChangeToField_naturality,
-    map_eq_zero_iff _ (baseChangeToField_injective R K S L (V ⧸ W))]
+    map_eq_zero_iff _ (baseChangeToField_injective (R := R) (K := K) (S := S) (L := L) (V := V ⧸ W))]
 
 variable [Module.Flat R S]
 
@@ -168,13 +167,13 @@ theorem spanBaseChange_inf_subspace (M : Submodule R V) (W : Submodule K V) :
 noncomputable def spanBaseChangeEquiv (M : Submodule R V) :
     S ⊗[R] M ≃ₗ[S] spanBaseChange K S L M :=
   baseChangeEquiv S M ≪≫ₗ
-    Submodule.equivMapOfInjective _ (baseChangeToField_injective R K S L V) _ ≪≫ₗ
+    Submodule.equivMapOfInjective _ (baseChangeToField_injective (R := R) (K := K) (S := S) (L := L) (V := V)) _ ≪≫ₗ
     LinearEquiv.ofEq _ _ (spanBaseChange_eq_map K S L M).symm
 
 @[simp]
 theorem coe_spanBaseChangeEquiv_apply (M : Submodule R V) (x : S ⊗[R] M) :
     (spanBaseChangeEquiv K S L M x : L ⊗[K] V) =
-      baseChangeToField R K S L V (M.subtype.baseChange S x) := rfl
+      baseChangeToField (R := R) (K := K) (S := S) (L := L) (V := V) (M.subtype.baseChange S x) := rfl
 
 theorem map_spanBaseChangeEquiv_submoduleOf (M N : Submodule R V) :
     ((N.submoduleOf M).baseChange S).map
@@ -186,7 +185,7 @@ theorem map_spanBaseChangeEquiv_submoduleOf (M N : Submodule R V) :
   rw [Submodule.submoduleOf, spanBaseChange_eq_map K S L N]
   simp only [Submodule.mem_comap, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply,
     Submodule.subtype_apply, coe_spanBaseChangeEquiv_apply]
-  exact ⟨fun h => ⟨_, h, rfl⟩, fun ⟨z, hz, h⟩ => baseChangeToField_injective R K S L V h ▸ hz⟩
+  exact ⟨fun h => ⟨_, h, rfl⟩, fun ⟨z, hz, h⟩ => baseChangeToField_injective (R := R) (K := K) (S := S) (L := L) (V := V) h ▸ hz⟩
 
 noncomputable def spanBaseChangeSubquotEquiv (M N : Submodule R V) :
     S ⊗[R] (M ⧸ N.submoduleOf M) ≃ₗ[S]

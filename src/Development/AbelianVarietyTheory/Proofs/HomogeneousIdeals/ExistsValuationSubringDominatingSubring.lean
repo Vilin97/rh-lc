@@ -43,14 +43,14 @@ theorem valuativePoint_ext (p : X ⟶ S) [IsSeparated p] {x x' : Spec (.of V) �
 
 theorem valuativePoint_ext_of_isSeparated [X.IsSeparated] {x x' : Spec (.of V) ⟶ X}
     (h : specAlgebraMap V K ≫ x = specAlgebraMap V K ≫ x') : x = x' :=
-  valuativePoint_ext K (terminal.from X) h (terminal.hom_ext _ _)
+  valuativePoint_ext (K := K) (terminal.from X) h (terminal.hom_ext _ _)
 
 theorem existsUnique_valuativeExtension (p : X ⟶ S) [UniversallyClosed p] [IsSeparated p]
     (r : Spec (.of V) ⟶ S) (y : Spec (.of K) ⟶ X) (h : y ≫ p = specAlgebraMap V K ≫ r) :
     ∃! x : Spec (.of V) ⟶ X, specAlgebraMap V K ≫ x = y ∧ x ≫ p = r := by
   obtain ⟨x, hx⟩ := exists_valuativeExtension p r y h
   exact ⟨x, hx, fun x' hx' ↦
-    valuativePoint_ext K p (hx'.1.trans hx.1.symm) (hx'.2.trans hx.2.symm)⟩
+    valuativePoint_ext (K := K) p (hx'.1.trans hx.1.symm) (hx'.2.trans hx.2.symm)⟩
 
 def valExt (p : X ⟶ S) [UniversallyClosed p] [IsSeparated p] (r : Spec (.of V) ⟶ S)
     (y : Spec (.of K) ⟶ X) (h : y ≫ p = specAlgebraMap V K ≫ r) : Spec (.of V) ⟶ X :=
@@ -161,7 +161,8 @@ section Centre
 variable {X X' S : Scheme.{u}} [IsIntegral X] [IsIntegral X']
 
 
-def genericFieldPoint : Spec (.of X.functionField) ⟶ X := X.fromSpecStalk (genericPoint X)
+def genericFieldPoint (X : Scheme.{u}) [IsIntegral X] : Spec (.of X.functionField) ⟶ X :=
+  X.fromSpecStalk (genericPoint X)
 
 theorem specAlgebraMap_fromSpecStalk (x : X) :
     specAlgebraMap (X.presheaf.stalk x) X.functionField ≫ X.fromSpecStalk x =
@@ -237,7 +238,7 @@ theorem DominatesStalk.unique [X.IsSeparated] {x' : X} (h : DominatesStalk W x)
     (h' : DominatesStalk W x') : x = x' := by
   obtain ⟨l, hl, rfl⟩ := dominatesStalk_iff_exists_hom.mp h
   obtain ⟨l', hl', rfl⟩ := dominatesStalk_iff_exists_hom.mp h'
-  rw [valuativePoint_ext_of_isSeparated X.functionField (hl.trans hl'.symm)]
+  rw [valuativePoint_ext_of_isSeparated (K := X.functionField) (hl.trans hl'.symm)]
 
 theorem DominatesStalk.range_eq_of_valuationRing [ValuationRing (X.presheaf.stalk x)]
     (h : DominatesStalk W x) :

@@ -155,6 +155,7 @@ noncomputable def torusPrime (t : Multiplicative X →* Rˣ) : PrimeSpectrum (Ad
   simp [torusPrime]
 
 
+variable (R X) in
 @[reducible] noncomputable def torusZariski : TopologicalSpace (Multiplicative X →* Rˣ) :=
   TopologicalSpace.induced torusPrime inferInstance
 
@@ -197,7 +198,7 @@ theorem finite_setOf_pow_eq_one_torus [Module.Finite ℤ X] {m : ℕ} (hm : m �
     {s : Multiplicative X →* Rˣ | s ^ m = 1}.Finite := by
   haveI : NeZero m := ⟨hm⟩
   haveI : AddGroup.FG X := Module.Finite.iff_addGroup_fg.1 inferInstance
-  obtain ⟨T, hT⟩ := (Group.fg_def.1 (inferInstance : Group.FG (Multiplicative X)))
+  obtain ⟨T, hT⟩ := Group.exists_of_isMulFG (Multiplicative X)
   let φ : {s : Multiplicative X →* Rˣ | s ^ m = 1} → (T → rootsOfUnity m R) := fun s x =>
     ⟨s.1 x, by simpa using DFunLike.congr_fun (show s.1 ^ m = 1 from s.2) x.1⟩
   refine Finite.of_injective φ fun s t h => Subtype.ext ?_

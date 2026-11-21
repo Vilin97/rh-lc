@@ -34,7 +34,7 @@ theorem coeff_subst_congr {g h : PowerSeries A} {a : MvPowerSeries σ A}
 theorem pderiv_subst_coe (p : Polynomial A) {a : MvPowerSeries σ A}
     (ha : MvPowerSeries.constantCoeff a = 0) (i : σ) :
     MvPowerSeries.pderiv (R := A) i ((p : PowerSeries A).subst a) =
-      (derivative A (p : PowerSeries A)).subst a * MvPowerSeries.pderiv (R := A) i a := by
+      (PowerSeries.derivative (p : PowerSeries A)).subst a * MvPowerSeries.pderiv (R := A) i a := by
   have hs : HasSubst a := HasSubst.of_constantCoeff_zero ha
   rw [subst_coe hs, derivative_coe, subst_coe hs, Derivation.comp_aeval_eq, smul_eq_mul]
 
@@ -47,7 +47,7 @@ theorem degree_le_of_mem_antidiagonal [DecidableEq σ] {d : σ →₀ ℕ} {x : 
 theorem pderiv_subst (g : PowerSeries A) {a : MvPowerSeries σ A}
     (ha : MvPowerSeries.constantCoeff a = 0) (i : σ) :
     MvPowerSeries.pderiv (R := A) i (g.subst a) =
-      (derivative A g).subst a * MvPowerSeries.pderiv (R := A) i a := by
+      (PowerSeries.derivative g).subst a * MvPowerSeries.pderiv (R := A) i a := by
   classical
   ext d
   have hdeg : (d + Finsupp.single i 1).degree = d.degree + 1 := by

@@ -407,11 +407,8 @@ theorem gen (n s : ℕ) : ∀ (k : ℕ) (r c : Fin (k+1) → Fin n),
   | 0, r, c => by
     rw [pow_zero, one_mul, det_fin_one, det_fin_one]
     have hx : ((Mg K n).submatrix r c) 0 0 = X (Sum.inl (r 0, c 0)) := rfl
-    rw [hx, ← mul_one (X _), diffOp_X_mul, diffOp_one, Derivation.leibniz_pow, ddet]
-    simp only [submatrix_apply, Finset.prod_range_succ, Finset.prod_range_zero, one_mul, Nat.cast_zero, add_zero, map_add (f := _), map_natCast,
-      map_one, nsmul_eq_mul, smul_eq_mul, Nat.add_sub_cancel]
-    push_cast
-    ring
+    rw [hx, ← mul_one (X _), diffOp_X_mul, diffOp_one, pderiv_pow, ddet]
+    simp [mul_assoc]
   | k+1, r, c => by
     rw [omega_step, Finset.mul_sum]
     have hsum : ∀ j : Fin (k+2),
@@ -445,7 +442,7 @@ theorem gen (n s : ℕ) : ∀ (k : ℕ) (r c : Fin (k+1) → Fin n),
         have : ∀ i, ∑ p : Fin (k+1), adjugate N i p * N p i = N.det := by
           intro i
           have := congrFun (congrFun h i) i
-          rw [mul_apply] at this
+          rw [Matrix.mul_apply] at this
           rw [this]; simp
         simp only [this, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
         push_cast; ring

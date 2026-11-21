@@ -127,7 +127,7 @@ def antilinPartCLM : (E →L[ℝ] F) →L[ℝ] (E →L⋆[ℂ] F) :=
         rw [smul_comm I c, ← smul_add, smul_comm] }
     1 fun L => by rw [one_mul]; exact norm_antilinPart_le L
 
-@[simp] theorem antilinPartCLM_apply (L : E →L[ℝ] F) : antilinPartCLM E F L = antilinPart L := rfl
+@[simp] theorem antilinPartCLM_apply (L : E →L[ℝ] F) : antilinPartCLM (E := E) (F := F) L = antilinPart L := rfl
 
 def del (f : E → F) (z : E) : E →L[ℂ] F := linPart (fderiv ℝ f z)
 
@@ -178,37 +178,37 @@ theorem dbar_eq_zero (hf : DifferentiableAt ℂ f z) : dbar f z = 0 := by
 
 theorem del_add (hf : DifferentiableAt ℝ f z) (hg : DifferentiableAt ℝ g z) :
     del (fun x => f x + g x) z = del f z + del g z := by
-  rw [del, fderiv_fun_add hf hg]; exact (linPartCLM E F).map_add _ _
+  rw [del, fderiv_fun_add hf hg]; exact (linPartCLM (E := E) (F := F)).map_add _ _
 
 theorem dbar_add (hf : DifferentiableAt ℝ f z) (hg : DifferentiableAt ℝ g z) :
     dbar (fun x => f x + g x) z = dbar f z + dbar g z := by
-  rw [dbar, fderiv_fun_add hf hg]; exact (antilinPartCLM E F).map_add _ _
+  rw [dbar, fderiv_fun_add hf hg]; exact (antilinPartCLM (E := E) (F := F)).map_add _ _
 
 theorem del_neg (f : E → F) (z : E) : del (fun x => -f x) z = -del f z := by
-  rw [del, fderiv_fun_neg]; exact (linPartCLM E F).map_neg _
+  rw [del, fderiv_fun_neg]; exact (linPartCLM (E := E) (F := F)).map_neg _
 
 theorem dbar_neg (f : E → F) (z : E) : dbar (fun x => -f x) z = -dbar f z := by
-  rw [dbar, fderiv_fun_neg]; exact (antilinPartCLM E F).map_neg _
+  rw [dbar, fderiv_fun_neg]; exact (antilinPartCLM (E := E) (F := F)).map_neg _
 
 theorem del_sub (hf : DifferentiableAt ℝ f z) (hg : DifferentiableAt ℝ g z) :
     del (fun x => f x - g x) z = del f z - del g z := by
-  rw [del, fderiv_fun_sub hf hg]; exact (linPartCLM E F).map_sub _ _
+  rw [del, fderiv_fun_sub hf hg]; exact (linPartCLM (E := E) (F := F)).map_sub _ _
 
 theorem dbar_sub (hf : DifferentiableAt ℝ f z) (hg : DifferentiableAt ℝ g z) :
     dbar (fun x => f x - g x) z = dbar f z - dbar g z := by
-  rw [dbar, fderiv_fun_sub hf hg]; exact (antilinPartCLM E F).map_sub _ _
+  rw [dbar, fderiv_fun_sub hf hg]; exact (antilinPartCLM (E := E) (F := F)).map_sub _ _
 
 theorem del_sum {ι : Type*} {t : Finset ι} {A : ι → E → F}
     (h : ∀ i ∈ t, DifferentiableAt ℝ (A i) z) :
     del (fun x => ∑ i ∈ t, A i x) z = ∑ i ∈ t, del (A i) z := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [del, fderiv_fun_sum h]; exact map_sum (linPartCLM E F) _ _
+    rw [del, fderiv_fun_sum h]; exact map_sum (linPartCLM (E := E) (F := F)) _ _
 
 theorem dbar_sum {ι : Type*} {t : Finset ι} {A : ι → E → F}
     (h : ∀ i ∈ t, DifferentiableAt ℝ (A i) z) :
     dbar (fun x => ∑ i ∈ t, A i x) z = ∑ i ∈ t, dbar (A i) z := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [dbar, fderiv_fun_sum h]; exact map_sum (antilinPartCLM E F) _ _
+    rw [dbar, fderiv_fun_sum h]; exact map_sum (antilinPartCLM (E := E) (F := F)) _ _
 
 theorem del_smul {c : E → ℂ} (hc : DifferentiableAt ℝ c z) (hf : DifferentiableAt ℝ f z) (v : E) :
     del (fun x => c x • f x) z v = c z • del f z v + del c z v • f z := by
@@ -303,7 +303,7 @@ theorem dbar_ofReal_comp {t : E → ℝ} {h : ℝ → ℝ} {h' : ℝ} (hh : HasD
 
 theorem contDiffAt_dbar {m n : WithTop ℕ∞} (hf : ContDiffAt ℝ n f z) (h : m + 1 ≤ n) :
     ContDiffAt ℝ m (dbar f) z :=
-  (antilinPartCLM E F).contDiff.contDiffAt.comp z (hf.fderiv_right h)
+  (antilinPartCLM (E := E) (F := F)).contDiff.contDiffAt.comp z (hf.fderiv_right h)
 
 end FirstOrder
 
@@ -334,7 +334,7 @@ theorem ddbar_apply (hu : ContDiffAt ℝ 2 u z) (v w : E) :
     ddbar u z v w = (1 / 4 : ℂ) • (fderiv ℝ (fderiv ℝ u) z v w
       + fderiv ℝ (fderiv ℝ u) z (I • v) (I • w) + I • fderiv ℝ (fderiv ℝ u) z v (I • w)
       - I • fderiv ℝ (fderiv ℝ u) z (I • v) w) := by
-  have h : HasFDerivAt (dbar u) _ z := (antilinPartCLM E F).hasFDerivAt.comp z
+  have h : HasFDerivAt (dbar u) _ z := (antilinPartCLM (E := E) (F := F)).hasFDerivAt.comp z
     (differentiableAt_fderiv_of_contDiffAt_two hu).hasFDerivAt
   rw [ddbar, del_apply, h.fderiv]
   simp only [ContinuousLinearMap.smul_apply, ContinuousLinearMap.sub_apply,

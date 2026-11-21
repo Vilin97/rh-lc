@@ -78,6 +78,7 @@ theorem extensionEmbedding_algebraMap (hv : v.IsReal) (x : v.Completion) :
   exact Completion.liesOver_extensionEmbedding_apply w v
 
 
+open scoped Classical in
 def completionConj (hv : v.IsReal) : Gal(w.Completion/v.Completion) :=
   if hw : w.IsComplex then
     AlgEquiv.ofRingEquiv (f := ((ringEquivComplexOfIsComplex hw).trans
@@ -92,7 +93,7 @@ theorem extensionEmbedding_completionConj (hv : v.IsReal) (x : w.Completion) :
     extensionEmbedding w (completionConj hv x) = conj (extensionEmbedding w x) := by
   by_cases hw : w.IsComplex
   · rw [← ringEquivComplexOfIsComplex_apply hw]
-    simp [completionConj, dif_pos hw]
+    simp [completionConj, dite_eq_left hw]
   · rw [completionConj, dite_eq_right hw, AlgEquiv.one_apply,
       ← extensionEmbeddingOfIsReal_apply (not_isComplex_iff_isReal.1 hw), Complex.conj_ofReal]
 
@@ -114,6 +115,7 @@ theorem completionConj_ne_one (hv : v.IsReal) (hw : w.IsComplex) :
 
 theorem eq_one_or_eq_completionConj (hv : v.IsReal) (hw : w.IsComplex)
     (σ : Gal(w.Completion/v.Completion)) : σ = 1 ∨ σ = completionConj hv := by
+  classical
   by_contra h
   push Not at h
   have hcard := AlgEquiv.card_le (F := v.Completion) (K := w.Completion)
@@ -125,6 +127,7 @@ theorem eq_one_or_eq_completionConj (hv : v.IsReal) (hw : w.IsComplex)
   omega
 
 
+open scoped Classical in
 theorem univ_eq_one_completionConj (hv : v.IsReal) (hw : w.IsComplex) :
     (Finset.univ : Finset Gal(w.Completion/v.Completion)) = {1, completionConj hv} := by
   ext σ
@@ -138,6 +141,7 @@ theorem card_gal_eq_two (hv : v.IsReal) (hw : w.IsComplex) :
   exact Finset.card_pair (completionConj_ne_one hv hw).symm
 
 
+variable (w) in
 theorem subsingleton_gal (h : ¬ (v.IsReal ∧ w.IsComplex)) :
     Subsingleton Gal(w.Completion/v.Completion) := by
   have hcard := AlgEquiv.card_le (F := v.Completion) (K := w.Completion)
@@ -145,6 +149,7 @@ theorem subsingleton_gal (h : ¬ (v.IsReal ∧ w.IsComplex)) :
   exact Fintype.card_le_one_iff_subsingleton.1 hcard
 
 
+variable (w) in
 theorem natCard_gal_completion :
     Nat.card Gal(w.Completion/v.Completion) = Module.finrank v.Completion w.Completion := by
   rw [Nat.card_eq_fintype_card]
@@ -178,6 +183,7 @@ theorem extensionEmbeddingOfIsReal_norm (hv : v.IsReal) (hw : w.IsComplex) (y : 
     extensionEmbedding_completionConj, Complex.mul_conj]
 
 
+variable (v w) in
 def normSubgroup : Subgroup v.Completionˣ :=
   (Units.map (Algebra.norm v.Completion : w.Completion →* v.Completion)).range
 
@@ -203,12 +209,13 @@ theorem mem_normSubgroup_iff (hv : v.IsReal) (hw : w.IsComplex) (x : v.Completio
     rw [map_pow, ha, Real.sq_sqrt hx.le]
 
 
+variable (w) in
 theorem normSubgroup_eq_top (h : ¬ (v.IsReal ∧ w.IsComplex)) : normSubgroup v w = ⊤ := by
   rw [eq_top_iff]
   intro x _
   refine ⟨Units.map (algebraMap v.Completion w.Completion : v.Completion →* w.Completion) x, ?_⟩
   apply Units.ext
-  rw [Units.coe_map, Units.coe_map, MonoidHom.coe_coe, Algebra.norm_algebraMap,
+  rw [Units.coe_map, Units.coe_map, MonoidHom.coe_ofClass, Algebra.norm_algebraMap,
     (finrank_completion_eq_one_iff w).2 h, pow_one]
 
 end Norm
@@ -218,6 +225,7 @@ section LocalSymbol
 variable (v)
 
 
+open scoped Classical in
 def localSymbol : v.Completionˣ →* Gal(w.Completion/v.Completion) :=
   if hv : v.IsReal then
     (realSignHom (completionConj (w := w) hv) (completionConj_mul_self hv)).comp
@@ -227,8 +235,8 @@ def localSymbol : v.Completionˣ →* Gal(w.Completion/v.Completion) :=
 theorem localSymbol_apply (hv : v.IsReal) (x : v.Completionˣ) :
     localSymbol v w x =
       if extensionEmbeddingOfIsReal hv x < 0 then completionConj hv else 1 := by
-  simp only [localSymbol, dif_pos hv, MonoidHom.comp_apply, realSignHom_apply, Units.coe_map,
-    RingHom.toMonoidHom_eq_coe, MonoidHom.coe_coe]
+  simp only [localSymbol, dite_eq_left hv, MonoidHom.comp_apply, realSignHom_apply, Units.coe_map,
+    RingHom.toMonoidHom_eq_coe, MonoidHom.coe_ofClass]
   exact if_congr Iff.rfl rfl rfl
 
 theorem localSymbol_of_not_isReal (hv : ¬ v.IsReal) : localSymbol v w = 1 := by
@@ -244,10 +252,10 @@ theorem ker_localSymbol : (localSymbol v w).ker = normSubgroup v w := by
     · intro h
       by_contra hneg
       have hlt : extensionEmbeddingOfIsReal hv x < 0 := lt_of_le_of_ne (not_lt.1 hneg) hx0
-      rw [if_pos hlt] at h
+      rw [ite_eq_left hlt] at h
       exact completionConj_ne_one hv hw h
     · intro h
-      rw [if_neg (not_lt.2 h.le)]
+      rw [ite_eq_right (not_lt.2 h.le)]
   · rw [normSubgroup_eq_top w h2, eq_top_iff]
     intro x _
     rw [MonoidHom.mem_ker]
@@ -347,7 +355,8 @@ theorem natCard_kerModRange_cycSub_normHom (hv : v.IsReal) (hw : w.IsComplex) :
   · rw [Ne, KerModRange.mk_eq_mk_iff]
     intro h
     have := re_pos_of_mem_range_normHom hv hw h
-    rw [AddSubgroup.coe_mk, zero_sub, toMul_neg, Units.val_inv_eq_inv_val, map_inv₀, hme] at this
+    change 0 < (extensionEmbedding w ((0 - m).toMul : w.Completion)).re at this
+    rw [zero_sub, toMul_neg, Units.val_inv_eq_inv_val, map_inv₀, hme] at this
     norm_num at this
   · rw [Set.eq_univ_iff_forall]
     intro q
@@ -368,13 +377,15 @@ theorem natCard_kerModRange_cycSub_normHom (hv : v.IsReal) (hw : w.IsComplex) :
     · right
       rw [KerModRange.mk_eq_mk_iff]
       apply mem_range_normHom hv hw
-      · rw [AddSubgroup.coe_mk, AddSubgroup.coe_mk, toMul_sub, Units.val_div_eq_div_val, map_div₀, hc,
-          (hker m).1 hm]
-      · rw [AddSubgroup.coe_mk, AddSubgroup.coe_mk, toMul_sub, Units.val_div_eq_div_val, map_div₀,
-          hme, div_neg, div_one, Complex.neg_re]
+      · change c ((x - m).toMul : w.Completion) = ((x - m).toMul : w.Completion)
+        rw [toMul_sub, Units.val_div_eq_div_val, map_div₀, hc, (hker m).1 hm]
+      · change 0 < (extensionEmbedding w ((x - m).toMul : w.Completion)).re
+        rw [toMul_sub, Units.val_div_eq_div_val, map_div₀, hme, div_neg, div_one, Complex.neg_re]
         linarith
     · left
-      rw [KerModRange.mk_eq_mk_iff, AddSubgroup.coe_mk, AddSubgroup.coe_mk, sub_zero]
+      rw [KerModRange.mk_eq_mk_iff]
+      change x - 0 ∈ (normHom (unitsRep v w)).range
+      rw [sub_zero]
       exact mem_range_normHom hv hw x hc hpos
 
 theorem natCard_kerModRange_normHom_cycSub (hv : v.IsReal) (hw : w.IsComplex) :
@@ -419,9 +430,9 @@ theorem cyclicHerbrand_unitsRep_eq_finrank (σ : Gal(w.Completion/v.Completion))
   · rw [(finrank_completion_eq_one_iff w).2 h2]
     have := subsingleton_gal w h2
     have hsub : ∀ x, cycSub (unitsRep v w) σ x = 0 := fun x => by
-      rw [Subsingleton.elim σ 1, cycSub_apply, map_one, Module.End.one_apply, sub_self]
+      rw [Subsingleton.elim σ 1, cycSub_apply, map_one, one_apply_eq_self, sub_self]
     have hnorm : ∀ x, normHom (unitsRep v w) x = x := fun x => by
-      rw [normHom_apply, Fintype.sum_subsingleton _ 1, map_one, Module.End.one_apply]
+      rw [normHom_apply, Fintype.sum_subsingleton _ 1, map_one, one_apply_eq_self]
     rw [cyclicHerbrand, herbrandQuotient, natCard_kerModRange_eq_one (fun x _ => ⟨x, hnorm x⟩),
       natCard_kerModRange_eq_one (fun x hx => ⟨0, by
         rw [map_zero]; rw [AddMonoidHom.mem_ker, hnorm] at hx; exact hx.symm⟩)]

@@ -160,7 +160,7 @@ theorem krullAkizuki_of_birational
         exact Ideal.Quotient.eq_zero_iff_mem.mpr hap
       rw [h] at this
       exact ha this
-    have h4 := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := A) (⊥ : Ideal (B ⧸ p)) h3
+    have h4 := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := A) (⊥ : Ideal (B ⧸ p)) h3
     exact Ideal.Quotient.maximal_of_isField _ (Ring.isField_iff_maximal_bot.mpr h4)
 
 end KrullAkizuki
@@ -213,7 +213,7 @@ theorem exists_discreteValuationSubring_of_subring (B : Subring L) [IsNoetherian
       ⟨c * x, LocalSubring.le_ofPrime B p hcx⟩, Subtype.ext rfl⟩
   have hKA := krullAkizuki_of_birational (A := A0) (B := V) hbir
   haveI : IsNoetherianRing V := hKA.1
-  haveI : IsPrincipalIdealRing V := ((IsBezout.TFAE (R := V)).out 0 1).mp hKA.1
+  haveI : IsPrincipalIdealRing V := ((IsBezout.tfae (R := V)).out 1 2).mp hKA.1
   have hVy0 : y ∈ V := hBV hy
   have hne : IsLocalRing.maximalIdeal V ≠ ⊥ := by
     intro h
@@ -513,6 +513,7 @@ variable {A : Type*} [CommRing A] [IsDomain A] [IsNoetherianRing A] [Ring.Dimens
   (K : Type*) {L : Type*} [Field K] [Algebra A K] [IsFractionRing A K] [Field L] [Algebra K L]
   [Algebra A L] [IsScalarTower A K L] [FiniteDimensional K L]
 
+include K
 
 theorem krullAkizuki (B : Subalgebra A L) : IsNoetherianRing B ∧ Ring.DimensionLEOne B := by
   have hinj : Function.Injective (algebraMap A L) := by
@@ -658,6 +659,7 @@ theorem exists_complete_discreteValuationRing_of_prime_lt {A : Type u} [CommRing
   · rw [← Ideal.comap_comap, maximalIdeal_comap, hm]
 
 
+open AlgebraicGeometry CategoryTheory in
 theorem exists_complete_discreteValuationRing_of_specializes {X : Scheme.{u}}
     [IsLocallyNoetherian X] {η x : X} (h : η ⤳ x) (hne : η ≠ x) :
     ∃ (O : CommRingCat.{u}) (_ : IsDomain O) (_ : IsDiscreteValuationRing O)
@@ -706,7 +708,7 @@ theorem discreteValuationRing_dominating_noetherian_local (L : Type w) [Field L]
   have hinj : Function.Injective (algebraMap R L) := by
     rw [IsScalarTower.algebraMap_eq R K L]
     exact (algebraMap K L).injective.comp (IsFractionRing.injective R K)
-  exact ⟨inferInstance, inferInstance, fun π => irreducible_algebraMap_adicCompletion_of_dvr, h1,
+  exact ⟨inferInstance, inferInstance, fun _ => irreducible_algebraMap_adicCompletion_of_dvr V, h1,
     injective_and_isLocalHom_adicCompletion_comp _
       fun a b hab => hinj (congrArg Subtype.val hab)⟩
 

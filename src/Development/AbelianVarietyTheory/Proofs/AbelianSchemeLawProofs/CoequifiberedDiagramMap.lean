@@ -68,8 +68,8 @@ def diagramMap : Y.presheaf ⟶ diagram f g a ha p hp where
 set_option backward.isDefEq.respectTransparency false in
 lemma isLocalization_preimage [QuasiCompact f] [QuasiSeparated f] {U : Y.Opens}
     (hU : IsAffineOpen U) (r : Γ(Y, U)) :
-    letI := (X.presheaf.map (homOfLE (f.preimage_mono (Y.basicOpen_le r))).op).hom.toAlgebra
-    IsLocalization.Away (f.app U r) Γ(X, f ⁻¹ᵁ Y.basicOpen r) := by
+    @IsLocalization.Away _ _ (f.app U r) Γ(X, f ⁻¹ᵁ Y.basicOpen r) _
+      (X.presheaf.map (homOfLE (f.preimage_mono (Y.basicOpen_le r))).op).hom.toAlgebra := by
   let : Algebra Γ(X, f ⁻¹ᵁ U) Γ(X, X.basicOpen (f.app _ r)) :=
     (X.presheaf.map (homOfLE (X.basicOpen_le _)).op).hom.toAlgebra
   rw! (castMode := .all) [f.preimage_basicOpen r]

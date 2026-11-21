@@ -126,7 +126,9 @@ theorem linForm_eq [DecidableEq J] (u : J → R) (i : ι) (j₀ : J) :
 
 def linFormHom (u : J → R) (S : Set ι) (j₀ : J) :
     MvPolynomial (ι × J) R →ₐ[R] MvPolynomial (ι × J) R :=
-  aeval fun x => if x ∈ elimIndices S j₀ then linForm u x.1 else X x
+  by
+    classical
+    exact aeval fun x => if x ∈ elimIndices S j₀ then linForm u x.1 else X x
 
 theorem linFormHom_X_of_mem (u : J → R) {S : Set ι} (j₀ : J) {i : ι} (hi : i ∈ S) :
     linFormHom u S j₀ (X (i, j₀)) = linForm u i := by
@@ -168,7 +170,9 @@ theorem linFormHom_comp_eq_id {u v : J → R} (S : Set ι) {j₀ : J} (h₀ : v 
 
 
 def linFormInvCoeff (u : J → R) (j₀ : J) (hu : IsUnit (u j₀)) (j : J) : R :=
-  if j = j₀ then (↑hu.unit⁻¹ : R) else -((↑hu.unit⁻¹ : R) * u j)
+  by
+    classical
+    exact if j = j₀ then (↑hu.unit⁻¹ : R) else -((↑hu.unit⁻¹ : R) * u j)
 
 def linFormEquiv (u : J → R) (S : Set ι) (j₀ : J) (hu : IsUnit (u j₀)) :
     MvPolynomial (ι × J) R ≃ₐ[R] MvPolynomial (ι × J) R :=

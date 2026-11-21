@@ -6,7 +6,7 @@ public import Formalism.PadicSubsetSums.CentralIdempotents.GaloisIrreducibility
 @[expose] public section
 
 open Finset Polynomial
-open scoped ComplexOrder
+open scoped Classical ComplexOrder
 
 noncomputable section
 
@@ -42,7 +42,7 @@ def AdmissibleCount : Prop :=
 def LemmaPSubSum : Prop :=
   ∀ N a : ℕ, 0 < a → a < N →
     8 * ((Finset.univ : Finset (Equiv.Perm (Fin N))).filter
-      (fun σ => IsSubSum σ.partition.parts a)).card ≤ 7 * N.factorial
+      (fun σ : Equiv.Perm (Fin N) => IsSubSum σ.partition.parts a)).card ≤ 7 * N.factorial
 
 def eqvSpace {G V ι : Type} [Monoid G] [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V)
     (emb : ι → G) (χ : ι → ℂ) : Submodule ℂ V where
@@ -157,7 +157,7 @@ def TypeSetWeight : Prop :=
   ∀ (K : Type) [Field K] [Fintype K] (N : ℕ) (A : Multiset ℕ → Prop),
     ∑ c ∈ (sqSet K N).filter (fun c => A (degType (monicOf c))), sqWeight (monicOf c) ≤
       (((Finset.univ : Finset (Equiv.Perm (Fin N))).filter
-        (fun σ => A σ.partition.parts)).card : ℝ) / (N.factorial : ℝ)
+        (fun σ : Equiv.Perm (Fin N) => A σ.partition.parts)).card : ℝ) / (N.factorial : ℝ)
 
 
 def SameFactorCount : Prop :=

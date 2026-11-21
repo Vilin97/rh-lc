@@ -85,15 +85,15 @@ theorem expG_neg (X : 𝔤) : h.expG (-X) = (h.expG X)⁻¹ := by
 theorem Ad_inv_Ad (g : G) (X : 𝔤) : h.Ad g⁻¹ (h.Ad g X) = X := by
   rw [← LinearMap.comp_apply, ← Ad_mul, inv_mul_cancel, Ad_one, LinearMap.id_apply]
 
-theorem contMDiff_expG : letI := h.chartedSpace; ContMDiff 𝓘(ℝ, 𝔤) 𝓘(ℝ, 𝔤) ∞ h.expG := by
+theorem contMDiff_expG : (letI := h.chartedSpace; ContMDiff 𝓘(ℝ, 𝔤) 𝓘(ℝ, 𝔤) ∞ h.expG) := by
   letI := h.chartedSpace
   intro X
   exact h.contMDiffAt_of_val (f := h.expG)
     (((contDiff_exp ℝ 𝔸).comp 𝔤.subtypeL.contDiff).contMDiff X)
 
 theorem contMDiff_expG_comp {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V] {φ : V → 𝔤}
-    (hφ : ContDiff ℝ ∞ φ) : letI := h.chartedSpace;
-    ContMDiff 𝓘(ℝ, V) 𝓘(ℝ, 𝔤) ∞ (fun p => h.expG (φ p)) := by
+    (hφ : ContDiff ℝ ∞ φ) : (letI := h.chartedSpace;
+    ContMDiff 𝓘(ℝ, V) 𝓘(ℝ, 𝔤) ∞ (fun p => h.expG (φ p))) := by
   letI := h.chartedSpace
   exact h.contMDiff_expG.comp hφ.contMDiff
 

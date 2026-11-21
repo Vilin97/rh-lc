@@ -135,8 +135,17 @@ theorem exists_isLatticeEmb [Module.Finite (𝓞 K) M] [Module.IsTorsionFree (�
   · rw [LinearMap.range_comp, Submodule.map_coe, LinearMap.coe_restrictScalars,
       ← Submodule.map_span]
     have : Submodule.span K (LinearMap.range (TensorProduct.mk (𝓞 K) K M 1) : Set (K ⊗[𝓞 K] M)) = ⊤ := by
-      intro s hs hli
-      exact (LinearIndependent.iff_fractionRing _ _).mp hli
+      rw [eq_top_iff]
+      intro y hy
+      refine TensorProduct.inductionOn y ?_ ?_
+      · intro a m
+        have hm : TensorProduct.mk (𝓞 K) K M 1 m ∈
+            LinearMap.range (TensorProduct.mk (𝓞 K) K M 1) := by
+          exact ⟨m, rfl⟩
+        rw [TensorProduct.tmul_eq_smul_one_tmul]
+        exact Submodule.smul_mem _ a (Submodule.subset_span hm)
+      · intro y z hy hz
+        exact Submodule.add_mem _ hy hz
     rw [this, Submodule.map_top, LinearEquiv.range]
 
 end Lattice

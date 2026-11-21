@@ -113,14 +113,14 @@ theorem exists_one_add_uniformizer_pow_mul_pow_eq {j : ℕ} (hj : d + 1 ≤ j) (
 theorem exists_units_pow_eq {j : ℕ} (hj : d + 1 ≤ j) {u : 𝒪[K]ˣ} {a : 𝒪[K]}
     (hu : (u : 𝒪[K]) - 1 = ϖ ^ j * a) :
     ∃ c : 𝒪[K], ((u ^ n : 𝒪[K]ˣ) : 𝒪[K]) = 1 + ϖ ^ (j + d) * (ε * a + ϖ * c) := by
-  obtain ⟨c, hc⟩ := exists_one_add_uniformizer_pow_mul_pow_eq hnd hj a
+  obtain ⟨c, hc⟩ := exists_one_add_uniformizer_pow_mul_pow_eq hϖ hnd hj a
   refine ⟨c, ?_⟩
   rw [Units.val_pow_eq_pow_val, ← hc, ← hu, add_sub_cancel]
 
 theorem pow_mem_unitFiltration {j : ℕ} (hj : d + 1 ≤ j) {u : 𝒪[K]ˣ}
     (hu : u ∈ unitFiltration K j) : u ^ n ∈ unitFiltration K (j + d) := by
   obtain ⟨a, ha⟩ := (mem_maximalIdeal_pow_iff hϖ).mp hu
-  obtain ⟨c, hc⟩ := exists_units_pow_eq hnd hj ha
+  obtain ⟨c, hc⟩ := exists_units_pow_eq hϖ hnd hj ha
   rw [mem_unitFiltration, hc, add_sub_cancel_left, mem_maximalIdeal_pow_iff hϖ]
   exact dvd_mul_right _ _
 
@@ -134,7 +134,7 @@ theorem exists_pow_div_mem_unitFiltration {j : ℕ} (hj : d + 1 ≤ j) {h : 𝒪
   refine ⟨hg.unit, ?_, ?_⟩
   · rw [mem_unitFiltration, hg1, mem_maximalIdeal_pow_iff hϖ]
     exact dvd_mul_right _ _
-  · obtain ⟨c, hc⟩ := exists_units_pow_eq hnd hj hg1
+  · obtain ⟨c, hc⟩ := exists_units_pow_eq hϖ hnd hj hg1
     rw [div_mem_unitFiltration_iff, mem_maximalIdeal_pow_iff hϖ]
     exact ⟨-c, by linear_combination hb - hc - ϖ ^ (j + d) * b * (Units.mul_inv ε)⟩
 
@@ -161,7 +161,7 @@ theorem eq_one_of_pow_eq_one {u : 𝒪[K]ˣ} (hu : u ∈ unitFiltration K (d + 1
     apply hJ
     rw [hjJ, mem_unitFiltration, mem_maximalIdeal_pow_iff hϖ, ha, pow_succ]
     exact mul_dvd_mul_left _ (dvd_mul_right _ _)
-  obtain ⟨c, hc⟩ := exists_units_pow_eq hnd (j := j) (by omega) ha
+  obtain ⟨c, hc⟩ := exists_units_pow_eq hϖ hnd (j := j) (by omega) ha
   rw [hun, Units.val_one, left_eq_add, mul_eq_zero] at hc
   rcases hc with hc | hc
   · exact pow_ne_zero _ hϖ.ne_zero hc

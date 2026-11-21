@@ -76,12 +76,12 @@ abbrev firstIncl (K : Type*) [Field K] : 𝓞 K →ₗ[𝓞 K] (Fin 2 → 𝓞 K
 def standardFlag : Fin 3 → Submodule (𝓞 K) (HermitianBundle.standard K 2).carrier :=
   ![⊥, LinearMap.range (firstIncl K), ⊤]
 
-theorem standardFlag_monotone : Monotone (standardFlag K) := by
+theorem standardFlag_monotone : Monotone (standardFlag (K := K)) := by
   intro i j hij
   fin_cases i <;> fin_cases j <;> simp_all [standardFlag]
 
 theorem standardFlag_saturated (i : Fin 3) :
-    (HermitianBundle.standard K 2).Saturated (standardFlag K i) := by
+    (HermitianBundle.standard K 2).Saturated (standardFlag (K := K) i) := by
   intro a x ha hx
   change Fin 2 → 𝓞 K at x
   fin_cases i

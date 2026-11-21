@@ -52,6 +52,7 @@ theorem pderiv_X_ite [DecidableEq κ] (i j : κ) :
   · exact pderiv_X_of_ne h
 
 
+open scoped Classical in
 theorem coeff_subst_kill (e : ι → κ) {b : κ → MvPowerSeries κ A} (hb0 : ∀ i, b (e i) = 0)
     (hb1 : ∀ k, k ∉ Set.range e → b k = X k) (f : MvPowerSeries κ A) (α : κ →₀ ℕ) :
     coeff α (subst b f) = if ∀ i, α (e i) = 0 then coeff α f else 0 := by
@@ -186,7 +187,7 @@ theorem existsUnique_coboundary_param [Finite σ] [Finite τ] {B : MvPowerSeries
   classical
   have := Fintype.ofFinite σ
   have := Fintype.ofFinite τ
-  have : IsAddTorsionFree A := .of_module_rat A
+  have : HasUniqueDiv A := HasUniqueDiv.of_module_rat A
 
   have hz : HasSubst (Sum.elim (fun i => X (inl i)) (Sum.elim (fun i => X (inr (inl i))) (Sum.elim (fun _ => 0) fun j => X (inr (inr j)))) :
         σ ⊕ σ ⊕ σ ⊕ τ → MvPowerSeries (σ ⊕ σ ⊕ τ) A) := hasSubst_of_constantCoeff_zero (by simp)

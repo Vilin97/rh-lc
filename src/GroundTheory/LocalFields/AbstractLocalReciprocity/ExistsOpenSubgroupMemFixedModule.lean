@@ -164,6 +164,8 @@ end Norm
 
 section Data
 
+open scoped GroundTheory.LocalField.Abstract
+
 instance finiteIndex_openSubgroup {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
     [CompactSpace G] (U : OpenSubgroup G) : (U : Subgroup G).FiniteIndex :=
   Subgroup.finiteIndex_of_finite_quotient

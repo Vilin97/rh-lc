@@ -15,7 +15,8 @@ section PrimeX
 
 variable {O : Type*} [CommRing O] [IsDomain O]
 
-instance isPrime_span_X : (Ideal.span {X} : Ideal O⟦X⟧).IsPrime := span_X_isPrime
+instance isPrime_span_X : (Ideal.span {X} : Ideal O⟦X⟧).IsPrime :=
+  Ideal.isPrime_span_singleton_of_prime prime_X
 
 omit [IsDomain O] in
 theorem mem_span_X_iff {f : O⟦X⟧} : f ∈ (Ideal.span {X} : Ideal O⟦X⟧) ↔ constantCoeff f = 0 := by
@@ -35,10 +36,10 @@ theorem algebraMap_X_pow_dvd_iff (M : Submonoid O⟦X⟧) (hM : ∀ m ∈ M, con
   obtain ⟨c, hc⟩ := (IsLocalization.eq_iff_exists M S).1 h1
   have h2 : X ^ a ∣ ((c * s : M) : O⟦X⟧) * f := ⟨c * g, by
     rw [Submonoid.coe_mul]; linear_combination hc⟩
-  exact X_prime.pow_dvd_of_dvd_mul_left a (X_dvd_iff.not.2 (hM _ (c * s).2)) h2
+  exact prime_X.pow_dvd_of_dvd_mul_left a (X_dvd_iff.not.2 (hM _ (c * s).2)) h2
 
 variable (S : Type*) [CommRing S] [Algebra O⟦X⟧ S]
-  [IsLocalization.AtPrime S (Ideal.span {X} : Ideal O⟦X⟧)]
+  [hS : IsLocalization.AtPrime S (Ideal.span {X} : Ideal O⟦X⟧)]
 
 theorem algebraMap_X_pow_dvd_iff_atPrime (a : ℕ) (f : O⟦X⟧) :
     algebraMap O⟦X⟧ S X ^ a ∣ algebraMap O⟦X⟧ S f ↔ X ^ a ∣ f :=
@@ -84,6 +85,7 @@ theorem exists_associated_X_pow_atPrime {z : S} (hz : z ≠ 0) :
   exact associated_mul_unit_left _ _ hs
 
 
+include hS in
 theorem isDiscreteValuationRing_atPrime_X [IsDomain S] : IsDiscreteValuationRing S :=
   IsDiscreteValuationRing.ofHasUnitMulPowIrreducibleFactorization
     ⟨_, (prime_algebraMap_X_atPrime (O := O) S).irreducible,
@@ -108,6 +110,7 @@ variable {O : Type*} [CommRing O] [IsDomain O] (K : Type*) [Field K] [Algebra O 
   [IsFractionRing O K]
 
 
+omit [IsDomain O] in
 theorem order_map_of_injective {A : Type*} [CommRing A] {φ : O →+* A}
     (hφ : Function.Injective φ) (f : O⟦X⟧) : (f.map φ).order = f.order :=
   le_antisymm (le_order _ _ fun i hi => hφ (by simpa using coeff_of_lt_order i hi))
@@ -127,7 +130,7 @@ theorem algebraMap_residueField_span_X (f : O⟦X⟧) :
       algebraMap O (Ideal.span {X} : Ideal O⟦X⟧).ResidueField (constantCoeff f) := by
   rw [IsScalarTower.algebraMap_apply O O⟦X⟧, ← sub_eq_zero, ← map_sub,
     Ideal.algebraMap_residueField_eq_zero, mem_span_X_iff]
-  simp [PowerSeries.algebraMap_apply]
+  simp
 
 instance isFractionRing_residueField_span_X :
     IsFractionRing O (Ideal.span {X} : Ideal O⟦X⟧).ResidueField := by
@@ -147,6 +150,7 @@ instance isFractionRing_residueField_span_X :
       algebraMap_residueField_span_X, algebraMap_residueField_span_X]⟩
 
 
+variable (O) in
 def residueFieldSpanXEquiv : (Ideal.span {X} : Ideal O⟦X⟧).ResidueField ≃ₐ[O] K :=
   IsLocalization.algEquiv (nonZeroDivisors O) _ _
 

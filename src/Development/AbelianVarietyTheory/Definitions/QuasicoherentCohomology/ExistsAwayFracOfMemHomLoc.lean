@@ -167,15 +167,15 @@ variable {ι : Type} {R : Type*} [CommRing R]
   {P : Type*} [AddCommGroup P] [Module R P] [Module (MvPolynomial ι R) P]
   [IsScalarTower R (MvPolynomial ι R) P]
 
-
+variable (R) in
 abbrev xProd (s : Finset ι) : MvPolynomial ι R := ∏ i ∈ s, X i
 
-
+variable (R) in
 theorem xProd_mem (s : Finset ι) : xProd R s ∈ polyGrading ι R s.card := by
   simpa using SetLike.prod_mem_graded (polyGrading ι R) (fun _ => 1) X
     (F := s) fun i _ => X_mem_polyGrading i
 
-
+variable (R) in
 theorem xProd_pow_mem (s : Finset ι) (k : ℕ) :
     xProd R s ^ k ∈ polyGrading ι R (k * s.card) := by
   simpa using SetLike.pow_mem_graded k (xProd_mem R s)
@@ -183,7 +183,7 @@ theorem xProd_pow_mem (s : Finset ι) (k : ℕ) :
 variable (ℳ : ℤ → Submodule R M) [PolyGradedSMul ι ℳ] {𝒩 : ℤ → Submodule R N} [PolyGradedSMul ι 𝒩]
   {𝒬 : ℤ → Submodule R P} [PolyGradedSMul ι 𝒬]
 
-
+omit [IsScalarTower R (MvPolynomial ι R) M] in
 theorem xProd_pow_smul_mem {s : Finset ι} {n : ℤ} {k : ℕ} {m : M} (hm : m ∈ ℳ (n + k * s.card))
     (j : ℕ) : xProd R s ^ j • m ∈ ℳ (n + (k + j : ℕ) * s.card) := by
   convert grSMul_mem ℳ (xProd_pow_mem R s j) hm using 2
@@ -202,12 +202,12 @@ def homLoc (s : Finset ι) (n : ℤ) : Submodule R (LocalizedModule.Away (xProd 
     rintro r _ ⟨k, m, hm, rfl⟩
     exact ⟨k, r • m, Submodule.smul_mem _ r hm, LinearMap.map_smul_of_tower _ r m⟩
 
-
+variable {ℳ} in
 theorem mem_homLoc {s : Finset ι} {n : ℤ} {z : LocalizedModule.Away (xProd R s) M} :
     z ∈ homLoc ℳ s n ↔
       ∃ k : ℕ, ∃ m ∈ ℳ (n + k * s.card), awayFrac M (xProd R s) k m = z := Iff.rfl
 
-
+variable {ℳ} in
 theorem awayFrac_mem_homLoc {s : Finset ι} {n d : ℤ} {k : ℕ} {m : M} (hm : m ∈ ℳ d)
     (h : d = n + k * s.card) : awayFrac M (xProd R s) k m ∈ homLoc ℳ s n := ⟨k, m, h ▸ hm, rfl⟩
 
@@ -244,7 +244,7 @@ instance homLoc.decomposition [Decomposition ℳ] (s : Finset ι) : Decompositio
       | zero => rw [map_zero]; exact zero_mem _
       | @homogeneous n m =>
         exact Submodule.mem_iSup_of_mem (n - k * s.card) (awayFrac_mem_homLoc m.2 (by ring))
-      | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+      | add a b ha hb => rw [(awayFrac M (xProd R s) k).map_add]; exact add_mem ha hb
 
 theorem isGradedMap_awayFrac (s : Finset ι) (k : ℕ) :
     IsGradedMap (grShift ℳ (k * s.card)) (homLoc ℳ s) (awayFrac M (xProd R s) k) :=
@@ -264,7 +264,7 @@ theorem isGradedMap_locRes {s t : Finset ι} (h : s ⊆ t) :
   push_cast
   ring
 
-
+variable {ℳ} in
 theorem IsGradedMap.awayMap {f : M →ₗ[MvPolynomial ι R] N} (hf : IsGradedMap ℳ 𝒩 f)
     (s : Finset ι) : IsGradedMap (homLoc ℳ s) (homLoc 𝒩 s) (awayMap (xProd R s) f) := by
   rintro n _ ⟨k, m, hm, rfl⟩
@@ -283,7 +283,7 @@ def homLocMk (s : Finset ι) (n : ℤ) (k : ℕ) : ℳ (n + k * s.card) →ₗ[R
 theorem coe_homLocMk (s : Finset ι) (n : ℤ) (k : ℕ) (m : ℳ (n + k * s.card)) :
     (homLocMk ℳ s n k m : LocalizedModule.Away (xProd R s) M) = awayFrac M (xProd R s) k m := rfl
 
-
+variable {ℳ} in
 theorem exists_homLocMk {s : Finset ι} {n : ℤ} (z : homLoc ℳ s n) :
     ∃ k m, homLocMk ℳ s n k m = z := by
   obtain ⟨_, k, m, hm, rfl⟩ := z
@@ -328,7 +328,7 @@ theorem toHomLoc_bijective [Decomposition ℳ] {s : Finset ι}
   ⟨toHomLoc_injective ℳ h.1 n,
     (isGradedMap_awayFrac_zero ℳ s).surjective_iff.1 (awayFrac_zero_bijective h).2 n⟩
 
-
+variable (ι) in
 def homLocEmptyEquiv (n : ℤ) : ℳ n ≃ₗ[R] homLoc ℳ (∅ : Finset ι) n :=
   LinearEquiv.ofBijective (toHomLoc ℳ ∅ n)
     ⟨toHomLoc_injective ℳ (fun _ _ h => by simpa using h) n, by
@@ -432,7 +432,7 @@ variable {ι : Type} {R : Type*} [CommRing R]
     (m' : M) = xProd R s • (m : M) → φ (k + 1) m' = φ k m)
 include hφ
 
-
+omit [IsScalarTower R (MvPolynomial ι R) M] in
 theorem homLocLift_pow (k j : ℕ) (m : ℳ (n + k * s.card)) :
     φ (k + j) ⟨_, xProd_pow_smul_mem ℳ m.2 j⟩ = φ k m := by
   induction j with
@@ -501,7 +501,7 @@ variable {ι : Type} {R : Type*} [CommRing R] {κ : Type*} [Finite κ]
   (ℳ : ∀ k, ℤ → Submodule R (M k)) [∀ k, PolyGradedSMul ι (ℳ k)]
 
 theorem homLocMap_piProj_bijective (s : Finset ι) (n : ℤ) :
-    Function.Bijective (LinearMap.pi fun k => homLocMap (isGradedMap_piProj ι ℳ k) s n) := by
+    Function.Bijective (LinearMap.pi fun k => homLocMap (isGradedMap_piProj (ι := ι) ℳ k) s n) := by
   classical
   have := Fintype.ofFinite κ
   constructor
@@ -581,10 +581,10 @@ theorem grCubeMap_congr {f g : M →ₗ[MvPolynomial ι R] N} (hf : IsGradedMap 
 
 variable [LinearOrder ι]
 
-
+variable (ℳ) in
 theorem grCech_eq (n : ℤ) : grCech ι ℳ n = cechComplex (grCube ι ℳ n) := rfl
 
-
+variable (ℳ) in
 theorem grCech_d (n : ℤ) (p : ℕ) :
     (grCech ι ℳ n).d p (p + 1) = ModuleCat.ofHom (Cube.d (grCube ι ℳ n) (p + 1)) :=
   cechComplex_d _ p
@@ -604,11 +604,11 @@ theorem isIso_grCechMap [Decomposition ℳ] [Decomposition 𝒩] {f : M →ₗ[M
 
 
 
-
+variable (ι ℳ) in
 def grAug (n : ℤ) : ℳ n →ₗ[R] grH ι ℳ n 0 :=
   (cechAugHomology (grCube ι ℳ n)).hom ∘ₗ toHomLoc ℳ ∅ n
 
-
+variable (ℳ) in
 theorem cechHomologyZeroIso_grAug (n : ℤ) (m : ℳ n) (s : {s : Finset ι // s.card = 1}) :
     ((cechHomologyZeroIso (grCube ι ℳ n)).hom.hom (grAug ι ℳ n m)).1 s = toHomLoc ℳ s.1 n m :=
   (congrFun congr(($(cechAugHomology_comp (grCube ι ℳ n))).hom (toHomLoc ℳ ∅ n m)) s).trans
@@ -619,7 +619,7 @@ theorem grHMap_grAug {f : M →ₗ[MvPolynomial ι R] N} (hf : IsGradedMap ℳ �
   congr(($(cechAugHomology_naturality (grCubeMap hf n))).hom (toHomLoc ℳ ∅ n m)).symm.trans
     (congrArg (cechAugHomology (grCube ι 𝒩 n)).hom (homLocMap_toHomLoc hf ∅ n m))
 
-
+variable (ℳ) in
 theorem grAug_bijective_iff (n : ℤ) : Function.Bijective (grAug ι ℳ n) ↔
     (cubeComplex (grCube ι ℳ n)).ExactAt 0 ∧ (cubeComplex (grCube ι ℳ n)).ExactAt 1 := by
   rw [← isIso_cechAugHomology_iff, ConcreteCategory.isIso_iff_bijective]
@@ -652,7 +652,7 @@ structure GradedShortExact (ℳ : ℤ → Submodule R M) (𝒩 : ℤ → Submodu
 variable [IsScalarTower R (MvPolynomial ι R) M] [IsScalarTower R (MvPolynomial ι R) N]
   [IsScalarTower R (MvPolynomial ι R) P]
 
-
+omit [IsScalarTower R (MvPolynomial ι R) P] in
 theorem IsGradedMap.shortExact_ker {𝒩 : ℤ → Submodule R N} {𝒬 : ℤ → Submodule R P}
     {g : N →ₗ[MvPolynomial ι R] P} (hg : IsGradedMap 𝒩 𝒬 g) (h : Function.Surjective g) :
     GradedShortExact (grSub 𝒩 (LinearMap.ker g)) 𝒩 𝒬 (LinearMap.ker g).subtype g :=
@@ -686,14 +686,14 @@ variable {ι : Type} {R : Type u} [CommRing R]
 
 abbrev cubes (n : ℤ) : ShortComplex (Cube.{u} ι R) :=
   ShortComplex.mk (grCubeMap h.graded_f n) (grCubeMap h.graded_g n) (by
-    rw [← grCubeMap_comp, grCubeMap_congr _ (IsGradedMap.zero ι ℳ 𝒬)
+    rw [← grCubeMap_comp, grCubeMap_congr _ (IsGradedMap.zero (ι := ι) (ℳ := ℳ) (𝒩 := 𝒬))
       h.exact.linearMap_comp_eq_zero, grCubeMap_zero])
 
 variable [LinearOrder ι]
 
 variable [Decomposition ℳ] [Decomposition 𝒩] [Decomposition 𝒬]
 
-
+omit [LinearOrder ι] in
 theorem cubes_shortExact (n : ℤ) (s : Finset ι) :
     ((h.cubes n).map ((evaluation _ _).obj s)).ShortExact :=
   ModuleCat.shortComplex_shortExact _ (h.homLoc s n).2.1 (h.homLoc s n).1 (h.homLoc s n).2.2
@@ -710,22 +710,22 @@ variable {ι : Type} {R : Type u} [CommRing R] {κ : Type} [Fintype κ]
   [∀ k, Module (MvPolynomial ι R) (M k)] [∀ k, IsScalarTower R (MvPolynomial ι R) (M k)]
   (ℳ : ∀ k, ℤ → Submodule R (M k)) [∀ k, PolyGradedSMul ι (ℳ k)]
 
-
+variable (ι) in
 def grCubePiIso (n : ℤ) : grCube ι (grPi ℳ) n ≅ Cube.directSum fun k => grCube ι (ℳ k) n :=
   Cube.isoMk (fun s => homLocPiEquiv ℳ s n ≪≫ₗ
       (DirectSum.linearEquivFunOnFintype R κ fun k => homLoc (ℳ k) s n).symm)
-    fun h z => DFinsupp.ext fun k => homLocMap_homLocRes (isGradedMap_piProj ι ℳ k) h n z
+    fun h z => DFinsupp.ext fun k => homLocMap_homLocRes (isGradedMap_piProj (ι := ι) ℳ k) h n z
 
 variable [LinearOrder ι]
 
 
 variable [Finite ι]
 
-
 theorem cubeComplex_grPi_exactAt_iff (n : ℤ) (p : ℕ) :
     (cubeComplex (grCube ι (grPi ℳ) n)).ExactAt p ↔
-      ∀ k, (cubeComplex (grCube ι (ℳ k) n)).ExactAt p :=
-  (exactAt_iff_of_quasiIsoAt
+      ∀ k, (cubeComplex (grCube ι (ℳ k) n)).ExactAt p := by
+  classical
+  exact (exactAt_iff_of_quasiIsoAt
     ((cubeFunctor ι R).mapIso (grCubePiIso ι ℳ n)).hom p).trans
     (cubeComplex_directSum_exactAt_iff _ p)
 
@@ -739,7 +739,7 @@ theorem xProd_smul_injective (s : Finset ι) :
     Function.Injective fun p : MvPolynomial ι R => xProd R s • p :=
   (IsRegular.prod fun _ _ => MvPolynomial.isRegular_X).left
 
-
+variable (ι R) in
 theorem operatorsCommute_id :
     OperatorsCommute (ι := ι) (R := R) (A := fun _ => R) fun _ _ => LinearMap.id :=
   fun _ _ _ _ => rfl

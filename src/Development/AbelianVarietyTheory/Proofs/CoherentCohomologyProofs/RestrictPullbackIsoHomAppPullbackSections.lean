@@ -175,13 +175,13 @@ abbrev appLEModule (e : U ≤ f ⁻¹ᵁ V) : Module Γ(Y, V) Γ(F, U) :=
   Module.compHom Γ(F, U) (f.appLE V U e).hom
 
 theorem appLEModule_smul (e : U ≤ f ⁻¹ᵁ V) (r : Γ(Y, V)) (s : Γ(F, U)) :
-    letI := appLEModule f F e
-    r • s = f.appLE V U e r • s := rfl
+    (letI := appLEModule f F e
+     r • s = f.appLE V U e r • s) := rfl
 
 theorem appLE_isScalarTower (e : U ≤ f ⁻¹ᵁ V) :
-    letI := appLEAlgebra f e
-    letI := appLEModule f F e
-    IsScalarTower Γ(Y, V) Γ(X, U) Γ(F, U) :=
+    (letI := appLEAlgebra f e
+     letI := appLEModule f F e
+     IsScalarTower Γ(Y, V) Γ(X, U) Γ(F, U)) :=
   letI := appLEAlgebra f e
   letI := appLEModule f F e
   .of_algebraMap_smul fun _ _ ↦ rfl
@@ -314,10 +314,10 @@ theorem isQuasicoherent_pullback_Spec (M : (Spec R).Modules) [M.IsQuasicoherent]
 
 set_option backward.isDefEq.respectTransparency false in
 theorem exists_equiv_pullback_Spec (M : (Spec R).Modules) [M.IsQuasicoherent] :
-    letI := φ.hom.toAlgebra
-    ∃ e : S ⊗[R] Γ(M, ⊤) ≃ₗ[S] Γ((Scheme.Modules.pullback (Spec.map φ)).obj M, ⊤),
-      ∀ m, e (1 ⊗ₜ m) =
-        ((Scheme.Modules.pullbackPushforwardAdjunction (Spec.map φ)).unit.app M).app ⊤ m := by
+    (letI := φ.hom.toAlgebra
+     ∃ e : S ⊗[R] Γ(M, ⊤) ≃ₗ[S] Γ((Scheme.Modules.pullback (Spec.map φ)).obj M, ⊤),
+       ∀ m, e (1 ⊗ₜ m) =
+         ((Scheme.Modules.pullbackPushforwardAdjunction (Spec.map φ)).unit.app M).app ⊤ m) := by
   letI := φ.hom.toAlgebra
   refine ⟨(tilde.isoTop ((ModuleCat.extendScalars φ.hom).obj (moduleSpecΓFunctor.obj M)) ≪≫
     moduleSpecΓFunctor.mapIso (tildeIsoPullback φ M)).toLinearEquiv, fun m ↦ ?_⟩
@@ -423,10 +423,10 @@ instance isQuasicoherent_pullback : ((Scheme.Modules.pullback f).obj G).IsQuasic
 
 theorem isBaseChange_pullbackSections (hU : IsAffineOpen U) (hV : IsAffineOpen V)
     (e : U ≤ f ⁻¹ᵁ V) :
-    letI := appLEAlgebra f e
-    letI := appLEModule f ((Scheme.Modules.pullback f).obj G) e
-    haveI := appLE_isScalarTower f ((Scheme.Modules.pullback f).obj G) e
-    IsBaseChange Γ(X, U) (pullbackSections f G e) := by
+    (letI := appLEAlgebra f e
+     letI := appLEModule f ((Scheme.Modules.pullback f).obj G) e
+     haveI := appLE_isScalarTower f ((Scheme.Modules.pullback f).obj G) e
+     IsBaseChange Γ(X, U) (pullbackSections f G e)) := by
   letI := appLEAlgebra f e
   letI := appLEModule f ((Scheme.Modules.pullback f).obj G) e
   haveI := appLE_isScalarTower f ((Scheme.Modules.pullback f).obj G) e
@@ -521,7 +521,7 @@ theorem app_surjective_of_epi_of_isAffineOpen (φ : F ⟶ F') [Epi φ] [F.IsQuas
   have h₄ : Epi ((moduleSpecΓFunctor ⋙ tilde.functor Γ(X, U)).map ψ) := by
     rw [← epi_comp_iff_of_isIso _ ((Scheme.Modules.fromTildeΓNatTrans (R := Γ(X, U))).app
       (F'.restrict hU.fromSpec)), h]
-    exact epi_comp _ _
+    exact epi_comp' (@IsIso.epi_of_iso _ _ _ _ _ h₁) h₃
   have h₅ : Epi (moduleSpecΓFunctor.map ψ) := (tilde.functor Γ(X, U)).epi_of_epi_map h₄
   have h₆ : Function.Surjective (φ.app (hU.fromSpec ''ᵁ ⊤)) :=
     (ModuleCat.epi_iff_surjective (moduleSpecΓFunctor.map ψ)).mp h₅

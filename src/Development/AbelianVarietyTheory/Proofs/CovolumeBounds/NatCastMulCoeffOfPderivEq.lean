@@ -7,6 +7,7 @@ public import Mathlib
 namespace GlobalTheory.FormalCalc
 
 open MvPowerSeries Finsupp
+open scoped MvPowerSeries.WithPiTopology
 
 section Chain
 
@@ -39,10 +40,11 @@ theorem subst_C' {a : σ → MvPowerSeries τ S} (ha : HasSubst a) (r : R) :
 theorem continuous_pderiv [TopologicalSpace R] [DiscreteTopology R] (i : σ) :
     Continuous (pderiv (R := R) i : MvPowerSeries σ R → MvPowerSeries σ R) := by
   refine continuous_iff_continuousAt.mpr fun f => ?_
-  rw [ContinuousAt, tendsto_iff_coeff_tendsto]
+  rw [ContinuousAt, MvPowerSeries.WithPiTopology.tendsto_iff_coeff_tendsto]
   intro d
   simp only [coeff_pderiv]
-  exact ((continuous_coeff R (d + single i 1)).mul continuous_const).continuousAt
+  exact ((MvPowerSeries.WithPiTopology.continuous_coeff R (d + single i 1)).mul
+    continuous_const).continuousAt
 
 theorem pderiv_comm (i j : σ) (f : MvPowerSeries σ R) :
     pderiv (R := R) i (pderiv (R := R) j f) = pderiv (R := R) j (pderiv (R := R) i f) := by
@@ -63,7 +65,8 @@ theorem pderiv_subst [Fintype σ] {a : σ → MvPowerSeries τ S} (ha : HasSubst
   letI : UniformSpace R := ⊥
   letI : UniformSpace S := ⊥
   have hc := continuous_subst (R := R) ha
-  refine congr_fun (DenseRange.equalizer (denseRange_toMvPowerSeries (σ := σ) (R := R))
+  refine congr_fun (DenseRange.equalizer
+    (MvPowerSeries.WithPiTopology.denseRange_toMvPowerSeries (σ := σ) (R := R))
     (g := fun f => pderiv (R := S) j (subst a f))
     (h := fun f => ∑ i, subst a (pderiv (R := R) i f) * pderiv (R := S) j (a i))
     ((continuous_pderiv j).comp hc)
@@ -133,7 +136,7 @@ theorem ext_of_pderiv_of_coeff [IsAddTorsionFree A] (e : ι → σ) {f g : MvPow
   have h1 := natCast_mul_coeff_of_pderiv_eq (hD i) hi
   have h2 := natCast_mul_coeff_of_pderiv_eq (rfl : pderiv (R := A) (e i) g = _) hi
   rw [← h2, ← nsmul_eq_mul, ← nsmul_eq_mul] at h1
-  exact (smul_right_inj hi).mp h1
+  exact IsAddTorsionFree.eq_of_nsmul_eq_nsmul_of_addCommute hi (AddCommute.all _ _) h1
 
 variable [Algebra ℚ A]
 
@@ -142,7 +145,9 @@ theorem existsUnique_primitive_param {e : ι → σ} (he : Function.Injective e)
     ∃! f : MvPowerSeries σ A, (∀ α : σ →₀ ℕ, (∀ i, α (e i) = 0) → coeff α f = 0) ∧
       ∀ i, pderiv (R := A) (e i) f = a i := by
   classical
-  haveI : IsAddTorsionFree A := .of_module_rat A
+  have huniq : HasUniqueDiv A := HasUniqueDiv.of_module_rat A
+  haveI : IsAddTorsionFree A :=
+    ⟨fun {n} hn {a b} _ hh => huniq.nsmul_right_injective (n := n) hn hh⟩
   have key : ∀ (α : σ →₀ ℕ) (i j : ι), α (e i) ≠ 0 → α (e j) ≠ 0 →
       (α (e j) : A) * coeff (α - single (e i) 1) (a i) =
         (α (e i) : A) * coeff (α - single (e j) 1) (a j) := by

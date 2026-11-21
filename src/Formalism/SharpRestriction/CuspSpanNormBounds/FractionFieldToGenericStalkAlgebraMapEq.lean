@@ -201,9 +201,10 @@ variable [MeasurableSpace E]
 
 
 def bbIntegrand (M : Model F E) {m : ℕ} (w : Pt E (m + 1)) (c : M.Cls m)
-    (xy : (IL (m + 1) → E) × (IN w → E)) : ℂ :=
+    (xy : (IL (m + 1) → E) × (IN w → E)) : ℂ := by
+  classical
   let Z : Matrix (Fin (m + 1)) (Fin (m + 1)) E := uLow xy.1 * w.mat * uUp w xy.2
-  if h : (∀ a b, Z a b ∈ M.R) ∧ IsUnit Z.det then
+  exact if h : (∀ a b, Z a b ∈ M.R) ∧ IsUnit Z.det then
     (M.nIso ⟨Matrix.of fun a b => ⟨Z a b, h.1 a b⟩, by
         have : (Matrix.of fun a b => (⟨Z a b, h.1 a b⟩ : M.R)).map M.R.subtype = Z :=
           rfl

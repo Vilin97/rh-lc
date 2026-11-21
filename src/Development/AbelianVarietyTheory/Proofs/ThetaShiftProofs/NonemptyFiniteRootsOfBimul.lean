@@ -58,14 +58,17 @@ def pairForm (f g : X →ₗ[O] O) : Bil X O :=
 @[simp] theorem pairForm_apply (f g : X →ₗ[O] O) (y x : X) :
     pairForm f g y x = f y * star (g x) + f x * star (g y) := rfl
 
-theorem pairForm_mem_balForms (f g : X →ₗ[O] O) : pairForm f g ∈ balForms ℤ O X O :=
+theorem pairForm_mem_balForms (f g : X →ₗ[O] O) :
+    pairForm f g ∈ balForms (S := ℤ) (O := O) (Y := X) (A := O) :=
   ⟨fun y x => by simp only [pairForm_apply]; ring, fun a y x => by
     simp only [pairForm_apply, map_smul, smul_eq_mul, star_mul, star_star]; ring⟩
 
 theorem exists_universal_pi {w : O} (hw : w + star w = 1) [Module.Finite O X]
     [Module.Projective O X] :
-    ∃ (n : ℕ) (Φ : Bil X (Fin n × Fin n → O)), Φ ∈ balForms ℤ O X (Fin n × Fin n → O) ∧
-      ∃ e : Fin n → X, ∀ {B : Type*} [AddCommGroup B] (τ : Bil X B), τ ∈ balForms ℤ O X B →
+    ∃ (n : ℕ) (Φ : Bil X (Fin n × Fin n → O)),
+      Φ ∈ balForms (S := ℤ) (O := O) (Y := X) (A := Fin n × Fin n → O) ∧
+      ∃ e : Fin n → X, ∀ {B : Type*} [AddCommGroup B] (τ : Bil X B),
+        τ ∈ balForms (S := ℤ) (O := O) (Y := X) (A := B) →
         ∀ y x, τ y x = ∑ ij : Fin n × Fin n, τ ((w * Φ y x ij) • e ij.1) (e ij.2) := by
   obtain ⟨n, f, g, -, -, hfg⟩ := Module.Finite.exists_comp_eq_id_of_projective O X
   let c : Fin n → X →ₗ[O] O := fun i => LinearMap.proj i ∘ₗ g
@@ -108,8 +111,8 @@ theorem exists_universal_pi {w : O} (hw : w + star w = 1) [Module.Finite O X]
 theorem exists_balForms_lift {w : O} (hw : w + star w = 1) [Module.Finite O X]
     [Module.Projective O X] [Module.Free ℤ O] {A B : Type*} [AddCommGroup A]
     [AddCommGroup B] (p : A →+ B) (hp : Function.Surjective p) {τ : Bil X B}
-    (hτ : τ ∈ balForms ℤ O X B) :
-    ∃ T ∈ balForms ℤ O X A, ∀ y x, p (T y x) = τ y x := by
+    (hτ : τ ∈ balForms (S := ℤ) (O := O) (Y := X) (A := B)) :
+    ∃ T ∈ balForms (S := ℤ) (O := O) (Y := X) (A := A), ∀ y x, p (T y x) = τ y x := by
   obtain ⟨n, Φ, hΦ, e, h⟩ := exists_universal_pi (X := X) hw
   let r : (Fin n × Fin n → O) →ₗ[ℤ] B :=
     ∑ ij : Fin n × Fin n, τ.flip (e ij.2) ∘ₗ
@@ -124,21 +127,22 @@ theorem exists_balForms_lift {w : O} (hw : w + star w = 1) [Module.Finite O X]
 
 theorem balRel_eq_span {w : O} (hw : w + star w = 1) [Module.Finite O X]
     [Module.Projective O X] [Module.IsTorsionFree ℤ O] :
-    balRel O X = Submodule.span ℤ
+    balRel (O := O) (Y := X) = Submodule.span ℤ
       {z : SymSq X | ∃ (a : O) (y x : X), z = SymSq.mk (a • y) x - SymSq.mk y (star a • x)} := by
   refine le_antisymm (fun z hz => ?_) fun z hz => mem_balRel.2 ⟨1, one_ne_zero, by rwa [one_smul]⟩
   set R := Submodule.span ℤ
       {z : SymSq X | ∃ (a : O) (y x : X), z = SymSq.mk (a • y) x - SymSq.mk y (star a • x)}
   obtain ⟨n, Φ, hΦ, e, h⟩ := exists_universal_pi (X := X) hw
   let τ : Bil X (SymSq X ⧸ R) := SymSq.mk.compr₂ R.mkQ
-  have hτ : τ ∈ balForms ℤ O X (SymSq X ⧸ R) :=
+  have hτ : τ ∈ balForms (S := ℤ) (O := O) (Y := X) (A := SymSq X ⧸ R) :=
     ⟨fun y x => congrArg R.mkQ (SymSq.mk_comm y x), fun a y x =>
       (Submodule.Quotient.eq _).2 (Submodule.subset_span ⟨a, y, x, rfl⟩)⟩
   let r : (Fin n × Fin n → O) →ₗ[ℤ] SymSq X ⧸ R :=
     ∑ ij : Fin n × Fin n, τ.flip (e ij.2) ∘ₗ
       ((LinearMap.toSpanSingleton O X (e ij.1)) ∘ₗ LinearMap.mulLeft O w ∘ₗ
         LinearMap.proj ij).restrictScalars ℤ
-  have h1 : R.mkQ = r ∘ₗ BalSq.lift ℤ O X _ ⟨Φ, hΦ⟩ ∘ₗ (balRel O X).mkQ := by
+  have h1 : R.mkQ = r ∘ₗ BalSq.lift ℤ O X _ ⟨Φ, hΦ⟩ ∘ₗ
+      (balRel (O := O) (Y := X)).mkQ := by
     refine SymSq.hom_ext fun y x => ?_
     change τ y x = r (Φ y x)
     rw [h τ hτ, LinearMap.sum_apply]
@@ -149,9 +153,10 @@ theorem balRel_eq_span {w : O} (hw : w + star w = 1) [Module.Finite O X]
 
 theorem BalSq.exists_lift {w : O} (hw : w + star w = 1) [Module.Finite O X]
     [Module.Projective O X] [Module.IsTorsionFree ℤ O] {B : Type*} [AddCommGroup B] {τ : Bil X B}
-    (hτ : τ ∈ balForms ℤ O X B) :
+    (hτ : τ ∈ balForms (S := ℤ) (O := O) (Y := X) (A := B)) :
     ∃ l : BalSq O X →ₗ[ℤ] B, ∀ y x, l (BalSq.mk O y x) = τ y x := by
-  refine ⟨(balRel O X).liftQ (SymSq.lift ℤ X B ⟨τ, hτ.1⟩) ?_, fun _ _ => rfl⟩
+  refine ⟨(balRel (O := O) (Y := X)).liftQ (SymSq.lift ℤ X B ⟨τ, hτ.1⟩) ?_,
+    fun _ _ => rfl⟩
   rw [balRel_eq_span hw, Submodule.span_le]
   rintro _ ⟨a, y, x, rfl⟩
   rw [SetLike.mem_coe, LinearMap.mem_ker, map_sub]
@@ -164,8 +169,9 @@ def balTensorRel : AddSubgroup (X ⊗[ℤ] X) :=
       {z | ∃ y x : X, z = y ⊗ₜ x - x ⊗ₜ y})
 
 
-def balTensorMk : Bil X ((X ⊗[ℤ] X) ⧸ balTensorRel O X) :=
-  LinearMap.mk₂ ℤ (fun y x => QuotientAddGroup.mk' (balTensorRel O X) (y ⊗ₜ x))
+def balTensorMk : Bil X ((X ⊗[ℤ] X) ⧸ balTensorRel (O := O) (X := X)) :=
+  LinearMap.mk₂ ℤ (fun y x => QuotientAddGroup.mk'
+    (balTensorRel (O := O) (X := X)) (y ⊗ₜ x))
     (fun _ _ _ => by rw [add_tmul, map_add (f := _)])
     (fun n y y' => by rw [← map_zsmul]; rfl)
     (fun _ _ _ => by rw [tmul_add, map_add (f := _)])
@@ -173,13 +179,17 @@ def balTensorMk : Bil X ((X ⊗[ℤ] X) ⧸ balTensorRel O X) :=
 
 variable (O X) in
 theorem balTensorMk_mem_balForms :
-    balTensorMk O ∈ balForms ℤ O X ((X ⊗[ℤ] X) ⧸ balTensorRel O X) :=
-  ⟨fun y x => QuotientAddGroup.eq_iff_sub_mem.2 (AddSubgroup.subset_closure (Or.inr ⟨y, x, rfl⟩)),
+    balTensorMk O ∈ balForms (S := ℤ) (O := O) (Y := X)
+      (A := (X ⊗[ℤ] X) ⧸ balTensorRel (O := O) (X := X)) :=
+  ⟨fun y x => QuotientAddGroup.eq_iff_sub_mem.2
+      (AddSubgroup.subset_closure (Or.inr ⟨y, x, rfl⟩)),
     fun a y x =>
-      QuotientAddGroup.eq_iff_sub_mem.2 (AddSubgroup.subset_closure (Or.inl ⟨a, y, x, rfl⟩))⟩
+      QuotientAddGroup.eq_iff_sub_mem.2
+        (AddSubgroup.subset_closure (Or.inl ⟨a, y, x, rfl⟩))⟩
 
-def balTensorLift {B : Type*} [AddCommGroup B] (τ : balForms ℤ O X B) :
-    (X ⊗[ℤ] X) ⧸ balTensorRel O X →+ B :=
+def balTensorLift {B : Type*} [AddCommGroup B]
+    (τ : balForms (S := ℤ) (O := O) (Y := X) (A := B)) :
+    (X ⊗[ℤ] X) ⧸ balTensorRel (O := O) (X := X) →+ B :=
   QuotientAddGroup.lift _ (TensorProduct.lift τ.1).toAddMonoidHom <|
     (AddSubgroup.closure_le _).2 <| by
       rintro _ (⟨a, y, x, rfl⟩ | ⟨y, x, rfl⟩) <;>
@@ -187,11 +197,12 @@ def balTensorLift {B : Type*} [AddCommGroup B] (τ : balForms ℤ O X B) :
       · exact sub_eq_zero.2 (τ.2.2 a y x)
       · exact sub_eq_zero.2 (τ.2.1 y x)
 
-@[simp] theorem balTensorLift_mk {B : Type*} [AddCommGroup B] (τ : balForms ℤ O X B) (y x : X) :
+@[simp] theorem balTensorLift_mk {B : Type*} [AddCommGroup B]
+    (τ : balForms (S := ℤ) (O := O) (Y := X) (A := B)) (y x : X) :
     balTensorLift τ (balTensorMk O y x) = (τ : Bil X B) y x := rfl
 
 theorem balTensor_hom_ext {B : Type*} [AddCommGroup B]
-    {f g : (X ⊗[ℤ] X) ⧸ balTensorRel O X →+ B}
+    {f g : (X ⊗[ℤ] X) ⧸ balTensorRel (O := O) (X := X) →+ B}
     (h : ∀ y x, f (balTensorMk O y x) = g (balTensorMk O y x)) : f = g := by
   refine AddMonoidHom.ext fun z => ?_
   obtain ⟨z, rfl⟩ := QuotientAddGroup.mk'_surjective _ z
@@ -214,26 +225,27 @@ theorem balTensorLift_bijective {w : O} (hw : w + star w = 1) [Module.Finite O X
 
 noncomputable def balTensorEquiv {w : O} (hw : w + star w = 1) [Module.Finite O X]
     [Module.Projective O X] [Module.IsTorsionFree ℤ O] :
-    ((X ⊗[ℤ] X) ⧸ balTensorRel O X) ≃+ BalSq O X :=
+    ((X ⊗[ℤ] X) ⧸ balTensorRel (O := O) (X := X)) ≃+ BalSq O X :=
   AddEquiv.ofBijective _ (balTensorLift_bijective hw)
 
 theorem isTorsionFree_balTensor {w : O} (hw : w + star w = 1) [Module.Finite O X]
     [Module.Projective O X] [Module.IsTorsionFree ℤ O] :
-    Module.IsTorsionFree ℤ ((X ⊗[ℤ] X) ⧸ balTensorRel O X) :=
+    Module.IsTorsionFree ℤ ((X ⊗[ℤ] X) ⧸ balTensorRel (O := O) (X := X)) :=
   (balTensorEquiv hw).toIntLinearEquiv.injective.moduleIsTorsionFree _
     (balTensorEquiv hw).toIntLinearEquiv.map_smul
 
 theorem finite_balTensor [Module.Finite ℤ X] :
-    Module.Finite ℤ ((X ⊗[ℤ] X) ⧸ balTensorRel O X) := by
+    Module.Finite ℤ ((X ⊗[ℤ] X) ⧸ balTensorRel (O := O) (X := X)) := by
   have h : Module.Finite ℤ (X ⊗[ℤ] X) := by
     convert Module.Finite.tensorProduct ℤ X X using 0
     congr!
-  exact Module.Finite.of_surjective (QuotientAddGroup.mk' (balTensorRel O X)).toIntLinearMap
+  exact Module.Finite.of_surjective
+    (QuotientAddGroup.mk' (balTensorRel (O := O) (X := X))).toIntLinearMap
     (QuotientAddGroup.mk'_surjective _)
 
 theorem free_balTensor {w : O} (hw : w + star w = 1) [Module.Finite ℤ X]
     [Module.Projective O X] [Module.IsTorsionFree ℤ O] :
-    Module.Free ℤ ((X ⊗[ℤ] X) ⧸ balTensorRel O X) := by
+    Module.Free ℤ ((X ⊗[ℤ] X) ⧸ balTensorRel (O := O) (X := X)) := by
   have : Module.Finite O X := Module.Finite.of_restrictScalars_finite ℤ O X
   have := isTorsionFree_balTensor (X := X) hw
   have := finite_balTensor (O := O) (X := X)
@@ -262,8 +274,8 @@ theorem expTwoPiI_surjective : Function.Surjective expTwoPiI := fun u =>
 
 theorem exists_balForms_log {w : O} (hw : w + star w = 1) [Module.Finite O X]
     [Module.Projective O X] [Module.Free ℤ O] {τ : Bil X (Additive ℂˣ)}
-    (hτ : τ ∈ balForms ℤ O X (Additive ℂˣ)) :
-    ∃ T ∈ balForms ℤ O X ℂ,
+    (hτ : τ ∈ balForms (S := ℤ) (O := O) (Y := X) (A := Additive ℂˣ)) :
+    ∃ T ∈ balForms (S := ℤ) (O := O) (Y := X) (A := ℂ),
       ∀ y x, ((τ y x).toMul : ℂ) = Complex.exp (2 * Real.pi * Complex.I * T y x) := by
   obtain ⟨T, hT, h⟩ := exists_balForms_lift hw expTwoPiI expTwoPiI_surjective hτ
   exact ⟨T, hT, fun y x => by rw [← h, coe_expTwoPiI]⟩

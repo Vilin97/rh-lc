@@ -21,6 +21,7 @@ def UnramifiedPlace (v : HeightOneSpectrum (𝓞 F)) : Prop :=
     Algebra.IsUnramifiedAt (𝓞 F) w.asIdeal
 
 
+open Classical in
 def eta (v : HeightOneSpectrum (𝓞 F)) : ℝ :=
   if IsField (Fv F v ⊗[F] E) then -1 else 1
 

@@ -320,7 +320,8 @@ def orthLift (H : Matrix (m ⊕ l) (m ⊕ l) ℂ) : Matrix (m ⊕ l) l ℂ := fr
 
 def orthProj (H : Matrix (m ⊕ l) (m ⊕ l) ℂ) : Matrix m (m ⊕ l) ℂ := fromCols 1 (orthCoeff H)
 
-def blockQS (T : Matrix (m ⊕ l) (m ⊕ l) ℂ) : Matrix l m ℂ := quotMap m l * T * incl m l
+def blockQS (T : Matrix (m ⊕ l) (m ⊕ l) ℂ) : Matrix l m ℂ :=
+  quotMap (m := m) (l := l) * T * incl (m := m) (l := l)
 
 variable {H : Matrix (m ⊕ l) (m ⊕ l) ℂ}
 
@@ -328,7 +329,8 @@ theorem blockQS_eq (T : Matrix (m ⊕ l) (m ⊕ l) ℂ) : blockQS T = T.toBlocks
   conv_lhs => rw [← fromBlocks_toBlocks T]
   simp [blockQS, quotMap, incl, fromCols_mul_fromBlocks, fromCols_mul_fromRows]
 
-theorem quotMap_mul_orthLift (H : Matrix (m ⊕ l) (m ⊕ l) ℂ) : quotMap m l * orthLift H = 1 := by
+theorem quotMap_mul_orthLift (H : Matrix (m ⊕ l) (m ⊕ l) ℂ) :
+    quotMap (m := m) (l := l) * orthLift H = 1 := by
   simp [quotMap, orthLift, fromCols_mul_fromRows]
 
 theorem orthLift_transpose_mul (hu : IsUnit (subGram H).det) :

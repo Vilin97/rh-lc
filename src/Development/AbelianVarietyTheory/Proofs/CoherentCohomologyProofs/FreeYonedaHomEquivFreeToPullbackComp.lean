@@ -84,7 +84,7 @@ variable {C D : Type u} [Category.{v} C] [Category.{v} D]
   (p : C ⥤ D) [p.IsContinuous J K]
   [(p.sheafPushforwardContinuous AddCommGrpCat.{v} J K).IsRightAdjoint]
 
-open SheafLES
+open GlobalTheory.SheafLES
 
 instance additive_sheafPullback : (p.sheafPullback AddCommGrpCat.{v} J K).Additive :=
   have := (p.sheafAdjunctionContinuous AddCommGrpCat.{v} J K).isLeftAdjoint
@@ -103,48 +103,48 @@ instance additive_sheafPushforwardContinuous :
 
 
 def freeToPullback {V : C} {W : D} (i : W ⟶ p.obj V) :
-    (freeYoneda K).obj W ⟶ (p.sheafPullback AddCommGrpCat.{v} J K).obj ((freeYoneda J).obj V) :=
-  (freeYonedaHomEquiv W _).symm
-    (((p.sheafPullback AddCommGrpCat.{v} J K).obj ((freeYoneda J).obj V)).obj.map i.op
+    (GlobalTheory.SheafLES.freeYoneda K).obj W ⟶ (p.sheafPullback AddCommGrpCat.{v} J K).obj ((GlobalTheory.SheafLES.freeYoneda J).obj V) :=
+  (GlobalTheory.SheafLES.freeYonedaHomEquiv W _).symm
+    (((p.sheafPullback AddCommGrpCat.{v} J K).obj ((GlobalTheory.SheafLES.freeYoneda J).obj V)).obj.map i.op
       (((p.sheafAdjunctionContinuous AddCommGrpCat.{v} J K).unit.app _).hom.app (op V)
         (tautSection V)))
 
 lemma freeYonedaHomEquiv_freeToPullback_comp {V : C} {W : D} (i : W ⟶ p.obj V)
     {G : Sheaf K AddCommGrpCat.{v}}
-    (b : (p.sheafPullback AddCommGrpCat.{v} J K).obj ((freeYoneda J).obj V) ⟶ G) :
-    freeYonedaHomEquiv W G (freeToPullback J K p i ≫ b) =
-      G.obj.map i.op (freeYonedaHomEquiv V _
+    (b : (p.sheafPullback AddCommGrpCat.{v} J K).obj ((GlobalTheory.SheafLES.freeYoneda J).obj V) ⟶ G) :
+    GlobalTheory.SheafLES.freeYonedaHomEquiv W G (freeToPullback J K p i ≫ b) =
+      G.obj.map i.op (GlobalTheory.SheafLES.freeYonedaHomEquiv V _
         ((p.sheafAdjunctionContinuous AddCommGrpCat.{v} J K).homEquiv _ _ b)) := by
-  rw [freeYonedaHomEquiv_comp, freeToPullback, Equiv.apply_symm_apply, Adjunction.homEquiv_unit,
-    freeYonedaHomEquiv_apply]
+  rw [GlobalTheory.SheafLES.freeYonedaHomEquiv_comp, freeToPullback, Equiv.apply_symm_apply, Adjunction.homEquiv_unit,
+    GlobalTheory.SheafLES.freeYonedaHomEquiv_apply]
   exact NatTrans.naturality_apply b.hom i.op _
 
 lemma freeToPullback_comp_map {V V' : C} {W : D} (i : W ⟶ p.obj V') (k : V' ⟶ V) :
-    freeToPullback J K p i ≫ (p.sheafPullback AddCommGrpCat.{v} J K).map ((freeYoneda J).map k) =
+    freeToPullback J K p i ≫ (p.sheafPullback AddCommGrpCat.{v} J K).map ((GlobalTheory.SheafLES.freeYoneda J).map k) =
       freeToPullback J K p (i ≫ p.map k) := by
-  apply (freeYonedaHomEquiv W _).injective
-  rw [freeYonedaHomEquiv_comp, freeToPullback, freeToPullback, Equiv.apply_symm_apply,
+  apply (GlobalTheory.SheafLES.freeYonedaHomEquiv W _).injective
+  rw [GlobalTheory.SheafLES.freeYonedaHomEquiv_comp, freeToPullback, freeToPullback, Equiv.apply_symm_apply,
     Equiv.apply_symm_apply]
   have hu : ((p.sheafAdjunctionContinuous AddCommGrpCat.{v} J K).unit.app
-        ((freeYoneda J).obj V)).hom.app (op V') (((freeYoneda J).map k).hom.app (op V') (tautSection V')) =
-      ((p.sheafPullback AddCommGrpCat.{v} J K).map ((freeYoneda J).map k)).hom.app (op (p.obj V'))
+        ((GlobalTheory.SheafLES.freeYoneda J).obj V)).hom.app (op V') (((GlobalTheory.SheafLES.freeYoneda J).map k).hom.app (op V') (tautSection V')) =
+      ((p.sheafPullback AddCommGrpCat.{v} J K).map ((GlobalTheory.SheafLES.freeYoneda J).map k)).hom.app (op (p.obj V'))
         (((p.sheafAdjunctionContinuous AddCommGrpCat.{v} J K).unit.app
-          ((freeYoneda J).obj V')).hom.app (op V') (tautSection V')) :=
+          ((GlobalTheory.SheafLES.freeYoneda J).obj V')).hom.app (op V') (tautSection V')) :=
     congrArg (fun f => f.hom.app (op V') (tautSection V'))
-      ((p.sheafAdjunctionContinuous AddCommGrpCat.{v} J K).unit.naturality ((freeYoneda J).map k))
-  have ht : ((freeYoneda J).map k).hom.app (op V') (tautSection V') =
-      ((freeYoneda J).obj V).obj.map k.op (tautSection V) := by
-    rw [← freeYonedaHomEquiv_apply, ← Category.comp_id ((freeYoneda J).map k),
-      freeYonedaHomEquiv_map_comp]
+      ((p.sheafAdjunctionContinuous AddCommGrpCat.{v} J K).unit.naturality ((GlobalTheory.SheafLES.freeYoneda J).map k))
+  have ht : ((GlobalTheory.SheafLES.freeYoneda J).map k).hom.app (op V') (tautSection V') =
+      ((GlobalTheory.SheafLES.freeYoneda J).obj V).obj.map k.op (tautSection V) := by
+    rw [← GlobalTheory.SheafLES.freeYonedaHomEquiv_apply, ← Category.comp_id ((GlobalTheory.SheafLES.freeYoneda J).map k),
+      GlobalTheory.SheafLES.freeYonedaHomEquiv_map_comp]
     rfl
   have e2 := NatTrans.naturality_apply
-    ((p.sheafAdjunctionContinuous AddCommGrpCat.{v} J K).unit.app ((freeYoneda J).obj V)).hom k.op
+    ((p.sheafAdjunctionContinuous AddCommGrpCat.{v} J K).unit.app ((GlobalTheory.SheafLES.freeYoneda J).obj V)).hom k.op
     (tautSection V)
   have e3 := hu.symm.trans ((congrArg (fun z => ((p.sheafAdjunctionContinuous AddCommGrpCat.{v} J K).unit.app
-    ((freeYoneda J).obj V)).hom.app (op V') z) ht).trans e2)
+    ((GlobalTheory.SheafLES.freeYoneda J).obj V)).hom.app (op V') z) ht).trans e2)
   refine (NatTrans.naturality_apply _ i.op _).trans ?_
   refine (congrArg (fun z => (((p.sheafPullback AddCommGrpCat.{v} J K).obj
-    ((freeYoneda J).obj V)).obj.map i.op) z) e3).trans ?_
+    ((GlobalTheory.SheafLES.freeYoneda J).obj V)).obj.map i.op) z) e3).trans ?_
   rw [op_comp, Functor.map_comp]
   rfl
 
@@ -159,13 +159,13 @@ def sitePull (φ : F ⟶ (p.sheafPushforwardContinuous AddCommGrpCat.{v} J K).ob
 
 lemma equivZero_sitePull (φ : F ⟶ (p.sheafPushforwardContinuous AddCommGrpCat.{v} J K).obj G)
     {V : C} {W : D} (i : W ⟶ p.obj V) (x : Sheaf.H'.{w} F 0 V) :
-    equivZero G W (sitePull.{w, w'} p φ 0 i x) =
-      G.obj.map i.op (φ.hom.app (op V) (equivZero F V x)) := by
+    GlobalTheory.SheafLES.equivZero G W (sitePull.{w, w'} p φ 0 i x) =
+      G.obj.map i.op (φ.hom.app (op V) (GlobalTheory.SheafLES.equivZero F V x)) := by
   obtain ⟨g, rfl⟩ : ∃ g, Ext.mk₀ g = x := ⟨Ext.addEquiv₀ x, Ext.mk₀_addEquiv₀_apply x⟩
   unfold sitePull
   erw [extMap_mk₀]
   rw [equivZero_mk₀, equivZero_mk₀, freeYonedaHomEquiv_freeToPullback_comp,
-    Adjunction.homEquiv_naturality_left, Equiv.apply_symm_apply, freeYonedaHomEquiv_comp]
+    Adjunction.homEquiv_naturality_left, Equiv.apply_symm_apply, GlobalTheory.SheafLES.freeYonedaHomEquiv_comp]
 
 lemma sitePull_map (φ : F' ⟶ (p.sheafPushforwardContinuous AddCommGrpCat.{v} J K).obj G)
     (s : F ⟶ F') (n : ℕ) {V : C} {W : D} (i : W ⟶ p.obj V) (x : Sheaf.H'.{w} F n V) :
@@ -188,7 +188,7 @@ lemma sitePull_res (φ : F ⟶ (p.sheafPushforwardContinuous AddCommGrpCat.{v} J
     (n : ℕ) {V V' : C} {W : D} (i : W ⟶ p.obj V') (k : V' ⟶ V) (x : Sheaf.H'.{w} F n V) :
     sitePull.{w, w'} p φ n i (res F n k x) = sitePull.{w, w'} p φ n (i ≫ p.map k) x := by
   have h1 := extMap_comp_left (p.sheafPullback AddCommGrpCat.{v} J K) (freeToPullback J K p i)
-    (((p.sheafAdjunctionContinuous AddCommGrpCat.{v} J K).homEquiv _ _).symm φ) ((freeYoneda J).map k) n x
+    (((p.sheafAdjunctionContinuous AddCommGrpCat.{v} J K).homEquiv _ _).symm φ) ((GlobalTheory.SheafLES.freeYoneda J).map k) n x
   rw [freeToPullback_comp_map] at h1
   exact (congrArg (fun y => sitePull.{w, w'} p φ n i y) (res_apply n k x)).trans h1
 
@@ -196,8 +196,8 @@ lemma sitePull_δ {S : ShortComplex (Sheaf J AddCommGrpCat.{v})}
     {T : ShortComplex (Sheaf K AddCommGrpCat.{v})} (hS : S.ShortExact) (hT : T.ShortExact)
     (φ : S ⟶ T.map (p.sheafPushforwardContinuous AddCommGrpCat.{v} J K)) (n : ℕ)
     {V : C} {W : D} (i : W ⟶ p.obj V) (x : Sheaf.H'.{w} S.X₃ n V) :
-    sitePull.{w, w'} p (G := T.X₁) φ.τ₁ (n + 1) i (δ hS n V x) =
-      δ hT n W (sitePull.{w, w'} p (G := T.X₃) φ.τ₃ n i x) := by
+    sitePull.{w, w'} p (G := T.X₁) φ.τ₁ (n + 1) i (GlobalTheory.SheafLES.δ hS n V x) =
+      GlobalTheory.SheafLES.δ hT n W (sitePull.{w, w'} p (G := T.X₃) φ.τ₃ n i x) := by
   have h1 := extMap_extClass (p.sheafPullback AddCommGrpCat.{v} J K) (freeToPullback J K p i) hS hT
     { τ₁ := ((p.sheafAdjunctionContinuous AddCommGrpCat.{v} J K).homEquiv _ _).symm φ.τ₁
       τ₂ := ((p.sheafAdjunctionContinuous AddCommGrpCat.{v} J K).homEquiv _ _).symm φ.τ₂
@@ -212,8 +212,8 @@ lemma sitePull_δ {S : ShortComplex (Sheaf J AddCommGrpCat.{v})}
           φ.comm₂₃
         exact (Adjunction.homEquiv_naturality_right_symm _ _ _).symm.trans
           (h.trans (Adjunction.homEquiv_naturality_left_symm _ _ _)) } n x
-  exact (congrArg (fun y => sitePull.{w, w'} p (G := T.X₁) φ.τ₁ (n + 1) i y) (δ_apply hS n V x)).trans
-    (h1.trans (δ_apply hT n W _).symm)
+  exact (congrArg (fun y => sitePull.{w, w'} p (G := T.X₁) φ.τ₁ (n + 1) i y) (GlobalTheory.SheafLES.δ_apply hS n V x)).trans
+    (h1.trans (GlobalTheory.SheafLES.δ_apply hT n W _).symm)
 
 lemma sitePull_bijective_succ {S : ShortComplex (Sheaf J AddCommGrpCat.{v})}
     {T : ShortComplex (Sheaf K AddCommGrpCat.{v})} (hS : S.ShortExact) (hT : T.ShortExact)
@@ -224,8 +224,8 @@ lemma sitePull_bijective_succ {S : ShortComplex (Sheaf J AddCommGrpCat.{v})}
     (hV : Subsingleton (Sheaf.H'.{w} S.X₂ (n + 1) V))
     (hW : Subsingleton (Sheaf.H'.{w'} T.X₂ (n + 1) W)) :
     Function.Bijective (sitePull.{w, w'} p (G := T.X₁) φ.τ₁ (n + 1) i) := by
-  have hδS := δ_surjective_of_subsingleton hS n V hV
-  have hδT := δ_surjective_of_subsingleton hT n W hW
+  have hδS := GlobalTheory.SheafLES.δ_surjective_of_subsingleton hS n V hV
+  have hδT := GlobalTheory.SheafLES.δ_surjective_of_subsingleton hT n W hW
   have hg : ∀ y, sitePull.{w, w'} p (G := T.X₃) φ.τ₃ n i (map S.g n V y) =
       map T.g n W (sitePull.{w, w'} p (G := T.X₂) φ.τ₂ n i y) := by
     intro y
@@ -244,18 +244,18 @@ lemma sitePull_bijective_succ {S : ShortComplex (Sheaf J AddCommGrpCat.{v})}
   · intro b
     obtain ⟨z, rfl⟩ := hδT b
     obtain ⟨z', rfl⟩ := h₃.2 z
-    exact ⟨δ hS n V z', sitePull_δ p hS hT φ n i z'⟩
+    exact ⟨GlobalTheory.SheafLES.δ hS n V z', sitePull_δ p hS hT φ n i z'⟩
 
 lemma sitePull_bijective_zero (φ : F ⟶ (p.sheafPushforwardContinuous AddCommGrpCat.{v} J K).obj G)
     {V : C} {W : D} (i : W ⟶ p.obj V)
     (h : Function.Bijective fun s : F.obj.obj (op V) ↦ G.obj.map i.op (φ.hom.app (op V) s)) :
     Function.Bijective (sitePull.{w, w'} p φ 0 i) := by
-  have key : ⇑(equivZero G W) ∘ ⇑(sitePull.{w, w'} p φ 0 i) =
-      (fun s : F.obj.obj (op V) ↦ G.obj.map i.op (φ.hom.app (op V) s)) ∘ ⇑(equivZero F V) :=
+  have key : ⇑(GlobalTheory.SheafLES.equivZero G W) ∘ ⇑(sitePull.{w, w'} p φ 0 i) =
+      (fun s : F.obj.obj (op V) ↦ G.obj.map i.op (φ.hom.app (op V) s)) ∘ ⇑(GlobalTheory.SheafLES.equivZero F V) :=
     funext (equivZero_sitePull p φ i)
-  have hb := h.comp (equivZero F V).bijective
+  have hb := h.comp (GlobalTheory.SheafLES.equivZero F V).bijective
   rw [← key] at hb
-  exact (EquivLike.comp_bijective _ (equivZero G W)).1 hb
+  exact (EquivLike.comp_bijective _ (GlobalTheory.SheafLES.equivZero G W)).1 hb
 
 end Site
 

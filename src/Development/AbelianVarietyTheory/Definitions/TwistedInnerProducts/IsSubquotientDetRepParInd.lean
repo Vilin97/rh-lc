@@ -27,6 +27,7 @@ theorem nabs_pos' (x : kˣ) : 0 < nabs k x := by
 theorem nabs_mul' (x y : kˣ) : nabs k (x * y) = nabs k x * nabs k y := by simp [nabs]
 
 
+open scoped Pointwise in
 theorem nabs_eq_one {x : kˣ} (hx : valuation k (x : k) = 1) : nabs k x = 1 := by
   borelize k
   have hc : IsCompact (𝒪[k] : Set k) := IsNonarchimedeanLocalField.isCompact_closedBall k 1
@@ -118,7 +119,7 @@ theorem ord_eq_one {x : kˣ} (hx : valuation k (x : k) = uniformizer k) : ord k 
 
 
 theorem ord_eq_zero_iff {x : kˣ} : ord k x = 0 ↔ valuation k (x : k) = 1 := by
-  refine ⟨fun h => ?_, ord_eq_zero⟩
+  refine ⟨fun h => ?_, ord_eq_zero k⟩
   set φ := IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt k
   have h0 : φ (valuation k (x : k)) ≠ 0 := by simp
   have h1 : WithZero.log (φ (valuation k (x : k))) = 0 := neg_eq_zero.1 h
@@ -127,17 +128,17 @@ theorem ord_eq_zero_iff {x : kˣ} : ord k x = 0 ↔ valuation k (x : k) = 1 := b
 
 def unrChar (α : ℂˣ) : kˣ →* ℂˣ where
   toFun x := α ^ ord k x
-  map_one' := by rw [ord_eq_zero (by simp), zpow_zero]
+  map_one' := by rw [ord_eq_zero k (x := 1) (by simp), zpow_zero]
   map_mul' x y := by rw [ord_mul, _root_.zpow_add]
 
 theorem unrChar_apply (α : ℂˣ) (x : kˣ) : unrChar k α x = α ^ ord k x := rfl
 
 theorem isUnram_unrChar (α : ℂˣ) : IsUnram (unrChar k α) := fun x hx => by
-  rw [unrChar_apply, ord_eq_zero hx, zpow_zero]
+  rw [unrChar_apply, ord_eq_zero k hx, zpow_zero]
 
 theorem unrChar_uniformizer (α : ℂˣ) {x : kˣ} (hx : valuation k (x : k) = uniformizer k) :
     unrChar k α x = α := by
-  rw [unrChar_apply, ord_eq_one hx, zpow_one]
+  rw [unrChar_apply, ord_eq_one k hx, zpow_one]
 
 
 theorem eq_unrChar {χ : kˣ →* ℂˣ} (h : IsUnram χ) {ϖ : kˣ}
@@ -146,10 +147,10 @@ theorem eq_unrChar {χ : kˣ →* ℂˣ} (h : IsUnram χ) {ϖ : kˣ}
     rw [ord_mul, ofAdd_add]
   refine MonoidHom.ext fun x => ?_
   have h1 : o (x / ϖ ^ ord k x) = 1 := by
-    rw [map_div, map_zpow, show o ϖ = .ofAdd 1 from congrArg Multiplicative.ofAdd (ord_eq_one hϖ), ← ofAdd_zsmul,
-      smul_eq_mul, mul_one]
+    rw [map_div, map_zpow, show o ϖ = .ofAdd 1 from congrArg Multiplicative.ofAdd (ord_eq_one k hϖ),
+      ← ofAdd_zsmul, smul_eq_mul, mul_one]
     exact div_self' _
-  have h2 := h _ (ord_eq_zero_iff.1 (ofAdd_eq_one.1 h1))
+  have h2 := h _ ((ord_eq_zero_iff k).1 (ofAdd_eq_one.1 h1))
   rw [map_div, map_zpow, div_eq_one] at h2
   exact h2
 
@@ -219,7 +220,7 @@ theorem isSmoothChar_deltaHalf : IsSmoothChar (deltaHalf k m) := by
   unfold deltaHalf
   refine Finset.prod_induction _ IsSmoothChar (fun _ _ => IsSmoothChar.mul) ?_ fun a _ => ?_
   · unfold IsSmoothChar; simp
-  · exact (isSmoothChar_of_isUnram (isUnram_absPow k _)).detChar.comp _ (continuous_apply a)
+  · exact (isSmoothChar_of_isUnram k (isUnram_absPow k _)).detChar.comp _ (continuous_apply a)
 
 variable {k}
 
@@ -569,11 +570,11 @@ theorem hasSatake_detRep {N : ℕ} {χ : kˣ →* ℂˣ} (h : IsUnram χ) {ϖ : 
     refine Finset.prod_congr rfl fun i _ => ?_
     have hu : IsUnram (χ * absPow k (((i : ℕ) : ℂ) - ((N : ℂ) - 1) / 2)) := fun x hx => by
       rw [MonoidHom.mul_apply, h x hx, isUnram_absPow k _ x hx, one_mul]
-    rw [← MonoidHom.mul_apply, ← eq_unrChar hu hϖ, modExp_fin _ (fun _ => by simp)]
+    rw [← MonoidHom.mul_apply, ← eq_unrChar k hu hϖ, modExp_fin _ (fun _ => by simp)]
     congr 3
     push_cast
     ring
-  have := isSubquotient_detRep_parInd (points (Fin N)) (isSmoothChar_of_isUnram h)
+  have := isSubquotient_detRep_parInd (points (Fin N)) (isSmoothChar_of_isUnram k h)
   rw [← key] at this
   exact this
 
@@ -584,7 +585,7 @@ theorem isCuspidal_detRep_one {χ : kˣ →* ℂˣ} (hχ : IsSmoothChar χ) :
   ext i j
   obtain rfl : i = j := Subsingleton.elim _ _
   obtain ⟨⟨a, i⟩, rfl⟩ := e.surjective i
-  simpa using (mem_unipRad.1 hu).2 a i i
+  simpa using ((mem_unipRad k).1 hu).2 a i i
 
 end Examples
 

@@ -165,7 +165,7 @@ variable (K L M : Type*) [Field K] [ValuativeRel K] [Field L] [ValuativeRel L]
 
 theorem valuativeExtension_trans [ValuativeExtension K L] [ValuativeExtension L M] :
     ValuativeExtension K M where
-  vle_iff_vle a b := by
+  vle_iff_vle {a b} := by
     rw [IsScalarTower.algebraMap_apply K L M, IsScalarTower.algebraMap_apply K L M,
       ValuativeExtension.vle_iff_vle, ValuativeExtension.vle_iff_vle]
 

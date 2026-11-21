@@ -151,21 +151,20 @@ theorem map_restrict_le_quotMeasure {D : Set X} (hD : NullMeasurableSet D μ)
 @[to_additive isAEAddOrbitSection_of_isAddFundamentalDomain
 ]
 theorem isAEOrbitSection_of_isFundamentalDomain [Countable G] {D : Set X}
-    (hD : IsFundamentalDomain G D μ) : IsAEOrbitSection G D μ where
-  nullMeasurableSet := hD.nullMeasurableSet
-  ae_covers := hD.ae_covers
-  ae_unique := by
-    have : ∀ᵐ x ∂μ, ∀ g : G, x ∈ D → g • x ∈ D → g • x = x := by
-      refine ae_all_iff.2 fun g => ?_
-      by_cases hg : g = 1
-      · exact Eventually.of_forall fun x _ _ => by rw [hg, one_smul]
-      · have := hD.aedisjoint (inv_ne_one.2 hg)
-        refine measure_mono_null (fun x hx => ?_) this
-        simp only [mem_compl_iff, mem_setOf_eq, Classical.not_imp] at hx
-        refine ⟨?_, ?_⟩
-        · rw [mem_smul_set_iff_inv_smul_mem, inv_inv]; exact hx.2.1
-        · simpa using hx.1
-    filter_upwards [this] with x hx hxD g hg using hx g hxD hg
+    (hD : IsFundamentalDomain G D μ) : IsAEOrbitSection G D μ := by
+  refine ⟨hD.nullMeasurableSet, hD.ae_covers, ?_⟩
+  have h : ∀ᵐ x ∂μ, ∀ g : G, x ∈ D → g • x ∈ D → g • x = x := by
+    refine ae_all_iff.2 fun g => ?_
+    by_cases hg : g = 1
+    · exact Eventually.of_forall fun x _ _ => by rw [hg, one_smul]
+    · have hdisj : AEDisjoint μ (g⁻¹ • D) D := by
+        simpa only [Function.onFun, one_smul] using hD.aedisjoint (inv_ne_one.2 hg)
+      refine measure_mono_null (fun x hx => ?_) hdisj.eq
+      simp only [mem_compl_iff, mem_ofPred_eq, Classical.not_imp] at hx
+      refine ⟨?_, hx.1⟩
+      rw [mem_smul_set_iff_inv_smul_mem, inv_inv]
+      exact hx.2.1
+  filter_upwards [h] with x hx hxD g hg using hx g hxD hg
 
 variable [Countable G] [MeasurableConstSMul G X] [SMulInvariantMeasure G X μ]
 

@@ -66,6 +66,9 @@ theorem map_eq_of_measurePreserving_coordinates {N V : Type*} [Group N] [Topolog
   have e : c = φ ∘ (fun x => φ.symm (c (φ x))) ∘ φ.symm := by
     funext x
     simp
+  have hc : AEMeasurable c (lam.map φ) := by
+    rw [φ.measurableEmbedding.aemeasurable_map_iff]
+    simpa only [Function.comp_apply] using (hφ.comp hC.measurable).aemeasurable
   rw [e]
   exact key _ hC
 

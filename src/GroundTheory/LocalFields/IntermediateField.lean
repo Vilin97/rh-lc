@@ -26,12 +26,16 @@ theorem IntermediateField.coe_vle_coe_iff (x y : E) : (x : L) ≤ᵥ (y : L) ↔
   by exact (valuation L).vle_iff_le
 
 instance intermediateField_valuativeExtension_right : ValuativeExtension E L :=
-  ⟨IntermediateField.coe_vle_coe_iff⟩
+  ⟨by
+    intro a b
+    exact IntermediateField.coe_vle_coe_iff (E := E) a b⟩
 
 instance intermediateField_valuativeExtension_left [ValuativeRel K] [ValuativeExtension K L] :
     ValuativeExtension K E :=
-  ⟨fun a b ↦ by
-    rw [← IntermediateField.coe_vle_coe_iff, IntermediateField.coe_algebraMap_apply,
+  ⟨by
+    intro a b
+    rw [← IntermediateField.coe_vle_coe_iff (E := E) (algebraMap K E a)
+      (algebraMap K E b), IntermediateField.coe_algebraMap_apply,
       IntermediateField.coe_algebraMap_apply, ValuativeExtension.vle_iff_vle]⟩
 
 

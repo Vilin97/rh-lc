@@ -36,12 +36,8 @@ noncomputable def freeSheafHomEquiv (U : C) (F : Sheaf J AddCommGrpCat.{v}) :
 
 variable [HasExt.{w} (Sheaf J AddCommGrpCat.{v})]
 
-open CategoryTheory Abelian Opposite Limits TopologicalSpace in
-variable {C : Type u} [Category.{v} C] (J : GrothendieckTopology C)
-  [HasSheafify J AddCommGrpCat.{v}] in
-
 lemma _root_.GlobalTheory.Flasque.subsingleton_H'_of_injective (I : Sheaf J AddCommGrpCat.{v}) [Injective I]
-    (n : ℕ) (U : C) : Subsingleton (I.H' (n + 1) U) :=
+    (n : ℕ) (U : C) : Subsingleton (Sheaf.H'.{w} I (n + 1) U) :=
   Ext.subsingleton_of_injective (_root_.GlobalTheory.Flasque.freeSheaf J U) I n
 
 section Shift

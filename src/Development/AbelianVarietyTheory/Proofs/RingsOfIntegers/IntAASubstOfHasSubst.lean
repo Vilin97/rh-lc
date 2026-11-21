@@ -43,7 +43,7 @@ theorem intAA_prod {ι : Type*} (t : Finset ι) {f : ι → MvPowerSeries σ k}
   Finset.prod_induction f (IntAA (R := R) k) (fun _ _ => intAA_mul) intAA_one hf
 
 theorem intAA_pderiv {f : MvPowerSeries σ k} (s : σ) (hf : IntAA (R := R) k f) :
-    IntAA (R := R) k (pderiv k s f) := fun n => by
+    IntAA (R := R) k (pderiv s f) := fun n => by
   rw [coeff_pderiv]
   exact Subring.mul_mem _ (hf _) (Subring.add_mem _ (natCast_mem _ _) (Subring.one_mem _))
 
@@ -63,7 +63,7 @@ theorem intAA_subst [Finite σ] {a : σ → MvPowerSeries τ k} {f : MvPowerSeri
 
 theorem main : ∀ (R : Type) [CommRing R] (k : Type) [CommRing k] [Algebra R k],
   (∀ (σ : Type) (f g : MvPowerSeries σ k), IntAA (R := R) k f → IntAA (R := R) k g → IntAA (R := R) k (f + g) ∧ IntAA (R := R) k (f - g) ∧ IntAA (R := R) k (f * g)) ∧
-  (∀ (σ : Type) (f : MvPowerSeries σ k) (s : σ), IntAA (R := R) k f → IntAA (R := R) k (pderiv k s f)) ∧
+  (∀ (σ : Type) (f : MvPowerSeries σ k) (s : σ), IntAA (R := R) k f → IntAA (R := R) k (pderiv s f)) ∧
   (∀ (σ : Type) (f : MvPowerSeries σ R), IntAA (R := R) k (MvPowerSeries.map (algebraMap R k) f)) ∧
   (∀ (σ τ : Type) [Finite σ] (a : σ → MvPowerSeries τ k) (f : MvPowerSeries σ k), (∀ s, constantCoeff (a s) = 0) → (∀ s, IntAA (R := R) k (a s)) → IntAA (R := R) k f → IntAA (R := R) k (MvPowerSeries.subst a f)) :=
   fun _ _ _ _ _ =>

@@ -89,6 +89,4 @@ theorem length_coker (P : Matrix ι ι R) :
     rw [length_coker_of_injective (Pi.basisFun R ι) _ hinj, ← Matrix.toLin'_apply',
       LinearMap.det_toLin']
 
-universe u_1 u_2 u_3 in
-
 end GlobalTheory.RelativeLengthSpanDet

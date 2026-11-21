@@ -227,7 +227,7 @@ theorem DiffVanish.multiDiff_update_add {d : ℕ} {φ : G → M} (h : DiffVanish
     h.shiftAct_eq_zero hm, sub_zero, LinearMap.add_apply]
 
 def DiffVanish.form {d : ℕ} {φ : G → M} (h : DiffVanish (d + 1) φ) :
-    MultilinearMap ℤ (fun _ : Fin d ↦ G) M :=
+    MultilinearMap (RingHom.id ℤ) (fun _ : Fin d ↦ G) M :=
   MultilinearMap.mk' (fun g ↦ multiDiff g φ 0)
     (fun g i a b ↦ by exact congrFun (h.multiDiff_update_add g i a b) 0)
     (fun g i c a ↦ by

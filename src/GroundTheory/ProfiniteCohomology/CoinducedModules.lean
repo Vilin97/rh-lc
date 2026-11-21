@@ -77,13 +77,13 @@ noncomputable def coindEmbedding (A : Rep.{u} k G) [IsDiscreteRep A] : A ⟶ dis
       map_smul' := fun r a => LocallyConstant.ext fun g => map_smul (A.ρ g) r a
       isIntertwining' := fun h => LinearMap.ext fun a => LocallyConstant.ext fun x => by
         change A.ρ x (A.ρ h a) = A.ρ (x * h) a
-        rw [map_mul, Module.End.mul_apply] }
+        rw [map_mul, mul_apply_eq_comp] }
 
 @[simp]
 theorem coindEval_coindEmbedding (A : Rep.{u} k G) [IsDiscreteRep A] (a : A) :
     coindEval k G A ((coindEmbedding A).hom a) = a := by
   change A.ρ 1 a = a
-  rw [map_one, Module.End.one_apply]
+  rw [map_one, one_apply_eq_self]
 
 theorem coindEmbedding_injective (A : Rep.{u} k G) [IsDiscreteRep A] :
     Function.Injective (coindEmbedding A).hom :=
@@ -122,18 +122,17 @@ noncomputable def coindShortComplex (A : Rep.{u} k G) [IsDiscreteRep A] :
   ShortComplex.mk (coindEmbedding A) (coindCokernelπ A) (coindEmbedding_comp_coindCokernelπ A)
 
 theorem coindShortComplex_shortExact (A : Rep.{u} k G) [IsDiscreteRep A] :
-    (coindShortComplex A).ShortExact where
-  exact := by
-    rw [← ShortComplex.exact_map_iff_of_faithful _ (forget₂ (Rep.{u} k G) (ModuleCat.{u} k)),
+    (coindShortComplex A).ShortExact := by
+  apply ShortComplex.ShortExact.mk'
+  · rw [← ShortComplex.exact_map_iff_of_faithful _ (forget₂ (Rep.{u} k G) (ModuleCat.{u} k)),
       ShortComplex.moduleCat_exact_iff]
     intro f hf
     change Submodule.Quotient.mk (p := coindEmbeddingRange A) f = 0 at hf
     obtain ⟨a, ha⟩ := (Submodule.Quotient.mk_eq_zero _).1 hf
     exact ⟨a, ha⟩
-  mono_f := by
-    change Mono (coindEmbedding A)
+  · change Mono (coindEmbedding A)
     infer_instance
-  epi_g := (Rep.epi_iff_surjective _).2 (Submodule.mkQ_surjective _)
+  · exact (Rep.epi_iff_surjective _).2 (Submodule.mkQ_surjective _)
 
 end Embedding
 

@@ -182,8 +182,8 @@ theorem isLocalizedModule_resBasicOpen [F.IsQuasicoherent] (hU : IsAffineOpen U)
 
 theorem nonempty_presentation_Spec {R : CommRingCat.{u}} (M : (Spec R).Modules)
     [M.IsQuasicoherent] : Nonempty M.Presentation := by
-  haveI hIso : IsIso M.fromTildeΓ := Scheme.Modules.isIso_fromTildeΓ_of_isQuasicoherent M
-  exact ⟨@SheafOfModules.Presentation.ofIsIso.{u, u, u} _ _ _ _ M.fromTildeΓ hIso
+  have hIso : IsIso M.fromTildeΓ := Scheme.Modules.isIso_fromTildeΓ_of_isQuasicoherent M
+  exact ⟨@SheafOfModules.Presentation.ofIsIso.{u, u, u} _ _ _ _ _ _ _ M M.fromTildeΓ hIso
     (presentationTilde.{u} _ .univ (by simp) _ (Submodule.span_eq _))⟩
 
 set_option backward.isDefEq.respectTransparency false in
@@ -397,14 +397,15 @@ theorem mem_primeCompl_primeIdealOf_iff (hU : IsAffineOpen U) (x : U) (f : Γ(X,
     (hU.primeIdealOf x).asIdeal f).symm
 
 theorem isLocalizedModule_germLinear [F.IsQuasicoherent] (hU : IsAffineOpen U) (x : U) :
-    IsLocalizedModule (hU.primeIdealOf x).asIdeal.primeCompl (germLinear F x) where
-  map_units r := by
+    IsLocalizedModule (hU.primeIdealOf x).asIdeal.primeCompl (germLinear F x) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro r
     have hr := (X.mem_basicOpen' r.1 x).mp ((mem_primeCompl_primeIdealOf_iff hU x r.1).mp r.2)
     have := hr.map (algebraMap (X.presheaf.stalk (x : X))
       (Module.End (X.presheaf.stalk (x : X)) (F.presheaf.stalk (x : X) :)))
     rw [Module.End.isUnit_iff] at this ⊢
     exact this
-  surj t := by
+  · intro t
     obtain ⟨W, hxW, s, rfl⟩ := F.presheaf.exists_germ_eq t
     obtain ⟨f, hfW, hxf⟩ := hU.exists_basicOpen_le (V := W) ⟨x, hxW⟩ x.2
     obtain ⟨n, t, ht⟩ := exists_pow_smul_eq_res F hU f (X.basicOpen_le f) rfl
@@ -414,7 +415,7 @@ theorem isLocalizedModule_germLinear [F.IsQuasicoherent] (hU : IsAffineOpen U) (
     rw [germ_smul, TopCat.Presheaf.germ_res_apply, TopCat.Presheaf.germ_res_apply, ← map_pow,
       TopCat.Presheaf.germ_res_apply] at this
     exact this
-  exists_of_eq {s t} e := by
+  · intro s t e
     obtain ⟨W, hxW, i, j, e'⟩ := F.presheaf.germ_eq x x.2 x.2 s t e
     obtain ⟨f, hfW, hxf⟩ := hU.exists_basicOpen_le (V := W) ⟨x, hxW⟩ x.2
     obtain ⟨n, hn⟩ := exists_pow_smul_eq_zero F hU f (X.basicOpen_le f) rfl (s - t) (by

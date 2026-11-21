@@ -17,7 +17,7 @@ theorem polishSpace_of_locallyCompact {G : Type*} [Group G] [TopologicalSpace G]
     PolishSpace G := by
   let _ := IsTopologicalGroup.rightUniformSpace G
   have : IsRightUniformGroup G := ⟨rfl⟩
-  have : CompleteSpace G := IsRightUniformGroup.completeSpace_of_weaklyLocallyCompactSpace
+  have : CompleteSpace G := IsRightUniformGroup.completeSpace_of_weaklyLocallyCompactSpace G
   have : (𝓤 G).IsCountablyGenerated := by
     rw [uniformity_eq_comap_nhds_one']
     infer_instance

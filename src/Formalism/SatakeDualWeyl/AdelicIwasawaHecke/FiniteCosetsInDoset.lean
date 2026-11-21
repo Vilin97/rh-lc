@@ -17,6 +17,7 @@ abbrev conjInter (K : Subgroup G) (s : G) : Subgroup K :=
 
 theorem finite_quot_conjInter {K : Subgroup G} (hK : IsCommensurated K) (s : G) :
     Finite (K ⧸ conjInter K s) := by
+  unfold IsCommensurated at hK
   haveI : (conjInter K s).FiniteIndex := ⟨hK s⟩
   exact Subgroup.finite_quotient_of_finiteIndex
 

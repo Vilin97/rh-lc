@@ -33,15 +33,17 @@ theorem exists_pow_classNumber_eq_span (v : HeightOneSpectrum (𝓞 K)) :
   exact pow_ne_zero _ v.ne_bot ha'
 
 
+open scoped Classical in
 theorem intValuation_of_pow_eq_span {v w : HeightOneSpectrum (𝓞 K)} {a : 𝓞 K} (ha : a ≠ 0)
     {n : ℕ} (h : v.asIdeal ^ n = Ideal.span {a}) :
     w.intValuation a = if w = v then WithZero.exp (-(n : ℤ)) else 1 := by
+  classical
   rw [intValuation_eq_exp_neg_multiplicity w ha, ← h]
   split_ifs with hw
   · subst hw
     rw [multiplicity_pow_self_of_prime w.prime n]
   · have h0 : multiplicity w.asIdeal (v.asIdeal ^ n) = 0 := by
-      rw [multiplicity_eq_zero]
+      apply multiplicity_eq_zero_of_not_dvd
       intro hdvd
       apply hw
       have hle : v.asIdeal ≤ w.asIdeal := Ideal.le_of_dvd (w.prime.dvd_of_dvd_pow hdvd)

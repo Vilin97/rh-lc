@@ -73,7 +73,7 @@ theorem exists_pow_eq_of_isAlgClosed {R : Type u} [CommRing R] [IsDomain R] [IsI
 
 namespace Tilt
 
-
+variable (p R) in
 def sharpEquiv : Tilt p R ≃* Perfection R p :=
   (Perfection.quotientMulEquiv p (span {(p : R)})).symm
 

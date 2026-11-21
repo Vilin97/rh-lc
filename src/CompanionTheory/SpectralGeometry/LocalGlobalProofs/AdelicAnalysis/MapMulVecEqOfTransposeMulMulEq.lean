@@ -74,11 +74,14 @@ theorem measurePreserving_transvection (ν : Measure R) [ν.IsAddHaarMeasure] {i
   exact (A.symm e).comp (B.comp A)
 
 
-noncomputable def scale (A : Matrix ι ι R) : ℝ≥0 :=
-  if h : IsUnit A.det then addEquivAddHaarChar (mulVecEquiv A h) else 1
+noncomputable def scale (A : Matrix ι ι R) : ℝ≥0 := by
+  classical
+  exact if h : IsUnit A.det then addEquivAddHaarChar (mulVecEquiv A h) else 1
 
 theorem scale_of_isUnit {A : Matrix ι ι R} (h : IsUnit A.det) :
-    scale A = addEquivAddHaarChar (mulVecEquiv A h) := dif_pos h
+    scale A = addEquivAddHaarChar (mulVecEquiv A h) := by
+  classical
+  exact dite_eq_left h
 
 theorem scale_mul {A B : Matrix ι ι R} (hA : IsUnit A.det) (hB : IsUnit B.det) :
     scale (A * B) = scale A * scale B := by

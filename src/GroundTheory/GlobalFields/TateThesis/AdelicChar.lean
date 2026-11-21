@@ -158,6 +158,7 @@ theorem forall_coe_mem_localInvDifferent_iff (k : K) :
     (algebraMap K 𝔸[K] k).2 = algebraMap K (FiniteAdeleRing (𝓞 K) K) k := rfl
 
 
+variable (K) in
 def finiteInvDifferent : AddSubgroup (FiniteAdeleRing (𝓞 K) K) where
   carrier := {a | ∀ v : HeightOneSpectrum (𝓞 K), a v ∈ localInvDifferent v}
   zero_mem' v := zero_mem (localInvDifferent v)
@@ -173,6 +174,7 @@ theorem mem_finiteInvDifferent_of_mem_integralFiniteAdeles {a : FiniteAdeleRing 
   fun v => mem_localInvDifferent_of_mem (ha v)
 
 
+variable (K) in
 theorem isOpen_finiteInvDifferent :
     IsOpen (finiteInvDifferent K : Set (FiniteAdeleRing (𝓞 K) K)) :=
   AddSubgroup.isOpen_of_mem_nhds _ (g := 0) (Filter.mem_of_superset
@@ -199,6 +201,7 @@ theorem exists_trace_eq_intCast {k : K}
   simp
 
 
+variable (K) in
 def invDifferentAdeles : AddSubgroup 𝔸[K] :=
   (⊤ : AddSubgroup (InfiniteAdeleRing K)).prod (finiteInvDifferent K)
 
@@ -223,6 +226,7 @@ theorem fourierChar_infiniteTrace_eq (x : InfiniteAdeleRing K) (a : FiniteAdeleR
   rw [this, AddChar.map_sub_eq_div, fourierChar_intCast, div_one]
 
 
+variable (K) in
 def adelicCharFun (x : 𝔸[K]) : Circle :=
   𝐞 (-infiniteTrace K (x.1 - algebraMap K _ (exists_sub_mem_finiteInvDifferent x.2).choose))
 
@@ -232,6 +236,7 @@ theorem adelicCharFun_eq (x : 𝔸[K]) {k : K}
   fourierChar_infiniteTrace_eq _ _ (exists_sub_mem_finiteInvDifferent x.2).choose_spec hk
 
 
+variable (K) in
 def adelicChar : AddChar 𝔸[K] Circle where
   toFun := adelicCharFun K
   map_zero_eq_one' := by
@@ -244,12 +249,12 @@ def adelicChar : AddChar 𝔸[K] Circle where
       have := add_mem hx hy
       rw [map_add (f := _)]
       convert this using 1
-      rw [adeleRing_add_snd]
+      rw [show (x + y).2 = x.2 + y.2 from rfl]
       abel
     rw [adelicCharFun_eq _ hxy, adelicCharFun_eq _ hx, adelicCharFun_eq _ hy,
       ← AddChar.map_add_eq_mul]
     congr 1
-    simp only [adeleRing_add_fst, map_add (f := _), map_sub]
+    simp only [show (x + y).1 = x.1 + y.1 from rfl, map_add (f := _), map_sub]
     ring
 
 theorem adelicChar_eq (x : 𝔸[K]) {k : K}

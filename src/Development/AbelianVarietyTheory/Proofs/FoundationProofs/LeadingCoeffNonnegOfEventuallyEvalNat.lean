@@ -31,7 +31,7 @@ theorem leadingCoeff_nonneg_of_eventually_eval_nat {P : ℚ[X]}
     rw [eq_C_of_degree_le_zero h0] at hn hneg
     simp only [eval_C, leadingCoeff_C] at hn hneg
     exact absurd hn (not_le.2 hneg)
-  · have := ((tendsto_atBot_of_leadingCoeff_nonpos P h0 hneg.le).comp
+  · have := ((tendsto_atBot_of_leadingCoeff_nonpos h0 hneg.le).comp
       (tendsto_natCast_atTop_atTop (R := ℚ))).eventually (eventually_lt_atBot 0)
     obtain ⟨n, h1, h2⟩ := (h.and this).exists
     exact absurd h1 (not_le.2 h2)
@@ -159,7 +159,9 @@ theorem exists_isHilbertPoly_quotPiece [Fintype ι] {I : Ideal (MvPolynomial ι 
 
 
 noncomputable def idealHilbertPoly (I : Ideal (MvPolynomial ι k)) : ℚ[X] :=
-  if h : ∃ P, IsHilbertPoly (quotPiece I) P then h.choose else 0
+  by
+    classical
+    exact if h : ∃ P, IsHilbertPoly (quotPiece I) P then h.choose else 0
 
 theorem isHilbertPoly_idealHilbertPoly [Finite ι] {I : Ideal (MvPolynomial ι k)}
     (hI : I.IsHomogeneous (homogeneousSubmodule ι k)) :

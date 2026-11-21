@@ -15,8 +15,9 @@ namespace ReciprocityTheory.Neutral.Bridge.HCFR
 variable (K : Type) [Field K] [NumberField K]
 
 
-def infIdele (w : InfinitePlace K) : (w.Completion)ˣ →* Ideles K :=
-  Units.map
+def infIdele (w : InfinitePlace K) : (w.Completion)ˣ →* Ideles K := by
+  classical
+  exact Units.map
     { toFun := fun x => ((Pi.mulSingle w x : InfiniteAdeleRing K), (1 : FiniteAdeleRing (𝓞 K) K))
       map_one' := Prod.ext (Pi.mulSingle_one w) rfl
       map_mul' := fun x y => Prod.ext (Pi.mulSingle_mul w x y) (mul_one 1).symm }

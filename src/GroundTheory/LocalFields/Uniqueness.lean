@@ -121,7 +121,7 @@ theorem vlt_map_iff (f : L →ₐ[K] M) (x y : L) : f x <ᵥ f y ↔ x <ᵥ y :=
   rw [← not_vle, vle_map_iff, not_vle]
 
 theorem valuativeExtension_algHom (f : L →ₐ[K] M) :
-    letI := f.toRingHom.toAlgebra
+    letI := f.toRingHom.toAlgebra;
     ValuativeExtension L M :=
   letI := f.toRingHom.toAlgebra
   ⟨fun {a b} => vle_map_iff f a b⟩
@@ -190,6 +190,11 @@ def integerAlgHom (f : L →ₐ[K] M) : 𝒪[L] →ₐ[𝒪[K]] 𝒪[M] where
   commutes' r := by ext; simp
 
 def residueAlgHom (f : L →ₐ[K] M) : 𝓀[L] →ₐ[𝓀[K]] 𝓀[M] :=
+  letI : IsLocalHom (integerAlgHom f) :=
+    ⟨fun x => by
+      rw [← not_imp_not, Valuation.Integer.not_isUnit_iff_valuation_lt_one,
+        Valuation.Integer.not_isUnit_iff_valuation_lt_one]
+      exact (valuation_map_lt_one_iff f x).mpr⟩
   IsLocalRing.ResidueField.mapAlgHom' (integerAlgHom f)
 
 variable (K L)
@@ -217,7 +222,8 @@ theorem valuation_algEquiv_apply (σ : L ≃ₐ[K] L) (x : L) : valuation L (σ 
 
 def integerAlgEquiv : (L ≃ₐ[K] L) →* (𝒪[L] ≃ₐ[𝒪[K]] 𝒪[L]) where
   toFun σ := AlgEquiv.ofAlgHom (integerAlgHom σ.toAlgHom) (integerAlgHom σ.symm.toAlgHom)
-    (by ext; simp) (by ext; simp)
+    (AlgHom.ext fun x => Subtype.ext (σ.apply_symm_apply (x : L)))
+    (AlgHom.ext fun x => Subtype.ext (σ.symm_apply_apply (x : L)))
   map_one' := by ext; rfl
   map_mul' _ _ := by ext; rfl
 

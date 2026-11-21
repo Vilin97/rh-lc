@@ -118,7 +118,7 @@ theorem exists_finset_separating [Finite G] (P : Ideal A) (H : Set G)
     (hH' : ∀ g ∉ H, P ⊔ Ideal.span (Set.range fun a : A ↦ g • a - a) = ⊤) :
     ∃ s : Finset (A × A), (∀ g ∉ H, ∑ p ∈ s, p.1 * g • p.2 = 0) ∧
       ∀ h ∈ H, ∑ p ∈ s, p.1 * h • p.2 - 1 ∈ P := by
-  obtain ⟨e, he, he'⟩ := exists_galoisMap_separating ℤ P H hH hH'
+  obtain ⟨e, he, he'⟩ := exists_galoisMap_separating (G := G) (A := A) ℤ P H hH hH'
   obtain ⟨s, rfl⟩ := e.exists_finset
   refine ⟨s, fun g hg ↦ ?_, fun h hh ↦ ?_⟩
   · simpa [Finset.sum_apply] using he g hg
@@ -128,7 +128,7 @@ theorem exists_finset_separating [Finite G] (P : Ideal A) (H : Set G)
 theorem exists_galois_coordinates [Finite G] (h : IsFreeRingAction G A) :
     ∃ s : Finset (A × A), (∀ g : G, g ≠ 1 → ∑ p ∈ s, p.1 * g • p.2 = 0) ∧
       ∑ p ∈ s, p.1 * p.2 = 1 := by
-  obtain ⟨s, hs, hs'⟩ := exists_finset_separating (G := G) (⊥ : Ideal A) {1}
+  obtain ⟨s, hs, hs'⟩ := exists_finset_separating (G := G) (A := A) (⊥ : Ideal A) {1}
     (by rintro _ rfl a; simp) (fun g hg ↦ by rw [h g hg, sup_top_eq])
   exact ⟨s, hs, by simpa [sub_eq_zero] using hs' 1 rfl⟩
 
@@ -216,10 +216,6 @@ variable {G : Type*} [Group G] [Finite G] {A : Type*} [CommRing A] [MulSemiringA
   (M : Type*) [AddCommGroup M] [Module A M] [DistribMulAction G M] [SMulDistribClass G A M]
   [Module B M] [IsScalarTower B A M] [SMulCommClass G B M]
 
-
-omit [Finite G] [MulSemiringAction G A] [SMulCommClass G B A] [FaithfulSMul B A]
-  [Algebra.IsInvariant B A G] [SMulDistribClass G A M] in
-
 end TameDescent
 
 section Free
@@ -240,7 +236,7 @@ variable [Finite G] (B : Type*) [CommRing B] [Algebra B A] [SMulCommClass G B A]
 theorem finite_and_projective (h : IsFreeRingAction G A) :
     Module.Finite B A ∧ Module.Projective B A := by
   cases nonempty_fintype G
-  obtain ⟨s, hs, hs'⟩ := exists_galois_coordinates h
+  obtain ⟨s, hs, hs'⟩ := exists_galois_coordinates (G := G) (A := A) h
   have hcomp : Fintype.linearCombination B (fun p : s ↦ p.1.1) ∘ₗ
       LinearMap.pi (fun p : s ↦ ringTrace G B A ∘ₗ LinearMap.mulLeft B p.1.2) = LinearMap.id := by
     refine LinearMap.ext fun a ↦ ?_
@@ -258,7 +254,7 @@ theorem bijective_galoisMap (h : IsFreeRingAction G A) :
     Function.Bijective (galoisMap G A B) := by
   classical
   cases nonempty_fintype G
-  obtain ⟨s, hs, hs'⟩ := exists_galois_coordinates h
+  obtain ⟨s, hs, hs'⟩ := exists_galois_coordinates (G := G) (A := A) h
   constructor
   · have key : ∀ z : A ⊗[B] A,
         ∑ p ∈ s, (∑ g : G, g • p.2 * galoisMap G A B z g) ⊗ₜ[B] p.1 = z := by

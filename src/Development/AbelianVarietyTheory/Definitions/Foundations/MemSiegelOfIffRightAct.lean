@@ -144,10 +144,12 @@ variable (e : n ⊕ n ≃ ι)
 def dblGram (J : Matrix n n A) : Matrix ι ι A := blkMat e J (-J)
 
 
+variable (A) in
 def diagSub : Submodule A (ι → A) :=
   LinearMap.eqLocus (LinearMap.funLeft A A (e ∘ .inl)) (LinearMap.funLeft A A (e ∘ .inr))
 
 
+variable (A) in
 def antiSub : Submodule A (ι → A) :=
   LinearMap.eqLocus (LinearMap.funLeft A A (e ∘ .inl)) (-LinearMap.funLeft A A (e ∘ .inr))
 

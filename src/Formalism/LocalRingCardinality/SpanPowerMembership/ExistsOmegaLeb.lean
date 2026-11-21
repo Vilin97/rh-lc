@@ -14,6 +14,8 @@ open scoped ENNReal NNReal
 
 variable (P Q : ℕ)
 
+local notation "J" => Formalism.UG.Jpq P Q
+
 abbrev MM : Type := Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ
 
 instance instBorelLie : BorelSpace (lieU P Q) := ⟨rfl⟩
@@ -161,8 +163,10 @@ theorem exists_omegaLeb : ∃ lam : Measure (lieU P Q), IsOmegaLeb lam := by
       _ = 1 := by field_simp
   have hl : (t • lam0).IsAddHaarMeasure := Measure.IsAddHaarMeasure.nnreal_smul lam0 ht0
   refine ⟨t • lam0, hl, ?_⟩
+  have hmeas : Measurable (psiE P Q) := (psiE P Q).continuous.measurable
   rw [← psiE_coe]
-  rw [Measure.prod_smul_left, Measure.prod_smul_right, Measure.map_smul, Measure.map_smul]
+  rw [Measure.prod_smul_left, Measure.prod_smul_right,
+    Measure.map_smul _ hmeas.aemeasurable, Measure.map_smul _ hmeas.aemeasurable]
   show t • t • m = volume
   rw [hs, smul_smul, smul_smul, hts, one_smul]
 

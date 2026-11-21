@@ -16,17 +16,24 @@ open Formalism.DoubleCosetMeasures
 
 namespace Phase
 
-theorem revIn_lt : ∀ (s : List ℕ) (j : ℕ), j < s.sum → revIn s j < s.sum
-  | [], j, h => by simpa [revIn] using h
-  | a :: s, j, h => by
+theorem revIn_lt : ∀ (s : List ℕ) (j : ℕ), j < s.sum → revIn s j < s.sum := by
+  intro s
+  induction s with
+  | nil => simp [revIn]
+  | cons a s ih =>
+    intro j h
     simp only [revIn, List.sum_cons] at h ⊢
     split_ifs with hj
     · omega
-    · have := revIn_lt s (j - a) (by omega); omega
+    · have := ih (j - a) (by omega)
+      omega
 
-theorem revIn_revIn : ∀ (s : List ℕ) (j : ℕ), j < s.sum → revIn s (revIn s j) = j
-  | [], j, _ => by simp [revIn]
-  | a :: s, j, h => by
+theorem revIn_revIn : ∀ (s : List ℕ) (j : ℕ), j < s.sum → revIn s (revIn s j) = j := by
+  intro s
+  induction s with
+  | nil => simp [revIn]
+  | cons a s ih =>
+    intro j h
     simp only [List.sum_cons] at h
     by_cases hj : j < a
     · simp only [revIn, if_pos hj]
@@ -34,11 +41,15 @@ theorem revIn_revIn : ∀ (s : List ℕ) (j : ℕ), j < s.sum → revIn s (revIn
     · simp only [revIn, if_neg hj]
       rw [if_neg (by omega)]
       have e : a + revIn s (j - a) - a = revIn s (j - a) := by omega
-      rw [e, revIn_revIn s (j - a) (by omega)]; omega
+      rw [e, ih (j - a) (by omega)]
+      omega
 
-theorem blk_revIn : ∀ (s : List ℕ) (j : ℕ), j < s.sum → blk s (revIn s j) = blk s j
-  | [], j, _ => by simp [blk]
-  | a :: s, j, h => by
+theorem blk_revIn : ∀ (s : List ℕ) (j : ℕ), j < s.sum → blk s (revIn s j) = blk s j := by
+  intro s
+  induction s with
+  | nil => simp [blk]
+  | cons a s ih =>
+    intro j h
     simp only [List.sum_cons] at h
     by_cases hj : j < a
     · simp only [revIn, blk, if_pos hj]
@@ -46,22 +57,29 @@ theorem blk_revIn : ∀ (s : List ℕ) (j : ℕ), j < s.sum → blk s (revIn s j
     · simp only [revIn, blk, if_neg hj]
       rw [if_neg (by omega)]
       have e : a + revIn s (j - a) - a = revIn s (j - a) := by omega
-      rw [e, blk_revIn s (j - a) (by omega)]
+      rw [e, ih (j - a) (by omega)]
 
-theorem blk_mono : ∀ (s : List ℕ) (i j : ℕ), i ≤ j → blk s i ≤ blk s j
-  | [], _, _, _ => by simp [blk]
-  | a :: s, i, j, h => by
+theorem blk_mono : ∀ (s : List ℕ) (i j : ℕ), i ≤ j → blk s i ≤ blk s j := by
+  intro s
+  induction s with
+  | nil => simp [blk]
+  | cons a s ih =>
+    intro i j h
     simp only [blk]
     split_ifs with h1 h2 h2
     · exact le_refl _
     · omega
     · omega
-    · have := blk_mono s (i - a) (j - a) (by omega); omega
+    · have := ih (i - a) (j - a) (by omega)
+      omega
 
 theorem revIn_anti : ∀ (s : List ℕ) (i j : ℕ), j < s.sum → i < j → blk s i = blk s j →
-    revIn s j < revIn s i
-  | [], _, _, h, _, _ => by simp at h
-  | a :: s, i, j, h, hij, hb => by
+    revIn s j < revIn s i := by
+  intro s
+  induction s with
+  | nil => simp
+  | cons a s ih =>
+    intro i j h hij hb
     simp only [List.sum_cons] at h
     simp only [blk] at hb
     simp only [revIn]
@@ -69,12 +87,16 @@ theorem revIn_anti : ∀ (s : List ℕ) (i j : ℕ), j < s.sum → i < j → blk
     · omega
     · omega
     · omega
-    · have := revIn_anti s (i - a) (j - a) (by omega) (by omega) (by omega); omega
+    · have := ih (i - a) (j - a) (by omega) (by omega) (by omega)
+      omega
 
 theorem revIn_succ : ∀ (s : List ℕ) (j : ℕ), j + 1 < s.sum → blk s j = blk s (j + 1) →
-    revIn s (j + 1) + 1 = revIn s j
-  | [], _, h, _ => by simp at h
-  | a :: s, j, h, hb => by
+    revIn s (j + 1) + 1 = revIn s j := by
+  intro s
+  induction s with
+  | nil => simp
+  | cons a s ih =>
+    intro j h hb
     simp only [List.sum_cons] at h
     simp only [blk] at hb
     simp only [revIn]
@@ -84,7 +106,8 @@ theorem revIn_succ : ∀ (s : List ℕ) (j : ℕ), j + 1 < s.sum → blk s j = b
     · omega
     · have e : j + 1 - a = (j - a) + 1 := by omega
       rw [e] at hb ⊢
-      have := revIn_succ s (j - a) (by omega) (by omega); omega
+      have := ih (j - a) (by omega) (by omega)
+      omega
 
 def revF (s : List ℕ) (a : Fin s.sum) : Fin s.sum := ⟨revIn s a, revIn_lt s a a.2⟩
 

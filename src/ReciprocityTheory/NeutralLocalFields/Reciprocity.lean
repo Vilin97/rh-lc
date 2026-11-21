@@ -30,7 +30,7 @@ def abRestrict (L : IntermediateField F (AlgebraicClosure F)) (h : IsFiniteAbeli
   QuotientGroup.lift _ (AlgEquiv.restrictNormalHom L : Field.absoluteGaloisGroup F →* (L ≃ₐ[F] L))
     (by
       refine Subgroup.topologicalClosure_minimal _ ?_ ?_
-      · exact Abelianization.commutator_subset_ker _
+      · exact Group.Abelianization.commutator_le_ker _
       · have e : ((AlgEquiv.restrictNormalHom L : Gal(AlgebraicClosure F/F) →* (L ≃ₐ[F] L)).ker :
             Set Gal(AlgebraicClosure F/F)) = (L.fixingSubgroup : Set Gal(AlgebraicClosure F/F)) := by
           rw [IntermediateField.restrictNormalHom_ker]
@@ -41,8 +41,8 @@ def abRestrict (L : IntermediateField F (AlgebraicClosure F)) (h : IsFiniteAbeli
 
 theorem abRestrict_mk (L : IntermediateField F (AlgebraicClosure F)) (h : IsFiniteAbelian F L)
     (g : AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) :
-    haveI := h.isGalois
-    abRestrict F L h (toAb F g) = AlgEquiv.restrictNormalHom L g := by
+    (haveI := h.isGalois
+     abRestrict F L h (toAb F g) = AlgEquiv.restrictNormalHom L g) := by
   unfold abRestrict toAb
   exact QuotientGroup.lift_mk' _ _ _
 

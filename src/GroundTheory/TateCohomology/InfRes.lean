@@ -61,7 +61,10 @@ lemma invariants_map_surjective {X : ShortComplex (Rep k G)} (hX : X.ShortExact)
   exact (ModuleCat.epi_iff_surjective _).1 e3
 
 noncomputable def toCoindOne : A ⟶ coindOne k G A :=
-  ofHom ⟨LinearMap.pi fun x => A.ρ x, fun g => by ext a x; simp⟩
+  ofHom ⟨LinearMap.pi fun x => A.ρ x, fun g => by
+    ext a x
+    change A.ρ x (A.ρ g a) = A.ρ (x * g) a
+    rw [map_mul, mul_apply_eq_comp]⟩
 
 lemma toCoindOne_injective : Function.Injective (toCoindOne A).hom := fun a b h => by
   have h' : A.ρ 1 a = A.ρ 1 b := congrFun h 1
@@ -87,8 +90,10 @@ lemma shiftSCQ_shortExact (h1 : IsZero (groupCohomology (res S.subtype A) 1)) :
     (shiftSCQ A S).ShortExact where
   mono_f := (Rep.mono_iff_injective _).2 fun x y h =>
     Subtype.ext (toCoindOne_injective A (congrArg Subtype.val h))
-  epi_g := (Rep.epi_iff_surjective _).2
-    (invariants_map_surjective ((shortExact_res S.subtype).2 (shiftSC_shortExact A)) h1)
+  epi_g := by
+    apply (Rep.epi_iff_surjective (shiftSCQ A S).g).2
+    exact invariants_map_surjective (X := (shiftSC A).map (resFunctor S.subtype))
+      ((shortExact_res S.subtype).2 (shiftSC_shortExact A)) h1
   exact := by
     rw [← ShortComplex.exact_map_iff_of_faithful _ (forget₂ (Rep k (G ⧸ S)) (ModuleCat k)),
       ShortComplex.moduleCat_exact_iff_ker_sub_range]

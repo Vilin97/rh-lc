@@ -29,6 +29,8 @@ variable {S L : Type*} [CommRing S] [IsDedekindDomain S] [Field L] [Algebra S L]
   [IsFractionRing S L] (v : HeightOneSpectrum S)
 
 
+variable (L) in
+open Classical in
 noncomputable def addv : AddValuation L (WithTop ℤ) :=
   AddValuation.of (fun x => if x = 0 then ⊤ else (((-log (v.valuation L x) : ℤ)) : WithTop ℤ))
     (by simp) (by simp)
@@ -40,7 +42,7 @@ noncomputable def addv : AddValuation L (WithTop ℤ) :=
       · subst hy; simp
       by_cases hxy : x + y = 0
       · simp [hxy]
-      simp only [hx, hy, hxy, if_false]
+      simp only [hx, hy, hxy, ite_false]
       rw [← WithTop.coe_min, WithTop.coe_le_coe]
       have hx' : v.valuation L x ≠ 0 := by simpa using hx
       have hy' : v.valuation L y ≠ 0 := by simpa using hy
@@ -64,9 +66,7 @@ noncomputable def addv : AddValuation L (WithTop ℤ) :=
 
 theorem addv_apply {x : L} (hx : x ≠ 0) :
     addv L v x = (((-log (v.valuation L x) : ℤ)) : WithTop ℤ) := by
-  first
-  | (unfold addv; rw [AddValuation.of_apply, if_neg hx])
-  | simp [addv, AddValuation.of_apply, hx]
+  simp [addv, hx]
 
 theorem addv_nonneg (s : S) : 0 ≤ addv L v (algebraMap S L s) := by
   by_cases hs : s = 0
@@ -228,6 +228,8 @@ theorem algebraMap_OL_injective : Function.Injective (algebraMap O L) := by
   | (rw [RingHom.coe_comp]; exact (algebraMap F L).injective.comp (IsFractionRing.injective O F))
 
 
+variable (O F L) in
+include F in
 theorem exists_heightOne (Q : Ideal (integralClosure O L)) (hQ : Q.IsMaximal) :
     ∃ v : HeightOneSpectrum (integralClosure O L), v.asIdeal = Q := by
   have hinj : Function.Injective (algebraMap O (integralClosure O L)) := by
@@ -272,6 +274,8 @@ theorem addv_mem_placesOver (v : HeightOneSpectrum (integralClosure O L)) :
     exact ⟨addv_nonneg v _, addv_pos_iff v _⟩
 
 
+variable (O F L) in
+include F in
 theorem placesOver_bij : ∃ e : HeightOneSpectrum (integralClosure O L) ≃ PlacesOver O L,
     ∀ v, (e v : AddValuation L (WithTop ℤ)) = addv L v := by
   classical

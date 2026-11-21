@@ -54,7 +54,7 @@ def stableUnitsAction : MulDistribMulAction Gal(L/K) V where
     simp [unitVal]))
 
 theorem unitVal_smul (σ : Gal(L/K)) (u : V) :
-    letI := stableUnitsAction V hV
+    letI := stableUnitsAction V hV;
     unitVal ((σ • u : V) : 𝒪[L]ˣ) = σ (unitVal u) :=
   (hV σ u u.2).choose_spec.2
 
@@ -86,7 +86,13 @@ abbrev lat (s : ℕ) : Submodule 𝒪[K] L := normalLattice D.π D.θ s
 abbrev k : ℕ := D.r + 1
 
 omit [FiniteDimensional K L] in
-theorem lat_antitone {s t : ℕ} (h : s ≤ t) : D.lat t ≤ D.lat s := normalLattice_antitone _ _ h
+theorem lat_antitone {s t : ℕ} (h : s ≤ t) : D.lat t ≤ D.lat s := by
+  have hlat : Antitone D.lat := by
+    refine antitone_nat_of_succ_le fun j => Submodule.span_le.mpr ?_
+    rintro _ ⟨σ, rfl⟩
+    simp only [SetLike.mem_coe, pow_succ', mul_smul]
+    exact Submodule.smul_mem _ D.π (Submodule.subset_span ⟨σ, rfl⟩)
+  exact hlat h
 
 theorem mul_mem_lat {s t : ℕ} (hs : D.k ≤ s) {x y : L} (hx : x ∈ D.lat s) (hy : y ∈ D.lat t) :
     x * y ∈ D.lat (t + 1) :=
@@ -425,6 +431,8 @@ end NormalLatticeData
 end Graded
 
 section Main
+
+open scoped Pointwise
 
 variable {K L : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   [Field L] [ValuativeRel L] [TopologicalSpace L] [IsNonarchimedeanLocalField L]

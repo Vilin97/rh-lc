@@ -17,8 +17,9 @@ def IsLayer (n q d : ℕ) {L : Type*} [Field L] [Algebra ℚ L] (ζ a b : L) : P
     IntermediateField.adjoin ℚ {ζ, a, b} = ⊤
 
 
-def sgn {L : Type*} [Field L] [Algebra ℚ L] (σ : Gal(L/ℚ)) (x : L) : ℤˣ :=
-  if σ x = x then 1 else -1
+def sgn {L : Type*} [Field L] [Algebra ℚ L] (σ : Gal(L/ℚ)) (x : L) : ℤˣ := by
+  classical
+  exact if σ x = x then 1 else -1
 
 def galMap {n : ℕ} {L : Type*} [Field L] [Algebra ℚ L] {ζ : L} (hζ : IsPrimitiveRoot ζ (2 ^ n))
     (a b : L) (σ : Gal(L/ℚ)) : GalL n :=

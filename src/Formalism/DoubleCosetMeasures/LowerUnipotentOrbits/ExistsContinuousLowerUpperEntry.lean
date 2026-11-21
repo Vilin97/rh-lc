@@ -121,44 +121,62 @@ end LU
 
 section Pt
 
-theorem revIn_lt : ∀ (s : List ℕ) (j : ℕ), j < s.sum → revIn s j < s.sum
-  | [], j, h => by simp at h
-  | a :: s, j, h => by
+theorem revIn_lt : ∀ (s : List ℕ) (j : ℕ), j < s.sum → revIn s j < s.sum := by
+  intro s
+  induction s with
+  | nil =>
+    intro j h
+    simp at h
+  | cons a s ih =>
+    intro j h
     simp only [List.sum_cons] at h ⊢
     by_cases hj : j < a
-    · simp only [revIn, hj, if_true]; omega
-    · simp only [revIn, hj, if_false]
-      have := revIn_lt s (j - a) (by omega); omega
+    · rw [revIn, ite_eq_left hj]
+      omega
+    · have htail : j - a < s.sum := by omega
+      have hrev := ih (j - a) htail
+      rw [revIn, ite_eq_right hj]
+      omega
 
-theorem revIn_revIn : ∀ (s : List ℕ) (j : ℕ), j < s.sum → revIn s (revIn s j) = j
-  | [], j, h => by simp at h
-  | a :: s, j, h => by
+theorem revIn_revIn : ∀ (s : List ℕ) (j : ℕ), j < s.sum → revIn s (revIn s j) = j := by
+  intro s
+  induction s with
+  | nil =>
+    intro j h
+    simp at h
+  | cons a s ih =>
+    intro j h
     simp only [List.sum_cons] at h
     by_cases hj : j < a
-    · have e : revIn (a :: s) j = a - 1 - j := by simp [revIn, hj]
-      rw [e]
+    · have e : revIn (a :: s) j = a - 1 - j := by rw [revIn, ite_eq_left hj]
       have h1 : a - 1 - j < a := by omega
-      simp only [revIn, h1, if_true]; omega
-    · have e : revIn (a :: s) j = a + revIn s (j - a) := by simp [revIn, hj]
-      rw [e]
+      rw [e, revIn, ite_eq_left h1]
+      omega
+    · have e : revIn (a :: s) j = a + revIn s (j - a) := by rw [revIn, ite_eq_right hj]
       have h1 : ¬ (a + revIn s (j - a) < a) := by omega
-      simp only [revIn, h1, if_false, Nat.add_sub_cancel_left]
-      rw [revIn_revIn s (j - a) (by omega)]; omega
+      have htail : j - a < s.sum := by omega
+      rw [e, revIn, ite_eq_right h1, Nat.add_sub_cancel_left, ih (j - a) htail]
+      omega
 
-theorem blk_revIn : ∀ (s : List ℕ) (j : ℕ), j < s.sum → blk s (revIn s j) = blk s j
-  | [], j, h => by simp at h
-  | a :: s, j, h => by
+theorem blk_revIn : ∀ (s : List ℕ) (j : ℕ), j < s.sum → blk s (revIn s j) = blk s j := by
+  intro s
+  induction s with
+  | nil =>
+    intro j h
+    simp at h
+  | cons a s ih =>
+    intro j h
     simp only [List.sum_cons] at h
     by_cases hj : j < a
-    · have e : revIn (a :: s) j = a - 1 - j := by simp [revIn, hj]
+    · have e : revIn (a :: s) j = a - 1 - j := by rw [revIn, ite_eq_left hj]
       rw [e]
       have h1 : a - 1 - j < a := by omega
-      simp only [blk, h1, hj, if_true]
-    · have e : revIn (a :: s) j = a + revIn s (j - a) := by simp [revIn, hj]
+      simp only [blk, ite_eq_left h1, ite_eq_left hj]
+    · have e : revIn (a :: s) j = a + revIn s (j - a) := by rw [revIn, ite_eq_right hj]
       rw [e]
       have h1 : ¬ (a + revIn s (j - a) < a) := by omega
-      simp only [blk, h1, hj, if_false, Nat.add_sub_cancel_left]
-      rw [blk_revIn s (j - a) (by omega)]
+      have htail : j - a < s.sum := by omega
+      simp only [blk, ite_eq_right h1, ite_eq_right hj, Nat.add_sub_cancel_left, ih (j - a) htail]
 
 theorem pt_mul_pt {K : Type} [CommRing K] (s : List ℕ) (t t' : ℕ → Kˣ)
     (htt : ∀ b, ((t b : Kˣ) : K) * ((t' b : Kˣ) : K) = 1) : pt s t * pt s t' = 1 := by

@@ -297,7 +297,7 @@ variable {K : Type} [Field K]
 
 lemma unitV_mul (ξ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {a b d : E} (ha : IsUnit (redP P a)) (hb : IsUnit (redP P b))
     (hd : redP P d = redP P a * redP P b) :
-    LocE.unitV P ξ d = LocE.unitV P ξ a * LocE.unitV P ξ b := by
+    LocE.unitV (P := P) ξ d = LocE.unitV (P := P) ξ a * LocE.unitV (P := P) ξ b := by
   have hd' : IsUnit (redP P d) := hd ▸ ha.mul hb
   unfold LocE.unitV
   rw [dite_eq_left hd', dite_eq_left ha, dite_eq_left hb]

@@ -19,8 +19,9 @@ def IsSqrtOn {K : Type} [NormedField K] (U : Set K) (s : K → K) : Prop :=
 
 def fibOf {K V : Type} [NormedField K] [MeasurableSpace K] [AddCommGroup V] [Module K V]
     [MeasurableSpace V] (μ : Measure V) (ν : Measure K) (q : V → K) (U : Set K) (s : K → K)
-    (t : K) : Measure V :=
-  if t = 0 then 0 else
+    (t : K) : Measure V := by
+  classical
+  exact if t = 0 then 0 else
     (ν (t • U))⁻¹ • Measure.map (fun x => s (t / q x) • x) (μ.restrict (q ⁻¹' (t • U)))
 
 theorem fibOf_zero {K V : Type} [NormedField K] [MeasurableSpace K] [AddCommGroup V] [Module K V]

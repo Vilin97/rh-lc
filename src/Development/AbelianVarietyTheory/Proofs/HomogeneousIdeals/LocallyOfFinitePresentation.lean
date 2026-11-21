@@ -129,11 +129,10 @@ theorem base_appLE_comp_section (hi : i ≫ g = f) {U : X.Opens} {V : Y.Opens} {
 theorem exists_algHom_retract (hir : i ≫ r = 𝟙 X) (hr : r ≫ f = g)
     {U : X.Opens} {V : Y.Opens} {W : S.Opens}
     (hUV : U ≤ i ⁻¹ᵁ V) (hVU : V ≤ r ⁻¹ᵁ U) (hUW : U ≤ f ⁻¹ᵁ W) (hVW : V ≤ g ⁻¹ᵁ W) :
-    letI := (f.appLE W U hUW).hom.toAlgebra
-    letI := (g.appLE W V hVW).hom.toAlgebra
+    (letI := (f.appLE W U hUW).hom.toAlgebra; letI := (g.appLE W V hVW).hom.toAlgebra;
     ∃ (s : Γ(X, U) →ₐ[Γ(S, W)] Γ(Y, V)) (p : Γ(Y, V) →ₐ[Γ(S, W)] Γ(X, U)),
       s.toRingHom = (r.appLE U V hVU).hom ∧ p.toRingHom = (i.appLE V U hUV).hom ∧
-        p.comp s = AlgHom.id _ _ := by
+        p.comp s = AlgHom.id _ _ ) := by
   letI := (f.appLE W U hUW).hom.toAlgebra
   letI := (g.appLE W V hVW).hom.toAlgebra
   refine ⟨⟨(r.appLE U V hVU).hom, fun a ↦ ?_⟩, ⟨(i.appLE V U hUV).hom, fun a ↦ ?_⟩, rfl, rfl, ?_⟩

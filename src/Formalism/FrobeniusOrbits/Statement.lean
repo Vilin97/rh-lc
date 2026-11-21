@@ -76,7 +76,7 @@ def bE (ζ a b : L) : hostE ζ a b := ⟨b, b_mem ζ a b⟩
 
 abbrev hostF (ζ a b : L) : Subfield (hostE ζ a b) := maximalRealSubfield (hostE ζ a b)
 
-
+open scoped Classical in
 def hPart (e : ℕ) (ζ a b : L) (σ : hostE ζ a b ≃ₐ[ℚ] hostE ζ a b) : HGrp e :=
   if h : ∃ u : (ZMod (2 ^ (e + 2)))ˣ,
       ((σ (thE ζ a b) : hostE ζ a b) : L) =

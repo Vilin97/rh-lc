@@ -138,7 +138,7 @@ def Adj : Subalgebra ℂ (Module.End ℂ (X hI)) where
   mul_mem' := by
     rintro S T ⟨S', hS⟩ ⟨T', hT⟩
     refine ⟨T' * S', fun x y => ?_⟩
-    simp only [Module.End.mul_apply]
+    simp only [mul_apply_eq_comp]
     rw [hS, hT]
   add_mem' := by
     rintro S T ⟨S', hS⟩ ⟨T', hT⟩
@@ -278,13 +278,10 @@ structure AdjOp (Φ Φ' : (β → ℂ) → (β → ℂ)) : Prop where
 variable {G}
 
 theorem AdjOp.symm {Φ Φ' : (β → ℂ) → (β → ℂ)} (hΦ : AdjOp (μ := μ) (ι := ι) (𝓕 := 𝓕) G Φ Φ') :
-    AdjOp (μ := μ) (ι := ι) (𝓕 := 𝓕) G Φ' Φ where
-  mem := hΦ.mem'
-  mem' := hΦ.mem
-  lin := hΦ.lin'
-  lin' := hΦ.lin
-  adj f hf h hh := by
-    rw [pr_conj, ← hΦ.adj h hh f hf, ← pr_conj]
+    AdjOp (μ := μ) (ι := ι) (𝓕 := 𝓕) G Φ' Φ := by
+  refine ⟨hΦ.mem', hΦ.mem, hΦ.lin', hΦ.lin, ?_⟩
+  intro f hf h hh
+  rw [pr_conj, ← hΦ.adj h hh f hf, ← pr_conj]
 
 private theorem adjOp_map_add_smul {Φ Φ' : (β → ℂ) → (β → ℂ)}
     (hΦ : AdjOp (μ := μ) (ι := ι) (𝓕 := 𝓕) G Φ Φ') {f h : β → ℂ} (hf : f ∈ 𝓕) (hh : h ∈ 𝓕) (c : ℂ) :
@@ -423,11 +420,7 @@ theorem repOn_algebraMap (c : ℂ) : RepOn hI (algebraMap ℂ (A hI) c) (fun f =
   exact repOn_smul hI c (repOn_one hI)
 
 theorem repOn_intCast (n : ℤ) : RepOn hI ((n : A hI)) (fun f => (n : ℂ) • f) := by
-  cases n with
-  | ofNat n =>
-      convert repOn_algebraMap hI (n : ℂ) using 1 <;> simp only [Int.cast_ofNat]
-  | negSucc n =>
-      convert repOn_algebraMap hI (-(n + 1 : ℂ)) using 1 <;> simp only [Int.cast_negSucc, Int.cast_add, Int.cast_one, Int.cast_natCast]
+  simpa only [map_intCast] using repOn_algebraMap hI (n : ℂ)
 
 theorem repOn_sum {γ : Type*} (s : Finset γ) {T : γ → A hI} {Φ : γ → (β → ℂ) → β → ℂ}
     (h : ∀ c ∈ s, RepOn hI (T c) (Φ c)) : RepOn hI (∑ c ∈ s, T c) (fun f => ∑ c ∈ s, Φ c f) := by

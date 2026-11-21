@@ -14,7 +14,7 @@ open Formalism.UG
 
 theorem bc_coe {A B : Type} [CommRing A] [CommRing B] {n : Type} [Fintype n] [DecidableEq n]
     (φ : A →+* B) (g : GL n A) : ((bc φ g : GL n B) : Matrix n n B) = (g : Matrix n n A).map φ :=
-  rfl
+  by simp [bc]
 
 theorem incl_cT_map {A B : Type} [CommRing A] [CommRing B] {m p : Type}
     (σ : A →+* A) (σ' : B →+* B) (φ : A →+* B) (h : φ.comp σ = σ'.comp φ) (M : Matrix m p A) :
@@ -34,7 +34,9 @@ theorem inclE_injective (F E : Type) [Field F] [CommRing E] [Algebra F E]
     (R : Type) [CommRing R] [Algebra F R] [Nontrivial R] :
     Function.Injective (inclE (F := F) (E := E) R) := by
   intro x y hxy
-  exact Algebra.TensorProduct.includeLeft_injective (S := F) (algebraMap F R).injective hxy
+  apply Algebra.TensorProduct.includeLeft_injective (S := F) (A := E) (B := R)
+    (algebraMap F R).injective
+  exact hxy
 
 theorem UG_inclusion_injective : Formalism.UG.InclInj := by
   intro F E _ _ _ n _ _ R _ _ hR

@@ -137,7 +137,8 @@ private lemma Jm_conjTranspose_eq_self (ε : Fin n → Bool) : (Jm ε)ᴴ = Jm �
   unfold Jm
   rw [Matrix.diagonal_conjTranspose]
   congr 1
-  simp
+  funext i
+  split_ifs <;> simp_all
 
 lemma polar_log_anticommutes_signature {ε : Fin n → Bool} {g : Matrix (Fin n) (Fin n) ℂ} (hg : inUJ ε g) :
     Jm ε * polarLog g * Jm ε = -polarLog g := by

@@ -38,7 +38,7 @@ theorem stabilizer_le_stabilizer_smul (r : k) (a : V) :
 
 theorem stabilizer_eq_top_of_isTrivial [ρ.IsTrivial] (a : V) : stabilizer ρ a = ⊤ := by
   ext g
-  simp
+  simp [Representation.isTrivial_apply]
 
 end Stabilizer
 
@@ -156,7 +156,7 @@ end Closure
 
 section Subcategory
 
-instance : (isDiscreteRep.{w} k G).IsClosedUnderQuotients where
+instance : (isDiscreteRep.{w} (k := k) (G := G)).IsClosedUnderQuotients where
   prop_of_epi f _ hX := by
     have : IsDiscreteRep _ := hX
     exact IsDiscreteRep.of_surjective f ((Rep.epi_iff_surjective f).1 ‹_›)
@@ -164,7 +164,7 @@ instance : (isDiscreteRep.{w} k G).IsClosedUnderQuotients where
 
 theorem isDiscreteRep_X₃_of_shortExact {S : ShortComplex (Rep.{w} k G)} (hS : S.ShortExact)
     [IsDiscreteRep S.X₂] : IsDiscreteRep S.X₃ :=
-  (isDiscreteRep k G).prop_X₃_of_shortExact hS ‹_›
+  isDiscreteRep.prop_X₃_of_shortExact hS ‹_›
 
 end Subcategory
 

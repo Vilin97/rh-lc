@@ -42,12 +42,16 @@ theorem point_ext {X T : Scheme.{u}} [Nonempty T] (g : T ⟶ Spec (.of K))
 
 theorem exists_section_of_locallyQuasiFinite {F : Scheme.{u}} (f : F ⟶ Spec (.of K))
     [LocallyQuasiFinite f] (L : Type u) [Field L] [Algebra K L] [IsIntegrallyClosedIn K L]
-    (x : Spec (.of L) ⟶ F) (hx : x ≫ f = specAlg(K, L)) :
-    ∃ x₀ : Spec (.of K) ⟶ F, specAlg(K, L) ≫ x₀ = x ∧ x₀ ≫ f = 𝟙 _ ∧
-      ∀ x₁ : Spec (.of K) ⟶ F, specAlg(K, L) ≫ x₁ = x → x₁ = x₀ := by
-  suffices H : ∃ x₀ : Spec (.of K) ⟶ F, specAlg(K, L) ≫ x₀ = x by
+    (x : Spec (.of L) ⟶ F) (hx : x ≫ f = Spec.map (CommRingCat.ofHom (algebraMap K L))) :
+    ∃ x₀ : Spec (.of K) ⟶ F, Spec.map (CommRingCat.ofHom (algebraMap K L)) ≫ x₀ = x ∧
+      x₀ ≫ f = 𝟙 _ ∧
+      ∀ x₁ : Spec (.of K) ⟶ F, Spec.map (CommRingCat.ofHom (algebraMap K L)) ≫ x₁ = x →
+        x₁ = x₀ := by
+  suffices H : ∃ x₀ : Spec (.of K) ⟶ F,
+      Spec.map (CommRingCat.ofHom (algebraMap K L)) ≫ x₀ = x by
     obtain ⟨x₀, h₀⟩ := H
-    refine ⟨x₀, h₀, point_ext specAlg(K, L) ?_, fun x₁ h₁ ↦ point_ext _ (h₁.trans h₀.symm)⟩
+    refine ⟨x₀, h₀, point_ext (Spec.map (CommRingCat.ofHom (algebraMap K L))) ?_,
+      fun x₁ h₁ ↦ point_ext _ (h₁.trans h₀.symm)⟩
     rw [reassoc_of% h₀, hx, Category.comp_id]
   obtain ⟨A, i, _, q, hq⟩ := Scheme.exists_Spec_apply_eq (x (Classical.arbitrary _))
   have hle : Set.range x ⊆ Set.range i := by

@@ -7,7 +7,7 @@ public import Formalism.HermitianCurvature.BlockKernelPropertiesOfSteps
 noncomputable section
 
 open Matrix Formalism.DoubleCosetMeasures Formalism.FourierDecayAlt.A5 Filter Topology
-open scoped ComplexConjugate
+open scoped Classical ComplexConjugate
 
 namespace Formalism.FourierDecayAlt.A6
 

@@ -97,7 +97,7 @@ def evalHom : G →+ ((G →+ QZ) →+ QZ) where
   map_zero' := by ext f; simp
   map_add' a b := by ext f; simp
 
-theorem evalHom_injective : Injective (evalHom G) := by
+theorem evalHom_injective : Injective (evalHom (G := G)) := by
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a ha
   by_contra hne

@@ -65,8 +65,8 @@ theorem baseRingHom_algebraMap (V : Y.Opens) (r : R) :
 
 
 theorem isLocalization_app {V : X.Opens} (hV : IsAffineOpen V) :
-    letI := (g.app V).hom.toAlgebra
-    IsLocalization (S.map (baseRingHom p V).hom) Γ(Y, g ⁻¹ᵁ V) := by
+    @IsLocalization Γ(X, V) _ (S.map (baseRingHom p V).hom) Γ(Y, g ⁻¹ᵁ V) _
+      (g.app V).hom.toAlgebra := by
   have po := (isIso_pushoutSection_iff H (US := ⊤) (UT := ⊤) (UX := V) (UY := g ⁻¹ᵁ V) le_top
     le_top (by simp)).mp (isIso_pushoutSection_of_isAffineOpen H _ _ _ (isAffineOpen_top _)
       (isAffineOpen_top _) hV)

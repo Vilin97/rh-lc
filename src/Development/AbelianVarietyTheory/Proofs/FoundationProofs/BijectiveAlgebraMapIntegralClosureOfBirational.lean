@@ -40,8 +40,8 @@ theorem _root_.GlobalTheory.apply_genericPoint_of_isDominant (f : X ⟶ Y) [IsDo
 
 theorem _root_.GlobalTheory.isFractionRing_stalk_of_eq_genericPoint [IsIntegral Y] {U : Y.Opens} (hU : IsAffineOpen U)
     (y : Y) (hyU : y ∈ U) (hy : y = genericPoint Y) :
-    letI := Y.presheaf.algebra_section_stalk (U := U) ⟨y, hyU⟩
-    IsFractionRing Γ(Y, U) (Y.presheaf.stalk y) := by
+    (letI := Y.presheaf.algebra_section_stalk (U := U) ⟨y, hyU⟩;
+      IsFractionRing Γ(Y, U) (Y.presheaf.stalk y)) := by
   haveI : Nonempty U := ⟨⟨y, hyU⟩⟩
   subst hy
   exact functionField_isFractionRing_of_isAffineOpen Y U hU
@@ -87,8 +87,8 @@ variable {X Y : Scheme.{u}} in
 private lemma bijective_algebraMap_integralClosure_of_isIntegrallyClosed (f : X ⟶ Y) [IsIntegral X] [IsIntegral Y]
     [IsDominant f] [IsIso (f.stalkMap (genericPoint X))]
     (hY : ∀ y : Y, IsIntegrallyClosed (Y.presheaf.stalk y)) {U : Y.Opens} (hU : IsAffineOpen U) :
-    letI := (f.app U).hom.toAlgebra
-    Function.Bijective (algebraMap Γ(Y, U) (integralClosure Γ(Y, U) Γ(X, f ⁻¹ᵁ U))) := by
+    (letI := (f.app U).hom.toAlgebra;
+      Function.Bijective (algebraMap Γ(Y, U) (integralClosure Γ(Y, U) Γ(X, f ⁻¹ᵁ U)))) := by
   letI := (f.app U).hom.toAlgebra
   rcases isEmpty_or_nonempty U with hE | hN
   · have hU0 : U = ⊥ := by

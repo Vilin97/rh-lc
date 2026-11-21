@@ -144,8 +144,7 @@ theorem contract_smul (hf : IsBaseChange L f) (l : L →ₗ[K] K) (a : L) (v : V
 theorem induction_smul (hf : IsBaseChange L f) {p : M → Prop} (x : M) (h0 : p 0)
     (hs : ∀ (a : L) (v : V), p (a • f v)) (ha : ∀ x y, p x → p y → p (x + y)) : p x := by
   obtain ⟨t, rfl⟩ := hf.equiv.surjective x
-  induction t with
-  | zero => rwa [map_zero]
+  induction t using TensorProduct.inductionOn with
   | tmul a v => rw [hf.equiv_tmul]; exact hs a v
   | add x y hx hy => rw [map_add (f := _)]; exact ha _ _ hx hy
 
@@ -245,7 +244,7 @@ section Tensor
 
 variable {K L V G : Type*} [Field K] [Field L] [Algebra K L] [AddCommGroup V] [Module K V]
 
-
+variable (K) in
 def rationalPart (W : Submodule L (L ⊗[K] V)) : Submodule K V :=
   (W.restrictScalars K).comap (TensorProduct.mk K L V 1)
 

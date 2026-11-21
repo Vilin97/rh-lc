@@ -147,7 +147,9 @@ def resLinearOver (hW : W ≤ U) (hV : V ≤ U) (h : V ≤ W) :
   { toFun := F.presheaf.map (homOfLE h).op
     map_add' := map_add _
     map_smul' := fun r s ↦ by
-      rw [resModule_smul, F.map_smul, res_res_ring]; rfl }
+      change F.presheaf.map (homOfLE h).op (X.presheaf.map (homOfLE hW).op r • s) =
+        X.presheaf.map (homOfLE hV).op r • F.presheaf.map (homOfLE h).op s
+      rw [F.map_smul, res_res_ring hW h] }
 
 variable [F.IsQuasicoherent]
 

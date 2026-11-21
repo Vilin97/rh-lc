@@ -42,7 +42,7 @@ theorem rhoDeriv_rhoDeriv_X (c : Matrix (Fin n) (Fin n) ℂ) (P Q : gl n) (a : F
   set_option synthInstance.maxHeartbeats 100000 in
     rw [rhoDeriv_X, map_sum]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [Derivation.leibniz, Derivation.map_add (f := _), derivation_C, smul_zero, add_zero,
+    simp only [Derivation.leibniz, Derivation.map_add, derivation_C, smul_zero, add_zero,
     smul_eq_mul, mul_zero, rhoDeriv_X, Matrix.mul_apply, map_sum, Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun i _ => ?_
@@ -153,7 +153,7 @@ theorem rhoDeriv_one_shift (M : gl n) (f : Poly n) :
       smul_eq_mul, smul_eq_mul, map_mul, map_mul]
     congr 2
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [shift_X, Derivation.map_add (f := _), derivation_C, add_zero, rhoDeriv_X, rhoDeriv_X, map_sum]
+      rw [shift_X, Derivation.map_add, derivation_C, add_zero, rhoDeriv_X, rhoDeriv_X, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp [shift_X, shift_C, Matrix.one_apply]
 
@@ -173,7 +173,7 @@ theorem rho_one_eq_zero_of_rho_zero_eq_zero (u : U n) (h : rho 0 u = 0) : rho 1 
 def geDeg (t : ℕ) : Submodule ℂ (Poly n) where
   carrier := {f | ∀ s : Fin n × Fin n →₀ ℕ, s.degree < t → AddMonoidAlgebra.coeff f s = 0}
   add_mem' {f g} hf hg s hs := by rw [MvPolynomial.coeff_add, hf s hs, hg s hs, add_zero]
-  zero_mem' s _ := coeff_zero s
+  zero_mem' s _ := by simp
   smul_mem' r f hf s hs := by rw [coeff_smul, hf s hs, smul_zero]
 
 theorem geDeg_anti {t t' : ℕ} (h : t' ≤ t) : (geDeg t : Submodule ℂ (Poly n)) ≤ geDeg t' :=
@@ -274,7 +274,7 @@ noncomputable def iterPd (w : List (Fin n × Fin n)) (f : Poly n) : Poly n :=
 theorem iterPd_mem_geDeg (w : List (Fin n × Fin n)) {t : ℕ} {f : Poly n} (hf : f ∈ geDeg t) :
     iterPd w f ∈ geDeg (t - w.length) := by
   induction w with
-  | nil => simpa using hf
+  | nil => simpa [iterPd] using hf
   | cons a w ih =>
     rw [iterPd_cons, List.length_cons, ← Nat.sub_sub]
     exact pderiv_mem_geDeg _ ih
@@ -283,7 +283,7 @@ theorem rho_one_word_sub_iterPd (w : List (Fin n × Fin n)) {t : ℕ} {f : Poly 
     (hw : w.length ≤ t) (hf : f ∈ geDeg t) :
     rho 1 (word w) f - iterPd w f ∈ geDeg (t - w.length + 1) := by
   induction w with
-  | nil => simp
+  | nil => simp [iterPd]
   | cons a w ih =>
     rw [List.length_cons] at hw ⊢
     have ih := ih (by omega)
@@ -326,7 +326,7 @@ theorem iterPd_monomial (w : List (Fin n × Fin n)) (s : Fin n × Fin n →₀ �
         monomial (s - Multiset.toFinsupp ((w.map Prod.swap : List _) : Multiset _)) (c * κ) ∧
       (κ ≠ 0 ↔ Multiset.toFinsupp ((w.map Prod.swap : List _) : Multiset _) ≤ s) := by
   induction w with
-  | nil => exact ⟨1, by simp, by simp⟩
+  | nil => exact ⟨1, by simp [iterPd], by simp⟩
   | cons a w ih =>
     obtain ⟨κ, h1, h2⟩ := ih
     rw [toFinsupp_map_swap_cons]

@@ -42,7 +42,7 @@ theorem exists_clear_col {n : ℕ} (A : Matrix (Fin (n + 1)) (Fin (n + 1)) F) (h
     rw [h0, map_zero] at this
     exact hr ((valI (V := V)).zero_iff.1 (le_antisymm this zero_le))
   let σ : Equiv.Perm (Fin (n + 1)) := Equiv.swap 0 p
-  let P : Matrix (Fin (n + 1)) (Fin (n + 1)) V := σ.toPEquiv.toMatrix
+  let P : Matrix (Fin (n + 1)) (Fin (n + 1)) V := σ.permMatrix V
   have hc : ∀ i, ∃ a : V, algebraMap V F a = A (σ i) 0 / A p 0 := by
     intro i
     apply exists_of_valI_le_one
@@ -57,7 +57,7 @@ theorem exists_clear_col {n : ℕ} (A : Matrix (Fin (n + 1)) (Fin (n + 1)) F) (h
   · rw [Matrix.det_mul]
     refine IsUnit.mul ?_ ?_
     · have hE : E.det = 1 := by
-        rw [Matrix.det_of_lowerTriangular E]
+        rw [Matrix.det_of_isLowerTriangular E]
         · simp [E]
         · intro i j hij
           have hij' : i < j := hij
@@ -70,7 +70,7 @@ theorem exists_clear_col {n : ℕ} (A : Matrix (Fin (n + 1)) (Fin (n + 1)) F) (h
     rw [Matrix.map_mul, Matrix.mul_assoc, Matrix.mul_apply, Fin.sum_univ_succ]
     have hPA : ∀ r, (P.map (algebraMap V F) * A) r 0 = A (σ r) 0 := by
       intro r
-      simp [P, Matrix.mul_apply, PEquiv.toMatrix_apply, Equiv.toPEquiv_apply]
+      simp [P, Equiv.Perm.permMatrix, Matrix.mul_apply, PEquiv.toMatrix_apply, Equiv.toPEquiv_apply]
     simp only [hPA, Matrix.map_apply, E, Matrix.of_apply]
     rw [if_neg (Fin.succ_ne_zero i)]
     simp only [if_true, Fin.succ_ne_zero, map_neg, map_one, map_zero, zero_mul]
@@ -91,7 +91,7 @@ theorem iwasawa : ∀ {n : ℕ} (A : Matrix (Fin n) (Fin n) F), A.det ≠ 0 →
       (∀ i, U i i ≠ 0) ∧ A = k.map (algebraMap V F) * U
   | 0, A, _ => ⟨1, A, by simp, fun i => i.elim0, fun i => i.elim0, by ext i; exact i.elim0⟩
   | n + 1, A, hA => by
-    obtain ⟨Q, hQ, hQA⟩ := exists_clear_col (V := V) A hA
+    obtain ⟨Q, hQ, hQA⟩ := exists_clear_col (V := V) (n := n) A hA
     set B := Q.map (algebraMap V F) * A with hB
     have hdetB : B.det = B 0 0 * (B.submatrix Fin.succ Fin.succ).det := by
       rw [Matrix.det_succ_column_zero, Fin.sum_univ_succ]
@@ -144,7 +144,7 @@ theorem iwasawa : ∀ {n : ℕ} (A : Matrix (Fin n) (Fin n) F), A.det ≠ 0 →
 theorem upper_inv {m : ℕ} (U : Matrix (Fin m) (Fin m) F) (hU : U.BlockTriangular id) (hd : ∀ i, U i i ≠ 0) :
     U⁻¹.BlockTriangular id ∧ (∀ i, U⁻¹ i i ≠ 0) ∧ U * U⁻¹ = 1 := by
   have hdet : U.det ≠ 0 := by
-    rw [Matrix.det_of_upperTriangular hU]
+    rw [Matrix.det_of_isUpperTriangular hU]
     exact Finset.prod_ne_zero_iff.mpr fun i _ => hd i
   have hu : IsUnit U.det := isUnit_iff_ne_zero.mpr hdet
   letI := Matrix.invertibleOfIsUnitDet U hu

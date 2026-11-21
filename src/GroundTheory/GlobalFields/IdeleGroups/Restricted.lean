@@ -87,9 +87,9 @@ def finiteUnitsEquiv :
     (fun v ↦ Valued.isOpen_valuationSubring (v.adicCompletion K))
 
 def prodRestrictedEquiv :
-    IdeleGroup K ≃ₜ* (InfiniteAdeleRing K)ˣ × Πʳ v : HeightOneSpectrum (𝓞 K),
+    𝔸[K]ˣ ≃ₜ* (InfiniteAdeleRing K)ˣ × Πʳ v : HeightOneSpectrum (𝓞 K),
       [(v.adicCompletion K)ˣ, (Submonoid.ofClass (v.adicCompletionIntegers K)).units] :=
-  (prodEquiv K).trans
+  (ContinuousMulEquiv.prodUnits (InfiniteAdeleRing K) (FiniteAdeleRing (𝓞 K) K)).trans
     { toMulEquiv := MulEquiv.prodCongr (MulEquiv.refl _) (finiteUnitsEquiv K).toMulEquiv
       continuous_toFun :=
         continuous_fst.prodMk ((finiteUnitsEquiv K).continuous.comp continuous_snd)
@@ -97,12 +97,12 @@ def prodRestrictedEquiv :
         continuous_fst.prodMk ((finiteUnitsEquiv K).symm.continuous.comp continuous_snd) }
 
 @[simp]
-theorem prodRestrictedEquiv_apply_fst (x : IdeleGroup K) :
+theorem prodRestrictedEquiv_apply_fst (x : 𝔸[K]ˣ) :
     ((prodRestrictedEquiv K x).1 : InfiniteAdeleRing K) = (x : 𝔸[K]).1 :=
   rfl
 
 @[simp]
-theorem prodRestrictedEquiv_apply_snd (x : IdeleGroup K) (v : HeightOneSpectrum (𝓞 K)) :
+theorem prodRestrictedEquiv_apply_snd (x : 𝔸[K]ˣ) (v : HeightOneSpectrum (𝓞 K)) :
     (((prodRestrictedEquiv K x).2 v : (v.adicCompletion K)ˣ) : v.adicCompletion K) =
       (x : 𝔸[K]).2 v :=
   rfl

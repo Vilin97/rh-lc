@@ -49,14 +49,14 @@ theorem mapSubmodule_mapSubmodule_inv (g : GL (Fin n) F) (L : Submodule 𝒪[F] 
   rw [← mapSubmodule_mul, mul_inv_cancel, mapSubmodule_one]
 
 theorem isLattice_mapSubmodule (g : GL (Fin n) F) (L : Submodule 𝒪[F] (Fin n → F))
-    [L.IsLattice F] : (mapSubmodule F n g L).IsLattice F where
-  fg := (Submodule.IsLattice.fg (A := F) (M := L)).map _
+    [L.IsFullLattice F] : (mapSubmodule F n g L).IsFullLattice F where
+  toIsLattice := Submodule.IsLattice.of_fg F ((Submodule.IsLattice.fg F L).map _)
   span_eq_top := by
     have : ((mapSubmodule F n g L : Submodule 𝒪[F] (Fin n → F)) : Set (Fin n → F)) =
         Matrix.toLin' (g : Matrix (Fin n) (Fin n) F) '' (L : Set (Fin n → F)) := by
       rw [mapSubmodule, Submodule.map_coe]
       rfl
-    rw [this, Submodule.span_image, Submodule.IsLattice.span_eq_top, Submodule.map_top,
+    rw [this, Submodule.span_image, Submodule.IsFullLattice.span_eq_top, Submodule.map_top,
       LinearMap.range_eq_top]
     intro v
     refine ⟨((g⁻¹ : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) *ᵥ v, ?_⟩
@@ -87,10 +87,10 @@ theorem standardLattice_eq_span :
   · rintro _ ⟨j, rfl⟩
     exact single_mem_standardLattice F n j
 
-instance isLattice_standardLattice : (standardLattice F n).IsLattice F where
-  fg := by
+instance isLattice_standardLattice : (standardLattice F n).IsFullLattice F where
+  toIsLattice := Submodule.IsLattice.of_fg F (by
     rw [standardLattice_eq_span]
-    exact Submodule.fg_span (Set.finite_range _)
+    exact Submodule.fg_span (Set.finite_range _))
   span_eq_top := by
     refine eq_top_iff.mpr ((Pi.basisFun F (Fin n)).span_eq.symm.le.trans (Submodule.span_mono ?_))
     rintro _ ⟨j, rfl⟩
@@ -125,9 +125,9 @@ theorem mapSubmodule_standardLattice_eq_iff {g : GL (Fin n) F} :
     conv_lhs => rw [← mapSubmodule_mapSubmodule_inv F n g (standardLattice F n)]
     exact Submodule.map_mono ((mapSubmodule_le_standardLattice_iff F n).mpr h2)
 
-def Lattice : Type _ := {L : Submodule 𝒪[F] (Fin n → F) // L.IsLattice F}
+def Lattice : Type _ := {L : Submodule 𝒪[F] (Fin n → F) // L.IsFullLattice F}
 
-instance (L : Lattice F n) : L.1.IsLattice F := L.2
+instance (L : Lattice F n) : L.1.IsFullLattice F := L.2
 
 instance : MulAction (GL (Fin n) F) (Lattice F n) where
   smul g L := ⟨mapSubmodule F n g L.1, isLattice_mapSubmodule F n g L.1⟩
@@ -148,8 +148,10 @@ variable [TopologicalSpace F] [IsNonarchimedeanLocalField F]
 
 theorem exists_smul_standard (L : Lattice F n) : ∃ g : GL (Fin n) F, g • standard F n = L := by
   obtain ⟨L, hL⟩ := L
+  let : Module.Free 𝒪[F] L := Submodule.IsLattice.free F L
+  let : Module.Finite 𝒪[F] L := Submodule.IsLattice.finite F L
   let b := Module.Free.chooseBasis 𝒪[F] L
-  let B := b.extendOfIsLattice F
+  let B := b.extendOfIsFullLattice F
   have hcard : Fintype.card (Module.Free.ChooseBasisIndex 𝒪[F] L) = n := by
     rw [← Module.finrank_eq_card_basis B, Module.finrank_fin_fun]
   let e := Fintype.equivFinOfCardEq hcard
@@ -246,7 +248,7 @@ theorem exists_conj_le_integralGL {H : Subgroup (GL (Fin n) F)}
     Submodule.FG.of_le (Submodule.IsLattice.fg (A := F) (M := a⁻¹ • standardLattice F n)) hLa
   have hstd : standardLattice F n ≤ L := fun v hv => Submodule.subset_span
     (Set.mem_iUnion₂.mpr ⟨1, H.one_mem, by rw [mapSubmodule_one]; exact hv⟩)
-  have hLlat : L.IsLattice F := Submodule.IsLattice.of_le_of_isLattice_of_fg F hstd hfg
+  have hLlat : L.IsFullLattice F := Submodule.IsFullLattice.of_le_of_fg F hstd hfg
 
   have hstab_le : ∀ h ∈ H, mapSubmodule F n h L ≤ L := by
     intro h hh

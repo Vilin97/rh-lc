@@ -333,7 +333,7 @@ theorem exists_abs_primeIdealZetaSum_add_log_le :
     rw [Real.dist_eq] at hs
     exact hs.le
   refine ⟨2 * Y + |Real.log R| + 1, ?_⟩
-  filter_upwards [hnear, eventually_summable_dedekindZetaTerm K, self_mem_nhdsWithin]
+  filter_upwards [hnear, eventually_summable_dedekindZetaTerm (K := K), self_mem_nhdsWithin]
     with s hs hζ hs1
   have hs1' : 1 < s := hs1
   have hζpos : 0 < dedekindZetaReal K s :=
@@ -353,7 +353,7 @@ theorem exists_abs_primeIdealZetaSum_add_log_le :
 theorem tendsto_primeIdealZetaSum_univ_atTop :
     Tendsto (fun s => (univ : Set (HeightOneSpectrum (𝓞 K))).primeIdealZetaSum s)
       (𝓝[>] 1) atTop := by
-  obtain ⟨C, hC⟩ := exists_abs_primeIdealZetaSum_add_log_le K
+  obtain ⟨C, hC⟩ := exists_abs_primeIdealZetaSum_add_log_le (K := K)
   have h1 : Tendsto (fun s : ℝ => s - 1) (𝓝[>] 1) (𝓝[>] 0) := by
     refine tendsto_nhdsWithin_iff.mpr
       ⟨?_, eventually_nhdsWithin_of_forall fun s (hs : 1 < s) => show 0 < s - 1 by linarith⟩

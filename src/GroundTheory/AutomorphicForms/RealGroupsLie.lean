@@ -225,7 +225,7 @@ theorem contDiffOn_proj_symm_mul_exp {n : WithTop ℕ∞} (c : 𝔸) (s : Set �
   (subspaceProj 𝔤).contDiff.comp_contDiffOn ((contDiffOn_expPartialHomeomorph_symm ℝ 𝔸).comp
     (contDiff_const.mul ((contDiff_exp ℝ 𝔸).comp 𝔤.subtypeL.contDiff)).contDiffOn hs)
 
-theorem isManifold (n : WithTop ℕ∞) : letI := h.chartedSpace; IsManifold 𝓘(ℝ, 𝔤) n G := by
+theorem isManifold (n : WithTop ℕ∞) : (letI := h.chartedSpace; IsManifold 𝓘(ℝ, 𝔤) n G) := by
   let := h.chartedSpace
   apply isManifold_of_contDiffOn
   rintro e e' ⟨g, rfl⟩ ⟨g', rfl⟩
@@ -241,8 +241,8 @@ theorem isManifold (n : WithTop ℕ∞) : letI := h.chartedSpace; IsManifold �
   · intro X _
     exact congrArg (fun a => subspaceProj 𝔤 ((𝔢).symm a)) (key X)
 
-theorem contMDiff_val (n : WithTop ℕ∞) : letI := h.chartedSpace;
-    ContMDiff 𝓘(ℝ, 𝔤) 𝓘(ℝ, 𝔸) n (fun x : G => ((x : 𝔸ˣ) : 𝔸)) := by
+theorem contMDiff_val (n : WithTop ℕ∞) : (letI := h.chartedSpace;
+    ContMDiff 𝓘(ℝ, 𝔤) 𝓘(ℝ, 𝔸) n (fun x : G => ((x : 𝔸ˣ) : 𝔸))) := by
   let := h.chartedSpace
   intro x
   rw [contMDiffAt_iff_source]
@@ -256,7 +256,7 @@ theorem contMDiffAt_of_val {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E
     [TopologicalSpace H] {I : ModelWithCorners ℝ E H} {M : Type*} [TopologicalSpace M]
     [ChartedSpace H M] {n : WithTop ℕ∞} {f : M → G} {x : M}
     (hf : ContMDiffAt I 𝓘(ℝ, 𝔸) n (fun y => ((f y : 𝔸ˣ) : 𝔸)) x) :
-    letI := h.chartedSpace; ContMDiffAt I 𝓘(ℝ, 𝔤) n f x := by
+    (letI := h.chartedSpace; ContMDiffAt I 𝓘(ℝ, 𝔤) n f x) := by
   let := h.chartedSpace
   rw [contMDiffAt_iff_target]
   refine ⟨?_, ?_⟩
@@ -275,7 +275,7 @@ theorem contMDiffAt_of_val {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E
         ((𝔢).open_target.mem_nhds (one_mem_expPartialHomeomorph_target ℝ 𝔸))
     exact ContDiffAt.comp_contMDiffAt (f := fun y => ((f y : 𝔸ˣ) : 𝔸)) hF hf
 
-theorem lieGroup (n : WithTop ℕ∞) : letI := h.chartedSpace; LieGroup 𝓘(ℝ, 𝔤) n G := by
+theorem lieGroup (n : WithTop ℕ∞) : (letI := h.chartedSpace; LieGroup 𝓘(ℝ, 𝔤) n G) := by
   let := h.chartedSpace
   exact {
     toIsManifold := h.isManifold n
@@ -392,16 +392,16 @@ theorem exp_mul_exp_neg (X : 𝔐) : exp X * exp (-X) = 1 := (expUnit ℝ 𝔐 X
 theorem exp_neg_mul_exp (X : 𝔐) : exp (-X) * exp X = 1 := (expUnit ℝ 𝔐 X).inv_mul
 
 theorem isExpLieAlgebra_indefiniteUnitary :
-    IsExpLieAlgebra (indefiniteUnitaryGroup p q) (indefiniteUnitaryLieAlgebra p q) where
-  expUnit_mem X hX := by
+    IsExpLieAlgebra (indefiniteUnitaryGroup p q) (indefiniteUnitaryLieAlgebra p q) := by
+  refine ⟨?_, ?_⟩
+  · intro X hX
     rw [mem_indefiniteUnitaryLieAlgebra_iff] at hX
     rw [mem_indefiniteUnitaryGroup_iff, coe_expUnit, ← Matrix.exp_conjTranspose, hX,
       exp_neg_conj_indefJ]
     simp only [Matrix.mul_assoc]
     rw [← Matrix.mul_assoc (indefJ p q) (indefJ p q), indefJ_mul_self, Matrix.one_mul,
       exp_neg_mul_exp, Matrix.mul_one]
-  exists_nhds := by
-    obtain ⟨ε, εpos, hε⟩ := Metric.isOpen_iff.1 (expPartialHomeomorph ℝ 𝔐).open_source 0
+  · obtain ⟨ε, εpos, hε⟩ := Metric.isOpen_iff.1 (expPartialHomeomorph ℝ 𝔐).open_source 0
       (zero_mem_expPartialHomeomorph_source ℝ 𝔐)
     refine ⟨Metric.ball 0 ε, Metric.isOpen_ball, Metric.mem_ball_self εpos, hε, fun X hX hG => ?_⟩
     rw [mem_indefiniteUnitaryGroup_iff, coe_expUnit] at hG

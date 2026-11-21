@@ -138,8 +138,10 @@ theorem ord_diagonal (v : HeightOneSpectrum (𝓞 K)) (a : Kˣ) :
   rw [ord, ← coe_finiteProj, coe_finiteProj_diagonal, valuedAdicCompletion_eq_valuation']
 
 
+open Classical in
 theorem exists_ord_eq_ite (v : HeightOneSpectrum (𝓞 K)) :
     ∃ x : IdeleGroup K, ∀ w, ord w x = if w = v then 1 else 0 := by
+  classical
   obtain ⟨π, hπ⟩ := v.valuation_exists_uniformizer K
   have hne : ((π : K) : v.adicCompletion K) ≠ 0 := by
     intro h

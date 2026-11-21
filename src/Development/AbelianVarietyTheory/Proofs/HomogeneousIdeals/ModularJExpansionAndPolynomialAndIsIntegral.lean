@@ -6,7 +6,9 @@ public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ExistsPo
 @[expose] public section
 
 open UpperHalfPlane ModularForm Complex Function Filter PowerSeries
-open scoped Topology MatrixGroups Manifold Real
+open scoped Topology MatrixGroups Manifold Real NumberField
+
+local notation "𝕢" => Periodic.qParam
 
 noncomputable section
 
@@ -305,7 +307,7 @@ theorem isIntegral_modularJ_of_ringOfIntegers {K : Type*} [Field K] [NumberField
     have := finrank_le_one (R := ℤ) (1 : 𝓞 K) fun α ↦ by
       obtain ⟨m, hm⟩ := hc α
       exact ⟨m, by simp [hm]⟩
-    rw [RingOfIntegers.rank, hK] at this
+    rw [NumberField.RingOfIntegers.rank, hK] at this
     omega
   refine isIntegral_modularJ_of_mul_mem (fun m hm ↦ hα m ?_) (h α)
   ext

@@ -19,7 +19,7 @@ variable {S : Type v} [CommRing S] [Fact ¬IsUnit (p : S)] [IsAdicComplete (span
 
 namespace Tilt
 
-
+variable (p R) in
 def seqEquiv : Perfection R p ≃* Tilt p R := Perfection.quotientMulEquiv p (span {(p : R)})
 
 def seq (n : ℕ) : Tilt p R →* R :=
@@ -232,7 +232,7 @@ theorem exists_isPrimitive : ∃ ε : tateModule p R, IsPrimitive ε := by
     rw [hy]
     exact hz.ne_one (Fact.out : p.Prime).one_lt
 
-
+variable (p R) in
 def eps : tateModule p R := (exists_isPrimitive p R).choose
 
 variable (p R) in

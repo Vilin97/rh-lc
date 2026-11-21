@@ -87,8 +87,9 @@ theorem algebraMap_completion_algebraMap_int (r : 𝓞 K) :
 
 theorem valued_algebraMap_completion (x : v.adicCompletion K) :
     Valued.v (algebraMap (v.adicCompletion K) (w.adicCompletion L) x) =
-      Valued.v x ^ w.asIdeal.ramificationIdx (𝓞 K) :=
-  valued_completionMap v w x
+      Valued.v x ^ w.asIdeal.ramificationIdx (𝓞 K) := by
+  rw [algebraMap_completion_eq]
+  exact valued_completionMap v w x
 
 variable {ι : Type*} [Fintype ι]
 

@@ -68,8 +68,7 @@ variable [WellFoundedLT n] [LocallyFiniteOrderBot n]
 
 theorem exists_isUpperTriangular_conjTranspose_mul_self {S : Matrix n n 𝕜} (hS : S.PosDef) :
     ∃ R : Matrix n n 𝕜, R.IsUpperTriangular ∧ Rᴴ * R = S := by
-  have hLi : (LDL.lowerInv hS).IsLowerTriangular := fun i j hij =>
-    LDL.lowerInv_triangular hS (OrderDual.toDual_lt_toDual.1 hij)
+  have hLi : (LDL.lowerInv hS).IsLowerTriangular := LDL.isLowerTriangular_lowerInv hS
   have hL : (LDL.lower hS).IsLowerTriangular := blockTriangular_inv_of_blockTriangular hLi
   have hD : (LDL.diag hS).PosDef := by
     rw [LDL.diag_eq_lowerInv_conj]
@@ -243,19 +242,19 @@ abbrev PosDiag := {a : n → ℝ // ∀ i, 0 < a i}
 abbrev UpperUnitriangular (n 𝕜 : Type*) [RCLike 𝕜] [LinearOrder n] :=
   {u : Matrix n n 𝕜 // u.IsUpperTriangular ∧ ∀ i, u i i = 1}
 
-theorem isUnit_det_iwasawa (x : unitaryGroup n 𝕜 × PosDiag n × UpperUnitriangular n 𝕜) :
+theorem isUnit_det_iwasawa (x : unitaryGroup n 𝕜 × PosDiag (n := n) × UpperUnitriangular n 𝕜) :
     IsUnit ((x.1 : Matrix n n 𝕜) * diagonal (fun i => (x.2.1.1 i : 𝕜)) * x.2.2.1).det := by
   rw [Matrix.mul_assoc, det_mul]
   exact (UnitaryGroup.det_isUnit x.1).mul
     (isUnit_det_diagonal_mul_of_unitriangular x.2.1.2 x.2.2.2.1 x.2.2.2.2)
 
-noncomputable def iwasawaMul (x : unitaryGroup n 𝕜 × PosDiag n × UpperUnitriangular n 𝕜) :
+noncomputable def iwasawaMul (x : unitaryGroup n 𝕜 × PosDiag (n := n) × UpperUnitriangular n 𝕜) :
     GL n 𝕜 :=
   ⟨(x.1 : Matrix n n 𝕜) * diagonal (fun i => (x.2.1.1 i : 𝕜)) * x.2.2.1,
     ((x.1 : Matrix n n 𝕜) * diagonal (fun i => (x.2.1.1 i : 𝕜)) * x.2.2.1)⁻¹,
     mul_nonsing_inv _ (isUnit_det_iwasawa x), nonsing_inv_mul _ (isUnit_det_iwasawa x)⟩
 
-@[simp] theorem coe_iwasawaMul (x : unitaryGroup n 𝕜 × PosDiag n × UpperUnitriangular n 𝕜) :
+@[simp] theorem coe_iwasawaMul (x : unitaryGroup n 𝕜 × PosDiag (n := n) × UpperUnitriangular n 𝕜) :
     ((iwasawaMul x : GL n 𝕜) : Matrix n n 𝕜) =
       (x.1 : Matrix n n 𝕜) * diagonal (fun i => (x.2.1.1 i : 𝕜)) * x.2.2.1 := rfl
 
@@ -269,7 +268,7 @@ theorem iwasawaMul_injective : Function.Injective (iwasawaMul (n := n) (𝕜 := 
   obtain ⟨h1, h2, h3⟩ := KAN_unique ha ha' hu hu' hu1 hu1' (congrArg Units.val h)
   subst h1 h2 h3; rfl
 
-noncomputable def iwasawaEquiv : unitaryGroup n 𝕜 × PosDiag n × UpperUnitriangular n 𝕜 ≃ GL n 𝕜 :=
+noncomputable def iwasawaEquiv : unitaryGroup n 𝕜 × PosDiag (n := n) × UpperUnitriangular n 𝕜 ≃ GL n 𝕜 :=
   Equiv.ofBijective iwasawaMul ⟨iwasawaMul_injective, iwasawaMul_surjective⟩
 
 theorem isCompact_unitaryGroup : IsCompact (unitaryGroup n 𝕜 : Set (Matrix n n 𝕜)) := by

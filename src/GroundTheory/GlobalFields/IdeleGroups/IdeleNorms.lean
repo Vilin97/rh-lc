@@ -38,9 +38,8 @@ theorem norm_eq_one_of_mul_eq_one {v : HeightOneSpectrum (𝓞 K)} {a b : v.adic
 
 theorem finite_mul_inv (x : IdeleGroup K) (v : HeightOneSpectrum (𝓞 K)) :
     (x : 𝔸[K]).2 v * ((x⁻¹ : IdeleGroup K) : 𝔸[K]).2 v = 1 := by
-  have h : ((x : 𝔸[K]) * ((x⁻¹ : IdeleGroup K) : 𝔸[K])).2 v = 1 := by
-    simpa only [Units.mul_inv] using adele_snd_one_apply v
-  rwa [adele_snd_mul_apply] at h
+  rw [← adele_snd_mul_apply, Units.mul_inv]
+  rfl
 
 theorem infinite_mul_inv (x : IdeleGroup K) (w : InfinitePlace K) :
     (x : 𝔸[K]).1 w * ((x⁻¹ : IdeleGroup K) : 𝔸[K]).1 w = 1 := by
@@ -86,7 +85,7 @@ theorem finiteModule_pos (x : IdeleGroup K) : 0 < finiteModule x := by
   rw [finiteModule, finprod_eq_prod _ (finite_mulSupport_norm x)]
   exact Finset.prod_pos fun v _ ↦ norm_pos_iff.2 (finite_ne_zero x v)
 
-
+variable (K) in
 def ideleModule : IdeleGroup K →* {r : ℝ // 0 < r} where
   toFun x := ⟨infiniteModule x * finiteModule x, mul_pos (infiniteModule_pos x) (finiteModule_pos x)⟩
   map_one' := by
@@ -187,7 +186,8 @@ theorem infiniteModule_diagonal (k : Kˣ) :
     infiniteModule (diagonal K k) = ∏ w : InfinitePlace K, w (k : K) ^ w.mult := by
   refine Finset.prod_congr rfl fun w _ ↦ ?_
   congr 1
-  exact InfinitePlace.Completion.norm_coe (K := K) (v := w) _
+  rw [coe_diagonal, AdeleRing.algebraMap_fst_apply]
+  exact AbsoluteValue.Completion.norm_coe (WithAbs.toAbs w.1 (k : K))
 
 theorem finiteModule_diagonal (k : Kˣ) :
     finiteModule (diagonal K k) = ∏ᶠ w : FinitePlace K, w (k : K) := by
@@ -200,7 +200,7 @@ theorem ideleModule_diagonal (k : Kˣ) : ideleModule K (diagonal K k) = 1 := by
   rw [ideleModule_apply, infiniteModule_diagonal, finiteModule_diagonal, Positive.val_one]
   exact prod_abs_eq_one k.ne_zero
 
-
+variable (K) in
 def normOneSubgroup : Subgroup (IdeleGroup K) := (ideleModule K).ker
 
 theorem mem_normOneSubgroup {x : IdeleGroup K} :
@@ -208,7 +208,7 @@ theorem mem_normOneSubgroup {x : IdeleGroup K} :
   rw [normOneSubgroup, MonoidHom.mem_ker]
   exact ⟨fun h ↦ by rw [h, Positive.val_one], fun h ↦ Subtype.ext (h.trans Positive.val_one.symm)⟩
 
-
+variable (K) in
 theorem isClosed_normOneSubgroup : IsClosed (normOneSubgroup K : Set (IdeleGroup K)) := by
   have h : (normOneSubgroup K : Set (IdeleGroup K)) =
       (fun x ↦ (ideleModule K x : ℝ)) ⁻¹' {1} := by
@@ -217,7 +217,7 @@ theorem isClosed_normOneSubgroup : IsClosed (normOneSubgroup K : Set (IdeleGroup
   rw [h]
   exact isClosed_singleton.preimage (continuous_subtype_val.comp continuous_ideleModule)
 
-
+variable (K) in
 theorem range_diagonal_le_normOneSubgroup : (diagonal K).range ≤ normOneSubgroup K := by
   rintro _ ⟨k, rfl⟩
   exact ideleModule_diagonal k

@@ -14,7 +14,7 @@ variable {G : Type} [Group G]
 
 theorem mem_stabAt_mul_iff (Γ K : Subgroup G) (g : G) (γ : Γ) (κ : K) (δ : Γ) :
     δ ∈ stabAt Γ K ((γ : G) * g * κ) ↔ γ⁻¹ * δ * γ ∈ stabAt Γ K g := by
-  simp only [stabAt, Set.mem_setOf_eq]
+  simp only [stabAt, Set.mem_ofPred_eq]
   have e : ((γ : G) * g * κ)⁻¹ * (δ : G) * ((γ : G) * g * κ) =
       (κ : G)⁻¹ * (g⁻¹ * ((γ⁻¹ * δ * γ : Γ) : G) * g) * κ := by
     push_cast; group

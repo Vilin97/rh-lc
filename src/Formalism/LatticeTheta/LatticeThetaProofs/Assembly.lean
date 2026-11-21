@@ -19,8 +19,9 @@ lemma norm_exp_two_pi_I_mul (r : ℝ) : ‖Complex.exp (2 * Real.pi * Complex.I 
     push_cast; ring]
   exact Complex.norm_exp_ofReal_mul_I _
 
-theorem poissonDecay_of (hD : DualIsLattice V) (h1 : LatticeSummableDecay V)
-    (h2 : Periodization V) (h3 : UnfoldCoeff V) (h4 : LatticeFourierSeries V) : PoissonDecay V := by
+theorem poissonDecay_of (hD : DualIsLattice (V := V)) (h1 : LatticeSummableDecay V)
+    (h2 : Periodization V) (h3 : UnfoldCoeff V) (h4 : LatticeFourierSeries V) :
+    PoissonDecay (V := V) := by
   intro Λ _ _ f hf b hb hfO hFO x
   obtain ⟨hdd, hdz⟩ := hD Λ
   haveI := hdd
@@ -51,7 +52,8 @@ theorem poissonDecay_of (hD : DualIsLattice V) (h1 : LatticeSummableDecay V)
   rw [hval]
   exact (hper x).hasSum
 
-theorem poissonSchwartz_of (hP : PoissonDecay V) (h6 : SchwartzDecay V) : PoissonSchwartz V := by
+theorem poissonSchwartz_of (hP : PoissonDecay (V := V)) (h6 : SchwartzDecay V) :
+    PoissonSchwartz (V := V) := by
   intro Λ _ _ f x
   have hd : (Module.finrank ℝ V : ℝ) < Module.finrank ℝ V + 1 := by linarith
   exact hP Λ f f.continuous _ hd (h6 f _).1 (h6 f _).2 x

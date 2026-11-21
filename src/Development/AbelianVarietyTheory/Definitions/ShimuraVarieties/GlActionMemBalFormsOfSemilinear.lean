@@ -32,7 +32,7 @@ theorem mem_symForms_iff_flip {b : Bil Y A} : b ∈ symForms S Y A ↔ b.flip = 
     conv_lhs => rw [← h]
     rfl⟩
 
-
+variable (Y) in
 abbrev SymLattice : Type _ := symForms ℤ Y ℤ
 
 instance [Module.Finite ℤ Y] [Module.Free ℤ Y] (L : Submodule ℤ (Bil Y ℤ)) : Module.Finite ℤ L :=
@@ -95,17 +95,17 @@ theorem mk_comm (y y' : Y) : mk y y' = mk y' y := by
   rw [mk_apply, mk_apply, ← sub_eq_zero, ← map_sub, ← AddMonoidHom.mem_ker, ker_ofTensor]
   exact AddSubgroup.subset_closure ⟨y, y', rfl⟩
 
+@[ext high] theorem hom_ext {A : Type*} [AddCommGroup A] {f g : SymSq Y →ₗ[ℤ] A}
     (h : ∀ y y', f (mk y y') = g (mk y y')) : f = g := by
   refine LinearMap.ext fun x => ?_
   obtain ⟨x, rfl⟩ := ofTensor_surjective Y x
-  induction x using TensorProduct.induction_on with
-  | zero => simp only [map_zero]
+  induction x using TensorProduct.inductionOn with
   | tmul y y' => exact h y y'
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 variable {A : Type*} [AddCommGroup A] [Module S A]
 
-
+variable (S Y A) in
 def lift : symForms S Y A ≃ₗ[S] (SymSq Y →ₗ[ℤ] A) where
   toFun b := AddMonoidHom.toIntLinearMap (M := SymSq Y) <|
     QuotientAddGroup.lift (symRel Y) (TensorProduct.lift b.1).toAddMonoidHom <|
@@ -113,14 +113,20 @@ def lift : symForms S Y A ≃ₗ[S] (SymSq Y →ₗ[ℤ] A) where
         rintro _ ⟨y, y', rfl⟩
         rw [SetLike.mem_coe, AddMonoidHom.mem_ker, map_sub]
         exact sub_eq_zero.2 (b.2 y y')
-  map_add' b c := by ext; rfl
-  map_smul' s b := by ext; rfl
+  map_add' b c := hom_ext fun _ _ => rfl
+  map_smul' s b := hom_ext fun _ _ => rfl
   invFun l := ⟨mk.compr₂ l, fun y y' => congrArg l (mk_comm y y')⟩
   left_inv b := by ext; rfl
-  right_inv l := by ext; rfl
+  right_inv l := hom_ext fun _ _ => rfl
+
+private theorem lift_mk (b : symForms S Y A) (y y' : Y) :
+    lift S Y A b (mk y y') = (b : Bil Y A) y y' := rfl
+
+private theorem lift_symm_apply (l : SymSq Y →ₗ[ℤ] A) (y y' : Y) :
+    ((lift S Y A).symm l : Bil Y A) y y' = l (mk y y') := rfl
 
 noncomputable def basis {ι : Type*} (e : Module.Basis ι ℤ Y) : Module.Basis (Sym2 ι) ℤ (SymSq Y) :=
-  .ofRepr <| LinearEquiv.ofLinear
+  .ofRepr <| LinearEquiv.ofLinearMap
     (lift ℤ Y (Sym2 ι →₀ ℤ)
       ⟨e.constr ℤ fun i => e.constr ℤ fun j => Finsupp.single s(i, j) 1, by
         rw [mem_symForms_iff_flip]
@@ -130,11 +136,11 @@ noncomputable def basis {ι : Type*} (e : Module.Basis ι ℤ Y) : Module.Basis 
     (by
       refine Finsupp.lhom_ext' fun p => LinearMap.ext_ring ?_
       induction p using Sym2.ind with
-      | h i j => simp)
+      | h i j => simp [lift_mk])
     (by
       refine (lift ℤ Y (SymSq Y)).symm.injective (Subtype.ext ?_)
       refine e.ext fun i => e.ext fun j => ?_
-      simp)
+      simp [lift_mk, lift_symm_apply])
 
 instance [Module.Free ℤ Y] : Module.Free ℤ (SymSq Y) :=
   .of_basis (basis (Module.Free.chooseBasis ℤ Y))
@@ -182,7 +188,7 @@ theorem IsBalanced.add_of_add_star {b : Bil Y A} (hb : IsBalanced O b) {w : O}
 
 variable [Module S A]
 
-
+variable (S O Y A) in
 def balForms : Submodule S (Bil Y A) where
   carrier := {b | b ∈ symForms S Y A ∧ IsBalanced O b}
   add_mem' {b c} hb hc := ⟨add_mem hb.1 hc.1, fun a y y' => by
@@ -204,6 +210,7 @@ def balForms : Submodule S (Bil Y A) where
 
 
 
+variable (O Y) in
 def balRel : Submodule ℤ (SymSq Y) :=
   saturation (Submodule.span ℤ
     {x : SymSq Y | ∃ (a : O) (y y' : Y), x = SymSq.mk (a • y) y' - SymSq.mk y (star a • y')})
@@ -212,12 +219,12 @@ theorem mem_balRel {x : SymSq Y} : x ∈ balRel O Y ↔ ∃ n : ℤ, n ≠ 0 ∧
     {x : SymSq Y | ∃ (a : O) (y y' : Y), x = SymSq.mk (a • y) y' - SymSq.mk y (star a • y')} :=
   mem_saturation_iff
 
-
+variable (O Y) in
 abbrev BalSq : Type _ := SymSq Y ⧸ balRel O Y
 
 namespace BalSq
 
-
+variable (O) in
 def mk : Bil Y (BalSq O Y) := SymSq.mk.compr₂ (balRel O Y).mkQ
 
 theorem mk_apply (y y' : Y) : mk O y y' = (balRel O Y).mkQ (SymSq.mk y y') := rfl
@@ -228,12 +235,13 @@ theorem mk_mem_balForms : mk O ∈ balForms ℤ O Y (BalSq O Y) :=
     (Submodule.Quotient.eq _).2 <| mem_balRel.2
       ⟨1, one_ne_zero, by rw [one_smul]; exact Submodule.subset_span ⟨a, y, y', rfl⟩⟩⟩
 
+@[ext high] theorem hom_ext {f g : BalSq O Y →ₗ[ℤ] A}
     (h : ∀ y y', f (mk O y y') = g (mk O y y')) : f = g :=
   Submodule.linearMap_qext _ (SymSq.hom_ext h)
 
 instance : Module.IsTorsionFree ℤ (BalSq O Y) := isTorsionFree_quotient_saturation _
 
-
+variable (S O Y A) in
 def lift [Module.IsTorsionFree ℤ A] : balForms S O Y A ≃ₗ[S] (BalSq O Y →ₗ[ℤ] A) where
   toFun b := (balRel O Y).liftQ (SymSq.lift S Y A ⟨b.1, b.2.1⟩) <| by
     intro x hx
@@ -245,12 +253,12 @@ def lift [Module.IsTorsionFree ℤ A] : balForms S O Y A ≃ₗ[S] (BalSq O Y �
       exact sub_eq_zero.2 (b.2.2 a y y')
     rw [LinearMap.mem_ker, map_smul] at h
     exact (smul_eq_zero.1 h).resolve_left hn
-  map_add' b c := by ext; rfl
-  map_smul' s b := by ext; rfl
+  map_add' b c := hom_ext fun _ _ => rfl
+  map_smul' s b := hom_ext fun _ _ => rfl
   invFun l := ⟨(mk O).compr₂ l, fun y y' => congrArg l ((mk_mem_balForms O Y).1 y y'),
     fun a y y' => congrArg l ((mk_mem_balForms O Y).2 a y y')⟩
   left_inv b := by ext; rfl
-  right_inv l := by ext; rfl
+  right_inv l := hom_ext fun _ _ => rfl
 
 
 end BalSq

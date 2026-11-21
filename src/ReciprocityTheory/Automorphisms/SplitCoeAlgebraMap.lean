@@ -13,6 +13,8 @@ open NumberField IsDedekindDomain
 
 variable {L : Type*} [Field L] [NumberField L] [IsCMField L]
 
+local notation3 "L⁺" => maximalRealSubfield L
+
 theorem SplitPlace.split_le_one (s : SplitPlace L) (x : 𝓞 L) : Valued.v (s.i (x : L)) ≤ 1 := by
   have hx : IsIntegral ℤ (x : L) := x.isIntegral_coe
   have h1 : IsIntegral ℤ (s.i (x : L)) := by

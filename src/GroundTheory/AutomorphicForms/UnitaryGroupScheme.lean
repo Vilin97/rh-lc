@@ -77,10 +77,10 @@ noncomputable def tensorMap (f : R →ₐ[F] S) : R ⊗[F] E →ₐ[F] S ⊗[F] 
 omit [Algebra.IsQuadraticExtension F E] in
 @[simp]
 theorem tensorMap_tmul (f : R →ₐ[F] S) (r : R) (e : E) :
-    tensorMap E f (r ⊗ₜ e) = f r ⊗ₜ e := rfl
+    tensorMap f (r ⊗ₜ e) = f r ⊗ₜ e := rfl
 
 theorem tensorMap_conjBase (f : R →ₐ[F] S) (z : R ⊗[F] E) :
-    tensorMap E f (conjBase F E R z) = conjBase F E S (tensorMap E f z) := by
+    tensorMap f (conjBase F E R z) = conjBase F E S (tensorMap f z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => rw [conjBase_tmul, tensorMap_tmul, tensorMap_tmul, conjBase_tmul]
@@ -88,7 +88,7 @@ theorem tensorMap_conjBase (f : R →ₐ[F] S) (z : R ⊗[F] E) :
 
 omit [Algebra.IsQuadraticExtension F E] in
 theorem tensorMap_includeRight (f : R →ₐ[F] S) (e : E) :
-    tensorMap E f (Algebra.TensorProduct.includeRight e) =
+    tensorMap f (Algebra.TensorProduct.includeRight e) =
       (Algebra.TensorProduct.includeRight e : S ⊗[F] E) := by
   simp [Algebra.TensorProduct.includeRight_apply]
 
@@ -112,7 +112,7 @@ variable {F E H R S T}
 omit [Algebra.IsQuadraticExtension F E] [Fintype ι] [DecidableEq ι] in
 theorem map_includeRight_tensorMap (f : R →ₐ[F] S) :
     (H.map (Algebra.TensorProduct.includeRight : E →ₐ[F] R ⊗[F] E)).map
-      ((tensorMap E f : R ⊗[F] E →ₐ[F] S ⊗[F] E) : R ⊗[F] E →+* S ⊗[F] E) =
+      ((tensorMap f : R ⊗[F] E →ₐ[F] S ⊗[F] E) : R ⊗[F] E →+* S ⊗[F] E) =
       H.map (Algebra.TensorProduct.includeRight : E →ₐ[F] S ⊗[F] E) := by
   rw [Matrix.map_map]
   congr 1
@@ -122,7 +122,7 @@ theorem map_includeRight_tensorMap (f : R →ₐ[F] S) :
 
 noncomputable def unitaryMap (f : R →ₐ[F] S) : unitaryPoints F E H R →* unitaryPoints F E H S :=
   ((Matrix.GeneralLinearGroup.map
-      ((tensorMap E f : R ⊗[F] E →ₐ[F] S ⊗[F] E) : R ⊗[F] E →+* S ⊗[F] E)).comp
+      ((tensorMap f : R ⊗[F] E →ₐ[F] S ⊗[F] E) : R ⊗[F] E →+* S ⊗[F] E)).comp
     (unitaryPoints F E H R).subtype).codRestrict _ fun g =>
     map_mem_unitaryGroupMatrix _ (tensorMap_conjBase f) (map_includeRight_tensorMap f) g.2
 
@@ -172,7 +172,7 @@ variable {V : Type*} [AddCommGroup V] [Module E V]
 
 noncomputable def unitaryPointsRationalEquivHermitian (h : HermitianForm F E V)
     (v : Basis ι E V) : unitaryPoints F E (gram h.toSesq v) F ≃* h.unitaryGroup :=
-  (unitaryPointsRationalEquiv F E (gram h.toSesq v)).trans (unitaryGroupEquivMatrix h v).symm
+  (unitaryPointsRationalEquiv (H := gram h.toSesq v)).trans (unitaryGroupEquivMatrix h v).symm
 
 end Rational
 

@@ -58,7 +58,7 @@ theorem exists_algHom_lift_of_etale_of_isLocalRing {R A S : Type*} [CommRing R] 
     [CommRing S] [Algebra R A] [Algebra R S] [Algebra.Etale R A] [IsLocalRing S] (J : Ideal S)
     [HenselianRing S J] (φ : A →ₐ[R] S ⧸ J) :
     ∃ ψ : A →ₐ[R] S, ∀ a, Ideal.Quotient.mk J (ψ a) = φ a := by
-  have hJ : J ≤ (⊥ : Ideal S).jacobson := HenselianRing.jac
+  have hJ : J ≤ (⊥ : Ideal S).jacobson := by simpa [Ideal.jacobson_bot] using (HenselianRing.jac (R := S) (I := J))
   have hJtop : J ≠ ⊤ := by
     rintro rfl
     rw [IsLocalRing.jacobson_eq_maximalIdeal _ bot_ne_top] at hJ
@@ -102,13 +102,16 @@ theorem exists_algHom_lift_of_etale_of_isLocalRing {R A S : Type*} [CommRing R] 
 theorem comap_eq_maximalIdeal_of_finite {R S : Type*} [CommRing R] [IsLocalRing R] [CommRing S]
     [Algebra R S] [Module.Finite R S] (n : Ideal S) [n.IsMaximal] :
     n.comap (algebraMap R S) = maximalIdeal R :=
-  IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal n)
+  IsLocalRing.eq_maximalIdeal
+    (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap R S)
+      (fun x ↦ IsIntegral.of_finite R x) n)
 
 theorem map_maximalIdeal_le_jacobson_of_finite (R S : Type*) [CommRing R] [IsLocalRing R]
     [CommRing S] [Algebra R S] [Module.Finite R S] :
     (maximalIdeal R).map (algebraMap R S) ≤ (⊥ : Ideal S).jacobson := by
-  rw [Ideal.jacobson, le_sInf_iff]
-  rintro n ⟨-, hn⟩
+  rw [Ideal.jacobson_bot, Ring.jacobson_eq_sInf_isMaximal, le_sInf_iff]
+  rintro n hn
+  letI : n.IsMaximal := hn
   rw [Ideal.map_le_iff_le_comap, comap_eq_maximalIdeal_of_finite]
 
 theorem finite_maximalSpectrum_of_finite_of_isLocalRing (R S : Type*) [CommRing R] [IsLocalRing R]
@@ -157,8 +160,9 @@ theorem exists_idempotent_notMem_iff_of_henselian (R : Type*) {S : Type*} [CommR
 
 theorem mem_jacobson_bot_of_forall_isMaximal {S : Type*} [CommRing S] {x : S}
     (h : ∀ n : Ideal S, n.IsMaximal → x ∈ n) : x ∈ (⊥ : Ideal S).jacobson := by
-  rw [Ideal.jacobson, Ideal.mem_sInf]
-  rintro n ⟨-, hn⟩
+  rw [Ideal.jacobson_bot, Ring.jacobson_eq_sInf_isMaximal, Ideal.mem_sInf]
+  rintro n hn
+  letI : n.IsMaximal := hn
   exact h n hn
 
 theorem one_sub_mem_iff_notMem_of_isIdempotentElem {S : Type*} [CommRing S] {e : S}
@@ -222,7 +226,7 @@ theorem existsUnique_idempotent_lift_of_henselian (R : Type*) {S C : Type*} [Com
 theorem henselianRing_of_finite (R : Type*) {S : Type*} [CommRing R]
     [HenselianLocalRing R] [CommRing S] [Algebra R S] [Module.Finite R S] (J : Ideal S)
     (hJ : J ≤ (⊥ : Ideal S).jacobson) : HenselianRing S J where
-  jac := hJ
+  jac := by simpa [Ideal.jacobson_bot] using hJ
   is_henselian f hf a₀ h₁ h₂ := by
     nontriviality S using Subsingleton.elim _ (0 : S)
     obtain ⟨u, hu⟩ := (isUnit_of_isUnit_mk_of_le_jacobson hJ h₂).exists_left_inv

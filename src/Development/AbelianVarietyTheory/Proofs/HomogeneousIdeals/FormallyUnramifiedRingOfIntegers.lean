@@ -22,7 +22,7 @@ def mulChar : R ⊗[O] O' →ₐ[R] R :=
   Algebra.TensorProduct.lift (AlgHom.id R R) (IsScalarTower.toAlgHom O O' R) fun _ _ ↦ .all _ _
 
 @[simp] theorem mulChar_tmul (r : R) (x : O') :
-    mulChar R O O' (r ⊗ₜ x) = r * algebraMap O' R x := rfl
+    mulChar (R := R) (O := O) (O' := O') (r ⊗ₜ x) = r * algebraMap O' R x := rfl
 
 theorem exists_elem_of_unramified {A : Type*} [CommRing A] [Algebra R A]
     [Algebra.FormallyUnramified R A] [Algebra.EssFiniteType R A] (χ : A →ₐ[R] R) :
@@ -45,7 +45,7 @@ theorem exists_eigen_of_unramified (N : Type*) [AddCommGroup N] [Module R N] [Mo
     [Algebra.FormallyUnramified R (R ⊗[O] O')] [Algebra.EssFiniteType R (R ⊗[O] O')] :
     ∃ s : N ⊗[O'] M →ₗ[R] N ⊗[O] M, Function.Injective s ∧ ∀ z, z ∈ LinearMap.range s ↔
       ∀ x : O', (Algebra.lsmul O O M x).lTensor N z = algebraMap O' R x • z := by
-  obtain ⟨e, he₁, he₂⟩ := exists_elem_of_unramified (mulChar R O O')
+  obtain ⟨e, he₁, he₂⟩ := exists_elem_of_unramified (mulChar (R := R) (O := O) (O' := O'))
   let g : O' →ₐ[O] Module.End R (N ⊗[O] M) :=
     { toFun x := AlgebraTensorModule.lTensor R N (Algebra.lsmul O O M x)
       map_one' := by ext; simp
@@ -75,7 +75,7 @@ theorem exists_eigen_of_unramified (N : Type*) [AddCommGroup N] [Module R N] [Mo
       map_add' n n' := LinearMap.ext fun m ↦ (congrArg (ρ e) (add_tmul n n' m)).trans (map_add _ _ _)
       map_smul' r n := LinearMap.ext fun m ↦ map_smul (ρ e) r (n ⊗ₜ m) }
   let q : N ⊗[O] M →ₗ[R] N ⊗[O'] M := mapOfCompatibleSMul O' O R N M
-  have hq : ∀ y z, q (ρ y z) = mulChar R O O' y • q z := fun y z ↦ by
+  have hq : ∀ y z, q (ρ y z) = mulChar (R := R) (O := O) (O' := O') y • q z := fun y z ↦ by
     induction y with
     | add y y' hy hy' => simp only [map_add (f := _), LinearMap.add_apply, hy, hy', add_smul]
     | tmul r x =>
@@ -93,7 +93,7 @@ theorem exists_eigen_of_unramified (N : Type*) [AddCommGroup N] [Module R N] [Mo
   refine ⟨s, Function.LeftInverse.injective hqs, fun z ↦ ⟨?_, fun hz ↦ ⟨q z, ?_⟩⟩⟩
   · rintro ⟨z, rfl⟩ x
     rw [← hqs z, hsq, hρe]
-  · have : ∀ y, ρ y z = mulChar R O O' y • z := fun y ↦ by
+  · have : ∀ y, ρ y z = mulChar (R := R) (O := O) (O' := O') y • z := fun y ↦ by
       induction y with
       | add y y' hy hy' => simp only [map_add (f := _), LinearMap.add_apply, hy, hy', add_smul]
       | tmul r x => rw [hρ, hz, mulChar_tmul, mul_smul]
@@ -183,7 +183,7 @@ variable (k K E : Type*) [Field k] [CharZero k] [Field K] [Field E] [NumberField
 theorem ringOfIntegers_injective (τ : 𝓞 K →+* k) : Function.Injective τ := by
   rw [RingHom.injective_iff_ker_eq_bot]
   refine Ideal.eq_bot_of_comap_eq_bot (R := ℤ) ?_
-  rw [RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
+  rw [Ideal.under_def, RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
   exact RingHom.injective_int _
 
 theorem formallyUnramified_ringOfIntegers [Algebra (𝓞 K) k] :

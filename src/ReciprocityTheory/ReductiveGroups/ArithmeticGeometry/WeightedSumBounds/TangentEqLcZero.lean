@@ -171,7 +171,7 @@ theorem lgCurve_sumList (G : LogFGL v d) :
       have hl : ∀ g' ∈ l, IsCurve v g' := fun g' hg' => h g' (by simp [hg'])
       rw [LogFGL.sumList, lgCurve_add G (fun b => (h g (by simp) b).1)
         (fun b => (isCurve_sumList G l hl b).1), lgCurve_sumList G l hl a]
-      simp
+      simp only [List.map_cons, List.sum_cons]
 
 theorem isCurve_sumF (G : LogFGL v d) {m : ℕ} (g : Fin m → Fin d → PowerSeries C)
     (h : ∀ u, IsCurve v (g u)) : IsCurve v (G.sumF g) :=

@@ -34,8 +34,7 @@ theorem h2π_zRepOfMonoidEnd_surjective :
 
 theorem map_ker_h2π_intRepOfMonoidEnd :
     (H2π (Rep.of (intRepOfMonoidEnd.{0} φ))).hom.toAddMonoidHom.ker.map
-        (cocycles₂IntRepAddEquiv φ : cocycles₂ (Rep.of (intRepOfMonoidEnd.{0} φ)) →+
-          cocycles₂ (Rep.of (zRepOfMonoidEnd φ))) =
+        (cocycles₂IntRepAddEquiv φ).toAddMonoidHom =
       (H2π (Rep.of (zRepOfMonoidEnd φ))).hom.toAddMonoidHom.ker := by
   ext x
   constructor
@@ -54,11 +53,14 @@ theorem map_ker_h2π_intRepOfMonoidEnd :
 noncomputable def h2IntRepAddEquiv :
     groupCohomology (Rep.of (intRepOfMonoidEnd.{0} φ)) 2 ≃+
       groupCohomology (Rep.of (zRepOfMonoidEnd φ)) 2 :=
-  ((QuotientAddGroup.quotientKerEquivOfSurjective _
+  ((QuotientAddGroup.quotientKerEquivOfSurjective
+      (H2π (Rep.of (intRepOfMonoidEnd.{0} φ))).hom.toAddMonoidHom
       (h2π_intRepOfMonoidEnd_surjective φ)).symm.trans
     (QuotientAddGroup.congr _ _ (cocycles₂IntRepAddEquiv φ)
       (map_ker_h2π_intRepOfMonoidEnd φ))).trans
-    (QuotientAddGroup.quotientKerEquivOfSurjective _ (h2π_zRepOfMonoidEnd_surjective φ))
+    (QuotientAddGroup.quotientKerEquivOfSurjective
+      (H2π (Rep.of (zRepOfMonoidEnd φ))).hom.toAddMonoidHom
+      (h2π_zRepOfMonoidEnd_surjective φ))
 
 theorem h2IntRepAddEquiv_H2_class (x : cocycles₂ (Rep.of (intRepOfMonoidEnd.{0} φ))) :
     h2IntRepAddEquiv φ ((H2π _).hom x) = (H2π _).hom (cocycles₂IntRepAddEquiv φ x) := by

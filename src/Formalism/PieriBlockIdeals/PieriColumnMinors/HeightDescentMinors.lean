@@ -17,7 +17,8 @@ section Ode
 variable {R : Type*} [CommRing R]
 
 theorem coeff_one_add_X_mul_derivative (H : R⟦X⟧) (n : ℕ) :
-    coeff n ((1 + X) * d⁄dX R H) = coeff (n + 1) H * ((n : R) + 1) + coeff n H * (n : R) := by
+    coeff n ((1 + X) * PowerSeries.derivative H) =
+      coeff (n + 1) H * ((n : R) + 1) + coeff n H * (n : R) := by
   rcases n with _ | m
   · simp [add_mul]
     rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_derivative]
@@ -25,7 +26,7 @@ theorem coeff_one_add_X_mul_derivative (H : R⟦X⟧) (n : ℕ) :
   · simp [add_mul, PowerSeries.coeff_derivative, PowerSeries.coeff_succ_X_mul]
 
 theorem eq_zero_of_binomial_ode [IsAddTorsionFree R] (c : R) (H : R⟦X⟧)
-    (h : (1 + X) * d⁄dX R H = C c * H) (h0 : constantCoeff H = 0) : H = 0 := by
+    (h : (1 + X) * PowerSeries.derivative H = C c * H) (h0 : constantCoeff H = 0) : H = 0 := by
   ext n
   simp only [map_zero]
   induction n with
@@ -38,10 +39,12 @@ theorem eq_zero_of_binomial_ode [IsAddTorsionFree R] (c : R) (H : R⟦X⟧)
       rw [nsmul_eq_mul, mul_comm]
       push_cast
       exact e
-    exact nsmul_right_injective (Nat.succ_ne_zero n) (by simpa using e2)
+    exact eq_of_nsmul_eq_nsmul_of_addCommute (Nat.succ_ne_zero n)
+      (AddCommute.zero_right _) (by simpa using e2)
 
 theorem eq_of_binomial_ode_of_constantCoeff_eq [IsAddTorsionFree R] (c : R) (F G : R⟦X⟧)
-    (hF : (1 + X) * d⁄dX R F = C c * F) (hG : (1 + X) * d⁄dX R G = C c * G)
+    (hF : (1 + X) * PowerSeries.derivative F = C c * F)
+    (hG : (1 + X) * PowerSeries.derivative G = C c * G)
     (h0 : constantCoeff F = constantCoeff G) : F = G := by
   have := eq_zero_of_binomial_ode c (F - G) (by rw [map_sub, mul_sub, hF, hG, mul_sub])
     (by rw [map_sub, h0, sub_self])
@@ -50,7 +53,7 @@ theorem eq_of_binomial_ode_of_constantCoeff_eq [IsAddTorsionFree R] (c : R) (F G
 variable [BinomialRing R]
 
 theorem binomialSeries_one_add_X_mul_derivative (c : R) :
-    (1 + X) * d⁄dX R (binomialSeries R c) = C c * binomialSeries R c := by
+    (1 + X) * PowerSeries.derivative (binomialSeries R c) = C c * binomialSeries R c := by
   ext n
   rw [coeff_one_add_X_mul_derivative, coeff_C_mul]
   simp only [binomialSeries_coeff, smul_eq_mul, mul_one]
@@ -66,7 +69,7 @@ theorem hasSubst_binomialSeries_sub_one {A : Type*} [CommRing A] [Algebra R A] (
   change PowerSeries.constantCoeff (binomialSeries A e - 1 : A⟦X⟧) = 0
   simp
 
-attribute [local instance] BinomialRing.toIsAddTorsionFree in
+attribute [local instance] BinomialRing.toHasUniqueDiv in
 theorem binomialSeries_subst_comp (d e : R) :
     (binomialSeries R d).subst (binomialSeries R e - 1 : R⟦X⟧) = binomialSeries R (d * e) := by
   have ha := hasSubst_binomialSeries_sub_one (A := R) e
@@ -74,15 +77,18 @@ theorem binomialSeries_subst_comp (d e : R) :
   have hFe : (1 + X : R⟦X⟧).subst a = binomialSeries R e := by
     rw [subst_add ha, subst_X ha, ← map_one (C (R := R)), subst_C]
     simp [hadef]
-  have hda : d⁄dX R a = d⁄dX R (binomialSeries R e) := by
+  have hda : PowerSeries.derivative a = PowerSeries.derivative (binomialSeries R e) := by
     rw [hadef, map_sub, derivative_one, sub_zero]
   apply eq_of_binomial_ode_of_constantCoeff_eq (d * e)
   · rw [derivative_subst ha, hda]
-    calc (1 + X) * ((d⁄dX R (binomialSeries R d)).subst a * d⁄dX R (binomialSeries R e))
-        = (d⁄dX R (binomialSeries R d)).subst a * ((1 + X) * d⁄dX R (binomialSeries R e)) := by ring
-      _ = (d⁄dX R (binomialSeries R d)).subst a * (C e * (1 + X : R⟦X⟧).subst a) := by
+    calc (1 + X) * ((PowerSeries.derivative (binomialSeries R d)).subst a *
+          PowerSeries.derivative (binomialSeries R e))
+        = (PowerSeries.derivative (binomialSeries R d)).subst a *
+            ((1 + X) * PowerSeries.derivative (binomialSeries R e)) := by ring
+      _ = (PowerSeries.derivative (binomialSeries R d)).subst a *
+            (C e * (1 + X : R⟦X⟧).subst a) := by
           rw [binomialSeries_one_add_X_mul_derivative, hFe]
-      _ = C e * ((1 + X) * d⁄dX R (binomialSeries R d)).subst a := by
+      _ = C e * ((1 + X) * PowerSeries.derivative (binomialSeries R d)).subst a := by
           rw [subst_mul ha]; ring
       _ = C e * (C d * (binomialSeries R d).subst a) := by
           rw [binomialSeries_one_add_X_mul_derivative, subst_mul ha, subst_C]; rfl

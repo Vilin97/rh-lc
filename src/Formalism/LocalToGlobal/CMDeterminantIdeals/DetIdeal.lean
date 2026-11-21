@@ -61,8 +61,9 @@ def detSub (L : MLat K m) : Submodule (𝓞 K) K :=
   Submodule.span (𝓞 K) {d | ∃ x : Fin m → Fin m → K, (∀ i, x i ∈ L.M) ∧ d = (Matrix.of x).det}
 
 
-def detIdeal (L : MLat K m) : FractionalIdeal (𝓞 K)⁰ K :=
-  if h : IsFractional (𝓞 K)⁰ L.detSub then ⟨L.detSub, h⟩ else 0
+def detIdeal (L : MLat K m) : FractionalIdeal (𝓞 K)⁰ K := by
+  classical
+  exact if h : IsFractional (𝓞 K)⁰ L.detSub then ⟨L.detSub, h⟩ else 0
 
 end MLat
 

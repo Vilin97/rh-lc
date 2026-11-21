@@ -39,8 +39,10 @@ variable [NumberField K] [NumberField L]
 
 def tensorInfiniteAdeleRingEquiv :
     L ⊗[K] InfiniteAdeleRing K ≃ₐ[L] InfiniteAdeleRing L :=
-  (Algebra.TensorProduct.piRight K L L (fun v : InfinitePlace K => v.Completion)).trans <|
-    (AlgEquiv.piCongrRight fun v => tensorPiEquivLeft (L := L) v).trans piPlacesOverEquiv
+  by
+    classical
+    exact (Algebra.TensorProduct.piRight K L L (fun v : InfinitePlace K => v.Completion)).trans <|
+      (AlgEquiv.piCongrRight fun v => tensorPiEquivLeft (L := L) v).trans piPlacesOverEquiv
 
 theorem tensorInfiniteAdeleRingEquiv_tmul (l : L) (x : InfiniteAdeleRing K)
     (w : InfinitePlace L) :
@@ -53,7 +55,8 @@ theorem tensorInfiniteAdeleRingEquiv_tmul (l : L) (x : InfiniteAdeleRing K)
 
 
 def infiniteAdeleRingMap : InfiniteAdeleRing K →+* InfiniteAdeleRing L :=
-  RingHom.pi fun w : InfinitePlace L =>
+  by classical
+  exact RingHom.pi fun w : InfinitePlace L =>
     (algebraMap (w.comap (algebraMap K L)).Completion w.Completion).comp
       (Pi.evalRingHom (fun v : InfinitePlace K => v.Completion) (w.comap (algebraMap K L)))
 
@@ -68,7 +71,7 @@ theorem infiniteAdeleRingMap_apply (x : InfiniteAdeleRing K) (w : InfinitePlace 
 theorem continuous_infiniteAdeleRingMap :
     Continuous (infiniteAdeleRingMap (K := K) (L := L)) :=
   continuous_pi fun w =>
-    (NumberField.LiesOver.continuous_completionMap (v := w.comap (algebraMap K L)) (w := w)).comp
+    (AbsoluteValue.Completion.continuous_map (w.comap (algebraMap K L)).1 w.1).comp
       (continuous_apply (w.comap (algebraMap K L)))
 
 
@@ -77,16 +80,16 @@ theorem infiniteAdeleRingMap_algebraMap (k : K) :
       algebraMap L (InfiniteAdeleRing L) (algebraMap K L k) := by
   funext w
   rw [infiniteAdeleRingMap_apply, InfiniteAdeleRing.algebraMap_apply,
-    InfiniteAdeleRing.algebraMap_apply, ← Completion.algebraMap_apply,
+    InfiniteAdeleRing.algebraMap_apply, ← AbsoluteValue.Completion.algebraMap_def,
     ← IsScalarTower.algebraMap_apply, IsScalarTower.algebraMap_apply K L]
-  rfl
+  simp
 
 theorem tensorInfiniteAdeleRingEquiv_tmul' (l : L) (x : InfiniteAdeleRing K) :
     tensorInfiniteAdeleRingEquiv (l ⊗ₜ x) =
       algebraMap L (InfiniteAdeleRing L) l * infiniteAdeleRingMap x := by
   funext w
   rw [tensorInfiniteAdeleRingEquiv_tmul]
-  rfl
+  simp [infiniteAdeleRingMap_apply, InfiniteAdeleRing.algebraMap_apply]
 
 end InfinitePlace
 

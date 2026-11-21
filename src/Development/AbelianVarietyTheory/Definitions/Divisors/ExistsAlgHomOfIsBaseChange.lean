@@ -57,13 +57,15 @@ theorem exists_algHom_of_isBaseChange {φ : M →ₗ[A] N} (hφ : IsBaseChange B
   exact ⟨ExteriorAlgebra.lift B ⟨f, sq⟩, fun m => by rw [ExteriorAlgebra.lift_ι_apply, hf]⟩
 
 theorem isBaseChange_exteriorPower {φ : M →ₗ[A] N} (hφ : IsBaseChange B φ) (D : ℕ) :
-    IsBaseChange B (exteriorPowerMapOver B D φ) := by
+    IsBaseChange B (exteriorPowerMapOver (B := B) (D := D) φ) := by
   obtain ⟨F, hF⟩ := exists_algHom_of_isBaseChange hφ
   let G : (⋀[B]^D N) →ₗ[B] B ⊗[A] (⋀[A]^D M) :=
     ((extProj A M D).baseChange B) ∘ₗ F.toLinearMap ∘ₗ (⋀[B]^D N).subtype
-  let H : B ⊗[A] (⋀[A]^D M) →ₗ[B] ⋀[B]^D N := (exteriorPowerMapOver B D φ).liftBaseChange B
-  have hG (x : ⋀[A]^D M) : G (exteriorPowerMapOver B D φ x) = 1 ⊗ₜ x := by
-    have : (G.restrictScalars A) ∘ₗ (exteriorPowerMapOver B D φ) = TensorProduct.mk A B _ 1 := by
+  let H : B ⊗[A] (⋀[A]^D M) →ₗ[B] ⋀[B]^D N :=
+    (exteriorPowerMapOver (B := B) (D := D) φ).liftBaseChange B
+  have hG (x : ⋀[A]^D M) : G (exteriorPowerMapOver (B := B) (D := D) φ x) = 1 ⊗ₜ x := by
+    have : (G.restrictScalars A) ∘ₗ (exteriorPowerMapOver (B := B) (D := D) φ) =
+        TensorProduct.mk A B _ 1 := by
       apply exteriorPower.linearMap_ext
       ext1 v
       have e : F (ExteriorAlgebra.ιMulti B D fun k => φ (v k)) =
@@ -190,13 +192,13 @@ theorem span_dForm (α : k →+* A) (D : ℕ) :
   choose v hv using fun i => hw (Set.mem_range_self i)
   exact ⟨v, congrArg (exteriorPower.ιMulti A D) (funext hv)⟩
 
-
+variable (D) in
 def formMap (ρ : A →+* B) (h : ρ.comp α = β) : Forms α D →ₛₗ[ρ] Forms β D :=
   letI := α.toAlgebra
   letI := β.toAlgebra
   letI := ρ.toAlgebra
   haveI : IsScalarTower k A B := IsScalarTower.of_algebraMap_eq' h.symm
-  { toFun := exteriorPowerMapOver B D (KaehlerDifferential.map k k A B)
+  { toFun := exteriorPowerMapOver (B := B) (D := D) (KaehlerDifferential.map k k A B)
     map_add' := map_add _
     map_smul' := fun a x => by
       rw [map_smul, ← algebraMap_smul B]
@@ -208,7 +210,8 @@ def formMap (ρ : A →+* B) (h : ρ.comp α = β) : Forms α D →ₛₗ[ρ] Fo
   letI := β.toAlgebra
   letI := ρ.toAlgebra
   haveI : IsScalarTower k A B := IsScalarTower.of_algebraMap_eq' h.symm
-  change exteriorPowerMapOver B D (KaehlerDifferential.map k k A B) (exteriorPower.ιMulti A D _) = _
+  change exteriorPowerMapOver (B := B) (D := D) (KaehlerDifferential.map k k A B)
+    (exteriorPower.ιMulti A D _) = _
   rw [exteriorPowerMapOver_ιMulti, dForm_eq]
   simp only [KaehlerDifferential.map_D]
   rfl

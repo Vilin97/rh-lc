@@ -182,6 +182,8 @@ end Equiv
 
 section Ambient
 
+open scoped Pointwise
+
 variable {R V : Type*} [Ring R] [AddCommGroup V] [Module R V]
 
 theorem relLength_submoduleOf {A W : Submodule R V} (h : A ≤ W) (B : Submodule R V) :
@@ -239,7 +241,7 @@ theorem signedLength_of_ge (_h : LengthCommensurable A B) (hBA : B ≤ A) :
 
 theorem signedLength_eq_natCast_iff_of_ge (h : LengthCommensurable A B) (hBA : B ≤ A) {n : ℕ} :
     signedLength A B = n ↔ relLength A B = n := by
-  rw [h.signedLength_of_ge hBA, Nat.cast_inj, ← ENat.coe_inj, ENat.coe_toNat h.1]
+  rw [h.signedLength_of_ge hBA, Nat.cast_inj, ← ENat.natCast_inj, ENat.natCast_toNat h.1]
 
 theorem signedLength_nonneg (h : LengthCommensurable A B) (hBA : B ≤ A) :
     0 ≤ signedLength A B := by

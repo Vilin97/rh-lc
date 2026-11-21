@@ -68,10 +68,12 @@ theorem eq_zero_of_mul_eq_zero_of_flat {S : Scheme.{u}} [IsAffine S] (s : T ⟶ 
     T.isBasis_affineOpens.exists_subset_of_mem_open hx V.isOpen
   refine ⟨V', hVV, hxV, ?_⟩
   have hf : (s.appLE ⊤ V' le_top).hom.Flat := s.flat_appLE (isAffineOpen_top S) hV' le_top
-  letI := (s.appLE ⊤ V' le_top).hom.toAlgebra
+  let := (s.appLE ⊤ V' le_top).hom.toAlgebra
   have : Module.Flat Γ(S, ⊤) Γ(T, V') := hf
   apply Module.Flat.isSMulRegular_of_nonZeroDivisors (M := Γ(T, V')) hr
-  have h' := congrArg (T.presheaf.map (homOfLE hVV).op) h
+  have he : V ≤ s ⁻¹ᵁ ⊤ := by rw [s.preimage_top]; exact le_top
+  have h' := congrArg (T.presheaf.map (homOfLE hVV).op)
+    (show s.appLE ⊤ V he r * a = 0 from h)
   rw [map_mul, map_zero, ← CommRingCat.comp_apply, Scheme.Hom.appLE_map] at h'
   simpa [Algebra.smul_def, RingHom.algebraMap_toAlgebra] using h'
 
@@ -84,7 +86,7 @@ theorem flat_of_schemeDominant_of_torsionFree_flat {O : CommRingCat.{u}}
   refine HasRingHomProperty.of_iSup_eq_top (P := @Flat) (fun U : T.affineOpens ↦ U)
     (iSup_affineOpens_eq_top T) fun U ↦ ?_
   rw [← RingHom.Flat.respectsIso.cancel_left_isIso (Scheme.ΓSpecIso O).inv]
-  letI := ((s.appLE ⊤ U le_top).hom.comp (Scheme.ΓSpecIso O).inv.hom).toAlgebra
+  let := ((s.appLE ⊤ U le_top).hom.comp (Scheme.ΓSpecIso O).inv.hom).toAlgebra
   refine hO Γ(T, U) ?_
   rw [eq_bot_iff]
   rintro a ⟨⟨r, hr⟩, ha⟩
@@ -93,7 +95,8 @@ theorem flat_of_schemeDominant_of_torsionFree_flat {O : CommRingCat.{u}}
       (Scheme.ΓSpecIso O).symm.commRingCatIsoToRingEquiv)
     rw [← this]
     exact ⟨r, hr, rfl⟩
-  have ha' : s.appLE ⊤ U le_top ((Scheme.ΓSpecIso O).inv r) * a = 0 := ha
+  have he : (U : T.Opens) ≤ s ⁻¹ᵁ ⊤ := by rw [s.preimage_top]; exact le_top
+  have ha' : s.appLE ⊤ U he ((Scheme.ΓSpecIso O).inv r) * a = 0 := ha
   have h0 : d.app U a = 0 := by
     refine eq_zero_of_mul_eq_zero_of_flat (d ≫ s) (d ⁻¹ᵁ U) _ hr' _ ?_
     have := congrArg (d.app U) ha'
@@ -164,8 +167,7 @@ theorem closureToClosed_comp (g : W ⟶ Z) (i : Z ⟶ P) [IsClosedImmersion i] (
 
 theorem toImage_closureToClosed (g : W ⟶ Z) (i : Z ⟶ P) [IsClosedImmersion i] (h : g ≫ i = j) :
     j.toImage ≫ closureToClosed j g i h = g := by
-  rw [← cancel_mono i]
-  simp [h]
+  rw [← cancel_mono i, Category.assoc, closureToClosed_comp, j.toImage_imageι, h]
 
 instance schemeDominant_toImage : IsSchemeTheoreticallyDominant j.toImage := by
   let c := closureToClosed j j.toImage.toImage (j.toImage.imageι ≫ j.imageι) (by simp)
@@ -240,12 +242,16 @@ theorem graphMap_fst : graphMap f₁ f₂ u φ h ≫ pullback.fst f₁ f₂ = u 
 theorem graphMap_snd : graphMap f₁ f₂ u φ h ≫ pullback.snd f₁ f₂ = φ := pullback.lift_snd _ _ _
 
 instance isImmersion_graphMap [IsImmersion u] : IsImmersion (graphMap f₁ f₂ u φ h) :=
-  have : IsImmersion (graphMap f₁ f₂ u φ h ≫ pullback.fst f₁ f₂) := by simpa
+  have : IsImmersion (graphMap f₁ f₂ u φ h ≫ pullback.fst f₁ f₂) := by
+    rw [graphMap_fst]
+    infer_instance
   IsImmersion.of_comp _ (pullback.fst f₁ f₂)
 
 instance quasiCompact_graphMap [QuasiCompact u] [QuasiSeparated f₂] :
     QuasiCompact (graphMap f₁ f₂ u φ h) :=
-  have : QuasiCompact (graphMap f₁ f₂ u φ h ≫ pullback.fst f₁ f₂) := by simpa
+  have : QuasiCompact (graphMap f₁ f₂ u φ h ≫ pullback.fst f₁ f₂) := by
+    rw [graphMap_fst]
+    infer_instance
   QuasiCompact.of_comp _ (pullback.fst f₁ f₂)
 
 def graphClosure : Scheme.{u} := (graphMap f₁ f₂ u φ h).image
@@ -310,7 +316,9 @@ def lift (t₁ : T ⟶ Z₁) (t₂ : T ⟶ Z₂) (ht : t₁ ≫ f₁ = t₂ ≫ 
     [IsSchemeTheoreticallyDominant d] (w : T' ⟶ U) (h₁ : d ≫ t₁ = w ≫ u) (h₂ : d ≫ t₂ = w ≫ φ) :
     T ⟶ graphClosure f₁ f₂ u φ h :=
   closureLift (graphMap f₁ f₂ u φ h) (pullback.lift t₁ t₂ ht) d w (by
-    apply pullback.hom_ext <;> simp [pullback.lift_fst, pullback.lift_snd, h₁, h₂])
+    apply pullback.hom_ext
+    · rw [Category.assoc, pullback.lift_fst, Category.assoc, graphMap_fst, h₁]
+    · rw [Category.assoc, pullback.lift_snd, Category.assoc, graphMap_snd, h₂])
 
 section
 
@@ -328,10 +336,13 @@ theorem lift_snd : lift f₁ f₂ u φ h t₁ t₂ ht d w h₁ h₂ ≫ snd f₁
   rw [← ι_snd, lift_ι_assoc, pullback.lift_snd]
 
 
+include ht d w h₁ h₂ in
 theorem existsUnique_lift : ∃! l : T ⟶ graphClosure f₁ f₂ u φ h,
-    l ≫ fst f₁ f₂ u φ h = t₁ ∧ l ≫ snd f₁ f₂ u φ h = t₂ :=
-  ⟨lift f₁ f₂ u φ h t₁ t₂ ht d w h₁ h₂, by simp,
-    fun _ hl ↦ hom_ext f₁ f₂ u φ h (by simp [hl.1]) (by simp [hl.2])⟩
+    l ≫ fst f₁ f₂ u φ h = t₁ ∧ l ≫ snd f₁ f₂ u φ h = t₂ := by
+  have hf := lift_fst f₁ f₂ u φ h t₁ t₂ ht d w h₁ h₂
+  have hs := lift_snd f₁ f₂ u φ h t₁ t₂ ht d w h₁ h₂
+  exact ⟨lift f₁ f₂ u φ h t₁ t₂ ht d w h₁ h₂, ⟨hf, hs⟩,
+    fun _ hl ↦ hom_ext f₁ f₂ u φ h (hl.1.trans hf.symm) (hl.2.trans hs.symm)⟩
 
 end
 
@@ -392,7 +403,7 @@ instance isIso_fst_restrict_opens (V : Z₁.Opens) (ψ : (V : Scheme.{u}) ⟶ Z�
 theorem exists_extension_of_isIso_fst [IsIso (fst f₁ f₂ u φ h)] :
     ∃ ψ : Z₁ ⟶ Z₂, f₁ = ψ ≫ f₂ ∧ u ≫ ψ = φ := by
   refine ⟨inv (fst f₁ f₂ u φ h) ≫ snd f₁ f₂ u φ h, by simp [← condition], ?_⟩
-  have : u ≫ inv (fst f₁ f₂ u φ h) = incl f₁ f₂ u φ h := by simp
+  have : u ≫ inv (fst f₁ f₂ u φ h) = incl f₁ f₂ u φ h := by simp [incl_fst]
   rw [reassoc_of% this, incl_snd]
 
 end graphClosure

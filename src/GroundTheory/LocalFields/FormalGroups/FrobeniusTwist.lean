@@ -86,6 +86,7 @@ theorem one_lt_card_residueField : 1 < Nat.card (ResidueField A) :=
   Finite.one_lt_card
 
 
+include hσ in
 theorem exists_residue_sub_mul_add_eq_zero (v w : B) :
     ∃ z : B, residue B (σ z - v * z + w) = 0 := by
   open Polynomial in

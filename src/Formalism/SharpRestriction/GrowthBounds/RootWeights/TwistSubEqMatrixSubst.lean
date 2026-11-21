@@ -16,6 +16,7 @@ open Formalism.MainNotions.G
 def matrixSubst {R B : Type*} [CommRing R] [CommRing B] {ι : Type*} {n : ℕ} (LL : Letters ι) (S : Set ι)
     (φ : R →+* B) (m m' : Matrix (Fin n) (Fin n) B) :
     MvPolynomial (ι × Fin n) R →+* MvPolynomial (ι × Fin n) B :=
+  open Classical in
   MvPolynomial.eval₂Hom (MvPolynomial.C.comp φ) fun v =>
     if v.1 ∈ S then
       (if LL.vec v.1 then ∑ b : Fin n, MvPolynomial.C (m b v.2) * X (v.1, b)
@@ -53,8 +54,7 @@ theorem matrixSubst_comp (φ : R →+* B) (m1 m1' m2 m2' : Matrix (Fin n) (Fin n
       rw [RingHom.comp_apply, matrixSubst_X, matrixSubst_X]
       by_cases hS : v.1 ∈ S
       · by_cases hv : LL.vec v.1 = true
-        set_option synthInstance.maxHeartbeats 100000 in
-          · rw [if_pos hS, if_pos hv, if_pos hS, if_pos hv, map_sum]
+        · rw [if_pos hS, if_pos hv, if_pos hS, if_pos hv, map_sum]
           have h1 : ∀ b : Fin n, matrixSubst LL S (RingHom.id B) m1 m1' (C (m2 b v.2) * X (v.1, b)) =
               ∑ a : Fin n, C (m1 a b * m2 b v.2) * X (v.1, a) := by
             intro b
@@ -66,8 +66,7 @@ theorem matrixSubst_comp (φ : R →+* B) (m1 m1' m2 m2' : Matrix (Fin n) (Fin n
           refine Finset.sum_congr rfl fun a _ => ?_
           set_option synthInstance.maxHeartbeats 100000 in
             rw [Matrix.mul_apply, map_sum, Finset.sum_mul]
-        set_option synthInstance.maxHeartbeats 100000 in
-          · rw [if_pos hS, if_neg hv, if_pos hS, if_neg hv, map_sum]
+        · rw [if_pos hS, if_neg hv, if_pos hS, if_neg hv, map_sum]
           have h1 : ∀ b : Fin n, matrixSubst LL S (RingHom.id B) m1 m1' (C (m2' v.2 b) * X (v.1, b)) =
               ∑ a : Fin n, C (m2' v.2 b * m1' b a) * X (v.1, a) := by
             intro b

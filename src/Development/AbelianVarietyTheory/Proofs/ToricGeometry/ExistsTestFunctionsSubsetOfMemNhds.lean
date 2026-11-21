@@ -6,7 +6,8 @@ public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ExistsOp
 @[expose] public section
 
 open Complex Matrix Filter Topology
-open scoped BigOperators Real
+open GlobalTheory.AffinePoints
+open scoped BigOperators Real GlobalTheory.AffinePoints
 
 namespace GlobalTheory
 

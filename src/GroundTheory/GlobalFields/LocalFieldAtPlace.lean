@@ -53,12 +53,8 @@ theorem normalizedAbv_eq_toNNReal (x : v.adicCompletion K) :
 theorem normalizedAbv_eq_zpow {x : v.adicCompletion K} (hx : x ≠ 0) :
     normalizedAbv v x = (Ideal.absNorm v.asIdeal : ℝ) ^ log (Valued.v x) := by
   have hx' : Valued.v x ≠ 0 := (Valued.v).ne_zero_iff.2 hx
-  have key : ∀ (y : ℤᵐ⁰) (hy : y ≠ 0), Multiplicative.toAdd (unzero hy) = log y := by
-    rintro (_ | a) hy
-    · exact absurd rfl hy
-    · rfl
-  rw [normalizedAbv_eq_toNNReal, WithZeroMulInt.toNNReal_neg_apply _ hx', key]
-  simp
+  rw [normalizedAbv_eq_toNNReal, WithZeroMulInt.toNNReal_neg_apply _ hx']
+  rfl
 
 theorem normalizedAbv_of_irreducible {ϖ : v.adicCompletionIntegers K} (hϖ : Irreducible ϖ) :
     normalizedAbv v (ϖ : v.adicCompletion K) = (Ideal.absNorm v.asIdeal : ℝ)⁻¹ := by

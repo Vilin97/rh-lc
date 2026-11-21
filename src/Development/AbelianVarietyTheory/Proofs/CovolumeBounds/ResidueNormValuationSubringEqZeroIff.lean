@@ -8,9 +8,14 @@ namespace GlobalTheory
 
 open Filter Topology MvPowerSeries
 
+noncomputable abbrev NormValuationSubring (C : Type*) [NormedField C] [IsUltrametricDist C] :=
+  (NormedField.valuation (K := C)).valuationSubring
+
 section
 
 variable {C : Type*} [NormedField C] [IsUltrametricDist C] {σ : Type*}
+
+local notation "𝒪" => NormValuationSubring C
 
 theorem mem_normValuationSubring_iff (x : C) : x ∈ 𝒪 ↔ ‖x‖ ≤ 1 := by
   rw [Valuation.mem_valuationSubring_iff, NormedField.valuation_apply]
@@ -59,8 +64,11 @@ theorem exists_norm_sum_monomial_eq_one [Infinite (IsLocalRing.ResidueField 𝒪
     intro h
     have h1 : P.coeff t₀ = IsLocalRing.residue 𝒪 (b' t₀) := by
       simp [P, MvPolynomial.coeff_sum, MvPolynomial.coeff_monomial, h₀]
-    rw [h, MvPolynomial.coeff_zero, eq_comm, residue_normValuationSubring_eq_zero_iff] at h1
-    exact absurd hb₀ h1.ne
+    simp only [h, MvPolynomial.coeff_zero, Pi.zero_apply] at h1
+    rw [eq_comm] at h1
+    have hlt : ‖(b' t₀ : C)‖ < 1 :=
+      (residue_normValuationSubring_eq_zero_iff (b' t₀)).1 h1
+    exact absurd hb₀ (by simpa [b'] using hlt.ne)
   obtain ⟨x, hx⟩ : ∃ x, MvPolynomial.eval x P ≠ 0 := by
     by_contra! h
     exact hP (MvPolynomial.funext fun x => by simp [h x])

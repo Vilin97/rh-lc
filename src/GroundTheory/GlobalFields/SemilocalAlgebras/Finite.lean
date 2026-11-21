@@ -37,7 +37,7 @@ open scoped Valued in
 theorem tensorMap_surjective : Function.Surjective (tensorMap L v) := by
   have hclosed : IsClosed (LinearMap.range (tensorMap L v).toLinearMap :
       Set (CompletionsOver L v)) :=
-    Submodule.closed_of_finiteDimensional _
+    Submodule.isClosed_of_finiteDimensional _
   have hdense : Dense (Set.range (tensorMap L v)) := by
     refine (denseRange_algebraMap_completionsOver L v).mono ?_
     rintro _ ⟨x, rfl⟩
@@ -128,9 +128,10 @@ theorem tensorEquiv'_tmul_mul (a : v.adicCompletion K) (y : L ⊗[K] v.adicCompl
   rw [map_mul, tensorEquiv'_tmul, map_one, one_mul]
 
 
+open scoped Valued in
 instance isModuleTopology_completionsOver :
     IsModuleTopology (v.adicCompletion K) (CompletionsOver L v) :=
-  isModuleTopologyOfFiniteDimensional
+  isModuleTopologyOfFiniteDimensional (𝕜 := v.adicCompletion K)
 
 end SemiLocal
 

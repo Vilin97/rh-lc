@@ -21,8 +21,9 @@ def VanishOrder {M : Type u} [TopologicalSpace M] (n : ℕ) (z : M → V n) (f :
   f =O[𝓝 x] fun y => ‖z y - z x‖ ^ N
 
 
-def fiberVals {M : Type u} (n : ℕ) (z : M → V n) (u : M → ℂ) (w : V n) : Multiset ℂ :=
-  if h : (z ⁻¹' {w}).Finite then h.toFinset.val.map u else 0
+def fiberVals {M : Type u} (n : ℕ) (z : M → V n) (u : M → ℂ) (w : V n) : Multiset ℂ := by
+  classical
+  exact if h : (z ⁻¹' {w}).Finite then h.toFinset.val.map u else 0
 
 def fiberSymm {M : Type u} (n : ℕ) (z : M → V n) (u : M → ℂ) (k : ℕ) (w : V n) : ℂ :=
   (fiberVals n z u w).esymm k

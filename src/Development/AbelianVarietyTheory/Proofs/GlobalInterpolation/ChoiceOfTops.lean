@@ -16,7 +16,9 @@ def ex (δ : ℝ) (S : Finset ℕ) (f : Finset ℕ → ℝ) : ℝ :=
   ∑ T ∈ S.powerset, δ ^ T.card * (1 - δ) ^ (S.card - T.card) * f T
 
 
-def ind (p : Prop) : ℝ := if p then 1 else 0
+def ind (p : Prop) : ℝ := by
+  classical
+  exact if p then 1 else 0
 
 theorem ind_pos {p : Prop} (h : p) : ind p = 1 := by
   unfold ind

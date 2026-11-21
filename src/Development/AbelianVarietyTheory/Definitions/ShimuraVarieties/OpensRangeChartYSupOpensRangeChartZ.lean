@@ -194,6 +194,7 @@ theorem evalHom_smul (c : A) (h' : (W.map ρ).toProjective.Equation (c • P)) {
   exact eval₂_smul_of_isHomogeneous ρ hp c P
 
 
+variable {ρ P} in
 theorem map_irrelevant_evalHom (h : IsUnimodularSol (W.map ρ) P) :
     (irrelevant (grading W)).toIdeal.map (evalHom W ρ P h.equation) = ⊤ := by
   rw [irrelevant_eq_span_coord, Ideal.map_span, ← Set.range_comp, ← h.span_eq_top]
@@ -808,12 +809,14 @@ variable {R' R'' : Type u} [CommRing R'] [CommRing R''] {W' : WeierstrassCurve R
   {W'' : WeierstrassCurve R''}
 
 
+variable {W} in
 theorem map_comp_eq {A : Type*} [CommRing A] {f : R →+* R'} (h : W.map f = W') (ρ : R' →+* A) :
     W.map (ρ.comp f) = W'.map ρ := by
   subst h
   rfl
 
 
+variable {W} in
 theorem IsUnimodularSol.comp_of_map_eq {A : Type*} [CommRing A] {f : R →+* R'}
     (h : W.map f = W') {ρ : R' →+* A} {P : Fin 3 → A} (hP : IsUnimodularSol (W'.map ρ) P) :
     IsUnimodularSol (W.map (ρ.comp f)) P :=

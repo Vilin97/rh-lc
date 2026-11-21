@@ -299,14 +299,15 @@ theorem height_eq_one_and_ringKrullDim_eq_of_flat_canonical
     (A : Type u) [CommRing A] [IsDomain A] [Algebra O A] [Algebra.FiniteType O A]
     [Module.Flat O A] {ϖ : O} (hϖ : Irreducible ϖ) (q : Ideal A) [q.IsPrime]
     (hq : q ∈ (Ideal.span {algebraMap O A ϖ}).minimalPrimes) :
-    haveI := liesOver_maximalIdeal_of_mem_minimalPrimes O
-      (map_maximalIdeal_eq_span_of_irreducible O (A := A) hϖ ▸ hq)
-    haveI := isLocalHom_algebraMap_localization_of_liesOver O q
-    letI := FractionRing.liftAlgebra O (FractionRing A)
-    q.height = 1 ∧ ∃ d : ℕ, ringKrullDim (A ⧸ q) = d ∧
-      Algebra.trdeg (ResidueField O) q.ResidueField = d ∧
-      Algebra.trdeg (FractionRing O) (FractionRing A) = d ∧
-      ringKrullDim (FractionRing O ⊗[O] A) = d := by
+    (
+      haveI := liesOver_maximalIdeal_of_mem_minimalPrimes O
+        (map_maximalIdeal_eq_span_of_irreducible O (A := A) hϖ ▸ hq)
+      haveI := isLocalHom_algebraMap_localization_of_liesOver O q
+      letI := FractionRing.liftAlgebra O (FractionRing A)
+      q.height = 1 ∧ ∃ d : ℕ, ringKrullDim (A ⧸ q) = d ∧
+        Algebra.trdeg (ResidueField O) q.ResidueField = d ∧
+        Algebra.trdeg (FractionRing O) (FractionRing A) = d ∧
+        ringKrullDim (FractionRing O ⊗[O] A) = d) := by
   have := liesOver_maximalIdeal_of_mem_minimalPrimes O
     (map_maximalIdeal_eq_span_of_irreducible O (A := A) hϖ ▸ hq)
   have := isLocalHom_algebraMap_localization_of_liesOver O q
@@ -384,12 +385,13 @@ private theorem ringKrullDim_genericFibre_eq_of_domain (A : Type u) [CommRing A]
   rw [← trdeg_eq_of_isAlgebraic_bot O K, trdeg_eq_of_isAlgebraic_top O A, hd]
 
 theorem exists_affine_chart_trdeg_eq (x : Y) :
-    letI := (Spec.preimage (Y.fromSpecStalk (genericPoint Y) ≫ f)).hom.toAlgebra
-    ∃ (A : Type u) (_ : CommRing A) (_ : IsDomain A) (_ : Algebra O A)
-      (_ : Algebra.FiniteType O A) (_ : FaithfulSMul O A) (j : Spec (.of A) ⟶ Y)
-      (_ : IsOpenImmersion j), x ∈ Set.range j ∧
-      j ≫ f = Spec.map (CommRingCat.ofHom (algebraMap O A)) ∧
-      Algebra.trdeg O A = Algebra.trdeg O Y.functionField := by
+    (
+      letI := (Spec.preimage (Y.fromSpecStalk (genericPoint Y) ≫ f)).hom.toAlgebra
+      ∃ (A : Type u) (_ : CommRing A) (_ : IsDomain A) (_ : Algebra O A)
+        (_ : Algebra.FiniteType O A) (_ : FaithfulSMul O A) (j : Spec (.of A) ⟶ Y)
+        (_ : IsOpenImmersion j), x ∈ Set.range j ∧
+        j ≫ f = Spec.map (CommRingCat.ofHom (algebraMap O A)) ∧
+        Algebra.trdeg O A = Algebra.trdeg O Y.functionField) := by
   let := (Spec.preimage (Y.fromSpecStalk (genericPoint Y) ≫ f)).hom.toAlgebra
   obtain ⟨_, ⟨U, hU, rfl⟩, hxU, -⟩ :=
     Y.isBasis_affineOpens.exists_subset_of_mem_open (Set.mem_univ x) isOpen_univ

@@ -48,13 +48,15 @@ theorem homog_of_mul {σ : Type} (w : σ → ℕ) {s g : MvPolynomial σ K} {n :
   have hc : weightedHomogeneousComponent w (Finsupp.weight w m) g ≠ 0 := by
     intro h0
     have h3 := congrArg (AddMonoidAlgebra.coeff · m) h0
-    rw [coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at h3
+    simp only [coeff_weightedHomogeneousComponent, ite_eq_left rfl,
+      AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at h3
     exact hm h3
   apply hc
   have h4 : s * weightedHomogeneousComponent w (Finsupp.weight w m) g = 0 := by
     rw [← hA]
     ext d
-    rw [coeff_weightedHomogeneousComponent, coeff_zero]
+    simp only [coeff_weightedHomogeneousComponent, AddMonoidAlgebra.coeff_zero,
+      Finsupp.zero_apply]
     split_ifs with hd
     · by_contra hne2
       have h5 := h hne2
@@ -106,14 +108,15 @@ theorem dvd_of_dvd_X_pow {i : Fin k ⊕ Fin k} {s f : Pol K k} (hs : ¬ (X i : P
     · exact absurd h' hs
 
 
-def chiF (i0 : Fin k) : Fin k ⊕ Fin k → Pol K k :=
+def chiF (K : Type) [Field K] (i0 : Fin k) : Fin k ⊕ Fin k → Pol K k :=
   Sum.elim (fun j => X (Sum.inl j)) (fun j => X (Sum.inl i0) * X (Sum.inr j))
 
 
-def tp (i0 : Fin k) : Pol K k := ∑ j ∈ Finset.univ.erase i0, X (Sum.inl j) * X (Sum.inr j)
+def tp (K : Type) [Field K] (i0 : Fin k) : Pol K k :=
+  ∑ j ∈ Finset.univ.erase i0, X (Sum.inl j) * X (Sum.inr j)
 
 
-def psiF (i0 : Fin k) : Fin k ⊕ Fin k → Pol K k :=
+def psiF (K : Type) [Field K] (i0 : Fin k) : Fin k ⊕ Fin k → Pol K k :=
   Sum.elim (fun j => X (Sum.inl j))
     (fun j => if j = i0 then - tp K i0 else X (Sum.inl i0) * X (Sum.inr j))
 
@@ -239,7 +242,7 @@ theorem divT : PI.OpWords.DivT := by
     refine ⟨0, Submodule.zero_mem _, ?_⟩
     rw [mul_zero]
     ext m
-    rw [coeff_zero]
+    simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     by_contra h
     have h1 := hfx h
     have h2 : m = 0 := by
