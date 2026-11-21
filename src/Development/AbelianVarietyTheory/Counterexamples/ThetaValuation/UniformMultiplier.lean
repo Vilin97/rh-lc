@@ -13,7 +13,6 @@ public import Development.AbelianVarietyTheory.Counterexamples.JetSurvey.Lattice
 
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.WeightAlgebra Formalism.L2.Pj ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.FD
   ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.PullbackSections ReciprocityTheory.ChartRestriction.G.PullbackSections.PfModelLatA ReciprocityTheory.ChartRestriction.G.PullbackSections.PfModelLatB
-  ReciprocityTheory.ChartRestriction.G.PullbackSections.PfModelLat
 
 namespace GlobalTheory.ModelLatExamples
 

@@ -69,25 +69,7 @@ theorem iB_mem_sumLatO {B W H : HSp D} (o : OrthDec B W H) (LW : Lat W) {LH : La
 theorem isLattice_sumLatO {B W H : HSp D} (o : OrthDec B W H) (LW : Lat W) (LH : Lat H)
     (hW : Submodule.IsLattice D.host.E LW) (hH : Submodule.IsLattice D.host.E LH) :
     Submodule.IsLattice D.host.E (sumLatO o LW LH) := by
-  refine ⟨(hW.fg.map _).sup (hH.fg.map _), eq_top_iff.2 fun y _ => ?_⟩
-  have hA : ∀ z ∈ Submodule.span D.host.E (LW : Set (Fin W.rank → D.host.E)),
-      o.iA *ᵥ z ∈ Submodule.span D.host.E (sumLatO o LW LH : Set (Fin B.rank → D.host.E)) := by
-    intro z hz
-    induction hz using Submodule.span_induction with
-    | mem x hx => exact Submodule.subset_span (iA_mem_sumLatO o LH hx)
-    | zero => rw [Matrix.mulVec_zero]; exact zero_mem _
-    | add x z _ _ hx hz => rw [Matrix.mulVec_add]; exact add_mem hx hz
-    | smul a x _ hx => rw [Matrix.mulVec_smul]; exact Submodule.smul_mem _ a hx
-  have hB : ∀ z ∈ Submodule.span D.host.E (LH : Set (Fin H.rank → D.host.E)),
-      o.iB *ᵥ z ∈ Submodule.span D.host.E (sumLatO o LW LH : Set (Fin B.rank → D.host.E)) := by
-    intro z hz
-    induction hz using Submodule.span_induction with
-    | mem x hx => exact Submodule.subset_span (iB_mem_sumLatO o LW hx)
-    | zero => rw [Matrix.mulVec_zero]; exact zero_mem _
-    | add x z _ _ hx hz => rw [Matrix.mulVec_add]; exact add_mem hx hz
-    | smul a x _ hx => rw [Matrix.mulVec_smul]; exact Submodule.smul_mem _ a hx
-  rw [← split_vec o y]
-  exact add_mem (hA _ (hW.span_eq_top ▸ Submodule.mem_top)) (hB _ (hH.span_eq_top ▸ Submodule.mem_top))
+  exact Submodule.IsLattice.of_fg D.host.E ((hW.fg.map _).sup (hH.fg.map _))
 
 theorem selfDual_sumLatO : ∀ (D : D7) (B W H : HSp D) (o : OrthDec B W H) (LW : Lat W) (LH : Lat H),
     IsSelfDualC W LW → IsSelfDualC H LH → IsSelfDualC B (sumLatO o LW LH) := by

@@ -10,7 +10,7 @@ noncomputable section
 
 namespace GlobalTheory.DataRowsCounterexample
 
-open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.IndefiniteRowSideFullHecke.FamilySizeBound
+open Formalism.BasicNotions Formalism.MainNotions
 
 theorem places_nonempty (D : D7) : Nonempty D.what₂.Tau ∧ Nonempty D.what₂.Word :=
   ⟨⟨D.eTau.symm 1⟩, ⟨D.u₀⟩⟩

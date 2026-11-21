@@ -25,7 +25,8 @@ theorem exists_gen_mul_of_isIntegral {R S : Type*} [CommRing R] [CommRing S] [Is
     intro h
     obtain ⟨Q, hKQ, hQ, hQp⟩ := Ideal.exists_ideal_over_prime_of_isIntegral p K h
     have hrQ : algebraMap R S r ∈ Q := by
-      rw [← Ideal.mem_comap, hQp]; exact hr
+      change r ∈ Ideal.under R Q
+      rw [hQp]; exact hr
     have h1 : J * Ideal.span {algebraMap R S r} ≤ J * Q :=
       Ideal.mul_mono_right ((Ideal.span_singleton_le_iff_mem _).mpr hrQ)
     have h2 : Ideal.span {y} ≤ J * Q := hK ▸ Ideal.mul_mono_right hKQ

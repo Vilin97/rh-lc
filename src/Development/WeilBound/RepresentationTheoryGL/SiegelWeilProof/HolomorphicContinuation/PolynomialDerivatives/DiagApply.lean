@@ -102,11 +102,15 @@ theorem diag_apply (d : ℕ) (f : Module.End ℂ V) (w : Fin d → V) (k : Fin d
 
 def amp (φ : V → V → ℂ) (d : ℕ) (v w : Fin d → V) : ℂ := ∑ k, φ (v k) (w k)
 
-theorem amp_posH (h : PosH φ) (d : ℕ) : PosH (amp φ d) where
-  add v w₁ w₂ := by simp only [amp, Pi.add_apply, h.add, Finset.sum_add_distrib]
-  smul v w r := by simp only [amp, Pi.smul_apply, h.smul, Finset.mul_sum]
-  herm v w := by simp only [amp, star_sum, ← h.herm]
-  pos v hv := by
+theorem amp_posH (h : PosH φ) (d : ℕ) : PosH (amp φ d) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro v w₁ w₂
+    simp only [amp, Pi.add_apply, h.add, Finset.sum_add_distrib]
+  · intro v w r
+    simp only [amp, Pi.smul_apply, h.smul, Finset.mul_sum]
+  · intro v w
+    simp only [amp, star_sum, ← h.herm]
+  · intro v hv
     obtain ⟨k, hk⟩ := Function.ne_iff.1 hv
     simp only [amp, Complex.re_sum]
     calc 0 < (φ (v k) (v k)).re := h.pos _ hk

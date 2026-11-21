@@ -127,8 +127,8 @@ theorem conv_XX_pow_mul (s k : ℕ) {a : PowerSeries ↥LL.1} (ha : Conv a) : Co
 
 theorem logS_const : constantCoeff (logS LL) = 0 := by simp [logS]
 
-theorem logS_deriv : (1 + X) * derivative ↥LL.1 (logS LL) = 1 := by
-  have h : ∀ k, coeff k (derivative ↥LL.1 (logS LL)) = (-1) ^ k := fun k => by
+theorem logS_deriv : (1 + X) * PowerSeries.derivative (logS LL) = 1 := by
+  have h : ∀ k, coeff k (PowerSeries.derivative (logS LL)) = (-1) ^ k := fun k => by
     have : ((k : ↥LL.1) + 1) ≠ 0 := Nat.cast_add_one_ne_zero k
     rw [coeff_derivative, logS, coeff_mk]
     push_cast
@@ -138,7 +138,7 @@ theorem logS_deriv : (1 + X) * derivative ↥LL.1 (logS LL) = 1 := by
   rw [add_mul, one_mul, map_add (f := _)]
   rcases k with _ | k
   · simp [h]
-  · rw [coeff_succ_X_mul, h, h, coeff_one, if_neg k.succ_ne_zero, pow_succ]
+  · rw [coeff_succ_X_mul, h, h, coeff_one, ite_eq_right k.succ_ne_zero, pow_succ]
     simp
 
 theorem exists_logS_div (s : ℕ) : ∃ τ, XX l ↥LL.1 s * τ = logS LL := by
@@ -296,6 +296,7 @@ theorem to_letters (s r n m m' : ℕ) {I : Type} [CommGroup I] (c : I → ℤ_[l
 end Generic
 
 
+open GlobalTheory.Cyc.Cont in
 set_option maxHeartbeats 1000000 in
 theorem letterwise (s r n m m' : ℕ) [NeZero n] (hs : 1 ≤ s) (h2 : l = 2 → 2 ≤ s) {I : Type} [CommGroup I]
     (c : I → ℤ_[l]ˣ) (i₀ : I) (hu : ‖(c i₀ : ℤ_[l]) - 1‖ = (l : ℝ) ^ (-(s : ℤ))) (Q : LetA ↥(OL LL) n)
@@ -324,10 +325,119 @@ theorem letterwise (s r n m m' : ℕ) [NeZero n] (hs : 1 ≤ s) (h2 : l = 2 → 
   obtain ⟨τ, hτ⟩ := exists_logS_div (LL := LL) s
   have hρ : (0 : ℝ) < (l : ℝ) ^ (-((s : ℝ) + 1 / ((l : ℝ) - 1))) :=
     Real.rpow_pos_of_pos (Nat.cast_pos.2 (Fact.out : l.Prime).pos) _
-  have c1 := GlobalTheory.T.cyclotomicFrobenius_system_continuation_open_disc l LL s r n (m + m') hs _ τ logS_const logS_deriv hτ U _ B _ hρ hB
-    (fun k i j => (hconv k i j).1)
-  have c2 := GlobalTheory.T.cyclotomicFrobenius_system_continuation_open_disc l LL s r n (m + m') hs _ τ logS_const logS_deriv hτ (fun k => (V k).transpose)
-    _ (fun k => (A k).transpose) _ hρ hV (fun k i j => (hconv k j i).2)
+  have hderiv := logS_deriv (LL := LL)
+  have hl := (Fact.out : l.Prime)
+  have hphi : phi l ↥LL.1 (logS LL) = (l : (↥LL.1)⟦X⟧) * logS LL := by
+    have hsubst : HasSubst (cyc l ↥LL.1 (l : ℤ_[l])) :=
+      HasSubst.of_constantCoeff_zero' (cyc_const l ↥LL.1 _)
+    have hne : (1 + X : (↥LL.1)⟦X⟧) ≠ 0 := fun h => by simp [h] at hderiv
+    apply derivative.ext
+    · have e : derivative (phi l ↥LL.1 (logS LL)) =
+          phi l ↥LL.1 (derivative (logS LL)) * derivative ((1 + X) ^ l - 1) := by
+        rw [phi, act_apply, act_apply, derivative_subst hsubst, cyc_natCast]
+      have e2 := congrArg (phi l ↥LL.1) hderiv
+      rw [map_mul, map_add (f := _), map_one, GlobalTheory.Cyc.Cont.phi_X, add_sub_cancel] at e2
+      have e3 : derivative ((1 + X : (↥LL.1)⟦X⟧) ^ l - 1) =
+          (l : (↥LL.1)⟦X⟧) * (1 + X : (↥LL.1)⟦X⟧) ^ (l - 1) := by
+        simp [Derivation.leibniz_pow]
+      have e4 : derivative ((l : (↥LL.1)⟦X⟧) * logS LL) =
+          (l : (↥LL.1)⟦X⟧) * derivative (logS LL) := by
+        rw [← nsmul_eq_mul, map_nsmul, nsmul_eq_mul]
+      apply mul_left_cancel₀ hne
+      have e5 : (1 + X : (↥LL.1)⟦X⟧) ^ l = (1 + X) ^ (l - 1) * (1 + X) := by
+        rw [← pow_succ, Nat.sub_add_cancel hl.one_le]
+      rw [e5] at e2
+      rw [e, e3, e4]
+      linear_combination (l : (↥LL.1)⟦X⟧) * e2 - (l : (↥LL.1)⟦X⟧) * hderiv
+    · obtain ⟨a, ha⟩ := X_dvd_iff.2 (logS_const (LL := LL))
+      simp [ha, GlobalTheory.Cyc.Cont.phi_X]
+  have hX : XX l ↥LL.1 s ≠ 0 := fun h => by
+    have hz : logS LL = 0 := by simpa [h] using hτ.symm
+    simp [hz] at hderiv
+  have hl0 : (l : ↥LL.1) ≠ 0 := by exact_mod_cast hl.ne_zero
+  have htau (x : ℝ) (hx : 0 < x) (hx1 : x < 1) : ∃ b, Bd x b τ := by
+    obtain ⟨a, ha⟩ := X_dvd_iff.2 (logS_const (LL := LL))
+    have hb : ∀ k, ‖coeff k a‖ ≤ k + 1 := by
+      intro k
+      have hk := congrArg (coeff (k + 1)) ha
+      rw [logS, coeff_mk, coeff_succ_X_mul] at hk
+      rw [← hk, norm_div, norm_pow, norm_neg, norm_one, one_pow, ← Nat.cast_succ, norm_nat]
+      have hpos : 0 < ‖((k + 1 : ℕ) : ℤ_[l])‖ :=
+        norm_pos_iff.mpr (Nat.cast_ne_zero.mpr k.succ_ne_zero)
+      exact (div_le_iff₀ hpos).2 (by simpa using inv_le_norm_nat l (k + 1) k.succ_ne_zero)
+    have hbound : ∃ b, Bd x b a := by
+      refine bd_of_tendsto (squeeze_zero (fun k => by positivity)
+        (fun k => mul_le_mul_of_nonneg_right (hb k) (by positivity)) ?_)
+      simpa [add_mul] using (tendsto_self_mul_const_pow_of_lt_one hx.le hx1).add
+        (tendsto_pow_atTop_nhds_zero_of_lt_one hx.le hx1)
+    have hj : ∀ j : ℕ, (phi l ↥LL.1 ^ j) (logS LL) =
+        (l : (↥LL.1)⟦X⟧) ^ j * logS LL := by
+      intro j
+      induction j with
+      | zero => simp
+      | succ j ih =>
+        rw [pow_succ', AlgHom.mul_apply, ih, map_mul, map_pow, map_natCast, hphi]
+        ring
+    have hpow := hj (s - 1)
+    conv_lhs at hpow => rw [ha, map_mul, phi_pow_X]
+    have hscale : (phi l ↥LL.1 ^ (s - 1)) a = (l : (↥LL.1)⟦X⟧) ^ (s - 1) * τ := by
+      apply mul_left_cancel₀ hX
+      rw [mul_left_comm, hτ, ← hpow, XX]
+    have heq : τ = C (((l : ↥LL.1) ^ (s - 1))⁻¹) * (phi l ↥LL.1 ^ (s - 1)) a := by
+      rw [hscale, ← mul_assoc, ← map_natCast (C (R := ↥LL.1)), ← map_pow, ← map_mul,
+        inv_mul_cancel₀ (pow_ne_zero _ hl0), map_one, one_mul]
+    rw [heq]
+    exact ex_mul hx ⟨_, bd_C x _⟩ (ex_phi_pow l LL _ hx hx1 hbound)
+  have hcontinue (W : ZMod n → Matrix (Fin r) (Fin r) (PowerSeries ↥LL.1))
+      (P : ZMod n → Matrix (Fin r) (Fin r) (PowerSeries ↥(OL LL)))
+      (D : ZMod n → Matrix (Fin r) (Fin r) ↥LL.1)
+      (hW : ∀ k, QQ l ↥LL.1 s ^ (m + m') • W k =
+        (P k).map (PowerSeries.map (algebraMap ↥(OL LL) ↥LL.1)) *
+          (W (k - 1)).map (phi l ↥LL.1) * (D k).map C)
+      (hc : ∀ k i j x, 0 < x → x < (l : ℝ) ^ (-((s : ℝ) + 1 / ((l : ℝ) - 1))) →
+        Filter.Tendsto (fun a : ℕ => ‖((coeff a (W k i j) : ↥LL.1) : Om l)‖ * x ^ a)
+          Filter.atTop (nhds 0)) :
+      ∀ k i j, Conv (τ ^ (m + m') * W k i j) := by
+    intro k i j x hx hx1
+    set M := m + m'
+    have hQτ : QQ l ↥LL.1 s * phi l ↥LL.1 τ = (l : (↥LL.1)⟦X⟧) * τ := by
+      apply mul_left_cancel₀ hX
+      rw [← mul_assoc, ← (XX_QQ_properties l _ s hs).1, ← map_mul, hτ, hphi, ← hτ]
+      ring
+    have hinv : C (((l : ↥LL.1) ^ M)⁻¹) * (l : (↥LL.1)⟦X⟧) ^ M = 1 := by
+      rw [← map_natCast (C (R := ↥LL.1)), ← map_pow, ← map_mul,
+        inv_mul_cancel₀ (pow_ne_zero _ hl0), map_one]
+    obtain ⟨y, hxy, hy1⟩ := exists_between hx1
+    set ρ := (l : ℝ) ^ (-((s : ℝ) + 1 / ((l : ℝ) - 1)))
+    have key := continuation_abstract (phi l ↥LL.1) (phi_X_const l _) _ (inv_lt_one l) (bd_phi_X l LL)
+      (fun k : ZMod n => k - 1) (fun k => τ ^ M • W k)
+      (fun k => (P k).map (PowerSeries.map (algebraMap ↥(OL LL) ↥LL.1)))
+      (fun k => C (((l : ↥LL.1) ^ M)⁻¹) • (D k).map C)
+      (fun z hz hz1 k a b => ⟨1, bd_map _ (norm_OL l LL) hz hz1.le _⟩)
+      (fun z hz _ k a b => ex_mul hz ⟨_, bd_C z _⟩ ⟨_, bd_C z _⟩)
+      (fun k => by
+        have e : (τ ^ M • W (k - 1)).map (phi l ↥LL.1) =
+            phi l ↥LL.1 τ ^ M • (W (k - 1)).map (phi l ↥LL.1) := by
+          ext1 a b
+          simp
+        simp only [e, Matrix.mul_smul, Matrix.smul_mul, ← hW, smul_smul]
+        congr 1
+        have hp : phi l ↥LL.1 τ ^ M * QQ l ↥LL.1 s ^ M =
+            (l : (↥LL.1)⟦X⟧) ^ M * τ ^ M := by
+          rw [← mul_pow, mul_comm, hQτ, mul_pow]
+        linear_combination -(C (((l : ↥LL.1) ^ M)⁻¹)) * hp - τ ^ M * hinv)
+      (min (ρ / 2) (1 / 2)) (by positivity)
+      (fun k a b => by
+        have hz : 0 < min (ρ / 2) (1 / 2) := by positivity
+        obtain ⟨c, hc'⟩ := htau _ hz ((min_le_right _ _).trans_lt (by norm_num))
+        exact ex_mul hz ⟨_, hc'.pow hz M⟩
+          (bd_of_tendsto (hc k a b _ hz ((min_le_left _ _).trans_lt (by linarith)))))
+      y (hx.trans hxy) hy1 k i j
+    obtain ⟨b, hb⟩ := key
+    exact hb.tendsto hx hxy
+  have c1 := hcontinue U _ B hB (fun k i j => (hconv k i j).1)
+  have c2 := hcontinue (fun k => (V k).transpose) _ (fun k => (A k).transpose) hV
+    (fun k i j => (hconv k j i).2)
   refine ⟨Matrix.of fun i j k => U k i j, Matrix.of fun i j k => V k i j, ?_, fun i j k => ?_,
     fun i j k => ?_, fun g => ?_, Matrix.of fun i j k => A k i j, ?_⟩
   · ext1 i j

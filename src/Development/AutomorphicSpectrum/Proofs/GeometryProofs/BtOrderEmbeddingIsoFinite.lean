@@ -12,7 +12,7 @@ public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SectionEqZer
 @[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct
-open GlobalTheory.CompanionTheory.Ar.BT GroundTheory.PAdicHodge
+open GlobalTheory.CompanionTheory.Ar.BT
 
 namespace GlobalTheory.CompanionTheory.Ar.BT.FiniteIso
 
@@ -25,9 +25,9 @@ theorem isFinOpenSub_top (Γ : QFGroup R T) (hfin : IsFinite Γ.G.hom) : Γ.IsFi
     have := hfin
     have hi : IsIso (⊤ : Γ.G.left.Opens).ι := (Scheme.topIso Γ.G.left).isIso_hom
     infer_instance
-  one _ := trivial
-  mul _ _ _ _ _ _ := trivial
-  inv _ _ _ _ := trivial
+  one := fun _ => trivial
+  mul := fun _ _ _ _ _ _ => trivial
+  inv := fun _ _ _ _ => trivial
 
 noncomputable def secMap {X : Scheme.{0}} {A : Type} [CommRing A] (j : X ⟶ Spec (CommRingCat.of A)) : A →+* Γ(X, ⊤) :=
   ((Scheme.ΓSpecIso (CommRingCat.of A)).inv ≫ j.appTop).hom
@@ -83,14 +83,11 @@ theorem isIso_of_finite : ∀ (R : Type) [CommRing R] [IsDomain R] [IsIntegrally
     exact IsIntegrallyClosed.isIntegral_iff.1 (h1.map (valAlg hρ t (htop t)))
   apply isIso_of_secMap_bijective
   constructor
-  · rw [injective_iff_map_eq_zero]
-    intro a ha
+  · intro a b hab
     apply Subtype.ext
     funext t
     apply inj
-    have e := val_secMap Γ hj t (htop t) a
-    rw [ha, ← valHom_apply, map_zero] at e
-    simpa using e.symm
+    rw [← val_secMap Γ hj t (htop t) a, ← val_secMap Γ hj t (htop t) b, hab]
   · intro s
     choose f hf using hval s
     let f' : H → R := fun h => f h

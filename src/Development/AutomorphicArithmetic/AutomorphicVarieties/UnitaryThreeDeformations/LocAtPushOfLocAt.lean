@@ -29,14 +29,20 @@ private theorem conj_push_mat (φ : R →ₐ[O] R') (h : GL (Fin 3) R) (r : D �
 private theorem triIn_push (φ : R →ₐ[O] R') {η : D →* ℤˣ} {Ψ : D →* Oˣ} {I : Subgroup D}
     {r : D →* GG (m := 3) (R := R)} {h : GL (Fin 3) R} (H : TriIn η Ψ I r h) :
     TriIn η Ψ I (((GG.map (φ : R →+* R')).comp r)) (GeneralLinearGroup.map (φ : R →+* R') h) where
-  tri g hg a b hab := by rw [conj_push_mat, H.tri g hg a b hab, map_zero]
-  ine s hs hη a := by rw [conj_push_mat, H.ine s hs hη a, AlgHom.commutes]
+  tri := by
+    intro g hg a b hab
+    rw [conj_push_mat, H.tri g hg a b hab, map_zero]
+  ine := by
+    intro s hs hη a
+    rw [conj_push_mat, H.ine s hs hη a, AlgHom.commutes]
 
 private theorem diagIn_push (φ : R →ₐ[O] R') {η : D →* ℤˣ} {Ψ : D →* Oˣ} {I : Subgroup D}
     {r : D →* GG (m := 3) (R := R)} {h : GL (Fin 3) R} (H : DiagIn η Ψ I r h) :
     DiagIn η Ψ I (((GG.map (φ : R →+* R')).comp r)) (GeneralLinearGroup.map (φ : R →+* R') h) where
   toTriIn := triIn_push φ H.toTriIn
-  low g hg a b hab := by rw [conj_push_mat, H.low g hg a b hab, map_zero]
+  low := by
+    intro g hg a b hab
+    rw [conj_push_mat, H.low g hg a b hab, map_zero]
 
 variable [IsLocalRing O] [IsCO O R] [IsCO O R']
 

@@ -65,10 +65,6 @@ namespace PhiModule
 
 open Matrix
 
-variable {ψ : Robba K →+* Robba K} {Q : ℕ}
-variable {M : Type*} [AddCommGroup M] [Module (Robba K) M] [Module.Free (Robba K) M]
-  [Module.Finite (Robba K) M]
-
 end PhiModule
 
 end GroundTheory.PAdicHodge
