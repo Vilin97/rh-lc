@@ -27,7 +27,7 @@ theorem mem_augIdeal_iff' {R A : Type} [CommRing R] [CommRing A] [Bialgebra R A]
 
 theorem eq_zero_of_app_augIdeal {G H : PDivGroup p k} (f : G ⟶ H)
     (hf : ∀ n, ∀ a ∈ augIdeal k (H.A n), f.app n a = 0) : f = 0 := by
-  refine hom_ext fun n => BialgHom.ext fun a => ?_
+  refine Hom.ext (funext fun n => BialgHom.ext fun a => ?_)
   have hmem : a - algebraMap k (H.A n) (counit (R := k) a) ∈ augIdeal k (H.A n) := by
     rw [mem_augIdeal_iff', map_sub, ← Bialgebra.counitAlgHom_apply (R := k),
       ← Bialgebra.counitAlgHom_apply (R := k), AlgHom.commutes, Algebra.algebraMap_self,

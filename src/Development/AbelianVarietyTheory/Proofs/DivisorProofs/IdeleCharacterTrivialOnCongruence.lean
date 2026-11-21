@@ -94,7 +94,6 @@ theorem sign_char_trivial_on_congruence : ∀ (F : Type) [Field F] [NumberField 
         show (((1 : InfiniteAdeleRing F), (b : AdeleRing (𝓞 F) F).2),
           MulOpposite.op ((1 : InfiniteAdeleRing F), ((b⁻¹ : (AdeleRing (𝓞 F) F)ˣ) : AdeleRing (𝓞 F) F).2)) = _
         rw [hbs, hbs']
-        rfl
       rw [this]
       exact huv ⟨(key s hs).1, (key s' hs').2⟩
     exact hts hmem

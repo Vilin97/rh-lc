@@ -19,7 +19,7 @@ theorem ofForm_injective_of_H0Const (R : Type) [CommRing R] (C : Type) [Category
     (F : C ⥤ CommAlgCat.{0} R) (hF : CohomZeroIsConstants F) : Function.Injective (ofForm F) := by
   rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
   intro ω hω
-  obtain ⟨g, hg, hD⟩ := ofForm_eq_zero.1 hω
+  obtain ⟨g, hg, hD⟩ := (ofForm_eq_zero (F := F)).1 hω
   have h0 : d0 F g = 0 := by
     funext T T' φ
     have e : d0 F g T T' φ = g T' - mp F φ (g T) := rfl

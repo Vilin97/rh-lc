@@ -39,6 +39,7 @@ def LSegJacquet (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNo
       ((¬ ∃ Γ : Fin s → Segment k, IsTopCut Δ Γ ∧ ∀ a, IsLSeg (Γ a) (y a).rep) → jm y hd π = 0)
 
 
+open Classical in
 def dualCl (x : IrrGL (k := k)) : IrrGL (k := k) :=
   if h : (contra x.rep).IsIrreducible then IrrGL.of (contra x.rep) (isSmooth_smoothRep _) h else x
 

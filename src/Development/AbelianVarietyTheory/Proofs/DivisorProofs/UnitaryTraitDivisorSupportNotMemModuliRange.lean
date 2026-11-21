@@ -138,14 +138,56 @@ theorem subsingleton_of_extends (T : UTrait Xo c) (σ : Sp T.V ⟶ Xo.XF c) (h :
   have hAb : IsAbelianScheme Xo.univ.t.G :=
     { comm := hsemi.comm, smooth := hsemi.smooth, proper := Xo.univ.proper, geomConnected := hsemi.geomConnected }
   let f : Sp T.V ⟶ Xo.X := σ ≫ pullback.fst _ _
-  have hB := GlobalTheory.isAbelianScheme_pullback_obj f Xo.univ.t.G hAb
+  have hB : IsAbelianScheme ((Over.pullback f).obj Xo.univ.t.G) := by
+    have := hAb.comm
+    have := hAb.smooth
+    have := hAb.proper
+    have := hAb.geomConnected
+    refine ⟨inferInstance, ?_, ?_, ?_⟩
+    · change Smooth (pullback.snd Xo.univ.t.G.hom f)
+      infer_instance
+    · change IsProper (pullback.snd Xo.univ.t.G.hom f)
+      infer_instance
+    · change GeometricallyConnected (pullback.snd Xo.univ.t.G.hom f)
+      infer_instance
   obtain ⟨e₁, he₁, -⟩ := grpPullback_iso m₁.cart (isGrpPullback_pullback T.t.G (jK T.V))
   have h₂ := (isGrpPullback_pullback ((Over.pullback f).obj Xo.univ.t.G) (jK T.V)).comp
     (isGrpPullback_pullback Xo.univ.t.G f)
   obtain ⟨e₂, he₂, -⟩ := grpPullback_iso (m₂.cart.congr (by rw [← h, Category.assoc]) rfl) h₂
   haveI := he₁
   haveI := he₂
-  obtain ⟨F, -, -⟩ := GlobalTheory.Poinc.TraitUniq.extIso T.t.semi (GlobalTheory.isSemiAbelian_of_isAbelianScheme _ hB) (e₁.symm ≪≫ e₂)
+  have hsemiB : IsSemiAbelian ((Over.pullback f).obj Xo.univ.t.G) := by
+    open MonObj in
+    have := hB.proper
+    refine ⟨hB.comm, hB.smooth, inferInstance, inferInstance, hB.geomConnected, ?_⟩
+    intro Ω _ _ p
+    let A := (Over.pullback p).obj ((Over.pullback f).obj Xo.univ.t.G)
+    have hA : IsAbelianScheme A := by
+      have := hB.comm
+      have := hB.smooth
+      have := hB.proper
+      have := hB.geomConnected
+      refine ⟨inferInstance, ?_, ?_, ?_⟩
+      · change Smooth (pullback.snd _ p); infer_instance
+      · change IsProper (pullback.snd _ p); infer_instance
+      · change GeometricallyConnected (pullback.snd _ p); infer_instance
+    have hunit : IsIso (toUnit (splitTorus (Sp Ω) PUnit)) := by
+      have h : 𝟙 (splitTorus (Sp Ω) PUnit) = 1 := by
+        rw [← Diag.diagMap_id, ← Diag.diagMap_zero]
+        congr 1
+      exact ⟨η, h.symm, toUnit_unique _ _⟩
+    exact ⟨{ X := PUnit
+             B := A
+             isAbelian := hA
+             q := 𝟙 A
+             q_hom := inferInstance
+             q_flat := by rw [Over.id_left]; infer_instance
+             q_surjective := by rw [Over.id_left]; infer_instance
+             q_quasiCompact := by rw [Over.id_left]; infer_instance
+             i := toUnit _ ≫ η
+             i_hom := by have := hA.comm; infer_instance
+             isKernel := by have := hunit; exact IsPullback.of_vert_isIso ⟨Category.comp_id _⟩ }⟩
+  obtain ⟨F, -, -⟩ := GlobalTheory.Poinc.TraitUniq.extIso T.t.semi hsemiB (e₁.symm ≪≫ e₂)
     (show IsMonHom (e₁.inv ≫ e₂.hom) from inferInstance)
   have hp : IsProper T.t.G.hom := by
     have := hB.proper

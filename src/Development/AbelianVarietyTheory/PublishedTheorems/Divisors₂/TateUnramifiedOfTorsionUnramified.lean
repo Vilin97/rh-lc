@@ -196,7 +196,7 @@ end Consequences
 
 namespace AbVarRed
 
-open GlobalTheory.CMCurve GlobalTheory.WeierstrassCurve
+open GlobalTheory.WeierstrassCurve
 
 theorem factPrimeFive : Fact (Nat.Prime 5) := ⟨by norm_num⟩
 

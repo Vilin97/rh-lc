@@ -32,6 +32,7 @@ theorem DivOver.formOrd_eq_mult_of_isDivOfForm : ∀ (k : Type) [Field k] [CharZ
   have h2 := E.formOrd_smul hn h0 (Units.mk0 c hc0)
   rw [DivOver.formOrd_formOf_eq_zero hU hE hω, add_zero] at h2
   replace h2 : E.formOrd η = E.ord (Units.mk0 c hc0) := hc ▸ h2
+  change E.formOrd η = K.mult w
   rw [h2, h1.mult_eq, hE.ord_eq]
 
 end GlobalTheory.Discrepancy

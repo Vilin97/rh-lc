@@ -148,6 +148,7 @@ theorem smul_map_mulVec_pi (M : Matrix κ κ F) (u : Fˣ) (hu : (u : F) = M.det)
     have e : (A * B).mulVec = A.mulVec ∘ B.mulVec := funext fun x => (mulVec_mulVec x A B).symm
     rw [hu', map_mul, ENNReal.coe_mul, mul_smul, e, ← Measure.map_map (hm _) (hm _), ← Measure.map_smul,
       IHB _ rfl, IHA _ rfl]
+    exact (hm A).aemeasurable
 
 theorem integral_comp_mulVec (g : GL κ F) (f : (κ → F) → ℂ) :
     ((distribHaarChar F (Matrix.GeneralLinearGroup.det g) : ℝ) : ℂ) *

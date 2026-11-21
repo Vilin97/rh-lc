@@ -61,8 +61,9 @@ theorem _root_.GlobalTheory.ThK.ModelPol.pureA_pt {κ : Type}
     (f : (κ → mixedEmbedding.mixedSpace F) → ℂ) (g : (κ → _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) → ℂ)
     (x : κ → mixedEmbedding.mixedSpace F) (y : κ → _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) :
     _root_.GlobalTheory.WeilM.pureA F f g (_root_.GlobalTheory.ThK.ModelPol.pt x y) = f x * g y := by
-  unfold _root_.GlobalTheory.WeilM.pureA _root_.GlobalTheory.ThK.ModelPol.pt
-  simp
+  change f (fun i => (InfiniteAdeleRing.ringEquiv_mixedSpace F)
+    ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (x i))) * g y = f x * g y
+  simp only [RingEquiv.apply_symm_apply]
 
 
 open scoped Classical in

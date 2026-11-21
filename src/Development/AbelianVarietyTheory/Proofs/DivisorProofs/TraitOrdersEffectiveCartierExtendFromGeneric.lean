@@ -66,7 +66,26 @@ theorem idlAlong_ne_bot {X : Scheme.{0}} (J : X.IdealSheafData) {R : Type} [Comm
     (ξ : Sp R ⟶ X) (h : (jK R ≫ ξ) (closedPoint (FractionRing R)) ∉ J.support) : idlAlong J ξ ≠ ⊥ := by
   intro h0
   have h1 := idlAlong_eq_top_of_notMem_support X J _ _ h
-  have h2 := GlobalTheory.TraitOrder.idlAlong_comp J ξ (algebraMap R (FractionRing R))
+  have eq_map : ∀ {S : Type} [CommRing S] [IsLocalRing S] (χ : Sp S ⟶ X)
+      (U : X.affineOpens) (hle : ⊤ ≤ χ ⁻¹ᵁ U.1),
+      idlAlong J χ = (J.ideal U).map (χ.appLE U.1 ⊤ hle ≫ (Scheme.ΓSpecIso (.of S)).hom).hom := by
+    intro S _ _ χ U hle
+    have hx : χ (closedPoint S) ∈ U.1 := hle trivial
+    unfold idlAlong
+    rw [ds_stalkId_eq_map J U _ hx, Ideal.map_map, ← CommRingCat.hom_comp, Scheme.germ_stalkClosedPointTo]
+    congr 2
+  have h2 : idlAlong J (jK R ≫ ξ) = (idlAlong J ξ).map (algebraMap R (FractionRing R)) := by
+    obtain ⟨U, hU, hx, -⟩ := TopologicalSpace.Opens.isBasis_iff_nbhd.1 X.isBasis_affineOpens
+      (show ξ (closedPoint R) ∈ (⊤ : X.Opens) from trivial)
+    have hle : ⊤ ≤ ξ ⁻¹ᵁ U := (Scheme.preimage_eq_top_of_closedPoint_mem ξ hx).ge
+    have hle' : ⊤ ≤ (jK R ≫ ξ) ⁻¹ᵁ U := fun x _ => hle (show jK R x ∈ (⊤ : (Sp R).Opens) from trivial)
+    rw [eq_map ξ ⟨U, hU⟩ hle, eq_map _ ⟨U, hU⟩ hle', Ideal.map_map]
+    congr 1
+    have e : (jK R ≫ ξ).appLE U ⊤ hle' = ξ.appLE U ⊤ hle ≫ (jK R).appTop := by
+      rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
+      exact (Scheme.Hom.appLE_comp_appLE _ _ _ _ _ _ _).symm
+    rw [e, Category.assoc, Scheme.ΓSpecIso_naturality, ← Category.assoc, CommRingCat.hom_comp]
+    rfl
   rw [h0, Ideal.map_bot] at h2
   exact bot_ne_top (h2.symm.trans h1)
 

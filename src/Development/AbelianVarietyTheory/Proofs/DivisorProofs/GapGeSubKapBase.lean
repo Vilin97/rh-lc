@@ -33,7 +33,7 @@ section Lin
 variable {X : Scheme.{0}} [IsIntegral X] {Γ : Type} [Group Γ]
 
 def fnAct (ρ : Γ →* Aut X) (γ : Γ) : X.functionFieldˣ →* X.functionFieldˣ :=
-  haveI : IsIso (ρ γ).asIso.hom := Iso.isIso_hom (ρ γ)
+  haveI : IsIso (ρ γ).asIso.hom := Iso.isIso_hom (ρ γ).asIso
   Units.map (GlobalTheory.functionFieldMap (ρ γ).asIso.hom).toMonoidHom
 
 def RatLin (ρ : Γ →* Aut X) (L : LB X) (hL : L.IsLB) : Prop :=
@@ -78,9 +78,9 @@ theorem j₀_ι : j₀ Y Z ≫ (barComp Y Z).ι = i₀ Y Z ≫ Y.j :=
 
 variable {Y Z} in
 def ActsBy {Γ : Type} [Group Γ] (ι : Γ →* LevelAut Dw l) (ρ : Γ →* Aut (V₀ Y Z)) : Prop :=
-  (∀ γ, (ρ γ).hom ≫ j₀ Y Z ≫ s₀ Y Z = j₀ Y Z ≫ s₀ Y Z) ∧
+  (∀ γ, (ρ γ).asIso.hom ≫ j₀ Y Z ≫ s₀ Y Z = j₀ Y Z ≫ s₀ Y Z) ∧
     ∀ (γ : Γ) (R : Type) [CommRing R] [Algebra c.F R] (y : FrPt Xo c R) (v : Sp R ⟶ V₀ Y Z), v ≫ i₀ Y Z = ptF y →
-      v ≫ (ρ γ).hom ≫ i₀ Y Z = ptF (move Xo c (ι γ)⁻¹ y)
+      v ≫ (ρ γ).asIso.hom ≫ i₀ Y Z = ptF (move Xo c (ι γ)⁻¹ y)
 
 end Base
 

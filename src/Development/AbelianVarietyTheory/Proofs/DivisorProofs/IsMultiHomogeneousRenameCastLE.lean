@@ -23,7 +23,7 @@ theorem isProbabilityMeasure_gaussProb {n : ℕ} (hn : 0 < n) : IsProbabilityMea
   haveI := (GlobalTheory.T.gaussianRadialLawProbability_log_integrable_mean n hn).1
   haveI : IsProbabilityMeasure (sphereProb n) := isProbabilityMeasure_sphereProb hn
   rw [← hp.map_eq]
-  exact Measure.isProbabilityMeasure_map hp.measurable.aemeasurable
+  infer_instance
 
 theorem eval_blockScale {B n : ℕ} (a : Fin B → ℕ) (g : MvPolynomial (Fin B × Fin n) ℂ)
     (hm : IsMultiHomogeneous a g) (r : Fin B → ℂ) (x : Fin B × Fin n → ℂ) :

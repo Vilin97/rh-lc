@@ -146,8 +146,9 @@ open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.Spl
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem intM_leviEmb {α n : Type} {m : α → Type} [Fintype α] [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)]
-    [Fintype n] [DecidableEq n] (e : (Σ a, m a) ≃ n) (y : Levi k m) (hy : ∀ a, GlobalTheory.StepData.IntM (y a).val) :
+theorem intM_leviEmb {α n : Type} {m : α → Type} [Fintype α] [DecidableEq α]
+    [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n]
+    (e : (Σ a, m a) ≃ n) (y : Levi k m) (hy : ∀ a, GlobalTheory.StepData.IntM (y a).val) :
     GlobalTheory.StepData.IntM (leviEmb k e y).val := by
   intro p q
   obtain ⟨⟨a, i⟩, rfl⟩ := e.surjective p

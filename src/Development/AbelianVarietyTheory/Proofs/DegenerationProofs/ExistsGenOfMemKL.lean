@@ -190,7 +190,7 @@ theorem exists_descent : ∀ (k : Type) [Field k] [IsAlgClosed k] (A B : Over (S
     rw [← orderOf_pos_iff, hord]
     omega
   have : Finite (Subgroup.zpowers x) := by
-    exact (finite_zpowers.mpr hfin).to_subtype
+    exact finite_zpowers.mpr hfin
   have hi : ∀ c : Subgroup.zpowers x, ∃ j : ℕ, x ^ j = (Subgroup.zpowers x).subtype c := fun c =>
     (Submonoid.mem_powers_iff _ _).mp (hfin.mem_powers_iff_mem_zpowers.mpr c.2)
   obtain ⟨u, hu, hcoc⟩ := exists_cocycle globalFns_holds hA hL (ThetaSplit.units_divisible k) hx

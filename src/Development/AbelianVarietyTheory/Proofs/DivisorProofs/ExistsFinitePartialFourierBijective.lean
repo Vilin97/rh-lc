@@ -281,7 +281,7 @@ theorem GlobalTheory.PartialFourierFin.exists_partialFourier_diag : ∀ (F : Typ
     exact ⟨g', hg', by rw [hB' g' hg', e]⟩
   · simp only [psi_fin_eq hψ]
     have hcont : Continuous fun u : κ ⊕ κ → FiniteAdeleRing (𝓞 F) F => u ⬝ᵥ z :=
-      continuous_finset_sum _ fun i _ => (continuous_apply i).mul continuous_const
+      continuous_finsetSum _ fun i _ => (continuous_apply i).mul continuous_const
     have hm : (fun u => chiF (u ⬝ᵥ z) * g u) ∈ SB (κ ⊕ κ → FiniteAdeleRing (𝓞 F) F) :=
       ⟨(isLocallyConstant_chiF.comp_continuous hcont).mul hg.1, hg.2.mul_left⟩
     rw [hB' _ hm, hB' g hg]

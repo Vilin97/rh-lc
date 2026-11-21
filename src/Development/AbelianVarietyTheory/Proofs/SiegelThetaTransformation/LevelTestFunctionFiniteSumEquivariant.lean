@@ -40,7 +40,7 @@ theorem map_smul_mem {A B : Lt E r} (f : (Fin r → E) →ₗ[𝓞 E] (Fin r →
     (𝔪 : Ideal (𝓞 E)) {u : Fin r → E} (hu : u ∈ 𝔪 • A) : f u ∈ 𝔪 • B := by
   refine Submodule.smul_induction_on hu (fun a ha v hv => ?_) fun x y hx hy => ?_
   · rw [map_smul]; exact Submodule.smul_mem_smul ha (hf v hv)
-  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  · rw [map_add]; exact add_mem hx hy
 
 theorem mul_smul_mem {A B : Lt E r} {s : 𝓞 E} (hf : ∀ v ∈ A, s • v ∈ B)
     (𝔪 : Ideal (𝓞 E)) {u : Fin r → E} (hu : u ∈ 𝔪 • A) : s • u ∈ 𝔪 • B :=

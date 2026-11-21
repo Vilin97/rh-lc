@@ -47,7 +47,7 @@ theorem sgA_mem_hatId' {I : Ideal (𝓞 D.host.E)} {x : AE D} (hx : x ∈ hatId 
     rw [map_mul, GlobalTheory.Mem.Col2.SplitChar.sgA_inc]
     rfl
   | zero => simp
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | neg a _ ha => rw [map_neg]; exact neg_mem ha
 
 theorem conj_conj_smul (𝔪 : Ideal (𝓞 D.host.E)) : D.host.conj • D.host.conj • 𝔪 = 𝔪 := by
@@ -124,7 +124,8 @@ theorem GlobalTheory.NuTrivSq.nuH_finIdl_eq_one : ∀ {D : D7} {T : Type} {L : L
         exact (G.ch.lev1 _ h1 h2 PP h1').1 x hunit (by simpa using hb)
     · exact G.ch.unr _ h1 h2 PP hS x hunit
   show (nuH G μ₀ i j).loc PP x = 1
-  rw [nuH, hL.xi_base, mul_one, div_eq_mul_inv, HChar.loc_mul, HChar.loc_inv, hμ, hχ]
-  simp
+  rw [nuH, hL.xi_base, mul_one, div_eq_mul_inv]
+  change (L.C.mu0 j).loc PP x * ((G.ch.chiH (D.R.m - i)).loc PP x)⁻¹ = 1
+  rw [hμ, hχ, inv_one, one_mul]
 
 end

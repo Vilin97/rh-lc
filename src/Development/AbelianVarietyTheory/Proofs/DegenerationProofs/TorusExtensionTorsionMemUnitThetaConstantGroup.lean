@@ -40,12 +40,17 @@ theorem exists_hom {R : Type} [CommRing R] [IsDomain R] {D : DegPre R} (hB : D.T
     (hf : ∀ p p' p'', QkAdd p p' p'' → f p'' = f p * f p') :
     ∃ φ : (nsmulAddMonoidHom k : GtPtF D F →+ GtPtF D F).ker →+ Additive M,
       ∀ t (p : QkPt D F k), p.y = 0 → p.g = t.1 → φ t = Additive.ofMul (f p) := by
+  let qkMk (g : GtPtF D F) (h : k • g = 0) : QkPt D F k :=
+    ⟨0, g, k • g, (isNsmul_iff_eq _ _ _).2 rfl, isIota_zero hB ((isZero_iff_eq _).2 h)⟩
   let r : (nsmulAddMonoidHom k : GtPtF D F →+ GtPtF D F).ker → QkPt D F k := fun t =>
-    qkMk hB 0 t.1 ((show k • t.1 = 0 from t.2).trans (map_zero _).symm)
+    qkMk t.1 t.2
   refine ⟨AddMonoidHom.mk' (fun t => Additive.ofMul (f (r t))) fun t t' => ?_, fun t p hy hg => ?_⟩
-  · rw [← ofMul_mul, ← hf _ _ _ (qkAdd_qkAdd hB (r t) (r t'))]
-    exact congrArg (fun p => Additive.ofMul (f p)) (qk_ext (add_zero _).symm rfl)
-  · exact congrArg (fun p => Additive.ofMul (f p)) (qk_ext hy.symm hg.symm)
+  · let p := qkMk (t.1 + t'.1) (by rw [nsmul_add, t.2, t'.2, add_zero])
+    have hp : QkAdd (r t) (r t') p :=
+      ⟨p, by simp [p, qkMk, r], (isAdd_iff_eq _ _ _).2 rfl, qk_equiv_refl hB p⟩
+    rw [← ofMul_mul, ← hf _ _ _ hp]
+    exact congrArg (fun p => Additive.ofMul (f p)) (qk_ext rfl rfl)
+  · exact congrArg (fun p => Additive.ofMul (f p)) (qk_ext (by simpa [r] using hy.symm) hg.symm)
 
 theorem fromGt_mem_unitGrp : LL → TwistBCSpanStatement → TWM.VRatioGtStatement → TWStatement → UUStatement → AllUV fun {V} _ _ _ {ϖ} hϖ {D} Q {F} _ _ {v} hv {A} {G} _ _ U => ∀ w₀ ρ, NormW U.toUnifPre w₀ ρ → ∀ (th : SecA A F 1) (ϑ : Fam D.toPre F 1), U.ExpandsF F 1 w₀ th ϑ → Prim D Q v ϑ → ∀ n j : ℕ, n.Prime → Odd n → IsUnit (n : V) → 2 ≤ j → ∀ x : TFK (R := V) F ⟶ A.A, FromGt U.toUnifPre (n ^ j) x → x ∈ unitGrp v ρ th (n ^ j) := by
   intro hL h₁ h₂ h₃ h₄ V _ _ _ _ hc ϖ hϖ D Q hQ F _ _ _ v hv A G _ _ hG U w₀ ρ hN th ϑ hE hP n j hn ho hu hj x hx
@@ -73,9 +78,12 @@ theorem fromGt_mem_unitGrp : LL → TwistBCSpanStatement → TWM.VRatioGtStateme
   have mem : ∀ {k} (p : QkPt D.toPre F k), p.y = 0 →
       p.g ∈ (nsmulAddMonoidHom k : GtPtF D.toPre F →+ GtPtF D.toPre F).ker := fun {k} p hy => by
     show k • p.g = 0
-    rw [qk_nsmul hB, hy, map_zero]
-  have mk : ∀ {k : ℕ} (g : GtPtF D.toPre F), k • g = 0 → ∃ p : QkPt D.toPre F k, p.y = 0 ∧ p.g = g := fun g h =>
-    ⟨qkMk hB 0 g (h.trans (map_zero _).symm), rfl, rfl⟩
+    obtain ⟨g, h₁, h₂⟩ := p.eq
+    rw [hy] at h₂
+    exact ((isNsmul_iff_eq _ _ _).1 h₁).symm.trans (isIota_unique h₂ (isIota_zero hB ((isZero_iff_eq _).2 rfl)))
+  have mk : ∀ {k : ℕ} (g : GtPtF D.toPre F), k • g = 0 → ∃ p : QkPt D.toPre F k, p.y = 0 ∧ p.g = g := fun {k} g h =>
+    ⟨⟨0, g, k • g, (isNsmul_iff_eq _ _ _).2 rfl,
+      isIota_zero hB ((isZero_iff_eq _).2 h)⟩, rfl, rfl⟩
   have inj : ∀ t, φ t = 0 → t = 0 := fun t ht => by
     obtain ⟨p, py, pg⟩ := mk t.1 t.2
     obtain ⟨o, oy, og⟩ := mk (k := m) 0 (nsmul_zero m)

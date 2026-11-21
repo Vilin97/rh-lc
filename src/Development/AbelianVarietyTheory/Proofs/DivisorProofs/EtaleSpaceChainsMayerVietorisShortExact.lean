@@ -68,7 +68,6 @@ theorem _root_.GlobalTheory.EtC.chainsXIso_naturality (R : Type) [CommRing R] {E
   rw [HomologicalComplex.extendMap_f _ _ (i := p) (by simp)]
   simp [_root_.GlobalTheory.EtC.chainsN]
   erw [Category.assoc, Category.assoc, Iso.inv_hom_id, Category.comp_id]
-  rfl
 
 
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex in

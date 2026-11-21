@@ -60,8 +60,8 @@ theorem smul_mem_hatV {L L' : Lt D.host.E k} (c : 𝓞 D.host.E) (h : ∀ x ∈ 
   refine hatV_map (DistribSMul.toAddMonoidHom _ ((1 : Af D.host.F) ⊗ₜ[D.host.F] (c : D.host.E))) _
     (fun a ha x hx => ?_) hu
   convert tmul_mem_hatV ha (h x hx) using 1
-    Algebra.TensorProduct.tmul_mul_tmul, one_mul]
-  rfl
+  ext i
+  simp [smul_eq_mul, Algebra.smul_def, Algebra.TensorProduct.tmul_mul_tmul]
 
 theorem nsmul_mem_hatV {L : Lt D.host.E k} {𝔪 : Ideal (𝓞 D.host.E)} {M : ℕ} (hM : (M : 𝓞 D.host.E) ∈ 𝔪) {u}
     (hu : u ∈ hatV L) : M • u ∈ hatV (𝔪 • L) := by

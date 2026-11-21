@@ -65,7 +65,8 @@ theorem tens_mem_schA_of_ne {f : SInf F κ} (hf : f ≠ 0) {r : (κ → AF F) �
     exact this
   have hev : (fun i => evI F (pt (fun i => (x i).2) i)) = y₀ := by
     funext i
-    simp [pt, evI, e]
+    change e (e.symm (y₀ i)) = y₀ i
+    exact e.apply_symm_apply _
   simp only [tens, pureA, Pi.smul_apply, smul_eq_mul, L, LinearMap.funLeft_apply, Function.comp_def]
   rw [hev, hrx]
   simp only [evI]

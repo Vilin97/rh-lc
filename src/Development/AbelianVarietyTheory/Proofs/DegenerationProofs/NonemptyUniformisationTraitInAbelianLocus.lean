@@ -46,9 +46,14 @@ theorem nonempty_pelUnif_of_abLocus : GlobalTheory.LN.UDvrSt → ∀ (E : Type) 
   have p : Sp (W ⧸ maximalIdeal W) := (default : PrimeSpectrum (ResidueField W))
   have h₀ : r p ∈ abLocus t'.G := (abLocus_pullback abLocusOne t.semi m.cart.1 (r p)).1 (hr ⟨_, rfl⟩)
   have h₁ : IsProper (pullback.snd t'.G.hom r) := isProper_snd_of_mem_abLocus t'.G (K := ResidueField W) r p h₀
-  have h₂ := IsSemiAbelian.pullback r t'.G hG
+  have := hG.comm
+  have := hG.geomConnected
   obtain ⟨P, -⟩ := hU E H W hW t' hpol
-    ⟨_, ZJ.isGt_splitExtOfAbelian _ ⟨h₂.comm, h₂.smooth, h₁, h₂.geomConnected⟩⟩
+    ⟨_, ZJ.isGt_splitExtOfAbelian _ ⟨inferInstance, by
+      change Smooth (pullback.snd t'.G.hom r)
+      infer_instance, h₁, by
+      change GeometricallyConnected (pullback.snd t'.G.hom r)
+      infer_instance⟩⟩
   exact ⟨P⟩
 
 end GlobalTheory.AbelianTrait

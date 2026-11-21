@@ -103,10 +103,22 @@ theorem isTor_nsmul {τ : Multiplicative D.toPre.X →* Fˣ} {g : GtPtF D.toPre 
 
 theorem exists_qkPt_tor {τ : Multiplicative D.toPre.X →* Fˣ} {g : GtPtF D.toPre F} (h : IsTor τ g) {n : ℕ}
     (hn : τ ^ n = 1) : ∃ q : QkPt D.toPre F n, q.y = 0 ∧ q.g = g := by
-  refine ⟨⟨0, g, n • g, (isNsmul_iff_eq _ _ _).2 rfl, (isIota_iff_eq D.tau_bimult _ _).2 ?_⟩, rfl, rfl⟩
-  have := isTor_nsmul h n
-  rw [hn, isTor_iff, isTorusPtF_iff_eq] at this
-  rw [this, map_zero]
+  refine ⟨⟨0, g, n • g, (isNsmul_iff_eq _ _ _).2 rfl, ?_⟩, rfl, rfl⟩
+  have ht := isTor_nsmul h n
+  rw [hn, isTor_iff, isTorusPtF_iff_eq] at ht
+  have hz : (n • g).IsZero := (isZero_iff_eq _).2 (by simpa using ht)
+  obtain ⟨hb, hv⟩ := (isZero_iff _).1 hz
+  refine (isIota_iff 0 _).2 ⟨hb.trans (cPoint_zero _).symm, fun χ y J hJ => ?_⟩
+  have face : ∀ x z, th D.toPre (T := TF (R := R) F) y J 1 x z = 1 := by
+    intro x z
+    have e := val_corr hJ (D.toPre.cub.face 0) (lift x z).left
+    rw [val_one] at e
+    refine Eq.trans ?_ e
+    refine Eq.trans ?_ (val_cub D.toPre.cub (lift x z) hJ (pzero _ _) (x2 _ 0) (x2 _ 1)).symm
+    congr 1 <;> simp [x2, pzero, Hom.one_def]
+  have t := tau_mul (𝟙 (TF (R := R) F)) hJ D.tau_bimult 0 0 χ
+  rw [add_zero, cPoint_zero, face, _root_.mul_one] at t
+  exact (hv χ y J hJ).trans (mul_eq_left.1 t.symm).symm
 
 variable [CharZero R] [IsAlgClosed F] {A : PolAV (Spec (CommRingCat.of (FractionRing R)))}
   {G : Over (Spec (CommRingCat.of R))} [GrpObj G] [IsCommMonObj G]

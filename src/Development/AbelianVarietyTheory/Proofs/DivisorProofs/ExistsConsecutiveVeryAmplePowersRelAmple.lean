@@ -99,6 +99,17 @@ namespace GlobalTheory.FormalAlg.ConsecPowers
 theorem exists_veryAmpleBy_pw_and_succ : ∀ (R : Type) [CommRing R] (X : Over (Spec (CommRingCat.of R))) (L : LB X.left), L.IsLB → RelAmple X L → ∃ d : ℕ, 1 ≤ d ∧ ∀ c : ℕ, c = d ∨ c = d + 1 → ∃ (n : ℕ) (s : Fin (n + 1) → LB.Sec (GlobalTheory.AbLaw.pw L c)), VeryAmpleBy X.hom (GlobalTheory.AbLaw.pw L c) s := by
   intro R _ X L hL hA
   obtain ⟨d₁, hd₁, n, s, hs⟩ := (GlobalTheory.Unif.relAmple_iff_veryAmpleBy R X L hL).1 hA
+  have isLB_pw {Y : Scheme.{0}} {H : LB Y} (hH : H.IsLB) (t : ℤ) :
+      (AbLaw.pw H t).IsLB := by
+    refine ⟨hH.cover, ?_, ?_⟩
+    · intro i
+      have h := congrArg (· ^ t) (hH.g_self i)
+      simp only [one_zpow, ← map_zpow] at h
+      exact h
+    · intro i j k
+      have h := congrArg (· ^ t) (hH.cocycle i j k)
+      simp only [mul_zpow, ← map_zpow] at h
+      exact h
   have hH := isLB_pw hL (d₁ : ℤ)
   obtain ⟨t₀, ht₀⟩ := GlobalTheory.TwistGen.twist_generated R X.left X.hom _ n s hH hs L hL
   obtain ⟨t, ht⟩ : ∃ t : ℕ, t₀ ≤ (t : ℤ) := ⟨t₀.toNat, Int.self_le_toNat t₀⟩

@@ -19,7 +19,7 @@ noncomputable section
 
 open CategoryTheory AlgebraicGeometry TopologicalSpace
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory.Cartier GlobalTheory.ProjVar GlobalTheory.CxPts GlobalTheory.Published.ArDegreeModel
+open GlobalTheory.Cartier GlobalTheory.ProjVar GlobalTheory.CxPts
 
 namespace GlobalTheory.Published.ChernDegreeComplexModel
 

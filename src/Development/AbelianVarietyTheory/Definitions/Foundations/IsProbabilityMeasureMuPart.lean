@@ -606,13 +606,13 @@ theorem muPart_univ_le (A : Set (Σ k, Frame (X k).Ψ r)) : muPart V dict A Set.
 
 variable (μ : Measure (AutQ V))
 
-def petE (la : ∀ k, Wt (X k).Ψ r) (P : FDSec X) : ENNReal := eLpNorm (fun q : AutQ V => ptN la P (dict q.out)) 2 μ
+def petE (la : ∀ k, Wt (X k).Ψ r) (P : FDSec X) : ENNReal := eLpNorm' (fun q : AutQ V => ptN la P (dict q.out)) 2 μ
 
 theorem petE_smul (la : ∀ k, Wt (X k).Ψ r) (a : ℂ) (P : FDSec X) :
     petE V dict μ la (a • P) = ENNReal.ofReal ‖a‖ * petE V dict μ la P := by
   have : (fun q : AutQ V => ptN la (a • P) (dict q.out)) = ‖a‖ • fun q : AutQ V => ptN la P (dict q.out) :=
     funext fun q => pnorm_smul _ _ a _ _
-  rw [petE, this, eLpNorm_const_smul, petE, Real.enorm_eq_ofReal (norm_nonneg a)]
+  rw [petE, this, eLpNorm'_const_smul _ (by norm_num), petE, Real.eNorm_eq_ofReal (norm_nonneg a)]
 
 theorem petE_le_supE (hμ : μ Set.univ ≤ 1) (hd : ∀ g, (dict g).2 ∈ (X (dict g).1).dom) (la : ∀ k, Wt (X k).Ψ r)
     (P : FDSec X) : petE V dict μ la P ≤ supE X la P := by
@@ -620,8 +620,10 @@ theorem petE_le_supE (hμ : μ Set.univ ≤ 1) (hd : ∀ g, (dict g).2 ∈ (X (d
     rw [Real.enorm_eq_ofReal (ptN_nonneg _ _ _)]
     exact le_iSup (fun p : FPt X => ENNReal.ofReal ((X p.1).pnorm (la p.1) (P p.1) p.2))
       ⟨(dict q.out).1, ⟨(dict q.out).2, hd _⟩⟩
-  refine (eLpNorm_le_of_ae_enorm_bound (Filter.Eventually.of_forall h)).trans ?_
-  rw [smul_eq_mul]
+  have hle : petE V dict μ la P ≤ eLpNorm' (fun _ : AutQ V => supE X la P) 2 μ :=
+    eLpNorm'_mono_eNorm_ae (by norm_num) (Filter.Eventually.of_forall h)
+  refine hle.trans ?_
+  rw [eLpNorm'_const _ (by norm_num), eNorm_eq_self]
   refine (mul_le_mul_right (ENNReal.rpow_le_one hμ (by positivity)) _).trans (by simp)
 
 theorem petE_ne_top [Fintype Cp] (hμ : μ Set.univ ≤ 1) (hd : ∀ g, (dict g).2 ∈ (X (dict g).1).dom)
@@ -726,10 +728,10 @@ theorem petAt_smul (G : WTZ E) (a : c.F) (f : Rul Xo c) :
   ring
 
 theorem petAt_eq (G : WTZ E) (f : Rul Xo c) :
-    petAt U x V dict μ G f = (eLpNorm (fun q : AutQ V => homN U x G f (dict q.out)) 2 μ).toReal := by
+    petAt U x V dict μ G f = (eLpNorm' (fun q : AutQ V => homN U x G f (dict q.out)) 2 μ).toReal := by
   have : (fun q : AutQ V => homN U x G f (dict q.out)) =
       lieFacZ Dw x G • fun q : AutQ V => ptN (modelWt U G) (rdU U f) (dict q.out) := rfl
-  rw [this, eLpNorm_const_smul, ENNReal.toReal_mul, Real.enorm_eq_ofReal (lieFacZ_pos x G).le,
+  rw [this, eLpNorm'_const_smul _ (by norm_num), ENNReal.toReal_mul, Real.eNorm_eq_ofReal (lieFacZ_pos x G).le,
     ENNReal.toReal_ofReal (lieFacZ_pos x G).le]
   rfl
 
@@ -750,17 +752,20 @@ theorem homN_sq_le {G : WTZ E} (hμ : μ Set.univ ≤ 1) (hd : ∀ g, (dict g).2
 
 end One
 
+attribute [local instance high] Submodule.module
+
 variable (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (x : ℝ) {D : D7}
 
 theorem petAt_wtZ {σ : c.F →+* ℂ} (V : HSp D) (dict : GA D V → Σ k, Frame ((U σ).X k).Ψ r) (mu : GA D V → ℂ)
     (hm : MuUnit V dict mu) (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ) (h : JMemL2 V σ (rdC U σ a n) dict mu) {f : Rul Xo c}
     (hf : f ∈ cusp Xo c U a n) : petAt (U σ) x V dict (muQ1 V) (wtZ a n) f = l2C U σ V dict mu x a n h f := by
-  rw [l2C, dif_pos hf, petAt, lieFacZ_wtZ]
+  rw [l2C, dite_eq_left hf, petAt, lieFacZ_wtZ]
   congr 1
   show _ = ‖(h ⟨f, hf⟩).toLp _‖
-  rw [Lp.norm_toLp, petE]
+  rw [Lp.norm_toLp, petE, eLpNorm_eq_eLpNorm' (by norm_num) (by norm_num) (h ⟨f, hf⟩).aestronglyMeasurable,
+    ENNReal.toReal_ofNat]
   congr 1
-  refine eLpNorm_congr_norm_ae (Filter.Eventually.of_forall fun q => ?_)
+  refine eLpNorm'_congr_norm_ae (Filter.Eventually.of_forall fun q => ?_)
   rw [Real.norm_of_nonneg (ptN_nonneg _ _ _), ptN, pnorm_eq_of_unit _ _ _ _ (hm.2.2.2 _)]
   show _ = ‖mu q.out * rdU (U σ) f (dict q.out).1 (dict q.out).2‖
   rw [norm_mul, hm.2.1, one_mul]

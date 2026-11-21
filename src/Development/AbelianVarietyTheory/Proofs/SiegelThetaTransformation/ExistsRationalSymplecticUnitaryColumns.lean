@@ -19,7 +19,9 @@ variable {n g : ℕ}
 theorem blk_eq (τ : Matrix (Fin g) (Fin g) ℂ) :
     blk n τ = (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ τ := by
   ext p q
-  simp only [blk, of_apply, kroneckerMap_apply, one_apply]
+  change (if p.1 = q.1 then τ p.2 q.2 else 0) =
+    (1 : Matrix (Fin n) (Fin n) ℂ) p.1 q.1 * τ p.2 q.2
+  rw [Matrix.one_apply]
   split_ifs <;> simp
 
 theorem blk_mul (A B : Matrix (Fin g) (Fin g) ℂ) : blk n A * blk n B = blk n (A * B) := by
@@ -50,7 +52,9 @@ theorem blk_mem_siegel {τ : Matrix (Fin g) (Fin g) ℂ} (h : τ ∈ Siegel (Fin
     · rw [if_neg (Ne.symm e), if_neg e]
   · have e : (blk n τ).map Complex.im = (1 : Matrix (Fin n) (Fin n) ℝ) ⊗ₖ τ.map Complex.im := by
       ext p q
-      simp only [map_apply, blk, of_apply, kroneckerMap_apply, one_apply]
+      change Complex.im (if p.1 = q.1 then τ p.2 q.2 else 0) =
+        (1 : Matrix (Fin n) (Fin n) ℝ) p.1 q.1 * Complex.im (τ p.2 q.2)
+      rw [Matrix.one_apply]
       split_ifs <;> simp
     rw [e]
     exact PosDef.one.kronecker h.2

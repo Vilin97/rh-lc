@@ -48,7 +48,7 @@ theorem inj_iff_loc {F G : Shv R} (φ : F ⟶ G) :
     intro a ha
     obtain ⟨S, hS, hP⟩ := h U a ha
     have hF : Presieve.IsSheaf Scheme.etaleTopology (F.obj ⋙ forget _) :=
-      (isSheaf_iff_isSheaf_of_type _ _).1 ((sheafCompose Scheme.etaleTopology (forget (ModuleCat.{1} (ULift.{1} R)))).obj F).cond
+      (isSheaf_iff_isSheaf_of_type _ _).1 ((sheafCompose Scheme.etaleTopology (forget (ModuleCat.{1} (ULift.{1} R)))).obj F).property
     refine (hF S hS).isSeparatedFor.ext fun V g hg => ?_
     change Sec.res g a = Sec.res g (0 : Sec F U)
     rw [hP V g hg]

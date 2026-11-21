@@ -51,12 +51,12 @@ theorem sm_avg {α : Type} (R : Finset α) (f : α → ℂ) (hf : ∀ x ∈ R, S
     exact Finset.sum_congr rfl fun x hx => (hg x hx).1
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_mul, map_inv₀, map_natCast, map_sum, norm_mul, norm_inv, Complex.norm_natCast]
-    have h1 : ‖∑ x ∈ R, ρ (g x)‖ ≤ R.card := by
-      refine (norm_sum_le _ _).trans ?_
-      refine (Finset.sum_le_sum fun x hx => (hg x hx).2 ρ).trans ?_
-      simp
-    calc (R.card : ℝ)⁻¹ * ‖∑ x ∈ R, ρ (g x)‖ ≤ (R.card : ℝ)⁻¹ * R.card := by gcongr
-      _ ≤ 1 := inv_mul_le_one
+      have h1 : ‖∑ x ∈ R, ρ (g x)‖ ≤ R.card := by
+        refine (norm_sum_le _ _).trans ?_
+        refine (Finset.sum_le_sum fun x hx => (hg x hx).2 ρ).trans ?_
+        simp
+      calc (R.card : ℝ)⁻¹ * ‖∑ x ∈ R, ρ (g x)‖ ≤ (R.card : ℝ)⁻¹ * R.card := by gcongr
+        _ ≤ 1 := inv_mul_le_one
 
 theorem sm_of_pow {x : ℂ} {n : ℕ} (hn : 0 < n) (h : x ^ n = 1) : Sm x := by
   have hx : x ∈ TaylorLogMetric.Qbar := by

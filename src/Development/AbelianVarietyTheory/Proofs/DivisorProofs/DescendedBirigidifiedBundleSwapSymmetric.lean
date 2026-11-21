@@ -45,13 +45,7 @@ theorem lbIso_swap : ∀ (X Y : Scheme.{0}) (π : X ⟶ Y) (Ga : Type) [Group Ga
         lift_snd, hsq.1]
   have h₂ := LB.isLB_pull hP₀ (lift (snd A₀ A₀) (fst A₀ A₀)).left
   have hN := LB.isLB_div h₂ hP₀
-  have cN : CechPic.cls _ hN = CechPic.pull (lift (snd A₀ A₀) (fst A₀ A₀)).left (CechPic.cls _ hP₀) - CechPic.cls _ hP₀ := by
-    rw [← CechPic.cls_pull hP₀ _ h₂, sub_eq_add_neg, ← CechPic.cls_dual hP₀ (CechPic.isLB_dual hP₀),
-      ← CechPic.cls_tens h₂ (CechPic.isLB_dual hP₀) (CechPic.isLB_tens h₂ (CechPic.isLB_dual hP₀))]
-    refine (CechPic.cls_eq_iff _ _).2 (CechPic.iso_of_chart (CechPic.isLB_tens h₂ (CechPic.isLB_dual hP₀)) ⟨fun p => p, fun _ _ h => h, ?_⟩)
-    intro y p q hp hq
-    exact (CechPic.gm_div' _ _ (𝟙 _) y p q hp hq).trans ((CechPic.gm_tens _ _ (𝟙 _) y p q hp hq).trans
-      (congrArg (_ * ·) (map_inv _ _))).symm
+  have cN := (CechPic.cls_div h₂ hP₀ hN).trans (by rw [CechPic.cls_pull hP₀ _ h₂])
   have z₀ : CechPic.pull (eSec (G2 A₀)) (CechPic.cls _ hP₀) = 0 :=
     (CechPic.cls_eq_zero_iff (LB.isLB_pull hP₀ _)).2 ⟨r, hr⟩
   have c₁ : CechPic.cls _ hP = CechPic.pull φ₂ (CechPic.cls _ hP₀) :=

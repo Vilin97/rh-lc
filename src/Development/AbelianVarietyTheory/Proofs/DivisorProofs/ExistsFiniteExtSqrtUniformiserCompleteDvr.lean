@@ -68,7 +68,7 @@ theorem exists_finite_ext_sq_eq_uniformiser : ∀ (V : Type) [CommRing V] [IsDom
         Ideal.comap_ne_bot_of_integral_mem hx0 hxP (Algebra.IsIntegral.isIntegral x)
       haveI : (P.comap (algebraMap V V₁)).IsPrime := Ideal.IsPrime.comap _
       have hm : (P.comap (algebraMap V V₁)).IsMaximal := IsPrime.to_maximal_ideal hc
-      have hPm : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap P hm
+      have hPm : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := V) P hm
       exact IsLocalRing.eq_maximalIdeal hPm
   exact ⟨V₁, inferInstance, inferInstance, inferInstance, ρ, t, ⟨hN₁, hIC₁, by assumption, by assumption⟩,
     inferInstance, hinj, hloc, hfin, ht2⟩

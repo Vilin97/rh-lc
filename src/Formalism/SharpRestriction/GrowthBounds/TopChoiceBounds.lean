@@ -1906,13 +1906,13 @@ variable {D : D7} {L : SizeData₂ D}
 
 section Sharp
 
-open Formalism.G0 Formalism.G0.TopsChoiceProbabilityLemmas Formalism.G0.TopsConditionalProbabilityWindows
+open Formalism.G0 Formalism.G0.TopsConditionalProbabilityWindows
 
 end Sharp
 
 section Num
 
-open Formalism.G0 Formalism.G0.TopsChoiceProbabilityLemmas Formalism.G0.TopsConditionalProbabilityWindows
+open Formalism.G0 Formalism.G0.TopsConditionalProbabilityWindows
 
 end Num
 

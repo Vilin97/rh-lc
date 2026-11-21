@@ -74,7 +74,7 @@ theorem exists_holUnif {S : Scheme.{0}} {t : SAB H S} {y : Sp ℂ ⟶ S} {t₁ :
   obtain ⟨w, hw, -⟩ := m.lin
   obtain ⟨w', hw'⟩ := LBIso.symm ⟨w, hw⟩
   have hL := t₁.PP.isLB
-  have hM := pull_isLB t.PP.isLB m.φ
+  have hM := LB.isLB_pull t.PP.isLB m.φ
   let u₁ := OrthoMetric.fibreUnif m.cart Φ.e Φ.lat Φ.fr Φ.e_add Φ.e_onto Φ.e_ker
     (discrete_of_im_int Φ.lat Φ.Hm Φ.span pos fun a ha b hb => Φ.herm_im_int ha hb) Φ.span
     (fun U f => by simpa only [Set.mem_univ, true_and] using Φ.hol U f) Φ.fr_hol Φ.fr_ne Φ.fr_g

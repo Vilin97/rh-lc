@@ -40,6 +40,14 @@ theorem hasGen_of_point {X Y : Scheme.{0}} {k : Type} [Field k] (p : Y ⟶ Sp k)
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H}
 
+#check PrimNorm.ptCls
+#check PrimNorm.diff₂_ptCls_adj
+#check PrimNorm.chartDivIn
+#check PrimNorm.chartDivOut
+#check GlobalTheory.CechPic.cls_eq_iff
+#check CechPic.cls_eq_iff
+#check CechPic.cls_pull
+
 theorem lbIso_of_rosatiAdj {k : Type} [Field k] {A : Over (Sp k)} [GrpObj A] [IsCommMonObj A] {L : LB A.left}
     (hL : L.IsLB) {f g : A ⟶ A} (h : RosatiAdj A L f g) :
     LBIso (cubeLB A ![fst A A ≫ f, snd A A] L) (cubeLB A ![fst A A, snd A A ≫ g] L) := by

@@ -47,7 +47,11 @@ theorem dbarAt_conn : ∀ (n : ℕ) (r : Type) [Fintype r] [DecidableEq r] (G : 
   rw [e, Finset.sum_comm]
   simp only [dbarAt, dz, h, Finset.mul_sum]
   refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun a _ => ?_
-  rw [mul_smul_comm, dzb, eq_neg_of_add_eq_zero_left (ExteriorAlgebra.ι_add_mul_swap _ _), smul_neg, ← neg_smul]
+  rw [mul_smul_comm, dzb]
+  conv_lhs =>
+    rw [eq_neg_of_add_eq_zero_left (ExteriorAlgebra.ι_add_mul_swap
+      (R := ℂ) (M := Fin n ⊕ Fin n → ℂ) (Pi.single (Sum.inr b) 1) (Pi.single (Sum.inl a) 1)),
+      smul_neg, ← neg_smul]
   rfl
 
 end GlobalTheory.ChernCalc
