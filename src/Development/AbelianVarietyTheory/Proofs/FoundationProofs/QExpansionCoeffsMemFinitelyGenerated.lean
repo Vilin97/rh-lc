@@ -124,7 +124,7 @@ theorem qcoeff_finitelyGenerated : ∀ (Ω : Type) [Field Ω] (ε : Ω →+* ℂ
     simpa [PowerSeries.coeff_map] using this
   have hcoef : ∀ i, Q.coeff i = if i ∈ Finset.range (n + 1) then PowerSeries.mk (d i) else 0 := fun i => by
     simp only [hQdef, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial]
-    exact Finset.sum_ite_eq' _ _ _
+    simp [Finsupp.single_apply]
   have hQne : Q ≠ 0 := by
     intro h0
     have hn := hcoef n

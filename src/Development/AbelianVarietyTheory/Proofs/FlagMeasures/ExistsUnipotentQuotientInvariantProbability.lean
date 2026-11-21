@@ -100,7 +100,7 @@ theorem exists_prob [LocallyCompactSpace G] (Γ : Subgroup G) [Countable Γ]
   · have : Cᶜ ∩ D = ∅ := by
       ext y; simp only [Set.mem_inter_iff, Set.mem_compl_iff, Set.mem_empty_iff_false, iff_false, not_and]
       exact fun h1 h2 => h1 (hDC h2)
-    rw [Measure.smul_apply, Measure.restrict_apply hC.measurableSet.compl, this]
+    rw [smul_apply, Measure.restrict_apply hC.measurableSet.compl, this]
     simp
   · intro f hf g
     rw [integral_smul_measure, integral_smul_measure]
@@ -135,7 +135,7 @@ theorem exists_prob_subgroup [LocallyCompactSpace G] (N Γ : Subgroup G) (hN : I
     (Subtype.val ⁻¹' C) (hce.isCompact_preimage hC) (fun m => by
       obtain ⟨γ, h1, h2, h3⟩ := hcov m m.2
       exact ⟨⟨γ, h2⟩, h1, h3⟩)
-  refine ⟨ν.map Subtype.val, Measure.isProbabilityMeasure_map hemb.measurable.aemeasurable, ?_, ?_, ?_⟩
+  refine ⟨ν.map Subtype.val, (by letI := hν; infer_instance), ?_, ?_, ?_⟩
   · rw [hemb.map_apply]; exact hνC
   · rw [hemb.map_apply]
     have : (Subtype.val : N → G) ⁻¹' (N : Set G)ᶜ = ∅ := by

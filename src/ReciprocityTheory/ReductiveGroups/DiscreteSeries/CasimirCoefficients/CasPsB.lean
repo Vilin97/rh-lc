@@ -21,6 +21,8 @@ variable {n : ℕ}
 
 namespace CasPsB
 
+local notation "𝕄" => Fin n → Fin n → ℂ
+
 variable {ε : Fin n → Bool} {Λ : Fin n → ℝ}
 
 theorem hasFDerivAt_integral_K [CompactSpace (KG ε)] {E : Type*} [NormedAddCommGroup E]
@@ -74,7 +76,7 @@ theorem contDiff_lead' (i : ℕ) {m : ℕ∞ω} : ContDiff ℂ m (fun z : 𝕄 =
       rfl
     rw [e]
     exact ContDiff.sum fun σ _ => contDiff_const.mul
-      (contDiff_prod fun j _ => contDiff_apply_apply ℂ ℂ _ _)
+      (contDiff_prod fun j _ => contDiff_apply_apply ℂ _ _)
   · have e : (fun z : 𝕄 => lead i z) = fun _ => 0 := by
       funext z
       simp only [lead, dif_neg h]

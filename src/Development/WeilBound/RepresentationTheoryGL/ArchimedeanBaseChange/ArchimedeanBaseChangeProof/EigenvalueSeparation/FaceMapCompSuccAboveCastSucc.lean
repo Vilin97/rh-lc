@@ -61,7 +61,7 @@ def OrthogonalKeepingOperator : Prop := ∀ (E : Type) [Field E] [NumberField E]
         (∀ x ∈ C, conv D.μ (Φ x) (f k) = s k (x * a₀) • f k) ∧
         ∀ j, ∑ i, ∫ x, starRingEnd ℂ ((g j i : H E a b → ℂ) x) * f k i x ∂D.ν = 0
 
-def hull {N : ℕ} (S : Set (Sm E N)) : Submodule ℂ (Sm E N) := sInf {U | S ⊆ U ∧ IsStable U}
+def hull {N : ℕ} (S : Set (Sm E N)) : Submodule ℂ (Sm E N) := sInf {U | S ⊆ U ∧ _root_.GlobalTheory.CuspRep.IsStable U}
 
 def slices₁ {ι : Type} (f : ι → H E a b → ℂ) : Set (Sm E a) := {φ | ∃ i m₂, φ.1 = fun x => f i (x, m₂)}
 
@@ -77,7 +77,7 @@ def E3 : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a b : �
   (∀ φ ∈ slices₁ f, IsAutForm φ) → (∀ φ ∈ slices₂ f, IsAutForm φ) →
   (∀ τ, HasInfCharGL (Submodule.span ℂ (slices₁ f)) τ (m₁ τ)) →
   (∀ τ, HasInfCharGL (Submodule.span ℂ (slices₂ f)) τ (m₂ τ)) →
-  IsStable (hull (slices₁ f)) ∧ IsStable (hull (slices₂ f)) ∧
+  _root_.GlobalTheory.CuspRep.IsStable (hull (slices₁ f)) ∧ _root_.GlobalTheory.CuspRep.IsStable (hull (slices₂ f)) ∧
   (∀ φ ∈ hull (slices₁ f), IsAutForm φ) ∧ (∀ φ ∈ hull (slices₂ f), IsAutForm φ) ∧
     SpectralAccumulation.NonPos (hull (slices₁ f)) ∧ SpectralAccumulation.NonPos (hull (slices₂ f)) ∧
     SpectralAccumulation.CentIm (hull (slices₁ f)) ∧ SpectralAccumulation.CentIm (hull (slices₂ f)) ∧

@@ -40,15 +40,15 @@ variable {K : Type*} [Fintype K] {K' : Type*} [Fintype K'] (F : Type*) [Field F]
 def ProjContractStatement : Prop :=
   ∀ I' : IFamily F ι', IsFieldIntersection I' →
     ∀ (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (V' : Ideal (MRingOver F ι')) (e d : ℕ)
-      (L : Fin e → K → ℤ), IsBlockMap κ v → IsProjVarF V' e → IsProjVarF (imageVar v V') d →
+      (L : Fin e → K → ℤ), IsBlockMap κ v → IsProjVarF V' e → IsProjVarF (imageVar F v V') d →
       d < e → I' V' e (fun j => pullDeg κ (L j)) = 0
 
 def ProjDegStatement : Prop :=
   ∀ (I : IFamily F ι) (I' : IFamily F ι'), IsFieldIntersection I → IsFieldIntersection I' →
     ∀ (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (V' : Ideal (MRingOver F ι')) (e : ℕ)
       (L : Fin e → K → ℤ) (i' : ∀ k', ι' k'), IsBlockMap κ v → IsProjVarF V' e →
-      IsProjVarF (imageVar v V') e → IsChart V' i' →
-      I' V' e (fun j => pullDeg κ (L j)) = (fnDeg v V' i' : ℤ) * I (imageVar v V') e L
+      IsProjVarF (imageVar F v V') e → IsChart V' i' →
+      I' V' e (fun j => pullDeg κ (L j)) = (fnDeg v V' i' : ℤ) * I (imageVar F v V') e L
 
 end Projection
 

@@ -62,7 +62,7 @@ theorem hasStrictFDerivAt_expProd {d : ℕ} (b : Fin d → Matrix (Fin n) (Fin n
     HasStrictFDerivAt (fun s : Fin d → ℝ => (List.ofFn fun i => NormedSpace.exp (s i • b i)).prod) (lc b) 0 := by
   set f := fun s : Fin d → ℝ => (List.ofFn fun i => NormedSpace.exp (s i • b i)).prod with hfdef
   have hcd : ContDiff ℝ ∞ f := GlobalTheory.GardingVec.contDiff_expProd b
-  have hs : HasStrictFDerivAt f (fderiv ℝ f 0) 0 := hcd.contDiffAt.hasStrictFDerivAt (by simp)
+  have hs : HasStrictFDerivAt f (fderiv ℝ f 0) 0 := hcd.contDiffAt.hasStrictFDerivAt_fderiv (by simp)
   suffices e : fderiv ℝ f 0 = lc b by rwa [e] at hs
   have hD : HasFDerivAt f (fderiv ℝ f 0) 0 := hs.hasFDerivAt
   have hj : ∀ j : Fin d, fderiv ℝ f 0 (Pi.single j 1) = b j := by

@@ -71,10 +71,11 @@ theorem sum_primePowerParts_le :
   have hn2 : (2 : ℕ) ∉ ({q, d} : Finset ℕ) := by
     simp only [Finset.mem_insert, Finset.mem_singleton]; omega
   have hprod : ∏ l ∈ n.primeFactors, f l = n := by
-    conv_rhs => rw [← Nat.factorization_prod_pow_eq_self hn.ne']
+    conv_rhs => rw [← Nat.prod_factorization_pow_eq_self hn.ne']
     rw [Finsupp.prod, Nat.support_factorization]
     refine Finset.prod_congr rfl fun p hp => ?_
     rw [Nat.factorization_def _ (Nat.prime_of_mem_primeFactors hp)]
+    simp [f, Nat.padicValNat_def]
   set s := n.primeFactors \ {2, q, d} with hs
   have hs2 : ∀ i ∈ s, 2 ≤ f i := fun i hi =>
     (Nat.prime_of_mem_primeFactors (Finset.mem_sdiff.1 hi).1).two_le.trans

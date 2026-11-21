@@ -121,8 +121,8 @@ theorem exists_short_coord {F : Type} [Field F] [NumberField F] [IsTotallyReal F
     rw [map_mul, map_mul, Real.norm_eq_abs, abs_mul, abs_mul_self]
     rwa [sq] at h4
   refine ⟨?_, fun k => ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [← hρc, Complex.norm_real, hqe, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hρc, Complex.norm_real, hqe, map_sum]
     refine (norm_sum_le _ _).trans ?_
     calc _ ≤ ∑ _k : ι, t ^ 2 := Finset.sum_le_sum fun k _ => key k
       _ = _ := by simp
@@ -178,7 +178,7 @@ theorem shortSmall (E : Type) [Field E] [NumberField E] [IsCMField E] (hfr : Fra
   letI : Module ℚ V := Module.compHom V (algebraMap ℚ E)
   have : IsScalarTower ℚ E V := IsScalarTower.of_compHom ℚ E V
   have : Module.Finite ℤ Λ := Module.Finite.iff_fg.2 hfg
-  have : IsAddTorsionFree V := .of_module_rat V
+  have : HasUniqueDiv V := .of_module_rat V
   have : Module.Free ℤ Λ := inferInstance
   let β := Module.Free.chooseBasis ℤ Λ
   let κ := Module.Free.ChooseBasisIndex ℤ Λ

@@ -114,7 +114,7 @@ private def Ker (N : MeasE E) (P : CuspSub E 2) (hI : ∀ φ ∈ P.V, ∀ y, Int
     rw [integral_const_mul, ha.2, mul_zero]⟩
 
 private theorem ker_stable (hD : DecE) (hR : RedE) (N : MeasE E) (hfin : N.μ N.D < ⊤) (P : CuspSub E 2) (hI) :
-    IsStable (Ker N P hI) := by
+    _root_.GlobalTheory.CuspRep.IsStable (Ker N P hI) := by
   intro o φ hφ
   refine ⟨P.stable o φ hφ.1, fun y => ?_⟩
   cases o with

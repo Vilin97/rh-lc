@@ -101,7 +101,8 @@ theorem flat_of_basis_mod_pow [IsNoetherianRing A] (B : Type*) [CommRing B] [IsN
     have := Submodule.mem_map_of_mem (f := TensorProduct.mk A M J (m s)) (h3 s)
     rw [Submodule.map_smul''] at this
     exact Submodule.smul_mono le_rfl le_top this
-  have h0 := Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := M ⊗[A] J) _ hI
+  have h0 := Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := M ⊗[A] J)
+    (I.map (algebraMap A B)) (by simpa only [Ideal.jacobson_bot] using hI)
   rw [← Submodule.mem_bot B, ← h0, Submodule.mem_iInf]
   intro n
   rw [← Ideal.map_pow, ← Submodule.restrictScalars_mem A, Ideal.smul_restrictScalars]

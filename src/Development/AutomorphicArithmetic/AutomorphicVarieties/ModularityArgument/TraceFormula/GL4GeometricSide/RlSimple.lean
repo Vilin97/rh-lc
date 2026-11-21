@@ -161,7 +161,7 @@ private theorem cpt_mem (N : Submodule ℂ (Sm E n))
 
 private theorem span_stable (N : Submodule ℂ (Sm E n)) (h1 : ∀ X, ∀ x ∈ N, lie E n X x ∈ N)
     (h2 : ∀ k : Kinf E n, ∀ x ∈ N, rt E n (infGL E n (Unitary.toUnits k)) x ∈ N) :
-    IsStable (Submodule.span ℂ {φ | ∃ g, ∃ x ∈ N, φ = finRep E n g x}) := by
+    _root_.GlobalTheory.CuspRep.IsStable (Submodule.span ℂ {φ | ∃ g, ∃ x ∈ N, φ = finRep E n g x}) := by
   intro o φ hφ
   refine Submodule.mem_comap.1 (Submodule.span_le.2 ?_ hφ)
   rintro _ ⟨g, x, hx, rfl⟩

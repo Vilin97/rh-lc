@@ -25,9 +25,9 @@ structure IsDiscreteWith (ω : HChar E) (V : Submodule ℂ (Sm E a)) : Prop wher
   central : ∀ z : Neutral.B1.Ideles E, ∀ φ ∈ V,
     rt E a (GeneralLinearGroup.scalar (Fin a) z) φ = ((ω.1 z : ℂˣ) : ℂ) • φ
   sqInt : ∀ φ ∈ V, IsSqInt fun g => ((‖φ.1 g‖ : ℝ) : ℂ)
-  stable : IsStable V
+  stable : _root_.GlobalTheory.CuspRep.IsStable V
   ne_bot : V ≠ ⊥
-  irred : ∀ W ≤ V, IsStable W → W = ⊥ ∨ W = V
+  irred : ∀ W ≤ V, _root_.GlobalTheory.CuspRep.IsStable W → W = ⊥ ∨ W = V
 
 
 variable (a) in

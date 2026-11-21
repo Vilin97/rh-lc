@@ -101,7 +101,7 @@ theorem l2_one_eq_integral_fundamentalDomain_div_volume {E : Type} [Field E] [Nu
     simp [I2.PT.ptN2, I2.HC, heR]
 
   have hqmp : MeasureTheory.Measure.QuasiMeasurePreserving ψR volume volume :=
-    ⟨ψR.continuous.measurable, MeasureTheory.Measure.absolutelyContinuous_isAddHaarMeasure _ _⟩
+    ⟨ψR.continuous.measurable.aemeasurable, MeasureTheory.Measure.absolutelyContinuous_isAddHaarMeasure _ _⟩
 
   have hfd0 : IsAddFundamentalDomain A (ψ ⁻¹' ZSpan.fundamentalDomain T.b) volume := by
     have h0 := ZSpan.isAddFundamentalDomain T.b (volume : Measure (I2.Vsp T.dim))

@@ -58,7 +58,7 @@ theorem contraction_wigMap :
   refine ⟨⟨⟨k, fun c => ∑ j, MvPolynomial.C ((Hpk k r *ᵥ B c) j) * MvPolynomial.X (Sum.inr j), a, ?_, ?_⟩,
     ?_, ?_, ?_⟩, ?_⟩
   · intro c
-    refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun j _ => ?_)
+    refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun j _ => ?_)
     refine (MvPolynomial.totalDegree_mul _ _).trans ?_
     rw [MvPolynomial.totalDegree_C, MvPolynomial.totalDegree_X]
   · intro ω

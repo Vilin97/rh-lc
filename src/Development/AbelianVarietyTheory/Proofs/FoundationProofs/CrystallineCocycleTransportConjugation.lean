@@ -16,7 +16,7 @@ namespace GlobalTheory.TwistedSelmerCompare
 theorem natCast_mem_maximalIdeal {l : ℕ} [Fact l.Prime] (O : Type) [CommRing O] [IsLocalRing O]
     [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] : (l : O) ∈ IsLocalRing.maximalIdeal O := by
   have h : ((IsLocalRing.maximalIdeal O).comap (algebraMap ℤ_[l] O)).IsMaximal :=
-    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal _
+    Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := ℤ_[l]) _
   have h2 := IsLocalRing.eq_maximalIdeal h
   have h3 : (l : ℤ_[l]) ∈ IsLocalRing.maximalIdeal ℤ_[l] := by
     rw [PadicInt.maximalIdeal_eq_span_p]; exact Ideal.mem_span_singleton_self _

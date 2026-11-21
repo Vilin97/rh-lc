@@ -221,7 +221,8 @@ theorem isotypic_of_quadratic_relation : ∀ {E : Type} [Field E] [IsAlgClosed E
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum, map_one]
     simp only [hyP]
-    ext i j; fin_cases i <;> fin_cases j <;> simp [Fin.sum_univ_two, Matrix.single_apply, Matrix.one_apply]
+    rw [Fin.sum_univ_two]
+    ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.single_apply, Matrix.one_apply]
   have hσ : ∀ g, σ g = ∑ a, ∑ b, (R g) a b • P a b := by
     intro g
     have e : σ g = Φ (MonoidAlgebra.single g 1) := by rw [hΦ, one_smul]

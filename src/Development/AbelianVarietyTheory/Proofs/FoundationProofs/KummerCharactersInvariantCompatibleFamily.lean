@@ -71,10 +71,10 @@ theorem GlobalTheory.KZ.H3.kum_family : ∀ (Ω : Type) [Field Ω] [Algebra ℚ 
     have h := (MvPolynomial.isHomogeneous_C (Fin 2) (χ n i δ)).mul ((mon_expand (ZMod (l ^ n)) w).2.2.1 i)
     rwa [zero_add] at h
   · intro n
-    obtain ⟨M, hM, hQ⟩ := common_level
+    obtain ⟨M, hM, hQ⟩ := GlobalTheory.KZ.H3.KumFam.common_level (k := w + 1)
       (fun i M => ∀ δ ∈ CongruenceSubgroup.Gamma M, ∀ δ' ∈ CongruenceSubgroup.Gamma M,
         χ n i (δ * δ') = χ n i δ + χ n i δ')
-      (fun _ _ _ hd hq δ hδ δ' hδ' => hq δ (gamma_dvd hd hδ) δ' (gamma_dvd hd hδ'))
+      (fun _ _ _ hd hq δ hδ δ' hδ' => hq δ (GlobalTheory.KZ.H3.KumFam.gamma_dvd hd hδ) δ' (GlobalTheory.KZ.H3.KumFam.gamma_dvd hd hδ'))
       (fun i => GlobalTheory.T.kummerCharacter_additive_on_congruence Ω ε X l n (c i) (χ n i) (hχ n i))
     refine ⟨M, hM, fun δ hδ δ' hδ' => ?_⟩
     rw [← Finset.sum_add_distrib]
@@ -93,13 +93,13 @@ theorem GlobalTheory.KZ.H3.kum_family : ∀ (Ω : Type) [Field Ω] [Algebra ℚ 
         have h1 := GlobalTheory.T.isKummerCharacterAtLevel_integral_matrix_conj Ω ε X l n γ (c k) (χ n k) hdet (hχ n k)
         rw [Betti.toGQ_sl] at h1
         exact GlobalTheory.T.isKummerCharacterAtLevel_padicInt_smul Ω ε X l n _ _ _ h1
-      have hs := kum_sum X l n Finset.univ _ _ (fun k _ => hk k)
+      have hs := GlobalTheory.KZ.H3.KumFam.kum_sum X l n Finset.univ _ _ (fun k _ => hk k)
       rw [← hinv γ hγ i] at hs
       refine (GlobalTheory.T.isKummerCharacterAtLevel_add_zero_congr Ω ε X l n).2.2 _ _ _ hs ⟨1, one_pos, fun δ _ => ?_⟩
       rw [Finset.sum_apply]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [GlobalTheory.T.integralConjugateSL2Int_laws.2.1, map_intCast]
-    obtain ⟨M, hM, hQ⟩ := near_fin _ _ fun i => GlobalTheory.T.kummerCharacters_eqOn_principalCongruence Ω ε X l n (c i) _ _ (hK i) (hχ n i)
+    obtain ⟨M, hM, hQ⟩ := GlobalTheory.KZ.H3.KumFam.near_fin (k := w + 1) _ _ fun i => GlobalTheory.T.kummerCharacters_eqOn_principalCongruence Ω ε X l n (c i) _ _ (hK i) (hχ n i)
     refine ⟨M, hM, fun δ hδ => ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_mul, MvPolynomial.algHom_C, (mon_expand (ZMod (l ^ n)) w).1, Finset.mul_sum]
@@ -110,11 +110,11 @@ theorem GlobalTheory.KZ.H3.kum_family : ∀ (Ω : Type) [Field Ω] [Algebra ℚ 
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, MvPolynomial.algebraMap_eq]; ring
   · intro n
-    obtain ⟨M, hM, hQ⟩ := near_fin _ _ fun i => GlobalTheory.T.kummerCharacters_eqOn_principalCongruence Ω ε X l n (c i) _ _
+    obtain ⟨M, hM, hQ⟩ := GlobalTheory.KZ.H3.KumFam.near_fin (k := w + 1) _ _ fun i => GlobalTheory.T.kummerCharacters_eqOn_principalCongruence Ω ε X l n (c i) _ _
       (GlobalTheory.T.isKummerCharacterAtLevel_succ_reduce Ω ε X l n (c i) (χ (n + 1) i) (hχ (n + 1) i)) (hχ n i)
     refine ⟨M, hM, fun δ hδ => ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_mul, MvPolynomial.map_C, map_mon]
+      simp only [map_sum, map_mul, MvPolynomial.map_C, GlobalTheory.KZ.H3.KumFam.map_mon]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← hQ δ hδ i]
   · intro n i

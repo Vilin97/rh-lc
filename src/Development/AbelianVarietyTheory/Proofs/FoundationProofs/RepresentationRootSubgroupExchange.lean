@@ -59,8 +59,7 @@ theorem root_exchange : ∀ (G : Type) [Group G] [Fintype G] (M : Type) [AddComm
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, (hvi i).2 y hy]
     set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sum, ← hg]
-      simp only [map_smul]
+      simpa only [map_sum, map_smul] using hg
   · choose f hf g hg hfg hχ using hBX b hb
     let F : X → X := fun x => ⟨f x x.2, hf x x.2⟩
     have hF : Function.Injective F := by

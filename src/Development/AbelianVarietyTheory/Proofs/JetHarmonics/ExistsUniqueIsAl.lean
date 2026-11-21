@@ -120,7 +120,7 @@ theorem unitAt_mul {n : ℕ} {R : Type} [CommRing R] [Algebra O R] (hR : (p : R)
 theorem unitAt_scale {n : ℕ} {R : Type} [CommRing R] [Algebra O R] (hR : (p : R) ^ n = 0)
     (a : O) (x z : LieG G) (h : z.1 = ptMap (dualScale a) ≫ x.1) :
     (unitAt χ hR z).snd = algebraMap O R a * (unitAt χ hR x).snd := by
-  have h1 : scale O (algebraMap O R a) ≫ lift hR x = lift hR z := by
+  have h1 : scale (O := O) (algebraMap O R a) ≫ lift hR x = lift hR z := by
     refine eq_lift hR z ?_
     rw [Category.assoc, lift_ι, bc, bc, h, ← Category.assoc, ← Category.assoc, scale,
       ptMap_comp_ptMap, ptMap_comp_ptMap]

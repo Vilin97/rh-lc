@@ -234,13 +234,16 @@ theorem integrable_triple {σ : Mat k r → (H →L[ℂ] H)} {w : H} {a : ℝ} {
       ((Matrix.of q.1.1 : Mat k r) ∈ Sset k r z ∧ (Matrix.of q.1.2 : Mat k r) ∈ Sset k r z') ∧
         (Matrix.of q.2 : Mat k r) ∈ GG k r} :=
     ((hSc.2.1.preimage c1).inter (hSc'.2.1.preimage c2)).inter (hG.2.1.preimage c3)
+  let K : Set ((Mt k r × Mt k r) × Mt k r) := {q |
+    ((Matrix.of q.1.1 : Mat k r) ∈ Sset k r z ∧ (Matrix.of q.1.2 : Mat k r) ∈ Sset k r z') ∧
+      (Matrix.of q.2 : Mat k r) ∈ GG k r}
   refine hmaj.mono' (aesm_of_continuousOn hcl hK ?_) ?_
-  · exact (((continuousOn_coef hσ w w₀).comp (c1.matrix_mul c3).continuousOn
-        fun q hq => hG.2.2.2.1 _ (hSc.1 hq.1.1) _ hq.2).mul ((continuousOn_coef hσ w w₀').comp
+  · exact (((continuousOn_coef hσ w w₀).comp (s := K) (c1.matrix_mul c3).continuousOn
+        fun q hq => hG.2.2.2.1 _ (hSc.1 hq.1.1) _ hq.2).mul ((continuousOn_coef hσ w w₀').comp (s := K)
         ((c2.matrix_mul continuous_const).matrix_mul c3).continuousOn
         fun q hq => hG.2.2.2.1 _ (hG.2.2.2.1 _ (hSc'.1 hq.1.2) _ hγi) _ hq.2).star).smul
-      (continuous_rankOneOperator.comp_continuousOn ((hf.comp c1.continuousOn fun q hq => hq.1.1).prodMk
-        (hf'.comp c2.continuousOn fun q hq => hq.1.2)))
+      (continuous_rankOneOperator.comp_continuousOn ((hf.comp (s := K) c1.continuousOn fun q hq => hq.1.1).prodMk
+        (hf'.comp (s := K) c2.continuousOn fun q hq => hq.1.2)))
   · filter_upwards [hK] with q hq
     obtain ⟨⟨hs, hs'⟩, hx⟩ := hq
     have hb1 := hΦb γ rfl q.1 hs hs'

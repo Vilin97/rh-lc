@@ -27,7 +27,8 @@ theorem isCommMonObj_of_dominant {S S' : Scheme.{0}} {f : S' ⟶ S} [QuasiCompac
     rw [lift_braiding_hom_assoc]
     exact Over.OverMorphism.ext ((h.2 T y x _ _ rfl rfl).trans
       ((congrArg (fun z => z.left ≫ φ) (_root_.mul_comm y x)).trans (h.2 T x y _ _ rfl rfl).symm))
-  refine ⟨ExtUnique.over_hom_ext_of_isPullback (IsPullback.of_hasPullback (A ⊗ A).hom f) ?_⟩
+  refine ⟨?_⟩
+  refine ExtUnique.over_hom_ext_of_isPullback (IsPullback.of_hasPullback (A ⊗ A).hom f) ?_
   exact congrArg (fun z => z.left) (key (Over.mk (pullback.snd (A ⊗ A).hom f))
     (Over.homMk (pullback.fst (A ⊗ A).hom f) (by simpa using pullback.condition)))
 

@@ -49,7 +49,7 @@ lemma torus_lipschitz_l2_bound {G ι : Type} [Fintype ι] [TopologicalSpace G] [
     intro g
     obtain ⟨y, hy, hDg⟩ := hD g
     set F : ℝ → ℂ := fun t => ∑ i, (y i : ℂ) * Φ i t g with hF
-    have hFc : Continuous F := continuous_finset_sum _ (fun i _ =>
+    have hFc : Continuous F := continuous_finsetSum _ (fun i _ =>
       continuous_const.mul ((hΦ i).comp (continuous_id.prodMk continuous_const)))
     have hFs : Continuous fun u : ℝ => F (s * u) := hFc.comp (continuous_const.mul continuous_id)
     have hD' : D g = s • ∫ u in (0:ℝ)..1, F (s * u) := by
@@ -74,7 +74,7 @@ lemma torus_lipschitz_l2_bound {G ι : Type} [Fintype ι] [TopologicalSpace G] [
         _ ≤ M * ∑ i, ‖Φ i (s * u) g‖ ^ 2 := mul_le_mul_of_nonneg_right hy a3
     have h3 : ∫ u in (0:ℝ)..1, ‖F (s * u)‖ ^ 2 ≤ ∫ u in (0:ℝ)..1, M * ∑ i, ‖Φ i (s * u) g‖ ^ 2 :=
       intervalIntegral.integral_mono_on zero_le_one ((hFs.norm.pow 2).intervalIntegrable 0 1)
-        ((continuous_const.mul (continuous_finset_sum _ (fun i _ => ((hΦc i g).norm.pow 2)))).intervalIntegrable 0 1)
+        ((continuous_const.mul (continuous_finsetSum _ (fun i _ => ((hΦc i g).norm.pow 2)))).intervalIntegrable 0 1)
         (fun u _ => h2 u)
     have h4 : ∫ u in (0:ℝ)..1, M * ∑ i, ‖Φ i (s * u) g‖ ^ 2 =
         M * ∑ i, ∫ u in (0:ℝ)..1, ‖Φ i (s * u) g‖ ^ 2 := by
@@ -139,7 +139,7 @@ lemma torus_lipschitz_l2_bound {G ι : Type} [Fintype ι] [TopologicalSpace G] [
           · intro u hu; exact (hB i (s * u) (hsu u hu)).2
         _ = B i := by simp
   have hg_int : Integrable (fun g => M * s ^ 2 * ∑ i, q i g) μ :=
-    (integrable_finset_sum _ (fun i _ => (hq i).1)).const_mul _
+    (integrable_finsetSum _ (fun i _ => (hq i).1)).const_mul _
   calc ∫ g, β g * ‖D g‖ ^ 2 ∂μ ≤ ∫ g, M * s ^ 2 * ∑ i, q i g ∂μ :=
         integral_mono_of_nonneg (Filter.Eventually.of_forall (fun g => mul_nonneg (hβ0 g) (sq_nonneg _)))
           hg_int (Filter.Eventually.of_forall hpt)

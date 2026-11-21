@@ -21,7 +21,7 @@ theorem UpperTheory.ConvolutionTheory.R2.irr :
   intro F E _ _ _ _ _ _ _ D W M π hreg h0 hne
   have hreg' := hreg
   choose m hm _ using hreg'
-  have hs : IsStable (span W M π) := UpperTheory.ConvolutionTheory.R2.stable F E D W M π
+  have hs : _root_.GlobalTheory.CuspRep.IsStable (span W M π) := UpperTheory.ConvolutionTheory.R2.stable F E D W M π
   have hc : ∀ Φ ∈ span W M π, IsCuspForm Φ := fun Φ hΦ =>
     ⟨UpperTheory.ConvolutionTheory.R2.aut F E D W M π hreg Φ hΦ, (UpperTheory.ConvolutionTheory.R2.cusp F E D W M π h0 Φ hΦ).1⟩
   have hle : span W M π ≤ UpperTheory.V.Cj.S.CI 2 fun τ => m (InfinitePlace.mk (τ.comp (algebraMap F E))) := fun Φ hΦ =>

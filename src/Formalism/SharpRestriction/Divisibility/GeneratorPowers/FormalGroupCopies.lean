@@ -12,12 +12,12 @@ noncomputable section
 namespace Formalism.MainNotions.ModuliIntegralCharts.H1.FormalGroupCopies
 
 open MvPowerSeries Formalism.L2.Pj ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ
-open Formalism.MainNotions.ModuliIntegralCharts.H1.FormalGroupOnCopies Formalism.MainNotions.ModuliIntegralCharts.H1.PartialDerivativeExponent
+open Formalism.MainNotions.ModuliIntegralCharts.H1.PartialDerivativeExponent
 
 variable {R : Type} [CommRing R] {d n : ℕ}
 
 theorem dofN_mul_left (F : Fin d → PS R 2 d) (b : Fin n) (u : Fin d → R) (A B : PS R n d)
-    (hA : ∀ j, pderiv R (b, j) A = 0) : DofN F b u (A * B) = A * DofN F b u B := by
+    (hA : ∀ j, pderiv (R := R) (b, j) A = 0) : DofN F b u (A * B) = A * DofN F b u B := by
   unfold DofN
   rw [Finset.mul_sum]
   refine Finset.sum_congr rfl (fun j _ => ?_)
@@ -66,6 +66,6 @@ end Formalism.MainNotions.ModuliIntegralCharts.H1.FormalGroupCopies
 namespace Formalism.MainNotions.ModuliIntegralCharts.H1
 
 open MvPowerSeries Formalism.L2.Pj ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ
-open Formalism.MainNotions.ModuliIntegralCharts.H1.FormalGroupOnCopies Formalism.MainNotions.ModuliIntegralCharts.H1.PartialDerivativeExponent Formalism.MainNotions.ModuliIntegralCharts.H1.FormalGroupCopies
+open Formalism.MainNotions.ModuliIntegralCharts.H1.PartialDerivativeExponent Formalism.MainNotions.ModuliIntegralCharts.H1.FormalGroupCopies
 
 end Formalism.MainNotions.ModuliIntegralCharts.H1

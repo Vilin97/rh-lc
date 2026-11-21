@@ -26,7 +26,7 @@ variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
   {μ : Measure (GA E a)} [μ.IsHaarMeasure] [μ.IsMulRightInvariant]
 
 theorem mem_of_stable {H : Submodule ℂ (L2 (latticeGL E a) μ)} (hH : H ≤ L2cusp μ)
-    (hi : IsIrredSubrep (R (latticeGL E a) μ) H) (W : Submodule ℂ (Sm E a)) (hs : IsStable W) (h0 : W ≠ ⊥)
+    (hi : IsIrredSubrep (R (latticeGL E a) μ) H) (W : Submodule ℂ (Sm E a)) (hs : _root_.GlobalTheory.CuspRep.IsStable W) (h0 : W ≠ ⊥)
     (hW : ∀ φ ∈ W, IsCuspForm φ ∧ (∀ t g, φ.1 (splitCentre E a t * g) = φ.1 g) ∧
       ∃ h : MemL2Quotient (latticeGL E a) μ φ.1, h.toL2 ∈ H) (φ : Sm E a)
     (hφ : IsCuspForm φ ∧ (∀ t g, φ.1 (splitCentre E a t * g) = φ.1 g) ∧
@@ -75,7 +75,7 @@ theorem cuspFiniteVectorsGL : GlobalTheory.Published.CuspFiniteVectorsGL := by
         ae_quotMeasure_iff.1 (Lp.coeFn_zero ℂ 2 _)).symm))
     · rw [Submodule.bot_coe]
       exact isClosed_singleton
-  have hirr : ∀ W ≤ V, IsStable W → W = ⊥ ∨ W = V := fun W hWV hWs => by
+  have hirr : ∀ W ≤ V, _root_.GlobalTheory.CuspRep.IsStable W → W = ⊥ ∨ W = V := fun W hWV hWs => by
     by_cases h0 : W = ⊥
     · exact Or.inl h0
     · exact Or.inr (le_antisymm hWV fun φ hφ =>

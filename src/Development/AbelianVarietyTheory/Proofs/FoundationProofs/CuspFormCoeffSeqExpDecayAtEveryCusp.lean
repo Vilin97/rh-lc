@@ -35,7 +35,7 @@ theorem cusp_decay : ∀ (k L N : ℕ) (ε : DirichletCharacter ℂ N) (a : ℕ 
   obtain ⟨δ, hδ, hd⟩ := (CuspFormClass.zero_at_infty (CuspForm.translate f γ)).petersson_exp_decay_left (k : ℤ) _
       (CuspForm.translate f γ)
   obtain ⟨D, hD, h⟩ := hd.exists_pos
-  rw [Asymptotics.IsBigOWith, atImInfty, eventually_comap, eventually_atTop] at h
+  rw [Asymptotics.isBigOWith_iff, atImInfty, eventually_comap, eventually_atTop] at h
   obtain ⟨y, hy⟩ := h
   have hC₀0 : 0 ≤ C₀ := le_trans (by positivity) (hC₀ UpperHalfPlane.I)
   refine ⟨max D (C₀ * Real.exp (δ * |y|)), δ, hδ, fun τ hτ => ?_⟩

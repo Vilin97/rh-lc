@@ -163,6 +163,7 @@ theorem idx_ne_zero (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) :
   have hL := (isLatMod_top_bot_iff L).1 hU.1
   have hM : IsLatMod (L ⊓ rs (𝓞 K) U) U ⊥ := by
     refine ⟨⟨L ⊓ rs (𝓞 K) U, ?_, by simp⟩, span_inf hL U⟩
+    have : Module.Finite (𝓞 K) L := Module.Finite.iff_fg.mpr hL.fg
     have : IsNoetherian (𝓞 K) L := inferInstance
     have : IsNoetherian (𝓞 K) ↥(L ⊓ rs (𝓞 K) U) := isNoetherian_of_le inf_le_left
     rw [← Module.Finite.iff_fg]

@@ -48,9 +48,7 @@ theorem frac_nonempty : ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosur
   have hec : ∀ x, e (cst x) = algebraMap Ω (HahnSeries ℚ Ω) x := by
     intro x
     refine huniq _ _ _ (he_exp (cst x)) ?_
-    convert hC x using 1
-    · rfl
-    · simp [HahnSeries.algebraMap_apply']
+    simpa [hcst, HahnSeries.algebraMap_apply'] using hC x
 
   have hsl := fun g : GQ => GlobalTheory.T.exists_ringEquiv_compGLTwoPosRatFun ε.range g hexp_mem
   choose σ hσ using hsl

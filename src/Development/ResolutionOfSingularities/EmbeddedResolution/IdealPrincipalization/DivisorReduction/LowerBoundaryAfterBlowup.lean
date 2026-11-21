@@ -63,30 +63,22 @@ private theorem restrictIdeal_strictTransform_id {X : Scheme.{u}} [IsLocallyNoet
     Scheme.IdealSheafData.comap_id]
 
 private theorem map_eq_self_of_getElem {α : Type u} (g : α → α) : ∀ l : List α,
-    (∀ (i : ℕ) (h : i < l.length), g (l[i]'h) = l[i]'h) → l.map g = l
-  | [], _ => rfl
-  | a :: t, h => by
-      have h0 : g a = a := h 0 (Nat.succ_pos _)
-      have ht : t.map g = t :=
-        map_eq_self_of_getElem g t (fun i hi => h (i + 1) (Nat.succ_lt_succ hi))
-      rw [List.map_cons, h0, ht]
+    (∀ (i : ℕ) (h : i < l.length), g (l[i]'h) = l[i]'h) → l.map g = l := by
+  intro l h
+  refine List.ext_getElem (List.length_map _) ?_
+  intro i _ hi
+  simpa only [List.getElem_map] using h i hi
 
 private theorem eraseIdx_map_eq {α : Type u} (g : α → α) : ∀ (l : List α) (j : ℕ),
     (∀ (i : ℕ) (h : i < l.length), i ≠ j → g (l[i]'h) = l[i]'h) →
-    (l.map g).eraseIdx j = l.eraseIdx j
-  | [], _, _ => rfl
-  | _ :: t, 0, h => by
-      have ht : t.map g = t :=
-        map_eq_self_of_getElem g t
-          (fun i hi => h (i + 1) (Nat.succ_lt_succ hi) (Nat.succ_ne_zero i))
-      show t.map g = t
-      exact ht
-  | a :: t, (m + 1), h => by
-      have h0 : g a = a := h 0 (Nat.succ_pos _) (Nat.succ_ne_zero m).symm
-      have ht := eraseIdx_map_eq g t m
-        (fun i hi hij => h (i + 1) (Nat.succ_lt_succ hi) (fun e => hij (by omega)))
-      show g a :: (t.map g).eraseIdx m = a :: t.eraseIdx m
-      rw [h0, ht]
+    (l.map g).eraseIdx j = l.eraseIdx j := by
+  intro l j h
+  rw [List.eraseIdx_map]
+  apply map_eq_self_of_getElem
+  intro k hk
+  obtain ⟨i, hi, hij, heq⟩ := List.mem_eraseIdx_iff_getElem.mp (List.getElem_mem hk)
+  rw [← heq]
+  exact h i hi hij
 
 theorem strictTransform_comap_boundary_of_ne (T : MarkedIdealWithBoundary.{u}) (hV : T.IsAdmissible) (j : ℕ)
     (hj : j < T.boundary.length) (i : ℕ) (hi : i < T.boundary.length) (hij : i ≠ j) :

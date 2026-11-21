@@ -139,7 +139,7 @@ theorem act_right {ψ : Sm E (r + s)} (hψ : ψ ∈ U) (ℓ : Sm E s) (m₁ : GA
     rw [upd1, ← CapFactor.lev_eq_leviEmb]
     rfl
 
-theorem LS_stable : IsStable (LS U T) := by
+theorem LS_stable : _root_.GlobalTheory.CuspRep.IsStable (LS U T) := by
   intro o φ hφ
   induction hφ using Submodule.span_induction with
   | mem x hx =>
@@ -150,7 +150,7 @@ theorem LS_stable : IsStable (LS U T) := by
   | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ a hx
 
-theorem RS_stable : IsStable (RS U T) := by
+theorem RS_stable : _root_.GlobalTheory.CuspRep.IsStable (RS U T) := by
   intro o φ hφ
   induction hφ using Submodule.span_induction with
   | mem x hx =>

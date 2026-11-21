@@ -86,7 +86,7 @@ theorem dLinSt (hR : RepSt) : DLinSt := by
   obtain ⟨ψ', hψ', e'⟩ := h'.2 1
   set c := tcoord hx w hw with hc
   let l : JetR R (Fin 1 × Fin d) 1 →ₐ[R] DualNumber R :=
-    jetLift R (RingHom.ker (fstD R)) kerD_sq (fun p => TrivSqZeroExt.inr (c p.2)) (fun _ => inr_mem_kerD _)
+    jetLift (R := R) (RingHom.ker (fstD R)) kerD_sq (fun p => TrivSqZeroExt.inr (c p.2)) (fun _ => inr_mem_kerD _)
   have hl : ∀ p, l (zR 1 p) = TrivSqZeroExt.inr (c p.2) := fun p => jetLift_zR _ _ _ _ p
   have e1 : l.comp ψ₀ = dualLift c := jet_ext fun j => by
     rw [AlgHom.comp_apply, hψ₀, dualLift_zR]

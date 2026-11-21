@@ -78,7 +78,7 @@ theorem sliceU_of_noLog2 (hNL : NoLog) : SliceU := by
       smul_mem' := fun b φ hφ => ⟨U.smul_mem b hφ.1, fun t g => by
         simp only [map_smul, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, hφ.2 t g]
         ring⟩ }
-  have hWst : IsStable W := by
+  have hWst : _root_.GlobalTheory.CuspRep.IsStable W := by
     rintro o ψ ⟨hψ, he⟩
     refine ⟨hU.1 o ψ hψ, fun t g => ?_⟩
     have e1 : ltS (aT E (r + s) r t) (T ψ) = Complex.exp (c * t) • T ψ := Subtype.ext (funext fun g => he t g)

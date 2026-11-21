@@ -38,9 +38,9 @@ def IsSqInt (φ : GA E a → ℂ) : Prop :=
 structure IsDiscrete (V : Submodule ℂ (Sm E a)) : Prop where
   aut : ∀ φ ∈ V, IsAutForm φ
   sqInt : ∀ φ ∈ V, IsSqInt φ.1
-  stable : IsStable V
+  stable : _root_.GlobalTheory.CuspRep.IsStable V
   ne_bot : V ≠ ⊥
-  irred : ∀ W ≤ V, IsStable W → W = ⊥ ∨ W = V
+  irred : ∀ W ≤ V, _root_.GlobalTheory.CuspRep.IsStable W → W = ⊥ ∨ W = V
 
 def IsLocCompGL (V : Submodule ℂ (Sm E a)) (w : HeightOneSpectrum (𝓞 E))
     (σ : SmIrr (GL (Fin a) (w.adicCompletion E))) : Prop :=

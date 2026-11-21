@@ -64,7 +64,7 @@ theorem det_one_add_patMat (X : PatIdx T → F) : (1 + patMat F T X).det = 1 := 
   refine Finset.prod_eq_one fun a _ => ?_
   have : (1 + patMat F T X).toSquareBlock γ a = 1 := by
     ext i j
-    simp only [Matrix.toSquareBlock_def, Matrix.of_apply, Matrix.add_apply, one_apply]
+    simp only [Matrix.toSquareBlock_def, Matrix.of_apply, Matrix.add_apply, Matrix.one_apply]
     have hij : ¬ T i j := fun h => by
       have := hT _ _ h
       rw [i.2, j.2] at this
@@ -143,7 +143,7 @@ theorem mem_integralGL_iff_patCoord {g : GL (Fin n) F} (hg : g ∈ U) :
       intro i j
       by_cases hij : T i j
       · exact h ⟨(i, j), hij⟩
-      · rw [(hU g).1 hg i j hij, one_apply]
+      · rw [(hU g).1 hg i j hij, Matrix.one_apply]
         split_ifs
         · exact one_mem _
         · exact zero_mem _

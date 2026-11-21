@@ -59,10 +59,10 @@ theorem not_forall_two_liesOver (K M : Type) [Field K] [NumberField K] [Field M]
     have hg := ((GlobalTheory.countable_ideal_and_summable_absNorm_rpow M).2 s hs).2
     have h0 := hf.tsum_subtype_add_tsum_subtype_compl S
     have h1 : ∑' v : S, ((Ideal.absNorm v.1.asIdeal : ℕ) : ℝ) ^ (-s) ≤ c := by
-      refine (hf.subtype S).tsum_le_tsum (fun v => ?_) hS
+      refine (hf.subtype (fun v => v ∈ S)).tsum_le_tsum (fun v => ?_) hS
       rw [← Real.rpow_neg_one]
       exact Real.rpow_le_rpow_of_exponent_le (one_le_absNorm _) (by linarith)
-    have hT := (hf.subtype (Sᶜ : Set _)).hasSum
+    have hT := (hf.subtype (fun v => v ∈ Sᶜ)).hasSum
     have hsum : HasSum ((fun Q : HeightOneSpectrum (𝓞 M) =>
         ((Ideal.absNorm Q.asIdeal : ℕ) : ℝ) ^ (-s)) ∘ i)
         ((∑' v : (Sᶜ : Set _), ((Ideal.absNorm v.1.asIdeal : ℕ) : ℝ) ^ (-s)) +

@@ -21,7 +21,7 @@ noncomputable section
 namespace PositivityTheory.Rg.BcB.SpectralAccumulation.FiniteDiscreteTypes
 
 theorem isoV_symm {E : Type} [Field E] [NumberField E] [IsCMField E] {N : ℕ} {V V' : Submodule ℂ (Sm E N)}
-    (hV : IsStable V) (h : IsoV V V') : IsoV V' V := by
+    (hV : _root_.GlobalTheory.CuspRep.IsStable V) (h : IsoV V V') : IsoV V' V := by
   obtain ⟨T, hT⟩ := h
   refine ⟨T.symm, fun o φ ψ e => ?_⟩
   have hm : act o (T.symm φ).1 ∈ V := hV o _ (T.symm φ).2

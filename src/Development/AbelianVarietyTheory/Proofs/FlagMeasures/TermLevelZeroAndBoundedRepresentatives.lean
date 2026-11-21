@@ -135,7 +135,8 @@ private lemma lev_le_iff_levelRep_good {b : S.V}
   rw [hset]
   constructor
   · intro hj
-    exact levelRep_good_mono (Nat.sInf_mem h) hj
+    exact levelRep_good_mono
+      (Nat.sInf_mem (s := {j | _root_.GlobalTheory.HL.LevelRep.Good S g g' j b}) h) hj
   · intro hj
     exact Nat.sInf_le hj
 

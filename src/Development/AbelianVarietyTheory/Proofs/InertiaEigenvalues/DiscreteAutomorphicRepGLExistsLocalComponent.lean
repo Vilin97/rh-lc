@@ -26,22 +26,22 @@ namespace GlobalTheory.DiscLocEx
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-def opD {V : Submodule ℂ (Sm E a)} (hV : IsStable V) (o : Op E a) : Module.End ℂ V := (act o).restrict (hV o)
+def opD {V : Submodule ℂ (Sm E a)} (hV : _root_.GlobalTheory.CuspRep.IsStable V) (o : Op E a) : Module.End ℂ V := (act o).restrict (hV o)
 
-def finPartD {V : Submodule ℂ (Sm E a)} (hV : IsStable V) : Representation ℂ (GL (Fin a) (Af E)) V :=
+def finPartD {V : Submodule ℂ (Sm E a)} (hV : _root_.GlobalTheory.CuspRep.IsStable V) : Representation ℂ (GL (Fin a) (Af E)) V :=
   GlobalTheory.PRep.sub (finRep E a) V fun k => hV (.fin k)
 
-def locRepD {V : Submodule ℂ (Sm E a)} (hV : IsStable V) (w : HeightOneSpectrum (𝓞 E)) :
+def locRepD {V : Submodule ℂ (Sm E a)} (hV : _root_.GlobalTheory.CuspRep.IsStable V) (w : HeightOneSpectrum (𝓞 E)) :
     Representation ℂ (GL (Fin a) (w.adicCompletion E)) V :=
   (finPartD hV).comp (locGL E a w)
 
-theorem isSmooth_finPartD {V : Submodule ℂ (Sm E a)} (hV : IsStable V) (ha : ∀ φ ∈ V, IsAutForm φ) :
+theorem isSmooth_finPartD {V : Submodule ℂ (Sm E a)} (hV : _root_.GlobalTheory.CuspRep.IsStable V) (ha : ∀ φ ∈ V, IsAutForm φ) :
     IsSmooth (finPartD hV) := fun φ => by
   convert (ha _ φ.2).level using 1
   ext k
   exact Subtype.ext_iff
 
-theorem isSmooth_locRepD {V : Submodule ℂ (Sm E a)} (hV : IsStable V) (ha : ∀ φ ∈ V, IsAutForm φ)
+theorem isSmooth_locRepD {V : Submodule ℂ (Sm E a)} (hV : _root_.GlobalTheory.CuspRep.IsStable V) (ha : ∀ φ ∈ V, IsAutForm φ)
     (w : HeightOneSpectrum (𝓞 E)) : IsSmooth (locRepD hV w) := fun φ =>
   (isSmooth_finPartD hV ha φ).preimage (CuspSub.continuous_locGL w)
 
@@ -75,7 +75,7 @@ theorem exists_scalarD {V : Submodule ℂ (Sm E a)} (hV : IsDiscrete V) {z : Mod
   · rw [← h] at hψ
     exact Module.End.mem_eigenspace_iff.1 hψ.2
 
-theorem nullPart_opD {V : Submodule ℂ (Sm E a)} (hV : IsStable V) (w : HeightOneSpectrum (𝓞 E))
+theorem nullPart_opD {V : Submodule ℂ (Sm E a)} (hV : _root_.GlobalTheory.CuspRep.IsStable V) (w : HeightOneSpectrum (𝓞 E))
     (K : Subgroup (GL (Fin a) (w.adicCompletion E)))
     (o : Op E a) {x : V} (hx : x ∈ nullPart (locRepD hV w) K) : opD hV o x ∈ nullPart (locRepD hV w) K := by
   cases o with
@@ -108,7 +108,7 @@ theorem eq_bot_of_fixedD {V : Submodule ℂ (Sm E a)} (hV : IsDiscrete V) (w : H
   · have h2 : nullPart (locRepD hV.stable w) K = ⊤ := hi (h1.trans (Submodule.map_subtype_top _).symm)
     exact absurd (eq_zero_of_mem_nullPart (isSmooth_locRepD hV.stable hV.aut w) hK hφ (h2 ▸ Submodule.mem_top)) h0
 
-def typePartD {V : Submodule ℂ (Sm E a)} (hV : IsStable V) (w : HeightOneSpectrum (𝓞 E))
+def typePartD {V : Submodule ℂ (Sm E a)} (hV : _root_.GlobalTheory.CuspRep.IsStable V) (w : HeightOneSpectrum (𝓞 E))
     (L : Subgroup (GL (Fin a) (Af E)))
     {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (Kinf E a) W) : Submodule ℂ V where
   carrier := {ψ | (∀ k ∈ L, GeneralLinearGroup.map (pLoc E w) k = 1 → finPartD hV k ψ = ψ) ∧
@@ -119,7 +119,7 @@ def typePartD {V : Submodule ℂ (Sm E a)} (hV : IsStable V) (w : HeightOneSpect
   smul_mem' := fun c _ hx => ⟨fun k h1 h2 => by rw [map_smul, hx.1 k h1 h2],
     fun g => Submodule.smul_mem _ c (hx.2 g)⟩
 
-theorem typePartD_act {V : Submodule ℂ (Sm E a)} (hV : IsStable V) (w : HeightOneSpectrum (𝓞 E))
+theorem typePartD_act {V : Submodule ℂ (Sm E a)} (hV : _root_.GlobalTheory.CuspRep.IsStable V) (w : HeightOneSpectrum (𝓞 E))
     (L : Subgroup (GL (Fin a) (Af E)))
     {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (Kinf E a) W) (g : GL (Fin a) (w.adicCompletion E))
     (x : V) (hx : x ∈ typePartD hV w L ρ) : locRepD hV w g x ∈ typePartD hV w L ρ := by

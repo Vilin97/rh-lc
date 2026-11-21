@@ -128,7 +128,12 @@ theorem exp_inj_upper {m : ℕ} {X Y : Matrix (Fin m) (Fin m) ℂ} (hX : ∀ i j
     ring
   have hc : ∀ Z : Matrix (Fin m) (Fin m) ℂ, (P Z).coeff 1 = Z i j := by
     intro Z
-    simp [P, Polynomial.coeff_monomial]
+    simp only [P, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial_apply]
+    rw [Finset.sum_eq_single 1]
+    · simp
+    · intro n hn hne
+      simp [hne]
+    · simp
   have : P X = P Y := by
     refine Polynomial.eq_of_infinite_eval_eq _ _ (Set.infinite_of_injective_forall_mem
       (f := fun t : ℕ => (t : ℂ)) Nat.cast_injective fun t => ?_)
@@ -557,7 +562,7 @@ theorem haarLie_eq_lebN : ∀ k r : ℕ,
   obtain ⟨c, -, -, hc⟩ := GlobalTheory.T.closedSubgroupBesselUnitary_haar_unique k r (Nset k r) _ _
     ⟨fun _ h => h.1, closed_N, (nSubgroup k r).1, (nSubgroup k r).2.1, (nSubgroup k r).2.2⟩ (GlobalTheory.T.flagUnipotentLebesgueMeasure_isHaarOn k r) hH
   have hT := GlobalTheory.T.tendsto_measure_image_ball_div_volume _ (Nset k r) _ 1 matGroup_N hH dens_one (EE k r) Phi (LL k r) Phi_zero
-    (Eventually.of_forall Phi_mem) fun i j => ⟨_, (smooth_Phi i j).contDiffAt.hasStrictFDerivAt (by simp),
+    (Eventually.of_forall Phi_mem) fun i j => ⟨_, (smooth_Phi i j).contDiffAt.hasStrictFDerivAt_fderiv (by simp),
       fun v => by rw [LL_val, unrealify_rl]; rfl⟩
   have hi : Function.Injective fun q : EE k r => (Matrix.of.symm (Phi q) : Mt k r) := fun q q' h =>
     (coord_homeo k r).1.injOn trivial trivial h

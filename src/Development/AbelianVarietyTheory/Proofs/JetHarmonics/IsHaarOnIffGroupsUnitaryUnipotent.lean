@@ -61,6 +61,9 @@ theorem isHaarOn_iff {k r : ℕ} {U : Set (B.Mat k r)} (hU : B2.IsClosedSubgroup
     refine { ne_zero := h0, conc := hc, left := hl, right := ?_, finite_compact := hfin }
     intro a ha
     rw [hcν, Measure.map_smul, hν.right a ha]
+    exact (show Continuous (B.rmulF a) from by
+      unfold B.rmulF
+      exact continuous_id.matrix_mul continuous_const).measurable.aemeasurable
   · intro h
     have : IsFiniteMeasureOnCompacts μ := ⟨fun K hK => h.finite_compact K hK⟩
     exact ⟨inferInstance, h.ne_zero, h.conc, h.left⟩

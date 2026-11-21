@@ -292,8 +292,9 @@ theorem eval_setBlock_diagonal {z : Fin p × Fin p → σ} (hz : Function.Inject
     intro s
     by_cases hs : ∃ w, z w = s
     · obtain ⟨⟨u, v⟩, rfl⟩ := hs
-      simp only [w, setBlock_apply hz, diagonal_apply, one_apply, of_apply]
-      split_ifs <;> simp
+      simp only [w, setBlock_apply hz]
+      change diagonal d u v = (1 : Matrix (Fin p) (Fin p) K) u v * d u
+      by_cases h : u = v <;> simp [diagonal_apply, Matrix.one_apply, h]
     · simp [w, setBlock_of_not _ _ hs]
   rw [eval_eq, eval_eq, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm => ?_

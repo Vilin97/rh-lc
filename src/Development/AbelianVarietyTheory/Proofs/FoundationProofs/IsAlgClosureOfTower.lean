@@ -21,6 +21,7 @@ variable {Ω : Type} [Field Ω]
 
 theorem eOm_spec [IsAlgClosed Ω] (ε : Ω →+* ℂ) (x : ℚ) :
     ε (eOm ε x) = Complex.exp (2 * Real.pi * Complex.I * (x : ℂ)) := by
+  haveI : CharZero Ω := ε.charZero
   obtain ⟨ζ, hζ⟩ := Api.exists_root_of_isAlgClosed ε x.den_pos
   have h : ∃ a, ε a = Complex.exp (2 * Real.pi * Complex.I * (x : ℂ)) := by
     refine ⟨ζ ^ x.num, ?_⟩
@@ -31,10 +32,12 @@ theorem eOm_spec [IsAlgClosed Ω] (ε : Ω →+* ℂ) (x : ℚ) :
   exact Function.invFun_eq h
 
 theorem eOm_add [IsAlgClosed Ω] (ε : Ω →+* ℂ) (x y : ℚ) : eOm ε (x + y) = eOm ε x * eOm ε y := by
+  haveI : CharZero Ω := ε.charZero
   apply Api.eOm_eq_of
   rw [map_mul, eOm_spec, eOm_spec, ← Complex.exp_add]; congr 1; push_cast; ring
 
 theorem eOm_intCast [IsAlgClosed Ω] (ε : Ω →+* ℂ) (m : ℤ) : eOm ε (m : ℚ) = 1 := by
+  haveI : CharZero Ω := ε.charZero
   apply Api.eOm_eq_of
   rw [map_one]
   have := Complex.exp_int_mul_two_pi_mul_I m

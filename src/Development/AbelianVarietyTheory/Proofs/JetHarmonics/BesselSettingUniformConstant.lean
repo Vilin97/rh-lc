@@ -45,7 +45,7 @@ theorem Ph_sum [FiniteDimensional ℂ Wp] (D : B.RealPlaceData k r Wp Wq) {m : �
       ∫ g, ∑ j, B.hsInner (B.rho D p (f i) (Matrix.of g)) (f j (Matrix.of g)) ∂D.μG :=
     fun i => (integral_finsetSum _ fun j _ => hint i j).symm
   simp only [e1]
-  rw [← integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => hint i j]
+  rw [← integral_finsetSum _ fun i _ => integrable_finsetSum _ fun j _ => hint i j]
   refine integral_congr_ae (hae.mono fun g hg => ?_)
   have h1 : B.rho D p F (Matrix.of g) = ∑ i, B.rho D p (f i) (Matrix.of g) := by
     unfold B.rho
@@ -70,7 +70,7 @@ theorem normSq_coef : Hyps → ∀ (k r : ℕ) (Wp : Type) [NormedAddCommGroup W
     (Formalism.FourierDecayAlt.P.B6.ae_inSS D).mono fun p hp => Ph_sum D F f hFg p hp fun i j =>
       (GlobalTheory.T.bessel_formal_degree_identity H k r ε mu R Wp Wq D dd hDS hdd (x i) (y i) (x j) (y j) (X i) (X j) p hp).1
   have hint : Integrable (B.Ph D F F) D.μSS :=
-    (integrable_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ => (hI i j).1).congr hPh.symm
+    (integrable_finsetSum _ fun i _ => integrable_finsetSum _ fun j _ => (hI i j).1).congr hPh.symm
   have hxi : ∀ i j, Integrable (fun p => B.xiTau D (1, 1) p * B.Ph D (f i) (f j) p) D.μSS := by
     intro i j
     refine Integrable.bdd_mul (c := 1) (hI i j).1 ?_ (Filter.Eventually.of_forall fun p => ?_)
@@ -90,7 +90,7 @@ theorem normSq_coef : Hyps → ∀ (k r : ℕ) (Wp : Type) [NormedAddCommGroup W
         ∫ p, ∑ i, ∑ j, B.xiTau D (1, 1) p * B.Ph D (f i) (f j) p ∂D.μSS := by
       refine integral_congr_ae (hPh.mono fun p hp => ?_)
       simp only [hp, Finset.mul_sum]
-    rw [e0, integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => hxi i j]
+    rw [e0, integral_finsetSum _ fun i _ => integrable_finsetSum _ fun j _ => hxi i j]
     have e1 : ∀ i, ∫ p, ∑ j, B.xiTau D (1, 1) p * B.Ph D (f i) (f j) p ∂D.μSS =
         ∑ j, ⟪l (x i), X i (l' (y i))⟫_ℂ * star ⟪l (x j), X j (l' (y j))⟫_ℂ / (dd : ℂ) := by
       intro i

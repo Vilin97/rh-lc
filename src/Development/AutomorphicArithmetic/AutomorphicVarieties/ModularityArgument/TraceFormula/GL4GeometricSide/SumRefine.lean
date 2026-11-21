@@ -69,7 +69,7 @@ private theorem core (π : CuspSub E n) (K : Subgroup (GL (Fin n) (Af E))) (hKc 
   let W0 : Submodule ℂ π.V := ⨅ g, LinearMap.ker (P ∘ₗ π.finPart g)
   have mem : ∀ x, x ∈ W0 ↔ ∀ g, P (π.finPart g x) = 0 := fun x => by
     simp [W0, Submodule.mem_iInf]
-  have stable : IsStable (W0.map π.V.subtype) := by
+  have stable : _root_.GlobalTheory.CuspRep.IsStable (W0.map π.V.subtype) := by
     rintro o _ ⟨x, hx, rfl⟩
     refine ⟨π.op o x, ?_, rfl⟩
     have hx' := (mem x).1 hx

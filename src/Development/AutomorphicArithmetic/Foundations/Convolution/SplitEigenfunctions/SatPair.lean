@@ -128,7 +128,7 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.satPair :
     filter_upwards [hsm x] with y hy
     exact Subtype.ext (Subtype.ext (funext fun g => hy g))
   have hker0 : ∀ y : Q.V, (∀ x, B x y = 0) → y = 0 := by
-    have hst : IsStable ((LinearMap.ker B.flip).map Q.V.subtype) := by
+    have hst : _root_.GlobalTheory.CuspRep.IsStable ((LinearMap.ker B.flip).map Q.V.subtype) := by
       rintro o _ ⟨y, hy, rfl⟩
       have hy' : ∀ x, B x y = 0 := fun x => LinearMap.congr_fun (LinearMap.mem_ker.1 hy) x
       refine ⟨Q.op o y, LinearMap.mem_ker.2 (LinearMap.ext fun x => ?_), rfl⟩

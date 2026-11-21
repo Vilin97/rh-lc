@@ -81,7 +81,7 @@ theorem ap₂_rt (hS : PairSlices) (T : Sm E b →ₗ[ℂ] Sm E b)
   rw [e, hT _ _ (sl₂_mem hS hF _)]
   rfl
 
-theorem rt_mem (hU : IsStable U₂) (hF : F ∈ pairSpace U₁ U₂) (g : Hf E a b) :
+theorem rt_mem (hU : _root_.GlobalTheory.CuspRep.IsStable U₂) (hF : F ∈ pairSpace U₁ U₂) (g : Hf E a b) :
     (fun y => F (y * finH g)) ∈ pairSpace (⊤ : Submodule ℂ (Sm E a)) U₂ := by
   induction hF using Submodule.span_induction with
   | mem F h =>
@@ -144,7 +144,7 @@ theorem ap₂_type (hS : PairSlices) {K₁ : Subgroup (GL (Fin a) (Af E))} {K₂
     rw [e]
     rfl
 
-theorem ap₂_hecke (hS : PairSlices) {ι : Type} [Fintype ι] (hU : IsStable U₂) (T : Sm E b →ₗ[ℂ] Sm E b)
+theorem ap₂_hecke (hS : PairSlices) {ι : Type} [Fintype ι] (hU : _root_.GlobalTheory.CuspRep.IsStable U₂) (T : Sm E b →ₗ[ℂ] Sm E b)
     (hT : ∀ o, ∀ ψ ∈ U₂, T (act o ψ) = act o (T ψ)) {f : ι → H E a b → ℂ}
     (hf : ∀ i, f i ∈ pairSpace U₁ U₂) (h : HeckeM E a b ι) (c : ℂ) (hh : heckeAct h f = c • f) :
     heckeAct h (fun i => ap₂ T (f i)) = c • fun i => ap₂ T (f i) := by

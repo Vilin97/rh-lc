@@ -186,7 +186,7 @@ def bdSub (r : ℕ) (ρ : ℝ) : Submodule ℂ (Sm E N) where
     rw [ct_smul]
     exact (klSub r 1 p).smul_mem c (hpk _ ⟨μ, 𝓕, hμ, h𝓕, rfl⟩)
 
-theorem isStable_bdSub (r : ℕ) (ρ : ℝ) : IsStable (bdSub (E := E) (N := N) r ρ) := by
+theorem isStable_bdSub (r : ℕ) (ρ : ℝ) : _root_.GlobalTheory.CuspRep.IsStable (bdSub (E := E) (N := N) r ρ) := by
   rintro o φ ⟨hφ, p, hp, hpz, hpk⟩
   refine ⟨lo_act hφ o, p, hp, hpz, ?_⟩
   rintro F ⟨μ, 𝓕, hμ, h𝓕, rfl⟩

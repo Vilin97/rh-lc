@@ -40,10 +40,10 @@ theorem hs_mul : ∀ (Ω : Type) [Field Ω] (ε : Ω →+* ℂ) (C : ℝ) (φ ψ
   rw [tsum_eq_sum (s := Finset.antidiagonal h.isPWO_support h'.isPWO_support s)]
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [HahnSeries.coeff_mul, map_sum, map_mul, Finset.sum_mul]
-    refine Finset.sum_congr rfl fun p hp => ?_
-    rw [Finset.mem_antidiagonal] at hp
-    rw [Set.indicator_of_mem (by simpa using hp.2.2)]
-    exact (hexp p hp.2.2).symm
+      refine Finset.sum_congr rfl fun p hp => ?_
+      rw [Finset.mem_antidiagonal] at hp
+      rw [Set.indicator_of_mem (by simpa using hp.2.2)]
+      exact (hexp p hp.2.2).symm
   · intro p hp
     by_cases hs : p.1 + p.2 = s
     · rw [Set.indicator_of_mem (by simpa using hs), hexp p hs]

@@ -38,8 +38,10 @@ theorem qminor_exists_poly {A : Type} [Ring A] [Algebra ℂ A] {n t : ℕ} (E : 
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [map_mul, map_intCast, map_list_prod, List.map_ofFn]
   congr 3
+  funext k
+  simp only [Function.comp_apply, Tm, map_add, hC]
   split_ifs
-  · rw [map_sub, map_sub, hX, hC]
+  · rw [map_sub φ, hX, hC, map_sub]
   · rw [map_zero]
 
 theorem continuous_qminor_apply {M : Type} [NormedAddCommGroup M] [InnerProductSpace ℂ M] {n t : ℕ}
@@ -99,7 +101,7 @@ theorem cof_eigen {M : Type} [NormedAddCommGroup M] [InnerProductSpace ℂ M] {m
     rfl
   have hc1 : Continuous fun Y : ℂ => ∑ j : Fin (m + 1), ((-1 : ℂ) ^ (i.val + j.val)) •
       qminor E (Fin.succAbove j) (Fin.succAbove i) (Y + (m : ℂ) / 2) (x j) := by
-    refine continuous_finset_sum _ fun j _ => Continuous.const_smul ?_ _
+    refine continuous_finsetSum _ fun j _ => Continuous.const_smul ?_ _
     exact (continuous_qminor_apply E _ _ (x j)).comp (continuous_add_const _)
   have hc2 : Continuous fun Y : ℂ => (∏ r ∈ univ.erase t, (Y + (mu r : ℂ))) • x i := by fun_prop
   have hd : Dense ({-(mu t : ℂ)}ᶜ : Set ℂ) := dense_compl_singleton _

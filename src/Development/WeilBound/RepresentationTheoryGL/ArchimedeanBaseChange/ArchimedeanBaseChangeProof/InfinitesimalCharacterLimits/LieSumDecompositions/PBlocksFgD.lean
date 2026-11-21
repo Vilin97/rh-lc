@@ -54,12 +54,12 @@ theorem rt_yp_eq {a : ℕ} (k : Kinf E a) (g : GL (Fin a) (Af E)) (φ : Sm E a) 
     rt E a (BlockDerivatives.yp k g) φ = act (.cpt k) (act (.fin g) φ) := by
   rw [act_cpt_eq, act_fin_eq, rt_yp_rt, mul_one, one_mul]
 
-theorem rt_yp_mem {a : ℕ} {U : Submodule ℂ (Sm E a)} (hU : IsStable U) (k : Kinf E a) (g : GL (Fin a) (Af E))
+theorem rt_yp_mem {a : ℕ} {U : Submodule ℂ (Sm E a)} (hU : _root_.GlobalTheory.CuspRep.IsStable U) (k : Kinf E a) (g : GL (Fin a) (Af E))
     {φ : Sm E a} (hφ : φ ∈ U) : rt E a (BlockDerivatives.yp k g) φ ∈ U := by
   rw [rt_yp_eq]
   exact hU _ _ (hU _ _ hφ)
 
-theorem T_rt_yp {a : ℕ} {U : Submodule ℂ (Sm E a)} (hU : IsStable U) {T : Sm E a →ₗ[ℂ] Sm E a}
+theorem T_rt_yp {a : ℕ} {U : Submodule ℂ (Sm E a)} (hU : _root_.GlobalTheory.CuspRep.IsStable U) {T : Sm E a →ₗ[ℂ] Sm E a}
     (hT : ∀ o, ∀ φ ∈ U, T (act o φ) = act o (T φ)) (k : Kinf E a) (g : GL (Fin a) (Af E)) {φ : Sm E a}
     (hφ : φ ∈ U) : T (rt E a (BlockDerivatives.yp k g) φ) = rt E a (BlockDerivatives.yp k g) (T φ) := by
   rw [rt_yp_eq, rt_yp_eq, hT _ _ (hU _ _ hφ), hT _ _ hφ]
@@ -86,7 +86,7 @@ def Mright (U : Submodule ℂ (Sm E (r + s))) (T : Sm E (r + s) →ₗ[ℂ] Sm E
 
 theorem Mleft_stable {U : Submodule ℂ (Sm E (r + s))} (hU : IsAutSt U) {c : ℂ}
     {T : Sm E (r + s) →ₗ[ℂ] Sm E (r + s)} (hT : IsSliceMap U c T) (hexp : HExp U T) (W : Submodule ℂ (Sm E r))
-    (hW : IsStable W) : IsStable (Mleft U T W) := by
+    (hW : _root_.GlobalTheory.CuspRep.IsStable W) : _root_.GlobalTheory.CuspRep.IsStable (Mleft U T W) := by
   rintro o ψ ⟨hψU, hψ⟩
   cases o with
   | fin h =>
@@ -130,7 +130,7 @@ theorem Mleft_stable {U : Submodule ℂ (Sm E (r + s))} (hU : IsAutSt U) {c : �
 
 theorem Mright_stable {U : Submodule ℂ (Sm E (r + s))} (hU : IsAutSt U) {c : ℂ}
     {T : Sm E (r + s) →ₗ[ℂ] Sm E (r + s)} (hT : IsSliceMap U c T) (hexp : HExp U T) (W : Submodule ℂ (Sm E s))
-    (hW : IsStable W) : IsStable (Mright U T W) := by
+    (hW : _root_.GlobalTheory.CuspRep.IsStable W) : _root_.GlobalTheory.CuspRep.IsStable (Mright U T W) := by
   rintro o ψ ⟨hψU, hψ⟩
   cases o with
   | fin h =>

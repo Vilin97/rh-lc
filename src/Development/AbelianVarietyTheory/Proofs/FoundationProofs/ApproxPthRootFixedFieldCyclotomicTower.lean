@@ -17,7 +17,8 @@ open scoped NNReal
 namespace GlobalTheory.K5.TopRoots
 
 theorem approxRoot_fix_tower : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω],
-    p ≠ 2 → IsClo p Ω → ∀ (T : Tower p Ω) (v : Valuation Ω ℝ≥0), (∀ x : Ω, v x ≤ 1 ↔ IsInt p x) →
+    p ≠ 2 → IsClo p Ω → ∀ (T : Tower p Ω) (v : Valuation Ω ℝ≥0),
+    (∀ x : Ω, v x ≤ 1 ↔ IsInt (p := p) x) →
     0 < v (p : Ω) → v (p : Ω) < 1 → ApproxRoot p v (Fix Ω (⨅ n, Gn T n)) := by
   intro p _ Ω _ _ hp2 hclo T v hv _ hp1
   classical

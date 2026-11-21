@@ -42,7 +42,7 @@ theorem slice_of : Dict → FinTr → Slice := by
       smul_mem' := fun b φ hφ => ⟨V.smul_mem b hφ.1, fun t g => by
         simp only [map_smul, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, hφ.2 t g]
         ring⟩ }
-  have hWst : IsStable W := by
+  have hWst : _root_.GlobalTheory.CuspRep.IsStable W := by
     rintro o φ ⟨hφ, he⟩
     refine ⟨hV.stable o φ hφ, fun t g => ?_⟩
     have e1 : ltS (aT E (r + s) r t) (T φ) = Complex.exp (c * t) • T φ := Subtype.ext (funext fun g => he t g)

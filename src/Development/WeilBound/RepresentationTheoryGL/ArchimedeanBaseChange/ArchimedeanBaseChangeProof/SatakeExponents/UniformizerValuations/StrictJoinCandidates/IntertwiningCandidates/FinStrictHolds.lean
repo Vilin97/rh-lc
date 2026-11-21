@@ -31,7 +31,7 @@ theorem forall₂_ofFn {α β : Type*} (R : α → β → Prop) {c c' : ℕ} (h 
     simp only [List.ofFn_succ]
     exact List.Forall₂.cons (by simpa using H 0) (ih _ _ fun i => by simpa using H i.succ)
 
-theorem siso_trans {x y z : Σ M : ℕ, Submodule ℂ (Sm E M)} (hy : IsStable y.2) (hx : SIso x z) (hyz : SIso y z) :
+theorem siso_trans {x y z : Σ M : ℕ, Submodule ℂ (Sm E M)} (hy : _root_.GlobalTheory.CuspRep.IsStable y.2) (hx : SIso x z) (hyz : SIso y z) :
     SIso x y := by
   obtain ⟨M, Vx⟩ := x
   obtain ⟨M', Vy⟩ := y

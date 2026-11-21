@@ -61,7 +61,7 @@ theorem lie_act (X : Lie E 1) (o : Op E 1) : Commute (lie E 1 X) (act o) := by
 
 theorem scalar_of_eigen {a : ℕ} (π : CuspSub E a) (T : Module.End ℂ (Sm E a)) (hT : ∀ o, Commute T (act o))
     {φ : Sm E a} (hφ : φ ∈ π.V) (h0 : φ ≠ 0) {c : ℂ} (h : T φ = c • φ) : ∀ ψ ∈ π.V, T ψ = c • ψ := by
-  have hs : IsStable (π.V ⊓ T.eigenspace c) := fun o ψ hψ =>
+  have hs : _root_.GlobalTheory.CuspRep.IsStable (π.V ⊓ T.eigenspace c) := fun o ψ hψ =>
     ⟨π.stable o ψ hψ.1, Module.End.mem_eigenspace_iff.2 (by
       have h1 : T (act o ψ) = act o (T ψ) := LinearMap.congr_fun (hT o).eq ψ
       rw [h1, Module.End.mem_eigenspace_iff.1 hψ.2, map_smul])⟩

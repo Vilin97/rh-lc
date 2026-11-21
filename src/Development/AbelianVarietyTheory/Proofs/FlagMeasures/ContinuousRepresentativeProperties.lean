@@ -15,7 +15,7 @@ theorem lintegral_enorm_sq_eq {X : Type} [MeasurableSpace X] (μ : Measure X) (F
     ∫⁻ x, ‖F x‖ₑ ^ 2 ∂μ = ENNReal.ofReal (‖F‖ ^ 2) := by
   rw [Lp.norm_def, ENNReal.ofReal_pow ENNReal.toReal_nonneg,
     ENNReal.ofReal_toReal (Lp.eLpNorm_ne_top F),
-    eLpNorm_eq_lintegral_rpow_enorm two_ne_zero ENNReal.ofNat_ne_top]
+    eLpNorm_eq_lintegral_rpow_eNorm_toReal two_ne_zero ENNReal.ofNat_ne_top (Lp.aestronglyMeasurable F)]
   have h2 : ((2 : ENNReal).toReal) = 2 := by norm_num
   simp only [h2, ← ENNReal.rpow_two]
   rw [← ENNReal.rpow_mul]

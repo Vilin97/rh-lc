@@ -23,7 +23,8 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 
 def integerAlgEquivOfAlgEquiv (e : L₁ ≃ₐ[K] L₂) : 𝒪[L₁] ≃ₐ[𝒪[K]] 𝒪[L₂] :=
   AlgEquiv.ofAlgHom (integerAlgHom e.toAlgHom) (integerAlgHom e.symm.toAlgHom)
-    (by ext; simp) (by ext; simp)
+    (AlgHom.ext fun x => Subtype.ext (e.apply_symm_apply (x : L₂)))
+    (AlgHom.ext fun x => Subtype.ext (e.symm_apply_apply (x : L₁)))
 
 
 omit [IsNonarchimedeanLocalField K] in
@@ -45,7 +46,8 @@ theorem lowerIndex_autCongr (e : L₁ ≃ₐ[K] L₂) (σ : L₁ ≃ₐ[K] L₁)
   refine iInf_congr fun x => ?_
   have h : integerAlgEquiv K L₂ (e.autCongr σ) (φ x) - φ x = φ (integerAlgEquiv K L₁ σ x - x) := by
     apply Subtype.ext
-    simp [φ, AlgEquiv.autCongr_apply]
+    change (e.autCongr σ) (e (x : L₁)) - e (x : L₁) = e (σ (x : L₁) - (x : L₁))
+    simp [AlgEquiv.autCongr_apply]
   simp only [AlgEquiv.toEquiv_eq_coe, EquivLike.coe_coe]
   rw [h]
   exact addVal_ringEquiv (φ : 𝒪[L₁] ≃+* 𝒪[L₂]) _

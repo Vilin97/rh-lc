@@ -145,7 +145,7 @@ private theorem count_galois_conj_spanSingleton {A₀ R K₀ L : Type} [CommRing
   have hgb : g b ≠ 0 := g.map_ne_zero_iff.mpr hb0
   have hσa : σ (algebraMap R L a) = algebraMap R L (g a) := (algebraMap_galRestrict_apply A₀ σ a).symm
   have hσb : σ (algebraMap R L b) = algebraMap R L (g b) := (algebraMap_galRestrict_apply A₀ σ b).symm
-  rw [map_div₀, hσa, hσb, count_spanSingleton_div v' haL hbL,
+  rw [map_div₀ σ, hσa, hσb, count_spanSingleton_div v' haL hbL,
     count_spanSingleton_div v (by simpa using hga) (by simpa using hgb),
     count_spanSingleton_algebraMap_eq_count_factors v' ha0, count_spanSingleton_algebraMap_eq_count_factors v' hb0,
     count_spanSingleton_algebraMap_eq_count_factors v hga, count_spanSingleton_algebraMap_eq_count_factors v hgb,
@@ -190,7 +190,8 @@ private theorem count_algebraMap_of_unramified_lemma_6 {A₀ R K₀ L : Type} [C
     · rw [hP]
       exact hQ
   have hv := HeightOneSpectrum.intValuation_liesOver P Q f
-  rw [he, pow_one, HeightOneSpectrum.intValuation_if_neg _ hf,
+  rw [← Ideal.ramificationIdx'_eq_ramificationIdx P.asIdeal Q.asIdeal P.ne_bot, he, pow_one,
+    HeightOneSpectrum.intValuation_if_neg _ hf,
     HeightOneSpectrum.intValuation_if_neg _ hfR] at hv
   rw [IsScalarTower.algebraMap_apply A₀ R L, count_spanSingleton_algebraMap_eq_count_factors Q hfR,
     count_spanSingleton_algebraMap_eq_count_factors P hf]

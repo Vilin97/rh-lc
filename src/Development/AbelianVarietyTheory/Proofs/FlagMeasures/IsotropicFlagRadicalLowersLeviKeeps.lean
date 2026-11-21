@@ -55,7 +55,7 @@ theorem lowers_keeps : ∀ (n : ℕ) (ε : Fin n → Bool) (a : ℕ) (j : Fin a 
     rw [star_sub, sub_dotProduct] at h
     rw [Matrix.mulVec_sub, dotProduct_sub, form_mul]
     exact h
-  · have hm' : m⁻¹ ∈ flagM ε W := (GlobalTheory.FlagLeviGroup.leviSub ε W).inv_mem hm
+  · have hm' : m⁻¹ ∈ flagM ε W := (GlobalTheory.FlagLeviGroup.leviSub (ε := ε) W).inv_mem hm
     simp only [GlobalTheory.IwConst.keeps, Submodule.mem_inf, Submodule.mem_iInf, mem_into]
     refine ⟨⟨fun i y hy => (hm i y hy).1, fun i y hy x hx => ?_⟩,
       ⟨fun i y hy => (hm i y hy).2, fun i y hy x hx => ?_⟩⟩

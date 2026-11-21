@@ -81,7 +81,7 @@ theorem ap₁_prod (T : Sm E a →ₗ[ℂ] Sm E a) (φ₁ : Sm E a) (φ₂ : Sm 
   show φ₂.1 x.2 * (T φ₁).1 x.1 = _
   ring
 
-theorem translate_mem {U₁ : Submodule ℂ (Sm E a)} {U₂ : Submodule ℂ (Sm E b)} (hU : IsStable U₁) {F : H E a b → ℂ}
+theorem translate_mem {U₁ : Submodule ℂ (Sm E a)} {U₂ : Submodule ℂ (Sm E b)} (hU : _root_.GlobalTheory.CuspRep.IsStable U₁) {F : H E a b → ℂ}
     (hF : F ∈ pairSpace U₁ U₂) (g : Hf E a b) :
     (fun y => F (y * finH g)) ∈ pairSpace U₁ (⊤ : Submodule ℂ (Sm E b)) := by
   induction hF using Submodule.span_induction with

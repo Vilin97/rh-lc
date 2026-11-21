@@ -50,14 +50,20 @@ open scoped nonZeroDivisors in
 variable {K : Type} [Field K] [NumberField K] in
 theorem _root_.GlobalTheory.Square.AwayClosure.of_dvd {m k : ℕ} {a : 𝓞 K} (h : a ∣ (m : 𝓞 K) ^ k) :
     _root_.GlobalTheory.Square.IsAwayUnit m (a : K) :=
-  _root_.GlobalTheory.Square.IsAwayUnit.of_dvd h
+  ⟨a, 0, k, h, by simp⟩
 
 open NumberField IsDedekindDomain Finset in
 open scoped nonZeroDivisors in
 variable {K : Type} [Field K] [NumberField K] in
 theorem _root_.GlobalTheory.Square.AwayClosure.mul {m : ℕ} {x y : K} (hx : _root_.GlobalTheory.Square.IsAwayUnit m x)
     (hy : _root_.GlobalTheory.Square.IsAwayUnit m y) : _root_.GlobalTheory.Square.IsAwayUnit m (x * y) :=
-  _root_.GlobalTheory.Square.IsAwayUnit.mul hx hy
+  by
+    obtain ⟨a, k, j, ha, hx⟩ := hx
+    obtain ⟨b, l, i, hb, hy⟩ := hy
+    refine ⟨a * b, k + l, j + i, by rw [pow_add]; exact mul_dvd_mul ha hb, ?_⟩
+    calc
+      x * y * (m : K) ^ (k + l) = (x * (m : K) ^ k) * (y * (m : K) ^ l) := by rw [pow_add]; ring
+      _ = ((a * b : 𝓞 K) : K) := by rw [hx, hy]; push_cast; rfl
 
 open NumberField IsDedekindDomain Finset in
 open scoped nonZeroDivisors in

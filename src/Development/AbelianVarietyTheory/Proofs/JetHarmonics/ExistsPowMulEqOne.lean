@@ -62,8 +62,14 @@ theorem isAdd_symm {R : Type} [CommRing R] [IsDomain R] {D : DegPre R} {F : Type
     [Algebra (FractionRing R) F] {g g' g'' : GtPtF D F} (h : g.IsAdd g' g'') : g'.IsAdd g g'' := by
   rw [isAdd_iff] at h ⊢
   refine ⟨h.1.trans (mul_comm _ _), fun χ y J hJ => ?_⟩
-  have C : IsCub (th D (T := TF (R := R) F) y J) := isCub_cubV D.cub hJ
-  rw [C.s12, h.2 χ y J hJ, mul_comm]
+  have C : ∀ x a b, th D (T := TF (R := R) F) y J x a b =
+      th D (T := TF (R := R) F) y J x b a := by
+    intro x a b
+    have := (val_corr hJ D.cub.cubeSymmetric_swap_last (lift x (lift a b)).left).trans
+      (val_cub D.cub (lift x (lift a b)) hJ _ _ _)
+    refine Eq.trans this ?_
+    congr 1 <;> simp [x3]
+  rw [C, h.2 χ y J hJ, mul_comm]
 
 variable {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V]
   {D : DegData V (maximalIdeal V)} {F : Type} [Field F] [Algebra (FractionRing V) F]

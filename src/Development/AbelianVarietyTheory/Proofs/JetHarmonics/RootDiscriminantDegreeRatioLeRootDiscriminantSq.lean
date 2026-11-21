@@ -72,7 +72,8 @@ theorem runNum_of_sizes : ∀ (D : D7) (large₂ : SizeData₂ D) (B : WeightFam
   obtain ⟨hP13, -, -, hr, hD⟩ := hP
   have hrd : 2 * (D.R.f : ℝ) * D.R.m ≤ D.host.rdE := hA.2.2.2.2.2.2.2.2.2
   have hf : 1 ≤ D.R.f := by
-    have : 0 < D.R.f := by unfold Ranks.f Ranks.n; positivity
+    have hmf : D.R.m ≤ D.R.f := D.R.m_le_f
+    have hmpos := D.R.two_le_m
     omega
   have hm : 1 ≤ D.R.m := hj.1.trans hj.2
   have hfR : (1 : ℝ) ≤ D.R.f := by exact_mod_cast hf

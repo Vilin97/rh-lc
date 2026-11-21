@@ -61,9 +61,9 @@ theorem homogenize_slP (w : ℕ) (g : Matrix (Fin 2) (Fin 2) ℤ) (p : ℂ[X]) :
     rwa [one_mul, one_mul, Nat.add_sub_of_le hi'] at h
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [polySlash_apply, map_sum]
-    refine Finset.sum_congr rfl fun i _ => ?_
-    simp only [map_mul, map_pow, map_add (f := _), MvPolynomial.aeval_C, MvPolynomial.aeval_X, Matrix.cons_val_zero,
-      Matrix.cons_val_one, mul_one, ← C_eq_algebraMap, smul_eq_C_mul]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      simp only [map_mul, map_pow, map_add (f := _), MvPolynomial.aeval_C, MvPolynomial.aeval_X, Matrix.cons_val_zero,
+        Matrix.cons_val_one, mul_one, ← C_eq_algebraMap, smul_eq_C_mul]
 
 theorem polySlash_polySlash (w : ℕ) (g h : Matrix (Fin 2) (Fin 2) ℤ) (p : ℂ[X]) :
     slP w h (slP w g p) = slP w (g * h) p := by

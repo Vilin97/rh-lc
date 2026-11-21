@@ -62,8 +62,8 @@ theorem exp_neg_log_one_var (K : Type*) [Field K] [CharZero K] :
     (exp K).subst (-log K) * (1 + X : PowerSeries K) = 1 := by
   have h0 : constantCoeff (-log K) = 0 := by simp
   have hs := HasSubst.of_constantCoeff_zero' h0
-  have e : (1 + X) * d⁄dX K (log K) = 1 := by
-    rw [deriv_log]
+  have e : (1 + X) * PowerSeries.derivative (log K) = 1 := by
+    rw [derivative_log]
     ext n
     cases n with
     | zero => simp [add_mul]

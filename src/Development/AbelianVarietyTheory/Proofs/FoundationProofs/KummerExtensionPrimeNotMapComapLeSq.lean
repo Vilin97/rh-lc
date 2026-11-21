@@ -207,7 +207,9 @@ theorem kummer_not_map_comap_le_sq :
     Ideal.comap_ne_bot_of_integral_mem hb0 hbP (Algebra.IsIntegral.isIntegral b)
   haveI : (P.comap (algebraMap A₀ (integralClosure A₀ E))).IsMaximal :=
     Ideal.IsPrime.isMaximal inferInstance hp0
-  have h := pow_sub_one_dvd_differentIdeal_aux A₀ K₀ E P two_ne_zero hp0 (Ideal.dvd_iff_le.mpr hle)
+  have h := pow_sub_one_dvd_differentIdeal_aux A₀ K₀ E
+    (p := P.comap (algebraMap A₀ (integralClosure A₀ E))) P (e := 2) hp0
+    (Ideal.dvd_iff_le.mpr hle)
   rw [hdiff, Ideal.dvd_iff_le] at h
   apply hP.ne_top
   simpa using h

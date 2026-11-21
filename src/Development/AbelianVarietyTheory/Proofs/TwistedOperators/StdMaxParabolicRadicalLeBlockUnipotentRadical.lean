@@ -62,13 +62,13 @@ theorem blk_lt_of_parab_le [Nontrivial R] {e : (Σ a, m a) ≃ n} {e' : (Σ a, m
     rw [ht]
     simp [Matrix.transvection, Matrix.single_apply]
   have hmem : t ∈ parab R e := by
-    rw [mem_parab]
+    change (t : Matrix n n R).BlockTriangular (blk e)
     intro k l hkl
     have hkl' : k ≠ l := fun hh => (ne_of_lt hkl) (by rw [hh])
     rw [hent, Matrix.one_apply_ne hkl', zero_add, if_neg]
     rintro ⟨rfl, rfl⟩
     exact hc hkl
-  have hzero := mem_parab.mp (h hmem) i j hij
+  have hzero : (t : Matrix n n R) i j = 0 := (h hmem) hij
   rw [hent, Matrix.one_apply_ne hne, zero_add, if_pos ⟨rfl, rfl⟩] at hzero
   exact one_ne_zero hzero
 

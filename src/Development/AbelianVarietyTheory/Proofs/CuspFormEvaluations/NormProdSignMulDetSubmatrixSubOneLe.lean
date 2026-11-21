@@ -129,6 +129,7 @@ theorem gram_eq_transpose_mul_mul_map_star {r : ℕ} (τ : E →+* ℂ) (G : Mat
   ext a b
   simp only [gram, hermC, ReciprocityTheory.ChartRestriction.G.FD.col, of_apply, mul_apply, transpose_apply, map_apply,
     Finset.sum_mul]
+  simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Finset.sum_mul]
   rw [Finset.sum_comm]
   rfl
 
@@ -159,7 +160,7 @@ theorem dmin_rmul_near_one {r : ℕ} (X : Data E r) (x : Frame X.Ψ r)
       rw [add_sub_cancel]; rfl
     rw [h1, gram_mul_eq_transpose_mul_gram_mul, hx]
     refine norm_gram_sign_sub_le j hj1 _ hδ (by nlinarith) (fun a b => ?_) a b
-    simpa [mat, one_apply] using hA τ a b
+    simpa [mat, Matrix.one_apply] using hA τ a b
   have hmin : ∀ (τ : X.Ψ) {i : ℕ} {e : Fin i → Fin r}, Function.Injective e →
       0 < ((∏ a, j (e a)) * ((gram τ.1 X.Gm (mat (rmul x A) τ)).submatrix e e).det).re ∧
       |Real.log ‖(∏ a, j (e a)) * ((gram τ.1 X.Gm (mat (rmul x A) τ)).submatrix e e).det‖| ≤
@@ -213,7 +214,7 @@ omit [NumberField E] [IsCMField E] in
 theorem rmul_one_frame {Ψ : Finset (E →+* ℂ)} {r : ℕ} (x : Frame Ψ r) :
     rmul x (fun _ a b => if a = b then 1 else 0) = x := by
   funext τ a b
-  simp [rmul, mat, mul_apply]
+  simp [rmul, mat, Matrix.mul_apply, Matrix.one_apply]
 
 omit [NumberField E] [IsCMField E] in
 theorem differentiable_rmul_add {Ψ : Finset (E →+* ℂ)} {r : ℕ} (x I : Frame Ψ r) :
@@ -222,7 +223,7 @@ theorem differentiable_rmul_add {Ψ : Finset (E →+* ℂ)} {r : ℕ} (x I : Fra
   have : (fun z : Frame Ψ r => rmul x (I + z) τ a b) =
       fun z => ∑ k, x τ a k * (I τ k b + z τ k b) := by
     funext z
-    simp [rmul, mat, mul_apply]
+    simp [rmul, mat, Matrix.mul_apply]
   rw [this]
   fun_prop
 

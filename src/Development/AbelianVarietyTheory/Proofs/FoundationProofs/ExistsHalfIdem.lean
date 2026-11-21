@@ -31,7 +31,7 @@ theorem sgA_mem (D : D7) {s : AE D} (hs : s ∈ OhE D) : sgA D s ∈ OhE D :=
   Formalism.UG.P.csDual_sig_mem _ hs
 
 theorem inc_int (D : D7) (b : 𝓞 D.host.E) : inc D (b : D.host.E) ∈ OhE D :=
-  (GlobalTheory.NormSum.AdLattice.incl_mem_iff (F := ℚ) _).2 ⟨b, rfl⟩
+  Formalism.UG.P.adelstab_incl_int (F := ℚ) b
 
 theorem inc_dvd (D : D7) {N : ℕ} {b : 𝓞 D.host.E} (h : (N : 𝓞 D.host.E) ∣ b) :
     ∃ w ∈ OhE D, inc D (b : D.host.E) = (N : AE D) * w := by

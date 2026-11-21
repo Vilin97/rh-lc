@@ -47,7 +47,7 @@ theorem exists_finset_coeff_mem_closure :
     apply hR0; rw [Polynomial.eq_C_of_natDegree_eq_zero h, hRb, map_zero]
   obtain ⟨D, hD⟩ : ∃ D, D = Polynomial.derivative R := ⟨_, rfl⟩
   have hD0 : D ≠ 0 := by
-    haveI : IsAddTorsionFree (PowerSeries L) := IsAddTorsionFree.of_isTorsionFree L _
+    haveI : HasUniqueDiv (PowerSeries L) := IsAddTorsionFree.of_isTorsionFree L _
     intro h; rw [hD] at h; exact hdeg (Polynomial.natDegree_eq_zero_of_derivative_eq_zero h)
   have hDc : ∀ i, D.coeff i ∈ RA := by
     intro i; rw [hD, Polynomial.coeff_derivative]

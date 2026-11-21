@@ -31,8 +31,8 @@ theorem exists_thetaFrame : Laws → Laws2 → Laws4 → TwistBaseChangeStatemen
   intro hL _ _ _ V _ _ _ ϖ hϖ D Q hQ F _ _ v hv
   obtain ⟨b, hb⟩ := IndivisibleSection.exists_secBGenerates hL.secBaseChange V (maximalIdeal V) D
   obtain ⟨Φ, f, hf, hf0, -, -⟩ := integralFamily_of_strictMin hL V ϖ hϖ D Q hQ 1 le_rfl 0 b (fun z hz => by
-    have h := QForm.Q_pos hϖ D hQ hz
-    rw [QForm.Q_zero hϖ D hQ, zero_add, one_smul]
+    have h := QForm.Q_pos hϖ (D := D) hQ hz
+    rw [QForm.Q_zero hϖ (D := D) hQ, zero_add, one_smul]
     omega)
   obtain ⟨θ, hθ⟩ := FamBaseChange.main hL.globalFns V (maximalIdeal V) D 1 Φ f hf F
   refine ⟨θ, (integralFamily_levelOne V ϖ hϖ D Q hQ F v hv θ f hθ).1, b, θ.s 0, hf0 ▸ hθ 0, fun _ => rfl, ?_⟩

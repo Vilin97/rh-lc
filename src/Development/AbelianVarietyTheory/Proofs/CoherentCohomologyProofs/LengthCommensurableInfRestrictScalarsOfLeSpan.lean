@@ -72,21 +72,22 @@ variable [IsPrincipalIdealRing R]
 
 theorem isLattice_comap_subtype {M : Submodule R V} (hM : M.FG) {W : Submodule K V}
     (h : W ≤ Submodule.span K (M : Set V)) :
-    Submodule.IsLattice K (M.comap (W.subtype.restrictScalars R)) where
-  fg := by
-    apply Submodule.fg_of_fg_map_injective (W.subtype.restrictScalars R) W.injective_subtype
-    exact hM.of_le (Submodule.map_comap_le _ _)
-  span_eq_top := by
+    Submodule.IsLattice K (M.comap (W.subtype.restrictScalars R)) := by
+  apply Submodule.IsLattice.of_fg K
+  apply Submodule.fg_of_fg_map_injective (W.subtype.restrictScalars R) W.injective_subtype
+  exact hM.of_le (Submodule.map_comap_le _ _)
+
+theorem finrank_inf_restrictScalars_of_le_span {M : Submodule R V} (hM : M.FG)
+    {W : Submodule K V} (h : W ≤ Submodule.span K (M : Set V)) :
+    Module.finrank R ↥(M ⊓ W.restrictScalars R) = Module.finrank K W := by
+  have : Submodule.IsFullLattice K (M.comap (W.subtype.restrictScalars R)) := by
+    have := isLattice_comap_subtype hM h
+    refine { span_eq_top := ?_ }
     refine eq_top_iff.mpr fun x _ => ?_
     obtain ⟨a, ha, hax⟩ := exists_ne_zero_smul_mem_of_mem_span_fractionField K (h x.2)
     have ha' : algebraMap R K a ≠ 0 := by simpa using ha
     rw [← Submodule.smul_mem_iff _ ha', algebraMap_smul]
     exact Submodule.subset_span hax
-
-theorem finrank_inf_restrictScalars_of_le_span {M : Submodule R V} (hM : M.FG)
-    {W : Submodule K V} (h : W ≤ Submodule.span K (M : Set V)) :
-    Module.finrank R ↥(M ⊓ W.restrictScalars R) = Module.finrank K W := by
-  have := isLattice_comap_subtype hM h
   have e := Submodule.equivMapOfInjective (W.subtype.restrictScalars R) W.injective_subtype
     (M.comap (W.subtype.restrictScalars R))
   have hr : LinearMap.range (W.subtype.restrictScalars R) = W.restrictScalars R := by
@@ -229,7 +230,7 @@ theorem signedLength_inf_smul_inf (M Θ : Submodule R V) [Submodule.IsLattice K 
       signedLength (M ⊓ W.restrictScalars R) (s • Θ ⊓ W.restrictScalars R) =
         signedLength (M ⊓ W.restrictScalars R) (Θ ⊓ W.restrictScalars R) +
           WithZero.log (Ring.ordFrac R s) * Module.finrank K W :=
-  signedLength_inf_smul_inf_of_le_span Submodule.IsLattice.fg Submodule.IsLattice.fg
+  signedLength_inf_smul_inf_of_le_span (Submodule.IsLattice.fg K M) (Submodule.IsLattice.fg K Θ)
     (by rw [Submodule.IsLattice.span_eq_top]; exact le_top)
     (by rw [Submodule.IsLattice.span_eq_top]; exact le_top) hs
 

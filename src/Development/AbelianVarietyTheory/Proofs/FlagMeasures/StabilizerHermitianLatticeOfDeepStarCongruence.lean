@@ -61,7 +61,8 @@ omit [NumberField K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 theorem isom_of_mem {H : HermSpace K V} {r : ℕ} {F F' : FlagD H r} {s : V ≃ₗ[K] V}
     (hs : s ∈ Subgroup.closure {s : V ≃ₗ[K] V | F.InN (s : V →ₗ[K] V) ∧ F'.InN (s : V →ₗ[K] V)}) :
     s ∈ isomGrp H :=
-  (Subgroup.closure_le (isomGrp H)).2 (fun t ht => (mem_isomGrp H t).2 ht.1.1) hs
+  (Subgroup.closure_le (k := {t : V ≃ₗ[K] V | F.InN (t : V →ₗ[K] V) ∧ F'.InN (t : V →ₗ[K] V)}) (isomGrp H)).2 (fun t ht =>
+    (mem_isomGrp H t).2 ht.1.1) hs
 
 
 omit [NumberField K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in

@@ -152,7 +152,7 @@ def muS : Shv (ZMod q) := ⟨Scheme.Γ ⋙ muF q, isSheaf q⟩
 def etaS : tw q 1 ⟶ muS q := ⟨sheafifyLift Scheme.etaleTopology (Functor.whiskerLeft Scheme.Γ (eta q)) (isSheaf q)⟩
 
 theorem etaS_sec (U : Scheme.{0}) (m : (twF q 1).obj Γ(U, ⊤)) :
-    Sec.map (etaS q) (ofRings.sec (ZMod q) (twF q 1) U m) = ((eta q).app Γ(U, ⊤)).hom m := by
+    Sec.map (etaS q) (ofRings.sec (twF q 1) U m) = ((eta q).app Γ(U, ⊤)).hom m := by
   have h := toSheafify_sheafifyLift Scheme.etaleTopology (Functor.whiskerLeft Scheme.Γ (eta q)) (isSheaf q)
   exact congrArg (fun φ => (φ.app (op U)).hom m) h
 

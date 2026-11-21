@@ -155,7 +155,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
   obtain ⟨hfull, hlift, -, -, -, -, hw, -⟩ := GlobalTheory.T.hermFramePairNormalForm_geometry_summary K V H hK r N
   have hL := (isLatMod_top_bot_iff Λ).1 hΛ.1.1.1
   obtain ⟨W, hWS, hWI, hSW, hWΛ⟩ :=
-    exists_split Λ hL.fg hL.span_eq_top (wSp N.F N.F') (II N.F N.F')
+    exists_split Λ hL.fg hΛ.1.1.1.2 (wSp N.F N.F') (II N.F N.F')
   have hW : IsLift N.F N.F' W :=
     ⟨fun w h => (mem_wSp_iff _ _ w).1 (hWS h), hWI, fun w h => hSW ((mem_wSp_iff _ _ w).2 h)⟩
   obtain ⟨σ⟩ : Nonempty (K →+* ℂ) := inferInstance

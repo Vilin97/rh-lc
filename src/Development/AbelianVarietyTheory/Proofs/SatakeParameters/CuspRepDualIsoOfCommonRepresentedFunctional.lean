@@ -14,7 +14,7 @@ theorem iso_of_common_functional : ∀ (E : Type) [Field E] [NumberField E] [IsT
 
   have irr : ∀ P : Submodule ℂ π.V, (∀ o, ∀ x ∈ P, π.op o x ∈ P) → P ≠ ⊥ → P = ⊤ := by
     intro P hP h0
-    have hst : IsStable (P.map π.V.subtype) := by
+    have hst : _root_.GlobalTheory.CuspRep.IsStable (P.map π.V.subtype) := by
       rintro o _ ⟨x, hx, rfl⟩
       exact ⟨π.op o x, hP o x hx, rfl⟩
     have e := Submodule.comap_map_eq_of_injective π.V.injective_subtype P

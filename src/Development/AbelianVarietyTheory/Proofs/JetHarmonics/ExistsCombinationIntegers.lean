@@ -95,7 +95,7 @@ theorem exists_combination_integers (K : Type) [Field K] [NumberField K] (T : CD
   haveI : IsLocalRing V := IsLocalization.AtPrime.isLocalRing V p
   haveI : IsDedekindDomain V := IsLocalization.isDedekindDomain (𝓞 K) hS V
   haveI : IsPrincipalIdealRing V :=
-    ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain V).out 2 0).1 ‹IsDedekindDomain V›
+    ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain V).out 3 1).1 ‹IsDedekindDomain V›
   have hu : ∀ s : p.primeCompl, IsUnit (φ s) := fun s => by
     by_contra hn
     exact s.2 ((IsLocalRing.mem_maximalIdeal _).2 hn)

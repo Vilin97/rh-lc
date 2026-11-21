@@ -30,6 +30,7 @@ theorem petInt_emb (γ : SL(2, ℤ)) : MeasurableEmbedding (fun z : ℍ => γ �
 theorem petInt_fd_meas : MeasurableSet ModularGroup.fd := by
   unfold ModularGroup.fd
   apply IsClosed.measurableSet
+  change IsClosed ({z : ℍ | 1 ≤ Complex.normSq (z : ℂ)} ∩ {z : ℍ | |z.re| ≤ 1 / 2})
   apply IsClosed.inter
   · exact isClosed_le continuous_const (Complex.continuous_normSq.comp UpperHalfPlane.continuous_coe)
   · exact isClosed_le (continuous_abs.comp (Complex.continuous_re.comp UpperHalfPlane.continuous_coe)) continuous_const

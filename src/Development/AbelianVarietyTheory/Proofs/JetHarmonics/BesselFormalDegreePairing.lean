@@ -58,7 +58,7 @@ theorem besPhInt_xi_cont {k r : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [Inn
   have h : ∀ z, Continuous (fun m : Formalism.QuantumDeterminants.Mt k r => Formalism.QuantumDeterminants.ell k r z (Matrix.of m)) := by
     intro z
     unfold Formalism.QuantumDeterminants.ell
-    refine continuous_finset_sum _ fun a _ => ?_
+    refine continuous_finsetSum _ fun a _ => ?_
     split_ifs
     · simp only [Matrix.of_apply]
       fun_prop

@@ -115,13 +115,40 @@ theorem sameKindIsometric : SameKindIsometric := by
       (∀ x, x ∈ L ↔ ∀ y ∈ L, star y ⬝ᵥ (M *ᵥ x) ∈ (algebraMap (𝓞 E) E).range) →
       Submodule.span E (L : Set (Fin n → E)) = ⊤ := by
     intro M L hl hm
-    have heq : Formalism.BasicNotions.dualSet (starRingEnd E) M L = (L : Set (Fin n → E)) := by
-      ext x
-      simp only [Formalism.BasicNotions.dualSet, Set.mem_setOf_eq, SetLike.mem_coe, hm]
-      simp [Formalism.UG.hform, dotProduct, Matrix.mulVec, Finset.mul_sum, Finset.sum_comm, mul_assoc]
-    have h := Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.LocB.dual_span (starRingEnd E) M L hl
-    rw [heq, Submodule.span_eq] at h
-    exact h
+    classical
+    obtain ⟨s, hs⟩ := hl.fg
+    apply eq_top_iff.mpr
+    intro z _
+    obtain ⟨d, hd⟩ := IsLocalization.exist_integer_multiples_of_finset (nonZeroDivisors (𝓞 E))
+      (s.image fun y => star y ⬝ᵥ (M *ᵥ z))
+    have hd0 : (algebraMap (𝓞 E) E d) ≠ 0 :=
+      (IsFractionRing.injective (𝓞 E) E).ne (nonZeroDivisors.ne_zero d.2)
+    have hdz : (algebraMap (𝓞 E) E d) • z ∈ L := by
+      apply (hm _).2
+      intro y hy
+      rw [← hs] at hy
+      induction hy using Submodule.span_induction with
+      | mem y hy =>
+        obtain ⟨a, ha⟩ := hd _ (Finset.mem_image.mpr ⟨y, hy, rfl⟩)
+        refine ⟨a, ?_⟩
+        rw [Matrix.mulVec_smul, dotProduct_smul]
+        simpa only [smul_eq_mul, Algebra.smul_def] using ha
+      | zero => simp
+      | add x y hx hy ihx ihy =>
+        simpa [star_add, add_dotProduct] using add_mem ihx ihy
+      | smul a x hx ih =>
+        have ha : star (algebraMap (𝓞 E) E a) ∈ (algebraMap (𝓞 E) E).range := by
+          rw [hcc]
+          exact ⟨IsCMField.ringOfIntegersComplexConj E a, by simp [cc]⟩
+        have he : star (a • x) = star (algebraMap (𝓞 E) E a) • star x := by
+          ext i
+          simp [Algebra.smul_def]
+        rw [he, smul_dotProduct]
+        simpa only [smul_eq_mul] using mul_mem ha ih
+    have hz : z = (algebraMap (𝓞 E) E d)⁻¹ • ((algebraMap (𝓞 E) E d) • z) := by
+      rw [smul_smul, inv_mul_cancel₀ hd0, one_smul]
+    rw [hz]
+    exact Submodule.smul_mem _ _ (Submodule.subset_span hdz)
   obtain ⟨P, hPd, hP⟩ := GlobalTheory.SelfDualGenus.congr_of_modular
     (GlobalTheory.LocalQuad.landherr_of_hasseNormSt GlobalTheory.QNorm.hasseNormSt) GlobalTheory.QNorm.hasseNormSt
     (by

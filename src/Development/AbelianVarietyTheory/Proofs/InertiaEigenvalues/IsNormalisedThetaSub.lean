@@ -588,7 +588,7 @@ theorem isNormalised_thetaSub {π : CuspSub E a} (h : IsNormalised π) : IsNorma
   change φ.1 (thetaA E a _) = φ.1 (thetaA E a g)
   rw [map_mul, thetaA_splitCentre, h φ hφ]
 
-theorem isSpehOf_thetaSub {N d : ℕ} {V : Submodule ℂ (Sm E N)} (hV : IsStable V) (hc : IsCsdGL V) {π : CuspSub E a}
+theorem isSpehOf_thetaSub {N d : ℕ} {V : Submodule ℂ (Sm E N)} (hV : _root_.GlobalTheory.CuspRep.IsStable V) (hc : IsCsdGL V) {π : CuspSub E a}
     (h : IsSpehOf V π d) : IsSpehOf V (thetaSub π) d := by
   obtain ⟨h, ν, hν, f, hf, hf'⟩ := h
   obtain ⟨T, hT⟩ := hc

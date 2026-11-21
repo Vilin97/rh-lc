@@ -202,7 +202,7 @@ theorem separation_of_six_inputs (h1 : SliceU) (h2 : Blocks) (h3 : Leaf) (h4 : N
   obtain ⟨φ, hφS, hne⟩ : ∃ φ ∈ S, φ ≠ 0 := by
     by_contra hcon
     push_neg at hcon
-    have hbot : IsStable (⊥ : Submodule ℂ (Sm E N)) := by
+    have hbot : _root_.GlobalTheory.CuspRep.IsStable (⊥ : Submodule ℂ (Sm E N)) := by
       intro o ψ hψ
       rw [Submodule.mem_bot] at hψ ⊢
       rw [hψ, map_zero]

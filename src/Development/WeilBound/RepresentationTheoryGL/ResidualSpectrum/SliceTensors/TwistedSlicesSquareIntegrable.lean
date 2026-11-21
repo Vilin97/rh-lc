@@ -45,7 +45,7 @@ def Chord : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E
 def A2 (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ) : Submodule ℂ (Sm E N) :=
   Submodule.span ℂ {ψ | IsAutForm ψ ∧ IsSqInt ψ.1}
 
-def Pr : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ), IsStable (A2 E N) ∧ ∀ ψ ∈ A2 E N, ψ ≠ 0 →
+def Pr : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ), _root_.GlobalTheory.CuspRep.IsStable (A2 E N) ∧ ∀ ψ ∈ A2 E N, ψ ≠ 0 →
   ∃ (V : Submodule ℂ (Sm E N)) (p : Sm E N →ₗ[ℂ] Sm E N), IsDiscrete V ∧ (∀ χ ∈ A2 E N, p χ ∈ V) ∧
     (∀ o, ∀ χ ∈ A2 E N, p (act o χ) = act o (p χ)) ∧ p ψ ≠ 0
 
@@ -54,7 +54,7 @@ def SliceTens : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyCompl
 
 def IndMap : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (r s : ℕ) (V : Submodule ℂ (Sm E (r + s))) (U₁ : Submodule ℂ (Sm E r))
   (U₂ : Submodule ℂ (Sm E s)) (T : Sm E (r + s) →ₗ[ℂ] Sm E (r + s)) (f₁ : Sm E r →ₗ[ℂ] Sm E r) (f₂ : Sm E s →ₗ[ℂ] Sm E s),
-  IsStable V → (∀ φ ∈ V, IsAutForm φ) → IsStable U₁ → IsStable U₂ → (∀ o, ∀ φ ∈ V, T (act o φ) = act o (T φ)) →
+  _root_.GlobalTheory.CuspRep.IsStable V → (∀ φ ∈ V, IsAutForm φ) → _root_.GlobalTheory.CuspRep.IsStable U₁ → _root_.GlobalTheory.CuspRep.IsStable U₂ → (∀ o, ∀ φ ∈ V, T (act o φ) = act o (T φ)) →
   (∀ φ ∈ V, MemInd2 U₁ U₂ (T φ)) → (∀ o, ∀ ψ ∈ U₁, f₁ (act o ψ) = act o (f₁ ψ)) →
   (∀ o, ∀ ψ ∈ U₂, f₂ (act o ψ) = act o (f₂ ψ)) →
   ∃ T' : Sm E (r + s) →ₗ[ℂ] Sm E (r + s), (∀ o, ∀ φ ∈ V, T' (act o φ) = act o (T' φ)) ∧

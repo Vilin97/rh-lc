@@ -63,7 +63,7 @@ theorem leaf_of (hC : Core) (hP : GrowPHolds) : Leaf := by
   intro E _ _ _ N τ hN U hU φ hφU hneg hφ0
   obtain ⟨⟨hst, hA⟩, -, hNP, ⟨z, hz, hcent⟩, -⟩ := hU
   set w := z / (N * (Module.finrank ℚ E : ℂ)) with hw
-  have hU'st : IsStable (tw U (-w)) := isStable_tw hst (-w)
+  have hU'st : _root_.GlobalTheory.CuspRep.IsStable (tw U (-w)) := isStable_tw hst (-w)
   have hU'A : ∀ χ ∈ tw U (-w), IsAutForm χ := by
     rintro _ ⟨ψ, hψ, rfl⟩
     exact (hA ψ hψ).mulChi _

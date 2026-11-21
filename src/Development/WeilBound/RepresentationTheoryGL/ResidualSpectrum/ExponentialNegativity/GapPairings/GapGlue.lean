@@ -15,7 +15,7 @@ namespace PositivityTheory.Rg.Rs.JGapGlue
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-def locRep (V : Submodule ℂ (Sm E a)) (hs : IsStable V) (w : HeightOneSpectrum (𝓞 E)) :
+def locRep (V : Submodule ℂ (Sm E a)) (hs : _root_.GlobalTheory.CuspRep.IsStable V) (w : HeightOneSpectrum (𝓞 E)) :
     Representation ℂ (GL (Fin a) (w.adicCompletion E)) V where
   toFun g := (finRep E a (locGL E a w g)).restrict fun ψ hψ => hs (.fin (locGL E a w g)) ψ hψ
   map_one' := by

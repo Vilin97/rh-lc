@@ -74,7 +74,7 @@ theorem fin_translate (π : CuspSub E a) (w : HeightOneSpectrum (𝓞 E)) (k : G
   rw [e2]
   exact mem_sphSpan π w gw hfix
 
-theorem isStable_sphSpan (π : CuspSub E a) (w : HeightOneSpectrum (𝓞 E)) : IsStable (sphSpan π w) := by
+theorem isStable_sphSpan (π : CuspSub E a) (w : HeightOneSpectrum (𝓞 E)) : _root_.GlobalTheory.CuspRep.IsStable (sphSpan π w) := by
   intro o φ hφ
   induction hφ using Submodule.span_induction with
   | mem x hx =>

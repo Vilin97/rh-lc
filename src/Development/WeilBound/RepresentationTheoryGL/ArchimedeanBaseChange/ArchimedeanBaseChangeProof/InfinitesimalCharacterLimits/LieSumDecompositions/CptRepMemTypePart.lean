@@ -113,8 +113,8 @@ theorem rep_rt (h2 : PairRt) {g : GA E N} (hg : ∀ φ ∈ W, rt E N g φ ∈ W)
     _ = conj (inner ℂ (cls h (rt E N g p)) (cls h s)) := by rw [e2]
     _ = inner ℂ (cls h s) (cls h (rt E N g p)) := inner_conj_symm _ _
 
-theorem rep_mem_typePart (h1 : PairLin) (h2 : PairRt) (hinj : ∀ x ∈ W, cls h x = 0 → x = 0) (hW : IsStable W)
-    (hWQ : ∀ s ∈ W, GrowQ s.1) {U : Submodule ℂ (Sm E N)} (hU : IsStable U) (hUP : ∀ χ ∈ U, GrowP χ.1)
+theorem rep_mem_typePart (h1 : PairLin) (h2 : PairRt) (hinj : ∀ x ∈ W, cls h x = 0 → x = 0) (hW : _root_.GlobalTheory.CuspRep.IsStable W)
+    (hWQ : ∀ s ∈ W, GrowQ s.1) {U : Submodule ℂ (Sm E N)} (hU : _root_.GlobalTheory.CuspRep.IsStable U) (hUP : ∀ χ ∈ U, GrowP χ.1)
     {χ : Sm E N} (hχ : χ ∈ U) [FiniteDimensional ℂ (orbSpan χ)] {L : Subgroup (GL (Fin N) (Af E))} {Y : Type}
     [AddCommGroup Y] [Module ℂ Y] {ρ : Representation ℂ (Kinf E N) Y} (hχT : χ ∈ typePart L ρ)
     (S : Submodule ℂ (Sm E N)) [FiniteDimensional ℂ S] (hSW : S ≤ W)
@@ -182,13 +182,13 @@ theorem rep_mem_typePart (h1 : PairLin) (h2 : PairRt) (hinj : ∀ x ∈ W, cls h
     rw [hΦ k]
     rfl
 
-theorem exists_repV (h1 : PairLin) (h2 : PairRt) (hinj : ∀ x ∈ W, cls h x = 0 → x = 0) (hW : IsStable W)
-    (hWA : ∀ x ∈ W, IsAutForm x) (hWQ : ∀ s ∈ W, GrowQ s.1) {V : Submodule ℂ (Sm E N)} (hV : IsStable V)
+theorem exists_repV (h1 : PairLin) (h2 : PairRt) (hinj : ∀ x ∈ W, cls h x = 0 → x = 0) (hW : _root_.GlobalTheory.CuspRep.IsStable W)
+    (hWA : ∀ x ∈ W, IsAutForm x) (hWQ : ∀ s ∈ W, GrowQ s.1) {V : Submodule ℂ (Sm E N)} (hV : _root_.GlobalTheory.CuspRep.IsStable V)
     (hVW : V ≤ W)
     (hVfd : ∀ (L : Subgroup (GL (Fin N) (Af E))), IsOpen (L : Set (GL (Fin N) (Af E))) → ∀ (Y : Type)
       [AddCommGroup Y] [Module ℂ Y] [FiniteDimensional ℂ Y] (ρ : Representation ℂ (Kinf E N) Y),
         GlobalTheory.Published.AutFin.IsContRep ρ → FiniteDimensional ℂ (V ⊓ typePart L ρ : Submodule ℂ (Sm E N)))
-    {U : Submodule ℂ (Sm E N)} (hU : IsStable U) (hUA : ∀ χ ∈ U, IsAutForm χ) (hUP : ∀ χ ∈ U, GrowP χ.1)
+    {U : Submodule ℂ (Sm E N)} (hU : _root_.GlobalTheory.CuspRep.IsStable U) (hUA : ∀ χ ∈ U, IsAutForm χ) (hUP : ∀ χ ∈ U, GrowP χ.1)
     {χ : Sm E N} (hχ : χ ∈ U) : ∃ a ∈ V, ∀ u ∈ V, pr χ.1 u.1 = inner ℂ (cls h u) (cls h a) := by
   obtain ⟨L, hLo, hLc, hχT⟩ := exists_type (hUA χ hχ)
   have : FiniteDimensional ℂ (orbSpan χ) := (hUA χ hχ).kfin
@@ -238,7 +238,7 @@ theorem core_of (h1 : PairLin) (h2 : PairRt) (h3 : PairLie) (h4 : GrowQHolds) : 
   intro E _ _ _ N U hU hUA hUP φ hφU hφA hφ0
   have : (Measure.haar : Measure (GA E N)).IsMulRightInvariant := GlobalTheory.CovolGL.isMulRightInvariant E N _
   have hF := PositivityTheory.Rg.HF.GL.automorphicFormsFiniteGL
-  have hW : IsStable (A2 E N) := PrSt.isStable_square_integrable_forms hF
+  have hW : _root_.GlobalTheory.CuspRep.IsStable (A2 E N) := PrSt.isStable_square_integrable_forms hF
   have hA : ∀ x ∈ A2 E N, IsAutForm x := fun x hx => (PrSt.mem_square_integrable_forms hx).1
   have h : ∀ x ∈ A2 E N, MemL2Quotient (latticeGL E N) (Measure.haar : Measure (GA E N)) x.1 := fun x hx =>
     memL2_of_isAutForm (PrSt.mem_square_integrable_forms hx).1 (PrSt.mem_square_integrable_forms hx).2

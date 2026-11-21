@@ -135,7 +135,7 @@ theorem exists_reduced_basis_harmA : ∀ (E : Type) [Field E] [NumberField E] [I
   set S : Set (MvPolynomial (LtN Dw n) c.F) := {Q | Q ∈ harmA c a n ∧
     ∀ σ' : c.F →+* ℂ, Real.log (∑ m ∈ Q.support, ‖σ' (Q.coeff m)‖) ≤ x} with hS
   have hW : ∀ P ∈ Submodule.span c.F S, P ∈ HHa Dw.mult n c.F ComplexEmbedding.conjugate (InPsi H)
-      fun τ i => a (τ, i) := fun P hP => mem_HHa_of_mem_span (fun Q hQ => hQ.1.1) hP
+      fun τ i => a (τ, i) := fun P hP => mem_HHa_of_mem_span (S := S) (fun Q hQ => hQ.1.1) hP
   have hI : ∀ P, P ∈ MvPoly.integralPart (Submodule.span c.F S) ↔ P ∈ harmA (Dw := Dw) c a n := fun P =>
     ⟨fun h => ⟨hW P h.1, h.2⟩, fun h => ⟨hsp P h, h.2⟩⟩
   obtain ⟨ω, hω, hA⟩ := GlobalTheory.exists_short_independent_integers c.F

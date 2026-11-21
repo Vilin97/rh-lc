@@ -29,8 +29,8 @@ def PosC (Ψ : GL (Fin 2) (A E) → ℂ) : Prop := ∀ s g, Ψ (GroundTheory.Aut
 variable [IsTotallyComplex E]
 
 structure InvPair (V V' : Submodule ℂ (Sm E 2)) (B : V →ₗ[ℂ] V' →ₗ[ℂ] ℂ) : Prop where
-  st : IsStable V
-  st' : IsStable V'
+  st : _root_.GlobalTheory.CuspRep.IsStable V
+  st' : _root_.GlobalTheory.CuspRep.IsStable V'
   fin : ∀ k (x : V) (y : V'), B ⟨act (.fin k) x.1, st _ _ x.2⟩ ⟨act (.fin k) y.1, st' _ _ y.2⟩ = B x y
   cpt : ∀ k (x : V) (y : V'), B ⟨act (.cpt k) x.1, st _ _ x.2⟩ ⟨act (.cpt k) y.1, st' _ _ y.2⟩ = B x y
   lie : ∀ X (x : V) (y : V'), B ⟨act (.lie X) x.1, st _ _ x.2⟩ y + B x ⟨act (.lie X) y.1, st' _ _ y.2⟩ = 0

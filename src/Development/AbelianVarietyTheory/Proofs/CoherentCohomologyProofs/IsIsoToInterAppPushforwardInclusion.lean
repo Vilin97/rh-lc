@@ -94,8 +94,8 @@ variable {S : ShortComplex (X.Sheaf AddCommGrpCat.{u})}
 lemma exact_map_interSheaf (hS : S.ShortExact) (W : Opens X) :
     (S.map (interSheaf AddCommGrpCat.{u} W)).Exact ∧
       Mono (S.map (interSheaf AddCommGrpCat.{u} W)).f :=
-  ((Functor.preservesFiniteLimits_tfae (interSheaf AddCommGrpCat.{u} W)).out 1 3 rfl rfl).mpr
-    inferInstance S ⟨hS.exact, hS.mono_f⟩
+  ((Functor.preservesFiniteLimits_tfae (interSheaf AddCommGrpCat.{u} W)).out 1 4 rfl rfl).mpr
+    inferInstance S hS
 
 lemma shortExact_map_interSheaf (hS : S.ShortExact) {𝔅 : Set (Opens X)} (h𝔅 : Opens.IsBasis 𝔅)
     (hinf : ∀ B ∈ 𝔅, ∀ B' ∈ 𝔅, B ⊓ B' ∈ 𝔅)

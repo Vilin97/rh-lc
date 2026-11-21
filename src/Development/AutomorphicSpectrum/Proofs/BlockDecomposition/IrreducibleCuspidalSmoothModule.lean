@@ -138,7 +138,7 @@ theorem exists_stable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] 
     [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (H : Submodule ℂ (L2 (latticeGL E a) μ)) (_ : H ≤ L2cusp μ)
     (hi : IsIrredSubrep (R (latticeGL E a) μ) H) :
     ∃ V : Submodule ℂ (Sm E a), (∀ φ, φ ∈ V ↔ IsCuspForm φ ∧ (∀ t g, φ.1 (splitCentre E a t * g) = φ.1 g) ∧
-      ∃ h : MemL2Quotient (latticeGL E a) μ φ.1, h.toL2 ∈ H) ∧ IsStable V := by
+      ∃ h : MemL2Quotient (latticeGL E a) μ φ.1, h.toL2 ∈ H) ∧ _root_.GlobalTheory.CuspRep.IsStable V := by
   have hS : IsSubrep (R (latticeGL E a) μ) H := hi.1
   refine ⟨formSpace μ H hS, fun φ => Iff.rfl, ?_⟩
   rintro o φ ⟨h1, h2, h3, h4⟩

@@ -243,7 +243,7 @@ theorem coeff_one_subst {κ : Type} [Fintype κ] {γ : κ → PowerSeries C}
     rw [← coeff_zero_eq_constantCoeff_apply, coeff_pderiv]
     simp [PowerSeries.coeff]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [e, ReciprocityTheory.ChartRestriction.G.TB.LogPf.pderiv_subst (a := γ) hγ, map_sum]
+    rw [e, GlobalTheory.FormalCalc.pderiv_subst (a := γ) (hasSubst_of_constantCoeff_zero hγ), map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, cc_subst (a := γ) hγ, e, mul_comm, ← coeff_zero_eq_constantCoeff_apply (pderiv (R := C) i f), coeff_pderiv]
   simp

@@ -39,7 +39,9 @@ theorem _root_.GlobalTheory.exists_measurable_lintegral_coset_eq_one
     obtain ⟨n, hn⟩ := K.exists_mem y
     refine ne_of_gt (lt_of_lt_of_le (pos_iff_ne_zero.2 (hc_pos n)) ?_)
     calc c n = (K n).indicator (fun _ => c n) y := (Set.indicator_of_mem hn (fun _ => c n)).symm
-      _ ≤ f y := ENNReal.le_tsum n
+      _ ≤ f y := by
+        change (K n).indicator (fun _ => c n) y ≤ ∑' i, (K i).indicator (fun _ => c i) y
+        exact le_tsum (fun i => (K i).indicator (fun _ => c i) y) n
   have hjg : ∀ g, Measurable fun h => j h * g := fun g => hj.continuous.measurable.mul_const g
   have hmeas : ∀ g, Measurable fun h => f (j h * g) := fun g => hf.comp (hjg g)
   set F : G → ℝ≥0∞ := fun g => ∫⁻ h, f (j h * g) ∂ν with hF_def

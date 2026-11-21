@@ -84,10 +84,10 @@ section Forms
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-private noncomputable def stRep (C : Submodule ℂ (Sm E a)) (hC : IsStable C) : Representation ℂ (GL (Fin a) (Af E)) C :=
+private noncomputable def stRep (C : Submodule ℂ (Sm E a)) (hC : _root_.GlobalTheory.CuspRep.IsStable C) : Representation ℂ (GL (Fin a) (Af E)) C :=
   GlobalTheory.PRep.sub (finRep E a) C fun k => hC (.fin k)
 
-private theorem proj_rep {C V D : Submodule ℂ (Sm E a)} (hC : IsStable C) (hV : IsStable V) (hD : IsStable D)
+private theorem proj_rep {C V D : Submodule ℂ (Sm E a)} (hC : _root_.GlobalTheory.CuspRep.IsStable C) (hV : _root_.GlobalTheory.CuspRep.IsStable V) (hD : _root_.GlobalTheory.CuspRep.IsStable D)
     (p : C →ₗ[ℂ] V) (p1 : ∀ x : C, x.1 - (p x).1 ∈ D) (p2 : ∀ (x : C) (v : V), x.1 - v.1 ∈ D → p x = v)
     (g : GL (Fin a) (Af E)) (y : C) : p (stRep C hC g y) = stRep V hV g (p y) := by
   refine p2 _ _ ?_
@@ -95,7 +95,7 @@ private theorem proj_rep {C V D : Submodule ℂ (Sm E a)} (hC : IsStable C) (hV 
   rw [map_sub] at this
   exact this
 
-private theorem hasSat_of_map {C : Submodule ℂ (Sm E a)} (hC : IsStable C) (π : CuspSub E a) (f : C →ₗ[ℂ] π.V)
+private theorem hasSat_of_map {C : Submodule ℂ (Sm E a)} (hC : _root_.GlobalTheory.CuspRep.IsStable C) (π : CuspSub E a) (f : C →ₗ[ℂ] π.V)
     (hf : ∀ g (y : C), f (stRep C hC g y) = π.finPart g (f y)) (w : Pl E) (B : Multiset ℂˣ) {x : C}
     (hx : IsSatVecGL w (fL a w) x.1 B) (h0 : f x ≠ 0) : HasSatGL w (π.locRep w) B := by
   have h1 : IsSatVecGL w (locOf (stRep C hC) w) x B :=

@@ -229,7 +229,7 @@ theorem kl_all (h𝓕 : IsAddFundamentalDomain (ratN E N r) 𝓕 μ) {V : Submod
         rw [ct_smul]
         exact (klSub r s p).smul_mem c hφ.2⟩ }
   have hle : W ≤ V := fun φ hφ => hφ.1
-  have hst : IsStable W := fun o φ hφ => ⟨hV.stable o φ hφ.1, kl_act μ 𝓕 h𝓕 (hV.aut φ hφ.1) hφ.2 o⟩
+  have hst : _root_.GlobalTheory.CuspRep.IsStable W := fun o φ hφ => ⟨hV.stable o φ hφ.1, kl_act μ 𝓕 h𝓕 (hV.aut φ hφ.1) hφ.2 o⟩
   rcases hV.irred W hle hst with hW | hW
   · have : φ₀ ∈ W := ⟨hφ₀, hk⟩
     rw [hW] at this

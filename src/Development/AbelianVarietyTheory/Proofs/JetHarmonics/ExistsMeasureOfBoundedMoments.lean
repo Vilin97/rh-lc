@@ -108,7 +108,7 @@ theorem binomC_natCast (k n : ℕ) : binomC k (n : ℤ_[q]) = (n.choose k : ℂ_
 
 theorem fwdDiff_binomC (k m : ℕ) :
     (fwdDiff (1 : ℤ_[q]))^[m] (binomC (q := q) k) 0 = if m = k then 1 else 0 := by
-  have h := fwdDiff_iter_choose_zero k m
+  have h := fwdDiff_iter_choose_zero (R := ℤ) k m
   rw [fwdDiff_iter_eq_sum_shift] at h ⊢
   have h' := congrArg (Int.cast : ℤ → ℂ_[q]) h
   simp only [zero_add, nsmul_one, binomC_natCast] at h' ⊢

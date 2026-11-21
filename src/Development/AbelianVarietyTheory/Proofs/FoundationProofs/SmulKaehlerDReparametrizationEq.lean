@@ -77,7 +77,7 @@ theorem thL_part (N i : ℕ) (b : Lau p) :
     thL (HahnSeries.single (i : ℤ) (1 : ℤ_[p]) * sh N i (fun _ => 1) b) =
       (i : Lau p) * (HahnSeries.single (i : ℤ) (1 : ℤ_[p]) * sh N i (fun _ => 1) b) +
       (N : Lau p) * (HahnSeries.single (i : ℤ) (1 : ℤ_[p]) * sh N i (fun r => ((r / N : ℤ) : ℤ_[p])) b) := by
-  ext s
+  ext s : 2
   rw [HahnSeries.coeff_add, coeff_natCast_mul, coeff_natCast_mul]
   change (s : ℤ_[p]) * _ = _
   simp only [HahnSeries.coeff_single_mul, sh, one_mul]

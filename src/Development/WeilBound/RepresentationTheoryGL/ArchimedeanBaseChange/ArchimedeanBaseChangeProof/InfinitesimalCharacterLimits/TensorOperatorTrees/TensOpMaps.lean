@@ -63,12 +63,12 @@ theorem tensOp_inj {U₁ : Submodule ℂ (Sm E r)} {U₂ : Submodule ℂ (Sm E s
   exact Finset.sum_congr rfl fun i _ => mul_comm _ _
 
 theorem emb_ind {U₁ U₁' : Submodule ℂ (Sm E r)} {U₂ U₂' : Submodule ℂ (Sm E s)} {g₁ : Sm E r →ₗ[ℂ] Sm E r}
-    {g₂ : Sm E s →ₗ[ℂ] Sm E s} (hU₁ : IsStable U₁) (hU₂ : IsStable U₂) (hm₁ : ∀ ψ ∈ U₁, g₁ ψ ∈ U₁')
+    {g₂ : Sm E s →ₗ[ℂ] Sm E s} (hU₁ : _root_.GlobalTheory.CuspRep.IsStable U₁) (hU₂ : _root_.GlobalTheory.CuspRep.IsStable U₂) (hm₁ : ∀ ψ ∈ U₁, g₁ ψ ∈ U₁')
     (hm₂ : ∀ ψ ∈ U₂, g₂ ψ ∈ U₂') (hn₁ : ∀ ψ ∈ U₁, g₁ ψ = 0 → ψ = 0) (hn₂ : ∀ ψ ∈ U₂, g₂ ψ = 0 → ψ = 0)
     (he₁ : ∀ o, ∀ ψ ∈ U₁, g₁ (act o ψ) = act o (g₁ ψ)) (he₂ : ∀ o, ∀ ψ ∈ U₂, g₂ (act o ψ) = act o (g₂ ψ)) :
     Emb (indSub U₁ U₂ ⊓ finVec (cptRep E (r + s))) (· ∈ indSub U₁' U₂' ⊓ finVec (cptRep E (r + s))) := by
   have H : Good U₁ U₂ g₁ g₂ := ⟨hU₁, hU₂, he₁, he₂⟩
-  have hV : IsStable (indSub U₁ U₂ ⊓ finVec (cptRep E (r + s))) := by
+  have hV : _root_.GlobalTheory.CuspRep.IsStable (indSub U₁ U₂ ⊓ finVec (cptRep E (r + s))) := by
     have h := isStable_indFin hU₁ hU₂
     rwa [show {φ : Sm E (r + s) | MemInd2 U₁ U₂ φ ∧ φ ∈ finVec (cptRep E (r + s))} =
       ((indSub U₁ U₂ ⊓ finVec (cptRep E (r + s)) : Submodule ℂ (Sm E (r + s))) : Set (Sm E (r + s))) from

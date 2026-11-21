@@ -15,7 +15,7 @@ namespace PositivityTheory.Rg.Rs
 theorem pr_holds : Pr := by
   intro E _ _ _ N
   have hF := PositivityTheory.Rg.HF.GL.automorphicFormsFiniteGL
-  have hW : IsStable (A2 E N) := PrSt.isStable_square_integrable_forms hF
+  have hW : _root_.GlobalTheory.CuspRep.IsStable (A2 E N) := PrSt.isStable_square_integrable_forms hF
   refine ⟨hW, fun ψ hψ hψ0 => ?_⟩
   let μ : Measure (GA E N) := Measure.haar
   have : μ.IsMulRightInvariant := GlobalTheory.CovolGL.isMulRightInvariant E N μ

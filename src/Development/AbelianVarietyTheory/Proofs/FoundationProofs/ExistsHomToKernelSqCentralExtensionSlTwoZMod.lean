@@ -93,7 +93,7 @@ theorem commutator_sl2_zmod (m : ℕ) (hm : Nat.Coprime m 6) :
     rw [h]
     simp only [map_mul, map_inv]
     refine mul_mem (mul_mem (inv_mem hT) ?_) (inv_mem hT)
-    exact Subgroup.Normal.conj_mem inferInstance _ (inv_mem hT) _
+    exact Subgroup.Normal.conj_mem _ (inv_mem hT) _
   rw [eq_top_iff, ← Subgroup.map_top_of_surjective ρ hs, ← _root_.SpecialLinearGroup.SL2Z_generators,
     MonoidHom.map_closure, Subgroup.closure_le]
   rintro _ ⟨x, hx, rfl⟩

@@ -21,16 +21,16 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem rel_equivalence (P : Ideal (Geo.MRing ι)) :
     Equivalence (fun z z' : Geo.mcPts P ↦
-      ∃ c : K → ℂ, (∀ k, c k ≠ 0) ∧ (z' : (Σ k, ι k) → ℂ) = fun p ↦ c p.1 * (z : (Σ k, ι k) → ℂ) p) where
-  refl z := ⟨fun _ ↦ 1, fun _ ↦ one_ne_zero, by funext p; simp⟩
-  symm := by
-    rintro z z' ⟨c, hc, h⟩
+      ∃ c : K → ℂ, (∀ k, c k ≠ 0) ∧ (z' : (Σ k, ι k) → ℂ) = fun p ↦ c p.1 * (z : (Σ k, ι k) → ℂ) p) := by
+  constructor
+  · intro z
+    exact ⟨fun _ ↦ 1, fun _ ↦ one_ne_zero, by funext p; simp⟩
+  · rintro z z' ⟨c, hc, h⟩
     refine ⟨fun k ↦ (c k)⁻¹, fun k ↦ inv_ne_zero (hc k), ?_⟩
     funext p
     rw [h]
     exact (inv_mul_cancel_left₀ (hc p.1) _).symm
-  trans := by
-    rintro z z' z'' ⟨c, hc, h⟩ ⟨d, hd, h'⟩
+  · rintro z z' z'' ⟨c, hc, h⟩ ⟨d, hd, h'⟩
     refine ⟨fun k ↦ d k * c k, fun k ↦ mul_ne_zero (hd k) (hc k), ?_⟩
     funext p
     rw [h', h, mul_assoc]

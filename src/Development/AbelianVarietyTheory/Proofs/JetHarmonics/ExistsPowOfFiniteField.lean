@@ -55,7 +55,7 @@ theorem comap_eq {p : ℕ} [Fact p.Prime] {OE : Type} [CommRing OE] [IsDedekindD
     simp [hσ])
   have hφ : ∀ a, φ (w.toOw a) = σ a := fun a => by
     show extend (p := p) σ (1 ⊗ₜ a) = σ a
-    simp
+    simp [extend]
   have hle : ((IsLocalRing.maximalIdeal R).comap σ).map w.toOw ≤
       (IsLocalRing.maximalIdeal R).comap φ := by
     rw [Ideal.map_le_iff_le_comap]

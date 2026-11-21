@@ -52,11 +52,11 @@ theorem exists_isAlgClosed_forall_isAdicComplete (F₀ : Type) [Field F₀] [IsA
     ⟨Subtype.val_injective, fun x => (hmem _).2 x.2, fun r hr => ⟨⟨r, (hmem r).1 hr⟩, rfl⟩⟩
   refine ⟨C, inferInstance, inferInstance, e, v,
     fun x => expNegTop_inj_of_eq (by rw [hvC, he]), fun b hb =>
-    NormIntegers.isAdicComplete_span_singleton hO ?_⟩
-  change ‖(b : C)‖ < 1
-  rw [← coe_nnnorm, ← hvC, ← NNReal.coe_one, NNReal.coe_lt_coe, ← expNegTop_zero, ← not_le,
-    expNegTop_le_iff]
-  exact not_le.2 hb
+    NormIntegers.isAdicComplete_span_singleton hO (by
+      change ‖(b : C)‖ < 1
+      rw [← coe_nnnorm, ← hvC, ← NNReal.coe_one, NNReal.coe_lt_coe, ← expNegTop_zero, ← not_le,
+        expNegTop_le_iff]
+      exact not_le.2 hb)⟩
 
 end GlobalTheory.ClosedValuedField
 

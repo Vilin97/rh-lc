@@ -17,12 +17,12 @@ noncomputable section
 def HeightComparison.Statement : Prop :=
   ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (n : ι → ℕ) (P : ArithVariety n) (A : HermLine n),
     ∃ (k : ℕ) (C : ℝ), ∀ x ∈ P.points (AlgebraicClosure ℚ),
-      |height A x| ≤ k * height HermLine.standard x + C
+      |height A x| ≤ k * height (HermLine.standard n) x + C
 
 def DenseBoundedHeight.Statement : Prop :=
   ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (n : ι → ℕ) (P : ArithVariety n),
     ∃ (S : Set (Cone n (AlgebraicClosure ℚ))) (C : ℝ), S ⊆ P.points (AlgebraicClosure ℚ) ∧
-      P.ZariskiDense S ∧ ∀ x ∈ S, height HermLine.standard x ≤ C
+      P.ZariskiDense S ∧ ∀ x ∈ S, height (HermLine.standard n) x ≤ C
 
 def SlopeMaxExtension.Statement : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (E' E E'' : HermitianBundle.{0} K),
@@ -39,7 +39,7 @@ theorem evalCone_chartMonomial {F : Type*} [CommRing F] (z : Cone n F)
   simp [evalCone, chartMonomial, eval₂_prod]
 
 theorem chartSection_supNormLE (P : ArithVariety n) (c0 : (k : ι) → Fin (n k + 1)) :
-    (IntegralSection.chartSection (P := P) c0).SupNormLE HermLine.standard 0 := by
+    (IntegralSection.chartSection (P := P) c0).SupNormLE (HermLine.standard n) 0 := by
   intro z hz c d e he hc
   have hpos : 0 < ∏ k, l2Norm (z k) := Finset.prod_pos fun k _ ↦ vectorL2Norm_pos (hz.1 k)
   have h0 : evalCone z (1 * e - chartMonomial c0 1 * chartMonomial c d) = 0 := hz.2 _ he.2

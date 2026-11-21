@@ -18,7 +18,7 @@ open PositivityTheory.Rg.BcB.SpectralAccumulation.AdmDiscPf
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {N : ℕ}
 
-theorem isoV_symm {V V' : Submodule ℂ (Sm E N)} (hV : IsStable V) (h : SpectralAccumulation.IsoV V V') : SpectralAccumulation.IsoV V' V := by
+theorem isoV_symm {V V' : Submodule ℂ (Sm E N)} (hV : _root_.GlobalTheory.CuspRep.IsStable V) (h : SpectralAccumulation.IsoV V V') : SpectralAccumulation.IsoV V' V := by
   obtain ⟨T, hT⟩ := h
   refine ⟨T.symm, fun o φ ψ hψ => ?_⟩
   set a := T.symm φ with ha

@@ -186,7 +186,7 @@ theorem secH_equivariant {τ : Matrix (Fin g) (Fin g) ℂ} (hY : IsUnit (τ.map 
 
 theorem beta_secL (σ : (Fin g → ℂ) →ₗ[ℂ] (Fin g ⊕ Fin g → ℂ)) (z w : Fin g → ℂ) :
     beta (omegaCx g) σ (secL g) z w = -((σ z ∘ Sum.inr) ⬝ᵥ w) := by
-  simp [omegaCx_eq_dot, secL_apply]
+  simp [beta, omegaCx_eq_dot, secL_apply]
 
 theorem beta_secH_secL' {τ : Matrix (Fin g) (Fin g) ℂ} (hτ : τ.IsSymm)
     (hY : IsUnit (τ.map Complex.im).det) (z w : Fin g → ℂ) :

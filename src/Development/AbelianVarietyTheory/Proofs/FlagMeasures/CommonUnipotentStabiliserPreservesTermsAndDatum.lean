@@ -166,17 +166,17 @@ theorem isUnimod_smul {s : V ≃ₗ[K] V} (h : ∀ x y, H.B (s x) (s y) = H.B x 
     rw [eq_top_iff]
     intro x _
     obtain ⟨y, rfl⟩ := s.surjective x
-    have hy : y ∈ Submodule.span K (Λ : Set V) := by rw [hL.span_eq_top]; trivial
+    have hy : y ∈ Submodule.span K (Λ : Set V) := by rw [h1.2]; trivial
     induction hy using Submodule.span_induction with
     | mem y hy => exact Submodule.subset_span (apply_mem_smul s hy)
     | zero => simp
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha trivial) (hb trivial)
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem (ha trivial) (hb trivial)
     | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c (ha trivial)
-  refine ⟨(isLatMod_top_bot_iff _).2 ⟨Submodule.FG.map _ hL.fg, hspan⟩, ?_⟩
+  refine ⟨⟨⟨s • Λ, Submodule.FG.map _ hL.fg, by simp [rs]⟩, hspan⟩, ?_⟩
   ext x
   obtain ⟨y, rfl⟩ := s.surjective x
   rw [apply_mem_smul_iff, mem_dual_iff, hspan]
-  conv_rhs => rw [← h2, mem_dual_iff, hL.span_eq_top]
+  conv_rhs => rw [← h2, mem_dual_iff, h1.2]
   refine and_congr (by simp) ⟨fun hh x hx => ?_, fun hh x hx => ?_⟩
   · rw [← h]; exact hh _ (apply_mem_smul s hx)
   · obtain ⟨z, hz, rfl⟩ := exists_of_mem_smul hx

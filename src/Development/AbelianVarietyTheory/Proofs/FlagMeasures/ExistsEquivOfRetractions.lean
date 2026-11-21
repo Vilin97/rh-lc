@@ -86,7 +86,7 @@ private theorem exists_inv_pair_mul_eq_of_mul_eq {K n m : Type*} [Field K] [Fint
     have hpX : p (X *ᵥ w) = 0 := by
       apply Subtype.ext
       rw [hp_eq, hNAX, sub_self, ZeroMemClass.coe_zero]
-    rw [hφ_eq, hpX, map_zero, ZeroMemClass.coe_zero, add_zero, hNAX]
+    rw [hφ_eq, hpX, ψ.map_zero, ZeroMemClass.coe_zero, add_zero, hNAX]
   refine ⟨LinearMap.toMatrix' φ, LinearMap.toMatrix' φ', ?_, ?_, ?_, ?_⟩
   · rw [← LinearMap.toMatrix'_comp, ← LinearMap.toMatrix'_id]
     congr 1

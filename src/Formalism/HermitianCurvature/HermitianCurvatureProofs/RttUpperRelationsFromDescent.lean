@@ -538,6 +538,8 @@ open scoped ComplexConjugate
 
 variable {k r : ℕ}
 
+local notation "⟪" u ", " v "⟫" => herm (Hpk k r) u v
+
 lemma Hh : (Hpk k r)ᴴ = Hpk k r := B2x8.Hpk_herm k r
 
 lemma herm_bvec_right (u : Fin (2 * r + k + 1) → ℂ) (j : Fin (2 * r + k + 1)) :
@@ -589,6 +591,9 @@ lemma h_es_e (a b : Fin r) : ⟪bvec (esI k r a), bvec (eI k r b)⟫ = if a = b 
   · rw [if_neg h, if_neg (Ne.symm h)]
 
 variable {l : Fin r}
+
+local notation "𝐞" => bvec (eI k r l)
+local notation "𝐬" => bvec (esI k r l)
 
 lemma weyl_cell_apply_dual_basis (c : ℂ) (q : Fin (2 * r + k + 1)) :
     w1 k r l c (esI k r l) q = if q = eI k r l then c else 0 := by

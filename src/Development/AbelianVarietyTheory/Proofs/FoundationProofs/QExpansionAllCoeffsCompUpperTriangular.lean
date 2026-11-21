@@ -29,12 +29,13 @@ theorem qAll_affine : ∀ (E : Subring ℂ) (N a d : ℕ) (b : ℤ) (f : ℍ →
       rw [this]; have := τ.im_pos; positivity
     have hτ := hc (UpperHalfPlane.ofComplex (((a : ℂ) * τ + b) / d))
     rw [UpperHalfPlane.ofComplex_apply_of_im_pos hz] at hτ
-    simp only [UpperHalfPlane.coe_mk_subtype] at hτ
     have hinj : Function.Injective (fun k : ℕ => a * k) := fun x y h => by
       simpa [ha.ne'] using h
     rw [← hinj.hasSum_iff]
     · show HasSum (fun k => _) (f _)
       convert hτ using 1
+      funext k
+      simp only [Function.comp_apply, dvd_mul_right, if_true, Nat.mul_div_cancel_left _ ha, e]
       rw [mul_assoc, ← Complex.exp_add]
       congr 2
       push_cast

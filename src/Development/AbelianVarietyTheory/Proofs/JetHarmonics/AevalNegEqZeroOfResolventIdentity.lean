@@ -18,7 +18,7 @@ theorem shift_coeff_of_eval_identity {N : Type} [AddCommGroup N] [Module ℂ N]
       (∑ i ∈ Finset.range M, Polynomial.monomial i (f (a i))).coeff k = f (a k) := by
     intro f k
     rw [Polynomial.finsetSum_coeff]
-    simp only [Polynomial.coeff_monomial]
+    simp only [Polynomial.coeff_monomial_apply]
     rw [Finset.sum_ite_eq']
     split_ifs with hk
     · rfl

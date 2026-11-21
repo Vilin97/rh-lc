@@ -42,9 +42,8 @@ theorem linearIndependent_laurentMonomial :
     rw [hv a k (m a) (hm a ha), LinearMap.map_smul_of_tower]
   have h1 := congrArg (AddMonoidAlgebra.coeff · (m j))
     ((map_eq_zero_iff _ (awayFrac_injective (xProd_smul_injective s) k)).1 h0)
-  rw [coeff_sum, Finset.sum_eq_single j, coeff_smul, coeff_monomial, if_pos rfl, coeff_zero,
-    smul_eq_mul, mul_one] at h1
-  · exact h1
+  rw [coeff_sum, Finset.sum_eq_single j, coeff_smul, coeff_monomial, if_pos rfl] at h1
+  · simpa using h1
   · intro a ha hne
     rw [coeff_smul, coeff_monomial, if_neg fun e => hne (hinj a ha e), smul_zero]
   · exact fun h => absurd hj h

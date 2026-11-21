@@ -78,7 +78,7 @@ noncomputable def embVec (τ : E →+* ℂ) : (κ → E) →+ EuclideanSpace ℂ
 
 omit [Fintype κ] in
 theorem embVec_smul (τ : E →+* ℂ) (x : E) (v : κ → E) : embVec τ (x • v) = τ x • embVec τ v := by
-  ext k; simp
+  ext k; simp [embVec, Pi.smul_apply]
 
 noncomputable def embLength (τ : E →+* ℂ) : AddGroupSeminorm (κ → E) where
   toFun v := ‖embVec τ v‖
@@ -153,7 +153,7 @@ theorem sum_sq_perpVec_le (τ : E →+* ℂ) (h : (Fin n → E) →ₗ[E] ((Fin 
         (mul_le_mul hu hv (apply_nonneg _ _) (abs_nonneg _))
   apply sum_sq_le_of_embLength_le
   rw [perpVec_eq_perpVector, abs_mul, Nat.abs_cast, abs_pow, pow_succ, pow_mul, ← mul_assoc]
-  exact seminorm_perpVector_le (embSeminorm τ) (by simp) (embLength τ)
+  exact seminorm_perpVector_le (embSeminorm τ) (by change ‖τ 1‖ ≤ 1; simp) (embLength τ)
     (fun x v => (embLength_smul τ x v).le) _ e' g
     (fun a a' => key _ _ (embLength_le_abs τ (he' a')) (embLength_le_abs τ (he a)))
     (fun a => key _ _ (embLength_le_abs τ hg) (embLength_le_abs τ (he a)))

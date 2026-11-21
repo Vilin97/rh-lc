@@ -238,7 +238,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {N : ℕ}
 
 
 open GlobalTheory.CuspRep.LocUniq in
-theorem isoPart_opD {V : Submodule ℂ (Sm E N)} (hs : IsStable V) (w : HeightOneSpectrum (𝓞 E)) {X : Type}
+theorem isoPart_opD {V : Submodule ℂ (Sm E N)} (hs : _root_.GlobalTheory.CuspRep.IsStable V) (w : HeightOneSpectrum (𝓞 E)) {X : Type}
     [AddCommGroup X] [Module ℂ X] (σ : Representation ℂ (GL (Fin N) (w.adicCompletion E)) X) (o : Op E N) {x : V}
     (hx : x ∈ isoPart σ (locRepD hs w)) : opD hs o x ∈ isoPart σ (locRepD hs w) := by
   cases o with
@@ -294,7 +294,7 @@ def opOf (o : Op E N) : OpAlg E N := ⟨act o, Algebra.subset_adjoin ⟨o, rfl�
 
 instance : IsScalarTower ℂ (OpAlg E N) (Sm E N) := ⟨fun _ _ _ => rfl⟩
 
-def toR (V : Submodule ℂ (Sm E N)) (hV : IsStable V) : Submodule (OpAlg E N) (Sm E N) where
+def toR (V : Submodule ℂ (Sm E N)) (hV : _root_.GlobalTheory.CuspRep.IsStable V) : Submodule (OpAlg E N) (Sm E N) where
   carrier := V
   add_mem' := V.add_mem
   zero_mem' := V.zero_mem
@@ -367,7 +367,7 @@ theorem equiv_val_smul {R M : Type*} [Ring R] [AddCommGroup M] [Module R M] {p q
   rfl
 
 theorem isLocCompGL_of_equiv {E : Type} [Field E] [NumberField E] [IsCMField E] {N : ℕ}
-    {V V' : Submodule ℂ (Sm E N)} (hV : IsStable V) (hV' : IsStable V')
+    {V V' : Submodule ℂ (Sm E N)} (hV : _root_.GlobalTheory.CuspRep.IsStable V) (hV' : _root_.GlobalTheory.CuspRep.IsStable V')
     (e : toR V hV ≃ₗ[OpAlg E N] toR V' hV') (w : HeightOneSpectrum (𝓞 E))
     (σ : SmIrr (GL (Fin N) (w.adicCompletion E))) (h : IsLocCompGL V w σ) : IsLocCompGL V' w σ := by
   obtain ⟨f, h0, h1, hf⟩ := h

@@ -46,9 +46,7 @@ omit [StarRing K] [FiniteDimensional K V] in
 theorem lat_map (A : Submodule K V) (p : V →ₗ[K] A) (hp : Function.Surjective p)
     (N : Submodule (𝓞 K) V) (hN : Submodule.IsLattice K N) :
     Submodule.IsLattice K (N.map (p.restrictScalars (𝓞 K))) := by
-  refine ⟨hN.fg.map _, ?_⟩
-  have e : ((N.map (p.restrictScalars (𝓞 K)) : Submodule (𝓞 K) A) : Set A) = p '' (N : Set V) := rfl
-  rw [e, ← Submodule.map_span, hN.span_eq_top, Submodule.map_top, LinearMap.range_eq_top.2 hp]
+  exact Submodule.IsLattice.of_fg K (hN.fg.map _)
 
 theorem dual_latIn (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (hp : PD h) (A : Submodule K V)
     (hsA : (hRes h A).IsSymm) (hpA : PD (hRes h A)) (p : V →ₗ[K] A) (hsur : Function.Surjective p)

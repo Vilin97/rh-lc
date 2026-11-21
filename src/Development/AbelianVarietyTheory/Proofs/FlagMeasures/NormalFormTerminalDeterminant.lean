@@ -70,10 +70,7 @@ theorem span_inf {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.IsLattice K Λ) (S
 omit [StarRing K] in
 theorem isLattice_field {M : Submodule (𝓞 K) K} (hfg : M.FG) {x : K} (hx : x ∈ M) (h0 : x ≠ 0) :
     Submodule.IsLattice K M := by
-  refine ⟨hfg, eq_top_iff.2 fun y _ => ?_⟩
-  have : y = (y * x⁻¹) • x := by simp [h0]
-  rw [this]
-  exact Submodule.smul_mem _ _ (Submodule.subset_span hx)
+  exact Submodule.IsLattice.of_fg K hfg
 
 theorem idx_scal {c : K} (hc : c * star c = 1) {A M M' : Submodule (𝓞 K) K} (hA : Submodule.IsLattice K A)
     (hM : Submodule.IsLattice K M) (hM' : Submodule.IsLattice K M') (h : ∀ t, t ∈ M' ↔ t * c ∈ M)

@@ -155,7 +155,7 @@ theorem isoV_of_ne (μ : Measure (GA E N)) [μ.IsHaarMeasure] [μ.IsMulRightInva
     have h1 : T ⟨x₀, hx₀⟩ = 0 := congrArg Subtype.val (LinearMap.congr_fun h0 ⟨x₀, hx₀⟩)
     rw [hT ⟨x₀, hx₀⟩ y₀ hy₀, h1, map_zero, inner_zero_right]
   have hker : LinearMap.ker Tl = ⊥ := by
-    have hst : IsStable ((LinearMap.ker Tl).map V.subtype) := by
+    have hst : _root_.GlobalTheory.CuspRep.IsStable ((LinearMap.ker Tl).map V.subtype) := by
       rintro o _ ⟨x, hx, rfl⟩
       refine ⟨⟨_, hV.stable o _ x.2⟩, ?_, rfl⟩
       refine Subtype.ext ?_
@@ -171,7 +171,7 @@ theorem isoV_of_ne (μ : Measure (GA E N)) [μ.IsHaarMeasure] [μ.IsMulRightInva
       obtain rfl : x' = x := Subtype.ext e
       exact hx'
   have hran : LinearMap.range Tl = ⊤ := by
-    have hst : IsStable ((LinearMap.range Tl).map V'.subtype) := by
+    have hst : _root_.GlobalTheory.CuspRep.IsStable ((LinearMap.range Tl).map V'.subtype) := by
       rintro o _ ⟨_, ⟨x, rfl⟩, rfl⟩
       exact ⟨Tl ⟨_, hV.stable o _ x.2⟩, ⟨_, rfl⟩, eqv o x _ rfl⟩
     rcases hV'.irred _ (Submodule.map_subtype_le _ _) hst with h | h

@@ -175,7 +175,7 @@ theorem hasSat_dual (hB : GlobalTheory.Published.CuspFormsBoundedGL) {π : CuspS
       have e : φ = (Df y).1 := Subtype.ext (funext fun h => by rw [hDv, hy, invA_invA, star_star])
       rw [e]
       exact (Df y).2
-    have hst : IsStable S := fun o φ ⟨y, hy⟩ => ⟨σ.op (invTOp o) y, fun g => by
+    have hst : _root_.GlobalTheory.CuspRep.IsStable S := fun o φ ⟨y, hy⟩ => ⟨σ.op (invTOp o) y, fun g => by
       change (act (invTOp o) y.1).1 g = _
       rw [act_val (invTOp o) hy, GlobalTheory.CsdBack.invTOp_involutive o]⟩
     have hne : S ≠ ⊥ := by

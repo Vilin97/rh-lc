@@ -104,7 +104,7 @@ theorem gauss_phase : ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (H : Sesq V
     simp only [hφ, hB2] at this
     exact Subtype.ext (Subtype.ext this)
   have : Module.Finite ℤ Λ := Module.Finite.iff_addGroup_fg.2 ((AddGroup.fg_iff_addSubgroup_fg _).2 hfg)
-  have : IsAddTorsionFree V := .of_isTorsionFree ℂ V
+  have : HasUniqueDiv V := .of_isTorsionFree ℂ V
   have : Module.Free ℤ Λ := inferInstance
   have := finite_quot _ φ hinj
   let _ : Fintype (Λ ⧸ φ.range) := Fintype.ofFinite _

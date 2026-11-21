@@ -272,9 +272,9 @@ theorem eventually_isUnit {x y z α β γ : B} (h : IsUnit (α * x + β * y + γ
     let p : Polynomial (B ⧸ m.asIdeal) :=
       Polynomial.C (π x) * Polynomial.X ^ 2 + Polynomial.C (π y) * Polynomial.X + Polynomial.C (π z)
     have hp : p ≠ 0 := fun h0 => by
-      have h2 : π x = 0 := by simpa [p] using congrArg (Polynomial.coeff · 2) h0
-      have h1 : π y = 0 := by simpa [p] using congrArg (Polynomial.coeff · 1) h0
-      have h3 : π z = 0 := by simpa [p] using congrArg (Polynomial.coeff · 0) h0
+      have h2 : π x = 0 := by simpa [p] using congrArg (AddMonoidAlgebra.coeff · 2) h0
+      have h1 : π y = 0 := by simpa [p] using congrArg (AddMonoidAlgebra.coeff · 1) h0
+      have h3 : π z = 0 := by simpa [p] using congrArg (AddMonoidAlgebra.coeff · 0) h0
       have := (h.map π).ne_zero
       simp [h1, h2, h3] at this
     refine ((Polynomial.finite_setOf_isRoot hp).preimage
@@ -457,9 +457,11 @@ theorem modular_involution (T : G →* G) (hc : Continuous T) (hT : ∀ x, T (T 
   let μ : Measure G := Measure.haar
   haveI : (μ.map T).IsHaarMeasure := e.isHaarMeasure_map μ hc hc
   refine smul_inj (μ := μ.map T) ?_
-  rw [← map_mul_right_eq, ← Measure.map_smul, ← map_mul_right_eq,
+  rw [← map_mul_right_eq, ← Measure.map_smul _ hc.measurable.aemeasurable, ← map_mul_right_eq,
     Measure.map_map (measurable_mul_const _) hc.measurable, Measure.map_map hc.measurable (measurable_mul_const _)]
   congr 1
+  funext x
+  exact (T.map_mul x g).symm
 
 theorem modular_compact (K : Subgroup G) (ho : IsOpen (K : Set G)) (hc : IsCompact (K : Set G)) {k : G}
     (hk : k ∈ K) : Measure.modularCharacter k = 1 := by
@@ -482,7 +484,7 @@ theorem map_inv_eq (μ : Measure G) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] 
   set c : ℝ≥0 := Measure.haarScalarFactor μ.inv μ
   have h1 : (c ^ 2) • μ = (1 : ℝ≥0) • μ := by
     rw [one_smul]
-    conv_rhs => rw [← Measure.inv_inv μ, hc, Measure.inv_def, Measure.map_smul, ← Measure.inv_def, hc, smul_smul]
+    conv_rhs => rw [← Measure.inv_inv μ, hc, Measure.inv_def, Measure.map_smul _ continuous_inv.measurable.aemeasurable, ← Measure.inv_def, hc, smul_smul]
     rw [pow_two]
   rw [hc, (pow_eq_one_iff_of_nonneg zero_le two_ne_zero).1 (smul_inj h1), one_smul]
 
@@ -627,10 +629,13 @@ theorem mulVec_mem {A : Type} [CommRing A] {n : Type} [Fintype n] [DecidableEq n
     (hu : ∀ w : n → A, (∀ i, w i ∈ R) → (fun i => (u : A) * w i) ∈ Λ) (hv : ∀ w ∈ Λ, ∀ i, (v : A) * w i ∈ R)
     {k X : Matrix n n A} {c : A} (hk : k - 1 = c • X)
     (hX : ∀ i j, c * (((u⁻¹ : Aˣ) : A) * ((v⁻¹ : Aˣ) : A) * X i j) ∈ R) {y : n → A} (hy : y ∈ Λ) : k *ᵥ y ∈ Λ := by
-  have h := hu _ fun i => sum_mem fun j (_ : j ∈ Finset.univ) => mul_mem (hX i j) (hv y hy j)
+  have h : (fun i => (u : A) * ∑ j : n, (c * (((u⁻¹ : Aˣ) : A) * ((v⁻¹ : Aˣ) : A) * X i j)) * ((v : A) * y j)) ∈ Λ :=
+    hu _ fun i => sum_mem fun j (_ : j ∈ Finset.univ) => mul_mem (hX i j) (hv y hy j)
   rw [sub_eq_iff_eq_add.1 hk, add_mulVec, one_mulVec]
   refine add_mem ?_ hy
   convert h using 1
+  ext i
+  simp only [Matrix.mulVec, dotProduct, Matrix.smul_apply, smul_eq_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   linear_combination (-c * X i j * y j) * u.mul_inv - (c * X i j * y j * u * ((u⁻¹ : Aˣ) : A)) * v.mul_inv
 
@@ -651,8 +656,8 @@ theorem finite_unimodular (I : AutInst) (μf : Measure I.Gf) [μf.IsHaarMeasure]
     unfold AutInst.Lf lamAf Formalism.UG.latS
     rw [Set.image_eq_range]
     rfl
-  obtain ⟨c, hc0, hlow⟩ := Formalism.UG.P.adelstabL_lower (F := I.F) I.L I.L_span
-  obtain ⟨d, hd0, hup⟩ := Formalism.UG.P.adelstabL_upper (F := I.F) I.L (Module.Finite.iff_fg.2 I.L_fg)
+  obtain ⟨c, hc0, hlow⟩ := Formalism.UG.P.adelstabL_lower (F := I.F) (E := I.E) I.L I.L_span
+  obtain ⟨d, hd0, hup⟩ := Formalism.UG.P.adelstabL_upper (F := I.F) (E := I.E) I.L (Module.Finite.iff_fg.2 I.L_fg)
   rw [← hL] at hlow hup
   have hun : ∀ g : ℕ, 1 ≤ g → IsUnit (g : I.E ⊗[I.F] Af I.F) := fun g hg => by
     have : (g : I.E) ≠ 0 := Nat.cast_ne_zero.2 (by omega)

@@ -186,7 +186,7 @@ theorem right_slice_single_first (F : Sm E (r + s)) {n : ℕ} (b : Fin n → Sm 
   rw [toL_single_cc]
   exact right_slice_lie_first_block F b q hexp _ m₁
 
-theorem key_left (W : Submodule ℂ (Sm E r)) (hW : IsStable W) (F : Sm E (r + s))
+theorem key_left (W : Submodule ℂ (Sm E r)) (hW : _root_.GlobalTheory.CuspRep.IsStable W) (F : Sm E (r + s))
     (hu : ∀ (x : BlockIx (r + s) r → Ad E) g, F.1 (unip x * g) = F.1 g)
     (hP : ∀ m₂, sl0 m₂ F ∈ W) {n : ℕ} (b : Fin n → Sm E r) (q : Fin n → Sm E s) (hb : ∀ i, b i ∈ W)
     (hexp : ∀ m : GA E r × GA E s, F.1 (lev (Ad E) r s m) = ∑ i, (b i).1 m.1 * (q i).1 m.2)
@@ -221,7 +221,7 @@ theorem key_left (W : Submodule ℂ (Sm E r)) (hW : IsStable W) (F : Sm E (r + s
       rw [left_slice_single_second F b q hexp]
       exact W.sum_mem fun i _ => W.smul_mem _ (hb i)
 
-theorem key_right (W : Submodule ℂ (Sm E s)) (hW : IsStable W) (F : Sm E (r + s))
+theorem key_right (W : Submodule ℂ (Sm E s)) (hW : _root_.GlobalTheory.CuspRep.IsStable W) (F : Sm E (r + s))
     (hu : ∀ (x : BlockIx (r + s) r → Ad E) g, F.1 (unip x * g) = F.1 g)
     (hP : ∀ m₁, sl1 m₁ F ∈ W) {n : ℕ} (b : Fin n → Sm E r) (q : Fin n → Sm E s) (hq : ∀ i, q i ∈ W)
     (hexp : ∀ m : GA E r × GA E s, F.1 (lev (Ad E) r s m) = ∑ i, (b i).1 m.1 * (q i).1 m.2)

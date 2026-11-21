@@ -82,7 +82,7 @@ theorem mem_square_integrable_forms {φ : Sm E N} (hφ : φ ∈ A2 E N) : IsAutF
   obtain ⟨⟨h1, h2⟩, h3⟩ := hle hφ
   exact ⟨h1, (memL2_iff_isSqInt (ContAut.continuous_of_isOpen_stab E N φ h1.level) h1.left h3).1 h2⟩
 
-theorem isStable_square_integrable_forms (hF : GlobalTheory.Published.AutomorphicFormsFiniteGL) : IsStable (A2 E N) := by
+theorem isStable_square_integrable_forms (hF : GlobalTheory.Published.AutomorphicFormsFiniteGL) : _root_.GlobalTheory.CuspRep.IsStable (A2 E N) := by
   intro o φ hφ
   induction hφ using Submodule.span_induction with
   | mem ψ hψ => exact Submodule.subset_span ⟨PrAut.isAutForm_act hF o hψ.1, isSqInt_act hF o hψ.1 hψ.2⟩
@@ -109,8 +109,8 @@ theorem inner_rt {g : GA E N} (hg : ∀ φ ∈ W, rt E N g φ ∈ W) (hg' : ∀ 
   let Ui : L2 (latticeGL E N) μ →ₗᵢ[ℂ] L2 (latticeGL E N) μ := ⟨(R (latticeGL E N) μ g).toLinearMap, norm_R g⟩
   exact Ui.inner_map_map _ _
 
-theorem exists_adj (hW : IsStable W) (hA : ∀ φ ∈ W, IsAutForm φ) (o : Op E N) :
-    ∃ B : Module.End ℂ (Sm E N), (∀ U : Submodule ℂ (Sm E N), IsStable U → ∀ u ∈ U, B u ∈ U) ∧
+theorem exists_adj (hW : _root_.GlobalTheory.CuspRep.IsStable W) (hA : ∀ φ ∈ W, IsAutForm φ) (o : Op E N) :
+    ∃ B : Module.End ℂ (Sm E N), (∀ U : Submodule ℂ (Sm E N), _root_.GlobalTheory.CuspRep.IsStable U → ∀ u ∈ U, B u ∈ U) ∧
       ∀ φ ∈ W, ∀ ψ ∈ W, inner ℂ (cls h (act o φ)) (cls h ψ) = inner ℂ (cls h φ) (cls h (B ψ)) := by
   cases o with
   | fin k =>

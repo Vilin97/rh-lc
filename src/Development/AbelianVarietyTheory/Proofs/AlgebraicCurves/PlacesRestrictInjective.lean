@@ -135,7 +135,7 @@ theorem exists_gauss_variables (d : Data K ι Ω WT A) (hd : d.AxH 𝒜)
       (∀ P : MvPolynomial (SVar d.D d.N) (Ω c), ∃ Q : MvPolynomial (SVar d.D d.N) (Ω c),
         MvPolynomial.aeval t Q = algebraMap _ (OmS (Ω c) d.D d.N) P) ∧
       ∀ w ∈ d.PlOver la c, (∀ j, 0 ≤ d.Wres c w (ratio (Ω := Ω c) (d.w j c) (d.w j0 c))) →
-        ∃ ht : ∀ s, t s ∈ vRing w,
+        ∃ ht : (∀ s, t s ∈ vRing w),
           letI := ReciprocityTheory.MultiplicativeHeights.residueAlgebra (vRing w) (algebraMap (Ω c) (OmS (Ω c) d.D d.N))
           AlgebraicIndependent
             (ResidueField ((vRing w).comap (algebraMap (Ω c) (OmS (Ω c) d.D d.N))))

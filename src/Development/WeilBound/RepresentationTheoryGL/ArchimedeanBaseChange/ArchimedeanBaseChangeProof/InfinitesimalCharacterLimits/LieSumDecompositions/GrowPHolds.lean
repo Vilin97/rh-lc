@@ -56,7 +56,7 @@ def PairLie : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex
     pr (act (.lie X) χ).1 u.1 = -pr χ.1 (act (.lie X) u).1
 
 def Core : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ) (U : Submodule ℂ (Sm E N)),
-  IsStable U → (∀ χ ∈ U, IsAutForm χ) → (∀ χ ∈ U, GrowP χ.1) → ∀ φ ∈ U, φ ∈ A2 E N → φ ≠ 0 →
+  _root_.GlobalTheory.CuspRep.IsStable U → (∀ χ ∈ U, IsAutForm χ) → (∀ χ ∈ U, GrowP χ.1) → ∀ φ ∈ U, φ ∈ A2 E N → φ ≠ 0 →
     ∃ (V : Submodule ℂ (Sm E N)) (p : Sm E N →ₗ[ℂ] Sm E N), IsDiscrete V ∧ (∀ χ ∈ U, p χ ∈ V) ∧
       (∀ o, ∀ χ ∈ U, p (act o χ) = act o (p χ)) ∧ p φ ≠ 0
 

@@ -156,7 +156,6 @@ theorem ordF_up (hu : ∀ P : HeightOneSpectrum (𝓞 E), Algebra.IsUnramifiedAt
   have : (P.asIdeal.under (𝓞 F)).IsMaximal := (P.under (𝓞 F)).isMaximal
   have h : P.valuation E (algebraMap F E k) = (P.under (𝓞 F)).valuation F k := by
     rw [← HeightOneSpectrum.valuation_liesOver E (P.under (𝓞 F)) P (k : F),
-      Ideal.ramificationIdx'_eq_ramificationIdx _ _ (P.under (𝓞 F)).ne_bot,
       Ideal.ramificationIdx_eq_one_iff.2 (hu P), pow_one]
   unfold ordF
   rw [← h]

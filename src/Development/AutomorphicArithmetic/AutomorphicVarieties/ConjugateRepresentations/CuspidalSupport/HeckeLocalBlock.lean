@@ -294,11 +294,11 @@ def Step : Prop :=
 
 def CiBasic : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (m : (E →+* ℂ) → Multiset ℂ),
-    IsStable (CI a m) ∧ ∃ c : ℂ, ∀ φ ∈ CI a m, lie E a (oneL E a) φ = c • φ
+    _root_.GlobalTheory.CuspRep.IsStable (CI a m) ∧ ∃ c : ℂ, ∀ φ ∈ CI a m, lie E a (oneL E a) φ = c • φ
 
 def CiCompl : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ (m : (E →+* ℂ) → Multiset ℂ),
-    ∀ U ≤ CI a m, IsStable U → ∃ D ≤ CI a m, IsStable D ∧ U ⊓ D = ⊥ ∧ U ⊔ D = CI a m
+    ∀ U ≤ CI a m, _root_.GlobalTheory.CuspRep.IsStable U → ∃ D ≤ CI a m, _root_.GlobalTheory.CuspRep.IsStable D ∧ U ⊓ D = ⊥ ∧ U ⊔ D = CI a m
 
 def CuspProj : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a → ∀ (m : (E →+* ℂ) → Multiset ℂ),

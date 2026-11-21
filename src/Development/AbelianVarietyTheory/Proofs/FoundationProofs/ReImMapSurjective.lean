@@ -116,6 +116,8 @@ theorem exists_isOmegaLeb : ∀ P Q : ℕ, ∃ lam : Measure (lieU P Q), IsOmega
   refine ⟨NNReal.sqrt t • l, Measure.IsAddHaarMeasure.nnreal_smul l hs, ?_⟩
   rw [Measure.prod_smul_left, Measure.prod_smul_right, smul_smul, NNReal.mul_self_sqrt,
     Measure.map_smul]
-  exact ht.symm
+  · exact ht.symm
+  · change AEMeasurable e (l.prod l)
+    exact e.continuous.measurable.aemeasurable
 
 end GlobalTheory.CompactDualOmega

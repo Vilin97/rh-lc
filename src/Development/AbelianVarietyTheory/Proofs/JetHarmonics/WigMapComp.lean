@@ -26,11 +26,16 @@ theorem wigMap_comp : ∀ (V₁ : Type) [NormedAddCommGroup V₁] [InnerProductS
       MvPolynomial.eval (Sum.elim ω (fun j => star (ω j))) (q p.1 * q' p.2) • (L p.1).comp (L' p.2)),
       Fintype.sum_prod_type]
     show (A ω).comp (A' ω) = _
-    rw [hL ω, hL' ω, ContinuousLinearMap.finset_sum_comp]
-    refine Finset.sum_congr rfl fun i _ => ?_
-    rw [ContinuousLinearMap.comp_finset_sum]
-    refine Finset.sum_congr rfl fun j _ => ?_
-    rw [ContinuousLinearMap.smul_comp, ContinuousLinearMap.comp_smul, smul_smul, map_mul]
+    rw [hL ω, hL' ω]
+    ext x
+    simp only [ContinuousLinearMap.comp_apply, sum_apply, ContinuousLinearMap.smul_apply,
+      map_sum, map_smul, Finset.smul_sum, map_mul]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [smul_comm, smul_smul]
   · intro h hh ω
     show ((A (h *ᵥ ω)).comp (A' (h *ᵥ ω))).comp (π₃ h) = (π₁ h).comp ((A ω).comp (A' ω))
     rw [ContinuousLinearMap.comp_assoc, h2' h hh, ← ContinuousLinearMap.comp_assoc, h2 h hh,

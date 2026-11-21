@@ -189,7 +189,7 @@ private theorem nw_one_mem_mul_mem_inv_mem_isClosed {n : ℕ} (ε : Fin n → Bo
       isClosed_eq ?_ continuous_const))
     simp only [herm]
     unfold dotProduct
-    exact continuous_finset_sum _ fun i _ =>
+    exact continuous_finsetSum _ fun i _ =>
       ((continuous_apply i).comp (hcv y).star).mul continuous_const
 
 end General

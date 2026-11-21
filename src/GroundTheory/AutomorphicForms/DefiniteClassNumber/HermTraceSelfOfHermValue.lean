@@ -36,9 +36,9 @@ theorem baseTrace_algebraMap (t : R) : baseTrace K E R (algebraMap R (R ⊗[K] E
 
 omit [Algebra.IsQuadraticExtension K E] in
 theorem baseTrace_tensorMap {S : Type*} [CommRing S] [Algebra K S] (f : R →ₐ[K] S)
-    (z : R ⊗[K] E) : baseTrace K E S (tensorMap f z) = f (baseTrace K E R z) := by
+    (z : R ⊗[K] E) : baseTrace K E S (tensorMap E f z) = f (baseTrace K E R z) := by
   induction z using TensorProduct.inductionOn with
-  | tmul r e => rw [tensorMap_tmul, baseTrace_tmul, baseTrace_tmul, map_mul, AlgHom.commutes]
+  | tmul r e => simp [tensorMap, baseTrace_tmul, AlgHom.commutes]
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 end Trace
@@ -143,30 +143,36 @@ end Invariance
 
 theorem tensorMap_hermPair {S : Type*} [CommRing S] [Algebra K S] (f : R →ₐ[K] S)
     (x y : ι → R ⊗[K] E) :
-    tensorMap f (hermPair K H R x y) =
-      hermPair K H S (fun i => tensorMap f (x i)) (fun i => tensorMap f (y i)) := by
+    tensorMap E f (hermPair K H R x y) =
+      hermPair K H S (fun i => tensorMap E f (x i)) (fun i => tensorMap E f (y i)) := by
   unfold hermPair
-  have h := RingHom.map_dotProduct (tensorMap (E := E) f : R ⊗[K] E →+* S ⊗[K] E)
+  have h := RingHom.map_dotProduct (tensorMap E f : R ⊗[K] E →+* S ⊗[K] E)
     (fun i => conjBase K E R (x i)) (baseMatrix K H R *ᵥ y)
   simp only [RingHom.coe_coe] at h
   rw [h]
   congr 1
   · funext i
-    exact tensorMap_conjBase f (x i)
+    have hconj (z : R ⊗[K] E) :
+        tensorMap E f (conjBase K E R z) = conjBase K E S (tensorMap E f z) := by
+      induction z using TensorProduct.inductionOn with
+      | tmul r e => simp [tensorMap, conjBase_tmul]
+      | add z w hz hw => simp only [map_add, hz, hw]
+    exact hconj (x i)
   · funext i
-    have := RingHom.map_mulVec (tensorMap (E := E) f : R ⊗[K] E →+* S ⊗[K] E)
+    have := RingHom.map_mulVec (tensorMap E f : R ⊗[K] E →+* S ⊗[K] E)
       (baseMatrix K H R) y i
     simp only [RingHom.coe_coe] at this
     rw [Function.comp_apply, this]
-    have h2 := map_includeRight_tensorMap (H := H) f
-    simp only [RingHom.coe_coe] at h2
+    have h2 : (baseMatrix K H R).map (tensorMap E f) = baseMatrix K H S := by
+      ext j k
+      simp [baseMatrix, tensorMap, Algebra.TensorProduct.includeRight_apply]
     rw [h2]
     rfl
 
 theorem hermTrace_tensorMap {S : Type*} [CommRing S] [Algebra K S] (f : R →ₐ[K] S)
     (x y : ι → R ⊗[K] E) :
     f (hermTrace K H R x y) =
-      hermTrace K H S (fun i => tensorMap f (x i)) (fun i => tensorMap f (y i)) := by
+      hermTrace K H S (fun i => tensorMap E f (x i)) (fun i => tensorMap E f (y i)) := by
   rw [hermTrace, hermTrace, ← tensorMap_hermPair, baseTrace_tensorMap]
 
 end Pairing
@@ -194,12 +200,12 @@ theorem sum_coords_smul_stdVec (x : ι → R ⊗[K] E) :
 
 omit [Algebra.IsQuadraticExtension K E] [Fintype ι] [Fintype κ] in
 theorem tensorMap_stdVec (a : ι × κ) :
-    (fun i => tensorMap (Algebra.ofId K R) (stdVec K b a i)) = stdVec R b a := by
+    (fun i => tensorMap E (Algebra.ofId K R) (stdVec K b a i)) = stdVec R b a := by
   funext i
   simp only [stdVec, Pi.single_apply]
   split_ifs with h
   · subst h
-    simp
+    simp [tensorMap]
   · simp
 
 theorem hermTrace_eq_sum (x y : ι → R ⊗[K] E) :
