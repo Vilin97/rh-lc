@@ -60,8 +60,8 @@ end GlobalTheory.ZEulProps
 theorem GlobalTheory.ZEulProps.uInt_props : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ) (φ φ' : GA E (m + 1) → ℂ)
     (Φ : (Fin (m + 1) → Cinf E) → ℂ) (N : ℕ) (x : ℝ),
     Continuous (GlobalTheory.JSW.whit φ) → Continuous (GlobalTheory.JSW.whit φ') →
-    (∀ u ∈ GlobalTheory.JSW.NA E (m + 1), ∀ g, GlobalTheory.JSW.whit φ (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ g) →
-    (∀ u ∈ GlobalTheory.JSW.NA E (m + 1), ∀ g, GlobalTheory.JSW.whit φ' (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ' g) →
+    (∀ u ∈ GlobalTheory.JSW.NA (E := E) (a := (m + 1)), ∀ g, GlobalTheory.JSW.whit φ (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ g) →
+    (∀ u ∈ GlobalTheory.JSW.NA (E := E) (a := (m + 1)), ∀ g, GlobalTheory.JSW.whit φ' (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ' g) →
     Continuous Φ → (∀ u, 0 ≤ (Φ u).re ∧ (Φ u).im = 0) →
     Measurable (GlobalTheory.ZEul.uInt φ φ' Φ N x) ∧
     (∀ u ∈ GlobalTheory.CellDec.NA E (m + 1), ∀ g, GlobalTheory.ZEul.uInt φ φ' Φ N x (u * g) = GlobalTheory.ZEul.uInt φ φ' Φ N x g) ∧
@@ -69,7 +69,7 @@ theorem GlobalTheory.ZEulProps.uInt_props : ∀ (E : Type) [Field E] [NumberFiel
   intro E _ _ _ m φ φ' Φ N x hW hW' hl hl' hΦ _
   refine ⟨?_, fun u hu g => ?_, fun g => ?_⟩
   · exact GlobalTheory.ZUnfTheta.measurable_integrand hW.measurable hW'.measurable hΦ N x
-  · have hu' : u ∈ GlobalTheory.JSW.NA E (m + 1) := (GlobalTheory.SmGL.mem_unipB (Ad E)).1 hu
+  · have hu' : u ∈ GlobalTheory.JSW.NA (E := E) (a := (m + 1)) := (GlobalTheory.SmGL.mem_unipB (Ad E)).1 hu
     unfold GlobalTheory.ZEul.uInt
     rw [GlobalTheory.ZEulProps.lastRow_unip hu g, mul_assoc u g, hl u hu', hl' u hu', GlobalTheory.RSJ.Model.detPow_mul,
       GlobalTheory.ZEulProps.detPow_unip hu x, one_mul, map_mul]

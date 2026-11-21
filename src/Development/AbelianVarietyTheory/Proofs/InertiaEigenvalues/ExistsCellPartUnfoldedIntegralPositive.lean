@@ -135,11 +135,11 @@ theorem uInt_self_zero {Φ : (Fin (m + 1) → Cinf E) → ℂ} (hΦ : ∀ u, 0 �
   exact ⟨rfl, mul_nonneg (mul_nonneg (Complex.normSq_nonneg _) (hΦ y).1) hc'.2⟩
 
 theorem uInt_unip_mul {φ : GA E (m + 1) → ℂ}
-    (hN : ∀ u ∈ GlobalTheory.JSW.NA E (m + 1), ∀ g, GlobalTheory.JSW.whit φ (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ g)
+    (hN : ∀ u ∈ GlobalTheory.JSW.NA (E := E) (a := (m + 1)), ∀ g, GlobalTheory.JSW.whit φ (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ g)
     (Φ : (Fin (m + 1) → Cinf E) → ℂ) (N : ℕ) (x : ℝ) {u : GA E (m + 1)} (hu : u ∈ NA E (m + 1))
     (g : GA E (m + 1)) : GlobalTheory.ZEul.uInt φ φ Φ N x (u * g) = GlobalTheory.ZEul.uInt φ φ Φ N x g := by
   obtain ⟨h1, h2⟩ := (GlobalTheory.SmGL.mem_unipB _).1 hu
-  have hu' : u ∈ GlobalTheory.JSW.NA E (m + 1) := ⟨h1, h2⟩
+  have hu' : u ∈ GlobalTheory.JSW.NA (E := E) (a := (m + 1)) := ⟨h1, h2⟩
   have hr : GlobalTheory.ZEul.lastRow (u * g) = GlobalTheory.ZEul.lastRow g := GlobalTheory.ZUnf.lastRow_mul_of_row fun l => by
     rcases lt_or_eq_of_le (Fin.le_last l) with hl | rfl
     · rw [h1 _ _ hl, Matrix.one_apply_ne (ne_of_gt hl)]
@@ -181,11 +181,11 @@ theorem exists_compact_support {S : Finset (HeightOneSpectrum (𝓞 E))} {b φ :
     (hNJ : ∀ z ∈ natLat E N, ∀ v ∈ S,
         Valued.v (z v) ≤ WithZero.exp (-FractionalIdeal.count E v (J : FractionalIdeal (𝓞 E)⁰ E)))
     (hΦc : HasCompactSupport Φ) (hs : tsupport Φ ⊆ GlobalTheory.RSTheta.rowSet E (Fin.last m))
-    (hN : ∀ u ∈ GlobalTheory.JSW.NA E (m + 1), ∀ g, GlobalTheory.JSW.whit φ (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ g)
+    (hN : ∀ u ∈ GlobalTheory.JSW.NA (E := E) (a := (m + 1)), ∀ g, GlobalTheory.JSW.whit φ (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ g)
     (hK : ∀ κ ∈ GlobalTheory.RSLocalPart.levelAt (m + 1) S J, ∀ g, GlobalTheory.JSW.whit φ (g * finGL E (m + 1) κ) = GlobalTheory.JSW.whit φ g)
-    (hb : ∃ C : Set (GA E (m + 1)), IsCompact C ∧ ∀ p ∈ GlobalTheory.JSW.mirS E S m, b p ≠ 0 →
-      ∃ u ∈ GlobalTheory.JSW.NA E (m + 1), u⁻¹ * p ∈ C)
-    (hW : ∀ p ∈ GlobalTheory.JSW.mirS E S m, GlobalTheory.JSW.whit φ p = b p) :
+    (hb : ∃ C : Set (GA E (m + 1)), IsCompact C ∧ ∀ p ∈ (GlobalTheory.JSW.supS (E := E) (a := m + 1) S ∩ GlobalTheory.JSW.mirSet (GlobalTheory.CuspRep.Ad E) m), b p ≠ 0 →
+      ∃ u ∈ GlobalTheory.JSW.NA (E := E) (a := (m + 1)), u⁻¹ * p ∈ C)
+    (hW : ∀ p ∈ (GlobalTheory.JSW.supS (E := E) (a := m + 1) S ∩ GlobalTheory.JSW.mirSet (GlobalTheory.CuspRep.Ad E) m), GlobalTheory.JSW.whit φ p = b p) :
     ∃ K : Set (GA E (m + 1)), IsCompact K ∧ ∀ g ∈ C0 E (m + 1) S, GlobalTheory.ZEul.uInt φ φ Φ N 0 g ≠ 0 →
       ∃ u ∈ NA E (m + 1), u * g ∈ K := by
   obtain ⟨C, hC, hbC⟩ := hb
@@ -225,7 +225,7 @@ theorem exists_compact_support {S : Finset (HeightOneSpectrum (𝓞 E))} {b φ :
   set y : Fin (m + 1) → Cinf E := fun i => pInf E (GlobalTheory.ZEul.lastRow g i) with hydef
   have hge : g = u * p * finGL E (m + 1) κ * infGL E (m + 1) (GlobalTheory.RSTheta.rowGL (Fin.last m) y) := by
     rw [← e, inv_mul_cancel_right]
-  have hpS : p ∈ GlobalTheory.JSW.mirS E S m := ⟨fun w hw => hp.2 w hw, hp.1⟩
+  have hpS : p ∈ (GlobalTheory.JSW.supS (E := E) (a := m + 1) S ∩ GlobalTheory.JSW.mirSet (GlobalTheory.CuspRep.Ad E) m) := ⟨fun w hw => hp.2 w hw, hp.1⟩
   obtain ⟨h1, h2⟩ := (GlobalTheory.SmGL.mem_unipB _).1 hu
   have hW' : GlobalTheory.JSW.whit φ (g * infGL E (m + 1) (secInv y)) = GlobalTheory.JSW.psiN u * b p := by
     rw [GlobalTheory.ZUnf.secInv_eq_inv_rowGL (hs hy), map_inv, e, mul_assoc, hN u ⟨h1, h2⟩, hK κ hκ, hW p hpS]
@@ -257,11 +257,11 @@ theorem exists_cellPart_unfoldedIntegral_positive_alt : ∀ (E : Type) [Field E]
     Continuous Φ → HasCompactSupport Φ → tsupport Φ ⊆ GlobalTheory.RSTheta.rowSet E (Fin.last m) →
     (∀ u, 0 ≤ (Φ u).re ∧ (Φ u).im = 0) → Φ (Pi.single (Fin.last m) 1) ≠ 0 →
     Continuous (GlobalTheory.JSW.whit φ) →
-    (∀ u ∈ GlobalTheory.JSW.NA E (m + 1), ∀ g, GlobalTheory.JSW.whit φ (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ g) →
+    (∀ u ∈ GlobalTheory.JSW.NA (E := E) (a := (m + 1)), ∀ g, GlobalTheory.JSW.whit φ (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ g) →
     (∀ κ ∈ GlobalTheory.RSLocalPart.levelAt (m + 1) S J, ∀ g, GlobalTheory.JSW.whit φ (g * finGL E (m + 1) κ) = GlobalTheory.JSW.whit φ g) →
-    b 1 = 1 → (∃ C : Set (GA E (m + 1)), IsCompact C ∧ ∀ p ∈ GlobalTheory.JSW.mirS E S m, b p ≠ 0 →
-      ∃ u ∈ GlobalTheory.JSW.NA E (m + 1), u⁻¹ * p ∈ C) →
-    (∀ p ∈ GlobalTheory.JSW.mirS E S m, GlobalTheory.JSW.whit φ p = b p) →
+    b 1 = 1 → (∃ C : Set (GA E (m + 1)), IsCompact C ∧ ∀ p ∈ (GlobalTheory.JSW.supS (E := E) (a := m + 1) S ∩ GlobalTheory.JSW.mirSet (GlobalTheory.CuspRep.Ad E) m), b p ≠ 0 →
+      ∃ u ∈ GlobalTheory.JSW.NA (E := E) (a := (m + 1)), u⁻¹ * p ∈ C) →
+    (∀ p ∈ (GlobalTheory.JSW.supS (E := E) (a := m + 1) S ∩ GlobalTheory.JSW.mirSet (GlobalTheory.CuspRep.Ad E) m), GlobalTheory.JSW.whit φ p = b p) →
     ∀ (μ : Measure (GA E (m + 1))) [μ.IsHaarMeasure] (𝓕₀ : Set (GA E (m + 1))),
     IsFundamentalDomain (GlobalTheory.CellDec.NE E (m + 1)) 𝓕₀ μ →
     ∃ f t : GA E (m + 1) → ℝ, Measurable f ∧ Measurable t ∧ (∀ g, 0 ≤ f g) ∧ IntegrableOn f 𝓕₀ μ ∧
@@ -276,7 +276,7 @@ theorem exists_cellPart_unfoldedIntegral_positive_alt : ∀ (E : Type) [Field E]
   have hBc : Continuous fun g => (GlobalTheory.ZEul.uInt φ φ Φ N 0 g).re := Complex.continuous_re.comp hc
   obtain ⟨K, hKc, hKs⟩ := exists_compact_support hJ hNJ hΦc hs hN hK hb hW
 
-  have hS1 : (1 : GA E (m + 1)) ∈ GlobalTheory.JSW.mirS E S m :=
+  have hS1 : (1 : GA E (m + 1)) ∈ (GlobalTheory.JSW.supS (E := E) (a := m + 1) S ∩ GlobalTheory.JSW.mirSet (GlobalTheory.CuspRep.Ad E) m) :=
     ⟨fun w _ => map_one _, fun j => by simp [Matrix.one_apply, eq_comm]⟩
   have hy1 : (fun i => pInf E (GlobalTheory.ZEul.lastRow (1 : GA E (m + 1)) i)) = Pi.single (Fin.last m) 1 := by
     funext i

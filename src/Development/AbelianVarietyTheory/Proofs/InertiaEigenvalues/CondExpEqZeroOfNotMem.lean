@@ -16,7 +16,7 @@ namespace GlobalTheory.RamShift
 variable {E : Type} [Field E] [NumberField E]
 
 def CondOne (w : HeightOneSpectrum (𝓞 E)) (c : w.adicCompletion E) : Prop :=
-  ∀ x : w.adicCompletion E, (∀ y ∈ Ov E w, GlobalTheory.JSW.psiLoc w (c * x * y) = 1) ↔ x ∈ Ov E w
+  ∀ x : w.adicCompletion E, (∀ y ∈ Ov E w, (GroundTheory.Global.adelicChar _ (GlobalTheory.CuspRep.sFin _ (GlobalTheory.CuspRep.sLoc _ w (c * x * y))) : ℂ) = 1) ↔ x ∈ Ov E w
 
 
 open Classical in

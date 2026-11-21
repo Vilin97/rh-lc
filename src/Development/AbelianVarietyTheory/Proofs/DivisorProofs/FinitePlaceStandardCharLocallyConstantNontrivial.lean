@@ -19,7 +19,7 @@ namespace GlobalTheory.JSW
 
 theorem psiLoc_addChar_locallyConstant_ne_one :
     ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)), ∃ ψ : AddChar (w.adicCompletion E) ℂ,
-      (∀ x, ψ x = GlobalTheory.JSW.psiLoc w x) ∧ IsLocallyConstant ψ ∧ ψ ≠ 1 := by
+      (∀ x, ψ x = (GroundTheory.Global.adelicChar _ (GlobalTheory.CuspRep.sFin _ (GlobalTheory.CuspRep.sLoc _ w x)) : ℂ)) ∧ IsLocallyConstant ψ ∧ ψ ≠ 1 := by
   intro E _ _ w
   refine ⟨psiLocChar w, fun x => rfl, ?_, ?_⟩
   · have hc : Continuous (psiLocChar w) := by

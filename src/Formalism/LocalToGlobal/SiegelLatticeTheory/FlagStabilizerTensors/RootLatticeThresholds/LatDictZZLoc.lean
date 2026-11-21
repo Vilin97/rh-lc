@@ -370,7 +370,8 @@ theorem exists_dual_one (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hs
     (hd : ∀ x, (∀ y, h x y = 0) → x = 0) {p : Ideal (𝓞 K)} (hp : p.IsMaximal) {z : V}
     {M₁ : AddSubgroup V} (hM₁ : IsSelfDualMod (locRing p) h M₁) (hz₁ : z ∈ M₁)
     (hp₁ : ∀ c : K, c • z ∈ M₁ → c ∈ locRing p) (hz0 : z ≠ 0) : ∃ y₁ ∈ M₁, h z y₁ = 1 := by
-  have hS := isHermSemilocal_locRing hK hp
+  have hstar : ∀ {a : K}, a ∈ locRing p → star a ∈ locRing p :=
+    fun ha => star_mem_locRing hp.isPrime ha
   let f : V →+ K :=
     { toFun := fun m => h m z
       map_zero' := by simp
@@ -379,7 +380,7 @@ theorem exists_dual_one (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hs
   have H1 : ∀ s ∈ locRing p, ∀ a ∈ M₁.map f, s * a ∈ M₁.map f := by
     intro s hs' a ha
     obtain ⟨m, hm, rfl⟩ := (hfA a).mp ha
-    refine (hfA _).mpr ⟨star s • m, hM₁.smul_mem _ (hS.star_mem _ hs') _ hm, ?_⟩
+    refine (hfA _).mpr ⟨star s • m, hM₁.smul_mem _ (hstar hs') _ hm, ?_⟩
     rw [map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, star_star]
   have H2 : ∃ a ∈ M₁.map f, a ≠ 0 := by
     obtain ⟨x, hx⟩ : ∃ x, h z x ≠ 0 := by
@@ -397,7 +398,7 @@ theorem exists_dual_one (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hs
     obtain ⟨m, hm, rfl⟩ := (hfA a).mp ha
     rw [one_mul]
     exact hM₁.int _ hm _ hz₁
-  obtain ⟨α, hαA, hα0, hdiv⟩ := hS.principal (M₁.map f) H1 H2 H3
+  obtain ⟨α, hαA, hα0, hdiv⟩ := principal_locRing hK hp (M₁.map f) H1 H2 H3
   obtain ⟨m₀, hm₀, rfl⟩ := (hfA α).mp hαA
   have hinv : (h m₀ z)⁻¹ ∈ locRing p := by
     apply hp₁
@@ -407,7 +408,7 @@ theorem exists_dual_one (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hs
     exact hdiv _ ((hfA _).mpr ⟨m, hm, rfl⟩)
   refine ⟨(star (h m₀ z))⁻¹ • m₀, hM₁.smul_mem _ ?_ _ hm₀, ?_⟩
   · rw [← star_inv₀]
-    exact hS.star_mem _ hinv
+    exact hstar hinv
   · have e := hs.eq m₀ z
     rw [starRingEnd_apply] at e
     rw [map_smul, smul_eq_mul, ← e]

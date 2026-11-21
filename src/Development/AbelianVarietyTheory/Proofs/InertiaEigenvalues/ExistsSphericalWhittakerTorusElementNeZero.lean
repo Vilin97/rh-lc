@@ -42,7 +42,7 @@ theorem exists_whittaker_ne_zero_induction_bad_places (m : ℕ) (T : Finset (Hei
       (∀ w ∉ T, w ∉ R → GlobalTheory.CellDec.compV E (m + 1) w
         ((GlobalTheory.CellDec.tl (m + 1) ϖ (GlobalTheory.RamShift.shift m T ϖ).1)⁻¹ * g) ∈ KGL w (n := (m + 1))) → whit φ.1 g ≠ 0 →
       ∃ φ ∈ π.V, (∀ w ∉ T, ∀ k ∈ KGL w (n := (m + 1)), act (.fin (locGL E (m + 1) w k)) φ = φ) ∧
-        ∃ x ∈ GlobalTheory.JSW.supS E (m + 1) T,
+        ∃ x ∈ GlobalTheory.JSW.supS (E := E) (a := (m + 1)) T,
           whit φ.1 (x * GlobalTheory.CellDec.tl (m + 1) ϖ (GlobalTheory.RamShift.shift m T ϖ).1) ≠ 0 := by
   classical
   set t0 := GlobalTheory.CellDec.tl (m + 1) ϖ (GlobalTheory.RamShift.shift m T ϖ).1 with ht0
@@ -159,7 +159,7 @@ theorem exists_sph_whit_tl_ne_zero : ∀ (E : Type) [Field E] [NumberField E] [I
     (∀ w, HasSatGL w.1 (π.locRep w.1) (Finset.univ.val.map (α w))) →
     ∀ (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ), (∀ w, IsUnifV E w (ϖ w : w.adicCompletion E)) →
     ∃ φ ∈ π.V, (∀ w ∉ T, ∀ k ∈ KGL w (n := (m + 1)), act (.fin (locGL E (m + 1) w k)) φ = φ) ∧
-      ∃ x ∈ GlobalTheory.JSW.supS E (m + 1) T,
+      ∃ x ∈ GlobalTheory.JSW.supS (E := E) (a := (m + 1)) T,
         GlobalTheory.JSW.whit φ.1 (x * GlobalTheory.CellDec.tl (m + 1) ϖ (GlobalTheory.RamShift.shift m T ϖ).1) ≠ 0 := by
   intro E _ _ _ m T π α hα ϖ hϖ
   classical

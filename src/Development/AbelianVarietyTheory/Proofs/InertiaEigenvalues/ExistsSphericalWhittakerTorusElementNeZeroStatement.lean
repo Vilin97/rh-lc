@@ -17,6 +17,6 @@ theorem _root_.GlobalTheory.T.exists_spherical_whittaker_torusElement_ne_zero : 
     (∀ w, HasSatGL w.1 (π.locRep w.1) (Finset.univ.val.map (α w))) →
     ∀ (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ), (∀ w, IsUnifV E w (ϖ w : w.adicCompletion E)) →
     ∃ φ ∈ π.V, (∀ w ∉ T, ∀ k ∈ KGL w (n := (m + 1)), act (.fin (locGL E (m + 1) w k)) φ = φ) ∧
-      ∃ x ∈ GlobalTheory.JSW.supS E (m + 1) T,
+      ∃ x ∈ GlobalTheory.JSW.supS (E := E) (a := (m + 1)) T,
         GlobalTheory.JSW.whit φ.1 (x * GlobalTheory.CellDec.tl (m + 1) ϖ (GlobalTheory.RamShift.shift m T ϖ).1) ≠ 0 := by
   first | (exact @GlobalTheory.JSW.NzSphRam.exists_sph_whit_tl_ne_zero) | (exact GlobalTheory.JSW.NzSphRam.exists_sph_whit_tl_ne_zero) | (intros; apply GlobalTheory.JSW.NzSphRam.exists_sph_whit_tl_ne_zero  <;> assumption)

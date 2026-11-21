@@ -24,8 +24,8 @@ open Matrix
 namespace GlobalTheory.BlockMirabolic
 
 theorem blockGL_mem_mirS : ∀ (E : Type) [Field E] [NumberField E] (m r : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E))),
-    ∀ h ∈ GlobalTheory.JSW.supS E (m + 1) S,
-      GroundTheory.Automorphic.FourierWhittaker.blockGL (by omega : m + 1 ≤ m + r + 1 + 1) h ∈ GlobalTheory.JSW.mirS E S (m + r + 1) := by
+    ∀ h ∈ GlobalTheory.JSW.supS (E := E) (a := (m + 1)) S,
+      GroundTheory.Automorphic.FourierWhittaker.blockGL (by omega : m + 1 ≤ m + r + 1 + 1) h ∈ (GlobalTheory.JSW.supS (E := E) (a := (m + r + 1) + 1) S ∩ GlobalTheory.JSW.mirSet (GlobalTheory.CuspRep.Ad E) (m + r + 1)) := by
   intro E _ _ m r S h hh
   constructor
   · intro w hw

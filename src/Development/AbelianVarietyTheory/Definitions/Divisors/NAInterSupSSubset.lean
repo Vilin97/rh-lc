@@ -17,7 +17,7 @@ open GlobalTheory.CuspRep GroundTheory.Automorphic GroundTheory.Automorphic.Four
 
 variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 
-theorem mem_NA_iff (u : GA E a) : u ∈ NA E a ↔ ∃ X : Pos a → Ad E, u = uGL X := by
+theorem mem_NA_iff (u : GA E a) : u ∈ NA (E := E) (a := a) ↔ ∃ X : Pos a → Ad E, u = uGL X := by
   constructor
   · rintro ⟨h0, h1⟩
     refine ⟨fun p => (u : Matrix (Fin a) (Fin a) (Ad E)) p.1.1 p.1.2, Units.ext ?_⟩
@@ -52,7 +52,7 @@ theorem superDiag_uGL (X : Pos a → Ad E) : GlobalTheory.Whittaker.superDiag (u
     rw [if_neg (ne_of_lt p.2), dite_eq_left p.2]
 
 theorem whit_mul {F : GA E a → ℂ} (hc : Continuous F) (hl : AutomorphicForm.IsLeftInvariant F) {u : GA E a}
-    (hu : u ∈ NA E a) (g : GA E a) : whit F (u * g) = psiN u * whit F g := by
+    (hu : u ∈ NA (E := E) (a := a)) (g : GA E a) : whit F (u * g) = psiN u * whit F g := by
   obtain ⟨X, rfl⟩ := (mem_NA_iff u).1 hu
   rw [psiN, superDiag_uGL]
   exact MultiplicityOne.whittaker_uGL_mul hc hl X g
@@ -64,7 +64,7 @@ theorem psiLoc_eq (w : HeightOneSpectrum (𝓞 E)) (x : w.adicCompletion E) :
   congr 2
 
 theorem loc_mem_supS (S : Finset (HeightOneSpectrum (𝓞 E))) (w : HeightOneSpectrum (𝓞 E))
-    (g : GL (Fin a) (w.adicCompletion E)) : finGL E a (locGL E a w g) ∈ supS E a S ↔ w ∈ S ∨ g = 1 := by
+    (g : GL (Fin a) (w.adicCompletion E)) : finGL E a (locGL E a w g) ∈ supS (E := E) (a := a) S ↔ w ∈ S ∨ g = 1 := by
   have hc : ∀ v, ∀ g : GA E a, GeneralLinearGroup.map ((pLoc E v).comp (pFin E)) g =
       GeneralLinearGroup.map (pLoc E v) (GeneralLinearGroup.map (pFin E) g) := fun _ _ => rfl
   constructor

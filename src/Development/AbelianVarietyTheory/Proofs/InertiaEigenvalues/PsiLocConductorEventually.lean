@@ -21,7 +21,7 @@ open scoped nonZeroDivisors ComplexConjugate
 
 open IsDedekindDomain Formalism.UG GlobalTheory.LFun
 
-theorem GlobalTheory.JSW.psiLoc_conductor_eventually : ∀ (E : Type) [Field E] [NumberField E], ∃ S : Finset (HeightOneSpectrum (𝓞 E)), ∀ w ∉ S, ∀ x : w.adicCompletion E, (∀ y ∈ Ov E w, GlobalTheory.JSW.psiLoc w (x * y) = 1) ↔ x ∈ Ov E w := by
+theorem GlobalTheory.JSW.psiLoc_conductor_eventually : ∀ (E : Type) [Field E] [NumberField E], ∃ S : Finset (HeightOneSpectrum (𝓞 E)), ∀ w ∉ S, ∀ x : w.adicCompletion E, (∀ y ∈ Ov E w, (GroundTheory.Global.adelicChar _ (GlobalTheory.CuspRep.sFin _ (GlobalTheory.CuspRep.sLoc _ w (x * y))) : ℂ) = 1) ↔ x ∈ Ov E w := by
   intro E _ _
   classical
   have hD : (differentIdeal ℤ (𝓞 E) : Ideal (𝓞 E)) ≠ 0 := differentIdeal_ne_bot (A := ℤ)

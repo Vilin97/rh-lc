@@ -12,7 +12,7 @@ open NumberField IsDedekindDomain GlobalTheory.CuspRep Formalism.UG GlobalTheory
 namespace GlobalTheory.JSW.MirSemi
 
 theorem infGL_mem_supS {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
-    (S : Finset (HeightOneSpectrum (𝓞 E))) (y : GL (Fin a) (Cinf E)) : infGL E a y ∈ GlobalTheory.JSW.supS E a S := by
+    (S : Finset (HeightOneSpectrum (𝓞 E))) (y : GL (Fin a) (Cinf E)) : infGL E a y ∈ GlobalTheory.JSW.supS (E := E) (a := a) S := by
   intro w _
   have h := pFin_infGL (E := E) (a := a) y
   ext i j
@@ -29,7 +29,7 @@ theorem locSpan_rightInv : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyCo
       add_mem' := fun {F G} hF hG g => by simp only [Pi.add_apply, hF g, hG g]
       zero_mem' := fun _ => rfl
       smul_mem' := fun c F hF g => by simp only [Pi.smul_apply, hF g] }
-  have hc : ∀ h ∈ GlobalTheory.JSW.supS E a S, h * k = k * h := fun h hh => GlobalTheory.T.adelicGL_complementary_supports_commute E a S h k hh hInf hS
+  have hc : ∀ h ∈ GlobalTheory.JSW.supS (E := E) (a := a) S, h * k = k * h := fun h hh => GlobalTheory.T.adelicGL_complementary_supports_commute E a S h k hh hInf hS
   refine fun F hF => (locSpan_le (V := V) hF₀ ?_ ?_) hF
   · intro F hF h hh g
     show F (g * k * h) = F (g * h)

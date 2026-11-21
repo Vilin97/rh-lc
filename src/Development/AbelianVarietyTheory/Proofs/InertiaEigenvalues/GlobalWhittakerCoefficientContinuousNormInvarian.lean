@@ -27,7 +27,7 @@ theorem continuous_whit_and_norm_mul : ∀ (E : Type) [Field E] [NumberField E] 
       funext fun g => GroundTheory.Automorphic.FourierWhittaker.whittaker_eq_partialCoeff_zero hF g
     rw [e]
     exact GroundTheory.Automorphic.FourierWhittaker.continuous_partialCoeff hF 0
-  · have hu' : u ∈ GlobalTheory.JSW.NA E a := (GlobalTheory.SmGL.mem_unipB _).1 hu
+  · have hu' : u ∈ GlobalTheory.JSW.NA (E := E) (a := a) := (GlobalTheory.SmGL.mem_unipB _).1 hu
     rw [GlobalTheory.JSW.WhitModel.whit_mul hF hl hu' g, norm_mul, GlobalTheory.JSW.psiN, Circle.norm_coe, one_mul]
 
 end GlobalTheory.JSW.WhitNorm

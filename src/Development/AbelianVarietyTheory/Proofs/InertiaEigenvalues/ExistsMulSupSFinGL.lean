@@ -70,7 +70,7 @@ theorem map_pLoc_pFin_finGL {a : ℕ} (v : HeightOneSpectrum (𝓞 E)) (k : GL (
 
 theorem exists_mul_supS_finGL : ∀ (E : Type) [Field E] [NumberField E] (a : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E))) (g : GA E a),
     g ∈ GlobalTheory.CellDec.C0 E a S →
-    ∃ u ∈ GlobalTheory.CellDec.NA E a, ∃ h ∈ GlobalTheory.JSW.supS E a S, ∃ k : GL (Fin a) (Af E),
+    ∃ u ∈ GlobalTheory.CellDec.NA E a, ∃ h ∈ GlobalTheory.JSW.supS (E := E) (a := a) S, ∃ k : GL (Fin a) (Af E),
       (∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) k ∈ KGL v (n := a)) ∧ (∀ v ∈ S, Matrix.GeneralLinearGroup.map (pLoc E v) k = 1) ∧
       g = u * h * finGL E a k := by
   intro E _ _ a S g hg

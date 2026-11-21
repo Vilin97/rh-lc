@@ -214,7 +214,7 @@ theorem chart_schurF_eq (β : GA E (m + 1) → ℂ) (b₁ : GA E (r + 1) → ℂ
 
 theorem chart_schurF_zero (β : GA E (m + 1) → ℂ) (b₁ : GA E (r + 1) → ℂ)
     (χ : (Fin (r + 1) → Fin (m + 1) → Cinf E) → ℝ) (C : Set (GA E (r + 1)))
-    (hC : ∀ p, b₁ p ≠ 0 → ∃ u ∈ GlobalTheory.JSW.NA E (r + 1), u⁻¹ * p ∈ C)
+    (hC : ∀ p, b₁ p ≠ 0 → ∃ u ∈ GlobalTheory.JSW.NA (E := E) (a := (r + 1)), u⁻¹ * p ∈ C)
     (g : GA E (m + r + 1 + 1)) (x : Lie E (m + r + 1 + 1)) (hx : IsUnit (Matrix.of x))
     (hK : (Dof ((g : Matrix (Fin (m + r + 1 + 1)) (Fin (m + r + 1 + 1)) (Ad E)).map (pInf E) * Matrix.of x)).det ∉
       (fun c : GA E (r + 1) => pInf E (c : Matrix (Fin (r + 1)) (Fin (r + 1)) (Ad E)).det) '' C) :
@@ -256,7 +256,7 @@ open GlobalTheory.SchurExt.SmoothPart in
 theorem contDiffOn_chart_schurF : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m r : ℕ)
     (β : GA E (m + 1) → ℂ) (b₁ : GA E (r + 1) → ℂ) (χ : (Fin (r + 1) → Fin (m + 1) → Cinf E) → ℝ),
     (∀ g, ContDiffOn ℝ ∞ (chart β g) (invSet E (m + 1))) → (∀ g, ContDiffOn ℝ ∞ (chart b₁ g) (invSet E (r + 1))) →
-    (∃ C : Set (GA E (r + 1)), IsCompact C ∧ ∀ p, b₁ p ≠ 0 → ∃ u ∈ GlobalTheory.JSW.NA E (r + 1), u⁻¹ * p ∈ C) →
+    (∃ C : Set (GA E (r + 1)), IsCompact C ∧ ∀ p, b₁ p ≠ 0 → ∃ u ∈ GlobalTheory.JSW.NA (E := E) (a := (r + 1)), u⁻¹ * p ∈ C) →
     ContDiff ℝ ∞ χ → ∀ g, ContDiffOn ℝ ∞ (chart (schurF β b₁ χ) g) (invSet E (m + r + 1 + 1)) := by
   intro E _ _ _ m r β b₁ χ hβ hb hC hχ g
   set Gi := (g : Matrix (Fin (m + r + 1 + 1)) (Fin (m + r + 1 + 1)) (Ad E)).map (pInf E) with hGi

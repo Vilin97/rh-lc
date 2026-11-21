@@ -89,9 +89,9 @@ open GroundTheory.Automorphic.FourierWhittaker (blockGL blockMat blockMat_apply 
 
 theorem eq_zero_of_comp_diag (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ)
     (w : HeightOneSpectrum (𝓞 E))
-    (hψ : ∀ x : w.adicCompletion E, (∀ y ∈ Ov E w, GlobalTheory.JSW.psiLoc w (x * y) = 1) ↔ x ∈ Ov E w)
+    (hψ : ∀ x : w.adicCompletion E, (∀ y ∈ Ov E w, (GroundTheory.Global.adelicChar _ (GlobalTheory.CuspRep.sFin _ (GlobalTheory.CuspRep.sLoc _ w (x * y))) : ℂ) = 1) ↔ x ∈ Ov E w)
     (ϖw : (w.adicCompletion E)ˣ) (hϖ : IsUnifV E w (ϖw : w.adicCompletion E)) (W : GA E N → ℂ)
-    (hWN : ∀ u ∈ GlobalTheory.JSW.NA E N, ∀ g, W (u * g) = GlobalTheory.JSW.psiN u * W g)
+    (hWN : ∀ u ∈ GlobalTheory.JSW.NA (E := E) (a := N), ∀ g, W (u * g) = GlobalTheory.JSW.psiN u * W g)
     (hWK : ∀ k ∈ KGL w (n := N), ∀ g, W (g * finGL E N (locGL E N w k)) = W g)
     (e : Fin N → ℤ) (he : ¬ Antitone e) (P : GA E N)
     (hP : ((GlobalTheory.CellDec.compV E N w P : GL (Fin N) (w.adicCompletion E)) : Matrix (Fin N) (Fin N) (w.adicCompletion E)) =
@@ -279,23 +279,23 @@ theorem compV_tl {E : Type} [Field E] [NumberField E] (N : ℕ) (ϖ : ∀ w : He
   · simp [Matrix.diagonal_apply_ne _ hij]
 
 theorem cell_values (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E)))
-    (hψ : ∀ w ∉ S, ∀ x : w.adicCompletion E, (∀ y ∈ Ov E w, GlobalTheory.JSW.psiLoc w (x * y) = 1) ↔ x ∈ Ov E w)
+    (hψ : ∀ w ∉ S, ∀ x : w.adicCompletion E, (∀ y ∈ Ov E w, (GroundTheory.Global.adelicChar _ (GlobalTheory.CuspRep.sFin _ (GlobalTheory.CuspRep.sLoc _ w (x * y))) : ℂ) = 1) ↔ x ∈ Ov E w)
     (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ) (hϖ : ∀ w, IsUnifV E w (ϖ w : w.adicCompletion E))
     (g : GA E N) (hg : g ∈ GlobalTheory.CellDec.C0 E N S) (l : GlobalTheory.CellDec.abelian₂ E N S) :
-    ∃ c : ℂ, ‖c‖ = 1 ∧ ∀ V : GA E N → ℂ, (∀ u ∈ GlobalTheory.JSW.NA E N, ∀ g, V (u * g) = GlobalTheory.JSW.psiN u * V g) →
+    ∃ c : ℂ, ‖c‖ = 1 ∧ ∀ V : GA E N → ℂ, (∀ u ∈ GlobalTheory.JSW.NA (E := E) (a := N), ∀ g, V (u * g) = GlobalTheory.JSW.psiN u * V g) →
       (∀ k : GL (Fin N) (Af E), (∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) k ∈ KGL v (n := N)) →
         (∀ v ∈ S, Matrix.GeneralLinearGroup.map (pLoc E v) k = 1) → ∀ g, V (g * finGL E N k) = V g) →
       ((∃ w, ¬ Antitone (l.1 w)) → V (GlobalTheory.CellDec.tl N ϖ l.1 * g) = 0) ∧
       ∀ p : HeightOneSpectrum (𝓞 E) → (Fin N → ℕ) → ℂ,
-        (∀ l' : HeightOneSpectrum (𝓞 E) →₀ (Fin N → ℕ), (∀ w ∈ l'.support, w ∉ S) → ∀ h ∈ GlobalTheory.JSW.supS E N S,
+        (∀ l' : HeightOneSpectrum (𝓞 E) →₀ (Fin N → ℕ), (∀ w ∈ l'.support, w ∉ S) → ∀ h ∈ GlobalTheory.JSW.supS (E := E) (a := N) S,
           V (h * GlobalTheory.JSW.tl ϖ l') = (∏ w ∈ l'.support, p w (l' w)) * V h) →
         (∀ w i, 0 ≤ l.1 w i) →
         V (GlobalTheory.CellDec.tl N ϖ l.1 * g) = c * (∏ w ∈ l.1.support, p w (fun i => (l.1 w i).toNat)) * V g := by
   obtain ⟨u, hu, h, hh, k, hk, hkS, rfl⟩ := GlobalTheory.CellDec.exists_mul_supS_finGL E N S g hg
   set t := GlobalTheory.CellDec.tl N ϖ l.1 with ht
   have hcomm : h * t = t * h := GlobalTheory.CellDec.TlComm.tl_commute_of_one_off E N S ϖ l h hh
-  have hu0 : u ∈ GlobalTheory.JSW.NA E N := (GlobalTheory.SmGL.mem_unipB (Ad E)).1 hu
-  have hu' : t * u * t⁻¹ ∈ GlobalTheory.JSW.NA E N := (GlobalTheory.SmGL.mem_unipB (Ad E)).1 (GlobalTheory.CellDec.tl_conj_mem ϖ l.1 hu)
+  have hu0 : u ∈ GlobalTheory.JSW.NA (E := E) (a := N) := (GlobalTheory.SmGL.mem_unipB (Ad E)).1 hu
+  have hu' : t * u * t⁻¹ ∈ GlobalTheory.JSW.NA (E := E) (a := N) := (GlobalTheory.SmGL.mem_unipB (Ad E)).1 (GlobalTheory.CellDec.tl_conj_mem ϖ l.1 hu)
   have hσ : t * (u * h * finGL E N k) = (t * u * t⁻¹) * (h * t) * finGL E N k := by
     rw [hcomm]; group
   have hne : GlobalTheory.JSW.psiN u ≠ 0 := norm_ne_zero_iff.1 (by rw [GlobalTheory.RSnmUnfProps.norm_psiN]; exact one_ne_zero)
@@ -356,22 +356,22 @@ end GlobalTheory.CellEvalNM
 open GroundTheory.Automorphic.FourierWhittaker (blockGL) in
 open GlobalTheory.CellEvalNM in
 theorem GlobalTheory.CellEvalNM.uIntNM_cell_eval : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m r : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E))),
-    (∀ w ∉ S, ∀ x : w.adicCompletion E, (∀ y ∈ Ov E w, GlobalTheory.JSW.psiLoc w (x * y) = 1) ↔ x ∈ Ov E w) →
+    (∀ w ∉ S, ∀ x : w.adicCompletion E, (∀ y ∈ Ov E w, (GroundTheory.Global.adelicChar _ (GlobalTheory.CuspRep.sFin _ (GlobalTheory.CuspRep.sLoc _ w (x * y))) : ℂ) = 1) ↔ x ∈ Ov E w) →
     ∀ (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ), (∀ w, IsUnifV E w (ϖ w : w.adicCompletion E)) →
     ∀ (α : HeightOneSpectrum (𝓞 E) → Fin (m + r + 1 + 1) → ℂˣ) (β : HeightOneSpectrum (𝓞 E) → Fin (m + 1) → ℂˣ)
       (φ : GA E (m + r + 1 + 1) → ℂ) (φ' : GA E (m + 1) → ℂ) (F : (Fin (m + 1) → Ad E) → ℂ),
-    (∀ u ∈ GlobalTheory.JSW.NA E (m + r + 1 + 1), ∀ g, GlobalTheory.JSW.whit φ (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ g) →
-    (∀ u ∈ GlobalTheory.JSW.NA E (m + 1), ∀ g, GlobalTheory.JSW.whit φ' (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ' g) →
+    (∀ u ∈ GlobalTheory.JSW.NA (E := E) (a := (m + r + 1 + 1)), ∀ g, GlobalTheory.JSW.whit φ (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ g) →
+    (∀ u ∈ GlobalTheory.JSW.NA (E := E) (a := (m + 1)), ∀ g, GlobalTheory.JSW.whit φ' (u * g) = GlobalTheory.JSW.psiN u * GlobalTheory.JSW.whit φ' g) →
     (∀ k : GL (Fin (m + r + 1 + 1)) (Af E), (∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) k ∈ KGL v (n := (m + r + 1 + 1))) →
       (∀ v ∈ S, Matrix.GeneralLinearGroup.map (pLoc E v) k = 1) → ∀ g, GlobalTheory.JSW.whit φ (g * finGL E (m + r + 1 + 1) k) = GlobalTheory.JSW.whit φ g) →
     (∀ k : GL (Fin (m + 1)) (Af E), (∀ v, Matrix.GeneralLinearGroup.map (pLoc E v) k ∈ KGL v (n := (m + 1))) →
       (∀ v ∈ S, Matrix.GeneralLinearGroup.map (pLoc E v) k = 1) → ∀ g, GlobalTheory.JSW.whit φ' (g * finGL E (m + 1) k) = GlobalTheory.JSW.whit φ' g) →
     (∀ l : HeightOneSpectrum (𝓞 E) →₀ (Fin (m + 1) → ℕ), (∀ w ∈ l.support, w ∉ S) →
-      ∀ h ∈ GlobalTheory.JSW.supS E (m + 1) S,
+      ∀ h ∈ GlobalTheory.JSW.supS (E := E) (a := (m + 1)) S,
         GlobalTheory.JSW.whit φ' (h * GlobalTheory.JSW.tl ϖ l) =
           (∏ w ∈ l.support, GlobalTheory.JSW.sphW (qV E w) (fun i => (β w i : ℂ)) (l w)) * GlobalTheory.JSW.whit φ' h) →
     (∀ l : HeightOneSpectrum (𝓞 E) →₀ (Fin (m + 1) → ℕ), (∀ w ∈ l.support, w ∉ S) →
-      ∀ h ∈ GlobalTheory.JSW.supS E (m + 1) S,
+      ∀ h ∈ GlobalTheory.JSW.supS (E := E) (a := (m + 1)) S,
         GlobalTheory.JSW.whit φ (GroundTheory.Automorphic.FourierWhittaker.blockGL (by omega : m + 1 ≤ m + r + 1 + 1) (h * GlobalTheory.JSW.tl ϖ l)) =
           (∏ w ∈ l.support, GlobalTheory.JSW.sphW (qV E w) (fun i => (α w i : ℂ)) (GlobalTheory.RSnmUnf.padNat (l w))) *
             GlobalTheory.JSW.whit φ (GroundTheory.Automorphic.FourierWhittaker.blockGL (by omega : m + 1 ≤ m + r + 1 + 1) h)) →
