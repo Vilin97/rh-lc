@@ -68,6 +68,7 @@ theorem exists_nat_of_bounds {x : WithBot ℕ∞} {e : ℕ} (h1 : 1 ≤ x) (h2 :
 end ComponentOfIncIdeal
 
 
+open ComponentOfIncIdeal in
 theorem ComponentOfIncIdeal.proof (h₁ : IncIdealDim.Statement) (h₂ : IncIdealPrime.Statement)
     (h₃ : ConeDimComponent.Statement) : ComponentOfIncIdeal.Statement := by
   intro F _ n e I W u q hI hdim hu hW hle hq hinc

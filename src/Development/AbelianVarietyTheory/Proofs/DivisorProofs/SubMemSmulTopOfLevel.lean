@@ -258,6 +258,7 @@ open AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj 
 attribute [local instance] Over.cartesianMonoidalCategory
 
 
+set_option maxHeartbeats 800000 in
 theorem free_of_unip_one (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H)
     (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (G : Type) [Group G] (h : G → (Dw.La →ₗ[𝓞 E] Dw.La)) (m q₀ : ℕ)
     (I : Ideal (𝓞 E)) (s : 𝓞 E) (hq : q₀.Prime) (hI : I ≠ ⊤) (hqI : (q₀ : 𝓞 E) ∈ I) (hr : m + 1 < q₀) (hs1 : 1 - s ∈ I)

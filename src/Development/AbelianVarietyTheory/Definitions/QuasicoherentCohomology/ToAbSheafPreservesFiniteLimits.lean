@@ -16,6 +16,7 @@ namespace GlobalTheory
 variable {X : Scheme.{u}}
 
 
+variable (X) in
 def toAbSheaf : X.Modules ⥤ Sheaf (Opens.grothendieckTopology X) AddCommGrpCat.{u} :=
   SheafOfModules.toSheaf X.ringCatSheaf
 
@@ -143,6 +144,7 @@ instance instModule : Module R (WithAction ρ) where
     rw [map_zero, map_zero]; rfl
 
 
+variable {R} in
 lemma toBase_smul (r : R) (x : WithAction ρ) :
     toBase ρ (r • x) = ρ (algebraMap R A r) (toBase ρ x) := rfl
 
@@ -226,6 +228,7 @@ lemma res_map_apply (f : F ⟶ G) (i : V ⟶ U) (x : F.H' n U) :
     (((Sheaf.cohomologyPresheafFunctor J n).map f).naturality i.op) x).symm
 
 
+variable (F n U) in
 def endAction : End F →+* AddMonoid.End (F.H' n U) where
   toFun f := (map f.asHom n U).hom
   map_one' := AddMonoidHom.ext (fun x => map_id_apply x)

@@ -103,6 +103,7 @@ def npowU (w : HeightOneSpectrum (𝓞 K)) (z : ℂ) : ℂˣ := Units.mk0 (npow 
 @[simp] theorem coe_npowU (w : HeightOneSpectrum (𝓞 K)) (z : ℂ) : (npowU w z : ℂ) = npow w z := rfl
 
 
+variable (K) in
 abbrev Fam : Type := HeightOneSpectrum (𝓞 K) → Multiset ℂˣ
 
 def locL (c : Fam K) (w : HeightOneSpectrum (𝓞 K)) (s : ℂ) : ℂ := eulerFac (c w) (npow w (-s))
@@ -321,6 +322,7 @@ section Ext
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+variable (E) in
 def above (S : Set (HeightOneSpectrum (𝓞 F))) : Set (HeightOneSpectrum (𝓞 E)) := {w | w.under (𝓞 F) ∈ S}
 
 theorem mem_aboveF {v : HeightOneSpectrum (𝓞 F)} {w : HeightOneSpectrum (𝓞 E)} :
@@ -382,6 +384,7 @@ open Classical in
 def etaFam (k : ℕ) : Fam F := fun v => if IsUnram (E := E) v ∨ Even k then {etaU E v ^ k} else 0
 
 
+variable (E) in
 def etaL (S : Set (HeightOneSpectrum (𝓞 F))) (k : ℕ) (s : ℂ) : ℂ := eulerProd S (etaFam E k) s
 
 theorem etaFam_of_unram {v : HeightOneSpectrum (𝓞 F)} (h : IsUnram (E := E) v) (k : ℕ) :
@@ -408,13 +411,16 @@ theorem converges_etaFam (S : Set (HeightOneSpectrum (𝓞 F))) (k : ℕ) {s : �
     Converges S (etaFam E k) s := (bounded_etaFam S k).converges (by simpa using hs)
 
 
+variable (E) in
 def dv (a b : ℕ) (v : HeightOneSpectrum (𝓞 F)) (s : ℂ) : ℂ :=
   ∏ i ∈ Finset.range a, locL (etaFam E (b + i)) v (2 * s + a - i)
 
 
+variable (E) in
 def dSfun (S : Set (HeightOneSpectrum (𝓞 F))) (a b : ℕ) (s : ℂ) : ℂ := ∏' v : {v // v ∉ S}, dv E a b v.1 s
 
 
+variable (E) in
 def dS (S : Set (HeightOneSpectrum (𝓞 F))) (a b : ℕ) : ℂ := dSfun E S a b (((b : ℂ) - a) / 2)
 
 theorem dv_center (a t : ℕ) (v : HeightOneSpectrum (𝓞 F)) :

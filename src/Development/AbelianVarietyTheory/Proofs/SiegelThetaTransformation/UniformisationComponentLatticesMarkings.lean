@@ -192,6 +192,7 @@ theorem isMark_of {H : Host E} (Dw D : Datum H) (l : Geo.Tor.Level H) (L : Lt E 
 end GlobalTheory.Dict.UWLat
 
 
+open GlobalTheory.Dict.UWLat in
 theorem GlobalTheory.Dict.uw_lattice : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Geo.Tor.Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (r : ℕ) (U : Unf Xo c σ r), GoodEmb c σ → IsUnf U → 1 ≤ r → ∀ (W : UW U) (k : U.Comp), (U.X k).κ0 = 2 * (U.X k).ξ0 ∧ SelfD (U.X k) (U.X k).Λ ∧ IsMark l (U.X k).Λ (W.mark k) ∧ r = (W.F.Di (W.ik k)).p + (W.F.Di (W.ik k)).q ∧ Function.Injective (W.emb k) ∧ Submodule.span E (Set.range (W.emb k)) = ⊤ ∧ ∀ a b, (((W.F.Di (W.ik k)).EF a b : ℤ) : ℚ) = EF (U.X k) (W.emb k a) (W.emb k b) := by
   intro E _ _ _ H Dw l Xo c σ r U hσ hU hr W k
   obtain ⟨hrank, htype, -⟩ := hU

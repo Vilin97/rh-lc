@@ -163,6 +163,7 @@ theorem differentiable_linForm {n : ℕ} (c : Fin n → ℂ) :
 end LocalUniversalDenominator
 
 
+open LocalUniversalDenominator in
 theorem LocalUniversalDenominator.fin_case
     (hcl : GroundTheory.Heights₂.Heights.ComplexSets.FiniteProjectionCluster.Statement)
     (hrs : GroundTheory.Heights₂.Heights.ComplexSets.RootSumHolomorphic.Statement)

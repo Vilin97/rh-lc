@@ -255,6 +255,7 @@ theorem polyNum_rename_perm {F : Type*} [Field F] {K : Type} [Fintype K] {κ : K
 end flagFurtherTerm_independent
 
 
+open flagFurtherTerm_independent in
 theorem flagFurtherTerm_independent.proof (hFib : VerticalDivisorFibreVariety.Statement)
     (hInd : FullFlagVerticalSymmetric.Statement) : flagFurtherTerm_independent.Statement := by
   intro O _ _ _ Ω _ _ K _ ι _ x d N V _ _ E E' hM _ φ₁ φ₂ I hI G hG r y y' f g hv c Q _ _ _ l

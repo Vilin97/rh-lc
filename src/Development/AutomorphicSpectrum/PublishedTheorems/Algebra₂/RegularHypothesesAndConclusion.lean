@@ -52,6 +52,7 @@ theorem IsInvariant.smul_comp {q : X ⟶ Y} (h : IsInvariant G q) {T : Over S} (
   rw [Hom.smul_def, Category.assoc, h, lift_snd_assoc]
 
 
+variable {G} in
 def IsInvariant.desc {q : X ⟶ Y} (h : IsInvariant G q) : orbitPresheaf G X ⟶ yoneda.obj Y where
   app T := ↾(Quotient.lift (fun x => x ≫ q) (by
     rintro _ y ⟨g, rfl⟩
@@ -104,6 +105,7 @@ theorem IsFppfTorsor.existsUnique_smul (h : IsFppfTorsor G q) {T : Over S} (x y 
     rw [← this, lift_fst]
 
 
+set_option backward.isDefEq.respectTransparency.types false in
 theorem IsFppfTorsor.of_descendsAlong (h : IsFppfTorsor G q) (P : MorphismProperty Scheme.{u})
     [P.IsStableUnderBaseChange] [IsZariskiLocalAtTarget P]
     [P.DescendsAlong (@Surjective ⊓ @Flat ⊓ @QuasiCompact)] (hG : P G.hom) : P q.left := by
@@ -134,6 +136,7 @@ theorem IsFppfTorsor.surjective (h : IsFppfTorsor G q) : Surjective q.left := by
   exact ⟨s z, by rw [← Scheme.Hom.comp_apply, e]⟩
 
 
+set_option backward.isDefEq.respectTransparency.types false in
 theorem IsFppfTorsor.isFiniteLocallyFree {S : Scheme.{0}} {G X Y : Over S} [GrpObj G] [ModObj G X] {q : X ⟶ Y}
     (h : IsFppfTorsor G q) (hG : IsFiniteLocallyFree G.hom) : IsFiniteLocallyFree q.left := by
   set_option backward.isDefEq.respectTransparency.types false in

@@ -17,6 +17,7 @@ section Quad
 variable {R O : Type} [CommRing R] [CommRing O] [IsLocalRing R] (ι : R →+* O) (δ : O) (D : R)
 
 
+omit [IsLocalRing R] in
 theorem isUnit_of_norm (hδ : δ * δ = ι D) (p q : R) (h : IsUnit (p ^ 2 - D * q ^ 2)) :
     IsUnit (ι p + ι q * δ) := by
   obtain ⟨w, hw⟩ := h.exists_right_inv

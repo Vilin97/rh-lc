@@ -85,6 +85,7 @@ theorem smul_primitive (hf : IsLubinTateSeries π f) {n k : ℕ} (hk : k < n)
     exact (mul_dvd_mul_iff_left (pow_ne_zero _ hπ.ne_zero)).1 h
 
 
+omit [IsSepClosed Ω] in
 theorem adjoin_eq_top_of_irreducible_of_residueDegree_eq_one {L : Type*} [Field L] [ValuativeRel L]
     [TopologicalSpace L] [IsNonarchimedeanLocalField L] [Algebra K L] [ValuativeExtension K L]
     [FiniteDimensional K L] (h : ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) = 1) {x : 𝒪[L]} (hx : Irreducible x) :
@@ -96,6 +97,7 @@ theorem adjoin_eq_top_of_irreducible_of_residueDegree_eq_one {L : Type*} [Field 
   exact bot_le
 
 
+include hπ in
 theorem exists_sub_one_eq_pow_mul {k : ℕ} {u : 𝒪[K]ˣ} (hu : u ∈ unitFiltration K k)
     (hu' : u ∉ unitFiltration K (k + 1)) : ∃ w : 𝒪[K], (u : 𝒪[K]) - 1 = π ^ k * w ∧ ¬ π ∣ w := by
   rw [mem_unitFiltration, mem_maximalIdeal_pow_iff hπ] at hu hu'

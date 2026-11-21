@@ -25,6 +25,7 @@ namespace GlobalTheory.HilbertClass
 variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K]
 
 
+omit [NumberField K] in
 theorem isEmpty_realEmb : IsEmpty (K →+* ℝ) :=
   ⟨fun φ => IsTotallyComplex.complexEmbedding_not_isReal (Complex.ofRealHom.comp φ)
     (ComplexEmbedding.isReal_iff.2 (RingHom.ext fun x => Complex.conj_ofReal _))⟩
@@ -66,6 +67,7 @@ theorem isRayField_self_top_iff : IsRayField K K ⊤ ↔ IsPrincipalIdealRing (�
   · exact (h.2.2.2 I hI).1 (h1 I)
 
 
+omit [NumberField K] [IsTotallyComplex K] in
 theorem isPrincipal_map_of_algHom {L M : Type} [Field L] [Algebra K L] [Field M] [Algebra K M] (f : L →ₐ[K] M)
     {𝔞 : Ideal (𝓞 K)} (h : (𝔞.map (algebraMap (𝓞 K) (𝓞 L))).IsPrincipal) :
     (𝔞.map (algebraMap (𝓞 K) (𝓞 M))).IsPrincipal := by

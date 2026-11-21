@@ -20,6 +20,7 @@ namespace GlobalTheory.SqIntUnit
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {N : ℕ}
 
 
+variable (k) in
 theorem exists_ne_zero_ne_one : ∃ x : k, x ≠ 0 ∧ x ≠ 1 := by
   have h : absPow k ((1 : ℝ) : ℂ) ≠ 1 := fun e => one_ne_zero (absPow_ofReal_eq_one.1 e)
   obtain ⟨z, hz⟩ : ∃ z : kˣ, absPow k ((1 : ℝ) : ℂ) z ≠ 1 := by
@@ -29,6 +30,7 @@ theorem exists_ne_zero_ne_one : ∃ x : k, x ≠ 0 ∧ x ≠ 1 := by
   rw [show z = 1 from Units.ext e, map_one]
 
 
+variable (k N) in
 theorem modularCharacterFun_eq_one (g : AdGL k N) : Measure.modularCharacterFun g = 1 := by
   obtain ⟨g, rfl⟩ := QuotientGroup.mk_surjective g
   let φ : GL (Fin N) k →* NNReal :=
@@ -46,6 +48,7 @@ theorem isMulRightInvariant [MeasurableSpace (AdGL k N)] [BorelSpace (AdGL k N)]
     ← Measure.modularCharacterFun_eq_haarScalarFactor μ g, modularCharacterFun_eq_one, one_smul]
 
 
+variable (k) in
 theorem compactOpen_basis (n : ℕ) : ∀ U ∈ nhds (1 : GL (Fin n) k), ∃ K : Subgroup (GL (Fin n) k),
     IsOpen (K : Set (GL (Fin n) k)) ∧ IsCompact (K : Set (GL (Fin n) k)) ∧ (K : Set (GL (Fin n) k)) ⊆ U := by
   intro U hU

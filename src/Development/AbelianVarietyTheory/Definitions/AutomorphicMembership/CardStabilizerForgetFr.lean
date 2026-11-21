@@ -141,6 +141,7 @@ theorem forgetFr_N (p : DecoF E n ST SG Q) : (forgetFr p).1.N = p.deco.1.N := rf
 theorem forgetFr_f (p : DecoF E n ST SG Q) : (forgetFr p).1.f = p.deco.1.f := rfl
 
 
+open Classical in
 theorem forgetFr_res (p : DecoF E n ST SG Q) : (forgetFr p).res Finset.subset_union_left = p.deco := by
   apply Subtype.ext
   ext1
@@ -154,6 +155,7 @@ theorem isLiftFr_forgetFr (p : DecoF E n ST SG Q) (w : uSG SG Q) (h : w.1 ∉ SG
   ⟨p.2 (rightOf w h), fun _ hx => (congrFun (forgetDeco_be_of_not p w h) _).trans (frBe_apply _ hx)⟩
 
 
+open Classical in
 theorem forgetFr_surjective : Function.Surjective (forgetFr : DecoF E n ST SG Q → DecoSet E n ST (uSG SG Q)) := by
   intro d
   refine ⟨⟨(d.res Finset.subset_union_left, fun P => d.1.liftFr (inRight SG P)),
@@ -348,6 +350,7 @@ theorem card_stabilizer_forgetFr (hd : Disjoint SG Q) (p : DecoF X.E n ST SG Q) 
     exact ⟨⟨g, h2⟩, Subtype.ext h1⟩
 
 
+variable (X n ST SG Q) in
 def trivPt : DecoF X.E n ST SG Q ≃ PtY ST SG Q (Ys.triv X n) where
   toFun p := ⟨(p, ∅), rfl⟩
   invFun p := p.1.1
@@ -366,6 +369,7 @@ open Classical in
 def unitOf (pi : 𝓞 E) : Eˣ := if h : (pi : E) = 0 then 1 else Units.mk0 _ h
 
 
+omit [StarRing E] in
 theorem unitOf_val {pi : 𝓞 E} {P : HeightOneSpectrum (𝓞 E)} (h : pi ∉ P.asIdeal) : (unitOf pi : E) = pi := by
   have h0 : (pi : E) ≠ 0 := fun h0 => h (by
     rw [RingOfIntegers.coe_eq_zero_iff.1 h0]
@@ -382,6 +386,7 @@ def tilFr (pi : 𝓞 E) (p : DecoF E n ∅ SG Q) : DecoF E N ST SG Q :=
   else @DecoF.base E _ _ _ N ST SG Q ⟨by omega⟩
 
 
+variable (E Q) in
 def extQ : GLQ E n Q →* GLQ E N Q := MonoidHom.pi fun P => (extI hN P.1).comp (Pi.evalMonoidHom _ P)
 
 theorem sumE_inj {g g' : Sp E n ≃ₗ[E] Sp E n} {t : Eˣ} (h : sumE hN g t = sumE hN g' t) : g = g' := by
@@ -398,6 +403,7 @@ theorem extQ_injective : Function.Injective (extQ E hN Q) := fun _ _ h =>
 variable {pi : 𝓞 E} (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal) (hQ : ∀ P : Q, pi ∉ P.1.asIdeal)
 
 
+include hT in
 theorem tilH_N_f {SG' : Finset (HeightOneSpectrum (𝓞 E))} (hG : ∀ w : SG, pi ∉ w.1.asIdeal) (hG' : ∀ w : SG', pi ∉ w.1.asIdeal)
     (d : DecoSet E n ∅ SG) (d' : DecoSet E n ∅ SG') (h : d.1.N = d'.1.N) :
     (DecoSet.tilH (ST := ST) hN pi d).1.N = (DecoSet.tilH (ST := ST) hN pi d').1.N ∧
@@ -484,6 +490,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
   (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ} (mu : Tup X.F X.E X.K S)
 
 
+variable (R) in
 def levQX : LevQFam X.E X.K (R.N R.m - 1) (QE sel (mu : Chr X.F X.E X.K)) :=
   levRedFam (rowTyQ R (mu : Chr X.F X.E X.K) (QE sel (mu : Chr X.F X.E X.K)))
 
@@ -501,6 +508,7 @@ theorem levQX_root (P : QE sel (mu : Chr X.F X.E X.K)) : ∃ m : ℕ, 0 < m ∧ 
   levRed_root _ _
 
 
+variable (Pr R) in
 abbrev XPt : Type := DecoF X.E (R.N R.m - 1) ∅ Pr.vGs (QE sel (mu : Chr X.F X.E X.K))
 
 @[reducible] def stepX (P : LevFam X.E X.K R.r Pr.vGs) : GStep X.E X.K (R.N R.m - 1) :=
@@ -571,6 +579,7 @@ theorem tilF_N (p : XPt Pr R sel mu) : (tilF sel mu u p).deco.1.N = (tilQ sel mu
   congrArg (fun d => d.1.N) (forgetFr_tilF sel mu hPr u hQ p)
 
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem tilF_smul (a : UF X.E (R.N R.m - 1) × GLG X.E (R.N R.m - 1) Pr.vGs × GLQ X.E (R.N R.m - 1) (QE sel (mu : Chr X.F X.E X.K)))
     (p : XPt Pr R sel mu) :
     tilF sel mu u (a • p) = ((extUH (N_m_succ R) a.1, extGH (N_m_succ R) a.2.1, extQ X.E (N_m_succ R) _ a.2.2) :

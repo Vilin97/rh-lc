@@ -187,6 +187,7 @@ def l2InnerCore (W : Weight L) (dV : SmoothVolume A) (n : ℕ) (V : Submodule �
     exact (sectionL2NormSq_pos W dV (hV s.2) hne').ne' h
 
 
+omit [BorelSpace X] [CompactSpace X] in
 lemma integral_ptInner_self (W : Weight L) (dV : SmoothVolume A) (n : ℕ) (s : Fin A.n → X → ℂ) :
     ∫ x, ptInner W n s s x ∂dV.μ = ((sectionL2NormSq W dV n s : ℝ) : ℂ) := by
   simp_rw [ptInner_self]
@@ -240,6 +241,7 @@ lemma iSup_ratio_eq {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
 end IntegralOfBergman
 
 
+open IntegralOfBergman in
 theorem IntegralOfBergman.proof : IntegralOfBergman.Statement := by
   intro D X _ _ _ _ _ A L W dV n V _ hV
   have := dV.isProb

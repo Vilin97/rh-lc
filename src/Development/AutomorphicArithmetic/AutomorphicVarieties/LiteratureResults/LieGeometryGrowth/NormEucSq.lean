@@ -41,6 +41,7 @@ def quad (p : Matrix (Fin a) (Fin a) (Cinf E)) (x : Fin a → Cinf E) : ℝ :=
   ∑ w : InfinitePlace E, (((x ᵥ* p) ⬝ᵥ star x) w).re
 
 
+variable (E a) in
 def poly : Subalgebra ℂ ((Fin a → Cinf E) → ℂ) :=
   Algebra.adjoin ℂ (Set.range fun l : (Fin a → Cinf E) →ₗ[ℝ] ℂ => (l : (Fin a → Cinf E) → ℂ))
 

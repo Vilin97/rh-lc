@@ -203,6 +203,7 @@ theorem res_div (μ ν : kˣ →* ℂˣ) : res (μ / ν) = res μ / res ν := by
 end P_exGrp
 
 
+open P_exGrp in
 theorem step_exGrp : ExistsGroupElementProp (k := k) := by
   intro n χ hχ
   let S : Finset (𝒪[k]ˣ →* ℂˣ) := Finset.univ.image (fun i => res (χ i))

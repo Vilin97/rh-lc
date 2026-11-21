@@ -112,6 +112,7 @@ variable {k : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchi
 
 
 open scoped Classical in
+open Classical in
 theorem integrable_opE_integrand (p : ℕ) {ψ : AddChar k Circle} (hψ : Continuous ψ) (ν : Measure k)
     [ν.IsAddHaarMeasure] {Φ : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k → ℂ}
     (hΦ : Φ ∈ SB (Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k)) (x₀ : Matrix n n' k) :
@@ -131,6 +132,7 @@ theorem integrable_opE_integrand (p : ℕ) {ψ : AddChar k Circle} (hψ : Contin
         Φ (affPt p z.1 z.2)) (x := (x₀, e)) fun h' => he ⟨_, h', rfl⟩
 
 
+omit [BorelSpace k] [DecidableEq n] [DecidableEq n'] in
 theorem opE_mem_SB (p : ℕ) (ψ : AddChar k Circle) (ν : Measure k)
     {Φ : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k → ℂ}
     (hΦ : Φ ∈ SB (Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k)) : opE ψ ν p Φ ∈ SB (Matrix n n' k) := by

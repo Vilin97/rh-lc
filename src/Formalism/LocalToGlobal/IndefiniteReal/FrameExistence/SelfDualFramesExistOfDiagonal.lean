@@ -67,6 +67,7 @@ theorem eToEAf_mem_intAf_of_isIntegral {a : D.host.E} (ha : IsIntegral ℤ a) :
   exact Subring.subset_closure (Or.inl ⟨⟨((b : 𝓞 D.host.E) : D.host.E), ⟨b, rfl⟩⟩, rfl⟩)
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem isFrame_one_std (V : HSp D) (hV : FrmC.StdLat V) :
     Formalism.L2.DIV.IsFrame (1 : GL (Fin V.rank) (EAf D)) (coordL V) := by
   intro x

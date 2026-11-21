@@ -275,6 +275,8 @@ variable {K K' : Type} [Field K] [Field K'] [Algebra K K'] {D N : ℕ} {ι : Typ
   {Ω : ι → Type} [∀ Z, Field (Ω Z)] [∀ Z, Algebra K (Ω Z)]
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem basis_descends (j0 : ι → Fin (N + 1)) (v : ∀ Z, Fin (N + 1) → Ω Z) (x : ∀ Z, Fin N → Ω Z)
     (hv : ∀ Z, v Z (j0 Z) ≠ 0) (hx : ∀ Z k, x Z k = v Z ((j0 Z).succAbove k) / v Z (j0 Z))
     (hind : ∀ Z, AlgebraicIndependent K (sImg (D := D) (j0 Z) (x Z)))
@@ -415,6 +417,8 @@ variable {K Kl K' : Type} [Field K] [Field Kl] [Field K'] [Algebra K Kl] [Algebr
   [IsScalarTower K Kl K'] {ι : Type} [Fintype ι] {Ω : ι → Type} [∀ Z, Field (Ω Z)] [∀ Z, Algebra K (Ω Z)]
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem basis_descends_loc {D D' N m n : ℕ} (hD : D = D') (e : Fin m ≃ Fin (N + 1)) (j0 : ι → Fin (N + 1))
     (v : ∀ Z, Fin m → Ω Z) (x : ∀ Z, Fin N → Ω Z)
     (hv : ∀ Z, v Z (e.symm (j0 Z)) ≠ 0)

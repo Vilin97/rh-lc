@@ -33,6 +33,7 @@ theorem card_image {p : ℕ} (t : {s : Finset κ // s.card = p}) (h : Set.InjOn 
   rw [Finset.card_image_of_injOn h, t.2]
 
 
+open Classical in
 def term (p : ℕ) : Cube.Term A p →ₛₗ[σ] Cube.Term B p where
   toFun x t := if h : Set.InjOn τ (t.1 : Set κ) then
       PD.sortSign τ t.1 • ψ.app t.1 (x ⟨t.1.image τ, card_image t h⟩) else 0

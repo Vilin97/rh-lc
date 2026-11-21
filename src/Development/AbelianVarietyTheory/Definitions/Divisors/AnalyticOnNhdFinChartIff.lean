@@ -244,6 +244,7 @@ namespace AnRead
 variable (R R' : AnRead p σ D) {S : Set (CxPts p σ)}
 
 
+variable {R} in
 theorem HoloOn.exists_log {g : CxPts p σ → ℂ} (h : R.HoloOn S g) (hS : IsOpen S) {y : CxPts p σ}
     (hy : y ∈ S) (h0 : g y ≠ 0) : ∃ W, IsOpen W ∧ y ∈ W ∧ W ⊆ S ∧ ∃ G : CxPts p σ → ℂ,
       R.HoloOn W G ∧ ∀ z ∈ W, (G z).re = Real.log ‖g z‖ := by
@@ -284,6 +285,7 @@ theorem locSec_apply (s : B.ι → CxPts p σ → ℂ) (x : CxPts p σ) :
     φ.locSec s x = s (pick φ.isLB x) := rfl
 
 
+variable (φ) in
 theorem half_eq {i j : B.ι} {y : CxPts p σ} (hi : y ∈ ptsIn p σ (B.U i))
     (hj : y ∈ ptsIn p σ (B.U j)) : φ.φ i y / 2 = φ.φ j y / 2 + Real.log ‖gv p σ B i j y‖ := by
   rw [φ.trans i j y hi hj, Real.log_pow]
@@ -291,6 +293,7 @@ theorem half_eq {i j : B.ι} {y : CxPts p σ} (hi : y ∈ ptsIn p σ (B.U i))
   ring
 
 
+variable (φ R) in
 theorem exists_half_eq {i j : B.ι} {y : CxPts p σ} (hi : y ∈ ptsIn p σ (B.U i))
     (hj : y ∈ ptsIn p σ (B.U j)) : ∃ W, IsOpen W ∧ y ∈ W ∧ ∃ G : CxPts p σ → ℂ,
       R.HoloOn W G ∧ ∀ z ∈ W, φ.φ i z / 2 = φ.φ j z / 2 + (G z).re := by
@@ -306,6 +309,7 @@ theorem IsSmooth.isPotential (h : φ.IsSmooth R) (hA : IsAlgAtlas A) : IsPotenti
   exact ⟨W, hW, hy, G, (hA.holoOn_iff R hW).2 hG, fun z hz => sub_eq_iff_eq_add'.2 (e z hz.1.1)⟩
 
 
+variable (φ) in
 theorem norm_mul_exp_eq_sqrt {s : B.ι → CxPts p σ → ℂ} (hs : s ∈ fibSec p σ B) {i : B.ι}
     {y : CxPts p σ} (hi : y ∈ ptsIn p σ (B.U i)) :
     ‖s i y‖ * Real.exp (-(φ.φ i y / 2)) = √(φ.nsq s y) := by
@@ -313,12 +317,14 @@ theorem norm_mul_exp_eq_sqrt {s : B.ι → CxPts p σ → ℂ} (hs : s ∈ fibSe
     neg_div]
 
 
+variable (φ) in
 theorem isSection_of_isAlgAtlas (hA : IsAlgAtlas A) {s : B.ι → CxPts p σ → ℂ}
     (hs : s ∈ R.holSec B) : IsSection A φ.locPot (φ.locSec s) :=
   ⟨fun _ => (hA.holoOn_iff R (isOpen_ptsIn _)).2 (hs.2 _), fun _ _ _ hy =>
     (φ.norm_mul_exp_eq_sqrt hs.1 hy.1).trans (φ.norm_mul_exp_eq_sqrt hs.1 hy.2).symm⟩
 
 
+variable (φ) in
 theorem logNormSec_locSec (s : B.ι → CxPts p σ → ℂ) (y : CxPts p σ) :
     logNormSec φ.locPot (φ.locSec s) y = 1 / 2 * Real.log (φ.nsq s y) := by
   have e : φ.nsq s y = (‖φ.locSec s y y‖ * Real.exp (-φ.locPot.φ y y)) ^ 2 := by
@@ -399,6 +405,7 @@ theorem IsSmooth.isPosPot_iff (h : φ.IsSmooth R) (hA : IsAlgAtlas A) :
     exact e ▸ half_pos (H i c y hy ξ (hξ h0))
 
 
+variable (φ) in
 theorem sameForm_of_re (hA : IsAlgAtlas A) {Q : LocPot (CxPts p σ)} (hQ : IsPotential A Q)
     (h : ∀ x, ∃ i, x ∈ ptsIn p σ (B.U i) ∧ ∃ W, IsOpen W ∧ x ∈ W ∧ ∃ G : CxPts p σ → ℂ,
       R.HoloOn W G ∧ ∀ z ∈ W, φ.φ i z / 2 = Q.φ x z + (G z).re) : SameForm A φ.locPot Q :=
@@ -410,6 +417,7 @@ theorem sameForm_of_re (hA : IsAlgAtlas A) {Q : LocPot (CxPts p σ)} (hQ : IsPot
     rw [locPot_φ, e' z hz.2, e z hz.1, Complex.add_re, add_assoc]
 
 
+variable (φ) in
 theorem sameForm_of_eq (hA : IsAlgAtlas A) {Q : LocPot (CxPts p σ)} (hQ : IsPotential A Q)
     (h : ∀ x, ∃ i, x ∈ ptsIn p σ (B.U i) ∧ ∀ z, φ.φ i z / 2 = Q.φ x z) :
     SameForm A φ.locPot Q :=
@@ -436,6 +444,7 @@ theorem isPotential_locPot (h : φ.IsSmooth R) : IsPotential R.finAtlas φ.locPo
   h.isPotential R.isAlgAtlas_finAtlas
 
 
+variable (φ) in
 theorem isSection_locSec {s : B.ι → CxPts p σ → ℂ} (hs : s ∈ R.holSec B) :
     IsSection R.finAtlas φ.locPot (φ.locSec s) := φ.isSection_of_isAlgAtlas R.isAlgAtlas_finAtlas hs
 

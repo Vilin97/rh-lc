@@ -179,6 +179,7 @@ theorem not_dvd_level (hL : LawsJ T) {P : Formalism.L2.DIV.Pl D.host.E} {p : ℕ
   exact P.asIdeal.mul_mem_right _ hpP
 
 
+omit [Algebra T.Q.c.F D.what₂.LL] in
 theorem exists_transform (hT : GlobalTheory.IndefiniteRowSideFullHecke.SplitOffDetection.HeckeTransform) (hP : GlobalTheory.IndefiniteRowSideFullHecke.HeckePrimeDetection.HeckePointLaws) (hL : LawsJ T)
     (i : Fin D.R.m) {P : Ideal (𝓞 D.host.E)} {p k : ℕ} (hSO : GlobalTheory.IndefiniteRowSideFullHecke.SplitOffDetection.IsSplitOff T.Q.l P p) (hk : k ≤ D.R.r)
     (cq : T.Q.c.F) {a : (D.host.E →+* ℂ) × ℕ → ℕ} {n : ℕ} (ha : Dom a n) :
@@ -226,6 +227,7 @@ theorem hkC_eq (i : Fin D.R.m) (P : Formalism.L2.DIV.Pl D.host.E) (k : ℕ) :
   rfl
 
 
+variable (T R κ) in
 def ReadsCusp (i : Fin D.R.m) (σ : T.Q.c.F →+* ℂ) (hV : T.V ((i : ℕ) + 1) σ = Wc D i) : Prop :=
   ∀ (P : Formalism.L2.DIV.Pl D.host.E) (p k : ℕ) (α : GA D (Wc D i)) (Rc : Finset (GA D (Wc D i))), IsHkData R i P k α Rc →
     GlobalTheory.IndefiniteRowSideFullHecke.OrthonormalLatticeThetaValues.IsUnitaryHeckeOperatorSplitPrimeData T R i P p k α Rc →
@@ -307,6 +309,7 @@ theorem phiC_apply {j : ℕ} {σ : T.Q.c.F →+* ℂ} {W : HSp D} (hV : T.V j σ
   rfl
 
 
+omit iA in
 theorem exists_withConst (hL : LawsJ T) (j : ℕ) (σ : T.Q.c.F →+* ℂ) (c0 : (T.U j σ).Comp → ℂ) (h0 : CUnit c0) :
     ∃ c' : ∀ (j : ℕ) (σ : T.Q.c.F →+* ℂ), (T.U j σ).Comp → ℂ, c' j σ = c0 ∧ LawsJ (withConst T c') := by
   classical
@@ -342,6 +345,7 @@ theorem readsCusp_of_shift {i : Fin D.R.m} (hβ : IsSDFrame (Wc D i) (R.βW i) (
   exact mul_left_cancel₀ hc h1
 
 
+set_option maxHeartbeats 1600000 in
 theorem readsCusp_of_clauses {i : Fin D.R.m} (hβ : IsSDFrame (Wc D i) (R.βW i) (R.ΛW i) 1) (hSb : R.fam_Sb)
     (hinf : R.models_inf) (hHW : R.models_HW) (hgW : R.models_gW) (hHV : R.models_HV) (hjV : R.models_jV)
     (hmem : R.thP_thF_mem) (fw : FWTie T R κ v₀) (hV₁ : T.V ((i : ℕ) + 1) (res T (sg0 D A)) = Wc D i)

@@ -8,6 +8,7 @@ open Matrix PositivityTheory.AutomorphicGaloisHodgeTate.Div
 namespace LateralTheory.DivDb
 
 
+open Polynomial in
 def DivPlus : Prop :=
   ∀ (Γ : Type) [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] [CompactSpace Γ]
     (K K' : Type) [Field K] [IsAlgClosed K] [CharZero K] [TopologicalSpace K]

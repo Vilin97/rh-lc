@@ -45,6 +45,7 @@ theorem γ₀_X_eq {K : FinExt l} {s : ℕ} {LL : FinExt l} {Γ : GamS P K s LL}
   rw [hact, (GlobalTheory.T.cyclotomicPowerSeriesAlgHom_action_laws l ↥(OL LL)).1, GlobalTheory.Cyc.cyc]
 
 
+set_option maxHeartbeats 1000000 in
 theorem main : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (K : FinExt l) (s : ℕ) (LL : FinExt l), Good K s LL → ∀ (Γ : GamS P K s LL) (R : WSer Γ), ∃ I : IoS AI R, IoW I := by
   intro l _ P AI K s LL hG Γ R
   haveI := (P.PD K).finK₀

@@ -258,6 +258,7 @@ section SpecCase
 variable {R S : CommRingCat.{u}} (φ : R ⟶ S)
 
 
+set_option backward.isDefEq.respectTransparency false in
 def pushforwardSpecΓIso :
     moduleSpecΓFunctor (R := S) ⋙ ModuleCat.restrictScalars φ.hom ≅
       Scheme.Modules.pushforward (Spec.map φ) ⋙ moduleSpecΓFunctor (R := R) :=
@@ -279,6 +280,7 @@ def pushforwardSpecΓIso :
         exact congr($(Scheme.ΓSpecIso_inv_naturality φ) r) }) fun _ ↦ rfl
 
 
+set_option backward.isDefEq.respectTransparency false in
 def tildePullbackIso :
     ModuleCat.extendScalars φ.hom ⋙ tilde.functor S ≅
       tilde.functor R ⋙ Scheme.Modules.pullback (Spec.map φ) :=
@@ -300,6 +302,7 @@ theorem tildePullbackIso_hom_app_toOpen (M : ModuleCat.{u} R) (m : M) :
   exact congr($this m)
 
 
+set_option backward.isDefEq.respectTransparency false in
 def tildeIsoPullback (M : (Spec R).Modules) [M.IsQuasicoherent] :
     tilde ((ModuleCat.extendScalars φ.hom).obj (moduleSpecΓFunctor.obj M)) ≅
       (Scheme.Modules.pullback (Spec.map φ)).obj M :=
@@ -365,6 +368,7 @@ theorem restrictPullbackIso_hom_app_unit (G : Y.Modules) (V : Y.Opens) (s : Γ(G
   exact congr(($this).app V s)
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem restrictPullbackIso_hom_app_pullbackSections (G : Y.Modules) {V : Y.Opens} {V' : Y'.Opens}
     {U' : X'.Opens} (hV : i ''ᵁ V' ≤ V) (e' : U' ≤ p ⁻¹ᵁ V') (e : j ''ᵁ U' ≤ f ⁻¹ᵁ V)
     (s : Γ(G, V)) :
@@ -412,6 +416,7 @@ theorem exists_affine_pair (x : X) {W : X.Opens} (hx : x ∈ W) :
 variable [G.IsQuasicoherent]
 
 
+set_option backward.isDefEq.respectTransparency false in
 instance isQuasicoherent_pullback : ((Scheme.Modules.pullback f).obj G).IsQuasicoherent := by
   refine isQuasicoherent_of_forall_exists_affine _ fun x ↦ ?_
   obtain ⟨U, V, hU, hV, hx, -, e⟩ := exists_affine_pair f x (W := ⊤) trivial
@@ -421,6 +426,7 @@ instance isQuasicoherent_pullback : ((Scheme.Modules.pullback f).obj G).IsQuasic
     (isQuasicoherent_pullback_Spec (f.appLE V U e) (G.restrict hV.fromSpec))
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem isBaseChange_pullbackSections (hU : IsAffineOpen U) (hV : IsAffineOpen V)
     (e : U ≤ f ⁻¹ᵁ V) :
     (letI := appLEAlgebra f e
@@ -506,6 +512,7 @@ theorem epi_of_locally_app_surjective (φ : F ⟶ F')
   exact congr(($e).app (𝒰 i) t)
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem app_surjective_of_epi_of_isAffineOpen (φ : F ⟶ F') [Epi φ] [F.IsQuasicoherent]
     [F'.IsQuasicoherent] {U : X.Opens} (hU : IsAffineOpen U) :
     Function.Surjective (φ.app U) := by

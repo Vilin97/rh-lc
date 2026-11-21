@@ -33,13 +33,16 @@ def frL (u : ι → GL (Fin n) ℂ) (y : Frames G) : Frames G :=
 def lT (u : ι → GL (Fin n) ℂ) : (Frames G → ℂ) →ₗ[ℂ] (Frames G → ℂ) := LinearMap.funLeft ℂ ℂ (frL G u)
 
 
+omit [Fintype ι] in
 theorem lT_apply (u : ι → GL (Fin n) ℂ) (F : Frames G → ℂ) (y : Frames G) : lT G u F y = F (frL G u y) := rfl
 
 
+omit [Fintype ι] in
 theorem lT_mul (u v : ι → GL (Fin n) ℂ) (F : Frames G → ℂ) : lT G (u * v) F = lT G v (lT G u F) :=
   funext fun y => congrArg F (Subtype.ext (funext fun τ => Matrix.mul_assoc _ _ _))
 
 
+omit [Fintype ι] in
 theorem lT_one (F : Frames G → ℂ) : lT G 1 F = F :=
   funext fun y => congrArg F (Subtype.ext (funext fun τ => Matrix.one_mul _))
 
@@ -87,6 +90,7 @@ def valL (b : S.β) (d : S.D b) : (S.Cl → Fr emb σ n → ℂ) →ₗ[ℂ] (Fr
   (S.trTo emb σ b d).toLinearMap ∘ₗ LinearMap.proj (S.cl b d)
 
 
+omit [StarRing E] [NumberField K] [StarRing K] in
 theorem tr_mul (b : S.β) (g h : S.G b) (F : Fr emb σ n → ℂ) :
     S.tr emb σ b (g * h) F = S.tr emb σ b g (S.tr emb σ b h F) := by
   funext y
@@ -120,10 +124,12 @@ theorem valL_mem (hφ : φ ∈ S.Fi emb σ lam) (b : S.β) (d : S.D b) : valL S 
   DiaStab.tr_mem S emb σ lam b _ (hφ _).1
 
 
+variable (S emb σ lam) in
 def prFi : (S.Cl → Fr emb σ n → ℂ) →ₗ[ℂ] S.Fi emb σ lam :=
   (LinearMap.exists_leftInverse_of_injective (S.Fi emb σ lam).subtype (Submodule.ker_subtype _)).choose
 
 
+omit [StarRing E] [NumberField K] [StarRing K] in
 theorem prFi_of_mem (hφ : φ ∈ S.Fi emb σ lam) : prFi S emb σ lam φ = ⟨φ, hφ⟩ :=
   LinearMap.congr_fun (LinearMap.exists_leftInverse_of_injective (S.Fi emb σ lam).subtype (Submodule.ker_subtype _)).choose_spec
     ⟨φ, hφ⟩
@@ -202,6 +208,8 @@ theorem continuous_infN (hθ : IsInfFam θ) (τ : ι) : Continuous fun g => (inf
   exact GlobalTheory.Mem.VolExists.continuous_infMat V.gram (hθ (t τ))
 
 
+open scoped Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
+attribute [local instance] Algebra.TensorProduct.rightAlgebra in
 theorem eventually_congOne (x₀ : GL (Fin n) (AfE D.host.F D.host.E)) (a : 𝓞 D.host.E) :
     ∀ᶠ κ in 𝓝 (1 : GA D V), CongOne a (x₀⁻¹ * finN V hn κ * x₀) := by
   subst hn

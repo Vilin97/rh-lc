@@ -308,6 +308,7 @@ theorem theta_lower_bound : ThetaLower := by
     exact le_trans hmin3 (by rw [e]; exact hinv _ hpos h')
 
 
+set_option maxHeartbeats 800000 in
 theorem theta_power_bound : ThetaPower := by
   intro C A0 Ct CDel cT Cb hC hA0 hCt hCDel hcT hCb hcb
   obtain ⟨k0, hk0⟩ : ∃ k0 : ℕ, max (max (max (1000 * (Ct * C * A0) ^ 2) (40 * (Real.pi * Ct * C ^ 2 * A0)))

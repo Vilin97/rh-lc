@@ -169,6 +169,7 @@ theorem hom_opp' (σ : k⟦X⟧ →ₐ[k] k⟦X⟧) (t : ℤ_[l]) (h : σ X = on
   exact X_pow_dvd_iff.1 (key (n + 1)) n (by omega)
 
 
+variable (k l) in
 def trace (m : ℤ_[l]) : k⟦X⟧ := 1 + ∑ z ∈ mu l, onePlusPow k l (m * z)
 
 theorem hom_trace (σ : k⟦X⟧ →ₐ[k] k⟦X⟧) (t : ℤ_[l]) (h : σ X = onePlusPow k l t - 1) (m : ℤ_[l]) :
@@ -209,6 +210,7 @@ theorem trace_one : ∃ c : k⟦X⟧, trace k l 1 = X ^ (l - 1) * (1 + X * c) :=
   linear_combination hc + h2
 
 
+variable (k) in
 def act (t : ℤ_[l]) : k⟦X⟧ →ₐ[k] k⟦X⟧ := sb (onePlusPow k l t - 1) (opp_dvd t)
 
 theorem act_X (t : ℤ_[l]) : act k t X = onePlusPow k l t - 1 := sb_X _ _
@@ -225,6 +227,7 @@ theorem act_X_eq (t : ℤ_[l]) : ∃ e : k⟦X⟧, act k t X = X * e ∧ constan
   simp [coeff_one, FrobeniusBinomialReduction.red]
 
 
+variable (l) in
 def Inv (b : k⟦X⟧) : Prop := ∀ z : ℤ_[l], z ^ (l - 1) = 1 → act k z b = b
 
 theorem inv_trace (m : ℤ_[l]) : Inv l (trace k l m) := fun z hz => by
@@ -269,6 +272,7 @@ theorem Inv.pow_dvd {b : k⟦X⟧} (h : Inv l b) (hX : X ∣ b) : X ^ (l - 1) �
   rwa [Nat.sub_add_cancel pred_pos] at this
 
 
+variable (k l) in
 def emb : k⟦X⟧ →ₐ[k] k⟦X⟧ := sb (trace k l 1) X_dvd_trace
 
 theorem emb_X : emb k l X = trace k l 1 := sb_X _ _
@@ -298,9 +302,11 @@ theorem inv_iff (b : k⟦X⟧) : Inv l b ↔ ∃ a, emb k l a = b := by
     rw [subst_comp_subst_apply (s X_dvd_trace) (s (opp_dvd z)), this]
 
 
+variable (k l) in
 def fr : k⟦X⟧ →ₐ[k] k⟦X⟧ := sb (X ^ l) (dvd_pow_self _ hl.out.ne_zero)
 
 
+variable (k l) in
 def ga : k⟦X⟧ →ₐ[k] k⟦X⟧ := sb ((1 + X) ^ (1 + l) - 1) (X_dvd_iff.2 gam_const)
 
 theorem fr_X : fr k l X = onePlusPow k l l - 1 := by rw [opp_nat, frob_eq]; exact sb_X _ _

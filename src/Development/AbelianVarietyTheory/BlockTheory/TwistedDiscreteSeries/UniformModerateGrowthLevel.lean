@@ -27,12 +27,14 @@ abbrev KMap (M : DSModel W S) : Type :=
 variable (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ))
 
 
+variable (W) in
 def IsSmoothFn (φ : GA D W → ℂ) : Prop :=
   ∀ (k : ℕ) (τs : Fin k → D.what₂.Tau) (Xs : Fin k → Matrix (Fin W.rank) (Fin W.rank) ℂ),
     (∀ i, Xs i ∈ lieAt W (τs i)) → ∀ g,
       ContDiff ℝ ∞ fun t : Fin k → ℝ => φ (g * (List.ofFn fun i => oneP θ W (τs i) (Xs i) (t i)).prod)
 
 
+variable (W) in
 def IsUnifModGrowth (φ : GA D W → ℂ) : Prop :=
   ∃ N : ℕ, ∀ l : List (D.what₂.Tau × Matrix (Fin W.rank) (Fin W.rank) ℂ), (∀ p ∈ l, p.2 ∈ lieAt W p.1) →
     ∀ x, ∃ C : ℝ, ∀ g ∈ GinfC W,

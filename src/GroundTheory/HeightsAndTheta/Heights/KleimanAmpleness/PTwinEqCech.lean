@@ -307,6 +307,7 @@ theorem hEquiv_mk (i : ℕ) (w : IndefiniteRowSideFullHecke.Kleiman.gradedZ S N 
 end GradedCech
 
 
+open GradedCech in
 theorem GradedCech.proof : GradedCech.Statement := by
   intro S _ N
   refine ⟨fun M _ _ _ _ G i c => hEquiv G c i, ?_, ?_⟩

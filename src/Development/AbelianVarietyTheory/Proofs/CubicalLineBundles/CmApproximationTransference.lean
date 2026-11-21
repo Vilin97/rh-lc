@@ -79,6 +79,7 @@ section CMType
 variable {K : Type} [Field K] [NumberField K] {ι : Type} [Fintype ι] {σ : ι → K →+* ℂ}
 
 
+omit [NumberField K] [Fintype ι] in
 theorem sumElim_bijective (hσ : Function.Injective σ)
     (hcm : ∀ τ : K →+* ℂ, (∃ i, σ i = τ) ↔ ¬ ∃ i, σ i = ComplexEmbedding.conjugate τ) :
     Function.Bijective (Sum.elim σ fun i => ComplexEmbedding.conjugate (σ i)) := by

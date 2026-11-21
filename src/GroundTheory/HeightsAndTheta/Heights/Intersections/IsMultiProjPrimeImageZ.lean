@@ -156,6 +156,7 @@ theorem geoNum_eq_zero
 end PointVertical
 
 
+open PointVertical in
 theorem ProjectivePointVertical.proof
     (hGeo : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)], GeoNumStatement ι)
     (hR4 : ∀ (F : Type) [Field F] (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)],

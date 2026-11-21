@@ -48,6 +48,7 @@ private theorem gramMat_eq_pi_smul_transpose {L : Type} [Field L] [NumberField L
   refine Finset.sum_congr rfl (fun a _ => Finset.sum_congr rfl (fun b _ => by ring))
 
 
+open Matrix in
 theorem gramDet_norm {L : Type} [Field L] [NumberField L] (B : HermitianBundle.{0} L) (σ : L →+* ℂ) {g : ℕ}
     (e : Fin g → B.carrier) (W Hm : Matrix (Fin g) (Fin g) ℂ)
     (h : ∀ i j, ((B.metric.form σ).inner ((1 : ComplexAt σ) ⊗ₜ[𝓞 L] e i) ((1 : ComplexAt σ) ⊗ₜ[𝓞 L] e j) : ℂ) =
@@ -223,6 +224,7 @@ theorem is_L2_of_gram_det_pos {E : Type} [Field E] [NumberField E] [IsCMField E]
 end KeyDeg
 
 
+open scoped ComplexOrder in
 theorem keyDeg_of_keyBad : KeyBadSt → KeyDegSt := by
   intro hb
   have hKF := GlobalTheory.T.exactKeyFormula_proof

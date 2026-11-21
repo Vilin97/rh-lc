@@ -226,6 +226,7 @@ def scaleB {d : ℕ} (b : Module.Basis (Fin d) F E) (c : F) (hc : c ≠ 0) : Mod
   b.unitsSMul (fun _ => (Units.mk0 c hc)⁻¹)
 
 
+omit [NumberField F] in
 theorem repr_scaleB {d : ℕ} (b : Module.Basis (Fin d) F E) (c : F) (hc : c ≠ 0) (R : Type) [CommRing R]
     [Algebra F R] (y : R ⊗[F] E) (k : Fin d) :
     (Algebra.TensorProduct.basis R (scaleB b c hc)).repr y k =

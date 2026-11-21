@@ -12,6 +12,7 @@ namespace GlobalTheory.GO.SplitGlue
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
 
 
+omit [StarRing E] in
 theorem exists_smul_le {N N' : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice E N)
     (hN' : Submodule.IsLattice E N') : ∃ a : 𝓞 E, a ≠ 0 ∧ ∀ x ∈ N', a • x ∈ N := by
   classical
@@ -34,6 +35,7 @@ theorem exists_smul_le {N N' : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLa
   | smul c y _ hy => rw [smul_comm]; exact N.smul_mem _ hy
 
 
+omit [StarRing E] in
 theorem mem_of_forall (N : Submodule (𝓞 E) (Sp E n)) {x : Sp E n}
     (h : ∀ w : HeightOneSpectrum (𝓞 E), ∃ s ∉ w.asIdeal, s • x ∈ N) : x ∈ N := by
   by_contra hx
@@ -47,6 +49,7 @@ theorem mem_of_forall (N : Submodule (𝓞 E) (Sp E n)) {x : Sp E n}
   exact hs (hle (by simpa using hsx))
 
 
+omit [StarRing E] in
 theorem eq_of_sameAt {N N' : Submodule (𝓞 E) (Sp E n)} (h : ∀ w, SameAt w N N') : N = N' := by
   apply le_antisymm
   · intro x hx

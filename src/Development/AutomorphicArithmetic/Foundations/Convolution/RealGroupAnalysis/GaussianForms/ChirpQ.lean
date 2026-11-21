@@ -33,6 +33,7 @@ private theorem continuous_eval_poly {R ι : Type*} [CommRing R] [TopologicalSpa
   | mul_X p i hp => simp only [map_mul, MvPolynomial.eval_X]; exact hp.mul (continuous_apply i)
 
 
+variable (F) in
 private noncomputable def lT : mixedEmbedding.mixedSpace F →L[ℝ] ℝ :=
   LinearMap.toContinuousLinearMap (-((mixedTraceForm F).flip 1))
 

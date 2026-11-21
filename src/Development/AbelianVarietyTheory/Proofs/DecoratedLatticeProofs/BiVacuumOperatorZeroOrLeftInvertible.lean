@@ -196,6 +196,7 @@ theorem psi_eq_one_of_neg {z : AF D.host.F} (h : ψ (-z) = 1) : ψ z = 1 := by
 end GlobalTheory.ZeroOrInv
 
 
+open GlobalTheory.ZeroOrInv GlobalTheory.LatVac in
 theorem GlobalTheory.FinPl.biInv_main : ∀ D : D7, GlobalTheory.FinPl.BiInv D := by
   intro D k _ _ _ _ ι p I P hP ψ hψ A S A' op hop
   refine ⟨fun LA LS LA' hA hS hA' => ?_, fun e e' he he' => comp_part ψ A S A' P op hop e e' he he'⟩

@@ -96,6 +96,7 @@ theorem ker_coneMapQ_eq {Ω : Type} [Field Ω] [CharZero Ω] (y : (Σ k, ι k) �
   exact lt_irrefl _ h
 
 
+open IndefiniteRowSideFullHecke.HeightsSet.CoordCurveDegree in
 theorem aeval_ratio_eq_zero_of_le {Ω L : Type} [Field Ω] [CharZero Ω] [Field L] [CharZero L]
     {y : (Σ k, ι k) → Ω} {z : (Σ k, ι k) → L} (hyz : mCoordIdeal y ≤ mCoordIdeal z) (d : ∀ k, ι k)
     (hyd : ∀ k, y ⟨k, d k⟩ ≠ 0) (hzd : ∀ k, z ⟨k, d k⟩ ≠ 0) {g : MvPolynomial (Σ k, ι k) ℚ}

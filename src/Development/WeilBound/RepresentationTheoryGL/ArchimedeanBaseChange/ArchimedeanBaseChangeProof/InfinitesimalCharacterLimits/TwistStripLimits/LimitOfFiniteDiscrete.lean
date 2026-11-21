@@ -35,6 +35,7 @@ theorem caseB (hTB : TwBound) (hNE : NodeEmb) (hG : Graft) (hTS : TwShift) (hTr 
   exact (hcon ⟨r, hr, hrN, c, hc⟩).elim
 
 
+variable (E) in
 def Q (N : ℕ) : Prop :=
   ∀ W : Submodule ℂ (Kinf E N → ℂ), FiniteDimensional ℂ W →
   ∃ Ω : ∀ M : ℕ, Set (Submodule ℂ (Kinf E M → ℂ)), KTypes E Ω ∧

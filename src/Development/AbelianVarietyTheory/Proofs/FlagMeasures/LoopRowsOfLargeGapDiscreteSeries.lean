@@ -41,6 +41,7 @@ open MeasureTheory NumberField Formalism.BasicNotions Formalism.MainNotions Form
 variable {D : D7}
 
 
+variable [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 theorem wuBessel_ofW {X : HidaSetting D} {θ : ℝ} (hG : Formalism.L2.SG.ConcreteSettingExists.GapHyp D)
     (hBW : Formalism.L2.SG.LocWSOf.BesselOfW) (C : Choice X θ) : WuBessel C :=
   Formalism.L2.SG.Pf.wuBesselOfLoc_all C hG hBW
@@ -48,6 +49,7 @@ theorem wuBessel_ofW {X : HidaSetting D} {θ : ℝ} (hG : Formalism.L2.SG.Concre
     (fun u τ => Formalism.L2.SG.Pf.colsTypeTr C u τ)
 
 
+variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] in
 def loopLocDatOfW (hG : Formalism.L2.SG.ConcreteSettingExists.GapHyp D) (hT : Formalism.BasicNotions.dsigTie D)
     (hBW : Formalism.L2.SG.LocWSOf.BesselOfW) {X : HidaSetting D} {θ : ℝ} (C : Choice X θ) {large₂ : SizeData₂ D} {C1 : ℝ}
     (hwin : normWin D large₂ C1 θ) (u u' : D.what₂.Word) : Formalism.L2.SG.LoopTieOf.LoopLocDat D large₂ u u' C1 where
@@ -75,6 +77,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 variable {𝒞 : FamClass} (sel : SSel 𝒞)
 
 
+variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] in
 def BGW (hBW : Formalism.L2.SG.LocWSOf.BesselOfW) (C1f : List ℝ → ℝ) (hC1 : ∀ l, 0 ≤ C1f l) :
     ∀ {eps : ℝ} (Fm : FamP eps) (hc : CG 𝒞 Fm) x (_ : (Fm.raise (yR (selG sel) yFG Fm hc)).x1 < x) (i : Fm.Ix x)
       (u u' : (Fm.D x i).what₂.Word), LoopLocDat (Fm.D x i) (Fm.L x i) u u' (C1f Fm.cOut) :=
@@ -84,6 +87,7 @@ def BGW (hBW : Formalism.L2.SG.LocWSOf.BesselOfW) (C1f : List ℝ → ℝ) (hC1 
     (Formalism.L2.SG.Pf.LoopBTheta.normWin_one (Fm.L x i) (hC1 _)) u u'
 
 
+variable [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 def MGW (hFX : Formalism.L2.SG.PoincareAmplitudeLowerBounds.FinXC) (hWu : Formalism.L2.SG.Pf.WuDecayOfGap) (hBW : Formalism.L2.SG.LocWSOf.BesselOfW)
     (hRM : RMeasExAll) (hJF : JFactNAll) (hCF : Formalism.L2.SG.Pf.LoopBCovN.CovNFormula) :
     ∀ {eps : ℝ} (Fm : FamP eps) (hc : CG 𝒞 Fm) x (hx : (Fm.raise (yR (selG sel) yFG Fm hc)).x1 < x) (i : Fm.Ix x)

@@ -369,6 +369,7 @@ theorem refineFun_lt_of_eq {β γ : Fin n → ℕ} {i j : Fin n} (hβ : β i = �
   omega
 
 
+variable (F) in
 theorem leviUnipotent_refineFun (β γ : Fin n → ℕ) :
     leviUnipotent F n β γ = leviUnipotent F n β (refineFun β γ) := by
   ext u

@@ -155,6 +155,7 @@ theorem vv_cast_map {K : Type} [Field K] {ι : Type} [Fintype ι] {n n' : ℕ} (
   exact ⟨v, HEq.rfl, HEq.rfl⟩
 
 
+set_option maxHeartbeats 2000000 in
 theorem stage {B' : Base} {f' : Fr B'.toPre} {T' : TwDat B'} {w' : ColW B' f' T'} {Z' : w'.Lt} {hX' : B'.fields.Ok} {Wt' : Set B'.places.Pl}
     (hV : ∀ i, Seed.FrmC.StdLat (Vc (w'.st Z').toD7 i)) (hXl : Seed.FrmC.StdLat (w'.st Z').toD7.sp.X') (hval : ValsIn w'.I)
     {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks (w'.st Z').toD7.what₂.LL] {Xg : Finset (Gc B' w'.px → B'.LL)} {tr : TrI B' w'.px}
@@ -202,6 +203,7 @@ theorem decoOf_heq {E : Type} [Field E] [NumberField E] [StarRing E] {F : Type} 
   rfl
 
 
+set_option maxHeartbeats 2000000 in
 theorem ptL_enl {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : TwDat B'} (w : ColW B f T) (w' : ColW B' f' T')
     (Z : w.Lt) (Z' : w'.Lt) (Wt : Set B.places.Pl) (Wt' : Set B'.places.Pl) (hPre : B'.toPre = B.toPre) (hp : HEq w'.px w.px)
     (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w'.st Z').toD7.R.m) (hi : (i : ℕ) = i') :
@@ -230,6 +232,7 @@ theorem ptL_enl {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} 
     (Formalism.UG.bc (swapAE (w.st Z).toD7) (h : GL (Fin (Vc (w.st Z).toD7 ⟨i, hi0⟩).rank) _)) * 1 * 1))) :))
 
 
+set_option maxHeartbeats 2000000 in
 theorem frames_enl {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : TwDat B'} {w : ColW B f T} (w' : ColW B' f' T')
     {Z : w.Lt} (Z' : w'.Lt) {hX : B.fields.Ok} {Wt : Set B.places.Pl} (z : Dat (w.st Z) w.I hX T Wt)
     (hPre : B'.toPre = B.toPre) (hf : HEq f' f) (hp : HEq w'.px w.px) :
@@ -272,6 +275,7 @@ theorem frames_enl {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat 
     exact (by with_unfolding_all exact ((heq_of_eq e) :))
 
 
+set_option maxHeartbeats 4000000 in
 theorem reset_side : ∀ {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : TwDat B'} {w : ColW B f T} {w' : ColW B' f' T'}
   {Z : w.Lt} {Z' : w'.Lt} {hX : B.fields.Ok} {hX' : B'.fields.Ok} {Wt : Set B.places.Pl} {Wt' : Set B'.places.Pl}
   (z : Dat (w.st Z) w.I hX T Wt), Enl0 B B' → HEq f' f → HEq w'.px w.px → z.Std → (∀ i, Seed.FrmC.StdLat (Vc (w'.st Z').toD7 i)) → Seed.FrmC.StdLat (w'.st Z').toD7.sp.X' → ValsIn w'.I →

@@ -258,6 +258,7 @@ theorem phaseLoc_L (hA : ∀ p, Agree δ M p) {γ : TermDef.Term D u u' F0 what�
 section Steps
 
 
+variable (M δ u u' F0 what₂) in
 def PhaseLocG : Prop :=
   ∀ (γ : TermDef.Term D u u' F0 what₂) (w : Point D.host.E (D.R.rS + 1))
     (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (L U : PairVal.MatR D),

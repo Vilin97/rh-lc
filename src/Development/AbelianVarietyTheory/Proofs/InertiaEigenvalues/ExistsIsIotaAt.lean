@@ -42,6 +42,7 @@ abbrev LocQ (N m n : ℕ) : Type :=
   ↥(locDiv w N m n) ⧸ (locInt w m n).addSubgroupOf (locDiv w N m n)
 
 
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta in
 def IsIotaAt {D : D7} {q : GlobalTheory.IndefiniteRowSideFullHecke.SphericalVolumeLift.FinPl D} {w : IsDedekindDomain.HeightOneSpectrum (𝓞 D.host.E)}
     (h : w.under (𝓞 D.host.F) = q) (ι : w.adicCompletion D.host.E →+ AE D) : Prop :=
   Continuous ι ∧ (∀ x, GlobalTheory.Core.Rk.SWQ.cw h (ι x) = x) ∧ (∀ x, GlobalTheory.Core.Rk.SWQ.cw h (cA D (ι x)) = 0) ∧

@@ -50,6 +50,7 @@ def CLiftK.r {C : Type 1} [Category.{0} C] {g : C ⥤ Thick (smFun X q)} {D : E.
   Units.map (g.map (s.map' 1 2)).φ.toMonoidHom (Λ.w (s.map' 0 1)) * Λ.w (s.map' 1 2) * (Λ.w (s.map' 0 2))⁻¹
 
 
+variable (q) in
 def IsFirstChernDeRham (D : E.LineData X) (x : HdR q 2) : Prop :=
   ∀ (s : ℕ) (C : Type 1) [Category.{0} C] (g : C ⥤ Thick (smFun X q)), (∀ c, (g.obj c).pdPow s = ⊥) →
     (∀ c, ∃ (V : X.Opens) (σ : (V : Scheme.{0}) ⟶ D.Y), σ ≫ D.f = V.ι ∧ InU V (g.obj c)) →

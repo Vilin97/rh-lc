@@ -221,6 +221,7 @@ theorem fT_algebraMap (x : F) (y : Matrix (Fin n) (Fin r) E) : fT F (algebraMap 
 variable {A : AddSubgroup (Matrix (Fin n) (Fin r) E)}
 
 
+omit [NumberField E] in
 theorem exists_gen (hfg : A.toIntSubmodule.FG) : ∃ (m : ℕ) (x : Fin m → Matrix (Fin n) (Fin r) E),
     ∀ u, u ∈ hatG F A ↔ ∃ c : Fin m → Af F, (∀ k, c k ∈ intG F) ∧ ∑ k, fT F (c k) (x k) = u := by
   obtain ⟨m, x, hx⟩ := Submodule.fg_iff_exists_fin_generating_family.1 hfg

@@ -36,6 +36,7 @@ structure XGeo (D : D7) where
   LT : GlobalTheory.FinPl.Lat D.sp.X'
 
 
+set_option maxHeartbeats 1000000 in
 structure YRat (a : XGeo D) where
   bes : ∀ j ρ, j + 2 * ρ + 2 = D.R.m → BesAt (Yc D j) (D.sp.X j) ρ
   jac : ∀ j ρ, j + 2 * ρ + 2 = D.R.m → JacAt (Yc D (j + 1)) (D.sp.X (j + 1)) ρ

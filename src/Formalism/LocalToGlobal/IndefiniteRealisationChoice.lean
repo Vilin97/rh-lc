@@ -81,6 +81,7 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : MainNotions.G.Inst 
 end At
 
 
+open Formalism.L2.DIV in
 structure RemainingDivisionBounds {eps : ℝ} (Fm : FamP eps) (Cabs CH : ℝ) : Prop where
 
   hh : Formalism.MainNotions.LocalQuadraticParts.ComplementTwoFamily Fm → DIVinN Fm → Formalism.MainNotions.LocalQuadraticParts.FrameNumberBoundFamily Fm Fm.Csz CH

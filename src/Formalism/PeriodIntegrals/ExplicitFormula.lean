@@ -9,6 +9,7 @@ noncomputable section
 namespace PI
 
 
+open Classical in
 def psi0 {N : ℕ} (χ : DirichletCharacter ℂ N) (u : ℝ) : ℂ :=
   by
     classical

@@ -96,6 +96,7 @@ theorem IsDefGram.inv_transpose {n : ℕ} {G : Matrix (Fin n) (Fin n) K} (h : Is
     exact (h.2.2 φ).inv.transpose
 
 
+omit [NumberField K] in
 theorem pairK_equivFun_symm {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeight n) (G : ι → Matrix (Fin n) (Fin n) K)
     (u v : VVIdx lam → K) :
     pairK lam G ((bVV K lam).equivFun.symm u) ((bVV K lam).equivFun.symm v) =

@@ -32,6 +32,7 @@ theorem padicHom_padicInt_mem_valBall_zero (t : ℤ_[p]) :
   exact CharZero.valuation_padicHom_padicInt_le_one K p t
 
 
+include p in
 theorem padicLog_mem_valBall_of_mem {k : ℕ} (hk : absRamificationIndex K ≤ k)
     {w : Additive (unitFiltrationUnits K 1)} (hw : w ∈ principalFiltration K k) :
     padicLog K w ∈ valBall K (k + 1) := by

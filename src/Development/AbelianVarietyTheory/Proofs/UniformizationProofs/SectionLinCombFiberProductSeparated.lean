@@ -270,6 +270,7 @@ theorem le_wchart_sum {U : X₁.Opens} {V : X₂.Opens} {j : K₁ → L.ι} {k :
     exacts [Set.mem_iInter.1 (hU hy.1) a, Set.mem_iInter.1 (hV hy.2) a])
 
 
+include H in
 theorem exists_sum (hL : L.IsLB) [IsAffine S] (hS : IsField Γ(S, ⊤)) [CompactSpace X₁] [CompactSpace X₂]
     [X₁.IsSeparated] [X₂.IsSeparated]
     (v : LB.Sec (LB.LinComb L (Sum.elim (fun k => p ≫ φ₁ k) (fun k => q ≫ φ₂ k)) (Sum.elim ε₁ ε₂))) :
@@ -333,6 +334,7 @@ theorem exists_sum (hL : L.IsLB) [IsAffine S] (hS : IsField Γ(S, ⊤)) [Compact
   ring
 
 
+include H in
 theorem eq_zero_of_sum (hL : L.IsLB) [IsAffine S] (hS : IsField Γ(S, ⊤)) [CompactSpace X₁] {n : ℕ}
     (a : Fin n → LB.Sec (LB.LinComb L φ₁ ε₁)) (b : Fin n → LB.Sec (LB.LinComb L φ₂ ε₂))
     (ha : ∀ c : Fin n → Γ(S, ⊤), (∀ j, ∑ i, resTop _ (i₁.appTop.hom (c i)) * (a i).f j = 0) → c = 0)

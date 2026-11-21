@@ -105,6 +105,7 @@ theorem exists_dRho_pure_all (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ)
 end GlobalTheory.SquareComm.AlgDeriv
 
 
+open GlobalTheory.SquareComm.AlgDeriv in
 theorem GlobalTheory.SquareComm.dRho_mem_algF : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D), IsStdChar D ψ (-1) → IsInfFam θ →
     ∀ (ε : Bool) (S X : HSp D) (A : Fr S) (B : Fr X), ∀ f ∈ algF ψ θ ε A B, ∀ (τ : D.what₂.Tau) (z : Matrix (Fin X.rank) (Fin S.rank) ℂ),
       dRho (heisO ψ (sgn ε S) X) θ τ z f ∈ algF ψ θ ε A B := by

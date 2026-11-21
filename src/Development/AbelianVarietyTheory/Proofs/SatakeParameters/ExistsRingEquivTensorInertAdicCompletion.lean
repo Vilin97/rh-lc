@@ -14,6 +14,7 @@ open scoped TensorProduct Matrix
 namespace GlobalTheory.InertCompletion
 
 
+open scoped WithZeroTopology in
 theorem exists_completion_map {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
     [Algebra F E] (v : HeightOneSpectrum (𝓞 F)) (P : HeightOneSpectrum (𝓞 E))
     (h : IsInertAt F E v P) :

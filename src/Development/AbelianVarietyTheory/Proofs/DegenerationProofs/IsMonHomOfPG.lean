@@ -46,6 +46,7 @@ theorem exists_beta [IsLocalRing R] [IsNoetherianRing R] (hI : I ≠ ⊤) {e : �
 variable (U : PreU I D A G) (U' : PreU I D' A' G)
 
 
+open CharAgree in
 theorem match_down {e : ℕ} {f : D'.X → D.X}
     (h : CharAgree.Match (U.gt (e + 1)) (U'.gt (e + 1)) f) : CharAgree.Match (U.gt e) (U'.gt e) f := by
   intro Z r z J J' hJ hJ' c c' x
@@ -65,6 +66,7 @@ theorem match_down {e : ℕ} {f : D'.X → D.X}
     ((val_pull hJ' _ _ _).symm.trans (val_corr hJ' (U'.gt_t e x) r))))
 
 
+open CharAgree in
 theorem exists_xe [IsLocalRing R] [IsNoetherianRing R] (hI : I ≠ ⊤) :
     ∃ xe : D'.X ≃+ D.X, ∀ e, CharAgree.Match (U.gt e) (U'.gt e) xe := by
   choose xe hxe using fun e => exists_match hI (U.gt e) (U'.gt e)
@@ -140,6 +142,7 @@ theorem exists_level [IsLocalRing R] (hwL : IsCPMap U'.P U.P (𝟙 _) (𝟙 G.le
   exact congrArg (· * _) (hv' Z r z jM jM' a₁ a₂)
 
 
+open UnifCompare hiding trans_comp_q gw_trans in
 theorem exists_iso [IsLocalRing R] [IsNoetherianRing R] [IsAdicComplete I R] (hI : I ≠ ⊤) (hS : SecBaseChangeSt)
     (hA : AmpleSt) (hwL : IsCPMap U'.P U.P (𝟙 _) (𝟙 G.left) hw wL) :
     ∃ (Φ : D'.P.A ≅ D.P.A) (w : LB.Iso D'.P.L (D.P.L.pull Φ.hom.left)), w.IsGen ∧ ∀ e : ℕ,
@@ -226,6 +229,7 @@ theorem isMonHom_of_pG [IsNoetherianRing R] [IsAdicComplete I R] (Φ : D'.P.A �
   · exact (Over.w _).trans (Over.w (U.gt e).q).symm
 
 
+open CoordCompare in
 theorem c_and_coord [IsLocalRing R] [IsNoetherianRing R] [IsAdicComplete I R] (hG : GlobalFnsSt)
     (Φ : D'.P.A ≅ D.P.A) (w : LB.Iso D'.P.L (D.P.L.pull Φ.hom.left)) (hw : w.IsGen) [IsMonHom Φ.hom]
     (hp : ∀ e : ℕ, (U'.gt e).pG.left ≫ Φ.hom.left = (U.gt e).pG.left) (xe : D'.X ≃+ D.X)

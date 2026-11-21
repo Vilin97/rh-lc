@@ -38,6 +38,7 @@ theorem exists_galois (F E : Type) [Field F] [CharZero F] [Field E] [Algebra F E
   · rw [RingHom.comp_assoc, ← IsScalarTower.algebraMap_eq F E C, ← IsScalarTower.algebraMap_eq F C Ω]
 
 
+open MonObj in
 theorem nonempty_level_of_rational {F : Type} [Field F] [CharZero F] (P : PolAV (Sp F)) (n : ℕ) (hn : 0 < n) (ζ : Fˣ)
     (hζ : IsPrimitiveRoot ζ n) (Q : PolAV (Sp (AlgebraicClosure F))) (φ : Q.A.left ⟶ P.A.left)
     (hQ : IsPolFibre (algebraMap F (AlgebraicClosure F)) P Q φ)

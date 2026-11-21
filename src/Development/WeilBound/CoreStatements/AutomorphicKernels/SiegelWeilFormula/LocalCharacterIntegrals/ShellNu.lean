@@ -111,6 +111,7 @@ def mulVecEquiv (P Q : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E)) (hPQ : P * Q = 
 end ShNu
 
 
+open ShNu in
 theorem lattice_norm_conj_invariant (v : HeightOneSpectrum (𝓞 F)) (σ : E →ₐ[F] E) (hcm : IsCMExt F E σ) {n : ℕ}
     (lam : Measure (Fin n → Fv F v ⊗[F] E)) [lam.IsAddHaarMeasure] (L₁ L₂ : AddSubgroup (Fin n → Fv F v ⊗[F] E))
     (h₁ : IsCO L₁) (h₂ : IsCO L₂) :

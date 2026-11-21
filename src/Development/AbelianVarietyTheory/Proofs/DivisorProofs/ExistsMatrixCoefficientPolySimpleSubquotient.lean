@@ -21,6 +21,7 @@ variable {O : Type} [CommRing O] {N : ℕ} {ι : Type} [Fintype ι] [DecidableEq
   {k : Type} [CommRing k] [Algebra O k] {Gm : Type} [AddCommGroup Gm] [Module (alg O N lam) Gm]
 
 
+variable (O N k) in
 def blockEmb (τ : ι) : MvPolynomial (Fin N × Fin N) O →ₐ[O] MvPolynomial (BVar N ι) k := aeval fun v => X (τ, v)
 
 omit [Fintype ι] [DecidableEq ι] in
@@ -48,6 +49,7 @@ theorem stepT_apply (τ : ι) (ψ : Gm →+ MvPolynomial (BVar N ι) k) (z : Gm)
     stepT c τ ψ z = ∑ m ∈ expSet N (res N (lam τ)), blockEmb O N k τ (monomial m 1) * ψ (c τ m • z) := rfl
 
 
+variable (O lam) in
 def Semi (ψ : Gm →+ MvPolynomial (BVar N ι) k) : Prop :=
   ∀ (r : O) z, ψ (algebraMap O (alg O N lam) r • z) = algebraMap O _ r * ψ z
 

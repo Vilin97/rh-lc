@@ -27,6 +27,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.RaisingLoweringOperators GlobalTheo
 variable {D : D7} {V W : HSp D} {S S' : D.what₂.Tau → SPar}
 
 
+open Classical in
 theorem exists_ins {a b : ℕ} (P : D.what₂.Tau → LPol b a) (τ : D.what₂.Tau) :
     ∃ j : LPol b a →ₗ[ℂ] PolF D b a, ∀ Q, j Q = glue (Function.update P τ Q) := by
   refine ⟨LinearMap.mulLeft ℂ
@@ -43,6 +44,7 @@ theorem exists_ins {a b : ℕ} (P : D.what₂.Tau → LPol b a) (τ : D.what₂.
   rw [if_neg (Finset.ne_of_mem_erase hσ)]
 
 
+open Classical in
 theorem locW_of_semiW {M : DSModel V S} {M' : DSModel W S'} {τ : D.what₂.Tau} {aS aT : ℚ}
     {A : PolF D W.rank V.rank →ₗ[ℂ] M'.sm τ →ₗ[ℂ] M.H τ} (h : SemiW M M' τ aS aT A)
     {P : D.what₂.Tau → LPol W.rank V.rank} {j : LPol W.rank V.rank →ₗ[ℂ] PolF D W.rank V.rank}

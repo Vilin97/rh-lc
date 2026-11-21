@@ -27,6 +27,8 @@ theorem exists_awayFrac_common {f : A₀} (z w : LocalizedModule.Away f N₀) :
     by rw [add_comm, awayFrac_add_pow_smul]⟩
 
 
+omit [Algebra R A] [IsScalarTower R₀ R A] [Module R N] [IsScalarTower R A N]
+  [IsScalarTower R₀ R N] in
 theorem exists_away_map_of_intertwine (ψ : N₀ →ₗ[R₀] N) (x₀ : A₀) (x : A)
     (h : ∀ (k : ℕ) y, ψ (x₀ ^ k • y) = x ^ k • ψ y) :
     ∃ θ : LocalizedModule.Away x₀ N₀ →ₗ[R₀] LocalizedModule.Away x N,

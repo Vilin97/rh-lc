@@ -73,6 +73,7 @@ theorem map_finite_eq {S : HSp D} {x y : GA D S} (h : finHom S x = finHom S y) :
     (Formalism.L2.Theta.mt S x).map (finitePart D) = (Formalism.L2.Theta.mt S y).map (finitePart D) := congrArg Units.val h
 
 
+set_option maxHeartbeats 2000000 in
 theorem mem_besGrp_of_parts {S S₀ A L : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (o : OrthDec S₀ A L) {x y z : GA D S}
     (hi : infHom S x = infHom S y) (hf : finHom S x = finHom S z) (hy : y ∈ besGrp d o) (hz : z ∈ besGrp d o) :
     x ∈ besGrp d o := by

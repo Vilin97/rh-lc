@@ -191,18 +191,21 @@ theorem relLength_submoduleOf {A W : Submodule R V} (h : A ≤ W) (B : Submodule
   relLength_comap_of_le_range W.subtype (by rwa [Submodule.range_subtype]) B
 
 
+open Pointwise in
 theorem relLength_smul_smul {G : Type*} [Monoid G] [DistribMulAction G V] [SMulCommClass G R V]
     {a : G} (ha : IsSMulRegular V a) (A B : Submodule R V) :
     relLength (a • A) (a • B) = relLength A B :=
   relLength_map_of_injective (DistribSMul.toLinearMap R V a) ha A B
 
 
+open Pointwise in
 theorem lengthCommensurable_smul_smul_iff {G : Type*} [Monoid G] [DistribMulAction G V]
     [SMulCommClass G R V] {a : G} (ha : IsSMulRegular V a) {A B : Submodule R V} :
     LengthCommensurable (a • A) (a • B) ↔ LengthCommensurable A B :=
   lengthCommensurable_map_iff_of_injective (DistribSMul.toLinearMap R V a) ha
 
 
+open Pointwise in
 theorem LengthCommensurable.signedLength_smul_smul {G : Type*} [Monoid G] [DistribMulAction G V]
     [SMulCommClass G R V] {a : G} {A B : Submodule R V} (h : LengthCommensurable A B)
     (ha : IsSMulRegular V a) : signedLength (a • A) (a • B) = signedLength A B :=

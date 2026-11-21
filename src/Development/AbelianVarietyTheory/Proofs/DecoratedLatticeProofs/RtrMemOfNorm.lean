@@ -54,6 +54,8 @@ theorem rtr_comm {δ δ' : Hfin X u} (h : δ * δ' = δ' * δ) (T : X.Vpi u →�
   exact congrArg (T ξ) e
 
 
+set_option maxHeartbeats 3000000 in
+set_option synthInstance.maxHeartbeats 200000 in
 theorem exists_rtr_dia {F : Formalism.L2.Forms.Forms0 D u} (Tr : Transport X u F) (hK : X.LevelSubgroupCharacter) (hL : LevelMatch X Tr hK)
     (v : (D.mem u).A.vT) (a : ((D.mem u).A.Fv v)ˣ) :
     ∃ δ : Hfin X u, ∀ T ∈ Cu X u hK, rtr X δ T ∈ Cu X u hK ∧

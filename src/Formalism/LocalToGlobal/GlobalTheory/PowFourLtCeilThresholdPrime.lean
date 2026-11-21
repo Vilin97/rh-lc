@@ -22,6 +22,7 @@ section AtRecord
 variable {D : D7} {L : SizeData₂ D} (X : G.Inst D L) (K : G.Consts) (Cr C bo : ℝ)
 
 
+open NumberField in
 theorem pa_int_dvd_of_mem_span {E : Type*} [Field E] [NumberField E] (N a : ℤ)
     (h : (a : 𝓞 E) ∈ Ideal.span {(N : 𝓞 E)}) : N ∣ a := by
   obtain ⟨z, hz⟩ := Ideal.mem_span_singleton'.1 h
@@ -50,6 +51,7 @@ theorem pa_int_dvd_of_mem_span {E : Type*} [Field E] [NumberField E] (N a : ℤ)
   exact_mod_cast this
 
 
+open NumberField in
 theorem pa_norm_congr_one {E : Type*} [Field E] [NumberField E] (c : E ≃ₐ[ℚ] E) (T M : ℕ) (pz : 𝓞 E)
     (hpz : (pz : E) * c (pz : E) = (T : E)) (hcong : (pz - 1) ∈ Ideal.span {(M : 𝓞 E)}) :
     (M : ℤ) ∣ (T : ℤ) - 1 := by

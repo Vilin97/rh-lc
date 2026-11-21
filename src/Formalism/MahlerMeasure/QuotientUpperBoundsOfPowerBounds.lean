@@ -36,6 +36,7 @@ def WindowMeanAP : Prop :=
       (n₀ : ℝ) * ((del₀ : ℝ) / Y₀ + (La₀ + (del₀ : ℝ) * h / Y₀) / E)
 
 
+open Classical in
 def WindowFullAP : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (K : Type) [NormedField K] [NormedAlgebra ℚ_[p] K] [IsUltrametricDist K]
     (n del₀ h : ℕ) (E : ℝ) (c : Fin n → Fin n → ℕ → K) (lead : K) (roots : Multiset K) (t₀ d : ℤ) (Y₀ : ℕ)

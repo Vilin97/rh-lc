@@ -14,6 +14,7 @@ namespace GlobalTheory.Reg
 open NumberField ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj
 
 
+open NumberField in
 theorem _root_.GlobalTheory.Reg.genFrEx_and_genFromTest : ∀ (E : Type) [Field E] [NumberField E]
     [IsCMField E] (H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H) (l : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H) (Xo : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Moduli Dw l)
     (c : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Coeff l), _root_.Formalism.L2.Pj.GenFrEx Xo c ∧ ∀ h : _root_.Formalism.L2.Pj.GenFrEx Xo c, _root_.Formalism.L2.Pj.GenFromTest Xo c h := by

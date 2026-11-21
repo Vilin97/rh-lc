@@ -173,6 +173,7 @@ theorem exists_tri_unit {α : Type} [Fintype α] (X : Data E r) (idx : Fin g ≃
   · rw [h2, h2, im_diag_ortho X idx x₀ hgr]
 
 
+set_option maxHeartbeats 1000000 in
 theorem cabs_diag_eq_one : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l), ∀ (σ : c.F →+* ℂ) (r : ℕ) (U : Formalism.L2.PjFree.Unf Xo c σ r), Formalism.L2.PjFree.GoodEmb c σ → Formalism.L2.PjFree.IsUnf U → ∀ k k' (x : (U.X k).dom) (x' : (U.X k').dom) (t : Ix Dw → (CAt σ)ˣ), IsUnitFr (U.X k) x.1 → IsUnitFr (U.X k') x'.1 → FrBor t (U.un k x) (U.un k' x') → ∀ j, cabs (t (some j) : CAt σ) = 1 := by
   classical
   intro E _ _ _ H Dw l Xo c σ r U hσ hU k k' x x' t hx hx' hB j₀

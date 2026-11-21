@@ -187,6 +187,7 @@ theorem isAlgebraic_adjoin [W.IsPrime] (j : Fin m)
 end RatioDim
 
 
+open RatioDim in
 theorem RatioDim.full : RatioDim.Statement := by
   intro k _ N m W hW hH j hj hrat
   have := hW

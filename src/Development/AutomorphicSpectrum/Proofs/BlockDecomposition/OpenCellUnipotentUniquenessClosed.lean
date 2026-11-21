@@ -77,6 +77,7 @@ variable (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   {h N : ℕ} (d : Fin h → ℕ) (hd : ∑ a, d a = N)
 
 
+variable {k d hd} in
 theorem mem_unipU_iff {u : GL (Fin N) k} :
     u ∈ unipU k d hd ↔ u ∈ unipB k (Fin N) ∧
       pm k (wOpen d hd) * u * (pm k (wOpen d hd))⁻¹ ∈ unipRadLower k (stdBlocks d hd) := by

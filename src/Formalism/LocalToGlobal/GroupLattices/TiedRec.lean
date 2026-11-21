@@ -21,6 +21,7 @@ variable (D : D7) (sc : Scale) (Ce : ℝ)
     Module.finrank ℂ (D.mem u).A.Mu0)
 
 
+set_option maxHeartbeats 4000000 in
 theorem gatIs_recG (H : LevelData (recG D sc Ce Lc X hd)) (hL : ∀ u, H u = Lc u)
     (hH : ∀ u w h, Cmp.HypAtP (X u w h).I) (u : D.what₂.Word) (w : D.what₂.places.Pl)
     (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)) : GatIs (recG D sc Ce Lc X hd) H u w hg := by

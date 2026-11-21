@@ -23,6 +23,7 @@ noncomputable section
 namespace GlobalTheory.CompanionTheory.BlockEntry
 
 
+attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra in
 theorem exp_sandwich' {n d : ℕ} (U : Matrix (Fin n) (Fin d) ℂ) (V : Matrix (Fin d) (Fin n) ℂ) (h : V * U = 1)
     (A : Matrix (Fin d) (Fin d) ℂ) : NormedSpace.exp (U * A * V) = 1 + U * (NormedSpace.exp A - 1) * V := by
   haveI : CompleteSpace (Matrix (Fin n) (Fin n) ℂ) := FiniteDimensional.complete ℝ _
@@ -130,6 +131,7 @@ theorem infEmb_compInf_sInf' : ∀ (F E : Type) [Field F] [NumberField F] [Field
   exact congrFun (hD.equalizer hL hR (funext hE)) z
 
 
+open GlobalTheory.CuspRep GlobalTheory.BlockArch in
 theorem archMat_blockEmb_infGL' : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [IsTotallyComplex E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E), IsHermND σ J → ∀ (r : ℕ) (X Y : Matrix (Fin n) (Fin r) E), IsWittFrame σ J X Y → ∀ (l d : ℕ) (h : l + d ≤ r) (ι : GlobalTheory.CuspRep.GA E d →* GAd σ J), GlobalTheory.BlockForms.IsBlockEmb σ J X Y h ι → ∀ (y : GL (Fin d) (GlobalTheory.CuspRep.Cinf E)), ι (GlobalTheory.CuspRep.infGL E d y) ∈ infPts σ J ∧ ∀ (w : InfinitePlace F) (τ : EmbOver E w),
  GlobalTheory.Orb.archMat σ J τ (projArch σ J w (ι (GlobalTheory.CuspRep.infGL E d y))) =
   1 + (GlobalTheory.BlockForms.blkCols h X).map τ.1 * (y.1.map (GlobalTheory.CuspRep.coord τ.1) - 1) * (((GlobalTheory.BlockForms.blkCols h Y).map τ.1)ᴴ * J.map τ.1) + (GlobalTheory.BlockForms.blkCols h Y).map τ.1 * (((y⁻¹).1.map (GlobalTheory.CuspRep.coord τ.1))ᴴ - 1) * (((GlobalTheory.BlockForms.blkCols h X).map τ.1)ᴴ * J.map τ.1) := by
@@ -271,6 +273,7 @@ theorem isLineOf_blockEmb_exp' : ∀ (F E : Type) [Field F] [NumberField F] [Fie
 end Line
 
 
+open GlobalTheory.CuspRep in
 theorem lie_eq_deriv_exp' : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (d : ℕ) (f : GlobalTheory.CuspRep.Sm E d) (B : Matrix (Fin d) (Fin d) (GlobalTheory.CuspRep.Cinf E)) (x : GlobalTheory.CuspRep.GA E d),
  (GlobalTheory.CuspRep.lie E d (GlobalTheory.CuspRep.toL B) f).1 x = deriv (fun t : ℝ => f.1 (x * GlobalTheory.CuspRep.infGL E d (GlobalTheory.CuspRep.expGLi d (t • B)))) 0 := by
   intro E _ _ _ d f B x

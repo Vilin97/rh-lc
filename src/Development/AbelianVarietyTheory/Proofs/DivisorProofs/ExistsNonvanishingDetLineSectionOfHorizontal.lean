@@ -45,6 +45,7 @@ variable {D : Datum H} {l : Level H} {Xo : Moduli D l} {c : Coeff l} {O : Type} 
   {Y : Model Xo c β} {V : Set (gen Y)} {τ : E →+* ℂ} {e : c.F →+* ℂ}
 
 
+variable (Y V τ) in
 abbrev Fr (R : Type) [CommRing R] : Type := Framed c Y.t (genι Y) (genStr Y) V τ D.p D.q R
 
 def Agree {R : Type} [CommRing R] (f : Fr Y V τ R)

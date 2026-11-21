@@ -85,6 +85,7 @@ theorem dpOf_eq (hn : ∀ n : ℕ, n ≠ 0 → ∀ x : B, (n : B) * x = 0 → x 
   cancel hn n.factorial_ne_zero ((dpOf_spec n hx).trans e.symm)
 
 
+variable (J h) in
 def dpExt (hn : ∀ n : ℕ, n ≠ 0 → ∀ x : B, (n : B) * x = 0 → x = 0) : DividedPowers J where
   dpow := dpOf J h
   dpow_null {n x} hx := by rw [dpOf, dite_eq_right hx]

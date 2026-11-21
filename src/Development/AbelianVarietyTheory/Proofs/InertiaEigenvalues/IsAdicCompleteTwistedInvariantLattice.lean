@@ -45,6 +45,8 @@ variable {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [Algebr
   [NormedAlgebra ℚ_[l] K]
 
 
+omit [IsUltrametricDist K] [IsUnitBall O K] [Fintype ι] [DecidableEq ι] [Fact l.Prime]
+  [NormedAlgebra ℚ_[l] K] in
 theorem pow_l_smul_vec_eq (n : ℕ) (v : Vec K a ι) : ((l : O) ^ n) • v = ((l : K) ^ n) • v := by
   rw [← Nat.cast_pow, ← Nat.cast_pow, Nat.cast_smul_eq_nsmul, Nat.cast_smul_eq_nsmul]
 

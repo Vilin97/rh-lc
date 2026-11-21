@@ -30,6 +30,7 @@ namespace GlobalTheory.RowLocVec
 variable {D : D7}
 
 
+open GlobalTheory.HalfProd GlobalTheory.ExportSeries.RestrictHalfModel in
 theorem prodHalf_halfInd {m n : ℕ} {a b : AE D} (ha : a * a = a) (hb : b * b = b) {Λ : AddSubgroup (Mx D m n)}
     (hΛ : ∀ e : AE D, e * e = e → ∀ u ∈ Λ, e • u ∈ Λ) :
     prodHalf a b (halfInd b Λ) (halfInd a Λ) = halfInd (a + b) Λ := by
@@ -69,6 +70,7 @@ theorem exists_compl_idem {e e₀ : AE D} {P P₀ : Finset (Pl D.host.E)} (hsub 
       horth Q (hsub hQ) Q' (Finset.sdiff_subset hQ') fun h => (Finset.mem_sdiff.1 hQ').2 (h ▸ hQ)
 
 
+open GlobalTheory.HalfProd in
 theorem isThetaAt_extend {S T : HSp D} {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1))
     {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)} {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)}
     (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) {a b : AE D} {P : Finset (Pl D.host.E)} (hP : IsIdemSum (a + b) P)

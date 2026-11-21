@@ -93,6 +93,7 @@ theorem point_eq_of_isometry {E : Type} [Field E] [NumberField E] [IsCMField E] 
       fun a => ⟨gam (F.t _ a) - F.t _ a, by rw [hA, one_smul, add_sub_cancel]⟩, h⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem marked_isometry_half {D : D7} (V : HSp D) {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E} {Dw : Datum H}
     (l : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H) (io : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E))
     (X X' : Data D.host.E V.rank) (A A' : Datum H) (φ : A.La ≃ₗ[𝓞 D.host.E] X.Λ) (φ' : A'.La ≃ₗ[𝓞 D.host.E] X'.Λ)
@@ -169,6 +170,7 @@ variable {D : D7} (V : HSp D) {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.
   (x₀ : (D.host.E →+* ℂ) → Matrix (Fin V.rank) (Fin V.rank) ℂ)
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_dict_over (hσ : GoodEmb c σ) (hA : l.A = 1) (hpq : 1 ≤ Dw.p + Dw.q)
     (hU : IsUnf U) (hW : ∀ k, ModelW V rfl (U.X k)) (hD : DictLat U V rfl dict io e F ik φ th x₀)
     (hι : GlobalTheory.Member.IotaOK Dw V io) (hth : ∀ k τ, Formalism.MainNotions.StandardLattice.IsInfEmb τ.1 (th k τ)) (hx₀ : ∀ k, IsOrthogonalFrame (U.X k) x₀)
@@ -231,6 +233,7 @@ theorem exists_dict_over (hσ : GoodEmb c σ) (hA : l.A = 1) (hpq : 1 ≤ Dw.p +
   rfl
 
 
+set_option maxHeartbeats 1000000 in
 theorem value_ratio (hσ : σ = c.F.val.toRingHom) (hA : l.A = 1) (hpq : 1 ≤ Dw.p + Dw.q)
     (hU : IsUnf U) (hW : ∀ k, ModelW V rfl (U.X k)) (hD : DictLat U V rfl dict io e F ik φ th x₀)
     (hι : GlobalTheory.Member.IotaOK Dw V io) (hth : ∀ k τ, Formalism.MainNotions.StandardLattice.IsInfEmb τ.1 (th k τ)) (hx₀ : ∀ k, IsOrthogonalFrame (U.X k) x₀)

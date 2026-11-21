@@ -197,6 +197,7 @@ variable {a : ℕ} (x : Fin a → D.nd.X i)
   (hc : ∀ j, Continuous fun g => Br.loc D.nbr i w hw (rTwO D.nd i r (x j)) g)
 
 
+include hc in
 theorem sum_crys (hAdm : FontaineAtPlacesOverL (D := D)) (K' : FinExt (D.nd.l i)) (h : (D.nbr i w hw).Kw.1 ≤ K'.1)
     (hN : (GKin h).Normal) (hF : (GKin h).FiniteIndex)
     (hS : ∀ (g : ↥(GK (D.nbr i w hw).Kw)) (c : ↥(K0 K')), ∃ c' : ↥(K0 K'),

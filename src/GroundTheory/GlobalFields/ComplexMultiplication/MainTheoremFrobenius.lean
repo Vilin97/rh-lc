@@ -105,6 +105,7 @@ variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ 
   [IsTotallyComplex K] {L : IntermediateField K ℂ} [NumberField L]
 
 
+omit [NumberField K] [IsTotallyComplex K] in
 theorem isPrimitiveRoot_localizationAt (𝔓 : HeightOneSpectrum (𝓞 L)) {ζ : L}
     (hζ : IsPrimitiveRoot ζ 12) :
     IsPrimitiveRoot (algebraMap (𝓞 L) (localizationAt L 𝔓) hζ.toInteger) 12 :=
@@ -114,6 +115,8 @@ theorem isPrimitiveRoot_localizationAt (𝔓 : HeightOneSpectrum (𝓞 L)) {ζ :
     exact RingOfIntegers.ext this)
 
 
+set_option maxHeartbeats 1000000 in
+include hK in
 theorem exists_vcPoint_pointHomOver_eq (𝔭 : HeightOneSpectrum (𝓞 K))
     (hv : (Ideal.absNorm 𝔭.asIdeal).Prime) (h5 : 5 ≤ Ideal.absNorm 𝔭.asIdeal)
     (𝔓 : HeightOneSpectrum (𝓞 L)) [𝔓.asIdeal.LiesOver 𝔭.asIdeal]

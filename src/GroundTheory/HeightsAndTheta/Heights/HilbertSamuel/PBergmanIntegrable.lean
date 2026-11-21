@@ -38,6 +38,7 @@ variable [CompactSpace X] [T2Space X] [MeasurableSpace X] [BorelSpace X]
   (W : Weight L) (dV : SmoothVolume A) (n : ℕ)
 
 
+omit [CompactSpace X] [T2Space X] [BorelSpace X] in
 theorem integral_pairing_self (s : Fin A.n → X → ℂ) :
     ∫ x, pairing W n s s x ∂dV.μ = ((sectionL2NormSq W dV n s : ℝ) : ℂ) := by
   simp_rw [pairing_self]

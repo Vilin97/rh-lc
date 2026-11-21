@@ -367,6 +367,7 @@ section words
 variable [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq]
 
 
+open Formalism.FourierDecayAlt.P.JFxDs3 in
 theorem rhoW_cont (D : RealPlaceData k r Wp Wq) {A c : ℝ} {m : ℕ} {F : Mat k r → (Wq →L[ℂ] Wp)} (hc : CCle A m F c)
     (hA : 0 ≤ A) (u v : List (Mat k r)) (hu : ∀ X ∈ u, unitLie k r X) (hv : ∀ X ∈ v, unitLie k r X)
     (hl : u.length + v.length ≤ m) {g : Mat k r} (hgG : g ∈ GV k r) :
@@ -806,6 +807,7 @@ section rhoAA
 variable [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq]
 
 
+open Formalism.FourierDecayAlt.P.PBN.JA in
 theorem rho_AA (Bs : RealPlaceData k r Wp Wq) {F : Mat k r → (Wq →L[ℂ] Wp)} (hF : CkOn ⊤ (GV k r) F) (m : ℕ)
     (hm : m ≤ r) (u ell : ℂ) {p : SS k r} (hp : Bs.inSS p) {g : Mat k r} (hg : g ∈ GV k r) :
     rho Bs p (C3.AAop k r m hm u F) g = C3.AAop k r m hm u (rho Bs p F) g ∧

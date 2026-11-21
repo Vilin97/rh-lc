@@ -269,6 +269,7 @@ end GlobalTheory.FrameMove
 namespace GlobalTheory
 
 
+open FrameMove in
 theorem exists_unique_frMove : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l), ∀ (ρ : Xo.X ⟶ Xo.X) (ν : SABMap Xo.univ.t Xo.univ.t ρ), ρ ≫ Xo.s = Xo.s → ∀ (S : Type) [CommRing S] [Algebra c.F S] (y : FrPt Xo c S), (∃ y' : FrPt Xo c S, FrMove ρ ν y y') ∧ ∀ y' y'' : FrPt Xo c S, ∀ ν' : SABMap Xo.univ.t Xo.univ.t ρ, ν'.φ = ν.φ → FrMove ρ ν y y' → FrMove ρ ν' y y'' → y' = y'' := by
   intro E _ _ _ H Dw l Xo c ρ ν hρ S _ _ y
   have hL := Xo.univ.t.PP.isLB

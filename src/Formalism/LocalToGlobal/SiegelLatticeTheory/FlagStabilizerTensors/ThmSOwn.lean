@@ -191,6 +191,7 @@ theorem kof_sOf (hA : (Y.tO u u').AbsConv) (S : Set (TT Y u u')) (Φ' : Set (RT 
   exact (tsum_subtype Φ' (aR hF u u')).trans h3.tsum_eq
 
 
+include hF in
 theorem hsEmb_tsum (hA : (Y.tO u u').AbsConv) (S : Set (TT Y u u')) :
     Formalism.L2.SG.PackageTie.hsEmb (∑' s, S.indicator (aM Y u u') s) = (Y.tO u u').part S := by
   have hc : Continuous (Formalism.L2.SG.PackageTie.hsEmb (Wq := CM (Y.cs u')) (Wp := CM (Y.cs u))) :=
@@ -208,6 +209,7 @@ theorem hsEmb_tsum (hA : (Y.tO u u').AbsConv) (S : Set (TT Y u u')) :
   exact h'.tsum_eq.symm
 
 
+include hF in
 theorem hsNormSq_tr [FiniteDimensional ℂ (ColT (hF.shInj u'))] (A : CM (Y.cs u') →L[ℂ] CM (Y.cs u)) :
     hsNormSq (tr (hF.shBij u) (hF.shBij u') A) = ‖Formalism.L2.SG.PackageTie.hsEmb A‖ ^ 2 := by
   have := finiteDimensional_colT (hF.shBij u)
@@ -264,6 +266,7 @@ theorem conjE_Kpp {u u' : D.what₂.Word} (hA : (Y.tO u u').AbsConv) :
     conjE_KOf hI u u' _ (PhiC (hF := hF) u u') (mem_PhiC_iff hI), kof_sOf hF hA _ _ mem_degSet_iff]
 
 
+include hI in
 theorem hsNormSq_Kpp {u u' : D.what₂.Word} (hA : (Y.tO u u').AbsConv) :
     hsNormSq (AdmissibleBoundsFromSource.Kpp D u u') = ‖(Y.tO u u').part (Y.tO u u').degSet‖ ^ 2 := by
   have := finiteDimensional_colT (hF.shBij u')
@@ -282,6 +285,7 @@ theorem hsEmb_eq_zero {Wq Wp : Type} [NormedAddCommGroup Wq] [InnerProductSpace 
     rw [OrthonormalBasis.coe_toBasis]; exact hb i)
 
 
+include hI in
 theorem kpp_zero {u u' : D.what₂.Word} (hZ : Formalism.L2.SG.RowsOther.KppTermZero (Y.tO u u')) : AdmissibleBoundsFromSource.Kpp D u u' = 0 := by
   have h0 : ∀ t ∈ PhiC (hF := hF) u u', aR hF u u' t = 0 := by
     intro t ht
@@ -309,6 +313,7 @@ open Formalism.L2.SG.Full
 variable {D : D7} {X : HidaSetting D} {Y : Full X} {hF : FinX Y} (hI : SIso D.s (sOf hF))
 
 
+include hI in
 theorem hsNormSq_off {u u' : D.what₂.Word}
     (hE : Formalism.L2.SG.TermOp.KExpansion (X.Fu u) (X.Fu u') (Y.cs u) (Y.cs u') (Y.FN u) (Y.FN u') Y.hK (Y.Dt u) (Y.Dt u'))
     (hA : (Y.tO u u').AbsConv) (hId : (Y.tO u u').IdDegenerate) (hZ : Formalism.L2.SG.RowsOther.KppTermZero (Y.tO u u')) :
@@ -318,6 +323,7 @@ theorem hsNormSq_off {u u' : D.what₂.Word}
       (Formalism.L2.SG.RowsOther.kppOff_of_termZero _ hZ)]
 
 
+include hI in
 theorem hsNormSq_diag {u : D.what₂.Word}
     (hE : Formalism.L2.SG.TermOp.KExpansion (X.Fu u) (X.Fu u) (Y.cs u) (Y.cs u) (Y.FN u) (Y.FN u) Y.hK (Y.Dt u) (Y.Dt u))
     (hA : (Y.tO u u).AbsConv) (hId : (Y.tO u u).IdDegenerate) :

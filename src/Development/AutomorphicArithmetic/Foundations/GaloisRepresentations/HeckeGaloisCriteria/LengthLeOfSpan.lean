@@ -72,6 +72,7 @@ theorem decomp : ∃ (f : X → T) (d : O), d ≠ 0 ∧ (∀ x y, y ≠ x → (f
     simp
 
 
+include hs in
 theorem qK_eq_zero_iff {v : FractionRing O ⊗[O] M} : qK T act S v = 0 ↔ v ∈ ⨆ x ∈ Sᶜ, heckeEig T act x := by
   constructor
   · intro hv

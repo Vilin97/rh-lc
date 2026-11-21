@@ -80,6 +80,7 @@ private theorem val_integral {G : Type} [Group G] [TopologicalSpace G] [CompactS
   exact (isIntegral_algHom_iff (j.restrictScalars ℤ_[l]) j.injective).1 h2
 
 
+omit [TopologicalSpace E] [IsModuleTopology ℚ_[l] E] in
 private theorem exists_int_basis : ∃ (n : ℕ) (e : Basis (Fin n) ℚ_[l] E),
     ∀ x : E, IsIntegral ℤ_[l] x ↔ ∀ i, ‖e.repr x i‖ ≤ 1 := by
   have : CharZero E := charZero_of_injective_algebraMap (algebraMap ℚ_[l] E).injective
@@ -95,6 +96,7 @@ private theorem exists_int_basis : ∃ (n : ℕ) (e : Basis (Fin n) ℚ_[l] E),
   exact hx.exists_integral_multiple
 
 
+open GlobalTheory.UnramifiedCrys GlobalTheory.UnramifiedRep in
 private theorem exists_split [IsTopologicalRing E] (K : FinExt l) (μ : ↥(GK K) →* Eˣ)
     (hμ : Continuous fun g => (μ g : E)) (hI : ∀ g ∈ IK K, μ g = 1) :
     ∃ (n : ℕ) (e : Basis (Fin n) ℚ_[l] E) (W W' : Matrix (Fin n) (Fin n) (Bdr l)), W * W' = 1 ∧

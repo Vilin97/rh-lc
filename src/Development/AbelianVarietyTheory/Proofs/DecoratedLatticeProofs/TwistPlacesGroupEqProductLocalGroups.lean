@@ -29,6 +29,7 @@ theorem at_le_off' {D : D7} (V : HSp D) {P P' : Pl D → Prop} (h : ∀ p, P p �
   (GlobalTheory.FinPl.SetCut.grp_split D V ∅).2.2.2.2.2.2.1 P P' h
 
 
+open GlobalTheory.FinPl in
 theorem off_mono {D : D7} {V : HSp D} {R R' : Pl D → Prop} (hR : ∀ p, R' p → R p) {g : GA D V} (h : g ∈ grpOff V R) :
     g ∈ grpOff V R' := by
   unfold grpOff at h ⊢
@@ -41,6 +42,7 @@ theorem off_mono {D : D7} {V : HSp D} {R R' : Pl D → Prop} (hR : ∀ p, R' p �
   exact this ⟨u.1, hR u.1 u.2⟩
 
 
+open GlobalTheory.FinPl in
 theorem off_of_each {D : D7} {V : HSp D} {R : Pl D → Prop} {g : GA D V} (h : ∀ p, R p → g ∈ grpOff V (· = p)) :
     g ∈ grpOff V R := by
   unfold grpOff

@@ -20,6 +20,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 abbrev FI (E : Type) [Field E] [NumberField E] : Type := FractionalIdeal (𝓞 E)⁰ E
 
 
+variable (F) in
 def cp (w : HeightOneSpectrum (𝓞 E)) : AE F E →+* w.adicCompletion E :=
   (evalV E w).toRingHom.comp ((finAdEquiv F E).toRingHom.comp (finTens F E))
 

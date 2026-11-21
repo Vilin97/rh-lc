@@ -161,6 +161,7 @@ end GlobalTheory.CompanionTheory.Ar.TieValue
 namespace GlobalTheory.CompanionTheory.Ar
 
 
+open TieValue in
 theorem valAt_iff_isValueAt_coords : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Spec (CommRingCat.of Ω) ⟶ X) (K : Type) [Fintype K] (J : K → Type) [∀ k, Fintype (J k)] (y : (Σ k, J k) → Ω), CoordTie ℤ ξ (fun c' : (k : K) → J k => ∏ k, y ⟨k, c' k⟩) → ∀ (z : Spec (CommRingCat.of ℂ) ⟶ X) (w : (Σ k, J k) → ℂ), genPt ξ ⤳ centre z → CoordsAt ξ y z w → ∀ (a : Ω) (v : ℂ), ValAt ξ z a v ↔ GroundTheory.Heights₂.Heights.LowerBoundFree.IsValueAt y a w v := by
   intro X Ω _ ξ K _ J _ y tie z w hgen hw a v
   classical

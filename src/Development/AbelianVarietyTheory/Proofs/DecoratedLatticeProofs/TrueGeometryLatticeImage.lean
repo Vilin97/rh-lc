@@ -139,6 +139,7 @@ theorem col_mem {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
   rfl
 
 
+set_option maxHeartbeats 2000000 in
 theorem mat_int (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (p : GlobalTheory.FinPl.SplitPt D k) (P : HeightOneSpectrum (𝓞 D.host.E)) (hP : Formalism.L2.NTheta.IsIdemAt p.e P) (V : HSp D) {n : ℕ}
     (hn : V.rank = n) (t : 𝓞 D.host.E) (ht : t ∈ P.asIdeal) (Lb : Submodule (𝓞 D.host.E) (Fin n → D.host.E))
@@ -188,6 +189,7 @@ theorem finM_inv {D : D7} (V : HSp D) {n : ℕ} (hn : V.rank = n) (κ : GA D V) 
   exact (Units.inv_eq_of_mul_eq_one_right e).symm
 
 
+set_option maxHeartbeats 2000000 in
 theorem col_mem_level {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX B.toPre} (I : TC B X) (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws)
     (Z : TC.Later B (I.cols l)) (u : B.Word) {Ch : ℕ → Type} {chOf : ∀ i, ((I.rec7 l Z).mem u).C.cls i → Ch i}
     (F : Formalism.L2.Forms.FormsTiedSym (I.rec7 l Z) u Ch chOf) (hF : I.StdF l Z u F) (i : ℕ) (hi : i ≤ (I.rec7 l Z).R.m)
@@ -223,6 +225,7 @@ theorem col_mem_level {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX B.t
   exact col_mem _ hgram S.Lb (fun z hz j => let ⟨r, hr, _⟩ := (hLb z).1 hz j; ⟨r, hr⟩) v _ h1.2 s
 
 
+set_option maxHeartbeats 4000000 in
 theorem stdPair_fixed {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX B.toPre} (I : TC B X) (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws)
     (Z : TC.Later B (I.cols l)) (u : B.Word) {Ch : ℕ → Type} {chOf : ∀ i, ((I.rec7 l Z).mem u).C.cls i → Ch i}
     (F : Formalism.L2.Forms.FormsTiedSym (I.rec7 l Z) u Ch chOf) (hF : I.StdF l Z u F) (j : ℕ) (hj : j ≤ (I.rec7 l Z).R.m)

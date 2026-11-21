@@ -38,11 +38,13 @@ theorem hdim_zero (Δ : Y.Dv) : Y.hdim 0 Δ = Module.finrank F (Y.H0 Δ) :=
   (Y.hZeroEquiv Δ).finrank_eq
 
 
+variable {Y} in
 theorem hdim_eq_of_toPic_eq {Δ : Y.Dv} {L : LB Y.X} (hL : L.IsLB) (e : toPic Δ = cls L hL) (i : ℕ) :
     Y.hdim i Δ = GlobalTheory.hdim F (twist (structureModule Y.X) L) i :=
   (nonempty_twist_iso_of_cls_eq _ (isLB_toLB Δ) hL e).elim (hdim_congr F i)
 
 
+variable {Y} in
 theorem hdim_congr {Δ Δ' : Y.Dv} (e : toPic Δ = toPic Δ') (i : ℕ) : Y.hdim i Δ = Y.hdim i Δ' :=
   hdim_eq_of_toPic_eq (isLB_toLB Δ') e i
 
@@ -54,6 +56,7 @@ theorem inter_eq_multiDiff (Δ : Fin Y.dim → Y.Dv) : Y.inter Δ = multiDiff Δ
   exact (interNum_eq_multiDiff F _ fun i => isLB_toLB (Δ i)).trans e.symm
 
 
+variable {Y} in
 theorem inter_eq_of_toPic_eq {Δ : Fin Y.dim → Y.Dv} {L : Fin Y.dim → LB Y.X}
     (hL : ∀ i, (L i).IsLB) (e : ∀ i, toPic (Δ i) = cls (L i) (hL i)) :
     Y.inter Δ = interNum F (structureModule Y.X) L :=
@@ -109,6 +112,7 @@ theorem isCurve_top (h : Y.dim = 1) : Y.IsCurve ⊤ :=
       (Y.topologicalKrullDim_eq.trans (by rw [h]; rfl))⟩
 
 
+variable {Y} in
 theorem IsCurve.eq_top (h : Y.dim = 1) {C : Y.Cl} (hC : Y.IsCurve C) : C = ⊤ :=
   not_not.1 fun hn => (Y.properCl_iff C).1 hn (PositivityModel.genericPoint_mem
     (Y.topologicalKrullDim_eq.trans (by rw [h]; rfl)) ((Y.isCurve_iff C).1 hC))
@@ -144,12 +148,15 @@ theorem deg_zsmul (n : ℤ) (Δ : Y.Dv) : Y.deg C (n • Δ) = n * Y.deg C Δ :=
 end IsCurve
 
 
+variable (Y) in
 def nef (Δ : Y.Dv) : Prop := IsNef F (Y.lb Δ)
 
 
+variable (Y) in
 def big (Δ : Y.Dv) : Prop := IsBig F (Y.lb Δ)
 
 
+variable (Y) in
 def ample (Δ : Y.Dv) : Prop := IsAmpleLB (Y.lb Δ)
 
 variable {Δ A B : Y.Dv} {L : LB Y.X}
@@ -173,6 +180,7 @@ theorem big_iff_of_toPic_eq (hL : L.IsLB) (e : toPic Δ = cls L hL) : Y.big Δ �
   ⟨fun h => h.of_cls_eq hL e.symm, fun h => h.of_cls_eq (isLB_toLB Δ) e⟩
 
 
+variable (Y) in
 theorem nef_zero : Y.nef 0 := nef_iff.2 fun C _ => (deg_zero C).ge
 
 theorem nef_iff_of_dim_eq_one (h : Y.dim = 1) : Y.nef Δ ↔ 0 ≤ Y.inter fun _ => Δ := by

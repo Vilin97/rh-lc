@@ -17,11 +17,13 @@ namespace CrystallineSemistableComparison
 variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)}
 
 
+variable (l) in
 def clToC : PadicAlgCl l →+* ℂ_[l] := algebraMap _ _
 
 theorem norm_clToC (x : PadicAlgCl l) : ‖clToC l x‖ = ‖x‖ := UniformSpace.Completion.norm_coe x
 
 
+variable (l K) in
 def okToOC : OK l K →+* OC l :=
   (((clToC l).comp K.val.toRingHom).comp (OK l K).subtype).codRestrict (normInteger ℂ_[l]) fun x =>
     mem_normInteger.2 ((norm_clToC _).trans_le (mem_normInteger.1 x.2))

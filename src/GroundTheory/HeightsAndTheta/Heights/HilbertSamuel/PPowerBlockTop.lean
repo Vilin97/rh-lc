@@ -107,6 +107,7 @@ theorem const_tensorPowH {I : AllFam} (hI : I.IsFamily) {P : Ideal (MRing ι)} {
   exact hn
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem blockFnField_addBlock {Ω : Type} [Field Ω] [CharZero Ω] {y : (Σ k, ι k) → Ω}
     {A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {m N : ℕ} {v : Fin N → Ω} (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0)
     (hv : ∀ j, v j ∈ chartLat y A.a m) : blockFnField (addBlock y v) = blockFnField y := by
@@ -139,6 +140,7 @@ theorem blockFnField_addBlock {Ω : Type} [Field Ω] [CharZero Ω] {y : (Σ k, �
 end PowerBlockTop
 
 
+open PowerBlockTop in
 theorem PowerBlockTop.proof (hPF : PFCoordStatement) (hIso : IsomInvariance.Statement)
     (hAB : AddBlockIsometric.Statement) : PowerBlockTop.Statement := by
   classical

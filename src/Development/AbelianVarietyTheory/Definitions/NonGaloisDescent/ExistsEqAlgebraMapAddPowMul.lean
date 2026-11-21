@@ -134,6 +134,7 @@ theorem hat_N {f : K⟦X⟧} (hf : f ∈ RpiE O K l e) :
   exact ((IsLocalization.Away.algebraMap_isUnit (Ehat O K l e)).pow n).mul_left_cancel h1
 
 
+variable (K) in
 def Ezpow (i : ℤ) : K⟦X⟧ := (((isUnit_E (K := K) l e).unit ^ i : K⟦X⟧ˣ) : K⟦X⟧)
 
 omit [IsUltrametricDist K] [CompleteSpace K]
@@ -154,6 +155,7 @@ section DivE
 variable {R : Type} [Semiring R] [Module R (Vec K a ι)] [SMulCommClass R K⟦X⟧ (Vec K a ι)]
 
 
+variable (l e) in
 def divE (n : ℕ) (W : Submodule R (Vec K a ι)) : Submodule R (Vec K a ι) where
   carrier := {y | E K l e ^ n • y ∈ W}
   add_mem' hv hw := by simpa only [Set.mem_ofPred_eq, smul_add] using W.add_mem hv hw
@@ -167,6 +169,7 @@ theorem mem_divE {n : ℕ} {W : Submodule R (Vec K a ι)} {y : Vec K a ι} :
 variable [Fact l.Prime] [NormedAlgebra ℚ_[l] K] [NeZero e]
 
 
+variable (l e) in
 def shiftE (i : ℤ) (W : Submodule R (Vec K a ι)) : Submodule R (Vec K a ι) where
   carrier := {y | Ezpow K l e (-i) • y ∈ W}
   add_mem' hv hw := by simpa only [Set.mem_ofPred_eq, smul_add] using W.add_mem hv hw
@@ -180,6 +183,7 @@ theorem mem_shiftE {i : ℤ} {W : Submodule R (Vec K a ι)} {y : Vec K a ι} :
 end DivE
 
 
+variable (K a ι) in
 def mulV (f : K⟦X⟧) : Module.End K (Vec K a ι) where
   toFun v := f • v
   map_add' := smul_add f

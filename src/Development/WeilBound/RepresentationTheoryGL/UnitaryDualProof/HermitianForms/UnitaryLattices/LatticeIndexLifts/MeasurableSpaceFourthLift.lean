@@ -77,6 +77,7 @@ private theorem addHaar_singleton_zero_eq_zero {m : ℕ} {ψ : AddChar k Circle}
   · exact absurd h hfin
 
 
+include hψ hψ1 hS hA₀ hBp hBc hBg hD hCp hCc hC hCB hν in
 theorem lift_form : ∃ I : V →ₗ[ℂ] V →ₗ⋆[ℂ] ℂ, Psd I ∧ (∀ x v w, I (col x v) (col x w) = I v w) ∧
       (∀ g v w, I (gl g v) (gl g w) = ((nabs k (Matrix.GeneralLinearGroup.det g) ^ s : ℝ) : ℂ) * I v w) ∧
       (∀ v, (I v v).re ≤ (B v v).re) ∧ IsD ψ col A₀ I C ∧ IsA col I 0 ∧

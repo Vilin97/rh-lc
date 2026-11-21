@@ -71,14 +71,17 @@ def cInf (e : K ≃+* M) : Cinf K →+* Cinf M :=
   RingHom.pi fun w : InfinitePlace M => coord (w.embedding.comp e.toRingHom)
 
 
+omit [NumberField K] [NumberField M] in
 theorem cInf_star (e : K ≃+* M) (x : Cinf K) : cInf e (star x) = star (cInf e x) :=
   funext fun _ => coord_star _ x
 
 
+omit [NumberField K] [NumberField M] in
 theorem cInf_smul (e : K ≃+* M) (t : ℝ) (x : Cinf K) : cInf e (t • x) = t • cInf e x :=
   funext fun _ => coord_smul _ t x
 
 
+omit [NumberField M] in
 theorem continuous_cInf (e : K ≃+* M) : Continuous (cInf e) :=
   LinearMap.continuous_of_finiteDimensional
     ({ toFun := cInf e, map_add' := map_add _, map_smul' := cInf_smul e } : Cinf K →ₗ[ℝ] Cinf M)
@@ -89,6 +92,7 @@ theorem norm_cInf_le (e : K ≃+* M) (x : Cinf K) : ‖cInf e x‖ ≤ ‖x‖ :
 variable [IsTotallyComplex K] [IsTotallyComplex M]
 
 
+omit [NumberField M] [IsTotallyComplex M] in
 theorem coord_cInf (e : K ≃+* M) (τ : M →+* ℂ) (x : Cinf K) :
     coord τ (cInf e x) = coord (τ.comp e.toRingHom) x := by
   conv_lhs => unfold coord
@@ -130,12 +134,14 @@ def Over (e : K ≃+* M) (v : HeightOneSpectrum (𝓞 K)) (w : HeightOneSpectrum
   ∀ x : 𝓞 K, x ∈ v.asIdeal ↔ RingOfIntegers.mapRingEquiv e x ∈ w.asIdeal
 
 
+omit [NumberField K] [NumberField M] in
 theorem Over.symm {e : K ≃+* M} {v : HeightOneSpectrum (𝓞 K)} {w : HeightOneSpectrum (𝓞 M)} (h : Over e v w) :
     Over e.symm w v := fun x => by
   rw [h]
   exact Iff.of_eq (congrArg (· ∈ w.asIdeal) ((RingOfIntegers.mapRingEquiv e).apply_symm_apply x).symm)
 
 
+omit [NumberField K] [NumberField M] in
 theorem Over.unique {e : K ≃+* M} {v v' : HeightOneSpectrum (𝓞 K)} {w : HeightOneSpectrum (𝓞 M)} (h : Over e v w)
     (h' : Over e v' w) : v = v' := HeightOneSpectrum.ext (Ideal.ext fun x => (h x).trans (h' x).symm)
 

@@ -150,6 +150,7 @@ theorem int_mul_ne {u : Pl F} (h : u ≠ v) {x : UA σ Y.J} (hx : x ∈ locGrp �
   rw [← int_prj, map_mul, prj_ne h hx, one_mul, int_prj]
 
 
+variable (σ Y) in
 def intGrp (v : Pl F) : Subgroup (UA σ Y.J) where
   carrier := {g | IntAt v g}
   one_mem' := fun z hz _ => by rw [inv_one, show mat (1 : UA σ Y.J) = 1 from rfl, Matrix.one_mulVec]; exact ⟨hz, hz⟩

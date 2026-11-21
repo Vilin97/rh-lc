@@ -61,6 +61,7 @@ def HasTr (γ : DX Δ) (τ : K) : Prop := (mt γ).det = 1 ∧ (mt γ).trace = al
 def Ind (H : Subgroup Kˣ) (τ : K) (t : Kˣ) : Prop := ∃ h ∈ H, τ = (t * h : Kˣ) + ((t * h)⁻¹ : Kˣ)
 
 
+open Classical in
 def one (p : Prop) : ℂ := if p then 1 else 0
 
 def KD (Δ : K) (O : Type) [CommRing O] [Algebra O K] : Subgroup (DX Δ) :=
@@ -68,6 +69,7 @@ def KD (Δ : K) (O : Type) [CommRing O] [Algebra O K] : Subgroup (DX Δ) :=
 
 variable (O : Type) [CommRing O] [Algebra O K]
 
+open Classical in
 def fZD (χ : Kˣ →* ℂˣ) (g : DX Δ) : ℂ :=
   if h : ∃ z : Kˣ, ∃ s : DX Δ, IsScal z s ∧ s⁻¹ * g ∈ KD Δ O then ((χ h.choose)⁻¹ : ℂˣ) else 0
 
@@ -172,9 +174,11 @@ structure Dat.Ok : Prop where
 namespace Dat
 
 
+open Classical in
 def Jv (v : Pl F) : Subgroup (U3 (cv v Δ)) := if v ∈ D.Sg then (D.S v).J else KU (Ov v) _
 
 
+open Classical in
 def J2v (v : Pl F) : Subgroup (DX (cv v Δ)) := if v ∈ D.Sg then (D.S v).J2 else KD _ (Ov v)
 
 def UG : Subgroup (GA Δ) := (rpg _ _).box D.Jv
@@ -188,12 +192,15 @@ abbrev Par (F : Type) [Field F] [NumberField F] : Type := ∀ v : Pl F, (Kv v)ˣ
 def Cone (t : Par F) : Prop := ∀ v ∈ D.Sg, t v ∈ (D.S v).P
 
 
+open Classical in
 def fGv (t : Par F) (v : Pl F) (g : U3 (cv v Δ)) : ℂ := if v ∈ D.Sg then (D.S v).fG (t v) g else one (g ∈ KU (Ov v) _)
 
 
+open Classical in
 def fSv (t : Par F) (v : Pl F) (g : DX (cv v Δ)) : ℂ := if v ∈ D.Sg then (D.S v).fS (t v) g else one (g ∈ KD _ (Ov v))
 
 
+open Classical in
 def fKv (t : Par F) (v : Pl F) (g : DX (cv v Δ)) : ℂ := if v ∈ D.Sg then (D.S v).fK (t v) g else fZD (Ov v) (D.χ v) g
 
 def FG (t : Par F) (g : GA Δ) : ℂ := ∏ᶠ v, D.fGv t v (g.1 v)

@@ -47,6 +47,7 @@ lemma vbd_mapDomain {V W : Type} (l : List V) (c : List W →₀ ℤ) :
 end GlobalTheory.SeqCx.ColDecomp
 
 
+open GlobalTheory.SeqCx.ColDecomp in
 theorem GlobalTheory.SeqCx.vertical_exact_of_columns : ∀ (V W : Type) (D : Set (List V × List W)) (a b : ℕ), (∀ l : List V, l.length = a → (∃ w, (l, w) ∈ D) → ExactAt {w | (l, w) ∈ D} b) → ∀ x ∈ chains2 D a b, vbd V W x = 0 → ∃ y ∈ chains2 D a (b + 1), vbd V W y = x := by
   classical
   intro V W D a b hex x hx hvx

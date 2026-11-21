@@ -40,6 +40,7 @@ theorem exists_near (v : HeightOneSpectrum (𝓞 L⁺))
   exact ⟨k, hk⟩
 
 
+variable (L) in
 theorem exists_sep (s : ReciprocityTheory.Aut.SplitPlace L) :
     ∃ e : 𝓞 L, Valued.v (s.i (e : L)) = 1 ∧
       Valued.v (s.i (IsCMField.complexConj L (e : L))) < 1 := by

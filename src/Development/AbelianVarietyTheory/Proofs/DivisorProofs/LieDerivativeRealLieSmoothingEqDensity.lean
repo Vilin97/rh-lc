@@ -71,6 +71,7 @@ theorem integral_mul_fderiv_lmul_eq_dens (ν : Measure (Lie E a)) [ν.IsAddHaarM
 namespace SmoothingDeriv
 
 
+omit [IsTotallyComplex E] in
 theorem continuous_rmul_fun : Continuous (fun y : Lie E a => rmul y) := by
   let R : Lie E a →ₗ[ℝ] (Lie E a →L[ℝ] Lie E a) :=
     { toFun := rmul
@@ -111,6 +112,7 @@ theorem chart_smoothing (ν : Measure (Lie E a)) (α : Lie E a → ℂ) (ψ : GA
 end SmoothingDeriv
 
 
+open SmoothingDeriv in
 theorem lieD_smoothing (ν : Measure (Lie E a)) [ν.IsAddHaarMeasure] {α : Lie E a → ℂ}
     (hα : IsTest (invSet E a) α) {ψ : GA E a → ℂ} (hψ : ψ ∈ Sm E a) (X : Lie E a) (g : GA E a) :
     lieD X (smoothing ν α ψ) g = smoothing ν (dens X α) ψ g := by

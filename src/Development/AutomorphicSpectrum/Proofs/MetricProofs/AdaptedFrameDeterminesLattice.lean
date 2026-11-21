@@ -29,6 +29,7 @@ theorem perExt_eq_sum (R : RiemLat E g Λ) (y : Ψ → Fin (j + j') → ℂ) :
   simp [perExt, Module.Basis.constr_apply_fintype]
 
 
+omit [IsCMField E] in
 theorem form_antisymm {M : Type} [AddCommGroup M] (f : M →ₗ[ℤ] M →ₗ[ℤ] ℤ) (hf : ∀ x, f x x = 0) (x y : M) :
     f x y = - f y x := by
   have h := hf (x + y)
@@ -80,6 +81,7 @@ theorem perExt_latPt (R : RiemLat E g Λ) (x : Λ) : C.perExt R (C.latPt x) = R.
   simp only [map_smul, hb, Int.cast_smul_eq_zsmul, map_zsmul]
 
 
+omit [NumberField E] in
 theorem sgI_mul_self : sgI j j' * sgI j j' = 1 := by
   simp [sgI, fromBlocks_multiply]
 
@@ -113,6 +115,7 @@ def cxStr (A : Ψ → Matrix (Fin (j + j')) (Sg j j') ℂ) (y : Ψ → Fin (j + 
   (-Complex.I) • C.aPart A y τ + Complex.I • C.bPart A y τ
 
 
+open Classical in
 theorem perExt_single_I_of_pPart (R : RiemLat E g Λ) (τ : Ψ) (w : Fin (j + j') → ℂ) (h : C.pPart R τ w = 0) :
     C.perExt R (Pi.single τ (Complex.I • w)) = (-Complex.I) • C.perExt R (Pi.single τ w) := by
   have h2 := (smul_eq_zero.1 h).resolve_left (by norm_num)
@@ -120,6 +123,7 @@ theorem perExt_single_I_of_pPart (R : RiemLat E g Λ) (τ : Ψ) (w : Fin (j + j'
   simp
 
 
+open Classical in
 theorem perExt_single_I_of_pBar (R : RiemLat E g Λ) (τ : Ψ) (w : Fin (j + j') → ℂ) (h : C.pBar R τ w = 0) :
     C.perExt R (Pi.single τ (Complex.I • w)) = Complex.I • C.perExt R (Pi.single τ w) := by
   have h2 := (smul_eq_zero.1 h).resolve_left (by norm_num)
@@ -127,6 +131,7 @@ theorem perExt_single_I_of_pBar (R : RiemLat E g Λ) (τ : Ψ) (w : Fin (j + j')
   simp
 
 
+open Classical in
 theorem perExt_single_cxStr {R : RiemLat E g Λ} {A : Ψ → Matrix (Fin (j + j')) (Sg j j') ℂ} (hA : C.IsAdapted R A)
     (y : Ψ → Fin (j + j') → ℂ) (τ : Ψ) :
     C.perExt R (Pi.single τ (C.cxStr A y τ)) = Complex.I • C.perExt R (Pi.single τ (y τ)) := by
@@ -140,6 +145,7 @@ theorem perExt_single_cxStr {R : RiemLat E g Λ} {A : Ψ → Matrix (Fin (j + j'
   simp
 
 
+open Classical in
 theorem perExt_eq_sum_single (R : RiemLat E g Λ) (y : Ψ → Fin (j + j') → ℂ) :
     C.perExt R y = ∑ τ, C.perExt R (Pi.single τ (y τ)) := by
   set_option synthInstance.maxHeartbeats 100000 in

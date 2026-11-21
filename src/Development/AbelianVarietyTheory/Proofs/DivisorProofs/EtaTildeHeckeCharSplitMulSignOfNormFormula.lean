@@ -381,6 +381,7 @@ theorem inertChar_real {η : (AE D)ˣ →* Circle} (hη : IsEtaTilde D η) {ε :
   linear_combination -e
 
 
+set_option maxHeartbeats 800000 in
 theorem lam_int {η : (AE D)ˣ →* Circle} (hη : IsEtaTilde D η) {lam : ℕ →* ℂ}
     (hlam : GlobalTheory.FinWeil.GoodNorm (GlobalTheory.FinWeil.sgO D) lam)
     (hlam' : ∀ n : ℕ, n ≠ 0 → (∀ q : ℕ, q.Prime → Formalism.MainNotions.StandardLatticesGL3.InertQ D q → ¬ q ∣ n) → lam n = (Real.sqrt n : ℂ))
@@ -463,6 +464,7 @@ theorem lam_int {η : (AE D)ˣ →* Circle} (hη : IsEtaTilde D η) {lam : ℕ �
       hP (hi P.asIdeal P.isPrime P.ne_bot (mem_of_dvd_absNorm P hq hd))
 
 
+open MeasureTheory Matrix GlobalTheory.FinWeil GlobalTheory.FinWeilO GlobalTheory.FockCompare GlobalTheory.VacUnique in
 theorem eta_split_mul_lam_pos : ∀ (D : D7) (η : (AE D)ˣ →* Circle), IsEtaTilde D η → ∀ (lam : ℕ →* ℂ), GoodNorm (GlobalTheory.FinWeil.sgO D) lam → (∀ n : ℕ, n ≠ 0 → (∀ q : ℕ, q.Prime → Formalism.MainNotions.StandardLatticesGL3.InertQ D q → ¬ q ∣ n) → lam n = (Real.sqrt n : ℂ)) → ∀ ε, IsHalfIdem D ε → ∀ (x : D.host.E) (k : ℕ), x ≠ 0 → (k : ℚ) = |Algebra.norm ℚ x| → ∀ y : (AE D)ˣ, (y : AE D) = (ε + cA D ε) * incA D x + (1 - (ε + cA D ε)) → ∃ r : ℝ, 0 < r ∧ (η y : ℂ) * lam k * ∏ τ, tauE D τ x = r := by
   intro D η hη lam hlam hlam' ε hε x k hx hk y hy
   obtain ⟨u, z, hz, e⟩ := IsFractionRing.div_surjective (A := 𝓞 D.host.E) x

@@ -466,6 +466,7 @@ theorem rpow_le_mul_exp_neg_log {u v r k : ℝ} (hu0 : 0 < u) (hv : v = Real.log
     _ = u * Real.exp (-k * v) := by rw [← hu]
 
 
+set_option maxHeartbeats 1000000 in
 theorem psi_thin_core {C7 C2 c lam : ℝ} (hC7 : 0 < C7) (hC2 : 0 ≤ C2) (hc : 0 < c) (hlam : 1 ≤ lam) (D : D7)
     (h7 : adm7 D C7) {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) (hp : χ.IsPrimitive)
     (hN : Real.log N ≤ lam)
@@ -620,6 +621,7 @@ theorem psiThin_of {C7 C2 c : ℝ} (hC7 : 0 < C7) (hC2 : 0 ≤ C2) (hc : 0 < c) 
     (fun ρ h0 h1 hz => hzf N χ hχ ρ h0 h1 hz) (fun T hT => hZ N χ hχ T hT) u hu1
 
 
+set_option maxHeartbeats 1000000 in
 theorem zero_sum_core {C7 C lam ka : ℝ} (hC : 0 < C) (hlam : 1 ≤ lam) (hka : 0 < ka) (D : D7)
     (h7 : adm7 D C7) (h11 : adm11 D C) {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) (hp : χ.IsPrimitive)
     (hN : Real.log N ≤ lam)

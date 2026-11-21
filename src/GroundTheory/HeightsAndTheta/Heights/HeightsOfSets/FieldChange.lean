@@ -20,6 +20,7 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
 
 
 open scoped Classical in
+open Classical in
 theorem card_embeddings_restrict (τ : K →+* ℂ) :
     (Finset.univ.filter fun σ : L →+* ℂ ↦ σ.comp (algebraMap K L) = τ).card = finrank K L :=
   _root_.UpperTheory.Reformulated.B.CardEmbeddingsRestrict.card_embeddings_restrict τ

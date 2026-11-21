@@ -200,6 +200,7 @@ theorem heckeOn_of_mem_partFull {c : HeightOneSpectrum (𝓞 D.host.E) → List 
 def diagLab (n k : ℕ) : List ℤ := List.replicate k 1 ++ List.replicate (n - k) 0
 
 
+variable (V) in
 def IsDiagOpAt (J : Set (GA D V)) (χ : GA D V → ℂ) (S : Finset (HeightOneSpectrum (𝓞 D.host.F)))
     (P : HeightOneSpectrum (𝓞 D.host.E)) (k : ℕ) (B : Finset (GA D V)) : Prop :=
   ∃ (e : AE D) (ϖ : 𝓞 D.host.E) (α : GA D V),

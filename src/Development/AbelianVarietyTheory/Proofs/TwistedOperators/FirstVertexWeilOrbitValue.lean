@@ -72,6 +72,8 @@ private theorem eq_locIdele_of_idemAt {e : AE D} {w : Pl D.host.E} (he : Formali
       ring
 
 
+set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 200000 in
 theorem detIdl_conj {e : AE D} {w : Pl D.host.E} (he : Formalism.L2.NTheta.IsIdemAt e w) (V : HSp D) (k u : GfC V) {n : ℕ}
     (h : n = V.rank) (β : GL (Fin V.rank) (Lev.EAf D)) :
     detIdl e V ((u⁻¹ * k * u : GfC V) : GA D V) = GlobalTheory.LFun.locIdele D.host.F w (gdet (inBasis h β w (finG V k))) := by
@@ -94,6 +96,7 @@ theorem kapAt_mem (S : GridChoice W U) {t : T} {k : FinPt G (.grid 0 D.R.m)}
   exact Subgroup.mem_iInf.mp (Subgroup.mem_inf.mp hk).1 w
 
 
+set_option maxHeartbeats 1000000 in
 theorem splitScal_eq (S : GridChoice W U) {μ₀ : T} (hL : L.Is μ₀) {t : T} {k : FinPt G (.grid 0 D.R.m)}
     (hk : finG (G.V (.grid 0 D.R.m)) k ∈ S.levRow t 0 (Nat.zero_le _)) (w : locPl G t) :
     splitScal G (.chi 0 D.R.m) w.1 1 ((S.N.u (.grid 0 D.R.m))⁻¹ * k * S.N.u (.grid 0 D.R.m)).1 =
@@ -154,6 +157,7 @@ theorem toPair_zero (G : GridData L sc) (x : GA D (G.V (.grid 0 D.R.m))) :
   simp [GridData.toPair]
 
 
+set_option maxHeartbeats 1000000 in
 theorem moved_latT (S : GridChoice W U) {μ₀ : T} (hL : L.Is μ₀) {t : T} {k : FinPt G (.grid 0 D.R.m)}
     (hk : finG (G.V (.grid 0 D.R.m)) k ∈ S.levRow t 0 (Nat.zero_le _)) (y) :
     y ∈ latHat D.host.F D.host.E (S.N.latT (.chi 0 D.R.m) : Set (Fin (G.pT (.chi 0 D.R.m)).rank → D.host.E)) ↔
@@ -175,6 +179,7 @@ theorem moved_latT (S : GridChoice W U) {μ₀ : T} (hL : L.Is μ₀) {t : T} {k
   simp only [mul_assoc, mul_inv_cancel_left]
 
 
+set_option maxHeartbeats 1000000 in
 theorem vac_scalar (S : GridChoice W U) {μ₀ : T} (hL : L.Is μ₀) {t : T} {k : FinPt G (.grid 0 D.R.m)}
     (hk : finG (G.V (.grid 0 D.R.m)) k ∈ S.levRow t 0 (Nat.zero_le _)) (c : ℂ)
     (hc : W.om (.chi 0 D.R.m) (G.toPair (.chi 0 D.R.m) ((S.N.u (.grid 0 D.R.m))⁻¹ * k * S.N.u (.grid 0 D.R.m)).1 1)
@@ -246,6 +251,7 @@ theorem iter_lam_eq {μ : ℕ → Kˣ →* ℂˣ} (hμ : ∀ c, IsTame (μ c)) (
   exact (Finset.prod_range (fun c => χ (c + 1) (dBlk (blkOf r t) (c + 1) g))).symm
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem block_triangular_second_diagonal_block_det_eq (ha : IsIx ea) {g : GL (Fin a) κ} (hg : g ∈ blockTri (blk2 r)) :
     (dBlk (blk2 r) 1 g : κ) = ((g.val.submatrix ea ea).toBlocks₂₂).det := by
   have hmem : ∀ x : Fin j × Fin t, blk2 r (ea (.inr x)) = 1 := by
@@ -407,6 +413,7 @@ theorem endLamAt_eq {μ₀ : T} (hL : L.Is μ₀) (G : GridData L sc) (t : T) {j
   rw [dif_pos hk', hlam, Units.val_inv_eq_inv_val]
 
 
+set_option maxHeartbeats 1000000 in
 theorem levFn_mul_endLamAt {μ₀ : T} (hL : L.Is μ₀) (G : GridData L sc) (t : T)
     (h : ∀ w, (locGrid G t w).rank (0, D.R.m) = D.sp.X'.rank) (x : GL (Fin D.sp.X'.rank) (Lev.EAf D))
     (hx : x ∈ lev D.sp.cm D.sp.X'.gram L.βX (Lev.flag1L (L.datXt t)))
@@ -461,6 +468,7 @@ private theorem reGL_symm_mem_of_mem_givenLevel (G : GridData L sc) (t : T) (w :
     simpa using hy
 
 
+set_option maxHeartbeats 1000000 in
 theorem chi_mul_endLam {G : GridData L sc} {W : G.Weil} {U : Set T} (S : GridChoice W U) {μ₀ : T} (hL : L.Is μ₀) {t : T}
     {k : FinPt G (.grid 0 D.R.m)} (hk : finG (G.V (.grid 0 D.R.m)) k ∈ S.levRow t 0 (Nat.zero_le _))
     (hk' : toXf k ∈ (levEnv D.sp.X' L.βX (L.datXt t)).J) :

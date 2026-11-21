@@ -42,6 +42,7 @@ open GlobalTheory.SymBridge GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalThe
 namespace GlobalTheory.Fam.LevelFrames
 
 
+open _root_.Formalism.L2.Col in
 theorem redV_eq_of_near {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {P : HeightOneSpectrum (𝓞 E)}
     {f : Sp E n ≃ₗ[E] Sp E n} (hf : ∀ i j : Fin n, P.valuation E (f (Pi.single j 1) i - if i.val = j.val then 1 else 0) < 1)
     {y : Sp E n} (hy : y ∈ stdAt E n P) : redV P (f y) = redV P y := by

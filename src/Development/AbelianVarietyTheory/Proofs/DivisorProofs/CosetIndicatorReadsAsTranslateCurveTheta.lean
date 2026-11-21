@@ -124,6 +124,7 @@ private theorem sb_cosInd (hc : D.host.ccK = ⊤) (hS : S.gram = 1) {e : AE D} {
     exact mem_of_inId hc hS mem_stdL FractionalIdeal.coeIdeal_le_one h0 ht2
 
 
+set_option maxHeartbeats 1600000 in
 private theorem fix_deep (hc : D.host.ccK = ⊤) (hs : Setup ψ θ S T ⊤ δ 1) {v : WO S T → ℂ}
     (hv : IsLatVac (heisO ψ S T) (latO S T (stdL D S.rank : Set (Fin S.rank → D.host.E))
       (stdL D T.rank : Set (Fin T.rank → D.host.E)) fun _ => True) v)

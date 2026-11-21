@@ -76,6 +76,8 @@ abbrev sDataH (hg : ∀ k, (placesOver H.E (H.g k)).ncard = Module.finrank ℚ H
       (fun p hp => (splH H hg ht.jac p hp).some))
 
 
+set_option synthInstance.maxHeartbeats 200000 in
+set_option maxHeartbeats 1600000 in
 def exampleRecordOfData
     (hg : ∀ k, (placesOver H.E (H.g k)).ncard = Module.finrank ℚ H.E) (ht : THyp H)
     (hlev : T ∈ H.levelPrimes) (hpde : T ≠ H.pde ∧ T ≠ H.pde')

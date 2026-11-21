@@ -32,6 +32,7 @@ theorem hTens_eq (JA : Matrix α α E) (JB : Matrix β β E) (x y : Matrix α β
   ring
 
 
+omit [DecidableEq α] [DecidableEq β] in
 theorem symp_mul_transpose (ξ : E) (JA : Matrix α α E) (JB : Matrix β β E) (h : Matrix β β E)
     (hh : hᵀ * JB * h.map c = JB) (x y : Matrix α β E) :
     symp (R := R) c ξ JA JB (x * hᵀ) (y * hᵀ) = symp (R := R) c ξ JA JB x y := by

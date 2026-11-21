@@ -11,6 +11,8 @@ namespace GlobalTheory.HeightCounting
 open Formalism.BasicNotions Formalism.MainNotions.N Formalism.L2.Host GlobalTheory.CuspRep NumberField IsDedekindDomain
 
 
+set_option maxHeartbeats 2000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 def trueK (hL : GlobalTheory.Published.LocalLanglandsGL) (hF : GlobalTheory.Published.AutomorphicFormsFiniteGL) (D : D7) (T : GlobalTheory.RowTie.WDTie D.nd D.naut)
     (η η' : HostCGu D.host 1)
     (h1 : ∀ w, (ParLaws.locG hL D.nd.plOm η w).unr)
@@ -54,6 +56,8 @@ def trueK (hL : GlobalTheory.Published.LocalLanglandsGL) (hF : GlobalTheory.Publ
       rw [Fr η w (h1 w)] at ha; rw [Fr η w' (h1 w')] at hb; exact h4 w w' hs hc a b ha hb }
 
 
+set_option maxHeartbeats 2000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 def trueCG (hL hF) (D : D7) (hE : IsEmpty D.nd.Loc) (T : GlobalTheory.RowTie.WDTie D.nd D.naut) (η η' h1 h2 h3 h4) :
     CGTrue hL (setCG D hE (trueK hL hF D T η η' h1 h2 h3 h4)) (wdCG hE _ T) where
   e := fun _ => Function.Embedding.subtype _

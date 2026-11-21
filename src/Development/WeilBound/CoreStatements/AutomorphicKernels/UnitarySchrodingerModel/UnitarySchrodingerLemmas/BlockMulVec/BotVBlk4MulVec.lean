@@ -133,6 +133,7 @@ theorem nu2_eq_modu {B : Type} [CommRing B] [TopologicalSpace B] [IsTopologicalR
 end Haar
 
 
+set_option maxHeartbeats 4000000 in
 theorem hwFin : PositivityTheory.PfSWUS.SwFockk.HWFin := by
   intro D n w hw nb hnb b p k hp hk hwk a ha v lam hlam
   obtain ⟨m, u, b0, rfl, hm, hu⟩ := GlobalTheory.StdUnn.LeftInvSect.exists_levi_unip hp a ha

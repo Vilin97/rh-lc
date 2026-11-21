@@ -172,6 +172,7 @@ end PositivityTheory.SiegelWeilFormula.Kdil.Tb
 namespace PositivityTheory.SiegelWeilFormula.Kdil
 
 
+open Tb in
 theorem thetaBdd_of (hS : GlobalTheory.Published.SiegelSetUnitary) : ThetaBdd := by
   intro F E _ _ _ _ _ σ d Fn hF
   obtain ⟨Ω, hΩ, cov⟩ := (cpt d hS).cov

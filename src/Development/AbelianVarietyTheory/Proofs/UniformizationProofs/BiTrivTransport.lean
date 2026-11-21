@@ -61,6 +61,7 @@ variable {G H : Over S} [GrpObj G] [IsCommMonObj G] [GrpObj H] {G₀ H₀ : Over
   {P : CP G} {P₀ : CP G₀} {w : LB.Iso P₀.L.L (P.L.L.pull F)} {i : H ⟶ G} {i₀ : H₀ ⟶ G₀}
 
 
+omit [GrpObj G] [IsCommMonObj G] [GrpObj H] [GrpObj G₀] [IsCommMonObj G₀] [GrpObj H₀] in
 theorem toBase_comp (hE : E ≫ H.hom = H₀.hom ≫ ρ) (hi : E ≫ i.left = i₀.left ≫ F) {T : Over S₀} (t : T ⟶ H₀) :
     toBase hE t ≫ i = toBase hw (t ≫ i₀) := Over.OverMorphism.ext (by
   show (t.left ≫ E) ≫ i.left = (t.left ≫ i₀.left) ≫ F

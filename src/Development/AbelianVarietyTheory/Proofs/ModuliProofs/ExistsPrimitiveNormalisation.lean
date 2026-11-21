@@ -307,6 +307,7 @@ section Main
 variable {S : Scheme.{0}} {B : Over S} [GrpObj B] [IsCommMonObj B] {M : LB B.left}
 
 
+omit [IsCommMonObj B] in
 def postHom (f : B ⟶ B) [IsMonHom f] (T : Over S) : (T ⟶ B) →* (T ⟶ B) :=
   MonoidHom.mk' (· ≫ f) fun x y => MonObj.mul_comp x y f
 

@@ -17,6 +17,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 namespace GlobalTheory
 
 
+set_option maxHeartbeats 1000000 in
 theorem lastPos_wtA_of_pins : ∀ (D : D7) (Q : Par D), Q.Pins → ∀ j, InR D j → ∀ w : WeightFamilies.Wt D j,
     w.LastPos → Formalism.L2.Pj.LastPos (Q.Dw j) (wtA w) := by
   intro D Q h j hj w hw τ hτ hm

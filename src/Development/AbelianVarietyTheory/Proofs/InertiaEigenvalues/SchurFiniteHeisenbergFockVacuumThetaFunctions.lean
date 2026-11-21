@@ -222,6 +222,7 @@ variable {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D}
   {𝓕 : Set (WO S T)}
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem lev (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ)
     (sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ) (sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ)
     (hcS : ∀ τ, IsCartanInv (gramAt D S τ) (sS τ)) (hcT : ∀ τ, IsCartanInv (gramAt D T τ) (sT τ))

@@ -81,6 +81,7 @@ theorem trace_one_tmul (e : E) :
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 
+include b in
 theorem trace_nondeg [Algebra.IsSeparable F E] (z : Fv F v ⊗[F] E)
     (h : ∀ w, Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (w * z) = 0) : z = 0 := by
   classical

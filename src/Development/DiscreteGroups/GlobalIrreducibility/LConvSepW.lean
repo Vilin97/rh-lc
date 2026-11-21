@@ -45,6 +45,7 @@ theorem lam_eq_zero (hI : PosInt I) (hB : IsInvForm (rhoW ψ) B) {z : WT (m := m
     form_eq_zero_of_self hB.1 hB.2.1 (by rw [hB.2.2]; exact hz), zero_div]
 
 
+variable (ψ) in
 def Wf (hψ : Continuous ψ) (I : (GL (Fin m) k → ℂ) →ₗ[ℂ] ℂ) (B : WT (m := m) ψ →ₗ⋆[ℂ] WT (m := m) ψ →ₗ[ℂ] ℂ)
     (y : WT (m := m) ψ) (g : GL (Fin m) k) : ℂ :=
   lam ψ hψ I B (rhoW ψ g y)

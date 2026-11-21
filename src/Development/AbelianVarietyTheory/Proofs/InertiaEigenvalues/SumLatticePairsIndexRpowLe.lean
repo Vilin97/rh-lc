@@ -264,6 +264,7 @@ variable {O K : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
   [Field K] [Algebra O K] [IsFractionRing O K] {r : ℕ}
 
 
+omit [IsDiscreteValuationRing O] in
 theorem lat_le_of_range_transpose_le (B : Matrix (Fin r) (Fin r) O) (hB : B.det ≠ 0)
     (g₀ g₁ : GL (Fin r) K) (A₀ A₁ : Matrix (Fin r) (Fin r) O)
     (h₀ : A₀.map (algebraMap O K) =

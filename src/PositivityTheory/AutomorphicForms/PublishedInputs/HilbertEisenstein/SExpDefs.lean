@@ -30,6 +30,7 @@ def wt (ω : HChar F) (t : {r : ℝ // 0 < r}) (u : normOneSubgroup F) : ℂ :=
   ((ω.1 (tau t u) : ℂˣ) : ℂ)⁻¹ * ((t : ℝ) : ℂ)
 
 
+variable (F) in
 abbrev muE : Measure ({r : ℝ // 0 < r} × normOneSubgroup F) :=
   posRealMeasure.prod ((normOneMeasure F).restrict (normOneFundamentalDomain F))
 

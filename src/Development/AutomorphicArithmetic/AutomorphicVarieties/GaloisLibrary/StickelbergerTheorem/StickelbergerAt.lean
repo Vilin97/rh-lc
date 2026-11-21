@@ -61,6 +61,7 @@ theorem idMap_inv (I : nonZeroDivisors (Ideal (𝓞 K))) (b : (ZMod M)ˣ) :
   Ideal.map_symm (sgO M K b)
 
 
+omit [NeZero M] in
 def carry (a b : ZMod M) : ℕ := if M ≤ a.val + b.val then 1 else 0
 
 end UpperTheory.V.Stick

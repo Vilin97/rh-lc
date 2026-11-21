@@ -77,6 +77,7 @@ theorem isWeightedHomogeneous_rename_rows {k : Type} [Field k] {N : ℕ} (σ : E
 end GlobalTheory.Alc.HighestVec
 
 
+open GlobalTheory.Alc.HighestVec in
 theorem GlobalTheory.Alc.exists_dominant_highest_vector_of_lt : ∀ (k : Type) [Field k] (N : ℕ)
     (M M' : Submodule k (MvPolynomial (Fin N × Fin N) k)), Good M → Good M' → M < M' →
     (∃ c : ℕ, ∀ f ∈ M', ∀ m ∈ f.support, ∑ a, rowDeg m a ≤ c) →

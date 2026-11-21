@@ -40,6 +40,7 @@ variable {K L L' : Type} [Field K] [NumberField K] [Field L] [NumberField L] [Al
   [Field L'] [NumberField L'] [Algebra K L']
 
 
+omit [NumberField K] [NumberField L] [NumberField L'] in
 theorem exists_prime_congr (e : L ≃ₐ[K] L') (𝔭 : Ideal (𝓞 K)) (σ : L ≃ₐ[K] L) (n : ℕ)
     (h : ∃ P : Ideal (𝓞 L), P.IsPrime ∧ P.LiesOver 𝔭 ∧ ∀ x : 𝓞 L, σ • x - x ^ n ∈ P) :
     ∃ P : Ideal (𝓞 L'), P.IsPrime ∧ P.LiesOver 𝔭 ∧ ∀ x : 𝓞 L', e.autCongr σ • x - x ^ n ∈ P := by
@@ -54,6 +55,7 @@ theorem exists_prime_congr (e : L ≃ₐ[K] L') (𝔭 : Ideal (𝓞 K)) (σ : L 
   exact hx _
 
 
+omit [NumberField L] [NumberField L'] in
 theorem isFrob_congr (e : L ≃ₐ[K] L') (𝔭 : HeightOneSpectrum (𝓞 K)) (σ : L ≃ₐ[K] L) :
     IsFrob L' 𝔭 (e.autCongr σ) ↔ IsFrob L 𝔭 σ := by
   refine ⟨fun h => ?_, exists_prime_congr e _ σ _⟩
@@ -61,6 +63,7 @@ theorem isFrob_congr (e : L ≃ₐ[K] L') (𝔭 : HeightOneSpectrum (𝓞 K)) (�
   rwa [show e.symm.autCongr (e.autCongr σ) = σ from e.autCongr.symm_apply_apply σ] at h1
 
 
+omit [NumberField K] [NumberField L] [NumberField L'] in
 theorem inInertia_congr (e : L ≃ₐ[K] L') (𝔭 : HeightOneSpectrum (𝓞 K)) (σ : L ≃ₐ[K] L) :
     InInertia L' 𝔭 (e.autCongr σ) ↔ InInertia L 𝔭 σ := by
   constructor
@@ -132,6 +135,7 @@ theorem imField_le_iff {M : IntermediateField ℚ ℂ} : imField φ ≤ M ↔ �
   (φ.codRestrict M h).toAlgebra
 
 
+omit [NumberField E] in
 theorem algOf_apply (M : IntermediateField ℚ ℂ) (h : ∀ x, φ x ∈ M) (x : E) :
     letI := algOf φ M h; ((algebraMap E M x : M) : ℂ) = φ x := rfl
 
@@ -151,14 +155,17 @@ def IsRayFieldIn (𝔮 : Ideal (𝓞 E)) (M : IntermediateField ℚ ℂ) : Prop 
   ∃ (h : ∀ x, φ x ∈ M) (_ : NumberField M), letI := algOf φ M h; IsRayField E M 𝔮
 
 
+variable {φ} in
 theorem IsRayFieldIn.emb_mem {𝔮 : Ideal (𝓞 E)} {M : IntermediateField ℚ ℂ} (h : IsRayFieldIn φ 𝔮 M) (x : E) :
     φ x ∈ M := h.1 x
 
 
+variable {φ} in
 theorem IsRayFieldIn.numberField {𝔮 : Ideal (𝓞 E)} {M : IntermediateField ℚ ℂ} (h : IsRayFieldIn φ 𝔮 M) :
     NumberField M := h.2.1
 
 
+variable {φ} in
 theorem IsRayFieldIn.isRayField {𝔮 : Ideal (𝓞 E)} {M : IntermediateField ℚ ℂ} [NumberField M]
     (h : IsRayFieldIn φ 𝔮 M) : letI := algOf φ M h.emb_mem; IsRayField E M 𝔮 := h.2.2
 
@@ -183,12 +190,14 @@ theorem exists_isRayFieldIn (h : RayField) {𝔮 : Ideal (𝓞 E)} (h𝔮 : 𝔮
   exact hL.exists_isRayFieldIn φ
 
 
+variable (E) in
 abbrev natIdeal (n : ℕ) : Ideal (𝓞 E) := Ideal.span {(n : 𝓞 E)}
 
 theorem natIdeal_ne_bot {n : ℕ} (hn : n ≠ 0) : natIdeal E n ≠ ⊥ := by
   simpa using hn
 
 
+variable (E) in
 def powIdealElts (h : ℕ) : Set E :=
   {y | y ≠ 0 ∧ ∃ 𝔞 : FractionalIdeal (𝓞 E)⁰ E, FractionalIdeal.spanSingleton (𝓞 E)⁰ y = 𝔞 ^ h}
 
@@ -270,6 +279,7 @@ theorem discField_le_iff {M : IntermediateField ℚ ℂ} : discField d A ≤ M �
   rfl
 
 
+variable {d A} in
 theorem hilbertField_eq (h : IsGoodCMCurve d F A) {L : PeriodPair} (hL : IsIntegersLattice d L) :
     hilbertField d F = ℚ⟮sqrtNegNat d, (latticeCurve L).j⟯ := by
   rw [hilbertField, h.field_eq hL, ← IntermediateField.adjoin_union]

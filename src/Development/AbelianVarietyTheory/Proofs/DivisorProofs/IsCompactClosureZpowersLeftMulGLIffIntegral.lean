@@ -78,6 +78,7 @@ theorem norm_le_one_iff_mem (he : ∀ x, x ∈ (algebraMap K.O K.E).range ↔ Va
   exact Valued.toNormedField.norm_le_one_iff
 
 
+omit [IsCMField E] in
 theorem exists_norm_ge (he : ∀ x, x ∈ (algebraMap K.O K.E).range ↔ Valued.v (e x) ≤ 1) (R : ℝ) :
     ∃ c : K.E, c ≠ 0 ∧ R ≤ ‖e c‖ := by
   obtain ⟨π, hπ⟩ := IsDiscreteValuationRing.exists_irreducible K.O
@@ -98,6 +99,7 @@ theorem exists_norm_ge (he : ∀ x, x ∈ (algebraMap K.O K.E).range ↔ Valued.
   exact hn.le
 
 
+omit [IsCMField E] in
 theorem exists_fg_of_crd_le (he : ∀ x, x ∈ (algebraMap K.O K.E).range ↔ Valued.v (e x) ≤ 1) (R : ℝ) :
     ∃ M : Submodule K.O B.A, M.FG ∧ ∀ y, (∀ i, ‖crd e b y i‖ ≤ R) → y ∈ M := by
   obtain ⟨c, hc0, hc⟩ := exists_norm_ge e he R

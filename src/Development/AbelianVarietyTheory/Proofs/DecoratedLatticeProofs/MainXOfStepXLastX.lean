@@ -88,6 +88,7 @@ end GlobalTheory.SeeSaw.DoubleInd
 namespace GlobalTheory.SeeSaw
 
 
+open GlobalTheory.SeeSaw.DoubleInd in
 theorem mainX_of_stepX_lastX : ∀ (D : D7) (c : Comm D) (𝒯 : Type) (t : 𝒯 → Tup c), (∀ s, (t s).Is) → StepX t → LastX t → MainX t := by
   intro D c 𝒯 t ht hS hL
   intro n h h₀ I _ s α ψ F hψ hyp y v

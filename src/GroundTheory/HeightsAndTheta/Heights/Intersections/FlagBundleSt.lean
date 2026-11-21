@@ -28,11 +28,13 @@ theorem aeval_comp_X {σ A B : Type} [CommRing A] [CommRing B] {_ : Algebra ℤ 
   | mul_X p q hp => rw [map_mul, hp, aeval_X, map_mul, map_mul]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem aeval_genPt (P : Ideal (MRing ι)) {_ : Algebra ℤ (FnField P)} (f : MRing ι) :
     aeval (genPt P) f = algebraMap (MRing ι ⧸ P) (FnField P) (Ideal.Quotient.mk P f) :=
   aeval_comp_X (Ideal.Quotient.mk P) (algebraMap (MRing ι ⧸ P) (FnField P)) f
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem ker_algebraMap_comp_mk (P : Ideal (MRing ι)) :
     RingHom.ker ((algebraMap (MRing ι ⧸ P) (FnField P)).comp (Ideal.Quotient.mk P)) = P := by
   rw [RingHom.ker_comp_of_injective _ (IsFractionRing.injective (MRing ι ⧸ P) (FnField P)), Ideal.mk_ker]

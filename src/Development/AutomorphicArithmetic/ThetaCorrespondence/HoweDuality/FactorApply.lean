@@ -44,6 +44,7 @@ def factorOp (i : ι) (g : Module.End ℂ (M i)) : Module.End ℂ (M₀ ⊗[ℂ]
     (PiTensorProduct.map (Function.update (fun j => (LinearMap.id : M j →ₗ[ℂ] M j)) i g))
 
 
+variable (M₀) in
 def part (i : ι) (K : Submodule ℂ (M i)) : Submodule ℂ (M₀ ⊗[ℂ] (⨂[ℂ] j, M j)) :=
   ⨆ r : M₀ × ∀ j, M j, K.map (intersection_update_fsHerm_neg_one i r)
 

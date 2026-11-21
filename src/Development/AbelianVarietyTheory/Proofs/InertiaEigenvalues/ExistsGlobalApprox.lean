@@ -75,6 +75,8 @@ theorem exists_global_approx : ∀ (L : Type) [Field L] [NumberField L] (R : Fin
   GlobalTheory.T.exists_field_element_relative_approx_completions
 
 
+set_option maxHeartbeats 1000000 in
+open Formalism.L2.Host in
 theorem mem_of_infPart {k : Type} [Field k] (σ : k →+* ℂ) (δ : Formalism.L2.Host.HChar D.host.E) (δc : (AE D)ˣ →* Circle)
     (hc : ChrEq δc δ) (n : ℕ) (hn : 0 < n) (hord : δ.OrderDvd n) (htame : ∀ v, δ.TameAt v) (hval : δ.ValuesIn 0 σ)
     (x : (AE D)ˣ) (hx : infPart D (x : AE D) = 1) : ((δc x : Circle) : ℂ) ∈ σ.fieldRange := by

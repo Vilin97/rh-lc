@@ -26,6 +26,7 @@ def integerAlgEquivOfAlgEquiv (e : L₁ ≃ₐ[K] L₂) : 𝒪[L₁] ≃ₐ[𝒪
     (by ext; simp) (by ext; simp)
 
 
+omit [IsNonarchimedeanLocalField K] in
 theorem addVal_ringEquiv {R S : Type*} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     [CommRing S] [IsDomain S] [IsDiscreteValuationRing S] (φ : R ≃+* S) (x : R) :
     addVal S (φ x) = addVal R x := by

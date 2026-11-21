@@ -26,6 +26,7 @@ variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p] [IsPerfectoidFiel
   [IsPerfectoidField M p]
 
 
+variable (p) in
 def map (φ : K →+* L) (hφ : ∀ x, ‖φ x‖ = ‖x‖) : AInf K p →+* AInf L p :=
   WittVector.map (preTiltMap p φ hφ)
 

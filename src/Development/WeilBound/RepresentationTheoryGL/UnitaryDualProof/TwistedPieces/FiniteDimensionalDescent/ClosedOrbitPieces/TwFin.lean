@@ -15,6 +15,7 @@ namespace PositivityTheory.RgUd.TP.Desc.Piece.PSect
 open PositivityTheory.RgUd.T PositivityTheory.RgUd.TP PositivityTheory.RgUd.TP.Desc PositivityTheory.RgUd.TP.Desc.Piece
 
 
+open ValuativeRel in
 theorem twFin (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (p c : ℕ) [Fact p.Prime] [CharP k p] : FiniteDimensional k (Tw k p c) := by
   letI := IsTopologicalAddGroup.rightUniformSpace k

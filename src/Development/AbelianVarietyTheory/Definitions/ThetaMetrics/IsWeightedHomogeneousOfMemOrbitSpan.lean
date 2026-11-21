@@ -262,11 +262,13 @@ noncomputable def colSubst (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ 
     | (t, Sum.inr b, k) => yForm t b fun l => B t l k
 
 
+omit [Fintype κ] in
 @[simp] theorem colSubst_X_xVar (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ R) (t : T) (a : Fin p)
     (k : κ) : colSubst A B (X (xVar t a k) : Poly R T p q κ) = xForm t a (A t k) := by
   simp [colSubst]
 
 
+omit [Fintype κ] in
 @[simp] theorem colSubst_X_yVar (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ R) (t : T) (b : Fin q)
     (k : κ) : colSubst A B (X (yVar t b k) : Poly R T p q κ) = yForm t b fun l => B t l k := by
   simp [colSubst]
@@ -320,6 +322,7 @@ theorem colSubst_minorProd [Fintype T] (A : T → Matrix κ κ' R) (B : T → Ma
         fun a b => colSubst_yForm _ _ _ _ _)
 
 
+omit [Fintype κ] in
 theorem eval_colSubst (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ R) (z : Var T p q κ' → R)
     (P : Poly R T p q κ) :
     eval z (colSubst A B P) = eval (fun v => match v with
@@ -334,6 +337,7 @@ theorem eval_colSubst (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ R) (z
     · rw [map_mul, map_mul, map_mul, hP, eval_X, colSubst_X_yVar, eval_yForm, dotProduct_comm]; rfl
 
 
+omit [Fintype κ] in
 theorem colSubst_isWeightedHomogeneous {M : Type*} [AddCommMonoid M] (w : T → Fin p ⊕ Fin q → M)
     (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ R) {P : Poly R T p q κ} {m : M}
     (hP : IsWeightedHomogeneous (rowWeight w) P m) :

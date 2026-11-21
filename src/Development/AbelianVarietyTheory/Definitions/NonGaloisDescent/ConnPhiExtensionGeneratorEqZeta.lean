@@ -170,6 +170,7 @@ theorem raises_smul_phi (c : K) : Raises (c • P.phi) := fun m v hv => by
   simp [smul_eq_C_mul]
 
 
+omit [IsUltrametricDist K] [Fintype ι] [DecidableEq ι] in
 theorem _root_.GlobalTheory.BK.Raises.eq_zero {T : Module.End K (Vec K a ι)} (hT : Raises T) {α : Type}
     {σ : α → α} (hσ : Function.Surjective σ) {δ : α → Vec K a ι} (h1 : ∀ x, δ x ∈ uPow K a ι 1)
     (h : ∀ x, δ (σ x) = T (δ x)) (x : α) : δ x = 0 := by
@@ -505,6 +506,7 @@ namespace PhiMod
 variable (P : PhiMod O K l e a ι) {y : Vec K a ι} (hy : y ∈ P.Mext (invE l e (A O K)))
 
 
+omit [Fact l.Prime] in
 def plus : PhiMod O K l e a (ι ⊕ Unit) :=
   ofMatrix (fun τ => Matrix.fromBlocks (P.mx τ) (Matrix.replicateCol Unit (y τ)) 0 1)
     (fun τ => Matrix.fromBlocks (P.mxInv τ) (Matrix.replicateCol Unit (-(P.mxInv τ *ᵥ y τ))) 0 1)

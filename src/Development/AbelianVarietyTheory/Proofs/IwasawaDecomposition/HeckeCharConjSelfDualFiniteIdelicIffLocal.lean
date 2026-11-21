@@ -46,6 +46,7 @@ theorem idelic_of_loc (χ : HChar L)
 end GlobalTheory.CuspRep.CsdFin
 
 
+open GlobalTheory.CuspRep.CsdFin in
 theorem GlobalTheory.CuspRep.csdFin_iff : ∀ {R : Formalism.BasicNotions.Ranks} (H : Formalism.BasicNotions.Host R) (χ : HChar H.E), haveI := host_isCMField H;
     (∀ u : (Af H.E)ˣ, χ.1 (finId H.E (Units.map (conjFin (IsCMField.complexConj H.E).toRingEquiv).toMonoidHom u)⁻¹) =
       χ.1 (finId H.E u)) ↔

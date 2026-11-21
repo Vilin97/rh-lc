@@ -70,6 +70,7 @@ theorem exists_lift_supp {S T : HSp D} (B : Base S T) (hB : B.Good) (u : G0 B.G.
   exact suppAt_idem_of_mem hPg PP.2 hs
 
 
+open Classical in
 theorem series_type_supp : ∀ (D : D7) (S T : HSp D) (B : Base S T), B.Good → S.SigOK → ∀ ω : PairRep S T, B.IsWeil 1 ω →
     ∀ (u : G0 B.G.Pg T.rank) (hu : u ∈ B.G.P.H), ∃ κ : GA D T, Lev.IsLevelLift T B.F.βT B.G.levT u κ ∧
       SuppAt (idem B.G.Pg) T κ ∧ ∀ (Q : Finset (Pl D.host.E)), B.admitted Q →

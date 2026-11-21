@@ -66,6 +66,7 @@ variable {K K' : Type*} [Fintype K] [DecidableEq K] [Fintype K'] [DecidableEq K'
   [Field F] (j : K ↪ K') (ι' : K' → Type*)
 
 
+omit [DecidableEq K] in
 theorem killBlocks_compl_rename :
     (killBlocks (ι := ι') (F := F) (Finset.univ.map j)ᶜ).comp (rename (blockIncl j ι')) =
       rename (blockIncl j ι') := by
@@ -74,6 +75,7 @@ theorem killBlocks_compl_rename :
   simp [killBlocks_X, blockIncl]
 
 
+omit [DecidableEq K] in
 theorem exists_rename_eq_killBlocks_compl (x : MRing ι' F) :
     ∃ a : MRing (fun k => ι' (j k)) F,
       rename (blockIncl j ι') a = killBlocks (Finset.univ.map j)ᶜ x := by

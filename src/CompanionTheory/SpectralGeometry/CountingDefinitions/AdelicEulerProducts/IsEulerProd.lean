@@ -61,6 +61,7 @@ def coordHerm (σ : E →ₐ[F] E) {d : ℕ} (b : Module.Basis (Fin d) F E) (lam
     ((Measure.pi fun _ => lam).prod (Measure.pi fun _ => coordK R b lam))
 
 
+omit [MeasurableSpace R] in
 def IsGramFib (σ : E →ₐ[F] E) {M : ℕ} (J : Matrix (Fin M) (Fin M) E) (n : ℕ)
     (μ : Measure (Fin n → Fin M → R ⊗[F] E)) (ν : Measure (HermR R σ n))
     (m : HermR R σ n → Measure (Fin n → Fin M → R ⊗[F] E)) : Prop :=

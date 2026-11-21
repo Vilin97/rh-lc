@@ -92,6 +92,7 @@ theorem natCast_not_mem_of_coprime {R : Type} [CommRing R] (I : Ideal R) (hI : I
   exact add_mem (Ideal.mul_mem_left _ _ ha) (Ideal.mul_mem_left _ _ hb)
 
 
+set_option maxHeartbeats 4000000 in
 theorem mu_mem_LL : Sites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [Fact (D.what₂.places.resChar w).Prime] {std t J} S =>
     KIn t → ∀ v π, IsUnifAt J v π → ∀ j < D.R.m, ∃ r : D.what₂.LL, D.what₂.embLL r = S.muT (j + 1) π) := by
   intro D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X _ std t J S _hDict _hSpl hK v π hπ j hj

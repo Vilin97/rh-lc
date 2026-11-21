@@ -18,10 +18,12 @@ theorem lpow_nzd (n : ℕ) : (l : A.Acr0) ^ n ∈ nonZeroDivisors A.Acr0 :=
   pow_mem (A.acris_torsion_free l (Fact.out : l.Prime).ne_zero) n
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def alphaL (n : ℕ) : A.Acr0 →ₗ[A.Acr0] (A.Acr0 ⧸ Ideal.span {(l : A.Acr0) ^ (n + 1)}) :=
   (Submodule.mkQ _).comp (LinearMap.mulLeft A.Acr0 ((l : A.Acr0) ^ n))
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def alpha (n : ℕ) : A.Acr 1 →+ A.Acr (n + 1) :=
   ((Ideal.span {(l : A.Acr0) ^ 1}).liftQ (alphaL A n) (by
     intro x hx

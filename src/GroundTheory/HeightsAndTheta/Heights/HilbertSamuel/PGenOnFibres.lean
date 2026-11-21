@@ -550,6 +550,7 @@ theorem secCoch_mem {s : Ω} {a : K → ℤ} (hs : s ∈ chartLat y a 1) :
       exact ((secCoch_spec hs J hJc).lift _).unique ((secCoch_spec hs J' hJc').lift _)
 
 
+variable (S) in
 theorem generatedV_idealOver {a : K → ℤ} {n : ℕ} {w : Fin n → Ω} (hw : ∀ j, w j ∈ chartLat y a 1)
     (hg : KH.GeneratesOn y a w) : KH.GeneratedV S (idealOver y S) a := by
   intro I

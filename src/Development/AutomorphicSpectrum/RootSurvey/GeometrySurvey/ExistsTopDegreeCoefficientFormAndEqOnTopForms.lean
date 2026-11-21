@@ -52,6 +52,7 @@ theorem delta_one {j : ℕ} (hj : j ≤ N) (p : ℕ) (τ : Ψ) (fr : ℕ → Ψ 
 variable (T : RootTower Ψ N) (II : IntersectionSystem)
 
 
+omit [Fintype Ψ] [DecidableEq Ψ] in
 theorem abs_ep_le {j p : ℕ} (hj : j ≤ N) (hp : 2 ≤ p) (fr : ℕ → Ψ ⊕ Ψ) : |ep N j p fr| ≤ N / ((p : ℝ) - 1) := by
   have hp' : (2 : ℝ) ≤ p := by exact_mod_cast hp
   have hj' : (j : ℝ) ≤ N := by exact_mod_cast hj

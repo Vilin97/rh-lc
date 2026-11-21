@@ -219,6 +219,7 @@ end GlobalTheory.SS.LiftTorus
 namespace GlobalTheory.SS
 
 
+open LiftTorus in
 theorem exists_lift_oneParameter : ∀ (k : Type) [Field k] [IsAlgClosed k] (G : Over (Sp k)) [GrpObj G], SmConn G → ∀ (X : Type) [AddCommGroup X] [Module.Free ℤ X] [Module.Finite ℤ X] (B : Over (Sp k)) [GrpObj B] (i : splitTorus (Sp k) X ⟶ G) (q : G ⟶ B), IsQuot i q → ∀ f : Gm (Sp k) ⟶ B, IsMonHom f → ∃ j : Gm (Sp k) ⟶ G, IsMonHom j ∧ j ≫ q = f := by
   intro k _ _ G _ _ X _ _ _ B _ i q ⟨_, _, hfl, hsu, haf, hi, _⟩ f _
   obtain ⟨E, _, p, r, _, _, hE⟩ := exists_pullback_grp q f

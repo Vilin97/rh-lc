@@ -68,6 +68,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   (ho : StrictMono o) (hz : ∀ j, d j ≠ 0 → j ∈ Set.range o) (hd' : ∑ a, d (o a) = N)
 
 
+include ho hz in
 theorem deltaHalf_drop (g : Levi k fun j => Fin (d j)) :
     deltaHalf k (fun j => Fin (d j)) g = deltaHalf k (fun a => Fin (d (o a))) (dropHom d o g) := by
   rw [deltaHalf_apply, deltaHalf_apply]
@@ -80,6 +81,7 @@ theorem deltaHalf_drop (g : Levi k fun j => Fin (d j)) :
     rfl
 
 
+include ho hz in
 theorem parInd_comp_dropHom_equiv {W : Type} [AddCommGroup W] [Module ℂ W]
     (τ : Representation ℂ (Levi k fun a => Fin (d (o a))) W) :
     Nonempty ((parInd (stdBlocks d hd) (τ.comp (dropHom d o) : Representation ℂ (Levi k fun j => Fin (d j)) W)).Equiv

@@ -74,6 +74,7 @@ lemma emb_comb [IsCMField E] (σ : E →+* ℂ) (c : ℂ) :
       simp [hτ, hτ', hm]
 
 
+open Classical in
 lemma Mc_comb [IsCMField E] {dim : (E →+* ℂ) → ℕ} (σ : E →+* ℂ) (c : ℂ) :
     ∃ r : Module.Free.ChooseBasisIndex ℤ (𝓞 E) → ℝ, ∀ v : Vsp dim,
       Mc σ c v = ∑ i, r i • act (RingOfIntegers.basis E i) v := by

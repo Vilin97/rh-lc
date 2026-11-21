@@ -54,6 +54,7 @@ instance (w : {v : InfinitePlace K.1 // v.IsReal}) : IsDiscreteRep (realKummer S
 variable (h2S : ∀ v : HeightOneSpectrum (𝓞 K.1), ((2 : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
 
 
+include h2S in
 theorem kummerSeq_shortExact :
     (sUnitsKummerSequence S (maxUnramifiedOutside K.1 ℚ̄ S) 2).ShortExact :=
   sUnitsKummerSequence_shortExact (Ω := ℚ̄) S 2 (fun v hv h => hv (h2S v h))
@@ -77,6 +78,7 @@ def kummerδ (n : ℕ) : unitsTateCohomology S ιr ιs n →+
     (fun _ => localKummerSeq_shortExact _ _ _ _) n).hom.toAddMonoidHom
 
 
+set_option maxHeartbeats 1000000 in
 theorem kummerG_apply (n : ℕ) (y : unitsTateCohomology S ιr ιs n) : kummerG S ιr ιs n y = 2 • y := by
   have h : tateCompactCohomologyMap₂₃ (gsFinFamily S ιs) (gsRealFamily S ιr)
       (sUnitsKummerSequence S (maxUnramifiedOutside K.1 ℚ̄ S) 2) (finKummer S ιs) (finKummerMap S ιs)
@@ -86,6 +88,7 @@ theorem kummerG_apply (n : ℕ) (y : unitsTateCohomology S ιr ιs n) : kummerG 
   exact congrArg (fun f => f.hom y) h
 
 
+set_option maxHeartbeats 1000000 in
 theorem kummerG_kummerF (n : ℕ)
     (x : gsTateCompactCohomology S ιr ιs (galRootsOfUnity.{0} K.1 (maxUnramifiedOutside K.1 ℚ̄ S) 2) n) :
     kummerG S ιr ιs n (kummerF S ιr ιs n x) = 0 :=
@@ -94,6 +97,7 @@ theorem kummerG_kummerF (n : ℕ)
     (realKummer S ιr) (realKummerMap S ιr) n) x
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_kummerδ_eq (n : ℕ)
     (x : gsTateCompactCohomology S ιr ιs (galRootsOfUnity.{0} K.1 (maxUnramifiedOutside K.1 ℚ̄ S) 2) (n + 1))
     (hx : kummerF S ιr ιs (n + 1) x = 0) : ∃ y, kummerδ S ιr ιs h2S n y = x :=
@@ -102,6 +106,7 @@ theorem exists_kummerδ_eq (n : ℕ)
     (fun _ => localKummerSeq_shortExact _ _ _ _) (fun _ => localKummerSeq_shortExact _ _ _ _) n) x hx
 
 
+set_option maxHeartbeats 1000000 in
 theorem kummerδ_kummerG (n : ℕ) (y : unitsTateCohomology S ιr ιs n) :
     kummerδ S ιr ιs h2S n (kummerG S ιr ιs n y) = 0 :=
   hom_apply_hom_apply_of_comp_eq (tateCompactCohomologyMap₂₃_tateCompactδ (gsFinFamily S ιs)
@@ -115,6 +120,7 @@ section Main
 variable (h2S : ∀ v : HeightOneSpectrum (𝓞 K.1), ((2 : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
 
 
+include h2S in
 theorem gsTateCompactCohomology_rootsOfUnity_two_eq_zero {r : ℕ} (hr : 4 ≤ r)
     (x : gsTateCompactCohomology S ιr ιs (galRootsOfUnity.{0} K.1 (maxUnramifiedOutside K.1 ℚ̄ S) 2) r) :
     x = 0 := by
@@ -156,6 +162,7 @@ theorem galRootsOfUnity_two_ρ_apply (σ : galUnramifiedOutside K.1 ℚ̄ S)
   · rw [map_neg, map_one]
 
 
+include h2S in
 theorem nonempty_rootsOfUnity_two_iso_zmodRep :
     Nonempty (galRootsOfUnity.{0} K.1 (maxUnramifiedOutside K.1 ℚ̄ S) 2 ≅
       zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) 2) := by
@@ -168,6 +175,7 @@ theorem nonempty_rootsOfUnity_two_iso_zmodRep :
       rw [galRootsOfUnity_two_ρ_apply])⟩
 
 
+include h2S in
 theorem gsTateCompactCohomology_zmodRep_two_eq_zero {r : ℕ} (hr : 4 ≤ r)
     (x : gsTateCompactCohomology S ιr ιs (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) 2) r) : x = 0 := by
   obtain ⟨e⟩ := nonempty_rootsOfUnity_two_iso_zmodRep S h2S
@@ -190,6 +198,8 @@ def someFinEmbeddings : ∀ v : S, ℚ̄ →ₐ[K.1] AlgebraicClosure ((v : Heig
   fun _ => Classical.choice nonempty_algHom_of_isSepClosed
 
 
+set_option maxHeartbeats 1000000 in
+include h2S in
 theorem injective_gsRealRes_zmodRep_two_succ {n : ℕ} (hn : 3 ≤ n) :
     Function.Injective (gsRealRes S ιr (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) 2) (n + 1)).hom :=
   (injective_tateGlobalToLocal_iff (gsFinFamily S (someFinEmbeddings S)) (gsRealFamily S ιr)
@@ -208,6 +218,8 @@ theorem injective_gsRealRes_zmodRep_two_succ {n : ℕ} (hn : 3 ≤ n) :
       (gsTateCompactCohomology_zmodRep_two_eq_zero S ιr (someFinEmbeddings S) h2S (by omega)))
 
 
+set_option maxHeartbeats 1000000 in
+include h2S in
 theorem surjective_gsRealRes_zmodRep_two_succ {n : ℕ} (hn : 2 ≤ n) :
     Function.Surjective (gsRealRes S ιr (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) 2) (n + 1)).hom :=
   (surjective_tateGlobalToLocal_iff (gsFinFamily S (someFinEmbeddings S)) (gsRealFamily S ιr)
@@ -226,6 +238,8 @@ theorem surjective_gsRealRes_zmodRep_two_succ {n : ℕ} (hn : 2 ≤ n) :
       (gsTateCompactCohomology_zmodRep_two_eq_zero S ιr (someFinEmbeddings S) h2S (by omega)))
 
 
+set_option maxHeartbeats 4000000 in
+include h2S in
 theorem injective_gsRealRes_zmodRep_two {r : ℕ} (hr : 4 ≤ r) :
     Function.Injective (gsRealRes S ιr (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) 2) r).hom := by
   cases r with
@@ -233,6 +247,8 @@ theorem injective_gsRealRes_zmodRep_two {r : ℕ} (hr : 4 ≤ r) :
   | succ n => exact injective_gsRealRes_zmodRep_two_succ S ιr h2S (by omega)
 
 
+set_option maxHeartbeats 4000000 in
+include h2S in
 theorem surjective_gsRealRes_zmodRep_two {r : ℕ} (hr : 3 ≤ r) :
     Function.Surjective (gsRealRes S ιr (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) 2) r).hom := by
   cases r with

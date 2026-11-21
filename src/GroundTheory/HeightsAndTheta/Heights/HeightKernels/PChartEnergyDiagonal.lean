@@ -174,6 +174,7 @@ theorem diagEnergy_prod (hI : ChartEnergyLinearInvariant.Statement) (hC : ChartE
 end ChartEnergyDiagonalAlt
 
 
+open ChartEnergyDiagonalAlt in
 theorem ChartEnergyDiagonal.proof (hI : ChartEnergyLinearInvariant.Statement) (hC : ChartEnergyCocycle.Statement) :
     ChartEnergyDiagonal.Statement := by
   intro e l hl

@@ -29,6 +29,9 @@ def wp (τ : ℍ) (z : ℂ) : ℂ := (periodPairOfTau τ).weierstrassP z
 def jLat (τ : ℍ) : ℂ := (latticeCurve (periodPairOfTau τ)).j
 
 
+open Complex Polynomial in
+open UpperHalfPlane hiding I in
+open scoped Real in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.ThetaConstantWeber.disc_ne_zero (τ : ℍ) :
     (_root_.GlobalTheory.periodPairOfTau τ).g₂ ^ 3 - 27 * (_root_.GlobalTheory.periodPairOfTau τ).g₃ ^ 2
       ≠ 0 := by
@@ -48,6 +51,9 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.ThetaConstantWeber.jLat_e
   ring
 
 
+open Complex Polynomial in
+open UpperHalfPlane hiding I in
+open scoped Real in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.ThetaConstantWeber.halfPeriods_notMem (τ : ℍ) :
     (1 / 2 : ℂ) ∉ (_root_.GlobalTheory.periodPairOfTau τ).lattice ∧
       (τ : ℂ) / 2 ∉ (_root_.GlobalTheory.periodPairOfTau τ).lattice ∧
@@ -94,6 +100,9 @@ def ThetaWeberStatement : Prop :=
   ∀ τ : ℍ, HalfPeriodDiff τ ∧ JacobiProduct τ ∧ ThetaWeber τ ∧ WeberCubic τ
 
 
+open Complex Polynomial in
+open UpperHalfPlane hiding I in
+open scoped Real in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.ThetaConstantWeber.ThetaWeber.pow_twelve {τ : ℍ}
     (h : _root_.GlobalTheory.IndefiniteRowSideFullHecke.ThetaConstantWeber.ThetaWeber τ) :
     (_root_.GlobalTheory.IndefiniteRowSideFullHecke.ThetaConstantWeber.thetaConst 0 0 τ / ModularForm.eta τ) ^ 12 = _root_.GlobalTheory.IndefiniteRowSideFullHecke.ThetaConstantWeber.weberF τ ^ 24 ∧

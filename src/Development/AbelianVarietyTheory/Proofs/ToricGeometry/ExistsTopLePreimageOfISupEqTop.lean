@@ -60,6 +60,7 @@ theorem hom_ext_of_points {X Y : Over (Sp ℂ)}
 end TorusEnd
 
 
+open TorusEnd in
 theorem exists_isMonHom_of_map_periodLattice :
     (∀ (X : Over (Sp ℂ)), IsReduced X.left → LocallyOfFiniteType X.hom → ∀ (U : X.left.Opens) (f f'
         : Γ(X.left, U)), (∀ x : (𝟙_ (Over (Sp ℂ)) ⟶

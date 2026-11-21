@@ -152,6 +152,7 @@ theorem eval_detPow (i c : ℕ) (H : Matrix (Fin i) (Fin i) C) :
   simp [RingHom.mapMatrix_apply]
 
 
+open Formalism.L2.Th1.C in
 theorem subst_col (v : AddValuation C (WithTop ℝ)) {i d : ℕ} (G : LogFGL v d) (u : Fin i → Fin d → C)
     (b : Fin i) (w : Fin d → C) (χ : MvPowerSeries (Fin d) C)
     (hχ : ∀ α, coeff α (subst (expOf G) χ) = α.prod fun e n => w e ^ n / (n.factorial : C)) :

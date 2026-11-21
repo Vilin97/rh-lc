@@ -161,6 +161,7 @@ theorem vp_le {s : ℕ} {μ : Fin (N + 1) → Fin (r + K) → ℤ} (h : VP LL n0
         exact le_trans h2 (ih (by omega) (by omega) _)
 
 
+open Classical in
 theorem vp_update {s : ℕ} (hs : s < N) {μ : Fin (N + 1) → Fin (r + K) → ℤ} (h : VP LL n0 B s μ)
     (la' : Fin (r + K) → ℤ) (hd : Dominant la')
     (hst : StepOK LL n0 B ⟨s, hs⟩ (μ (⟨s, hs⟩ : Fin N).castSucc) la') :

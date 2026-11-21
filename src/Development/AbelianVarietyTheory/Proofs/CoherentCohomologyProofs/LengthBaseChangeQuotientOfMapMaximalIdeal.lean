@@ -54,6 +54,7 @@ theorem length_baseChange_flat :
   IsLocalRing.length_baseChange R S X
 
 
+variable {X} in
 theorem length_baseChange_subquotient_flat (A B : Submodule R X) :
     Module.length S (A.baseChange S ⧸ (B.baseChange S).submoduleOf (A.baseChange S)) =
       Module.length R (A ⧸ B.submoduleOf A) *
@@ -115,12 +116,14 @@ theorem ramificationIdx_maximalIdeal_pos : 0 < (maximalIdeal S).ramificationIdx 
   exact (map_maximalIdeal_lt_top (algebraMap R S)).ne this
 
 
+variable {R} in
 theorem addVal_algebraMap_uniformizer {ϖ : R} (hϖ : Irreducible ϖ) :
     addVal S (algebraMap R S ϖ) = ((maximalIdeal S).ramificationIdx R : ℕ) := by
   rw [← length_fibre_eq_ramificationIdx, ← length_quotient_span_singleton_eq_addVal,
     hϖ.maximalIdeal_eq, Ideal.map_span, Set.image_singleton]
 
 
+variable {R} in
 theorem addVal_algebraMap (x : R) :
     addVal S (algebraMap R S x) = addVal R x * ((maximalIdeal S).ramificationIdx R : ℕ) := by
   rcases eq_or_ne x 0 with rfl | hx
@@ -140,6 +143,7 @@ theorem length_baseChange_dvr :
   rw [length_baseChange_flat, length_fibre_eq_ramificationIdx]
 
 
+variable {X} in
 theorem length_baseChange_subquotient_dvr (A B : Submodule R X) :
     Module.length S (A.baseChange S ⧸ (B.baseChange S).submoduleOf (A.baseChange S)) =
       Module.length R (A ⧸ B.submoduleOf A) * ((maximalIdeal S).ramificationIdx R : ℕ) := by

@@ -99,6 +99,7 @@ theorem one_comp (h : IsGrpPullback G' G f φ) (T : Over S') (T₀ : Over S) (τ
   exact (hρ _ _).1 (map_one ρ)
 
 
+omit [GrpObj G'] in
 theorem weilIs_congr {X : Scheme.{0}} {a b : X ⟶ S} (e : a = b) (L : LB G.left) (k : ℤ)
     (x y : Over.mk a ⟶ G) (x' y' : Over.mk b ⟶ G) (hx : x.left = x'.left) (hy : y.left = y'.left)
     (c : Γ(X, ⊤)ˣ) (H : Out.WeilIs G L k x y c) : Out.WeilIs G L k x' y' c := by

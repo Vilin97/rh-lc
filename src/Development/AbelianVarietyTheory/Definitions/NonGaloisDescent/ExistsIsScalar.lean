@@ -120,6 +120,7 @@ theorem realRd_apply (ν : ℂ) (f : D.nexp.Fm i ((j : ℕ) + 1) b) :
 end Read
 
 
+variable (Rl) in
 def IsScale {j : Fin D.R.m} (B : Base (Vc D j) (Wc D j)) (c : ℂ) : Prop :=
   ∃ gramR c0R c0L, Bridge.FamTie Rl.B Rl.pl (Rl.Sb : Set (Pl D.host.E)) Rl.Q (labLL D) (fun τ => Bridge.lamRdef (Ptw D) τ)
       (fun j τ => Bridge.lamLdef (Vc D j).rank ((j : ℕ) + 1) τ) gramR c0R c0L ∧
@@ -129,6 +130,7 @@ def IsScale {j : Fin D.R.m} (B : Base (Vc D j) (Wc D j)) (c : ℂ) : Prop :=
           c • coefFn D.what₂.embLL (FWT.lamV D j) (F : Pol D.what₂.LL D.what₂.Tau (Vc D j).rank)
 
 
+variable (Rl) in
 def IsNorm {j : Fin D.R.m} (B : Base (Vc D j) (Wc D j)) (ν : ℂ) : Prop :=
   ν ≠ 0 ∧ ∃ c, IsScale Rl v₀ B c ∧ ∃ n : ℕ, n ≠ 0 ∧ ν ^ n = (cj (twAt D.what₂.embLL A3.A.v0) (Rl.phs j) * c) ^ n
 

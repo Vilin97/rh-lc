@@ -11,6 +11,7 @@ open scoped ComplexOrder ENNReal MatrixOrder Pointwise
 namespace GlobalTheory
 
 
+open scoped MatrixOrder in
 theorem exists_det_add_eq_det_mul_det_one_add {n : Type} [Fintype n] [DecidableEq n]
     {P Q : Matrix n n ℂ} (hP : P.PosSemidef) (hQ : Q.PosSemidef) (hd : P.det ≠ 0) :
     ∃ R : Matrix n n ℂ, R.PosSemidef ∧ (R = 0 → Q = 0) ∧ (P + Q).det = P.det * (1 + R).det := by

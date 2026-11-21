@@ -786,6 +786,7 @@ theorem bt_typed_sec (p : PlF D) {T T' : ℕ} (F0 : FlagG (VS D) D.R.rS (T : D.h
   ring
 
 
+set_option maxHeartbeats 1600000 in
 theorem bt_typed_O (hD : LocDiffC D Z) (p : PlF D) {T T' : ℕ} (F0 : FlagG (VS D) D.R.rS (T : D.host.E))
     (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS (T' : D.host.E)) (Tn T'n : ℕ)
     (hXL : XLam Λ (lf D F0) = XS D F0)
@@ -878,6 +879,7 @@ theorem bt_typed_Ep (p : PlF D) {T T' : ℕ} (F0 : FlagG (VS D) D.R.rS (T : D.ho
         (Submodule.smul_mem _ _ (Submodule.subset_span (Or.inr ⟨a, rfl⟩)))
 
 
+set_option maxHeartbeats 1600000 in
 theorem bbTie_core (hE : LocEqC D Z) (hS : LocSatC D Z) (hD : LocDiffC D Z) : BBTie D Z := by
   intro u u' F0 Λ F' hR hPD hMI p
   have hFix := hR.2.1
@@ -1648,6 +1650,7 @@ theorem bt_isTerm (hE : LocEqC D Z) (hS : LocSatC D Z) (hD : LocDiffC D Z) (hDu 
     exact Submodule.subset_span ⟨_, hmem, rfl⟩
 
 
+set_option maxHeartbeats 800000 in
 theorem frameGenLoc_core (hE : LocEqC D Z) (hS : LocSatC D Z) (hD : LocDiffC D Z) (hDu : LocUnimodC D Z)
     {u u' : D.what₂.Word} (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
     (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
@@ -1736,6 +1739,7 @@ theorem frameGenLoc_of (Z : LocDat D) (hE : LocEqC D Z) (hS : LocSatC D Z) (hD :
 section Tied
 
 
+variable (D) in
 def LocTied : Prop := ∀ p : PlF D, Nonempty (Formalism.L2.S.LocIso (D.s.atP p) (Formalism.L2.S.locC D p))
 
 

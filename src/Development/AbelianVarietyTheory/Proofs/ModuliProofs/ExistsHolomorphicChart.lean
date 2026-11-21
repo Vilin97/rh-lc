@@ -21,6 +21,7 @@ noncomputable section
 namespace GlobalTheory.SubfieldChart
 
 
+open Filter Topology in
 theorem exists_finite_test {A : Type} {e : A → ℂ} {N : Set (A → ℂ)} (hN : N ∈ 𝓝 e) :
     ∃ (n : ℕ) (r : Fin n → A) (ε : ℝ), 0 < ε ∧ ∀ u : A → ℂ, (∀ i, ‖u (r i) - e (r i)‖ < ε) → u ∈ N := by
   rw [nhds_pi, Filter.mem_pi] at hN

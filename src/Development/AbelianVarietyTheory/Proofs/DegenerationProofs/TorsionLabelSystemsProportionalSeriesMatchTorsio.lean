@@ -77,6 +77,7 @@ theorem zeta_shift (H : Labels N EF ζ lab) {k : ℕ} (hk : 0 < k) (x e y : La) 
   exact WpPairing.wp_congr_left N ((H.2.1 k hk _ _).2 ⟨e, rfl⟩) _
 
 
+omit N lab in
 theorem zeta_tower {k k' : ℕ} (h : ζ (k * k') ^ k' = ζ k) (x y : La) :
     ζ (k * k') ^ EF (k' • x) y = ζ k ^ EF x y := by
   rw [map_nsmul, LinearMap.smul_apply, nsmul_eq_mul, zpow_mul, zpow_natCast, h]

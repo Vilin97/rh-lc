@@ -54,6 +54,7 @@ def Sset (k r : ℕ) (z : Fin (2 * r + k + 1) → ℂ) :
 end QuotSetU
 
 
+open QuotSetU in
 def QuotSetU : Prop :=
   ∀ (k r : ℕ) (z : Fin (2 * r + k + 1) → ℂ), inWb k r z → 0 < Tz k r z →
     IsMatGroup (UH (Hpk k r)) ∧ IsMatGroup (Sset k r z) ∧ Sset k r z ⊆ UH (Hpk k r) ∧

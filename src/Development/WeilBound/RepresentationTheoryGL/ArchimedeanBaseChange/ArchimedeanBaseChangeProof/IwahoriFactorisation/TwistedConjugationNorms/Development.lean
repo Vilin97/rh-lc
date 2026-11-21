@@ -351,6 +351,7 @@ end Local
 end S1
 
 
+open S1 in
 theorem s1 (hU : Unr E) (w : Pl E) (hw : ¬ IsSplitAt w) (ϖ : (w.adicCompletion E)ˣ) (hϖ : IsUnifAt ϖ) (a : ℕ) (y : Fin a → ℤ)
     (hy : StrictAnti y) (δ : GLw a w) (hP : ∃ p : GLw a w, dcos a w (tdiag ϖ y) (p⁻¹ * δ * thL a w p) ≠ 0) :
     (∃ p₀, OneCoset (thL a w) (iwGL a w) δ {g | dcos a w (tdiag ϖ y) g ≠ 0} p₀) ∧

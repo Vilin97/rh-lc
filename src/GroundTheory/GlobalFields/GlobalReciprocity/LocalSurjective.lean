@@ -44,6 +44,7 @@ theorem exists_localSymbol_eq (w : PlacesOver L v) {τ : L ≃ₐ[K] L}
   rw [hx, MulEquiv.symm_apply_apply]
 
 
+omit [IsGalois K L] [IsMulCommutative (L ≃ₐ[K] L)] in
 theorem mk_finiteEmbedding_normUnits (w : PlacesOver L v) (z : (w.1.adicCompletion L)ˣ) :
     IdeleClassGroup.mk K (finiteEmbedding v
         (LocalField.normUnits (v.adicCompletion K) (w.1.adicCompletion L) z)) =

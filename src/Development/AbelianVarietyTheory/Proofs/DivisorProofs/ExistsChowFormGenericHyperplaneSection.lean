@@ -79,6 +79,10 @@ private theorem isWeightedHomogeneous_aeval_of_forall {R S σ τ Γ Δ : Type} [
     (IsWeightedHomogeneous.prod _ _ _ fun v _ => (hφ v).pow _)
 
 
+set_option autoImplicit false in
+open MvPolynomial Filter in
+open scoped ENNReal in
+attribute [local instance] MvPolynomial.gradedAlgebra MvPolynomial.algebraMvPolynomial in
 theorem _root_.GlobalTheory.ChowSpec.exists_isChowFormInt_generic_section : ∀ (K L : Type) [Field K] [Field L] (N : ℕ) [Algebra K L] [Algebra (MvPolynomial (Fin N) K) L] [IsScalarTower K (MvPolynomial (Fin N) K) L] [IsFractionRing (MvPolynomial (Fin N) K) L] (P : Ideal (MvPolynomial (Fin N) K)) (D δ : ℕ) (f : MvPolynomial (Fin (D + 1 + 1) × Fin N) K), (∀ g ∈ P, ∀ n : ℕ, homogeneousComponent n g ∈ P) → _root_.GlobalTheory.ChowHt.IsChowFormInt P (D + 1) δ f → ∃ f' : MvPolynomial (Fin (D + 1) × Fin N) L, _root_.GlobalTheory.ChowHt.IsChowFormInt (P.map (MvPolynomial.map (algebraMap K L) : MvPolynomial (Fin N) K →+* MvPolynomial (Fin N) L) ⊔ Ideal.span {(∑ j : Fin N, C (algebraMap (MvPolynomial (Fin N) K) L (X j)) * X j : MvPolynomial (Fin N) L)}) D δ f' := by
   intro K L _ _ N _ _ _ _ P D δ f hP hf
   set t : Fin N → L := fun j => algebraMap (MvPolynomial (Fin N) K) L (X j) with ht

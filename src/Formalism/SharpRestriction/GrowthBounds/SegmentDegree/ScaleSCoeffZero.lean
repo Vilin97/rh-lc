@@ -114,10 +114,12 @@ namespace Dat
 variable {n' r : ℕ} [NeZero n'] (X : Dat n' r) (K : ℕ)
 
 
+omit [NeZero n'] in
 def offSet (j : ℤ) : Set (ℤ × Fin (r + K)) :=
   {v | ∃ t c : Fin r, c ≠ Fin.rev t ∧ v = (X.F.fr j t.val, Fin.castAdd K c)}
 
 
+omit [NeZero n'] in
 def monTau (j : ℤ) (u : Fin r × Fin r → ℕ) : ℤ × Fin (r + K) →₀ ℕ :=
   ∑ v : Fin r × Fin r, Finsupp.single (X.F.fr j v.1.val, Fin.castAdd K v.2) (u v)
 

@@ -125,6 +125,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger GlobalTheory
 variable {D : D7}
 
 
+set_option maxHeartbeats 1000000 in
 theorem seesaw_small {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {μ₀ : T} (hL : L.Is μ₀)
     (W : G.Weil) (t : T) {i j : ℕ} (hi : i + 1 ≤ D.R.m) (hj : j + 1 ≤ D.R.m)
     (ω : GA D (spW₁ G i j) × GA D (GlobalTheory.Doubling.hsum (spV G i j) (spV₁ G i j)) →*

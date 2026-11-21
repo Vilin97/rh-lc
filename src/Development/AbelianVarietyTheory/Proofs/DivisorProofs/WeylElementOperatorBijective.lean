@@ -54,6 +54,7 @@ namespace GlobalTheory.WeylBij
 open GlobalTheory.WeylFourier GlobalTheory.RatWeilOp
 
 
+open scoped Classical in
 theorem weyl_hasOpB : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ → (∀ᶠ v in cofinite, PsiUnr ψ v) →
     (∀ v : Pl (F := F), ∃ x, psiLoc ψ v x ≠ 1) → ∀ (κ : Type) [Fintype κ] [DecidableEq κ],
     GlobalTheory.SympChangeBij.HasOpB ψ (GlobalTheory.SympChange.weylM (F := F) (κ := κ)) := by

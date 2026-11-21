@@ -82,6 +82,7 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.
   {T : CoreJ D} [Algebra T.Q.c.F D.what₂.LL] {R : RealDat D A T.Q.c.F}
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_comb_base {i : Fin D.R.m} {κ : WeightFamilies.Wt D ((i : ℕ) + 1)} {v : (R.MW i (sg0 D A)).Vec} {ι x₀} {ph : ℂ}
     (hn : κ.n = (Vc D i).rank) (O : OMDat T.toCore R i Unit (fun _ => A.μ0)) (hP : O.Pins κ v ι x₀)
     (hrow : O.OneMapOf κ v (T.cE ((i : ℕ) + 1) O.s0) ph) (y : A.fam.amb.FL i A.μ0) :
@@ -124,6 +125,7 @@ theorem exists_comb_base {i : Fin D.R.m} {κ : WeightFamilies.Wt D ((i : ℕ) + 
 variable {κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)} {v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec}
 
 
+set_option maxHeartbeats 1600000 in
 theorem expands_thF_jV {F : Face D A} (hR : GlobalTheory.Hk3.Core R F) (fw : FWTie T R κ v₀) (hU : R.LUnif) {i : Fin D.R.m}
     (O : ∀ i, OMDat T.toCore R i Unit (fun _ => A.μ0)) (hpins : OMPins T R κ v₀ O i) {ph : ℂ}
     (hrow : (O i).OneMapOf (κ i) (v₀ i (sg0 D A)) (T.cE ((i : ℕ) + 1) (O i).s0) ph) (y : A.fam.amb.FL i A.μ0) :
@@ -163,6 +165,7 @@ theorem conjTup_base {F : Face D A} (hR : GlobalTheory.Hk3.Core R F) (τ : ℂ �
   simp
 
 
+set_option maxHeartbeats 1600000 in
 theorem conjForm_jV {F : Face D A} (hR : GlobalTheory.Hk3.Core R F) {i : Fin D.R.m}
     (O : ∀ i, OMDat T.toCore R i Unit (fun _ => A.μ0)) (hpins : OMPins T R κ v₀ O i)
     (c : VsV D i ℂ →ₗ[ℂ] (R.cV i).W) (hc : ExtC R i (inC (O i).c') (O i).c0' c) (τ : ℂ ≃+* ℂ) (hfix : FixBase T R i τ)

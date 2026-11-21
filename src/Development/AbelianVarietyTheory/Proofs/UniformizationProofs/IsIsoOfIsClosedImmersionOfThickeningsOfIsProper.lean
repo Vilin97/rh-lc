@@ -18,6 +18,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory
 
 
+open ThickeningClosed in
 theorem isIso_of_isClosedImmersion_of_thickenings_of_isProper {R : Type} [CommRing R]
     [IsNoetherianRing R] (I : Ideal R) (hI : I ≤ Ideal.jacobson ⊥)
     (Y : Over (Spec (CommRingCat.of R))) [IsProper Y.hom] {Z : Scheme.{0}} (j : Z ⟶ Y.left)

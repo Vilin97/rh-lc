@@ -409,6 +409,7 @@ structure LevFam.Split {SG0 SG : Finset (HeightOneSpectrum (𝓞 X.E))} (ι : GL
 variable {SG0 Q : Finset (HeightOneSpectrum (𝓞 X.E))}
 
 
+open Classical in
 def inlSG (w : SG0) : uSG SG0 Q := ⟨w.1, Finset.mem_union_left _ w.2⟩
 
 open Classical in

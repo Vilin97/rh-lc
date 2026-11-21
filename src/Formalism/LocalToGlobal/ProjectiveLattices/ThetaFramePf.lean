@@ -96,6 +96,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : D
 variable (Xo : Moduli Dw l) (c : Coeff l)
 
 
+set_option maxHeartbeats 400000 in
 theorem thetaFrame_of (hT : ReciprocityTheory.ChartRestriction.G.Out.SecTwistSt) : ThetaFrameSt Xo c := by
   intro T io O _ β Y hPI yt z hz hzs G m t' m1 m2
   obtain ⟨θ, hθ, -, w2, σ', ⟨g2, r2⟩, hcl, hgen⟩ := thetaCore_of hT E H Dw l Xo c O β Y hPI T.V yt z hz G m t' m2

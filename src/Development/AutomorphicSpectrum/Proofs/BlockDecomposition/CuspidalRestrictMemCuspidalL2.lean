@@ -17,6 +17,7 @@ variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 open GroundTheory.Automorphic.AutomorphicForm
 
 
+omit [IsTotallyComplex E] in
 theorem unipGL_eq_unip {r : ℕ} (X : UPos a r → Ad E) :
     (unipGL X : GL (Fin a) (Ad E)) = unip X :=
   Units.ext rfl

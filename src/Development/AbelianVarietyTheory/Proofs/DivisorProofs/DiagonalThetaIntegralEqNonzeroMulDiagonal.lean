@@ -38,6 +38,7 @@ namespace GlobalTheory.DiagSiegelUnfold
 open MeasureTheory
 
 
+set_option maxHeartbeats 1000000 in
 theorem diag_theta_integral : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) →
     ∀ (S T : HSp D) (JA : Matrix (Fin T.rank) (Fin T.rank) D.host.E) (JB : Matrix (Fin S.rank) (Fin S.rank) D.host.E)
         (ξ : AF D.host.F ⊗[D.host.F] D.host.E), JA = T.gramᵀ →

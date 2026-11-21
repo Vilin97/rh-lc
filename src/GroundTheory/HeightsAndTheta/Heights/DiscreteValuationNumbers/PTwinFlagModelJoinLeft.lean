@@ -36,6 +36,7 @@ theorem pullDeg_sub (a b : K → ℤ) :
 end FlagModelJoinLeftAlt
 
 
+open FlagModelJoinLeftAlt in
 theorem FlagModelJoinLeftAlt.proof (hVert : JoinVerticalDivisor.Statement)
     (hFlag : FlagPairJoinLeft.Statement) (hNum : PairNumberJoinLeft.Statement) :
     FlagModelJoinLeftAlt.Statement := by

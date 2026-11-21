@@ -53,6 +53,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {l : Le
   {ρ' : 𝓞 E →+* Module.End Ω V'} {j : V →+ V'}
 
 
+include m in
 theorem map_act (hact : M.IsActOf t.act.act ρ) (hact' : M'.IsActOf t'.act.act ρ')
     (hj : ∀ e, (M'.pt (j e)).left ≫ m.φ = spMap (dualMap i) ≫ (M.pt e).left) (a : 𝓞 E) (e : V) :
     j (ρ a e) = ρ' a (j e) := by
@@ -67,6 +68,7 @@ theorem map_act (hact : M.IsActOf t.act.act ρ) (hact' : M'.IsActOf t'.act.act �
   exact congrArg (· ≫ _) (hj e).symm
 
 
+include m in
 theorem map_mem_eigSp (hact : M.IsActOf t.act.act ρ) (hact' : M'.IsActOf t'.act.act ρ')
     (hj : ∀ e, (M'.pt (j e)).left ≫ m.φ = spMap (dualMap i) ≫ (M.pt e).left)
     (hsl : ∀ (a : Ω₀) (e : V), j (a • e) = i a • j e) (σ : 𝓞 E →+* Ω₀) {e : V} (he : e ∈ eigSp ρ σ) :

@@ -16,6 +16,8 @@ variable {K L : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K]
   [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L]
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [Algebra K L]
+  [ValuativeExtension K L] [FiniteDimensional K L] in
 theorem finiteIndex_of_isOpen_integerUnits {V : Subgroup 𝒪[L]ˣ} (h : IsOpen (V : Set 𝒪[L]ˣ)) :
     V.FiniteIndex := by
   have : Finite (𝒪[L]ˣ ⧸ V) := Subgroup.quotient_finite_of_isOpen V h
@@ -50,6 +52,8 @@ theorem cycHerbrand_units_eq_finrank (hσ : ∀ g, g ∈ Subgroup.zpowers σ) :
 variable [IsCyclic (L ≃ₐ[K] L)]
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel L]
+  [TopologicalSpace L] [IsNonarchimedeanLocalField L] [ValuativeExtension K L] [IsGalois K L] in
 theorem natCard_tateNegOne_units : Nat.card (TateNegOne (L ≃ₐ[K] L) Lˣ) = 1 := by
   have := subsingleton_tateNegOne_units (K := K) (L := L)
   exact Nat.card_eq_one_iff_unique.mpr ⟨inferInstance, inferInstance⟩

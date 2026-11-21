@@ -11,6 +11,7 @@ open GlobalTheory.QFam
 namespace GlobalTheory.QFam
 
 
+open scoped UpperHalfPlane MatrixGroups ModularForm Manifold BigOperators in
 theorem _root_.GlobalTheory.QFam.IsFam.value_mul_denom {ι : Type} {act : ι → SL(2, ℤ) → ι}
     {w : ℤ} {f : ι → ℍ → ℂ}
     (h : _root_.GlobalTheory.QFam.IsFam act w f) (i : ι) (γ : SL(2, ℤ)) (τ : ℍ) :
@@ -20,6 +21,7 @@ theorem _root_.GlobalTheory.QFam.IsFam.value_mul_denom {ι : Type} {act : ι →
   exact hi
 
 
+open scoped UpperHalfPlane MatrixGroups ModularForm Manifold BigOperators in
 theorem _root_.GlobalTheory.QFam.IsFam.esymm_slash {ι : Type} [Fintype ι]
     {act : ι → SL(2, ℤ) → ι} {w : ℤ} {f : ι → ℍ → ℂ}
     (hb : _root_.GlobalTheory.QFam.ActBij act) (h : _root_.GlobalTheory.QFam.IsFam act w f)
@@ -60,6 +62,7 @@ theorem _root_.GlobalTheory.QFam.IsFam.esymm_slash {ι : Type} [Fintype ι]
     rfl
 
 
+open scoped UpperHalfPlane MatrixGroups ModularForm Manifold BigOperators in
 theorem _root_.GlobalTheory.QFam.sum_esymm_slash : ∀ (ι : Type) [Fintype ι]
     (act : ι → SL(2, ℤ) → ι) (w : ℤ) (f : ι → ℍ → ℂ),
     _root_.GlobalTheory.QFam.ActBij act → _root_.GlobalTheory.QFam.IsFam act w f → ∀ γ : SL(2, ℤ),

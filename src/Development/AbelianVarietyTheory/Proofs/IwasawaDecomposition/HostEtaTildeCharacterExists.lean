@@ -64,6 +64,7 @@ private theorem exists_prime_mem {A : Type} [CommRing A] (P : Ideal A) (hP : P.I
       exact ⟨l, h1, h2.mul_left _, h3⟩
 
 
+open Classical in
 theorem etaT_exists : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R), EtaTExists H := by
   intro R H
   obtain ⟨c, hc, hcm, hunr, -, -⟩ := GlobalTheory.Mem.HostCM.host_cm R H

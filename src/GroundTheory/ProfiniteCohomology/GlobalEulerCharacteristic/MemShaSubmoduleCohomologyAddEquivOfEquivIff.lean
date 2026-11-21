@@ -98,6 +98,7 @@ theorem isIntertwiningMap_kummerModNZMod (i : ℕ) :
         (zmodRepOfTorsionEquiv ℓ T hT) (fun _ _ => rfl) N (i + 1) g _
 
 
+omit [N.Normal] [CompactSpace N] in
 theorem mem_shaSubmodule_iff_mem_range_kummerModNZMod {ι : Type} {Hv : ι → Type} [∀ v, Group (Hv v)]
     [∀ v, TopologicalSpace (Hv v)] [∀ v, IsTopologicalGroup (Hv v)] (ψ : ∀ v, Hv v →ₜ* N) (i : ℕ)
     (hsha : ∀ x : cohomology (Rep.res N.subtype T) (i + 1),

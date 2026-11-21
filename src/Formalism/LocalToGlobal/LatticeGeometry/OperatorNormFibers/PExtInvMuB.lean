@@ -17,6 +17,7 @@ section Places
 variable (K K' : Type) [Field K] [NumberField K] [Field K'] [NumberField K'] [Algebra K K']
 
 
+open Classical in
 theorem card_fiber [IsTotallyComplex K] (v : InfinitePlace K) :
     (Finset.univ.filter fun v' : InfinitePlace K' => v'.comap (algebraMap K K') = v).card =
       finrank K K' := by

@@ -22,6 +22,7 @@ open Limits GlobalTheory.CxPts Filter Topology GlobalTheory.ShFam GlobalTheory.S
 attribute [local instance] Over.cartesianMonoidalCategory
 
 
+set_option maxHeartbeats 800000 in
 theorem tendsto_arc_readsZ {V : Unf Xo c σ r} (hσ : GoodEmb c σ) (hU : IsUnf V) (T : TorFlag Xo c)
     {ee : Ix D → ℤ} (hee : ee none = 0) {k : V.Comp} {la : ReciprocityTheory.ChartRestriction.G.FD.Wt (V.X k).Ψ r}
     {P : Frame (V.X k).Ψ r → ℂ} (hP : P ∈ (V.X k).SS la)
@@ -134,6 +135,7 @@ end ThetaShiftProofs
 open GlobalTheory.CxPts Filter Topology ReciprocityTheory.ChartRestriction.G.DVR.FlatBC
 
 
+set_option maxHeartbeats 800000 in
 theorem holoOn_bdZ {V : Unf Xo c σ r} (hσ : GoodEmb c σ) (hU : IsUnf V) (T : TorFlag Xo c)
     {ee : Ix D → ℤ} (hee : ee none = 0) {k : V.Comp} {la : ReciprocityTheory.ChartRestriction.G.FD.Wt (V.X k).Ψ r}
     {P : Frame (V.X k).Ψ r → ℂ} (hP : P ∈ (V.X k).SS la) {d : ℕ} [SmoothOfRelativeDimension d (flagStr T.X)]

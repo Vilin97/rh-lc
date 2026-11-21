@@ -24,6 +24,7 @@ def IsFinExt (T T' : CDVR) (i : T.Fr →+* T'.Fr) : Prop :=
     ∃ r : ℕ, 0 < r ∧ ∀ x : T.Fr, vV T'.V (i x) = (r : ℤ) * vV T.V x
 
 
+variable (H l) in
 def IsHeckePrime (𝔓 : Ideal (𝓞 E)) (p : ℕ) : Prop :=
   𝔓.IsMaximal ∧ 𝔓 ⊔ 𝔓.map (H.bar : 𝓞 E →+* 𝓞 E) = ⊤ ∧ p.Prime ∧ (p : 𝓞 E) ∈ 𝔓 ∧ ¬ p ∣ l.M'
 

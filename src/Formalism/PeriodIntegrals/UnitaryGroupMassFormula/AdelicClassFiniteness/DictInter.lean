@@ -24,6 +24,7 @@ lemma tau_tmul (w e : E) (a : Af F) : tau w (e ⊗ₜ[F] a) = Algebra.trace F E 
     | rfl
 
 
+variable (F E) in
 def dualSet : Set E := {w | ∀ a : 𝓞 E, Algebra.trace F E (w * (a : E)) ∈ (algebraMap (𝓞 F) F).range}
 
 lemma tau_mul_left (w a : E) (r : E ⊗[F] Af F) :

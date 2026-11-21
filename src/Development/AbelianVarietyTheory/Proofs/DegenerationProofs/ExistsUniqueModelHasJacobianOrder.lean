@@ -253,6 +253,7 @@ theorem isOpenImmersion_j (M : Model R A) : IsOpenImmersion M.j :=
   DvrModel.isOpenImmersion_generic (isPullback_j M)
 
 
+omit [IsFractionRing R K] in
 theorem mem_basicOpen_cst (hπ : Irreducible π) (M : Model R A) (U : M.Y.left.Opens) (x : M.Y.left) :
     x ∈ M.Y.left.basicOpen (cst M U π) ↔ x ∈ U ∧ x ∉ M.sp := by
   rw [← rs_cst M (le_top : U ≤ ⊤)]
@@ -308,6 +309,7 @@ theorem exists_pow_mul_eq (hπ : Irreducible π) (M : Model R A) {U : M.Y.left.O
   rw [← this, _root_.mul_comm]
 
 
+omit [IsFractionRing R K] in
 theorem prime_cst (hπ : Irreducible π) (M : Model R A) (hM : M.Irr) {U : M.Y.left.Opens} (hU : IsAffineOpen U)
     (h : ((U : Set M.Y.left) ∩ M.sp).Nonempty) : Prime (cst M U π) := by
   have := M.smooth
@@ -328,6 +330,7 @@ theorem prime_cst (hπ : Irreducible π) (M : Model R A) (hM : M.Irr) {U : M.Y.l
   exact DvrModel.prime_res hπ hp hU hx hs
 
 
+omit [IsFractionRing R K] in
 theorem nonempty_basicOpen_inter (hπ : Irreducible π) (M : Model R A) (hM : M.Irr) {U : M.Y.left.Opens}
     (hU : IsAffineOpen U) (h : ((U : Set M.Y.left) ∩ M.sp).Nonempty) {b : Γ(M.Y.left, U)}
     (hb : ¬ cst M U π ∣ b) : ((M.Y.left.basicOpen b : Set M.Y.left) ∩ M.sp).Nonempty := by
@@ -341,6 +344,7 @@ theorem nonempty_basicOpen_inter (hπ : Irreducible π) (M : Model R A) (hM : M.
     exact (hU.fromSpec_preimage_basicOpen _).le this (Ideal.mem_span_singleton_self _)
 
 
+omit [IsFractionRing R K] in
 theorem dvd_of_dvd_rs (hπ : Irreducible π) (M : Model R A) (hM : M.Irr) {U W : M.Y.left.Opens}
     (hU : IsAffineOpen U) (hW : W ≤ U) (h : ((W : Set M.Y.left) ∩ M.sp).Nonempty) {b : Γ(M.Y.left, U)}
     (hb : cst M W π ∣ rs _ hW b) : cst M U π ∣ b := by
@@ -374,6 +378,7 @@ variable {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] {K : T
   [IsFractionRing R K] {A : Over (Sp K)} {π : R} {I : Type} [Fintype I] [DecidableEq I]
 
 
+omit [IsDomain R] [IsDiscreteValuationRing R] [IsFractionRing R K] in
 theorem jac_mem_basicOpen (M : Model R A) (D : I → VF A) {U : M.Y.left.Opens} (hU : IsAffineOpen U)
     (g : Γ(M.Y.left, U)) (N : AddSubgroup Γ(A.left, M.j ⁻¹ᵁ M.Y.left.basicOpen g))
     (hN : ∀ s, ∀ x ∈ N, (M.j.app (M.Y.left.basicOpen g)).hom s * x ∈ N)

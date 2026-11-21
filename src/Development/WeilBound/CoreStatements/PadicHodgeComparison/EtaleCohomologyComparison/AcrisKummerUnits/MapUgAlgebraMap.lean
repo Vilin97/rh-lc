@@ -19,21 +19,26 @@ namespace CrystallineSemistableComparison
 variable {l : ℕ} [Fact l.Prime]
 
 
+variable (l) in
 abbrev Ainf : Type := AInf ℂ_[l] l
 
 
+variable (l) in
 abbrev Acris : Type := ACris.ACris ℂ_[l] l
 
 
+variable (l) in
 abbrev Acris0 : Type := ↥(ACris.ACrisZero ℂ_[l] l)
 
 
+variable (l) in
 abbrev theta0 : Ainf l →+* OC l := WittVector.fontaineTheta (OC l) l
 
 theorem ker_theta0 : RingHom.ker (theta0 l) = Ideal.span {xi0 l} :=
   IsPerfectoidField.ker_fontaineTheta_eq_span_p_sub_teichmuller untilt_pFlat
 
 
+variable (l) in
 abbrev WL (R : Type) [CommRing R] : Type := Localization.Away (l : WittVector l R)
 
 section Away

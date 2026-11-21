@@ -74,6 +74,7 @@ theorem archRepT_comm_starProjection {V : Submodule ℂ (CuspL2 μ)} [CompleteSp
   exact this.symm
 
 
+set_option maxHeartbeats 4000000 in
 theorem exists_isZKFinite_of_summand (V : Submodule ℂ (CuspL2 μ)) [CompleteSpace V]
     (hV : (cuspRepT μ).IsInvariant V) (hirr : ((cuspRepT μ).restrict V hV).IsIrreducible) :
     ∃ e ∈ V, e ≠ 0 ∧ IsZKFinite μ e := by

@@ -113,6 +113,7 @@ namespace Formalism.FourierDecayAlt.P
 open Finset Formalism.FourierDecayAlt.Sz Formalism.FourierDecayAlt.P.Sz9
 
 
+set_option maxHeartbeats 1000000 in
 theorem sz_sizesMain_of (hCorA : CorA) (hBeta : BetaOnCut) (hAZ : AZeroBound)
     (hIL : Interlacing) (hLA : LamAnti) (hTP : ThresholdProducts) (hTL : ThetaLower) (hThP : ThetaPower)
     (hFS : FinalSmall) : SizesMain := by

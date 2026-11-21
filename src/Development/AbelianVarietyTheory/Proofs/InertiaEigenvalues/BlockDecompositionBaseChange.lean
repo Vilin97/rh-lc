@@ -9,6 +9,7 @@ public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.MemSpan
 namespace GlobalTheory
 
 
+open Matrix in
 theorem blockDecomposition_baseChange {K L : Type} [Field K] [Field L] (φ : K →+* L) {n r t : ℕ}
     (e : (Fin n → K) ≃ₗ[K] ((Fin r → K) × (Fin t → K))) :
     ∃ e' : (Fin n → L) ≃ₗ[L] ((Fin r → L) × (Fin t → L)),

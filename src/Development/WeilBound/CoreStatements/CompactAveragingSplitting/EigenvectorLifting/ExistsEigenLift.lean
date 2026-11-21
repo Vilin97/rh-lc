@@ -34,6 +34,7 @@ theorem inv_mem_UAt {X : Spc F E n} {v : Pl F} {g : UA σ X.J} (hg : g ∈ UAt �
   rw [e, smul_neg, ← Matrix.mul_smul, hg u hu, Matrix.mul_zero, neg_zero]
 
 
+variable (σ) in
 def KSub (W : Spc F E d) (v : Pl F) : Subgroup (UA σ W.J) where
   carrier := KAt σ W v
   one_mem' := ⟨one_mem_UAt W v, fun y hy => by

@@ -127,6 +127,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.Cha
 namespace GlobalTheory.CompanionTheory.Ar.Giv
 
 
+open GroundTheory.Heights₂.Heights in
 theorem lineOfLargeDegree_of_use :
     ReciprocityTheory.ChartRestriction.G.Geo.ArithIntersectionSystemStatement → PositivityTheory.MbHsUse.HSUse →
       ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.MoriwakiBigStatement → ReciprocityTheory.ChartRestriction.G.Geo.ResK.ResKStatement →

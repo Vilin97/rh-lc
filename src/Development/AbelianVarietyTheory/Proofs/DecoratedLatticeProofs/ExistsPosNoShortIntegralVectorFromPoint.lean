@@ -69,6 +69,7 @@ end GlobalTheory.CuspGeo.FirstMinPos
 namespace GlobalTheory.CuspGeo
 
 
+open FirstMinPos in
 theorem firstMin_pos : ∀ (I : AutInst) (y : I.Ginf), ∃ t : ℝ, 0 < t ∧ NoShort I y t := by
   intro I y
   have hK0 : 0 < ∑ v, cst I y v + 1 :=

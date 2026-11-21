@@ -72,6 +72,7 @@ theorem measurable_belowIndicator {h : HermitianForm F E W} {v : Basis ι E W}
   measurable_one.indicator (measurableSet_below M y t)
 
 
+omit [Fintype ι] [DecidableEq ι] in
 theorem vecAt_injective (v : Basis ι E W) : Function.Injective (vecAt v) := by
   intro x y hxy
   obtain ⟨w⟩ := (inferInstance : Nonempty (InfinitePlace E))

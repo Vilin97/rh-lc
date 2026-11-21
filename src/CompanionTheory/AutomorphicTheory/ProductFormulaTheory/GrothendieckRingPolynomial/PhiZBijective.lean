@@ -55,6 +55,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 variable [Fact (Assoc k)] [Fact (Comm k)] [Fact (One k)]
 
 
+open GrothendieckPhiBijection in
 theorem phiZ_bijective (hk : Steps k) (h1 : TriAut) (h2 : UniTri)
     (Z : ∀ Δ : Segment k, IrrCl (GL (Fin (Δ.len * Δ.d)) k)) (hZ : IsSegmentClass k Z) :
     Function.Bijective (phiOf (k := k) fun Δ => ⟨Δ.len * Δ.d, Z Δ⟩) := by

@@ -25,6 +25,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 namespace GlobalTheory.Mem.R3.GeoExProof
 
 
+set_option maxHeartbeats 2000000 in
 theorem geoExV_of_top : GlobalTheory.Published.CuspRapidDecay → ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 I0 T0 : Type) (A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T0 D.R.m) (C : CoreJ D) [Algebra C.Q.c.F D.what₂.LL] (F : Face D A3.A), VolTieG D → LawsJ C → LawsCore C.toCore → AlgTie C → Finite T0 → (∀ i, VStd D i) → 8 * D.R.f * D.R.r + 4 ≤ D.R.nV → GlobalTheory.Mem.R3.GeoExV A3 C F := by
   intro hRD D G _ _ Pl0 I0 T0 A3 C _ F hVol hL hLC hA hT hVS hn R cG hVal hPre _hlev hpb hK
   obtain ⟨dict, mu, chiW, x₀, cE, nW, FW, B, -, -, hFired, -, -, hPre', hchi, hU, -, -⟩ :=

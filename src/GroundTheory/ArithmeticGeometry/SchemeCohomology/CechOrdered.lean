@@ -271,6 +271,7 @@ lemma bd_ocone {q : ℕ} (c : ι) (S : Set ι) (hc : ∀ s ∈ S, c ≤ s) (z : 
     simp
 
 
+omit [LinearOrder ι] in
 noncomputable def aug {q : ℕ} : Chain ι q →+ ℤ :=
   Finsupp.liftAddHom fun _ => AddMonoidHom.id ℤ
 
@@ -469,6 +470,7 @@ variable {P U}
 
 
 open scoped Classical in
+open Classical in
 noncomputable def pair {q : ℕ} (σ : Cochain P U q) (V : Opens X) : Chain ι q →+ P.obj (op V) :=
   Finsupp.liftAddHom fun t =>
     if h : V ≤ inter U t then zmultiplesHom _ (res P h (σ t)) else 0

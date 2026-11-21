@@ -231,6 +231,7 @@ theorem ct_degree_toFinsupp_ofFn {ι : Type} [DecidableEq ι] (j : ℕ) (v : Fin
     | simp [Finsupp.degree_eq_sum, Finsupp.sum]
 
 open scoped Classical in
+open Classical in
 theorem ct_jet_one_iter {ι : Type} [Fintype ι] (β : EuclideanSpace ℂ ι → ℂ)
     (hβ : ContDiff ℂ (⊤ : ℕ∞) β) (c : ℕ)
     (hjet : ∀ α : ι →₀ ℕ, α.degree ≤ c →

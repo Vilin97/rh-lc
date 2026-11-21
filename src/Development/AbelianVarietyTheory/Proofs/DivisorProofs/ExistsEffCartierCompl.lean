@@ -44,6 +44,7 @@ noncomputable section
 namespace GlobalTheory.CompProport
 
 
+open scoped ENNReal in
 theorem growth_eq_of_tendsto (D : ℕ) (r : ℕ → ℕ) {c : ℝ}
     (h : Tendsto (fun m : ℕ => (r m : ℝ) / (m : ℝ) ^ D) atTop (nhds (c / D.factorial))) :
     GlobalTheory.CompHt.growth D (fun m => (r m : ℕ∞)) = ENNReal.ofReal c := by
@@ -363,6 +364,7 @@ theorem topSelf_eq_inter (T : TorFlag Xo c) (Z : Comp Xo c) (C : FlagCpt T.Y (Ri
     rfl
 
 
+open Classical in
 theorem topSelf_eq_covol (hM : GlobalTheory.Published.MumfordProportionality) (T : TorFlag Xo c) (hc : ∀ x ∈ genBd T.Y, HasToricChart T.Y x)
     (hF : FnAlgClosed Xo c) {σ : c.F →+* ℂ} {N : ℕ} (U : Formalism.L2.PjFree.Unf Xo c σ N)
     (hσ : Formalism.L2.PjFree.GoodEmb c σ) (hU : Formalism.L2.PjFree.IsUnf U) :

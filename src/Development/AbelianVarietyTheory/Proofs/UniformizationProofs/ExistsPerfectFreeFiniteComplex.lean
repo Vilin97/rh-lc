@@ -158,6 +158,7 @@ theorem nonempty_equiv {a b a' b' : ℕ} (D : Matrix (Fin b) (Fin a) A) (D' : Ma
       (fun R _ g w w' v => un R g v w w') β α hβ hα)⟩
 
 
+open TensorProduct in
 theorem bijOn_basis {P₀ P₁ : Type} [AddCommGroup P₀] [Module A P₀] [AddCommGroup P₁] [Module A P₁]
     {a b : ℕ} (b₀ : Module.Basis (Fin a) A P₀) (b₁ : Module.Basis (Fin b) A P₁) (d : P₀ →ₗ[A] P₁)
     (R : Type) [CommRing R] [Algebra A R] :
@@ -307,6 +308,7 @@ theorem Computes.nonempty_equiv {a b a' b' : ℕ} {D : Matrix (Fin b) (Fin a) A}
       fun i => (h₂ i).trans ((h₁ i).symm.trans (h₃ i))).symm)
 
 
+open PerfOfModel in
 theorem computes_of_model {κ : Type} [LinearOrder κ] [Fintype κ] {D : κ → X.Opens}
     {K : CochainComplex (ModuleCat.{0} A) ℕ} (φ : K ⟶ cechLB f M D) (hM : M.IsLB) (hc : ⨆ i, D i = ⊤)
     (hD : ∀ I : Finset κ, I.Nonempty → IsAffineOpen (⨅ i ∈ I, D i))

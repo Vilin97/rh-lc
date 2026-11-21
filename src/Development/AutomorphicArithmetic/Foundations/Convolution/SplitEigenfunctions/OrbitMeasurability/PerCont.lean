@@ -22,6 +22,7 @@ variable {E : Type} [Field E] [NumberField E]
 abbrev Orb (δ : ℚ) : Type := ↥{ξ : Fin 4 → ℚ | qr δ ξ = qr δ X0}
 instance (δ : ℚ) : MeasurableSpace (Orb δ) := ⊤
 
+variable (E) in
 abbrev Y (δ : ℚ) : Type := ↥(IdeleGroup.normOneSubgroup E) × G1 E × Orb δ
 
 def mY (δ : ℚ) (N : MeasE E) : Measure (Y E δ) :=

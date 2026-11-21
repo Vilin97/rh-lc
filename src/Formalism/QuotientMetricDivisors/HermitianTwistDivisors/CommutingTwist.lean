@@ -236,6 +236,7 @@ theorem aniso {v0 : InfinitePlace K} (hv0 : IsConjAt v0) {n : ℕ}
   exact lt_irrefl _ hp
 
 
+open ConjugateWeightGram in
 theorem exists_proj {v0 : InfinitePlace K} (hv0 : IsConjAt v0) {n : ℕ}
     {H : Matrix (Fin n) (Fin n) K} (hpos : (H.map v0.embedding).PosDef)
     (Z : Submodule K (Fin n → K)) :

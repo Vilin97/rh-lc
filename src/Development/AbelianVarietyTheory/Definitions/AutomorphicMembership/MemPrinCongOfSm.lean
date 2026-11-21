@@ -78,6 +78,7 @@ theorem locM_mul (x y : GL (Fin n) (AfE F E)) : locM P (x * y) = locM P x * locM
 theorem locM_one : locM P (1 : GL (Fin n) (AfE F E)) = 1 := Matrix.map_one _ (map_zero _) (map_one _)
 
 
+omit [NumberField E] in
 theorem mat_mul (f g : Sp E n ≃ₗ[E] Sp E n) : mat (f * g) = mat f * mat g := by
   ext i j
   rw [Matrix.mul_apply]
@@ -296,6 +297,7 @@ def CongOne (a : 𝓞 E) (k : GL (Fin n) (AfE F E)) : Prop :=
     Formalism.L2.Herm.intAf F E
 
 
+variable (ST SG Q) in
 theorem exists_cong (c : ℕ) : ∃ a : 𝓞 E, a ≠ 0 ∧ ∀ k ∈ UAd hc n, CongOne a k → CongOne a k⁻¹ →
     ∀ (x : GL (Fin n) (AfE F E)) (p : DecoF E n ST SG Q), Near c x p → Near c (x * k) p := by
   classical
@@ -323,6 +325,7 @@ theorem exists_cong (c : ℕ) : ∃ a : 𝓞 E, a ≠ 0 ∧ ∀ k ∈ UAd hc n, 
     exact mul_le_of_le_one_right' (HeightOneSpectrum.valuation_le_one (K := E) P r)
 
 
+variable {hc} in
 theorem near_of_isPtOf {g : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} (h : IsPtOf hc g p) (c : ℕ) : Near c g p := by
   classical
   have hN : Formalism.UG.CS.globLat g (stdLat E n) = p.deco.1.N := by
@@ -361,6 +364,7 @@ theorem near_of_isPtOf {g : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} (h : I
     simp
 
 
+variable (ST SG Q) in
 def ptOf (c : ℕ) (x : GL (Fin n) (AfE F E)) : DecoF E n ST SG Q := Classical.epsilon (Near c x)
 
 theorem near_ptOf (c : ℕ) {x : GL (Fin n) (AfE F E)} (hx : x ∈ UAd hc n) : Near c x (ptOf ST SG Q c x) :=

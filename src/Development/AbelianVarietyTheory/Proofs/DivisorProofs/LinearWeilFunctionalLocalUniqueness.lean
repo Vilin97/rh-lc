@@ -177,6 +177,7 @@ theorem smul_one_map (a : E) : (a • (1 : Matrix β β E)).map c = c a • 1 :=
   ext i j; by_cases h : i = j <;> simp [Matrix.one_apply, h]
 
 
+omit [Invertible (2 : R)] in
 theorem exists_shear (J : Matrix β β E) (ε : E) (h2 : ε * c ε = 0) (h3 : c (c ε) = ε) : ∃ γ : UG c (dbl J),
     ((γ : GL (β ⊕ β) E) : Matrix (β ⊕ β) (β ⊕ β) E) = Matrix.fromBlocks 1 ((-ε) • 1) ((-c ε) • 1) 1 := by
   have h2' : c ε * ε = 0 := by rw [mul_comm, h2]
@@ -189,6 +190,7 @@ theorem exists_shear (J : Matrix β β E) (ε : E) (h2 : ε * c ε = 0) (h3 : c 
     simp [dbl, Matrix.fromBlocks_transpose, Matrix.fromBlocks_multiply, smul_smul, h2, h2']
 
 
+omit [Invertible (2 : R)] in
 theorem exists_inl (J : Matrix β β E) (g : UG c J) : ∃ gd : UG c (dbl J),
     ((gd : GL (β ⊕ β) E) : Matrix (β ⊕ β) (β ⊕ β) E) = Matrix.fromBlocks ((g : GL β E) : Matrix β β E) 0 0 1 := by
   refine ⟨⟨⟨Matrix.fromBlocks ((g : GL β E) : Matrix β β E) 0 0 1,
@@ -278,6 +280,7 @@ theorem exists_idem (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) : ∃ ε : AE 
   · rw [hc, hp, map_sub, map_one, splitProj_comp_splitIdem, sub_zero]
 
 
+omit [NumberField E] in
 theorem at_det {n : ℕ} (T : Matrix (Fin n) (Fin n) (AE F E)) (hT : At (evFin F v) (T - 1)) : At (evFin F v) (T.det - 1) := by
   intro u hu
   let I : Ideal (AE F E) := LinearMap.ker (LinearMap.lsmul (AE F E) (AE F E) (algebraMap (AF F) (AE F E) u))

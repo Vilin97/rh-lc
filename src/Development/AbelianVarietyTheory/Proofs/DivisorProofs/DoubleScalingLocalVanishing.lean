@@ -230,6 +230,7 @@ theorem exists_lift (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) {α β : Type}
     Matrix.ext fun _ _ => piW_liftPair h t _, Matrix.ext fun _ _ => piW_comp_liftPair h t _⟩
 
 
+omit [NumberField E] in
 theorem at_det {β : Type} [Fintype β] [DecidableEq β] {N : Matrix β β (AE F E)} (h : At (evFin F v) (N - 1)) :
     At (evFin F v) (N.det - 1) := by
   intro a ha

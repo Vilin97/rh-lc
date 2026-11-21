@@ -63,6 +63,7 @@ theorem isAdmissible_derivB (ψ : AddChar k Circle) (hc : Continuous ψ) (h1 : �
       fun Y _ _ τ hq hirr => PositivityTheory.Tls2.BZGL.irreducibleAdmissibleGL_top k n Y τ (hq.isSmooth hD) hirr
 
 
+variable (k) in
 theorem uAdm : UAdm k := fun ψ hc h1 n i π hs hi => isAdmissible_derivB ψ hc h1 n i π hs hi
 
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
@@ -78,6 +79,7 @@ theorem mem_fixed_iff {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V] (ρ
   simp
 
 
+variable (k) in
 theorem uEig : UEig k := by
   intro ψ hc h1 n i π hs hi t W _ _ σ ω hW hsub hω z
   have hadm := uAdm k ψ hc h1 n i π hs hi

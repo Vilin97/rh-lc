@@ -31,6 +31,7 @@ theorem flin_pad {K : Type} [Field K] {σ n m : Type} [Fintype n] [Fintype m] {l
   simp [hl]
 
 
+open Formalism.L2.Th1.C in
 theorem unitaryInv_rect {K : Type} [Field K] [CharZero K] (R : Subring K) (l linv ph : PowerSeries K)
     (hFr : Frame R l linv ph) (O : Type) [CommRing O] [StarRing O] (τ : O →+* K)
     (hE : ∀ α, EndInt R l linv (τ α)) (hB : ∀ z : O, star z = z → IsBinomScalar R (τ z))

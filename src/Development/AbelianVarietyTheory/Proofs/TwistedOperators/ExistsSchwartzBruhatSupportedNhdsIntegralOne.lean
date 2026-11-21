@@ -40,6 +40,7 @@ private theorem sigmaCompactSpace_of_isNonarchimedeanLocalField (k : Type) [Fiel
       rw [Set.mem_ofPred_eq, hm, Units.val_mk0]
 
 
+open GlobalTheory.SplitWeil.FourierPi in
 theorem exists_SB_supported_integral_one : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] (n : Type) [Fintype n] [DecidableEq n] (ν : Measure k) [ν.IsAddHaarMeasure] (U : Set (n → k)) (_ : U ∈ nhds (0 : n → k)), ∃ Ψ : SB (n → k), (∀ y, y ∉ U → Ψ.1 y = 0) ∧ ∫ y, Ψ.1 y ∂(Measure.pi fun _ => ν) = 1 := by
   intro k _ _ _ _ _ _ n _ _ ν _ U hU
   have := sigmaCompactSpace_of_isNonarchimedeanLocalField k

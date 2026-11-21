@@ -153,6 +153,7 @@ end Graph
 end StackedExceptionalCycle
 
 
+open StackedExceptionalCycle StackedGraphHorizontal in
 theorem DualStackedExcCycle.proof (hR : DualStackedExcReduced.Statement) : DualStackedExcCycle.Statement := by
   intro K _ _ i F F' T _ _ b b' a hi hlt hcov hab
   obtain ⟨E, hE, huniq, hmult⟩ := hR K i F F' T b b' a hi hlt hcov hab

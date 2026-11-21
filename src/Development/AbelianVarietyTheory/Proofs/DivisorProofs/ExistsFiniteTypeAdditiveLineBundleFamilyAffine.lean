@@ -72,6 +72,7 @@ theorem locallyOfFiniteType_stage (s : Finset C) : LocallyOfFiniteType (stage R 
   exact Subalgebra.fg_adjoin_finset s
 
 
+open GlobalTheory.CechPic in
 theorem exists_lb_stage (X : Over (Sp R)) [QuasiCompact X.hom] [QuasiSeparated X.hom]
     (N : LB (X ⊗ spO R C).left) (hN : N.IsLB) :
     ∃ (s : Finset C) (M : LB (X ⊗ stage R C s).left), M.IsLB ∧ LBIso N (M.pull (X ◁ toStage R C s).left) := by
@@ -87,6 +88,7 @@ theorem exists_lb_stage (X : Over (Sp R)) [QuasiCompact X.hom] [QuasiSeparated X
   exact hiso
 
 
+open GlobalTheory.CechPic in
 theorem exists_stage_pull_eq (X : Over (Sp R)) [QuasiCompact X.hom] [QuasiSeparated X.hom]
     (s : Finset C) (c c' : Pic (X ⊗ stage R C s).left)
     (h : CechPic.pull (X ◁ toStage R C s).left c = CechPic.pull (X ◁ toStage R C s).left c') :

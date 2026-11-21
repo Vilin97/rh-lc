@@ -299,6 +299,7 @@ theorem spMap_spMap {A B D : Type} [CommRing A] [CommRing B] [CommRing D] (f : A
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
 
+set_option maxHeartbeats 800000 in
 theorem sv_of_tie {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
     {Xo : Moduli Dw l} {c : Coeff l} [StarRing (𝓞 E)]
     {T : CDVR} {io : c.F →+* T.Fr} {y : IntFr Xo c T io} (C : IntegralChartA3 Xo c T io y)
@@ -345,6 +346,8 @@ end GlobalTheory.GermValuationJetHarmonics
 namespace GlobalTheory
 
 
+open GermValuationJetHarmonics in
+set_option maxHeartbeats 800000 in
 theorem harmonic_value_of_tied_sections : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l), letI := H.starRing; ∀ (nab : NabV Xo c), IsNab Xo c nab → ∀ (T : CDVR) (io : c.F →+* T.Fr) (y : IntFr Xo c T io) (C : IntegralChartA3 Xo c T io y) (P : PELUnif (maximalIdeal T.V) C.I.G) (τ : Frames P.U.LG.L (κ := Fin 1 × Fin (chD C.ch)) C.xT), τ.Gen → IsEL P C.xT C.actT C.eT C.wPT τ → ∀ (F : Type) [Field F] [CharZero F] [Algebra T.Fr F] [Algebra T.V F] [IsScalarTower T.V T.Fr F], letI := io.toAlgebra; letI : Algebra c.F F := ((algebraMap T.Fr F).comp io).toAlgebra; ∀ (φ : T.Fr →ₐ[c.F] F), φ.toRingHom = algebraMap T.Fr F → ∀ (yF : FrPt Xo c F), FrMap φ y.1 yF → ∀ (q n : ℕ) (σ : Fin n → P.U.toUnifPre.SecGF F q) (hh : Fin n → LB.Sec (LPow Xo.univ.t.G Xo.univ.t.PP.L (q : ℤ) (ptO Xo yF.x))) (f : Fin n → PS F 1 (chD C.ch)), (∀ i, SecTieF C.I P F yF.x q (σ i) (hh i)) → (∀ i, GermA P.U.toUnifPre (κ := Fin 1 × Fin (chD C.ch)) C.xT τ F q (σ i) (f i)) → ∀ (a : ((E →+* ℂ) × ℕ → ℕ)) (Pp : MvPolynomial (LtN Dw n) c.F), Pp ∈ harmA c a n → ∑ m ∈ Pp.support, algebraMap c.F F (Pp.coeff m) * ∏ i, nab yF (q : ℤ) (hh i) (colOf m i) = nabValN C.ch.B F (MvPowerSeries.map (algebraMap T.Fr F) C.ch.h) H.w0 q (boxSer f) (fun ℓ : LtN Dw n => ℓ.2.2) (fun (ℓ : LtN Dw n) i => algebraMap T.Fr F (C.ch.uvec ⟨ℓ.1, ℓ.2.1⟩ i)) (MvPolynomial.map (algebraMap c.F F) Pp) := by
   intro E _ _ _ H Dw l Xo c
   letI := H.starRing

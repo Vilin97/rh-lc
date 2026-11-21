@@ -101,6 +101,7 @@ theorem weightAbsEntrySum_nonneg (u : AllWt.Weight Dw) : 0 ≤ CovHt.l1 u :=
   Finset.sum_nonneg fun _ _ => Finset.sum_nonneg fun _ _ => abs_nonneg _
 
 
+omit [IsCMField E] in
 theorem htEx_nonneg {p : ℕ} (hp : p.Prime) : 0 ≤ htEx E p := by
   have : (1 : ℝ) ≤ p := by exact_mod_cast hp.one_le
   have : (0 : ℝ) ≤ p - 1 := by linarith
@@ -108,6 +109,7 @@ theorem htEx_nonneg {p : ℕ} (hp : p.Prime) : 0 ≤ htEx E p := by
   positivity
 
 
+omit [NumberField E] [IsCMField E] in
 theorem even_nsmul_snd {G : WTZ E} (hG : Even G.2) (k : ℕ) : Even (k • G).2 := by
   rw [Prod.smul_snd, nsmul_eq_mul]
   exact hG.mul_left _

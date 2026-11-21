@@ -176,6 +176,7 @@ variable {G LL O V : Type} [Group G] [TopologicalSpace G] [Field LL] [CommRing O
   {X X' : Type} [AddCommGroup X] [Module O X] [AddCommGroup X'] [Module O X']
 
 
+omit [TopologicalSpace G] [TopologicalSpace V] [ContinuousAdd V] [ContinuousConstSMul LL V] in
 theorem lTensor_equivariant (f : X →ₗ[O] X') (g : G) (m : ↥L.T ⊗[O] X) :
     f.lTensor ↥L.T (twCoef (latRep L) χ X g m) = twCoef (latRep L) χ X' g (f.lTensor ↥L.T m) := by
   induction m using TensorProduct.induction_on with

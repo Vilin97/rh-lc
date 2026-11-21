@@ -12,6 +12,7 @@ open scoped ENNReal NNReal
 namespace GlobalTheory.CompanionTheory.SW
 
 
+open scoped Pointwise in
 theorem exists_continuous_modulus_of_continuous_action :
     ∀ (V : Type) [AddCommGroup V] [TopologicalSpace V] [LocallyCompactSpace V]
       [SecondCountableTopology V] [T2Space V] [MeasurableSpace V] [BorelSpace V]

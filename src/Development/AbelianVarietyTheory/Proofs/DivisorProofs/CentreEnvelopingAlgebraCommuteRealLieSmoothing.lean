@@ -45,6 +45,7 @@ end Analytic
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+variable (E a) in
 def Cv : Submodule ℂ (Lie E a → ℂ) where
   carrier := {h | ContDiffOn ℝ ∞ h (invSet E a) ∧ ∀ x ∉ invSet E a, h x = 0}
   add_mem' := fun ha hb => ⟨ha.1.add hb.1, fun x hx => by simp [ha.2 x hx, hb.2 x hx]⟩

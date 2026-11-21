@@ -21,6 +21,7 @@ theorem entire_apply_eq_of_isZLattice_periodic [NormedSpace ℝ E] [FiniteDimens
     (IsZLattice.isCompact_range_of_periodic L F hF.continuous hper).isBounded z w
 
 
+omit [NormedSpace ℂ E] [NormedAddCommGroup V] [NormedSpace ℂ V] in
 theorem periodic_of_mem_span_int {F : E → V} {S : Set E}
     (hper : ∀ x, ∀ g ∈ S, F (x + g) = F x) :
     ∀ x, ∀ g ∈ Submodule.span ℤ S, F (x + g) = F x := by

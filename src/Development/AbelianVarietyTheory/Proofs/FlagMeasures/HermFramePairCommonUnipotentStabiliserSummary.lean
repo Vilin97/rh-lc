@@ -237,6 +237,11 @@ private theorem hermFlag_graded_zero_lemma_7 {x : V} (hx : x ∈ F.Xa 0) : x = 0
   simpa using hx
 
 
+open NumberField in
+open scoped Pointwise ENNReal Classical in
+variable {K V : Type} [Field K] [StarRing K] [AddCommGroup V] [Module K V]
+  {H : _root_.Formalism.HermitianLatticeCounting.S6.HermSpace K V} {r : ℕ} (F : _root_.Formalism.HermitianLatticeCounting.S6.FlagD H r) in
+variable {F} in
 theorem _root_.GlobalTheory.UnipStab.pow_eq_zero [FiniteDimensional K V]
     {s : V ≃ₗ[K] V} (hs : F.InN (s : V →ₗ[K] V)) :
     ((s : V →ₗ[K] V) - 1) ^ (2 * r + 1) = 0 := by
@@ -459,6 +464,8 @@ theorem _root_.GlobalTheory.UnipStab.conj_ZI {s t : V ≃ₗ[K] V}
 end Two
 
 
+open NumberField in
+open scoped Pointwise ENNReal Classical in
 theorem _root_.GlobalTheory.UnipStab.common_unipotent_stabiliser : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (H : _root_.Formalism.HermitianLatticeCounting.S6.HermSpace K V), _root_.Formalism.HermitianLatticesTheory.IsCMUnram K → ∀ (r : ℕ) (N : _root_.GlobalTheory.DegCnt.NF H r), (∀ s : V ≃ₗ[K] V, s ∈ N.R ↔ N.F.InN (s : V →ₗ[K] V) ∧ N.F'.InN (s : V →ₗ[K] V)) ∧ (∀ s ∈ N.R, ∀ y ∈ _root_.GlobalTheory.HermLat.uPerp N.F N.F', s y - y ∈ _root_.Formalism.HermitianLatticeCounting.S6.II N.F N.F') ∧ (∀ s ∈ N.R, ∀ t ∈ N.R1, s * t * s⁻¹ ∈ N.R1) ∧ (∀ s ∈ N.R, ∀ t ∈ N.ZI, s * t * s⁻¹ ∈ N.ZI) ∧ ∀ s ∈ N.R, ((s : V →ₗ[K] V) - 1) ^ (2 * r + 1) = 0 := by
   intro K V _ _ _ _ _ _ _ _ H _ r N
   refine ⟨_root_.GlobalTheory.UnipStab.mem_R N,

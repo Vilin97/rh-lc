@@ -87,6 +87,7 @@ theorem inv_sub_one_apply {u : GL (Fin n) (AfE F E)} (hu : u ∈ UAd hc n) (i j 
   · rw [Matrix.one_apply_ne h, Matrix.one_apply_ne h.symm, map_zero]
 
 
+include hc in
 theorem valued_nat_conj (w : HeightOneSpectrum (𝓞 E)) (m : ℕ) :
     Valued.v (algebraMap E (w.adicCompletion E) (m : E)) =
       Valued.v (algebraMap E ((conjPrime₂ w).adicCompletion E) (m : E)) := by
@@ -217,6 +218,7 @@ theorem glue_approx {Q : Finset (HeightOneSpectrum (𝓞 E))} (hQ : ∀ P ∈ Q,
 end Main
 
 
+open GlobalTheory.SeeSaw.TwLev.GlueApprox in
 theorem exists_ratAt_congOne : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
     (hc : CMData F E) {n : ℕ} [NeZero n] {Q : Finset (HeightOneSpectrum (𝓞 E))}, (∀ P ∈ Q, conjPrime₂ P ∉ Q) →
     ∀ (m : ℕ), 0 < m → (∀ P ∈ Q, ((m : ℕ) : 𝓞 E) ∈ P.asIdeal) → ∀ (z : GL (Fin n) (AfE F E)), z ∈ UAd hc n →

@@ -114,6 +114,8 @@ theorem mem_of_mem_support_smul {S T : HSp D} {H : Set (WO S T)} (a : ℂ) {c : 
   exact Finsupp.mem_support_iff.1 hu (by rw [Finsupp.smul_apply, h1, smul_zero])
 
 
+set_option maxHeartbeats 1000000 in
+open GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.Core.Rk GlobalTheory.AdForm GlobalTheory.PlaceModel GlobalTheory.PlaceDatum in
 theorem exists_comb_of_isThetaAt {S T : HSp D} (ψ : AddChar (AF D.host.F) ℂ)
     (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)) (ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E))
     (e : AE D) (f₀ Φ f : WO S T → ℂ) (hψ : IsStdChar D ψ (-1)) (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT)

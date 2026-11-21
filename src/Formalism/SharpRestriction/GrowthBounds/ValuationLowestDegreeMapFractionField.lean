@@ -1401,6 +1401,7 @@ theorem li_segE_injective {n' r : ℕ} [NeZero n'] (F : Frames n' r) (j : ℤ) :
   fun _ _ h => (OrderIso.injective _) (Subtype.ext h)
 
 
+open Formalism.MainNotions.SelectionLemmas in
 theorem space_statement_linear_independent (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     (hA2 : ∀ (N n : ℕ) [NeZero n] (LL : Letters (Fin N)) (B : Fin N → ℕ),
       LinearIndependent O (fun x : {x : PPath n N LL B × (ℤ → Finset (Fin n)) // IsSt x.1.mu x.2} =>
@@ -1741,6 +1742,7 @@ theorem XXZ_lift (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O
     rw [smul_eq_C_mul, smul_eq_C_mul, map_mul, map_C]
 
 
+open Formalism.MainNotions.SelectionLemmas in
 theorem space_statement_sixth_clause (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (n' r K : ℕ) [NeZero n']
     [NeZero r] [NeZero K] (F : Frames n' r) (j : ℤ) (m : ℤ → ℤ) (th o : ℤ → ℝ)
     (h1 : XX' O r K F j m th o =

@@ -48,6 +48,7 @@ theorem schDom_spec_map {A B : Type} [CommRing A] [CommRing B] [IsReduced A] (φ
   exact IsSchemeTheoreticallyDominant.of_isDominant _
 
 
+set_option maxHeartbeats 800000 in
 theorem over_ext_of_points {F : Type} [Field F] [IsAlgClosed F] {K Y : Over (Spec (CommRingCat.of F))}
     [LocallyOfFiniteType K.hom] [FormallyUnramified Y.hom] [LocallyOfFiniteType Y.hom] (u v : K ⟶ Y)
     (h : ∀ p : 𝟙_ (Over (Spec (CommRingCat.of F))) ⟶ K, p ≫ u = p ≫ v) : u = v := by
@@ -82,6 +83,8 @@ theorem over_ext_of_points {F : Type} [Field F] [IsAlgClosed F] {K Y : Over (Spe
   exact (cancel_epi (equalizer.ι u v)).1 (equalizer.condition u v)
 
 
+open MonObj in
+set_option maxHeartbeats 1600000 in
 theorem fix_torsion (hMul : Out.MulNSt) {F : Type} [Field F] [IsAlgClosed F] (P : Out.PolAV (Spec (CommRingCat.of F)))
     (M : ℕ) (hM1 : 1 ≤ M) (hM : (M : F) ≠ 0) (σ : P.A ⟶ P.A) [IsMonHom σ]
     (hσ : ∀ x : 𝟙_ (Over (Spec (CommRingCat.of F))) ⟶ P.A, x ^ M = 1 → x ≫ σ = x)

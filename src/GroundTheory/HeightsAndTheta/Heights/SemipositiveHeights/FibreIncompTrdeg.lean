@@ -63,6 +63,7 @@ def scaleWt (κ : K → K') (A : Type) [CommRing A] (k' : K') : MvPolynomial (Fi
   if h : k' ∈ Set.range κ then 1 else X ⟨k', h⟩
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem algebraicIndependent_forgotten {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
     (V' : Ideal (MRingOver S ι')) [V'.IsPrime] (hV' : IsMultiHomogIdeal V') (i : ∀ k : FibreBlock κ, ι' k.1)
     (hi : ∀ k : FibreBlock κ, (X ⟨k.1, i k⟩ : MRingOver S ι') ∉ V') :
@@ -146,6 +147,7 @@ theorem algebraicIndependent_forgotten {κ : K → K'} {v : (Σ k, ι k) → (Σ
   exact hjinj ((mul_eq_zero.mp hc.symm).resolve_right (hyprod m) |>.trans (map_zero j).symm)
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem trdeg_add_card_le [Nontrivial S] {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
     (V' : Ideal (MRingOver S ι')) [V'.IsPrime] (hV' : IsMultiHomogIdeal V') (hrel : IsRelevant V')
     (hinj : Function.Injective (algebraMap S

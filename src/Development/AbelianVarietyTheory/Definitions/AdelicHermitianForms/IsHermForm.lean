@@ -44,10 +44,12 @@ def IsUnA (c : E ≃ₐ[F] E) {n : ℕ} (G : Matrix (Fin n) (Fin n) E) (g : Matr
   ∀ x y, hermA c G (g *ᵥ x) (g *ᵥ y) = hermA c G x y
 
 
+variable (F) in
 def fm {n : ℕ} (γ : Matrix (Fin n) (Fin n) E) : Matrix (Fin n) (Fin n) (RA F E) :=
   γ.map fun x => (1 : FiniteAdeleRing (𝓞 F) F) ⊗ₜ x
 
 
+variable (F) in
 def CongAtA {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E)) (N D : ℕ) (k : Matrix (Fin n) (Fin n) (RA F E)) : Prop :=
   ∃ t : ℕ, t.Coprime N ∧ ∀ z ∈ hat F (L : Set (Fin n → E)), ∃ w ∈ hat F (L : Set (Fin n → E)),
     t • (k *ᵥ z - z) = D • w

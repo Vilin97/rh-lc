@@ -65,6 +65,8 @@ variable {ι : Type u} (𝔘 : ι → X.Opens)
   (hU : ∀ (m : ℕ) (t : Fin (m + 1) → ι), IsAffineOpen (⨅ a, 𝔘 (t a))) [Finite ι] (p : ℕ)
 
 
+set_option maxHeartbeats 4000000 in
+include hF hU in
 theorem exists_transMap_eq_zero [IsProper (X ↘ Spec (.of A))] (hUtop : iSup 𝔘 = ⊤) :
     ∃ c, ∀ n (y : cechH (modulesAb (idealPow I F (n + c + 1))).obj 𝔘 p),
       cechHMap 𝔘 (modulesAbMap (idealPowι I F (n + c + 1))).hom p y = 0 →

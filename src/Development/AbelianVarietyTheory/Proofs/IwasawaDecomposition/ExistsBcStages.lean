@@ -34,6 +34,7 @@ theorem levOver_cast' {D : D7} {G : Type} [Group G] {i : Fin D.R.m} {Pg₁ Pg₂
   exact h
 
 
+set_option maxHeartbeats 4000000 in
 theorem exists_bc_stages (X X' : Stages) (hP : X'.B.toPre = X.B.toPre) (hLL : Set.range X.B.embLL ⊆ Set.range X'.B.embLL)
     {G : Type} [Group G] [Fintype G] {Pl0 T0 Pl0' T0' : Type} {A : FamIn X.toD7.what₂.LL G Pl0 T0 X.toD7.R.m}
     {A' : FamIn X'.toD7.what₂.LL G Pl0' T0' X'.toD7.R.m} (T : CoreJ X.toD7) [Algebra T.Q.c.F X.toD7.what₂.LL]

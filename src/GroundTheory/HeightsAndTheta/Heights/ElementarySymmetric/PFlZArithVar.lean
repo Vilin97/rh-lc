@@ -31,6 +31,7 @@ section Rename
 variable {K : Type} [Fintype K] {ι ι' : K → Type} [∀ k, Fintype (ι k)] [∀ k, Fintype (ι' k)]
 
 
+omit [Fintype K] in
 theorem isMultiHomog_rename_sigma (e : ∀ k, ι k ≃ ι' k) {g : MRing ι} {a : K → ℕ}
     (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g a) :
     ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (rename (Equiv.sigmaCongrRight e) g : MRing ι') a := by

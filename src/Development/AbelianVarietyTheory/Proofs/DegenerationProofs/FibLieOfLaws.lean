@@ -17,6 +17,7 @@ noncomputable section
 namespace GlobalTheory.Ex.Arch
 
 
+open GlobalTheory.PointUnif GlobalTheory.EigenSplit in
 theorem fibLie_of_laws : Laws → FibLieSt := by
   intro _ R _ _ _ D J g Λ Hm χ ex fr hfib O _ act F hF τ n hn
   obtain ⟨-, P', φ, w, u, -, hφ, -, -, h1, h2, -, hex, -⟩ := hfib

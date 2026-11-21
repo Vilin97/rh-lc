@@ -146,6 +146,7 @@ lemma lev_smul {f : Mx k r → E} (c : ℂ) (hf : SmoothLev k r i D f) :
   rw [hfF g hg hgG]
 
 
+variable (E k r i D) in
 def Sm : Submodule ℂ (Pt k r i D → E) where
   carrier := {φ | SmoothLev k r i D (ext k r i D φ)}
   add_mem' {φ ψ} hφ hψ := by

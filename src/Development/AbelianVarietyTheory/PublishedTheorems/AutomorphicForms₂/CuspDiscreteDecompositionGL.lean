@@ -20,12 +20,14 @@ variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
   {μ : Measure (GA E a)} [μ.IsHaarMeasure] [μ.IsMulRightInvariant]
 
 
+variable (μ) in
 def IsKFinL2 (F : L2 (latticeGL E a) μ) : Prop :=
   IsOpen {k : GL (Fin a) (Af E) | R (latticeGL E a) μ (finGL E a k) F = F} ∧
     FiniteDimensional ℂ (Submodule.span ℂ
       (Set.range fun k : Kinf E a => R (latticeGL E a) μ (infGL E a (Unitary.toUnits k)) F))
 
 
+variable (μ) in
 structure IsFinitePartOf (π : CuspSub E a) (H : Submodule ℂ (L2 (latticeGL E a) μ)) : Prop where
   normalised : IsNormalised π
   finitePartMemL2 : ∀ φ ∈ π.V, MemL2Quotient (latticeGL E a) μ φ.1

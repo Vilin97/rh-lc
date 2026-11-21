@@ -21,6 +21,7 @@ open GlobalTheory.OneMapRef GlobalTheory.WeilParts
 namespace GlobalTheory.OneMapRef.VecP
 
 
+open scoped ComplexOrder in
 theorem isCartanInv_one_of_onb {k : ℕ} {G B : Matrix (Fin k) (Fin k) ℂ} (h : IsONBasis G 1 B k) : IsCartanInv G 1 := by
   obtain ⟨ε, hε, hB, -⟩ := h
   have hε1 : ∀ a, ε a = 1 := fun a =>

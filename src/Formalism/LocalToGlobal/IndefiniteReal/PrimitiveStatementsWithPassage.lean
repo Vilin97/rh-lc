@@ -77,6 +77,7 @@ def LiftsEig3 (P : Subgroup G) (ψ : P →* Kˣ) (C : ∀ j : Fin m, ((A3.liftI 
     (A3.A.fam.L j A3.A.fam.μ0).inV0 (A3.A.fam.lvlA P ψ) (eigSum (A3.liftI j A3.A.fam.μ0).opAll (C j))
 
 
+variable {A3} in
 def LiftsTyp3 (A3 : FamIn3 K G Pl0 I0 Ty T m) (C : ∀ j : Fin m, ((A3.liftI j A3.A.fam.μ0).OpIx → K) → Prop) : Prop :=
   ∀ j x, C j x → A3.fam3.IsType3 (A3.fam3.LI j A3.A.fam.μ0) (A3.fam3.tr3 j) x
 

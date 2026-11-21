@@ -72,6 +72,7 @@ variable (hS : HidaSetting p n' W Qq O Kf ι σ j w) (r : ℕ)
     (I : LocId L p nV W Qq) (ψ : Formalism.L2.Herm.awayFrom₂ L p →* Oˣ) (e : ℕ) (hdet : IsUnit sp.gram0.det) (hH : HypAtP I)
 
 
+include hH in
 theorem fix_iff (i : compL L p) (g : Fin nV → GL (Fin (m + 1)) Qq) (γ : UJ (sp.cm.sig : E →+* E) sp.gram0) :
     (repP L p i * jQ I hdet hk g)⁻¹ * ratA sp γ * (repP L p i * jQ I hdet hk g) ∈ KA L ↔
       γ ∈ gamC sp.cm.sig sp.gram0 (Formalism.L2.Herm.awayFrom₂ L p) (repP L p i).1 ∧
@@ -86,6 +87,7 @@ theorem fix_iff (i : compL L p) (g : Fin nV → GL (Fin (m + 1)) Qq) (γ : UJ (s
   rw [this]
 
 
+include hH in
 def fixEquiv (i : compL L p) (y : GL (Fin R.k) (E ⊗[F] FiniteAdeleRing (𝓞 F) F)) (hy : y = (repP L p i).1)
     (g : Fin nV → GL (Fin (m + 1)) Qq) :
     {γ : gamC sp.cm.sig sp.gram0 (Formalism.L2.Herm.awayFrom₂ L p) y //

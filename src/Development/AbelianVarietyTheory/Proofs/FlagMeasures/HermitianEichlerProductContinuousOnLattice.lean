@@ -242,6 +242,8 @@ private lemma exists_Bd_prod_sub_of_Bd_sub : ∀ (r : ℕ) (A : Fin r → Module
         (by rw [map_mul]; exact O.mul_mem hbO hwO)
 
 
+open ValuativeRel NumberField IsDedekindDomain in
+open scoped Pointwise ENNReal Classical in
 theorem _root_.GlobalTheory.HL.EichCont.prod_eich_cont : ∀ {F : Type} [Field F] [ValuativeRel F]
     [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E]
     [Algebra F E] [TopologicalSpace E] (L : _root_.Formalism.MainNotions.S.Loc.LocE F E) (N r : ℕ) (Hm : Matrix (Fin N) (Fin N) E)

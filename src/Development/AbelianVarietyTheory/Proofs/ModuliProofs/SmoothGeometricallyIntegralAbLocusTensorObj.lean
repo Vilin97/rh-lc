@@ -17,6 +17,8 @@ open scoped CategoryTheory.Obj TensorProduct Pointwise
 namespace GlobalTheory
 
 
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
+open scoped CategoryTheory.Obj TensorProduct Pointwise in
 theorem _root_.GlobalTheory.smooth_geometricallyIntegral_abLocus_tensorObj : ∀ (X : Scheme.{0}) (P Q : Over X), Smooth P.hom → Smooth Q.hom → GeometricallyIntegral P.hom → GeometricallyIntegral Q.hom → Smooth (P ⊗ Q).hom ∧ GeometricallyIntegral (P ⊗ Q).hom ∧ _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.abLocus P ∩ _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.abLocus Q ⊆ _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.abLocus (P ⊗ Q) := by
   intro X P Q hPs hQs hPi hQi
   haveI := _root_.GlobalTheory.geometricallyConnected_of_geometricallyIntegral P.hom

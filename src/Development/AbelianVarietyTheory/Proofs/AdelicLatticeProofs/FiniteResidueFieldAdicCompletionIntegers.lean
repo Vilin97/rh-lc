@@ -865,6 +865,7 @@ theorem modular_of_perfect {ξ : E} (hξ0 : ξ ≠ 0) (hd : G.det ≠ 0) (hL : R
     ← traceFormDual_eq hξ0, (perfect_iff_traceFormDual_eq hξ0 hd hL).1 h]
 
 
+variable (E r) in
 def signMatrix (p : ℕ) : Matrix (Fin r) (Fin r) E :=
   Matrix.diagonal fun a => if (a : ℕ) < p then 1 else -1
 

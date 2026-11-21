@@ -31,6 +31,7 @@ def HasCoord (g : Z.X ⟶ B.X) (L : Lat B) {V : B.X.Opens} {n : ℕ} (m : Fin n 
       v ≫ B.tMap.φ = u σ i ≫ mu.φ ∧ ∀ l, tanEv B.t hv h (L.N.incl.app V (m l)) = c σ i l
 
 
+variable (Z) in
 structure LatChart (L : Lat B) : Type where
 
   g : Z.X ⟶ B.X
@@ -48,6 +49,7 @@ structure LatChart (L : Lat B) : Type where
     ∃ u, Z.FlagAt x u ∧ HasCoord g L m x u fun σ i l => valR x U (c σ i l)
 
 
+variable (Z) in
 def HasLatFlags (L : Lat B) : Prop :=
   (∀ σ, Z.ty σ = Finset.range (Dw.mult σ + 1)) ∧ ∀ x : Z.X, ∃ q : LatChart Z L, x ∈ q.U
 
@@ -71,9 +73,11 @@ def tr (q q' : LatChart Z L) (e : ∀ σ : E →+* ℂ, Fin (Dw.mult σ) → ℤ
 end LatChart
 
 
+variable (Z L) in
 def latLB (e : ∀ σ : E →+* ℂ, Fin (Dw.mult σ) → ℤ) : LB Z.X := ⟨LatChart Z L, LatChart.U, fun q q' => q.tr q' e⟩
 
 
+variable (L) in
 def Curve.degLat {k : Type} [Field k] (c : Curve k Z.X) (e : ∀ σ : E →+* ℂ, Fin (Dw.mult σ) → ℤ) : ℤ :=
   c.degOf (latLB Z L e)
 

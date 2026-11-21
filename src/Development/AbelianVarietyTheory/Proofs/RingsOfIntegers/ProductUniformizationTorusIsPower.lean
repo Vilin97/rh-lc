@@ -160,6 +160,7 @@ theorem exists_factor (P : UnifPowOf3 pD pA pG U' U) (e : ℕ) (i : Fin j) :
   exact ⟨hk.lift _ _ hc, hk.lift_fst _ _ hc⟩
 
 
+set_option maxHeartbeats 800000 in
 theorem char_prod (P : UnifPowOf3 pD pA pG U' U) (e : ℕ)
     (h : Fin j → (splitTorus (Spec (CommRingCat.of (R ⧸ I ^ (e + 1)))) D'.toPre.X ⟶
         splitTorus (Spec (CommRingCat.of (R ⧸ I ^ (e + 1)))) D.toPre.X))

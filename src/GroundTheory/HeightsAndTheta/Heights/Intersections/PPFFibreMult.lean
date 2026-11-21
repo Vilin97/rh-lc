@@ -35,6 +35,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} {P' : Ideal (MRing ι')}
 
 
+omit [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem baseSubst_rename (hv : IsBlockMap κ v) (G : GenFibre v P') (t : MRing ι) :
     baseSubst κ G (rename v t) = C (aeval G.x t) := by
   have h : (baseSubst κ G).comp (rename v : MRing ι →ₐ[ℤ] MRing ι').toRingHom =
@@ -52,12 +53,14 @@ theorem baseSubst_rename (hv : IsBlockMap κ v) (G : GenFibre v P') (t : MRing �
   exact DFunLike.congr_fun h t
 
 
+omit [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem baseSubst_X_fib (G : GenFibre v P') (q : Σ k : FibreBlock κ, ι' k.1) :
     baseSubst κ G (X ⟨q.1.1, q.2⟩) = X q := by
   unfold baseSubst
   rw [eval₂Hom_X', dite_eq_right q.1.2]
 
 
+omit [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem exists_baseSubst_mul (hv : IsBlockMap κ v) (G : GenFibre v P') (g : MRingOver G.Φ (fibreIdx ι' κ)) :
     ∃ (t : MRing ι) (f : MRing ι'), aeval G.x t ≠ 0 ∧ baseSubst κ G (rename v t) * g = baseSubst κ G f := by
   induction g using MvPolynomial.induction_on with
@@ -80,18 +83,21 @@ theorem exists_baseSubst_mul (hv : IsBlockMap κ v) (G : GenFibre v P') (g : MRi
     ring
 
 
+omit [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem isUnit_baseSubst_rename (hv : IsBlockMap κ v) (G : GenFibre v P') {t : MRing ι} (ht : aeval G.x t ≠ 0) :
     IsUnit (baseSubst κ G (rename v t)) := by
   rw [baseSubst_rename hv]
   exact (isUnit_iff_ne_zero.mpr ht).map C
 
 
+omit [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem ker_baseSubst_le (hv : IsBlockMap κ v) (G : GenFibre v P') : RingHom.ker (baseSubst κ G) ≤ P' := by
   intro a ha
   rw [RingHom.mem_ker] at ha
   rw [← G.genericFibre_ker_target, RingHom.mem_ker, ← aeval_baseSubst hv, ha, map_zero]
 
 
+omit [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem fibreIdeal_eq_map (hv : IsBlockMap κ v) (G : GenFibre v P') :
     fibreIdeal κ G = P'.map (baseSubst κ G) := by
   apply le_antisymm
@@ -108,6 +114,7 @@ theorem fibreIdeal_eq_map (hv : IsBlockMap κ v) (G : GenFibre v P') :
     exact ha
 
 
+omit [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem exists_of_mem_map (hv : IsBlockMap κ v) (G : GenFibre v P') (W : Ideal (MRing ι'))
     {g : MRingOver G.Φ (fibreIdx ι' κ)} (hg : g ∈ W.map (baseSubst κ G)) :
     ∃ (t : MRing ι) (w : MRing ι'), aeval G.x t ≠ 0 ∧ w ∈ W ∧
@@ -132,6 +139,7 @@ theorem exists_of_mem_map (hv : IsBlockMap κ v) (G : GenFibre v P') (W : Ideal 
     ring
 
 
+omit [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem comap_fibreOf_and_isPrime (hv : IsBlockMap κ v) (G : GenFibre v P') (W : Ideal (MRing ι')) [W.IsPrime]
     (hPW : P' ≤ W) (hI : imageZ v W = imageZ v P') :
     (fibreOf κ G W).comap (baseSubst κ G) = W ∧ (fibreOf κ G W).IsPrime := by

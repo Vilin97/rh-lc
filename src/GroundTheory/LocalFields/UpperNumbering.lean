@@ -36,6 +36,7 @@ section Fiber
 variable {K L : Type*} [Field K] [Field L] [Algebra K L] (M : IntermediateField K L) [Normal K M]
 
 
+open Classical in
 theorem sum_filter_restrictNormalHom_eq {β : Type*} [AddCommMonoid β] [Fintype (L ≃ₐ[K] L)]
     [Fintype (L ≃ₐ[M] L)] (F : (L ≃ₐ[K] L) → β) (σ : L ≃ₐ[K] L) :
     ∑ ρ ∈ Finset.univ.filter

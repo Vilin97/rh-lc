@@ -79,6 +79,7 @@ theorem fibreComponent_dim_eq (hP : P.IsPrime) (hPC : P.comap (C : ℤ →+* MvP
   exact ⟨m, hm, fun q hq W' hW' => (key q hq W' hW').1.trans (h1.symm.trans hm)⟩
 
 
+omit [Fintype σ] in
 theorem fibreComponent_dim_succ_le (hP : P.IsPrime) (hPC : P.comap (C : ℤ →+* MvPolynomial σ ℤ) = ⊥)
     {p : ℕ} (hp : p.Prime) {W : Ideal (MvPolynomial σ ℤ)}
     (hW : W ∈ (P ⊔ Ideal.span {(C (p : ℤ) : MvPolynomial σ ℤ)}).minimalPrimes) :

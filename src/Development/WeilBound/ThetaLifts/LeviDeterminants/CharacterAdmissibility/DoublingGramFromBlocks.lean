@@ -15,6 +15,7 @@ variable {R : Type} [CommRing R] {E : Type} [CommRing E] [Algebra R E] {c : E �
   [Fintype ν] [DecidableEq ν]
 
 
+variable (c) in
 structure Fr (J : Matrix β β E) (J₁ : Matrix β₁ β₁ E) (H : Matrix μ μ E) (ι : Matrix β β₁ E) (Z : Matrix β μ E)
     (π : Matrix β₁ β E) (ρ : Matrix μ β E) : Prop where
   one : ι * π + Z * ρ = 1

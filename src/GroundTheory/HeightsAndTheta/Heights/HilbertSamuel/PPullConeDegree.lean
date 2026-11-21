@@ -22,6 +22,7 @@ variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintyp
   [CharZero Ω]
 
 
+omit [CharZero Ω] in
 theorem isWeightedHomogeneous_of_isMultiHomog {f : MvPolynomial (Σ k, ι k) ℚ} {a : K → ℕ}
     (hf : IsMultiHomog f a) : IsWeightedHomogeneous (NumbersDVR.blockWeight ι) f a := by
   intro m hm
@@ -30,12 +31,14 @@ theorem isWeightedHomogeneous_of_isMultiHomog {f : MvPolynomial (Σ k, ι k) ℚ
   exact hf m (mem_support_iff.mpr hm) k
 
 
+omit [CharZero Ω] in
 theorem isMultiHomog_of_isWeightedHomogeneous {f : MvPolynomial (Σ k, ι k) ℚ} {a : K → ℕ}
     (hf : IsWeightedHomogeneous (NumbersDVR.blockWeight ι) f a) : IsMultiHomog f a := by
   intro m hm k
   rw [← weight_blockWeight_apply, hf (mem_support_iff.mp hm)]
 
 
+omit [DecidableEq K] [CharZero Ω] in
 theorem prod_X_pow_eq_monomial (a : K → ℕ) :
     (∏ k, MvPolynomial.X k ^ a k : MvPolynomial K Ω) = monomial (Finsupp.equivFunOnFinite.symm a) 1 := by
   rw [monomial_eq, C_1, one_mul, Finsupp.prod_fintype _ _ (fun i => by simp)]
@@ -55,6 +58,7 @@ theorem coeff_mConeMapQ (y : (Σ k, ι k) → Ω) (f : MvPolynomial (Σ k, ι k)
   | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq, map_add (f := _), map_add (f := _)]
 
 
+omit [DecidableEq K] [CharZero Ω] in
 theorem exists_dvd_monomial (N : ℕ) (hne : ∀ k, Nonempty (ι k)) (μ : (Σ k, ι k) →₀ ℕ)
     (hμ : ∀ k, N * Fintype.card (ι k) ≤ ∑ i, μ ⟨k, i⟩) (r : ℚ) :
     ∃ c : ∀ k, ι k, (∏ k, (X ⟨k, c k⟩ : MvPolynomial (Σ k, ι k) ℚ)) ^ N ∣ monomial μ r := by

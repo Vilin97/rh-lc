@@ -187,6 +187,8 @@ theorem IsFibreIso.zero (hF : Compat φ F) : (DegPre.zF D' F).left ≫ κ = (Deg
         (hF.base.trans (Category.id_comp _).symm)).trans ((Category.id_comp _).trans z₂.symm)))))
 
 
+omit hκ in
+variable (hD κ) in
 def SecUp {k : ℕ} {α : D'.X} {β : D.X} (s' : LB.Sec (LB.LinComb D'.P.L (DegPre.famφ D' F α) (DegPre.famε k)))
     (s : LB.Sec (LB.LinComb D.P.L (DegPre.famφ D F β) (DegPre.famε k))) : Prop :=
   ∀ (Z : Scheme.{0}) (r : Z ⟶ (DegPre.BF D' F).left) (z : Z) J J', Good D.P.L z J → Good D'.P.L z J' →
@@ -326,6 +328,8 @@ theorem phiRel_up (hF : Compat φ F) {k : ℕ} {p : QkPt D F k} {p' : QkPt D' F 
   ac_rfl
 
 
+omit hκ in
+variable (hD) in
 theorem weilQkIs_pull (hF : Compat φ F) {k : ℕ} {p q : QkPt D F k} {p' q' : QkPt D' F k} (hp : p'.y = hD.xe.symm p.y)
     (hpg : IsPullGtF φ hD F p.g p'.g) (hq : q'.y = hD.xe.symm q.y) (hqg : IsPullGtF φ hD F q.g q'.g) {ζ : F}
     (H : WeilQkIs D F k p q ζ) : WeilQkIs D' F k p' q' ζ := by

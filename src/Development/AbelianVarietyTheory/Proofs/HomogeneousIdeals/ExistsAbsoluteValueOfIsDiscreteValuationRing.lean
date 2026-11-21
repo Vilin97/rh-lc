@@ -223,6 +223,7 @@ theorem exists_complete_isAlgClosed_isometry (K : Type u) [NontriviallyNormedFie
   rw [RingHom.comp_apply, RingHom.comp_apply, h₁, h₂, h₃]
 
 
+open IsDedekindDomain in
 theorem exists_absoluteValue_of_isDiscreteValuationRing (V K : Type*) [CommRing V] [IsDomain V]
     [IsDiscreteValuationRing V] [Field K] [Algebra V K] [IsFractionRing V K]
     {a : V} (ha0 : a ≠ 0) (ha : a ∈ IsLocalRing.maximalIdeal V) {r : ℝ} (hr0 : 0 < r)

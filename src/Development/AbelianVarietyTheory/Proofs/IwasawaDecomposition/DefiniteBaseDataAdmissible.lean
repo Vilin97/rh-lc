@@ -15,6 +15,7 @@ open Formalism.L2.Col
 namespace GlobalTheory.Mem.DatLaws
 
 
+open NumberField IsDedekindDomain in
 theorem _root_.GlobalTheory.Mem.DatLaws.dat_ok : ∀ (B : _root_.GlobalTheory.Mem.Base)
     (X : _root_.GlobalTheory.Mem.PreX B.toPre)
     (Ch : _root_.Formalism.L2.Col.Chars B.fields (B.primes X) B.R.m),

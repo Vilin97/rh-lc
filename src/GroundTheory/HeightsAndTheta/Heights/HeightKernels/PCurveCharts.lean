@@ -24,6 +24,7 @@ theorem exists_chart (hy : IsArithVar (mCoordIdeal y) 1) : ∃ t : T, y ⟨(), t
   simp [mCoordIdeal, RingHom.mem_ker, mConeMap, h0]
 
 
+omit [Fintype T] in
 theorem mem_integer_of_mem_chartRingZ [NumberField K'] (v : HeightOneSpectrum (𝓞 K')) (t : T)
     (ht : ∀ u, v.valuation K' (y ⟨(), u⟩) ≤ v.valuation K' (y ⟨(), t⟩)) {b : K'}
     (hb : b ∈ chartRingZ y (fun _ => t)) : b ∈ (v.valuation K').integer := by
@@ -106,6 +107,7 @@ theorem exists_nat_mul_mem_adjoin [CharZero K'] {S : Set K'} {x : K'} (hx : x �
     exact mul_mem hnx hmz
 
 
+omit [Fintype T] in
 theorem mem_adjoin_of_mem_blockFnField [NumberField K'] (t : T) (ht : y ⟨(), t⟩ ≠ 0) {x : K'}
     (hx : x ∈ blockFnField y) :
     x ∈ Algebra.adjoin ℚ (Set.range fun p : Σ _ : Unit, T => y p / y ⟨p.1, t⟩) := by

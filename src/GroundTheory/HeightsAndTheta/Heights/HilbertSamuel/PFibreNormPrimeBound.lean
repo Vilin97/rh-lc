@@ -31,6 +31,7 @@ theorem FibreNormPrimeBound.block_ne_zero {y : (Σ k, ι k) → Ω} {e : K → �
   rw [h i, zero_pow hi]
 
 
+omit [Fintype K] in
 theorem FibreNormPrimeBound.exists_chart (V : ValuationSubring Ω) {y : (Σ k, ι k) → Ω}
     (hblk : ∀ k, ∃ i, y ⟨k, i⟩ ≠ 0) :
     ∃ c : ∀ k, ι k, (∀ k, y ⟨k, c k⟩ ≠ 0) ∧ ∀ q : Σ k, ι k, y q / y ⟨q.1, c q.1⟩ ∈ V := by

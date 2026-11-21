@@ -27,6 +27,7 @@ namespace ScaledFSTopPos
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem geoNum_nonneg : ∀ (n : ℕ) (V : Ideal (MRing ι)) (a : Fin n → K → ℤ), (∀ j k, 0 ≤ a j k) →
     0 ≤ geoNum n V a
   | 0, V, a, _ => by

@@ -58,6 +58,7 @@ theorem surjective_tateGlobalToLocal_of_eq_zero (n : ℕ)
     (h _)
 
 
+omit [∀ w, Fintype (F w)] in
 theorem injective_tateGlobalToLocal_iff (n : ℕ) (hv : ∀ v, Subsingleton (cohomology (Aᵥ v) n)) :
     Function.Injective (tateGlobalToLocal φ ψ A Aᵥ a Aᵣ ar n).hom ↔
       Function.Injective (globalToLocal ψ A Aᵣ ar n).hom := by
@@ -69,6 +70,7 @@ theorem injective_tateGlobalToLocal_iff (n : ℕ) (hv : ∀ v, Subsingleton (coh
     exact h (congrArg Prod.snd hxy)
 
 
+omit [∀ w, Fintype (F w)] in
 theorem surjective_tateGlobalToLocal_iff (n : ℕ) (hv : ∀ v, Subsingleton (cohomology (Aᵥ v) n)) :
     Function.Surjective (tateGlobalToLocal φ ψ A Aᵥ a Aᵣ ar n).hom ↔
       Function.Surjective (globalToLocal ψ A Aᵣ ar n).hom := by

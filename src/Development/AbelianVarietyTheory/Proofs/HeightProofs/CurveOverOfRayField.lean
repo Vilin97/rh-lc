@@ -26,6 +26,9 @@ variable {K : Type} [Field K] [NumberField K] {d : ℕ}
 end Quadratic
 
 
+set_option autoImplicit false in
+open NumberField IsDedekindDomain Polynomial in
+open scoped IntermediateField in
 theorem _root_.GlobalTheory.FieldSize.RayExistCurve.finrank_adjoin {d : ℕ} (hd : 0 < d) {r : ℂ} (hr : r ^ 2 = -(d : ℂ)) :
     FiniteDimensional ℚ ℚ⟮r⟯ ∧ Module.finrank ℚ ℚ⟮r⟯ = 2 := by
   open Polynomial in

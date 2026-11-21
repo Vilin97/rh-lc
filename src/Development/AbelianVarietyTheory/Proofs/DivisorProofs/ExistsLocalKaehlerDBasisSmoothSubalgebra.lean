@@ -12,6 +12,8 @@ set_option autoImplicit false
 namespace GlobalTheory.PD
 
 
+set_option maxHeartbeats 1000000 in
+open TensorProduct in
 theorem exists_notMem_smul_D_mem_span (k K : Type) [Field k] [Field K] [Algebra k K] (B : Subalgebra k K)
     [IsFractionRing B K] [Algebra.Smooth k B] (d : ℕ) (hd : Module.finrank K Ω[K⁄k] = d)
     (P : Ideal B) [P.IsPrime] :

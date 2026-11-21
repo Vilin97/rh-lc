@@ -44,6 +44,7 @@ namespace GlobalTheory.DefFree
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
+open GlobalTheory.BadShare in
 theorem central_tens2 {G G' : Type} [Group G] [Fintype G] [Group G'] [Fintype G'] {a : G → ℂ} {b : G' → ℂ}
     (ha : ∀ x, conv a x = conv x a) (hb : ∀ x, conv b x = conv x b) (z : G × G' → ℂ) :
     conv (tens2 a b) z = conv z (tens2 a b) := by
@@ -366,6 +367,7 @@ theorem definiteFree : DefiniteFree := by
   exact ⟨(principal_last h hbig hi).1, free_last h hbig hi⟩
 
 
+open Classical GlobalTheory.BadShare in
 theorem definiteGoodShare (hG : GlobalTheory.Published.GreenCuspidal) : DefiniteGoodShare := by
   intro eps heps
   by_cases h1 : eps ≤ 1

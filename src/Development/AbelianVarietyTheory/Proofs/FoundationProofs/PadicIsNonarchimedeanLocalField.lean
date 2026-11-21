@@ -238,6 +238,7 @@ theorem ratCircle_eq_zero {x : AddCircle (1 : ℚ)} (h : ratCircle x = 0) : x = 
   exact_mod_cast hn
 
 
+variable (k) in
 theorem exists_hasConductor_one : ∃ ψ : AddChar k Circle, HasConductor ψ 1 := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[k]
   have h0 : (ϖ : k) ≠ 0 := by simpa using hϖ.ne_zero
@@ -432,6 +433,7 @@ theorem fourier_inversion (h : HasConductor ψ c) {f : k → ℂ} (hf : f ∈ SB
   rw [h4]; ring
 
 
+omit [ν.IsAddHaarMeasure] in
 theorem isSelfDual_of_isUnitVol (h : HasConductor ψ 1) (hν : IsUnitVol ν) : IsSelfDual ψ ν := by
   haveI := hν.1
   refine ⟨hν.1, fun f hf => ?_⟩

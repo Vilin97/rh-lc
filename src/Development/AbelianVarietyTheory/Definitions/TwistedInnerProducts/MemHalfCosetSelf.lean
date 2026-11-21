@@ -22,9 +22,11 @@ variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {
   {K K' : Type} [Field K] [Field K'] {σ : K →+* ℂ} {σ' : K' →+* ℂ}
 
 
+variable (σ) in
 def RootsIn (n : ℕ) : Prop := ∀ z : ℂ, z ^ n = 1 → z ∈ Set.range σ
 
 
+variable (σ) in
 def LocIn (χ : HChar D.host.E) : Prop := ∀ w x, (χ.loc w x : ℂ) ∈ Set.range σ
 
 theorem LocIn.valuesIn {χ : HChar D.host.E} (h : LocIn σ χ) : χ.ValuesIn 0 σ := by
@@ -34,6 +36,7 @@ theorem LocIn.valuesIn {χ : HChar D.host.E} (h : LocIn σ χ) : χ.ValuesIn 0 �
   simp [Formalism.L2.Host.HChar.valTw, Formalism.L2.Host.HChar.val, Formalism.L2.Host.HChar.locK, hy]
 
 
+variable (G σ) in
 structure CharsIn : Prop where
 
   mu0 : ∀ j, LocIn σ (L.C.mu0 j)
@@ -51,6 +54,7 @@ structure CharsIn : Prop where
   del' : L.C.del'.ValuesIn 0 σ
 
 
+variable (G) in
 abbrev pairLat (p : Pair T) : AddSubgroup (WO (G.pS p) (G.pT p)) :=
   latO (G.pS p) (G.pT p) (G.latS p : Set _) (G.latT p : Set _) fun _ => True
 
@@ -162,11 +166,13 @@ def PhasesIn : Prop :=
 end Sums
 
 
+variable (G σ) in
 def LRatiosIn (μ₀ : T) (i j : Fin D.R.m) : Prop :=
   ∀ (t : T) (Λ Λ₀ : ℂ → ℂ), GlobalTheory.CMVal.IsHeckeL (SqNum.nuH G t i j) Λ → GlobalTheory.CMVal.IsHeckeL (SqNum.nuH G μ₀ i j) Λ₀ →
     ∀ s : ℕ, 1 ≤ s → s ≤ bigN D + 1 → Λ₀ s ≠ 0 → Λ s / Λ₀ s ∈ Set.range σ
 
 
+variable (W) in
 structure IsBottomTri (i j : Fin D.R.m) {A A' WW : HSp D} (X : Tri T A A' WW) : Prop where
 
   rank : A.rank = SqNum.botBig D i j
@@ -183,6 +189,7 @@ structure IsBottomTri (i j : Fin D.R.m) {A A' WW : HSp D} (X : Tri T A A' WW) : 
     (fun _ => G.ch.chi (D.R.m - i) * L.eta ^ (rankV D i j % 2)) (fun t => SqNum.nuH G t i j) (locPl G)
 
 
+variable (W σ) in
 def SumsIn {A A' WW : HSp D} (X : Tri T A A' WW) : Prop :=
   ∃ Ω Ω' : ℂ, Ω ≠ 0 ∧ Ω' ≠ 0 ∧ ∀ t, ∀ h ∈ GfC WW,
     (∀ k, IntegrableOn (X.ker W.ψ W.θ t (MvPolynomial.monomial k 1) h) X.fd X.m →
@@ -191,6 +198,7 @@ def SumsIn {A A' WW : HSp D} (X : Tri T A A' WW) : Prop :=
       X.I' W.ψ W.θ t (MvPolynomial.monomial k 1) h / Ω' ∈ Set.range σ
 
 
+variable (W σ) in
 def BottomIn (i j : Fin D.R.m) : Prop :=
   (∃ (A A' WW : HSp D) (X : Tri T A A' WW), IsBottomTri W i j X) →
     ∃ (A A' WW : HSp D) (X : Tri T A A' WW), IsBottomTri W i j X ∧ SumsIn W σ X
@@ -206,6 +214,7 @@ theorem SumsIn.rationalSums {A A' WW : HSp D} {X : Tri T A A' WW} (h : SumsIn W 
     exact ⟨z, by rw [hz]; field_simp⟩
 
 
+variable (σ) in
 structure NumbersIn (S : GridChoice W Set.univ) (μ₀ : T) : Prop where
 
   chars : CharsIn G σ
@@ -257,6 +266,7 @@ namespace Choice
 variable (ch : Choice R)
 
 
+variable (σ) in
 def FieldIn : Prop := NumbersIn σ ch.S.toGridChoice A.μ0
 
 def FieldOK : Prop := ch.FieldIn D.what₂.embLL

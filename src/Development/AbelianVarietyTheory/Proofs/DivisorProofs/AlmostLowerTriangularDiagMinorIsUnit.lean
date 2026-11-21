@@ -85,6 +85,7 @@ theorem units_of_det {K α : Type} [Field K] [DecidableEq α] (O : Subring K) {s
 end GlobalTheory.FlagPush.AlmostLowUnits
 
 
+open GlobalTheory.FlagPush.AlmostLowUnits in
 theorem GlobalTheory.FlagPush.almostLow_units : ∀ (ι : Type) (m : ι → ℕ) (τ : ι) (a b : Fin (m τ)), (b : ℕ) = a + 1 →
     ∀ (K : Type) [Field K] (O : Subring K) (g : Mat m K), AlmostLow τ a b g → Par 0 O g →
     (∀ x : Root m, x ≠ ⟨τ, a⟩ → x ≠ ⟨τ, b⟩ → g x.1 x.2 x.2 ≠ 0 ∧ (g x.1 x.2 x.2)⁻¹ ∈ O) ∧

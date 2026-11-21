@@ -80,6 +80,7 @@ theorem exists_minor_dvd : ∀ (V : Type) [CommRing V] [IsDomain V] [ValuationRi
     exact ⟨J, e ▸ hJ⟩
 
 
+open GlobalTheory.HartogsUnit in
 theorem exists_nat_mul_mem : ∀ (A : Type) [CommRing A] [IsDomain A] [IsIntegrallyClosed A] [IsNoetherianRing A] [CharZero A] (a : FractionRing A), (∀ (T : CDVR) (α : A →+* T.V) (ι : FractionRing A →+* T.Fr), Function.Injective α → (∀ x, ι (algebraMap A (FractionRing A) x) = algebraMap T.V T.Fr (α x)) → (∀ n : ℕ, 0 < n → IsUnit (n : T.V)) → ι a ∈ (algebraMap T.V T.Fr).range) → ∃ (m : ℕ) (b : A), 0 < m ∧ algebraMap A (FractionRing A) b = (m : FractionRing A) * a := by
   intro A _ _ _ _ _ a h
   classical
@@ -214,6 +215,8 @@ theorem comb_vecMul (hv : ∀ i, IsTanAtG t x (v i)) {n : ℕ} {q : Fin n → (S
 end Tan
 
 
+open GlobalTheory.LocM.BaseMdl in
+set_option maxHeartbeats 1000000 in
 theorem exists_change {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
     {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {O : Type} [CommRing O] {β : O →+* c.F}
     (Y : Model Xo c β) {R : Type} [CommRing R] {ξ : Sp R ⟶ Y.X} {g : ℕ}
@@ -311,6 +314,8 @@ theorem value_map : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : 
   linear_combination (ι (M₁.submatrix id I).det * (C₂'.submatrix J id).det) * k1
 
 
+open GlobalTheory.ModelFrameCompare MonObj in
+set_option maxHeartbeats 1000000 in
 theorem images_eigenBasis {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
     {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} (Y : Model Xo c (algebraMap (𝓞 c.F) c.F))
     (σ : E →+* ℂ) (T : CDVR) (io : c.F →+* T.Fr) (y₀ : IntFr Xo c T io) (xV : Sp T.V ⟶ Y.X)

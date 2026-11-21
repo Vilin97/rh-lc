@@ -223,6 +223,7 @@ variable {G : Type} [Group G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field 
     {V : Type} [AddCommGroup V] [Module LL V] [Module Qp V] [IsScalarTower Qp LL V]
 
 
+variable (LL') in
 def mJ : V ⊗[Qp] B →ₗ[Qp] (LL' ⊗[LL] V) ⊗[Qp] B :=
   TensorProduct.map ((TensorProduct.mk LL LL' V 1).restrictScalars Qp) LinearMap.id
 
@@ -404,6 +405,7 @@ variable (hc : Continuous (algebraMap LL LL')) (hO' : Function.Injective (algebr
     (hb : ∀ i, bL i = algebraMap O' LL' (bO i)) (hlin : ∀ φ : LL' →ₗ[LL] LL, Continuous φ)
 
 
+include hb hlin in
 theorem core (T₁ T₂ : LocLat G Qp LL O) (F : LatHom T₁.L T₂.L) (c : ι → G → T₂.V)
     (h : (∑ i, bO i • jp (O' := O') hc hO' T₂ (c i)) ∈ (bHom (O' := O') hc hO' F).ImF PD) (k : ι) :
     c k ∈ F.ImF PD := by
@@ -445,6 +447,7 @@ theorem index_nonempty_of (bO : Module.Basis ι O O') (hO' : Function.Injective 
   exact bO.index_nonempty
 
 
+include hb hlin in
 theorem descLift (T₁ T₂ : LocLat G Qp LL O) (F : LatHom T₁.L T₂.L) (e : ℕ)
     (h : (bHom (O' := O') hc hO' F).LiftF PD e) : F.LiftF PD e := by
   intro c hc2
@@ -459,6 +462,7 @@ theorem descLift (T₁ T₂ : LocLat G Qp LL O) (F : LatHom T₁.L T₂.L) (e : 
   simpa using h2
 
 
+include hb hlin in
 theorem jp_ImF (T₁ T₂ : LocLat G Qp LL O) (F : LatHom T₁.L T₂.L) (c : G → T₂.V) (h : c ∈ F.ImF PD) :
     jp (O' := O') hc hO' T₂ c ∈ (bHom (O' := O') hc hO' F).ImF PD := by
   obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 h
@@ -480,6 +484,7 @@ theorem jp_add (T : LocLat G Qp LL O) (a b : G → T.V) :
   rw [TensorProduct.tmul_add]
 
 
+include hb hlin in
 theorem descCol [IsLocalRing O'] (hk : lenOl PD (O := O) ≠ ⊤) (T₁ T₂ : LocLat G Qp LL O)
     (F : LatHom T₁.L T₂.L) (x : ℝ) (h : Formalism.MainNotions.TruncatedSeriesCountingBounds.ColLeR PD (bHom (O' := O') hc hO' F) x) :
     Formalism.MainNotions.TruncatedSeriesCountingBounds.ColLeR PD F x := by
@@ -563,11 +568,13 @@ theorem descCol [IsLocalRing O'] (hk : lenOl PD (O := O) ≠ ⊤) (T₁ T₂ : L
   exact ⟨mm, k, h1, h2, h3⟩
 
 
+include hb hlin in
 theorem descLift_at : ∀ (T₁ T₂ : LocLat G Qp LL O) (F : LatHom T₁.L T₂.L), Formalism.MainNotions.WachCoordinates.CrysLat PD T₁ →
     Formalism.MainNotions.WachCoordinates.CrysLat PD T₂ → F.Onto → ∀ e, (bHom (O' := O') hc hO' F).LiftF PD e → F.LiftF PD e :=
   fun T₁ T₂ F _ _ _ e h => descLift PD hc hO' bO bL hb hlin T₁ T₂ F e h
 
 
+include hb hlin in
 theorem descCol_at [IsLocalRing O'] (hk : lenOl PD (O := O) ≠ ⊤) :
     ∀ (T₁ T₂ : LocLat G Qp LL O) (F : LatHom T₁.L T₂.L), Formalism.MainNotions.WachCoordinates.CrysLat PD T₁ →
     Formalism.MainNotions.WachCoordinates.CrysLat PD T₂ → F.Onto → ∀ x, Formalism.MainNotions.TruncatedSeriesCountingBounds.ColLeR PD (bHom (O' := O') hc hO' F) x →

@@ -129,6 +129,7 @@ end GlobalTheory.JR.WeilQuad.Fnf
 namespace GlobalTheory.JR.WeilQuad
 
 
+open Fnf in
 theorem fOp_nOp_fOp (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E]
     [StarRing E] [U : Unram F E] (A : Et F E) (ψ : AddChar F ℂ) (x : A.Kˣ) (μ : Measure A.L) (ω : A.K → ℂ)
     (hH : Hyp A ψ x μ ω) (u : A.Kˣ) (G : ℂ) (hG : IsStableGauss A ψ x μ u G) (φ : A.L → ℂ) (hφ : IsTest φ)

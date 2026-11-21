@@ -61,6 +61,7 @@ lemma antitone_of_mem_gtBox {n : ℕ} {μ : Fin (n + 1) → ℤ} {κ : Fin n →
       _ ≤ κ i := (hκ i).1
 
 
+open Classical in
 def sLe {n : ℕ} (κ : Fin n → ℤ) (b : ℕ) : Finset (Fin n → ℤ) :=
   (Fintype.piFinset fun i => Finset.Icc (κ i) (κ i + b)).filter fun l =>
     (∀ m, κ m ≤ l m) ∧ (∀ m m' : Fin n, m.val + 1 = m'.val → l m' ≤ κ m) ∧

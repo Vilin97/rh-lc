@@ -249,6 +249,7 @@ theorem exists_ratio_lb (hBP : ProjFrameBasePtFree.Statement) (hfr : IsProjFrame
 end PullFSExtension
 
 
+open PullFSExtension in
 theorem PullFSExtension.proof (hBP : ProjFrameBasePtFree.Statement) : PullFSExtension.Statement := by
   intro D Ω _ _ κ _ x e hfr
   obtain ⟨δ, hδ, hlb⟩ := exists_ratio_lb hBP hfr

@@ -351,6 +351,7 @@ theorem exists_of_half {T A : Type} {inc : T → (E →+* Qbar l)} (h : IsHalf i
     fun τ => congrArg (Sum.elim f f') (e'.symm_apply_apply (.inr τ))⟩
 
 
+variable (Ω) in
 theorem exists_crys_char (h1 : GlobalTheory.Published.HeckeLAdicCharacter) (h2 : GlobalTheory.Published.HeckeLAdicCharacterAbove) (ι : Qbar l ≃+* ℂ)
     (c : (E →+* Qbar l) → ℤ) (w0 : ℤ) (hc : ∀ τ, c τ + c (cj τ) = w0) :
     ∃ μ : G E Ω →* (Qbar l)ˣ, Continuous μ ∧ CrysWith (rk1 μ) fun τ => {c τ} := by

@@ -133,6 +133,7 @@ def dualHom (i : X.Tw) (s : X.Sig i) : Gen.GE N →* Matrix (Fin D.R.r) (Fin D.R
 end Global
 
 
+open scoped Pointwise in
 theorem noInv_tateDual : ∀ (D : D7) (bkP : BlochKatoReduction.BK D) (i : D.ntw.Tw) (s : D.ntw.Sig i), (∃ AI, Nonempty (LocTied (D.ntw.l i) (D.loc (D.ntw.l i)) AI)) → HodgeL bkP i s → NoJump bkP i s → ∀ v ∈ placesOver D.host.E (D.ntw.l i), NoInv i (Tdual i s) v := by
   rintro D bkP i s ⟨AI, ⟨T⟩⟩ hH hJ v hv A hA x hx
   let φ := algebraMap (D.ntw.O0 i) (FractionRing (D.ntw.O0 i))

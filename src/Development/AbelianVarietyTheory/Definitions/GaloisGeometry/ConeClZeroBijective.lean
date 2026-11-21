@@ -127,6 +127,7 @@ def coneTerm (q : ℕ) : Om R B q →ₗ[R] Term F 0 q :=
   LinearMap.pi fun s ↦ (SemiHom.of_algHom (e (s.obj (Fin.last 0)))).mOm q
 
 
+include he in
 theorem dH_coneTerm {q : ℕ} (ω : Om R B q) : dH F 0 q (coneTerm e q ω) = 0 := by
   funext s
   have k : ∀ i : Fin 2, ((OmF F q).map (CatH.toLast i s)).hom (coneTerm e q ω (CatH.face i s)) =
@@ -185,6 +186,7 @@ theorem backOm_coneTerm {q : ℕ} (ω : Om R B q) :
     (SemiHom.mOm_id _ (fun _ ↦ rfl) ω)
 
 
+include hb in
 theorem coneCl_eq_zero_iff {n : ℕ} (ω : LinearMap.ker (dOm R B (n + 1))) :
     coneCl e he (n + 1) ω = 0 ↔ ∃ η, dOm R B n η = ω.1 := by
   refine ⟨fun h ↦ ?_, fun ⟨η, hη⟩ ↦ ?_⟩
@@ -198,6 +200,7 @@ theorem coneCl_eq_zero_iff {n : ℕ} (ω : LinearMap.ker (dOm R B (n + 1))) :
   · rw [show ω = ⟨dOm R B n η, dOm_dOm η⟩ from Subtype.ext hη.symm, coneCl_dOm]
 
 
+include hb in
 theorem coneF_bijective (h : Limits.IsInitial T₀) (n : ℕ) : Function.Bijective (coneF e he n) := by
   refine ⟨(injective_iff_map_eq_zero _).2 fun ω hω ↦ ?_, fun x ↦ ?_⟩
   · have h1 : ofTop F n (coneTerm e n ω.1) ∈ BF F n n := HypF.mk_eq_zero.1 hω
@@ -225,6 +228,7 @@ theorem coneF_bijective (h : Limits.IsInitial T₀) (n : ℕ) : Function.Bijecti
           (congrArg (mp F (h.to T)) ((AlgEquiv.ofBijective _ hb).apply_symm_apply b))) _
 
 
+include hb in
 theorem coneCl_zero_bijective (h : Limits.IsInitial T₀) : Function.Bijective (coneCl e he 0) :=
   (HypF.toHyp_zero_bijective F 0).comp (coneF_bijective e he hb h 0)
 

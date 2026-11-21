@@ -16,6 +16,7 @@ noncomputable section
 namespace GlobalTheory.CompanionTheory.SW.ThetaSum
 
 
+open scoped Classical in
 theorem norm_mixed_sq_le (F : Type) [Field F] [NumberField F] (y : F) :
     ‖mixedEmbedding F y‖ ^ 2 ≤ ∑ w : InfinitePlace F, (w y) ^ 2 := by
   rw [mixedEmbedding.norm_eq_sup'_normAtPlace]

@@ -17,6 +17,7 @@ section Alg
 variable {K L : Type*} [Field K] [Field L] [Algebra K L] {N : ℕ}
 
 
+variable (K) in
 def HomQ (x : Fin N → L) (f : L) : Prop :=
   ∃ (e : ℕ) (A B : MvPolynomial (Fin N) K), A.IsHomogeneous e ∧ B.IsHomogeneous e ∧
     MvPolynomial.aeval x B ≠ 0 ∧ f = MvPolynomial.aeval x A / MvPolynomial.aeval x B
@@ -49,6 +50,7 @@ theorem homQ_ratio (x : Fin N → L) (m k₀ : Fin N) (hx : x k₀ ≠ 0) : HomQ
     by simpa using hx, by simp⟩
 
 
+variable (K) in
 def homQField (x : Fin N → L) : IntermediateField K L where
   carrier := {f | HomQ K x f}
   mul_mem' := fun ha hb => homQ_mul ha hb

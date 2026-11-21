@@ -26,6 +26,7 @@ instance decidableInTranslate {n : ℕ} (T : Finset ℕ) (u₀ x : ZMod n) :
   unfold InTranslate
   exact Finset.decidableExistsAndFinset
 
+open Classical in
 def HostThickOrbit : Prop :=
   ∀ (n L : ℕ), 0 < n → 2 ≤ L → ∀ T : Finset ℕ, (∀ s ∈ T, 4 * L * s < n) → NoRel T L →
   ∀ u₀ t h : ZMod n,

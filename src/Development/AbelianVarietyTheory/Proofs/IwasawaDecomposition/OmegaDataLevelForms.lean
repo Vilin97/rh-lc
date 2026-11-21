@@ -41,6 +41,7 @@ theorem natCast_mem_Mb {E : Type} [Field E] [NumberField E] [IsCMField E] {H : R
   Ideal.mul_le_left (l.prod.ge (Ideal.mem_span_singleton_self _))
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_root_value (l : Level H) {V : HSp D} {k : GA D V} (hk : k ∈ GfC V) {c : (AE D)ˣ →* Circle}
     {χ : HChar D.host.E} (hc : ChrEq c χ) (ht : ∀ P, χ.TameAt P) (Q : Finset (Pl D.host.E))
     (ch : ∀ P : Pl D.host.E, (kP P)ˣ →* ℂˣ) (hres : ∀ P ∈ Q, IsRes χ P (ch P)) (hQ : ∀ P ∈ Q, l.Mb ≤ P.asIdeal)
@@ -112,6 +113,7 @@ theorem exists_of_mem_closure {A B k : Type} [CommRing A] [CommRing B] [CommRing
     exact ⟨-X, by rw [Subring.coe_neg, map_neg, h1], by rw [map_neg, h2, neg_zero]⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem resS_eq_zero {I : Ideal (𝓞 D.host.E)} {P : Pl D.host.E} (hP : I ≤ P.asIdeal)
     {z : Af D.host.F ⊗[D.host.F] D.host.E}
     (hz : z ∈ GlobalTheory.AdLat.hat1 D.host.F (algebraMap (𝓞 D.host.E) D.host.E '' (I : Set (𝓞 D.host.E)))) :
@@ -127,6 +129,7 @@ theorem resS_eq_zero {I : Ideal (𝓞 D.host.E)} {P : Pl D.host.E} (hP : I ≤ P
   · rw [RingHom.map_mul, resS_oToS, Ideal.Quotient.eq_zero_iff_mem.2 (hP hx), zero_mul]
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_psi (V : HSp D) {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {n : ℕ} (d : DeltaDat Xo c n)
     (io : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E)) (hι : LatEmb V io) (hrk : Dw.p + Dw.q = V.rank)
     (hpq : 1 ≤ Dw.p + Dw.q) (hd : d.IsLev) (Q : Finset (Pl D.host.E)) (hQ : ∀ P ∈ Q, d.I ≤ P.asIdeal)
@@ -190,6 +193,7 @@ theorem exists_psi (V : HSp D) {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {n
   rfl
 
 
+set_option maxHeartbeats 1000000 in
 theorem psiTie_of_values (V : HSp D) {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {n r : ℕ}
     (d : DeltaDat Xo c n) (hr : V.rank = r) (io : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E))
     (hι : IotaOK Dw V io) (hpq : 1 ≤ Dw.p + Dw.q) (x₀ : (D.host.E →+* ℂ) → Matrix (Fin r) (Fin r) ℂ)
@@ -293,6 +297,7 @@ theorem adjoint_eq {l l₂ : Level H} (hM : l.M ∣ l₂.M) (hb : l₂.Mb ≤ l.
 end Pairing
 
 
+set_option maxHeartbeats 1000000 in
 theorem datEq_of_values (S T : HSp D) (βS : GL (Fin S.rank) (EAf D)) (βT : GL (Fin T.rank) (EAf D))
     {Λ : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)} (hβ : IsSDFrame T βT Λ 1) (e : AE D) {l : Level H}
     {Xo : Moduli Dw l} {c : Coeff l} (d : DeltaDat Xo c S.rank) (hd : d.IsLev)

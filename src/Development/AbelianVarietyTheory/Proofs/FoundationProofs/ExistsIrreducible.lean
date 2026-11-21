@@ -202,6 +202,7 @@ variable {F : Type} [Field F] [NumberField F] (p : HeightOneSpectrum (𝓞 F))
   (hv : ∀ x y : F, valuation K (ι x) ≤ valuation K (ι y) ↔ p.valuation F x ≤ p.valuation F y)
 
 
+include hd in
 theorem exists_val_eq (x : K) (hx : x ≠ 0) :
     ∃ y : F, y ≠ 0 ∧ valuation K (ι y) = valuation K x := by
   have h0 : valuation K x ≠ 0 := by simpa using hx
@@ -211,6 +212,7 @@ theorem exists_val_eq (x : K) (hx : x ≠ 0) :
   exact h0 (by simpa using (show valuation K (ι 0) = valuation K x from hy).symm)
 
 
+include hd hv in
 theorem exists_irreducible (g : F) (hg : p.valuation F g = WithZero.exp (-1 : ℤ)) :
     ∃ q : 𝒪[K], Irreducible q ∧ (q : K) = ι g := by
   have hlt : ∀ x y : F, valuation K (ι x) < valuation K (ι y) ↔
@@ -249,6 +251,7 @@ theorem exists_irreducible (g : F) (hg : p.valuation F g = WithZero.exp (-1 : �
   omega
 
 
+include hd hv in
 theorem exists_sq_eq (a : 𝓞 F) (ha : ∀ n : ℕ, ∃ m : ℤ, a - (m : 𝓞 F) ^ 2 ∈ p.asIdeal ^ n) :
     ∃ β : K, β ^ 2 = ι a := by
   haveI : T2Space K := IsTopologicalAddGroup.t2Space_of_zero_sep fun x hx =>

@@ -221,6 +221,7 @@ theorem mapRep_blockRep {k' : Type} [CommRing k'] (f : k →+* k') :
   rfl
 
 
+variable (k) in
 def vecComp : (Fin n → k) ≃ₗ[k] (∀ j, Fin (a j) → k) :=
   (LinearEquiv.funCongrLeft k k e).trans (LinearEquiv.piCurry k fun _ _ => k)
 
@@ -249,6 +250,7 @@ variable {l : ℕ} [Fact l.Prime] (P : LocPrime l) {E Ω : Type} [Field E] [Fiel
   {r : ∀ j, ↥Gw →* GL (Fin (a j)) (Om l)}
 
 
+omit [DecidableEq ι] in
 theorem exists_common_model (h : ∀ j, ∃ L r', IsModel Bw (r j) L r') (L₀ : FinExt l) :
     ∃ L : FinExt l, L₀.1 ≤ L.1 ∧ Bw.LL.1 ≤ L.1 ∧ ∃ r' : ∀ j, ↥Gw →* GL (Fin (a j)) ↥L.1,
       ∀ j, IsModel Bw (r j) L (r' j) := by

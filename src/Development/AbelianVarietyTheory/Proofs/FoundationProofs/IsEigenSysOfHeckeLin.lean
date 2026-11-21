@@ -85,12 +85,14 @@ section Component
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+variable (F) in
 def compAt (w : HeightOneSpectrum (𝓞 E)) : Af F ⊗[F] E →+* w.adicCompletion E :=
   (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV E w).toRingHom.comp (finAdEquiv F E).toRingHom
 
 theorem compAt_apply (w : HeightOneSpectrum (𝓞 E)) (y : Af F ⊗[F] E) : compAt F w y = finAdEquiv F E y w := rfl
 
 
+variable (F) in
 def singleAt (w : HeightOneSpectrum (𝓞 E)) (x : w.adicCompletion E) : Af F ⊗[F] E :=
   (finAdEquiv F E).symm (singleFin w x)
 

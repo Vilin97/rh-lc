@@ -117,6 +117,7 @@ end GlobalTheory.ClassFin.CosetSep
 namespace GlobalTheory.ClassFin
 
 
+open CosetSep in
 theorem exists_isInv_evC_one_ne : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (Γ : Set (Matrix ι ι ℂ)) (Rey : MvPolynomial (ι × ι) ℂ →ₗ[ℂ] MvPolynomial (ι × ι) ℂ), IsQGroup Γ → IsReynolds Γ Rey → ∀ y : Matrix ι ι ℂ, y.det = 1 → y ∉ Γ → ∃ f, IsInv Γ f ∧ evC f 1 ≠ evC f y := by
   intro ι _ _ Γ Rey hΓ hR y hy hyΓ
   have htop := vanC_sup_eq_top hΓ hy hyΓ

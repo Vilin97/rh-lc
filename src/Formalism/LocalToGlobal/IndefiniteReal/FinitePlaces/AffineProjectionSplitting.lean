@@ -58,6 +58,7 @@ theorem symplO_nsmul_right (t y : WO S T) (k : ℕ) : symplO S T t (k • y) = s
   | succ n ih => rw [succ_nsmul, succ_nsmul, symplO_add_right, symplO_add_left, ih]
 
 
+set_option maxHeartbeats 800000 in
 theorem actO_fix {e e₁ : AE D} (he : e * cA D e = 0) (h1 : e₁ * e = e₁) {g : GA D S} {h : GA D T}
     (hg : SuppAt e₁ S g) (hh : SuppAt e₁ T h) {t : WO S T} (ht : IsHalf e t) (h0 : ∀ i j, e₁ * t i j = 0) :
     actO S T g h t = t := by
@@ -93,6 +94,7 @@ theorem actO_fix {e e₁ : AE D} (he : e * cA D e = 0) (h1 : e₁ * e = e₁) {g
   rw [hL, hR']
 
 
+set_option maxHeartbeats 1600000 in
 theorem evalYZero_zero (ψ : AddChar (AF D.host.F) ℂ) {e e₁ : AE D} (he₁ : IsSplitIdem D e₁) (h1 : e₁ * e = e₁)
     (Λ : AddSubgroup (WO S T))
     (hΛe₁ : ∀ u ∈ Λ, u.map (fun a => e₁ * a) ∈ Λ)

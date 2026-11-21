@@ -260,6 +260,7 @@ theorem n78 : LateralTheory.E.t_E3Cut.Global := by
   exact LateralTheory.E.GlobalPf.Global_of n79 n83 n84
 
 
+open CategoryTheory LateralTheory.E.t_E3Cut in
 theorem main (H : LateralTheory.E.t_E3Cut.Hyp) : GlobalTheory.EtC.E3 := by
   intro q _ T _ _ _ hAIC hq X p _ i
   have hAR : LateralTheory.E.t_E3Cut.AlgRes (CommRingCat.ofHom (algebraMap T (FractionRing T))) := by

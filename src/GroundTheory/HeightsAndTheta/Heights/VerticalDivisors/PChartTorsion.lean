@@ -132,6 +132,7 @@ theorem back_toChart (g : MvPolynomial (Fin n ⊕ (Fin k × Fin n)) D) :
 end ChartTorsion
 
 
+open ChartTorsion in
 theorem ChartTorsion.proof : ChartTorsion.Statement := by
   intro D _ _ n k P hP hPD c g hc hcg j
   by_cases hj : (X j : MvPolynomial (Fin n) D) ∈ P

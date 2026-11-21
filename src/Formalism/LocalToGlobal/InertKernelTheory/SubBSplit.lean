@@ -50,6 +50,7 @@ def BOf (fd : Formalism.L2.PairingIndexBounds.F.FData X D) (j : ℕ) (La : X.Lt 
   fun v => (frGL fd j La v)⁻¹
 
 
+variable (X) in
 def glInv : (j : ℕ) → (∀ v : X.Pl, GL (Fin ((X.Fl.Pj j).m + 1)) (X.G.P.Qq v)) →
     ∀ v : Fin (X.Fl.Pj j).nV, GL (Fin ((X.Fl.Pj j).m + 1)) ((X.Fl.Pj j).Qq v)
   | 0, B => B

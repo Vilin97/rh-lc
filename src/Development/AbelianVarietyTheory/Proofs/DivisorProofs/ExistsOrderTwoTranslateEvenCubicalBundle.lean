@@ -380,6 +380,7 @@ variable {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] {G : Over (Sp R)} 
 
 
 
+omit [IsDomain R] in
 theorem exists_points [IsAdicComplete 𝔪 R] {i₀ : splitTorus (Lv 𝔪 0) X ⟶ thickObj R 𝔪 0 G} (F : FormalTorus 𝔪 i₀) :
     ∃ t : (Multiplicative X →* ℤˣ) →* (𝟙_ (Over (Sp R)) ⟶ G), ∀ φ e,
       (thick R 𝔪 e ≫ (t φ).left : Lv 𝔪 e ⟶ _) = (sgnPt (𝟙_ (Over (Lv 𝔪 e))) φ ≫ F.i e).left ≫ pr 𝔪 e G := by
@@ -413,6 +414,7 @@ theorem exists_points [IsAdicComplete 𝔪 R] {i₀ : splitTorus (Lv 𝔪 0) X �
   exact congrArg (fun q => q.left) e₂
 
 
+omit [IsDomain R] in
 theorem exists_two_ne_zero [IsAdicComplete 𝔪 R] [CharZero R] : ∃ e, (2 : Γ(Lv 𝔪 e, ⊤)) ≠ 0 := by
   by_contra hn
   push Not at hn
@@ -422,6 +424,7 @@ theorem exists_two_ne_zero [IsAdicComplete 𝔪 R] [CharZero R] : ∃ e, (2 : Γ
   exact two_ne_zero (α := R) ((map_ofNat _ 2).symm.trans (b.trans (map_zero _)))
 
 
+omit [IsLocalRing R] in
 theorem val_level {I : Ideal R} {P : CP G} {e : ℕ} {Pe : CP (thickObj R I e G)} (h : IsLevelCP I e Pe P) {Z : Scheme.{0}}
     {t : Z ⟶ G.left} {w} (hw : SymVal P t w) {T : Over (Lv I e)} {x : T ⟶ thickObj R I e G} (hx : x⁻¹ = x)
     (r : T.left ⟶ Z) (ht : r ≫ t = x.left ≫ pr I e G) (z : T.left) (J') (hJ' : Good Pe.L.L z J') :

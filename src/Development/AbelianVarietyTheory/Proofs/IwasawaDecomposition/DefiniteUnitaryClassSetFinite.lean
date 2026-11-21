@@ -105,12 +105,14 @@ abbrev HF : Type := Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.HA
 variable {E n}
 
 
+omit [IsCMField E] in
 theorem cT_map {R S : Type} [CommRing R] [CommRing S] (p : R →+* S) (s : R →+* R) (t : S →+* S)
     (h : ∀ y, p (s y) = t (p y)) (M : Matrix (Fin n) (Fin n) R) : cT t (M.map p) = (cT s M).map p := by
   ext i j
   exact (h _).symm
 
 
+omit [IsCMField E] in
 theorem unitary_map {R S : Type} [CommRing R] [CommRing S] (p : R →+* S) (s : R →+* R) (t : S →+* S)
     (h : ∀ y, p (s y) = t (p y)) (M : Matrix (Fin n) (Fin n) R) (hM : cT s M * M = 1) :
     cT t (M.map p) * M.map p = 1 := by
@@ -159,6 +161,7 @@ theorem AEq_symm_sig (y : Af E) : (finAdEquiv (Fr E) E).symm (conjFin (cc E) y) 
   exact ((finAdEquiv (Fr E) E).apply_symm_apply y).symm
 
 
+variable (E n) in
 def toGL : HF E n →* GL (Fin n) (Af E) :=
   (GeneralLinearGroup.map (AEq (E := E))).comp
     (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.HR (AFr E) (sg E) (1 : Matrix (Fin n) (Fin n) E)).subtype
@@ -175,6 +178,7 @@ theorem cT_toGL (g : HF E n) : cT (conjFin (cc E)) (toGL E n g).val * (toGL E n 
   exact h3 hg
 
 
+variable (E n) in
 def toFin : HF E n →* finU E n where
   toFun g := ⟨⟨finGL E n (toGL E n g), finGL_mem_UA _ (cT_toGL g)⟩, pInf_finGL _⟩
   map_one' := Subtype.ext (Subtype.ext (by simp))
@@ -244,6 +248,7 @@ theorem assemble {g γ f₁ s k x₀ x₁ : UA E n} (hx₀ : x₀ ∈ infU E n) 
   group
 
 
+variable (E n) in
 theorem classSet_finite (K : Subgroup (finU E n)) (hK : IsOpen (K : Set (finU E n))) :
     ∃ S : Finset (UA E n), ∀ g : UA E n, ∃ γ ∈ ratU E n, ∃ s ∈ S, ∃ x ∈ infU E n, ∃ k ∈ K,
       g = γ * s * x * (k : UA E n) := by

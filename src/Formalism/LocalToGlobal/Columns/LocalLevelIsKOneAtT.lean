@@ -57,6 +57,7 @@ def LocalLevelIsKOneAtT : Prop :=
         (x : Matrix (Fin n) (Fin n) (X.E ⊗[X.F] v.adicCompletion X.F)) *ᵥ y - y ∈ Formalism.L2.Herm.locL v (baseLb X.E n (Pr.vT u)))
 
 
+include hc hPr in
 theorem th_plUnder_vGs (v : HeightOneSpectrum (𝓞 X.F)) :
     v ∈ plUnder X.F Pr.vGs ↔ ((Pr.g 0 : 𝓞 X.F) ∈ v.asIdeal ∨ (Pr.g 1 : 𝓞 X.F) ∈ v.asIdeal) := by
   classical

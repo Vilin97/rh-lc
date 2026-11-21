@@ -171,6 +171,7 @@ theorem assemble {k H : Type} [Field k] [CommRing H] [HopfAlgebra k H] {V V' : T
       simp only [Module.Basis.constr_apply_fintype, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hP]
 
 
+open Algebra.TensorProduct in
 theorem exists_hopf {k : Type} [Field k] {G : Over (Sp k)} [GrpObj G] [IsCommMonObj G] {f : G ⟶ G} [IsMonHom f]
     {A : Type} [CommRing A] [Algebra k A] [Module.Finite k A] {κ : Ov k A ⟶ G} (h₁ : κ ≫ f = 1)
     (h₂ : ∀ (T : Over (Sp k)) (x : T ⟶ G), x ≫ f = 1 → ∃! y : T ⟶ Ov k A, y ≫ κ = x)

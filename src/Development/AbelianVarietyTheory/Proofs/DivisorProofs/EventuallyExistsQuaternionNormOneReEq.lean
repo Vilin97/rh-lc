@@ -133,6 +133,8 @@ private lemma exists_binary_form_eq_unit {O : Type*} [CommRing O] [IsLocalRing O
       linear_combination (-c * ω) * hβ + (c * ω ^ 2) * hw + (-c * (w * ω + 1) + c * ω) * hω⟩
 
 
+open NumberField IsDedekindDomain in
+open scoped Quaternion Topology in
 theorem _root_.GlobalTheory.QSA.IntRep.exists_nrm_eq_one_re_eq : ∀ (F : Type) [Field F] [NumberField F] (a b : F), a ≠ 0 → b ≠ 0 →
     ∀ᶠ v in (Filter.cofinite : Filter (HeightOneSpectrum (𝓞 F))), ∀ t ∈ v.adicCompletionIntegers F,
       ∃ u : ℍ[v.adicCompletion F, algebraMap F (v.adicCompletion F) a, algebraMap F (v.adicCompletion F) b],

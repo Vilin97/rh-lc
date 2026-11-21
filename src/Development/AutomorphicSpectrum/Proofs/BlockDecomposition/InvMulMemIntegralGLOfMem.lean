@@ -20,6 +20,7 @@ variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchim
   {n : ℕ}
 
 
+omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
 theorem torusPow_central (t : GL (Fin n) F) (c : GL (Fin n) F)
     (h : ∃ a : F, (t : Matrix (Fin n) (Fin n) F) = diagonal fun _ => a) : t * c = c * t := by
   obtain ⟨a, ha⟩ := h

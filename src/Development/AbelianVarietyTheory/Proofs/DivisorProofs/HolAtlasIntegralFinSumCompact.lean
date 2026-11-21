@@ -120,6 +120,7 @@ private theorem isForm_and_integral_finset_sum {ι : Type} (s : Finset ι)
     rw [integral_add_of_isForm A hA hs.1, hs.2]
 
 
+set_option autoImplicit false in
 theorem _root_.GlobalTheory.CxForm.IntegralSum.integral_sum : ∀ {M : Type} [TopologicalSpace M] [CompactSpace M]
     [T2Space M] [SecondCountableTopology M] [MeasurableSpace M] [BorelSpace M] {n : ℕ}
     (A : _root_.GlobalTheory.CxForm.HolAtlas M n) {N : ℕ} (α : Fin N → A.Fld),

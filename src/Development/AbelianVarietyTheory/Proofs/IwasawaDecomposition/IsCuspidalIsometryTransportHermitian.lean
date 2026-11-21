@@ -119,6 +119,7 @@ theorem kap_symm_mem_NI {r : ℕ} {C' : Matrix (Fin V'.rank) (Fin r) D.host.E} {
 end GlobalTheory.Mem.Isom.IsoMat
 
 
+open GlobalTheory.Mem.Isom GlobalTheory.Mem.Isom.IsoMat in
 theorem GlobalTheory.Mem.Isom.isCuspFun_tr : ∀ (D : D7) (V V' : HSp D) (I : GlobalTheory.Mem.Isom.IsoMat V V') (φ : GA D V → ℂ),
     IsCuspFun V φ → IsCuspFun V' (I.tr φ) := by
   intro D V V' I φ hφ r C' hC' μ 𝓕 hμ h𝓕 g

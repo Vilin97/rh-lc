@@ -427,6 +427,7 @@ lemma sum_pa_le {Ns n : ℕ} {la : ℕ → ℤ} {L : ℝ} (hL0 : 0 ≤ L)
 end TDim
 
 
+open TDim in
 theorem logWeylDimensionEstimate : LogWeylDimensionEstimate := by
   unfold LogWeylDimensionEstimate
   intro r K Ns n la A0 h2 hK hn hd hP hM hA0

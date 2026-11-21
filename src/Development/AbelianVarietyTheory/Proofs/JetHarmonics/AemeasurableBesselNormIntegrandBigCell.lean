@@ -16,6 +16,7 @@ open scoped InnerProductSpace ENNReal
 namespace GlobalTheory
 
 
+open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt.P in
 theorem bigCell_density_eq {P : M.Par} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp]
     [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq]
     (p : KB.Pl P Wp Wq) (F : B.Mat P.k P.r → (Wq →L[ℂ] Wp)) (c : Fin (P.r + 1) → ℂ) (hd : ∀ a, c a ≠ 0) :
@@ -54,6 +55,7 @@ theorem bigCell_density_eq {P : M.Par} {Wp Wq : Type} [NormedAddCommGroup Wp] [I
     simp
 
 
+open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt.P in
 theorem bigCell_density_aemeasurable :
     ∀ (P : M.Par) (Wp Wq : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
       [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq] (p : KB.Pl P Wp Wq)

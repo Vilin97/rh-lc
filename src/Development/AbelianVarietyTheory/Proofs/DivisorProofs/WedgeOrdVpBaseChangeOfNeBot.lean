@@ -101,6 +101,7 @@ theorem IsLieImage.baseChange (hF : PrimitiveSubmodule B = Submodule.span R' ((b
   exact mem_Fil.1 this f hf
 
 
+set_option maxHeartbeats 1000000 in
 theorem IsKSValue.baseChange (P : AbelianDeRham) {A' : Over (Sp (DualNumber R))} [GrpObj A']
     {B' : Over (Sp (DualNumber R'))} [GrpObj B'] {g : ℕ} (hA : IsAbelianScheme A')
     (hg : SmoothOfRelativeDimension g A'.hom) {i : A.left ⟶ A'.left} {j : B.left ⟶ B'.left}
@@ -192,6 +193,7 @@ variable {K K' : Type} [Field K] [Algebra c.F K] [Field K'] [Algebra c.F K'] {K�
   {y' : FrPt Xo c K'}
 
 
+open scoped CategoryTheory.Obj in
 theorem exists_isGrpPullback {S S' : Scheme.{0}} (G : Over S) [GrpObj G] (f : S' ⟶ S) :
     ∃ (G' : Over S') (_ : GrpObj G') (φ : G'.left ⟶ G.left), IsGrpPullback G' G f φ :=
   ⟨_, inferInstance, _, isGrpPullback_pullback G f⟩

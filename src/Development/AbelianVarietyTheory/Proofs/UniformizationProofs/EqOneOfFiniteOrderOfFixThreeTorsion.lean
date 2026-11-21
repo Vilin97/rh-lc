@@ -26,6 +26,7 @@ open GlobalTheory.UT
 namespace GlobalTheory.FiniteOrderFix
 
 
+open TorsionZero in
 theorem exists_sec_le {K : Type} [Field K] {X : Scheme.{0}} [IsIntegral X] (p : X ⟶ Sp K) {L : LB X}
     (hL : L.IsLB) {N : ℕ} {σ : Type} (s : σ → (lbPow L N).Sec)
     (hcov : ⨆ i, nonzeroLocus (s i) = ⊤) (haff : ∀ i, IsAffineOpen (nonzeroLocus (s i)))
@@ -115,6 +116,7 @@ theorem eq_of_agree_on_pow_torsion (h : Laws) {K : Type} [Field K] [IsAlgClosed 
   exact Over.OverMorphism.ext (ext_of_isDominant_of_isSeparated P'.A.hom hw _ (equalizer.condition _ _))
 
 
+open SerreField in
 theorem eq_one_of_field (h : Laws) {K : Type} [Field K] [IsAlgClosed K] [CharZero K] (P : PolAV (Sp K))
     {M : ℕ} (hM : 3 ≤ M) (σ : CategoryTheory.End P.A) [hσ : IsMonHom (σ : P.A ⟶ P.A)] {m : ℕ} (hm : m ≠ 0)
     (hord : σ ^ m = 1) (hfix : ∀ x : baseOver (Sp K) ⟶ P.A, x ^ M = 1 → x ≫ σ = x) : σ = 1 := by

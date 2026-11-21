@@ -48,6 +48,7 @@ theorem maDens_euclPot_comp {n D : ℕ} (s : (Fin D → ℂ) → Fin n → ℂ) 
 end VarWirtinger
 
 
+open VarWirtinger in
 theorem VarWirtinger.proof (hDSC : DiscriminantSheetCover.Statement) (hMF : MassFinite.Statement) :
     VarWirtinger.Statement := by
   classical

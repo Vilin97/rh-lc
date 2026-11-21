@@ -36,6 +36,7 @@ theorem placesOver_finite {S : Set (HeightOneSpectrum (𝓞 F))} (hS : S.Finite)
   exact Set.mem_biUnion hv hwv
 
 
+omit [NumberField F] [NumberField L] in
 theorem mem_placesOver_of_natCast_mem {S : Set (HeightOneSpectrum (𝓞 F))} {n : ℕ}
     (hn : ∀ v : HeightOneSpectrum (𝓞 F), ((n : ℕ) : 𝓞 F) ∈ v.asIdeal → v ∈ S)
     {w : HeightOneSpectrum (𝓞 L)} (hw : ((n : ℕ) : 𝓞 L) ∈ w.asIdeal) : w ∈ placesOver S := by
@@ -45,6 +46,7 @@ theorem mem_placesOver_of_natCast_mem {S : Set (HeightOneSpectrum (𝓞 F))} {n 
   exact hw
 
 
+omit [NumberField F] [NumberField L] in
 theorem natCast_not_mem_of_not_mem_placesOver {S : Set (HeightOneSpectrum (𝓞 F))} {n : ℕ}
     (hn : ∀ v : HeightOneSpectrum (𝓞 F), ((n : ℕ) : 𝓞 F) ∈ v.asIdeal → v ∈ S) :
     ∀ w ∉ (placesOver S : Set (HeightOneSpectrum (𝓞 L))), ((n : ℕ) : 𝓞 L) ∉ w.asIdeal :=

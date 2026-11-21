@@ -106,6 +106,7 @@ theorem exists_ringEquiv_transcendental (p : ℕ) [Fact p.Prime] {z : ℂ} (hz :
 end Transc
 
 
+open Formalism.L2.Th1.CM in
 theorem isAlgebraic_g2_of_hasCMBy_of_disc_eq_one (hGood : CM2) (d : ℕ) (L : PeriodPair) (hsq : Squarefree d) (hd4 : d % 4 = 3)
     (hcm : HasCMBy d L) (p : ℕ) [Fact p.Prime] (h5 : 5 ≤ p) (hpd : ¬ p ∣ d)
     (hdisc : L.g₂ ^ 3 - 27 * L.g₃ ^ 2 = 1) : IsAlgebraic ℚ L.g₂ := by

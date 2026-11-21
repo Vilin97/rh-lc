@@ -109,6 +109,7 @@ def placeScale (r : InfinitePlace E → ℝ) : (InfinitePlace E → ℝ) →ₗ[
   LinearMap.pi fun w => (r w • LinearMap.id).comp (LinearMap.proj w)
 
 
+omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 theorem det_placeScale (r : InfinitePlace E → ℝ) : LinearMap.det (placeScale r) = ∏ w, r w := by
   rw [placeScale, LinearMap.det_pi]
   simp

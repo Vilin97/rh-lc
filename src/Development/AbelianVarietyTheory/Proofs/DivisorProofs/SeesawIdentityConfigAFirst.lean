@@ -139,6 +139,7 @@ def i2 : Ix m := ⟨2, ⟨0, by simp [blk3]⟩⟩
 def i1 (j : Fin m) : Ix m := ⟨1, j⟩
 
 
+variable (R) in
 def sMid : Matrix (Fin n) (Fin m) R := Matrix.of fun p j => (Pi.single (e (i1 j)) (1 : R) : Fin n → R) p
 
 theorem mul_sMid (A : Matrix (Fin n) (Fin n) R) : A * sMid R e = Matrix.of fun r j => A r (e (i1 j)) := by

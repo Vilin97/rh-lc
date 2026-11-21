@@ -35,6 +35,7 @@ theorem cyc_dec {ζ : AlgebraicClosure ℚ} (hζ : IsPrimitiveRoot ζ (l ^ r)) (
       (g : G Kf.1 (AlgebraicClosure ℚ))) ζ hζ.pow_eq_one
 
 
+set_option maxHeartbeats 1000000 in
 theorem rvF_act
     (hev : ∀ σ x, ιs v (((ev σ : Dec (F := Kf.1) A) : G Kf.1 (AlgebraicClosure ℚ)) x) = σ (ιs v x))
     {ζ : AlgebraicClosure ℚ} (hζ : IsPrimitiveRoot ζ (l ^ r))

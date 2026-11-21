@@ -64,6 +64,7 @@ def valSub : ValuationSubring (Cb l) where
       exact Or.inr ⟨y, hy⟩
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def toValSub : OCb l →+* valSub l :=
   (algebraMap (OCb l) (Cb l)).codRestrict (valSub l) fun x => ⟨x, rfl⟩
 

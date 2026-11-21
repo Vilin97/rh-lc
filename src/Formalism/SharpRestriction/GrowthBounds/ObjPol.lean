@@ -32,6 +32,7 @@ def ramE (p : ℕ) (O : Type*) [CommRing O] [IsDomain O] [IsDiscreteValuationRin
   (IsDiscreteValuationRing.addVal O (p : O)).toNat
 
 
+open Classical in
 def ordW (x : KK O) : WithTop ℤ :=
   open Classical in
   if x = 0 then ⊤ else
@@ -92,6 +93,7 @@ def coefL (R : Type*) [CommRing R] (n : ℕ) : R →+* GLLaurent R n :=
   (LaurentPolynomial.C).comp ((algebraMap (MvPolynomial (Fin n × Fin n) R) (GLCoord R n)).comp MvPolynomial.C)
 
 
+open Classical in
 def twistSub {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} (LL : Letters ι) (S : Set ι) (j : Fin n) :
     MvPolynomial (ι × Fin n) R →+* MvPolynomial (ι × Fin n) (GLLaurent R n) :=
   open Classical in
@@ -120,6 +122,7 @@ def ASet {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} [NeZero n] (LL : Letter
   {F | ((th : ℤ) : WithTop ℤ) ≤ valS LL S F}
 
 
+open Classical in
 def glAct (R : Type*) [CommRing R] {ι : Type*} [Fintype ι] {n : ℕ} (LL : Letters ι) (S : Set ι) (a b : Fin n) :
     MvPolynomial (ι × Fin n) R →ₗ[R] MvPolynomial (ι × Fin n) R :=
   open Classical in
@@ -148,6 +151,7 @@ def wtS {ι : Type*} [Fintype ι] {n : ℕ} (LL : Letters ι) (S : Set ι) (m : 
   fun a => ∑ l : ι, if l ∈ S then (if LL.vec l then (m (l, a) : ℤ) else -(m (l, a) : ℤ)) else 0
 
 
+open Classical in
 def divPowMono (R : Type*) [CommRing R] {ι : Type*} [Fintype ι] {n : ℕ} (LL : Letters ι) (S : Set ι)
     (a b : Fin n) (k : ℕ) (m : ι × Fin n →₀ ℕ) : MvPolynomial (ι × Fin n) R :=
   open Classical in
@@ -477,6 +481,7 @@ def IsCostly (mu : Fin (N + 1) → Fin (r + K) → ℤ) (c : ℤ) (i : Fin N) : 
   (colH (mu i.succ) c < colH (mu i.castSucc) c ∧ colH (mu i.castSucc) c ≤ r)
 
 
+open Classical in
 def oc (om : Fin N → ℕ) (mu : Fin (N + 1) → Fin (r + K) → ℤ) (c : ℤ) : ℕ :=
   open Classical in
   ∑ i : Fin N, if IsCostly mu c i then om i else 0

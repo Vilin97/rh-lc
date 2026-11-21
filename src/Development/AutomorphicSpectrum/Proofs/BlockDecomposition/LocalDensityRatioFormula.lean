@@ -68,6 +68,7 @@ theorem summable_ge (v : HeightOneSpectrum (𝓞 F)) (e : ℝ) (s : Fv F v) :
   exact hi (if_neg (hN i (not_le.1 h)))
 
 
+open Classical in
 theorem rv_form {v : HeightOneSpectrum (𝓞 F)} (s : Fv F v) :
     (¬ Ge v 0 s ∧ ∀ e, rv v e s = 0) ∨
       ∃ n : ℕ, (∀ i, Ge v i s ↔ i ≤ n) ∧ ∀ e, rv v e s = ∑ i ∈ Finset.range (n + 1), e ^ i := by
@@ -207,6 +208,7 @@ theorem ge_pow {v : HeightOneSpectrum (𝓞 F)} {u : (Fv F v)ˣ} (hu : Valued.v 
     rw [ge_shift hu, ih, pow_succ, Units.val_mul, mul_assoc]
 
 
+open Classical in
 theorem rv_one_series {v : HeightOneSpectrum (𝓞 F)} {u : (Fv F v)ˣ} (hu : Valued.v (u : Fv F v) = WithZero.exp (1 : ℤ))
     (s : Fv F v) : rv v 1 s = ∑' k : ℕ, rv v 0 ((((u ^ k : (Fv F v)ˣ)) : Fv F v) * s) := by
   rw [rv_eq]

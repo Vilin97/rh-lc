@@ -33,9 +33,11 @@ def AgreeAt (PP : Pl D.host.E) {a b : ℕ} (M M' : Matrix (Fin a) (Fin b) (Ef D)
     ∀ i j, Formalism.IndefR.Datum.toEAf D e * M i j = Formalism.IndefR.Datum.toEAf D e * M' i j
 
 
+variable (D) in
 def nAux (j : ℕ) : ℕ := D.R.m - 1 - j
 
 
+variable (D) in
 def IsAuxiliaryHeckeCharacter (j : ℕ) (E Ev : ℕ → (D.sp.Y j).V) (z : (D.sp.Y j).V) : Prop :=
   (∀ i < nAux D j / 2, ∀ l < nAux D j / 2,
     (D.sp.Y j).hD (E i) (E l) = 0 ∧ (D.sp.Y j).hD (Ev i) (Ev l) = 0 ∧
@@ -46,16 +48,19 @@ def IsAuxiliaryHeckeCharacter (j : ℕ) (E Ev : ℕ → (D.sp.Y j).V) (z : (D.sp
     ∀ i < nAux D j / 2, (D.sp.Y j).hD (E i) z = 0 ∧ (D.sp.Y j).hD (Ev i) z = 0)
 
 
+variable (D) in
 def normalFr (j : ℕ) (E Ev : ℕ → (D.sp.Y j).V) (z : (D.sp.Y j).V) (n : ℕ) : (D.sp.Y j).V :=
   if n < nAux D j / 2 then E n
   else if Even j ∧ n = nAux D j / 2 then z
   else (if Even j then -(D.sp.T : D.host.E) else (D.sp.T : D.host.E)) • Ev (nAux D j - 1 - n)
 
 
+variable (D) in
 def colX (j : ℕ) (γ : GL (Fin (D.sp.X j).rank) (Ef D)) (n : ℕ) (i : Fin (D.sp.Y j).rank) : Ef D :=
   if h : n < (D.sp.X j).rank then mulM (ratM (frameMat (D.sp.Y j) (D.sp.X j) (D.sp.iXY j))) γ.val i ⟨n, h⟩ else 0
 
 
+variable (D) in
 def chainMat (j : ℕ) (γ : GL (Fin (D.sp.X j).rank) (Ef D)) (E Ev : ℕ → (D.sp.Y j).V) (z : (D.sp.Y j).V) (s : ℕ) :
     Matrix (Fin (D.sp.Y j).rank) (Fin (D.sp.Y j).rank) (Ef D) :=
   fun i a =>

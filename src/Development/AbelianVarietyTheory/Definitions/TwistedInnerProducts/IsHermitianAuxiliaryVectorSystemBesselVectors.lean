@@ -44,6 +44,7 @@ end Generic
 section Coef
 
 
+variable (D v) in
 def locIdeal : Ideal (AE D) where
   carrier := {z | tensAt D.host.E v (compFin D.host.F D.host.E v z) = z}
   zero_mem' := by simp
@@ -122,6 +123,7 @@ def IsScaled (t : ℕ → Fv D.host.F v) : Prop :=
   (∀ r, vec β (.inl r) = jX.map τ *ᵥ vec γ r) ∧ ∀ i : Fin c, vec β (.inr i) = t i • (τ ∘ a i)
 
 
+variable (c) in
 structure IsHermitianAuxiliaryVectorSystem (κ : ℕ → D.host.E) : Prop where
   iso : jXᴴ * V.gram * jX = X.gram
   perp : ∀ i < c, star (a i) ᵥ* V.gram ᵥ* jX = 0

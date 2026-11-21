@@ -33,6 +33,7 @@ open GlobalTheory GlobalTheory.CM GlobalTheory.Frames GlobalTheory.LamT
 namespace GlobalTheory.OrthoHerm
 
 
+open scoped Matrix ComplexConjugate in
 theorem im_diag_eq_trace {E : Type} [Field E] [NumberField E] [IsCMField E] {r g : ℕ} (q : ℕ) (ξ : E)
     (Gm : Matrix (Fin r) (Fin r) E) (Ψ : Finset (E →+* ℂ))
     (hΨ : ∀ τ : E →+* ℂ, τ ∈ Ψ ↔ ComplexEmbedding.conjugate τ ∉ Ψ) (idx : Fin g ≃ Ψ × Fin r)

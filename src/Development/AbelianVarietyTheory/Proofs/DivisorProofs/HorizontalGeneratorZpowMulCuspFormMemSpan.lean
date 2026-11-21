@@ -25,6 +25,7 @@ theorem zero_mem_SS' (X : Data E r) (la : Wt X.Ψ r) : (0 : Frame X.Ψ r → ℂ
   split_ifs <;> simp
 
 
+open Classical in
 def mulAt {Comp : Type} (X : Comp → Data E r) (k0 : Comp) (h : Frame (X k0).Ψ r → ℂ) : FDSec X →ₗ[ℂ] FDSec X :=
   (LinearMap.single ℂ (fun k => Frame (X k).Ψ r → ℂ) k0) ∘ₗ (LinearMap.mulLeft ℂ h) ∘ₗ
     (LinearMap.proj (R := ℂ) (φ := fun k => Frame (X k).Ψ r → ℂ) k0)

@@ -97,12 +97,14 @@ theorem relIndex_quotPreimage (S : Subgroup (U ⧸ V.subgroupOf U)) :
 variable [TopologicalSpace G] [IsTopologicalGroup G]
 
 
+omit [IsTopologicalGroup G] in
 theorem continuous_quotPreimageHom (S : Subgroup (U ⧸ V.subgroupOf U)) :
     Continuous (quotPreimageHom S) :=
   (QuotientGroup.continuous_mk.comp (continuous_subgroup_inclusion (quotPreimage_le S))).subtype_mk
     _
 
 
+omit [IsTopologicalGroup G] in
 theorem continuous_quotPreimageEquiv (S : Subgroup (U ⧸ V.subgroupOf U)) :
     Continuous (quotPreimageEquiv S).toMonoidHom := by
   exact (QuotientGroup.isQuotientMap_mk _).continuous_iff.2 (continuous_quotPreimageHom S)
@@ -113,6 +115,7 @@ theorem isOpen_subgroupOf {V : Subgroup G} (hV : IsOpen (V : Set G)) (W : Subgro
   hV.preimage continuous_subtype_val
 
 
+omit [(V.subgroupOf U).Normal] in
 theorem discreteTopology_quot (hV : IsOpen (V : Set G)) :
     DiscreteTopology (U ⧸ V.subgroupOf U) :=
   QuotientGroup.discreteTopology (isOpen_subgroupOf hV U)

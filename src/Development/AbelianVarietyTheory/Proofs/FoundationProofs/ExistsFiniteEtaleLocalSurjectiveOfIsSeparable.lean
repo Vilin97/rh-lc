@@ -64,6 +64,7 @@ private lemma isAdicComplete_of_linearEquiv_pi {V M ι : Type*} [CommRing V] [Ad
     simpa using hL i n
 
 
+open Polynomial IsLocalRing in
 theorem _root_.GlobalTheory.unramExt : _root_.ReciprocityTheory.ChartRestriction.G.Out.UnramExtSt := by
   unfold _root_.ReciprocityTheory.ChartRestriction.G.Out.UnramExtSt
   intro V _ _ _ _ k' _ _ _ _

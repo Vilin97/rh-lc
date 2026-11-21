@@ -26,6 +26,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {n r : ℕ} {J : Matrix (Fin n) (Fin n) E} {X Y : Matrix (Fin n) (Fin r) E}
 
 
+variable (σ J X Y) in
 structure IsTorus (a : (Fin r → ℝ) → GAd σ J) : Prop where
   add : ∀ s t, a (s + t) = a s * a t
   cont : Continuous a
@@ -48,6 +49,7 @@ theorem inv_mem_minPar (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hW : IsWittFra
   inv_mem_minimal_parabolic h hJ hW hp
 
 
+variable (X) in
 def minParSub (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hW : IsWittFrame σ J X Y) : Subgroup (GAd σ J) where
   carrier := minPar σ J X
   one_mem' := one_mem_minPar σ J X

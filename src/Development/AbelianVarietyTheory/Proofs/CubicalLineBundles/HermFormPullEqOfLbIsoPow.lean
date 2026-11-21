@@ -162,6 +162,7 @@ lemma hermForm_sub_smul {g : ℕ} (H H' : Matrix (Fin g) (Fin g) ℂ) (a b : ℂ
 end PullHermitian
 
 
+open PullHermitian in
 theorem hermForm_pull_eq_of_lbIso_pow :
     ∀ (A A' : Over (Sp ℂ)) [GrpObj A] [GrpObj A'] (L : LB A.left) (L' : LB A'.left), L.IsLB → L'.IsLB →
   ∀ (g g' : ℕ) (u : HolUnif A L g) (u' : HolUnif A' L' g') (Hm : Matrix (Fin g) (Fin g) ℂ) (χ : u.Λ → ℂ)

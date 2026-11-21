@@ -90,6 +90,7 @@ theorem eq_of_mem_closure {F : X.Modules} [IsFiniteQC F] {n : ℕ} (hd : suppDim
     exact absurd (by exact_mod_cast h3 : n + 1 ≤ n) (by omega)
 
 
+variable (κ) in
 theorem interNumRed_eq_zero (hp : IsProjOver (strHom κ X)) {ι : Type} [Fintype ι]
     {P : ι → LB X} (hP : ∀ i, (P i).IsLB) (C : Closeds X)
     (hC : topologicalKrullDim (C : Set X) < (Fintype.card ι : ℕ)) : interNumRed κ C P = 0 := by

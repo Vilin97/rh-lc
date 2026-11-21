@@ -100,6 +100,7 @@ theorem nsmul_D (d : D) : n • d = 0 :=
   nsmul_eq_zero_of_nonempty_addEquiv H.nonempty_addEquiv d
 
 
+include H in
 theorem exists_devissage (M : Rep.{u} (ULift.{u} ℤ) Γ) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) :
     ∃ (I Q : Rep.{u} (ULift.{u} ℤ) Γ) (_ : IsDiscreteRep I) (_ : IsDiscreteRep Q) (_ : Finite I)
@@ -150,6 +151,7 @@ namespace GroupDualityHypotheses
 variable (H : GroupDualityHypotheses n D t)
 
 
+include H in
 theorem injective_zero (M : Rep.{u} (ULift.{u} ℤ) Γ) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) : Function.Injective (dualityMap D (rfl : 0 + 2 = 2) t M) := by
   have := H.finite_D
@@ -165,6 +167,7 @@ theorem injective_zero (M : Rep.{u} (ULift.{u} ℤ) Γ) [IsDiscreteRep M] [Finit
   exact (injective_iff_map_eq_zero _).1 (injective_cohomologyMap_zero i hi) x h2
 
 
+include H in
 theorem surjective_zero (M : Rep.{u} (ULift.{u} ℤ) Γ) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) : Function.Surjective (dualityMap D (rfl : 0 + 2 = 2) t M) := by
   have := H.finite_D
@@ -202,6 +205,7 @@ theorem bijective_zero (M : Rep.{u} (ULift.{u} ℤ) Γ) [IsDiscreteRep M] [Finit
   ⟨H.injective_zero M hM, H.surjective_zero M hM⟩
 
 
+include H in
 theorem injective_one (M : Rep.{u} (ULift.{u} ℤ) Γ) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) : Function.Injective (dualityMap D (rfl : 1 + 1 = 2) t M) := by
   have := H.finite_D
@@ -239,6 +243,7 @@ theorem injective_one (M : Rep.{u} (ULift.{u} ℤ) Γ) [IsDiscreteRep M] [Finite
   exact congrArg (fun φ => φ.hom v) (comp_δ hS 0 1 rfl)
 
 
+include H in
 theorem surjective_one (M : Rep.{u} (ULift.{u} ℤ) Γ) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) : Function.Surjective (dualityMap D (rfl : 1 + 1 = 2) t M) := by
   have := H.finite_D
@@ -294,6 +299,8 @@ variable {k Γ : Type u} [CommRing k] [Group Γ] [TopologicalSpace Γ] [IsTopolo
   [CompactSpace Γ] [TotallyDisconnectedSpace Γ] (D : Rep.{u} k Γ) [IsDiscreteRep D]
 
 
+omit [TopologicalSpace Γ] [IsTopologicalGroup Γ] [CompactSpace Γ] [TotallyDisconnectedSpace Γ]
+  [IsDiscreteRep D] in
 theorem tensorHom_toDualDual_evalPairing (M : Rep.{u} k Γ) :
     (𝟙 (dualRep D M) ⊗ₘ toDualDual D M) ≫ evalPairing D (dualRep D M) =
       (β_ (dualRep D M) M).hom ≫ evalPairing D M := by
@@ -337,6 +344,7 @@ variable {Γ : Type u} [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] 
   {t : cohomology D 2 →+ ZMod n}
 
 
+omit [NeZero n] in
 theorem dualityMap_two_eq (M : Rep.{u} (ULift.{u} ℤ) Γ) [IsDiscreteRep M] [Finite M]
     [IsDiscreteRep (dualRep D (dualRep D M))] (x : cohomology M 2)
     (y : cohomology (dualRep D M) 0) :
@@ -350,6 +358,7 @@ namespace GroupDualityHypotheses
 variable (H : GroupDualityHypotheses n D t)
 
 
+include H in
 theorem bijective_two (M : Rep.{u} (ULift.{u} ℤ) Γ) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) : Function.Bijective (dualityMap D (rfl : 2 + 0 = 2) t M) := by
   have := H.finite_D
@@ -393,6 +402,7 @@ theorem bijective_two (M : Rep.{u} (ULift.{u} ℤ) Γ) [IsDiscreteRep M] [Finite
   exact hpre.comp h0
 
 
+include H in
 theorem bijective_dualityMap (M : Rep.{u} (ULift.{u} ℤ) Γ) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) {r s : ℕ} (h : r + s = 2) :
     Function.Bijective (dualityMap D h t M) := by

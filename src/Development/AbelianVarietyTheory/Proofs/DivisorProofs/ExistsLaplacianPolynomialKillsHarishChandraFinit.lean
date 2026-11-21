@@ -53,6 +53,7 @@ theorem foldr_replicate' (z : Module.End ℂ (Sm E a)) (χ : Module.End ℂ (Sm 
     simp [sub_smul, Polynomial.aeval_X, Polynomial.aeval_C]
 
 
+variable (E a) in
 theorem exists_poly_one (W : Submodule ℂ (Kinf E a → ℂ)) (hW : FiniteDimensional ℂ W)
     (χ : Module.End ℂ (Sm E a) → ℂ) (N : ℕ) :
     ∃ p : Polynomial ℂ, p ≠ 0 ∧ ∀ φ : Sm E a,

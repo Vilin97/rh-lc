@@ -138,6 +138,7 @@ def StarAll (X : Inst D L) (K : Consts) (C bo : ℝ) : Prop :=
   ∀ a b, InWin L a b → ∀ p, Cand D L K p → ∀ t0 ∈ goodReps X p, ∀ j ∈ SizeData₂.lifts D, StarAt X K C bo a b p j t0
 
 
+open Classical in
 def candF (D : D7) (L : SizeData₂ D) (K : Consts) : Finset ℕ :=
   (Finset.range ⌈L.sc.X'⌉₊).filter (fun p => Cand D L K p)
 

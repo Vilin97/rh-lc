@@ -48,6 +48,7 @@ end GlobalTheory.CompanionTheory.GrForm.FrameEx
 namespace GlobalTheory.CompanionTheory.GrForm
 
 
+open FrameEx in
 theorem stFrame : StFrame := by
   intro O _ l s hb X q W d c u hu
   letI := (strV q W).toAlgebra

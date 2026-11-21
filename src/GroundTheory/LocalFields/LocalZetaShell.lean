@@ -23,6 +23,7 @@ theorem exists_units_ord_eq_one : ∃ π : Kˣ, ord (π : K) = 1 := by
   exact ⟨Units.mk0 _ h0, by rw [Units.val_mk0]; exact ord_uniformizer hϖ⟩
 
 
+variable (K) in
 def unifUnit : Kˣ := (exists_units_ord_eq_one K).choose
 
 theorem ord_unifUnit : ord (unifUnit K : K) = 1 := (exists_units_ord_eq_one K).choose_spec
@@ -65,6 +66,7 @@ end Order
 section Shell
 
 
+variable (K) in
 def ordShell (k : ℤ) : Set Kˣ := {u | ord (u : K) = k}
 
 theorem mem_ordShell {k : ℤ} {u : Kˣ} : u ∈ ordShell K k ↔ ord (u : K) = k := Iff.rfl
@@ -170,6 +172,8 @@ theorem setIntegral_ordShell_mul {E : Type*} [NormedAddCommGroup E] [NormedSpace
   · rw [Set.indicator_of_notMem hu, Set.indicator_of_notMem (mt (mul_mem_ordShell_iff v).mp hu)]
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [MeasurableSpace K]
+  [BorelSpace K] in
 theorem integral_eq_zero_of_mul_eq {G : Type*} [Group G] [MeasurableSpace G] [MeasurableMul G]
     (μ : Measure G) [μ.IsMulLeftInvariant] (F : G → ℂ) (v : G) {a : ℂ} (ha : a ≠ 1)
     (hF : ∀ u, F (v * u) = a * F u) : ∫ u, F u ∂μ = 0 := by

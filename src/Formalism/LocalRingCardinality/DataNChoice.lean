@@ -12,6 +12,7 @@ open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.
 open scoped TensorProduct
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 structure NChoice (D : D7) where
 
   twI : D.what₂.places.Pl → D.ntw.Tw
@@ -56,6 +57,7 @@ structure NChoice (D : D7) where
 attribute [instance] NChoice.crOe NChoice.domOe NChoice.dvrOe NChoice.algOe NChoice.algOOe NChoice.towOe
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def NChoice.kMapE {D : D7} (c : NChoice D) (w : D.what₂.places.Pl) :
     FractionRing (D.ntw.Ok (c.twI w) (c.k' w)) →+* FractionRing (c.Oe w) :=
   IsFractionRing.map (j := algebraMap (D.ntw.Ok (c.twI w) (c.k' w)) (c.Oe w)) (c.Oe_inj w)

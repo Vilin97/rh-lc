@@ -24,6 +24,7 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
   [NeZero n]
 
 
+omit [NeZero n] in
 theorem nsmul_galRootsOfUnity_eq_zero' {F L : Type} [Field F] [Field L] [Algebra F L]
     (ζ : galRootsOfUnity.{0} F L n) : n • ζ = 0 := by
   apply Additive.toMul.injective
@@ -113,6 +114,7 @@ theorem zmodActPairing_tmul (D Z' : Rep.{0} (ULift.{0} ℤ) H) (hD : ∀ d : D, 
 end ActPairings
 
 
+omit [NeZero n] in
 theorem zsmul_eq_cast_zsmul {M : Type*} [AddCommGroup M] [NeZero n] {x : M} (hx : n • x = 0) (z : ℤ) :
     z • x = (ZMod.cast (z : ZMod n) : ℤ) • x := by
   rw [ZMod.coe_intCast]
@@ -293,6 +295,7 @@ theorem eq_of_add_neg_one_pow_one_smul_eq_zero {R M : Type*} [Ring R] [AddCommGr
   exact h
 
 
+set_option maxHeartbeats 1600000 in
 theorem gsKummerCompactδ_cup (hnS : ∀ v ∉ S, ((n : ℕ) : 𝓞 K.1) ∉ v.asIdeal) (x : gsUnitsCompact S ιs 1)
     (y : cohomology (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) 1) :
     compactCup (gsFinFamily S ιs) (gsPairingμ S n) (gsPairingμᵥ S ιs n) (gsPairingμ_hμ S ιs n)

@@ -24,6 +24,7 @@ def HostAddCharCompatible (H : HostRaw φ) (ell : AddChar (E0 × φ.A) ℂ → �
     (∀ n : ℕ, n ≠ 0 → χ (n : ZMod N) = primVal (arith H) ψ n) → ell ψ = An.logDerivativeAtOne χ
 
 
+open Classical in
 def keptA (Λ : Level) (H : HostRaw φ) : Finset (AddChar (E0 × φ.A) ℂ) :=
   Finset.univ.filter fun ψ => H.Kept Λ.KEPT (chr φ ψ)
 

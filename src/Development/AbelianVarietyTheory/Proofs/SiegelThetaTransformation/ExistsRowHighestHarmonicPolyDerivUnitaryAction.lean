@@ -77,6 +77,7 @@ noncomputable def hActL (X : Data E r) (idx : Fin g ≃ X.Ψ × Fin r) (h : Matr
 end GlobalTheory.Dict.ColPoly
 
 
+open GlobalTheory.Dict.ColPoly in
 theorem GlobalTheory.Dict.exists_rowHighest_polyDeriv_hAct : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (X : Data E r) (g q0 : ℕ) (hr : X.p0 + q0 = r) (bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ) (idx : Fin g ≃ X.Ψ × Fin r) (n : ℕ), IsSympl X bas → Even n → ∀ h : Matrix (Fin n) (Fin n) E, ccT h * h = 1 → ∀ (k : X.Ψ → Fin q0 → ℕ) (k' : X.Ψ → Fin X.p0 → ℕ), ∀ P ∈ Harm.rowHighest ℂ k k', ∃ P' ∈ Harm.rowHighest ℂ k k', ∀ F : (Fin n → Fin g → ℂ) → ℂ, AnalyticOnNhd ℂ F Set.univ → I2.polyDeriv P (letterDir X hr idx) (fun z => F (hAct X idx h z)) 0 = I2.polyDeriv P' (letterDir X hr idx) F 0 := by
   intro E _ _ _ r X g q0 hr bas idx n _hs _hn h hh k k' P hP
   classical

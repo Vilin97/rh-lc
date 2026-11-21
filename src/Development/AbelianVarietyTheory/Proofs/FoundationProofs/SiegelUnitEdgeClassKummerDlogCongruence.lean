@@ -295,6 +295,7 @@ theorem coef_bridge {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω
 end Loc
 
 
+open GlobalTheory.DlEx in
 theorem dl_pres {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (ε : Ω →+* ℂ) (X : GlobalTheory.KZ.Tower Ω ε)
     (hj : ∃ φ : ℂ → ℂ, DifferentiableOn ℂ φ Hs ∧ X.an X.jK = (φ : Mero)) (l : ℕ) [Fact l.Prime] (A : ValuationSubring Ω)
     (hl : ((l : ℕ) : Ω) ∈ A.nonunits) (n L : ℕ) (f : X.K) (hL : 0 < L) (hf : f ≠ 0) (hfK : f ∈ KT X L) :
@@ -334,6 +335,7 @@ theorem dl_pres {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (�
   rw [HahnSeries.coeff_sub, hz ij.2]; ring
 
 
+open GlobalTheory.K4 GlobalTheory.KEdge GlobalTheory.NeedB in
 theorem galois_side {p : ℕ} [hp : Fact p.Prime] {Ωl : Type} [Field Ωl] [Algebra (O0 p) Ωl] (T : GlobalTheory.K5.Tower p Ωl) (L n : ℕ)
     {F K Ω' : Type} [Field F] [Field K] [Field Ω'] [Algebra F K] [Algebra F Ω'] [Algebra K Ω'] [IsScalarTower F K Ω']
     [IsAlgClosure K Ω'] [Normal F K] (E : Ω' →+* Ωl) (ζ α β : Ω') (hζ : E ζ = T.ζ n)
@@ -457,6 +459,7 @@ theorem coefQ_supp {Ω : Type} [Field Ω] (p L : ℕ) (hp : 0 < p) (f : ℕ → 
 end GlobalTheory.PairTop
 
 
+open GlobalTheory.PairTop in
 theorem GlobalTheory.pair_edge_dlog : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∃ cc : ℕ, ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (ε : Ω →+* ℂ) (X : GlobalTheory.KZ.Tower Ω ε), (∃ φ : ℂ → ℂ, DifferentiableOn ℂ φ Hs ∧ X.an X.jK = (φ : Mero)) →
   ∀ (A : ValuationSubring Ω), ((p : ℕ) : Ω) ∈ A.nonunits →
   ∀ (L n N c d : ℕ) (A₁ a₂ g B₁ b₂ h : ℤ), a₂ ≡ N * g [ZMOD (p : ℤ) ^ L] → b₂ ≡ N * h [ZMOD (p : ℤ) ^ L] → (N : ℤ) ∣ a₂ → (N : ℤ) ∣ b₂ → 1 ≤ n → n ≤ L → 0 < N → Nat.Coprime N p → 1 < c → Nat.Coprime c (6 * N * p) → 1 < d → Nat.Coprime d (6 * N * p) →

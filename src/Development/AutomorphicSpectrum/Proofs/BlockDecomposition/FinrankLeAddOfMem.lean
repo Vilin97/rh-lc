@@ -38,6 +38,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.Cha
 namespace GlobalTheory.CompanionTheory.NefLower
 
 
+open PositivityTheory.HtPt.Siua in
 theorem num_lower {M : Type} [AddCommGroup M] (d : ℕ)
     (f : MultilinearMap ℤ (fun _ : Fin (d + 1) => M) ℤ) (μ e : M) (δ : ℚ) (hδ : 0 < δ) :
     ∃ t : ℚ, 0 < t ∧ ∀ (a : ℕ) (m : ℤ), 1 ≤ a → (m : ℚ) = a * t →
@@ -185,6 +186,7 @@ theorem pow_mem_chartLatQ (y : (Σ k, ι k) → Ω) (γ : K → ℤ) (e : Ω) (h
 end Sections
 
 
+open GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Kleiman2 GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization in
 theorem count_lower (hK : VeryAmpleNefPlusAmple.Statement) (hS : SectionCount.Statement)
     (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] [CharZero Ω]
     (y : (Σ k, ι k) → Ω) (d : ℕ) (a : K → ℤ) (hV : IsArithVar (mCoordIdeal y) (d + 1 + 1))
@@ -256,6 +258,7 @@ theorem count_lower (hK : VeryAmpleNefPlusAmple.Statement) (hS : SectionCount.St
   linarith
 
 
+open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Kleiman2 in
 theorem lower_of_pos (hK : VeryAmpleNefPlusAmple.Statement) (hS : SectionCount.Statement)
     (hKod : KodairaGeneric.Statement)
     (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] [CharZero Ω]

@@ -281,6 +281,8 @@ private lemma exists_riemannZeta_ne_zero_near_one_of_abs_im_le_one :
   exact right_ne_zero_of_mul hgs
 
 
+open Complex DirichletCharacter ArithmeticFunction MeasureTheory in
+open Filter Topology in
 theorem _root_.GlobalTheory.ZeroFreePrincipal.zero_free : ∃ c : ℝ, 0 < c ∧ ∀ (q : ℕ) [NeZero q] (s : ℂ),
     s ≠ 1 → LFunction (1 : DirichletCharacter ℂ q) s = 0 →
     s.re < 1 - c / Real.log (q * (|s.im| + 2)) := by

@@ -87,6 +87,7 @@ variable {G} {g : ℕ}
   {x : ∀ (S : Type) [CommRing S] [Algebra R₀ S], (Fin g → S) → (sp (R₀ := R₀) S ⟶ G)}
 
 
+open TrivSqZeroExt in
 theorem Coord.mul_inr (h : Coord G g x) {K : Type} [AddCommGroup K] [Module R₀ K]
     [Module R₀ᵐᵒᵖ K] [IsCentralScalar R₀ K] (a b : Fin g → K) :
     x (TrivSqZeroExt R₀ (K × K)) (fun i => inr (a i, 0)) *
@@ -128,6 +129,7 @@ theorem Coord.mul_inr (h : Coord G g x) {K : Type} [AddCommGroup K] [Module R₀
   exact Prod.ext e1.symm e2.symm
 
 
+open TrivSqZeroExt in
 theorem Coord.mul_eq (h : Coord G g x) {S : Type} [CommRing S] [Algebra R₀ S]
     (K : Submodule R₀ S) (hK : ∀ a ∈ K, ∀ b ∈ K, a * b = 0) (a b : Fin g → K) :
     x S (fun i => a i) * x S (fun i => b i) = x S (fun i => (a i : S) + b i) := by

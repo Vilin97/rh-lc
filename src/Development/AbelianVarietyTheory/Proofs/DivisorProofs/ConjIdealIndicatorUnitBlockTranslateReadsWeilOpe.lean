@@ -106,6 +106,7 @@ theorem heis_off (hψ : IsStdChar D ψ (-1)) (hS : IsSelfDualC S LS) (hT : IsSel
   rw [← h, smul_smul, mul_inv_cancel₀ hc, one_smul, h]
 
 
+set_option maxHeartbeats 1600000 in
 theorem heis_model (hψ : IsStdChar D ψ (-1)) (hS : IsSelfDualC S LS) (hT : IsSelfDualC T LT) {e : Formalism.L2.Theta.AE D}
     {P : Finset (Formalism.L2.DIV.Pl D.host.E)} (he : IsIdemSum e P) {vac : WO S T → ℂ} (hv : IsThetaFunO ψ S T vac)
     {Tm : (WO S T → ℂ) →ₗ[ℂ] (WO S T → ℂ)}
@@ -156,6 +157,7 @@ theorem heis_model (hψ : IsStdChar D ψ (-1)) (hS : IsSelfDualC S LS) (hT : IsS
   exact smul_right_injective _ hp hF
 
 
+set_option maxHeartbeats 1600000 in
 theorem reads_transl : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D) {a d : ℕ} (hS : S.rank = a) (hT : T.rank = d) (δ : ℂ),
     D.host.ccK = ⊤ → Setup ψ θ S T ⊤ δ 1 →
     ∀ (LS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)) (LT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)),

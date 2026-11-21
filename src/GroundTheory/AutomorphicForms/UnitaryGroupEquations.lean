@@ -36,6 +36,7 @@ theorem matrixCoords_apply (g : Matrix ι ι (R ⊗[F] E)) (i j : ι) (k : κ) :
 variable {R}
 
 
+omit [Algebra.IsQuadraticExtension F E] [Fintype κ] in
 theorem repr_tensorMap (f : R →ₐ[F] S) (z : R ⊗[F] E) (k : κ) :
     (Algebra.TensorProduct.basis S b).repr
         (TensorProduct.map f.toLinearMap (LinearMap.id : E →ₗ[F] E) z) k =
@@ -47,6 +48,7 @@ theorem repr_tensorMap (f : R →ₐ[F] S) (z : R ⊗[F] E) (k : κ) :
   | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 
+omit [Algebra.IsQuadraticExtension F E] [Fintype ι] [DecidableEq ι] in
 theorem matrixCoords_map (f : R →ₐ[F] S) (g : Matrix ι ι (R ⊗[F] E)) :
     matrixCoords b S (g.map (TensorProduct.map f.toLinearMap
       (LinearMap.id : E →ₗ[F] E))) =

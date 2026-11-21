@@ -71,6 +71,9 @@ theorem mem_integer_of_isIntegral {x : w.adicCompletion L}
     (hx.tower_top (A := 𝒪[w.adicCompletion L]))
 
 
+omit [Algebra K L] [w.asIdeal.LiesOver v.asIdeal]
+  [ContinuousSMul (v.adicCompletion K) (w.adicCompletion L)]
+  [IsScalarTower K (v.adicCompletion K) (w.adicCompletion L)] in
 theorem isIntegral_algebraMap_ringOfIntegers (r : 𝓞 L) :
     IsIntegral 𝒪[v.adicCompletion K]
       (algebraMap L (w.adicCompletion L) (algebraMap (𝓞 L) L r)) := by
@@ -82,6 +85,8 @@ theorem isIntegral_algebraMap_ringOfIntegers (r : 𝓞 L) :
   exact (congrArg (algebraMap L (w.adicCompletion L)) hroot).trans (map_zero _)
 
 
+omit [Algebra K L] [w.asIdeal.LiesOver v.asIdeal]
+  [IsScalarTower K (v.adicCompletion K) (w.adicCompletion L)] in
 theorem continuousSMul_integer :
     ContinuousSMul 𝒪[v.adicCompletion K] (w.adicCompletion L) := by
   refine continuousSMul_of_algebraMap _ _ ?_

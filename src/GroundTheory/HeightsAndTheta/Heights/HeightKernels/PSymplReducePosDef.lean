@@ -23,6 +23,7 @@ theorem sum_mul_symplCons {n : ℕ} (c : ℝ) (x : Fin n ⊕ Fin n → ℝ)
 end PSymplReducePosDef
 
 
+open PSymplReducePosDef in
 theorem SymplReducePosDef.proof : SymplReducePosDef.Statement := by
   intro n H hH
   have hsymm : ∀ i j, H j i = H i j := fun i j => by

@@ -194,6 +194,7 @@ section Matrix
 variable {n : ℕ}
 
 
+omit [Field F] [ValuativeRel F] [IsNonarchimedeanLocalField F] in
 theorem isSchwartzBruhat_iff_comp_symm (Φ : Matrix (Fin n) (Fin n) F → ℂ) :
     IsSchwartzBruhat Φ ↔
       Φ ∘ (matrixCoordHomeomorph (Fin n) F).symm ∈ localSchwartzBruhatPi F := by

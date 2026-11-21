@@ -16,6 +16,7 @@ namespace Formalism.L2.Herm
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
+set_option maxHeartbeats 1000000 in
 structure TwChTied (D : D7) (inQ : D.what₂.Tup → HeightOneSpectrum (𝓞 D.host.F) → Prop) where
 
   eCls0 : ∀ u μ, (D.mem u).C.cls 0 ≃ (D.chTw u μ).cls 0

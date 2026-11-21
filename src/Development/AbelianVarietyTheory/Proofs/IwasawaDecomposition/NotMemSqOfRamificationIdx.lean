@@ -338,6 +338,7 @@ end Enlarge
 section Data
 
 
+open Classical in
 def avoidPlaces (P : Pre) (s : Finset ℕ) : Finset (HeightOneSpectrum (𝓞 P.host.E)) :=
   (((finite_offSet P).union s.finite_toSet).inter_of_left {p | p.Prime}).toFinset.attach.biUnion fun p =>
     (placesOver_finite_av P.host.E p.1 (((Set.Finite.mem_toFinset _).1 p.2).2.ne_zero)).toFinset

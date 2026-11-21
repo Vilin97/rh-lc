@@ -118,6 +118,7 @@ theorem exists_param [Finite (Pts O A)] (ζ₀ : Pts O A) [IsDVRAt ζ₀] :
 
 
 open scoped Classical in
+open Classical in
 theorem exists_unit_param (K : Type*) [Field K] [Algebra K A] [FiniteDimensional K A]
     [Finite (Pts O A)] [∀ ζ : Pts O A, IsDVRAt ζ] (h : IsUnif (A := A) ϖ) (ζ₀ : Pts O A) :
     ∃ t : Aˣ, ∀ ζ : Pts O A, ord ϖ ζ (t : A) = (((if ζ = ζ₀ then 1 else 0 : ℤ)) : WithTop ℤ) := by
@@ -234,6 +235,7 @@ theorem length_zero_of_le {R M : Type*} [Ring R] [AddCommGroup M] [Module R M]
   exact h (a - b).2
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem length_residue (hfin : Module.Finite O ↥(As O A)) (ζ : Pts O A) :
     Module.length O (↥(As O A) ⧸ ζ.asIdeal) = (fdeg ζ : ℕ∞) := by
   classical
@@ -262,6 +264,7 @@ theorem ballO_mono [∀ ζ : Pts O A, IsDVRAt ζ] (h : IsUnif (A := A) ϖ) (he :
 
 
 open scoped Classical in
+open Classical in
 theorem length_step (K : Type*) [Field K] [Algebra K A] [FiniteDimensional K A]
     [Finite (Pts O A)] [∀ ζ : Pts O A, IsDVRAt ζ] (h : IsUnif (A := A) ϖ) (hfin : Module.Finite O ↥(As O A))
     (he : IsGen (A := A) e) (c d : Pts O A → ℤ) (ζ₀ : Pts O A)

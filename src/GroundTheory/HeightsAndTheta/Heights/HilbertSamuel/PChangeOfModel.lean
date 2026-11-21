@@ -26,6 +26,7 @@ open Classical in
 def blockDeg (k₂ : K) : K → ℕ := fun k => if k = k₂ then 1 else 0
 
 
+omit [Fintype K] [∀ k, Fintype (ι₂ k)] in
 theorem isMultiHomog_linForm (A : ∀ k, ι₂ k → ι k → ℤ) (q : Σ k, ι₂ k) :
     IsMultiHomog (linForm A q) (blockDeg q.1) := by
   classical
@@ -41,6 +42,7 @@ theorem isMultiHomog_linForm (A : ∀ k, ι₂ k → ι k → ℤ) (q : Σ k, ι
   · simp [blockDeg, hk]
 
 
+omit [∀ k, Fintype (ι₂ k)] in
 theorem exists_linForm_not_mem {P : Ideal (MRing ι)} {d : ℕ} {A : ∀ k, ι₂ k → ι k → ℤ} (hP : IsArithVar P d)
     (hBP : IsBasePtFree P (linForm A)) : ∀ k₂, ∃ j, linForm A ⟨k₂, j⟩ ∉ P := by
   intro k₂
@@ -59,6 +61,7 @@ theorem exists_linForm_not_mem {P : Ideal (MRing ι)} {d : ℕ} {A : ∀ k, ι�
 end ChangeOfModel
 
 
+open ChangeOfModel IndefiniteRowSideFullHecke.Inter in
 theorem ChangeOfModel.proof (hAI3 : Inter.PushforwardArithIntersection.Statement) (hGr : GraphStatement)
     (hGF : GenFibreExistsStatement)
     (hEU : ∀ (F : Type) [Field F] (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)],

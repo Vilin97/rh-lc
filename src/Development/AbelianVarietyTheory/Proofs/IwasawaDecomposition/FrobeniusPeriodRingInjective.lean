@@ -64,6 +64,7 @@ theorem sat (k : ℕ) (x : R) (hx : p * x ∈ Ideal.span {p, w} ^ (k + 1)) : x �
   exact add_mem (Ideal.mul_mem_right _ _ (pow_mem p w k)) hG
 
 
+include hp hw in
 theorem coeff_mem (l r : ℕ) (a F : ℕ → R) (hF : ∀ N, F (N + 1) = a N * w ^ (l * N) + p * F N)
     (N : ℕ) (b : R) (h : b * w ^ (l * N) + F N ∈ Ideal.span {p, w} ^ (N + r)) :
     ∀ i < N, l * (i + 1) ≤ i + r + 1 → a i ∈ Ideal.span {p, w ^ l} := by
@@ -224,6 +225,7 @@ theorem pow_dvd_of_frob (k : ℕ) (t : K) (ht : t ∈ Algebra.adjoin R {algebraM
     exact ⟨m, hm, by ring⟩
 
 
+include hq in
 theorem bounded_mod (x : R) (n : ℕ) (m : K) (hm : m ∈ Algebra.adjoin R {algebraMap R K x * q}) :
     ∃ (a : R) (z : K), algebraMap R K p ^ n * m = algebraMap R K a + algebraMap R K x ^ n * z := by
   induction n generalizing m with

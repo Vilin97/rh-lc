@@ -259,6 +259,7 @@ theorem glRel_LT {E : Fin n → Fin n → Module.End ℂ V} (hE : GlRel E) (p q 
 end GlobalTheory.CompanionTheory.LeviChain
 
 
+open GlobalTheory.CompanionTheory.LeviChain in
 theorem GlobalTheory.CompanionTheory.LeviChain.lF_bd_comm : ∀ (n : ℕ) (lev : Fin n → ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (E : Fin n → Fin n → Module.End ℂ V),
     Monotone lev → GlRel E → ∀ p q : Fin n, lev p = lev q → ∀ x : Cn n V, SuppIn (inU lev) x →
       lF E p q (bd (allT n) E x) = bd (allT n) E (lF E p q x) := by

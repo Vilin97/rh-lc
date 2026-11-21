@@ -216,6 +216,7 @@ def IsDesc : Prop :=
     (b ≫ m₀) z ∈ V i → gs b z (m₀ ⁻¹ᵁ V i) (pb i) = gs a z (h.W i) (pE h ν i)
 
 
+variable (Q) in
 def Commutes : Prop :=
   ∀ (α : Q.X) (j : Fin 4) (T : A₀.left ⟶ A₀.left), T ≫ m₀ = m₀ ≫ Q.famφB α j → T ≫ A₀.hom = A₀.hom →
     ∀ (W : Q.P.A.left.Opens) (f : Γ(Q.P.A.left, W)) (Z : Scheme.{0}) (b : Z ⟶ A₀.left) (z : Z),

@@ -77,6 +77,7 @@ theorem smallGen_of_monomialsBounded (y : (Σ k, ι k) → Ω) (A : HermLine ι)
 end PerturbedMonomialBound
 
 
+open PerturbedMonomialBound in
 theorem PerturbMonomial.proof (hDeg : GenDegAmple.Statement) : PerturbMonomial.Statement := by
   intro K _ ι _ Ω _ y D a A P0 q _ hV _ ha hP0 hsemi hmono _
   have hBa : (HermLine.zcomb A (fsH ι) q 1).a = fun k => (q : ℤ) * a k + 1 := by

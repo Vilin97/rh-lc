@@ -20,6 +20,7 @@ section Model
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {l : Level H}
 
 
+variable (l) in
 def splitArc : letI := H.starRing; AnArc (𝓞 E) :=
   letI := H.starRing
   { gB := 0
@@ -148,6 +149,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} [StarRi
 open FrameValue
 
 
+include Λ in
 theorem isScalarTower : IsScalarTower ℂ (FractionRing ℂ) ℂ := by
   have h : Out.jFK (R := ℂ) ℂ ≫ Out.jK ℂ = 𝟙 (Sp ℂ) :=
     (Over.w (Λ.ex0 0).b).symm.trans ((congrArg (· ≫ a.D₀.P.A.hom) (Λ.ex0_b 0)).trans (Over.w (Λ.u.ex _)))

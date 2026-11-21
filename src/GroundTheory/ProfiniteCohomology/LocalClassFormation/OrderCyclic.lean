@@ -28,6 +28,7 @@ theorem galUnits_norm_apply (x : Additive Lˣ) :
   rfl
 
 
+omit [FiniteDimensional K L] in
 theorem mem_invariants_galUnits_iff (x : Additive Lˣ) :
     x ∈ (galUnits.{u} K L).ρ.invariants ↔
       Additive.toMul x ∈ GroundTheory.LocalField.invariants Gal(L/K) Lˣ :=

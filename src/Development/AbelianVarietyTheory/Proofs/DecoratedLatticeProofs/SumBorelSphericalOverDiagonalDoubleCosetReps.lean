@@ -115,6 +115,8 @@ private theorem card_satakePairs_eq_card_filter_lt {N : ℕ} (S : Finset (Fin N)
   simp [Finset.mem_product, and_assoc]
 
 
+open MeasureTheory ValuativeRel Matrix in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem _root_.GlobalTheory.BorelCosetSum.sum_cosets_eq : ∀ (k : Type) [Field k] [ValuativeRel k]
     [TopologicalSpace k] [IsNonarchimedeanLocalField k] (N : ℕ) (ϖ : kˣ),
     valuation k (ϖ : k) = uniformizer k → ∀ (γ : Fin N → ℂ) (ψ : GL (Fin N) k → ℂ),

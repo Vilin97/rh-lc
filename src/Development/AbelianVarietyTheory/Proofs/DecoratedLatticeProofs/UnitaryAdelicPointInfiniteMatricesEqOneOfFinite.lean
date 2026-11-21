@@ -31,6 +31,7 @@ theorem inner_rieszJ (tr : Formalism.L2.SG.ColDict.Transport X u F) (z : Formali
   simp [rieszJ, conjJAt]
 
 
+variable (X) in
 def RepM (wt : (VS D).V ≃ₗ[D.host.E] (VS D).V)
     (ιA : X.B.I.E ⊗[X.B.I.F] Formalism.MainNotions.S.Af X.B.I.F ≃+* D.host.E ⊗[D.host.F] FiniteAdeleRing (𝓞 D.host.F) D.host.F)
     (h : X.B.I.Gf) (M : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) (GlobalTheory.AdForm.EF D)) : Prop :=

@@ -14,6 +14,8 @@ open NumberField IsDedekindDomain Matrix Formalism.UG Formalism.BasicNotions Glo
 open scoped TensorProduct
 
 
+open NumberField IsDedekindDomain Matrix in
+open scoped TensorProduct in
 theorem _root_.GlobalTheory.OverCompare.exists_intV_mul_inclE_eq_one {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
     [Algebra F E] (v : HeightOneSpectrum (𝓞 F)) (c : 𝓞 F) (hc : c ∉ v.asIdeal) :
     ∃ u ∈ _root_.Formalism.BasicNotions.intV E v, u * _root_.Formalism.UG.inclE (F := F) (v.adicCompletion F) (algebraMap F E (c : F)) = 1 := by

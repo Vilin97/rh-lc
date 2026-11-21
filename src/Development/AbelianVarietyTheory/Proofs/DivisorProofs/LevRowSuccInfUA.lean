@@ -102,6 +102,8 @@ theorem givenLevel_succ {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L
   | _ + 1, _ => rfl
 
 
+set_option maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem prodLev_inf_UA {V : HSp D} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)} {β : GL (Fin V.rank) (Lev.EAf D)}
     (hβ : IsFrame β Λ) (hsd : IsSelfDualC V Λ) (P : Finset (Pl D.host.E)) {n' : P → ℕ} (hn : ∀ w, n' w = V.rank)
     (K : ∀ w : P, Subgroup (GL (Fin (n' w)) (Kw w.1))) (hK : ∀ w, K w = KO (Kw w.1) (Fin (n' w))) :

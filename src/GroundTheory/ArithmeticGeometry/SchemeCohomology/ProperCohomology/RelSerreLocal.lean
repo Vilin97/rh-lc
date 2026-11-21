@@ -24,10 +24,12 @@ namespace RelSerre
 variable {A : Type u} [CommRing A] {X X' : Scheme.{u}} [X.Over (Spec (.of A))] {N : ℕ}
 
 
+variable (A) in
 def baseHom {V : X.Opens} (hV : IsAffineOpen V) : CommRingCat.of A ⟶ Γ(X, V) :=
   Spec.preimage (hV.fromSpec ≫ (X ↘ Spec (.of A)))
 
 
+variable (A) in
 abbrev baseAlgebra {V : X.Opens} (hV : IsAffineOpen V) : Algebra A Γ(X, V) :=
   (baseHom A hV).hom.toAlgebra
 
@@ -53,6 +55,7 @@ instance isClosedImmersion_graph [IsClosedImmersion i] [IsSeparated (X ↘ Spec 
   exact IsClosedImmersion.of_comp _ (pullback.fst _ _)
 
 
+variable (A) in
 abbrev overV {V : X.Opens} (hV : IsAffineOpen V) :
     pullback (pullback.snd (ProjSpace.toSpecBase A N) (X ↘ Spec (.of A))) hV.fromSpec ⟶
       pullback (ProjSpace.toSpecBase A N) (X ↘ Spec (.of A)) :=
@@ -92,6 +95,7 @@ lemma restrictIso_hom_fst {V : X.Opens} (hV : IsAffineOpen V) :
     inv_restrictT_fst, pullbackRestrictIsoRestrict_inv_fst, Scheme.isoOfEq_hom_ι]
 
 
+variable (A) in
 def pasteIso {V : X.Opens} (hV : IsAffineOpen V) :
     letI := baseAlgebra A hV
     pullback (pullback.snd (ProjSpace.toSpecBase A N) (X ↘ Spec (.of A))) hV.fromSpec ≅

@@ -24,6 +24,7 @@ lemma algV_res (a : A) : resO hle (algV X V a) = algV X V' a := by
     this
 
 
+variable (I) in
 abbrev resS : Γ(reesScheme I X, reesPr I X ⁻¹ᵁ V) →+* Γ(reesScheme I X, reesPr I X ⁻¹ᵁ V') :=
   resO (Scheme.Hom.preimage_mono _ hle)
 
@@ -60,6 +61,7 @@ lemma reesRingHom_res (hV : IsAffineOpen V) (hV' : IsAffineOpen V')
     CommRingCat.of (Polynomial Γ(X, V')) => f.hom s) h
 
 
+variable (F) in
 def resFA : Γ(F, V) →ₗ[A] Γ(F, V') where
   toFun := resF F hle
   map_add' := map_add _

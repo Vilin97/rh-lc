@@ -154,6 +154,7 @@ private lemma exists_smul_mem_range_algebraMap_of_unique_lift {R B : Type} [Comm
   exact ⟨a, by simpa using ha.symm⟩
 
 
+open scoped TensorProduct in
 theorem _root_.GlobalTheory.algebraMap_bijective_of_unramified_of_unique_geometric_point :
     ∀ (R B : Type) [CommRing R] [IsReduced R] [CommRing B] [Algebra R B] [Module.Finite R B]
       [Algebra.FormallyUnramified R B] (P : Set (Ideal R)),

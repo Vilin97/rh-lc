@@ -16,16 +16,20 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.Inde
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 
+variable (F E) in
 abbrev Ten (n d : ℕ) : Type := Matrix (Fin n) (Fin d) (AE F E)
 
 
+variable (σ) in
 def EpsHerm {n : ℕ} (J : Matrix (Fin n) (Fin n) E) : Prop :=
   ((∀ i j, σ (J j i) = J i j) ∨ ∀ i j, σ (J j i) = -J i j) ∧ J.det ≠ 0
 
 
+variable (F) in
 def rId (t : ℝ) : AF F := 1 + realAd F (Real.exp t - 1)
 
 
+variable (σ) in
 structure Frame {n : ℕ} (J : Matrix (Fin n) (Fin n) E) where
 
   r : ℕ
@@ -92,6 +96,7 @@ def fullRank (E : Type) [Field E] (n d : ℕ) : Set (Matrix (Fin n) (Fin d) E) :
 scoped instance measAdPi {κ : Type} : MeasurableSpace (κ → AF F) := borel _
 
 
+variable (F) in
 def coef {κ : Type} [Fintype κ] (ψ : AddChar (AF F) ℂ) (μ : Measure (κ → AF F)) (Φ₁ Φ₂ : (κ → AF F) → ℂ)
     (w : (κ → AF F) × (κ → AF F)) : ℂ := ∫ u, schr ψ w Φ₁ u * (starRingEnd ℂ) (Φ₂ u) ∂μ
 

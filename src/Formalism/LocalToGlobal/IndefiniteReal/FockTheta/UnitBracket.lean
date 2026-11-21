@@ -94,6 +94,7 @@ def nCoef (sS BS XS : Matrix (Fin n) (Fin n) ℂ) (sT BT XT : Matrix (Fin m) (Fi
     cplxO sS sT (adX XS XT (cplxO sS sT (unitMap BS BT l.1 l.2))))) k
 
 
+open Classical in
 def quadOp (τ : D.what₂.Tau) (sS BS XS : Matrix (Fin n) (Fin n) ℂ) (sT BT XT : Matrix (Fin m) (Fin m) ℂ) (pS pT : ℕ)
     (P : MvPolynomial (FVar D m n) ℂ) : MvPolynomial (FVar D m n) ℂ :=
   ∑ k : Fin m × Fin n, ∑ l : Fin m × Fin n,

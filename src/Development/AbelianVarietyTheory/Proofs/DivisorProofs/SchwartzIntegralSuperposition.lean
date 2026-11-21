@@ -163,6 +163,7 @@ theorem wt_integral (hΦ : Continuous Φ) (hc : AEStronglyMeasurable c ν)
 end SchwartzIntegralExchange
 
 
+open SchwartzIntegralExchange in
 theorem schwartz_clm_integral_comm :
     ∀ (E : Type) [NormedAddCommGroup E] [NormedSpace ℝ E] (P : Type) [TopologicalSpace P]
     [SecondCountableTopology P] [MeasurableSpace P] [OpensMeasurableSpace P] (ν : Measure P)

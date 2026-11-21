@@ -18,6 +18,8 @@ variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchi
   [MeasurableSpace F] [BorelSpace F] {n : ℕ} {α : Type*} [LinearOrder α] {β : Fin n → α}
 
 
+omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [MeasurableSpace F]
+  [BorelSpace F] in
 theorem det_eq_prod_of_apply {ι : Type*} [Fintype ι] [DecidableEq ι]
     (L : (ι → F) ≃ₗ[F] (ι → F)) (c : ι → F) (h : ∀ x s, L x s = c s * x s) :
     (LinearEquiv.det L : F) = ∏ s, c s := by
@@ -29,6 +31,7 @@ theorem det_eq_prod_of_apply {ι : Type*} [Fintype ι] [DecidableEq ι]
   rw [this, Matrix.det_diagonal]
 
 
+omit [MeasurableSpace F] [BorelSpace F] in
 theorem modulus_prod {ι : Type*} (s : Finset ι) (f : ι → F) :
     LocalField.modulus (∏ i ∈ s, f i) = ∏ i ∈ s, LocalField.modulus (f i) := by
   classical
@@ -41,6 +44,7 @@ theorem distribHaarChar_pi_eq_modulus {ι : Type*} [Fintype ι] [DecidableEq ι]
   rw [distribHaarChar_pi_eq, GroundTheory.LocalField.distribHaarChar_eq_modulus]
 
 
+variable (β) in
 abbrev leviDiag (μ : Fin n → ℤ) : levi F n β := ⟨Cartan.diagPow F n μ, diagPow_mem_levi μ⟩
 
 theorem leviChart_leftModulus_diag (μ : Fin n → ℤ) :
@@ -93,6 +97,7 @@ theorem modulus_det_diagPow (μ : Fin n → ℤ) :
   rw [Cartan.coe_diagPow, Matrix.det_diagonal, modulus_prod]
 
 
+omit [MeasurableSpace F] [BorelSpace F] in
 theorem prod_leviIndex_eq (f : Fin n → ℝ≥0) :
     ∏ s : LeviIndex n β, f s.1.1 = ∏ i, f i ^ blockSize β (blockOf β i) := by
   classical
@@ -137,6 +142,8 @@ theorem prod_subtype_eq_ite {M : Type*} [CommMonoid M] (P : Fin n × Fin n → P
   exact (Finset.prod_subtype (Finset.univ.filter P) (by simp) g).symm
 
 
+omit [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
+  [MeasurableSpace F] [BorelSpace F] in
 theorem prod_identity (t : Fin n → ℝ≥0) (ht : ∀ i, t i ≠ 0) :
     ((∏ s : LeviIndex n β, t s.1.1) / ∏ s : ParabolicIndex n β, t s.1.1) ^ 2 *
       (∏ s : {ij : Fin n × Fin n // β ij.1 < β ij.2}, t s.1.1 / t s.1.2) * (∏ i, t i) ^ n =
@@ -182,6 +189,7 @@ theorem prod_identity (t : Fin n → ℝ≥0) (ht : ∀ i, t i ≠ 0) :
   field_simp
 
 
+variable (β) in
 def leviAbsDet : levi F n β →* ℝ≥0 where
   toFun m := LocalField.modulus (((m : GL (Fin n) F) : Matrix (Fin n) (Fin n) F).det)
   map_one' := by simp [LocalField.modulus_one]
@@ -193,6 +201,7 @@ theorem leviAbsDet_apply (m : levi F n β) :
   rfl
 
 
+variable (β) in
 def leviModulusHom : levi F n β →* ℝ≥0 where
   toFun := leviModulus β
   map_one' := by
@@ -208,6 +217,7 @@ omit [MeasurableSpace F] [BorelSpace F] in
 theorem leviModulusHom_apply (m : levi F n β) : leviModulusHom β m = leviModulus β m := rfl
 
 
+omit [MeasurableSpace F] [BorelSpace F] in
 theorem modulus_eq_one_of_ord {x : F} (hx : x ≠ 0) (h : LocalField.ord x = 0) :
     LocalField.modulus x = 1 :=
   LocalField.modulus_eq_one_iff.2 ⟨hx, h⟩
@@ -230,6 +240,7 @@ theorem leviRatio_of_mem_integralGL {k : levi F n β}
     (Subgroup.mem_subgroupOf.2 hk)
 
 
+omit [TopologicalSpace F] [IsNonarchimedeanLocalField F] [MeasurableSpace F] [BorelSpace F] in
 theorem hom_cartan (f : levi F n β →* ℝ≥0)
     (hf : ∀ k : levi F n β, (k : GL (Fin n) F) ∈ integralGL F n → f k = 1) {k₁ k₂ : levi F n β}
     (h₁ : (k₁ : GL (Fin n) F) ∈ integralGL F n) (h₂ : (k₂ : GL (Fin n) F) ∈ integralGL F n)

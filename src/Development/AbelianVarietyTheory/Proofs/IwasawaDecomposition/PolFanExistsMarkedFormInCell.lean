@@ -144,6 +144,7 @@ theorem exists_min (hl : IsCarrierDim bar q ψ lab) (hX : Module.finrank O X ≤
   exact_mod_cast hr
 
 
+omit [Module.Projective O X] in
 theorem evalZ_zero' (φ : InvFun O) : φ.evalZ (0 : LinearMap.BilinForm ℤ X) = 0 := by
   have e := φ.eval_comp (X := X) (X₁ := Fin 0 → O) (r := 0) (fun _ => ⟨0, Subsingleton.elim _ _⟩)
     (fun _ _ => (0 : ℝ))
@@ -152,6 +153,7 @@ theorem evalZ_zero' (φ : InvFun O) : φ.evalZ (0 : LinearMap.BilinForm ℤ X) =
   simpa using e
 
 
+omit [Module.Projective O X] in
 theorem evalZ_sum {m : ℕ} {γ : Fin m → LinearMap.BilinForm ℤ X} (hγ : ψ.LinearOn γ)
     (S : Finset (LinearMap.BilinForm ℤ X)) (h : ∀ x ∈ S, InRCone γ x) :
     ψ.evalZ (∑ x ∈ S, x) = ∑ x ∈ S, ψ.evalZ x := by
@@ -210,6 +212,7 @@ end Face
 end Exist
 
 
+open _root_.GlobalTheory.PolFan.Mark.Exist in
 theorem exists_isMarked_inRCone (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (q : ℕ)
     (ψ lab : InvFun (𝓞 E)) (i : ℕ)
     (hDom : ∀ (X : Type) [AddCommGroup X] [Module (𝓞 E) X] [Module.Finite (𝓞 E) X] [Module.Projective (𝓞 E) X],

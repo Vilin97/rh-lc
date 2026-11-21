@@ -595,6 +595,7 @@ end PrimeReciprocalSums
 open PrimeReciprocalSums
 
 
+open Classical in
 private theorem small_order_prime_bounds (e : ℕ) (he : 2 ≤ e) (n : ℕ) (hn : n = 2 ^ e) :
   (∀ l : ℕ, l.Prime → l ≠ 2 → ∀ j : ℕ, j ≤ e →
     ((2 ^ j : ℕ) • hOf e l = 0 ↔

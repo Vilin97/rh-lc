@@ -30,6 +30,7 @@ def bcComp {f : U ⟶ Z} {g : Z ⟶ Y} {k : U ⟶ Y} (h : f ≫ g = k) : bc g �
   (MorphismProperty.Over.pullbackComp f g).symm ≪≫ MorphismProperty.Over.pullbackCongr h
 
 
+set_option backward.isDefEq.respectTransparency.types false in
 def bcFst (f : U ⟶ Y) : bc f ⋙ (Scheme.Etale.forget U ⋙ Over.forget U) ⟶ Scheme.Etale.forget Y ⋙ Over.forget Y where
   app V := pullback.fst V.hom f
   naturality V W g := pullback.lift_fst _ _ _

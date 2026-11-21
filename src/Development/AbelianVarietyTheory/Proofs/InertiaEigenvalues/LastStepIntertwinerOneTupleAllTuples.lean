@@ -57,6 +57,7 @@ theorem isItW_transfer (θ : InfFam D) (M : DSModel V S) (M' : DSModel W S')
       (fun t => hd' τ _ φ) φ' h (LinearMap.proj z ∘ₗ pt)
 
 
+open Classical in
 theorem isItW_lastStep_transfer (k : Fin D.R.m) (hk : (k : ℕ) + 1 = D.R.m) (a : ℕ) (ha : a = k) (hV : V.SigOK)
     (hW : W.SigOK) (rV : V.rank = D.R.r + k * D.R.t) (rW : W.rank = V.rank + D.R.t)
     (M : DSModel V (parB (Ptw D) a)) (M' : DSModel W (parB (Ptw D) D.R.m)) (θ : InfFam D) (hθ : IsInfFam θ)

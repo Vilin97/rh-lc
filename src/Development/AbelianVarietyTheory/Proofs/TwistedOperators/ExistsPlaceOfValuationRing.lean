@@ -103,6 +103,7 @@ private theorem exists_heightOneSpectrum_range_iff_finitePlace_le_one {O : Type}
     rw [map_mul, map_units_inv, IsUnit.unit_spec, hψ, hψ, map_mul, map_inv₀]
 
 
+open NumberField IsDedekindDomain in
 theorem _root_.GlobalTheory.EmbeddingPlace.exists_place : ∀ (D : _root_.Formalism.BasicNotions.D7) (Ks : Type) [Field Ks] [NumberField Ks] (i : D.ntw.Tw) (ι : Ks →+* FractionRing (D.ntw.O i)), ∃ la : HeightOneSpectrum (𝓞 Ks), ((D.ntw.l i : ℕ) : 𝓞 Ks) ∈ la.asIdeal ∧ ∀ x : Ks, ι x ∈ (algebraMap (D.ntw.O i) (FractionRing (D.ntw.O i))).range ↔ FinitePlace.mk la x ≤ 1 := by
   intro D Ks _ _ i ι
   haveI := D.ntw.domO i

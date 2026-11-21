@@ -255,6 +255,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : D
 variable (Xo : Moduli Dw l) (c : Coeff l) [StarRing (𝓞 E)]
 
 
+variable {Xo c} in
 theorem upCharS_at_chartL {T : CDVR} {io : c.F →+* T.Fr} {y : IntFr Xo c T io} {C3 : IntChart T io y}
     {C : Type} [Field C] [CharZero C] {V : VF C} {ie : T.Fr →+* C} (hPlace : Pl.PlaceCriterionOfIdempotent)
     (hL : UpFLaw V.l T.V (𝓞 E) (chD C3.ch) C3.FT C3.actT)

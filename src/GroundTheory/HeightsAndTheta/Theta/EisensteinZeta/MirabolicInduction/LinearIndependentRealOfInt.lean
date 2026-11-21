@@ -21,6 +21,7 @@ variable {W : Type*} [NormedAddCommGroup W] [InnerProductSpace ℝ W] [FiniteDim
 def Sep (L : Submodule ℤ W) (lam : ℝ) : Prop := ∀ x ∈ L, x ≠ 0 → lam ≤ ‖x‖
 
 
+omit [InnerProductSpace ℝ W] [FiniteDimensional ℝ W] in
 theorem discreteTopology_of_sep {L : Submodule ℤ W} {lam : ℝ} (hlam : 0 < lam) (h : Sep L lam) :
     DiscreteTopology L := by
   refine DiscreteTopology.of_forall_le_dist hlam fun x y hxy => ?_
@@ -56,6 +57,7 @@ theorem exists_basis_of_discrete (L : Submodule ℤ W) [DiscreteTopology L] :
   infer_instance
 
 
+omit [FiniteDimensional ℝ W] in
 theorem gram_comb {k l : Type*} [Fintype k] [Fintype l] (A : Matrix k l ℝ) (b : l → W) :
     gram ℝ (fun i => ∑ j, A i j • b j) = A * gram ℝ b * Aᵀ := by
   ext i i'
@@ -64,6 +66,7 @@ theorem gram_comb {k l : Type*} [Fintype k] [Fintype l] (A : Matrix k l ℝ) (b 
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun j' _ => by ring
 
 
+omit [FiniteDimensional ℝ W] in
 theorem det_gram_eq_of_span_eq {n : ℕ} {b b' : Fin n → W} (hb : LinearIndependent ℤ b)
     (h : span ℤ (Set.range b) = span ℤ (Set.range b')) : (gram ℝ b).det = (gram ℝ b').det := by
   have hP : ∀ i, ∃ c : Fin n → ℤ, ∑ j, c j • b' j = b i := fun i =>
@@ -107,6 +110,7 @@ omit [FiniteDimensional ℝ W] in
 theorem proj_apply (v x : W) : proj v x = x - (inner ℝ v x / ‖v‖ ^ 2) • v := rfl
 
 
+omit [FiniteDimensional ℝ W] in
 theorem inner_proj (v x : W) (hv : v ≠ 0) : inner ℝ v (proj v x) = 0 := by
   have hn : ‖v‖ ^ 2 ≠ 0 := pow_ne_zero _ (norm_ne_zero_iff.2 hv)
   rw [proj_apply, inner_sub_right, real_inner_smul_right, real_inner_self_eq_norm_sq,
@@ -123,6 +127,7 @@ theorem proj_self (v : W) (hv : v ≠ 0) : proj v v = 0 := by
   simpa using proj_smul_self v 1 hv
 
 
+omit [FiniteDimensional ℝ W] in
 theorem norm_sq_proj_add (v x : W) (hv : v ≠ 0) (s : ℝ) :
     ‖proj v x + s • v‖ ^ 2 = ‖proj v x‖ ^ 2 + s ^ 2 * ‖v‖ ^ 2 := by
   rw [norm_add_sq_real, real_inner_smul_right, real_inner_comm, inner_proj v x hv, norm_smul,
@@ -130,6 +135,7 @@ theorem norm_sq_proj_add (v x : W) (hv : v ≠ 0) (s : ℝ) :
   ring
 
 
+omit [FiniteDimensional ℝ W] in
 theorem sub_round_smul (v x : W) :
     x - (round (inner ℝ v x / ‖v‖ ^ 2)) • v =
       proj v x + (inner ℝ v x / ‖v‖ ^ 2 - round (inner ℝ v x / ‖v‖ ^ 2)) • v := by
@@ -137,6 +143,7 @@ theorem sub_round_smul (v x : W) :
   abel
 
 
+omit [FiniteDimensional ℝ W] in
 theorem mem_zsmul_of_proj_eq_zero {L : Submodule ℤ W} {v : W} (hvL : v ∈ L) (hv : v ≠ 0)
     (hmin : ∀ x ∈ L, x ≠ 0 → ‖v‖ ≤ ‖x‖) {y : W} (hy : y ∈ L) (h0 : proj v y = 0) :
     ∃ k : ℤ, y = k • v := by
@@ -152,6 +159,7 @@ theorem mem_zsmul_of_proj_eq_zero {L : Submodule ℤ W} {v : W} (hvL : v ∈ L) 
   nlinarith
 
 
+omit [FiniteDimensional ℝ W] in
 theorem half_le_norm_proj {L : Submodule ℤ W} {v : W} (hvL : v ∈ L) (hv : v ≠ 0)
     (hmin : ∀ x ∈ L, x ≠ 0 → ‖v‖ ≤ ‖x‖) {x : W} (hx : x ∈ L) (h0 : proj v x ≠ 0) :
     ‖v‖ / 2 ≤ ‖proj v x‖ := by
@@ -177,6 +185,7 @@ theorem half_le_norm_proj {L : Submodule ℤ W} {v : W} (hvL : v ∈ L) (hv : v 
   nlinarith [norm_nonneg (proj v x), sq_nonneg ‖v‖]
 
 
+omit [FiniteDimensional ℝ W] in
 theorem exists_lift {L : Submodule ℤ W} {v : W} (hvL : v ∈ L) (hv : v ≠ 0) {x : W} (hx : x ∈ L) :
     ∃ y ∈ L, proj v y = proj v x ∧ ‖y‖ ≤ ‖proj v x‖ + ‖v‖ / 2 := by
   refine ⟨x - round (inner ℝ v x / ‖v‖ ^ 2) • v, L.sub_mem hx (L.smul_mem _ hvL), ?_, ?_⟩
@@ -191,6 +200,7 @@ theorem exists_lift {L : Submodule ℤ W} {v : W} (hvL : v ∈ L) (hv : v ≠ 0)
     linarith
 
 
+omit [FiniteDimensional ℝ W] in
 theorem det_gram_cons_orth {m : ℕ} (v : W) (c : Fin m → W) (hc : ∀ i, inner ℝ v (c i) = 0) :
     (gram ℝ (Fin.cons v c : Fin (m + 1) → W)).det = ‖v‖ ^ 2 * (gram ℝ c).det := by
   rw [det_succ_row_zero, Fin.sum_univ_succ]
@@ -205,6 +215,7 @@ theorem det_gram_cons_orth {m : ℕ} (v : W) (c : Fin m → W) (hc : ∀ i, inne
   simp [gram]
 
 
+omit [FiniteDimensional ℝ W] in
 theorem det_gram_cons_add {m : ℕ} (v : W) (c : Fin m → W) (t : Fin m → ℝ) :
     (gram ℝ (Fin.cons v (fun i => c i + t i • v) : Fin (m + 1) → W)).det =
       (gram ℝ (Fin.cons v c : Fin (m + 1) → W)).det := by

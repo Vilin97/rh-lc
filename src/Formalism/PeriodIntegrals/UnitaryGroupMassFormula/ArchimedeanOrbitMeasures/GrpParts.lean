@@ -155,6 +155,7 @@ theorem grpPiecesStd_of (h0 : BlockEx) (hS : ChiStab) (hD : GrpDens) (hH : GrpHa
     ring
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem exp_mul_of_mul_eq_zero {n : ℕ} (M P : Matrix (Fin n) (Fin n) ℂ) (hMP : M * P = 0) :
     NormedSpace.exp M * P = P := by
   open scoped Norms.Operator in

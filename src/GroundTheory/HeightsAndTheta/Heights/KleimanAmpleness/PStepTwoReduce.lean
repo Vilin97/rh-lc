@@ -35,6 +35,7 @@ variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : 
   [IsScalarTower S Ω E]
 
 
+omit [IsScalarTower S Ω E] in
 theorem tildeSys_twist_mono {M M' : FinGradedSub (S := S) (x := x) E} (h : ∀ c, M.piece c ≤ M'.piece c)
     (Q : SubSystem S x Ω) (I : Chart x) :
     ((M.tildeSys 0).twist Q).sub I ≤ ((M'.tildeSys 0).twist Q).sub I := by

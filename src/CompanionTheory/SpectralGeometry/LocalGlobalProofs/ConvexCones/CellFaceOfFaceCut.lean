@@ -20,6 +20,7 @@ variable {O : Type} [CommRing O] {bar : O → O} {ψ : InvFun O}
   {X : Type} [AddCommGroup X] [Module O X] [Module.Finite O X]
 
 
+omit [Module O X] [Module.Finite O X] in
 theorem apply_eq_sum_of_toReal {m : ℕ} {β : LinearMap.BilinForm ℤ X} {u : Fin m → LinearMap.BilinForm ℤ X}
     {c : Fin m → ℝ} (hβ : toReal β = ∑ i, c i • toReal (u i)) (F : LinearMap.BilinForm ℤ X →ₗ[ℤ] ℤ) :
     (F β : ℝ) = ∑ i, c i * (F (u i) : ℝ) := by

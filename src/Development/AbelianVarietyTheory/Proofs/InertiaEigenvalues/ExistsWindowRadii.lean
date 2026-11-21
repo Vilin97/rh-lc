@@ -8,6 +8,7 @@ public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.Moor
 namespace GlobalTheory.PMonE
 
 
+open Finset in
 theorem _root_.GlobalTheory.PMonE.exists_window_radii : ∀ (F : Type) [NontriviallyNormedField F]
     [IsUltrametricDist F] [IsAlgClosed F] (p : ℕ) [Fact p.Prime] [CharP F p] [PerfectRing F p]
     (k : ℕ) (ϖ : F), ‖ϖ‖ = (p : ℝ)⁻¹ → ∀ lam : Fin (k + 1) → F, (∀ j, lam j ≠ 0) →

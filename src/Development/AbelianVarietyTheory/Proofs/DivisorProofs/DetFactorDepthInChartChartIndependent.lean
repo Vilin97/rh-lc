@@ -121,6 +121,7 @@ theorem logOf_comp_hom (G G' : FGLaw C d) (φ : Pt C 1 d) (hφ : GP φ)
   simp only [MvPowerSeries.smul_eq_C_mul]
 
 
+open ReciprocityTheory.PGsh GlobalTheory.FGDepth in
 theorem detDepth_le_of_transF {R : Type} [CommRing R] (v : AddValuation C (WithTop ℝ)) (j : R →+* C)
     (hj : ∀ r, IsIntV v (j r)) (F F' : Fin d → PS R 2 d) (hF : ∀ a, constantCoeff (F a) = 0)
     (φ φi : Pt R 1 d) (hi : IsInvPair φ φi)

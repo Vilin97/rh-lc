@@ -49,6 +49,7 @@ section Principal
 
 attribute [local instance] Polynomial.algebra Polynomial.isLocalization
 
+attribute [local instance] Polynomial.algebra Polynomial.isLocalization in
 theorem isPrincipal_of_forall_C_mem {R : Type*} [CommRing R] [IsDomain R]
     [UniqueFactorizationMonoid R] (E : Ideal (Polynomial R)) [hE : E.IsPrime]
     (h : ∀ r, Polynomial.C r ∈ E → r = 0) : E.IsPrincipal := by
@@ -250,6 +251,7 @@ theorem elimIdeal_ne_bot {p : Ideal (MvPolynomial σ K)} [hP : p.IsPrime]
   omega
 
 
+omit [Fintype σ] in
 theorem exists_algebraicIndependent_genericPoint [Finite σ] {p : Ideal (MvPolynomial σ K)}
     [p.IsPrime] (hdim : ringKrullDim (MvPolynomial σ K ⧸ p) = (Fintype.card β : ℕ)) :
     ∃ κ : β → σ, AlgebraicIndependent K fun i => genericPoint p (κ i) := by

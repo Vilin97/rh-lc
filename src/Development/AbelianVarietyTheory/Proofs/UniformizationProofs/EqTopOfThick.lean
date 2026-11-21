@@ -285,6 +285,7 @@ theorem eq_top_of_thick {R : Type} [CommRing R] (I : Ideal R) [IsAdicComplete I 
   exact hy (hw ▸ hw')
 
 
+open AbLaw AbTriv in
 theorem triv_of_thick (hG : GlobalFnsSt) {V : Type} [CommRing V] [IsDomain V] (I : Ideal V) [hV : IsAdicComplete I V]
     (B : Over (Spec (CommRingCat.of V))) [GrpObj B] (hB : IsAbelianScheme B) (hp : IsProjBy B.hom) (N : LB B.left)
     (hN : N.IsLB) (h₀ : Triv (N.pull (eSec B))) (ht : ∀ e, Triv (N.pull (fstG I e B).left)) : Triv N := by

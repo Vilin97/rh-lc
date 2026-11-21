@@ -70,6 +70,7 @@ def gramB (sg : ι → DomWeight n) : Matrix (VVIdx sg) (VVIdx sg) K :=
   Matrix.of fun i j => fockB (bVVfun K sg i) (bVVfun K sg j)
 
 
+open Classical in
 def projVV (sg : ι → DomWeight n) : Pol K ι n →ₗ[K] VV K sg :=
   ∑ i : VVIdx sg, ∑ j : VVIdx sg,
     ((gramB (K := K) sg)⁻¹ i j) • (fockBL (bVVfun K sg j)).smulRight (bVV K sg i)
@@ -201,12 +202,14 @@ def brC (u : Pr.Word) : VV X.K (W.lamTrue u R.m) →ₗ[X.K] VV X.K W.sgTrue :=
   Br.brAt (N_m_succ R) (W.lamTrue u R.m) W.sgTrue fun τ => X.emb τ (star ((Pr.piT u : 𝓞 X.E) : X.E))
 
 
+variable (Pr R) in
 abbrev RowPt : Type := DecoSet X.E (R.N R.m - 1) ∅ (rowSG Pr sel mu)
 
 def tilQ (u : Pr.Word) : RowPt Pr R sel mu → DecoSet X.E (R.N R.m) (Pr.vT u) (rowSG Pr sel mu) :=
   DecoSet.tilH (N_m_succ R) (Pr.piT u)
 
 
+open Classical in
 def tilC (u : Pr.Word) : RowPt Pr R sel mu → DecoSet X.E (R.N R.m) (Pr.vT u) Pr.vGs :=
   fun d => (tilQ sel mu u d).res Finset.subset_union_left
 
@@ -228,6 +231,7 @@ def evRho (P : LevFam X.E X.K R.r Pr.vGs) (u : Pr.Word) :
     rw [smul_mul_smul_comm]
 
 
+open Classical in
 @[reducible] def evGSD (P : LevFam X.E X.K R.r Pr.vGs) (u : Pr.Word) : GSD X.K where
   G := FormG (rowTy Ch sel mu P).inv
   D := RowPt Pr R sel mu
@@ -352,6 +356,7 @@ def DecoF.deco (p : DecoF E n ST SG Q) : DecoSet E n ST SG := p.1.1
 def DecoF.fr (p : DecoF E n ST SG Q) (P : Q) : Sp E n ≃ₗ[E] Sp E n := p.1.2 P
 
 
+variable (E n ST SG Q) in
 def DecoF.base [NeZero n] : DecoF E n ST SG Q := ⟨(DecoSet.base E n ST SG, fun _ => 1), fun _ _ => Iff.rfl⟩
 
 instance [NeZero n] : Nonempty (DecoF E n ST SG Q) := ⟨DecoF.base E n ST SG Q⟩
@@ -400,6 +405,7 @@ def grp : Subgroup (GLQ E n Q) := Subgroup.pi Set.univ fun P => (Θ P).H
 def chr : ↥Θ.grp →* Kˣ := piChar (fun P => (Θ P).H) fun P => (Θ P).lam
 
 
+variable (E K n Q) in
 def top : LevQFam E K n Q := fun _ => ⟨⊤, 1⟩
 
 end LevQFam
@@ -428,6 +434,7 @@ def frmRho (C : CoefPk X n (DecoF X.E n ST SG Q)) (Λ : LevFam X.E X.K n SG) (Θ
     ring
 
 
+open Classical in
 @[reducible] def frmGSD (C : CoefPk X n (DecoF X.E n ST SG Q)) (Λ : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K n Q) :
     GSD X.K where
   G := FrmG Λ Θ
@@ -662,9 +669,11 @@ open Classical in
 def unitV (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (a : E) : K := if h : IsUnit (redP P a) then ((χ h.unit : Kˣ) : K) else 0
 
 
+variable {P} in
 def locChar (cq : K) (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (a : E) : K := cq ^ vP P q a * unitV χ (a / (q : E) ^ vP P q a)
 
 
+open Classical in
 def valsQ (E : Type) [Field E] (q A B : ℕ) : Finset E :=
   (Finset.range (q ^ (A + B))).image fun i : ℕ => ((i : ℕ) : E) / (q : E) ^ A
 
@@ -977,6 +986,7 @@ def FiniteSumNonzeroLargeDepth (i : ℕ) (P : rowSG Pr sel mu) (hal : AutY X R i
   ∃ A₀ B₀ : ℕ, ∀ A' B', A₀ ≤ A' → B₀ ≤ B' → E1at Ch sel mu { cst with A := A', B := B' } i P hal h ≠ 0
 
 
+open Classical in
 structure ChIdx.Ok (G : ChGlob X R.m) (m2 : ℕ) : Prop where
   hm : R.m = m2 + 2
   cst_ok : cst.Ok
@@ -1071,6 +1081,7 @@ def colValF (u : Pr.Word) (j : ℕ) : CoefPk X (R.N j) (ChPt (R := R) sel mu u j
   (colVal W u j (Pr.vT u) Pr.vGs).pull DecoF.deco
 
 
+open Classical in
 @[reducible] def chF (u : Pr.Word) (j : ℕ) : GFam X.K where
   β := L.β j
   V := (colValF W sel mu u j).V
@@ -1085,12 +1096,14 @@ def colValF (u : Pr.Word) (j : ℕ) : CoefPk X (R.N j) (ChPt (R := R) sel mu u j
   Del _ := (colValF W sel mu u j).Del
 
 
+open Classical in
 def frsF {u : Pr.Word} {j : ℕ} (p : ChPt (R := R) sel mu u j) : Frs X.E (R.N j) (rowSG Pr sel mu) := fun P =>
   if h : P.1 ∈ Pr.vGs then p.deco.1.liftFr ⟨P.1, h⟩ else p.fr ⟨P.1, (Finset.mem_union.mp P.2).resolve_left h⟩
 
 def frsT (u : Pr.Word) (d : RowPt Pr R sel mu) : Frs X.E (R.N R.m) (rowSG Pr sel mu) := fun P => (tilQ sel mu u d).1.liftFr P
 
 
+open Classical in
 def Sall (u : Pr.Word) : Finset (HeightOneSpectrum (𝓞 X.E)) := Pr.vT u ∪ rowSG Pr sel mu
 
 def cAof : ℕ := (∏ P : rowSG Pr sel mu, qOf P.1) ^ cst.A

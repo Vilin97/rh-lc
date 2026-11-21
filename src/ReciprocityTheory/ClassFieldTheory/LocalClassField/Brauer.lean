@@ -61,6 +61,8 @@ theorem inflation_unramified_closure_h2_bijective (hK : FiniteDimensional ℚ_[p
   exact BrLK_mono (Kn_le_Kur (degLK_pos hL)) hx
 
 
+open Classical in
+variable (p K) in
 noncomputable def invBr : Br p K →+ QZ :=
   if h : ∃ f : Br p K →+ QZ, ∀ x, f ((layerInf p K (MaximalUnramifiedExtension p K)).hom.H 2 x) = invUr p K x then h.choose else 0
 

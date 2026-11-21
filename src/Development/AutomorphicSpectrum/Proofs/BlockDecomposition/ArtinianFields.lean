@@ -54,6 +54,7 @@ theorem exists_adele (S : Finset (HeightOneSpectrum (𝓞 F))) (b : ∀ v : Heig
     exact h.trans (sc_apply _)
 
 
+variable (F E) in
 def LocR (S : Finset (HeightOneSpectrum (𝓞 F))) : InfinitePlace F ⊕ S → Type
   | .inl w => w.Completion ⊗[F] E
   | .inr v => Fv F v.1 ⊗[F] E
@@ -63,6 +64,7 @@ instance locRing (S : Finset (HeightOneSpectrum (𝓞 F))) : ∀ c, CommRing (Lo
   | .inr v => inferInstanceAs (CommRing (Fv F v.1 ⊗[F] E))
 
 
+variable (F E) in
 def locC (S : Finset (HeightOneSpectrum (𝓞 F))) : ∀ c, AF F ⊗[F] E →+* LocR F E S c
   | .inl w => compInf F E w
   | .inr v => compFin F E v.1

@@ -17,6 +17,7 @@ namespace Formalism.REAL
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
 open scoped Classical in
+open Classical in
 def expG {n : ℕ} (ε : Fin n → Bool) (X : Matrix (Fin n) (Fin n) ℂ) (t : ℝ) : UJ ε :=
   if h : inG ε X then
     ⟨(Matrix.isUnit_exp ((t : ℂ) • X)).unit, exp_indefinite_unitary_holds n ε X h t⟩
@@ -105,6 +106,7 @@ lemma inK_smul_real {n : ℕ} (ε : Fin n → Bool) {Z : Matrix (Fin n) (Fin n) 
 
 
 open scoped Classical in
+open Classical in
 def expK {n : ℕ} (ε : Fin n → Bool) (Z : Matrix (Fin n) (Fin n) ℂ) (t : ℝ) : KG ε :=
   if h : inK ε Z then
     ⟨expG ε Z t, by

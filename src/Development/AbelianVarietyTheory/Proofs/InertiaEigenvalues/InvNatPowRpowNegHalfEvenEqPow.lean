@@ -33,6 +33,7 @@ theorem prod_ite_split {ι : Type} [Fintype ι] [DecidableEq ι] (i₀ : ι) (A 
   split_ifs <;> simp
 
 
+open Classical in
 theorem datumFn_prim (B : Base S T) (Q : Finset (Pl D.host.E)) {P : Pl D.host.E} (hP : P ∈ Q)
     (φ : ∀ PP : Pl D.host.E, Matrix (Fin T.rank) (Fin S.rank) (kP PP) → ℂ) (x : WO S T) :
     B.F.datumFn B.G (B.de.Q ∪ Q) (B.locFn Q fun PP y => if PP.1 = P then ((prim y : ℚ) : ℂ) else φ PP.1 y) x =

@@ -122,6 +122,7 @@ theorem cosetInd_zero (y : a → k) :
       (mt hy.1 h), if_neg h]
 
 
+open Classical in
 theorem intInd_fromCols (q : Matrix a b k) (y : a → k) :
     Set.indicator {x : Matrix a (b ⊕ Unit) k | ∀ r c, x r c ∈ 𝒪[k]} (fun _ => (1 : ℂ))
         (fromCols q (Matrix.of fun r _ => y r)) =

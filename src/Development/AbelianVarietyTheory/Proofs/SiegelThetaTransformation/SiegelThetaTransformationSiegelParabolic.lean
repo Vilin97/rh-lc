@@ -156,6 +156,8 @@ private lemma parabolic_exponent_term_eq {ι : Type} [Fintype ι] (A B : Matrix 
   ring
 
 
+open Matrix Complex in
+open scoped ComplexConjugate Real in
 theorem _root_.GlobalTheory.SW.Parab.trans_parabolic : ∀ (κ ι : Type) [Fintype κ] [Fintype ι] [DecidableEq ι]
     (σ : Matrix (ι ⊕ ι) (ι ⊕ ι) ℚ), Even (Fintype.card κ) → σ ∈ Matrix.symplecticGroup ι ℚ →
     σ.toBlocks₂₁ = 0 → ∃ ω : (Matrix κ ι ℚ → ℂ) → (Matrix κ ι ℚ → ℂ), ∀ φ, _root_.GlobalTheory.SW.IsSB φ →

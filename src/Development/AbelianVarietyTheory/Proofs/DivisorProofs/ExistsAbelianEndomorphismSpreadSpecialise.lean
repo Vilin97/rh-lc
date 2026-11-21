@@ -76,6 +76,7 @@ private theorem bcMap_comp_pullback_map {k₀ K : Type} [Field k₀] [Field K] [
     rw [Category.assoc, e1, Category.assoc, bcMap_snd, bcMap_snd, ← Category.assoc, e2]
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_endo_spread_specialise : ∀ (k₀ K : Type) [Field k₀] [IsAlgClosed k₀] [Field K] [Algebra k₀ K]
     (B : Over (Sp k₀)) [GrpObj B], IsAbelianScheme B →
     ∀ f : (Over.pullback (spMap (algebraMap k₀ K))).obj B ⟶ (Over.pullback (spMap (algebraMap k₀ K))).obj B,

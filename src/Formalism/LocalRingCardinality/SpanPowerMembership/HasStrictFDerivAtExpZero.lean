@@ -18,6 +18,7 @@ theorem hasStrictFDerivAt_exp_zero_alt : HasStrictFDerivAt (exp : 𝔸 → 𝔸)
   exact h
 
 
+variable (𝔸) in
 def logA : 𝔸 → 𝔸 := (hasStrictFDerivAt_exp_zero_alt (𝔸 := 𝔸)).localInverse _ _ _
 
 theorem logA_exp : ∀ᶠ X in 𝓝 (0 : 𝔸), logA (𝔸 := 𝔸) (exp X) = X := hasStrictFDerivAt_exp_zero_alt.eventually_left_inverse

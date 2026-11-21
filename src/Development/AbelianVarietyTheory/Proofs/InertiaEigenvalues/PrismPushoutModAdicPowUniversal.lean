@@ -108,6 +108,7 @@ private lemma mem_subring_of_isPushout_of_maps_mem {A X Y P : Type} [CommRing A]
   exact (r p).2
 
 
+open CategoryTheory in
 theorem _root_.GlobalTheory.BSP.PoUniv.isPO_univ (l : ℕ) [Fact l.Prime] (R : Type) [CommRing R]
     (B C B' C' : _root_.GlobalTheory.Prism.Obj l R) (h : _root_.GlobalTheory.Prism.Hom B C)
     (k : _root_.GlobalTheory.Prism.Hom B B') (k' : _root_.GlobalTheory.Prism.Hom C C') (h' : _root_.GlobalTheory.Prism.Hom B' C')

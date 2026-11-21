@@ -19,6 +19,7 @@ open GlobalTheory GlobalTheory.Cartier GlobalTheory.ProjVar GlobalTheory.CxPts G
 namespace GlobalTheory.CompanionTheory.SerreBpf
 
 
+open GlobalTheory.QCoh GlobalTheory.Twist CechPic GlobalTheory.LB in
 theorem eventually_basePointFree (Y : Var ℂ) (i : Fin (Y.N + 1))
     (hi : Y.ι (genericPoint Y.X) ∈ ProjSpace.chart ℂ Y.N i) (Δ : Y.Dv) :
     ∀ᶠ m : ℕ in Filter.atTop, ∃ (L : LB Y.X) (r : L.ι → Y.Fnˣ) (n : ℕ) (b : Fin n → L.Sec),

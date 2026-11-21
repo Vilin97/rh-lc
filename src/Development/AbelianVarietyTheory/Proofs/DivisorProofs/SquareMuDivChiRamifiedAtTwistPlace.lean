@@ -40,6 +40,7 @@ theorem not_overP_g {D : D7} {T : Type} {Lc : LevCh D T} {sc : Consts} (G : Grid
 end GlobalTheory.RamTwist
 
 
+open GlobalTheory.RamTwist in
 theorem GlobalTheory.SqTop.not_unramAt_twist : ∀ {D : D7} {T : Type} {Lc : LevCh D T} {sc : Consts} (G : GridData Lc sc) (μ₀ : T), Lc.Is μ₀ → ∀ (t : T) (v : HeightOneSpectrum (𝓞 D.host.F)) (e : AF D.host.F), IsPlaceIdem D v e → v ∉ G.pl.S0 → ∀ PP ∈ Lc.Q t, PP.under (𝓞 D.host.F) = v → ∀ i j : Fin D.R.m, ¬ GlobalTheory.WeilParts.UnramAt e (Lc.mu t (j + 1) / G.ch.chi (D.R.m - i)) := by
   intro D T Lc sc G μ₀ hμ t v e he hv PP hPP hPv i j hU
   have hmi1 : 1 ≤ D.R.m - (i : ℕ) := by have := i.2; omega

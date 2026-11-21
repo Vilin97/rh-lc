@@ -409,6 +409,7 @@ theorem det_unit_cols {n m : ℕ} (hm : m ≤ n) (W : Matrix (Fin n) (Fin n) R)
   rw [hb, Matrix.det_fromBlocks_zero₁₂, Matrix.det_one, mul_one]
 
 
+open Classical in
 theorem initMinor_cat {n m : ℕ} (hm : m ≤ n) (I : Fin m → Fin n) :
     ∃ (u : R) (x : Fin n → ℕ → R), ∀ y : Matrix (Fin n) (Fin n) R,
       (Matrix.of fun p q : Fin m => y (I p) (Fin.castLE hm q)).det = u * (catM (n - m) y x).det := by
@@ -610,6 +611,7 @@ theorem dvd_smul' {A : Type*} [CommRing A] [Algebra X.G.Kf A] {a b : A} (c : X.G
   exact Dvd.dvd.mul_left h _
 
 
+include hm hlam hφ in
 theorem block_good (v : X.Pl) (s : Fin (X.G.P.n' v)) (F : MvPolynomial (Fin (m₀ + 1) × Fin (m₀ + 1)) X.G.Kf)
     (hF : F ∈ dualWeyl X.G.Kf (m₀ + 1) (m₀ + 1) (nuOf (lamAt (lam v) s))) :
     denB X Kc j v s ∣ φ (rename (fun x => (⟨v, (s, x)⟩ :
@@ -664,6 +666,7 @@ def VtG : Submodule X.G.Kf (MvPolynomial (Σ v : X.Pl, Fin (X.G.P.n' v) × (Fin 
       Σ v : X.Pl, Fin (X.G.P.n' v) × (Fin (m₀ + 1) × Fin (m₀ + 1)))) (F v)}
 
 
+include hm hlam hφ in
 theorem place_good (v : X.Pl) (P : MvPolynomial (Fin (X.G.P.n' v) × (Fin (m₀ + 1) × Fin (m₀ + 1))) X.G.Kf)
     (hP : P ∈ Vsp X.G.Kf (lam v)) :
     (∏ s, denB X Kc j v s) ∣ φ (rename (fun x => (⟨v, x⟩ :
@@ -687,6 +690,7 @@ theorem place_good (v : X.Pl) (P : MvPolynomial (Fin (X.G.P.n' v) × (Fin (m₀ 
       exact dvd_zero _
 
 
+include hm hlam hφ in
 theorem vtG_good (G : MvPolynomial (Σ v : X.Pl, Fin (X.G.P.n' v) × (Fin (m₀ + 1) × Fin (m₀ + 1))) X.G.Kf)
     (hG : G ∈ VtG X m₀ lam) : denD X Kc j ∣ φ G * numD X Kc j := by
   unfold VtG at hG

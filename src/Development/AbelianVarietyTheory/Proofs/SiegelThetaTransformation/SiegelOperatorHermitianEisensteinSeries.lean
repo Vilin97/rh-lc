@@ -55,6 +55,7 @@ theorem det_growth (C D Z : Matrix (Fin N) (Fin N) ℂ) (h : D * Cᴴ = C * Dᴴ
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)) {n : ℕ}
 
 
+omit [NumberField E] [IsCMField E] in
 theorem pushZ_mem {Z : CM Ψ N N} (hZ : Z ∈ Hn Ψ N) (v : Fin N → E) {t : ℝ} (ht : 0 ≤ t) :
     pushZ Ψ Z v t ∈ Hn Ψ N := by
   intro τ
@@ -120,6 +121,7 @@ theorem term_tendsto_zero (hΨ : IsType Ψ) (hn : n ≠ 0) {γ : M2 E N} (hγ : 
 end GlobalTheory.SW.EisSiegel
 
 
+open GlobalTheory.SW.EisSiegel in
 theorem GlobalTheory.SW.eis_siegel_operator : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)), IsType Ψ → ∀ (n N : ℕ), Even n → 4 * (N + 1) < n → ∀ φ : Matrix (Fin n) (Fin (N + 1)) E → ℂ, IsSB φ → ∀ Z ∈ Hn Ψ (N + 1), Tendsto (fun t : ℝ => eis Ψ φ (pushZ Ψ Z (Pi.single 0 1) t) 0 0) atTop (𝓝 (eis Ψ (dropF φ) (dropZ Ψ Z) 0 0)) := by
   intro E _ _ _ Ψ hΨ n N hn hN φ hφ Z hZ
   obtain ⟨ι, hι, hsurj⟩ := GlobalTheory.T.embedding_compatible_with_weil_and_denominator E Ψ hΨ n N hn

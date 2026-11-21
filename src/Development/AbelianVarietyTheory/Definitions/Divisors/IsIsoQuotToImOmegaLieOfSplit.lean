@@ -136,6 +136,7 @@ theorem dUnit_base (h : V ≤ unitSec G ⁻¹ᵁ W) (k : W ≤ G.hom ⁻¹ᵁ U)
     dUnit G h (G.hom.appLE U W k a) = 0 := d_base _ h k a
 
 
+variable {G} in
 theorem omega_hom_ext {F : S.Modules} {φ ψ : omega G ⟶ F}
     (H : ∀ (W : G.left.Opens) (f : Γ(G.left, W)),
       φ.app _ (dUnit G (le_refl (unitSec G ⁻¹ᵁ W)) f) = ψ.app _ (dUnit G le_rfl f)) : φ = ψ :=
@@ -176,6 +177,7 @@ theorem exists_isVB [Smooth G.hom] [PreconnectedSpace S] :
   (exists_isVB_conormal (sec_hom η[G])).imp fun _ h => ⟨h, h.dual⟩
 
 
+omit [QuasiSeparated G.hom] in
 theorem exists_isVB_of_isSemiAbelian [h : IsSemiAbelian G] [PreconnectedSpace S] :
     ∃ g, IsVB (omega G) g ∧ IsVB (Lie G) g :=
   have := h.smooth
@@ -463,6 +465,7 @@ def dlogChar : X →+ Γ(omega (splitTorus S X), ⊤) :=
       h, h, one_smul, one_smul, add_comm]
 
 
+variable {X Y} in
 theorem omegaMap_dlogChar (u : Y →+ X) (b : Y) :
     (omegaMap (SplitTorus.torusMap S u)).app ⊤ (dlogChar S Y b) = dlogChar S X (u b) :=
   (omegaMap_dUnit _ (le_preimage_top _ _) (le_preimage_top _ _) (le_preimage_top _ _) _).trans

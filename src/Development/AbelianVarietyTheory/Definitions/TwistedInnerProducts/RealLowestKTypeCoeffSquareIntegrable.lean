@@ -105,6 +105,7 @@ def SourceLevelLawC (F : Face D A) : Prop :=
       ω (κ, 1) (ptAt R i σ BW f Q) = (Lev.levChi (Vc D i) (R.βV i) (datV i R.Pg (R.Q t) P m) κ)⁻¹ • ptAt R i σ BW f Q
 
 
+open Datum in
 def InnerProductFormulaC (F : Face D A) : Prop :=
   ForLiftDataC R F fun i t σ P m ω BW f _ _ =>
     ∀ (ν : Measure (GA D (Vc D i))) (𝓕 : Set (GA D (Vc D i))), IsMeasDef (Vc D i) (levV R i t P m) ν 𝓕 →
@@ -124,6 +125,7 @@ def InnerProductFormulaC (F : Face D A) : Prop :=
       l2 ν 𝓕 (upLift R i ω φ₁ F₁) (upLift R i ω φ₂ F₂) = ((ν 𝓕).toReal : ℂ) * ∫ b, ∑' x, Z (pt x b) ∂(Measure.pi mR)
 
 
+open Datum in
 def FockCoefficientC (F : Face D A) : Prop :=
   ForLiftDataC R F fun i _ σ _ _ ω BW f c io =>
     ∀ (μ : Measure (WO (Vc D i) (Wc D i))) (𝓧 : Set (WO (Vc D i) (Wc D i))), IsCovolOne (ratL (Wc D i) (Vc D i)) μ 𝓧 →
@@ -136,6 +138,7 @@ def FockCoefficientC (F : Face D A) : Prop :=
           ⟪w', w⟫_ℂ * l2 μ 𝓧 (ω (1, x) f) f
 
 
+open Datum in
 def FiniteZetaL (F : Face D A) : Prop :=
   ∀ i t σ s P cμ cη m ω BW f₀ f c io, IsLiftDataC R F i t σ s P cμ cη m ω BW f₀ f c io →
     ∀ (μ : Measure (WO (Vc D i) (Wc D i))) (𝓧 : Set (WO (Vc D i) (Wc D i))), IsCovolOne (ratL (Wc D i) (Vc D i)) μ 𝓧 →
@@ -152,6 +155,7 @@ def FiniteZetaL (F : Face D A) : Prop :=
               starRingEnd ℂ (petW R i (U₁ v₁) (U₂ v₂)))
 
 
+open Datum in
 def LevelIndexNormC (F : Face D A) : Prop :=
   ForLiftDataC R F fun i t _ P m _ _ f _ _ =>
     levV R i t P m ≤ GlobalTheory.Mass.Levels.latLev (Vc D i) ∧

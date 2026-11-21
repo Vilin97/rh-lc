@@ -237,6 +237,7 @@ lemma trace_eq (W : Weight L) (dV : SmoothVolume A) {n : ℕ} {V : Submodule ℂ
 end GramChiDerivative
 
 
+open GramChiDerivative in
 theorem GramChiDerivative.proof : GramChiDerivative.Statement := by
   intro D X _ _ _ _ _ A L W₀ W₁ dV n V _ hV e t
   have := dV.isProb

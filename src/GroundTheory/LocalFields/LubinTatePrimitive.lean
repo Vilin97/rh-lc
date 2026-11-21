@@ -22,6 +22,7 @@ variable {L : Type*} [Field L] [ValuativeRel L] [TopologicalSpace L] [IsNonarchi
   [Algebra K L] [ValuativeExtension K L]
 
 
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem associated_psEval {φ : PowerSeries 𝒪[K]} (h0 : PowerSeries.constantCoeff φ = 0)
     (h1 : IsUnit (PowerSeries.coeff 1 φ)) (a : 𝒪[L]) (ha : a ∈ 𝓂[L]) :
     Associated a ⟨psEval φ (fun _ => (a : L)), psEval_mem_integer φ (fun _ => a) fun _ => ha⟩ := by
@@ -96,6 +97,8 @@ theorem aeval_ltEisenstein_of_primitive {k : ℕ}
     fun h => hl' ((mem_lubinTateTorsion_ltPoly_iff k l).mpr h)
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [TopologicalSpace Ω]
+  [IsValuativeTopology Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω] in
 theorem exists_integer_eq {E : IntermediateField K Ω} {x : Ω} (hxE : x ∈ E)
     (hx : valuation Ω x < 1) : ∃ y : 𝒪[E], ((y : E) : Ω) = x :=
   ⟨⟨⟨x, hxE⟩, ((valuation_coe_lt_one_iff E ⟨x, hxE⟩).mp hx).le⟩, rfl⟩

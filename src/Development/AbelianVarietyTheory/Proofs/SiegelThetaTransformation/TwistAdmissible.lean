@@ -357,6 +357,8 @@ theorem _root_.GlobalTheory.SW.TwistAdm.twist_adm {M R : ℕ}
 end GlobalTheory.SW.TwistAdm
 
 
+open Matrix Complex NumberField Filter Topology in
+open scoped ComplexConjugate ComplexOrder Real Classical in
 theorem _root_.GlobalTheory.SW.twist_admissible : ∀ (E : Type) [Field E]
     [NumberField E] [IsCMField E] (n N M R : ℕ) (φ : _root_.GlobalTheory.SW.Fam E n N)
     (𝔛 : _root_.GlobalTheory.SW.Lt E N), _root_.GlobalTheory.SW.admitted M R φ → 𝔛.FG →

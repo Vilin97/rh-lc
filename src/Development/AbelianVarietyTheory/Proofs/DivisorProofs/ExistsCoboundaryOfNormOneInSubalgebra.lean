@@ -176,6 +176,7 @@ theorem sumMap_transfer (s : F' ≃ₐ[F] F') {n : ℕ} (B : Subalgebra F' (Matr
     simpa [sumMap] using this
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem hilbert90_matrix_subalgebra_norm_one : ∀ (F F' : Type) [Field F] [Field F'] [Algebra F F'] [Finite F'] (s : F' ≃ₐ[F] F'),
     (∀ t : F' ≃ₐ[F] F', t ∈ Subgroup.zpowers s) → ∀ (n : ℕ) (B : Subalgebra F' (Matrix (Fin n) (Fin n) F')),
     (∀ x ∈ B, x.map s ∈ B) → ∀ ε : GL (Fin n) F', (ε : Matrix (Fin n) (Fin n) F') ∈ B → nrm s ε = 1 →

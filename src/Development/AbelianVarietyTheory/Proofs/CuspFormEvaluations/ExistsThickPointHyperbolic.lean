@@ -25,6 +25,9 @@ section Abstract
 variable {W : Type} [AddCommGroup W] [Module ℝ W]
 
 
+open NumberField Module Submodule in
+open scoped nonZeroDivisors in
+variable {W : Type} [AddCommGroup W] [Module ℝ W] in
 theorem _root_.GlobalTheory.ThickPoint.exists_euclidean_real {M : ℕ} [FiniteDimensional ℝ W] (hM : finrank ℝ W = M)
     (B : LinearMap.BilinForm ℝ W) (hs : B.IsSymm) (hp : ∀ x, 0 ≤ B x x) :
     ∃ φ : W →ₗ[ℝ] EuclideanSpace ℝ (Fin M), ∀ x y, inner ℝ (φ x) (φ y) = B x y := by
@@ -50,6 +53,10 @@ theorem _root_.GlobalTheory.ThickPoint.exists_euclidean_real {M : ℕ} [FiniteDi
 variable {V : Type} [AddCommGroup V] [Module ℚ V]
 
 
+open NumberField Module Submodule in
+open scoped nonZeroDivisors in
+variable {W : Type} [AddCommGroup W] [Module ℝ W] in
+variable {V : Type} [AddCommGroup V] [Module ℚ V] in
 theorem _root_.GlobalTheory.ThickPoint.transference_pair {M : ℕ} (b : Basis (Fin M) ℚ V)
     (B : LinearMap.BilinForm ℚ V) (hs : B.IsSymm) (hn : B.Nondegenerate)
     (φ ψ : V →+ EuclideanSpace ℝ (Fin M)) (hφ : ∀ x y, inner ℝ (φ x) (ψ y) = (B x y : ℝ))
@@ -239,6 +246,9 @@ private lemma isIntegral_natAbs_discr_mul_of_mem_inv_differentIdeal {z : E}
   exact RingOfIntegers.isIntegral_coe a
 
 
+open NumberField Module Submodule in
+open scoped nonZeroDivisors in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.exists_short_basis_at {r : ℕ} (X : _root_.ReciprocityTheory.ChartRestriction.G.FD.DataX E r) (x : _root_.ReciprocityTheory.ChartRestriction.G.FD.Frame X.Ψ r)
     (hx : x ∈ X.dom) (ε : ℝ) (hε : 0 < ε)
     (hmin : ∀ v ∈ X.L', v ≠ 0 → ε ≤ ∑ τ, X.maj x τ (_root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ.1 v)) :

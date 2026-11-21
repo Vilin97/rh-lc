@@ -26,12 +26,15 @@ variable {Ω : Type*} [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValu
 variable {π : 𝒪[K]} {f g : PowerSeries 𝒪[K]}
 
 
+variable (Ω) in
 def lubinTateField (hπ : Irreducible π) (hf : IsLubinTateSeries π f) (n : ℕ) :
     IntermediateField K Ω :=
   adjoin K (IdealPoint.val ''
     (lubinTateTorsion Ω hf n : Set (IdealPoint Ω (lubinTateFormalGroup hπ hf))))
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ω]
+  [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension K Ω] in
 theorem finiteDimensional_adjoin_simple (x : Ω) : FiniteDimensional K K⟮x⟯ :=
   adjoin.finiteDimensional (Algebra.IsAlgebraic.isAlgebraic x).isIntegral
 
@@ -88,6 +91,7 @@ theorem lubinTateField_eq (hf : IsLubinTateSeries π f) (hg : IsLubinTateSeries 
   exact le_antisymm (key hf hg) (key hg hf)
 
 
+omit [IsSepClosed Ω] in
 theorem image_val_lubinTateTorsion_ltPoly (n : ℕ) :
     IdealPoint.val '' (lubinTateTorsion Ω (isLubinTateSeries_ltPoly π) n :
       Set (IdealPoint Ω (lubinTateFormalGroup hπ (isLubinTateSeries_ltPoly π)))) =
@@ -125,6 +129,9 @@ theorem exists_lubinTateField_eq_adjoin_eisenstein (hf : IsLubinTateSeries π f)
   omega
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ω]
+  [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω]
+  [IsSepClosed Ω] in
 theorem adjoin_simple_eq_top_of_eq {E : IntermediateField K Ω} {a : Ω} (hE : E = K⟮a⟯) :
     K⟮(⟨a, hE ▸ mem_adjoin_simple_self K a⟩ : E)⟯ = ⊤ := by
   rw [eq_top_iff]
@@ -219,6 +226,7 @@ def galPoint {F : _root_.FormalGroup 𝒪[K]} {E : IntermediateField K Ω} [Fini
     exact x.valuation_lt_one)
 
 
+omit [TopologicalSpace Ω] [IsValuativeTopology Ω] in
 theorem galPoint_val {F : _root_.FormalGroup 𝒪[K]} {E : IntermediateField K Ω}
     [FiniteDimensional K E] (σ : E ≃ₐ[K] E) (x : IdealPoint Ω F) (hx : x.val ∈ E) :
     (galPoint σ x hx).val = ((σ ⟨x.val, hx⟩ : E) : Ω) := rfl
@@ -327,6 +335,7 @@ theorem exists_galEquiv_lubinTateField (hf : IsLubinTateSeries π f) (n : ℕ) :
   rw [← galPoint_val σ (b • l) (hmem hx), hgal σ _ hx, smul_comm, ← ha, smul_comm]
 
 
+variable (hπ) in
 def lubinTateGalEquiv (hf : IsLubinTateSeries π f) (n : ℕ) :
     (lubinTateField Ω hπ hf n ≃ₐ[K] lubinTateField Ω hπ hf n) ≃* (𝒪[K] ⧸ Ideal.span {π ^ n})ˣ :=
   Classical.choose (exists_galEquiv_lubinTateField (Ω := Ω) (hπ := hπ) hf n)

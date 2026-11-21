@@ -19,6 +19,7 @@ section
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} {F : Type} [Field F]
 
 
+omit [Fintype K] in
 theorem segre_weight_mapDomain (e : (Σ k, ι k) →₀ ℕ) :
     Finsupp.weight (NumbersDVR.blockWeight (segreIdx ι))
         (Finsupp.mapDomain (fun v : Σ k, ι k => (⟨Sum.inr v.1, v.2⟩ : Σ c, segreIdx ι c)) e) =

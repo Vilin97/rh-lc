@@ -140,6 +140,7 @@ theorem gal_clause {l : ℕ} [Fact l.Prime] {R : Type} [CommRing R] (g : GQ l) (
 end GlobalTheory.CompanionTheory.LTPer.Tilt
 
 
+open GlobalTheory.CompanionTheory.LTPer.Tilt in
 theorem GlobalTheory.CompanionTheory.LTPer.Tilt.tilt_period : ∀ {l : ℕ} [Fact l.Prime] (K : FinExt l) (χ : ↥(GK K) →* (↥K.1)ˣ) (π : ↥(OL K)) (z : ℕ → Om l),
     LTData K χ π z → ∀ μ : ↥K.1 →ₐ[ℚ_[l]] Om l,
     ∃ (r : ↥(OL K) →+* Tl l) (v : ℕ → Tl l),

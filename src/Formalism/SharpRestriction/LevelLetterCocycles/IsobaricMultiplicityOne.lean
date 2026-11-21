@@ -34,6 +34,7 @@ end Formalism.MainNotions.N.T2
 
 namespace Formalism.MainNotions.N.T2
 
+open Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations in
 theorem litGoodO : Formalism.MainNotions.N.LitGoodO := by
   intro l _ LL
   haveI : FiniteDimensional ℚ_[l] LL.1 := LL.2

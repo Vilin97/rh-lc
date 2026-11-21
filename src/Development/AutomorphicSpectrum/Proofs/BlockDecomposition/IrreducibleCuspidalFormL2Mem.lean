@@ -158,10 +158,12 @@ variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
   {μ : Measure (GA E a)} [μ.IsHaarMeasure] [μ.IsMulRightInvariant]
 
 
+variable (E a μ) in
 def piInf : Kinf E a →* (L2 (latticeGL E a) μ →L[ℂ] L2 (latticeGL E a) μ) :=
   (R (latticeGL E a) μ).comp ((infGL E a).comp Unitary.toUnits)
 
 
+variable (E a μ) in
 def piFin : GL (Fin a) (Af E) →* (L2 (latticeGL E a) μ →L[ℂ] L2 (latticeGL E a) μ) :=
   (R (latticeGL E a) μ).comp (finGL E a)
 

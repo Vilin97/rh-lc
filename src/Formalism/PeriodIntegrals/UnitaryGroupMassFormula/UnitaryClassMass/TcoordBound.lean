@@ -162,6 +162,7 @@ end T
 end HX
 
 
+open HX in
 theorem tensLocX_of (hI : LocInt) : TensLoc := by
   intro F E _ _ _ _ _
   classical

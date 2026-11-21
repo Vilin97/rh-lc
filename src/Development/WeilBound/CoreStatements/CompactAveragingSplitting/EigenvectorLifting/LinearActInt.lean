@@ -15,6 +15,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   {κ ι : Type} [Fintype κ] [Fintype ι] {ψ : AddChar k ℂ}
 
 
+omit [Invertible (2 : k)] in
 theorem norm_char (hc : Continuous ψ) (x : k) : ‖ψ x‖ = 1 := by
   have hle : ∀ y, ‖ψ y‖ ≤ 1 := fun y => by
     by_cases h0 : y = 0
@@ -70,6 +71,7 @@ theorem eventually_fix (hc : Continuous ψ) {φ : (κ → k) → ℂ} (hφ : φ 
   rw [schr, h3, h0, mul_zero]
 
 
+omit [Invertible (2 : k)] in
 theorem exists_compact_ann (hc : Continuous ψ) (h1 : ψ ≠ 1) {U : Set (ι → k)} (hU : U ∈ 𝓝 (0 : ι → k)) :
     ∃ C : Set (ι → k), IsCompact C ∧ ∀ x, (∀ y ∈ U, ψ (x ⬝ᵥ y) = 1) → x ∈ C := by
   classical
@@ -99,6 +101,7 @@ theorem schr_comm (w w' : (κ → k) × (κ → k)) (φ : (κ → k) → ℂ) :
   linear_combination (w.1 ⬝ᵥ w'.2 - w'.1 ⬝ᵥ w.2) * h2
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Invertible (2 : k)] in
 theorem exists_section (large₂ : Submodule k ((κ → k) × (κ → k)))
     (hiso : ∀ w ∈ large₂, ∀ w' ∈ large₂, w.1 ⬝ᵥ w'.2 = w'.1 ⬝ᵥ w.2) (hdim : Module.finrank k large₂ = Fintype.card κ)
     (X : (ι → k) →ₗ[k] (κ → k) × (κ → k)) (hXL : ∀ x, X x ∈ large₂ → x = 0) :

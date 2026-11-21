@@ -27,6 +27,7 @@ section Defs
 variable (k : Type) [Field k] {X : Scheme.{0}} [Algebra k Γ(X, ⊤)]
 
 
+variable (X) in
 def strHom : X ⟶ Sp k := X.toSpecΓ ≫ Spec.map (CommRingCat.ofHom (algebraMap k Γ(X, ⊤)))
 
 abbrev redι (Z : Closeds X) : (Scheme.IdealSheafData.vanishingIdeal Z).subscheme ⟶ X :=
@@ -81,6 +82,7 @@ theorem strHom_eq {f : X ⟶ Sp k}
     toSpecΓ_SpecMap_ΓSpecIso_inv, Category.comp_id]
 
 
+variable (k X) in
 theorem algebraMap_eq_strHom (r : k) :
     algebraMap k Γ(X, ⊤) r = (strHom k X).appTop ((Scheme.ΓSpecIso (.of k)).inv r) := by
   have e : (Scheme.ΓSpecIso (.of k)).inv ≫ (strHom k X).appTop =
@@ -272,6 +274,7 @@ theorem interNum_one_nonneg_of_sec (hH : IsAmpleLB H) (hd : topologicalKrullDim 
   exact ha this
 
 
+omit [IsIntegral C] in
 theorem interNum_one_of_cls_eq_add (hH : IsAmpleLB H) (hd : topologicalKrullDim C = 1)
     {A B : LB C} (hL : L.IsLB) (hA : A.IsLB) (hB : B.IsLB) (e : cls L hL = cls A hA + cls B hB) :
     interNum k (structureModule C) ![L] =
@@ -388,6 +391,7 @@ theorem IsNef.of_cls_eq (h : IsNef k M) (hL : L.IsLB) (e : cls L hL = cls M h.is
   ⟨hL, fun Z hZ => (h.2 Z hZ).trans_eq (interNumRed_one_congr hL h.isLB e Z).symm⟩
 
 
+variable (k X) in
 theorem isNef_triv : IsNef k (LB.triv X) :=
   ⟨LB.isLB_triv X, fun Z _ => (interNumRed_one_eq_zero (LB.isLB_triv X) rfl Z).ge⟩
 
@@ -483,6 +487,7 @@ theorem IsPsEff.exists_hasNonzeroSec [IsLocallyNoetherian X] (h : IsPsEff N) (hA
   module
 
 
+omit [IsIntegral X] in
 theorem IsPsEff.of_cls_eq (h : IsPsEff M) (hL : L.IsLB) (e : cls L hL = cls M h.isLB) :
     IsPsEff L := by
   obtain ⟨A, hA, hs⟩ := h.2

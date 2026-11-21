@@ -510,6 +510,7 @@ theorem exists_frame_of_sig {F E : Type} [Field F] [NumberField F] [Field E] [Nu
 end GlobalTheory.CompanionTheory.WeilSiegel.NoFrame.Hasse
 
 
+open GlobalTheory.CompanionTheory.WeilSiegel.NoFrame GlobalTheory.CompanionTheory.WeilSiegel.NoFrame.Hasse in
 theorem GlobalTheory.CompanionTheory.WeilSiegel.NoFrame.exists_obstruction : ∀ (D : D7) (r : ℕ) (V : HSp D), 2 * r < V.rank → ∀ (t : ℕ) (β : HermE D r), GlobalTheory.CompanionTheory.WeilSiegel.Deg.IsBlockNF t β → (¬ ∃ x : Matrix (Fin V.rank) (Fin r) D.host.E, x.rank = r ∧ gramQ V x = β.1) → ∃ (ρ : D.what₂.Tau) (ε : ℝ) (S : Submodule ℂ (Fin r → ℂ)), (ε = 1 ∨ ε = -1) ∧ GlobalTheory.CompanionTheory.WeilSiegel.NoFrame.NonnegOn ε (β.1.map (tauE D ρ)) S ∧ ∀ T : Submodule ℂ (Fin V.rank → ℂ), GlobalTheory.CompanionTheory.WeilSiegel.NoFrame.PosOn ε (gramAt D V ρ) T → Module.finrank ℂ T < Module.finrank ℂ S := by
   intro D r V h2r t β hNF hno
   by_contra hcon

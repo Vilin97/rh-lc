@@ -63,6 +63,7 @@ theorem Reads.inj {μ μ' : Chr F E K} {ξ : HChar E} (h : Reads σ μ ξ) (h' :
   exact Units.ext (σ.injective ((h a).symm.trans (h' a)))
 
 
+variable (σ) in
 theorem reads_one : Reads σ (1 : Chr F E K) (1 : HChar E) := fun a => by
   show ((1 : ℂˣ) : ℂ) = σ ((1 : Kˣ) : K)
   simp
@@ -209,6 +210,7 @@ def A : Amb B.fields := I.J.amb B I.chi
 abbrev Q (a : I.ι) : Finset (HeightOneSpectrum (𝓞 B.fields.E)) := QE I.sel (I.tup a : Chr B.fields.F B.fields.E B.fields.K)
 
 
+open Classical in
 def SQ : Finset (HeightOneSpectrum (𝓞 B.host.E)) := Finset.univ.biUnion I.Q
 
 abbrev dat : Dat := B.dat X I.Ch

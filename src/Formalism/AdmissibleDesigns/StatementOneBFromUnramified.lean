@@ -43,6 +43,9 @@ variable {D : D7} (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV)
   (hc : TruncatedSeriesCountingIdentities.FamilyContinuous (D := D) i r) (cB : ℕ)
 
 
+include hD hc in
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem tbTarget_row (hN : RepresentationBoundsCohomology.NormAt D.nd r ρ π) (hTB : EmbeddingTypes.admTB i r π dc cB) (hG : K.SelfGood i)
     (hTie : TruncatedSeriesCountingIdentities.LocalCoefficientCompatibility i) (hF : TruncatedSeriesCountingIdentities.FontaineAtPlacesOverL i) (hG2 : TruncatedSeriesCountingIdentities.admG2 i r ρ π) (hdec : TruncatedSeriesCountingIdentities.SemisimpleDecomposition i r ρ π) :
     TB.TBTarget i dc Dd cB :=
@@ -70,6 +73,8 @@ variable {D : D7} (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV)
   (lenRow : HeightOneSpectrum (𝓞 D.host.E) → ℚ) (cB : ℕ)
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem open_inputs_at_normalized (g2 : TruncatedSeriesCountingIdentities.admG2 i r ρ π) (g4 : TruncatedSeriesCountingIdentities.admG4 i r) (g5 : TruncatedSeriesCountingIdentities.admG5 i r) (g5x : TruncatedSeriesCountingIdentities.TameGeneratorConditions i)
     (dcm : TruncatedSeriesCountingIdentities.SemisimpleDecomposition i r ρ π) (font : TruncatedSeriesCountingIdentities.FontaineAtPlacesOverL i) (fin : LargeLevelLemmas.tateH1FinitenessAtPlacesOver i) (tie : TruncatedSeriesCountingIdentities.LocalCoefficientCompatibility i)
     (hG : K.SelfGood i) (hQP : QS.QPow i) (hTB : EmbeddingTypes.admTB i (Norm.rN i r ρ π) π dc cB) :
@@ -136,6 +141,8 @@ variable {D : D7} (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV)
   (lenRow : HeightOneSpectrum (𝓞 D.host.E) → ℚ) (e' : HeightOneSpectrum (𝓞 D.host.E) → ℕ) (cB : ℕ)
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem theorem_n5_from_inputs (g1 : TruncatedSeriesCountingIdentities.admG1 i r) (g2 : TruncatedSeriesCountingIdentities.admG2 i r ρ π) (g3 : TruncatedSeriesCountingIdentities.admG3 i r ρ π) (g4 : TruncatedSeriesCountingIdentities.admG4 i r)
     (g5 : TruncatedSeriesCountingIdentities.admG5 i r) (g5x : TruncatedSeriesCountingIdentities.TameGeneratorConditions i) (g6 : TruncatedSeriesCountingIdentities.admG6 i r) (bk : TruncatedSeriesCountingIdentities.admBK i) (bka : LargeLevelLemmas.BlochKatoAnnihilators i)
     (ct : TruncatedSeriesCountingIdentities.FamilyContinuous i r) (dcm : TruncatedSeriesCountingIdentities.SemisimpleDecomposition i r ρ π) (font : TruncatedSeriesCountingIdentities.FontaineAtPlacesOverL i) (fin : LargeLevelLemmas.tateH1FinitenessAtPlacesOver i)

@@ -36,11 +36,13 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   {V : Type} [AddCommGroup V] [Module ℂ V]
 
 
+omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 theorem isSmooth_comp {n : ℕ} {π : Representation ℂ (GL (Fin n) k) V} (h : IsSmooth π) :
     IsSmooth (π.comp (invTranspose n) : Representation ℂ (GL (Fin n) k) V) :=
   fun v => (h v).preimage (continuous_invTranspose n)
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem isIrreducible_comp {n : ℕ} {π : Representation ℂ (GL (Fin n) k) V} (h : π.IsIrreducible) :
     Representation.IsIrreducible (π.comp (invTranspose n) : Representation ℂ (GL (Fin n) k) V) :=
   GlobalTheory.CosocleComp.isIrreducible_comp (fun g => ⟨_, invTranspose_invTranspose n g⟩) h
@@ -49,6 +51,7 @@ def dual (x : IrrGL (k := k)) : IrrGL (k := k) :=
   IrrGL.of (x.rep.comp (invTranspose x.1)) (isSmooth_comp x.2.rep.smooth) (isIrreducible_comp x.2.rep.irr)
 
 
+omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 theorem dual_of {n : ℕ} (π : Representation ℂ (GL (Fin n) k) V) (hs : IsSmooth π) (hi : π.IsIrreducible) :
     dual (IrrGL.of π hs hi) = IrrGL.of (π.comp (invTranspose n)) (isSmooth_comp hs) (isIrreducible_comp hi) :=
   IrrGL.of_eq_of.2 ⟨compEquiv (IrrGL.equivOf π hs hi).symm (invTranspose n)⟩

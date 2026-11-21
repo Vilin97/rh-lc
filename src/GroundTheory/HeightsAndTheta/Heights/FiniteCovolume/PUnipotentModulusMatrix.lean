@@ -172,6 +172,7 @@ theorem heisMat_unitary {y : ι → ℂ} (hy : hForm H a y = 0) {s : ℂ}
   linear_combination (hForm H a q * hForm H p a) * hs
 
 
+omit hH ha in
 theorem heisMat_conj {g : Matrix ι ι ℂ} (hg : gᴴ * H * g = H) (hga : g *ᵥ a = a) (y : ι → ℂ)
     (s : ℂ) : g * heisMat H a y s = heisMat H a (g *ᵥ y) s * g := by
   refine matrix_ext_mulVec fun z => ?_
@@ -180,6 +181,7 @@ theorem heisMat_conj {g : Matrix ι ι ℂ} (hg : gᴴ * H * g = H) (hga : g *�
   simp only [mulVec_add, mulVec_sub, mulVec_smul, hga]
 
 
+omit ha in
 theorem eq_of_mulVec_partner {b : ι → ℂ} (hab : hForm H a b = 1) {n m : Matrix ι ι ℂ}
     (hn : nᴴ * H * n = H) (hm : mᴴ * H * m = H)
     (hna : n *ᵥ a = a)

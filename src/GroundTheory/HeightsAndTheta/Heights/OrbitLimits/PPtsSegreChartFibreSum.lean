@@ -90,6 +90,7 @@ section Chart
 variable {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
 
+omit [DecidableEq K] in
 theorem bsmul_mem_mcPts {P : Ideal (MRing ι)} (hP : IsMultiHomogIdeal P) {c : K → ℂ} (hc : ∀ k, c k ≠ 0)
     {z : (Σ k, ι k) → ℂ} (hz : z ∈ mcPts P) : bsmul c z ∈ mcPts P := by
   refine ⟨fun k => ?_, fun f hf => ?_⟩
@@ -107,6 +108,7 @@ theorem bsmul_mem_mcPts {P : Ideal (MRing ι)} (hP : IsMultiHomogIdeal P) {c : K
     exact hle hf
 
 
+omit [DecidableEq K] in
 theorem mem_fibre_of_chart {e m : ℕ} {P : Ideal (MRing ι)} {σ : Fin m ≃ ((k : K) → ι k)}
     {i : (k : K) → ι k} {Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)} (hΨ0 : ∀ w, Ψ w 0 = w i)
     {x : Fin m → ℂ} (hx : x ∈ segreChartSet P σ i) :
@@ -123,6 +125,7 @@ theorem mem_fibre_of_chart {e m : ℕ} {P : Ideal (MRing ι)} {σ : Fin m ≃ ((
   · rw [Fin.cons_succ, chartProjMatrix_mulVec, hw]
 
 
+omit [DecidableEq K] in
 theorem chart_of_mem_fibre {e m : ℕ} {P : Ideal (MRing ι)} {σ : Fin m ≃ ((k : K) → ι k)}
     {i : (k : K) → ι k} {Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)} (hΨ0 : ∀ w, Ψ w 0 = w i)
     {y : Fin e → ℂ} {w : ((k : K) → ι k) → ℂ} (hw : w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y) :
@@ -167,12 +170,14 @@ section Term
 variable {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
 
+omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem logNorm_ofWeight_one (g : ((Σ k, ι k) → ℂ) → ℝ)
     (hg : ∀ (c : K → ℂ) z, (∀ k, c k ≠ 0) → g (fun p => c p.1 * z p) = g z) (z : (Σ k, ι k) → ℂ) :
     logNorm (HermLine.ofWeight g hg) 1 z = g z := by
   simp [logNorm, HermLine.ofWeight, Real.exp_neg]
 
 
+omit [DecidableEq K] in
 theorem isSectionOn_ofWeight_one {P : Ideal (MRing ι)} (hP : P.IsPrime) (g : ((Σ k, ι k) → ℂ) → ℝ)
     (hg : ∀ (c : K → ℂ) z, (∀ k, c k ≠ 0) → g (fun p => c p.1 * z p) = g z) :
     IsSectionOn P (HermLine.ofWeight g hg) 1 := by
@@ -281,6 +286,7 @@ end Term
 end PtsSegreChartFibreSum
 
 
+open PtsSegreChartFibreSum in
 theorem PtsSegreChartFibreSum.proof (h₁ : SegreChartZeroSet.Statement) (h₂ : SegreChartProjFinite.Statement) :
     PtsSegreChartFibreSum.Statement := by
   intro K _ _ ι _ P e m σ i L g Ψ hP hL hg hΨ hΨ0

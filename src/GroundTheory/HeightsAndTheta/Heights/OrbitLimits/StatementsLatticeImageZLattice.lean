@@ -20,6 +20,7 @@ theorem mem_latticeImage {F : Type*} [Field F] (L : AddSubgroup F) (y : mixedSpa
   simp
 
 
+open scoped Classical in
 def LatticeImageZLattice.Statement : Prop :=
   ∀ (F : Type) [Field F] [NumberField F] (L : AddSubgroup F), L.FG →
     (∀ x : F, ∃ n : ℕ, 0 < n ∧ (n : F) * x ∈ L) →

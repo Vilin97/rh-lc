@@ -169,6 +169,7 @@ theorem eq_of_galPol {w : PlE H} {a b : A.LP w} (ha : A.unr a) (hb : A.unr b) {u
   simpa only [A.lpTw_add, add_neg_cancel, A.lpTw_zero] using congrArg (A.lpTw · (-u)) h2
 
 
+variable (A) in
 def IsCohSum (n : ℕ) (Sig : List (Formalism.BasicNotions.Part A.CG)) : Prop :=
   (∀ p ∈ Sig, A.csd p.π) ∧ ∀ p ∈ Sig, ∀ τ, (A.infG p.π τ).Nodup ∧
     ∀ z ∈ A.infG p.π τ, ∃ k : ℤ, z = (k : ℂ) + ((n : ℂ) - (p.d : ℂ)) / 2
@@ -205,6 +206,7 @@ open GlobalTheory.CuspRep
 variable [IsTotallyComplex H.E]
 
 
+variable (A) in
 def ReadsCusp (e : ∀ a, A.CG a → CG H.E a) : Prop :=
   (∀ a, 1 ≤ a → Function.Injective (e a)) ∧ (∀ a π, 1 ≤ a → (e a π).IsUnitary) ∧
     ∀ a π w, 1 ≤ a → A.unr (A.locG π w) → ∃ B : Multiset ℂˣ, (e a π).HasSat w B ∧

@@ -39,6 +39,7 @@ section Kummer
 variable {K : Type*} [Field K] {n : ℕ} [NeZero n]
 
 
+omit [NeZero n] in
 theorem forall_mem_zpowers_exists_pow_eq {F : Type*} [Field F] [Algebra K F] {y : Kˣ}
     (h : ∃ x : F, x ^ n = algebraMap K F (y : K)) :
     ∀ a ∈ Subgroup.zpowers y, ∃ x : F, x ^ n = algebraMap K F (a : K) := by
@@ -64,6 +65,7 @@ instance finite_zpowers_quotient_unitsPow (y : Kˣ) :
 variable [HasEnoughRootsOfUnity K n] {Ω : Type*} [Field Ω] [Algebra K Ω] [IsSepClosed Ω]
 
 
+omit [IsSepClosed Ω] in
 theorem adjoin_eq_top_of_pow_eq {y : Kˣ} (α : kummerExtension K n Ω (Subgroup.zpowers y))
     (hα : α ^ n = algebraMap K _ (y : K)) : adjoin K {α} = ⊤ := by
   refine eq_top_iff.2 fun m _ ↦ ?_

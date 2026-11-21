@@ -28,6 +28,8 @@ protected abbrev zsc {D : D7} {O : Obj D} (P : RowSideFamily O.ex) (Del h0 : ℕ
   GlobalTheory.Fc.zsc P Del h0 c
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
 structure Part (D : D7) (O : Obj D) (c : ℝ) : Type 1 where
   R : Formalism.L2.RecT O.ex
   S : Formalism.L2.SG.SpectralTiesReal.STiesR R

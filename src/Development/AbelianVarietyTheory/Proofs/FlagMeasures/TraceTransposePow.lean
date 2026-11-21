@@ -78,6 +78,7 @@ private lemma sum_mulVec_one_eq_sum_entries {n : ℕ} (P : Matrix (Fin n) (Fin n
   simp [Matrix.mulVec, dotProduct]
 
 
+open Polynomial in
 theorem trace_transpose_pow {V : Type} [AddCommGroup V] [Module ℂ V] {n : ℕ} (E : Fin n → Fin n → Module.End ℂ V)
     (hE : Formalism.REAL.GlRel E) (χ : Fin n → ℂ) (v : V)
     (hv : ∀ k : ℕ, (∑ c, (Matrix.of E ^ k) c c) v = gelfVal χ k • v) (m : ℕ) :
@@ -173,6 +174,7 @@ theorem trace_transpose_pow {V : Type} [AddCommGroup V] [Module ℂ V] {n : ℕ}
 variable {n : ℕ}
 
 
+open GlobalTheory.CapelliCentral in
 lemma word_apply {ε : Fin n → Bool} (w : List (Fin n × Fin n)) (F : smoothSpace ε ℂ) {f : Matrix (Fin n) (Fin n) ℂ → ℂ}
     (h : ∀ g, inUJ ε g → F.1 g = f g) :
     ∀ g, inUJ ε g → ((w.map fun p => eabEnd ε ℂ p.1 p.2).prod F).1 g = Eword ε w f g := by
@@ -231,6 +233,7 @@ lemma sum_cycWord {A : Type} [Ring A] (E : Fin n → Fin n → A) (m : ℕ) :
     rw [hs, Fin.snoc_castSucc, Fin.snoc_castSucc]
 
 
+open GlobalTheory.CapelliCentral in
 lemma gelf_apply {ε : Fin n → Bool} (m : ℕ) (F : smoothSpace ε ℂ) {f : Matrix (Fin n) (Fin n) ℂ → ℂ}
     (h : ∀ g, inUJ ε g → F.1 g = f g) {g : Matrix (Fin n) (Fin n) ℂ} (hg : inUJ ε g) :
     ((∑ c, (Matrix.of (eabEnd ε ℂ) ^ (m + 1)) c c) F).1 g = gelf ε m f g := by

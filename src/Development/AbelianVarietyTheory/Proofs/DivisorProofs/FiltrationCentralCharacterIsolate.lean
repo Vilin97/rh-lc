@@ -54,6 +54,7 @@ theorem aeval_apply_comm (T U : Module.End ℂ V) (h : U * T = T * U) (f : Polyn
 end CentralStepEigen
 
 
+open CentralStepEigen in
 theorem exists_intertwining_bijOn_eigen_of_central_step :
     ∀ {G V X : Type} [Group G] [AddCommGroup V] [Module ℂ V] [AddCommGroup X] [Module ℂ X]
     (ρ : Representation ℂ G V) (σ : Representation ℂ G X) (N : ℕ) (S : Fin (N + 1) → Subrepresentation ρ),

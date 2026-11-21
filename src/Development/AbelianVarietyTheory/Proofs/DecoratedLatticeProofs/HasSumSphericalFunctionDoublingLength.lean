@@ -34,6 +34,7 @@ theorem ord_det_of_mem_KO {x : GL (Fin n) k} (hx : x ∈ KO k (Fin n)) :
   exact (Valuation.integer.integers (valuation k)).one_of_isUnit (Units.isUnit _)
 
 
+variable (k n) in
 def pairEquiv : ((GL (Fin n) k ⧸ KO k (Fin n)) × (GL (Fin n) k ⧸ KO k (Fin n))) ≃
     ((GL (Fin n) k ⧸ KO k (Fin n)) × (GL (Fin n) k ⧸ KO k (Fin n))) where
   toFun p := (p.2, (QuotientGroup.mk (p.2.out⁻¹ * p.1.out) : GL (Fin n) k ⧸ KO k (Fin n)))

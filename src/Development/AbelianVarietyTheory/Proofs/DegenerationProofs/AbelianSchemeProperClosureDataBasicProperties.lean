@@ -132,6 +132,7 @@ theorem flat_P : Flat (C.P.hom ≫ C.π) := by
 variable {C} {p : ℕ} [Fact p.Prime] {y : Sp (OO p) ⟶ C.Z} (τ : C.Test y)
 
 
+include τ in
 theorem Test.cl : C.Cl y := by
   have hi : Function.Injective ((OO p).subtype.comp τ.j) := (OO p).subtype_injective.comp τ.j_inj
   obtain ⟨r, hr⟩ := spMap_factor_jK _ hi

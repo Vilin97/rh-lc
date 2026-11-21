@@ -39,6 +39,7 @@ theorem midDeg_sub (a b : K ⊕ K' → ℤ) :
 end PairNumberJoinRight
 
 
+open PairNumberJoinRight in
 theorem PairNumberJoinRight.proof (hLeft : PairNumberJoinLeft.Statement)
     (hVert : JoinVerticalDivisorRight.Statement) (hRel : PairNumberRelabelAlt.Statement) :
     PairNumberJoinRight.Statement := by

@@ -49,6 +49,7 @@ theorem isMultiHomog_prod {J : Type} (s : Finset J) (f : J → MRing ι) (d : J 
       (ih fun j' hj' => h j' (Finset.mem_insert_of_mem hj')) rfl
 
 
+open Classical in
 def monoSet (a : K → ℕ) : Finset ((Σ k, ι k) →₀ ℕ) :=
   (Finset.Icc 0 (Finsupp.equivFunOnFinite.symm fun p : (Σ k, ι k) => a p.1)).filter (blockSum · = a)
 
@@ -66,6 +67,7 @@ theorem aeval_monomial_int (y : (Σ k, ι k) → Ω) (γ : (Σ k, ι k) →₀ �
   simp [aeval_monomial]
 
 
+omit [Fintype K] in
 theorem valueSpan_le (y : (Σ k, ι k) → Ω) (a : K → ℕ) (W : Submodule ℚ Ω)
     (hW : ∀ γ : (Σ k, ι k) →₀ ℕ, blockSum γ = a → aeval y (monomial γ (1 : ℤ) : MRing ι) ∈ W) :
     valueSpan y a ≤ W := by
@@ -87,6 +89,7 @@ theorem finiteDimensional_valueSpan (y : (Σ k, ι k) → Ω) (a : K → ℕ) :
   exact ⟨γ, mem_monoSet.mpr hγ, rfl⟩
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] [CharZero Ω] in
 theorem finrank_le_of_mul [CharZero Ω] {V W : Submodule ℚ Ω} [FiniteDimensional ℚ W] {t : Ω} (ht : t ≠ 0)
     (h : V ≤ W.comap (LinearMap.mulLeft ℚ t)) : Module.finrank ℚ V ≤ Module.finrank ℚ W := by
   have hinj : Function.Injective (LinearMap.mulLeft ℚ t) := fun a b hab => mul_left_cancel₀ ht hab
@@ -96,6 +99,7 @@ theorem finrank_le_of_mul [CharZero Ω] {V W : Submodule ℚ Ω} [FiniteDimensio
 end BlockBirationalHilbert
 
 
+open BlockBirationalHilbert in
 theorem BlockBirationalHilbert.proof (hV : HilbFnValueSpan.Statement) : BlockBirationalHilbert.Statement := by
   intro K _ _ ι _ Ω _ _ y k₀ hy hbir m
   classical

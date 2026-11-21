@@ -74,6 +74,7 @@ open Formalism.MainNotions.DIV.Cons GlobalTheory.ToricRank
 open scoped CategoryTheory.Obj
 
 
+open IsLocalRing ReciprocityTheory.ChartRestriction.G.Out in
 theorem finrank_le_of_lieMult_valued {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     {D : DegData R (maximalIdeal R)} {P : PolAV (Sp (FractionRing R))} {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G]
     (U : UnifPre (maximalIdeal R) D P G) {O : Type} [CommRing O] [IsDomain O] [StarRing O] [Module.Finite ℤ O]

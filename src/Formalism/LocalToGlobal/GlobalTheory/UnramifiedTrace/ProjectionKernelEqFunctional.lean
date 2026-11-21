@@ -65,6 +65,7 @@ theorem ld_locP (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls 0)
       ((Submodule.span_singleton_le_iff_mem _ _).2 z3.2))
 
 
+set_option maxHeartbeats 4000000 in
 theorem ptz_val (T : Forms0 D u) {v : (D.mem u).A.vT} {c : (D.mem u).C.cls 0}
     {g : Module.Dual ((D.mem u).A.Fv v) ((D.fm u).lk 0 v c)}
     {γ : UJ (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _))}

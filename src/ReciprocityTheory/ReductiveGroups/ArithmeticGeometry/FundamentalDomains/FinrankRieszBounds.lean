@@ -85,6 +85,7 @@ theorem riesz (δ : X.Ψ → (Fin r → ℂ) →ₗ[ℂ] ℂ) :
   · linarith
 
 
+omit hz in
 theorem finrank_le {ξ : Fin r → E} (hz : z ∈ X.dom) (hξ : X.IsIso ξ) :
     finrank ℝ (VT (X := X) z ξ) ≤ 2 * fdeg E * (r - 2) := by
   classical

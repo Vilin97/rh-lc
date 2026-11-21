@@ -285,6 +285,8 @@ private lemma ideal_le_pi_or_le_cj_pi_of_proper (L : _root_.Formalism.MainNotion
   rw [hzE, hy1]
 
 
+open ValuativeRel MeasureTheory in
+open scoped Pointwise ENNReal Classical in
 theorem _root_.GlobalTheory.UnramOrder.proper_ideals : ∀ {F : Type} [Field F] [ValuativeRel F]
     [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E]
     [Algebra F E] [TopologicalSpace E] (L : _root_.Formalism.MainNotions.S.Loc.LocE F E), ∀ ϖ : 𝒪[F], Irreducible ϖ →

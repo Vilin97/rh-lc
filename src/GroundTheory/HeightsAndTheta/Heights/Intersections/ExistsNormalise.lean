@@ -56,6 +56,7 @@ theorem exists_normalise {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} 
     exact inv_mul_cancel₀ (hj k)
 
 
+omit [∀ k, Fintype (ι k)] [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem eq_of_normalised {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
     {j : ∀ k : FibreBlock κ, ι' k.1} {w : (Σ k, ι k) → ℂ} (hw : ∀ k, ∃ i, w ⟨k, i⟩ ≠ 0)
     {z₁ z₂ : (Σ k', ι' k') → ℂ} (h₁v : ∀ p, z₁ (v p) = w p) (h₁j : ∀ k : FibreBlock κ, z₁ ⟨k.1, j k⟩ = 1)
@@ -83,6 +84,7 @@ theorem eq_of_normalised {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} 
 end GenericPointsInAffineChart
 
 
+open GenericPointsInAffineChart PullbackDegreeCount in
 theorem GenericPointsInAffineChart.proof (hFin : ArithmeticIntersectionChartFinite.Statement) (hNorm : ChartNormCount.Statement)
     (hOrb : OrbitCompNonvanish.Statement) : GenericPointsInAffineChart.Statement := by
   intro K _ ι _ K' _ ι' _ κ v P' n G j hv hP' hP hj

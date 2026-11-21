@@ -45,6 +45,7 @@ noncomputable def blockProj {K : Type} (ι : K → Type) (k : K) : ((Σ k, ι k)
 end FubiniStudyLeviForm
 
 
+open FubiniStudyLeviForm in
 theorem FsLineLevi.proof : FsLineLevi.Statement := by
   intro K _ ι _ z w hz
   classical

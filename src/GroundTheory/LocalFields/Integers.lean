@@ -87,6 +87,8 @@ theorem free_integer : Module.Free 𝒪[K] 𝒪[L] := Module.free_of_finite_type
 instance : Module.Free 𝒪[K] 𝒪[L] := free_integer K L
 
 
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [TopologicalSpace L]
+  [IsNonarchimedeanLocalField L] [FiniteDimensional K L] in
 theorem finrank_integer : Module.finrank 𝒪[K] 𝒪[L] = Module.finrank K L :=
   (IsFractionRing.finrank_eq 𝒪[K] K 𝒪[L] L).symm
 

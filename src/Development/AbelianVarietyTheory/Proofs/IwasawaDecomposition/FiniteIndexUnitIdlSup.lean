@@ -50,6 +50,7 @@ theorem ker_classHom_le : (classHom L).ker ≤ unitIdl L ⊔ (diagUnits L).range
   exact Subgroup.mul_mem_sup hu ⟨_, rfl⟩
 
 
+open Classical in
 theorem finiteIndex_unitIdl_sup : ∀ (L : Type) [Field L] [NumberField L],
     (unitIdl L ⊔ (diagUnits L).range).FiniteIndex := by
   intro L _ _

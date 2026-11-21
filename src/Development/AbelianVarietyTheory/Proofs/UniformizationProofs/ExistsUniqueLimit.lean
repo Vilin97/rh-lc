@@ -187,6 +187,7 @@ def evU {φ : K → (Y ⟶ X)} {ε : K → ℤ} (u : LB.Gen (LB.LinComb L φ ε)
   inv_val := by funext Z r z J; exact (val u r z J.1).inv_val
 
 
+variable (L) in
 def secVals (φ : K → (Y ⟶ X)) (ε : K → ℤ) : Set (Vals L Y) := Set.range (ev (L := L) (φ := φ) (ε := ε))
 
 variable {φ : K → (Y ⟶ X)} {ε : K → ℤ}

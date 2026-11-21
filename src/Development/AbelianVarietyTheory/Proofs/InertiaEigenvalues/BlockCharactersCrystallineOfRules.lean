@@ -256,6 +256,7 @@ variable [IsDomain B]
   (hunit : ∀ b : B, b ≠ 0 → (∀ g, ∃ x : Qp, PD.actB g b = x • b) → IsUnit b)
 
 
+include hreg in
 theorem coordInv_le (A : G → Matrix (Fin n) (Fin n) Qp) :
     Module.Finite K₀ (coordInv PD A) ∧ finrank K₀ (coordInv PD A) ≤ n := by
   have hr : Module.rank K₀ (coordInv PD A) ≤ n := by
@@ -270,6 +271,7 @@ theorem coordInv_le (A : G → Matrix (Fin n) (Fin n) Qp) :
   exact lt_of_le_of_lt hr Cardinal.natCast_lt_aleph0
 
 
+include hreg hunit in
 theorem coordInv_dual (A A' : G → Matrix (Fin n) (Fin n) Qp) (hA : ∀ g, A g * (A' g).transpose = 1)
     (h : finrank K₀ (coordInv PD A) = n) : finrank K₀ (coordInv PD A') = n := by
   classical
@@ -333,6 +335,7 @@ theorem coordInv_dual (A A' : G → Matrix (Fin n) (Fin n) Qp) (hA : ∀ g, A g 
   simpa using hd.fintype_card_le_finrank
 
 
+include hreg hunit in
 theorem dualCrys_of_regular [CharZero Qp] (LL : Type) [Field LL] [Algebra Qp LL] [FiniteDimensional Qp LL] :
     CrystallineSubrepresentation.DualCrys PD LL := by
   intro V _ _ _ _ _ ρ hc

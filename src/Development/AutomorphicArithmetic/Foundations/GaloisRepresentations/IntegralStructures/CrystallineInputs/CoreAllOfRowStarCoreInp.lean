@@ -203,6 +203,7 @@ end GlobalTheory.RoadU.PhiTwist
 
 namespace GlobalTheory.RoadU
 
+open GlobalTheory.GalCut.IwaTwist GlobalTheory.GalCut7.IwahoriTwist GlobalTheory.RoadU.PhiTwist UpperTheory.V UpperTheory.V.Af in
 theorem _root_.UpperTheory.Gal.Int.Inp.holdsS_good_phi : UpperTheory.Gal.Int.Inp.Inp → SphericalLevelCondition .csd .crys → SphericalLevelCondition .csd .phi → SphericalLevelCondition .good .phi := by
   intro hI Hc Hp E Ω _ _ _ _ _ _ l _ ι a ha π χ hS r hr w hw B hB
   intro P AI hT A h O _ _ _ Bw hj g
@@ -341,6 +342,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 namespace GlobalTheory.RoadU
 
 
+set_option maxHeartbeats 1000000 in
 theorem _root_.UpperTheory.Gal.Int.Inp.holdsS_dR_all_of_good : UpperTheory.Gal.Int.Inp.Inp → SphericalLevelCondition .good .dR → SphericalLevelCondition .all .dR := by
   intro hI hG E Ω _ _ _ _ _ _ l _ ι a ha π χ hS r hr w _ B hB
   have hAF : GlobalTheory.Published.AutomorphicFormsFiniteGL := GlobalTheory.automorphicFormsFiniteGL
@@ -431,6 +433,7 @@ end GlobalTheory.RoadU.PhiDescent
 
 namespace GlobalTheory.RoadU
 
+open GlobalTheory.RoadU.PhiDescent in
 theorem _root_.UpperTheory.Gal.Int.Inp.holdsS_all_phi : UpperTheory.Gal.Int.Inp.Inp → SphericalLevelCondition .good .crys → SphericalLevelCondition .good .phi → SphericalLevelCondition .all .phi := by
   intro hIn _ hgood E Ω _ _ _ _ _ _ l _ ι a ha π χ hsc r hr w _ B hB Pr AI hT A h O _ _ _ Bw hj g
   have hF := GlobalTheory.automorphicFormsFiniteGL
@@ -489,6 +492,7 @@ noncomputable section
 namespace GlobalTheory.RoadU
 
 
+open UpperTheory.V.Af in
 theorem _root_.UpperTheory.Gal.Int.Inp.ex_all_of_good : UpperTheory.Gal.Int.Inp.Inp → Ex .good → SphericalLevelCondition .good .unr → Ex .all := by
   intro hIn hEx hHolds E Ω _ _ _ _ _ _ l _ ι a ha π χ hsc
   have hAF : GlobalTheory.Published.AutomorphicFormsFiniteGL := GlobalTheory.automorphicFormsFiniteGL

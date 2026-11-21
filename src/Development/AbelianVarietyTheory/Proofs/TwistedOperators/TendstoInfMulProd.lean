@@ -106,6 +106,8 @@ private theorem coe_circle_exp_arg_eq_div_norm (z : ℂˣ) :
   linear_combination Complex.norm_mul_exp_arg_mul_I (z : ℂ)
 
 
+set_option maxHeartbeats 1000000 in
+open GlobalTheory.FockCompare GlobalTheory.HeckeFinTrivial in
 theorem hasInfExp_of_chrEq : ∀ (D : D7) (c : (AE D)ˣ →* Circle) (χ : Formalism.L2.Host.HChar D.host.E) (a : D.what₂.Tau → ℚ), ChrEq c χ → χ.HasInfQ (tauE D) a → ∀ τ, HasInfExp D c τ (a τ) := by
   intro D c χ a hc hχ τ
   obtain ⟨n, hn, hinf⟩ := hχ

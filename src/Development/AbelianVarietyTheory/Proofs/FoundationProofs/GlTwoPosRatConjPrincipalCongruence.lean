@@ -19,6 +19,7 @@ namespace GlobalTheory.FN
 open Matrix CongruenceSubgroup
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem conj_Gamma_den_mul (g : GL (Fin 2) ℚ) (M : ℕ) (y : SL(2, ℤ))
     (hy' : y ∈ Gamma ((g.1.den * (g⁻¹).1.den) * M)) :
     ∃ z ∈ Gamma M, ((z : Matrix (Fin 2) (Fin 2) ℤ).map (Int.cast : ℤ → ℚ)) =

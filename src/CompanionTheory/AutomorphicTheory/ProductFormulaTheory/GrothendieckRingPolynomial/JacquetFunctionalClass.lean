@@ -116,6 +116,7 @@ theorem jacquet_functional_class (W : List (IrrGL (k := k))) {N : ℕ} {V : Type
   rw [dif_pos hl, clsGL, Finsupp.sum_mapDomain_index (fun _ => zero_mul _) (fun _ _ _ => add_mul _ _ _)]
 
 
+variable (k) in
 theorem jCls : JCls k := by
   intro W N V _ _ π hπ hl
   by_cases hd : ∑ a, (W.get a).1 = N

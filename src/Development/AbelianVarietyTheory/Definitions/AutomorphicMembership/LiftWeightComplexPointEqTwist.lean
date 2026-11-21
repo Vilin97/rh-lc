@@ -23,6 +23,7 @@ section Roots
 variable {K G : Type} [Field K] [NumberField K] [Group G] [Finite G]
 
 
+omit [NumberField K] in
 theorem isIntegral_char (χ : G →* Kˣ) (g : G) : IsIntegral ℤ ((χ g : Kˣ) : K) := by
   refine IsIntegral.of_pow (n := orderOf g) (orderOf_pos g) ?_
   rw [← Units.val_pow_eq_pow_val, ← map_pow, pow_orderOf_eq_one, map_one, Units.val_one]
@@ -63,6 +64,7 @@ theorem eOp_eq (a : MonoidAlgebra LL G) : A.eOp (fun g => a.coeff g) = (twRep A)
 def supLat : Submodule (𝓞 LL) (Fin n → LL) := Submodule.span (𝓞 LL) (A.MK : Set (Fin n → LL))
 
 
+omit [Fintype G] in
 theorem supLat_isLatIn (h1 : A.IsKsForm) (h2 : A.MKFull) : IsLatIn ⊤ (supLat A) := by
   constructor
   · obtain ⟨s, hs⟩ := h2.1
@@ -176,6 +178,7 @@ variable {K : Type} [Field K] [NumberField K] {ι : Type} [Fintype ι] [Decidabl
   [∀ v, Field (kf v)] [∀ v, Fintype (kf v)] {n : ℕ}
 
 
+omit [NumberField K] in
 theorem exists_psiU_eq (hn : 0 < n) (v : ι) (a : kf v) :
     ∃ u ∈ Subgroup.pi Set.univ (fun v => uniSub (kf v) n),
       (∀ w, supd (((u w : mirabSub (kf w) n) : GL (Fin (n + 1)) (kf w)) : Matrix (Fin (n + 1)) (Fin (n + 1)) (kf w)) =
@@ -639,6 +642,7 @@ theorem j_coordMap (j : Fin D.R.m) (z : Fin (finrank D.what₂.LL (R.WL F false 
 variable (c : OnConst) (a : ChainArgs D.what₂.LL (Fin D.R.m) R.nW)
 
 
+variable (R) in
 def supArgs : ChainArgs D.what₂.LL (Fin D.R.m) R.nW where
   Th1 _ j := supLat (R.FW j)
   Th _ j := supLat (R.FW j)

@@ -155,6 +155,7 @@ theorem tupPins_of_muIsW (X : Stages) (f : Fr X.B.toPre) (T : TwDat X.B) (Wt : S
       exact fun x _ => HChar.loc_one _ _
 
 
+open Formalism.L2.Rows Formalism.L2.Geo GlobalTheory.GeoGraft GlobalTheory.GeoModel in
 theorem geoOver_stages (X : Stages) (X₀ : DivX X.toD7) : GeoOver (fun _ => True) X₀ := by
   let D := X.toD7
   let eO : 𝓞 X.B.Ks ≃+* D.what₂.O := RingEquiv.refl _

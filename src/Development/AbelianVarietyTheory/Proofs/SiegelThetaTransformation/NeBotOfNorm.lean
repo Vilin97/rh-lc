@@ -243,6 +243,7 @@ theorem relIndex_eq (Λ Λ' : Lt E n) : Λ'.toAddSubgroup.relIndex Λ.toAddSubgr
     (Λ'.comap Λ.subtype).toAddSubgroup.index := rfl
 
 
+omit [IsCMField E] in
 theorem index_iff {q : ℕ} {P : Ideal (𝓞 E)} (hq : q.Prime) (hP : Ideal.absNorm P = q)
     {Λ : Lt E n} (N : Submodule (𝓞 E) Λ) :
     ((∀ c ∈ P, ∀ x, c • x ∈ N) ∧ N.toAddSubgroup.index = q) ↔

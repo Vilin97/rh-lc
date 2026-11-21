@@ -77,6 +77,7 @@ theorem Rw_lTr (hR : RCalc) (x : G n) {f : Mat n → V} (hf : ContDiffOn ℝ ∞
 end LeftTranslateSobolev
 
 
+open LeftTranslateSobolev in
 theorem ltSob : LtSob := by
   intro n _ _ μ _ V _ _ _ _ hR x f hf
   refine ⟨⟨contDiffOn_lTr x hf.1, fun w => ?_⟩, fun g hg => ?_⟩

@@ -40,6 +40,7 @@ theorem pderiv_algHom_of_linear {R : Type*} [CommRing R]
       mul_smul_comm]
 
 
+omit [Fintype τ] in
 theorem constantCoeff_algHom_of_linear {R : Type*} [CommRing R]
     (G : MvPolynomial τ R →ₐ[R] MvPolynomial σ R) (M : σ → τ → R)
     (hG : ∀ j, G (X j) = ∑ i, M i j • X i) (Q : MvPolynomial τ R) :

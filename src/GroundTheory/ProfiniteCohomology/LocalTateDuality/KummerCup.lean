@@ -27,6 +27,7 @@ theorem nsmul_res_galRootsOfUnity_eq_zero (hn : (n : K) ≠ 0) (W : Subgroup Gal
   nsmul_eq_zero_of_nonempty_addEquiv (nonempty_addEquiv_galRootsOfUnity (Ksep := Ksep) hn) d
 
 
+omit [IsSepClosure K Ksep] in
 theorem bockSeq_kummerSeqOpen_compat₁₂ (W : Subgroup Gal(Ksep/K)) :
     ((bockSeq W n).f ⊗ₘ 𝟙 (kummerSeqOpen (K := K) (Ksep := Ksep) n W).X₂) ≫
         intMulPairing W (kummerSeqOpen (K := K) (Ksep := Ksep) n W).X₂ =
@@ -118,6 +119,7 @@ def unitsInvariantOpen (W : Subgroup Gal(Ksep/K)) (a : (fixedField W)ˣ) :
 
 
 
+omit [IsSepClosure K Ksep] in
 theorem exists_unitsInvariantOpen_eq (W : Subgroup Gal(Ksep/K))
     (v : (Rep.res W.subtype (galUnits.{0} K Ksep)).ρ.invariants) :
     ∃ a : (fixedField W)ˣ, unitsInvariantOpen W a = v := by
@@ -187,6 +189,7 @@ theorem exists_δ_unitsInvariantOpen_eq (hn : (n : K) ≠ 0) (U : OpenSubgroup G
   exact ⟨a, hv⟩
 
 
+variable (n) in
 def openChar (U : OpenSubgroup Gal(Ksep/K)) (z : cocycles (zmodRep.{0} (U : Subgroup Gal(Ksep/K)) n) 1) :
     Additive Gal(Ksep/fixedField (U : Subgroup Gal(Ksep/K))) →ₜ+ QZ where
   toFun σ := zmodToQZ n (zmodCocycleHom z (galFixedFieldEquivOpen U (Additive.toMul σ)))
@@ -210,6 +213,7 @@ theorem openChar_apply (U : OpenSubgroup Gal(Ksep/K))
   rfl
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem res_galUnits_ρ_galFixedFieldEquivOpen (U : OpenSubgroup Gal(Ksep/K))
     (σ : Gal(Ksep/fixedField (U : Subgroup Gal(Ksep/K)))) (x : Additive Ksepˣ) :
     (Rep.res (U : Subgroup Gal(Ksep/K)).subtype (galUnits.{0} K Ksep)).ρ (galFixedFieldEquivOpen U σ) x =
@@ -248,6 +252,7 @@ theorem cupPairing_δ_unitsInvariantOpen_eq_zero_iff (hn : (n : K) ≠ 0) (U : O
   rfl
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem zmodCocycleHom_eq_zero_of_charKer_eq_top (hn : (n : K) ≠ 0) (U : OpenSubgroup Gal(Ksep/K))
     (z : cocycles (zmodRep.{0} (U : Subgroup Gal(Ksep/K)) n) 1)
     (h : charKer (charAdd (openChar n U z)) = ⊤) (g : (U : Subgroup Gal(Ksep/K))) :
@@ -259,6 +264,7 @@ theorem zmodCocycleHom_eq_zero_of_charKer_eq_top (hn : (n : K) ≠ 0) (U : OpenS
   exact zmodToQZ_injective (hσ.trans (map_zero _).symm)
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem exists_cocycle_charKer_eq (hn : (n : K) ≠ 0) (U : OpenSubgroup Gal(Ksep/K))
     (ψ : Gal(Ksep/fixedField (U : Subgroup Gal(Ksep/K))) →* Multiplicative (ZMod n))
     (hψ : IsOpen (ψ.ker : Set Gal(Ksep/fixedField (U : Subgroup Gal(Ksep/K))))) :

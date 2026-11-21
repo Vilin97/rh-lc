@@ -108,6 +108,7 @@ theorem comp_pre (η : Y →ₗ[ℤ] ℝ) (σ : E →+* ℂ) (u : 𝓞 E) (a : Y
   rw [smul_comm]
 
 
+variable (E) in
 def Pf (η ζ : Y →ₗ[ℤ] ℝ) (a c : Y) : ℝ :=
   (∑ σ : E →+* ℂ, (comp η σ a * conj (comp ζ σ c) + comp ζ σ a * conj (comp η σ c))).re
 
@@ -163,6 +164,8 @@ theorem Pf_bal (η ζ : Y →ₗ[ℤ] ℝ) (c c' : 𝓞 E) (h : (c' : E) = cj (c
   exact Finset.sum_congr rfl fun σ _ => by ring
 
 
+omit hcj in
+variable (E) in
 def PfB (η ζ : Y →ₗ[ℤ] ℝ) : Y →ₗ[ℤ] Y →ₗ[ℤ] ℝ :=
   (AddMonoidHom.mk' (fun a => (AddMonoidHom.mk' (fun c => Pf E η ζ a c)
       (Pf_add_right η ζ a)).toIntLinearMap)
@@ -207,6 +210,7 @@ theorem Pm_ne_zero {η : Y →ₗ[ℤ] ℝ} (hη : η ≠ 0) : Pm hcj η η ≠ 
   exact_mod_cast this.symm
 
 
+omit hcj in
 theorem Pf_skew (θ : 𝓞 E) (hθ : ∀ σ : E →+* ℂ, star (σ (θ : E)) = -σ (θ : E))
     (η ζ : Y →ₗ[ℤ] ℝ) (a c : Y) :
     Pf E (η ∘ₗ smulZ θ) ζ a c = -Pf E η (ζ ∘ₗ smulZ θ) a c := by

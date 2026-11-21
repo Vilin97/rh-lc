@@ -28,6 +28,8 @@ namespace GlobalTheory.SymBiextHalf
 open GlobalTheory.CechPic GlobalTheory.SymLin GlobalTheory.LamOfDouble
 
 
+open FreeAbelianGroup in
+set_option maxHeartbeats 1000000 in
 theorem exists_lin {K : Type} [Field K] [IsAlgClosed K] (hG : Out.GlobalFnsSt) {A : Over (Sp K)} [GrpObj A]
     [IsCommMonObj A] (hA : IsAbelianScheme A) {M : LB A.left} (hM : M.IsLB)
     (H : ∀ T : Over (Sp K),

@@ -20,6 +20,7 @@ section Generic
 variable [W.IsElliptic]
 
 
+omit [W.IsElliptic] in
 theorem reduceFF_some (V : WeierstrassCurve 𝒪) [V.IsElliptic] {x y : gaussRing W}
     (h : ((V.baseChange K).baseChange (W.baseChange K).toAffine.FunctionField).toAffine.Nonsingular
       (algebraMap (gaussRing W) _ x) (algebraMap (gaussRing W) _ y)) :
@@ -147,6 +148,7 @@ theorem gaussResidue_comp_residueField_map :
 variable (W' W'' : WeierstrassCurve 𝒪) [W'.IsElliptic] [W''.IsElliptic]
 
 
+set_option maxHeartbeats 1000000 in
 theorem reduceFF_map_genEval
     {R : ((W'.baseChange K).baseChange (W.baseChange K).toAffine.FunctionField).toAffine.Point}
     (hR : IsGenPt (W'.baseChange K) R) (hR' : IsGenPt (W'.map (residue 𝒪)) (reduceFF K W W' R))

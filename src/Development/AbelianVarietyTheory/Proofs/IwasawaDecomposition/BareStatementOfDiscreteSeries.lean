@@ -118,6 +118,7 @@ def bareLayer (B : Base) (C : Cols B) (W : RowsRest B C) {rows₁ : Rows.Data B.
   restN_card_levelGroup_eq := rfl
 
 
+set_option maxHeartbeats 4000000 in
 theorem exists_nStage_over {B : Base} {C C₀ : Cols B} {W₀ : RowsRest B C₀} (N₀ : NStage B C₀ W₀) {f : Fr B.toPre}
     (h₀ : GrpTrue N₀ f) (W : RowsRest B C) (heta : ∀ j w, W.etaJ j w = 0)
     {rows₁ : Rows.Data B.R} (Y : NData B.R B.host rows₁) (A₁ : NAut Y) (hpl : ∀ k v, f.P.Div k (A₁.plGw k v)) (L : LocStage)
@@ -196,6 +197,7 @@ theorem exists_nStage_over {B : Base} {C C₀ : Cols B} {W₀ : RowsRest B C₀}
 variable {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T}
 
 
+set_option maxHeartbeats 4000000 in
 theorem exists_bare_over {K : Ctx} (P : Pre2 K w) {rows₁ : Rows.Data B.R} (Y : NData B.R B.host rows₁) (A₁ : NAut Y)
     (hpl : ∀ k v, f.P.Div k (A₁.plGw k v)) (L : LocStage) :
     ∃ N : NStage B w.C (P.q.W (fun _ _ => 0) fun _ _ => le_rfl), IsEmpty N.nd.Loc ∧ GrpTrue N f ∧

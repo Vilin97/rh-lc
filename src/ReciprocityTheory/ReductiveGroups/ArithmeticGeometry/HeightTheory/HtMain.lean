@@ -33,6 +33,7 @@ namespace Data
 variable (d : Data K ι Ω WT A)
 
 
+set_option maxHeartbeats 1000000 in
 theorem heights (hd : d.AxH 𝒜) (h : d.S1) (hH1 : d.FinitePlaceHyp) (hF1d : d.TrivialPlaceHyp) (hLAM : d.HtLAM)
     (hSup : d.HtSup) (hI2et : d.HeightIntegralEstimateTrivialPlace) (hI2be : d.HeightIntegralBoundEstimate) :
     Formalism.MainNotions.Gaps.HeightData.HtConcl (d.htOf hd h) := by

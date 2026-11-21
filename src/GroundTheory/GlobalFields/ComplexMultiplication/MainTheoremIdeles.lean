@@ -120,6 +120,7 @@ variable {m : ℕ} {hm : m ≠ 0} {s : IdeleGroup K} {x : Kˣ} {u : IdeleGroup K
   {𝔭 : HeightOneSpectrum (𝓞 K)} {π : (𝔭.adicCompletion K)ˣ}
 
 
+omit [Algebra K ℂ] in
 theorem inv_smul_eq_of_eq (hu : u ∈ (Modulus.ofNat m hm).congruenceSubgroup)
     (hπ : toFractionalIdeal (finiteEmbedding 𝔭 π) = primeIdealUnit 𝔭)
     (hs : s = diagonal K x * u * finiteEmbedding 𝔭 π) (𝔞 : 𝓘) :
@@ -131,6 +132,7 @@ theorem inv_smul_eq_of_eq (hu : u ∈ (Modulus.ofNat m hm).congruenceSubgroup)
   rw [hs, mul_inv, mul_inv, mul_smul, mul_smul, hπ', hu', map_inv]
 
 
+omit [Algebra K ℂ] in
 theorem smulQuotient_inv_mk_of_eq (h𝔭 : (m : 𝓞 K) ∉ 𝔭.asIdeal)
     (hu : u ∈ (Modulus.ofNat m hm).congruenceSubgroup)
     (hπ : toFractionalIdeal (finiteEmbedding 𝔭 π) = primeIdealUnit 𝔭)

@@ -177,6 +177,7 @@ theorem trans_injective (E F : Idx R Ω) (h : E ≤ F) : Function.Injective (tra
   exact FaithfulSMul.algebraMap_injective (Lift R Ω E) (Lift R Ω F)
 
 
+variable (R Ω) in
 def ofA (E : Idx R Ω) : Lift R Ω E →ₐ[R] SH R Ω := DirectLimit.Algebra.of (R := R) (Lift R Ω) (trans R Ω) E
 
 theorem ofA_injective (E : Idx R Ω) : Function.Injective (ofA (R := R) (Ω := Ω) E) :=

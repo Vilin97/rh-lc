@@ -41,6 +41,7 @@ theorem exists_analytic_leftInverse {Θ : E → W} (hΘ : Differentiable ℂ Θ)
   · exact (hc.hasStrictFDerivAt' hd hn).eventually_left_inverse
 
 
+omit [FiniteDimensional ℂ W] [NormedAddCommGroup W] [NormedSpace ℂ W] in
 theorem eq_zero_of_mul_eq_zero {u v : E → ℂ} (hu : Continuous u) (hv : Differentiable ℂ v)
     (hu0 : u ≠ 0) (h : ∀ e, u e ≠ 0 → v e = 0) : v = 0 := by
   obtain ⟨e, he⟩ := Function.ne_iff.1 hu0
@@ -96,6 +97,7 @@ theorem growth (hK : IsCompact K) (hθ : Continuous θ) (hf : Continuous f) (hN 
     _ = _ := by ring
 
 
+omit [FiniteDimensional ℂ V] [FiniteDimensional ℂ W] [NormedSpace ℂ V] in
 theorem exists_transl (hN : ∀ z, θ z ≠ 0)
     (hL : ∀ l ∈ Λ, ∃ κ : V → ℂ, Continuous κ ∧ ∀ z, κ z ≠ 0 ∧ θ (z + l) = κ z • θ z ∧
       f (z + l) = κ z ^ d * f z)
@@ -126,6 +128,7 @@ theorem exists_transl (hN : ∀ z, θ z ≠ 0)
     rw [h2, mul_pow, inv_pow, mul_assoc, inv_mul_cancel_left₀ (pow_ne_zero _ h0)]
 
 
+omit [FiniteDimensional ℂ W] in
 theorem eventually_mem_image (hK : IsCompact K) (hθ : Continuous θ) (hN : ∀ z, θ z ≠ 0)
     (hP : ∀ z, ∃ k ∈ K, z - k ∈ Λ)
     (hL : ∀ l ∈ Λ, ∃ κ : V → ℂ, Continuous κ ∧ ∀ z, κ z ≠ 0 ∧ θ (z + l) = κ z • θ z ∧
@@ -364,6 +367,7 @@ theorem differentiable_of_mem_adjoin {u : ι → E → ℂ} (hu : ∀ c, Differe
   | mul x y _ _ hx hy => exact hx.mul hy
 
 
+omit [NormedAddCommGroup E] [NormedSpace ℂ E] [FiniteDimensional ℂ E] [Fintype ι] in
 theorem exists_eval_eq {u : ι → E → ℂ}
     (hcl : ∀ y : ι → ℂ, (∀ F : MvPolynomial ι ℂ, (∀ e, MvPolynomial.eval (fun c => u c e) F = 0) →
       MvPolynomial.eval y F = 0) → ∃ e, y = fun c => u c e)

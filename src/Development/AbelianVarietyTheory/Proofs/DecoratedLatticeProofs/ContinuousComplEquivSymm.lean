@@ -122,6 +122,7 @@ end GlobalTheory.Core.Rk.SplitIota
 open scoped TensorProduct
 
 
+open GlobalTheory.Core.Rk.SplitIota in
 theorem GlobalTheory.Core.Rk.SplitIota.exists_iota : ∀ (D : D7) (q : FinPl D) (w : HeightOneSpectrum (𝓞 D.host.E)) (h : w.under (𝓞 D.host.F) = q), Formalism.MainNotions.SchurIrreducible.IsSplit (E := D.host.E) q → ∃ ι : w.adicCompletion D.host.E →+ AE D, Continuous ι ∧ (∀ x, cw h (ι x) = x) ∧ (∀ x, cw h (cA D (ι x)) = 0) ∧ (∀ x, algebraMap (AF D.host.F) (AE D) (pairA D.host.F 0 (singleFin q 1)) * ι x = ι x) ∧ (∀ a x, a * ι x = ι (cw h a * x)) ∧ (∀ a, algebraMap (AF D.host.F) (AE D) (pairA D.host.F 0 (singleFin q 1)) * a = ι (cw h a) + cA D (ι (cw h (cA D a)))) ∧ IsSplitIdem D (ι 1) ∧ Continuous (cw h) := by
   intro D q w h hs
   have hE := isCMExt_host D

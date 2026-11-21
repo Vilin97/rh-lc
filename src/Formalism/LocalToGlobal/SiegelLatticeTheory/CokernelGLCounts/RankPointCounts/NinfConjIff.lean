@@ -120,6 +120,7 @@ theorem ninf_conj_iff (u : D.what₂.Word) (s : X.B.I.Ginf)
 end Grp
 
 
+open Formalism.L2.SG.TermOp.Vanish in
 theorem fixNormC : FixNormC := by
   intro D X Y u u' t h hh r
   have hfe : ∀ v a, uMat (h v) *ᵥ rv X.B.I v (X.eR a) = rv X.B.I v (X.eR a) :=

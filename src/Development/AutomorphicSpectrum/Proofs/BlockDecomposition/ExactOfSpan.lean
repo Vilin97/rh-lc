@@ -121,6 +121,7 @@ theorem dn_const (n : ℕ) (z : Cn F n) :
   exact mp_id F (op a₀) _
 
 
+include hb in
 theorem pointed (hH : HtpySt) (n : ℕ) (z : Cn F (n + 1)) (hz : dn F (n + 1) z = 0) :
     ∃ y, dn F n y = z := by
   obtain ⟨-, h1⟩ := hH R Pᵒᵖ F Pᵒᵖ F (CoefMap.id F) (m1 F a₀ hb) (th a₀)
@@ -331,6 +332,7 @@ theorem uf_bij (hinf : ∀ a b, (u (a ⊓ b)).1 = (u a).1 ⊓ (u b).1) (f : Γ(X
   rfl
 
 
+include hle in
 theorem pos [Finite P] (hC : CxSt) (hH : HtpySt) (hinf : ∀ a b, (u (a ⊓ b)).1 = (u a).1 ⊓ (u b).1)
     (hcov : ⨆ a, (u a).1 = W.1) (n : ℕ) (z : Cn (FF s u) (n + 1))
     (hz : dn (FF s u) (n + 1) z = 0) : ∃ y, dn (FF s u) n y = z := by

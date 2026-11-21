@@ -23,6 +23,7 @@ noncomputable section
 namespace GlobalTheory.TraitExt
 
 
+open ReciprocityTheory.ChartRestriction.G.DVR GlobalTheory.UT GlobalTheory.ArcPull GlobalTheory.PullLinear in
 theorem exists_pull_gen {R R' : Type} [CommRing R] [IsDomain R] [CommRing R'] [IsDomain R'] {I : Ideal R} {I' : Ideal R'}
     (hR : AdmBase R I) (hR' : AdmBase R' I') (g : R →+* R') (hg : Function.Injective g) (hI : I.map g ≤ I')
     {D : DegData R I} {A : PolAV (Sp (FractionRing R))} {G : Over (Sp R)}

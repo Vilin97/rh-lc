@@ -22,6 +22,7 @@ open Reduction AutomorphicForm RightCosetSpace
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
 
+variable (K n) in
 abbrev ArchUnits : Type _ := (ArchMatrix K n)ˣ
 
 instance : MeasurableSpace (ArchUnits K n) := borel _
@@ -29,6 +30,7 @@ instance : MeasurableSpace (ArchUnits K n) := borel _
 instance : BorelSpace (ArchUnits K n) := ⟨rfl⟩
 
 
+variable (K n) in
 def archIncl : ArchUnits K n →* AdelicGLn.AdelicGL K n :=
   (infEmb K n).comp (Subgroup.topEquiv (G := ArchUnits K n)).symm.toMonoidHom
 
@@ -59,6 +61,7 @@ theorem centralSection_inv_mul_inv_comm (s t : {r : ℝ // 0 < r}) :
   rw [← map_inv, ← map_inv, ← map_mul, ← map_mul, mul_comm]
 
 
+variable (K n) in
 def archProjFun (A : ArchUnits K n) : AdelicGLn.AdelicGL K n :=
   archIncl K n A * (centralSection K n (detModule K n (archIncl K n A)))⁻¹
 

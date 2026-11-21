@@ -69,6 +69,7 @@ variable {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 I0 T0 : Type} {A3 : FamIn3 D.w
   (i : D.ntw.Tw) (j : Fin D.R.m) (b : Bool)
 
 
+include YS hρ in
 theorem xi_int_of_ties (hRF : GlobalTheory.NT.RayField) (hSI : GlobalTheory.IndefiniteRowSideFullHecke.TwistSeries.SerInt) (hV : T.V ((j : ℕ) + 1) T.σ₀ = Wc D j)
     (hpin : RealPin Rl cG ρ) (hU : ρ.LevelOf D.nexp) (hnV : 8 * D.R.f * D.R.r + 4 ≤ D.R.nV)
     (hcore : GlobalTheory.Hk3.Core Rl.toRealDat F) (hti : TieIn T Rl.toRealDat κ v₀) (hio : IoExt Rl.toRealDat) (hpb : T.pb = Rl.C.P.pb)

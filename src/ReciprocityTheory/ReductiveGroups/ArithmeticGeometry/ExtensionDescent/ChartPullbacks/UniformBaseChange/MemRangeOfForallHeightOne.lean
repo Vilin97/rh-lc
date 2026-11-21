@@ -145,6 +145,7 @@ theorem mem_range_of_forall_height_one [IsNoetherianRing A] [IsIntegrallyClosed 
   exact hs s hsP hsx
 
 
+omit [IsFractionRing A K] in
 theorem finite_height_one [IsNoetherianRing A] {a : A} (ha : a ≠ 0) :
     {P : Ideal A | P.IsPrime ∧ P.height = 1 ∧ a ∈ P}.Finite := by
   classical

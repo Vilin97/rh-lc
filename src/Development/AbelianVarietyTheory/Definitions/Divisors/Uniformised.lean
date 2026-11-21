@@ -39,6 +39,7 @@ def Datum.Cls (D : Datum p) (N : ℕ) (D' : PLat D.O D.inv) (t : D.La → D'.La)
   Genus p N D.plat D' t ∧ HalfPerf p D'
 
 
+open Classical in
 def Base.IsType {D : Datum p} {R : Type} [CommRing R] (b : Base D R) (σ : R →+* ℂ)
     (ρ : D.O →+* Matrix (Fin D.g) (Fin D.g) ℂ) : Prop :=
   ∀ c : 𝓞 D.F, (ρ (algebraMap (𝓞 D.F) D.O c)).trace = (D.m : ℂ) * (∑ i, σ (b.t i c) +

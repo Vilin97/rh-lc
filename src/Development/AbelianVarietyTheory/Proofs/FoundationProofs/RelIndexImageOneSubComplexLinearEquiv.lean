@@ -20,6 +20,8 @@ section General
 variable {W : Type} [NormedAddCommGroup W] [NormedSpace ℝ W] [FiniteDimensional ℝ W]
 
 
+omit [FiniteDimensional ℝ W] in
+set_option backward.isDefEq.respectTransparency false in
 theorem relIndex_eq_abs_det {ι : Type} [Fintype ι] [DecidableEq ι] (b₁ b₂ : Basis ι ℝ W) {L₁ L₂ : AddSubgroup W}
     (h₁ : (Submodule.span ℤ (Set.range b₁)).toAddSubgroup = L₁)
     (h₂ : (Submodule.span ℤ (Set.range b₂)).toAddSubgroup = L₂) (h : L₁ ≤ L₂) :

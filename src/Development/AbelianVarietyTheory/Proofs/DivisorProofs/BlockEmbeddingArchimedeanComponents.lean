@@ -225,6 +225,7 @@ theorem continuous_sInf [IsTotallyComplex E] : Continuous (sInf E) :=
 end GlobalTheory.BlockArch
 
 
+open GlobalTheory.CuspRep GlobalTheory.BlockArch in
 theorem GlobalTheory.BlockForms.exists_archComp_of_isBlockEmb : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [IsTotallyComplex E] [Algebra F E]
     (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E)
     (r : ℕ) (Xf Yf : Matrix (Fin n) (Fin r) E) (l d : ℕ) (h : l + d ≤ r) (ι : GlobalTheory.CuspRep.GA E d →* GAd σ J),

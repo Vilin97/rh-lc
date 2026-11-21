@@ -40,6 +40,7 @@ theorem norm_coeff_out (hs : IsSmooth π) (hi : π.IsIrreducible) (hu : IsUnitar
   rw [hz, map_mul, Module.End.mul_apply, hc, map_smul, map_smul, norm_smul, h1, one_mul]
 
 
+omit [ValuativeRel k] in
 theorem isLocallyConstant_orbit [IsTopologicalRing k] (hs : IsSmooth π) (v : V) :
     IsLocallyConstant fun g : GL (Fin N) k => π g v := by
   refine (IsLocallyConstant.iff_eventually_eq _).2 fun g => ?_

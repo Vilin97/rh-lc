@@ -124,6 +124,7 @@ theorem frac_dR (hF : IsField BdR) (b b' : BdR) (hb : b ≠ 0)
   exact ⟨c, by rw [hc, div_mul_cancel₀ _ hb]⟩
 
 
+include PD in
 theorem isDomain_cris (hF : IsField BdR) : IsDomain B :=
   letI : Field BdR := hF.toField
   PD.ι_inj.isDomain PD.ι.toRingHom

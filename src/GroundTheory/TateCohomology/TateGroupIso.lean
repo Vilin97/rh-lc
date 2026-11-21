@@ -91,6 +91,7 @@ section Consequences
 variable {k G : Type u} [CommRing k] [Group G]
 
 
+omit [Group G] in
 theorem res_res {H K : Type u} [Group H] [Group K] [Group G] (f : H →* K) (g : K →* G)
     (A : Rep.{u} k G) : res f (res g A) = res (g.comp f) A :=
   rfl

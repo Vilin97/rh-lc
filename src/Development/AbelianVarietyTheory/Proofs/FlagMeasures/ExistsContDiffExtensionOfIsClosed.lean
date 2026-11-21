@@ -11,6 +11,7 @@ open scoped ContDiff Manifold Topology
 namespace GlobalTheory
 
 
+open scoped ContDiff Manifold Topology in
 theorem _root_.GlobalTheory.exists_contDiff_extension_of_isClosed {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [FiniteDimensional ℝ E] {S : Set E} (hS : IsClosed S) (f : E → ℂ)
     (hf : ∀ x ∈ S, ∃ (U : Set E) (F : E → ℂ), IsOpen U ∧ x ∈ U ∧ ContDiffOn ℝ ∞ F U ∧
@@ -40,6 +41,7 @@ theorem _root_.GlobalTheory.exists_contDiff_extension_of_isClosed {E : Type*} [N
   simpa only [t, if_pos hy, Set.mem_singleton_iff] using hgy
 
 
+open scoped ContDiff Manifold Topology in
 theorem _root_.GlobalTheory.smoothOnG_exists_contDiff_extension :
     ∀ (n : ℕ) (ε : Fin n → Bool) (f : Matrix (Fin n) (Fin n) ℂ → ℂ), _root_.Formalism.REAL.SmoothOnG ε f →
       ∃ F : (Fin n → Fin n → ℂ) → ℂ, ContDiff ℝ ∞ F ∧

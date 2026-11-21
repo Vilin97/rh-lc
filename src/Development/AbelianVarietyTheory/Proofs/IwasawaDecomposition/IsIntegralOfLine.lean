@@ -24,6 +24,7 @@ section Alg
 variable {K : Type} [Field K] [NumberField K] [StarRing K]
 
 
+omit [NumberField K] in
 theorem repr_map_mem {V V' ι ι' : Type} [AddCommGroup V] [Module K V] [AddCommGroup V'] [Module K V'] [Fintype ι]
     (b : Basis ι K V) (b' : Basis ι' K V') (f : V →ₗ[K] V') (hf : ∀ i j, b'.repr (f (b i)) j ∈ cmMax K) {x : V}
     (hx : ∀ i, b.repr x i ∈ cmMax K) (j : ι') : b'.repr (f x) j ∈ cmMax K := by
@@ -34,6 +35,7 @@ theorem repr_map_mem {V V' ι ι' : Type} [AddCommGroup V] [Module K V] [AddComm
   exact mul_mem (hx i) (hf i j)
 
 
+omit [StarRing K] in
 theorem isIntegral_of_line {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
     (N : Submodule (𝓞 K) V) (hN : Submodule.IsLattice K N) {v : V} (hv : v ≠ 0) (l : K)
     (h : ∀ a : K, a • v ∈ N → l • a • v ∈ N) : IsIntegral (𝓞 K) l := by
@@ -76,6 +78,7 @@ theorem exists_inv_rat {V ι Γ : Type} [AddCommGroup V] [Module K V] [Fintype �
   exact smul_ne_zero (Nat.cast_ne_zero.2 Fintype.card_ne_zero) hv h1
 
 
+omit [NumberField K] [StarRing K] in
 theorem repr_of_smul {V' W ι' : Type} [AddCommGroup V'] [Module K V'] [AddCommGroup W] [Module ℂ W] [Fintype ι'] (σ : K →+* ℂ)
     (b' : Basis ι' K V') (c0 : V' →ₛₗ[σ] W) (hli : LinearIndependent ℂ fun i => c0 (b' i)) {x y : V'} {μ : ℂ}
     (h : c0 x = μ • c0 y) (j : ι') : σ (b'.repr x j) = μ * σ (b'.repr y j) := by
@@ -169,6 +172,7 @@ section Coef
 variable {E K : Type} [Field E] [NumberField E] [Field K] [NumberField K] [StarRing K] {ι : Type} [Fintype ι]
 
 
+open scoped TensorProduct in
 theorem mem_globLat_swap {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E] {n : ℕ}
     {Λ : Submodule (𝓞 E) (Fin n → E)} (hfr : IsFrame (1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) Λ)
     (h : GL (Fin n) (IsDedekindDomain.FiniteAdeleRing (𝓞 F) F ⊗[F] E)) (v : Fin n → E) :

@@ -10,6 +10,7 @@ open NumberField IsDedekindDomain Neutral.B1 ReciprocityTheory.Neutral.Bridge.HC
 namespace GlobalTheory.HeckeGal
 
 
+open NumberField IsDedekindDomain in
 theorem _root_.GlobalTheory.HeckeGal.norm_lt_one_of_contEmb {E : Type} [Field E] [NumberField E]
     {l : ℕ} [Fact l.Prime]
     (v : HeightOneSpectrum (𝓞 E)) (j : v.adicCompletion E →+* _root_.Formalism.ConjugateSelfDual.Qbar l) (hj : Continuous j)
@@ -34,6 +35,7 @@ theorem _root_.GlobalTheory.HeckeGal.norm_lt_one_of_contEmb {E : Type} [Field E]
   exact absurd hn (not_lt.mpr (one_le_pow₀ hge))
 
 
+open NumberField IsDedekindDomain in
 theorem _root_.GlobalTheory.HeckeGal.place_eq_of_contEmb_comp_eq :
     ∀ (E : Type) [Field E] [NumberField E] (l : ℕ) [Fact l.Prime] (v v' : HeightOneSpectrum (𝓞 E))
       (j : v.adicCompletion E →+* _root_.Formalism.ConjugateSelfDual.Qbar l) (j' : v'.adicCompletion E →+* _root_.Formalism.ConjugateSelfDual.Qbar l),

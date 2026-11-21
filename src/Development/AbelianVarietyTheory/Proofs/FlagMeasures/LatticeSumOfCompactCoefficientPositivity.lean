@@ -36,6 +36,7 @@ def RateAt (p : KB.Pl P Wp Wq) (nn : ℝ → ℝ) (F : B.Mat P.k P.r → (Wq →
         PBK.mainD s cStd ((-1) ^ (s + 1)) (GermFibreKernels.btOf s ((Real.pi ^ (2 * (s - 1)))⁻¹) Vec h) x D‖ ≤ Cst * ‖x‖⁻¹
 
 
+omit [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq] in
 theorem slv_congr_group {k r : ℕ} (T : D.LevTower k r Wp Wq) {F F' : B.Mat k r → (Wq →L[ℂ] Wp)}
     (hFF : ∀ g ∈ B.GV k r, F g = F' g) (i : ℕ) (hi : i ≤ r) (w : List C.Letter) (a : C.LPt) (ha : D.IsLocPt a i)
     (e : Wd.Ix (Fin w.length)) : ∀ g ∈ B.GV k (r - i), KB.slv T F i hi w a ha.2 e g = KB.slv T F' i hi w a ha.2 e g := by

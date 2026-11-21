@@ -70,6 +70,7 @@ variable (X : Formalism.MainNotions.G.Inst D L) (Y : Formalism.MainNotions.G.Lat
   (t0 : Formalism.MainNotions.G.HH D) (ht0 : t0 ∈ Formalism.MainNotions.G.reps X (D.what₂.places.resChar w))
 
 
+include hL ht0 in
 theorem ne_w_non (j : ℕ) (hj : j ∈ SizeData₂.lifts D) (s : Fin ((D.gat u w hg).P.n' (Y.vOf u w hg t0)))
     (hs : s ∉ (Y.Fl u w hg).TT (Y.vOf u w hg t0)) :
     ((Y.Fl u w hg).w (Y.vOf u w hg t0) j s : ℝ) ≤ L.sc.w'' D.R.n + L.etaSz := by
@@ -84,6 +85,7 @@ theorem ne_w_non (j : ℕ) (hj : j ∈ SizeData₂.lifts D) (s : Fin ((D.gat u w
   linarith
 
 
+include hL ht0 in
 theorem ne_w_top (j : ℕ) (hj : j ∈ SizeData₂.lifts D) (s : Fin ((D.gat u w hg).P.n' (Y.vOf u w hg t0)))
     (hs : s ∈ (Y.Fl u w hg).TT (Y.vOf u w hg t0)) :
     ((Y.Fl u w hg).w (Y.vOf u w hg t0) j s : ℝ) ≤
@@ -115,6 +117,7 @@ theorem ne_Nm (j : ℕ) (hj : j ∈ SizeData₂.lifts D) : (j : ℝ) * ((D.R.t :
 end Orbit
 
 
+open Classical in
 theorem price_bound_large_primes : PriceBoundLargePrimes 1 := by
   intro D L X Y K hK _ hT hL u w hg hp t0 ht0 j hj
   have hr : (D.gat u w hg).P.r = 1 := by rw [(hL u w hg).2.2.2.1, if_neg (not_lt.2 hp)]

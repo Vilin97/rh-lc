@@ -26,6 +26,8 @@ variable {l : ℕ} [hl : Fact l.Prime] {a e : ℕ} [NeZero a] [NeZero e] {O K : 
   [IsUnitBall O K] [NormedAlgebra ℚ_[l] K] (t : Wq l a →ₐ[ℤ_[l]] O)
 
 
+omit [NeZero e] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsUltrametricDist K] [IsUnitBall O K]
+  [NormedAlgebra ℚ_[l] K] in
 theorem iotaP_mem (b : Bp l a) : iotaP K t b ∈ PPSet t K e := by
   refine ⟨fun x => ((x.1.factorial * (x.2 / e).factorial : ℕ) : Wq l a) * (b.coeff x.1).coeff x.2,
     fun r => ?_, fun τ i n => ?_⟩
@@ -41,6 +43,7 @@ theorem iotaP_mem (b : Bp l a) : iotaP K t b ∈ PPSet t K e := by
     simp [embK, map_mul, map_natCast]
 
 
+variable (K) in
 def iotaD : Bp l a →+* PPd t K e :=
   (iotaP K t).codRestrict (PPd t K e) fun b => Subring.subset_closure (iotaP_mem t b)
 
@@ -69,12 +72,14 @@ theorem coeff_iotaP_X (b : Bp l a) (τ : ZMod a) (i : ℕ) : coeff i (iotaP K t 
   rw [coeff_map, Polynomial.coeff_coe]
 
 
+omit [NeZero e] in
 theorem constP_inclS_coe (q : Polynomial (Wq l a)) :
     constP a K (inclS t K (q : (Wq l a)⟦X⟧)) = iotaP K t (Polynomial.C q) := funext fun τ => by
   rw [iotaP_C, rhoK_eq_toAc]
   rfl
 
 
+omit [NeZero e] in
 theorem acris_complete : IsAdicComplete (Ideal.span {(l : Per.Acris l)}) (Per.Acris l) :=
   (GlobalTheory.MemLoc.acris_torsionFree_complete l).2
 
@@ -119,6 +124,7 @@ theorem fP_X (g' : GQ l) : fP a ϖ g' Polynomial.X = ainfToAcris l (ϖ.mu g' * �
   simp [fP]
 
 
+omit [NeZero a] [NeZero e] in
 theorem sep_teich_acris (x : Per.Acris l) (h : ∀ n, ainfToAcris l ϖ.teich ^ n ∣ x) : x = 0 := by
   have := acris_complete (l := l)
   refine sep_l l x fun r => ?_
@@ -167,6 +173,8 @@ variable (sh : K⟦X⟧ →+* K⟦X⟧⟦X⟧)
 include hsh
 
 
+omit [NeZero a] [NeZero e] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsUltrametricDist K] [IsUnitBall O K]
+  [NormedAlgebra ℚ_[l] K] in
 theorem sh_C [CharZero K] (c : K) : sh (C c) = C (C c) := by
   ext i : 1
   rcases i with _ | i

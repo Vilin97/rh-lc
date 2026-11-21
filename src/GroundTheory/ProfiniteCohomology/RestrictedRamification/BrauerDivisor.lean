@@ -339,6 +339,7 @@ theorem exists_normal_level (φ : galUnramifiedOutside K.1 ℚ̄ S → ℤ) (hφ
   exact ⟨E, hEf, hEn, fun x u hu => hVφ x u (hEV hu)⟩
 
 
+open Classical in
 theorem eq_sum_single (f : {v : HeightOneSpectrum (𝓞 K.1) // v ∉ S} → galUnramifiedOutside K.1 ℚ̄ S → ℤ)
     (T : Finset {v : HeightOneSpectrum (𝓞 K.1) // v ∉ S}) (hT : ∀ v ∉ T, f v = 0) :
     f = ∑ v ∈ T, Pi.single v (f v) := by
@@ -349,6 +350,7 @@ theorem eq_sum_single (f : {v : HeightOneSpectrum (𝓞 K.1) // v ∉ S} → gal
   · exact hT v h
 
 
+open Classical in
 theorem good_single {ℓ : ℕ}
     (hbase : ∀ (v : {v : HeightOneSpectrum (𝓞 K.1) // v ∉ S})
       (L : IntermediateField K.1 (maxUnramifiedOutside K.1 ℚ̄ S)) [FiniteDimensional K.1 L] [Normal K.1 L],
@@ -499,6 +501,7 @@ theorem good_base (ℓ : ℕ) (hℓ : ℓ.Prime)
 end PicInf
 
 
+open PicInf Classical in
 theorem exists_coprime_smul_picInfRep (ℓ : ℕ) (hℓ : ℓ.Prime)
     (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
     (m : (picInfRep K S ιs).V) : ∃ N : ℕ, N.Coprime ℓ ∧ N • m = 0 := by

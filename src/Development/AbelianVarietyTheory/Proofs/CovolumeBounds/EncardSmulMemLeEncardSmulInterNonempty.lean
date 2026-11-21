@@ -84,6 +84,7 @@ theorem setLIntegral_le_mul_of_ae_covers (hD : ∀ᵐ x ∂μ, ∃ g : G, g • 
     _ = m * ∫⁻ x in D, u x ∂μ := by rw [lintegral_smul_measure, smul_eq_mul]
 
 
+omit [MeasurableConstSMul G X] [SMulInvariantMeasure G X μ] in
 @[to_additive ae_encard_vadd_mem_le_one
 ]
 theorem ae_encard_smul_mem_le_one (hD : IsFundamentalDomain G D μ) :

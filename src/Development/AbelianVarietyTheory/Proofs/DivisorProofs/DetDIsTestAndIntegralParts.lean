@@ -77,6 +77,7 @@ section Specific
 variable {K : Type} [Field K] [NumberField K] {n : ℕ}
 
 
+open Classical in
 def wordOf (v : InfinitePlace K) (p : Equiv.Perm (Fin n)) (l : List (Fin n)) : List (Lie K n) :=
   l.map fun j => toL (Matrix.single (p j) j (Pi.single v 1))
 

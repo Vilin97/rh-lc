@@ -49,6 +49,7 @@ def VolTieG (D : D7) : Prop :=
       μ 𝓕 = ENNReal.ofReal (D.vol W)
 
 
+open Classical in
 def rhoOfIndex {p q : ℕ} (a : Ix p q) : ℚ :=
   ((Finset.univ.filter fun b => posC a b).card : ℚ) - ((Finset.univ.filter fun b => posC b a).card : ℚ)
 

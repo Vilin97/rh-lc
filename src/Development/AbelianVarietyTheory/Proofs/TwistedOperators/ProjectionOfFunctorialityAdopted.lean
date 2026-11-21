@@ -65,6 +65,7 @@ theorem idem_ind {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) (e :
   | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
 
 
+set_option maxHeartbeats 1000000 in
 theorem heckeProjector_idempotent_compositeLift (hC : GlobalTheory.Hk3.Core R F) (t : T0) (y : (R.HX t).H) (v : SmT (R.MY 0)) :
     R.e0 (R.e0 (R.thDn t y v)) = R.e0 (R.thDn t y v) := by
   rw [thDn_eq]

@@ -24,6 +24,7 @@ variable {ι : Type} [Fintype ι] {N : ℕ} (W : Wts ι N) (h : W.Hyp) (hd : W.I
 include h hd
 
 
+omit [Fintype ι] in
 theorem antitone (τ : ι) : Antitone (W.u1 τ) := fun a b hab => by
   have hab' : (a : ℕ) ≤ b := hab
   have := (W.div_gap_sum h hd τ (b - a) a b (by omega)).1
@@ -37,6 +38,7 @@ theorem mul_abs_le (τ : ι) (a : Fin N) : (W.T : ℝ) * |(W.u1 τ a : ℝ)| ≤
   linarith
 
 
+omit [Fintype ι] in
 theorem mul_cloud_le (τ : ι) (a : Fin N) (ha : (a : ℕ) < W.kc) : (W.T : ℝ) * (W.u1 τ a : ℝ) ≤ W.S + 2 * N := by
   have hk := h.kc_lt
   have hp := h.p_lt

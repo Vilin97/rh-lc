@@ -31,6 +31,7 @@ instance liesOver_below (w : HeightOneSpectrum (𝓞 L)) :
   ⟨rfl⟩
 
 
+omit [NumberField K] [NumberField L] in
 theorem below_eq_iff (w : HeightOneSpectrum (𝓞 L)) (v : HeightOneSpectrum (𝓞 K)) :
     below K w = v ↔ w.asIdeal.LiesOver v.asIdeal := by
   constructor

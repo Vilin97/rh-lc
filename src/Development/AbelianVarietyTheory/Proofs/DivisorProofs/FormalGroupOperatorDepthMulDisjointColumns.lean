@@ -228,6 +228,7 @@ theorem expAlong_const (x : Σ b, Fin (d b)) : constantCoeff (expAlong G u x) = 
     (colLin_const u x.1) ((expOf_twoSided_unique C v (d x.1) (G x.1)).1.1 x.2)
 
 
+omit [CharZero C] [Fintype κ] in
 theorem expAlong_suppIn (x : Σ b, Fin (d b)) :
     SuppIn {y : Σ b, ι b | y.1 = x.1} (expAlong G u x) := by
   unfold expAlong
@@ -307,6 +308,7 @@ end
 end DepthAdd
 
 
+open DepthAdd in
 theorem depth_mul_of_disjoint_columns : ∀ (C : Type) [Field C] [CharZero C]
     (v : AddValuation C (WithTop ℝ)) (κ : Type) [Fintype κ] [DecidableEq κ] (d : κ → ℕ)
     (G : ∀ b, LogFGL v (d b)) (ι : κ → Type) [∀ b, Fintype (ι b)] [∀ b, DecidableEq (ι b)]

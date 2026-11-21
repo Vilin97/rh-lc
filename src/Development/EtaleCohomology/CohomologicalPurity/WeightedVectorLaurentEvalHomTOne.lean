@@ -200,6 +200,7 @@ theorem sW_natn {m : SimplexCategoryᵒᵖ} (θ : n ⟶ m) (w : ((W d R).obj n).
 end elems
 
 
+variable (d R) in
 def rW : W d R ⟶ disc.obj (yoneda.obj (Spec (CommRingCat.of (AP d R)))) where
   app n :=
     { app := fun U => TypeCat.ofHom fun w => toS (rhom ((cW w).obj 0) (ofS (sW w)))
@@ -217,6 +218,7 @@ def rW : W d R ⟶ disc.obj (yoneda.obj (Spec (CommRingCat.of (AP d R)))) where
     exact congrArg toS (rhom_congr (chain_ratio (cW w) _) _)
 
 
+variable (d R) in
 def gW : (W d R).obj (op (SimplexCategory.mk 0)) ⟶
     yoneda.obj (Spec (CommRingCat.of (LaurentPolynomial (AP d R)))) where
   app U := TypeCat.ofHom fun w => toS (ghom ((cW w).obj 0) (ofS (sW w)))

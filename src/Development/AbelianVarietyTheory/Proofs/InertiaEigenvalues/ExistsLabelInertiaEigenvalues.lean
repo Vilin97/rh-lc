@@ -67,6 +67,7 @@ theorem isOfFinOrder_of_isOpen {M : Type} [Group M] (φ : Ine (F := E) A →* M)
   exact φ.ker.pow_index_mem σ
 
 
+open Classical in
 theorem charpoly_eq_of_gen {n : ℕ} (ρ : Ine (F := E) A →* GL (Fin n) ℂ)
     (hρ : ∃ U : Subgroup (G E Ω), IsOpen (U : Set (G E Ω)) ∧
       ∀ σ : Ine (F := E) A, (σ : G E Ω) ∈ U → ρ σ = 1)

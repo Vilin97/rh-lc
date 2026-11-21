@@ -181,6 +181,7 @@ theorem two_le_Wsp (e y : Fin D.R.rS → (VS D).V) (z : (VS D).V) : 2 ≤ finran
   omega
 
 
+variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 theorem exists_W_vec {N : ℕ} (hN : 0 < N) {e y : Fin D.R.rS → (VS D).V} {z : (VS D).V} (h : Dual e y z N)
     (t : D.host.E) (ht : star t = t) (htp : Formalism.HermitianLattices.Ext.L3.TotPos t) :
     ∃ w : (VS D).V, IsW e y z w ∧ (VS D).hT w w = t := by

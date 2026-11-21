@@ -32,6 +32,7 @@ def SplitNonConj (ST : Finset (HeightOneSpectrum (𝓞 E))) : Prop :=
   ∀ P ∈ ST, ∀ Q ∈ ST, Q ≠ conjPrime₂ P
 
 
+variable (E n ST SG) in
 def HasStdReps : Prop :=
   ∀ d : DecoSet E n ST SG, ∃ ga : UF E n, StdAtAll (((ga, 1) : UF E n × GLG E n SG) • d)
 

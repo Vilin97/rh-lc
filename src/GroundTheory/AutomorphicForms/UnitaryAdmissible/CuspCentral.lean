@@ -38,6 +38,7 @@ theorem ringEquiv_posIdele (r : ℝ) (hr : 0 < r) :
       RingEquiv.apply_symm_apply, Real.sqrt_sq hr.le]
 
 
+variable (K n) in
 def centralExp : ℝ := ((n * Module.finrank ℚ K : ℝ))⁻¹
 
 theorem coe_zInf (s : {r : ℝ // 0 < r}) :
@@ -57,6 +58,7 @@ theorem coe_zInf (s : {r : ℝ // 0 < r}) :
     exact map_zero _
 
 
+variable (K n) in
 def centralZ : (isExpLieAlgebra K n).lieSubalgebra :=
   ⟨algebraMap ℝ (ArchMatrix K n) (centralExp K n), Submodule.mem_top⟩
 

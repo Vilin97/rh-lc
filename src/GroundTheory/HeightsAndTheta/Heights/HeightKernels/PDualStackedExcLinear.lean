@@ -54,6 +54,7 @@ theorem linFormsIndep (h : IsExcResidueData b b' α M) : LinFormsIndep M := by
 end StackedExceptionalLinearForms
 
 
+open StackedExceptionalLinearForms in
 theorem DualStackedExcLinear.proof (hEx : DualStackedExcResidueExists.Statement)
     (hBase : DualStackedExcBaseLe.Statement) (hLe : DualStackedExcLinPrimeLe.Statement) :
     DualStackedExcLinear.Statement := by

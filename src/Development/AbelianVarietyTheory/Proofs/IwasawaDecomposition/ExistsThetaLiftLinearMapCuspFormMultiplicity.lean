@@ -45,6 +45,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.HolomorphicParabolicSmoothFunctions
 variable {D : D7}
 
 
+open Classical in
 theorem restrictsTo_of_eq {θ : InfFam D} {V : HSp D} {S : D.what₂.Tau → SPar} {M : DSModel V S} (h1 : LowSm M)
     (h2 : GlobalTheory.IndefiniteRowSideFullHecke.HolomorphicLowestType.LowIrr M) {J : Set (GA D V)} {χ : GA D V → ℂ} {T : MMap M} (hT : IsMultMap θ M J χ T)
     {U : KMap M} (hU : KEquiv θ M U) (e : ∀ τ, lowT M τ) (he : ∀ τ, e τ ≠ 0)
@@ -105,6 +106,7 @@ theorem exists_extension (hP : GlobalTheory.Published.CuspRapidDecay) {θ : InfF
   exact ⟨T, hT, restrictsTo_of_eq h1 h2 hT hk e he hTe⟩
 
 
+open Classical in
 theorem exists_member (hP : GlobalTheory.Published.CuspRapidDecay) {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D}
     {χS χT : (AE D)ˣ →* Circle} {om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)} (hom : IsWeilDatumO ψ S T χS χT om)
     {θ : InfFam D} (hθ : IsInfFam θ) (hpos : ∀ τ, (gramAt D S τ).PosDef)

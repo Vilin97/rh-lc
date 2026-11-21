@@ -476,6 +476,7 @@ omit [IsUltrametricDist K] in
 theorem norm_l_lt_one : ‖(l : K)‖ < 1 := by rw [norm_natCast_eq l]; exact Padic.norm_p_lt_one
 
 
+omit [IsUltrametricDist K] in
 theorem norm_pow_le_norm_factorial (m : ℕ) : ‖(l : K)‖ ^ m ≤ ‖(m.factorial : K)‖ := by
   rw [norm_l, norm_natCast_eq l, Padic.norm_eq_zpow_neg_valuation (by
     exact_mod_cast m.factorial_ne_zero), Padic.valuation_natCast, inv_pow, zpow_neg, zpow_natCast]

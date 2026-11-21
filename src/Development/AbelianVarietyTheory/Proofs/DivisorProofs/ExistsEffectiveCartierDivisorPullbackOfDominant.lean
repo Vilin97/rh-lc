@@ -69,6 +69,7 @@ theorem eff_pull {D₀ : CartierDiv W} (hD : D₀.Eff) : (pull f D₀).Eff := by
 end GlobalTheory.Cartier.PullDominant
 
 
+open GlobalTheory.Cartier.PullDominant in
 theorem GlobalTheory.Cartier.exists_pull_dominant :
     ∀ (M W : Scheme.{0}) [IsIntegral M] [IsIntegral W] (f : M ⟶ W) [IsDominant f] (D₀ : CartierDiv W), D₀.Eff → ∃ D₁ : CartierDiv M, D₁.Eff ∧ ∀ x g, D₀.IsEqn (f x) g → D₁.IsEqn x (Units.map (GlobalTheory.functionFieldMap f).toMonoidHom g) := by
   intro M W _ _ f _ D₀ hD

@@ -124,6 +124,7 @@ theorem fourier_transform_preserves_compact {c : kˣ} (hc : HasConductor ψ c) {
   simp [this]
 
 
+omit h [MeasurableSpace k] [BorelSpace k] [ν.IsAddHaarMeasure] in
 def Refl (τ : Matrix (Fin n) (Fin n) k →ₗ[k] k) (Z : Subalgebra k (Matrix (Fin n) (Fin n) k)) (p : Sp k n) : Sp k n :=
   (p.1 - (2 : k) • Pr τ Z p.1, p.2)
 

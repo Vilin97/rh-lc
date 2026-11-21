@@ -200,6 +200,7 @@ theorem Fm_rot (ai : Ψ → Matrix (Fin (j + j')) (Fin (j + j')) ℂ) (h : ∀ �
   rw [h1]
 
 
+variable (F) in
 def scL (c : 𝓞 E) : (Ψ → Fin (j + j') → ℂ) →ₗ[ℝ] (Ψ → Fin (j + j') → ℂ) where
   toFun y τ := F.σ τ c • y τ
   map_add' y z := by

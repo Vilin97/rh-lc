@@ -284,6 +284,7 @@ theorem pr_mem_of_valuation_le {w : HeightOneSpectrum (𝓞 D.host.E)} (hw : For
   exact hn
 
 
+set_option maxHeartbeats 800000 in
 theorem sec_mem_idV_iff {w : HeightOneSpectrum (𝓞 D.host.E)} (hw : Formalism.L2.NTheta.IsIdemAt p.e w) {ϖ : 𝒪[k]}
     (hϖ : Irreducible ϖ) {I : FI D} (hI : I ≠ 0) {n : ℕ} (hn : FractionalIdeal.count D.host.E w I = n) (t : k) :
     p.sec t ∈ idV I p.v ↔ ∃ z : 𝒪[k], t = (ϖ : k) ^ n * z := by
@@ -408,6 +409,7 @@ theorem count_stairIdeal_at_S0 (hq : OffQ D) {μ₀ : T} (hL : L.Is μ₀) (G : 
   ring
 
 
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField in
 theorem exists_splitPoint_at_S0 (P : Places L) {v : GlobalTheory.FinPl.Pl D} (hv : v ∈ P.S0) :
     ∃ (k : Type) (_ : Field k) (_ : ValuativeRel k) (_ : TopologicalSpace k) (_ : IsNonarchimedeanLocalField k)
       (p : SplitPt D k), p.v = v ∧ Formalism.L2.NTheta.IsIdemAt p.e (P.w v) := by

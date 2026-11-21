@@ -32,6 +32,8 @@ private lemma exists_root_quadratic_of_isUnit_of_mem_maximalIdeal (R : Type) [Co
   exact ⟨β, by simpa using hβ⟩
 
 
+open scoped TensorProduct in
+open NumberField IsDedekindDomain Polynomial in
 theorem _root_.GlobalTheory.SplitPlace.not_isField_of_split : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E]
     [Algebra F E], Module.finrank F E = 2 → ∀ v : HeightOneSpectrum (𝓞 F),
     (v.asIdeal.primesOver (𝓞 E)).ncard = 2 → ¬ IsField (v.adicCompletion F ⊗[F] E) := by

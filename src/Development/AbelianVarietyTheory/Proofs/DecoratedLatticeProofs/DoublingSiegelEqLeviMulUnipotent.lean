@@ -67,6 +67,7 @@ theorem siegel_mt_jX (A : HSp D) {g : GA D (dblSp A)} (hg : g ∈ siegel A) :
   simp only [← Matrix.mul_assoc, giA_mul_gA, Matrix.one_mul]
 
 
+set_option maxHeartbeats 1000000 in
 theorem siegel_eq_levi_nC : ∀ (D : D7) (A : HSp D) (p : siegel A), ∃ (a : GL (Fin A.rank) (AE D)) (c : skewA D A.rank),
     (p : GA D (dblSp A)) = (dblDec A).levi a * (dblDec A).nC c := by
   intro D A p

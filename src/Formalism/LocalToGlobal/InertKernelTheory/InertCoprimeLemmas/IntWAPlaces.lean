@@ -465,6 +465,7 @@ end Formalism.L2.KerInert.WAP
 namespace Formalism.L2.KerInert
 
 
+open WAP in
 theorem weak_approximation_places : WAPlaces := by
   intro E _ _ _ hCM p hp n L hyp
   classical

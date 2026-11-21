@@ -263,6 +263,7 @@ theorem mem_perf {R E : Type} [CommRing R] [CommRing E] {j : E →+* R} {φ : R 
     x ∈ perf j φ hφ p := ⟨n, e ^ k, 0, by rw [h, map_pow, mul_zero, add_zero]⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem approx (hG : Good K s LL) (I : IoS AI R) (hW : IoW I) (y : RW LL) (hy : FixH AI K y) (m : ℕ) :
     ∃ (n : ℕ) (y0 : RW LL) (e : R.EE) (r : RW LL),
       (φRW LL)^[n] y0 = I.ioE e + (l : RW LL) * r ∧ NearPi AI LL s m (y - y0) := by

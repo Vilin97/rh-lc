@@ -63,6 +63,9 @@ def extA {K : Type} [Field K] [NumberField K] [StarRing K] {m : ℕ} (A : FamIn 
 variable {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
+set_option maxHeartbeats 2000000 in
 structure NewReal (R : RealDat D A Ks) (V : NewLev D N) (X : NewFam A N) where
   BR : ∀ n, Bridge.SideReal D D.sp.X'
     (Bridge.envOf R.cX.coef (levEnvOf D.sp.X' R.βX ((extL R.toLevCh V).datXt (.inr n)) R.pl (X.ok n)))
@@ -98,6 +101,7 @@ structure NewReal (R : RealDat D A Ks) (V : NewLev D N) (X : NewFam A N) where
   thG : ∀ i n, (HV i n).H →ₗ[ℂ] (R.HW i (sg0 D A)).H
 
 
+set_option maxHeartbeats 4000000 in
 def extR (R : RealDat D A Ks) {V : NewLev D N} {X : NewFam A N} (Y : NewReal R V X) : RealDat D (extA A X) Ks where
   toLevCh := extL R.toLevCh V
   hv0 := R.hv0
@@ -187,6 +191,7 @@ variable {T : CoreJ D} [Algebra T.Q.c.F D.what₂.LL] {R : RealDat D A T.Q.c.F} 
   {v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec}
 
 
+set_option maxHeartbeats 2000000 in
 def fwExt (t : FWTie T R κ v₀) : FWTie T (extR R Y) κ v₀ where
   alg_eq := t.alg_eq
   e := t.e
@@ -202,6 +207,7 @@ def fwExt (t : FWTie T R κ v₀) : FWTie T (extR R Y) κ v₀ where
   ev := t.ev
 
 
+set_option maxHeartbeats 2000000 in
 def omExt {i : Fin D.R.m} (O : OMDat T.toCore R i Unit (fun _ => A.μ0)) :
     OMDat T.toCore (extR R Y) i Unit (fun _ => (extA A X).μ0) where
   c' := O.c'

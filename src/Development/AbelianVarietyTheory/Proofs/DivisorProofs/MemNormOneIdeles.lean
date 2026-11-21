@@ -19,6 +19,7 @@ namespace GlobalTheory.NormOneIdele
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+variable (F E) in
 def N1 (σ : E →ₐ[F] E) : Subgroup (AE F E)ˣ where
   carrier := {z | (z : AE F E) * cA σ (z : AE F E) = 1}
   one_mem' := by simp

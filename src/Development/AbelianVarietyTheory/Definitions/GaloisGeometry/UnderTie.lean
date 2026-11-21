@@ -91,6 +91,7 @@ def SizeLaw : Prop :=
       (latK D.sp (gramN D (i + 1) hi) a x'.1 ((St (i + 1) hi).K β').lev.Lb))
 
 
+variable (t u μ) in
 def MuLaw : Prop :=
   ∀ i (hi : i < D.R.m),
     (∀ y : Formalism.L2.Herm.unitaryOneFiniteAdeles D.sp.cm, muOf t u μ dtU (i + 1) (Matrix.GeneralLinearGroup.det y.1) = (((t.O u μ).mt (i + 1) (dtU y) : ℂˣ) : ℂ)) ∧

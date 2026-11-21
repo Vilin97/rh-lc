@@ -177,6 +177,7 @@ theorem IsHilbertSchmidt.comp_right {T : K →L[𝕜] L} (hT : IsHilbertSchmidt 
   (hsNormSq_comp_right_le T B).trans_lt (ENNReal.mul_lt_top (by simp) hT)
 
 
+variable (𝕜 H K) in
 def hilbertSchmidt : Submodule 𝕜 (H →L[𝕜] K) where
   carrier := {T | IsHilbertSchmidt T}
   add_mem' {S T} hS hT := by

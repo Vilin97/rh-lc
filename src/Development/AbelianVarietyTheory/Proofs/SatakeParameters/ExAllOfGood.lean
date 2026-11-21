@@ -23,6 +23,7 @@ noncomputable section
 namespace GlobalTheory.RoadU
 
 
+open UpperTheory.V.Af in
 theorem frobEig_of_dec {E Ω : Type} [Field E] [NumberField E]
     [IsCMField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) {a : ℕ}
     (π : CuspSub E a) (Q : GlobalTheory.RealGal.QCM E Ω) (P : CuspSub ↥Q.K a) (r : G ↥Q.K Ω →* GL (Fin a) (Qbar l))

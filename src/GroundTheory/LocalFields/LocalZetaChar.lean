@@ -150,6 +150,7 @@ theorem continuous_quasiChar_inv (hχ : Continuous χ) : Continuous (χ⁻¹ : K
   exact hχ.inv
 
 
+omit hχ in
 theorem quasiCharExponent_inv : quasiCharExponent χ⁻¹ = -quasiCharExponent χ := by
   simp only [quasiCharExponent, MonoidHom.inv_apply, Units.val_inv_eq_inv_val, norm_inv,
     Real.logb_inv, neg_neg]

@@ -95,6 +95,7 @@ theorem shift_iff (a b : ℤ) (x : P.R.BdR) :
     rwa [neg_add_cancel_left] at this
 
 
+omit J in
 theorem exists_symbol : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P), ThetaL P AI →
     ∀ (K : FinExt l), ∃ sy : ℤ → P.R.BdR → PadicComplex l, ∀ a : ℤ,
       (∀ x ∈ (P.PD K).Fil a, ∀ y ∈ (P.PD K).Fil a, sy a (x + y) = sy a x + sy a y) ∧

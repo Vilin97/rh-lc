@@ -101,6 +101,7 @@ def PqF (i : X.Tw) (j : ℕ) (b : Bool) (k : ℕ) (P : PlE D.host) (y : X.Ok i k
     (Formalism.MainNotions.IntegralHeckeForms.hkO Y i j b n P).baseChange (X.Ok i k)
 
 
+open Classical in
 def ThURel : Prop :=
   ∀ i : X.Tw, X.NonzeroIndexPlace i → ∀ j ∈ Finset.Icc 1 D.R.m, ∀ b : Bool,
     ∃ (ch : Set (PlE D.host)) (sg : Bool), (∀ P P', IsConjPl D.host P P' → P ≠ P' → (P ∈ ch ↔ P' ∉ ch)) ∧

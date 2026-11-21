@@ -54,6 +54,7 @@ private theorem root_small {x : Qbar l} (h : x ^ l = 1) : ‖x - 1‖ < 1 := by
   exact (pow_lt_one_iff_of_nonneg (norm_nonneg _) hl.out.ne_zero).1 h3
 
 
+variable (l) in
 private def U : Subgroup (Qbar l)ˣ where
   carrier := {u | ‖(u : Qbar l) - 1‖ < 1}
   one_mem' := by simp
@@ -264,6 +265,7 @@ private theorem exists_mul {M w : ℕ} [NeZero (M * w)] (φ : DirichletCharacter
 end UpperTheory.V.Sd.EG
 
 
+open UpperTheory.V.Sd in
 def UpperTheory.V.Z.Sym.W.PropEGc : Prop :=
   ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] (ι : Qbar l ≃+* ℂ) (c : G ℚ Ω), UpperTheory.V.Sd.IsCC c →
     ∀ (N w : ℕ) (φ θ : G ℚ Ω →* (Qbar l)ˣ), SlopeTestRemainingChoices N w θ → SplitAt N w φ → φ ≠ 1 → ∃ k₀ : ℕ, ∀ k ≥ k₀, φ c = (-1) ^ k →

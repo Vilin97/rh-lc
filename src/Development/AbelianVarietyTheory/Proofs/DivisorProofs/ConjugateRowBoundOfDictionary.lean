@@ -138,6 +138,7 @@ theorem taylor_fnConj_comb (D : D7) (hI : GlobalTheory.NormSum.Inp D) (cc : Idea
     ← hcj ⟨_, hAU _ (hq i) α⟩]
 
 
+open GlobalTheory.SignedHC in
 theorem abs_entry_le {D : D7} (large₂ : SizeData₂ D) (hs : GlobalTheory.IndefiniteRowSideFullHecke.LevelPlusSubgroup.SizeRows large₂) (i : ℕ) (τ : D.what₂.Tau) :
     ∀ x ∈ entries (parV D 1 i D.R.m τ), |(x : ℝ)| ≤ 14 * large₂.sc.b := by
   obtain ⟨-, -, -, -, -, -, -, -, -, -, -, hgap, hbe, -⟩ := hs

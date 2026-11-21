@@ -19,6 +19,7 @@ variable {K L : Type} [Field K] [Field L] [Algebra K L] {C : Type} [AddCommGroup
   {H : Type} [AddCommGroup H] [Module ℂ H] {X : Type} [AddCommGroup X] [Module ℂ X]
 
 
+variable (L) in
 def crd (b : Basis (Fin n) K C) : C →ₗ[K] (Fin n → L) :=
   (Algebra.linearMap K L).compLeft (Fin n) ∘ₗ b.equivFun.toLinearMap
 
@@ -65,6 +66,7 @@ theorem extB_injective (σ : L →+* ℂ) {w : Fin n → H} (hw : LinearIndepend
   exact funext fun k => σ.injective (congrFun h1 k)
 
 
+variable (K C) in
 abbrev HasB (n : ℕ) : Prop := Nonempty (Basis (Fin n) K C)
 
 theorem hasB_finrank [FiniteDimensional K C] : HasB K C (finrank K C) := ⟨Module.finBasis K C⟩
@@ -143,6 +145,7 @@ theorem RhoIs.unique {σ : L →+* ℂ} {j : WL →ₛₗ[σ] H} {e : H →ₗ[�
   MonoidHom.ext fun g => LinearMap.ext fun x => hj (he ((h g x).trans (h' g x).symm))
 
 
+variable (L) in
 def rhoB (b : Basis (Fin n) K C) (ρC : G →* (C →ₗ[K] C)) : G →* ((Fin n → L) →ₗ[L] (Fin n → L)) where
   toFun g := Matrix.toLin' ((LinearMap.toMatrix b b (ρC g)).map (algebraMap K L))
   map_one' := by
@@ -486,6 +489,7 @@ def KapIs : Prop :=
       (κ i).aM τ k = aMi D i ((Wc D i).sig (tauE D τ)).1 ((Wc D i).sig (tauE D τ)).2 τ k) ∧ (κ i).n = D.R.nV
 
 
+variable (D) in
 def KapDom : Prop :=
   (∀ (i : Fin D.R.m) (τ : D.what₂.Tau),
     (Antitone fun k : Fin (D.R.sigW ((i : ℕ) + 1)).1 => aPl D i ((Wc D i).sig (tauE D τ)).1 τ k) ∧
@@ -523,6 +527,7 @@ theorem kapDom : KapDom D := by
     exact ⟨a + b + c, by simp only [Ranks.nV, Ranks.r]; omega⟩
 
 
+variable (D) in
 def kapTop (i : Fin D.R.m) : WeightFamilies.Wt D ((i : ℕ) + 1) :=
   ⟨_, _, fun τ => ((kapDom D).1 i τ).1, fun τ => ((kapDom D).1 i τ).2, D.R.nV, (kapDom D).2⟩
 
@@ -618,6 +623,7 @@ theorem FWTie.mem_MK (t : FWTie T R κ v₀) (i : Fin D.R.m) (f : Cu T κ i) :
     exact (t.nrm_eq i la y f).trans_le ((T.nrmM_le_one_iff _ la _ _).2 (h la _))
 
 
+variable (T R v₀) in
 def EvInj : Prop := ∀ i σ, GoodEmb T.Q.c (res T σ) → Function.Injective (evAt R i σ (v₀ i σ))
 
 theorem FWTie.jK_eq (t : FWTie T R κ v₀) (ht : t.Evaluates) (h : EvInj T R v₀) {i : Fin D.R.m} {σ : D.what₂.LL →+* ℂ}

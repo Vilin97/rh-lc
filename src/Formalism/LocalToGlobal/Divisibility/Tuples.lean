@@ -64,6 +64,7 @@ def SplitAt (v : HeightOneSpectrum (𝓞 F)) : Prop :=
     Ideal.map (algebraMap (𝓞 F) (𝓞 E)) v.asIdeal = P.asIdeal * P'.asIdeal
 
 
+variable {E} in
 def DegOne (v : HeightOneSpectrum (𝓞 F)) : Prop :=
   (Ideal.absNorm v.asIdeal).Prime ∧ ((Ideal.absNorm v.asIdeal : ℕ) : 𝓞 F) ∉ v.asIdeal ^ 2
 
@@ -154,6 +155,7 @@ def IsResChar (ξ : Chr F E L) (P : HeightOneSpectrum (𝓞 E)) (χ : (𝓞 E �
 
 
 open scoped Classical in
+open Classical in
 def resChar (ξ : Chr F E L) (P : HeightOneSpectrum (𝓞 E)) : (𝓞 E ⧸ P.asIdeal)ˣ →* Lˣ :=
   if h : ∃ χ, IsResChar ξ P χ then h.choose else 1
 
@@ -172,6 +174,7 @@ def U1 (σ : E →ₐ[F] E) : Subgroup (AfE F E)ˣ := (MonoidHom.id _ * conjId �
 
 
 open scoped Classical in
+open Classical in
 def tilde (σ : E →ₐ[F] E) (ξ : Chr F E L) : (h90 σ).range →* Lˣ :=
   if h : (h90 σ).ker ≤ ξ.ker then
     (h90 σ).rangeRestrict.liftOfSurjective (h90 σ).rangeRestrict_surjective
@@ -180,6 +183,7 @@ def tilde (σ : E →ₐ[F] E) (ξ : Chr F E L) : (h90 σ).range →* Lˣ :=
 
 
 open scoped Classical in
+open Classical in
 def detTw (σ : E →ₐ[F] E) (ξ : Chr F E L) {n : ℕ} (g : GL (Fin n) (AfE F E)) : Lˣ :=
   if h : Matrix.GeneralLinearGroup.det g ∈ (h90 σ).range then tilde σ ξ ⟨_, h⟩ else 1
 

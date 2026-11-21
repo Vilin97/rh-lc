@@ -199,6 +199,7 @@ theorem rows_isTermF' (t : D.s.Term u u') (hG : D.s.Gterm t ≠ 0) :
     exact (map_ne_zero_iff _ (algebraMap D.host.F D.host.E).injective).2 hG
 
 
+include Y in
 theorem rows_reduced_exists {C' Cl Cg cb Cu cT CT C0 A C : ℝ} (hH : Cnt.Hyp D large₂ u u' C' Cl Cg cb Cu cT CT C0 A)
     (hHH : UnitaryVolumeMass.stHH D large₂ u u' C' Cl Cg cb Cu cT CT C0 A C) (t : D.s.Term u u') (hG : D.s.Gterm t ≠ 0)
     (hrel : D.s.relevant t) :

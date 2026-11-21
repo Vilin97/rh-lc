@@ -73,6 +73,7 @@ theorem isLattice_lat (d : HermitianOrthogonalExtensionData A B c ε) (hε : ε 
 end GlobalTheory.UnitaryEmbeddingOpenLevel
 
 
+open GlobalTheory.UnitaryEmbeddingOpenLevel in
 theorem GlobalTheory.UnitaryEmbeddingOpenLevel.levOpen : ∀ (D : D7) (Y V : HSp D) (d : HermitianOrthogonalExtensionData Y V 1 1) (Λ : Lat Y) (𝔪 : Ideal (𝓞 D.host.E)), IsSelfDualC Y Λ → 𝔪 ≠ ⊥ → IsOpen {g : GA D V | Lev.finE V g ∈ congLev D.sp.cm V.gram (d.lat Λ fun _ => 1) 𝔪} := by
   intro D Y V d Λ 𝔪 hΛ h𝔪
   exact (congLev_open_compact V (isLattice_lat d one_ne_zero hΛ.1) h𝔪).1

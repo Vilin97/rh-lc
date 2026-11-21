@@ -27,11 +27,13 @@ def Gen (τ : ∀ w : InfinitePlace F, EmbOver E w) (W : Spc F E d) (γ : Multip
   ∀ w (t : ℝ), (mat (γ (Multiplicative.ofAdd t))).map (piInf (τ w)) = NormedSpace.exp ((t : ℂ) • Y w)
 
 
+variable (W) in
 def UMG (f : UA σ W.J → ℂ) : Prop :=
   ∃ (k : ℕ) (S : Set (UA σ W.J → ℂ)), f ∈ S ∧ ∀ f₁ ∈ S, Continuous f₁ ∧ (∃ C : ℝ, ∀ h, ‖f₁ h‖ ≤ C * (ht h : ℝ) ^ k) ∧
     ∀ γ ∈ Lines σ W, ∃ f₂ ∈ S, ∀ h, HasDerivAt (fun t : ℝ => f₁ (h * γ (Multiplicative.ofAdd t))) (f₂ h) 0
 
 
+variable (W) in
 def SmoothFin (τ : ∀ w : InfinitePlace F, EmbOver E w) (f : UA σ W.J → ℂ) : Prop :=
   ∃ U ∈ 𝓝 (1 : UA σ W.J), ∀ u ∈ U, (∀ w, (mat u).map (piInf (τ w)) = 1) → ∀ h, f (h * u) = f h
 

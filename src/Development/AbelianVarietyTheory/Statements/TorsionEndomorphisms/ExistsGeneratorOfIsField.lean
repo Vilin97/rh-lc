@@ -71,6 +71,7 @@ theorem exists_isValueAt (hL : L.IsLB) {n : ℤ} (s : LB.Sec (LPow A L n T)) (w 
       (val_le A L w) s) τ hτ).exists
 
 
+open ThetaAct in
 theorem exists_pullSec (hL : L.IsLB) {a : ℤ} {T' : Over S} (h : T' ⟶ T) (v : SecM A L a T) :
     ∃ w : SecM A L a T', ∀ (Z : Scheme.{0}) (r : Z ⟶ (T' ⊗ A).left) (z : Z) (J), Good L z J →
       sv w r z J = sv v (r ≫ (h ▷ A).left) z J := by
@@ -81,6 +82,7 @@ theorem exists_pullSec (hL : L.IsLB) {a : ℤ} {T' : Over S} (h : T' ⟶ T) (v :
   exact ⟨SecM.ofSec A w, fun Z r z J hJ => (hw Z r z J hJ).trans (H1.SectionArithmetic.sval_pullSec _ _ r z hJ)⟩
 
 
+open ThetaAct in
 theorem exists_isGenSec_of_retract (hL : L.IsLB) {a : ℤ} {T' : Over S} (i : T' ⟶ T) (h : T ⟶ T')
     (hi : i ≫ h = 𝟙 T') (t : SecM A L a T) (ht : ∀ s, ∃ r : Γ(T.left, ⊤), r • t = s) :
     ∃ th, IsGenSec A L a (T := T') th := by

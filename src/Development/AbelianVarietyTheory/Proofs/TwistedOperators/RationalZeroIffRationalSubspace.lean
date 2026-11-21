@@ -97,6 +97,7 @@ theorem lPos_iff_ne_bot : R.LPos F ↔ ∀ b, (A.fam.R A.μ0).inV0 (F.lvl b) ((R
   forall_congr' fun b => pos_iff_ne_bot R F b
 
 
+variable {R} in
 theorem isForm_jX (h : R.IsModels) (t : T) : IsForm (R.jX t) :=
   isForm_of_pres (R.B.R t).pres (R.HX t) (h.HX t) (R.jX t) (h.jX t)
 

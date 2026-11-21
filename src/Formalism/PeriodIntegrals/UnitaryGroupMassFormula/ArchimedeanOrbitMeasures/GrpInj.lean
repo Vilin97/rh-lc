@@ -38,6 +38,7 @@ theorem injOn_nhds_of_strict {E F : Type} [NormedAddCommGroup E] [NormedSpace �
   exact sub_eq_zero.1 (norm_eq_zero.1 this)
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem exp_mul_injOn {ι V : Type} [Fintype ι] [Fintype V] {n : ℕ}
     (L : EuclideanSpace ℝ ι →ₗ[ℝ] (V → Matrix (Fin n) (Fin n) ℂ)) (P : V → Matrix (Fin n) (Fin n) ℂ)
     (hker : ∀ x, (∀ v, L x v * P v = 0) → x = 0) :

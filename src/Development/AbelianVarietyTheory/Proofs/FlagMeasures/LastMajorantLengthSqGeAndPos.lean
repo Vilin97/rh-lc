@@ -90,6 +90,8 @@ private lemma neg_re_herm_splitForm_le_sum_normSq (k r : ℕ) (u : Fin (2 * r + 
         ring
 
 
+open Matrix MeasureTheory Finset in
+open scoped InnerProductSpace ENNReal in
 theorem _root_.GlobalTheory.LastLen.last_len : ∀ (k r : ℕ) (z : Fin (2 * r + k + 1) → ℂ), _root_.Formalism.QuantumDeterminants.inWb k r z → 0 < _root_.Formalism.QuantumDeterminants.Tz k r z → ∀ g ∈ _root_.BranchingSupport.GG k r, _root_.Formalism.QuantumDeterminants.Tz k r z ≤ _root_.BranchingSupport.lenA k r z g (Fin.last r) ^ 2 ∧ ∀ a, 0 < _root_.BranchingSupport.lenA k r z g a ∧ _root_.BranchingSupport.lenA k r z g a = _root_.Formalism.MainNotions.S.lA k r z g a := by
   intro k r z hz hT g hg
   have hpos := (_root_.GlobalTheory.TensLen.lengths k r z hz hT g hg).2.2.1

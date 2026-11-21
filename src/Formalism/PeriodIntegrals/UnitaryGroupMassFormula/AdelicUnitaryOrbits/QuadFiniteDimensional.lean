@@ -203,6 +203,7 @@ theorem quad_tmul_algebraMap (x : R) (d : F) :
     ← TensorProduct.smul_tmul, Algebra.smul_def]
 
 
+include h2 hli in
 theorem quad_trace {d : F} (hd : θ * θ = algebraMap F E d) (a b : R) :
     Algebra.trace R (R ⊗[F] E) (a ⊗ₜ[F] (1 : E) + b ⊗ₜ[F] θ) = 2 * a := by
   have e1 : (a ⊗ₜ[F] (1 : E) + b ⊗ₜ[F] θ) * ((1 : R) ⊗ₜ[F] θ) =

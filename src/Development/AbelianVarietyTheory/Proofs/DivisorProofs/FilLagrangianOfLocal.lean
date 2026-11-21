@@ -27,6 +27,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.HTLagr
 
 
+open GlobalTheory GlobalTheory.CatCoh GlobalTheory.PDiv GlobalTheory.PtExt in
 theorem mem_fil_of_orth_of_ker (R : Type) [CommRing R] [Nontrivial R] (A B : Over (Sp R)) [GrpObj A] [GrpObj B]
     (g : ℕ) (hA : IsAbelianScheme A) (hB : IsAbelianScheme B) (hgA : SmoothOfRelativeDimension g A.hom)
     (hgB : SmoothOfRelativeDimension g B.hom) (P : LB (A ⊗ B).left) (hLB : P.IsLB)

@@ -25,6 +25,7 @@ def restrict0 {M : Type} [AddCommGroup M] [Module (MRingOver S ι) M] (z : KH.Ce
   KH.cellRes S M (frontCell I).1 I.1 (z (frontCell I))
 
 
+variable (S ι) in
 abbrev KosC (V : Ideal (MRingOver S ι)) (R p n : ℕ) : Type :=
   {J : Finset (Fin R) // J.card = p} → KH.CechC S ι (MRingOver S ι ⧸ V) n
 
@@ -55,12 +56,14 @@ def kosD {V : Ideal (MRingOver S ι)} {R : ℕ} (z : Fin R → KH.CechC S ι (MR
 variable [LinearOrder K]
 
 
+variable (S ι) in
 def kosCech (V : Ideal (MRingOver S ι)) (R p n : ℕ) : KosC S ι V R p n →+ KosC S ι V R p (n + 1) :=
   (KH.cechD S ι (MRingOver S ι ⧸ V) n).toAddMonoidHom.compLeft _
 
 variable [∀ k, Fintype (ι k)]
 
 
+variable (S ι) in
 def kosPart (V : Ideal (MRingOver S ι)) (R : ℕ) (α c : K → ℤ) (p n : ℕ) : AddSubgroup (KosC S ι V R p n) :=
   (Submodule.pi Set.univ fun _ => KH.cechCc ι (KH.quotPart S V) (c - (p : ℤ) • α) n).toAddSubgroup
 

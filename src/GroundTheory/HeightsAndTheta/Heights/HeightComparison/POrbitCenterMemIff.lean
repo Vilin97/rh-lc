@@ -51,6 +51,7 @@ theorem weightedHomogeneousComponent_X_mul (j : Coord n) (G : MvPolynomial (Coor
 end OrbitCenterMemIff
 
 
+open OrbitCenterMemIff in
 theorem OrbitCenterMemIff.proof : OrbitCenterMemIff.Statement := by
   classical
   intro ι _ _ n x hx v F d hF

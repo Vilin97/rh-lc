@@ -178,6 +178,7 @@ theorem cochainOf_normHomotopy {s m : ℕ} (h : s = m + 1) (e : X) (y : (cochain
   rfl
 
 
+omit [Fintype F] in
 theorem cochainOf_cupPairingCochains_zeroCochain {n : ℕ} (x : X) (y : (cochainsComplex Y).X n)
     (g : Fin n → F) :
     cochainOf Z (cupPairingCochains μ (zero_add n) (zeroCochain X x) y) g =

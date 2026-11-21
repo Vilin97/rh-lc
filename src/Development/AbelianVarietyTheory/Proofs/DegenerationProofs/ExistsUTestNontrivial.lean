@@ -55,6 +55,7 @@ end Pull
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H}
 
 
+open IsLocalRing in
 theorem exists_padic_embedding (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [CharZero V]
     [IsAdicComplete (maximalIdeal V) V] (h : Finite (ResidueField V)) :
     ∃ (p : ℕ) (_ : Fact p.Prime) (c : FractionRing V →+* PadicAlgCl p),

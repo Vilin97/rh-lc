@@ -35,10 +35,20 @@ def fn (f : Hol W) (p : E) : ℂ := by
   classical
   exact if h : p ∈ W then f.1 ⟨p, h⟩ else 0
 
+set_option autoImplicit false in
+open TopologicalSpace Filter Topology in
+variable {E E' E'' : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedAddCommGroup E'] [NormedSpace ℂ E']
+  [NormedAddCommGroup E''] [NormedSpace ℂ E''] in
+variable {W : Opens E} {W' : Opens E'} {W'' : Opens E''} in
 theorem _root_.GlobalTheory.AnPer.Hol.fn_of_mem (f : _root_.GlobalTheory.AnPer.Hol W) {p : E} (h : p ∈ W) :
     f.fn p = f.1 ⟨p, h⟩ := by
   simp [_root_.GlobalTheory.AnPer.Hol.fn, h]
 
+set_option autoImplicit false in
+open TopologicalSpace Filter Topology in
+variable {E E' E'' : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedAddCommGroup E'] [NormedSpace ℂ E']
+  [NormedAddCommGroup E''] [NormedSpace ℂ E''] in
+variable {W : Opens E} {W' : Opens E'} {W'' : Opens E''} in
 theorem _root_.GlobalTheory.AnPer.Hol.ext_fn {f g : _root_.GlobalTheory.AnPer.Hol W}
     (h : ∀ p ∈ W, f.fn p = g.fn p) : f = g := by
   refine Subtype.ext (funext fun p ↦ ?_)
@@ -46,6 +56,11 @@ theorem _root_.GlobalTheory.AnPer.Hol.ext_fn {f g : _root_.GlobalTheory.AnPer.Ho
   rw [_root_.GlobalTheory.AnPer.Hol.fn_of_mem f p.2, _root_.GlobalTheory.AnPer.Hol.fn_of_mem g p.2] at hp
   exact hp
 
+set_option autoImplicit false in
+open TopologicalSpace Filter Topology in
+variable {E E' E'' : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedAddCommGroup E'] [NormedSpace ℂ E']
+  [NormedAddCommGroup E''] [NormedSpace ℂ E''] in
+variable {W : Opens E} {W' : Opens E'} {W'' : Opens E''} in
 theorem _root_.GlobalTheory.AnPer.Hol.analytic (f : _root_.GlobalTheory.AnPer.Hol W) :
     AnalyticOnNhd ℂ f.fn W := by
   obtain ⟨F, hF, e⟩ : ∃ F : E → ℂ, AnalyticOnNhd ℂ F W ∧ ∀ p : W, f.1 p = F p := f.2
@@ -56,6 +71,11 @@ theorem _root_.GlobalTheory.AnPer.Hol.analytic (f : _root_.GlobalTheory.AnPer.Ho
 
 def mk (F : E → ℂ) (h : AnalyticOnNhd ℂ F W) : Hol W := ⟨fun p ↦ F p, F, h, fun _ ↦ rfl⟩
 
+set_option autoImplicit false in
+open TopologicalSpace Filter Topology in
+variable {E E' E'' : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedAddCommGroup E'] [NormedSpace ℂ E']
+  [NormedAddCommGroup E''] [NormedSpace ℂ E''] in
+variable {W : Opens E} {W' : Opens E'} {W'' : Opens E''} in
 theorem _root_.GlobalTheory.AnPer.Hol.fn_mk (F : E → ℂ) (h : AnalyticOnNhd ℂ F W) {p : E} (hp : p ∈ W) :
     (_root_.GlobalTheory.AnPer.Hol.mk F h).fn p = F p := by
   rw [_root_.GlobalTheory.AnPer.Hol.fn_of_mem _ hp]
@@ -64,26 +84,51 @@ theorem _root_.GlobalTheory.AnPer.Hol.fn_mk (F : E → ℂ) (h : AnalyticOnNhd �
 def ev (p : E) (hp : p ∈ W) : Hol W →ₐ[ℂ] ℂ :=
   (Pi.evalAlgHom ℂ (fun _ : W ↦ ℂ) ⟨p, hp⟩).comp (holSub W).val
 
+set_option autoImplicit false in
+open TopologicalSpace Filter Topology in
+variable {E E' E'' : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedAddCommGroup E'] [NormedSpace ℂ E']
+  [NormedAddCommGroup E''] [NormedSpace ℂ E''] in
+variable {W : Opens E} {W' : Opens E'} {W'' : Opens E''} in
 theorem _root_.GlobalTheory.AnPer.Hol.ev_apply (p : E) (hp : p ∈ W) (f : _root_.GlobalTheory.AnPer.Hol W) :
     _root_.GlobalTheory.AnPer.Hol.ev p hp f = f.fn p := by
   rw [_root_.GlobalTheory.AnPer.Hol.fn_of_mem f hp]
   rfl
 
+set_option autoImplicit false in
+open TopologicalSpace Filter Topology in
+variable {E E' E'' : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedAddCommGroup E'] [NormedSpace ℂ E']
+  [NormedAddCommGroup E''] [NormedSpace ℂ E''] in
+variable {W : Opens E} {W' : Opens E'} {W'' : Opens E''} in
 theorem _root_.GlobalTheory.AnPer.Hol.fn_add (f g : _root_.GlobalTheory.AnPer.Hol W) {p : E} (hp : p ∈ W) :
     (f + g).fn p = f.fn p + g.fn p := by
   rw [_root_.GlobalTheory.AnPer.Hol.fn_of_mem _ hp, _root_.GlobalTheory.AnPer.Hol.fn_of_mem _ hp, _root_.GlobalTheory.AnPer.Hol.fn_of_mem _ hp]
   rfl
 
+set_option autoImplicit false in
+open TopologicalSpace Filter Topology in
+variable {E E' E'' : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedAddCommGroup E'] [NormedSpace ℂ E']
+  [NormedAddCommGroup E''] [NormedSpace ℂ E''] in
+variable {W : Opens E} {W' : Opens E'} {W'' : Opens E''} in
 theorem _root_.GlobalTheory.AnPer.Hol.fn_mul (f g : _root_.GlobalTheory.AnPer.Hol W) {p : E} (hp : p ∈ W) :
     (f * g).fn p = f.fn p * g.fn p := by
   rw [_root_.GlobalTheory.AnPer.Hol.fn_of_mem _ hp, _root_.GlobalTheory.AnPer.Hol.fn_of_mem _ hp, _root_.GlobalTheory.AnPer.Hol.fn_of_mem _ hp]
   rfl
 
+set_option autoImplicit false in
+open TopologicalSpace Filter Topology in
+variable {E E' E'' : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedAddCommGroup E'] [NormedSpace ℂ E']
+  [NormedAddCommGroup E''] [NormedSpace ℂ E''] in
+variable {W : Opens E} {W' : Opens E'} {W'' : Opens E''} in
 theorem _root_.GlobalTheory.AnPer.Hol.fn_smul (c : ℂ) (f : _root_.GlobalTheory.AnPer.Hol W) {p : E} (hp : p ∈ W) :
     (c • f).fn p = c * f.fn p := by
   rw [_root_.GlobalTheory.AnPer.Hol.fn_of_mem _ hp, _root_.GlobalTheory.AnPer.Hol.fn_of_mem _ hp]
   rfl
 
+set_option autoImplicit false in
+open TopologicalSpace Filter Topology in
+variable {E E' E'' : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedAddCommGroup E'] [NormedSpace ℂ E']
+  [NormedAddCommGroup E''] [NormedSpace ℂ E''] in
+variable {W : Opens E} {W' : Opens E'} {W'' : Opens E''} in
 theorem _root_.GlobalTheory.AnPer.Hol.fn_algebraMap (c : ℂ) {p : E} (hp : p ∈ W) :
     (algebraMap ℂ (_root_.GlobalTheory.AnPer.Hol W) c).fn p = c := by
   rw [_root_.GlobalTheory.AnPer.Hol.fn_of_mem _ hp]
@@ -98,12 +143,22 @@ def comap (Φ : E' → E) (hΦ : AnalyticOnNhd ℂ Φ W') (h : ∀ p ∈ W', Φ 
   map_add' _ _ := rfl
   commutes' _ := rfl
 
+set_option autoImplicit false in
+open TopologicalSpace Filter Topology in
+variable {E E' E'' : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedAddCommGroup E'] [NormedSpace ℂ E']
+  [NormedAddCommGroup E''] [NormedSpace ℂ E''] in
+variable {W : Opens E} {W' : Opens E'} {W'' : Opens E''} in
 theorem _root_.GlobalTheory.AnPer.Hol.fn_comap (Φ : E' → E) (hΦ : AnalyticOnNhd ℂ Φ W') (h : ∀ p ∈ W', Φ p ∈ W)
     (f : _root_.GlobalTheory.AnPer.Hol W) {p : E'} (hp : p ∈ W') :
     (_root_.GlobalTheory.AnPer.Hol.comap Φ hΦ h f).fn p = f.fn (Φ p) := by
   rw [_root_.GlobalTheory.AnPer.Hol.fn_of_mem _ hp]
   exact (_root_.GlobalTheory.AnPer.Hol.fn_of_mem f (h p hp)).symm
 
+set_option autoImplicit false in
+open TopologicalSpace Filter Topology in
+variable {E E' E'' : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedAddCommGroup E'] [NormedSpace ℂ E']
+  [NormedAddCommGroup E''] [NormedSpace ℂ E''] in
+variable {W : Opens E} {W' : Opens E'} {W'' : Opens E''} in
 theorem _root_.GlobalTheory.AnPer.Hol.fderiv_fn_congr (f : _root_.GlobalTheory.AnPer.Hol W) {F : E → ℂ}
     (e : ∀ q ∈ W, f.fn q = F q) {p : E} (hp : p ∈ W) :
     fderiv ℂ f.fn p = fderiv ℂ F p := by
@@ -114,6 +169,11 @@ def derFun (v : E) (f : Hol W) : Hol W :=
   mk (fun p ↦ fderiv ℂ f.fn p v) fun p hp ↦
     ((ContinuousLinearMap.apply ℂ ℂ v).analyticAt _).comp (f.analytic p hp).fderiv
 
+set_option autoImplicit false in
+open TopologicalSpace Filter Topology in
+variable {E E' E'' : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedAddCommGroup E'] [NormedSpace ℂ E']
+  [NormedAddCommGroup E''] [NormedSpace ℂ E''] in
+variable {W : Opens E} {W' : Opens E'} {W'' : Opens E''} in
 theorem _root_.GlobalTheory.AnPer.Hol.fn_derFun (v : E) (f : _root_.GlobalTheory.AnPer.Hol W) {p : E} (hp : p ∈ W) :
     (_root_.GlobalTheory.AnPer.Hol.derFun v f).fn p =
       fderiv ℂ f.fn p v :=
@@ -139,11 +199,21 @@ def der (v : E) : Derivation ℂ (Hol W) (Hol W) :=
         fderiv_fun_mul (f.analytic p hp).differentiableAt (g.analytic p hp).differentiableAt]
       rfl
 
+set_option autoImplicit false in
+open TopologicalSpace Filter Topology in
+variable {E E' E'' : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedAddCommGroup E'] [NormedSpace ℂ E']
+  [NormedAddCommGroup E''] [NormedSpace ℂ E''] in
+variable {W : Opens E} {W' : Opens E'} {W'' : Opens E''} in
 theorem _root_.GlobalTheory.AnPer.Hol.fn_der (v : E) (f : _root_.GlobalTheory.AnPer.Hol W) {p : E} (hp : p ∈ W) :
     (_root_.GlobalTheory.AnPer.Hol.der v f).fn p =
       fderiv ℂ f.fn p v :=
   _root_.GlobalTheory.AnPer.Hol.fn_derFun v f hp
 
+set_option autoImplicit false in
+open TopologicalSpace Filter Topology in
+variable {E E' E'' : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedAddCommGroup E'] [NormedSpace ℂ E']
+  [NormedAddCommGroup E''] [NormedSpace ℂ E''] in
+variable {W : Opens E} {W' : Opens E'} {W'' : Opens E''} in
 theorem _root_.GlobalTheory.AnPer.Hol.fn_der_comap (Φ : E' → E) (hΦ : AnalyticOnNhd ℂ Φ W')
     (h : ∀ p ∈ W', Φ p ∈ W) (v : E') (f : _root_.GlobalTheory.AnPer.Hol W) {p : E'} (hp : p ∈ W') :
     (_root_.GlobalTheory.AnPer.Hol.der v (_root_.GlobalTheory.AnPer.Hol.comap Φ hΦ h f)).fn p =

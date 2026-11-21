@@ -15,6 +15,7 @@ namespace GlobalTheory.Mem.Col2.Splice
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [StarRing E]
 
 
+omit [StarRing E] in
 theorem hasRes_of_mul {P : HeightOneSpectrum (𝓞 E)} {s : 𝓞 E} (hs : s ∉ P.asIdeal) {z : P.adicCompletion E}
     {c : 𝓞 E ⧸ P.asIdeal}
     (h : HasRes P (algebraMap E _ (algebraMap (𝓞 E) E s) * z) (Ideal.Quotient.mk P.asIdeal s * c)) : HasRes P z c := by
@@ -67,11 +68,13 @@ theorem adAt_pullV_osmul {n : ℕ} (g : GL (Fin n) (AfE F E)) (w : HeightOneSpec
   rw [e', map_mul, adAt_inclE]
 
 
+omit [StarRing E] in
 theorem mat_ext {n : ℕ} {M N : Matrix (Fin n) (Fin n) (AfE F E)} (h : ∀ w, M.map (adAt F w) = N.map (adAt F w)) : M = N := by
   ext i j
   exact PtExist.ad_ext fun w => congrFun (congrFun (h w) i) j
 
 
+omit [StarRing E] in
 theorem adAt_pullV_congr {n : ℕ} {g k : GL (Fin n) (AfE F E)} {w : HeightOneSpectrum (𝓞 E)}
     (hw : ((g⁻¹ : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)).map (adAt F w) =
       ((k⁻¹ : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)).map (adAt F w)) (x : Sp E n) (i : Fin n) :

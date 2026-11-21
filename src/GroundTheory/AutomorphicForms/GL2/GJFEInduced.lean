@@ -19,6 +19,7 @@ variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchi
   {W : Type*} [AddCommGroup W] [Module ℂ W] {σ : Representation ℂ (levi F n β) W}
 
 
+variable (β) in
 def leviMeasure (ψ : AddChar F Circle) : Measure (levi F n β) :=
   haarLevi β (leviCoordMeasure β ψ)
 
@@ -27,6 +28,7 @@ instance (ψ : AddChar F Circle) : (leviMeasure β ψ).IsHaarMeasure := by
   infer_instance
 
 
+omit [MeasurableSpace F] [BorelSpace F] in
 theorem continuous_inducedChar : Continuous (inducedChar (F := F) β) := by
   have h3 : Continuous (leviAbsDetShift (F := F) β) := by
     refine continuous_monoidHom_of_eq_one _

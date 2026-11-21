@@ -32,10 +32,12 @@ theorem under_int_ne_bot (w : HeightOneSpectrum (𝓞 L)) : w.asIdeal.under ℤ 
   mt Ideal.eq_bot_of_comap_eq_bot w.ne_bot
 
 
+omit [NumberField L] in
 theorem rationalPrimeUnder_prime (w : HeightOneSpectrum (𝓞 L)) : (rationalPrimeUnder w).Prime :=
   (Int.prime_absNorm _).mpr (Ideal.prime_of_isPrime (under_int_ne_bot w) inferInstance)
 
 
+omit [NumberField L] in
 theorem span_rationalPrimeUnder (w : HeightOneSpectrum (𝓞 L)) :
     Ideal.span {((rationalPrimeUnder w : ℕ) : ℤ)} = w.asIdeal.under ℤ :=
   Int.ideal_span_absNorm_eq_self _
@@ -182,6 +184,7 @@ theorem summable_indicator_not_prime {s : ℝ} (hs : 1 / 2 < s) :
     (summable_absNorm_rpow_neg_of_not_prime hs)
 
 
+variable (K L) in
 theorem summable_higherDegreePrimes {s : ℝ} (hs : 1 / 2 < s) :
     Summable fun w : higherDegreePrimes K L => (Ideal.absNorm w.1.asIdeal : ℝ) ^ (-s) := by
   refine (summable_subtype_iff_indicator (s := higherDegreePrimes K L)
@@ -191,6 +194,7 @@ theorem summable_higherDegreePrimes {s : ℝ} (hs : 1 / 2 < s) :
   exact indicator_le_indicator_of_subset higherDegreePrimes_subset (fun _ => by positivity) w
 
 
+variable (K L) in
 theorem primeIdealZetaSum_higherDegreePrimes_le :
     ∃ C : ℝ, ∀ s : ℝ, 1 ≤ s → (higherDegreePrimes K L).primeIdealZetaSum s ≤ C := by
   refine ⟨∑' w, {w : HeightOneSpectrum (𝓞 L) | ¬ (Ideal.absNorm w.asIdeal).Prime}.indicator

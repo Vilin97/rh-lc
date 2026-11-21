@@ -128,6 +128,7 @@ theorem coprime_cc {𝔪 : Ideal (𝓞 E)} {t t' : 𝓞 E} (ht : (t' : E) = cc (
   simpa [hc, ht, cc] using this
 
 
+omit [IsCMField E] in
 theorem smul_mem_smul {𝔪 : Ideal (𝓞 E)} {L L' : Lt E r} {t : 𝓞 E} (h : ∀ v ∈ L, t • v ∈ L')
     {v : Fin r → E} (hv : v ∈ 𝔪 • L) : t • v ∈ 𝔪 • L' := by
   refine Submodule.smul_induction_on hv (fun a ha u hu => ?_) fun a b ha hb => ?_

@@ -157,6 +157,7 @@ section Generic
 variable (F : FiniteSubfield) [Fact (K ≤ F)] [F.1.fixingSubgroup.Normal]
 
 
+set_option maxHeartbeats 4000000 in
 theorem exists_infLocalInfl_eq_homologyπ (n : ℕ)
     (z : (cochainsComplex (galUnitsZ v.Completion (AlgebraicClosure v.Completion))).cycles n)
     (y₀ : (cochainsComplex (infLocalLevelRep ι F)).X n)
@@ -174,6 +175,7 @@ theorem exists_infLocalInfl_eq_homologyπ (n : ℕ)
   rw [iCycles_cyclesMap_apply, hw, hy₀]
 
 
+set_option maxHeartbeats 4000000 in
 theorem exists_d_eq_of_infLocalInfl_eq_zero (n : ℕ) (w : (cochainsComplex (infLocalLevelRep ι F)).cycles n)
     (hy : (infLocalInfl ι F n).hom (((cochainsComplex (infLocalLevelRep ι F)).homologyπ n).hom w) = 0) :
     ∃ u : (cochainsComplex (galUnitsZ v.Completion (AlgebraicClosure v.Completion))).X ((ComplexShape.up ℕ).prev n),
@@ -192,6 +194,7 @@ variable {F M E : FiniteSubfield} [Fact (K ≤ F)] [Fact (K ≤ M)] [Fact (K ≤
   [Fact (M ≤ E)] [F.1.fixingSubgroup.Normal] [M.1.fixingSubgroup.Normal] [E.1.fixingSubgroup.Normal]
 
 
+set_option maxHeartbeats 4000000 in
 theorem infLocalTransition_homologyπ_eq_zero (n : ℕ) (w : (cochainsComplex (infLocalLevelRep ι F)).cycles n)
     (u' : (cochainsComplex (infLocalLevelRep ι M)).X ((ComplexShape.up ℕ).prev n))
     (hu : ((cochainsComplex (galUnitsZ v.Completion (AlgebraicClosure v.Completion))).d _ n).hom (((infLocalCochainsInfl ι M).f _).hom u') =
@@ -215,6 +218,7 @@ theorem infLocalTransition_homologyπ_eq_zero (n : ℕ) (w : (cochainsComplex (i
 end GenericTransition
 
 
+set_option maxHeartbeats 4000000 in
 theorem exists_infLocalInfl_eq (n : ℕ)
     (x : cohomology (galUnitsZ v.Completion (AlgebraicClosure v.Completion)) n) :
     ∃ (p : GLevel K) (y : cohomology (infLocalLevelRep ι p.1) n), (infLocalInfl ι p.1 n).hom y = x := by
@@ -227,6 +231,7 @@ theorem exists_infLocalInfl_eq (n : ℕ)
   exact ⟨p, y, hy⟩
 
 
+set_option maxHeartbeats 4000000 in
 theorem exists_infLocalTransition_eq_zero (n : ℕ) (p : GLevel K) (y : cohomology (infLocalLevelRep ι p.1) n)
     (hy : (infLocalInfl ι p.1 n).hom y = 0) :
     ∃ (q : GLevel K) (h : p ≤ q), (haveI : Fact (p.1 ≤ q.1) := ⟨h⟩

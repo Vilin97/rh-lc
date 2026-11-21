@@ -35,9 +35,11 @@ def hookRows (n : ℕ) (a : ℕ → ℕ) : ℕ :=
   Formalism.LatticeIndexTer.hookProd (YoungDiagram.ofRowLens (((List.range n).map a).insertionSort (· ≥ ·)) List.sortedGE_insertionSort)
 
 
+variable (D) in
 abbrev pW (i : Fin D.R.m) (ρ : D.what₂.Tau) : ℕ := ((Wc D i).sig (tauE D ρ)).1
 
 
+variable (D) in
 abbrev qW (i : Fin D.R.m) (ρ : D.what₂.Tau) : ℕ := ((Wc D i).sig (tauE D ρ)).2
 
 def logHookSum (i : Fin D.R.m) (l : D.what₂.Tau → D.what₂.Tau) : ℝ :=
@@ -47,6 +49,7 @@ def deltaConj (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ) : PolF D (Wc D i).ra
   delta (pW D i) (qW D i) (fun ρ => aPl D i (pW D i ρ) (lab σ ρ)) (fun ρ => aMi D i (pW D i ρ) (qW D i ρ) (lab σ ρ))
 
 
+variable (D) in
 def gramV (i : Fin D.R.m) : Matrix (Fin (Vc D i).rank) (Fin (Vc D i).rank) D.host.E :=
   if D.sp.Vneg ((i : ℕ) + 1) then -(Vc D i).gram else (Vc D i).gram
 

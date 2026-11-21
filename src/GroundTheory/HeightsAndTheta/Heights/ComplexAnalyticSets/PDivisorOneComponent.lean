@@ -80,6 +80,7 @@ theorem dim_sup_add_one_le {n d : ℕ} {J W W' : Ideal (MvPolynomial (Fin n) ℂ
 end DivisorOneComponent
 
 
+open DivisorOneComponent in
 theorem DivisorOneComponent.proof : DivisorOneComponent.Statement := by
   classical
   intro n d J u hJ hdim hu

@@ -119,6 +119,7 @@ section Local
 variable (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+variable {k} in
 theorem valuation_det_eq_one {n : Type} [Fintype n] [DecidableEq n] (A : GL n k)
     (h1 : ∀ a b, (A : Matrix n n k) a b ∈ (valuation k).integer)
     (h2 : ∀ a b, ((A⁻¹ : GL n k) : Matrix n n k) a b ∈ (valuation k).integer) :

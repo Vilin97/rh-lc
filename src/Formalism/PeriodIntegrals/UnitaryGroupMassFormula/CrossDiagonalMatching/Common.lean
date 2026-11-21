@@ -55,6 +55,7 @@ theorem use₄ {E : Type} [Field E] [NumberField E] {n : ℕ} (P : Ideal (𝓞 E
 variable {D : D7} {u : D.what₂.Word}
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem cls_le_ld (T : Forms0 D u) (c : (D.mem u).C.cls 0) :
     clsCrd D u 0 (Nat.zero_le _) c ≤ Ld D u 0 (Nat.zero_le _) c := by
   have h1 : clsCrd D u 0 (Nat.zero_le _) c = Formalism.UG.CS.globLat (T.cls0.y c).1 T.cls0.lev.Lb :=

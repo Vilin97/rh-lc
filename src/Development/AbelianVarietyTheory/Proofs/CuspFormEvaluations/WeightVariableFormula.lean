@@ -1748,6 +1748,7 @@ theorem cover (σ : E →+* ℂ) : (∃ t, pl t = σ) ∨ ∃ t, ComplexEmbeddin
     exact Or.inr ⟨t, by rw [ht, conj_conj]⟩
 
 
+omit he in
 def fw (he : IsEnum H pl) : Lt Ix Dw.p Dw.q n → LtN Dw n := fun ℓ =>
   Sum.elim (fun i => ⟨pl ℓ.1.1, Fin.cast (mult_pl Dw he _).symm i, ℓ.2⟩)
     (fun j => ⟨ComplexEmbedding.conjugate (pl ℓ.1.1), Fin.cast (mult_conj Dw he _).symm j, ℓ.2⟩) ℓ.1.2
@@ -1855,6 +1856,7 @@ theorem inv_fw (P : MvPolynomial (Lt Ix Dw.p Dw.q n) K) : RowInv Dw.mult n K (re
         (ρ' := (t, Sum.inr (Fin.cast (mult_conj Dw he _) i'))) (fun _ => rfl) (fun _ => rfl), hP.2 _ _ _ hi]
 
 
+omit he in
 def aa (pl : Ix → (E →+* ℂ)) (a : (E →+* ℂ) × ℕ → ℕ) : Row Ix Dw.p Dw.q → ℕ := fun ρ =>
   Sum.elim (fun i : Fin Dw.p => a (pl ρ.1, i)) (fun j : Fin Dw.q => a (ComplexEmbedding.conjugate (pl ρ.1), j)) ρ.2
 

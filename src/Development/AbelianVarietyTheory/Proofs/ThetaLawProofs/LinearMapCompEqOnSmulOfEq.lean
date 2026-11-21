@@ -223,6 +223,7 @@ end Via
 end GlobalTheory.LineFinite
 
 
+open GlobalTheory.LineFinite in
 theorem GlobalTheory.KeyKa.finZ_of_line_towards_generic : Out.Laws → ∀ (k K : Type) [Field k] [IsAlgClosed k] [Field K] [IsAlgClosed K] [Algebra k K] (x : KeyIn k) (x' : KeyIn K) φ w (n : ℕ) (b : Fin (n ^ x.P.g) → RR x n) (b' : Fin (n ^ x.P.g) → RR x' n) (r : ℕ) (s : Fin r → RR x n) (s' : Fin r → RR x' n) (i₀ : Fin r) (s₀ s₁ : RR x' n) (T : Fin (n ^ x.P.g) → K) (t : K), 4 ≤ n → KeyVia x' x (algebraMap k K) φ w → IsBasis x b → (∀ j, SecVia x' x φ w (b' j) (b j)) → FinZ x s → AlgebraicIndependent k T → (∀ i, i ≠ i₀ → SecVia x' x φ w (s' i) (s i)) → SecVia x' x φ w s₀ (s i₀) → Coords x' b' T s₁.f → (∀ c, (show Γ(x'.P.A.left, x'.P.L.U c) from (s' i₀).f c) = AbLaw.cst x'.P.A.hom _ (1 - t) * (show Γ(x'.P.A.left, x'.P.L.U c) from s₀.f c) + AbLaw.cst x'.P.A.hom _ t * (show Γ(x'.P.A.left, x'.P.L.U c) from s₁.f c)) → FinZ x' s' := by
   intro hL k K _ _ _ _ _ x x' φ w n b b' r s s' i₀ s₀ s₁ T t hn ⟨_, _, _, hp, _⟩ hb hb' hs hT hs' hs₀ hs₁ hσ
   have := x.P.isAb.proper

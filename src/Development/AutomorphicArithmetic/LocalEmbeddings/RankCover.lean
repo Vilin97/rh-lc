@@ -25,6 +25,7 @@ section Mid
 variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
 
 
+set_option maxHeartbeats 1000000 in
 theorem rank_cover {T : CoreJ D} [Algebra T.Q.c.F D.what₂.LL] {R : RealDat D A T.Q.c.F}
     {κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)} {v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec}
     (fw : FWTie T R κ v₀) (Fc : Face D A) (i : Fin D.R.m) (Y : Deep T.toCore ((i : ℕ) + 1)) {e : ℕ} {o : ℝ} (hY : Y.Good e o)
@@ -75,6 +76,7 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotio
   {Y0 : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y0 cX} {Csz : ℝ}
 
 
+set_option maxHeartbeats 1000000 in
 theorem rank_data (p : PtAt ex Csz) (i : Fin D.R.m) (Y : Cov p i) {e : ℕ} {o : ℝ} (hY : Y.Good e o)
     (θ : LevelAut (dat p i) Y.d.l₂ →* p.P.Gp) (h1 : ∀ γ, CongMod p.T.Q.l.Mb (liftLa γ) ((p.O i).lev (θ γ)))
     (h2 : ∀ γ, CongMod p.T.Q.l.Mb (liftLa γ) LinearMap.id → θ γ = 1) {G' : Type} [Group G'] (c : p.P.Gp ≃* G')

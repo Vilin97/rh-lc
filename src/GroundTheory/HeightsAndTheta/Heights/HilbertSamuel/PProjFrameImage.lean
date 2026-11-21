@@ -48,6 +48,7 @@ theorem coneEval_graphMap (x : Ix κ → Ω) (e : Fin (D + 1) → Ix κ) (f : MR
 end ProjFrameImage
 
 
+open ProjFrameImage in
 theorem ProjFrameImage.proof : ProjFrameImage.Statement := by
   intro D Ω _ _ κ _ x e hP
   refine le_antisymm (fun f hf => ?_) bot_le

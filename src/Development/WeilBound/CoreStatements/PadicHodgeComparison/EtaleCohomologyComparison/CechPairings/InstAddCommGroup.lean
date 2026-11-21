@@ -85,6 +85,7 @@ variable {R₁ R₂ R₃ : Type} [CommRing R₁] [CommRing R₂] [CommRing R₃]
   {σ₁₂ : R₁ →+* R₂} {σ₂₃ : R₂ →+* R₃} {σ₁₃ : R₁ →+* R₃}
 
 
+variable (C) in
 def id : Hom C C (RingHom.id R) where
   f _ := LinearMap.id
   comm _ _ := rfl

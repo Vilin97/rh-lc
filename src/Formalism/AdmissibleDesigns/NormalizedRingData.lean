@@ -19,6 +19,8 @@ variable {D : D7} (i : D.nd.Loc)
   (ρ : D.nd.X i → (GE D.nd →* GL (Fin D.R.r) (D.nd.O i))) (π : D.nd.X i)
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem normalized_ring_data (hN : NormAt D.nd r ρ π)
     (hG1 : ∀ (γ : GE D.nd) (k : ℕ), (fun x : D.nd.X i => ((rO D.nd i r x γ).charpolyRev).coeff k) ∈ D.nd.T i)
     (hres : Submodule.span (kk D.nd i)

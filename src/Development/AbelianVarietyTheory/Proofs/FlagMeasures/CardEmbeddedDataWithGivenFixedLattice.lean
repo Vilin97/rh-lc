@@ -163,6 +163,7 @@ theorem fixLat_isLattice {H : HermSpace K V} {g : 𝓞 K} (hg : g ≠ 0) {L' L :
   intro s hs hli
   exact (LinearIndependent.iff_fractionRing _ _).mp hli
 
+omit [NumberField K] in
 theorem div_mem_dual {H : HermSpace K V} {g : 𝓞 K} (hg : g ≠ 0) {L' L : Submodule (𝓞 K) V}
     {Γ : Submodule (𝓞 K) (V × V)} (hΓ : IsModIso H g L' L Γ) {s y : V} (h : (s, y) ∈ Γ) :
     (algebraMap (𝓞 K) K g)⁻¹ • (s - y) ∈ Formalism.HermitianLatticesTheory.dual H.B.flip (fixLat Γ) := by
@@ -176,6 +177,7 @@ theorem div_mem_dual {H : HermSpace K V} {g : 𝓞 K} (hg : g ≠ 0) {L' L : Sub
   rw [ht, map_mul, ← mul_assoc, inv_mul_cancel₀ h3, one_mul]
 
 
+omit [NumberField K] [IsScalarTower (𝓞 K) K V] in
 theorem graph_le {H : HermSpace K V} {g : 𝓞 K} {L' L : Submodule (𝓞 K) V}
     {Γ₁ Γ₂ : Submodule (𝓞 K) (V × V)} (h1 : IsModIso H g L' L Γ₁) (h2 : IsModIso H g L' L Γ₂)
     (hf : fixLat Γ₁ = fixLat Γ₂) {S : Set V} (hS : L' = fixLat Γ₁ ⊔ Submodule.span (𝓞 K) S)

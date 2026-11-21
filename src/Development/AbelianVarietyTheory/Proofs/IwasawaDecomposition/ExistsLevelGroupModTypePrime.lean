@@ -39,6 +39,7 @@ theorem RedTo.inv {g : Sp E n ≃ₗ[E] Sp E n} {a : GL (Fin n) (𝓞 E ⧸ P.as
   rw [h1, Matrix.mulVec_mulVec, ← Units.val_mul, inv_mul_cancel, Units.val_one, Matrix.one_mulVec]
 
 
+variable (P) in
 def redSub (G : Subgroup (Sp E n ≃ₗ[E] Sp E n)) (hG : G ≤ GLint E n P) : Subgroup (GL (Fin n) (𝓞 E ⧸ P.asIdeal)) where
   carrier := {a | ∃ g ∈ G, RedTo P g a}
   one_mem' := ⟨1, one_mem _, RedTo.one⟩

@@ -116,6 +116,7 @@ theorem matMapSmul {S T : Type} [CommRing S] [CommRing T] (f : S →+* T) {α β
   ext i j; simp
 
 
+open Matrix in
 theorem exists_lattice_basis : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (d m n : ℕ)
     (Y : Matrix (Fin d) (Fin m) (bk.S)), ∃ (c : ℕ) (X X' R : Matrix (Fin d) (Fin d) (bk.S))
     (Q : Matrix (Fin m) (Fin d) (bk.S)) (Q' : Matrix (Fin d) (Fin m) (bk.S)),

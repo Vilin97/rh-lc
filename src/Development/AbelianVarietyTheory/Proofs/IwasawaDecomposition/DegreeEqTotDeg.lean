@@ -68,6 +68,7 @@ theorem jetSet_amb (B : Base) (J : AmbIn B.host) (χ : Submodule (𝓞 B.host.E)
   rfl
 
 
+open Classical in
 @[reducible] def hostWts (P : Pre) : Wts (hostFields P.host) P.Word P.R where
   row := fun τ => RowPar.of (P.hc τ)
   hc := P.hcW

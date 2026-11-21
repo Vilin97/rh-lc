@@ -84,6 +84,7 @@ theorem vertR_le {W : Ideal (MRing ι)} {G H : MRing ι}
 end SmallSectionPointHeight
 
 
+open SmallSectionPointHeight in
 theorem SmallSectionPointHeight.proof (hOrd : SectionOrderAtPoint.Statement) :
     SmallSectionPointHeight.Statement := by
   intro K _ ι _ Ω _ y D A τ s II hII hP hbir hA hτ hs hs0 hsmall

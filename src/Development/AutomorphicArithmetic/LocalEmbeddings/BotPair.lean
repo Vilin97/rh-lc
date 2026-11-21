@@ -54,6 +54,7 @@ theorem localLattice_le_latticeAtPlace {S T : HSp D} {ΛS : Submodule (𝓞 D.ho
     (GlobalTheory.BigDat.one_smul_gen_mem _ _ v hα (hLS s hs) (hLT _ (GlobalTheory.BigDat.smul_mem_scLat_of_mem ha ht)))
 
 
+set_option maxHeartbeats 800000 in
 theorem exists_pure_pair (ε : Bool) (M X : HSp D) {k : ℕ} (hk : k = X.rank) {Xs : Spc D.host.F D.host.E M.rank}
     {Ws : Spc D.host.F D.host.E k} (Mo : Model D.sp.cm.sig Xs Ws) (hJ : Xs.J = GlobalTheory.RealDict.sgE (D := D) ε • M.gram)
     (hJW : Ws.J = D.host.xi0 • (X.gramᵀ).submatrix (finCongr hk) (finCongr hk))

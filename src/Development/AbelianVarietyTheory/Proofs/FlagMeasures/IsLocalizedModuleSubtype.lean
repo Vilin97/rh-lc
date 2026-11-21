@@ -77,6 +77,7 @@ theorem isLocalizedModule_subtype {L : Submodule (𝓞 K) V} (hL : Submodule.IsL
   exists_of_eq h := ⟨1, by rw [Subtype.ext h]⟩
 
 
+omit [StarRing K] [FiniteDimensional K V] in
 theorem exists_extension {L : Submodule (𝓞 K) V} (hL : Submodule.IsLattice K L) (S : Submodule K V)
     (φ : ↥(L ⊓ rs (𝓞 K) S) →ₗ[𝓞 K] 𝓞 K) :
     ∃ ψ : L →ₗ[𝓞 K] 𝓞 K, ∀ x : ↥(L ⊓ rs (𝓞 K) S), ψ ⟨x, x.2.1⟩ = φ x := by

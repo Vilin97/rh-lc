@@ -59,6 +59,7 @@ def lbOf (Fo : FormsIn M (i + 1) hi) (β : Fo.Ch) : Submodule (𝓞 D.host.E) (F
   reL (rankN D (i + 1) hi).symm (Fo.K β).lev.Lb
 
 
+set_option maxHeartbeats 4000000 in
 theorem sameU_of (Fo : FormsIn M (i + 1) hi) (β : Fo.Ch) : SameUlocJ hi (Fo.K β).lev (ulocOf Fo β) := by
   intro v
   exact (Subgroup.map_comap_eq_self_of_surjective (reGL (rankN D (i + 1) hi) _).surjective _).symm
@@ -66,6 +67,7 @@ theorem sameU_of (Fo : FormsIn M (i + 1) hi) (β : Fo.Ch) : SameUlocJ hi (Fo.K �
 end Step
 
 
+set_option maxHeartbeats 1000000 in
 structure StepD {i : ℕ} {hi : i + 1 ≤ D.R.m} (Fo : FormsIn M (i + 1) hi) where
 
   B : GL (Fin (D.sp.X (i + 1)).rank) D.host.E
@@ -120,6 +122,7 @@ theorem lv_empty (j : ℕ) (hj : D.R.m < j) : IsEmpty ((Z.lv Fl ht).comp j) := b
   exact levelsG_empty (X0.g u w hg) Fl D.R.m _ _ _ _ j hj
 
 
+set_option maxHeartbeats 4000000 in
 def loc (i : ℕ) (hi : i + 1 ≤ D.R.m) : LocIn X0 u w hg (Z.lv Fl ht) i (Z.Fo i hi).Ch :=
   haveI := Z.chFin
   haveI : ∀ β, Fintype ((Z.S i hi).chart β).comp := fun β => @Fintype.ofFinite _ ((Z.S i hi).fin β)
@@ -184,6 +187,7 @@ variable {D : D7} {u : D.what₂.Word} {C : ColumnChain D.R D.what₂.Tau (D.hcW
   {M : MemberForms D.what₂.LL D.what₂.embLL D.what₂.places D.what₂.Tau (D.hcW u) C A P} {i : ℕ} {hi : i + 1 ≤ D.R.m}
 
 
+set_option maxHeartbeats 4000000 in
 theorem fin_of (Fo : FormsIn M (i + 1) hi) (β : Fo.Ch) (p : ℕ) :
     Finite (compG D.sp.cm.sig (D.sp.X (i + 1)).gram (ulocOf Fo β) p) := by
   have hcls := Finite.of_surjective _ (Fo.K β).y_bij.2
@@ -211,6 +215,7 @@ section Mem
 variable {D : D7} {u : D.what₂.Word} {eV : (D.mem u).A.vT ≃ PlT D u} {i : ℕ} {hi : i ≤ D.R.m} {K : ClsTied u i hi}
 
 
+set_option maxHeartbeats 2000000 in
 def formsInOne (V : ValTied u eV i hi K) (dt : DetTie K.lev) : FormsIn (D.fm u) i hi where
   T := (D.mem u).A.T
   bad := badG D
@@ -230,6 +235,7 @@ section Mem2
 variable {D : D7} {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i}
 
 
+set_option maxHeartbeats 2000000 in
 def formsInMid (F : FormsTiedSym D u Ch chOf) (i : ℕ) (h1 : 1 ≤ i) (h2 : i + 1 ≤ D.R.m) (dt : ∀ β, DetTie (F.ch i h1 h2 β).lev) :
     FormsIn (D.fm u) i (le_of_succ_m h2) where
   T := (D.mem u).A.T
@@ -314,6 +320,7 @@ def BaseEx (Fo : FormsIn M (i + 1) hi) : Prop :=
 variable {u w hg}
 
 
+set_option maxHeartbeats 1000000 in
 def PsiEx (Fo : FormsIn M (i + 1) hi) (e : D.what₂.LL →+* (D.gat u w hg).Kf) : Prop :=
   ∀ β, ∃ ψ : awayG D.sp.cm.sig (D.sp.X (i + 1)).gram (ulocOf Fo β) (D.what₂.places.resChar w) →* (D.gat u w hg).Oˣ,
     UnitCharacterChartCompatibility hi (Fo.K β).lev e ψ

@@ -74,6 +74,7 @@ end GlobalTheory.JacLineFiltration
 namespace GlobalTheory.JacLineFiltration
 
 
+set_option maxHeartbeats 2000000 in
 theorem jacquet_line_filtration : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k],
     GlobalTheory.Published.GeometricLemmaFiltration → ∀ {n m : Type} [Fintype n] [DecidableEq n] [Fintype m] [DecidableEq m]
     (e : Fin 1 ⊕ m ≃ n) {Y : Type} [AddCommGroup Y] [Module ℂ Y] (τ : Representation ℂ (GL m k) Y),

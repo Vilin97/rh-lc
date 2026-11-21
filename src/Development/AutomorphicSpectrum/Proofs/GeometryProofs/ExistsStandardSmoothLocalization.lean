@@ -19,6 +19,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.Cha
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω] [CharZero Ω]
 
 
+omit [CharZero Ω] in
 theorem segre_update_ratio [DecidableEq K] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0)
     (k : K) (i : ι k) :
     (∏ k', y ⟨k', Function.update c k i k'⟩) / ∏ k', y ⟨k', c k'⟩ = y ⟨k, i⟩ / y ⟨k, c k⟩ := by
@@ -64,6 +65,7 @@ theorem trdeg_blockFnField {y : (Σ k, ι k) → Ω} {e : ℕ} (hA : IsArithVar 
   rw [← h1, ← trdeg_add_eq ℤ ℚ (A := blockFnField y), trdeg_eq_zero (R := ℤ) (A := ℚ), zero_add]
 
 
+open scoped IntermediateField.algebraAdjoinAdjoin in
 theorem exists_away_of_trdeg (S : Set Ω) (hS : S.Finite) {e : ℕ}
     (h : Algebra.trdeg ℚ (IntermediateField.adjoin ℚ S) = e) :
     ∃ s : Algebra.adjoin ℚ S, s ≠ 0 ∧

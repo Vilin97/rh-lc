@@ -100,6 +100,7 @@ theorem integral_mul_mul_eigen (z : Fin n → ℂˣ) {f : GL (Fin n) F → ℂ}
   ring
 
 
+variable (μ) in
 def eigenSubalgebra (z : Fin n → ℂˣ) (f : GL (Fin n) F → ℂ)
     (hf : ∀ g, ∀ k ∈ integralGL F n, f (g * k) = f g) :
     Subalgebra ℂ (SphericalHecke μ (F := F) (n := n)) where
@@ -150,6 +151,7 @@ theorem sum_rho_coeff : ∑ i : Fin n, ((n : ℤ) - 1 - 2 * (i : ℕ)) = 0 := by
   linarith
 
 
+omit [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)] in
 theorem halfModulus_const (c : ℤ) : halfModulus F (fun _ : Fin n => c) = 1 := by
   rw [halfModulus_eq, rhoPair]
   simp only [mul_comm _ c, ← Finset.mul_sum, sum_rho_coeff, mul_zero, neg_zero, zpow_zero]

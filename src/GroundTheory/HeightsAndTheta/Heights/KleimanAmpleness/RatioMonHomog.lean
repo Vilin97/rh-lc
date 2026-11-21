@@ -40,6 +40,7 @@ theorem ResidueGen.aeval_ratioMon {L : Type} [Field L] [Algebra F L] (z : (Σ k,
   simp [ResidueGen.ratioMon, map_prod]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem ResidueGen.ratio_eval {L : Type} [Field L] [Algebra F L] (z : (Σ k, ι k) → L) (β : K → ℤ)
     (c d : ∀ k, ι k) (hc : ∀ k, z ⟨k, c k⟩ ≠ 0) (hd : ∀ k, z ⟨k, d k⟩ ≠ 0) :
     aeval z (ResidueGen.ratioMon (F := F) β c d) / aeval z (ResidueGen.ratioMon (F := F) β d c) =

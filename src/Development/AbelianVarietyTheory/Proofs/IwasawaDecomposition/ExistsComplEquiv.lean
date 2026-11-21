@@ -11,6 +11,7 @@ open NumberField IsDedekindDomain ReciprocityTheory.Aut Formalism.AUTREP Formali
 namespace GlobalTheory.SplitComplHomeo
 
 
+open scoped WithZeroTopology in
 theorem exists_complEquiv : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (s : SplitPlace L),
     ∃ i : s.v.adicCompletion (NumberField.maximalRealSubfield L) ≃+* s.w.adicCompletion L,
       Continuous i ∧ Continuous i.symm ∧ ∀ x : L, i (s.i x) = algebraMap L (s.w.adicCompletion L) x := by

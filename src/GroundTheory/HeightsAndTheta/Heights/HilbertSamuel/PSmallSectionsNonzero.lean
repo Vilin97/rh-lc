@@ -18,6 +18,7 @@ namespace SmallSectionsNonzero
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
 
+omit [Fintype K] in
 theorem isMultiHomog_mul {g h : MRing ι} {a b : K → ℕ} (hg : IsMultiHomog g a)
     (hh : IsMultiHomog h b) : IsMultiHomog (g * h) (a + b) := by
   classical
@@ -27,6 +28,7 @@ theorem isMultiHomog_mul {g h : MRing ι} {a b : K → ℕ} (hg : IsMultiHomog g
   rw [hg m₁ hm₁ k, hh m₂ hm₂ k]
 
 
+omit [Fintype K] in
 theorem isMultiHomog_sub {g h : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d)
     (hh : IsMultiHomog h d) : IsMultiHomog (g - h) d := by
   classical
@@ -36,6 +38,7 @@ theorem isMultiHomog_sub {g h : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d
   · exact hh m hm
 
 
+omit [Fintype K] in
 theorem isMultiHomog_monomial (e : (Σ k, ι k) →₀ ℕ) (r : ℤ) :
     IsMultiHomog (monomial e r : MRing ι) (fun k => ∑ i, e ⟨k, i⟩) := by
   classical
@@ -75,11 +78,13 @@ theorem isMultiHomog_chartMono (c : ∀ k, ι k) (d : K → ℕ) : IsMultiHomog 
   exact hm
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem aeval_chartMono (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (d : K → ℕ) :
     aeval y (chartMono c d) = ∏ k, y ⟨k, c k⟩ ^ d k := by
   simp [chartMono, map_prod]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem eval_chartMono (z : (Σ k, ι k) → ℂ) (c : ∀ k, ι k) (d : K → ℕ) :
     eval z (map (Int.castRingHom ℂ) (chartMono c d)) = ∏ k, z ⟨k, c k⟩ ^ d k := by
   simp [chartMono, map_prod]
@@ -164,12 +169,14 @@ theorem exists_chartForm (y : (Σ k, ι k) → Ω) (a : K → ℤ) (n : ℕ) {s 
     ring
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem one_mem_chartLat (y : (Σ k, ι k) → Ω) (a : K → ℤ) : (1 : Ω) ∈ chartLat y a 0 := by
   intro c _
   simp only [Nat.cast_zero, zero_mul, neg_zero, zpow_zero, Finset.prod_const_one, mul_one]
   exact one_mem _
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem mul_mem_chartLat {y : (Σ k, ι k) → Ω} {a : K → ℤ} {n j : ℕ} {s t : Ω} (hs : s ∈ chartLat y a n)
     (ht : t ∈ chartLat y a j) : s * t ∈ chartLat y a (n + j) := by
   intro c hc
@@ -186,6 +193,7 @@ theorem mul_mem_chartLat {y : (Σ k, ι k) → Ω} {a : K → ℤ} {n j : ℕ} {
   exact mul_mem (hs c hc) (ht c hc)
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem pow_mem_chartLat {y : (Σ k, ι k) → Ω} {a : K → ℤ} {w : Ω} (hw : w ∈ chartLat y a 1) :
     ∀ j : ℕ, w ^ j ∈ chartLat y a j
   | 0 => by rw [pow_zero]; exact one_mem_chartLat y a
@@ -275,6 +283,7 @@ theorem isSmallH_pow {y : (Σ k, ι k) → Ω} {A : HermLine ι} {w : Ω} (hw : 
 end SmallSectionsNonzero
 
 
+open SmallSectionsNonzero in
 theorem SmallSectionsNonzero.proof : SmallSectionsNonzero.Statement := by
   intro K _ ι _ Ω _ y D A P0 har _ hA j
   obtain ⟨q, w, hw, hgen, hsm⟩ := hA.gen

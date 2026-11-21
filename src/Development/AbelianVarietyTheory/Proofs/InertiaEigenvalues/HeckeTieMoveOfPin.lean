@@ -20,6 +20,8 @@ noncomputable section
 namespace GlobalTheory.TwInputs.Move
 
 
+set_option maxHeartbeats 4000000 in
+set_option maxRecDepth 100000 in
 theorem heckeTie_of_same {D D' : D7} {N : NData D.R D.host D.what₂} {N' : NData D'.R D'.host D'.what₂}
     {X : NTw D.R D.host D.what₂ D.LL0 N} {X' : NTw D'.R D'.host D'.what₂ D'.LL0 N'}
     {Y : NExp D.R D.host D.what₂ D.LL0 N X} {Y' : NExp D'.R D'.host D'.what₂ D'.LL0 N' X'}
@@ -76,6 +78,7 @@ theorem heckeTie_move_of_pin : ∀ {D D' : D7} {ι : D.what₂.LL →+* D'.what�
     (rd i j b) (rd' i' (h.cm j) b) hR ht
 
 
+set_option maxHeartbeats 4000000 in
 theorem SameData.mu_levK {D D' : D7} {ι : D.what₂.LL →+* D'.what₂.LL} {e : ↥D'.LL0 ≃+* ↥D.LL0} (h : CopyTw D D' ι e)
     {ρ : Setup D.ntw} {ρ' : Setup D'.ntw} (hs : SameData ρ ρ') (i : D.ntw.Tw) (i' : D'.ntw.Tw) (hi : HEq i i')
     (j : Fin D.R.m) (b : Bool) :

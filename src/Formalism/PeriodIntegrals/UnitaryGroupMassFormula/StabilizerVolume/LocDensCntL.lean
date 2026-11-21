@@ -202,6 +202,7 @@ variable {K : Type} [CommRing K] [Algebra (𝓞 F ⧸ v.asIdeal) K] (r : K)
   (hr : r * r = algebraMap _ K (red v (algebraMap F (Fv F v) A.D0)))
 
 
+include hr in
 def rho : lamC v A hD →+* K where
   toFun z := algebraMap _ K (red v (Xc v A z)) + algebraMap _ K (red v (Yc v A z)) * r
   map_one' := by

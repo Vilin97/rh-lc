@@ -37,6 +37,8 @@ def indLeft [TopologicalSpace G] [IsTopologicalGroup G] {P Q : Subgroup G}
   map_smul' _ _ := rfl
 
 
+open ValuativeRel MeasureTheory in
+variable {F G M V : Type} [Field F] [Group G] [Group M] [AddCommGroup V] [Module F V] in
 theorem _root_.GlobalTheory.SmGL.Placing.smInd_equiv [TopologicalSpace G] [IsTopologicalGroup G]
     {P Q : Subgroup G}
     {σ : Representation F P V} {τ : Representation F Q V} (w : G)
@@ -56,6 +58,8 @@ theorem _root_.GlobalTheory.SmGL.Placing.smInd_equiv [TopologicalSpace G] [IsTop
     exact congrArg f.1.1 (mul_assoc w x g)
 
 
+open ValuativeRel MeasureTheory in
+variable {F G M V : Type} [Field F] [Group G] [Group M] [AddCommGroup V] [Module F V] in
 lemma _root_.GlobalTheory.SmGL.Placing.twKer_le (π : Representation F G V)
     {N N' : Subgroup G} (w : G) (h : ∀ u ∈ N, w * u * w⁻¹ ∈ N') :
     _root_.GlobalTheory.PRep.twKer π N 1 ≤ (_root_.GlobalTheory.PRep.twKer π N' 1).comap (π w) := by
@@ -68,6 +72,8 @@ lemma _root_.GlobalTheory.SmGL.Placing.twKer_le (π : Representation F G V)
   rw [← Module.End.mul_apply (π w⁻¹), ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply]
 
 
+open ValuativeRel MeasureTheory in
+variable {F G M V : Type} [Field F] [Group G] [Group M] [AddCommGroup V] [Module F V] in
 theorem _root_.GlobalTheory.SmGL.Placing.jacquet_equiv (π : Representation F G V) {N N' : Subgroup G}
     {s s' : M →* G}
     (hs : ∀ g, s g ∈ Subgroup.normalizer (N : Set G))
@@ -107,6 +113,9 @@ def Moves {ι : Type} (e e' : ι ≃ n) (w : GL n R) : Prop :=
     (g : Matrix n n R) (e x) (e y)
 
 
+open ValuativeRel MeasureTheory in
+variable {R : Type} [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
+  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 theorem _root_.GlobalTheory.SmGL.Placing.exists_moves {ι : Type} (e e' : ι ≃ n) :
     ∃ w : GL n R, _root_.GlobalTheory.SmGL.Placing.Moves e e' w := by
   let σ : n ≃ n := e.symm.trans e'
@@ -187,6 +196,7 @@ private theorem leviEmb_conj_of_moves (hw : _root_.GlobalTheory.SmGL.Placing.Mov
   simp [_root_.GlobalTheory.SmGL.leviEmb, Matrix.reindex_apply]
 
 
+open ValuativeRel MeasureTheory in
 theorem _root_.GlobalTheory.SmGL.Placing.parInd_jac_placing : ∀ (k : Type) [Field k] [ValuativeRel k]
     [TopologicalSpace k] [IsNonarchimedeanLocalField k] (α n : Type) (m : α → Type) [Fintype α]
     [LinearOrder α] [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n]

@@ -55,6 +55,7 @@ variable {R : Type} [CommRing R] {E : Type} [CommRing E] [Algebra R E] {c : E �
 variable [Invertible (2 : R)]
 
 
+omit [DecidableEq α] in
 theorem rho_diag (ψ : AddChar R ℂ) {ξ : E} {JA : Matrix α α E} {JB : Matrix β β E} {d : Darboux (symp c ξ JA JB) κ}
     {dd : Darboux (symp c ξ JA (dbl JB)) (κ ⊕ κ)} (h : IsDblCoord c ξ JA JB d dd) (z : Matrix α β E)
     (φ : (κ ⊕ κ → R) → ℂ) (u : κ → R) :

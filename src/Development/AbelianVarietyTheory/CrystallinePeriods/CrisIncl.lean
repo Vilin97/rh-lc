@@ -17,6 +17,7 @@ open Formalism
 open scoped Formalism.Per
 
 
+open Reformulated.AutPerF in
 theorem exists_incl (l : ℕ) [Fact l.Prime] : ∃ ι : Per.Bcris l →+* Per.BdR l, Per.IsCrisDR l ι := by
   exact (CrisDeRhamLog.Bridge.CrisIncl.exists_incl l).imp fun _ h => ⟨h.1, h.2⟩
 

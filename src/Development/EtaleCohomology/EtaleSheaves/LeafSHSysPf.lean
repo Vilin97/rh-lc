@@ -70,6 +70,7 @@ theorem monic_rep {J : Type} [SmallCategory J] [IsFiltered J] (D : J ⥤ CommRin
   exact ⟨j, Q, hQ, hm⟩
 
 
+open Polynomial in
 theorem root_of_cof {J : Type} [SmallCategory J] [IsFiltered J] (D : J ⥤ CommRingCat.{0}) (c : Cocone D)
     {Ω : Type} [Field Ω] (ω : c.pt →+* Ω)
     (H : ∀ (j : J) (E : Type) (_ : CommRing E) (_ : Algebra (D.obj j) E) (_ : Algebra.Etale (D.obj j) E) (ψ : E →+* Ω),

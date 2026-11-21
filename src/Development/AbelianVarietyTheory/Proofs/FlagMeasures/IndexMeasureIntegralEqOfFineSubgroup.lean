@@ -73,6 +73,8 @@ private lemma finsum_out_div_relIndex_eq_of_le {W : Type} [AddCommGroup W] {A B 
     Nat.cast_mul, mul_div_mul_left _ _ (Nat.cast_ne_zero.mpr hidx)]
 
 
+open scoped Pointwise Classical in
+open Function in
 theorem _root_.GlobalTheory.IdxInt.cint_eq_of_fine : ∀ {W : Type} [AddCommGroup W] (A B : AddSubgroup W) (φ : W → ℂ),
     _root_.GlobalTheory.IdxInt.Fine A φ B → _root_.GlobalTheory.IdxInt.cint A φ = (∑ᶠ c : W ⧸ B, φ c.out) / (B.relIndex A : ℂ) := by
   intro W _ A B φ hB

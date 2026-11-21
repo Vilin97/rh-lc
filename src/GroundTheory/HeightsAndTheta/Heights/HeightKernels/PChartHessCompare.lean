@@ -229,6 +229,7 @@ end Chart
 end ChartHessianComparison
 
 
+open ChartHessianComparison in
 theorem ChartHessCompare.proof (hCmp : HermFormCompare.Statement) : ChartHessCompare.Statement := by
   intro e M N hM hN
   obtain ⟨B, hMB, hB⟩ := ChartDensityIntegrableAlt.exists_conjTranspose_mul_self hM

@@ -170,6 +170,7 @@ section Separating
 open scoped IntermediateField.algebraAdjoinAdjoin
 
 
+omit [Algebra k K] in
 theorem isPrincipalIdealRing_adjoin [Algebra k K] (t : K) :
     IsPrincipalIdealRing (Algebra.adjoin k {t}) := by
   refine IsPrincipalIdealRing.of_surjective

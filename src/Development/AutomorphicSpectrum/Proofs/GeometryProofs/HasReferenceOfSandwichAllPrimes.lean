@@ -149,6 +149,7 @@ theorem genUnit_some (o : RootOrigin Y S M Fx) (o₀ : RootOrigin Y S₀ R Fx) (
     rw [o.g_flag, o₀.g_flag, ← hi, dualMap_comp, spMap_comp, Category.assoc]
 
 
+open GroundTheory.Heights₂.Heights.Model in
 theorem sum_bound {T : Top.RootTower (CMType H) (D.p + D.q)} [DecidableEq (CMType H)] (o : TowerOrigin Y T) :
     ∃ C : ℝ, ∀ B : ℕ, 2 ≤ B → ∑ p ∈ o.S B, ((if p = 2 then 2 else 1 / ((p : ℝ) - 1)) +
       2 * padicValInt p (discr E)) * Real.log p ≤ C * Real.log B := by

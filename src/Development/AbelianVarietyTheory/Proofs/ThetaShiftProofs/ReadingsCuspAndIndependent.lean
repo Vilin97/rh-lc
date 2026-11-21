@@ -15,6 +15,8 @@ open NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G.Geo.Tor R
 namespace GlobalTheory.ArcRead
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem readings_cusp_and_independent :
     ∀ (D : D7) (T : Top D) (h : LawsP T) (j : ℕ), InR D j → TieReadSt h j := by
   intro D T h j hj

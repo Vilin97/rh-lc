@@ -201,6 +201,7 @@ theorem glue_tan' {n : ℕ} (s : Fin n → S) (hs : Ideal.span (Set.range s) = �
     Category.assoc, Category.assoc, hk]
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem tan_ext_cover {n : ℕ} (s : Fin n → S) (hs : Ideal.span (Set.range s) = ⊤)
     {v₁ v₂ : sp (R₀ := S) (DualNumber S) ⟶ G}
     (h : ∀ k, spMap (dualMapS (Algebra.ofId S (Localization.Away (s k)))) ≫ v₁ =

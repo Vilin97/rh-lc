@@ -58,6 +58,7 @@ private lemma degW_blattner_le_of_sign_lemma {p q : ℕ} (M : _root_.Formalism.B
         simp [shiftNu_add_right]
 
 
+open MvPolynomial in
 theorem _root_.GlobalTheory.FlowLemma.degW_blattner_le (p q : ℕ) (M : _root_.Formalism.BasicNotions.TH.GKMod p q) (lam : _root_.Formalism.BasicNotions.TH.Ix p q → ℚ)
     (c θ : ℚ)
     (hC : _root_.GlobalTheory.FockAlg.ConeTypes M lam)

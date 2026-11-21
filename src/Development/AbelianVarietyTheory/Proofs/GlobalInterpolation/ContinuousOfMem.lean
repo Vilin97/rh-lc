@@ -112,6 +112,7 @@ theorem cEmb_inv (τ : E →+* ℂ) (x : UA E n) (i j : Fin n) :
   exact congrArg (fun M : Matrix (Fin n) (Fin n) (Ad E) => coord τ (pInf E (M i j))) h2
 
 
+variable (E n) in
 abbrev coeffs : Set (infU E n → ℂ) :=
   {f | ∃ (τ : E →+* ℂ) (i : Fin n) (j : Fin n), f = fun x : infU E n => (cEmb τ x.val).val i j}
 

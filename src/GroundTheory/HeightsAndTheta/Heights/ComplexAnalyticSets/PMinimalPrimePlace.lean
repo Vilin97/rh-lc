@@ -228,6 +228,7 @@ theorem exists_maximal_ord_eq [IsNoetherianRing A] [IsReduced A] [IsDomain B] (�
 end MinimalPrimePlace
 
 
+open MinimalPrimePlace in
 theorem MinimalPrimePlace.proof : MinimalPrimePlace.Statement := by
   intro n I J q hI hJ hJq P'
   have hle : I.map (algebraMap (MvPolynomial (Fin n) ℂ) (Localization.AtPrime (RingHom.ker (eval q)))) ≤

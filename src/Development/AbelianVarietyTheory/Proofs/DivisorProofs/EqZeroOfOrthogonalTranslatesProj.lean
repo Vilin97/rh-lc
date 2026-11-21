@@ -19,6 +19,7 @@ variable {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℝ V] [FiniteDime
   {ρ : V → H →L[ℂ] H}
 
 
+omit [FiniteDimensional ℝ V] [MeasurableSpace V] [BorelSpace V] [CompleteSpace H] in
 theorem IsHeis.inner_left (hJ : ∀ x, J (J x) = -x) (h : IsHeis (omJ J) ρ) (u : V) (x y : H) :
     ⟪ρ u x, y⟫_ℂ = ⟪x, ρ (-u) y⟫_ℂ := by
   have h0 : omJ J u (-u) = 0 := by

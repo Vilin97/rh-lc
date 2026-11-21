@@ -66,6 +66,7 @@ private theorem complex_smul_of_eq (c : ℂ) (a : A) :
      simp [TensorProduct.smul_tmul'])
 
 
+variable {σ} in
 @[elab_as_elim] theorem induction {P : CxExt σ A → Prop} (x : CxExt σ A)
     (smul : ∀ (c : ℂ) (a : A), P (c • of σ a)) (add : ∀ x y, P x → P y → P (x + y)) : P x := by
   letI := σ.toAlgebra
@@ -79,6 +80,7 @@ private theorem complex_smul_of_eq (c : ℂ) (a : A) :
     exact add x y hx hy
 
 
+variable {σ} in
 def lift {B : Type} [CommRing B] [Algebra ℂ B] (φ : A →+* B)
     (h : ∀ a, φ (algebraMap F A a) = algebraMap ℂ B (σ a)) : CxExt σ A →ₐ[ℂ] B :=
   letI := σ.toAlgebra
@@ -88,6 +90,7 @@ def lift {B : Type} [CommRing B] [Algebra ℂ B] (φ : A →+* B)
     fun _ _ => Commute.all _ _
 
 
+variable {σ} in
 @[simp] theorem lift_of {B : Type} [CommRing B] [Algebra ℂ B] (φ : A →+* B)
     (h : ∀ a, φ (algebraMap F A a) = algebraMap ℂ B (σ a)) (a : A) : lift φ h (of σ a) = φ a := by
   first

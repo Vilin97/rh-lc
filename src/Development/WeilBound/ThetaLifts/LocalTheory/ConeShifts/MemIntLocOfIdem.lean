@@ -62,6 +62,7 @@ theorem mem_latW_loc (W : Spc F E n) (y : Fin n → AE F E) :
   rw [map_sub, comp_sgE]; exact sub_self _
 
 
+variable (v) in
 def Pres (X : Spc F E n) : Subring (Matrix (Fin n) (Fin n) (AE F E)) where
   carrier := {M | ∀ y ∈ latW X v, M *ᵥ y ∈ latW X v}
   one_mem' y hy := by rwa [Matrix.one_mulVec]
@@ -71,6 +72,7 @@ def Pres (X : Spc F E n) : Subring (Matrix (Fin n) (Fin n) (AE F E)) where
   neg_mem' ha y hy := by rw [Matrix.neg_mulVec]; exact neg_mem (ha y hy)
 
 
+variable (v) in
 def fr (a : GL (Fin n) (Fv F v ⊗[F] E)) : Matrix (Fin n) (Fin n) (AE F E) →+* Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E) where
   toFun M := (a⁻¹).1 * M.map (compFin F E v) * a.1
   map_one' := by rw [Matrix.map_one _ (map_zero _) (map_one _), Matrix.mul_one, Units.inv_mul]

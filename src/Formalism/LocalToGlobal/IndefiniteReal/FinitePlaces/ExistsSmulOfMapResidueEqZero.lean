@@ -502,6 +502,7 @@ theorem isType_dgl {ϖ : O} (hϖ : Irreducible ϖ) {n e : ℕ} (he : e ≤ n) :
     simp
 
 
+open Classical in
 theorem card_filter_reps {ϖ : O} (hϖ : Irreducible ϖ) {n e : ℕ} {γ : GL (Fin n) L} (hγ : IsType O ϖ e γ)
     {R : Finset (GL (Fin n) L)} (hR : IsReps (Formalism.UG.GLint (Fin n) O) γ R)
     (P : Submodule (IsLocalRing.ResidueField O) (Fin n → IsLocalRing.ResidueField O) → Prop) :

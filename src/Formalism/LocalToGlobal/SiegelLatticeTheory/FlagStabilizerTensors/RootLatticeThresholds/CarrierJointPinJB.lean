@@ -294,6 +294,7 @@ theorem measConj_holds : MeasConj X := by
     exact (lintegral_mul_left_eq_self f h⁻¹).symm
 
 
+open Classical in
 theorem tens_cancel (w0 : D.what₂.Word) (v : InfinitePlace X.B.I.F) (a b : ∀ w, X.Vloc w0 w)
     (hab : ∀ w, w ≠ v → a w = b w) (hK : (∏ w ∈ Finset.univ.erase v, inner ℂ (a w) (a w)) ≠ 0)
     (h : X.tensU w0 a = X.tensU w0 b) : a v = b v := by
@@ -321,6 +322,7 @@ theorem tens_cancel (w0 : D.what₂.Word) (v : InfinitePlace X.B.I.F) (a b : ∀
   exact sub_eq_zero.1 (inner_self_eq_zero.1 hz)
 
 
+open Classical in
 theorem wlocEqv_holds : WlocEqv X := by
   intro w0 v s hs x
   obtain ⟨x0, hx0⟩ := Formalism.L2.SG.Pf.Carrier.EnergyPfLoc.wu_ne X w0

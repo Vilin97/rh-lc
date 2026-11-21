@@ -48,6 +48,7 @@ def BlockSemisimple {a : ℕ} (ρ : Γ →* GL (Fin a) O) (χ : ℕ → (Γ →*
   (blockRep ρ χ t).IsSemisimpleRepresentation
 
 
+omit [IsDomain O] in
 def LatticeContinuous [TopologicalSpace Γ] [TopologicalSpace O] {a : ℕ}
     (ρ : Γ →* GL (Fin a) O) : Prop :=
   Continuous fun g => ((ρ g : GL (Fin a) O) : Matrix (Fin a) (Fin a) O)

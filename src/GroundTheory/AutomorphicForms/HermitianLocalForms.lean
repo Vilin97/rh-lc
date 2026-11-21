@@ -106,6 +106,7 @@ theorem tensorQuadEquiv_tmul (r : R) (x : E) :
   simp [tensorQuadEquiv, quadTensorEquiv_tmul]
 
 
+variable {ψ} in
 theorem tensorQuadEquiv_conjBase (hψ : ∀ x, ψ (conj K E x) = star (ψ x)) (z : R ⊗[K] E) :
     tensorQuadEquiv ψ R (conjBase K E R z) = star (tensorQuadEquiv ψ R z) := by
   induction z using TensorProduct.induction_on with

@@ -103,6 +103,7 @@ theorem real_compare {θ : InfFam D} (hθ : IsInfFam θ) (V : HSp D) (n : ℕ) (
     _ ≤ _ := by nlinarith [norm_nonneg u]
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem finite_compare (V : HSp D) (n : ℕ)
     (g : (Fin V.rank → Fin n → Af D.host.F ⊗[D.host.F] D.host.E) → ℂ)
     (hg : g ∈ GlobalTheory.WeilM.SB (Fin V.rank → Fin n → Af D.host.F ⊗[D.host.F] D.host.E))

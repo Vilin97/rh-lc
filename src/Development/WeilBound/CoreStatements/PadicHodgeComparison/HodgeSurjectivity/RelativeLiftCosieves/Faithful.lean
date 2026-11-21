@@ -96,6 +96,7 @@ end CrystallineSemistableComparison.Onto.EquivalenceOnIso
 namespace CrystallineSemistableComparison.Onto
 
 
+open EquivalenceOnIso in
 theorem onIso_pf : OnIso := by
   intro K _ W Z q i _ U U' h hU a n
   have := faithful h a

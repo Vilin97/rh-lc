@@ -17,6 +17,7 @@ variable {X : Type} [AddCommGroup X] [TopologicalSpace X] [IsTopologicalAddGroup
   [MeasurableSpace X] [OpensMeasurableSpace X]
 
 
+omit [MeasurableSpace X] [OpensMeasurableSpace X] in
 def thick (S : Set X) (Λ : AddSubgroup X) : Set X := {x | ∃ s ∈ S, x - s ∈ Λ}
 
 omit [MeasurableSpace X] [OpensMeasurableSpace X] in
@@ -67,6 +68,7 @@ theorem measure_thick_eq (m1 m2 : Measure X) (Λ : AddSubgroup X) (hΛ : IsOpen 
     | exact fun c _ => (hfib c).2
 
 
+omit [MeasurableSpace X] [OpensMeasurableSpace X] in
 theorem iInter_thick (S : Set X) (hSc : IsClosed S) (Λ : ℕ → AddSubgroup X)
     (hb : ∀ N ∈ 𝓝 (0 : X), ∃ n, (Λ n : Set X) ⊆ N) : ⋂ n, thick S (Λ n) = S := by
   ext x

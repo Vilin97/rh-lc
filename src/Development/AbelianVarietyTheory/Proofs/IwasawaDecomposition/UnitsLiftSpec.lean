@@ -141,6 +141,7 @@ section Build
 variable (B0 : LocBase0 D.host D.what₂) (C : NChoice D)
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def mkX (hs : HeckeStd0 B0) (hd : FinDimV B0) (hL : MtLoc B0 (partCompl_of hs hd))
     (hMF : ∀ i, Module.Free (OOf B0 i) (MtSub B0 (partCompl_of hs hd) i))
     (hMFin : ∀ i, Module.Finite (OOf B0 i) (MtSub B0 (partCompl_of hs hd) i)) (hTL : ∀ i, IsLocalRing (TOf B0 i))
@@ -232,6 +233,7 @@ variable (B0 : LocBase0 D.host D.what₂) (C : NChoice D) (hs : HeckeStd0 B0) (h
   (hI : OsInt B0) (hBF : ∀ i, Module.Free (OOf B0 i) (BjC B0 hI i))
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def mkT
     (hTwE : ∀ (a : LocT B0) (x : D.LL0) (y : D.ntw.O0 (C.twI (wOf B0 a))),
       algebraMap (D.ntw.O0 (C.twI (wOf B0 a))) (FractionRing (D.ntw.O0 (C.twI (wOf B0 a)))) y =

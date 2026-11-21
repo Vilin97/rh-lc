@@ -36,6 +36,7 @@ theorem free_of_fg {V : Type*} [AddCommGroup V] [Module ℝ V] {L : Submodule �
   infer_instance
 
 
+open Classical in
 noncomputable def spanCovol (L : Submodule ℤ E) : ℝ :=
   letI : Decidable L.FG := Classical.propDecidable _
   if h : L.FG then

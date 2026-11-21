@@ -23,6 +23,7 @@ theorem mem_Dinv {ρ : Representation L G V} {x : V ⊗[F] B} :
   simp [Dinv, Submodule.mem_iInf, sub_eq_zero]
 
 
+variable (L V) in
 def onPer : End L (V ⊗[F] B) := AlgebraTensorModule.map LinearMap.id ψ
 
 def admitted (e : ℕ) (ρ : Representation L G V) : Prop := finrank L (Dinv σ ρ) = e * finrank L V
@@ -35,6 +36,7 @@ def NilD (ρ : Representation L G V) (Q : Polynomial L) : Prop :=
   ∃ N : ℕ, ∀ x ∈ Dinv σ ρ, (Polynomial.aeval (onPer ψ L V) Q ^ N) x = 0
 
 
+variable (L) in
 def Bound (e : ℕ) : Prop :=
   ∀ (U : Type) [AddCommGroup U] [Module L U] [Module F U] [IsScalarTower F L U] [Module.Finite L U] (ρ : Representation L G U),
     Module.Finite L (Dinv σ ρ) ∧ finrank L (Dinv σ ρ) ≤ e * finrank L U

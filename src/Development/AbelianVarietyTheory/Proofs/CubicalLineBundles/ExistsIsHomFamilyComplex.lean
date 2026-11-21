@@ -232,6 +232,7 @@ theorem exists_isHomFamily_complex (hT : ThetaUnifAV) (hW : Out.WeilSt) {D : Dat
 end PureType
 
 
+open PureType in
 theorem cmPoint_complex (hT : ThetaUnifAV) (hW : Out.WeilSt)
     (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l)
     (g : ℕ) (ty : Fin g → (E →+* ℂ)) (FU : FamilyUnif Xo (algebraMap (KA l) ℂ) ty) (i : Fin FU.n)

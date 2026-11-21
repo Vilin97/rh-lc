@@ -1115,6 +1115,7 @@ theorem resS_sigS_selector (hc : CMData F E) {T : Finset (Pl E)} {c : intAf F E}
   · exact fun QQ hQ => (resS_sigS_eq_zero_iff hc (isConjPl_conjPl QQ).symm c).2 (hc2 _ hQ)
 
 
+set_option maxHeartbeats 800000 in
 theorem exists_unitary_lift (hc : CMData F E) (G : GL (Fin n) (intAf F E))
     (hGh : cT (sigS hc) (G : Matrix (Fin n) (Fin n) (intAf F E)) = (G : Matrix (Fin n) (Fin n) (intAf F E)))
     (T : Finset (Pl E)) (hT : IsSplitSet T) (y : ∀ PP : ↥T, GL (Fin n) (kP PP.1)) :

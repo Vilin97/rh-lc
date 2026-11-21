@@ -20,6 +20,7 @@ section Index
 variable {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
 
+omit [NumberField K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 theorem ιMulti_comb {m : ℕ} (b : Fin m → V) (c : Matrix (Fin m) (Fin m) K) :
     exteriorPower.ιMulti K m (fun i => ∑ j, c i j • b j) = c.det • exteriorPower.ιMulti K m b := by
   have h : (exteriorPower.ιMulti K m).compLinearMap (Fintype.linearCombination K b) =
@@ -38,6 +39,7 @@ theorem ιMulti_comb {m : ℕ} (b : Fin m → V) (c : Matrix (Fin m) (Fin m) K) 
   exact AlternatingMap.congr_fun h c
 
 
+omit [NumberField K] in
 theorem ιMulti_comb_int {m : ℕ} (b : Fin m → V) (c : Matrix (Fin m) (Fin m) (𝓞 K)) :
     exteriorPower.ιMulti K m (fun i => ∑ j, c i j • b j) = algebraMap (𝓞 K) K c.det • exteriorPower.ιMulti K m b := by
   have := ιMulti_comb b (c.map (algebraMap (𝓞 K) K))
@@ -48,6 +50,7 @@ theorem ιMulti_comb_int {m : ℕ} (b : Fin m → V) (c : Matrix (Fin m) (Fin m)
   exact Finset.sum_congr rfl fun j _ => (algebraMap_smul K _ _).symm
 
 
+omit [NumberField K] in
 theorem detSpan_span {m : ℕ} (b : Fin m → V) :
     detSpan K m (Submodule.span (𝓞 K) (Set.range b)) = Submodule.span (𝓞 K) {exteriorPower.ιMulti K m b} := by
   refine le_antisymm (Submodule.span_le.2 ?_) (Submodule.span_mono ?_)

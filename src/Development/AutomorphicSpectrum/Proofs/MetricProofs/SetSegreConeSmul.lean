@@ -167,6 +167,7 @@ theorem chart_eq (S : Set ((Σ k, ι k) → ℂ)) {m e : ℕ} (σ : Fin m ≃ ((
     exact ⟨z, hz, (hl z).symm.trans h1, rfl⟩
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem segChart_eq (S : Set ((Σ k, ι k) → ℂ)) {m : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (a : Fin m) :
     setSegChartSet S σ (σ a) = {x | x ∈ setSegreCone S σ ∧ eval x (linForm (Pi.single a (1 : ℂ))) = 1} := by
   ext x

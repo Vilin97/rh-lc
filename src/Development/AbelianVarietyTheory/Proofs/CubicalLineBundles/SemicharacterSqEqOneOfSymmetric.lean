@@ -207,6 +207,7 @@ lemma neg_eq (hv : ValueRules) (hL : L.IsLB) (hs : Out.Sym A L)
 end SymmetricSemicharacter
 
 
+open SymmetricSemicharacter in
 theorem semicharacter_sq_eq_one_of_symmetric :
     ∀ (P : Out.PolAV (Sp ℂ)) (u : HolUnif P.A P.L P.g) (Hm : Matrix (Fin P.g) (Fin P.g) ℂ)
       (χ : u.Λ → ℂ), u.IsAH Hm χ → ∀ l, χ l ^ 2 = 1 := by

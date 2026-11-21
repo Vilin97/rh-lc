@@ -106,6 +106,7 @@ theorem swd_nb (hΨ : IsType Ψ) (hn : Even n) (hN : 4 * N < n) {M R q : ℕ} {P
     ((he Λ hΛ).2 fun Λ => thH Ψ (ψ Λ) Z 0 0 - eis Ψ (ψ Λ) Z 0 0).symm
 
 
+omit [NumberField E] [IsCMField E] in
 theorem detIm_pos {Z : CM Ψ N N} (hZ : Z ∈ Hn Ψ N) : 0 < detIm Z :=
   Finset.prod_pos fun τ _ => (Complex.pos_iff.1 (hZ τ).det_pos).1
 
@@ -242,6 +243,7 @@ theorem bound_step (hΨ : IsType Ψ) {k : ℕ} (hN0 : 0 < N) (hN : 4 * N < k + k
 end GlobalTheory.SW.Step
 
 
+open GlobalTheory.SW.Step in
 theorem GlobalTheory.SW.swAt_succ : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)), IsType Ψ → ∀ (n N : ℕ), Even n → 4 * (N + 1) < n → SWAt Ψ n N → SWAt Ψ n (N + 1) := by
   intro E _ _ _ Ψ hΨ n N hn hN hSW M R φ h Z hZ
   obtain ⟨C, hC⟩ := GlobalTheory.T.twisted_siegelWeil_difference_bounded E Ψ hΨ n N hn hN hSW M R φ h

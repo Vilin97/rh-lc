@@ -54,6 +54,10 @@ theorem _root_.GlobalTheory.OrbitUnfold.setLIntegral_pull (g : H) (f : H → ℝ
     (measurableEmbedding_mulLeft g) f 𝓕
 
 
+open MeasureTheory Set in
+open scoped ENNReal Pointwise in
+variable {H : Type} [Group H] [MeasurableSpace H] [MeasurableMul H] {ν : Measure H}
+  [ν.IsMulLeftInvariant] {Γ : Subgroup H} {Y : Type} [MulAction Γ Y] {𝓕 : Set H} in
 theorem _root_.GlobalTheory.OrbitUnfold.isFundamentalDomain_iUnion_pull (hF : IsFundamentalDomain Γ 𝓕 ν)
     (y₀ : Y) {O : Set Y}
     [Countable O] (hO : ∀ γ : Γ, γ • y₀ ∈ O) (σ : O → Γ) (hσ : ∀ a : O, σ a • y₀ = a) :
@@ -99,6 +103,10 @@ private theorem selfEquivSigmaOrbits_symm_mk {G X : Type} [Group G] [MulAction G
     (MulAction.selfEquivSigmaOrbits G X).symm ⟨ω, x⟩ = x := rfl
 
 
+open MeasureTheory Set in
+open scoped ENNReal Pointwise in
+variable {H : Type} [Group H] [MeasurableSpace H] [MeasurableMul H] {ν : Measure H}
+  [ν.IsMulLeftInvariant] {Γ : Subgroup H} {Y : Type} [MulAction Γ Y] {𝓕 : Set H} in
 theorem _root_.GlobalTheory.OrbitUnfold.tsum_setIntegral_eq_zero :
     ∀ (H : Type) [Group H] [MeasurableSpace H] [MeasurableMul H] (ν : Measure H)
       [ν.IsMulLeftInvariant] (Γ : Subgroup H) [Countable Γ] (Y : Type) [Countable Y]

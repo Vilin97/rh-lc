@@ -266,6 +266,7 @@ theorem tdiag_mem_Tor (w : Pl E) (ϖ : (w.adicCompletion E)ˣ) (n : ℕ) (y : Fi
   diagT_mem_Tor n _
 
 
+omit [IsCMField E] in
 theorem unif_val_lt_one (w : Pl E) (ϖ : (w.adicCompletion E)ˣ) (hϖ : ordL (ϖ : w.adicCompletion E) = 1) :
     Valued.v (ϖ : w.adicCompletion E) < 1 := by
   have h0 : Valued.v (ϖ : w.adicCompletion E) ≠ 0 := by simp

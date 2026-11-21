@@ -16,6 +16,7 @@ variable {F : Type u} [Field F] {E E' : WeierstrassCurve F} [E.IsElliptic] [E'.I
   [hp : Fact p.Prime] [CharP F p]
 
 
+omit [E.IsElliptic] in
 theorem exists_frobeniusPoint_eq {L : Type*} [Field L] [Algebra F L] [CharP L p] [PerfectRing L p]
     (P : ((frobeniusTwist E p).baseChange L).toAffine.Point) :
     ∃ R : (E.baseChange L).toAffine.Point, frobeniusPoint E p L R = P := by
@@ -102,6 +103,7 @@ theorem exists_eq_comp_frobeniusIsogeny (φ : Isogeny E E')
   exact ⟨ψ, hψ.symm, hd, by rw [hd, Nat.mul_div_cancel _ hp.out.pos]⟩
 
 
+omit [E.IsElliptic] [CharP F p] [PerfectRing F p] hp in
 theorem Isogeny.comap_bijective_of_degree_eq_one {E₁ E₂ : WeierstrassCurve F} [E₁.IsElliptic]
     [E₂.IsElliptic] (ψ : Isogeny E₁ E₂) (h : ψ.degree = 1) : Function.Bijective ψ.comap := by
   refine ⟨ψ.comap.toRingHom.injective, fun z => ?_⟩

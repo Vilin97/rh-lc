@@ -461,6 +461,7 @@ theorem exists_matrix_lift {R T : Type} [CommRing R] [CommRing T] {n : ℕ} (ψ 
   exact (Matrix.isUnits_det_units k).ne_zero
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_local_lift {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)}
     {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)} {N : ℕ} (hB : IsBaseFrame V β Λ N)
     {P : Pl D.host.E} {e : Formalism.L2.Theta.AE D} (he : IsIdemAt e P) (k : GL (Fin V.rank) (kP P)) :

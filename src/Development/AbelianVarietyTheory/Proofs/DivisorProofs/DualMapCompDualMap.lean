@@ -348,6 +348,7 @@ theorem fibMor (h : IsGrpPullback A A' (DeRham.epsRed K) i) : GrpMor (dp0 (DualN
   (by rw [Category.comp_id, Category.id_comp] <;> rfl) h
 
 
+omit [GrpObj A] in
 @[reducible] def Pt.eps (P : GPt A) : Thick (epsDP K) (A.hom ≫ DeRham.epsRed K) where
   B := DualNumber P.B
   alg := (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K P.B)).toAlgebra

@@ -24,6 +24,7 @@ variable {G : Type} [Group G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field 
     (ρ : Representation LL G V)
 
 
+include PD in
 theorem one_ne_zero_BdR : (1 : BdR) ≠ 0 := by
   intro h
   apply PD.not_mem_filtration_two
@@ -32,6 +33,7 @@ theorem one_ne_zero_BdR : (1 : BdR) ≠ 0 := by
   exact Submodule.zero_mem _
 
 
+include PD in
 theorem eq_zero_of_tmul_one (v : V) (hv : v ⊗ₜ[Qp] (1 : BdR) = 0) : v = 0 := by
   obtain ⟨f, hf⟩ := Module.Projective.exists_dual_eq_one Qp (one_ne_zero_BdR PD)
   have h := congrArg (fun x => TensorProduct.rid Qp V (LinearMap.lTensor V f x)) hv

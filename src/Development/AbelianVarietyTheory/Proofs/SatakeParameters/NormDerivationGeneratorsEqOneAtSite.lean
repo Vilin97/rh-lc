@@ -13,6 +13,7 @@ open Formalism.BasicNotions NumberField IsDedekindDomain Formalism.MainNotions.G
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
+open GlobalTheory.EigenGenerator in
 theorem GlobalTheory.TwV.DelB.dgen_unit : AllSites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [Fact (D.what₂.places.resChar w).Prime] {std t J} S => ∀ ι : ℂ →+* ℂ_[D.what₂.places.resChar w], (∀ z : TaylorLogMetric.Qbar, ι z = S.lam z) → ∀ τ, ‖ι ((t.O u μ).dgen τ)‖ = 1) := by
   intro D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X _ std t J S ι hι τ
   have h5 := hg.2.1

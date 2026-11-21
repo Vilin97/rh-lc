@@ -33,6 +33,7 @@ theorem symplOmega_eq_sum {R : Type*} [CommRing R] {l : Type*} [Fintype l] [Deci
 end PSymplCons
 
 
+open PSymplCons in
 theorem SymplCons.proof : SymplCons.Statement := by
   intro R _ n
   refine ⟨fun u => ?_, fun p q p' q' w w' => ?_⟩

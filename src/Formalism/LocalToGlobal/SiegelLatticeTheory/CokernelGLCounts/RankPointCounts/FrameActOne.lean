@@ -30,6 +30,7 @@ theorem sgnP_mem (p : PlF D) (b : Fin (D.R.rS + 1)) : TermLoc.sgnP D p b ∈ (D.
   rw [pow_two, TermLoc.localSign_sq, sub_self]
 
 
+set_option maxHeartbeats 1000000 in
 theorem btAdm : BtAdm Zd u u' F0 what₂ := by
   intro hC γ Z F'₂ φ φ' Λ₂ hs
   obtain ⟨_, _, ⟨hlat, hloc⟩, _⟩ := hs

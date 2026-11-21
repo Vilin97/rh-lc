@@ -10,6 +10,7 @@ open MeasureTheory NumberField Matrix Finset Formalism.MainNotions.S GlobalTheor
 namespace GlobalTheory.LeviIso
 
 
+open scoped MatrixOrder ComplexOrder in
 theorem exists_hermitian_sqrt_mul_mul_eq {n : ℕ} (J C : Matrix (Fin n) (Fin n) ℂ)
     (hJ : J * J = 1) (hJh : Jᴴ = J) (hC : C.det ≠ 0)
     (h : (Cᴴ * C) * J * (Cᴴ * C) = J) :

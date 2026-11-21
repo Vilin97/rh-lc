@@ -15,6 +15,7 @@ open UpperTheory.Gal.Int.Core
 open scoped Pointwise
 
 
+open GlobalTheory.RealGal.AttConj in
 theorem UpperTheory.Gal.Int.Core.oneConj_holds :
     OneConj := by
   intro F Ω _ _ _ _ _ K _ _ _ _ _ _ l _ ι a sat r g c hc hsurj h

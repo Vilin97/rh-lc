@@ -100,6 +100,7 @@ theorem exists_norm_eq (hF : IsFixF K F) (hs : h.IsSymm) (S : VecSplit h h')
   exact ⟨t, by rw [← hy, ← ht]; rfl⟩
 
 
+open Classical in
 theorem sum_genus (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) (hs : h.IsSymm)
     (hd : IsTotPosDef h) (S : VecSplit h h') {L : Submodule (𝓞 K) V}
     (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {c : ℝ}

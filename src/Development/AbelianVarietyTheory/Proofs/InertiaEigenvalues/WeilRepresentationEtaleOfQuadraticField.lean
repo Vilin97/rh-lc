@@ -36,6 +36,7 @@ theorem weilAt_of_isField : WeilField → ∀ (F E : Type) [NontriviallyNormedFi
 end GlobalTheory.JR.WeilEtProof
 
 
+open GlobalTheory.JR.WeilEtProof in
 theorem GlobalTheory.JR.weilEt_of_weilField : WeilField → WeilEt := by
   intro hF F E _ _ _ _ _ A ψ hψ x μ hμ
   suffices h : ∀ (n : ℕ) (A : Et F E), Module.finrank F A.K = n → WeilAt A from h _ A rfl ψ hψ x μ hμ

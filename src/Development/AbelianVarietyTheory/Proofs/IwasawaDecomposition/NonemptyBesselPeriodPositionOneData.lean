@@ -334,6 +334,7 @@ theorem exists_list (S : AE D → Prop) (N : ℕ) (hN : N ≠ 0)
 end Places
 
 
+open Formalism.L2.Col in
 theorem nonempty_besselPeriodPositionOneData : ∀ D : D7, Nonempty (Pos1 D) := by
   intro D
   choose π hπ1 hπ2 hπ3 using exists_levelGen D

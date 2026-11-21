@@ -56,6 +56,7 @@ theorem hasCompactSupport_pureA {f : (κ → mixedEmbedding.mixedSpace F) → �
   exact Prod.ext ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm_apply_apply _) rfl
 
 
+variable (F κ) in
 theorem exists_bump : ∃ f : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F κ, HasCompactSupport f ∧ f 0 = 1 := by
   let b : ContDiffBump (0 : κ → mixedEmbedding.mixedSpace F) := ⟨1, 2, one_pos, one_lt_two⟩
   have h1 : HasCompactSupport fun x => (b x : ℂ) :=

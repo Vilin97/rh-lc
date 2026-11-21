@@ -34,6 +34,7 @@ theorem pairing_eps_eq_zero {k : Type} [Field k] {M : Type*} [AddCommGroup M] [M
     linear_combination hbc
 
 
+set_option maxHeartbeats 1000000 in
 theorem graphFil_isotropic : ∀ (k : Type) [Field k] (A₀ : Over (Sp k)) [GrpObj A₀], IsAbelianScheme A₀ →
     ∀ (P : LB (A₀ ⊗ A₀).left), P.IsLB → ∀ (φ : LinearMap.BilinForm k (HdR A₀)),
     GlobalTheory.AbDual.IsCorrForm (dp0 k) (𝟙 _) A₀ A₀ P φ → ∀ f : HdR A₀ →ₗ[k] HdR A₀,

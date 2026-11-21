@@ -65,6 +65,7 @@ theorem gsRealInvRootsQZ_ptRes_eq (w : {v : InfinitePlace K.1 // v.IsReal}) (x :
     (realLocalEquiv_realUnitsRes S ιr (gsLocalEmbeddings S ιs) (by norm_num) w _).symm)
 
 
+omit [NeZero N] in
 theorem sum_placeInv_inr_add_sum_placeInv_inl [Fintype S] (ι : LocalEmbeddings K) (z : cohomology (unitsLimitRep K) 2)
     (hz : ∀ v : HeightOneSpectrum (𝓞 K.1), v ∉ S → brauerLocal ι z (.inr v) = 0) :
     ∑ v : S, placeInv (.inr (v : HeightOneSpectrum (𝓞 K.1))) (brauerLocal ι z (.inr (v : HeightOneSpectrum (𝓞 K.1)))) +

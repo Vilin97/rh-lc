@@ -132,6 +132,7 @@ theorem apply_mem_maximalAbelianExtension {y : Ω} (hy : y ∈ maximalAbelianExt
   exact le_maximalAbelianExtension _ ((apply_mem_transportField e ε hε).2 hyL)
 
 
+include hε in
 theorem mem_maximalAbelianExtension_transport_iff {y : Ω} :
     ε y ∈ maximalAbelianExtension K' Ω' ↔ y ∈ maximalAbelianExtension K Ω := by
   refine ⟨fun h => ?_, apply_mem_maximalAbelianExtension e ε hε⟩
@@ -186,6 +187,7 @@ def residueFieldEquivOfVle : 𝓀[K] ≃+* 𝓀[K'] :=
   IsLocalRing.ResidueField.mapEquiv (integerEquivOfVle e he)
 
 
+include he in
 theorem card_residueField_eq_of_vle : Nat.card 𝓀[K'] = Nat.card 𝓀[K] :=
   (Nat.card_congr (residueFieldEquivOfVle e he).toEquiv).symm
 
@@ -194,6 +196,7 @@ theorem natCast_residueField_ne_zero_iff (m : ℕ) : (m : 𝓀[K']) ≠ 0 ↔ (m
   rw [← map_natCast (residueFieldEquivOfVle e he), Ne, map_eq_zero_iff _ (residueFieldEquivOfVle e he).injective]
 
 
+include he in
 theorem ord_apply_of_vle (x : Kˣ) : ord (e (x : K)) = ord (x : K) := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[K]
   have hϖ' : Irreducible (integerEquivOfVle e he ϖ) :=
@@ -239,6 +242,7 @@ theorem apply_mem_maximalUnramifiedExtension_of_vle {y : Ω}
   rwa [mem_transportField, RingEquiv.symm_symm] at this
 
 
+variable (K Ω) in
 def transportedArtinMap :
     K'ˣ →* (maximalAbelianExtension K' Ω' ≃ₐ[K'] maximalAbelianExtension K' Ω') :=
   (galTransport e (maximalAbelianExtensionTransport e ε hε)
@@ -271,6 +275,7 @@ theorem transportedArtinMap_apply' (x' : K'ˣ) {y' : Ω'}
   exact h
 
 
+include he in
 theorem transportedArtinMap_eq : transportedArtinMap K Ω e ε hε = localArtinMap K' Ω' := by
   have he' := symm_vle_iff e he
   have hε' := symm_algebraMap_transport e ε hε
@@ -325,6 +330,7 @@ theorem transportedArtinMap_eq : transportedArtinMap K Ω e ε hε = localArtinM
     rw [h2, RingEquiv.apply_symm_apply]
 
 
+include he in
 theorem transport_localArtinMap_apply (x : Kˣ) {y : Ω} (hy : y ∈ maximalAbelianExtension K Ω) :
     ε ((localArtinMap K Ω x ⟨y, hy⟩ : maximalAbelianExtension K Ω) : Ω) =
       ((localArtinMap K' Ω' (Units.map e.toRingHom.toMonoidHom x)
@@ -343,6 +349,7 @@ variable {K K' : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonar
   [Field K'] [ValuativeRel K'] [TopologicalSpace K'] [IsNonarchimedeanLocalField K']
 
 
+open Filter Topology in
 theorem vle_apply_iff_of_continuous (e : K ≃+* K') (hc : Continuous e) (hc' : Continuous e.symm)
     (x y : K) : e x ≤ᵥ e y ↔ x ≤ᵥ y := by
   refine vle_map_iff_of_valuation_lt_one_iff e.toRingHom (fun z => ?_) x y

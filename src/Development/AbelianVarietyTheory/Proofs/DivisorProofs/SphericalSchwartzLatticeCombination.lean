@@ -117,6 +117,7 @@ theorem latInd_eq {t s : k} (ht : t ∈ 𝒪[k]) (hs : s ∈ 𝒪[k]) {N : ℕ} 
 end SpanLat
 
 
+open SpanLat in
 theorem span_latInd_lat : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (n : ℕ)
     (φ : Matrix (Fin n) (Fin n) k → ℂ), φ ∈ SB (Matrix (Fin n) (Fin n) k) →
     (∀ g ∈ KO k (Fin n), ∀ X, φ (g.val * X) = φ X) →

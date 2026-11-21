@@ -388,6 +388,8 @@ private lemma exists_orthogonal_vector_norm_coprime {q : ℕ} (hq : q.Prime) (S 
   omega
 
 
+open scoped ComplexConjugate BigOperators ComplexOrder in
+variable {g : ℕ} in
 theorem _root_.GlobalTheory.MomOne.exists_orthFrame : ∀ (q g : ℕ) (S : _root_.Formalism.L2.Ker.JMB.Setup g),
     q.Prime → S.Ok → ¬ q ∣ S.d → ∃ (x : Fin g → Fin g → ℂ) (a : Fin g → ℕ), (∀ i, x i ∈ S.La) ∧
       (∀ i j, _root_.Formalism.L2.Ker.JMB.beta S.d S.Hm (x i) (x j) = if i = j then (a i : ℂ) else 0) ∧

@@ -98,6 +98,7 @@ theorem adeleAlgHom_surjective : Function.Surjective (adeleAlgHom e he) := by
   rw [adeleAlgHom_apply, ha, hf, ContinuousAlgEquiv.apply_symm_apply]
 
 
+omit e he in
 theorem exists_continuous_adele_equiv :
     ∃ e : FiniteAdeleRing (𝓞 ℚ) ℚ ≃ₐ[ℚ] FiniteAdeleRing ℤ ℚ, Continuous e := by
   choose e he using exists_clocal

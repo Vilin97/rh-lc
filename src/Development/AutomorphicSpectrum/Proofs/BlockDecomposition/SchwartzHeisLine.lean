@@ -53,6 +53,7 @@ theorem linForm_apply (B y : κ → mixedEmbedding.mixedSpace F) :
     simp [linForm, map_sum, LinearMap.sum_apply]
 
 
+open scoped Classical in
 theorem phase_line (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (a b x : κ → AF F) (hb : At (evI F) b) (t : ℝ) :
     ψ (x ⬝ᵥ (realAd F t • b) + ⅟(2 : AF F) * ((realAd F t • a) ⬝ᵥ (realAd F t • b))) =
       Complex.exp (-(2 * Real.pi * Complex.I) * ((t * linForm (fun i => evI F (b i)) (fun i => evI F (x i)) +

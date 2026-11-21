@@ -218,6 +218,7 @@ end
 end ModelDimension.ChowFactor
 
 
+open ModelDimension.ChowFactor in
 theorem ModelDimension.chow_form_product_formula :
     ∀ (n e δ : ℕ) (W : Ideal (MvPolynomial (Fin n) ℂ)) (g : MvPolynomial (Fin (e + 1) × Fin n) ℂ)
   (v : Fin e × Fin n → ℂ) (P : Finset (Fin n → ℂ)) (u₀ : Fin n → ℂ),

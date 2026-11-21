@@ -79,6 +79,7 @@ end GlobalTheory.UMinTop
 namespace GlobalTheory
 
 
+set_option maxHeartbeats 1000000 in
 theorem umin_theta_compactification_exists : UMinSt := by
   have h_dim := @GlobalTheory.UMin.polFib_univ
   have h_xf := GlobalTheory.T.moduliScheme_coefficientField_normal_noetherian_separated

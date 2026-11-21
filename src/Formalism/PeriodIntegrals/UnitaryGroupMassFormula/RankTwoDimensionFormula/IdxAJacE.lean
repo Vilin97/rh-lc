@@ -65,6 +65,7 @@ theorem ja_integral (m : IntAf F E) : IsIntegral (jaT F E) m := by
   exact hx
 
 
+set_option maxHeartbeats 400000 in
 theorem ja_key (G : ℕ) (m : IntAf F E) :
     ∃ t : IntAf F E, ∃ c ∈ jaT F E, (1 + (G : IntAf F E) * m) * t = 1 + (G : IntAf F E) * c := by
   obtain ⟨p, hpm, hp⟩ := ja_integral F E m

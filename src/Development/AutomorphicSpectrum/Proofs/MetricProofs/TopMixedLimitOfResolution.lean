@@ -232,6 +232,7 @@ end
 end Mix
 
 
+open Mix in
 theorem mixed_limit : ReciprocityTheory.ChartRestriction.G.Geo.ResK.ResKStatement → TopNMixedLimit.Statement := by
   intro _ II Ψ _ _ K _ ι _ Ω _ _ E _ _ D O Lt _ _ _ X B hII _ k hk
   obtain ⟨Θ, hΘ, hrel⟩ := GlobalTheory.T.local_holomorphic_section_of_potential K ι (mCoordIdeal D.y) D.n X.M D.A' D.A'_pos.1

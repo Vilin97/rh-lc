@@ -78,6 +78,8 @@ theorem _root_.GlobalTheory.HermNbr.hf_sub_left (cK : K ≃+* K) (J : Matrix (Fi
     Finset.sum_sub_distrib]
 
 
+open scoped BigOperators in
+variable {O K : Type} [CommRing O] [Field K] [Algebra O K] {r : ℕ} in
 theorem _root_.GlobalTheory.HermNbr.hf_conj (cK : K ≃+* K) (hc2 : ∀ x, cK (cK x) = x)
     (J : Matrix (Fin r) (Fin r) K)
     (hJ : J.transpose.map cK = J) (x y : Fin r → K) :
@@ -134,6 +136,8 @@ def Nbrs (cK : K ≃+* K) (J : Matrix (Fin r) (Fin r) K) (ϖ : O)
   {L' | ∃ v, IsStep cK J ϖ L v ∧ L' = nb cK J L v}
 
 
+open scoped BigOperators in
+variable {O K : Type} [CommRing O] [Field K] [Algebra O K] {r : ℕ} in
 theorem _root_.GlobalTheory.HermNbr.graph_sum {X : Type} (S : Set X) (i : X → X → ℕ)
     (Nb : X → Set X) (Q : ℕ) (hQ : 2 ≤ Q)
     (s D : ℝ) (hs : 0 < s) (hD : 0 ≤ D)

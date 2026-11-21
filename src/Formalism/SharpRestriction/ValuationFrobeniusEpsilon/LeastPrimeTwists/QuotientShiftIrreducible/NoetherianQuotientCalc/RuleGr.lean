@@ -217,6 +217,7 @@ theorem comp_mem_of_isHomSub
       exact N.add_mem (ha m) (hb m)
 
 
+omit [GradedAlgebra 𝒜] in
 theorem isHomSub_of_comp_mem {N : Submodule R F.M}
     (hN : ∀ x ∈ N, ∀ m, (decompose F.gr x m : F.M) ∈ N) : F.IsHomSub N := by
   classical

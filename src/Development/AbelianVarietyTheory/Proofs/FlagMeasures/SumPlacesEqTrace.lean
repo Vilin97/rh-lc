@@ -199,6 +199,7 @@ end Char
 section Haar
 
 
+open Formalism.BasicNotions in
 theorem exists_model (k r : ℕ) : ∃ (P Q : ℕ) (C : Matrix (Fin P ⊕ Fin Q) (Fin (2 * r + k + 1)) ℂ)
     (D : Matrix (Fin (2 * r + k + 1)) (Fin P ⊕ Fin Q) ℂ) (φ : UpqT P Q → Mt k r),
     Cᴴ * Formalism.UG.Jpq P Q * C = Hpk k r ∧ C * D = 1 ∧ D * C = 1 ∧ (∀ g, Matrix.of (φ g) = D * UpqT.mat g * C) ∧

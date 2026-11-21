@@ -25,6 +25,7 @@ variable {R A E L : Type} [CommRing R] [IsDomain R] [CommRing A] [IsDomain A] [A
   [Algebra E L] [IsScalarTower R E L]
 
 
+omit [CharZero E] [IsDomain A] in
 theorem exists_clear_denominators (p : Polynomial E) :
     ∃ b : R, b ≠ 0 ∧ ∃ p' : Polynomial R,
       p'.map (algebraMap R E) = Polynomial.C (algebraMap R E b) * p := by
@@ -32,6 +33,8 @@ theorem exists_clear_denominators (p : Polynomial E) :
   exact ⟨b, nonZeroDivisors.ne_zero hb, _, by rw [h, Algebra.smul_def, Polynomial.algebraMap_apply]⟩
 
 
+omit [IsDomain A] in
+include E L in
 theorem minpoly_separable_up_to [IsIntegrallyClosed R] {θ : A} (hθ : IsIntegral R θ) :
     ∃ δ : R, δ ≠ 0 ∧ ∃ u v : Polynomial R,
       u * minpoly R θ + v * Polynomial.derivative (minpoly R θ) = Polynomial.C δ := by
@@ -50,6 +53,7 @@ theorem minpoly_separable_up_to [IsIntegrallyClosed R] {θ : A} (hθ : IsIntegra
   linear_combination (Polynomial.C (algebraMap R E ba) * Polynomial.C (algebraMap R E bb)) * hab
 
 
+omit [CharZero E] [IsDomain A] in
 theorem exists_mul_eq_aeval {θ : A} (hθ : IsIntegral R θ)
     (hgen : IntermediateField.adjoin E {algebraMap A L θ} = ⊤) (x : A) :
     ∃ b : R, b ≠ 0 ∧ ∃ q : Polynomial R, Polynomial.aeval θ q = algebraMap R A b * x := by
@@ -68,6 +72,7 @@ theorem exists_mul_eq_aeval {θ : A} (hθ : IsIntegral R θ)
   exact congrArg _ hp
 
 
+omit [IsDomain R] [IsDomain A] in
 theorem exists_integral_primitive [FaithfulSMul R A] [Algebra.IsAlgebraic R A] {n : ℕ} (x : Fin n → A)
     (hgen : IntermediateField.adjoin E (Set.range fun j => algebraMap A L (x j)) = ⊤) :
     ∃ θ : A, IsIntegral R θ ∧ IntermediateField.adjoin E {algebraMap A L θ} = ⊤ := by
@@ -194,6 +199,8 @@ section Main
 variable {σ ι : Type} [Finite σ] [Finite ι] (K : Ideal (MvPolynomial ι (MvPolynomial σ ℂ))) [K.IsPrime]
 
 
+omit [Finite σ] in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem hypersurfacePresentation_of (hKS : ∀ s : MvPolynomial σ ℂ, C s ∈ K → s = 0) :
     ∃ (d : ℕ) (y : Fin d → MvPolynomial ι (MvPolynomial σ ℂ)) (θ : MvPolynomial ι (MvPolynomial σ ℂ))
       (m : Polynomial (MvPolynomial (Fin d) (MvPolynomial σ ℂ))) (D : MvPolynomial (Fin d) (MvPolynomial σ ℂ))

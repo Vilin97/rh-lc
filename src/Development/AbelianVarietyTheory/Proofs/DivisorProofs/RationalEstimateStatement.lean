@@ -30,6 +30,7 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.
   {κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)} {v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec}
 
 
+set_option maxHeartbeats 1000000 in
 theorem oneMapRowR_charOf (O : ∀ i, OMDat J.toCore R i Unit (fun _ => A.μ0)) (F : Face D A) (ph : Fin D.R.m → ℂ)
     (i : Fin D.R.m) (h : OneMapRowR J R κ v₀ O ph i) :
     OneMapRowR J (charOf R F) κ v₀ (fun k => reOM (O k) F) ph i := by

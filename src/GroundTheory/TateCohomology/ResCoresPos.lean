@@ -51,6 +51,7 @@ lemma barInclF_comm (j : ℕ) :
   exact congrArg (fun v => Finsupp.single v _) (contractNth_subtype S i x)
 
 
+set_option backward.isDefEq.respectTransparency false in
 noncomputable def barIncl :
     (barResolution k S).complex ⟶ (resBarResolution (k := k) S).complex where
   f n := barInclF S n
@@ -65,6 +66,7 @@ noncomputable def barIncl :
     exact h
 
 
+set_option backward.isDefEq.respectTransparency false in
 lemma barIncl_π : barIncl (k := k) S ≫ (resBarResolution (k := k) S).π = (barResolution k S).π := by
   ext : 1
   refine free_ext _ _ _ _ _ fun x => ?_
@@ -89,6 +91,7 @@ section Key
 variable {k G : Type u} [CommRing k] [Group G] (S : Subgroup G)
 
 
+set_option backward.isDefEq.respectTransparency false in
 noncomputable def resHomComplex (A : Rep.{u} k G) :
     (barComplex k G).linearYonedaObj k A ⟶
       (resBarResolution (k := k) S).complex.linearYonedaObj k (res S.subtype A) where
@@ -102,6 +105,7 @@ noncomputable def resHomComplex (A : Rep.{u} k G) :
     rfl
 
 
+set_option backward.isDefEq.respectTransparency false in
 lemma freeLift_cochainsMap_subtype (A : Rep.{u} k G) (n : ℕ) (y : (Fin n → G) → A) :
     freeLift k S (res S.subtype A) (((cochainsMap S.subtype (𝟙 (res S.subtype A))).f n).hom y) =
       barInclF S n ≫ (resFunctor S.subtype).map (freeLift k G A y) := by
@@ -113,6 +117,7 @@ lemma freeLift_cochainsMap_subtype (A : Rep.{u} k G) (n : ℕ) (y : (Fin n → G
     y (Subtype.val ∘ w) by simp).symm
 
 
+set_option backward.isDefEq.respectTransparency false in
 lemma cochainsMap_subtype_comp_iso (A : Rep.{u} k G) :
     cochainsMap S.subtype (𝟙 (res S.subtype A)) ≫ (inhomogeneousCochainsIso (res S.subtype A)).hom =
       (inhomogeneousCochainsIso A).hom ≫ resHomComplex S A ≫
@@ -121,6 +126,7 @@ lemma cochainsMap_subtype_comp_iso (A : Rep.{u} k G) :
   exact freeLift_cochainsMap_subtype S A n y
 
 
+set_option backward.isDefEq.respectTransparency false in
 lemma iso_resHomComplex_adj_iso (A : Rep.{u} k G) :
     (inhomogeneousCochainsIso A).hom ≫ resHomComplex S A ≫
       (linearYonedaObjResProjectiveResolutionIso (barResolution k G) (res S.subtype A)).hom ≫

@@ -101,6 +101,7 @@ theorem unitDir_ofReal (r : ℝ) (hr : r ≠ 0) (u : ℂˣ) (hu : (u : ℂ) = r)
 end GlobalTheory.EtaInfSign
 
 
+open GlobalTheory.QuadSymbol in
 theorem GlobalTheory.EtaInfSign.quadChar_eq_infSign : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     (b : Neutral.B1.Ideles (maximalRealSubfield E)),
     (∀ v, (b : AdeleRing (𝓞 (maximalRealSubfield E)) (maximalRealSubfield E)).2 v = 1) →

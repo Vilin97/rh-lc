@@ -12,6 +12,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights.Inter
 
 
+open Classical in
 theorem LocAwaySpec.proof : LocAwaySpec.Statement := by
   intro R _ Φ _ φ S hrep
   choose f g hg hfg using hrep

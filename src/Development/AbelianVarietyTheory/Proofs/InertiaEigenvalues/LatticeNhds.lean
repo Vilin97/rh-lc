@@ -275,6 +275,7 @@ theorem as_TW {G : Type} [Group G] [TopologicalSpace G] (LL : FinExt l)
     (GlobalTheory.ArtinSchreierWitt.main l).2.1
 
 
+set_option maxHeartbeats 1600000 in
 theorem cob_TW {P : LocPrime l} (AI : LocAinf l P) (K LL : FinExt l)
     (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)) (H : Subgroup ↥(GK K))
     (hH : ((GK K).subtype.comp H.subtype).range = Hinf K) (c : ↥(latticeCocycles (resLat T H))) :

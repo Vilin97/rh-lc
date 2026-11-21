@@ -460,9 +460,11 @@ section Coef
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T}
 
 
+variable (G) in
 def expAt (P : Pl D.host.E) : ℝ := (D.R.m : ℝ) ^ 3 * bigN D * cosExp G P
 
 
+variable (G) in
 def dlF (w : PlL D) : ℝ := ∑ P ∈ G.pl.W0, expAt G P * vw w ((resCard (Kw P) : ℕ) : D.what₂.LL)
 
 theorem coefficient_local_term_at_split_place {μ₀ : T} (hL : L.Is μ₀) (S : GridChoice W U) (t : T) (Φ : G.Datum)

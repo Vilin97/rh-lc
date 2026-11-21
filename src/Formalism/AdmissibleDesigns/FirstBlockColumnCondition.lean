@@ -37,6 +37,7 @@ variable {D : D7} (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV)
   (hrk : ((Dd.ρk 0 Dd.e₁).map (algebraMap (D.nd.O i) (FractionRing (D.nd.O i)))).rank = 1)
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem first_block_column_condition (l : Col i dc) :
     FS i r π dc g0 eB e₁ s Dd hD hc 0 (colIdx i dc l) =
       KHf.F0col i dc (colIdx i dc l)
@@ -61,6 +62,8 @@ theorem first_block_column_condition (l : Col i dc) :
   simp only [KHf.Fρ, if_neg hnot]
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem hRho_of
     (hG4 : TruncatedSeriesCountingIdentities.admG4 i r) (hdec : TruncatedSeriesCountingIdentities.SemisimpleDecomposition i r ρ π)
     (hFf : ∀ l, KFin.FinFf i dc Dd l) (hRk : ∀ l, KFin.RankFf i dc Dd ρ π l)

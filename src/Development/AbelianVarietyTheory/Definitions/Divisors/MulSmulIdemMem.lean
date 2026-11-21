@@ -199,6 +199,7 @@ def ofConst {la : Weight Dw} {δ : HeightOneSpectrum (𝓞 c.F) → ℝ} (s : Co
   pts := s.hasPts
 
 
+variable (x) in
 def const (h : HasPts U Z) (a : c.F) (ha : a ≠ 0) : TwSec U x Z 0 :=
   (ofConst ((ConstSec.one x h).smul a ha) (by simp)
     (fun G _ f hf => by rw [wtOf_zero, add_zero]; exact mul_smul_idem_mem hf a)
@@ -217,6 +218,7 @@ theorem const_spec (h : HasPts U Z) (a : c.F) (ha : a ≠ 0) :
 end TwSec
 
 
+variable (Xo c) in
 def UnramPts (B : Finset ℕ) : Prop :=
   ∀ (Z : Comp Xo c) (w : HeightOneSpectrum (𝓞 c.F)), (∀ p ∈ B, ((p : ℕ) : 𝓞 c.F) ∉ w.asIdeal) →
     ∃ v ∈ valOn Z w, ∀ f : Rul Xo c, v f = ⊤ ∨ ∃ n : ℤ, v f = ((n : ℝ) : EReal)

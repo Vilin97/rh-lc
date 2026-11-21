@@ -12,6 +12,7 @@ open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.Basi
 namespace GlobalTheory.NL
 
 
+set_option maxHeartbeats 1600000 in
 theorem N_basis_loc {l : ℕ} [Fact l.Prime] {P : LocPrime l} (H : LocHW l P) (K : FinExt l) (s : ℕ)
     (LL : FinExt l) (h : Good K s LL) (T : Lt K LL) (hT : IsCrys (P.PD K) T.ρ) :
     Nonempty (Module.Basis (Fin (Module.finrank ↥(OL LL) ↥T.L.T)) (AA K LL) ↥((H.W K s LL h).N T)) := by

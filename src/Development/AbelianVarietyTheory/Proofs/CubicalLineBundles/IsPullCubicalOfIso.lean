@@ -33,6 +33,7 @@ variable {S S' : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G] {G' : Over
   {f : S' ⟶ S} {F : G'.left ⟶ G.left}
 
 
+omit [IsCommMonObj G] [IsCommMonObj G'] in
 theorem exists_rigidified (he : eSec G' ≫ F = f ≫ eSec G) (L : RigLB G) (L' : RigLB G')
     (h : LBIso L'.L (L.L.pull F)) : ∃ w : LB.Iso L'.L (L.L.pull F), PGen w ∧
       PMaps w (K := PUnit) (fun _ => eSec G') (fun _ => eSec G) (fun _ => 1) L'.rig L.rig f := by

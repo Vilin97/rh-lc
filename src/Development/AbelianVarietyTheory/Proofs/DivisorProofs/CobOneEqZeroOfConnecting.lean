@@ -196,6 +196,8 @@ theorem extChar_vecExtMap (hp : (p : R) = 0) (f : G ⟶ H) (x : H.VecExt) :
   rfl
 
 
+omit [Fact p.Prime] in
+variable (G) in
 theorem primLie_bijective (hp : (p : R) = 0) : Function.Bijective G.primLie :=
   (LinearEquiv.ofBijective _ (G.dual.omegaLevel_one_bijective hp)).dualMap.bijective.comp T.additiveFunctionCartierDualTangent_bijective
 
@@ -209,6 +211,7 @@ theorem primLie_naturality (f : G ⟶ H) (b : LinearMap.ker (cobOne R (H.A 1)))
     rfl
 
 
+omit [Fact p.Prime] in
 theorem SemiHom.primLie_prim {σ : R →+* R'} {G' : PDivGroup p R'} (s : SemiHom σ G' G)
     (t : SemiHom σ G'.dual G.dual)
     (h : ∀ (φ : CartierDual R (G.A 1)) (a : G.A 1),
@@ -221,6 +224,7 @@ theorem SemiHom.primLie_prim {σ : R →+* R'} {G' : PDivGroup p R'} (s : SemiHo
   exact h φ b.1
 
 
+variable (G) in
 theorem primLie_toBase [Algebra R R'] (b : LinearMap.ker (cobOne R (G.A 1))) (w : G.dual.omega) :
     (G.baseChange R').primLie (((G.toBase R').app 1).prim b)
       (omegaMap _ _ (PerfdLat.dualBaseChange R' G).hom ((G.dual.toBase R').omega w)) =
@@ -233,18 +237,22 @@ theorem primLie_toBase [Algebra R R'] (b : LinearMap.ker (cobOne R (G.A 1))) (w 
   rw [mul_one, Algebra.algebraMap_eq_smul_one]
 
 
+variable (G) in
 def rigToLie (hp : (p : R) = 0) : G.RigExt →ₗ[R] G.dual.Lie :=
   G.primLie ∘ₗ G.extChar hp ∘ₗ G.rigToExt
 
 
+variable (G) in
 theorem rigToLie_apply (hp : (p : R) = 0) (x : G.RigExt) :
     G.rigToLie hp x = G.primLie (G.extChar hp (G.rigToExt x)) := rfl
 
 
+variable (G) in
 theorem rigToLie_surjective (hp : (p : R) = 0) : Function.Surjective (G.rigToLie hp) :=
   (G.primLie_bijective hp).2.comp ((G.extChar_bijective hp).2.comp G.rigToExt_surjective)
 
 
+variable (G) in
 theorem exact_rigOfOmega_rigToLie (hp : (p : R) = 0) :
     Function.Exact G.rigOfOmega (G.rigToLie hp) := fun x => by
   rw [← G.exact_rigOfOmega_rigToExt x, rigToLie_apply,
@@ -260,6 +268,7 @@ section BaseChange
 variable (G R') [Algebra R R']
 
 
+omit [Fact p.Prime] in
 theorem liftSemi_prim_bijective (hp : (p : R) = 0)
     (h : Module.Flat R R' ∨ Module.Projective R G.dual.omega) :
     Function.Bijective (liftSemi ((G.toBase R').app 1).prim) := by

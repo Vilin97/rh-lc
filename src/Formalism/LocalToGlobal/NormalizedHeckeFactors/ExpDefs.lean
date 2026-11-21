@@ -294,6 +294,7 @@ def topR {r : ℕ} (h : r ≤ n) {R : Type} (x : Matrix (Fin n) (Fin n) R) : Mat
 
 
 open scoped Classical in
+open Classical in
 def intLift (v : HeightOneSpectrum (𝓞 L⁺)) (y : v.adicCompletion L⁺) : v.adicCompletionIntegers L⁺ :=
   if h : y ∈ v.adicCompletionIntegers L⁺ then ⟨y, h⟩ else 0
 
@@ -303,6 +304,7 @@ def redMat (v : HeightOneSpectrum (𝓞 L⁺)) {ι R : Type} [CommRing R] (red :
 
 
 open scoped Classical in
+open Classical in
 def glOf {ι R : Type} [Fintype ι] [DecidableEq ι] [CommRing R] (M : Matrix ι ι R) : GL ι R :=
   if h : IsUnit M.det then M.nonsingInvUnit h else 1
 
@@ -313,6 +315,7 @@ theorem glOf_val {ι R : Type} [Fintype ι] [DecidableEq ι] [CommRing R] (M : M
   rfl
 
 
+variable (L n) in
 def IsAlgWeightF (K : Type) [Field K] {W : Type} [AddCommGroup W] [Module K W] (ρ : Representation K (GQ L n) W) : Prop :=
   FiniteDimensional K W ∧
   ∃ (ι : Type) (_ : Fintype ι) (_ : DecidableEq ι) (b : Module.Basis ι K W) (κ : Type) (_ : Fintype κ)

@@ -58,6 +58,7 @@ theorem exists_ringHom_eval {A B σ : Type} [CommRing A] [CommRing B] [Finite σ
   exact ⟨ψ, fun c => ψ.commutes c, hψ⟩
 
 
+open DiscrJacobian in
 theorem exists_trace_eq {A B σ : Type} [CommRing A] [IsLocalRing A] [IsNoetherianRing A]
     [CommRing B] [Fintype σ] [DecidableEq σ] [Algebra A B] [Algebra (MvPowerSeries σ A) B]
     [IsScalarTower A (MvPowerSeries σ A) B] [Module.Free A B] [Module.Finite A B]

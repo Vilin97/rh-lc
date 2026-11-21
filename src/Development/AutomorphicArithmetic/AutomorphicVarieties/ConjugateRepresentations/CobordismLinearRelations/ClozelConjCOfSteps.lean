@@ -61,6 +61,7 @@ def IsPiHarm (π : CuspSub E a) (Ξ : AlgRep E a) (r : ℝ) {n : ℕ} (e : Fin n
   Lev Ξ ω ∧ dCo (smLie Ξ) ω = 0 ∧ Coclosed (smAdj Ξ r) e ω ∧ ∀ X, ω X ∈ tens Ξ.d π.V
 
 
+variable (E a) in
 def ConjAt : Prop :=
   ∀ (π : CuspSub E a), (CG.mk π).IsRegAlg → ∀ σ : ℂ ≃+* ℂ,
     ∃ (π' : CuspSub E a) (τ τ' : SmIrr (GL (Fin a) (Af E))), IsFinComp π τ ∧ IsFinComp π' τ' ∧ IsConjBy σ τ τ' ∧

@@ -90,6 +90,7 @@ theorem isClosed_ker_cycMod (l : ℕ) [Fact l.Prime] (m : ℕ) :
 end GlobalTheory.InertiaClosed
 
 
+open GlobalTheory.InertiaClosed in
 theorem GlobalTheory.isClosed_Ine_inf_ker_cycMod : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Algebra ℚ Ω]
     [Algebra.IsAlgebraic ℚ Ω] (A : ValuationSubring Ω) (m : ℕ),
     IsClosed ((Ine (F := ℚ) A ⊓ (cycMod ℚ Ω l m).ker : Subgroup (G ℚ Ω)) : Set (G ℚ Ω)) := by

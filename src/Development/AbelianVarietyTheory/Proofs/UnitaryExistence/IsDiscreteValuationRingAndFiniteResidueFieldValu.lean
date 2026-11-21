@@ -10,6 +10,7 @@ open IsLocalRing NumberField IsDedekindDomain
 namespace GlobalTheory
 
 
+open IsLocalRing IsDedekindDomain NumberField in
 theorem _root_.GlobalTheory.isDiscreteValuationRing_and_finite_residueField_valuationSubringAtPrime
     {R : Type*} [CommRing R] [IsDedekindDomain R] (K : Type*) [Field K] [Algebra R K]
     [IsFractionRing R K] (v : IsDedekindDomain.HeightOneSpectrum R)
@@ -56,6 +57,7 @@ private theorem eq_of_le_of_mem_nonunits_of_dvr {K : Type*} [Field K]
     _ = W := A.ofPrime_idealOfLE W h
 
 
+open IsLocalRing IsDedekindDomain NumberField in
 theorem _root_.GlobalTheory.isDiscreteValuationRing_and_finite_residueField_of_numberField {L : Type*} [Field L]
     [NumberField L] (W : ValuationSubring L) {n : ℕ} (hn : n ≠ (0 : ℕ))
     (hW : (↑n : L) ∈ W.nonunits) :

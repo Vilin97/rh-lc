@@ -14,6 +14,7 @@ variable {R F H L : Type*} [CommRing R] [AddCommGroup F] [Module R F] [AddCommGr
   [AddCommGroup L] [Module R L]
 
 
+variable (R H) in
 noncomputable def wedgeMul (a b : ℕ) : (⋀[R]^a H) ⊗[R] (⋀[R]^b H) →ₗ[R] ⋀[R]^(a + b) H :=
   LinearMap.codRestrict _
     (LinearMap.mul' R (ExteriorAlgebra R H) ∘ₗ
@@ -62,6 +63,7 @@ section Dual
 
 
 
+variable (F) in
 theorem rankAtStalk_dual [Module.Finite R F] [Module.Projective R F] (p : PrimeSpectrum R) :
     rankAtStalk (Dual R F) p = rankAtStalk F p := by
   let S := p.asIdeal.primeCompl

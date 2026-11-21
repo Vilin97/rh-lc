@@ -180,6 +180,7 @@ variable (R : Type) [CommRing R] (I : Ideal R) (Y : ∀ e : ℕ, Over (Spec (Com
     fun j t => mulT I Y N D d e t S (sh e j))
 
 
+include hshp hDa in
 theorem form_step (i : ι) (e : ℕ)
     (ih : ∀ (t : ℤ) (a : Tm I Y N D d e t S), ∃ (k n : ℕ) (Q : MvPolynomial ι R)
       (w : Tm I Y N D d e (n : ℤ) S), Q.IsHomogeneous n ∧ (k : ℤ) + t = n ∧

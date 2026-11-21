@@ -46,6 +46,8 @@ theorem mem_unipRad_entries {e : (Σ a, m a) ≃ n} {g : GL n R} :
       · rw [Matrix.one_apply_ne hs, Matrix.one_apply_ne (fun hh => hs (by simpa using e.injective hh))]
 
 
+omit [Fintype α] [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype β] [∀ a, Fintype (m' a)]
+  [∀ a, DecidableEq (m' a)] in
 theorem blk_lt_of_parab_le [Nontrivial R] {e : (Σ a, m a) ≃ n} {e' : (Σ a, m' a) ≃ n}
     (h : parab R e ≤ parab R e') {i j : n} (hij : blk e' j < blk e' i) : blk e j < blk e i := by
   have hne : i ≠ j := fun hh => (ne_of_lt hij) (by rw [hh])

@@ -84,6 +84,7 @@ end GlobalTheory.FN.Lag
 namespace GlobalTheory.FN.Lag
 
 
+open Finset in
 theorem conj_family_of_injective : ∀ (g : ℂ ≃+* ℂ) (ι : Type) [Fintype ι] (act act' : ι → SL(2, ℤ) → ι) (m k N : ℕ) (t t' F : ι → ℍ → ℂ), 0 < N → ActBij act → ActBij act' → IsFam act m t → IsFam act' m t' → IsFam act k F → Function.Injective t → (∀ i, QConj g N (t i) (t' i)) → (∀ i, ∃ a, HasQ N (F i) a) → ∃ F' : ι → ℍ → ℂ, IsFam act' k F' ∧ ∀ i, QConj g N (F i) (F' i) := by
   intro g ι _ act act' m k N t t' F hN hb hb' ht ht' hF hinj htt' hFq
   classical

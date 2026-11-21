@@ -126,6 +126,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} {W : Wts X Pr.Word R} {Ch : Ch
   {P : LevFam X.E X.K R.r Pr.vGs} {c : TopDepth R cst.M} {G : ChGlob X R.m}
 
 
+variable (A) in
 def twThPt (i j : ℕ) (e : j = i + 1) (β : (twFam W Ch sel mu cst L u m2 b hY P c i).β) (β' : (twFam W Ch sel mu cst L u m2 b hY P c j).β)
     (d : (twFam W Ch sel mu cst L u m2 b hY P c i).D β) (d' : (twFam W Ch sel mu cst L u m2 b hY P c j).D β') :
     VCx X.Tau (R.N i) (R.N j) → ℂ :=
@@ -166,6 +167,7 @@ def twChain : ColumnChain R X.Tau (W.hc u) := (twSrc chi hX hm hF hK hρ).chainT
 end Def
 
 
+variable (W sel mu cst A u) in
 def TwJets : Prop :=
   ∀ i < R.m, JetsRatDeg A (R.N i) (R.N (i + 1)) (Sall sel mu u) (cAof sel mu cst * cBof sel mu cst u) fun τ => ∑ a, (W.nuW u (i + 1) τ).w a
 

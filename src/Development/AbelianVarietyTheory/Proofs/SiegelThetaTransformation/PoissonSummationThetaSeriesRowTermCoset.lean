@@ -16,6 +16,9 @@ variable {ι : Type} [Fintype ι]
 
 
 
+open Matrix Complex in
+open scoped ComplexConjugate Real in
+variable {ι : Type} [Fintype ι] in
 theorem _root_.GlobalTheory.SW.FourierJ.Row.poisson_class : ∀ (ι : Type) [Fintype ι] [DecidableEq ι]
     (R : ℕ), 0 < R → ∀ τ ∈ _root_.GlobalTheory.SW.Siegel ι, -τ⁻¹ ∈ _root_.GlobalTheory.SW.Siegel ι →
     IsUnit τ.det → ∃ c : ℂ, c ^ 2 * (((-I) * (R : ℂ) ^ 2) ^ Fintype.card ι * τ.det) = 1 ∧

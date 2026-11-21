@@ -187,6 +187,7 @@ theorem exists_idxEquiv (D : Datum H) {g : ℕ} {ty : Fin g → (E →+* ℂ)} (
 end Host
 
 
+open TorusAtAssembly in
 theorem exists_torusOf : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (g : ℕ) (ty : Fin g → (E →+* ℂ)) (Pm : D.La →+ (Fin g → ℂ)) (Hm : Matrix (Fin g) (Fin g) ℂ), IsTypeFn H D.p D.q ty → IsPeriod D ty Pm → Hm.IsHermitian → (∀ z : Fin g → ℂ, z ≠ 0 → 0 < (hermForm Hm z z).re) → (∀ a b, (hermForm Hm (Pm a) (Pm b)).im = D.EF a b) → ∃ (T : I2.PT E) (ψ : (Fin g → ℂ) ≃ₗ[ℂ] I2.Vsp T.dim), IsTorusOf D ty Pm Hm T ψ := by
   intro E _ _ _ H D g ty Pm Hm hty hP hH hpos hEF
   obtain ⟨hlin, -, hdisc, hspan, -⟩ := hP

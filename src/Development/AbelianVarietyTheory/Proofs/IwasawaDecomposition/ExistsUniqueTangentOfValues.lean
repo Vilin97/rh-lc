@@ -73,6 +73,7 @@ theorem appLE_eq (w : v ≫ π = (specO k (DualNumber k)).hom ≫ x) (we : sec (
   exact E.symm
 
 
+include he in
 theorem eq_of_form_eq (w : v ≫ π = (specO k (DualNumber k)).hom ≫ x) (we : sec (epsZero k) ≫ v = x ≫ e)
     (w' : v' ≫ π = (specO k (DualNumber k)).hom ≫ x) (we' : sec (epsZero k) ≫ v' = x ≫ e)
     (H : form w we = form w' we') : v = v' := by
@@ -91,6 +92,7 @@ theorem eq_of_form_eq (w : v ≫ π = (specO k (DualNumber k)).hom ≫ x) (we : 
     ← hW.SpecMap_appLE_fromSpec _ hT (preimage_le we' h), E]
 
 
+include he in
 theorem exists_form_eq [QuasiSeparated π]
     (L : (Scheme.Modules.pullback x).obj (conormal e) ⟶ structureModule (Sp k)) :
     ∃ (v : (specO k (DualNumber k)).left ⟶ Y) (w : v ≫ π = (specO k (DualNumber k)).hom ≫ x)

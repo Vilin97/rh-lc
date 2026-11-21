@@ -32,6 +32,7 @@ open GlobalTheory.StepLaw (ResAt UnrOff)
 variable {D : D7} {S T : HSp D}
 
 
+open Classical in
 def allP (B : Base S T) (Q : Finset (Pl D.host.E)) : Finset (Pl D.host.E) := B.G.Pg ∪ (B.de.Q ∪ Q)
 
 

@@ -206,6 +206,7 @@ theorem fib_data (t : RT Y u u') (s₀ s : fib Y t) : ∃ c : (VS D).V ≃ₗ[D.
   group
 
 
+variable (Y) in
 def cOf (t : RT Y u u') (s₀ s : fib Y t) : (VS D).V ≃ₗ[D.host.E] (VS D).V := Classical.choose (fib_data Y t s₀ s)
 
 theorem cOf_spec (t : RT Y u u') (s₀ s : fib Y t) :
@@ -217,6 +218,7 @@ theorem cOf_spec (t : RT Y u u') (s₀ s : fib Y t) :
   Classical.choose_spec (fib_data Y t s₀ s)
 
 
+variable (Y) in
 def phi (t : RT Y u u') (s₀ : fib Y t) (s : fib Y t) : autLz D (X.Fu u') s₀.1.lam' :=
   ⟨⇑(indW (X.Fu u') (cOf Y t s₀ s) (cOf_spec t s₀ s).1 (fix_X _ _ (cOf_spec t s₀ s).2.2.1)),
     indW_mem _ _ _ (cOf_spec t s₀ s).2.2.1 (cOf_spec t s₀ s).2.2.2.1 _ (cOf_spec t s₀ s).2.1⟩
@@ -644,6 +646,7 @@ theorem conj_triv {U : Submodule D.host.E (VS D).V} {l φ : (VS D).V ≃ₗ[D.ho
     exact hφ.2 _ hx
 
 
+set_option maxHeartbeats 400000 in
 theorem pair_step (hK : IotaKer) {s₁ s₂ t₁ t₂ : TT Y u u'} (h1 : s₁.toTerm = t₁.toTerm) (h2 : s₂.toTerm = t₂.toTerm)
     (hr : rowOf Y.TR (Y.cs u) (Y.cs u') s₁ = rowOf Y.TR (Y.cs u) (Y.cs u') s₂)
     (hr' : rowOf Y.TR (Y.cs u) (Y.cs u') t₁ = rowOf Y.TR (Y.cs u) (Y.cs u') t₂) :

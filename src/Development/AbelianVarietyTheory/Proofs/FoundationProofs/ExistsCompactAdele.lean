@@ -142,6 +142,7 @@ theorem infMat_unitary (h : IsCMExt F E σ) {τ : E →+* ℂ} {θ : Ainf F ⊗[
   exact h2.symm.trans (congrArg (fun X => X.map θ) hm)
 
 
+variable (σ) in
 def stab (L : Set (Fin M → E)) : Subgroup (HA (AF F) σ J) where
   carrier := {h | StabHat F L (finMat σ J h)}
   one_mem' := fun y => by rw [finMat_one, Matrix.one_mulVec]

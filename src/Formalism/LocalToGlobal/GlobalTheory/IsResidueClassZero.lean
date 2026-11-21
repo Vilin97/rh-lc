@@ -166,6 +166,7 @@ def Cand : Prop :=
     (B.sc.p0 B.R.k ≤ (p : ℝ) → ¬ B.InBand K p)
 
 
+open Classical in
 def goodReps : Finset B.H := (reps B I h p).filter (fun t0 => Good B h t0)
 
 def Sig : ℝ := (B.R.m : ℝ) * ∑ t0 ∈ goodReps B I h p, kapv B I K a b h p t0

@@ -37,6 +37,7 @@ theorem ext_c {a b : AF F} (h1 : ∀ w, ci w a = ci w b) (h2 : ∀ v, cf v a = c
   Prod.ext (funext h1) (RestrictedProduct.ext _ _ h2)
 
 
+open Classical in
 def sglI (w : InfinitePlace F) (c : w.Completion) : AF F :=
   ((Pi.single w c : InfiniteAdeleRing F), (0 : FiniteAdeleRing (𝓞 F) F))
 

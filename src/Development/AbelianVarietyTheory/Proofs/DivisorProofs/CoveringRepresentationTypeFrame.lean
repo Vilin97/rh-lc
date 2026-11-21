@@ -88,6 +88,7 @@ def subRep (V : Submodule K A) (hV : ∀ g, ∀ f ∈ V, tr g f ∈ V) : Represe
   map_mul' g h := LinearMap.ext fun f => Subtype.ext (Subtype.ext (tm g h f))
 
 
+include t1 tm tB in
 theorem embReg_of_submodules [Algebra K ℂ] [Finite Γ] (Vm V V₁ V₂ U : Submodule K A) (bm : ∀ f ∈ Vm, f ∈ B)
     (b0 : ∀ f ∈ V, f ∈ B) (b2 : ∀ f ∈ V₂, f ∈ B) (bU : ∀ f ∈ U, f ∈ B)
     (m0 : ∀ f ∈ Vm, ∀ u ∈ U, f * u ∈ V) (m1 : ∀ f ∈ V, ∀ u ∈ U, f * u ∈ V₁) (m2 : ∀ f ∈ V₁, ∀ u ∈ U, f * u ∈ V₂)
@@ -130,6 +131,7 @@ theorem cusp_mem_secRing (G : WTZ E) (f : Rul Xo c) (hf : f ∈ cuspW Xo c U G) 
   LevDesc.mem_secRing (AllWt.cuspW_le_secZ _ hf)
 
 
+include hpq hA in
 theorem embReg_of_cusp (Gm G G₁ G₂ W : WTZ E) (em : Even Gm.2) (eW : Even W.2) (a0 : Gm + W = G) (a1 : G + W = G₁)
     (a2 : G₁ + W = G₂) (kW : KeepsCusp U W) (k0 : KeepsCusp U G) (k1 : KeepsCusp U G₁)
     (f0 : FiniteDimensional c.F (cuspW Xo c U G)) (f2 : FiniteDimensional c.F (cuspW Xo c U G₂)) (t : ℝ) (ht : 0 ≤ t)

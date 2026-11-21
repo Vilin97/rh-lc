@@ -58,6 +58,7 @@ private lemma gram_quadratic_real_nonneg {s : ℕ} {X : Type} [AddCommGroup X]
   exact (mul_nonneg_iff_of_pos_left hNpos).mp h0
 
 
+open Matrix in
 theorem _root_.GlobalTheory.Poinc.qW_nonneg_of_posW : ∀ {s : ℕ} (W : Matrix (Fin s) (Fin s) ℤ),
     _root_.GlobalTheory.Poinc.PosW W → ∀ {X : Type} [AddCommGroup X]
     (β : LinearMap.BilinForm ℤ X), (∀ a b, β a b = β b a) → (∀ x, 0 ≤ β x x) →

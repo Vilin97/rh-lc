@@ -201,6 +201,7 @@ theorem horiz_eq (hH : TwoBlockHorizDiv.Statement) {x : Ix κ → Ω} {B : Matri
 end TwoBlockCoeffCycle
 
 
+open TwoBlockCoeffCycle in
 theorem TwoBlockCoeffCycle.proof (hA : CoordArithOfFnField.Statement) (hF : TwoBlockFnField.Statement)
     (hH : TwoBlockHorizDiv.Statement) : TwoBlockCoeffCycle.Statement := by
   classical

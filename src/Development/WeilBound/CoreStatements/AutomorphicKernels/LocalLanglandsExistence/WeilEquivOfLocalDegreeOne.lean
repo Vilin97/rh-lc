@@ -70,6 +70,7 @@ variable {Ω : Type} [Field Ω] {A : ValuationSubring Ω}
   {v : HeightOneSpectrum (𝓞 K)} {w : HeightOneSpectrum (𝓞 F)}
 
 
+omit [IsAlgClosure F Ω] in
 theorem normV_eq_of_localDegreeOne (h : IsPlaceOver A v) (h' : IsPlaceOver A w)
     (hloc : ∀ (σ : Weil h) (x : F), (σ : G K Ω) (algebraMap F Ω x) = algebraMap F Ω x) :
     normV w = normV v := by

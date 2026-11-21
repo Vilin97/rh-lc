@@ -11,6 +11,7 @@ open Matrix
 namespace GlobalTheory.HeisLatVac
 
 
+open Classical in
 def vacFn {K κ : Type} [CommRing K] [Invertible (2 : K)] [Fintype κ] (ψ₀ : AddChar K ℂ)
     (Λ : AddSubgroup ((κ → K) × (κ → K))) (χ : (κ → K) × (κ → K) → ℂ) (x₀ : κ → K) : (κ → K) → ℂ := by
   classical

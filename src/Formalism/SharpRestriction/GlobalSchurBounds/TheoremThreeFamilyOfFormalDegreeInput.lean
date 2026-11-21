@@ -60,6 +60,7 @@ theorem chosenProviso_min (C0 : ℝ) (hC0 : Real.exp 1 ≤ C0)
   chosenProviso_4f Fm C0 hC0 (familyRankFormula_of_classNumber Fm hn) hR
 
 
+variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 theorem explicitConstants_family_of_volume_eq_mass (h2v : flipTwoThree.fam0 Fm BaseVolumeEqualsMass) (h3 : flipTwoThree.fam0 Fm SigmaDegreeTwoSidedBoundOfGap) : FamilyVandermondeCountExplicit Fm :=
   division_level_prime_family Fm (Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.siegel_mass_ratio_family Fm) h2v h3
 
@@ -69,6 +70,7 @@ end Fam
 def cTmin (y : ℝ) : ℝ := max 11 (16 + 3 * max 5 (y + 1))
 
 
+variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 theorem tuSize_min {eps : ℝ} (Fm : FamP eps) (hle : cTmin Fm.CYL ≤ Fm.CTu)
     (h2v : flipTwoThree.fam0 Fm BaseVolumeEqualsMass) (h3 : flipTwoThree.fam0 Fm SigmaDegreeTwoSidedBoundOfGap) : TuSize Fm := by
   obtain ⟨x0, hx0⟩ := explicitConstants_family_of_volume_eq_mass Fm h2v h3 (max 5 (Fm.CYL + 1)) (max 5 (Fm.CYL + 1))

@@ -295,6 +295,7 @@ end Tilde
 section FiniteType
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem IsFiniteQC.of_generatingSections [F.IsQuasicoherent] (σ : F.GeneratingSections)
     [σ.IsFiniteType] : IsFiniteQC F :=
   have : Finite σ.I := SheafOfModules.GeneratingSections.IsFiniteType.finite (σ := σ)
@@ -303,6 +304,7 @@ theorem IsFiniteQC.of_generatingSections [F.IsQuasicoherent] (σ : F.GeneratingS
   .of_epi (F := freeModule X σ.I) σ.π
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem IsFiniteQC.of_isFiniteType [F.IsQuasicoherent] [F.IsFiniteType] : IsFiniteQC F := by
   obtain ⟨σ, hσ⟩ := SheafOfModules.IsFiniteType.exists_localGeneratorsData F
   refine .of_restrict (fun i ↦ Scheme.Opens.ι (σ.X i)) (fun x ↦ ?_) fun i ↦ ?_
@@ -322,6 +324,7 @@ theorem IsFiniteQC.of_isFiniteType [F.IsQuasicoherent] [F.IsFiniteType] : IsFini
     exact .of_generatingSections τ
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem exists_presentation_over [F.IsQuasicoherent] (hU : IsAffineOpen U)
     (s : Set Γ(F.restrict hU.fromSpec, ⊤)) (hs : Submodule.span Γ(X, U) s = ⊤)
     (t : Set (s →₀ Γ(X, U))) (ht : Submodule.span Γ(X, U) t =
@@ -349,6 +352,7 @@ theorem exists_presentation_over [F.IsQuasicoherent] (hU : IsAffineOpen U)
       (U.sheafOfModulesEquivOverInverseUnit X.ringCatSheaf).symm), rfl, rfl⟩
 
 
+set_option backward.isDefEq.respectTransparency false in
 instance IsFiniteQC.isFiniteType [IsFiniteQC F] : F.IsFiniteType := by
   have H (U : X.affineOpens) : ∃ σ : (F.over U.1).GeneratingSections, σ.IsFiniteType := by
     obtain ⟨U, hU⟩ := U

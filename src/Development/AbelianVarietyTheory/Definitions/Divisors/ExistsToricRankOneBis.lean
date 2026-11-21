@@ -62,6 +62,7 @@ def TFE {D : DegPre R} {a : D.P.A ⟶ D.P.A} (h h' : D.X →+ D.X) {n j : ℤ} (
   ∀ mu β, TRel h mu (f β) (f (β + shift h h' n j mu))
 
 
+open Classical in
 def IsSum (I : Ideal R) {D : DegPre R} {a : D.P.A ⟶ D.P.A} {n j : ℤ} {Ix : Type} {w : Ix → D.X}
     (s : ∀ i, SecT D a n j (w i)) (F : ∀ δ, SecT D a n j δ) : Prop :=
   ∀ (e : ℕ) (S : Finset Ix), (∀ i ∉ S, Van I (s i) e) → ∀ (δ : D.X) (Z : Scheme.{0})

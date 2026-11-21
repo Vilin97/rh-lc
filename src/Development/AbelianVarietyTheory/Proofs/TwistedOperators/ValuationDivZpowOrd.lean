@@ -16,6 +16,9 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   {n : Type} [Fintype n] [DecidableEq n]
 
 
+open ValuativeRel Matrix in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  {n : Type} [Fintype n] [DecidableEq n] in
 theorem _root_.GlobalTheory.LocalCartan.diagT_mem_KO {t : n → kˣ} (ht : ∀ i, valuation k (t i : k) = 1) :
     _root_.GlobalTheory.SmGL.diagT k n t ∈ _root_.GlobalTheory.SplitWeil.KO k n := by
   rw [_root_.GlobalTheory.SplitFlip.mem_KO_iff]
@@ -33,6 +36,9 @@ theorem _root_.GlobalTheory.LocalCartan.diagT_mem_KO {t : n → kˣ} (ht : ∀ i
     · exact zero_mem _
 
 
+open ValuativeRel Matrix in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  {n : Type} [Fintype n] [DecidableEq n] in
 theorem _root_.GlobalTheory.LocalCartan.exists_diagT (g : GL n k) :
     ∃ x ∈ _root_.GlobalTheory.SplitWeil.KO k n, ∃ y ∈ _root_.GlobalTheory.SplitWeil.KO k n,
       ∃ t : n → kˣ, g = x * _root_.GlobalTheory.SmGL.diagT k n t * y := by
@@ -120,6 +126,9 @@ private lemma exists_unit_mul_zpow_uniformizer {ϖ : kˣ}
   ring
 
 
+open ValuativeRel Matrix in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  {n : Type} [Fintype n] [DecidableEq n] in
 theorem _root_.GlobalTheory.LocalCartan.cartan_decomposition (k : Type) [Field k] [ValuativeRel k]
     [TopologicalSpace k] [IsNonarchimedeanLocalField k] (n : Type) [Fintype n] [DecidableEq n]
     (ϖ : kˣ) (g : GL n k) (hϖ : valuation k (ϖ : k) = uniformizer k) :

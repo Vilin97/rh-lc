@@ -19,6 +19,7 @@ variable {p : ℕ} [Fact p.Prime]
 section Algebra
 
 
+variable (p) in
 def algClToBdRField : PadicAlgCl p →+* 𝔹dR := (algebraMap 𝔹 𝔹dR).comp (algClToBdR p).toRingHom
 
 instance algebraAlgClBDeRham : Algebra (PadicAlgCl p) 𝔹dR := (algClToBdRField p).toAlgebra

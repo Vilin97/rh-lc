@@ -21,11 +21,13 @@ variable {F : Type u} [Field F] [IsAlgClosed F] [DecidableEq F] (E : Weierstrass
   [E.IsElliptic] (p : ℕ) [hp : Fact p.Prime] [CharP F p]
 
 
+omit [IsAlgClosed F] [E.IsElliptic] hp [CharP F p] in
 theorem mem_torsionBy_natCast_iff (n : ℕ) (P : E.toAffine.Point) :
     P ∈ AddSubgroup.torsionBy E.toAffine.Point (n : ℤ) ↔ n • P = 0 :=
   AddSubgroup.torsionBy.nsmul_iff
 
 
+omit hp [CharP F p] in
 theorem finite_torsionBy_natCast {n : ℕ} (hn : n ≠ 0) :
     Finite (AddSubgroup.torsionBy E.toAffine.Point (n : ℤ)) := by
   have hn' : (n : ℤ) ≠ 0 := by exact_mod_cast hn

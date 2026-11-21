@@ -31,6 +31,7 @@ theorem map_thetaR' {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (σ :
   exact h _
 
 
+variable (E n) in
 def tF : GL (Fin n) (Af E) →* GL (Fin n) (Af E) := thetaR (GlobalTheory.ThetaPull.cFin E) n
 
 theorem thetaF_eq (g : GL (Fin n) (Af E)) : thetaF E n g = tF E n g := by

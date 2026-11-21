@@ -102,6 +102,7 @@ theorem tendsto_mul_completedLFunction_one_sub_of_forall :
   ring
 
 
+omit hτ in
 theorem residue_one_sub_ne_zero :
     ((normOneClassMeasure K univ).toReal : ℂ) * ((π : ℂ) ^ nrComplexPlaces K)⁻¹ *
       (χ.discrNormConductor : ℂ) ^ ((1 - (τ : ℂ) * I) / 2) *

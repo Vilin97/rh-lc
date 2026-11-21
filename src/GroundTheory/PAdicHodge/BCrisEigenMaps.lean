@@ -46,6 +46,8 @@ variable {L : IntermediateField ℚ_[p] (PadicAlgCl p)}
 
 
 
+include hζ in
+set_option maxHeartbeats 3200000 in
 theorem isUnit_of_galB_fixed [FiniteDimensional ℚ_[p] L] {B : BCris hε} (hB0 : B ≠ 0)
     (h : ∀ σ : Gal(PadicAlgCl p/L), galB hε σ B = B) : IsUnit B := by
   obtain ⟨k, hk, hBk⟩ := bCris_fixed_mem_maxUnramified hε hζ (K := L) B h

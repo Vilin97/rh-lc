@@ -132,6 +132,7 @@ theorem Lf_eq (D : D7) : (Formalism.L2.SG.InstExistsPf.instOf D).Lf =
   rfl
 
 
+set_option maxHeartbeats 2000000 in
 theorem mem_Kg_iff_redFn : ∀ (D : D7) (β : GL (Fin (Yc D 0).rank) (EAf D)) (x : (Formalism.L2.SG.InstExistsPf.instOf D).Gf) (g : ℕ),
     IsFrame β (Formalism.L2.Herm.crdLat (Yc D 0) (Yc D 0).L0) → x ∈ (Formalism.L2.SG.InstExistsPf.instOf D).Kset → 1 ≤ g →
     (Ideal.span {(g : 𝓞 D.host.E)}).IsRadical →

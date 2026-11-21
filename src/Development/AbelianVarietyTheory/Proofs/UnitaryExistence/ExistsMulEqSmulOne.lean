@@ -86,6 +86,7 @@ theorem exists_solutions {V : Type} (F : Type) [CommRing V] [IsDomain V] [Field 
     exact isUnit_of_dvd_one h1
 
 
+open IsLocalRing in
 theorem exists_mul_eq_one {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] (e : ℕ) {m n : Type}
     [Fintype m] [DecidableEq m] [Fintype n] (C : Matrix m n R)
     (hC : ∀ u, u ᵥ* C.map (Ideal.Quotient.mk (maximalIdeal R ^ (e + 1))) = 0 → u = 0) :
@@ -115,6 +116,7 @@ theorem exists_mul_eq_one {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuat
   exact ⟨Matrix.of Q * (C * Matrix.of Q)⁻¹, by rw [← Matrix.mul_assoc, Matrix.mul_nonsing_inv _ hu]⟩
 
 
+open NumberField TensorProduct in
 theorem finrank_int_eq (E : Type) [Field E] [NumberField E] (X : Type) [AddCommGroup X] [Module (𝓞 E) X] :
     Module.finrank ℤ X = Module.finrank ℚ E * Module.finrank (𝓞 E) X := by
   rw [← (TensorProduct.isBaseChange ℤ X ℚ).finrank_eq, ← (TensorProduct.isBaseChange (𝓞 E) X E).finrank_eq,
@@ -261,6 +263,7 @@ theorem exists_matrix_torus {S X : Type} [CommRing S] [AddCommGroup X] {G : Over
   exact prodPts_prodPts hv.1 _ fun i => C i
 
 
+open IsLocalRing ReciprocityTheory.ChartRestriction.G.Out in
 theorem exists_matrix_level {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     {D : DegData R (maximalIdeal R)} {P : PolAV (Sp (FractionRing R))} {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G]
     (U : UnifPre (maximalIdeal R) D P G) {O : Type} [CommRing O] [StarRing O] [Module O D.toPre.X] {oD : D.OAct O}
@@ -306,6 +309,7 @@ theorem exists_matrix_level {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValu
   simp [Matrix.mul_apply, vecMul, dotProduct, Diag.dualBasis_apply]
 
 
+open IsLocalRing ReciprocityTheory.ChartRestriction.G.Out in
 theorem finrank_le_of_lieMult {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     {D : DegData R (maximalIdeal R)} {P : PolAV (Sp (FractionRing R))} {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G]
     (U : UnifPre (maximalIdeal R) D P G) {O : Type} [CommRing O] [IsDomain O] [StarRing O] [Module.Finite ℤ O]

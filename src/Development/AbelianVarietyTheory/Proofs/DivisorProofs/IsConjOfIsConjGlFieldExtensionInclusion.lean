@@ -62,6 +62,7 @@ end GlobalTheory.Shin.ConjDesc
 namespace GlobalTheory.Shin
 
 
+open ConjDesc in
 theorem isConj_of_isConj_incl : ∀ (F F' : Type) [Field F] [Field F'] [Algebra F F'] [Finite F'] (n : ℕ)
     (γ γ' : GL (Fin n) F), IsConj (incl F F' n γ) (incl F F' n γ') → IsConj γ γ' := by
   intro F F' _ _ _ _ n γ γ' hc

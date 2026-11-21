@@ -142,6 +142,7 @@ theorem homConstSet_pair_of_smul {E E' : CMCurve K} {𝔞 : (FractionalIdeal (�
   exact ⟨d⁻¹, inv_ne_zero hd, eq_image_mul_inv hd hset, eq_image_mul_inv (inv_ne_zero hd) hset'⟩
 
 
+include hK in
 theorem homConstSet_symm {E E' : CMCurve K} {𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ} {b : ℂ} (hb : b ≠ 0)
     (hset : (homConstSet E.curve E'.curve : Set ℂ) = (b * ·) '' idealLattice σ₀ ↑𝔞⁻¹) :
     (homConstSet E'.curve E.curve : Set ℂ) = (b⁻¹ * ·) '' idealLattice σ₀ ↑𝔞 := by
@@ -234,6 +235,7 @@ variable {K : Type*} [Field K] [NumberField K] (σ₀ : K →+* ℂ) (hK : finra
   [IsTotallyComplex K]
 
 
+include hK in
 theorem degree_eq_absNorm {E E' : CMCurve K} (v : HeightOneSpectrum (𝓞 K))
     (hv : (Ideal.absNorm v.asIdeal).Prime) (φ : Isogeny E.curve E'.curve)
     (hφ : (homConstSet E.curve E'.curve : Set ℂ) =
@@ -328,6 +330,7 @@ theorem degree_eq_absNorm {E E' : CMCurve K} (v : HeightOneSpectrum (𝓞 K))
     exact inv_absNorm_notMem_inv v hK hv hx
 
 
+include hK in
 theorem exists_isogeny_homConstSet_eq {E E' : CMCurve K} (v : HeightOneSpectrum (𝓞 K))
     (h : (ellMulAction σ₀ hK).smul
       (ClassGroup.mk0 ⟨v.asIdeal, mem_nonZeroDivisors_of_ne_zero v.ne_bot⟩) E.toEll = E'.toEll) :

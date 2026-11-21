@@ -12,6 +12,7 @@ open MvPolynomial Formalism.BasicNotions Formalism.MainNotions.product_first_zer
 open scoped ComplexOrder
 
 
+set_option maxHeartbeats 1000000 in
 theorem normClsAt_of_tors (hT : ChiTors) : NormClsAt := by
   intro D u Ch chOf Tf hL hBe h s x Pc hPc Qc hQc o ho o' ho' c
   classical

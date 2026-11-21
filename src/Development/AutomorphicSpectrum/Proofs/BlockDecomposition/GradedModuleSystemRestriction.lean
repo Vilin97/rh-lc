@@ -28,6 +28,7 @@ set_option autoImplicit false
 namespace GlobalTheory.CompanionTheory.FormalAlg.Lift.Glue
 
 
+open MvPolynomial in
 theorem exists_finite_sub (ι : Type) [LinearOrder ι] [Fintype ι] (R : Type)
     [CommRing R] (G : Type) [AddCommGroup G] [Module R G] [Module (MvPolynomial ι R) G]
     [IsScalarTower R (MvPolynomial ι R) G] (𝒢 : ℤ → Submodule R G) [PolyGradedSMul ι 𝒢]

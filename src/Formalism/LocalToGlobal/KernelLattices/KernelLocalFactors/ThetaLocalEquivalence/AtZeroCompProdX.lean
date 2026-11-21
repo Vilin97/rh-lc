@@ -45,6 +45,7 @@ theorem cnt_toList {κ : Type} [DecidableEq κ] (α : κ →₀ ℕ) (i : κ) :
   exact Multiset.filter_congr fun j _ => eq_comm
 
 
+open Classical in
 theorem iter_eq_derivAt0 (G : VCx ι a b → ℂ) (hG : ContDiff ℂ ⊤ G) (m : DVar ι a b →₀ ℕ) (k : ℕ) (hk : k = Multiset.card m.toMultiset)
     (r : Fin k → DVar ι a b) (hr : ∀ i, (Finset.univ.filter fun j => r j = i).card = m i) :
     iteratedFDeriv ℂ k G 0 (fun j => coordX (r j)) = derivAt0 G m := by

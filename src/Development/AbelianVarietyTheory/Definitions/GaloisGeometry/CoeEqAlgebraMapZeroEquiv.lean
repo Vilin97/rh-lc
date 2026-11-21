@@ -65,6 +65,7 @@ section Pull
 variable {X' : Scheme.{0}} {s : X ⟶ Sp k} {s' : X' ⟶ Sp k} {f : X' ⟶ X}
 
 
+variable (s s' f) in
 def appSec (U : X.Opens) : Sec s U →+* Sec s' (f ⁻¹ᵁ U) := (f.app U).hom
 
 omit [CommRing k] in
@@ -121,6 +122,7 @@ section Pull3
 variable {X' : Scheme.{0}} {s : X ⟶ Sp k} {s' : X' ⟶ Sp k} {f : X' ⟶ X}
 
 
+variable (s) in
 def toOmega (j : ℕ) : formsPre s j ⟶
     (SheafOfModules.forget _ ⋙ PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).obj
       (Omega s j) :=

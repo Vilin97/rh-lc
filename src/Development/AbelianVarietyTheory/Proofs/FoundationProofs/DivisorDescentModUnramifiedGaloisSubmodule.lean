@@ -12,6 +12,8 @@ open scoped nonZeroDivisors
 namespace GlobalTheory.DivisorDescent
 
 
+open IsDedekindDomain in
+open scoped nonZeroDivisors Pointwise in
 theorem _root_.GlobalTheory.DivisorDescent.exists_pow_eq_of_dvd_count {R L : Type} [CommRing R] [IsDedekindDomain R]
     [Field L] [Algebra R L] [IsFractionRing R L] (N : ℕ) (I : FractionalIdeal R⁰ L) (hI : I ≠ 0)
     (h : ∀ v : HeightOneSpectrum R, (N : ℤ) ∣ FractionalIdeal.count L v I) :
@@ -33,6 +35,8 @@ theorem _root_.GlobalTheory.DivisorDescent.exists_pow_eq_of_dvd_count {R L : Typ
   rw [← zpow_natCast, ← zpow_mul, mul_comm, Int.mul_ediv_cancel' (h v)]
 
 
+open IsDedekindDomain in
+open scoped nonZeroDivisors Pointwise in
 theorem _root_.GlobalTheory.DivisorDescent.exists_pow_class {A : Type} [CommRing A]
     [IsDedekindDomain A] (N : ℕ)
     (hCl : ∀ c : ClassGroup A, ∃ d, c = d ^ N) (a : Ideal A) (ha : a ≠ ⊥) :
@@ -193,6 +197,8 @@ private theorem count_algebraMap_of_unramified_lemma_6 {A₀ R K₀ L : Type} [C
   exact_mod_cast (neg_injective (WithZero.exp_injective hv)).symm
 
 
+open IsDedekindDomain in
+open scoped nonZeroDivisors Pointwise in
 theorem _root_.GlobalTheory.DivisorDescent.descent_submodule : ∀ (A₀ R K₀ L : Type) [CommRing A₀]
     [IsDedekindDomain A₀] [CommRing R] [IsDedekindDomain R] [Field K₀] [Field L]
     [Algebra A₀ K₀] [IsFractionRing A₀ K₀] [Algebra R L] [IsFractionRing R L] [Algebra A₀ R]

@@ -25,6 +25,7 @@ variable {E : Type*} [AddCommGroup E] [Module (𝓞 K) E] [Module.Finite (𝓞 K
   [Module.Projective (𝓞 K) E]
 
 
+omit [Module.Projective (𝓞 K) E] in
 theorem finite_quotient_span {ι : Type*} [Fintype ι] {s : ι → E} (hs : LinearIndependent (𝓞 K) s)
     (hcard : Fintype.card ι = Module.finrank (𝓞 K) E) :
     Finite (E ⧸ Submodule.span (𝓞 K) (Set.range s)) := by
@@ -156,6 +157,7 @@ def degreeWith (h : HermitianMetric K E) {ι : Type*} [Fintype ι] [DecidableEq 
 section Index
 
 
+omit [NumberField K] [Module.Finite (𝓞 K) E] [Module.Projective (𝓞 K) E] in
 theorem card_quotient_range_comp {M : Type*} [AddCommGroup M] [Module (𝓞 K) M]
     (Φ : M →ₗ[𝓞 K] E) (hΦ : Function.Injective Φ) (g : M →ₗ[𝓞 K] M) :
     Nat.card (E ⧸ LinearMap.range (Φ ∘ₗ g)) =
@@ -214,6 +216,7 @@ section Degree
 variable (h : HermitianMetric K E)
 
 
+omit [NumberField K] [Module.Finite (𝓞 K) E] [Module.Projective (𝓞 K) E] in
 theorem linearCombination_comb {ι : Type*} [Fintype ι] (s : ι → E) (A : Matrix ι ι (𝓞 K)) :
     Fintype.linearCombination (𝓞 K) s ∘ₗ A.mulVecLin =
       Fintype.linearCombination (𝓞 K) (fun j ↦ ∑ i, A i j • s i) := by
@@ -292,6 +295,7 @@ theorem degreeWith_eq_of_linearIndependent {ι : Type*} [Fintype ι] [DecidableE
   rw [← degreeWith_comb h ht hcard D hD, hu2, ← hu1, degreeWith_comb h hs hcard A hA]
 
 
+omit [NumberField K] [Module.Projective (𝓞 K) E] in
 theorem exists_linearIndependent_fin :
     ∃ s : Fin (Module.finrank (𝓞 K) E) → E, LinearIndependent (𝓞 K) s := by
   obtain ⟨S, hS, hli⟩ := exists_set_linearIndependent_of_isDomain (𝓞 K) E

@@ -29,6 +29,10 @@ def latM (𝔞 : Frac F) : FractionalIdeal (𝓞 F)⁰ F :=
 def nrm (𝔞 : Frac F) : ℝ := (FractionalIdeal.absNorm (𝔞 : FractionalIdeal (𝓞 F)⁰ F) : ℝ)
 
 
+open NumberField Complex in
+open scoped nonZeroDivisors ContDiff in
+variable (F : Type) [Field F] [NumberField F] in
+variable {F} in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.latM_eq_dual (𝔞 : _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.Frac F) :
     _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.latM 𝔞 =
       FractionalIdeal.dual ℤ ℚ (𝔞 : FractionalIdeal (𝓞 F)⁰ F) := by
@@ -37,6 +41,10 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.latM_e
     Units.val_inv_eq_inv_val]
 
 
+open NumberField Complex in
+open scoped nonZeroDivisors ContDiff in
+variable (F : Type) [Field F] [NumberField F] in
+variable {F} in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.unit_inv_mul (ε : (𝓞 F)ˣ) :
     (((ε⁻¹ : (𝓞 F)ˣ) : 𝓞 F) : F) * ((ε : 𝓞 F) : F) = 1 := by
   norm_cast; simp
@@ -132,6 +140,10 @@ def HeckeWeightTwo : Prop :=
       DifferentiableOn ℂ (G 0) (upperHalf F) ∧ HasExpansion 𝔞 𝔟 2 (G 0)
 
 
+open NumberField Complex in
+open scoped nonZeroDivisors ContDiff in
+variable (F : Type) [Field F] [NumberField F] in
+variable {F} in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.prod_emb [IsTotallyReal F] (x : F) :
     ∏ τ : _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.Emb F, ((τ x : ℝ) : ℂ) = ((Algebra.norm ℚ x : ℚ) : ℂ) := by
   have h1 := Algebra.norm_eq_prod_embeddings ℚ ℂ x
@@ -154,6 +166,10 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.prod_e
   rw [h2, h3]
 
 
+open NumberField Complex in
+open scoped nonZeroDivisors ContDiff in
+variable (F : Type) [Field F] [NumberField F] in
+variable {F} in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.eisTerm_unit [IsTotallyReal F] {k : ℕ} (hk : Even k)
     (σ : ℂ) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.Emb F → ℂ) (ε : (𝓞 F)ˣ) (a b : F) :
     _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.eisTerm k σ z (((ε : 𝓞 F) : F) * a, ((ε : 𝓞 F) : F) * b) =
@@ -172,6 +188,10 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.eisTer
     simp [hk.neg_pow, inv_neg, norm_neg]
 
 
+open NumberField Complex in
+open scoped nonZeroDivisors ContDiff in
+variable (F : Type) [Field F] [NumberField F] in
+variable {F} in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.eisClass_mk [IsTotallyReal F] (𝔞 𝔟 : _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.Frac F)
     {k : ℕ} (hk : Even k) (σ : ℂ) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.Emb F → ℂ)
     (p : _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.LatPair 𝔞 𝔟) :
@@ -185,6 +205,10 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.eisCla
   rw [hp, _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.eisTerm_unit hk]
 
 
+open NumberField Complex in
+open scoped nonZeroDivisors ContDiff in
+variable (F : Type) [Field F] [NumberField F] in
+variable {F} in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.qClass_mk (𝔞 𝔟 : _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.Frac F) (k : ℕ)
     (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.Emb F → ℂ) (p : _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.QPair 𝔞 𝔟) :
     _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.qClass 𝔞 𝔟 k z (Quotient.mk _ p) =
@@ -202,6 +226,10 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.qClass
   rw [hn, hmul]
 
 
+open NumberField Complex in
+open scoped nonZeroDivisors ContDiff in
+variable (F : Type) [Field F] [NumberField F] in
+variable {F} in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.latPt_ne_zero {z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.Emb F → ℂ}
     (hz : z ∈ _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.upperHalf F) {p : F × F} (hp : p ≠ 0) (τ : _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.Emb F) :
     _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.latPt z p τ ≠ 0 := by

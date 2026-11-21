@@ -77,6 +77,7 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type} {A3 : FamIn
   [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
 
+set_option maxHeartbeats 4000000 in
 theorem nexp_upd (R : RealDat3 D A3 Ks) (cG : G0 R.Pg D.R.r ≃* G0g D.nd) (S : RatDat D.ntw) (n : NExpRealS R cG S)
     (lam : type_of% R.lam3) (err : type_of% R.err0) :
     ∃ (Sx : RatDat D.ntw) (n' : NExpRealS ((R.updS R.kap lam).withErr err) cG Sx), HEq Sx S ∧ HEq n'.eF n.eF ∧ HEq n'.fi n.fi :=

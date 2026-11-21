@@ -31,6 +31,7 @@ variable {K : Type} [Field K] (σ : K →+* ℂ) [Algebra K ℂ⸨X⸩]
   {v : ℂ} (hv : v ≠ 0)
 
 
+include hK in
 theorem hasSum_algebraMap_const (v : ℂ) (x : K) :
     HasSum (fun n : ℤ => (algebraMap K ℂ⸨X⸩ x).coeff n * v ^ n) (σ x) := by
   rw [hK, HahnSeries.ofPowerSeries_C, HahnSeries.C_apply]

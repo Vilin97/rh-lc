@@ -18,6 +18,7 @@ universe u
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} {F : Type*} [Field F]
 
 
+omit [DecidableEq K] in
 theorem chartMonomial_add (u : ∀ k, ι k) (a c : K → ℕ) :
     (chartMonomial u (a + c) : MRing ι F) = chartMonomial u a * chartMonomial u c := by
   simp only [chartMonomial, Pi.add_apply, pow_add, Finset.prod_mul_distrib]

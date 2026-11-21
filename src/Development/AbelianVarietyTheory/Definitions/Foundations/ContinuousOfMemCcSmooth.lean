@@ -40,6 +40,7 @@ theorem exists_biinvariant (h : f ∈ SB G) :
 variable [MeasurableSpace G] {μ : Measure G}
 
 
+omit [IsTopologicalGroup G] in
 theorem conv_eq_zero {y : G} (h : y ∉ tsupport f * tsupport f') : conv μ f f' y = 0 := by
   have : ∀ x, f x * f' (x⁻¹ * y) = 0 := fun x => by
     by_contra hne

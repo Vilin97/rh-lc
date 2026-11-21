@@ -17,6 +17,7 @@ variable {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [Comple
   {η H : ℕ}
 
 
+omit [CompleteSpace K] in
 theorem conn_mem_ext_Rpi (D : BKDat O K l e a ι η H) {y : Vec K a ι}
     (hy : y ∈ D.ext (Rpi O K l e)) : D.conn y ∈ D.ext (Rpi O K l e) := by
   have hf : ∀ i τ, (Matrix.mulVec (D.mxInv τ) (y τ)) i ∈ Rpi O K l e := fun i τ =>

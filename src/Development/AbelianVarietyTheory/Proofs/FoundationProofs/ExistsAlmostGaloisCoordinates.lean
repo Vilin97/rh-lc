@@ -121,6 +121,7 @@ theorem rep_of_span {T : Tower p Ω} {n : ℕ} {r : Ω}
 end GlobalTheory.KumDlog.AlmostGal
 
 
+open GlobalTheory.KumDlog.AlmostGal in
 theorem GlobalTheory.KumDlog.almostGal_coord : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∀ (Ω : Type) [Field Ω]
     [Algebra (O0 p) Ω], IsClo p Ω → ∀ (T : Tower p Ω) (n : ℕ) (r : Ω), IsInt p r →
     (∀ h ∈ Hinf T, ∃ i : ℕ, h r = T.ζ n ^ i * r) →

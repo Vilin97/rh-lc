@@ -35,6 +35,7 @@ theorem stalk_value (hg : IsCptGen ξ) {R : Type} [CommRing R] [IsLocalRing R] (
   exact e2
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem spec_square {F : Type} [Field F] (θ : Ω →+* F) {A : Subring F} [IsLocalRing A]
     (z : Spec (CommRingCat.of A) ⟶ X) (h : genPt ξ ⤳ centre z)
     (hs : ∀ s : X.presheaf.stalk (centre z),

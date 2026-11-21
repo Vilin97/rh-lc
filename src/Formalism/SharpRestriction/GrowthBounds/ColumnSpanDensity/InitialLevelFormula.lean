@@ -11,6 +11,7 @@ namespace Formalism.MainNotions.flipOneThree.Pf
 open Formalism.MainNotions.G Formalism.MainNotions.flipOneThree
 
 
+open Classical in
 def RestOddTops : Prop :=
   ∀ (n' : ℕ) (TT : Finset (Fin n')), 2 ≤ numSeg TT → ∀ f : Fin n' → Fin n' → ℕ → ℝ,
     ∑ j : Fin (numSeg TT), ∑ i : Fin (segS TT j), f (segPos TT j i) (segStart TT j) ((segDists TT j).get i) =

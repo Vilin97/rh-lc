@@ -67,6 +67,7 @@ theorem exists_flat_away {A B : Type} [CommRing A] [CommRing B] [IsDomain A] [Is
     (IsLocalizedModule.iso (Submonoid.powers r) (IsScalarTower.toAlgHom A B C).toLinearMap).symm
 
 
+open UnramifiedEndFlat in
 theorem exists_open_flat {X Y : Scheme.{0}} [IrreducibleSpace X] [IsIntegral Y]
     [IsLocallyNoetherian Y] (f : X ⟶ Y) [IsFinite f]
     (hf : f (genericPoint X) = genericPoint Y) :
@@ -95,6 +96,7 @@ theorem exists_open_flat {X Y : Scheme.{0}} [IrreducibleSpace X] [IsIntegral Y]
 end FiniteEndFlat
 
 
+open UnramifiedEndFlat FiniteEndFlat in
 theorem flat_and_surjective_of_isFinite_grpEnd (K : Type) [Field K] [IsAlgClosed K]
     (G : Over (Spec (CommRingCat.of K))) [GrpObj G] [IsIntegral G.left]
     [LocallyOfFiniteType G.hom] (φ : G ⟶ G) [IsMonHom φ] [IsFinite φ.left] :

@@ -45,6 +45,7 @@ theorem hTens_mul_vecMulVec {R A : Type} [CommRing R] [CommRing A] [Algebra R A]
 end GlobalTheory.ThK.SympVan
 
 
+open GlobalTheory.ThK.SympVan in
 theorem GlobalTheory.ThK.symp_shiftA_vanish : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a') (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')),
     CfgA B G G₁ H H' → ∀ (z : Matrix (Fin b) (Fin (b + a')) (AE F E)) (l : (AE F E)ˣ),

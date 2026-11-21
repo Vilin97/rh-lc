@@ -119,6 +119,7 @@ theorem fockOp_apply {q : Tens F p₁ q₁ r s →ₗ[ℂ] P} {w : InfinitePlace
   rw [fockOp_eq hq hK, indOp_apply hq (hK Y)]
 
 
+variable (r s) in
 def negT : Mat r s →ₗ[ℂ] Mat r s where
   toFun Y := -Yᵀ
   map_add' Y Z := by rw [Matrix.transpose_add, neg_add]

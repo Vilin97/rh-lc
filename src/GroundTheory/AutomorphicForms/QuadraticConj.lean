@@ -32,6 +32,7 @@ theorem conjLinear_one : conjLinear F E 1 = 1 := by
   simpa using conjLinear_algebraMap (F := F) (E := E) 1
 
 
+omit [Algebra.IsQuadraticExtension F E] in
 theorem linearIndependent_one_of_not_mem [Nontrivial E] {x : E}
     (hx : x ∉ Set.range (algebraMap F E)) : LinearIndependent F ![1, x] := by
   rw [LinearIndependent.pair_iff]

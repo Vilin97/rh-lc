@@ -23,6 +23,7 @@ noncomputable section
 namespace GlobalTheory.ConeExch
 
 
+open scoped Classical in
 theorem admissible_integral_exchange {F : Type} [Field F] [NumberField F] {κ T : Type} [Fintype κ] [MeasurableSpace T] (μ : Measure T) {m : ℕ}
     (φ : Fin m → (κ → Af F) → ℂ) (hφ : ∀ j, φ j ∈ SB _) (f : Fin m → T → SInf F κ)
     (hm : ∀ j y, AEStronglyMeasurable (fun t => f j t y) μ)
@@ -48,6 +49,7 @@ theorem admissible_integral_exchange {F : Type} [Field F] [NumberField F] {κ T 
   exact Finset.sum_congr rfl fun j _ => (hL j _).2
 
 
+open scoped Classical in
 theorem proj_mem_adm {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] (y : κ → AF F) :
     (LinearMap.proj y : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ) ∈ (adeleClass F).adm κ := fun g _ =>
   ⟨g (fun i => (y i).2) • (BoundedContinuousFunction.evalCLM ℂ fun i => InfiniteAdeleRing.ringEquiv_mixedSpace F (y i).1).comp

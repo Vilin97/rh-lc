@@ -272,6 +272,7 @@ theorem pair_le {I J : Type} [Countable I] [Countable J]
     exact ⟨e1, (inv_mul_eq_one.1 e2).symm⟩
 
 
+variable (E j) in
 abbrev Cls : Type :=
   Quot (fun Λ Λ' : {Λ : Submodule (𝓞 E) (Fin j → E) // Submodule.IsLattice E Λ} =>
       ∃ γ : GL (Fin j) E, ∀ y, (γ : Matrix (Fin j) (Fin j) E) *ᵥ y ∈ Λ'.1 ↔ y ∈ Λ.1)

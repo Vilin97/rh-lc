@@ -52,6 +52,7 @@ def placeUnder {K : Type} [Field K] (σ₀ : K →+* ℂ) {M : IntermediateField
   InfinitePlace.mk ((ρ : M →+* ℂ).comp (σ₀.codRestrict M h))
 
 
+open Classical in
 def JetsInField {X : Fields} (A : Amb X) (a b : ℕ) (Sb : Finset (HeightOneSpectrum (𝓞 X.E))) (Md : ℕ) (deg : X.Tau → ℤ) : Prop :=
   ∀ (L : Submodule (𝓞 X.E) (Sp X.E a)) (L' : Submodule (𝓞 X.E) (Sp X.E b)) (c : ℕ) (x : HomE X.E a b),
     InRange Sb Md c L L' x → ∀ e : DVar X.Tau a b →₀ ℕ,
@@ -104,9 +105,11 @@ def HostTie : Prop :=
     HEq N.H D.host.toHostAx
 
 
+variable {N s Pr} in
 theorem HostTie.host_heq (h : HostTie N s Pr) : HEq N.H D.host.toHostAx := h.2.2.2.2.2.2.2.2.2.2.2.2.2.2
 
 
+variable {N s Pr} in
 theorem HostTie.rd_eq (h : HostTie N s Pr) : N.rd = D.host.rdE := by
   have hH := h.host_heq
   have hR := h.1
@@ -117,6 +120,7 @@ theorem HostTie.rd_eq (h : HostTie N s Pr) : N.rd = D.host.rdE := by
   rfl
 
 
+variable {N s Pr} in
 theorem HostTie.cond_eq (h : HostTie N s Pr) : N.cond = D.host.condN := by
   have hH := h.host_heq
   have hR := h.1
@@ -127,6 +131,7 @@ theorem HostTie.cond_eq (h : HostTie N s Pr) : N.cond = D.host.condN := by
   rfl
 
 
+variable {N s Pr} in
 theorem HostTie.pr_cond (h : HostTie N s Pr) : Pr.cond = D.host.condN :=
   h.2.2.2.2.2.2.2.2.2.2.2.1.trans h.cond_eq
 

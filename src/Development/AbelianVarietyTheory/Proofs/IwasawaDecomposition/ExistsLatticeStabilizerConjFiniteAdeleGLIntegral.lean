@@ -97,6 +97,7 @@ theorem emb_mulVec {n : ℕ} (A : Matrix (Fin n) (Fin n) F) (y : Fin n → F) :
   exact (RingHom.map_mulVec (algebraMap F (FiniteAdeleRing (𝓞 F) F)) A y i).symm
 
 
+variable (F) in
 def lat {n : ℕ} (s : GL (Fin n) (FiniteAdeleRing (𝓞 F) F)) : Submodule (𝓞 F) (Fin n → F) where
   carrier := {y | IntV (((s⁻¹ : GL (Fin n) _) : Matrix (Fin n) (Fin n) _) *ᵥ emb y)}
   add_mem' := by
@@ -222,6 +223,7 @@ theorem matInt_conj {n : ℕ} (s : GL (Fin n) (FiniteAdeleRing (𝓞 F) F)) (γ 
 end GlobalTheory.StabLat
 
 
+open GlobalTheory.StabLat in
 theorem GlobalTheory.StabLat.exists_lattice_stab_conj :
     ∀ (F : Type) [Field F] [NumberField F] (n : ℕ) (s : GL (Fin n) (FiniteAdeleRing (𝓞 F) F)),
       ∃ Λ : Submodule (𝓞 F) (Fin n → F), Submodule.IsLattice F Λ ∧ ∀ γ : GL (Fin n) F,

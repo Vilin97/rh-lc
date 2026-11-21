@@ -156,6 +156,7 @@ private theorem polynomial_eventually_ne_zero_lemma_3 {ρ : Polynomial ℂ} (hρ
   exact ht
 
 
+open Filter Topology Asymptotics in
 theorem _root_.GlobalTheory.exists_mvPolynomial_of_poly_bound_off_hypersurface :
     ∀ (d m : ℕ) (q : MvPolynomial (Fin d) ℂ) (f : (Fin d → ℂ) → ℂ) (C : ℝ), q ≠ 0 →
       DifferentiableOn ℂ f {x | MvPolynomial.eval x q ≠ 0} →

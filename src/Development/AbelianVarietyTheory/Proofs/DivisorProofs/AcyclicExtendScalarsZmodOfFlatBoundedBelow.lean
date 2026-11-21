@@ -39,6 +39,7 @@ lemma nsmul_self_eq_zero (q : ℕ) {F : Shv (ZMod q)} {U : Scheme.{0}} (z : Sec 
 end GlobalTheory.EtC.FlatExtAcyc
 
 
+open GlobalTheory.EtC.FlatExtAcyc in
 theorem GlobalTheory.EtC.flatExtAcyc.main : ∀ (Q q : ℕ) [NeZero Q] (hq : q ∣ Q) (K : Cx (ZMod Q)) (a : ℤ) [K.IsStrictlyGE a], (∀ n, FlatS (K.X n)) → K.Acyclic → (extCx (ZMod.castHom hq (ZMod q)) K).Acyclic := by
   intro Q q _ hq K a _ hflat hK
   have hqe : q * (Q / q) = Q := Nat.mul_div_cancel' hq

@@ -11,6 +11,7 @@ open Module Function
 namespace GlobalTheory
 
 
+open Module Function in
 theorem _root_.GlobalTheory.exists_symplectic_coordinates_adapted {Λ : Type*} [AddCommGroup Λ] [Module.Free ℤ Λ]
     [Module.Finite ℤ Λ] {ω : LinearMap.BilinForm ℤ Λ} (hω : ω.IsAlt) (hp : Bijective ω)
     {I : Submodule ℤ Λ} (hsat : ∀ (k : ℤ) (x : Λ), k ≠ 0 → k • x ∈ I → x ∈ I)

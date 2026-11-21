@@ -16,6 +16,7 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.Inde
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n : ℕ}
 
 
+variable (σ) in
 def growForms (Y : Spc F E n) : Set (modFun σ Y →ₗ[ℂ] ℂ) := {μ | IsGrowForm μ}
 
 def EisHalf : Prop :=

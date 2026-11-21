@@ -80,6 +80,7 @@ theorem comp_cast (N N' : ℕ) (e : N' = N) (hp : -(N : ℤ) = -(N' : ℤ)) (w :
   simp
 
 
+include hF in
 theorem exists_cochain : ∃ η : Cochain ((chains R).obj E) K k,
     ∀ (N : ℕ) (w : ℤ) (h : -(N : ℤ) + k = w) (U : Scheme.{0}) (x : Sx E N U), ev η N w h U x = F N w h U x := by
   refine ⟨Cochain.mk fun p q hpq => if hp : p ≤ 0 then

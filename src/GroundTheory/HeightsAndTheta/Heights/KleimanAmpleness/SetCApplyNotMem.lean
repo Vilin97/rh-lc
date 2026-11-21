@@ -38,6 +38,7 @@ theorem rem_apply_subset (I : ∀ k, Finset (ι k)) (p : Σ k, ι k) (l : K) : r
   · rw [rem_apply_of_ne i hl]
 
 
+omit [∀ k, LinearOrder (ι k)] in
 theorem offset_update (I : ∀ k, Finset (ι k)) (k : K) (X : Finset (ι k)) :
     ∑ l ∈ Finset.univ.filter (· < k), ((Function.update I k X l).card - 1) =
       ∑ l ∈ Finset.univ.filter (· < k), ((I l).card - 1) :=
@@ -220,6 +221,7 @@ theorem sum_addC {M : Type} [AddCommMonoid M] (c : ∀ k, ι k) (I : ∀ k, Fins
   exact Finset.sum_congr rfl fun l hl => by rw [addC_apply_of_ne c I (Finset.ne_of_mem_erase hl)]
 
 
+omit [Fintype K] in
 theorem telescope {M : Type} [AddCommGroup M] (g : Finset K → M) (s : Finset K) :
     ∑ k ∈ s, (g (s.filter (· < k)) - g (s.filter (· ≤ k))) = g ∅ - g s := by
   induction s using Finset.induction_on_max with
@@ -554,6 +556,7 @@ theorem dif_projOp (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {f : (∀ k, Finset (ι k)
     · intro h; exact absurd (Finset.mem_univ j) h
 
 
+omit [∀ k, LinearOrder (ι k)] in
 theorem projOp_projOp (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) (f : (∀ k, Finset (ι k)) → Ω) (T : Finset K) {k : K}
     (hk : k ∉ T) (I : ∀ k, Finset (ι k)) :
     projOp y c T (projOp y c {k} f) I = projOp y c (insert k T) f I := by
@@ -706,6 +709,7 @@ theorem supp_extC {m : ℕ} {G : (∀ k, Finset (ι k)) → Submodule S Ω} {s :
   · rfl
 
 
+omit [Fintype K] in
 theorem G_fill {G : (∀ k, Finset (ι k)) → Submodule S Ω}
     (hins : ∀ I : ∀ k, Finset (ι k), (∀ k, (I k).Nonempty) → ∀ k,
       G (Function.update I k (insert (c k) (I k))) = G I)
@@ -764,6 +768,7 @@ theorem homot_mem (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {G : (∀ k, Finset (ι k))
 end CellContract
 
 
+open CellContract in
 theorem CellContract.proof : CellContract.Statement := by
   intro S _ K _ _ ι _ _ Ω _ _ y G c hc hbot hmono hins q s hs hds
   have hf := supp_extC S hs hbot

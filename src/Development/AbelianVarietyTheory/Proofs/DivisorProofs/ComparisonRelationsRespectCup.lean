@@ -40,6 +40,7 @@ theorem wedge_mem_N {x y : Ω[B⁄R]} (h : x ∈ N1 R δ ∨ y ∈ N1 R δ) : we
   · exact Ideal.mul_mem_left _ _ h
 
 
+variable (R) in
 def kwedge : K1 R δ →ₗ[B] K1 R δ →ₗ[B] K R δ 2 :=
   LinearMap.liftQ₂ _ _ ((wedge R B).compr₂ (N R δ 2).mkQ)
     (fun x hx ↦ LinearMap.ext fun y ↦ (Submodule.Quotient.mk_eq_zero _).2 (wedge_mem_N δ (Or.inl hx)))

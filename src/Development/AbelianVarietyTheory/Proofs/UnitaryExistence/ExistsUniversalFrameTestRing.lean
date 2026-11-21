@@ -17,6 +17,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 namespace GlobalTheory.Frames
 
 
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
 theorem _root_.GlobalTheory.Frames.exists_univFrame_testRing : _root_.ReciprocityTheory.ChartRestriction.G.Out.SecBaseChangeSt → ∀ (E : Type) [Field E] [NumberField E]
     [IsCMField E] (H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H) (l : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H) (Xo : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Moduli Dw l)
     (c : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Coeff l) (p : _root_.Formalism.L2.Pj.TRing c.F) (y₀ : _root_.Formalism.L2.Pj.FrPt Xo c p.R),

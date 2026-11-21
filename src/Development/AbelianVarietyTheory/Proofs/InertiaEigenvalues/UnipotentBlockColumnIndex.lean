@@ -138,6 +138,7 @@ section Fn
 variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 
 
+omit [NumberField E] in
 theorem map_posU {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {ι : Type} [Fintype ι]
     {p : ι → Fin a × Fin a} (hp : IsNil p) (x : ι → R) :
     GeneralLinearGroup.map φ (posU hp x) = posU hp (fun t => φ (x t)) := by

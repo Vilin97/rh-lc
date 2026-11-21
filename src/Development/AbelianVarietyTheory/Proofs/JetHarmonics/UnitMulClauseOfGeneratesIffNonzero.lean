@@ -226,6 +226,7 @@ theorem generates_iff_secBGenerates (hS : SecBaseChangeSt) [IsNoetherianRing R] 
     ((generates_iff_smul _ g).1 H))
 
 
+omit [IsDomain R] in
 theorem exists_thick_pt {J : Ideal R} (hJ : J ≤ maximalIdeal R) (e : ℕ) (X : Over (Spec (CommRingCat.of R)))
     (x : X.left) (hx : X.hom x = closedPoint R) :
     ∃ y : (thickObj R J e X).left, pullback.fst X.hom (thick R J e) y = x := by

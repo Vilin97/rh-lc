@@ -35,6 +35,7 @@ theorem centre_mem {b : Module.Basis T ℤ (dualLattice F)} {b' : Module.Basis T
 end StackedExceptionalBaseBound
 
 
+open StackedExceptionalBaseBound in
 theorem DualStackedExcBaseLe.proof (hBihom : DualStackedGraphBihomog.Statement)
     (hLead : DualStackedExcLeadForm.Statement) : DualStackedExcBaseLe.Statement := by
   intro K _ _ i F F' T _ _ b b' a hi hlt hcov hab k _ α M hres

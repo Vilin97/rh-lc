@@ -124,6 +124,7 @@ variable (F : Type) [Field F] [NumberField F] (n : ℕ)
 abbrev ratAf : GL (Fin n) F →* GL (Fin n) (Af F) := Matrix.GeneralLinearGroup.map (algebraMap F (Af F))
 
 
+variable {F n} in
 def arith (g : GL (Fin n) (Af F)) (U : Subgroup (GL (Fin n) (Af F))) : Subgroup (GL (Fin n) F) :=
   (U.comap (MulAut.conj g⁻¹).toMonoidHom).comap (ratAf F n)
 

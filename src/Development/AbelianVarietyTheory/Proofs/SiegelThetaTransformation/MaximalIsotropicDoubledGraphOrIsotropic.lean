@@ -103,6 +103,7 @@ theorem coord_apply (p : (Fin r → E) × (Fin r → E)) :
 end GlobalTheory.SW.DblLag
 
 
+open GlobalTheory.SW.DblLag in
 theorem GlobalTheory.SW.lag_graph_or_isotropic : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (X : Data E r), (∀ γ γ' : GL (Fin r) E, IsUn X γ → IsUn X γ' → botSpan (iota X 1 γ) = botSpan (iota X 1 γ') → γ = γ') ∧ ∀ U : Lag E r, (∃ γ : GL (Fin r) E, IsUn X γ ∧ botSpan (iota X 1 γ) = U.1) ∨ ∃ ξ : Fin r → E, ξ ≠ 0 ∧ herm X.Gm ξ ξ = 0 ∧ Sum.elim ξ 0 ᵥ* dblT X ∈ U.1 := by
   intro E _ _ _ r X
   refine ⟨fun γ γ' _ _ h => ?_, ?_⟩

@@ -107,6 +107,7 @@ theorem volume_real_unitBall_pos : 0 < volume.real (Metric.ball (0 : E) 1) :=
   ENNReal.toReal_pos (Metric.measure_ball_pos _ _ one_pos).ne' measure_ball_lt_top.ne
 
 
+variable (E) in
 theorem two_div_sqrt_pow_le_volume_unitBall :
     (2 / √(finrank ℝ E : ℝ)) ^ finrank ℝ E ≤ volume.real (Metric.ball (0 : E) 1) := by
   let o := stdOrthonormalBasis ℝ E
@@ -134,6 +135,7 @@ theorem two_div_sqrt_pow_le_volume_unitBall :
   rwa [div_eq_mul_inv]
 
 
+variable (E) in
 theorem two_pow_div_volume_unitBall_le :
     2 ^ finrank ℝ E / volume.real (Metric.ball (0 : E) 1) ≤
       (finrank ℝ E : ℝ) ^ ((finrank ℝ E : ℝ) / 2) := by

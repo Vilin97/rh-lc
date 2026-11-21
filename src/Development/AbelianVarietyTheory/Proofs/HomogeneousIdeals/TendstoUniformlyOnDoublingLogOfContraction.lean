@@ -131,6 +131,7 @@ theorem tendstoUniformlyOn_doublingLog_of_contraction
   gcongr
 
 
+omit [CompleteSpace V] in
 theorem exists_ball_contraction
     (h : (fun x => ε x - (2 : ℂ)⁻¹ • x) =O[𝓝 0] fun x => ‖x‖ ^ 2) :
     ∃ r > 0, ∃ C ≥ 0, (∀ x ∈ ball (0 : V) r, ‖ε x‖ ≤ 5 / 8 * ‖x‖) ∧

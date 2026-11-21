@@ -122,6 +122,7 @@ end GlobalTheory.UnitRigidity
 namespace GlobalTheory
 
 
+open UnitRigidity in
 theorem unit_eq_one_of_axes_of_isGt :
     ∀ (K : Type) [Field K] [IsAlgClosed K] (E : SplitExt (Sp K)) (G : Over (Sp K)) [GrpObj G], E.IsGt G → ∀ u : Γ((G ⊗ G).left, ⊤), IsUnit u → (lift (𝟙 G) (1 : G ⟶ G)).left.appTop.hom u = 1 → (lift (1 : G ⟶ G) (𝟙 G)).left.appTop.hom u = 1 → u = 1 := by
   intro K _ _ E G _ h u hu u₁ u₂

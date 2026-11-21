@@ -1428,18 +1428,21 @@ theorem int_C (hW : WeylLevelElementFacts) (hEP : EabPres) (hQ : QMinorLeftH) (h
       (mB E l.succ (ho1 l hD.1) id id u) := int_minor hW hEP hQ hD id id u
 
 
+variable (E l) in
 def bE1 (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → ℂ) (u : ℂ) : Module.End ℂ (sfData E l.succ (ho1 l hD)).V :=
   mB E l.succ (ho1 l hD) id id (u - 1) * bTee E l hD u -
     ∑ w : Fin (mdim k r l.succ), ∑ x : Fin (mdim k r l.succ), ((((-1 : ℤ) ^ ((w : ℕ) + (x : ℕ)) : ℤ)) : ℂ) •
       (scaledRowVectorOperator E l hD z w * mB E l.succ (ho1 l hD) (skip1 w) (skip1 x) (u - 2) * (xv k r z' l.succ x • 1))
 
 
+variable (E l) in
 def borderedMinorLastColumn (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → ℂ) (u : ℂ) : Module.End ℂ (sfData E l.succ (ho1 l hD)).V :=
   bTss E l hD (u - (mdim k r l.succ : ℂ)) * mB E l.succ (ho1 l hD) id id u -
     ∑ w : Fin (mdim k r l.succ), ∑ x : Fin (mdim k r l.succ), ((((-1 : ℤ) ^ ((w : ℕ) + (x : ℕ)) : ℤ)) : ℂ) •
       (scaledColumnVectorOperator E l hD z x * mB E l.succ (ho1 l hD) (skip1 w) (skip1 x) u * (xbv k r z' l.succ w • 1))
 
 
+variable (E l) in
 def doubleRemovedMinorTerm (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → ℂ) (u : ℂ) : Module.End ℂ (sfData E l.succ (ho1 l hD)).V :=
   ∑ w : Fin (mdim k r l.succ), ∑ w' : Fin (mdim k r l.succ), ∑ x : Fin (mdim k r l.succ),
     ∑ x' : Fin (mdim k r l.succ), if w ≠ w' ∧ x ≠ x' then ((sg2 w w' * sg2 x x' : ℤ) : ℂ) •
@@ -1448,6 +1451,7 @@ def doubleRemovedMinorTerm (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → ℂ) 
         ((xv k r z' l.succ x' * xbv k r z' l.succ w') • 1)) else 0
 
 
+variable (E l) in
 def capelliDetFirstFactorOrder (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → ℂ) (u : ℂ) : Module.End ℂ (sfData E l.succ (ho1 l hD)).V :=
   bTee E l hD u * mB E l.succ (ho1 l hD) id id (u - 1) * bTss E l hD (u - (mdim k r l.succ : ℂ) - 1)
   - (∑ w : Fin (mdim k r l.succ), ∑ x : Fin (mdim k r l.succ), ((((-1 : ℤ) ^ ((w : ℕ) + (x : ℕ)) : ℤ)) : ℂ) •
@@ -1459,6 +1463,7 @@ def capelliDetFirstFactorOrder (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → �
   - doubleRemovedMinorTerm E l hD z z' u
 
 
+variable (E l) in
 def capelliDetSecondFactorOrder (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → ℂ) (u : ℂ) : Module.End ℂ (sfData E l.succ (ho1 l hD)).V :=
   bTss E l hD (u - (mdim k r l.succ : ℂ) - 1) * mB E l.succ (ho1 l hD) id id (u - 1) * bTee E l hD u
   - (∑ w : Fin (mdim k r l.succ), ∑ x : Fin (mdim k r l.succ), ((((-1 : ℤ) ^ ((w : ℕ) + (x : ℕ)) : ℤ)) : ℂ) •

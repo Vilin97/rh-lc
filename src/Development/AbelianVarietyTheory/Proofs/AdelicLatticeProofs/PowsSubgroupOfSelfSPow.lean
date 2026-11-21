@@ -14,6 +14,8 @@ open scoped WithZero TensorProduct
 namespace GlobalTheory.CNorm
 
 
+open NumberField IsDedekindDomain Polynomial in
+open scoped WithZero TensorProduct in
 theorem _root_.GlobalTheory.CNorm.pTor_pIdx_sUnits : ∀ (p : ℕ) (F : Type) [Field F] [NumberField F]
     (ζ : F) (S : Finset (HeightOneSpectrum (𝓞 F))), p.Prime → IsPrimitiveRoot ζ p →
     _root_.GlobalTheory.CNorm.pTor p (_root_.GlobalTheory.QNorm.sUnits F S) = p ∧

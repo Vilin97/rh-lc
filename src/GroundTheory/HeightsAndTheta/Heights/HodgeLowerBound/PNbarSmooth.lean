@@ -51,6 +51,7 @@ theorem hermOfFun_h_of_mem {P : Ideal (MRing ι)} (hP : IsMultiHomogIdeal P) {a 
 end NbarSmooth
 
 
+open MuRegSmooth TopNPoly NbarSmooth in
 theorem NbarSmooth.proof (hE : HermExtend.Statement) (hP : ProjSmoothAlong.Statement)
     (hVS : VertFactorSmooth.Statement) : NbarSmooth.Statement := by
   intro II Ψ _ _ K _ ι _ Ω _ _ E _ _ D O Lt _ _ _ X B p q t hsm

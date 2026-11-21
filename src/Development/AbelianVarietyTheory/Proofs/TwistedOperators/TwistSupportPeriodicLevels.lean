@@ -50,6 +50,7 @@ private theorem parPhi_add_eq_of_maxM {δ : kˣ →* ℂˣ} (hδ : IsTame δ) {x
   simp only [map_mul, tame_det_of_mem_KOne hδ hu, mul_one]
 
 
+open Classical in
 theorem parPhi_add {δ : kˣ →* ℂˣ} (hδ : IsTame δ) (x : Matrix (r ⊕ s) (r ⊕ s') k) {y : Matrix (r ⊕ s) (r ⊕ s') k}
     (hy : MaxM y) : parPhi δ (x + y) = parPhi δ x := by
   by_cases hx : parPhi δ x = 0

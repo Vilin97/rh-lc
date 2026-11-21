@@ -163,6 +163,7 @@ theorem Ψ_sub_one (m : Matrix (Fin 2) (Fin 2) (AF F)) : Ψ φ (m - 1) = Ψ φ m
 end GlobalTheory.QSA.Split
 
 
+open GlobalTheory.QSA.Split in
 theorem GlobalTheory.QSA.strongApprox_split : ∀ (F : Type) [Field F] [NumberField F] (a b : F), a ≠ 0 → b ≠ 0 → (∃ x : ℍ[F, a, b], x ≠ 0 ∧ nrm x = 0) → ∀ (S₁ : Finset (InfinitePlace F)) (S₂ : Finset (HeightOneSpectrum (𝓞 F))) (ε : AF F), IsPlacesIdem S₁ S₂ ε → (S₁.Nonempty ∨ S₂.Nonempty) → ∀ g : DA F a b, nrm g = 1 → g ∈ closure (H0 (a := a) (b := b) ε) := by
   intro F _ _ a b ha hb hiso S₁ S₂ ε hε hS g hg
   obtain ⟨φ, hφ⟩ := GlobalTheory.T.quaternion_split_of_isotropic_norm F a b ha hb hiso

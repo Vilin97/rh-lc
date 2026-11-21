@@ -210,6 +210,7 @@ theorem prodAt_base (S : Finset ι) :
     rw [prodAt_insert hc s _ hj, Module.End.mul_apply, ih, hs]
 
 
+omit hs in
 def res (a : ∀ i, G i → Module.End ℂ W) (i : ι) (w₀ : W) (g : G i) : Module.End ℂ (cyc a i w₀) :=
   (a i g).restrict (fun _ hx => apply_mem_cyc hx (gen_mem_alg i g))
 

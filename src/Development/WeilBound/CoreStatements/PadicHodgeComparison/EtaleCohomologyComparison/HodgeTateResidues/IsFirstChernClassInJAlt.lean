@@ -157,6 +157,7 @@ end Red
 variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)}
 
 
+variable (l K) in
 structure CB : Type 1 where
   Λ : Type
   [ring : CommRing Λ]
@@ -204,6 +205,7 @@ def cupS {r r' s i j : ℕ} (h : r + r' = s) (x : Y.Fam M r i) (y : Y.Fam M r' j
   (pdPair (Y.L M n) (Y.c n) h).cup rfl (x n) (y n)
 
 
+variable (Y M) in
 def oneS : Y.Fam M 0 0 := fun n => pdOne (Y.L M n) (Y.c n)
 
 def shS {r r' j : ℕ} (k : ℕ) (h : r + k = r') (x : Y.Fam M r j) : Y.Fam M r' j := fun n =>

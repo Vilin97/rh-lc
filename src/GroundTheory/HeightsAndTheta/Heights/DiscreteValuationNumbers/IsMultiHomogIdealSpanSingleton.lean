@@ -27,6 +27,7 @@ def IsEffectiveVertical (P : Ideal (MRing ι O)) (ϖ : O) (b : K → ℤ) (f g :
     ∃ u v : MRing ι O, u ∉ W ∧ u * f - v * g ∈ P
 
 
+open Classical in
 def cutIdentity (ϖ : O) (P : Ideal (MRing ι O)) (b : K → ℤ) (f g : MRing ι O) (c : K → ℕ)
     (s : MRing ι O) {d : ℕ} (L : Fin d → K → ℤ) : Prop :=
   by
@@ -88,6 +89,7 @@ def GenericFibProps.Statement : Prop :=
         MvPolynomial.map (algebraMap O (FractionRing O)) s ∉ genFib P
 
 
+open Classical in
 def GenericCycleCorresp.Statement : Prop :=
   by
   classical

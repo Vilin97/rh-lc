@@ -87,6 +87,7 @@ theorem homConst_toHom (φ : Isogeny E E') : homConst E E' φ.toHom = invConst �
   rfl
 
 
+omit [IsAlgClosed F] [IsAlgClosed F'] [DecidableEq F] [DecidableEq F'] in
 theorem invConst_map (φ : Isogeny E E') : invConst (φ.map σ) = σ (invConst φ) := by
   let _ := σ.toAlgebra
   let _ := Classical.decEq F'
@@ -149,6 +150,7 @@ variable {F F' : Type u} [Field F] [Field F'] [IsAlgClosed F] [IsAlgClosed F'] [
   [DecidableEq F']
 
 
+variable (E E' : WeierstrassCurve F) [E.IsElliptic] [E'.IsElliptic] in
 def homConstSet : AddSubgroup F := (homConst E E').range
 
 variable {E E' : WeierstrassCurve F} [E.IsElliptic] [E'.IsElliptic]

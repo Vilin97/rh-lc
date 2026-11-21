@@ -178,6 +178,7 @@ theorem diag_ne_zero {n : ℕ} {F : Type} [Field F] (B : GL (Fin n) F) (hB : B.v
 end GlobalTheory.HwTransfer
 
 
+open MvPolynomial GlobalTheory.HwTransfer in
 theorem GlobalTheory.hwAt_of_hwAtF : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ) (K : Type) [Field K] (e : K →+* ℂ)
     (c : L →+* L), (∀ x, c x = IsCMField.complexConj L x) → ∀ (W : Type) [AddCommGroup W] [Module K W]
     (ρ : Representation K (ReciprocityTheory.Aut.GQ L n) W) (a : NG.AlgWt L n) (ω : W →ₛₗ[e] a.W),

@@ -157,6 +157,7 @@ theorem pullback_wedge_cup_square (h : φ ≫ s = s' ≫ spMap (RingHom.id R))
 end GlobalTheory.Obs.PrimitivePullback
 
 
+open GlobalTheory.Obs.PrimitivePullback in
 theorem GlobalTheory.Obs.primitiveStructureSheafDegTwoVanish_of_cup_iso
     (H : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (g : ℕ), IsAbelianScheme A →
       SmoothOfRelativeDimension g A.hom →

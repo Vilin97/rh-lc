@@ -46,6 +46,7 @@ variable {R R' : Type} [CommRing R] [CommRing R'] {M : Type} [AddCommGroup M] [M
   (e : M ≃+ M') (he : ∀ g m, e (ρ g m) = ρS (toGS Ω S g) (e m))
 
 
+include he in
 theorem triv_of_mem {σ : G F Ω} (hσ : σ ∈ NS Ω S) (m : M) : ρ σ m = m := by
   apply e.injective
   have : toGS Ω S σ = 1 := (QuotientGroup.eq_one_iff σ).2 hσ
@@ -106,6 +107,7 @@ theorem z_one {Γ : Type} [Group Γ] [TopologicalSpace Γ] {π : Representation 
   simpa using this
 
 
+include he in
 theorem mem_unrAt_iff {v : HeightOneSpectrum (𝓞 F)} (hv : v ∉ S) {A : ValuationSubring Ω} (hA : IsPlaceOver A v)
     (z : Z1 ρ) :
     resH1 ρ (Dec (F := F) A).subtype continuous_subtype_val (Submodule.Quotient.mk z) ∈ Formalism.GaloisCohomology.unrAt ρ A ↔
@@ -124,6 +126,7 @@ theorem mem_unrAt_iff {v : HeightOneSpectrum (𝓞 F)} (hv : v ∉ S) {A : Valua
     exact h g.1.1 g.2
 
 
+include he in
 theorem vanish_NS [IsAlgClosure F Ω] (A : Formalism.GaloisCohomology.Places F Ω) (z : Z1 ρ)
     (h : ∀ v ∉ S, ∀ σ ∈ Ine (F := F) (A.1 v), z.1 σ = 0) : ∀ σ ∈ NS Ω S, z.1 σ = 0 := by
   have hz := z.2.2

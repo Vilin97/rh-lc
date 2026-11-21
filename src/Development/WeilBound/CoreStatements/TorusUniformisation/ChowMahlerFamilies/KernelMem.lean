@@ -32,6 +32,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
   {C : Type} [Field C] [Algebra O C] [Algebra Ω C] [IsScalarTower O Ω C] {RC : Subalgebra O C}
 
 
+set_option maxHeartbeats 800000 in
 theorem kernel_mem [Fact p.Prime] (hpS : p ∈ S) [CharZero Ω] [IsLocallyNoetherian 𝔐.X]
     [IsNoetherianRing (CR O y c')] [IsIntegrallyClosed (CR O y c')] [IsFractionRing (CR O y c') Ω]
     (P : ChartPack G O c') (hT : IsTestPt p (CR O y c') RC) :
@@ -144,6 +145,8 @@ theorem kernel_mem [Fact p.Prime] (hpS : p ∈ S) [CharZero Ω] [IsLocallyNoethe
   rw [hbi, Units.val_pow_eq_pow_val, Subalgebra.coe_pow, hζ']
 
 
+set_option synthInstance.maxHeartbeats 200000 in
+set_option maxHeartbeats 800000 in
 theorem exists_der [Fact p.Prime] (hpS : p ∈ S) [CharZero Ω]
     [IsNoetherianRing (CR O y c')] [IsIntegrallyClosed (CR O y c')] [IsFractionRing (CR O y c') Ω]
     (P : ChartPack G O c') (hR : ∀ a ∈ CR O y c', algebraMap Ω C a ∈ RC) {g : ℕ}

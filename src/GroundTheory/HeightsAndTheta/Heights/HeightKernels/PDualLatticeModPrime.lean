@@ -92,6 +92,7 @@ theorem dual_le_span (F : HermLattice K i) :
 end DualLatticeModPrimeAlt
 
 
+open DualLatticeModPrimeAlt in
 theorem DualLatticeModPrime.proof : DualLatticeModPrime.Statement := by
   intro K _ _ i F 𝔭 h𝔭
   classical

@@ -37,6 +37,7 @@ open Classical
 namespace GlobalTheory.CompanionTheory.Ar.Adapt
 
 
+open ReciprocityTheory.AnForm.M.PLAux in
 theorem exists_adaptedAtlas : ∀ {e : ℕ} {X : Type} [TopologicalSpace X] [CompactSpace X] [T2Space X] (A : FinHolAtlas e X) (L : LocPot X)
     (s : X → X → ℂ) {n : ℕ} (m : Fin n → ℕ) (W : Fin n → Set X), IsPotential A L → IsSection A L s → IsSNC A L s m W →
     (∀ y, logNormSec L s y ≤ 0) → ∃ B : FinHolAtlas e X, IsAdaptedAtlas A B L s := by

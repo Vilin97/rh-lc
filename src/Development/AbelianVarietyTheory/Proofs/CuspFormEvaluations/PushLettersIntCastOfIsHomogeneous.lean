@@ -85,6 +85,7 @@ theorem basisComponent_mem_rowHighest (b : Module.Basis ι R S) (i : ι) {P : Po
     rw [← basisComponent_sum b J (fun j => rowAdd t r r' (s : R) (basisComponent b j P)) hi, this]
 
 
+variable (R S c c') in
 theorem span_map_rowHighest [Module.Free R S] :
     Submodule.span S (MvPolynomial.map (algebraMap R S) ''
       (rowHighest (R := R) (κ := κ) c c' : Set (Poly R T p q κ))) = rowHighest c c' := by
@@ -116,6 +117,7 @@ theorem herm_one_eq_sum (x y : Fin n → E) : herm 1 x y = ∑ k, x k * cc (y k)
   simp [herm, Matrix.one_apply]
 
 
+variable (p q) in
 noncomputable def symO (τ : T → E →+* K) (Λ : Submodule (𝓞 E) (Fin n → E)) :
     Subalgebra (𝓞 K) (Poly K T p q (Fin n)) :=
   Algebra.adjoin (𝓞 K)

@@ -26,6 +26,7 @@ variable {D : D7} {j : ℕ} {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Ho
   {dict : ∀ σ : c.F →+* ℂ, GA D (D.sp.W j) → Σ k, Frame ((U σ).X k).Ψ D.R.r}
 
 
+set_option maxHeartbeats 1000000 in
 theorem theta_sup_le (hLw : Laws D j Xo c U dict) {σ : c.F →+* ℂ} (hσ : GoodEmb c σ) {a : (D.host.E →+* ℂ) × ℕ → ℕ} {n : ℕ}
     (hDom : Dom a n) [StarRing (𝓞 D.host.E)] {nab : NabV Xo c} (hnab : IsNab Xo c nab) {xx : Fin n → Dw.La}
     {P : MvPolynomial (LtN Dw n) c.F} (hP : P ∈ harmA c a n) {f : Rul Xo c} (hf : IsThRule Xo c nab xx P f)
@@ -133,6 +134,7 @@ theorem exists_large {ι : Type} [Fintype ι] [Nonempty ι] (u : ι → ℝ) (hu
   exact h3.trans h2
 
 
+set_option maxHeartbeats 1000000 in
 theorem theta_lower (hLw : Laws D j Xo c U dict) {σ : c.F →+* ℂ} (hσ : GoodEmb c σ) {a : (D.host.E →+* ℂ) × ℕ → ℕ} {n : ℕ}
     (hDom : Dom a n) [StarRing (𝓞 D.host.E)] {nab : NabV Xo c} (hnab : IsNab Xo c nab) (α : 𝓞 D.host.E)
     (hα : α * H.bar α = (l.M : 𝓞 D.host.E)) (hMb : l.Mb = Ideal.span {H.bar α})
@@ -249,6 +251,7 @@ theorem loss_le {b φ d N lM z : ℝ} (hb : 1000 ≤ b) (hφ : b ^ 14 ≤ φ) (h
   nlinarith
 
 
+set_option maxHeartbeats 1000000 in
 theorem core_ratio (hLw : Laws D j Xo c U dict) (α : 𝓞 D.host.E) (hα : α * H.bar α = (l.M : 𝓞 D.host.E))
     (hMb : l.Mb = Ideal.span {H.bar α}) {a : (D.host.E →+* ℂ) × ℕ → ℕ} {n : ℕ} (hDom : Dom a n) (hLP : LastPos Dw a)
     {b : ℝ} (hb : 1000 ≤ b) (hrn : D.R.r ≤ n) (hcol : D.R.f * D.R.r * (D.R.r + 1) ≤ 2 * n)

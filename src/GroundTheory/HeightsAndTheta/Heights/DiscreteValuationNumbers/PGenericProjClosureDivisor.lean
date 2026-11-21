@@ -23,6 +23,7 @@ variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintyp
   {O : Type} [CommRing O] {Φ : Type} [Field Φ] [Algebra O Φ]
 
 
+omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem aeval_eq_zero_of_mem {z : (Σ k, ι k) → Φ} {f : MRing ι O} (hf : f ∈ pointIdeal O z) :
     aeval z f = 0 := by
   have key : ((aeval (fun _ : K => (1 : Φ))).restrictScalars O).comp (pointConeMap O z) = aeval z := by
@@ -274,6 +275,7 @@ def IsZPair (a₀ a₀' : K → ℤ) (z : (Σ o, bundleIdx (bundleIdx ι M) M' o
     (fun o => (bf o : ℤ) - bg o) = zetaFirst a₀ - zetaSecond a₀') ∧ aeval z f = aeval z g
 
 
+omit [Algebra O Ω] [IsScalarTower O Ω Φ] in
 theorem IsZPair.cross {a₀ a₀' : K → ℤ} {z : (Σ o, bundleIdx (bundleIdx ι M) M' o) → Φ}
     {f g f' g' : MRing (bundleIdx (bundleIdx ι M) M') O} (h : IsZPair a₀ a₀' z f g)
     (h' : IsZPair a₀ a₀' z f' g') : f * g' - f' * g ∈ pointIdeal O z := by
@@ -282,6 +284,7 @@ theorem IsZPair.cross {a₀ a₀' : K → ℤ} {z : (Σ o, bundleIdx (bundleIdx 
   exact cross_mem hf hg hf' hg' (fun o => (congrFun hd o).trans (congrFun hd' o).symm) hv hv'
 
 
+omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] [Algebra O Ω] [IsScalarTower O Ω Φ] in
 theorem val_pair {z : (Σ o, bundleIdx (bundleIdx ι M) M' o) → Φ} {L : ℕ}
     {xs : Fin L → MRing (bundleIdx (bundleIdx ι M) M') O} {v : Fin L → Φ} (hxs : ∀ l, aeval z (xs l) = v l)
     (G : Fin L → MRing (bundleIdx (bundleIdx ι M) M') O) {x : MRing (bundleIdx (bundleIdx ι M) M') O} {w : Φ}

@@ -93,6 +93,7 @@ theorem bound (f r d : ℕ) (L n v M rd : ℝ) (hd : (d : ℝ) = 2 * f) (hL : 1 
       _ = _ := by rw [← Real.exp_add, ← Real.exp_add]; congr 1; ring
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.OneMeasureSizes in
 theorem up_core (hV : VolSt) (hS : StabSt) (hN : NumSt) (D : D7) (Tu : Type) (C : LevCh D Tu) (t0 : Tu) (hC : C.Is t0)
     (i : Fin D.R.m) (P : LevelP C.Pg D.R.r ℂ) (μ : MeasureTheory.Measure (GA D (Wc D i))) (𝓕 : Set (GA D (Wc D i)))
     (hF : IsMeasFD (Wc D i) (levW C i P) μ 𝓕) (L : ℝ) (hL : Sizes D L) (hIB : IndexBound C i P) :

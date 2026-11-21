@@ -42,6 +42,7 @@ theorem gloRho_oToS (a : 𝓞 E) : gloRho v spl halg (oToS F E a) = IsLocalRing.
   congr 1
 
 
+include hc in
 theorem glk_ker (w : Pl E) (hov : IsOver v w) (ϖ : 𝓞 E) (h2 : cO E ϖ ∉ w.asIdeal)
     (hval : Valued.v (gloPhi v spl (inclE (F := F) (v.adicCompletion F) (algebraMap (𝓞 E) E ϖ))) < 1) :
     ∀ a ∈ w.asIdeal, gloRho v spl halg (oToS F E a) = 0 := by

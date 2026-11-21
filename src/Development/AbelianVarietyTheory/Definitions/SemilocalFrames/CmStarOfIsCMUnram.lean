@@ -26,6 +26,7 @@ def NDLat (h : V →ₗ⋆[E] V →ₗ[E] E) (M : Submodule (𝓞 E) V) : Prop :
 
 
 
+omit [NumberField E] [IsScalarTower (𝓞 E) E V] in
 theorem orth_span (h : V →ₗ⋆[E] V →ₗ[E] E) {M : Submodule (𝓞 E) V} {x : V} (hx : ∀ y ∈ M, h y x = 0) :
     ∀ y ∈ Submodule.span E (M : Set V), h y x = 0 := by
   intro y hy
@@ -36,6 +37,7 @@ theorem orth_span (h : V →ₗ⋆[E] V →ₗ[E] E) {M : Submodule (𝓞 E) V} 
   | smul c a _ ha => rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, ha, smul_zero]
 
 
+omit [NumberField E] in
 theorem ndLat_of_isLattice {h : V →ₗ⋆[E] V →ₗ[E] E} (hn : h.Nondegenerate) {M : Submodule (𝓞 E) V}
     (hM : Submodule.IsLattice E M) : NDLat h M :=
   ⟨hM.fg, fun x _ h0 => hn.2 x fun y => orth_span h h0 y (by rw [hM.span_eq_top]; trivial)⟩

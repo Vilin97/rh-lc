@@ -44,6 +44,7 @@ lemma lintegral_eq_bruhat (S : Subgroup G) (μS : Measure S) (μ ν : Measure G)
 end QuotIndepPf
 
 
+open QuotIndepPf in
 theorem quotIndep : QuotIndep := by
   intro G _ _ _ _ _ _ _ _ S hS μS _ _ _ _ _ μ ν₁ ν₂ h₁ h₂ f hf hinv
   obtain ⟨b, hbm, hb1⟩ := QuotIndepPf.exists_bruhat S hS μS

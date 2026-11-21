@@ -34,6 +34,7 @@ theorem squareZero_localUnit_difference_ring_identity {R : Type*} [CommRing R] {
 end GlobalTheory.CechPic
 
 
+open GlobalTheory.SmallExtLift in
 theorem GlobalTheory.CechPic.eq_zero_of_sqZero_retract : ∀ {X X' : Scheme.{0}} (i : X ⟶ X') (q : X' ⟶ X), i ≫ q = 𝟙 X → (∀ x, i (q x) = x) → IsUnit (2 : Γ(X', ⊤)) → (∀ (W : X'.Opens) (f g : Γ(X', W)), (i.app W).hom f = 0 → (i.app W).hom g = 0 → f * g = 0) → ∀ (c : GlobalTheory.CechPic.Pic X'), GlobalTheory.CechPic.pull i c = 0 → 2 • c = 0 → c = 0 := by
   intro X X' i q e hiq h2 hsq c hc hc2
   obtain ⟨Q, hQ, rfl⟩ := GlobalTheory.CechPic.cls_surj c

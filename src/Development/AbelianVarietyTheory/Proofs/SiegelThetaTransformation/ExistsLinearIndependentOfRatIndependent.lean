@@ -137,6 +137,7 @@ noncomputable def rowEmb {E m n : Type} [Field E] [Fintype n] (W : Matrix n m E)
       map_add' := fun s t => by ext p; simp [add_vecMul] }
 
 open scoped Classical in
+open Classical in
 theorem det_gram_rowEmb {E m : Type} [Field E] [NumberField E] [Fintype m] {N : ℕ}
     (W : Matrix (Fin N) m E) (ω : (E →+* ℂ) → E) :
     (((gram ℝ fun p : Fin N × (E →+* ℂ) => rowEmb W (Pi.single p.1 (ω p.2))).det : ℝ) : ℂ) =

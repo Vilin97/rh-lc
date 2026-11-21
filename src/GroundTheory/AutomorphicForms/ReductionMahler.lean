@@ -73,6 +73,7 @@ theorem exists_adelicNorm_vecMul_le_mul {C : Set (AdelicGLn.AdelicGL K n)} (hC :
     · rw [norm_vecMul_integralGL v (hS g hg v hv), one_mul]
 
 
+variable (K n) in
 def normOneGL : Subgroup (AdelicGLn.AdelicGL K n) :=
   (normOneSubgroup K).comap (AdelicGLn.det K n)
 

@@ -115,11 +115,13 @@ theorem intM_div_iff (hp : Irreducible p) {m n : ℕ} (z : Matrix (Fin m) (Fin n
   rw [eq_inv_mul_iff_mul_eq₀ h0, ← map_mul, (IsFractionRing.injective O K).eq_iff, mul_comm]
 
 
+variable (O) in
 def sec (a : ResidueField O) : O := (residue_surjective a).choose
 
 theorem residue_sec (a : ResidueField O) : residue O (sec O a) = a := (residue_surjective a).choose_spec
 
 
+variable (K p) in
 def yw {m n : ℕ} (w : Matrix (Fin m) (Fin n) (ResidueField O)) : Matrix (Fin m) (Fin n) K :=
   (algebraMap O K p)⁻¹ • (w.map (sec O)).map (algebraMap O K)
 
@@ -397,6 +399,8 @@ theorem const_eq (z : Circle) (q j m : ℕ) :
   rw [this, Circle.coe_inv, Circle.coe_pow, Complex.ofReal_pow, inv_pow, mul_pow, mul_inv, ← pow_mul, mul_comm m j]
 
 
+set_option maxHeartbeats 1000000 in
+open IsLocalRing MeasureTheory in
 theorem hecke_identity_split : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (χS χT : (Formalism.L2.Theta.AE D)ˣ →* Circle) (om : GA D S × GA D T →* Module.End ℂ (Formalism.IndefR.Datum.WO S T → ℂ)) (P : HeightOneSpectrum (𝓞 D.host.E)) (e : Formalism.L2.Theta.AE D) (ϖ : 𝓞 D.host.E) (x : (Formalism.L2.Theta.AE D)ˣ) (f : Formalism.IndefR.Datum.WO S T → ℂ) (αS : ℕ → GA D S) (αT : ℕ → GA D T) (RS : ℕ → Finset (GA D S)) (RT : ℕ → Finset (GA D T)) (t : ℕ), Formalism.IndefR.Datum.IsWeilDatumO ψ S T χS χT om → IsIdemAt e P → ϖ ∈ P.asIdeal → ϖ ∉ P.asIdeal ^ 2 → (x : Formalism.L2.Theta.AE D) = e * incA D (ϖ : D.host.E) + (1 - e) → (∀ y : (Formalism.L2.Theta.AE D)ˣ, (1 - e) * (y : Formalism.L2.Theta.AE D) = 1 - e → finPart D (e * (y : Formalism.L2.Theta.AE D)) ∈ intAE D → finPart D (e * ((y⁻¹ : (Formalism.L2.Theta.AE D)ˣ) : Formalism.L2.Theta.AE D)) ∈ intAE D → χS y = 1 ∧ χT y = 1) → Formalism.IndefR.Datum.IsThetaFunO ψ S T f → (∀ u ∈ Formalism.IndefR.Datum.latO S T (L0c D S) (L0c D T) (fun _ => True), Formalism.IndefR.Datum.IsHalf e u ∨ Formalism.IndefR.Datum.IsHalf (cA D e) u → Formalism.IndefR.Datum.heisO ψ S T u f = f) → (∀ j, j ≤ S.rank → IsHeckeElt S e (ϖ : D.host.E) j (αS j) ∧ (∀ γ ∈ RS j, SuppAt e S γ) ∧ IsCosetRep S (locPart S (KsphC S ∅) e) (αS j) (RS j)) → (∀ j, j ≤ T.rank → IsHeckeElt T e (ϖ : D.host.E) j (αT j) ∧ (∀ γ ∈ RT j, SuppAt e T γ) ∧ IsCosetRep T (locPart T (KsphC T ∅) e) (αT j)⁻¹ (RT j)) → (∀ k ∈ locPart S (KsphC S ∅) e, ∀ k' ∈ locPart T (KsphC T ∅) e, om (k, k') f = f) ∧ (T.rank = S.rank + t → ∀ k, k ≤ T.rank → ∑ b ∈ RT k, om (1, b) f = ∑ j ∈ Finset.range (min k S.rank + 1), (((Ideal.absNorm P.asIdeal : ℂ)) ^ ((S.rank - j) * (k - j)) * (Formalism.L2.Col.gaussBin (Ideal.absNorm P.asIdeal) t (k - j) : ℂ) * ((χS x : ℂ) * (Real.sqrt (Ideal.absNorm P.asIdeal) : ℂ) ^ S.rank)⁻¹ ^ k * ((χT x : ℂ) * (Real.sqrt (Ideal.absNorm P.asIdeal) : ℂ) ^ T.rank) ^ j) • ∑ a ∈ RS j, om (a, 1) f) ∧ (S.rank = T.rank + t → ∀ k, k ≤ S.rank → ∑ a ∈ RS k, om (a, 1) f = ∑ j ∈ Finset.range (min k T.rank + 1), (((Ideal.absNorm P.asIdeal : ℂ)) ^ ((T.rank - j) * (k - j)) * (Formalism.L2.Col.gaussBin (Ideal.absNorm P.asIdeal) t (k - j) : ℂ) * ((χT x : ℂ) * (Real.sqrt (Ideal.absNorm P.asIdeal) : ℂ) ^ T.rank)⁻¹ ^ k * ((χS x : ℂ) * (Real.sqrt (Ideal.absNorm P.asIdeal) : ℂ) ^ S.rank) ^ j) • ∑ b ∈ RT j, om (1, b) f) := by
   intro D ψ S T χS χT om P e ϖ x f αS αT RS RT t hW hP hϖ hϖ2 hx hχ hf hfix hS hT
   classical

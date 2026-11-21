@@ -37,6 +37,7 @@ theorem cspan_lamTr : Formalism.MainNotions.product_first_zeroth_parts.CSpan (la
   simp only [Formalism.MainNotions.product_first_zeroth_parts.CSpan, lamTr, delSq_wSh]
 
 
+set_option maxHeartbeats 1000000 in
 theorem val_of_trEv (Tf : FormsTiedSym D u Ch chOf) (c : (D.fm u).clsP) (f : (D.mem u).C.Y D.R.m → ℂ)
     (M : D.what₂.Tau → Matrix (Fin (D.R.N D.R.m)) (Fin (D.R.N D.R.m)) ℂ) (Q : MvPolynomial (D.what₂.Tau × Fin (D.R.N D.R.m) × Fin (D.R.N D.R.m)) ℂ)
     (hq : trEvS Tf c f = fnOf _ (shiftOf (lamT u D.R.m)) M Q) (z : (D.mem u).C.Y D.R.m) :
@@ -64,6 +65,7 @@ theorem val_of_trEv (Tf : FormsTiedSym D u Ch chOf) (c : (D.fm u).clsP) (f : (D.
 section Frame
 
 
+variable (D) in
 abbrev eN : Fin (D.R.N D.R.m - 1) ⊕ Fin 1 ≃ Fin (D.R.N D.R.m) := finSumFinEquiv.trans (finCongr (Nm_succ D.R))
 
 theorem lastGL_eq (a : ℂˣ) : ((Formalism.MainNotions.PrimeDegreeVariant.lastGL ℂ (D.R.N D.R.m) a : GL (Fin (D.R.N D.R.m)) ℂ) : Matrix (Fin (D.R.N D.R.m)) (Fin (D.R.N D.R.m)) ℂ) =

@@ -13,6 +13,8 @@ public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CayleyExistsA
 namespace GlobalTheory.DecTransport
 
 
+open Matrix Finset Formalism.FourierDecayAlt.ThreeDimData in
+open scoped InnerProductSpace in
 lemma decE_le {q : ℕ} (hq : 1 ≤ q) {h d : ℝ} (hh : 0 ≤ h) (hd : 0 ≤ d) :
     GlobalTheory.Count.decE q h d ≤ Real.exp (h / 8) * Real.exp (-(h / (8 * Real.sqrt q)) * d) := by
   unfold GlobalTheory.Count.decE
@@ -61,6 +63,8 @@ private lemma rpow_three_div_two_eq_mul_sqrt {x : ℝ} (hx : 0 ≤ x) : x ^ ((3 
   rw [show ((3 : ℝ) / 2) = 1 + 1 / 2 by norm_num, Real.rpow_one_add' hx (by norm_num), Real.sqrt_eq_rpow]
 
 
+open Matrix Finset GlobalTheory.Count GlobalTheory.IndefiniteRowSideFullHecke.SideNormalisedGap Formalism.FourierDecayAlt.B in
+open scoped InnerProductSpace in
 theorem decLow_of_decGap (hA : GlobalTheory.DSId.DecGap) : Formalism.FourierDecayAlt.ThreeDimData.DecLow := by
   intro k r hk ε lam h H _ _ _ σ hl hσ hg h120 P hP w₁ w₂ h₁ h₂
   have hh : 0 ≤ h := by

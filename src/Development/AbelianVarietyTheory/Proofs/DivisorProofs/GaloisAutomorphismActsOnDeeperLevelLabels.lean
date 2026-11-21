@@ -19,6 +19,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.Poinc.GalAct
 
 
+open MonObj in
 theorem exists_mulEquiv_points {S S' : Scheme.{0}} {G' : Over S'} [GrpObj G'] {G : Over S} [GrpObj G]
     {f : S' ⟶ S} {F : G'.left ⟶ G.left} (hF : IsGrpPullback G' G f F) {X : Scheme.{0}} (t : X ⟶ S') (g : X ⟶ S)
     (hg : t ≫ f = g) :
@@ -58,6 +59,7 @@ theorem eq_id_of_frac {A K : Type} [CommRing A] [Field K] (φ : A →+* K) (h : 
   rw [this, Spec.map_id]
 
 
+open MonObj in
 theorem exists_generic_labels {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {S : ThetaSys o Ω} (ρ : S.Real)
     {G : Over (Sp Ω)} [GrpObj G] {b : G.left ⟶ ρ.P.A.left} (hb : IsGrpPullback G ρ.P.A (spMap S.R.val.toRingHom) b) :
     ∃ w : S.Gam → (Over.mk (𝟙 (Sp Ω)) ⟶ G), (∀ x, (w x).left ≫ b = spMap S.R.val.toRingHom ≫ (ρ.pt x).left) ∧
@@ -97,6 +99,7 @@ theorem exists_generic_labels {o Ω : Type} [CommRing o] [Field Ω] [Algebra o �
     fun x y h => (key _ (htor y)).unique h rfl, htor, fun z hz => (key z hz).exists⟩
 
 
+open MonObj in
 theorem exists_label_action {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {S : ThetaSys o Ω} (ρ : S.Real)
     {G : Over (Sp Ω)} [GrpObj G] {b : G.left ⟶ ρ.P.A.left} (hb : IsGrpPullback G ρ.P.A (spMap S.R.val.toRingHom) b)
     (σ : Ω →+* Ω) (hσ : Function.Surjective σ) {t : G.left ⟶ G.left} (ht : IsGrpPullback G G (spMap σ) t) :

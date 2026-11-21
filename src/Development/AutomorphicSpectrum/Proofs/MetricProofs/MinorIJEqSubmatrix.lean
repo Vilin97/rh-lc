@@ -434,6 +434,7 @@ end GlobalTheory.CompanionTheory.Ar.PB.SchurCalc
 namespace GlobalTheory.CompanionTheory.Ar.PB
 
 
+open SchurCalc in
 theorem norm_three_steps : ∀ (N j : ℕ) (a b ca cb : Fin N) (G h : Matrix (Fin N) (Fin N) ℂ), j ≤ N → (b : ℕ) = a + 1 → ((b : ℕ) < j ∨ j ≤ (a : ℕ)) → (ca : ℕ) = lastCol N j a → (cb : ℕ) = ca + 1 → IsBlockDiag j G → G.PosDef → IsBlockDiag j h → h.det ≠ 0 → ∃ G₂ : Matrix (Fin 2) (Fin 2) ℂ, G₂.PosDef ∧ (∀ r s : Fin 2, G₂ r s = minorIJ (hᴴ * G * h) (insert (![ca, cb] r) ((stepCols N j a).erase ca)) (insert (![ca, cb] s) ((stepCols N j a).erase ca)) / minorIJ (hᴴ * G * h) ((stepCols N j a).erase ca) ((stepCols N j a).erase ca)) ∧ ∀ t : ℂ, (∑ i : Fin N, (xiCoef () a ((), i) : ℝ) * (blockPot j i G (h * (1 + Matrix.single cb ca t)) + if IsProperStep N j i then 0 else Real.log ‖if (i : ℕ) + 1 = j then (if (a : ℕ) < j then minorIJ h (wIdx N j) (wIdx N j) else 1) else minorIJ h (omIdx N j) (omIdx N j)‖)) = xiPot G₂ t := by
   intro N j a b ca cb G h hj hb hcase hca hcb hG hGp hh hdet
   have ha2 := a.2

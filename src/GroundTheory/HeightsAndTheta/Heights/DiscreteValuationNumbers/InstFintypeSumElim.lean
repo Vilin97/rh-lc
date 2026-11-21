@@ -227,6 +227,7 @@ def FlagModel.value {x : (Σ k, ι k) → Ω} {d N : ℕ} {V : Type*} [AddCommGr
 
 
 open scoped Classical in
+open Classical in
 def ck (x : (Σ k, ι k) → Ω) (d N : ℕ) {V : Type*} [AddCommGroup V] [Module Ω V]
     (E E' : ChartBundle O (mseg x) N V) (k : ℕ) {q : ℕ} (L : Fin q → K → ℤ)
     (Q : MvPolynomial (Fin q) ℤ) : ℤ :=
@@ -237,6 +238,7 @@ def ck (x : (Σ k, ι k) → Ω) (d N : ℕ) {V : Type*} [AddCommGroup V] [Modul
 
 
 open scoped Classical in
+open Classical in
 def rootNum (x : (Σ k, ι k) → Ω) (d N : ℕ) {V : Type*} [AddCommGroup V] [Module Ω V]
     (E : ChartBundle O (mseg x) N V) (G : MvPolynomial (Fin N) ℤ) {q : ℕ} (L : Fin q → K → ℤ)
     (Q : MvPolynomial (Fin q) ℤ) (c : O) : ℤ :=

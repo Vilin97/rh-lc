@@ -249,6 +249,7 @@ theorem varRadialWeight {d : ℕ} {J : Ideal (MvPolynomial (Fin n) ℂ)} {A : Ma
         exact (hpt y).symm
 
 
+open RegLelongAnnulus in
 theorem varLelongAnnulus : VarLelongAnnulus.Statement := by
   have hCM := HilbertSamuel.Closed.ChartMassCompact
   intro n d J A x r s hJ hdim hAf hr hrs

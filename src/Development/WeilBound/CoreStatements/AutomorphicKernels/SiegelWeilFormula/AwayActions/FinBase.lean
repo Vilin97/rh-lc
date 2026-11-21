@@ -19,6 +19,7 @@ namespace PositivityTheory.SiegelWeilFormula.KAway
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 
+variable (F) in
 def eInf : AF F := 1 - finOne F
 
 theorem finOne_mul_eInf : finOne F * eInf F = 0 := by

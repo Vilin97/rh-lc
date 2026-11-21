@@ -90,6 +90,7 @@ def RepB {B W : Scheme.{0}} (ι : W ⟶ B) (L : DerivedCategory (SShv B q)) (e :
       (OU B q).map a ≫ e U n c
 
 
+open CategoryTheory.Limits in
 def LeafCons : Prop := ∀ (q : ℕ) [NeZero q] (i : ℤ) {B W Y0 Y1 Y2 : Scheme.{0}} (ι : W ⟶ B) [IsClosedImmersion ι]
   (p : Y0 ⟶ B) (g1 : Y1 ⟶ Y0) (g2 : Y2 ⟶ Y1),
   ∃ (K0 K1 K2 L : DerivedCategory (SShv B q)) (f : K0 ⟶ K1) (g : K1 ⟶ K2) (ℓ : L ⟶ K2)

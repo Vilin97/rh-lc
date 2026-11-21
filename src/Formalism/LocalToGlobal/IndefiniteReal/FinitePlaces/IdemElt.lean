@@ -79,6 +79,7 @@ instance finiteFE : Module.Finite D.host.F D.host.E :=
   Module.finite_of_finrank_pos (by rw [D.sp.cm.deg2]; norm_num)
 
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem emb_exists (v : HeightOneSpectrum (𝓞 D.host.F)) (b : D.host.E) (t N : D.host.F)
     (ht : algebraMap D.host.F D.host.E t = b + star b) (hN : algebraMap D.host.F D.host.E N = b * star b)
     (hb : star b ≠ b) (r₁ : v.adicCompletion D.host.F)

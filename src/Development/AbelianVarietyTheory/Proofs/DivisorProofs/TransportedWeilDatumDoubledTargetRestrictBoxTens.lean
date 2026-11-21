@@ -26,6 +26,7 @@ noncomputable section
 namespace GlobalTheory.WeilSchrodinger.DblRestrict
 
 
+set_option maxHeartbeats 2000000 in
 theorem omp_diag_boxFun : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) →
     ∀ (S T : HSp D) (χS χT : (AE D)ˣ →* Circle), IsHeckeChar D χS → IsHeckeChar D χT →
       ResEta D χS S.rank → ResEta D χT T.rank →

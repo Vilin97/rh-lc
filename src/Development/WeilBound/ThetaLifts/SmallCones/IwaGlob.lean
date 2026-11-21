@@ -128,6 +128,7 @@ theorem int_of_KAt {k : UA σ X.J} (hk : k ∈ KAt σ X v) : IntAt v k := fun z 
   ⟨latW_le (hk.2 z h1).1, latW_le (hk.2 z h1).2⟩
 
 
+variable (F) in
 def eInf : AF F := ((1, 0) : Ainf F × Af F)
 
 theorem eInf_smul {z : Fin n → AE F E} (hz : z ∈ latHat X) : eInf F • z = 0 := by

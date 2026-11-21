@@ -242,6 +242,7 @@ theorem residue_phi {z : AfE F E} {r : 𝓞 E}
 end Prime
 
 
+include hφ in
 theorem exists_prime : ∃ (w : HeightOneSpectrum (𝓞 E)) (ρ : 𝓞 E ⧸ w.asIdeal →+* Formalism.L2.Forms.kv F v), w.under (𝓞 F) = v ∧
     (∀ r : 𝓞 E, r ∈ w.asIdeal ↔ Valued.v (φ (inclE (F := F) (v.adicCompletion F) (r : E))) < 1) ∧
     ∀ (z : AfE F E) (c : 𝓞 E ⧸ w.asIdeal), HasRes w (adAt F w z) c →

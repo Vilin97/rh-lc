@@ -70,6 +70,7 @@ end GlobalTheory.CuspRep.ZcTrace
 namespace GlobalTheory.ResW
 
 
+open GlobalTheory.CuspRep.ZcTrace in
 theorem zc_eq_sum_Eop : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), GlobalTheory.ResW.zc E a = ∑ τ : E →+* ℂ, ∑ i : Fin a, GlobalTheory.CuspRep.Eop τ i i := by
   intro E _ _ _ a
   rw [Finset.sum_comm]

@@ -124,6 +124,8 @@ private lemma trace_leftReg_mul_mulRight_eq_sum_coeff {K G : Type} [Field K] [Gr
   simp [MonoidAlgebra.basis, MonoidAlgebra.single_mul_apply, mul_assoc]
 
 
+open Module in
+variable {K : Type} [Field K] [CharZero K] {G : Type} [Group G] [Fintype G] in
 theorem _root_.GlobalTheory.MultOneRealised.exists_rep_of_mult_one : ∀ (K : Type) [Field K] [CharZero K] (G : Type) [Group G] [Fintype G] (χ : G → K), _root_.Formalism.L2.DIV.IsAbsIrrChar χ → ∀ (P : Subgroup G) [Fintype P] (ψ : P →* Kˣ), ∑ h : P, χ (h : G) * (((ψ h)⁻¹ : Kˣ) : K) = (Fintype.card P : K) → ∃ (n : ℕ) (τ : Representation K G (Fin n → K)), 0 < n ∧ Function.Surjective τ.asAlgebraHom ∧ ∀ g, LinearMap.trace K (Fin n → K) (τ g) = χ g := by
   intro K _ _ G _ _ χ hχ P _ ψ hsum
   classical

@@ -105,6 +105,7 @@ variable {o}
 
 
 
+variable (o) in
 def genPt (R : Type*) [CommRing R] [IsDomain R] (ι : K → Type*) [∀ k, Fintype (ι k)] :
     MRingOver R ι →ₐ[R] FractionRing (MRingOver R ι) :=
   IsScalarTower.toAlgHom R _ _

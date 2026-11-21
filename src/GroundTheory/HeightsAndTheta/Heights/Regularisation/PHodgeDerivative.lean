@@ -198,6 +198,7 @@ theorem chartImag_entry_deriv {n a g : ℕ} (h : a ≤ n) (T0 : (Fin n → ℂ) 
 end HodgeDerivative
 
 
+open HodgeDerivative in
 theorem HodgeDerivative.proof (h0 : ImTauBounds.Statement) (h1 : Tau0Holomorphic.Statement)
     (hAn : AnalyticDerivBound.Statement) (hInv : InvEntryDeriv.Statement)
     (hLDG : LogDetGramDeriv.Statement) : HodgeDerivative.Statement := by

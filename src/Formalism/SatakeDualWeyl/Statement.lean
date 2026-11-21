@@ -156,6 +156,7 @@ def FinDosetSupp {k : Type} [Zero k] (K : Subgroup G) (f : G → k) : Prop :=
   ∃ S : Finset G, ∀ g : G, f g ≠ 0 → ∃ s ∈ S, ∃ a b : K, g = (a : G) * s * b
 
 
+open Classical in
 def Hecke (k : Type) [CommRing k] (K : Subgroup G) : Submodule k (G → k) where
   carrier := {f | IsBiInv K f ∧ FinDosetSupp K f}
   zero_mem' := ⟨fun _ _ _ => rfl, ⟨∅, fun g h => (h rfl).elim⟩⟩

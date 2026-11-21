@@ -24,6 +24,7 @@ def IsBlockVec {r t : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W] (χ : kˣ 
     ∀ u : kˣ, (u : k) = (h.val.submatrix (Fin.natAdd r) (Fin.natAdd r)).det → π h v = (χ u : ℂ) • v
 
 
+variable (k) in
 def BlockSplit : Prop := ∀ (r t : ℕ) (χ : kˣ →* ℂˣ) (π : Irr k (r + t)) (v : π.V), IsSmoothChar χ → IsTame χ →
   v ≠ 0 → IsBlockVec χ π.π v →
   (∃ (π₁ : Irr k r) (π₂ : Irr k t), IsSpherical π₂.π ∧

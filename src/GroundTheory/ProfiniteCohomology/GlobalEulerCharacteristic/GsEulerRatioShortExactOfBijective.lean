@@ -77,6 +77,8 @@ theorem eulerChar_mul_eq_mul_card_ker (hS : S.ShortExact)
     card_range_eq_card_ker_of_exact (cohomology_exact₁ hS 2 3 rfl)]
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] [IsDiscreteRep S.X₁] [IsDiscreteRep S.X₂]
+  [IsDiscreteRep S.X₃] in
 theorem card_X₂_eq_of_shortExact (hS : S.ShortExact) [Finite S.X₂] :
     Nat.card S.X₂ = Nat.card S.X₁ * Nat.card S.X₃ := by
   have hinj : Function.Injective S.f.hom := (Rep.mono_iff_injective _).1 hS.mono_f
@@ -160,6 +162,7 @@ theorem gsReal_card_mul_eq (hT : T.ShortExact) [Finite T.X₁] [Finite T.X₂] [
   exact ((congrArg₂ (· * ·) e1 e3).symm.trans h).trans (congrArg (· * _) e2)
 
 
+omit [IsDiscreteRep T.X₁] [IsDiscreteRep T.X₂] [IsDiscreteRep T.X₃] in
 theorem gsRealRes_cohomologyMap {A B : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S)}
     [IsDiscreteRep A] [IsDiscreteRep B] (f : A ⟶ B) (n : ℕ) (x : cohomology A n)
     (v : {v : InfinitePlace K.1 // v.IsReal}) :
@@ -179,6 +182,7 @@ theorem gsRealRes_cohomologyMap {A B : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOut
   exact (h1.trans c1).trans (h2.trans c2).symm
 
 
+open scoped Classical in
 theorem gsEulerRatio_shortExact [Finite S] (hT : T.ShortExact) [Finite T.X₂]
     (hn : ∀ v : HeightOneSpectrum (𝓞 K.1), ((Nat.card T.X₂ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
     (hA : Function.Bijective (gsRealRes S ιr T.X₁ 3).hom)
@@ -219,6 +223,7 @@ theorem gsEulerRatio_shortExact [Finite S] (hT : T.ShortExact) [Finite T.X₂]
     hglob hprod
 
 
+open scoped Classical in
 theorem gsEulerRatio_shortExact_of_bijective [Finite S] (hT : T.ShortExact) [Finite T.X₂]
     (hn : ∀ v : HeightOneSpectrum (𝓞 K.1), ((Nat.card T.X₂ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
     (hA : Function.Bijective (gsRealRes S ιr T.X₁ 3).hom)

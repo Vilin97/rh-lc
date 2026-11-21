@@ -52,6 +52,7 @@ omit [GrpObj G] in
 theorem over_w (w : Over.mk y ⟶ G) : w.left ≫ G.hom = y := Over.w w
 
 
+omit [GrpObj G] in
 def mkPt (w : T ⟶ G.left) (h : w ≫ G.hom = y) : Over.mk y ⟶ G := Over.homMk w h
 
 omit [GrpObj G] in
@@ -75,6 +76,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {t : SAB H X} {A : Type} [CommRing A] {x₀ : Sp A ⟶ X} {q : ℕ}
 
 
+variable (t x₀ q) in
 structure FP : Type 1 where
   f : A
   B : Type

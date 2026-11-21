@@ -22,6 +22,7 @@ variable {D : D7} {Tw : TwForms D} {inQ : D.what₂.Tup → HeightOneSpectrum (�
 theorem one_le (i : ℕ) : 1 ≤ i + 1 := Nat.succ_le_succ (Nat.zero_le i)
 
 
+set_option maxHeartbeats 4000000 in
 def formsInTw (W : TwFormsTiedS D Tw T J F) (u : D.what₂.Word) (μ : D.what₂.Tup) (hμ : μ ≠ D.what₂.mu0) (i : ℕ)
     (hi : i + 1 ≤ D.R.m) (dt : ∀ β, DetTie (W.ch u μ hμ (i + 1) (one_le i) hi β).lev) :
     FormsIn (Tw.fm u μ) (i + 1) hi where
@@ -50,6 +51,7 @@ variable {X : Formalism.L2.Herm.Herm0 D} {u : D.what₂.Word} {w : D.what₂.pla
   {hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)} {Fl : Fills (D.gat u w hg)} {Lv : Levels Fl} {i : ℕ}
 
 
+set_option maxHeartbeats 2000000 in
 def locInOf {Ch : Type} (cmpt : Ch → Type) [∀ β, Fintype (cmpt β)] (em : ∀ β, cmpt β → Lv.compS i) (cov : ChartsCover Lv i em)
     (Lb : Ch → Submodule (𝓞 D.host.E) (Fin (D.sp.X (i + 1)).rank → D.host.E))
     (Uloc : Ch → ∀ v : HeightOneSpectrum (𝓞 D.host.F),

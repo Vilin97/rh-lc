@@ -121,6 +121,7 @@ theorem coconeLeftμ_sub_coconeRightμ_eq_d {r s m : ℕ} (h : r + s = m + 1)
       (congrArg Prod.snd hY)
 
 
+include hLL hRR in
 theorem coconeLeft_homology_eq_coconeRight_homology {r s n : ℕ} (h : r + s = n)
     (x : (mappingCoconeNat fA).homology r) (y : (mappingCoconeNat fB).homology s) :
     (coconeLeft μL ρB μK hL).homology h x

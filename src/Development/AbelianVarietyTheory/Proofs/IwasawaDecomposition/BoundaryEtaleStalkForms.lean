@@ -109,6 +109,7 @@ theorem exists_coefficientField (S : Type) [CommRing S] [IsLocalRing S] [IsAdicC
 end Algebra
 
 
+open MvPowerSeries GlobalTheory.CohenStructure in
 theorem exists_finite_over_normal (S : Type) [CommRing S] [IsDomain S] [IsLocalRing S] [CharZero S]
     [IsNoetherianRing S] [hc : IsAdicComplete (maximalIdeal S) S] :
     ∃ (A : Type) (_ : CommRing A) (_ : IsDomain A) (i : A →+* S),

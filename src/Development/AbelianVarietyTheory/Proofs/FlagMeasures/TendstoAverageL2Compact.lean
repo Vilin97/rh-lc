@@ -190,6 +190,7 @@ theorem map_restrict_le (μ : Measure (Mt k r)) (hU : IsUnimod (GG k r) μ) {x :
 end GlobalTheory.SgInf.Mollify
 
 
+open GlobalTheory.SgInf.Mollify in
 theorem GlobalTheory.SgInf.tendsto_average_L2 : ∀ (k r : ℕ) (μ : Measure (Mt k r)), IsHaarOn (GG k r) μ → ∀ {Wp : Type}
     [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [FiniteDimensional ℂ Wp] (g : Mt k r → Wp),
     (∀ K : Set (Mt k r), IsCompact K → AEStronglyMeasurable g (μ.restrict K) ∧

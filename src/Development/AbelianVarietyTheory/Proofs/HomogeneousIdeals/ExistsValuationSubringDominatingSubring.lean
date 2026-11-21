@@ -33,6 +33,7 @@ theorem exists_valuativeExtension (p : X ⟶ S) [UniversallyClosed p] (r : Spec 
   exact ⟨l.l, l.fac_left, l.fac_right⟩
 
 
+variable (K) in
 theorem valuativePoint_ext (p : X ⟶ S) [IsSeparated p] {x x' : Spec (.of V) ⟶ X}
     (h : specAlgebraMap V K ≫ x = specAlgebraMap V K ≫ x') (h' : x ≫ p = x' ≫ p) : x = x' := by
   have hU := IsSeparated.valuativeCriterion p
@@ -41,6 +42,7 @@ theorem valuativePoint_ext (p : X ⟶ S) [IsSeparated p] {x x' : Spec (.of V) �
   exact congrArg (fun l ↦ l.l) (hU.elim ⟨x, rfl, rfl⟩ ⟨x', h.symm, h'.symm⟩)
 
 
+variable (K) in
 theorem valuativePoint_ext_of_isSeparated [X.IsSeparated] {x x' : Spec (.of V) ⟶ X}
     (h : specAlgebraMap V K ≫ x = specAlgebraMap V K ≫ x') : x = x' :=
   valuativePoint_ext (K := K) (terminal.from X) h (terminal.hom_ext _ _)

@@ -33,6 +33,7 @@ theorem spMap_comp_spMap {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (
   rfl
 
 
+open NumberField in
 theorem exists_base (R₁ : Type) [CommRing R₁] [IsDomain R₁] [CharZero R₁] (n m : ℕ) [NeZero n] [NeZero m]
     (hu : IsUnit (n : R₁)) (ζ : R₁) (hζ : IsPrimitiveRoot ζ m) :
     ∃ (o : Type) (_ : CommRing o) (b : o →+* R₁) (ze : oˣ), IsDedekindDomain o ∧ Algebra.FiniteType ℤ o ∧

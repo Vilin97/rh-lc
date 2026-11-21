@@ -61,6 +61,7 @@ theorem norm_symm_le (z : w.adicCompletion F) (hz : ‖z‖ ≤ 1) : ‖i.symm z
   linarith
 
 
+omit hw in
 theorem norm_symm_lt (z : w.adicCompletion F) (hz : ‖z‖ < 1) : ‖i.symm z‖ < 1 := by
   by_contra h
   push Not at h

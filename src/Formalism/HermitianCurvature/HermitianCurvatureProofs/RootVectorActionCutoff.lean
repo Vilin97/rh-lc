@@ -26,6 +26,7 @@ theorem cI_inj : Function.Injective (cI (k := k) (r := r)) := fun p q h => Fin.e
   have := congrArg Fin.val h; simpa [cI] using this)
 
 
+variable (E) in
 abbrev SA (hD : IsOpen D) : Subalgebra ℂ (Module.End ℂ (VS k r 0 D E)) :=
   Algebra.adjoin ℂ (Set.range fun p : Fin (mdim k r 0) × Fin (mdim k r 0) => Eh (E := E) (i := 0) hD p.1 p.2)
 

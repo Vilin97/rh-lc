@@ -170,6 +170,7 @@ theorem hFl_sum_monomial (II : IntersectionSystem) {β : Type} (s : Finset β) (
   | insert b s hb ih => rw [Finset.sum_insert hb, Finset.sum_insert hb, hadd, hmono, ih]
 
 
+omit [DecidableEq Ψ] in
 theorem C_mul_prod_linForm (c : ℚ) {d : ℕ} (ℓ : Fin d → Ψ × Fin N → ℤ) :
     (C c * ∏ i, linForm Ψ N (ℓ i) : RootPoly Ψ N) =
       ∑ r : Fin d → Ψ × Fin N, monomial (∑ i, Finsupp.single (r i) 1) (c * ∏ i, (ℓ i (r i) : ℚ)) := by
@@ -214,6 +215,7 @@ theorem hFlMono_sum_single (II : IntersectionSystem) (hII : IsIntersectionSystem
 end FlagHeightMultilinear
 
 
+open FlagHeightMultilinear in
 theorem HFlProdLinear.proof (hA : FlagArithVar.Statement) : HFlProdLinear.Statement := by
   intro II Ψ _ _ _ N d c ℓ hII hN hd
   subst hd

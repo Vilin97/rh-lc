@@ -99,6 +99,9 @@ variable {k G : Type u} [Field k] [Group G] [TopologicalSpace G] [IsTopologicalG
   (hM : ∀ (g : (P : Subgroup G)) (m : M), M.ρ g m = m)
 
 
+omit [IsTopologicalGroup G] [CompactSpace G] [(P : Subgroup G).Normal] [IsDiscreteRep T]
+  [IsDiscreteRep M] in
+include hT hM in
 theorem homRep_ρ_of_mem (g : (P : Subgroup G)) (f : homRep T M) : (homRep T M).ρ g f = f := by
   apply LinearMap.ext
   intro t
@@ -106,6 +109,8 @@ theorem homRep_ρ_of_mem (g : (P : Subgroup G)) (f : homRep T M) : (homRep T M).
   rw [hM, show ((g : G)⁻¹) = ((g⁻¹ : (P : Subgroup G)) : G) from rfl, hT]
 
 
+omit [CompactSpace G] [(P : Subgroup G).Normal] [IsDiscreteRep T] [IsDiscreteRep M] in
+include hT hM in
 theorem isDiscreteRep_homRep : IsDiscreteRep (homRep T M) :=
   ⟨fun f => Subgroup.isOpen_mono (H₁ := (P : Subgroup G))
     (fun g hg => homRep_ρ_of_mem P T M hT hM ⟨g, hg⟩ f) P.isOpen⟩
@@ -140,6 +145,7 @@ noncomputable def coprimeTwistEquiv (n : ℕ) :
     (twistInvariantsEquiv (P : Subgroup G) T (homRep T M) (homRep_ρ_of_mem P T M hT hM) n).symm
 
 
+include hTr hP in
 theorem finrank_cohomology_eq_finrank_invariants (n : ℕ) :
     Module.finrank k (cohomology M n) = Module.finrank k
       ((cohomologyConjRep T (P : Subgroup G) n).tprod

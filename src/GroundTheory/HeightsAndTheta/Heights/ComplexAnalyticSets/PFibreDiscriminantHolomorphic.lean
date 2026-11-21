@@ -22,6 +22,7 @@ def pairProd {N : ℕ} (l : (σ → ℂ) →L[ℂ] ℂ) (z : Fin N → σ → �
   ∏ q ∈ (Finset.univ : Finset (Fin N)).offDiag, (l (z q.1) - l (z q.2))
 
 
+omit [Fintype σ] in
 theorem continuous_pairProd {N : ℕ} (l : (σ → ℂ) →L[ℂ] ℂ) : Continuous (pairProd (N := N) l) := by
   unfold pairProd
   exact continuous_finsetProd _ fun q _ =>
@@ -91,6 +92,7 @@ theorem norm_prod_le_pow {ι : Type*} (s : Finset ι) (F : ι → ℂ) {C : ℝ}
     _ ≤ C ^ n := pow_le_pow_right₀ hC hs
 
 
+omit [Fintype σ] in
 theorem exists_bound_pairs {Y : Set (σ → ℂ)} {d : ℕ} {A : (σ → ℂ) →L[ℂ] (Fin d → ℂ)}
     {K : Set (Fin d → ℂ)} (l : (σ → ℂ) →L[ℂ] ℂ) (hK : IsCompact {x | x ∈ Y ∧ A x ∈ K}) :
     ∃ C : ℝ, 1 ≤ C ∧ ∀ a ∈ {x | x ∈ Y ∧ A x ∈ K}, ∀ b ∈ {x | x ∈ Y ∧ A x ∈ K}, ‖l a - l b‖ ≤ C := by

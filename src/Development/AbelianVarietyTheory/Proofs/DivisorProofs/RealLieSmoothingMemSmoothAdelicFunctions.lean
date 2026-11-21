@@ -15,6 +15,7 @@ namespace GlobalTheory.AutGrowth
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+omit [IsTotallyComplex E] in
 theorem contDiff_lmul_uncurry : ContDiff ℝ ∞ fun q : Lie E a × Lie E a => lmul q.1 q.2 := by
   have e : (fun q : Lie E a × Lie E a => lmul q.1 q.2) = fun q i j => ∑ k, q.1 i k * q.2 k j := by
     funext q i j

@@ -24,6 +24,11 @@ variable {S : Scheme.{0}}
 
 
 
+set_option autoImplicit false in
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
+open scoped CategoryTheory.Obj UpperHalfPlane TensorProduct in
+attribute [local instance] Over.cartesianMonoidalCategory in
+variable {S : Scheme.{0}} in
 theorem _root_.GlobalTheory.TensorFinite.isFinite_tensorHom {X Y X' Y' : Over S} (f : X ⟶ Y) (g : X' ⟶ Y') (hf : IsFinite f.left)
     (hg : IsFinite g.left) : IsFinite (f ⊗ₘ g).left := by
   rw [Over.tensorHom_left]

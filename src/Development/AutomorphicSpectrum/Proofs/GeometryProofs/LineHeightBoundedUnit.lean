@@ -95,6 +95,7 @@ theorem exists_arch_bound {y : (Σ k, ι k) → Ω} {d : ℕ} (hAr : IsArithVar 
 end GlobalTheory.CompanionTheory.Ar.Ht.FlatLine
 
 
+open GlobalTheory.CompanionTheory.Ar.Ht.FlatLine in
 theorem GlobalTheory.CompanionTheory.Ar.Ht.lineHt_bounded_of_genUnit : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω] (y : (Σ k, ι k) → Ω) (d : ℕ), IsArithVar (mCoordIdeal y) d → Birational y → ∀ (A : HermLine ι) (k : ℕ) (u : Ω) (c : ℝ), IsSmoothHerm A → 0 < k → GenUnit y (fun b => k * A.a b) u → VertBound y (fun b => k * A.a b) u c → ∃ C : ℝ, ∀ (L : Type) [Field L] [NumberField L], ∀ w ∈ ptsOver L (mCoordIdeal y), |lineHt A L w| ≤ C := by
   intro K _ ι _ Ω _ y d hAr hB A k u c hS hk hG hV
   obtain ⟨C, hC⟩ := exists_arch_bound hAr hB hS hV

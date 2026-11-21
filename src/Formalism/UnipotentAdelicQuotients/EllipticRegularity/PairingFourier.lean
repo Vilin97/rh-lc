@@ -110,6 +110,7 @@ private theorem eF_eq_exp_comp_of_clm (ζ : E d) (L : E d →L[ℝ] ℂ)
   funext x; rw [hL]; rfl
 
 
+set_option maxHeartbeats 800000 in
 theorem pf_fourier_fderiv (k : E d → ℂ) (hk : ContDiff ℝ ∞ k) (hkc : HasCompactSupport k) (v ζ : E d) :
     𝓕 (fun x => fderiv ℝ k x v) ζ = (2 * Real.pi * Complex.I * ((inner ℝ ζ v : ℝ) : ℂ)) * 𝓕 k ζ := by
   obtain ⟨L, hL⟩ := exists_clm_eq_neg_two_pi_I_inner ζ

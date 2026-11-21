@@ -43,6 +43,7 @@ theorem glmPsi_apply (e : κ ≃+* k') (σ₀ : K →+* ℂ) (ψ : AddChar κ K)
   rw [e.symm_apply_apply]
 
 
+open Classical in
 def glmChi (e : κ ≃+* k') (σ₀ : K →+* ℂ) (χ : κˣ →* Kˣ) : MulChar k' ℂ :=
   MulChar.ofUnitHom ((Units.map σ₀.toMonoidHom).comp (χ.comp (Units.map e.symm.toRingHom.toMonoidHom)))
 

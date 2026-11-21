@@ -113,6 +113,7 @@ theorem res_ampleChart_pow {a : Ω} (ha : a ∈ ampleChart H 1 σ I) (n : ℕ) :
 end AmpleChart
 
 
+variable (x) in
 def resUnionChart (I J : Chart x) : Chart x :=
   ⟨I.1 ∪ J.1, I.2.1.mono Finset.subset_union_left, Finset.union_subset I.2.2 J.2.2⟩
 

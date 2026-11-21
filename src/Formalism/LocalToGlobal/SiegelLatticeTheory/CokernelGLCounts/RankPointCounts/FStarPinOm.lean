@@ -38,6 +38,7 @@ theorem pinOm_cancel {R W : Type*} [CommRing R] [AddCommGroup W] [Module R W] {a
   exact this
 
 
+set_option maxHeartbeats 4000000 in
 theorem pinOm_holds : PinOm Zd u u' F0 what₂ := by
   intro γ Z F'₂ φ φ' Λ₂ hB β₀ hβ hfr hW hO p hm hm₂
   obtain ⟨hC, hCtx, hS, -, -, hTH, hPD, hGv⟩ := hB

@@ -143,6 +143,7 @@ variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) {u u' : D.what₂.Word}
   {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
 
+variable (u u' F0 what₂) in
 def GlobGramNe : Prop :=
   CtxP u u' F0 what₂ →
   ∀ (γ : TermDef.Term D u u' F0 what₂) (Z : PairVal.MatR D) (F'₂ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)),

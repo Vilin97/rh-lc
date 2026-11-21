@@ -90,6 +90,7 @@ theorem exists_level {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)}
     (GlobalTheory.VacUnique.latO_inf S T _ _ _ (AddSubgroup.nsmul_mem _ hu N))⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem average {θ : InfFam D} {sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ}
     {sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ}
     {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)} {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)}
@@ -222,6 +223,7 @@ theorem isAlgComb_self (f₀ : WO S T → ℂ) : GlobalTheory.MovedAlg.IsAlgComb
     simp [GlobalTheory.SplitScalar.heisO_zero]⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem om_vac_algComb : ∀ {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D}
     {sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ} {sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ}
     {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)} {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)} {v : WO S T → ℂ}

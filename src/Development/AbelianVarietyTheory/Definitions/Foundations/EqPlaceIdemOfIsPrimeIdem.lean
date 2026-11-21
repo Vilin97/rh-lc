@@ -75,6 +75,7 @@ theorem mul_idem_iff_mem_range_emb {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v :
       · rw [h2 u hu]; simp
 
 
+omit [NumberField E] in
 theorem adTens_ext {y z : AF F ⊗[F] E} (h1 : ∀ w, compInf F E w y = compInf F E w z)
     (h2 : ∀ v, compFin F E v y = compFin F E v z) : y = z := by
   rw [← sub_eq_zero, ← add_eq_right (b := 1)]
@@ -87,6 +88,7 @@ section Single
 omit [NumberField E]
 
 
+variable (E) in
 def singleTens (v : HeightOneSpectrum (𝓞 F)) : Fv F v ⊗[F] E →ₙ+* AF F ⊗[F] E :=
   GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.tensNU (R' := AF F) ((LinearMap.inr F (Ainf F) (Af F)).comp (singleFin v))
     fun a b => Prod.ext (mul_zero _).symm (singleFin_mul v a b)

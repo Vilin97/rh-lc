@@ -210,6 +210,7 @@ open scoped Matrix
 open GlobalTheory.UnitFrameGen MeasureTheory
 
 
+set_option maxHeartbeats 1600000 in
 theorem norm_gen_eq_one_of_frOver {E : Type} [Field E] [NumberField E] [IsCMField E]
     {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H} {l : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H} {Xo : Moduli Dw l}
     {c : Coeff l} {n : ℕ} (d : DeltaDat Xo c n) {σ : c.F →+* ℂ} {σ₂ : d.c₂.F →+* ℂ} {σ' : KA l →+* ℂ}

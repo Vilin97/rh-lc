@@ -119,6 +119,7 @@ def GenericInPsiLocus (φ : R →+* R') (D : DegPre R) : Prop :=
 end Pull
 
 
+open scoped CategoryTheory.Obj in
 def UnifBaseChange : Prop :=
   ∀ (R R' : Type) [CommRing R] [IsDomain R] [CommRing R'] [IsDomain R']
     (I : Ideal R) (I' : Ideal R') (_ : AdmBase R I) (_ : AdmBase R' I')

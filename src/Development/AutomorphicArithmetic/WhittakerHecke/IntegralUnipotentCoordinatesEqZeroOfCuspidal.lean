@@ -14,6 +14,7 @@ open UpperTheory.ConvolutionTheory.R2.G (FS2 nE)
 open scoped Classical
 
 
+open GroundTheory.Automorphic.FourierWhittaker in
 private noncomputable def latE' {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (D : Dat F E) :
     vecLattice F (Fin 2) ≃ AdeleRing.principalSubgroup (𝓞 E) E where
   toFun g := ⟨D.coE.symm g.1, by

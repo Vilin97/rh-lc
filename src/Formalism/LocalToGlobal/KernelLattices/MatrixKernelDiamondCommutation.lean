@@ -34,6 +34,7 @@ section PtsFin
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG Q : Finset (HeightOneSpectrum (𝓞 E))}
 
 
+omit [NumberField E] in
 theorem decoF_ext {p p' : DecoF E n ST SG Q} (h1 : p.deco = p'.deco) (h2 : ∀ R : Q, p.fr R = p'.fr R) : p = p' :=
   Subtype.ext (Prod.ext h1 (funext h2))
 
@@ -77,6 +78,7 @@ end Ops
 variable {u : Pr.Word}
 
 
+variable (R u) in
 abbrev TopPt : Type := RowPt Pr R sel mu × DecoSet X.E (R.N R.m) (Pr.vT u) (rowSG Pr sel mu)
 
 def tilTop (d : RowPt Pr R sel mu) : TopPt R sel mu u := (d, tilQ sel mu u d)

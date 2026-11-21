@@ -90,6 +90,7 @@ end GlobalTheory.DirectedNoeth
 namespace GlobalTheory
 
 
+open GlobalTheory.DirectedNoeth in
 theorem isNoetherianRing_of_directed_pure_union : ∀ (S : Type) [CommRing S] [IsLocalRing S] (ι : Type)
     [Preorder ι] [IsDirected ι (· ≤ ·)] [Nonempty ι] (R : ι → Subring S), Monotone R →
     (∀ x : S, ∃ i, x ∈ R i) → (∀ i, IsNoetherianRing (R i)) →

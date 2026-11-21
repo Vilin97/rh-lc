@@ -201,6 +201,7 @@ theorem fermat {p : ℕ} [Fact p.Prime] (u : ℚ_[p]) (hu : ‖u‖ = 1) : ‖u 
 end GlobalTheory.HilbertThetaSeries.DConst
 
 
+open GlobalTheory.HilbertThetaSeries.DConst in
 theorem GlobalTheory.HilbertThetaSeries.wC_near_one : ∀ (F : Type) [Field F] [NumberField F] (p : ℕ) [Fact p.Prime] (ι : Qbar p ≃+* ℂ), p ≠ 2 → ∀ δ c : F, IsDel p δ → PUnit p (c / δ) → ∀ t N : ℕ, N.Coprime p → (-1) ^ ((p - 1) / 2) * (t : ℤ) ≡ 1 [ZMOD p] → ‖ι.symm (wC (p - 1) t (N : F) c) - 1‖ ≤ (p : ℝ)⁻¹ := by
   intro F _ _ p _ ι hp2 δ c hδ hc t N hN ht
   have hp : p.Prime := Fact.out

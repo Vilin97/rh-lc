@@ -275,6 +275,7 @@ theorem obj_isHCParam_u (R : Formalism.BasicNotions.Ranks) (P : Formalism.BasicN
     rw [hz, hq]; push_cast; ring
 
 
+open Formalism.MainNotions.CayleySignature in
 theorem exists_isCayleyU_eps48 (k r : ℕ) (hk : 1 ≤ k) : ∃ P, IsCayleyU k r (eps48 k r) P := by
   apply obj_cayleyU_of_card
   have e : (Finset.univ.filter fun i => eps48 k r i = true) =

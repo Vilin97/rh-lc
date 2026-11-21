@@ -21,6 +21,7 @@ instance intermediateField_valuativeRel : ValuativeRel E :=
   ValuativeRel.ofValuation ((valuation L).comap (algebraMap E L))
 
 
+variable {E} in
 @[simp]
 theorem IntermediateField.coe_vle_coe_iff (x y : E) : (x : L) ≤ᵥ (y : L) ↔ x ≤ᵥ y :=
   by exact (valuation L).vle_iff_le
@@ -39,6 +40,7 @@ instance intermediateField_valuativeExtension_left [ValuativeRel K] [ValuativeEx
       IntermediateField.coe_algebraMap_apply, ValuativeExtension.vle_iff_vle]⟩
 
 
+variable {E} in
 theorem IntermediateField.valuation_coe (x : E) :
     valuation L (x : L) = ValuativeExtension.mapValueGroupWithZero E L (valuation E x) :=
   (ValuativeExtension.mapValueGroupWithZero_valuation (A := E) (B := L) x).symm

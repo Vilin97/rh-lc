@@ -33,6 +33,7 @@ theorem CycleSplit.Filt.telescope : ∀ {n : ℕ} (a : Fin (n + 1) → ℤ) (b :
     linarith
 
 
+open SectionCount.Drop.Filt in
 theorem CycleSplit.Filt.proof (hS : CycleSplit.Filt.Step.Statement.{u, w}) :
     CycleSplit.Filt.Statement.{u, w} := by
   classical

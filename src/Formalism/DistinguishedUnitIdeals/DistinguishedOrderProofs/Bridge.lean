@@ -488,6 +488,7 @@ variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {ϖ : 
   {b : ℕ → ℕ} {lam : Fin r → D} {U : ℕ → Submodule O (Fin r → O)}
 
 
+omit [IsDomain O] [IsDiscreteValuationRing O] in
 lemma nb_iff (h : BridgeItems R ϖ η kind b lam U) {s : ℕ} (hs : s < ell)
     (y : Fin r → PowerSeries O) (m m' : ℕ)
     (hX : ∀ i : ℤ, 0 ≤ i → NbK (kind s) (b s) (UOf (kind s) (b s) η (R.Fil s)) (i - H s) =
@@ -549,6 +550,7 @@ theorem level_iff (hϖ : Irreducible ϖ) (h : BridgeItems R ϖ η kind b lam U) 
     rfl
 
 
+omit [IsDomain O] [IsDiscreteValuationRing O] in
 lemma pr_key (h : BridgeItems R ϖ η kind b lam U) {s : ℕ} (hs : s < ell)
     (y : Fin r → PowerSeries O) (N : ℕ) (o : Fin r → O) (d : D) (e : S.Lv)
     (hd : algebraMap O LL (ϖ ^ N) • d = ∑ k, algebraMap O LL (o k) • lam k)

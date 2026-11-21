@@ -91,6 +91,7 @@ attribute [local instance] Formalism.BasicNotions.factResChar Formalism.BasicNot
 variable {B : Base} {C : Cols B}
 
 
+set_option maxHeartbeats 4000000 in
 theorem isLocalFamily_stages (sc : Scale) (Z Z' : Later B C) (L0 : LevelData (recOf Z)) (T : ∀ u, Forms0 (recOf Z) u) (g)
     (h : IsLocalFamily sc (recOf Z) L0 T g) : IsLocalFamily sc (recOf Z') L0 (fun u => forms0Re Z' (T u)) g := by
   run_tac do
@@ -144,6 +145,7 @@ theorem columnLocalData_of_levelZero_concreteData (w : ColW B f T) (Z : w.Lt) (C
     gPlTiedS_of G.herm hpl _ _ e (h1.trans hg)⟩, hR, hO⟩⟩
 
 
+set_option maxHeartbeats 8000000 in
 theorem nonempty_columnLocalData_of_standardConcreteFamily (w : ColW B f T) (Z : w.Lt) (C : ColsTiedSym (w.D Z)) (hC : TC.StdC w.I w.l Z C)
     (hL : ∀ u, TC.StdLvC w.I w.l Z u (C.forms u)) (g) (hd)
     (h : IsLocalFamily K.s (w.D Z) C.herm.base.lev0 (fun u => (C.forms u).to0) g)
@@ -156,6 +158,7 @@ theorem nonempty_columnLocalData_of_standardConcreteFamily (w : ColW B f T) (Z :
     (funext hl) (funext fun u => (hf u).trans ((forms0Re_setGat g hd _).symm.trans (columnFormsAlongLaterStages_stageZero_eq _ C u).symm)) hpl
 
 
+set_option maxHeartbeats 8000000 in
 theorem exists_trueVolume_stage_of_any_column_choice (p : WP) : StepW p fun K B f T w => ∃ G : GJStage B w.C, GIs2 K w G := by
   refine StepW.of_all fun K B f T w hO _ _ => ?_
   obtain ⟨Z₀⟩ := TrueColsTest.later w.l (JetEx.hasLetters_of_over hO)

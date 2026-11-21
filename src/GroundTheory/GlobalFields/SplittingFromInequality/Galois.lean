@@ -17,6 +17,7 @@ variable {K K' L : Type*} [Field K] [NumberField K] [Field K'] [NumberField K'] 
   [NumberField L] [Algebra K K'] [Algebra K' L] [Algebra K L] [IsScalarTower K K' L]
 
 
+omit [NumberField K] [NumberField L] in
 theorem SplitsCompletely.of_liesOver {v : HeightOneSpectrum (𝓞 K)} (hv : SplitsCompletely L v)
     (v' : HeightOneSpectrum (𝓞 K')) [v'.asIdeal.LiesOver v.asIdeal] : SplitsCompletely L v' := by
   intro w hw
@@ -27,6 +28,7 @@ theorem SplitsCompletely.of_liesOver {v : HeightOneSpectrum (𝓞 K)} (hv : Spli
   exact ⟨(mul_eq_one.1 he).2, (mul_eq_one.1 hf).2⟩
 
 
+variable (K) in
 theorem eventually_splitsCompletely_of_tower
     (h : ∀ᶠ v : HeightOneSpectrum (𝓞 K) in cofinite, SplitsCompletely L v) :
     ∀ᶠ v' : HeightOneSpectrum (𝓞 K') in cofinite, SplitsCompletely L v' :=

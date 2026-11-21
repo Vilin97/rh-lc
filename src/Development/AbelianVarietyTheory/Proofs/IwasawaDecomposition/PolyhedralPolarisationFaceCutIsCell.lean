@@ -16,6 +16,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {ψ : I
   {X : Type} [AddCommGroup X] [Module (𝓞 E) X] [Module.Finite (𝓞 E) X]
 
 
+omit [Module (𝓞 E) X] [Module.Finite (𝓞 E) X] in
 theorem apply_eq_sum_of_toReal {m : ℕ} {β : LinearMap.BilinForm ℤ X} {u : Fin m → LinearMap.BilinForm ℤ X}
     {c : Fin m → ℝ} (hβ : toReal β = ∑ i, c i • toReal (u i)) (F : LinearMap.BilinForm ℤ X →ₗ[ℤ] ℤ) :
     (F β : ℝ) = ∑ i, c i * (F (u i) : ℝ) := by

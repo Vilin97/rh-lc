@@ -47,6 +47,7 @@ def localCoord (v : HeightOneSpectrum (𝓞 K)) (i : ι) :
     (tensorEquiv L v).symm.toLinearEquiv.toLinearMap
 
 
+omit [DecidableEq ι] in
 theorem sum_localCoord (v : HeightOneSpectrum (𝓞 K)) (z : CompletionsOver L v) :
     ∑ i, algebraMap (v.adicCompletion K) (CompletionsOver L v) (localCoord b v i z) *
       algebraMap L (CompletionsOver L v) (b i) = z := by
@@ -61,6 +62,7 @@ theorem sum_localCoord (v : HeightOneSpectrum (𝓞 K)) (z : CompletionsOver L v
   rfl
 
 
+omit [Fintype ι] [DecidableEq ι] in
 theorem localCoord_algebraMap (v : HeightOneSpectrum (𝓞 K)) (i : ι) (l : L) :
     localCoord b v i (algebraMap L (CompletionsOver L v) l) =
       algebraMap K (v.adicCompletion K) (b.repr l i) := by
@@ -100,6 +102,7 @@ theorem localCoord_mem (v : HeightOneSpectrum (𝓞 K)) (i : ι) (z : Completion
   exact sum_mem fun w _ ↦ trace_mem_adicCompletionIntegers v w.1 (hz w)
 
 
+omit [Fintype ι] [DecidableEq ι] in
 theorem continuous_localCoord (v : HeightOneSpectrum (𝓞 K)) (i : ι) :
     Continuous (localCoord b v i) :=
   IsModuleTopology.continuous_of_linearMap (localCoord b v i)

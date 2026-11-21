@@ -106,6 +106,7 @@ theorem pr_eq_zero (q : GlobalTheory.FinPl.SplitPt D k) (x : AE D) (hx : Formali
   rw [← q.pr_sec (q.pr x), h2, map_zero]
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_int_lift (v : GlobalTheory.FinPl.Pl D) (y : D.host.E ⊗[D.host.F] v.adicCompletion D.host.F) (hy : y ∈ intV D.host.E v) :
     ∃ x : AE D, finPart D x ∈ intAE D ∧ Formalism.UG.prV (E := D.host.E) v (toEAf D x) = y := by
   have hone : (1 : Af D.host.F) ∈ intAf D.host.F := fun w => by rw [map_one]; exact one_mem _

@@ -239,6 +239,7 @@ end GlobalTheory.FirstRowEndLaw
 namespace GlobalTheory.FirstRowEndLaw
 
 
+open Formalism.MainNotions in
 theorem pde_ne_q' {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type} {A : FamIn D.what₂.LL Γ Pl0 T D.R.m}
     {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks} {large₂ : SizeData₂ D} {F : Face D A}
     (h : GlobalTheory.RowClaim.HidaSetting large₂ R F) : Nat.Coprime D.host.pde (D.host.QS * D.host.q) ∧ Nat.Coprime D.host.pde' (D.host.QS * D.host.q) := by

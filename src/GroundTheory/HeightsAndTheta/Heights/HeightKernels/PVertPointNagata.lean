@@ -27,6 +27,7 @@ theorem isMultiHomog_comp (n : ℕ) (f : MRing (fun _ : Unit => T)) :
   Inter.LocRingPow.isMultiHomog_iff.mpr (weightedHomogeneousComponent_isWeightedHomogeneous _ _)
 
 
+omit [Fintype T] in
 theorem exists_comp_not_mem {J : Ideal (MRing (fun _ : Unit => T))} {f : MRing (fun _ : Unit => T)}
     (hf : f ∉ J) : ∃ n, comp n f ∉ J := by
   obtain ⟨D, hD⟩ := Inter.LocRingPow.exists_component_not_mem hf
@@ -37,6 +38,7 @@ theorem comp_mem {J : Ideal (MRing (fun _ : Unit => T))} (hJ : IsMultiHomogIdeal
   Inter.LocRingPow.component_mem hJ hf _
 
 
+omit [Fintype T] in
 theorem aeval_eq_eval₂ {S : Type*} [CommRing S] [Algebra ℤ S] (v : (Σ _ : Unit, T) → S)
     (f : MRing (fun _ : Unit => T)) : aeval v f = eval₂ (Int.castRingHom S) v f := by
   rw [aeval_def, show algebraMap ℤ S = Int.castRingHom S from RingHom.ext_int _ _]
@@ -68,6 +70,7 @@ theorem coeff_aeval {S : Type*} [CommRing S] [Algebra ℤ S] [Algebra ℤ (Polyn
 end VerticalPointNagata
 
 
+open VerticalPointNagata in
 theorem VertPointNagata.proof (hCh : VertPointChart.Statement) : VertPointNagata.Statement := by
   intro T _ K' _ _ y s hP hs hsP W hW t ht _ _ a b hb hab
   classical

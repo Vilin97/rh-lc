@@ -166,14 +166,17 @@ variable {F : Type} [Field F] {K : Type} [Fintype K] [LinearOrder K] {ι : K →
   {Ω : Type} [Field Ω] [Algebra F Ω] {N : ℕ} {x : Fin (N + 1) → Ω}
 
 
+variable (K ι Ω x) in
 abbrev DoubleCech.Amb (q p : ℕ) : Type :=
   Kleiman.Cech.Cochain (fun _ : Kleiman.Chart x => ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.Cell K ι q → Ω) p
 
 
+variable (F K ι Ω x) in
 def DoubleCech.vert (q p : ℕ) : DoubleCech.Amb K ι Ω x q p →ₗ[F] DoubleCech.Amb K ι Ω x q (p + 1) :=
   Kleiman.Cech.d (fun _ : Kleiman.Chart x => ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.Cell K ι q → Ω) (fun _ _ _ => LinearMap.id) p
 
 
+variable (F) in
 def DoubleCech.horiz (y : (Σ k, ι k) → Ω) (q p : ℕ) :
     DoubleCech.Amb K ι Ω x q p →ₗ[F] DoubleCech.Amb K ι Ω x (q + 1) p :=
   Kleiman.Cech.mapC (G := fun _ : Kleiman.Chart x => ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.Cell K ι q → Ω)
@@ -203,6 +206,7 @@ theorem DoubleCech.vert_apply {q p : ℕ} (s : DoubleCech.Amb K ι Ω x q p) (J 
   simp only [Finset.sum_apply, Pi.smul_apply, LinearMap.id_apply]
 
 
+omit [LinearOrder K] [∀ k, LinearOrder (ι k)] in
 theorem DoubleCech.d_eval {q p : ℕ} (s : DoubleCech.Amb K ι Ω x q p) (c : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.Cell K ι q) :
     Kleiman.Cech.d (fun _ : Kleiman.Chart x => Ω) (omegaRes F x) p (fun J => s J c) =
       fun J => DoubleCech.vert F K ι Ω x q p s J c := by
@@ -425,6 +429,7 @@ theorem DoubleCech.col_succ (hMJ : ∀ (J J' : Kleiman.Chart x) I, J.1 ⊆ J'.1 
       (fun _ _ _ _ _ => LinearMap.id_comp _) p t.1)
 
 
+omit [Fintype K] [LinearOrder K] [∀ k, LinearOrder (ι k)] in
 theorem DoubleCech.B_mono {B : (∀ k, Finset (ι k)) → Submodule F Ω}
     (hMI : ∀ J (I I' : ∀ k, Finset (ι k)), (∀ k, I k ⊆ I' k) → CellMeets y I' → M J I ≤ M J I')
     (hcol : ∀ I : ∀ k, Finset (ι k), (∀ k, (I k).Nonempty) → CellMeets y I → CechAugExact F (fun J => M J I) (B I))

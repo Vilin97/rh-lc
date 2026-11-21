@@ -67,6 +67,7 @@ section Continuity
 variable [IsFiniteMeasureOnCompacts μ]
 
 
+omit [μ.IsMulRightInvariant] in
 theorem tendsto_lintegral_rightMul_sub {ψ : RightCosetSpace Γ → ℂ} (hc : Continuous ψ)
     (hs : HasCompactSupport ψ) (g₀ : G) :
     Tendsto (fun g ↦ ∫⁻ x, ‖ψ (rightMul Γ g x) - ψ (rightMul Γ g₀ x)‖ₑ ^ (2 : ℝ)

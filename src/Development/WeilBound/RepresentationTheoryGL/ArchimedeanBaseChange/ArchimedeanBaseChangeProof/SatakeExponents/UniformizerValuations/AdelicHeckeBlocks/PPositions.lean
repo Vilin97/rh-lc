@@ -283,6 +283,7 @@ theorem pair_compact {a b : ℕ} {S : Set (Pl E)} (hS : IsSection S) (C : ∀ i 
 end Slots
 
 
+open Slots in
 theorem slots : Slots := by
   intro E _ _ _ a b S hS
   refine ⟨fun i x y => ?_, fun i => ?_, fun x y H => ?_, fun y hy => ?_, fun x => ?_, fun x => ?_, fun C hC hCK => ?_⟩

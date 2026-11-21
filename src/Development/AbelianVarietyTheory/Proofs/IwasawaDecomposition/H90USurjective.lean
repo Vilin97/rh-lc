@@ -64,10 +64,12 @@ theorem KD_le_ker {χ : HChar H.E} (hF : χ.TrivOn H.F) (ht : ∀ v, χ.TameAt v
   KDq_empty H ▸ KDq_le_ker H ∅ hF ht fun v h _ => hu v h
 
 
+variable {H} in
 theorem KD_le_ker_of_isChiPsi {χ : HChar H.E} (h : IsChiPsi H χ) : KD H ≤ (χ.1.comp (finPartI H.E)).ker :=
   KD_le_ker H h.triv (fun v x hx _ => h.unr v x hx) fun v _ => h.unr v
 
 
+variable {H} in
 theorem KD_le_ker_of_isMu0 {P : PiBar H} {W : Omg H} {e : R.Psi → ℚ} {j : ℕ} {χ : HChar H.E} (h : IsMu0 P W e j χ) :
     KD H ≤ (χ.1.comp (finPartI H.E)).ker :=
   KD_le_ker H h.triv h.tame h.unr
@@ -272,6 +274,7 @@ variable (σ : H.E →ₐ[H.F] H.E) (hσ : ∀ x, σ x = H.conj x) (ι : AfE H.F
   (h2 : ∀ z, z ∈ RInt H.F H.E ↔ ∀ Q : HeightOneSpectrum (𝓞 H.E), Valued.v (ι z Q) ≤ 1)
 
 
+include hσ h1 h2 in
 theorem finIdele_mem_KDq {x : (AfE H.F H.E)ˣ} (hx : h90 σ x = 1) : finIdele ι x ∈ KDq H SQ := by
   have hcm : IsCMField H.E := H.isCMField_hostE
   have hc : ∀ x, IsCMField.complexConj H.E x = H.conj x := fun x => bridge_star_holds R H x

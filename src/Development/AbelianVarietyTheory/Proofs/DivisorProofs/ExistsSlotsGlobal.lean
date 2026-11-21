@@ -123,6 +123,8 @@ theorem mapMat_mul {n n' n'' : ℕ} {r : ↥(GK K) →* GL (Fin n) ↥(OL LL)} {
     (homOf hr hr' a ha) (homOf hr' hr'' a' ha') (homOf hr hr'' a'' ha'') A A' A'' h h' h'' hc i, Matrix.map_mul]
 
 
+include F Cm in
+set_option maxHeartbeats 1000000 in
 theorem exists_positions {n t h R : ℕ} {r : ↥(GK K) →* GL (Fin n) ↥(OL LL)} {ψ : Fin t → ↥(GK K) →* GL (Fin 1) ↥(OL LL)}
     {U : ZMod (Module.finrank ℚ_[l] ↥(K0 K)) → Fin n → ℤ} {wt : Fin t → ZMod (Module.finrank ℚ_[l] ↥(K0 K)) → ℤ}
     (hr : MatGood (D.loc l) ((HW l).W K 1 LL hA.2.2).emb r fun i => Finset.univ.val.map (U i)) (hU : ∀ i a, 0 ≤ U i a ∧ U i a ≤ h)
@@ -255,6 +257,7 @@ end GlobalTheory.WachPlace
 namespace GlobalTheory.WachPlace
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_positions_global (hBS : GlobalTheory.Published.BhattScholzeCrystallineLattices) {E Ω : Type} [Field E] [NumberField E]
     [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] {l : ℕ} [Fact l.Prime] (hl : l ≠ 2) (hd : ¬ (l : ℤ) ∣ NumberField.discr E)
     {σ : Equiv.Perm (E →+* PadicAlgCl l)} (hσ : GlobalTheory.ExpFrame.IsFrobPerm σ) {n t h R : ℕ}

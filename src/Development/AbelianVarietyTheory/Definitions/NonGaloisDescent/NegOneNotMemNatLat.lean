@@ -41,6 +41,7 @@ theorem detPow_mul (x : ℝ) (g h : GA E a) : detPow E a x (g * h) = detPow E a 
 
 
 
+omit [IsTotallyComplex E] in
 theorem detPow_ratGL (x : ℝ) (γ : GL (Fin a) E) : detPow E a x (ratGL E a γ) = 1 := by
   have h : Matrix.GeneralLinearGroup.det (ratGL E a γ) = diagUnits E (Matrix.GeneralLinearGroup.det γ) :=
     Units.ext (det_map (algebraMap E (Ad E)) γ)

@@ -103,6 +103,7 @@ theorem isIntM_smul_iff (Q : Finset (Pl D.host.E)) (es : Pl D.host.E → AE D) (
 end GlobalTheory.ZRep
 
 
+open GlobalTheory.ZRep in
 theorem GlobalTheory.ZRep.central_reps : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0
     : Type) (A : FamIn D.what₂.LL G Pl0 T0 D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra
     Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.Hk3.Core R F → QGuard R → ∀ (i

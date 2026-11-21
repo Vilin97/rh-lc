@@ -215,6 +215,7 @@ def rd (f : Rul Xo c) : RM.Ω := letI := cstAlg Or; evR Xo c f Fr.y₀
 @[simp] theorem rd_one : Fr.rd 1 = 1 := letI := cstAlg Or; Formalism.L2.Pj.evalAt_one _ _ _ Fr.test
 
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem rd_smul (a : c.F) (f : Rul Xo c) : Fr.rd (a • f) = Or.𝔐.cst a * Fr.rd f :=
   letI := cstAlg Or; Formalism.L2.Pj.evalAt_smul _ _ a f _
 

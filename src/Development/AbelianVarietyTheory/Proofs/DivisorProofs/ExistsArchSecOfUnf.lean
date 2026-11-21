@@ -58,6 +58,7 @@ theorem framesOn_eq {r : ℕ} {σ : c.F →+* ℂ} (U : Unf Xo c σ r) (hσ : Go
     rwa [Equiv.apply_symm_apply] at this
 
 
+open GlobalTheory.BdryUnit in
 theorem const_length {r : ℕ} {σ : c.F →+* ℂ} (U : Unf Xo c σ r) (x : ℝ) (hσ : GoodEmb c σ) (hU : IsUnf U)
     (hgeo : FnAlgClosed Xo c) {Z : Comp Xo c} {τ : Psi H} {Y : Model Xo c (RingHom.id c.F)} {V : (Xo.XF c).Opens}
     {sig : GlobalTheory.IndefiniteRowSideFullHecke.FramedFlatCoordinates.Rule Y V τ.1} {f : Rul Xo c} (hV : (V : Set (Xo.XF c)) = Z)
@@ -110,6 +111,7 @@ theorem detLaw_inv (s : ArchSec U x Z (flatWt Dw τ)) : DetLaw Z s.inv (conjEmb 
     (g₁.det * evR Xo c s.inv z) * k2
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem archSec_denom (hpq : 1 ≤ Dw.p + Dw.q) (hA : l.A = 1) (s : ArchSec U x Z (flatWt Dw τ))
     (hs : ∀ (T : CDVR) (io : c.F →+* T.Fr) (y₀ : IntFr Xo c T io), (∀ a, a ≠ 0 → vV T.V (io a) = 0) →
       (letI := io.toAlgebra; LiesOn Z y₀.1) → nval T.V 1 (evI y₀ s.sig) = 0) :
@@ -179,6 +181,7 @@ theorem HasBddSec.neg (h : HasBddSec U x Z la) : HasBddSec U x Z (-la) := by
     fun w v hv => (h w v hv).symm⟩
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem HasBddSec.add (h : HasBddSec U x Z la) (h' : HasBddSec U x Z la') : HasBddSec U x Z (la + la') := by
   obtain ⟨s, m, hm, h⟩ := h
   obtain ⟨t, m', hm', h'⟩ := h'

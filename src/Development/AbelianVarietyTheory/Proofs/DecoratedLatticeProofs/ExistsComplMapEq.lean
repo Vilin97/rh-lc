@@ -172,6 +172,7 @@ theorem iota_mem (h : w.under (𝓞 D.host.F) = q) (hs : Formalism.MainNotions.S
 end GlobalTheory.Core.Rk.SWQ.LatHalf
 
 
+open GlobalTheory.Core.Rk.SWQ.LatHalf in
 theorem GlobalTheory.Core.Rk.SWQ.LatHalf.mem_latO_iff_intM : ∀ (D : D7) (q : FinPl D) (w : HeightOneSpectrum (𝓞 D.host.E)) (h : w.under (𝓞 D.host.F) = q), Formalism.MainNotions.SchurIrreducible.IsSplit (E := D.host.E) q → ∀ (S T : HSp D) (LS : Lat S) (LT : Lat T), IsSelfDualC S LS → IsSelfDualC T LT → ∀ a : GL (Fin S.rank) (w.adicCompletion D.host.E), GlobalTheory.LFun.IsFrameAt w LS a → ∃ b : GL (Fin T.rank) (w.adicCompletion D.host.E), ∀ u : WO S T, offM q u = 0 → (∀ i j, cw h (cA D (u i j)) = 0) → (u ∈ latO S T (LS : Set (Fin S.rank → D.host.E)) (LT : Set (Fin T.rank → D.host.E)) (fun v => v = q) ↔ IntM ((b⁻¹).1 * u.map (cw h) * a.1)) := by
   intro D q w h hs S T LS LT hS hT a ha
   obtain ⟨ι, -, h1, -, -, h4, h5, -, -⟩ := GlobalTheory.Core.Rk.SplitIota.exists_iota D q w h hs

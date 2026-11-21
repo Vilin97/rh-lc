@@ -153,6 +153,7 @@ theorem ddConst_monomial_rho (f j k : ℕ) :
 end FlagEq
 
 
+open FlagEq in
 theorem flagIntegralReal_eq_mul_ddConst (f j k : ℕ) (G : IndefiniteRowSideFullHecke.RestTerms.Roots f j k) :
     flagIntegralReal f (j + k) G = stairConst f (j + k) * IndefiniteRowSideFullHecke.RestTerms.ddConst f j k G := by
   rw [flagIntegralReal_eq, ddConst_eq]

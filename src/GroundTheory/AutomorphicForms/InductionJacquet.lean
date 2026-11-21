@@ -18,6 +18,8 @@ variable {N : Type*} [Group N] [TopologicalSpace N] [IsTopologicalGroup N]
   {V : Type*} [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ N V)
 
 
+omit [TopologicalSpace N] [IsTopologicalGroup N] [LocallyCompactSpace N] [T2Space N]
+  [TotallyDisconnectedSpace N] in
 theorem coinvariantsKer_le_ker (K : Subgroup N) :
     coinvariantsKer ρ K ≤ Representation.Coinvariants.ker ρ := by
   refine Submodule.span_le.2 ?_
@@ -25,6 +27,7 @@ theorem coinvariantsKer_le_ker (K : Subgroup N) :
   exact Representation.Coinvariants.sub_mem_ker (k : N) v
 
 
+omit [IsTopologicalGroup N] [LocallyCompactSpace N] [T2Space N] [TotallyDisconnectedSpace N] in
 theorem exists_mem_coinvariantsKer
     (hN : ∀ s : Finset N, ∃ K : Subgroup N, IsCompact (K : Set N) ∧ IsOpen (K : Set N) ∧
       ∀ x ∈ s, x ∈ K)
@@ -132,6 +135,7 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   {V : Type*} [AddCommGroup V] [Module ℂ V] {ρ : Representation ℂ G V} {N M Nbar K : Subgroup G}
 
 
+omit [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] in
 theorem exists_fixedVectors_mk_eq_of_fixed (hρ : IsSmooth ρ) (hKc : IsCompact (K : Set G))
     (hKo : IsOpen (K : Set G))
     (hfact : ∀ k ∈ K, ∃ x ∈ K ⊓ N, ∃ y ∈ K ⊓ M, ∃ z ∈ K ⊓ Nbar, k = x * y * z)
@@ -199,6 +203,7 @@ theorem exists_fixedVectors_mk_eq_of_fixed (hρ : IsSmooth ρ) (hKc : IsCompact 
   rw [map_smul, hyq, smul_smul, inv_mul_cancel₀ hn, one_smul]
 
 
+omit [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] in
 theorem exists_fixedVectors_mk_eq (hρ : IsAdmissible ρ) (hKc : IsCompact (K : Set G))
     (hKo : IsOpen (K : Set G))
     (hfact : ∀ k ∈ K, ∃ z ∈ K ⊓ Nbar, ∃ y ∈ K ⊓ M, ∃ x ∈ K ⊓ N, k = z * y * x)

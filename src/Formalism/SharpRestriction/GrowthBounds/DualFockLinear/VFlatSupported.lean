@@ -69,6 +69,7 @@ theorem V_flat_supported {Kf : Type} [Field Kf] {n' m : ℕ} (TT : Finset (Fin n
   | smul t a _ ha => exact Subalgebra.smul_mem _ ha t
 
 
+set_option maxHeartbeats 1600000 in
 theorem rho_peel (D : Formalism.BasicNotions.D7) {p n' : ℕ} {W Qq O Kf : Type} [CommRing W] [IsDomain W] [IsDiscreteValuationRing W]
     [Field Qq] [Algebra W Qq] [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field Kf] [Algebra O Kf]
     {ι : Qq →+* Kf} {σ : Qq ≃+* Qq} {j : W →+* O} {w : O} (h : HidaSetting p n' W Qq O Kf ι σ j w) {m : ℕ} (r : ℕ)

@@ -189,6 +189,7 @@ theorem form_eq_zero (D : A.V →ₗ[ℝ] A.V →ₗ[ℝ] ℝ) (alt : ∀ a b, D
     · exact h₂ l m
 
 
+open AppellHumbertTrivial in
 theorem im_eq_EF {w : ℂ} (hw : (A.BwMat w).PosDef) {g : ℕ} (k : A.V →ₗ[ℂ] (Fin g → ℂ))
     {Hm : Matrix (Fin g) (Fin g) ℂ} (hH : Hm.IsHermitian)
     (h₁ : ∀ n m, (hermForm Hm (k (A.Pw w (AnArc.La.mk 0 n 0))) (k (A.Pw w m))).im = A.EF (AnArc.La.mk 0 n 0) m)
@@ -233,6 +234,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {Fu : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) ty} (Ha : HolArc Y σ a χ W Fu)
 
 
+open AbelianLetters AppellHumbertTrivial in
 theorem im_hermForm_eq (hL : Out.Laws) (hL2 : Out.Laws2) (hP : ∀ w v, Ha.y v = 0 → Ha.Pw w v = Ha.P₀ v) {n : ℕ}
     (u : HolUnif a.D₀.P.A a.D₀.P.L n) {Hm : Matrix (Fin n) (Fin n) ℂ} {χ' : u.Λ → ℂ} (hAH : u.IsAH Hm χ')
     (F : (Fin g → ℂ) →ₗ[ℂ] (Fin n → ℂ)) (hF : ∀ z, (u.ex (F z)).left = (show Sp ℂ ⟶ _ from (Ha.ex₀ z).b.left))
@@ -289,6 +291,7 @@ theorem im_hermForm_eq (hL : Out.Laws) (hL2 : Out.Laws2) (hP : ∀ w v, Ha.y v =
 end ThetaShiftProofs
 
 
+set_option maxHeartbeats 800000 in
 theorem holArc_agrees : Known → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] (σ : c.F →+* ℂ) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (a : ArcIn Dw l β ℂ (σ.comp β)) (χ : Sp (PowerSeries ℂ) ⟶ Y.X) (W : Wit Y a χ) (g : ℕ) (ty : Fin g → (E →+* ℂ)) (Fu : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) ty) (Ha : HolArc Y σ a χ W Fu) (Λ : GtAn₀ a), letI := H.starRing; ∃ (gam : (Fu.Di Ha.i).La ≃ₗ[𝓞 E] Λ.A.La) (h : (Fin g → ℂ) ≃ₗ[ℂ] Λ.A.V), (∀ z, Λ.ex₀ (h z) = Ha.ex₀ z) ∧ (∀ v, Λ.y (gam v) = Ha.y v) ∧ (∀ w v, h (Ha.Pw w v) = Λ.A.Pw w (gam v)) ∧ ∀ v v', Λ.A.EF (gam v) (gam v') = (Fu.Di Ha.i).EF v v' := by
   intro hK E _ _ _ H Dw l Xo c _ _ σ O _ β Y a χ W g ty Fu Ha Λ
   letI := H.starRing

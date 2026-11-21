@@ -53,6 +53,7 @@ theorem permMat_mem {n : ℕ} (s : Equiv.Perm (Fin n)) : permMat s ∈ Matrix.un
   rw [Matrix.mem_unitaryGroup_iff, star_permMat, permMat_mul]
 
 
+open Formalism.MainNotions.S in
 theorem weight_int_dom {n : ℕ} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     {π : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} (hπ : IsURepOn (UJset (allPos n)) π) {Λ : Fin n → ℝ}
     (hK : IsKTypeOf (allPos n) π Λ ⊤) :

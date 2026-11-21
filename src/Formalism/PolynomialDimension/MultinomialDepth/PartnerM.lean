@@ -1119,6 +1119,7 @@ section Comp
 variable {K σ : Type} [Field K]
 
 
+open Classical in
 noncomputable def compP (Pr : (σ →₀ ℕ) → Prop) (x : MvPolynomial σ K) : MvPolynomial σ K :=
   ∑ m ∈ x.support, if Pr m then monomial m (AddMonoidAlgebra.coeff x m) else 0
 

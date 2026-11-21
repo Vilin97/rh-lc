@@ -88,6 +88,7 @@ theorem isClopen_of_invariant {K : Subgroup G} (hK : IsOpen (K : Set G)) {C : Se
   · simpa using (hC a ha 1 K.one_mem g).2 hg
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] in
 theorem doubleCoset_invariant (K : Subgroup G) (x : G) : ∀ a ∈ K, ∀ b ∈ K, ∀ g,
     a * g * b ∈ {g : G | ∃ a ∈ K, ∃ b ∈ K, g = a * x * b} ↔
       g ∈ {g : G | ∃ a ∈ K, ∃ b ∈ K, g = a * x * b} := by

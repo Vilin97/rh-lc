@@ -90,6 +90,7 @@ theorem ext {A B : Matrix (Fin n) (Fin n) R} (hx : A *ᵥ x = B *ᵥ x) (hy : A 
   simpa [mulVec_single_one] using e
 
 
+omit h in
 def lev (c : R →+* R) (J : Matrix (Fin n) (Fin n) R) (ε : R) (x y : Fin n → R) (t s : R) : Matrix (Fin n) (Fin n) R :=
   1 + (t - 1) • vecMulVec x (J *ᵥ fun i => c (y i)) + ((s - 1) * ε) • vecMulVec y (J *ᵥ fun i => c (x i))
 

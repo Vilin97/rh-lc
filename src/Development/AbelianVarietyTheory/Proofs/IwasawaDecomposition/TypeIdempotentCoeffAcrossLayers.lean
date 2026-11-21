@@ -149,6 +149,7 @@ theorem five_le_type (H : Host R) {k : Fin 2} (hc : H.g k % (H.QS * H.q * H.d) =
   omega
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def retype [IsEmpty N.Loc] (T : NTypes A) (hl : ∀ k w (p : A.LP w), A.items₂ k w p = (X - 1) ^ A.lpDim p)
     (hi : ∀ w (p : A.LP w) σ, A.inePol p σ = (X - 1) ^ A.lpDim p) (L : ∀ k, LabelDatum (H.g k))
     (ω : Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g N)) →ₐ[ℂ] ℂ) : NTypes A :=

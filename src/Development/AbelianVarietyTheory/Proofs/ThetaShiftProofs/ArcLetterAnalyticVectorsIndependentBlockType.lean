@@ -150,6 +150,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   (h₂ : ∀ i, (u i).left ≫ φ = spMap (dualMap k) ≫ (v i).left)
 
 
+include hφ h₁ h₂ in
 theorem isCombAt_one {cf : Fin (Dw.mult τ) → R} (h : IsLieComb cf v 1) :
     IsCombAt y.x (y.u τ) (fun i => k (cf i)) (1 : tEps y.x ⟶ Xo.univ.t.G).left := by
   have h0 := LieCombBaseChange.prod_left_comp hφ (T := epsR R) (T' := epsR S) _ (LieCombBaseChange.dualMap_over k)
@@ -163,6 +164,7 @@ theorem isCombAt_one {cf : Fin (Dw.mult τ) → R} (h : IsLieComb cf v 1) :
     exact congrArg (fun q => q.left) e₁.symm
 
 
+include hφ h₁ h₂ in
 theorem coeff_eq {cf cf' : Fin (Dw.mult τ) → R} (h : IsLieComb cf v 1) (h' : IsLieComb cf' v 1) (i) :
     k (cf i) = k (cf' i) := by
   refine congrFun ((y.basis τ _ ⟨Over.w _, ?_⟩ fun x => ?_).unique (isCombAt_one y m hφ τ h₁ h₂ h)

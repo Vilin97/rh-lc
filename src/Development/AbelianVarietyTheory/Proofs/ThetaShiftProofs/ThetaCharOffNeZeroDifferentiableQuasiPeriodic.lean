@@ -93,6 +93,8 @@ private theorem thetaCharOff_eq_theta_submatrix (S : Finset (Fin g)) (τ : Matri
   ring
 
 
+open Matrix in
+variable {g : ℕ} {S : Finset (Fin g)} in
 theorem _root_.GlobalTheory.ThetaBlock.thetaCharOff_ne_zero_differentiable_quasiPeriodic (g : ℕ) (S : Finset (Fin g))
     (τ : Matrix (Fin g) (Fin g) ℂ) (c₁ c₂ : Fin g → ℂ) (hs : τ.IsSymm)
     (hp : (τ.map Complex.im).PosDef) (h₁ : ∀ k, c₁ k = 0 ∨ c₁ k = 1 / 2)

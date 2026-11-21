@@ -20,6 +20,8 @@ theorem im_embedding_algebraMap (σ : E →+* ℂ) (c : F) : (σ (algebraMap F E
   exact Complex.conj_eq_iff_im.mp h.symm
 
 
+omit [IsTotallyReal F] [IsTotallyComplex E] in
+variable (F E) in
 theorem exists_imaginary_integer : ∃ t : 𝓞 E, (t : E) ≠ 0 ∧ conj F E (t : E) = -(t : E) := by
   obtain ⟨ζ, hζ⟩ := exists_not_mem_range (F := F) (E := E)
   obtain ⟨y, hy0, hyi⟩ := (IsFractionRing.isAlgebraic_iff ℤ ℚ E |>.mpr (.of_finite ℚ ζ)).exists_integral_multiple
@@ -42,6 +44,8 @@ theorem exists_imaginary_integer : ∃ t : 𝓞 E, (t : E) ≠ 0 ∧ conj F E (t
     ring
 
 
+omit [IsTotallyReal F] in
+variable (F E) in
 theorem card_infinitePlace_eq : Fintype.card (InfinitePlace E) = finrank ℚ F := by
   have h1 := IsTotallyComplex.finrank (K := E)
   have h2 := InfinitePlace.card_eq_nrRealPlaces_add_nrComplexPlaces (K := E)

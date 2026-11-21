@@ -58,6 +58,7 @@ theorem free_of (hC : GlobalTheory.Published.CrystallineSmoothLift) (hA : Global
 end GlobalTheory.Proof.AbelianDeRhamFreeOfHodge
 
 
+open GlobalTheory.Proof.AbelianDeRhamFreeOfHodge in
 theorem GlobalTheory.Proof.abelianDeRhamFree_of_hodge :
     GlobalTheory.Published.CrystallineSmoothLift → GlobalTheory.Published.AbelianHodgeDeRham → GlobalTheory.Published.AbelianDeRhamFree := by
   intro hC hA R _ A _ g hab hg

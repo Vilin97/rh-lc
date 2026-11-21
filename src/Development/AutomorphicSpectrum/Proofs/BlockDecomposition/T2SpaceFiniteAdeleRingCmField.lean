@@ -229,6 +229,7 @@ theorem continuous_qAd_symm (h : v₁ ≠ v₂) : Continuous (qAd h).symm := by
   · exact (continuous_apply _).comp (continuous_fst.comp continuous_snd)
 
 
+variable (v₁ v₂) in
 def conjRest : Rest v₁ v₂ →+* Rest v₁ v₂ :=
   RingHom.prodMap (starRingEnd (Oth v₁ v₂ → ℂ)) (conjFin (IsCMField.complexConj E).toRingEquiv)
 
@@ -312,6 +313,7 @@ theorem t2Space_finiteAdeleRing_cmField : T2Space (Af E) := by
 end Field
 
 
+open Classical in
 theorem splitAt2 : SplitAt2 := by
   intro E _ _ _ n v₁ v₂ hne _ _ μ _
   haveI : T2Space (Af E) := t2Space_finiteAdeleRing_cmField

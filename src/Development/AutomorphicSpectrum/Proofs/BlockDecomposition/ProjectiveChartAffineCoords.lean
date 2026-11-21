@@ -143,6 +143,7 @@ theorem rep_zero_xdt (h1 : CrystallineSemistableComparison.Pb.KH.LocGr) (h2 : Cr
   rwa [e0] at hx
 
 
+set_option maxHeartbeats 1600000 in
 theorem main : KH.LocGr → KH.PolyTf → KH.GrAff →
     ∀ {K : Type} [Field K] [CharZero K] {X : Scheme.{0}} (q : X ⟶ Spec (CommRingCat.of K)) (n : ℕ)
     [SmoothOfRelativeDimension (n + 1) q] {N : ℕ} (i : X ⟶ PSpace K N) (y : Fin (n + 2) → MvPolynomial (Fin (N + 1)) K),

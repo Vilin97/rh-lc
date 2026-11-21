@@ -99,6 +99,7 @@ theorem normEDS_eq_zero_iff_of_three {b d : R} (hb : b ≠ 0) (hd : d ≠ 0) (n 
   · rw [normEDS_neg, neg_eq_zero, nat k, dvd_neg]
 
 
+omit [IsDomain R] in
 theorem normEDS_zero_left_of_even (c d : R) {n : ℤ} (hn : Even n) : normEDS 0 c d n = 0 := by
   simp [normEDS, hn]
 
@@ -337,6 +338,8 @@ private theorem good_two : Good W h₀ 2 := by
   linear_combination this
 
 
+omit [DecidableEq F] in
+include h₀ in
 private theorem ne_zero_of_Psi3_eq_zero (hc : W.Ψ₃.eval x₀ = 0) :
     2 * y₀ + W.a₁ * x₀ + W.a₃ ≠ 0 ∧ W.preΨ₄.eval x₀ ≠ 0 := by
   have hb : 2 * y₀ + W.a₁ * x₀ + W.a₃ ≠ 0 := by
@@ -543,6 +546,8 @@ private theorem good (n : ℤ) : Good W h₀ n := by
   · exact good_nat W h₀ n.toNat n hn (by omega)
 
 
+omit [DecidableEq F] in
+include h₀ in
 theorem psiAt_eq_zero_iff (n : ℤ) : psiAt W x₀ y₀ n = 0 ↔ (W.ΨSq n).eval x₀ = 0 := by
   rw [← psiAt_sq W h₀.1, pow_eq_zero_iff two_ne_zero]
 

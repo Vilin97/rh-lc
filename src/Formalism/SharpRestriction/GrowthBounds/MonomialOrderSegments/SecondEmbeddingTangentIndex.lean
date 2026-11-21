@@ -17,6 +17,7 @@ variable {K : Type} [Field K] (D : TwistData K) (j : Fin D.J)
 def Marked (o : Finset (Fin (D.nB j + D.r))) : Prop := ∃ l ∈ o, l.val < D.nB j
 
 
+open Classical in
 def fk (o : Finset (Fin (D.nB j + D.r))) : Fin (D.nB j + D.r) → D.ML :=
   @ite _ (D.Marked j o) (by unfold Marked; infer_instance) (D.e1 j) (D.e0 j)
 

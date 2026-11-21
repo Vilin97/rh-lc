@@ -38,6 +38,7 @@ theorem scalar_id (t : ℝ) (ht : 0 < t) (i m r : ℕ) :
 variable {r m : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W]
 
 
+set_option maxHeartbeats 2000000 in
 theorem openCellPar (ψ : AddChar k Circle) (hψ : Continuous ψ)
     (ρ : Representation ℂ (Levi k fun a => Fin (dd r m a)) W) (hρ : IsSmooth ρ) (ω : kˣ →* ℂˣ)
     (hcent : ∀ (z : kˣ) (t : W), ρ (levZ k r m z) t = (ω z : ℂ) • t)

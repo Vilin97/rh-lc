@@ -54,6 +54,8 @@ theorem exists_inv_eq (W : OpenSubgroup G) (q : QZ) : ∃ x : H2Open C W, F.inv 
   (F.inv_bijective W).2 q
 
 
+include hVU in
+include hVU hP in
 theorem tate_hypotheses (S : Subgroup (U ⧸ (V : Subgroup G).subgroupOf U)) :
     IsZero (groupCohomology (Rep.res S.subtype ((Rep.res (U : Subgroup G).subtype C).quotientToInvariants
         ((V : Subgroup G).subgroupOf U))) 1) ∧

@@ -25,6 +25,7 @@ variable {K : IntermediateField ℚ_[p] (PadicAlgCl p)}
 
 
 
+include hζ in
 theorem isDomain_bCris : IsDomain (BCris hε) :=
   Function.Injective.isDomain (iotaB hε hζ) (iotaB_injective hε hζ)
 
@@ -43,6 +44,8 @@ theorem algClToBdRField_injective : Function.Injective (algClToBdRField p) :=
 
 
 
+include hζ in
+set_option maxHeartbeats 1600000 in
 theorem exists_iotaB_eq_iff {β : PadicAlgCl p} :
     (∃ x : BCris hε, iotaB hε hζ x = algClToBdRField p β) ↔ β ∈ unramifiedClosure p := by
   constructor

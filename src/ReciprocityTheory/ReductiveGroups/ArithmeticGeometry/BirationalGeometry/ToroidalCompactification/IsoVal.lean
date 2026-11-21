@@ -97,11 +97,13 @@ theorem cub_w₀ {T' : Over S'} {z : T'.left} {J J'} (hJ : Good L.L z J) (hJ' : 
   all_goals exact hJ
 
 
+omit hG hA hwg [GrpObj A] [GrpObj A'] [IsCommMonObj A] [IsCommMonObj A'] in
 def Om {M : LB A.left} {M' : LB A'.left} (w : LB.Iso M' (M.pull Φ)) {Z : Scheme.{0}} {s' : Z ⟶ S'} (z : Z)
     (J : (Z ⟶ A.left) → M.ι) (J' : (Z ⟶ A'.left) → M'.ι) (x : Over.mk s' ⟶ A') : (Z.presheaf.stalk z)ˣ :=
   gw w (show Z ⟶ _ from x.left) z (J (x.left ≫ Φ)) (J' x.left)
 
 
+omit hG hA hwg in
 def cubZ {Z : Scheme.{0}} {s : Z ⟶ S} (z : Z) (J : (Z ⟶ A.left) → L.L.ι) (a b d : Over.mk s ⟶ A) : (Z.presheaf.stalk z)ˣ :=
   cubV c (T := Over.mk s) z J a b d
 

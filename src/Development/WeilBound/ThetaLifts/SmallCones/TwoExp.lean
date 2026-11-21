@@ -73,6 +73,7 @@ theorem PG.x_ne (h : PG σ X X₁ H ε) : H.x ≠ 0 := fun h0 => by
   simp [bf] at this
 
 
+variable (H H') in
 def capAB : Submodule (AE F E) (Ten F E n d) where
   carrier := sumA H H' ∩ sumB H H'
   zero_mem' := ⟨⟨0, 0, by simp [vv0]⟩, ⟨0, 0, by simp [vv0]⟩⟩

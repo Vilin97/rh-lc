@@ -105,6 +105,7 @@ theorem gram_apply (B : V →ₛₗ[conjHom F E] V →ₗ[E] E) (v : Basis ι E 
     gram B v i j = B (v i) (v j) := rfl
 
 
+omit [DecidableEq ι] in
 theorem sesq_eq_sum (B : V →ₛₗ[conjHom F E] V →ₗ[E] E) (v : Basis ι E V) (x y : V) :
     B x y = ∑ i, ∑ j, conj F E (v.repr x i) * gram B v i j * v.repr y j := by
   conv_lhs => rw [← v.sum_repr x, ← v.sum_repr y]
@@ -117,6 +118,7 @@ theorem sesq_eq_sum (B : V →ₛₗ[conjHom F E] V →ₗ[E] E) (v : Basis ι E
   ring
 
 
+omit [Fintype ι] [DecidableEq ι] in
 theorem isHermitianFor_gram (h : HermitianForm F E V) (v : Basis ι E V) :
     IsHermitianFor (conjHom F E) (gram h.toSesq v) := by
   ext i j

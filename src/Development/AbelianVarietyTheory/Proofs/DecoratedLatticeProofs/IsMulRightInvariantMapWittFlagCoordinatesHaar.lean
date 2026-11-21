@@ -117,6 +117,8 @@ theorem measurable_shift {D : D7} (V₀ : HSp D) (ρ : ℕ) (c' : skewA D ρ) (b
   exact (continuous_shift V₀ ρ c' b').measurable
 
 
+set_option synthInstance.maxHeartbeats 200000 in
+set_option maxHeartbeats 400000 in
 theorem isMulRightInvariant_map_coord : ∀ (D : D7) (V V₀ : HSp D) (ρ : ℕ) (d : HypDec V V₀ ρ) (vb : VolM D ρ V₀.rank) (vU : VolU D ρ) (e : skewA D ρ × (Mx D ρ V₀.rank × UX D ρ) ≃ᵐ flagN d), (∀ p, (e p : GA D V) = d.nC p.1 * (d.nB p.2.1 * d.levi p.2.2.1)) → ∀ (lC : Measure (skewA D ρ)), lC.IsAddHaarMeasure → SFinite lC → ((lC.prod (vb.μ.prod vU.ν)).map e).IsMulRightInvariant := by
   intro D V V₀ ρ d vb vU e he lC hC hS
   obtain ⟨a1, a2, a3, a4, -⟩ := lattice_Mx D ρ ρ

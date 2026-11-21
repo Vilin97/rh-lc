@@ -71,9 +71,11 @@ def LiftConv (m : Measure (GA D A)) (ν : Measure (GA D B)) (K : GA D A → GA D
   (∀ h, Integrable (AutomorphicL2Unitary.descend (GQ A) fun g => K g h * conj (f g)) (autMeasure A m)) ∧ MemL2Quotient (GQ B) ν (lift m K f)
 
 
+variable (B) in
 def volQ (ν : Measure (GA D B)) : ℝ := (autMeasure B ν).real Set.univ
 
 
+variable (A B) in
 def HidaSetting (t : ℕ) (cA : CptF A) : Prop :=
   1 ≤ A.rank ∧ 1 ≤ t ∧ B.rank = A.rank + t ∧ IsInfFam θ ∧ HSpace.SigOK A ∧ IsCartanFrame A cA ∧
     (∀ τ, IsCartanInv (gramAt D A τ) (sA τ)) ∧ (∀ τ, IsCartanInv (gramAt D B τ) (sB τ)) ∧

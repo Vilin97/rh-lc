@@ -306,6 +306,7 @@ end GlobalTheory.ContinuousQuotient
 namespace GlobalTheory
 
 
+open ContinuousQuotient in
 theorem exists_eq_mul_of_continuousOn_quotient :
     ∀ (P : Out.PolAV (Sp ℂ)) (L : LB P.A.left) (u : HolUnif P.A L P.g) (U : P.A.left.Opens) (a b : Γ(P.A.left, U)) (φ : (Fin P.g → ℂ) → ℂ), Out.Laws → IsAffineOpen U → b ≠ 0 → ContinuousOn φ {z | ⊤ ≤ (u.ex z).left ⁻¹ᵁ U} → (∀ z, ⊤ ≤ (u.ex z).left ⁻¹ᵁ U → valAt' (u.ex z).left U a = φ z * valAt' (u.ex z).left U b) → ∃ c : Γ(P.A.left, U), a = c * b := by
   intro P L u U a b φ _ hU hb hφc hφ

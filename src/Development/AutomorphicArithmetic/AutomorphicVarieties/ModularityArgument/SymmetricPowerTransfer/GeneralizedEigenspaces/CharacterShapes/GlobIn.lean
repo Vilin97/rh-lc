@@ -82,6 +82,7 @@ def dG (t : Dat.Par F) (y : ∀ v : A.Sg, (Kv v.1)ˣ) : ParN F 3 :=
   fun v => ![t v * (unif (Kv v))⁻¹, if h : v ∈ A.Sg then y ⟨v, h⟩ else 1, (unif (Kv v))⁻¹]
 
 
+open Classical in
 def Ys : Finset (∀ v : A.Sg, (Kv v.1)ˣ) := Fintype.piFinset fun v => A.Ry v.1
 
 

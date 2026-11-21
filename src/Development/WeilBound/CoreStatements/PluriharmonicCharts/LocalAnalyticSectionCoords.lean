@@ -178,6 +178,7 @@ section Cov
 variable {M : FlagModel y Ψ N j} {M' : FlagModel y' Ψ N j}
 
 
+open FibreCount in
 theorem img_blk (Cv : FlagCover M' M) {d : ℕ}
     (hy : IsArithVar (mCoordIdeal y) (d + 2)) (hy' : IsArithVar (mCoordIdeal y') (d + 2))
     {w₁ w₂ : (Σ k, ι k) → ℂ} (hw : w₁ ∈ mcPts (mCoordIdeal y)) {z₁ z₂ : (Σ k, ι' k) → ℂ}

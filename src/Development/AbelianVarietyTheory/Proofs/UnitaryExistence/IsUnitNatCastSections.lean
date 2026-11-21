@@ -63,6 +63,7 @@ theorem flat_pullback_mulN {T k : Type} [CommRing T] [Field k] (σ : T →+* k) 
 end MulEtaleDvr
 
 
+open MulEtaleDvr in
 theorem etale_mulN_torsion_dvr :
     ∀ (T : Type) [CommRing T] [IsDomain T] [IsDiscreteValuationRing T] (G : Over (Sp T)) [GrpObj G]
       [IsCommMonObj G] (n : ℕ), IsUnit (n : T) → Flat G.hom → LocallyOfFiniteType G.hom →

@@ -56,6 +56,7 @@ theorem symp_act {R E : Type} [CommRing R] [CommRing E] [Algebra R E] (c : E →
   rw [hTens_act c JA JB _ _ k.1.2 k.2.2]
 
 
+open Classical in
 theorem pure_update_smul {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] (f : SInf F κ)
     (φ : ∀ w : Pl (F := F), (κ → Fv F w) → ℂ)
     (hstd : ∀ᶠ v in Filter.cofinite, φ v = Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1) (w : Pl (F := F))

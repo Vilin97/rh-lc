@@ -15,6 +15,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.HTLat
 
 
+open GlobalTheory.HodgeTateCompare in
 theorem omega_free_finite_bijective_of_smooth {O : Type} [CommRing O] [IsLocalRing O]
     (G : Over (Spec (CommRingCat.of O))) [GrpObj G] [Smooth G.hom] :
     Module.Free O (omega G) ∧ Module.Finite O (omega G) ∧

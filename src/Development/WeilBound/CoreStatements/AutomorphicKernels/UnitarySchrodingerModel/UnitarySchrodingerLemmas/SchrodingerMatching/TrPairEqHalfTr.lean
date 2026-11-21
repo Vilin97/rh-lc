@@ -36,6 +36,8 @@ theorem inner_mul_right (V : HSp D) (y : Mx D V.rank n) (a : Mx D n n) :
   simp only [Matrix.mul_assoc]
 
 
+set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem jt_conj (V : HSp D) (ψ : AddChar (AF D.host.F) ℂ) (μ : Measure (Mx D V.rank n)) (𝓕 : Set (Mx D V.rank n))
     (hμ : IsCovolOne (ratMx D V.rank n) μ 𝓕) (a : GL (Fin n) (AE D)) (φ : Mx D V.rank n → ℂ) (c : hermA D n) :
     PositivityTheory.PfSWUS.Loc.jtR (AF D.host.F) D.sp.cm.sig (HSpace.gram V) ψ (μ.map tupInv)

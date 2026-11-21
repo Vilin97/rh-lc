@@ -159,6 +159,7 @@ structure Run (D : D7) (B : WeightFamilies.Prov D) (j : ℕ) where
   nus : HeightOneSpectrum (𝓞 B.KO) → ℝ
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 structure Loc (D : D7) (nch : NChoice D) where
 
   B : WeightFamilies.Prov D

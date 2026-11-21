@@ -28,6 +28,7 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.
 
 
 
+variable (D) in
 def LevOver (i : Fin D.R.m) (Pg : Finset (Formalism.L2.DIV.Pl D.host.E)) (βW : ∀ i, GL (Fin (Wc D i).rank) (EAf D)) {G : Type}
     (eG : G → G0 Pg D.R.r) {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E} (l : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H)
     (Dw : ℕ → ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H) (iota : ∀ j : ℕ, (Dw j).La →ₗ[𝓞 D.host.E] (Fin D.R.r → D.host.E))

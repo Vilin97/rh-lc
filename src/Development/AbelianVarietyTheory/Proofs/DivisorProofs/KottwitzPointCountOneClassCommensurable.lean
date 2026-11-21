@@ -110,6 +110,7 @@ theorem oTerm_prod' {G' : Type} [Group G'] (θ : G →* G) (θ' : G' →* G') (K
 end Term
 
 
+open GlobalTheory.BCT GlobalTheory.BCT.OrbProd GlobalTheory.LKCount.OrbKProd in
 theorem orbK_prod_of_commensurable {G₁ G₂ : Type} [Group G₁] [Group G₂] (θ₁ : G₁ →* G₁) (θ₂ : G₂ →* G₂)
     (K₁ : Subgroup G₁) (K₂ : Subgroup G₂) (δ₁ : G₁) (δ₂ : G₂) (f₁ : G₁ → ℂ) (f₂ : G₂ → ℂ)
     (hK₁ : ∀ x : G₁, (K₁.map (MulAut.conj x).toMonoidHom).Commensurable K₁)
@@ -195,6 +196,7 @@ theorem core_count_of_commensurable (Γ' T K : Subgroup G) (F : G → ℂ) (hΓT
 end Core
 
 
+open GlobalTheory.LKCountPoint in
 theorem pointSum_eq_pointSide_of_commensurable : ∀ {Γ G₁ G₂ : Type} [Group Γ] [Group G₁] [Group G₂] (ι₁ : Γ →* G₁) (ι₂ : Γ →* G₂) (θ : G₂ →* G₂) (K₁ : Subgroup G₁) (K₂ : Subgroup G₂) (γ : G₁) (δ : G₂) (f₁ : G₁ → ℂ) (φ : G₂ → ℂ), (∀ g : G₁, Subgroup.Commensurable (K₁.map (MulAut.conj g).toMonoidHom) K₁) → (∀ g : G₂, Subgroup.Commensurable (K₂.map (MulAut.conj g).toMonoidHom) K₂) → K₂.map θ ≤ K₂ → (∀ k ∈ K₁, ∀ x, f₁ (k⁻¹ * x * k) = f₁ x) → (∀ k ∈ K₂, ∀ x, φ (k⁻¹ * x * θ k) = φ x) → (∀ g : Γ, ι₁ g * γ = γ * ι₁ g) → (∀ g : Γ, ι₂ g * δ = δ * θ (ι₂ g)) → Function.Injective (ι₁.prod ι₂) → (∀ x : G₁ × G₂, Finite (stab ι₁ ι₂ K₁ K₂ x)) → {q : DoubleCoset.Quotient ((ι₁.prod ι₂).range : Set (G₁ × G₂)) ((K₁.prod K₂ : Subgroup (G₁ × G₂)) : Set (G₁ × G₂)) | f₁ ((Quotient.out q).1⁻¹ * γ * (Quotient.out q).1) * φ ((Quotient.out q).2⁻¹ * δ * θ (Quotient.out q).2) ≠ 0}.Finite → pointSum ι₁ ι₂ θ K₁ K₂ γ δ f₁ φ = pointSide ι₁ ι₂ θ K₁ K₂ γ δ f₁ φ := by
   intro Γ G₁ G₂ _ _ _ ι₁ ι₂ θ K₁ K₂ γ δ f₁ φ hK₁ hK₂ _ hf₁ hφ hc₁ hc₂ hι hstab hsupp
   have hΓT : (ι₁.prod ι₂).range ≤ GlobalTheory.BCT.twCent ((MonoidHom.id G₁).prodMap θ) (γ, δ) := by

@@ -133,6 +133,7 @@ theorem LiesOver.isTorsionFree {w : Place k K'} {v : Place k K} (h : w.LiesOver 
     Subtype.ext ((algebraMap K K').injective (congrArg Subtype.val hab))
 
 
+omit [IsScalarTower k K K'] in
 theorem LiesOver.valuation_algebraMap {w : Place k K'} {v : Place k K} (h : w.LiesOver v) (x : K) :
     letI := h.algebra
     v.valuation x ^ (IsLocalRing.maximalIdeal v.ring).ramificationIdx'
@@ -176,6 +177,7 @@ theorem LiesOver.ord_algebraMap {w : Place k K'} {v : Place k K} (h : w.LiesOver
   linarith
 
 
+omit [IsFunctionField k K'] in
 theorem LiesOver.deg_mul_finrank {w : Place k K'} {v : Place k K} (h : w.LiesOver v) :
     letI := h.algebra
     letI := h.isLocalHom
@@ -186,6 +188,7 @@ theorem LiesOver.deg_mul_finrank {w : Place k K'} {v : Place k K} (h : w.LiesOve
   exact (letI : Module.Free v.ResidueField w.ResidueField := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank k v.ResidueField w.ResidueField)
 
 
+omit [IsFunctionField k K'] in
 theorem LiesOver.finrank_residueField {w : Place k K'} {v : Place k K} (h : w.LiesOver v) :
     letI := h.algebra
     letI := h.isLocalHom

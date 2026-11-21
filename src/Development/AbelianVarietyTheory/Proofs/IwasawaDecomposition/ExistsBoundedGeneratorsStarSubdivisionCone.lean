@@ -44,6 +44,7 @@ theorem linearOn_starDepth {ψ w : InvFun O} {n : ℕ} {u : Fin n → LinearMap.
   simpa [starFun_evalR, starFun_evalZ] using h c hc
 
 
+omit [Module O X] [Module.Finite O X] in
 theorem mul_le_of_sub_mem_rcone {m : ℕ} {γ : Fin m → LinearMap.BilinForm ℤ X} {h : LinearMap.BilinForm ℤ X →ₗ[ℤ] ℤ}
     (hγ : ∀ i, 0 ≤ h (γ i)) {β v : LinearMap.BilinForm ℤ X} {t : ℝ} (hm : toReal β - t • toReal v ∈ rcone γ) :
     t * (h v : ℝ) ≤ h β := by

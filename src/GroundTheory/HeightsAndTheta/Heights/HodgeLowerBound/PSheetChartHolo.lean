@@ -21,6 +21,7 @@ namespace SheetChartHolo
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem segre_torusSmul (c : K → ℂ) (z : (Σ k, ι k) → ℂ) :
     segre (torusSmul c z) = (∏ k, c k) • segre z := by
   funext i
@@ -45,6 +46,7 @@ def patchMap {n : ℕ} (Q : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (n + 1
   fun i => Q (segre (s (ψ.symm ξ))) i.succ / Q (segre (s (ψ.symm ξ))) 0
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem patchMap_eq {P : Ideal (MRing ι)} {n : ℕ} (M : CxModel P n)
     (Q : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (n + 1) → ℂ))
     (ψ : OpenPartialHomeomorph M.Xc (Fin n → ℂ)) (s : M.Xc → (Σ k, ι k) → ℂ)

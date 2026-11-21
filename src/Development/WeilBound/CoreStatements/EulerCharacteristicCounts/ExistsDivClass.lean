@@ -71,6 +71,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp LL O : Type} [Field Qp] [
   (A : GRep G Qp LL O) (L : Lattice (O := O) A.ρ)
 
 
+open GlobalTheory.CompanionTheory.GrowthOfInvariants in
 theorem redT_mem {ϖ : O} {r : ℕ} (hW : (fun x => ϖ ^ r • x) '' (L.T : Set A.V) ∈ nhds (0 : A.V))
     (hI : StableSub L (Ideal.span {ϖ ^ r} • ⊤ : Submodule O ↥L.T)) (c : ↥(latticeCocycles L)) :
     redT L _ c ∈ quotientCocycles L _ hI := by
@@ -100,6 +101,7 @@ theorem redT_mem {ϖ : O} {r : ℕ} (hW : (fun x => ϖ ^ r • x) '' (L.T : Set 
     exact hcoc g h
 
 
+open GlobalTheory.CompanionTheory.GrowthOfInvariants in
 theorem exists_div_class [IsDomain O] [IsFractionRing O LL] {a : O} (ha : a ≠ 0)
     (hI : StableSub L (Ideal.span {a} • ⊤ : Submodule O ↥L.T)) (c : ↥(latticeCocycles L))
     (hc : redT L (Ideal.span {a} • ⊤ : Submodule O ↥L.T) c ∈ BQ L _ hI) :

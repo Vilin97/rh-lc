@@ -36,6 +36,8 @@ def constTermOn (φ : G → ℂ) (x : G) : ℂ := ∫ q, φ ((q.out : N) * x) �
 variable {Γ N} {φ ψ : G → ℂ} {μ : Measure N} {𝓕 : Set N}
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] [SecondCountableTopology G] [MeasurableSpace G] [BorelSpace G]
+  [DiscreteTopology Γ] [LocallyCompactSpace N] in
 theorem leftInv_integrand (hφ : LeftInv Γ φ) (x : G) : LeftInv (Γ.subgroupOf N) fun n : N => φ (n * x) :=
   fun γ hγ n => by simp only [Subgroup.coe_mul, mul_assoc]; exact hφ _ hγ _
 
@@ -96,6 +98,7 @@ variable (hc : Cocompact Γ N)
 include hc
 
 
+omit [LocallyCompactSpace N] in
 theorem integrableOn [μ.IsHaarMeasure] (h : IsFundamentalDomain (Γ.subgroupOf N) 𝓕 μ) (hφ : LeftInv Γ φ)
     (hφc : Continuous φ) (x : G) : IntegrableOn (fun n : N => φ (n * x)) 𝓕 μ :=
   let ⟨K, hK, hs⟩ := hc
@@ -103,6 +106,7 @@ theorem integrableOn [μ.IsHaarMeasure] (h : IsFundamentalDomain (Γ.subgroupOf 
     (leftInv_integrand hφ x)
 
 
+omit [LocallyCompactSpace N] in
 theorem measure_ne_top [μ.IsHaarMeasure] (h : IsFundamentalDomain (Γ.subgroupOf N) 𝓕 μ) : μ 𝓕 ≠ ⊤ :=
   ((integrableOn_const_iff (C := (1 : ℂ))).1
     (hc.integrableOn h (φ := fun _ => 1) (fun _ _ _ => rfl) continuous_const 1)).elim (by simp) LT.lt.ne

@@ -222,6 +222,8 @@ private theorem fourier_pow_mul_gaussian (m : ℕ) (l : ℂ) :
   ring
 
 
+open NumberField MeasureTheory in
+open scoped RealInnerProductSpace FourierTransform in
 theorem _root_.GlobalTheory.HeckeLemma.fourier_hmon_mul_gaussian : ∀ (k : ℤ) (l : ℂ),
     𝓕 (fun w : ℂ => _root_.GlobalTheory.HeckeTheta.hmon k w *
         Complex.exp ((-2 * Real.pi * ‖w‖ ^ 2 : ℝ) : ℂ)) l =

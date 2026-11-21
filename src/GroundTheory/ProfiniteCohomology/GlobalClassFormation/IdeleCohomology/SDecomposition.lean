@@ -32,14 +32,17 @@ variable {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L] [Algeb
   (S : Finset (HeightOneSpectrum (𝓞 K)))
 
 
+variable (K L) in
 noncomputable abbrev sIdeleRep : Rep ℤ Gal(L/K) :=
   (ideleRep K L).subrepresentation (sIdelesSubmodule K L S) (sIdelesSubmodule_stable K L S)
 
 
+variable (K) in
 abbrev SIndex : Type :=
   InfinitePlace K ⊕ ((S : Set (HeightOneSpectrum (𝓞 K))) ⊕ ↥(S : Set (HeightOneSpectrum (𝓞 K)))ᶜ)
 
 
+variable (L) in
 noncomputable def sComp : SIndex K S → Rep ℤ Gal(L/K)
   | .inl v => Rep.of (infiniteUnitsAboveRep L v)
   | .inr (.inl v) => Rep.of (finiteUnitsAboveRep L v.1)

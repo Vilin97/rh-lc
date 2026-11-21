@@ -21,6 +21,7 @@ noncomputable section
 variable {K : Type*} [Field K] [NumberField K]
 
 
+variable (K) in
 def mixedToInfinite : mixedSpace K →+ InfiniteAdeleRing K :=
   (InfiniteAdeleRing.ringEquiv_mixedSpace K).symm.toAddMonoidHom
 

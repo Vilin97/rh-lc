@@ -29,6 +29,7 @@ theorem blockDiag_iff {b : Fin N → ℕ} {M : Matrix (Fin N) (Fin N) k} :
     · exact h1 h
 
 
+variable (k) in
 def levi (b : Fin N → ℕ) : Subgroup (GL (Fin N) k) where
   carrier := {g | ∀ i j, b i ≠ b j → (g : Matrix (Fin N) (Fin N) k) i j = 0}
   one_mem' := fun i j hij => by
@@ -141,6 +142,7 @@ theorem blockTri_le_normalizer (b : Fin N → ℕ) :
   infer_instance
 
 
+variable (k) in
 def permGL : Equiv.Perm (Fin N) →* GL (Fin N) k := (Matrix.permMatrixHom (R := k)).toHomUnits
 
 theorem permGL_apply (w : Equiv.Perm (Fin N)) (i j : Fin N) :
@@ -428,11 +430,13 @@ def extTensor {ι : Type} {Γ Y : ι → Type} [∀ a, Group (Γ a)] [∀ a, Add
   PiTensorProduct.map_tprod _ _
 
 
+variable (G) in
 def isoSetoid : Setoid (FDRep ℂ G) where
   r A B := Nonempty (Representation.Equiv A.ρ B.ρ)
   iseqv := ⟨fun _ => ⟨.refl _⟩, fun ⟨e⟩ => ⟨e.symm⟩, fun ⟨e⟩ ⟨f⟩ => ⟨e.trans f⟩⟩
 
 
+variable (G) in
 def RepClass : Type 1 := Quotient (isoSetoid G)
 
 def cls [FiniteDimensional ℂ V] (ρ : Representation ℂ G V) : RepClass G := Quotient.mk (isoSetoid G) (FDRep.of ρ)
@@ -548,6 +552,7 @@ theorem isCuspidal_iff_forall (ρ : Representation ℂ (GL (Fin N) k) V) :
   rwa [← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, map_zero, Module.End.one_apply] at h1
 
 
+variable (k) in
 abbrev GradedClass : Type 1 := Σ n : ℕ, RepClass (GL (Fin n) k)
 
 def classes {h : ℕ} {d : Fin h → ℕ} {Y : Fin h → Type} [∀ a, AddCommGroup (Y a)] [∀ a, Module ℂ (Y a)]

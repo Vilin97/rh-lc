@@ -17,6 +17,7 @@ open GlobalTheory.Core.Rk.IP
 namespace GlobalTheory.RallisEuler
 
 
+open GlobalTheory.LFun in
 theorem trivPar_euler : ∀ {D : D7} (χ : (AE D)ˣ →* Circle) (Sf : Finset (FinPl D)) (n : ℕ), GlobalTheory.LFun.UnrOff χ (Sf : Set (FinPl D)) → EqRight (fun s => ∏ i ∈ Finset.range n, GlobalTheory.LFun.charL χ⁻¹ (Sf : Set (FinPl D)) (s + (n : ℂ) / 2 - i)) (fun s => GlobalTheory.LFun.LSD D Sf (GlobalTheory.BottomRallis.trivPar n) χ (s + 1 / 2)) := by
   intro D χ Sf n hU
   refine ⟨(n : ℝ) / 2 + 1, fun s hs => ?_⟩

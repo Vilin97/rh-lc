@@ -23,6 +23,7 @@ variable {ι : Type} [Fintype ι] {M : ι → Type} [∀ i, CommRing (M i)] [∀
   {V : Type} [CommRing V] [Algebra R V]
 
 
+open Classical in
 def slv (Λ : (∀ i, M i) →ₗ[R] R) : (∀ i, M i ⊗[R] V) →ₗ[R] V :=
   ∑ i, (TensorProduct.lid R V).toLinearMap ∘ₗ LinearMap.rTensor V (Λ ∘ₗ LinearMap.single R M i) ∘ₗ
     LinearMap.proj (φ := fun i ↦ M i ⊗[R] V) i

@@ -23,6 +23,7 @@ noncomputable section
 namespace GlobalTheory.ArchCoordsD
 
 
+open GlobalTheory.FockVacuum in
 theorem herm_rot_pos {ι : Type} [Fintype ι] {P Q R S : ι → ℕ} (c : ∀ w, Matrix (Ix (P w) (Q w)) (Ix (R w) (S w)) ℂ) (hc : c ≠ 0) :
     0 < -2 * (∑ w, ∑ a, ∑ b, lineSign a b * c w a b *
       star ((fun w => Matrix.of fun a b => lineSign a b * Complex.I * c w a b :
@@ -44,6 +45,7 @@ theorem herm_rot_pos {ι : Type} [Fintype ι] {P Q R S : ι → ℕ} (c : ∀ w,
   linarith
 
 
+open GlobalTheory.FockVacuum in
 theorem exists_coords : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (α β κ : Type) [Fintype α]
     [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ] (P Q R S : InfinitePlace F → ℕ)
     (τ : ∀ w : InfinitePlace F, EmbOver E w) (JA : Matrix α α (AE F E)) (JB : Matrix β β (AE F E))

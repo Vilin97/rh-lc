@@ -20,6 +20,7 @@ noncomputable section
 namespace GlobalTheory.Mum.RatTors
 
 
+open Polynomial in
 theorem exists_split_ext (K : Type) [Field K] (C : Type) [CommRing C] (φ : K →+* C) (hφ : φ.Finite) :
     ∃ E : IntermediateField K (AlgebraicClosure K), FiniteDimensional K E ∧
       ∀ (K₂ Ω : Type) [Field K₂] [Field Ω] (e : E →+* K₂) (j : K₂ →+* Ω) (ψ : C →+* Ω),

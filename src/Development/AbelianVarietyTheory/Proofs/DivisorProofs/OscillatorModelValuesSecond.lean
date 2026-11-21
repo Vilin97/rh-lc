@@ -255,6 +255,7 @@ def ReadsGen (θ : InfFam D) (V W : HSp D) {H : Geo.Tor.Host D.host.E} {Dw : Dat
           ∏ b, ϑ (zOf θ V W rfl (U.X k) idx x.1 w b)
 
 
+set_option maxHeartbeats 1000000 in
 theorem const_move {H : Geo.Tor.Host D.host.E} {Dw : Datum H} {W : HSp D} {l : Geo.Tor.Level H}
     {Xo : Moduli Dw l} {c : Coeff l} {σ : c.F →+* ℂ} {U : Unf Xo c σ W.rank} {g : ℕ}
     {e : Fin g ≃ Σ τ : D.host.E →+* ℂ, Fin (Dw.mult τ)}
@@ -336,6 +337,7 @@ theorem const_move {H : Geo.Tor.Host D.host.E} {Dw : Datum H} {W : HSp D} {l : G
   exact congrArg _ (hval a _ f hf)
 
 
+set_option maxHeartbeats 1000000 in
 theorem value_move {H : Geo.Tor.Host D.host.E} {Dw : Datum H} {W₀ W : HSp D} (hV : W₀ = W) {l : Geo.Tor.Level H}
     {Xo : Moduli Dw l} {c : Coeff l} {σ : c.F →+* ℂ} {r : ℕ} (hr : W₀.rank = r) (hr' : W.rank = r) {U : Unf Xo c σ r}
     {dict : GA D W₀ → Σ k, Frame (U.X k).Ψ r} (io : Dw.La →ₗ[𝓞 D.host.E] (Fin r → D.host.E)) {g : ℕ}

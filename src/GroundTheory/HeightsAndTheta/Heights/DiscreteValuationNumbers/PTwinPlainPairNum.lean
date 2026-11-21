@@ -45,6 +45,7 @@ theorem classNum_eq_sum_of_subset {σ : Type*} (cls : σ → K → ℤ) (H : MvP
     rw [hμ, zero_mul]
 
 
+omit [DecidableEq K] in
 theorem classList_add_perm {σ : Type*} (cls : σ → K → ℤ) (μ ν : σ →₀ ℕ) :
     (classList cls (μ + ν)).Perm (classList cls μ ++ classList cls ν) := by
   rw [← Multiset.coe_eq_coe, ← Multiset.coe_add]

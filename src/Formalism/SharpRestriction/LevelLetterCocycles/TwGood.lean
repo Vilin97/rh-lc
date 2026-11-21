@@ -89,6 +89,7 @@ theorem mem_avRec {D : D7} (v : PlE D.host) : v ∈ AvRec D ↔ ∃ p ∈ avPrim
   simp only [AvRec, AvSet, Set.Finite.mem_toFinset, Set.mem_iUnion, exists_prop]
 
 
+open Classical in
 def TwGoodOne (D : D7) (I : TwIn D) (i : D.ntw.Tw) (b : Bool) (Q : Finset (PlE D.host)) (k' : ℕ)
     (ψ : D.ntw.RCG i Q →* (D.ntw.Ok i k')ˣ) : Prop :=
   IntegralHeckeForms.GoodTw D.nexp (BlochKatoReduction.bk0 D) I.E I.N0 i (twEps D i) (I.S i) (AvRec D) Q k' (BlochKatoReduction.Gen.psiAt b ψ)

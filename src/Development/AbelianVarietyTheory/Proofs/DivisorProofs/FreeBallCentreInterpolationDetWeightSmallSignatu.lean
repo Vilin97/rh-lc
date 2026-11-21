@@ -61,6 +61,7 @@ theorem kappa_exists {r : ℕ} (X : Data E r) (x0 : Frame X.Ψ r) (h0 : IsOrth X
   congr 1; ring
 
 
+open GlobalTheory.Up.OrbitInterpolation in
 theorem orbitInterp_small {r : ℕ} (X : Data E r) (G : Subgroup (GL (Fin r) E)) (x0 : Frame X.Ψ r)
     (la : Wt X.Ψ r) (ρ0 bb m : ℝ) (hPD : PropDisc X) (h0 : IsOrth X x0) (hd : 1 ≤ dimX X)
     (hp0 : 0 < X.p0) (hp1 : X.p0 < r) (hq : X.p0 * (r - X.p0) ≤ 3) (hρ0 : 0 < ρ0)

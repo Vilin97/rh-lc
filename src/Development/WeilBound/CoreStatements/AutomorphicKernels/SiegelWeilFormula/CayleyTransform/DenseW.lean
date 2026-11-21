@@ -112,6 +112,7 @@ theorem det_of_inU {ε : ℤˣ} {n : ℕ} {h : M2 n} (hh : InU (Qc n ε)ᵀ h) :
 end PositivityTheory.SiegelWeilFormula.Krd.DM
 
 
+open PositivityTheory.SiegelWeilFormula.Krd PositivityTheory.SiegelWeilFormula.Krd.DM PositivityTheory.SiegelWeilFormula.Krd.DC in
 theorem PositivityTheory.SiegelWeilFormula.Krd.denseW : PositivityTheory.SiegelWeilFormula.DenseW := by
   intro F E _ _ _ _ _ σ d R w y O hO hy
   have h0 := zeta_ne R.hζ

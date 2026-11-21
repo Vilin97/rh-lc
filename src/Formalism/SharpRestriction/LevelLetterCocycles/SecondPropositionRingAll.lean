@@ -22,6 +22,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     (W : LocWach PD LL O v n)
 
 
+open Classical in
 def SecondPropositionRingInput (π' Eπ : LetA O n) (h' : ℕ) (c : ZMod n) : Prop :=
   IsUnit (algebraMap (LetA O n) W.EE π') ∧ IsUnit (algebraMap (LetA O n) W.EE Eπ) ∧
   (∃ g ∈ W.AΔ, W.γA W.gamK π' = π' * g) ∧

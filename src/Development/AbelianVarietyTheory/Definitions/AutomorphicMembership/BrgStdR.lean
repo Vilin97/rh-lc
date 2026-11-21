@@ -45,6 +45,7 @@ variable (X : Stages) {px : PreX X.B.toPre} (I : ColIn X.B px) (hX : X.B.fields.
   (tr : TrI X.B px)
 
 
+set_option maxHeartbeats 2000000 in
 def BrgStdR (L : Formalism.IndefR.Links.LevCh X.toD7 (TupU I U)) (cX : CoefA X.toD7.sp.X')
     (jR : ∀ t, (famR X I hX U Xg tr).A.fam.amb.FR t → Bridge.Gf X.toD7.sp.X' → cX.W) : Prop :=
   StdSide (X := X.B.fields) (n := X.B.R.N X.B.R.m - 1) (a := X.toD7.sp.X'.rank) (H := Bridge.Gf X.toD7.sp.X') (Γ := GQ X.toD7.sp.X')
@@ -57,6 +58,7 @@ def BrgStdR (L : Formalism.IndefR.Links.LevCh X.toD7 (TupU I U)) (cX : CoefA X.t
     fun t φ => jR t ((by with_unfolding_all exact ((mtildeKGSD (Pr := X.B.primes px) X.B.wts I.Ch I.sel t.1).res φ.1.down φ.2 :)))
 
 
+set_option maxHeartbeats 2000000 in
 def BrgStdV (L : Formalism.IndefR.Links.LevCh X.toD7 (TupU I U)) (i : Fin X.toD7.R.m) (cV : CoefA (Vc X.toD7 i))
     (jL : ∀ t, (famR X I hX U Xg tr).A.fam.amb.FL i t → Bridge.Gf (Vc X.toD7 i) → cV.W) : Prop :=
   StdSide (X := X.B.fields) (n := X.B.R.nV) (a := (Vc X.toD7 i).rank) (H := Bridge.Gf (Vc X.toD7 i)) (Γ := GQ (Vc X.toD7 i))
@@ -73,6 +75,7 @@ def BrgStd {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks X.toD7.what₂.LL
     ∀ i, BrgStdV X I hX U Xg tr R.toLevCh i (R.cV i) fun t φ => R.B.jL i t φ
 
 
+variable {X I hX} in
 def Dat.Std {T : Top.TwDat X.B} {Wt : Set X.B.places.Pl} (z : Dat X I hX T Wt) : Prop :=
   BrgStd X I hX (usedOf I T Wt) z.Xg z.tr z.R.toRealDat
 

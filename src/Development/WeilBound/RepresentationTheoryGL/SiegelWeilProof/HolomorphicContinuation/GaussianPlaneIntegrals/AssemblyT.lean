@@ -16,6 +16,7 @@ open AsmA
 variable {ι A B : Type} [Fintype ι] [DecidableEq ι] [Fintype A] [Fintype B]
 
 
+variable (ι A B) in
 abbrev NN : ℕ := Fintype.card ι + (Fintype.card A + Fintype.card B)
 
 def emb (i : ι) : Fin (NN ι A B) := Fin.castAdd _ (Fintype.equivFin ι i)
@@ -24,6 +25,7 @@ theorem emb_injective : Function.Injective (emb (ι := ι) (A := A) (B := B)) :=
   simpa [emb] using h
 
 
+variable (A B) in
 def invE (j : Fin (NN ι A B)) : Option ι :=
   if h : (j : ℕ) < Fintype.card ι then some ((Fintype.equivFin ι).symm ⟨j, h⟩) else none
 
@@ -45,6 +47,7 @@ theorem sum_invE (f : Fin (NN ι A B) → ℂ) (g : ι → ℂ) :
     (Finset.sum_congr rfl fun j _ => by simp [emb]) |>.symm
 
 
+variable (ι) in
 def resφ : (Fin (NN ι A B) × A) ⊕ (Fin (NN ι A B) × B) → PV ι A B :=
   Sum.elim (fun x => (invE A B x.1).elim 0 fun i => X (Sum.inl (i, x.2)))
     (fun y => (invE A B y.1).elim 0 fun i => X (Sum.inr (i, y.2)))

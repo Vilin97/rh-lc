@@ -321,11 +321,13 @@ theorem absLe_flatTensor {G : Grid k} (hs : 1 ≤ G.s) {ψ : AddChar k Circle} (
   exact absLe_mono key (le_of_eq (by ring))
 
 
+omit [MeasurableSpace k] [BorelSpace k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem exists_diag_stair {G : Grid k} (hs : 1 ≤ G.s) (ϖ : kˣ) (e j : ℕ) :
     ∃ κ : Fin (G.rank (G.m, j)) → ℕ, stair G ϖ e j = diagGL (fun i => ϖ ^ κ i) ∧ ∀ i, κ i ≤ e * G.m :=
   ⟨_, rfl, fun i => Nat.mul_le_mul_left _ (by have := topRank_add hs j; have := i.2; omega)⟩
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem isDiag_stair {G : Grid k} (hs : 1 ≤ G.s) (J : G.Level) (ϖ : kˣ) (e : ℕ) :
     IsDiag G ϖ (e * G.m) ((Reps.through hs J (stair G ϖ e)).elt fun i => DoubleCoset.mk _ _ (stair G ϖ e (i + 1))) := by
   rintro ⟨i, j⟩

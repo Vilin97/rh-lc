@@ -138,6 +138,7 @@ theorem stab_of_int (v : Pl D) (k : GLoc D.sp.cm.sig (Jst D n) v)
   exact hint _ hM' _ hz
 
 
+set_option maxHeartbeats 800000 in
 theorem nb_mem_KAt {nb : hermA D n → G D n} (hnb : IsNMap nb) {v : Pl D} {y : hermA D n} (hy : IntAt v y) :
     nb y ∈ KAt D n v := by
   obtain ⟨hi, ho, hint⟩ := hy

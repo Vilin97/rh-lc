@@ -15,6 +15,7 @@ section Affine
 variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
 
 
+omit [NormedSpace ℂ V] in
 lemma exists_mem_four_of_open_dense {U : Set V} (ho : IsOpen U) (hd : Dense U)
     (e₁ e₂ e₃ e₄ : V ≃ₜ V) : ∃ x, e₁ x ∈ U ∧ e₂ x ∈ U ∧ e₃ x ∈ U ∧ e₄ x ∈ U := by
   have hD : ∀ e : V ≃ₜ V, Dense (e ⁻¹' U) := fun e => hd.preimage e.isOpenMap

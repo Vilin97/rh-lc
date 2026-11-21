@@ -50,6 +50,7 @@ theorem isGen_of_injective {k : Type} [Field k] [ValuativeRel k] [TopologicalSpa
     simp only [map_smul, hf]
 
 
+open ValuativeRel in
 theorem seg_eq_segL {D : D7} {v : HeightOneSpectrum (𝓞 D.host.F)} (φ : SplitProj D v) (PP : Pl D.host.E) (hP : IsProjAt φ PP)
     {ϖ : (Fv D.host.F v)ˣ} (hϖ : valuation (Fv D.host.F v) (ϖ : Fv D.host.F v) = uniformizer (Fv D.host.F v))
     (z : ℂˣ) (t : ℕ) : GlobalTheory.LFun.seg PP z t = GlobalTheory.ParHecke.segL ϖ z t := by
@@ -96,6 +97,8 @@ theorem isUnram_of_lifts {D : D7} {v : HeightOneSpectrum (𝓞 D.host.F)} (φ : 
 end GlobalTheory.ChainTw.UpQProof
 
 
+open GlobalTheory.ChainTw.UpQProof in
+set_option maxHeartbeats 1000000 in
 theorem GlobalTheory.ChainTw.upQ_holds : GlobalTheory.Published.CuspRapidDecay → ∀ D : D7, UpQ D := by
   classical
   intro hP D hN c w hw k hk s s' hs hs' p hp u φ hu v₀ _

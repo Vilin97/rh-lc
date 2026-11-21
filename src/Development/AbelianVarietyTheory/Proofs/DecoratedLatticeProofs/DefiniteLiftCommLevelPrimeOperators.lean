@@ -111,6 +111,7 @@ end GlobalTheory.SeeSaw.LiftsAtLevel
 namespace GlobalTheory.SeeSaw.LiftsAtLevel
 
 
+open GlobalTheory.FinPl.ValDbl in
 theorem pt_over {D : D7} {c : Comm D} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     {ι : Type} {v : VCom c} {o : TDat c k ι} {t : Tup c} {w : VTup t} (hc : c.Is) (ht : t.Is) (hv : v.Is) (hVF : VForm v w)
     (hSh : ShapeOff v o) (j : ℕ) (hj : j < D.R.m) (α : t.Ch j) (γ : t.Ch (j + 1))
@@ -151,6 +152,7 @@ theorem pt_over {D : D7} {c : Comm D} {k : Type} [Field k] [ValuativeRel k] [Top
 end GlobalTheory.SeeSaw.LiftsAtLevel
 
 
+open GlobalTheory.SeeSaw.LiftsAtLevel in
 theorem GlobalTheory.SeeSaw.liftS_of_exact : ∀ (D : D7) (c : Comm D) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (ι : Type) (v : VCom c) (o : TDat c k ι) (t : Tup c) (w : VTup t), LiftExact D → c.Is → t.Is → v.Is → VForm v w → ShapeOff v o → (∀ j, j < D.R.m → ∃ μ, IsWeilDatumO c.ψ _ _ μ μ (t.kom j) ∧ ∀ i, GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedCharacter.CharUnramAt D μ (o.p i).v) → LiftS o t := by
   intro D c k _ _ _ _ ι v o t w hLE hc ht hv hVF hSh hμ j hj α γ P φ hφ
   obtain ⟨μ, hW, hU⟩ := hμ j hj

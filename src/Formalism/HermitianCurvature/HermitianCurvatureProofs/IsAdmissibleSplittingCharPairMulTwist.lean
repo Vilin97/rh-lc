@@ -7552,6 +7552,7 @@ theorem SS_hyps (i : ℕ) (hi : i ∈ Set.Icc 1 (P.k - 1)) :
   · rw [hns, hz, hgi]; exact h2
 
 
+include hTT in
 theorem BB_la {β : A P (DQ P)} (hβ : β ∈ BB P L) (y : ℂ) : la L y * β = β * la L y := by
   have hle : BB P L ≤ Subalgebra.centralizer ℂ ({la L y} : Set (A P (DQ P))) := by
     refine Algebra.adjoin_le fun g hg => ?_
@@ -7568,6 +7569,7 @@ theorem BB_la {β : A P (DQ P)} (hβ : β ∈ BB P L) (y : ℂ) : la L y * β = 
   exact this _ rfl
 
 
+include hTT in
 theorem BB_lb {β : A P (DQ P)} (hβ : β ∈ BB P L) :
     ∃ β' ∈ BB P L, ∀ y : ℂ, lb L y * β = β * lb L y + β' * la L y := by
   induction hβ using Algebra.adjoin_induction with

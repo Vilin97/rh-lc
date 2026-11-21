@@ -373,6 +373,7 @@ end GlobalTheory.Mem.R3.Rw.NumDef
 namespace GlobalTheory.Mem.R3.Rw
 
 
+open NumDef in
 theorem exists_nums_numOK : ∀ (B : Base) (C : Cols B) (G : Type) [Group G] (p : PkB B C G) (e : PerD p) (W₀ : RowsRest B C),
     ∃ n : Nums p W₀, ∀ η hη V S N G', NumOK (assemble B C (p.what₂ e W₀ n η hη) V S N G') := by
   intro B C G _ p e W₀

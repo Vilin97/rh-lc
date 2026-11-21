@@ -27,6 +27,7 @@ namespace GlobalTheory.Mem.Top.Bl
 open GlobalTheory.Mem.Db GlobalTheory.Mem.Top.Bl.WitTr
 
 
+set_option maxHeartbeats 16000000 in
 theorem witMv_of_positionMv : ∀ 𝒮 : Slots, PositionMv 𝒮 → WitMv 𝒮 := by
   intro 𝒮 hS K B f T w Z O x N h hE
   have hR := GlobalTheory.T.concreteSplitPrimeAutomorphicData_divisionLatticeChange K.s (w.D Z) x.col.Gt x.col.cmp x.col.g.herm x.col.g.forms N h x.col.isRec

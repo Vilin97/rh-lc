@@ -70,6 +70,7 @@ theorem cc_map (τ : PowerSeries O →ₐ[O] PowerSeries O) (h0 : constantCoeff 
 section Taylor
 
 
+open MvPowerSeries in
 theorem taylor_two_var (f : PowerSeries O) :
     (MvPowerSeries.X 1 : MvPowerSeries (Fin 2) O) ^ 2 ∣
       PowerSeries.subst (MvPowerSeries.X 0 + MvPowerSeries.X 1 : MvPowerSeries (Fin 2) O) f -

@@ -18,6 +18,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo Filter Topology Globa
 namespace GlobalTheory.CompanionTheory.Ar.Top.HhTestProof
 
 
+open scoped ComplexOrder MatrixOrder in
 theorem det_one_add_bound {a b : ℕ} (Z : Matrix (Fin a) (Fin b) ℂ) (hZ : ∀ i k, ‖Z i k‖ = 1) :
     0 < (1 + Z * Z.conjTranspose).det.re ∧ (1 + Z * Z.conjTranspose).det.re ≤ (1 + (b : ℝ)) ^ a := by
   have hA : (1 + Z * Z.conjTranspose).PosDef :=

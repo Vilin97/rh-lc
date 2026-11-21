@@ -13,6 +13,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 open GlobalTheory GlobalTheory.QCoh GlobalTheory.CechPic GlobalTheory.Cartier GlobalTheory.ConsGeo
 
 
+open Cardinal in
 private theorem UpperTheory.nonempty_embedding_complex (K : Type) [Field K] [CharZero K] [Countable K] :
     Nonempty (K →+* ℂ) := by
   let F := FractionRing (MvPolynomial ℝ K)

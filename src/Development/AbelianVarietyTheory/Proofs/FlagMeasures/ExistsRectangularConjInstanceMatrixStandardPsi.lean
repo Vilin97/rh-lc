@@ -62,6 +62,7 @@ theorem conj_map {k l R S : Type} [Fintype k] [Fintype l] [CommRing R] [CommRing
   simp only [Matrix.mul_assoc]
 
 
+set_option maxHeartbeats 1000000 in
 theorem finE_conj_stdPsi (D : D7) (hF : D.host.F = maximalRealSubfield D.host.E) (PY : RowPsi (Yc D 0) D.R.r)
     (t : Formalism.L2.Theta.GA D (Yc D 0)) (hP : StdPsi hF PY) :
     ∃ (U : Matrix (Fin (Yc D 0).rank) (Fin D.R.r) (Formalism.IndefR.Lev.EAf D))

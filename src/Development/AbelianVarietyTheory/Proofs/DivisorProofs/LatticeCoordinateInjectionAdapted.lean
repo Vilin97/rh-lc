@@ -42,6 +42,7 @@ theorem symp_vecMulVec_self_eq_zero (F E : Type) [Field F] [NumberField F] [Fiel
 end GlobalTheory.VacResNonvan
 
 
+open GlobalTheory.VacResNonvan in
 theorem GlobalTheory.VacResNonvan.nonvan : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (n d n₁ : ℕ) (X : Spc F E n) (W : Spc F E d) (X₁ : Spc F E n₁) (H : Plane E n n₁) (j₀ j₁ : ℕ) (M₁ : Model σ X₁ W),
     H.IsAdapted σ B X X₁ j₀ j₁ →

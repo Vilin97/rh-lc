@@ -389,6 +389,7 @@ theorem bound_of_invariant {g : ℕ} {F : Matrix (Fin g) (Fin g) ℂ → ℂ}
 end Koecher
 
 
+open ReciprocityTheory.PTheta ReciprocityTheory.ChartRestriction.G.Key Koecher in
 theorem phKoecher : PhKoecherStatement := by
   intro g hg N hN F hF hper hinv c hc
   have hNpos : (0 : ℝ) < N := by exact_mod_cast hN

@@ -15,6 +15,7 @@ open NumberField IsDedekindDomain Formalism Formalism.BasicNotions Formalism.Bas
 namespace GlobalTheory.AdmReadBridge
 
 
+set_option maxHeartbeats 1000000 in
 theorem main : ∀ D : D7, AdmissibleParameterJ.AdmRead D := by
   intro D i r hr w hw C τ
   have hτ : ∀ x : D.host.E, AdmissibleParameterJ.gEmb C τ x =

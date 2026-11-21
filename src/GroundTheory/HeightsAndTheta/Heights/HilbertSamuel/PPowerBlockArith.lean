@@ -52,6 +52,7 @@ theorem blockFnField_addBlock {Ω : Type} [Field Ω] [CharZero Ω] {y : (Σ k, �
 end PowerBlockArith
 
 
+open PowerBlockArith in
 theorem PowerBlockArith.proof (hF : CoordArithOfFnField.Statement) : PowerBlockArith.Statement := by
   intro K _ ι _ Ω _ _ y D a m N v hy hv hgen
 

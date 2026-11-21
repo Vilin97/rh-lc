@@ -23,9 +23,11 @@ variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchi
   {n : ℕ} {α : Type*} [LinearOrder α]
 
 
+variable (n) in
 abbrev LeviIndex (β : Fin n → α) : Type := {ij : Fin n × Fin n // β ij.1 = β ij.2}
 
 
+variable (F) in
 def unipMatrix {β : Fin n → α} (u : UnipotentIndex n β → F) : Matrix (Fin n) (Fin n) F :=
   fun i j => if h : β i < β j then u ⟨(i, j), h⟩ else 0
 
@@ -49,6 +51,7 @@ def lieLevi : Submodule F (Matrix (Fin n) (Fin n) F) where
 
 
 
+variable {F n β} in
 theorem mul_mem_lieLevi {A B : Matrix (Fin n) (Fin n) F} (hA : A ∈ lieLevi F n β)
     (hB : B ∈ lieLevi F n β) : A * B ∈ lieLevi F n β := by
   intro i j h
@@ -182,6 +185,7 @@ theorem isUnit_add_unipMatrix (m : levi F n β) (u : UnipotentIndex n β → F) 
   exact (m : GL (Fin n) F).isUnit
 
 
+variable (β) in
 def parabolicMk (m : levi F n β) (u : UnipotentIndex n β → F) : blockUpper F n β :=
   ⟨(isUnit_add_unipMatrix m u).unit, by
     rw [mem_blockUpper, IsUnit.unit_spec]
@@ -325,6 +329,7 @@ theorem parabolicChart_parabolicMk (m : levi F n β) (u : UnipotentIndex n β �
     rw [dite_eq_right h, mem_levi.1 m.2 _ _ h, unipMatrix_apply_of_lt u hlt, zero_add]
 
 
+variable (β) in
 def parabolicMkHomeomorph : (levi F n β × (UnipotentIndex n β → F)) ≃ₜ blockUpper F n β where
   toFun x := parabolicMk β x.1 x.2
   invFun p := (leviProj F n β p, unipCoord p)
@@ -376,6 +381,7 @@ variable [MeasurableSpace F] [BorelSpace F] [MeasurableSpace (GL (Fin n) F)]
 variable {β : Fin n → α}
 
 
+variable (β) in
 def haarLevi (μ𝔪 : Measure (LeviIndex n β → F)) : Measure (levi F n β) :=
   (leviChart β).haar μ𝔪
 
@@ -384,6 +390,7 @@ instance isHaarMeasure_haarLevi (μ𝔪 : Measure (LeviIndex n β → F)) [μ�
   LinearChart.isHaarMeasure_haar _ μ𝔪
 
 
+variable (β) in
 def parabolicMeasure (μ𝔪 : Measure (LeviIndex n β → F)) (μ𝔫 : Measure (UnipotentIndex n β → F)) :
     Measure (ParabolicIndex n β → F) :=
   map (coordEquiv β) (μ𝔪.prod μ𝔫)

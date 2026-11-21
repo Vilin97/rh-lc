@@ -169,6 +169,7 @@ variable {π' : Y' ⟶ Spec (CommRingCat.of R')} {f : R →+* R'} {p : Y' ⟶ Y}
   (hp : p ≫ π = π' ≫ Spec.map (CommRingCat.ofHom f)) {φ' : K → (Y' ⟶ X)} (hφ : ∀ k, φ' k = p ≫ φ k)
 
 
+variable (L ε) in
 def pullOver : SecOver π (LB.LinComb L φ ε) →ₛₗ[f] SecOver π' (LB.LinComb L φ' ε) where
   toFun s :=
     { f := fun j => pullFn hp (wchart_eq hφ j).le (chartFun π (LB.LinComb L φ ε) j s)
@@ -318,6 +319,7 @@ variable {L : LB X} (hL : L.IsLB) {I : Type} [Fintype I] {φ : I → (Y ⟶ X)} 
   (hφ : ∀ k, φ' k = p ≫ φ k)
 
 
+include hL in
 theorem isExtension_pullOver : IsExtension (pullOver L ε H.w hφ) := by
   obtain ⟨T, hT⟩ := (NoetherianSpace.isCompact (Set.univ : Set Y)).elim_finite_subcover
     (fun j : I → L.ι => (LB.wchart L φ j : Set Y)) (fun j => (LB.wchart L φ j).isOpen) (fun y _ => by

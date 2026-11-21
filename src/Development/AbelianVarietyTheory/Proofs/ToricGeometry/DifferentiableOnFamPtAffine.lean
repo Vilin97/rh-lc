@@ -115,6 +115,7 @@ section Family
 variable {R : Type} [CommRing R] [Algebra ℂ R]
 
 
+variable (R) in
 abbrev spO : Over (Sp ℂ) := Over.mk (spMap (algebraMap ℂ R))
 
 def resPt (ρ : R →ₐ[ℂ] ℂ) : 𝟙_ (Over (Sp ℂ)) ⟶ spO R :=

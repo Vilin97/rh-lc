@@ -50,6 +50,7 @@ theorem level_tools_of_admitted' (hA : admitted D HW F Cm CR CA CB CK) : Formali
     uniformizer_clause_of_admitted D HW F Cm hA⟩
 
 
+set_option maxHeartbeats 0 in
 theorem dual_lemma_of_admitted (hA : admitted D HW F Cm CR CA CB CK) (l : ℕ) [Fact l.Prime] (K LL : Loc.FinExt l)
     (hg : Loc.Good K 1 LL) [NeZero (Module.finrank ℚ_[l] ↥(Loc.K0 K))] : LemmaDN ((HW l).W K 1 LL hg) := by
   intro d T₁ T₂ F' b S η m hset

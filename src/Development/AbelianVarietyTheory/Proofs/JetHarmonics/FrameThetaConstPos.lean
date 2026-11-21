@@ -49,6 +49,9 @@ private lemma twoDelta_sub_eq_two_mul_blockWt_sub {X : _root_.ReciprocityTheory.
   exact_mod_cast key
 
 
+open NumberField Topology in
+open scoped ContDiff in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 theorem _root_.GlobalTheory.ThetaRecordCompare.levi_twoDelta {X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r} {de : _root_.ReciprocityTheory.ChartRestriction.G.FD.Wt X.Ψ r}
     (h : _root_.GlobalTheory.IndefiniteRowSideFullHecke.ThetaWeightedNorm.IsTwoDelta X de) {x0 : _root_.ReciprocityTheory.ChartRestriction.G.FD.Frame X.Ψ r}
     (ho : _root_.ReciprocityTheory.ChartRestriction.G.AR.Up.IsOrth X x0) {z : _root_.ReciprocityTheory.L2DbarEstimates.V (_root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.nd X)} (hz : z ∈ _root_.ReciprocityTheory.ChartRestriction.G.AR.Up.OmF X x0)
@@ -84,6 +87,9 @@ theorem _root_.GlobalTheory.ThetaRecordCompare.gapsGe_mono {X : _root_.Reciproci
   fun τ i j hij hne => hg.trans (h τ i j hij hne)
 
 
+open NumberField Topology in
+open scoped ContDiff in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 theorem _root_.GlobalTheory.ThetaRecordCompare.cusp_of_gaps {X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r} (hn : 2 ≤ _root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.nd X)
     (h0 : 0 < X.p0) (hr : X.p0 < r) {la : _root_.ReciprocityTheory.ChartRestriction.G.FD.Wt X.Ψ r}
     (hg : _root_.GlobalTheory.IndefiniteRowSideFullHecke.ThetaWeightedNorm.GapsGe X la 0) (hp : _root_.GlobalTheory.IndefiniteRowSideFullHecke.ThetaWeightedNorm.PairingGe X la 1) {P : _root_.ReciprocityTheory.ChartRestriction.G.FD.Frame X.Ψ r → ℂ}
@@ -208,6 +214,10 @@ private lemma diagForm_Fp_sub_pos (A : _root_.ReciprocityTheory.ChartRestriction
   linarith
 
 
+open NumberField Topology in
+open scoped ContDiff in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
+variable {X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r} in
 theorem _root_.GlobalTheory.ThetaRecordCompare.arch_gaps (A : _root_.ReciprocityTheory.ChartRestriction.G.AR.Up.ArchInM X) (h0 : 0 < X.p0)
     (hr : X.p0 < r) :
     _root_.GlobalTheory.IndefiniteRowSideFullHecke.ThetaWeightedNorm.GapsGe X A.L 1 ∧ _root_.GlobalTheory.IndefiniteRowSideFullHecke.ThetaWeightedNorm.PairingGe X A.L 1 ∧ _root_.GlobalTheory.IndefiniteRowSideFullHecke.ThetaWeightedNorm.GapsGe X A.Fp 0 ∧

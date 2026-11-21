@@ -73,6 +73,7 @@ namespace GlobalTheory.InertLevel
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 
 
+open GlobalTheory.InertUmax in
 def idemAt (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L))) : AL L :=
   (1 : L) ⊗ₜ[maximalRealSubfield L] sgl L v 1
 

@@ -170,6 +170,7 @@ theorem height_one : height (1 : AdelicGLn.AdelicGL K n) = 1 := by
   simp [height, locHeight_one]
 
 
+variable (K n) in
 def heightConst : ℝ := ∏ w : InfinitePlace K, (max 1 (n : ℝ)) ^ w.mult
 
 theorem one_le_heightConst : 1 ≤ heightConst K n :=

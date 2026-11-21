@@ -133,6 +133,7 @@ end Id
 attribute [local instance] GlobalTheory.TorusExt.gtGroup
 
 
+open GlobalTheory.ModelData.ModelTate in
 theorem exists_tateIsoQ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} (D : Datum H) {R : Type}
     [CommRing R] [IsDomain R] [CharZero R] {I : Ideal R} (hA : AdmBase R I) {t : SAB H (Sp R)} (P : PELUnif I t)
     (hT : P.TorsionIso) {S : Scheme.{0}} (t₀ : SAB H S) (z : Sp (FractionRing R) ⟶ S) (ψ : P.A.A.left ⟶ t₀.G.left)

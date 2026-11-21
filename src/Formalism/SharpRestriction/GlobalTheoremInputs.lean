@@ -24,6 +24,7 @@ def vvTerm (D : D7) (l : ℕ) : ℝ :=
   if l.Prime then ((∑ e ∈ Finset.Ico 1 D.R.t, D.what₂.shaLen l e : ℚ) : ℝ) * Real.log l else 0
 
 
+open Classical in
 def etaSum {D : D7} (L : SizeData₂ D) (j : ℕ) : ℝ :=
   ∑ w ∈ L.supp.filter (fun w => D.what₂.muAt w ≠ D.what₂.mu0),
     SizeData₂.lwP w * (D.what₂.places.ramIdx w : ℝ) * (D.what₂.etaJ j w : ℝ)

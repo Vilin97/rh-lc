@@ -155,6 +155,7 @@ variable {Γ A K M : Type} [Group Γ] [Group A] [Field K] [AddCommGroup M] [Modu
   (ι : Γ →* A) (U : Subgroup A) (ρ : Γ →* Module.End K M)
 
 
+open Classical in
 theorem deltaForm_eq_sum (x g : A) (hf : {γ : Γ | x⁻¹ * ((ι γ)⁻¹ * g) ∈ U}.Finite) (v : M) :
     deltaForm ι U ρ x v g = ∑ γ ∈ hf.toFinset, ρ γ v := by
   unfold deltaForm
@@ -249,6 +250,7 @@ section Core
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T}
 
 
+open Classical in
 theorem vCore_lin {S : GridChoice W U} {t : T} {Φ : G.Datum} (h : S.SumOK t Φ) {J : Type} (s : Finset J) (a : J → ℂ)
     (Ψs : J → FinPt G (.top 0) → VV ℂ (wt G (.top 0))) (Ψ0 : FinPt G (.top 0) → VV ℂ (wt G (.top 0)))
     (F : FinPt G (.grid 0 D.R.m) → VV ℂ (listedWt G (.grid 0 D.R.m)))
@@ -394,6 +396,8 @@ theorem gam_ne {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U
   simp
 
 
+set_option maxHeartbeats 1600000 in
+open Classical in
 theorem exists_intMod_levelPrimePow_eq_add_mul (ch : Choice R) {t : T} {w : PlL D} {B : ℝ} (hB : 0 ≤ B) (hO : ∀ a, ch.S.SumOK t (ch.Phi a))
     {X' : InfinitePlace D.what₂.LL → Matrix (Fin ch.n) (Fin ch.n) ℂ} {M : Submodule (𝓞 D.what₂.LL) (Fin ch.n → D.what₂.LL)}
     (hM : IsTestLat ch.G ch.rp ch.n ch.e X' M) (Fx : A.fam.amb.FR t) (y : Fin ch.n → D.what₂.LL)
@@ -506,6 +510,7 @@ variable {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type} {A : FamIn 
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks}
 
 
+set_option maxHeartbeats 1600000 in
 theorem fin_at (F : Face D A) (ch : Choice R) (C b : ℝ) (hO : ∀ t a, ch.S.SumOK t (ch.Phi a)) (hD : DepthAt ch)
     (hS : FinScalAt ch (C / 16) b) (hC : FinCoefAt ch (C / 16) b) (hDt : FinDatAt ch (C / 16) b) (hG : FinGamAt ch (C / 16) b)
     (hT : FinTopAt ch (C / 16) b) (hR : FinRowAt ch (C / 16) b) (hP : FinPairAt ch (C / 16) b) (hΨ : FinPsiAt ch)
@@ -533,6 +538,7 @@ theorem fin_at (F : Face D A) (ch : Choice R) (C b : ℝ) (hO : ∀ t a, ch.S.Su
   exact LossLe.mono (loss_mul (hS w) core) (le_of_eq (by ring))
 
 
+set_option maxHeartbeats 1600000 in
 theorem fin_of_factors : SumOKK → DepthK → FinScalK → FinCoefK → FinDatK → FinGamK → FinTopK → FinRowK → FinPairK → FinPsiK →
     FinFormK → FinK := by
   rintro ⟨a0, hO⟩ ⟨a1, hD⟩ ⟨a2, hS⟩ ⟨a3, hC⟩ ⟨a4, hDt⟩ ⟨a5, hG⟩ ⟨a6, hT⟩ ⟨a7, hR⟩ ⟨a8, hP⟩ ⟨a9, hΨ⟩ ⟨a10, hF⟩

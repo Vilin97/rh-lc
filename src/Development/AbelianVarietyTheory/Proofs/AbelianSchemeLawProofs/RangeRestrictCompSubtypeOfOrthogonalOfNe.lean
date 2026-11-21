@@ -443,6 +443,7 @@ theorem cubeSign_inrEmb (w : Finset (ι ⊕ₗ κ)) (k : κ) :
   rw [cubeSign, card_parts, h1, h2, cubeSign, pow_add]
 
 
+variable (ι κ) in
 noncomputable def partsEquiv : Finset (ι ⊕ₗ κ) ≃ Σ _ : Finset ι, Finset κ where
   toFun w := ⟨part (inlEmb ι κ) w, part (inrEmb ι κ) w⟩
   invFun x := sumVertex x.1 x.2

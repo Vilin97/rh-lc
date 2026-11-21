@@ -72,6 +72,7 @@ theorem pair_rat_int {T : HSp D} {LT : Lat T} (hT : IsSelfDualC T LT) {P : Globa
     simp only [Pi.neg_apply, RingHom.map_neg, mul_neg, Finset.sum_neg_distrib]; exact neg_mem hx
 
 
+set_option maxHeartbeats 800000 in
 theorem pair_int {S T : HSp D} {LS : Lat S} {LT : Lat T} (hS : IsSelfDualC S LS) (hT : IsSelfDualC T LT)
     (hA : ∀ a ∈ D.host.AA, p.pr (incA D (star a)) ∈ 𝒪[k]) {P : GlobalTheory.FinPl.Pl D → Prop}
     {u : WO S T} (hu : u ∈ latO S T (LS : Set _) (LT : Set _) fun _ => True)
@@ -272,6 +273,7 @@ theorem latO_of_latRow (G : GridData L sc) (i : ℕ) {Y : WO (G.V (.grid (i + 1)
       fun _ => True := hY.1
 
 
+set_option maxHeartbeats 1600000 in
 theorem bessel_step_conj_place_column_functional_bound : OnStd fun {D} _ _ {sc} {G} W F => ∀ σ (h : 2 * (σ + 1) + 2 ≤ D.R.m), ∀ v ∈ G.pl.S0, ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (p : GlobalTheory.FinPl.SplitPt D k) (β : GlobalTheory.FinPl.Frame p (G.V (.grid (2 * (σ + 1) + 1) 0)) (Fin (G.V (.grid (2 * (σ + 1) + 1) 0)).rank)) (ϖ : 𝒪[k])
     (κ : Fin (2 * (σ + 1) + 1 - 1) → Fin (G.V (.grid (2 * (σ + 1) + 1) 0)).rank),

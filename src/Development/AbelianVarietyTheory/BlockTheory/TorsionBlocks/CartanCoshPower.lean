@@ -48,6 +48,7 @@ theorem pOf_herm {p q : ℕ} (B : Matrix (Fin p) (Fin q) ℂ) : (pOf B).IsHermit
   simp [pOf, Matrix.IsHermitian, Matrix.fromBlocks_conjTranspose]
 
 
+open scoped Matrix.Norms.L2Operator in
 theorem cartanB_eq {p q : ℕ} {g : UpqT p q} {B : Matrix (Fin p) (Fin q) ℂ} (h : IsCartan g B) :
     cartanB g = B := by
   obtain ⟨k₁, h₁, k₂, h₂, hg⟩ := h
@@ -70,6 +71,7 @@ theorem cartanB_eq {p q : ℕ} {g : UpqT p q} {B : Matrix (Fin p) (Fin q) ℂ} (
   ring
 
 
+open scoped Matrix.Norms.L2Operator ComplexOrder in
 theorem isCartan_cartanB {p q : ℕ} (g : UpqT p q) : IsCartan g (cartanB g) := by
   set J : Mat p q := Formalism.UG.Jpq p q with hJ
   set G : Mat p q := UpqT.mat g with hG

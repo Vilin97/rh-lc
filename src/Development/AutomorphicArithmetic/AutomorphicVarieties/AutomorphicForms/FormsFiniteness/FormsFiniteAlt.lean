@@ -48,6 +48,7 @@ theorem Bdd.mono {S S' : Submodule ℂ (archSmooth K n)} (h : Bdd S) (hS : S' �
   centre z hz := (h.centre z hz).mono hS
 
 
+variable (K n) in
 def FinAt : Prop := ∀ S : Submodule ℂ (archSmooth K n), Bdd S → FiniteDimensional ℂ S
 
 def FormsFinite : Prop := ∀ (K : Type) [Field K] [NumberField K] (n : ℕ), FinAt K n

@@ -135,6 +135,7 @@ section Core
 variable {V : Type*} [AddCommGroup V] [Module ℂ V] {π : Representation ℂ (GL (Fin n) F) V}
 
 
+omit [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)] in
 theorem isLocallyConstant_of_mul_right {γ : Type*} {K : Subgroup (GL (Fin n) F)}
     (hKo : IsOpen (K : Set (GL (Fin n) F))) {f : GL (Fin n) F → γ}
     (hf : ∀ g, ∀ k ∈ K, f (g * k) = f g) : IsLocallyConstant f := by

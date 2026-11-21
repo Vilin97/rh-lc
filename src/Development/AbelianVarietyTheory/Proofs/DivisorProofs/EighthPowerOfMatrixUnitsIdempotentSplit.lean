@@ -33,6 +33,7 @@ theorem prod_comp' {X M N : C} [MonObj M] [IsCommMonObj M] [MonObj N] [IsCommMon
 end MatUnitIdem
 
 
+open MatUnitIdem in
 theorem matUnits_univ_of_idem : ∀ {S : Scheme.{0}} (G H : Over S) [GrpObj G] [IsCommMonObj G] [GrpObj H] (E : Fin 8 → Fin 8 → (G ⟶ G)) (hE : ∀ a b, IsMonHom (E a b)) (hrel : ∀ a b c d, E a b ≫ E c d = if b = c then E a d else 1) (hsum : ∏ a, E a a = 𝟙 G) (i : H ⟶ G) (r : G ⟶ H) (hi : IsMonHom i) (hr : IsMonHom r) (hir : i ≫ r = 𝟙 H) (hri : r ≫ i = E 0 0), ∀ (T : Over S) (y : Fin 8 → (T ⟶ H)), ∃! x : T ⟶ G, ∀ a, x ≫ (E a 0 ≫ r) = y a := by
   intro S G H _ _ _ E hE hrel hsum i r hi hr hir hri T y
   have key : ∀ b, E b b = (E b 0 ≫ r) ≫ i ≫ E 0 b := by

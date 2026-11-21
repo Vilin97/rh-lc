@@ -38,15 +38,18 @@ def RigPic : Type := {c : SmallPic G.left // IsRigCls G c}
 variable {G}
 
 
+omit [GrpObj G] [IsCommMonObj G] in
 theorem smallCls_eq_zero_iff {X : Scheme.{0}} {L : LB X} (hL : L.IsLB) : smallCls L hL = 0 ↔ ∃ t : LB.Gen L, t.IsGen :=
   (smallPicEquiv X).symm.map_eq_zero_iff.trans (cls_eq_zero_iff hL)
 
 
+omit [GrpObj G] [IsCommMonObj G] in
 theorem smallPull_comp {X Y Z : Scheme.{0}} (g : Z ⟶ Y) (f : Y ⟶ X) (c : SmallPic X) :
     smallPull (g ≫ f) c = smallPull g (smallPull f c) := by
   simp [smallPull, pull_comp]
 
 
+omit [IsCommMonObj G] in
 theorem isRigCls_iff {L : LB G.left} (hL : L.IsLB) : IsRigCls G (smallCls L hL) ↔ Out.Rigidified G L := by
   rw [IsRigCls, smallPull_smallCls _ hL (pull_isLB hL _), smallCls_eq_zero_iff]; rfl
 
@@ -73,6 +76,7 @@ def sqMap : (G' ⊗ G').left ⟶ (G ⊗ G).left := (lift (pushHom h _ (fst G' G'
   congrArg (fun q => q.left) (lift_snd (pushHom h _ (fst G' G')) (pushHom h _ (snd G' G')))
 
 
+omit [GrpObj G] [IsCommMonObj G] in
 theorem sq_hom_ext {T : Scheme.{0}} {a b : T ⟶ (G ⊗ G).left} (h₁ : a ≫ (fst G G).left = b ≫ (fst G G).left)
     (h₂ : a ≫ (snd G G).left = b ≫ (snd G G).left) : a = b := pullback.hom_ext h₁ h₂
 
@@ -279,6 +283,7 @@ def completePt (L : SmallPic (gPt A Λ).left) : GtPic A Λ :=
 variable {X : Scheme.{0}} {π : X ⟶ Y.X} {t : SAB H X} (m : SABMap t Y.t π) (z : Sp ↥(intO ↥C.S) ⟶ X) (hz : z ≫ π = P.yt)
 
 
+include hz in
 theorem isGrpPullback_gPt_base : IsGrpPullback (gPt A Λ) (tens Y.t Λ).G (z ≫ π) (pullback.fst _ _ ≫ (tens.map Λ A.m).φ) :=
   ((isGrpPullback_pullback _ (spMap A.f)).comp (tens.map Λ A.m).cart).congr (A.fac.trans hz.symm) rfl
 

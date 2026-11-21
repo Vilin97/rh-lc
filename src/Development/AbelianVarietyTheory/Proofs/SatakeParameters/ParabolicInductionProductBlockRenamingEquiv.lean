@@ -18,6 +18,8 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   {f : γ' → γ} {m : γ → Type} [∀ c, Fintype (m c)] [∀ c, DecidableEq (m c)]
 
 
+omit [Fintype γ] [LinearOrder γ] [Fintype γ'] [LinearOrder γ'] [Fintype n] [DecidableEq n]
+  [∀ c, Fintype (m c)] [∀ c, DecidableEq (m c)] in
 theorem blk_rename {e : (Σ c, m c) ≃ n} {e₂ : (Σ c', m (f c')) ≃ n}
     (he : ∀ c' x, e₂ ⟨c', x⟩ = e ⟨f c', x⟩) (j : n) : blk e j = f (blk e₂ j) := by
   obtain ⟨⟨c', x⟩, rfl⟩ := e₂.surjective j
@@ -25,11 +27,13 @@ theorem blk_rename {e : (Σ c, m c) ≃ n} {e₂ : (Σ c', m (f c')) ≃ n}
   rw [h1, he, blk_apply]
 
 
+omit [Fintype γ] [Fintype γ'] [∀ c, Fintype (m c)] [∀ c, DecidableEq (m c)] in
 theorem mem_parab_rename (hf : StrictMono f) {e : (Σ c, m c) ≃ n} {e₂ : (Σ c', m (f c')) ≃ n}
     (he : ∀ c' x, e₂ ⟨c', x⟩ = e ⟨f c', x⟩) (g : GL n k) : g ∈ parab k e ↔ g ∈ parab k e₂ := by
   simp only [mem_parab, blk_rename he, hf.lt_iff_lt]
 
 
+omit [∀ c, DecidableEq (m c)] in
 theorem modExp_rename (hf : StrictMono f) (hs : Function.Surjective f) (c' : γ') :
     modExp (fun c' => m (f c')) c' = modExp m (f c') := by
   unfold modExp

@@ -13,6 +13,8 @@ open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions F
 namespace GlobalTheory.Reg
 
 
+set_option maxHeartbeats 2000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem compSplit_record : ∀ (D : D7) (T : Top D) (h : LawsP T) (j : ℕ) (hj : InR D j)
     (hG : GenFrEx (T.Q.Xo j) T.Q.c), CompSplitSt h j hG := by
   intro D T h j hj hG Z w g

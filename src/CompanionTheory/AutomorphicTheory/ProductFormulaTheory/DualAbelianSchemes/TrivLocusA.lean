@@ -17,6 +17,7 @@ noncomputable section
 namespace CompanionTheory.PfDual
 
 
+open GlobalTheory.TrivRep in
 theorem exists_ideal_locTriv_noeth : ∀ (R : Type) [CommRing R] [IsNoetherianRing R] (B : Over (Spec (CommRingCat.of R))) [GrpObj B], IsAbelianScheme B → ∀ F : LB B.left, F.IsLB → ∃ I : Ideal R, ∀ (R' : Type) [CommRing R'] (g : R →+* R') (X' : Scheme.{0}) (π : X' ⟶ B.left) (f' : X' ⟶ Spec (CommRingCat.of R')), IsPullback π f' B.hom (Spec.map (CommRingCat.ofHom g)) → ((∀ p : Spec (CommRingCat.of R'), ∃ U : (Spec (CommRingCat.of R')).Opens, p ∈ U ∧ Triv ((F.pull π).pull (f' ⁻¹ᵁ U).ι)) ↔ I ≤ RingHom.ker g) := by
   intro R _ _ B _ hB F hF
   have hG : GlobalFnsSt := GlobalTheory.globalFns_holds

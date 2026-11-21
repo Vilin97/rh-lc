@@ -65,6 +65,7 @@ theorem vecS_mulVec' {k : ℕ} (M : ↥Gw →* Matrix (Fin k) (Fin k) O)
     simp only [map_sum, map_mul, locM_entry]
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem phi_eq_zero {k : ℕ} (z : KOG O k) (hz : Br.phi Bw k z = 0) : z = 0 := by
   obtain ⟨y, rfl⟩ := Submodule.Quotient.mk_surjective _ z
   change (Submodule.Quotient.mk (Br.vecS Bw k y) :
@@ -80,6 +81,7 @@ theorem phi_eq_zero {k : ℕ} (z : KOG O k) (hz : Br.phi Bw k z = 0) : z = 0 := 
   exact hbj
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem actD_phi {Γ : Type} [Group Γ] {k : ℕ} (M : Γ →* Matrix (Fin k) (Fin k) O) (f : ↥Gw →* Γ)
     (gK : ↥(GK Bw.Kw)) (x : KOG O k) :
     actD (Br.lat Bw (M.comp f)) gK (Br.phi Bw k x) = Br.phi Bw k ((WKG M).comp f (Br.ι Bw gK) x) := by
@@ -92,6 +94,7 @@ theorem actD_phi {Γ : Type} [Group Γ] {k : ℕ} (M : Γ →* Matrix (Fin k) (F
   rw [h]
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem inv_killed {Γ : Type} [Group Γ] {k : ℕ} (M : Γ →* Matrix (Fin k) (Fin k) O) (f : ↥Gw →* Γ) (p c : ℕ)
     (h : ∀ y : (Fin k → Br.LLw Bw) ⧸ stdG (Br.Ow Bw) (Br.LLw Bw) k,
       (∀ gK, actD (Br.lat Bw (M.comp f)) gK y = y) → ((p : Br.Ow Bw) ^ c) • y = 0) :
@@ -107,6 +110,7 @@ theorem inv_killed {Γ : Type} [Group Γ] {k : ℕ} (M : Γ →* Matrix (Fin k) 
   exact hk
 
 
+include Bw in
 theorem natCast_ne_zero : algebraMap O (FractionRing O) ((l : ℕ) : O) ≠ 0 := by
   intro h
   have h2 := congrArg (Br.toLLK Bw) h
@@ -120,6 +124,7 @@ theorem natCast_ne_zero : algebraMap O (FractionRing O) ((l : ℕ) : O) ≠ 0 :=
 end Bridge
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem main : ∀ (D : D7) (HW : HWOf D.loc) (i : D.nd.Loc) (ρ : D.nd.X i → (GE D.nd →* GL (Fin D.R.r) (D.nd.O i))) (π : D.nd.X i)
     (u : HeightOneSpectrum (𝓞 D.host.E)) (hu : u ∈ placesOver D.host.E (D.nd.l i)) (s : ℕ)
     (hs : Good (D.nbr i u hu).Kw s (D.nbr i u hu).LL)

@@ -24,6 +24,8 @@ variable {K : Type*} [Field K] [NumberField K] {V V' : Type*} [AddCommGroup V] [
   [Module (𝓞 K) V'] [IsScalarTower (𝓞 K) K V']
 
 
+open scoped ComplexOrder in
+omit [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Module (𝓞 K) V'] [IsScalarTower (𝓞 K) K V'] in
 theorem injective_of_isometry (h : HermFam K V) (h' : HermFam K V') (M : V →ₗ[K] V')
     (hM : ∀ s c c', h'.form s (M c) (M c') = h.form s c c') : Function.Injective M := by
   obtain ⟨s⟩ : Nonempty (K →+* ℂ) := inferInstance

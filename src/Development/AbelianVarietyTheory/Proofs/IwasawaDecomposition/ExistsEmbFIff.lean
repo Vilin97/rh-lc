@@ -60,6 +60,7 @@ variable {F E K ι : Type} [Field F] [NumberField F] [Field E] [NumberField E] [
   [StarRing K] [Fintype ι] {n : ℕ} (S : GStep E K n) (emb : ι → E →+* K) (σ : K →+* ℂ) (lam : ι → DomWeight n)
 
 
+omit [StarRing E] [NumberField K] [StarRing K] in
 theorem mem_Fi_iff {σ' : E →ₐ[F] E} {J : Matrix (Fin n) (Fin n) E} {T f : ℕ} {bad : Set (HeightOneSpectrum (𝓞 F))}
     (L : StepLevel F E σ' J T f bad) {e : ι → E →+* ℂ} (he : e = embAt σ emb) {lam' : ι → DomWeight n} (hl : lam = lam')
     (y : S.Cl → UPts σ' J (FiniteAdeleRing (𝓞 F) F)) (hy : Function.Bijective fun c => (Quotient.mk'' (y c) : Cls L))
@@ -209,6 +210,7 @@ namespace GlobalTheory.Mem.Col2.TC
 open GlobalTheory.Mem.Col2.RowTie
 
 
+set_option maxHeartbeats 1000000 in
 theorem clsP_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)),
     ∀ u : B.Word, ∃ (KP : ClsPTied (D := (I.rec7 l Z)) u) (W : ValPTied u KP),
       I.ReadsP I.mu0 KP.lev.Lb KP.lev.U KP.lev.chi (fun c => (KP.y c).1) KP.lat (fun c s => (KP.stabI c s).1) ∧

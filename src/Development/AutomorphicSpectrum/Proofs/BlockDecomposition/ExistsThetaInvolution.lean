@@ -96,6 +96,7 @@ theorem lieD_theta (X : Lie E n) {φ : GA E n → ℂ} (hφ : φ ∈ Sm E n) (g 
   simp
 
 
+open ComplexConjugate in
 theorem atEmb_conjugate (w : InfinitePlace E) (z : ℂ) :
     atEmb (ComplexEmbedding.conjugate w.embedding) z = atEmb w.embedding (conj z) := by
   have hne : w.embedding ≠ ComplexEmbedding.conjugate w.embedding := fun h =>
@@ -104,6 +105,7 @@ theorem atEmb_conjugate (w : InfinitePlace E) (z : ℂ) :
   rw [InfinitePlace.mk_conjugate_eq, InfinitePlace.mk_embedding, if_neg hne, if_pos rfl]
 
 
+open ComplexConjugate in
 theorem star_atEmb (w : InfinitePlace E) (z : ℂ) : star (atEmb w.embedding z) = atEmb w.embedding (conj z) := by
   funext v
   simp only [atEmb, InfinitePlace.mk_embedding, if_true, Pi.star_apply]

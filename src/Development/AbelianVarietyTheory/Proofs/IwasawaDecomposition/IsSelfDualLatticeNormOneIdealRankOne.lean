@@ -108,6 +108,7 @@ variable (Ch : Chars X Pr R.m) (sel : HeightOneSpectrum (𝓞 X.F) → HeightOne
   (hX : X.Ok) (P : LevFam X.E X.K R.r Pr.vGs)
 
 
+include hX in
 theorem rowG_ok (hQ : QE sel (mu : Chr X.F X.E X.K) = ∅) : (rowGSD W (rowTyG Ch P).inv).Ok :=
   (rowCast_lin W (rcol_rowSG_eq sel mu hQ) (rowTyG Ch P).inv _ (rowTy_inv_cast Ch sel mu hQ P)).1 (mtildeOk W Ch sel mu hX P)
 

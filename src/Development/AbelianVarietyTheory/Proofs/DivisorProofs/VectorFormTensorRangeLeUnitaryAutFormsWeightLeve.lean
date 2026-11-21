@@ -157,6 +157,7 @@ end GlobalTheory.BCT.TrKer.RangeLe
 namespace GlobalTheory.BCT.TrKer
 
 
+open GlobalTheory.BCT.TrKer.RangeLe in
 theorem range_Phi_le_forms : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ, 1 ≤ n → ∀ (S : Set (Pl E)), IsSection S → ∀ (lam : InfinitePlace E → DomWeight n) (K' : ∀ w : Pl E, Subgroup (UL n w)), IsLevelFam (fun w : Pl E => MonoidHom.id (UL n w)) (KL n) K' → LinearMap.range (Phi S lam K') ≤ forms S lam K' := by
   intro E _ _ _ hU n _ S _ lam K' hK
   rw [LinearMap.range_eq_map, ← TensorProduct.span_tmul_eq_top, Submodule.map_span, Submodule.span_le]

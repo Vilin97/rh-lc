@@ -57,6 +57,7 @@ theorem unramIn_iff_differentIdeal_eq_top :
     exact Subgroup.mem_bot.mp hmem
 
 
+omit K L in
 theorem unramIn_iff_natAbs_discr :
     ∀ (K L : Type) [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L] [IsGalois K L],
       (∀ 𝔭 : HeightOneSpectrum (𝓞 K), UnramIn L 𝔭) ↔

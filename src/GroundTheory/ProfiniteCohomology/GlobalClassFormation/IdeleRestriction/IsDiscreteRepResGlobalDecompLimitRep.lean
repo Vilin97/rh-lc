@@ -38,6 +38,7 @@ theorem completionEmbedding_eq_of_algebraMap (F : FiniteSubfield) [Fact (K ≤ F
     fun x => by rw [hj, completionEmbedding_algebraMap]]
 
 
+set_option maxHeartbeats 2000000 in
 theorem idelesProj_comp (g : K.1.fixingSubgroup) (z : IdeleLimit) :
     idelesProj (ι.comp (fixingSubgroupEquiv K.1 g : ℚ̄ →ₐ[K.1] ℚ̄)) z = idelesProj ι ((g : ℚ̄ ≃ₐ[ℚ] ℚ̄) • z) := by
   obtain ⟨F, x, rfl⟩ := exists_of z
@@ -60,6 +61,7 @@ theorem idelesProj_comp (g : K.1.fixingSubgroup) (z : IdeleLimit) :
   exact (completionEmbedding_eq_of_algebraMap _ p.1 (r⁻¹ • w) j hj (y : 𝔸[p.1.1])).symm
 
 
+set_option maxHeartbeats 2000000 in
 theorem idelesLocalRes_comp (g : K.1.fixingSubgroup) (n : ℕ) :
     idelesLocalRes (ι.comp (fixingSubgroupEquiv K.1 g : ℚ̄ →ₐ[K.1] ℚ̄)) n = idelesLocalRes ι n := by
   set ι' := ι.comp (fixingSubgroupEquiv K.1 g : ℚ̄ →ₐ[K.1] ℚ̄)
@@ -106,6 +108,7 @@ theorem infCompletionEmbedding_eq_of_algebraMap (F : FiniteSubfield) [Fact (K �
     fun x => by rw [hj, infCompletionEmbedding_algebraMap]]
 
 
+set_option maxHeartbeats 2000000 in
 theorem infIdelesProj_comp (g : K.1.fixingSubgroup) (z : IdeleLimit) :
     infIdelesProj (ι.comp (fixingSubgroupEquiv K.1 g : ℚ̄ →ₐ[K.1] ℚ̄)) z =
       infIdelesProj ι ((g : ℚ̄ ≃ₐ[ℚ] ℚ̄) • z) := by
@@ -140,6 +143,7 @@ theorem infIdelesProj_comp (g : K.1.fixingSubgroup) (z : IdeleLimit) :
   exact (infCompletionEmbedding_eq_of_algebraMap _ p.1 u j hj (y : 𝔸[p.1.1])).symm
 
 
+set_option maxHeartbeats 2000000 in
 theorem infIdelesLocalRes_comp (g : K.1.fixingSubgroup) (n : ℕ) :
     infIdelesLocalRes (ι.comp (fixingSubgroupEquiv K.1 g : ℚ̄ →ₐ[K.1] ℚ̄)) n = infIdelesLocalRes ι n := by
   set ι' := ι.comp (fixingSubgroupEquiv K.1 g : ℚ̄ →ₐ[K.1] ℚ̄)

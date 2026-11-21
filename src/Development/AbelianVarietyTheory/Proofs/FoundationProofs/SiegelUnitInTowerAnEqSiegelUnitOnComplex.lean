@@ -19,6 +19,7 @@ open GlobalTheory.KZ GlobalTheory.Sieg
 namespace GlobalTheory.KZ.SiegelMem
 
 
+open Polynomial in
 theorem mem_range_of_isIntegral {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosed Ω] (ε : Ω →+* ℂ) {α : ℂ}
     (hα : IsIntegral ℚ α) : α ∈ Set.range ε := by
   have h0 : minpoly ℚ α ≠ 0 := minpoly.ne_zero hα

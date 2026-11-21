@@ -260,6 +260,7 @@ theorem valR_rigRel {S S' : Scheme.{0}} {G : Over S} [GrpObj G] {A : Over S'} [G
 end GlobalTheory.MBLow.JetBCGen
 
 
+open GlobalTheory.MBLow.JetBC GlobalTheory.ThetaPtMove GlobalTheory.MBLow.JetBCGen TrivSqZeroExt in
 theorem GlobalTheory.MBLow.thJet_of_keyAtMap : ∀ (R K : Type) [CommRing R] [Field K] (f : R →+* K) (x : KeyIn R) (x' : KeyIn K) (φ : x'.P.A.left ⟶ x.P.A.left), KeyAtMap x' x f φ → ∀ (g : ℕ) (hg : x.P.g = g) (hg' : x'.P.g = g) (m : ℕ) (I : Type) (pt : I → (baseOver (Sp R) ⟶ x.P.A)) (pt' : I → (baseOver (Sp K) ⟶ x'.P.A)) (ϑ : I → R) (J : I → Fin g → R), (∀ i, (pt' i).left ≫ φ = spMap f ≫ (pt i).left) → ThJet x hg m pt ϑ J → ThJet x' hg' m pt' (fun i => f (ϑ i)) (fun i j => f (J i j)) := by
   intro R K _ _ f x x' φ hK g hg hg' m I pt pt' ϑ J hpt ⟨th, hth, H⟩
   obtain ⟨he, w, hgg, F, hp, hw, hrig, hθ, hF1, hF2, hv⟩ := hK

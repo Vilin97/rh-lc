@@ -22,6 +22,7 @@ variable {D : D7} {X : Formalism.L2.Herm.Herm0 D} {u : D.what₂.Word} {w : D.wh
   {M : MemberForms D.what₂.LL D.what₂.embLL D.what₂.places D.what₂.Tau (D.hcW u) C A P}
 
 
+set_option maxHeartbeats 2000000 in
 structure LocTiesR (Fo : FormsIn M (i + 1) hi) (Lc : LocIn X u w hg Lv i Fo.Ch) (e : D.what₂.LL →+* (D.gat u w hg).Kf) (β : Fo.Ch) :
     Prop where
   frRat : FrRatJ (Lc.t β) Lc.B
@@ -35,6 +36,7 @@ structure LocTiesR (Fo : FormsIn M (i + 1) hi) (Lc : LocIn X u w hg Lv i Fo.Ch) 
   chRat : ∀ cl, ∃ r : D.what₂.LL, D.what₂.embLL r = ((Fo.tw β).ch ((Fo.K β).y cl) : ℂ)
 
 
+set_option maxHeartbeats 8000000 in
 theorem locTies_of {T : ∀ u : D.what₂.Word, Forms0 D u} {Gt : GatTies D} {c : LatCmp D} (K : CmpTied D X T Gt c)
     (ht : Fl.t = D.R.t) (hF : FillTie Gt u w hg Fl) {Fo : FormsIn M (i + 1) hi} {Lc : LocIn X u w hg Lv i Fo.Ch} {β : Fo.Ch}
     (H : LocTiesR hi Fo Lc (c.embW u w hg) β) : LocTies hi Fo Lc (Gt.gat_pos u w hg) (c.embW u w hg) β where

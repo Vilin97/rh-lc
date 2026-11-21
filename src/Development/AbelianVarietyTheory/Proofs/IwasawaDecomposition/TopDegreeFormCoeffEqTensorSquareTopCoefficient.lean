@@ -71,6 +71,7 @@ theorem det_single_not_inj (a : Fin n → Fin n) (ha : ¬ Function.Injective a) 
   simp [hij]
 
 
+open Classical in
 theorem topCoeff_prod {m : ℕ} (x : Fin m → Fin n × Fin n) :
     GlobalTheory.GoodMetric.topCoeff (∏ j, X (x j) : MvPolynomial (Fin n × Fin n) ℂ) =
       topForm n m (fun j => Pi.single (x j).1 1) * topForm n m (fun j => Pi.single (x j).2 1) := by

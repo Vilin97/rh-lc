@@ -29,6 +29,8 @@ theorem isNonarchimedeanLocalField_fixedField (V : OpenSubgroup Gal(Ksep/K)) :
   exact h1
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [IsSepClosure K Ksep]
+  [ValuativeExtension K Ksep] in
 theorem valuation_le_valuation_iff_coe (E : IntermediateField K Ksep) (x y : E) :
     valuation E x ≤ valuation E y ↔ valuation Ksep (x : Ksep) ≤ valuation Ksep (y : Ksep) := by
   rw [← (valuation E).vle_iff_le, ← (valuation Ksep).vle_iff_le, IntermediateField.coe_vle_coe_iff]
@@ -62,6 +64,7 @@ theorem natCast_residueField_fixedField_ne_zero {l : ℕ} (hl : (l : 𝓀[K]) �
   rwa [map_natCast, map_zero] at h
 
 
+omit [IsSepClosure K Ksep] in
 theorem natCast_ne_zero_of_residueField {l : ℕ} (hl : (l : 𝓀[K]) ≠ 0) : (l : K) ≠ 0 := by
   intro h
   apply hl
@@ -139,6 +142,7 @@ theorem apply_eq_of_valuation_sub_lt_one (hl : (l : 𝓀[K]) ≠ 0)
 variable (h : V ≤ W) [((V : Subgroup Gal(Ksep/K)).subgroupOf (W : Subgroup Gal(Ksep/K))).Normal]
 
 
+include h in
 theorem cohomologyConj_one_galRootsOfUnity_eq_id (hl : (l : 𝓀[K]) ≠ 0)
     (hind : ((V : Subgroup Gal(Ksep/K)).relIndex W).Coprime l) (g : (W : Subgroup Gal(Ksep/K)))
     (hg : ∀ x ∈ fixedField (V : Subgroup Gal(Ksep/K)), valuation Ksep x ≤ 1 →
@@ -200,6 +204,7 @@ theorem cohomologyConj_one_galRootsOfUnity_eq_id (hl : (l : 𝓀[K]) ≠ 0)
   rw [toMul_add, toMul_nsmul, toMul_ofMul, hsm, hy]
 
 
+include h in
 theorem cohomologyConj_galRootsOfUnity_eq_id (hl : (l : 𝓀[K]) ≠ 0)
     (hμ : ∀ ζ : Ksep, ζ ^ l = 1 → ζ ∈ fixedField (V : Subgroup Gal(Ksep/K)))
     (hind : ((V : Subgroup Gal(Ksep/K)).relIndex W).Coprime l) (g : (W : Subgroup Gal(Ksep/K)))

@@ -29,6 +29,7 @@ private theorem lrt_tf (O K V : Type) [CommRing O] [IsDomain O] [Field K] [Algeb
     exact smul_right_injective V (lrt_am_ne (K := K) hr0) h1⟩
 
 
+omit [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O K] [Fintype ι] in
 private theorem lrt_coord (b : Module.Basis ι K V) {y : V}
     (hy : y ∈ span O (Set.range b)) (i : ι) : b.repr y i ∈ Set.range (algebraMap O K) := by
   classical
@@ -49,6 +50,7 @@ private theorem lrt_coord (b : Module.Basis ι K V) {y : V}
       rw [← algebraMap_smul K a x, map_smul, Finsupp.smul_apply, smul_eq_mul, map_mul, hu]⟩
 
 
+omit [IsDiscreteValuationRing O] in
 private theorem lrt_den (b : Module.Basis ι K V) (F : V) :
     ∃ a : O, a ≠ 0 ∧ a • F ∈ span O (Set.range b) := by
   obtain ⟨a, ha⟩ := IsLocalization.exist_integer_multiples_of_finite (nonZeroDivisors O)

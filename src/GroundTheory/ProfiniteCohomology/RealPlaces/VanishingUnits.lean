@@ -69,6 +69,7 @@ theorem subsingleton_realLocal_of_odd (w : {v : InfinitePlace K.1 // v.IsReal}) 
   exact (realLocalEquiv w n).injective.subsingleton
 
 
+set_option maxHeartbeats 1000000 in
 theorem two_nsmul_realLocal (w : {v : InfinitePlace K.1 // v.IsReal}) {n : ℕ} (hn : 1 ≤ n)
     (t : cohomology (galUnits.{0} w.1.Completion (AlgebraicClosure w.1.Completion)) n) : 2 • t = 0 := by
   rcases Nat.even_or_odd n with he | ho
@@ -110,6 +111,8 @@ theorem realLocalEquiv_realUnitsRes (ι : LocalEmbeddings K) {r : ℕ} (hr : 1 �
     (congrArg (realLocalEquiv w r) (congrArg (fun f => f.hom y) (realUnitsRes_eq S ιr r w).symm))
 
 
+set_option maxHeartbeats 1000000 in
+include h2S in
 theorem eq_zero_of_realUnitsRes_eq_zero {r : ℕ} (hr : 4 ≤ r) (y : cohomology (galSUnitsMax K.1 ℚ̄ S) r)
     {k : ℕ} (hk : 2 ^ k • y = 0) (h : ∀ w, (realUnitsRes S ιr r w).hom y = 0) : y = 0 := by
   have hinj := (sUnitsRealPrimaryEquiv K S (nonempty_localEmbeddings K).some h2S hr).injective
@@ -122,6 +125,8 @@ theorem eq_zero_of_realUnitsRes_eq_zero {r : ℕ} (hr : 4 ≤ r) (y : cohomology
   exact congrArg Subtype.val h0
 
 
+set_option maxHeartbeats 1000000 in
+include h2S in
 theorem exists_realUnitsRes_eq {r : ℕ} (hr : 4 ≤ r)
     (t : ∀ w : {v : InfinitePlace K.1 // v.IsReal},
       cohomology (galUnits.{0} w.1.Completion (AlgebraicClosure w.1.Completion)) r) :
@@ -134,6 +139,7 @@ theorem exists_realUnitsRes_eq {r : ℕ} (hr : 4 ≤ r)
   exact congrFun hy w
 
 
+set_option maxHeartbeats 1000000 in
 theorem realUnitsRes_tateToGlobal (n : ℕ) (x : unitsTateCohomology S ιr ιs (n + 1))
     (w : {v : InfinitePlace K.1 // v.IsReal}) :
     (realUnitsRes S ιr (n + 1) w).hom ((tateToGlobal (gsFinFamily S ιs) (gsRealFamily S ιr)
@@ -144,6 +150,8 @@ theorem realUnitsRes_tateToGlobal (n : ℕ) (x : unitsTateCohomology S ιr ιs (
     (realUnitsMor S ιr) n) x)) w
 
 
+set_option maxHeartbeats 1000000 in
+include h2S in
 theorem exists_realUnitsRes_eq_of_three_le {m : ℕ} (hm : 3 ≤ m + 1)
     (t : ∀ w : {v : InfinitePlace K.1 // v.IsReal}, cohomology (realUnits w) (m + 1)) :
     ∃ y : cohomology (galSUnitsMax K.1 ℚ̄ S) (m + 1), ∀ w, (realUnitsRes S ιr (m + 1) w).hom y = t w := by
@@ -152,6 +160,7 @@ theorem exists_realUnitsRes_eq_of_three_le {m : ℕ} (hm : 3 ≤ m + 1)
   · exact ⟨0, fun w => @Subsingleton.elim _ (subsingleton_realLocal_of_odd w ho) _ _⟩
 
 
+set_option maxHeartbeats 2000000 in
 theorem tateGlobalToLocal_units_eq {m : ℕ} (hm : 3 ≤ m + 1)
     (t : (∀ v : S, cohomology (finUnits S v) (m + 1)) ×
       (∀ w : {v : InfinitePlace K.1 // v.IsReal}, cohomology (realUnits w) (m + 1)))
@@ -163,6 +172,7 @@ theorem tateGlobalToLocal_units_eq {m : ℕ} (hm : 3 ≤ m + 1)
   exact Prod.ext h1 (funext hy)
 
 
+include h2S in
 theorem exists_tateGlobalToLocal_eq {m : ℕ} (hm : 3 ≤ m + 1)
     (t : (∀ v : S, cohomology (finUnits S v) (m + 1)) ×
       (∀ w : {v : InfinitePlace K.1 // v.IsReal}, cohomology (realUnits w) (m + 1))) :
@@ -173,6 +183,8 @@ theorem exists_tateGlobalToLocal_eq {m : ℕ} (hm : 3 ≤ m + 1)
     tateGlobalToLocal_units_eq S ιr ιs hm t y hy
 
 
+set_option maxHeartbeats 1000000 in
+include h2S in
 theorem tateToGlobal_units_eq_zero {n : ℕ} (hn : 3 ≤ n) (x : unitsTateCohomology S ιr ιs (n + 1))
     {k : ℕ} (hk : 2 ^ k • x = 0) :
     (tateToGlobal (gsFinFamily S ιs) (gsRealFamily S ιr) (galSUnitsMax K.1 ℚ̄ S) (finUnits S)
@@ -182,6 +194,8 @@ theorem tateToGlobal_units_eq_zero {n : ℕ} (hn : 3 ≤ n) (x : unitsTateCohomo
   · exact realUnitsRes_tateToGlobal S ιr ιs n x w
 
 
+set_option maxHeartbeats 1000000 in
+include h2S in
 theorem eq_zero_of_tateToGlobal_units_eq_zero {m : ℕ} (hm : 3 ≤ m + 1)
     (x : unitsTateCohomology S ιr ιs (m + 1 + 1))
     (hx : (tateToGlobal (gsFinFamily S ιs) (gsRealFamily S ιr) (galSUnitsMax K.1 ℚ̄ S) (finUnits S)
@@ -196,6 +210,7 @@ theorem eq_zero_of_tateToGlobal_units_eq_zero {m : ℕ} (hm : 3 ≤ m + 1)
     (realUnitsMor S ιr) m) g
 
 
+include h2S in
 theorem eq_zero_unitsTateCohomology_of_two_pow_nsmul {r : ℕ} (hr : 4 ≤ r) (x : unitsTateCohomology S ιr ιs r)
     {k : ℕ} (hk : 2 ^ k • x = 0) : x = 0 := by
   obtain ⟨m, rfl⟩ : ∃ m, r = m + 1 + 1 := ⟨r - 2, by omega⟩

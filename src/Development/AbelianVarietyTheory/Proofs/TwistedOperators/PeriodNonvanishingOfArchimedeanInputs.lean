@@ -39,6 +39,7 @@ section General
 variable {D : D7} {θ : InfFam D} {V : HSp D} {S : D.what₂.Tau → SPar}
 
 
+open Classical in
 theorem real_translate (hθ : IsInfFam θ) {M : DSModel V S} {J : Set (GA D V)} {χ : GA D V → ℂ} :
     ∀ a ∈ GinfC V, ∀ v : SmT M, ∃ v' : SmT M, ∀ T ∈ MultT θ M J χ, ∀ h, T v' h = T v (h * a) := by
   refine GlobalTheory.Core.Rk.TopOnto.real_induction hθ _ (fun v => ⟨v, fun T _ h => by rw [mul_one]⟩) (fun a b ha hb v => ?_)

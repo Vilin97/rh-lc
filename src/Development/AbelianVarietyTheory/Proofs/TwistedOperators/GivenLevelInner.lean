@@ -31,6 +31,7 @@ open Matrix
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T}
 
 
+variable (G) in
 theorem givenLevel_inner (t : T) (w : Pl D.host.E) : ∀ X : ℕ × ℕ, 1 ≤ X.1 → 1 ≤ X.2 →
     givenLevel G t w X = GlobalTheory.SplitWeil.KO (Kw w) _
   | (_ + 1, _ + 1), _, _ => rfl

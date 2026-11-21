@@ -20,6 +20,7 @@ section Cone
 variable {K : Type*} [DecidableEq K] {ι : K → Type*} {F : Type*} [Field F]
 
 
+omit [DecidableEq K] in
 theorem primeCompl_map_le_nonZeroDivisors (P W : Ideal (MRing ι F)) [P.IsPrime] [W.IsPrime]
     (hPW : P ≤ W) :
     W.primeCompl.map (Ideal.Quotient.mk P) ≤ nonZeroDivisors (MRing ι F ⧸ P) := by
@@ -33,6 +34,7 @@ def coneLocal (P W : Ideal (MRing ι F)) [P.IsPrime] [W.IsPrime] (hPW : P ≤ W)
   Localization.subalgebra.ofField _ _ (primeCompl_map_le_nonZeroDivisors P W hPW)
 
 
+omit [DecidableEq K] in
 instance coneLocal.isLocalization (P W : Ideal (MRing ι F)) [P.IsPrime] [W.IsPrime] (hPW : P ≤ W) :
     IsLocalization (W.primeCompl.map (Ideal.Quotient.mk P)) (coneLocal P W hPW) :=
   Localization.subalgebra.isLocalization_ofField _ _ _

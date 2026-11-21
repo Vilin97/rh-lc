@@ -83,6 +83,7 @@ theorem chart_add (X Y : Matrix A C k) : chart j eA eC g h (X + Y) = chart j eA 
   rfl
 
 
+omit [Fintype A'] [Fintype C'] in
 theorem exists_homeo [TopologicalSpace k] [TopologicalSpace k'] [IsTopologicalRing k'] (h1 : Continuous j) (h2 : Continuous j.symm) :
     ∃ Θ : Matrix A C k ≃ₜ Matrix A' C' k', ∀ X, Θ X = chart j eA eC g h X :=
   ⟨{ toFun := chart j eA eC g h
@@ -217,6 +218,7 @@ theorem det_skewGram_ne (A B : HSp D) {d : ℕ} (e : Fin A.rank ⊕ Fin B.rank �
     (mul_ne_zero (GlobalTheory.RouteCoords.gram_det_ne A) (GlobalTheory.RouteCoords.gram_det_ne B))
 
 
+set_option maxHeartbeats 1000000 in
 theorem local_match (hL : L.Is μ₀) (W : G.Weil) (B : Frames G) (t : T) (i j : Fin D.R.m) (M : Vol G) (hst : SquareStanding G t)
     {e : Num G i j} {Bs : Base D.host.F D.host.E} {Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j} {X : Chars D.host.F D.host.E}
     {om : Rep D.sp.cm.sig Γ.V Γ.W} {om' : Rep D.sp.cm.sig Γ.V' Γ.W} (h : IsTripleOf W M t i j e Bs Γ X) {R Rf}

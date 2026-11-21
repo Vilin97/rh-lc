@@ -79,6 +79,7 @@ end GlobalTheory.HeckeFamilyMatrices.SsD
 namespace GlobalTheory.HeckeFamilyMatrices
 
 
+open GlobalTheory.HeckeFamilyMatrices.SsD in
 theorem diamond_genEigen_eigen : ∀ (N l k : ℕ), 5 ≤ N → l.Prime → ¬ l ∣ N → 3 ≤ k → ∀ (d : ZMod N) (σ : SL(2, ℤ)), IsDiam N l d σ →
   ∀ (f : ModularForm (Lev N l) (k : ℤ)) (c : ℂ) (n : ℕ), (fun F => DdF (k : ℤ) σ F - c • F)^[n] ⇑f = 0 → DdF (k : ℤ) σ ⇑f = c • ⇑f := by
   intro N l k hN hl _ _ d σ _ f c n hn

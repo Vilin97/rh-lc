@@ -95,6 +95,7 @@ theorem coe_divFunAction_apply (g : G) (f : divFun φ A) (i : I) (x : G) :
   rfl
 
 
+omit [IsTopologicalGroup G] in
 theorem exists_mem_nhds_one_forall_mul_eq {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
     [CompactSpace G] {X : Type*} {f : G → X} (hf : IsLocallyConstant f) :
     ∃ V ∈ nhds (1 : G), ∀ x : G, ∀ v ∈ V, f (x * v) = f x := by
@@ -274,6 +275,7 @@ theorem isZero_cohomology_of_bijective_nsmul_ulift (M : Rep.{0} (ULift.{0} ℤ) 
   exact hx
 
 
+omit [TotallyDisconnectedSpace G] in
 theorem exists_coprime_smul_cohomology_eq_zero (M : Rep.{0} (ULift.{0} ℤ) G) [IsDiscreteRep M]
     (ℓ : ℕ) (hM : ∀ m : M.V, ∃ N : ℕ, N.Coprime ℓ ∧ N • m = 0) (n : ℕ) (x : cohomology M n) :
     ∃ N : ℕ, N.Coprime ℓ ∧ N • x = 0 := by
@@ -301,6 +303,8 @@ variable {I : Type} {H : I → Type} [∀ i, Group (H i)] [∀ i, TopologicalSpa
   (φ : ∀ i, H i →* G) (hφ : ∀ i, Continuous (φ i))
 
 
+omit [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G] [∀ i, TopologicalSpace (H i)]
+  [∀ i, IsTopologicalGroup (H i)] [∀ i, CompactSpace (H i)] [∀ i, TotallyDisconnectedSpace (H i)] in
 theorem bijective_nsmul_divFun_rat {n : ℕ} (hn : n ≠ 0) :
     Function.Bijective (fun f : divFun φ ℚ => n • f) := by
   have hn' : (n : ℚ) ≠ 0 := by exact_mod_cast hn
@@ -328,6 +332,8 @@ theorem bijective_nsmul_divFun_rat {n : ℕ} (hn : n ≠ 0) :
       field_simp
 
 
+omit [∀ i, TopologicalSpace (H i)] [∀ i, IsTopologicalGroup (H i)] [∀ i, CompactSpace (H i)]
+  [∀ i, TotallyDisconnectedSpace (H i)] in
 theorem isZero_cohomology_one_divFunRep_int : IsZero (cohomology (divFunRep φ ℤ) 1) := by
   have hS := divFunSequence_shortExact φ
   have h1 : Subsingleton (cohomology (divFunSequence φ).X₂ 1) :=
@@ -381,6 +387,7 @@ section TrivSeq
 variable (Γ : Type) [Group Γ]
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] in
 def trivMap {A B : Type} [AddCommGroup A] [AddCommGroup B] (g : A →+ B) :
     trivRep Γ A ⟶ trivRep Γ B :=
   Rep.ofHom ⟨uliftIntLinearMap g, fun _ => LinearMap.ext fun _ => rfl⟩

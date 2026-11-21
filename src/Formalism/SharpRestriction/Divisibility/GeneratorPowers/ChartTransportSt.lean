@@ -119,6 +119,7 @@ def ChartFrameTrSt : Prop :=
             LB.Gen.Maps (LB.linCombIso I.w1 (primφ I.t') primε) wP' (flatGen Xo.univ.t.PP.L I.m1.φ _ _ c₁)
 
 
+omit [StarRing (𝓞 E)] in
 def FrTanBasisSt : Prop :=
   ∀ (S : Type) [Field S] [Algebra c.F S] (y : FrPt Xo c S) (w : Sp (DualNumber S) ⟶ Xo.univ.t.G.left),
     IsTanAt y.x w →

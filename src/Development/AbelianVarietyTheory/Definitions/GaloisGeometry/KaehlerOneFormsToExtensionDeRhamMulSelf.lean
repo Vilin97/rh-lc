@@ -34,6 +34,7 @@ def IsTrDR (T : DR k L →ₗ[k] DR k K) : Prop :=
 
 
 open scoped Classical in
+open Classical in
 def trDR : DR k L →ₗ[k] DR k K := if h : ∃ T, IsTrDR k K L T then h.choose else 0
 
 variable {k K L} {ι : Type}

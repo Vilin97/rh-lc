@@ -79,6 +79,7 @@ theorem existsUnique_resG_eq {X : Scheme.{0}} [IsIntegral X] (π : X ⟶ Sp ℤ)
 end BoundedRegular
 
 
+open BoundedRegular in
 theorem regular_of_bounded_at_padicAlgCl_points :
     (∀ (X : Scheme.{0}) [IsIntegral X] (π : X ⟶ Sp ℤ) [Flat π] [LocallyOfFiniteType π] (x : X),
       IsClosed ({x} : Set X) → IsIntegrallyClosed (X.presheaf.stalk x) →

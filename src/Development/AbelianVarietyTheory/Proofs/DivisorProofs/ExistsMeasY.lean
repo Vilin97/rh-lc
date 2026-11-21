@@ -48,6 +48,7 @@ theorem exists_measV (hv : ∀ i, (Vc D i).IsPosDef) (i : Fin D.R.m) (t : T) :
     (fun τ => Or.inl (hv i τ)) (GlobalTheory.Mem.LevelOK.levOK_all D _ (R.βV i) (R.datVt i t)).1
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_modX (t : T) : ∃ (H : HMod (Bridge.Gf D.sp.X' → R.cX.W)) (j : A.fam.amb.FR t →ₛₗ[D.what₂.embLL] H.H),
     H.Is (Bridge.AdForms (Bridge.ratF D.sp.X') R.cX.coef.ρ (levEnv _ R.βX (R.datXt t)).J (levEnv _ R.βX (R.datXt t)).χ)
       (Bridge.adInner (Bridge.ratF D.sp.X') (levEnv _ R.βX (R.datXt t)).J (R.B.R t).pres.y) ∧ ∀ x, H.e (j x) = R.B.jR t x := by
@@ -61,6 +62,7 @@ theorem exists_modX (t : T) : ∃ (H : HMod (Bridge.Gf D.sp.X' → R.cX.W)) (j :
   exact (hj)
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_modV (i : Fin D.R.m) (t : T) :
     ∃ (H : HMod (Bridge.Gf (Vc D i) → (R.cV i).W)) (j : A.fam.amb.FL i t →ₛₗ[D.what₂.embLL] H.H),
     H.Is (Bridge.AdForms (Bridge.ratF (Vc D i)) (R.cV i).coef.ρ (levEnv _ (R.βV i) (R.datVt i t)).J

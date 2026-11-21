@@ -89,6 +89,7 @@ theorem seq_agree {K M : Cx R} [K.IsStrictlyLE 0] {n : ℤ}
 end GlobalTheory.NullHtpyStair
 
 
+open GlobalTheory.NullHtpyStair in
 theorem GlobalTheory.nullHtpy_stair : ∀ (R : Type) [CommRing R] (K M : Cx R) [K.IsStrictlyLE 0],
     (∀ p n : ℤ, p ≤ 0 → Subsingleton (CohomologyClass (sgl (K.X p)) M n)) → ∀ n : ℤ,
     Subsingleton (CohomologyClass K M n) := by

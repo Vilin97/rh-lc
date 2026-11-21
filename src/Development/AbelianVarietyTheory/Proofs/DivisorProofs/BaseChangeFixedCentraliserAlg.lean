@@ -12,6 +12,7 @@ open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMi
 open scoped TensorProduct Classical
 
 
+open GlobalTheory.FinClsLoc.BaseChangeCent in
 theorem GlobalTheory.FinClsLoc.baseChange_fixedCentraliser_alg :
   ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (β Y : G.Cˣ) (L : Type) [Ring L] [Algebra ℚ L] (ι : L →ₐ[ℚ] G.C),
     Function.Injective ι →

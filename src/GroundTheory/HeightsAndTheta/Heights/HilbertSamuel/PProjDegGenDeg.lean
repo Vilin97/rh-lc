@@ -50,6 +50,7 @@ theorem eq_zero_of_isBigO (D : ℕ) (c : ℝ)
 end ProjDegGenDeg
 
 
+open ProjDegGenDeg in
 theorem ProjDegGenDeg.proof (hR : RankOfSections.Statement) : ProjDegGenDeg.Statement := by
   intro D Ω _ _ κ _ x e hA hF
   obtain ⟨hq, hdim⟩ := GenericFibre.proof Ω κ x D hA

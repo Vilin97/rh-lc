@@ -135,6 +135,7 @@ theorem secM_fg (y : (Σ k, ι k) → Ω) (d : K → ℕ) : (secM y d).FG := by
   exact Module.Finite.iff_fg.mp inferInstance
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem chartLat_le_nm (y : (Σ k, ι k) → Ω) (a : K → ℤ) (τ : ℕ) : chartLat y a τ ≤ chartLatNm y a τ :=
   fun _ hs c hc => isIntegral_algebraMap (x := (⟨_, hs c hc⟩ : chartRingZ y c))
 
@@ -172,12 +173,15 @@ theorem mem_fnField (y : (Σ k, ι k) → Ω) {s : Ω} : s ∈ fnField y ↔ ∃
     IsMultiHomog g d ∧ IsMultiHomog h d ∧ aeval y h ≠ 0 ∧ aeval y g = s * aeval y h := Iff.rfl
 
 
+omit [Fintype K] in
+open Classical in
 theorem ratio_mem (y : (Σ k, ι k) → Ω) (p : Σ k, ι k) (q : ι p.1) (hq : y ⟨p.1, q⟩ ≠ 0) :
     y p / y ⟨p.1, q⟩ ∈ fnField y :=
   ⟨Pi.single p.1 1, X p, X ⟨p.1, q⟩, homog_X p, homog_X ⟨p.1, q⟩, by rw [aeval_X]; exact hq,
     by rw [aeval_X, aeval_X, div_mul_cancel₀ _ hq]⟩
 
 
+omit [Fintype K] in
 theorem chartRingZ_le (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {x : Ω}
     (hx : x ∈ chartRingZ y c) : x ∈ fnField y := by
   induction hx using Algebra.adjoin_induction with
@@ -239,6 +243,7 @@ theorem birational_yr : Birational (yr y c0 hc0) := by
     ring
 
 
+omit [Fintype K] in
 theorem map_chartRingZ_yr (c : ∀ k, ι k) :
     (chartRingZ (yr y c0 hc0) c).map (fnField y).subtype.toIntAlgHom = chartRingZ y c := by
   rw [chartRingZ, chartRingZ, AlgHom.map_adjoin, ← Set.range_comp]

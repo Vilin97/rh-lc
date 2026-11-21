@@ -10,6 +10,7 @@ namespace GlobalTheory
 
 
 open scoped Classical in
+open Classical in
 theorem mixedSpace_trace_eq (F : Type) [Field F] [NumberField F]
     (x : mixedEmbedding.mixedSpace F) :
     Algebra.trace ℝ (mixedEmbedding.mixedSpace F) x =
@@ -28,6 +29,7 @@ theorem mixedSpace_trace_eq (F : Type) [Field F] [NumberField F]
     simp [mixedEmbedding.stdBasis, two_mul]
 
 
+open Classical in
 theorem mixedSpace_traceForm_nondegenerate :
     ∀ (F : Type) [Field F] [NumberField F] (ξ : mixedEmbedding.mixedSpace F),
     (∀ η : mixedEmbedding.mixedSpace F,

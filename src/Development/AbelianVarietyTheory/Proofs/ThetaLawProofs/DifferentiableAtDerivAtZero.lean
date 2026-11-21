@@ -304,6 +304,8 @@ private lemma deriv_thetaChar_pow_eight_eq (τ : ℍ) :
   ring
 
 
+open Complex Filter in
+open scoped UpperHalfPlane MatrixGroups ModularForm Manifold Topology Real in
 theorem _root_.GlobalTheory.JacobiDeriv.deriv_thetaChar_pow_eight : ∀ τ : UpperHalfPlane,
     (deriv (fun z : ℂ => _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.thetaChar (g := 1) !![(τ : ℂ)] ![1 / 2] ![1 / 2] ![z]) 0) ^ 8 =
       (2 * Real.pi : ℂ) ^ 8 * ModularForm.discriminant τ := by

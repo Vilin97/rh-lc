@@ -55,6 +55,7 @@ instance : AddCommGroup (Chr D) := inferInstanceAs (AddCommGroup D.X)
 instance : Module O (Chr D) := Module.compHom D.X (starRingEnd O)
 
 
+variable (D O) in
 def torAct : OAct O (splitTorus (Sp R) (Chr D)) := Diag.diagAct (Sp R) O (Chr D)
 
 theorem exists_torPt {T : Over (Sp R)} (x : T ⟶ splitTorus (Sp R) (Chr D)) : ∃ g : GtPt D T, g.b = 1 ∧
@@ -92,6 +93,7 @@ variable {oa : D.OAct O} (Y : Ray oa)
 def act : OAct O Y.H := ofRingAct Y.ρ
 
 
+variable (oa) in
 def actB : OAct O D.P.A := ofRingAct oa.onB.toRingAct
 
 def q : Y.H ⟶ D.P.A := (Y.Φ Y.H (𝟙 _)).b

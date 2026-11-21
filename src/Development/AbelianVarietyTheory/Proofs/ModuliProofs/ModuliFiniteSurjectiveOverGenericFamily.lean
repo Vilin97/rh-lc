@@ -366,6 +366,7 @@ theorem exists_isLev {n N : ℕ} {k : Type} [Field k] [IsAlgClosed k] [CharZero 
 end GlobalTheory.ModFam
 
 
+open GlobalTheory.ModFam in
 theorem GlobalTheory.moduli_finite_surjective_over_family : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (n N : ℕ) (MM : Scheme.{0}) (sM : MM ⟶ Sp (RZ H n N)) (tM : SAB H MM) (lev : D.La → (𝟙_ (Over MM) ⟶ tM.G)) (l : Level H) (Xo : Moduli D l) (β : RZ H n N →+* KA l), l.A = N → n.Prime → Odd n → (∃ j, 1 ≤ j ∧ N = n ^ j) → N.Coprime l.M → IsInc (RZ H n N).subtype (KA l).val.toRingHom β → FamCore D sM tM lev → ∃ (a : Xo.X ⟶ MM) (ν : SABMap Xo.univ.t tM a) (h : a ≫ sM = Xo.s ≫ spMap β), (∀ x, (Xo.univ.etaA x).left ≫ ν.φ = a ≫ (lev x).left) ∧ IsFinite (pullback.lift a _ h) ∧ Surjective (pullback.lift a _ h) := by
   intro _ _ E _ _ _ H D n N MM sM tM lev l Xo β hA hn _ ⟨j, _, hj⟩ hc hβ F
   subst hA

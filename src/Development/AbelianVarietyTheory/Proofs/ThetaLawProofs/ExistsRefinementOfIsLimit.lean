@@ -60,6 +60,8 @@ variable {I : Type} [SmallCategory I] [IsCofiltered I]
   [∀ {i j} (f : i ⟶ j), IsAffineHom (D.map f)] [∀ i, QuasiSeparatedSpace (D.obj i)]
 
 
+set_option backward.isDefEq.respectTransparency false in
+include hc in
 theorem exists_appLE_eq {i : I} {U : (D.obj i).Opens} (hU : IsCompact (U : Set (D.obj i)))
     (s : Γ(X, π i ⁻¹ᵁ U)) :
     ∃ (j : I) (f : j ⟶ i) (t : Γ(D.obj j, D.map f ⁻¹ᵁ U)),
@@ -81,6 +83,7 @@ theorem exists_appLE_eq {i : I} {U : (D.obj i).Opens} (hU : IsCompact (U : Set (
   exact (e _ _ _ _ t).trans h
 
 
+include hc in
 theorem exists_unit_eq {i : I} {U : (D.obj i).Opens} (hU : IsCompact (U : Set (D.obj i)))
     (s : Γ(X, π i ⁻¹ᵁ U)ˣ) :
     ∃ (j : I) (f : j ⟶ i) (t : Γ(D.obj j, D.map f ⁻¹ᵁ U)ˣ), ∀ y : X, y ∈ π i ⁻¹ᵁ U →
@@ -111,6 +114,7 @@ theorem exists_unit_eq {i : I} {U : (D.obj i).Opens} (hU : IsCompact (U : Set (D
     (homOfLE (cone_preimage_le D π w (g ≫ f) U)) y hy _).symm
 
 
+include hc in
 theorem exists_refinement_of_isLimit [∀ i, CompactSpace (D.obj i)] (L : LB X) (hL : L.IsLB) :
     ∃ (j : I) (M : LB (D.obj j)) (e : M.ι → L.ι), M.IsLB ∧ (∀ a, π j ⁻¹ᵁ M.U a ≤ L.U (e a)) ∧
       ∀ a b (y : X), π j y ∈ M.U a → π j y ∈ M.U b →
@@ -199,6 +203,7 @@ theorem exists_refinement_of_isLimit [∀ i, CompactSpace (D.obj i)] (L : LB X) 
     exact ht (a, b) y ⟨pre a ha, pre b hb⟩
 
 
+include hc in
 theorem exists_lb_of_isLimit [∀ i, CompactSpace (D.obj i)] (L : LB X) (hL : L.IsLB) :
     ∃ (j : I) (M : LB (D.obj j)), M.IsLB ∧ LBIso L (M.pull (π j)) ∧
       ∀ (Y : Scheme.{0}) (r : X ⟶ Y) (q : Y ⟶ D.obj j), r ≫ q = π j → LBIso L ((M.pull q).pull r) := by

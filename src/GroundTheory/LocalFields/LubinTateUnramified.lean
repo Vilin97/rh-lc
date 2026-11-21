@@ -76,6 +76,7 @@ variable (hf : IsLubinTateSeries π f) {n : ℕ} (hn : 0 < n) {E : IntermediateF
   (hE : IsUnramifiedSubextension E)
 
 
+include hE hn in
 theorem bijective_restrictAut_prod :
     haveI := hE.isGalois
     Function.Bijective ((restrictAut (le_sup_left (a := lubinTateField Ω hπ hf n) (b := E))).prod
@@ -101,6 +102,8 @@ theorem bijective_restrictAut_prod :
 variable [FiniteDimensional K E] {m : ℕ} (hEm : Module.finrank K E = m)
 
 
+omit [IsSepClosed Ω] in
+include hE hEm in
 theorem frobenius_generates :
     (∀ σ : E ≃ₐ[K] E, σ ∈ Subgroup.zpowers (frobenius K E hE.ramificationIndex_eq_one)) ∧
       Nat.card (E ≃ₐ[K] E) = m := by
@@ -120,6 +123,7 @@ def lubinTateUnramifiedGalEquiv :
         (frobenius_generates hE hEm).2).symm)
 
 
+include hn hE in
 theorem lubinTateUnramified_mul_comm
     (σ τ : (lubinTateField Ω hπ hf n ⊔ E : IntermediateField K Ω) ≃ₐ[K]
       (lubinTateField Ω hπ hf n ⊔ E : IntermediateField K Ω)) :

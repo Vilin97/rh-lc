@@ -49,6 +49,7 @@ theorem length_toList {J : Type} (m : J →₀ ℕ) : (Finsupp.toMultiset m).toL
 end RootMono
 
 
+open RootMono in
 theorem arMono_add_single (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) (M : RootModel Ψ N) (II : IntersectionSystem)
     (t : ℝ) (m : Ψ × Fin N →₀ ℕ) (r : Ψ × Fin N) (hII : IsIntersectionSystem II) (hm : m.degree = dimFl Ψ N) :
     M.arMono II t ((m + Finsupp.single r 1).mapDomain some) =

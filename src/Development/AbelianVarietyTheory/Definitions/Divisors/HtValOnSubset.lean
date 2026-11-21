@@ -39,6 +39,7 @@ structure ArchSec (Z : Comp Xo c) (la : Weight Dw) : Type where
   norm_inf : ∀ σ, homN (U (goodOf c σ)) x (wtOf Dw la 0) sig '' framesOn (U (goodOf c σ)) Z = {cInf σ}
 
 
+variable {U x} in
 def ArchSec.ofConst {Z : Comp Xo c} {la : Weight Dw} {δ : HeightOneSpectrum (𝓞 c.F) → ℝ} (s : ConstSec U x Z la δ) :
     ArchSec U x Z la :=
   ⟨s.sig, s.inv, s.sig_mem, s.inv_mem, s.idem_sig, s.idem_inv, s.mul_inv, s.cInf, s.cInf_pos, s.norm_inf⟩

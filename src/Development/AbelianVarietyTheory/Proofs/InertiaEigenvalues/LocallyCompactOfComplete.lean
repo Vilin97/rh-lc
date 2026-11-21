@@ -152,6 +152,7 @@ theorem locallyCompact_of_complete {O E : Type} [CommRing O] [IsDomain O] [IsDis
   exact ⟨z, trivial, hz⟩
 
 
+open WithZero in
 theorem val_conj {E : Type} [Field E] (v : Valuation E (WithZero (Multiplicative ℤ))) (π : E)
     (hπ : v π = exp (-1)) (c : E ≃+* E) (hc : ∀ x, c (c x) = x) (hle : ∀ y, v y ≤ 1 → v (c y) ≤ 1) (y : E) :
     v (c y) = v y := by
@@ -190,6 +191,7 @@ theorem val_conj {E : Type} [Field E] (v : Valuation E (WithZero (Multiplicative
   · exact (h4.trans h3.symm).symm.le.trans (hle2 _ _ hy h3.ge)
 
 
+open WithZero in
 theorem exists_fixed_val {E : Type} [Field E] (v : Valuation E (WithZero (Multiplicative ℤ))) (π : E)
     (hπ : v π = exp (-1)) (c : E ≃+* E) (hc : ∀ x, c (c x) = x) (hv : ∀ y, v (c y) = v y)
     (a : E) (ha : v a ≤ 1) (hd : v (a - c a) = 1) (y : E) : ∃ x, c x = x ∧ v y = v x := by

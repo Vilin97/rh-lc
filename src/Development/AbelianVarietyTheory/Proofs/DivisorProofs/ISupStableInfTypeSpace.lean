@@ -7,6 +7,7 @@ public import Mathlib
 namespace GlobalTheory
 
 
+open Classical in
 theorem iSup_stable_inf_typeSpace {G E C : Type} [Group G] [Fintype G] [AddCommGroup E] [Module ℂ E]
     (ρ : Representation ℂ G E) (P : Subgroup G) (ψ : P →* ℂˣ) (U : C → Submodule ℂ E) (S : C → Prop)
     (hU : ∀ c g, (U c).map (ρ g) ≤ U c) :

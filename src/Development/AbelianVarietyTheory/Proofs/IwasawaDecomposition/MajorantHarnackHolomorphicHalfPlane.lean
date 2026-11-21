@@ -287,6 +287,7 @@ end GlobalTheory.MajHarnack
 namespace GlobalTheory
 
 
+open MajHarnack in
 theorem maj_harnack : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (N : ℕ) (X : Data E N)
     (T : ℝ) (x : ℂ → Frame X.Ψ N), DifferentiableOn ℂ x {w | T < w.im} →
     (∀ w : ℂ, T < w.im → x w ∈ X.dom) → ∀ w w' : ℂ, T < w.im → T < w'.im →

@@ -50,6 +50,7 @@ def gw (j : X) : Submodule R (Matrix ι ι R) :=
 
 variable {R}
 
+variable {R} in
 def Normalises {Γ : Type} [Group Γ] (ρ : Γ →* Matrix ι ι R) : Prop :=
   (∀ g, ∃ ν : R, (ρ g)ᵀ * Φ.JR R * ρ g = ν • Φ.JR R) ∧
   (∃ π : Γ →* Equiv.Perm Φ.κ, ∀ g a b, ρ g a b ≠ 0 → Φ.blk a = π g (Φ.blk b)) ∧
@@ -92,6 +93,7 @@ theorem ad_mem {Γ : Type} [Group Γ] {ρ : Γ →* Matrix ι ι R} (h : Φ.Norm
     exact e (by rw [k5, ← k6, k4])
 
 variable {Φ} in
+variable {Φ R} in
 def adRep {Γ : Type} [Group Γ] {ρ : Γ →* Matrix ι ι R} (h : Φ.Normalises ρ) (j : X) :
     Representation R Γ (Φ.gw R j) where
   toFun s :=
@@ -104,6 +106,7 @@ def adRep {Γ : Type} [Group Γ] {ρ : Γ →* Matrix ι ι R} (h : Φ.Normalise
 variable [IsLocalRing O]
 
 
+variable {R} in
 def HH [IsCO O R] (h : Matrix ι ι R) : Prop :=
   hᵀ * Φ.JR R * h = Φ.JR R ∧ (∀ a b, Φ.blk a ≠ Φ.blk b → h a b = 0) ∧ h.map (res O R) = 1
 

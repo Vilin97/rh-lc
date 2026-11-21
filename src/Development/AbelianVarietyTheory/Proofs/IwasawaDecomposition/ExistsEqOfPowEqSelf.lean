@@ -17,6 +17,7 @@ noncomputable section
 namespace GlobalTheory.WeilDict
 
 
+open Polynomial in
 theorem exists_eq_of_pow_eq_self {Ω L : Type} [Field Ω] [IsAlgClosed Ω] [Field L] (j : Ω →+* L) {N : ℕ}
     (hN : 2 ≤ N) {ζ : L} (hζ : ζ ^ N = ζ) : ∃ z, j z = ζ := by
   have hmon : (X ^ N - X : Polynomial Ω).Monic :=

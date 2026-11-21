@@ -57,12 +57,14 @@ theorem isCuspForm_act (o : Op E a) {φ : Sm E a} (h : GlobalTheory.CuspRep.IsCu
   mem_range_ofCusp.1 (isStable_range o φ (mem_range_ofCusp.2 h))
 
 
+variable (E a) in
 def ofAut : automorphicForms E a →ₗ[ℂ] Sm E a := Submodule.inclusion automorphicForms_le_Sm
 
 theorem mem_range_ofAut {φ : Sm E a} : φ ∈ LinearMap.range (ofAut E a) ↔ IsAutForm φ :=
   ⟨fun ⟨ψ, h⟩ => h ▸ (isAutForm_iff _).2 ψ.2, fun h => ⟨⟨φ.1, (isAutForm_iff φ).1 h⟩, rfl⟩⟩
 
 
+variable (E a) in
 def ofKZ : smoothKZ E a →ₗ[ℂ] Sm E a := (smEq E a).symm.toLinearMap ∘ₗ toArchSmooth
 
 theorem isStable_map {U : Submodule ℂ (cuspForms E a)} (h : Stab U) : GlobalTheory.CuspRep.IsStable (U.map (ofCusp E a)) := by

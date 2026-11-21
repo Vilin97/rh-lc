@@ -390,6 +390,7 @@ theorem splits_pcs : Splits dV dW (pcs dV dW LV₀ LW₀ 𝔟 𝔠 ψ) x y ψ (h
     exact ((dV.coordS W).left_inv u).symm.trans (congrArg (fun w => dV.extX W (u ⬝ dV.jX) + dV.ext0 W w + dV.extY W (u ⬝ dV.jY)) e.symm)
 
 
+omit hW₀ in
 theorem vac_mem_cls {f : WO V W → ℂ} (hf : VacG ψ V W (homL dV dW LV₀ LW₀ 𝔟 𝔠 fun _ => True) f) :
     f ∈ cls dV dW (pcs dV dW LV₀ LW₀ 𝔟 𝔠 ψ) x y ψ := by
   have key := GlobalTheory.FinPl.FlatFix.fix_of_isotropic ψ V W _ _ _ hV hW (fun v _ => GlobalTheory.FinPl.TamePlaces.tame D v) f hf.2
@@ -480,6 +481,7 @@ theorem hO_extX_extY (a b : Mx D W.rank ρ) : hO V W (dV.extX W a) (dV.extY W b)
   rw [h, show pairS W (0 : Mx D W.rank ρ) 0 = 0 by simp [pairS], add_zero]
 
 
+variable (dV dW) in
 theorem symplO_shift (N : Mx D ρ ρ) :
     symplO V W (dV.extX W (dW.jX ⬝ N)) (dV.extY W (dW.jY ⬝ (incA D (-D.host.xi0⁻¹) • rat (shiftM D ρ)))) =
       Algebra.trace (AF D.host.F) (AE D) (upSum N) := by
@@ -496,6 +498,7 @@ theorem xZero_mem (h1 : ∀ i, ∀ b ∈ 𝔟 i, α⁻¹ * b ∈ 𝔠 i) : idem 
   rwa [Matrix.mul_smul, smul_smul, mul_inv_cancel₀ α0, one_smul, rat_mul] at this
 
 
+include hψ in
 theorem uni_xZero (h2 : ∀ i, ∀ w ∈ dualC (𝔟 (i + 1)), α⁻¹ * -D.host.xi0⁻¹ * w ∈ dualC (𝔠 i)) (u : UX D ρ)
     (h : dV.extX W (xZero dW ⬝ u.1.1 - xZero dW) ∈ homL dV dW LV₀ LW₀ 𝔟 𝔠 fun _ => True) : psiUni ψ u.1 = 1 := by
   have hw := rat_mem_latO (P := fun _ => True) hV hW (dW.e' * ((α⁻¹ * -D.host.xi0⁻¹) • shiftM D ρ) * dV.qY) (fun z hz => by

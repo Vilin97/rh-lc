@@ -29,6 +29,9 @@ def intSpan (D : D7) {V : Type} [AddCommGroup V] [Module ℂ V] (s : Set V) : Ad
   AddSubgroup.closure {y | ∃ a : 𝓞 D.what₂.LL, ∃ x ∈ s, y = D.what₂.embLL (a : D.what₂.LL) • x}
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
+set_option maxHeartbeats 2000000 in
 structure SideTie (R : RealDat D A Ks) (F : Face D A) (tup : T → D.what₂.Tup) (b : Bool) {EE : Type} [NormedAddCommGroup EE]
     [InnerProductSpace ℂ EE] [FiniteDimensional ℂ EE] (S : RowSide D EE) where
 
@@ -54,6 +57,9 @@ structure SideTie (R : RealDat D A Ks) (F : Face D A) (tup : T → D.what₂.Tup
     R.jX t '' (lvlForms (A.MtildeCSD t) (A.leftGroupActionRight t) (F.lvl b).P (F.lvl b).ψ ∩ intForms (A.MtildeCSD t))
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
+set_option maxHeartbeats 2000000 in
 structure RowsTieSum (R : RealDat D A Ks) (F : Face D A) (X0 : BaseLevelRowSide D) where
 
   tup : T → D.what₂.Tup
@@ -111,6 +117,9 @@ structure RowsTieSum (R : RealDat D A Ks) (F : Face D A) (X0 : BaseLevelRowSide 
     A.fam.etaJ F.P0 F.ψ0 (R.toCx F).zs i (R.mu (D.plEq w)) (D.plEq w)
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
+set_option maxHeartbeats 2000000 in
 structure RowsTie (R : RealDat D A Ks) (F : Face D A) (X0 : BaseLevelRowSide D) where
 
   tup : T → D.what₂.Tup

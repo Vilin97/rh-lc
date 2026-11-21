@@ -78,14 +78,17 @@ def StepRatio {T : Type} (σ₀ : K →+* ℂ) (Qn : ℕ) (S0 : Finset T) (cc qq
     u1 = σ₀ (b * ∏ v ∈ S0, (g v : K) / (g' v : K)) * u0
 
 
+omit [NumberField K] [StarRing K] in
 theorem IsAwayUnit.of_dvd {m k : ℕ} {a : 𝓞 K} (h : a ∣ (m : 𝓞 K) ^ k) : IsAwayUnit m (a : K) :=
   ⟨a, 0, k, h, by simp⟩
 
 
+omit [NumberField K] [StarRing K] in
 theorem IsAwayUnit.one (m : ℕ) : IsAwayUnit m (1 : K) :=
   ⟨1, 0, 0, by simp, by simp⟩
 
 
+omit [NumberField K] [StarRing K] in
 theorem IsAwayUnit.mul {m : ℕ} {x x' : K} (h : IsAwayUnit m x) (h' : IsAwayUnit m x') : IsAwayUnit m (x * x') := by
   obtain ⟨a, k, j, ha, hx⟩ := h
   obtain ⟨a', k', j', ha', hx'⟩ := h'
@@ -95,6 +98,7 @@ theorem IsAwayUnit.mul {m : ℕ} {x x' : K} (h : IsAwayUnit m x) (h' : IsAwayUni
   ring
 
 
+omit [StarRing K] in
 theorem vw_eq_zero_of_notMem (w : Pl K) {a : 𝓞 K} (ha : a ∉ w.asIdeal) : vw w (a : K) = 0 := by
   classical
   have ha0 : (Ideal.span {a} : Ideal (𝓞 K)) ≠ 0 := by

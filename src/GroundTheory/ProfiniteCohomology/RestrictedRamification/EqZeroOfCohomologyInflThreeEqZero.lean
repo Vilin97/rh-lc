@@ -79,6 +79,7 @@ variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologic
   (A : Rep.{u} k G) [IsDiscreteRep A]
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] in
 theorem inv_mul_contractNth_mem {n : ℕ} (V : Subgroup G) [V.Normal] (g g' : Fin (n + 1) → G)
     (h : ∀ i, (g i)⁻¹ * g' i ∈ V) (j : Fin (n + 1)) (i : Fin n) :
     (Fin.contractNth j (· * ·) g i)⁻¹ * Fin.contractNth j (· * ·) g' i ∈ V := by

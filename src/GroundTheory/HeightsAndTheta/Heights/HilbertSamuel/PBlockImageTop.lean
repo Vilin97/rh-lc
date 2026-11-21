@@ -82,6 +82,7 @@ theorem formApply_blockForms (k₀ : K) (M : Matrix (Ix κ) (ι k₀) ℤ) (z : 
 end BlockImageTop
 
 
+open BlockImageTop in
 theorem BlockImageTop.proof (hCM : GraphChangeOfModel.Statement) (hIm : BlockGraphImage.Statement)
     (hDeg : BlockGraphDeg.Statement) : BlockImageTop.Statement := by
   intro D K _ _ ι _ Ω _ _ κ _ I y k₀ A M N x m hI hP hB hx hBI ha hA hm hh

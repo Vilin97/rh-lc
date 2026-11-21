@@ -41,11 +41,13 @@ def stab (R : Type) [CommRing R] (s : Set ι) : Subgroup (GL ι R) where
   inv_mem' := fun {a} ha r hr c hc => ⟨(ha r hr c hc).2, by rw [inv_inv]; exact (ha r hr c hc).1⟩
 
 
+open Classical in
 def bdet (s : Set ι) (g : GL ι R) : Rˣ :=
   by classical
     exact if h : IsUnit ((g : Matrix ι ι R).submatrix (Subtype.val : s → ι) Subtype.val).det then h.unit else 1
 
 
+open Classical in
 def ext {G : Type} [Group G] (K P : Subgroup G) (f : G → ℝ) (g : G) : ℝ :=
   by classical
     exact if h : ∃ k : K, g * (k : G)⁻¹ ∈ P then f (g * (h.choose : G)⁻¹) else 0

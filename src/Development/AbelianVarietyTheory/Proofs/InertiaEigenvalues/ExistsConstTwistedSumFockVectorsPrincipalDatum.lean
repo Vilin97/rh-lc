@@ -258,6 +258,7 @@ theorem datum_sum (B : Base S T) {ψ : Twist D Circle} (hQ : B.admitted ψ.Q) {�
         exact hy ⟨h0, _, h1, (hk i).2⟩
 
 
+open Classical in
 theorem om_princ_move {B : Base S T} (hB : B.Good) (hS : S.SigOK) {ψ : Twist D Circle} (hψ : ψ.Good) (hQ : B.admitted ψ.Q)
     {ω : PairRep S T} (hω : B.IsWeil ψ.chi ω) {g : GA D S} (hg : g ∈ GfC S) (sg : Lev.finE S g ∈ St B.F.βS) :
     ω (g, 1) ((GlobalTheory.FlatVecSum.princ B).vecFlat ψ) = (((vacC B ψ g 1 : ℂˣ) : ℂ) * 1) •
@@ -286,6 +287,7 @@ theorem om_princ_move {B : Base S T} (hB : B.Good) (hS : S.SigOK) {ψ : Twist D 
   rw [one_mul, this]
 
 
+open Classical in
 theorem vec_sum {B : Base S T} (hB : B.Good) (hS : S.SigOK) {ψ : Twist D Circle} (hψ : ψ.Good) (hQ : B.admitted ψ.Q)
     {ω : PairRep S T} (hω : B.IsWeil ψ.chi ω) {ι : Type} [Fintype ι] (g : ι → GA D S) (hg : ∀ i, g i ∈ GfC S)
     (hk : ∀ i, Lev.finE S (g i) ∈ lev D.sp.cm S.gram B.F.βS (B.levS ψ))

@@ -86,6 +86,8 @@ theorem levPh_mem_cuspW {G G' : WTZ E} (hG : Even G.2) (hG' : Even G'.2) (hK : K
 end Keeps
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
 structure LiftData (T : CoreJ D) (i : Fin D.R.m) : Type 1 where
 
   l : Level T.Q.H

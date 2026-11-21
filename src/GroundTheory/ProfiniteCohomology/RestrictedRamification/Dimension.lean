@@ -79,6 +79,7 @@ variable {ℓ : ℕ} (hℓ : ℓ.Prime)
   (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
 
 
+include hℓ hS in
 theorem subsingleton_h3_rootsOfUnity (hK : ℓ ≠ 2 ∨ IsTotallyComplex K.1) :
     Subsingleton (cohomology (galRootsOfUnity.{0} K.1 (maxUnramifiedOutside K.1 ℚ̄ S) ℓ) 3) :=
   ⟨fun x y => (eq_zero_h3_rootsOfUnity_of_h3_sUnits K S ℓ hℓ hS hK
@@ -87,6 +88,7 @@ theorem subsingleton_h3_rootsOfUnity (hK : ℓ ≠ 2 ∨ IsTotallyComplex K.1) :
       (fun z hz => eq_zero_of_h3_sUnits K S ℓ hℓ hS z 1 (by rwa [pow_one])) y).symm⟩
 
 
+include hℓ hS in
 theorem subsingleton_h3_res_rootsOfUnity (hK : ℓ ≠ 2 ∨ IsTotallyComplex K.1)
     (U : OpenSubgroup (galUnramifiedOutside K.1 ℚ̄ S)) :
     Subsingleton (cohomology (Rep.res (U : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)).subtype
@@ -102,6 +104,7 @@ theorem subsingleton_h3_res_rootsOfUnity (hK : ℓ ≠ 2 ∨ IsTotallyComplex K.
   exact ((gsRootsOfUnityCohomologyIso S hL ℓ 3).toLinearEquiv.toEquiv.symm).subsingleton
 
 
+include hℓ hS in
 theorem cdp_galUnramifiedOutside_le_two (hK : ℓ ≠ 2 ∨ IsTotallyComplex K.1) :
     cdp ℓ (galUnramifiedOutside K.1 ℚ̄ S) ≤ 2 := by
   obtain ⟨e⟩ := nonempty_zmod_addEquiv_rootsOfUnity_gs K S hℓ hS
@@ -117,6 +120,7 @@ variable (K : FiniteSubfield) (S : Set (HeightOneSpectrum (𝓞 K.1))) {n : ℕ}
   (hK : Odd n ∨ IsTotallyComplex K.1)
 
 
+include hn hS hK in
 theorem cdp_galUnramifiedOutside_le_two_of_dvd {ℓ : ℕ} (hℓ : ℓ.Prime) (hℓn : ℓ ∣ n) :
     cdp ℓ (galUnramifiedOutside K.1 ℚ̄ S) ≤ 2 := by
   refine cdp_galUnramifiedOutside_le_two K S hℓ (fun v hv => hS v ?_) ?_
@@ -132,6 +136,8 @@ theorem cdp_galUnramifiedOutside_le_two_of_dvd {ℓ : ℕ} (hℓ : ℓ.Prime) (h
 variable (ιs : ∀ v : S, ℚ̄ →ₐ[K.1] AlgebraicClosure ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1))
 
 
+set_option maxHeartbeats 2000000 in
+include hn hS hK in
 theorem subsingleton_compactCohomology_four (M : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S))
     [IsDiscreteRep M] (hM : ∀ m : M, n • m = 0) :
     Subsingleton (compactCohomologyRes (gsFinFamily S ιs) M 4) := by

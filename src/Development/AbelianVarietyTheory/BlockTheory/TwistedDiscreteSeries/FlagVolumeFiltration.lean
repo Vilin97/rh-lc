@@ -17,6 +17,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   {n n' : Type} {c : ℕ}
 
 
+variable (k n) in
 def flagSub (c i : ℕ) : Submodule 𝒪[k] (n ⊕ Fin c → k) where
   carrier := {y | ∀ l : Fin c, i ≤ l.val → y (Sum.inr l) = 0}
   zero_mem' _ _ := rfl

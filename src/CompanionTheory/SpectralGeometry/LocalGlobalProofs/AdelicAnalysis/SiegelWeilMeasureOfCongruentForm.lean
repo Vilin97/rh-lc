@@ -170,6 +170,7 @@ theorem mat_inv (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) {M : 
     HA.mat R σ J h⁻¹ = (HA.mat R σ J h)⁻¹ := rfl
 
 
+omit [NumberField F] [NumberField E] in
 theorem act_conj (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) {M n : ℕ}
     {J J' : Matrix (Fin M) (Fin M) E} (G : GL (Fin M) (R ⊗[F] E)) (e : HA R σ J' → HA R σ J)
     (hmat : ∀ u, HA.mat R σ J (e u) = G * HA.mat R σ J' u * G⁻¹) (u : HA R σ J')
@@ -270,6 +271,7 @@ section Main
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+omit [NumberField E] in
 theorem isFD_pull (σ : E →ₐ[F] E) {M : ℕ} {J J' : Matrix (Fin M) (Fin M) E}
     (e : HA (AF F) σ J' ≃* HA (AF F) σ J)
     (hrat : ∀ u, HA.mat (AF F) σ J (e u) ∈ HFin (AF F) σ J ↔ HA.mat (AF F) σ J' u ∈ HFin (AF F) σ J')

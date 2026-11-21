@@ -95,6 +95,7 @@ theorem mem_stabArch_of {F E : Type} [Field F] [NumberField F] [Field E] [Number
   rwa [MulAut.conj_apply, inv_inv]
 
 
+set_option maxHeartbeats 2000000 in
 theorem iwasawa_stab_arch : ∀ (D : D7) (T T₀ : HSp D) (r : ℕ) (d : HypDec T T₀ r) (b : GL (Fin T.rank) (AE D)), IsMaj T b → ∀ y ∈ GinfC T, ∃ q ∈ stab d, ∃ k ∈ Kmax T b, q ∈ GinfC T ∧ y = q * k := by
   intro D T T₀ r d b hb y hy
   have hloc := fun w : InfinitePlace D.host.F => local_at_arch (isCMExt_host D) T.gram w _ (hb w).choose

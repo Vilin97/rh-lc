@@ -165,6 +165,7 @@ theorem powSpan_finite (t : Module.End ℂ V) (d : ℕ) (N : Submodule ℂ V) [F
 end GlobalTheory.KilledFin
 
 
+open Polynomial in
 theorem GlobalTheory.killed_span_adjoin_finrank_le :
     ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (T : Finset (Module.End ℂ V))
       (p : Module.End ℂ V → Polynomial ℂ), (∀ s ∈ T, ∀ t ∈ T, Commute s t) →

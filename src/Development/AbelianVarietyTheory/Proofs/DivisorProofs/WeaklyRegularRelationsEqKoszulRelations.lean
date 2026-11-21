@@ -16,6 +16,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory
 
 
+open RingTheory.Sequence in
 theorem weaklyRegular_relations_koszul :
     ∀ (O : Type) [CommRing O] (g : ℕ) (f : Fin g → O), RingTheory.Sequence.IsWeaklyRegular O (List.ofFn f) → ∀ a : Fin g → O, ∑ i, a i * f i = 0 → ∃ c : Matrix (Fin g) (Fin g) O, (∀ i, c i i = 0) ∧ (∀ i j, c i j = - c j i) ∧ a = c.mulVec f := by
   intro O _ g

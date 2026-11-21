@@ -79,6 +79,7 @@ theorem paired_line_iff (ha : a ≤ 1) (χ χ' : HChar E) (s : Op E a → Op E a
       rw [← add_mul, h3, zero_mul]
 
 
+omit [NumberField E] [IsTotallyComplex E] in
 theorem toUnits_barK (k : Kinf E a) : Unitary.toUnits (barK k) = invT a (Cinf E) (Unitary.toUnits k) := Units.ext rfl
 
 

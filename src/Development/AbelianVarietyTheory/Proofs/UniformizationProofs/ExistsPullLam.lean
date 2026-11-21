@@ -132,6 +132,7 @@ theorem exists_defect₁ (s : LB.Gen (LB.LinComb L.L (lam (fst H Y ≫ i) (snd H
     lift_snd_assoc, Category.assoc] using e
 
 
+omit [IsMonHom i] [GrpObj H] in
 theorem exists_defect₂ (s : LB.Gen (LB.LinComb L.L (lam (fst H G ≫ i) (snd H G)) Oε)) (hs : s.IsGen) :
     ∃ f : Γ((H ⊗ G ⊗ G).left, ⊤)ˣ, ∀ (Z : Over S) (t : Z ⟶ H) (y : Z ⟶ G ⊗ G) (z : Z.left) (J), Good L.L z J →
       val s (lift t (y ≫ fst _ _ * y ≫ snd _ _)).left z J = gm (lift t y).left z ⊤ f *

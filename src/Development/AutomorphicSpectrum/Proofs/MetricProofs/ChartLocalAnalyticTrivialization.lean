@@ -97,6 +97,7 @@ theorem exists_analytic_param {A B E : Type} [NormedAddCommGroup A] [NormedSpace
     rw [hGz, hG', h1]
 
 
+open MvPolynomial in
 theorem exists_chart_inverse {K : Type} [Fintype K] {J : K → Type} [∀ k, Fintype (J k)] {P : Ideal (MRing J)}
     (hP : IsMultiHomogIdeal P) {n : ℕ} {Bd : Set ((Σ k, J k) → ℂ)} (χ : SncChart P n Bd) {t₀ : Fin n → ℂ}
     (ht₀ : t₀ ∈ Metric.ball (0 : Fin n → ℂ) 1)

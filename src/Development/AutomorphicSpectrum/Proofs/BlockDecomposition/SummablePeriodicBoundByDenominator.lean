@@ -111,6 +111,7 @@ end GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.Compare
 namespace GlobalTheory.CompanionTheory.SiegelND.Integ.Hua
 
 
+open GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.Compare in
 theorem summable_quot_of_le_delta_rpow : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (n : ℕ)
     (Λ : AddSubgroup (hermE σ n)) (t : F), t ≠ 0 → ∀ τ : ℕ, 0 < τ →
     (∀ c ∈ hermO σ n, ((τ : F) / t) • c ∈ Λ) →

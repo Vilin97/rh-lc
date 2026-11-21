@@ -35,6 +35,7 @@ theorem gsRootsLocalUnitsMor_eq (v : S) :
   (gsKummerLocalMap S ιs ℓ v).comm₁₂.symm
 
 
+include hℓS in
 theorem cohomologyMap_gsRootsLocalUnitsMor_injective (v : S) :
     Function.Injective (cohomologyMap (gsRootsLocalUnitsMor S ιs ℓ v) 2).hom := by
   have h2 := cohomologyMap_f_injective_of_subsingleton (localKummer_shortExact S ℓ v) 1
@@ -54,6 +55,7 @@ theorem cohomologyMap_gsRootsLocalUnitsMor_injective (v : S) :
   exact h1 (h2 hab')
 
 
+include hℓS in
 theorem ptRes_eq_zero_iff (v : S) (x : cohomology (gsRoots S ℓ) 2) :
     ptRes (gsFinFamily S ιs) (gsRoots S ℓ) v 2 x = 0 ↔
       (cohomologyMapAlong (gsFinFamily S ιs v).toMonoidHom (continuous_toMonoidHom _)
@@ -83,6 +85,9 @@ theorem ptRes_eq_zero_iff (v : S) (x : cohomology (gsRoots S ℓ) 2) :
 variable {ℓ} (hℓ : ℓ.Prime)
 
 
+set_option maxHeartbeats 4000000 in
+omit [NeZero ℓ] in
+include hℓS hℓ in
 theorem eq_zero_of_gsSUnitsLocalMor_eq_zero (hK : Odd ℓ ∨ IsTotallyComplex K.1)
     (y : cohomology (galSUnitsMax K.1 ℚ̄ S) 2) (hy : ℓ • y = 0)
     (hloc : ∀ v : S, (cohomologyMapAlong (gsFinFamily S ιs v).toMonoidHom (continuous_toMonoidHom _)
@@ -115,6 +120,7 @@ theorem eq_zero_of_gsSUnitsLocalMor_eq_zero (hK : Odd ℓ ∨ IsTotallyComplex K
     · exact brauerLocal_sUnitsBrauer_inr K S _ _ w hw
 
 
+include hℓS hℓ in
 theorem mem_ptSha_iff_cohomologyMap_eq_zero (hK : Odd ℓ ∨ IsTotallyComplex K.1)
     (x : cohomology (gsRoots S ℓ) 2) :
     x ∈ ptSha (gsFinFamily S ιs) (gsRoots S ℓ) 2 ↔

@@ -986,6 +986,7 @@ theorem FFl_zero : (0 : Mx k r → (Wq →L[ℂ] Wp)) ∈ FFl k r z z' π π' i 
   ⟨smooth_zero, fun _ _ _ _ => by simp, fun _ _ _ _ => by simp, fun _ _ _ _ _ _ => by simp⟩
 
 
+variable (k r z z' π π' i D) in
 def FFV : Submodule ℂ (Mx k r → (Wq →L[ℂ] Wp)) where
   carrier := {J | J ∈ FFl k r z z' π π' i D ∧ ∀ g, g ∉ Glev k r i ∩ D → J g = 0}
   zero_mem' := ⟨FFl_zero, fun _ _ => rfl⟩
@@ -1001,6 +1002,7 @@ theorem FFV_ext {Φ Ψ : FFV k r z z' π π' i D}
   · rw [Φ.2.2 g hg, Ψ.2.2 g hg]
 
 
+open Classical in
 def cutV (hD : IsDom k r z z' i D) (J : Mx k r → (Wq →L[ℂ] Wp)) (hJ : J ∈ FFl k r z z' π π' i D) :
     FFV k r z z' π π' i D :=
   ⟨(Glev k r i ∩ D).indicator J, FFl_congr hD hJ (fun _ hx => Set.indicator_of_mem hx _),

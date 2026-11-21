@@ -289,6 +289,7 @@ section Finite
 variable {O : Type*} [CommRing O] [Algebra ℤ_[p] O] (i : O →+* ℂ_[p]) (hi : ∀ x, ‖i x‖ ≤ 1)
 
 
+include hi in
 theorem map_algebraMap_padicInt (z : ℤ_[p]) :
     i (algebraMap ℤ_[p] O z) = algebraMap ℚ_[p] ℂ_[p] z :=
   ringHom_padicInt_eq (i.comp (algebraMap ℤ_[p] O)) (fun _ => hi _) z
@@ -369,6 +370,7 @@ theorem finiteDimensional_genField {T : Set ℂ_[p]} (hT : T.Finite) :
 variable (L : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] L]
 
 
+omit [Module.Finite ℤ_[p] O] in
 theorem finite_of_intEmb_eq {j : O →+* integralClosure ℤ_[p] L} (hj : ∀ a, intEmb L (j a) = i a) :
     j.Finite := by
   have h : j.comp (algebraMap ℤ_[p] O) = algebraMap ℤ_[p] (integralClosure ℤ_[p] L) :=
@@ -421,6 +423,7 @@ section Frames
 open MvPolynomial
 
 
+variable (p) in
 def algInt : Subring ℂ_[p] where
   carrier := {x | x ∈ algField p ∧ ‖x‖ ≤ 1}
   mul_mem' ha hb := ⟨mul_mem ha.1 hb.1, by

@@ -146,6 +146,7 @@ theorem chiL_integrable (w0 : Equiv.Perm (Fin r)) : Integrable (chiL w0) := by
   simp [boxC_vol]
 
 
+set_option maxHeartbeats 1000000 in
 theorem inner_int (S : B.RealPlaceData k r Wp Wq) (z0 z0' : Fin (2 * 0 + k + 1) → ℂ)
     (hz : S.z = liftVec k r 0 z0) (hz' : S.z' = liftVec k r 0 z0')
     (σ : Equiv.Perm (Fin r)) (d : Fin r → ℂ) (hd : ∀ a, d a ≠ 0) (γ0 : B.Mat k 0) (hγ0 : γ0 ∈ B.GV k 0)

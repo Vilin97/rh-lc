@@ -180,6 +180,7 @@ theorem EnoughCompact.isDiscreteSum (hρ : IsUnitaryRep ρ) (h : EnoughCompact �
   ⟨exists_isHilbertSum hρ fun _ => h.exists_irred_le hρ, fun R => h.multIn_lt hρ R.isIrr⟩
 
 
+omit [TopologicalSpace G] in
 theorem eq_zero_of_isHilbertSum {ι : Type} {W : ι → Submodule ℂ K}
     (hs : IsHilbertSum ℂ (fun i => W i) fun i => (W i).subtypeₗᵢ) {x : K} (h : ∀ i, ∀ y ∈ W i, ⟪y, x⟫_ℂ = 0) :
     x = 0 := by

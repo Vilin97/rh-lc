@@ -162,6 +162,8 @@ private lemma cechDiag_comp_cπ_eq_id {Y X : Scheme.{0}} (f : Y ⟶ X) :
   rfl
 
 
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex Simplicial in
+open scoped TensorProduct in
 theorem _root_.GlobalTheory.EtC.DescZero.desc_zero : ∀ (q : ℕ) [NeZero q] (A A' : Type) [CommRing A] [CommRing A'] [Algebra A A'],
     Algebra.IsIntegral A A' → RingHom.ker (algebraMap A A') ≤ nilradical A → IsUnit (q : A) →
     ∀ (j : ℤ) (b : _root_.GlobalTheory.EtC.Ht q (_root_.GlobalTheory.EtC.sp A') 0 j),

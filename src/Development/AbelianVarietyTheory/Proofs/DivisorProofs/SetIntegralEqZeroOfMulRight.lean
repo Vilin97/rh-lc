@@ -23,6 +23,8 @@ def phase (σ : E →ₐ[F] E) {d d₁ : ℕ} (W : Spc F E d) (H' : Plane E d d�
   -Algebra.trace (AF F) (AE F E) (GlobalTheory.UnipMass.hA σ W.J (incV F (H'.ι *ᵥ w)) (mat u⁻¹ *ᵥ incV F H'.y))
 
 
+set_option maxHeartbeats 400000 in
+set_option synthInstance.maxHeartbeats 100000 in
 theorem setIntegral_eq_zero_of_mul_right (σ : E →ₐ[F] E) {d d₁ : ℕ} (W : Spc F E d) (H' : Plane E d d₁)
     (μ : Measure (unip σ W H')) [hμ : μ.IsHaarMeasure] (𝓕 : Set (unip σ W H'))
     (h𝓕 : IsFundamentalDomain ((ratU σ W.J).subgroupOf (unip σ W H')) 𝓕 μ) (h1 : μ 𝓕 = 1)

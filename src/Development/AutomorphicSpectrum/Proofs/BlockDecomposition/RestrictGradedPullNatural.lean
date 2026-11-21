@@ -92,6 +92,7 @@ theorem inV_of {V : X.Opens} {s : ℕ} {T : Thick (smFun X q)} (h : KS q s {V} T
   exact hT
 
 
+variable (q) in
 def mF (V : X.Opens) (s : ℕ) : (KS q s {V}).FullSubcategory ⥤ (KS (V.ι ≫ q) s {⊤}).FullSubcategory where
   obj T := ⟨liftT V T.obj (inV_of T.property), T.property.1, ⊤, rfl, fun _ _ => trivial⟩
   map {T T'} f := ObjectProperty.homMk (smH (T := liftT V T.obj (inV_of T.property)) (T' := liftT V T'.obj (inV_of T'.property))
@@ -100,6 +101,7 @@ def mF (V : X.Opens) (s : ℕ) : (KS q s {V}).FullSubcategory ⥤ (KS (V.ι ≫ 
   map_comp _ _ := ObjectProperty.hom_ext _ (sm_ext rfl)
 
 
+variable (q) in
 def mV (V : X.Opens) (s a : ℕ) :
     CH.Mor ((KS (V.ι ≫ q) s {⊤}).ι ⋙ HT.grT (smFun V.toScheme (V.ι ≫ q)) a)
       ((KS q s {V}).ι ⋙ HT.grT (smFun X q) a) (RingHom.id K) where

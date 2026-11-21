@@ -49,10 +49,12 @@ end Lattice
 section OrderIso
 
 
+variable (K) in
 def openFiniteIndexSubgroups : Set (Subgroup Kˣ) :=
   {H | IsOpen (H : Set Kˣ) ∧ H.FiniteIndex}
 
 
+variable (K Ω) in
 def normGroupMap (L : finiteAbelianExtensions K Ω) : openFiniteIndexSubgroups K :=
   have := L.2.1
   ⟨(normUnits K (L : IntermediateField K Ω)).range,
@@ -83,6 +85,7 @@ theorem normGroupMap_le_iff {L L' : finiteAbelianExtensions K Ω} :
   exact range_normUnits_le_iff
 
 
+variable (K Ω) in
 def normGroupOrderIso : finiteAbelianExtensions K Ω ≃o (openFiniteIndexSubgroups K)ᵒᵈ where
   toEquiv := (Equiv.ofBijective _ ⟨normGroupMap_injective, normGroupMap_surjective⟩).trans
     OrderDual.toDual

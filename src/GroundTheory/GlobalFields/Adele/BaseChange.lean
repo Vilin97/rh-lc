@@ -30,12 +30,14 @@ theorem adeleTensorEquiv_one_tmul_mul (a : 𝔸[K]) (t : L ⊗[K] 𝔸[K]) :
   rw [map_mul, adeleTensorEquiv_tmul, map_one, one_mul]
 
 
+variable (K L) in
 def adeleTensorSemilinear : L ⊗[K] 𝔸[K] →ₛₗ[adeleMap K L] 𝔸[L] where
   toFun := adeleTensorEquiv K L
   map_add' := map_add _
   map_smul' c t := adeleTensorEquiv_one_tmul_mul c t
 
 
+variable (K L) in
 def adeleTensorHomeomorph :
     letI := moduleTopology 𝔸[K] (L ⊗[K] 𝔸[K])
     L ⊗[K] 𝔸[K] ≃ₜ 𝔸[L] :=
@@ -66,6 +68,7 @@ scoped instance continuousSMul_adeleRing : ContinuousSMul 𝔸[K] 𝔸[L] :=
   continuousSMul_of_algebraMap _ _ continuous_adeleMap
 
 
+variable (K L) in
 def adeleTensorAlgEquivAdele : L ⊗[K] 𝔸[K] ≃ₐ[𝔸[K]] 𝔸[L] :=
   AlgEquiv.ofRingEquiv (f := (adeleTensorEquiv K L).toRingEquiv) fun a ↦ by
     change adeleTensorEquiv K L (1 ⊗ₜ a) = adeleMap K L a
@@ -81,6 +84,7 @@ theorem isModuleTopology_adeleRing : IsModuleTopology 𝔸[K] 𝔸[L] := by
       continuous_invFun := (adeleTensorHomeomorph K L).continuous_invFun }
 
 
+variable (K L) in
 def normalizedTrace : L →ₗ[K] K :=
   (finrank K L : K)⁻¹ • Algebra.trace K L
 
@@ -90,6 +94,7 @@ theorem normalizedTrace_one : normalizedTrace K L 1 = 1 := by
   exact Nat.cast_ne_zero.2 Module.finrank_pos.ne'
 
 
+variable (K L) in
 def traceRetraction : L ⊗[K] 𝔸[K] →ₗ[𝔸[K]] 𝔸[K] where
   toFun t := TensorProduct.lid K 𝔸[K] (LinearMap.rTensor 𝔸[K] (normalizedTrace K L) t)
   map_add' s t := by simp only [map_add (f := _)]
@@ -109,6 +114,7 @@ theorem traceRetraction_one_tmul (a : 𝔸[K]) : traceRetraction K L (1 ⊗ₜ a
   rw [LinearMap.rTensor_tmul, TensorProduct.lid_tmul, normalizedTrace_one, one_smul]
 
 
+variable (K L) in
 def adeleRetraction (y : 𝔸[L]) : 𝔸[K] :=
   traceRetraction K L ((adeleTensorEquiv K L).symm y)
 

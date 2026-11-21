@@ -105,6 +105,7 @@ lemma centerMorphism_closedPoint {x : X} (φ : X.presheaf.stalk x ⟶ CommRingCa
   rw [Spec_closedPoint, Scheme.fromSpecStalk_closedPoint]
 
 
+omit [IsIntegral X] in
 lemma eq_of_specMap_comp_eq {A K : Type u} [CommRing A] [CommRing K] [Algebra A K]
     (hι : Function.Injective (algebraMap A K)) {g₁ g₂ : Spec (.of A) ⟶ Spec (.of k)}
     (h : Spec.map (CommRingCat.ofHom (algebraMap A K)) ≫ g₁ =

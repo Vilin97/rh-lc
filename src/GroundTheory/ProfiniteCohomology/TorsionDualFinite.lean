@@ -89,6 +89,7 @@ theorem exists_apply_ne_zero {a : G} (ha : a ≠ 0) : ∃ f : G →+ QZ, f a ≠
   exact (AddEquiv.map_eq_zero_iff toAddCircle.symm).mp h
 
 
+variable (G) in
 def evalHom : G →+ ((G →+ QZ) →+ QZ) where
   toFun a :=
     { toFun := fun f => f a

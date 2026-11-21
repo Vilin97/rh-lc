@@ -77,6 +77,7 @@ variable (M : Type) [AddCommGroup M] [Module R M] [Module Rᵐᵒᵖ M] [IsCentr
   {M' : Type} [AddCommGroup M'] [Module R' M'] [Module R'ᵐᵒᵖ M'] [IsCentralScalar R' M']
 
 
+variable (R) in
 abbrev pr : TrivSqZeroExt R M →+* R := (fstHom R R M).toRingHom
 
 def extDP (κ : DividedPowers I) : DividedPowers (I.comap (pr R M)) where
@@ -138,6 +139,7 @@ theorem snd_extDP (κ : DividedPowers I) (n : ℕ) (x : TrivSqZeroExt R M) :
     ((extDP M κ).dpow n x).snd = dpPred κ n x.fst • x.snd := zero_add _
 
 
+variable (M) in
 theorem isDPNilpotent_extend {κ : DividedPowers I} (h : IsNilDP κ) : IsNilDP (extDP M κ) := by
   obtain ⟨N, hN⟩ := h
   have f : ∀ l : List (ℕ × TrivSqZeroExt R M), (l.map fun p ↦ (extDP M κ).dpow p.1 p.2).prod.fst =
@@ -248,6 +250,7 @@ theorem IsDPDer.isDPMorphism {κ : DividedPowers I} {D : Derivation T R M} (h : 
     | succ n => exact (h n a ha).symm
 
 
+variable (M) in
 theorem isDPMorphism_inl (κ : DividedPowers I) :
     IsDPMorphism κ (extDP M κ) (algebraMap R (TrivSqZeroExt R M)) := by
   refine ⟨Ideal.map_le_iff_le_comap.2 fun a ha ↦ ha, fun {n} a _ ↦ TrivSqZeroExt.ext (fst_extDP _ _ _) ?_⟩

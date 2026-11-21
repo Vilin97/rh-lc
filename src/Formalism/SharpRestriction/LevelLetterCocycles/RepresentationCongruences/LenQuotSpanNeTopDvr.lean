@@ -24,6 +24,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {v : AddValuation LL (WithTop ℚ)} {n : ℕ}
 
 
+omit [Algebra O LL] in
 theorem len_quot_span_ne_top_dvr [IsDomain O] [IsDiscreteValuationRing O] (t : O) (ht : t ≠ 0) :
     Module.length O (O ⧸ Ideal.span {t}) ≠ ⊤ := by
   have hI : Ideal.span {t} ≠ ⊥ := by rwa [Ne, Ideal.span_singleton_eq_bot]

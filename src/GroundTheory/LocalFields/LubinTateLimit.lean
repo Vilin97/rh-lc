@@ -24,6 +24,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 variable {Ω : Type*} [Field Ω] [Algebra K Ω] [IsSepClosed Ω]
 
 
+variable (K Ω) in
 def unramifiedTowerRoot (k : ℕ) : Ω :=
   Classical.choose (exists_isPrimitiveRoot_card_pow_sub_one (K := K) (Ksep := Ω)
     (Nat.factorial_ne_zero (k + 1)))
@@ -35,6 +36,7 @@ theorem isPrimitiveRoot_unramifiedTowerRoot (k : ℕ) :
     (Nat.factorial_ne_zero (k + 1)))
 
 
+variable (K Ω) in
 def unramifiedTower (k : ℕ) : IntermediateField K Ω := K⟮unramifiedTowerRoot K Ω k⟯
 
 theorem isUnramifiedSubextension_unramifiedTower (k : ℕ) :

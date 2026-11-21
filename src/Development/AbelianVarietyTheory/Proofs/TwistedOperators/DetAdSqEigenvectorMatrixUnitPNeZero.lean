@@ -11,6 +11,7 @@ open Formalism.BasicNotions.TH Formalism.MainNotions.SchurIrreducible GlobalTheo
 namespace GlobalTheory.PolarU
 
 
+open scoped ComplexOrder in
 theorem det_ne_zero_of_add_conjTranspose {n : Type} [Fintype n] [DecidableEq n]
     (P : Matrix n n ℂ) (h : P + Pᴴ = (2 : ℂ) • (1 : Matrix n n ℂ)) : P.det ≠ 0 := by
   intro hdet

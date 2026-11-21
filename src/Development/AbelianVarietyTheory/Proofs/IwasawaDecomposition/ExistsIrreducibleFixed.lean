@@ -93,11 +93,13 @@ variable {k k' : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarc
 def diagU (b : borel k (Fin n)) (i : Fin n) : kˣ := GeneralLinearGroup.det (leviProj k (points (Fin n)) b i)
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem val_diagU (b : borel k (Fin n)) (i : Fin n) : (diagU b i : k) = b.1.val i i := by
   rw [diagU, GeneralLinearGroup.val_det_apply, Matrix.det_unique]
   rfl
 
 
+variable (k) in
 def borelChar (α : Fin n → ℂˣ) : borel k (Fin n) →* ℂˣ :=
   (deltaHalf k (fun _ : Fin n => Unit) * (torusChar fun i => SmGL.unrChar k (α i)).comp
     (leviTorus k (Fin n)).symm.toMonoidHom).comp (leviProj k (points (Fin n)))
@@ -141,11 +143,14 @@ theorem exists_hasSatake (α : Fin n → ℂˣ) : ∃ π : IrrRep (GL (Fin n) k)
 def flip (j : k' →+* k) (n : ℕ) : GL (Fin n) k' →* GL (Fin n) k := invRevT.comp (GeneralLinearGroup.map j)
 
 
+omit [ValuativeRel k] [IsNonarchimedeanLocalField k] [ValuativeRel k'] [IsNonarchimedeanLocalField k'] in
 theorem continuous_flip {j : k' →+* k} (hj : Continuous j) : Continuous (flip j n) :=
   Units.continuous_iff.2 ⟨continuous_matrix fun a b => hj.comp (Units.continuous_coe_inv.matrix_elem b.rev a.rev),
     continuous_matrix fun a b => hj.comp (Units.continuous_val.matrix_elem b.rev a.rev)⟩
 
 
+omit [ValuativeRel k] [IsNonarchimedeanLocalField k] [ValuativeRel k'] [IsNonarchimedeanLocalField k']
+  [TopologicalSpace k] [TopologicalSpace k'] in
 theorem flip_surjective {j : k' →+* k} (hj : Function.Surjective j) : Function.Surjective (flip j n) := fun g => by
   let e := RingEquiv.ofBijective j ⟨j.injective, hj⟩
   refine ⟨GeneralLinearGroup.map e.symm.toRingHom (invRevT g), ?_⟩
@@ -263,6 +268,7 @@ theorem lpDim_locPar (π : CG E a) (h : IsPlaceOver A w) : (locPar hL π h).lpDi
   exact H.dim _
 
 
+include hF in
 theorem eventually_unr (π : CG E a) : ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite,
     ∀ (A : ValuationSubring Ω) (h : IsPlaceOver A w), (locPar hL π h).unr := by
   induction π using Quotient.inductionOn with | _ π =>
@@ -288,6 +294,7 @@ theorem locPar_ofChar (χ : HChar E) (h : IsPlaceOver A w) :
   locPar_mk hL (CG.isLoc_ofChar χ w) h
 
 
+include hF in
 theorem locPar_twist (π : CG E a) (χ : HChar E) (h : IsPlaceOver A w) :
     locPar hL (π.twist χ) h = (locPar hL π h).lpChar (locPar hL (CG.ofChar χ) h) := by
   induction π using Quotient.inductionOn with | _ π =>
@@ -298,6 +305,7 @@ theorem locPar_twist (π : CG E a) (χ : HChar E) (h : IsPlaceOver A w) :
   exact congrArg _ (IrrGL.tw_of σ.ρ σ.smooth σ.irred _ _).symm
 
 
+include hF in
 theorem locPar_tw (π : CG E a) (χ : CG E 1) (h : IsPlaceOver A w) :
     locPar hL (π.tw χ) h = (locPar hL π h).lpChar (locPar hL χ h) := by
   rw [CG.tw, locPar_twist hL hF, CG.ofChar_toChar]

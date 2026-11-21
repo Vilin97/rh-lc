@@ -27,6 +27,7 @@ section Inf
 variable {K : Type} [Field K] [NumberField K] {n : ℕ}
 
 
+open Classical in
 def pdL (v : InfinitePlace K) (i j : Fin n) (F : Lie K n → ℂ) (x : Lie K n) : ℂ :=
   fderiv ℝ F x (toL (Matrix.single i j (Pi.single v 1)))
 

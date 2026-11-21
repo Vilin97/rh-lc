@@ -10,6 +10,7 @@ open scoped Classical
 namespace Formalism.IrreducibleCountingLemmas.GaloisIrreducibility
 
 
+open Classical in
 theorem card_mult_le {K : Type} [Field K] [Fintype K] (N j : ℕ) (P : K[X]) (hP : P.Monic)
     (hj : P.natDegree = j) :
     ((Finset.univ : Finset (Fin N → K)).filter (fun c => P * P ∣ monicOf c)).card

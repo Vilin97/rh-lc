@@ -25,6 +25,7 @@ namespace PositivityTheory.PRW.GKD
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+variable (E a) in
 def dualMapC : Sm E a →ₗ⋆[ℂ] Sm E a where
   toFun φ := ⟨fun g => star (φ.1 (invA E a g)), GlobalTheory.T.smooth_conjugate_inverse_mem φ.2⟩
   map_add' φ ψ := Subtype.ext (funext fun g => by simp)

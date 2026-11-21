@@ -24,6 +24,7 @@ structure Primes (q : W → ℕ) : Prop where
   div : ¬ Summable fun w => (q w : ℝ)⁻¹
 
 
+open Classical in
 structure Sys (q : W → ℕ) (X : Type) (d : X → ℕ) (A : ∀ x, W → Fin (d x) → ℂ) : Prop where
   primes : Primes q
   pos : ∀ x, 1 ≤ d x

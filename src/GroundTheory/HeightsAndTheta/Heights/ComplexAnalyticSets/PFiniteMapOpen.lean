@@ -159,6 +159,8 @@ theorem exists_point_of_evalYT_eq_zero (J : Ideal (MvPolynomial (Fin n) ℂ))
 end FiniteMapOpen
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+open FiniteMapOpen in
 theorem FiniteMapOpen.proof : FiniteMapOpen.Statement := by
   classical
   intro n d J p hJ hinj hfin x hx U hU

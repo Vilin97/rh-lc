@@ -85,6 +85,7 @@ theorem IsAutomorphicForm.isSmoothKZ {φ : AdelicGLn.AdelicGL K n → ℂ} (hφ 
   (isAutomorphicForm_iff.1 hφ).1
 
 
+variable (K n) in
 def smoothKZ : Submodule ℂ (AdelicGLn.AdelicGL K n → ℂ) where
   carrier := {φ | IsSmoothKZ φ}
   zero_mem' := ⟨isLeftInvariant_zero, isSmooth_zero, isKFinite_zero, isZFinite_zero⟩

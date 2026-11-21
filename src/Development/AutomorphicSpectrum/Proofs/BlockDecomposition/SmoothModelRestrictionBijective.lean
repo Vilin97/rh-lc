@@ -134,6 +134,7 @@ theorem st_le (𝒱 : Set X.Opens) : St (γ := γ) (p := p) (q := q) (κ := κ) 
   fun _ hT => ⟨trivial, hT.2⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem glue (hp : p ≠ 0) (hn : IsNilpotent (p : R)) (U : Cov q) (j : ℕ) :
     Function.Bijective ((incl (st_le (γ := γ) (p := p) (q := q) (κ := κ) (Set.range U.U))).o.pull j) := by
   refine cover_bij (incl (st_le (γ := γ) (p := p) (q := q) (κ := κ) (Set.range U.U))).o
@@ -237,6 +238,7 @@ theorem nil_l (k : Type) [Field k] [CharP k l] [PerfectRing k l] (m : ℕ) : IsN
   exact Ideal.mem_span_singleton_self _⟩
 
 
+set_option maxHeartbeats 1600000 in
 theorem resF_bij (q : X ⟶ Spec (CommRingCat.of O)) (ρ : O →+* k) (U : Cov q) (m j : ℕ) :
     Function.Bijective (resF l (B.schFn q) ρ m j) := by
   have hp : l ≠ 0 := (Fact.out : l.Prime).ne_zero

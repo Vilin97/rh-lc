@@ -207,6 +207,7 @@ theorem lw_size (X : Formalism.MainNotions.G.Inst D L) (Y : Formalism.MainNotion
     linarith
 
 
+open Classical in
 theorem numeric_comparison_of_constants (D : Formalism.BasicNotions.D7) (L : SizeData₂ D) (X : Formalism.MainNotions.G.Inst D L) (Y : Formalism.MainNotions.G.LatInst D)
     (K : Formalism.MainNotions.G.Consts) (h1 : 5 ≤ K.dl1) (h2 : 4 ≤ K.dl2) (h3 : 1 ≤ K.Pr1) (h4 : Formalism.MainNotions.G.rG L.sc < D.R.k)
     (h4' : 2 ≤ L.sc.x) (hS : Formalism.MainNotions.SizesAt L) : Formalism.MainNotions.FormalGroupSystem.SmallResidueCharComparison D L X Y K := by

@@ -214,6 +214,7 @@ end Forms
 end PowerHeightsirational
 
 
+open PowerHeightsirational in
 theorem PowerHeightsirational.proof (hN : GeneratedNefGeneric.Statement) (hK : KodairaGeneric.Statement)
     (hC : ChartDenominator.Statement) : PowerHeightsirational.Statement := by
   intro K _ _ ι _ Ω _ _ y D a q w hD hV hB hw hgen hdeg

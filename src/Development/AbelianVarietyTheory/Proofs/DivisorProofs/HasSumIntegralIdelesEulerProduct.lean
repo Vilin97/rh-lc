@@ -170,6 +170,8 @@ theorem update_le (v : HeightOneSpectrum (OF E)) {k : ℕ} (hk : m v = k + 1) (v
   · rw [Function.update_of_ne e]; exact hm v'
 
 
+include hω hB hm in
+open Classical in
 theorem FS_ram (hF : TrivOnF χ) (T : Finset (HeightOneSpectrum (𝓞 E))) {v : HeightOneSpectrum (OF E)} (hv : Splits v) {k : ℕ}
     (hk : m v = k + 1) (hT : ∀ w ∈ T, ¬ Over w v) {P : HeightOneSpectrum (𝓞 E)} (hP : Over P v) (h : ¬ LevelLe χ P k)
     (hr : ∀ w, Over w v → ¬ UnrAt χ w) :
@@ -183,6 +185,8 @@ def eFactor (χ : HChar E) (S : ℂ) (q : HeightOneSpectrum (OF E)) (P : HeightO
     ((Ideal.absNorm q.asIdeal : ℂ) - 1) * ((Ideal.absNorm q.asIdeal : ℂ) ^ (-S)) ^ 2
 
 
+include hω hB hu hS hm in
+open Classical in
 theorem FS_unr (hF : TrivOnF χ) (T : Finset (HeightOneSpectrum (𝓞 E))) {v : HeightOneSpectrum (OF E)} (hv : Splits v)
     (hk : m v = 1) (hT : ∀ w ∈ T, ¬ Over w v) {P : HeightOneSpectrum (𝓞 E)} (hP : Over P v) (h : UnrAt χ P)
     (hl : ∀ w, Over w v → LevelLe χ w 1) :

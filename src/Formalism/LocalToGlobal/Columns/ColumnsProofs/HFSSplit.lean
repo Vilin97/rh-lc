@@ -117,6 +117,7 @@ theorem Lifts.eq_zero (F : CoefFrame ι) {A' : Module.End L S'.EqFun} (hA : b.Li
     simp only [LinearMap.zero_apply, lift_zero]
 
 
+include b in
 theorem finiteDimensional (F : CoefFrame ι) [FiniteDimensional K S.EqFun] : FiniteDimensional L S'.EqFun := by
   classical
   let B := Module.finBasis K S.EqFun

@@ -331,6 +331,7 @@ theorem lamChar_delInv (d : ι → (GE N →* Multiplicative (ZMod (X.l i ^ M)))
 end Char
 
 
+set_option maxHeartbeats 1000000 in
 theorem length_selT {Λ : Type} [CommRing Λ] [Algebra (X.O0 i) Λ] [Module Λ (KmodO (X.Ok i k))] (χ : Λ →+* X.Ok i k)
     (hχ : ∀ (c : Λ) (b : KmodO (X.Ok i k)), c • b = χ c • b) (hχ0 : ∀ c, χ (algebraMap (X.O0 i) Λ c) = phiK X i k c)
     (κ : GE N →* Λˣ) (hκ : ∀ g, χ (κ g : Λˣ) = (((ψ g)⁻¹ : (X.Ok i k)ˣ) : X.Ok i k))

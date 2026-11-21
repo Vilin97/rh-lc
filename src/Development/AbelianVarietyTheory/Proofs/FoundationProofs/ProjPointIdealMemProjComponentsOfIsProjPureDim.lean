@@ -298,6 +298,7 @@ theorem projSetDegree_sup_le_of_isPrime {P : Ideal (MvPolynomial ι k)} [P.IsPri
     exact_mod_cast h7
 
 
+omit [Finite ι] in
 theorem exists_mem_projComponents_sup {I J Q : Ideal (MvPolynomial ι k)}
     (hQ : Q ∈ projComponents (I ⊔ J)) :
     ∃ P ∈ projComponents I, Q ∈ projComponents (P ⊔ J) := by

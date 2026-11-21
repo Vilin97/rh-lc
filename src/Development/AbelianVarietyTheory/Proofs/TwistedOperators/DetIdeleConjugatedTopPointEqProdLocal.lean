@@ -31,6 +31,8 @@ theorem det_kapAt_val {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : Gri
   rfl
 
 
+set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 200000 in
 theorem detAt_conjPt_eq_prod {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil}
     {U : Set T} (S : GridChoice W U) {t : T} (_ht : t ∈ U) (j : ℕ) (hj : j + 1 < D.R.m) (k : FinPt G (.top (j + 1)))
     (e : AE D) (hI : IsIdemSum e (locPl G t)) :

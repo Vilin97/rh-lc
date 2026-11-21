@@ -34,6 +34,7 @@ noncomputable section
 namespace GlobalTheory.KFixedVanish
 
 
+open scoped Classical in
 theorem exists_fixed {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
     (μ : Measure (κ → mixedEmbedding.mixedSpace F)) [μ.IsAddHaarMeasure]
     (U V : Submodule ℂ (SInf F κ)) (hV : FiniteDimensional ℂ V) (hUV : U ≤ V)

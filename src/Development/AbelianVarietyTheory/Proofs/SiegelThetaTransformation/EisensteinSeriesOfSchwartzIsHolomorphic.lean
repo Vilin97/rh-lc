@@ -23,6 +23,7 @@ section Lines
 variable {X : Type} [NormedAddCommGroup X] [NormedSpace ℂ X] [FiniteDimensional ℂ X]
 
 
+omit [FiniteDimensional ℂ X] in
 theorem deriv_line {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] {f : X → V} {p : X}
     (hf : DifferentiableAt ℂ f p) (v : X) :
     HasDerivAt (fun s : ℂ => f (p + s • v)) (fderiv ℂ f p v) 0 := by
@@ -213,6 +214,7 @@ theorem hFac_inv_bound (n N : ℕ) {δ : ℝ} (hδ : 0 < δ) (B : ℝ) :
 end GlobalTheory.SW.EisHeat
 
 
+open GlobalTheory.SW.EisHeat in
 theorem GlobalTheory.SW.isHeat_eis : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)), IsType Ψ → ∀ (n N : ℕ), Even n → 4 * N < n → ∀ φ : Matrix (Fin n) (Fin N) E → ℂ, IsSB φ → IsHeat Ψ (eis Ψ φ) := by
   rintro E _ _ _ Ψ hΨ n N hn hN φ ⟨R, hR, hφ⟩
   refine isHeat_tsum Ψ (D := fun U : Lag E N => eisTerm Ψ U.2.choose φ)

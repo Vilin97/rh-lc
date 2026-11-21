@@ -110,6 +110,7 @@ lemma mem_loc_iff_span (w : HeightOneSpectrum (𝓞 K)) {d : ℕ} (M : Submodule
 end SemilocalBasisHermitianTwistDivisors
 
 
+open SemilocalBasisHermitianTwistDivisors in
 theorem semilocal_basis_exists : LocBasisEx := by
   intro K _ _ _ d L hL w
   have : IsDedekindDomain (A w) :=

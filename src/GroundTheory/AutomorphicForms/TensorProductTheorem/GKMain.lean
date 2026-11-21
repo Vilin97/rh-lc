@@ -88,6 +88,7 @@ attribute [instance] Decomposition.instAddCommGroup₁ Decomposition.instModule�
   Decomposition.instAddCommGroup₂ Decomposition.instModule₂
 
 
+set_option maxHeartbeats 4000000 in
 theorem nonempty_decomposition (hirr : Mx.IsIrreducible) (hadm : Mx.IsAdmissible) :
     Nonempty (Mx.Decomposition) := by
   classical

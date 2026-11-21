@@ -387,11 +387,13 @@ variable {A : PolAV (Spec (CommRingCat.of (FractionRing R)))} {A' : PolAV (Spec 
   {Ω : (TFK (R := R') F ⊗ A'.A).left ⟶ (TFK (R := R) F ⊗ A.A).left}
 
 
+variable (v Ω) in
 def AbUp {k : ℕ} (t' : SecA A' F k) (t : SecA A F k) : Prop :=
   ∀ (Z : Scheme.{0}) (r : Z ⟶ (TFK (R := R') F ⊗ A'.A).left) (z : Z) J J', Good A.L z J → Good A'.L z J' →
     sA t (r ≫ Ω) z J = (om v z J J' (r ≫ (snd (TFK (R := R') F) A'.A).left) ^ (k : ℤ)).val * sA t' r z J'
 
 
+variable (v) in
 def FrUp {x' : TFK (R := R') F ⟶ A'.A} (e' : FrAt x') {x : TFK (R := R) F ⟶ A.A} (e : FrAt x) (ρ : F) : Prop :=
   ∀ (z : Sp F) J J', Good A.L z J → Good A'.L z J' →
     (om (Z := Sp F) v z J J' x'.left).val * (vS e' z J').val = constVal (𝟙 (Sp F)) z ρ * (vS e z J).val
@@ -481,6 +483,7 @@ theorem exists_point (hG : GlobalFnsSt) (hI : I.map φ ≤ I') (hF : Compat φ F
   exact S
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_expand (hG : GlobalFnsSt) {U : Unif I D A G} {U' : Unif I' D' A' G'}
     {bc : G' ≅ (Over.pullback (specOf φ)).obj G} (hbc : IsMonHom bc.hom) (hU : IsPullUnif φ hD bc U U') (hF : Compat φ F)
     {g : Spec (CommRingCat.of (FractionRing R')) ⟶ Spec (CommRingCat.of (FractionRing R))}

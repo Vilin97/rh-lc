@@ -70,6 +70,7 @@ end GlobalTheory.SBRestrict
 namespace GlobalTheory.SBRestrict
 
 
+open Classical in
 theorem eq_SB_of_restrict : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k]
     {Y Y' : Type} [Fintype Y] [DecidableEq Y] [Fintype Y'] [DecidableEq Y'] (ψ0 : AddChar k ℂ), Continuous ψ0 →
     (∀ x : k, ‖ψ0 x‖ = 1) → ψ0 ≠ 1 → ∀ (I : Set (Y × Y')) (S : Submodule ℂ (Matrix Y Y' k → ℂ)),

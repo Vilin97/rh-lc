@@ -57,6 +57,7 @@ namespace PoitouTateDualityHypotheses
 variable {φ D t inv} (P : PoitouTateDualityHypotheses φ D t inv)
 
 
+include P in
 theorem bijective_ptCompactDualMap (hM : ∀ m : M, n • m = 0) {r s : ℕ} (h : r + s = 3) :
     Function.Bijective (ptCompactDualMap φ D M t h) := by
   have hD := P.nonempty_addEquiv
@@ -95,6 +96,7 @@ theorem bijective_ptCompactDualMap (hM : ∀ m : M, n • m = 0) {r s : ℕ} (h 
   exact bijective_compHom_zmodToQZ β (nsmul_cohomology_eq_zero _ hMD s) hβ
 
 
+include P in
 theorem subsingleton_compactCohomologyRes_zero (hM : ∀ m : M, n • m = 0) :
     Subsingleton (compactCohomologyRes φ M 0) := by
   have hnD := nsmul_eq_zero_of_nonempty_addEquiv P.nonempty_addEquiv
@@ -107,6 +109,8 @@ theorem subsingleton_compactCohomologyRes_zero (hM : ∀ m : M, n • m = 0) :
   rw [Subsingleton.elim y 0, map_zero, map_zero]
 
 
+omit [NeZero n] in
+include P in
 theorem ptCompactDualMap_ptLocalToCompact {r s : ℕ} (h : r + s = 2) (h' : r + 1 + s = 3)
     (ξ : ∀ v, cohomology (Rep.res (φ v).toMonoidHom M) r) :
     ptCompactDualMap φ D M t h' ((ptLocalToCompact φ M r).hom ξ) = ptLocalDualMap φ D M inv h ξ := by
@@ -116,6 +120,7 @@ theorem ptCompactDualMap_ptLocalToCompact {r s : ℕ} (h : r + s = 2) (h' : r + 
   rfl
 
 
+include P in
 theorem exact_stage (hM : ∀ m : M, n • m = 0) {r s : ℕ} (h : r + s = 2) (h' : r + 1 + s = 3) :
     Function.Exact (ptGlobalToLocal φ M r).hom (ptLocalDualMap φ D M inv h) ∧
       Function.Exact (ptLocalDualMap φ D M inv h)
@@ -134,6 +139,7 @@ theorem exact_stage (hM : ∀ m : M, n • m = 0) {r s : ℕ} (h : r + s = 2) (h
   · exact exact_comp_symm_addEquiv (ptExact_global φ M (r + 1)) e
 
 
+include P in
 theorem injective_ptGlobalToLocal_zero (hM : ∀ m : M, n • m = 0) :
     Function.Injective (ptGlobalToLocal φ M 0).hom := by
   have := P.subsingleton_compactCohomologyRes_zero M hM
@@ -143,6 +149,7 @@ theorem injective_ptGlobalToLocal_zero (hM : ∀ m : M, n • m = 0) :
   exact map_zero _
 
 
+include P in
 theorem surjective_ptLocalDualMap_two (hM : ∀ m : M, n • m = 0) :
     Function.Surjective (ptLocalDualMap φ D M inv (show 2 + 0 = 2 from rfl)) := by
   intro χ
@@ -154,6 +161,7 @@ theorem surjective_ptLocalDualMap_two (hM : ∀ m : M, n • m = 0) :
   exact e.apply_symm_apply χ
 
 
+include P in
 theorem nineTerm (hM : ∀ m : M, n • m = 0) :
     Function.Injective (ptGlobalToLocal φ M 0).hom ∧
     Function.Exact (ptGlobalToLocal φ M 0).hom (ptLocalDualMap φ D M inv (show 0 + 2 = 2 from rfl)) ∧
@@ -175,6 +183,7 @@ theorem nineTerm (hM : ∀ m : M, n • m = 0) :
     P.surjective_ptLocalDualMap_two M hM⟩
 
 
+include P in
 theorem bijective_ptShaPairing (hM : ∀ m : M, n • m = 0) :
     Function.Bijective (ptShaPairing φ D M t) := by
   classical
@@ -214,6 +223,7 @@ theorem bijective_ptShaPairing (hM : ∀ m : M, n • m = 0) :
     rfl
 
 
+include P in
 theorem sha (hM : ∀ m : M, n • m = 0) :
     Finite (ptSha φ M 1) ∧ Finite (ptSha φ (dualRep D M) 2) ∧
       Function.Bijective (ptShaPairing φ D M t) ∧ Function.Bijective (ptShaPairing φ D M t).flip := by

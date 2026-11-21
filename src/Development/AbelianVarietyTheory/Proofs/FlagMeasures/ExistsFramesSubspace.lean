@@ -29,6 +29,7 @@ variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComple
   (b : Module.Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
 
 
+omit [IsTotallyComplex K] in
 theorem le_of_subset_span (hX : ∀ v, IsUnit (X v).det) {L S N : Submodule (𝓞 K) V} (hL : L.FG)
     (hS : IsSat (Formalism.HermitianLatticesTheory.realize b X) L S) (hN : N ≤ L)
     (h : (N : Set V) ⊆ Submodule.span K (S : Set V)) : N ≤ S := by

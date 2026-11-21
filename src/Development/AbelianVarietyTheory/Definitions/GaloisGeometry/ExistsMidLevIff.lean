@@ -214,6 +214,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 variable {D : D7} {u : D.what₂.Word}
 
 
+set_option maxHeartbeats 1000000 in
 structure StepCharts (C : ColumnChain D.R D.what₂.Tau (D.hcW u)) (i : ℕ) (hi : i ≤ D.R.m) where
 
   T : ℕ
@@ -376,12 +377,15 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : G.Inst D L} {Gl : G
   {ex : Extra D L hT Gi Gl Kc Y cX} (t : KerEntTied ex) (u : D.what₂.Word) (μ : D.what₂.Tup)
 
 
+include μ in
 theorem m_eq : D.R.m = t.m2 + 2 := (t.idx_ok μ).hm
 
 
+include μ in
 theorem cpl_lt : t.m2 + 1 < D.R.m := by have := m_eq t μ; omega
 
 
+include μ in
 theorem top_le : t.m2 + 1 + 1 ≤ D.R.m := by have := m_eq t μ; omega
 
 abbrev SB : Finset (HeightOneSpectrum (𝓞 t.X.E)) := rowSG t.Pr t.sel (t.tup μ)
@@ -532,6 +536,7 @@ theorem AdTie.latK_eq (H : AdTie A dtU a) (i : ℕ) (hi : i ≤ D.R.m) (c : (D.c
   exact latK_eq_map _ _ _ _ _
 
 
+variable (St) in
 abbrev AdDatum : Type :=
   ∀ i (hi : i + 1 ≤ D.R.m), (St i (Nat.le_of_succ_le hi)).Ch → (St (i + 1) hi).Ch →
     UPts (sigD D) (gramN D i (Nat.le_of_succ_le hi)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F) →
@@ -598,9 +603,11 @@ theorem AdLawAt.mu_ne {XiAd : AdDatum St} {muT : ℕ → (AfE D.host.F D.host.E)
   exact one_ne_zero h
 
 
+variable (St) in
 abbrev ChainBase : Type := ∀ i hi, (St i hi).Base
 
 
+variable (St) in
 def moveCharts (k : ChainBase St) : ChainCharts D u μ := fun i hi => (St i hi).move (k i hi)
 
 variable (A dtU a)

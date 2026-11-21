@@ -49,6 +49,7 @@ theorem exists_mul_algebraMap_eq (x : K♭) :
     IsLocalization.sec_spec (nonZeroDivisors 𝒪♭) x⟩
 
 
+variable (K p) in
 def tiltSharpFun (x : K♭) : K :=
   ♮(IsLocalization.sec (nonZeroDivisors 𝒪♭) x).1 /
     ♮((IsLocalization.sec (nonZeroDivisors 𝒪♭) x).2 : 𝒪♭)
@@ -69,6 +70,7 @@ theorem tiltSharpFun_eq {x : K♭} {a b : 𝒪♭} (hb : b ≠ 0)
   rw [div_eq_div_iff (untiltK_ne_zero hb') (untiltK_ne_zero hb), key']
 
 
+variable (K p) in
 def tiltSharp : K♭ →*₀ K where
   toFun := tiltSharpFun (K := K) (p := p)
   map_zero' := by
@@ -126,6 +128,7 @@ end Sharp
 section Norm
 
 
+variable (K p) in
 def tiltAbv : AbsoluteValue K♭ ℝ where
   toFun x := ‖tiltSharp (K := K) (p := p) x‖
   map_mul' x y := by simp only [map_mul, norm_mul]

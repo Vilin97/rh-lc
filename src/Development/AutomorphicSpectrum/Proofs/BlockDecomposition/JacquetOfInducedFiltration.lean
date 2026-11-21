@@ -40,6 +40,7 @@ def equivComp {G H V V' : Type} [Group G] [Group H] [AddCommGroup V] [Module ℂ
     e.left_inv e.right_inv
 
 
+set_option maxHeartbeats 1000000 in
 theorem jacquetOfInducedFiltration : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k], GlobalTheory.SmGL.JacquetOfInducedFiltration k := by
   intro k _ _ _ _ α β n _ _ _ _ _ _ m _ _ m' _ _ e e'

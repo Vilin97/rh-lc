@@ -33,6 +33,7 @@ variable {R₁ : Type} [CommRing R₁] [Algebra R₀ R₁]
 
 
 
+include hI hs in
 theorem exists_isSig (α : Aug I π R₁) {B B₀ : Type} [CommRing B] [Algebra R B] [CommRing B₀] [Algebra R₀ B₀]
     (p : B →+* B₀) (semi : SemiHom π p) (surj : Function.Surjective p)
     (ker : ∀ b, p b = 0 ↔ b ∈ I.map (algebraMap R B)) : ∃ σ, α.IsSig p σ := by

@@ -67,6 +67,7 @@ theorem coneVarMap_coe (hPW : P ≤ W) (v : ∀ k, ι k) (G : MvPolynomial K (lo
   rfl
 
 
+variable {P W} in
 theorem exists_clear (hPW : P ≤ W) (G : MvPolynomial K (locRing P W)) :
     ∃ (V : MRing ι) (b : K → ℕ) (N : (K →₀ ℕ) → MRing ι), IsMultiHomog V b ∧ V ∉ W ∧
       ∀ e, IsMultiHomog (N e) b ∧
@@ -100,6 +101,7 @@ theorem exists_clear (hPW : P ≤ W) (G : MvPolynomial K (locRing P W)) :
       ring
 
 
+variable {P W} in
 theorem coneVarMap_mul_clear (hPW : P ≤ W) (v : ∀ k, ι k) (G : MvPolynomial K (locRing P W))
     {V : MRing ι} {b : K → ℕ} {N : (K →₀ ℕ) → MRing ι}
     (hN : ∀ e, IsMultiHomog (N e) b ∧
@@ -123,6 +125,7 @@ theorem mem_of_clear_mem {I : Ideal (MRing ι)} [I.IsPrime] (hI : IsMultiHomogId
     exact DFunLike.coe_injective (add_left_cancel h12)
 
 
+variable {P W} in
 theorem coneVarMap_injective (hPW : P ≤ W) (hPh : IsMultiHomogIdeal P) {v : ∀ k, ι k}
     (hv : ∀ k, (X ⟨k, v k⟩ : MRing ι) ∉ W) : Function.Injective (coneVarMap P W hPW v) := by
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
@@ -149,12 +152,14 @@ theorem coneVarMap_injective (hPW : P ≤ W) (hPh : IsMultiHomogIdeal P) {v : �
   exact hne (Subtype.ext h2)
 
 
+variable {P W} in
 theorem isUnit_algebraMap_cone (hPW : P ≤ W) {g : MRing ι} (hg : g ∉ W) :
     IsUnit (algebraMap (MRing ι ⧸ P) (coneLocRing P W hPW) (Ideal.Quotient.mk P g)) :=
   IsLocalization.map_units (coneLocRing P W hPW)
     (⟨_, ⟨g, hg, rfl⟩⟩ : W.primeCompl.map (Ideal.Quotient.mk P))
 
 
+variable {P W} in
 theorem isUnit_coneVarMap (hPW : P ≤ W) (hWh : IsMultiHomogIdeal W) {v : ∀ k, ι k}
     (hv : ∀ k, (X ⟨k, v k⟩ : MRing ι) ∉ W) (G : MvPolynomial K (locRing P W)) {e : K →₀ ℕ}
     (he : IsUnit (AddMonoidAlgebra.coeff G e)) : IsUnit (coneVarMap P W hPW v G) := by
@@ -171,6 +176,7 @@ theorem isUnit_coneVarMap (hPW : P ≤ W) (hWh : IsMultiHomogIdeal W) {v : ∀ k
   exact isUnit_of_mul_isUnit_left (heq ▸ isUnit_algebraMap_cone hPW hNum)
 
 
+variable {P W} in
 theorem exists_lift (hPW : P ≤ W) {v : ∀ k, ι k} (hv : ∀ k, (X ⟨k, v k⟩ : MRing ι) ∉ W) (f : MRing ι) :
     ∃ F, coneVarMap P W hPW v F =
       algebraMap (MRing ι ⧸ P) (coneLocRing P W hPW) (Ideal.Quotient.mk P f) := by
@@ -202,6 +208,7 @@ theorem exists_lift (hPW : P ≤ W) {v : ∀ k, ι k} (hv : ∀ k, (X ⟨k, v k�
     rw [div_mul_cancel₀ _ hX0]
 
 
+variable {P W} in
 theorem exists_isUnit_coeff (hPW : P ≤ W) {v : ∀ k, ι k} (G : MvPolynomial K (locRing P W))
     {g : MRing ι} (hg : g ∉ W)
     (hG : coneVarMap P W hPW v G =
@@ -230,6 +237,7 @@ theorem isPrime_map_C {A : Type*} [CommRing A] (σ : Type*) (p : Ideal A) [p.IsP
   exact RingHom.ker_isPrime _
 
 
+variable {P W} in
 theorem isLocalization_coneVarMap (hPW : P ≤ W) (hPh : IsMultiHomogIdeal P) (hWh : IsMultiHomogIdeal W)
     (v : ∀ k, ι k) (hv : ∀ k, (X ⟨k, v k⟩ : MRing ι) ∉ W) :
     haveI := isLocalRing hPW

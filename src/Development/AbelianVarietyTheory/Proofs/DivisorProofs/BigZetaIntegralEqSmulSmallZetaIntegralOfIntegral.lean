@@ -50,6 +50,7 @@ theorem smallF_rows {A C C₁ : Type} [Fintype A] [DecidableEq A]
   ring
 
 
+omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] in
 theorem exists_reindex_unit_val {C C₁ : Type} [Fintype C] [DecidableEq C] [Fintype C₁] [DecidableEq C₁]
     (τ eC : C ≃ C₁) :
     ∃ s : kˣ, ValuativeRel.valuation k (s : k) = 1 ∧ ∀ u : GL C k, ∃ u₁ : GL C₁ k, u₁.val = reindex τ eC u.val ∧

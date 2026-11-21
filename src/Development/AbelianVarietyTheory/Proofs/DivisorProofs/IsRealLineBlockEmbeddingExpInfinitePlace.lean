@@ -38,6 +38,7 @@ abbrev infComp (w : InfinitePlace F) : Ainf F ⊗[F] E →+* w.Completion ⊗[F]
   (Algebra.TensorProduct.map (GlobalTheory.AutFunCompare.evW w) (AlgHom.id F E)).toRingHom
 
 
+omit [NumberField E] in
 theorem exists_place_of_prim {R : Type} [CommRing R] (j : Ainf F ⊗[F] E ≃+* R) (e : R) (he : e * e = e)
     (hp : ∀ f : R, f * f = f → f * e = f → f = 0 ∨ f = e) (y : Ainf F ⊗[F] E) (hy : j y = e) :
     ∃ w : InfinitePlace F, ∀ w', w' ≠ w → infComp w' y = 0 := by
@@ -77,6 +78,7 @@ theorem exists_place_of_prim {R : Type} [CommRing R] (j : Ainf F ⊗[F] E ≃+* 
     rwa [map_mul, hδ2, mul_zero, eq_comm] at this
 
 
+omit [NumberField E] in
 theorem single_prim [DecidableEq (InfinitePlace E)] (v : InfinitePlace E) (f : Cinf E) (h1 : f * f = f)
     (h2 : f * Pi.single v 1 = f) : f = 0 ∨ f = Pi.single v 1 := by
   have hne : ∀ u, u ≠ v → f u = 0 := fun u hu => by
@@ -113,6 +115,7 @@ section SlopeTestRemainingChoices
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+omit [NumberField E] in
 theorem compInf_eq_infComp (w : InfinitePlace F) (z : AF F ⊗[F] E) :
     compInf F E w z = infComp w (GlobalTheory.LFun.infTens F E z) := by
   induction z using TensorProduct.induction_on with
@@ -121,6 +124,7 @@ theorem compInf_eq_infComp (w : InfinitePlace F) (z : AF F ⊗[F] E) :
   | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 
+omit [NumberField E] in
 theorem compInf_sigR (σ : E →ₐ[F] E) (w : InfinitePlace F) (z : AF F ⊗[F] E) :
     compInf F E w (sigR _ σ z) = sigR _ σ (compInf F E w z) := by
   induction z using TensorProduct.induction_on with
@@ -129,6 +133,7 @@ theorem compInf_sigR (σ : E →ₐ[F] E) (w : InfinitePlace F) (z : AF F ⊗[F]
   | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 
+omit [NumberField F] [Algebra F E] in
 theorem evalMat_exp {d : ℕ} (u : InfinitePlace E) (X : Matrix (Fin d) (Fin d) (Cinf E)) :
     (Pi.evalRingHom (fun _ : InfinitePlace E => ℂ) u).mapMatrix (NormedSpace.exp X) =
       NormedSpace.exp ((Pi.evalRingHom (fun _ : InfinitePlace E => ℂ) u).mapMatrix X) := by

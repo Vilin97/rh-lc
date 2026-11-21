@@ -328,6 +328,7 @@ end Residue
 end AltPf
 
 
+open AltPf in
 theorem jpAlt_of_steps : JpIw → JpHgt → JpUnif → JpCmp → JpPos → JpCondition := by
   intro hIw hHgt hUnif hCmp hPos
   intro O L _ _ _ _ _ _ _ n r t hrt hr ψ₀ hψ β hβ

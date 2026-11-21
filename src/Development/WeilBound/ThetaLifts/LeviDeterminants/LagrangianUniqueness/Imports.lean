@@ -109,6 +109,7 @@ theorem off (h2 : ∀ a ∉ P, ∃ χ : G → ℂ, IsLocallyConstant χ ∧ χ a
   rw [map_smul, (mul_left_eq_self₀.1 h3).resolve_left (hne a haP), smul_zero]
 
 
+include h₀ in
 theorem test (hP0 : (0 : G) ∈ P) (h1 : ∀ p ∈ P, ∀ φ ∈ SB G, l (fun x => φ (x + p)) = l φ)
     (h2 : ∀ a ∉ P, ∃ χ : G → ℂ, IsLocallyConstant χ ∧ χ a ≠ 1 ∧ ∀ φ ∈ SB G, l (fun x => χ x * φ x) = l φ)
     (h0 : l (ind U₀ 0) = 0) {φ : G → ℂ} (hφ : φ ∈ SB G) : l φ = 0 := by

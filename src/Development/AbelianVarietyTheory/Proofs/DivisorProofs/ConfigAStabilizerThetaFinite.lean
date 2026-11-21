@@ -99,6 +99,7 @@ section Fin
 variable {F : Type} [Field F] [NumberField F]
 
 
+variable (F) in
 def intA : AddSubgroup (Af F) where
   carrier := {a | ∀ v, a v ∈ v.adicCompletionIntegers F}
   add_mem' ha hb v := add_mem (ha v) (hb v)
@@ -181,6 +182,7 @@ section Heis
 variable {F : Type} [Field F] [NumberField F] {ψ : AddChar (AF F) ℂ} {κ : Type} [Fintype κ]
 
 
+variable (F) in
 def infOne : AF F := pairA F 1 0
 
 theorem fst_eq_zero {a : AF F} (h : infOne F * a = 0) : a.1 = 0 :=

@@ -147,6 +147,7 @@ theorem cohomologyMapAlong_invariantsGsKernelMor_comp_gsBrauerInfl (n : ℕ) :
   exact coe_invariantsGsKernelFun K S a
 
 
+set_option maxHeartbeats 1000000 in
 theorem eq_zero_of_h3_gsUnits (ℓ : ℕ) (hℓ : ℓ.Prime)
     (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
     (x : cohomology (galUnits K.1 (maxUnramifiedOutside K.1 ℚ̄ S)) 3) (k : ℕ) (hx : ℓ ^ k • x = 0) :

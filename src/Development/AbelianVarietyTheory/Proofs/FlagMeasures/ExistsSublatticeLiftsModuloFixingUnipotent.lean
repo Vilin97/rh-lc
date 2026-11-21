@@ -280,6 +280,7 @@ theorem fun_reps {u u' : D.what₂.Word} {F0 : Fb D u} {Λ : LatV D} (hSt : Stan
     ring
 
 
+variable (D) in
 abbrev coefI (a : Fin D.R.rS) : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E :=
   ddS D ^ (-((D.R.rS : ℤ) - (a : ℕ)))
 

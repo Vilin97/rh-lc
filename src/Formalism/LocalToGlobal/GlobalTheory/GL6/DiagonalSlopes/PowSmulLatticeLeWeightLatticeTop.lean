@@ -120,6 +120,8 @@ open Formalism.MainNotions.product_first_zeroth_parts Formalism.L2.Forms Classic
 open scoped Matrix
 
 
+set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem bwL_lcInt0 (D : D7) (u : D.what₂.Word) (Tt : Forms0 D u) (i : ℕ) (hi : i ≤ D.R.m) (h0 : i = 0)
     (c : (D.mem u).C.cls i) : clsCrd D u i hi c ≤ Ld D u i hi c := by
   intro x hx

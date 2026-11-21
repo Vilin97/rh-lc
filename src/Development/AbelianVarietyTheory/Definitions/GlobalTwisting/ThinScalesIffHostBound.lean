@@ -36,6 +36,7 @@ abbrev baseOf (s : Scale) (cD ch : ℝ) (H : Host R) : Arith.Base :=
     eta := (R.m : ℝ) * (h0v s ch : ℝ) }
 
 
+open Classical in
 def BadOK (s : Scale) (Cb : ℝ) (H : Host R) : Prop :=
   let B := baseOf s 0 0 H
   let PR := (Finset.range ⌈s.X'⌉₊).filter (fun p =>

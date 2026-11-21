@@ -125,6 +125,7 @@ section Main
 variable {R : Ranks} {H : Host R} {what₂ : Rows.Data R}
 
 
+set_option maxHeartbeats 1000000 in
 theorem heckeEig_ne_bot (B : LocBase0 H what₂) (hs : HeckeStd0 B) (hd : FinDimV B) (hL : MtLoc B (partCompl_of hs hd))
     (hAct : ActEx B (partCompl_of hs hd)) (hH : ActHK B hs hd hL hAct) (i : LocT B) (x : XOf B i) :
     heckeEig (TOf B i) (actC B (partCompl_of hs hd) hAct i) x ≠ ⊥ := by

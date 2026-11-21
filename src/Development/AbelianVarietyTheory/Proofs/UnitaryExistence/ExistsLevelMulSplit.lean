@@ -84,6 +84,7 @@ private theorem host_bar_w0_of_isCMField {E : Type} [Field E] [NumberField E] [I
   exact mul_left_cancel₀ two_ne_zero h2
 
 
+open NumberField Pointwise in
 theorem _root_.GlobalTheory.exists_level_mul_split : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (l : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H), (∀ (pd : ℕ) (I : Ideal (𝓞 E)), Odd pd → pd.Coprime l.M → I = Ideal.span {a | a ∈ I ∧ a ∈ Algebra.adjoin ℤ {H.w0}} → I * I.map (H.bar : 𝓞 E →+* 𝓞 E) = Ideal.span {(pd : 𝓞 E)} → I ⊔ I.map (H.bar : 𝓞 E →+* 𝓞 E) = ⊤ → ∃ l₂ : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H, l.Dvd l₂ ∧ l₂.M = l.M * pd ∧ l₂.Mb = l.Mb * I ∧ l₂.A = l.A) ∧ ∀ pd : ℕ, pd.Prime → pd ≠ 2 → jacobiSym (-(H.d : ℤ)) pd = 1 → ∃ I : Ideal (𝓞 E), I = Ideal.span {a | a ∈ I ∧ a ∈ Algebra.adjoin ℤ {H.w0}} ∧ I * I.map (H.bar : 𝓞 E →+* 𝓞 E) = Ideal.span {(pd : 𝓞 E)} ∧ I ⊔ I.map (H.bar : 𝓞 E →+* 𝓞 E) = ⊤ := by
   intro E _ _ _ H l
   refine ⟨fun pd I hodd hcop hI hprod hsup => ?_, fun pd hp hp2 hJ => ?_⟩

@@ -21,6 +21,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Compa
   [TotallyDisconnectedSpace G]
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] in
 theorem subsingleton_cohomology_of_top {k : Type} [CommRing k] (A : Rep.{0} k G) [IsDiscreteRep A]
     (r : ℕ) (h : Subsingleton (cohomology (Rep.res (⊤ : Subgroup G).subtype A) r)) :
     Subsingleton (cohomology A r) := by
@@ -36,6 +37,7 @@ section Int
 variable {C : Rep.{0} ℤ G} [IsDiscreteRep C] (F : ClassFormation C)
 
 
+include F in
 theorem ClassFormation.exists_cupH_quot (U : OpenSubgroup G) (N : Subgroup (U : Subgroup G))
     [N.Normal] (hN : IsOpen (N : Set (U : Subgroup G))) (n : ℕ) [NeZero n]
     (w : groupCohomology ((Rep.res (U : Subgroup G).subtype C).quotientToInvariants N) (n + 2)) :
@@ -68,6 +70,7 @@ theorem rightUnitor_quotientToInvariants {k H : Type} [CommRing k] [Group H] (A 
   TensorProduct.ext' fun _ _ => Subtype.ext rfl
 
 
+include F in
 theorem ClassFormation.subsingleton_cohomology_of_three_le_int (U : OpenSubgroup G) {r : ℕ}
     (hr : 3 ≤ r) : Subsingleton (cohomology (Rep.res (U : Subgroup G).subtype C) r) := by
   obtain ⟨n, rfl⟩ : ∃ n, r = n + 2 := ⟨r - 2, by omega⟩
@@ -122,6 +125,7 @@ theorem ClassFormation.subsingleton_cohomology_of_three_le_int (U : OpenSubgroup
   rw [hz, ← hβ, map_nsmul, LinearMap.smul_apply, ← map_nsmul, hmt, map_zero, map_zero]
 
 
+include F in
 theorem ClassFormation.subsingleton_cohomology_top_of_three_le_int {r : ℕ} (hr : 3 ≤ r) :
     Subsingleton (cohomology C r) :=
   subsingleton_cohomology_of_top C r (F.subsingleton_cohomology_of_three_le_int ⊤ hr)
@@ -133,12 +137,14 @@ section ULift
 variable {C : Rep.{0} (ULift.{0} ℤ) G} [IsDiscreteRep C] (F : ClassFormation C)
 
 
+include F in
 theorem ClassFormation.subsingleton_cohomology_of_three_le (U : OpenSubgroup G) {r : ℕ}
     (hr : 3 ≤ r) : Subsingleton (cohomology (Rep.res (U : Subgroup G).subtype C) r) := by
   have := (ClassFormation.toInt C F).subsingleton_cohomology_of_three_le_int U hr
   exact (cohomologyULiftIntAddEquiv (Rep.res (U : Subgroup G).subtype C) r).injective.subsingleton
 
 
+include F in
 theorem ClassFormation.subsingleton_cohomology_top_of_three_le {r : ℕ} (hr : 3 ≤ r) :
     Subsingleton (cohomology C r) :=
   subsingleton_cohomology_of_top C r (F.subsingleton_cohomology_of_three_le ⊤ hr)

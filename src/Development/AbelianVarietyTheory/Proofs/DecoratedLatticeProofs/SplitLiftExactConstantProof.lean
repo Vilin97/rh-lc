@@ -36,6 +36,7 @@ end GlobalTheory.FinPl.LiftExactPf
 namespace GlobalTheory.FinPl
 
 
+open GlobalTheory.FinPl.LiftRam GlobalTheory.FinPl.LiftExactPf in
 theorem liftExact : ∀ D : D7, GlobalTheory.FinPl.LiftExact D := by
   intro D k _ _ _ _ p q χ hχ
   refine ⟨-1, Or.inr rfl, ?_⟩

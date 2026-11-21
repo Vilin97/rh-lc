@@ -131,6 +131,7 @@ theorem tendsto_boundary {T : Fin n → Matrix (Fin (n + 1 + 1)) (Fin (n + 1 + 1
 end ChartIntegrationByPartsCutoff
 
 
+open ChartIntegrationByPartsCutoff in
 theorem ChartIbpCutoff.proof (hE : ChartCutoffEnergy.Statement) (hD : ChartDiffEnergy.Statement) :
     ChartIbpCutoff.Statement := by
   intro n A B C D T hA hB hC hD' hT

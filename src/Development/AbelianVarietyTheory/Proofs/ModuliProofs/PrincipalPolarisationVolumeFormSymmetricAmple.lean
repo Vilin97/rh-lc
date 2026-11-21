@@ -159,6 +159,7 @@ theorem actsBy_id (P : Out.PolAV (Sp K)) {k m : ℕ} (hk0 : 0 < k) (hk : k ≠ 1
 end GlobalTheory.PrincipalNumerics
 
 
+open GlobalTheory.PrincipalNumerics in
 theorem GlobalTheory.principal_polarisation_numerics : Out.Laws → Out.Laws2 → ∀ (K : Type) [Field K] [IsAlgClosed K] (P : Out.PolAV (Sp K)), Vol P.A.hom P.L P.g 1 ∧ FormIs P P.L (𝟙 P.A) ∧ SymB P.L ∧ MapDeg (𝟙 P.A.left) 1 ∧ (∃ (m : ℕ) (th : Fin (m + 1) → (lbPow P.L 4).Sec), VAmp P.A.hom (lbPow P.L 4) th) ∧ ∀ k : ℕ, (k : K) ≠ 0 → ∃ pt : Fin (2 * P.g) → (Out.baseOver (Sp K) ⟶ P.A), TorsBasis P.A k pt ∧ (k ≠ 1 → ActsBy pt (𝟙 P.A) (1 : Matrix _ _ (ZMod k))) := by
   intro hL _ K _ _ P
   refine ⟨vol_one hL.globalSectionsRank hL.globalFns P, formIs_id P, symB hL.globalFns P, mapDeg_id _,

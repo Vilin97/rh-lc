@@ -32,6 +32,8 @@ theorem split_trivial (K M : Type) [Field K] [NumberField K] [Field M] [NumberFi
     fun e => hne (congrArg HeightOneSpectrum.asIdeal e), hP.2, hP'.2, hN P hP, hN P' hP'⟩
 
 
+open NumberField IsDedekindDomain NumberField.mixedEmbedding Filter Topology Asymptotics Polynomial in
+open scoped ContDiff Classical in
 theorem _root_.GlobalTheory.NormChar.smulComm (K L : Type) [Field K] [Field L] [Algebra K L] :
     SMulCommClass (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) := by
   refine ⟨fun σ a x => ?_⟩

@@ -303,6 +303,7 @@ theorem fixes_of_row (hq : ∀ m : M, (⟨ιv (star pE), rll_incl_int v (cO E π
   exact h0
 
 
+omit hL in
 theorem stab_eq (hL' : ∀ x : baseDualV hc n ST v, x.1 ∈ latS (F := F) (v.adicCompletion F) (Formalism.BasicNotions.intV E v) (baseLb E n ST) → fT x = 0)
     {T : ℕ} (hT : T.Prime) (hTπ : π * cO E π = (T : 𝓞 E)) (hM : Nat.card M = T) (hne : fT ≠ 0)
     {P : Pl E} (hP : P ∈ ST) (hov : IsOver v P) (hcardP : Nat.card (𝓞 E ⧸ P.asIdeal) = T) :
@@ -412,6 +413,7 @@ end GlobalTheory.Mem.Col2.Reside
 end
 
 
+set_option maxHeartbeats 4000000 in
 theorem GlobalTheory.Mem.Col2.TC.charts_funKilled : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m) (bad : Set (HeightOneSpectrum (𝓞 B.host.F))) (Ch : Type) (chOf : (I.stp u a i).Cl → Ch) (K : ∀ β : Ch, LevelChart (I.rec7 l Z) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1) (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a i c.1))), I.ReadsK l Z u a i hi chOf K → ∃ K' : ∀ β : Ch, LevelChart (I.rec7 l Z) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1) (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a i c.1)), I.ReadsK l Z u a i hi chOf K' ∧ ∀ β, FunKilled (K' β).lev (X.piT u) ∧ (K' β).lev.Lb = (K β).lev.Lb ∧ (K' β).lev.Uloc = (K β).lev.Uloc ∧ (K' β).lev.U = (K β).lev.U ∧ (∀ (κ' : (K' β).lev.U) (κ : (K β).lev.U), κ'.1 = κ.1 → (K' β).lev.chi κ' = (K β).lev.chi κ) ∧ (K' β).y = (K β).y ∧ (K' β).stabI = (K β).stabI := by
   intro B X I hI hP l Z u a i hi bad Ch chOf K hK
   have hPr := l.pr

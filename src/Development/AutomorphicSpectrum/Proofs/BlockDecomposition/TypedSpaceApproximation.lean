@@ -471,6 +471,8 @@ theorem half_of_cover {F Ω Sl : Set (G)} (hF : IsFundamentalDomain (Γ) F μ) (
 end Half
 
 
+open PositivityTheory.Rg.BcB.SpectralAccumulation in
+open scoped Classical in
 theorem conc : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (N : ℕ) [MeasurableSpace (GA E N)] [BorelSpace (GA E N)]
   (μ : Measure (GA E N)) [μ.IsHaarMeasure] (K : Subgroup (GL (Fin N) (Af E))) (W : Submodule ℂ (Kinf E N → ℂ))
   (R ε δ : ℝ) (α : GA E N → ℂ) (F : Set (GA E N)), IsOpen (K : Set (GL (Fin N) (Af E))) → FiniteDimensional ℂ W → 0 < ε →

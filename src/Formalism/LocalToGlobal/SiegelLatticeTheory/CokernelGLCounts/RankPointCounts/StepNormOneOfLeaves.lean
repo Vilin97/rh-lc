@@ -286,6 +286,7 @@ theorem one_le_NDPt (γ : Formalism.FourierDecayAlt.PN.Pts D.host.E D.R.rS)
 end Bounds
 
 
+open Formalism.L2.SG.HidaSetting Formalism.L2.SG.TermOp Formalism.L2.SG.Full Formalism.FourierDecayAlt Formalism.L2.SG.NGData Formalism.L2.SG.NGCut in
 theorem stepNormOne_of
     (hOV : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word),
       Formalism.L2.SG.TermOp.KExpCut.OOVanish (X.Fu u) (X.Fu u') (Y.what₂ u) (Y.what₂ u') (X := X))

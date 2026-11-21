@@ -56,9 +56,11 @@ section Grp
 variable {C : Type} [CommGroup C]
 
 
+variable (C) in
 abbrev powR (n : ℕ) : Subgroup C := (powMonoidHom n : C →* C).range
 
 
+variable (C) in
 abbrev torK (n : ℕ) : Subgroup C := (powMonoidHom n : C →* C).ker
 
 abbrev difR (τ : C →* C) : Subgroup C := (MonoidHom.id C / τ).range

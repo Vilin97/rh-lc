@@ -129,6 +129,7 @@ theorem perp_left {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : HermitianOrthogon
   exact Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun j _ => by ring
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_frame {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : HermitianOrthogonalExtensionData A B c ε) (hε : ε ≠ 0) {Λ : Lat A}
     (hΛ : IsSelfDualC A Λ) (𝔟 : Fin c → FractionalIdeal (𝓞 D.host.E)⁰ D.host.E) (s : Fin c → k) (hs : ∀ q, s q ≠ 0)
     (h1 : ∀ q, ∀ u ∈ 𝔟 q, (s q)⁻¹ * emb p u ∈ 𝒪[k]) (h2 : ∀ q, ∃ u ∈ 𝔟 q, ∃ o ∈ 𝒪[k], s q = o * emb p u) :

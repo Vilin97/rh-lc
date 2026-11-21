@@ -22,6 +22,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 namespace GlobalTheory.SpecSpan
 
 
+open Classical in
 theorem series_sum {D : D7} {S T : HSp D} (B : Base S T) (hB : B.Good) (ω : PairRep S T) {τs : Type} (s : Finset τs)
     (c : τs → ℂ) (f : τs → WO S T → ℂ) (hf : ∀ τ, IsThetaFunO B.F.ψ S T (f τ)) (h : GA D S) (P : PolF D T.rank S.rank) :
     series B.F ω (∑ τ ∈ s, c τ • f τ) h P = ∑ τ ∈ s, c τ • series B.F ω (f τ) h P := by
@@ -53,6 +54,7 @@ theorem theta_vecAt {D : D7} {S T : HSp D} {B : Base S T} (hB : B.Good) {Q : Fin
   GlobalTheory.GalLift.Vec.theta_of_thetaAt hB.frame.vac.1 hB.frame.vac.2.inf (Base.isThetaAt_vecAt hB hQ φ) hB.frame.vac.2.theta
 
 
+open Classical in
 theorem twist_series_mem_span {D : D7} {S T : HSp D} (B : Base S T) (hB : B.Good) (hS : S.SigOK) (ω : PairRep S T)
     (hω : B.IsWeil 1 ω) (t : Twist D Circle) (hQ : B.admitted t.Q) (O : Subring ℂ) (ι : ↥t.Q → Type) [∀ PP, Fintype (ι PP)]
     (a : ∀ PP, ι PP → ℂ) (ha : ∀ PP u, a PP u ∈ O) (g : ∀ PP, ι PP → GL (Fin S.rank) (kP PP.1))
@@ -92,6 +94,7 @@ end GlobalTheory.SpecSpan
 namespace GlobalTheory.SpecSpan
 
 
+open Classical in
 theorem univ_spec {k : Type} [Field k] [Finite k] {r n : ℕ} {C : Type} [AddCommGroup C] [Fintype C]
     [Fintype (Planes k r n)] (β : DetBases k r n) (κ : kˣ →* Multiplicative C) (ν : Multiplicative C →* ℂˣ)
     (g : Planes k r n → GL (Fin n) k) (c : Planes k r n → kˣ)

@@ -212,6 +212,7 @@ theorem pow_eq_of_frob [IsNoetherianRing O] {g : W.Gam} {J : O⟦X⟧ →ₐ[O] 
   exact sub_eq_zero.1 (eq_zero_of_dvd_C J h1 W.DelF (fun δ => W.γ₀ δ) h2 _ (h6.dvd.trans e7))
 
 
+omit [IsDomain O] in
 theorem lines_of_frob (hq : IsUnit (algebraMap (LetA O n) W.EE W.q)) {β : W.DD T}
     (hN : W.N T = Submodule.span (LetA O n) {β}) {k : ℕ} {f : LetA O n} (hf : W.q ^ k • W.φD T β = f • β)
     {i : ZMod n} {m : ℕ} {u : (O⟦X⟧)ˣ} (hu : f i = W.q₀ ^ m * u) {a : ℤ} (ha : (m : ℤ) = k + a) :

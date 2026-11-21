@@ -239,6 +239,7 @@ theorem sig_one (n : ℕ) :
   rfl
 
 
+omit [IsLocalRing O] [IsDomain O] in
 theorem smul_p_pt {B : Type} [CommRing B] [Algebra O B] (x : G.TateOver B) (n : ℕ) :
     ((p : ℤ_[p]) • x).pt (n + 1) = (x.pt n).comp (G.res n : G.A (n + 1) →ₐ[O] G.A n) := by
   have h1 : ((p : ℤ_[p]) • x).conv (n + 1) = x.conv (n + 1) ^ p := by
@@ -268,6 +269,7 @@ variable {p : ℕ} [Fact p.Prime] [IsDomain O] {G : PDivGroup p O}
   {e : ∀ n, (G.A n →ₐ[O] IsLocalRing.ResidueField O) → G.A n} (he : ∀ n, IdemData (G.A n) (e n))
 
 
+variable (s hpt) in
 def endo (n : ℕ) : G.A n →ₐ[O] G.A n :=
   (sumE (he n)).comp (AlgHom.pi (sig G s hpt n))
 
@@ -373,6 +375,8 @@ theorem res_endo (H : HasIdem O) (n : ℕ) (a : G.A (n + 1)) :
   rfl
 
 
+variable (s hpt) in
+include hpt he in
 def uEnd (H : HasIdem O) : G ⟶ G where
   app n := BialgHom.ofAlgHom (endo s hpt he n) (counit_endo hs hw he n) (comul_endo hw he H n)
   comm n := BialgHom.ext fun a => res_endo hw he H n a

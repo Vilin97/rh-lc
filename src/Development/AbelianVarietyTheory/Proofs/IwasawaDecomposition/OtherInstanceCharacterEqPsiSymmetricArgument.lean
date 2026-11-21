@@ -34,6 +34,7 @@ theorem otherInstanceCharacter_eq_psi_symmetricArgument (X : HidaSetting D) (x :
     X.chi2 x = X.psiEf (divN X.B.I X.B.g (argS X x)) := rfl
 
 
+open Classical in
 def side (X : HidaSetting D) (w : HeightOneSpectrum (𝓞 D.host.E)) : Bool := decide (GlobalTheory.Mem.SymFrame.EwAt X w)
 
 def wtA (ρ k : ℕ) (s : Bool) {r : ℕ} (i _j : Fin r) : ℤ :=

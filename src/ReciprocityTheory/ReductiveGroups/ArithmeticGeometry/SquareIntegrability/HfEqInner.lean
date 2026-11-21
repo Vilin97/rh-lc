@@ -21,6 +21,7 @@ def VP {dim : (E →+* ℂ) → ℕ} (σ : E →+* ℂ) : Submodule ℂ (Vsp dim
 
 
 open scoped Classical in
+open Classical in
 def prj {dim : (E →+* ℂ) → ℕ} (σ : E →+* ℂ) (v : Vsp dim) : Vsp dim :=
   WithLp.toLp 2 fun j => if j.1 = σ then v j else 0
 

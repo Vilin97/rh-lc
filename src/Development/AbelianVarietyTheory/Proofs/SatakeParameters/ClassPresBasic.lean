@@ -133,6 +133,7 @@ theorem ext_li : LinearIndependent ℂ (fun i => P.extL (S.basis i)) := by
   exact h2
 
 
+open Classical in
 def avgForm (S : CSD K) (c : S.Cl) (x : S.V) : S.Forms :=
   ⟨Pi.single c (∑ g : S.Gam c, S.ρ c g x), by
     intro c' γ

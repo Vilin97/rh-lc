@@ -33,6 +33,7 @@ open Formalism.L2.Col
   piT := X.piT
 
 
+open Classical in
 @[reducible] def Base.wts (B : Base) : Wts B.fields B.Word B.R where
   row := fun τ => RowPar.of (B.hc τ)
   hc := B.hcW

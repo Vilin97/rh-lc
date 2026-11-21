@@ -23,6 +23,7 @@ theorem cA_tmul (D : D7) (a : AF D.host.F) (e : D.host.E) :
     cA D (a ⊗ₜ[D.host.F] e) = a ⊗ₜ[D.host.F] star e := rfl
 
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem trace_mem (D : D7) (y : AE D) :
     ∃ b : AF D.host.F, algebraMap (AF D.host.F) (AE D) b = y + cA D y := by
   induction y using TensorProduct.induction_on with
@@ -66,6 +67,7 @@ theorem fixed_unit (D : D7) (x : (AE D)ˣ) (hx : cA D (x : AE D) = x) :
 end GlobalTheory.CharConjFixed
 
 
+open GlobalTheory.CharConjFixed in
 theorem GlobalTheory.char_conj_fixed_eq_one : ∀ (D : D7) (μ : (AE D)ˣ →* Circle) (n : ℕ), ResEta D μ n → Even n →
     ∀ (V : HSp D) (x : (AE D)ˣ), IsDetRoot V 1 x → μ x = 1 := by
   intro D μ n hμ hn V x hx

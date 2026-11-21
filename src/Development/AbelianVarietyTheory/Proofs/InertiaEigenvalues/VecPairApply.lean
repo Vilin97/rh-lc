@@ -103,6 +103,7 @@ def LocCountFin : Prop :=
         Nat.card Y ^ (D.R.f * D.R.r)
 
 
+omit [Algebra (X.O0 i) Λ] in
 def IsChar {M : ℕ} {ι : Type} [Fintype ι] (ξ : ι → Λ) (d : ι → (GE N →* Multiplicative (ZMod (X.l i ^ M)))) : Prop :=
   ∀ g, ((κ g : Λˣ) : Λ) * ∏ q, (1 + ξ q) ^ (Multiplicative.toAdd (d q g)).val = 1
 
@@ -116,6 +117,7 @@ def NewPl (M : ℕ) (L : Subgroup (GE N)) (p : PlE D.host) (d : GE N →* Multip
     d γ = Multiplicative.ofAdd 1
 
 
+variable (X) in
 def two (g : GE N) : Bool → GE N := fun b => if b then cConj X g else g
 
 end GlobalTheory.NewPrime

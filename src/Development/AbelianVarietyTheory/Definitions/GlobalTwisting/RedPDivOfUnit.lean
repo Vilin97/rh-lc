@@ -21,6 +21,7 @@ section Cong
 variable {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] {P : HeightOneSpectrum (𝓞 E)}
 
 
+variable (P) in
 def CongQ (a b : E) : Prop := IntAt P a ∧ IntAt P b ∧ IntAt P ((a - b) / (qOf P : E))
 
 omit [StarRing E] in
@@ -91,6 +92,7 @@ theorem PhiGS_congr (k₀ rS r t j c' n' c n : ℕ) {x y : HomE E (n' + c') (n +
     exact Finset.prod_congr rfl fun i _ => unitV_det_congr _ fun s s' => h _ _
 
 
+omit [NumberField E] [StarRing E] in
 theorem entB_zero (q k₀ c' n' n : ℕ) (hc : c' = 0) (ex : ℕ → ℕ) (x : HomE E (n' + c') (n + 0)) (p p' : ℕ) :
     LocE.entB q k₀ c' n' 0 n ex ex x p p' =
       if h : p < n ∧ p' < n' then x (Pi.single ⟨p', by omega⟩ 1) ⟨p, h.1⟩ else 0 := by
@@ -118,6 +120,7 @@ theorem entB_zero (q k₀ c' n' n : ℕ) (hc : c' = 0) (ex : ℕ → ℕ) (x : H
     simp [Loc.atN, h1]
 
 
+omit [StarRing E] in
 theorem locChar_mul (q : ℕ) (cq : K) (ξ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {u : E} (hu : ∀ a, redP P (a * u) = redP P a) (a : E) :
     LocE.locChar q cq ξ (a * u) = LocE.locChar q cq ξ a := by
   have e : ∀ z : ℤ, redP P (a * u / (q : E) ^ z) = redP P (a / (q : E) ^ z) := fun z => by

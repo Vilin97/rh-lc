@@ -70,6 +70,8 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : G.Inst D L} {Gl : G
   [Fact (D.what₂.places.resChar w).Prime] {t : KerEntTied ex} (J : Joint t H X) (std : Lt.StdAtW D Gl u w hg)
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
 structure Dec where
   gam : ∀ j (_ : j ≤ D.R.m), (sysS H X std).Lt j → GL (Fin (D.R.N j)) D.host.E
   kap : ∀ j (hj : j ≤ D.R.m) (La : (sysS H X std).Lt j), ((J.St j hj).K (J.chart std j hj La)).lev.U

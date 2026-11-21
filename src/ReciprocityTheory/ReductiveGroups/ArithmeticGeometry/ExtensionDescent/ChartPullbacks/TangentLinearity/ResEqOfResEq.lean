@@ -348,6 +348,7 @@ theorem u_zero (hGF : GlobalFnsSt) (hu : u.IsGen)
   exact (congrArg (res _) h1).trans ((corr_symm' D.toPre.P.L hcc) j j' hj hj' hm)
 
 
+include hO in
 theorem rho_e (hGF : GlobalFnsSt) (hu : u.IsGen)
     (hu0 : LB.Gen.Corr D.toPre.P.L _ _ _ _ (LB.pullGen D.toPre.P.L _ _ u (zero2 D.toPre.P.A))
       (LB.oneGen D.toPre.P.L))

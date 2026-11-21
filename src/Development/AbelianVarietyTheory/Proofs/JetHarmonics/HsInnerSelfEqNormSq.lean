@@ -17,6 +17,7 @@ variable {P : M.Par} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace �
   [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq]
 
 
+omit [FiniteDimensional ℂ Wp] in
 theorem hsInner_self_eq_normSq (A : Wq →L[ℂ] Wp) : B.hsInner A A = ((‖B.hsVec A‖ ^ 2 : ℝ) : ℂ) := by
   unfold B.hsInner
   rw [inner_self_eq_norm_sq_to_K]

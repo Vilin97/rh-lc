@@ -45,6 +45,7 @@ theorem d_extZ {Q : ObjectProperty C} (hQ : Cosieve Q) {n : â„•} (b : CH.Cn (Q.Î
 end RelativeFormLift
 
 
+open RelativeFormLift in
 theorem relLiftOf_pf : RelLiftOf := by
   intro hS hO K _ W Z q i _ a n y hy
   have hQ : Cosieve (On q i) := (hS K W Z W q i i).2.1

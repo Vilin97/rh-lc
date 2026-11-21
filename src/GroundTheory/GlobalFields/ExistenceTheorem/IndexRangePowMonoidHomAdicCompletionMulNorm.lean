@@ -30,6 +30,7 @@ theorem index_range_powMonoidHom_adicCompletion_mul_norm (v : HeightOneSpectrum 
     div_mul_cancel₀ _ hn, sq]
 
 
+omit [NumberField K] in
 theorem eq_one_or_eq_two_of_isReal {w : InfinitePlace K} (hw : w.IsReal) : n = 1 ∨ n = 2 := by
   obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot K n
   have h := hζ.map_of_injective (InfinitePlace.embedding_of_isReal hw).injective
@@ -41,6 +42,7 @@ theorem eq_one_or_eq_two_of_isReal {w : InfinitePlace K} (hw : w.IsReal) : n = 1
   exact (Nat.dvd_prime Nat.prime_two).1 (h.dvd_of_pow_eq_one 2 hx2)
 
 
+omit [NumberField K] in
 theorem index_range_powMonoidHom_infinitePlaceCompletion_mul_norm (w : InfinitePlace K) :
     ((powMonoidHom n : (w.Completion)ˣ →* (w.Completion)ˣ).range.index : ℝ) *
       ‖(n : w.Completion)‖ ^ w.mult = (n : ℝ) ^ 2 := by

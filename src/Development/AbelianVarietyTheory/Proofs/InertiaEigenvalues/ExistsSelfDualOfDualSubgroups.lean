@@ -12,6 +12,8 @@ namespace GlobalTheory.JR.AbsInv
 variable {V : Type} [AddCommGroup V] [TopologicalSpace V] [IsTopologicalAddGroup V]
 
 
+open MeasureTheory Filter Topology Pointwise in
+variable {V : Type} [AddCommGroup V] [TopologicalSpace V] [IsTopologicalAddGroup V] in
 theorem _root_.GlobalTheory.JR.AbsInv.exists_nhds_invariant {f : V → ℂ}
     (hf : _root_.GlobalTheory.JR.IsTest f) :
     ∃ U ∈ 𝓝 (0 : V), ∀ M : AddSubgroup V, (M : Set V) ⊆ U → ∀ x, ∀ m ∈ M, f (x + m) = f x := by
@@ -54,6 +56,9 @@ theorem _root_.GlobalTheory.JR.AbsInv.exists_nhds_invariant {f : V → ℂ}
 variable [MeasurableSpace V] [BorelSpace V]
 
 
+open MeasureTheory Filter Topology Pointwise in
+variable {V : Type} [AddCommGroup V] [TopologicalSpace V] [IsTopologicalAddGroup V] in
+variable [MeasurableSpace V] [BorelSpace V] in
 theorem _root_.GlobalTheory.JR.AbsInv.integral_eq_zero_of_translate (μ : Measure V) [μ.IsAddHaarMeasure] (g : V → ℂ) (m : V) (c : ℂ)
     (hc : c ≠ 1) (h : ∀ x, g (x + m) = c * g x) : ∫ x, g x ∂μ = 0 := by
   have h1 : ∫ x, g x ∂μ = c * ∫ x, g x ∂μ := by
@@ -122,6 +127,10 @@ private theorem integral_indicator_bicharacter_eq_indicator (μ : Measure V) [μ
       rw [Set.indicator_of_notMem hyn, Set.indicator_of_notMem hy, mul_zero]
 
 
+open MeasureTheory Filter Topology Pointwise in
+variable {V : Type} [AddCommGroup V] [TopologicalSpace V] [IsTopologicalAddGroup V] in
+variable [MeasurableSpace V] [BorelSpace V] in
+variable [T2Space V] [LocallyCompactSpace V] [SecondCountableTopology V] in
 theorem _root_.GlobalTheory.JR.AbsInv.fourB_fourB (μ : Measure V) [μ.IsAddHaarMeasure] (B : V → V → ℂ)
     (hB : Continuous (fun p : V × V => B p.1 p.2)) (hs : ∀ x y, B x y = B y x)
     (ha : ∀ x x' y, B (x + x') y = B x y * B x' y) (M N : AddSubgroup V)
@@ -231,6 +240,10 @@ private theorem measureReal_mul_eq_of_dual_pairs_subset (μ : Measure V) [μ.IsA
   exact_mod_cast h2.symm.trans h1
 
 
+open MeasureTheory Filter Topology Pointwise in
+variable {V : Type} [AddCommGroup V] [TopologicalSpace V] [IsTopologicalAddGroup V] in
+variable [MeasurableSpace V] [BorelSpace V] in
+variable [T2Space V] [LocallyCompactSpace V] [SecondCountableTopology V] in
 theorem _root_.GlobalTheory.JR.AbsInv.exists_selfDual (B : V → V → ℂ)
     (hB : Continuous (fun p : V × V => B p.1 p.2)) (hs : ∀ x y, B x y = B y x)
     (ha : ∀ x x' y, B (x + x') y = B x y * B x' y)
@@ -280,6 +293,10 @@ theorem _root_.GlobalTheory.JR.AbsInv.exists_selfDual (B : V → V → ℂ)
 end GlobalTheory.JR.AbsInv
 
 
+open MeasureTheory Filter Topology Pointwise in
+variable {V : Type} [AddCommGroup V] [TopologicalSpace V] [IsTopologicalAddGroup V] in
+variable [MeasurableSpace V] [BorelSpace V] in
+variable [T2Space V] [LocallyCompactSpace V] [SecondCountableTopology V] in
 theorem _root_.GlobalTheory.JR.exists_selfDual_of_dual_subgroups : ∀ (V : Type) [AddCommGroup V] [TopologicalSpace V] [IsTopologicalAddGroup V] [T2Space V] [LocallyCompactSpace V] [SecondCountableTopology V] [MeasurableSpace V] [BorelSpace V] (B : V → V → ℂ), Continuous (fun p : V × V => B p.1 p.2) → (∀ x y, B x y = B y x) → (∀ x x' y, B (x + x') y = B x y * B x' y) → (∀ y, B 0 y = 1) → (∀ U ∈ 𝓝 (0 : V), ∃ M N : AddSubgroup V, (M : Set V) ⊆ U ∧ IsOpen (M : Set V) ∧ IsCompact (M : Set V) ∧ IsOpen (N : Set V) ∧ IsCompact (N : Set V) ∧ (∀ y, y ∈ N ↔ ∀ x ∈ M, B x y = 1) ∧ (∀ x, x ∈ M ↔ ∀ y ∈ N, B x y = 1)) → ∃ μ : MeasureTheory.Measure V, _root_.GlobalTheory.JR.SelfDual μ B := by
   intro V _ _ _ _ _ _ _ _ B hB hs ha _ H
   exact _root_.GlobalTheory.JR.AbsInv.exists_selfDual B hB hs ha H

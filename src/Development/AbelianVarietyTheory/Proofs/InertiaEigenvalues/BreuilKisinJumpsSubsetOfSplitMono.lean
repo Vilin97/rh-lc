@@ -18,6 +18,7 @@ variable {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [Comple
   [TameDescentExponentData K l e a] {ι κ : Type} [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ] {η H : ℕ}
 
 
+omit [CompleteSpace K] [NeZero e] [NeZero a] [TameDescentExponentData K l e a] in
 theorem C_mem_invL (c : K) : (C c : K⟦X⟧) ∈ invL l (A O K) :=
   (mem_invL_A_iff l).2 ⟨‖c‖, fun n => by
     rw [coeff_C]
@@ -26,6 +27,7 @@ theorem C_mem_invL (c : K) : (C c : K⟦X⟧) ∈ invL l (A O K) :=
     · simp⟩
 
 
+omit [CompleteSpace K] [NeZero e] [NeZero a] [TameDescentExponentData K l e a] [Fintype ι] [DecidableEq ι] in
 theorem smul_mem_of_invL {B : Subalgebra O K⟦X⟧} (hB : invL l (A O K) ≤ B)
     (W : Submodule B (Vec K a ι)) (c : K) {x : Vec K a ι} (hx : x ∈ W) : c • x ∈ W := by
   have := W.smul_mem ⟨C c, hB (C_mem_invL c)⟩ hx
@@ -38,6 +40,7 @@ theorem Ezpow_zero : Ezpow K l e 0 = 1 := by
   simpa using Ezpow_natCast (K := K) l e 0
 
 
+omit [CompleteSpace K] [NeZero a] [TameDescentExponentData K l e a] [Fintype ι] [DecidableEq ι] in
 theorem shiftE_le {B : Subalgebra O K⟦X⟧} (hB : invL l (A O K) ≤ B)
     (W : Submodule B (Vec K a ι)) {i j : ℤ} (h : i ≤ j) : shiftE l e j W ≤ shiftE l e i W := by
   intro v hv
@@ -59,6 +62,7 @@ variable {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [Comple
   [TameDescentExponentData K l e a] {ι κ : Type} [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ] {η H : ℕ}
 
 
+omit [CompleteSpace K] in
 theorem EN_mem_shiftE_Man (D : BKDat O K l e a ι η H) (k : ℤ) {y : Vec K a ι}
     (hy : y ∈ shiftE l e k (D.Mext (Rpi O K l e))) : D.EN y ∈ shiftE l e k (D.Mext (Rpi O K l e)) := by
   rw [mem_shiftE] at hy ⊢
@@ -90,6 +94,7 @@ variable {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [Comple
 section Proj
 
 
+variable (l e) in
 noncomputable def cst : ℕ → K
   | 0 => 1
   | n + 1 => (((n + 1 : ℕ) : ℤ) * e * l : ℤ) * cst n
@@ -282,6 +287,7 @@ theorem mem_filL_of_app_mem (D₀ : BKDat O K l e a ι η H) (D₁ : BKDat O K l
 end GlobalTheory.BK.SubJumps
 
 
+open GlobalTheory.BK in
 theorem GlobalTheory.BK.jumps_subset_of_split_mono : ∀ (O K : Type) [CommRing O] [NormedField K] [IsUltrametricDist K] [CompleteSpace K] [Algebra O K] [IsUnitBall O K] (l e a : ℕ) [Fact l.Prime] [NormedAlgebra ℚ_[l] K] [NeZero e] [NeZero a] [TameDescentExponentData K l e a] (ι κ : Type) [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ] (η H : ℕ) (D₀ : BKDat O K l e a ι η H) (D₁ : BKDat O K l e a κ η H) (F : GlobalTheory.BK.Hom D₀.toPhiMod D₁.toPhiMod) (n : ℕ), (∀ τ : ZMod a, ∃ Λ : Matrix ι κ K⟦X⟧, (∀ i k, Λ i k ∈ A O K) ∧ Λ * F.mat τ = (l : K) ^ n • (1 : Matrix ι ι K⟦X⟧)) → D₀.jumps ⊆ D₁.jumps := by
   intro O K _ _ _ _ _ _ l e a _ _ _ _ _ ι κ _ _ _ _ η H D₀ D₁ F n hΛ i hi h1
   apply hi

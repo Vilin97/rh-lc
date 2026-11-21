@@ -42,6 +42,7 @@ theorem frm_one {D : D7} (X : HidaSetting D) (u : D.what₂.Word) (v : NumberFie
 end GlobalTheory.ZhatRat
 
 
+open GlobalTheory.ZhatRat in
 theorem GlobalTheory.zhatRat_embed : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (W : WittDat X) (u u' : D.what₂.Word) (s : TT Y u u') (τ : D.what₂.Tau), (ZhatL (lf D (FlagOfWord W u)) (Formalism.L2.SG.Saturated.mapL (W.δ u) (W.isom u) s.frame)).map (embS D τ) = Formalism.L2.SG.RealObj.ZX X u u' 1 s.pt.1 (X.pl.symm τ) := by
   intro D X Y W u u' s τ
   obtain ⟨M, _, hM1, _, hM3⟩ := s.rep.2.1

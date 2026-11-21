@@ -93,6 +93,7 @@ theorem exists_Lc (Z : Subalgebra k (Matrix (Fin n) (Fin n) k)) {m : ℕ} (hm : 
   rw [e, add_sub_cancel_left]; exact ha
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem relIndex_eq_of_coset (H K : Subgroup (GL (Fin n) k)) (A N : AddSubgroup (Matrix (Fin n) (Fin n) k))
     (h1 : ∀ h ∈ H, h.val - 1 ∈ A) (h2 : ∀ a ∈ A, ∃ h ∈ H, h.val = 1 + a)
     (h3 : ∀ h ∈ H, ∀ x ∈ N, h.val * x ∈ N) (h4 : ∀ h, h ∈ K ↔ h.val - 1 ∈ N) :

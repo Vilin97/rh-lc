@@ -262,6 +262,7 @@ theorem IsSumTriple.baseChange {R : Type*} [CommRing R] [Algebra R A] [Algebra R
   rwa [WeierstrassCurve.map_baseChange] at this
 
 
+open WeierstrassCurve.Projective in
 theorem IsSumTriple.equiv_add {k : Type*} [Field k] {V : WeierstrassCurve k} {P Q T : Fin 3 → k}
     (h : IsSumTriple V P Q T) (hP : V.toProjective.Nonsingular P)
     (hQ : V.toProjective.Nonsingular Q) (hT : T ≠ 0) : T ≈ V.toProjective.add P Q :=
@@ -324,6 +325,7 @@ theorem comp_ptOver_eq_fieldAdd {A : Type u} [CommRing A] [Algebra R A] {P Q T :
   exact (fieldAdd_ptOver W _ _ _ (h.baseChange g)).symm
 
 
+omit [W.IsElliptic] in
 theorem exists_nhds_eq_ptOver {T : Over (Spec (.of R))} (p q : T ⟶ schemeOver W) (t : T.left) :
     ∃ (A : Type u) (_ : CommRing A) (_ : Algebra R A) (j : specOver R A ⟶ T) (P Q : Fin 3 → A)
       (hP : IsUnimodularSol (W.baseChange A) P) (hQ : IsUnimodularSol (W.baseChange A) Q),

@@ -183,6 +183,7 @@ private theorem quotient_mk_levRep {E : Type} [Field E] [NumberField E] [IsCMFie
   Classical.choose_spec (Submodule.Quotient.mk_surjective _ q)
 
 
+open GlobalTheory.DatumInverseCharacter in
 theorem datEq_of_phiHat : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Geo.Tor.Level H) (Xo : Moduli Dw l) (c : Coeff l) (n : ℕ) (d : DeltaDat Xo c n), d.IsLev → ∀ (ψ : (LaI Xo c d ≃ₗ[𝓞 E] LaI Xo c d) →* c.Fˣ) (φ : (Fin n → LevQc Dw d.l₂) → c.F) (w : (Fin n → LevQ Dw d.l₂) → c.F), (∀ q, d.eF (w q) = phiHat d.c₂ (fun x => d.eF (φ x)) q) → (∀ (kI : LaI Xo c d ≃ₗ[𝓞 E] LaI Xo c d) (σq : LevQ Dw d.l₂ ≃ₗ[𝓞 E] LevQ Dw d.l₂) (σc : LevQc Dw d.l₂ ≃ₗ[𝓞 E] LevQc Dw d.l₂), (∀ a b : Dw.La, σq (Submodule.Quotient.mk a) = Submodule.Quotient.mk b → a - b ∈ l.Mb • (⊤ : Submodule (𝓞 E) Dw.La) ∧ kI (Submodule.Quotient.mk a) = Submodule.Quotient.mk b) → (∀ (x : LevQc Dw d.l₂) (q : LevQ Dw d.l₂), (d.l₂.M : ℤ) ∣ Dw.EF (qRep (σc x)) (cSep d.l₂ • levRep (σq q)) - Dw.EF (qRep x) (cSep d.l₂ • levRep q)) → ∀ x, φ (fun b => σc.symm (x b)) = (((ψ kI)⁻¹ : c.Fˣ) : c.F) * φ x) → DatEq d ψ w := by
   intro E _ _ _ H Dw l Xo c n d hLev ψ φ w hw hφ
   obtain ⟨hDvd, -, -, hMb2, -⟩ := hLev

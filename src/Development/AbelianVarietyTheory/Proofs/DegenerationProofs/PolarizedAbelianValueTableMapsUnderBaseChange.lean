@@ -45,6 +45,7 @@ theorem exists_ptHom (gp : IsGrpPullback A' A f φ) (hh : h ≫ T.hom = T'.hom �
   rfl
 
 
+omit [GrpObj A] in
 theorem sval_all {L : LB A.left} {k : ℤ} {s : LB.Sec (LPow A L k T)} {q : T.left ⟶ (T ⊗ A).left} {p : T.left ⟶ A.left}
     {e : LB.Gen (LB.LinComb L (Y := T.left) (K := Fin 1) (fun _ => p) (fun _ => k))} {c : Γ(T.left, ⊤)}
     (H : ∀ z J, Good L z J → sval (φ := fun _ : Fin 1 => (snd T A).left) (ε := fun _ => k) s q z J =

@@ -63,6 +63,7 @@ end GlobalTheory.CharPMatrix
 namespace GlobalTheory.UPel.HT
 
 
+open GlobalTheory.CharPMatrix in
 theorem Datum.charP_tensor_matrix : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.HT.Datum p) (k : Type) [Field k]
     [CharP k p] [Algebra (𝓞 D.F) k], Nonempty ((k ⊗[𝓞 D.F] D.O) ≃ₐ[k] Matrix (Fin D.m) (Fin D.m) k) := by
   intro p _ D k _ _ _

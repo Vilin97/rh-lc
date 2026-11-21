@@ -608,6 +608,7 @@ theorem recursiveSequence_stable (n r : ℕ) (hr : r ≤ n) : (h3F Q a h1 hstep 
       rw [this]
 
 
+include h1 hstep in
 theorem exists_sequence_of_extension (hcongr : ∀ (R : ℕ) (c c' : ℕ → α), (∀ r < R, c r = c' r) → Q R c → Q R c') :
     ∃ c : ℕ → α, c 0 = a ∧ ∀ R : ℕ, 1 ≤ R → Q R c := by
   refine ⟨fun r => (h3F Q a h1 hstep r).1 r, (h3F Q a h1 hstep 0).2.1, fun R hR => ?_⟩

@@ -18,6 +18,7 @@ namespace GlobalTheory.EisMidHt
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}
 
 
+variable (F) in
 def adVec (z : Fin n → E) : Fin n → AF F ⊗[F] E := fun i => inclR (F := F) (AF F) (z i)
 
 

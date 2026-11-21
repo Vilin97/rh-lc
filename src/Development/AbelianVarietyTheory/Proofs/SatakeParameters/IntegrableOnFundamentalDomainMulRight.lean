@@ -16,6 +16,7 @@ variable {H : Type} [Group H] [TopologicalSpace H] [IsTopologicalGroup H] [Measu
   {Γ : Subgroup H} [Countable Γ] {𝓕 : Set H}
 
 
+omit [μ.IsMulLeftInvariant] [Countable Γ] in
 theorem isFundamentalDomain_image_mul_right (h𝓕 : IsFundamentalDomain Γ 𝓕 μ) (y : H) :
     IsFundamentalDomain Γ ((fun h => h * y) '' 𝓕) μ := by
   refine h𝓕.image_of_equiv (Equiv.mulRight y) ?_ (Equiv.refl _) ?_

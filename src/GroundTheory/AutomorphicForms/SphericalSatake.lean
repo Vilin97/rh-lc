@@ -150,6 +150,7 @@ theorem sphericalFun_unramifiedChar (w : Fin n → ℂˣ) (g : GL (Fin n) F) :
     iwasawaExponent_mul_of_mem_integralGL F n _ hk]
 
 
+variable (F n) in
 def integralOpen : OpenSubgroup (GL (Fin n) F) := ⟨integralGL F n, isOpen_integralGL F n⟩
 
 variable [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)]
@@ -189,6 +190,7 @@ theorem sphericalEigen_unramifiedChar (w : Fin n → ℂˣ) (h : SphericalHecke 
     exact hx (by simp [apply_out_eq_zero hxs])
 
 
+variable (μ) in
 def satake (h : SphericalHecke μ (F := F) (n := n)) : LaurentRing n :=
   (μ.real (integralGL F n : Set (GL (Fin n) F)) : ℂ) •
     ∑ x ∈ cosetSupport h, single (iwasawaExponent F n x.out) ((h : HeckeAlgebra μ) x.out)
@@ -215,6 +217,7 @@ theorem evalAt_satake (w : Fin n → ℂˣ) (h : SphericalHecke μ (F := F) (n :
   rw [evalAt_single]
 
 
+variable (μ) in
 def satakeHom : SphericalHecke μ (F := F) (n := n) →ₐ[ℂ] LaurentRing n where
   toFun := satake μ
   map_one' := eq_of_forall_evalAt fun w => by simp only [evalAt_satake, map_one]

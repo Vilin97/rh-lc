@@ -254,6 +254,7 @@ end GlobalTheory.TypeSum.CoefLow
 namespace GlobalTheory.TypeSum
 
 
+open CoefLow in
 theorem coefBound_of_casselmanWallach : GlobalTheory.Published.CasselmanWallach → ∀ (n : ℕ) (ε : Fin n → Bool) (H : Type)
     [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] (σ : Mx n → (H →L[ℂ] H)), Std ε σ →
     CoefBound ε σ := by

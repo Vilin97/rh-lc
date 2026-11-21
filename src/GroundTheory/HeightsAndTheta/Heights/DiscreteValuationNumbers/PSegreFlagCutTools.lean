@@ -143,6 +143,7 @@ theorem IsVerticalDivisor.restrict {P H : Ideal (MRing ι O)} {ϖ : O} {b : K �
 variable [IsDomain O] [IsDiscreteValuationRing O] [Fintype K] [∀ k, Fintype (ι k)]
 
 
+omit [DecidableEq K] in
 theorem ratDiv_eq_of_sub_mem {P : Ideal (MRing ι O)} [P.IsPrime] {f g f' g' : MRing ι O} (hf : f ∉ P)
     (hg : g ∉ P) (hf' : f' ∉ P) (hg' : g' ∉ P) (h : f * g' - f' * g ∈ P) :
     ratDiv P f g = ratDiv P f' g' := by

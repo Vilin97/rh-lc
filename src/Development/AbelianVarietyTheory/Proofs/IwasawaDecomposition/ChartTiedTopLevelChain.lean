@@ -241,6 +241,7 @@ theorem reads_pt (c : (I.stp u I.mu0 j).Cl) : IsPtOf B.sp.cm (y c * k (chOf c)) 
   IsPtOf.of_extTo (I.Q_subset_SQ _) (Finset.disjoint_right.2 fun P hP => (Finset.eq_empty_iff_forall_notMem.1 I.twistPrimes_reference_tuple_eq_empty P hP).elim) (H.pt c)
 
 
+set_option maxHeartbeats 2000000 in
 theorem read_of_mem (c : (I.stp u I.mu0 j).Cl) (x : U (chOf c)) (hx : x.1 ∈ UAd B.sp.cm (B.R.N j)) :
     ∃ (hJ : x.1 ∈ J0 B.sp.cm (B.R.N j) ((B.primes X).vT u))
       (hm : (redG B.sp.cm (B.R.N j) ((B.primes X).vT u) (B.primes X).vGs ⟨x.1, hJ⟩)⁻¹ ∈
@@ -277,6 +278,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} {Ch : Chars X Pr R.m}
   {L : ChIdx X Pr R (QE sel (mu : Chr X.F X.E X.K))} {Gc : ChGlob X R.m} {m2 : ℕ}
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_gLevH (hX : X.Ok) (hPr : Pr.Ok) (hsel : IsSel X sel) (hL : L.Ok Ch sel mu cst Gc m2) (hsh : cst.sharp = true)
     (hc : Formalism.BasicNotions.CMData X.F X.E) {j : ℕ} (hj : j + 1 = R.m) [NeZero (R.N j)] (b : L.β j) (u : Pr.Word) (σ : X.K →+* ℂ)
     {Jm : Matrix (Fin (R.N j)) (Fin (R.N j)) X.E} {T f : ℕ} {bad : Set (HeightOneSpectrum (𝓞 X.F))}
@@ -367,6 +369,7 @@ theorem exists_gLevH (hX : X.Ok) (hPr : Pr.Ok) (hsel : IsSel X sel) (hL : L.Ok C
 end Level
 
 
+set_option maxHeartbeats 8000000 in
 theorem stepBefore_oneLevel : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (G : GLoc (I.rec7 l Z).host.F (I.rec7 l Z).host.E (sigD (I.rec7 l Z)) (I.rec7 l Z).host.g) (Ch : Type) (chOf : (I.stp u I.mu0 (B.R.m - 1)).Cl → Ch) (K : ∀ β : Ch, LevelChart (I.rec7 l Z) (B.T u) (badG (I.rec7 l Z)) (B.R.m - 1) (Nat.sub_le _ _) (fun c : {c // chOf c = β} => (I.chain l u I.mu0).stab (B.R.m - 1) c.1) (fun c => latCrd (I.rec7 l Z) (B.R.m - 1) (Nat.sub_le _ _) (I.latAt u I.mu0 (B.R.m - 1) c.1))), I.IdG l Z G → I.ReadsK l Z u I.mu0 (B.R.m - 1) (Nat.sub_le _ _) chOf K → ∃ (J : StepLevel (I.rec7 l Z).host.F (I.rec7 l Z).host.E (sigD (I.rec7 l Z)) (gramN (I.rec7 l Z) (B.R.m - 1) (Nat.sub_le _ _)) (B.T u) B.R.f (badG (I.rec7 l Z))) (lamJ : ∀ (j : Fin 2) (v : HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F)), ((I.rec7 l Z).host.g j : 𝓞 (I.rec7 l Z).host.F) ∈ v.asIdeal → HSym (I.rec7 l Z) (B.R.N (B.R.m - 1)) false v →* ℂˣ) (V : GLevH J G (fun _ v _ => HSym (I.rec7 l Z) (B.R.N (B.R.m - 1)) false v) lamJ) (Yb : Type) (_ : Finite Yb) (_ : MulAction J.U Yb) (yb : Ch → Yb), (∀ j v h, V.fr j v h = 1) ∧ (∀ j v h M, ((lamJ j v h M : ℂˣ) : ℂ) = lamSym (G.psi0 j v h) (G.chiB j v h) B.R.k (rSD B.R) B.R.t (B.R.m - 1) M.1.1) ∧ (∀ y : Yb, ∃! β, ∃ κ : J.U, κ • yb β = y) ∧ ∀ β, (K β).lev.Lb = J.Lb ∧ (K β).lev.U ≤ J.U ∧ (∀ κ : J.U, κ.1 ∈ (K β).lev.U ↔ κ • yb β = yb β) ∧ ∀ (κ : (K β).lev.U) (κ' : J.U), κ.1 = κ'.1 → (K β).lev.chi κ = J.chi κ' := by
   intro B X I hOk hPins l Z u G Ch chOf K hG hR
   classical

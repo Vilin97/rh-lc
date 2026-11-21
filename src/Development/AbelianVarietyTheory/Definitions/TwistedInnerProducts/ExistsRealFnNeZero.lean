@@ -137,6 +137,7 @@ theorem realFn_mul_fin (g : GA D (G.V X)) (k : FinPt G X) :
   rw [realFn_mul, ← Subgroup.coe_inv, rhoAt_fin, GlobalTheory.AutMult.toFin_coe]; rfl
 
 
+variable (X) in
 theorem exists_realFn_ne_zero : ∃ (Λ : Module.Dual ℂ (VV ℂ (wt G X))) (v : VV ℂ (wt G X)),
     realFn θ N X Λ (fun _ => v) 1 ≠ 0 := by
   haveI : Nontrivial (VV ℂ (wt G X)) :=

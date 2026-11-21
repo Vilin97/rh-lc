@@ -89,6 +89,7 @@ theorem fK_apply (x : EuclideanSpace ℝ (KapI X)) (k : KapI X) : fK X x k = bL 
   simp [fK, U, Equiv.piCongrLeft'_apply]
 
 
+open Classical in
 def Bq : Matrix (KapI X) (KapI X) ℝ := fun k l => bL X (EuclideanSpace.single l 1) ((eI X).symm k)
 
 open Classical in

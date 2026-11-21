@@ -263,6 +263,7 @@ theorem lieImg_iff (W : Wit Y a χ) {ν : GtPt a.D₀ (epsR A)} {g : GtPt W.P.D.
       (by rw [← Category.assoc, h₆, Category.assoc, Over.w v])).1 (hP n _ _ vn h₆)
 
 
+omit [IsDomain A] [IsLocalRing A] in
 def scaleOver (c : A) : epsR A ⟶ epsR A := Over.homMk (spMap (epsScaleR c))
   ((spMap_comp _ _).symm.trans (congrArg spMap (RingHom.ext fun r => by
     ext <;> simp [epsScaleR, TrivSqZeroExt.algebraMap_eq_inl])))
@@ -285,6 +286,7 @@ theorem chain {M α : Type} [Monoid M] (P : α → M → Prop) : ∀ (m : ℕ) (
 end ThetaShiftProofs
 
 
+open Formalism.L2.Pj Formalism.L2.Pj.QAt GlobalTheory.ArcQ GlobalTheory.Frames in
 theorem lieImg_iff_isLieComb : Out.GlobalFnsSt → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (A : Type) [CommRing A] [IsDomain A] [IsLocalRing A] [IsNoetherianRing A] (b : O →+* A) (a : ArcIn Dw l β A b) (χ : Sp (PowerSeries A) ⟶ Y.X) (W : Wit Y a χ) (m : ℕ) (cf : Fin m → A) (e : Fin m → Out.GtPt a.D₀ (epsR A)) (ν : Out.GtPt a.D₀ (epsR A)) (v : Fin m → (epsR (PowerSeries A) ⟶ W.t.G)) (w : epsR (PowerSeries A) ⟶ W.t.G), (∀ i, LieImg W (e i) (v i)) → GtComb cf e ν → (LieImg W ν w ↔ IsLieComb (fun i => PowerSeries.C (R := A) (cf i)) v w) := by
   intro hG E _ _ _ H Dw l Xo c O _ β Y A _ _ _ _ b a χ W m cf e ν v w hv ⟨u, p, hu, h₀, hp, hν⟩
   subst hν

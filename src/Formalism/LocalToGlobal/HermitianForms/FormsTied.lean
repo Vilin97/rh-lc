@@ -76,6 +76,7 @@ def fcOf (R : Ranks) (i : ℕ) : ℕ := if R.m ≤ i + 1 then R.k else R.N i
 theorem fcOf_lt {R : Ranks} {i : ℕ} (h : i + 1 < R.m) : fcOf R i = R.N i := if_neg (Nat.not_le.2 h)
 
 
+set_option maxHeartbeats 1000000 in
 structure FormsTied (D : D7) (u : D.what₂.Word) where
   atT : AtTTied u
   cls : ∀ i hi, ClsTied u i hi

@@ -391,6 +391,7 @@ theorem mul_detU_mem (hf : 1 < Module.finrank ℚ E / 2) {σ : c.F →+* ℂ} (U
     rw [hP.2 k x hx, zero_mul]
 
 
+set_option maxHeartbeats 2000000 in
 theorem mem_cusp_of_span (hf : 1 < Module.finrank ℚ E / 2) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r)
     (hU : ∀ σ, GoodEmb c σ → IsUnf (U σ))
     (hχ : ∀ σ, GoodEmb c σ → ∀ a n, Dom a n → ∀ k, ∀ γ ∈ ((U σ).X k).Γ, ((U σ).X k).χ (laU (U σ) a n k) γ = 1)
@@ -561,6 +562,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Form
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
+set_option maxHeartbeats 1000000 in
 theorem mem_cuspA_of_rdU_mem_holSub0 : ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j, InR D j → ∀ w : WeightFamilies.Wt D j, w.LastPos → ∀ f ∈ sec (T.Q.Xo j) T.Q.c (wtA w) w.n, rdU (T.U j T.σ₀) f ∈ holSub0 (T.U j T.σ₀).X (laU (T.U j T.σ₀) (wtA w) w.n) → f ∈ T.cuspA j (wtA w) w.n := by
   intro D T h j hj w hw f hf hfh
   have hr : 1 ≤ D.R.r := by unfold Ranks.r; have := D.R.two_le_m; omega

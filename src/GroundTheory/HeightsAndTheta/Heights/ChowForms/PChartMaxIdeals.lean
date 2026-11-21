@@ -105,6 +105,7 @@ theorem le_of_sup_le (hD : ChartDehomog.Statement) {W₁ W₂ : Ideal (MvPolynom
 end ChartMaxIdeals
 
 
+open ChartMaxIdeals in
 theorem ChartMaxIdeals.proof (h₁ : ConeDimOfChowForm.Statement) (h₂ : ConeDimComponent.Statement)
     (h₆ : SpecFirstMemIncIdeal.Statement) (h₇ : ChartFinite.Statement) (h₈ : ChartIncDomain.Statement)
     (h₉ : ChartKernel.Statement) (hH : ChartHomogenise.Statement) (hD : ChartDehomog.Statement)

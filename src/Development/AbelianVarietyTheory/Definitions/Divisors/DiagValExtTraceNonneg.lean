@@ -29,6 +29,7 @@ variable {m l n n' : Type} [Fintype m] [Fintype l] [Fintype n] [Fintype n'] [Dec
   [DecidableEq l]
 
 
+omit [Fintype n'] in
 theorem chg_submatrix {m' : Type} [Fintype m'] (A : Matrix n n' ℂ) (H : Matrix n n ℂ) (e : m' ≃ n)
     {l' : Type} (f : l' → n') :
     chg (A.submatrix e f) (H.submatrix e e) = (chg A H).submatrix f f := by
@@ -40,6 +41,7 @@ theorem chg_submatrix {m' : Type} [Fintype m'] (A : Matrix n n' ℂ) (H : Matrix
 variable (A₁ : Matrix m m ℂ) (B : Matrix m l ℂ) (A₂ : Matrix l l ℂ) (H : Matrix (m ⊕ l) (m ⊕ l) ℂ)
 
 
+omit [DecidableEq m] [DecidableEq l] in
 theorem chg_fromBlocks : chg (fromBlocks A₁ B 0 A₂) H = fromBlocks (chg A₁ H.toBlocks₁₁)
     (A₁ᵀ * (H.toBlocks₁₁ * Bᴴᵀ + H.toBlocks₁₂ * A₂ᴴᵀ)) ((Bᵀ * H.toBlocks₁₁ + A₂ᵀ * H.toBlocks₂₁) * A₁ᴴᵀ)
     ((Bᵀ * H.toBlocks₁₁ + A₂ᵀ * H.toBlocks₂₁) * Bᴴᵀ + (Bᵀ * H.toBlocks₁₂ + A₂ᵀ * H.toBlocks₂₂) * A₂ᴴᵀ) := by
@@ -49,6 +51,8 @@ theorem chg_fromBlocks : chg (fromBlocks A₁ B 0 A₂) H = fromBlocks (chg A₁
 
 
 
+omit [DecidableEq l] in
+variable {A₁ H} in
 theorem quotGram_chg (hA : IsUnit A₁.det) (hH : IsUnit (subGram H).det) :
     quotGram (chg (fromBlocks A₁ B 0 A₂) H) = chg A₂ (quotGram H) := by
   have h₁ : IsUnit A₁ᵀ.det := by rwa [det_transpose]
@@ -147,6 +151,7 @@ theorem crd_frame (hy : y ∈ ptsIn p σ a.U) (i j : Fin r ⊕ Fin s) :
   simpa [mid, Pi.single_apply, one_apply] using this
 
 
+variable (p σ) in
 def tr (y : CxPts p σ) : Matrix (Fin r ⊕ Fin s) (Fin r ⊕ Fin s) ℂ :=
   ((a.mid hS).tr p σ (a'.mid hS) y).submatrix finSumFinEquiv finSumFinEquiv
 
@@ -193,6 +198,7 @@ variable {S : ShortComplex X.Modules} {r s : ℕ} (h : Met p σ S.X₂ (r + s)) 
   (h₁ : IsVB S.X₁ r) (h₃ : IsVB S.X₃ s) {y : CxPts p σ} (a a' : AdaptedChart S r s)
 
 
+include hS in
 theorem gram_frame (hy : y ∈ ptsIn p σ a.U) :
     h.gram a.frame y = (h.G (a.mid hS) y).submatrix finSumFinEquiv finSumFinEquiv := by
   ext i j
@@ -200,6 +206,7 @@ theorem gram_frame (hy : y ∈ ptsIn p σ a.U) :
   simp [gram, AdaptedChart.mid]
 
 
+include hS in
 theorem posDef_gram_frame (hy : y ∈ ptsIn p σ a.U) : (h.gram a.frame y).PosDef := by
   rw [h.gram_frame hS a hy]
   exact (h.posDef _ y hy).submatrix finSumFinEquiv.injective
@@ -210,6 +217,7 @@ theorem gram_frame_trans (hy : y ∈ ptsIn p σ a.U) (hy' : y ∈ ptsIn p σ a'.
     ← h.trans _ _ y hy]
 
 
+include hS h₁ h₃ in
 theorem exists_adapted (y : CxPts p σ) : ∃ a : AdaptedChart S r s, y ∈ ptsIn p σ a.U :=
   (VBExt.exists_adaptedChart hS h₁ h₃ _).imp fun _ => mem_ptsIn.2
 
@@ -285,6 +293,7 @@ def quot : VMetric p S.X₃ s :=
   ⟨h₃, fun σ => (h.met σ).quot hS h₁ h₃, fun σ σ' => (h.conj σ σ').quot hS h₁ h₃⟩
 
 
+variable {h} in
 theorem IsCInf.quot (H : h.IsCInf) : (h.quot hS h₁ h₃).IsCInf := fun σ => (H σ).quot hS h₁ h₃
 
 end Seq

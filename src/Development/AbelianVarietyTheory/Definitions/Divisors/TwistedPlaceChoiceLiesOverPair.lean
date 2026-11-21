@@ -46,6 +46,8 @@ abbrev Sq (D : D7) : Type := Fin D.R.m × Fin D.R.m
 abbrev Grid (p : PtAt ex Csz) (CF : ℝ) : Type 1 := GlobalTheory.ChiGrid.GridData p.R.toRealDat.toLevCh ⟨1, CF, p.Z.b⟩
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
 structure FunIn (p : PtAt ex Csz) (CF : ℝ) where
 
   G : GlobalTheory.ChiGrid.GridData p.R.toRealDat.toLevCh ⟨1, CF, p.Z.b⟩

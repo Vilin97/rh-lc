@@ -14,6 +14,7 @@ namespace UpperTheory.V.Cm
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+variable (E a) in
 def archEq : Lie E a ≃L[ℝ] ArchMatrix E a :=
   LinearEquiv.toContinuousLinearEquiv
     ((matEq E a).toLinearEquiv : Lie E a ≃ₗ[ℝ] ArchMatrix E a)
@@ -161,6 +162,7 @@ private theorem ent (y : GL (Fin a) (Cinf E)) (w : InfinitePlace E) (i j : Fin a
   exact (norm_le_pi_norm (y.val i j) w).trans ((norm_le_pi_norm (toL y.val i) j).trans (norm_le_pi_norm (toL y.val) i))
 
 
+variable (E a) in
 theorem exists_height_le : ∃ N : ℕ, ∀ y : GL (Fin a) (Cinf E),
     AutomorphicForm.height (infGL E a y) ≤ GlobalTheory.CuspRep.height y ^ N := by
   refine ⟨∑ w : InfinitePlace E, w.mult, fun y => ?_⟩

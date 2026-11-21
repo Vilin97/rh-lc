@@ -192,6 +192,7 @@ def CrysWith [IsAlgClosure E Ω] {n : ℕ} (r : G E Ω →* GL (Fin n) (Qbar l))
         IsJumpsAt P Bw (r.comp (Dec (F := E) A).subtype) τ (J τ)
 
 
+variable (E Ω l) in
 def BlockPair [IsAlgClosure E Ω] (n t : ℕ) (J : (E →+* Qbar l) → Fin n → ℤ) (bot : (E →+* Qbar l) → ℤ) : Prop :=
   ∃ (r : G E Ω →* GL (Fin n) (Qbar l)) (a : ℕ) (ρ : G E Ω →* GL (Fin a) (Qbar l)) (χ : Fin t → G E Ω →* (Qbar l)ˣ),
     a + t = n ∧ CrysWith r (fun τ => Finset.univ.val.map (J τ)) ∧ Continuous ρ ∧
@@ -207,6 +208,7 @@ def IsHalf [IsCMField E] {ι : Type} (inc : ι → (E →+* Qbar l)) : Prop :=
   Function.Injective inc ∧ (∀ τ τ', cj (inc τ) ≠ inc τ') ∧ ∀ i, ∃ τ, i = inc τ ∨ i = cj (inc τ)
 
 
+variable (Ω) in
 def BlockFor [IsCMField E] [IsAlgClosure E Ω] {ι : Type} (inc : ι → (E →+* Qbar l)) (P : Par) (W : Wts ι) (mu : ι → ℕ → ℕ) : Prop :=
   ∃ (ep : (E →+* Qbar l) → (E →+* Qbar l)) (J : (E →+* Qbar l) → Fin P.Nr → ℤ) (bot : (E →+* Qbar l) → ℤ),
     (ep = id ∨ ep = cj) ∧ BlockPair E Ω l P.Nr P.t J bot ∧
@@ -214,6 +216,7 @@ def BlockFor [IsCMField E] [IsAlgClosure E Ω] {ι : Type} (inc : ι → (E →+
       bot (ep (inc τ)) = W.bot P τ ∧ bot (ep (cj (inc τ))) = (h0 P : ℤ) - (W.bot P τ + (P.t : ℤ) - 1)
 
 
+variable (E Ω l) in
 structure FrobNorm (Pl : Type) where
 
   lab : Pl → HeightOneSpectrum (𝓞 E)
@@ -237,6 +240,7 @@ def sysOf {Pl I : Type} (n : ℕ) (pt : Pl → Fin n → I) (θ : I → Qbar l) 
   if h : 1 ≤ k ∧ k ≤ n then θ (pt P ⟨k - 1, by omega⟩) else 1
 
 
+variable (Ω) in
 def GalSide [IsCMField E] [IsAlgClosure E Ω] {ι : Type} [DecidableEq ι] (inc : ι → (E →+* Qbar l)) (P : Par) (W : Wts ι) (F : Frame l ι P.Nr)
     (Bk : (F.I → Qbar l) → Prop) : Prop :=
   ∃ (Pl : Type) (pt : Pl → Fin P.Nr → F.I) (Fn : FrobNorm E Ω l Pl) (ep : (E →+* Qbar l) → (E →+* Qbar l)), (ep = id ∨ ep = cj) ∧

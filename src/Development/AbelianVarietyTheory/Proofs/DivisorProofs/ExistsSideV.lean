@@ -64,6 +64,7 @@ theorem Q_base (hL : R.toLevCh.Is A.μ0) : R.Q A.μ0 = ∅ :=
     exact fun _ _ => rfl)
 
 
+open Formalism.L2.Host Formalism.L2.Col GlobalTheory.RationalValues in
 theorem xiR_mem (hL : R.toLevCh.Is A.μ0) (hF : R.IsFam) {χ xi Q xiR} (h : TwLev R χ xi Q xiR) :
     ∀ PP ∈ Q, ∀ x, ((xiR PP x : ℂˣ) : ℂ) ∈ D.what₂.embLL.fieldRange := by
   classical
@@ -113,6 +114,7 @@ theorem xiR_mem (hL : R.toLevCh.Is A.μ0) (hF : R.IsFam) {χ xi Q xiR} (h : TwLe
   exact hm
 
 
+variable (R V) in
 def okOf (n : N) : Set Pl0 := {P | Bridge.SplitOff (R.pl P) ((R.Sb : Set (Pl D.host.E)) ∪ (V.Q n : Set (Pl D.host.E)))}
 
 theorem okOf_subset (hL : R.toLevCh.Is A.μ0) (hF : R.IsFam) (n : N) : okOf R V n ⊆ A.ok A.μ0 := by
@@ -129,6 +131,7 @@ theorem sep_new (hL' : (extL R.toLevCh V).Is (.inl A.μ0)) (n : N) : ∀ PP ∈ 
     GlobalTheory.HeckeCharacterRestriction.not_isConjPl_union hL' (.inr n) (Or.inr h') (Or.inl h)⟩
 
 
+set_option maxHeartbeats 2000000 in
 theorem exists_sideX (hS : SideLev) {F : Face D A} (hC : GlobalTheory.Hk3.Core R F) (hL' : (extL R.toLevCh V).Is (.inl A.μ0)) (n : N)
     (hV : TwLev R (V.xiH n) (V.xi n) (V.Q n) (V.xiR n)) :
     ∃ (S : CSD D.what₂.LL) (act : Representation D.what₂.LL G S.Forms) (op : okOf R V n × ℕ → Module.End D.what₂.LL S.Forms)
@@ -158,6 +161,7 @@ theorem exists_sideX (hS : SideLev) {F : Face D A} (hC : GlobalTheory.Hk3.Core R
   exact (congrArg R.eG e).trans (hC.grp.red_R A.μ0 ⟨q, hq⟩)
 
 
+set_option maxHeartbeats 2000000 in
 theorem exists_sideV (hS : SideLev) {F : Face D A} (hC : GlobalTheory.Hk3.Core R F) (hL' : (extL R.toLevCh V).Is (.inl A.μ0)) (i : Fin D.R.m)
     (n : N) (hV : TwLev R (V.xiH n) (V.xi n) (V.Q n) (V.xiR n)) :
     ∃ (S : CSD D.what₂.LL) (act : Representation D.what₂.LL G S.Forms) (op : okOf R V n × ℕ → Module.End D.what₂.LL S.Forms)
@@ -188,6 +192,7 @@ theorem exists_sideV (hS : SideLev) {F : Face D A} (hC : GlobalTheory.Hk3.Core R
   exact (congrArg R.eG e).trans (hC.grp.red_L i A.μ0 ⟨q, hq⟩)
 
 
+set_option maxHeartbeats 2000000 in
 def newRealOfSideData {X : NewFam A N}
     (BR : ∀ n, Bridge.SideReal D D.sp.X'
       (Bridge.envOf R.cX.coef (levEnvOf D.sp.X' R.βX ((extL R.toLevCh V).datXt (.inr n)) R.pl (X.ok n)))
@@ -220,6 +225,7 @@ def newRealOfSideData {X : NewFam A N}
   thG _ _ := 0
 
 
+set_option maxHeartbeats 2000000 in
 theorem fam_stage (hS : SideLev) {F : Face D A} (hC : GlobalTheory.Hk3.Core R F) (hL' : (extL R.toLevCh V).Is (.inl A.μ0))
     (hV : ∀ n, TwLev R (V.xiH n) (V.xi n) (V.Q n) (V.xiR n)) : ∃ (X : NewFam A N) (Y : NewReal R V X), FamC Y := by
   choose SR actR opR BR a1 a2 a3 using fun n => exists_sideX hS hC hL' n (hV n)

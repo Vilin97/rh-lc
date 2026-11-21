@@ -49,6 +49,7 @@ variable {L L' : Type*} [Field L] [NumberField L] [Field L'] [NumberField L'] [A
   [Algebra K L'] [Algebra K' L'] [Algebra L L'] [IsScalarTower K K' L'] [IsScalarTower K L L']
 
 
+omit [NumberField K] [NumberField K'] [NumberField L'] in
 theorem liesOver_trans_of_liesOver (v : HeightOneSpectrum (𝓞 K)) (v' : HeightOneSpectrum (𝓞 K'))
     (u' : HeightOneSpectrum (𝓞 L')) [v'.asIdeal.LiesOver v.asIdeal]
     [u'.asIdeal.LiesOver v'.asIdeal] : u'.asIdeal.LiesOver v.asIdeal :=

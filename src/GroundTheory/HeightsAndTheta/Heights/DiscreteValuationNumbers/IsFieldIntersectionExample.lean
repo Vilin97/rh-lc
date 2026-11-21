@@ -44,6 +44,7 @@ theorem existsUnique_iff (hN : Statement.{u}) :
     fun h => ⟨fun V _ L => intNum F V L, hN F K ι, h⟩⟩
 
 
+omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem ringKrullDim_eq_of_relDim (V : Ideal (MRing ι F)) (n : ℕ)
     (h : FieldNumbers.relDim V = (n : WithBot (WithTop ℤ))) :
     ringKrullDim (MRing ι F ⧸ V) = ((n + Fintype.card K : ℕ) : WithBot ℕ∞) := by

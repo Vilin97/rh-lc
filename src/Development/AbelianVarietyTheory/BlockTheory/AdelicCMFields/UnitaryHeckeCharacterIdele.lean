@@ -48,6 +48,9 @@ def conj [h : IsCMExtension F E] : E ≃ₐ[F] E :=
       exact this }
 
 
+open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum Filter in
+open scoped RestrictedProduct in
+variable (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.embedding_conj [_root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.IsCMExtension F E] (φ : E →+* ℂ) (x : E) :
     φ (_root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.conj F E x) = starRingEnd ℂ (φ (x)) := by
   haveI := _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.IsCMExtension.isCMField F E
@@ -520,6 +523,9 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdel
   rw [_root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.ideleNorm, MonoidHom.mul_apply, hinf, hfin, one_mul]
 
 
+open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum Filter in
+open scoped RestrictedProduct in
+variable {E : Type} [Field E] [NumberField E] in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.UnitaryHeckeChar.normPow_isUnramifiedAt (t : ℝ) (P : HeightOneSpectrum (𝓞 E)) :
     (_root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.UnitaryHeckeChar.normPow E t).IsUnramifiedAt P := by
   intro u hu
@@ -537,6 +543,9 @@ private theorem norm_uniformiser_eq_absNorm_inv {P : HeightOneSpectrum (𝓞 E)}
   simp
 
 
+open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum Filter in
+open scoped RestrictedProduct in
+variable {E : Type} [Field E] [NumberField E] in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.UnitaryHeckeChar.normPow_valueAt (t : ℝ) (P : HeightOneSpectrum (𝓞 E)) :
     (_root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.UnitaryHeckeChar.normPow E t).valueAt P =
       Complex.exp ((-(t * Real.log (Ideal.absNorm P.asIdeal)) : ℝ) * Complex.I) := by

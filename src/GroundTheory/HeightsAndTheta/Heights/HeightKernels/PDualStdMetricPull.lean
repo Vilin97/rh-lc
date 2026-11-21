@@ -19,6 +19,7 @@ namespace StandardDualMetricPullback
 variable {K : Type} [Field K] [NumberField K] {i : ℕ} {T : Type} [Fintype T] [DecidableEq T]
 
 
+omit [DecidableEq T] in
 theorem linApply_eq (b : Module.Basis T ℤ (dualLattice (HermLattice.standard K i)))
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b))) (z : (Σ _ : Unit, T) → ℂ) (j : Fin i) :
     linApply (ι₂ := PBlk i) (dualStdCoordMat b) z ⟨(), j⟩ =
@@ -51,6 +52,7 @@ theorem linApply_eq (b : Module.Basis T ℤ (dualLattice (HermLattice.standard K
 end StandardDualMetricPullback
 
 
+open StandardDualMetricPullback in
 theorem DualStdMetricPull.proof : DualStdMetricPull.Statement := by
   intro K _ _ i T _ _ b hb z hz
   set W := dualRecover b hb (fun t => z ⟨(), t⟩)

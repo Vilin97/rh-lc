@@ -49,6 +49,7 @@ theorem pair_comp_blkV_one {Ω : Type} [Field Ω] (x x' : Ix κ → Ω) : pair x
 end TwoBlockTop
 
 
+open TwoBlockTop in
 theorem TwoBlockTop.proof (hPF : PFCoordStatement) (hIm : ImageCoordStatement) (hA : CoordArithOfFnField.Statement)
     (hF : TwoBlockFnField.Statement) (hS : MetricTransportSmooth.Statement) : TwoBlockTop.Statement := by
   classical

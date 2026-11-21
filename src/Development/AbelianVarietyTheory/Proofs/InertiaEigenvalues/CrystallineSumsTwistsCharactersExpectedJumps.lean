@@ -198,6 +198,7 @@ theorem multV_char_zero (hc : Nat.card (↥K.1 →ₐ[ℚ_[l]] ↥LL.1) = finran
   split_ifs <;> rfl
 
 
+omit T in
 theorem card_emb {lam : ↥(OL LL)} (h : Standing P K LL emb lam) :
     Nat.card (↥K.1 →ₐ[ℚ_[l]] ↥LL.1) = finrank ℚ_[l] ↥K.1 := by
   have e : K0 K = K.1 := inf_eq_left.2 h.2.1.1

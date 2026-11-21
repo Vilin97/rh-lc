@@ -215,6 +215,7 @@ theorem respectsAdd_of_map (ψ : Isogeny (E.map σ) (E'.map σ))
   exact happ (map_add _ _ _) _ _
 
 
+omit [E.IsElliptic] in
 theorem transcendental_of_ffMap {z : E.toAffine.FunctionField}
     (h : Transcendental F' (ffMap σ E z)) : Transcendental F z := by
   intro halg
@@ -223,6 +224,7 @@ theorem transcendental_of_ffMap {z : E.toAffine.FunctionField}
   exact (ffMap_algebraMap σ E a).symm
 
 
+omit [E.IsElliptic] [E'.IsElliptic] in
 theorem baseChange_map_ffMap :
     (E'.baseChange E.toAffine.FunctionField).map (ffMap σ E) =
       (E'.map σ).baseChange (E.map σ).toAffine.FunctionField := by
@@ -232,6 +234,7 @@ theorem baseChange_map_ffMap :
     WeierstrassCurve.map_map, hc]
 
 
+omit [E.IsElliptic] [E'.IsElliptic] in
 theorem nonsingular_of_ffMap {x y : E.toAffine.FunctionField}
     (h : ((E'.map σ).baseChange (E.map σ).toAffine.FunctionField).toAffine.Nonsingular
       (ffMap σ E x) (ffMap σ E y)) :

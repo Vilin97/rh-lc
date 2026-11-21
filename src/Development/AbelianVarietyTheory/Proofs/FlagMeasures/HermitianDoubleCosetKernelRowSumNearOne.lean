@@ -86,6 +86,10 @@ private theorem exists_MvTo_isTerm_of_Mv_of_InFF [IsNonarchimedeanLocalField F] 
     exact ⟨⟨_, _⟩, hW⟩
 
 
+open ValuativeRel MeasureTheory in
+open scoped Pointwise ENNReal Classical in
+open ValuativeRel MeasureTheory in
+open scoped Pointwise ENNReal Classical in
 theorem _root_.GlobalTheory.HL.kern_row_sum : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] (L : _root_.Formalism.MainNotions.S.Loc.LocE F E), ∀ (r k : ℕ) (S : _root_.GlobalTheory.HL.Frames L r k), 4 * r + 7 ≤ k → ∀ (j : Fin r) (β βJ : ℕ) (d : S.Datum) (Λ : Submodule L.O S.V), S.IsTerm d Λ → S.InFF β (j + 1) βJ d Λ → |(∑ᶠ y : {y // S.IsTerm d y ∧ S.InFF β (j + 1) βJ d y}, S.kern β (j + 1) βJ d Λ y) - 1| ≤ 24 / 7 * (S.q : ℝ) ^ (1 - ((k : ℤ) - 2 * r - 3)) := by
   intro F _ _ _ _ _ E _ _ _ L r k S hk j β βJ d Λ hT hF
   obtain ⟨-, -, hfinK, -, hsplit⟩ :=

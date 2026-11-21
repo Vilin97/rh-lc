@@ -45,6 +45,7 @@ theorem symplO_eq_symp_one {D : D7} (S T : HSp D) (x y : WO S T) : symplO S T x 
 end GlobalTheory.SquareAgree.SympForm
 
 
+open GlobalTheory.SquareAgree.SympForm in
 theorem GlobalTheory.SquareAgree.SympForm.symp_model_eq_symplO : ∀ (D : D7) (ε : Bool) (S X : HSp D) {d : ℕ} (e : Fin X.rank ≃ Fin d)
     (Vs : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc D.host.F D.host.E S.rank) (Ws : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc D.host.F D.host.E d),
     Vs.J = (if ε then 1 else -1 : D.host.E) • S.gram → Ws.J = D.host.xi0 • reindex e e X.gramᵀ →

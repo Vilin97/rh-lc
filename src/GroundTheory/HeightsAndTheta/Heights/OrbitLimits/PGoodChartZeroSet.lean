@@ -47,6 +47,7 @@ theorem eval_homogenize {m : ℕ} (f : MvPolynomial (Fin m) ℂ) {D : ℕ} (hD :
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem segre_scaleBlock [DecidableEq K] (k0 : K) (c : ℂ) (z : (Σ k, ι k) → ℂ) :
     segre (scaleBlock k0 c z) = c • segre z := by
   funext j
@@ -84,6 +85,7 @@ theorem exists_segre_smul (P : Ideal (MRing ι)) (hP : IsMultiHomogIdeal P) {z :
     exact ⟨scaleBlock k0 c z, scaleBlock_mem_zeroLocus P hP k0 hc hz, segre_scaleBlock k0 c z⟩
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem segre_of_isEmpty (hK : IsEmpty K) (z : (Σ k, ι k) → ℂ) (j : (k : K) → ι k) : segre z j = 1 := by
   simp [segre]
 

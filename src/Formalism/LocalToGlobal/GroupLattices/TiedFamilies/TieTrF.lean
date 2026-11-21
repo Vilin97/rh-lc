@@ -40,6 +40,7 @@ def lvSet {u : D.what₂.Word} {A : AtTTied (D := D) u} {i : ℕ} {hi : i ≤ D.
 
 
 
+set_option maxHeartbeats 4000000 in
 def forms0Set {u : D.what₂.Word} (T : Forms0 D u) : Forms0 (setGat D g' hd') u where
   atT := atTTSet D g' hd' T.atT
   cls0 := clsSet D g' hd' T.cls0

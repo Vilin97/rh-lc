@@ -18,6 +18,7 @@ variable (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero
   (hp : v (p : C) < 1)
 
 
+include hv hp in
 theorem smul_dUnit_mem (A : Type) [CommRing A] [Bialgebra O A] [IsCocomm O A] [Module.Finite O A]
     [Module.Projective O A] (hfin : {u : A | IsGroupLikeElem O u}.Finite) (q : O) (hq : q ≠ 0)
     (M : Submodule O (Cot O A)) (hM : ∀ u, IsGroupLikeElem O u → dUnit O u ∈ M)
@@ -69,6 +70,7 @@ theorem smul_dUnit_mem (A : Type) [CommRing A] [Bialgebra O A] [IsCocomm O A] [M
   exact (dvd_add_left h2).1 h1
 
 
+include hv hp in
 theorem smul_mem_range_dlogLinear [Algebra ℤ_[p] O] [IsAdicComplete (Ideal.span {(p : O)}) O]
     (G : PDivGroup p O) (κ : O) (hκ : v (algebraMap O C κ) ^ (p - 1) ≤ v (p : C)) (w : G.omega) :
     κ • w ∈ LinearMap.range (dlogLinear G) := by

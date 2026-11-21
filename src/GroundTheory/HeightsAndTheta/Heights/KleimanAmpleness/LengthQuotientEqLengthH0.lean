@@ -135,6 +135,7 @@ theorem d_mk (F₁ F₂ : SubSystem S x Ω) (u : Cech.Idx (support x) 0 → Ω) 
   rfl
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_toCochain_eq (F₁ F₂ : SubSystem S x Ω)
     (hlift : ∀ s : Chart x → Ω, (∀ I, s I ∈ F₁.sub I) →
       (∀ I₁ I₂ : Chart x, I₁.1 ⊆ I₂.1 → s I₁ - s I₂ ∈ F₂.sub I₂) →
@@ -225,6 +226,7 @@ theorem exists_toCochain_eq (F₁ F₂ : SubSystem S x Ω)
   exact hts _
 
 
+set_option maxHeartbeats 400000 in
 theorem length_secs_eq (F₁ F₂ : SubSystem S x Ω)
     (hlift : ∀ s : Chart x → Ω, (∀ I, s I ∈ F₁.sub I) →
       (∀ I₁ I₂ : Chart x, I₁.1 ⊆ I₂.1 → s I₁ - s I₂ ∈ F₂.sub I₂) →

@@ -71,6 +71,7 @@ theorem colsOf_anchor {R : Type*} [CommRing R] {j m : ℕ} (Z : Matrix (Fin j) (
 end GrassmannianArithmeticVariety
 
 
+open GrassmannianArithmeticVariety in
 theorem GrassArithVar.proof (h : CoordConeArithVar.Statement) : GrassArithVar.Statement := by
   intro f j m hf
   let e : Fin (f * j * m) ≃ Fin f × Fin j × Fin m :=

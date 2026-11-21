@@ -177,6 +177,7 @@ theorem Xplus_le_upair : F0.Xplus ≤ UPair D F0 F' := by
 end PairSpanDimension
 
 
+open PairSpanDimension in
 theorem perpendicular_definition_holds : PerpDef := by
   intro D u u' _ F0 what₂ _ Z F' _ hZ hP
   have hG : GZ (Tn u) (Tn u') (ZhatL (lf D F0) F') ≠ 0 := by rw [hZ]; exact totPos_ne_zero hP

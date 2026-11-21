@@ -17,6 +17,7 @@ noncomputable section
 namespace GlobalTheory.StdUnn
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem exists_realPar_of_isCharAF : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsCharAF D.host.F ψ →
     ∀ θ : InfFam D, IsInfFam θ → ∃ l : D.what₂.Tau → ℝ, HasRealPar ψ θ l := by
   intro D ψ hψ θ hθ

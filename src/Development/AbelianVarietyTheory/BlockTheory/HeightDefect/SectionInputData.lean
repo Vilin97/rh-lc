@@ -36,6 +36,7 @@ theorem isSecZ_wtZ (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ) (f : Rul Xo c) :
     exact ⟨h1, fun p t y y' hb => by rw [key]; exact h2 p t y y' hb⟩
 
 
+variable (Xo c) in
 structure Input : Type where
 
   D : ℕ

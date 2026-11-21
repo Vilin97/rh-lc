@@ -14,6 +14,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 namespace GlobalTheory.HolDict
 
 
+open Formalism.L2.NTheta in
 theorem lamAt_strictAnti {R : Ranks} (h : HCParam R) {n : ℕ} (hn : n = R.r) :
     StrictAnti fun a : Fin n => lamAt h a := by
   intro a b hab
@@ -28,6 +29,7 @@ theorem lamAt_strictAnti {R : Ranks} (h : HCParam R) {n : ℕ} (hn : n = R.r) :
   linarith
 
 
+open Formalism.L2.NTheta in
 theorem holPar_kapW_eq {R : Ranks} (h : HCParam R) {n p q : ℕ} (hn : n = R.r) (hpq : p + q = n) :
     holPar p q (kapW h p q) = Finset.univ.image fun a : Fin n => (lamAt h a, decide ((a : ℕ) < p)) := by
   have ho : Odd (p + q) := by rw [hpq, hn]; exact odd_r R
@@ -44,6 +46,7 @@ theorem holPar_kapW_eq {R : Ranks} (h : HCParam R) {n p q : ℕ} (hn : n = R.r) 
       simp [ha, show p + ((a : ℕ) - p) = a by omega]
 
 
+open Formalism.L2.NTheta in
 theorem isEnum_holPar_kapW {R : Ranks} (h : HCParam R) {n p q : ℕ} (hn : n = R.r) (hpq : p + q = n)
     {lam : Fin n → ℝ} {ε : Fin n → Bool} (he : IsEnum (holPar p q (kapW h p q)) lam ε) (a : Fin n) :
     lam a = (lamAt h a : ℝ) ∧ ε a = decide ((a : ℕ) < p) := by

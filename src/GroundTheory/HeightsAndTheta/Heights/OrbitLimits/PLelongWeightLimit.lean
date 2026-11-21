@@ -71,6 +71,7 @@ theorem smoothNear_weight {Z : Set (Fin n → ℂ)} (u : Fin n → ℂ) {k : (Fi
 end LelongWeightLimit
 
 
+open LelongWeightLimit in
 theorem LelongWeightLimit.proof (hL : GroundTheory.Heights₂.Heights.LelongLimit.Statement)
     (hS : GroundTheory.Heights₂.Heights.StokesOnVariety.Statement) (hD : LelongWeightDiff.Statement) :
     LelongWeightLimit.Statement := by

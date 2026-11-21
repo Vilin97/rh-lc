@@ -288,6 +288,7 @@ theorem finrank_lattice_eq_finrank_span (A : Submodule (𝓞 K) V) :
   rw [Module.finrank, Module.finrank, rank_eq_rank_span K]
 
 
+omit [NumberField K] in
 theorem finiteDimensional_span_of_fg {A : Submodule (𝓞 K) V} (hA : A.FG) :
     FiniteDimensional K (Submodule.span K (A : Set V)) := by
   obtain ⟨s, rfl⟩ := hA
@@ -380,12 +381,14 @@ namespace IsLatticeFrame
 variable {A : Submodule (𝓞 K) V} {ι κ : Type*} {e : ι → V}
 
 
+omit [NumberField K] [IsScalarTower (𝓞 K) K V] in
 theorem span_eq (he : IsLatticeFrame A e) :
     Submodule.span K (Set.range e) = Submodule.span K (A : Set V) :=
   le_antisymm (Submodule.span_mono (Set.range_subset_iff.2 he.mem))
     (Submodule.span_le.2 he.mem_span)
 
 
+omit [NumberField K] [IsScalarTower (𝓞 K) K V] in
 theorem span_le (he : IsLatticeFrame A e) : Submodule.span (𝓞 K) (Set.range e) ≤ A :=
   Submodule.span_le.2 (Set.range_subset_iff.2 he.mem)
 
@@ -393,6 +396,7 @@ theorem card_eq [Fintype ι] (he : IsLatticeFrame A e) : Fintype.card ι = finra
   rw [finrank_lattice_eq_finrank_span, ← he.span_eq, finrank_span_eq_card he.linearIndependent]
 
 
+omit [NumberField K] [IsScalarTower (𝓞 K) K V] in
 theorem comp_equiv (he : IsLatticeFrame A e) (p : κ ≃ ι) : IsLatticeFrame A (e ∘ p) :=
   ⟨fun i => he.mem _, he.linearIndependent.comp _ p.injective, by
     rw [p.surjective.range_comp]
@@ -405,11 +409,13 @@ theorem relIndex_ne_zero (he : IsLatticeFrame A e) (hA : A.FG) :
     exact he.mem_span x hx
 
 
+omit [NumberField K] [IsScalarTower (𝓞 K) K V] in
 theorem of_le {B : Submodule (𝓞 K) V} (he : IsLatticeFrame A e) (hAB : A ≤ B)
     (hB : ∀ x ∈ B, x ∈ Submodule.span K (A : Set V)) : IsLatticeFrame B e :=
   ⟨fun i => hAB (he.mem i), he.linearIndependent, fun x hx => he.span_eq ▸ hB x hx⟩
 
 
+omit [NumberField K] in
 theorem map (he : IsLatticeFrame A e) (f : V →ₗ[K] V') (hf : Function.Injective f) :
     IsLatticeFrame (A.map (f.restrictScalars (𝓞 K))) (f ∘ e) := by
   refine ⟨fun i => ⟨e i, he.mem i, rfl⟩,
@@ -419,6 +425,7 @@ theorem map (he : IsLatticeFrame A e) (f : V →ₗ[K] V') (hf : Function.Inject
   exact ⟨x, he.mem_span x hx, rfl⟩
 
 
+omit [NumberField K] in
 theorem smul (he : IsLatticeFrame A e) {d : ι → 𝓞 K} (hd : ∀ i, d i ≠ 0) :
     IsLatticeFrame A fun i => d i • e i := by
   have hd' : ∀ i, (d i : K) ≠ 0 := fun i => by simpa using hd i
@@ -435,6 +442,7 @@ theorem smul (he : IsLatticeFrame A e) {d : ι → 𝓞 K} (hd : ∀ i, d i ≠ 
 end IsLatticeFrame
 
 
+omit [NumberField K] in
 theorem isLatticeFrame_span {ι : Type*} {e : ι → V} (he : LinearIndependent K e) :
     IsLatticeFrame (Submodule.span (𝓞 K) (Set.range e)) e :=
   ⟨fun i => Submodule.subset_span ⟨i, rfl⟩, he,
@@ -468,12 +476,14 @@ variable {A : Submodule (𝓞 K) V} {ι κ : Type*} [Fintype ι] [DecidableEq ι
   [DecidableEq κ]
 
 
+omit [IsScalarTower (𝓞 K) K V] in
 theorem frameDeg_eq_relIndex (A : Submodule (𝓞 K) V) (e : ι → V) :
     h.frameDeg A e =
       Real.log ((Submodule.span (𝓞 K) (Set.range e)).toAddSubgroup.relIndex A.toAddSubgroup) -
         ∑ σ : K →+* ℂ, 1 / 2 * Real.log (h.gramDet σ e) := rfl
 
 
+omit [IsScalarTower (𝓞 K) K V] in
 theorem frameDeg_comp_equiv (A : Submodule (𝓞 K) V) (e : ι → V) (p : κ ≃ ι) :
     h.frameDeg A (e ∘ p) = h.frameDeg A e := by
   simp only [frameDeg_eq_relIndex, gramDet_comp_equiv, p.surjective.range_comp]

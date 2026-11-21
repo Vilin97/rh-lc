@@ -38,6 +38,7 @@ def zCut (Q : PairedCharacterCondition.Pend D) (i : D.nd.Loc) (S : Set (D.nd.X i
   descHom (D.nd.T i) (D.nd.act i) S (Q.zO i) (Q.zO_comm i)
 
 
+set_option maxHeartbeats 2000000 in
 def pendCut (Q : PairedCharacterCondition.Pend D) : PairedCharacterCondition.Pend (cut D c) where
   lz := Q.lz
   eSer_eq := Q.eSer_eq

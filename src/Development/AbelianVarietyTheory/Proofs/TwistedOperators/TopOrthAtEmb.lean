@@ -49,6 +49,7 @@ end GlobalTheory.RowChain.LastSeeSawStep
 namespace GlobalTheory.RowChain.LastSeeSawStep
 
 
+set_option maxHeartbeats 2000000 in
 theorem main : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L sc) (Wl : G.Weil) (t : T) {M : GlobalTheory.FunObj.Vol G}
     (hM : M.Is t) (j : ℕ) (hj : j + 2 * 0 + 2 = D.R.m) (vN : VolN (besDecAt G j 0 hj))
     (Φ₁ : WO (G.V (.grid D.R.m j)) (G.V (.grid D.R.m (j + 1))) → ℂ)

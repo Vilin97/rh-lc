@@ -52,6 +52,7 @@ theorem infGL_apply (y : GL (Fin a) (Cinf E)) (i j : Fin a) :
       sInf E (y.val i j) := rfl
 
 
+omit [NumberField E] [IsTotallyComplex E] in
 def sd (M : Matrix (Fin a) (Fin a) (Cinf E)) : Cinf E := ∑ p : Fin a × Fin a with (p.2 : ℕ) = p.1 + 1, M p.1 p.2
 
 end PositivityTheory.Rg.Cz

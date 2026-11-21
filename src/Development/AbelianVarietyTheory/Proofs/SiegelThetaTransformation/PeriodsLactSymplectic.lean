@@ -22,6 +22,7 @@ noncomputable def spOf (γ : GL (Fin r) E) : Matrix (Fin g ⊕ Fin g) (Fin g ⊕
     ((bas (Pi.single p.swap 1) : X.Λ) : Fin r → E)) q.swap
 
 
+omit [NumberField E] [IsCMField E] in
 theorem gl_mulVec_inv_mulVec (γ : GL (Fin r) E) (v : Fin r → E) :
     (γ : Matrix (Fin r) (Fin r) E) *ᵥ ((γ⁻¹ : GL (Fin r) E) : Matrix (Fin r) (Fin r) E) *ᵥ v = v := by
   rw [Matrix.mulVec_mulVec, Units.mul_inv, Matrix.one_mulVec]

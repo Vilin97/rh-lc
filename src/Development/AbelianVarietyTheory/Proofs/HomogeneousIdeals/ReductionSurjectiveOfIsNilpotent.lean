@@ -47,6 +47,7 @@ theorem isTangent_comp {x : epsR R ⟶ G} (hx : IsTangent x) : IsTangent (x ≫ 
   rw [Over.comp_left, ← Category.assoc, hx, ← Over.comp_left, IsMonHom.one_hom]
 
 
+omit [IsCommMonObj G] in
 theorem existsUnique_lieMatrix (hv : ∀ i, IsTangent (v i)) (hw : IsLieBasis w) :
     ∃! M : Matrix (Fin n) (Fin m) R, ∀ i, IsLieComb (M i) w (v i ≫ f) := by
   have hx : ∀ i, ∃! c, IsLieComb c w (v i ≫ f) := fun i => hw.2 _ (isTangent_comp f (hv i))

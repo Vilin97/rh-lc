@@ -98,6 +98,7 @@ theorem lefOne_eval (hD : EllDiag) (hW : WeylAt) [MeasurableSpace (GL (Fin n) �
 end GlobalTheory.CompanionTheory.LefPair
 
 
+open GlobalTheory.CompanionTheory.LefPair in
 theorem GlobalTheory.CompanionTheory.LefPair.lefPairOf : LefPairOf := by
   intro hD hW _ a b _ _ _ _ ν₁ _ ν₂ _ l₁ l₂ v₁ v₂ f₁ f₂ h₁ h₂
   have := sigmaFinite_haar ν₁

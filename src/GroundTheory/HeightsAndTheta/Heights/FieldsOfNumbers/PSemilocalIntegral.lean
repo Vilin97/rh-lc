@@ -29,6 +29,7 @@ variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintyp
   {F : Type u} [Field F]
 
 
+omit [DecidableEq K] in
 theorem exists_ringKrullDim_eq_nat (Q : Ideal (MRing ι F)) [Q.IsPrime] :
     ∃ D : ℕ, ringKrullDim (MRing ι F ⧸ Q) = D := by
   have h1 : (0 : WithBot ℕ∞) ≤ ringKrullDim (MRing ι F ⧸ Q) := ringKrullDim_nonneg_of_nontrivial
@@ -68,6 +69,7 @@ variable {F : Type u} [Field F] {K K' : Type} [Fintype K] [DecidableEq K] [Finty
   [DecidableEq K'] {j : K ↪ K'} {ι' : K' → Type} [∀ k, Fintype (ι' k)]
 
 
+omit [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem contract_le {P' : Ideal (MRing ι' F)} [P'.IsPrime] {W : Ideal (MRing (fun k => ι' (j k)) F)}
     (hPW : contractPrime j P' ≤ W) (R : ValuationSubring (FractionRing (MRing ι' F ⧸ P')))
     (hR : ∀ a ∈ degZeroLoc (contractPrime j P') {W}, contractFracMap j P' a ∈ R)

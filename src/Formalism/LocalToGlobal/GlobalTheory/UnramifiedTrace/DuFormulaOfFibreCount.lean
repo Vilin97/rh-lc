@@ -15,6 +15,7 @@ open scoped TensorProduct Classical
 variable {D : D7} {u : D.what₂.Word}
 
 
+set_option maxHeartbeats 4000000 in
 theorem du_formula_of_fibre_count (T : Forms0 D u) (hF : DUFib0F T) : DUFormulaLevelZero D u := by
   intro v φ hφ
   obtain ⟨G, hG, hGφ⟩ := S0.forms_from_adelic_function T 0 (Nat.zero_le _) rfl φ hφ

@@ -312,6 +312,7 @@ theorem chernPart_apply (h : φ.IsCInf) (ε : ℤˣ) (c : AlgChart p σ D) (hS :
     chartMeas_apply_of_subset _ _ hS hc]
 
 
+omit [SecondCountableTopology (CxPts p σ)] in
 theorem chernPart_neg_eq_zero (h : φ.IsCInf) (h' : φ.SemiPosReg D) : φ.chernPart D (-1) = 0 := by
   refine le_antisymm (iSup_le fun c => le_of_eq (Measure.measure_univ_eq_zero.1 ?_)) bot_le
   rw [chartMeas_apply _ _ MeasurableSet.univ, inter_univ, c.e.image_source_eq_target]
@@ -480,12 +481,14 @@ theorem val_ratOfSec {i : L.ι} (h : genericPoint Z ∈ L.U i) :
   rw [ratOfSec, dif_pos h, Units.val_mk0]
 
 
+variable (s hs) in
 theorem isRatSec_ratOfSec : IsRatSec L (ratOfSec s hs) := fun i j h => by
   rw [val_ratOfSec h.1, val_ratOfSec h.2, ← fnOf_resG inf_le_left h, ← fnOf_resG inf_le_right h,
     ← map_mul]
   exact congrArg _ (s.compat i j)
 
 
+variable (hL s hs) in
 abbrev divOfSec : CartierDiv Z := divOfRatSec hL (isRatSec_ratOfSec s hs)
 
 theorem notMem_supp_divOfSec {z : Z} : z ∉ (divOfSec hL s hs).supp ↔ z ∈ nonzeroLocus s := by
@@ -714,6 +717,7 @@ theorem nsq_shift (t : (k →+* ℂ) → ℝ) (ht : ∀ σ, t ((starRingEnd ℂ)
   (L.φ σ).nsq_addFn _ s y
 
 
+variable (p) in
 def triv : HermLB p where
   B := LB.triv X
   isLB := LB.isLB_triv X
@@ -722,6 +726,7 @@ def triv : HermLB p where
   conj _ _ _ _ _ _ _ := rfl
 
 
+variable (p) in
 def fs {B : LB X} (hB : B.IsLB) {α : Type} [Fintype α] [DecidableEq α] (b : α → B.Sec)
     (hb : ⨆ j, nonzeroLocus (b j) = ⊤) (A : (k →+* ℂ) → Matrix α α ℂ) (hA : ∀ σ, (A σ).det ≠ 0)
     (hc : ∀ σ, ∃ U ∈ Matrix.unitaryGroup α ℂ,
@@ -1090,6 +1095,7 @@ theorem SemiPos.shift {L : HermLB p} (h : L.SemiPos D) (t : (k →+* ℂ) → �
   fun σ => (h σ).addFn_const _
 
 
+variable (p D) in
 theorem isNef_triv : (triv p).IsNef D where
   semiPos σ i c y _ ξ := (congrArg Complex.re (ReciprocityTheory.L2DbarEstimates.Y.cmpb_leviV_const 0 _ ξ)).ge
   vertical Z i _ _ κ _ _ _ _ := (interNum_eq_zero_of_cls_eq_zero κ _
@@ -1120,6 +1126,7 @@ namespace ProjSpace
 variable (k) (N : ℕ)
 
 
+attribute [local instance] MvPolynomial.gradedAlgebra in
 theorem isIntegral_of_isDomain [IsDomain k] : IsIntegral (PSpace k N) := by
   let η : ProjectiveSpectrum (grading k N) := ⟨⊥, Ideal.isPrime_bot, fun h =>
     MvPolynomial.X_ne_zero _ (h (HomogeneousIdeal.mem_irrelevant_of_mem _ one_pos (X_mem k N 0)))⟩
@@ -1311,6 +1318,7 @@ theorem mem_asIdeal_iff (n : ℤ) : n ∈ (i (genericPoint Z)).asIdeal ↔ (n : 
   exact ⟨UnitAt.ne_zero, unitAt_genericPoint⟩
 
 
+omit [IsIntegral Z] in
 theorem surjective_intCast [IsClosedImmersion i] :
     Function.Surjective (Int.castRingHom Γ(Z, ⊤)) := by
   rw [← RingHom.ext_int (i.appTop.hom.comp (Scheme.ΓSpecIso (.of ℤ)).inv.hom) (Int.castRingHom _)]

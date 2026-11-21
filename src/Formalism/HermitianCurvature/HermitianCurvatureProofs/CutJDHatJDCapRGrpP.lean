@@ -31,6 +31,7 @@ def beJ (z : Fin (2 * r + k + 1) → ℂ) (g : Q.Mx k r) (J : Fin (r + k) → Fi
   (Matrix.of fun p q => colR k r z g J q p).det
 
 
+open Classical in
 def jSetR : Finset (Fin (r + k) → Fin (2 * r + k + 1)) := Finset.univ.filter fun J => StrictMono J
 
 def rhatOp {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] (z z' : Fin (2 * r + k + 1) → ℂ) (Y : ℂ)

@@ -55,6 +55,7 @@ theorem eventually_finrank_fiber_le [Module.Finite R M] (p : PrimeSpectrum R) :
 
 
 
+variable (M) in
 theorem isLocallyConstant_finrank_fiber [Module.Finite R M] [Module.Projective R M] :
     IsLocallyConstant fun p : PrimeSpectrum R =>
       finrank p.asIdeal.ResidueField (p.asIdeal.ResidueField ⊗[R] M) := by
@@ -281,6 +282,7 @@ variable {R : Type*} [CommRing R] [IsDomain R] [ValuationRing R] {M₀ M₁ : Ty
   [AddCommGroup M₀] [Module R M₀] [AddCommGroup M₁] [Module R M₁]
 
 
+variable (R) in
 theorem free_of_finite_of_isTorsionFree (M : Type*) [AddCommGroup M] [Module R M]
     [Module.Finite R M] [Module.IsTorsionFree R M] : Module.Free R M := by
   have : Module.Flat R M := Module.Flat.flat_iff_torsion_eq_bot_of_isBezout.2

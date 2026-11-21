@@ -31,6 +31,7 @@ noncomputable def evOne (W : LocWach PD L O v n) (i : ZMod n) (ζ : L) : O⟦X�
   (W.lev i ζ).comp (Pi.constAlgHom O (ZMod n) O⟦X⟧)
 
 
+omit [CharZero L] [Algebra ℚ L] in
 theorem lev_eq (W : LocWach PD L O v n) (i : ZMod n) (ζ : L) (a : LetA O n) :
     W.lev i ζ a = evOne W i ζ (a i) := by
   have h := W.lev_letter i ζ (a - fun _ => a i) (by simp)

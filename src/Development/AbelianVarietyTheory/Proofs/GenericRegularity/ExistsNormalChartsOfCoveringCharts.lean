@@ -45,6 +45,7 @@ theorem vV_of_irreducible {v : V} (hv : Irreducible v) : vV V (algebraMap V K' v
   rw [vV, valV_algebraMap_of_irreducible hv, WithZero.log_exp]; simp
 
 
+variable (V K') in
 def imageVal : ValuationSubring K' := (valV V (K' := K')).valuationSubring
 
 theorem mem_imageVal (x : K') : x ∈ imageVal V K' ↔ x ∈ Set.range (algebraMap V K') :=

@@ -286,6 +286,7 @@ theorem conj_sqrtQ_pow (k : ℕ) : starRingEnd ℂ (sqrtQ F ^ k) = sqrtQ F ^ k :
 end GlobalTheory.CompanionTheory.SatakeStable
 
 
+open GlobalTheory.CompanionTheory.SatakeStable in
 theorem GlobalTheory.CompanionTheory.SatakeStable.l11 : liftZP_unit := by
   unfold liftZP_unit
   intro F _ _ _ _ n V _ _ ρ B hU v z hv0 hH r hr

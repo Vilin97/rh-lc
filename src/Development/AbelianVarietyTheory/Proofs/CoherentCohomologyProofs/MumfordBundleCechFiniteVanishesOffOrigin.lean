@@ -21,6 +21,7 @@ open GlobalTheory GlobalTheory.AbLaw
 namespace GlobalTheory.MumfordSupport
 
 
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 theorem exists_iso_pull_pull {X Y Z : Scheme.{0}} {L : LB X} (hL : L.IsLB) (a : Y ⟶ X) (b : Z ⟶ Y) :
     ∃ w : LB.Iso ((L.pull a).pull b) (L.pull (b ≫ a)), w.IsGen :=
   LBIso.chartPull (chartPullLinComb L a (fun _ : PUnit => b)

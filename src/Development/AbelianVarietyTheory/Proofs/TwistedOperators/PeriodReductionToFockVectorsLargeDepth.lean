@@ -136,6 +136,7 @@ variable {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type} {A : FamIn 
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks}
 
 
+set_option maxHeartbeats 1600000 in
 theorem fockAt_of_steps (ch : Choice R) (hB : BasicAt ch) (hMv : MovedAt ch) (hCF : ColFock ch)
     (hL : ∀ (t : T) (M : Vol ch.G), IsHaarDef M → ∀ (f : SchRow ch.G), (∀ i, IsThetaFunO ch.W.ψ _ _ (f i)) →
       ∀ (P : PolRow ch.G) (y : (R.HX t).H), GlobalTheory.Unf.IsContAut _ (liftP ch.W M (rowPath T D.R.m D.R.m)

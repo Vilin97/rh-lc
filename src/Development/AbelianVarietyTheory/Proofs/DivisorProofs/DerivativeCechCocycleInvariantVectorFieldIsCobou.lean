@@ -203,6 +203,7 @@ theorem pairCocycle_cocycle (V : J → A.left.Opens) (φ : ∀ a b, Γ(A.left, V
   linear_combination e1 - e2 - e3
 
 
+omit [GrpObj A] in
 theorem axis_coboundary {I : Type} (V : J → A.left.Opens) (φ : ∀ a b, Γ(A.left, V a ⊓ V b))
     (hφ : ∀ (a b c : J) (P : GPt A), P.In (V a) → P.In (V b) → P.In (V c) →
       valR P.x _ (φ a b) + valR P.x _ (φ b c) = valR P.x _ (φ a c))

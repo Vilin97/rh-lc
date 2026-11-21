@@ -41,6 +41,7 @@ namespace PositivityTheory.Rg.Sw.Glob.LocLawH
 variable {D : D7} {n : ℕ}
 
 
+open Classical in
 def atT {m : ℕ} (σ : (D.what₂.Tau → ℂ) →+ AE D) (τ : D.what₂.Tau) (M : Matrix (Fin m) (Fin n) ℂ) : Mx D m n :=
   fun i j => σ (Pi.single τ (M i j))
 

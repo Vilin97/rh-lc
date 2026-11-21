@@ -18,6 +18,7 @@ namespace CrystallineSemistableComparison
 variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)}
 
 
+set_option maxHeartbeats 1000000 in
 structure ComparisonOn (G : Model l K → Prop) where
   c : ∀ (M : Model l K) (n : ℕ), M.V n →+ (Module.Dual K (HdR M.q n) →+ BdR l)
   lin : ∀ (M : Model l K) (n : ℕ) (z : ℚ_[l]) (v : M.V n) (φ : Module.Dual K (HdR M.q n)), c M n (z • v) φ = qQ l z * c M n v φ

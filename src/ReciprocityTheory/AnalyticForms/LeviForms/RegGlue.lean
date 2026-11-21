@@ -94,6 +94,7 @@ def cutψ (s : ℝ) : ℝ := Real.smoothTransition (64 * (s - 1) / 17)
 def cutP {e : ℕ} (z : Fin e → ℂ) : ℝ := ∏ i, (1 - cutψ (‖z i‖ ^ 2))
 
 
+open Classical in
 def glueCut {e : ℕ} {X : Type} [TopologicalSpace X] (B : FinHolAtlas e X) (j : Fin B.n) (y : X) :
     ℝ := by
   classical

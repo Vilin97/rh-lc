@@ -497,6 +497,7 @@ theorem isInertChart_chart (hw : IsInertAt F E v w) (hc : IsConjAt σ h c) {a : 
 end InertChart
 
 
+open InertChart in
 theorem exists_isInertChart (σ : E →ₐ[F] E) (hσ : IsCMExt F E σ) (v : HeightOneSpectrum (𝓞 F)) :
     (IsUnram (E := E) v → IsSplit (E := E) v ∨ ∃ w, IsInertAt F E v w) ∧
     ∀ (w : HeightOneSpectrum (𝓞 E)) (h : w.under (𝓞 F) = v), IsInertAt F E v w →

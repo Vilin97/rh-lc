@@ -24,6 +24,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
 
 
+attribute [local instance] Over.cartesianMonoidalCategory in
 private theorem indep_v {O : Type} [CommRing O] {β : O →+* c.F} {Z : Model Xo c β} {R : Type} [CommRing R]
     {φ : c.F →+* R} {x : Sp R ⟶ Z.X} (f : EigFrame Z φ x) (τ : E →+* ℂ) : Indep Z.t x (f.v τ) := by
   intro cf cf' w h1 h2

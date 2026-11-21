@@ -56,6 +56,7 @@ theorem loc_mem_KAt' {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
     exact hK z hz
 
 
+open scoped Classical in
 theorem ev_mem_adm' {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] (x : κ → AF F) :
     (LinearMap.proj x : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ) ∈ (GlobalTheory.WeilM.adeleClass F).adm κ := by
   intro g _

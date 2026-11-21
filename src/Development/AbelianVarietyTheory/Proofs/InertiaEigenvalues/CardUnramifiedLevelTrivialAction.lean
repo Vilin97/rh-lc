@@ -198,6 +198,7 @@ theorem card_LCHomLev_eq_unrK {p : ℕ} [Fact p.Prime] {K : IntermediateField �
     rw [ContinuousMulEquiv.apply_symm_apply]
 
 
+open scoped ReciprocityTheory.DiscreteGroups.LocalClassField in
 theorem card_unramifiedClasses_eq_card_invariants_localGalois {p : ℕ} [Fact p.Prime] {K : IntermediateField ℚ_[p] (PadicAlgCl p)}
     (hK : FiniteDimensional ℚ_[p] K) {R : Type} [CommRing R] {N : Type} [AddCommGroup N] [Module R N]
     [Finite N] [TopologicalSpace N] [DiscreteTopology N]

@@ -24,6 +24,7 @@ variable {K : Type} [Field K]
 abbrev dK (f : K) : Ω[K⁄ℤ] := KaehlerDifferential.D ℤ K f
 
 
+variable (K) in
 def extD : abelian₂ K →+ abelian₂ K := (CechDR.dDR ℤ K).toAddMonoidHom
 
 theorem extD_apply (η : abelian₂ K) : extD K η = CechDR.dDR ℤ K η := rfl
@@ -86,6 +87,7 @@ def logAt (Z : Set X) (G : CartierDiv X) (a : ℕ) (y : X) : AddSubgroup (abelia
   spanForms {c | G.RegularAt y c} (dlog '' {g | LogUnit Z y g}) a
 
 
+omit [IsIntegral X] in
 def latSec {V : Type} [AddCommGroup V] (M : X → AddSubgroup V) (U : X.Opens) : AddSubgroup V :=
   ⨅ y ∈ U, M y
 

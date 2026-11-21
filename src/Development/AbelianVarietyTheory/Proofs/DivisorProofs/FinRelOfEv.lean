@@ -21,6 +21,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {n d n₁ d₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {X₁ : Spc F E n₁} {W₁ : Spc F E d₁}
 
 
+open scoped Classical in
 theorem finRel_of_ev {B : Base F E} {M : Model σ X W} {M₁ : Model σ X₁ W₁} {ι : Matrix (Fin n) (Fin n₁) E}
     {ι' : Matrix (Fin d) (Fin d₁) E} {I : Set (Matrix (Fin n) (Fin d) (AE F E))} (hM : M.IsGood B.ψ) (hM₁ : M₁.IsGood B.ψ)
     (e : Fn F n d →ₗ[ℂ] Fn F n₁ d₁) (he : IsEv B M M₁ ι ι' I e)
@@ -103,6 +104,8 @@ theorem finRel_of_ev {B : Base F E} {M : Model σ X W} {M₁ : Model σ X₁ W�
     exact canc _ _ h1
 
 
+open GlobalTheory.ThK.EvUniqInf in
+open scoped Classical in
 theorem infRel_of_ev {B : Base F E} {M : Model σ X W} {M₁ : Model σ X₁ W₁} {ι : Matrix (Fin n) (Fin n₁) E}
     {ι' : Matrix (Fin d) (Fin d₁) E} {I : Set (Matrix (Fin n) (Fin d) (AE F E))} (hM : M.IsGood B.ψ) (hM₁ : M₁.IsGood B.ψ)
     (e : Fn F n d →ₗ[ℂ] Fn F n₁ d₁) (hev : IsEv B M M₁ ι ι' I e)

@@ -418,6 +418,7 @@ theorem emb_comm {v : HeightOneSpectrum (𝓞 F)} (x : GL (Fin n) (E ⊗[F] v.ad
   rw [← e, ← afsplitU_mul, ← afsplitU_mul, one_mul, mul_one, one_mul, mul_one]
 
 
+omit [StarRing E] in
 abbrev StdAt (v : HeightOneSpectrum (𝓞 F)) (Lb : Submodule (𝓞 E) (Fin n → E)) : Prop :=
   latS (F := F) (v.adicCompletion F) (intV E v) Lb = Formalism.UG.stdLat (intV E v)
 
@@ -431,6 +432,7 @@ open Formalism.MainNotions Formalism.L2.Col Formalism.L2.DIV Formalism.L2.Ker Gl
 attribute [local instance] GlobalTheory.Mem.Col2.starE Formalism.BasicNotions.Host.cmStar
 
 
+set_option maxHeartbeats 1000000 in
 theorem reads_gLevH {B : Base} {X : PreX B.toPre} (I : TC B X) (hPr : (B.primes X).Ok) (u : B.Word)
     (G : GLoc B.host.F B.host.E B.sp.cm.sig B.host.g) (i : ℕ) {Ch : Type} (chOf : (I.stp u I.mu0 i).Cl → Ch)
     {J : Matrix (Fin (B.R.N i)) (Fin (B.R.N i)) B.host.E} (hJ : J = 1) {T f : ℕ} {bad : Set (HeightOneSpectrum (𝓞 B.host.F))}
@@ -477,6 +479,7 @@ theorem reads_gLevH {B : Base} {X : PreX B.toPre} (I : TC B X) (hPr : (B.primes 
   exact this
 
 
+set_option maxHeartbeats 1000000 in
 theorem chart_gLevH {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l))
     (u : B.Word) (G : GLoc (I.rec7 l Z).host.F (I.rec7 l Z).host.E (sigD (I.rec7 l Z)) (I.rec7 l Z).host.g) (i : ℕ) (hi : i ≤ B.R.m)
     (Ch : Type) (chOf : (I.stp u I.mu0 i).Cl → Ch)

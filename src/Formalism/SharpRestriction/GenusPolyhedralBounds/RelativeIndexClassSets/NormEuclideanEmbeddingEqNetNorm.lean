@@ -33,6 +33,7 @@ def netN (σ : B.KO →+* ℂ) (F : B.Cusp j ka) : ℝ :=
 def cf (σ : B.KO →+* ℂ) : ℝ := (Real.sqrt (Fintype.card (Nt.NN σ) : ℝ))⁻¹
 
 
+open Classical in
 def e0 (σ : B.KO →+* ℂ) : B.Cusp j ka →ₛₗ[σ] EuclideanSpace ℂ (Σ τ : B.KO →+* ℂ, Nt.NN τ) where
   toFun F := WithLp.toLp 2 (fun p => if p.1 = σ then ((Nt.cf p.1 : ℝ) : ℂ) * Nt.ev p.1 p.2 F else 0)
   map_add' F G := by

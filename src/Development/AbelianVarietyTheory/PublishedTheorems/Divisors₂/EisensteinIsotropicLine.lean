@@ -40,6 +40,7 @@ end GlobalTheory.EisLine
 namespace GlobalTheory.Published
 
 
+open GlobalTheory.EisLine in
 def EisensteinIsotropicLine : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ →
     Algebra.Unramified (𝓞 F) (𝓞 E) →

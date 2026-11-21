@@ -107,6 +107,7 @@ theorem exists_pow_mul_mem_pow {A : Subalgebra k Ω} {L : Submodule A Ω} {r : �
 end VeryAmpleSecs
 
 
+open VeryAmpleSecs in
 theorem VeryAmpleSecs.proof : VeryAmpleSecs.Statement.{u, w} := by
   intro k _ Ω _ _ N x Nb r h hv n
   ext s

@@ -121,6 +121,7 @@ theorem aeval_ker {V : Type*} [AddCommGroup V] [Module ℂ V] (T : Module.End �
 end CoreD
 
 
+open CoreD in
 theorem equivLift_of (hFFT : PositivityTheory.Rg.Sw.FFT) (_hSF : SemiFam) (hD : Dens) (hS : SymKComm) (hI : InvOp)
     (hF : FormFacts) : EquivLift := by
   intro m n ε c hc R t ht htk

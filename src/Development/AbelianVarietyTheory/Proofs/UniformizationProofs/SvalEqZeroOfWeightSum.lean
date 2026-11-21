@@ -278,6 +278,7 @@ end GlobalTheory.ExpUniq
 namespace GlobalTheory
 
 
+open ExpUniq in
 theorem expT_eq_iff : (AllPre fun {V} _ _ _ {_} {_} {_} _ _ U => ∀ (W : Type) [CommRing W] [IsLocalRing W] [Algebra V W], FinExt V W → ∀ k σ σ' f f', U.ExpT (TA V W) k σ f → U.ExpT (TA V W) k σ' f' → (σ = σ' ↔ f = f')) := by
   intro V _ _ _ hV D A G _ _ U W _ _ _ hW k σ σ' f f' h h'
   have := hV.1

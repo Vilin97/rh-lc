@@ -29,6 +29,7 @@ def globalDecomp : Gal(Ωv/Kv) →* K.1.fixingSubgroup :=
       (decompHom Kv ι σ).commutes ⟨x, hx⟩
 
 
+omit [Algebra.IsIntegral Kv Ωv] in
 theorem globalDecomp_apply (σ : Gal(Ωv/Kv)) (x : ℚ̄) :
     ι ((globalDecomp Kv ι σ : ℚ̄ ≃ₐ[ℚ] ℚ̄) x) = σ (ι x) :=
   decompHom_apply ι σ x
@@ -68,6 +69,7 @@ theorem localUnitsMor_finiteComponentRep_levelDiag (u : Additive F.1ˣ) :
   congrArg Additive.ofMul (Units.ext (completionEmbedding_algebraMap ι F (u.toMul : F.1)))
 
 
+set_option maxHeartbeats 4000000 in
 theorem localInfl_finiteComponent_levelDiag (n : ℕ) (y : cohomology (galUnitsZ K.1 F.1) n) :
     (localInfl ι F n).hom ((finiteComponent (placeOfEmbedding ι F) n).hom
       ((cohomologyMap (levelDiag K F) n).hom y)) =
@@ -89,6 +91,7 @@ variable {v : InfinitePlace K.1} (ι : ℚ̄ →ₐ[K.1] AlgebraicClosure v.Comp
   (F : FiniteSubfield) [Fact (K ≤ F)] [F.1.fixingSubgroup.Normal]
 
 
+set_option maxHeartbeats 4000000 in
 theorem levelDiag_infiniteComponent_infLocalInfl_cochains :
     cochainsMap (levelDiag K F) ≫
       cochainsMapAlong (MulAction.stabilizer (F.1 ≃ₐ[K.1] F.1)
@@ -119,6 +122,7 @@ theorem levelDiag_infiniteComponent_infLocalInfl_cochains :
   exact hval _
 
 
+set_option maxHeartbeats 4000000 in
 theorem infLocalInfl_infiniteComponent_levelDiag (n : ℕ) (y : cohomology (galUnitsZ K.1 F.1) n) :
     (infLocalInfl ι F n).hom ((infiniteComponent (infPlaceOfEmbedding ι F) n).hom
       ((cohomologyMap (levelDiag K F) n).hom y)) =
@@ -150,6 +154,7 @@ section Components
 variable (ι : LocalEmbeddings K) {n : ℕ} (hn : 1 ≤ n)
 
 
+set_option maxHeartbeats 4000000 in
 theorem idelesLimitCohomologyEquiv_unitsToIdeles_inr (v : HeightOneSpectrum (𝓞 K.1))
     (x : cohomology (unitsLimitRep K) n) :
     idelesLimitCohomologyEquiv ι hn ((unitsToIdeles K n).hom x) (.inr v) =
@@ -162,6 +167,7 @@ theorem idelesLimitCohomologyEquiv_unitsToIdeles_inr (v : HeightOneSpectrum (�
   exact localInfl_finiteComponent_levelDiag (ι.fin v) p.1 n y
 
 
+set_option maxHeartbeats 4000000 in
 theorem idelesLimitCohomologyEquiv_unitsToIdeles_inl (v : InfinitePlace K.1)
     (x : cohomology (unitsLimitRep K) n) :
     idelesLimitCohomologyEquiv ι hn ((unitsToIdeles K n).hom x) (.inl v) =

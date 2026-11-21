@@ -180,6 +180,7 @@ variable {O : Type} [CommRing O] [StarRing O] [Module O D.X] {w : O} {t : D.X �
   {r : D.X → D.X → Fˣ}
 
 
+variable (O) in
 def IsRootForm {X K F : Type} [AddCommGroup X] [Module O X] [Field K] [Field F] [Algebra K F] (k : ℕ) (t : X → X → Kˣ)
     (r : X → X → Fˣ) : Prop :=
   IsScalarForm O r ∧ ∀ y x, r y x ^ k = Units.map (algebraMap K F).toMonoidHom (t y x)

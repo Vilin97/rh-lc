@@ -116,6 +116,7 @@ theorem eventually_latLoc_le {L L' : Submodule (𝓞 E) (Fin n → E)} (hL : L.F
   simp
 
 
+variable (F) in
 theorem eventually_latLoc_eq (L L' : Submodule (𝓞 E) (Fin n → E)) [hL : Submodule.IsLattice E L]
     [hL' : Submodule.IsLattice E L'] :
     ∀ᶠ v : HeightOneSpectrum (𝓞 F) in cofinite, latLoc F L v = latLoc F L' v := by
@@ -123,6 +124,7 @@ theorem eventually_latLoc_eq (L L' : Submodule (𝓞 E) (Fin n → E)) [hL : Sub
     eventually_latLoc_le (F := F) hL'.fg hL.span_eq_top] with v h h' using le_antisymm h h'
 
 
+omit [NumberField E] in
 theorem isLattice_stdLattice : Submodule.IsLattice E (stdLattice E n) := by
   refine ⟨Submodule.fg_pi fun _ => ?_, eq_top_iff.2 fun y _ => ?_⟩
   · rw [LinearMap.range_eq_map]
@@ -139,6 +141,8 @@ theorem isLattice_stdLattice : Submodule.IsLattice E (stdLattice E n) := by
 variable (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E)
 
 
+omit [NumberField E] in
+variable {σ J} in
 theorem mem_stabLoc_stdLattice_iff {v : HeightOneSpectrum (𝓞 F)} {k : GLoc σ J v} :
     k ∈ stabLoc σ J (stdLattice E n) v ↔ (∀ i j, (matHom _ σ J k).1 i j ∈ intLoc F E v) ∧
       ∀ i j, (matHom _ σ J k⁻¹).1 i j ∈ intLoc F E v := by

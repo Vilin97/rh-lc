@@ -54,6 +54,7 @@ def incl (F₁ F₂ : SubSystem k x Ω) (h21 : ∀ I, F₂.sub I ≤ F₁.sub I)
   map_smul' _ _ := rfl
 
 
+set_option maxHeartbeats 1000000 in
 theorem quotH_subsingleton (F₁ F₂ : SubSystem k x Ω) (h21 : ∀ I, F₂.sub I ≤ F₁.sub I) (i : ℕ)
     (h1 : Subsingleton (F₁.H i)) (h2 : Subsingleton (F₂.H (i + 1))) :
     Subsingleton (SubSystem.quotH F₁ F₂ i) := by
@@ -94,6 +95,7 @@ theorem quotH_subsingleton (F₁ F₂ : SubSystem k x Ω) (h21 : ∀ I, F₂.sub
 end RestrLenEuler
 
 
+open RestrLenEuler in
 theorem RestrLenEuler.proof : RestrLenEuler.Statement.{u, w} := by
   intro k _ Ω _ _ N x qq hqq _ t L n
   set Ls : Fin t → SubSystem k x Ω := fun j => (L j).toSubSystem with hLs

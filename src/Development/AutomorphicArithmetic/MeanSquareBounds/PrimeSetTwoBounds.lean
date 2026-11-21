@@ -45,6 +45,7 @@ def BoxAll (Q C τ Y X : ℝ) (f : ℕ → ℂ) (M : ℕ) : Prop :=
 def primePairSetFirst (z : ℝ) : Finset ℕ := PPset 8 3 (Real.exp z)
 
 
+open Classical in
 def primeSetTwoBounds (z z' : ℝ) (q : ℕ) : Finset ℕ :=
   (Icc 1 ⌊Real.exp z'⌋₊).filter fun d => d.Prime ∧ d % 16 = 7 ∧ oddM z q ∣ d + 1 ∧ Real.exp z' ^ (1 / 2 : ℝ) < (d : ℝ)
 

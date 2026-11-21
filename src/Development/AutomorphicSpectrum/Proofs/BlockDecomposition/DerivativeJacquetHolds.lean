@@ -25,6 +25,7 @@ namespace GlobalTheory.CompanionTheory.BZDerivJac
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+variable (k) in
 def embM (n j : ℕ) : Mir k n →* Mir k (n + j) :=
   Nat.rec (motive := fun j => Mir k n →* Mir k (n + j)) (MonoidHom.id _)
     (fun j f => ((levi k (n + j + 1)).comp (Mir k (n + j)).subtype).comp f) j

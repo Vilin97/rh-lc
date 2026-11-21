@@ -47,6 +47,7 @@ theorem continuous_mixS_joint {D : D7} (ψ : AddChar (AF D.host.F) ℂ) {S T S�
       (((continuous_fst.comp continuous_fst).prodMk continuous_const).prodMk ((c1.add c2).add continuous_const)))
 
 
+set_option maxHeartbeats 1000000 in
 theorem weilCont : WeilCont := by
   intro D n V ψ hψ χ hχ hr θ hθ μ 𝓕 hμ ω hω Φ
   let A : HSp D := Formalism.BasicNotions.Examples₂.posSpace (E := D.host.E) Formalism.BasicNotions.Examples₂.star_isIntegral n

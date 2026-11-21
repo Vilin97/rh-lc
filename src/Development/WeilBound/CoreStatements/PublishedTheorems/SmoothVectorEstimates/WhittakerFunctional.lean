@@ -86,6 +86,7 @@ theorem dot_eLast (k : ℕ) (y : UnipotentBlockColumnIndex a k k → Ad E) : dot
   split_ifs <;> simp
 
 
+variable (E a) in
 def Yg (hψ : StdPsi ψ) : Submodule ℂ (XB E a) where
   carrier := {φ | Good ψ (a - 1) φ}
   add_mem' h h' := good_add h h'

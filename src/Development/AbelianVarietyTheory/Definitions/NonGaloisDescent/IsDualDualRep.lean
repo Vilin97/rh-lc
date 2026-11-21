@@ -15,6 +15,7 @@ variable {D : Formalism.BasicNotions.D7} {N : NData D.R D.host D.what₂} {X : N
   (i : X.Tw) (s : X.Sig i)
 
 
+variable (X) in
 def IsCj (g g' : GE N) : Prop := ∀ x, g' x = X.cc (g (X.cc.symm x))
 
 def IsDual (ρ : GE N →* GL (Fin D.R.r) (X.O0 i)) : Prop :=
@@ -110,6 +111,7 @@ def Recip : Prop :=
       ∑ a, (c a : K) * form x y (γ a) (φ a) (γ' a) (φ' a) = 0
 
 
+variable (X) in
 def StepAB : Prop :=
   ∀ (M : ℕ), 1 ≤ M → ∀ H S d, AdmFam X i M H S d → ∀ z, IsTameInertiaElementAtTwistPrime X i z →
     ∀ U : Subgroup (GE N), IsOpen (U : Set (GE N)) → U.Normal → ∀ (A : Finset (PlE D.host)) (R : ℕ) (h : Fin R → GE N),

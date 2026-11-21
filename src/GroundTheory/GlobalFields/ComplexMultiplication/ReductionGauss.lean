@@ -35,6 +35,7 @@ theorem coordReduce_algebraMap (a : 𝒪) :
   simp
 
 
+omit [IsDomain 𝒪] [IsDiscreteValuationRing 𝒪] in
 theorem smul_basis_mul (c : 𝒪) (p q : 𝒪[X]) :
     (C c * p) • (1 : W.toAffine.CoordinateRing) + (C c * q) • CoordinateRing.mk W Y =
       algebraMap 𝒪 W.toAffine.CoordinateRing c * (p • 1 + q • CoordinateRing.mk W Y) := by

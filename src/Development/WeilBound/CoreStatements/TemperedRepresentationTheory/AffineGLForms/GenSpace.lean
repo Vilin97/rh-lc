@@ -22,6 +22,7 @@ def genSpace (L : Subgroup (GL (Fin a) (Af E))) {W : Type} [AddCommGroup W] [Mod
     (∀ g : GA E a, (fun k : Kinf E a => (cptRep E a k φ).1 g) ∈ GlobalTheory.Published.AutFin.coeffSpan ρ) ∧ ∀ z ∈ J, z φ = 0}
 
 
+variable (E a) in
 def GenFin : Prop :=
   ∀ (L : Subgroup (GL (Fin a) (Af E))), IsOpen (L : Set (GL (Fin a) (Af E))) →
   ∀ (W : Type) [AddCommGroup W] [Module ℂ W] [FiniteDimensional ℂ W] (ρ : Representation ℂ (Kinf E a) W),
@@ -29,6 +30,7 @@ def GenFin : Prop :=
     FiniteDimensional ℂ (Submodule.span ℂ (genSpace L ρ J))
 
 
+variable (E a) in
 def CuspFin : Prop :=
   ∀ (L : Subgroup (GL (Fin a) (Af E))), IsOpen (L : Set (GL (Fin a) (Af E))) →
   ∀ (W : Type) [AddCommGroup W] [Module ℂ W] [FiniteDimensional ℂ W] (ρ : Representation ℂ (Kinf E a) W),
@@ -36,6 +38,7 @@ def CuspFin : Prop :=
     FiniteDimensional ℂ (Submodule.span ℂ {φ | φ ∈ genSpace L ρ J ∧ IsCuspidal φ.1})
 
 
+variable (E a) in
 def CTFin (r : ℕ) : Prop :=
   ∀ (L : Subgroup (GL (Fin a) (Af E))), IsOpen (L : Set (GL (Fin a) (Af E))) →
   ∀ (W : Type) [AddCommGroup W] [Module ℂ W] [FiniteDimensional ℂ W] (ρ : Representation ℂ (Kinf E a) W),

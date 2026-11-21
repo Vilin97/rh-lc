@@ -433,6 +433,7 @@ theorem isIrreducible_of_cls_eq_mul (hG : GeometricLemma) (hBZ : BernsteinZelevi
 end Main
 
 
+set_option maxHeartbeats 2000000 in
 theorem isIrreducible_prod₂_of_polynomialRing (hG : GeometricLemma) (hBZ : BernsteinZelevinskyFiniteness)
     (hZ : ZelevinskyPolynomialRing) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] (x y : IrrGL (k := k)) (hx : x.IsCusp) (hy : y.IsCusp)

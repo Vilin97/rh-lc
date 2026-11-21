@@ -63,6 +63,7 @@ theorem epsU_conj (hJ : IsUnit J.det) (B B' γ : GL (Fin n) E) (k : ℕ) (hγ : 
     _ = _ := by rw [h1, h2, inv_inv, inv_one, mul_one]
 
 
+set_option maxHeartbeats 2000000 in
 theorem epsU_iw (S : StepLevel F E σ J T f bad) (A : LocAt F E n G) (hW : LocInt A) (hp : p.Prime) (hT : ¬ p ∣ T)
     (halg : ∀ v (a : (A.pl v).1.adicCompletion F), A.spl v ((1 : E) ⊗ₜ[F] a) = (a, a))
     (hb : ∀ v (t : Fin n → (A.pl v).1.adicCompletion F),
@@ -150,6 +151,7 @@ variable {u : D.what₂.Word} {C : ColumnChain D.R D.what₂.Tau (D.hcW u)} {A :
   {i : ℕ} {hi : i ≤ D.R.m} {G : GAtP p}
 
 
+set_option maxHeartbeats 4000000 in
 theorem exists_pow (S : StepIn M i hi G) (β : S.Ch) (cl : {c // S.chOf c = β}) :
     ∃ (b k : ℕ), 0 < k ∧ ∃ (g κ : UPts (sigD D) (gramN D i hi) (FiniteAdeleRing (𝓞 D.host.F) D.host.F))
       (γ : GL (Fin (D.R.N i)) D.host.E), γ ∈ UJ (sigD D : D.host.E →+* D.host.E) (gramN D i hi) ∧
@@ -167,6 +169,7 @@ theorem exists_pow (S : StepIn M i hi G) (β : S.Ch) (cl : {c // S.chOf c = β})
   exact e
 
 
+set_option maxHeartbeats 4000000 in
 theorem twUnit_of (S : StepIn M i hi G) (e : D.what₂.LL →+* G.Kf) (w : D.what₂.places.Pl) (β : S.Ch) (H : S.Core e β)
     (hR0 : ∀ x, x ∈ intW D.what₂.places w ↔ e x ∈ Set.range (algebraMap G.O G.Kf)) (L : LatIn S w β) : S.TwUnit w β := by
   intro cl B' hB'

@@ -68,6 +68,7 @@ theorem comm_of_supp {x y : GA E n} (hinf : GeneralLinearGroup.map (pInf E) x = 
 end GlobalTheory.WhitRed
 
 
+open GlobalTheory.WhitRed in
 theorem GlobalTheory.WhitRed.exists_mirabolic : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ) (T : Finset (HeightOneSpectrum (𝓞 E)))
     (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ) (F : GA E (m + 1) → ℂ)
     (U : Subgroup (GL (Fin (m + 1)) (Af E))) (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ),

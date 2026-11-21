@@ -60,6 +60,7 @@ private theorem isPrecomplete_of_module_finite {R M : Type*} [CommRing R] [AddCo
   rwa [Ideal.smul_eq_mul, Ideal.mul_top] at h
 
 
+set_option maxHeartbeats 800000 in
 theorem complete_max {l : ℕ} [Fact l.Prime] (LL : FinExt l) :
     IsAdicComplete (IsLocalRing.maximalIdeal ↥(OL LL)) ↥(OL LL) := by
   classical

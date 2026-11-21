@@ -26,6 +26,7 @@ namespace GlobalTheory.ModGrowth
 variable {D : D7}
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation in
 def conjInv (V : HSp D) {J : Matrix (Fin V.rank) (Fin V.rank) D.host.E} (h : J = (-1 : D.host.E) • V.gram) (u : UB J) :
     GA D V :=
   ⟨Matrix.GeneralLinearGroup.map (Formalism.L2.Theta.cA D) u.1, by
@@ -91,6 +92,7 @@ end GlobalTheory.ModGrowth
 namespace GlobalTheory.ModGrowth
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels in
 theorem modInt_of_bound : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (W W₁ X : HSp D) (A : Fr W) (A₁ : Fr W₁)
     (B : Fr X) (α β : (AE D)ˣ →* Circle) (ν : Measure (GA D W)) (𝓕 : Set (GA D W)) (ν₁ : Measure (GA D W₁))
     (𝓕₁ : Set (GA D W₁)) (ωA : WRep W X) (ωB : WRep W₁ X) (e : Fin X.rank ≃ Fin (W.rank + W₁.rank))

@@ -32,10 +32,13 @@ def DualTw {Γ k : Type} [Group Γ] [Field k] (r : Γ →* GL (Fin n) k) (θ : �
     (θ s : k) • (P : Matrix (Fin n) (Fin n) k)
 
 
+omit [NumberField F] in
+variable (l) in
 def IsCycWt (wt : ℤ) (θ : G F Ω →* (Qbar l)ˣ) : Prop :=
   ∃ (M : ℕ) (χ : G F Ω →* (Qbar l)ˣ), 1 ≤ M ∧ KillsMu M χ ∧ θ = cycBar F Ω l ^ wt * χ
 
 
+variable (l) in
 structure LevelO (M : ℕ) (m : Fin n → ℤ) (r : G F Ω →* GL (Fin n) (Qbar l)) : Prop extends Level l M m r where
   odd : Odd n
 

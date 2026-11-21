@@ -13,6 +13,7 @@ open GlobalTheory GlobalTheory.CM
 
 namespace GlobalTheory.CM
 
+open GlobalTheory.CechPic in
 theorem exists_rigLB_extension_dedekind :
     ∀ (R K : Type) [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K] (G : Over (Sp R)) [GrpObj G], IsAbelianScheme G → ∀ (X' : Scheme.{0}) (π : X' ⟶ G.left) (p : X' ⟶ Sp K), IsPullback π p G.hom (spMap (algebraMap R K)) → ∀ L : LB X', L.IsLB → ∃ L' : RigLB G, LBIso (L'.L.pull π) L := by
   intro R K _ _ _ _ _ A _ hA X' φ p hφ N hN

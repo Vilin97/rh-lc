@@ -87,6 +87,7 @@ theorem exists_trace_eq (ψ : 𝓞 E →+ ℤ) : ∃ δ : E, ∀ u : 𝓞 E, ((�
   exact (LinearMap.congr_fun h2 u)
 
 
+open FractionalIdeal in
 theorem exists_local_gen {M : FractionalIdeal (𝓞 E)⁰ E} (hM : M ≠ 0) {𝔭 : Ideal (𝓞 E)} {δ : E} (hδ : δ ∈ M)
     (hδ' : δ ∉ (𝔭 : FractionalIdeal (𝓞 E)⁰ E) * M) :
     ∃ s : 𝓞 E, s ∉ 𝔭 ∧ ∀ x ∈ M, ∃ t : 𝓞 E, (s : E) * x = δ * t := by
@@ -109,6 +110,7 @@ theorem exists_local_gen {M : FractionalIdeal (𝓞 E)⁰ E} (hM : M ≠ 0) {�
   exact ⟨t, by rw [← ht, Algebra.smul_def, mul_comm]⟩
 
 
+open FractionalIdeal in
 theorem exists_mem_notMem_mul {M : FractionalIdeal (𝓞 E)⁰ E} (hM : M ≠ 0) {𝔭 : Ideal (𝓞 E)} (h𝔭 : 𝔭 ≠ ⊤) :
     ∃ x ∈ M, x ∉ (𝔭 : FractionalIdeal (𝓞 E)⁰ E) * M := by
   by_contra! h

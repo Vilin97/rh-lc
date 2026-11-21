@@ -306,6 +306,7 @@ end GlobalTheory.HighWtEmb.NabInter
 namespace GlobalTheory.HighWtEmb
 
 
+open NabInter in
 theorem mem_nabK_of_toBlock : ∀ (k : Type) [Field k] (N : ℕ) (ι : Type) [Fintype ι] [DecidableEq ι]
     (ν : ι → Fin N → ℕ) (P : MvPolynomial (BVar N ι) k),
     (∀ τ, toBlock k N τ P ∈ dualWeyl (MvPolynomial (OVar N τ) k) N N (ν τ)) → P ∈ nabK k N ν := by

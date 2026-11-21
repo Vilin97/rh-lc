@@ -91,6 +91,7 @@ def GammaConjAt : Prop :=
     zonalSpherical μ z g⁻¹ = (starRingEnd ℂ) (zonalSpherical μ z g)
 
 
+variable {F n μ} in
 def IsReps (h : SphericalHecke μ (F := F) (n := n)) (T : Finset (GL (Fin n) F)) : Prop :=
   (∀ g ∈ T, ∀ g' ∈ T, g⁻¹ * g' ∈ GLnLocal.integralGL F n → g = g') ∧
   ∀ f : GL (Fin n) F → ℂ, (∀ g, ∀ k ∈ GLnLocal.integralGL F n, f (g * k) = f g) →

@@ -42,6 +42,7 @@ open GlobalTheory.LamT (CMPt)
 namespace GlobalTheory.FrameDenseZ
 
 
+open Formalism.L2.LamCM GlobalTheory.CM GlobalTheory.Frames GlobalTheory.LamT in
 theorem exists_poly_div_det_secZ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H)
     (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (K : Type) [Field K] [Algebra c.F K] (y : FrPt Xo c K)
     (e : Ix Dw → ℤ) (F : Rul Xo c) (hF : F ∈ GlobalTheory.AllWt.secZ Xo c e) :
@@ -78,6 +79,7 @@ end GlobalTheory.FrameDenseZ
 namespace GlobalTheory.FrameDenseZ
 
 
+open Formalism.L2.LamCM in
 theorem exists_frame_evalFr_ne_zero {K : Type} [Field K] [Infinite K] {B : Type} [Fintype B] (m : B → ℕ)
     (P : MvPolynomial (FrVar m) K) (hP : P ≠ 0) :
     ∃ Y : ∀ b, Matrix (Fin (m b)) (Fin (m b)) K, (∀ b, (Y b).det ≠ 0) ∧ evalFr P Y ≠ 0 := by

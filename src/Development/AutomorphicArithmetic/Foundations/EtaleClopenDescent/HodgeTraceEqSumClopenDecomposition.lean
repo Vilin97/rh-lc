@@ -17,6 +17,7 @@ variable {R M N : Type*} [CommRing R] [AddCommGroup M] [Module R M] [Module.Fini
   [Module.Projective R M] [AddCommGroup N] [Module R N] [Module.Finite R N] [Module.Projective R N]
 
 
+open TensorProduct in
 private theorem projTrace_comm (u : M →ₗ[R] N) (v : N →ₗ[R] M) :
     projTrace R N (u ∘ₗ v) = projTrace R M (v ∘ₗ u) := by
   obtain ⟨t, rfl⟩ := (dualTensorHom_bijective (R := R) (M := M) (N := N)).2 u

@@ -39,6 +39,7 @@ def xx {M : Model l K} (hM : M.Sm) {j : ℕ} (v : M.T j) : Fam M (rr h1 hM j) j 
 theorem xx_spec {M : Model l K} (hM : M.Sm) {j : ℕ} (v : M.T j) : Lf _ v (xx h1 hM v) := ((h1.ex M hM j).choose_spec v).choose_spec
 
 
+variable (γ) in
 def gT {M : Model l K} (hM : M.Sm) (a : ℕ) {j : ℕ} (v : M.T j) : Module.Dual K (Hdg M.q a j) →+ ℂ_[l] := γ (xx h1 hM v) a
 
 include h2 in

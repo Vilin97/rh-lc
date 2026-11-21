@@ -491,6 +491,7 @@ theorem lineDeriv_bound (v : E) (ξ : E) :
     _ = _ := by ring
 
 
+open LineDeriv in
 def lineDerivCLM (v : E) : SobolevSpace E F s →L[ℂ] SobolevSpace E F (s - 1) :=
   multiplier (m := fun ξ ↦ (2 * Real.pi * Complex.I) * ((inner ℝ ξ v : ℝ) : ℂ))
     (by fun_prop) (lineDeriv_bound v)

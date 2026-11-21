@@ -68,6 +68,7 @@ abbrev FP : S ⥤ Sᵒᵖ ⥤ ModuleCat.{1} R :=
   yoneda ⋙ (Functor.whiskeringRight Sᵒᵖ (Type 0) (ModuleCat.{1} R)).obj (uliftFunctor.{1, 0} ⋙ ModuleCat.free R)
 
 
+variable {R} in
 def gen {U V : S} (a : V ⟶ U) : ((FP R).obj U).obj (op V) := ModuleCat.freeMk (R := R) (ULift.up a)
 
 variable {R} in

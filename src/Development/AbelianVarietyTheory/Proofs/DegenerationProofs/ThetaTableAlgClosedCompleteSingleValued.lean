@@ -46,6 +46,7 @@ theorem exists_isTorsFrame_closed [CharZero R] [IsAlgClosed F] (hLaw : Laws) {ρ
   exact exists_isTorsFrame_of_symLift hLaw _ A ρ hρ n hn T y x hy' hy θ hθ
 
 
+omit [IsDomain R] in
 theorem exists_valAt (hLaw : Laws) {k : ℕ} (t : SecA A F k) (x : TFK (R := R) F ⟶ A.A) {e} (he : LB.Gen.IsGen e) :
     ∃ c, ValAt t x e c := by
   obtain ⟨v, hv, -⟩ := hLaw.evVal _ A k x e he t

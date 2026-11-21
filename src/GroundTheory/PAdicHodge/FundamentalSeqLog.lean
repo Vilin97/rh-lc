@@ -24,6 +24,7 @@ theorem dpow_zero_right {n : ℕ} (hn : n ≠ 0) : dpow n (0 : AInf K p) = 0 := 
   rw [dpow, map_zero, zero_pow hn, mul_zero]
 
 
+variable (K p) in
 def pdIdeal : Ideal (AInf K p) where
   carrier := {x | ∀ n : ℕ, dpow n x ∈ ACrisZero K p}
   add_mem' {x y} hx hy n := by

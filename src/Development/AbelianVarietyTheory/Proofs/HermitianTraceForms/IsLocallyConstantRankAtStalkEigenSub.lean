@@ -73,6 +73,7 @@ theorem isSplitting_of_idem [Fintype ι] {σ : ι → O →+* R} (e : ι → R �
     simp [h1, Pi.single_apply]
 
 
+omit [DecidableEq ι] in
 theorem IsSplitting.map [Finite ι] {σ : ι → O →+* R} (h : IsSplitting σ) {R' : Type*}
     [CommRing R'] (f : R →+* R') : IsSplitting (fun i => f.comp (σ i)) := by
   classical
@@ -103,6 +104,7 @@ theorem IsSplitting.map [Finite ι] {σ : ι → O →+* R} (h : IsSplitting σ)
     rfl
 
 
+omit [DecidableEq ι] in
 theorem IsSplitting.injective [Nontrivial R] {σ : ι → O →+* R} (h : IsSplitting σ) :
     Function.Injective σ := by
   classical
@@ -567,6 +569,7 @@ variable {E : Type*} [Field E] [NumberField E] {R : Type*} [CommRing R] {ι : Ty
   [DecidableEq ι]
 
 
+omit [DecidableEq ι] in
 theorem nonempty_basis (hc : Fintype.card ι = Module.finrank ℚ E) :
     Nonempty (Module.Basis ι ℤ (𝓞 E)) :=
   ⟨(Module.finBasis ℤ (𝓞 E)).reindex (Fintype.equivFinOfCardEq
@@ -652,6 +655,7 @@ theorem det_sq_conjugateHom {L : Type*} [Field L] [Algebra (𝓞 L) R] {φ : ι 
   congr 2
 
 
+omit [Fintype ι] [DecidableEq ι] in
 theorem card_embeddings_of_splits {L : Type*} [Field L] [CharZero L] [Fintype (E →+* L)]
     (hL : ∀ x : E, ((minpoly ℚ x).map (algebraMap ℚ L)).Splits) :
     Fintype.card (E →+* L) = Module.finrank ℚ E := by
@@ -665,6 +669,7 @@ theorem isSplitting_of_isUnit_discr {σ : ι → 𝓞 E →+* R} (b : Module.Bas
 
 
 
+omit [DecidableEq ι] in
 theorem isSplitting_of_isDomain {S : Type*} [CommRing S] [IsDomain S] [CharZero S]
     {σ : ι → 𝓞 E →+* S} (hσ : Function.Injective σ) (hc : Fintype.card ι = Module.finrank ℚ E)
     (f : S →+* R) (hu : IsUnit (NumberField.discr E : R)) :

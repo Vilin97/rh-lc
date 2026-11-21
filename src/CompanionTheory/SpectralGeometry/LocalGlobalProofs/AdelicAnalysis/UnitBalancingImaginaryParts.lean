@@ -11,6 +11,7 @@ open scoped ENNReal NNReal MatrixGroups
 namespace GlobalTheory.CompanionTheory.SW.UnitBalance
 
 
+open NumberField.Units NumberField.Units.dirichletUnitTheorem in
 theorem exists_bound_log_centered (E : Type) [Field E] [NumberField E] :
     ∃ R : ℝ, ∀ t : InfinitePlace E → ℝ, ∃ (u : (𝓞 E)ˣ) (s : ℝ), ∀ w : InfinitePlace E,
       |t w + Real.log (w (u : E)) - s| ≤ R := by

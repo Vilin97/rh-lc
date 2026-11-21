@@ -92,6 +92,7 @@ def LiftIsSum (O : OMDat T.toCore R i Unit (fun _ => A.μ0)) (κ : WeightFamilie
       ζ * (lieFac (T.Q.Dw ((i : ℕ) + 1)) (xiR D) (wtA κ) : ℂ) * adOver O cc (actLev O.c' O.lev2 z f) q.out
 
 
+set_option maxHeartbeats 2000000 in
 theorem oneMapOf_of_span (hR : PreChar R) (hchi : R.grp_chiW) (hT : TieIn T R κ v₀) (O : OMDat T.toCore R i Unit (fun _ => A.μ0))
     (hF : O.c'.F = D.what₂.embLL.toRatAlgHom.fieldRange)
     (hP : O.Pins (κ i) (v₀ i (sg0 D A)) (iotaW T i) (T.x₀ ((i : ℕ) + 1) O.s0)) {cE : (T.U ((i : ℕ) + 1) O.s0).Comp → ℂ}
@@ -143,6 +144,7 @@ theorem oneMapOf_of_span (hR : PreChar R) (hchi : R.grp_chiW) (hT : TieIn T R κ
       hR.thP.thF_mem hR.thP.thG hE hid⟩
 
 
+set_option maxHeartbeats 2000000 in
 theorem lift_of_oneMapOf (O : OMDat T.toCore R i Unit (fun _ => A.μ0)) {κ : WeightFamilies.Wt D ((i : ℕ) + 1)} {v₀ : (R.MW i (sg0 D A)).Vec}
     {ι x₀} (hP : O.Pins κ v₀ ι x₀) {cE : (T.U ((i : ℕ) + 1) O.s0).Comp → ℂ} (h : O.OneMapOf κ v₀ cE 1) :
     ∃ z ∈ Subgroup.center G, ∃ ζ ∈ D.what₂.embLL.toRatAlgHom.fieldRange, (∃ m : ℕ, 0 < m ∧ ζ ^ m = 1) ∧

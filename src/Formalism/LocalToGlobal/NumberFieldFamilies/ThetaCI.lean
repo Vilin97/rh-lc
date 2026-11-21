@@ -178,6 +178,7 @@ theorem inf_surj (z : D.what₂.Tau → ℂ) : ∃ y : Ainf D.host.F ⊗[D.host.
   field_simp
 
 
+variable (D) in
 def cmpAt (τ : D.what₂.Tau) : AE D →+* ℂ := (th0 D τ).comp (infPart D)
 
 theorem ae_ext' {x y : AE D} (h1 : ∀ τ, cmpAt D τ x = cmpAt D τ y) (h2 : finPart D x = finPart D y) : x = y := by

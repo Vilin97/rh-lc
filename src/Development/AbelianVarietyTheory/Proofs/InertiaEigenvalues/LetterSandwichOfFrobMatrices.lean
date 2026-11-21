@@ -53,6 +53,7 @@ theorem φD_smulA (a : LetA O n) (x : W.DD T) : W.φD T (a • x) = W.φA a • 
   exact this
 
 
+include W in
 theorem neZero_letters : NeZero n := by
   have := PD.finK₀
   exact ⟨by rw [W.n_eq]; exact Module.finrank_pos.ne'⟩

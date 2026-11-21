@@ -22,6 +22,7 @@ open NumberField Formalism.BasicNotions Formalism.MainNotions.TaylorLogMetric
 open scoped nonZeroDivisors Pointwise
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.EquidistributedConjugates in
 theorem fixesK_conjEmb_iff (D : D7) (M : IntermediateField ℚ ℂ) (ρ : M →ₐ[ℚ] ℂ)
     (hm : ∀ a : D.host.K, D.host.φ₀ (a : D.host.E) ∈ M) :
     FixesK D M (conjEmb M ρ) ↔ ¬ FixesK D M ρ := by

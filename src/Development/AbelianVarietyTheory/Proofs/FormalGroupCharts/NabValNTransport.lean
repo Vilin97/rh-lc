@@ -19,6 +19,7 @@ open ReciprocityTheory.ChartRestriction.G.TB.WickVanishing
 namespace GlobalTheory.ChartField
 
 
+open GlobalTheory.FBMap in
 theorem nabValN_transport (R : Type) [CommRing R] (d : ℕ) (O : Type) [CommRing O] [StarRing O] [Module.Free ℤ O]
     [Module.Finite ℤ O] [IsReduced O] (k : Type) [Field k] [Algebra ℚ k] [Algebra R k] (B B' : FB R d O)
     (φ φi : Pt R 1 d) (h h' : PS k 2 d) (hh : B.IsCanonGauge k h) (hh' : B'.IsCanonGauge k h')

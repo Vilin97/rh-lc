@@ -122,6 +122,8 @@ namespace GlobalTheory.Core.Mi.ChainLast
 variable {D : D7}
 
 
+open GlobalTheory.SeeSaw.LastPrim in
+set_option maxHeartbeats 1000000 in
 theorem last_sameAt {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {ρ : ℕ} {B : BesLev D ρ} {J : JacLev D ρ}
     {LV : Lat B.V} {LV₀ : Lat B.V₀} {LW : Lat J.W} {LW₀ : Lat J.W₀} {v : GlobalTheory.FinPl.Pl D}
     (hG : GoodBF ψ B J LV LV₀ LW LW₀ v) (i : Fin ρ) (hi : i.1 + 1 = ρ) {𝔷 : FI D} {𝔟 : ℕ → FI D}
@@ -195,6 +197,7 @@ theorem ideal_eq (𝔟 𝔷 : FI D) (h𝔟0 : 𝔟 ≠ 0) (h𝔷0 : 𝔷 ≠ 0) 
 end GlobalTheory.Core.Mi.ChainLast
 
 
+open GlobalTheory.Core.Mi.ChainLast in
 theorem GlobalTheory.Core.Mi.LatMatch.lastAt_of_goodBF : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (ρ : ℕ) (B : BesLev D ρ) (J : JacLev D ρ) (LV : Lat B.V) (LV₀ : Lat B.V₀) (LW : Lat J.W) (LW₀ : Lat J.W₀) (v : GlobalTheory.FinPl.Pl D), GoodBF ψ B J LV LV₀ LW LW₀ v → LastAt ψ B.d (vecB B.o B.ζ) LV LV₀ v := by
   intro D ψ hψ ρ B J LV LV₀ LW LW₀ v hG i hi s hs
   obtain ⟨-, h2, -, -, h5, -, -⟩ := GlobalTheory.T.fractionalIdealCompletion_properties_at_place D ψ hψ v

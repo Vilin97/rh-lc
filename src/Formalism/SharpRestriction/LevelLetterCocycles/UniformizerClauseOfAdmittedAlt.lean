@@ -53,6 +53,7 @@ theorem level_tools_of_admitted' (hA : admitted D HW F Cm CR CA CB CK) : Formali
     uniformizer_clause_of_admitted D HW F Cm hA⟩
 
 
+set_option maxHeartbeats 0 in
 theorem local_lemmas_of_literature (hA : admitted D HW F Cm CR CA CB CK) (h23 : Formalism.MainNotions.LiftingTheory.adm23 D HW F)
     (hHerr : Formalism.MainNotions.ElementDenominator.HerrClassNaturalExtension D.loc D.locA HW F) (a22 : Formalism.MainNotions.CrystallineLiftingBounds.adm22 D HW F)
     (hFont : Formalism.MainNotions.InvariantsGenerators.LitFont D HW F) : cocyclesToWachVectorsBoundAtGoodExtensions D HW F := by

@@ -80,6 +80,7 @@ theorem exists_ofK_eq (x : KbarMult p) (hx : x ∈ multOf p K) : ∃ a : Kˣ, of
   exact Units.ext rfl
 
 
+variable (p K L) in
 noncomputable def kToLayer [(subG p K L).Normal] : Additive Kˣ →+ (layer p K L).V where
   toFun a := ⟨ofK p K a, fun g => kbarRep_ofK g.1 a⟩
   map_zero' := Subtype.ext (map_zero _)

@@ -61,6 +61,7 @@ theorem gal_sl_upper (ε : Ω →+* ℂ) (X : Tower Ω ε) (s : Ω ≃ₐ[ℚ] �
     congr 1; push_cast; ring
 
 
+omit [IsAlgClosure ℚ Ω] in
 theorem eval_eq_zero_of_mem {ε : Ω →+* ℂ} (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (n : ℕ) (φ : X.K ≃+* X.K)
     {x : X.Khat l} (hx : x ∈ (idl l) ^ n • (⊤ : Submodule ℤ_[l] (X.Khat l))) :
     AdicCompletion.eval (idl l) (X.Kl l) n (X.kmap l φ x) = 0 := by
@@ -74,6 +75,7 @@ theorem eval_eq_zero_of_mem {ε : Ω →+* ℂ} (X : Tower Ω ε) (l : ℕ) [Fac
     rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
 
 
+omit [IsAlgClosure ℚ Ω] in
 theorem act_upper_add {ε : Ω →+* ℂ} (X : Tower Ω ε) {N l w : ℕ} [Fact l.Prime] {b : X.Fn l} (hb : b ∈ X.B N l w)
     (q : ℕ) (hq : 0 < q) (a t : ℤ) :
     X.act l !![1, a + t * q; 0, (q : ℤ)] b = X.act l !![1, a; 0, (q : ℤ)] b := by

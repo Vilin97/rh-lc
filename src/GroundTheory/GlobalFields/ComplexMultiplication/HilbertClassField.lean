@@ -30,6 +30,7 @@ variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ 
   [IsTotallyComplex K]
 
 
+omit [NumberField K] in
 theorem mem_fixingSubgroup_adjoin_simple_iff {F E : Type*} [Field F] [Field E] [Algebra F E]
     (α : E) (τ : E ≃ₐ[F] E) : τ ∈ (F⟮α⟯).fixingSubgroup ↔ τ α = α := by
   constructor
@@ -44,6 +45,7 @@ theorem mem_fixingSubgroup_adjoin_simple_iff {F E : Type*} [Field F] [Field E] [
     exact (le_iff_le _ _).1 hle (Subgroup.mem_zpowers τ)
 
 
+include hK in
 theorem adjoin_j_eq_hilbertClassField (x : ELL K) : K⟮ELL.j x⟯ = hilbertClassField K ℂ := by
   classical
   obtain ⟨L, hHL, hLfin, hLgal, hL, E, hEl, hE, hiso⟩ :=
@@ -73,12 +75,14 @@ theorem adjoin_j_eq_hilbertClassField (x : ELL K) : K⟮ELL.j x⟯ = hilbertClas
   rwa [lift_adjoin_simple, lift_restrict] at h
 
 
+include hK in
 theorem adjoin_j_curve_eq_hilbertClassField (E : CMCurve K) :
     K⟮E.curve.j⟯ = hilbertClassField K ℂ := by
   rw [← ELL.j_toEll]
   exact adjoin_j_eq_hilbertClassField hK E.toEll
 
 
+include hK in
 theorem j_mem_hilbertClassField (x : ELL K) : ELL.j x ∈ hilbertClassField K ℂ := by
   rw [← adjoin_j_eq_hilbertClassField hK x]
   exact mem_adjoin_simple_self K _
@@ -97,6 +101,7 @@ theorem hilbertClassFieldArtinEquiv_apply_j (a : ClassGroup (𝓞 K)) (y : ELL K
   rfl
 
 
+include hK in
 theorem j_weierstrassCurve_mem_hilbertClassField (Λ : PeriodPair)
     (hΛ : periodLatticeEnd Λ = cmRingOfEmbedding (algebraMap K ℂ)) :
     (weierstrassCurve Λ).j ∈ hilbertClassField K ℂ :=

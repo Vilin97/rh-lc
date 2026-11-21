@@ -58,6 +58,7 @@ theorem norm_detPow (g : GL (Fin m) F) (s : ℂ) :
   rw [detPow_eq_qs_zpow, norm_zpow, norm_qs]
 
 
+variable (F m) in
 def tile (j : ℤ) : Set (GL (Fin m) F) := {g | j * m ≤ ordDet g ∧ ordDet g < j * m + m}
 
 theorem isLocallyConstant_ordDet_GL : IsLocallyConstant (ordDet : GL (Fin m) F → ℤ) :=

@@ -202,6 +202,7 @@ theorem hasDerivAt_entry {Z : Matrix (Fin n) (Fin n) ℂ} (P A : Matrix (Fin n) 
   exact L.hasFDerivAt.comp_hasDerivAt 0 ((hd.const_mul P).mul_const A)
 
 
+open Polynomial in
 theorem not_zfin_exp (h : IsCMExt F E σ) (hJ : IsHermND σ J) {w : InfinitePlace F} (τ : EmbOver E w) (i : Fin n) :
     IsSm σ J (fun g => Complex.exp (archMat σ J τ (projArch σ J w g) i i)) ∧
     ¬ FiniteDimensional ℂ (Submodule.span ℂ {f | ∃ z, IsCentral σ J z ∧

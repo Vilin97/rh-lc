@@ -79,6 +79,7 @@ private theorem acyc_pi (q : ℕ) (ι : Type) [Finite ι] :
 end UpperTheory.Cb.AcycFin
 
 
+open UpperTheory.Cb.AcycFin in
 theorem UpperTheory.acyclic_spec_finite_algebra_strictHenselian :
     ∀ (q : ℕ) (O A : Type) [CommRing O] [CommRing A] [Algebra O A] [Module.Finite O A], SH O → IsUnit (q : O) → Acyc q (sp A) := by
   intro q O A _ _ _ _ hO _

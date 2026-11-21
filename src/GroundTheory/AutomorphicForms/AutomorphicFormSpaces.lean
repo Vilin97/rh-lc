@@ -41,6 +41,7 @@ theorem archCompact_eq_image :
     exact archPart_mem_archCompact hk
 
 
+variable (K n) in
 theorem isCompact_archCompact : IsCompact (archCompact K n : Set (archGroup K n)) := by
   rw [archCompact_eq_image]
   exact isCompact_maxCompact.image ((archEquiv K n).continuous.comp

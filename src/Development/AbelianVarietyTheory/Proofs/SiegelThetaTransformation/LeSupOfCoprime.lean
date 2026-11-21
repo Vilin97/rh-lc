@@ -76,6 +76,7 @@ theorem relIndex_half {P Q : Ideal (𝓞 E)} {L L' : Lt E r} {s : 𝓞 E}
       (Submodule.smul_mem_smul hm (L'.smul_mem _ hx))
 
 
+omit [IsCMField E] in
 theorem relIndex_shift {P Q : Ideal (𝓞 E)} {L L' : Lt E r} {s : 𝓞 E}
     (hs : IsCoprime (Ideal.span {s}) P) (h : ∀ v ∈ L, s • v ∈ L') (h' : ∀ v ∈ L', s • v ∈ L) :
     (idq P Q L).toAddSubgroup.relIndex L.toAddSubgroup =

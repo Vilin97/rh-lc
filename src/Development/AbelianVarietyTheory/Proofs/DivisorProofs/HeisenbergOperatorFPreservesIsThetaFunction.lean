@@ -92,6 +92,7 @@ local instance modTopAEF : IsModuleTopology (AF F) (AF F ⊗[F] E) := ⟨rfl⟩
 local instance topRingAEF : IsTopologicalRing (AF F ⊗[F] E) := IsModuleTopology.isTopologicalRing (AF F) _
 
 
+variable (F) in
 def eInfF : AF F := pairA F 1 0
 
 theorem smul_eq_zero_of_infF {a : AEF F E} (h : infPartF F E a = 0) : eInfF F • a = 0 := by

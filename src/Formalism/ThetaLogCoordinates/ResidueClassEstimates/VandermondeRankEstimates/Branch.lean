@@ -182,6 +182,7 @@ lemma W_extW {n : ℕ} (la : Fin n → ℤ) :
 end Branch
 
 
+open Branch in
 theorem branchingDimensionFormula : BranchDim := by
   intro n mu hmu
   have h : ∀ i : Fin n, mu i.succ ≤ mu i.castSucc := by

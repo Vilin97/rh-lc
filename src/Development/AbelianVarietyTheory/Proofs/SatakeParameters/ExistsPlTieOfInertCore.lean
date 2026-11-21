@@ -26,6 +26,7 @@ def intAlg {A B : Type} [CommRing A] [CommRing B] [Algebra ℤ A] [Algebra ℤ B
   { f with commutes' := fun r => RingHom.congr_fun (RingHom.ext_int (f.comp (algebraMap ℤ A)) (algebraMap ℤ B)) r }
 
 
+omit [NumberField E] in
 theorem exists_intHom {O Kf : Type} [CommRing O] [IsDomain O] [IsIntegrallyClosed O] [Field Kf] [Algebra O Kf]
     [IsFractionRing O Kf] (ψ : E →+* Kf) : ∃ g : 𝓞 E →+* O, ∀ x : 𝓞 E, algebraMap O Kf (g x) = ψ x := by
   have h : ∀ x : 𝓞 E, ∃ y : O, algebraMap O Kf y = ψ x := fun x =>
@@ -36,6 +37,7 @@ theorem exists_intHom {O Kf : Type} [CommRing O] [IsDomain O] [IsIntegrallyClose
            map_zero' := hinj (by simp [hg]), map_add' := fun a b => hinj (by simp [hg]) }, hg⟩
 
 
+omit [NumberField E] in
 theorem eq_of_cong {O : Type} [CommRing O] [IsLocalRing O] [IsNoetherianRing O] (Q : HeightOneSpectrum (𝓞 E))
     [Algebra.IsUnramifiedAt ℤ Q.asIdeal] (g g' : 𝓞 E →+* O) (hQ : ∀ x, x ∈ Q.asIdeal ↔ g x ∈ maximalIdeal O)
     (h : ∀ x, residue O (g x) = residue O (g' x)) : g = g' := by
@@ -237,6 +239,7 @@ theorem Good.pow_inj (h : Good Q i) (hn : n ≠ 0) {s t : ℕ} (hs : s < n) (ht 
 variable {O Kf : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field Kf] [Algebra O Kf] [IsFractionRing O Kf]
 
 
+variable (O) in
 def Ov (ψ : E →+* Kf) (Q : HeightOneSpectrum (𝓞 E)) : Prop :=
   ∀ x : 𝓞 E, x ∈ Q.asIdeal ↔ ∃ y ∈ maximalIdeal O, algebraMap O Kf y = ψ x
 

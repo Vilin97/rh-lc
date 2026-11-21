@@ -152,6 +152,7 @@ theorem map_integralModel {n : ℕ} (I : Ideal (MvPolynomial (Fin n) K)) :
   exact Ideal.mul_mem_left _ _ (Ideal.mem_map_of_mem _ hgI)
 
 
+omit [NumberField K] in
 theorem homogeneousComponent_mem_integralModel {n : ℕ} {I : Ideal (MvPolynomial (Fin n) K)}
     (hI : IsHomogIdeal I) : ∀ p ∈ integralModel I, ∀ d, homogeneousComponent d p ∈ integralModel I := by
   intro p hp d
@@ -160,6 +161,7 @@ theorem homogeneousComponent_mem_integralModel {n : ℕ} {I : Ideal (MvPolynomia
   exact hI _ hp d
 
 
+attribute [local instance] MvPolynomial.algebraMvPolynomial in
 theorem exists_C_mul_mem {σ : Type*} (J : Ideal (MvPolynomial σ (𝓞 K))) (h : MvPolynomial σ (𝓞 K))
     (hh : MvPolynomial.map (algebraMap (𝓞 K) K) h ∈ J.map (MvPolynomial.map (algebraMap (𝓞 K) K))) :
     ∃ d : 𝓞 K, d ≠ 0 ∧ C d * h ∈ J := by
@@ -245,6 +247,7 @@ theorem specHom_rename_inr (e : ℕ) {n : ℕ} (v : HeightOneSpectrum (𝓞 K))
     simp [specHom, parY]
 
 
+omit [NumberField K] in
 theorem incIdeal_le_comap_specHom (e : ℕ) {n : ℕ} (I : Ideal (MvPolynomial (Fin n) K))
     (v : HeightOneSpectrum (𝓞 K)) :
     incIdeal (integralModel I) (e + 1) ≤
@@ -269,6 +272,8 @@ end NumberField
 end SecBFinite
 
 
+attribute [local instance] MvPolynomial.gradedAlgebra in
+open SecBFinite in
 theorem SecBFinite.proof (hIN : IncidenceNull.Statement) (hCT : ChartTorsion.Statement)
     (hPS : PrimitiveScale.Statement) : SecBFinite.Statement := by
   intro K _ _ n e I f v hI hf

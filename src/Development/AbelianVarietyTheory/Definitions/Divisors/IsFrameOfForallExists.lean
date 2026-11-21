@@ -259,6 +259,7 @@ theorem isFrame_one (U : X.Opens) :
     (Module.Basis.singleton_apply (Fin 1) Γ(X, V) i).trans (map_one (resG X h)).symm
 
 
+variable (X) in
 def freeFrame (ι : Type) (i : ι) : Γ(freeModule X ι, ⊤) :=
   Scheme.Modules.Hom.app (M := structureModule X) (N := freeModule X ι)
     (SheafOfModules.ιFree i) ⊤ (1 : Γ(X, ⊤))
@@ -278,6 +279,7 @@ theorem isFrame_biproduct (ι : Type) [Fintype ι] [HasBiproduct fun _ : ι => s
   · exact congrArg _ ((Pi.single_eq_same _ _).trans (map_one (resG X h)).symm)
 
 
+variable (X) in
 theorem isFrame_freeFrame (ι : Type) [Fintype ι] : IsFrame (freeFrame X ι) := by
   have := Abelian.hasFiniteBiproducts (C := X.Modules)
   have := (isFrame_biproduct (X := X) ι).map_iso
@@ -293,6 +295,7 @@ theorem isFrame_freeFrame (ι : Type) [Fintype ι] : IsFrame (freeFrame X ι) :=
   exact this
 
 
+variable (F) in
 def IsVB (r : ℕ) : Prop := ∀ x : X, ∃ (U : X.Opens) (e : Fin r → Γ(F, U)), x ∈ U ∧ IsFrame e
 
 variable {r s : ℕ}
@@ -306,14 +309,17 @@ theorem IsFrame.isVB {e : ι → Γ(F, ⊤)} (he : IsFrame e) : IsVB F (Fintype.
   isVB_of_frames rfl fun _ => ⟨⊤, e, trivial, he⟩
 
 
+variable (X) in
 theorem isVB_freeModule (ι : Type) [Fintype ι] : IsVB (freeModule X ι) (Fintype.card ι) :=
   (isFrame_freeFrame X ι).isVB
 
 
+variable (X) in
 theorem isVB_freeModule_fin (r : ℕ) : IsVB (freeModule X (Fin r)) r := by
   simpa using isVB_freeModule X (Fin r)
 
 
+variable (X) in
 theorem isVB_structureModule : IsVB (structureModule X) 1 :=
   fun _ => ⟨⊤, _, trivial, isFrame_one ⊤⟩
 
@@ -407,6 +413,7 @@ theorem isVB_zero_iff : IsVB F 0 ↔ IsZero F := by
     exact ⟨fun _ _ _ => Subsingleton.elim _ _, fun _ => ⟨0, Subsingleton.elim _ _⟩⟩
 
 
+variable (F) in
 structure Sub where
 
   sec (V : X.Opens) : Submodule Γ(X, V) Γ(F, V)

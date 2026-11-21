@@ -40,6 +40,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 attribute [local instance] isDiscreteModule_units
 
 
+include hf in
 theorem isAbelianGalois_lubinTateField_sup {n : ℕ} (hn : 0 < n) {E : IntermediateField K Ω}
     (hE : IsUnramifiedSubextension E) :
     IsAbelianGalois K (lubinTateField Ω hπ hf n ⊔ E : IntermediateField K Ω) := by
@@ -48,6 +49,7 @@ theorem isAbelianGalois_lubinTateField_sup {n : ℕ} (hn : 0 < n) {E : Intermedi
   exact isAbelianGalois_of_mul_comm _ (lubinTateUnramified_mul_comm hπ hf hn hE)
 
 
+include hf in
 theorem exists_le_lubinTateField_sup_unramifiedTower (L : IntermediateField K Ω)
     [FiniteDimensional K L] [IsAbelianGalois K L] :
     ∃ n m : ℕ, L ≤ lubinTateField Ω hπ hf (n + 1) ⊔ unramifiedTower K Ω m := by
@@ -147,6 +149,7 @@ end Torsion
 variable {Ω : Type*} [Field Ω] [Algebra ℚ_[p] Ω] [IsSepClosed Ω] [Algebra.IsSeparable ℚ_[p] Ω]
 
 
+omit [Algebra.IsSeparable ℚ_[p] Ω] in
 theorem unramifiedTower_le_adjoin_rootsOfUnity (m : ℕ) :
     unramifiedTower ℚ_[p] Ω m ≤
       adjoin ℚ_[p] {ζ : Ω | ζ ^ (p ^ (m + 1).factorial - 1) = 1} := by
@@ -186,6 +189,7 @@ theorem coprime_pow_sub_one {k : ℕ} (hk : k ≠ 0) : (p ^ k - 1).Coprime p := 
   exact hp.out.one_lt.ne' (Nat.dvd_one.1 h2)
 
 
+omit [Algebra.IsSeparable ℚ_[p] Ω] in
 theorem maximalUnramifiedExtension_eq_adjoin_rootsOfUnity :
     maximalUnramifiedExtension ℚ_[p] Ω =
       adjoin ℚ_[p] {ζ : Ω | ∃ n : ℕ, 0 < n ∧ n.Coprime p ∧ ζ ^ n = 1} := by
@@ -217,6 +221,7 @@ theorem maximalUnramifiedExtension_eq_adjoin_rootsOfUnity :
     exact hU.le_maximalUnramifiedExtension (pow_mem (mem_adjoin_simple_self ℚ_[p] ξ) i)
 
 
+variable (Ω) in
 theorem maximalAbelianExtension_eq_adjoin_rootsOfUnity :
     maximalAbelianExtension ℚ_[p] Ω = adjoin ℚ_[p] {ζ : Ω | ∃ n : ℕ, 0 < n ∧ ζ ^ n = 1} := by
   have : IsSepClosure ℚ_[p] Ω := ⟨inferInstance, inferInstance⟩

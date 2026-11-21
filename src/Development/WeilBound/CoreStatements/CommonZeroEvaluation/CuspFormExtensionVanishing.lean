@@ -16,6 +16,7 @@ open scoped ENNReal Classical
 namespace ModelDimension
 
 
+open GlobalTheory.FlatLine GlobalTheory.CompHS in
 theorem evR_eq_of_sec₀_eq {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
     {Dw : Datum H} {l : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H} {Xo : Moduli Dw l} {c : Coeff l}
     {Y : Model Xo c (RingHom.id c.F)} (X : GlobalTheory.FlagMod.FlagCover Y) (Z : Comp Xo c) {e : Ix Dw → ℤ}

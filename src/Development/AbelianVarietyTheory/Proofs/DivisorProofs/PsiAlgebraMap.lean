@@ -141,6 +141,7 @@ instance gradedRing (hN : GradedFam c₀ N) : GradedRing (piece hN) :=
 section Frac
 
 
+variable (F) in
 def cL : F →+* FractionRing F[X] := (algebraMap F[X] (FractionRing F[X])).comp C
 
 theorem cL_injective : Function.Injective (cL F) :=
@@ -179,6 +180,7 @@ theorem valL_mk (g : NumDenSameDeg (piece hN) P.primeCompl) :
   rw [hnum, hden, coeff_monomial, if_pos rfl, coeff_monomial, if_pos rfl, monomial_mul_C, mul_div_cancel₀ _ hs]
 
 
+variable (F) in
 def eqR : F ≃+* (cL F).range :=
   RingEquiv.ofBijective (cL F).rangeRestrict
     ⟨fun a b h => cL_injective (congrArg Subtype.val h), RingHom.rangeRestrict_surjective _⟩

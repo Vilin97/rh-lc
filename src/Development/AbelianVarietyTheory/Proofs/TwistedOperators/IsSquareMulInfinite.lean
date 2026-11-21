@@ -390,6 +390,7 @@ theorem eta_mul {K L A : Type} [Field K] [Field L] [Algebra K L] [CommRing A] [A
 end NormIndex
 
 
+open NormIndex in
 theorem localCharacters : ∀ (K L : Type) [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] [Algebra.IsQuadraticExtension K L], LocalCharacters K L := by
   intro K L _ _ _ _ _ _

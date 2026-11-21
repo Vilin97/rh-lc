@@ -130,6 +130,7 @@ theorem exists_ne_zero_polynomial_common_zero [IsAlgClosed k] (n r d m : ℕ)
 end TsenLang
 
 
+open TsenLang in
 theorem tsenLang_ratFunc :
     ∀ (k : Type) [Field k] [IsAlgClosed k] (n r d : ℕ) (f : Fin r → MvPolynomial (Fin n) (RatFunc k)),
       (∀ i, (f i).IsHomogeneous d) → 0 < d → r * d < n →

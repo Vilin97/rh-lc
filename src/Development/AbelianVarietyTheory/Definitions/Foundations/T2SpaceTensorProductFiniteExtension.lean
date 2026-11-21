@@ -72,6 +72,7 @@ theorem t2Space_tensorProduct_finiteExtension [TopologicalSpace R] [IsTopologica
   T2Space.of_injective_continuous e.injective (IsModuleTopology.continuous_of_linearMap e.toLinearMap)
 
 
+omit [FiniteDimensional F E] in
 def extUnit (j : R →ₗ[F] R') (hj : ∀ a b, j (a * b) = j a * j b) : (R ⊗[F] E)ˣ →* (R' ⊗[F] E)ˣ :=
   Units.map
     { toFun := fun y => 1 - tensNU j hj 1 + tensNU j hj y
@@ -95,6 +96,7 @@ theorem continuous_extUnit [TopologicalSpace R] [IsTopologicalRing R] [Topologic
   Continuous.units_map _ (continuous_const.add (GlobalTheory.AutFunCompare.continuous_tensNU j hj hc))
 
 
+omit [FiniteDimensional F E] in
 def conjUnit (σ : E →ₐ[F] E) : (R ⊗[F] E)ˣ →* (R ⊗[F] E)ˣ := Units.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR R σ).toMonoidHom
 
 end Norm
@@ -160,9 +162,11 @@ theorem absEw_eq_sq {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {w : InfinitePlace
   exact NNReal.eq ((InfinitePlace.Completion.isometry_extensionEmbedding w).norm_map_of_map_zero (map_zero _) _).symm
 
 
+variable (F E) in
 def unitFin (v : HeightOneSpectrum (𝓞 F)) : (AF F ⊗[F] E)ˣ →* (Fv F v ⊗[F] E)ˣ := Units.map (compFin F E v).toMonoidHom
 
 
+variable (F E) in
 def unitInf (w : InfinitePlace F) : (AF F ⊗[F] E)ˣ →* (w.Completion ⊗[F] E)ˣ := Units.map (compInf F E w).toMonoidHom
 
 theorem absEv_unitFin (v : HeightOneSpectrum (𝓞 F)) (x : (AF F ⊗[F] E)ˣ) :
@@ -188,6 +192,7 @@ theorem finite_mulSupport_absEv (x : (AF F ⊗[F] E)ˣ) :
     fun _ hv h => hv (absEv_unitFin_eq_one h.1 h.2)
 
 
+variable (F E) in
 def absE : (AF F ⊗[F] E)ˣ →* ℝ≥0 where
   toFun x := (∏ w, absEw F E w (unitInf F E w x)) * ∏ᶠ v, absEv F E v (unitFin F E v x)
   map_one' := by simp
@@ -281,9 +286,11 @@ theorem inInf_mul (w : InfinitePlace F) (a b : w.Completion) : inInf w (a * b) =
   Prod.ext (GlobalTheory.AutFunCompare.sgW_mul w a b) (mul_zero _).symm
 
 
+variable (F E) in
 def ideleAt (v : HeightOneSpectrum (𝓞 F)) : (Fv F v ⊗[F] E)ˣ →* (AF F ⊗[F] E)ˣ := extUnit (inFin v) (inFin_mul v)
 
 
+variable (F E) in
 def ideleAtInf (w : InfinitePlace F) : (w.Completion ⊗[F] E)ˣ →* (AF F ⊗[F] E)ˣ := extUnit (inInf w) (inInf_mul w)
 
 omit [NumberField F] [NumberField E] in

@@ -19,24 +19,28 @@ open GlobalTheory.EmbChart (atPlace evFin_atPlace atPlace_mul_right)
 variable {F : Type} [Field F] [NumberField F] {κ : Type} (v : Pl F)
 
 
+variable (κ) in
 def evA : (κ → AF F) →+ (κ → Fv F v) where
   toFun x i := evFin F v (x i)
   map_zero' := by funext i; simp
   map_add' x y := by funext i; simp
 
 
+variable (κ) in
 def inA : (κ → Fv F v) →+ (κ → AF F) where
   toFun y i := atPlace v (y i)
   map_zero' := by funext i; simp
   map_add' x y := by funext i; simp
 
 
+variable (κ) in
 def evF : (κ → Af F) →+ (κ → Fv F v) where
   toFun x i := evalV F v (x i)
   map_zero' := by funext i; simp
   map_add' x y := by funext i; simp
 
 
+variable (κ) in
 def inF : (κ → Fv F v) →+ (κ → Af F) where
   toFun y i := singleFin v (y i)
   map_zero' := by funext i; simp

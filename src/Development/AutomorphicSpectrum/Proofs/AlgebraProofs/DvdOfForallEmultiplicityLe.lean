@@ -172,6 +172,7 @@ theorem mem_relComps_of_mem_support {R : Type*} [CommRing R] [IsNoetherianRing R
 end SectionPerfect
 
 
+open SectionPerfect in
 theorem chowFormSectionPerfect_of (hA : ChowFormSectionAlgClosed.Statement)
     (hS : SectionCycleReduced.Statement) (hM : MinimalPrimeComap.Statement)
     (hB : FundCycleBaseChange.Statement) : ChowFormSectionPerfect.Statement := by
@@ -315,6 +316,7 @@ theorem dvd_of_forall_emultiplicity_le' {R : Type*} [CommRing R] [IsDomain R]
 end SectionAlgClosed
 
 
+open SectionAlgClosed in
 theorem chowFormSectionAlgClosed_of (h₅ : SectionOrderAlgClosed.Statement) :
     ChowFormSectionAlgClosed.Statement := by
   have h₁ : ConeDimOfChowForm.Statement := SectionPerfect.coneDimOfChowForm_full

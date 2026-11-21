@@ -404,6 +404,7 @@ theorem rdU_mem_SS (hσ : Formalism.L2.PjFree.GoodEmb c σ) (hU : Formalism.L2.P
 end Cusp
 
 
+open Formalism.BasicNotions Formalism.L2.Pj in
 theorem cuspTransform : GlobalTheory.IndefiniteRowSideFullHecke.SplitOffDetection.CuspTransform := by
   intro D T h j hj P p i cq a n hs _ hD hE hDt hF f hf
   have hp := h.pins

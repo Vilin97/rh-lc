@@ -211,6 +211,7 @@ def muL (c : ZMod n) (ζ : LL) : LetA O n ⊗[O] XO BdR T →ₗ[O] (ℤ → XO 
       · rw [smul_zero]))
 
 
+include Ct in
 theorem expS_wd [IsDomain O] [IsDedekindDomain O] (hinj : Function.Injective (algebraMap O LL))
     {c : ZMod n} {ζ : LL} (hP : PtHyp (W := W) T c ζ) (π' : LetA O n)
     (hπ : PowerSeries.constantCoeff (W.lev (c - 1) 1 π') = 0)

@@ -187,6 +187,7 @@ theorem integrable_monoInner_ex (i j : Fin (Finset.Nat.antidiagonalTuple (D + 1)
     (HasCompactSupport.of_compactSpace _)
 
 
+omit hA in
 theorem integral_monoInner_ex (i j : Fin (Finset.Nat.antidiagonalTuple (D + 1) (2 * n)).card) :
     ∫ p : CP D, monoInner (2 * n) (ex D (2 * n) i) (ex D (2 * n) j) p.rep ∂CP.fsMeasure D =
       if i = j then ((monoNormSq (adtEnum D (2 * n) i) : ℝ) : ℂ) else 0 := by

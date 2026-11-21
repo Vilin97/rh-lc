@@ -89,6 +89,7 @@ end GlobalTheory.StdUnn.HeightExists
 namespace GlobalTheory.StdUnn
 
 
+open HeightExists in
 theorem exists_height : ∀ (D : D7) (n : ℕ), ∃ H : G D n → ℝ≥0, IsHeight H := by
   intro D n
   let δ : P D n →* ℝ≥0 := (absA D).comp (Matrix.GeneralLinearGroup.det.comp leviBlock)

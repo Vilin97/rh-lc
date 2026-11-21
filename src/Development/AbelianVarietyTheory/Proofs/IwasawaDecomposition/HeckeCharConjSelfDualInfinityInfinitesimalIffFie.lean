@@ -86,6 +86,7 @@ theorem field_iff (χ : HChar L) :
 end GlobalTheory.CuspRep.CsdInf
 
 
+open GlobalTheory.CuspRep.CsdInf in
 theorem GlobalTheory.CuspRep.csdInf_iff : ∀ {R : Ranks} (H : Formalism.BasicNotions.Host R) (χ : HChar H.E), haveI := host_isCMField H;
     (∀ z, dchi χ (-star z) = dchi χ z) ↔
       ∀ k : H.Eˣ, χ.inf (Units.map (MonoidHomClass.toMonoidHom H.conj) k) = (χ.inf k)⁻¹ := by

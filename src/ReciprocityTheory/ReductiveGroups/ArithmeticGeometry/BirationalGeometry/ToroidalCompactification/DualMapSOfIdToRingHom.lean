@@ -106,6 +106,7 @@ variable {S : Type} [CommRing S] {G : Over (Spec (CommRingCat.of S))} [GrpObj G]
 
 set_option backward.isDefEq.respectTransparency false in
 
+set_option backward.isDefEq.respectTransparency false in
 theorem glue_tan {n : ℕ} (s : Fin n → S) (hs : Ideal.span (Set.range s) = ⊤)
     (w : ∀ k, sp (R₀ := S) (DualNumber (Localization.Away (s k))) ⟶ G) (hw : ∀ k, TanS (w k))
     (hc : ∀ k l (T : CommRingCat.{0}) (α : DualNumber (Localization.Away (s k)) →+* T)

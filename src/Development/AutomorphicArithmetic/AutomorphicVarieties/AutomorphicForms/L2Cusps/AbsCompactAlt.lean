@@ -29,6 +29,7 @@ def band : Set (GA E a) :=
     Reduction.detModule E a g < Reduction.detModule E a (splitCentre E a 1))}
 
 
+variable {E a} in
 def muOne (μ : Measure (GA E a)) : Measure (G1 E a) := Measure.map retractOne (μ.restrict (band E a))
 
 def quotMap (q : Quot (latticeGL E a)) : RightCosetSpace (Γ1 E a) :=

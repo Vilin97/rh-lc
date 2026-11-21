@@ -47,6 +47,7 @@ theorem ringKrullDim_locAt_chart_le {P : Ideal (MvPolynomial (Σ k, ι k) ℂ)}
   exact ⟨Ideal.Quotient.mk _ a, rfl⟩
 
 
+set_option maxHeartbeats 600000 in
 theorem le_ringKrullDim_locAt_chart {P : Ideal (MvPolynomial (Σ k, ι k) ℂ)} (e : ℕ)
     (hdim : ∀ Q ∈ P.minimalPrimes,
       ringKrullDim (MvPolynomial (Σ k, ι k) ℂ ⧸ Q) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞))
@@ -145,6 +146,7 @@ theorem ringKrullDim_locAt_chart (P : Ideal (MvPolynomial (Σ k, ι k) ℂ)) (hP
   le_antisymm (ringKrullDim_locAt_chart_le hP e hdim p z hz) (le_ringKrullDim_locAt_chart e hdim p z hz)
 
 
+set_option maxHeartbeats 400000 in
 theorem isRegularLocalRing_locAt_chart (P : Ideal (MvPolynomial (Σ k, ι k) ℂ)) (e : ℕ)
     (hdim : ∀ Q ∈ P.minimalPrimes,
       ringKrullDim (MvPolynomial (Σ k, ι k) ℂ ⧸ Q) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞))

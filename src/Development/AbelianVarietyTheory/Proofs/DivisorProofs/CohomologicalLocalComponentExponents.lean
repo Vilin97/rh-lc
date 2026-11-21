@@ -405,6 +405,8 @@ theorem isTemperedGL_of_twist {η : Formalism.L2.Host.HChar E} (hη : η.IsUnita
 end Global
 
 
+open NumberField IsDedekindDomain GlobalTheory.CuspRep in
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField in
 theorem norm_satake_eq_one : GlobalTheory.Published.ClozelCohomological → GlobalTheory.Published.CohomologicalCsdTempered →
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a : ℕ), 1 ≤ a → ∀ P : CuspSub E a, P.IsCsd →
   ∀ m : (E →+* ℂ) → Multiset ℂ, (∀ τ, P.HasInfChar τ (m τ)) → (∀ τ, (m τ).Nodup) →

@@ -18,6 +18,7 @@ variable {F K Ω : Type*} [Field F] [NumberField F] [Field K] [NumberField K] [A
   [Field Ω] [Algebra F Ω] [Algebra K Ω] [IsScalarTower F K Ω]
 
 
+omit [NumberField F] [NumberField K] in
 theorem restrictScalars_smul (h : Ω ≃ₐ[K] Ω) (A : ValuationSubring Ω) :
     (h.restrictScalars F) • A = h • A := by
   ext x
@@ -26,6 +27,7 @@ theorem restrictScalars_smul (h : Ω ≃ₐ[K] Ω) (A : ValuationSubring Ω) :
   rfl
 
 
+omit [NumberField K] [Field K] [Algebra F K] [Algebra K Ω] [IsScalarTower F K Ω] in
 theorem mem_inertia_of_integers [IsAlgClosure F Ω] {A : ValuationSubring Ω} {σ : Ω ≃ₐ[F] Ω}
     (hd : σ • A = A) (hb : ∀ b : Ω, IsIntegral ℤ b → A.valuation (σ b - b) < 1) :
     σ ∈ Inertia (F := F) A := by

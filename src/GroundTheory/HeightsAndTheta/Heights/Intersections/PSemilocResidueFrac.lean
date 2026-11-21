@@ -208,6 +208,7 @@ end Field
 end SemilocResidueFrac
 
 
+open SemilocResidueFrac SemilocRankFrac regularityLocalResidue_holds in
 theorem SemilocResidueFrac.proof (hFin : SemilocFinite.Statement) (hMax : SemilocMaxIdeals.Statement) :
     SemilocResidueFrac.Statement := by
   intro K _ ι _ K' _ ι' _ κ v P' n s α W hv hP' hQ hs hsQ hW W' hW' _ G' i' hi' F _ _ hF

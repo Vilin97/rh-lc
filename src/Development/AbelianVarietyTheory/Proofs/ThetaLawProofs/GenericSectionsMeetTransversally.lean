@@ -31,6 +31,7 @@ namespace GlobalTheory.KeyKa.GenericZeros
 open EtBaseChange
 
 
+open scoped IntermediateField.algebraAdjoinAdjoin in
 theorem trdeg_adjoin_range_le {k K B : Type} [Field k] [Field K] [Algebra k K] [CommRing B] [Algebra k B]
     (ψ : B →ₐ[k] K) : Algebra.trdeg k (IntermediateField.adjoin k (Set.range ψ)) ≤ Algebra.trdeg k B := by
   rw [trdeg_eq_of_isAlgebraic_top k (Algebra.adjoin k (Set.range ψ)) (IntermediateField.adjoin k (Set.range ψ))]

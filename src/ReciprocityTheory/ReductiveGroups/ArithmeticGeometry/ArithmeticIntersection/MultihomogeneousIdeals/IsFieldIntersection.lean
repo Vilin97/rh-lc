@@ -59,6 +59,7 @@ def IsBlockMap (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) : Prop :=
     ∀ q : Σ k', ι' k', q.1 ∈ Set.range κ → q ∈ Set.range v
 
 
+variable (F) in
 def imageVar (v : (Σ k, ι k) → (Σ k', ι' k')) (V' : Ideal (MRingOver F ι')) : Ideal (MRingOver F ι) :=
   V'.comap (rename v : MRingOver F ι →ₐ[F] MRingOver F ι').toRingHom
 

@@ -52,6 +52,7 @@ theorem mem_ptsIn_basicOpen_natCast {k : Type} [CommRing k] {X : Scheme.{0}} {p 
 end GlobalTheory.CompanionTheory.Ar.BaseZ.ChartDown
 
 
+open GlobalTheory.CompanionTheory.Ar.BaseZ.ChartDown in
 theorem GlobalTheory.CompanionTheory.Ar.BaseZ.exists_chart_sheet : ∀ (k : Type) [CommRing k] [IsDomain k] [CharZero k] [Module.Finite ℤ k] (X : Scheme.{0}) (p : X ⟶ Sp k) (t : X ⟶ Sp ℤ) (τ : ℤ →+* ℂ) (σ : k →+* ℂ) (D : ℕ) (c' : AlgChart t τ D), Nonempty (CxPts p σ) → ∃ c : AlgChart p σ D, c.e.source = sheet t τ ⁻¹' c'.e.source ∧ ∀ y ∈ c.e.source, c'.e (sheet t τ y) = c.e y := by
   intro k _ _ _ _ X p t τ σ D c' hne
   obtain ⟨N, hN0, hN⟩ := GlobalTheory.T.etale_over_integers_localization k

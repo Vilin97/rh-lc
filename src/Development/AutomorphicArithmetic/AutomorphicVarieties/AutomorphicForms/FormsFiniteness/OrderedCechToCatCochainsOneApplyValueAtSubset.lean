@@ -228,6 +228,7 @@ theorem rt_apply (g : AdelicGLn.AdelicGL K n) (φ : archSmooth K n) (x : AdelicG
 def Sat (S : Submodule ℂ (archSmooth K n)) : Prop := ∀ k ∈ Reduction.maxCompact (K := K) (n := n), ∀ φ ∈ S, rt k φ ∈ S
 
 
+variable (K n) in
 def NInv (r : ℕ) : Submodule ℂ (archSmooth K n) where
   carrier := {ψ | ∀ (X : UPos n r → AdeleRing (𝓞 K) K) g, ψ.1 (unipGL X * g) = ψ.1 g}
   add_mem' h1 h2 X g := congrArg₂ (· + ·) (h1 X g) (h2 X g)
@@ -235,6 +236,7 @@ def NInv (r : ℕ) : Submodule ℂ (archSmooth K n) where
   smul_mem' c _ h X g := congrArg (c • ·) (h X g)
 
 
+variable (K) in
 def Van (r s : ℕ) : Submodule ℂ (archSmooth K (r + s)) where
   carrier := {ψ | ∀ m₁ m₂, ψ.1 (blk m₁ m₂) = 0}
   add_mem' {x y} h1 h2 m₁ m₂ := by

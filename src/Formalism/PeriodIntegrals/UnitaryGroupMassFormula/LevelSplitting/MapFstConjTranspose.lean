@@ -27,6 +27,7 @@ def p2 : (R1 × R2) ⊗[F] E →+* R2 ⊗[F] E :=
   (Algebra.TensorProduct.map (AlgHom.snd F R1 R2) (AlgHom.id F E)).toRingHom
 
 
+variable {R1 R2} in
 def crd (R : Type) [CommRing R] [Algebra F R] :
     R ⊗[F] E ≃ₗ[R] (Fin (Module.finrank F E) → R) :=
   (Algebra.TensorProduct.basis R (Module.finBasis F E)).equivFun

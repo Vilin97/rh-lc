@@ -50,16 +50,19 @@ theorem span_single_eq_eigSp {ι : Type} (σ : Ψ → (𝓞 E →+* ℂ)) (e : I
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
 
 
+omit [NumberField E] in
 theorem conj_ne (σ : Ψ → (𝓞 E →+* ℂ)) (h : IsCMFam σ) (τ τ' : Ψ) : σ τ' ≠ (starRingEnd ℂ).comp (σ τ) :=
   fun hc => ((h.2 (σ τ)).1 ⟨τ, rfl⟩) ⟨τ', hc⟩
 
 
+omit [NumberField E] in
 theorem conj_comp_inj {s t : 𝓞 E →+* ℂ} (h : (starRingEnd ℂ).comp s = (starRingEnd ℂ).comp t) : s = t := by
   ext a
   have := congrArg (starRingEnd ℂ) (RingHom.congr_fun h a)
   simpa using this
 
 
+omit [NumberField E] in
 theorem conj_conj_comp (s : 𝓞 E →+* ℂ) : (starRingEnd ℂ).comp ((starRingEnd ℂ).comp s) = s := by
   ext a
   simp

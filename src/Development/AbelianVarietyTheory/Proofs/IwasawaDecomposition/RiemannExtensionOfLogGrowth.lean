@@ -17,6 +17,9 @@ open scoped Real
 variable {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V]
 
 
+open Filter Topology Asymptotics Metric Set Complex in
+open scoped Real in
+variable {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] in
 theorem _root_.GlobalTheory.LogExt.analyticOnNhd_of_differentiableOn [FiniteDimensional ℂ V] {U : Set V}
     {f : V → ℂ} (hU : IsOpen U) (hf : DifferentiableOn ℂ f U) : AnalyticOnNhd ℂ f U :=
   _root_.GlobalTheory.SCV.analyticOnNhd_of_differentiableOn hU hf
@@ -178,6 +181,9 @@ private theorem exists_differentiableOn_ball_of_log_bound {ψ h : ℂ → ℂ} {
       simp [Function.update_of_ne hne]
 
 
+open Filter Topology Asymptotics Metric Set Complex in
+open scoped Real in
+variable {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] in
 theorem _root_.GlobalTheory.LogExt.riemann_extension_log (V : Type) [NormedAddCommGroup V] [NormedSpace ℂ V]
     [FiniteDimensional ℂ V] (U : Set V) (φ u : V → ℂ) (hU : IsOpen U)
     (hφ : DifferentiableOn ℂ φ U) (hu : DifferentiableOn ℂ u {b ∈ U | φ b ≠ 0})

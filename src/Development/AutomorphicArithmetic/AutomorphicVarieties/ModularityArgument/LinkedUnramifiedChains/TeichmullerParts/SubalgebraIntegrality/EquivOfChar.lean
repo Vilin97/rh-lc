@@ -129,6 +129,7 @@ private theorem sB_apply (χ : Fin n → kˣ →* ℂˣ) (p : parab k (points (F
 end Loc
 
 
+open GlobalTheory.SmGL.PrinProd in
 theorem psRes : PsRes := by
   intro k _ _ _ _ n ω ω' _ _ h
   let χ : Fin n → kˣ →* ℂˣ := fun i => ω i * absPow k ((↑n - 1) / 2)

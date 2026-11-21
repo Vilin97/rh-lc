@@ -44,6 +44,7 @@ abbrev LieAt (V : HSp D) (τ : D.what₂.Tau) : Type := lieU (gramAt D V τ)
 abbrev LieInf (V : HSp D) : Type := ∀ τ : D.what₂.Tau, LieAt V τ
 
 
+open Classical in
 def atPlace (V : HSp D) (τ : D.what₂.Tau) (X : LieAt V τ) : LieInf V := Pi.single τ X
 
 def IsExpFam (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)) (V : HSp D) (e : LieInf V → GA D V) : Prop :=

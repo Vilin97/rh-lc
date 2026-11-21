@@ -42,6 +42,7 @@ lemma sum_expHom (e : Fin (n + 1) →₀ ℕ) : ∑ j, expHom n e j = (e.degree 
   rfl
 
 
+variable (A n) in
 def toLaurent : MvPolynomial (Fin (n + 1)) A →+* Laurent A n :=
   AddMonoidAlgebra.mapDomainRingHom A (expHom n)
 
@@ -158,6 +159,7 @@ lemma Allowed.mono {s t : Set (Fin (n + 1))} {k : ℤ} {m : Fin (n + 1) → ℤ}
   ⟨h.1, fun j hj => h.2 j fun hs => hj (hst hs)⟩
 
 
+variable (A) in
 def LDeg (s : Set (Fin (n + 1))) (k : ℤ) : AddSubgroup (Laurent A n) where
   carrier := {ℓ | ∀ m, ℓ.coeff m ≠ 0 → Allowed s k m}
   zero_mem' m h := (h rfl).elim

@@ -145,6 +145,7 @@ theorem exists_rig {G B T : Scheme.{0}} (q : G ⟶ B) (eG : T ⟶ G) (eB : T ⟶
   · exact (congrArg (_ * ·) (v (fun _ => a) y (mem_pull₂.2 hy))).trans (mul_inv_cancel _)
 
 
+attribute [local instance] SplitExt.free SplitExt.finite in
 theorem isGt_of_units (E : SplitExt S) {G : Over S} [GrpObj G] (q : G ⟶ E.B) (i : splitTorus S E.X ⟶ G)
     (hq : IsMonHom q) (hi : IsMonHom i) (hf : Flat q.left) (hs : Surjective q.left) (ha : IsAffineHom q.left)
     (hk : IsPullback i (toUnit _) q (η[E.B]))
@@ -365,6 +366,7 @@ end Data
 end CoordToExt
 
 
+open CoordToExt in
 theorem gtCoord_isGt : Geo.Tor.GtCoordToGtSt := by
   rintro R _ _ I D e G _ _ ⟨g⟩
   have := g.q_hom

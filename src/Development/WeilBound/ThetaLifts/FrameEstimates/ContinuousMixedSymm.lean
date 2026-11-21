@@ -328,6 +328,8 @@ theorem Good.update {φ : ∀ u : HeightOneSpectrum (𝓞 F), (κ → Fv F u) �
     rwa [Function.update_of_ne e]
 
 
+open Classical in
+variable (v) in
 def psv (ψ : AddChar (AF F) ℂ) : AddChar (Fv F v) ℂ := ψ.compAddMonoidHom (atPlace v).toAddMonoidHom
 
 theorem psv_apply (ψ : AddChar (AF F) ℂ) (t : Fv F v) : psv v ψ t = ψ (atPlace v t) := rfl
@@ -337,9 +339,11 @@ scoped instance invTwoV : Invertible (2 : Fv F v) :=
     by rw [← map_ofNat (evFin F v) 2, ← map_mul, mul_invOf_self, map_one]⟩
 
 
+variable (v) in
 def evP (w : (κ → AF F) × (κ → AF F)) : (κ → Fv F v) × (κ → Fv F v) := (fun i => evFin F v (w.1 i), fun i => evFin F v (w.2 i))
 
 
+variable (v) in
 def offP (w : (κ → AF F) × (κ → AF F)) : (κ → AF F) × (κ → AF F) := (fun i => off v (w.1 i), fun i => off v (w.2 i))
 
 theorem schr_tens (ψ : AddChar (AF F) ℂ) (w : (κ → AF F) × (κ → AF F)) (φ : (κ → Fv F v) → ℂ) {r : (κ → AF F) → ℂ}
@@ -443,6 +447,7 @@ theorem ev_trace (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (z : AE F E) :
     rfl
 
 
+variable (v) in
 def ep : AF F := atPlace v 1
 
 theorem ep_mul (a : AF F) : ep v * a = atPlace v (evFin F v a) := by rw [ep, atPlace_mul_right, one_mul]

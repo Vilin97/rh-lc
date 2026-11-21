@@ -86,6 +86,7 @@ theorem chartMass_conj (M T : Matrix (Fin (e + 1)) (Fin (e + 1)) ℂ) (hM : M.Po
 end ChartMongeAmpereAffineInvariance
 
 
+open ChartMongeAmpereAffineInvariance in
 theorem ChartMassInvariant.proof : ChartMassInvariant.Statement := by
   intro e M hM
   let S : Matrix (Fin (e + 1))ᵒᵈ (Fin (e + 1))ᵒᵈ ℂ := M

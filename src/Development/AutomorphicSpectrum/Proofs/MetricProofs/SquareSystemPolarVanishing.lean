@@ -345,6 +345,7 @@ end GlobalTheory.CompanionTheory.Ar.PB.SqAt
 namespace GlobalTheory.CompanionTheory.Ar.PB
 
 
+open GlobalTheory.CompanionTheory.Ar.PB.SqAt in
 theorem first_half_at_scale : Inputs → ∀ (II : IntersectionSystem), IsFullIntersectionSystem II →
     ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (d : ℕ) (σ : Type) [Fintype σ]
     (SY : AnSys (d + 1) σ) (P : Ideal (MRing ι)) (Re : Realis SY P) (a₀ : σ) (ε : σ → ℤ)

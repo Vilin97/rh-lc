@@ -260,6 +260,7 @@ variable {X : Type*} [AddCommGroup X] [Module.Free ℤ X] [Module.Finite ℤ X]
   {Q : QuadraticMap ℤ X ℝ}
 
 
+omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 theorem exists_mul_sum_sq_le {ι : Type*} [Fintype ι] (hQ : (realExtension Q).PosDef)
     (e : Module.Basis ι ℤ X) : ∃ c > 0, ∀ a, c * ∑ i, (e.repr a i : ℝ) ^ 2 ≤ Q a := by
   obtain ⟨c, hc, h⟩ := posDef_exists_mul_dotProduct_le ((realExtension_posDef_iff Q e).mp hQ)

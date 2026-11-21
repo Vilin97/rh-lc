@@ -26,6 +26,7 @@ namespace PotentialCharts
 variable {D : ℕ} {X : Type*} [TopologicalSpace X] {A : FinHolAtlas D X} (P : PotentialCharts A)
 
 
+open Classical in
 theorem glue_eventually_of_close (a : Fin P.N → X → ℝ) (η : Fin P.N → X → ℝ) {Cη ε : ℝ}
     (hcut : P.IsCutoffFamily η Cη) (hε : 0 ≤ ε)
     (hcmp : ∀ j k, ∀ x ∈ P.mid j ∩ P.mid k, |a j x - a k x| ≤ ε)
@@ -109,6 +110,7 @@ theorem arg_contDiffAt (ρ : Mollifier D) (η : Fin B.N → X → ℝ) {Cη t ε
 end BoundedPshData
 
 
+open Classical in
 theorem BoundedGlue.proof : BoundedGlue.Statement := by
   intro X _ _ _ D A B ρ η Cη t ε hcut ht hε hball hcmp
   have hloc := B.glue_eventually_of_close (fun j x => B.phReg ρ t j x) η hcut hε.le hcmp

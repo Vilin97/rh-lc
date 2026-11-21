@@ -155,6 +155,7 @@ theorem sqSum_ne_zero {a : J → ℂ} (ha : a ≠ 0) : sqSum a ≠ 0 := by
 end LeviFSInvariant
 
 
+open LeviFSInvariant in
 theorem LeviFSInvariant.proof : LeviFSInvariant.Statement := by
   intro M _ a b c μ ha hc
   have hf : (fun u : M → ℂ => Real.log (∑ j, ‖u j‖ ^ 2) / 2) = phi := by

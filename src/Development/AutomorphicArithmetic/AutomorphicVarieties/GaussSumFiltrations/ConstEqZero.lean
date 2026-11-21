@@ -160,6 +160,7 @@ private theorem ez_at_imaginary_unit_shift_eq {F : Type} [Field F] [NumberField 
   simp only [mul_add, Finset.sum_add_distrib]
 
 
+open GlobalTheory.HilbertThetaSeries.QUniq in
 theorem GlobalTheory.HilbertThetaSeries.hasQ_unique : ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (f : Hn F → ℂ) (a b : F → ℂ),
     HasQ f a → HasQ f b → a = b := by
   intro F _ _ _ f a b ha hb

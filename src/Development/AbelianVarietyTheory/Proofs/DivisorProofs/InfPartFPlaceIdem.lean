@@ -97,6 +97,7 @@ theorem theta_smul (c : ℂ) {f : WOF F E nS nT → ℂ} (hf : IsThetaFunOF σ J
   smooth k L hL h0 w := (hf.smooth k L hL h0 w).const_smul c
 
 
+variable (σ JS JT xi0 ψ) in
 def thetaSubF : Submodule ℂ (WOF F E nS nT → ℂ) where
   carrier := {f | IsThetaFunOF σ JS JT xi0 ψ f}
   add_mem' := theta_add

@@ -38,6 +38,7 @@ theorem resGal_mem_Dec_iff {σ : G L Ω} :
   simp only [resGal_apply]
 
 
+variable (F L) in
 def decRes (A : ValuationSubring Ω) : Dec (F := L) A →* Dec (F := F) A :=
   ((resGal F L Ω).comp (Dec (F := L) A).subtype).codRestrict (Dec (F := F) A)
     (fun σ => resGal_mem_Dec_iff.mpr σ.2)

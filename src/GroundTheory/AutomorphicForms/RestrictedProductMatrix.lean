@@ -206,6 +206,7 @@ def matrixHomeomorph (hC : ∀ i (M : Matrix m m (R i)), M ∈ C i ↔ ∀ a b, 
   (matrixHomeomorphSets m hB).trans (congrSets fun i => (coe_eq_setOf m hC i).symm)
 
 
+omit [∀ i, SubringClass (S i) (R i)] in
 theorem isOpen_coe_of_forall (hC : ∀ i (M : Matrix m m (R i)), M ∈ C i ↔ ∀ a b, M a b ∈ B i)
     (hB : ∀ i, IsOpen (B i : Set (R i))) (i : ι) : IsOpen (C i : Set (Matrix m m (R i))) := by
   rw [coe_eq_setOf m hC i]

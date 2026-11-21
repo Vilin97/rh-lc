@@ -40,6 +40,7 @@ theorem finite_over (p : ℕ) (hp : p ≠ 0) :
 end GlobalTheory.HilbertThetaSeries.DelGen
 
 
+open GlobalTheory.HilbertThetaSeries.DelGen in
 theorem GlobalTheory.HilbertThetaSeries.del_exists_and_move : ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (p : ℕ), p.Prime → (∃ δ : F, IsDel p δ) ∧ ∀ δ : F, IsDel p δ → ∀ y : (Af F)ˣ, ∃ ξ : Fˣ, TP (ξ : F) ∧ AtP p δ (Units.map (algebraMap F (Af F)).toMonoidHom ξ * y) := by
   intro F _ _ _ p hp
   obtain ⟨T, hT⟩ := finite_over (F := F) p hp.ne_zero

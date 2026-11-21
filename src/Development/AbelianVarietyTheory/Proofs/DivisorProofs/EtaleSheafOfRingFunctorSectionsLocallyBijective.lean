@@ -15,6 +15,7 @@ instance instWEqLBEtRings (R : Type) [CommRing R] : (Scheme.etaleTopology.{0}).W
   exact GrothendieckTopology.WEqualsLocallyBijective.ofEssentiallySmall _
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem etale_affine_of_mem {U : Scheme.{0}} {S : Sieve U} (hS : S ∈ Scheme.etaleTopology U) (u : U) :
     ∃ (V : Scheme.{0}) (j : V ⟶ U) (v : V), IsAffine V ∧ Etale j ∧ j v = u ∧ S j := by
   obtain ⟨𝒰, hle⟩ := Scheme.mem_grothendieckTopology_iff.1 hS

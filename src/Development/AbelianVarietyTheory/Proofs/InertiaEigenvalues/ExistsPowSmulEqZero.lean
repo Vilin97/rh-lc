@@ -153,6 +153,7 @@ def AdicBasis : Prop :=
 abbrev act : Representation O G ↥L.T := twistRep (latRep L) χ⁻¹
 
 
+omit [TopologicalSpace G] [TopologicalSpace V] [IsTopologicalAddGroup V] [ContinuousConstSMul LL V] in
 theorem act_coe (g : G) (t : ↥L.T) : (act L χ g t : V) = twistRep ρ (chiLL LL χ⁻¹) g t :=
   (algebraMap_smul LL (χ⁻¹ g : O) (ρ g t)).symm
 
@@ -245,6 +246,7 @@ theorem mk_cobZ (hc : ∀ v, Continuous fun g => twistRep ρ (chiLL LL χ⁻¹) 
   (Submodule.Quotient.mk_eq_zero _).mpr ⟨t, t.2, rfl⟩
 
 
+omit [IsTopologicalAddGroup V] [ContinuousConstSMul LL V] [TopologicalSpace V] [TopologicalSpace G] in
 theorem eq_zero_of_smul (hl : algebraMap O LL lam ≠ 0) (t : ↥L.T) (h : lam • t = 0) : t = 0 := by
   have h1 : lam • (t : V) = 0 := congrArg Subtype.val h
   rw [← algebraMap_smul LL lam] at h1

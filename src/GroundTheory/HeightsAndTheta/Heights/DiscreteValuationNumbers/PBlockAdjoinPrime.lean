@@ -18,6 +18,7 @@ namespace BlockAdjoinPrime
 variable {R : Type*} [CommRing R] {K : Type*} {ι : K → Type*}
 
 
+open Classical in
 def killB (B : Set K) : MRing ι R →ₐ[R] MRing ι R :=
   by
     classical

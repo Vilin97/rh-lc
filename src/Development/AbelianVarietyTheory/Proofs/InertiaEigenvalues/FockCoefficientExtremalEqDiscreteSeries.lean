@@ -152,6 +152,7 @@ theorem Killed.coef (hom : IsWeilDatumO ψ S T χS χT om) (hc : IsCovolOne (rat
   simp [e, thetaIP]
 
 
+open GlobalTheory.FockKill GlobalTheory.FockIndep GlobalTheory.OrientedHeis in
 theorem killed_of_harmonic (hom : IsWeilDatumO ψ S T χS χT om) (hθ : IsInfFam θ) (kS : S.SigOK) (kT : T.SigOK)
     (BS : D.what₂.Tau → Mt S.rank) (hBS : ∀ τ, IsONBasis (gramAt D S τ) 1 (BS τ) S.rank) (M : DSModel T Sp)
     (p : D.what₂.Tau → ℕ) (hp : ∀ τ a, M.ε τ a = decide ((a : ℕ) < p τ)) (f : WO S T → ℂ) (hf : IsThetaFunO ψ S T f)
@@ -228,6 +229,7 @@ def killedSub (hom : IsWeilDatumO ψ S T χS χT om) (hθ : IsInfFam θ) (M : DS
     rw [a', smul_zero]
 
 
+open GlobalTheory.DefLift.LowerKill GlobalTheory.PointAtPlaceHom GlobalTheory.Mem.RealTranslate in
 theorem values_killed (hom : IsWeilDatumO ψ S T χS χT om) (hθ : IsInfFam θ) (M : DSModel T Sp) (h1 : LowSm M)
     (h2 : GlobalTheory.IndefiniteRowSideFullHecke.HolomorphicLowestType.LowIrr M) (c : CoefA S) (hc : c.Is) (pt : PolF D T.rank S.rank →ₗ[ℂ] (WO S T → ℂ))
     (hpt : ∀ P, IsThetaFunO ψ S T (pt P)) (Δ : PolF D T.rank S.rank)
@@ -318,6 +320,7 @@ theorem holAd_coef (hom : IsWeilDatumO ψ S T χS χT om) (hcv : IsCovolOne (rat
   rw [← this, ← Module.End.mul_apply, ← map_mul, Prod.mk_mul_mk, mul_one]
 
 
+open GlobalTheory.HolDict.InterpolationCoefficientsInL2 in
 theorem coef_eq (hom : IsWeilDatumO ψ S T χS χT om) (hcv : IsCovolOne (ratL T S) μ 𝓕) (hθ : IsInfFam θ)
     (M : DSModel T Sp) (hS : HolShape M) {w : D.what₂.Tau → Fin T.rank → ℤ} (hW : WtIs M w) {v : M.Vec}
     (hv : IsExtVec M v) {J : WO S T → ℂ} (hJ : IsThetaFunO ψ S T J)
@@ -394,6 +397,7 @@ theorem coef_eq (hom : IsWeilDatumO ψ S T χS χT om) (hcv : IsCovolOne (ratL T
   rwa [hLinv u₀ hu₀] at key
 
 
+set_option maxHeartbeats 1000000 in
 theorem coef_extremal : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Laws R F → R.FullP → ∀ (i : Fin D.R.m) (t : T) μ 𝓕, IsCovolOne (ratL (Wc D i) (Vc D i)) μ 𝓕 → ∀ v : (∀ ρ, lowT (R.MW i (sg0 D A)) ρ), Formalism.IndefR.FWT.IsExtVec (R.MW i (sg0 D A)) (fun ρ => ((v ρ : (R.MW i (sg0 D A)).sm ρ))) → ∀ w, ∀ u ∈ GinfC (Wc D i),
     thetaIP μ 𝓕 (jointVec R i t v w) (R.ωP i t (1, u) (jointVec R i t v w)) =
       thetaIP μ 𝓕 (jointVec R i t v w) (jointVec R i t v w) *

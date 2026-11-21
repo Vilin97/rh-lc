@@ -328,6 +328,7 @@ theorem psi_realLine (h : Chart θ σ) (hψ : IsStdChar D ψ (-1)) (w : WO S T) 
   ring
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem omO_rat (h : Chart θ σ) (x y : WO S T) (q : D.host.F)
     (hq : symplO S T x y = algebraMap D.host.F (AF D.host.F) q) :
     omO S T (piW θ T S x) (piW θ T S y) = (Algebra.trace ℚ D.host.F q : ℚ) := by

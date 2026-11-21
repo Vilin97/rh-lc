@@ -147,6 +147,7 @@ def phiAt (k : Fin 2) (ψ₀ : AddChar (ZMod (D.host.g k)) ℂ) (f : (ZMod (D.ho
     (ψ₀ (sdg (u : Matrix (Fin D.R.r) (Fin D.R.r) (ZMod (D.host.g k)))))⁻¹ * (D.ntypes.eSer k f).coeff u⁻¹ else 0
 
 
+open Classical in
 def cardU (k : Fin 2) : ℂ :=
   haveI : NeZero (D.host.g k) := ⟨(D.host.g_prime k).ne_zero⟩
   ((Finset.univ.filter fun u : GL (Fin D.R.r) (ZMod (D.host.g k)) =>

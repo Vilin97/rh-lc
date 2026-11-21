@@ -32,6 +32,7 @@ theorem invT_map {R : Type} [CommRing R] (c : R →+* R) (g : GL (Fin a) R) :
     ← map_inv]; rfl)
 
 
+omit [NumberField L] [IsCMField L] in
 theorem barK_barK (k : Kinf L a) : barK (barK k) = k := by
   refine Subtype.ext ?_
   ext i j : 1

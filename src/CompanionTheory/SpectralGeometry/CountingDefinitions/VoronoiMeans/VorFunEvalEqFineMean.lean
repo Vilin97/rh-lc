@@ -45,6 +45,7 @@ theorem finite_classGroup (O : Type) [CommRing O] [IsDedekindDomain O] [Module.F
   infer_instance
 
 
+open GlobalTheory.ProjModClasses in
 theorem classes (h : CMOrd O bar) : ∀ q : ℕ, ∃ (n : ℕ) (R : Fin n → ModuleCat.{0} O),
     (∀ k, Module.Finite O (R k) ∧ Module.Projective O (R k) ∧ Module.finrank O (R k) ≤ q) ∧
     ∀ (X : Type) [AddCommGroup X] [Module O X] [Module.Finite O X] [Module.Projective O X], Module.finrank O X ≤ q →

@@ -209,6 +209,7 @@ theorem cmp_iso_of_expansions [NeZero n] (hinj : Function.Injective (algebraMap 
 end Generic
 
 
+set_option maxHeartbeats 1000000 in
 theorem cmp_iso (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (Cm : CmpOf D.loc D.locA HW F) (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l)
     (h : Good K s LL) (T : Lt K LL) (hT : IsCrys ((D.loc l).PD K) T.ρ) :

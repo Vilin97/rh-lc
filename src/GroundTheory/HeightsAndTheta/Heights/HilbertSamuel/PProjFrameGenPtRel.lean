@@ -15,6 +15,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.Cha
 noncomputable section
 
 
+open ProjFrameFibrePt in
 theorem ProjFrameGenPtRel.proof : ProjFrameGenPtRel.Statement := by
   intro D Ω _ _ κ _ x e _ hF G
   classical

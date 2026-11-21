@@ -25,6 +25,7 @@ def monoDeriv (v : κ → E) (e : κ → ℕ) (F : E → ℂ) : E → ℂ :=
   (univ : Finset κ).toList.foldr (fun x G => (dirDeriv (v x))^[e x] G) F
 
 
+open Classical in
 def coordVec (x : κ) : κ → ℂ := Pi.single x 1
 
 def taylorCoeff (F : (κ → ℂ) → ℂ) (e : κ → ℕ) : ℂ :=

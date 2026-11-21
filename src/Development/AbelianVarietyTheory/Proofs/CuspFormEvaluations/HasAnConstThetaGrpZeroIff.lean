@@ -256,6 +256,7 @@ theorem exists_entire_twist (hL : L.IsLB) {m : T ⊗ A ⟶ A} {a b : ℤ}
       div_mul_cancel₀ _ (zpow_ne_zero _ (u.fr_ne _ _ h0))]
 
 
+variable {p} in
 theorem exAt_translPt {y : T ⟶ A} {x : Fin g → ℂ} (hy : p ≫ y = u.ex x) (z : Fin g → ℂ) :
     exAt u p z ≫ (translPt A y).left = (u.ex (z + x)).left := by
   have h : lift p (u.ex z) ≫ translPt A y = u.ex (z + x) := by
@@ -265,6 +266,7 @@ theorem exAt_translPt {y : T ⟶ A} {x : Fin g → ℂ} (hy : p ≫ y = u.ex x) 
   rw [← Over.comp_left, h]
 
 
+variable {p} in
 theorem exAt_translT {y : T ⟶ A} {x : Fin g → ℂ} (hy : p ≫ y = u.ex x) (z : Fin g → ℂ) :
     exAt u p z ≫ (translT A y).left = exAt u p (z + x) := by
   have h : lift p (u.ex z) ≫ translPt A y = u.ex (z + x) := by

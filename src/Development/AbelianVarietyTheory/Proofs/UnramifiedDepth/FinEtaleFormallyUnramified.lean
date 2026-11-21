@@ -108,6 +108,9 @@ private theorem finrank_eq_card_algHom_of_pointDerivation_eq_zero {C B : Type} [
         rw [Module.finrank_fintype_fun_eq_card, Nat.card_eq_fintype_card]
 
 
+open TensorProduct IsLocalRing Matrix CategoryTheory AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj in
+open scoped CategoryTheory.Obj CategoryTheory.MonObj in
+attribute [local instance] Over.cartesianMonoidalCategory in
 theorem _root_.GlobalTheory.finEtale_main :
     (∀ (C O A : Type) [Field C] [IsAlgClosed C] (v : Valuation C NNReal) [CommRing O]
       [Algebra O C], v.Integers O →

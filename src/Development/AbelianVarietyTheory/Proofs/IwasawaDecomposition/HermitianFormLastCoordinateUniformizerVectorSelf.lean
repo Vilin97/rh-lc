@@ -555,6 +555,7 @@ namespace GlobalTheory.Mem.Col2.TilX
 variable {B : Base} {X : PreX B.toPre} (I : TC B X)
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_ka (hI : I.Ok) (u : B.Word) {Lb : Unit → Submodule (𝓞 B.host.E) (Fin (B.R.N B.R.m) → B.host.E)}
     {U : Unit → Subgroup (GA B (B.R.N B.R.m))} {chi : ∀ β, U β →* ℂˣ} {y : (I.stp u I.mu0 B.R.m).Cl → GA B (B.R.N B.R.m)}
     {st : ∀ c, (I.stp u I.mu0 B.R.m).Stab c → GL (Fin (B.R.N B.R.m)) B.host.E} {k : Unit → GA B (B.R.N B.R.m)}
@@ -869,6 +870,7 @@ namespace GlobalTheory.Mem.Col2.TilX
 variable {B : Base} {X : PreX B.toPre} (I : TC B X)
 
 
+set_option maxHeartbeats 1600000 in
 theorem til_fv_eq (hI : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l))
     (hg : gramN (I.rec7 l Z) B.R.m le_rfl = 1) (u : B.Word)
     (hsu : ∀ c, clsCrd (I.rec7 l Z) u B.R.m le_rfl c = ((I.stp u I.mu0 B.R.m).rep c).1.1.deco.1.L)
@@ -1090,6 +1092,7 @@ theorem baseL_sup (u : B.Word) {Lb : Submodule (𝓞 B.host.E) (Fin (B.R.N B.R.m
 end GlobalTheory.Mem.Col2.TilX
 
 
+set_option maxHeartbeats 4000000 in
 theorem GlobalTheory.Mem.Col2.TC.til_ties : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (A : AtTTied (D := (I.rec7 l Z)) u) (K : ClsTied (D := (I.rec7 l Z)) u B.R.m le_rfl) (KP : ClsPTied (D := (I.rec7 l Z)) u) (L : LvTied (D := (I.rec7 l Z)) u A B.R.m le_rfl) (W : ValTied (D := (I.rec7 l Z)) u A.eV B.R.m le_rfl K), A.res = I.resT l u I.mu0 → (∃ k, I.Reads u I.mu0 B.R.m (fun _ => ()) (fun _ => K.lev.Lb) (fun _ => K.lev.U) (fun _ => K.lev.chi) (fun c => (K.y c).1) (fun c s => (K.stabI c s).1) k) → I.ReadsP I.mu0 KP.lev.Lb KP.lev.U KP.lev.chi (fun c => (KP.y c).1) KP.lat (fun c s => (KP.stabI c s).1) → (∀ v c (z : Ld (I.rec7 l Z) u B.R.m le_rfl c) (h : z.1 ∈ ((I.stp u I.mu0 B.R.m).rep c).1.1.deco.1.N), L.pr v c z = Submodule.Quotient.mk ⟨z.1, h⟩) → I.IdY l Z u I.mu0 B.R.m le_rfl W.eY → ∃ (Tl : TilTied (D := (I.rec7 l Z)) u A KP L) (Ta : TilAd Tl K), (∀ j, Tl.z0 j = if j.1 + 1 = B.R.N B.R.m then ((X.piT u : 𝓞 B.host.E) : B.host.E) else 0) ∧ TilBaseLat Tl K ∧ ∃ e, (∀ z, e z = z) ∧ EvzTie (D := (I.rec7 l Z)) Ta W e := by
   intro B X I hI hP l Z u A K KP L W hres hRd hRP hL hY
   obtain ⟨k, hk⟩ := hRd

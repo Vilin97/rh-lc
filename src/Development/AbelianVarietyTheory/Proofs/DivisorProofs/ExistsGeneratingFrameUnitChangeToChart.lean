@@ -21,6 +21,7 @@ open GlobalTheory.FlagMod (GChart ev tau tau_le le_preimage_comp)
 namespace GlobalTheory.KeyFramePoint
 
 
+open scoped CategoryTheory.MonObj in
 theorem card_eq_of_isLieBasis {X : Scheme.{0}} {R : Type} [CommRing R] [Nontrivial R] {x : Sp R ⟶ X} {G : Over X} [GrpObj G]
     [IsCommMonObj G] {G' : Over (Sp R)} [GrpObj G'] [IsCommMonObj G'] {Φ : G'.left ⟶ G.left}
     (h : IsGrpPullback G' G x Φ) {n n' : ℕ} {v : Fin n → (epsR R ⟶ G')} {v' : Fin n' → (epsR R ⟶ G')}

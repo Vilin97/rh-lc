@@ -20,6 +20,7 @@ variable {H : Type*} [Group H] [TopologicalSpace H] [IsTopologicalGroup H] [Loca
   [T2Space H] [SecondCountableTopology H] [MeasurableSpace H] [BorelSpace H]
 
 
+omit [LocallyCompactSpace H] [T2Space H] in
 theorem isFundamentalDomain_preimage_mul_right (L : Subgroup H) [DiscreteTopology L]
     (ν : Measure H) (g : H) :
     IsFundamentalDomain L ((· * g) ⁻¹' fundamentalDomain L) ν := by
@@ -57,6 +58,7 @@ theorem isMulRightInvariant_of_compactSpace (L : Subgroup H) [DiscreteTopology L
   rw [hc, hc1, one_smul]
 
 
+omit [T2Space H] in
 theorem inv_eq_self_of_isMulRightInvariant (ν : Measure H) [ν.IsHaarMeasure]
     [ν.IsMulRightInvariant] : ν.inv = ν := by
   set c : ℝ≥0 := Measure.haarScalarFactor ν.inv ν

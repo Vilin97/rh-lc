@@ -21,6 +21,7 @@ variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAl
 variable {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)}
 
 
+omit [IsAlgClosure E Ω] in
 theorem exists_open_subgroup {S : Set (Ine (F := E) A)} (hS : IsOpen S) (h1 : 1 ∈ S) :
     ∃ U : Subgroup (G E Ω), IsOpen (U : Set (G E Ω)) ∧ ∀ σ : Ine (F := E) A, (σ : G E Ω) ∈ U → σ ∈ S := by
   obtain ⟨V, hV, rfl⟩ := isOpen_induced_iff.mp hS
@@ -209,6 +210,7 @@ section Ties
 variable {D : D7} (T : GlobalTheory.RowTie.WDTie D.nd D.naut)
 
 
+include T in
 theorem ineRep_of_tie : IneRep D := by
   intro k w _ L
   have key : ∀ (x : WD (E := D.host.E) (A := D.nd.plOm.1 w) (w := w) (D.nd.plOm.2 w)) (n : ℕ), x.lpDim = n →

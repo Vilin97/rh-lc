@@ -190,6 +190,7 @@ theorem chartAbsDens_congr_zeroSet {m : ℕ} {K : Ideal (MvPolynomial (Fin m) �
 end VarIntGraph
 
 
+open VarIntGraph in
 theorem VarIntGraphInt.proof (hI : IntegralIndep.Statement) : VarIntGraphInt.Statement := by
   classical
   intro n e J p F Φ hJ hF hΦ hint

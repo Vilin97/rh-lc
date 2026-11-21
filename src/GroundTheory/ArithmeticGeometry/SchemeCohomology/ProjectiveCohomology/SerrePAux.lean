@@ -161,6 +161,7 @@ variable {X : Scheme.{u}}
   {S : ShortComplex X.Modules} (hS : S.ShortExact)
 
 
+include hS in
 theorem finite_H_X₃ [IsNoetherianRing A] (p : ℕ)
     [Module.Finite A (Sheaf.H.{w'} (modulesAb S.X₂) p)]
     [Module.Finite A (Sheaf.H.{w'} (modulesAb S.X₁) (p + 1))] :
@@ -169,6 +170,7 @@ theorem finite_H_X₃ [IsNoetherianRing A] (p : ℕ)
     fun y hy => H.exact₃ (shortExact_abSC hS) rfl y hy
 
 
+include hS in
 theorem subsingleton_H_X₃ (p : ℕ) [Subsingleton (Sheaf.H.{w'} (modulesAb S.X₂) p)]
     [Subsingleton (Sheaf.H.{w'} (modulesAb S.X₁) (p + 1))] :
     Subsingleton (Sheaf.H.{w'} (modulesAb S.X₃) p) := by
@@ -199,6 +201,7 @@ lemma twistEquiv_additive (k : ℤ) : (twistEquiv (A := A) (n := n) k).functor.A
   Functor.additive_of_preserves_binary_products _
 
 
+variable (A n) in
 abbrev freeP (I : Type u) : (projectiveSpace A n).Modules :=
   SheafOfModules.free (R := (projectiveSpace A n).ringCatSheaf) I
 

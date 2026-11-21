@@ -23,9 +23,11 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {ρ : Y.X ⟶ gen Z}
 
 
+variable (e ρ) in
 abbrev GenFrame : Type := EigFrame Z (constF e Y) (genericPt Y ≫ ρ ≫ genι Z)
 
 
+variable (ρ) in
 abbrev StalkFrame (y : Y.X) (φ : c.F →+* Y.X.presheaf.stalk y) : Type := EigFrame Z φ (stalkPt Y y ≫ ρ ≫ genι Z)
 
 abbrev toFn (y : Y.X) : Y.X.presheaf.stalk y →+* Y.Fn := algebraMap (Y.X.presheaf.stalk y) Y.X.functionField
@@ -83,6 +85,7 @@ theorem toFn_injective (y : Y.X) : Function.Injective (toFn y) :=
   IsFractionRing.injective (Y.X.presheaf.stalk y) Y.X.functionField
 
 
+omit [NumberField F] in
 theorem fits_iff {y : Y.X} {φ : c.F →+* Y.X.presheaf.stalk y} {f : StalkFrame ρ y φ} {f' : GenFrame e ρ}
     (hφ : constF e Y = (toFn y).comp φ) (hf : f.IsMap (toFn y) f')
     {P : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn} : Fits g₀ τ y φ f P ↔ g₀.co f' τ = P :=
@@ -109,6 +112,7 @@ theorem Fits.φ_eq {y : Y.X} {φ φ' : c.F →+* Y.X.presheaf.stalk y} {f : Stal
   RingHom.ext fun a => toFn_injective y ((RingHom.congr_fun h.1 a).symm.trans (RingHom.congr_fun h'.1 a))
 
 
+omit [NumberField F] in
 theorem Fits.eq_mul {y : Y.X} {φ : c.F →+* Y.X.presheaf.stalk y} {f f' : StalkFrame ρ y φ}
     {P P' : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn} (h : Fits g₀ τ y φ f P) (h' : Fits g₀ τ y φ f' P') :
     P' = P * (f.co f' τ).map (toFn y) := by
@@ -118,6 +122,7 @@ theorem Fits.eq_mul {y : Y.X} {φ : c.F →+* Y.X.presheaf.stalk y} {f f' : Stal
     EigFrame.co_mul]
 
 
+omit [NumberField F] in
 theorem Fits.co_eq {y : Y.X} {φ : c.F →+* Y.X.presheaf.stalk y} {f f' : StalkFrame ρ y φ}
     {P : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn} {T : Matrix _ _ (Y.X.presheaf.stalk y)}
     (h : Fits g₀ τ y φ f P) (h' : Fits g₀ τ y φ f' (P * T.map (toFn y))) : f.co f' τ = T := by
@@ -126,6 +131,8 @@ theorem Fits.co_eq {y : Y.X} {φ : c.F →+* Y.X.presheaf.stalk y} {f f' : Stalk
   exact (Matrix.map_injective (toFn_injective y) this).symm
 
 
+attribute [local instance] Over.cartesianMonoidalCategory in
+open MonoidalCategory CartesianMonoidalCategory MonObj ReciprocityTheory.ChartRestriction.G.PullbackSections GlobalTheory.LieMet in
 theorem exists_co_eq {R : Type} [CommRing R] {φ : c.F →+* R} {x : Sp R ⟶ Z.X} (f : (E →+* ℂ) → EigFrame Z φ x)
     (T : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) R) (hT : ∀ τ, IsUnit (T τ).det) :
     ∃ g : EigFrame Z φ x, ∀ τ, (f τ).co g τ = T τ := by
@@ -145,6 +152,7 @@ theorem exists_co_eq {R : Type} [CommRing R] {φ : c.F →+* R} {x : Sp R ⟶ Z.
     rw [← hu _ (ha.trans (key τ a)), mulVec_mulVec, nonsing_inv_mul _ (hT τ), one_mulVec]
 
 
+omit [NumberField F] in
 theorem Fits.exists_mul {y : Y.X} {φ : c.F →+* Y.X.presheaf.stalk y} {f : StalkFrame ρ y φ}
     {P : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn} (h : Fits g₀ τ y φ f P)
     {T : Matrix _ _ (Y.X.presheaf.stalk y)} (hT : IsUnit T.det) :
@@ -180,6 +188,7 @@ theorem trAt_gen {r : ℕ} {y : Y.X} (ch ch' : Chart M r) (h : j y ∈ ch.U) (h'
 variable {j dual A}
 
 
+omit [NumberField F] in
 theorem Fits.change (hA : IsCo (genericPt Y ≫ j) A) {y : Y.X} {ch ch' : Chart M (Dw.mult τ)} (h : j y ∈ ch.U)
     (h' : j y ∈ ch'.U) {φ : c.F →+* Y.X.presheaf.stalk y} {f : StalkFrame ρ y φ}
     (hf : Fits g₀ τ y φ f (lieMat dual (A ch))) : ∃ f' : StalkFrame ρ y φ,
@@ -190,6 +199,7 @@ theorem Fits.change (hA : IsCo (genericPt Y ≫ j) A) {y : Y.X} {ch ch' : Chart 
 
 
 
+variable (e) in
 def IsOver {B : Var F} (ρB : B.X ⟶ gen Z) (ρ : Y.X ⟶ gen Z) (f : Y.X ⟶ B.X) (φ : B.Fn →+* Y.Fn) : Prop :=
   f ≫ ρB = ρ ∧ f ≫ B.str = Y.str ∧ genericPt Y ≫ f = spMap φ ≫ genericPt B ∧ constF e Y = φ.comp (constF e B)
 
@@ -213,6 +223,7 @@ theorem IsOver.toFn_comp (h : IsOver e ρB ρ f φ) (y : Y.X) :
 
 
 
+omit [NumberField F] in
 theorem Fits.pull (h : IsOver e ρB ρ f φ) {g : GenFrame e ρB} {g' : GenFrame e ρ} (hg : g.IsMap φ g') (g₁ : GenFrame e ρ)
     {y : Y.X} {φ₀ : c.F →+* B.X.presheaf.stalk (f y)} {k : StalkFrame ρB (f y) φ₀}
     {P : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) B.Fn} (hk : Fits g τ (f y) φ₀ k P) :

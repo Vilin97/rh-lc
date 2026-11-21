@@ -307,6 +307,7 @@ theorem gLat_eq_of_finCong (V : HSp D) (u : GA D V) (h : FinCong V 1 u) (h' : Fi
       Matrix.one_mulVec]
 
 
+set_option maxHeartbeats 800000 in
 theorem xi_eq_of_marks (l : Level H) (V : HSp D) (io : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E))
     (hio : LatEmb V io) {La : Type} [AddCommGroup La] [Module (𝓞 D.host.E) La] (t : Dw.La → La)
     (g g' : GA D V) (Λ Λ' : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)) (hΛ : Λ = latG V g) (hΛ' : Λ' = latG V g')

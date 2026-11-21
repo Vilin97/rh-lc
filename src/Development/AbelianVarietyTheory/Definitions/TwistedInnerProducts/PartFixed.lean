@@ -17,6 +17,8 @@ namespace GlobalTheory.Asc
 variable {D : D7}
 
 
+set_option genSizeOfSpec false in
+set_option genInjectivity false in
 structure Gen (ψ : AddChar (AF D.host.F) ℂ) (V V₀ W : HSp D) (ρ : ℕ) (Y : Type) [MeasurableSpace Y] where
   d : HypDec V V₀ ρ
   χV : (AE D)ˣ →* Circle

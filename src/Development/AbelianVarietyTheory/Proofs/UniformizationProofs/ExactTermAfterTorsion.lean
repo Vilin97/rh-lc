@@ -84,6 +84,7 @@ theorem cst_gF {Z : Scheme.{0}} (ρ : Z ⟶ (DegPre.BF D.toPre F).left) (z : Z) 
   simp
 
 
+include hϖ hv in
 theorem vge_iff {k : ℕ} {χ : D.toPre.X} (b : D.toPre.SecB k χ)
     (hb : ∀ σ : D.toPre.SecB k χ, ∃ c : V, ∀ (Z : Scheme.{0}) (r : Z ⟶ D.toPre.P.A.left) (z : Z) (J),
       Good D.toPre.P.L z J → sval σ r z J = Geo.Tor.cst (r ≫ D.toPre.P.A.hom) z c * sval b r z J)

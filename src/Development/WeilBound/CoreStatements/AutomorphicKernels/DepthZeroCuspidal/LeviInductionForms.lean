@@ -54,6 +54,7 @@ variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAl
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
 
 
+omit [IsAlgClosure E Ω] in
 theorem wildPf_of_isWild {σ : G E Ω} (hσ : Formalism.MainNotions.BlochKatoReduction.IsWild A σ) : Formalism.MainNotions.N.KillingConditions.WildPf.IsWild A σ := by
   intro y hy
   have hv : A.valuation y ≠ 0 := by simpa using hy

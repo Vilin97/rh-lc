@@ -100,6 +100,7 @@ theorem galK_comm {R : Ranks} (H : Host R) (σ τ : H.E ≃ₐ[H.K] H.E) : σ * 
   exact AlgEquiv.congr_fun h x
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def toyNtypes (ht : THyp H) (htm : TameHyp H)
     (teichC : ∀ k, Fb (H.g k) (H.g_prime k) →* ℂ)
     (teichC_inj : ∀ k, ∀ x y : Fb (H.g k) (H.g_prime k), x ≠ 0 → y ≠ 0 →
@@ -211,6 +212,7 @@ variable {R : Ranks} (H : Host R) {what₂ : Rows.Data R} [NumberField what₂.L
   (LL0 : IntermediateField ℚ what₂.LL) (h : NHyp H what₂)
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def nthToy : NTh R H what₂ LL0 (ndToy H what₂ h) (ntwToy H LL0 h) (nexpToy H LL0 h) where
   iC := fun i => i.elim
   iC_int := fun i => i.elim

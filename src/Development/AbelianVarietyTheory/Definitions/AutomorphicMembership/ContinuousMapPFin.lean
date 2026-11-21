@@ -34,6 +34,7 @@ theorem fin_mul_inf {k x : UA E n} (hk : k ∈ finU E n) (hx : x ∈ infU E n) :
   · simp only [Subgroup.coe_mul, map_mul, h2, one_mul, mul_one]
 
 
+variable (E n) in
 def autU : Submodule ℂ (UA E n → ℂ) where
   carrier := {φ | IsAutFormU φ}
   add_mem' {a b} ha hb := by
@@ -89,9 +90,11 @@ theorem RU_mem_autU (x : UA E n) (φ : UA E n → ℂ) (h : φ ∈ autU E n) : R
     simp only [RU_RU, mul_assoc, mul_inv_cancel_left]
 
 
+variable (E n) in
 def autRep : Representation ℂ (UA E n) (autU E n) := sub (RU E n) (autU E n) RU_mem_autU
 
 
+variable (E n) in
 abbrev Wt : Type := InfinitePlace E → DomWeight n
 
 def zeroWt (n : ℕ) : DomWeight n := ⟨0, antitone_const⟩
@@ -106,6 +109,7 @@ def Wt.at (W : Wt E n) (τ : E →+* ℂ) : DomWeight n :=
   if (InfinitePlace.mk τ).embedding = τ then W (InfinitePlace.mk τ) else (W (InfinitePlace.mk τ)).dual
 
 
+omit [NumberField E] [IsCMField E] in
 @[simp] theorem Wt.at_embedding (W : Wt E n) (v : InfinitePlace E) : W.at v.embedding = W v := by
   simp [Wt.at]
 
@@ -189,6 +193,7 @@ theorem algForms.val_algRep {W : Wt E n} (f : algForms W) (k : finU E n) (g : UA
     algForms.val (algRep W k f) g = algForms.val f (g * k) := rfl
 
 
+variable (E n) in
 @[ext] structure AutSub where
 
   V : Submodule ℂ (UA E n → ℂ)
@@ -215,6 +220,7 @@ theorem isIrreducible_rep : π.rep.IsIrreducible := by
 def Iso : Prop := Nonempty (π.rep.Equiv π'.rep)
 
 
+variable (E n) in
 instance setoid : Setoid (AutSub E n) where
   r := Iso
   iseqv := ⟨fun π => ⟨.refl π.rep⟩, fun ⟨e⟩ => ⟨e.symm⟩, fun ⟨e⟩ ⟨e'⟩ => ⟨e.trans e'⟩⟩
@@ -223,6 +229,7 @@ def finPart (W : Wt E n) : Submodule ℂ (algForms W) :=
   ⨅ v : W.Sp, π.V.comap ((LinearMap.applyₗ v).comp (algForms W).subtype)
 
 
+variable {π} in
 theorem mem_finPart {W : Wt E n} {f : algForms W} : f ∈ π.finPart W ↔ ∀ v, f.1 v ∈ π.V := Submodule.mem_iInf _
 
 def IsLocComp (w : HeightOneSpectrum (𝓞 E)) (σ : SmIrr (GL (Fin n) (w.adicCompletion E))) : Prop :=
@@ -272,12 +279,14 @@ theorem IsLocComp.congr {w : HeightOneSpectrum (𝓞 E)} {σ σ' : SmIrr (GL (Fi
 end AutSub
 
 
+omit [IsCMField E] in
 theorem continuous_map_pFin : Continuous (GeneralLinearGroup.map (pFin E) : GA E n → GL (Fin n) (Af E)) :=
   Continuous.units_map _ (continuous_id.matrix_map continuous_snd)
 
 
 
 
+variable (E n) in
 def AU : Type := Quotient (AutSub.setoid E n)
 
 namespace AU

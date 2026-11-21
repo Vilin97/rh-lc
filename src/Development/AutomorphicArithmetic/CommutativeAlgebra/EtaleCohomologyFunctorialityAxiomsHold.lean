@@ -62,6 +62,7 @@ private theorem exists_section (A : Type) [CommRing A] [HenselianLocalRing A]
 end UpperTheory.Cb.SHAcyc
 
 
+open UpperTheory.Cb.SHAcyc in
 theorem UpperTheory.etaleCohomology_functorialityAxioms_hold : GlobalTheory.EtC.B2 := by
   intro R _ A _ hA F n hn
   obtain ⟨hH, hS⟩ := hA

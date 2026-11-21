@@ -508,6 +508,7 @@ theorem one_le_gradedQuotDeg {P : Ideal T} [P.IsPrime] (hI : P.IsHomogeneous �
   exact_mod_cast h1
 
 
+omit hx [GradedAlgebra 𝒜] in
 theorem ringKrullDim_quotient_of_mem_minimalPrimes_sup {P Q : Ideal T} [P.IsPrime] {r : ℕ}
     (hr : ringKrullDim (T ⧸ P) = (r + 1 : ℕ)) {f : T} (hfP : f ∉ P)
     (hQ : Q ∈ (P ⊔ Ideal.span {f}).minimalPrimes) : ringKrullDim (T ⧸ Q) = r := by

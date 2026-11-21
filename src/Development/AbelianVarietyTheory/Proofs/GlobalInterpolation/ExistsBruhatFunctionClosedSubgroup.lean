@@ -149,6 +149,8 @@ private theorem exists_normalized_weight_of_closedEmbedding
       exact E.subset (Nat.succ_le_succ hNk) hmem
 
 
+open MeasureTheory in
+open scoped ENNReal in
 theorem _root_.GlobalTheory.exists_bruhat_function_closed_subgroup
     (G : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [LocallyCompactSpace G]
     [SecondCountableTopology G] [T2Space G] [MeasurableSpace G] [BorelSpace G] (H : Subgroup G)

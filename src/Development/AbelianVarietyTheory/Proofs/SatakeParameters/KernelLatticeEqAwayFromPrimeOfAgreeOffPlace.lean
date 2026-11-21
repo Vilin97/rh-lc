@@ -20,6 +20,7 @@ theorem sameOff_symm {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
   fun w' hw => (h w' hw).symm
 
 
+set_option maxHeartbeats 1000000 in
 theorem normConj_mem_pow : ∀ (D : D7) (n p : ℕ) (G : GAtP p) (A : LocAt D.host.F D.host.E n G), LocInt A → SplAlg A → ∀ v (P : HeightOneSpectrum (𝓞 D.host.E)), PrimeOf p (G.P.W v) (A.iw v) P → ∀ (m : ℕ) (a b : 𝓞 D.host.E), (b : D.host.E) = D.host.conj (a : D.host.E) → a ∈ P.asIdeal ^ m → ∃ c : 𝓞 D.host.F, c ∈ (A.pl v).1.asIdeal ^ m ∧ algebraMap D.host.F D.host.E (c : D.host.F) = ((a * b : 𝓞 D.host.E) : D.host.E) := by
   intro D n p G A hInt hSpl v P hP m a b hb ha
 

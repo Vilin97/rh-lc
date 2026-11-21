@@ -68,6 +68,7 @@ theorem reAt_eq (v : InfinitePlace F) (x : F) :
   exact Complex.ofReal_re _
 
 
+open Classical in
 def sgn (k : Fˣ) : InfinitePlace F → Bool := fun v => decide (0 < reAt v (k : F))
 
 theorem tp_of_sgn_eq (k σ : Fˣ) (h : sgn k = sgn σ) : TP ((k * σ⁻¹ : Fˣ) : F) := by

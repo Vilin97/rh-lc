@@ -126,6 +126,7 @@ theorem symp_lag {Cy : Matrix (Fin d) (Fin m) (AE F E)} (h : IsLagAt σ W v Cy) 
   rw [symp, GlobalTheory.CompanionTheory.SplitUnique.hTens_eq_zero (cA σ) _ h.iso, mul_zero, map_zero]
 
 
+variable (v) in
 def lagr (Cy : Matrix (Fin d) (Fin m) (AE F E)) :
     Submodule (Fv F v) ((Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v)) where
   carrier := {w | ∃ z : Matrix (Fin n) (Fin m) (AE F E), locCo M.co v (z * Cyᵀ) = w}

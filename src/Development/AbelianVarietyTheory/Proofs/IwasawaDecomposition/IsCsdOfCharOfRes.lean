@@ -219,6 +219,7 @@ theorem etaInf_norm {k : Lˣ} {t : (𝐅)ˣ} (ht : upF 𝐅 t = k * cU 𝐜 k) (
 end GlobalTheory.CuspRep.NormTriv
 
 
+open GlobalTheory.CuspRep.NormTriv in
 theorem GlobalTheory.CuspRep.isCsd_ofChar_of_res : ∀ {R : Formalism.BasicNotions.Ranks} (H : Formalism.BasicNotions.Host R) (χ : HChar H.E),
     (χ.TrivOn H.F ∨ χ.ResEta H.F) → haveI := host_isCMField H; (CG.ofChar χ).IsCsd := by
   intro R H χ h

@@ -78,6 +78,7 @@ variable {T : CoreJ D} [Algebra T.Q.c.F D.what₂.LL] {R : RealDat D A T.Q.c.F} 
   {v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec}
 
 
+set_option maxHeartbeats 2000000 in
 def fwBase (t : FWTie T R κ v₀) : FWTie T (baseR R) κ v₀ where
   alg_eq := t.alg_eq
   e := t.e
@@ -93,6 +94,7 @@ def fwBase (t : FWTie T R κ v₀) : FWTie T (baseR R) κ v₀ where
   ev := t.ev
 
 
+set_option maxHeartbeats 2000000 in
 def omBase {i : Fin D.R.m} (O : OMDat T.toCore R i Unit (fun _ => A.μ0)) :
     OMDat T.toCore (baseR R) i Unit (fun _ => (baseA A).μ0) where
   c' := O.c'
@@ -150,6 +152,7 @@ theorem ext_base (j : Fin D.R.m) : TwConj.Ext T R κ v₀ O j (baseR R) v₀ (fu
   ⟨fun _ h => ⟨h.core, h.host, h.curve, h.split, h.chi⟩, fun _ _ _ _ h => h, fun c u hc hu => ⟨c, u, hc, hu, fun _ => rfl⟩⟩
 
 
+set_option maxHeartbeats 2000000 in
 theorem restrict_to_base : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m} (T : CoreJ D)
     [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F) (F : Face D A) (κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1))
     (v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec) (O : ∀ i, OMDat T.toCore R i Unit (fun _ => A.μ0))

@@ -35,6 +35,7 @@ variable {E H : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ E] [FiniteDi
   [NormedAddCommGroup H] [InnerProductSpace ℂ H] [FiniteDimensional ℂ H]
 
 
+omit [FiniteDimensional ℂ E] [FiniteDimensional ℂ H] in
 theorem inner_of_normSq (u : E →ₗ[ℂ] H) (n : ℝ) (h : ∀ x, ‖u x‖ ^ 2 = n * ‖x‖ ^ 2) (x y : E) :
     ⟪u x, u y⟫_ℂ = (n : ℂ) * ⟪x, y⟫_ℂ := by
   have h' : ∀ z, ((‖u z‖ : ℝ) : ℂ) ^ 2 = (n : ℂ) * ((‖z‖ : ℝ) : ℂ) ^ 2 := fun z => by exact_mod_cast h z

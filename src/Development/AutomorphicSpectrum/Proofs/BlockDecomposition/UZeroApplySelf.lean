@@ -95,6 +95,7 @@ noncomputable def u {d : ℕ} (p : ℕ) [NeZero p] (k : Fin d) (m : ℕ) : Q p d
 abbrev A (p : ℕ) (D : Type) [CommRing D] (d : ℕ) := AddMonoidAlgebra D (Q p d)
 
 
+open AddMonoidAlgebra in
 noncomputable def J (p : ℕ) [NeZero p] {D : Type} [CommRing D] {d : ℕ} (t : Fin d → D) : Ideal (A p D d) :=
   Ideal.span (Set.range fun k => single (u p k 0) 1 - single 0 (t k))
 

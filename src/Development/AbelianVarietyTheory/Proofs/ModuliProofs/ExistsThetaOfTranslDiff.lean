@@ -381,6 +381,7 @@ end GlobalTheory.DescendedPrincipal
 namespace GlobalTheory
 
 
+open DescendedPrincipal in
 theorem kTriv_of_descent : Out.Laws → ∀ (k : Type) [Field k] [IsAlgClosed k] [CharZero k] (P : Out.PolAV (Sp k)) (n : ℕ) (B : Over (Sp k)) [GrpObj B] (ψ : P.A ⟶ B) (M : LB B.left), 0 < n → IsAbelianScheme B → M.IsLB → IsMonHom ψ → IsFinite ψ.left → Etale ψ.left → Surjective ψ.left → Nat.card {x : 𝟙_ (Over (Sp k)) ⟶ P.A // x ≫ ψ = 1} = n ^ P.g → LBIso (abelian₂ P.A (lbPow P.L n)) (abelian₂ P.A (M.pull ψ.left)) → Out.KTriv B M := by
   intro hL k _ _ _ P n B _ ψ M hn hB hM hψ _ _ _ hc hw R _ t y hy
   have hG := hL.globalFns

@@ -12,6 +12,7 @@ open GroundTheory.FunctionField KaehlerDifferential IntermediateField
 variable {k K : Type*} [Field k] [Field K] [Algebra k K]
 
 
+variable (k) in
 def spanDField (x : K) : IntermediateField k K where
   carrier := {y | D k K y ∈ Submodule.span K {D k K x}}
   mul_mem' {a b} ha hb := by
@@ -84,6 +85,7 @@ section Perfect
 variable [PerfectField k]
 
 
+variable (k K) in
 theorem exists_isSeparable_adjoin : ∃ x : K, Algebra.IsSeparable k⟮x⟯ K := by
   have : Algebra.EssFiniteType k K := essFiniteType
   obtain ⟨s, hs, hsep⟩ := exists_isTranscendenceBasis_and_isSeparable_of_perfectField k K
@@ -96,6 +98,7 @@ theorem exists_isSeparable_adjoin : ∃ x : K, Algebra.IsSeparable k⟮x⟯ K :=
   convert hsep <;> simp
 
 
+variable (k K) in
 theorem finrank_kaehlerDifferential : Module.finrank K Ω[K⁄k] = 1 := by
   obtain ⟨x, hx⟩ := exists_isSeparable_adjoin k K
   rw [← finrank_top, ← span_D_eq_top (k := k) x, finrank_span_singleton (D_ne_zero_of_isSeparable x)]

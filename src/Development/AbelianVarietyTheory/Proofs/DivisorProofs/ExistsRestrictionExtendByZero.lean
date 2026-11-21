@@ -56,6 +56,7 @@ end GlobalTheory.ExtendByZero
 namespace GlobalTheory.RestrS
 
 
+open scoped Classical in
 theorem exists_restr : ∀ (F : Type) [Field F] [NumberField F] {κ₁ κ : Type} [Fintype κ₁] [Fintype κ] (j : κ₁ → κ), Function.Injective j →
     ∃ R : SInf F κ →L[ℂ] SInf F κ₁, ∀ f y, R f y = f (Function.extend j y 0) := by
   intro F _ _ κ₁ κ _ _ j hj

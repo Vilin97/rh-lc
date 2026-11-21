@@ -11,6 +11,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 namespace GlobalTheory.AdicColimit
 
 
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry in
 theorem _root_.GlobalTheory.AdicColimit.isAdicColimit_of_disjoint_cover (R : Type) [CommRing R] (I : Ideal R)
     (T : Over (Spec (CommRingCat.of R))) (𝒰 : T.left.OpenCover.{0})
     (hd : ∀ i j, i ≠ j → Disjoint (Set.range (𝒰.f i)) (Set.range (𝒰.f j)))

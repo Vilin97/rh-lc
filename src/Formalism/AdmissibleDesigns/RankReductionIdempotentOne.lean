@@ -341,6 +341,7 @@ theorem inc_equiv (r : G →* A) (χ : G →* T'ˣ) (e₁ : A) (ε : G →* Oˣ)
 end T12
 
 
+omit hT2Core in
 instance submoduleContinuousConstSMul {O M : Type} [Semiring O] [AddCommMonoid M] [Module O M] [TopologicalSpace M]
     [ContinuousConstSMul O M] (S : Submodule O M) : ContinuousConstSMul O ↥S :=
   ⟨fun c => (continuous_subtype_val.const_smul c).subtype_mk _⟩

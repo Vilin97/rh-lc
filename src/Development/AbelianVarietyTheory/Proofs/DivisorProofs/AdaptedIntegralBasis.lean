@@ -121,6 +121,7 @@ lemma greedy {n : ℕ} (V : ℕ → Submodule (LaurentSeries F) (Fin n → Laure
 end GlobalTheory.LaurentFlagBasis
 
 
+open GlobalTheory.LaurentFlagBasis in
 theorem GlobalTheory.LaurentFlagBasis.adapted_integral_basis : ∀ (F : Type) [Field F] (n R : ℕ)
     (W : Fin (R + 1) → Submodule (LaurentSeries F) (Fin n → LaurentSeries F)), Monotone W →
     ∃ g : (Matrix (Fin n) (Fin n) (PowerSeries F))ˣ, ∀ (k : Fin (R + 1)) (j : Fin n),

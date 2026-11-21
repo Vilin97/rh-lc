@@ -91,6 +91,7 @@ theorem realPt_sub (C : Ctx S T) (y : Matrix (Fin S.rank) (Fin T.rank) D.host.E)
 end GlobalTheory.Ker.FockOnto
 
 
+open GlobalTheory.Ker.FockOnto in
 theorem GlobalTheory.Ker.exists_test_of_fock : ∀ (D : D7) (S T : HSp D) (C : Ctx S T), ∀ B, C.IsB B → ∀ f, C.IsTh f → C.IsFock B f → ∃ φ : TF S.rank C.g, SW.IsSB φ ∧ f = C.Th (C.xB B) φ := by
   intro D S T C B hB f hf hF
   obtain ⟨R, hRc, -, hadd, hR, hR', -⟩ := GlobalTheory.T.realPoints_classicalModel_realVectorSpace D S T C

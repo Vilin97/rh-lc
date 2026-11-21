@@ -49,6 +49,7 @@ variable {D : D7} {X0 : Formalism.L2.Herm.Herm0 D} {u : D.what₂.Word} {w : D.w
   {M : MemberForms D.what₂.LL D.what₂.embLL D.what₂.places D.what₂.Tau (D.hcW u) C A P}
 
 
+set_option maxHeartbeats 4000000 in
 theorem hypTJC_site (Z : SiteD X0 u w hg M) (Fl : Fills (D.gat u w hg)) (ht : Fl.t = D.R.t)
     (hT : ∀ i hi, ¬ D.what₂.places.resChar w ∣ (Z.Fo i hi).T) (i : ℕ) (hi : i + 1 ≤ D.R.m) (β : (Z.Fo i hi).Ch) :
     HypTJC ((Z.loc Fl ht i hi).t β) :=
@@ -59,6 +60,7 @@ theorem hypTJC_site (Z : SiteD X0 u w hg M) (Fl : Fills (D.gat u w hg)) (ht : Fl
       ((Z.Fo i hi).K β).lev w').2.1 (T_not_mem hg.1 (hT i hi) w' h))
 
 
+set_option maxHeartbeats 4000000 in
 theorem hypTJ_site (Z : SiteD X0 u w hg M) (Fl : Fills (D.gat u w hg)) (ht : Fl.t = D.R.t)
     (hT : ∀ i hi, ¬ D.what₂.places.resChar w ∣ (Z.Fo i hi).T)
     (hbad : ∀ i hi, ∀ w' ∈ (Z.Fo i hi).bad, ((D.what₂.places.resChar w : ℕ) : 𝓞 D.host.F) ∉ w'.asIdeal)

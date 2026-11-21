@@ -725,6 +725,7 @@ theorem IsHomothetic.weierstrassSigma_mul {L L' : PeriodPair} {c : ℂ} (h : IsH
 
 
 open scoped Classical in
+open Classical in
 def sigmaSign (w : ℂ) : ℂ := if w / 2 ∈ L.lattice then 1 else -1
 
 theorem sigmaSign_of_mem {w : ℂ} (h : w / 2 ∈ L.lattice) : sigmaSign L w = 1 := if_pos h

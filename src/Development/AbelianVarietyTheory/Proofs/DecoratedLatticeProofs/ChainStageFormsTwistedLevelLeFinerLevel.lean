@@ -83,6 +83,7 @@ theorem multT_le {V : HSp D} {S : D.what₂.Tau → SPar} (θ : InfFam D) (M : D
     ⟨hX.aut, hX.cusp, fun v k hk g => (h k hk).2 ▸ hX.lev v k (h k hk).1 g, hX.equiv, hX.cont⟩)
 
 
+open Classical in
 theorem lev_flat_le (c : Com D) (w : Twist D) (hw : w.Is c) (j : ℕ) {n : ℕ} (hn : n = D.R.r + j * D.R.t)
     (J : Matrix (Fin n) (Fin n) D.host.E) (β : GL (Fin n) (Lev.EAf D)) (hr hr' : D.R.r ≤ n)
     (x : GL (Fin n) (Lev.EAf D))
@@ -133,6 +134,7 @@ theorem lev_flat_le (c : Com D) (w : Twist D) (hw : w.Is c) (j : ℕ) {n : ℕ} 
       rw [← map_prod, prod_diagonal_block_dets_eq_lower_block_det hn (h3' PP (hQ PP hP))]
 
 
+open Classical in
 theorem flatLe : ∀ D : D7, FlatLe D := by
   intro D c w hw j _ s hs hr
   obtain ⟨hr', hL, hflat⟩ := hs

@@ -68,6 +68,7 @@ namespace GlobalTheory.Asc
 open GlobalTheory.Asc.HeisL GlobalTheory.Unf.FB
 
 
+set_option maxHeartbeats 2000000 in
 theorem heis_baseL : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (σ : ℕ) (S : HSp D) (B : BesL D σ) (vB : VolM D (σ + 1) S.rank) (vT : VolM D σ S.rank) (vL : VolM D B.L.rank S.rank) (f : WO S B.V → ℂ) (y : WO S B.L → ℂ), GlobalTheory.Unf.FB.Quasi ψ S B.V f → GlobalTheory.Unf.FB.Quasi ψ S B.L y → (∫ b in vB.𝓕, f (xLast B.d (vecB B.o B.ζ) ⬝ b) * star (y (zEll B.L (σ + 1) B.ζ ⬝ b)) ∂vB.μ = contractT B.o S vL.μ vL.𝓕 (B.d.mixT S ψ vT.μ vT.𝓕 f 0) y 0) ∧ ∫⁻ v in vL.𝓕, ‖B.d.mixT S ψ vT.μ vT.𝓕 f 0 ((B.o.resT S).symm (0, v))‖ₑ ∂vL.μ ≤ ∫⁻ b in vB.𝓕, ‖f (xLast B.d (vecB B.o B.ζ) ⬝ b)‖ₑ ∂vB.μ := by
   intro D ψ hψ σ S B vB vT vL f y hf hy
   have hψn : ∀ a, ‖ψ a‖ = 1 := hψ.1.2.1

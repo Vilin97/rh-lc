@@ -38,6 +38,7 @@ def Pc : L2 μ →L[ℂ] L2 μ := (CuspidalSpectrum.cuspidalL2 μ).starProjectio
 variable {μ}
 
 
+variable (μ) in
 structure Twist where
   e : G1 K n ≃ₜ* G1 K n
   mem_gam : ∀ g, e g ∈ Gam K n ↔ g ∈ Gam K n
@@ -76,6 +77,7 @@ def qht (x : G1 K n) : ℝ :=
   ⨅ γ : Gam K n, AutomorphicForm.height (((γ : G1 K n) * x : G1 K n) : AdelicGLn.AdelicGL K n)
 
 
+variable (μ) in
 def cuspTr (θ : Twist μ) (f : CC K n) : ℂ :=
   trace (Pc μ ∘L Rop μ f ∘L θ.U ∘L Pc μ)
 

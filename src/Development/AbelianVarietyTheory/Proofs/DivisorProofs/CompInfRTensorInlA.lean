@@ -51,12 +51,15 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 open GlobalTheory.AutFunCompare (evW sgW)
 
 
+variable (F) in
 def inlA : Ainf F →ₗ[F] AF F := LinearMap.inl F (Ainf F) (Af F)
 
 
+variable (F) in
 def inrA : Af F →ₗ[F] AF F := LinearMap.inr F (Ainf F) (Af F)
 
 
+variable (F E) in
 def glueInf (c : ∀ w : InfinitePlace F, w.Completion ⊗[F] E) : AF F ⊗[F] E :=
   (inlA F).rTensor E (∑ w, (sgW w).rTensor E (c w))
 

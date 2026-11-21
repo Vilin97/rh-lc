@@ -231,6 +231,7 @@ theorem li_of_mul' {m n : ℕ} {B : Matrix (Fin m) (Fin n) E} (h : LinearIndepen
   rwa [Matrix.smul_mul, Matrix.mul_smul, smul_smul, mul_inv_cancel₀ hk, one_smul, Matrix.mul_one]
 
 
+omit [IsCMField E] in
 theorem exists_span {n m : ℕ} {κ : Type} [Fintype κ] [DecidableEq κ]
     (hn : n = m + Fintype.card κ) (R : Matrix κ (Fin n) E) (F : Matrix (Fin n) κ E)
     (h : R * F = 1) : ∃ (B : Matrix (Fin m) (Fin n) E) (S : Matrix (Fin n) (Fin m) E), IntM B ∧
@@ -409,6 +410,7 @@ theorem lift_le {n m : ℕ} {H : Matrix (Fin n) (Fin n) ℂ} (hH : H.PosDef)
 end GlobalTheory.SW.ShortStep
 
 
+open GlobalTheory.SW.MinkowskiProductBounds GlobalTheory.SW.ShortStep in
 theorem GlobalTheory.SW.shortIso_step : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)), IsType Ψ → ∀ N : ℕ, (∀ D : ℕ, 0 < D → ∃ C : ℝ, ShortIso Ψ N D 0 C) → (∀ (D : ℕ) (ε : ℝ), 0 < D → 0 < ε → ∃ C : ℝ, ShortIso Ψ (N + 1) D ε C) → ∀ D : ℕ, 0 < D → ∃ C : ℝ, ShortIso Ψ (N + 1) D 0 C := by
   intro E _ _ _ Ψ h N ih hth D hD
   classical

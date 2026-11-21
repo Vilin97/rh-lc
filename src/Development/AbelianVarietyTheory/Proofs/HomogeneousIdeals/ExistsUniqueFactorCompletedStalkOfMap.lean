@@ -135,6 +135,7 @@ noncomputable def fromSpecCompletedStalk (X : Scheme.{u}) (x : X) :
     X.fromSpecStalk x
 
 
+omit [IsLocalRing R] in
 theorem existsUnique_factor_completedStalk (I : Ideal R) [IsAdicComplete I R]
     {f : Spec (.of R) ⟶ X} {x : X}
     {φ : X.presheaf.stalk x ⟶ .of R} (hφ : Spec.map φ ≫ X.fromSpecStalk x = f)
@@ -150,6 +151,7 @@ theorem existsUnique_factor_completedStalk (I : Ideal R) [IsAdicComplete I R]
   · intro h; exact congr($(Spec.map_injective h).hom)
 
 
+omit [IsLocalRing R] in
 theorem existsUnique_factor_completedStalk' (I : Ideal R) [IsAdicComplete I R]
     {f : Spec (.of R) ⟶ X} {x : X}
     {φ : X.presheaf.stalk x ⟶ .of R} (hφ : Spec.map φ ≫ X.fromSpecStalk x = f)

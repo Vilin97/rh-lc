@@ -45,6 +45,7 @@ variable {σ : F →+* ℂ} {Δ : Y.Dv}
 abbrev genAt (Δ : Y.Dv) (x : Y.X) : Y.Fn := ((eqn Δ x)⁻¹ : Y.Fnˣ)
 
 
+omit [NumberField F] in
 theorem generatesAt_genAt (Δ : Y.Dv) (x : Y.X) : Δ.GeneratesAt x (genAt Δ x) := by
   rw [genAt, Units.val_inv_eq_inv_val]
   exact CartierDiv.isEqn_iff_generatesAt_inv.1 (Base.isEqn_eqn Δ x)

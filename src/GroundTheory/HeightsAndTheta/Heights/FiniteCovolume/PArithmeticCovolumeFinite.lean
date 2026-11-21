@@ -17,6 +17,7 @@ variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Alge
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 
+omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 theorem continuous_len_invApply {h : HermitianForm F E W} {v : Basis ι E W} (M : Majorant h v)
     (y : InfinitePlace E → ι → ℂ) : Continuous fun g : archUnitary h v => M.len (invApply g y) := by
   have hw : ∀ w, Continuous fun g : archUnitary h v => invApply g y w := fun w =>

@@ -18,6 +18,7 @@ namespace GlobalTheory.IntSepElement
 variable (E : Type) [Field E] [NumberField E]
 
 
+open scoped Classical in
 noncomputable def dualB : Module.Basis (Module.Free.ChooseBasisIndex ℤ (𝓞 E)) ℚ E :=
   (Algebra.traceForm ℚ E).dualBasis (traceForm_nondegenerate ℚ E) (integralBasis E)
 

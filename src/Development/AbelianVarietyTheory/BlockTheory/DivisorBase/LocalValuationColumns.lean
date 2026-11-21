@@ -74,6 +74,7 @@ def DepthEq : Prop :=
 end Chart
 
 
+variable (Dw c) in
 def ColsExist (p : ℕ) (la : PointsOfFlagModel.abelian₂ p c) : Prop :=
   ∀ (cx : Lt1 Dw → ℕ) (n : ℕ), blockCols cx ≤ n →
     ∃ x : ℕ → ∀ f : Lt1 Dw, Fin (rk f) → Fin n → 𝓞 E,
@@ -84,6 +85,7 @@ def ColsExist (p : ℕ) (la : PointsOfFlagModel.abelian₂ p c) : Prop :=
 
 
 
+variable (Xo c) in
 def LocalDepth (p : ℕ) [Fact p.Prime] (la : PointsOfFlagModel.abelian₂ p c) : Prop :=
   ∀ (T : CDVR) (io : c.F →+* T.Fr) (e : ℕ), OverLa la.1 T.V io e →
     ∀ (y : IntFr Xo c T io) (Ch : IntegralChartA3 Xo c T io y) (X : ValExt T p) (cx : Lt1 Dw → ℕ) (n : ℕ)

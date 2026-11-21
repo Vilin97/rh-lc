@@ -9,6 +9,7 @@ open NumberField NumberField.InfinitePlace NumberField.Units NumberField.Units.d
 namespace GlobalTheory.IntegerUnitBound
 
 
+open scoped Classical in
 theorem exists_unit_norm_add_le (E : Type) [Field E] [NumberField E] :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ v : logSpace E, ∃ u : (𝓞 E)ˣ,
       ∀ w, |v w + logEmbedding E (Additive.ofMul u) w| ≤ C := by
@@ -32,6 +33,7 @@ theorem exists_unit_norm_add_le (E : Type) [Field E] [NumberField E] :
     _ ≤ ∑ i, ‖B i‖ := ZSpan.norm_fract_le B v
 
 
+open scoped Classical in
 theorem exists_unit_of_sum_eq_zero (E : Type) [Field E] [NumberField E] :
     ∃ C : ℝ, ∀ t : InfinitePlace E → ℝ, ∑ w, (mult w : ℝ) * t w = 0 → ∃ u : (𝓞 E)ˣ,
       ∀ w : InfinitePlace E, |t w + Real.log (w (u : E))| ≤ C := by

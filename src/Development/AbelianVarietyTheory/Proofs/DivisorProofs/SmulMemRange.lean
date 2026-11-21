@@ -91,6 +91,7 @@ private lemma map_iInf_eigenspace_le_of_intertwine {ι : Type*} {X Y : ι → Ma
   rw [toLin'_apply, mulVec_mulVec, hZ, ← mulVec_mulVec, hxa, mulVec_smul]
 
 
+open Matrix in
 theorem _root_.GlobalTheory.Sandwich.HodgeTateBound.bound : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C]
     [CharZero C] (v : Valuation C NNReal) (O : Type) [CommRing O] [Algebra O C]
     [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O], v.Integers O →

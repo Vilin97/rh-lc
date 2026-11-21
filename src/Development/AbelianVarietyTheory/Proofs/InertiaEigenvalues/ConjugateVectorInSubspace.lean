@@ -151,6 +151,7 @@ theorem intertwine {D : D7} {A B : Type} [AddCommGroup A] [Module ℂ A] [AddCom
     exact ⟨N.smul_mem c a1, by rw [a2]⟩
 
 
+set_option maxHeartbeats 2000000 in
 theorem typeVec_rows {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
     {A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
     (R : RealDat3 D A3 Ks) (F : Face3 D A3) (cG : G0 R.Pg D.R.r ≃* G0g D.nd) {X0 : BaseLevelRowSide D}

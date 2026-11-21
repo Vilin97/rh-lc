@@ -12,6 +12,7 @@ noncomputable section
 namespace GlobalTheory.Dec.GelfSepProof
 
 
+open PowerSeries Matrix in
 theorem _root_.GlobalTheory.Dec.GelfSepProof.gen {n : ℕ} (l : Fin n → ℂ) :
     ((1 : PowerSeries ℂ) -
         PowerSeries.X * PowerSeries.mk fun (k : ℕ) ↦ ∑ a : Fin n, ∑ b : Fin n, (_root_.Formalism.REAL.Amat l ^ k) a b) *

@@ -81,6 +81,7 @@ theorem mem_GfC_of_mem_range {D : D7} (V : HSp D) (v : HeightOneSpectrum (𝓞 D
   exact GlobalTheory.AdelicU.mem_finPts.2 (GlobalTheory.AdelicU.projInf_emb _ _ v x)
 
 
+open GlobalTheory.SplitGLLift in
 theorem homAt : ∀ {D : D7} (W₁ : HSp D) {a : ℕ} (Γ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Geo D.sp.cm.sig a W₁.rank)
     (hJ : Γ.V'.J = (-1 : D.host.E) • W₁.gram), IsCMExt D.host.F D.host.E D.sp.cm.sig →
     (∀ i j, D.sp.cm.sig (Γ.V'.J j i) = Γ.V'.J i j) →

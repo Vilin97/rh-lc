@@ -26,6 +26,7 @@ variable {K L F W : Type} [Field K] [Field L] [Field F] [Field W] [Algebra K L] 
   [Algebra K W] [IsScalarTower K L W]
 
 
+omit [Algebra K W] [IsScalarTower K L W] in
 theorem indep_of_lift {ι : Type} (ψ : L ⊗[K] F →ₐ[L] W) (hψ : Function.Injective ψ) {x : ι → F}
     (hx : AlgebraicIndependent K x) : AlgebraicIndependent L fun i => ψ (1 ⊗ₜ x i) := by
   rw [algebraicIndependent_iff_injective_aeval]

@@ -20,6 +20,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 section Lat
 
 
+variable (k) in
 def lat0 (m : ℕ) : AddSubgroup (Fin (m + 1) → k) where
   carrier := {x | ∀ i, valuation k (x i) ≤ valuation k ((1 : kˣ) : k)}
   add_mem' := fun {a b} ha hb i => by

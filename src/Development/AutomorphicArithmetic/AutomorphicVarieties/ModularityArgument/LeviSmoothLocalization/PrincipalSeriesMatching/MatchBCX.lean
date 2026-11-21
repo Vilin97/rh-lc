@@ -97,6 +97,7 @@ private theorem pair_prod (hO : PairGOps) (q : ℝ) (J : Finset ℕ) (A A' : ℕ
       (ih fun j hj => h j (Finset.mem_insert_of_mem hj))
 
 
+open Classical in
 private def pick {X : Type} (sat : X → Multiset ℂˣ → Prop) (w : X) : Multiset ℂˣ :=
   if h : ∃ B, sat w B then h.choose else 0
 

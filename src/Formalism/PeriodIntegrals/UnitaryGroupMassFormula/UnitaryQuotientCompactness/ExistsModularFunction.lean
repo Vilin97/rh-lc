@@ -14,6 +14,7 @@ namespace PI.QuotSetU.UnitaryGroupMassFormula
 open PI ModW ModW.MG
 
 open scoped Classical in
+open Classical in
 def modFun {m : ℕ} (G : Set (Matrix (Fin m) (Fin m) ℂ)) (hG : IsMatGroup G)
     (g : Matrix (Fin m) (Fin m) ℂ) : ℝ :=
   if h : g ∈ G then (Measure.modularCharacterFun (mk hG g h) : ℝ) else 1

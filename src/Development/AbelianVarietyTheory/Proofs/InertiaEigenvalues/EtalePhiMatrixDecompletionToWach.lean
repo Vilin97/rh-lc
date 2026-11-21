@@ -55,6 +55,7 @@ theorem exists_pole_RW (AI : LocAinf l P) (LL : FinExt l) (s : ℕ) (x : RW LL) 
   exact ⟨z, by rw [crd_piR_pow, hz, pow_zero, one_mul]⟩
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem exists_near_perfI (h : Good K s LL) (I : IoS AI R) (hI : IoW I) (x : RW LL)
     (hx : FixH AI K x) (m : ℕ) : ∃ u ∈ perfI I l, NearPi AI LL s m (x - u) := by
   obtain ⟨u, hu, hu'⟩ := exists_inv_perfI I l
@@ -117,6 +118,7 @@ theorem conj_io' {O E A R : Type} [CommRing O] [CommRing E] [CommRing A] [CommRi
   exact ⟨V, e, h2, h1, h3⟩
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem decompletion : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (K : FinExt l) (s : ℕ) (LL : FinExt l), Good K s LL → ∀ (Γ : GamS P K s LL) (R : WSer Γ) (I : IoS AI R), IoW I → ∀ (r : ℕ) (F : Matrix (Fin r) (Fin r) (RW LL)), IsUnit F → (∀ i j, FixH AI K (F i j)) → ∃ (V : Matrix (Fin r) (Fin r) (RW LL)) (F' : Matrix (Fin r) (Fin r) R.EE), IsUnit V ∧ (∀ i j, FixH AI K (V i j)) ∧ F * V.map (φRW LL) = V * F'.map I.ioE := by
   intro l _ P AI K s LL h Γ R I hI r F hu hF
   have hl := GlobalTheory.Decompl.FixL.fixSub_ladic l P AI LL {g | g ∈ GK K ∧ P.χQ g = 1}

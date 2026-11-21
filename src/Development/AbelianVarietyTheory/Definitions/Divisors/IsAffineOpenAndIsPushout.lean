@@ -122,11 +122,14 @@ theorem le_nhd (h : V ≤ e ⁻¹ᵁ W) : V ≤ e ⁻¹ᵁ (W ⊓ π ⁻¹ᵁ e 
   le_inf h ((le_preimage_iff he).2 h)
 
 
+omit he in
+variable (e π W) in
 def center : Γ(X, W) →+ Γ(X, W ⊓ π ⁻¹ᵁ e ⁻¹ᵁ W) :=
   (resG X inf_le_left).toAddMonoidHom -
     ((π.appLE _ _ inf_le_right).hom.comp (e.appLE W _ le_rfl).hom).toAddMonoidHom
 
 
+omit he in
 theorem center_apply (f : Γ(X, W)) : center e W π f =
     resG X inf_le_left f - π.appLE _ _ inf_le_right (e.appLE W _ le_rfl f) := rfl
 
@@ -152,6 +155,7 @@ end Def
 variable {π : X ⟶ S} {e : S ⟶ X} {F F' : S.Modules} {U V V' : S.Opens} {W W' : X.Opens}
 
 
+variable (π e F) in
 @[ext] structure Der where
 
   app {W : X.Opens} {V : S.Opens} (h : V ≤ e ⁻¹ᵁ W) : Γ(X, W) →+ Γ(F, V)
@@ -245,6 +249,7 @@ def comp (D : Der π e F) (φ : F ⟶ F') : Der π e F' where
 end Der
 
 
+variable (F) in
 def homEquivDer : (conormal e ⟶ F) ≃ Der π e F where
   toFun := (univ he).comp
   invFun := Der.lift
@@ -287,6 +292,7 @@ theorem map_id {φ : X ⟶ X} (hφ : φ = 𝟙 X) (w : φ ≫ π = π) (we : e �
     (congrArg _ (resG_self _ f))
 
 
+include he in
 theorem map_comp (he'' : e'' ≫ π'' = 𝟙 S) (w' : ψ ≫ π' = π'') (we' : e'' ≫ ψ = e')
     {χ : X'' ⟶ X} (hχ : ψ ≫ φ = χ) (w'' : χ ≫ π = π'') (we'' : e'' ≫ χ = e) :
     map he' w we ≫ map he'' w' we' = map he'' w'' we'' :=
@@ -298,6 +304,7 @@ theorem map_comp (he'' : e'' ≫ π'' = 𝟙 S) (w' : ψ ≫ π' = π'') (we' : 
         ((le_preimage_of_comp hχ).1 le_rfl), appLE_appLE hχ]
 
 
+include he in
 theorem map_eq_zero (hφ : π' ≫ e = φ) : map he' w we = 0 :=
   hom_ext he fun W f => by
     have k := (le_preimage_of_comp hφ).2 (le_refl (φ ⁻¹ᵁ W))
@@ -362,6 +369,7 @@ theorem pullback_hom_ext {F : S'.Modules}
 end Base
 
 
+variable (π e) in
 structure IsChart (U : S.Opens) (W : X.Opens) : Prop where
 
   affine_base : IsAffineOpen U
@@ -385,6 +393,7 @@ theorem isAffineOpen_and_isPushout {Y T : Scheme.{0}} {f : T ⟶ S} {g : Y ⟶ X
   exact .of_isIso (Scheme.Hom.isPullback_resLE H k k' rfl).isoPullback.hom
 
 
+include he in
 theorem exists_isChart_inf (hU : IsAffineOpen U) (hW : IsAffineOpen W) (k : W ≤ π ⁻¹ᵁ U) {x : S}
     (hx : e x ∈ W) (hV : x ∈ V) : ∃ U', x ∈ U' ∧ U' ≤ V ∧ U' ≤ U ∧ IsChart π e U' (W ⊓ π ⁻¹ᵁ U') := by
   obtain ⟨U', hU', hx', hle⟩ := QCoh.exists_affine_mem_le (U := V ⊓ e ⁻¹ᵁ W) x ⟨hV, hx⟩
@@ -394,6 +403,7 @@ theorem exists_isChart_inf (hU : IsAffineOpen U) (hW : IsAffineOpen W) (k : W �
     le_inf (hle.trans inf_le_right) ((le_preimage_iff he).2 le_rfl), inf_le_right⟩
 
 
+include he in
 theorem exists_isChart {x : S} (hV : x ∈ V) : ∃ U W, x ∈ U ∧ U ≤ V ∧ IsChart π e U W := by
   obtain ⟨U, hU, hx, -⟩ := QCoh.exists_affine_mem_le x hV
   obtain ⟨W, hW, hx', k⟩ := QCoh.exists_affine_mem_le (U := π ⁻¹ᵁ U) (e x)
@@ -549,6 +559,7 @@ theorem IsChart.isFrame_d [QuasiCompact e] (c : IsChart π e U W) {R A ι : Type
   rw [IsBaseChange.basis_apply, hb, hd]
 
 
+include he in
 theorem isIso_baseMap {π' : X' ⟶ S'} {e' : S' ⟶ X'} {φ : X' ⟶ X} {f : S' ⟶ S} [QuasiCompact e]
     [QuasiCompact e'] (he' : e' ≫ π' = 𝟙 S') (H : IsPullback φ π' π f) (we : e' ≫ φ = f ≫ e) :
     IsIso (baseMap he' H.w we) := by
@@ -588,6 +599,7 @@ theorem isIso_baseMap {π' : X' ⟶ S'} {e' : S' ⟶ X'} {φ : X' ⟶ X} {f : S'
   exact isIso_of_mono_of_epi _
 
 
+include he in
 theorem exists_isFrame [QuasiCompact e] [Smooth π] (x : S) :
     ∃ (U : S.Opens) (n : ℕ) (s : Fin n → Γ(conormal e, U)), x ∈ U ∧ IsFrame s := by
   obtain ⟨U, W, hx, -, c⟩ := exists_isChart he (x := x) (V := ⊤) trivial
@@ -598,6 +610,7 @@ theorem exists_isFrame [QuasiCompact e] [Smooth π] (x : S) :
   exact Summand.exists_frame_of_projective c.affine_base ⟨x, hx⟩
 
 
+include he in
 theorem isVB_conormal [QuasiCompact e] (n : ℕ) [h : SmoothOfRelativeDimension n π] :
     IsVB (conormal e) n := fun x => by
   obtain ⟨U, hU, W, hW, hx, k, hs⟩ := h.exists_isStandardSmoothOfRelativeDimension (e x)
@@ -612,6 +625,7 @@ theorem isVB_conormal [QuasiCompact e] (n : ℕ) [h : SmoothOfRelativeDimension 
   exact ⟨U', _, hx', Summand.isFrame_of_affine_basis c.affine_base (b.map (c.augCotEquiv he))⟩
 
 
+include he in
 theorem exists_isVB_conormal [QuasiCompact e] [Smooth π] [PreconnectedSpace S] :
     ∃ n, IsVB (conormal e) n := by
   let r (x : S) := Module.finrank (S.presheaf.stalk x) ((conormal e).presheaf.stalk x :)

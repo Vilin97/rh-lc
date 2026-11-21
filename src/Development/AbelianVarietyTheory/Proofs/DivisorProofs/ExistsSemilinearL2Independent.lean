@@ -66,6 +66,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {r : ℕ} {D : D7}
 
 
+set_option maxHeartbeats 2000000 in
 theorem exists_semilinear_L2_independent (hS : Out.SecBaseChangeSt) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (σ : c.F →+* ℂ)
     (hσ : GoodEmb c σ) (hU : IsUnf (U σ)) (V : HSp D)
     (dict : Formalism.L2.Theta.GA D V → Σ k, Frame ((U σ).X k).Ψ r) (mu : Formalism.L2.Theta.GA D V → ℂ)
@@ -153,6 +154,7 @@ theorem exists_semilinear_L2_independent (hS : Out.SecBaseChangeSt) (U : ∀ σ 
 end Gen
 
 
+set_option maxHeartbeats 2000000 in
 theorem hasGram_nrm_of_good (D : D7) (T : Core D) (j : ℕ) (Y : Deep T j) (e : ℕ) (o : ℝ) (hY : Y.Good e o)
     (G : WTZ D.host.E) : GlobalTheory.AllWt.HasGram (Y.nrm G) := by
   haveI := GlobalTheory.Deep.finiteDimensional_V_of_good D T j Y e o hY G

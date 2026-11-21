@@ -212,6 +212,7 @@ private theorem rootSum_charpoly_mem_virt_of_pow_mem_center (F : Type) [Field F]
   simp [ρ, Matrix.charpoly_map]
 
 
+open Polynomial in
 theorem _root_.GlobalTheory.CuspGL.rootSum_charpoly_mem_virt (F : Type) [Field F] [Finite F] (θ : AlgebraicClosure F →* ℂ)
     (hθ : ∀ x y : AlgebraicClosure F, x ≠ 0 → y ≠ 0 → θ x = θ y → x = y) (n k : ℕ) :
     (fun x : GL (Fin n) F => _root_.GlobalTheory.CuspGL.rootSum θ k (Matrix.charpoly (x : Matrix (Fin n) (Fin n) F)))

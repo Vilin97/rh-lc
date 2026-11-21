@@ -17,6 +17,8 @@ namespace GlobalTheory.SphereMeanFrame
 open GlobalTheory.IndefiniteRowSideFullHecke.UnitSphereMeasure
 
 
+set_option autoImplicit false in
+open MvPolynomial NumberField Module MeasureTheory in
 theorem _root_.GlobalTheory.SphereMeanFrame.eval_linSubst {B N n : ℕ} (M : Matrix (Fin N) (Fin n) ℂ)
     (f : MvPolynomial (Fin B × Fin N) ℂ) (u : Fin B × Fin n → ℂ) :
     eval u (_root_.GlobalTheory.ChowHt.linSubst M f) =
@@ -26,6 +28,8 @@ theorem _root_.GlobalTheory.SphereMeanFrame.eval_linSubst {B N n : ℕ} (M : Mat
   simp
 
 
+set_option autoImplicit false in
+open MvPolynomial NumberField Module MeasureTheory in
 theorem _root_.GlobalTheory.SphereMeanFrame.blockSphereMean_linSubst {B N : ℕ} (Q : Matrix (Fin (N + 1)) (Fin (N + 1)) ℂ)
     (hQ : ∀ x : EuclideanSpace ℂ (Fin (N + 1)), ‖Matrix.toEuclideanLin Q x‖ = ‖x‖)
     (f : MvPolynomial (Fin B × Fin (N + 1)) ℂ) :
@@ -56,6 +60,8 @@ theorem _root_.GlobalTheory.SphereMeanFrame.blockSphereMean_linSubst {B N : ℕ}
   rw [← integral_map hΦ.measurable.aemeasurable hgm.aestronglyMeasurable, hΦ.map_eq]
 
 
+set_option autoImplicit false in
+open MvPolynomial NumberField Module MeasureTheory in
 theorem _root_.GlobalTheory.SphereMeanFrame.blockSphereMean_eq_of_frameNorm_eq : ∀ (B N : ℕ) (A A' : Matrix (Fin N) (Fin N) ℂ),
     A.det ≠ 0 → A'.det ≠ 0 → (∀ z, _root_.GlobalTheory.ChowHt.frameNorm A z = _root_.GlobalTheory.ChowHt.frameNorm A' z) →
     ∀ f : MvPolynomial (Fin B × Fin N) ℂ,

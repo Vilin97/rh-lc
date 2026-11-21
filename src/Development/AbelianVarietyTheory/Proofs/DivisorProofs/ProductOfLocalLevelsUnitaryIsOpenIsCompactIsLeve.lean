@@ -20,6 +20,7 @@ open GlobalTheory.SplitPts GroundTheory.Automorphic
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 
+omit [IsCMField E] in
 theorem mem_KGL_iff_val (w : Pl E) (g : GLw n w) :
     g ∈ GlobalTheory.LFun.KGL w (n := n) ↔ (∀ i j, Valued.v (g.val i j) ≤ 1) ∧ ∀ i j, Valued.v ((g⁻¹).val i j) ≤ 1 := by
   have hO : GLnLocal.integralGL (w.adicCompletion E) n = GlobalTheory.LFun.KGL w (n := n) := by
@@ -92,6 +93,7 @@ theorem mem_globLev (S : Set (Pl E)) (K' : ∀ w : Pl E, Subgroup (UL n w)) (k :
   exact this ▸ ha
 
 
+variable (E n) in
 def finPart : finU E n →* GL (Fin n) (Af E) :=
   (GeneralLinearGroup.map (pFin E)).comp ((UA E n).subtype.comp (finU E n).subtype)
 

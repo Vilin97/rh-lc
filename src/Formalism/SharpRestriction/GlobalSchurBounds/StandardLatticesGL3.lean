@@ -318,6 +318,7 @@ def useBar (D : D7) : Prop :=
                 (U D (torConj D (tor0 D cc δ) M ρ) x G)))
 
 
+open TensorProduct in
 abbrev AE (D : D7) : Type := D.host.E ⊗[ℚ] IsDedekindDomain.FiniteAdeleRing (𝓞 ℚ) ℚ
 
 def sgA (D : D7) : AE D →+* AE D :=

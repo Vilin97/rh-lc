@@ -130,6 +130,7 @@ theorem norm_natCast_cp {p : ℕ} [Fact p.Prime] (ι : ℂ ≃+* ℂ_[p]) (s : �
 end MMIsom
 
 
+open MMIsom in
 theorem frameONB_of (hLB : LocBasisMM) (hRC : RatCoord) (hFC : FixConj) : FrameONB := by
   intro D cc δ B hcc hδ p _ h5 hj lam ι hι g₁ hiso hidx hidx2 σ hσ γ B' hF σp hσp
   obtain ⟨b, hb, hG, hE⟩ := hLB D p h5 hj lam

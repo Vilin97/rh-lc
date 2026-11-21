@@ -154,6 +154,7 @@ theorem jets_odd_of (hT : TensStd) (hG : GramTransfer) (hF : FrameCompose) (hJ :
   exact ⟨hall, fun P hP => Formalism.DworkPowerSeriesWeights.intOp ℂ_[p] ν _ hall P hP⟩
 
 
+open Formalism.L2.Th1.H Formalism.L2.Th1.H.FormalGroupLawNegation in
 theorem tens_std (p : ℕ) [Fact p.Prime] (L : PeriodPair) (ι : ℂ ≃+* ℂ_[p]) (ω₀ : ℂ)
     (n : Type) [Fintype n] [DecidableEq n] (h : Matrix n n ℂ) (Λ : AddSubgroup (n → ℂ)) (α : (n → ℂ) → ℂ)
     (β : (Fin 4 × n → ℂ) → ℂ) (g : (Fin 4 × n → ℂ) ≃ₗ[ℂ] (Fin 4 × n → ℂ)) (hD : StdData L ω₀ h Λ α β g)
@@ -251,6 +252,7 @@ theorem fourth_power_theta : TensZ := by
   exact tens_std p _ ι _ n h Λ _ _ g₁ hS hidx ε hε θ hθ htens t N hN hpN ht
 
 
+open Formalism.L2.Th1.G JL Formalism.G in
 theorem jets_linear : JetsLinZ := by
   intro K _ _ _ n _ T γ hT ν _ M Cm hC hM
   have k1 : JetsIn (unitBall K) (linSub γ (Formalism.L2.Th1.G.tens4 T)) := (jets_in_norm_holds K _ _).1 hT

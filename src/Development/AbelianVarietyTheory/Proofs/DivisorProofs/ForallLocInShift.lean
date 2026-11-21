@@ -236,6 +236,7 @@ theorem val_single {P : HeightOneSpectrum (𝓞 E)} {x : (P.adicCompletion E)ˣ}
   · rw [suppAt_single P x w h, map_one]
 
 
+open Classical in
 theorem unif_shift {m : HeightOneSpectrum (OF E) → ℕ} {T : Finset (HeightOneSpectrum (𝓞 E))} {w : HeightOneSpectrum (𝓞 E)}
     (hm : m (w.under (OF E)) = 0) (hw : w ∉ T) (y : (Af E)ˣ) :
     (unifAt w)⁻¹ * y ∈ MS m T ↔ y ∈ MS m T ∧ y ∉ MS m (insert w T) := by

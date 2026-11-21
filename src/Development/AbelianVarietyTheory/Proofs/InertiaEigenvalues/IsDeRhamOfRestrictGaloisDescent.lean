@@ -114,6 +114,7 @@ theorem finrank_fixed {R G M K L : Type} [Field R] [Group G] [AddCommGroup M] [M
       (fun y => ⟨fun _ => y, rfl⟩))
 
 
+open GlobalTheory.JumpDescent TensorProduct in
 theorem isDR_of_restrict : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (K K' LL : FinExt l)
     (hle : GK K' ≤ GK K), K.1 ≤ K'.1 → (∀ g ∈ GK K, ∀ x ∈ K'.1, g x ∈ K'.1) →
     ∀ (V : Type) [AddCommGroup V] [Module ↥LL.1 V] [Module ℚ_[l] V]

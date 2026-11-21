@@ -33,6 +33,7 @@ theorem qht_le (x h : UA σ W.J) : qht x ≤ qht (x * h) * ht h⁻¹ := by
   rwa [← Subgroup.coe_mul, mul_assoc, mul_inv_cancel_right] at this
 
 
+variable (σ W) in
 def rapid : Submodule ℂ (UA σ W.J → ℂ) where
   carrier := {f | IsRapid (Y := W) f}
   zero_mem' := ⟨continuous_const, fun _ _ _ => rfl, fun _ => ⟨0, fun _ => by simp⟩⟩

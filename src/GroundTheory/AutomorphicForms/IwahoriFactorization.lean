@@ -334,6 +334,7 @@ theorem elimGL_mem_iwahori (hβ : Monotone β) {h : GL (Fin n) F} (hh : h ∈ iw
     exact hD i i
 
 
+variable (β) in
 theorem congruenceSubgroup_iwahoriFactorization {m : ℕ} (hm : 1 ≤ m) :
     ∀ k ∈ congruenceSubgroup F n m,
       ∃ z ∈ congruenceSubgroup F n m ⊓ oppositeUnipotentRadical F n β,
@@ -376,6 +377,7 @@ theorem congruenceSubgroup_iwahoriFactorization' {m : ℕ} (hm : 1 ≤ m) :
   iwahoriFactorization_symm (congruenceSubgroup_iwahoriFactorization β hm)
 
 
+variable {β} in
 theorem iwahori_iwahoriFactorization' (hβ : Monotone β) :
     ∀ k ∈ iwahori F n, ∃ x ∈ iwahori F n ⊓ unipotentRadical F n β,
       ∃ y ∈ iwahori F n ⊓ levi F n β, ∃ z ∈ iwahori F n ⊓ oppositeUnipotentRadical F n β,

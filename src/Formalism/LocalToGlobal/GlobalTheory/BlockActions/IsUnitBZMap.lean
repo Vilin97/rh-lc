@@ -45,6 +45,7 @@ theorem isUnit_bZ_map (Tf : FormsTiedSym D u Ch chOf) (τ : D.what₂.Tau) :
   exact this
 
 
+set_option maxHeartbeats 1000000 in
 theorem base_eq (Tf : FormsTiedSym D u Ch chOf) (hL : Formalism.L2.Rows.LowerMapTieS Tf) (h : (D.fm u).PRat) (x : Vl D u D.R.m)
     (Pc : (D.mem u).C.cls D.R.m → MvPolynomial (D.what₂.Tau × Fin (D.R.N D.R.m) × Fin (D.R.N D.R.m)) D.what₂.LL)
     (hPc : ∀ c z, (D.fm u).emb D.R.m x c z = fnOf _ (shiftOf (lamT u D.R.m)) 1 (MvPolynomial.map D.what₂.embLL (Pc c))

@@ -239,6 +239,7 @@ theorem deltaHalf_drop (G : Levi k fun j => Fin (b j)) :
   rfl
 
 
+include hz in
 theorem nonempty_jac_equiv (π : Representation ℂ (GL (Fin N) k) V) :
     Nonempty ((jac (stdBlocks b hb) π).Equiv
       ((jac (stdBlocks (fun i => b (ι i)) hb') π).comp (restrictHom b ι))) := by

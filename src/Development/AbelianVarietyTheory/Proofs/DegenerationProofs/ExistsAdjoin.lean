@@ -47,6 +47,7 @@ theorem gs_ι (z : (TF (R := R) F).left) (a : Γ(Spec (CommRingCat.of E), ⊤)) 
     (appTop_specMap (CommRingCat.ofHom (algebraMap E F)) a)
 
 
+omit [IsDomain R] in
 theorem sec_rat (hL : L.IsLB) {K : Type} [Fintype K] {φ : K → ((TF (R := R) E).left ⟶ X)} {ε : K → ℤ}
     (s : LB.Sec (LB.LinComb L φ ε))
     (hf : ∀ (U : Type) [CommGroup U] (h : ((TF (R := R) F).left ⟶ X) → U), ∏ i, h ((ιE R E F).left ≫ φ i) ^ ε i = 1) :

@@ -229,6 +229,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : D
   {bc : W'.t.G ≅ (Over.pullback (Out.specOf (PowerSeries.map f))).obj W.t.G}
 
 
+set_option maxHeartbeats 1600000 in
 theorem lieImg_baseChange [IsLocalRing A] [IsLocalRing A']
     (hU : Out.IsPullUnif (PowerSeries.map f) hD bc W.P.U W'.P.U) (he : ∀ y, hD.xe (W'.e y) = W.e (p.xe y))
     (hs : W'.φ ≫ prj p = prj hD ≫ W.φ) (S : Sq W.w hD.w p.w W'.w)
@@ -296,6 +297,7 @@ theorem lieImg_baseChange [IsLocalRing A] [IsLocalRing A']
     exact congrArg spMap (RingHom.ext fun r => (hκ₁ r).symm)
 
 
+set_option maxHeartbeats 1600000 in
 theorem thetaOf_baseChange (hG : Out.GlobalFnsSt)
     (hU : Out.IsPullUnif (PowerSeries.map f) hD bc W.P.U W'.P.U)
     (hs : W'.φ ≫ prj p = prj hD ≫ W.φ) (S : Sq W.w hD.w p.w W'.w) (m : SABMap W'.t W.t (spMap (PowerSeries.map f)))

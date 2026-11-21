@@ -98,6 +98,7 @@ theorem isGradedMap_glueD (hgr : ∀ S S' (h : S ⊆ S'), IsGradedMap (𝒢 S) (
     ((hgr _ _ _).comp (isGradedMap_piProj _ _ k.2)).neg
 
 
+variable (res) in
 def glueGr : ℤ → Submodule A (glue res) := grSub (grPi fun i : ι => 𝒢 {i}) (glue res)
 
 @[instance_reducible]

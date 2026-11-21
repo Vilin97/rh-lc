@@ -103,11 +103,13 @@ section
 variable {p : Fin n → Mat C N} {E : Fin n → Fin n → Mat C N}
 
 
+variable (E) in
 noncomputable def blk (j : Fin n) : Finset (Fin n) := by
   classical
   exact Finset.univ.filter fun i => E i j ≠ 0
 
 
+variable (E) in
 noncomputable def bb (j : Fin n) : Fin n :=
   if h : (blk E j).Nonempty then (blk E j).min' h else j
 
@@ -156,6 +158,7 @@ lemma mul_E {R : Subalgebra C (Mat C N)} (hp : Sys p) (hM : MUnits R p E) {a : M
   rw [(hM.2.2.2.2.1 i j (bb E j) hij (bb_ne hp hM j)).1, bb_congr hp hM hij]
 
 
+variable (E) in
 noncomputable def T (w : Fin N → C) : Matrix (Fin N) (Fin n) C := Matrix.of fun x j => (E j (bb E j) *ᵥ w) x
 
 lemma mul_T (M : Mat C N) (w : Fin N → C) (x : Fin N) (j : Fin n) :
@@ -164,6 +167,7 @@ lemma mul_T (M : Mat C N) (w : Fin N → C) (x : Fin N) (j : Fin n) :
   simp [T, Matrix.mul_apply, Matrix.mulVec, dotProduct]
 
 
+variable (p E) in
 noncomputable def rmat (a : Mat C N) : Matrix (Fin n) (Fin n) C := Matrix.of fun i j => coef p E a i j
 
 lemma T_mul (w : Fin N → C) (a : Mat C N) (x : Fin N) (j : Fin n) :

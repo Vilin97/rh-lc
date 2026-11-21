@@ -9,6 +9,7 @@ open IsLocalRing TensorProduct
 namespace GlobalTheory
 
 
+open MvPolynomial in
 noncomputable def coeffDerivFun {B τ : Type} [CommRing B] (D : Derivation ℤ B B)
     (p : MvPolynomial τ B) : MvPolynomial τ B :=
   ∑ s ∈ p.support, MvPolynomial.monomial s (D (p.coeff s))

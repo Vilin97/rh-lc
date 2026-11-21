@@ -91,6 +91,7 @@ theorem prime_eq {e e' : AE D} {w w' : HeightOneSpectrum (𝓞 D.host.E)} (h : F
 end GlobalTheory.AdForm.PlacesDistinct
 
 
+open GlobalTheory.AdForm.PlacesDistinct in
 theorem GlobalTheory.AdForm.StdT.places_injective : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word)
     {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {ι : Type}
     (p : ι → SplitPt (I.rec7 l Z) k) (β : ∀ j i, Frame (p i) ((I.rec7 l Z).sp.X j) (Fin ((I.rec7 l Z).sp.X j).rank))

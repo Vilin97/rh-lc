@@ -43,6 +43,7 @@ theorem isReduced_of_smooth_algebra (R S : Type) [CommRing R] [CommRing S] [Alge
   exact (affine_isReduced_iff (CommRingCat.of S)).1 this
 
 
+open scoped TensorProduct in
 theorem exists_lift_geometric (R S : Type) [CommRing R] [CommRing S] [Algebra R S]
     [Module.Finite R S] [Module.FaithfullyFlat R S] (k : Type) [Field k] [IsAlgClosed k]
     (χ : R →+* k) : ∃ χ' : S →+* k, χ'.comp (algebraMap R S) = χ := by
@@ -67,6 +68,7 @@ theorem exists_lift_geometric (R S : Type) [CommRing R] [CommRing S] [Algebra R 
   exact g.commutes (χ x)
 
 
+open scoped TensorProduct in
 theorem exists_preimage_of_geometric (R S : Type) [CommRing R] [CommRing S] [Algebra R S]
     [_root_.IsReduced R] [Algebra.Smooth R S] [Module.FaithfullyFlat R S] (w : S)
     (h : ∀ (k : Type) [Field k] [IsAlgClosed k] (χ₁ χ₂ : S →+* k),

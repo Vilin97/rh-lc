@@ -57,12 +57,15 @@ def pageOf : SlopeBoundParameters where
 section Weights
 
 
+variable (D) in
 def uMinus (j : ℕ) (τ : D.what₂.Tau) (i : ℕ) : ℤ := uAn D j τ i - (cTw D j : ℤ) * deW D j i
 
 
+variable (D) in
 def kapMinus (j : ℕ) (τ : D.what₂.Tau) (i : ℕ) : ℤ := kap D j τ i - (cTw D j : ℤ) * deW D j i
 
 
+variable (D) in
 def twW (j : ℕ) (_ : D.what₂.Tau) (i : ℕ) : ℤ := (cTw D j : ℤ) * deW D j i
 
 def remW (j : ℕ) (τ : D.what₂.Tau) (i : ℕ) : ℤ :=
@@ -87,10 +90,12 @@ def supPrW (j : ℕ) : ℕ := univ.sup fun τ : D.what₂.Tau => (range D.R.r).s
 def bZero (j : ℕ) : ℝ := 4 * (D.R.f : ℝ) * (D.R.r : ℝ) ^ 2 * (1 + (supPrW Q j : ℝ) / (LevelStarExponents.h0 L / (4 * tR Q)))
 
 
+variable (D L) in
 def badPrimes (B : ℝ) : Finset ℕ :=
   (range (⌊B⌋₊ + 1)).filter Nat.Prime ∪ (2 * (discr D.host.E).natAbs * levDeep D L).primeFactors
 
 
+variable (D) in
 def diff_vp (p : ℕ) : ℝ := (padicValNat p (discr D.host.E).natAbs : ℝ) / (Module.finrank ℚ D.host.E : ℝ)
 
 def aSum (j : ℕ) : ℝ :=
@@ -118,6 +123,7 @@ def rTwo (j : ℕ) : ℝ :=
 def lamKap (j : ℕ) : ℝ := (numAt Q j).G * (nKap D j - (D.R.f : ℝ) * D.R.r * D.R.nV / 2 + D.R.nV)
 
 
+variable (D L) in
 def measureMove : ℝ := 61 * (D.R.f : ℝ) * (D.R.r : ℝ) ^ 2 * L.sc.L
 
 end Numbers
@@ -170,9 +176,11 @@ theorem dimFlag_eq (h : T.Pins) (hj : InR D j) : dimFlag (T.Dw j) = placeRankTwo
     placeRankTwoOne.dimY, Nat.choose_two_right]
 
 
+variable (D) in
 def thetaExp (Dw : Datum H) (v : D.what₂.Tau → ℕ → ℤ) : WTZ D.host.E := wtOf Dw (toWt Dw v) ((D.R.nV / 2 : ℕ) : ℤ)
 
 
+variable (D) in
 def plainExp (Dw : Datum H) (v : D.what₂.Tau → ℕ → ℤ) : WTZ D.host.E := wtOf Dw (toWt Dw v) 0
 
 theorem thetaExp_kap_eq (h : T.Pins) (hj : InR D j) (w : WeightFamilies.Wt D j) (hn : w.n = D.R.nV)

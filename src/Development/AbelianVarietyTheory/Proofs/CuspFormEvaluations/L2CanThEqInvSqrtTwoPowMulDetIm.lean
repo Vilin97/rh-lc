@@ -18,6 +18,7 @@ noncomputable section
 variable {g : ℕ} {τ : Matrix (Fin g) (Fin g) ℂ}
 
 
+variable (τ) in
 def realPt : (Fin g ⊕ Fin g → ℝ) →ₗ[ℝ] (Fin g → ℂ) where
   toFun p := (fun i => (p (.inl i) : ℂ)) + τ *ᵥ fun i => (p (.inr i) : ℂ)
   map_add' p q := by
@@ -130,6 +131,7 @@ theorem mem_lat_perBasis (y : EuclideanSpace ℂ (Fin g)) :
 variable (hφ : ∀ v w, Hf v w = hermForm (imInv τ) (φ v) (φ w))
 
 
+include hφ in
 theorem im_Hf_realCoord (p q : Fin g ⊕ Fin g → ℝ) :
     (Hf (realCoord hs hp φ p) (realCoord hs hp φ q)).im =
       ∑ i, p (.inr i) * q (.inl i) - ∑ i, p (.inl i) * q (.inr i) := by

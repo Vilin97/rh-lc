@@ -264,6 +264,7 @@ theorem continuous_prismTuple (i n : ℕ) : Continuous fun γ : Fin n → Γ => 
   · exact (continuous_const.mul (continuous_tupleSeq_apply _)).mul continuous_const
 
 
+omit [IsDiscreteRep A] in
 theorem isLocallyConstant_conjHomotopyFun {n : ℕ} {φ : (Fin (n + 1) → Γ) → A}
     (hφ : IsLocallyConstant φ) : IsLocallyConstant (conjHomotopyFun A g n φ) := by
   have e : conjHomotopyFun A g n φ =

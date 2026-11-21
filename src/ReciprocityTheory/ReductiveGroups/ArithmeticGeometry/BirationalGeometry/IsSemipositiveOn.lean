@@ -44,6 +44,7 @@ def conePts (σ : o →+* C) (I : Ideal (MvPolynomial (ι) o)) : Set (ι → C) 
   {z | z ≠ 0 ∧ ∀ f ∈ I, eval z (map σ f) = 0}
 
 
+variable (C ι) in
 structure ConeMetric where
 
   ρ : (ι → C) → ℝ

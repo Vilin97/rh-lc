@@ -253,6 +253,8 @@ theorem two_le_dimY (hj : InR D j) : 2 ≤ WeightFamilies.dimY D j := by
 end Abstract
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem sharesDef : GlobalTheory.RunJoin.SharesDefSt := by
   intro D T h EX p hj large₂ H C2 A2 CT ka wL wF Tn nP nW h0 S nus hPar hPg hC hL G₀ hNZ Sh hSh
   obtain ⟨A⟩ := GlobalTheory.T.thetaArchimedeanData_definiteModels_nonempty D T h EX p hj large₂ H C2 A2 CT ka wL wF Tn nP nW h0 S nus hPar hPg hC G₀.N G₀.w hNZ

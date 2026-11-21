@@ -29,6 +29,7 @@ variable {M : Type} [AddCommGroup M] [Module (AF F) M]
 def partFin (v : Pl F) (z : M) : M := GlobalTheory.LatVac.liftV v 1 • z
 
 
+variable (F) in
 def partInf (z : M) : M := realAd F 1 • z
 
 theorem at_partFin (v : Pl F) (z : M) : At (evFin F v) (partFin v z) := fun u hu => by
@@ -60,6 +61,7 @@ section Groups
 variable {R : Type} [Zero R] {n : ℕ}
 
 
+variable (σ) in
 def UAtSub (X : Spc F E n) (ev : AF F → R) : Subgroup (UA σ X.J) where
   carrier := UAt σ X ev
   one_mem' := fun u _ => by rw [GlobalTheory.StabHaar.mat_one, sub_self, smul_zero]
@@ -77,6 +79,7 @@ def UAtSub (X : Spc F E n) (ev : AF F → R) : Subgroup (UA σ X.J) where
 def KAt {X : Spc F E n} (K : Subgroup (UA σ X.J)) (ev : AF F → R) : Subgroup (UA σ X.J) := K ⊓ UAtSub σ X ev
 
 
+variable (E) in
 def idelesAt (ev : AF F → R) : Subgroup (AE F E)ˣ where
   carrier := {l | At ev ((l : AE F E) - 1)}
   one_mem' := fun u _ => by rw [Units.val_one, sub_self, smul_zero]
@@ -92,6 +95,7 @@ def idelesAt (ev : AF F → R) : Subgroup (AE F E)ˣ where
     rw [e, smul_neg, ← smul_mul_assoc, hg u hu, zero_mul, neg_zero]
 
 
+variable (E) in
 def unitsAt (v : Pl F) : Subgroup (AE F E)ˣ :=
   idelesAt E (evFin F v) ⊓ (intLoc F E v).toSubmonoid.units.comap (unitFin F E v)
 
@@ -128,6 +132,7 @@ theorem isClosed_idelesAt (ev : AF F → R) : IsClosed (idelesAt E ev : Set (AE 
     isClosed_eq ((Units.continuous_val.sub continuous_const).const_smul u) continuous_const
 
 
+omit [NumberField E] in
 theorem compFin_smul (v : Pl F) (a : AF F) (z : AE F E) : compFin F E v (a • z) = evFin F v a • compFin F E v z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
@@ -135,6 +140,7 @@ theorem compFin_smul (v : Pl F) (a : AF F) (z : AE F E) : compFin F E v (a • z
   | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 
+omit [NumberField E] in
 theorem compInf_smul (w : InfinitePlace F) (a : AF F) (z : AE F E) :
     compInf F E w (a • z) = evInf F w a • compInf F E w z := by
   induction z using TensorProduct.induction_on with
@@ -191,6 +197,7 @@ theorem ideleAt_unitFin {v : Pl F} {l : (AE F E)ˣ} (hl : l ∈ idelesAt E (evFi
       exact Units.ext this.symm
 
 
+variable (E) in
 def idelesAtEquiv (v : Pl F) : idelesAt E (evFin F v) ≃ₜ* (Fv F v ⊗[F] E)ˣ where
   toFun l := unitFin F E v l.1
   invFun x := ⟨ideleAt F E v x, ideleAt_mem v x⟩
@@ -282,6 +289,7 @@ def IsNormK (K : Subgroup (UA σ X.J)) (ev : AF F → R) (μ : Measure (KAt K ev
   μ.IsHaarMeasure ∧ μ Set.univ = 1
 
 
+variable (E) in
 def IsNormE (v : Pl F) (μ : Measure (idelesAt E (evFin F v))) : Prop :=
   μ.IsHaarMeasure ∧ μ {l | l.1 ∈ unitsAt E v} = 1
 
@@ -303,6 +311,7 @@ theorem existsUnique_isNormK {K : Subgroup (UA σ X.J)} (hK : IsCompact (K : Set
   exact Measure.isHaarMeasure_eq_of_isProbabilityMeasure _ _
 
 
+variable (E) in
 theorem idelesAt_facts (ev : AF F → R) : IsTopologicalGroup (idelesAt E ev) ∧ LocallyCompactSpace (idelesAt E ev) ∧
     SecondCountableTopology (idelesAt E ev) ∧ T2Space (idelesAt E ev) ∧ BorelSpace (idelesAt E ev) := by
   haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E
@@ -321,6 +330,7 @@ theorem idelesAt_facts (ev : AF F → R) : IsTopologicalGroup (idelesAt E ev) �
   exact ⟨inferInstance, (isClosed_idelesAt ev).locallyCompactSpace, inferInstance, inferInstance, inferInstance⟩
 
 
+variable (E) in
 theorem exists_haar_idelesAt (ev : AF F → R) : ∃ μ : Measure (idelesAt E ev), μ.IsHaarMeasure := by
   obtain ⟨_, _, _, _, _⟩ := idelesAt_facts E ev
   exact ⟨Measure.haar, inferInstance⟩
@@ -331,6 +341,7 @@ theorem haar_idelesAt_eq_smul {ev : AF F → R} (μ' μ : Measure (idelesAt E ev
   exact ⟨_, (Measure.haarScalarFactor_pos_of_isHaarMeasure μ' μ).ne', Measure.isMulLeftInvariant_eq_smul μ' μ⟩
 
 
+variable (E) in
 theorem existsUnique_isNormE (v : Pl F) : ∃! μ, IsNormE E v μ := by
   obtain ⟨_, _, _, _, _⟩ := idelesAt_facts E (evFin F v)
   obtain ⟨hc, ho⟩ := isCompact_isOpen_unitsAt (E := E) v
@@ -398,6 +409,7 @@ theorem acts_locOpInf {T : ((κ → AF F) → ℂ) → ((κ → AF F) → ℂ)} 
   exact h.choose_spec
 
 
+variable (F κ) in
 theorem exists_rest_inf : ∃ r : ((κ → AF F) → ℂ), r 0 ≠ 0 ∧ ∀ f : SInf F κ, Rest (evI F) f r := by
   let φ : ∀ w : Pl F, (κ → Fv F w) → ℂ := fun w => Set.indicator {x | ∀ i, x i ∈ w.adicCompletionIntegers F} 1
   refine ⟨fun x => ∏ᶠ w, φ w fun i => evFin F w (x i), ?_, fun f => ⟨fun x z hz => ?_, ?_⟩⟩
@@ -454,6 +466,7 @@ theorem locOp_lin {v : Pl F} {T : ((κ → AF F) → ℂ) → ((κ → AF F) →
 variable {V : Type} [AddCommGroup V] [Module (AF F) V] {Bf : V → V → AF F}
 
 
+open scoped GlobalTheory.VacAny in
 theorem locOp_rho (co : Darboux Bf κ) {ψ : AddChar (AF F) ℂ} (hψ : Continuous ψ) (v : Pl F) (u : V)
     {φ : (κ → Fv F v) → ℂ} (hφ : φ ∈ SB (κ → Fv F v)) :
     Acts (evFin F v) (co.rho ψ (partFin v u)) φ (locOp v (co.rho ψ (partFin v u)) φ) ∧
@@ -467,6 +480,7 @@ theorem locOp_rho (co : Darboux Bf κ) {ψ : AddChar (AF F) ℂ} (hψ : Continuo
   exact ⟨acts_locOp ⟨_, hm, h⟩, locOp_eq hφ hm h⟩
 
 
+open GlobalTheory.ArchUniq Classical in
 theorem locOpInf_rho (co : Darboux Bf κ) {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) (u : V) (f : SInf F κ) :
     Acts (evI F) (co.rho ψ (partInf F u)) f (locOpInf (co.rho ψ (partInf F u)) f) ∧
       ⇑(locOpInf (co.rho ψ (partInf F u)) f) = schrF (trP F κ) (locV (co.e u).1, locV (co.e u).2) f := by

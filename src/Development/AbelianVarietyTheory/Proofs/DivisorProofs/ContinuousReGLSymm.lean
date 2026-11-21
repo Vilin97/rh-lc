@@ -123,6 +123,7 @@ theorem isCO_levRow {i : ℕ} (hi : i ≤ D.R.m) : IsCO (G.V (.grid i D.R.m)) (S
 end GridChoice
 
 
+variable (G) in
 theorem posDef_top {j : ℕ} (hj : j ≤ D.R.m) (φ : D.host.E →+* ℂ) : ((G.V (.top j)).gram.map φ).PosDef := by
   have h := G.isV (X := .top j) hj (fun _ e => by cases e)
   have := h.sigOK φ

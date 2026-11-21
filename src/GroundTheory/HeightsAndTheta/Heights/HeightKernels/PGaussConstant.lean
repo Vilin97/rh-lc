@@ -52,6 +52,7 @@ theorem exp_part (n : ℕ) (hn : 1 ≤ n) :
 end PGaussConstant
 
 
+open PGaussConstant in
 theorem GaussConstant.proof : GaussConstant.Statement := by
   intro n hn
   rw [PGaussConstant.rhs_eq, gaussShellConst]

@@ -71,6 +71,7 @@ variable {I : Type} [Category.{0} I] [IsCofiltered I] (D : I ⥤ Scheme.{0}) (c 
   (hc : IsLimit c) [∀ {i j} (f : i ⟶ j), IsAffineHom (D.map f)]
 
 
+include hc in
 theorem exists_finite_cover [∀ i, CompactSpace (D.obj i)] (M : LB c.pt) (hM : M.IsLB) :
     ∃ (j : I) (S : Type) (_ : Finite S) (W : S → (D.obj j).Opens) (a : S → M.ι),
       (∀ k, IsCompact (W k : Set (D.obj j))) ∧ (∀ y, ∃ k, y ∈ W k) ∧
@@ -110,6 +111,7 @@ theorem exists_finite_cover [∀ i, CompactSpace (D.obj i)] (M : LB c.pt) (hM : 
     exact hle k
 
 
+include hc in
 theorem exists_units_stage [∀ i, QuasiSeparatedSpace (D.obj i)] {j : I} {A : Type} [Finite A]
     (U : A → (D.obj j).Opens) (hU : ∀ p, IsCompact (U p : Set (D.obj j)))
     (s : ∀ p, Γ(c.pt, c.π.app j ⁻¹ᵁ U p)ˣ) :
@@ -150,6 +152,7 @@ theorem exists_units_stage [∀ i, QuasiSeparatedSpace (D.obj i)] {j : I} {A : T
   exact ⟨n, f, t, ht⟩
 
 
+include hc in
 theorem exists_cocycle_stage {n : I} {S : Type} [Finite S] [∀ i, QuasiSeparatedSpace (D.obj i)]
     (V : S → (D.obj n).Opens) (hV : ∀ k, IsCompact (V k : Set (D.obj n)))
     (t : ∀ k l, Γ(D.obj n, V k ⊓ V l)ˣ)
@@ -202,6 +205,7 @@ theorem exists_cocycle_stage {n : I} {S : Type} [Finite S] [∀ i, QuasiSeparate
   exact ⟨n', g, fun k l m y hk hl hm => hg (k, l, m) y hk hl hm⟩
 
 
+include hc in
 theorem exists_lb_stage [∀ i, CompactSpace (D.obj i)] [∀ i, QuasiSeparatedSpace (D.obj i)]
     (M : LB c.pt) (hM : M.IsLB) :
     ∃ (i : I) (M₁ : LB (D.obj i)), M₁.IsLB ∧ ∃ w : LB.Iso M (M₁.pull (c.π.app i)), w.IsGen := by

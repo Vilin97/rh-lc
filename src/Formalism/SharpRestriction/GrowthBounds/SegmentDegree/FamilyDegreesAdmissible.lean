@@ -43,6 +43,7 @@ def sumhT (t : Fin n') (v : Fin (r + K) → ℕ) : ℝ :=
 def sumSt (t : Fin n') : ℝ := ∑ v ∈ X.laSet p K t, X.sumhT p K t v
 
 
+omit [NeZero n'] in
 def firstSumFactor : ℝ := 1 - 1 / X.a ^ (X.Ns ^ 2)
 
 def sumWf (j : ℤ) : ℝ := ∏ i : Fin r, sumBin r K ((X.Bw p K j (X.F.fr (j - 1) i.val) - (X.m0 K : ℤ)).toNat)

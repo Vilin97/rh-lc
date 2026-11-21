@@ -173,6 +173,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {Wp Wq : InfinitePla
   {L : R.LevelData (MA.A (D.parOf S v) (MA.DQ (D.parOf S v))) (D.parOf S v).r}
 
 
+variable (Cc S T v e L) in
 def HReal (X : MA.A (D.parOf S v) (MA.DQ (D.parOf S v))) : Prop :=
   ∃ ts : List (MA.A (D.parOf S v) (MA.DQ (D.parOf S v)) × B.DiffOp S.G.k S.G.r (Wp (S.pl v)) (Wq (S.pl v))),
     (∀ t ∈ ts, t.1 ∈ Submonoid.closure (MA.bddSet (D.parOf S v) L) ∧ HatOK Cc S T v t.2) ∧

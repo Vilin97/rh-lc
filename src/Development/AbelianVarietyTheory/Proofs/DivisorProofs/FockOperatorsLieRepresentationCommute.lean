@@ -13,6 +13,7 @@ open Formalism.BasicNotions.TH Formalism.MainNotions.SchurIrreducible GlobalTheo
 namespace GlobalTheory.FockAlg
 
 
+open MvPolynomial in
 theorem _root_.GlobalTheory.FockAlg.fock_lie_and_commute : ∀ (p q r s : ℕ),
     (∀ Y Z, _root_.Formalism.BasicNotions.TH.omAct p q r s (Y * Z - Z * Y) =
       _root_.Formalism.BasicNotions.TH.omAct p q r s Y * _root_.Formalism.BasicNotions.TH.omAct p q r s Z - _root_.Formalism.BasicNotions.TH.omAct p q r s Z * _root_.Formalism.BasicNotions.TH.omAct p q r s Y) ∧

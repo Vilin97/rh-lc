@@ -26,6 +26,8 @@ noncomputable def splitPts (F : Type) [Field F] [NumberField F] (κ : Type) :
     exact RingEquiv.apply_symm_apply _ _
 
 
+open scoped TensorProduct in
+open NumberField MeasureTheory in
 theorem _root_.GlobalTheory.SliceExt.exists_rep_pure (F : Type) [Field F] [NumberField F]
     (κ : Type) [Fintype κ]
     (G : Type) [Group G] (ρ : G →* (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F κ →L[ℂ] _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F κ)) :

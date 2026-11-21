@@ -83,6 +83,7 @@ noncomputable section
 namespace GlobalTheory.ThetaRegularizationComparison
 
 
+open GlobalTheory.RegCompare in
 theorem thetaInt_wop_intg {D : D7} {M X : HSp D} {ω : GlobalTheory.Grid.WRep M X} {ν : Measure (GA D M)} {𝓕 : Set (GA D M)}
     (hν : IsHaarFD M ν 𝓕) {Φ : WO M X → ℂ} (hL : ∀ γ ∈ GQ M, ∀ g h, thetaKO ω (γ * g) h Φ = thetaKO ω g h Φ)
     (hΦ : Intg ω ν 𝓕 Φ) (z : GA D M →₀ ℂ) : thetaInt ω ν 𝓕 (wop ω z Φ) = zdeg z • thetaInt ω ν 𝓕 Φ := by

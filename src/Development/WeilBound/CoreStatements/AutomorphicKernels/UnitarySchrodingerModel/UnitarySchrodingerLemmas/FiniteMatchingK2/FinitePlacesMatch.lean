@@ -20,6 +20,7 @@ theorem adj_one_k {D : D7} {n : ℕ} : adj (1 : Mx D n n) = 1 := by
   rw [Matrix.map_one (cA D) (map_zero (cA D)) (map_one (cA D)), Matrix.transpose_one]
 
 
+set_option maxHeartbeats 2000000 in
 theorem finite_places_match : PositivityTheory.PfSWUS.SwMatch.FinMatch := by
   intro D n M a d bs g gv hP lam L hlam hL hstd
   have ha1 : a.1 * (a⁻¹).1 = 1 := a.mul_inv

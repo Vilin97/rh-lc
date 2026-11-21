@@ -68,6 +68,7 @@ def IsFactor (lin : ℂ → A.La → A.V →ₗ[ℂ] ℂ) (cst : ℂ → A.La �
 
 
 
+variable {A} in
 theorem IsFactor.sum {lin : ℂ → A.La → A.V →ₗ[ℂ] ℂ} {cst : ℂ → A.La → ℂ} (h : IsFactor A lin cst) (w : ℂ)
     (la : A.La) (v : A.V) (j : ℕ) (α : A.X) (th : (Fin A.gB → ℂ) → ℂ) (hth : th ∈ A.Theta j α) :
     A.Sum j α th w (v + A.Pw w la) = Complex.exp (lin w la v + cst w la) ^ j * A.Sum j α th w v := by

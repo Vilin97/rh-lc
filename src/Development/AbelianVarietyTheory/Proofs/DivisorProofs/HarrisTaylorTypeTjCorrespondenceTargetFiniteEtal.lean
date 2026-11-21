@@ -40,6 +40,7 @@ def kerAct {s : S ⟶ Sp R} {o o' : Obj b N s} (ψ : o.A ⟶ o'.A) [IsMonHom ψ]
       exact MonObj.mul_comp _ _ _)
 
 
+open GlobalTheory.CechPic in
 theorem val_act {s : S ⟶ Sp R} (o : Obj b N s) (a : D.O) {T : Over S} (x y : T ⟶ o.A) :
     BirigidPow.val o.isLB (x ≫ o.act.act a) y = BirigidPow.val o.isLB x (y ≫ o.act.act (D.star a).unop) := by
   have e := (cls_eq_iff (pull_isLB o.isLB _) (pull_isLB o.isLB _)).2 (o.rosati a)
@@ -50,6 +51,7 @@ theorem val_act {s : S ⟶ Sp R} (o : Obj b N s) (a : D.O) {T : Over S} (x y : T
   exact e'
 
 
+open GlobalTheory.TranslChar GlobalTheory.CechPic in
 theorem exists_pairing {s : S ⟶ Sp R} {c : ℕ} {o o' : Obj b N s} {ψ : o.A ⟶ o'.A} [IsMonHom ψ]
     (hψ : IsPIsog c o o' ψ) {ψ' : o'.A ⟶ o.A} [IsMonHom ψ'] (h₁ : ψ ≫ ψ' = (𝟙 o.A) ^ c)
     (h₂ : ψ' ≫ ψ = (𝟙 o'.A) ^ c) (hl : ∀ a : D.O, o.act.act a ≫ ψ = ψ ≫ o'.act.act a)

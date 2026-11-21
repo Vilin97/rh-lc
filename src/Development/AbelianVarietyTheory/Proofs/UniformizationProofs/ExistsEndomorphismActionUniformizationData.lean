@@ -113,6 +113,7 @@ theorem trans_fst (e : ℕ) (G : Over (Spec (CommRingCat.of R))) :
   (pullback.lift_fst _ _ _).trans (Category.comp_id _)
 
 
+omit [IsDomain R] in
 theorem trans_map (e : ℕ) {G G' : Over (Spec (CommRingCat.of R))} (a : G ⟶ G') :
     thickMap R I e G ≫ ((Over.pullback (thick R I (e + 1))).map a).left =
       ((Over.pullback (thick R I e)).map a).left ≫ thickMap R I e G' := by

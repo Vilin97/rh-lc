@@ -205,6 +205,7 @@ theorem exists_isGauge_of_isCMExt (hσ : IsCMExt F E σ) : ∃ G : GaugeFam F E 
 end GlobalTheory.GaugeEx
 
 
+open Formalism.BasicNotions Formalism.MainNotions.G in
 theorem GlobalTheory.GaugeEx.exists_isGauge : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E] (cm : CMData F E), ∃ G : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.GaugeFam F E cm.sig, G.IsGauge := by
   intro F E _ _ _ _ _ _ cm
   have hσ : IsCMExt F E cm.sig :=

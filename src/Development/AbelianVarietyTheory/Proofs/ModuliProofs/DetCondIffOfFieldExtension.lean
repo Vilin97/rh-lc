@@ -33,6 +33,7 @@ theorem lieMult_fibre {S : Scheme.{0}} {k : Type} [Field k] (x : Sp k ⟶ S) {G 
     (fun c => by rw [h]; exact pullback.lift_fst _ _ _) k' y τ n
 
 
+open ReciprocityTheory.ChartRestriction.G.Chart (prodPts scaleD tvec tmap eigLat IsUnivChart) in
 theorem lieMult_iff_finrank {k : Type} [Field k] {O : Type} [CommRing O] {G : Over (Sp k)} [GrpObj G]
     (act : OAct O G) [∀ a, IsMonHom (act.act a)] {n : ℕ}
     {x : ∀ m : ℕ, Chart.sp (R₀ := k) (Chart.JetR k (Fin n) m) ⟶ G} (hx : IsUnivChart G n x)
@@ -92,6 +93,7 @@ theorem lieMult_iff_finrank {k : Type} [Field k] {O : Type} [CommRing O] {G : Ov
     simp [Fintype.linearCombination_apply]
 
 
+open ReciprocityTheory.ChartRestriction.G.Chart (tvec tmap eigLat fB pushR dualMapA) in
 theorem lieMult_extend {S : Scheme.{0}} {G : Over S} [GrpObj G] [Smooth G.hom] {K Ω : Type} [Field K] [Field Ω]
     (i : K →+* Ω) (x : Sp K ⟶ S) {O : Type} [CommRing O] (act : OAct O G) (τ : O →+* K) (N : ℕ) :
     LieMult act (spMap i ≫ x) (i.comp τ) N ↔ LieMult act x τ N := by

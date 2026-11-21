@@ -60,6 +60,7 @@ theorem suppAt_mono {D : D7} {V : HSp D} {a b : AE D} (hab : b * a = a) (ha : a 
   rw [← hg k l, ← mul_assoc, e]
 
 
+open GlobalTheory.ChiUnit GlobalTheory.DilChi in
 theorem chi_unitOff_part {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m} {Ks : Type} [Field Ks]
     [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks} {F : Face D A} (hC : GlobalTheory.Hk3.Core R F)
     (i : Fin D.R.m) (t : T0) (Q : Finset (Pl D.host.E)) (hQ : Q ⊆ R.Q t) (N : ℕ)

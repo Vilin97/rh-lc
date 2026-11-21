@@ -98,6 +98,7 @@ theorem emb_mem {κ : GL D k} (h : κ ∈ KO k D) : emb₂ k (Equiv.refl (A ⊕ 
     · exact h2 i j
 
 
+variable (k D) in
 def mLat : AddSubgroup (D → k) where
   carrier := {v | ∀ i, valuation k (v i) < 1}
   add_mem' ha hb i := by simpa using Valuation.map_add_lt _ (ha i) (hb i)

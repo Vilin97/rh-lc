@@ -11,6 +11,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.G
 open scoped Classical ENNReal nonZeroDivisors
 
 
+open scoped Pointwise in
 private theorem lint_add {F : Type} [Field F] [NumberField F] {h : A F → ℝ≥0∞}
     (hh : ∀ (k : F) x, h (rt k + x) = h x) (a : A F) :
     ∫⁻ b in fundamentalSet F, h (b + a) ∂(adeleMeasure F) = ∫⁻ b in fundamentalSet F, h b ∂(adeleMeasure F) := by

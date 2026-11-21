@@ -9,6 +9,7 @@ open PowerSeries
 namespace GlobalTheory
 
 
+open IsLocalRing Polynomial in
 theorem exists_isPrimitiveRoot_sub_isUnit_of_dvd_sub_one {l : ℕ} {O : Type} [CommRing O]
     [IsDomain O] [IsDiscreteValuationRing O] [IsAdicComplete (IsLocalRing.maximalIdeal O) O]
     (hl : l.Prime) (hu : ¬ IsUnit (l : O)) (e : ℕ) (he : e ∣ l - 1) :

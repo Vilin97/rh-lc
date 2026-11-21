@@ -118,6 +118,7 @@ theorem exists_dualHom (M : ℕ) (ι : Type) [Fintype ι] (K : Type) [Field K] [
   exact DFunLike.congr_fun this F
 
 
+set_option maxHeartbeats 1000000 in
 theorem core (hT : TameQuotient) (hG : GalHyp bkP i s) (hF : FirstHalf i s) (hR : Recip bkP i s)
     {M R : ℕ} {P : Fin R ⊕ Fin R → PlE D.host} {d : Fin R ⊕ Fin R → (GE N →* Multiplicative (ZMod (X.l i ^ M)))}
     {φ φ' : Fin R → GE N} {Q : Finset (PlE D.host)} (hM : 1 ≤ M) (hP : Position i s M P d φ φ') (hQ : IsQ P Q)

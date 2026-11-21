@@ -74,6 +74,7 @@ structure IsUp {n t : ℕ} (U : Submodule ℂ (UA E n → ℂ)) (lam : (E →+* 
       Finset.univ.val.map fun i => (((ψ i).val w : ℂˣ) : ℂ)
 
 
+variable (E) in
 def TwoUp (n : ℕ) : Prop :=
   ∀ (U : Submodule ℂ (UA E n → ℂ)), IsAutRepU U → ∀ lam : (E →+* ℂ) → DomWeight n, (∀ τ, HasWeightAt U τ (lam τ)) →
     ∀ w₀ : HeightOneSpectrum (𝓞 E), IsSplitAt w₀ →

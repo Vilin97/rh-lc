@@ -82,6 +82,7 @@ theorem derivative_rowAddGeneric (u w : ι → σ) (huw : ∀ k l, u k ≠ w l)
 end RowAdd
 
 
+set_option linter.unusedVariables false in
 theorem rowAdd_invariant_iff {K σ ι : Type*} [Field K] [CharZero K] [DecidableEq σ] [Fintype ι]
     (u w : ι → σ) (hw : Function.Injective w)
     (huw : ∀ k l, u k ≠ w l) (P : MvPolynomial σ K) :

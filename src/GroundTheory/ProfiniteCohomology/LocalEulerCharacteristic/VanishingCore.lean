@@ -81,6 +81,7 @@ variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologic
 attribute [local instance] Subgroup.fintypeQuotientOfFiniteIndex
 
 
+omit [(U : Subgroup G).Normal] in
 theorem sum_quotient_out_apply_eq_zero (A : Rep.{u} k G)
     (hA : ∀ (m : (U : Subgroup G)) (a : A), A.ρ m a = a)
     (hinv : ∀ a : A, (∀ g : G, A.ρ g a = a) → a = 0) (a : A) :

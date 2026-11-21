@@ -112,6 +112,7 @@ theorem map_int (f : MRing ι) : MvPolynomial.map (Int.castRingHom ℤ) f = f :=
   rw [show Int.castRingHom ℤ = RingHom.id ℤ from RingHom.ext_int _ _, MvPolynomial.map_id]
 
 
+variable (y) in
 theorem aeval_eq_eval_mConeMap (f : MRing ι) :
     aeval y f = MvPolynomial.eval (fun _ : K => (1 : Ω)) (mConeMap y f) := by
   induction f using MvPolynomial.induction_on with
@@ -136,6 +137,7 @@ theorem cellMon_aeval_ne {I : ∀ k, Finset (ι k)} (hI : ∀ k, ∀ i ∈ I k, 
   | mul x x' _ _ hx hx' => rw [map_mul]; exact mul_ne_zero hx hx'
 
 
+variable (y) in
 theorem aeval_div_mem (c : ∀ k, ι k) {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) :
     aeval y g / ∏ k, y ⟨k, c k⟩ ^ d k ∈ chartRingZ y c := by
   classical
@@ -468,6 +470,7 @@ end Cocycle
 end ZeroCocycleSection
 
 
+open ZeroCocycleSection GenOnFibres in
 theorem ZeroCocycleSection.proof : ZeroCocycleSection.Statement := by
   intro K _ _ ι _ _ Ω _ y a v hv
   classical

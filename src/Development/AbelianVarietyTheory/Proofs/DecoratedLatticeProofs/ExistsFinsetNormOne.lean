@@ -125,6 +125,8 @@ theorem exists_int_near (F : Type) [Field F] [NumberField F] : ∃ C : ℝ, 0 < 
   linarith [hf' w]
 
 
+open NumberField.mixedEmbedding NumberField.InfinitePlace MeasureTheory ENNReal Module in
+open scoped nonZeroDivisors in
 theorem exists_small_elt (v₀ : HeightOneSpectrum (𝓞 F)) (η : ℝ) (hη : 0 < η) :
     ∃ x : F, x ≠ 0 ∧ (∀ w : InfinitePlace F, w x < η) ∧
       ∀ v : HeightOneSpectrum (𝓞 F), v ≠ v₀ → ‖algebraMap F (v.adicCompletion F) x‖ ≤ 1 := by

@@ -177,6 +177,7 @@ theorem val_rigT {S : Scheme.{0}} (B : Over S) [GrpObj B] (L : LB B.left) (ρ : 
   exact (map_zpow _ _ _).trans ((zpow_natCast _ _).trans (congrArg (· ^ k) e))
 
 
+omit [IsDomain R] in
 theorem cst_base (z : (TF (R := R) F).left) (a : R) :
     Geo.Tor.cst (jFK (R := R) F ≫ jK R) z a = cstH z (algebraMap (FractionRing R) F (algebraMap R _ a)) :=
   ((GlobalTheory.ExpansionValueZero.cst_comp _ _ z a).trans (H1.gs_spec _ z _)).trans (cst_eq z _)

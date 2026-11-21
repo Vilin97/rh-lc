@@ -147,6 +147,7 @@ theorem relIndex_globLev (hU : Unr E) (S : Set (Pl E)) (hS : IsSection S) (K' : 
 end GlobalTheory.BCT.HopLev2
 
 
+open GlobalTheory.BCT.HopLev GlobalTheory.BCT.HopLev2 in
 theorem GlobalTheory.BCT.hop_indicator_level : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ, 1 ≤ n →
     ∀ S : Set (Pl E), IsSection S → ∀ K' : ∀ w : Pl E, Subgroup (UL n w),
     IsLevelFam (fun w : Pl E => MonoidHom.id (UL n w)) (KL n) K' → ∀ φ ∈ fixed (RF E n) (globLev S K'),

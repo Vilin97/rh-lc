@@ -42,6 +42,7 @@ theorem val_rat_lt {y : D.host.E} (hy : PP.valuation D.host.E y < 1) : valuation
   rwa [show (r : D.host.E) = y * ((d : 𝓞 D.host.E) : D.host.E) from e.symm, map_mul, map_mul, map_mul, hd, mul_one] at this
 
 
+set_option maxHeartbeats 1000000 in
 theorem val_pr_lt {z : AE D} (hz : Valued.v (adAt D.host.F PP (toEAf D z)) < 1) : valuation K (q.pr z) < 1 := by
   obtain ⟨y, N, r, hr, hN, e⟩ := exists_approx_small (F := D.host.F) (toEAf D z) {PP} (γ := 1) one_ne_zero
   have hN' := hN PP (Finset.mem_singleton_self PP)

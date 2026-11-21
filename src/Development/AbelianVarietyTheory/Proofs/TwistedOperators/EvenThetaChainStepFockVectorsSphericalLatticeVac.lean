@@ -38,6 +38,7 @@ theorem latO_le {D : D7} (S T : HSp D) (LS : Set (Fin S.rank → D.host.E)) (LT 
 end GlobalTheory.EvenOnto.FockOff
 
 
+open GlobalTheory.EvenOnto.FockOff in
 theorem GlobalTheory.EvenOnto.fock_sph_vac : ∀ D : D7, ForStep D fun c _ s s' p => ∀ φ, IsThetaFunO c.ψ s.V s'.V (p.pt φ) ∧ GlobalTheory.IndefiniteRowSideFullHecke.SphericalVolumeLift.IsFockVec c.ψ c.θ s.V s'.V (cart s.M) (cart s'.M) (p.pt φ) ∧ GlobalTheory.IndefiniteRowSideFullHecke.SphericalVolumeLift.IsSphOff c.ψ s.V s'.V s.Λ s'.Λ c.S (p.pt φ) ∧ ∀ v ∉ c.S, GlobalTheory.FinZeta.VacFin c.ψ s.V s'.V v (p.pt φ) := by
   intro D c hc k hk s s' hs hs' p hp φ
   have hψ : IsStdChar D c.ψ (-1) := hc.std

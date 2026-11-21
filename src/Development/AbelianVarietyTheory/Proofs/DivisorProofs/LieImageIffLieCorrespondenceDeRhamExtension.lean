@@ -29,6 +29,7 @@ set_option autoImplicit false
 namespace GlobalTheory.PtExt
 
 
+set_option maxHeartbeats 1000000 in
 theorem isLieImage_iff_lieCorr : GlobalTheory.Published.AbelianHodgeDeRham → ∀ (p : ℕ) [Fact p.Prime]  (R : Type) [CommRing R], IsNilpotent (p : R) → ∀ (A : Over (Sp R)) [GrpObj A] (g : ℕ), IsAbelianScheme A → SmoothOfRelativeDimension g A.hom → ∀ (G : PDivGroup p R) (t : G.TorsionTower A) (E : primDR A ≃ₗ[R] G.RigExt), (∀ c, IsCan t c (E c)) → ∀ (h : HdR A) (v : epsR R ⟶ A), IsLieImage h v ↔ t.LieCorr (G.lieUnivToLie (E.symm.dualMap h)) v := by
   intro hHdR p _ R _ hnil A _ g hA hsm G t E hE h v
   obtain ⟨N, hN⟩ := hnil

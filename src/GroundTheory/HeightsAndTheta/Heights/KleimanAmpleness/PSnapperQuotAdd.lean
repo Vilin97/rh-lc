@@ -176,6 +176,8 @@ end Quot
 end SnapperQuotientAdditivity
 
 
+set_option maxHeartbeats 1000000 in
+open SnapperQuotientAdditivity in
 theorem SnapperQuotAdd.proof (hfin : SnapperSubquotFinite.Statement.{u, v, w}) :
     SnapperQuotAdd.Statement.{u, v, w} := by
   intro k _ Ω _ _ N x E _ _ _ _ F₁ F₂ F₃ hfg h21 h32

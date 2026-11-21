@@ -43,6 +43,7 @@ def ArchGlue {D : D7} (V : HSp D) : Prop :=
       ∃ h ∈ GinfC V, ∀ τ, archM V (th τ) h = u τ
 
 
+set_option maxHeartbeats 800000 in
 theorem root_eq_one_of_glue {D : D7} (V : HSp D) (hglue : ArchGlue V) {r : ℕ} (hr : V.rank = r) (hr0 : 0 < r) {Comp : Type}
     (X : Comp → Data D.host.E r) (dict : GA D V → Σ c, Frame (X c).Ψ r) (mu : GA D V → ℂ)
     (Kf : Subgroup (GA D V)) (th : ∀ c, (X c).Ψ → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ))

@@ -24,6 +24,7 @@ theorem mul_lattice_one {E : Type} [Field E] [NumberField E] {n : ℕ} (L : Subm
 variable {D : D7} {u : D.what₂.Word}
 
 
+set_option maxHeartbeats 4000000 in
 theorem pt_agree1 (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls 0)
     (w1 : Fin (D.R.N 0) → D.host.E) (s1 : 𝓞 D.host.E)
     (hz1 : s1 • w1 ∈ Lk T.atT 0 (Nat.zero_le _) v c) (hs1 : s1 ∉ T.atT.Pv v) (y : (D.fm u).lk 0 v c)
@@ -51,6 +52,8 @@ theorem pt_agree1 (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls 0)
   rw [hp, map_smul, map_smul, h1, h3]
 
 
+set_option maxHeartbeats 16000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem valSame_pt (T : Forms0 D u) : ValSame T := by
   intro v c G hG g η κ μ g' η' κ' μ' y hP hP'
   obtain ⟨_, γ, hD, z, γ1, κ1, hz1, hU, hpt⟩ := hP
@@ -70,6 +73,8 @@ theorem valSame_pt (T : Forms0 D u) : ValSame T := by
   exact val_of_mem T v (T.cls0.y c) (hcomp T η' κ' μ') (hcomp T η κ μ) H3.1 H1.1 hm G hG
 
 
+set_option maxHeartbeats 16000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem valTe_pt (T : Forms0 D u) : ValTe T := by
   intro v c G hG g η κ μ hP
   obtain ⟨_, γ, hD, z, γ1, κ1, hz1, hU, hpt⟩ := hP

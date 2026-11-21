@@ -117,6 +117,7 @@ theorem conv_right_invariant [MeasurableMul (G₁ × G₂)] (a : G₁ → ℂ) (
   simp only [Prod.fst_mul, Prod.snd_mul, one_mul, hk, mul_assoc]
 
 
+omit [MeasurableMul G₂] [μ₂.IsMulLeftInvariant] in
 theorem conv_eq_partial (a : G₁ → ℂ) (e : G₂ → ℂ) (Y : G₁ × G₂ → ℂ) (z : G₁) (b : G₂)
     (hi : Integrable (fun g => (a g.1 * e g.2) * Y ((z, b) * g)) (μ₁.prod μ₂)) :
     ∫ g, (a g.1 * e g.2) * Y ((z, b) * g) ∂(μ₁.prod μ₂) =

@@ -11,6 +11,7 @@ attribute [local instance] GlobalTheory.Mem.Col2.starE Formalism.BasicNotions.Ho
 namespace GlobalTheory.Mem.Col2.AdT
 
 
+open Classical in
 theorem addChar_isIntegral {A : Type} [AddCommGroup A] [Finite A] {K : Type} [Field K] (ψ : AddChar A K) (y : A) :
     IsIntegral ℤ (ψ y) := by
   refine IsIntegral.of_pow (Nat.card_pos (α := A)) ?_

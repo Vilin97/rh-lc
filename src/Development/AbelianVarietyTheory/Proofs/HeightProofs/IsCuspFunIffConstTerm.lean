@@ -193,6 +193,7 @@ theorem exists_dual {r : ℕ} (C : Matrix (Fin V.rank) (Fin r) E) (hC : LinearIn
     module
 
 
+omit [StarRing E] in
 theorem tens_cocompact : ∃ K : Set (AF F ⊗[F] E), IsCompact K ∧ ∀ z, ∃ x : E, z - inclR (F := F) (AF F) x ∈ K := by
   obtain ⟨K, hK, h⟩ := GlobalTheory.T.exists_compact_adeleRing_mod_numberField F
   have : IsModuleTopology (AF F) (AF F ⊗[F] E) := ⟨rfl⟩

@@ -23,6 +23,7 @@ variable {A B X Y C : Type*} [AddCommGroup A] [AddCommGroup B] [AddCommGroup X] 
   [AddCommGroup C]
 
 
+omit [AddCommGroup A] in
 theorem exact_comp_addEquiv {f : A → B} {g : B →+ X} (hfg : Function.Exact f g) (e : X ≃+ Y) :
     Function.Exact f (e.toAddMonoidHom.comp g) := fun b => by
   rw [← hfg b, AddMonoidHom.comp_apply, AddEquiv.coe_toAddMonoidHom, AddEquiv.map_eq_zero_iff]
@@ -37,6 +38,7 @@ theorem exact_addEquiv_comp_comp_symm {g : B →+ X} {c : X → C} (hgc : Functi
     exact ⟨b, by simp⟩
 
 
+omit [AddCommGroup C] in
 theorem exact_comp_symm_addEquiv {c : X → C} {β : C → A} (hcβ : Function.Exact c β) (e : X ≃+ Y) :
     Function.Exact (c ∘ e.symm) β := fun x => by
   rw [hcβ x]

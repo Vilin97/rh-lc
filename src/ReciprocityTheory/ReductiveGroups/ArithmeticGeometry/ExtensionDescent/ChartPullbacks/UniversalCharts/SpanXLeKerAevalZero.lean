@@ -56,6 +56,7 @@ theorem jet_ext {κ : Type} {m : ℕ} {A : Type} [CommRing A] [Algebra R A] {ψ�
   exact h j
 
 
+variable (R) in
 def jetLift {κ : Type} {m : ℕ} {A : Type} [CommRing A] [Algebra R A] (J : Ideal A) (hJ : J ^ (m + 1) = ⊥)
     (b : κ → A) (hb : ∀ j, b j ∈ J) : JetR R κ m →ₐ[R] A :=
   Ideal.Quotient.liftₐ _ (MvPolynomial.aeval b) (fun a ha => by
@@ -125,6 +126,7 @@ variable {R : Type} [CommRing R] {n : ℕ} {S : Type} [CommRing S] [Algebra R S]
   [Algebra (MvPolynomial (Fin n) R) S] [IsScalarTower R (MvPolynomial (Fin n) R) S]
 
 
+variable (R) in
 abbrev sX (j : Fin n) : S := algebraMap (MvPolynomial (Fin n) R) S (MvPolynomial.X j)
 
 variable [Algebra.FormallyEtale (MvPolynomial (Fin n) R) S] (ε : S →ₐ[R] R)

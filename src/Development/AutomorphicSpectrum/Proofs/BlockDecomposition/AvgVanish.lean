@@ -31,6 +31,7 @@ def piPerm (i t : ℕ) : Equiv.Perm (Fin ((i + 1) + t + 1)) :=
   (finCongr (by omega : (i + 1) + t + 1 = i + (t + 1) + 1)).trans ((ePG i (t + 1)).symm.trans (eGP (i + 1) t))
 
 
+variable (k) in
 def wGL (i t : ℕ) : GL (Fin ((i + 1) + t + 1)) k where
   val := Equiv.Perm.permMatrix k (piPerm i t)⁻¹
   inv := Equiv.Perm.permMatrix k (piPerm i t)
@@ -38,22 +39,27 @@ def wGL (i t : ℕ) : GL (Fin ((i + 1) + t + 1)) k where
   inv_val := by rw [← Matrix.permMatrix_mul, inv_mul_cancel, Matrix.permMatrix_one]
 
 
+variable (k) in
 def wEl (i t : ℕ) : Mir k ((i + 1) + t + 1) := levi k _ (wGL k i t)
 
 
+variable (k) in
 def sEmb (n : ℕ) : Mir k n →* Mir k (n + 1) := (levi k (n + 1)).comp (Mir k n).subtype
 
 
+variable (k) in
 def dEmb (i t : ℕ) (d : Fin (t + 1) → k) : Mir k ((i + 1) + t + 1) :=
   ⟨unip k ((i + 1) + (t + 1)) (Multiplicative.ofAdd (Fin.append (0 : Fin (i + 1) → k) d)), MirU_le_Mir k _ ⟨_, rfl⟩⟩
 
 
+variable (k) in
 def Cl (i t : ℕ) : Set (Mir k ((i + 1) + t + 1)) :=
   {p | ∀ c : Fin (i + 1), (((p⁻¹ : Mir k ((i + 1) + t + 1)) : GL (Fin ((i + 1) + t + 2)) k) :
       Matrix (Fin ((i + 1) + t + 2)) (Fin ((i + 1) + t + 2)) k)
       (Fin.castSucc (Fin.last ((i + 1) + t))) (Fin.castLE (by omega) c) = 0}
 
 
+variable (k) in
 def castM {a b : ℕ} (h : a = b) : Mir k a ≃* Mir k b := h ▸ MulEquiv.refl _
 
 section Fibre
@@ -81,6 +87,7 @@ def qO (ψ : AddChar k Circle) : τ.V ⊗[ℂ] σ.V →ₗ[ℂ] (phiN ψ τ).V �
   LinearMap.rTensor σ.V (twKer τ.ρ (MirUin k (i + 1)) (mirChar k ψ i)).mkQ
 
 
+variable (k) in
 def muD (t : ℕ) : @MeasureTheory.Measure (Fin t → k) (borel _) :=
   letI : MeasurableSpace (Fin t → k) := borel _
   haveI : BorelSpace (Fin t → k) := ⟨rfl⟩

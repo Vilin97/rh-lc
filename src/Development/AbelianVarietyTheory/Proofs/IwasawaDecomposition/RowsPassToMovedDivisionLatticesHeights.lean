@@ -84,14 +84,17 @@ variable {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {Z
   (N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V) (h : B.Word → ℝ) {p0 : BaseLevelRowSide (w.D Z)} (t : RowsT K w Z Wt p0)
 
 
+set_option maxHeartbeats 800000 in
 def readMv : Read (datMv N h t.r.z).R.toRealDat (datMv N h t.r.z).F.lv2 ((p0Mv N h p0)) :=
   (by with_unfolding_all exact ((readB (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
 
 
+set_option maxHeartbeats 800000 in
 def readLMv : ReadL (datMv N h t.r.z).R (datMv N h t.r.z).F ((p0Mv N h p0)) (readMv N h t) :=
   (by with_unfolding_all exact ((readLB (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Z) :))
 
 
+set_option maxHeartbeats 1600000 in
 theorem readSame : ReadSame N h t (readMv N h t) (readLMv N h t) where
   tup := (by with_unfolding_all exact ((readB_tup (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
   tupT := (by with_unfolding_all exact ((readB_tupT (a := Z) (Refill.ofDiv Z N h) (iK := t.r.z.alg) t.r.Y) :))
@@ -112,12 +115,14 @@ theorem readSame : ReadSame N h t (readMv N h t) (readLMv N h t) where
 end Main
 
 
+set_option maxHeartbeats 800000 in
 theorem datMv_geo {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {Z : w.Lt} {Wt : Set B.places.Pl}
     (N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V) (h : B.Word → ℝ) {hX : B.fields.Ok} (z : Dat (w.st Z) w.I hX T Wt) :
     HEq (datMv N h z).geo (geoHalf (a := ⟨Z.W, Z.V, Z.S, Z.N, Z.G⟩) (SRe.upL Z Z.S N h) (iK := z.alg) z.geo) :=
   (by with_unfolding_all exact ((HEq.refl (geoHalf (a := ⟨Z.W, Z.V, Z.S, Z.N, Z.G⟩) (SRe.upL Z Z.S N h) (iK := z.alg) z.geo)) :))
 
 
+set_option maxHeartbeats 4000000 in
 theorem rows_move_geo : ∀ (K : Ctx) (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : ColW B f T) (Z : w.Lt) (Wt : Set B.places.Pl)
     (O : Obj2 (w.D Z)) (t : RowsT K w Z Wt O.p0) (N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V) (h : B.Word → ℝ)
     (O' : Obj2 (w.D (Db.setDivZ Z N h))), O' = O.tr N h →

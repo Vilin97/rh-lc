@@ -119,6 +119,7 @@ end EtPowerP
 open Formalism.L2.Th1.E EtPowerP
 
 
+open Classical in
 theorem etPower_of (h : UnitKerInt) : EtPower := by
   intro dK L hsq hd hCM p _ ι hp2 hpd hW α t M hα hαu hαt ht hM hMt
   classical

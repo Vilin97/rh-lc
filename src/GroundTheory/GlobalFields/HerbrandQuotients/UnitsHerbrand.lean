@@ -135,6 +135,7 @@ theorem funPermRep_mem_logLattice (g : L ≃ₐ[K] L) {m : InfinitePlace L → �
   obtain ⟨x, rfl⟩ := hm
   exact ⟨unitsRep K L g x, fullLog_unitsRep g x⟩
 
+variable (K L) in
 def logLatticeRep : Representation ℤ (L ≃ₐ[K] L) (logLattice L) where
   toFun g := ((funPermRep ℝ (L ≃ₐ[K] L) (InfinitePlace L) g).restrictScalars ℤ).restrict
     fun _ hm => funPermRep_mem_logLattice g hm

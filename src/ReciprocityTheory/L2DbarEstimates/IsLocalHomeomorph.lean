@@ -47,6 +47,7 @@ def Holo {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n) (f : M → �
   ∀ e : OpenPartialHomeomorph M (V n), IsChart n z e → DifferentiableOn ℂ (f ∘ e.symm) e.target
 
 
+open scoped Classical in
 def d {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n) (j : Fin n) (f : M → ℂ) (x : M) :
     ℂ := by
   classical
@@ -55,6 +56,7 @@ def d {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n) (j : Fin n) (f 
   else 0
 
 
+open scoped Classical in
 def db {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n) (j : Fin n) (f : M → ℂ) (x : M) :
     ℂ := by
   classical

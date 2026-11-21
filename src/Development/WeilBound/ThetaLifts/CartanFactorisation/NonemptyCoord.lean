@@ -84,6 +84,7 @@ theorem schrInf_apply {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ)
   ring
 
 
+variable (F κ) in
 structure Coord where
   n : ℕ
   Q : EuclideanSpace ℝ (Fin n) ≃L[ℝ] (κ → mixedEmbedding.mixedSpace F)

@@ -37,6 +37,8 @@ private lemma mvIsInt_X_divisor {C : Type} [Field C] (v : AddValuation C (WithTo
   split_ifs <;> simp
 
 
+open MvPowerSeries in
+variable {C : Type} [Field C] in
 theorem _root_.GlobalTheory.FGDepth.Coord.depth_in_coords : ∀ (C : Type) [Field C] [CharZero C]
     (v : AddValuation C (WithTop ℝ)) (i d c : ℕ) (G : _root_.ReciprocityTheory.PGsh.LogFGL v d) (u : Fin i → Fin d → C)
     (Φ Ψ : Fin d → MvPowerSeries (Fin d) C),

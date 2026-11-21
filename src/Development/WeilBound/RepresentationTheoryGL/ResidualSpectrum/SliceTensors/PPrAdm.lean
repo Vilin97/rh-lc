@@ -115,6 +115,7 @@ theorem exists_orth (hW : IsStable W) (hA : ∀ φ ∈ W, IsAutForm φ) (hinj : 
   exact hp χW w' ⟨hw'V, hw'L, hw'T⟩
 
 
+omit [μ.IsHaarMeasure] [μ.IsMulRightInvariant] in
 theorem orth_unique (hinj : ∀ x ∈ W, cls h x = 0 → x = 0) {V : Submodule ℂ (Sm E N)} (hVW : V ≤ W)
     {χ v v' : Sm E N} (hχ : χ ∈ W) (hv : v ∈ V) (hv' : v' ∈ V)
     (h1 : ∀ w ∈ V, inner ℂ (cls h (χ - v)) (cls h w) = 0) (h2 : ∀ w ∈ V, inner ℂ (cls h (χ - v')) (cls h w) = 0) :

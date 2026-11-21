@@ -56,6 +56,7 @@ theorem expand_at (π' a : LetA O n) (i : ZMod n) (hπ0 : PowerSeries.constantCo
   rfl
 
 
+set_option maxHeartbeats 1000000 in
 theorem basis_L [IsDomain O] (π' : LetA O n) (s' : ℕ) (hs : 1 ≤ s') (w₁ : (LetA O n)ˣ)
     (hπ : π' = w₁ * (letπ : LetA O n) ^ s')
     (huniq : ∀ a, Formalism.MainNotions.DeltaInvariantLattices.InAΔ W a → ∃! f : ZMod n → PowerSeries O, ∀ i, a i = PowerSeries.subst (π' i) (f i))

@@ -140,6 +140,7 @@ private theorem restrictScalars_pderiv_apply {K Ω σ : Type*} [CommRing K] [Com
   exact congrFun (Derivation.coe_restrictScalars K _) f
 
 
+set_option maxHeartbeats 800000 in
 private theorem det_sum_X_mul_C_ne_zero_of_dual_family {Ω : Type*} [Field Ω] {D m : ℕ} (y : Fin D → Fin m → Ω)
     (J : Fin D → Fin m) (hy : ∀ a b, y a (J b) = if a = b then 1 else 0) :
     (Matrix.of fun a b : Fin D =>
@@ -161,6 +162,7 @@ private theorem det_sum_X_mul_C_ne_zero_of_dual_family {Ω : Type*} [Field Ω] {
   exact zero_ne_one h1
 
 
+set_option maxHeartbeats 800000 in
 theorem gFam_indep {K Ω : Type*} [Field K] [CharZero K] [Field Ω] [Algebra K Ω] {D m : ℕ}
     (x : Fin m → Ω) (J : Fin D → Fin m) (δ : Fin D → Derivation K Ω Ω)
     (hδ : ∀ a b, δ a (x (J b)) = if a = b then 1 else 0) :

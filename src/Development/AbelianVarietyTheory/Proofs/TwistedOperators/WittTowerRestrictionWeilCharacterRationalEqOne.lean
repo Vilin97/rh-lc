@@ -61,6 +61,7 @@ theorem symplOH_isoPart_midPart (V V' W : HSp D) {r : ℕ} (C : Matrix (Fin V.ra
   rw [e5, hX0, Matrix.zero_mul, Matrix.trace_zero, map_zero]
 
 
+set_option maxHeartbeats 1000000 in
 theorem res_om_rat {V V' W : HSp D} {r : ℕ} {C : Matrix (Fin V.rank) (Fin r) D.host.E}
     {B : Matrix (Fin V.rank) (Fin V'.rank) D.host.E} (hs : IsIsoSplit V V' C B) {ψ : AddChar (AF D.host.F) ℂ}
     {χS χT : (AE D)ˣ →* Circle} {ω : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)} (hω : IsWeilDatumO ψ V W χS χT ω)

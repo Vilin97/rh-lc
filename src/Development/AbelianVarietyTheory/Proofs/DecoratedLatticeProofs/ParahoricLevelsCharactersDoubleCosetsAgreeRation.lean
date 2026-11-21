@@ -319,6 +319,7 @@ theorem stdAt_eq (N : ℕ) : stdAt E N P = LocE.sclLat P q N 0 := by
   simp
 
 
+variable (P q) in
 def Par (kj n c : ℕ) (κ : Sp E (n + c) ≃ₗ[E] Sp E (n + c)) : Prop :=
   (∀ l l', IntAt P (κ (Pi.single l' 1) l)) ∧ ∀ l l' : Fin (n + c), (kj ≤ l.1 ∧ l.1 < n) → ¬ (kj ≤ l'.1 ∧ l'.1 < n) →
     IntAt P (κ (Pi.single l' 1) l / (q : E))

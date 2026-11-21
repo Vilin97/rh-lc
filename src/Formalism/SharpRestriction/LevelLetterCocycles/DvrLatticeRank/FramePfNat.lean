@@ -317,6 +317,7 @@ variable (Ψ₁ : W.EE ⊗[O] LcQ W T₁ π' c →ₗ[W.EE] W.DD T₁) (Ψ₂ : 
       Ψ₂ ((framepf_Lmap f hfN π' c).lTensor W.EE x) - W.map f (Ψ₁ x) ∈ JP W T₂ π' Eπ h' M c)
 
 
+include hnat in
 theorem framepf_α_nat (x₁ : LA W T₁ π' c) (hx₁ : x₁ ∈ LamLA W T₁ π' Eπ h' c ⊤) (x₂ : LA W T₂ π' c)
     (y₁ : W.DD T₁) (hov : LAover W f π' c x₁ x₂) (hxy : Ψ₁ x₁ - y₁ ∈ JP W T₁ π' Eπ h' M c) :
     Ψ₂ x₂ - W.map f y₁ ∈ JP W T₂ π' Eπ h' M c := by
@@ -326,6 +327,7 @@ theorem framepf_α_nat (x₁ : LA W T₁ π' c) (hx₁ : x₁ ∈ LamLA W T₁ �
   exact h
 
 
+include hnat in
 theorem framepf_β_nat (Φ₁ : W.DD T₁ →ₗ[W.EE] W.EE ⊗[O] LcQ W T₁ π' c)
     (Φ₂ : W.DD T₂ →ₗ[W.EE] W.EE ⊗[O] LcQ W T₂ π' c) (lam : O)
     (hΦ₁ : ∀ y ∈ LamPS W T₁ Eπ h' c, Φ₁ y ∈ LamLA W T₁ π' Eπ h' c ⊤)

@@ -17,6 +17,7 @@ open Formalism.L2.Th1.F (MulStable IsKerReps taylor0 pSeries)
 open Formalism.L2.Th1.E (Unif ptW inW px py IntCurve OneUnit GaussOne)
 
 
+open Classical in
 def TwoTorsionKernelUnique : Prop :=
   ∀ (K : Type) [NormedField K] [IsUltrametricDist K] (W : WeierstrassCurve K), IntCurve W →
     ‖(2 : K)‖ = 2⁻¹ → ‖W.a₁‖ = 1 →
@@ -25,6 +26,7 @@ def TwoTorsionKernelUnique : Prop :=
 
 
 
+open Classical in
 def TorsBound : Prop :=
   ∀ (K : Type) [NormedField K] [IsUltrametricDist K] (W : WeierstrassCurve K), IntCurve W →
     ‖(2 : K)‖ = 2⁻¹ → ∀ (P : W.toAffine.Point) (k : ℕ), (2 ^ k) • P = 0 → P + P ≠ 0 →

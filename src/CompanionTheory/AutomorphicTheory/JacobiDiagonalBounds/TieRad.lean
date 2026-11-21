@@ -116,6 +116,7 @@ structure BaseTie (X : Q.ActualOps P.k P.r z z' π π')
   t : ∀ (Y : ℝ) a b, IsIntertwinedEndomorphism τ (X.t (Y : ℂ) a b) (MA.QQr P (MA.DQ P) (Y : ℂ) a b)
 
 
+omit [FiniteDimensional ℂ Wp] in
 theorem word_tied {X : Q.ActualOps P.k P.r z z' π π'} {μ : Measure (Mt P.k P.r)}
     {L : R.LevelData (Q.Pr (Q.RadSp P.k P.r z z' π π')) P.r} {st : Fr.Start (Q.Pr (Q.RadSp P.k P.r z z' π π'))}
     {l0 : ℕ} (hD : P5.IsData P z z' π π' X μ L st l0)

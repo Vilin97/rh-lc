@@ -275,6 +275,7 @@ theorem nb_rat {nb : hermA D n → G D n} (h : IsNMap nb) (γ : hermA D n) (hγ 
   exact h2
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem fourierZero : PositivityTheory.PfSWUS.FourierZero := by
   intro D n ψ hψ nb lam 𝓖 hC f hf hinv hco
   obtain ⟨hnb, hlam, hFD, -⟩ := hC

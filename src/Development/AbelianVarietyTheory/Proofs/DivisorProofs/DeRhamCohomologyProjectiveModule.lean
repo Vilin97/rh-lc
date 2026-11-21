@@ -26,6 +26,7 @@ namespace GlobalTheory.HdRDescent
 universe u v
 
 
+set_option maxHeartbeats 1000000 in
 theorem baseChange_equiv :
     ∀ (K L O : Type) [Field K] [Field L] [Algebra K L] [CommRing O] (M : Type u) [AddCommGroup M]
     [Module K M] [Module O M] [SMulCommClass K O M] (N : Type v) [AddCommGroup N] [Module L N] [Module O N]

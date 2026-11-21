@@ -14,6 +14,7 @@ open NumberField Matrix GlobalTheory.CuspRep GlobalTheory.GKCoh UpperTheory.V.Af
 open scoped TensorProduct
 
 
+open MeasureTheory GlobalTheory.CuspRep.CuspidalL2GL in
 theorem UpperTheory.V.Lit.Bor.petEx :
     UpperTheory.V.Lit.Bor.PetEx := by
   intro E _ _ _ a ha r

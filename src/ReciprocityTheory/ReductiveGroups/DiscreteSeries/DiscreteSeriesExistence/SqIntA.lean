@@ -146,6 +146,7 @@ theorem star_eq (hone : ρ 1 = 1) (hmul : ∀ a b, ρ (a * b) = (ρ a).comp (ρ 
   rw [← hI, hinv]
 
 
+include hR in
 theorem memLp_of_ne (hone : ρ 1 = 1) (hmul : ∀ a b, ρ (a * b) = (ρ a).comp (ρ b)) (hiso : ∀ g v, ‖ρ g v‖ = ‖v‖)
     (hirr : ∀ S : Submodule ℂ H, IsClosed (S : Set H) → (∀ g, ∀ v ∈ S, ρ g v ∈ S) → S = ⊥ ∨ S = ⊤)
     (w₀ x₀ : H) (hx₀ : x₀ ≠ 0) (h0 : MemLp (fun g => ⟪w₀, ρ g x₀⟫_ℂ) 2 μ) (x : H) :

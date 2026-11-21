@@ -25,6 +25,7 @@ theorem smooth_update {n : ℕ} {L : Fin n → HermLine ι} (hL : ∀ i, IsSmoot
   · simpa [Function.update_of_ne h] using hL i
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem update_comp_swap {m : ℕ} (L : Fin (m + 1) → HermLine ι) (j : Fin (m + 1)) (X : HermLine ι) :
     Function.update L j X ∘ Equiv.swap j (Fin.last m) =
       Fin.snoc (fun i : Fin m => L (Equiv.swap j (Fin.last m) i.castSucc)) X := by

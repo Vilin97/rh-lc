@@ -23,21 +23,26 @@ namespace GlobalTheory.TopFlip
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheory.ChiGrid.Consts} {G : GridData L sc}
 
 
+variable (G) in
 abbrev spX (i j : ℕ) : HSp D := GlobalTheory.Doubling.hsum (spV G i j) (spV₁ G i j)
 
 
+variable (G) in
 def latX (i j : ℕ) : Submodule (𝓞 D.host.E) (Fin (spX G i j).rank → D.host.E) :=
   GlobalTheory.Doubling.sumLat finSumFinEquiv (G.Λ (.grid i (j + 1))) (G.Λ (.grid (i + 1) j))
 
 
+variable (G) in
 def homLatA (i j : ℕ) : AddSubgroup (WO (spW G i j) (spX G i j)) :=
   latO (GlobalTheory.Grid.neg (spW G i j)) (spX G i j) (G.Λ (.grid (i + 1) (j + 1))) (latX G i j) fun _ => True
 
 
+variable (G) in
 def homLatB (i j : ℕ) : AddSubgroup (WO (spW₁ G i j) (spX G i j)) :=
   latO (spW₁ G i j) (spX G i j) (G.Λ (.grid i j)) (latX G i j) fun _ => True
 
 
+variable (G) in
 def orderingsOnSpW (i j : ℕ) : Set (WO (spW G i j) (spX G i j)) :=
   {x | GlobalTheory.RouteSeesaw.topR (A := spV G i j) (B := spV₁ G i j) x ∈
       latO (negSp (spW G i j)) (spV G i j) (G.Λ (.grid (i + 1) (j + 1))) (G.Λ (.grid i (j + 1))) (fun _ => True) ∧
@@ -45,6 +50,7 @@ def orderingsOnSpW (i j : ℕ) : Set (WO (spW G i j) (spX G i j)) :=
       latO (spV₁ G i j) (spW G i j) (G.Λ (.grid (i + 1) j)) (G.Λ (.grid (i + 1) (j + 1))) fun _ => True}
 
 
+variable (G) in
 def orderingsOnSpWOne (i j : ℕ) : Set (WO (spW₁ G i j) (spX G i j)) :=
   {y | GlobalTheory.RouteSeesaw.topR (A := spV G i j) (B := spV₁ G i j) y ∈
       latO (spW₁ G i j) (spV G i j) (G.Λ (.grid i j)) (G.Λ (.grid i (j + 1))) (fun _ => True) ∧
@@ -82,20 +88,24 @@ variable (B : Frames G) (t : T) (i j : Fin D.R.m)
 def frX : GL (Fin (spX G i j).rank) (EAf D) := GlobalTheory.Doubling.blkGL finSumFinEquiv (B.β i (j + 1), -B.β (i + 1) j)
 
 
+variable (G) in
 def colX (w : Pl D.host.E) : Fin (spX G i j).rank ≃ (locGrid G t w).Cols i j :=
   finSumFinEquiv.symm.trans (Equiv.sumCongr (finCongr (rank_vertex G t w (X := (i, j + 1)) ⟨i.2.le, j.2⟩).symm)
     (finCongr (rank_vertex G t w (X := (i + 1, j)) ⟨i.2, j.2.le⟩).symm))
 
 
+variable (G) in
 def ordX (w : Pl D.host.E) :
     (locGrid G t w).Cols i j ≃ Fin ((locGrid G t w).rank (i + 1, j + 1) + (locGrid G t w).rank (i, j)) :=
   (stdSplit ((locGrid G t w).rank_square i j)).symm.trans finSumFinEquiv
 
 
+variable (G) in
 abbrev MatA (w : Pl D.host.E) : Type :=
   Matrix (Fin ((locGrid G t w).rank (i + 1, j + 1))) ((locGrid G t w).Cols i j) (Kw w)
 
 
+variable (G) in
 abbrev MatB (w : Pl D.host.E) : Type := Matrix (Fin ((locGrid G t w).rank (i, j))) ((locGrid G t w).Cols i j) (Kw w)
 
 def linA (w : Pl D.host.E) (x : WO (spW G i j) (spX G i j)) : MatA G t i j w :=
@@ -147,11 +157,13 @@ section Charts
 variable (W : G.Weil) (B : Frames G) (t : T) {i j : Fin D.R.m} (e : Num G i j) (Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j) (w : Pl D.host.E)
 
 
+variable (G i j) in
 abbrev ToA : Type :=
   ((Fin (spW G i j).rank × Fin ((spW G i j).rank + (spW₁ G i j).rank) → Fv D.host.F (w.under (𝓞 D.host.F))) → ℂ) →ₗ[ℂ]
     (MatA G t i j w → ℂ)
 
 
+variable (G i j) in
 abbrev ToB : Type :=
   ((Fin (spW₁ G i j).rank × Fin ((spW G i j).rank + (spW₁ G i j).rank) → Fv D.host.F (w.under (𝓞 D.host.F))) → ℂ) →ₗ[ℂ]
     (MatB G t i j w → ℂ)

@@ -112,6 +112,7 @@ theorem inW_const_mul (a : ℂ) (f : ℂ → ℂ) :
   rfl
 
 
+open Classical in
 def piW (hA : PtWAdd) (hU : Unif l L ι W) : ℂ →+ W.toAffine.Point :=
   AddMonoidHom.mk' (ptW l L ι W) (hA l L ι W hU)
 
@@ -136,6 +137,7 @@ theorem sub_ptW (hA : PtWAdd) (hU : Unif l L ι W) (s t : ℂ) :
   simpa [piW] using h
 
 
+open Classical in
 theorem ptW_int (hA : PtWAdd) (hZ : PtWZero) (hU : Unif l L ι W) (hW : IntCurve W) (t : ℂ) (N : ℕ)
     (hlN : ¬ l ∣ N) (hNt : (N : ℂ) * t ∈ L.lattice) (ht : t ∉ L.lattice) :
     ‖px W (ptW l L ι W t)‖ ≤ 1 ∧ ‖py W (ptW l L ι W t)‖ ≤ 1 :=
@@ -144,6 +146,7 @@ theorem ptW_int (hA : PtWAdd) (hZ : PtWZero) (hU : Unif l L ι W) (hW : IntCurve
     (fun h => ht ((hZ l L ι W hU t).1 h))
 
 
+open Classical in
 theorem restrict (hS : AnalyticSysW) (hA : PtWAdd) (hZ : PtWZero) (hU : Unif l L ι W)
     (hW : IntCurve W) (t : ℂ) (N : ℕ) (hlN : ¬ l ∣ N) (hNt : (N : ℂ) * t ∈ L.lattice) :
     IntPts W ((piW l L ι W hA hU).comp (AddSubgroup.zmultiples t).subtype) ∧
@@ -335,6 +338,7 @@ theorem hW_sim_hW (t₀ a b : ℂ) (M : ℕ) (hM : 0 < M) (ha : (M : ℂ) * a �
 variable {l L ι W}
 
 
+open Classical in
 theorem eW_prod (hS : AnalyticSysW) (hA : PtWAdd) (hU : Unif l L ι W) (P Q : ℂ) (hP : P ∉ L.lattice)
     (hQ : ptW l L ι W Q ≠ 0) :
     eW l L ι W (P + Q) * eW l L ι W (P - Q) =
@@ -363,6 +367,7 @@ theorem eW_prod (hS : AnalyticSysW) (hA : PtWAdd) (hU : Unif l L ι W) (P Q : �
   linear_combination key
 
 
+open Classical in
 theorem hW_prod (hS : AnalyticSysW) (hA : PtWAdd) (hU : Unif l L ι W) (t₀ : ℂ) (M : ℕ) (hM : 0 < M)
     (h0 : (M : ℂ) * t₀ ∈ L.lattice) (h0' : t₀ ∉ L.lattice) (a b p q : ℂ)
     (ha : (M : ℂ) * a ∈ L.lattice) (hb : (M : ℂ) * b ∈ L.lattice) (hp : (M : ℂ) * p ∈ L.lattice)
@@ -405,6 +410,7 @@ end TransW
 open TransW
 
 
+open Classical in
 theorem AnalyticTransW_of (hS : AnalyticSysW) (hA : PtWAdd) (hZ : PtWZero) : AnalyticTransW := by
   intro l _ L ι W hU hW t N _ hlN hNt ht
   obtain ⟨hIP, hTS⟩ := restrict hS hA hZ hU hW t N hlN hNt
@@ -440,6 +446,7 @@ theorem two_mem {t : ℂ} {N : ℕ} (h : (N : ℂ) * t ∈ L.lattice) : ((2 * N 
   exact nsmul_mem h 2
 
 
+open Classical in
 theorem oddCase (hS : AnalyticSysW) (hA : PtWAdd) (hZ : PtWZero) (hU : Unif l L ι W) (hW : IntCurve W)
     (hl2 : l ≠ 2) (ω₀ : ℂ) (hω : ω₀ ∈ L.lattice) (hω2 : ω₀ / 2 ∉ L.lattice)
     (hOne : OneUnit (inW l ι W (th0 L (ω₀ / 2)))) (s : ℂ) (N : ℕ) (hN : 0 < N) (hlN : ¬ l ∣ N)
@@ -480,6 +487,7 @@ theorem oddCase (hS : AnalyticSysW) (hA : PtWAdd) (hZ : PtWZero) (hU : Unif l L 
   exact gaussMul ℂ_[l] _ _ (gaussOne_of_oneUnit hE') (gW_gauss hS hA hZ hU hW _ (2 * N) hN2 m3)
 
 
+open Classical in
 theorem shiftCase (hS : AnalyticSysW) (hA : PtWAdd) (hZ : PtWZero) (hU : Unif l L ι W) (hW : IntCurve W)
     (ω₀ : ℂ) (hω : ω₀ ∈ L.lattice) (hω2 : ω₀ / 2 ∉ L.lattice)
     (hx : ‖px W (ptW l L ι W (ω₀ / 2))‖ ≤ 1)

@@ -23,6 +23,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {v : AddValuation LL (WithTop ℚ)} {n : ℕ} (W : LocWach PD LL O v n)
 
 
+open PowerSeries in
 def ιS (hR : Formalism.MainNotions.UnusedSlot80.ToolsR.RingP W) : PowerSeries O →ₐ[O] PowerSeries O :=
   PowerSeries.substAlgHom (R := O) (PowerSeries.HasSubst.of_constantCoeff_zero'
     (Formalism.MainNotions.UnusedSlot80.ToolsR.π₀₁_cc hR))
@@ -323,6 +324,7 @@ namespace Formalism.MainNotions.CrystallineLiftingInputs.truncatedSeriesData
 open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc
 
 
+set_option maxHeartbeats 400000 in
 theorem gamma_lemma_of_crystalline (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (h9 : Formalism.MainNotions.DeltaInvariantLattices.P9 D HW F) :
     ∀ (l : ℕ) [Fact l.Prime] (K LL : FinExt l) (hg : Good K 1 LL)
       [NeZero (Module.finrank ℚ_[l] ↥(K0 K))], Formalism.MainNotions.N.Pv.LocalLengthBound.WachGammaDerivation ((HW l).W K 1 LL hg) := by

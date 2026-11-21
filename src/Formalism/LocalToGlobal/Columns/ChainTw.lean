@@ -83,6 +83,7 @@ def twCSet {i : ℕ} (st : TwSt X Pr R (QE sel (mu : Chr X.F X.E X.K)) i) (P : t
   {D | ∃ h, Quotient.mk _ h = D ∧ TwCand Ch sel mu cst st P h}
 
 
+open Classical in
 def twCFin {i : ℕ} (st : TwSt X Pr R (QE sel (mu : Chr X.F X.E X.K)) i) (P : twQOff (Pr := Pr) sel mu) :
     Finset (Quotient (twSetoid (Pr := Pr) (R := R) cst.sharp (i + 1) P.1)) :=
   if hf : (twCSet Ch sel mu cst st P).Finite then hf.toFinset else ∅
@@ -93,6 +94,7 @@ def twRep {i : ℕ} (st : TwSt X Pr R (QE sel (mu : Chr X.F X.E X.K)) i) (P : tw
     prCat (Pr := Pr) cst.sharp (i + 1) P.1 h ≤ GLint X.E (R.N (i + 1)) P.1
 
 
+open Classical in
 def twNext {i : ℕ} (st : TwSt X Pr R (QE sel (mu : Chr X.F X.E X.K)) i) : TwSt X Pr R (QE sel (mu : Chr X.F X.E X.K)) (i + 1) where
   β := {d : ∀ P : twQOff (Pr := Pr) sel mu, ↥(twCFin Ch sel mu cst st P) //
     ∀ P : rowSG Pr sel mu, P.1 ∈ Pr.vGs → ∃ al : st.β, FiniteSumNonzeroLargeDepth Ch sel mu cst i P (st.h al P) 1}
@@ -125,6 +127,7 @@ theorem twChiVal_spec {j : ℕ} {P : rowSG Pr sel mu} {h : AutY X R j} {g : Sp X
   exact ⟨_, hs.1, hs.2, rfl⟩
 
 
+variable {Ch sel mu cst} in
 theorem twChiVal_eq {j : ℕ} {P : rowSG Pr sel mu} {h : AutY X R j} (hok : TwChrOk Ch sel mu cst j P h)
     {g : Sp X.E (R.N j) ≃ₗ[X.E] Sp X.E (R.N j)} {r : AutY X R j} (hr : r ∈ Loc.Cbe (Jat (Pr := Pr) cst.sharp j P.1) h)
     (hx : ∀ x, r (Loc.inX X.E (R.N j) (cOf R j) x) = Loc.inX X.E (R.N j) (cOf R j) (g x)) :
@@ -142,6 +145,7 @@ theorem twChiVal_eq {j : ℕ} {P : rowSG Pr sel mu} {h : AutY X R j} (hok : TwCh
   rw [he, e, h1, mul_one]
 
 
+open Classical in
 def twLam (j : ℕ) (P : rowSG Pr sel mu) (h : AutY X R j) :
     ↥((prCat (Pr := Pr) cst.sharp j P.1 h).subgroupOf (GLint X.E (R.N j) P.1)) →* X.Kˣ :=
   if hok : TwChrOk Ch sel mu cst j P h then
@@ -176,6 +180,7 @@ def twLevQ (j : ℕ) (hh : rowSG Pr sel mu → AutY X R j) : LevQFam X.E X.K (R.
     twLam Ch sel mu cst j ⟨P.1, Finset.mem_union_right _ P.2⟩ (hh ⟨P.1, Finset.mem_union_right _ P.2⟩)⟩
 
 
+open Classical in
 def twIdx (m2 : ℕ) : ChIdx X Pr R (QE sel (mu : Chr X.F X.E X.K)) where
   β j := (twSt Ch sel mu cst m2 j).β
   finβ j := (twSt Ch sel mu cst m2 j).fin
@@ -194,6 +199,7 @@ def twZeta (σ₀ : X.K →+* ℂ) (N : ℕ) : X.K :=
   @Classical.epsilon _ ⟨1⟩ fun z => σ₀ z = Complex.exp (2 * Real.pi * Complex.I / (N : ℂ))
 
 
+open Classical in
 def twPsiQ (σ₀ : X.K →+* ℂ) (xi0 : X.E) (P : HeightOneSpectrum (𝓞 X.E)) (D : ℕ) (a : X.E) : X.K :=
   if hb : ∃ b : ℤ, IntAt P ((qOf P : X.E) ^ D * a) ∧ IntAt P (xi0 * a - (b : X.E) / (qOf P : X.E) ^ D) then
     twZeta σ₀ (qOf P ^ D) ^ hb.choose else 1
@@ -205,11 +211,13 @@ variable (Ch : Chars X Pr R.m) (sel : HeightOneSpectrum (𝓞 X.F) → HeightOne
 open Classical
 
 
+open Classical in
 def twMuq (G : ChGlob X R.m) (j : ℕ) (P : rowSG Pr sel mu) : X.K :=
   if P.1 ∈ Pr.vGs then ciMuq G (mu : Chr X.F X.E X.K) j P
   else if hj : j - 1 < R.m then (((Ch.muVal ⟨j - 1, hj⟩ P.1)⁻¹ * (qValC (mu : Chr X.F X.E X.K) P.1)⁻¹ : X.Kˣ) : X.K) else 1
 
 
+open Classical in
 def twCst (G : ChGlob X R.m) : LocCst X (rowSG Pr sel mu) where
   psi P := if P.1 ∈ Pr.vGs then ciPsi Ch P else twPsiQ G.σ₀ G.xi0 P.1 (2 * R.m)
   D P := if P.1 ∈ Pr.vGs then 1 else 2 * R.m

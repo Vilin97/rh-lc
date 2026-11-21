@@ -131,6 +131,7 @@ theorem snd_phi {B O : Type} [CommRing B] [Algebra ℂ B] [CommRing O] [Algebra 
     (h : ∀ (b : B) ω, ℓ (b • ω) = α b • ℓ ω) (c : TrivSqZeroExt B Ω[B⁄ℂ]) : (phi α ℓ h c).snd = ℓ c.snd := zero_add _
 
 
+set_option maxHeartbeats 1600000 in
 def Phi (U : A.left.affineOpens) (ℓ : Ω[Sec (str A) U.1⁄ℂ] →+ (Fin g → Hol (W u U.1)))
     (h : ∀ b ω, ℓ (b • ω) = valHom u U.1 b • ℓ ω) :
     (diagExt ℂ (Sec (str A) U.1)).thick (affPt (str A) U) (affPt_w _ U) ⟶ (rl u).obj ((ch u).jet U) where
@@ -210,6 +211,7 @@ theorem jet_alg {B O : Type} [CommRing B] [Algebra ℂ B] [CommRing O] [Algebra 
   exact z2.trans (sub_zero _)
 
 
+set_option maxHeartbeats 1600000 in
 theorem jet_eq (f : Z1 (O (dp0 ℂ) (str A))) (U : A.left.affineOpens) (ℓ : Ω[Sec (str A) U.1⁄ℂ] →+ (Fin g → Hol (W u U.1)))
     (h : ∀ b ω, ℓ (b • ω) = valHom u U.1 b • ℓ ω)
     (hD : ∀ b a, ℓ (KaehlerDifferential.D ℂ _ b) a = dw a (valHom u U.1 b)) (G0 : Hol (W u U.1)) (Gj κ : TrivSqZeroExt (Hol (W u U.1)) (Fin g → Hol (W u U.1)))
@@ -237,6 +239,7 @@ theorem lift_fn (U : A.left.Opens) (ℓ : Ω[Sec (str A) U⁄ℂ] →+ (Fin g �
   | smul b x _ hx => rw [h, e2, Pi.smul_apply, smul_eq_mul, Hol.fn_mul _ _ hp, hx, fn_valHom u U b hp]; rfl
 
 
+set_option maxHeartbeats 800000 in
 theorem main : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u : HolUnif A L g), ∀ (c : FirstDeRham (str A)) (q : u.Λ →+ ℂ) (per : u.Λ →+ Hol (fibFam u).V), (∀ l, per l = algebraMap ℂ _ (q l)) → IsPeriod (fibUnif u) c per → IsPer u.ex u.Λ (cmp1 (str A) c) q := by
   intro A _ g L u c q per hper hP
   obtain ⟨f, rfl⟩ := H1.mk_surjective _ c

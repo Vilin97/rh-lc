@@ -27,6 +27,7 @@ theorem tate_d_iCycles (A : Rep k G) (n : ℕ) (z : (tateComplex A).cycles n) :
   exact h
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem tateIsoH_homology_class_eq (A : Rep k G) (n : ℕ) [NeZero n] :
     ∃ C : (tateComplex A).cycles n ⟶ cocycles A n,
       (tateComplex A).homologyπ n ≫ (tateIsoH A n n rfl).hom = C ≫ π A n ∧
@@ -82,6 +83,7 @@ noncomputable abbrev tδ {S : ShortComplex (Rep k G)} (hS : S.ShortExact) (i j :
   (TateCohomology.map_tateComplexFunctor_shortExact hS).δ i j hij
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem tδ_apply {S : ShortComplex (Rep k G)} (hS : S.ShortExact) (i : ℤ)
     (x₃ : (tateComplex S.X₃).X i) (hx₃ : ((tateComplex S.X₃).d i (i + 1)).hom x₃ = 0)
     (x₂ : (tateComplex S.X₂).X i) (hx₂ : ((tateComplex.map S.g).f i).hom x₂ = x₃)
@@ -94,6 +96,7 @@ theorem tδ_apply {S : ShortComplex (Rep k G)} (hS : S.ShortExact) (i : ℤ)
     (i + 1 + 1) (by simp)
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem tδ_comp_tateIsoH {S : ShortComplex (Rep k G)} (hS : S.ShortExact) (n : ℕ) [NeZero n] :
     tδ hS n (n + 1) rfl ≫ (tateIsoH S.X₁ (n + 1) (n + 1) (Nat.cast_succ n).symm).hom =
       (tateIsoH S.X₃ n n rfl).hom ≫ δ hS n (n + 1) rfl := by
@@ -200,6 +203,9 @@ variable (Q : ShortComplex (ShortComplex (Rep k G)))
   (hC₃ : (Q.map ShortComplex.π₃).ShortExact)
 
 
+include hR₂ hC₂ in
+set_option backward.isDefEq.respectTransparency false in
+set_option maxHeartbeats 800000 in
 theorem tδ_comp_tδ (p : ℤ) :
     tδ hC₃ p (p + 1) rfl ≫ tδ hR₁ (p + 1) (p + 1 + 1) rfl =
       -(tδ hR₃ p (p + 1) rfl ≫ tδ hC₁ (p + 1) (p + 1 + 1) rfl) := by

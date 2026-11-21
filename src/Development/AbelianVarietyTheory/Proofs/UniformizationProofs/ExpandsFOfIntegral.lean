@@ -111,6 +111,7 @@ variable {S₀ S₁ : Scheme.{0}} {G : Over S₀} [GrpObj G] {A : Over S₁} [Gr
   {L₀ : LB G.left} {L₁ : LB A.left}
 
 
+include hp hτ in
 theorem exists_psi : ∃ ψ : (T ⊗ A).left ⟶ (T₀ ⊗ G).left, IsPullback ψ (fst T A).left (fst T₀ G).left τ ∧
     ψ ≫ (snd T₀ G).left = (snd T A).left ≫ φ ∧ ψ = (psiO hp τ hτ).left := by
   refine ⟨(psiO hp τ hτ).left, ?_, psi_snd hp τ hτ, rfl⟩

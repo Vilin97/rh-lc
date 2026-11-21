@@ -91,6 +91,7 @@ lemma memJ_right (h : Hyp ε E) (i j : ℕ) {x y : Module.End ℂ V} (hy : y ∈
     · simp only [add_mul, Finset.sum_mul, mul_sub, mul_assoc, Finset.sum_sub_distrib]; abel
 
 
+variable (ε E) in
 def Rr (h : Hyp ε E) : Subalgebra ℂ (Module.End ℂ V)[X] where
   carrier := {f | ∀ k, f.coeff k ∈ U E k}
   mul_mem' {f g} hf hg k := by
@@ -105,6 +106,7 @@ def Rr (h : Hyp ε E) : Subalgebra ℂ (Module.End ℂ V)[X] where
     · exact zero_mem _
 
 
+variable (ε E) in
 def inJ (f : (Module.End ℂ V)[X]) : Prop := ∀ k, f.coeff k ∈ Jk ε E k
 
 lemma inJ_mul_right (h : Hyp ε E) {x g : (Module.End ℂ V)[X]} (hx : inJ ε E x) (hg : g ∈ Rr ε E h) :
@@ -133,6 +135,7 @@ lemma inJ_comm (h : Hyp ε E) {f g : (Module.End ℂ V)[X]} (hf : f ∈ Rr ε E 
     rwa [Finset.HasAntidiagonal.mem_antidiagonal.mp hx, Nat.add_sub_cancel] at this
 
 
+variable (ε E) in
 def con (h : Hyp ε E) : RingCon (Rr ε E h) where
   r f g := inJ ε E ((f : (Module.End ℂ V)[X]) - g)
   iseqv := ⟨fun f k => by simp,
@@ -151,6 +154,7 @@ def con (h : Hyp ε E) : RingCon (Rr ε E h) where
     exact add_mem (inJ_mul_right h h1 c.2 k) (inJ_mul_left h h2 b.2 k)
 
 
+variable (ε E) in
 abbrev Q (h : Hyp ε E) := (con ε E h).Quotient
 
 instance instCR (h : Hyp ε E) : CommRing (Q ε E h) :=

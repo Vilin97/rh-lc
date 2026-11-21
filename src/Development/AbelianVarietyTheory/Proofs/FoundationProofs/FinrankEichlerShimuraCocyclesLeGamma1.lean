@@ -189,6 +189,7 @@ end GlobalTheory.HeckeFamilyMatrices.CocBound
 namespace GlobalTheory.HeckeFamilyMatrices
 
 
+open CocBound ModularGroup in
 theorem finrank_eichlerShimuraCocycles_le_Gamma1 (N : ℕ) (Γ : Subgroup SL(2, ℤ)) (w : ℕ) (hN : 5 ≤ N)
     (hΓ : Γ ≤ CongruenceSubgroup.Gamma1 N) (hfi : Γ.FiniteIndex) :
     FiniteDimensional ℂ (Z1 Γ w) ∧ 12 * Module.finrank ℂ (Z1 Γ w) ≤ (w + 1) * (12 + Γ.index) := by

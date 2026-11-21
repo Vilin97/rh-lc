@@ -91,6 +91,7 @@ namespace GenIso
 def ofHom (ψ : E' ⟶ E) [IsIso (Z.genRes.map ψ)] : Z.GenIso E E' := (asIso (Z.genRes.map ψ)).symm
 
 
+variable (E) in
 def smul (g : O) (hg : g ≠ 0) : Z.GenIso E E :=
   haveI := isIso_genRes_map_smulHom E hg
   ofHom (smulHom E (Z.const g))
@@ -259,6 +260,7 @@ instance mono_ι (i : Fin (N + 1)) : Mono (fl.ι i) := (fl.isSubbundle i).mono
 instance mono_step (i : Fin N) : Mono (fl.step i) := mono_of_mono_fac (fl.step_ι i)
 
 
+include fl in
 theorem isVB_self : IsVB E N := (fl.isVB (Fin.last N)).of_iso (asIso (fl.ι _))
 
 def gr (i : Fin N) : X.Modules := cokernel (fl.step i)
@@ -295,6 +297,7 @@ def ofIso {E' : X.Modules} (e : E ≅ E') : Flag E' N where
   isIso_last := inferInstance
 
 
+open ZeroObject in
 def ofRankOne {L : X.Modules} (h : IsVB L 1) : Flag L 1 where
   F := ![0, L]
   ι := Fin.cons 0 (Fin.cons (𝟙 L) finZeroElim)
@@ -306,6 +309,7 @@ def ofRankOne {L : X.Modules} (h : IsVB L 1) : Flag L 1 where
   isIso_last := IsIso.id L
 
 
+open ZeroObject in
 def ofBiprod {L M : X.Modules} (hL : IsVB L 1) (hM : IsVB M 1) : Flag (L ⊞ M) 2 where
   F := ![0, L, L ⊞ M]
   ι := Fin.cons 0 (Fin.cons biprod.inl (Fin.cons (𝟙 _) finZeroElim))

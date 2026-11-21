@@ -18,6 +18,7 @@ def strictCone (ϖ : kˣ) (r : ℕ) : Set (Fin r → kˣ) :=
   {t | ∃ a : Fin r → ℤ, StrictAnti a ∧ t = fun i => ϖ ^ a i}
 
 
+open Classical in
 def IsExp {r : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin r) k) V)
     (E : Multiset ((Fin r → kˣ) →* ℂˣ)) : Prop :=
   ∀ χ, expMult π χ = (E.count χ : ℕ∞)

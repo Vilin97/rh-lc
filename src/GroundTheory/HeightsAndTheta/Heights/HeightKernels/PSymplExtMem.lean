@@ -36,6 +36,7 @@ lemma row_inr (i : Fin n) :
 end PSymplExtMem
 
 
+open PSymplExtMem in
 theorem SymplExtMem.proof (h1 : SymplOmegaMem.Statement) (h2 : SymplCons.Statement) :
     SymplExtMem.Statement := by
   intro R _ n α β γ δ Q hdet hQ

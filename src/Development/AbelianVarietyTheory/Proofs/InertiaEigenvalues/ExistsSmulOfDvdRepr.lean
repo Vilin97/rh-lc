@@ -52,6 +52,7 @@ theorem exists_smul_of_dvd_repr {A M ι : Type} [CommRing A] [AddCommGroup M] [M
   exact congrArg Subtype.val key
 
 
+set_option maxHeartbeats 1000000 in
 theorem ex_of_val {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P} {H : LocHW l P}
     {F : LocFon l P AI H} (C : LocCmpT l P AI H F) {K : FinExt l} {s : ℕ} {LL : FinExt l}
     (h : Good K s LL) (T : Lt K LL) (hT : IsCrys (P.PD K) T.ρ) (i : Let K) (ζ : ↥LL.1) (m : ℕ)
@@ -69,6 +70,7 @@ theorem ex_of_val {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P} {
     ((H.W K s LL h).N_Γ T g x x.2) k
 
 
+set_option maxHeartbeats 1000000 in
 theorem sub_mem_X_of_val : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (_ : CmpOf D.loc D.locA HW F) (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l)
     (h : Good K s LL), let W := (HW l).W K s LL h;
@@ -98,6 +100,7 @@ theorem sub_mem_X_of_val : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc)
     rfl
 
 
+set_option maxHeartbeats 1000000 in
 theorem gam_mod_π_mod_X : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (_ : CmpOf D.loc D.locA HW F) (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l)
     (h : Good K s LL), let W := (HW l).W K s LL h;

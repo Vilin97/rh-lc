@@ -123,6 +123,7 @@ theorem chi_ne {s : SL(2, ℤ)} (hs : s ∈ Gamma0 N) : χ ((s 1 1 : ℤ) : ZMod
   exact ((IsUnit.of_mul_eq_one _ (by rw [mul_comm]; exact hd')).map χ).ne_zero
 
 
+variable (N) in
 def decU (g : AdelicGL ℚ 2) : FiniteAdelicGL ℚ 2 :=
   (decompGL_spec N g).2.choose_spec.choose
 

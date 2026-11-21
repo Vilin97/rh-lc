@@ -32,6 +32,7 @@ theorem sigma_rem (I : ∀ k, Finset (ι k)) (p : Σ k, ι k) :
     simp [hk]
 
 
+omit [Fintype K] in
 theorem rem_rem_comm (I : ∀ k, Finset (ι k)) (p q : Σ k, ι k) :
     rem (rem I p) q = rem (rem I q) p := by
   obtain ⟨k, i⟩ := p
@@ -44,6 +45,7 @@ theorem rem_rem_comm (I : ∀ k, Finset (ι k)) (p q : Σ k, ι k) :
       Function.update_comm (Ne.symm hk)]
 
 
+omit [∀ k, LinearOrder (ι k)] in
 theorem offset_update (I : ∀ k, Finset (ι k)) (k : K) (X : Finset (ι k)) :
     ∑ l ∈ Finset.univ.filter (· < k), ((Function.update I k X l).card - 1) =
       ∑ l ∈ Finset.univ.filter (· < k), ((I l).card - 1) :=
@@ -192,6 +194,7 @@ theorem cellD_apply_not (y : (Σ k, ι k) → Ω) (m : ℕ) (t : Cell K ι m →
   simp only [cellD, LinearMap.pi_apply, if_neg hJ, LinearMap.zero_apply]
 
 
+omit [∀ k, Fintype (ι k)] [Fintype K] [Algebra S Ω] in
 theorem meets_rem {y : (Σ k, ι k) → Ω} {I : ∀ k, Finset (ι k)} (hI : CellMeets y I) (p : Σ k, ι k) :
     CellMeets y (rem I p) := by
   obtain ⟨k, i⟩ := p
@@ -204,6 +207,7 @@ theorem meets_rem {y : (Σ k, ι k) → Ω} {I : ∀ k, Finset (ι k)} (hI : Cel
     exact hI l j hj
 
 
+omit [∀ k, Fintype (ι k)] [Algebra S Ω] in
 theorem rem_isCell {m : ℕ} (J : Cell K ι (m + 1)) {k : K} {i : ι k} (hi : i ∈ J.1 k)
     (hne : ((J.1 k).erase i).Nonempty) :
     (∀ l, (rem J.1 ⟨k, i⟩ l).Nonempty) ∧ ∑ l, ((rem J.1 ⟨k, i⟩ l).card - 1) = m := by
@@ -229,6 +233,7 @@ theorem ext_of_empty {m : ℕ} (t : Cell K ι m → Ω) {J : ∀ k, Finset (ι k
 end CellDSq
 
 
+open CellDSq in
 theorem CellDSq.proof : CellDSq.Statement := by
   intro S _ K _ _ ι _ _ Ω _ _ y n s
   funext I

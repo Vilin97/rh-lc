@@ -37,6 +37,7 @@ theorem col_equiv (a : IrrGL (k := k)) {α : Type} [Fintype α] [LinearOrder α]
   GlobalTheory.T.multi_product_single_factor_equiv a b i₀ hb hb0 g
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem interleave_embed {T : Type 1} {u v w : List T} (h : Zc.Comb.Interleave u v w) :
     ∃ (r : Fin w.length → Fin 2) (σ₀ : Fin u.length ↪o Fin w.length) (σ₁ : Fin v.length ↪o Fin w.length),
       (∀ j, r j = 0 ↔ j ∈ Set.range σ₀) ∧ (∀ j, r j = 1 ↔ j ∈ Set.range σ₁) ∧

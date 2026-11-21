@@ -110,6 +110,7 @@ theorem capS_eq (τ : E →+* ℂ) (u : ℂ) : capS r s τ u = Formalism.REAL.qd
 theorem commute_val {x y : Pa (Vsp r s m) (Isp r s m)} (h : Commute x.1 y.1) : Commute x y := Subtype.ext h
 
 
+set_option maxHeartbeats 1000000 in
 theorem trace_ss (hm : ∀ τ, (m τ).Nodup ∧ Multiset.card (m τ) = r + s) (τ : E →+* ℂ) :
     ∃ x : Pa (Vsp r s m) (Isp r s m), x.1 = Tr1 r s τ ∧ IsSS (piQ (Vsp r s m) (Isp r s m) x) := by
   classical

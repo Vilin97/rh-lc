@@ -22,6 +22,7 @@ abbrev CechC (S : Type*) [CommRing S] {K : Type*} [Fintype K] (ι : K → Type*)
   ∀ I : Cell K ι n, LocalizedModule (cellMon S I.1) M
 
 
+open Classical in
 def cellRes (S : Type*) [CommRing S] {K : Type*} {ι : K → Type*} (M : Type*) [AddCommGroup M]
     [Module (MRingOver S ι) M] (J I : ∀ k, Finset (ι k)) :
     LocalizedModule (cellMon S J) M →ₗ[MRingOver S ι] LocalizedModule (cellMon S I) M := by

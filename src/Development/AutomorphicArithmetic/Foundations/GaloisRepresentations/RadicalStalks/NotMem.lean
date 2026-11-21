@@ -66,6 +66,7 @@ private lemma divA {w B : Ideal C} (hw : w.IsMaximal) (hw0 : w ≠ ⊥) {a : C}
   rwa [Ideal.dvd_iff_le, Ideal.span_singleton_le_iff_mem] at h2
 
 
+set_option maxHeartbeats 200000 in
 private lemma exPar (p : ℕ) (hp0 : (p : C) ≠ 0) {w : Ideal C} (hw : w.IsMaximal)
     (hpw : (p : C) ∈ w) (f : ℕ) (hf : 0 < f) : Nonempty (Par p w f) := by
   have hw0 : w ≠ ⊥ := by

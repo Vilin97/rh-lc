@@ -36,6 +36,9 @@ theorem complexConj_eq_neg_of_sq_eq_neg {x : E} {n : ℕ} (hx : x ^ 2 = -(n : E)
   apply Complex.ext <;> simp [h0]
 
 
+open NumberField in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
+omit [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.HostModel.coe_sq_eq_neg {x : 𝓞 E} {n : ℕ} (hx : x ^ 2 = -(n : 𝓞 E)) : (x : E) ^ 2 = -(n : E) := by
   have h := congrArg (fun y : 𝓞 E => (y : E)) hx
   simpa using h
@@ -52,6 +55,8 @@ theorem sub_complexConj_eq_of_two_mul {w x : 𝓞 E} {n : ℕ} (hx : x ^ 2 = -(n
   linear_combination hw - h
 
 
+open NumberField in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.HostModel.exists_embedding_rt_eq (H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) : ∃ τ : E →+* ℂ, τ (H.rt : E) = H.rt0 := by
   let φ : E →+* ℂ := (IsAlgClosed.lift : E →ₐ[ℚ] ℂ).toRingHom
   set w := φ (H.rt : E) with hw
@@ -119,6 +124,7 @@ private theorem isPrimitiveRoot_hostModel_primitiveRoot21 :
   (IsCyclotomicExtension.zeta_spec 21 ℚ _root_.GlobalTheory.HostModel.E21).toInteger_isPrimitiveRoot
 
 
+open NumberField in
 theorem _root_.GlobalTheory.HostModel.sqrtNegSeven_sq : _root_.GlobalTheory.HostModel.sqrtNegSeven ^ 2 = -((7 : ℕ) : 𝓞 _root_.GlobalTheory.HostModel.E21) := by
   have hz := isPrimitiveRoot_hostModel_primitiveRoot21
   have hω : IsPrimitiveRoot (_root_.GlobalTheory.HostModel.primitiveRootCyclotomicField21 ^ 3) 7 := hz.pow (by norm_num) (by norm_num)
@@ -172,6 +178,7 @@ private theorem isUnit_one_sub_of_isPrimitiveRoot_twentyOne {R : Type*} [CommRin
   exact IsUnit.of_mul_eq_one _ h1
 
 
+open NumberField in
 theorem _root_.GlobalTheory.HostModel.unramified_E21_over_maximalRealSubfield : Algebra.Unramified (𝓞 (maximalRealSubfield _root_.GlobalTheory.HostModel.E21)) (𝓞 _root_.GlobalTheory.HostModel.E21) := by
   set ζ := _root_.GlobalTheory.HostModel.primitiveRootCyclotomicField21
   have hz : IsPrimitiveRoot ζ 21 := isPrimitiveRoot_hostModel_primitiveRoot21

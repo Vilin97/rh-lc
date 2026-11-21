@@ -27,6 +27,7 @@ noncomputable section
 namespace PositivityTheory.HtPt.Rg
 
 
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory GlobalTheory.CM GlobalTheory.LamF GlobalTheory.CechPic GlobalTheory.TripleProd ReciprocityTheory.GeometryOfNumbersTheory Formalism.L2.LamCM in
 theorem ample_prod : ∀ (R : Type) [CommRing R] (A A' : Over (Spec (CommRingCat.of R))) [GrpObj A] [GrpObj A'] (L : LB A.left) (L' : LB A'.left), IsAbelianScheme A → L.IsLB → Out.RelAmple A L → IsAbelianScheme A' → L'.IsLB → Out.RelAmple A' L' → IsAbelianScheme (A ⊗ A') ∧ ∃ M : LB (A ⊗ A').left, M.IsLB ∧ Out.RelAmple (A ⊗ A') M := by
   intro R _ A A' _ _ L L' hA hL hLa hA' hL' hLa'
   have hAA := ReciprocityTheory.ChartRestriction.G.Geo.Tor.AbelianSchemeGerms.isAbelianScheme_tensor A A' hA hA'

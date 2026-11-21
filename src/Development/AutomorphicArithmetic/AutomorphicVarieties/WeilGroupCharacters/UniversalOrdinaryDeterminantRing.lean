@@ -150,6 +150,7 @@ structure Pair (R : Type) [CommRing R] [Algebra O R] [IsCO O R] : Type 1 where
   I : ∀ u, ∀ g ∈ r.Ip u, ∀ h : F.G₀, D.tr (MonoidAlgebra.single h 1 * (MonoidAlgebra.single g 1 - 1)) = 0
 
 
+variable {r} in
 def Pair.Maps {R A : Type} [CommRing R] [Algebra O R] [IsCO O R] [CommRing A] (p : Pair r R) (f : R →+* A)
     (D : GDet n A F.G₀) (ψ : ∀ v, Fin n → F.Gv v →* Aˣ) : Prop :=
   p.D.map f = D ∧ ∀ v i, pushCh f (p.ψ v i) = ψ v i
@@ -181,6 +182,7 @@ structure LamObj : Type 1 where
 attribute [instance] LamObj.ring LamObj.alg LamObj.co
 
 
+variable {r} in
 def LamObj.toPair (Λ : LamObj r) {R : Type} [CommRing R] [Algebra O R] [IsCO O R] (p : Pair r R) : Λ.Λ →ₐ[O] R :=
   (Λ.univ R (fun v i => (p.ψ v i).comp (F.Iv v).subtype) fun v i => ⟨_, p.psi v i, rfl⟩).choose
 

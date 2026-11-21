@@ -480,6 +480,7 @@ theorem adjZ_of_mem {Y : Mat p q} (hY : Y ∈ upq p q) : adjZ Y = -Y := by
   rw [adjZ, Matrix.mul_assoc, h, Matrix.mul_neg, ← Matrix.mul_assoc, KStabLie.Jm_sq, Matrix.one_mul]
 
 
+open DerivedAdjoint in
 theorem covariance (F : FockData T0 T1 T2) (g : T1.G) (Z : Mat p q) (P Q : Pol p q r s) :
     inner ℂ (F.ι Q) (F.π (g, 1) (F.ι (fockAct1 p q r s Z P))) =
       inner ℂ (F.ι (fockAct1 p q r s (adjZ (matG T1 g * Z * matG T1 g⁻¹)) Q)) (F.π (g, 1) (F.ι P)) := by

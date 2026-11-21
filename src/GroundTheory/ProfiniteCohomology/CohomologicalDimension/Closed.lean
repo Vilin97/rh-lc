@@ -57,6 +57,7 @@ theorem exists_mem_inv_mul_mem {x : G} (hx : x ∈ H ⊔ V) : ∃ h ∈ H, h⁻�
   exact ⟨h, hh, by rwa [inv_mul_cancel_left]⟩
 
 
+variable (H V) in
 noncomputable def supSection (x : ↥(H ⊔ V)) : ↥H :=
   ⟨(exists_mem_inv_mul_mem H V x.2).choose, (exists_mem_inv_mul_mem H V x.2).choose_spec.1⟩
 
@@ -65,10 +66,12 @@ theorem supSection_spec (x : ↥(H ⊔ V)) : ((supSection H V x : G))⁻¹ * x �
   (exists_mem_inv_mul_mem H V x.2).choose_spec.2
 
 
+variable (V) in
 def ConstOnCosets {X : Type*} {n : ℕ} (c : (Fin n → H) → X) : Prop :=
   ∀ x y : Fin n → H, (∀ i, ((x i : G))⁻¹ * (y i : G) ∈ V) → c x = c y
 
 
+variable (V) in
 noncomputable def supExtend {X : Type*} {n : ℕ} (c : (Fin n → H) → X) : (Fin n → ↥(H ⊔ V)) → X :=
   fun x => c fun i => supSection H V (x i)
 

@@ -60,6 +60,7 @@ variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchi
   {W : Type*} [AddCommGroup W] [Module ℂ W] {σ : Representation ℂ (levi F n β) W}
 
 
+variable (F n) in
 theorem exists_reps_congruenceSubgroup (m : ℕ) :
     ∃ R : Finset (GL (Fin n) F), (∀ x ∈ R, x ∈ integralGL F n) ∧
       ∀ k ∈ integralGL F n, ∃ x ∈ R, x⁻¹ * k ∈ congruenceSubgroup F n m := by

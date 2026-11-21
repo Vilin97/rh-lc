@@ -13,6 +13,7 @@ namespace GlobalTheory.CMVal.TermUnit
 variable {E : Type} [Field E] [NumberField E] {I : Type} [Fintype I]
 
 
+omit [NumberField E] [Fintype I] in
 theorem bijective_mk {φ : I → E →+* ℂ} (h : IsCMType φ) :
     Function.Bijective (fun i => InfinitePlace.mk (φ i)) := by
   constructor

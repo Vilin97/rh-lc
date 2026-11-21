@@ -25,6 +25,7 @@ variable {k : Type u} [Field k] {X : Scheme.{u}} [X.Over (Spec (.of k))] [IsInte
   [IsFunctionField k X.functionField]
 
 
+omit [IsProper (X ↘ Spec (.of k))] [IsFunctionField k X.functionField] in
 noncomputable def invertibleDegree {L : X.Modules} (hL : IsInvertibleSheaf L) : ℤ :=
   WeilDivisor.degree (k := k) (divisorOfInvertible hL)
 

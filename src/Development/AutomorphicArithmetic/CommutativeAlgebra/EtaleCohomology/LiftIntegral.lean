@@ -301,6 +301,7 @@ end Sch
 end UpperTheory.Ru.crystallineComparison
 
 
+open CategoryTheory Limits AlgebraicGeometry UpperTheory.Gal.crystallineComparison in
 theorem UpperTheory.Ru.crystallineComparison.splitEx :
     UpperTheory.Ru.crystallineComparison.SplitEx := by
   intro l hl Y T U _ hnz hcl hsec y

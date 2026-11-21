@@ -240,6 +240,8 @@ private theorem exists_sq_near_of_valuation_two_lt_one {K : Type} [Field K] (w :
   exact ⟨y.1, y.2, by rwa [← Valuation.map_neg, neg_sub]⟩
 
 
+open NumberField IsDedekindDomain in
+open scoped WithZero in
 theorem _root_.GlobalTheory.QNorm.exists_normal_form_of_not_isSquare : ∀ (F : Type) [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) (δ : v.adicCompletion F), δ ≠ 0 → ¬ IsSquare δ → ∃ c : v.adicCompletion F, c ≠ 0 ∧ ((∃ n : ℤ, Valued.v (δ * c ^ 2) = WithZero.exp (2 * n + 1)) ∨ (Valued.v (δ * c ^ 2) = 1 ∧ Valued.v (4 : v.adicCompletion F) < Valued.v (δ * c ^ 2 - 1) ∧ ∃ n : ℤ, Valued.v (δ * c ^ 2 - 1) = WithZero.exp (2 * n + 1)) ∨ _root_.GlobalTheory.QNorm.EvenNorms Valued.v (δ * c ^ 2)) := by
   intro F _ _ v δ hδ0 hδsq
   obtain ⟨⟨π₀, -, hπ⟩, -, -, R, -, hR, hcov⟩ := _root_.GlobalTheory.QNorm.exists_uniformizer_and_residue_representatives F v

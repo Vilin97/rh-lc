@@ -279,6 +279,7 @@ theorem inf_toAddSubgroup {R V : Type} [Ring R] [AddCommGroup V] [Module R V] (p
     (p ⊓ q).toAddSubgroup = p.toAddSubgroup ⊓ q.toAddSubgroup := rfl
 
 
+open Classical in
 theorem pathCount_eq_card_middle (P Q : HeightOneSpectrum (𝓞 E)) (i j : ℕ) (d f : DecoSet E n ST SG) :
     decorationPathCount P.asIdeal Q.asIdeal i j d f =
       Nat.card {e : DecoSet E n ST SG // e ∈ d.heckeSet P.asIdeal i ∧ f ∈ e.heckeSet Q.asIdeal j} := by

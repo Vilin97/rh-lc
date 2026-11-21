@@ -268,6 +268,7 @@ end GlobalTheory.SW.Repro
 namespace GlobalTheory.SW
 
 
+open Repro in
 theorem kern_reproducing : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (X : Data E r) (g q0 : ℕ) (hr : X.p0 + q0 = r) (idx : Fin g ≃ X.Ψ × Fin r) (n : ℕ) (c : X.Ψ → Fin q0 → ℕ) (c' : X.Ψ → Fin X.p0 → ℕ) (m : ℕ) (P : Fin m → Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)), Even n → (∀ j, P j ∈ Harm.rowHighest ℂ c c') → 2 * r ≤ n → (∃ j, P j ≠ 0) → ∃ δ₁ : ℝ, 0 < δ₁ ∧ ∀ δ : ℝ, 0 < δ → δ ≤ δ₁ → ∃ a : ℝ, 0 < a ∧ ∀ F : Frame X.Ψ r → ℂ, DifferentiableOn ℂ F X.dom → (∀ x ∈ X.dom, ∀ b ∈ Bor X.Ψ r, F (rmul x b) = bchar (wtOf X hr c c' n) b * F x) → (∃ C : ℝ, ∀ x ∈ X.dom, X.pnorm (wtOf X hr c c' n) F x ≤ C) → ∀ x₁ ∈ X.dom, ∫ x₂ in slab X δ, kern X hr idx P x₁ x₂ * F x₂ = a * F x₁ := by
   intro E _ _ _ r X g q0 hr idx n c c' m P hn hP hrn hP0
   have _ := isAddHaarMeasure_volume X

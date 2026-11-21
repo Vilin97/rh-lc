@@ -66,6 +66,7 @@ def lev (S : Finset (Fin n)) : Fin n ⊕ Fin n → ℕ
   | Sum.inr i => 2 * S.card - below S i
 
 
+variable (σ Y) in
 def parS (b : GL (Fin n ⊕ Fin n) E) (S : Finset (Fin n)) : Subgroup (G2 σ Y) where
   carrier := {g | (inFrame b g).BlockTriangular (lev S)}
   mul_mem' := fun {x y} hx hy => by

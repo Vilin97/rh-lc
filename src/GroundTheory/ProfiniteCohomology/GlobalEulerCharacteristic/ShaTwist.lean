@@ -42,6 +42,7 @@ theorem sum_coordTensor_tmul (z : TensorProduct k H N) : ∑ i, coordTensor b i 
     rw [Finset.sum_add_distrib, hz, hw]
 
 
+omit [Fintype ι] in
 theorem coordTensor_rTensor {X : Type*} [AddCommGroup X] [Module k X] (f : X →ₗ[k] H) (i : ι)
     (w : TensorProduct k X N) : coordTensor b i (f.rTensor N w) = f (coordTensor b i w) := by
   induction w using TensorProduct.induction_on with
@@ -91,6 +92,7 @@ theorem cohomologyMap_resTensorFormMor_twistResMap (f : M →ₗ[k] k) (n : ℕ)
   rfl
 
 
+omit [Fintype ιb] in
 theorem cohomologyMap_resTensorFormMor_coord_twistResMap (n : ℕ) (i : ιb)
     (z : TensorProduct k (cohomology (Rep.res Q.subtype T) n) M) :
     (cohomologyMap (resTensorFormMor Q T M hM (b.coord i)) n).hom (twistResMap Q T M hM n z) =
@@ -166,6 +168,7 @@ theorem mem_shaSubmodule_iff_coprimeTwistEquiv {ιb : Type*} [Fintype ιb]
     (homRep_ρ_of_mem P T M hT hM) b n _
 
 
+include hTr hP in
 theorem finrank_shaSubmodule_eq_finrank_invariants (n : ℕ) {X : Type u} [AddCommGroup X] [Module k X]
     (ρX : Representation k (G ⧸ (P : Subgroup G)) X)
     (e : X →ₗ[k] cohomology (Rep.res (P : Subgroup G).subtype T) n)

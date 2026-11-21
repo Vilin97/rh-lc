@@ -17,6 +17,7 @@ variable {O L U Γ : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
   [IsFractionRing O L] [Field U] [LinearOrderedCommGroupWithZero Γ] (v : Valuation U Γ)
 
 
+omit [Field L] [Algebra O L] [IsFractionRing O L] in
 theorem val_lt_one (g : O →+* U) (h1 : ∀ a, v (g a) ≤ 1) {ϖ : O} (hϖ : Irreducible ϖ) (h2 : v (g ϖ) < 1)
     {a : O} (ha : a ∈ IsLocalRing.maximalIdeal O) : v (g a) < 1 := by
   rw [hϖ.maximalIdeal_eq, Ideal.mem_span_singleton] at ha

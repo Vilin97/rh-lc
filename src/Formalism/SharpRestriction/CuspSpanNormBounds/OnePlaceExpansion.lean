@@ -29,6 +29,7 @@ end ThmB
 section Frames
 
 
+open Formalism.MainNotions.FrameBoundFromBesselTorus Formalism.MainNotions.OnePlaceEstimates in
 theorem frame_bound_of_bessel_torus (D : D7) (Cgf Cf : ℝ) (hCf : 2 ≤ Cf) (hOB : OneBesselTor D Cgf) :
     Formalism.MainNotions.OnePlaceEstimates.FrameBesselBound D Cgf Cf := by
   intro L f κ₀ κ τ hκ₀ hκ hτ hc hκN hκNt hε hgap hf

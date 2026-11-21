@@ -49,6 +49,7 @@ theorem denseRange_units : DenseRange (Units.map (diagInf E).toMonoidHom) := by
   exact ⟨v, hv, Units.mk0 k h0, Units.ext hk.symm⟩
 
 
+omit [NumberField E] [IsTotallyComplex E] in
 theorem continuous_coord (τ : E →+* ℂ) : Continuous (coord τ) := by
   unfold coord
   split_ifs
@@ -56,6 +57,7 @@ theorem continuous_coord (τ : E →+* ℂ) : Continuous (coord τ) := by
   · exact Complex.continuous_conj.comp (continuous_apply _)
 
 
+omit [NumberField E] [IsTotallyComplex E] in
 theorem coord_expU (τ : E →+* ℂ) (x : Cinf E) : coord τ (expU x : (Cinf E)ˣ) = Complex.exp (coord τ x) := by
   unfold coord
   split_ifs
@@ -63,6 +65,7 @@ theorem coord_expU (τ : E →+* ℂ) (x : Cinf E) : coord τ (expU x : (Cinf E)
   · exact (Complex.exp_conj _).symm
 
 
+omit [NumberField E] in
 theorem conj_ne (τ : E →+* ℂ) : ComplexEmbedding.conjugate τ ≠ τ := fun h =>
   InfinitePlace.not_isReal_iff_isComplex.2 (IsTotallyComplex.isComplex (InfinitePlace.mk τ))
     (InfinitePlace.isReal_mk_iff.2 (ComplexEmbedding.isReal_iff.2 h))

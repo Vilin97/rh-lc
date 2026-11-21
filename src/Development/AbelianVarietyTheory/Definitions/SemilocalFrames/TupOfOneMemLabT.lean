@@ -28,6 +28,7 @@ def ES (S : Set (Tup2 D)) : MonoidAlgebra ℂ (G0g D.nd) :=
         ∏ kv : (Σ k : Fin 2, D.nd.PlG k), (D.ntypes.eSer kv.1 (Formalism.CyclotomicNorms.monicOf (a kv))).coeff (g kv) else 0)
 
 
+open Classical in
 def labT : Finset (Tup2 D) :=
   haveI : ∀ k, NeZero (D.host.g k) := fun k => ⟨(D.host.g_prime k).ne_zero⟩
   (Finset.univ.image (tupOf D)).filter fun t => ∀ k v, IsLabel D k (t k v)

@@ -231,12 +231,15 @@ def EatC (cdig : ℝ) (j p : ℕ) : ℝ :=
   cdig * (N.R.f : ℝ) * (N.Nm : ℝ) ^ 2 * Real.logb p N.sc.a + (∑ z : RPl N.R, N.w j z) / ((p : ℝ) ^ 2 - 1)
 
 
+open Classical in
 def kindA (p : ℕ) : Finset (RPl N.R) := Finset.univ.filter fun z => ¬ N.cls p = PrimeClass.signal ∧ z.1 = false
 
 
+open Classical in
 def kindBC (p : ℕ) : Finset (RPl N.R) := Finset.univ.filter fun z => N.cls p = PrimeClass.signal ∨ z.1 = true
 
 
+open Classical in
 def topsBC (p : ℕ) : Finset (RPl N.R) := (N.kindBC p).filter fun z => z.1 = false ∧ z.2 ∈ N.TT
 
 def IsCs (p : ℕ) : Prop := N.cls p = PrimeClass.inertClass ∧ Odd (addOrderOf (N.hP p)) ∧ N.hP p ≠ 0

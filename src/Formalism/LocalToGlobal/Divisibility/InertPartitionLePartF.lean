@@ -354,6 +354,7 @@ variable {K : Type} [Field K] [NumberField K] [StarRing K] {G : Type} [Group G] 
   {Pl0 I0 Ty T J : Type} [Fintype J] (F3 : DefFam3 K G Pl0 I0 Ty T J)
 
 
+variable {F3} in
 theorem toSub2_stable {Zs : DefSub F3.amb3} (hst : Zs.Stable) : (F3.toSub2 Zs).Stable := by
   show (∀ t i, _) ∧ ∀ j t i, _
   refine ⟨fun t i => ?_, fun j t i => ?_⟩

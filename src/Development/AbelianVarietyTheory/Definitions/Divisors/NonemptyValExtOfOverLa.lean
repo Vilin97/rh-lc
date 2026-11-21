@@ -290,6 +290,7 @@ theorem le_nuFac {f : Lt1 Dw} {k : ℕ} {r : EReal}
   le_iInf₂ h
 
 
+omit [StarRing (𝓞 E)] in
 theorem not_isUnit_of_overLa (la : PointsOfFlagModel.abelian₂ p c) {e : ℕ} (ho : OverLa la.1 T.V io e) : ¬ IsUnit (p : T.V) := by
   intro hu
   have hp0 : (p : 𝓞 c.F) ≠ 0 := Nat.cast_ne_zero.2 (Fact.out : p.Prime).ne_zero
@@ -313,6 +314,7 @@ theorem not_isUnit_of_overLa (la : PointsOfFlagModel.abelian₂ p c) {e : ℕ} (
   nlinarith [mul_pos h6 h2]
 
 
+omit [StarRing (𝓞 E)] in
 theorem nonempty_valExt_of_overLa (la : PointsOfFlagModel.abelian₂ p c) {e : ℕ} (ho : OverLa la.1 T.V io e) : Nonempty (ValExt T p) :=
   nonempty_valExt T p (not_isUnit_of_overLa la ho)
 
@@ -416,6 +418,8 @@ def GenEx (Y : Model Xo c β) (Z : Comp Xo c) (la : HeightOneSpectrum (𝓞 c.F)
   ∃ (T : CDVR) (io : c.F →+* T.Fr) (e : ℕ) (_ : OverLa la T.V io e) (y : IntFr Xo c T io), OnComp Z y ∧ IsGen Y y
 
 
+attribute [local instance] Over.cartesianMonoidalCategory in
+open MonObj in
 theorem isTanAtG_map {X0 : Scheme.{0}} (t : SAB H X0) {S S' : Type} [CommRing S] [CommRing S'] (φ : S →+* S')
     {x : Sp S ⟶ X0} {v : Sp (DualNumber S) ⟶ t.G.left} (hv : IsTanAtG t x v) :
     IsTanAtG t (spMap φ ≫ x) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v) := by

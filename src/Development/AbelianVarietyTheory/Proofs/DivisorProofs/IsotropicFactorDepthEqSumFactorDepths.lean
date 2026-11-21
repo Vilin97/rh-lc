@@ -19,6 +19,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.IsoFactorDepth
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.LocalValuationColumns in
 def colEmb {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}
     (cx : Lt1 Dw → ℕ) : Col cx ↪ (Σ f : Lt1 Dw, Fin (rk f)) where
   toFun b := ⟨b.1.1, b.2⟩
@@ -30,6 +31,7 @@ def colEmb {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTh
     rfl
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.LocalValuationColumns in
 theorem prodP_eq_rename_polyH {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
     {Dw : Datum H} (C : Type) [Field C] (cx : Lt1 Dw → ℕ) :
     prodP C cx = MvPolynomial.rename (fun x : Let cx =>

@@ -30,6 +30,8 @@ theorem index_range_powMonoidHom_of_mulEquiv {G H : Type*} [CommGroup G] [CommGr
   rw [← map_range_powMonoidHom e n, Subgroup.index_map_equiv]
 
 
+omit [NumberField K] in
+open Classical in
 theorem index_range_powMonoidHom_infinitePlaceCompletion (w : InfinitePlace K) {n : ℕ}
     (hn : n ≠ 0) :
     letI : Decidable (w.IsReal ∧ Even n) := Classical.propDecidable _

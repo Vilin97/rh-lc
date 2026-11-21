@@ -21,6 +21,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.SymVeryAmple
 
 
+open GlobalTheory.CechPic in
 theorem exists_of_involution {R : Type} [CommRing R] {X : Scheme.{0}} (f : X ⟶ Spec (CommRingCat.of R))
     (σ : X ⟶ X) (hσ : σ ≫ σ = 𝟙 X) (h : IsProjBy f) :
     ∃ (H : LB X) (n : ℕ) (s : Fin (n + 1) → LB.Sec H), H.IsLB ∧ VeryAmpleBy f H s ∧

@@ -49,6 +49,7 @@ theorem mul_inclR {L : Type} [Field L] (ι : L →+ AE F E) (v : Pl (F := F))
 end GlobalTheory.InertLocSymp
 
 
+open GlobalTheory.InertLocSymp in
 theorem GlobalTheory.InertLocSymp.psi_symp_eq :
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (v : Pl (F := F)) (n d : ℕ) (X : Spc F E n) (W : Spc F E d)
     (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] (ϖ : L) (σL : L →+* L) (q : ℕ) (δ : L) (ψL : AddChar L ℂ) (ι : L →+ AE F E),

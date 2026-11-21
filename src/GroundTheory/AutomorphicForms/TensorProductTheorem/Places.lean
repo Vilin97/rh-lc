@@ -97,6 +97,7 @@ section Window
 variable [DecidableEq ι]
 
 
+omit hK'c hK'o hK'e in
 theorem apply_eq_apply_single (v : ι) {u : V}
     (hu : ∀ h ∈ boxSubgroup K K', h v = 1 → ρ h u = u) {h : Πʳ w, [G w, K w]}
     (hh : h ∈ boxSubgroup K K') : ρ h u = ρ (singleHom K v (h v)) u := by
@@ -104,6 +105,7 @@ theorem apply_eq_apply_single (v : ι) {u : V}
   rw [map_mul, Module.End.mul_apply, hu _ (eraseAt_mem_boxSubgroup v hh) (eraseAt_apply_self v h)]
 
 
+omit hK'c hK'o hK'e in
 theorem apply_single_fixed (v : ι) (x : G v) {m : V} (hm : m ∈ fixedVectors ρ (boxSubgroup K K'))
     {h : Πʳ w, [G w, K w]} (hh : h ∈ boxSubgroup K K') (hv : h v = 1) :
     ρ h (ρ (singleHom K v x) m) = ρ (singleHom K v x) m := by
@@ -111,6 +113,7 @@ theorem apply_single_fixed (v : ι) (x : G v) {m : V} (hm : m ∈ fixedVectors �
     hm h hh]
 
 
+include hK'c hK'o hK'e in
 theorem heckeOp_single_mul (v : ι) (x : G v) {b : Πʳ w, [G w, K w]} (hb : b v = 1) :
     heckeOp hρ (isCompact_boxSubgroup_of_eq hK'c hK'e) (isOpen_boxSubgroup hK'o hK'e)
         (singleHom K v x * b) =

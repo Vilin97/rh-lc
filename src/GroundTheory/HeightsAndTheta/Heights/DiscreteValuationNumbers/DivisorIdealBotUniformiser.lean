@@ -68,6 +68,7 @@ def LeftExpansion.Statement : Prop :=
         cycEval (fun U => vNum U L) (fun U => cycEval (fun G => divCycle G s U) (ratDiv P f g))
 
 
+open Classical in
 def RightExpansion.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
     ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]

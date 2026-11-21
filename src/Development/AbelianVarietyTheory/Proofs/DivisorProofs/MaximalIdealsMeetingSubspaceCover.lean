@@ -163,6 +163,8 @@ private theorem form_lift : ∀ (l : ℕ) [Fact l.Prime] (ι : Type) [Fintype ι
 end GlobalTheory.ExpCover
 
 
+open GlobalTheory.ExpCover in
+set_option maxHeartbeats 600000 in
 theorem _root_.GlobalTheory.T.maximalIdeals_meeting_subspace_cover : ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (G0 : Type) [Group G0] [Fintype G0] (Pl0 : Type) (B : BlockDat K G0 Pl0) (w : HeightOneSpectrum (𝓞 K)) [Fact (Formalism.EigenvalueLevelCeiling.plc w).Prime] (ι : Type) [Fintype ι] [DecidableEq ι] (N : ℕ) (F : Frame (Formalism.EigenvalueLevelCeiling.plc w) ι N) (lam : ι → ℕ → ℕ) (jK : F.K →* alg F.O N lam) [hm : Module F.T (Forms F.O (A := alg F.O N lam) F.Γ jK (NablaT F.O N lam))] [@IsScalarTower F.O F.T (Forms F.O (A := alg F.O N lam) F.Γ jK (NablaT F.O N lam)) _ hm.toSMul _], F.Ok → F.IsJ lam jK → F.IsHecke lam jK (NablaT F.O N lam) → ∀ (R : Reads F lam B w) (ℓ : Lvl K G0) (Z : Submodule K B.S.Forms), (∀ i, Z ≤ Z.comap (B.op i)) → Covers B ℓ Z w fun m : {m : MaximalSpectrum F.T // ∃ θ, R.Occurs Z θ ∧ F.Over θ m.asIdeal} => haveI := m.1.isMaximal.isPrime; F.setting lam jK m.1.asIdeal := by
   intro K _ _ _ G0 _ _ Pl0 B w _ ι _ _ N F lam jK hm hst hOk hJ hH R ℓ Z hZ J hInc z hz
   have hfZ : B.toF ℓ Z z ∈ Z := toF_mem B ℓ Z z

@@ -50,6 +50,7 @@ def isoI (hG : type_of% (@CrystallineSemistableComparison.Om.Glob.glob_iso _)) (
   ((Classical.choose (hG K) q U a j).trans (bridgeI hB hS q U a j)).trans (lerayI hA q U a j)
 
 
+set_option maxHeartbeats 2000000 in
 theorem isoI_nat (hG : type_of% (@CrystallineSemistableComparison.Om.Glob.glob_iso _)) (hB : type_of% (@CrystallineSemistableComparison.Om.Cech.formToCO_bijective _))
     (hS : type_of% (@CrystallineSemistableComparison.Om.Cech.formToCO_smul _)) (hA : type_of% (@CrystallineSemistableComparison.Om.Cech.cechOmAdd_smul _))
     (hP : type_of% (@CrystallineSemistableComparison.Om.Cech.cechOm_pull _)) (hC : type_of% (@CrystallineSemistableComparison.Om.Cech.formCoch_pull _))

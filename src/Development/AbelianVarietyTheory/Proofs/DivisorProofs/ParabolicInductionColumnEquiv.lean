@@ -25,6 +25,7 @@ variable {α : Type} [Fintype α] [LinearOrder α] {m m' : α → Type} [∀ a, 
   [DecidableEq n']
 
 
+variable (k) in
 def leviMap (τ : ∀ a, m' a ≃ m a) : Levi k m' →* Levi k m :=
   MonoidHom.pi fun a => (Units.map (Matrix.reindexAlgEquiv k k (τ a)).toMonoidHom).comp
     (Pi.evalMonoidHom (fun a => GL (m' a) k) a)

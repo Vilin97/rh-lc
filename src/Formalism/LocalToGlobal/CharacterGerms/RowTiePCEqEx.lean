@@ -157,6 +157,7 @@ theorem ex_add (Y : FBChart C V O dd) (j : Fin dd) :
 end RowTiePCEqEx
 
 
+open RowTiePCEqEx in
 theorem exDer_holds {C : Type} [Field C] [CharZero C] {V : VF C} {O : Type} [CommRing O] [StarRing O] {dd : ℕ}
     (Y : FBChart C V O dd) : ExDerSt Y := by
   intro v j

@@ -22,6 +22,7 @@ section Lattice
 open Module
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem relIndex_eq_abs_det {ι : Type} [Fintype ι] [DecidableEq ι] (b₁ b₂ : Basis ι ℝ ℂ) {L₁ L₂ : AddSubgroup ℂ}
     (h₁ : (Submodule.span ℤ (Set.range b₁)).toAddSubgroup = L₁)
     (h₂ : (Submodule.span ℤ (Set.range b₂)).toAddSubgroup = L₂) (h : L₁ ≤ L₂) :

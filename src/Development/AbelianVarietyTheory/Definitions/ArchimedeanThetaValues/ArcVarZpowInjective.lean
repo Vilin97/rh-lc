@@ -28,6 +28,10 @@ private lemma exists_pos_nat_mul_eq_int {Idx : Type} [Fintype Idx] (q : Idx → 
   ring
 
 
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
+open Matrix in
+variable {K : Type} [CommRing K] [IsDomain K] {X : Type} [AddCommGroup X] [Module.Free ℤ X]
+  [Module.Finite ℤ X] in
 theorem _root_.GlobalTheory.ToricData.finite_form_le (be : LinearMap.BilinForm ℤ X) (hs : ∀ y z, be y z = be z y)
     (hp : ∀ y, y ≠ 0 → 0 < be y y) (C : ℤ) : {y | be y y ≤ C}.Finite := by
   classical
@@ -188,18 +192,22 @@ theorem arcVar_zpow_injective : Function.Injective fun n : ℤ => arcVar k ^ n :
   simp [hn.ne'] at h2
 
 
+omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 theorem arcExp_eq (y : X) : arcExp k be y = arcVar k ^ (be y y / 2) := rfl
 
 
+omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 theorem arcExp_val (y : X) : (arcExp k be y : FractionRing (PowerSeries k)) =
     algebraMap (PowerSeries k) (FractionRing (PowerSeries k)) PowerSeries.X ^ (be y y / 2) :=
   Units.val_zpow_eq_zpow_val _ _
 
 
+omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 theorem arcExp_neg (y : X) : arcExp k be (-y) = arcExp k be y := by
   simp only [arcExp_eq, map_neg, LinearMap.neg_apply, neg_neg]
 
 
+omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 theorem polar_arcExp (hs : ∀ y z, be y z = be z y) (he : ∀ y, (2 : ℤ) ∣ be y y) (y z : X) :
     polar (arcExp k be) y z = arcVar k ^ (be y z) := by
   rw [polar, arcExp_eq, arcExp_eq, arcExp_eq, ← zpow_neg, ← zpow_neg, ← zpow_add, ← zpow_add]

@@ -102,6 +102,7 @@ theorem exists_local_mult {B : Subring L} {M : AddSubgroup L} {ι : Type} [Finty
 
 
 open scoped Classical in
+open Classical in
 noncomputable def toB (B : Subring L) (x : L) : B := if h : x ∈ B then ⟨x, h⟩ else 0
 
 theorem coe_toB {B : Subring L} {x : L} (h : x ∈ B) : (toB B x : L) = x := by

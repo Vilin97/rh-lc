@@ -62,6 +62,7 @@ theorem prime_of_filter {W : Type} [CommRing W] (hW : ProdACF W) (F : Set W) (hF
   rw [show (⟨I, hI⟩ : PrimeSpectrum W).asIdeal = I from rfl, key e he, not_not]
 
 
+open AlgebraicGeometry in
 theorem isClosed_basicOpen_idem {X : Scheme.{0}} {s : Γ(X, ⊤)} (hs : IsIdempotentElem s) :
     IsClosed (X.basicOpen s : Set X) := by
   have : (X.basicOpen s : Set X)ᶜ = (X.basicOpen (1 - s) : Set X) := by

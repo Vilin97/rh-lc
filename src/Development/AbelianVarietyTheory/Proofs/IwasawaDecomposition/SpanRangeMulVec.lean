@@ -20,6 +20,7 @@ variable {K V M : Type} [Field K] {σ : K →+* ℂ} [AddCommGroup V] [Module K 
   [NormedAddCommGroup M] [InnerProductSpace ℂ M] [FiniteDimensional ℂ M]
 
 
+omit [FiniteDimensional ℂ M] in
 theorem inner_of_norm_sq {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] (f : M →ₗ[ℂ] H) {n : ℝ} (hn : 0 < n)
     (h : ∀ x, ‖f x‖ ^ 2 = n * ‖x‖ ^ 2) (x y : M) : inner ℂ (f x) (f y) = (n : ℂ) * inner ℂ x y := by
   have hs : 0 < Real.sqrt n := Real.sqrt_pos.2 hn

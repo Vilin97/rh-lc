@@ -130,6 +130,7 @@ theorem left_eq_iff {A' : Type} [CommRing A'] {g' : Sp A' ⟶ S} (φ : A →+* A
       rw [e1, Category.assoc, e2, hg]
 
 
+variable (g) in
 def ofVal (f : Multiplicative X →* A) : Over.mk g ⟶ splitTorus S X :=
   ofChar _ ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom.toMonoidHom.comp f)
 
@@ -146,6 +147,7 @@ variable {S : Scheme.{0}} {R : Type} [CommRing R] {g : Sp (DualNumber R) ⟶ S}
   {X Y : Type} [AddCommGroup X] [AddCommGroup Y]
 
 
+variable (g) in
 def epsVec (c : X →+ R) : Over.mk g ⟶ splitTorus S X :=
   ofVal g
     { toFun := fun x => 1 + inr (c x.toAdd)
@@ -359,6 +361,7 @@ section Basis
 variable {I J : Type} [Fintype I] [Fintype J]
 
 
+variable (R) in
 def dualBasis (b : Module.Basis I ℤ X) : Module.Basis I R (X →+ R) :=
   Module.Basis.ofEquivFun
     { toFun := fun c i => c (b i)
@@ -454,6 +457,7 @@ theorem isLieEigen_iff (v : epsPt t ⟶ splitTorus S X) :
     simpa using hc a x
 
 
+variable (X) in
 def eigenHom {k : Type} [CommRing k] (τ : O →+* k) : Submodule k (X →+ k) where
   carrier := {c | ∀ (a : O) (x : X), c (a • x) = τ a * c x}
   add_mem' hc hd a x := by simp [hc a x, hd a x, mul_add]

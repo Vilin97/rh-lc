@@ -61,6 +61,7 @@ theorem map_map_symm (h : GL n k') :
   simp
 
 
+include hf in
 theorem map_symm_mem_KO {h : GL n k'} (hh : h ∈ GlobalTheory.SplitWeil.KO k' n) :
     Matrix.GeneralLinearGroup.map f.symm.toRingHom h ∈ GlobalTheory.SplitWeil.KO k n := by
   obtain ⟨h0, rfl⟩ := hh
@@ -74,6 +75,7 @@ theorem map_symm_mem_KO {h : GL n k'} (hh : h ∈ GlobalTheory.SplitWeil.KO k' n
   simp [j] <;> rfl
 
 
+include hf in
 theorem map_symm_mem_iwahori [LinearOrder n] {h : GL n k'} (hh : h ∈ GlobalTheory.SmGL.iwahori k' n) :
     Matrix.GeneralLinearGroup.map f.symm.toRingHom h ∈ GlobalTheory.SmGL.iwahori k n := by
   rw [GlobalTheory.SmGL.mem_iwahori] at hh ⊢

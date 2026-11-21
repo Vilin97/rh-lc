@@ -19,6 +19,7 @@ namespace GlobalTheory.SaturationClosed
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
 
 
+omit [NumberField E] [IsCMField E] in
 def adjEnt {Ψ : Finset (E →+* ℂ)} (k w : Frame Ψ r) (τ : Ψ) (a c : Fin r) : ℂ :=
   (Matrix.adjugate (mat k τ) * mat w τ) a c
 
@@ -37,6 +38,7 @@ theorem lact_one {Ψ : Finset (E →+* ℂ)} (x : Frame Ψ r) : lact (1 : GL (Fi
   rw [Units.val_one, Matrix.map_one _ (map_zero τ.1) (map_one τ.1), Matrix.one_mul]; rfl
 
 
+omit [NumberField E] [IsCMField E] in
 theorem adjEnt_rmul {Ψ : Finset (E →+* ℂ)} (k b : Frame Ψ r) (hb : b ∈ Bor Ψ r) (τ : Ψ) (a c : Fin r)
     (hca : c < a) : adjEnt k (rmul k b) τ a c = 0 := by
   have h1 : mat (rmul k b) τ = mat k τ * mat b τ := rfl
@@ -44,6 +46,7 @@ theorem adjEnt_rmul {Ψ : Finset (E →+* ℂ)} (k b : Frame Ψ r) (hb : b ∈ B
   simp [Matrix.smul_mul, mat, (hb τ).2 a c hca]
 
 
+omit [NumberField E] [IsCMField E] in
 theorem exists_of_adjEnt {Ψ : Finset (E →+* ℂ)} (k w : Frame Ψ r) (hk : ∀ τ, (mat k τ).det ≠ 0)
     (hw : ∀ τ, (mat w τ).det ≠ 0) (h0 : ∀ τ a c, c < a → adjEnt k w τ a c = 0) :
     ∃ b ∈ Bor Ψ r, w = rmul k b := by

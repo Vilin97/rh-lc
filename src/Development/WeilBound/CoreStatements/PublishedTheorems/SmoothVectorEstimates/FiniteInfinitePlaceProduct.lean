@@ -54,6 +54,7 @@ theorem inf_eq_prod (ν : HChar L) (k : Lˣ) :
   rfl
 
 
+set_option maxHeartbeats 400000 in
 theorem eq_one (ν : HChar L) (h : ∀ᶠ w in cofinite, ν.val w = 1) : ν = 1 := by
   classical
   have hνc : Continuous (ν : Ideles L →* ℂˣ) := ν.2.1

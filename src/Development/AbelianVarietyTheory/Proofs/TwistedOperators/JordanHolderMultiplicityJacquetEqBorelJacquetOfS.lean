@@ -94,6 +94,7 @@ theorem torusToLevi_surjective (hf : Function.Injective (blk f)) :
     det_unique, hs default x]
 
 
+omit [LinearOrder β] [DecidableEq n] [∀ j, DecidableEq (c j)] in
 theorem sum_card_blocks (P : β → Prop) [DecidablePred P] :
     ∑ b with P b, (Fintype.card (c b) : ℤ) = ∑ i with P (blk f i), (1 : ℤ) := by
   rw [Finset.sum_filter, Finset.sum_filter, ← f.sum_comp, Fintype.sum_sigma]
@@ -104,6 +105,7 @@ theorem sum_card_blocks (P : β → Prop) [DecidablePred P] :
 variable [LinearOrder n]
 
 
+omit [DecidableEq n] [∀ j, DecidableEq (c j)] in
 theorem modExp_blk (hf : StrictMono (blk f)) (i : n) :
     modExp c (blk f i) = modExp (fun _ : n => Unit) i := by
   unfold modExp

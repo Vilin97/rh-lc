@@ -243,6 +243,7 @@ theorem idem_div_int {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} (he 
   rwa [show ((N : 𝓞 D.host.E) : D.host.E) = N from map_natCast (algebraMap (𝓞 D.host.E) D.host.E) N]
 
 
+set_option maxHeartbeats 4000000 in
 theorem mem_latO_of_int {βS : GL (Fin S.rank) (EAf D)} {βT : GL (Fin T.rank) (EAf D)}
     (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) (fS : Formalism.L2.DIV.IsFrame βS ΛS) (fT : Formalism.L2.DIV.IsFrame βT ΛT)
     {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} (he : IsIdemSum e P) {N : ℕ} (hN : N ≠ 0)

@@ -83,6 +83,7 @@ def WDRel (φ : Ω ≃+* Ω') (y : WD h) (y' : WD h') : Prop :=
     b.N = b'.N ∧ ∀ (σ : Weil h) (σ' : Weil h'), WeilRel φ σ σ' → b.ρ σ = b'.ρ σ'
 
 
+variable (A A' w w') in
 structure PlaceIso (φ : Ω ≃+* Ω') (j : E →+* E') (i : w.adicCompletion E ≃+* w'.adicCompletion E') : Prop where
 
   mem : ∀ z, φ z ∈ A' ↔ z ∈ A

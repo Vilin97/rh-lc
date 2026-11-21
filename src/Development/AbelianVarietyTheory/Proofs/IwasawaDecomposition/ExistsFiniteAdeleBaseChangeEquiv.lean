@@ -61,6 +61,7 @@ theorem exists_locMap (F : Type) [Field F] [NumberField F] [Algebra F E]
   omega
 
 
+variable (F) in
 def locMap (P : HeightOneSpectrum (𝓞 E)) :
     (P.under (𝓞 F)).adicCompletion F →+* P.adicCompletion E := (exists_locMap F P).choose
 
@@ -80,6 +81,7 @@ theorem locMap_int (P : HeightOneSpectrum (𝓞 E)) (a : (P.under (𝓞 F)).adic
   simpa using locMap_valued P 0 a (by simpa using ha)
 
 
+variable (F E) in
 def adMap : FiniteAdeleRing (𝓞 F) F →+* FiniteAdeleRing (𝓞 E) E where
   toFun a := ⟨fun P => locMap F P (a (P.under (𝓞 F))), by
     have h : {v : HeightOneSpectrum (𝓞 F) | a v ∉ v.adicCompletionIntegers F}.Finite :=

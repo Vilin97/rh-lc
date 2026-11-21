@@ -39,6 +39,7 @@ theorem mem_segreChartComponents {P : Ideal (MRing ι)} {m : ℕ} {σ : Fin m �
   Set.Finite.mem_toFinset _
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem chart_coord_eq_one {P : Ideal (MRing ι)} {m : ℕ} {σ : Fin m ≃ ((k : K) → ι k)}
     {i : (k : K) → ι k} {J : Ideal (MvPolynomial (Fin m) ℂ)} (hJ : J ∈ segreChartComponents P σ i)
     {x : Fin m → ℂ} (hx : x ∈ ComplexSets.zeroSet J) : x (σ.symm i) = 1 := by
@@ -66,11 +67,13 @@ theorem contDiff_chartLift {m : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (i : (k
   contDiff_pi.2 fun p => contDiff_apply ℝ (fun _ => ℂ) (σ.symm (Function.update i p.1 p.2))
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem chartLift_blockNonzero {m : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k)
     {x : Fin m → ℂ} (hx : x (σ.symm i) = 1) : ∀ k, ∃ j, chartLift σ i x ⟨k, j⟩ ≠ 0 :=
   fun k => ⟨i k, by simp [chartLift, hx]⟩
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem chartLift_segre_apply {m : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k)
     (z : (Σ k, ι k) → ℂ) (hz : segre z i = 1) (k : K) (j : ι k) :
     chartLift σ i (fun a => segre z (σ a)) ⟨k, j⟩ = z ⟨k, j⟩ * (z ⟨k, i k⟩)⁻¹ := by

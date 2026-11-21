@@ -52,6 +52,8 @@ variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   [IsDiscreteRep (dualRep D (zmodRep.{0} G n))]
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] [NeZero n] [IsDiscreteRep D]
+  [IsDiscreteRep (dualRep D (zmodRep.{0} G n))] in
 theorem tensorHom_zmodDualIso_inv_dualEvalPairing :
     ((zmodDualIso n D hD).inv ⊗ₘ 𝟙 (zmodRep.{0} G n)) ≫ dualEvalPairing D (zmodRep.{0} G n) =
       (𝟙 D ⊗ₘ 𝟙 (zmodRep.{0} G n)) ≫ zmodMulPairingRight n D hD := by
@@ -59,6 +61,7 @@ theorem tensorHom_zmodDualIso_inv_dualEvalPairing :
     MonoidalCategory.tensorHom_comp_tensorHom, Iso.inv_hom_id, Category.comp_id]
 
 
+omit [NeZero n] in
 theorem compactZmodDualityMap_eq_compactDualityMap {m r s : ℕ}
     (T : compactCohomologyRes φ D m →+ ZMod n) (h : r + s = m) (x : cohomology (zmodRep.{0} G n) r)
     (y : compactCohomologyRes φ D s) :
@@ -91,6 +94,8 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1))) [Fintype 
   (hK : Odd N ∨ IsTotallyComplex K.1)
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+include hS in
 theorem bijective_gs_compactZmodDualityMap_of_duality {r s : ℕ} (h : r + s = 3) :
     Function.Bijective (compactZmodDualityMap (gsFinFamily S ιs) (gsRoots S N) (nsmul_gsRoots S N)
       (gsCompactInv S ιs N hK (subsingleton_cohomology_three_gsRoots S hS hK)) h) := by
@@ -102,6 +107,7 @@ theorem bijective_gs_compactZmodDualityMap_of_duality {r s : ℕ} (h : r + s = 3
       (nsmul_zmodRep_eq_zero _ N) h)
 
 
+include hS in
 theorem bijective_gsCompactInv_of_duality [Nonempty S] :
     Function.Bijective (gsCompactInv S ιs N hK (subsingleton_cohomology_three_gsRoots S hS hK)) :=
   bijective_of_surjective_of_surjective_dual
@@ -115,6 +121,7 @@ theorem bijective_gsCompactInv_of_duality [Nonempty S] :
       (zmodH0Class_surjective (H := galUnramifiedOutside K.1 ℚ̄ S) (n := N)))
 
 
+include hS in
 theorem gsLevelBijective_gsCompactInv [Nonempty S] :
     GsLevelBijective (gsCompactInv S ιs N hK (subsingleton_cohomology_three_gsRoots S hS hK)) :=
   ⟨bijective_gsCompactInv_of_duality S ιs hS hK, fun h => bijective_gs_compactZmodDualityMap_of_duality S ιs hS hK h⟩
@@ -128,6 +135,7 @@ variable {K L : FiniteSubfield} [Fact (K ≤ L)] (S : Set (HeightOneSpectrum (�
   (hL : ∀ x : L.1, algebraMap L.1 ℚ̄ x ∈ maxUnramifiedOutside K.1 ℚ̄ S) (n : ℕ) [NeZero n]
 
 
+set_option maxHeartbeats 3200000 in
 theorem bijective_compactZmodDualityMap_gsOpenSubgroup_of_surjective
     (τ : compactCohomologyRes (mackeyFamily (gsOpenSubgroup S hL) (gsFinFamily S ιs))
       (Rep.res (gsOpenSubgroup S hL : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)).subtype (gsRoots S n)) 3 →+ ZMod n)

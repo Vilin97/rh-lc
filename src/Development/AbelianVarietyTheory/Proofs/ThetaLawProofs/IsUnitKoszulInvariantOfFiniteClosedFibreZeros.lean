@@ -245,6 +245,7 @@ theorem eq_of_pow_eq_one (laws : Out.Laws) {R : Type} [CommRing R] [IsLocalRing 
     (congrArg CommaMorphism.left e₅) (spMap (IsLocalRing.residue R)) ⟨_, e₂⟩ e₄)
 
 
+open EtBaseChange in
 theorem exists_unit_val_jac {R R' : Type} [CommRing R] [CommRing R'] {x : KeyIn R} {x' : KeyIn R'} {f : R →+* R'} {φ w}
     {n : ℕ} (hg : x'.P.g = x.P.g) {s : Fin x.P.g → RR x n} {s' : Fin x'.P.g → RR x' n} (H : KeyVia x' x f φ w)
     (hs : ∀ i, SecVia x' x φ w (s' i) (s (i.cast hg))) {z : Pt x} {z' : Pt x'}

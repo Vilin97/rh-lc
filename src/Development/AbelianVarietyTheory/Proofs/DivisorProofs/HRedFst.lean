@@ -19,6 +19,7 @@ namespace GlobalTheory.Poinc.IntEval
 variable {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {G : Over (Sp R)}
 
 
+variable (I) in
 def hRed (h : 𝟙_ (Over (Sp R)) ⟶ G) (e : ℕ) : Sp (R ⧸ I ^ (e + 1)) ⟶ (thickObj R I e G).left :=
   pullback.lift (thick R I e ≫ h.left) (𝟙 _) (by
     rw [Category.assoc, Over.w h, Category.id_comp]

@@ -74,6 +74,7 @@ theorem pt_nat {T T' : Thick (nlFun γ p X q κ)} (φ : T ⟶ T') :
   rfl
 
 
+variable (γ p q κ) in
 def fib : Pts (nlFun γ p X q κ) (qF hI q κ) where
   pt T := pullback.lift (pt T) (Spec.map (CommRingCat.ofHom ((Ideal.Quotient.mk T.J).comp T.i))) (pt_comp hI T)
   nat {T T'} φ := by
@@ -133,6 +134,7 @@ def IsLift (W : Y.Opens) {d : ℕ} (t : Fin d → Γ(Y, W)) (u : Fin d → ∀ T
   ∀ i (T : Thick L) (h : InY 𝔭 W T), Ideal.Quotient.mk T.J (u i T) = ev 𝔭 T h (t i)
 
 
+variable (L) in
 abbrev GF (r : ℕ) : Thick L ⥤ ModuleCat.{0} b.R := sq (thFil L r) (thFil L ((r : ℤ) + 1))
 
 def Rp {W : Y.Opens} (P : ObjectProperty (Thick L)) {d r : ℕ} (u : Fin d → ∀ T : Thick L, T.B)

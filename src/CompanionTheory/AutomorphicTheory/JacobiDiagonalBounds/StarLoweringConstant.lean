@@ -175,6 +175,7 @@ theorem nfs_left {P : A} {n : ℕ} {b : A} (hb : b ∈ B) {x : A} (hx : x ∈ NF
   | smul c x _ hx => rw [mul_smul_comm]; exact Submodule.smul_mem _ _ hx
 
 
+omit [StarRing A] in
 theorem nfs_mul_gen {P Q : A} {n : ℕ} (hP : ∀ b ∈ B, Commute b P)
     (hQ : ∀ X ∈ hats L, ∀ b ∈ B, X * (b * Q) ∈ NFs L B Q 1) {x y : A} (hx : x ∈ NFs L B P 1) (hy : y ∈ NFs L B Q n) :
     x * y ∈ NFs L B (P * Q) (n + 1) := by
@@ -213,6 +214,7 @@ theorem nfs_mul_gen {P Q : A} {n : ℕ} (hP : ∀ b ∈ B, Commute b P)
   | smul c x _ hx => rw [smul_mul_assoc]; exact Submodule.smul_mem _ _ hx
 
 
+omit [StarRing A] in
 theorem nfs_pass {P Q : A} (hP : ∀ b ∈ B, Commute b P) (hQ : ∀ X ∈ hats L, X * Q ∈ NFs L B Q 1) {x : A}
     (hx : x ∈ NFs L B P 1) : x * Q ∈ NFs L B (P * Q) 1 := by
   induction hx using Submodule.span_induction with

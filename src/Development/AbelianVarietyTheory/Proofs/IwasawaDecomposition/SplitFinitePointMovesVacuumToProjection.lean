@@ -213,6 +213,7 @@ theorem step (C : Ctx S T) {χS χT : (AE D)ˣ →* Circle} {om : GA D S × GA D
   field_simp
 
 
+open GlobalTheory.AdLat in
 theorem mov_split {V : HSp D} {e : AE D} (he : IsSplitIdem D e) {h h' : GA D V}
     (h1 : (e + cA D e) • Formalism.L2.Theta.mt V h' = (e + cA D e) • 1)
     (h2 : (1 - (e + cA D e)) • Formalism.L2.Theta.mt V h' = (1 - (e + cA D e)) • Formalism.L2.Theta.mt V h)

@@ -788,6 +788,7 @@ theorem rec_norm_detTw {ξ : Formalism.L2.DIV.Chr X.F X.E X.K} (σ₀ : X.K →+
   · simp
 
 
+variable (W : Wts X Pr.Word R) in
 structure ChainGlob (σ₀ : X.K →+* ℂ) where
   hσ : ∀ x : X.K, σ₀ (star x) = starRingEnd ℂ (σ₀ x)
   chr : DetChr X R.m
@@ -819,6 +820,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R)
   (Λ : ∀ j, LevFam X.E X.K (R.N j) Pr.vGs)
 
 
+set_option linter.unusedVariables false in
 @[irreducible] def recDGamAll (Λ : ∀ j, LevFam X.E X.K (R.N j) Pr.vGs) {σ₀ : X.K →+* ℂ} (hX : X.Ok) (G : ChainGlob W σ₀) : ℕ := dGamAut X R
 
 variable {W Λ}
@@ -841,6 +843,7 @@ theorem recDGamAll_dvd {σ₀ : X.K →+* ℂ} (hX : X.Ok) (G : ChainGlob W σ�
       | (unfold Ranks.N; nlinarith)) _ _ _
 
 
+variable (W Λ) in
 def repPt (hc : Formalism.BasicNotions.CMData X.F X.E) (u : Pr.Word) (j : ℕ) (c : StCl W Λ u j) : GL (Fin (R.N j)) (Formalism.L2.DIV.AfE X.F X.E) :=
   letI : NeZero (R.N j) := ⟨(R.N_pos j).ne'⟩
   ((ptOf hc (R.N j) (Pr.vT u) Pr.vGs ((stepGSD W Λ u j).outSec.rep c) : GL (Fin (R.N j)) (X.E ⊗[X.F] Formalism.L2.Herm.Af X.F)))
@@ -889,14 +892,17 @@ theorem rhoK'_norm {σ₀ : X.K →+* ℂ} (G : ChainGlob W σ₀) (u : Pr.Word)
   · simp
 
 
+variable (W) in
 def sSharpC (u : Pr.Word) (i : ℕ) (τ : X.Tau) : ℤ := ⌊sExp' R ((RowPar.of (W.hc u τ)).eAt i) (i + 1)⌋
 
 
+variable (W) in
 def sDivC (u : Pr.Word) (i : ℕ) (τ : X.Tau) : ℤ := ⌊sExp R ((RowPar.of (W.hc u τ)).eAt i) (i + 1)⌋
 
 def dePow (σ₀ : X.K →+* ℂ) (n : ℕ) (e : X.Tau → ℤ) (y : FrS X σ₀ n) : ℂ := ∏ τ, deFr y τ ^ e τ
 
 
+variable (W Λ) in
 structure ChainArg {σ₀ : X.K →+* ℂ} (G : ChainGlob W σ₀) (u : Pr.Word) where
   kk : ∀ i, ClsKer (stepGSD W Λ u i) (stepGSD W Λ u (i + 1))
   unf : ∀ i, StCl W Λ u i → StCl W Λ u (i + 1) → ((FrS X σ₀ (R.N i) → ℂ) →ₗ[ℂ] (FrS X σ₀ (R.N (i + 1)) → ℂ))
@@ -963,6 +969,7 @@ structure AtTNum where
   one_lt_gammaP : 1 < GamP
 
 
+variable (W Λ) in
 def duStarC (u : Pr.Word) : ℕ :=
   Nat.card (formGSD (colVal W u 0 ∅ Pr.vGs) (Λ 0)).Cl * Module.finrank X.K (colVal W u 0 (∅ : Finset _) Pr.vGs).V
 
@@ -1062,6 +1069,7 @@ theorem rec_LshKer_lattice {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.
     exact fun x hx => hx.1
 
 
+variable (W Λ) in
 def stepBv (u : Pr.Word) (j : ℕ) (P : {P // P ∈ Pr.vT u}) : Submodule (𝓞 X.K) (stepGSD W Λ u j).EqFun :=
   (stepGSD W Λ u j).intOf fun d => BvLat W u j P d
 
@@ -1221,6 +1229,7 @@ def tilR (u : Pr.Word) (d : DecoSet X.E (R.N R.m - 1) ∅ SG') : DecoSet X.E (R.
   (DecoSet.tilH (ST := Pr.vT u) (N_m_succ R) (Pr.piT u) d).res hSG
 
 
+variable (R) in
 def extR : UF X.E (R.N R.m - 1) × GLG X.E (R.N R.m - 1) SG' →* UF X.E (R.N R.m) × GLG X.E (R.N R.m) Pr.vGs :=
   MonoidHom.prodMap (extUH (N_m_succ R))
     ((MonoidHom.pi fun w : Pr.vGs => Pi.evalMonoidHom (fun w : SG' => GL (Fin (R.N R.m)) (𝓞 X.E ⧸ w.1.asIdeal))
@@ -1250,6 +1259,7 @@ theorem rec_extUH_injective {E : Type} [Field E] [NumberField E] [StarRing E] {N
   rwa [e, e] at h3
 
 
+variable (ΛM) in
 def LevExt : Prop := ∀ h : ↥(ΛM.inv).grp, (extR R hSG ((1 : UF X.E (R.N R.m - 1)), h.1)).2 ∈ (Λ R.m).grp
 
 variable {Λ}
@@ -1275,6 +1285,7 @@ theorem tilR_smulF (hPr : Pr.Ok) (u : Pr.Word) (hpi : ∀ w : SG', Pr.piT u ∉ 
   | exact tilR_smul hSG hPr u hpi _ d
 
 
+variable (W Λ ΛM) in
 def tilCl (u : Pr.Word) (c : (ptGSD W ΛM).Cl) : StCl W Λ u R.m :=
   (stepGSD W Λ u R.m).cls (tilR hSG u ((ptGSD W ΛM).outSec.rep c))
 
@@ -1307,11 +1318,13 @@ def pairSemi (σ₀ : X.K →+* ℂ) {n : ℕ} (lam : X.Tau → DomWeight n) (y 
   map_smul' a x := by rw [map_smul, LinearMap.smul_apply, smul_eq_mul, map_mul, smul_eq_mul]
 
 
+variable (W Λ ΛM) in
 def lowC (σ₀ : X.K →+* ℂ) (hσ : ∀ x : X.K, σ₀ (star x) = starRingEnd ℂ (σ₀ x)) (u : Pr.Word) :
     (FrS X σ₀ (R.N R.m) → ℂ) →ₗ[ℂ] (FrS X σ₀ (R.N R.m - 1) → ℂ) :=
   (stepEv W Λ σ₀ hσ u R.m).extend ((ptEv W ΛM σ₀ hσ).ev.comp (brC W u))
 
 
+variable (W ΛM) in
 def periodC (hX : X.Ok) (σ₀ : X.K →+* ℂ) (hσ : ∀ x : X.K, σ₀ (star x) = starRingEnd ℂ (σ₀ x)) (hM : (rowGSD W ΛM).Ok) :
     ((ptGSD W ΛM).Cl → FrS X σ₀ (R.N R.m - 1) → ℂ) →ₗ[ℂ] (Fin ((rowGSD W ΛM).hDim hM) → ℂ) →ₗ[ℂ] ℂ :=
   (ptEv W ΛM σ₀ hσ).perCl (ptOk W ΛM hX) fun c a => pairSemi σ₀ W.sgTrue

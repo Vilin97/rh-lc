@@ -57,6 +57,7 @@ theorem redM_apply_of_mem (PP : Pl D.host.E) {b a : ℕ} (N : Matrix (Fin b) (Fi
   exact dif_pos h
 
 
+set_option maxHeartbeats 800000 in
 theorem local_dual_unit (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsStdChar D ψ (-1)) (e₁ : AE D) (PP : Pl D.host.E)
     (he₁ : Formalism.L2.NTheta.IsIdemAt e₁ PP) (u : Formalism.L2.Herm.intAf D.host.F D.host.E) (hu : resS D.host.F PP u ≠ 0) :
     ∃ c : Datum.EAf D,
@@ -86,6 +87,8 @@ theorem local_dual_unit (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsStdChar D ψ (
     exact hc
 
 
+set_option maxHeartbeats 800000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem exists_half_frMapO (S T : HSp D) (βS : GL (Fin S.rank) (Datum.EAf D)) (βT : GL (Fin T.rank) (Datum.EAf D))
     (e : AE D) (hee : e * e = e) (z : Matrix (Fin T.rank) (Fin S.rank) (Datum.EAf D))
     (hz : ∀ i j, toEAf D e * z i j = z i j) :

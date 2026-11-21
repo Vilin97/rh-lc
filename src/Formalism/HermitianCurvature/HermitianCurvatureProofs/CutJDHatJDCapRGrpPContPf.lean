@@ -200,6 +200,7 @@ theorem opE_comm (l k : Fin r) (hlk : l ≠ k) (p q : Fin 6) : Commute (opE (X :
   exact Formalism.QuantumDeterminants.commuting_functional_holds r X l k p q f f.2 (Or.inl hlk)
 
 
+variable (X) in
 def eS (i : ℕ) (p : Fin 6) : Module.End ℂ (WSm r X) := if h : i < r then opE ⟨i, h⟩ p else 0
 
 theorem eS_comm (i j : ℕ) (hij : i ≠ j) (p q : Fin 6) : Commute (eS (r := r) X i p) (eS X j q) := by

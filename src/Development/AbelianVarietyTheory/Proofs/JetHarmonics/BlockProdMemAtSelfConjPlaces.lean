@@ -127,6 +127,7 @@ variable {C : Type} [Field C] {Ty : Type} {r : Ty → ℕ} {Orb : Type} [Fintype
   {N n : ℕ} (pl : Fin N × Fin 2 ↪ Fin n)
 
 
+variable (r) in
 abbrev Var : Type := WVO fun (o : Orb) (_ : Fin 2) => Σ s : ZMod 2, Fin (r (tau o s))
 
 def lt (ρ : Fin N) (w : Var r tau) (col : Fin 2) : Letter Ty r n := ⟨tau w.1 w.2.2.1, w.2.2.2, pl (ρ, col)⟩
@@ -324,6 +325,7 @@ variable {C : Type} [Field C] {V : VF C} {Ty : Type} {r : Ty → ℕ} {Orb : Typ
   (X : ∀ o, RowData C V 2 (fun _ => Σ s : ZMod 2, Fin (r (tau o s))) (J o)) (F : ∀ o, RF.Flag (X o))
 
 
+omit [Fintype Orb] in
 theorem sub_minor (hty : ∀ o g c, ((X o).G g).ty (Sum.inl c) = c.1 + sh g)
     (hen : ∀ o g a q, (((F o).en g a q).2 : ℕ) = q) (o : Orb) {what₂ : ℕ} (pr : Fin what₂ → Fin N) (g : Fin 2)
     (s : ZMod 2) (k : ℕ) (hk : k ≤ r (tau o s)) (hr : k ≤ what₂) :

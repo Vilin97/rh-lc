@@ -303,6 +303,7 @@ theorem core (l q N : ℕ) (hl : ∀ x : R, (l : R) * x = 0 → x = 0) (hc : IsA
 end GlobalTheory.CrisSec
 
 
+open GlobalTheory.CrisSec in
 theorem GlobalTheory.CrisSec.phiSection : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (N d : ℕ) (A A' : Matrix (Fin d) (Fin d) (bk.S)), A * A' = bk.E ^ (2 * N) • (1 : Matrix (Fin d) (Fin d) (bk.S)) → ∃ (k : ℕ) (Q Q' : Matrix (Fin d) (Fin d) (Per.Acris l)), Q * Q' = (l : Per.Acris l) ^ (2 * k) • (1 : Matrix (Fin d) (Fin d) (Per.Acris l)) ∧ (∀ i j, ((algebraMap (Ainf l) (Per.Acris l)).comp bk.ev) X ∣ (Q - (l : Per.Acris l) ^ k • (1 : Matrix (Fin d) (Fin d) (Per.Acris l))) i j) ∧ (∀ i j, ((algebraMap (Ainf l) (Per.Acris l)).comp bk.ev) X ∣ (Q' - (l : Per.Acris l) ^ k • (1 : Matrix (Fin d) (Fin d) (Per.Acris l))) i j) ∧ ((algebraMap (Ainf l) (Per.Acris l)).comp bk.ev) (frobS l bk.a bk.E) ^ N • (Q * (A.map fun s => ((algebraMap (Ainf l) (Per.Acris l)).comp bk.ev) (frobS l bk.a (PowerSeries.C (PowerSeries.constantCoeff s))))) = ((algebraMap (Ainf l) (Per.Acris l)).comp bk.ev) (frobS l bk.a (PowerSeries.C (PowerSeries.constantCoeff bk.E))) ^ N • ((A.map fun s => ((algebraMap (Ainf l) (Per.Acris l)).comp bk.ev) (frobS l bk.a s)) * Q.map (phiA l)) := by
   intro l _ K bk N d A A' hA
   set ψ : bk.S →+* Per.Acris l := (algebraMap (Ainf l) (Per.Acris l)).comp bk.ev with hψ

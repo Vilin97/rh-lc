@@ -336,6 +336,7 @@ theorem z_indep : AlgebraicIndependent F (z F Ψ h) := by
     rfl
 
 
+include h in
 theorem leadMinor_ne_zero (τ : Ψ) (A : Fin (n - 1)) : leadMinor (genMat0Fr F Ψ n j τ) A ≠ 0 := by
   by_cases hA : (A : ℕ) < j
   · have e := pivotMinor_congr (genMat0Fr F Ψ n j τ) (genMatFr F Ψ n τ)

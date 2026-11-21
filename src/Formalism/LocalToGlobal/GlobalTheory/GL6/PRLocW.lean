@@ -105,6 +105,7 @@ theorem rlv_sig_sig (x : D.host.E) : sigD D (sigD D x) = x := by
   rw [forms_involution_eq_host_conj, forms_involution_eq_host_conj, host_conj_involutive]
 
 
+set_option maxHeartbeats 2000000 in
 theorem rlv_coordFacts (i : ℕ) (hi : i ≤ D.R.m) :
     (∀ c, Formalism.L2.GlobalTheoryTheory.Comp.dl (sigD D) (gramN D i hi) (Formalism.L2.GlobalTheoryTheory.Comp.dl (sigD D) (gramN D i hi) (clsCrd D u i hi c)) =
       clsCrd D u i hi c) ∧

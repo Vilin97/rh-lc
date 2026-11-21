@@ -33,6 +33,7 @@ theorem locCompact_secondCountable [CompleteSpace L] {ϖ : L} {σ : L →+* L} {
   · open scoped Valued in exact inferInstance
 
 
+open UpLatIndex in
 theorem distribHaarChar_eq [CompleteSpace L] [LocallyCompactSpace L] {ϖ : L} {σ : L →+* L} {q : ℕ}
     (h : IsUnramInv ϖ σ q) (u : Lˣ) : (distribHaarChar L u : ℝ) = (q : ℝ) ^ (-2 * ordL (u : L)) := by
   have hq : q ≠ 0 := by have := h.2.2.2.2.2.1; omega

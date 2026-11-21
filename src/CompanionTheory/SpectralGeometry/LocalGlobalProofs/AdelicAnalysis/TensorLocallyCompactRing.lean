@@ -18,6 +18,7 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E]
   (R : Type) [CommRing R] [Algebra F R] [TopologicalSpace R] [IsTopologicalRing R]
 
 
+omit [IsTopologicalRing R] in
 theorem isModTop : IsModuleTopology R (R ⊗[F] E) := ⟨rfl⟩
 
 def coordHomeo {d : ℕ} (b : Module.Basis (Fin d) F E) : (R ⊗[F] E) ≃ₜ (Fin d → R) :=

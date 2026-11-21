@@ -39,6 +39,7 @@ theorem prod_factorial_update_sub_one {m : ℕ} (l v : Fin m → ℕ) (i : Fin m
 end CombCfMonomialPsumOne
 
 
+open CombCfMonomialPsumOne in
 theorem CombCfMonomialPsumOne.proof : CombCfMonomialPsumOne.Statement := by
   intro m n v l
   induction n generalizing l with

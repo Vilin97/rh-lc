@@ -88,12 +88,16 @@ section Step
 variable {k : Type*} [Field k] {n : Type*} {c : ℕ} {n' : Type*}
 
 
+variable (n c n') in
 abbrev KeptVar : Type _ := {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Kept rs}
 
 
+variable (n c n') in
 abbrev FreeVar : Type _ := {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free (c / 2 + 1) rs}
 
 
+open Classical in
+variable (n c n') in
 def stepVarEquiv : KeptVar n c n' ⊕ FreeVar n c n' ≃ StepVar n c n' where
   toFun := Sum.elim (fun rs => ⟨rs.1, Or.inr rs.2⟩) fun rs => ⟨rs.1, Or.inl rs.2⟩
   invFun rs := if h : Kept rs.1 then .inl ⟨rs.1, h⟩ else .inr ⟨rs.1, rs.2.resolve_right h⟩
@@ -109,6 +113,7 @@ def joinVars (p : (KeptVar n c n' → k) × (FreeVar n c n' → k)) : StepVar n 
 def keptPart (e : StepVar n c n' → k) : KeptVar n c n' → k := fun rs => e ⟨rs.1, Or.inr rs.2⟩
 
 
+omit [Field k] in
 theorem keptPart_joinVars (w : KeptVar n c n' → k) (f : FreeVar n c n' → k) : keptPart (joinVars (w, f)) = w := by
   funext rs
   exact congrArg (Sum.elim w f) ((stepVarEquiv n c n').symm_apply_apply (.inl rs))
@@ -162,6 +167,8 @@ theorem continuous_keptPt : Continuous (keptPt : (KeptVar n c n' → k) → _) :
 variable [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] [MeasurableSpace k] [BorelSpace k]
 
 
+open Classical in
+omit [DecidableEq n] [DecidableEq n'] in
 theorem integrable_step {ψ : AddChar k Circle} (hψ : Continuous ψ) (ν : Measure k) [ν.IsAddHaarMeasure]
     {Φ : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k → ℂ} (hΦ : Φ ∈ SB _) (x₀ : Matrix n n' k) :
     Integrable (fun e : StepVar n c n' → k => Φ (stepPt x₀ e) * (ψ (-ch (stepPt x₀ e)) : ℂ)) (Measure.pi fun _ => ν) := by
@@ -276,6 +283,8 @@ theorem continuous_pairPhase (x : ColArgs G) : Continuous (pairPhase x) := by
 variable [MeasurableSpace k] [BorelSpace k] (ψ : AddChar k Circle) (ν : Measure k)
 
 
+open Classical in
+variable (G) in
 def keptVol : Measure (KeptVars G) := Measure.pi fun _ => Measure.pi fun _ => ν
 
 def contractIntegrand (φ : ∀ b : Edge, Matrix (Fin (G.rank b.tgt)) (Fin (G.rank b.src)) k → ℂ) (x : ColArgs G)

@@ -26,15 +26,18 @@ section LeviParabolic
 variable {β γ : Fin n → ℕ}
 
 
+variable (F n β γ) in
 abbrev leviParabolic : Subgroup (levi F n β) := (blockUpper F n γ).subgroupOf (levi F n β)
 
 
+variable (F n β γ) in
 def leviParabolicToLeviPar : leviParabolic F n β γ →* leviPar F n β γ where
   toFun q := ⟨((q : levi F n β) : GL (Fin n) F), (q : levi F n β).2, Subgroup.mem_subgroupOf.1 q.2⟩
   map_one' := rfl
   map_mul' _ _ := rfl
 
 
+variable (F n β γ) in
 def leviParabolicIncl : leviParabolic F n β γ →* blockUpper F n γ where
   toFun q := ⟨((q : levi F n β) : GL (Fin n) F), Subgroup.mem_subgroupOf.1 q.2⟩
   map_one' := rfl
@@ -94,6 +97,7 @@ section LeviInduction
 variable {β γ : Fin n → ℕ} {W : Type*} [AddCommGroup W] [Module ℂ W]
 
 
+variable (F n β γ) in
 def leviInflateTwist (τ : Representation ℂ (levi F n γ) W) :
     Representation ℂ (leviParabolic F n β γ) W :=
   twist ((sqrtModularLeviPar F n β γ).comp (leviParabolicToLeviPar F n β γ))
@@ -106,11 +110,13 @@ theorem leviInflateTwist_apply (τ : Representation ℂ (levi F n γ) W)
       τ (leviProj F n γ (leviParabolicIncl F n β γ q)) w := rfl
 
 
+variable (F n β γ) in
 abbrev leviParabolicIndSpace (τ : Representation ℂ (levi F n γ) W) :
     Submodule ℂ (levi F n β → W) :=
   indSpace (leviParabolic F n β γ) (leviInflateTwist F n β γ τ)
 
 
+variable (F n β γ) in
 abbrev leviParabolicInd (τ : Representation ℂ (levi F n γ) W) :
     Representation ℂ (levi F n β) (leviParabolicIndSpace F n β γ τ) :=
   indRep (leviParabolic F n β γ) (leviInflateTwist F n β γ τ)

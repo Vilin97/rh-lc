@@ -560,6 +560,7 @@ theorem scL_eq (x : ℝ) (hx1 : Fm.x1 < x) (i : Fm.Ix x) : (Fm.L x i).sc.L = (x 
   congr 1; push_cast; ring
 
 
+include Fm in
 theorem ev_y (Y0 : ℝ) : ∃ x4 : ℝ, ∀ x ≥ x4, Y0 ≤ x ^ (eps / 8) :=
   Filter.eventually_atTop.1
     ((tendsto_rpow_atTop (by have := eps_pos' Fm; positivity : 0 < eps / 8)).eventually_ge_atTop Y0)
@@ -631,6 +632,7 @@ variable (L : SizeData₂ D)
 theorem Sc_eq' : L.Sc = 4 * (D.R.k : ℝ) * (D.s.Del : ℝ) := by rw [L.Sc_eq]; ring
 
 
+include L in
 theorem data1 (τ : D.what₂.Tau) (l : ℕ) (h1 : 1 ≤ l) (h2 : l ≤ D.R.k - 1) :
     0 ≤ vOne D τ l ∧ vOne D τ l ≤ 4 * (D.R.k : ℝ) * (D.s.Del : ℝ) := by
   obtain ⟨l, rfl⟩ : ∃ l', l = l' + 1 := ⟨l - 1, by omega⟩
@@ -713,6 +715,7 @@ theorem w''_le_a : L.sc.w'' D.R.n ≤ L.sc.a := by
 variable (P : ParameterChoice' D L)
 
 
+include P in
 theorem data3 (u : D.what₂.Word) (τ : D.what₂.Tau) :
     4 * (D.R.k : ℝ) * (D.s.Del : ℝ) ≤ uOne D u τ 1 - vOne D τ 1 := by
   have hk := D.R.m_add_three_le_k
@@ -737,6 +740,7 @@ theorem data3 (u : D.what₂.Word) (τ : D.what₂.Tau) :
     exact this
 
 
+include P in
 theorem data4 (u : D.what₂.Word) (τ : D.what₂.Tau) (ht : ¬ IsTop D τ) :
     uOne D u τ 1 - vOne D τ 1 ≤ 8 * (D.R.k : ℝ) * (D.s.Del : ℝ) := by
   have hk := D.R.m_add_three_le_k
@@ -758,6 +762,7 @@ theorem uOne_last (u : D.what₂.Word) (τ : D.what₂.Tau) :
   rw [h, D.hcW_last u τ hk]
 
 
+include P in
 theorem data5 (u : D.what₂.Word) (τ : D.what₂.Tau) (ht : ¬ IsTop D τ) :
     uOne D u τ D.R.k = vOne D τ (D.R.k - 1) - 1 / 2 := by
   have hk := D.R.m_add_three_le_k
@@ -769,6 +774,7 @@ theorem data5 (u : D.what₂.Word) (τ : D.what₂.Tau) (ht : ¬ IsTop D τ) :
   push_cast; ring
 
 
+include P in
 theorem data6 (τ : D.what₂.Tau) (ht : IsTop D τ) :
     3 ≤ bOne D τ 1 - bTop D τ ∧ bOne D τ 1 / 2 ≤ bTop D τ := by
   obtain ⟨t, ht⟩ := ht
@@ -885,6 +891,7 @@ theorem wj_ge (τ : D.what₂.Tau) (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) :
 variable (P : ParameterChoice' D L)
 
 
+include P in
 theorem bOne_ge (hx2 : 2 ≤ L.sc.x) (τ : D.what₂.Tau) (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) :
     L.sc.w'' D.R.n / 2 ≤ bOne D τ j := by
   obtain ⟨j, rfl⟩ : ∃ j', j = j' + 1 := ⟨j - 1, by omega⟩
@@ -1124,6 +1131,7 @@ theorem max_power_le_half_width (SzK : SizeK L) (SzW : SizeW L) (Cl : ℝ) (hCl0
 variable (P : ParameterChoice' D L)
 
 
+include P in
 theorem first_node_le_b_cubed (SzK : SizeK L) (h2 : 2 ≤ XX L) (h3 : 5 / szTh L ≤ XX L) (u : D.what₂.Word) (τ : D.what₂.Tau) :
     uOne D u τ 1 ≤ L.sc.b ^ (3 : ℝ) := by
   have hk := D.R.m_add_three_le_k
@@ -1160,6 +1168,7 @@ theorem first_node_le_b_cubed (SzK : SizeK L) (h2 : 2 ≤ XX L) (h3 : 5 / szTh L
     linarith
 
 
+include P in
 theorem count_power_le_discriminant (Cl : ℝ) (hCl0 : 0 < Cl) (hClC : Cl ≤ P.CCount) :
     ((D.R.k : ℝ) * D.R.f * L.sc.L) ^ Cl ≤ (D.s.Del : ℝ) := by
   have hk5 := five_le_k (D := D)
@@ -1181,6 +1190,7 @@ theorem count_power_le_discriminant (Cl : ℝ) (hCl0 : 0 < Cl) (hClC : Cl ≤ P.
     _ ≤ _ := P.Del_count
 
 
+include P in
 theorem node_gaps_large (SzNo : SizeNodes L) (Cl : ℝ) (hCl : Cl ≤ XX L) (τ : D.what₂.Tau) (j : ℕ) (h1 : 1 ≤ j)
     (h2 : j + 1 ≤ D.R.m) :
     Cl * (D.R.r : ℝ) ^ 19 * (D.R.f : ℝ) ^ 5 * L.sc.L ≤ bOne D τ (j + 1) - bOne D τ j := by
@@ -1197,6 +1207,7 @@ theorem node_gaps_large (SzNo : SizeNodes L) (Cl : ℝ) (hCl : Cl ≤ XX L) (τ 
   linarith
 
 
+include P in
 theorem type_prime_size_bounds (i : Fin 2) :
     ((D.R.k : ℝ) * L.sc.b) ^ 8 ≤ (D.host.g i : ℝ) ∧ (D.host.g i : ℝ) ≤ L.sc.b ^ (P.CYL + 1) := by
   obtain ⟨Y, y1, -, y3, y4⟩ := P.g_Y
@@ -1219,6 +1230,7 @@ section Hyp4
 variable {D : D7} (L : SizeData₂ D) (P : ParameterChoice' D L)
 
 
+include P in
 theorem row_parameter_gaps_large (Cl : ℝ) (hClG : Cl ≤ P.Cgap) (τ : D.what₂.Tau) (i : Fin D.R.r) (h : i.1 + 1 < D.R.r) :
     Cl * (D.R.k : ℝ) * (D.R.m : ℝ) ^ 4 + (D.R.r : ℝ) * (D.R.m : ℝ) ^ 10 <
       lamS D.R (D.hc τ) i - lamS D.R (D.hc τ) ⟨i.1 + 1, h⟩ := by

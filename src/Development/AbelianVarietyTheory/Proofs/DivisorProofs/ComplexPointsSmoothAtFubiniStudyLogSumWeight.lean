@@ -56,6 +56,7 @@ end GlobalTheory.HSAmp.CanSmooth
 namespace GlobalTheory.HSAmp
 
 
+open CanSmooth in
 theorem cInfAt_canWeight : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegral X] (p : X ⟶ Sp k) (P : Pair p) (D e : ℕ) (x : Fin (D + 1) → X.functionField), Gens P D e x → ∀ n : ℕ, 1 ≤ n → ∀ (σ : k →+* ℂ) (y : CxPts p σ), CInfAt (fun z : CxPts p σ => ((e : ℝ) * n)⁻¹ * Real.log (∑ l, P.nu e 0 σ z (x l) ^ (2 * n))) y := by
   intro k _ X _ p P D e x hx n _ σ y
   set i := pick (P.L.φ σ).isLB y

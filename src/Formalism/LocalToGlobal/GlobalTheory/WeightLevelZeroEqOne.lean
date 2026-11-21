@@ -54,6 +54,7 @@ theorem normTie_at (v : InfinitePlace D.what₂.LL) (x : ((D.fm u).lat 0).V)
   exact h
 
 
+open Classical in
 theorem exists_single (hst : ∀ c, Subsingleton ((D.mem u).C.stab 0 c)) (x : ((D.fm u).lat 0).V) (c : (D.mem u).C.cls 0) :
     ∃ xc, co0 T xc = Pi.single c (co0 T x c) := by
   classical

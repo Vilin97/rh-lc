@@ -61,6 +61,7 @@ theorem geoNum_one_linear {K : Type} [Fintype K] {ι : K → Type} [∀ k, Finty
 end SlopeTestRemainingChoices
 
 
+open ReciprocityTheory.ChartRestriction.G.AI.I1 GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.Inter.PointVertical in
 theorem nefAt_pull {K K' : Type} [Fintype K] [Fintype K'] {ι : K → Type} {ι' : K' → Type} [∀ k, Fintype (ι k)]
     [∀ k, Fintype (ι' k)] {κ : K → K'} {v : (Σ k, ι k) → Σ k, ι' k} (hv : IsBlockMap κ v) {P : Ideal (MRing ι)}
     {P' : Ideal (MRing ι')} (hP : P ≤ imageZ v P') {p : ℕ} (hp : p.Prime) {a : K → ℤ} (h : PB.NefAt P p a) :

@@ -89,6 +89,7 @@ variable {o : Type u} [CommRing o] {Ω : Type v} [Field Ω] [Algebra o Ω] {K : 
   {w : Module.Basis (Fin N) Ω E} {b : Fin N → K → ℤ}
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem mon_ne_zero {c : ∀ k, ι k} (hc : segreVec y c ≠ 0) (a : K → ℤ) :
     IndefiniteRowSideFullHecke.NumbersDVR.Bundles.chartMon y c a ≠ 0 := by
   have hy : ∀ k, y ⟨k, c k⟩ ≠ 0 := fun k =>
@@ -96,6 +97,7 @@ theorem mon_ne_zero {c : ∀ k, ι k} (hc : segreVec y c ≠ 0) (a : K → ℤ) 
   exact Finset.prod_ne_zero_iff.mpr fun k _ => zpow_ne_zero _ (hy k)
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem forward (h : IsFlagFrame y B w b) :
     IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsGradedFrame o y B
       (fun i => Submodule.span Ω (w '' {j | (j : ℕ) < i})) b w := by
@@ -178,6 +180,7 @@ theorem forward (h : IsFlagFrame y B w b) :
       rw [hdiag, Finsupp.single_eq_same, mul_one, sub_self]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem backward (h : IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsGradedFrame o y B
       (fun i => Submodule.span Ω (w '' {j | (j : ℕ) < i})) b w) :
     IsFlagFrame y B w b := by

@@ -48,6 +48,7 @@ end FormsPkg
 variable {D : D7} {G : DV.Geo D.what₂.LL} {Lev : Type}
 
 
+open Classical in
 structure FormsKPkg (F : ShimFam D G Lev) : Type 1 where
 
   κs : Lev

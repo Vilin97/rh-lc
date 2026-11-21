@@ -140,6 +140,7 @@ theorem cycLen_dvd {r : ℕ} (b : Fin r → Fin r) (c : Cyc b) : cycLen b c ∣ 
   Nat.dvd_factorial (cycLen_pos b c) (by simpa using Fintype.card_subtype_le (fun i : Fin r => b i = c.1))
 
 
+variable (p K) in
 abbrev SSParam (r : ℕ) : Type := Σ b : Fin r → Fin r, ∀ c : Cyc b, (Tor p (cycLen b c) →* Kˣ)
 
 instance finiteTor {r : ℕ} (b : Fin r → Fin r) (c : Cyc b) : Finite (Tor p (cycLen b c)) := by

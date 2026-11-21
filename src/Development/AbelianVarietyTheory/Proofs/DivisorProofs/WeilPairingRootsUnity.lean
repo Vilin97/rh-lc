@@ -40,6 +40,7 @@ theorem pc_one_right {T : Over S} (x : T ⟶ A) : pc hP x (1 : T ⟶ A) = 0 := b
   rwa [_root_.mul_one, left_eq_add] at this
 
 
+include hB hB' in
 theorem exists_theta_prod {k : ℕ} {T : Over S} (X : T ⟶ G2 A) (hX : X ^ k = 1) :
     ∃ θ : Out.ThetaGrp (G2 A) P k T, θ.pt = X := by
   have e : ∀ g : T ⊗ G2 A ⟶ G2 A, pull g.left (cls P hP) = pc hP (g ≫ fst A A) (g ≫ snd A A) := fun g => by

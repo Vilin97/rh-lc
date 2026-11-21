@@ -50,6 +50,7 @@ theorem sigma_algebraMap {K : UQ} (B : InvAlg K) (o : K.O) :
 end GlobalTheory.UnitLemma.SwapInt
 
 
+open GlobalTheory.UnitLemma.SwapInt in
 theorem GlobalTheory.UnitLemma.InvAlg.isIntegral_mk_comap_sigma_iff :
     ∀ (K : UQ) (B : InvAlg K) (m : MaximalSpectrum B.A) (x : B.A),
       IsIntegral K.O (Ideal.Quotient.mk (m.asIdeal.comap B.σ) x) ↔

@@ -31,6 +31,7 @@ theorem chartMon_not_mem {W : Ideal (MRing (bundleIdx ι M) F)} [hW : W.IsPrime]
 end FlagLineSectionProof
 
 
+open FlagLineSectionProof in
 theorem FlagLineSection.proof : FlagLineSection.Statement := by
   intro F _ Ω _ _ K _ _ ι _ y e hy _ N E _ _ B w b hB M a φ hφ Φ _ _ t ht h0
   have hXn : ∀ l : Fin M, projMap F y w φ (truncCoord t 1) (X ⟨none, l⟩) =

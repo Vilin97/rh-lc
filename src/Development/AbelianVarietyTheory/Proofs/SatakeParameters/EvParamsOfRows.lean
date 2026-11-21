@@ -24,6 +24,8 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeR
 namespace GlobalTheory.Mem.RowsLed
 
 
+open Formalism.MainNotions.Inhab Formalism.L2.GlobalTheoryTheory GlobalTheory.EX GlobalTheory.EX.OB in
+set_option maxHeartbeats 1000000 in
 theorem ev_exists_sizeData_untwisted : Ev fun K => ∀ X : Stages, K.Over X.B.toPre → X.V.div.etaF = 6 * K.s.x ^ (-K.C.P.CF) →
     (∀ w, X.toD7.what₂.muAt w = X.toD7.what₂.mu0 → ∀ j, 1 ≤ j → j ≤ X.toD7.R.m → X.toD7.what₂.Aj j w = 0) →
     ∃ L : SizeData₂ X.toD7, L.sc = K.s ∧ Nonempty (ParameterChoice' X.toD7 L) := by

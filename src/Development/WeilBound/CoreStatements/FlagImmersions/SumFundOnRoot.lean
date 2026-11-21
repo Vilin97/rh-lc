@@ -97,6 +97,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
   {Fx : FixedData Y Sys}
 
 
+open Classical in
 def tieOf (Or : RootOrigin Y S RM Fx) (h₀ : 0 < Sys.t₀) (hvb : Or.𝔐.OmVB)
     (hd : ∀ p : ℕ, p.Prime → (p : ℤ) ∣ NumberField.discr E → p ∈ S) (hA : AlgOver (Or.Re.comap some)) :
     HodgeTie Y S (Module.finrank ℚ c.F) RM where

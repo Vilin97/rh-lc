@@ -19,6 +19,7 @@ open PAlg Pb
 variable {l : ℕ} [Fact l.Prime] (K : IntermediateField ℚ_[l] (PadicAlgCl l))
 
 
+variable (l) in
 def CrisSurj : Prop := ∀ n, Function.Surjective ((base l).cris n)
 
 def cb (ht : TFil l) (hs : CrisSurj l) : CB l K where

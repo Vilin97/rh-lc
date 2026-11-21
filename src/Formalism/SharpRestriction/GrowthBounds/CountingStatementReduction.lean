@@ -1080,6 +1080,7 @@ theorem isoProj_of_set (E : GLOps n K V) (lam : Fin n → ℤ) (e : Module.End K
   ⟨fun x hx => h.1 lam rfl x hx, fun mu hmu x hx => h.2 mu (by simpa using hmu) x hx⟩
 
 
+open Classical in
 theorem setProj_eq_sum (E : GLOps n K V) (hT : (⨆ mu : Fin n → ℤ, isoSub E mu) = ⊤) (T : Set (Fin n → ℤ))
     (e : Module.End K V) (he : IsIsoProjSet E T e) (ee : (Fin n → ℤ) → Module.End K V)
     (hee : ∀ lam, IsIsoProj E lam (ee lam)) (x : V) :
@@ -1111,6 +1112,7 @@ theorem setProj_eq_sum (E : GLOps n K V) (hT : (⨆ mu : Fin n → ℤ, isoSub E
 end Abs
 
 
+open Classical in
 theorem subOps_int (D : Formalism.BasicNotions.D7) (p n' : ℕ) (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     (S0 : UniformizedDVR p O) (hG : AdmissibleDVR p n' O) (N r n : ℕ) (hn : 0 < n) (Lt : Letters (Fin N)) (S : Set (Fin N))
     (φ : Fin n → Fin r) (hφ : Function.Injective φ)
@@ -2722,6 +2724,7 @@ namespace Formalism.MainNotions.G.CountingStatementReduction
 open Formalism.MainNotions.flipOneThree Formalism.MainNotions.G Finset
 
 
+open Classical in
 theorem double_count {α δ : Type*} (A : Finset α) (Dl : Finset δ) (rel : δ → α → Prop)
     (n rk m : δ → α → ℝ) (ε K : ℝ) (hε : 0 ≤ ε) (hK : 0 ≤ K)
     (hn : ∀ d ∈ Dl, ∀ a ∈ A, 0 ≤ n d a) (hm : ∀ d ∈ Dl, ∀ a ∈ A, 0 ≤ m d a)
@@ -2960,6 +2963,7 @@ theorem clSum_eq_sum {aTop : Fin X.s → ℕ} (hfin : {b | Kept X.p X.r (X.S C0 
     exact hb (if_neg fun h => hk h.1)
 
 
+open Classical in
 theorem keptSum_eq_classes {aTop : Fin X.s → ℕ} (hfin : {b | Kept X.p X.r (X.S C0 CE1 CE2) aTop b}.Finite)
     (f : SegBlock X.s X.r → ℕ) :
     keptSum C0 CE1 CE2 X f aTop =
@@ -3023,10 +3027,12 @@ theorem rank_ge {D : Formalism.BasicNotions.D7} {CYb Cde Ck CD Cb Cc : ℝ} (hH 
 variable (C0 CE1 CE2 X)
 
 
+open Classical in
 def MCl (aTop : Fin X.s → ℕ) : ℝ :=
   ∑ dl ∈ (clSet C0 CE1 CE2 X).filter (fun dl => Compat C0 CE1 CE2 X dl aTop), (mCl C0 CE1 CE2 X dl aTop : ℝ)
 
 
+open Classical in
 def DigitClassDimensionComparison (g : (Fin X.s → ℕ) → ℕ → SegBlock X.s X.r → ℕ) (ε : ℝ) : Prop :=
   ∀ dl ∈ clSet C0 CE1 CE2 X,
     ∑ a ∈ (box X).filter (fun a => Compat C0 CE1 CE2 X dl a.1), (clSum C0 CE1 CE2 X (g a.1 a.2) a.1 dl : ℝ) ≤
@@ -3048,6 +3054,7 @@ theorem meanBox_eq (κ : (Fin X.s → ℕ) → ℕ → ℝ) :
   rw [Finset.sum_product]
 
 
+open Classical in
 theorem mean_of_classes {D : Formalism.BasicNotions.D7} {CYb Cde Ck CD Cb Cc : ℝ} (hH : flipOneThree.HI C0 CYb Cde Ck CD Cb Cc X)
     (h11 : adm11 D C0 CYb Cde Ck CD Cb CE1 CE2 Cc X)
     (hfin : ∀ aTop : Fin X.s → ℕ, {b | Kept X.p X.r (X.S C0 CE1 CE2) aTop b}.Finite)

@@ -124,6 +124,7 @@ theorem mem_dualFr_tauLat {E : Type} [Field E] [NumberField E] (emb : ι → E �
     | smul c y _ hy => rw [dotProduct_smul]; exact Submodule.smul_mem _ c hy
 
 
+omit [Fintype ι] in
 theorem dualFr_tauLat_tilN {E : Type} [Field E] [NumberField E] [StarRing E] (emb : ι → E →+* K) (τ : ι)
     (L : Submodule (𝓞 E) (Sp E n)) :
     dualFr (tauLat emb τ (tilN L)) = Br.sumLat rfl (dualFr (tauLat emb τ L)) 1 := by

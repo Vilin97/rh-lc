@@ -107,6 +107,7 @@ theorem eigen_of_triangular (f : (J → V) → ℂ) (lt : J → J → Prop) (rk 
 end Triangular
 
 
+open Harm in
 theorem polyDeriv_triangular {T κ W : Type*} [Fintype T] [Fintype κ] {p q : ℕ}
     [NormedAddCommGroup W] [NormedSpace ℂ W] {F : W → ℂ} (hF : ContDiff ℂ (⊤ : ℕ∞) F)
     {c : T → Fin p → ℕ} {c' : T → Fin q → ℕ} {P : Poly ℂ T p q κ} (hP : P ∈ rowHighest ℂ c c')

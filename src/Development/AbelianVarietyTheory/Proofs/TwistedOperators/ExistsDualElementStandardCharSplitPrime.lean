@@ -187,6 +187,7 @@ open GlobalTheory.IdemModTwo GlobalTheory.SplitChart
 variable {D : D7} {v : HeightOneSpectrum (𝓞 D.host.F)} {e : AE D}
 
 
+set_option maxHeartbeats 1000000 in
 theorem trace_generator_split_section (he : SplitAt D v e) (a : Fv D.host.F v) :
     Algebra.trace (AF D.host.F) (AE D) (incA D D.host.xi0 * GlobalTheory.FinPl.SplitPoint.sec D v e a) =
       pairA D.host.F 0 (singleV D.host.F v (comp he (incA D D.host.xi0) * a)) := by
@@ -251,6 +252,7 @@ namespace GlobalTheory.SplitDualElt
 open GlobalTheory.IdemModTwo GlobalTheory.SplitChart
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_dual_elt : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (e₁ : AE D) (PP : Pl D.host.E), Formalism.L2.NTheta.IsIdemAt e₁ PP → ∃ c : Datum.EAf D, (∀ Z : AE D, infPart D Z = 0 → ∀ r : Formalism.L2.Herm.intAf D.host.F D.host.E, resS D.host.F PP r = 0 → toEAf D Z = c * r → ψ (Algebra.trace (AF D.host.F) (AE D) (incA D D.host.xi0 * Z)) = 1) ∧ (∀ Z : AE D, infPart D Z = 0 → toEAf D Z = c → ψ (Algebra.trace (AF D.host.F) (AE D) (incA D D.host.xi0 * Z)) ≠ 1) := by
   intro D ψ hψ e PP hI
   obtain ⟨v, he⟩ := (isSplitIdem_iff e).1 hI.1

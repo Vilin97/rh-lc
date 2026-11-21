@@ -29,6 +29,7 @@ section General
 variable {S : Scheme.{0}} {A B D : Over S} [GrpObj A] [GrpObj B] [GrpObj D]
 
 
+omit [GrpObj A] in
 theorem isAdditive_swap_iff {P : LB (A ⊗ B).left} (hP : P.IsLB) : IsAdditive (swap P) ↔
     ∀ (Y : Over S) (a : Y ⟶ A) (b b' : Y ⟶ B), evc hP a (b * b') = evc hP a b + evc hP a b' := by
   have hs : (swap P).IsLB := pull_isLB hP _
@@ -37,10 +38,12 @@ theorem isAdditive_swap_iff {P : LB (A ⊗ B).left} (hP : P.IsLB) : IsAdditive (
   exact ⟨fun h Y a b b' ↦ h Y b b' a, fun h Y b b' a ↦ h Y a b b'⟩
 
 
+omit [GrpObj B] in
 theorem triv_left {P : LB (A ⊗ B).left} (hP : P.IsLB) (h : IsAdditive P) : Triv (ev P (1 : B ⟶ A) (𝟙 B)) :=
   (triv_ev_iff hP _ _).2 (h.evc_one hP _)
 
 
+omit [GrpObj A] in
 theorem triv_right {P : LB (A ⊗ B).left} (hP : P.IsLB) (h : IsAdditive (swap P)) :
     Triv (ev P (𝟙 A) (1 : A ⟶ B)) := by
   have hs : (swap P).IsLB := pull_isLB hP _
@@ -56,6 +59,7 @@ theorem dual_ext {Q : LB (A ⊗ D).left} (h : IsDual A D Q) {T : Over S} {y y' :
   exact (isAdditive_iff h.isLB).1 h.additive _ _ _ _
 
 
+omit [GrpObj A] [GrpObj B] [GrpObj D] in
 theorem evc_of_cls {Q : LB (A ⊗ D).left} (hQ : Q.IsLB) {P : LB (A ⊗ B).left} (hP : P.IsLB) {x : B ⟶ D}
     (e : cls P hP = evc hQ (fst A B) (snd A B ≫ x)) {Y : Over S} (a : Y ⟶ A) (b : Y ⟶ B) :
     evc hP a b = evc hQ a (b ≫ x) := by
@@ -107,6 +111,7 @@ theorem additive_pull {S' : Scheme.{0}} {b : S' ⟶ S} {A' B' : Over S'} [GrpObj
     exact (isAdditive_swap_iff hP).1 a₂ _ _ _ _
 
 
+omit [GrpObj A] [GrpObj B] [GrpObj D] in
 theorem pull_evc_eq {S' : Scheme.{0}} {A' B' D' : Over S'} {f : A'.left ⟶ A.left} {g : B'.left ⟶ B.left}
     {d : D'.left ⟶ D.left} {l : (A' ⊗ B').left ⟶ (A ⊗ B).left} {m : (A' ⊗ D').left ⟶ (A ⊗ D).left}
     (l₁ : l ≫ (fst A B).left = (fst A' B').left ≫ f) (l₂ : l ≫ (snd A B).left = (snd A' B').left ≫ g)

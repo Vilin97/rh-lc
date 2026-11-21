@@ -109,6 +109,7 @@ theorem exists_polPull (hP : PolBaseChangeSt) {S S' : Scheme.{0}} (f : S' ⟶ S)
     rw [e₁, e₂, ← mA]; rfl⟩, LBIso.symm tA⟩
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_desc_pol (hL : Laws) (h2 : Laws2) (hH : HomExtSt) {O' R V : Type} [CommRing O'] [CommRing R] [IsDomain R]
     [IsNoetherianRing R] [IsIntegrallyClosed R] [IsLocalRing R] [CharZero R] [CommRing V] [IsDomain V] (f : O' →+* R)
     {g : R →+* V} (hg : Function.Injective g) (P₀ : PolAV (Sp O')) (P : PolAV (Sp R)) (P' : PolAV (Sp V))

@@ -35,6 +35,9 @@ namespace GlobalTheory.LevelVac
 variable {D : D7}
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1600000 in
+open GlobalTheory.VacUnique GlobalTheory.FockCompare in
 theorem vac_eq_smul {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D}
     {S T : HSp D} {sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ}
     {sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ}
@@ -108,6 +111,8 @@ theorem vac_eq_smul {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D}
   exact ⟨a, det f f' a hf.2.theta hth hlat hlat' fun z => (congrFun ha z).symm⟩
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 800000 in
 theorem exists_level_frame (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D))
     {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)} (hβ : Formalism.L2.DIV.IsFrame β Λ) :
     ∃ N : ℕ, 0 < N ∧ ∀ k : GA D V, GlobalTheory.Member.FinCong V N k → ∃ β' : GL (Fin V.rank) (Lev.EAf D),
@@ -130,6 +135,8 @@ theorem om_pow_eq {G M : Type} [Monoid G] [AddCommGroup M] [Module ℂ M] (ω : 
   | succ m ih => rw [pow_succ, map_mul, Module.End.mul_apply, hc, map_smul, ih, smul_smul, pow_succ, mul_comm]
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1600000 in
 theorem exists_level_fix {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D} {χS χT : (AE D)ˣ →* Circle}
     {om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)} (hW : IsWeilDatumO ψ S T χS χT om)
     {sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ} {sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ}

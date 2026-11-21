@@ -52,6 +52,7 @@ def LprNondeg : Prop :=
 variable {u u' F0 what₂}
 
 
+set_option maxHeartbeats 800000 in
 theorem lprPart_of (hE : LprExist Zd u u' F0 what₂) (hN : LprNondeg Zd u u' F0 what₂) : LprPart Zd u u' F0 what₂ := by
   intro hrows γ Z hC F' hP p ψ hI hz
   obtain ⟨ψ₀, hI₀, hz₀, hL, hι⟩ := hE hrows γ Z hC F' hP p

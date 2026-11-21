@@ -44,6 +44,7 @@ def divSupp (P : Ideal (MRingOver R ι)) (s : MRingOver R ι) : Set (Ideal (MRin
 
 
 open scoped Classical in
+open Classical in
 def multAt (J W : Ideal (MRingOver R ι)) : ℕ :=
   if h : W.IsPrime then
     haveI := h
@@ -67,6 +68,7 @@ def charOf (W : Ideal (MRing ι)) : ℕ :=
 
 
 open scoped Classical in
+open Classical in
 def geoNum : (n : ℕ) → Ideal (MRing ι) → (Fin n → K → ℤ) → ℤ
   | 0, V, _ =>
     if h : IsRelevant V then

@@ -13,10 +13,12 @@ namespace PositivityTheory.RgUd.Form
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+variable (k) in
 def colEl (m N : ℕ) (h : m + 2 ≤ N) (x : Fin (m + 1) → k) : GL (Fin N) k :=
   blkAt k (m + 2) N h (unip k (m + 1) (Multiplicative.ofAdd x))
 
 
+variable (k) in
 def xi0 (m : ℕ) : Fin (m + 1) → k := Pi.single (Fin.last m) 1
 
 def AvgData (ψ : AddChar k Circle) {m N : ℕ} (h : m + 2 ≤ N) {V : Type} [AddCommGroup V] [Module ℂ V]

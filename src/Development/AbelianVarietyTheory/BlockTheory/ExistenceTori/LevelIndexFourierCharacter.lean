@@ -131,6 +131,7 @@ theorem zeta_level_mem (c : Coeff l) : zeta l.M ∈ c.F := by
   exact pow_mem c.zeta_mem k
 
 
+variable {l} in
 def zetaM (c : Coeff l) : c.F := ⟨zeta l.M, zeta_level_mem l c⟩
 
 
@@ -154,6 +155,7 @@ def levPtCl (Xo : Moduli D l) {S : Type} [CommRing S] (x0 : Sp S ⟶ Xo.X) (x : 
     simp only [levPt, this])
 
 
+variable (D l) in
 def levelIndex (n : ℕ) : Finset (Fin n → NamedCl D l) := (Set.finite_univ).toFinset
 
 def SpansAtEvery {n : ℕ} (s : Set (Fin n)) (x₀ : Fin n → ConjCl D l) : Prop :=

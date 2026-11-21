@@ -154,6 +154,7 @@ theorem exists_induces (V : HSp D) {ι : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank
     exact ⟨-w, neg_mem hw, by rw [neg_nsmul, ← e, neg_sub]; exact (add_sub_cancel _ _).symm⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem petE_transl {Xo : Moduli Dw l} {c : Coeff l} {σ : c.F →+* ℂ} {r : ℕ} {U : Unf Xo c σ r} {V : HSp D}
     (hs : V.SigOK) (hr : V.rank = r) {dict : GA D V → Σ k, Frame (U.X k).Ψ r}
     {ι : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E)} {g : ℕ}
@@ -202,6 +203,8 @@ open scoped TensorProduct
 open GlobalTheory GlobalTheory.CovTop
 
 
+attribute [local instance] Formalism.BasicNotions.Host.cmStar in
+set_option maxHeartbeats 1000000 in
 theorem GlobalTheory.LevelIsometry.keeps_cusp_lattice_norm : ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j : ℕ, 1 ≤ (T.Q.Dw j).p → 1 ≤ (T.Q.Dw j).q → 2 < Module.finrank ℚ D.host.E / 2 → InR D j → ∀ (Y : Deep T.toCore j) (e : ℕ) (o : ℝ), Y.Good e o → ∀ G : WTZ D.host.E, Even G.2 → KeepsCusp Y.U G ∧ ∀ (γ : LevelAut (T.Q.Dw j) Y.d.l₂) (f g : Y.V G), (g : Rul Y.d.Xo₂ Y.d.c₂) = pull Y.d.Xo₂ Y.d.c₂ γ f → (f ∈ AllWt.latW Y.U G → g ∈ AllWt.latW Y.U G) ∧ ∀ σ, Y.nrm G σ g = Y.nrm G σ f := by
   intro D T hT j hp _ _ hj Y e o hY G hG
   have hpq : 1 ≤ (T.Q.Dw j).p + (T.Q.Dw j).q := le_add_right hp

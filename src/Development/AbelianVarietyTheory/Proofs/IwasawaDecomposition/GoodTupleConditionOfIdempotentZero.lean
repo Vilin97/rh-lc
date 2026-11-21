@@ -48,6 +48,7 @@ theorem isAlgebraic_rat (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Alge
 variable {R : Ranks}
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem exists_isCMConjOm (H : Host R) (Ω : Type) [Field Ω] [Algebra H.E Ω] [IsAlgClosure H.E Ω] :
     ∃ c : Ω ≃+* Ω, IsCMConjOm H.E Ω c := by
   have : CharZero Ω := charZero_of_injective_algebraMap (algebraMap H.E Ω).injective
@@ -276,6 +277,7 @@ theorem monic_unip {K : Type} [CommRing K] [Nontrivial K] (n : ℕ) :
   exact ⟨h.pow n, by rw [h.natDegree_pow, h', mul_one]⟩
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def nData (H : Host R) (what₂ : Rows.Data R) (hsha : ∀ p e, what₂.shaLen p e = shaTrue H p e)
     (hs : ∀ k, (placesOver H.E (H.g k)).ncard = Module.finrank ℚ H.E)
     (hc : what₂.restRowsFiniteGroupCard = ∏ k : Fin 2, (Nat.card (GL (Fin R.r) (ZMod (H.g k)))) ^ R.f) : NData R H what₂ where
@@ -386,6 +388,7 @@ def negOneFam (H : Host R) : UnrFam H 1 :=
   ⟨(fun _ => ⟨{-1}, by simp⟩, fun _ => {0}), fun _ => rfl, fun _ => rfl⟩
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def nAut (N : NData R H what₂) [IsEmpty N.Loc] (pl : ∀ k, N.PlG k → PlE H)
     (h1 : ∀ k v, pl k v ∈ placesOver H.E (H.g k)) (h2 : ∀ k, Function.Injective (pl k))
     (h3 : ∀ k v v', ¬ IsConjPl H (pl k v) (pl k v')) : NAut N where
@@ -550,6 +553,7 @@ section Twist
 variable [NumberField what₂.LL] [StarRing what₂.LL] (LL0 : IntermediateField ℚ what₂.LL)
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def nTw (N : NData R H what₂) [IsEmpty N.Loc] : NTw R H what₂ LL0 N where
   cc := (exists_isCMConjOm H N.Om).choose
   cc_cm := (exists_isCMConjOm H N.Om).choose_spec
@@ -671,6 +675,7 @@ def nTw (N : NData R H what₂) [IsEmpty N.Loc] : NTw R H what₂ LL0 N where
 variable {LL0}
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def nExp {N : NData R H what₂} (tw : NTw R H what₂ LL0 N) [IsEmpty tw.Tw] : NExp R H what₂ LL0 N tw where
   U := ⊥
   eLL0 := fun _ => 0
@@ -720,6 +725,7 @@ def nExp {N : NData R H what₂} (tw : NTw R H what₂ LL0 N) [IsEmpty tw.Tw] : 
   eH_idem := fun i => isEmptyElim i
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def nTh {N : NData R H what₂} {tw : NTw R H what₂ LL0 N} [IsEmpty tw.Tw] (ex : NExp R H what₂ LL0 N tw) :
     NTh R H what₂ LL0 N tw ex where
   iC := fun i => isEmptyElim i
@@ -819,6 +825,7 @@ def cenTriv (Γ : Type) [Group Γ] (V : Type) [AddCommGroup V] [Module ℂ V] :
   (MonoidAlgebra.lift ℂ (Module.End ℂ V) Γ 1).comp (Subalgebra.val _)
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def nTypes (N : NData R H what₂) [IsEmpty N.Loc] (pl : ∀ k, N.PlG k → PlE H)
     (h1 : ∀ k v, pl k v ∈ placesOver H.E (H.g k)) (h2 : ∀ k, Function.Injective (pl k))
     (h3 : ∀ k v v', ¬ IsConjPl H (pl k v) (pl k v'))

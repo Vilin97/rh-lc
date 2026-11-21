@@ -46,6 +46,7 @@ theorem codSub_injective {G V W : Type} [Group G] [AddCommGroup V] [Module ℂ V
   fun a b hab => hf (congrArg Subtype.val hab)
 
 
+include hT in
 theorem mid_sub {V : Type} [AddCommGroup V] [Module ℂ V] {P : Representation ℂ (GL (Fin m) k) V}
     (hP : HasFiniteLength P) (hs : IsSmooth P) (x : IrrCl (GL (Fin N) k)) (S : Subrepresentation P)
     (hx : ∃ f : x.rep.ρ.IntertwiningMap (T S.toRepresentation).ρ, Function.Injective f) :
@@ -151,6 +152,7 @@ theorem mid_sub {V : Type} [AddCommGroup V] [Module ℂ V] {P : Representation �
       fun a b hab => h1inj (e.symm.left_inv.injective hab)⟩ hU'
 
 
+include hT in
 theorem mid_gen {V : Type} [AddCommGroup V] [Module ℂ V] {P : Representation ℂ (GL (Fin m) k) V}
     (hP : HasFiniteLength P) (hs : IsSmooth P) (x : IrrCl (GL (Fin N) k))
     (f : x.rep.ρ.IntertwiningMap (T P).ρ) (hf : Function.Injective f) :

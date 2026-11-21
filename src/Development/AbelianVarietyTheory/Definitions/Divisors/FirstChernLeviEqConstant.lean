@@ -149,6 +149,7 @@ variable {Y} (T : Real0 Y) (A : SlopeTestRemainingChoices Y)
 
 
 
+variable (Y) in
 structure Ht where
 
   h0 : Wt Y → Y.Pt → ℝ
@@ -166,6 +167,7 @@ variable (H : Ht Y)
 variable {T} (P : T.Pts)
 
 
+variable (Y) in
 def midWt : Wt Y := fun _ i => if (i : ℕ) < Y.j then 1 else 0
 
 

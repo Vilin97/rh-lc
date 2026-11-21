@@ -31,6 +31,9 @@ open GlobalTheory.UT
 namespace GlobalTheory
 
 
+open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry IsLocalRing in
+open scoped CategoryTheory.Obj in
+attribute [local instance] Over.cartesianMonoidalCategory in
 theorem _root_.GlobalTheory.twistBaseChange_and_valuation_statements :
     _root_.ReciprocityTheory.ChartRestriction.G.DVR.TwistBaseChangeStatement ∧ _root_.ReciprocityTheory.ChartRestriction.G.DVR.TwistBCSpanStatement ∧ _root_.ReciprocityTheory.ChartRestriction.G.DVR.TWM.VRatioGtStatement ∧ _root_.ReciprocityTheory.ChartRestriction.G.DVR.TWStatement ∧ _root_.ReciprocityTheory.ChartRestriction.G.DVR.UUStatement := by
   have hbc : _root_.ReciprocityTheory.ChartRestriction.G.DVR.TwistBaseChangeStatement := _root_.GlobalTheory.twistBaseChange

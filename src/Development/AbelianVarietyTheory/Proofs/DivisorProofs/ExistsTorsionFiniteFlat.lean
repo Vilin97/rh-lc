@@ -102,6 +102,7 @@ theorem flat_of_retract {X Y S : Scheme.{0}} (f : X ⟶ S) (i : X ⟶ Y) (r : Y 
   rwa [hx] at key
 
 
+open GlobalTheory.UPel.HT in
 theorem oActN_natCast {S : Scheme.{0}} {O : Type} [Ring O] {G : Over S} [GrpObj G] (act : OActN O G) (n : ℕ) :
     act.act (n : O) = 𝟙 G ^ n := by
   induction n with
@@ -113,6 +114,7 @@ theorem oActN_natCast {S : Scheme.{0}} {O : Type} [Ring O] {G : Over S} [GrpObj 
   | succ n ih => rw [Nat.cast_succ, act.add, ih, act.one, pow_succ]
 
 
+open GlobalTheory.UPel.HT in
 theorem act_finite_flat {S : Scheme.{0}} [IsLocallyNoetherian S] {F O : Type} [Field F] [NumberField F] [Ring O]
     [Algebra (𝓞 F) O] (A : Over S) [GrpObj A] [IsCommMonObj A] (hA : IsAbelianScheme A) (act : OActN O A)
     (c : 𝓞 F) (hc : c ≠ 0) :
@@ -139,6 +141,7 @@ theorem act_finite_flat {S : Scheme.{0}} [IsLocallyNoetherian S] {F O : Type} [F
     (MorphismProperty.of_isPullback (P := @IsFinite) (GlobalTheory.AbLaw.MulN.isPullback_baseChange t _) hf)).1
 
 
+open KerGrp in
 theorem exists_torsion_finite_flat : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.HT.Datum p) (R : Type) [CommRing R]
     (b : GlobalTheory.UPel.HT.Base D R) (N : ℕ) (w : Ideal (𝓞 D.F)) (S : Scheme.{0}) [IsLocallyNoetherian S]
     (s : S ⟶ Sp R) (o : GlobalTheory.UPel.HT.Obj b N s), w ≠ ⊥ → ∃ (K : Over S) (_ : GrpObj K) (i : K ⟶ o.A),

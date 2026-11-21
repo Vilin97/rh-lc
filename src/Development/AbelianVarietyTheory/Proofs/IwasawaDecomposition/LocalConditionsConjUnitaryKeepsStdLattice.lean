@@ -187,6 +187,7 @@ noncomputable section
 namespace GlobalTheory.Mem.Col2.TC.ChTw.Match
 
 
+set_option maxHeartbeats 1000000 in
 theorem conj_unitary_preserves_stdLat_of_ptOf : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → ∀ (l : I.Laws) (u : B.Word) (n : ℕ) (t s : GA B n)
     (x : ∀ w : (B.primes X).vGs, GL (Fin n) (𝓞 B.fields.E ⧸ w.1.asIdeal)) (h : GLG B.fields.E n (B.primes X).vGs),
     (∃ p : DecoF B.fields.E n ∅ ∅ ∅, PtOf t p ∧ p.deco.1.N = stdLat B.fields.E n) →

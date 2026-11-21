@@ -22,12 +22,14 @@ namespace GlobalTheory.HCA
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+variable (E a) in
 def glRho : glL E a →ₗ[ℝ] Module.End ℂ ((glH E a).smoothFuns (F := ℂ)) where
   toFun X := (glH E a).rightDerivEnd X
   map_add' X Y := by ext1 f; ext1; exact (glH E a).rightDeriv_add_left _ _ _
   map_smul' r X := by ext1 f; ext1; exact (glH E a).rightDeriv_smul_left r _ _
 
 
+variable (E a) in
 def glLap : Module.End ℂ ((glH E a).smoothFuns (F := ℂ)) :=
   ∑ τ : E →+* ℂ, ∑ i : Fin a, ∑ j : Fin a,
     ((glH E a).rightDerivEnd ⟨Matrix.single i j (atEmb τ 1), Submodule.mem_top⟩ ^ 2 +

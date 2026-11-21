@@ -13,6 +13,7 @@ open scoped InnerProductSpace ContDiff
 namespace GlobalTheory.ProductChartAll
 
 
+open scoped ENNReal in
 theorem le_smul_pi {ι : Type} [Fintype ι] {α : ι → Type} [∀ i, MeasurableSpace (α i)]
     (ν : Measure (∀ i, α i)) (μ : ∀ i, Measure (α i)) {K : ℝ≥0∞} (h0 : K ≠ 0) (h1 : K ≠ ⊤)
     (h : ∀ s : ∀ i, Set (α i), (∀ i, MeasurableSet (s i)) →
@@ -49,6 +50,7 @@ theorem exp_sub_one_le {x : ℝ} (h0 : 0 ≤ x) (h1 : x ≤ 1) : Real.exp x - 1 
   linarith
 
 
+open scoped Matrix.Norms.Frobenius in
 theorem dOp_chart_le {n : ℕ} {ε : Fin n → Bool} {s : ℝ} {E : Fin (n ^ 2) → Matrix (Fin n) (Fin n) ℂ}
     (hE : ∀ i j, ((E i * (E j)ᴴ).trace).re = if i = j then 1 else 0) (hs : 0 ≤ s)
     (hn : Real.exp (2 * n ^ 2 * s) ≤ 2) (a a' : UJ ε) (t t' : Fin (n ^ 2) → ℝ)

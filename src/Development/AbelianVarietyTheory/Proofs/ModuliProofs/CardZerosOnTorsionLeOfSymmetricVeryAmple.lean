@@ -271,6 +271,7 @@ open GlobalTheory.ZV
 namespace GlobalTheory
 
 
+open TorsionZero in
 theorem card_zeros_on_torsion_le_of_symmetric_veryAmple :
     Out.Laws → Out.Laws2 → ∀ (K : Type) [Field K] [IsAlgClosed K] (P : Out.PolAV (Sp K)) (M : LB P.A.left) (σ : Type) [Finite σ] (th : σ → M.Sec) (C d k : ℕ), M.IsLB → SymB M → VAmp P.A.hom M th → (∀ e ≥ 1, ∃ r ≤ (C * e) ^ P.g, SectionsHaveFiniteDimension P.A.hom (lbPow M e) r) → 1 ≤ P.g → (k : K) ≠ 0 → ∀ s : (lbPow M d).Sec, (∃ j, s.f j ≠ 0) → Nat.card {x : Out.baseOver (Sp K) ⟶ P.A // x ^ k = 1 ∧ ¬ ⊤ ≤ x.left ⁻¹ᵁ Out.nonzeroLocus s} ≤ C ^ P.g * P.g.factorial * d * k ^ (2 * P.g - 2) := by
   intro hL _ K _ _ P M σ _ th C d k hM hsym hva hgrow hg hk u hu

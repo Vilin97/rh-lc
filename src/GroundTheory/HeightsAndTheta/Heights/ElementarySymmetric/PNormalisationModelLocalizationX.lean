@@ -354,6 +354,7 @@ theorem exists_locToFrac (hJ : J.IsPrime) (hq : q ∈ zeroSet J) (x : FractionRi
 end NormalisationModelLocalization
 
 
+open NormalisationModelLocalization in
 theorem NormalisationModelLocalization.proof : NormalisationModelLocalization.Statement := by
   intro n J q M hJ
   by_cases hq : q ∈ zeroSet J

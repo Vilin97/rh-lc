@@ -200,6 +200,7 @@ noncomputable def modNIntegerEquiv : ModN 𝒪[E] p ≃ₗ[ℤ] 𝒪[E] ⧸ Idea
 variable [Fact p.Prime]
 
 
+omit [TopologicalSpace E] [IsNonarchimedeanLocalField E] in
 theorem finrank_modN_integer {n : ℕ} (hn : Nat.card (𝒪[E] ⧸ Ideal.span {(p : 𝒪[E])}) = p ^ n) :
     Finite (ModN 𝒪[E] p) ∧ Module.finrank (ZMod p) (ModN 𝒪[E] p) = n := by
   have hp := (Fact.out : p.Prime)
@@ -281,6 +282,8 @@ theorem unitsIncl_toAdditive_smul (σ : F ≃ₐ[E] F) (a : Additive 𝒪[F]ˣ) 
   congrArg Additive.ofMul (unitsIncl_smul σ a.toMul)
 
 
+omit [Algebra E F] [ValuativeExtension E F] [FiniteDimensional E F] [TopologicalSpace F]
+  [IsNonarchimedeanLocalField F] in
 theorem finite_torsN_integerUnits (l : ℕ) [NeZero l] : Finite (TorsN (Additive 𝒪[F]ˣ) l) := by
   classical
   have hl : 0 < l := Nat.pos_of_ne_zero (NeZero.ne l)
@@ -311,6 +314,7 @@ theorem g_units_eq_one_add [Finite (ModN (Additive 𝒪[F]ˣ) l)] :
     d.g_of_trivial_int (ULift.{u} ℤ) (fun _ _ ↦ rfl) AddEquiv.ulift, add_comm]
 
 
+omit [FiniteDimensional E F] in
 theorem valuation_le_of_mem_maxPow {ϖ : 𝒪[F]} (hϖ : Irreducible ϖ) {k : ℕ} {x : 𝒪[F]}
     (hx : x ∈ 𝓂[F] ^ k) : valuation F (x : F) ≤ valuation F (ϖ : F) ^ k := by
   obtain ⟨a, rfl⟩ := (mem_maximalIdeal_pow_iff hϖ).mp hx

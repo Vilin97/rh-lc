@@ -29,6 +29,7 @@ variable {L Ω : Type} [Field L] [NumberField L] [Field Ω] [Algebra L Ω] [IsAl
   {St : Type} {wt : St → Plc L} {At : St → ValuationSubring Ω} (ht : ∀ u, IsPlaceOver (At u) (wt u))
 
 
+variable (n wt) in
 abbrev KT : Subgroup (GV n wt) := Subgroup.pi Set.univ fun u => KO ((wt u).adicCompletion L) (Fin n)
 
 def IsType {m : ℕ} (τ₀ : KT n wt →* GL (Fin m) ℂ) (χ : ∀ u, Fin n → Ine (F := L) (At u) →* ℂˣ) : Prop :=
@@ -155,6 +156,7 @@ def TypeFor (τ₀ : KT n (wt s) →* GL (Fin m) c.O) : Prop :=
 variable (τ₀ : KT n (wt s) →* GL (Fin m) c.O)
 
 
+variable {r} in
 def IsTheta (Λ : LamObj r) (θ : (hset Q τ₀).X.I.T →* Λ.Λˣ) : Prop :=
   ∀ (v : V.frame.Vl) (i : Fin n) (x : Weil (s.hw v.1)) (g : Dec (F := L) (s.A v.1)) (hg : g ∈ V.frame.Iv v) (y : Uo ((s.w v.1).adicCompletion L)),
     (g : G L Ω) = (x : G L Ω) → artOf (s.hw v.1) x = y →

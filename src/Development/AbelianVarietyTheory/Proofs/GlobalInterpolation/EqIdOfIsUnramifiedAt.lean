@@ -52,6 +52,10 @@ private lemma isCMExt_mem_range_of_conj_fixed (h : _root_.Formalism.MainNotions.
     exact hmem
 
 
+open scoped TensorProduct in
+open NumberField IsDedekindDomain MeasureTheory Topology in
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+  {σ : E →ₐ[F] E} in
 theorem _root_.GlobalTheory.UnramifiedDiscriminant.exists_int_of_conj_eq (h : _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.IsCMExt F E σ) (a : 𝓞 E) (ha : σ a = a) :
     ∃ t : 𝓞 F, algebraMap (𝓞 F) (𝓞 E) t = a := by
   obtain ⟨f, hf⟩ := isCMExt_mem_range_of_conj_fixed h ha

@@ -32,6 +32,7 @@ noncomputable def binMatK (K : Type) [Field K] {n : ℕ} (del₀ : ℕ) (c : Fin
   fun i j => ∑ k ∈ range (del₀ + 1), Polynomial.C (c i j k) * binK K k
 
 
+open Classical in
 def ValuationWindowLowerBound : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (K : Type) [NormedField K] [NormedAlgebra ℚ_[p] K] [IsUltrametricDist K]
     (n del₀ h : ℕ) (E : ℝ) (c : Fin n → Fin n → ℕ → K) (lead : K) (roots : Multiset K) (t₀ : ℤ)

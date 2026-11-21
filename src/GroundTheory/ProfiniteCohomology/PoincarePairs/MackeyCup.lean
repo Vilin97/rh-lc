@@ -206,6 +206,7 @@ theorem cupCochain_comp_monoidHom (ι : H →* G) {A B : Rep.{u} k G} {r s n : �
   rfl
 
 
+omit [Group H] in
 theorem hom_conjHomotopyFun {X Y : Rep.{u} k G} (P : X ⟶ Y) (g : G) (m : ℕ)
     (K : (Fin (m + 1) → G) → X) (γ : Fin m → G) :
     P.hom (conjHomotopyFun X g m K γ) = conjHomotopyFun Y g m (fun τ => P.hom (K τ)) γ := by
@@ -213,12 +214,14 @@ theorem hom_conjHomotopyFun {X Y : Rep.{u} k G} (P : X ⟶ Y) (g : G) (m : ℕ)
     simp only [conjHomotopyFun, map_sum, map_smul]
 
 
+omit [Group H] in
 theorem cupCochain_neg_left {A B : Rep.{u} k G} {r s n : ℕ} (h : r + s = n)
     (F : (Fin r → G) → A) (E : (Fin s → G) → B) (σ : Fin n → G) :
     cupCochain h (fun τ => -F τ) E σ = -cupCochain h F E σ := by
   rw [cupCochain_apply, cupCochain_apply, neg_tmul]
 
 
+omit [Group H] in
 theorem cupCochain_neg_right {A B : Rep.{u} k G} {r s n : ℕ} (h : r + s = n)
     (F : (Fin r → G) → A) (E : (Fin s → G) → B) (σ : Fin n → G) :
     cupCochain h F (fun τ => -E τ) σ = -cupCochain h F E σ := by

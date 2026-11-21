@@ -107,6 +107,7 @@ theorem mem_idealOf {y y' : Af D.host.F ⊗[D.host.F] D.host.E} (h : y' * y = 1)
 end GlobalTheory.SeeSaw.IdeleIdeal
 
 
+open GlobalTheory.SeeSaw.IdeleIdeal GlobalTheory.FinPlLoc in
 theorem GlobalTheory.SeeSaw.exists_idealOfIdele : ∀ (D : D7) (m : (AE D)ˣ), ∃ 𝔞 : FI D, ∀ x : Pl D, ∀ a ∈ idAt D (· = x),
     a ∈ idV 𝔞 x ↔ ((m⁻¹ : (AE D)ˣ) : AE D) * a ∈ intAt D (· = x) := by
   intro D m

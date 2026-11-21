@@ -26,6 +26,7 @@ variable {A : Type u} [CommRing A] [IsNoetherianRing A] {n : ℕ} {X : Scheme.{u
   [i.IsOver (Spec (.of A))]
 
 
+omit [IsNoetherianRing A] [X.Over (Spec (.of A))] [i.IsOver (Spec (.of A))] in
 theorem exists_generatingSections_twist (F : X.Modules) (hF : IsCoherent F) :
     ∃ q₀ : ℕ, ∀ q : ℕ, q₀ ≤ q → ∃ σ : (twist i F q).GeneratingSections, σ.IsFiniteType := by
   have := hF.1
@@ -41,6 +42,7 @@ variable [HasExt.{w'} (Sheaf (Opens.grothendieckTopology X.toTopCat) AddCommGrpC
 attribute [local instance] algebraOfOver
 
 
+include i in
 theorem finite_H (F : X.Modules) (hF : IsCoherent F) (p : ℕ) :
     Module.Finite A (Sheaf.H.{w'} (modulesAb F) p) := by
   have := hF.1

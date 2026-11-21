@@ -69,6 +69,7 @@ abbrev tP (L : RigLB G) (c : CubicalStr G L) : LB.Gen (LB.LinComb (L.L.pull m.F)
   GeneratorPullback.pullAlong L.L m.F m.F3 (thφ G (x3 G)) thε (thφ G' (x3 G')) (fun I => m.psum_comm I.down) c.t
 
 
+set_option maxHeartbeats 800000 in
 def cubical (L : RigLB G) (c : CubicalStr G L) (hL : (L.L.pull m.F).IsLB)
     (hr : (m.rigPull L.L L.rig).IsGen) : CubicalStr G' (m.rigLB L hL hr) where
   t := tP m L c

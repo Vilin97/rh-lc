@@ -163,6 +163,7 @@ theorem lTensor_counit_comulTw [Coalgebra.IsCocomm K H] (c : H ⊗[K] H) (hu : I
     TensorProduct.rid_tmul, one_smul]
 
 
+variable (K H) in
 def Twisted (_c : H ⊗[K] H) : Type := H
 
 instance (c : H ⊗[K] H) : AddCommGroup (Twisted c) := inferInstanceAs (AddCommGroup H)

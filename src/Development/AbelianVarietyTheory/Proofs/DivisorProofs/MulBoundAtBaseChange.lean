@@ -80,6 +80,7 @@ variable {X : Data F} (E : Type) [Field E] [NumberField E] [Algebra F E]
 
 
 
+variable (X) in
 theorem toExtV_mem {j : ℕ} {x : X.V j} (hx : x ∈ X.M j) : X.toExtV E j x ∈ (X.baseChange E).M j :=
   (Submodule.subset_span ⟨x, hx, rfl⟩ : extMap (X.toExt E j) (X.V j) x ∈
     Submodule.span (𝓞 E) (extMap (X.toExt E j) (X.V j) '' X.M j))

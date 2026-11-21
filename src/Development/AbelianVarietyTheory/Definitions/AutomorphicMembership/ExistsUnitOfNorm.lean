@@ -274,6 +274,7 @@ variable {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] {D : DegPre R}
   {C : Type} [NormedField C] [IsUltrametricDist C]
 
 
+omit [IsDomain R] [IsLocalRing R] in
 theorem exists_unit_of_norm {x : C} (h : ‖x‖ = 1) : ∃ u : (intO C)ˣ, ((u : intO C) : C) = x := by
   have h0 : x ≠ 0 := fun e => by simp [e] at h
   refine ⟨⟨⟨x, h.le⟩, ⟨x⁻¹, ?_⟩, Subtype.ext (mul_inv_cancel₀ h0), Subtype.ext (inv_mul_cancel₀ h0)⟩, rfl⟩
@@ -443,6 +444,7 @@ theorem IsTauVal.unique {g : R →+* intO C} (hex : ∀ χ, ∃ r, PsiCoord D χ
   exact mul_right_cancel₀ (right_ne_zero_of_mul (e₁ ▸ h0)) (e₁.symm.trans e₂)
 
 
+omit [IsUltrametricDist C] in
 theorem exists_lift {X : Type} [AddCommGroup X] [Module.Finite ℤ X] (β : X →ₗ[ℤ] X →ₗ[ℤ] ℝ) (p : ℕ)
     (h : ∀ a b, ∃ c : Cˣ, β a b = -Real.logb p ‖(c : C)‖) :
     ∃ t : X → X → Cˣ, (∀ a b, β a b = -Real.logb p ‖(t a b : C)‖) ∧

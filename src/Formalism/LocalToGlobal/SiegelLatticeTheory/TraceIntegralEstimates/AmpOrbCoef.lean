@@ -93,6 +93,7 @@ theorem B_ne {k r : ℕ} {H Wp : Type} [NormedAddCommGroup H] [InnerProductSpace
   exact (ENNReal.ofReal_pos.2 hm0).ne' hz0
 
 
+variable [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] [Fact Formalism.L2.SG.LitS.PfNVG.BesselNVG] in
 theorem ampOrbCoefDD_of (hJ : PI.BesselMapUniq.BesselMapUniq) : Formalism.MainNotions.S.Pv.LemmaJ.AmpOrbCoefDD := by
   intro Cg cb Cu cT CT C0
   refine ⟨0, 1000, fun C' Cl _ hCl D large₂ hH τ w w' hTT θ W hW A hA hT hT' => ?_⟩

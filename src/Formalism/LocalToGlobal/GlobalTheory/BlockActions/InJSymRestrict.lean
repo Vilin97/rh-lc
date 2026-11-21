@@ -109,6 +109,7 @@ theorem redM_entry {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (
   · rw [dite_eq_right (by rw [h]; exact hY), dite_eq_right hY]
 
 
+set_option maxHeartbeats 4000000 in
 theorem lev_bad (Tf : FormsTiedSym D u Ch chOf) (K : GL (Fin (D.R.N D.R.m - 1)) (D.host.E ⊗[D.host.F] (FiniteAdeleRing (𝓞 D.host.F) D.host.F)))
     (G : GL (Fin (D.R.N D.R.m)) (D.host.E ⊗[D.host.F] (FiniteAdeleRing (𝓞 D.host.F) D.host.F)))
     (hE : IsExt D Tf.til.z0 (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) K.1 G.1)
@@ -152,6 +153,7 @@ theorem lev_bad (Tf : FormsTiedSym D u Ch chOf) (K : GL (Fin (D.R.N D.R.m - 1)) 
   exact (hb x y).symm
 
 
+set_option maxHeartbeats 4000000 in
 theorem lev_mem (Tf : FormsTiedSym D u Ch chOf) (K : GL (Fin (D.R.N D.R.m - 1)) (D.host.E ⊗[D.host.F] (FiniteAdeleRing (𝓞 D.host.F) D.host.F)))
     (G : GL (Fin (D.R.N D.R.m)) (D.host.E ⊗[D.host.F] (FiniteAdeleRing (𝓞 D.host.F) D.host.F)))
     (hE : IsExt D Tf.til.z0 (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) K.1 G.1)

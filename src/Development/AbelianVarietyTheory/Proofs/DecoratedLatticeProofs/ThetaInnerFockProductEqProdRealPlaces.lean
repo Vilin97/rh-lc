@@ -115,6 +115,7 @@ theorem pure_mul {f : X → ℂ} (hf : P f) (Q R : MvPolynomial ι ℂ) :
       pure_comm hadd hsm hA hc Aadd Asm hR, mul_comm p, GlobalTheory.FockIndep.pure_X_mul hadd hsm hA hc Aadd Asm hR]
 
 
+omit hadd hsm Aadd Asm in
 theorem pure_rename {κ : Type} {f : X → ℂ} (hf : P f) (e : κ → ι) (Q : MvPolynomial κ ℂ) :
     pureTensorL A f (MvPolynomial.rename e Q) = pureTensorL (fun i => A (e i)) f Q := by
   induction Q using MvPolynomial.induction_on' with

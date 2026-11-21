@@ -15,6 +15,7 @@ namespace Formalism.IrreducibleCountingLemmas.GaloisIrreducibility
 open Formalism.GaloisIrreducibility (IsSubSum IsOrbit)
 
 
+open Classical in
 def BB (g N : ℕ) : Finset ℕ :=
   insert g ((Finset.range (g ^ N + 1)).filter (fun l =>
     l.Prime ∧ ∃ d ∈ Finset.Icc 1 N, g ^ d < l ^ (4 * padicValNat l (g ^ d - 1))))
@@ -50,12 +51,14 @@ def Good (K₁ L₁ K₂ L₂ : Type) [Field K₁] [Fintype K₁] [Field L₁] [
   GoodAt K₁ L₁ N f₁ χ₁ ∧ GoodAt K₂ L₂ N f₂ χ₂
 
 
+open Classical in
 def DivisorDegreeSubSum : Prop :=
   ∀ (K : Type) [Field K] (f : K[X]) (a : ℕ), f ≠ 0 →
     ((∃ h : K[X], h ∣ f ∧ h.natDegree = a) ↔
       IsSubSum ((UniqueFactorizationMonoid.normalizedFactors f).map Polynomial.natDegree) a)
 
 
+open Classical in
 def LemmaP : Prop :=
   ∀ N a : ℕ, 0 < a → a < N →
     8 * ((Finset.univ : Finset (Equiv.Perm (Fin N))).filter
@@ -66,6 +69,7 @@ def monicOf {K : Type*} [Field K] {N : ℕ} (c : Fin N → K) : K[X] :=
   X ^ N + ∑ i : Fin N, C (c i) * X ^ (i : ℕ)
 
 
+open Classical in
 def SquarefreeCount : Prop :=
   ∀ (K : Type) [Field K] [Fintype K] (N : ℕ), 1 ≤ N →
     Fintype.card K ^ N ≤
@@ -74,6 +78,7 @@ def SquarefreeCount : Prop :=
       + 2 * Fintype.card K ^ (N - 1)
 
 
+open Classical in
 def IrredCountUpper : Prop :=
   ∀ (K : Type) [Field K] [Fintype K] (d : ℕ), 1 ≤ d →
     d * ((Finset.univ : Finset (Fin d → K)).filter (fun c => Irreducible (monicOf c))).card
@@ -81,6 +86,7 @@ def IrredCountUpper : Prop :=
 
 
 
+open Classical in
 def TypeCountExact : Prop :=
   ∀ (K : Type) [Field K] [Fintype K] (N : ℕ) (n : ℕ → ℕ), ∑ d ∈ Finset.Icc 1 N, d * n d = N →
     ((Finset.univ : Finset (Fin N → K)).filter (fun c =>
@@ -92,6 +98,7 @@ def TypeCountExact : Prop :=
         (fun c => Irreducible (monicOf c) ∧ (monicOf c).coeff 0 ≠ 0)).card).choose (n d)
 
 
+open Classical in
 def CycleTypeProb : Prop :=
   ∀ (N : ℕ) (n : ℕ → ℕ), ∑ d ∈ Finset.Icc 1 N, d * n d = N →
     ((Finset.univ : Finset (Equiv.Perm (Fin N))).filter
@@ -99,12 +106,14 @@ def CycleTypeProb : Prop :=
       ∏ d ∈ Finset.Icc 1 N, (d ^ n d * (n d).factorial) = N.factorial
 
 
+open Classical in
 def CycleProbPrime : Prop :=
   ∀ N p : ℕ, p.Prime → p ≤ N → N < 2 * p →
     p * ((Finset.univ : Finset (Equiv.Perm (Fin N))).filter (fun σ => p ∈ σ.cycleType)).card
       = N.factorial
 
 
+open Classical in
 def CycleProbSum : Prop :=
   ∀ N : ℕ,
     (((Finset.univ : Finset (Equiv.Perm (Fin N))).filter
@@ -122,6 +131,7 @@ def PrimeRecipSum : Prop :=
 
 
 
+open Classical in
 def FrobOrbitIrred : Prop :=
   ∀ (K L : Type) [Field K] [Fintype K] [Field L] [Algebra K L] [IsAlgClosed L] (f : K[X]),
     f.Monic → Irreducible f →

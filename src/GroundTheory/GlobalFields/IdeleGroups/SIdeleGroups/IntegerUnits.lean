@@ -17,6 +17,7 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
 namespace IdeleGroup
 
 
+omit [NumberField K] in
 theorem smul_mem_standardOpenSubgroup (σ : L ≃ₐ[K] L) {x : IdeleGroup L}
     (hx : x ∈ standardOpenSubgroup L) : σ • x ∈ standardOpenSubgroup L := by
   rw [mem_standardOpenSubgroup_iff_ord] at hx ⊢
@@ -47,6 +48,7 @@ theorem integerUnitsAboveIncl_injective :
     w.1.adicCompletion L)) h))
 
 
+omit [NumberField K] in
 theorem mem_range_integerUnitsAboveIncl_iff (y : (w : PlacesOver L v) → (w.1.adicCompletion L)ˣ) :
     y ∈ (integerUnitsAboveIncl v).range ↔ ∀ w : PlacesOver L v,
       (y w : w.1.adicCompletion L) ∈ w.1.adicCompletionIntegers L ∧

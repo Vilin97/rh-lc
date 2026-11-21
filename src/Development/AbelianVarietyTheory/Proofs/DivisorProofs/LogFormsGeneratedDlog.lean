@@ -42,6 +42,8 @@ private lemma logUnit_of_isUnit_stalk {X : Scheme.{0}} [IsIntegral X] (Z : Set X
   rw [← CategoryTheory.comp_apply, TopCat.Presheaf.stalkSpecializes_comp]
 
 
+set_option autoImplicit false in
+open CategoryTheory AlgebraicGeometry TopologicalSpace in
 theorem _root_.GlobalTheory.DI.dK_dlog_mem_forms_one : ∀ {X : Scheme.{0}} [IsIntegral X]
     (Z : Set X) (y : X), (∀ w ∈ _root_.GlobalTheory.LogDR.locRing y,
       ExteriorAlgebra.ι X.functionField (_root_.GlobalTheory.LogDR.dK w) ∈

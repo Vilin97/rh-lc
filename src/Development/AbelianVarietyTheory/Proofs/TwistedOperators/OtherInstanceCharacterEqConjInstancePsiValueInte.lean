@@ -21,6 +21,7 @@ open GlobalTheory.SeeConjRead
 namespace GlobalTheory.SeeConjChar
 
 
+open Formalism.L2.SG.HidaSetting in
 theorem argT_finE_eq {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (h : X.B.I = Formalism.L2.SG.InstExistsPf.instOf D)
     (κ : GA D (Yc D 0)) :
     argT X h (finE (Yc D 0) κ) = cast (congrArg (fun I : Formalism.MainNotions.S.AutInst => TensorProduct I.F I.E (Formalism.MainNotions.S.Af I.F)) h)

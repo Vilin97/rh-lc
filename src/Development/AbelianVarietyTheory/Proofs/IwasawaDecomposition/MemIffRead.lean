@@ -24,6 +24,7 @@ variable {B : Base} {X : PreX B.toPre} {I : TC B X} {u : B.Word} {j : ℕ} {Ch :
   {k : Ch → GA B (B.R.N j)}
 
 
+set_option maxHeartbeats 2000000 in
 theorem mem_iff_read (H : I.Reads u I.mu0 j chOf Lb U chi y st k) (c : (I.stp u I.mu0 j).Cl) (x : GA B (B.R.N j))
     (hx : x ∈ UAd B.sp.cm (B.R.N j)) :
     x ∈ U (chOf c) ↔ ∃ (hJ : x ∈ J0 B.sp.cm (B.R.N j) ((B.primes X).vT u))

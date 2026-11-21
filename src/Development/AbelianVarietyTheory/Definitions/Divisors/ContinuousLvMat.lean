@@ -25,12 +25,14 @@ theorem cT_add {p q : Type} (X Y : Matrix p q A) : cT s (X + Y) = cT s X + cT s 
 theorem cT_cT (h : ∀ x, s (s x) = x) {p q : Type} (X : Matrix p q A) : cT s (cT s X) = X := by ext; simp [cT, h]
 
 
+variable (s J) in
 def Gram (C D : Matrix (Fin n) (Fin j) A) (Z : Matrix (Fin n) (Fin m) A) (J₀ : Matrix (Fin m) (Fin m) A) : Prop :=
   cT s C * (J * C) = 0 ∧ cT s C * (J * Z) = 0 ∧ cT s C * (J * D) = 1 ∧
   cT s Z * (J * C) = 0 ∧ cT s Z * (J * Z) = J₀ ∧ cT s Z * (J * D) = 0 ∧
   cT s D * (J * C) = 1 ∧ cT s D * (J * Z) = 0 ∧ cT s D * (J * D) = 0
 
 
+variable (s J C D Z Ji) in
 def carry (C' D' : Matrix (Fin n) (Fin j) A) (Z' : Matrix (Fin n) (Fin m) A) : Matrix (Fin n) (Fin n) A :=
   C' * (cT s D * J) + Z' * (Ji * (cT s Z * J)) + D' * (cT s C * J)
 

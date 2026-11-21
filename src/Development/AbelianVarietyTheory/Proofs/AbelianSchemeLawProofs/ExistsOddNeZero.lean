@@ -83,6 +83,7 @@ theorem toRing_pow (σ : A ≅ A) [IsMonHom σ.hom] (m : ℕ) :
       simp only [toRing_apply, iter, Iso.trans_hom, Category.assoc])
 
 
+omit [GrpObj A] [IsCommMonObj A] in
 theorem hasGen_iter {L : LB A.left} (hL : L.IsLB) (σ : A ≅ A)
     (h : HasGen L (K := Fin 2) ![σ.hom.left, 𝟙 A.left] ![1, -1]) (m : ℕ) :
     HasGen L (K := Fin 2) ![(iter σ m).hom.left, 𝟙 A.left] ![1, -1] := by

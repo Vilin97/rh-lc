@@ -27,6 +27,7 @@ theorem exp_strict :
   | exact hasStrictFDerivAt_exp_zero.congr_fderiv (by ext; simp)
 
 
+variable (n) in
 def logM : Matrix (Fin n) (Fin n) ℂ → Matrix (Fin n) (Fin n) ℂ :=
   (exp_strict (n := n)).localInverse _ _ _
 

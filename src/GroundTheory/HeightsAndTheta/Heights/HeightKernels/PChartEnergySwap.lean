@@ -113,6 +113,7 @@ theorem contDiffAt_logCoord {y : Fin (e + 1) → ℂ} (hy : y 0 ≠ 0) : ContDif
 end ChartEnergySwapHessian
 
 
+open ChartEnergySwapHessian ChartMongeAmpereAffineInvariance in
 theorem ChartEnergySwapInvariant.proof : ChartEnergySwapInvariant.Statement := by
   intro e M N hM hN k
   set S := swapFirstTwo e with hS

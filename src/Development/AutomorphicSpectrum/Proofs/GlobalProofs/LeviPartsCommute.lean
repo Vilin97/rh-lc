@@ -91,6 +91,7 @@ variable {D : D7} {θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E 
   {ε : D.what₂.Tau → Fin V.rank → Bool} {fr : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ}
 
 
+open Classical in
 theorem eq_zero_of_kInf {W : D.what₂.Tau → Type} [∀ τ, AddCommGroup (W τ)] [∀ τ, Module ℂ (W τ)]
     {ρ : ∀ τ, Representation ℂ (Formalism.REAL.KG (ε τ)) (W τ)} (hθ : IsInfFam θ) (hfr : IsFrameFam V ε fr) {φ : GA D V → ℂ}
     (htype : ∀ τ, HasTypeAt θ V τ (ε τ) (fr τ) (ρ τ) φ) (S : ∀ τ, Finset (Formalism.REAL.KG (ε τ)))

@@ -146,6 +146,7 @@ end GlobalTheory.CompanionTheory.Ar.GR.FlagClose
 namespace GlobalTheory.CompanionTheory.Ar.GR
 
 
+open FlagClose in
 theorem flagStatement_holds : FlagStatement := by
   intro p _ C _ _ _ v R _ _ hv hp F _ _ _ _ N _ _ _ _ AA hFS hT n b hG σ hσ
   obtain ⟨f, hf0, hf⟩ : ∃ f : ℕ, 0 < f ∧ Fintype.card F = p ^ f := by

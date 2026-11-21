@@ -14,6 +14,7 @@ open scoped TensorProduct
 namespace GlobalTheory
 
 
+open Polynomial in
 theorem exists_etale_subset_range_of_isPrime {A : Type} [CommRing A] (q : Ideal A) [q.IsPrime]
     {K : Type} [Field K] [Algebra A K] [Algebra q.ResidueField K]
     [IsScalarTower A q.ResidueField K] [Algebra.IsSeparable q.ResidueField K]

@@ -73,6 +73,7 @@ theorem ringKrullDim_of_mem_minimalPrimes (q W : Ideal (MRing (fun _ : Unit => �
   rfl
 
 
+omit [Fintype ι₀] in
 theorem isRelevant_of_ringKrullDim (W : Ideal (MRing (fun _ : Unit => ι₀) F)) [W.IsPrime] (e : ℕ)
     (hW : ringKrullDim (MRing (fun _ : Unit => ι₀) F ⧸ W) = ((e + 1 : ℕ) : WithBot ℕ∞)) :
     IsRelevant W := by
@@ -102,6 +103,7 @@ theorem isRelevant_of_ringKrullDim (W : Ideal (MRing (fun _ : Unit => ι₀) F))
   omega
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem hilbFn_pos (q : Ideal (MRing (fun _ : Unit => ι₀) F)) (hq : IsMultiProjPrime q) (n : ℕ) :
     0 < hilbFn q (fun _ => (n : ℤ)) := by
   obtain ⟨i, hi⟩ := hq.relevant ()
@@ -131,6 +133,7 @@ theorem hilbFn_pos (q : Ideal (MRing (fun _ : Unit => ι₀) F)) (hq : IsMultiPr
   exact_mod_cast hpos
 
 
+omit [Fintype ι₀] in
 theorem le_ker_constantCoeff (q : Ideal (MRing (fun _ : Unit => ι₀) F)) (hq : IsMultiProjPrime q) :
     q ≤ RingHom.ker (constantCoeff : MRing (fun _ : Unit => ι₀) F →+* F) := by
   intro p hp

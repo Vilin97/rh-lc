@@ -99,6 +99,7 @@ theorem not_pow_dvd (n : ℕ) (hn : 0 < n) (P Q : Ideal (𝓞 L)) [hP : P.IsMaxi
   exact hP.ne_top (by rw [← hPQ, sup_eq_left.2 h11])
 
 
+omit K L in
 theorem natCast_mul_finrank_mem_differentIdeal :
     ∀ (K L : Type) [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L] [IsGalois K L] (n : ℕ), 0 < n →
       (∀ 𝔭 : HeightOneSpectrum (𝓞 K), (n : 𝓞 K) ∉ 𝔭.asIdeal → GlobalTheory.NT.UnramIn L 𝔭) →

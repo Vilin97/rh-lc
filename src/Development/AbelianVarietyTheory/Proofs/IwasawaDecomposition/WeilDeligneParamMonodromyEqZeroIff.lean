@@ -106,6 +106,7 @@ section Small
 variable {K n : Type*} [NormedField K] [IsUltrametricDist K] [Fintype n] [DecidableEq n]
 
 
+omit [DecidableEq n] in
 theorem norm_mul_apply_le {X Y : Matrix n n K} {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b)
     (hX : ∀ i j, ‖X i j‖ ≤ a) (hY : ∀ i j, ‖Y i j‖ ≤ b) (i j : n) : ‖(X * Y) i j‖ ≤ a * b := by
   rw [Matrix.mul_apply]
@@ -274,6 +275,7 @@ theorem exists_open_normal {V : Set (G E Ω)} (hV : V ∈ nhds 1) :
 variable {r : G E Ω →* GL n (Qbar l)}
 
 
+omit [NumberField E] [IsAlgClosure E Ω] in
 theorem near_mem_nhds (hr : Continuous fun g => (r g : Matrix n n (Qbar l))) {ε : ℝ} (hε : 0 < ε) :
     {g | ∀ i j, ‖((r g : Matrix n n (Qbar l)) - 1) i j‖ < ε} ∈ nhds (1 : G E Ω) := by
   refine IsOpen.mem_nhds ?_ (by simpa using fun _ _ => hε)
@@ -375,28 +377,34 @@ variable (hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal) (ι : Qbar l ≃+* ℂ)
   (hr : Continuous fun g => (r g : Matrix n n (Qbar l)))
 
 
+include hl hr in
 theorem isWDOf_wdOf : IsWDOf ι r (wdOf h hl ι r) := by
   obtain ⟨x, hx⟩ := (exists_isWDOf_iff (h := h) (ι := ι) hl (isTameChar_tameL h hl)).mpr
     (exists_isMonodromy h hl (isTameChar_tameL h hl) hr)
   rwa [hx.wdOf_eq hl]
 
 
+include hr in
 theorem unr_wdOf_iff : (wdOf h hl ι r).unr ↔ ∀ σ ∈ Ine (F := E) A, r σ = 1 :=
   (exists_isMonodromy h hl (isTameChar_tameL h hl) hr).choose_spec.unr_wdOf_iff hl
     (isTameChar_tameL h hl) ι
 
 
+include hr in
 theorem charPol_wdOf (g : Weil h) :
     (wdOf h hl ι r).charPol g = (r g : Matrix n n (Qbar l)).charpoly.map ι.toRingHom :=
   (exists_isMonodromy h hl (isTameChar_tameL h hl) hr).choose_spec.charPol_wdOf hl
     (isTameChar_tameL h hl) ι g
 
 
+include hr in
 theorem inePol_wdOf {σ : G E Ω} (hσ : σ ∈ Ine (F := E) A) :
     (r σ : Matrix n n (Qbar l)).charpoly.map ι.toRingHom = (wdOf h hl ι r).inePol σ := by
   rw [WD.inePol_of_mem_Ine _ hσ, charPol_wdOf hl ι hr, coe_ineIncl]
 
 
+open Pointwise in
+omit [IsAlgClosure E Ω] in
 theorem MonodromyThm.isFrob_conj {q : ℕ} {g σ : G E Ω} (hσ : IsFrob (g • A) q σ) :
     IsFrob A q (g⁻¹ * σ * g) := by
   have hm : ∀ x, g x ∈ g • A ↔ x ∈ A := fun x => ValuationSubring.smul_mem_pointwise_smul_iff
@@ -412,6 +420,7 @@ theorem MonodromyThm.isFrob_conj {q : ℕ} {g σ : G E Ω} (hσ : IsFrob (g • 
       ← valuation_lt_one_iff'] at h1
 
 
+include hr in
 theorem frobEig_wdOf (hu : (wdOf h hl ι r).unr) {B : ValuationSubring Ω} {σ : G E Ω}
     (hB : IsPlaceOver B w) (hσ : IsFrob B (normV w) σ) :
     (r σ : Matrix n n (Qbar l)).charpoly.map ι.toRingHom =
@@ -426,6 +435,7 @@ theorem frobEig_wdOf (hu : (wdOf h hl ι r).unr) {B : ValuationSubring Ω} {σ :
     mul_inv_cancel_left]
 
 
+include hr in
 theorem weilDeligneParam_monodromy_eq_zero_iff :
     (wdOf h hl ι r).mono0 ↔ (r '' (Ine (F := E) A : Set (G E Ω))).Finite := by
   have ht := isTameChar_tameL h hl
@@ -448,6 +458,7 @@ theorem weilDeligneParam_monodromy_eq_zero_iff :
 end Laws
 
 
+variable (h) in
 theorem wdOf_laws (hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal) (ι : Qbar l ≃+* ℂ) {a : ℕ}
     (r : G E Ω →* GL (Fin a) (Qbar l)) :
     (wdOf h hl ι r).lpDim = a ∧

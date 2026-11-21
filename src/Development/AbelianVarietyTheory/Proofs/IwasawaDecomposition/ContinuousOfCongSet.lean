@@ -21,6 +21,7 @@ namespace GlobalTheory.Mem.ReadEx
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+variable (F E) in
 def toIdl : (AfE F E)ˣ →* Ideles E :=
   Units.map ((MonoidHom.inr (InfiniteAdeleRing E) (FiniteAdeleRing (𝓞 E) E)).comp
     (afIso F E : AfE F E →* FiniteAdeleRing (𝓞 E) E))
@@ -156,6 +157,7 @@ theorem ker_of_reads {K : Type} [Field K] {σ : K →+* ℂ} {μ : Formalism.L2.
   exact Units.ext (σ.injective (h1.symm.trans (map_one σ).symm))
 
 
+variable (F) in
 def evP (P : HeightOneSpectrum (𝓞 E)) : AfE F E →+* P.adicCompletion E where
   toFun z := afIso F E z P
   map_one' := by rw [map_one]; rfl
@@ -256,6 +258,7 @@ theorem afIso_one_tmul {a : FiniteAdeleRing (𝓞 F) F} {k : F} {P : HeightOneSp
   omega
 
 
+variable (F E) in
 def finF : Ideles F →* (AfE F E)ˣ :=
   (idF F E).comp (Units.map (MonoidHom.snd (InfiniteAdeleRing F) (FiniteAdeleRing (𝓞 F) F)))
 

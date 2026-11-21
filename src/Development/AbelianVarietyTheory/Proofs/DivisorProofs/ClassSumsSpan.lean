@@ -167,6 +167,7 @@ theorem dict_mem (hT : LawsJ T) (O : OMDat T.toCore R i Tp tup) (g : GA D (Wc D 
   exact hd.2.2.2.1 _
 
 
+set_option maxHeartbeats 1000000 in
 theorem atDict_indep (hT : LawsJ T) (O : OMDat T.toCore R i Tp tup) (κ : WeightFamilies.Wt D ((i : ℕ) + 1)) (m : ℕ)
     (b : Fin m → Rul (T.Q.Xo ((i : ℕ) + 1)) O.c') (hb : ∀ j, b j ∈ GlobalTheory.OneMapAll.cuspOver O κ)
     (hli : LinearIndependent O.c'.F b) : LinearIndependent ℂ fun j => atDict O (rdU (unfO O) (b j)) := by
@@ -201,6 +202,7 @@ theorem atDict_indep (hT : LawsJ T) (O : OMDat T.toCore R i Tp tup) (κ : Weight
     rw [this, mul_zero]
 
 
+set_option maxHeartbeats 1000000 in
 theorem rdU_mem_span_raw (hT : LawsJ T) (O : OMDat T.toCore R i Tp tup) (κ : WeightFamilies.Wt D ((i : ℕ) + 1))
     (hn : κ.n = (Vc D i).rank) (hsz : 8 * D.R.f * D.R.r + 4 ≤ (Vc D i).rank) [StarRing (𝓞 D.host.E)]
     (nab : NabV (T.Q.Xo ((i : ℕ) + 1)) O.c') (hnab : IsNab _ O.c' nab) {bad : ℕ} (hb : 0 < bad)

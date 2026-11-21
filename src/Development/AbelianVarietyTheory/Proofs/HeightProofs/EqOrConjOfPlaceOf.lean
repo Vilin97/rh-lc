@@ -176,6 +176,7 @@ def evW (w : InfinitePlace F) : Ainf F →ₐ[F] w.Completion :=
   Pi.evalAlgHom F (fun w : InfinitePlace F => w.Completion) w
 
 
+open Classical in
 def sgW (w : InfinitePlace F) : w.Completion →ₗ[F] Ainf F :=
   LinearMap.single F (fun w : InfinitePlace F => w.Completion) w
 

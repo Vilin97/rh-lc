@@ -14,6 +14,7 @@ open MvPolynomial
 noncomputable section
 
 
+attribute [local instance] MvPolynomial.gradedAlgebra in
 theorem homogeneousComponent_mul_of_isHomogeneous_right {σ : Type*} (a g : MvPolynomial σ ℂ)
     {e : ℕ} (hg : g.IsHomogeneous e) (k : ℕ) :
     homogeneousComponent k (a * g) = if e ≤ k then homogeneousComponent (k - e) a * g else 0 := by

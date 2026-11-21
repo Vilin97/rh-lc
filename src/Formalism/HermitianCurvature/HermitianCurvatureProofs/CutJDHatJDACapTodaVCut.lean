@@ -72,6 +72,7 @@ def TVCrd : Prop :=
       gaugeF k r c • kvC r (kvTop k r y) r Φ c = (vABm r y r).1 (fun c' => gaugeF k r c' • Φ c') c
 
 
+open scoped ContDiff in
 theorem jDACapTodaV_of_parts (h1 : TVCoef) (h2 : TVGrp) (h3 : TVCrd) : JDACapTodaV := by
   intro Wp Wq _ _ _ _ _ _ P Bs hpl hk y J hJ c hc g hg hcg
   have e1 := h1 Wp Wq P Bs hpl hk y J hJ c hc g hg hcg

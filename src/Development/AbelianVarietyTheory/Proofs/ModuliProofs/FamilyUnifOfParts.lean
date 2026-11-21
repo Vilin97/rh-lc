@@ -136,6 +136,7 @@ variable {D : Datum H} {l : Level H} {Xo : Moduli D l} {σ : KA l →+* ℂ} {g 
       (∀ a, ∃ x, gam (t a) = t' a + l.A • x) ∧ ∀ a, P' (gam a) = h (P a)))
 
 
+include upUniq in
 theorem point_eq {D' : Datum H} {t : D.La →ₗ[𝓞 E] D'.La} {P : D'.La →+ (Fin g → ℂ)} {y y' : Sp ℂ ⟶ Xo.X} {e e'}
     (h : Unif Xo σ ty D' t P y e) (h' : Unif Xo σ ty D' t P y' e') : y = y' :=
   (upUniq _ _ _ _ _ _ _ _ _ _ h h').mpr ⟨LinearEquiv.refl _ _, LinearEquiv.refl _ _, fun _ _ => rfl,
@@ -155,6 +156,7 @@ theorem cls_subset {y y' : Sp ℂ ⟶ Xo.X} {x} (hx : x ∈ cls Xo σ ty y) (hx'
   exact ⟨hg', _, _, hu''⟩
 
 
+include perObj upUniq in
 theorem cls_eq {y y' : Sp ℂ ⟶ Xo.X} {x} (hx : x ∈ cls Xo σ ty y) (hx' : x ∈ cls Xo σ ty y') :
     cls Xo σ ty y = cls Xo σ ty y' :=
   (cls_subset perObj upUniq hx hx').antisymm (cls_subset perObj upUniq hx' hx)

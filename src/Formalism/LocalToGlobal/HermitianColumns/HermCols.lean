@@ -57,6 +57,7 @@ structure HermTied (D : D7) extends HermCols D where
     D.detCls u i c = dt x
 
 
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes MeasureTheory in
 def VolumeCompatible (D : D7) : Prop :=
   ∀ (W : HSpace D.host.E) (P Q : ℕ), W.SigOK → (∀ τ, W.sig τ = (P, Q)) →
     ∀ μ, Formalism.MainNotions.StandardLattice.IsVolMeas D W P Q μ →

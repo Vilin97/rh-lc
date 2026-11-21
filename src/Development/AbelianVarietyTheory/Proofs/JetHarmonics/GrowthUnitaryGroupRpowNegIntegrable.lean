@@ -15,6 +15,8 @@ open scoped InnerProductSpace ENNReal
 namespace GlobalTheory
 
 
+open Matrix MeasureTheory Finset in
+open scoped InnerProductSpace ENNReal in
 theorem _root_.GlobalTheory.gN_rpow_neg_integrable_haar : _root_.Formalism.FourierDecayAlt.ThreeDimData.GrowthG := by
   unfold _root_.Formalism.FourierDecayAlt.ThreeDimData.GrowthG
   intro k r μG A hμ hA

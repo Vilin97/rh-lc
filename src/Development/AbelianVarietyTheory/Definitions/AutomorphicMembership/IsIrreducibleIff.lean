@@ -49,6 +49,7 @@ structure SmIrr (G : Type) [Group G] [TopologicalSpace G] where
 attribute [instance] SmIrr.acg SmIrr.mod
 
 
+variable (G) in
 instance SmIrr.setoid : Setoid (SmIrr G) where
   r σ σ' := Nonempty (σ.ρ.Equiv σ'.ρ)
   iseqv := ⟨fun σ => ⟨.refl σ.ρ⟩, fun ⟨e⟩ => ⟨e.symm⟩, fun ⟨e⟩ ⟨e'⟩ => ⟨e.trans e'⟩⟩
@@ -57,6 +58,7 @@ instance SmIrr.setoid : Setoid (SmIrr G) where
 def Irr (G : Type) [Group G] [TopologicalSpace G] : Type 1 := Quotient (@SmIrr.setoid G _ _)
 
 
+variable (G) in
 def SmIrr.triv : SmIrr G where
   V := ℂ
   ρ := Representation.trivial ℂ G ℂ

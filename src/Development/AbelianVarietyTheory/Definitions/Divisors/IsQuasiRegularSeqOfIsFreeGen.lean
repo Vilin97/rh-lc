@@ -44,6 +44,7 @@ theorem ι_mem_support (z : I.subscheme) : I.subschemeι z ∈ I.support :=
   I.range_subschemeι.le ⟨z, rfl⟩
 
 
+variable {I} in
 theorem exists_ι_eq {y : Y} (hy : y ∈ I.support) : ∃ z : I.subscheme, I.subschemeι z = y :=
   I.range_subschemeι.ge hy
 
@@ -176,6 +177,7 @@ theorem isQuasiRegularSeq_of_isFreeGen {A : Type} [CommRing A] {α : k →+* A} 
     simpa only [hX] using (isQuasiRegularSeq_X (R := k) (Fin D)).of_flat A
 
 
+omit K in
 theorem isQuasiRegularSeq_secGer (h : FormallyUnramified ((cutIdeal hL s).subschemeι ≫ p)) {y : Y}
     (hy : y ∈ (cutIdeal hL s).support) (j : L.ι) (hj : y ∈ L.U j) :
     IsQuasiRegularSeq (Y.presheaf.stalk y) (secGer s j y hj) := by

@@ -109,6 +109,7 @@ lemma vmin_le (h : ℕ) (x : K) :
         split_ifs <;> norm_num
 
 
+omit [NormedAlgebra ℚ_[p] K] in
 lemma dvd_cancel {d : ℤ} (hd : IsCoprime d (p : ℤ)) (i : ℕ) {m : ℤ} (hm : (p : ℤ) ^ i ∣ d * m) :
     (p : ℤ) ^ i ∣ m := (IsCoprime.pow_left hd.symm).dvd_of_dvd_mul_left hm
 

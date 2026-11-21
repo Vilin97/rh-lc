@@ -14,6 +14,8 @@ open scoped nonZeroDivisors
 namespace GlobalTheory.CM
 
 
+open NumberField Module in
+open scoped nonZeroDivisors in
 theorem _root_.GlobalTheory.CM.deg_ideal_smul {K V : Type} [Field K] [NumberField K] [AddCommGroup V]
     [Module K V] [Module (𝓞 K) V]
     [IsScalarTower (𝓞 K) K V] (h : _root_.ReciprocityTheory.GeometryOfNumbersTheory.HermFam K V) (Λ : Submodule (𝓞 K) V) {v : V} (hv : v ≠ 0)
@@ -82,6 +84,8 @@ theorem _root_.GlobalTheory.CM.deg_ideal_smul {K V : Type} [Field K] [NumberFiel
     _ = _ := _root_.GlobalTheory.deg_lineHerm m hm h𝔠
 
 
+open NumberField Module in
+open scoped nonZeroDivisors in
 theorem _root_.GlobalTheory.CM.two_mul_deg_dual_line : ∀ (E K V : Type) [Field E] [NumberField E] [IsCMField E]
     [Field K] [NumberField K]
     [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (h : _root_.ReciprocityTheory.GeometryOfNumbersTheory.HermFam K V)

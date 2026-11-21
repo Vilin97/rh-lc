@@ -106,9 +106,11 @@ theorem incM_map {m k : Type} (A : Matrix m k E) {w : InfinitePlace F} (τ : Emb
 variable (τ : ∀ w : InfinitePlace F, EmbOver E w) (w : InfinitePlace F)
 
 
+variable (σ J) in
 def GAt : Set (UA σ J) := {g | At (evI F) (mat g - 1) ∧ ∀ w', w' ≠ w → cmp (τ w') g = 1}
 
 
+variable (σ J) in
 def LinesAt : Set (Multiplicative ℝ →* UA σ J) := {γ | Continuous γ ∧ ∀ t, γ t ∈ GAt σ J τ w}
 
 def HasRDer (γ : Multiplicative ℝ →* UA σ J) (f f' : UA σ J → ℂ) : Prop :=
@@ -116,6 +118,7 @@ def HasRDer (γ : Multiplicative ℝ →* UA σ J) (f f' : UA σ J → ℂ) : Pr
 
 
 
+variable {w} in
 def IsGenAt (τ : EmbOver E w) (C : Matrix (Fin n) (Ix R S) ℂ) (γ : Multiplicative ℝ →* UA σ J) (X : Mat R S) : Prop :=
   ∀ t : ℝ, cmp τ (γ (Multiplicative.ofAdd t)) * C = C * NormedSpace.exp (t • X)
 
@@ -151,6 +154,7 @@ theorem HasRDer.unique {γ : Multiplicative ℝ →* UA σ J} {f f₁ f₂ : UA 
     f₁ = f₂ := funext fun g => (h₁ g).unique (h₂ g)
 
 
+open Classical in
 def liftAt [IsTotallyReal F] (τ : ∀ w : InfinitePlace F, EmbOver E w) (w : InfinitePlace F) (ξ : E)
     (G : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n) (Fin n) (AE F E) := 1 + liftM τ ξ (Pi.single w (G - 1))
 
@@ -304,6 +308,7 @@ theorem single_mem_wtSub (c : Ix R S) :
   by_cases h : d = c <;> simp [Eab, stdWt, h, Matrix.single_apply, Pi.single_apply, eq_comm]
 
 
+variable (R S) in
 abbrev stdMod : GKMod R S where
   V := Ix R S → ℂ
   act := (Matrix.toLin' : Mat R S ≃ₗ[ℂ] _).toLinearMap
@@ -362,6 +367,7 @@ theorem stable_genBy_coef (hCM : IsCMExt F E σ) {Y : Spc F E n} {C : Matrix (Fi
   rw [← Matrix.mul_assoc C C', hC', Matrix.one_mul]
 
 
+variable (F E) in
 def hypPlane : Spc F E 2 := ⟨!![0, 1; -1, 0], ⊤, fun _ => !![0, -2 * Complex.I; Complex.I / 2, 0], fun _ => 1⟩
 
 def hypFrame : Matrix (Fin 2) (Ix 1 1) ℂ :=

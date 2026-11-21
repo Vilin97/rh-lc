@@ -257,6 +257,7 @@ theorem smoothFamily_orbit [CompleteSpace H] {ε : Fin n → Bool} {σ : Matrix 
 end GlobalTheory.SmoothAverage
 
 
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.IndefR Formalism.IndefR.Mult GlobalTheory.Chain.IoLift in
 theorem GlobalTheory.SmoothAverage.kMean_smooth : ∀ (D : D7) (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S) (τ : D.what₂.Tau) (e : Formalism.REAL.KG (M.ε τ) → ℂ), Continuous e → ∀ w ∈ M.sm τ, kMean M τ e w ∈ M.sm τ ∧ ∀ ℓ : M.H τ →ₗ[ℂ] ℂ, Sobolev₂ (lieAt V τ) (M.rep τ) ℓ → (Continuous fun k : Formalism.REAL.KG (M.ε τ) => ℓ (M.σ τ (Formalism.REAL.toMK k) w)) ∧ ℓ (kMean M τ e w) = ∫ k, e k * ℓ (M.σ τ (Formalism.REAL.toMK k) w) ∂(Formalism.REAL.muK (M.ε τ)) := by
   intro D V S M τ e he w hw
   have : CompleteSpace (M.H τ) := (M.ds τ).1

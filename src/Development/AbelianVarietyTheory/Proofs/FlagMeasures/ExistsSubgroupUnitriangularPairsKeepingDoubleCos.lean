@@ -97,6 +97,7 @@ theorem adapt_X {T : D.host.E} (F : LFlag (VS D) D.R.rS T) {a : GV D} (ha : Adap
   exact ⟨fun hx => by simpa using symm_mem_of_mem a _ h _ hx, h x⟩
 
 
+open Formalism.L2.SG.NGCut.NormalVectorPairings in
 def flagLatticeAutomorphismGroup {T : D.host.E} (F : LFlag (VS D) D.R.rS T) (Λ : LV D) : Subgroup (GV D) where
   carrier := Aut0 F Λ
   one_mem' := ⟨GlobalTheory.Unfold.Model.adapt_one F, GlobalTheory.Unfold.Model.gmap_one Λ⟩
@@ -122,6 +123,7 @@ theorem one_mem_nrat {T : D.host.E} (F : LFlag (VS D) D.R.rS T) : (1 : GV D) ∈
     fun x _ => by show x - x ∈ _; rw [sub_self]; exact Submodule.zero_mem _⟩
 
 
+open Formalism.L2.SG.NGCut.NormalVectorPairings in
 theorem nrat_conj {T : D.host.E} {F : LFlag (VS D) D.R.rS T} {Λ : LV D} {a n : GV D} (ha : a ∈ Aut0 F Λ)
     (hn : n ∈ NRat F) : a * n * a⁻¹ ∈ NRat F := by
   obtain ⟨⟨hai, haf⟩, -⟩ := ha
@@ -241,6 +243,7 @@ namespace GlobalTheory.KeyGroup
 variable {D : D7} {T T' : D.host.E} {F : LFlag (VS D) D.R.rS T} {F0' : FlagG (VS D) D.R.rS T'} {Λ : LV D}
 
 
+open Formalism.L2.SG.NGCut.NormalVectorPairings in
 theorem keyEq_left {γ n : GV D} (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) (hn : n ∈ NLam Λ F) :
     KeyEq F (lf D F0') Λ γ (n * γ) := by
   have hni : n ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT := hn.1.1

@@ -30,6 +30,7 @@ def KfLow (τ : D.what₂.Tau) : Submodule ℂ (M.sm τ) :=
     (w : M.H τ) = M.rep τ g ((w0 : M.sm τ) : M.H τ)}
 
 
+open Classical in
 theorem mult_equiv {T : MMap M} (hT : T ∈ Mult θ M J χ) (τ : D.what₂.Tau) {g : Matrix (Fin V.rank) (Fin V.rank) ℂ}
     (hg : g ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ)) (v : M.Vec) (w : M.sm τ) (hw : (w : M.H τ) = M.rep τ g (v τ)) :
     T (Function.update v τ w) = rTr V (atTau θ V τ g) (T v) := by
@@ -44,6 +45,7 @@ theorem mult_equiv {T : MMap M} (hT : T ∈ Mult θ M J χ) (τ : D.what₂.Tau)
     rfl
 
 
+open Classical in
 theorem vanish_KfLow {T : MMap M} (hT : T ∈ Mult θ M J χ)
     (hlow : ∀ v : ∀ ρ, lowT M ρ, T (fun ρ => v ρ) = 0) :
     ∀ (s : Finset D.what₂.Tau) (v : M.Vec), (∀ τ ∈ s, v τ ∈ KfLow M τ) →

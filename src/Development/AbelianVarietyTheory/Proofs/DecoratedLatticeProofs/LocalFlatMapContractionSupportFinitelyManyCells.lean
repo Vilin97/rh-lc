@@ -45,6 +45,7 @@ end
 end GlobalTheory.LocFlat.CellsContr
 
 
+open GlobalTheory.LocFlat.CellsContr in
 theorem GlobalTheory.LocFlat.contr_support_finite_cells :
     ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     [MeasurableSpace k] [BorelSpace k] (ψ : AddChar k Circle), Continuous ψ → ψ ≠ 1 → ∀ (ν : Measure k),

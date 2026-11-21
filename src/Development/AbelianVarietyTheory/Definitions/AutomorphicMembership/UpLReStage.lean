@@ -16,6 +16,8 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.L2.Theta Formali
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
 structure RowPk (D : D7) : Type 1 where
   G' : Type
   [grp : Group G']
@@ -39,6 +41,7 @@ def upL {B : Base} {C : Cols B} (a : Late B C) (S' : SStage B C a.W) (N : ∀ u,
     (h : B.Word → ℝ) : Late B C := ⟨a.W, (Db.setDivZ a N h).V, S', a.N, a.G⟩
 
 
+set_option maxHeartbeats 4000000 in
 def RowPk.up {B : Base} {C : Cols B} (a : Late B C) (S' : SStage B C a.W) (N : ∀ u, Submodule (𝓞 B.LL) (a.V.div.Nu u).V)
     (h : B.Word → ℝ) (p : RowPk a.D) : RowPk (upL a S' N h).D :=
   @RowPk.mk (upL a S' N h).D p.G' p.grp p.fin p.Pl0 p.T (famM (upL a S' N h) p.A) p.Ks p.fld p.nf (alg (upL a S' N h) p.iK)
@@ -47,6 +50,7 @@ def RowPk.up {B : Base} {C : Cols B} (a : Late B C) (S' : SStage B C a.W) (N : �
 variable {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B}
 
 
+set_option maxHeartbeats 4000000 in
 def pkOf {w : ColW B f T} {Z : w.Lt} {Wt : Set B.places.Pl} {p0 : BaseLevelRowSide (w.D Z)} (r : RowsT K w Z Wt p0) : RowPk (Late.D Z) where
   G' := _
   Pl0 := _
@@ -58,16 +62,19 @@ def pkOf {w : ColW B f T} {Z : w.Lt} {Wt : Set B.places.Pl} {p0 : BaseLevelRowSi
   eE := r.r.Y.eE
 
 
+set_option maxHeartbeats 4000000 in
 theorem sx_eq {w : ColW B f T} {Z : w.Lt} {Wt : Set B.places.Pl} {p0 : BaseLevelRowSide (w.D Z)} (r : RowsT K w Z Wt p0) (col : ColT w Z) :
     SX K B f T w Z Wt p0 r col = (pkOf r).SAt fun u => (col.C.forms u).to0 := (Eq.refl (SX K B f T w Z Wt p0 r col))
 
 
+set_option maxHeartbeats 4000000 in
 def LevelThreeCondition (𝒮 : Slots) : Prop :=
   ∀ (K : Ctx) (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : ColW B f T) (Z : w.Lt) (l : Lv3 𝒮 K w Z) (S' : SStage B w.C Z.W)
     (N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V) (h : B.Word → ℝ),
     ∃ l' : Lv3 𝒮 K w (upL Z S' N h), pkOf l'.what₂ = (pkOf l.what₂).up Z S' N h
 
 
+set_option maxHeartbeats 4000000 in
 def SxMv : Prop :=
   ∀ (K : Ctx) (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : ColW B f T) (Z : w.Lt) (Wt : Set B.places.Pl) (p0 : BaseLevelRowSide (w.D Z))
     (r : RowsT K w Z Wt p0) (col : ColT w Z) (N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V) (h : B.Word → ℝ)
@@ -76,11 +83,13 @@ def SxMv : Prop :=
       Nonempty (SX K B f T w (Db.setDivZ Z N h) Wt p0' t col')
 
 
+set_option maxHeartbeats 4000000 in
 def SameCar {D : D7} (F F' : ∀ u, Forms0 D u) : Prop :=
   ∀ u : D.what₂.Word, (F' u).cls0.lev.Lb = (F u).cls0.lev.Lb ∧ (F' u).cls0.lev.U = (F u).cls0.lev.U ∧
     HEq (F' u).cls0.lev.chi (F u).cls0.lev.chi ∧ (F' u).cls0.y = (F u).cls0.y ∧ (F' u).val0.eY = (F u).val0.eY
 
 
+set_option maxHeartbeats 4000000 in
 def SameStd : Prop :=
   ∀ (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : ColW B f T) (Z : w.Lt) (Zn : New (Late.D Z)) (col : ColT w Z)
     (col' : ColT w (reL Z Zn)) (F₁ : ∀ u, Forms0 (reL Z Zn).D u), SameL Z Zn (fun u => (col.C.forms u).to0) F₁ →

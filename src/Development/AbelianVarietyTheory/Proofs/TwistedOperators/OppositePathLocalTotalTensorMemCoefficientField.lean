@@ -33,6 +33,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   [MeasurableSpace k] [BorelSpace k]
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem apow_nat_half_mem (F : Subfield ℂ) (habs : ∀ u : kˣ, apow u (1 / 2) ∈ F) (x : kˣ) (n : ℕ) :
     apow x ((n : ℂ) / 2) ∈ F := by
   have : apow x ((n : ℂ) / 2) = apow x (1 / 2) ^ n := by
@@ -40,6 +41,7 @@ theorem apow_nat_half_mem (F : Subfield ℂ) (habs : ∀ u : kˣ, apow u (1 / 2)
   rw [this]; exact F.pow_mem (habs x) n
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem fourierSum_mem {A D : Type} [Fintype A] [DecidableEq A] [DecidableEq D] (F : Subfield ℂ) (ψ : AddChar k Circle)
     (ϖ : kˣ) (e : ℕ) (P : Finset D) (hψ : ∀ x : k, valuation k (((ϖ ^ e : kˣ) : k) * x) ≤ 1 → (ψ x : ℂ) ∈ F)
     {Φ : Matrix A D k → ℂ} (hΦ : ∀ X, Φ X ∈ F) (Y : Matrix A D k) : fourierSum ψ ϖ e P Φ Y ∈ F := by
@@ -58,6 +60,7 @@ theorem fourierSum_mem {A D : Type} [Fintype A] [DecidableEq A] [DecidableEq D] 
   · exact F.zero_mem
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem invFourierSum_inv_mem {A D : Type} [Fintype A] [DecidableEq A] [DecidableEq D] (F : Subfield ℂ) (ψ : AddChar k Circle)
     (ϖ : kˣ) (e : ℕ) (P : Finset D) (hψ : ∀ x : k, valuation k (((ϖ ^ e : kˣ) : k) * x) ≤ 1 → (ψ x : ℂ) ∈ F)
     {Φ : Matrix A D k → ℂ} (hΦ : ∀ X, Φ X ∈ F) (T : Matrix A D k) : invFourierSum ψ⁻¹ ϖ e P Φ T ∈ F := by

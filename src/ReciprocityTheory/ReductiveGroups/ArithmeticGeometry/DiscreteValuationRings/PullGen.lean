@@ -357,6 +357,7 @@ lemma shape_secRel {Y : Scheme.{0}} {U₁ U₂ U₃ W V₂ O : Y.Opens} (hW : W 
   exact e2.symm
 
 
+variable {D F} in
 lemma secRel_pullSecs (hL : D.toPre.P.L.IsLB) (oa : D.toPre.OAct O) (w0 : O)
     (uΨ : LB.Gen (LB.LinComb D.toPre.P.L (K := Fin 4)
       ![(padd D.toPre.P.A (𝟙 _) (oa.onB.act w0)).left, 𝟙 D.toPre.P.A.left, (oa.onB.act w0).left,

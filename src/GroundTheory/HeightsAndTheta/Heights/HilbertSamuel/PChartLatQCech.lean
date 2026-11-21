@@ -70,6 +70,7 @@ theorem aeval_eq_zero_of_memQ {f : MRingOver ℚ ι} (hf : f ∈ idealOver y ℚ
   exact RingHom.mem_ker.mp (h hf)
 
 
+attribute [local instance] MvPolynomial.algebraMvPolynomial in
 theorem mem_idealOverQ {p : MRingOver ℚ ι} {d : K → ℕ} (hp : IsMultiHomog p d) (h0 : aeval y p = 0) :
     p ∈ idealOver y ℚ := by
   obtain ⟨⟨G, ⟨_, n, hn, rfl⟩⟩, hG⟩ :=
@@ -100,6 +101,7 @@ theorem mem_idealOverQ {p : MRingOver ℚ ι} {d : K → ℕ} (hp : IsMultiHomog
   exact Ideal.mul_mem_right _ _ hmem
 
 
+variable (y) in
 def evQ : (MRingOver ℚ ι ⧸ idealOver y ℚ) →ₐ[ℚ] Ω :=
   Ideal.Quotient.liftₐ (idealOver y ℚ) (aeval y) fun _ ha => aeval_eq_zero_of_memQ ha
 
@@ -165,6 +167,7 @@ theorem val_smul (T : Submonoid (MRingOver ℚ ι)) (r : ℚ)
   · simp only [val, dif_neg hT, smul_zero]
 
 
+variable (y) in
 def valL (T : Submonoid (MRingOver ℚ ι)) : LocalizedModule T (MRingOver ℚ ι ⧸ idealOver y ℚ) →ₗ[ℚ] Ω where
   toFun := val y T
   map_add' := val_add T
@@ -555,6 +558,7 @@ theorem cell_good {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} (J : KH.Cell 
 end ChartLatQCech
 
 
+open ChartLatQCech GenOnFibres ZeroCocycleSection in
 theorem ChartLatQCech.proof : ChartLatQCech.Statement := by
   intro K _ _ ι _ _ Ω _ _ y d b hA
   classical

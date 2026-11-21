@@ -162,6 +162,7 @@ variable {La Y : Type} [AddCommGroup La] [Module (𝓞 E) La] [AddCommGroup Y] [
   (y : La →ₗ[𝓞 E] Y)
 
 
+include iso in
 theorem rank_one_form [Module.Finite ℤ Y] (hY : Module.finrank (𝓞 E) Y = 1)
     (hy : Function.Surjective y) (be : LinearMap.BilinForm ℤ Y) (hsym : ∀ a b, be a b = be b a)
     (nn : La →ₗ[𝓞 E] La) (hnn : ∀ v v', -EF (nn v) v' = be (y v) (y v'))

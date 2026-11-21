@@ -185,6 +185,7 @@ end FrPt
 variable {σ σ' : c.F →+* ℂ}
 
 
+variable (Z) in
 def cxPt (y : FrPt Xo c (CAt σ)) : CxPts (genStr Z) σ :=
   ⟨GlobalTheory.AllWt.ptF (S := CAt σ) y ≫ Z.jQ,
     (Category.assoc _ _ _).trans ((congrArg (_ ≫ ·) Z.jQ_over).trans (ptF_snd y))⟩
@@ -198,15 +199,18 @@ theorem not_liesIn_cxPt (y : FrPt Xo c (CAt σ)) : ¬ LiesIn (cxPt Z y) (genBd Z
   fun h => h ⟨GlobalTheory.AllWt.ptF y (IsLocalRing.closedPoint ℂ), rfl⟩
 
 
+variable (Z) in
 def cxFrame (y : FrPt Xo c (CAt σ)) : EigFrame Z σ ((cxPt Z y).1 ≫ genι Z) :=
   EigFrame.ofFrPt (S := CAt σ) Z y (Category.assoc _ _ _).symm
 
 variable [SmoothOfRelativeDimension Dw.dim (genStr Z)]
 
 
+variable (Z σ) in
 abbrev manifold : AnRead (genStr Z) σ Dw.dim := AnRead.all _ _ _
 
 
+variable (Z) in
 structure OddPrimesWithRootsOfUnity : Type where
 
   m : ℕ

@@ -21,6 +21,7 @@ section Lemmas
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem chartRadius_smul (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (c : ∀ k, ι k) (d : K → ℂ) (hd : ∀ k, d k ≠ 0)
     (z : (Σ k, ι k) → ℂ) : chartRadius A c (fun p => d p.1 * z p) = chartRadius A c z := by
   unfold chartRadius
@@ -31,6 +32,7 @@ theorem chartRadius_smul (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine 
   rw [mul_div_mul_left _ _ hX]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem chartRadius_conj (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (hA : IsConjInvariantH A) (c : ∀ k, ι k)
     (z : (Σ k, ι k) → ℂ) : chartRadius A c (fun p => (starRingEnd ℂ) (z p)) = chartRadius A c z := by
   unfold chartRadius
@@ -38,6 +40,7 @@ theorem chartRadius_conj (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine 
   simp only [Complex.norm_conj]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem chartRadius_pos (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (c : ∀ k, ι k) (z : (Σ k, ι k) → ℂ)
     (hz : ∀ k, z ⟨k, c k⟩ ≠ 0) : 0 < chartRadius A c z :=
   div_pos (A.pos z fun k => ⟨c k, hz k⟩)

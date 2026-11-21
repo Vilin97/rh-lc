@@ -64,6 +64,7 @@ theorem isWeilDatumO_fixSig (h : IsWeilDatumO ψ S T χS χT om) : IsWeilDatumO 
       (isThetaFunO_of_fixSig hf)⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_cong_fix_vac (hW : IsWeilDatumO ψ S T χS χT om)
     (hcS : ∀ τ, IsCartanInv (gramAt D S τ) (sS τ)) (hcT : ∀ τ, IsCartanInv (gramAt D T τ) (sT τ))
     (hsdS : IsSelfDualC S ΛS) (hsdT : IsSelfDualC T ΛT) {f₀ : WO S T → ℂ}
@@ -146,6 +147,7 @@ theorem exists_cong_fix_vac (hW : IsWeilDatumO ψ S T χS χT om)
   exact ⟨_, Nat.mul_pos n₁.factorial_pos n.factorial_pos, hn⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem eventually_fix (hW : IsWeilDatumO ψ S T χS χT om)
     (hcS : ∀ τ, IsCartanInv (gramAt D S τ) (sS τ)) (hcT : ∀ τ, IsCartanInv (gramAt D T τ) (sT τ))
     (hsdS : IsSelfDualC S ΛS) (hsdT : IsSelfDualC T ΛT) {f₀ : WO S T → ℂ}
@@ -384,6 +386,7 @@ variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {
   {i j : Fin D.R.m} {A A' WW : HSp D} {X : Tri T A A' WW}
 
 
+variable (D) in
 def conjField : IntermediateField ℚ ℂ := ⨆ τ : D.what₂.Tau, (tauE D τ).toRatAlgHom.fieldRange
 
 theorem finiteDimensional_conjField : FiniteDimensional ℚ (conjField D) := by

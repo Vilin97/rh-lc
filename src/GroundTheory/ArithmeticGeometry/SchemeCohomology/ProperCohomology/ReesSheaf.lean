@@ -25,6 +25,7 @@ variable {A : Type u} [CommRing A] {I : Ideal A} {X : Scheme.{u}} [X.Over (Spec 
 lemma sectionsModuleA_smul (a : A) (m : Γ(F, V)) : a • m = algV X V a • m := rfl
 
 
+variable (A) in
 def toPolyA (q : PolynomialModule Γ(X, V) Γ(F, V)) : PolynomialModule A Γ(F, V) :=
   PolynomialModule.ofCoeff A q.coeff
 
@@ -106,6 +107,7 @@ lemma targetToPolySec_ι_π (y : Γ((Scheme.Modules.pullback (reesPr I X)).obj F
   exact h
 
 
+variable (I) in
 def reesSectionsMap (x : Γ(reesSheaf I F, reesPr I X ⁻¹ᵁ V)) : PolynomialModule A Γ(F, V) :=
   toPolyA A (thetaMap hF hV (targetToPolySec ((reesSheafι I F).app _ x)))
 
@@ -173,6 +175,7 @@ lemma reesSectionsMap_surjective (p : reesSubmodule I Γ(F, V)) :
     exact ⟨reesInr I V r • x, by rw [reesSectionsMap_smul, hx]⟩
 
 
+variable (I) in
 def reesSectionsEquiv : Γ(reesSheaf I F, reesPr I X ⁻¹ᵁ V) ≃+ reesSubmodule I Γ(F, V) :=
   AddEquiv.ofBijective
     ({ toFun := fun x => ⟨reesSectionsMap I hF hV x, reesSectionsMap_mem hF hV x⟩

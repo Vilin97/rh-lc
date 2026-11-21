@@ -37,6 +37,7 @@ theorem trans_algebraMap_eq_of_comp {i j : EtNbhd R} (hij : i ≤ j) (φ : i.A �
 end StageHensel
 
 
+open StageHensel in
 theorem exists_le_isRoot_of_simple_root (R : Type) [CommRing R] [IsLocalRing R] (i : EtNbhd R)
     (h : Polynomial i.A) (a₀ : i.A) (hm : h.Monic) (h0 : i.pt (h.eval a₀) = 0)
     (h1 : i.pt (h.derivative.eval a₀) ≠ 0) :

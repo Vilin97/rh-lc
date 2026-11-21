@@ -41,6 +41,7 @@ section Product
 variable {S : Scheme.{0}} {A A' B : Over S} [GrpObj B]
 
 
+variable (A B) in
 def zb : A ⊗ B ⟶ A ⊗ B := lift (fst A B) (1 : A ⊗ B ⟶ B)
 
 theorem zb_whiskerRight (q : A ⟶ A') : zb A B ≫ q ▷ B = q ▷ B ≫ zb A' B := by

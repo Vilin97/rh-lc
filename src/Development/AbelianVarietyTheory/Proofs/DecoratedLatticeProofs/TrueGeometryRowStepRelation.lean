@@ -21,6 +21,7 @@ noncomputable section
 namespace GlobalTheory.PenBridge.SuppLev
 
 
+set_option maxHeartbeats 1000000 in
 theorem bc_prV_eq_one_of_not (D : D7) (S : HSp D) (n : ℕ) (hn : S.rank = n) (κ : GA D S)
     (g : GL (Fin n) (D.host.E ⊗[D.host.F] FiniteAdeleRing (𝓞 D.host.F) D.host.F))
     (hg : GlobalTheory.AdForm.finM S hn κ = g.1) (P : HeightOneSpectrum (𝓞 D.host.F) → Prop) (w : HeightOneSpectrum (𝓞 D.host.F))
@@ -43,6 +44,7 @@ theorem bc_prV_eq_one_of_not (D : D7) (S : HSp D) (n : ℕ) (hn : S.rank = n) (�
   rw [hE, h1, map_one]
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_mem_level_set (D : D7) (S : HSp D) (n : ℕ) (hn : S.rank = n) {T f : ℕ} {bad : Set (HeightOneSpectrum (𝓞 D.host.F))}
     (K : StepLevel D.host.F D.host.E (sigD D) (S.gram.reindex (finCongr hn) (finCongr hn)) T f bad)
     (t : 𝓞 D.host.E) (ht : t ∣ (T : 𝓞 D.host.E))

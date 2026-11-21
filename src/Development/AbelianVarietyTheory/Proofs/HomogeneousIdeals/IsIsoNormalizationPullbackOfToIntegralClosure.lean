@@ -180,6 +180,9 @@ instance isIso_toNormalization_fromNormalization {X Y : Scheme.{u}} (f : X ⟶ Y
   infer_instance
 
 
+set_option backward.defeqAttrib.useBackward true in
+set_option backward.isDefEq.respectTransparency false in
+open TensorProduct in
 theorem isIso_normalizationPullback_of_toIntegralClosure {X S Y : Scheme.{u}} (f : X ⟶ S)
     (g : Y ⟶ S) [QuasiCompact f] [QuasiSeparated f] [Flat g]
     (hg : ∀ y : Y, ∃ (U : S.Opens) (_ : IsAffineOpen U) (V : Y.Opens) (_ : IsAffineOpen V)
@@ -397,17 +400,20 @@ section Mono
 variable {X Y V : Scheme.{u}} (f' : X ⟶ V) (b : V ⟶ Y) [Mono b] (f : X ⟶ Y) (H : f = f' ≫ b)
 
 
+include H in
 theorem isPullback_id_of_mono : IsPullback (𝟙 X) f' f b :=
   IsPullback.of_horiz_isIso_mono ⟨by simp [H]⟩
 
 variable [QuasiCompact f] [QuasiSeparated f] [PreservesNormalization b]
 
 
+include H in
 theorem isPullback_toNormalization_of_mono [IsIntegralHom f'] :
     IsPullback f.toNormalization f' f.fromNormalization b := by
   simpa using isPullback_toNormalization_of_isIntegralHom (isPullback_id_of_mono f' b f H)
 
 
+include H in
 theorem isOpenImmersion_lift_toNormalization_of_mono [QuasiCompact f'] [LocallyQuasiFinite f']
     [LocallyOfFiniteType f'] [IsSeparated f'] :
     IsOpenImmersion (pullback.lift f.toNormalization f' (by simp [H]) :
@@ -429,6 +435,7 @@ variable {R R' : Type u} [CommRing R] [CommRing R'] [Algebra R R'] (M : Submonoi
   {s : Y ⟶ Spec (.of R)}
 
 
+include M in
 theorem isPreimmersion_of_isPullback_localization
     (hb : IsPullback b t s (Spec.map (CommRingCat.ofHom (algebraMap R R')))) :
     IsPreimmersion b :=
@@ -436,6 +443,7 @@ theorem isPreimmersion_of_isPullback_localization
 
 
 
+include M in
 theorem isPullback_toNormalization_of_isLocalization
     (hb : IsPullback b t s (Spec.map (CommRingCat.ofHom (algebraMap R R'))))
     {X V : Scheme.{u}} (f' : X ⟶ V) [IsIntegralHom f'] (i : V ⟶ Y') [IsOpenImmersion i]
@@ -446,6 +454,7 @@ theorem isPullback_toNormalization_of_isLocalization
   isPullback_toNormalization_of_mono f' (i ≫ b) f H
 
 
+include M in
 theorem isOpenImmersion_lift_toNormalization_of_isLocalization
     (hb : IsPullback b t s (Spec.map (CommRingCat.ofHom (algebraMap R R'))))
     {X : Scheme.{u}} (f' : X ⟶ Y') [QuasiCompact f'] [LocallyQuasiFinite f']
@@ -483,6 +492,7 @@ theorem isIso_toNormalization_morphismRestrict {X Y : Scheme.{u}} (f : X ⟶ Y) 
   infer_instance
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem flat_of_isSchemeTheoreticallyDominant {R : Type u} [CommRing R] [IsDomain R]
     (hR : ∀ (A : Type u) [CommRing A] [Algebra R A], Submodule.torsion R A = ⊥ → Module.Flat R A)
     {X N : Scheme.{u}} (j : X ⟶ N) [QuasiCompact j] [IsSchemeTheoreticallyDominant j]
@@ -859,6 +869,7 @@ theorem normalizationActionOver_normalizationMap (hπ : ∀ g, (ρ g).asIso.hom 
     (by simp [reassoc_of% hπ, normalizationActionOver_fromNormalization])
 
 
+include hπ in
 theorem mem_range_normalizationMap_app [QuasiCompact π] [IsSchemeTheoreticallyDominant π]
     (hπ : ∀ g, (ρ g).asIso.hom ≫ π = π)
     (hinv : ∀ W : X'.Opens, IsAffineOpen W → ∀ s : Γ(X, π ⁻¹ᵁ W),

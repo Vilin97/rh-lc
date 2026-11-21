@@ -65,6 +65,9 @@ private lemma dvd_of_norm_le_pow
   rw [map_mul, map_pow, hz, mul_div_cancel₀ _ (pow_ne_zero _ h0)]
 
 
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
+open scoped CategoryTheory.Obj in
+open IntermediateField in
 theorem _root_.GlobalTheory.ZH.FieldOfTest.isComplete_range_fractionRing (V F : Type) [CommRing V] [IsDomain V]
     [IsDiscreteValuationRing V]
     [IsAdicComplete (IsLocalRing.maximalIdeal V) V] [NormedField F] [Algebra (FractionRing V) F]
@@ -195,6 +198,9 @@ private lemma finiteDimensional_of_finrank_adjoin_le {K E : Type} [Field K] [Fie
   exact hfin
 
 
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
+open scoped CategoryTheory.Obj in
+open IntermediateField in
 theorem _root_.GlobalTheory.ZH.FieldOfTest.exists_finiteDimensional_of_isComplete (p : ℕ) [Fact p.Prime]
     (L : Subfield (PadicAlgCl p)) (hL : IsComplete (L : Set (PadicAlgCl p))) :
     ∃ K : IntermediateField ℚ_[p] (PadicAlgCl p), FiniteDimensional ℚ_[p] K ∧
@@ -338,6 +344,10 @@ theorem _root_.GlobalTheory.ZH.FieldOfTest.exists_finiteDimensional_of_isComplet
     _ ≤ n * n := Nat.mul_le_mul (hfr a ha') (hfr b hb)
 
 
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
+open scoped CategoryTheory.Obj in
+open IntermediateField in
+attribute [local instance] Over.cartesianMonoidalCategory in
 theorem _root_.GlobalTheory.ZH.FieldOfTest.fractionRing_finite_over_padic : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω]
     [_root_.GlobalTheory.ZH.ArithBase o Ω] (S : _root_.GlobalTheory.ZH.ThetaSys o Ω) (ρ : S.Real)
     (p : ℕ) [Fact p.Prime] (y₀ : S.R →+* PadicAlgCl p)

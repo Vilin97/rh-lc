@@ -15,6 +15,7 @@ noncomputable section
 namespace GlobalTheory.LatLevel
 
 
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
 theorem exists_finset_of_nhds_zero {F : Type} [Field F] [NumberField F] (V : Set (Af F)) (hV : IsOpen V)
     (h0 : (0 : Af F) ∈ V) :
     ∃ s : Finset (HeightOneSpectrum (𝓞 F)), ∀ γ ∈ Formalism.MainNotions.StandardLattice.intAf F, (∀ v ∈ s, evalV F v γ = 0) → γ ∈ V := by

@@ -173,6 +173,7 @@ theorem hom_ext_of_points {Z U : Scheme.{0}} (j : U ⟶ Z) [QuasiCompact j] [IsS
     (Over.homMk (pullback.fst X.hom j) (by simpa using pullback.condition)))
 
 
+open GrpDense (pushPt_surjective pushPt_mul pushPt_inv pushPt_one) in
 theorem grpObj_of_dominant {Z U : Scheme.{0}} (j : U ⟶ Z) [QuasiCompact j] [IsSchemeTheoreticallyDominant j]
     (G : Over Z) [Flat G.hom] [IsSeparated G.hom] (A : Over U) [GrpObj A] [IsCommMonObj A] (φ : A.left ⟶ G.left)
     (h : IsPullback φ A.hom G.hom j) (m : G ⊗ G ⟶ G) (i : G ⟶ G) (e : 𝟙_ (Over Z) ⟶ G)

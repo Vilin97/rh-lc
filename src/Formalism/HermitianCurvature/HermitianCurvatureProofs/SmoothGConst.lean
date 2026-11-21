@@ -17,6 +17,7 @@ section Ops
 variable {k ρ : ℕ} {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E]
 
 
+variable (k ρ) in
 def ParOK (T : (Q.Mx k ρ → E) → Q.Mx k ρ → E) : Prop :=
   ∀ (Par : Type) [NormedAddCommGroup Par] [NormedSpace ℝ Par] [FiniteDimensional ℝ Par] [MeasurableSpace Par]
     [BorelSpace Par] (U₀ : Set (Par × Mt k ρ)), IsOpen U₀ →
@@ -32,6 +33,7 @@ def ParOK (T : (Q.Mx k ρ → E) → Q.Mx k ρ → E) : Prop :=
       T fi (Matrix.of y) = ∫ Z, T (f Z) (Matrix.of y) ∂ν
 
 
+variable (k ρ) in
 def SmoothG (a : Q.Mx k ρ → ℂ) : Prop :=
   ∀ y₀ : Mt k ρ, Matrix.of y₀ ∈ Q.Glev k ρ (Fin.last ρ) → ∃ (U : Set (Mt k ρ)) (F : Mt k ρ → ℂ),
     IsOpen U ∧ y₀ ∈ U ∧ ContDiffOn ℝ ∞ F U ∧ ∀ y ∈ U, Matrix.of y ∈ Q.Glev k ρ (Fin.last ρ) → a (Matrix.of y) = F y

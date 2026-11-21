@@ -327,6 +327,7 @@ private theorem absSumAt_arcTx_twist_tx {C : Type} [NontriviallyNormedField C]
     exact hfib.tsum_eq
 
 
+open scoped BigOperators in
 theorem _root_.GlobalTheory.eval_twist_tx_eq_zero_of_aeval_arcTx : ∀ (C : Type) [NontriviallyNormedField C]
     [IsUltrametricDist C] [CompleteSpace C] (N : _root_.GlobalTheory.Ex.NumD C) (k : ℕ)
     (β : N.Form k) (m : ℕ) (hm : m ^ 2 ∣ k), Odd m →

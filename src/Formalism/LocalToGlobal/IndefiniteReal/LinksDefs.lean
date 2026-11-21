@@ -297,9 +297,11 @@ def IsRes (χ : HChar D.host.E) (P : Pl D.host.E) (c : (kP P)ˣ →* ℂˣ) : Pr
     c u = χ.locK P k
 
 
+variable (D) in
 abbrev Ptw : TPar D := tparRec D
 
 
+variable (D) in
 def labLL (τ : D.what₂.Tau) : D.host.E →+* D.what₂.LL :=
   D.embE.comp (D.host.sigmaOf (D.eTau τ).1 : D.host.E →+* D.host.E)
 
@@ -339,10 +341,12 @@ abbrev SmT (M : DSModel V S) : Type := ⨂[ℂ] τ, M.sm τ
 abbrev LowT (M : DSModel V S) : Type := ⨂[ℂ] τ, lowT M τ
 
 
+variable (D) in
 def aPl (i : Fin D.R.m) (p : ℕ) (τ : D.what₂.Tau) (n : ℕ) : ℕ :=
   if n < p then ⌊Formalism.L2.NTheta.lamAt (D.hc τ) n + (D.hc τ).e i - ((p : ℚ) - (n + 1)) - ((D.R.t : ℚ) + 1) / 2⌋.toNat else 0
 
 
+variable (D) in
 def aMi (i : Fin D.R.m) (p q : ℕ) (τ : D.what₂.Tau) (n : ℕ) : ℕ :=
   if n < q then ⌊-((D.hc τ).e i + Formalism.L2.NTheta.lamAt (D.hc τ) (p + (q - n) - 1) + ((q - n : ℕ) : ℚ) + ((D.R.t : ℚ) - 1) / 2)⌋.toNat
   else 0
@@ -354,12 +358,15 @@ section Spaces
 open Formalism.IndefR.Lev
 
 
+variable (D) in
 abbrev Yc (j : ℕ) : HSp D := D.sp.Y (min j D.R.m)
 
 
+variable (D) in
 abbrev Wc (i : Fin D.R.m) : HSp D := D.sp.W ((i : ℕ) + 1)
 
 
+variable (D) in
 abbrev Vc (i : Fin D.R.m) : HSp D := D.sp.V ((i : ℕ) + 1)
 
 theorem r_le_Y (j : ℕ) : D.R.r ≤ (Yc D j).rank := by
@@ -381,6 +388,7 @@ theorem r_le_V (i : Fin D.R.m) : D.R.r ≤ (Vc D i).rank := by
   exact Nat.le_add_right _ _
 
 
+variable (D) in
 structure LevCh (T : Type) where
 
   C : Formalism.L2.Host.CharFrame D
@@ -471,6 +479,8 @@ open Formalism.IndefR.Lev Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism
 variable (D) {G : Type} [Group G] [Fintype G] {Pl0 T : Type} (A : FamIn D.what₂.LL G Pl0 T D.R.m)
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
 structure Face where
 
   P0 : Subgroup G
@@ -504,6 +514,9 @@ abbrev sg0 : D.what₂.LL →+* ℂ := sgAt D.what₂.embLL A.v0
 abbrev PolF (a b : ℕ) : Type := MvPolynomial (FVar D a b) ℂ
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
+set_option maxHeartbeats 2000000 in
 structure RealDat (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] extends LevCh D T where
 
   hv0 : A.v0 = InfinitePlace.mk D.what₂.embLL

@@ -334,11 +334,13 @@ theorem valAt_zpow {K : Type} [Field K] {Z : Scheme.{0}} [IsIntegral Z] (y : Sp 
   rw [← e, valAt_stalk, valAt_stalk, e]
 
 
+omit [NumberField F] in
 theorem ratVal_one {Y : Var F} {σ : F →+* ℂ} (y : Pts Y σ) : ratVal (1 : Y.Fn) y = 1 := by
   have e := ratVal_fnOf (y := y) CxPts.mem_ptsIn_top trivial 1
   rwa [map_one, CxPts.ev_one CxPts.mem_ptsIn_top] at e
 
 
+omit [NumberField F] in
 theorem unitAt_eqn_zero {Y : Var F} (x : Y.X) : UnitAt x (eqn (0 : Y.Dv) x : Y.Fn) := by
   simpa using (CartierDiv.isEqn_zero x).iff_unitAt.1 (isEqn_eqn 0 x)
 
@@ -347,6 +349,7 @@ end Base
 open Base
 
 
+variable (F) in
 def Model.pspace (n : ℕ) : Model (proj F n) where
   X := PSpace (𝓞 F) n
   p := PSpace.str (𝓞 F) n
@@ -363,6 +366,7 @@ variable {C : CxSt F} {Y : Var F} {A : Adl C Y} {M : Model Y} {L : HermLB M.p} {
   {cf : HeightOneSpectrum (𝓞 F) → ℝ}
 
 
+variable (C Y) in
 def triv : Adl C Y where
   D := 0
   n := 1
@@ -384,6 +388,7 @@ theorem pn_triv (σ : F →+* ℂ) (τ : ℕ) {f : Y.Fn} {y : Pts Y σ} (hf : Re
   simp [ratVal_one, Weight.ofFun]
 
 
+variable (C) in
 theorem induced_triv (M : Model Y) : (triv C Y).Induced M (HermLB.triv M.p) 1 0 := by
   have hL := LB.isLB_pull (HermLB.triv M.p).isLB M.j
   refine ⟨by simp, fun _ => 1, ⟨hL, fun a b h => ?_, fun _ x _ => ?_⟩, fun σ y y' i f _ _ hf => ?_,
@@ -442,6 +447,7 @@ structure ResSt (C : CxSt F) : Type 1 where
     (Fin n → Y.Fn) → (Fin Y.dim → Fin n → 𝓞 E) → ∀ (M0 : HLat F), (M0.V →ₗ[F] Y.Fn) → Adl C Y → ℝ
 
 
+omit [StarRing F] in
 theorem supInf_twist {C : CxSt F} {Y : Var F} (A : Adl C Y) (ci : InfinitePlace F → ℝ)
     (cf : HeightOneSpectrum (𝓞 F) → ℝ) (v : InfinitePlace F) (τ : ℕ) (f : Y.Fn) :
     (A.twist ci cf).supInf v τ f = Real.exp (-((τ : ℝ) * ci v)) * A.supInf v τ f := by
@@ -454,6 +460,7 @@ theorem supInf_twist {C : CxSt F} {Y : Var F} (A : Adl C Y) (ci : InfinitePlace 
   ring
 
 
+omit [StarRing F] in
 theorem supFin_twist {C : CxSt F} {Y : Var F} (A : Adl C Y) (ci : InfinitePlace F → ℝ)
     (cf : HeightOneSpectrum (𝓞 F) → ℝ) (v : HeightOneSpectrum (𝓞 F)) (τ : ℕ) (f : Y.Fn) :
     (A.twist ci cf).supFin v τ f = Real.exp (-((τ : ℝ) * cf v)) * A.supFin v τ f := by
@@ -541,6 +548,7 @@ theorem deg_ofW (C : CxSt F) (Y : Var F) (L : Y.Dv) (W : HLat F) (ι : W.V →�
     (ofW C Y L W ι).deg = (Y.inter (fun _ => L) : ℝ) := by simp [Adl.deg, ofW]
 
 
+omit [StarRing F] in
 theorem deg_twist {C : CxSt F} {Y : Var F} (A : Adl C Y) (ci : InfinitePlace F → ℝ)
     (cf : HeightOneSpectrum (𝓞 F) → ℝ) : (A.twist ci cf).deg = A.deg := rfl
 

@@ -90,6 +90,7 @@ namespace GlobalTheory.Chain.KFinOnto
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
+set_option maxHeartbeats 1000000 in
 theorem itW_onto_kFin : ∀ (hD : GlobalTheory.Published.DiscreteSeriesCover) (hH : GlobalTheory.Published.HarishChandraModules) (D : D7)
     (k : Fin D.R.m) (a b : ℕ),
     a = k → b = (k : ℕ) + 1 → ∀ (V W : HSp D) (M : DSModel V (parB (Ptw D) a)) (M' : DSModel W (parB (Ptw D) b))

@@ -63,6 +63,7 @@ theorem iSup_range_eq {N : ℕ} {V : Submodule ℂ (Sm E N)} (hV : IsDiscrete V)
 end SatakeVectorEventually
 
 
+open SatakeVectorEventually in
 theorem eventually_satV {N : ℕ} {V : Submodule ℂ (Sm E N)} (hV : IsDiscrete V) :
     ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite, ∃ B, SatV V w B := by
   obtain ⟨φ, hφ, h0⟩ := (Submodule.ne_bot_iff _).1 hV.ne_bot

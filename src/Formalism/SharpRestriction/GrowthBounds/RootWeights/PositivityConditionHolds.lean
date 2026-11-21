@@ -78,6 +78,7 @@ theorem pie_alt_zero (n : ℕ) (ga : Fin n → ℕ) {i j : Fin n} (hij : i ≠ j
   exact Matrix.det_zero_of_column_eq hij fun k => by simp [h]
 
 
+open Classical in
 def pie_S {n : ℕ} (lam : Fin n → ℕ) (b : ℕ) : Finset (Fin n → ℕ) :=
   (Fintype.piFinset fun _ : Fin n => Finset.range (∑ j, lam j + b + 1)).filter
     fun mu => (∀ j, lam j ≤ mu j) ∧ ∑ j, mu j = ∑ j, lam j + b

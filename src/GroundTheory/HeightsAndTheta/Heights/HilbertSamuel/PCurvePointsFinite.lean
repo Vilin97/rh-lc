@@ -84,6 +84,7 @@ theorem charZero_fractionRing (W : Ideal (MRing ι)) [W.IsPrime] (hH : IsHorizon
 end CurvePointsFinite
 
 
+open CurvePointsFinite in
 theorem CurvePointsFinite.proof : CurvePointsFinite.Statement := by
   intro K _ ι _ W hW
   have : W.IsPrime := hW.2.1.1

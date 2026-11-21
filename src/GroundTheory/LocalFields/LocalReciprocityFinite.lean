@@ -155,6 +155,7 @@ theorem valuation_top_localClassFieldData
   rfl
 
 
+variable (K Ω) in
 noncomputable def unramifiedFrobenius (L : IntermediateField K Ω) [Normal K L] : L ≃ₐ[K] L :=
   ((maximalUnramifiedExtensionFrobenius K Ω).liftNormal Ω).restrictNormal L
 
@@ -191,6 +192,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [IsSepClosure K Ω] in
 theorem fixingOpenSubgroup_anti {L F : IntermediateField K Ω} [FiniteDimensional K L]
     [FiniteDimensional K F] (h : L ≤ F) : fixingOpenSubgroup F ≤ fixingOpenSubgroup L :=
   fun _ hx => IntermediateField.fixingSubgroup_antitone h hx

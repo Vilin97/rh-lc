@@ -293,6 +293,7 @@ theorem TwoVar.shear (hc : IsChart G j ε f) (ht : TwoVar j f a h d) (hd : (MvPo
   exact ⟨e.choose_spec, by rwa [this]⟩
 
 
+omit [IsAlgClosed k] in
 theorem add_step {m n : ℕ} (hmn : m < n) {Pd : Polynomial k} {P : Fin r → Polynomial k} {ψ : k → (A →ₐ[k] k)}
     (hg : ∀ (s t : k) (z w : PowerSeries k), s ≠ 0 → (m : ℕ∞) ≤ z.order → (n : ℕ∞) ≤ (w - z).order →
         PowerSeries.coeff m z = s ^ m → PowerSeries.coeff n (w - z) = s ^ n * t → Pd.eval t ≠ 0 → w ≠ 0 →

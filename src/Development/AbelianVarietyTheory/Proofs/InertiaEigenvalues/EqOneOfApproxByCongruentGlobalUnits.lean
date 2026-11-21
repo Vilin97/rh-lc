@@ -39,6 +39,7 @@ end GlobalTheory
 namespace GlobalTheory
 
 
+open IsDedekindDomain.HeightOneSpectrum in
 theorem eq_one_of_approx_by_congruent_units : ChevalleyUnits → ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E))
     (x : w.adicCompletion E), Valued.v x = 1 → (∀ a : ℕ, 0 < a → ∀ t : w.adicCompletion E, t ≠ 0 → ∃ k : Eˣ,
       (∀ v : HeightOneSpectrum (𝓞 E), v ≠ w →

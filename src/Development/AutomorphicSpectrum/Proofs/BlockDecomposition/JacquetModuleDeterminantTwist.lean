@@ -214,6 +214,7 @@ theorem block_det_of_not_le {a c : β'} (hac : ¬ a ≤ c) :
   exact Matrix.det_isEmpty
 
 
+include hγ hp in
 theorem det_adLie_levi :
     (LinearEquiv.det (adLie k N γ p) : kˣ) =
       ∏ a, GeneralLinearGroup.det (g a) ^ modExp m' a := by

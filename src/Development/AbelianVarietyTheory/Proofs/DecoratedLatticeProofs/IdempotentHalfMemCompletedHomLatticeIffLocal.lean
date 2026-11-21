@@ -133,6 +133,7 @@ theorem coefA_rat (e : AE D) (b : D.host.E) (s : Fin S.rank → D.host.E) (t : F
   ring
 
 
+set_option maxHeartbeats 1000000 in
 theorem mem_localization_of_component (hc : D.host.ccK = ⊤) (hN : IsSelfDualC S N) (hN' : IsSelfDualC T N') {e e' : AE D}
     {P : HeightOneSpectrum (𝓞 D.host.E)} (he : Formalism.L2.NTheta.IsIdemAt e' P) (hee : e' * e = e')
     {x : Formalism.L2.Col.HomE D.host.E S.rank T.rank}

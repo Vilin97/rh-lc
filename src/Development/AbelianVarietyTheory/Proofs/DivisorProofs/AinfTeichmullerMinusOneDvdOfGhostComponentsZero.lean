@@ -34,6 +34,7 @@ theorem frobenius_iterate_teichmuller (k : ℕ) (x : PreTilt O p) :
       WittVector.map_teichmuller, frobenius_def, ← pow_mul, ← pow_succ]
 
 
+variable (p O) in
 def ghostHom (n : ℕ) : Ainf p O →+* O where
   toFun := ghost p O n
   map_one' := by rw [ghost, iterate_map_one, map_one]

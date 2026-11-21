@@ -243,6 +243,8 @@ theorem deltaHalf_single (a₀ : β) (h0 : ∀ j, j ≠ a₀ → IsEmpty (X j)) 
     rw [Subsingleton.elim (g a) 1, map_one, map_one]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype β]
+  [∀ j, Fintype (X j)] [∀ j, DecidableEq (X j)] in
 theorem mem_parab_single (e : (Σ j, X j) ≃ n) (a₀ : β) (h0 : ∀ j, j ≠ a₀ → IsEmpty (X j))
     (x : GL n k) : x ∈ parab k e := by
   refine mem_parab_iff.2 fun a b i j hab => ?_
@@ -251,6 +253,7 @@ theorem mem_parab_single (e : (Σ j, X j) ≃ n) (a₀ : β) (h0 : ∀ j, j ≠ 
   · exact (h0 a ha).elim i
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem eq_one_single (e : (Σ j, X j) ≃ n) (a₀ : β) (h0 : ∀ j, j ≠ a₀ → IsEmpty (X j))
     {g : GL n k} (hg : g ∈ unipRad k e) : g = 1 := by
   obtain ⟨-, h2⟩ := mem_unipRad.1 hg

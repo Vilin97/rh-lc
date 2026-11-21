@@ -143,6 +143,7 @@ theorem N_injective (hB : IsBlockImage y k₀ M N x) (hx : LinearIndependent ℤ
     _ = 0 := by simp [h1]
 
 
+omit [DecidableEq K] [CharZero Ω] in
 theorem exists_blockBasis [CharZero Ω] (y : (Σ k, ι k) → Ω) (k₀ : K) :
     ∃ (r : ℕ) (M : Matrix (Ix (Fin r)) (ι k₀) ℤ) (N : Matrix (ι k₀) (Ix (Fin r)) ℤ) (x : Ix (Fin r) → Ω),
       IsBlockImage y k₀ M N x ∧ LinearIndependent ℤ x := by

@@ -99,6 +99,7 @@ variable {G : Type} [Group G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field 
     {W : Type} [AddCommGroup W] [Module LL W] [Module Qp W] [IsScalarTower Qp LL W]
 
 
+variable (Qp B) in
 def pairB (m : V →ₗ[LL] U →ₗ[LL] W) : V ⊗[Qp] B →ₗ[LL] U ⊗[Qp] B →ₗ[LL] W ⊗[Qp] B :=
   (TensorProduct.mk LL _ _).compr₂ (tensorB (TensorProduct.lift m) ∘ₗ prodB)
 

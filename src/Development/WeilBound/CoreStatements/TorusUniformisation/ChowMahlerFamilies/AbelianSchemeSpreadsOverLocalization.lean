@@ -130,6 +130,7 @@ theorem isProjOver_abelian (K : Type) [Field K] (A : Over (Sp K)) [GrpObj A] (hA
 end Norm
 
 
+open GlobalTheory GlobalTheory.SpreadAb in
 theorem exists_model (R K : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] [Field K] [Algebra R K]
     [IsFractionRing R K] (A : Over (Sp K)) [GrpObj A] (hA : IsAbelianScheme A) {J : Type} [Fintype J]
     (w : J → (A ⟶ A)) (M : LB A.left) (hM : M.IsLB) :

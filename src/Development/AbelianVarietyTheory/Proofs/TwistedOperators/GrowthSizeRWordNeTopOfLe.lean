@@ -54,6 +54,7 @@ theorem Rder_eq_sum_glDer (hθ : IsInfFam θ) (hs : φ ∈ SmFun θ V) {τ : D.w
   exact RderC_eq_sum_glDer hθ hs τ X
 
 
+variable (θ V N) in
 def wordFin (l : List (D.what₂.Tau × Fin V.rank × Fin V.rank)) : Submodule ℂ (GA D V → ℂ) where
   carrier := {f | f ∈ SmFun θ V ∧ growthSize V N (wordAct (glDer θ V) l f) ≠ ∞}
   add_mem' h h' := ⟨add_mem h.1 h'.1, by

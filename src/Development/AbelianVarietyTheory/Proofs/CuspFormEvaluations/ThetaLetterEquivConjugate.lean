@@ -44,6 +44,7 @@ theorem typeLetterEquiv_apply {τ : ι} {i : Fin (dim τ)} {t : {τ // Ψ τ}} {
   rfl
 
 
+include hσ hΨ in
 theorem half_cases (τ : ι) : Ψ τ ∨ ∃ τ', Ψ τ' ∧ τ = σ τ' := by
   by_cases h : Ψ τ
   · exact Or.inl h
@@ -426,6 +427,7 @@ theorem mem_symO_iff_rename (Λ : GenLat E n) (P : MvPolynomial (LtN Dw n) c.F) 
 end Datum
 
 
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj in
 theorem theta_letter_dictionary :
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H)
       (c : Coeff l) (n : ℕ) [Fintype {τ : E →+* ℂ // InPsi H τ}],

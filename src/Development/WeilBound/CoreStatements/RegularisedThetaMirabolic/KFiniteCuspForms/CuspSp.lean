@@ -49,6 +49,7 @@ end RfCs.FrobeniusSplitPrimeDatum
 namespace RfCs
 
 
+open RfCs.FrobeniusSplitPrimeDatum in
 theorem cuspFiniteVectorsGL : GlobalTheory.Published.CuspFiniteVectorsGL := by
   intro E _ _ _ a μ _ _ H hH hi
   obtain ⟨V, hV, hs⟩ := GlobalTheory.T.irreducible_cuspidal_smooth_module E a μ H hH hi

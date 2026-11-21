@@ -95,6 +95,7 @@ theorem wToC_mem_kur (x : WW p) : Formalism.L2.G.Pend.wToC p x ∈ MaximalUnrami
   exact closure_mono hsub hx
 
 
+variable (p) in
 def wK : WW p →+* MaximalUnramifiedExtension p := (Formalism.L2.G.Pend.wToC p).codRestrict (MaximalUnramifiedExtension p) wToC_mem_kur
 
 theorem wK_coe (x : WW p) : ((wK p x : MaximalUnramifiedExtension p) : ℂ_[p]) = Formalism.L2.G.Pend.wToC p x := rfl

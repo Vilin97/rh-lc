@@ -337,6 +337,7 @@ section Symbolic
 variable {R : Type*} [CommRing R]
 
 
+open IsLocalRing in
 theorem exists_sup_maximalIdeal_pow_stable [IsNoetherianRing R] [IsLocalRing R]
     (J : ℕ → Ideal R) (hJ : Antitone J) (k : ℕ) :
     ∃ m, ∀ m' ≥ m, J m' ⊔ IsLocalRing.maximalIdeal R ^ k =
@@ -369,6 +370,7 @@ theorem exists_sup_maximalIdeal_pow_stable [IsNoetherianRing R] [IsLocalRing R]
   simpa [Ideal.comap_map_quotientMk, sup_comm] using this.symm
 
 
+open IsLocalRing in
 theorem exists_le_maximalIdeal_pow_of_iInf_eq_bot [IsNoetherianRing R] [IsLocalRing R]
     [IsPrecomplete (IsLocalRing.maximalIdeal R) R] (J : ℕ → Ideal R)
     (hJ : Antitone J) (h0 : ⨅ m, J m = ⊥)

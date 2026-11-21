@@ -174,6 +174,7 @@ theorem sdC_std {V : HSp D} (hV : V.gram = 1) : IsSelfDualC V (stdL D V.rank) :=
   isSelfDualC_of_sd hV (GlobalTheory.NormSum.VacMove.sd_of_moves (GlobalTheory.NormSum.VacMove.moves_one D _))
 
 
+set_option maxHeartbeats 1600000 in
 theorem term_reads (hc : D.host.ccK = ⊤) (hs : Setup ψ θ S T ⊤ δ 1) {v : WO S T → ℂ}
     (hv : IsLatVac (heisO ψ S T) (latO S T (stdL D S.rank : Set (Fin S.rank → D.host.E))
       (stdL D T.rank : Set (Fin T.rank → D.host.E)) fun _ => True) v)
@@ -263,6 +264,7 @@ theorem term_reads (hc : D.host.ccK = ⊤) (hs : Setup ψ θ S T ⊤ δ 1) {v : 
   rw [h6, h7, one_smul]
 
 
+set_option maxHeartbeats 1600000 in
 theorem sum_char (hc : D.host.ccK = ⊤) (hs : Setup ψ θ S T ⊤ δ 1) {e : AE D} {𝔪 : Ideal (𝓞 D.host.E)} (h : GoodMod e 𝔪)
     (A B : AddSubgroup (VC D S.rank T.rank)) (hA : A = (stdMat D S.rank T.rank).map (ptHom D ⊤ δ S.rank T.rank))
     (hB : B = (skewMat D 𝔪 S.rank T.rank).map (ptHom D ⊤ δ S.rank T.rank)) [Fintype (B ⧸ A.addSubgroupOf B)]
@@ -325,6 +327,7 @@ theorem reads_sum {ι : Type} (s : Finset ι) {a d : ℕ} {hS : S.rank = a} {hT 
   | insert i s hi ih => rw [Finset.sum_insert hi, Finset.sum_insert hi]; exact (h i).add ih
 
 
+set_option maxHeartbeats 1600000 in
 theorem indicator_reads : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D) {a d : ℕ} (hS : S.rank = a) (hT : T.rank = d) (δ : ℂ),
   D.host.ccK = ⊤ → Setup ψ θ S T ⊤ δ 1 → ∀ v : WO S T → ℂ, IsVacO ψ θ S T (fun _ => 1) (fun _ => 1) (stdL D S.rank : Set (Fin S.rank → D.host.E)) (stdL D T.rank : Set (Fin T.rank → D.host.E)) v →
   ∀ G ∈ Th D (tor0 D ⊤ δ) (stdL D a) (stdL D d), Reads ψ θ hS hT ⊤ δ 1 G v → ∀ (e : AE D) (𝔪 : Ideal (𝓞 D.host.E)), GoodMod e 𝔪 →

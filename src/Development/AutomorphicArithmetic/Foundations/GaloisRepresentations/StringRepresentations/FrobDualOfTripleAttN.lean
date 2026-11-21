@@ -24,6 +24,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 variable {D : Formalism.BasicNotions.D7} {N : NData D.R D.host D.what₂} {X : NTw D.R D.host D.what₂ D.LL0 N}
 
 
+open Classical in
 structure AttN (A : NAut N) (bkP : BKPh X) (i : X.Tw) (ι : FractionRing (X.O0 i) →+* ℂ)
     (ρ : Gen.GE N →* GL (Fin D.R.r) (X.O0 i)) (π : A.CG D.R.r) (sh : ℝ) : Prop where
   unr : ∀ w, w ∉ placesOver D.host.E (X.l i) → A.unr (A.locG π w) → ∀ σ ∈ Ine (F := D.host.E) (N.plOm.1 w), ρ σ = 1

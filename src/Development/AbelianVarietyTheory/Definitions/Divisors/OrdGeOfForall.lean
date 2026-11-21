@@ -99,6 +99,7 @@ def OrdGe (φ : InvFun O) (d e : ℕ) (f : A) : Prop :=
     Φ.ev y f ∈ Ideal.span {Φ.t y i ^ ⌈(d : ℝ) * φ.evalZ (Φ.δ y i)⌉₊} ⊔ ((maximalIdeal A).map (Φ.ev y)) ^ e
 
 
+variable {Φ} in
 theorem OrdGe.mem {φ : InvFun O} {d e : ℕ} {f : A} (h : Φ.OrdGe φ d e f) (y : Φ.Y) (hP : IsPrincipalIdealRing (Φ.V y))
     (hm : Φ.m y = 1) (i : Fin (Φ.m y)) (b : ℕ) (hb : (b : ℝ) = d * φ.evalZ (Φ.δ y i)) :
     Φ.ev y f ∈ Ideal.span {Φ.t y i ^ b} ⊔ ((maximalIdeal A).map (Φ.ev y)) ^ e := by

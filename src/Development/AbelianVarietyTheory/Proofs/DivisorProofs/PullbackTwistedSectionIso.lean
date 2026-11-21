@@ -59,6 +59,7 @@ end GlobalTheory.CutPull
 namespace GlobalTheory
 
 
+open GlobalTheory.CutPull in
 theorem cut_pullback_iso : ∀ {X Y : Scheme.{0}} (f : Y ⟶ X) (G : X.Modules) [G.IsQuasicoherent] {L : LB X} (hL : L.IsLB) (s : L.Sec) (hL' : (L.pull f).IsLB), Nonempty ((Scheme.Modules.pullback f).obj (cut G hL s) ≅ cut ((Scheme.Modules.pullback f).obj G) hL' (secPull s f)) := by
   intro X Y f G _ L hL s hL'
   have : PreservesColimits (Scheme.Modules.pullback f) :=

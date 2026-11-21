@@ -106,6 +106,7 @@ theorem isIntegral_of_norm_le (x : ℂ) (h : ∀ (l : ℕ) [Fact l.Prime] (ι : 
   exact ⟨f, hfm, by rw [← aeval_def, ← aeval_map_algebraMap ℚ, hf, minpoly.aeval]⟩
 
 
+open scoped Matrix in
 theorem norm_root_eq_one {Γ k : Type} [Group Γ] [TopologicalSpace Γ] [CompactSpace Γ] [NormedField k] {n : ℕ}
     (r : Γ →* GL (Fin n) k) (hr : Continuous r) (g : Γ) (b : k)
     (hb : (r g : Matrix (Fin n) (Fin n) k).charpoly.IsRoot b) : ‖b‖ = 1 := by

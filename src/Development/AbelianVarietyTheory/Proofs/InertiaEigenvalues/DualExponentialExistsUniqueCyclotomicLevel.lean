@@ -390,6 +390,7 @@ theorem th_tw (j : ℤ) (σ : GQ l) {y : P.R.BdR} (hy : y ∈ Fl P 0) :
   rfl
 
 
+include T in
 theorem graded {e : ℕ} {z : GQ l → ℚ_[l]}
     (hz : CocOn (Gj K s) (fun σ y => ((P.χQ σ ^ (-(e : ℤ)) : ℚ_[l]ˣ) : ℚ_[l]) * y) Set.univ z)
     (i : ℕ) {b : P.R.BdR} (hb : b ∈ Fl P 0)

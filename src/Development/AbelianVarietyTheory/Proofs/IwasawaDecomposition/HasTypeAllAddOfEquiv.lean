@@ -96,6 +96,7 @@ theorem HasTypeAll.add {Lie Gs : Set (Mx n)} {f f' : Mx n → ℂ} (h : HasTypeA
     · simpa only [e2, e4, if_false] using b5 g hg
 
 
+open GlobalTheory.TypeSum.Transport in
 theorem hasTypeAll_transport : ∀ (n : ℕ) (H H' : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [NormedAddCommGroup H'] [InnerProductSpace ℂ H'] (σ₁ : Mx n → (H →L[ℂ] H)) (σ₂ : Mx n → (H' →L[ℂ] H')) (G₁ G₂ Q : Mx n), IsUnit G₁ → IsUnit Q → Qᴴ * G₂ * Q = G₁ → ∀ U : H ≃ₗᵢ[ℂ] H', (∀ g ∈ Formalism.QuantumDeterminants.UH G₁, ∀ v, U (σ₁ g v) = σ₂ (Q * g * Q⁻¹) (U v)) → ∀ f : Mx n → ℂ, HasTypeAll (lieOf G₁) (Formalism.QuantumDeterminants.UH G₁) σ₁ f → HasTypeAll (lieOf G₂) (Formalism.QuantumDeterminants.UH G₂) σ₂ (fun y => f (Q⁻¹ * y * Q)) := by
   intro n H H' _ _ _ _ σ₁ σ₂ G₁ G₂ Q hG hQ hGG U hU f hf
   have h1 : Q⁻¹ * Q = 1 := Matrix.nonsing_inv_mul _ ((isUnit_iff_isUnit_det _).1 hQ)

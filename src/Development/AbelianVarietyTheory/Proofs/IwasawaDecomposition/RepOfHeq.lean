@@ -42,6 +42,7 @@ variable {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {Z₀ : w.Lt
   {z₀ : Dat (w.st Z₀) w.I hX T Wt} {q : RowPk w z₀}
 
 
+set_option maxHeartbeats 2000000 in
 theorem rep_pin {o : q.Over} {m : Moved o} (hco : m.Coh) {s : Side0 o} (r : ReadPk m s) (hp : r.Pin) (π : q.p.Φ) :
     ∃ (S : Set (Formalism.L2.NG.FinTyp (w.st Z₀).toD7.host.E (w.st Z₀).toD7.R.r)) (c : Formalism.L2.Col.FinTypCls S),
       S = {ρ | ∃ π', (q.t.rep π').Iso ρ} ∧ (Formalism.L2.Col.finTypRep S c).Iso (q.t.rep π) ∧
@@ -60,6 +61,7 @@ theorem rep_pin {o : q.Over} {m : Moved o} (hco : m.Coh) {s : Side0 o} (r : Read
   exact (by with_unfolding_all exact (h5 :))
 
 
+set_option maxHeartbeats 2000000 in
 theorem repOf_heq {o o' : q.Over} {m : Moved o} (hco : m.Coh) {s : Side0 o} (r : ReadPk m s) (hp : r.Pin)
     {m' : Moved o'} (hco' : m'.Coh) {s' : Side0 o'} (r' : ReadPk m' s') (hp' : r'.Pin) :
     HEq (GlobalTheory.HeightCounting.repOf r'.Y) (GlobalTheory.HeightCounting.repOf r.Y) := by

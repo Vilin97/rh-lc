@@ -178,6 +178,7 @@ theorem thF_match' {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.
     fun v => sub_eq_zero.2 (GlobalTheory.DefLiftHecke.thF_low hC i t hP hfix hM hy v))
 
 
+set_option maxHeartbeats 4000000 in
 theorem downEig : GlobalTheory.Hk3.HoweUnram → ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.LiftRows.Given R F → R.FullP → ∀ i t, DownEig R i t := by
   intro hH D G _ _ Pl0 T A Ks _ _ _ R F hG hFP i t h hh s
   have hC := hG.core

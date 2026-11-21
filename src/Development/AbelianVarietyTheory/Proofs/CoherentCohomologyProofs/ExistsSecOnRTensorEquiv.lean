@@ -75,6 +75,7 @@ theorem restrict_mul (h : W ≤ V) (s : SecOn M V) (t : SecOn H V) :
     simp only [twCoord_mul, twCoord_restrict, coord_restrict, map_mul, rs_rs]
 
 
+variable (M H V) in
 def secMulHom : SecOn M V ⊗[Γ(X, V)] SecOn H V →ₗ[Γ(X, V)] SecOn (tw M H 1) V :=
   TensorProduct.lift <| LinearMap.mk₂ Γ(X, V) mul
     (fun s s' t => tw_ext fun p k => by
@@ -168,6 +169,7 @@ end GlobalTheory.AbLaw.ExtProd
 namespace GlobalTheory.AbLaw
 
 
+open ExtProd in
 theorem exists_secOnR_tensor_equiv : ∀ (R : Type) [CommRing R] (Y Y' Z : Scheme.{0}) (f : Y ⟶ Spec (CommRingCat.of R)) (f' : Y' ⟶ Spec (CommRingCat.of R)) (p₁ : Z ⟶ Y) (p₂ : Z ⟶ Y') (M : LB Y) (M' : LB Y'), IsPullback p₁ p₂ f f' → M.IsLB → M'.IsLB → ∀ (U : Y.Opens) (W : Y'.Opens) (O : Z.Opens) (e₁ : O ≤ p₁ ⁻¹ᵁ U) (e₂ : O ≤ p₂ ⁻¹ᵁ W), IsAffineOpen U → IsAffineOpen W → O = p₁ ⁻¹ᵁ U ⊓ p₂ ⁻¹ᵁ W → ∃ E : SecOnR f M U ⊗[R] SecOnR f' M' W ≃ₗ[R] SecOnR (p₁ ≫ f) (tw (M.pull p₁) (M'.pull p₂) 1) O, ∀ (a : SecOn M U) (b : SecOn M' W) (p : (M.pull p₁).ι) (l : (M'.pull p₂).ι), SecOn.twCoord ((SecOnR.of _ _ O).symm (E (SecOnR.of f M U a ⊗ₜ SecOnR.of f' M' W b))) p l = rs Z (inf_le_inf_left O inf_le_left) (GlobalTheory.LB.coord (SecOn.pullLE M p₁ U O e₁ a) p) * rs Z (inf_le_inf_left O inf_le_right) (GlobalTheory.LB.coord (SecOn.pullLE M' p₂ W O e₂ b) l) := by
   intro R _ Y Y' Z f f' p₁ p₂ M M' H hM hM' U W O e₁ e₂ hU hW e
   have hO : IsAffineOpen O := e ▸ isAffineOpen_inf H hU hW

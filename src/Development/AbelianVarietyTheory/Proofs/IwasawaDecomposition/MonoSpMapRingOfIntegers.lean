@@ -80,6 +80,8 @@ section Dict
 variable {S T : Type} [CommRing S] [CommRing T]
 
 
+attribute [local instance] Over.cartesianMonoidalCategory in
+open GlobalTheory.Exist.FlagBaseChange MonObj in
 theorem sab_dict {X X' : Scheme.{0}} {t' : SAB H X'} {t : SAB H X} {f : X' ⟶ X} (m : SABMap t' t f) {x' : Sp S ⟶ X'}
     {x : Sp S ⟶ X} (hx : x' ≫ f = x) :
     (∀ v : Sp (DualNumber S) ⟶ t.G.left, v ≫ t.G.hom = spMap (algebraMap S (DualNumber S)) ≫ x →

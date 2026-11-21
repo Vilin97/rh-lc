@@ -240,6 +240,7 @@ theorem isNzFamily_lat (hcard : Fintype.card (E →+* L) = Module.finrank ℚ E)
     exact h
 
 
+omit [Fintype (E →+* L)] [CharZero L] in
 theorem sum_dual_mul [DecidableEq (E →+* L)] (t u : E →+* L) :
     ∑ k, t (HT.dualInt E k) * u ((RingOfIntegers.basis E k : 𝓞 E) : E) = if t = u then 1 else 0 := by
   let ρ' : 𝓞 E →+* Module.End L L :=
@@ -383,6 +384,7 @@ theorem eigProj_eigProj (ρ : 𝓞 E →+* Module.End L V) {t u : E →+* L} (y 
   · exact HT.LatBasic.eigProj_of_ne (Ne.symm h) (HT.LatBasic.eigProj_mem ρ u y)
 
 
+open Classical in
 def phi (ρ : 𝓞 E →+* Module.End L V) {r : ℕ} (v : Fin r → V) (t : E →+* L) :
     (Fin r → L) →ₗ[𝓞 L] V :=
   (thetaO ρ v).comp (LinearMap.single (𝓞 L) (fun _ : E →+* L => Fin r → L) t)
@@ -565,6 +567,7 @@ end Final
 end TorPart
 
 
+open NumberField GlobalTheory.CompanionTheory.Ar GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.NineStatements TorPart in
 theorem torusPartDegree : ∀ (E L Ψ : Type) [Field E] [NumberField E] [Field L] [NumberField L] [Fintype Ψ] (V : Type) [AddCommGroup V] [Module L V] [Module (𝓞 L) V] [IsScalarTower (𝓞 L) L V] (A : LinPt E L Ψ V) (r : ℕ) (v : Fin r → V), 2 * Fintype.card Ψ = Module.finrank ℚ E → IsOFamily A.ρ A.I v → ∀ s, logIdx (A.tor s) (fun a => eigComp A.ρ (A.σ s) (v a)) / Module.finrank ℚ L = -(r * Real.log (|(discr E : ℝ)| ^ (1 / (Module.finrank ℚ E : ℝ)))) + Real.log (((oSpan A.ρ v).relIndex A.I : ℕ) : ℝ) / Module.finrank ℚ E := by
   intro E L Ψ _ _ _ _ _ V _ _ _ _ A r v hΨ hv s
   classical

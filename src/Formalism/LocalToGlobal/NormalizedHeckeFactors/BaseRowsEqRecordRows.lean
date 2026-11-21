@@ -33,6 +33,7 @@ section Pin
 variable (T : TiedDataSK ex) (P : RowSideFamily ex) (hp : RowSideDetermined T P) (hL : RowsHoldLam3 P) (h : RowsHold0_3 P)
 
 
+include h in
 theorem wf0 : (P.A3.side3 P.P0 P.ψ0 P.Zs).WF := by
   obtain ⟨s, hs⟩ := h.famOk
   exact P.A3.side_well_formed hs _ _ _ h.zsSt h.zsBl h.famSep

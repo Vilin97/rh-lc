@@ -105,6 +105,7 @@ def Compat {G G' : Glob l L} (h : Hom G G') {O : Type} [CommRing O] [IsLocalRing
 end Glob
 
 
+variable (l) in
 def PL {Γ : Type} [Group Γ] [TopologicalSpace Γ] (H : Subgroup Γ) : Subgroup Γ :=
   ⨅ (U : OpenNormalSubgroup Γ) (_ : ∀ h ∈ H, ∃ e : ℕ, h ^ l ^ e ∈ U), U.toSubgroup
 

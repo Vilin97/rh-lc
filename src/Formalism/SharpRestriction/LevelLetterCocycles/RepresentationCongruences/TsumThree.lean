@@ -156,6 +156,7 @@ private theorem mul_div_sub_one_sq_eq_mul_add_sq (v L y : ℝ) (hy : y = (L - 1)
   ring
 
 
+set_option maxHeartbeats 800000 in
 theorem rr_le (l : ℕ) (hl : 11 ≤ l) (h w S η H H₁ : ℕ) (hη : η + 1 ≤ h)
     (hH : H ≤ h + η) (hH₁ : H₁ ≤ w + S + η) (s r : ℝ)
     (hs : s ≤ ((H₁ : ℝ) + cW l H + 3) + ((H : ℝ) + cW l H + 3) / ((l : ℝ) - 2))
@@ -247,6 +248,7 @@ theorem sig_le (l : ℕ) (hl : 11 ≤ l) (h w S η : ℕ) (h1 : 1 ≤ h) (hG : w
   linarith
 
 
+set_option maxHeartbeats 800000 in
 theorem Aa_cut_le (l : ℕ) (hl : 11 ≤ l) (h w S η H H₁ H₂ : ℕ) (hη : η + 1 ≤ h)
     (hH : H ≤ h + η) (hH₁ : H₁ ≤ h + η) (hH₂ : H₂ ≤ w + S + η) (s A : ℝ)
     (hs : s ≤ ((H₁ : ℝ) + cW l H + 3) + ((H₂ : ℝ) + cW l H + 3) / ((l : ℝ) - 1) +
@@ -297,6 +299,7 @@ theorem Aa_cut_le (l : ℕ) (hl : 11 ≤ l) (h w S η H H₁ H₂ : ℕ) (hη : 
   linarith
 
 
+set_option maxHeartbeats 800000 in
 theorem Aa_le (l : ℕ) (hl : 11 ≤ l) (h w S η H H₁ : ℕ) (hη : η + 1 ≤ h)
     (hH : H ≤ h + η) (hH₁ : H₁ ≤ h + η) (s A : ℝ)
     (hs : s ≤ ((H₁ : ℝ) + cW l H + 3) + ((H : ℝ) + cW l H + 3) / ((l : ℝ) - 2))

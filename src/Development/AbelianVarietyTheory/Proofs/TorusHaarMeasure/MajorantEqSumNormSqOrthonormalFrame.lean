@@ -15,6 +15,9 @@ namespace GlobalTheory.MajorantOrthFrame
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 
+open NumberField MeasureTheory Topology in
+open scoped ComplexOrder ENNReal Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.MajorantOrthFrame.maj_eq_sum_norm_sq_of_isOrth :
     (∀ (r : ℕ) (X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r) (x : _root_.ReciprocityTheory.ChartRestriction.G.FD.Frame X.Ψ r), _root_.ReciprocityTheory.ChartRestriction.G.AR.Up.IsOrth X x →
       (∀ τ : X.Ψ, (_root_.ReciprocityTheory.ChartRestriction.G.FD.mat x τ).det ≠ 0) ∧ ∀ (τ : X.Ψ) (v : Fin r → ℂ),

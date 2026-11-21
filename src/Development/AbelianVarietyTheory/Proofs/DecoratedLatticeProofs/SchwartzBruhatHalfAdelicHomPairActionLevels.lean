@@ -21,6 +21,7 @@ open GlobalTheory.SeeSaw GlobalTheory.Unf
 namespace GlobalTheory.SBMove
 
 
+open Formalism.L2.Col in
 theorem isFrame_one_std {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
     (n : ℕ) : Formalism.L2.DIV.IsFrame (F := F) 1 (Formalism.L2.Col.stdLat E n) := by
   rcases Nat.eq_zero_or_pos n with rfl | hn
@@ -166,6 +167,7 @@ theorem actO_mem_stdHom {D : D7} (S T : HSp D) {n m : ℕ} (hn : S.rank = n) (hm
 end GlobalTheory.SBMove
 
 
+open GlobalTheory.SBMove in
 theorem GlobalTheory.SBMove.isSBHalf_actO_lev : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (Ch : ℕ → Type) (A : TwDat I l Z u a Ch), A.Is → ∀ (i : ℕ) (hi : i + 1 ≤ B.R.m) α γ, ∀ Φ : WO ((I.rec7 l Z).sp.X i) ((I.rec7 l Z).sp.X (i + 1)) → ℂ, IsSBHalf A.e (stdHom _ _) Φ → ∀ (κ : A.U i α) (κ' : A.U (i + 1) γ), IsSBHalf A.e (stdHom _ _) (fun z => Φ (actO _ _ κ.1⁻¹ κ'.1⁻¹ z)) := by
   intro B X I hI hP l Z u a Ch A hA i hi α γ Φ hΦ κ κ'
   have hi0 : i ≤ B.R.m := Nat.le_of_succ_le hi

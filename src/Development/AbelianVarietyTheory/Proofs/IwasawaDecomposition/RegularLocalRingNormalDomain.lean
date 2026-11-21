@@ -70,6 +70,7 @@ theorem dvd_of_not_dvd (hx : Prime x) (h : StableDvd (A ⧸ Ideal.span {x})) {a 
   | (intros; exact _root_.GlobalTheory.SaturatedNotDvd.main ..)
 
 
+omit [IsLocalRing A] in
 theorem prime_dvd_of_stable (hx : Prime x) {a b : A} {I : Ideal A} (hI : I ≠ ⊥)
     (hst : ∀ r ∈ I, ∃ s ∈ I, a * r = x * b * s) : x ∣ a := by
   by_contra ha

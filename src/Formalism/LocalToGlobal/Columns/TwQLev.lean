@@ -60,6 +60,7 @@ def chiQ (σ₀ : K →+* ℂ) : levUQ hc n ST SG Q H q →* ℂˣ :=
   ∏ P : Q, (Units.map σ₀.toMonoidHom).comp ((q.chr P).comp (lqRes q H P))
 
 
+variable (ST) in
 def qUloc (v : HeightOneSpectrum (𝓞 F)) : Subgroup (GL (Fin n) (E ⊗[F] v.adicCompletion F)) :=
   levLoc hc n ST SG H v ⊓ ⨅ (P : Q) (h : qv F P.1 = v), h ▸ (q.U P).comap (qFst q P)
 

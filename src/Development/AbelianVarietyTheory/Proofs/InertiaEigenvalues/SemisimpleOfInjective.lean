@@ -343,6 +343,7 @@ theorem HasTrace.twist {F c : PlE H → ℂ} (h : HasTrace A i F) (ψ : G H.E N.
   rw [← e.1, ← e.2, map_mul, map_zpow₀]
 
 
+variable (N i) in
 def epsBar : G H.E N.Om →* Qbar (N.l i) :=
   (((algebraMap ℚ_[N.l i] (Qbar (N.l i))).comp PadicInt.Coe.ringHom).toMonoidHom.comp
     (Units.coeHom _)).comp (cycZ H.E N.Om (N.l i))
@@ -361,6 +362,7 @@ theorem ae_epsBar : AE N fun w σ => A.iotaQC i (epsBar N i σ) = ((normV w : �
   rw [this, map_natCast, map_natCast]
 
 
+variable (A i) in
 def chiBar (c : ℕ) : G H.E N.Om →* Qbar (N.l i) :=
   ((iotaOQ N A i).toMonoidHom.comp (Units.coeHom _)).comp (N.chi i c)
 
@@ -384,9 +386,11 @@ theorem chiBar_succ (c : ℕ) (hc : c < R.t) (σ : G H.E N.Om) :
   exact A.iotaQ_alg i _
 
 
+variable (A) in
 def sumEig {a : ℕ} (π : A.CG a) (w : PlE H) : ℂ := (A.frobEig (A.locG π w)).sum
 
 
+variable (A i) in
 abbrev muEta : A.CG 1 := A.tw (A.muC i) A.etaTinv
 
 variable (A i) in
@@ -410,6 +414,7 @@ theorem sumEig_tw {a : ℕ} (π : A.CG a) (χ : A.CG 1) :
   exact ⟨Ne.symm h0, rfl⟩
 
 
+variable (A) in
 def sumPart (p : Part A.CG) (w : PlE H) : ℂ :=
   ((List.range p.d).map fun k : ℕ => sumEig A p.π w *
     ((normV w : ℕ) : ℂ) ^ (((((p.d : ℝ) - 1) / 2 - k : ℝ)) : ℂ)).sum

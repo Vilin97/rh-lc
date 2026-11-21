@@ -81,6 +81,7 @@ def hyp (D : D7) (large₂ : SizeData₂ D) (C0 C' Cl Cg cb Cu cT CT : ℝ) : Pr
   StandingNumericalData D C0 ∧ StandingHypotheses D large₂ C' Cl Cg cb Cu cT CT ∧ 1 ≤ C0
 
 
+open Classical in
 def gsFam (D : D7) (u u' : D.what₂.Word) : D.s.Pair u u' → ℂ := fun P =>
   if scalarP D.s P ∧ D.s.Gterm (D.s.pfst P) ≠ 0 ∧ D.s.Gterm (D.s.psnd P) ≠ 0 then D.s.pval P else 0
 

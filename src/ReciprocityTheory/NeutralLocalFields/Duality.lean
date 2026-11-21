@@ -336,6 +336,7 @@ def cycN : (L ≃ₐ[K] L) →* (ZMod n)ˣ :=
     (MulSemiringAction.toRingAut (L ≃ₐ[K] L) L)
 
 
+variable {K L n} in
 theorem cycN_spec (σ : L ≃ₐ[K] L) (ζ : L) (h : ζ ^ n = 1) :
     σ ζ = ζ ^ ((cycN K L n σ : ZMod n)).val := by
   have hz : ζ ≠ 0 := by

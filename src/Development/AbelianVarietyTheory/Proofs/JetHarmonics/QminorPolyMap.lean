@@ -10,6 +10,7 @@ open Formalism.REAL Finset
 namespace GlobalTheory
 
 
+open Finset in
 theorem _root_.GlobalTheory.qminor_polyMap (A : Type) [Ring A] [Algebra ℂ A] (n t : ℕ) (E : Fin n → Fin n → A)
     (a b : Fin t → Fin n) (s : ℂ) :
     ∃ c : ℕ → A, ∀ u : ℂ, _root_.Formalism.REAL.qminor E a b (u - s) = ∑ i ∈ Finset.range (t + 1), u ^ i • c i := by

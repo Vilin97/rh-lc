@@ -65,6 +65,7 @@ theorem exists_quot {J : Ideal B} (δ : DividedPowers J) (𝔟 : Ideal B) (h𝔟
     exact hg.2 a ha
 
 
+omit [CommRing B] in
 theorem map_fil_le {B : Type} [CommRing B] {J : Ideal B} (δ : DividedPowers J) {C : Type} [CommRing C]
     {J' : Ideal C} (δ' : DividedPowers J') (f : B →+* C) (hf : IsDPMorphism δ δ' f) (N : ℕ) :
     (fil δ N).map f ≤ fil δ' N := by
@@ -82,6 +83,7 @@ theorem map_fil_le {B : Type} [CommRing B] {J : Ideal B} (δ : DividedPowers J) 
     exact (hf.dpow_comp (n := p.1) p.2 (h1 p hp)).symm
 
 
+omit [CommRing B] in
 theorem fil_le_map_fil : ∀ (B : Type) [CommRing B] (J : Ideal B) (δ : DividedPowers J) (C : Type) [CommRing C]
     (J' : Ideal C) (δ' : DividedPowers J') (f : B →+* C), IsDPMorphism δ δ' f → J' = J.map f →
     ∀ N, fil δ' N ≤ (fil δ N).map f := by

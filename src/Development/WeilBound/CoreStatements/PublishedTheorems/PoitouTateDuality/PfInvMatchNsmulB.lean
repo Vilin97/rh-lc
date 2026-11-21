@@ -18,6 +18,7 @@ namespace PositivityTheory.Lit1.PTN
 attribute [local instance 2000] Rep.hV2
 
 
+set_option maxHeartbeats 1000000 in
 theorem loc_act_rootOf (Kf : FiniteSubfield) [NumberField Kf.1] [IsAlgClosure Kf.1 (AlgebraicClosure ℚ)]
     (S : Set (HeightOneSpectrum (𝓞 Kf.1))) [Fintype S] {l r : ℕ} [Fact l.Prime] [NeZero (l ^ r)]
     (ζ : AlgebraicClosure ℚ) (hζ : IsPrimitiveRoot ζ (l ^ r))
@@ -93,6 +94,7 @@ theorem cls_nsmul_of_match {L D : Type} [Group L] [TopologicalSpace L] [IsTopolo
   exact (congrArg e2 h').trans (map_nsmul e2 n _)
 
 
+set_option maxHeartbeats 1000000 in
 theorem invMatch_nsmul_B (Kf : FiniteSubfield) [NumberField Kf.1] [IsAlgClosure Kf.1 (AlgebraicClosure ℚ)]
     (S : Set (HeightOneSpectrum (𝓞 Kf.1))) [Fintype S] {l r : ℕ} [Fact l.Prime] (hr : 0 < r)
     (hS : ∀ v : HeightOneSpectrum (𝓞 Kf.1), ((l : ℕ) : 𝓞 Kf.1) ∈ v.asIdeal → v ∈ S)

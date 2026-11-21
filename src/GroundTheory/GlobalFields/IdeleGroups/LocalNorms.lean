@@ -28,6 +28,7 @@ def finiteLocalNorm (v : HeightOneSpectrum (𝓞 K)) :
   map_mul' y z := by simp only [Pi.mul_apply, map_mul, Finset.prod_mul_distrib]
 
 
+variable {L} in
 theorem coe_finiteLocalNorm (v : HeightOneSpectrum (𝓞 K))
     (y : (w : PlacesOver L v) → (w.1.adicCompletion L)ˣ) :
     ((finiteLocalNorm L v y : (v.adicCompletion K)ˣ) : v.adicCompletion K) =
@@ -39,6 +40,8 @@ def integerUnitsOver (v : HeightOneSpectrum (𝓞 K)) :
   Subgroup.pi Set.univ fun w ↦ (Submonoid.ofClass (w.1.adicCompletionIntegers L)).units
 
 
+omit [NumberField K] in
+variable {L} in
 theorem mem_integerUnitsOver {v : HeightOneSpectrum (𝓞 K)}
     {y : (w : PlacesOver L v) → (w.1.adicCompletion L)ˣ} :
     y ∈ integerUnitsOver L v ↔
@@ -46,6 +49,7 @@ theorem mem_integerUnitsOver {v : HeightOneSpectrum (𝓞 K)}
   simp [integerUnitsOver, Subgroup.mem_pi]
 
 
+open scoped Classical in
 def infiniteLocalNorm (v : InfinitePlace K) :
     ((w : v.placesOver L) → ((w : InfinitePlace L).Completion)ˣ) →* (v.Completion)ˣ where
   toFun y := ∏ w : v.placesOver L, Units.map (Algebra.norm v.Completion :
@@ -54,6 +58,9 @@ def infiniteLocalNorm (v : InfinitePlace K) :
   map_mul' y z := by simp only [Pi.mul_apply, map_mul, Finset.prod_mul_distrib]
 
 
+omit [NumberField K] in
+open scoped Classical in
+variable {L} in
 theorem coe_infiniteLocalNorm (v : InfinitePlace K)
     (y : (w : v.placesOver L) → ((w : InfinitePlace L).Completion)ˣ) :
     ((infiniteLocalNorm L v y : (v.Completion)ˣ) : v.Completion) =
@@ -85,6 +92,8 @@ theorem eventually_finiteProj_mem (y : IdeleGroup L) :
   exact hw
 
 
+omit [NumberField K] [NumberField L] in
+variable (K) in
 theorem eventually_forall_placesOver {P : HeightOneSpectrum (𝓞 L) → Prop}
     (h : ∀ᶠ w in cofinite, P w) :
     ∀ᶠ v : HeightOneSpectrum (𝓞 K) in cofinite, ∀ w : PlacesOver L v, P w.1 := by
@@ -95,6 +104,7 @@ theorem eventually_forall_placesOver {P : HeightOneSpectrum (𝓞 L) → Prop}
   exact ⟨w.1, hw, HeightOneSpectrum.ext w.2.over.symm⟩
 
 
+omit [NumberField K] in
 theorem placesOver_congr (yf : ∀ v : HeightOneSpectrum (𝓞 K),
       (w : PlacesOver L v) → (w.1.adicCompletion L)ˣ)
     {v v' : HeightOneSpectrum (𝓞 K)} (h : v' = v) (w : HeightOneSpectrum (𝓞 L))
@@ -104,6 +114,7 @@ theorem placesOver_congr (yf : ∀ v : HeightOneSpectrum (𝓞 K),
   rfl
 
 
+omit [NumberField K] [NumberField L] in
 theorem infinitePlacesOver_congr (yi : ∀ v : InfinitePlace K,
       (w : v.placesOver L) → ((w : InfinitePlace L).Completion)ˣ)
     {v v' : InfinitePlace K} (h : v' = v) (w : InfinitePlace L)

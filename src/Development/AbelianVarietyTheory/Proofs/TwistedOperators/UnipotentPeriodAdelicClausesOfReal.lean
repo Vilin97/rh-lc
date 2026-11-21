@@ -174,6 +174,7 @@ theorem coef_split (θ : InfFam D) {Y V : HSp D} (d : HermitianOrthogonalExtensi
   split_ifs <;> simp
 
 
+open Classical in
 theorem one_clause (θ : InfFam D) {Y V : HSp D} (d : HermitianOrthogonalExtensionData Y V 1 1) {S : D.what₂.Tau → SPar} (M : DSModel V S)
     (K : Subgroup (GL (Fin V.rank) (Lev.EAf D))) (u : ∀ τ, M.H τ) (φ : GA D Y → ℂ) (ν : Measure (GA D Y))
     [ν.IsMulLeftInvariant] (m : Measure (GinfC Y)) (μ : Measure (GfC Y)) [SigmaFinite m] [SigmaFinite μ]
@@ -220,6 +221,8 @@ theorem mulVec_sub_mem_of_triple_product_fixing {n : ℕ} {R : Type} [CommRing R
   exact hk
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem vanish {Y V : HSp D} (d : HermitianOrthogonalExtensionData Y V 1 1) (Λ : Lat V) (𝔪 : Ideal (𝓞 D.host.E)) (hΛ : IsSelfDualC V Λ)
     (hz : zv d ∈ Λ) (x : GA D Y) (γ : GA D V) (z : Fin V.rank → D.host.E) (hzγ : mt V γ *ᵥ ratV (zv d) = ratV z)
     (h : GA D Y) (hk : Lev.finE V (stabilizerEmbedding d x⁻¹ * γ * stabilizerEmbedding d h) ∈ congLev D.sp.cm V.gram Λ 𝔪) :
@@ -246,6 +249,7 @@ namespace GlobalTheory.SepPer.AdelicFromReal
 variable {D : D7}
 
 
+open Classical in
 theorem term_clause (θ : InfFam D) (hθ : IsInfFam θ) {Y V : HSp D} (d : HermitianOrthogonalExtensionData Y V 1 1) {S : D.what₂.Tau → SPar}
     (M : DSModel V S) (u : ∀ τ, M.H τ) (B : Fr V) (Q : ℝ) (Λ : Lat V) (𝔪 : Ideal (𝓞 D.host.E)) (hΛ : IsSelfDualC V Λ)
     (hz : zv d ∈ Λ) (ν : Measure (GA D Y)) (m : Measure (GinfC Y)) (μ : Measure (GfC Y)) [SigmaFinite m] [SigmaFinite μ]

@@ -22,6 +22,7 @@ instance isScalarTower_finiteSubfield_of_fact : IsScalarTower K.1 F.1 E.1 :=
   IsScalarTower.of_algebraMap_eq fun _ ↦ rfl
 
 
+variable (F E) in
 def completionEmbeddingBelow (u : PlacesOver F.1 v)
     [(placeOfEmbedding ι E).1.asIdeal.LiesOver u.1.asIdeal] :
     u.1.adicCompletion F.1 →ₐ[v.adicCompletion K.1] AlgebraicClosure (v.adicCompletion K.1) :=

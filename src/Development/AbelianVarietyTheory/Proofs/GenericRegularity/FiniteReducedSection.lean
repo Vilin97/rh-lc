@@ -31,6 +31,7 @@ theorem finite_reduced_of_eq {K Ω Kl K' : Type} [Field K] [Field Ω] [Algebra K
   exact this
 
 
+set_option maxHeartbeats 1000000 in
 theorem tv_indep {D : D7} {B : WeightFamilies.Prov D} {P : ModuliIntegralCharts.Prov D} {j : ℕ} (X : PJ D B P j)
     (la : HeightOneSpectrum (𝓞 B.KO)) (N : ℕ) [Algebra B.KO (Kp X la N)]
     [IsScalarTower B.KO (X.Kl la) (Kp X la N)] :
@@ -101,6 +102,8 @@ variable {D : D7} {T : Top D} (h : LawsP T) (j : ℕ) (hj : InR D j) (hG : GenFr
   (hT : GenFromTest (T.Q.Xo j) T.Q.c hG)
 
 
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 1000000 in
 theorem finite_reduced_section (hfg : FnFG (T.Q.Xo j) T.Q.c) (htr : FnTrdeg (T.Q.Xo j) T.Q.c (WeightFamilies.dimY D j)) :
     ∀ ka wL wF G S g0 la, CurveHyp h j hj hG ka wL wF G S g0 → ∀ Z,
       FiniteDimensional (Kp (recPlus h j hj) la G.N)

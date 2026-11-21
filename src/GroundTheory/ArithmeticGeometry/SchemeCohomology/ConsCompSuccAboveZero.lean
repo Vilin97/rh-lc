@@ -84,6 +84,7 @@ lemma d_d (n : ℕ) (σ : Cochain P U n) : d P U (n + 1) (d P U n σ) = 0 := by
   exact h2
 
 
+variable {P} in
 def push {P' : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} (φ : P ⟶ P') (n : ℕ) :
     Cochain P U n →+ Cochain P' U n where
   toFun σ i := φ.app _ (σ i)
@@ -129,6 +130,7 @@ lemma push_injective {P' : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} (φ : P ⟶ P'
   funext fun i => h i (congrFun hστ i)
 
 
+variable {P} in
 lemma CechAcyclic.of_retract {G : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} (ι' : P ⟶ G) (r : G ⟶ P)
     (hr : ι' ≫ r = 𝟙 P) (hG : CechAcyclic G U) : CechAcyclic P U := by
   intro n σ hσ

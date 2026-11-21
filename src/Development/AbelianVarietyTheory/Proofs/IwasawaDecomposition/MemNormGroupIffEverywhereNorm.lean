@@ -77,6 +77,7 @@ theorem eventually_integral_form (δ : K) (hδ : δ ≠ 0) (a : (AdeleRing (𝓞
 variable (L : Type) [Field L] [NumberField L] [Algebra K L] [Algebra.IsQuadraticExtension K L]
 
 
+omit [NumberField L] in
 theorem almostNorm_finComp (a : (AdeleRing (𝓞 K) K)ˣ) : AlmostNorm K L (finComp a) := by
   obtain ⟨δ, b, hδ, h0, h1⟩ := AlmostNorm.exists_basis_sq K L
   have hδ0 : δ ≠ 0 := fun h => hδ (h ▸ IsSquare.zero)
@@ -85,6 +86,7 @@ theorem almostNorm_finComp (a : (AdeleRing (𝓞 K) K)ˣ) : AlmostNorm K L (finC
   exact (mem_normGroup_iff_form b h0 h1).2 ⟨x, y, h⟩
 
 
+omit [NumberField L] in
 theorem mem_normGroup_iff_everywhereNorm (a : (AdeleRing (𝓞 K) K)ˣ) :
     a ∈ normGroup K L (AdeleRing (𝓞 K) K) ↔ EverywhereNorm K L (finComp a) (infComp a) := by
   obtain ⟨δ, b, hδ, h0, h1⟩ := AlmostNorm.exists_basis_sq K L
@@ -211,6 +213,7 @@ theorem globalNormIndexTwo : Formalism.D.Classical.GlobalNormIndexTwo := by
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta in
 theorem existsUnique_isEta : ∀ D : D7, ∃! η : (AF D.host.F)ˣ →* Circle, IsEta D η := fun D =>
   globalNormIndexTwo D.host.F D.host.E D.sp.cm.deg2
 

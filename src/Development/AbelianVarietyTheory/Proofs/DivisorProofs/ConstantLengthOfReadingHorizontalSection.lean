@@ -56,6 +56,7 @@ theorem char_part {g : ℕ} (ty : Fin g → E →+* ℂ) (t : Fin g → ℂ) (s 
   exact sub_eq_zero.2 (Finset.sum_congr rfl fun _ _ => by ring)
 
 
+omit [NumberField E] in
 theorem eq_zero_of_span {r : ℕ} (τ : E →+* ℂ) (Λ : Set (Fin r → E)) (hΛ : Submodule.span E Λ = ⊤)
     (f : (Fin r → ℂ) → ℂ) (ha : ∀ u v, f (u + v) = f u + f v) (hs : ∀ (s : ℂ) u, f (s • u) = conj s * f u)
     (h : ∀ v ∈ Λ, f (fun n => τ (v n)) = 0) (u : Fin r → ℂ) : f u = 0 := by

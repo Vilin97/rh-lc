@@ -13,6 +13,7 @@ open GlobalTheory.SplitWeil (SB nabs)
 namespace GlobalTheory.KSp
 
 
+open MeasureTheory Matrix in
 theorem _root_.GlobalTheory.KSp.sieg_blocks : ∀ (F : Type) [Field F] [CharZero F] (E : Type) [Field E] [Algebra F E] (c : E →ₐ[F] E) (δ : E)
     (hE : _root_.GlobalTheory.WeilM.IsQuad c δ) (ν : Type) [Fintype ν] [DecidableEq ν] (p : _root_.GlobalTheory.WeilM.UG c (_root_.GlobalTheory.SplitUnitary.stdJ ν E)), p ∈ _root_.GlobalTheory.KSp.sieg c ν →
     (_root_.GlobalTheory.KSp.mat c p).toBlocks₁₁ * (((_root_.GlobalTheory.KSp.mat c p).toBlocks₂₂).map c)ᵀ = 1 ∧

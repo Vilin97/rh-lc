@@ -67,6 +67,7 @@ theorem isLocalHom_localization [Module.Finite O B] (P : Ideal B) [P.IsMaximal] 
   exact h2 ha
 
 
+omit [IsLocalRing O] in
 theorem length_residueField (P : Ideal B) [P.IsMaximal] :
     Module.length O (ResidueField (Localization.AtPrime P)) = Module.length O (B ⧸ P) := by
   let e : (B ⧸ P) ≃+* ResidueField (Localization.AtPrime P) :=
@@ -93,6 +94,7 @@ theorem ord_mul_length [Module.Finite O B] (P : Ideal B) [P.IsMaximal] (θ : B) 
   rfl
 
 
+omit [IsLocalRing O] in
 theorem length_localization_quotient (I : Ideal B) (Q : Ideal (B ⧸ I)) [Q.IsMaximal] :
     Module.length O (Localization.AtPrime Q) =
       Module.length O (Localization.AtPrime (Q.comap (Ideal.Quotient.mk I)) ⧸
@@ -163,6 +165,7 @@ theorem finsum_reindex [Module.Finite O B] (θ : B) :
 end LengthFiniteAlgebra
 
 
+open LengthFiniteAlgebra in
 theorem LengthFiniteAlgebra.proof : LengthFiniteAlgebra.Statement := by
   intro O B _ _ _ _ _ _ θ
   have hr : LinearMap.range (LinearMap.mulLeft O θ) = (Ideal.span {θ}).restrictScalars O := by

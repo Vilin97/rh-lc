@@ -228,6 +228,7 @@ end GlobalTheory.CompanionTheory.OrbUniq
 namespace GlobalTheory.CompanionTheory.OrbUniq
 
 
+set_option maxHeartbeats 1600000 in
 theorem uniq_of_trans : IdemEx → NullSing → Trans → Uniq := by
   intro hI hN hT D r t V b₀ hb S e he ν ν' hν hν' hne
   obtain ⟨hee, -⟩ := (hI D S).2 e he

@@ -99,6 +99,7 @@ theorem _root_.GroundTheory.Arith.Abelian.Isogeny.invConst_congr {F : Type} [Fie
   rw [Isogeny.congr_rfl]
 
 
+omit [CharZero L] in
 theorem _root_.GroundTheory.Arith.Abelian.Isogeny.invConst_conj (g : ℂ ≃ₐ[L] ℂ)
     (ψ : Isogeny (W.baseChange ℂ) (W'.baseChange ℂ)) : invConst (ψ.conj g) = g (invConst ψ) := by
   rw [Isogeny.conj, Isogeny.mapOf, Isogeny.invConst_congr, invConst_map]

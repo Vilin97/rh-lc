@@ -241,6 +241,7 @@ section Rep
 variable {G : ι → Type*} [∀ v, Group (G v)] {K : ∀ v, Subgroup (G v)}
 
 
+variable (K) in
 def tensorRep (π : ∀ v, Representation ℂ (G v) (V v)) :
     Representation ℂ (Πʳ v, [G v, K v]) (⨂[ℂ] v, V v) where
   toFun g := PiTensorProduct.map fun v => π v (g v)

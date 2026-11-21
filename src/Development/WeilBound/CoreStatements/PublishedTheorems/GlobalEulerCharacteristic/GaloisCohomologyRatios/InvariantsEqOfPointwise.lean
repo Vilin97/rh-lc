@@ -45,6 +45,7 @@ theorem modNRep_actA_one_apply (g : galUnramifiedOutside K.1 ℚ̄ S) :
   exact congrArg Submodule.Quotient.mk (h1.trans h2.symm)
 
 
+omit [Module.Finite (ZMod ℓ) M] in
 theorem nRep_gsRestrictGal (g : galUnramifiedOutside K.1 ℚ̄ S) :
     nRep hL hζ M hM (gsRestrictGal hL g) =
       quotientRep (gsOpenSubgroup S hL : Subgroup (galUnramifiedOutside K.1 ℚ̄ S))
@@ -59,6 +60,7 @@ theorem nRep_gsRestrictGal (g : galUnramifiedOutside K.1 ℚ̄ S) :
     (homRep_ρ_of_mem (gsOpenSubgroup S hL) (gsRootsZMod S ℓ) M (roots_trivial hL hζ) hM)) h1
 
 
+omit [Module.Finite (ZMod ℓ) M] in
 theorem tprod_gsRestrictGal (g : galUnramifiedOutside K.1 ℚ̄ S) :
     (letI := actA hL 1; (modNRep (L.1 ≃ₐ[K.1] L.1) (AA hL 1) ℓ).tprod (nRep hL hζ M hM)) (gsRestrictGal hL g) =
       ((gsH1SUnitsModRep ℓ hL).tprod

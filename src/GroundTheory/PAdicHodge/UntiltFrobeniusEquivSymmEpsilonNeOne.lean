@@ -34,6 +34,7 @@ section Cp
 variable {p : ℕ} [Fact p.Prime]
 
 
+variable (p) in
 def muBdR (ε : PreTilt (normInteger ℂ_[p]) p) : BDeRhamPlus (normInteger ℂ_[p]) p :=
   wittToBDeRhamPlus 𝒪 p (AInf.mu ε)
 
@@ -94,6 +95,7 @@ theorem exists_isPrimitiveRoot_p : ∃ ζ : ℂ_[p], IsPrimitiveRoot ζ p := by
   exact HasEnoughRootsOfUnity.exists_primitiveRoot ℂ_[p] p
 
 
+variable (p) in
 def rootSeq : ℕ → ℂ_[p]
   | 0 => 1
   | 1 => (exists_isPrimitiveRoot_p (p := p)).choose
@@ -118,6 +120,7 @@ theorem norm_rootSeq (n : ℕ) : ‖rootSeq p n‖ = 1 := by
   exact (pow_eq_one_iff_of_nonneg (norm_nonneg _) (pow_ne_zero _ (Fact.out : p.Prime).ne_zero)).1 h
 
 
+variable (p) in
 def rootSeqInt (n : ℕ) : normInteger ℂ_[p] :=
   ⟨rootSeq p n, mem_normInteger.2 (norm_rootSeq n).le⟩
 
@@ -125,6 +128,7 @@ theorem rootSeqInt_succ_pow (n : ℕ) : rootSeqInt p (n + 1) ^ p = rootSeqInt p 
   Subtype.ext (by simp [rootSeqInt, rootSeq_succ_pow])
 
 
+variable (p) in
 def epsilon : PreTilt (normInteger ℂ_[p]) p :=
   IsPerfectoidField.ofCompatible p (rootSeqInt p) rootSeqInt_succ_pow
 
@@ -138,6 +142,7 @@ theorem untilt_frobeniusEquiv_symm_epsilon_ne_one : PreTilt.untilt (φi (epsilon
   exact rootSeq_one_ne_one (congrArg Subtype.val h)
 
 
+variable (p) in
 def tBdR : BDeRhamPlus (normInteger ℂ_[p]) p := fontaineT (epsilon p) untilt_epsilon
 
 theorem maximalIdeal_eq_span_tBdR : 𝔪 = span {tBdR p} :=

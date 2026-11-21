@@ -137,6 +137,7 @@ theorem exists_sheet {W : Ideal (MvPolynomial (Fin n) ℂ)} {A : Matrix (Fin d) 
 end ParamPieceInt
 
 
+open ParamPieceInt in
 theorem ParamPieceInt.proof : ParamPieceInt.Statement := by
   intro n d W A σ r r' N hσ hinj hN hrr hprop hcov f φ P hφ hPm hPb hPw hgP
   classical

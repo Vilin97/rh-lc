@@ -81,6 +81,8 @@ theorem auxiliaryVectorDecomposition_eq_zero {A B : HSp D} {c : ℕ} {ε : D.hos
   exact (mul_eq_zero.1 h3).resolve_left h4
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 2000000 in
 theorem exists_sumFrame {A B : HSp D} {c : ℕ} {ε : D.host.E} (hε : ε ≠ 0) (d : HermitianOrthogonalExtensionData A B c ε)
     {Λ : Submodule (𝓞 D.host.E) (Fin A.rank → D.host.E)} (hΛ : Submodule.IsLattice D.host.E Λ)
     {β : GL (Fin A.rank) (Lev.EAf D)} (hβ : IsFrame β Λ) {𝔟 : Fin c → FractionalIdeal (𝓞 D.host.E)⁰ D.host.E}
@@ -416,6 +418,7 @@ theorem valued_frameSign (w : Pl D.host.E) (c : ℕ) (p : Fin c) (k : ℕ) :
 variable {G : GridData L sc} (W : G.Weil)
 
 
+set_option maxHeartbeats 4000000 in
 theorem gridChoice_nonempty {U : Set T} (N : Std G U) (Z : Normal W N)
     (hfin : (⋃ t ∈ U, (locPl G t : Set (Pl D.host.E))).Finite)
     (hAA : ∀ t ∈ U, ∀ w ∈ locPl G t,

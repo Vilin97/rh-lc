@@ -15,6 +15,7 @@ section
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+omit [NumberField E] [IsTotallyComplex E] in
 def barK (k : Kinf E a) : Kinf E a :=
   ⟨(star k.1)ᵀ, Matrix.mem_unitaryGroup_iff.2 (by
     have h : star k.1 * k.1 = 1 := Matrix.mem_unitaryGroup_iff'.1 k.2
@@ -25,6 +26,7 @@ def barK (k : Kinf E a) : Kinf E a :=
     rw [e, ← Matrix.transpose_mul, h', Matrix.transpose_one])⟩
 
 
+omit [IsTotallyComplex E] in
 def invTOp : Op E a → Op E a
   | .fin k => .fin (invT a (Af E) k)
   | .cpt k => .cpt (barK k)

@@ -25,6 +25,7 @@ theorem T_add (Φ Ψ : d.Fn) (X : Mx F E d.m d.n) : d.T (Φ + Ψ) X = d.T Φ X +
   exact mul_add _ _ _
 
 
+variable (d) in
 abbrev b1 : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n) (AE F E) := incM F d.b.1.toCols₁
 
 theorem incM_mul {ι ι' ι'' : Type} [Fintype ι'] (x : Matrix ι ι' E) (y : Matrix ι' ι'' E) :

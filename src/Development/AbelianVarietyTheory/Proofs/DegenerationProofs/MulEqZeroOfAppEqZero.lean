@@ -20,6 +20,10 @@ open TopologicalSpace
 namespace GlobalTheory.SquareZero
 
 
+open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
+open scoped CategoryTheory.Obj in
+open TopologicalSpace in
+attribute [local instance] Over.cartesianMonoidalCategory in
 theorem _root_.GlobalTheory.SquareZero.mul_eq_zero_of_app_eq_zero : ∀ (A A' : Type) [CommRing A] [CommRing A']
     (g : A →+* A'), Function.Surjective g → RingHom.ker g ^ 2 = ⊥ → ∀ (X X' : Scheme.{0})
     (f : X ⟶ Spec (CommRingCat.of A)) (f' : X' ⟶ Spec (CommRingCat.of A')) (β : X' ⟶ X),

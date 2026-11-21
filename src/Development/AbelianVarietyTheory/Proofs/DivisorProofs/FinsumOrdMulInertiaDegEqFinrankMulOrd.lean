@@ -170,6 +170,8 @@ private lemma length_quotient_smul_univ_eq_finrank_mul {A M : Type*} [CommRing A
   exact (WithTop.add_left_cancel hfin e2).symm
 
 
+open IsLocalRing in
+open scoped Pointwise in
 theorem _root_.GlobalTheory.finsum_ord_mul_inertiaDeg_eq_finrank_mul_ord (A B : Type) [CommRing A] [IsDomain A]
     [IsNoetherianRing A] [IsLocalRing A] [CommRing B] [IsDomain B] [Algebra A B]
     [Module.Finite A B] (hinj : Function.Injective (algebraMap A B)) (hdim : ringKrullDim A = 1)

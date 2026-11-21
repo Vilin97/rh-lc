@@ -16,6 +16,8 @@ open NumberField IsDedekindDomain GlobalTheory.FieldSize
 namespace GlobalTheory.FieldSize.WeberUnram
 
 
+set_option autoImplicit false in
+open NumberField IsDedekindDomain in
 theorem _root_.GlobalTheory.FieldSize.WeberUnram.of_algHom {K M R : Type} [Field K] [NumberField K]
     [Field M] [Algebra K M] [Field R] [NumberField R]
     [Algebra K R] [IsAbelianGalois K R] (f : M →ₐ[K] R) :

@@ -138,6 +138,7 @@ variable {l : ℕ} [Fact l.Prime] (P : LocPrime l) (ι : Om l ≃+* ℂ) {LL K :
   (ρ : Representation ↥LL.1 ↥(GK K) V)
 
 
+set_option maxHeartbeats 2000000 in
 theorem letterHom_eq_zero (f : ↥(Dpst P ρ) →+ Om l)
     (hf : f ∈ letterHom (mulD P ρ) ((LL.1.val : ↥LL.1 →ₐ[ℚ_[l]] Om l) : ↥LL.1 →+* Om l)
       (algebraMap ↥(MaximalUnramifiedExtension l) (Om l))) (y : ↥(Dpst P ρ)) (hy : wdMk P ι ρ y = 0) : f y = 0 := by

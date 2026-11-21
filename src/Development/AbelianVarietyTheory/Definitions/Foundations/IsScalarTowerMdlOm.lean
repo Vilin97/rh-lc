@@ -60,6 +60,10 @@ theorem cR_mod (l N : ℕ) [Fact l.Prime] (hN : (N : ZMod l) ≠ 0) (r₀ : ZMod
   rw [mul_comm (-r₀), ← mul_assoc, mul_inv_cancel₀ hN, one_mul]
 
 
+open scoped MatrixGroups TensorProduct in
+open Matrix in
+variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ} in
+attribute [local instance] _root_.GlobalTheory.K4.algMdl in
 theorem _root_.GlobalTheory.ZetaB.eval_clsHat (X : _root_.GlobalTheory.KZ.Tower Ω ε) (l : ℕ)
     [Fact l.Prime] (n : ℕ) (a : X.K) :
     AdicCompletion.eval (_root_.GlobalTheory.KZ.idl l) (X.Kl l) n
@@ -70,6 +74,10 @@ theorem _root_.GlobalTheory.ZetaB.eval_clsHat (X : _root_.GlobalTheory.KZ.Tower 
   rfl
 
 
+open scoped MatrixGroups TensorProduct in
+open Matrix in
+variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ} in
+attribute [local instance] _root_.GlobalTheory.K4.algMdl in
 theorem _root_.GlobalTheory.ZetaB.unitOf_val (X : _root_.GlobalTheory.KZ.Tower Ω ε) {a : X.K}
     (ha : a ≠ 0) : ((_root_.GlobalTheory.ZetaB.unitOf X a : (X.K)ˣ) : X.K) = a := by
   unfold _root_.GlobalTheory.ZetaB.unitOf
@@ -77,6 +85,10 @@ theorem _root_.GlobalTheory.ZetaB.unitOf_val (X : _root_.GlobalTheory.KZ.Tower �
   rfl
 
 
+open scoped MatrixGroups TensorProduct in
+open Matrix in
+variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ} in
+attribute [local instance] _root_.GlobalTheory.K4.algMdl in
 theorem _root_.GlobalTheory.ZetaB.unitOf_zero (X : _root_.GlobalTheory.KZ.Tower Ω ε) :
     _root_.GlobalTheory.ZetaB.unitOf X 0 = 1 := by
   unfold _root_.GlobalTheory.ZetaB.unitOf

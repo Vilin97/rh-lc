@@ -121,6 +121,7 @@ namespace GlobalTheory.OrbFinAf
 variable {p : ℕ} [Fact p.Prime]
 
 
+open CompactOrbitVectors in
 theorem isCompact_prod_local : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (D : ∀ v : AwayP p, Set (Gv G v)),
     (∀ v, IsCompact (D v)) → (∀ᶠ v in (Filter.cofinite : Filter (AwayP p)), D v ⊆ IntV G v) →
     IsCompact {g : G.GAf | ∀ v, piV G v g ∈ D v} := by

@@ -300,6 +300,7 @@ def cosetSum (π : Representation ℂ G V) {H : Subgroup G} (U : Subgroup H) [Fi
   ∑ q : H ⧸ U, π (q.out : H)
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] in
 theorem out_apply (π : Representation ℂ G V) {H : Subgroup G} {U : Subgroup H} {v : V} (hv : ∀ u ∈ U, π (u : H) v = v)
     (h : H) : π ((h : H ⧸ U).out : H) v = π h v := by
   obtain ⟨u, hu⟩ := QuotientGroup.mk_out_eq_mul U h
@@ -411,6 +412,7 @@ section Classes
 variable {G : Type} [Group G] [TopologicalSpace G]
 
 
+omit [TopologicalSpace G] in
 def orbitMap {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V) (v : V) :
     (Representation.leftRegular ℂ G).IntertwiningMap ρ where
   toLinearMap := (LinearMap.applyₗ v ∘ₗ ρ.asAlgebraHom.toLinearMap : MonoidAlgebra ℂ G →ₗ[ℂ] V)
@@ -419,6 +421,7 @@ def orbitMap {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ
     simp
 
 
+omit [TopologicalSpace G] in
 theorem orbitMap_surjective {V : Type} [AddCommGroup V] [Module ℂ V] {ρ : Representation ℂ G V} (h : ρ.IsIrreducible)
     {v : V} (hv : v ≠ 0) : Function.Surjective (orbitMap ρ v) := by
   have h1 : v ∈ (orbitMap ρ v).range := ⟨MonoidAlgebra.single 1 1, by

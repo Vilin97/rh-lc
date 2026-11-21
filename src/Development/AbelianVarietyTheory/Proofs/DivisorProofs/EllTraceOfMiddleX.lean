@@ -25,6 +25,7 @@ noncomputable section
 namespace GlobalTheory.PsCo.Plug
 open MainStatements.WeightKernel
 
+set_option maxHeartbeats 1000000 in
 theorem hyperX : CuspAny → ArchZero → GlobalTheory.IndefiniteRowSideFullHecke.CentralizerTensorForms.RegularSemisimple → HyperZeroX := by
   intro hCA hAZ hRS D V lam S M T U μa μf μ _ _ fa ff hTD γ hreg hirr hna
   obtain ⟨Φ, L, a, hgood⟩ := exists_isGood V

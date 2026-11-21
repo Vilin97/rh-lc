@@ -39,6 +39,7 @@ theorem transfer {H K ι : Type} [AddCommGroup H] [TopologicalSpace H] [IsTopolo
     exact hemb.integrable_map_iff.mp h2
 
 
+open GlobalTheory.CompanionTheory.SiegelND.Coef.TestN in
 theorem hCo_smul {F E R : Type} [Field F] [Field E] [Algebra F E] [CommRing R] [Algebra F R] (σ : E →ₐ[F] E)
     {d n : ℕ} (b : Module.Basis (Fin d) F E) (r : R) (X X' : HermR R σ n)
     (h : X'.1 = algebraMap R (R ⊗[F] E) r • X.1) (i : Idx n d) : hCo R σ b X' i = r * hCo R σ b X i := by

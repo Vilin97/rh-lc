@@ -41,10 +41,12 @@ theorem exists_of_conj_eq {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {x : E} (hx 
     exact this.symm
 
 
+variable (F E) in
 def infPart : AE F E →+* Ainf F ⊗[F] E :=
   (Algebra.TensorProduct.map (AlgHom.fst F (Ainf F) (Af F) : AF F →ₐ[F] Ainf F) (AlgHom.id F E)).toRingHom
 
 
+variable (F E) in
 def swapAf : Af F ⊗[F] E →+* E ⊗[F] Af F := (Algebra.TensorProduct.comm F (Af F) E).toRingEquiv.toRingHom
 
 def Comp (Φ : AE F E →+* FiniteAdeleRing (𝓞 E) E) : Prop :=

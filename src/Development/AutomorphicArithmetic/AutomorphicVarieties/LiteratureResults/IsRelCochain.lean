@@ -40,6 +40,7 @@ def IsCuspFn (φ : Sm E a) : Prop :=
   IsLevelFn U Ξ φ ∧ IsCuspidal φ.1 ∧ ∀ l : List (Lie E a), IsSqIntMod ((l.map (lie E a)).prod φ)
 
 
+variable {U} in
 structure IsRelCochain (P : Sm E a → Prop) {q : ℕ} (ω : Herm E a [⋀^Fin q]→ₗ[ℝ] (Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ))) : Prop where
   equiv : IsCochain (smK Ξ) ω
   basic : ∀ (X : Fin q → Herm E a) (i : Fin q), (X i).1 = 1 → ω X = 0

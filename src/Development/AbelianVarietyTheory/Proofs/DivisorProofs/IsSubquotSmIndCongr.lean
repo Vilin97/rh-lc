@@ -153,6 +153,10 @@ private theorem borelGL_deltaHalf_eq_smGL_deltaHalf_leviTorus (k : Type) [Field 
       (borelGL_U_eq_unipRad_points k n) _ _ _ (borelGL_s_eq_leviEmb_points_leviTorus k n _)]
 
 
+open MeasureTheory ValuativeRel in
+open scoped NNReal in
+variable (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  (n : Type) [Fintype n] [DecidableEq n] [LinearOrder n] in
 theorem _root_.GlobalTheory.LGrp.SatakeCompare.isSubquot_ps_iff {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL n k) V) (α : n → ℂˣ) :
     _root_.GlobalTheory.LGrp.IsSubquot π (_root_.GlobalTheory.LGrp.psGL k α) ↔
@@ -171,6 +175,10 @@ theorem _root_.GlobalTheory.LGrp.SatakeCompare.isSubquot_ps_iff {V : Type} [AddC
     _root_.GlobalTheory.LGrp.unrChar_eq]
 
 
+open MeasureTheory ValuativeRel in
+open scoped NNReal in
+variable (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  (n : Type) [Fintype n] [DecidableEq n] [LinearOrder n] in
 theorem _root_.GlobalTheory.LGrp.SatakeCompare.hasSatakeGL_iff : ∀ (k : Type) [Field k] [ValuativeRel k]
     [TopologicalSpace k] [IsNonarchimedeanLocalField k] (n V : Type) [Fintype n] [DecidableEq n]
     [LinearOrder n] [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL n k) V)

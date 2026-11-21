@@ -17,6 +17,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Number
 variable {eps : ℝ}
 
 
+set_option maxHeartbeats 800000 in
 def gd (Fm : FamP eps) (c : ∀ x (i : Fm.Ix x), CutD (Fm.D x i)) : FamP eps :=
   { Fm with
     D := fun x i => (raw (c x i)).rec'
@@ -37,6 +38,7 @@ theorem twGood_gd (Fm : FamP eps) (c : ∀ x (i : Fm.Ix x), CutD (Fm.D x i)) (h 
   exact ⟨x0, fun x hx0 hx i => twAt_tr (c x i) (h x hx0 hx i)⟩
 
 
+open Classical in
 theorem linkN_of_gd (Fm : FamP eps) (c : ∀ x (i : Fm.Ix x), CutD (Fm.D x i))
     (hc : ∀ x, Fm.x1 < x → ∀ i, (c x i).Good ∧ GlobalTheory.NLink.MultLe (Fm.L x i) ∧ TwistedPlaces.adm3 (Fm.L x i))
     (h : LinkN (gd Fm c)) : LinkN Fm := by

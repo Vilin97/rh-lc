@@ -43,11 +43,13 @@ theorem apply_eq_of_mulVec (h : GL ι 𝔸[k]) (v : ι → 𝔸[k]) (j : ι) :
   simp only [Matrix.mulVec, dotProduct]
 
 
+omit [DecidableEq ι] in
 theorem summable_prod_coord {f : k → ℝ} (hf : Summable f) (h0 : ∀ a, 0 ≤ f a) :
     Summable fun ξ : ι → k ↦ ∏ i, f (ξ i) :=
   _root_.UpperTheory.Reformulated.B.Yva3.main hf h0
 
 
+omit [DecidableEq ι] in
 theorem decay_real_bound {A B Z t κ : ℝ} {X : ι → ℝ} {m n r : ℕ} (hA : 0 ≤ A) (hB : 0 < B)
     (hX : ∀ j, 0 < X j) (ht : 0 < t) (hκ : 0 < κ) (hZ : 0 < Z) (h₀ : ∀ j, X j / B ≤ Z)
     (h₂ : t * κ ≤ Z ^ n) :
@@ -89,6 +91,7 @@ theorem infC_sum {α : Type} (s : Finset α) (f : α → 𝔸[k]) :
   | insert a s ha ih => rw [Finset.sum_insert ha, Finset.sum_insert ha, infC_add, ih]
 
 
+open scoped Classical in
 theorem exists_decay_boundC_tensor (w : InfinitePlace k) (φ : 𝓢(ι → mixedSpace k, ℂ))
     (I : (FractionalIdeal (𝓞 k)⁰ k)ˣ) (b : ι → 𝔸ᶠ[k]) {C : Set (GL ι 𝔸[k])}
     (hC : IsCompact C) (r : ℕ) :

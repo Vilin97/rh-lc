@@ -28,6 +28,7 @@ end Boxes
 section SchwartzBruhat
 
 
+variable (F ι) in
 def schwartzBruhatPi : Submodule ℂ ((ι → F) → ℂ) where
   carrier := {f | IsLocallyConstant f ∧ HasCompactSupport f}
   add_mem' hf hg := ⟨hf.1.add hg.1, hf.2.add hg.2⟩

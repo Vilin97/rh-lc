@@ -45,6 +45,7 @@ theorem logWeight_nonneg (w : D.what₂.places.Pl) : 0 ≤ SizeData₂.lwP w := 
   positivity
 
 
+open Classical in
 theorem etaSum_eq_sum (L : SizeData₂ D) (j : ℕ) :
     etaSum L j = ∑ l ∈ (L.supp.filter (fun w => D.what₂.muAt w ≠ D.what₂.mu0)).image
       (fun w => D.what₂.places.resChar w), etaAt L j l := by
@@ -557,6 +558,7 @@ theorem lamB_nonneg (L : SizeData₂ D) (tb : Tab L) {C : ℝ} (hC : 0 < C) {l :
     linarith
 
 
+open Classical in
 theorem etaSum_le (L : SizeData₂ D) (tb : Tab L) (C : ℝ) (P : ParameterChoice' D L) (hA : AdmT L tb C P)
     (_hg2 : ∀ l ∈ gset D, l ≠ 2) (hsumm : Summable (vvTerm D)) {j : ℕ} (hj : j ∈ SizeData₂.lifts D) :
     etaSum L j ≤ (L.dZ0 j : ℝ) * (6 + UpperTheory.KStar.nuBudget D + Real.log (Formalism.MainNotions.N.hE D.host : ℝ) + Real.log (D.what₂.restRowsFiniteGroupCard : ℝ) +

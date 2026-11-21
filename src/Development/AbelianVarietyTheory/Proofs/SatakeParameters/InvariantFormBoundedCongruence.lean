@@ -136,6 +136,7 @@ theorem ipA_eq {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type}
   rfl
 
 
+set_option maxHeartbeats 1000000 in
 theorem inner_eq {D : D7} {cf : CharFrame D} {nch : NChoice D} {tp : TupTied D cf nch} (X : GlobalTheory.NJoin.RealAt D cf nch tp)
     (μ : D.what₂.Tup) (hμ : Used0 D μ) (j : Fin D.R.m) :
     ∃ Fx : D.what₂.Mt μ (j.1 + 1) → (Bridge.Gf (Vc D j) → (X.R.cV j).W),
@@ -174,6 +175,7 @@ namespace GlobalTheory.VFormCls
 open Formalism.IndefR Formalism.L2.Theta
 
 
+set_option maxHeartbeats 4000000 in
 theorem frame_bij {D : D7} {V : TH.HSp D} {n : ℕ} (P : principalLevelFrame.RowPsi V n) :
     Function.Bijective ((finHom V).rangeRestrict.comp P.ψ) := by
   obtain ⟨hsplit, -, hinter, -⟩ := GlobalTheory.UnitarySplit.real_finite_split D V

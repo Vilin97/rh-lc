@@ -27,6 +27,8 @@ variable {D : D7} {V W : HSp D} {S' : D.what₂.Tau → SPar} {ψ : AddChar (AF 
   {ω : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)} {μ : Measure (WO V W)} {𝓕 : Set (WO V W)}
 
 
+open Classical in
+set_option maxHeartbeats 4000000 in
 theorem pair_of_ext (θ : InfFam D) (hθ : IsInfFam θ) (M : DSModel W S') (hLS : LowSm M) (hLI : GlobalTheory.IndefiniteRowSideFullHecke.HolomorphicLowestType.LowIrr M)
     (hω : IsWeilDatumO ψ V W χV χW ω) (hcv : IsCovolOne (ratL W V) μ 𝓕)
     (J : MultilinearMap ℂ (fun ρ => lowT M ρ) (WO V W → ℂ)) (hJ : ∀ v, IsThetaFunO ψ V W (J v))
@@ -178,6 +180,7 @@ end GlobalTheory.RawLift.FockPair
 namespace GlobalTheory.RawLift.FockPair
 
 
+open GlobalTheory.DefLift GlobalTheory.RawLift Formalism.IndefR.FWT in
 theorem coef_one_vector : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D) (χS χT : (AE D)ˣ →* Circle) (om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)), IsInfFam θ → IsWeilDatumO ψ S T χS χT om → ∀ (Sp : D.what₂.Tau → SPar) (M : DSModel T Sp), GlobalTheory.HolDict.HolShape M → (∃ wt, GlobalTheory.HolDict.WtIs M wt) → ∀ (μ : Measure (WO S T)) (𝓧 : Set (WO S T)), IsCovolOne (ratL T S) μ 𝓧 → ∀ c : CoefA S, c.Is → ∀ pt : PolF D T.rank S.rank →ₗ[ℂ] (WO S T → ℂ), (∀ P, IsThetaFunO ψ S T (pt P)) → ∀ (Δ : PolF D T.rank S.rank) (io : LowT M →ₗ[ℂ] c.W →ₗ[ℂ] PolF D T.rank S.rank), IsIoW θ M c om (fun P => pt P) Δ io → GlobalTheory.RawLift.FockCoef.Killed om θ M (pt Δ) → ∀ w : c.W, ∃ N : ℂ, ∀ g : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ, (∀ ρ, g ρ ∈ Formalism.QuantumDeterminants.UH (gramAt D T ρ)) → ∀ (e e' : ∀ ρ, lowT M ρ), l2 μ 𝓧 (om (1, realElt θ T g) (pt (io (PiTensorProduct.tprod ℂ e) w))) (pt (io (PiTensorProduct.tprod ℂ e') w)) = N * (∏ ρ, ⟪((e' ρ : M.sm ρ) : M.H ρ), M.rep ρ (g ρ) ((e ρ : M.sm ρ) : M.H ρ)⟫_ℂ) := by
   intro D ψ θ S T χS χT om hθ hom Sp M hM hwt μ 𝓧 hcv c hc pt hpt Δ io hio hΔ w
   obtain ⟨wt, hw⟩ := hwt

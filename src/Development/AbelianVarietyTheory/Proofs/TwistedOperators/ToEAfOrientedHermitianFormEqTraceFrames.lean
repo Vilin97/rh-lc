@@ -31,6 +31,8 @@ theorem hO_eq_trace_mul {D : D7} (S T : HSp D) (k y : WO S T) :
   rw [Finset.sum_comm]
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 800000 in
 theorem toEAf_hO_eq_trace_frames {D : D7} (S T : HSp D) (βS : GL (Fin S.rank) (Datum.EAf D))
     (βT : GL (Fin T.rank) (Datum.EAf D)) (k y : WO S T) :
     toEAf D (hO S T y k) = Matrix.trace (frMapAdj S T βS βT k * frMapO S T βS βT y) := by

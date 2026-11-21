@@ -34,6 +34,7 @@ theorem exists_pairCurry : ∃ e : (⨂[ℂ] p : (Σ _ : α, β), Y p.1 p.2) ≃
     sigmaCurry_tprod (fun p : (Σ _ : α, β) => Y p.1 p.2)⟩
 
 
+omit [Finite α] [Finite β] in
 theorem exists_pairSwap :
     ∃ e : (⨂[ℂ] p : (Σ _ : α, β), Y p.1 p.2) ≃ₗ[ℂ] ⨂[ℂ] q : (Σ _ : β, α), Y q.2 q.1,
     ∀ x : ∀ p : (Σ _ : α, β), Y p.1 p.2,

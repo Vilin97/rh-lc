@@ -157,6 +157,8 @@ lemma isLocallyFraction_locMap {f : A} {d : ℕ} (hf : f ∈ 𝒜 d) (hd : 0 < d
   (toSection hf hd k ⟨z, hz⟩).2
 
 
+set_option backward.isDefEq.respectTransparency.types false in
+open ProjectiveSpectrum in
 lemma exists_section_of_isLocallyFraction_zero {U : Opens (ProjectiveSpectrum.top 𝒜)}
     (t : ∀ x : U, Loc 𝒜 x.1) (ht : (isLocallyFraction 𝒜 0).pred t) :
     ∃ t' : (ProjectiveSpectrum.Proj.structureSheaf 𝒜).obj.obj (op U),

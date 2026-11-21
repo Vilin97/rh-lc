@@ -68,6 +68,7 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotio
   {cX : ExtraC} {ex : Extra D L hT Gi Gl K Yd cX}
 
 
+set_option maxHeartbeats 2000000 in
 theorem divisionRows_pairing_vanishes_of_rational_pairing_law
     (hC : GlobalTheory.Published.DiscreteSeriesCover ∧ GlobalTheory.Published.HarishChandraModules ∧ GlobalTheory.Published.CasselmanWallach ∧ GlobalTheory.Published.HarishChandraFinite ∧
       GlobalTheory.Published.CuspRapidDecay) (x : TwIn ex) (hH : Holds x.R x.F) (hB : Rw.BkLaw D)

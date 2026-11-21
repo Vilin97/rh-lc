@@ -91,6 +91,7 @@ theorem meas_pos [SecondCountableTopology (CxPts p σ)] (ω : VolDens p σ D)
 end GlobalTheory.HSAmp.VolFin
 
 
+open GlobalTheory.HSAmp.VolFin in
 theorem GlobalTheory.HSAmp.volDens_meas_finite_openPos : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegral X]
     (p : X ⟶ Sp k) (D : ℕ), IsArithVar p D → GenSmooth p D → ∀ (σ : k →+* ℂ) (ω : VolDens p σ D),
     IsFiniteMeasure ω.meas ∧ ω.meas.IsOpenPosMeasure := by

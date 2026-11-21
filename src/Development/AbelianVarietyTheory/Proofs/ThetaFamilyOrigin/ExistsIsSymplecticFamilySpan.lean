@@ -101,6 +101,7 @@ theorem exists_isSymplecticFamily_span {R V : Type*} [CommRing R] [AddCommGroup 
         · exact ⟨Sum.inr i.succ, rfl⟩
 
 
+open ReciprocityTheory.ChartRestriction.G.Out in
 theorem exists_stdSymp_zmod {p j g : ℕ} (hp : p.Prime) {V : Type*} [AddCommGroup V] [Module (ZMod (p ^ (j + 1))) V]
     (h₀ : Nat.card V = (p ^ (j + 1)) ^ (2 * g)) (h₁ : Nat.card {x : V // p ^ j • x = 0} = (p ^ j) ^ (2 * g))
     (h₂ : Nat.card {x : V // p • x = 0} = p ^ (2 * g))
@@ -166,6 +167,7 @@ theorem exists_stdSymp_zmod {p j g : ℕ} (hp : p.Prime) {V : Type*} [AddCommGro
       Fin.ext_iff] <;> split_ifs <;> first | omega | simp
 
 
+open ReciprocityTheory.ChartRestriction.G.Out in
 theorem exists_stdSymp_of_pairing {p J g : ℕ} (hp : p.Prime) {G R : Type*} [CommGroup G] [CommRing R] [IsDomain R]
     (hc : ∀ m, Nat.card {x : G // x ^ p ^ m = 1} = (p ^ m) ^ (2 * g)) {ze : Rˣ} (hz : IsPrimitiveRoot ze (p ^ J))
     (W : G → G → Rˣ → Prop) (hW : ∀ x y, x ^ p ^ J = 1 → y ^ p ^ J = 1 → ∃! c, W x y c)

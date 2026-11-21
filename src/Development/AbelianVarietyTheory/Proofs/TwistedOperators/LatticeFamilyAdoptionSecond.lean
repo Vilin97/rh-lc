@@ -89,6 +89,7 @@ variable {O K K'' Fm : Type} [CommRing O] [Field K] [Algebra O K] [IsFractionRin
   [AddCommGroup Fm] [Module K Fm] [Module O Fm] [IsScalarTower O K Fm]
 
 
+variable (O K'') in
 def ext (A : Module.End K Fm) : Module.End K'' (K'' ⊗[O] Fm) :=
   LinearMap.baseChange K'' (A.restrictScalars O)
 

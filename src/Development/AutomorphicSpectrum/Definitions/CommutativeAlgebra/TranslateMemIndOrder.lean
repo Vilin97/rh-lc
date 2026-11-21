@@ -41,6 +41,7 @@ abbrev omega (A : Subalgebra R (T → R)) : Type := (augIdeal A).Cotangent
 
 
 open scoped Classical in
+open Classical in
 noncomputable def dlogChar (A : Subalgebra R (T → R)) (χ : T →* Rˣ) : omega A :=
   if h : (fun t => ((χ t : Rˣ) : R)) ∈ A then
     (augIdeal A).toCotangent ⟨⟨_, h⟩ - 1, by simp [augIdeal, evalAt, RingHom.mem_ker]⟩
@@ -49,6 +50,7 @@ noncomputable def dlogChar (A : Subalgebra R (T → R)) (χ : T →* Rˣ) : omeg
 namespace OrderApi
 
 
+omit [CommGroup T] in
 theorem mul_mem_prodSpan {A : Subalgebra R (T → R)} {a b : T → R} (ha : a ∈ A) (hb : b ∈ A) :
     (fun z : T × T => a z.1 * b z.2) ∈ prodSpan A :=
   Submodule.subset_span ⟨a, ha, b, hb, rfl⟩
@@ -57,6 +59,7 @@ theorem mem_indOrder (ι : H →* T) (A : Subalgebra R (H → R)) (f : T → R) 
     f ∈ indOrder ι A ↔ ∀ t, (fun h => f (t * ι h)) ∈ A := Iff.rfl
 
 
+omit [CommGroup T] in
 theorem comp_mem_extOrder {R' : Type} [CommRing R'] (φ : R →+* R') {A : Subalgebra R (T → R)} {f : T → R}
     (hf : f ∈ A) : (fun t => φ (f t)) ∈ extOrder φ A :=
   Algebra.subset_adjoin ⟨f, hf, rfl⟩

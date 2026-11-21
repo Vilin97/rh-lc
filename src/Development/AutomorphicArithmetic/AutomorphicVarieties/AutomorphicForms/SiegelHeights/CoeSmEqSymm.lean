@@ -52,6 +52,7 @@ theorem uAction_ι_smEq (X : TR.Lie E a) (φ : TR.Sm E a) :
   rw [← smEq_uTR, uTR_ι]
 
 
+open Classical in
 def genU (v : InfinitePlace E) (i j : Fin a) : UEnv E a :=
   UniversalEnvelopingAlgebra.ι ℝ (lieEq E a (TR.toL (Matrix.single i j (Pi.single v 1))))
 

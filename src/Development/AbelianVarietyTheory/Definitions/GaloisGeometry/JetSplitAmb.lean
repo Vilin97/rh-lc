@@ -29,11 +29,13 @@ def JetSplitAmb : Prop :=
           ‖(p : ℂ_[p])‖ ^ (Fintype.card X.Tau * b * a) ≤ 1
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.BadPrimesPeriodBound in
 def TiesAt (D : D7) (EX : ErrX D) (Dx : DivX D) (μ : D.what₂.Tup) : Prop :=
   ∃ (Ch : Chars (recFields D) (recPrimes EX) D.R.m) (mu0 : _) (eta : _) (sel : _) (δ : ℂ) (B : Base D D.host.ccK δ) (χ : _) (cD : _),
     HostTie EX ∧ CharTie Ch mu0 eta sel ∧ AnTie D δ χ cD ∧ ∀ u, ChainTie Ch sel Dx mu0 (ambOf (recSeam D) B χ cD) u μ
 
 
+open GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.Mem.Col2.KerRat in
 def RowPin {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X) (h : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l)) (a : (I.rec7 l Z).what₂.Tup) : Prop :=
   ∀ u : B.Word, ∃ e : (I.per l u a).Mt ≃ₗ[ℂ] (I.rec7 l Z).what₂.Amb a,
     (a = (I.rec7 l Z).what₂.mu0 → HEq e ((I.rec7 l Z).eMt u)) ∧ (a ≠ (I.rec7 l Z).what₂.mu0 → e = (I.rec7 l Z).eMtTw u a) ∧

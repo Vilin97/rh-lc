@@ -32,6 +32,7 @@ private theorem integrable_mul_of_bounded {α : Type*} [MeasurableSpace α] {ν 
   exact mul_le_mul_of_nonneg_left (hb a) (norm_nonneg _)
 
 
+omit [Group G] [IsTopologicalGroup G] [SecondCountableTopology G] [CompleteSpace H] in
 theorem integrable_mul_coeff (hn : ∀ g y, ‖π g y‖ = ‖y‖) (hc : ∀ y, Continuous fun g => π g y)
     {e : G → ℂ} (he : Integrable e μ) (x y : H) :
     Integrable (fun g => e g * ⟪x, π g y⟫_ℂ) μ := by
@@ -41,6 +42,7 @@ theorem integrable_mul_coeff (hn : ∀ g y, ‖π g y‖ = ‖y‖) (hc : ∀ y,
     _ = ‖x‖ * ‖y‖ := by rw [hn]
 
 
+omit [Group G] [IsTopologicalGroup G] [SecondCountableTopology G] [TopologicalSpace G] [BorelSpace G] in
 theorem IsWeakInt.inner_comp {e : G → ℂ} {T : H →L[ℂ] H} (h : IsWeakInt μ π e T) (A : H →L[ℂ] H)
     (x y : H) : ⟪x, A (T y)⟫_ℂ = ∫ g, e g * ⟪x, A (π g y)⟫_ℂ ∂μ := by
   rw [← ContinuousLinearMap.adjoint_inner_left, h.2]

@@ -36,6 +36,7 @@ variable {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D : DegData R I}
   (F : Type) [Field F] [Algebra (FractionRing R) F]
 
 
+open GlobalTheory.FieldBaseChange GlobalTheory.ExpFieldCompare in
 theorem exists_expandsF_pow {w w' : W0 U} (hw : w.IsGen) (hw' : w'.IsGen) : ∃ d : F, d ≠ 0 ∧
     ∀ (k : ℕ) t s, U.ExpandsF F k w' t s → U.ExpandsF F k w t (d ^ k • s) := by
   obtain ⟨u, hu⟩ := exists_isoVal_ratio A.isLB U.LG.isLB hw' hw
@@ -64,12 +65,14 @@ theorem exists_expandsF_pow {w w' : W0 U} (hw : w.IsGen) (hw' : w'.IsGen) : ∃ 
     zpow_natCast (gm _ _ _ _), Units.val_pow_eq_pow_val, _root_.mul_assoc]
 
 
+variable {F} in
 theorem valAt_congr {k : ℕ} {t : SecA A F k} {x : TFK (R := R) F ⟶ A.A} {e e' : FrAt x} {c : F}
     (h : ∀ z J, Good A.L z J → val e (𝟙 _) z J = val e' (𝟙 _) z J) (H : ValAt t x e c) : ValAt t x e' c := fun z J hJ => by
   refine (H z J hJ).trans ?_
   rw [GlobalTheory.FrameMove.val_powFrame, GlobalTheory.FrameMove.val_powFrame, h z J hJ]
 
 
+variable {F} in
 theorem sec_eq_of_valAt (hT : SecTwistSt) {t t' : SecA A F 1} {x : TFK (R := R) F ⟶ A.A} {e : FrAt x} {c : F} (hc : c ≠ 0)
     (H : ValAt t x e c) (H' : ValAt t' x e c) : t = t' := by
   obtain ⟨b, hb⟩ := GlobalTheory.PowBasis.exists_basis_pow_field hT R A F 1 le_rfl
@@ -118,6 +121,7 @@ theorem coef_smul {k : ℕ} (g : GtPtF D.toPre F) {w : Frm D.toPre F k g.b} (hw 
   rwa [add_zero, h₂, add_zero] at this
 
 
+variable {U F} in
 theorem liesOver_change {w₀ w₀' : W0 U} {d : F}
     (hd : ∀ (k : ℕ) t s, U.ExpandsF F k w₀ t s → U.ExpandsF F k w₀' t (d ^ k • s)) {g : GtPtF D.toPre F}
     {w w' : Frm D.toPre F 1 g.b} (hw' : w'.IsGen)

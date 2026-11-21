@@ -17,6 +17,8 @@ variable (F Ω : Type) [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarc
   [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension F Ω]
 
 
+omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [ValuativeRel Ω]
+  [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension F Ω] in
 theorem brauerInflation_unitsInflationOfLE {E E' : IntermediateField F Ω} (h : E ≤ E')
     [FiniteDimensional F E] [Normal F E] [FiniteDimensional F E'] [Normal F E']
     (y : groupCohomology (galUnits F E) 2) :

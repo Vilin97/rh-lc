@@ -269,6 +269,7 @@ variable {Ok O' : Type} [CommRing Ok] [CommRing O'] [Algebra O Ok] [Algebra O O'
   [IsScalarTower O Ok O']
 
 
+variable (O W Ok O') in
 abbrev rho : Ok ⊗[O] W →ₗ[O] O' ⊗[O] W :=
   LinearMap.rTensor W (IsScalarTower.toAlgHom O Ok O').toLinearMap
 

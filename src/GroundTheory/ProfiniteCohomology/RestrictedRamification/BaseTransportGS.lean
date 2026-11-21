@@ -33,6 +33,7 @@ def zmodRepResIso (n : ℕ) : Rep.res θ.toMulEquiv.toMonoidHom (zmodRep.{u} G' 
 
 
 
+omit [IsTopologicalGroup G] [IsTopologicalGroup G'] in
 theorem zmodMulPairingRight_res (n : ℕ) {D' : Rep.{u} (ULift.{u} ℤ) G'} {D : Rep.{u} (ULift.{u} ℤ) G}
     (hD' : ∀ d : D', n • d = 0) (hD : ∀ d : D, n • d = 0) (f : Rep.res θ.toMulEquiv.toMonoidHom D' ⟶ D) :
     (Rep.resFunctor θ.toMulEquiv.toMonoidHom).map (zmodMulPairingRight n D' hD') ≫ f =
@@ -72,6 +73,7 @@ theorem gsMackeyEmbeddings_mackeyPlaceEquiv
   Equiv.piCongrLeft_apply_apply _ _ _ _
 
 
+omit [NumberField F] [Algebra F Ω] [IsScalarTower F L Ω] [IsGalois F Ω] in
 theorem gsFinFamily_apply_of_eq {ιs' : ∀ w : (placesOver S : Set (HeightOneSpectrum (𝓞 L))),
       Ω →ₐ[L] AlgebraicClosure ((w : HeightOneSpectrum (𝓞 L)).adicCompletion L)}
     {w : (placesOver S : Set (HeightOneSpectrum (𝓞 L)))}

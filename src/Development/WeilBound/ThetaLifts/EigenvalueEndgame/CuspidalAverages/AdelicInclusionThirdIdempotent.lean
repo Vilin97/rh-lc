@@ -21,6 +21,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {W : Spc F E d} {u u' : Matrix (Fin d) (Fin j) E}
 
 
+variable (σ) in
 abbrev cR : AE F E →+* AE F E := (cA σ : AE F E →+* AE F E)
 
 theorem incM_transpose_cuspidal_averages {a b : Type} (A : Matrix a b E) : incM F Aᵀ = (incM F A)ᵀ := rfl

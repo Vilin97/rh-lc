@@ -66,6 +66,7 @@ noncomputable def cosetInd (R : ℕ) (q : Matrix κ ι ℚ ⧸ perSub ℚ κ ι 
   fun x => if (x : Matrix κ ι ℚ ⧸ perSub ℚ κ ι R) = q then 1 else 0
 
 
+omit [DecidableEq ι] [Fintype κ] [Fintype ι] in
 theorem hasLevel_cosetInd_zero (R : ℕ) : HasLevel R (cosetInd (κ := κ) (ι := ι) R 0) := by
   refine ⟨fun x hx => ?_, fun x y hy => ?_⟩
   · have h : (x : Matrix κ ι ℚ ⧸ perSub ℚ κ ι R) = 0 := by
@@ -77,6 +78,7 @@ theorem hasLevel_cosetInd_zero (R : ℕ) : HasLevel R (cosetInd (κ := κ) (ι :
     simp only [cosetInd, QuotientAddGroup.mk_add, h, add_zero]
 
 
+omit [DecidableEq ι] in
 theorem heisS_cosetInd_zero (R : ℕ) (q : Matrix κ ι ℚ ⧸ perSub ℚ κ ι R) :
     heisS 0 q.out (cosetInd R 0) = cosetInd R q := by
   funext x
@@ -114,6 +116,7 @@ theorem heisS_cosetInd_char {R : ℕ} (hR : 0 < R) (q : Matrix κ ι ℚ ⧸ per
   · simp [cosetInd, hx]
 
 
+omit [DecidableEq ι] in
 theorem eq_sum_cosetInd {R : ℕ} (hR : 0 < R) {φ : Matrix κ ι ℚ → ℂ} (hφ : HasLevel R φ) :
     φ = ∑ q ∈ (IpPos.classes_finite_card (K := ℚ) (κ := κ) (ι := ι) hR).1.toFinset,
       φ q.out • cosetInd R q := by
@@ -128,6 +131,7 @@ theorem eq_sum_cosetInd {R : ℕ} (hR : 0 < R) {φ : Matrix κ ι ℚ → ℂ} (
     exact hφ.1 _ (by rwa [IpPos.apply_out_mk hφ x])
 
 
+omit [DecidableEq ι] in
 theorem map_sum_of_isSB {α : Type} (m : (Matrix κ ι ℚ → ℂ) → ℂ) (h0 : m 0 = 0)
     (hadd : ∀ φ ψ, IsSB φ → IsSB ψ → m (φ + ψ) = m φ + m ψ) (f : α → Matrix κ ι ℚ → ℂ)
     (hf : ∀ a, IsSB (f a)) (s : Finset α) :
@@ -271,6 +275,7 @@ end Main
 end GlobalTheory.SW.DblZero
 
 
+open GlobalTheory.SW.DblZero in
 theorem GlobalTheory.SW.dbl_zero_and_norm : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (X : Data E r) (g : ℕ) (bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ) (idx : Fin g ≃ X.Ψ × Fin r) (n : ℕ), IsSympl X bas → Even n → ∃ a : ℂ, a ≠ 0 ∧ ∃ b : ℝ, 0 < b ∧ ∀ φ₁ φ₂ : TF n g, IsSB φ₁ → IsSB φ₂ → dbl X bas idx φ₁ φ₂ 0 = a * ip φ₁ φ₂ ∧ ip (dbl X bas idx φ₁ φ₂) (dbl X bas idx φ₁ φ₂) = b * (ip φ₁ φ₁ * ip φ₂ φ₂) := by
   intro E _ _ _ r X g bas idx n hs hn
   have sb := fun φ ψ h k => (GlobalTheory.T.doubledHermitianTestFunction_spec E r X g bas idx n hs hn φ ψ h k).1

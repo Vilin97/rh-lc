@@ -228,6 +228,7 @@ private lemma simpleSum_read_eq_mul_simpleSum {k : Type} [Field k] (t : Type) [F
   · simp
 
 
+open MeasureTheory ValuativeRel Matrix Topology in
 theorem _root_.GlobalTheory.FirstVertexFrame.firstVertex_typeChain : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] (ψ : AddChar k Circle) (ϖ : kˣ) (s : ℕ) (t : Type) [Fintype t] [DecidableEq t]
     (κ : ℕ) (P : _root_.GlobalTheory.StepData.TypeDatum k (Fin κ ⊕ Fin (s + 1))),

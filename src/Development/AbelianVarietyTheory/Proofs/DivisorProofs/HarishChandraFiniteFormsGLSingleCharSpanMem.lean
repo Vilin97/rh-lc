@@ -124,6 +124,7 @@ theorem foldr_zero (χ : Module.End ℂ (Sm E a) → ℂ) (zs : List (Module.End
 end GlobalTheory.HCF.FormsSub
 
 
+open GlobalTheory.HCF.FormsSub in
 theorem GlobalTheory.HCF.formsGL_single_span : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
     (L : Subgroup (GL (Fin a) (Af E))) (W : Submodule ℂ (Kinf E a → ℂ)) (χ : Module.End ℂ (Sm E a) → ℂ) (N : ℕ),
     ∀ φ ∈ Submodule.span ℂ (formsGL E a L W {χ} N), φ ∈ formsGL E a L W {χ} N := by

@@ -29,6 +29,7 @@ namespace GlobalTheory.UnramCharVals
 attribute [local instance] GlobalTheory.TorusExt.gtGroup
 
 
+open ReciprocityTheory.ChartRestriction.G.DVR in
 theorem tor_charVal_pow : ∀ (R : Type) [CommRing R] [IsDomain R] (D : DegPre R) (F : Type) [Field F] [Algebra (FractionRing R) F] (t : GtPtF D F) (k : ℕ), t.b = 1 → (letI := GlobalTheory.TorusExt.gtGroup D F; k • t = 0) → ∀ (J : ((TF (R := R) F).left ⟶ D.P.A.left) → D.P.L.ι), Good D.P.L (Z := (TF (R := R) F).left) (closedPoint F) J → ∀ χ, (GlobalTheory.BXOf.sig F (GlobalTheory.TorusExt.charVal t χ (closedPoint F) J) : F) ^ k = 1 := by
   intro R _ _ D F _ _ t k h1 hk J hJ χ
   letI := GlobalTheory.TorusExt.gtGroup D F

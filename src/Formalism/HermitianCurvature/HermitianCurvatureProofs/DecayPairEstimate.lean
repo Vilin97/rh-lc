@@ -69,6 +69,7 @@ theorem dpMul_comm (l : Fin r) {W : Module.End ℂ (RadSp k r z z' π π')} {m :
   rw [dpMul_isMulOp l, hW, hW, dpMul_isMulOp l, smul_comm]
 
 
+variable (k r z z' π π') in
 def dpSub (μ : Measure (Mt k r)) [SFinite μ] (hμ : B.IsHaarOn (Glev k r (Fin.last r)) μ) (l : Fin r) :
     Submodule ℂ (RadSp k r z z' π π') :=
   squareIntegrableSmoothSubmoduleGL k r z z' π π' μ hμ ⊓ (squareIntegrableSmoothSubmoduleGL k r z z' π π' μ hμ).comap (dpMul l)

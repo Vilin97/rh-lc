@@ -355,6 +355,7 @@ theorem nu_ball (hD : WbData k r z z' μW μW' a a' μsec) :
 end ZetaZeros
 
 
+open ZetaZeros in
 theorem rhsHaar_of (hInv : RhsWInv) : RhsHaar := by
   intro k r z z' μW μW' a a' μsec hD
   have := hD.haarW.1

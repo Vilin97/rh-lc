@@ -28,6 +28,7 @@ namespace GlobalTheory.DnCusp
 variable {D : D7}
 
 
+open GlobalTheory.Size in
 theorem isCuspFun_of_mem_cusp (N : GlobalTheory.Grid.Node D) (θ : InfFam D) {Φ : N.Maps} (hΦ : Φ ∈ N.Cusp θ) (v : SmT N.M) :
     IsCuspFun N.V (Φ v) := by
   obtain ⟨U, hU, rfl⟩ := Submodule.mem_map.1 hΦ

@@ -129,6 +129,7 @@ variable {D : D7} {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.
   {c : Coeff l} {σ : c.F →+* ℂ} {r : ℕ}
 
 
+open Classical in
 def DictSpec (U : Unf Xo c σ r) (V : HSp D) (hr : V.rank = r)
     (ι : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E)) {g : ℕ} (e : Fin g ≃ Σ τ : D.host.E →+* ℂ, Fin (Dw.mult τ))
     (F : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) (fun j => relab c σ (e j).1))

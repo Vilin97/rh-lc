@@ -87,6 +87,7 @@ lemma re_nonneg_of_trace (s : E)
   linarith
 
 
+omit [IsCMField E] in
 lemma cross_eq {Y : Type} [AddCommGroup Y] [Module (𝓞 E) Y] [Module.Finite ℤ Y]
     (hY : Module.finrank (𝓞 E) Y = 1) (η η' : Module.Dual ℤ Y) (x x' : Y) :
     pairE (E := E) η x * pairE η' x' = pairE η x' * pairE η' x := by
@@ -161,6 +162,7 @@ lemma pairE_eq (t : La) (η : Module.Dual ℤ Y) (ht : ∀ v, -EF t v = η (y v)
   congr 1; ring
 
 
+include iso in
 theorem rank_one [Module.Finite ℤ Y] (hY : Module.finrank (𝓞 E) Y = 1) (hκ : X.κ0 = 2 * X.ξ0)
     (hy : Function.Surjective y) (be : LinearMap.BilinForm ℤ Y) (hsym : ∀ a b, be a b = be b a)
     (hpos : ∀ a, a ≠ 0 → 0 < be a a) (nn : La →ₗ[𝓞 E] La) (hnn : ∀ v v', -EF (nn v) v' = be (y v) (y v'))

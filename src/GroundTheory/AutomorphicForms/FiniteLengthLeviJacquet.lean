@@ -239,6 +239,7 @@ theorem Refines.trans {β γ δ : Fin n → ℕ} (h₁ : Refines β γ) (h₂ : 
   fun i j h => h₂ i j (h₁ i j h)
 
 
+omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
 theorem eq_one_of_mem_leviUnipotent_self (u : leviUnipotent F n β β) :
     ((u : levi F n β) : GL (Fin n) F) = 1 := by
   have hu := mem_unipotentRadical.1 (Subgroup.mem_subgroupOf.1 u.2)
@@ -250,6 +251,7 @@ theorem eq_one_of_mem_leviUnipotent_self (u : leviUnipotent F n β β) :
   · rw [hl i j hij, Units.val_one, one_apply_ne fun e => hij (by rw [e])]
 
 
+omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
 theorem nontrivial_leviJacquetModule_self {U : Type*} [AddCommGroup U] [Module ℂ U]
     [Nontrivial U] (ρ : Representation ℂ (levi F n β) U) :
     Nontrivial (LeviJacquetModule β β ρ) := by
@@ -264,6 +266,7 @@ theorem nontrivial_leviJacquetModule_self {U : Type*} [AddCommGroup U] [Module �
   exact (Submodule.mem_bot ℂ).1 (hle hmem)
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_embedding_leviParabolicInd {U : Type u} [AddCommGroup U] [Module ℂ U]
     {ρ : Representation ℂ (levi F n β) U} [ρ.IsIrreducible] (hρ : IsSmooth ρ) :
     ∃ (γ : Fin n → ℕ) (_ : Refines β γ) (W : Type u) (_ : AddCommGroup W) (_ : Module ℂ W)

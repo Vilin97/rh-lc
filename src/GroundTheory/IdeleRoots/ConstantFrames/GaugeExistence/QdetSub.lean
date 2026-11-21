@@ -79,6 +79,7 @@ theorem natDegree_prod_ne_one {n : ℕ} (E : Fin n → Fin n → A) {σ : Equiv.
   omega
 
 
+omit [Algebra ℂ A] in
 theorem prod_linear (m : ℕ) (c : Fin m → A) :
     (List.ofFn fun k : Fin m => X + C (c k)).prod.natDegree ≤ m ∧
       (List.ofFn fun k : Fin m => X + C (c k)).prod.coeff m = 1 ∧

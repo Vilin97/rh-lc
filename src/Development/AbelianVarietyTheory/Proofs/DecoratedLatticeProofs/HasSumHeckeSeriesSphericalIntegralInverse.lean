@@ -104,6 +104,9 @@ private lemma ord_det_eq_zero_of_mem_KO {x : GL (Fin n) k}
   simpa using this
 
 
+open MeasureTheory ValuativeRel in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  {n : ℕ} in
 theorem _root_.GlobalTheory.HeckeDual.hasSum_dual : ∀ (k : Type) [Field k] [ValuativeRel k]
     [TopologicalSpace k] [IsNonarchimedeanLocalField k] (n : ℕ) (γ : Fin n → ℂ)
     (φ : GL (Fin n) k → ℂ), _root_.GlobalTheory.SatakeBound.IsBorelSph k γ φ → (∀ i, γ i ≠ 0) → ∀ X : ℂ,

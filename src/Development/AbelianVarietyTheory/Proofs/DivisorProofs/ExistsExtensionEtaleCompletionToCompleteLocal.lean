@@ -15,6 +15,7 @@ variable {O S : Type} [CommRing O] [IsLocalRing O] [IsNoetherianRing O] [CommRin
   [IsNoetherianRing S] [Algebra O S]
 
 
+omit [IsNoetherianRing O] in
 theorem finite_quotient (hm : (maximalIdeal O).map (algebraMap O S) = maximalIdeal S)
     [Module.Finite O (S ⧸ maximalIdeal S)] (n : ℕ) :
     Module.Finite O (S ⧸ (maximalIdeal O ^ (n + 1)).map (algebraMap O S)) := by
@@ -28,6 +29,7 @@ theorem finite_quotient (hm : (maximalIdeal O).map (algebraMap O S) = maximalIde
   exact mem_nilradical.2 ⟨n + 1, by rw [← map_pow, Ideal.Quotient.eq_zero_iff_mem]; exact Ideal.pow_mem_pow hx' _⟩
 
 
+omit [IsNoetherianRing O] in
 theorem formallyUnramified_quotient (hm : (maximalIdeal O).map (algebraMap O S) = maximalIdeal S)
     [Module.Finite O (S ⧸ maximalIdeal S)] [Algebra.FormallyUnramified O (S ⧸ maximalIdeal S)] (n : ℕ) :
     Algebra.FormallyUnramified O (S ⧸ (maximalIdeal O ^ (n + 1)).map (algebraMap O S)) := by

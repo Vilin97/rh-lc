@@ -14,6 +14,9 @@ variable {X : Type} [TopologicalSpace X] [T2Space X] [LocallyCompactSpace X]
   [TotallyDisconnectedSpace X]
 
 
+open Matrix Topology in
+variable {X : Type} [TopologicalSpace X] [T2Space X] [LocallyCompactSpace X]
+  [TotallyDisconnectedSpace X] in
 theorem _root_.GlobalTheory.SBExtend.exists_isCompact_isClopen_between {K W : Set X} (hK : IsCompact K)
     (hW : IsOpen W) (hKW : K ⊆ W) : ∃ V : Set X, IsCompact V ∧ IsClopen V ∧ K ⊆ V ∧ V ⊆ W := by
   have hB := loc_compact_Haus_tot_disc_of_zero_dim (H := X)
@@ -30,6 +33,10 @@ theorem _root_.GlobalTheory.SBExtend.exists_isCompact_isClopen_between {K W : Se
     isClopen_biUnion_finset fun x _ => (hU x x.2).1, ht, Set.iUnion₂_subset fun x _ => hUW x x.2⟩
 
 
+open Matrix Topology in
+variable {X : Type} [TopologicalSpace X] [T2Space X] [LocallyCompactSpace X]
+  [TotallyDisconnectedSpace X] in
+omit [LocallyCompactSpace X] [TotallyDisconnectedSpace X] in
 theorem _root_.GlobalTheory.SBExtend.indicator_mem_SB {V : Set X} (hc : IsCompact V)
     (hV : IsClopen V) : (V.indicator fun _ => (1 : ℂ)) ∈ _root_.GlobalTheory.SplitWeil.SB X := by
   show IsLocallyConstant _ ∧ HasCompactSupport _

@@ -28,6 +28,7 @@ variable {R G M : Type} [CommRing R] [Group G] [TopologicalSpace G] [IsTopologic
   [TopologicalSpace M] [IsTopologicalAddGroup M] [ContinuousConstSMul R M] [DiscreteTopology M]
 
 
+omit [IsTopologicalAddGroup M] [DiscreteTopology M] in
 instance continuousConstSMul_sub (N : Submodule R M) : ContinuousConstSMul R N :=
   ⟨fun c => (continuous_subtype_val.const_smul c).subtype_mk _⟩
 
@@ -156,6 +157,7 @@ private theorem exists_normal_conj_inclusion {K : Type} [Group K] {U' U : Subgro
   simp [mul_assoc]
 
 
+omit [IsTopologicalGroup G] [DiscreteTopology M] in
 private theorem exists_infl (ρ : Representation R G M) {U' U : Subgroup G} [U'.Normal] (h : U' ≤ U)
     [DiscreteTopology (U ⧸ U'.subgroupOf U)] (z : U' → M) (y : U → M)
     (hL : ∀ (u : U') (g : U), y (Subgroup.inclusion h u * g) = z u + ρ u (y g))
@@ -280,6 +282,7 @@ private theorem mem_range_resU (ρ : Representation R G M) {U' U : Subgroup G} (
   rw [hz u, hc1 u, hc0, sub_zero]
 
 
+set_option maxHeartbeats 800000 in
 theorem length_restriction_coker_le_H2 (ρ : Representation R G M) (hρ : ContAction ρ) {U' U : Subgroup G} [U'.Normal]
     (h : U' ≤ U) (ho : IsOpen (U'.subgroupOf U : Set U)) :
     Module.length R (resCoker ρ h) ≤ Module.length R (H2 (quotRep ρ U U')) := by
@@ -344,6 +347,8 @@ theorem length_restriction_coker_le_H2 (ρ : Representation R G M) (hρ : ContAc
   exact len_le_of_ker_le f g hfs hker
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] [TopologicalSpace M] [IsTopologicalAddGroup M]
+  [ContinuousConstSMul R M] [DiscreteTopology M] in
 theorem length_H0_quotient_rep_le (ρ : Representation R G M) (U' U : Subgroup G) [(U'.subgroupOf U).Normal] :
     Module.length R (H0 (quotRep ρ U U')) ≤ Module.length R (H0U ρ U) := by
   refine Module.length_le_of_injective

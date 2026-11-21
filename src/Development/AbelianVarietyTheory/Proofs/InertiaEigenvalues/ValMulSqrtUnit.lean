@@ -47,6 +47,7 @@ end GlobalTheory.UnitOverP
 namespace GlobalTheory.UnitOverP
 
 
+open Formalism.L2.Host in
 theorem val_mul_sqrt_unit : ∀ (D : D7) (V W : HSp D) (B : Base V W), B.Good → ∀ χ : Formalism.L2.Host.HChar D.host.E, ChrEq (B.mu * B.eta⁻¹) χ → ∀ (p : ℕ) (A : ValuationSubring ℂ), p.Prime → (p : ℂ) ∈ A.nonunits → ∀ bad : ℕ, p ∣ bad → (∀ PP, PP ∈ B.G.Pg ∨ PP ∈ B.de.Q → (bad : 𝓞 D.host.E) ∈ PP.asIdeal) → ∀ P : HeightOneSpectrum (𝓞 D.host.E), (bad : 𝓞 D.host.E) ∉ P.asIdeal → ((χ.val P : ℂˣ) : ℂ) * ((Real.sqrt (Ideal.absNorm P.asIdeal) : ℝ) : ℂ) ∈ A ∧ (((χ.val P : ℂˣ) : ℂ) * ((Real.sqrt (Ideal.absNorm P.asIdeal) : ℝ) : ℂ))⁻¹ ∈ A := by
   intro D V W B hB χ hχ p A hp hpA bad hpb hbad P hP
   classical

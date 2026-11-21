@@ -100,6 +100,7 @@ theorem exists_gamma (D : D7) (k : Fin 2) : ∃ γ : PlE D.host → G D.host.E D
   exact ⟨γ, fun v => h1 _ v rfl, fun v w hw => h2 w v hw⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_labels_true_conj : ∀ (D : D7) (hE : IsEmpty D.nd.Loc) (Rw : RowWD D), ∃ lab h A C tm tg hl,
     (∀ k v, A.plGw k v = D.naut.plGw k v) ∧
     ∃ T : GlobalTheory.RowTie.WDTie (setAut D hE lab h A C tm tg hl).nd (setAut D hE lab h A C tm tg hl).naut,

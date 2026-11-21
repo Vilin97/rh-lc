@@ -55,6 +55,7 @@ variable {R : Type} [CommRing R] (I : Ideal R)
   (hL : ∀ e, (L e).IsLB ∧ (w e).IsGen)
 
 
+include hL in
 theorem congr_ofSec_of_redL (e : ℕ) (V : (Y (e + 1)).left.Opens) (V' : (Y e).left.Opens)
     (h : V' ≤ β e ⁻¹ᵁ V) (τ : LB.Sec (L (e + 1))) (σ : LB.Sec (L e))
     (hr : redL I Y β hβ L w hL e V V' h (SecOnR.of _ _ _ (GlobalTheory.LB.ofSec τ V)) =

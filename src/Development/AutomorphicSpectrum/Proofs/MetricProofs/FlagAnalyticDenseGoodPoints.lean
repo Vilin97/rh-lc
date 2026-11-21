@@ -57,6 +57,7 @@ end GlobalTheory.CompanionTheory.Ar.PB.WSq.FC.DensR
 namespace GlobalTheory.CompanionTheory.Ar.PB.WSq.FC
 
 
+open DensR in
 theorem dens_r : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Φ : Type) [Field Φ] (y : (Σ k, ι k) → Φ) (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N j : ℕ) (M : FlagModel y Ψ N j) (n d : ℕ) (BM : BaseMetric M n) (FA : FlagAn BM d) (l : Fin BM.q) (x : FA.Re.R.X), FA.pr (FA.Re.π x) ∈ BM.O l → ∀ V, IsOpen V → x ∈ V → ∃ x' ∈ V, FA.pr (FA.Re.π x') ∈ BM.O l \ bdry BM.s ∧ ∀ p, FC.plk M (BM.F l) (FC.bvec BM l (FA.pr (FA.Re.π x'))) (FA.Re.R.lift x' x') p ≠ 0 := by
   intro K _ ι _ Φ _ y Ψ _ _ N j M n d BM FA l x hx V hV hxV
   have hlift : FA.Re.R.lift x x ∈ mcPts (mCoordIdeal y) := FA.Re.R.mem x x (FA.Re.R.mem_U x)

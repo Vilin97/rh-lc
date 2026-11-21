@@ -19,6 +19,7 @@ variable {G A V V' : Type} [Group G] [CommRing A] [Algebra ℚ_[l] A] [AddCommGr
   [IsScalarTower ℚ_[l] A V']
 
 
+variable (l) in
 def tm (B : Type) [AddCommGroup B] [Module ℚ_[l] B] (f : V →ₗ[A] V') : V ⊗[ℚ_[l]] B →ₗ[A] V' ⊗[ℚ_[l]] B :=
   AlgebraTensorModule.map f LinearMap.id
 
@@ -92,10 +93,12 @@ section Diag
 variable {G A : Type} [Group G] [CommRing A] [Algebra ℚ_[l] A] {n : ℕ}
 
 
+variable (l) in
 abbrev pr (B : Type) [AddCommGroup B] [Module ℚ_[l] B] (a : Fin n) :
     (Fin n → A) ⊗[ℚ_[l]] B →ₗ[A] A ⊗[ℚ_[l]] B := tm l B (LinearMap.proj a)
 
 
+variable (l) in
 abbrev inc (B : Type) [AddCommGroup B] [Module ℚ_[l] B] (a : Fin n) :
     A ⊗[ℚ_[l]] B →ₗ[A] (Fin n → A) ⊗[ℚ_[l]] B := tm l B (LinearMap.single A (fun _ => A) a)
 

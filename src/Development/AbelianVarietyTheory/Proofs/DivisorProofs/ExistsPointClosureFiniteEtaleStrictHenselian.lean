@@ -16,6 +16,8 @@ open scoped TensorProduct
 namespace GlobalTheory.KeyOriginNoeth
 
 
+open IsLocalRing Polynomial in
+open scoped TensorProduct in
 theorem _root_.GlobalTheory.KeyOriginNoeth.exists_point_of_closureFiniteEtale :
     ∀ (A R O B : Type) [CommRing A] [IsDomain A] [CommRing R] [IsLocalRing R] [Algebra A R]
     [CommRing O] [IsLocalRing O] [HenselianLocalRing O] [IsSepClosed (ResidueField O)] [CommRing B]

@@ -346,6 +346,7 @@ end Cover
 section Subcategory
 
 
+variable (X) in
 abbrev qcoh : ObjectProperty X.Modules := fun M ↦ M.IsQuasicoherent
 
 end Subcategory

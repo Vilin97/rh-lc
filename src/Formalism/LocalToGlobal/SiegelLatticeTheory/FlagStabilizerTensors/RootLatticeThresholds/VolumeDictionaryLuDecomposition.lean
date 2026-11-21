@@ -402,6 +402,7 @@ theorem tw_inv_eq {u u' : D.what₂.Word} (F0 : FlagG (VS D) D.R.rS ((Tu D u : �
   rw [eq_inv_iff_mul_eq_one, ← tw_mul, mul_inv_cancel, tw_one]
 
 
+open Formalism.L2.SG.PackageTie2 in
 theorem volume_dictionary_lu_decomposition (Y : Formalism.L2.SG.Full.Full X) {u u' : D.what₂.Word} (t : TT Y u u')
     {w : Point D.host.E (D.R.rS + 1)} {F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)} {L U : MatR D}
     (hL : IsLoUni L) (hU : IsUpUni U) (hZu : IsUnit (Zhat (X.Fu u) F'.fl).det)

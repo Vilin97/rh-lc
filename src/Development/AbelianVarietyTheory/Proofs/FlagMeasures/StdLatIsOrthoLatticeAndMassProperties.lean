@@ -16,6 +16,8 @@ open scoped ENNReal Classical
 namespace GlobalTheory.Mass.StdMass
 
 
+open NumberField Matrix in
+open scoped ENNReal Classical in
 theorem _root_.GlobalTheory.Mass.StdMass.isSymm_of_ortho {K V : Type} [Field K] [NumberField K] [StarRing K]
     [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
     {h : V →ₗ⋆[K] V →ₗ[K] K} {L : Submodule (𝓞 K) V} {n : ℕ} (hL : _root_.Formalism.HermitianLatticesTheory.IsOrthoLattice h L n) :
@@ -66,6 +68,8 @@ private theorem massU_zero_eq_one (K : Type) [Field K] [NumberField K] [StarRing
   norm_num
 
 
+open NumberField Matrix in
+open scoped ENNReal Classical in
 theorem _root_.GlobalTheory.Mass.StdMass.main : ∀ (K : Type) [Field K] [NumberField K]
     [StarRing K], _root_.Formalism.HermitianLatticesTheory.IsCMUnram K → ∀ j : ℕ, (_root_.Formalism.MainNotions.S.Cnt.stdH K j).IsSymm ∧
       _root_.Formalism.HermitianLatticesTheory.IsOrthoLattice (_root_.Formalism.MainNotions.S.Cnt.stdH K j) (_root_.Formalism.MainNotions.S.Cnt.stdLat K j) j ∧ 0 < _root_.Formalism.MainNotions.S.Cnt.massU K j ∧ _root_.Formalism.MainNotions.S.Cnt.massU K 0 = 1 ∧

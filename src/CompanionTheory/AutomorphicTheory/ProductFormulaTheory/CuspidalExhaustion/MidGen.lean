@@ -37,6 +37,7 @@ variable {m N : ℕ}
 
 include hT in
 
+include hT in
 theorem Tm_equiv_injective {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
     {τ : Representation ℂ (GL (Fin m) k) V} {τ' : Representation ℂ (GL (Fin m) k) W} (e : τ.Equiv τ') :
     Function.Injective (Tm e.toIntertwiningMap) := by
@@ -63,6 +64,7 @@ theorem codSub_injective {G V W : Type} [Group G] [AddCommGroup V] [Module ℂ V
 
 include hT in
 
+include hT in
 theorem mid_sub {V : Type} [AddCommGroup V] [Module ℂ V] {P : Representation ℂ (GL (Fin m) k) V}
     (hP : HasFiniteLength P) (hs : IsSmooth P) (x : IrrCl (GL (Fin N) k)) (S : Subrepresentation P)
     (hx : ∃ f : x.rep.ρ.IntertwiningMap (T S.toRepresentation).ρ, Function.Injective f) :
@@ -142,6 +144,7 @@ theorem mid_sub {V : Type} [AddCommGroup V] [Module ℂ V] {P : Representation �
 
 include hT in
 
+include hT in
 theorem mid_gen {V : Type} [AddCommGroup V] [Module ℂ V] {P : Representation ℂ (GL (Fin m) k) V}
     (hP : HasFiniteLength P) (hs : IsSmooth P) (x : IrrCl (GL (Fin N) k))
     (f : x.rep.ρ.IntertwiningMap (T P).ρ) (hf : Function.Injective f) :

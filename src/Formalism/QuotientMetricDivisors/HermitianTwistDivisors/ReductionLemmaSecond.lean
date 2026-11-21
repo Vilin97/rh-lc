@@ -163,6 +163,7 @@ theorem place_ineq (hCS : DetCS) (K0 : Subfield K) (hK0 : IsCMSub K0) {n D : ℕ
 end Rb
 
 
+open Rb in
 theorem lemmaRb_of (hPF : ProdFormula) (hCS : DetCS) (hLB : LcvBasis) (hIC : IdxChange)
     (hVB : ValBasic) (hGC : GramChange) (hFC : FinsumConj) : LemmaRb := by
   intro K _ _ _ _ K0 hK0 v0 hv0 n D H hH hHpos P hP XQ hXQ M hM e he

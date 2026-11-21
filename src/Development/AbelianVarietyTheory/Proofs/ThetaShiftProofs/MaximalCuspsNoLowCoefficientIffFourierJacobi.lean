@@ -22,6 +22,8 @@ theorem mem_MggK_of_rho_eq_zero {D : D7} (X : WeightFamilies.Prov D) (CR Tt cc :
   exact absurd (funext fun i => absurd i.isLt (by omega)) hne
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem tieMaxCusp : ∀ (D : D7) (T : Top D) (h : LawsP T) (j : ℕ), InR D j → ∀ (ka : WeightFamilies.Wt D j) (CR Tt cc : ℝ), TieMaxCuspSt h j CR Tt cc ka := by
   intro D T h j hj ka CR Tt cc F
   rcases lt_or_eq_of_le hj.2 with hlt | hjm

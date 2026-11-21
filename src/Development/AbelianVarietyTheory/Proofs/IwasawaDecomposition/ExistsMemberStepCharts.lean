@@ -455,6 +455,7 @@ theorem dia_of_pt (hPr : (B.primes X).Ok) (u : B.Word) {n : ℕ} [NeZero n] {Q :
     exact k3 P r j hr
 
 
+set_option maxHeartbeats 1000000 in
 theorem chart_of (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (i : ℕ) (hi : i ≤ B.R.m)
     (c₀ : (I.stp u I.mu0 i).Cl) (p : (I.stp u I.mu0 i).Cl → Prop)
     (hp : ∀ c, p c ↔ c.1 = c₀.1 ∧ bar (rpI I u i c) = bar (rpI I u i c₀)) :
@@ -517,6 +518,7 @@ theorem mem_baseLb (hPr : (B.primes X).Ok) (u : B.Word) (n : ℕ) [NeZero n] (x 
     exact ⟨r, fun j => (h1 j).symm, (hB.dvd _).2 (h2 _ (by simp only [lastIdx]; omega))⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_charts : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (i : ℕ) (hi : i ≤ B.R.m), ∃ (Ch : Type) (_ : Finite Ch) (chOf : (I.stp u I.mu0 i).Cl → Ch) (K : ∀ β : Ch, LevelChart (I.rec7 l Z) (B.T u) (badG (I.rec7 l Z)) i hi (fun c : {c // chOf c = β} => (I.chain l u I.mu0).stab i c.1) (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u I.mu0 i c.1))), I.ReadsK l Z u I.mu0 i hi chOf K ∧ (∀ c, ((K (chOf c)).y ⟨c, rfl⟩).1 = I.yStd u i c) ∧ ((i = 0 ∨ i = B.R.m) → Nonempty (Unique Ch)) := by
   intro B X I hI hP l Z u i hi
   have hPr := l.pr

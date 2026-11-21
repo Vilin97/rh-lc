@@ -76,6 +76,7 @@ theorem map_fixedProj_of_invariant {U : Type*} [AddCommGroup U] [Module ℂ U] (
     inv_mul_cancel₀ (by exact_mod_cast hN.ne'), one_smul]
 
 
+variable (ρ) in
 def hop (g : G) : Module.End ℂ (fixedVectors ρ K) :=
   (fixedProj ρ hρ hKc hKo) ∘ₗ (ρ g) ∘ₗ (fixedVectors ρ K).subtype
 

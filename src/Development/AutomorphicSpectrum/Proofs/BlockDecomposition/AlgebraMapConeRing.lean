@@ -171,6 +171,7 @@ def incl {M M' : AddSubmonoid (Gam n d)} (h : M ≤ M') : Rg K M →ₐ[K] Rg K 
   AddMonoidAlgebra.mapDomainAlgHom K K (AddSubmonoid.inclusion h)
 
 
+variable (K) in
 def mon {M : AddSubmonoid (Gam n d)} (g : Gam n d) (hg : g ∈ M) : Rg K M := AddMonoidAlgebra.single ⟨g, hg⟩ 1
 
 theorem incl_mon {M M' : AddSubmonoid (Gam n d)} (h : M ≤ M') (g : Gam n d) (hg : g ∈ M) :
@@ -196,6 +197,7 @@ theorem mon_mul {M : AddSubmonoid (Gam n d)} (g g' : Gam n d) (hg : g ∈ M) (hg
   rfl
 
 
+variable (K n) in
 def poly (S : Finset (Fin d)) : Bp K n d →ₐ[K] R0 K n d S :=
   MvPolynomial.aeval fun e => mon K (oneE e) (oneE_mem S e)
 
@@ -215,6 +217,7 @@ theorem incl_poly {S T : Finset (Fin d)} (h : S ⊆ T) (b : Bp K n d) :
   exact DFunLike.congr_fun this b
 
 
+variable (K n) in
 def I0 (S : Finset (Fin d)) : Ideal (R0 K n d S) :=
   Ideal.span {y | ∃ k, (S = ∅ ∨ k ∈ S) ∧ y = mon K (oneE (Sum.inr k)) (oneE_mem S _)}
 
@@ -265,6 +268,7 @@ theorem wv_mem {S : Finset (Fin d)} {k : Fin d} (hk : k ∈ S) (e : E n d) : wv 
     · exact ratE_mem hk j
 
 
+variable (K) in
 def monL (g : Gam n d) : Lr K n d := mon K g (AddSubmonoid.mem_top g)
 
 def dl (e : E n d) : Ω[Lr K n d⁄K] :=
@@ -276,6 +280,7 @@ def enumD {a : ℕ} (D : {D : Finset (E n d) // D.card = a}) : Fin a → E n d :
   finSumFinEquiv.symm ((D.1.map finSumFinEquiv.toEmbedding).orderEmbOfFin (by simpa using D.2) i)
 
 
+variable (K) in
 def monW {a : ℕ} (g : Gam n d) (D : {D : Finset (E n d) // D.card = a}) : Om K (Lr K n d) a :=
   monL K g • wedge (K := K) (enumD D)
 
@@ -283,6 +288,7 @@ def good (g : Gam n d) (D : Finset (E n d)) : Prop :=
   (∀ l, 0 ≤ g (Sum.inl l) ∧ (g (Sum.inl l) = 0 → Sum.inl l ∉ D)) ∧ 1 ≤ tdeg g
 
 
+open Classical in
 def Tset (g : Gam n d) (D : Finset (E n d)) : Finset (Fin d) :=
   Finset.univ.filter fun j => g (Sum.inr j) < 0 ∨ (g (Sum.inr j) = 0 ∧ Sum.inr j ∈ D)
 

@@ -215,6 +215,7 @@ theorem thetaGrp_in_frame {A : Over (Sp ℂ)} [GrpObj A] {L : LB A.left} (hL : L
   field_simp
 
 
+open GlobalTheory.WeilExp in
 theorem weilIs_exp_riemannForm : ∀ (A : Over (Sp ℂ)) [GrpObj A] [IsCommMonObj A], IsAbelianScheme A →
     ∀ (L : LB A.left), L.IsLB →
     ∀ (n : ℕ) (u : HolUnif A L n) (Hm : Matrix (Fin n) (Fin n) ℂ) (χ : u.Λ → ℂ), u.IsAH Hm χ →

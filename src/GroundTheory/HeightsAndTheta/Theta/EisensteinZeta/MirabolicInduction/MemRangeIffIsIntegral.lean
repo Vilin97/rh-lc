@@ -118,9 +118,11 @@ def pt (τ : InfinitePlace E) (v : S.V) : S.FibSp τ := (1 : CAt τ.embedding) �
 end MetSpace
 
 
+variable (E) in
 def fPl : ℕ := Fintype.card (InfinitePlace E)
 
 
+variable (E) in
 def rd : ℝ := |(discr E : ℝ)| ^ ((1 : ℝ) / (2 * fPl E))
 
 namespace MetSpace

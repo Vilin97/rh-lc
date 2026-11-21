@@ -133,6 +133,7 @@ theorem ker_fg_of_projective {P C M : Type*} [CommRing P] [CommRing C] [Algebra 
 end GlobalTheory.CompanionTheory.FinPresDescent
 
 
+open GlobalTheory.CompanionTheory.FinPresDescent in
 theorem GlobalTheory.CompanionTheory.FinPresDescent.finitePresentation_of_finite_projective_faithfullyFlat :
     ∀ (R C D : Type) [CommRing R] [CommRing C] [CommRing D] [Algebra R C] [Algebra C D]
       [Algebra R D] [IsScalarTower R C D], Module.Finite C D → Module.Projective C D →

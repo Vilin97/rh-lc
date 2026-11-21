@@ -27,6 +27,7 @@ variable {V : Type} [AddCommGroup V] [TopologicalSpace V] [IsTopologicalAddGroup
   (hχ : ∀ x t y, χ (t + x) y = χ t y * χ x y) (L : AddSubgroup V)
 
 
+include hχ in
 theorem transform_indicator (hLo : IsOpen (L : Set V)) (y : V) :
     ∫ x, (L : Set V).indicator (fun _ => (1 : ℂ)) x * χ x y ∂μ =
       (ann χ L).indicator (fun _ => ((μ.real (L : Set V) : ℝ) : ℂ)) y := by

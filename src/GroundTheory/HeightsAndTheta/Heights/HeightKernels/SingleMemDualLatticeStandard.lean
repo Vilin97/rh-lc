@@ -42,6 +42,7 @@ def dualStdCoordMat (b : Module.Basis T ℤ (dualLattice (HermLattice.standard K
   fun _ j t => b.repr ⟨Pi.single j 1, single_mem_dualLattice_standard K j⟩ t
 
 
+omit [DecidableEq T] in
 theorem dualStdCoordMat_sum (b : Module.Basis T ℤ (dualLattice (HermLattice.standard K i))) (j : Fin i) :
     ∑ t, dualStdCoordMat b () j t • (b t : Fin i → K) = Pi.single j 1 := by
   have h := congrArg (fun v : dualLattice (HermLattice.standard K i) => (v : Fin i → K))

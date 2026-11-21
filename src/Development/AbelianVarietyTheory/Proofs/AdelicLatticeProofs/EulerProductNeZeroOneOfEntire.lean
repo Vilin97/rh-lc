@@ -19,6 +19,8 @@ private lemma neg_one_le_re_pow_of_norm_le_one {c : ℂ} (hc : ‖c‖ ≤ 1) (k
   linarith [(abs_le.mp (h2.trans h1)).1]
 
 
+open NumberField IsDedekindDomain NumberField.mixedEmbedding MeasureTheory Complex Classical in
+open scoped ContDiff nonZeroDivisors in
 theorem _root_.GlobalTheory.not_summable_two_add_two_re_pow_div (c : ℂ) (hc : ‖c‖ ≤ 1) :
     ¬ Summable fun k : ℕ => (2 + 2 * (c ^ (k + 1)).re) / ((k : ℝ) + 1) := by
   intro h
@@ -70,6 +72,8 @@ private lemma natCast_rpow_neg_le_half {n : ℕ} (hn : 2 ≤ n) {σ : ℝ} (hσ 
         exact_mod_cast hn
 
 
+open NumberField IsDedekindDomain NumberField.mixedEmbedding MeasureTheory Complex Classical in
+open scoped ContDiff nonZeroDivisors in
 theorem _root_.GlobalTheory.conj_neg_log_euler_factor (n : ℕ) (hn : 2 ≤ n) (c : ℂ) (hc : ‖c‖ ≤ 1) (s : ℂ)
     (hs : 1 < s.re) :
     starRingEnd ℂ (-Complex.log (1 - c * (n : ℂ) ^ (-(starRingEnd ℂ s)))) =
@@ -90,6 +94,8 @@ theorem _root_.GlobalTheory.conj_neg_log_euler_factor (n : ℕ) (hn : 2 ≤ n) (
   rw [map_neg, ← Complex.log_conj _ harg, map_sub, map_one, map_mul, hconj]
 
 
+open NumberField IsDedekindDomain NumberField.mixedEmbedding MeasureTheory Complex Classical in
+open scoped ContDiff nonZeroDivisors in
 theorem _root_.GlobalTheory.eulerProduct_ne_zero_one_of_entire : ∀ (ι : Type) (N : ι → ℕ) (c : ι → ℂ), (∀ i, 2 ≤ N i) → (∀ i, ‖c i‖ ≤ 1) → (∀ σ : ℝ, 1 < σ → Summable fun i => (N i : ℝ) ^ (-σ)) → Nonempty ι → ∀ Z L : ℂ → ℂ, Differentiable ℂ Z → Differentiable ℂ L → (∀ s : ℂ, 1 < s.re → Z s = (s - 1) * Complex.exp (∑' i, -Complex.log (1 - 1 * ((N i : ℕ) : ℂ) ^ (-s)))) → (∀ s : ℂ, 1 < s.re → L s = Complex.exp (∑' i, -Complex.log (1 - c i * ((N i : ℕ) : ℂ) ^ (-s)))) → L 1 ≠ 0 := by
   intro ι N c hN hc hsum hne Z L hZ hL hZs hLs h1
   set L' : ℂ → ℂ := fun s => starRingEnd ℂ (L (starRingEnd ℂ s)) with hL'

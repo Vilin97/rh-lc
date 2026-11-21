@@ -202,6 +202,7 @@ section Denominators
 variable {R K : Type} [CommRing R] [IsDomain R] [Field K] [Algebra R K] [IsFractionRing R K] {r : ℕ}
 
 
+omit [IsDomain R] in
 theorem exists_denominator (M : Submodule R (Fin r → K)) (hM : M.FG) :
     ∃ n ∈ R⁰, ∀ v ∈ M, ∃ x : Fin r → R, algebraMap R K ∘ x = algebraMap R K n • v := by
   have hN : (⨆ i : Fin r, M.map (LinearMap.proj i : (Fin r → K) →ₗ[R] K)).FG :=

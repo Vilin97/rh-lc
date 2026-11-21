@@ -317,6 +317,7 @@ theorem sen_gen [IsDomain O] (p : Pres W F ι τ γ) (hp : ((PD.p : ℕ) : k) = 
   simp only [hO', Matrix.map_apply]
 
 
+omit [TopologicalSpace G] [TopologicalSpace LL] in
 theorem exists_isC (hp : ((PD.p : ℕ) : k) = 0) (u : Oˣ) (hu : (u : O) = 1 + ((PD.p : ℕ) : O)) :
     ∃ c : ℤ → O, GlobalTheory.WachUse.IsC PD LL c ∧ ∀ a : ℤ, algebraMap O k (c a) = -(a : k) := by
   choose c hc1 hc2 using exists_c (algebraMap O k) ((PD.p : ℕ) : O) (by rw [map_natCast, hp]) _ hu
@@ -336,6 +337,7 @@ theorem map_prod_c (c : ℤ → O) (hc : ∀ a : ℤ, algebraMap O k (c a) = -(a
 end Gen
 
 
+set_option maxHeartbeats 1600000 in
 theorem sen_base : ∀ {l : ℕ} [Fact l.Prime] {P : LocPrime l} (H : LocHW l P) (S : TopSit P) (k : Type) [Field k] [Algebra S.O k] [CharP k l], S.IsRes k → ∀ {R : RingPG k l} (ι : k⸨X⸩ →ₐ[k] k⸨X⸩) (F : DFun R S.n S.G) (τ : ZMod S.n → ZMod (Module.finrank ℚ_[l] ↥(K0 S.K))) (γ : (S.W H).Gam) (p : Pres (S.W H) F ι τ γ), GlobalTheory.IndefiniteRowSideFullHecke.OnePlusPowerCharacters.IsCyclotomic R ι → (∀ i, (S.W H).emb (τ i) = S.emb i) → ((S.W H).χΓ γ : S.O) = 1 + (l : S.O) → GlobalTheory.WachUse.QN (S.W H) → ∀ (T : LocLat S.G ℚ_[l] ↥S.LL.1 S.O) (A : Ob k S.G) q (U : ZMod S.n → Multiset ℤ), Onto T A q → KerIs S.Γ.lam q → CrysWith (P.PD S.K) S.emb T.ρ U → ∀ N : Lats k S.n A.m, (∀ i y, y ∈ N i ↔ ∃ x : ↥(DΔ (S.W H) T), (x : (S.W H).DD T) ∈ (S.W H).N T ∧ p.j T A q i x = y) → ∀ i x, sen ((F.D A).γ i) (N i) x = resCount (U i) 0 x := by
   intro l _ P H S k _ _ _ hk R ι F τ γ p hι hτ hγ hQ T A q U hO hK hU N hN i x
   obtain ⟨N', hN', hL⟩ := GlobalTheory.T.wachDeltaInvariants_reduction_isLattice H S k hk ι F τ γ p hι hτ hγ hQ T A q U hO hK hU

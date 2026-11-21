@@ -99,6 +99,7 @@ theorem exists_preimage {M : Type} [NormedAddCommGroup M] [NormedSpace ℝ M] [F
   exact ⟨Y.1, Y.2, hY, (congrArg Subtype.val (hp' ⟨_, hA _ Y.2⟩)).symm⟩
 
 
+open scoped Matrix.Norms.Frobenius in
 theorem exists_log (A : Submodule ℝ (Matrix (Fin n) (Fin n) ℂ))
     (hA : ∀ X ∈ A, ∀ Y ∈ A, X * Y ∈ A) {W : Set (Matrix (Fin n) (Fin n) ℂ)}
     (hW : W ∈ 𝓝 (0 : Matrix (Fin n) (Fin n) ℂ)) :
@@ -157,6 +158,7 @@ theorem finrank_eq (ε : Fin n → Bool) (A : Submodule ℝ (Matrix (Fin n) (Fin
   rw [h1, finrank_span_eq_card h2, Fintype.card_fin]
 
 
+open scoped Matrix.Norms.Frobenius in
 theorem exists_limit (ε : Fin n → Bool) (A : Submodule ℝ (Matrix (Fin n) (Fin n) ℂ))
     (hA : ∀ X ∈ A, ∀ Y ∈ A, X * Y ∈ A) (μ : Measure (algSub ε A hA)) [μ.IsHaarMeasure] :
     ∃ c : ℝ, 0 < c ∧ Tendsto

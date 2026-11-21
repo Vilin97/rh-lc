@@ -78,6 +78,7 @@ private lemma height_add_ringKrullDim_quotient_le' (A : Type) [CommRing A] (I : 
   exact le_iSup (fun a : PrimeSpectrum A => Order.height a + Order.coheight a) P
 
 
+open IsLocalRing TensorProduct in
 theorem _root_.GlobalTheory.RegularAscent.exists_regular_near_of_regular_quotient (B : Type) [CommRing B]
     [IsNoetherianRing B] (p : Ideal B) [p.IsPrime]
     (hp : IsRegularLocalRing (Localization.AtPrime p)) :

@@ -84,6 +84,7 @@ theorem exists_typeSpace (H : Submodule ℂ (L2 (latticeGL E a) μ)) (hH : H ≤
           ∀ v ∈ X, B v ∈ X := GlobalTheory.T.k_finite_irreducible_fixed_vectors E a μ H hH hI F hFH hF
 
 
+omit μ in
 theorem Zalg_comm_cptRep {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) (k : Kinf E a) :
     z * cptRep E a k = cptRep E a k * z := by
   obtain ⟨c, Y, h0, h1, hd, hi⟩ := GlobalTheory.T.unitary_exponential_path_exists E a k
@@ -92,6 +93,7 @@ theorem Zalg_comm_cptRep {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) (k 
   exact h
 
 
+omit μ in
 theorem Zalg_le (S : Subalgebra ℂ (Module.End ℂ (Sm E a))) (h : ∀ X, lie E a X ∈ S) : Zalg E a ≤ S := by
   have hE : ∀ τ i j, Eop (a := a) τ i j ∈ S := fun τ i j =>
     S.smul_mem (S.sub_mem (h _) (S.smul_mem (h _) _)) _

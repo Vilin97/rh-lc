@@ -45,6 +45,7 @@ abbrev HSym (D : D7) (n : ℕ) (zl : Bool) (v : HeightOneSpectrum (𝓞 D.host.F
   JSymG (kv D.host.F v) n D.R.k (rSD D.R) D.R.t zl
 
 
+set_option maxHeartbeats 4000000 in
 structure FormsTiedSym (D : D7) (u : D.what₂.Word) (Ch : ℕ → Type) (chOf : ∀ i, (D.mem u).C.cls i → Ch i) where
   atT : AtTTied u
 

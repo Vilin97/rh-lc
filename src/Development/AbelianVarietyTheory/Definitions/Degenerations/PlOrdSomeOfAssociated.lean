@@ -47,6 +47,7 @@ def MonIrr.prime {k : Type} [Field k] (p : MonIrr k) : HeightOneSpectrum k[X] wh
   ne_bot := by simpa using p.2.2.ne_zero
 
 
+open scoped Classical in
 def plVal : Option (MonIrr k) → Valuation (RatFunc k) (WithZero (Multiplicative ℤ))
   | none => RatFunc.inftyValuation k
   | some p => p.prime.valuation (RatFunc k)

@@ -262,6 +262,7 @@ theorem nat_smul_mem_smul {k : ℕ} (hk : (k : 𝓞 E) ∈ P) {x : Fin r → E} 
   rwa [Nat.cast_smul_eq_nsmul, ← Nat.cast_smul_eq_nsmul E]
 
 
+omit [IsCMField E] in
 theorem mem_of_two (hM : Odd M) (hsM : s.Coprime M) (hMQ : (M : 𝓞 E) ∈ Q) (hc : Q ⊔ P = ⊤) {j : ℕ}
     {z : Fin r → E} (ha : ∀ t ∈ Q ^ j, t • z ∈ P • L) {b : 𝓞 E}
     (hb2 : ((2 * s : ℕ) : E) • b • z ∈ L) : b • z ∈ P • L := by

@@ -307,6 +307,7 @@ instance (μR : Measure R) [μR.IsOpenPosMeasure] [SigmaFinite μR] :
 end GlobalTheory.UnipCoord
 
 
+open GlobalTheory.UnipCoord in
 theorem GlobalTheory.UnipCoord.map_coords_haar : ∀ (R : Type) [CommRing R] [TopologicalSpace R] [IsTopologicalRing R] [LocallyCompactSpace R]
     [SecondCountableTopology R] [T2Space R] [MeasurableSpace R] [BorelSpace R] (n : ℕ)
     [MeasurableSpace (GL (Fin n) R)] [BorelSpace (GL (Fin n) R)] (μR : Measure R) [μR.IsAddHaarMeasure]

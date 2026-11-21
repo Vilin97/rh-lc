@@ -19,6 +19,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.TorsionCharacterExt
 
 
+open Algebra.TensorProduct in
 theorem tensor_eq_zero_of_forall_pair (O F : Type) [CommRing O] [Field F] [IsAlgClosed F]
     [Algebra O F] [Module.Flat O F] (hinj : Function.Injective (algebraMap O F)) (A : Type)
     [CommRing A] [Algebra O A] [Module.Finite O A] [Module.Flat O A]
@@ -60,6 +61,7 @@ end GlobalTheory.TorsionCharacterExt
 namespace GlobalTheory
 
 
+open KernelNoTorsion TangentPow TorsionCharacter GmPoints in
 theorem torsionCharacter_ext_and_exists_of_integral_points :
     ∀ (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal) (O : Type) [CommRing O] [Algebra O C], v.Integers O → ∀ (G : Over (Spec (CommRingCat.of O))) [GrpObj G] [IsCommMonObj G], ∀ N : ℕ, 1 ≤ N → IsFinite (torsion G N).hom → Flat (torsion G N).hom → (∀ f f' : torsion G N ⟶ Gm (Spec (CommRingCat.of O)), (∀ w : specO O O ⟶ torsion G N, w ≫ f = w ≫ f') → f = f') ∧ ∀ κ : (specO O O ⟶ G) → Cˣ, (∀ x y : specO O O ⟶ G, x ^ N = 1 → y ^ N = 1 → κ (x * y) = κ x * κ y) → ∃ f : torsion G N ⟶ Gm (Spec (CommRingCat.of O)), IsCharTors G N f ∧ ∀ w : specO O O ⟶ torsion G N, algebraMap O C (unitOf (w ≫ f) : O) = (κ (w ≫ torsion.ι G N) : C) := by
   intro C _ _ _ v O _ _ hv G _ _ N hN hfin hflat

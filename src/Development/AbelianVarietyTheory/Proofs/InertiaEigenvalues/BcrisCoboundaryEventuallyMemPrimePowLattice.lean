@@ -138,6 +138,7 @@ theorem main_gen {O K : Type} [CommRing O] [Algebra ℤ_[l] O] [Module.Free ℤ_
   exact smul_right_injective T.V (pow_ne_zero n hK) h3
 
 
+set_option maxHeartbeats 800000 in
 theorem cont_at_one : ∀ (l : ℕ) [Fact l.Prime], l ≠ 2 → ∀ (LL : FinExt l) (T : QLat LL) (b : TW (OB l ↥(OL LL)) T) (c : Gl l → T.V), IsCobOf (sQ l) T b c → ∀ m : ℕ, ∀ᶠ g in nhds (1 : Gl l), ∃ x ∈ T.L.T, c g = ((l : ↥LL.1) ^ m) • x := by
   intro l _ _ LL T b c hc m
   have hK : (l : ↥LL.1) ≠ 0 := by

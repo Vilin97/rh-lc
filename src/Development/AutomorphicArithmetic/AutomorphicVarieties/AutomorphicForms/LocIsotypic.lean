@@ -24,6 +24,7 @@ def IsLevelWD {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 F)} {h : Is
     ∀ s : ↥(Ine (F := F) A), a.ρ (ineIncl h s) = Matrix.toLin' (Matrix.diagonal fun i => (χ i s : ℂ))
 
 
+variable (F) in
 def KLoc (w : HeightOneSpectrum (𝓞 F)) (n M : ℕ) : Subgroup (GL (Fin n) (w.adicCompletion F)) :=
   (KLev F n M).comap (locGL F n w)
 

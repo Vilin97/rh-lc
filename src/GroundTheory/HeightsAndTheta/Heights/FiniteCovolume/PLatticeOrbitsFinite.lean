@@ -17,6 +17,7 @@ variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Alge
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 
+omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
 theorem isIsotropicLine_span_singleton (h : HermitianForm F E W) {x : W} (hx : x ≠ 0)
     (hxx : h.toSesq x x = 0) : IsIsotropicLine h (Submodule.span E {x}) := by
   refine ⟨finrank_span_singleton hx, ?_⟩

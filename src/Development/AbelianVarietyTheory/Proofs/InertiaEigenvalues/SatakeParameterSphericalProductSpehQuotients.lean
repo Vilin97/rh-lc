@@ -382,6 +382,7 @@ theorem chiDelta_eq {β : ∀ a, Fin (N a) → ℂ} {γ : Fin n → ℂ} (hγ : 
   ring
 
 
+omit h in
 theorem exists_model {S : Multiset ℂˣ} (hS : S.card = n) :
     ∃ (X : Type) (_ : AddCommGroup X) (_ : Module ℂ X) (R : Representation ℂ (GL (Fin n) (w.adicCompletion E)) X)
       (β : Fin n → ℂˣ) (l : X →ₗ[ℂ] ℂ) (y : X), IsSmooth R ∧ Finset.univ.val.map β = S ∧ IsSatVecGL w R y S ∧ l y = 1 ∧

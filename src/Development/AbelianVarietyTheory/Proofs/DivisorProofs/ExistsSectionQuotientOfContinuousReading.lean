@@ -201,6 +201,7 @@ theorem chart_dvd (U : Unf Xo c σ r) (hσ : GoodEmb c σ) (hU : IsUnf U) {h : G
   exact mul_le_mul_of_nonneg_right (hlt hza hx1).le (pow_nonneg (norm_nonneg _) _)
 
 
+open IsDedekindDomain Module Formalism.BasicNotions GlobalTheory.FlatCore in
 theorem exists_quotient : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (r : ℕ) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (x : ℝ), Laws U x → ∀ (Z : Comp Xo c) (e e' : Ix Dw → ℤ) (f g : Rul Xo c), f ∈ secZ Xo c e → f ∈ suppOn Z → g ∈ secZ Xo c e' → g ∈ suppOn Z → f ≠ 0 → ∀ σ, GoodEmb c σ → ∀ q : FDSec (U σ).X, (∀ k, ContinuousOn (q k) ((U σ).X k).dom) → (∀ z ∈ framesOn (U σ) Z, rdU (U σ) g z.1 z.2 = q z.1 z.2 * rdU (U σ) f z.1 z.2) → ∃ s ∈ secZ Xo c (e' - e), idem Z * s = s ∧ s * f = g := by
   intro E _ _ _ H Dw l Xo c r U x hL Z e e' f g hf hfZ hg hgZ hf0 σ hσ q hq hfg
   obtain ⟨-, -, h, -⟩ := evLaws_genFr_atlas E H Dw l Xo c

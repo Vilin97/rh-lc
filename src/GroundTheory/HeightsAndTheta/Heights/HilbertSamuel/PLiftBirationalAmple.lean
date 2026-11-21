@@ -80,6 +80,7 @@ theorem chartLat_var [DecidableEq K] (p : Σ k, ι k) : y p ∈ chartLat y (Pi.s
   exact Algebra.subset_adjoin ⟨p, rfl⟩
 
 
+open Classical in
 theorem chartLat_form {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) :
     aeval y g ∈ chartLat y (fun k => (d k : ℤ)) 1 := by
   set_option synthInstance.maxHeartbeats 100000 in
@@ -153,6 +154,7 @@ end Ratios
 end LiftBirationalAmple
 
 
+open LiftBirationalAmple in
 theorem LiftBirationalAmple.proof (h : GeneratedNonzeroSection.Statement) : LiftBirationalAmple.Statement := by
   classical
   intro K _ _ ι _ _ Ω _ _ y D N c hvar hbir hc hample

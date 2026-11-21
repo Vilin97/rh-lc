@@ -26,11 +26,13 @@ variable {D : Datum H} {l : Level H} {Xo : Moduli D l} {c : Coeff l} {O : Type} 
 variable [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] {b : O →+* ℂ} {a : ArcIn D l β ℂ b}
 
 
+omit [IsScalarTower ℂ (FractionRing ℂ) ℂ] in
 theorem ex_add_nsmul (Λ : GtAn a) (j : ℕ) (α mu : Λ.A.X) :
     Λ.u.ex (Λ.A.ct α + j • Λ.A.ct mu) = a.D₀.c (Λ.ε α + j • Λ.ε mu) := by
   rw [← map_nsmul, ← map_add (f := _), ← map_nsmul, ← map_add (f := _), Λ.ct]
 
 
+omit [IsScalarTower ℂ (FractionRing ℂ) ℂ] in
 theorem expo_eq (Λ : GtAn a) (j : ℕ) (α mu : Λ.A.X) : expo a j (Λ.ε α) (Λ.ε mu) = Λ.A.exponent j α mu := by
   rw [expo, AnArc.exponent, AnArc.q, Λ.be_eq, Λ.be_eq]
 

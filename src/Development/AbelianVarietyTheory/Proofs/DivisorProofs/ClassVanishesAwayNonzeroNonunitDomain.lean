@@ -45,6 +45,7 @@ theorem away_ext {a : B} {R : Type} [CommRing R] {f g : Localization.Away a →+
   IsLocalization.ringHom_ext (Submonoid.powers a) h
 
 
+variable (B) in
 def diag : Idx B ⥤ CommRingCat.{0} where
   obj a := CommRingCat.of (Localization.Away a.val)
   map {a b} h := CommRingCat.ofHom (tr (leOfHom h : a.val ∣ b.val))
@@ -66,6 +67,7 @@ theorem toFrac_comp (a : Idx B) : (toFrac a).comp (algebraMap B _) = algebraMap 
     (IsLocalization.map_units (FractionRing B) (⟨a.val, mem_nonZeroDivisors_of_ne_zero a.ne⟩ : nonZeroDivisors B))
 
 
+variable (B) in
 def cocone : Cocone (diag B) where
   pt := CommRingCat.of (FractionRing B)
   ι :=
@@ -87,6 +89,7 @@ theorem desc_unit (s : Cocone (diag B)) (y : nonZeroDivisors B) :
   exact (IsLocalization.Away.algebraMap_isUnit (S := Localization.Away y.1) y.1).map (s.ι.app b).hom
 
 
+variable (B) in
 def isColim : IsColimit (cocone B) where
   desc s := CommRingCat.ofHom (IsLocalization.lift (M := nonZeroDivisors B) (S := FractionRing B) (desc_unit s))
   fac s a := by

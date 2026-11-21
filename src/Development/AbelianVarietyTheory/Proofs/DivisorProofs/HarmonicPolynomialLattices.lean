@@ -28,6 +28,7 @@ namespace GlobalTheory.SmallSpan
 variable {D : D7} {m n : ℕ}
 
 
+open GlobalTheory.ExportSeries.Onto in
 theorem exists_harm (w : Weight D n) (B : GLR D n) (hw : w.Good) (hm : ∀ τ, w.p τ + w.q τ ≤ m) (F : VV ℂ w.lam) :
     ∃ P ∈ harm m w B, harmFn m w B P = coefFn (RingHom.id ℂ) w.lam (F : Pol ℂ D.what₂.Tau n) := by
   obtain ⟨s, hs⟩ := GlobalTheory.ExportSeries.DeltaExtremal.harmFn_delta D m n w B hw hm
@@ -51,6 +52,7 @@ theorem exists_harm (w : Weight D n) (B : GLR D n) (hw : w.Good) (hm : ∀ τ, w
   exact hle (Submodule.mem_map_of_mem F.2)
 
 
+open GlobalTheory.ExportSeries.HarmLattice in
 theorem harmLat_le_span {K₀ K : Type} [Field K₀] [NumberField K₀] [Field K] [NumberField K] (f : K₀ →+* K) (σ : K →+* ℂ)
     (emb : D.what₂.Tau → (D.host.E →+* K₀)) (O O' : Subring ℂ) (hO' : ∀ a : 𝓞 K, σ a ∈ O') (w : Weight D n) (B : GLR D n)
     (hw : w.Good) (hm : ∀ τ, w.p τ + w.q τ ≤ m) {M : Submodule (𝓞 D.host.E) (Fin n → D.host.E)}

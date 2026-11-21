@@ -265,6 +265,7 @@ theorem orthChange_core : OrthChange := by
 end IntegralOrthonormalChange
 
 
+open IntegralOrthonormalChange in
 theorem basisInv_of (hO : OrthChange) (hU : UnitSubst) : BasisInv := by
   intro D cc δ hcc hδ p _ hp5 hin lam N N' L L' F hS
   obtain ⟨r, b, hbL, hbO, hI⟩ := hS

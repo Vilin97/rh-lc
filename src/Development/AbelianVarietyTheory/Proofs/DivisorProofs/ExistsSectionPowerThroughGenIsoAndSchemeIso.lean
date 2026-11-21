@@ -26,6 +26,7 @@ noncomputable section
 namespace GlobalTheory.SecThroughIso
 
 
+open ReciprocityTheory.ChartRestriction.G.DVR in
 theorem gs_appLE {X Y Z : Scheme.{0}} (f : Z ⟶ Y) (g : Y ⟶ X) (z : Z) {U : X.Opens} {V : Y.Opens}
     (h : V ≤ g ⁻¹ᵁ U) (hz : f z ∈ V) (x : Γ(X, U)) :
     gs f z V ((g.appLE U V h).hom x) = gs (f ≫ g) z U x := by

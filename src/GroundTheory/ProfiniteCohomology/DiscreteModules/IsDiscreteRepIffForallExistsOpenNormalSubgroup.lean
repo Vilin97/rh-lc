@@ -70,6 +70,7 @@ instance isDiscreteRep_of_isTrivial (A : Rep.{w} k G) [A.ρ.IsTrivial] : IsDiscr
 variable [IsTopologicalGroup G]
 
 
+omit [IsTopologicalGroup G] in
 theorem IsDiscreteRep.of_injective {A B : Rep.{w} k G} (f : A ⟶ B)
     (hf : Function.Injective f.hom) [IsDiscreteRep B] : IsDiscreteRep A :=
   ⟨fun a => by

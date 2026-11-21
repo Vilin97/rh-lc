@@ -112,6 +112,7 @@ theorem replace_zeta {K : Type} [Fintype K] [DecidableEq K] {ι' : Option K → 
 end FlagBundleLineBaseProof
 
 
+open FlagBundleLineBaseProof in
 theorem FlagBundleLineBase.proof (hdim : FlagBundleDim.Statement)
     (hsec : FlagLineSection.Statement) (hdeg : FlagLineDegree.Statement)
     (hpf : FieldNumbers.ProjectionFormulaDegree.Statement.{0}) :

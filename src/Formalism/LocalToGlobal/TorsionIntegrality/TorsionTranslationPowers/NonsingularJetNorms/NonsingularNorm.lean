@@ -86,6 +86,7 @@ section Alg
 variable {K : Type} [Field K] (W : WeierstrassCurve K)
 
 
+set_option maxHeartbeats 800000 in
 theorem disc_comb (x y : K) (h : W.toAffine.Equation x y) :
     W.Δ =
       (2 * y + W.a₁ * x + W.a₃) *

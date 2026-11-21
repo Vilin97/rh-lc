@@ -207,13 +207,16 @@ def locPart (Y : Submodule A M) (op : ι → Module.End A M) (a : ι → A) : Su
   Y ⊓ ⨅ (i : ι) (k : ℕ), ⨆ n : ℕ, (maximalIdeal A ^ k • Y).comap ((op i - algebraMap A _ (a i)) ^ n)
 
 
+omit [IsLocalRing A] in
 def Restr {Y : Submodule A M} (t : Module.End A Y) (φ : Module.End A M) : Prop := ∀ y : Y, (t y : M) = φ y
 
 
+omit [IsLocalRing A] in
 def heckeAlg (Y : Submodule A M) (op : ι → Module.End A M) : Subalgebra A (Module.End A Y) :=
   Algebra.adjoin A {t | ∃ i, Restr t (op i)}
 
 
+omit [IsLocalRing A] in
 def CommOn (Y : Submodule A M) (op : ι → Module.End A M) : Prop :=
   (∀ i, ∀ y ∈ Y, op i y ∈ Y) ∧ ∀ i j, ∀ y ∈ Y, op i (op j y) = op j (op i y)
 

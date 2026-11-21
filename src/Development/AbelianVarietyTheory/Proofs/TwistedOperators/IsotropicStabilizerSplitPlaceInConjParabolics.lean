@@ -78,6 +78,7 @@ open GlobalTheory.AutFunCompare (colSpan exists_colSpan mem_extSub_colSpan)
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {v : HeightOneSpectrum (𝓞 F)}
 
 
+omit [NumberField E] in
 theorem splitVec_map_inclR_mulVec (τ : E →ₐ[F] Fv F v) {n r : ℕ} (C : Matrix (Fin n) (Fin r) E)
     (a : Fin r → Fv F v ⊗[F] E) :
     splitVec τ ((C.map (inclR (Fv F v))) *ᵥ a) = (C.map τ) *ᵥ fun k => splitProj τ (a k) := by

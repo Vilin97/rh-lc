@@ -501,6 +501,7 @@ instance isDiscreteValuationRing_adicCompletion_of_dvr :
   (adicCompletion_isDVR_irreducible V (IsDiscreteValuationRing.exists_irreducible V).choose_spec).2.1
 
 
+variable {V} in
 theorem irreducible_algebraMap_adicCompletion_of_dvr {π : V} (hπ : Irreducible π) :
     Irreducible (algebraMap V (AdicCompletion (maximalIdeal V) V) π) :=
   (adicCompletion_isDVR_irreducible V hπ).2.2
@@ -515,6 +516,7 @@ variable {A : Type*} [CommRing A] [IsDomain A] [IsNoetherianRing A] [Ring.Dimens
 
 include K
 
+include K in
 theorem krullAkizuki (B : Subalgebra A L) : IsNoetherianRing B ∧ Ring.DimensionLEOne B := by
   have hinj : Function.Injective (algebraMap A L) := by
     rw [IsScalarTower.algebraMap_eq A K L]
@@ -548,6 +550,7 @@ theorem krullAkizuki (B : Subalgebra A L) : IsNoetherianRing B ∧ Ring.Dimensio
     rw [← mul_smul, Algebra.smul_def]
 
 
+include K in
 theorem isDedekindDomain_integralClosure_of_dimensionLEOne :
     IsDedekindDomain (integralClosure A L) := by
   obtain ⟨h1, h2⟩ := krullAkizuki K (integralClosure A L)
@@ -586,6 +589,7 @@ theorem range_algebraMap_eq_iInf_discreteValuationSubring [IsIntegrallyClosed R]
   exact (IsIntegrallyClosed.isIntegral_iff (R := R) (K := K)).symm
 
 
+variable {R K} in
 theorem exists_algebraMap_eq_of_forall_discreteValuationSubring [IsIntegrallyClosed R] {x : K}
     (hx : ∀ V : ValuationSubring K, IsDiscreteValuationRing V → (∀ r, algebraMap R K r ∈ V) →
       (∀ r ∈ maximalIdeal R, algebraMap R K r ∈ V.nonunits) → x ∈ V) :

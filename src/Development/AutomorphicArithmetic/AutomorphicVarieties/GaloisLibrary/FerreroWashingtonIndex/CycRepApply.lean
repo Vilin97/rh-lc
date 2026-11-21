@@ -41,6 +41,7 @@ def sgnE [IsCMField K] (e : ι → K →+* ℂ) : AddSubgroup (ι → ZMod 2) :=
   AddSubgroup.closure {f | ∃ u : (𝓞 K)ˣ, cE K ((u : 𝓞 K) : K) = ((u : 𝓞 K) : K) ∧ f = sgn e ((u : 𝓞 K) : K)}
 
 
+variable (K) in
 def UnrFin : Prop :=
   ∀ w : HeightOneSpectrum (𝓞 K), w.asIdeal.ramificationIdx (𝓞 (maximalRealSubfield K)) = 1
 

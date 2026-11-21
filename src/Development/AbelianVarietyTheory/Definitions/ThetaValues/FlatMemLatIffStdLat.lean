@@ -330,6 +330,7 @@ theorem mem_tensorLat_span {S : Set (Fin n → E)} {γ : Fin n → Vsp X.dim} :
       (α.isIntegral_coe.map (IsCMField.complexConj E).toRingEquiv.toRingHom.toIntAlgHom) ha
 
 
+omit [IsCMField E] in
 theorem mem_stdLat {v : Fin n → E} : v ∈ stdLat E n ↔ ∀ k, IsIntegral ℤ (v k) := by
   rw [stdLat, Submodule.mem_span_range_iff_exists_fun]
   constructor
@@ -346,6 +347,7 @@ theorem mem_stdLat {v : Fin n → E} : v ∈ stdLat E n ↔ ∀ k, IsIntegral �
     simp [Finset.sum_apply, Pi.single_apply, Algebra.smul_def, hc]
 
 
+omit [IsCMField E] in
 theorem stdLat_fg : (stdLat E n).FG := Submodule.fg_span (Set.finite_range _)
 
 theorem mem_stdLat_iff_herm {v : Fin n → E} :

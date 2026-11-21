@@ -40,6 +40,7 @@ theorem pow_twist {K : Type*} [Fintype K] {ι : K → Type*} {Ω : Type*} [Field
 end SpanStepLocal
 
 
+open SpanStepLocal in
 theorem SpanStepLocal.proof (hR : RelLatticeFinite.Statement) : SpanStepLocal.Statement := by
   intro K _ ι _ Ω _ y a q w hy hw hgen j hj
   classical

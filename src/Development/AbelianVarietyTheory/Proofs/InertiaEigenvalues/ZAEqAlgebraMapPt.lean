@@ -64,6 +64,7 @@ variable {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [Algebr
   {ι : Type} [Fintype ι] [DecidableEq ι]
 
 
+variable (O) in
 def kLift (c : ZMod a → AdjoinRoot (Polynomial.X ^ e + Polynomial.C (l : K))) : ZMod a → Ahat O K l e :=
   fun τ => AhatEq.equivAhat O K l e (PowerSeries.C (c τ))
 
@@ -72,6 +73,7 @@ def hsum (P : PhiMod O K l e a ι) {n : ℕ} (s : Fin n → ZMod a → Ahat O K 
   fun τ i => ∑ k, algebraMap (Ahat O K l e) (AhatE O K l e) (s k τ) * P.hatTot (m k) τ i
 
 
+variable (O K l e) in
 def InEhat (j : ℤ) (w : ZMod a → ι → AhatE O K l e) : Prop :=
   ∃ N : ℕ, 0 ≤ j + N ∧ ∀ τ i, ∃ x : Ahat O K l e,
     algebraMap (Ahat O K l e) (AhatE O K l e) (Ehat O K l e ^ (j + N).toNat * x) =

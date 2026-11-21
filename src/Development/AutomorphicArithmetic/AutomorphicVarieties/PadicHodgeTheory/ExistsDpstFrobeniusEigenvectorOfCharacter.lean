@@ -13,6 +13,7 @@ open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.
 set_option synthInstance.maxHeartbeats 400000
 
 
+open Module in
 private theorem exists_int_basis {l : ℕ} [Fact l.Prime] {G : Type} [Group G] [TopologicalSpace G] [CompactSpace G]
     {V : Type} [AddCommGroup V] [Module ℚ_[l] V] [FiniteDimensional ℚ_[l] V] [TopologicalSpace V]
     [IsModuleTopology ℚ_[l] V] (ρ : Representation ℚ_[l] G V) (hρ : ∀ x, Continuous fun g => ρ g x) :
@@ -85,6 +86,7 @@ private theorem map_iterFrob {p : ℕ} [Fact p.Prime] {R : Type} [CommRing R] [C
   simp [iterateFrobenius_def, frobenius_def, pow_succ, pow_mul]
 
 
+open TensorProduct GlobalTheory.Pst in
 private theorem phiV_pow {l : ℕ} [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) {LL : Type} [Field LL]
     [Algebra ℚ_[l] LL] {V : Type} [AddCommGroup V] [Module LL V] [Module ℚ_[l] V] [IsScalarTower ℚ_[l] LL V]
     (k : ℕ) (v : V) (w : Ainf l) :

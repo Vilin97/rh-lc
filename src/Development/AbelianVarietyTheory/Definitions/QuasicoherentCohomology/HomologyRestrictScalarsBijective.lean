@@ -21,6 +21,8 @@ def cechClass (A : Cube.{v} ι R) (p : ℕ) :
   ((cechCyclesIso A p).inv ≫ (cechComplex A).homologyπ p).hom
 
 
+open CategoryTheory Limits in
+variable {ι : Type} [LinearOrder ι] {R : Type u} [Ring R] {S : Type u'} [Ring S] in
 theorem _root_.GlobalTheory.iCycles_cechCyclesIso_inv (A : _root_.GlobalTheory.Cube.{v} ι R) (p : ℕ)
     (x : LinearMap.ker (_root_.GlobalTheory.Cube.d A (p + 1))) :
     ((_root_.GlobalTheory.cechComplex A).iCycles p).hom ((_root_.GlobalTheory.cechCyclesIso A p).inv.hom x) = x.1 := by
@@ -33,12 +35,16 @@ theorem _root_.GlobalTheory.iCycles_cechCyclesIso_inv (A : _root_.GlobalTheory.C
   rw [e]
 
 
+open CategoryTheory Limits in
+variable {ι : Type} [LinearOrder ι] {R : Type u} [Ring R] {S : Type u'} [Ring S] in
 theorem _root_.GlobalTheory.cechClass_surjective (A : _root_.GlobalTheory.Cube.{v} ι R) (p : ℕ) :
     Function.Surjective (_root_.GlobalTheory.cechClass A p) :=
   (ModuleCat.epi_iff_surjective _).1
     (inferInstance : Epi ((_root_.GlobalTheory.cechCyclesIso A p).inv ≫ (_root_.GlobalTheory.cechComplex A).homologyπ p))
 
 
+open CategoryTheory Limits in
+variable {ι : Type} [LinearOrder ι] {R : Type u} [Ring R] {S : Type u'} [Ring S] in
 theorem _root_.GlobalTheory.cechClass_succ_eq_zero_iff (A : _root_.GlobalTheory.Cube.{v} ι R) (p : ℕ)
     (x : LinearMap.ker (_root_.GlobalTheory.Cube.d A (p + 1 + 1))) :
     _root_.GlobalTheory.cechClass A (p + 1) x = 0 ↔
@@ -87,17 +93,23 @@ private theorem cechClass_zero_bijective' (A : _root_.GlobalTheory.Cube.{v} ι R
   exact (_root_.GlobalTheory.cechHomologyZeroIso A).symm.toLinearEquiv.bijective
 
 
+open CategoryTheory Limits in
+variable {ι : Type} [LinearOrder ι] {R : Type u} [Ring R] {S : Type u'} [Ring S] in
 theorem _root_.GlobalTheory.cechClass_zero_eq_zero_iff (A : _root_.GlobalTheory.Cube.{v} ι R)
     (x : LinearMap.ker (_root_.GlobalTheory.Cube.d A (0 + 1))) :
     _root_.GlobalTheory.cechClass A 0 x = 0 ↔ x = 0 :=
   (cechClass_zero_bijective' A).1.eq_iff' (map_zero _)
 
 
+open CategoryTheory Limits in
+variable {ι : Type} [LinearOrder ι] {R : Type u} [Ring R] {S : Type u'} [Ring S] in
 theorem _root_.GlobalTheory.cechClass_zero_bijective (A : _root_.GlobalTheory.Cube.{v} ι R) :
     Function.Bijective (_root_.GlobalTheory.cechClass A 0) :=
   cechClass_zero_bijective' A
 
 
+open CategoryTheory Limits in
+variable {ι : Type} [LinearOrder ι] {R : Type u} [Ring R] {S : Type u'} [Ring S] in
 theorem _root_.GlobalTheory.homologyMap_cechClass {A B : _root_.GlobalTheory.Cube.{v} ι R} (φ : A ⟶ B) (p : ℕ)
     (x : LinearMap.ker (_root_.GlobalTheory.Cube.d A (p + 1)))
     (y : LinearMap.ker (_root_.GlobalTheory.Cube.d B (p + 1)))
@@ -119,6 +131,8 @@ theorem _root_.GlobalTheory.homologyMap_cechClass {A B : _root_.GlobalTheory.Cub
   rfl
 
 
+open CategoryTheory Limits in
+variable {ι : Type} [LinearOrder ι] {R : Type u} [Ring R] {S : Type u'} [Ring S] in
 theorem _root_.GlobalTheory.Cube.termMap_mem_ker {A B : _root_.GlobalTheory.Cube.{v} ι R} (φ : A ⟶ B) {p : ℕ}
     {x : _root_.GlobalTheory.Cube.Term A p}
     (h : x ∈ LinearMap.ker (_root_.GlobalTheory.Cube.d A p)) :
@@ -127,6 +141,8 @@ theorem _root_.GlobalTheory.Cube.termMap_mem_ker {A B : _root_.GlobalTheory.Cube
     map_zero]
 
 
+open CategoryTheory Limits in
+variable {ι : Type} [LinearOrder ι] {R : Type u} [Ring R] {S : Type u'} [Ring S] in
 theorem _root_.GlobalTheory.cechAugHomology_apply (A : _root_.GlobalTheory.Cube.{v} ι R) (a : A.obj ∅) :
     (_root_.GlobalTheory.cechAugHomology A).hom a =
       _root_.GlobalTheory.cechClass A 0
@@ -156,6 +172,7 @@ variable {f : R →+* S} {A A' : Cube.{v} ι R} {B B' : Cube.{v'} ι S} (ψ : Cu
 
 
 
+omit [LinearOrder ι] in
 def term (p : ℕ) : Cube.Term A p →ₛₗ[f] Cube.Term B p where
   toFun x s := ψ.app s.1 (x s)
   map_add' x y := funext fun s => map_add _ _ _
@@ -167,6 +184,10 @@ theorem term_apply (p : ℕ) (x : Cube.Term A p) (s : {s : Finset ι // s.card =
     ψ.term p x s = ψ.app s.1 (x s) := rfl
 
 
+open CategoryTheory Limits in
+variable {ι : Type} [LinearOrder ι] {R : Type u} [Ring R] {S : Type u'} [Ring S] in
+variable {f : R →+* S} {A A' : _root_.GlobalTheory.Cube.{v} ι R} {B B' : _root_.GlobalTheory.Cube.{v'} ι S}
+  (ψ : _root_.GlobalTheory.Cube.SemiHom f A B) in
 theorem _root_.GlobalTheory.Cube.SemiHom.term_d (p : ℕ) (x : _root_.GlobalTheory.Cube.Term A p) :
     ψ.term (p + 1) (_root_.GlobalTheory.Cube.d A p x) =
       _root_.GlobalTheory.Cube.d B p (ψ.term p x) := by
@@ -179,6 +200,11 @@ theorem _root_.GlobalTheory.Cube.SemiHom.term_d (p : ℕ) (x : _root_.GlobalTheo
 
 
 
+open CategoryTheory Limits in
+variable {ι : Type} [LinearOrder ι] {R : Type u} [Ring R] {S : Type u'} [Ring S] in
+variable {f : R →+* S} {A A' : _root_.GlobalTheory.Cube.{v} ι R} {B B' : _root_.GlobalTheory.Cube.{v'} ι S}
+  (ψ : _root_.GlobalTheory.Cube.SemiHom f A B) in
+omit [LinearOrder ι] in
 theorem _root_.GlobalTheory.Cube.SemiHom.term_bijective
     (h : ∀ s : Finset ι, s.Nonempty → Function.Bijective (ψ.app s)) (p : ℕ) :
     Function.Bijective (ψ.term (p + 1)) := by
@@ -197,6 +223,10 @@ theorem coe_cocycle (p : ℕ) (x : LinearMap.ker (Cube.d A p)) :
     (ψ.cocycle p x).1 = ψ.term p x.1 := rfl
 
 
+open CategoryTheory Limits in
+variable {ι : Type} [LinearOrder ι] {R : Type u} [Ring R] {S : Type u'} [Ring S] in
+variable {f : R →+* S} {A A' : _root_.GlobalTheory.Cube.{v} ι R} {B B' : _root_.GlobalTheory.Cube.{v'} ι S}
+  (ψ : _root_.GlobalTheory.Cube.SemiHom f A B) in
 theorem _root_.GlobalTheory.Cube.SemiHom.cechClass_cocycle_eq_zero (p : ℕ)
     (x : LinearMap.ker (_root_.GlobalTheory.Cube.d A (p + 1)))
     (h : _root_.GlobalTheory.cechClass A p x = 0) :
@@ -229,6 +259,10 @@ theorem _root_.GlobalTheory.Cube.SemiHom.homology_cechClass (p : ℕ)
   rfl
 
 
+open CategoryTheory Limits in
+variable {ι : Type} [LinearOrder ι] {R : Type u} [Ring R] {S : Type u'} [Ring S] in
+variable {f : R →+* S} {A A' : _root_.GlobalTheory.Cube.{v} ι R} {B B' : _root_.GlobalTheory.Cube.{v'} ι S}
+  (ψ : _root_.GlobalTheory.Cube.SemiHom f A B) in
 theorem _root_.GlobalTheory.Cube.SemiHom.homology_bijective
     (h : ∀ s : Finset ι, s.Nonempty → Function.Bijective (ψ.app s))
     (p : ℕ) : Function.Bijective (ψ.homology p) := by
@@ -267,6 +301,10 @@ theorem _root_.GlobalTheory.Cube.SemiHom.homology_bijective
     exact Subtype.ext hx'
 
 
+open CategoryTheory Limits in
+variable {ι : Type} [LinearOrder ι] {R : Type u} [Ring R] {S : Type u'} [Ring S] in
+variable {f : R →+* S} {A A' : _root_.GlobalTheory.Cube.{v} ι R} {B B' : _root_.GlobalTheory.Cube.{v'} ι S}
+  (ψ : _root_.GlobalTheory.Cube.SemiHom f A B) in
 theorem _root_.GlobalTheory.Cube.SemiHom.homology_naturality (ψ' : _root_.GlobalTheory.Cube.SemiHom f A' B') (α : A ⟶ A')
     (β : B ⟶ B')
     (h : ∀ s, s.Nonempty → ∀ x, ψ'.app s ((α.app s).hom x) =
@@ -290,6 +328,10 @@ theorem _root_.GlobalTheory.Cube.SemiHom.homology_naturality (ψ' : _root_.Globa
   exact h s.1 (Finset.card_pos.1 (by rw [s.2]; exact Nat.succ_pos p)) (x.1 s)
 
 
+open CategoryTheory Limits in
+variable {ι : Type} [LinearOrder ι] {R : Type u} [Ring R] {S : Type u'} [Ring S] in
+variable {f : R →+* S} {A A' : _root_.GlobalTheory.Cube.{v} ι R} {B B' : _root_.GlobalTheory.Cube.{v'} ι S}
+  (ψ : _root_.GlobalTheory.Cube.SemiHom f A B) in
 theorem _root_.GlobalTheory.Cube.SemiHom.homology_cechAugHomology (a : A.obj ∅) :
     ψ.homology 0 ((_root_.GlobalTheory.cechAugHomology A).hom a) =
       (_root_.GlobalTheory.cechAugHomology B).hom (ψ.app ∅ a) := by
@@ -303,6 +345,7 @@ theorem _root_.GlobalTheory.Cube.SemiHom.homology_cechAugHomology (a : A.obj ∅
 
 
 
+omit [LinearOrder ι] in
 def constRingHom (ι : Type) (f : R →+* S) :
     Cube.SemiHom f (Cube.const ι (ModuleCat.of R R)) (Cube.const ι (ModuleCat.of S S)) where
   app _ := f.toSemilinearMap

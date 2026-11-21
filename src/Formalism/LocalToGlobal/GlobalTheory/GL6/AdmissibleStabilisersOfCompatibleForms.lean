@@ -59,6 +59,7 @@ section AdmsGL
 variable {F : Type} [Field F] [NumberField F] {n : ℕ}
 
 
+set_option maxHeartbeats 1000000 in
 theorem adms_gl (v : HeightOneSpectrum (𝓞 F)) (M : GL (Fin n) (v.adicCompletion F))
     (hA : ∀ p q, (M : Matrix (Fin n) (Fin n) (v.adicCompletion F)) p q ∈ v.adicCompletionIntegers F)
     (hB : ∀ p q, ((M⁻¹ : GL (Fin n) (v.adicCompletion F)) : Matrix (Fin n) (Fin n) (v.adicCompletion F)) p q ∈
@@ -111,6 +112,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {gp : Fin 2 → ℕ}
 
 
+set_option maxHeartbeats 1000000 in
 theorem adms_iwU (S : StepLevel F E σ J T f bad) (G : GLoc F E σ gp) {a t nb skip fc : ℕ} {zl : Bool}
     (L : GLev S G a t nb skip fc zl) (ha : n ≤ a) (i : Fin 2) (v : HeightOneSpectrum (𝓞 F))
     (hv : (gp i : 𝓞 F) ∈ v.asIdeal) (x : GL (Fin n) (E ⊗[F] v.adicCompletion F)) (hx : x ∈ S.Uloc v) :
@@ -140,6 +142,7 @@ theorem rank_zero_le_admissible_bound : D.R.N 0 ≤ aOf D.R 0 := by
   simp
 
 
+set_option maxHeartbeats 2000000 in
 theorem adms_core (Tf : FormsTied D u) (x : UPts (sigD D) (gramN D 0 (Nat.zero_le _)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F))
     (γ : GL (Fin (D.R.N 0)) D.host.E) (hγJ : γ ∈ UJ (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _)))
     (hγ : x.1⁻¹ * bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) γ * x.1 ∈
@@ -170,6 +173,7 @@ theorem adms_core (Tf : FormsTied D u) (x : UPts (sigD D) (gramN D 0 (Nat.zero_l
     x γ hγJ hγ
 
 
+set_option maxHeartbeats 2000000 in
 theorem adms_triv (Tf : FormsTied D u) (c : (D.mem u).C.cls 0)
     (γ : UJ (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _)))
     (hγ : bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) γ.1 ∈

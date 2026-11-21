@@ -209,6 +209,8 @@ def pair (I J : Cx R) : Pair I J (cx I J) where
 end GlobalTheory.EtC.TensEx
 
 
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex in
+open scoped DirectSum TensorProduct in
 theorem _root_.GlobalTheory.EtC.tensor_exists :
     ∀ (R : Type) [CommRing R] (I J : _root_.GlobalTheory.EtC.Cx R),
       ∃ (K : _root_.GlobalTheory.EtC.Cx R) (τ : _root_.GlobalTheory.EtC.Pair I J K), τ.IsTensor := by

@@ -47,6 +47,7 @@ theorem val_prod {R : Type} [CommRing R] [IsLocalRing R] {z : Spec (CommRingCat.
 end GlobalTheory.CompanionTheory.Ar.Cusp.FamEx.PointUnique
 
 
+open GlobalTheory.CompanionTheory.Ar.Cusp.FamEx.PointUnique in
 theorem GlobalTheory.CompanionTheory.Ar.Cusp.FamEx.point_eq_of_coordsAt : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Spec (CommRingCat.of Ω) ⟶ X) (K : Type) [Fintype K] (J : K → Type) (y : (Σ k, J k) → Ω), CoordTie ℤ ξ (fun c' : (k : K) → J k => ∏ k, y ⟨k, c' k⟩) → ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsNormalScheme X → (∀ q : X, genPt ξ ⤳ q) → ∀ (z z' : Spec (CommRingCat.of ℂ) ⟶ X) (w : (Σ k, J k) → ℂ), CoordsAt ξ y z w → CoordsAt ξ y z' w → z = z' := by
   intro X Ω _ ξ K _ J y T _ hall z z' w hz hz'
   have hξ := T.gen

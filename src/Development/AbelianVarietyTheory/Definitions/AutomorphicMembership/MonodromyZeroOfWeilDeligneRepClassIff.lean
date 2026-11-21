@@ -223,6 +223,7 @@ theorem Iso.dual {a : WDRep h V} {b : WDRep h V'} (hab : a.Iso b) : a.dual.Iso b
   exact ⟨e.dualMap, fun σ f => by ext; simp [h1], fun f => by ext; simp [h2]⟩
 
 
+variable (h) in
 def ofChars {ι : Type*} [Finite ι] (χ : ι → Weil h →* ℂˣ) (hχ : ∀ i, IsSmooth (χ i)) :
     WDRep h (ι → ℂ) where
   ρ := { toFun := fun σ => diagEnd fun i => (χ i σ : ℂ)
@@ -245,6 +246,7 @@ def ofChars {ι : Type*} [Finite ι] (χ : ι → Weil h →* ℂˣ) (hχ : ∀ 
     (hχ : ∀ i, IsSmooth (χ i)) : (ofChars (h := h) χ hχ).N = 0 := rfl
 
 
+variable (h) in
 def diag {ι : Type*} [Finite ι] (c : ι → ℂˣ) : WDRep h (ι → ℂ) :=
   ofChars (h := h) (fun i => unrChar h (c i)) fun _ => isSmooth_unrChar h _
 
@@ -255,9 +257,11 @@ def diag {ι : Type*} [Finite ι] (c : ι → ℂˣ) : WDRep h (ι → ℂ) :=
 @[simp] theorem diag_N {ι : Type*} [Finite ι] (c : ι → ℂˣ) : (diag (h := h) c).N = 0 := rfl
 
 
+variable (w) in
 def spEig (n : ℕ) (i : Fin n) : ℂˣ := qPow w (((i : ℕ) : ℝ) - ((n : ℝ) - 1) / 2)
 
 
+variable (h) in
 def sp (n : ℕ) : WDRep h (Fin n → ℂ) where
   ρ := (diag (h := h) (spEig (w := w) n)).ρ
   N := shiftEnd n
@@ -444,6 +448,7 @@ def lpDual (x : WD h) : WD h :=
 def lpZero : WD h := mk (WDRep.diag (h := h) (ι := Fin 0) fun i => i.elim0)
 
 
+variable (h) in
 def lpOfChar (χ : Weil h →* ℂˣ) (hχ : IsSmooth χ) : WD h :=
   mk (WDRep.ofChars (h := h) (ι := Fin 1) (fun _ => χ) fun _ => hχ)
 

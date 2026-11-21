@@ -18,6 +18,8 @@ namespace GlobalTheory.HL.CoordInnerFst
 open CoordInnerSnd
 
 
+open ValuativeRel in
+open scoped Pointwise ENNReal Classical in
 theorem _root_.GlobalTheory.HL.CoordInnerFst.transport : ∀ {F : Type} [Field F] [ValuativeRel F]
     [TopologicalSpace F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E]
     [MeasurableSpace E] (M : _root_.Formalism.MainNotions.S.Loc.Model F E), M.OK → ∀ {V : Type} [AddCommGroup V] [Module E V]

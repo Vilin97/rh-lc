@@ -111,6 +111,7 @@ theorem isOpen_nz : IsOpen {z : (Σ k, J k) → ℂ | ∀ k, ∃ i, z ⟨k, i⟩
 variable {ref : HermLine J} {w : ((Σ k, J k) → ℂ) → ℝ} (P : PotentialCharts M.atlas)
 
 
+include P in
 theorem relative_weight_bounded (hr : IsSmoothHerm ref) (hL : LogHom D ref.a w) (hB : ChartBdd D w) :
     ∃ C, ∀ y ∈ Yo M, |ph0 M ref w y| ≤ C := by
   have hloc : ∀ x : M.Xc, ∃ C, ∀ᶠ y in 𝓝 x, y ∈ Yo M → |ph0 M ref w y| ≤ C := by

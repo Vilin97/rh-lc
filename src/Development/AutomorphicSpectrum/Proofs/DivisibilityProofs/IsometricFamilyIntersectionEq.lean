@@ -38,6 +38,7 @@ theorem cycList_perm (Z : Ideal (MRing ι O) → ℤ) {l l' : List (K → ℤ)} 
   exact intNumL_perm (IsLocalRing.ResidueField O) (specialIdeal W) h
 
 
+omit [DecidableEq K] in
 theorem divCycle_mul_finite {R : Type} [CommRing R] [IsNoetherianRing (MRing ι R)] (P : Ideal (MRing ι R))
     (f : MRing ι R) (n : Ideal (MRing ι R) → ℤ) :
     (Function.support fun W => divCycle P f W * n W).Finite := by

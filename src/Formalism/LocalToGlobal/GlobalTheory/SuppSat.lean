@@ -18,9 +18,11 @@ def bndP (L : SizeData₂ D) : ℕ :=
   max ⌊L.sc.a + L.sc.a / ((D.R.k : ℝ) * L.sc.x ^ (Scale.A / 2))⌋₊ ⌊L.sc.X'' D.R.n⌋₊ + 1
 
 
+open Classical in
 def PsAt (L : SizeData₂ D) : Finset ℕ := (Finset.range (bndP L)).filter (fun p => p.Prime ∧ InertK D p)
 
 
+open Classical in
 def sAt (L : SizeData₂ D) (K : G.Consts) : Finset ℕ := (Finset.range ⌈L.sc.X'⌉₊).filter (fun p => G.Cand D L K p)
 
 def TTv (D : D7) : Finset ℕ := D.host.TT.image Formalism.HC.Frame.A.val

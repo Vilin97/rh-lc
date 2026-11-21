@@ -48,6 +48,7 @@ theorem fiveTerm_exact :
       exact exists_transgression_eq A N hN t ht
 
 
+include hN in
 theorem infRes_exact {q : ℕ} (hq : q ≠ 0)
     (hA : ∀ i, 0 < i → i < q → IsZero (cohomology (Rep.res N.subtype A) i)) :
     Function.Injective (cohomologyInfl A N q).hom ∧

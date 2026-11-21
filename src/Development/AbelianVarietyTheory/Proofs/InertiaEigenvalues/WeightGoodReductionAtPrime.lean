@@ -38,6 +38,7 @@ theorem actD_mk (T : LocLat G Qp LL O) (g : G) (x : T.V) :
     actD T.L g (Submodule.Quotient.mk x) = Submodule.Quotient.mk (T.ρ g x) := rfl
 
 
+omit [TopologicalSpace Qp] in
 theorem lc_mk (T : LocLat G Qp LL O) (hT : IsOpen (T.L.T : Set T.V)) {f : G → T.V}
     (hf : Continuous f) :
     IsLocallyConstant fun g => (Submodule.Quotient.mk (f g) : T.V ⧸ T.L.T) := by
@@ -149,6 +150,7 @@ theorem length_le_of_card (O : Type) [CommRing O] [IsLocalRing O] (M N : Type) [
   exact (Nat.pow_le_pow_iff_right hq).1 h
 
 
+omit [TopologicalSpace Qp] in
 def actTors (T : LocLat G Qp LL O) (a : O) (g : G) :
     ↥(Submodule.torsionBy O (T.V ⧸ T.L.T) a) →+ ↥(Submodule.torsionBy O (T.V ⧸ T.L.T) a) where
   toFun m := ⟨actD T.L g m.1, by
@@ -161,6 +163,7 @@ theorem lc_sub {X Y : Type} [TopologicalSpace X] {p : Y → Prop} {f : X → Sub
   IsLocallyConstant.desc f Subtype.val hf Subtype.val_injective
 
 
+omit [TopologicalSpace Qp] in
 def toCoc (T : LocLat G Qp LL O) (a : O) (c : ↥(Submodule.torsionBy O ↥(divisibleCocycles T.L) a)) :
     ↥{c : G → ↥(Submodule.torsionBy O (T.V ⧸ T.L.T) a) |
       IsLocallyConstant c ∧ ∀ g h, c (g * h) = c g + actTors T a g (c h)} :=
@@ -236,6 +239,7 @@ def toG (T : LocLat G Qp LL O) : GRep G Qp LL O where
   cont := T.cont
 
 
+omit [TopologicalSpace Qp] in
 theorem fixed_points_trivial_of_scalar_action_ne_one (T : LocLat G Qp LL O) (g : G) (u : LL) (hu : u ≠ 1)
     (hg : ∀ x, T.ρ g x = u • x) : H0V T.ρ = ⊥ := by
   rw [eq_bot_iff]

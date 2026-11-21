@@ -39,6 +39,7 @@ theorem log_hermOfFun_h (a : K → ℤ) (F : ((Σ k, ι k) → ℂ) → ℝ) {z 
   ring
 
 
+omit [DecidableEq Ψ] in
 theorem ComponentSetting.wSt_eq (X : ComponentSetting D O Lt) (B p q : ℕ) (hq : 1 ≤ q)
     (t t' : ℝ) {z : (Σ k, ι k) → ℂ} (hz : z ∈ mcPts (mCoordIdeal D.y)) :
     X.wSt B p q t t' z = (Real.log (X.S'.ref.h z) - Real.log (X.S.ref.h z)) +

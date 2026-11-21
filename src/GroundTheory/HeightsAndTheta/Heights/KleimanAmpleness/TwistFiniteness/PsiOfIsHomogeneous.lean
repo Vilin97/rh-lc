@@ -22,6 +22,7 @@ variable {Ω : Type w} [Field Ω] {N r : ℕ}
 abbrev LA (Ω : Type w) [Field Ω] : Type w := AddMonoidAlgebra Ω (ℤ × ℤ)
 
 
+set_option linter.unusedVariables false in
 def Amb (x : Fin (N + 1) → Ω) (η : Fin (r + 1) → Ω) : Type w := LA Ω
 
 variable (x : Fin (N + 1) → Ω) (η : Fin (r + 1) → Ω)

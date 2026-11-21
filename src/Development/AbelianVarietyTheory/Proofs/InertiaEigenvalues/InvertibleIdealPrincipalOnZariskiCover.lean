@@ -31,6 +31,7 @@ theorem one_mem_span_values {A : Type} [CommRing A] (I : Ideal A) [Module.Invert
 end GlobalTheory.BSP.ZarPrincipal
 
 
+open GlobalTheory.BSP.ZarPrincipal in
 theorem GlobalTheory.BSP.invertible_ideal_principal_on_cover :
     ∀ (A : Type) [CommRing A] (I : Ideal A), Module.Invertible A ↥I → ∃ (n : ℕ) (s t : Fin n → A),
       Ideal.span (Set.range s) = ⊤ ∧ ∀ i, t i ∈ I ∧ ∀ x ∈ I, ∃ c, s i * x = c * t i := by

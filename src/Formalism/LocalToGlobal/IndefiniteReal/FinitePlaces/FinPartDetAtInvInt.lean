@@ -377,6 +377,7 @@ theorem frGL_val' {n : ℕ} (β : GL (Fin n) (Lev.EAf D)) (y : GL (Fin n) (Forma
         ((β⁻¹ : GL (Fin n) (Lev.EAf D)) : Matrix (Fin n) (Fin n) (Lev.EAf D)) := rfl
 
 
+set_option maxHeartbeats 1000000 in
 theorem finE_resG_mem_St (hε : IsIdempotentElem ε) {g : GA D V} {β : GL (Fin V.rank) (Lev.EAf D)}
     (hg : Lev.finE V g ∈ Formalism.L2.DIV.St β) : Lev.finE V (resG V ε g) ∈ Formalism.L2.DIV.St β := by
   obtain ⟨y, hy⟩ := hg
@@ -479,6 +480,7 @@ theorem comm_comm (z : Af D.host.F ⊗[D.host.F] D.host.E) :
 
 
 
+set_option maxHeartbeats 1000000 in
 theorem toEAf_det {V : HSp D} {g : GA D V} {β : GL (Fin V.rank) (Lev.EAf D)}
     {y : GL (Fin V.rank) (Formalism.L2.Herm.intAf D.host.F D.host.E)} (hy : Formalism.L2.DIV.frGL β y = Lev.finE V g) :
     toEAf D (mt V g).det =
@@ -530,6 +532,7 @@ theorem infPart_idemAt {e : AE D} {PP : Formalism.L2.DIV.Pl D.host.E} (hPP : For
   linear_combination -hz + (infPart D e) * hy - hx
 
 
+set_option maxHeartbeats 1000000 in
 theorem unrOff_detAt {e e₁ : AE D} {PP₁ : Formalism.L2.DIV.Pl D.host.E} (hPP₁ : Formalism.L2.NTheta.IsIdemAt e₁ PP₁)
     (horth : (e + cA D e) * e₁ = 0) (V : HSp D) {g : GA D V} {β : GL (Fin V.rank) (Lev.EAf D)}
     (hg : Lev.finE V g ∈ Formalism.L2.DIV.St β) {χ : (AE D)ˣ →* Circle} (hU : UnrOff e χ) : χ (detAt e₁ V g) = 1 := by
@@ -607,6 +610,7 @@ theorem isIdemAt_conj {e : AE D} {PP : Formalism.L2.DIV.Pl D.host.E} (h : Formal
     · intro hn hm; exact hn (cF_int hm)
 
 
+open Classical in
 theorem isIdemSum_conj {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} (h : IsIdemSum e P) :
     IsIdemSum (cA D e) (P.image Formalism.L2.DIV.conjPl) := by
   classical

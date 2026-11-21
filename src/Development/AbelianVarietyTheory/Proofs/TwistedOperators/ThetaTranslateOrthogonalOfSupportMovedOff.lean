@@ -79,6 +79,7 @@ def charSpan (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (b : AE D) : Submodu
   Submodule.span ℂ {p | ∃ y : WO S T, IsHalf b y ∧ p = fun t => ψ (symplO S T t y)}
 
 
+open Classical in
 theorem exists_char_of_wave {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {a : AE D} {Λ : AddSubgroup (WO S T)} (N : ℕ)
     {Ψ : WO S T → ℂ}
     (hΨ : Ψ ∈ Submodule.span ℂ {Ψ : WO S T → ℂ | ∃ x y : WO S T, IsHalf a x ∧ IsHalf (cA D a) y ∧

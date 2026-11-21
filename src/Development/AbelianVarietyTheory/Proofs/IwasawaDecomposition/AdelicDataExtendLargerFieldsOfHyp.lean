@@ -29,6 +29,7 @@ open GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.Mem.Top GlobalTheory.Me
 namespace GlobalTheory.Mem.R3.Rw
 
 
+set_option maxHeartbeats 4000000 in
 theorem datExt0_of_hypotheses : GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.HarishChandraModules → GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.CasselmanWallach → GlobalTheory.Published.WeilRepresentationUnitaryPair → GlobalTheory.Published.DiscreteSeriesExists → GlobalTheory.Published.HarishChandraFinite → DatExt0 := by
   intro h1 h2 h3 h4 h5 h6 h7
   refine ((GlobalTheory.T.exists_extendedColumnData_all_clauses_but_places h1 h2 h3 h4 h5 h6 h7).and (GlobalTheory.T.extendedData_nonzero_index_places_correspond_alt h1 h2 h3 h4 h5 h6 h7)).trans (StepW.of_all ?_)

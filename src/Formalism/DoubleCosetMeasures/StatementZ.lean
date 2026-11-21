@@ -47,6 +47,7 @@ def Jset (J' : Subgroup (GL (Fin a) F)) : Set (Matrix (Fin a) (Fin a) F) :=
   (fun k : GL (Fin a) F => (k : Matrix (Fin a) (Fin a) F)) '' (J' : Set (GL (Fin a) F))
 
 
+open Classical in
 def phiU (O : Subring F) (ϖ : F) (J' : Subgroup (GL (Fin a) F)) (ρ : J' →* ℂˣ) :
     Matrix (Fin a ⊕ Fin t) (Fin a) F → ℂ :=
   by

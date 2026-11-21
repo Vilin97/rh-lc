@@ -243,9 +243,11 @@ def lowIdeal {O : Type} [CommRing O] {ι : Type} (I : Ideal O) (K : Set ι) (c :
       omega
 
 
+variable (X i) in
 abbrev Red (M : ℕ) (ι : Type) : Type := abelian₂ X i M ι ⧸ (idl i).map (algebraMap (X.O0 i) (abelian₂ X i M ι))
 
 
+variable (X i) in
 abbrev toRed (M : ℕ) (ι : Type) : abelian₂ X i M ι →ₐ[X.O0 i] Red X i M ι := Ideal.Quotient.mkₐ _ _
 
 theorem sq_mem_idl : ((X.l i ^ (nu X i + 1) : ℕ) : X.O0 i) ∈ idl i := by

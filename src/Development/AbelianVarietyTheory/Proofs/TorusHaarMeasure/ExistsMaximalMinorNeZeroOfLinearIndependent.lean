@@ -12,6 +12,8 @@ open scoped ComplexOrder ENNReal Matrix
 namespace GlobalTheory
 
 
+open NumberField MeasureTheory Topology in
+open scoped ComplexOrder ENNReal Matrix in
 theorem _root_.GlobalTheory.exists_maximal_minor_ne_zero_of_linearIndependent
     (K : Type) [Field K] (r : ℕ) (ι : Type) [Fintype ι] [DecidableEq ι] (w : ι → Fin r → K)
     (hw : LinearIndependent K w) :

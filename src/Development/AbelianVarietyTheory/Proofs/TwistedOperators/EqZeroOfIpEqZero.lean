@@ -63,6 +63,7 @@ theorem ip_om_one (g : GL a k) (h : GL b k) (Φ : Matrix b a k → ℂ) :
   simp
 
 
+omit [DecidableEq a] [DecidableEq b] in
 theorem eq_zero_of_ip_eq_zero {Φ : Matrix b a k → ℂ} (hΦ : Φ ∈ SB (Matrix b a k)) (h0 : ip ν Φ Φ = 0) : Φ = 0 := by
   obtain ⟨hl, hK⟩ : IsLocallyConstant Φ ∧ HasCompactSupport Φ := hΦ
   obtain ⟨h2, ht⟩ := Model.secondCountable_and_t2_local_field (k := k)

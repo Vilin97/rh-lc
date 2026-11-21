@@ -1597,6 +1597,7 @@ def badN (k : ℕ) (w w' : Point K) (q : Cos R w × Cos R w') : ℕ :=
 
 
 open scoped Classical in
+open Classical in
 theorem fib_core (ψ : AddChar K ℂ) (hsd : ∀ a : K, (∀ r ∈ R, ψ (a * r) = 1) ↔ a ∈ R)
     (hun : ∀ x : K, conj (ψ x) = ψ (-x))
     (hfin : ∀ (m : ℕ) (Z : Matrix (Fin m) (Fin m) K), IsInt R Z → IsUnit Z.det →
@@ -1693,6 +1694,7 @@ theorem fib_core (ψ : AddChar K ℂ) (hsd : ∀ a : K, (∀ r ∈ R, ψ (a * r)
 
 
 open scoped Classical in
+open Classical in
 theorem fibre_zero (ψ : AddChar K ℂ) (hsd : ∀ a : K, (∀ r ∈ R, ψ (a * r) = 1) ↔ a ∈ R)
     (hun : ∀ x : K, conj (ψ x) = ψ (-x))
     (hfin : ∀ (m : ℕ) (Z : Matrix (Fin m) (Fin m) K), IsInt R Z → IsUnit Z.det →

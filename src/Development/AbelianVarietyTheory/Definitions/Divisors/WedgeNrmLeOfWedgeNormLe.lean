@@ -58,12 +58,14 @@ section Fin
 variable {K : Type} [Field K] [NumberField K] [Algebra c.F K]
 
 
+omit [Algebra c.F K] in
 theorem nrmOf_nonneg (la : HeightOneSpectrum (𝓞 K)) (w : EReal) : 0 ≤ nrmOf la w := by
   simp only [nrmOf]
   split_ifs
   exacts [le_rfl, by positivity]
 
 
+omit [Algebra c.F K] in
 theorem nrmOf_anti (la : HeightOneSpectrum (𝓞 K)) {w w' : EReal} (hw : w ≠ ⊥) (h : w ≤ w') :
     nrmOf la w' ≤ nrmOf la w := by
   by_cases ht : w' = ⊤
@@ -217,9 +219,11 @@ section Inf
 variable {K : Type} [Field K] [Algebra c.F K] {r : ℕ}
 
 
+variable (c) in
 abbrev baseEmb (τ : K →+* ℂ) : c.F →+* ℂ := goodOf c (τ.comp (algebraMap c.F K))
 
 
+variable (c) in
 def goodHom (τ : K →+* ℂ) : K →ₐ[c.F] CAt (baseEmb c τ) :=
   if h : GoodEmb c (τ.comp (algebraMap c.F K)) then
     ⟨τ, fun a => (DFunLike.congr_fun (if_pos h : baseEmb c τ = _) a).symm⟩

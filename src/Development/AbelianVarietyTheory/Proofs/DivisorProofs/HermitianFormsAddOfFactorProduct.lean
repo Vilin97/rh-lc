@@ -234,6 +234,7 @@ theorem lam_shift [IsCommMonObj A] {L L₁ : LB A.left} (u₁ : HolUnif A L₁ g
 end GlobalTheory.TorusRM.LamAdd
 
 
+open GlobalTheory.TorusRM.LamAdd GlobalTheory.ProdUnifSq in
 theorem GlobalTheory.TorusRM.lbIso_lam_of_add : ∀ (g : ℕ) (A : Over (Sp ℂ)) [GrpObj A], IsAbelianScheme A → IsProjOver A.hom →
     ∀ (M₁ M₂ M₃ : LB A.left) (u₁ : HolUnif A M₁ g) (u₂ : HolUnif A M₂ g) (u₃ : HolUnif A M₃ g)
       (H₁ H₂ H₃ : Matrix (Fin g) (Fin g) ℂ) (χ₁ : u₁.Λ → ℂ) (χ₂ : u₂.Λ → ℂ) (χ₃ : u₃.Λ → ℂ),

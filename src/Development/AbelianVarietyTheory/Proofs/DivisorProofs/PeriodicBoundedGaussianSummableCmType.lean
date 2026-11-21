@@ -54,6 +54,7 @@ theorem embHom_injective {φ : I → K →+* ℂ} (hφ : GlobalTheory.CMVal.IsCM
   exact absurd hi (by norm_num)
 
 
+omit [Fintype I] in
 theorem summable_exp_neg_mul_norm_sq {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
     (L : Submodule ℤ E) [DiscreteTopology L] {a : ℝ} (ha : 0 < a) :
     Summable fun x : L ↦ Real.exp (-a * ‖(x : E)‖ ^ 2) := by

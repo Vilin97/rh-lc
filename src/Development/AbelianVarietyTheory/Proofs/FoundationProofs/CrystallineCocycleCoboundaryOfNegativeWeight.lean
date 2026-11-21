@@ -24,6 +24,7 @@ private theorem fd_adjoin_range (l : ℕ) [Fact l.Prime] {ι : Type} [Finite ι]
       (Algebra.IsAlgebraic.isAlgebraic z).isIntegral
 
 
+open TensorProduct in
 private theorem desc {l : ℕ} [Fact l.Prime] {H : Type} [Group H] [TopologicalSpace H] (φ : H →* GQ l)
     (κ : H →* (PadicAlgCl l)ˣ) (E₀ : IntermediateField ℚ_[l] (PadicAlgCl l)) [FiniteDimensional ℚ_[l] E₀]
     (hκ : ∀ g, (κ g : PadicAlgCl l) ∈ E₀) (c : H → PadicAlgCl l) (hc : c ∈ Loc.finiteCocycles φ (Loc.chRep κ)) :
@@ -101,6 +102,7 @@ private theorem coef_finext {l : ℕ} [Fact l.Prime] (c : Coef l) :
 end GlobalTheory.NegVan
 
 
+open GlobalTheory.NegVan in
 theorem GlobalTheory.NegVan.crys_cocycle_coboundary_of_neg_weight :
     Loc.LocalPublishedTheorems → ∀ (l : ℕ) [Fact l.Prime] (κ : GQ l →* (Qbar l)ˣ), Continuous (fun σ => (κ σ : Qbar l)) →
       ∀ c : Coef l, (∀ σ, (κ σ : Qbar l) ∈ c.O) → ∀ w : ℤ, w < 0 → Loc.HasWeight (MonoidHom.id (GQ l)) κ w →

@@ -191,6 +191,7 @@ end GlobalTheory.CompanionTheory.Ar.PB.StepBlock
 namespace GlobalTheory.CompanionTheory.Ar.PB
 
 
+open StepBlock in
 theorem stepPot_mul_eq_blockPot : ∀ (N j : ℕ) (i : Fin N) (Pi G h : Matrix (Fin N) (Fin N) ℂ), j ≤ N →
     IsPeriodGram j Pi G → IsBlockDiag j G → G.PosDef → IsBlockDiag j h → h.det ≠ 0 →
     InFlagDomain N j (Pi * h) ∧ stepPot N j i (Pi * h) = blockPot j i G h + Real.log ‖detFac j i h‖ := by

@@ -96,6 +96,7 @@ variable (ιs : ∀ v : S, ℚ̄ →ₐ[K.1] AlgebraicClosure ((v : HeightOneSpe
   [NeZero n] [Fintype S]
 
 
+set_option maxHeartbeats 1600000 in
 theorem surjective_gsCompactInv [Nonempty S] (hodd : Odd n ∨ IsTotallyComplex K.1)
     (h3 : Subsingleton (cohomology (gsRoots S n) 3))
     (ht : ∀ v, Function.Surjective (gsLocalInvRoots S ιs n v)) :
@@ -110,6 +111,7 @@ theorem surjective_gsCompactInv [Nonempty S] (hodd : Odd n ∨ IsTotallyComplex 
   exact (sum_apply_pi_single (fun w => gsLocalInvRoots S ιs n w) v η).trans hη
 
 
+omit [Fintype S] in
 abbrev gsLocalBrauerRoots (v : S) (z : cohomology (Rep.res (gsFinFamily S ιs v).toMonoidHom (gsRoots S n)) 2) :
     localGaloisCohomology K 2 (.inr (v : HeightOneSpectrum (𝓞 K.1))) :=
   (cohomologyMap (rootsLocalMorZ S ιs n v) 2).hom (cohomologyULiftIntAddEquiv _ 2 z)
@@ -135,6 +137,7 @@ theorem nsmul_gsLocalBrauerRoots (v : S)
     ((congrArg _ h).trans (map_zero _)))).trans (map_zero _))
 
 
+open Classical in
 noncomputable def gsBrauerFamily
     (ξ : ∀ v : S, cohomology (Rep.res (gsFinFamily S ιs v).toMonoidHom (gsRoots S n)) 2) :
     ⨁ w : Place K.1, localGaloisCohomology K 2 w :=
@@ -176,6 +179,7 @@ theorem sumPlaceInv_gsBrauerFamily
     ((placeInv_gsLocalBrauerRoots S n ιs v (ξ v)).trans (zmodToQZ_gsLocalInvRoots S ιs n v (ξ v)).symm)
 
 
+omit [NeZero n] [Fintype S] in
 theorem placeInv_brauerLocal_sUnitsBrauer (v : S) (y : cohomology (galSUnitsMax K.1 ℚ̄ S) 2) :
     placeInv (.inr (v : HeightOneSpectrum (𝓞 K.1)))
         (brauerLocal (gsLocalEmbeddings S ιs) (sUnitsBrauer K S y) (.inr (v : HeightOneSpectrum (𝓞 K.1)))) =
@@ -191,6 +195,7 @@ theorem placeInv_brauerLocal_sUnitsBrauer (v : S) (y : cohomology (galSUnitsMax 
   simp only [gsLocalEmbeddings_fin]
 
 
+omit [NeZero n] [Fintype S] in
 theorem exists_sUnits_of_mem_localPrimaryKernel (ℓ : ℕ) (hℓ : ℓ.Prime)
     (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
     (β : ⨁ w : Place K.1, localGaloisCohomology K 2 w) (hβ : β ∈ localPrimaryKernel K S ℓ) :
@@ -201,6 +206,7 @@ theorem exists_sUnits_of_mem_localPrimaryKernel (ℓ : ℕ) (hℓ : ℓ.Prime)
       (congrArg Subtype.val ((sUnitsH2PrimaryEquiv K S ℓ hℓ hS (gsLocalEmbeddings S ιs)).apply_symm_apply ⟨β, hβ⟩))⟩
 
 
+set_option maxHeartbeats 1600000 in
 theorem injective_gsCompactInv (ℓ k : ℕ) (hℓ : ℓ.Prime) (hnk : n = ℓ ^ k)
     (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
     (hodd : Odd n ∨ IsTotallyComplex K.1) (h3 : Subsingleton (cohomology (gsRoots S n) 3))

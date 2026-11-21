@@ -41,6 +41,7 @@ def cocycleEquiv : Z1 ρ ≃+ Z1 ρ' where
   map_add' z w := Subtype.ext (funext fun g => map_add e _ _)
 
 
+include he in
 theorem exists_H1_equiv_of_equivariant_equiv : ∃ T : H1 ρ ≃+ H1 ρ', ∀ (z : Z1 ρ) (z' : Z1 ρ'),
     (∀ g, z'.1 g = e (z.1 g)) → T (Submodule.Quotient.mk z) = Submodule.Quotient.mk z' := by
   refine ⟨QuotientAddGroup.congr ((B1 ρ).comap (Z1 ρ).subtype).toAddSubgroup

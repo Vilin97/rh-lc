@@ -39,6 +39,7 @@ theorem hasInfExp_one (τ : D.what₂.Tau) : HasInfExp D (1 : (AE D)ˣ →* Circ
   ⟨0, by simp, allSome_fam.2 fun x _ _ => by simp⟩
 
 
+variable (D) in
 def chrA : Subgroup ((AE D)ˣ →* Circle) where
   carrier := {χ | IsHeckeChar D χ ∧ ∀ τ, ∃ a, HasInfExp D χ τ a}
   one_mem' := ⟨⟨continuous_const, fun _ => rfl⟩, fun τ => ⟨0, hasInfExp_one τ⟩⟩

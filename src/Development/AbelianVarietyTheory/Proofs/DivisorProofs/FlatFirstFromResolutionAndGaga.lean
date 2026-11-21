@@ -93,6 +93,7 @@ theorem hasLev_of_prime_pow [IsDedekindDomain A] (q : A) (hq : q ≠ 0) (e : ℕ
 end Alg
 
 
+open GlobalTheory.AV GlobalTheory.AV.AbVar in
 theorem card_ker_eq_det {S : Scheme.{0}} (A : Over S) [GrpObj A] (hA : IsAbelianScheme A)
     (k : Type) [Field k] [IsAlgClosed k] [CharZero k] (x : Sp k ⟶ S) (u u' : A ⟶ A) [IsMonHom u] [IsMonHom u']
     (n : ℕ) (hn : n ≠ 0) (hu : u ≫ u' = (𝟙 A) ^ n)

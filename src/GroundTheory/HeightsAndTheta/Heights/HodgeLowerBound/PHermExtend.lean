@@ -31,6 +31,7 @@ def coefAt (z₀ w : (Σ k, ι k) → ℂ) (k : K) : ℂ :=
   (∑ j, starRingEnd ℂ (w ⟨k, j⟩) * z₀ ⟨k, j⟩) * ((blkSq w k : ℝ) : ℂ)⁻¹
 
 
+variable (ι) in
 def blocksNe : Set ((Σ k, ι k) → ℂ) :=
   {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0}
 
@@ -248,6 +249,7 @@ theorem local_ext (hP : IsMultiHomogIdeal P) (hpos : ∀ z ∈ mcPts P, 0 < F z)
     exact logRatio_smul hF hw hc
 
 
+open scoped Manifold in
 theorem exists_smooth_descend (hP : IsMultiHomogIdeal P) (hpos : ∀ z ∈ mcPts P, 0 < F z)
     (hF : ∀ z ∈ mcPts P, ∀ c : K → ℂ, (∀ k, c k ≠ 0) → F (torusSmul c z) = (∏ k, ‖c k‖ ^ a k) * F z)
     (hS : SmoothAlong (mcPts P) F) :

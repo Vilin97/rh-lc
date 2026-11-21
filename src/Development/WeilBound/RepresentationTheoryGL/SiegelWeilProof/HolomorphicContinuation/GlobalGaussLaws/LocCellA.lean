@@ -61,6 +61,7 @@ end PositivityTheory.Rg.Sw.Glob.LocCellA
 namespace PositivityTheory.Rg.Sw.Glob
 
 
+open LocCellA in
 theorem wEx : WEx := by
   intro D n
   let M : Matrix (Fin (n + n)) (Fin (n + n)) (AE D) := blk4 0 1 (-1) 0

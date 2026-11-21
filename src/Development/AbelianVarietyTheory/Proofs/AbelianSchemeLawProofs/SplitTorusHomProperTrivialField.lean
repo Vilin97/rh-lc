@@ -224,6 +224,7 @@ lemma pt_univ : (pt K X _ (univ K X)).left = (Rosenlicht.torusIso K X).hom := by
   · exact (Over.w (pt K X _ (univ K X))).trans (Rosenlicht.torusIso_hom_hom K X).symm
 
 
+variable {X} in
 def coch (l : X →+ ℤ) (G : Type) [CommGroup G] : G →* (Multiplicative X →* G) where
   toFun x :=
     { toFun := fun a => x ^ l a.toAdd

@@ -167,6 +167,7 @@ theorem shift_apply (la : A.La) (α : A.X) (th : (Fin A.gB → ℂ) → ℂ) (z 
       Complex.exp (-(Real.pi * A.H z la.l)) * th (z + (k : ℂ)⁻¹ • (A.ct la.y + la.l)) := rfl
 
 
+variable {k} in
 theorem shift_mem_Theta {α : A.X} {th : (Fin A.gB → ℂ) → ℂ} (h : th ∈ A.Theta k α) (la : A.La) :
     A.shift k la α th ∈ A.Theta k (α + la.y) := by
   have hk : (k : ℂ) ≠ 0 := NeZero.ne _
@@ -239,6 +240,7 @@ theorem term_add_P0_div (la : A.La) (α : A.X) (th : (Fin A.gB → ℂ) → ℂ)
   field_simp
 
 
+omit [NeZero k] in
 theorem exponent_add_weight (α y μ : A.X) : A.exponent k (α + y) μ = A.exponent k α μ + A.be y μ := by
   rw [exponent, exponent, map_add (f := _), A.be_symm μ y, add_assoc]
 

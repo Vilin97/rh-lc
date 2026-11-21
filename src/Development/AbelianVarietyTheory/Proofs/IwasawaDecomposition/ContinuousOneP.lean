@@ -64,6 +64,7 @@ theorem hasDerivAt_Rder {φ : GA D V → ℂ} (hφ : φ ∈ SmFun θ V) (hX : X 
   (differentiable_oneP hφ hX g 0).hasDerivAt
 
 
+attribute [local instance 100] LieRing.ofAssociativeRing in
 theorem glRel_derEnd (hθ : IsInfFam θ) (V : HSp D) (τ : D.what₂.Tau) : Formalism.REAL.GlRel fun a b : Fin V.rank =>
     GlobalTheory.Mem.RealTranslate.derEnd (V := V) hθ τ (Matrix.single a b 1) := by
   have R := (GlobalTheory.T.adelicUnitary_realPoints_structure_realPlaces D).2 θ hθ V

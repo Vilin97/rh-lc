@@ -32,6 +32,7 @@ theorem invT_mem_Sm {φ : GA E a → ℂ} (hφ : φ ∈ Sm E a) : (fun y => φ (
     fun _ hx => chart_invT φ g hx
 
 
+variable (E a) in
 def dualFn : Sm E a ≃ₗ[ℂ] Sm E a where
   toFun φ := ⟨fun y => φ.1 (invT a (Ad E) y), invT_mem_Sm φ.2⟩
   invFun φ := ⟨fun y => φ.1 (invT a (Ad E) y), invT_mem_Sm φ.2⟩
@@ -57,6 +58,7 @@ theorem lie_dualFn (X : Lie E a) (φ : Sm E a) :
   exact congrArg _ (fderiv_invTL_one X)
 
 
+omit [IsTotallyReal E] in
 def invTOp : Op E a → Op E a
   | .fin k => .fin (invT a (Af E) k)
   | .cpt k => .cpt k
@@ -70,6 +72,7 @@ theorem invTOp_invTOp (o : Op E a) : invTOp (invTOp o) = o := by
   | lie X => exact congrArg Op.lie (funext fun i => funext fun j => neg_neg (X i j))
 
 
+omit [NumberField E] [IsTotallyReal E] in
 theorem invT_toUnits (k : Kinf E a) : invT a (Rinf E) (Unitary.toUnits k) = Unitary.toUnits k :=
   Units.ext (Matrix.ext fun i j => star_trivial (k.1 i j))
 
@@ -129,6 +132,7 @@ theorem Zalg_dualFn {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) :
     exact ⟨x' * y', mul_mem h1 h3, fun φ => by simp [h2, h4]⟩
 
 
+omit [IsTotallyReal E] in
 theorem height_invT (y : GL (Fin a) (Rinf E)) : height (invT a _ y) = height y := by
   unfold height
   rw [invT_val, invT_inv_val, InvT.norm_transpose, InvT.norm_transpose, add_right_comm]

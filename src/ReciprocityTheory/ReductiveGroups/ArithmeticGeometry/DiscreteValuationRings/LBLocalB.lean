@@ -130,6 +130,7 @@ lemma sumElim_hφ {X : Scheme.{0}} {Ix Ix' : Type}
   · exact hφ₂ k
 
 
+set_option maxHeartbeats 1000000 in
 theorem genHasVal_mulGen (hϖ : Irreducible ϖ) {X : Scheme.{0}} (L : LB X) (hL : L.IsLB) {Ix Ix' : Type} [Fintype Ix] [Fintype Ix']
     (φ₁ : Ix → (Spec (CommRingCat.of V) ⟶ X)) (φ₁' : Ix → (Spec (CommRingCat.of (FractionRing V)) ⟶ X))
     (hφ₁ : ∀ k, φ₁' k = jK V ≫ φ₁ k) (ε₁ : Ix → ℤ)

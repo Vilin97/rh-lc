@@ -31,6 +31,7 @@ lemma eSec_struct {S : Scheme.{0}} (H : Over S) [GrpObj H] (κ : Γ((𝟙_ (Over
     _ = κ := by rw [key]; simp
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem tLin_of (hGF : GlobalFnsSt) : TLinSt := by
   intro R _ _ I O _ _ D _ A G _ _ U ιD ιA ιG hlin e a u hu hu0 χ
   have hO := hlin.q_lin e

@@ -177,6 +177,7 @@ theorem factor_isGalois_dvd [NeZero q] {L : Type} [Field L] [Algebra K L] [Finit
 end GlobalTheory.KeyOriginCut.TorsorField
 
 
+open GlobalTheory.KeyOriginCut.TorsorField in
 theorem GlobalTheory.KeyOriginCut.torsor_field_eq_prod_galois :
     ∀ (K M : Type) [Field K] [CommRing M] [Algebra K M] (q : ℕ)
     (act : Multiplicative (ZMod q) →* (M ≃ₐ[K] M)), 0 < q →

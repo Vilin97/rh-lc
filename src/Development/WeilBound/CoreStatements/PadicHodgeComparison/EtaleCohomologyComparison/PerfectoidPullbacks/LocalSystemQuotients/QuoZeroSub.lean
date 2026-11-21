@@ -104,6 +104,7 @@ section Pos
 variable {n : ℕ} (hn : n ≠ 0)
 
 
+variable (F ρ) in
 def psiP : Cx.Hom (Kt l F ρ n) (quo l (Kt l F ρ (n + 1)) n) (RingHom.id _) :=
   ((mq hn).o (IdF.span _ ((l : WittVector l k) ^ n)) (fun _ => le_rfl)).hom.comp
     (hinv (cmpq (sW l F ρ (n + 1)).A l n) fun i => GlobalTheory.T.compare_quotient_bijective _ _ (sW l F ρ (n + 1)).A l n i)

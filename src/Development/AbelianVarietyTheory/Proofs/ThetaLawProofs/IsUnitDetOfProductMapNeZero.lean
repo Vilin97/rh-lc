@@ -27,6 +27,9 @@ variable {R S B : Type} [CommRing R] [CommRing S] [CommRing B] [Algebra R S] [Al
   simp [_root_.GlobalTheory.DiscrJacobian.mu]
 
 
+open scoped TensorProduct in
+variable {R S B : Type} [CommRing R] [CommRing S] [CommRing B] [Algebra R S] [Algebra S B]
+  [Algebra R B] [IsScalarTower R S B] in
 theorem _root_.GlobalTheory.DiscrJacobian.mem_span_of_mu_eq_zero {ι : Type} [Fintype ι] [Module.Finite R B]
     [Module.FinitePresentation S B] (x : ι → S)
     (hx : ∀ j, x j ∈ (⊥ : Ideal S).jacobson)
@@ -156,6 +159,9 @@ variable {R B C : Type} [CommRing R] [CommRing B] [CommRing C] [Algebra R B] [Al
 
 
 
+open scoped TensorProduct in
+variable {R B C : Type} [CommRing R] [CommRing B] [CommRing C] [Algebra R B] [Algebra R C] in
+open IsLocalRing in
 theorem _root_.GlobalTheory.DiscrJacobian.isUnit_det_of_productMap_ne_zero [IsLocalRing R]
     [Algebra (ResidueField R) C]
     [IsScalarTower R (ResidueField R) C] {d : ℕ} (b : Module.Basis (Fin d) R B)
@@ -262,6 +268,8 @@ theorem _root_.GlobalTheory.DiscrJacobian.X_mem_jacobson {R : Type} [CommRing R]
   simp
 
 
+open MvPowerSeries IsLocalRing in
+open scoped TensorProduct in
 theorem _root_.GlobalTheory.DiscrJacobian.map_mem_radical {R S B : Type} [CommRing R]
     [IsLocalRing R] [CommRing S] [CommRing B]
     [Algebra R B] [Algebra S B] [Module.Finite R B] (hsurj : Function.Surjective (algebraMap S B))
@@ -359,6 +367,9 @@ private theorem norm_sum_mul_eq_discr_mul_det {R B : Type} [CommRing R] [CommRin
     Algebra.discr_def, mul_comm]
 
 
+open MvPowerSeries IsLocalRing in
+open scoped TensorProduct in
+set_option maxHeartbeats 800000 in
 theorem _root_.GlobalTheory.DiscrJacobian.associated_discr_norm_jacobian (R : Type) [CommRing R] [IsLocalRing R]
     (g d : ℕ) (f : Fin g → MvPowerSeries (Fin g) R)
     (b : Module.Basis (Fin d) R (MvPowerSeries (Fin g) R ⧸ Ideal.span (Set.range f)))

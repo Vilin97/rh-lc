@@ -66,6 +66,7 @@ def trivCoc (u : Fn1 X) (hu : IsCoc (whole X) u) :
 end GlobalTheory.PtExt.Lift
 
 
+open GlobalTheory.PtExt.Lift in
 theorem GlobalTheory.PtExt.cohom_fv_of_toH1O_surjective : ∀ (R : Type) [CommRing R] (X : Over (Sp R)),
     Function.Surjective (toH1O (X.hom ≫ 𝟙 _)) → ∀ u : Fn1 X, IsCoc (whole X) u →
       ∃ f : Z1 (O (dp0 R) (X.hom ≫ 𝟙 _)), Cohom (whole X) u (fv f) := by

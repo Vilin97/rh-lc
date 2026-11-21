@@ -10,6 +10,7 @@ open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC LateralTheory.E.t_
 namespace LateralTheory.E.StandardEtaleChartsMultivariableHensel
 
 
+attribute [local instance] MvPolynomial.gradedAlgebra in
 def stdOpen (i : Fin 2) : P1.Opens := Proj.basicOpen (MvPolynomial.homogeneousSubmodule (Fin 2) ℤ) (MvPolynomial.X i)
 
 def StdPair {A : Type} [CommRing A] {Z U V : Scheme.{0}} (p : Z ⟶ Spec (CommRingCat.of A)) (ι₁ : U ⟶ Z) (ι₂ : V ⟶ Z) : Prop :=

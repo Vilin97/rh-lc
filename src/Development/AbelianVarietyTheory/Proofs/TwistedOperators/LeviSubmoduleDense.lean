@@ -87,6 +87,7 @@ private theorem mul_Jm_comm_of_unitary_of_preserves {n : ℕ} (ε : Fin n → Bo
 end
 
 
+omit [CompleteSpace V] in
 theorem isKFinOn_of_isKFinIn {n : ℕ} {ε : Fin n → Bool} {M : Subgroup (UJ ε)}
     {σ : Matrix (Fin n) (Fin n) ℂ → (V →L[ℂ] V)} {v : V} (h : IsKFinIn M σ v) : IsKFinOn (mats M) σ v := by
   obtain ⟨U, hU, hv, hk⟩ := h

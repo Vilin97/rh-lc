@@ -209,6 +209,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {emb : ZMod n → (K₀ →ₐ[Qp] LL)}
 
 
+variable (PD emb O) in
 abbrev TwistCrys : Prop :=
   ∀ (T : LocLat G Qp LL O) (U : ZMod n → Multiset ℤ) (θ : G →* Oˣ) (a : ZMod n → ℤ),
     CrysWith PD emb T.ρ U → IsCrysChar PD emb θ a →
@@ -480,6 +481,7 @@ theorem finite_subset_adm (hO : IsOpen (Set.range (algebraMap O LL)))
   exact hc'
 
 
+omit [IsTopologicalRing LL] [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O LL] in
 theorem finite_classes_subset_admissible_of_goodO [TopologicalSpace Qp] (hO : Formalism.MainNotions.N.GoodO (Qp := Qp) LL O)
     (hfin : ∀ c : O, c ≠ 0 → Finite (O ⧸ Ideal.span {c}))
     (hext : GlobalTheory.IndefiniteRowSideFullHecke.CrystallineExtensions.ExtCrysAt PD emb) (htw : TwistCrys PD O emb)

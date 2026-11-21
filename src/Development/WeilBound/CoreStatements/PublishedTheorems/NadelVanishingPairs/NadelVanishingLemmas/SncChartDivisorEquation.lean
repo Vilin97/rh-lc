@@ -128,6 +128,7 @@ private theorem unitAt_of_ord_eq_zero_on_generizations {X : Scheme.{0}} [IsInteg
   exact isUnit_iff_exists_inv.mpr ⟨b, IsFractionRing.injective _ _ hab⟩
 
 
+open GlobalTheory.Discrepancy.MonoEqn in
 theorem GlobalTheory.Discrepancy.IsSncChart.isEqn_monomial : ∀ (k : Type) [Field k] [CharZero k] (Y : Scheme.{0}) [IsIntegral Y] [IsLocallyNoetherian Y] (q : Y ⟶ Sp k) (n : ℕ) [SmoothOfRelativeDimension n q] (B : Closeds Y) (y : Y) (U : Y.Opens) (hy : y ∈ U) (z : Fin n → Γ(Y, U)) (J : Finset (Fin n)) (w : Fin n → Y) (u : Fin n → Y.functionFieldˣ), IsSncChart q n B y U hy z J w u → ∀ D : CartierDiv Y, D.supp ≤ B → D.IsEqn y (∏ j ∈ J, u j ^ D.mult (w j)) := by
   intro k _ _ Y _ _ q n _ B y U hy z J w u hc D hD
   haveI : Smooth q := SmoothOfRelativeDimension.smooth n q

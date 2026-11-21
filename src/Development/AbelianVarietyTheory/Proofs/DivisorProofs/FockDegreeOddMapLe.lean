@@ -27,6 +27,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {n d : ℕ} {Y : Spc F E n} {W : Spc F E d}
 
 
+variable (F) in
 def sgnAd : AF F := ((-1 : InfiniteAdeleRing F), (1 : FiniteAdeleRing (𝓞 F) F))
 
 theorem sgnAd_mul_self : sgnAd F * sgnAd F = 1 := by

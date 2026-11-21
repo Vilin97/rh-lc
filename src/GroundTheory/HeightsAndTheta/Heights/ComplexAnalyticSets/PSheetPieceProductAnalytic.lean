@@ -190,6 +190,7 @@ theorem isBounded_prodFn {σ : Type} [Fintype σ] {X : Set (σ → ℂ)} {w : σ
 end SheetPieceProductAnalytic
 
 
+open SheetPieceProductAnalytic in
 theorem SheetPieceProductAnalytic.proof (hsec : UnbranchedFibreSections.Statement) :
     SheetPieceProductAnalytic.Statement := by
   intro σ _ X w B d A D δ N U V ℓ hP hU hV hcov hdisj

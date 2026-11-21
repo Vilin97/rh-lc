@@ -43,6 +43,7 @@ namespace AnRead
 variable {p : Y ⟶ Sp k} {σ : k →+* ℂ} {D : ℕ}
 
 
+variable (p σ D) in
 def all [SmoothOfRelativeDimension D p] : AnRead p σ D := ⟨_, id, AlgChart.exists_mem_source⟩
 
 instance nonempty [SmoothOfRelativeDimension D p] : Nonempty (AnRead p σ D) := ⟨all p σ D⟩
@@ -169,6 +170,7 @@ theorem HoloOn.inv {f : CxPts p σ → ℂ} (hf : R.HoloOn S f) (h0 : ∀ y ∈ 
     R.HoloOn S fun y => (f y)⁻¹ := fun i => (hf i).inv fun _ hv => h0 _ hv.2
 
 
+variable (R B) in
 def holSec : Submodule ℂ (B.ι → CxPts p σ → ℂ) where
   carrier := {s | s ∈ fibSec p σ B ∧ ∀ i, R.HoloOn (ptsIn p σ (B.U i)) (s i)}
   zero_mem' := ⟨zero_mem _, fun _ _ => differentiableOn_const (0 : ℂ)⟩
@@ -176,10 +178,12 @@ def holSec : Submodule ℂ (B.ι → CxPts p σ → ℂ) where
   smul_mem' c _ hs := ⟨Submodule.smul_mem _ c hs.1, fun i j => (hs.2 i j).const_smul c⟩
 
 
+variable (R) in
 theorem secVal_mem_holSec (s : B.Sec) : secVal p σ s ∈ R.holSec B :=
   ⟨secVal_mem s, fun _ => R.holoOn_ev _ _⟩
 
 
+variable (R B) in
 def valC : SecC p σ B →ₗ[ℂ] R.holSec B :=
   SecC.val.codRestrict _ (SecC.val_mem_of R.secVal_mem_holSec)
 
@@ -264,6 +268,7 @@ def topDens (y : CxPts p σ) : ℝ :=
     Real.exp (-φ.φ (pick φ.isLB y) y))
 
 
+variable {f} in
 theorem topDens_eq (hf : f ∈ fibSec p σ (tens K.bundle B)) (hy : y ∈ c.e.source) {a : K.bundle.ι}
     {b : B.ι} (ha : y ∈ ptsIn p σ (K.bundle.U a)) (hb : y ∈ ptsIn p σ (B.U b)) :
     c.topDens K φ f y = 2 ^ D * (‖c.topCoeff K f a b y‖ ^ 2 * Real.exp (-φ.φ b y)) := by
@@ -320,6 +325,7 @@ theorem topMeasure_apply (c : AlgChart p σ D) {A : Set (CxPts p σ)} (hA : Meas
     ← Measure.restrict_apply_self, key, Measure.restrict_apply_self]
 
 
+variable {R φ f} in
 theorem isLocallyFiniteMeasure_topMeasure (hφ : φ.IsSmooth R) (hf : f ∈ R.holSec (tens K.bundle B)) :
     IsLocallyFiniteMeasure (R.topMeasure K φ f) := ⟨fun y => by
   obtain ⟨i, hi⟩ := R.cover y
@@ -347,6 +353,7 @@ theorem isLocallyFiniteMeasure_topMeasure (hφ : φ.IsSmooth R) (hf : f ∈ R.ho
   exact interior_subset hz.2⟩
 
 
+variable {R φ f} in
 theorem topInt_lt_top [CompactSpace (CxPts p σ)] (hφ : φ.IsSmooth R)
     (hf : f ∈ R.holSec (tens K.bundle B)) : R.topInt K φ f < ⊤ :=
   have := isLocallyFiniteMeasure_topMeasure K hφ hf
@@ -538,6 +545,7 @@ def Isometric (φ : Weight p σ B) : Prop :=
 
 
 
+variable (F) in
 def ofMem (a : κ) : F.Reading (F.L a) (wt a) where
   isLB := (F.φ a).isLB
   u c i := gv p σ (F.L a) (c.2.2 a) i

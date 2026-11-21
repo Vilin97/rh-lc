@@ -138,6 +138,7 @@ end GlobalTheory.Ord2.ImZ
 namespace GlobalTheory.Ord2
 
 
+open GlobalTheory.Ord2.ImZ in
 theorem exists_ker_eps_ne_one : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (e : ℕ)
     (S : Finset Pl) (A : ValuationSubring Ω) (W : R2 Ω l), Nf e S A W → ∃ z ∈ W.ker, eps l z ≠ 1 := by
   intro l _ Ω _ _ _ e S A W h

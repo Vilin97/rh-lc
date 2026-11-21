@@ -75,6 +75,7 @@ theorem one_le_exponent_iff (v : HeightOneSpectrum (𝓞 K)) :
   rw [Nat.one_le_iff_ne_zero, Ne, exponent_eq_zero_iff, not_not]
 
 
+omit [NumberField K] in
 theorem asIdeal_pow_exponent_dvd (v : HeightOneSpectrum (𝓞 K)) :
     v.asIdeal ^ 𝔪.exponent v ∣ 𝔪.ideal :=
   pow_multiplicity_dvd _ _

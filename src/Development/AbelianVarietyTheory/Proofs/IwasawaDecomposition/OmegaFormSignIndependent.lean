@@ -306,6 +306,7 @@ theorem char_hatA (C : Ctx S T) {Λ : Lt D.host.E S.rank} (hΛ : Λ ∈ Vset D.h
   ring
 
 
+set_option maxHeartbeats 1600000 in
 theorem heis_root (C : Ctx S T) {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E} {Dw : Datum H} {l : Level H}
     {h : GA D S} {g : GA D T} {Λ : Lt D.host.E S.rank} (hΛ : Λ ∈ Vset D.host.E S.rank 1)
     (hmv : IsMov (fmtC S h) (stdL D.host.E S.rank) Λ) (hL : SelfD C.X (latG T g)) {f : WO S T → ℂ}

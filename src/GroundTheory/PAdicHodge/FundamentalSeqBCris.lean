@@ -34,6 +34,8 @@ variable {ε : PreTilt (normInteger ℂ_[p]) p} (hε : PreTilt.untilt ε = 1)
 
 
 
+include hζ in
+set_option maxHeartbeats 1600000 in
 theorem exists_mul_pow_fontaineT_eq (z : 𝔹dR) :
     ∃ (n : ℕ) (w : 𝔹), z * algebraMap 𝔹 𝔹dR (fontaineT ε hε) ^ n = algebraMap 𝔹 𝔹dR w := by
   have := IsPerfectoidField.isLocalization_away_bDeRham (maximalIdeal_eq_span_fontaineT hε hζ)

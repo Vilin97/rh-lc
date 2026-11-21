@@ -150,6 +150,7 @@ theorem h_f_pXv (H : D.Hyp) (b : Fin r) (v : n → A) : D.h (D.f b) (D.pXv v) = 
     Finset.sum_const_zero]
 
 
+variable (D) in
 def pL : (n → A) →ₗ[A] (n → A) := LinearMap.id - D.pX - D.pXv
 
 theorem pL_apply (v : n → A) : pL D v = v - D.pX v - D.pXv v := rfl

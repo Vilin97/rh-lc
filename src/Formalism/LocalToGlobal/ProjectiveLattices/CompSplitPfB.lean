@@ -114,6 +114,7 @@ theorem cspB_idem_map {S T : Type} [CommRing S] [Algebra c.F S] [CommRing T] [Al
   exact cspB_idem_spec C hC x hx (PrimeSpectrum.comap φ.toRingHom q)
 
 
+variable (Xo c) in
 def cspB_rule : Rul Xo c := fun _ y => cspB_idem C hC y.x y.x_over
 
 theorem cspB_rule_natural : IsNatural (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z)

@@ -18,6 +18,7 @@ namespace GlobalTheory.Core.Rk
 def IdE {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D) : Prop := ∀ x : X.B.I.E, HEq (X.ιE x) x
 
 
+open GlobalTheory.Mem GlobalTheory.Mem.Col2 in
 def TrueE (D : D7) : Prop :=
   ∃ (B : Base) (X : PreX B.toPre) (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)),
     D = I.rec7 l Z ∧ ∃ w : World I l Z, IdE w.S.X

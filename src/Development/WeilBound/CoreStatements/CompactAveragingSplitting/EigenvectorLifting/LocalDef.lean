@@ -45,6 +45,7 @@ def LinearAct : Prop := AllLocal fun k _ _ _ _ _ K _ _ _ c ψ =>
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n d : ℕ}
 
 
+variable (E) in
 abbrev Ev (v : Pl F) : Type := Fv F v ⊗[F] E
 
 def cV (σ : E →ₐ[F] E) (v : Pl F) : Ev E v →ₐ[Fv F v] Ev E v := Algebra.TensorProduct.map (AlgHom.id (Fv F v) (Fv F v)) σ

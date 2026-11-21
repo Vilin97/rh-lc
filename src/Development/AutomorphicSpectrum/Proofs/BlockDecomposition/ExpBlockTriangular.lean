@@ -9,6 +9,7 @@ open Matrix Topology Filter
 namespace GlobalTheory.CompanionTheory.Unitary.ExpUpper
 
 
+open scoped Matrix.Norms.L2Operator in
 theorem blockTriangular_exp {n : ℕ} (T : Matrix (Fin n) (Fin n) ℂ)
     (hT : T.BlockTriangular id) : (NormedSpace.exp T).BlockTriangular id := by
   have hmem : ∀ k : ℕ, ((k.factorial : ℂ)⁻¹ • T ^ k) ∈ Matrix.blockTriangularSubalgebra ℂ ℂ id := fun k =>

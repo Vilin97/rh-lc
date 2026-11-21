@@ -43,6 +43,7 @@ def subDegree {n : ℕ} (L : Submodule (𝓞 K) (Fin n → K)) (h : (K →+* ℂ
     1 / 2 * ∑ σ : K →+* ℂ, log (gramAt (h σ) σ u).det.re
 
 
+variable (K) in
 def normalise (x : ℝ) : ℝ := x / Module.finrank ℚ K
 
 namespace HermLattice

@@ -151,6 +151,7 @@ variable {ι κ : Type} [LinearOrder ι] [LinearOrder κ] {R : Type u} [Ring R]
   {e : κ ↪o ι} {i : ι}
 
 
+variable (e) in
 def termLower (A : Cube.{v} ι R) (p : ℕ) : Term A p →ₗ[R] Term (lowerFace e A) p :=
   LinearMap.pi fun s => LinearMap.proj (R := R)
     (φ := fun t : {t : Finset ι // t.card = p} => A.obj t.1)
@@ -172,6 +173,7 @@ theorem termUpper_apply (he : Set.range e = {i}ᶜ) (A : Cube.{v} ι R) (p : ℕ
       x ⟨insert i (s.1.map e.toEmbedding), by rw [card_insert_map he, s.2]⟩ := rfl
 
 
+variable (e i) in
 noncomputable def termIncl (A : Cube.{v} ι R) (p : ℕ) :
     Term (upperFace e i A) p →ₗ[R] Term A (p + 1) :=
   LinearMap.pi fun t => if h : i ∈ t.1 then
@@ -185,6 +187,7 @@ noncomputable def termIncl (A : Cube.{v} ι R) (p : ℕ) :
     else 0
 
 
+variable (e i) in
 noncomputable def termSec (A : Cube.{v} ι R) (p : ℕ) :
     Term (lowerFace e A) p →ₗ[R] Term A p :=
   LinearMap.pi fun t => if i ∈ t.1 then 0 else
@@ -381,6 +384,7 @@ variable {ι κ : Type} [LinearOrder ι] [LinearOrder κ] {R : Type u} [Ring R]
   {e : κ ↪o ι} {i : ι}
 
 
+variable (e) in
 def cubeLowerProj (A : Cube.{v} ι R) : cubeComplex A ⟶ cubeComplex (Cube.lowerFace e A) :=
   CochainComplex.ofHom (fun p => ModuleCat.ofHom (Cube.termLower (e := e) A p)) fun p => by
     rw [cubeComplex_d, cubeComplex_d]
@@ -406,16 +410,19 @@ theorem isIso_cubeLowerProj (he : Function.Surjective e) (A : Cube.{v} ι R) :
   exact HomologicalComplex.Hom.isIso_of_components _
 
 
+variable (e i) in
 noncomputable def cubeInclX (A : Cube.{v} ι R) (p : ℕ) :
     (cubeComplex (Cube.upperFace e i A)).X p ⟶ (cubeComplex A).X (p + 1) :=
   ModuleCat.ofHom (Cube.termIncl (e := e) (i := i) A p)
 
 
+variable (e i) in
 noncomputable def cubeSecX (A : Cube.{v} ι R) (p : ℕ) :
     (cubeComplex (Cube.lowerFace e A)).X p ⟶ (cubeComplex A).X p :=
   ModuleCat.ofHom (Cube.termSec (e := e) (i := i) A p)
 
 
+variable (e i) in
 noncomputable def cubeUpperInclF (A : Cube.{v} ι R) : ∀ p : ℕ,
     (shiftSucc (cubeComplex (Cube.upperFace e i A))).X p ⟶ (cubeComplex A).X p
   | 0 => 0

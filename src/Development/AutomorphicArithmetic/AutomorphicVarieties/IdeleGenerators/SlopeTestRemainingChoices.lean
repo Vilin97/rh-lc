@@ -74,10 +74,12 @@ def IsAutC [IsTotallyComplex F] (ι : Qbar l ≃+* ℂ) (r : G F Ω →* GL (Fin
   ∃ π : CuspSub F n, (CG.mk π).IsRegAlg ∧ AttC ι r π
 
 
+omit [NumberField F] in
 def TypeAway (r : G F Ω →* GL (Fin n) (Qbar l)) (τ : Fin n → G F Ω →* (Qbar l)ˣ) : Prop :=
   ∀ A : ValuationSubring Ω, ¬ A.valuation (l : Ω) < 1 → IsDiagOn r (Ine (F := F) A) τ
 
 
+omit [NumberField F] in
 def OrdAt (r : G F Ω →* GL (Fin n) (Qbar l)) (m : Fin n → ℤ) (ψ : Fin n → G F Ω →* (Qbar l)ˣ) (A : ValuationSubring Ω) : Prop :=
   ∃ κ : Fin n → ↥(Dec (F := F) A) →* (Qbar l)ˣ, IsFlagOn r (Dec (F := F) A) κ ∧
     (∀ i (s : ↥(Dec (F := F) A)), (s : G F Ω) ∈ Ine (F := F) A → κ i s = cycBar F Ω l s ^ m i) ∧ ∀ i s, Cong (κ i s) (ψ i s)
@@ -85,6 +87,7 @@ def OrdAt (r : G F Ω →* GL (Fin n) (Qbar l)) (m : Fin n → ℤ) (ψ : Fin n 
 variable [CharZero Ω] [IsAlgClosure ℚ Ω]
 
 
+omit [NumberField F] [IsAlgClosure ℚ Ω] in
 def IsPair [CharZero F] (c : G ℚ Ω) (r : G F Ω →* GL (Fin n) (Qbar l)) (μ : G F Ω →* (Qbar l)ˣ) (P : GL (Fin n) (Qbar l)) : Prop :=
   ∀ s s' : G F Ω, galEmb ℚ F Ω s' = c * galEmb ℚ F Ω s * c⁻¹ →
     (r s : Matrix (Fin n) (Fin n) (Qbar l))ᵀ * (P : Matrix (Fin n) (Fin n) (Qbar l)) * (r s' : Matrix (Fin n) (Fin n) (Qbar l)) =
@@ -111,6 +114,7 @@ structure SlopeTestRemainingChoices (N w : ℕ) (θ : G ℚ Ω →* (Qbar l)ˣ) 
   mu : KillsMu w θ
 
 
+omit [IsAlgClosure ℚ Ω] in
 def SplitAt (N w : ℕ) (χ : G ℚ Ω →* (Qbar l)ˣ) : Prop :=
   KillsMu N χ ∧ ∀ s : G ℚ Ω, (∀ ζ : Ω, ζ ^ N = 1 → s ζ = ζ ^ w) → χ s = 1
 

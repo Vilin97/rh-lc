@@ -86,6 +86,7 @@ end GlobalTheory.DeRhamCharpolyP
 namespace GlobalTheory.DeRhamCharpolyP
 
 
+open GlobalTheory.AV GlobalTheory.PDivGroup in
 theorem charpoly_push : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p] [PerfectRing k p]
     (B : GlobalTheory.AV.AbVar k) (f : B ⟶ B) [Module.Finite k (HdR B.X)],
     LinearMap.charpoly (push (dp0 k) (𝟙 _) f.hom) = (GlobalTheory.AV.AbVar.charpoly f).map (Int.castRingHom k) := by

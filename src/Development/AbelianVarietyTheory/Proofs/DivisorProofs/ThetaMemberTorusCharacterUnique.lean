@@ -31,6 +31,7 @@ noncomputable section
 namespace GlobalTheory.GSep.TorCharUnique
 
 
+attribute [local instance] GlobalTheory.TorusExt.gtGroup in
 theorem equiv_of_qkToAkU {R : Type} [CommRing R] [IsDomain R] {J : Ideal R} (hB : AdmBase R J) {D : DegData R J}
     {A : PolAV (Sp (FractionRing R))} {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G] (hG : IsSemiAbelian G)
     (U : Unif J D A G) {k : ℕ} (hk : 1 ≤ k) (p p' : QkPt D.toPre (FractionRing R) k)
@@ -49,6 +50,7 @@ theorem equiv_of_qkToAkU {R : Type} [CommRing R] [IsDomain R] {J : Ideal R} (hB 
       ((GlobalTheory.TorusExt.qkExt_iff D.tau_bimult _ hf p' _).2 rfl) x).1 h'
 
 
+attribute [local instance] GlobalTheory.TorusExt.gtGroup in
 theorem torChar_unique : ∀ (I : Type) (X₁ : GlobalTheory.GSep.GSet) (z₁ : X₁.M.Z) (act : I → (X₁.ρ.P.A ⟶ X₁.ρ.P.A)) (V : Type) [CommRing V] [IsDomain V] [IsLocalRing V] (ev : X₁.M.Z.presheaf.stalk z₁ →+* V) (Y : Type) [AddCommGroup Y] (t : Y → V) (δ : I → Y → Y) (𝔪 : GlobalTheory.GSep.GMem X₁ z₁ act V ev Y t δ) (τ : X₁.S.Gam) (χ χ' : Multiplicative 𝔪.D.toPre.X →* (FractionRing V)ˣ), GlobalTheory.GSep.TransTerms.TorChar 𝔪 τ χ → GlobalTheory.GSep.TransTerms.TorChar 𝔪 τ χ' → χ = χ' := by
   intro I X₁ z₁ act V _ _ _ ev Y _ t δ 𝔪 τ χ χ' h h'
   obtain ⟨p, x, hy, hg, hq, hx⟩ := h.2 _ ((isTor_iff _ _).2 (GlobalTheory.TorusExt.isTorusPtF_torusPt χ))

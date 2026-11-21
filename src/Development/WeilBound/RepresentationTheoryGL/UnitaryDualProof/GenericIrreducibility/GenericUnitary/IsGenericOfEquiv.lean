@@ -15,6 +15,7 @@ namespace PositivityTheory.RgUd.Exp
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 theorem isGeneric_of_equiv {N : ℕ} {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
     {π : Representation ℂ (GL (Fin N) k) V} {σ : Representation ℂ (GL (Fin N) k) W} (h : IsGeneric π)
     (φ : π.Equiv σ) : IsGeneric σ := by

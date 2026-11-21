@@ -20,6 +20,7 @@ variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchi
   {W : Type*} [AddCommGroup W] [Module ℂ W] {σ : Representation ℂ (levi F n β) W}
 
 
+variable (β) in
 def leviCoordMeasure (ψ : AddChar F Circle) : Measure (LeviIndex n β → F) :=
   Measure.pi fun _ => LocalField.selfDualMeasure ψ
 
@@ -28,12 +29,14 @@ instance (ψ : AddChar F Circle) : (leviCoordMeasure β ψ).IsAddHaarMeasure := 
   infer_instance
 
 
+variable (β) in
 def leviAbsDetShift : levi F n β →* ℝ≥0 where
   toFun m := leviAbsDet β m ^ (((n : ℝ) - 1) / 2)
   map_one' := by simp
   map_mul' m m' := by simp [NNReal.mul_rpow]
 
 
+variable (β) in
 def inducedChar : levi F n β →* ℝ≥0 :=
   leviRatio β * leviSqrtModular β * leviAbsDetShift β
 
@@ -47,6 +50,7 @@ theorem modulus_det_pos (g : GL (Fin n) F) :
   LocalField.modulus_pos (det_ne_zero g)
 
 
+omit [MeasurableSpace F] [BorelSpace F] in
 theorem detPow_add_shift (m : levi F n β) (s : ℂ) :
     detPow (m : GL (Fin n) F) (s + ((n : ℂ) - 1) / 2) =
       detPow (m : GL (Fin n) F) s * ((leviAbsDetShift β m : ℝ≥0) : ℂ) := by
@@ -59,6 +63,7 @@ theorem detPow_add_shift (m : levi F n β) (s : ℂ) :
   rfl
 
 
+omit [MeasurableSpace F] [BorelSpace F] in
 theorem leviIntegrand_shift (Ψ : Matrix (Fin n) (Fin n) F → ℂ) (w : W) (ℓ : Module.Dual ℂ W)
     (s : ℂ) (m : levi F n β) :
     leviIntegrand σ (leviRatio β * leviSqrtModular β) Ψ w ℓ (s + ((n : ℂ) - 1) / 2) m =
@@ -68,6 +73,8 @@ theorem leviIntegrand_shift (Ψ : Matrix (Fin n) (Fin n) F → ℂ) (w : W) (ℓ
   ring
 
 
+omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [MeasurableSpace F]
+  [BorelSpace F] in
 theorem monoidHom_ne_zero {G : Type*} [Group G] (χ : G →* ℝ≥0) (g : G) : χ g ≠ 0 :=
   left_ne_zero_of_mul_eq_one (map_mul_eq_one χ (mul_inv_cancel g))
 
@@ -112,6 +119,7 @@ theorem leviIntegrandB_eq (Ψ : Matrix (Fin n) (Fin n) F → ℂ) (w : W) (ℓ :
 section ParabolicB
 
 
+omit [MeasurableSpace F] [BorelSpace F] in
 theorem modularCharacter_leviProj (p : blockUpper F n β) :
     Measure.modularCharacter (leviIncl (leviProj F n β p)) = Measure.modularCharacter p := by
   have h := modularCharacter_eq_one_of_mem _ (leviProj_inv_mul_mem p)
@@ -134,12 +142,14 @@ theorem leviSqrtModular_mul_self (m : levi F n β) :
   simp [leviSqrtModular, NNReal.mul_self_sqrt]
 
 
+variable (β) in
 def parabolicB (Ξ : Matrix (Fin n) (Fin n) F → ℂ) (φ : GL (Fin n) F → W) (ℓ : Module.Dual ℂ W)
     (s : ℂ) (y : GL (Fin n) F) (p : blockUpper F n β) : ℂ :=
   Ξ ((p : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) *
     detPow (p : GL (Fin n) F) (1 - s + ((n : ℂ) - 1) / 2) * ℓ (φ ((p : GL (Fin n) F)⁻¹ * y))
 
 
+omit [MeasurableSpace F] [BorelSpace F] in
 theorem modular_mul_parabolicB {φ : GL (Fin n) F → W} (hφ : φ ∈ parabolicIndSpace F n β σ)
     (Ξ : Matrix (Fin n) (Fin n) F → ℂ) (ℓ : Module.Dual ℂ W) (s : ℂ) (y : GL (Fin n) F)
     (m : levi F n β) (u : UnipotentIndex n β → F) :
@@ -160,10 +170,12 @@ theorem modular_mul_parabolicB {φ : GL (Fin n) F → W} (hφ : φ ∈ parabolic
 variable [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)] (ψ : AddChar F Circle)
 
 
+variable (β) in
 abbrev measureP : Measure (blockUpper F n β) :=
   haarParabolic (parabolicMeasure β (leviCoordMeasure β ψ) (unipMeasure β ψ))
 
 
+variable (β) in
 abbrev measureM : Measure (levi F n β) := haarLevi β (leviCoordMeasure β ψ)
 
 omit [MeasurableSpace F] [BorelSpace F] [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)] in

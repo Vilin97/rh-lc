@@ -85,6 +85,7 @@ variable {K : Type*} [Group K] [TopologicalSpace K] [IsTopologicalGroup K] [Comp
   [NormedAddCommGroup W] [InnerProductSpace ℂ W] [FiniteDimensional ℂ W]
 
 
+omit [Group K] [IsTopologicalGroup K] in
 theorem integrable_of_continuous_of_compactSpace [IsFiniteMeasure μ] {E : Type*}
     [NormedAddCommGroup E] {f : K → E} (hf : Continuous f) : Integrable f μ :=
   hf.integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace f)
@@ -121,6 +122,7 @@ noncomputable def rankOneAverage (hρc : ∀ v, Continuous fun k => ρ k v)
     simpa using h2
 
 
+omit [FiniteDimensional ℂ V] in
 theorem inner_rankOneAverage (hρc : ∀ v, Continuous fun k => ρ k v)
     (hρu : ∀ k v, ‖ρ k v‖ = ‖v‖) (hσc : ∀ w, Continuous fun k => σ k w) (u v : V) (u' w : W) :
     ⟪u', rankOneAverage μ ρ σ hρc hρu hσc v w u⟫_ℂ =
@@ -132,6 +134,8 @@ theorem inner_rankOneAverage (hρc : ∀ v, Continuous fun k => ρ k v)
   simp [inner_smul_right]
 
 
+omit [TopologicalSpace K] [IsTopologicalGroup K] [CompactSpace K] [MeasurableSpace K]
+  [BorelSpace K] in
 theorem finrank_pos_of_isIrreducible [h : ρ.IsIrreducible] : 0 < Module.finrank ℂ V := by
   rw [Module.finrank_pos_iff]
   by_contra hV

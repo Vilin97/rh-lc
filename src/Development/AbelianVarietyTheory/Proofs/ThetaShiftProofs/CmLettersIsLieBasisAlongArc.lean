@@ -159,6 +159,7 @@ theorem eig_of_isPull {ν : Out.GtPt a.D₀ (epsR A)} {v : epsR (PowerSeries A) 
     (ConstLie.lieImg_of_tr W hg' (hp.smul hG W.P.lin x s)) (ConstLie.lieImg_of_tr W hg' (hp.pull k p')))
 
 
+include hG in
 theorem isZero_of_lieImg {ν : Out.GtPt a.D₀ (epsR A)} (h : LieImg W ν 1) : ν.IsZero := by
   obtain ⟨o, ho⟩ := ConstLie.exists_gtComb (D := a.D₀) (m := 0) Fin.elim0 Fin.elim0
   have h₀ := (ConstLin.lieImg_iff_isLieComb hG E H Dw l Xo c O β Y A b a χ W 0 _ _ o Fin.elim0 1

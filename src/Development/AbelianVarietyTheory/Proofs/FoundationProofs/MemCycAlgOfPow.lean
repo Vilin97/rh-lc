@@ -50,6 +50,7 @@ theorem mem_ineCyc {l : ℕ} [Fact l.Prime] {A : ValuationSubring Ω} {s : G ℚ
 abbrev FracA (A : ValuationSubring Ω) : Type := Ω ⧸ LinearMap.range (Algebra.linearMap A Ω)
 
 
+omit [Algebra ℚ Ω] in
 theorem mem_of_pow_mem (A : ValuationSubring Ω) {x : Ω} {n : ℕ} (hn : n ≠ 0)
     (h : x ^ n ∈ A) : x ∈ A := by
   rw [← A.valuation_le_one_iff] at h ⊢

@@ -22,6 +22,7 @@ def Interlace {n : ℕ} (lam mu : Fin n → ℕ) : Prop :=
   (∀ j, lam j ≤ mu j) ∧ ∀ i j : Fin n, i.val + 1 = j.val → mu j ≤ lam i
 
 
+open Classical in
 def adm1 (_D : Formalism.BasicNotions.D7) : Prop :=
   ∀ (n : ℕ) (lam : Fin n → ℕ), Antitone lam → ∀ b : ℕ,
     alt n (lam + rhoN n) * hsymm (Fin n) ℤ b =

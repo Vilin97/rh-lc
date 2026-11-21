@@ -46,6 +46,7 @@ theorem formsIn_ne_top {W : Ideal (MvPolynomial (Fin n) ℂ)} (hW : IsRelevant W
 end AdmissibleAE
 
 
+open AdmissibleAE in
 theorem AdmissibleAE.proof : AdmissibleAE.Statement := by
   intro n Z hrel
   unfold IsAdmissible

@@ -59,6 +59,7 @@ theorem iso_bij {m : ℕ} {T T' : Thick (Wc.L l (B.schFn q) ρ m)} (e : T ≅ T'
   · exact RingHom.congr_fun (congrArg (fun f => f.φ) e.inv_hom_id) x
 
 
+set_option maxHeartbeats 1000000 in
 theorem local_bij (q : X ⟶ Spec (CommRingCat.of O)) (ρ : O →+* k) {n : ℕ} (hn : n ≠ 0) {W : X.Opens} {d : ℕ}
     (cW : Coord q W d) (j : ℕ) :
     Function.Bijective (((mqS q ρ hn {W}).o (IdF.span _ ((l : WittVector l k) ^ n)) (fun _ => le_rfl)).pull j) := by

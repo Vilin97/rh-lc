@@ -90,6 +90,7 @@ theorem exists_phi_eq_p_mul_theta_eq (c : 𝒪) :
 section Plus
 
 
+set_option maxHeartbeats 1600000 in
 theorem phiPlus_eq_of_mul_eq {y : (BCrisPlus ℂ_[p] p)} {a : ACris ℂ_[p] p} {k m : ℕ}
     (hy : y * (p : (BCrisPlus ℂ_[p] p)) ^ k = algebraMap (ACris ℂ_[p] p) (BCrisPlus ℂ_[p] p) a)
     (ha : phi ℂ_[p] p a = (p : ACris ℂ_[p] p) ^ m * a) :
@@ -100,6 +101,7 @@ theorem phiPlus_eq_of_mul_eq {y : (BCrisPlus ℂ_[p] p)} {a : ACris ℂ_[p] p} {
   exact (isUnit_p_bCrisPlus.pow k).mul_right_cancel (by rw [h]; ring)
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_phiPlus_eq_theta_eq (c : ℂ_[p]) :
     ∃ y : (BCrisPlus ℂ_[p] p), phiPlus ℂ_[p] p y = (p : (BCrisPlus ℂ_[p] p)) * y ∧ θdR (iotaPlus ℂ_[p] p y) = c := by
   obtain ⟨N, hN⟩ : ∃ N : ℕ, ‖(p : ℂ_[p]) ^ N * c‖ ≤ 1 := by
@@ -128,6 +130,7 @@ theorem exists_phiPlus_eq_theta_eq (c : ℂ_[p]) :
   ring
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_phiPlus_eq_pow_theta_eq {m : ℕ} (hm : 1 ≤ m) (c : ℂ_[p]) :
     ∃ y : (BCrisPlus ℂ_[p] p), phiPlus ℂ_[p] p y = (p : (BCrisPlus ℂ_[p] p)) ^ m * y ∧ θdR (iotaPlus ℂ_[p] p y) = c := by
   obtain ⟨k, rfl⟩ : ∃ k, m = k + 1 := ⟨m - 1, by omega⟩
@@ -152,12 +155,15 @@ theorem iotaPlus_periodTPlus : iotaPlus ℂ_[p] p (periodTPlus hε) = fontaineT 
   rw [periodTPlus, iotaPlus_algebraMap, iota_periodT]
 
 
+include hζ in
 theorem mem_span_fontaineT_of_theta_eq_zero {r : 𝔹} (hr : θdR r = 0) :
     r ∈ Ideal.span {fontaineT ε hε} := by
   rw [← maximalIdeal_eq_span_fontaineT hε hζ, IsPerfectoidField.maximalIdeal_bDeRhamPlus]
   exact hr
 
 
+set_option maxHeartbeats 1600000 in
+include hζ in
 theorem exists_phiPlus_eq_pow_iotaPlus_sub_mem {m n : ℕ} (hnm : n ≤ m) (w : 𝔹) :
     ∃ y : (BCrisPlus ℂ_[p] p), phiPlus ℂ_[p] p y = (p : (BCrisPlus ℂ_[p] p)) ^ m * y ∧
       iotaPlus ℂ_[p] p y - w ∈ Ideal.span {fontaineT ε hε ^ n} := by

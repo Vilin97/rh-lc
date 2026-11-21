@@ -127,6 +127,7 @@ theorem smooth_translate {ε : Fin (2 * r + k + 1) → Bool} {lam : Fin (2 * r +
 end TranslationBesselVanishing
 
 
+open TranslationBesselVanishing in
 theorem bessel_ne_zero_of_cyclic_orbit : Formalism.FourierDecayAlt.ThreeDimData.DDNzOfCyc := by
   intro hCyc hKF k r ε lam H _ _ _ σ w0 Wp _ _ z c π hlam hds hlow Bm hB hzero x hx
   obtain ⟨hadd, -, -, C, Ws, hWs, hbd⟩ := hB

@@ -43,6 +43,7 @@ def ownNorm (B : WeightFamilies.Prov D) : RunIn.SecNorm B :=
   ⟨B.l2NormAlt, B.l2Norm_nonneg_bis, B.l2Norm_eq_zero_iff, B.l2Norm_smul_alt, B.l2Norm_add_le', B.l2Norm_le_supNorm_alt⟩
 
 
+set_option maxHeartbeats 400000 in
 theorem sharesAt_ownNorm {ka wL wF : WeightFamilies.Wt D j} (G : GlobalFamilyData X ka wL wF) (S : Scal B) (Tn : ℕ) (c : ℝ)
     (Sh : Set (B.Cusp j wF)) :
     SharesAt (RunIn.globalFamilyDataBaseChange (ownNorm B) X E hM G) (scalarsWithNorm (ownNorm B).N (ownNorm B).h0 (ownNorm B).h1 (ownNorm B).h2
@@ -50,6 +51,7 @@ theorem sharesAt_ownNorm {ka wL wF : WeightFamilies.Wt D j} (G : GlobalFamilyDat
   Iff.rfl
 
 
+set_option maxHeartbeats 400000 in
 theorem sharesAt_of_xplus {ka wL wF : WeightFamilies.Wt D j} (G : GlobalFamilyData X ka wL wF) (S : Scal B) (Tn : ℕ) (c : ℝ)
     (Sh : Set (B.Cusp j wF)) (h : SharesAt (gd2Xplus G E hM) S Tn c Sh) : SharesAt G S Tn c Sh := by
   obtain ⟨del, th', h1, h2⟩ := h
@@ -58,6 +60,7 @@ theorem sharesAt_of_xplus {ka wL wF : WeightFamilies.Wt D j} (G : GlobalFamilyDa
   exact ⟨fun la => a la, b, c, d, fun la => e la⟩
 
 
+set_option maxHeartbeats 4000000 in
 theorem shortG_xN (wL wF : WeightFamilies.Wt D j) (S : Scal B) (β : ℝ) :
     ShortG (RunIn.xN n X E hM) ((RunIn.xN n X E hM).wF0 wL wF)
       ((RunIn.xN n X E hM).Thc (scalarsWithNorm n.N n.h0 n.h1 n.h2 n.h3 n.h4 S).s0 ((RunIn.xN n X E hM).wF0 wL wF)) β ↔
@@ -67,6 +70,8 @@ theorem shortG_xN (wL wF : WeightFamilies.Wt D j) (S : Scal B) (β : ℝ) :
 end General
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem sharesAt_of_lt : ∀ (D : D7) (T : Top D) (h : LawsP T) (j : ℕ) (hj : InR D j) (large₂ : SizeData₂ D) (H : KHyp) (C2 A2 CT : ℝ) (ka wL wF : WeightFamilies.Wt D j) (Tn nP nW : ℕ) (h0 : ℝ) (EX : ErrX D) (p : ℕ) (S : Scal (recB h.toLawsCore)) (nus : HeightOneSpectrum (𝓞 (recB h.toLawsCore).KO) → ℝ), ParOK T EX p j → PageOK large₂ (recPJ h j hj) H C2 A2 CT ka wL wF Tn nP nW h0 → HypC large₂ (recPJ h j hj) H C2 A2 7 0 CT S ka wL wF Tn nP nW h0 nus → LatAt (recB h.toLawsCore) j ka → j < D.R.m → ∀ G : GlobalFamilyData (recPJ h j hj) ka wL wF, GenOK h j hj large₂ G S (cc D large₂ C2 A2 7 wL) → EtaOK h j hj large₂ wL G.iet G.et → ∀ Sh : Set ((recB h.toLawsCore).Cusp j wF), Submodule.span (recB h.toLawsCore).KO Sh = ⊤ → SharesAt G S Tn (cc D large₂ C2 A2 7 wL) Sh := by
   intro D T h j hj large₂ H C2 A2 CT ka wL wF Tn nP nW h0 EX p S nus hPar hPg hH hLat hjm G hG hE Sh hSh
   have ht : TieC (⟨1,2,1,2,1,2,1,4,7⟩ : KAdm) H 1 4 0 11 C2 A2 7 := by

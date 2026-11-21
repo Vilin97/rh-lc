@@ -67,6 +67,7 @@ theorem isMultiHomog_of_pullWeight {κ : K → K'} {v : (Σ k, ι k) → (Σ k',
   simp only [Finset.sum_apply, Pi.smul_apply, hw]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem rename_component (v : (Σ k, ι k) → (Σ k', ι' k')) (D : K' → ℕ) (f : MRing ι) :
     rename v (weightedHomogeneousComponent (pullWeight v) D f) =
       weightedHomogeneousComponent (LocRingPow.multiDegWeight ι') D (rename v f) := by
@@ -250,6 +251,7 @@ end Elim
 end PullbackElimination
 
 
+open PullbackElimination in
 theorem PullbackEliminationOfVariable.proof : PullbackEliminationOfVariable.Statement := by
   classical
   intro K _ ι _ K' _ ι' _ κ v P' J' n hv hP' hQ hJ hJP

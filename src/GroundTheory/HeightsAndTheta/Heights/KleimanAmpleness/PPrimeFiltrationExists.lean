@@ -122,6 +122,7 @@ theorem exists_homogeneous_notMem {A : Submodule (Poly S N) M} (hne : A ≠ ⊤)
   exact Submodule.sum_mem _ fun c _ => h _ c (SetLike.coe_mem _)
 
 
+attribute [local instance] MvPolynomial.gradedAlgebra in
 theorem exists_isPrime_colonIdeal [IsNoetherianRing S] {A : Submodule (Poly S N) M}
     (hA : 𝓜.IsGradedSub A) (hne : A ≠ ⊤) :
     ∃ ge : M × ℤ, ge.1 ∈ 𝓜.piece ge.2 ∧ (colonIdeal A ge.1).IsPrime ∧
@@ -163,6 +164,7 @@ theorem exists_isPrime_colonIdeal [IsNoetherianRing S] {A : Submodule (Poly S N)
 variable (𝓜)
 
 
+open Classical in
 def primeFiltNext [IsNoetherianRing S] (A : Submodule (Poly S N) M) : M × ℤ :=
   open scoped Classical in
   if h : 𝓜.IsGradedSub A ∧ A ≠ ⊤ then Classical.choose (exists_isPrime_colonIdeal h.1 h.2) else (0, 0)
@@ -209,6 +211,7 @@ theorem exists_primeFiltSeq_eq_top [IsNoetherianRing S] [Module.Finite (Poly S N
 
 
 open scoped Classical in
+open Classical in
 def primeFilt [IsNoetherianRing S] [Module.Finite (Poly S N) M] : PrimeFilt 𝓜 where
   n := Nat.find 𝓜.exists_primeFiltSeq_eq_top
   step i := 𝓜.primeFiltSeq i

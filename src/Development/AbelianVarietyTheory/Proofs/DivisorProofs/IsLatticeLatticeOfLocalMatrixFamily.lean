@@ -15,6 +15,7 @@ namespace GlobalTheory.LocMatLat
 variable {K : Type} [Field K] [NumberField K] {ι : Type} [Fintype ι] [DecidableEq ι]
 
 
+omit [DecidableEq ι] in
 theorem exists_denom (B : HeightOneSpectrum (𝓞 K) → Matrix ι ι K) (h : {w | ¬ IntAt w (B w)}.Finite) :
     ∃ d : 𝓞 K, d ≠ 0 ∧ ∀ w, IntAt w ((d : K) • B w) := by
   haveI : Finite {w | ¬ IntAt w (B w)} := h
@@ -31,6 +32,7 @@ theorem exists_denom (B : HeightOneSpectrum (𝓞 K) → Matrix ι ι K) (h : {w
     exact w.valuation_le_one r
 
 
+omit [DecidableEq ι] in
 theorem mulVec_le (w : HeightOneSpectrum (𝓞 K)) {M : Matrix ι ι K} (hM : IntAt w M) {x : ι → K}
     (hx : ∀ j, w.valuation K (x j) ≤ 1) (i : ι) : w.valuation K ((M *ᵥ x) i) ≤ 1 := by
   simp only [Matrix.mulVec, dotProduct]

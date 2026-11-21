@@ -34,6 +34,7 @@ def cLoc (l : D.what₂.Tau → ℝ) (τ : D.what₂.Tau) : ℝ := 2 * Real.pi *
 def tLoc (l : D.what₂.Tau → ℝ) (τ : D.what₂.Tau) : ℝ := 2 * Real.pi * l τ
 
 
+open Classical in
 def gAway (V : HSp D) (l : D.what₂.Tau → ℝ) (s : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ) (τ : D.what₂.Tau)
     (z : D.what₂.Tau → Matrix (Fin V.rank) (Fin n) ℂ) : ℂ :=
   Complex.exp (-(2 * Real.pi) * ∑ τ' ∈ Finset.univ.filter (fun τ' => τ' ≠ τ),

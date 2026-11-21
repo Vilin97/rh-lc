@@ -34,6 +34,7 @@ def formPoly (b : Module.Basis T ℤ (dualLattice F)) (p : Σ _ : Unit, T) : MvP
   ∑ j, C ((b p.2 : Fin i → K) j) * X j
 
 
+omit [Fintype T] [DecidableEq T] in
 theorem dualPlanePt_eq_mulVec [DecidableEq (K →+* ℂ)] (b : Module.Basis T ℤ (dualLattice F))
     (σ : K →+* ℂ) (v : Fin i → ℂ) (t : T) :
     dualPlanePt b σ v ⟨(), t⟩ =
@@ -45,6 +46,7 @@ theorem dualPlanePt_eq_mulVec [DecidableEq (K →+* ℂ)] (b : Module.Basis T �
     simp [hτ]
 
 
+omit [Fintype T] [DecidableEq T] in
 theorem eval₂_formPoly (b : Module.Basis T ℤ (dualLattice F)) (σ : K →+* ℂ) (v : Fin i → ℂ)
     (p : Σ _ : Unit, T) :
     eval₂Hom σ v (formPoly b p) = dualPlanePt b σ v p := by
@@ -53,6 +55,7 @@ theorem eval₂_formPoly (b : Module.Basis T ℤ (dualLattice F)) (σ : K →+* 
 end DualPointsOfPlane
 
 
+open DualPointsOfPlane in
 theorem DualPtsOfPlane.proof : DualPtsOfPlane.Statement := by
   intro K _ _ i F T _ _ b hb σ v hv
   classical

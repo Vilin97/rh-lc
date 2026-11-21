@@ -194,6 +194,7 @@ namespace Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.DN
 open NumberField Formalism.BasicNotions Formalism.MainNotions.TaylorLogMetric Matrix nonZeroDivisors
 
 
+open FractionalIdeal in
 theorem spanPow {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K]
     [IsFractionRing R K] (I : FractionalIdeal R⁰ K) (hI : I ≠ 0) (S : Set K)
     (hIS : (I : Submodule R K) = Submodule.span R S) (k : ℕ) :

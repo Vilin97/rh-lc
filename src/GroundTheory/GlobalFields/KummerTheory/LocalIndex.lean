@@ -101,6 +101,7 @@ variable {ϖ : 𝒪[K]} (hϖ : Irreducible ϖ) {n d : ℕ} {ε : 𝒪[K]ˣ}
 include hϖ hnd
 
 
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] hϖ in
 theorem exists_one_add_uniformizer_pow_mul_pow_eq {j : ℕ} (hj : d + 1 ≤ j) (a : 𝒪[K]) :
     ∃ c : 𝒪[K], (1 + ϖ ^ j * a) ^ n = 1 + ϖ ^ (j + d) * (ε * a + ϖ * c) := by
   obtain ⟨c₀, hc₀⟩ := exists_one_add_pow_eq (ϖ ^ j * a) n
@@ -110,6 +111,7 @@ theorem exists_one_add_uniformizer_pow_mul_pow_eq {j : ℕ} (hj : d + 1 ≤ j) (
   ring
 
 
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] hϖ in
 theorem exists_units_pow_eq {j : ℕ} (hj : d + 1 ≤ j) {u : 𝒪[K]ˣ} {a : 𝒪[K]}
     (hu : (u : 𝒪[K]) - 1 = ϖ ^ j * a) :
     ∃ c : 𝒪[K], ((u ^ n : 𝒪[K]ˣ) : 𝒪[K]) = 1 + ϖ ^ (j + d) * (ε * a + ϖ * c) := by
@@ -264,6 +266,7 @@ theorem natCard_rootsOfUnity_eq (hn : n ≠ 0) :
   rw [← map_unitsIncl_ker_powMonoidHom hn, Subgroup.card_map_of_injective unitsIncl_injective]
 
 
+omit [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem index_range_powMonoidHom_multiplicativeInt (n : ℕ) :
     (powMonoidHom n : Multiplicative ℤ →* Multiplicative ℤ).range.index = n := by
   have h : (powMonoidHom n : Multiplicative ℤ →* Multiplicative ℤ).range =
@@ -281,6 +284,7 @@ theorem index_range_powMonoidHom_multiplicativeInt (n : ℕ) :
   simp
 
 
+omit [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem range_powMonoidHom_prod {G H : Type*} [CommGroup G] [CommGroup H] (n : ℕ) :
     (powMonoidHom n : G × H →* G × H).range =
       (powMonoidHom n : G →* G).range.prod (powMonoidHom n : H →* H).range := by

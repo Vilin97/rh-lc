@@ -173,6 +173,7 @@ theorem homConst_homId : homConst E E (homId : isogEnd E) = 1 := by
   exact invCoeff_invariantDifferential E
 
 
+variable (E) in
 def endConst : isogEnd E →+* F where
   toFun := homConst E E
   map_one' := homConst_homId

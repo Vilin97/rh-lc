@@ -92,6 +92,7 @@ open Formalism.L2.Col Formalism.L2.Ker Formalism.UG GlobalTheory.Mem.Chr GlobalT
 variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X)
 
 
+set_option maxHeartbeats 2000000 in
 theorem right_lev (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (C : Formalism.L2.Forms.ColsTiedSym (I.rec7 l Z))
     (hC : I.StdC l Z C) (u : B.Word) (x : TC.GA B (B.R.N 0)) :
     x ∈ (C.forms u).to0.cls0.lev.U ↔
@@ -133,6 +134,7 @@ theorem right_lev (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I
     exact (key (levU_le_UAd _ _ _ _ _ hx)).2 hx
 
 
+set_option maxHeartbeats 2000000 in
 theorem left_lev (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (Ch : ℕ → Type)
     (A : GlobalTheory.AdForm.TwDat I l Z u a Ch) (hA : A.Is) (β : Ch 0) (hβ : A.kb 0 β = TC.kStd X u (B.R.N 0)) (x : TC.GA B (B.R.N 0)) :
     x ∈ (A.K 0 (Nat.zero_le _) β).lev.U ↔
@@ -168,6 +170,7 @@ theorem left_lev (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.
     exact e2
 
 
+set_option maxHeartbeats 2000000 in
 theorem lev_zero_std : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (C : Formalism.L2.Forms.ColsTiedSym (I.rec7 l Z)), I.StdC l Z C → ∀ (u : B.Word) (a : I.ι) (Ch : ℕ → Type) (A : GlobalTheory.AdForm.TwDat I l Z u a Ch), A.Is → ∀ (β : Ch 0), A.kb 0 β = TC.kStd X u (B.R.N 0) → ∀ x, x ∈ (A.K 0 (Nat.zero_le _) β).lev.U ↔ x ∈ (C.forms u).to0.cls0.lev.U := by
   intro B X I hI hP l Z C hC u a Ch A hA β hβ x
   exact (left_lev I hI hP l Z u a Ch A hA β hβ x).trans (right_lev I hI hP l Z C hC u x).symm

@@ -18,6 +18,7 @@ namespace LatticeQuotientMeasure
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 
+variable (F) in
 def e0 : AF F := ((0 : Ainf F), (1 : Af F))
 
 theorem at_iff {M : Type} [AddCommGroup M] [Module (AF F) M] (z : M) : At (evI F) z ↔ e0 F • z = 0 := by
@@ -119,6 +120,7 @@ theorem continuous_mat_inv {J : Matrix (Fin n) (Fin n) E} : Continuous fun g : U
 end LatticeQuotientMeasure
 
 
+open LatticeQuotientMeasure in
 theorem latMeas : LatMeas := by
   intro F E _ _ _ _ _ σ _ τ n d J J' _ _ C N S hC h
   haveI := ring_AE F E

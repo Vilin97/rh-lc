@@ -84,6 +84,7 @@ theorem rhoC_lt (ε : Fin n → Bool) {a b : Fin n} (hab : a < b) (he : ε a = �
   linarith
 
 
+open Classical in
 def levS (y : ℕ → ℝ) (L : ℝ) (m : ℕ) : ℕ := ((range m).filter fun i => L ≤ y i - y (i + 1)).card
 
 theorem levS_mono (y : ℕ → ℝ) (L : ℝ) : Monotone (levS y L) := by

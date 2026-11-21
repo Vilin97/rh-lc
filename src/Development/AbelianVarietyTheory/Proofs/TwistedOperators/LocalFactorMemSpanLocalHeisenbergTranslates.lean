@@ -114,6 +114,7 @@ private theorem isLatVac_latO_of_local_conditions {D : D7} {ψ : AddChar (AF D.h
       hs e he _ ha hia ((GlobalTheory.SplitScalar.isHalf_iff e _).mpr hea)]
 
 
+set_option maxHeartbeats 1000000 in
 theorem mem_span_local : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D) (sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ) (sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ) (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)) (ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)) (f₀ : WO S T → ℂ), IsBase ψ θ S T sS sT ΛS ΛT f₀ → ∀ (v : FinPl D) (x : WO S T → ℂ), IsLocal ψ θ S T sS sT ΛS ΛT (.inl v) x → x ∈ Submodule.span ℂ (Set.range fun w : WO S T => heisO ψ S T (wAt (.inl v) w) f₀) := by
   intro D ψ θ S T sS sT ΛS ΛT f₀ hb v x hx
   obtain ⟨hii, hci, -⟩ := idem_fin D v

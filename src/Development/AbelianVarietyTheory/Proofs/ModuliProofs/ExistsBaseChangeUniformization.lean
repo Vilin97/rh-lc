@@ -21,6 +21,7 @@ noncomputable section
 namespace GlobalTheory.TorsionFormCompare
 
 
+open UnifBaseChange ExpandsLinear in
 theorem exists_unif_pull_of_deg (hP : PolBaseChangeSt) (hG : GlobalFnsSt) (hS : SecBaseChangeSt)
     (hT : DVR.TwistBaseChangeStatement)
     (R R' : Type) [CommRing R] [IsDomain R] [CommRing R'] [IsDomain R'] (I : Ideal R)

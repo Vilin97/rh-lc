@@ -61,6 +61,7 @@ theorem archRepT_apply (a : archGroup K n) (v : CuspL2 μ) :
     archRepT μ a v = cuspRepT μ (archP K n a) v := rfl
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_isOpen_forall_cuspRepT_finOne_eq (v : CuspL2 μ)
     (hv : FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k :
       (Reduction.maxCompact : Subgroup (AdelicGLn.AdelicGL K n)) =>

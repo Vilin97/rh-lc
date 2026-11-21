@@ -281,6 +281,7 @@ theorem loc_iff_std (v : HeightOneSpectrum (𝓞 D.host.F)) (hv : Formalism.L2.C
   rw [mem_levJ_iff V 1 L' g v hL1 hU hoff, mem_mhlKv_iff_St u hu1, ← castGL_mem_St h.symm, hg]
 
 
+omit hsub hoffP in
 theorem eta_isT_std (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)) (hβ : IsSDFrame V 1 Λ 1)
     (v : HeightOneSpectrum (𝓞 D.host.F)) (Pb : Pl D.host.E) (hPb : Formalism.L2.Col.conjPrime₂ Pb = pl x.1) (hv : Formalism.L2.Col.IsOver v Pb)
     (Ut : Formalism.L2.Col.MhlUnif Pb) (g : Bridge.Gf V)

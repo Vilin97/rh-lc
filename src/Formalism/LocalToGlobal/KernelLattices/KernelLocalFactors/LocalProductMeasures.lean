@@ -128,6 +128,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
   (mu : Tup X.F X.E X.K S) (cst : LocCst X (rowSG Pr sel mu)) (G : ChGlob X R.m)
 
 
+variable (Pr) in
 def RmOf : Set (HeightOneSpectrum (𝓞 X.F)) := {v | ∃ P ∈ rowSG Pr sel mu, P.asIdeal.under (𝓞 X.F) = v.asIdeal}
 
 def muLam (σ₀ : X.K →+* ℂ) (χ : HChar X.E) (ξ : Chr X.F X.E X.K) (v : HeightOneSpectrum (𝓞 X.F)) : X.Eˣ →* ℂˣ :=

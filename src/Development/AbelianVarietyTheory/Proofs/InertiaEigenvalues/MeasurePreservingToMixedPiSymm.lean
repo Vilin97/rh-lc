@@ -206,6 +206,7 @@ theorem mixedFourierPi_toMixedSch (f : 𝓢(Fin n → Cinf E, ℂ)) (u : Fin n �
   exact mul_comm _ _
 
 
+omit [IsTotallyComplex E] in
 def latt (n : ℕ) (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ) : Set (Fin n → Af E) := {z | ∀ i, z i ∈ idealFiniteAdeles J}
 
 def thetaFn (f : (Fin n → Cinf E) → ℂ) (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ) (η : Fin n → Af E)
@@ -230,6 +231,7 @@ theorem thetaFn_mem (f : 𝓢(Fin n → Cinf E, ℂ)) (J : (FractionalIdeal (�
   exact schwartzBruhatTensorPi_mem _ (finiteTensor_mem fun i => cosetIndicator_mem_finiteSchwartzBruhat J (η i))
 
 
+omit [IsTotallyComplex E] in
 theorem finiteMeasurePi_latt (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ) :
     (finiteMeasurePi E (latt n J)).toReal = (finiteAdeleMeasure E (idealFiniteAdeles J)).toReal ^ n := by
   have : latt n J = Set.univ.pi fun _ => (idealFiniteAdeles J : Set (Af E)) := by

@@ -54,6 +54,7 @@ variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
 
+omit [Fintype K] [IsDomain O] [IsDiscreteValuationRing O] in
 theorem isMultiHomog_C (a : O) : IsMultiHomog (C a : MRingOver O ι) 0 := by
   classical
   intro m hm k

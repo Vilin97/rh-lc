@@ -21,6 +21,7 @@ def rowI (i : Fin m) : Fin (r + m) := ⟨i, by omega⟩
 def colI (j : Fin r) : Fin (r + m) := ⟨m + j, by omega⟩
 
 
+variable (r) in
 def blockE (Y : Fin m × Fin r → k) : Matrix (Fin (r + m)) (Fin (r + m)) k := fun i j =>
   if h : (i : ℕ) < m ∧ m ≤ (j : ℕ) then Y (⟨i, h.1⟩, ⟨j - m, by omega⟩) else 0
 

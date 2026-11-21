@@ -34,6 +34,7 @@ theorem map_ι_mul {a b c : Type} [Fintype b] (M : Matrix a b k) (N : Matrix b c
     simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, ι_mul]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem frame_card {N : ℕ} {Y : Type} [Fintype Y] [DecidableEq Y] (F : Frame k N Y) : Fintype.card Y = N := by
   have e : (Y → k) ≃ₗ[k] (Fin N → k) := LinearEquiv.ofLinear (Matrix.toLin' F.β) (Matrix.toLin' F.γ)
     (by rw [← Matrix.toLin'_mul, F.βγ, Matrix.toLin'_one]) (by rw [← Matrix.toLin'_mul, F.γβ, Matrix.toLin'_one])

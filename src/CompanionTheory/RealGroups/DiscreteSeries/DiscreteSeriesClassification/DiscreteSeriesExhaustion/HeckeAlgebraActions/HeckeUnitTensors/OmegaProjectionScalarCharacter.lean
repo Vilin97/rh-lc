@@ -17,6 +17,7 @@ open CompanionTheory.RgExh
 variable {m : ℕ} {X : GMod (m + 1)} {χ : Fin (m + 1) → ℂ} {s : Fin (m + 1)}
 
 
+variable (X χ s) in
 def toS (g : (step X (χ s)).V) : ↥(stepSub X (χ s)) := g
 
 variable (X χ s) in
@@ -66,6 +67,7 @@ theorem coe_pow (β : ℂ) (k : ℕ) (G : Fin (m + 1) → (step X (χ s)).V) :
     simp only [LinearMap.sub_apply, LinearMap.smul_apply, Module.End.one_apply, coeY_sub, coeY_smul, coe_omD]
 
 
+variable (χ s) in
 def phi0 (hS : ScalChar X χ) : X.V →ₗ[ℂ] (Fin (m + 1) → (step X (χ s)).V) where
   toFun v := fun c => ofS X χ s ⟨Pr X χ s (Pi.single c v), Pr_mem hS _⟩
   map_add' v w := by

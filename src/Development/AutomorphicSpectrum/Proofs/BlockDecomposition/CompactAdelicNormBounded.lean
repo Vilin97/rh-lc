@@ -108,6 +108,7 @@ end GlobalTheory.CompanionTheory.RedCov.Simple.NormBound
 namespace GlobalTheory.CompanionTheory.RedCov.Simple
 
 
+open GroundTheory.Automorphic.Reduction NormBound in
 theorem exists_adelicNorm_le_of_isCompact :
     ∀ (F : Type) [Field F] [NumberField F] (N : ℕ) (D : Set (Fin N → AF F)), IsCompact D →
       ∃ P : ℝ, 0 < P ∧ ∀ y ∈ D, GroundTheory.Automorphic.Reduction.adelicNorm y ≤ P := by

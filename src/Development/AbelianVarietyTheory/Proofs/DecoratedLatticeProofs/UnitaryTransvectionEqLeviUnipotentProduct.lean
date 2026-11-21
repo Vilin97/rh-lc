@@ -135,6 +135,7 @@ theorem prod_jY :
 end Main
 
 
+set_option maxHeartbeats 1000000 in
 theorem eq_levi_nB_nC {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (A : Mx D ρ 1) (V : Mx D S.rank 1)
     (h : adj (d.pY ⬝ V) ⬝ A = 0) (u : GA D S)
     (hu : mt S u = 1 + d.jX ⬝ A ⬝ (adj V ⬝ gA S) - V ⬝ (adj (d.jX ⬝ A) ⬝ gA S) -

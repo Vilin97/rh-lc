@@ -287,6 +287,7 @@ end
 end GlobalTheory.PoinSumBound
 
 
+open ReciprocityTheory.ChartRestriction.G.AR.Up.PoinPf in
 theorem GlobalTheory.PoinSumBound.poin_conv_bdd : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (X : Data E r) (x0 : Frame X.Ψ r), IsOrth X x0 → PropDisc X → ∀ (la : Wt X.Ψ r) (W : Frame X.Ψ r → ℝ≥0∞) (bb : ℝ), IsMetricW X la W → WLower X la W → 0 < bb → (∃ C : ℝ≥0∞, C < ⊤ ∧ ∀ x, IsOrth X x → ∑' γ : X.Γ, ENNReal.ofReal (Real.exp (-(bb / 2 * GlobalTheory.Up.rhX X x0 (lact γ.1 x)))) ≤ C) → ∀ (F : V (nd X) → ℂ) (P : Frame X.Ψ r → ℂ), DifferentiableOn ℂ F (OmF X x0) → InAt X x0 W bb F → IsBEq X la P → (∀ z ∈ OmF X x0, P (cpt X x0 z) = F z) → (∀ x ∈ X.dom, Summable fun γ : X.Γ => ‖(X.χ la γ.1)⁻¹ * P (lact γ.1 x)‖) ∧ X.IsBddSec la (poin X la P) := by
   intro E _ _ _ r X x0 hx0 hPD la W bb hW hWl hbb hSB F P hFd hA hP hPF
   have H : GlobalTheory.PoinSumBound.HypS X x0 la W bb F P := ⟨hx0, hPD, hW, hWl, ⟨hbb, hSB⟩, hFd, hA, hP, hPF⟩

@@ -47,6 +47,7 @@ variable {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L] [Algeb
 section Representation
 
 
+variable (L) in
 noncomputable abbrev finiteUnitsAboveRep :
     Representation ℤ Gal(L/K) (∀ w : PlacesOver L v, Additive (w.1.adicCompletion L)ˣ) :=
   piUnitsRep
@@ -132,12 +133,14 @@ section Decomposition
 variable (w : PlacesOver L v)
 
 
+omit [NumberField K] [NumberField L] in
 theorem mem_stabilizer_iff_smul_eq (σ : Gal(L/K)) :
     σ ∈ MulAction.stabilizer Gal(L/K) w.1.asIdeal ↔ σ • w = w := by
   rw [MulAction.mem_stabilizer_iff, Subtype.ext_iff, coe_smul_placesOver,
     HeightOneSpectrum.ext_iff, smul_asIdeal]
 
 
+omit [NumberField K] in
 theorem galHom_eq_decomposition (σ : MulAction.stabilizer Gal(L/K) w.1.asIdeal)
     (h : w.1 = (σ : Gal(L/K)) • w.1) (x : w.1.adicCompletion L) :
     galHom (σ : Gal(L/K)) w.1 w.1 h x = σ • x := by

@@ -244,6 +244,7 @@ theorem short_basis (hD3 : IntegerApproximationCount (E := E)) (hep : 0 < ep0) :
     exact hnorm i
 
 
+include hns in
 theorem covering (hD3 : IntegerApproximationCount (E := E)) (hep : 0 < ep0) (d : VT (X := Y.toData) z ξ) :
     ∃ μ : Y.Λp ξ, ‖d - phi z ξ hξ μ‖ ≤ (finrank ℝ (VT (X := Y.toData) z ξ) : ℝ) ^ 3 * Y.NA /
       (2 * Y.k0 * Real.sqrt ep0) := by

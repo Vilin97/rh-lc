@@ -98,6 +98,7 @@ theorem val_sym_move (hG : GlobalFnsSt) {T : Over (Sp R)} (g : T ⊗ D.P.A ⟶ D
   exact (val_pull hJ' _ _ _).symm.trans (key.trans (hv' t x z J J' hJ hJ'))
 
 
+open GlobalTheory.ThetaInValues in
 theorem sym_values : GlobalFnsSt → AllIso fun {_} _ _ {_} {_} {F} _ _ {N} {N'} ν ν' {_} w f =>
     ∀ x, (N'.σ (f x) : F) * wVal ν ν' w f x = (N.σ x : F) * wVal ν ν' w f x⁻¹ := by
   intro hG R _ _ D D' F _ _ N N' ν ν' φ w f hφ hw hf x

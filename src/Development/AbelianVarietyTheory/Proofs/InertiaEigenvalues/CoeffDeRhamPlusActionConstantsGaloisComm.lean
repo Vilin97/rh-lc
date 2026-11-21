@@ -88,6 +88,7 @@ variable {O : Type} [CommRing O] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Mo
   [NormedAlgebra ℚ_[l] K] [CompleteSpace K] (ϖ : PiSys l e)
 
 
+variable (O) in
 def piHat : Ahat O K l e :=
   AhatEq.equivAhat O K l e (PowerSeries.C (AdjoinRoot.root (Polynomial.X ^ e + Polynomial.C (l : K))))
 
@@ -102,6 +103,7 @@ theorem piHat_pow_add : piHat O K ^ e + (l : Ahat O K l e) = 0 := by
     root_pow_add, map_zero, map_zero]
 
 
+variable (O) in
 theorem exists_uhat_eq : ∃ w : Ahat O K l e, uhat O K l e = piHat O K + Ehat O K l e * w := by
   obtain ⟨v, hv⟩ := AhatEq.associated_taylor (AhatEq.separable_E K l e)
   refine ⟨AhatEq.equivAhat O K l e v, ?_⟩
@@ -285,6 +287,7 @@ theorem actVdR_A {Pl : LocPrime l} {AI : LocAinf l Pl} (Td : LocTied l Pl AI) {L
 end GlobalTheory.BKGal.JumpConst
 
 
+open GlobalTheory.BKGal.JumpConst in
 theorem GlobalTheory.BKGal.JumpConst.actVdR_comm_kLift : ∀ (l : ℕ) [Fact l.Prime] (Pl : LocPrime l) (AI : LocAinf l Pl) (Td : LocTied l Pl AI) (LL : FinExt l) (T : QLat LL) (A : OD l ↥(OL LL) →+ (T.V ⊗[ℚ_[l]] Pl.R.BdR →+ T.V ⊗[ℚ_[l]] Pl.R.BdR)), (∀ (o : ↥(OL LL)) (b : Per.BdRp l) (v : T.V) (c : Pl.R.BdR), A (o ⊗ₜ[ℤ_[l]] b) (v ⊗ₜ[ℚ_[l]] c) = ((o : ↥LL.1) • v) ⊗ₜ[ℚ_[l]] (GlobalTheory.BKGal.JumpDR.cD Td b * c)) → ∀ (a e : ℕ) [NeZero a] [NeZero e] (ϖ : PiSys l e) [HasUnr a LL] [TameDescentExponentData ↥LL.1 l e a] (c : ZMod a → AdjoinRoot (Polynomial.X ^ e + Polynomial.C (l : ↥LL.1))) (g : Gl l), (g : GQ l) ∈ GK (ϖ.field a) → ∀ y : T.V ⊗[ℚ_[l]] Pl.R.BdR, actVdR (Pl.PD (Formalism.MainNotions.ElementDenominator.qlExt l)) T.ρ g (A (ϖ.iD (thetaW a LL) ↥LL.1 (GlobalTheory.BKGal.JumpDR.kLift ↥(OL LL) c)) y) = A (ϖ.iD (thetaW a LL) ↥LL.1 (GlobalTheory.BKGal.JumpDR.kLift ↥(OL LL) c)) (actVdR (Pl.PD (Formalism.MainNotions.ElementDenominator.qlExt l)) T.ρ g y) := by
   intro l _ Pl AI Td LL T A hA a e _ _ ϖ _ _ c g hg y
   have hπ : (g : GQ l) (ϖ.seq 0) = ϖ.seq 0 := ϖ.gal_pi a ⟨g, hg⟩

@@ -78,6 +78,7 @@ theorem exists_continuousOn_roots {d : ℕ} (p : Polynomial (MvPolynomial (Fin d
     exact h2 i
 
 
+open Polynomial in
 theorem exists_embeddings_of_roots {F L : Type} [Field F] [Field L] [Algebra F L]
     (pb : PowerBasis F L) (τ : F →+* ℂ) {n : ℕ} (r : Fin n → ℂ)
     (hr : ∀ z, ((minpoly F pb.gen).map τ).eval z = 0 ↔ ∃ i, r i = z) :
@@ -215,6 +216,7 @@ theorem exists_continuousOn_embeddings (K : Type) [Field K] [CharZero K] (σ : T
     exact DFunLike.congr_fun hkl _
 
 
+open MeasureTheory ReciprocityTheory.ChartRestriction.G.T0 SectionSum in
 theorem exists_local_families (K Ω : Type) [Field K] [CharZero K] [Countable K] [Field Ω]
     [Algebra K Ω] (D N : ℕ) (j₀ : Fin (N + 1)) (w : Fin (N + 1) → Ω) (hw : w j₀ = 1)
     (hfg : (⊤ : IntermediateField K Ω).FG) (htr : Algebra.trdeg K Ω = D)

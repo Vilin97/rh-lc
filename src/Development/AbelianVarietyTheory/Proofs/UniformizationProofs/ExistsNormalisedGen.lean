@@ -70,6 +70,7 @@ theorem exists_gen_pull {X Y Z : Scheme.{0}} {L : LB X} {K : Type} [Fintype K] {
 variable {S : Scheme.{0}} {X : Type} [AddCommGroup X] {Y : Over S}
 
 
+variable (X) in
 def aug (R : CommRingCat.{0}) : grpAlg X R ⟶ R :=
   CommRingCat.ofHom (AddMonoidAlgebra.lift R R X 1).toRingHom
 
@@ -82,6 +83,7 @@ theorem const_aug (R : CommRingCat.{0}) : const X R ≫ aug X R = 𝟙 R := by
   simp [const, aug]
 
 
+variable (X Y) in
 def unitSec : Y.left ⟶ (splitTorus S X ⊗ Y).left := (lift (1 : Y ⟶ splitTorus S X) (𝟙 Y)).left
 
 theorem comp_unitSec {Z : Over S} (y : Z ⟶ Y) :

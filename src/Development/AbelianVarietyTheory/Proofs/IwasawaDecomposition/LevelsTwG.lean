@@ -106,11 +106,13 @@ theorem ChData.frRat (j : ℕ) (hj : j + 1 ≤ D.R.m) (β : T.Ch u μ (j + 1)) :
   fun _ _ => rfl
 
 
+set_option maxHeartbeats 4000000 in
 theorem ChData.sameU (j : ℕ) (hj : j + 1 ≤ D.R.m) (β : T.Ch u μ (j + 1)) :
     SameUlocJ hj ((formsInTw W u μ hμ j hj (dt j hj)).K β).lev ((Cd.Lc Gt Fl ht j hj).Uloc β) :=
   (W.car u μ hμ (j + 1) (one_le j) hj β).Uloc_eq
 
 
+set_option maxHeartbeats 4000000 in
 theorem ChData.Lb_eq (j : ℕ) (hj : j + 1 ≤ D.R.m) (β : T.Ch u μ (j + 1)) :
     ((formsInTw W u μ hμ j hj (dt j hj)).K β).lev.Lb = reL (rankN D (j + 1) hj) ((Cd.Lc Gt Fl ht j hj).Lb β) :=
   (W.car u μ hμ (j + 1) (one_le j) hj β).Lb_eq

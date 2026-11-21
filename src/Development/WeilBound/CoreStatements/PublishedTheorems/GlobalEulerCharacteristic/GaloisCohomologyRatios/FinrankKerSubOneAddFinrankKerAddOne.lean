@@ -149,6 +149,7 @@ theorem symm_gsRestrictGal (σ : galUnramifiedOutside K.1 ℚ̄ S) :
   (gsQuotientGalEquiv hL).symm_apply_eq.2 (gsQuotientGalEquiv_mk hL σ).symm
 
 
+omit [Module.Finite (ZMod ℓ) M] in
 theorem nRep_gsRestrictGal (σ : galUnramifiedOutside K.1 ℚ̄ S) :
     nRep hL hζ M hM (gsRestrictGal hL σ) = (homRep (gsRootsZMod S ℓ) M).ρ σ :=
   (congrArg (quotientRep (PP hL) (homRep (gsRootsZMod S ℓ) M)
@@ -156,6 +157,7 @@ theorem nRep_gsRestrictGal (σ : galUnramifiedOutside K.1 ℚ̄ S) :
     (symm_gsRestrictGal hL σ)).trans (QuotientGroup.lift_mk _ _ _)
 
 
+set_option maxHeartbeats 1000000 in
 theorem real_place_H0_finrank_b (ιr : ∀ v : {v : InfinitePlace K.1 // v.IsReal}, ℚ̄ →ₐ[K.1] AlgebraicClosure v.1.Completion)
     (hℓS : ∀ v ∉ S, ((ℓ : ℕ) : 𝓞 K.1) ∉ v.asIdeal)
     (hcop : Nat.Coprime (gsOpenSubgroup S hL : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)).index ℓ)

@@ -147,11 +147,13 @@ def sysP (a : ℕ) : Sys d (F ⊗[ℂ] K) (F ⊗[ℂ] DR ℂ K) where
   M I J := Submodule.map₂ (TensorProduct.mk ℂ _ _) (omA ℂ (xv x) I) (omB ℂ K (rB ℂ K (xv x) J) a)
 
 
+variable (F) in
 def muP (τ : DR ℂ K →ₗ[K] K) : DR ℂ K ⊗[ℂ] DR ℂ K →ₗ[ℂ] DR ℂ K →ₗ[ℂ] F ⊗[ℂ] DR ℂ K :=
   LinearMap.flip (LinearMap.rTensorHom (DR ℂ K) ∘ₗ (LinearMap.mul ℂ (DR ℂ K)).flip.compr₂
     ((Algebra.trace F K).restrictScalars ℂ ∘ₗ τ.restrictScalars ℂ))
 
 
+variable (F) in
 def mulP : F ⊗[ℂ] DR ℂ K →ₗ[ℂ] DR ℂ K :=
   TensorProduct.lift ((Algebra.lsmul ℂ ℂ (DR ℂ K)).toLinearMap ∘ₗ (Algebra.linearMap F K).restrictScalars ℂ)
 
@@ -195,9 +197,11 @@ def loc (B : Subalgebra ℂ L) (e : B →ₐ[ℂ] ℂ) : Subalgebra ℂ L where
 variable {F : Type} [Field F] [Algebra ℂ F] [Algebra F L] {d : ℕ} (x : Fin (d + 1) → Fˣ)
 
 
+variable (L) in
 def tt (j : Fin d) : L := algebraMap F L ((x j.succ : F) / x 0)
 
 
+variable (L) in
 def dtS (S : Finset (Fin d)) : DR ℂ L :=
   ExteriorAlgebra.ιMulti L S.card fun a => D ℂ L (tt L x (S.orderEmbOfFin rfl a))
 

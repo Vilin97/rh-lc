@@ -155,6 +155,7 @@ theorem two_mul_hq_le {S : HermForm K r} (M : Majorant S) (σ : K →+* ℂ) (x 
   exact (Complex.nonneg_iff.1 ((M.posDef _).posSemidef.dotProduct_mulVec_nonneg _)).1
 
 
+open CMTransference in
 theorem exists_short_basis {S : HermForm K r} {L : Submodule (𝓞 K) (Fin r → K)}
     (hL : IsLattice L) (hsd : IsSelfDual S L) (M : Majorant S) {ε : ℝ} (hε : 0 < ε)
     (hmin : ∀ v ∈ L, v ≠ 0 → ε ≤ (∑ σ : K →+* ℂ, hq (M.H σ) (embVec σ v)) / 2) :

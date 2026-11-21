@@ -27,6 +27,7 @@ noncomputable section
 namespace GlobalTheory.Dieu
 
 
+open GlobalTheory.AV.KerPart in
 theorem isIsog_hasLogDeg_map : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] (A B : AbVar k) (G H : PDivGroup p k) (t : G.TorsionTower A.X) (t' : H.TorsionTower B.X) (f : A ⟶ B), IsIsogeny f → IsIsog (t.map t' f.hom) ∧ HasLogDeg (t.map t' f.hom) (padicValNat p (deg f)) := by
   intro p _ k _ A B G H t t' f hf
   have hp : p.Prime := Fact.out

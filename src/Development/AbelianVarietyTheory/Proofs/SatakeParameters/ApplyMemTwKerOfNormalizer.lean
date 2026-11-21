@@ -68,9 +68,11 @@ end Cong
 section Red
 
 
+variable (k) in
 abbrev incl (n : ℕ) : GL (Fin n) 𝒪[k] →* GL (Fin n) k := Matrix.GeneralLinearGroup.map (algebraMap 𝒪[k] k)
 
 
+variable (k) in
 abbrev red (n : ℕ) : GL (Fin n) 𝒪[k] →* GL (Fin n) 𝓀[k] :=
   Matrix.GeneralLinearGroup.map (IsLocalRing.residue 𝒪[k])
 
@@ -350,6 +352,7 @@ section Conj
 variable {n s : ℕ} {d : Fin s → ℕ}
 
 
+variable (e : (Σ a, Fin (d a)) ≃ Fin n) in
 abbrev Gp : Subgroup (GL (Fin n) k) := KOne k (Fin n) ⊔ (unipRad k e ⊓ KO k (Fin n))
 
 def ind (T : Finset (Fin s)) (a : Fin s) : ℕ := if a ∈ T then 1 else 0
@@ -587,6 +590,7 @@ section Step
 variable {n s : ℕ} {d : Fin s → ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
 
 
+variable (e : (Σ a, Fin (d a)) ≃ Fin n) (π : Representation ℂ (GL (Fin n) k) V) {c : k} (hc : c ≠ 0) in
 def Claim (C : Fin s → ℕ) : Prop :=
   ∀ w ∈ fixed π (Gp e), π (dia e hc C) w ∈ twKer π (KOne k (Fin n)) 1 → w = 0
 

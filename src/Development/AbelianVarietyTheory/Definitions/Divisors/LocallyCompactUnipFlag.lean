@@ -246,6 +246,7 @@ theorem adjA_adjA (X : Matrix (Fin n) (Fin n) (AF F ⊗[F] E)) : adjA σ J (adjA
   rw [inv_mul_form hJ, Matrix.mul_one, ← Matrix.mul_assoc, inv_mul_form hJ, Matrix.one_mul]
 
 
+omit [NumberField F] in
 theorem exists_dualCols {C : Matrix (Fin n) (Fin r) E} (hC : IsIsoCols σ J C) :
     ∃ L : Matrix (Fin r) (Fin n) E, L * C = 1 ∧ L * J⁻¹ * cT (σ : E →+* E) L = 0 := by
   obtain ⟨hC, h0⟩ := hC

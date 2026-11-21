@@ -45,6 +45,7 @@ theorem padic_v_map_le_one_iff {E : Type} [Field E] [NumberField E] {g : ℕ} [F
 end GlobalTheory.LocalFieldIso
 
 
+open GlobalTheory.LocalFieldIso in
 theorem GlobalTheory.LocalFieldIso.padic_iso_place : ∀ (E : Type) [Field E] [NumberField E] (g : ℕ) [Fact g.Prime] (w : HeightOneSpectrum (𝓞 E))
     (i : ℚ_[g] ≃+* w.adicCompletion E), Continuous i →
     ((g : ℕ) : 𝓞 E) ∈ w.asIdeal ∧ ((g : ℕ) : 𝓞 E) ∉ w.asIdeal ^ 2 ∧ Formalism.ConjugateSelfDual.normV w = g := by

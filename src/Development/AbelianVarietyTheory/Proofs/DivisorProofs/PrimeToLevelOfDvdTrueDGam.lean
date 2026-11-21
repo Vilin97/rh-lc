@@ -38,6 +38,7 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E]
   {V' : Type} [AddCommGroup V'] [Module E V'] [Module (𝓞 E) V'] [IsScalarTower (𝓞 E) E V']
 
 
+omit [StarRing E] in
 theorem card_dvd_of_minkMult {n N M : ℕ} (hM : MinkMult N M) (hN : Module.finrank ℚ E * n ≤ N)
     (G : Subgroup (Sp E n ≃ₗ[E] Sp E n)) [Finite G] : Nat.card G ∣ M := by
   obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le hN

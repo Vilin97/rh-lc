@@ -194,6 +194,7 @@ instance borelSpace_finRes : BorelSpace (Πʳ v : HeightOneSpectrum (𝓞 K),
   ⟨rfl⟩
 
 
+variable (K n) in
 def finHaar : Measure (Πʳ v : HeightOneSpectrum (𝓞 K),
     [GL (Fin n) (v.adicCompletion K), (integralGL (v.adicCompletion K) n : Set (GL (Fin n) (v.adicCompletion K)))]) :=
   (Measure.haar : Measure (AdelicGLn.FiniteAdelicGL K n)).map (AdelicGLn.finiteRestrictedEquiv K n)
@@ -203,6 +204,7 @@ instance isHaarMeasure_finHaar : (finHaar K n).IsHaarMeasure := by
   infer_instance
 
 
+variable (K n) in
 def finConst : ℝ :=
   (finHaar K n).real {x | ∀ v, x v ∈ integralGL (v.adicCompletion K) n}
 

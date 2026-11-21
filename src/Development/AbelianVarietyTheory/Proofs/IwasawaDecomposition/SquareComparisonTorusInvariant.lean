@@ -138,6 +138,8 @@ end Level
 end TorusInvarianceSq
 
 
+open ReciprocityTheory.ChartRestriction.G.DVR TorusInvariance TorusInvarianceSq SqLevel in
+set_option maxHeartbeats 400000 in
 theorem comparison_sq_torus_invariant : GlobalFnsSt → ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] (I : Ideal R), AdmBase R I →
     ∀ (D D' : DegData R I) (A A' : PolAV (Spec (CommRingCat.of (FractionRing R)))) (G : Over (Spec (CommRingCat.of R)))
     [GrpObj G] [IsCommMonObj G], IsSemiAbelian G → ∀ (U : UnifPre I D A G) (U' : UnifPre I D' A' G)

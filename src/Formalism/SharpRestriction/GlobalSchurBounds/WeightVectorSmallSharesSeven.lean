@@ -24,6 +24,7 @@ def ChBadp_at (X : G.Inst D L) : Prop :=
 variable (L)
 
 
+open Classical in
 def cands (K : G.Consts) : Finset ℕ := (Finset.range ⌈L.sc.X'⌉₊).filter (fun p => G.Cand D L K p)
 
 variable {L}

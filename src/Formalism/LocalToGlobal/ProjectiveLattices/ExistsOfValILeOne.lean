@@ -14,6 +14,7 @@ variable {V F : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [Fie
   [IsFractionRing V F]
 
 
+variable (V) in
 abbrev valI : Valuation F (WithZero (Multiplicative ℤ)) := (IsDiscreteValuationRing.maximalIdeal V).valuation F
 
 theorem exists_of_valI_le_one {x : F} (h : valI (V := V) x ≤ 1) : ∃ a : V, algebraMap V F a = x := by

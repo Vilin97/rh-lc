@@ -58,6 +58,7 @@ theorem exists_reframe (F : FlagD H r) (f : Fin (r + 1) → V) (hf : ∀ a, f a 
     simp only [map_add (f := _), LinearMap.add_apply, pairing_lastVector_lastVector, pairing_isotropicSpan_lastVector F hx, z_X F hx, X_iso F hx hx, add_zero]
 
 
+omit [StarRing K] in
 theorem exists_inv_lower {j : ℕ} (A : Matrix (Fin j) (Fin j) K) (h0 : ∀ a b, a < b → A a b = 0)
     (h1 : ∀ a, A a a = 1) :
     ∃ M : Matrix (Fin j) (Fin j) K, M * A = 1 ∧ (∀ a b, a < b → M a b = 0) ∧ ∀ a, M a a = 1 := by

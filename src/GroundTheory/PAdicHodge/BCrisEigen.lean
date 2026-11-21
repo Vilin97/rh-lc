@@ -24,6 +24,7 @@ variable {ε : PreTilt (normInteger ℂ_[p]) p} (hε : PreTilt.untilt ε = 1)
   (hζ : PreTilt.untilt ((_root_.frobeniusEquiv (PreTilt (normInteger ℂ_[p]) p) p).symm ε) ≠ 1)
 
 
+include hζ in
 theorem exists_eq_zpow_mul_unit {y : 𝔹dR} (hy : y ≠ 0) :
     ∃ (i : ℤ) (u : 𝔹ˣ), y = algebraMap 𝔹 𝔹dR (fontaineT ε hε) ^ i * algebraMap 𝔹 𝔹dR (u : 𝔹) := by
   have ht : Irreducible (fontaineT ε hε) :=
@@ -87,6 +88,7 @@ theorem exists_gal_smul_unit (σ : Gal(PadicAlgCl p/L)) {i : ℤ} {u : 𝔹} {q 
   linear_combination h3
 
 
+variable (p) in
 def SenTateCharacters : Prop :=
   ∀ (K : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] K]
     (η : Gal(PadicAlgCl p/K) →* ℚ_[p]ˣ), Continuous η →
@@ -126,6 +128,8 @@ theorem exists_twist_of_finite_image {K : IntermediateField ℚ_[p] (PadicAlgCl 
   exact ⟨z, by rw [hz, hψL], hzc⟩
 
 
+include hζ in
+set_option maxHeartbeats 1600000 in
 theorem exists_unramified_twist (hST : SenTateCharacters p)
     {K : IntermediateField ℚ_[p] (PadicAlgCl p)} [FiniteDimensional ℚ_[p] K] {y : 𝔹dR}
     (hy0 : y ≠ 0) (hyσ : ∀ σ : Gal(PadicAlgCl p/K), ∃ q : ℚ_[p],
@@ -190,6 +194,8 @@ theorem isUnit_of_fixed_twist {R F G : Type*} [CommRing R] [IsDomain R] [Field F
   exact (isUnit_pow_iff hf.ne').1 hbfu
 
 
+include hζ in
+set_option maxHeartbeats 3200000 in
 theorem isUnit_of_twist {L : IntermediateField ℚ_[p] (PadicAlgCl p)} [FiniteDimensional ℚ_[p] L]
     {b : BCris hε} (hb0 : b ≠ 0) {i : ℤ} {u : 𝔹ˣ}
     (hyu : iotaB hε hζ b = algebraMap 𝔹 𝔹dR (fontaineT ε hε) ^ i * algebraMap 𝔹 𝔹dR (u : 𝔹))
@@ -235,6 +241,8 @@ theorem isUnit_of_twist {L : IntermediateField ℚ_[p] (PadicAlgCl p)} [FiniteDi
   field_simp
 
 
+include hζ in
+set_option maxHeartbeats 3200000 in
 theorem isUnit_of_forall_galB_eq_mul (hST : SenTateCharacters p)
     {K : IntermediateField ℚ_[p] (PadicAlgCl p)} [FiniteDimensional ℚ_[p] K] {b : BCris hε}
     (hb0 : b ≠ 0)

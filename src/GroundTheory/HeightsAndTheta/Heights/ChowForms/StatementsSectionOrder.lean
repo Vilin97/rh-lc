@@ -115,6 +115,7 @@ def ChartNorm.Statement : Prop :=
               (algebraMap (ChartInc I t e) (ChartLoc I t e p) (chartLin I t e u)))
 
 
+open Classical in
 def ChartLength.Statement : Prop :=
   ∀ (F : Type) [Field F] [CharZero F] (n e : ℕ) (I : Ideal (MvPolynomial (Fin n) F))
     (f : MvPolynomial (Fin (e + 1) × Fin n) F) (t u : Fin n → F)

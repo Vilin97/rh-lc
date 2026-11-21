@@ -294,6 +294,7 @@ theorem slice_noncusp {F : (Fin n → ℂ) → ℂ} (hF : AnalyticOnNhd ℂ F (p
 end ExpQuad
 
 
+open ExpQuad in
 theorem ExpQuadMonomial.proof (hE : RiemannExtensionSlices.Statement)
     (hO : PuncturedExpOrder.Statement) (hD : LogCoverDescent.Statement) :
     ExpQuadMonomial.Statement := by

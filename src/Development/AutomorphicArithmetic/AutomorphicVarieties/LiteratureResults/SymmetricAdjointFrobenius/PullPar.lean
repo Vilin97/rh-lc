@@ -19,6 +19,7 @@ section Comp
 variable {E : Type} [Field E] [NumberField E] [IsTotallyReal E]
 
 
+omit [IsTotallyReal E] in
 private def zf (y : Af E) : Ad E := ((0, y) : InfiniteAdeleRing E × Af E)
 
 

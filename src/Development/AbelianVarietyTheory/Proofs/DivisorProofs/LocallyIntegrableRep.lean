@@ -58,6 +58,9 @@ theorem _root_.GlobalTheory.LocRep.rep_sum (hlin : ∀ (a : ℂ) v w, ι (a • 
     rw [Finset.sum_insert hj, h1, h2, Finset.sum_insert hj]
 
 
+open MeasureTheory in
+variable {G : Type} [TopologicalSpace G] [MeasurableSpace G] {μ : Measure G}
+  {K : Type} [NormedAddCommGroup K] [InnerProductSpace ℂ K] {ι : K → G → ℂ} in
 theorem _root_.GlobalTheory.LocRep.exists_pairing
     (hloc : ∀ C, IsCompact C → ∃ M : ℝ, ∀ v, IntegrableOn (ι v) C μ ∧ ∫ x in C, ‖ι v x‖ ∂μ ≤ M * ‖v‖)
     (hlin : ∀ (a : ℂ) v w, ι (a • v + w) =ᵐ[μ] fun x => a * ι v x + ι w x) {C : Set G} (hC : IsCompact C) :
@@ -92,6 +95,9 @@ theorem _root_.GlobalTheory.LocRep.locallyIntegrable_rep [LocallyCompactSpace G]
   exact ⟨C, hCx, (hM v).1⟩
 
 
+open MeasureTheory in
+variable {G : Type} [TopologicalSpace G] [MeasurableSpace G] {μ : Measure G}
+  {K : Type} [NormedAddCommGroup K] [InnerProductSpace ℂ K] {ι : K → G → ℂ} in
 theorem _root_.GlobalTheory.LocRep.rep_of_pairing [LocallyCompactSpace G] [SecondCountableTopology G] [T2Space G] [BorelSpace G]
     [IsLocallyFiniteMeasure μ]
     (hloc : ∀ C, IsCompact C → ∃ M : ℝ, ∀ v, IntegrableOn (ι v) C μ ∧ ∫ x in C, ‖ι v x‖ ∂μ ≤ M * ‖v‖)

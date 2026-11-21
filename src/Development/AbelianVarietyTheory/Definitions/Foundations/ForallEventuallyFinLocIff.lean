@@ -246,19 +246,23 @@ def IsDSTensor (M : DSModel V S) (δ : GinfC V →* (X →L[ℂ] X)) : Prop :=
   ∃ B, IsRestrTensor (fun τ => infArch V (placeOf D τ)) (dsRep M) 0 δ B
 
 
+open Classical in
 def homDS (M : DSModel V S) (ρ : GA D V →* (H →L[ℂ] H)) (U : Submodule ℂ H) :
     Submodule ℂ (ContinuousMultilinearMap ℂ M.H H) := homPi (fun τ => embW V (placeOf D τ)) (dsRep M) ρ U
 
 
+open Classical in
 def homFinDS (σ : Representation ℂ (GfC V) W) (M : DSModel V S) (ρ : GA D V →* (H →L[ℂ] H)) (U : Submodule ℂ H) :
     Submodule ℂ (W →ₗ[ℂ] ContinuousMultilinearMap ℂ M.H H) :=
   homTensorPi (GfC V).subtype (fun τ => embW V (placeOf D τ)) σ (dsRep M) ρ U
 
 
+open Classical in
 def IsCopyFinDS (σ : Representation ℂ (GfC V) W) (M : DSModel V S) (ρ : GA D V →* (H →L[ℂ] H)) (U : Submodule ℂ H) :
     Prop := IsTensorCopyPi (GfC V).subtype (fun τ => embW V (placeOf D τ)) σ (dsRep M) ρ U
 
 
+open Classical in
 theorem mem_homDS {θ : InfF D} (hθ : IsInfFam θ) {M : DSModel V S} {ρ : GA D V →* (H →L[ℂ] H)} {U : Submodule ℂ H}
     {Φ : ContinuousMultilinearMap ℂ M.H H} : Φ ∈ homDS M ρ U ↔ (∀ y, Φ y ∈ U) ∧ ∀ τ,
       ∀ g ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ), ∀ y, Φ (Function.update y τ (M.rep τ g (y τ))) = ρ (atTau θ V τ g) (Φ y) := by

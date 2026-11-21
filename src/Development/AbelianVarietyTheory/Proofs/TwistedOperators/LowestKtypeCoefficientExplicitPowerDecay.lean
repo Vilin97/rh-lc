@@ -118,6 +118,7 @@ end GlobalTheory.SepReal.PowDec
 namespace GlobalTheory.SepReal
 
 
+open GlobalTheory.SepReal.PowDec in
 theorem decPow : DecPow := by
   intro m ε lam B hm hlam hgap _ H _ _ π hπ v₀ hv₀ g hg
   have hm1 : (1 : ℝ) ≤ m := by exact_mod_cast (by omega : 1 ≤ m)

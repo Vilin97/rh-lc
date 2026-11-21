@@ -33,17 +33,21 @@ def NuBetween (la : PointsOfFlagModel.abelian₂ p c) (cx : Lt1 Dw → ℕ) (A B
     (A : EReal) ≤ nuP p y cx ∧ (y.IsAlg → nuP p y cx ≤ (B : EReal))
 
 
+variable (c p) in
 def OscLe (cx : Lt1 Dw → ℕ) (b : ℝ) : Prop :=
   ∀ la : PointsOfFlagModel.abelian₂ p c, ∃ A : ℕ, NuBetween Xo la cx A (A + b)
 
 
+variable (Dw) in
 def nCol : ℕ := 8 * ((∑ f : Lt1 Dw, 2 * rk f) / 8 + Fintype.card (Lt1 Dw) + 1)
 
 
+variable (Dw) in
 def shift (u : Weight Dw) (n : ℕ) (τ : Psi H) : ℤ :=
   ((n / 2 : ℕ) : ℤ) + 1 - if h : 0 < Dw.p then u τ ⟨Dw.p - 1, by omega⟩ else 0
 
 
+variable (Dw) in
 def thA (u : Weight Dw) (n : ℕ) : (E →+* ℂ) × ℕ → ℕ :=
   fun x => ((wtOf Dw (u + GlobalTheory.FlatLine.parWt Dw (shift Dw u n)) ((n / 2 : ℕ) : ℤ)).1 x).toNat
 

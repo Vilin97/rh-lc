@@ -133,6 +133,7 @@ theorem blockEmb_mem_cellLeviSub {a : Set.range δ} {y : GL (Fin (blockSize δ a
     unipotentRadical_le_blockUpper (blockEmb_mem_unipotentRadical (β ∘ w) hy)⟩
 
 
+set_option maxHeartbeats 400000 in
 theorem intertwiningMap_blockEmb_eq_zero {a : Set.range δ} {V₀ : Type*} [AddCommGroup V₀]
     [Module ℂ V₀] {π₀ : Representation ℂ (GL (Fin (blockSize δ a)) F) V₀}
     (hsc : Subsingleton (JacquetModule F (blockSize δ a) (restrictFun δ (β ∘ w) a) π₀))

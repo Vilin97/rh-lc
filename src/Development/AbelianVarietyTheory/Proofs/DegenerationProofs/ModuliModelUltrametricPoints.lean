@@ -26,6 +26,7 @@ theorem spMap_comp {R R₁ R₂ : Type} [CommRing R] [CommRing R₁] [CommRing R
   rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, show b.comp a = d from RingHom.ext h]
 
 
+open IsLocalRing in
 theorem exists_finite_split {R Ω : Type} [CommRing R] [IsLocalRing R] [Field Ω] [IsAlgClosed Ω]
     (σ : ResidueField R →+* Ω) (G : Over (Sp R)) [GrpObj G] (hG : IsSemiAbelian G) :
     ∃ s : Set Ω, s.Finite ∧ ∀ (R' : Type) [CommRing R'] [IsLocalRing R'] (f : R →+* R') [IsLocalHom f]

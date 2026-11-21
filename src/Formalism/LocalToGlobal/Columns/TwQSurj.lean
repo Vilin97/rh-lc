@@ -27,6 +27,7 @@ def QIntGL {v : HeightOneSpectrum (𝓞 F)} (k : GL (Fin n) (v.adicCompletion F)
     (∀ i j, (((k⁻¹ : GL (Fin n) _) : Matrix (Fin n) (Fin n) _) i j) ∈ v.adicCompletionIntegers F)
 
 
+variable (ST SG) in
 def FrLat (q : QLoc hc n Q Θ) : Prop :=
   ∀ (x : UAd hc n) (p : DecoF E n ST SG Q), decoOf ST SG (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) = p.deco → ∀ P : Q,
     QIntGL ((bc (q.phi P) (qGL n (p.fr P)))⁻¹ * q.at P x)

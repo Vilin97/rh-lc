@@ -298,6 +298,7 @@ def ofAffinePoint (p : (W.baseChange k).toAffine.Point) :
   ofProjectivePoint_zero W k
 
 
+variable {k} in
 @[simp] theorem ofAffinePoint_some {a b : k} (h : (W.baseChange k).toAffine.Nonsingular a b) :
     ofAffinePoint W k (.some a b h) = ptOver W ![a, b, 1] (isUnimodularSol_some h.left) := rfl
 
@@ -328,6 +329,7 @@ def affinePointEquiv : (W.baseChange k).toAffine.Point ≃
   Equiv.ofBijective _ (ofAffinePoint_bijective W k)
 
 
+variable {k} in
 theorem projectivePointEquiv_symm_ptOver (P : Fin 3 → k)
     (h : IsUnimodularSol (W.baseChange k) P) :
     (projectivePointEquiv W k).symm (ptOver W P h) =

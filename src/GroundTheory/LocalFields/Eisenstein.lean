@@ -312,6 +312,7 @@ variable (hgen : K⟮α⟯ = ⊤)
 include hgen
 
 
+omit hn in
 theorem finrank_le_of_isEisensteinAt : Module.finrank K L ≤ f.natDegree := by
   rw [← IntermediateField.finrank_top', ← hgen]
   exact finrank_adjoin_le_of_isEisensteinAt hf hα

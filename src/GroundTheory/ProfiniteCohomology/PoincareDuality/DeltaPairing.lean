@@ -22,6 +22,8 @@ variable {S T : ShortComplex (Rep.{u} k G)} [IsDiscreteRep S.X₁] [IsDiscreteRe
   (μ₁ : S.X₁ ⊗ T.X₃ ⟶ C) (μ₂ : S.X₂ ⊗ T.X₂ ⟶ C) (μ₃ : S.X₃ ⊗ T.X₁ ⟶ C)
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] [IsDiscreteRep S.X₁] [IsDiscreteRep S.X₂] [IsDiscreteRep S.X₃] [IsDiscreteRep T.X₁]
+  [IsDiscreteRep T.X₂] [IsDiscreteRep T.X₃] [IsDiscreteRep C] in
 theorem cupCochain_pairing_left (h₁₂ : (S.f ⊗ₘ 𝟙 T.X₂) ≫ μ₂ = (𝟙 S.X₁ ⊗ₘ T.g) ≫ μ₁)
     {p q n : ℕ} (h : p + q = n) (a : (Fin p → G) → S.X₁) (b : (Fin q → G) → T.X₂)
     (σ : Fin n → G) :
@@ -33,6 +35,8 @@ theorem cupCochain_pairing_left (h₁₂ : (S.f ⊗ₘ 𝟙 T.X₂) ≫ μ₂ = 
   exact e
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] [IsDiscreteRep S.X₁] [IsDiscreteRep S.X₂] [IsDiscreteRep S.X₃] [IsDiscreteRep T.X₁]
+  [IsDiscreteRep T.X₂] [IsDiscreteRep T.X₃] [IsDiscreteRep C] in
 theorem cupCochain_pairing_right (h₂₃ : (𝟙 S.X₂ ⊗ₘ T.f) ≫ μ₂ = (S.g ⊗ₘ 𝟙 T.X₁) ≫ μ₃)
     {p q n : ℕ} (h : p + q = n) (a : (Fin p → G) → S.X₂) (b : (Fin q → G) → T.X₁)
     (σ : Fin n → G) :

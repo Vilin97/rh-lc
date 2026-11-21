@@ -85,6 +85,7 @@ end GlobalTheory.CompanionTheory.SmoothRep
 namespace GlobalTheory.CompanionTheory.SmoothRep
 
 
+attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra in
 theorem val_image_mem_nhds_one {E : Type} [Field E] [NumberField E] {a : ℕ} {N : Set (GL (Fin a) (Cinf E))} (hN : N ∈ 𝓝 1) :
     (Units.val '' N) ∈ 𝓝 (1 : Matrix (Fin a) (Fin a) (Cinf E)) := by
   letI : NormedAddCommGroup (Matrix (Fin a) (Fin a) (Cinf E)) := Matrix.linftyOpNormedAddCommGroup

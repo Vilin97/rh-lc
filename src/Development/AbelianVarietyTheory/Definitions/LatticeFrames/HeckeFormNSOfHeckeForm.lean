@@ -42,6 +42,7 @@ def IsWeyl (w : GA D (dblSp A)) : Prop :=
 variable (ψ : AddChar (AF D.host.F) ℂ) (κ : Measure (skewA D A.rank))
 
 
+variable {A} in
 def fam {N : ℕ} (c : Fin N → ℂ) (x : Fin N → GA D (dblSp A)) (Φ : GA D (dblSp A) → ℂ) : GA D (dblSp A) → ℂ :=
   fun g => ∑ i, c i * Φ (g * x i)
 

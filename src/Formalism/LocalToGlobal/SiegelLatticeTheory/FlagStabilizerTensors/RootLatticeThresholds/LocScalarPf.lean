@@ -229,6 +229,7 @@ theorem ennreal_mul_le_sq (a b : ℝ≥0∞) : a * b ≤ a ^ 2 + b ^ 2 := by
       _ ≤ a ^ 2 + b ^ 2 := le_self_add
 
 
+variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 theorem local_scalar_reduction : LocScalarStep := by
   intro D hG X u μS νl C hQ v c hc0 hc
   set μ := Formalism.REAL.muG (X.B.I.ε v) with hμ

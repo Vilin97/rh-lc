@@ -130,6 +130,9 @@ theorem _root_.GlobalTheory.SpanRing.inRing_mat (h : Γ) :
     (Submodule.subset_span ⟨1, T.one_mem, h, by funext x; simp⟩)
 
 
+variable {Γ X A : Type} [Group Γ] [CommRing A] {n : ℕ}
+  (T : Subalgebra A (X → A)) (rep : X → (Γ →* GL (Fin n) A)) in
+variable {T rep} in
 theorem _root_.GlobalTheory.SpanRing.eval_mem_span {a : X → Matrix (Fin n) (Fin n) A}
     (ha : _root_.GlobalTheory.IndefiniteRowSideFullHecke.CongruenceModuleMatrices.InRing T rep a) (x : X) :
     a x ∈ Submodule.span A (Set.range (_root_.GlobalTheory.IndefiniteRowSideFullHecke.CongruenceModuleMatrices.mat (rep x))) := by
@@ -139,6 +142,9 @@ theorem _root_.GlobalTheory.SpanRing.eval_mem_span {a : X → Matrix (Fin n) (Fi
     Submodule.smul_mem _ _ (Submodule.subset_span ⟨h k, rfl⟩)
 
 
+variable {Γ X A : Type} [Group Γ] [CommRing A] {n : ℕ}
+  (T : Subalgebra A (X → A)) (rep : X → (Γ →* GL (Fin n) A)) in
+variable {T rep} in
 theorem _root_.GlobalTheory.SpanRing.exists_inRing_eval (x : X) {M : Matrix (Fin n) (Fin n) A}
     (hM : M ∈ Submodule.span A (Set.range (_root_.GlobalTheory.IndefiniteRowSideFullHecke.CongruenceModuleMatrices.mat (rep x)))) :
     ∃ a, _root_.GlobalTheory.IndefiniteRowSideFullHecke.CongruenceModuleMatrices.InRing T rep a ∧ a x = M := by

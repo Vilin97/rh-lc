@@ -18,6 +18,7 @@ open GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Sl
 namespace GlobalTheory.CompanionTheory.Ar.Sl.KeyDegFree
 
 
+open scoped ComplexOrder in
 theorem gramDet_eq_norm {L : Type} [Field L] [NumberField L] (B : HermitianBundle.{0} L) (σ : L →+* ℂ)
     {n : ℕ} {e : Fin n → B.carrier} (hli : LinearIndependent (𝓞 L) e) :
     GroundTheory.Heights₂.Heights.gramDet B.metric σ e = ‖B.gramDet σ e‖ := by

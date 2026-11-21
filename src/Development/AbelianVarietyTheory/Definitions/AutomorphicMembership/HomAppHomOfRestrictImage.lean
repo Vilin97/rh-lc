@@ -280,6 +280,7 @@ theorem isLocalRing_intO (C : Type) [NormedField C] [IsUltrametricDist C] : IsLo
 section Norm
 
 
+variable (X) in
 abbrev gen (p : ℕ) : X.Opens := X.basicOpen ((p : ℕ) : Γ(X, ⊤))
 
 def oneSec (V : X.Opens) : Γ(structureModule X, V) := (1 : Γ(X, V))

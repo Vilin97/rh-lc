@@ -427,6 +427,7 @@ theorem exists_generator_sum_charCocycle [IsCyclic G] (χ : Additive G →+ AddC
     exact_mod_cast this
 
 
+omit [Fintype G] in
 theorem mem_coboundaries₂_of_subsingleton [Subsingleton G] (z : cocycles₂ A) :
     ⇑z ∈ coboundaries₂ A := by
   refine ⟨fun _ => z (1, 1), ?_⟩

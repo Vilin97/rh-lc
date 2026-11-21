@@ -190,6 +190,7 @@ def latS (S : Finset (Pl E)) (B : ∀ w : Pl E, AddSubgroup (w.adicCompletion E)
       rw [map_neg]; exact neg_mem (ha.2 w hw)⟩
 
 
+variable (E k) in
 def nuFin : Measure (Fin k → Af E) := Measure.pi fun _ => GroundTheory.Global.finiteAdeleMeasure E
 
 def boxL (L : Set (Af E)) (c : Fin k → Af E) : Set (Fin k → Af E) := {f | ∀ i, f i - c i ∈ L}
@@ -197,6 +198,7 @@ def boxL (L : Set (Af E)) (c : Fin k → Af E) : Set (Fin k → Af E) := {f | �
 variable [IsTotallyComplex E]
 
 
+variable (E k) in
 def nuInf : Measure (Fin k → Cinf E) :=
   (Measure.pi fun _ => GroundTheory.Global.infiniteAdeleMeasure E).map fun y i => (infEq E).symm (y i)
 

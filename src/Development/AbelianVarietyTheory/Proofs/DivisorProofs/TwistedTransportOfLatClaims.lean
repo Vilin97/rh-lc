@@ -209,5 +209,6 @@ theorem twistedTransport_of_latClaims (hP : PeriodEx) (hA : LatAlg) (hC : LatCon
 end GlobalTheory.TwistedTransportProof
 
 
+open GlobalTheory.TwistedTransportProof in
 theorem GlobalTheory.TwistedTransportProof.main : PeriodEx → LatAlg → LatConj → GlobalTheory.ToricTransport.TwistedTransport :=
   twistedTransport_of_latClaims

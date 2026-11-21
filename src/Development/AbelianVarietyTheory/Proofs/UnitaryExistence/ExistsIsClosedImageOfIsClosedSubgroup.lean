@@ -92,6 +92,7 @@ theorem pt_mem_image_iff {X Y : Over (Sp k)} [LocallyOfFiniteType X.hom]
     exact ⟨pt x, hx, rfl⟩
 
 
+omit [IsAlgClosed k] in
 theorem isConstructible_image_of_isClosed {X Y : Over (Sp k)} [LocallyOfFiniteType X.hom]
     [QuasiCompact X.hom] [LocallyOfFiniteType Y.hom] [QuasiCompact Y.hom] (f : X ⟶ Y)
     {Z : Set X.left} (hZ : IsClosed Z) : IsConstructible (f.left '' Z) := by
@@ -111,6 +112,7 @@ theorem isConstructible_image_of_isClosed {X Y : Over (Sp k)} [LocallyOfFiniteTy
 end RationalPoint
 
 
+open RationalPoint in
 theorem exists_isClosed_image_of_isClosed_subgroup :
     ∀ (k : Type) [Field k] [IsAlgClosed k] (G B : Over (Sp k)) [GrpObj G] [GrpObj B] (q : G ⟶ B), IsMonHom q → LocallyOfFiniteType G.hom → QuasiCompact G.hom → LocallyOfFiniteType B.hom → QuasiCompact B.hom → ∀ (C : Subgroup (𝟙_ (Over (Sp k)) ⟶ G)) (Z : Set G.left), IsClosed Z → (∀ x, x ∈ C ↔ Set.range x.left ⊆ Z) → ∃ Z' : Set B.left, IsClosed Z' ∧ ∀ y : (𝟙_ (Over (Sp k)) ⟶ B), (∃ x ∈ C, x ≫ q = y) ↔ Set.range y.left ⊆ Z' := by
   intro k _ _ G B _ _ q _ _ _ _ _ C Z hZ hC

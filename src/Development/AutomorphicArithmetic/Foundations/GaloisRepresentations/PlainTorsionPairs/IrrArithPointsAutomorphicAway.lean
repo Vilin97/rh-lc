@@ -65,6 +65,7 @@ theorem end2oN (_ : r.V0ok) (H : IrrArithPointsAutomorphicAway B ι J) (x : B.Pt
     J ≤ RingHom.ker x → x.Arith h → x.IsRep ρ → Af.IsIrr ρ → AutOffN s.v0 ι ρ := H x h ρ
 
 
+omit [IsAlgClosure L Ω] in
 theorem v0_ne {s s' : HidaSetting l L Ω} (h : ¬ s'.p ∣ s.p) : s.v0 ≠ s'.v0 := fun e =>
   h (by rw [← s.norm_v0_eq_one, ← s'.norm_v0_eq_one, e])
 

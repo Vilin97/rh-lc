@@ -94,6 +94,8 @@ theorem sub_mem_of_cosSet {m n : ℕ} {Λ : Submodule (𝓞 D.host.E) (Fin n →
 end GlobalTheory.CosScalar
 
 
+set_option maxHeartbeats 2000000 in
+open GlobalTheory.CosScalar in
 theorem GlobalTheory.CosScalar.conjHalf_heisO_cosVec_smul : All fun {D} _ _ _ {G} W _ => ∀ i, i < D.R.m → ∀ e : AE D, IsIdemSum e G.pl.W0 → (∀ κ, IsThetaAt W.ψ (symplO _ _) (heisO W.ψ _ _) e (latO (G.pS (.chi i 0)) (G.pT (.chi i 0)) (G.latS (.chi i 0) : Set _) (G.latT (.chi i 0) : Set _) fun _ => True) 1 (W.vac i) (cosInd e κ) (W.cosVec i κ)) → ∀ w ∈ Ann W.ψ (G.pS (.chi i 0)) (G.pT (.chi i 0)) (depLat G (.chi i 0)), w.map (infPart D) = 0 → ∀ κ, ∃ c : ℂ, heisO W.ψ (G.pS (.chi i 0)) (G.pT (.chi i 0)) (cA D e • w) (W.cosVec i κ) = c • W.cosVec i κ := by
   intro D hQ T L μ₀ hL sc G W M hM i hi e he hT w hw hinf κ
   have hsd := GlobalTheory.CosetRow.selfDual_chi hL G i hi

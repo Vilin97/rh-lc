@@ -62,6 +62,7 @@ variable (K Ksep : Type) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNona
   [Field Ksep] [Algebra K Ksep] [IsSepClosure K Ksep]
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem natCard_rootsOfUnity_of_ne_zero {p : ℕ} (hp : (p : K) ≠ 0) :
     Nat.card (rootsOfUnity p Ksep) = p := by
   have : NeZero (p : Ksep) := ⟨by
@@ -74,6 +75,7 @@ theorem natCard_rootsOfUnity_of_ne_zero {p : ℕ} (hp : (p : K) ≠ 0) :
 variable {n : ℕ} (hn : (n : K) ≠ 0)
 
 
+include hn in
 theorem finite_cohomology_of_trivial (V : OpenSubgroup Gal(Ksep/K))
     (hV : ∀ σ ∈ V, ∀ ζ : Ksep, ζ ^ n = 1 → σ ζ = ζ) :
     ∀ (A : Rep (ULift.{0} ℤ) (V : Subgroup Gal(Ksep/K))) [IsDiscreteRep A] [Finite A],

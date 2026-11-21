@@ -35,6 +35,7 @@ theorem analyticOnNhd_of_differentiableOn_fd {E : Type*} [NormedAddCommGroup E] 
 end ParametricCircleIntegralAnalytic
 
 
+open ParametricCircleIntegralAnalytic in
 theorem ParametricCircleIntegralAnalytic.proof : ParametricCircleIntegralAnalytic.Statement := by
   intro ι _ Φ O U c r hr hO hU hΦ hUO x₀ hx₀
   have hcd : ContinuousOn (fderiv ℂ Φ) O :=

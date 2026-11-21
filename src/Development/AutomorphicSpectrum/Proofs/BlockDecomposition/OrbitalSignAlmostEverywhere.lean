@@ -38,6 +38,7 @@ theorem exists_integral_unitary (hE : Unr E) (n : ℕ) (P : E[X]) (hP : P ∈ El
   exact ⟨γ, hγ, by rw [hc, hMP]⟩
 
 
+open GlobalTheory.UnitOrbCount in
 theorem kapOrb_unit_pos (hU : Unr E) (n : ℕ) (hn : 1 ≤ n) (p₁ p₂ : E[X]) (h1 : p₁ ∈ Ell E p₁.natDegree)
     (h2 : p₂ ∈ Ell E p₂.natDegree) (hc : IsCoprime p₁ p₂) (hd : p₁.natDegree + p₂.natDegree = n) :
     ∀ᶠ w : Pl E in cofinite, kapOrb n w (atPl w p₁) (atPl w p₂) ((KL n w : Set (UL n w)).indicator 1) = 1 := by

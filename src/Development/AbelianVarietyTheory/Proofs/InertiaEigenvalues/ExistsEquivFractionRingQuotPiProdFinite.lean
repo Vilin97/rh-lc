@@ -99,6 +99,7 @@ theorem exists_inj (hϖ : Irreducible ϖ) {M : Type} [AddCommGroup M] [Module O 
       rw [← hw1, this, map_smul, hx, smul_zero]
 
 
+omit [IsDomain O] [IsDiscreteValuationRing O] in
 theorem exists_socle {Y : Type} [AddCommGroup Y] [Module O Y]
     (hp : ∀ y : Y, ∃ n : ℕ, ϖ ^ n • y = 0) (T : Submodule O Y) (y : Y) (hy : y ∈ T) (h0 : y ≠ 0) :
     ∃ z ∈ T, z ≠ 0 ∧ ϖ • z = 0 := by
@@ -145,6 +146,7 @@ theorem pw_anti {Y : Type} [AddCommGroup Y] [Module O Y] {n m : ℕ} (h : n ≤ 
   exact mem_pw.2 ⟨ϖ ^ k • z, by rw [pow_add, mul_smul]⟩
 
 
+omit [IsDomain O] [IsDiscreteValuationRing O] in
 theorem exists_uniform {Y : Type} [AddCommGroup Y] [Module O Y] {S : Set Y} (hS : S.Finite) :
     ∃ N, ∀ y ∈ S, y ∈ pw ϖ Y N → y ∈ ⨅ n, pw ϖ Y n := by
   have h1 : ∀ y : Y, ∃ N, y ∈ pw ϖ Y N → y ∈ ⨅ n, pw ϖ Y n := by

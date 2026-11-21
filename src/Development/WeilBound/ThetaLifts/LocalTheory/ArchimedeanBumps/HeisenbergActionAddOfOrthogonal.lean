@@ -49,6 +49,7 @@ theorem rho_comm (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (u u' : Matrix (Fi
   linear_combination ((M.co.e u).1 ⬝ᵥ (M.co.e u').2 - (M.co.e u').1 ⬝ᵥ (M.co.e u).2) * h2
 
 
+variable (σ) in
 def bA (J : Matrix (Fin n) (Fin n) E) (x y : Fin n → AE F E) : AE F E := x ⬝ᵥ incM F J *ᵥ fun i => cA σ (y i)
 
 theorem sy_vv (x x' : Fin n → AE F E) (y y' : Fin d → AE F E) :

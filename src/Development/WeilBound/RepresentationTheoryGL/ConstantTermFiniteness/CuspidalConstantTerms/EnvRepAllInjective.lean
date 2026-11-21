@@ -96,6 +96,8 @@ theorem realEntries_one (R : RealPoints θ V) :
   simp only [realEntries, R.2.2.2.2.1 1 (one_mem _) p.1, Matrix.one_apply]
 
 
+set_option maxHeartbeats 1000000 in
+open Classical in
 theorem envRepAll_injective (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)) (_hθ : IsInfFam θ)
     (V : HSp D) (R : RealPoints θ V) : Function.Injective (envRepAll R) := by
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]

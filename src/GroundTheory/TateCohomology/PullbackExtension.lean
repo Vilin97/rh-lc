@@ -67,6 +67,7 @@ noncomputable def pullbackSES : ShortComplex (Rep.{u} k G) :=
   ShortComplex.mk (pullbackι S β) (pullbackSnd S β) (pullbackι_pullbackSnd S β)
 
 
+variable {S} in
 theorem pullbackSES_shortExact (hS : S.ShortExact) : (pullbackSES S β).ShortExact := by
   have hex := function_exact_of_shortExact hS
   have hinj : Function.Injective S.f.hom := (Rep.mono_iff_injective _).1 hS.mono_f

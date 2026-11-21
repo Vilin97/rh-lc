@@ -97,6 +97,7 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
   [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
 
+omit [FiniteDimensional K V] in
 theorem disc_of_equiv (h : V →ₗ⋆[K] V →ₗ[K] K) (N : Submodule (𝓞 K) V) (T : ℕ)
     (e : (↥(dual h N) ⧸ N.comap (dual h N).subtype) ≃ₗ[𝓞 K] (𝓞 K ⧸ Ideal.span {(T : 𝓞 K)})) :
     discN h N = T ^ Module.finrank ℚ K ∧ Cnt.DiscGen h N 1 := by

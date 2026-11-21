@@ -27,6 +27,7 @@ theorem cuspFormsBounded : CuspFormsBoundedGL :=
     (GlobalTheory.cuspRapidDecaySiegelGL_of_finite GlobalTheory.automorphicFormsFiniteGL)
 
 
+variable (ω) in
 abbrev bddSm : Submodule ℂ (Sm E a) := (bddForms E a ω).comap (Sm E a).subtype
 
 abbrev ip (φ ψ : Sm E a) : ℂ := pet (latticeGL E a) μ φ.1 ψ.1

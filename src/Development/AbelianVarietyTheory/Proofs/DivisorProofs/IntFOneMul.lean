@@ -18,6 +18,7 @@ namespace GlobalTheory.HeckeExtend
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+variable (F) in
 def intF (N : ℕ) : Set (AF F) :=
   {x | ∃ c : Af F, (∀ v, c v ∈ v.adicCompletionIntegers F) ∧ x.2 = N • c}
 
@@ -30,6 +31,7 @@ theorem intF_one_mul {x y : AF F} (hx : x ∈ intF F 1) (hy : y ∈ intF F 1) : 
   rw [e, e']
 
 
+variable (F E) in
 def SE : AddSubgroup (AF F ⊗[F] E) :=
   AddSubgroup.closure {z | ∃ s ∈ intF F 1, ∃ o : 𝓞 E, z = algebraMap (AF F) (AF F ⊗[F] E) s * incAF F E o}
 
@@ -60,6 +62,7 @@ theorem one_mem_SE : (1 : AF F ⊗[F] E) ∈ SE F E :=
   AddSubgroup.subset_closure ⟨1, ⟨1, fun v => one_mem _, by rw [one_smul]; rfl⟩, 1, by simp [Algebra.TensorProduct.one_def]⟩
 
 
+variable (F E) in
 def CE (N : ℕ) : AddSubgroup (AF F ⊗[F] E) := (SE F E).map (nsmulAddMonoidHom N)
 
 theorem mem_CE {N : ℕ} {z : AF F ⊗[F] E} : z ∈ CE F E N ↔ ∃ s ∈ SE F E, N • s = z := by
@@ -75,6 +78,7 @@ theorem CE_step {N : ℕ} {x y : AF F ⊗[F] E} (hx : x - 1 ∈ CE F E N) (hy : 
   ring
 
 
+variable (F E) in
 def WE (N : ℕ) : Subgroup (AF F ⊗[F] E)ˣ where
   carrier := {z | (z : AF F ⊗[F] E) - 1 ∈ CE F E N ∧ ((z⁻¹ : (AF F ⊗[F] E)ˣ) : AF F ⊗[F] E) - 1 ∈ CE F E N}
   one_mem' := by simp

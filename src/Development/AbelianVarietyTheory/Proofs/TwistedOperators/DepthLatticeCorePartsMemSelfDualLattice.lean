@@ -157,6 +157,7 @@ end GlobalTheory.AscFin.BigProj
 namespace GlobalTheory.AscFin
 
 
+open GlobalTheory.AscFin.BigProj in
 theorem pcBF_big_core : OnStd fun {D} _ _ {sc} {G} W F =>
     ∀ ρ (h : 2 * ρ + 2 ≤ D.R.m), ∀ w : WO (F.V₀ ρ) (G.V (.grid (2 * ρ + 1) 0)),
       (F.dB ρ h).ext0 (G.V (.grid (2 * ρ + 1) 0)) w ∈ latRow G (2 * ρ + 1) →

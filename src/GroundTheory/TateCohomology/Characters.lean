@@ -62,6 +62,7 @@ noncomputable def h1RatModIntIso :
   H1IsoOfIsTrivial _
 
 
+omit [Fintype G] in
 theorem h1RatModIntIso_inv_apply (χ : Additive G →+ AddCircle (1 : ℚ)) :
     (h1RatModIntIso G).inv χ =
       H1π _ ((cocycles₁IsoOfIsTrivial (Rep.trivial ℤ G (AddCircle (1 : ℚ)))).inv χ) :=

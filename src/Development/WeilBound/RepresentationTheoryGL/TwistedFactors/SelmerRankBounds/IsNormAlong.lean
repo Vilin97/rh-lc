@@ -71,6 +71,7 @@ def galInf (σ : E ≃ₐ[F] E) : InfiniteAdeleRing E →+* InfiniteAdeleRing E 
   galOf (GroundTheory.Global.InfinitePlace.tensorInfiniteAdeleRingEquiv (K := F) (L := E)) σ
 
 
+variable (E) in
 def incFin (v : HeightOneSpectrum (𝓞 F)) : v.adicCompletion F →+* CompletionsOver E v :=
   RingHom.pi fun w => completionMap v w.1
 
@@ -84,6 +85,7 @@ def atFin (v : HeightOneSpectrum (𝓞 F)) : 𝔸[E] →+* CompletionsOver E v w
 variable {n : ℕ}
 
 
+variable (E n) in
 def unitSet (v : HeightOneSpectrum (𝓞 F)) : Set (GL (Fin n) (CompletionsOver E v)) :=
   {g | ∀ w : PlacesOver E v, mapGL n (Pi.evalRingHom (fun w : PlacesOver E v => w.1.adicCompletion E) w) g ∈
     GLnLocal.integralGL (w.1.adicCompletion E) n}

@@ -38,6 +38,8 @@ def datFn {t : T} (d : PureDat G t) : ∀ l : Arr D, WO (G.pS (arrP t l)) (G.pT 
   | .inr i => (d.2 i).fn
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1600000 in
 theorem colAt_firstPt (S : GridChoice W U) {t : T} (ht : t ∈ U) (k : FinPt G (.top 0)) {w : Pl D.host.E}
     (hw : w ∈ locPl G t) (x : ∀ j : Fin D.R.m, WO (G.pS (.top t j : Pair T)) (G.pT (.top t j : Pair T))) :
     S.colAt t w (firstPt t ((S.N.u (.top 0))⁻¹ * k * S.N.u (.top 0)) x) =

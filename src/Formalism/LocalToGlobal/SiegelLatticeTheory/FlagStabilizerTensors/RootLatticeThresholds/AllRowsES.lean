@@ -80,6 +80,7 @@ theorem Ea_mul (a b : CV D) : Ea a * Ea b = if a = b then Ea a else 0 := by
     simp
 
 
+open Classical in
 theorem ES_idem (S : Set (Tup2 D)) : ES S * ES S = ES S := by
   rw [ES_eq, Finset.sum_mul_sum]
   refine Finset.sum_congr rfl fun a ha => ?_

@@ -644,6 +644,7 @@ theorem phiPG_zero (ψ : AddChar k Circle) (hψ : Continuous ψ) (hσ : IsSmooth
 end Final
 
 
+open GlobalTheory.RgGu.Leib in
 theorem phiPG0_holds : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k], PhiPG0 k := by
   intro k _ _ _ _ ψ hψ _ t τ σ hσ
   exact phiPG_zero τ σ ψ hψ hσ _ rfl

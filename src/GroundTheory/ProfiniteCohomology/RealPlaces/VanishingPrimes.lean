@@ -26,6 +26,7 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
 section Local
 
 
+set_option maxHeartbeats 2000000 in
 theorem subsingleton_cohomology_gsFinFamily_of_three_le {n : ℕ} (hn : n ≠ 0)
     (M : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S)) [IsDiscreteRep M]
     (hM : ∀ m : M, n • m = 0) (v : S) {j : ℕ} (hj : 3 ≤ j) :
@@ -36,6 +37,7 @@ theorem subsingleton_cohomology_gsFinFamily_of_three_le {n : ℕ} (hn : n ≠ 0)
   exact_mod_cast hℓ.ne_zero
 
 
+set_option maxHeartbeats 2000000 in
 theorem subsingleton_cohomology_real_of_odd (v : {v : InfinitePlace K.1 // v.IsReal}) {n : ℕ}
     (hn : Odd n) (A : Rep.{0} (ULift.{0} ℤ) Gal(AlgebraicClosure v.1.Completion / v.1.Completion))
     [IsDiscreteRep A] (hA : ∀ a : A, n • a = 0) {j : ℕ} (hj : 1 ≤ j) :

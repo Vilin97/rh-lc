@@ -375,6 +375,7 @@ theorem exists_twist_of_lowers (hL : Out.Laws) (hpq : 1 ≤ D.p + D.q) (hd : l.D
       rw [hm, ← Category.assoc, hA', Category.assoc, b, Category.assoc]
 
 
+variable (Xo jK) in
 def Grp : Type := {f : Xo.X ⟶ Xo.X // ∃ g σ, Twist Xo jK g σ f}
 
 instance : One (Grp Xo jK) := ⟨⟨𝟙 _, _, _, Twist.one⟩⟩

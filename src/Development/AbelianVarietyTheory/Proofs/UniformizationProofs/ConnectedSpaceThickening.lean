@@ -86,6 +86,7 @@ theorem isMonHom_of_mono {S : Scheme.{0}} {A B C : Over S} [MonObj A] [MonObj B]
 end EndTorus
 
 
+open EndTorus in
 theorem gtCoord_end_torus_abelian : LL → ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R), AdmBase R I → ∀ (D : DegPre R) (e : ℕ) (G : Over (Spec (CommRingCat.of R))) [GrpObj G] [IsCommMonObj G] (g : GtCoord I D e G) (a : thickObj R I e G ⟶ thickObj R I e G), IsMonHom a → (∃! h : D.X →+ D.X, ∃ t, TorusEndOf D.X h t ∧ g.i ≫ a = t ≫ g.i) ∧ ∃! b : thickObj R I e D.P.A ⟶ thickObj R I e D.P.A, IsMonHom b ∧ a ≫ g.q = g.q ≫ b := by
   intro _ R _ _ I hR D e G _ _ g a ha
   obtain ⟨hN, -, -, hC⟩ := hR

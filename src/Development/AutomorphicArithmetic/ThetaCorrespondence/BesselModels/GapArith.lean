@@ -75,6 +75,7 @@ theorem blockM_bound {a : ℕ} {x : ℚ} (h : x ∈ (num D C τ).blockM a) :
   constructor <;> linarith [this.1, this.2]
 
 
+variable {D} in
 theorem blockC_gt {a : ℕ} (h1 : 1 ≤ a) (h2 : a ≤ D.R.m) {x : ℚ} (h : x ∈ (num D C τ).blockC a) :
     -((num D C τ).b 1 : ℚ) < x := by
   have hb := abs_le.1 (abs_sub_le_of_mem_block (c := ((num D C τ).cen a : ℚ)) (t := sLen D) h)

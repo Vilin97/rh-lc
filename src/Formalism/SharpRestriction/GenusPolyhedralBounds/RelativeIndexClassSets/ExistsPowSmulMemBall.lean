@@ -55,6 +55,7 @@ def ordAt (ϖ : O) (ζ : Pts O A) (n : ℕ) (a : ↥(As O A)) : WithTop ℤ :=
   (vL ζ a).map (Nat.cast : ℕ → ℤ) + ((-((n : ℤ) * (ep ϖ ζ : ℤ)) : ℤ) : WithTop ℤ)
 
 
+open Classical in
 def ord (ϖ : O) (ζ : Pts O A) (x : A) : WithTop ℤ :=
   by
     classical
@@ -62,6 +63,7 @@ def ord (ϖ : O) (ζ : Pts O A) (x : A) : WithTop ℤ :=
       ordAt ϖ ζ h.choose ⟨ϖ ^ h.choose • x, h.choose_spec⟩ else ⊤
 
 
+variable (A) in
 structure IsUnif (ϖ : O) : Prop where
 
   irreducible : Irreducible ϖ
@@ -344,6 +346,7 @@ section Ball
 variable {V : Type*} [AddCommGroup V] [Module A V]
 
 
+variable (A) in
 def IsGen (e : V) : Prop := Function.Bijective (fun a : A => a • e)
 
 def coord (e v : V) : A := Function.invFun (fun a : A => a • e) v

@@ -132,6 +132,8 @@ end Lift
 end BlowUpOverLocInChart
 
 
+set_option maxHeartbeats 1600000 in
+open BlowUpOverLocInChart in
 theorem BlowUpOverLocInChart.proof : BlowUpOverLocInChart.Statement.{u} := by
   intro R _ K _ _ ι J P W _ hPh hW hPW hrel N u hu j huj
   set L := FractionRing (MRing ι R ⧸ P)

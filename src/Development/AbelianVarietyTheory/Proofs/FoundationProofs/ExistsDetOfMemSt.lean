@@ -43,6 +43,7 @@ open GlobalTheory.AdLat
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+variable (F E) in
 def swapF : RA F E →+* E ⊗[F] Formalism.L2.Herm.Af F :=
   (Algebra.TensorProduct.comm F (FiniteAdeleRing (𝓞 F) F) E).toAlgHom.toRingHom
 

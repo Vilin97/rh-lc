@@ -317,6 +317,12 @@ private theorem ch_add_colMat (x : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k)
   simp [_root_.GlobalTheory.RootEx.ch, Finset.sum_add_distrib, _root_.GlobalTheory.RootEx.UnfoldShape.colMat]
 
 
+open MeasureTheory ValuativeRel Matrix in
+open scoped Pointwise in
+variable {k : Type} [Field k] [ValuativeRel k] in
+variable {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ} in
+variable [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
+variable [MeasurableSpace k] [BorelSpace k] in
 theorem _root_.GlobalTheory.RootEx.UnfoldShape.opE_translate (ψ : AddChar k Circle) (ν : Measure k) [ν.IsAddHaarMeasure]
     {Ψ : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k → ℂ} {y : Fin c → (n ⊕ Fin c → k)}
     (hy : ∀ i, y i ∈ _root_.GlobalTheory.IndefiniteRowSideFullHecke.ExponentTerms.Yle k n c (i.val + 1)) (hΨ : ∀ x, Ψ (x + _root_.GlobalTheory.RootEx.UnfoldShape.colMat n' y) = Ψ x)

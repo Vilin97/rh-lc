@@ -263,6 +263,7 @@ theorem exists_iso_of_compatible_thickenings_gen {R : Type} [CommRing R] [IsLoca
 end GlobalTheory.AlgebraiseGen
 
 
+open GlobalTheory.Algebraise GlobalTheory.SectionRingIso ReciprocityTheory.ChartRestriction.G.Geo.Tor TopologicalSpace in
 theorem GlobalTheory.exists_iso_of_compatible_thickenings_sq : SecBaseChangeSt → AmpleSt → ∀ (R : Type) [CommRing R] [IsLocalRing R] [IsNoetherianRing R] (I : Ideal R)
     [IsAdicComplete I R] (P P' : PolAV (Spec (CommRingCat.of R))) (β : ∀ e : ℕ, thickObj R I e P'.A ≅ thickObj R I e P.A)
     (v : ∀ e : ℕ, LB.Iso ((LB.LinComb P'.L (K := Fin 1) (fun _ => 𝟙 P'.A.left) (fun _ => 2)).pull (fstG I e P'.A).left)

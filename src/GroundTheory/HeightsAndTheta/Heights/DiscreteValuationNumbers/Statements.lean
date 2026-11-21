@@ -27,6 +27,7 @@ def ConservationOfNumber.Statement : Prop :=
 
 
 open scoped Classical in
+open Classical in
 def CutByEffectiveDivisor.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
     ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]

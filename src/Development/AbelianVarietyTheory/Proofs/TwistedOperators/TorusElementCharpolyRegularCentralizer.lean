@@ -143,6 +143,7 @@ theorem trBase_smul (a : k ⊗[F] E) (z : k ⊗[F] Fld P) : trBase P k (a • z)
   lT_smul P k (Algebra.trace E (Fld P)) a z
 
 
+variable (k) in
 theorem eq_zero_of_trBase [NumberField E] (z : k ⊗[F] Fld P) (hz : ∀ y, trBase P k (z * y) = 0) : z = 0 := by
   classical
   let b := (pb P).basis
@@ -304,6 +305,7 @@ end GlobalTheory.TrEll.GamAlg
 namespace GlobalTheory.TrEll
 
 
+open GamAlg in
 theorem gam_charpoly_regular_cent : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (r n : ℕ) (P : PPol σ r) (J : Matrix (Fin n) (Fin n) E), IsHermND σ J →
     ∀ (k : Type) [CommRing k] [Algebra F k], ∀ (x : plusUnits P k)

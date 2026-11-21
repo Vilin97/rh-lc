@@ -242,6 +242,8 @@ theorem pairH_annih {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.F ψ
     rw [e, half_add_self]
 
 
+set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem sdHerm_map {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.F ψ) {lam : Measure (hermA D r)}
     {𝓖 : Set (hermA D r)} (hl : IsCovolOneH lam 𝓖) :
     SdHerm D.host.F D.host.E D.sp.cm.sig (AF D.host.F) ψ r (lam.map hermTo) := by
@@ -280,6 +282,8 @@ theorem sdHerm_map {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.F ψ)
 end Herm
 
 
+set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem whit_eq_coefN : ∀ (D : D7) (r : ℕ) (V : HSp D) (ψ : AddChar (AF D.host.F) ℂ), IsCharAF D.host.F ψ →
   ∀ μ : Measure (Mx D V.rank r), (∃ 𝓕, IsCovolOne (ratMx D V.rank r) μ 𝓕) →
   ∀ lam : Measure (hermA D r), (∃ 𝓖, IsCovolOneH lam 𝓖) →

@@ -24,6 +24,7 @@ variable {G : Type} [Group G] {LL : Type} [Field LL]
     (r : GG →* A) (χ : GG →* T'ˣ) (E : A) (Dw : Subgroup GG) (eG : ↥Dw ≃* G)
 
 
+variable (O) in
 def lRep : Representation O GG A where
   toFun g := LinearMap.mulLeft O (uElt r χ g)
   map_one' := LinearMap.ext fun a => by simp [uElt_one]

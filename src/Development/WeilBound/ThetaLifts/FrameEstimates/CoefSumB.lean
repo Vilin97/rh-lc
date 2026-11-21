@@ -128,6 +128,7 @@ theorem exists_dom {G : Type} [AddCommGroup G] [TopologicalSpace G] [IsTopologic
 end CS
 
 
+open CS in
 theorem coefSum_of_annih (hA : Annih) : CoefSum := by
   intro F _ _ κ _ ψ hstd μ hμ
   have hψ := GlobalTheory.StdCharFromIsStd.isCharAF hstd

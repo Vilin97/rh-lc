@@ -78,6 +78,7 @@ section TLd
 variable {D : D7} {u : D.what₂.Word}
 
 
+set_option maxHeartbeats 2000000 in
 theorem tld_isLat (i : ℕ) (hi : i ≤ D.R.m) (c : (D.mem u).C.cls i) :
     Formalism.L2.GlobalTheoryTheory.Comp.IsLat (clsCrd D u i hi c) := by
   letI := D.host.cmStar
@@ -131,6 +132,7 @@ theorem sf_mulVec_smul {n : ℕ} (v : HeightOneSpectrum (𝓞 F))
   ring
 
 
+set_option maxHeartbeats 1000000 in
 theorem sf_of_gen {n : ℕ} (v : HeightOneSpectrum (𝓞 F)) (L2 Lb : Submodule (𝓞 E) (Fin n → E))
     {Mm : Type} [AddCommGroup Mm] [Module (intV E v) Mm]
     (f : latS (F := F) (v.adicCompletion F) (intV E v) Lb →ₗ[intV E v] Mm)
@@ -214,6 +216,7 @@ theorem sf_bc_eq {n : ℕ} (v : HeightOneSpectrum (𝓞 F)) (y1 y2 : GL (Fin n) 
   rfl
 
 
+set_option maxHeartbeats 2000000 in
 theorem sf_two {n : ℕ} (v : HeightOneSpectrum (𝓞 F)) (L1 L2 Lb : Submodule (𝓞 E) (Fin n → E))
     {Mm : Type} [AddCommGroup Mm] [Module (intV E v) Mm]
     (f : latS (F := F) (v.adicCompletion F) (intV E v) Lb →ₗ[intV E v] Mm)

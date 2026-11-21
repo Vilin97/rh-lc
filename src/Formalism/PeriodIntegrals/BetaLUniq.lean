@@ -22,6 +22,7 @@ end PI.BetaLUniq
 namespace PI
 
 
+open PI.BetaLUniq in
 def BetaLUniq : Prop :=
   ∀ (D : D7) (u u' : D.what₂.Word),
   ∀ (Λ : Lt D) (F : Fl D (Tu D u)) (F' F'' : Fl D (Tu D u')) (β₁ β₂ : (hS D).V ≃ₗ[D.host.E] (hS D).V),

@@ -63,6 +63,7 @@ theorem card_lagr [Nontrivial K] {JB : Matrix β β K} {Cy : Matrix β ν K} (h 
   rw [card_eq_of_linearEquiv K f, Fintype.card_sum, two_mul]
 
 
+omit [Invertible (2 : k)] [Fintype α] [DecidableEq α] in
 theorem indep {Cy Cx : Matrix β ν K} {M : Matrix (ν ⊕ ν) β K} (h2 : M * fromCols Cy Cx = 1) {z z' : Matrix ν α K}
     (h : Cy * z + Cx * z' = 0) : z = 0 ∧ z' = 0 := by
   have hrows : fromRows z z' = 0 := by
@@ -96,6 +97,7 @@ theorem lagY_dim [Nontrivial K] {ξ₀ : K} (hq : IsQuad c ξ₀) {ξ : K} {JA :
     exact sub_eq_zero.1 (indep hM h3).1
 
 
+omit [Invertible (2 : k)] in
 theorem exists_coord {ξ₀ : K} (hq : IsQuad c ξ₀) (ν α : Type) [Fintype ν] [Fintype α] [DecidableEq α] :
     ∃ (r : ℕ) (e : (Fin r → k) ≃ₗ[k] Matrix ν α K), ∀ t : GL α K, ∃ g : GL (Fin r) k,
       (∀ x, e (g.val *ᵥ x) = e x * t.valᵀ) ∧ GeneralLinearGroup.det g =
@@ -140,6 +142,7 @@ theorem exists_coord {ξ₀ : K} (hq : IsQuad c ξ₀) (ν α : Type) [Fintype �
     simp
 
 
+omit [DecidableEq α] [DecidableEq β] in
 theorem schr_box (ψ : AddChar k ℂ) {κ' : Type} [Fintype κ'] (w : (κ ⊕ κ' → k) × (κ ⊕ κ' → k)) (φ₁ : (κ → k) → ℂ)
     (φ₂ : (κ' → k) → ℂ) : schr ψ w (boxFun φ₁ φ₂) =
       boxFun (schr ψ (w.1 ∘ Sum.inl, w.2 ∘ Sum.inl) φ₁) (schr ψ (w.1 ∘ Sum.inr, w.2 ∘ Sum.inr) φ₂) := by

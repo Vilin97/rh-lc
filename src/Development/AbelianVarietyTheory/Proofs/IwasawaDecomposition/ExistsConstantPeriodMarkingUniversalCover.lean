@@ -226,6 +226,7 @@ theorem isEx_chart (h : IsExpChart ch ex) {x : CxPts (genStr Z) σ} (hx : x ∈ 
   · rw [hv, map_zero_eq_one (hadd x hx)]
 
 
+variable (Fu ex) in
 def Match (x : CxPts (genStr Z) σ) (i : Fin Fu.n) (P : (Fu.Di i).La →+ (Fin g → ℂ)) (y : Sp ℂ ⟶ Xo.XF c)
     (L : (Fin g → ℂ) ≃ₗ[ℂ] (Fin g' → ℂ)) : Prop :=
   (∀ z, Fu.ex i P z = 1 ↔ ex x (L z) = 1) ∧ ∀ (w) (v : Sp (DualNumber ℂ) ⟶ Z.oF.t.G.left),
@@ -349,6 +350,7 @@ theorem isHolTo_chart (h : IsLogChart k ch ex lam ρ) {B : Set (Fin n → ℂ)} 
     (k := fun t : (Fin n → ℂ) × (Fin g' → ℂ) => (logExp k t.1, t.2)) (z := bz) hh d
 
 
+variable (Fu ch ex lam k) in
 def Marks (s : Fin n → ℂ) (i : Fin Fu.n) (T : (Fu.Di i).La ≃+ (Fin r → ℤ)) : Prop :=
   ∀ (a : CxFr Z σ) (W : Letter Dw → Fin g' → ℂ), a.1 = ch.symm (logExp k s) → Dirs a (fun w => (ex a.1 w).left) W →
     ∃ (Q : (Fu.Di i).La →+ (Letter Dw → ℂ)) (gm : (Fu.Di i).La ≃ₗ[𝓞 E] (Fu.Di i).La), Per Fu a i Q ∧

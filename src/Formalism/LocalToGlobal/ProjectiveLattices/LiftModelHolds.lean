@@ -173,6 +173,7 @@ theorem ball_of {g0 : B.Cusp j wF} (C : CurveModel G la g0) (FP FQ : ↥(Frac0 (
       exact Ideal.mul_mem_left _ _ hzI
 
 
+set_option maxHeartbeats 1600000 in
 theorem liftModelSt_of (G : GlobalFamilyData (xplus X E hM) ka wL wF) (la : HeightOneSpectrum (𝓞 B.KO)) (hL : LocRingSt G la) :
     LiftModelSt G la := by
   intro y hw g0 T hCM hg0

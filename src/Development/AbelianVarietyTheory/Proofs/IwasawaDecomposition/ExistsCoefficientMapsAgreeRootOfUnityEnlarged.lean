@@ -96,6 +96,7 @@ theorem decoOf_lat {X : Formalism.L2.Col.Fields} (hc : CMData X.F X.E) (n : ℕ)
   rfl
 
 
+set_option maxHeartbeats 4000000 in
 theorem exists_root_reading (X : Stages) {px : PreX X.B.toPre} (I : ColIn X.B px) (hX : X.B.fields.Ok) (U : Set I.ι)
     (Xg : Finset (Gc X.B px → X.B.LL)) (tr : TrI X.B px) {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks X.toD7.what₂.LL]
     (R : RealDat X.toD7 (famR X I hX U Xg tr).A Ks) (hI : I.Ok) (hL : LevOf X I U R.toLevCh) (i : Fin X.toD7.R.m)
@@ -210,6 +211,7 @@ theorem heq_apply {α β β' : Type} {g : α → β} {g' : α → β'} (e : β' 
   rfl
 
 
+set_option maxHeartbeats 8000000 in
 theorem exists_agree_root : ∀ {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : TwDat B'} {w : ColW B f T} {w' : ColW B' f' T'}
   {Z : w.Lt} {Z' : w'.Lt} {hX : B.fields.Ok} {hX' : B'.fields.Ok} {Wt : Set B.places.Pl} {Wt' : Set B'.places.Pl}
   (z : Dat (w.st Z) w.I hX T Wt), Enl0 B B' → HEq f' f → HEq w'.px w.px → z.Std →

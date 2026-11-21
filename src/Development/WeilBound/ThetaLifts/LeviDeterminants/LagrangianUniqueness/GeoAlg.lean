@@ -69,6 +69,7 @@ section Abs
 variable {F : Type} [Field F] {A : Type} [CommRing A] [Algebra F A]
 
 
+variable (A) in
 def emb (κ : Type) : ((κ → F) × (κ → F)) →ₗ[F] ((κ → A) × (κ → A)) :=
   ((Algebra.linearMap F A).compLeft κ).prodMap ((Algebra.linearMap F A).compLeft κ)
 

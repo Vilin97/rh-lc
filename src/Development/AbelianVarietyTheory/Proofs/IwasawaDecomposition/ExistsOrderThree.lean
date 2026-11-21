@@ -353,6 +353,7 @@ theorem isTheta0_lamConj {D : D7} {cc : Ideal (𝓞 D.host.K)} {δ t : ℂ} {M :
     exact h2
 
 
+open Formalism.L2.GlobalTheoryTheory in
 theorem ties_of_data {D : D7} {δ : ℂ} (hF : FieldOK D.host D.what₂.embLL D.embE) (h : IsDiscriminantTwelfthRootOfIdealLattice D D.host.ccK δ)
     (h2 : g2 (lamOf D D.host.ccK δ) ∈ coefM D) (h3 : g3 (lamOf D D.host.ccK δ) ∈ coefM D) :
     OmegaCompatible (retie D) δ ∧ DataIn D (tor0 D D.host.ccK δ) (coefM D) ∧ ∀ s : D.what₂.LL →+* ℂ,

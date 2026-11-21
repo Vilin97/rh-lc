@@ -127,6 +127,7 @@ end GlobalTheory.DPEval2
 namespace GlobalTheory
 
 
+open DPEval2 in
 theorem dpEval_two :
     ∀ (B : Type) [CommRing B] (u v : ℕ → B), u 0 = 1 → v 0 = 1 →
     (∀ m n, u m * u n = ((m + n).choose m : B) * u (m + n)) →

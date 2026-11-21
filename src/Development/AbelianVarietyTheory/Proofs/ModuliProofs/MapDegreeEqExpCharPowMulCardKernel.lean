@@ -214,6 +214,7 @@ theorem exists_mapDeg_of_isFinite : ∀ (X Y : Scheme.{0}) [IsIntegral X] [IsInt
 end DegKer
 
 
+open DegKer in
 theorem mapDeg_eq_pow_mul_card_ker :
     ∀ (K : Type) [Field K] [IsAlgClosed K] (P : Out.PolAV (Sp K)) (α : P.A ⟶ P.A), IsMonHom α → IsFinite α.left → Finite {x : Out.baseOver (Sp K) ⟶ P.A // x ≫ α = 1} ∧ ∃ e : ℕ, MapDeg α.left (ringExpChar K ^ e * Nat.card {x : Out.baseOver (Sp K) ⟶ P.A // x ≫ α = 1}) := by
   intro K _ _ P α _ _

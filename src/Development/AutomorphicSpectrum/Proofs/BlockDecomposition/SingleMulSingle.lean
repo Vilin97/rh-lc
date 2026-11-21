@@ -213,11 +213,13 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {n r : ℕ} {J : Matrix (Fin n) (Fin n) E} {X Y : Matrix (Fin n) (Fin r) E}
 
 
+variable (σ J X Y) in
 def Pj : Idx r → Matrix (Fin n) (Fin n) (AF F ⊗[F] E) :=
   pr (adMat F X) (adMat F Y) (cT (sigR (AF F) σ) (adMat F X) * JR (F := F) (AF F) J)
     (cT (sigR (AF F) σ) (adMat F Y) * JR (F := F) (AF F) J)
 
 
+variable (F E) in
 def eA (x : ℝ) : AF F ⊗[F] E := algebraMap (AF F) (AF F ⊗[F] E) (1 + realAd F (x - 1))
 
 theorem eA_exp (u : ℝ) : eA F E (Real.exp u) = algebraMap (AF F) (AF F ⊗[F] E) (rId F u) := rfl
@@ -348,6 +350,7 @@ theorem dl_neg (s : Fin r → ℝ) (α : Idx r) : dl (-s) α = - dl s α := by
   rcases α with i | u | i <;> simp [dl]
 
 
+variable (σ J X Y) in
 def Psi (q : (Idx r → Idx r → ℝ) × GAd σ J) : Matrix (Fin n) (Fin n) (AF F ⊗[F] E) :=
   ∑ α, ∑ β, eA F E (q.1 α β) • (Pj σ J X Y α * (matHom _ σ J q.2).1 * Pj σ J X Y β)
 

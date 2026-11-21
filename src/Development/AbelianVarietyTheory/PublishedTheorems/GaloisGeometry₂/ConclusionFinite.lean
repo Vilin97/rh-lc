@@ -78,6 +78,7 @@ theorem mem_eig_wdPst {LL : FinExt l} {V : Type} [AddCommGroup V] [Module ↥LL.
   exact End.hasEigenvalue_of_hasEigenvector ⟨End.mem_eigenspace_iff.mpr he, hv⟩
 
 
+omit [IsAlgClosure E Ω] in
 theorem smooth_loc (χ : HChar E) : GlobalTheory.SmGL.IsSmoothChar (χ.loc w) := by
   obtain ⟨n, hn⟩ := GlobalTheory.Mem.UnrAe.exists_levelLe χ w
   have hu := unif_spec w
@@ -124,6 +125,7 @@ theorem mem_eig_of_period {LL : FinExt l} {V : Type} [AddCommGroup V] [Module �
     rw [weilD_apply, End.mul_apply, hxz, map_smul, hs, mul_smul])
 
 
+omit [IsAlgClosure E Ω] in
 theorem eq_loc {χ : HChar E} {ξ : (w.adicCompletion E)ˣ →* ℂˣ} (hξ : GlobalTheory.NPin.IsComp χ w ξ) : ξ = χ.loc w := by
   have hs := hξ.1.mul (smooth_loc (w := w) χ).inv
   have hc := Subgroup.isClosed_of_isOpen _ hs
@@ -144,6 +146,7 @@ theorem eq_loc {χ : HChar E} {ξ : (w.adicCompletion E)ˣ →* ℂˣ} (hξ : Gl
   exact mul_inv_cancel _
 
 
+omit [IsAlgClosure E Ω] in
 theorem isComp_loc (χ : HChar E) : GlobalTheory.NPin.IsComp χ w (χ.loc w) :=
   ⟨smooth_loc (w := w) χ, fun _ => rfl⟩
 

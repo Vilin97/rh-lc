@@ -217,6 +217,7 @@ theorem linGrowth (h : IsOrbit X T M γ x) (τ : X.Ψ) : LinGrowth ((γ : Matrix
     _ = _ := by ring
 
 
+open Polynomial in
 theorem exists_monic (Λ : Submodule (𝓞 E) (Fin N → E)) (hfg : Λ.FG) (hsp : Submodule.span E (Λ : Set (Fin N → E)) = ⊤)
     (A : Matrix (Fin N) (Fin N) E) (hA : ∀ v ∈ Λ, A *ᵥ v ∈ Λ) : ∃ q : (𝓞 E)[X], q.Monic ∧ aeval A q = 0 := by
   have : Module.Finite (𝓞 E) Λ := Module.Finite.iff_fg.2 hfg

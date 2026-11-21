@@ -209,6 +209,9 @@ private lemma propDisc_arithmetic_group_frames (r : ℕ) (X : _root_.Reciprocity
       (fun _ _ => norm_nonneg _) (Finset.mem_univ τ)
 
 
+open NumberField MeasureTheory Topology in
+open scoped ContDiff ENNReal Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.ClosedDiscontinuity.propDisc_closed :
     ∀ (r : ℕ) (X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r), _root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.PropDisc X :=
   fun r X => propDisc_arithmetic_group_frames r X
@@ -376,6 +379,9 @@ private lemma la1sq_pos_of_mem_dom {r : ℕ} (X : _root_.ReciprocityTheory.Chart
   exact hlow v hv hv0
 
 
+open NumberField MeasureTheory Topology in
+open scoped ContDiff ENNReal Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.ClosedDiscontinuity.firstMinimum_invariant_continuous_pos_on_frames : _root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.LineBundleFirstBoundGlobalGeneration (E := E) := by
   unfold _root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.LineBundleFirstBoundGlobalGeneration
   intro r X hr
@@ -386,6 +392,9 @@ theorem _root_.GlobalTheory.ClosedDiscontinuity.firstMinimum_invariant_continuou
     exact Real.sqrt_pos.2 (la1sq_pos_of_mem_dom X hr hx)
 
 
+open NumberField MeasureTheory Topology in
+open scoped ContDiff ENNReal Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.ClosedDiscontinuity.propDisc_and_la1GG :
     (∀ (r : ℕ) (X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r), _root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.PropDisc X) ∧ (_root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.LineBundleFirstBoundGlobalGeneration (E := E)) :=
   ⟨_root_.GlobalTheory.ClosedDiscontinuity.propDisc_closed, _root_.GlobalTheory.ClosedDiscontinuity.firstMinimum_invariant_continuous_pos_on_frames⟩

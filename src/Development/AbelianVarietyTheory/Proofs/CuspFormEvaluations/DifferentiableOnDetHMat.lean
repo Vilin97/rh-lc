@@ -140,6 +140,7 @@ theorem per_lact (x : Frame X.Ψ r) {γ : GL (Fin r) E}
     rw [Matrix.mul_inv_rev, mulVec_mulVec, Matrix.mul_assoc, nonsing_inv_mul _ hu, Matrix.mul_one]
 
 
+variable (X) in
 theorem differentiableOn_per (v : Fin r → E) (p : X.Ψ × Fin r) :
     DifferentiableOn ℂ (fun x => per X x v p) X.dom := by
   have hent : ∀ τ a c, Differentiable ℂ fun x : Frame X.Ψ r => mat x τ a c := by
@@ -162,6 +163,7 @@ theorem differentiableOn_per (v : Fin r → E) (p : X.Ψ × Fin r) :
     · exact hent _ _ _
 
 
+variable (X) in
 def Hm (bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ) (idx : Fin g ≃ X.Ψ × Fin r) (x : Frame X.Ψ r) :
     Matrix (Fin g) (Fin g) ℂ :=
   (hMat X bas idx x)ᵀ * imInv X bas idx x * (hMat X bas idx x).map conj
@@ -211,10 +213,12 @@ theorem hermForm_Hm_rmul (z w : Fin g → ℂ) :
 end Rmul
 
 
+variable (X) in
 theorem c_pos (τ : X.Ψ) : 0 < X.c τ :=
   mul_pos two_pos (norm_pos_iff.2 ((map_ne_zero τ.1).2 X.ξ0_ne))
 
 
+variable (X) in
 theorem emb_neg_half (τ : X.Ψ) : τ.1 (-(X.κ0 / 2)) = I * (X.c τ / 2 : ℝ) := by
   have hξ : (τ.1 X.ξ0).re = 0 := by
     have h := congrArg Complex.re (PerMove.map_cc τ.1 X.ξ0)
@@ -235,6 +239,7 @@ theorem emb_neg_half (τ : X.Ψ) : τ.1 (-(X.κ0 / 2)) = I * (X.c τ / 2 : ℝ) 
     · rw [abs_of_pos hpos]; ring
 
 
+variable (X) in
 theorem EF_eq_sum (u v : Fin r → E) : (EF X u v : ℝ) =
     ∑ τ : X.Ψ, X.c τ * -(hermC τ.1 X.Gm (Data.emb τ.1 u) (Data.emb τ.1 v)).im := by
   rw [EF_def, UnitFrame.trace_eq_sum_re X.Ψ X.cmType]

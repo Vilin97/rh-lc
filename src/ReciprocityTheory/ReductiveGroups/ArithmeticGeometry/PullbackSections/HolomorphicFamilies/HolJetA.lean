@@ -25,6 +25,7 @@ theorem germ_stalkClosedPointTo_eq {R : CommRingCat.{0}} [IsLocalRing R] (f : Sp
   | congr 3
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem hom_ext_of_local {R : CommRingCat.{0}} [IsLocalRing R] {f₁ f₂ : Spec R ⟶ Y}
     (hpt : f₁ (IsLocalRing.closedPoint R) = f₂ (IsLocalRing.closedPoint R))
     (happ : ∀ (U : Y.Opens) (h₁ : ⊤ ≤ f₁ ⁻¹ᵁ U) (h₂ : ⊤ ≤ f₂ ⁻¹ᵁ U), f₁.appLE U ⊤ h₁ = f₂.appLE U ⊤ h₂) :
@@ -101,6 +102,7 @@ theorem nbhdPt_closedPoint [IsLocalRing A] (ψ : ∀ U : Y.Opens, y₀ ∈ U →
   rw [e, Scheme.fromSpecStalk_closedPoint]
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem nbhdPt_appLE [IsLocalRing A] (ψ : ∀ U : Y.Opens, y₀ ∈ U → (Γ(Y, U) ⟶ A))
     (hψ : ∀ (U V : Y.Opens) (hU : y₀ ∈ U) (hV : y₀ ∈ V) (h : V ≤ U),
       Y.presheaf.map (homOfLE h).op ≫ ψ V hV = ψ U hU)
@@ -144,6 +146,7 @@ theorem nbhdPt_congr {ψ ψ' : ∀ U : Y.Opens, y₀ ∈ U → (Γ(Y, U) ⟶ A)}
   rfl
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem nbhdPt_comp_appLE [IsLocalRing A] {Y' : Scheme.{0}} (φ : Y ⟶ Y')
     (ψ : ∀ U : Y.Opens, y₀ ∈ U → (Γ(Y, U) ⟶ A))
     (hψ : ∀ (U V : Y.Opens) (hU : y₀ ∈ U) (hV : y₀ ∈ V) (h : V ≤ U),

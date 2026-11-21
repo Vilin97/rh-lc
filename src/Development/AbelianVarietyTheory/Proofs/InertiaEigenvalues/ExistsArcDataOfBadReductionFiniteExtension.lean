@@ -67,6 +67,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {l : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H} {Xo : Moduli Dw l} {c : Coeff l}
 
 
+set_option maxHeartbeats 400000 in
 theorem exists_arcIn_of_unif {V : ValuationSubring c.F} (Y : Model Xo c V.subtype) (T : CDVR) (io : c.F →+* T.Fr)
     (b : V →+* T.V) (χ : Sp T.V ⟶ Y.X) (z : Sp T.Fr ⟶ Xo.XF c)
     (hb : (algebraMap T.V T.Fr).comp b = io.comp V.subtype) (hz : z ≫ pullback.snd _ _ = spMap io)

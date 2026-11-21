@@ -22,6 +22,7 @@ namespace GlobalTheory.TopZeroInv
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T}
 
 
+variable (W) in
 def thetaSub (p : Pair T) : Submodule ℂ (WO (G.pS p) (G.pT p) → ℂ) where
   carrier := {f | IsThetaFunO W.ψ _ _ f}
   add_mem' := GlobalTheory.OrientedHeis.theta_add

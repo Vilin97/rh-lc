@@ -28,6 +28,7 @@ variable {LL : Type} [Field LL] [Algebra Qp LL]
     {V' : Type} [AddCommGroup V'] [Module LL V'] [Module Qp V'] [IsScalarTower Qp LL V']
 
 
+variable (LL) in
 def mB (b : B) : V ⊗[Qp] B →ₗ[LL] V ⊗[Qp] B :=
   AlgebraTensorModule.map LinearMap.id (LinearMap.mulLeft Qp b)
 

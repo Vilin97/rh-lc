@@ -18,6 +18,7 @@ open GlobalTheory.Ex.OneGen GlobalTheory.UT
 namespace GlobalTheory.Ex.OneGen
 
 
+open ReciprocityTheory.ChartRestriction.G.H1.SectionArithmetic in
 theorem exists_sec_pull_locus {X Y : Scheme.{0}} {L : LB X} (s : LB.Sec L) (φ : Y ⟶ X) :
     ∃ s' : LB.Sec (LB.LinComb L (K := Fin 1) (fun _ => φ) (fun _ => 1)),
       nonzeroLocus s' = φ ⁻¹ᵁ nonzeroLocus s := by

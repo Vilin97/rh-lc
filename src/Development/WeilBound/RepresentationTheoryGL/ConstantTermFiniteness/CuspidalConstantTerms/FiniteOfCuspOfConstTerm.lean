@@ -129,6 +129,7 @@ end GlobalTheory.CompanionTheory.Hypotheses₂.HCF.Rg
 namespace GlobalTheory.CompanionTheory.Hypotheses₂
 
 
+open GlobalTheory.Published.AutFin in
 theorem _root_.PositivityTheory.RgHf.harishChandraFinite : GlobalTheory.Published.HarishChandraFinite := by
   intro D θ hθ V U hU ε fr hfr W _ _ _ ρ hρ c
   exact HCF.Rg.finite_of_cusp_of_constTerm θ V U ε fr W ρ c (GlobalTheory.CompanionTheory.HCCusp.cuspFinite D θ hθ V U hU ε fr hfr W ρ hρ c)

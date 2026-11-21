@@ -42,6 +42,8 @@ def augSub (A : Subalgebra R (T → R)) : Submodule R (T → R) where
 def toAug {A : Subalgebra R (T → R)} (f : augSub A) : augIdeal A := ⟨⟨f.1, f.2.1⟩, f.2.2⟩
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 def augCl (A : Subalgebra R (T → R)) : augSub A →ₗ[R] omega A where
   toFun f := (augIdeal A).toCotangent (toAug f)
   map_add' f g := by
@@ -90,6 +92,7 @@ def idem : TorsT E N p →* TorsT E N p where
   map_mul' s t := Multiplicative.toAdd.injective (funext fun i => by simp [toN, fromN])
 
 
+variable {pq sc} in
 theorem exists_eps (h : IsSec pq sc) : ∃ ε : 𝓞 E, pq (Ideal.Quotient.mk _ ε) = 1 ∧
     ∀ u, Ideal.Quotient.mk (Ideal.span {(p : 𝓞 E)}) ε * u = sc (pq u) := by
   obtain ⟨ε, hε⟩ := Ideal.Quotient.mk_surjective (sc 1)
@@ -139,6 +142,7 @@ theorem pts_idem (P : ChartPack G O c') {F : Type} [Field F]
   simp only [Category.assoc]
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem lat_eq_span [Smooth 𝔐.t.G.hom] (P : ChartPack G O c') (q : Cpt 𝔐.ξ)
     (ψ : CR O y c' →+* 𝔐.X.presheaf.stalk q.1) (h1 : spMap ψ ≫ P.x = 𝔐.X.fromSpecStalk q.1)
     (h2 : (genMap 𝔐.ξ q).comp ψ = algebraMap (CR O y c') Ω) :

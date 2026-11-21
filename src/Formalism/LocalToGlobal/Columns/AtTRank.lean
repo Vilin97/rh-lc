@@ -17,6 +17,7 @@ variable {K : Type} [Field K] {ι : Type} [Fintype ι] [DecidableEq ι] {G : ι 
   [∀ i, Fintype (G i)] {M : Type} [AddCommGroup M] [Module K M]
 
 
+variable (K M) in
 def trl (b : ∀ i, G i) : Module.End K ((∀ i, G i) → M) := LinearMap.funLeft K M fun c => b * c
 
 theorem trl_apply (b : ∀ i, G i) (F : (∀ i, G i) → M) (c : ∀ i, G i) : trl K M b F c = F (b * c) := rfl
@@ -37,12 +38,15 @@ theorem trl_comm (b b' : ∀ i, G i) : Commute (trl K M b) (trl K M b') := by
   rw [trl_mul, trl_mul, mul_comm]
 
 
+variable (K M) in
 def nmF (i : ι) : Module.End K ((∀ i, G i) → M) := ∑ g : G i, trl K M (Pi.mulSingle i g)
 
 
+variable (K M G) in
 def ramFun : Submodule K ((∀ i, G i) → M) := ⨅ i, LinearMap.ker (nmF K M (G := G) i)
 
 
+variable (K M G) in
 def offAlg (i : ι) : Submodule K (Module.End K ((∀ i, G i) → M)) :=
   Submodule.span K {x | ∃ b : ∀ i, G i, b i = 1 ∧ x = trl K M b}
 
@@ -143,6 +147,7 @@ variable {K : Type} [Field K] [CharZero K] {ι : Type} [Fintype ι] [DecidableEq
   [∀ i, CommGroup (G i)] [∀ i, Fintype (G i)] {M : Type} [AddCommGroup M] [Module K M]
 
 
+variable (K M G) in
 def eF (i : ι) : Module.End K ((∀ i, G i) → M) := 1 - ((Fintype.card (G i) : K)⁻¹) • nmF K M i
 
 theorem card_ne (i : ι) : (Fintype.card (G i) : K) ≠ 0 :=
@@ -160,6 +165,7 @@ theorem nmF_comm_eF (i j : ι) : Commute (nmF K M (G := G) i) (eF K G M j) :=
   (Commute.one_right _).sub_right ((nmF_comm i j).smul_right _)
 
 
+variable (K M G) in
 def eL (l : List ι) : Module.End K ((∀ i, G i) → M) := (l.map (eF K G M)).prod
 
 theorem eL_mem_offAlg {i : ι} {l : List ι} (h : i ∉ l) : eL K G M l ∈ offAlg K G M i := by

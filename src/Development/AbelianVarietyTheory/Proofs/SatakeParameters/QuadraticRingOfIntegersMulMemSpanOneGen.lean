@@ -99,6 +99,7 @@ private theorem exists_integral_generator_common_denom_of_finrank_two
   exact ⟨u, v, huv⟩
 
 
+open NumberField IsDedekindDomain in
 theorem _root_.GlobalTheory.quadratic_ringOfIntegers_mul_mem_span_one_gen : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E], Module.finrank F E = 2 → ∃ (θ : 𝓞 E) (D : 𝓞 F), D ≠ 0 ∧ ∀ y : 𝓞 E, ∃ u v : 𝓞 F, algebraMap (𝓞 F) (𝓞 E) D * y = algebraMap (𝓞 F) (𝓞 E) u + algebraMap (𝓞 F) (𝓞 E) v * θ := by
   intro F E _ _ _ _ _ h
   obtain ⟨θ, -, D, hD, hy⟩ := exists_integral_generator_common_denom_of_finrank_two F E h

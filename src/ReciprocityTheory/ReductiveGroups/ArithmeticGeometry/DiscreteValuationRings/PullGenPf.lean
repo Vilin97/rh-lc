@@ -52,6 +52,7 @@ theorem ros_right_one (hG : GlobalFnsSt) {f g : D.P.A ⟶ D.P.A} [IsMonHom f] [I
   exact mul_eq_left.1 e.symm
 
 
+set_option maxHeartbeats 800000 in
 theorem exists_sq (hG : GlobalFnsSt) (oa : D.OAct O) (w0 : O) (hw : TraceFormTwistIso D oa w0) (a : O) (N : ℕ)
     (haa : star a * a = ((N + 1 : ℕ) : O)) :
     ∃ s : LB.Gen (LB.LinComb D.P.L (K := Fin 3) ![(𝟙 D.P.A : D.P.A ⟶ D.P.A).left, (oa.onB.act a).left,
@@ -117,6 +118,7 @@ theorem exists_sq (hG : GlobalFnsSt) (oa : D.OAct O) (w0 : O) (hw : TraceFormTwi
   simp
 
 
+set_option maxHeartbeats 800000 in
 theorem exists_pullGenB (hG : GlobalFnsSt) (oa : D.OAct O) (w0 : O) (hw : TraceFormTwistIso D oa w0) (a : O) (N : ℕ) (hN : 1 ≤ N)
     (haa : star a * a = (N : O)) (k : ℕ) (χ : D.X) :
     ∃ e : LB.Gen (LB.LinComb D.P.L (K := Fin 8) ![D.famφB (star a • χ) 0, D.famφB (star a • χ) 1, D.famφB (star a • χ) 2,

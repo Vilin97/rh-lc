@@ -94,6 +94,7 @@ noncomputable def divisorHom : Additive Kˣ →+ Divisor k K where
     exact divisor_mul (Additive.toMul x).ne_zero (Additive.toMul y).ne_zero
 
 
+variable (k K) in
 noncomputable def principalDivisors : AddSubgroup (Divisor k K) := (divisorHom (k := k)).range
 
 noncomputable def zeroDivisor (x : K) : Divisor k K := divisor x ⊔ 0

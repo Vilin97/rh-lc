@@ -43,6 +43,7 @@ theorem exists_factor {L : Type} [Field L] {R : CommRingCat.{0}} {Z : Scheme.{0}
   rw [Spec.map_preimage, IsOpenImmersion.lift_fac]
 
 
+open GlobalTheory.AffinePoints in
 theorem const_of_connected {Z : Scheme.{0}} (g : Z ⟶ Sp ℂ) [Smooth g] [ConnectedSpace Z]
     (t : (Sp ℂ ⟶ Z) → ℕ)
     (ht : ∀ (m : ℕ) (B : Set (Fin m → ℂ)) (y : (Fin m → ℂ) → (Sp ℂ ⟶ Z)), IsOpen B →

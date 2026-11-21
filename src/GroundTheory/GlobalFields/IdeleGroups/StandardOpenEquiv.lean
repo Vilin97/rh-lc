@@ -109,6 +109,7 @@ theorem continuous_ofIntegerUnits :
           Units.continuous_coe_inv.comp ((continuous_apply v).comp continuous_snd)))
 
 
+variable (K) in
 def standardOpenSubgroupEquiv :
     standardOpenSubgroup K ≃ₜ* (InfiniteAdeleRing K)ˣ ×
       Π v : HeightOneSpectrum (𝓞 K), (v.adicCompletionIntegers K)ˣ where

@@ -43,6 +43,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   [IsSepClosure K Ω] [IsSepClosure K' Ω]
 
 
+omit [ValuativeRel K'] [TopologicalSpace K'] [IsNonarchimedeanLocalField K'] [ValuativeExtension K K'] in
 theorem maximalAbelianExtension_le_of_algebra {y : Ω} (hy : y ∈ maximalAbelianExtension K Ω) :
     y ∈ maximalAbelianExtension K' Ω := by
   let := algebraicValuativeRel K Ω

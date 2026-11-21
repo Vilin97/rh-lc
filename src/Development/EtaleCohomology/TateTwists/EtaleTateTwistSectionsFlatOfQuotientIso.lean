@@ -183,6 +183,7 @@ theorem shf_loc (R : Type) [CommRing R] (P : Scheme.{0}ᵒᵖ ⥤ ModuleCat.{1} 
 end LateralTheory.EtaleFoundations.TwFlat
 
 
+open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC in
 theorem LateralTheory.EtaleFoundations.etale_tate_twist_sections_flat_of_quotient_iso : LateralTheory.EtaleFoundations.EtaleTateTwistSheafFlat := by
   intro q _ i
   obtain ⟨h1, h2⟩ := LateralTheory.EtaleFoundations.TwFlat.shf_loc (ZMod q) (Scheme.Γ ⋙ twF q i)

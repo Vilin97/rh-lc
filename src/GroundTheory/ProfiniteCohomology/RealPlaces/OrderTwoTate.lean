@@ -179,6 +179,7 @@ theorem H0Iso_inv_injective : Function.Injective (H0Iso A).inv.hom :=
   (ModuleCat.mono_iff_injective _).1 inferInstance
 
 
+include hc in
 def cohomZeroEquivContinuous : tateQuot (act A c) ≃+ cohomologyTateZero A :=
   AddEquiv.ofBijective (QuotientAddGroup.lift _ (h0HomOfOrderTwo A hG) (by
       intro a ha

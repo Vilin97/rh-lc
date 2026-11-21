@@ -133,6 +133,7 @@ private theorem isMultiHomog_of_isMultiHomogeneous_const {K : Type} [Field K] {B
   simp [GroundTheory.Heights₂.Heights.groupWeight, Pi.single_apply]
 
 
+open ChowFormHeightComparison₂.CF.D in
 theorem ChowFormHeightComparison₂.CF.stForm : ChowFormHeightComparison₂.CF.StForm := by
   intro K Ω _ _ _ _ d N m δ g A hspan hA y Φ hΦ H hH
   obtain ⟨P, hgP⟩ := exists_right_inverse_of_span_col_eq_top g hspan

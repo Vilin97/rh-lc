@@ -41,6 +41,7 @@ theorem stab_inf {A B : Submodule ℂ (EuclideanSpace ℂ I)} (hA : Stab T A) (h
   fun g v hv => ⟨hA g v hv.1, hB g v hv.2⟩
 
 
+variable (T) in
 def Good (D : Submodule ℂ (I → ℂ)) (v₀ : I → ℂ) (S : Submodule ℂ (EuclideanSpace ℂ I)) : Prop :=
   Stab T S ∧ (∀ v ∈ S, v.ofLp ∈ D) ∧ ∃ w ∈ S, ⟪w, WithLp.toLp 2 v₀⟫_ℂ ≠ 0
 

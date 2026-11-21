@@ -224,6 +224,7 @@ theorem l_pow_inv_ne (s : ℕ) : (((l : ℚ_[l]) ^ s)⁻¹) ≠ 0 :=
   inv_ne_zero (pow_ne_zero _ (by exact_mod_cast (Fact.out : l.Prime).ne_zero))
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_disc (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (T : LocTied l P AI)
     (K : FinExt l) (s : ℕ) (LL : FinExt l) (_ : Good K s LL) (Γ : GamS P K s LL) (R : WSer Γ) (I : IoS AI R)
     (_ : IoW I) (β : RA LL →+* ↥LL.1 ⊗[ℚ_[l]] P.R.B) (hβ : IsBeta AI β)

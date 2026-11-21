@@ -79,6 +79,7 @@ def PlacesOk (j : Fin D.R.m) (t : p.P.T) (l : ℕ) : Prop :=
   ∀ ν ∈ (blk p j t).bl, ∀ Q, ‖D.what₂.embLL (ν Q)‖ ^ 2 = ((blk p j t).q Q : ℝ) ^ ((blk p j t).n - (blk p j t).t)
 
 
+open Classical in
 def AutAt (j : Fin D.R.m) (P : Par) (W : Wts D.what₂.Tau) (w : HeightOneSpectrum (𝓞 D.what₂.LL)) : Prop :=
   PlacesOk p j (p.R.mu w) (Formalism.EigenvalueLevelCeiling.plc w) ∧
   ∀ [Fact (Formalism.EigenvalueLevelCeiling.plc w).Prime] (F : Frame (Formalism.EigenvalueLevelCeiling.plc w) D.what₂.Tau P.Nr) (R : Reads F W.lam (blk p j (p.R.mu w)) w)

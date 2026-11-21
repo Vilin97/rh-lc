@@ -52,6 +52,7 @@ variable {G : Type} [Group G] [MeasurableSpace G] [MeasurableMul G] {μ : Measur
   {Λ : Subgroup G} [Countable Λ] {𝓕 : Set G}
 
 
+open scoped Pointwise in
 theorem iSup_inj_eq (h𝓕 : IsFundamentalDomain Λ 𝓕 μ) {Φ : G → ℝ≥0∞} (hΦ : ∀ (s : Λ) g, Φ (s • g) = Φ g) :
     ⨆ (D : Set G) (_ : MeasurableSet D) (_ : ∀ s : Λ, ∀ g ∈ D, s • g ∈ D → s = 1), ∫⁻ g in D, Φ g ∂μ =
       ∫⁻ g in 𝓕, Φ g ∂μ := by

@@ -80,6 +80,7 @@ variable {W₁ W₂ : X.Opens} (hcov : W₁ ⊔ W₂ = ⊤)
   (hdisj : Disjoint ((W₁ ⊓ W₂ : X.Opens) : Set X) (closedFibre (A := A) X))
 
 
+variable (A) in
 def splitSection (n : ℕ) : Γ(fibreQuot A X n, ⊤) :=
   (existsUnique_glue_of_supportedIn (supportedIn_fibreQuot_closedFibre n) hcov hdisj
     (resF (fibreQuot A X n) (le_top : W₁ ≤ ⊤) (fibreOne A X n)) 0).exists.choose
@@ -109,6 +110,7 @@ lemma quotPowMap_splitSection (n : ℕ) :
   · rw [resF_app, h₂, map_zero]
 
 
+variable (A X) in
 abbrev fibreTower : ∀ n, Sheaf.H.{u} (modulesAb (fibreQuot A X (n + 1))) 0 →ₗ[A]
     Sheaf.H.{u} (modulesAb (fibreQuot A X n)) 0 :=
   fun n => H.linearMapV436 A (quotPowMap (maximalIdeal A) (𝟙_ X.Modules) n) 0
@@ -123,6 +125,7 @@ lemma mem_towerLimit_splitSection :
     (congrArg _ (quotPowMap_splitSection hcov hdisj n))
 
 
+include hcov hdisj in
 theorem false_of_split (hΓ : Function.Surjective (algebraMap A Γ(X, ⊤)))
     (hsurj : ∀ x : (∀ n, Sheaf.H.{u} (modulesAb (fibreQuot A X n)) 0),
       x ∈ towerLimit (fibreTower A X) → x 0 ∈ LinearMap.range
@@ -174,6 +177,7 @@ variable {A : Type u} [CommRing A] [IsNoetherianRing A] [IsLocalRing A] {X : Sch
   [X.Over (Spec (.of A))]
 
 
+omit [IsNoetherianRing A] in
 lemma isClosed_closedFibre : IsClosed (closedFibre (A := A) X) :=
   (isClosed_singleton_closedPoint A).preimage (X ↘ Spec (.of A)).base.hom.continuous
 

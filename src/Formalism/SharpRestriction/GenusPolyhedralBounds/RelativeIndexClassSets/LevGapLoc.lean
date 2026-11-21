@@ -136,6 +136,7 @@ theorem sc_right_mem (v : HeightOneSpectrum (𝓞 F)) (c : v.adicCompletion F)
     (hc : c ∈ v.adicCompletionIntegers F) : (1 : E) ⊗ₜ[F] c ∈ intV E v := Subring.subset_closure (Or.inr ⟨⟨c, hc⟩, rfl⟩)
 
 
+open Polynomial in
 theorem sc_core (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x)
     (hfix : ∀ x, σ x = x → ∃ a, algebraMap F E a = x) (h2 : Module.finrank F E = 2)
     (v : HeightOneSpectrum (𝓞 F)) (a : 𝓞 E) (t N : 𝓞 F)

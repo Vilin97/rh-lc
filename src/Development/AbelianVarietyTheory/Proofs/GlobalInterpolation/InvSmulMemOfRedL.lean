@@ -343,9 +343,11 @@ theorem TAt.move (h : TAt T ST) (P : ST) : MoveHyp ST ∅ P :=
   ⟨h.ne P, h.st P, fun w => absurd w.2 (Finset.notMem_empty _)⟩
 
 
+variable (ST) in
 def OffT (w : HeightOneSpectrum (𝓞 E)) : Prop := ∀ P : ST, w ≠ P.1 ∧ w ≠ conjPrime₂ P.1
 
 
+variable (ST) in
 def AgreeOff (N N' : Submodule (𝓞 E) (Sp E n)) : Prop := ∀ w, OffT ST w → localization₂ w.asIdeal N = localization₂ w.asIdeal N'
 
 def pair {P : ST} (h : Unif T P.1) (d : Deco E n ST SG) (hd : d.Ok) : LocF.PP (locF h) n :=

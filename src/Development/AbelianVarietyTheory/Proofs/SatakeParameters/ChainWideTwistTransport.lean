@@ -90,6 +90,7 @@ theorem exists_proj (L : Submodule (𝓞 K) V) (hfg : L.FG) (hsp : Submodule.spa
 end Lattices
 
 
+open Classical in
 theorem deg_eq {ι : Type} {a b : ℕ} (e : ι × Fin b × Fin a →₀ ℕ) (τ : ι) :
     ((∑ k ∈ e.support.filter (fun k => k.1 = τ), e k : ℕ) : ℤ) = ∑ β, ∑ α, (e (τ, β, α) : ℤ) := by
   rw [← Finset.sum_product', Finset.univ_product_univ, Nat.cast_sum]

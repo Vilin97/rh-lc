@@ -73,6 +73,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
 
 
+open Classical in
 def rest (fa : ∀ w, GArch σ J w → ℂ) (ff : ∀ v, GLoc σ J v → ℂ) (w : InfinitePlace F) (g : GAd σ J) : ℂ :=
   (∏ u ∈ Finset.univ.erase w, fa u (projArch σ J u g)) * ∏ᶠ v, ff v (proj σ J v g)
 
@@ -116,6 +117,7 @@ theorem update_mem {fa : ∀ w, GArch σ J w → ℂ} (hfa : ∀ w, fa w ∈ CcA
 end Gen
 
 
+set_option maxHeartbeats 2000000 in
 theorem integral_class_eq_zero (hB : BumpOn) (hW : Weight) (hV : Vanish) (hFD : FDRight) (hG : ArchGroup)
     (hU : ArchUnimod) (hR : MainStatements.RegularCuspidalTrace.RegClassInt) (μ : Measure (GA D V)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant]
     (fa : ∀ w, GArch D.sp.cm.sig V.gram w → ℂ) (ff : ∀ v, GLoc D.sp.cm.sig V.gram v → ℂ)

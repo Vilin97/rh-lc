@@ -21,6 +21,7 @@ variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Alge
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 
+omit [NumberField F] [IsTotallyReal F] [DecidableEq ι] in
 theorem ArchCovolumeBound.proof (h : HermitianForm F E W) (v : Basis ι E W)
     (h₁ : CoordEmbedBasis.Statement E ι)
     (h₂ : IntegralFormCovolume.Statement (ι → E) (InfinitePlace E → ι → ℂ)

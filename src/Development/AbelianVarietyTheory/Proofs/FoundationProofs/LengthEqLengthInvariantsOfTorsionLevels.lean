@@ -438,6 +438,7 @@ theorem nonempty_S : Nonempty D.S := by
   exact ⟨⟨⟨m, hm.isPrime, h0⟩, (mem_above D _).2 hl'⟩⟩
 
 
+include hF hT in
 theorem exists_kill_pi (he : e ≠ 0) : ∃ m : ℕ,
     ∀ p : ∀ v : D.S, H2 ((zlTw D (e + 1)).comp (locFam D.S D.A v)), (l : ℤ_[l]) ^ m • p = 0 := by
   obtain ⟨c, hc⟩ := exists_kill D e he
@@ -516,6 +517,7 @@ theorem ptShaAt : PTShaAt D e := by
   rfl
 
 
+omit hN hS h3 in
 theorem finite_level (hP : PoitouTateDuality) (hc : PTCase F l) (r : ℕ) (hr : 0 < r) :
     (∃ j, NineTermExact D.S D.A (redChar D.chi r) j (zr D (e + 1) r) (contAction_zr D (e + 1) r)) ∧
     ShaDual D.S D.A (redChar D.chi r) (zr D (e + 1) r) ∧ Subsingleton (Hn (zr D (e + 1) r) 3) := by

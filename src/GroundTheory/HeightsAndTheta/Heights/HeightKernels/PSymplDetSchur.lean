@@ -44,6 +44,7 @@ theorem clearCol_mul_succ {n : ℕ} (A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ)
 end PSymplDetSchur
 
 
+open PSymplDetSchur in
 theorem SymplDetSchur.proof : SymplDetSchur.Statement := by
   intro n A ha
   have hdet : A.det = (clearCol A * A).det := by

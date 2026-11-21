@@ -78,6 +78,7 @@ variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologic
   (φ : ∀ v, Hv v →ₜ* G)
 
 
+omit [∀ v, CompactSpace (Hv v)] in
 instance isDiscreteRep_resHom_coind_res {K : Type u} [Group K] [TopologicalSpace K]
     [IsTopologicalGroup K] [CompactSpace K] (ψ : K →ₜ* G) (V : OpenSubgroup G) (A : Rep.{u} k G)
     [IsDiscreteRep A] :

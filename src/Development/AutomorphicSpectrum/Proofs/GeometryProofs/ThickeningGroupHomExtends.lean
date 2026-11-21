@@ -129,6 +129,7 @@ theorem spec_lift (A B : Type) [CommRing A] [CommRing B] [Algebra R A] [Algebra 
     rfl
 
 
+omit [IsNoetherianRing R] in
 theorem exists_specOver (X : Over (Spec (CommRingCat.of R))) [IsFinite X.hom] :
     ∃ (A : Type) (_ : CommRing A) (_ : Algebra R A) (_ : Module.Finite R A), Nonempty (X ≅ specOver A) := by
   have : IsAffine X.left := isAffine_of_isAffineHom X.hom

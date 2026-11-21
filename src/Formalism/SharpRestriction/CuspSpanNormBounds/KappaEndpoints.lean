@@ -940,6 +940,7 @@ variable {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] [MeasurableS
 variable {M : Model F E} {V : Type} [AddCommGroup V] [Module E V]
 
 
+open MeasureTheory in
 theorem ng_scale (hOK : M.OK) (x : Eˣ) :
     ∃ c : NNReal, ∀ s : Set E, IsOpen s → M.mu ((fun y => (x : E) * y) '' s) = c * M.mu s := by
   have := hOK.loc

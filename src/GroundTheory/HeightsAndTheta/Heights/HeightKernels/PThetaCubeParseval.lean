@@ -45,6 +45,7 @@ lemma measureReal_cube (g : ℕ) :
 end KThetaCubeParseval
 
 
+open KThetaCubeParseval in
 theorem ThetaCubeParseval.proof (h : ThetaCharIntegral.Statement) : ThetaCubeParseval.Statement := by
   intro g c hc
   set μ := volume.restrict (Set.Icc (0 : Fin g → ℝ) 1)

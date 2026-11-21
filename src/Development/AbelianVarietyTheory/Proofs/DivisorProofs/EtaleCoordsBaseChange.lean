@@ -92,6 +92,7 @@ variable [SmoothOfRelativeDimension D p] [SmoothOfRelativeDimension D p']
 variable {B : LB Y} {B' : LB Y'}
 
 
+omit [SmoothOfRelativeDimension D p] [SmoothOfRelativeDimension D p'] in
 theorem Vanishing.cval_pullChart (hm : ∀ z, (m z).1 = z.1 ≫ r) (b : ChartPull B' B r) (w : r ≫ p = p' ≫ spMap ρ)
     (f : H0 p B ⊤) {i : B'.ι} {z : CxPts p' τ} (hz : z ∈ ptsIn p' τ (B'.U i)) :
     cval τ (pullChart (W := ⊤) b w le_top f) i z = cval σ f (b.idx i) (m z) :=

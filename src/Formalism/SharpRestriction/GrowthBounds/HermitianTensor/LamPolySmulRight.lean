@@ -97,6 +97,7 @@ theorem lamPoly_prod (v t : S → MvPolynomial (Fin k × Fin n) K) :
   rw [renB_prod, hT]
 
 
+include hT in
 theorem lamPoly_mem {A : Type} [CommRing A] [Algebra A K] (Mv Mt Mr : S → Submodule A (MvPolynomial (Fin k × Fin n) K))
     (h : ∀ s, ∀ v ∈ Mv s, ∀ t ∈ Mt s, L s (blockEmb K true v * blockEmb K false t) ∈ Mr s) :
     ∀ V ∈ tensorLat A K Mv, ∀ W ∈ tensorLat A K Mt, lamPoly T V W ∈ tensorLat A K Mr := by

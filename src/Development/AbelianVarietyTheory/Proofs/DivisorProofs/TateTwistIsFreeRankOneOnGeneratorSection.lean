@@ -35,6 +35,7 @@ end GlobalTheory.TwistedGenericPoint
 namespace GlobalTheory
 
 
+open GlobalTheory.TwistedGenericPoint in
 theorem twGen_gen : ∀ (q : ℕ) (i : ℤ) (S : Scheme.{0}) (ζ : Prim q Γ(S, ⊤)), Gen (tw q i) S (twGen i ζ) := by
   intro q i S ζ U s
   rcases Nat.eq_zero_or_pos q with rfl | hq

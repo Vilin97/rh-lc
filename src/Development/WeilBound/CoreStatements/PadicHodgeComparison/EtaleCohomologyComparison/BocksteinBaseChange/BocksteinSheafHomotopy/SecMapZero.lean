@@ -45,6 +45,7 @@ theorem ev_pull_sch {X Y : Scheme.{0}} {I : GlobalTheory.EtC.Cx R} {n : ℤ} (f 
 end WeightedPowerFormIntegrability
 
 
+open WeightedPowerFormIntegrability in
 theorem sum : SumInputFromFormal := by
   intro hF R _ F X r Y j hj n
   have hS := hF.et.sch

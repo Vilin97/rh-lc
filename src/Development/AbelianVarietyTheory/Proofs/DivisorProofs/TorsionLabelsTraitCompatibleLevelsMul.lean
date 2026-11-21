@@ -23,6 +23,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.Mum
 
 
+attribute [local instance] GlobalTheory.TorusExt.gtGroup in
 theorem GlobalTheory.Mum.lab_level_mul : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R], Base R →
     ∀ (D : DegData R (maximalIdeal R)) (A : PolAV (Sp (FractionRing R))) (lab : Labels D.toPre A),
     OneTrait D.toPre A lab → ∀ k d : ℕ, 1 ≤ k → 1 ≤ d →

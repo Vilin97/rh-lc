@@ -26,6 +26,7 @@ theorem continuous_of_valued_eq {A B Γ : Type*} [Ring A] [Ring B] [LinearOrdere
   exact hx
 
 
+open scoped WithZeroTopology in
 theorem exists_extension {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L]
     (w : HeightOneSpectrum (𝓞 K)) (u : HeightOneSpectrum (𝓞 L)) (f : K →+* u.adicCompletion L)
     (hf : ∀ x, Valued.v (f x) = w.valuation K x) :

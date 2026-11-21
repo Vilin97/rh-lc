@@ -36,6 +36,7 @@ variable {K G X H E : Type} [Field K] [Group G] [Fintype G] [AddCommGroup X] [Mo
   [NormedAddCommGroup E] [InnerProductSpace ℂ E] [FiniteDimensional ℂ E]
 
 
+omit [Fintype G] in
 theorem mem_range_adjoint (ρ : Representation ℂ G H) (π : Representation ℂ G E) (Θ : H →ₗ[ℂ] E)
     (hρ : ∀ g y, ‖ρ g y‖ = ‖y‖) (hΘ : ∀ g y, Θ (ρ g y) = π g (Θ y)) (g : G) {y : H}
     (hy : y ∈ LinearMap.range (LinearMap.adjoint Θ)) : ρ g y ∈ LinearMap.range (LinearMap.adjoint Θ) := by
@@ -85,6 +86,7 @@ theorem exists_rational {σ : K →+* ℂ} (j : X →ₛₗ[σ] H) (r : Represen
   exact hx h1
 
 
+omit [FiniteDimensional ℂ E] in
 theorem sum_lvlIdem {σ : K →+* ℂ} (π : Representation ℂ G E) (P : Subgroup G) (ψ : P →* Kˣ) {x : E}
     (hx : ∀ g : P, π (g : G) x = σ ((ψ g : Kˣ) : K) • x) : ∑ g, σ ((lvlIdem P ψ).coeff g) • π g x = x := by
   classical

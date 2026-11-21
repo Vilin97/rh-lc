@@ -14,6 +14,8 @@ namespace GlobalTheory.Per.Val
 variable {l : ℕ} [Fact l.Prime]
 
 
+open Polynomial in
+variable {l : ℕ} [Fact l.Prime] in
 theorem _root_.GlobalTheory.Per.Val.exists_norm_eq (x : _root_.Formalism.BasicNotions.Loc.Om l) (hx : x ≠ 0) :
     ∃ q : ℚ, ‖x‖ = (l : ℝ) ^ (-(q : ℝ)) := by
   have hi : IsIntegral ℚ_[l] x := Algebra.IsIntegral.isIntegral x

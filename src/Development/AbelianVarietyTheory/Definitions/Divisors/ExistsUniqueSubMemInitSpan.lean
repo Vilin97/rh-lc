@@ -230,6 +230,7 @@ theorem TAt_mul (k k' k'' : F.J) (z : Sp S ⟶ Z) (h₁ : ⊤ ≤ z ⁻¹ᵁ (F.
   · exact F.ev_B_diag_mul k k' k'' z h₁ h₂ h₃ σ i
 
 
+open Classical in
 def LL (e : Ix Dw → ℤ) : LB Z := ⟨F.J, F.U, fun k k' => ∏ ix, F.T k k' ix ^ (-e ix)⟩
 
 def detOm : LB Z := ⟨F.J, F.U, fun k k' => (Units.map

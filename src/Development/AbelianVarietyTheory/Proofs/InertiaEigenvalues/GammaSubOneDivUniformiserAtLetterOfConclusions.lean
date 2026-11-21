@@ -83,6 +83,7 @@ end GlobalTheory.AdmDssLet
 namespace GlobalTheory
 
 
+open GlobalTheory.AdmDssLet in
 theorem adm18_of_N1used : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (Cm : CmpOf D.loc D.locA HW F), Formalism.MainNotions.DeltaInvariantLattices.DeltaInvariantNormBound D HW F Cm → Formalism.MainNotions.RamifiedCoefficientChains.adm18 D HW F := by
   intro D HW F Cm hN l _ K s LL h

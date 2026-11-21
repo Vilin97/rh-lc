@@ -62,6 +62,7 @@ theorem mem_colon {A : Submodule (MRingOver S ι) M} {g : M} {p : MRingOver S ι
   simp [colon]
 
 
+variable (𝓜) in
 def IsGradedSub (A : Submodule (MRingOver S ι) M) : Prop :=
   ∀ m ∈ A, ∀ c, (DirectSum.decompose 𝓜 m c : M) ∈ A
 
@@ -267,6 +268,7 @@ theorem range_fin {M : Type} {r : ℕ} (f : ℕ → M) :
 end KHPrimeFilt
 
 
+open KHPrimeFilt in
 theorem KHPrimeFilt.full : PrimeFiltStatement := by
   intro S _ K _ ι _ M _ _ _ _ 𝓜 hS hfin hgr
   let _ : LinearOrder K := LinearOrder.lift' (Fintype.equivFin K) (Fintype.equivFin K).injective

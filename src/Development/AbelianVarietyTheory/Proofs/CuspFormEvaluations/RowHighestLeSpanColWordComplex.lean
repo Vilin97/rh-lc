@@ -254,6 +254,7 @@ theorem rowHighest_eq_orbitSpan [Field K] [CharZero K] :
   exact colWord_mem_orbitSpan h c c' w
 
 
+include h in
 theorem span_map_rowHighest_int [CommRing K] [Algebra ℚ K] :
     Submodule.span K (MvPolynomial.map (Int.castRingHom K) ''
       (rowHighest (κ := Fin n) ℤ c c' : Set (Poly ℤ T p q (Fin n)))) = rowHighest K c c' := by

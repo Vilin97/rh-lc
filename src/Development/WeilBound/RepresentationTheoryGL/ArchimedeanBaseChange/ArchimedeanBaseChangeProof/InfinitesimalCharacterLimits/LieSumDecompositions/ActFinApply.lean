@@ -162,6 +162,7 @@ theorem RS_stable : IsStable (RS U T) := by
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ a hx
 
 
+omit hU in
 theorem LS_aut : ∀ φ ∈ LS U T, IsAutForm φ := by
   intro φ hφ
   induction hφ using Submodule.span_induction with
@@ -175,6 +176,7 @@ theorem LS_aut : ∀ φ ∈ LS U T, IsAutForm φ := by
   | smul a x _ hx => exact GlobalTheory.CompanionTheory.AffglAssembly.isAutForm_smul a hx
 
 
+omit hU in
 theorem RS_aut : ∀ φ ∈ RS U T, IsAutForm φ := by
   intro φ hφ
   induction hφ using Submodule.span_induction with

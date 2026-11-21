@@ -131,6 +131,7 @@ def actQuot (η : ℕ) : Representation O (TameGal K l e a)
     exact h
 
 
+variable (P) in
 def quotToPol (η : ℕ) : ((P.EM η).restrictScalars O ⧸
     (P.M.restrictScalars O).submoduleOf ((P.EM η).restrictScalars O)) →ₗ[O] P.Pol :=
   Submodule.liftQ _ (P.cls.restrictScalars O ∘ₗ Submodule.subtype _)
@@ -211,6 +212,7 @@ theorem tameDescent_extended_action_extraVector (g : TameGal K l e a) : (Δ.plus
 end Descent
 
 
+omit [NormedAlgebra ℚ_[l] K] [NeZero e] [NeZero a] [TameDescentExponentData K l e a] in
 structure IsExactTriple {P : PhiMod O K l e a ι} {Q : PhiMod O K l e a κ} {T : PhiMod O K l e a μ}
     (F : Hom P Q) (G : Hom Q T) : Prop where
   inj : ∀ v ∈ P.M, F.app v = 0 → v = 0

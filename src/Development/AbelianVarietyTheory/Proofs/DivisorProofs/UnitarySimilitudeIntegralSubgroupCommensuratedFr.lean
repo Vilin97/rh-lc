@@ -136,6 +136,7 @@ theorem Kres_commensurable (K : IntermediateField ℚ_[p] (PadicAlgCl p)) [Finit
 end GlobalTheory.HeckeP
 
 
+open GlobalTheory.HeckeP in
 theorem GlobalTheory.heckeOperator_integral :
     ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (r : ℕ), 0 < r →
       (∀ g : Gr G r, Subgroup.Commensurable ((KHT p G.m G.n r G.Fw).map (MulAut.conj g).toMonoidHom)

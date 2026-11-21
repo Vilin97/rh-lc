@@ -31,6 +31,7 @@ theorem le_cechOpen_iff {W : Opens T} {s : Finset ι} :
   simp [cechOpen]
 
 
+variable {V U} in
 theorem mem_cechOpen {x : T} {s : Finset ι} :
     x ∈ cechOpen V U s ↔ x ∈ V ∧ ∀ i ∈ s, x ∈ U i := by
   classical
@@ -201,11 +202,13 @@ def presheafCechH (n : ℕ) : ModuleCat.{v} R := (presheafCech P V U).homology n
 
 
 
+omit [LinearOrder ι] in
 def presheafCechAug : P.obj (op V) →ₗ[R] Cube.Term (presheafCube P V U) 1 :=
   LinearMap.pi fun s => presheafRes P (cechOpen_le V U s.1)
 
 
 
+omit [LinearOrder ι] in
 theorem aug_presheafCubeEmptyEquiv (x : P.obj (op V)) :
     Cube.aug (presheafCube P V U) (presheafCubeEmptyEquiv P V U x) = presheafCechAug P V U x :=
   funext fun _ => presheafRes_presheafRes P _ _ x
@@ -378,6 +381,7 @@ theorem cechAbFunctor_shortExact (S : ShortComplex ((Opens T)ᵒᵖ ⥤ AddCommG
 def toCechAbH : P.obj (op V) →ₗ[ℤ] cechAbH P V U 0 := presheafToCechH (P ⋙ abToIntModule) V U
 
 
+variable {P} in
 theorem cechAbHMap_toCechAbH (φ : P ⟶ Q) (x : P.obj (op V)) :
     (cechAbHMap V U φ 0).hom (toCechAbH P V U x) = toCechAbH Q V U (φ.app (op V) x) :=
   homologyMap_presheafToCechH V U (Functor.whiskerRight φ abToIntModule) x

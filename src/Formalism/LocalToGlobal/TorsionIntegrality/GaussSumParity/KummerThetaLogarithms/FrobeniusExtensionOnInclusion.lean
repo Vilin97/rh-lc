@@ -242,6 +242,7 @@ def jBK (hB : ∀ x : ℂ_[l], x ∈ ringB l ↔ x ∈ MaximalUnramifiedExtensio
     exact ((hB x).1 x.2).1)
 
 
+set_option maxHeartbeats 800000 in
 lemma jBK_coe (hB : ∀ x : ℂ_[l], x ∈ ringB l ↔ x ∈ MaximalUnramifiedExtension l ∧ ‖x‖ ≤ 1) (x : ringB l) :
     ((jBK hB x : MaximalUnramifiedExtension l) : ℂ_[l]) = x := by
   exact RingHom.codRestrict_apply _ _ _ x

@@ -135,6 +135,7 @@ theorem gradNPf_sub_one (lO x : O) (hl : v (ι lO) = 1) (hx : v (ι x - 1) = 1) 
     inv_mul_cancel₀ hne, mul_one]
 
 
+include hι hR in
 theorem gradNPf_lte (l : ℕ) [hp : Fact l.Prime] (hl2 : l ≠ 2) (hl : v (l : L) = 1)
     (x t : O) (ht : IsUnit t) (hxt : x - 1 = (l : O) * t) :
     ∀ m : ℕ, m ≠ 0 → ∃ ε : O, IsUnit ε ∧ x ^ m - 1 = (l : O) ^ (1 + padicValNat l m) * ε := by
@@ -226,6 +227,7 @@ theorem gradNPf_sum_val (l : ℕ) [hp : Fact l.Prime] (N : ℕ) :
     ring
 
 
+include hι hR in
 theorem gradNPf_prod (l : ℕ) [hp : Fact l.Prime] (hl2 : l ≠ 2) (hl : v (l : L) = 1)
     (x t : O) (ht : IsUnit t) (hxt : x - 1 = (l : O) * t) (s : ℕ) (hs : s ≠ 0) (hsl : ¬ l ∣ s)
     (N : ℕ) : ∃ a : O, (l : O) ^ (N + padicValNat l N.factorial) =

@@ -91,6 +91,7 @@ theorem local_line {W : Type} [AddCommGroup W] [Module (AF F) W] {B : W → W �
 end Vac
 
 
+open Vac in
 theorem vacuum_eigenline_of_local : LocRepEx → VacEigen := by
   intro hA F E _ _ _ _ _ σ n d B X W M om P v k hk
   obtain ⟨ω, ρ, L⟩ := hA F E σ n d B X W M om P v

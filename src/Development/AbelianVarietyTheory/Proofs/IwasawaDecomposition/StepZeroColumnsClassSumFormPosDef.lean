@@ -14,6 +14,7 @@ attribute [local instance] GlobalTheory.Mem.Col2.starE
 namespace GlobalTheory.Mem.Df
 
 
+set_option maxHeartbeats 1600000 in
 theorem cols_ipV_herm {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (u : B.Word) (c : ((I.cols l).mem u).C.cls 0)
     (f g : ((I.cols l).mem u).C.Y 0 → ℂ) :
     ((I.cols l).fm u).ipV 0 c f g = starRingEnd ℂ (((I.cols l).fm u).ipV 0 c g f) :=

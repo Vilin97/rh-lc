@@ -23,6 +23,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {Ψ : Type} [Fintype
   [AddCommGroup Λ] [Module (𝓞 E) Λ] {F : UnivFam E Ψ j j' n g Λ} (C : LatEmb F) (R : RiemLat E g Λ)
 
 
+omit [IsCMField E] in
 theorem embOf_coe (s : 𝓞 E →+* ℂ) (a : 𝓞 E) : embOf s (a : E) = s a :=
   IsFractionRing.lift_algebraMap (intEmb_injective s) a
 

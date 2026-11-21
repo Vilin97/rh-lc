@@ -103,6 +103,7 @@ theorem secondCountableTopology_units : SecondCountableTopology kˣ := by
   exact Units.isEmbedding_val₀.secondCountableTopology
 
 
+variable {k} in
 theorem isSmoothChar_torusChar {n : ℕ} {θ : Fin n → kˣ →* ℂˣ} (hθ : ∀ i, IsSmoothChar (θ i)) :
     IsSmoothChar (torusChar θ) :=
   Finset.prod_induction _ IsSmoothChar (fun _ _ => IsSmoothChar.mul) (by

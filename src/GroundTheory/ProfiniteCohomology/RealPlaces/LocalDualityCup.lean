@@ -89,6 +89,7 @@ variable {F Ω : Type} [Field F] [Field Ω] [Algebra F Ω] (M : Rep.{0} (ULift.{
   {n : ℕ} [NeZero n] (hMn : ∀ m : M, n • m = 0) (e : galRootsOfUnity.{0} F Ω n ≃+ ZMod n)
 
 
+omit [NeZero n] in
 theorem cartierDualToQZ_act {c : Gal(Ω/F)} (hinv : c⁻¹ = c)
     (hconj : ∀ ζ : galUnits.{0} F Ω, n • ζ = 0 → (galUnits.{0} F Ω).ρ c ζ = -ζ)
     (φ : cartierDual F Ω M) :
@@ -134,6 +135,7 @@ variable {F Ω : Type} [Field F] [Field Ω] [Algebra F Ω] [FiniteDimensional F 
   (hneg : (-1 : F) ∉ Set.range (Algebra.norm F : Ω → F))
 
 
+include hneg in
 theorem realInv_cocycleTwo (t : galUnits.{0} F Ω) (ht : (galUnits.{0} F Ω).ρ c t = t)
     (h2t : 2 • t = 0) (q : QZ) (hq : 2 • q = 0) (hqt : q = 0 ↔ t = 0) :
     realInv F Ω h2 hN (cohomologyπ _ 2 (cocycleTwo (galUnits.{0} F Ω) hG hc t ht)) = q := by
@@ -187,6 +189,7 @@ variable {F Ω : Type} [Field F] [Field Ω] [Algebra F Ω] [FiniteDimensional F 
   {c : Gal(Ω/F)} (hG : ∀ g : Gal(Ω/F), g = 1 ∨ g = c) (hc : c ≠ 1)
 
 
+omit [FiniteDimensional F Ω] in
 theorem cochainOf_cupCartier {p q : ℕ} (h : p + q = 2) (x : cocycles M p)
     (y : cocycles (cartierDual F Ω M) q) (s : Fin 2 → Gal(Ω/F)) :
     cochainOf _ (cocycleι _ 2 (HomologicalComplex.cyclesMap (cochainsMap (cartierPairing F Ω M)) 2

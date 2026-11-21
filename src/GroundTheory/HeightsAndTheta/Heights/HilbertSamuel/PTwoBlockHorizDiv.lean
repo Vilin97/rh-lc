@@ -159,6 +159,7 @@ theorem sup_le_iff_of_horiz {x : Ix κ → Ω} {B : Matrix (Ix κ) (Ix κ) ℚ} 
 end TwoBlockHorizDiv
 
 
+open TwoBlockHorizDiv in
 theorem TwoBlockHorizDiv.proof : TwoBlockHorizDiv.Statement := by
   intro Ω _ _ κ _ x B c l hsp hl W hW
   have hiff : IsRelevant W → ∀ Q : Ideal (MRing (FinTwoTypeFamily κ)), Q.IsPrime → Q ≤ W →

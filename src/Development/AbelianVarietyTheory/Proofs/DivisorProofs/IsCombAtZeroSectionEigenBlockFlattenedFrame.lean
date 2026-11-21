@@ -23,6 +23,8 @@ noncomputable section
 namespace GlobalTheory.LogKSDiv
 
 
+attribute [local instance] Over.cartesianMonoidalCategory Over.braidedCategory in
+open MonObj in
 theorem isCombAtG_extend {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
     {X0 : Scheme.{0}} (t : SAB H X0) {R : Type} [CommRing R] (x : Sp R ⟶ X0) {m n : ℕ}
     (f : Fin m → Fin n) (hf : Function.Injective f)

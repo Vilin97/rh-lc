@@ -19,6 +19,7 @@ variable {F : Type u} [Field F] [DecidableEq F] (W : WeierstrassCurve F) [W.IsEl
 variable [IsAlgClosed F]
 
 
+omit [DecidableEq F] [W.IsElliptic] [IsAlgClosed F] in
 theorem aeval_genX (p : F[X]) :
     aeval (genX W) p = algebraMap F[X] W.toAffine.FunctionField p := by
   simp only [genX_eq, aeval_algebraMap_apply, aeval_X_left, AlgHom.id_apply]

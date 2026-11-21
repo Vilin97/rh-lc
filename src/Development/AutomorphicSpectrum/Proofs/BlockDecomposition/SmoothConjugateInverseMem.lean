@@ -14,6 +14,7 @@ namespace GlobalTheory.CompanionTheory.DualSm
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+omit [NumberField E] [IsTotallyComplex E] in
 theorem map_invT {R S : Type} [CommRing R] [CommRing S] (p : R →+* S) (g : GL (Fin a) R) :
     GeneralLinearGroup.map p (invT a R g) = invT a S (GeneralLinearGroup.map p g) := by
   apply Units.ext
@@ -28,6 +29,7 @@ theorem invA_infGL (y : GL (Fin a) (Cinf E)) :
     (by rw [invA, map_invT, pFin_infGL, pFin_infGL, map_one])
 
 
+omit [NumberField E] [IsTotallyComplex E] in
 def trL : Lie E a →L[ℝ] Lie E a :=
   LinearMap.toContinuousLinearMap
     { toFun := fun X => toL (Matrix.of X)ᵀ
@@ -35,6 +37,7 @@ def trL : Lie E a →L[ℝ] Lie E a :=
       map_smul' := fun _ _ => rfl }
 
 
+omit [IsTotallyComplex E] in
 theorem toL_invT (y : GL (Fin a) (Cinf E)) : toL (invT a (Cinf E) y).val = trL (invL (toL y.val)) := by
   change toL ((y⁻¹).val)ᵀ = toL (Matrix.of (toL (Matrix.of (toL y.val))⁻¹))ᵀ
   rw [Matrix.coe_units_inv]

@@ -611,6 +611,7 @@ end Core
 end OneLetterPf
 
 
+open OneLetterPf in
 theorem one_letter_density_estimate (hL : LeibnizCls) (hS : DensSmoothCls) : OneLetterDens := by
   intro Wp Wq _ _ _ _ _ _ S _ _ P z z' π π' X μ L st l0 D hD hl1 hl2 hz hz' hπ hπ' l hl le hre
   have : SFinite μ := sfinite_of_isHaarOn _ μ hD.2.1

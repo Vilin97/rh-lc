@@ -288,6 +288,8 @@ end Periods
 end GlobalTheory.HolChartLift
 
 
+open NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD Formalism.L2.Pj
+  ReciprocityTheory.ChartRestriction.G.AR.Inst ReciprocityTheory.L2DbarEstimates ReciprocityTheory.ChartRestriction.G.AR.Up in
 theorem GlobalTheory.HolChartLift.exists_hol_lift : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (r : ℕ) (U : Unf Xo c σ r), GoodEmb c σ → IsUnf U → ∀ (A : Type) [CommRing A] [Algebra c.F A] (yA : FrPt Xo c A) (m : ℕ) (B : Set (Fin m → ℂ)) (φ : (Fin m → ℂ) → (A →ₐ[c.F] CAt σ)) (y : (Fin m → ℂ) → FrPt Xo c (CAt σ)), IsOpen B → (∀ a, DifferentiableOn ℂ (fun b => toC (φ b a)) B) → (∀ b ∈ B, FrMap (φ b) yA (y b)) → ∀ b₀ ∈ B, ∀ (k : U.Comp) (x₀ : (U.X k).dom) (t₀ : Ix Dw → (CAt σ)ˣ), FrBor t₀ (U.un k x₀) (y b₀) → ∃ (B₁ : Set (Fin m → ℂ)) (z : (Fin m → ℂ) → V (nd (U.X k))), IsOpen B₁ ∧ b₀ ∈ B₁ ∧ B₁ ⊆ B ∧ DifferentiableOn ℂ z B₁ ∧ z b₀ = 0 ∧ ∀ b ∈ B₁, ∃ (hb : cpt (U.X k) x₀.1 (z b) ∈ (U.X k).dom) (t : Ix Dw → (CAt σ)ˣ), FrBor t (U.un k ⟨_, hb⟩) (y b) := by
   intro E _ _ _ H Dw l Xo c σ r U hσ hU A _ _ yA m B φ y hB hφ hy b₀ hb₀ k x₀ t₀ ht₀
   obtain ⟨hr, hty, -, hfib, -, g, e, F, ik, ψ, hef, hun⟩ := hU

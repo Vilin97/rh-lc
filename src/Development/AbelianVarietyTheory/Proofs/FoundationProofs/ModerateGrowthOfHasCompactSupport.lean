@@ -21,6 +21,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 namespace HeightProper
 
 
+omit [NumberField F] [NumberField E] in
 theorem repr_map {R R' ι : Type} [CommRing R] [Algebra F R] [CommRing R'] [Algebra F R'] (b : Module.Basis ι F E)
     (φ : R →ₐ[F] R') (z : R ⊗[F] E) (i : ι) :
     (Algebra.TensorProduct.basis R' b).repr (Algebra.TensorProduct.map φ (AlgHom.id F E) z) i =

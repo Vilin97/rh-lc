@@ -109,6 +109,7 @@ theorem exists_homCoeff_eq_algebraMap (Q : isogHom E E') :
   · exact exists_isogCoeff_eq_algebraMap (isogOfHom Q hQ)
 
 
+variable (E E') in
 noncomputable def homConst : isogHom E E' →+ F where
   toFun Q := (exists_homCoeff_eq_algebraMap Q).choose
   map_zero' := (algebraMap F E.toAffine.FunctionField).injective (by

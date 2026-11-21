@@ -389,6 +389,7 @@ theorem exists_idemSum_locPl' {μ₀ : T} (hL : L.Is μ₀) (G : GridData L sc) 
     | exact GlobalTheory.ParahoricLift.exists_isIdemAt fun h => (hL.Q_pl t w b).2 w b ((GlobalTheory.IdemSupport.isConjPl_iff _ _).1 h)
 
 
+variable (G) in
 def finDatOf (t : T) (p : Pair T) {e : AE D} (he : IsIdemSum e (locPl G t)) (f : WO (G.pS p) (G.pT p) → ℂ)
     (hf : IsSBHalf e (latO (G.pS p) (G.pT p) (G.latS p : Set _) (G.latT p : Set _) fun _ => True) f) : FinDatum G t p :=
   { FinDatum.ind G t p (locPl G t) (fun _ hw => (Good.locPl_cases hw).elim (fun h => .inl h.1)
@@ -500,6 +501,7 @@ section Main
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T}
 
 
+set_option maxHeartbeats 1000000 in
 theorem GridChoice.exists_isCosExpansion {μ₀ : T} (hL : L.Is μ₀) (S : GridChoice W U) (t : T) (Φ : G.Datum)
     (hde : Nat.Coprime D.host.pde (D.host.QS * D.host.q) ∧ Nat.Coprime D.host.pde' (D.host.QS * D.host.q))
     (hc : ∀ P ∈ L.Q t, ((Ideal.absNorm D.host.ccK : ℕ) : 𝓞 D.host.E) ∉ P.asIdeal) (β : CosFam G t) :

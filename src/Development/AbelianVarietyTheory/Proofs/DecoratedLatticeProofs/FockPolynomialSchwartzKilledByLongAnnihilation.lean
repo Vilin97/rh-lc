@@ -158,12 +158,14 @@ theorem ptOf_add_smul {m : ℕ} (z Y : D.what₂.Tau → Matrix (Fin m) (Fin n) 
   split_ifs <;> simp [Complex.conj_ofReal]
 
 
+variable (θ) in
 def gen (e : D.what₂.Tau × Fin V.rank × Fin n × Bool →₀ ℕ) (g : (Fin V.rank → Fin n → Af D.host.F ⊗[D.host.F] D.host.E) → ℂ) :
     Mx D V.rank n → ℂ :=
   fun x => evalPoly (monomial e 1) (fun τ => compAt θ τ x) * gauss V l s (fun τ => compAt θ τ x) *
     g (fun i j => finPart D (x i j))
 
 
+variable (θ n) in
 def lowDeg (N : ℕ) : Submodule ℂ (Mx D V.rank n → ℂ) :=
   Submodule.span ℂ {φ | ∃ e g, Finsupp.degree e < N ∧ φ = gen θ V l s e g}
 
@@ -295,6 +297,7 @@ theorem exists_lowDeg {φ : Mx D V.rank n → ℂ} (hφ : φ ∈ fockA θ V n l 
 end Span
 
 
+open scoped ComplexOrder in
 theorem fockA_killed_by_annS : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (V : HSp D) (n : ℕ) (l : D.what₂.Tau → ℝ) (s : RealMat V), (∀ τ, IsCartanInv (gramAt D V τ) (s τ)) → ∀ φ ∈ fockA θ V n l s, ∃ N : ℕ, ∀ L : List (D.what₂.Tau × Matrix (Fin V.rank) (Fin n) ℂ), L.length = N → L.foldr (fun q g => annS V l s θ q.1 q.2 g) φ = 0 := by
   intro D θ hθ V n l s hs φ hφ
   have hM : ∀ τ, (gramAt D V τ * s τ).IsHermitian := fun τ => (hs τ).2.2.isHermitian

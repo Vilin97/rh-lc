@@ -315,6 +315,7 @@ theorem map_incA_rhoF {p q : ℕ} (X : Matrix (Fin p) (Fin q) D.host.E) :
   Matrix.ext fun i j => rhoF_incA (X i j)
 
 
+set_option maxHeartbeats 2000000 in
 theorem top_abs (d : HermitianOrthogonalExtensionData A B 1 1) (S : Finset ℕ) (Λ : Submodule (𝓞 D.host.E) (Fin A.rank → D.host.E))
     (Λs : Submodule (𝓞 D.host.E) (Fin B.rank → D.host.E)) (hΛ : Λs = d.lat Λ fun _ => 1)
     (fr₀ : GL (Fin A.rank) D.host.E) (u₀ : GfC A) (hon : cT σ fr₀.1 * A.gram * fr₀.1 = 1)

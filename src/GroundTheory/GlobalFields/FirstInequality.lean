@@ -15,6 +15,7 @@ noncomputable section
 variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
 
 
+variable (K L) in
 def ideleClassToCycTateZero (σ : Gal(L/K)) :
     Additive (IdeleClassGroup K) →+
       CycTateZero (Representation.ofMulDistribMulAction Gal(L/K) (IdeleClassGroup L)) σ :=

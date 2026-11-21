@@ -30,6 +30,7 @@ variable {S S' : Scheme.{0}} {f : S' ⟶ S} {P : PolAV S} {P₀ : PolAV S'} {a :
   (hp : IsGrpPullback P₀.A P.A f a) {w : LB.Iso P₀.L (P.L.pull a)} (hw : w.IsGen)
 
 
+include hp hw in
 theorem exists_frames {T : Over S} {T' : Over S'} {g : T'.left ⟶ T.left}
     {rig : LB.Gen (P.L.pull (eSec P.A))} (hrig : rig.IsGen) {I : Type} {x : I → (T ⟶ P.A)} {x' : I → (T' ⟶ P₀.A)}
     (hx : ∀ i, (x' i).left ≫ a = g ≫ (x i).left) {n : ℕ}
@@ -51,6 +52,7 @@ theorem exists_frames {T : Over S} {T' : Over S'} {g : T'.left ⟶ T.left}
   rwa [Fin.prod_univ_one, zpow_one, Category.id_comp, Category.id_comp] at this
 
 
+include hw in
 theorem isTwVal_move {T T₀ : Over S} {T' : Over S'} {σ : T'.left ⟶ T.left} (hσ : σ ≫ T.hom = T'.hom ≫ f)
     {β : T ⟶ T₀} {g : T'.left ⟶ T₀.left} (hg : g ≫ T₀.hom = T'.hom ≫ f) (hβ : σ ≫ β.left = g)
     {θ : LB.Sec (LPow P.A P.L 1 T₀)} {θ₁ : LB.Sec (LPow P₀.A P₀.L 1 T')} (hθ : SecRel hp g hg w θ₁ θ)

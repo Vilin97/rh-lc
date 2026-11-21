@@ -230,6 +230,7 @@ theorem coeff_mem_of_eval_mem {K : Type*} [Field K] [CharZero K] (B : Subring K)
   exact c.2
 
 
+open scoped IntermediateField.algebraAdjoinAdjoin in
 theorem norm_mem_adjoin {Ω : Type} [Field Ω] [CharZero Ω] (S : Set Ω) [IsIntegrallyClosed (Algebra.adjoin ℚ S)]
     {y : Ω} (hy : IsIntegral (Algebra.adjoin ℚ S) y) :
     ((Algebra.norm (IntermediateField.adjoin ℚ S) y : IntermediateField.adjoin ℚ S) : Ω) ∈
@@ -273,6 +274,7 @@ theorem coeff_mul_pow_mem {Ω : Type} [Field Ω] [CharZero Ω] (S : Set Ω) (P :
 end DehomCharpolyForms
 
 
+open DehomCharpolyForms in
 theorem DehomCharpolyForms.proof : DehomCharpolyForms.Statement := by
   intro Ω _ _ D l P _ hP hgen j m u hu
   classical

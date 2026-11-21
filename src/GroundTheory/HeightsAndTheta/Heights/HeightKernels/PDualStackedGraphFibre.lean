@@ -64,6 +64,7 @@ theorem vertR_sub (P : Ideal (MRing ι)) {n : ℕ} (L : Fin n → HermLine ι) (
 end StackedGraphFibre
 
 
+open StackedGraphFibre in
 theorem DualStackedGraphFibre.proof (hCyc : DualStackedExcCycle.Statement)
     (hSec : DualStackedExcGeoSecond.Statement) (hFir : DualStackedExcGeoFirst.Statement) :
     DualStackedGraphFibre.Statement := by

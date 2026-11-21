@@ -45,12 +45,15 @@ variable {K K' L L' : Type*} [Field K] [NumberField K] [Field K'] [NumberField K
   [Algebra K' L'] [Algebra L L'] [IsScalarTower K K' L'] [IsScalarTower K L L']
 
 
+omit [NumberField K] [NumberField K'] in
 theorem finrank_eq_one_of_bijective (hK : Function.Bijective (algebraMap K K')) :
     Module.finrank K K' = 1 :=
   (AlgEquiv.ofBijective (Algebra.ofId K K') hK).toLinearEquiv.finrank_eq.symm.trans
     (Module.finrank_self K)
 
 
+omit [Algebra K L] [Algebra K L'] [Algebra K' L'] [Algebra L L'] [IsScalarTower K K' L']
+  [IsScalarTower K L L'] in
 theorem ideleNorm_ideleEmbedding_of_bijective (hK : Function.Bijective (algebraMap K K'))
     (x : IdeleGroup K) : ideleNorm K K' (ideleEmbedding K K' x) = x := by
   rw [ideleNorm_ideleEmbedding, finrank_eq_one_of_bijective hK, pow_one]
@@ -58,6 +61,7 @@ theorem ideleNorm_ideleEmbedding_of_bijective (hK : Function.Bijective (algebraM
 variable [IsGalois K L]
 
 
+omit [NumberField K] [NumberField K'] [NumberField L] [NumberField L'] in
 theorem restrictNormal_restrictScalars_eq_one (hL : Function.Bijective (algebraMap L L'))
     {σ : L' ≃ₐ[K'] L'} (h : (σ.restrictScalars K).restrictNormal L = 1) : σ = 1 := by
   refine AlgEquiv.ext fun y ↦ ?_
@@ -179,10 +183,12 @@ theorem ker_ideleSymbol : (ideleSymbol K L).ker = (diagonal K).range ⊔ (ideleN
     (sup_le diagonal_range_le_ker_ideleSymbol (range_ideleNorm_le_ker_ideleSymbol L))
 
 
+omit [IsGalois K L] [IsMulCommutative (L ≃ₐ[K] L)] in
 instance ideleClassNorm_range_normal : (ideleClassNorm K L).range.Normal :=
   ⟨fun n hn g ↦ by rwa [mul_comm g n, mul_inv_cancel_right]⟩
 
 
+variable (K L) in
 def reciprocityMap : IdeleClassGroup K →* (L ≃ₐ[K] L) :=
   QuotientGroup.lift _ (ideleSymbol K L) diagonal_range_le_ker_ideleSymbol
 
@@ -228,6 +234,7 @@ theorem reciprocityMap_surjective : Function.Surjective (reciprocityMap K L) := 
   ⟨IdeleClassGroup.mk K x, hx⟩
 
 
+variable (K L) in
 def reciprocityMapEquiv : IdeleClassGroup K ⧸ (ideleClassNorm K L).range ≃* (L ≃ₐ[K] L) :=
   (QuotientGroup.quotientMulEquivOfEq (ker_reciprocityMap (K := K) (L := L)).symm).trans
     (QuotientGroup.quotientKerEquivOfSurjective _ reciprocityMap_surjective)

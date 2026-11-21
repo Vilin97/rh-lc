@@ -29,6 +29,7 @@ theorem scaleT_inv_scaleT (c : K → ℂ) (hc : ∀ k, c k ≠ 0) (f : MvPolynom
   exact DFunLike.congr_fun h f
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem mConeMap_torus (c : K → ℂ) (z : (Σ k, ι k) → ℂ) (f : MRing ι) :
     mConeMap (fun q : Σ k, ι k => c q.1 * z q) f = scaleT c (mConeMap z f) := by
   have h : mConeMap (fun q : Σ k, ι k => c q.1 * z q) =
@@ -42,6 +43,7 @@ theorem mConeMap_torus (c : K → ℂ) (z : (Σ k, ι k) → ℂ) (f : MRing ι)
   rfl
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem mCoordIdeal_torus (c : K → ℂ) (hc : ∀ k, c k ≠ 0) (z : (Σ k, ι k) → ℂ) :
     mCoordIdeal (fun q : Σ k, ι k => c q.1 * z q) = mCoordIdeal z := by
   ext f

@@ -27,6 +27,7 @@ variable {n d : ℕ} {X X₂ : Spc F E n} {W W₂ : Spc F E d} {B : Base F E} {M
   {r s r' s' : ℕ}
 
 
+variable (M X₂ W₂) in
 def reM : Model σ (reS X X₂) (reS W W₂) := ⟨M.co, M.vac, M.μ, M.dom⟩
 
 theorem so_re : M.So B.ψ B.τ₁ ≤ (reM X₂ W₂ M).So B.ψ B.τ₁ := Submodule.span_mono (by

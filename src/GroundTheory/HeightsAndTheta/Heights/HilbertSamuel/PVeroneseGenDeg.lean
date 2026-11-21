@@ -123,6 +123,7 @@ theorem eventualValue_eq {K : Type*} (F : (K → ℤ) → ℤ) (c : ℤ)
 end VeroneseGenDeg
 
 
+open VeroneseGenDeg in
 theorem VeroneseGenDeg.proof : VeroneseGenDeg.Statement := by
   intro D _
   set q := (coordIdeal ℤ (Veronese.x D)).map (MvPolynomial.map (Int.castRingHom ℚ)) with hq

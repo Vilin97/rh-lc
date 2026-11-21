@@ -42,6 +42,7 @@ theorem heq_smul {W W' : Type} [nW : NormedAddCommGroup W] [iW : InnerProductSpa
 end GlobalTheory.Mem.R3.Rw.OmCoef
 
 
+set_option maxHeartbeats 4000000 in
 theorem GlobalTheory.Mem.R3.Rw.OmCoef.exists_coefFam_ext : ∀ {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : TwDat B'} {w : ColW B f T} {w' : ColW B' f' T'}
   {Z : w.Lt} {Z' : w'.Lt} {hX : B.fields.Ok} {hX' : B'.fields.Ok} {Wt : Set B.places.Pl} {Wt' : Set B'.places.Pl}
   (z : Dat (w.st Z) w.I hX T Wt), Enl0 B B' → HEq f' f → HEq w'.px w.px → z.Std →

@@ -32,6 +32,7 @@ theorem genDeg_one_pos (hA : GenDegAmple.Statement) {K : Type} [Fintype K] {ι :
   rwa [hEq] at h
 
 
+open Classical in
 theorem nefOnF_of_nefOnGenericDeg {K : Type} [Fintype K] [Nonempty K] {ι : K → Type} [∀ k, Fintype (ι k)]
     {P : Ideal (MRing ι)} {b : K → ℤ} (hb : NefOnGenericDeg P b) :
     KH.NefOnF (fun V _ L => NumbersDVR.intNum ℚ V L) (P.map (MvPolynomial.map (Int.castRingHom ℚ))) b := by

@@ -106,6 +106,7 @@ theorem isOpen_UU : IsOpen (UU : Set (Sp k n)) := by
   exact isOpen_compl_singleton.preimage continuous_snd
 
 
+open scoped Pointwise in
 theorem relIndex_ne_zero {H : Type*} [Group H] [TopologicalSpace H] [IsTopologicalGroup H] {J A : Subgroup H}
     (hJ : IsCompact (J : Set H)) (hA : IsOpen (A : Set H)) : A.relIndex J ≠ 0 := by
   letI : SMul J (Set J) := ⟨fun g s => (fun x => g * x) '' s⟩

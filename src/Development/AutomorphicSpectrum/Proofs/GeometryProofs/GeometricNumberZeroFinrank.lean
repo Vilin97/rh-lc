@@ -139,6 +139,7 @@ theorem theta_surjective (hPW : P ≤ W) {c : ∀ k, J k} (hc : ∀ k, (X ⟨k, 
   rw [map_mul, h3, mul_assoc, mul_comm (theta hPW c hc v), h2, mul_one]
 
 
+omit [P.IsPrime] [W.IsPrime] in
 def chartHom {K : Type} [Field K] (w : (Σ k, J k) → K) (c : ∀ k, J k) : MRing J →+* chartRingZ w c :=
   (aeval (R := ℤ) fun p : Σ k, J k =>
     (⟨w p / w ⟨p.1, c p.1⟩, Algebra.subset_adjoin ⟨p, rfl⟩⟩ : chartRingZ w c)).toRingHom

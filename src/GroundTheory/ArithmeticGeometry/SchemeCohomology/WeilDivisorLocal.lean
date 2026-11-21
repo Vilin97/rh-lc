@@ -30,6 +30,7 @@ namespace PrimeDivisor
 variable [IsIntegral X] [IsLocallyNoetherian X] [IsNormalScheme X]
 
 
+omit [IsLocallyNoetherian X] [IsNormalScheme X] in
 lemma heightOneSpectrum_eq (x : PrimeDivisor X)
     (w : HeightOneSpectrum (X.presheaf.stalk x.point)) : w = x.heightOneSpectrum := by
   have := x.dimensionLEOne_stalk

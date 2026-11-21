@@ -9,6 +9,7 @@ open Polynomial
 namespace GlobalTheory.SimilarTranspose
 
 
+open Polynomial in
 theorem _root_.GlobalTheory.SimilarTranspose.exists_form {k : Type} [Field k] (f : k[X]) (hf : f ≠ 0) :
     ∃ l : k[X] →ₗ[k] k, (∀ a, f ∣ a → l a = 0) ∧ ∀ a, (∀ b, l (a * b) = 0) → f ∣ a := by
   set g := f * C f.leadingCoeff⁻¹ with hg
@@ -145,6 +146,7 @@ private theorem exists_nondegenerate_X_symmetric_form_torsion {k : Type} [Field 
     · simp
 
 
+open Polynomial in
 theorem _root_.GlobalTheory.SimilarTranspose.main : ∀ (k ι : Type) [Field k] [Fintype ι] [DecidableEq ι] (A : Matrix ι ι k),
     ∃ P : Matrix ι ι k, IsUnit P ∧ P * A = A.transpose * P := by
   intro k ι _ _ _ A

@@ -162,6 +162,7 @@ namespace GlobalTheory.TwoFacCore
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+set_option maxHeartbeats 1000000 in
 theorem units_mod {d : ℕ} (Λ : AddSubgroup (Fin d → AE F E)) (p : ℕ) (K Ki : Matrix (Fin d) (Fin d) (AE F E))
     (β b up um h : AE F E) (N₀ : ℕ) (hKK : K * Ki = 1) (hKiK : Ki * K = 1)
     (hK : ∀ z ∈ Λ, K *ᵥ z ∈ Λ) (hKi : ∀ z ∈ Λ, Ki *ᵥ z ∈ Λ)
@@ -292,6 +293,7 @@ theorem smul_map {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E
   simp [Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, map_mul]
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_skew_cayley : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' →
     ∀ (v : Pl (F := F)) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w →

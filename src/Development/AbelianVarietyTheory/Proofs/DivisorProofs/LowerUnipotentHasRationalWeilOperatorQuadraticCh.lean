@@ -205,6 +205,7 @@ namespace GlobalTheory.RatWeilUnip
 open GlobalTheory.AdelicSvNQuad (quad archMul)
 
 
+open scoped Classical in
 theorem hasOp_unip : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ → ∀ (κ : Type) [Fintype κ]
     [DecidableEq κ] (b : Matrix κ κ F), bᵀ = b → HasOp ψ (Matrix.fromBlocks 1 0 b 1) := by
   intro F _ _ ψ hψ κ _ _ b hb

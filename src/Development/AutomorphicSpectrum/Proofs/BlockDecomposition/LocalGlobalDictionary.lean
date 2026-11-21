@@ -18,6 +18,7 @@ open PositivityTheory.RgEis
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+variable (F E) in
 def sec : (Af F ⊗[F] E) →+ AE F E :=
   (TensorProduct.map (LinearMap.inr F (Ainf F) (Af F)) (LinearMap.id : E →ₗ[F] E)).toAddMonoidHom
 

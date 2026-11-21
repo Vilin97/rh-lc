@@ -146,6 +146,7 @@ end GlobalTheory.CompanionTheory.Rodier.Bad
 namespace GlobalTheory.CompanionTheory.Rodier
 
 
+open Bad in
 theorem exists_open_congr : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (ψ : AddChar k Circle), Continuous ψ → ψ ≠ 1 → ∀ (h N : ℕ) (d : Fin h → ℕ) (hd : ∑ a, d a = N) {W : Type}
     [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (Levi k fun a => Fin (d a)) W) (f : IndSp (stdBlocks d hd) ρ),

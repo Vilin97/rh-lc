@@ -91,6 +91,7 @@ theorem idemF_mul (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L))) : idemF
   split_ifs <;> simp
 
 
+variable (L) in
 def eA (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L))) : AL L := (1 : L) ⊗ₜ[maximalRealSubfield L] idemF v
 
 theorem eA_mul (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L))) : eA L v * eA L v = eA L v := by

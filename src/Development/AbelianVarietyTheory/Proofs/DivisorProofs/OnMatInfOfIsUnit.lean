@@ -45,6 +45,7 @@ def IsKerOpInf {Z : Type} [NormedAddCommGroup Z] [NormedSpace ℝ Z]
       ∀ W, IsModGrowthInf W → ∀ z g, T W z g = ∫ x, k x * (𝐞 (η x z) : ℂ) * W (g * γ x) ∂ν
 
 
+variable (E) in
 def levSetInf (n r : ℕ) : Set (GL (Fin n) (Cinf E)) := {g | ∀ w, compGL w g ∈ levSet n r}
 
 def rowCutInf (ρ : Fin n) (x : Matrix (Fin n) (Fin n) (Cinf E)) : Fin n → Cinf E := fun j => if j ≤ ρ then x ρ j else 0

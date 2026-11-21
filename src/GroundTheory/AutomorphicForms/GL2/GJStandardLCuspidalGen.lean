@@ -70,6 +70,7 @@ theorem abstract_form {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ 
     rw [hLa, mul_comm N⁻¹, mul_assoc, inv_mul_cancel₀ hN0, mul_one]
 
 
+include μ hKc hKo in
 theorem schur_form {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] (B : V →ₗ[ℂ] H)
     (hB : ∀ u, B u = 0 → u = 0)
     (hinv : ∀ x u w, inner ℂ (B (ρ x u)) (B (ρ x w)) = inner ℂ (B u) (B w))

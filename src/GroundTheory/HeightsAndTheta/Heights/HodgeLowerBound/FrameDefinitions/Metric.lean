@@ -54,6 +54,7 @@ theorem isValueAt_mul {y : (Σ k, ι k) → Ω} {s t : Ω} {z : (Σ k, ι k) →
   · simp only [map_mul]; rw [mul_div_mul_comm]
 
 open scoped Classical in
+open Classical in
 def valAt (y : (Σ k, ι k) → Ω) (s : Ω) (z : (Σ k, ι k) → ℂ) : ℂ :=
   if h : ∃ v, IsValueAt y s z v then h.choose else 0
 

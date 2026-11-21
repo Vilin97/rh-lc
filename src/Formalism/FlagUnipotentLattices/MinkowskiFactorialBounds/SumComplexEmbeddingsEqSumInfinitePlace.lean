@@ -412,6 +412,7 @@ private theorem two_mul_div_two_le_sqrt_mul_sqrt_mul_rpow (r D : ℝ) (hr : 0 < 
   nlinarith [hs0, hs2, hr]
 
 
+set_option maxHeartbeats 800000 in
 theorem coveringO_of_transference (hT : Transference) : CoveringO := by
   unfold Formalism.HermitianLatticeCounting.LatticeSumBounds.CoveringO
   unfold Formalism.HermitianLatticeCounting.LatticeSumBounds.Transference at hT

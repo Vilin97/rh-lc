@@ -47,6 +47,7 @@ theorem nondeg (hdet : IsUnit J.det) {x : ι → K} (h : ∀ z, hf σ J x z = 0)
   simpa [Matrix.vecMul_vecMul, Matrix.mul_nonsing_inv J hdet] using h2
 
 
+variable (σ J) in
 structure OFam (e f : ι → K) (r : ℕ) where
   a : Fin r → ι → K
   inv : Fin r → K

@@ -67,6 +67,7 @@ variable (F) in
 def evI (a : AF F) : mixedEmbedding.mixedSpace F := InfiniteAdeleRing.ringEquiv_mixedSpace F a.1
 
 
+variable (F) in
 def realAd (t : ℝ) : AF F :=
   LinearMap.inl F (Ainf F) (Af F) ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (algebraMap ℝ _ t))
 
@@ -108,6 +109,7 @@ def PsiUnr (ψ : AddChar (AF F) ℂ) (v : Pl F) : Prop :=
   ∀ x : Fv F v, (∀ y ∈ v.adicCompletionIntegers F, psiLoc ψ v (x * y) = 1) ↔ x ∈ v.adicCompletionIntegers F
 
 
+variable (F E) in
 abbrev Chr : Type := (AE F E)ˣ →* Circle
 
 def chrW (χ : Chr F E) {v : Pl F} (τ : E →ₐ[F] Fv F v) : (Fv F v)ˣ →* ℂˣ :=
@@ -134,9 +136,11 @@ def eps (ψ : AddChar (AF F) ℂ) {v : Pl F} (ν : (Fv F v)ˣ →* ℂˣ) (s : �
   (Ideal.absNorm v.asIdeal : ℂ) ^ (-(condExp ν : ℤ) * s) * gauss ψ ν * (ν (unifAt v) : ℂ) ^ condExp ν
 
 
+variable (E) in
 def SplitsFully (v : Pl F) : Prop := ((v.asIdeal.under ℤ).primesOver (𝓞 E)).ncard = Module.finrank ℚ E
 
 
+variable (F E) in
 structure Base where
 
   ψ : AddChar (AF F) ℂ
@@ -178,6 +182,7 @@ def IsCartan {n : ℕ} (M θ : Matrix (Fin n) (Fin n) ℂ) : Prop :=
 variable {σ : E →ₐ[F] E}
 
 
+variable (σ) in
 structure Spc.IsHerm (B : Base F E) {n : ℕ} (X : Spc F E n) (r s : ℕ) : Prop where
   herm : ∀ i j, σ (X.J j i) = X.J i j
   sig : ∀ w, HasSig (X.J.map (B.emb w).1) r s
@@ -187,6 +192,7 @@ structure Spc.IsHerm (B : Base F E) {n : ℕ} (X : Spc F E n) (r s : ℕ) : Prop
   bas : ∀ v : B.P, IsSplitBasis (B.τ v) X.L (X.bas v)
 
 
+variable (σ) in
 structure Spc.IsSkew (B : Base F E) {n : ℕ} (X : Spc F E n) (r s : ℕ) : Prop where
   skew : ∀ i j, σ (X.J j i) = -X.J i j
   sig : ∀ w, HasSig (Complex.I • X.J.map (B.emb w).1) r s
@@ -208,6 +214,7 @@ structure Model {n d : ℕ} (X : Spc F E n) (W : Spc F E d) where
   dom : Set (UA σ X.J)
 
 
+variable (σ) in
 abbrev Rep {n d : ℕ} (X : Spc F E n) (W : Spc F E d) : Type :=
   UA σ X.J × UA σ W.J →* Module.End ℂ ((Fin n × Fin d → AF F) → ℂ)
 
@@ -216,6 +223,7 @@ section Pair
 variable {n d : ℕ} {X : Spc F E n} {W : Spc F E d}
 
 
+variable (X W) in
 def latAtV (v : Pl F) : AddSubgroup (Matrix (Fin n) (Fin d) (AE F E)) :=
   AddSubgroup.closure {z | ∃ a : AF F, At (evFin F v) a ∧ evFin F v a ∈ v.adicCompletionIntegers F ∧
     ∃ x ∈ X.L, ∃ y ∈ W.L, z = a • incM F (Matrix.vecMulVec x y)}
@@ -288,13 +296,16 @@ def Model.Conv (M : Model σ X W) (om : Rep σ X W) (Φ : (Fin n × Fin d → AF
   ∀ h, IntegrableOn (fun g => theta om Φ g h) M.dom M.μ
 
 
+variable (σ X) in
 def UAt {R : Type} [Zero R] (ev : AF F → R) : Set (UA σ X.J) := {g | At ev (mat g - 1)}
 
 
+variable (σ X) in
 def KInf (τ : ∀ w : InfinitePlace F, EmbOver E w) : Set (UA σ X.J) :=
   {k | k ∈ UAt σ X (evI F) ∧ ∀ w, Commute ((mat k).map (piInf (τ w))) (X.θ w)}
 
 
+variable (σ X) in
 def Lines : Set (Multiplicative ℝ →* UA σ X.J) := {γ | Continuous γ ∧ ∀ t, γ t ∈ UAt σ X (evI F)}
 
 def augAt (om : Rep σ X W) (v : Pl F) : Submodule ℂ ((Fin n × Fin d → Fv F v) → ℂ) :=
@@ -303,6 +314,7 @@ def augAt (om : Rep σ X W) (v : Pl F) : Submodule ℂ ((Fin n × Fin d → Fv F
 end Pair
 
 
+variable (σ) in
 structure Geo (a a' : ℕ) where
 
   p : ℕ
@@ -320,6 +332,7 @@ structure Geo (a a' : ℕ) where
   M' : Model σ V' W
 
 
+variable (F E) in
 structure Chars where
 
   α : Chr F E
@@ -333,9 +346,11 @@ structure Chars where
 def Chars.ν (X : Chars F E) : Chr F E := X.α / X.β
 
 
+open Classical in
 def Chars.T (X : Chars F E) : Finset (Pl F) := X.S₀ ∪ X.Q
 
 
+variable (σ) in
 structure Base.IsGood (B : Base F E) : Prop where
   cm : IsCMExt F E σ
   galois : IsGalois ℚ E
@@ -382,6 +397,7 @@ structure IsTriple (B : Base F E) (G : Geo σ a a') (X : Chars F E) (om : Rep σ
   weil' : G.M'.IsWeil B.ψ X.α (X.α / X.β) om'
 
 
+variable (F) in
 structure RealMaps (a a' : ℕ) : Type 1 where
 
   Pi : Type
@@ -393,6 +409,7 @@ structure RealMaps (a a' : ℕ) : Type 1 where
   p' : SInf F (Fin a' × Fin (a + a')) →ₗ[ℂ] Pi
 
 
+variable (F) in
 structure FinMaps (a a' : ℕ) : Type 1 where
 
   Pi : Pl F → Type
@@ -501,6 +518,7 @@ def Coinv : Prop :=
 end Maps
 
 
+variable (E) in
 structure Plane (n n₁ : ℕ) where
 
   x : Fin n → E
@@ -514,6 +532,7 @@ structure Plane (n n₁ : ℕ) where
 def skip (i₀ i₁ j : ℕ) : ℕ := if j < i₀ then j else if j + 1 < i₁ then j + 1 else j + 2
 
 
+variable (σ) in
 structure Plane.IsAdapted (B : Base F E) {n n₁ : ℕ} (H : Plane E n n₁) (Y : Spc F E n) (Y₁ : Spc F E n₁) (i₀ i₁ : ℕ) :
     Prop where
   rank : n = n₁ + 2
@@ -533,12 +552,14 @@ structure Plane.IsAdapted (B : Base F E) {n n₁ : ℕ} (H : Plane E n n₁) (Y 
     ∀ j : Fin n₁, i.1 = skip i₀ i₁ j → ∀ r, (Y.bas v).1 r i = (H.ι.map (B.τ v) * (Y₁.bas v).1) r j
 
 
+open Classical in
 def stepFac (B : Base F E) (X : Chars F E) (e₁ e₂ s : ℤˣ) (𝔟 𝔠 : FractionalIdeal (𝓞 E)⁰ E) (z : ℤ) : ℂ :=
   ((idealVal X.ν 𝔟 ^ (e₁ : ℤ) * idealVal X.ν 𝔠 ^ (e₂ : ℤ) : ℂˣ) : ℂ) *
     ∏ v : B.P with v.1 ∈ X.T, (chrW X.ν (B.τ v) (Units.map (Int.castRingHom _).toMonoidHom s) : ℂ) *
       eps B.ψ (chrW X.ν (B.τ v)) z
 
 
+variable (σ) in
 def StepBeta (e₁ e₂ s : ℤˣ) : Prop :=
   ∀ (B : Base F E) (a b : ℕ) (G : Geo σ a (b + 2)) (G₁ : Geo σ a b) (H : Plane E (b + 2) b)
     (H' : Plane E (a + (b + 2)) (a + b)) (R : RealMaps F a (b + 2)) (R₁ : RealMaps F a b),
@@ -550,6 +571,7 @@ def StepBeta (e₁ e₂ s : ℤˣ) : Prop :=
           c * charL X.ν (X.S₀ : Set (Pl F)) ((((a - (b + 2)) / 2 : ℕ) : ℂ) + 1) = u * c₁
 
 
+variable (σ) in
 def StepAlpha (e₁ e₂ s : ℤˣ) : Prop :=
   ∀ (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a') (H : Plane E (b + 2) b)
     (H' : Plane E (b + 2 + a') (b + a')) (R : RealMaps F (b + 2) a') (R₁ : RealMaps F b a'),

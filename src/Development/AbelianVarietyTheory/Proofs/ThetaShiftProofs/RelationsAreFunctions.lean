@@ -90,6 +90,7 @@ theorem qkAdd_congr {p p' q q' : QkPt D F k} (h : QkPt.Equiv D F p q) (h' : QkPt
     rw [hg, hg', map_add (f := _), add_add_add_comm]
 
 
+include hB in
 theorem qkAdd_iff_of_equiv {p p' q q' r r' : QkPt D F k} (h : QkPt.Equiv D F p q) (h' : QkPt.Equiv D F p' q')
     (e : QkAdd p p' r) : QkAdd q q' r' ↔ QkPt.Equiv D F r r' := by
   have a := (qkAdd_iff hB _ _ _).1 e
@@ -123,6 +124,7 @@ theorem qkSmul_congr (a : O) {p q : QkPt D F k} (h : QkPt.Equiv D F p q) :
     rw [hg, gtSmul_add, iota_smul hG oa]
 
 
+include hB hG in
 theorem qkAct_iff_of_equiv {a : O} {p q r r' : QkPt D F k} (h : QkPt.Equiv D F p q) (e : QkAct oa a p r) :
     QkAct oa a q r' ↔ QkPt.Equiv D F r r' := by
   have a₁ := (qkAct_iff hB hG oa _ _ _).1 e

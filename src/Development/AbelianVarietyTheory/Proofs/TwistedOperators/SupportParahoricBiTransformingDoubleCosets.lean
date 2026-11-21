@@ -16,12 +16,15 @@ namespace GlobalTheory.ChainStepSupp
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+open MeasureTheory ValuativeRel Matrix in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem _root_.GlobalTheory.ChainStepSupp.det_lower_ne_zero {A D : Type} [Fintype A] [DecidableEq A]
     [Fintype D] [DecidableEq D]
     {j : GL (A ⊕ D) k} (hj : j ∈ _root_.GlobalTheory.IndefiniteRowSideFullHecke.VolumeFlatSection.parahoric k A D) : j.1.toBlocks₂₂.det ≠ 0 :=
   (_root_.GlobalTheory.ParahoricLowerBlock.lower_block_tame k A D 1 (fun _ _ => rfl) j hj).1
 
 
+variable (k) in
 def reGL {m n : Type} [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n] (e : m ≃ n) : GL m k ≃* GL n k :=
   Units.mapEquiv (Matrix.reindexAlgEquiv k k e).toMulEquiv
 
@@ -60,6 +63,8 @@ theorem _root_.GlobalTheory.ChainStepSupp.reGL_reGL_symm {m n : Type} [Fintype m
   simp [_root_.GlobalTheory.ChainStepSupp.val_reGL, Matrix.reindex_apply]
 
 
+open MeasureTheory ValuativeRel Matrix in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem _root_.GlobalTheory.ChainStepSupp.emb₂_mem_parahoric {A D : Type} [Fintype A] [DecidableEq A]
     [Fintype D] [DecidableEq D]
     {x : GL A k} {y : GL D k} (hx : x ∈ _root_.GlobalTheory.SplitWeil.KO k A)
@@ -79,6 +84,8 @@ theorem _root_.GlobalTheory.ChainStepSupp.emb₂_mem_parahoric {A D : Type} [Fin
   · simp [_root_.GlobalTheory.SmGL.val_emb₂]
 
 
+open MeasureTheory ValuativeRel Matrix in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem _root_.GlobalTheory.ChainStepSupp.emb₂_one_torusElt {A D : Type} [Fintype A] [DecidableEq A]
     [Fintype D] [DecidableEq D] (ϖ : kˣ)
     (f : D → ℤ) :
@@ -93,6 +100,8 @@ theorem _root_.GlobalTheory.ChainStepSupp.emb₂_one_torusElt {A D : Type} [Fint
       Matrix.one_apply]
 
 
+open MeasureTheory ValuativeRel Matrix in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem _root_.GlobalTheory.ChainStepSupp.support_dcell : ∀ (k : Type) [Field k] [ValuativeRel k]
     [TopologicalSpace k] [IsNonarchimedeanLocalField k] (ϖ : kˣ),
     valuation k (ϖ : k) = uniformizer k →

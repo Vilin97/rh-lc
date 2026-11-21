@@ -35,6 +35,7 @@ def ringActPull {S S' : Scheme.{0}} (f : S' ⟶ S) {G : Over S} [GrpObj G] [IsCo
     exact CategoryTheory.Functor.map_mul (Over.pullback f) (o.act a) (o.act b)
 
 
+open ReciprocityTheory.ChartRestriction.G.DVR in
 theorem polAct_pull : ∀ (S S' : Scheme.{0}) (f : S' ⟶ S) (P : Out.PolAV S) (P' : Out.PolAV S') (g : P'.A.left ⟶ P.A.left),
     IsGrpPullback P'.A P.A f g → LBIso (P.L.pull g) P'.L →
     ∀ (O : Type) [Ring O] [StarRing O] (o : P.OAct O), ∃ o' : P'.OAct O,
@@ -104,6 +105,7 @@ theorem degAct_pull : GlobalFnsSt → ∀ (R R' : Type) [CommRing R] [IsDomain R
       (he a) (he (star a)) _ _ _ _ (hs a) (hs (star a)) (ιD.c_lin a) (ιD.c_lin (star a)) (ιD.tau_bal a)
 
 
+open GlobalTheory.TorusCoord GlobalTheory.PullLinear in
 theorem oLinear_pull : ∀ (R R' : Type) [CommRing R] [IsDomain R] [CommRing R'] [IsDomain R'] (I : Ideal R) (I' : Ideal R') (φ : R →+* R') (D : DegData R I) (D' : DegData R' I') (hD : IsPullDeg φ D.toPre D'.toPre) (A : PolAV (Spec (CommRingCat.of (FractionRing R)))) (A' : PolAV (Spec (CommRingCat.of (FractionRing R')))) (G : Over (Spec (CommRingCat.of R))) [GrpObj G] [IsCommMonObj G] (G' : Over (Spec (CommRingCat.of R'))) [GrpObj G'] [IsCommMonObj G'] (bc : G' ≅ (Over.pullback (specOf φ)).obj G), IsMonHom bc.hom → ∀ (U : Unif I D A G) (U' : Unif I' D' A' G'), IsPullUnif φ hD bc U U' → ∀ (O : Type) [Ring O] [StarRing O] [Module O D.toPre.X] [Module O D'.toPre.X] (ιD : D.toPre.OAct O) (ιD' : D'.toPre.OAct O) (ιA : A.OAct O) (ιA' : A'.OAct O) (ιG : RingAct G O) (ιG' : RingAct G' O), U.OLinear O ιD ιA ιG → (∀ a, (ιG'.act a) ≫ bc.hom = bc.hom ≫ (Over.pullback (specOf φ)).map (ιG.act a)) → (∀ a, (Over.pullback (jK R')).map (ιG'.act a) ≫ U'.gen.hom = U'.gen.hom ≫ ιA'.act a) → (∀ (a : O) (y : D'.toPre.X), hD.xe (a • y) = a • hD.xe y) → (∀ a, ιD'.onB.act a ≫ hD.e.hom = hD.e.hom ≫ (Over.pullback (specOf φ)).map (ιD.onB.act a)) → U'.OLinear O ιD' ιA' ιG' := by
   intro R R' _ _ _ _ I I' φ D D' hD A A' G _ _ G' _ _ bc _ U U' hU O _ _ _ _ ιD ιD' ιA ιA' ιG ιG'
     hlin hG hgen hx hB
@@ -170,6 +172,7 @@ theorem oLinear_pull : ∀ (R R' : Type) [CommRing R] [IsDomain R] [CommRing R']
   exact e₁.symm.trans (e₃.trans e₂)
 
 
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.DVR GlobalTheory.UT GlobalTheory.ArcPull GlobalTheory.PullLinear in
 theorem unif_pull {R R' : Type} [CommRing R] [IsDomain R] [CommRing R'] [IsDomain R'] {I : Ideal R} {I' : Ideal R'}
     (hR : AdmBase R I) (hR' : AdmBase R' I') (g : R →+* R') (hg : Function.Injective g) (hI : I.map g ≤ I')
     {D : DegData R I} {A : PolAV (Spec (CommRingCat.of (FractionRing R)))} {G : Over (Spec (CommRingCat.of R))}
@@ -323,6 +326,7 @@ theorem lam_down (gB : IsGrpPullback B₁ B f β) (gC : IsGrpPullback C₁ C f �
     simp only [Category.assoc]
 
 
+omit [IsCommMonObj B] [IsCommMonObj C] [IsCommMonObj B₁] [IsCommMonObj C₁] in
 theorem hom_pull (gB : IsGrpPullback B₁ B f β) (gC : IsGrpPullback C₁ C f δ) (u : B ⟶ C) (hu : IsMonHom u) :
     ∃ u₁ : B₁ ⟶ C₁, IsMonHom u₁ ∧ u₁.left ≫ δ = β ≫ u.left := by
   obtain ⟨e, he, he'⟩ := grpPullback_iso gB (isGrpPullback_pullback B f)
@@ -361,6 +365,7 @@ theorem tau_lam {D : DegPre R} {D₁ : DegPre R'} (hD : IsPullDeg φ D D₁) (h�
   abel
 
 
+set_option maxHeartbeats 800000 in
 theorem factor_pull {D D' : DegPre R} {D₁ D₁' : DegPre R'} (hφ : Function.Injective φ) (hD : IsPullDeg φ D D₁)
     (hD' : IsPullDeg φ D' D₁') (F : Factor D D') [m : Module F.O D₁'.X] (o₁ : D₁'.OAct F.O)
     (hx : ∀ (a : F.O) (y : D₁'.X), hD'.xe (a • y) = a • hD'.xe y)
@@ -445,6 +450,7 @@ theorem factor_pull {D D' : DegPre R} {D₁ D₁' : DegPre R'} (hφ : Function.I
 end Factor
 
 
+open GlobalTheory.HalfBC GlobalTheory.PullLinear in
 theorem factor_baseChange : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R], AdmBase R (maximalIdeal R) → ∀ (D D' : DegData R (maximalIdeal R)) (F : Factor D.toPre D'.toPre) (A' : PolAV (Sp (FractionRing R))) (G' : Over (Sp R)) [GrpObj G'] [IsCommMonObj G'], IsSemiAbelian G' → ∀ (U' : Unif (maximalIdeal R) D' A' G') (oA : A'.OAct F.O) (oG : RingAct G' F.O), U'.toUnifPre.OLinear F.O F.o oA oG → ∀ (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G], IsSemiAbelian G → ∀ (inc : G ⟶ G') (pr : G' ⟶ G), IsMonHom inc → IsMonHom pr → inc ≫ pr = 𝟙 G → pr ≫ inc = oG.act F.e → ∀ (R' : Type) [CommRing R'] [IsDomain R'] [IsLocalRing R'] (ρ : R →+* R'), AdmBase R' (maximalIdeal R') → Function.Injective ρ → IsLocalHom ρ → ∃ (D₁ D₁' : DegData R' (maximalIdeal R')) (F₁ : Factor D₁.toPre D₁'.toPre) (A₁' : PolAV (Sp (FractionRing R'))) (G₁' : Over (Sp R')) (_ : GrpObj G₁') (_ : IsCommMonObj G₁') (U₁' : Unif (maximalIdeal R') D₁' A₁' G₁') (oA₁ : A₁'.OAct F₁.O) (oG₁ : RingAct G₁' F₁.O) (G₁ : Over (Sp R')) (_ : GrpObj G₁) (_ : IsCommMonObj G₁) (β : G₁.left ⟶ G.left) (β₂ : (G2 G₁).left ⟶ (G2 G).left) (inc₁ : G₁ ⟶ G₁') (pr₁ : G₁' ⟶ G₁), Nonempty (IsPullDeg ρ D.toPre D₁.toPre) ∧ IsSemiAbelian G₁' ∧ U₁'.toUnifPre.OLinear F₁.O F₁.o oA₁ oG₁ ∧ IsSemiAbelian G₁ ∧ IsMonHom inc₁ ∧ IsMonHom pr₁ ∧ inc₁ ≫ pr₁ = 𝟙 G₁ ∧ pr₁ ≫ inc₁ = oG₁.act F₁.e ∧ IsGrpPullback G₁ G (spMap ρ) β ∧ Geo.Tor.IsSquare β β₂ ∧ LBIso ((abelian₂ G₁' U₁'.LG.L).pull (lift (fst G₁ G₁ ≫ inc₁) (snd G₁ G₁ ≫ inc₁ ≫ oG₁.act F₁.f) : G2 G₁ ⟶ G2 G₁').left) (((abelian₂ G' U'.LG.L).pull (lift (fst G G ≫ inc) (snd G G ≫ inc ≫ oG.act F.f) : G2 G ⟶ G2 G').left).pull β₂) := by
   intro R _ _ _ hR D D' F A' G' _ _ hG' U' oA oG hlin G _ _ hG inc pr mi mp hip hpi R' _ _ _ ρ hR' hρ hloc
   obtain ⟨D₁, ⟨hD⟩⟩ := GlobalTheory.MumPull.exists_pull R R' ρ hρ hloc D

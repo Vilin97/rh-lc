@@ -197,6 +197,9 @@ private theorem sum_smul_translate_eq_zero_of_fixes_selfDual {σ : R →+* R} {w
     exact (smul_eq_zero.mp hzero).resolve_left (sub_ne_zero.mpr hγ)
 
 
+open Classical in
+open scoped BigOperators in
+variable {R X M : Type} [CommRing R] [AddCommGroup X] [Module R X] [AddCommGroup M] [Module ℂ M] in
 theorem _root_.GlobalTheory.FinWeil.exists_weil_rep : ∀ {R X M : Type} [CommRing R] [AddCommGroup X]
     [Module R X] [AddCommGroup M] [Module ℂ M] {σ : R →+* R} {w : R} {γ : X → X → ℂ}
     {W : X → M →ₗ[ℂ] M}, _root_.GlobalTheory.FinWeil.IsHeis σ w γ W → ∀ lam : ℕ →* ℂ,

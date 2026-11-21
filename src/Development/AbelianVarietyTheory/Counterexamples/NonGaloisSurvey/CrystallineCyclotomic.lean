@@ -19,6 +19,7 @@ variable {G : Type} [Group G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field 
     (PD : PeriodData G Qp K₀ K B BdR) (LL : Type) [Field LL] [Algebra Qp LL]
 
 
+include PD in
 theorem nontrivial_B : Nontrivial B := by
   by_contra h
   rw [not_nontrivial_iff_subsingleton] at h

@@ -19,6 +19,7 @@ noncomputable section
 namespace GlobalTheory.LiftSys
 
 
+open TensorProduct in
 theorem oneTmul_surjective_ker {R R₀ : Type} [CommRing R] [CommRing R₀] (I : Ideal R) (π : R →+* R₀)
     (hπ : Function.Surjective π) (hk : RingHom.ker π = I) (M : Type*) [AddCommGroup M] [Module R M] :
     letI := π.toAlgebra

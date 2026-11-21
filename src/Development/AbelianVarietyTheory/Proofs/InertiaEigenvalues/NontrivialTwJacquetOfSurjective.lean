@@ -18,6 +18,7 @@ section Chars
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+variable (k) in
 theorem exists_continuous_addChar_ne_one : ∃ ψ : AddChar k Circle, Continuous ψ ∧ ψ ≠ 1 := by
   obtain ⟨ψ, hψ⟩ := exists_hasConductor_one k
   exact ⟨ψ, hψ.continuous, hψ.ne_one⟩

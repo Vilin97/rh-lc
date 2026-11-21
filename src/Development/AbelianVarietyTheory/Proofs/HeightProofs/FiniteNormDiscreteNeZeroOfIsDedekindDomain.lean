@@ -61,6 +61,7 @@ theorem finite_normDiscrete_ne_zero_of_isDedekindDomain {S L : Type*} [CommRing 
   exact Ideal.dvd_span_singleton.mpr hab
 
 
+open scoped IntermediateField.algebraAdjoinAdjoin in
 theorem finite_zeros_poles_of_trdeg_one :
     ∀ (F Ω : Type) [Field F] [CharZero F] [Field Ω] [Algebra F Ω] (t : Ω),
       (⊤ : IntermediateField F Ω).FG → Algebra.trdeg F Ω = 1 → Transcendental F t →

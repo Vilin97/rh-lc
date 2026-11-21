@@ -61,6 +61,7 @@ theorem idx_comap (W : Submodule K X) (A B : Submodule O X) :
   rw [qlen_comap W A B, qlen_comap W B A]
 
 
+omit [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O K] in
 theorem isLat_scale {Y : Type} [AddCommGroup Y] [Module K Y] [Module O Y] [IsScalarTower O K Y]
     (c : K) (hc : c ≠ 0) (A : Submodule O Y) (hA : IsLat O K Y A) :
     IsLat O K Y (A.map ((c • LinearMap.id : Y →ₗ[K] Y).restrictScalars O)) := by

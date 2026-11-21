@@ -83,6 +83,7 @@ theorem tendsto_size (h : Tendsto (fun p : ℕ × ℕ => growthSize V N (ψ p.1 
   rwa [ENNReal.ofReal_coe_nnreal] at hfin
 
 
+variable (θ N) in
 def IsCauchy (ψ : ℕ → GA D V → ℂ) : Prop :=
   (∀ n, Continuous (ψ n) ∧ ψ n ∈ SmFun θ V ∧ ∀ d, growthSob θ V d N (ψ n) ≠ ⊤) ∧
     ∀ d, Tendsto (fun p : ℕ × ℕ => growthSob θ V d N (ψ p.1 - ψ p.2)) atTop (𝓝 0)

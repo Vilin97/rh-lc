@@ -28,6 +28,7 @@ noncomputable section
 namespace GlobalTheory.ColKer
 
 
+open GlobalTheory.Chain.StepVac in
 theorem mu_exp {D : D7} {T : Type} {L : LevCh D T} {μ₀ : T} (hL : L.Is μ₀) (t : T) (j : ℕ) (hj : j < D.R.m)
     (τ : D.what₂.Tau) : HasInfExp D (L.mu t (j + 1)) τ (-(D.hc τ).e ⟨j, hj⟩) := by
   obtain ⟨n, hn, ho⟩ := hL.xi_fin t
@@ -126,6 +127,7 @@ theorem realSubst_top {μ₀ : T} (hL : L.Is μ₀) (W : G.Weil) {U : Set T} (N 
     exact (transp_frame (Matrix.nonsingInvUnit _ (hO _ hn.1 τ)) (frGL N.fr _ τ) (GlobalTheory.CoefModel.realGL W.θ (G.V (.top j)) k τ)).symm
 
 
+open GlobalTheory.SignedHC in
 theorem detShift_top (G : GridData L sc) (t : T) (j : ℕ) (hj : j < D.R.m) (τ : D.what₂.Tau) :
     (((wt G (.top (j + 1)) τ).detShift : ℤ) : ℚ) = -((D.hc τ).e ⟨j, hj⟩ : ℚ) + ((G.V (.top j)).rank : ℚ) / 2 ∧
     (((nuEnd G (.top t j) τ : ℤ) - (wt G (.top j) τ).detShift : ℤ) : ℚ) =

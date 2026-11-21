@@ -42,6 +42,7 @@ theorem part {rc : RecMap A} (hMW : DiscCsd H.E) (hS : RecSpeh rc) (hC : CuspRea
     rw [c3 τ m hm]
 
 
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField in
 theorem parts {rc : RecMap A} (hNT : DefiniteN)
     (hMW : DiscCsd H.E)
     (hP : RecProd rc) (hS : RecSpeh rc) (hSat : RecSatake rc) (hC : CuspReadG rc)

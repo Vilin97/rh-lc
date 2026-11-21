@@ -46,6 +46,7 @@ def hitEquiv {Γ K : Subgroup G} (gj : G) (δ : Γ) (k : K) :
   right_inv γ := by ext; simp
 
 
+open Classical in
 theorem measure_fd_eq_sum {Γ K : Subgroup G} [Countable Γ] (μ : Measure G) [μ.IsMulLeftInvariant]
     (hK : MeasurableSet (K : Set G)) {ι : Type*} [Fintype ι] (g : ι → G)
     (hcov : ∀ x : G, ∃ i, ∃ γ : Γ, ∃ k : K, x = (γ : G) * g i * k)

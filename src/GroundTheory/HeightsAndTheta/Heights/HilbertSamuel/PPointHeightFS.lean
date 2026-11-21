@@ -57,6 +57,7 @@ theorem ptsIntegral_zero {e : ℕ} (P : Ideal (MRing (GlobalTheory (Fin 1))))
 end PointHeightFSAux
 
 
+open PointHeightFSAux in
 theorem PointHeightFS.proof : PointHeightFS.Statement := by
   intro I hI
   classical

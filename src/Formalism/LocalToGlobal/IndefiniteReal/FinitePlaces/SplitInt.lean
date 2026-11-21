@@ -21,6 +21,7 @@ open Formalism.IndefR.Datum
 variable {D : D7}
 
 
+set_option maxHeartbeats 1600000 in
 theorem split_emb {w : HeightOneSpectrum (𝓞 D.host.F)} {e : AE D} (h1 : e * e = e) (h2 : e * cA D e = 0)
     (hs : e + cA D e = phiE w 1) :
     ∃ (s : w.adicCompletion D.host.F) (ι : D.host.E →ₐ[D.host.F] w.adicCompletion D.host.F),
@@ -133,6 +134,7 @@ theorem not_two_primes_F {I : Ideal (𝓞 D.host.F)} (hI : I ≠ ⊤) {p q : ℕ
   exact add_mem (I.mul_mem_left _ hpI) (I.mul_mem_left _ hqI)
 
 
+set_option maxHeartbeats 1600000 in
 theorem plOf_split {w : HeightOneSpectrum (𝓞 D.host.F)} (ι : D.host.E →ₐ[D.host.F] w.adicCompletion D.host.F)
     (s : w.adicCompletion D.host.F) (hs : s * s = algebraMap D.host.F (w.adicCompletion D.host.F) (-(D.host.d : D.host.F)))
     (hι : ι D.host.sqrtMinusD = s) : ¬ Lev.IsConjPl (D := D) (plOf ι) (plOf ι) := by
@@ -214,6 +216,7 @@ theorem plOf_split {w : HeightOneSpectrum (𝓞 D.host.F)} (ι : D.host.E →ₐ
     (fun h => D.host.hypOdd.2.2.1 h.symm) hdw hqw
 
 
+set_option maxHeartbeats 1600000 in
 theorem splitIdem_int {e : AE D} (he : IsSplitIdem D e) : finPart D e ∈ intAE D := by
   obtain ⟨h1, h2, w, ε, hpl, hsε⟩ := he
   rw [placeIdem_eq hpl] at hsε

@@ -27,6 +27,7 @@ open ReciprocityTheory.ChartRestriction.G.AR.Inst ReciprocityTheory.ChartRestric
 open scoped Matrix nonZeroDivisors
 
 
+set_option maxHeartbeats 800000 in
 theorem selfDual_and_congr_free (E : Type) [Field E] [NumberField E] [IsCMField E]
     (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H) (l : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H)
     (Xo : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Moduli Dw l) (c : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Coeff l) (σ : c.F →+* ℂ) (r : ℕ)

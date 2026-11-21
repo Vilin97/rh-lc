@@ -232,6 +232,7 @@ theorem toCompl_fromCompl (x : AdicCompletion (germQuotPointIdeal I w) (holGerms
 end GermCompletionEquiv
 
 
+open GermCompletionEquiv in
 theorem GermCompletionEquiv.proof (hH : HolGermPointIdealSpan.Statement) (hP : PolyGermPointPow.Statement) :
     GermCompletionEquiv.Statement := by
   intro σ _ I w

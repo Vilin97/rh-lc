@@ -60,6 +60,8 @@ end Row
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+omit [NumberField E] [IsTotallyComplex E] in
+variable (E) in
 def rowSet (ℓ : Fin a) : Set (Fin a → Cinf E) := {u | ∀ w, u ℓ w ≠ 0}
 
 omit [NumberField E] [IsTotallyComplex E] in
@@ -72,6 +74,7 @@ theorem isOpen_rowSet (ℓ : Fin a) : IsOpen (rowSet E ℓ) := by
   exact isOpen_iInter_of_finite fun w => isOpen_ne_fun (by fun_prop) continuous_const
 
 
+omit [IsTotallyComplex E] in
 theorem continuousOn_rowGL (ℓ : Fin a) : ContinuousOn (rowGL ℓ) (rowSet E ℓ) := by
   refine GlobalTheory.CuspQuot.isOpenEmbedding_val.isInducing.continuousOn_iff.2 ?_
   have h : Continuous fun u : Fin a → Cinf E => rowMat ℓ u := continuous_const.matrix_updateRow ℓ continuous_id

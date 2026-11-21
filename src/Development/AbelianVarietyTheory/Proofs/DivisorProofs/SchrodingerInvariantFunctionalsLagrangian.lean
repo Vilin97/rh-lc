@@ -44,6 +44,7 @@ theorem arch (V : Type) [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimens
 open scoped Classical
 
 
+open GlobalTheory.CharInvForm in
 theorem charInv : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ → ∀ (κ : Type) [Fintype κ]
     (l : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ),
     (∀ (y : κ → AF F), ∀ φ ∈ schA F κ, l (fun x => ψ (x ⬝ᵥ y) * φ x) = l φ) →

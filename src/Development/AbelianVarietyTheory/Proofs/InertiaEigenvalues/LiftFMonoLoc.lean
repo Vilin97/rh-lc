@@ -111,6 +111,7 @@ open Formalism.MainNotions.ElementDenominator
 variable {l : ℕ} [Fact l.Prime]
 
 
+set_option maxHeartbeats 1000000 in
 theorem liftFam_core (P : LocPrime l) (K' LL : FinExt l) (h : (qlExt l).1 ≤ K'.1) (hN : (GKin h).Normal)
     (hF : (GKin h).FiniteIndex)
     (hS : ∀ (g : ↥(GK (qlExt l))) (c : ↥(K0 K')), ∃ c' : ↥(K0 K'),
@@ -155,6 +156,7 @@ open Formalism.MainNotions.ElementDenominator
 variable {l : ℕ} [Fact l.Prime]
 
 
+set_option maxHeartbeats 1000000 in
 theorem liftFam_of_eq (P : LocPrime l) (K K' LL : FinExt l) (hK : K = qlExt l) (CT : ℕ)
     (hT : ∀ (K' : FinExt l) (h : (qlExt l).1 ≤ K'.1) (hN : (GKin h).Normal) (hF : (GKin h).FiniteIndex)
       (hS : ∀ (g : ↥(GK (qlExt l))) (c : ↥(K0 K')), ∃ c' : ↥(K0 K'),

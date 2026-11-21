@@ -28,6 +28,7 @@ noncomputable section
 namespace GlobalTheory.ChainTw.EulerAtTwist
 
 
+open GlobalTheory.LFun in
 theorem eulerProd_eq_mul_prod {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     {S₀ S : Set (HeightOneSpectrum (𝓞 F))} {A : Finset (HeightOneSpectrum (𝓞 F))}
     (hS : ∀ v, v ∈ S ↔ v ∈ S₀ ∨ v ∈ A) (hA : ∀ v ∈ A, v ∉ S₀) {c : Fam E} {r : ℕ} {κ : ℝ}
@@ -55,6 +56,7 @@ theorem eulerProd_eq_mul_prod {F E : Type} [Field F] [NumberField F] [Field E] [
   exact h1.unique h4
 
 
+open GlobalTheory.LFun in
 theorem Lv_pair {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (c : Fam E)
     {v : HeightOneSpectrum (𝓞 F)} {P P' : HeightOneSpectrum (𝓞 E)} (hne : P' ≠ P)
     (hv : ∀ u : HeightOneSpectrum (𝓞 E), u.under (𝓞 F) = v ↔ u = P ∨ u = P') (s : ℂ) :
@@ -132,6 +134,7 @@ theorem quotL_entire_ne_zero_off (c : Com D) (hc : c.Is) (S' : Finset (HeightOne
     exact lt_irrefl _ this
 
 
+open GlobalTheory.LFun in
 theorem eval_relation (c : Com D) (w : Twist D) (hw : w.Is c) {i j : ℕ} (hi : i ∈ Finset.Icc 1 D.R.m)
     (hj : j ∈ Finset.Icc 1 D.R.m) {Λ Λ₀ : ℂ → ℂ} (hΛ : Differentiable ℂ Λ) (hΛ₀ : Differentiable ℂ Λ₀)
     (e : ∀ z : ℂ, 1 < z.re → Λ z = eulerProd (above D.host.E (c.S : Set (HeightOneSpectrum (𝓞 D.host.F))))
@@ -218,6 +221,7 @@ end GlobalTheory.ChainTw.EulerAtTwist
 namespace GlobalTheory.ChainTw.EulerAtTwist
 
 
+open GlobalTheory.LFun in
 theorem restore_hval : ∀ (D : D7) (c : Com D) (w : Twist D), w.Is c → ∀ k < D.R.m,
     (∀ H H₀, IsHval c (c.S : Set _) k H → IsHval c w.S₀ k H₀ → H₀ = H * ∏ PP ∈ w.Q, blockL c k PP) ∧
     ∃ H₀, H₀ ≠ 0 ∧ IsHval c w.S₀ k H₀ := by

@@ -16,6 +16,7 @@ section Alg
 variable {A U : Type} [CommGroup A] [CommGroup U]
 
 
+variable (A U) in
 @[ext] structure Th where
 
   x : A

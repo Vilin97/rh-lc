@@ -184,6 +184,7 @@ theorem image_expU {P Q : ℕ} (S : Set (lieU P Q)) :
     exact ⟨X, hX, mat_injective h.symm⟩
 
 
+attribute [local instance] sumNormedAddCommGroup sumNormedSpace in
 theorem exists_omegaDensity {P Q : ℕ} (μ : Measure (UpqT P Q)) [μ.IsHaarMeasure] :
     ∃ c : ℝ≥0∞, c ≠ 0 ∧ c ≠ ⊤ ∧ OmegaDensity μ c := by
   haveI : IsTopologicalGroup (UpqT P Q) := inferInstanceAs (IsTopologicalGroup (Formalism.UG.Upq P Q))

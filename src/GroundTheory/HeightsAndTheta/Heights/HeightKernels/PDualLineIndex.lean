@@ -120,6 +120,7 @@ theorem dualPointCoord_ne_zero {K : Type} [Field K] [NumberField K] {i : ℕ} (F
 end DualLineIndexAlt
 
 
+open DualLineIndexAlt in
 theorem DualLineIndex.proof : DualLineIndex.Statement := by
   intro K _ _ i F T _ _ b K' _ _ _ v hv
   classical

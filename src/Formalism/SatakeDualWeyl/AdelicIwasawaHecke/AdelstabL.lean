@@ -22,6 +22,7 @@ local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
 local notation "𝒮" => tensInt (F := F) (FiniteAdeleRing (𝓞 F) F) (intOE E) (intAd F)
 local notation "ι" => inclE (F := F) (E := E) (FiniteAdeleRing (𝓞 F) F)
 
+omit [NumberField F] [Algebra F E] in
 theorem adelstabL_den {κ : Type} [Fintype κ] (f : κ → E) :
     ∃ m : ℤ, m ≠ 0 ∧ ∀ i, IsIntegral ℤ ((m : E) * f i) := by
   classical

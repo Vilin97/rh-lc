@@ -24,6 +24,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 namespace SegJ
 
 
+open Classical in
 theorem jhMult_seg_cl (hA : GlobalTheory.Published.IrreducibleAdmissibleGL)
     {Z : ∀ Δ : Segment k, IrrCl (GL (Fin (Δ.len * Δ.d)) k)} (hZ : IsSegmentClass k Z) (Δ : Segment k)
     (y : Fin Δ.len → IrrCl (GL (Fin Δ.d) k)) (hd : ∑ _ : Fin Δ.len, Δ.d = Δ.len * Δ.d) :
@@ -52,6 +53,7 @@ theorem jhMult_seg_cl (hA : GlobalTheory.Published.IrreducibleAdmissibleGL)
     rfl
 
 
+open Classical in
 theorem jm_seg (hA : GlobalTheory.Published.IrreducibleAdmissibleGL)
     {Z : ∀ Δ : Segment k, IrrCl (GL (Fin (Δ.len * Δ.d)) k)} (hZ : IsSegmentClass k Z) (Δ : Segment k)
     {m : ℕ} (y : Fin m → IrrGL (k := k)) (hy : ∀ a, (y a).1 = Δ.d) (hd : ∑ a, (y a).1 = Δ.len * Δ.d) :
@@ -70,6 +72,7 @@ theorem jm_seg (hA : GlobalTheory.Published.IrreducibleAdmissibleGL)
   exact propext ⟨fun h => ⟨rfl, fun a => by simpa using h a⟩, fun ⟨_, h⟩ a => by simpa using h a⟩
 
 
+open Classical in
 theorem jmL_seg (hA : GlobalTheory.Published.IrreducibleAdmissibleGL)
     {Z : ∀ Δ : Segment k, IrrCl (GL (Fin (Δ.len * Δ.d)) k)} (hZ : IsSegmentClass k Z) (Δ : Segment k)
     (W : List (IrrGL (k := k))) (hW : ∀ w ∈ W, w.1 = Δ.d) (hl : W.length = Δ.len) :
@@ -112,6 +115,8 @@ theorem vWord_ne (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (Δ : Seg
 end SegJ
 
 
+open SegJ in
+variable (k) in
 theorem jSeg : JSeg k := by
   intro Z hZ Δ
   have hA := CompanionTheory.Tls2.BZGL.irreducibleAdmissibleGL_top

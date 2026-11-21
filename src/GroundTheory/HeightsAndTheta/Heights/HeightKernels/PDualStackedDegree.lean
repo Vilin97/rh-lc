@@ -82,6 +82,7 @@ theorem relIndex_stacked {T : Type} [Fintype T] [DecidableEq T] {F F' : HermLatt
 end DualStackedDegreeAlt
 
 
+open DualStackedDegreeAlt in
 theorem DualStackedDegree.proof (hIdx : DualLatticeIndex.Statement) : DualStackedDegree.Statement := by
   intro K _ _ i F F' T _ _ b b' a h hab
   have ha : ∀ t, a t ≠ 0 := fun t ht => b.ne_zero t (Subtype.ext (by rw [hab t, ht, zero_smul]; rfl))

@@ -54,6 +54,7 @@ section Fr
 variable {Γ Ga Gp : Type} [Group Γ] [Group Ga] [Group Gp] (X : Frame Γ Ga Gp) {A : Type} [CommRing A] {m : ℕ}
 
 
+variable (A m) in
 private abbrev R (g : Ga) : Module.End A (X.Fn A m) := rtr A (Ga × Gp) (Fin m → A) (g, 1)
 
 private theorem comm_rp (g : Ga) (p : Gp) : Commute (R X A m g) (X.rp A m p) := by

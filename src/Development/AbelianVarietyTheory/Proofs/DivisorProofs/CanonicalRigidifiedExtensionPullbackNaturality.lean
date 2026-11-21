@@ -114,6 +114,7 @@ variable {A : Over (Sp R)} [GrpObj A] {A' : Over (Sp R')} [GrpObj A'] {φ : A'.l
 variable {p : ℕ} {G : PDivGroup p R} {G' : PDivGroup p R'} {t : G.TorsionTower A} {t' : G'.TorsionTower A'}
 
 
+variable (σ m t t') in
 def sL (n : ℕ) : letI := via σ (G'.A n ⊗[R'] G'.A n); G.A n →ₐ[R] G'.A n ⊗[R'] G'.A n :=
   letI := via σ (G'.A n ⊗[R'] G'.A n)
   { (Algebra.TensorProduct.includeLeftRingHom).comp ((t'.semiHom t m).app n).toRingHom with
@@ -122,6 +123,7 @@ def sL (n : ℕ) : letI := via σ (G'.A n ⊗[R'] G'.A n); G.A n →ₐ[R] G'.A 
       rw [SemiBialgHom.map_algebraMap]; rfl }
 
 
+variable (σ m t t') in
 def sRt (n : ℕ) : letI := via σ (G'.A n ⊗[R'] G'.A n); G.A n →ₐ[R] G'.A n ⊗[R'] G'.A n :=
   letI := via σ (G'.A n ⊗[R'] G'.A n)
   { (Algebra.TensorProduct.includeRight.toRingHom).comp ((t'.semiHom t m).app n).toRingHom with

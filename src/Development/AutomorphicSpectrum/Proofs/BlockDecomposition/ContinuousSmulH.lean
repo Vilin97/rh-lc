@@ -80,6 +80,8 @@ open GlobalTheory.CompanionTheory.IwaAd GlobalTheory.CompanionTheory.HermVol Glo
 variable {D : D7} {n : ℕ}
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem char_herm [BorelSpace (Mx D n n)] [LocallyCompactSpace (hermA D n)] (a : GL (Fin n) (AE D)) :
     addEquivAddHaarChar (restr (hermA D n) (GlobalTheory.ModuLR.lrCE a (ad a)⁻¹) (lr_herm a) (lr_herm_symm a)) =
       absA D (Matrix.GeneralLinearGroup.det a : (AE D)ˣ) ^ n := by

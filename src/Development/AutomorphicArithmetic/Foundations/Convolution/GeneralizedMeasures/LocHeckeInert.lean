@@ -97,9 +97,11 @@ def MatchAt (σ : E ≃ₐ[F] E) (v : Pl F) (c : ℂ) (φ : GL (Fin n) (Completi
     Match (incFin E v) (galFin σ v) (Module.finrank F E) mE mF c φ f
 
 
+variable (E) in
 def Unr (v : Pl F) : Prop := ∀ w : PlacesOver E v, Algebra.IsUnramifiedAt (𝓞 F) w.1.asIdeal
 
 
+variable (E) in
 def Split (v : Pl F) : Prop := ∀ w : PlacesOver E v, Function.Surjective (completionMap v w.1)
 
 structure Loc (σ : E ≃ₐ[F] E) (n : ℕ) (q : Pl F) (w₀ : PlacesOver E q) where

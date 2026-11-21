@@ -55,6 +55,7 @@ theorem planeCoef_mul_planeMat (σ : E →ₐ[F] E) (B : Base F E) {n n₁ j₀ 
     Matrix.submatrix_one_equiv]
 
 
+variable (F) in
 theorem span_lattice_eq_top {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E)) (hL : L.IsLattice E) :
     Submodule.span F (L : Set (Fin n → E)) = ⊤ := by
   have hsm : ∀ (e : E), ∀ x ∈ L, e • x ∈ Submodule.span F (L : Set (Fin n → E)) := by
@@ -87,6 +88,7 @@ theorem span_lattice_eq_top {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E)) (hL
   | smul c a _ ha => exact hsm' c a ha
 
 
+variable (F) in
 theorem span_vecMulVec {n d : ℕ} (LX : Submodule (𝓞 E) (Fin n → E)) (LW : Submodule (𝓞 E) (Fin d → E))
     (hX : LX.IsLattice E) (hW : LW.IsLattice E) :
     Submodule.span F {m : Matrix (Fin n) (Fin d) E | ∃ x ∈ LX, ∃ y ∈ LW, m = Matrix.vecMulVec x y} = ⊤ := by
@@ -169,6 +171,7 @@ theorem isOpen_of_span (v : HeightOneSpectrum (𝓞 F)) {K : Type} [Fintype K]
   exact AddSubgroup.isOpen_of_mem_nhds S (g := 0) (Filter.mem_of_superset (hU.mem_nhds h0) hUS)
 
 
+variable (F) in
 def fRat {n d n₁ d₁ : ℕ} (H : Plane E n n₁) (H' : Plane E d d₁) :
     Matrix (Fin n) (Fin d) E →ₗ[F] (Kc F E d₁ n₁ → F) where
   toFun g k := (bE F E).repr ((planeCoef H * g * (planeCoef H')ᵀ) (posS k.1).1 (posS k.1).2) k.2

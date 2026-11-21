@@ -23,6 +23,7 @@ section Index
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {P : HeightOneSpectrum (𝓞 E)}
 
 
+omit [StarRing E] in
 theorem exists_int_approx (c : ℕ) {a : E} (ha : IntAt P a) :
     ∃ r : 𝓞 E, IntAt P (((qOf P : E) ^ c)⁻¹ * (a - algebraMap (𝓞 E) E r)) := by
   obtain ⟨r, s, hs, h⟩ := ha
@@ -168,12 +169,14 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
   (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ} (mu : Tup X.F X.E X.K S)
 
 
+variable (R) in
 abbrev TopPt (u : Pr.Word) : Type := ChPt (R := R) sel mu u R.m
 
 def topLevG (P : LevFam X.E X.K R.r Pr.vGs) : LevFam X.E X.K (R.N R.m) Pr.vGs := fun w =>
   levExt (Nat.sub_le _ 1) (rowTyG Ch P w)
 
 
+variable (R) in
 def topLevQ {c : ℕ} (hc : 0 < c) : LevQFam X.E X.K (R.N R.m) (QE sel (mu : Chr X.F X.E X.K)) := fun P =>
   levelParahoricTimesPrincipalCongruence (N_m_succ R) (rowTyQ R (mu : Chr X.F X.E X.K) (QE sel (mu : Chr X.F X.E X.K)) P) hc
 
@@ -191,12 +194,16 @@ theorem topGSD_ok (hX : X.Ok) (P : LevFam X.E X.K R.r Pr.vGs) (u : Pr.Word) {M :
     levelGroup_character_isOfFinOrder _ _ c.pos _
 
 
+open Classical in
 abbrev inG (w : Pr.vGs) : rowSG Pr sel mu := ⟨w.1, Finset.mem_union_left _ w.2⟩
 
 
+open Classical in
+variable (Pr) in
 abbrev inQ (w : QE sel (mu : Chr X.F X.E X.K)) : rowSG Pr sel mu := ⟨w.1, Finset.mem_union_right _ w.2⟩
 
 
+variable (Pr) in
 def TilOk (u : Pr.Word) : Prop :=
   (∀ P : Pr.vT u, cO X.E (Pr.piT u) ∉ P.1.asIdeal) ∧ (∀ w : rowSG Pr sel mu, Pr.piT u ∉ w.1.asIdeal) ∧
     Disjoint Pr.vGs (QE sel (mu : Chr X.F X.E X.K))
@@ -258,6 +265,7 @@ theorem tilFr_isLiftFr (H : TilOk Pr sel mu u) (d : RowPt Pr R sel mu) (P : rowS
   isLiftFr_tilH (N_m_succ R) d H.1 H.2.1 P (liftFr_spec d.2 P) _ rfl
 
 
+open Classical in
 def tilTop (H : TilOk Pr sel mu u) (d : RowPt Pr R sel mu) : TopPt R sel mu u :=
   ⟨((tilQ sel mu u d).res Finset.subset_union_left, fun P => tilFr H d (inQ Pr sel mu P)),
     fun P => (tilFr_isLiftFr H d (inQ Pr sel mu P)).1⟩
@@ -366,6 +374,7 @@ theorem tilEl_rho (H : TilOk Pr sel mu u) {M : ℕ} (c : TopDepth R M) (g : Form
     (tilEl_chr H c.pos g d)
 
 
+variable (Ch P) in
 def evTop (H : TilOk Pr sel mu u) {M : ℕ} (c : TopDepth R M) :
     (topGSD W Ch sel mu P u c).EqFun →ₗ[X.K] (evGSD W Ch sel mu P u).EqFun where
   toFun φ := ⟨fun d => φ.1 (tilTop H d), fun g d => by
@@ -570,6 +579,7 @@ theorem XiTop_tilTop (hX : X.Ok) (hPr : Pr.Ok) (hm : R.m = m2 + 2) (hc : cst.Ok)
   · rw [frsF_tilTop_Q H d P hP]
 
 
+variable {W} in
 theorem k2top_tilTop (hX : X.Ok) (hPr : Pr.Ok) (hm : R.m = m2 + 2) (hc : cst.Ok) (H : TilOk Pr sel mu u) {T : ChTh W sel mu u m2}
     (hT : TameFr T.top) (p : ChPt (R := R) sel mu u (m2 + 1)) (Y : Set (Sp X.E (R.N (m2 + 1)))) (d : RowPt Pr R sel mu) :
     topDegreeKTwo W Ch sel mu cst T p Y (tilTop H d) = cp2K W Ch sel mu cst T p Y d := by

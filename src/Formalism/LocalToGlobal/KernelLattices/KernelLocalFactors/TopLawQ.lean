@@ -516,6 +516,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
   (A : Amb X) (u : Pr.Word) (m2 : ℕ)
 
 
+open Classical in
 theorem frsF_smulQ {j : ℕ} (p : ChPt (R := R) sel mu u j)
     (Λ : LevFam X.E X.K (R.N j) Pr.vGs) (Θ : LevQFam X.E X.K (R.N j) (QE sel (mu : Chr X.F X.E X.K)))
     (g : FrmG Λ Θ) (w : rowSG Pr sel mu) :
@@ -551,6 +552,7 @@ theorem qSep_of (hPr : Pr.Ok) (hsel : IsSel X sel) (hS : ∀ i, Pr.g i ∈ S) : 
   fun P hP hw => QE_disj mu hPr hsel hS P hw hP
 
 
+open Classical in
 theorem qUnif_of (hX : X.Ok) (hPr : Pr.Ok) (hsel : IsSel X sel) : QUnif sel mu :=
   fun P hP => mq_rowSG_unif (Pr := Pr) mu hX hPr hsel ⟨P, Finset.mem_union_right _ hP⟩
 

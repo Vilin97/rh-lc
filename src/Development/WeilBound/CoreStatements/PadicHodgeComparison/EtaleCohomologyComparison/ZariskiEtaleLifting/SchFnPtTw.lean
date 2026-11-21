@@ -152,6 +152,7 @@ def pullMorC (u : Fn.Map F F') (k : Bool) (n : ℕ) : CH.Mor (Oc F' κ k n) (Oc 
 def pullHc (u : Fn.Map F F') (k : Bool) (n j : ℕ) : Hc F' κ k n j →ₗ[Acris l] Hc F κ k n j := (pullMorC κ u k n).pull j
 
 
+variable (l) in
 structure Compat : Prop where
   red : ∀ {O : Type} [CommRing O] (F : Fn O) (κ : O →+* OC l) (k : Bool) {m n : ℕ} (h : n ≤ m) (j : ℕ) (x : Hc F κ k m j),
     β F κ k n j (redHc F κ k h j x) = (CH.Mor.ofNatTrans (redEl (F.pt κ) h)).pull j (β F κ k m j x)

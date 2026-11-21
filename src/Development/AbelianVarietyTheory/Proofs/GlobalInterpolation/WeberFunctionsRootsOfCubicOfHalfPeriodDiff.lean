@@ -81,6 +81,7 @@ end GlobalTheory.WeberCubicAlgebra
 namespace GlobalTheory.WeberCubicAlgebra
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.ThetaConstantWeber in
 theorem weberCubic_of_halfPeriodDiff : ∀ τ : UpperHalfPlane, GlobalTheory.IndefiniteRowSideFullHecke.ThetaConstantWeber.HalfPeriodDiff τ →
     GlobalTheory.IndefiniteRowSideFullHecke.ThetaConstantWeber.JacobiProduct τ → GlobalTheory.IndefiniteRowSideFullHecke.ThetaConstantWeber.ThetaWeber τ → GlobalTheory.IndefiniteRowSideFullHecke.ThetaConstantWeber.WeberCubic τ := by
   intro τ hd hj hw

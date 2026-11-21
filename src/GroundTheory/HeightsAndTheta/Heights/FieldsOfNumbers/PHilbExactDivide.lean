@@ -24,6 +24,7 @@ attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
 
 open scoped Classical in
+open Classical in
 theorem component_mul_form {c : K → ℕ} {s : MRing ι F} (hs : IsMultiHomog s c)
     (t : MRing ι F) (n : K → ℕ) :
     weightedHomogeneousComponent (blockWeight ι) n (t * s) =
@@ -50,6 +51,7 @@ theorem exists_sub_component_mem {I : Ideal (MRing ι F)} (hI : IsMultiHomogIdea
   exact hI a ha n
 
 
+omit [DecidableEq K] in
 theorem mem_colon_span_iff {I : Ideal (MRing ι F)} {s g : MRing ι F} :
     g ∈ I.colon (Ideal.span {s}) ↔ g * s ∈ I := by
   rw [Submodule.mem_colon]

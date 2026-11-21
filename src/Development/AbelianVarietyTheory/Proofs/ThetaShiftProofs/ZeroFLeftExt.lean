@@ -15,6 +15,7 @@ variable {K : Type} [CommRing K] [IsDomain K] {X : Type} [AddCommGroup X] [Modul
 variable (q : X → (FractionRing K)ˣ) (F : Type) [Field F] [Algebra (FractionRing K) F]
 
 
+omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 theorem hom_eq_iff {F : Type} [Field F] {t t' : Multiplicative X →* Fˣ} :
     (∀ χ : X, t (Multiplicative.ofAdd χ) = t' (Multiplicative.ofAdd χ)) ↔ t = t' :=
   ⟨fun h => MonoidHom.ext fun χ => h χ.toAdd, fun h _ => h ▸ rfl⟩

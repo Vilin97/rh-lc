@@ -23,11 +23,13 @@ variable {l : ℕ} [hl : Fact l.Prime] {a e : ℕ} [NeZero a] [NeZero e] {O K : 
   [Algebra O K] [IsUnitBall O K] [NormedAlgebra ℚ_[l] K] [CompleteSpace K]
 
 
+omit [NeZero a] [NeZero e] [Module.Finite ℤ_[l] O] [CompleteSpace K] in
 theorem toOB_injective : Function.Injective (toOB l O) :=
   Module.Flat.lTensor_preserves_injective_linearMap (M := O) (acrisToBcris l).toLinearMap
     (GlobalTheory.MemLoc.PhiInj.algebraMap_acris_bcris_injective l)
 
 
+omit [NeZero a] in
 theorem iSD_eq_of_mem_invL_A (ϖ : PiSys l e) (f : invL l (S O K e)) (hf : (f : K⟦X⟧) ∈ invL l (A O K)) :
     ϖ.iSD O K f = ϖ.iHat O K (toHatS O K l e f) := by
   obtain ⟨n, hn⟩ := hf
@@ -46,6 +48,7 @@ theorem iSD_eq_of_mem_invL_A (ϖ : PiSys l e) (f : invL l (S O K e)) (hf : (f : 
   rw [ϖ.iS_of_mem O K hn, crisToOD_toOCr]
 
 
+omit [NeZero a] in
 theorem crisToOD_iS (ϖ : PiSys l e) (s : S O K e) : crisToOD l O (ϖ.iS O K s) =
     ϖ.iHat O K (toHatS O K l e (algebraMap (S O K e) (invL l (S O K e)) s)) := by
   have hlu : IsUnit (l : OD l O) := isUnit_l_OD
@@ -103,6 +106,7 @@ theorem crisToOD_iS (ϖ : PiSys l e) (s : S O K e) : crisToOD l O (ϖ.iS O K s) 
     exact Ideal.mem_span_singleton.2 (hdiv n)
 
 
+omit [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [NeZero e] [CompleteSpace K] in
 theorem eq_zero_of_forall_dvd (x : Ahat O K l e) (h : ∀ n : ℕ, ∃ y, x = Ehat O K l e ^ n * y) : x = 0 := by
   refine AdicCompletion.ext_evalₐ fun n => ?_
   obtain ⟨y, rfl⟩ := h n

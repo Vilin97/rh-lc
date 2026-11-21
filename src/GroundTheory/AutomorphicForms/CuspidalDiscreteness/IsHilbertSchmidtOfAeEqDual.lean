@@ -73,6 +73,7 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Loca
   (Γ : Subgroup G) [DiscreteTopology Γ]
 
 
+omit [LocallyCompactSpace G] [SecondCountableTopology G] [MeasurableSpace G] [BorelSpace G] in
 theorem exists_encard_le_of_isCompact {C : Set G} (hC : IsCompact C) :
     ∃ N : ℕ, ∀ g : G, {γ : Γ | γ • g ∈ C}.encard ≤ N := by
   have hfin := finite_setOf_mem_of_isCompact Γ (hC.mul hC.inv)

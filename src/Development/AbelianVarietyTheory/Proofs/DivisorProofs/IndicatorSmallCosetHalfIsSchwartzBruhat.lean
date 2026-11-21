@@ -116,6 +116,8 @@ theorem prod_pow_ne_bot {D : D7} (P : Finset (Pl D.host.E)) (n : ℕ) : (∏ w �
   exact fun w _ => pow_ne_zero _ (by rw [Ideal.zero_eq_bot]; exact w.ne_bot)
 
 
+set_option synthInstance.maxHeartbeats 200000 in
+set_option maxHeartbeats 1000000 in
 theorem isSBHalf_cosLoc : ∀ {D : D7} (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E))
     (ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)) (βS : GL (Fin S.rank) (Lev.EAf D))
     (βT : GL (Fin T.rank) (Lev.EAf D)) (P : Finset (Pl D.host.E)) (e : AE D) (n : ℕ) (r : WO S T),

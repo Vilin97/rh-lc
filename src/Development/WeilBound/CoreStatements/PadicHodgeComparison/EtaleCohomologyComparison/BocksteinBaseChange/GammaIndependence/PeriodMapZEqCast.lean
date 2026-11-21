@@ -149,6 +149,7 @@ theorem deltaE_id {M : Model l K} {a a' : D.Ch M} (m : D.Mo (𝟙 M.X) (Category
   exact congrArg _ (LinearMap.ext fun x => by rw [LinearMap.comp_apply, Fm.pull_id M hM n x])
 
 
+include hL in
 theorem deltaE_indep {M : Model l K} (hM : G M) (a a' : D.Ch M) (n : ℕ) (u : M.T n) (f : Module.Dual C.K₀ (I.D M n)) :
     delta hF hC Fm a n (E.e a n u) f = delta hF hC Fm a' n (E.e a' n u) f := by
   obtain ⟨b, ⟨m₁⟩, ⟨m₂⟩⟩ := hL.refine M M (𝟙 M.X) (Category.id_comp _) hM hM a a'

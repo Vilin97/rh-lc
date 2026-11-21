@@ -32,6 +32,7 @@ theorem finPart_tmul (x : AF D.host.F) (z : D.host.E) : finPart D (x ⊗ₜ[D.ho
   rfl
 
 
+set_option maxHeartbeats 800000 in
 theorem mul_gen (a : AE D) (α : Af D.host.F) (m : D.host.E) :
     a * (pairA D.host.F 0 α ⊗ₜ[D.host.F] m) =
       jF D (finPart D a * (α ⊗ₜ[D.host.F] (1 : D.host.E))) * ((1 : AF D.host.F) ⊗ₜ[D.host.F] m) := by
@@ -91,6 +92,7 @@ theorem jF_gen_mem (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank �
     rw [hm]; exact neg_mem hx
 
 
+set_option maxHeartbeats 1600000 in
 theorem latO_smul_mem (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E))
     (ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)) {a : AE D} (ha : finPart D a ∈ intAE D) {u : WO S T}
     (hu : u ∈ latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) (fun _ => True)) :

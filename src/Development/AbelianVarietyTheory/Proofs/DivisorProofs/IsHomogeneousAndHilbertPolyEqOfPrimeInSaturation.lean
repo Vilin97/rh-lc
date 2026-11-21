@@ -174,6 +174,8 @@ private lemma isHomogeneous_of_forall_homogeneousComponent_mem {K : Type} [Field
   exact hI g hg n
 
 
+open MvPolynomial Filter in
+attribute [local instance] MvPolynomial.gradedAlgebra in
 theorem _root_.GlobalTheory.prime_saturation_homogeneous_and_hilbertPoly_eq (K : Type) [Field K] (N : ℕ)
     (I Q : Ideal (MvPolynomial (Fin N) K))
     (hI : ∀ g ∈ I, ∀ n : ℕ, homogeneousComponent n g ∈ I) (hQ : Q.IsPrime) (hIQ : I ≤ Q)

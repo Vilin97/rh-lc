@@ -140,6 +140,7 @@ theorem coef_near {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ X W)
 end levelStructure
 
 
+open levelStructure in
 theorem level_of (hC : CoefEq) (hF : FourierInj) (hB : CoefBd) : Level := by
   intro F E _ _ _ _ _ σ B n d X W M χX χW om r s r' s' hp φ hφ
   by_cases h0 : ∀ f : SInf F (Fin n × Fin d), pureA F f φ = 0

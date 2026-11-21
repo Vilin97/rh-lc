@@ -30,6 +30,7 @@ instance : One (HC E) where
   one := ⟨1, continuous_const, fun _ => rfl⟩
 
 
+open scoped Classical in
 def locM (P : HeightOneSpectrum (𝓞 E)) : P.adicCompletion E →* AdeleRing (𝓞 E) E where
   toFun x := ((1 : InfiniteAdeleRing E),
     (RestrictedProduct.mulSingle (fun v : HeightOneSpectrum (𝓞 E) => v.adicCompletionIntegers E) P x :
@@ -75,6 +76,7 @@ theorem HC.At.unique {χ : HC E} {P : HeightOneSpectrum (𝓞 E)} {a b : ℂ} (h
   rw [← ha.2 ϖ hϖ, ← hb.2 ϖ hϖ]
 
 
+open scoped Classical in
 def locInf (v : InfinitePlace E) : v.Completion →* AdeleRing (𝓞 E) E where
   toFun x := ((Pi.mulSingle v x : InfiniteAdeleRing E), (1 : FiniteAdeleRing (𝓞 E) E))
   map_one' := by

@@ -245,10 +245,12 @@ theorem mem_coch {F : Finset ι → Submodule k E} {a : Finset ι → E} : a ∈
     · simpa [hs] using h s
 
 
+variable (k ι E) in
 def prL (c : ℕ) : (Finset ι → E) →ₗ[k] (Finset ι → E) :=
   LinearMap.pi fun s => if s.card = c then LinearMap.proj s else 0
 
 
+variable (k ι E) in
 def sgL : (Finset ι → E) →ₗ[k] (Finset ι → E) :=
   LinearMap.pi fun s => ((-1 : ℤ) ^ (s.card + 1)) • LinearMap.proj s
 

@@ -116,6 +116,7 @@ theorem conj_inv_smul (x : 𝓞 D.host.E) : D.host.conj⁻¹ • x = D.host.conj
   rw [conj_inv_eq]
 
 
+set_option maxHeartbeats 800000 in
 theorem star_mem_AAbar {c : D.host.E} (hc : c ∈ D.host.AA) : star c ∈ D.host.AAbar := by
   have hJ : ((D.host.𝔟 : Ideal (𝓞 D.host.E)) : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E) ≠ 0 :=
     FractionalIdeal.coeIdeal_ne_zero.2 bb_ne_bot
@@ -160,6 +161,7 @@ theorem star_mem_AAbar {c : D.host.E} (hc : c ∈ D.host.AA) : star c ∈ D.host
   exact h3 (FractionalIdeal.mem_spanSingleton_self _ _)
 
 
+set_option maxHeartbeats 800000 in
 theorem xi_dual {c c' : D.host.E} (hc : c ∈ D.host.AA) (hc' : c' ∈ D.host.AA) (o : 𝓞 D.host.E) :
     ∃ z : ℤ, Algebra.trace ℚ D.host.E (D.host.xi0 * c * star c' * o) = z := by
   have hfp := factPrincipalDatum D.R D.host

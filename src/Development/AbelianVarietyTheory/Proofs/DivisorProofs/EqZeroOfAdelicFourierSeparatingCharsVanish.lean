@@ -69,6 +69,7 @@ theorem topAddGroup_AE : IsTopologicalAddGroup (AE F E) :=
 end GlobalTheory.AdelicFourierUniq
 
 
+open GlobalTheory.AdelicFourierUniq in
 theorem GlobalTheory.AdelicFourierUniq.eq_zero : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (ψ : AddChar (AF F) ℂ),
     IsStd ψ → ∀ (d : ℕ) (A : Type) [AddCommGroup A] (p : A → (Fin d → AE F E) →ₗ[AF F] AF F),
     (∀ a b, p (a + b) = p a + p b) → (∀ u, (∀ a, ψ (p a u) = 1) → u = 0) →

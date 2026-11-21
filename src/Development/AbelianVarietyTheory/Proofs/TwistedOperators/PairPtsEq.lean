@@ -22,6 +22,7 @@ def arrP (t : T) : Arr D → Pair T
   | .inr i => .chi i D.R.m
 
 
+variable (G) in
 abbrev Vecs (t : T) : Type := ∀ a : Arr D, WO (G.pS (arrP t a)) (G.pT (arrP t a)) → ℂ
 
 def vecsOf (S : GridChoice W U) {t : T} (d : PureDat G t) : Vecs G t

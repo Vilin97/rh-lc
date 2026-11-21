@@ -28,6 +28,7 @@ theorem regularTensorEquiv_single_tmul (g : Γ) (r : k) (n : N) :
   simp [Finsupp.single_apply]
 
 
+omit [Fintype Γ] in
 theorem regularTensorEquiv_tprod_apply (h : Γ) (x : MonoidAlgebra k Γ ⊗[k] N) (γ : Γ) :
     regularTensorEquiv (((leftRegular k Γ).tprod σ) h x) γ =
       σ h (regularTensorEquiv x (h⁻¹ * γ)) := by

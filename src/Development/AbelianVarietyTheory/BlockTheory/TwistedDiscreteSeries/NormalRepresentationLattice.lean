@@ -96,6 +96,7 @@ def LastSteps : Prop :=
         ∀ y, Submodule.Quotient.mk y = yb → ε * (η ⬝ᵥ y) ∈ powInt ϖ (-((s : ℤ) + 1))
 
 
+variable (k) in
 def ChainSizes : Prop :=
   ∀ ϖ : kˣ, valuation k (ϖ : k) = uniformizer k →
   ∀ ψ : AddChar k Circle, HasConductor ψ 1 → ∀ ν : Measure k, ν.IsAddHaarMeasure →

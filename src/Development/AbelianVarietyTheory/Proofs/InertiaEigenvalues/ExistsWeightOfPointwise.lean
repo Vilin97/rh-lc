@@ -60,6 +60,8 @@ theorem exists_finset_span_eq_top {A ι : Type} [CommRing A] (v : ι → A) (h :
   exact ⟨g ⟨x, hx⟩, by simp, hg ⟨x, hx⟩⟩
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem exists_finite_subfamily {E : Type} [Field E] [NumberField E] [IsCMField E]
     {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
     (la : HeightOneSpectrum (𝓞 c.F)) (hM : GlobalTheory.Reg.ModelAt Xo c la) (σ : c.F →+* ℂ) {ι : Type}
@@ -215,6 +217,7 @@ theorem exists_scalar_ne_zero
 end Model
 
 
+set_option maxHeartbeats 1000000 in
 theorem holSub0_le_span_one (D : D7) (T : CoreJ D) (h : LawsJ T) (j : ℕ) (hj : Formalism.L2.Pj.InR D j)
     (σ : T.Q.c.F →+* ℂ) (hσ : GoodEmb T.Q.c σ) (n : ℕ) (hev : Even n)
     (hn : 4 * (Module.finrank ℚ D.host.E * D.R.r) + 4 ≤ n) :
@@ -234,6 +237,7 @@ theorem holSub0_le_span_one (D : D7) (T : CoreJ D) (h : LawsJ T) (j : ℕ) (hj :
   exact key ⟨hP.1, hP.2⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_weight_of_pointwise
     (hP : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (X : Data E r), 0 < X.p0 → X.p0 < r → (∀ n : ℕ, Even n → ∀ γ ∈ X.Γ, X.χ (fun (τ : X.Ψ) (j : Fin r) => if X.p0 ≤ (j : ℕ) then ((n / 2 : ℕ) : ℤ) else -((n / 2 : ℕ) : ℤ)) γ = 1) → ∀ y ∈ X.dom, ∀ N : ℕ, ∃ n : ℕ, N ≤ n ∧ 0 < n ∧ Even n ∧ ∃ P ∈ X.SS (fun (τ : X.Ψ) (j : Fin r) => if X.p0 ≤ (j : ℕ) then ((n / 2 : ℕ) : ℤ) else -((n / 2 : ℕ) : ℤ)), P y ≠ 0) :
     ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j, Formalism.L2.Pj.InR D j → ∀ σ : T.Q.c.F →+* ℂ, GoodEmb T.Q.c σ → ∃ (b : (D.host.E →+* ℂ) × ℕ → ℕ) (m : ℕ), Dom b m ∧ LastPos (T.Q.Dw j) b ∧ 4 * (Module.finrank ℚ D.host.E * D.R.r) + 4 ≤ m ∧ ∀ k, ∀ x ∈ ((T.U j σ).X k).dom, ∃ P ∈ Formalism.L2.Pj.holSub0 (T.U j σ).X (laU (T.U j σ) b m), P k x ≠ 0 := by

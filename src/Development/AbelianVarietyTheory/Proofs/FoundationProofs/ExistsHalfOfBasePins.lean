@@ -124,6 +124,8 @@ theorem splitOK_of_place (PP : Pl D.host.E) {q : ℕ} (hq : q.Prime) (hc : Nat.c
       ((Prime.coprime_iff_not_dvd (Nat.prime_iff_prime_int.mp hq)).2 hnd).symm
 
 
+variable (D) in
+open Classical in
 def coverHalf (Q : Finset (Pl D.host.E)) : Ideal (𝓞 D.host.E) :=
   ∏ 𝔭 ∈ Q.image (fun PP => PP.under (𝓞 D.host.K)), 𝔭.asIdeal.map (algebraMap (𝓞 D.host.K) (𝓞 D.host.E))
 

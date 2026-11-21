@@ -63,6 +63,7 @@ lemma smooth_lin {f f' : Mx k r → E} (hf : SmoothLev k r i D f) (hf' : SmoothL
   rw [hf1 g hg.1 hgl, hf2 g hg.2 hgl]
 
 
+variable (k r i D E) in
 def SS : Submodule ℂ (Pt k r i D → E) where
   carrier := {φ | SmoothLev k r i D (ext0 φ)}
   add_mem' {φ ψ} hφ hψ := by

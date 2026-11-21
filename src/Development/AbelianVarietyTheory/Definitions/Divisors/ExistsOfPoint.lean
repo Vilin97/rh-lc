@@ -52,6 +52,7 @@ structure TautBase (o : Type) [CommRing o] (W : Type) [CommRing W] [IsLocalRing 
 attribute [instance] TautBase.grp TautBase.comm
 
 
+open InhTate Inh in
 def TautBase.torus {o W : Type} [CommRing o] [CommRing W] [IsLocalRing W] (b : o →+* W) (r : ℕ)
     (u : Γ((𝟙_ (Over (Sp W))).left, ⊤)ˣ) (β : LinearMap.BilinForm ℤ (Fin r → ℤ)) (hβ : ∀ a a', β a a' = β a' a) :
     TautBase o W where

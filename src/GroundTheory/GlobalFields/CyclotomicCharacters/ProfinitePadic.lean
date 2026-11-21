@@ -45,6 +45,7 @@ theorem continuous_of_continuous_toZModPow {X : Type*} [TopologicalSpace X] {f :
   exact (norm_sub_le_of_toZModPow_eq hy).trans_lt hn
 
 
+variable (ℓ) in
 theorem continuous_toPadicInt : Continuous (toPadicInt ℓ) :=
   continuous_of_continuous_toZModPow fun n =>
     (ProfiniteInteger.continuous_proj (primePowPNat ℓ n)).congr fun x =>

@@ -108,6 +108,7 @@ variable (v : (D.mem u).A.vT)
 include hp hy
 
 
+set_option maxHeartbeats 2000000 in
 theorem uop_rs (g) (hg : g ∈ AdFun T.cls0.lev (embT D)) :
     LT.Uop D u 0 v (rs T g) = rs T (upAd (T.atT.res v) (((D.mem u).A.T : ℕ) : 𝓞 D.host.E) (T.atT.eV v).1 p g) := by
   classical

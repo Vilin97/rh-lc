@@ -55,6 +55,7 @@ theorem eq_iwasawa (g : GL (Fin n) F) :
   (exists_iwasawa_decomp g).choose_spec.2.2
 
 
+variable (ψ₀ : AddChar F ℂ) (z : Fin n → ℂˣ) in
 def sphericalWhittaker (g : GL (Fin n) F) : ℂ :=
   if Antitone (iwasawaExponent F n g) then
     Whittaker.psiN ψ₀ (iwasawaUnip g) * halfModulus F (iwasawaExponent F n g) *

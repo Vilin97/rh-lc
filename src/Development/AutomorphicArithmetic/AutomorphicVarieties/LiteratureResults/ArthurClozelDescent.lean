@@ -17,6 +17,7 @@ section Defs
 variable {E : Type} [Field E] [NumberField E] [IsTotallyReal E] {a : ℕ}
 
 
+omit [IsTotallyReal E] in
 def IsAdExt (σ : E →+* E) (s : AdeleRing (𝓞 E) E →+* AdeleRing (𝓞 E) E) : Prop :=
   Continuous s ∧ ∀ x : E, s (algebraMap E _ x) = algebraMap E _ (σ x)
 

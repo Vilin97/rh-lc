@@ -131,6 +131,7 @@ theorem ga_le_at (P : ParameterChoice' D L) (X : Inst D L) (K : Consts) (hK : K.
   linarith
 
 
+open Formalism.MainNotions.DIV.Proofs.HHParts in
 theorem logX_le (hN : SizeN L) (hK : SizeK L) :
     Real.log (L.sc.X'' D.R.n + 1) ≤ 4 * Formalism.MainNotions.DIV.Proofs.szPol L := by
   obtain ⟨hn1, hn2⟩ := hN
@@ -193,6 +194,7 @@ theorem logX_le (hN : SizeN L) (hK : SizeK L) :
   linarith
 
 
+open Formalism.MainNotions.DIV.Proofs.HHParts in
 theorem ga_le_pol (P : ParameterChoice' D L) (X : Inst D L) (K : Consts) (hK : K.Nonneg)
     (hF : ∀ w, ParametersFill X K w) (hM : Formalism.MainNotions.CornerGLContinuity.MertensBound D) (hS : SizesAt L) :
     L.Ga ≤ 64 * Formalism.MainNotions.DIV.Proofs.szPol L ^ 4 * L.sc.b := by

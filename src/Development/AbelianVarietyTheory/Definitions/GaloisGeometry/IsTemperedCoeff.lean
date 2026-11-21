@@ -13,6 +13,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   {V : Type} [AddCommGroup V] [Module ℂ V] {N : ℕ}
 
 
+variable (k N) in
 abbrev AdGL : Type := GL (Fin N) k ⧸ Subgroup.center (GL (Fin N) k)
 
 def CoeffLp (p : ℝ) (π : Representation ℂ (GL (Fin N) k) V) : Prop :=

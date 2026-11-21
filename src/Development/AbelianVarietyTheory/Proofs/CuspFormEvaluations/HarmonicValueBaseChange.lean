@@ -21,6 +21,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.HarmonicValueBaseChange
 
 
+set_option maxHeartbeats 1000000 in
 theorem sum_map_of_harmA (hC : ChartIndepSt2) {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
     {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} [StarRing (𝓞 E)] (nab : NabV Xo c)
     (hnab : IsNab Xo c nab) {S S' : Type} [CommRing S] [Algebra c.F S] [Algebra ℚ S]

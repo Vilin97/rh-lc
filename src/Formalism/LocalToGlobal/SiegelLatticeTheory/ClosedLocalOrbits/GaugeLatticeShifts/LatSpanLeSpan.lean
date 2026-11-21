@@ -160,6 +160,7 @@ theorem hT_pj_left (v w : S.V) : S.hT (pj e f v) w = S.hT (pj e f v) (pj e f w) 
   simp [map_add (f := _), h1, h2]
 
 
+include hee hff hef in
 theorem hT_coord (v w : S.V) :
     S.hT v w = ∑ a, starRingEnd E (S.hT (f a) v) * S.hT (e a) w +
       ∑ a, starRingEnd E (S.hT (e a) v) * S.hT (f a) w + S.hT (pj e f v) (pj e f w) := by
@@ -194,6 +195,7 @@ theorem pj_lmap (v : S.V) : pj e f (lmap e f δ v) = pj e f v := by
   abel
 
 
+include hee hff hef hδ hX in
 theorem lmap_isom (v w : S.V) : S.hT (lmap e f δ v) (lmap e f δ w) = S.hT v w := by
   rw [hT_coord hee hff hef (lmap e f δ v), hT_coord hee hff hef v w]
   simp only [lmap_coordX hff hef, lmap_coordY hee hef hX, pj_lmap hee hff hef hX]
@@ -276,6 +278,7 @@ variable (hee : ∀ a b, S.hT (e a) (e b) = 0) (hff : ∀ a b, S.hT (f a) (f b) 
   (hδ1 : ∀ x ∈ latSpan aa e, δ x ∈ Λ) (hδ2 : ∀ x ∈ latSpan aa e, δ.symm x ∈ Λ)
 
 
+include hee hff hef hδ hX hΛ hLp hU hδ1 hδ2 in
 theorem lmap_mem (v : S.V) (hv : v ∈ Λ) : lmap e f δ v ∈ Λ := by
   have hXΛ : latSpan aa e ≤ Λ := by rw [hΛ]; exact le_sup_left.trans le_sup_left
   have hLΛ : L ≤ Λ := by rw [hΛ]; exact le_sup_right.trans le_sup_left
@@ -310,6 +313,7 @@ theorem lmap_mem (v : S.V) (hv : v ∈ Λ) : lmap e f δ v ∈ Λ := by
   rwa [hU] at hd
 
 
+include hee hff hef hδ hX hΛ hLp hU hδ1 hδ2 in
 theorem gmap_lequiv : Formalism.HermitianLatticesTheory.gmap (lequiv hee hff hef hδ hX) Λ = Λ := by
   ext x
   rw [mem_gmap_iff]

@@ -74,6 +74,7 @@ theorem exists_away (k A : Type) [CommRing k] [IsDomain k] [CharZero k] [IsNoeth
 variable {k : Type} [CommRing k] {X : Scheme.{0}} {p : X ⟶ Sp k} {D : ℕ}
 
 
+attribute [local instance] Algebra.TensorProduct.rightAlgebra in
 theorem trdeg_chart (h : IsArithVar p D) {A : Type} [CommRing A] [Algebra k A]
     (i : Sp A ⟶ X) [IsOpenImmersion i] (hi : i ≫ p = spMap (algebraMap k A)) [Nontrivial A] :
     Algebra.trdeg k A = D := by

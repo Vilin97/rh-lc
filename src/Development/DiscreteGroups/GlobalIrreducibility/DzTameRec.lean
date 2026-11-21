@@ -32,6 +32,7 @@ theorem normV_mem (v : HeightOneSpectrum (𝓞 M)) : ((normV v : ℕ) : 𝓞 M) 
   exact hc
 
 
+omit [IsAlgClosure M Ω] in
 theorem weil_fix_root (h : IsPlaceOver A v) (s : Weil h) (ζ : Ω) (hζ : ζ ^ (normV v - 1) = 1) :
     (s : G M Ω) ζ = ζ := by
   have hq : 1 < normV v := one_lt_normV v

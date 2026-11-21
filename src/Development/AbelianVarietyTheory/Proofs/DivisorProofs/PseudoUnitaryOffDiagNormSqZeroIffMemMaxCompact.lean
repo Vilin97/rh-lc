@@ -103,6 +103,7 @@ lemma comm_of {n : ℕ} (ε : Fin n → Bool) (M : Matrix (Fin n) (Fin n) ℂ)
 end GlobalTheory.OffDiagK
 
 
+open GlobalTheory.OffDiagK in
 theorem GlobalTheory.offDiag_zero_iff_mem_K : ∀ (n : ℕ) (ε : Fin n → Bool) (g : UJ ε),
     ∑ z : {z : Fin n × Fin n // ε z.1 = true ∧ ε z.2 = false}, ‖(toM g) z.1.1 z.1.2‖ ^ 2 = 0 ↔ g ∈ KG ε := by
   intro n ε g

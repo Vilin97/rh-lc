@@ -86,6 +86,7 @@ theorem exists_associated_X_pow_atPrime {z : S} (hz : z ≠ 0) :
 
 
 include hS in
+include O in
 theorem isDiscreteValuationRing_atPrime_X [IsDomain S] : IsDiscreteValuationRing S :=
   IsDiscreteValuationRing.ofHasUnitMulPowIrreducibleFactorization
     ⟨_, (prime_algebraMap_X_atPrime (O := O) S).irreducible,

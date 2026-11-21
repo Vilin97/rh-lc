@@ -88,6 +88,7 @@ theorem unitAA_of_prime {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace 
     exact ((isIntegral_natCast _).mul hint).neg
 
 
+open GlobalTheory.Mem GlobalTheory.Mem.Col2 in
 theorem unitAA_level {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word)
     {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (p : SplitPt (I.rec7 l Z) k)
     (hv : ((B.T u : ℕ) : 𝓞 (I.rec7 l Z).host.F) ∈ p.v.asIdeal) : p.UnitAA := by

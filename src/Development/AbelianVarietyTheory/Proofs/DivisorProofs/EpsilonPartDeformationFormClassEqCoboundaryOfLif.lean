@@ -56,6 +56,7 @@ section Eps
 variable {K : Type} [Field K] {A : Over (Sp K)} [GrpObj A]
 
 
+omit [GrpObj A] in
 def epsHom {P Q : GPt A} (φ : P.Hom Q) : P.eps ⟶ Q.eps :=
   letI := P.eps.alg
   letI := Q.eps.alg

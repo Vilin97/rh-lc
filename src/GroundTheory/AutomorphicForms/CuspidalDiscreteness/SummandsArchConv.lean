@@ -109,6 +109,7 @@ theorem finAvg_eq_self (U : Subgroup (AdelicGLn.integralFiniteGL K n))
   simp
 
 
+variable (K n) in
 def archGroupEquiv : archGroup K n ≃ₜ* ArchUnits K n where
   toMulEquiv := Subgroup.topEquiv
   continuous_toFun := continuous_subtype_val

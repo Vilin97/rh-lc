@@ -111,6 +111,7 @@ theorem qs_pow_mul_sqrtQ (s : ℂ) (m : ℤ) (k : ℕ) :
   rw [qs_add, mul_pow, _root_.zpow_mul, zpow_natCast, mul_assoc, ← mul_pow, key, one_pow, mul_one]
 
 
+variable (F n) in
 def integralMatrixSet : Set (Matrix (Fin n) (Fin n) F) :=
   Set.pi Set.univ fun _ => Set.pi Set.univ fun _ => (𝒪[F] : Set F)
 
@@ -119,6 +120,7 @@ theorem mem_integralMatrixSet {X : Matrix (Fin n) (Fin n) F} :
   ⟨fun h i j => h i (Set.mem_univ _) j (Set.mem_univ _), fun h i _ j _ => h i j⟩
 
 
+variable (F n) in
 def integralIndicator : Matrix (Fin n) (Fin n) F → ℂ :=
   (integralMatrixSet F n).indicator 1
 

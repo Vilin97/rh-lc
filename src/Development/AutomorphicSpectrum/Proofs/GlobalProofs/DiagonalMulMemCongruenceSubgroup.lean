@@ -225,6 +225,7 @@ section Main
 variable [Algebra K ℂ] [IsTotallyComplex K] (hK : finrank ℚ K = 2)
 
 
+include hK in
 theorem weberSet_fixed (hd : NumberField.discr K < -4) (L : PeriodPair)
     (hL : ∀ z, z ∈ L.lattice ↔ ∃ a : 𝓞 K, algebraMap K ℂ (a : K) = z) {n : ℕ} (hn : n ≠ 0)
     (σ : ℂ ≃ₐ[K] ℂ) (u : IdeleGroup K)
@@ -261,6 +262,7 @@ theorem weberSet_fixed (hd : NumberField.discr K < -4) (L : PeriodPair)
     exact (Option.some_injective _ e).symm
 
 
+include hK in
 theorem mk_mem_of_fixed (hd : NumberField.discr K < -4) (L : PeriodPair)
     (hL : ∀ z, z ∈ L.lattice ↔ ∃ a : 𝓞 K, algebraMap K ℂ (a : K) = z) {n : ℕ} (hn : n ≠ 0)
     (σ : ℂ ≃ₐ[K] ℂ) (u : IdeleGroup K)
@@ -312,6 +314,7 @@ section Final
 variable [Algebra K ℂ] [IsTotallyComplex K] (hK : finrank ℚ K = 2)
 
 
+include hK in
 theorem adjoin_weberSet_eq_rayClassField (hd : NumberField.discr K < -4) (L : PeriodPair)
     (hL : ∀ z, z ∈ L.lattice ↔ ∃ a : 𝓞 K, algebraMap K ℂ (a : K) = z) {n : ℕ} (hn : n ≠ 0) :
     IntermediateField.adjoin K (weberSet L n) = (Modulus.ofNat (K := K) n hn).rayClassField ℂ := by

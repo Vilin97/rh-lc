@@ -66,6 +66,7 @@ theorem exists_compactOpenSubgroup : ∃ K : OpenSubgroup G, IsCompact (K : Set 
   exact ⟨K, hK⟩
 
 
+omit [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] in
 theorem isCompact_inf_left {K L : OpenSubgroup G} (hK : IsCompact (K : Set G)) :
     IsCompact ((K ⊓ L : OpenSubgroup G) : Set G) := by
   rw [OpenSubgroup.coe_inf]

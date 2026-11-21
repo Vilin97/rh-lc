@@ -262,24 +262,29 @@ variable {D : Out.DegPre R} {e : ℕ} {G : Over (Sp R)} [GrpObj G] [IsCommMonObj
   {G₀ : Over (Sp A)} [GrpObj G₀] {φ : G₀.left ⟶ G.left}
 
 
+omit [IsDomain R] in
 def thickPt (e : ℕ) (hρ : ∀ x ∈ I ^ (e + 1), ρ x = 0) : Sp A ⟶ Sp (R ⧸ I ^ (e + 1)) :=
   spMap (Ideal.Quotient.lift _ ρ hρ)
 
 
+omit [IsDomain R] in
 theorem thickPt_thick (hρ : ∀ x ∈ I ^ (e + 1), ρ x = 0) :
     thickPt e hρ ≫ Out.thick R I e = spMap ρ := by
   rw [thickPt, ← Spec.map_comp]; rfl
 
 
+omit [IsDomain R] [IsCommMonObj G] in
 def thickLift (hρ : ∀ x ∈ I ^ (e + 1), ρ x = 0) (h : IsGrpPullback G₀ G (spMap ρ) φ) :
     G₀.left ⟶ (Out.thickObj R I e G).left :=
   pullback.lift φ (G₀.hom ≫ thickPt e hρ) (by rw [Category.assoc, thickPt_thick, h.1.w])
 
 
+omit [IsDomain R] [IsCommMonObj G] in
 theorem thickLift_fst (hρ : ∀ x ∈ I ^ (e + 1), ρ x = 0) (h : IsGrpPullback G₀ G (spMap ρ) φ) :
     thickLift hρ h ≫ pullback.fst G.hom (Out.thick R I e) = φ := pullback.lift_fst _ _ _
 
 
+omit [IsDomain R] [IsCommMonObj G] in
 theorem isGrpPullback_thickLift (hρ : ∀ x ∈ I ^ (e + 1), ρ x = 0) (h : IsGrpPullback G₀ G (spMap ρ) φ) :
     IsGrpPullback G₀ (Out.thickObj R I e G) (thickPt e hρ) (thickLift hρ h) :=
   (isGrpPullback_pullback G (Out.thick R I e)).cancel
@@ -325,6 +330,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {t : SA
   {t₀ : SAB H (Sp A)}
 
 
+omit [IsDomain R] in
 theorem map_pow_one_eq_zero (hρ : ∀ x ∈ I, ρ x = 0) : ∀ x ∈ I ^ (0 + 1), ρ x = 0 :=
   fun x hx => hρ x (Ideal.pow_le_self (Nat.succ_ne_zero 0) hx)
 
@@ -368,6 +374,7 @@ variable [IsLocalRing A] [IsNoetherianRing A]
 end PELUnif
 
 
+omit [IsDomain R] in
 theorem map_eq_zero_of_isLocalHom [IsLocalRing R] {k : Type} [Field k] (ρ : R →+* k) [IsLocalHom ρ] :
     ∀ x ∈ IsLocalRing.maximalIdeal R, ρ x = 0 := fun x hx => by
   by_contra h

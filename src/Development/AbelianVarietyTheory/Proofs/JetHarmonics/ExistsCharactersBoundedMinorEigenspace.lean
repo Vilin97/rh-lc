@@ -60,6 +60,7 @@ theorem exists_minor_le {C : Type} [Field C] (V : VF C) (vm : Valuation C NNReal
   exact Finset.sum_congr rfl fun x _ => mul_comm _ _
 
 
+open ReciprocityTheory.ChartRestriction.G.PullbackSections.CVA ReciprocityTheory.ChartRestriction.G.TB.LogPf in
 theorem isCh_map {R k : Type} [CommRing R] [CommRing k] (φ : R →+* k) {d : ℕ} (F : Fin d → PS R 2 d)
     (hF : ∀ i, MvPowerSeries.constantCoeff (F i) = 0) (u : PS R 1 d) (hu : IsCh F u) :
     IsCh (fun i => MvPowerSeries.map φ (F i)) (MvPowerSeries.map φ u) := by

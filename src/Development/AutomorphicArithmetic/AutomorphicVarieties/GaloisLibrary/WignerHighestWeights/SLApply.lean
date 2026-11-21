@@ -17,6 +17,7 @@ section
 variable {E : Type} [Field E] [NumberField E] {a : ℕ} {A : Type} [Ring A] [Algebra ℂ A] [Module ℝ A]
 
 
+omit [Algebra ℂ A] in
 private noncomputable def sL (L : Lie E a →ₗ[ℝ] A) (i j : Fin a) : Cinf E →ₗ[ℝ] A where
   toFun x := L (toL (Matrix.single i j x))
   map_add' x y := by

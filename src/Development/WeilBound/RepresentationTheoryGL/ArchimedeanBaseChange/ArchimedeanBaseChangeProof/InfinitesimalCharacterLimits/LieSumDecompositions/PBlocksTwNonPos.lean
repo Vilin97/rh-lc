@@ -15,6 +15,7 @@ namespace PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.BlockTwistCharacters
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 
+omit [IsCMField E] in
 theorem pE_shift (a r : ℕ) (c w : ℂ) :
     pE E a r (c + w * r * (Module.finrank ℚ E : ℂ)) = pE E a r c + w.re * r := by
   have hd : (Module.finrank ℚ E : ℝ) ≠ 0 := by

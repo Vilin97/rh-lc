@@ -104,6 +104,7 @@ theorem integral_indicator_projFin_smul {D : D7} (V : HSp D) {μa : ∀ w, Measu
   GlobalTheory.T.integral_finiteIndicator_smul_archFunction D V μa μf μ hμ νF hF E B hB hB' a ha
 
 
+open scoped Classical in
 theorem integral_pi_dsRep {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S)
     (μa : ∀ w, Measure (GArch D.sp.cm.sig V.gram w)) [∀ w, SigmaFinite (μa w)]
     {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
@@ -144,6 +145,7 @@ theorem integral_pi_dsRep {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (M :
     exact integral_congr_ae (.of_forall hcomp)
 
 
+open scoped Classical in
 theorem apply_homFinDS {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} {M : DSModel V S} {W : Type} [AddCommGroup W]
     [Module ℂ W] {σ : Representation ℂ (GfC V) W} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     [CompleteSpace H] {π : GA D V →* (H →L[ℂ] H)} {T : W →ₗ[ℂ] ContinuousMultilinearMap ℂ M.H H}

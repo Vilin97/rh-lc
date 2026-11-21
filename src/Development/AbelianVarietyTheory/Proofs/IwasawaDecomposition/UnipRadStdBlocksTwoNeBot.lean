@@ -13,6 +13,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 namespace GlobalTheory
 
 
+open GlobalTheory.SmGL in
 theorem unipRad_stdBlocks_two_ne_bot : ∀ (R : Type) [CommRing R] [Nontrivial R] (n a b : ℕ) (h : ∑ i, ![a, b] i = n), 0 < a → 0 < b → unipRad R (stdBlocks ![a, b] h) ≠ ⊥ := by
   intro R _ _ n a b h ha hb
   set e := stdBlocks ![a, b] h with he

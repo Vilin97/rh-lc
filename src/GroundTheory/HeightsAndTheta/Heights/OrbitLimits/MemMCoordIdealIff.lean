@@ -19,6 +19,7 @@ namespace CurveVerticalPointSurjective
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem ringHom_aeval {A A' : Type*} [CommRing A] [CommRing A'] [Algebra ℤ A] (f : A →+* A')
     (z : (Σ k, ι k) → A) (g : MRing ι) : f (aeval z g) = aeval (fun p => f (z p)) g := by
   induction g using MvPolynomial.induction_on with
@@ -37,16 +38,19 @@ theorem sub_mem_mCoordIdeal {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) {f 
   rw [mem_mCoordIdeal_iff y (homog_sub hf hg), map_sub, h, sub_self]
 
 
+omit [Fintype K] in
 theorem homogD {f : MRing ι} {a b : K → ℕ} (hf : IsMultiHomog f a) (h : a = b) : IsMultiHomog f b :=
   h ▸ hf
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem prod_pow_add {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (e₁ e₂ : K → ℕ) :
     ∏ k, y ⟨k, c k⟩ ^ (e₁ + e₂) k = (∏ k, y ⟨k, c k⟩ ^ e₁ k) * ∏ k, y ⟨k, c k⟩ ^ e₂ k := by
   rw [← Finset.prod_mul_distrib]
   exact Finset.prod_congr rfl fun k _ => by rw [Pi.add_apply, pow_add]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem chartMon_notMem {Q : Ideal (MRing ι)} (hQ : Q.IsPrime) {c : ∀ k, ι k}
     (hc : ∀ k, (X ⟨k, c k⟩ : MRing ι) ∉ Q) (n : K → ℕ) : chartMon c n ∉ Q := by
   intro h

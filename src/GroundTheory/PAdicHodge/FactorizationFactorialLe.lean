@@ -150,6 +150,7 @@ theorem dpow_mul_dpow (m n : ℕ) (x : AInf K p) :
         rw [← factorial_mul_dpow (m + n) x]; ring
 
 
+variable (K p) in
 def ACrisZero : Subalgebra (AInf K p) 𝔸 :=
   Algebra.adjoin (AInf K p) {y | ∃ n : ℕ, ∃ x ∈ RingHom.ker θ, dpow n x = y}
 
@@ -172,6 +173,7 @@ theorem acrisZero_eq_adjoin {ξ : AInf K p} (hξ : RingHom.ker θ = Ideal.span {
     exact dpow_mem (by rw [hξ]; exact Ideal.mem_span_singleton_self ξ) n
 
 
+variable (K p) in
 abbrev ACris : Type _ :=
   AdicCompletion (Ideal.span {(p : ACrisZero (K := K) (p := p))}) (ACrisZero (K := K) (p := p))
 
@@ -186,6 +188,7 @@ local notation "𝒪" => normInteger K
 local notation "θ" => fontaineTheta 𝒪 p
 
 
+variable (K p) in
 def thetaAway : 𝔸 →+* K :=
   ((IsPerfectoidField.awayEquiv (K := K) p : Localization.Away (p : 𝒪) ≃ₐ[𝒪] K) :
     Localization.Away (p : 𝒪) →+* K).comp (fontaineThetaInvertP 𝒪 p)
@@ -203,6 +206,7 @@ theorem thetaAway_dpow {x : AInf K p} (hx : x ∈ RingHom.ker θ) {n : ℕ} (hn 
   exact h.resolve_left (Nat.factorial_ne_zero n)
 
 
+variable (K p) in
 def thetaIntegral : Subalgebra (AInf K p) 𝔸 :=
   { (normInteger K).comap (thetaAway (K := K) (p := p)) with
     algebraMap_mem' := fun x => by
@@ -331,6 +335,7 @@ theorem dpow_frobenius_mem {x : AInf K p} (hx : x ∈ RingHom.ker θ) (n : ℕ) 
     exact Subalgebra.algebraMap_mem _ w
 
 
+variable (K p) in
 def phiAway : 𝔸 →+* 𝔸 :=
   Localization.awayLift ((algebraMap (AInf K p) 𝔸).comp (φ : AInf K p →+* AInf K p)) (p : AInf K p)
     (by

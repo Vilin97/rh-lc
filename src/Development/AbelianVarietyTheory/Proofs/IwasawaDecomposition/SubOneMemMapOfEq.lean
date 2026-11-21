@@ -29,6 +29,7 @@ theorem intValuation_eq_one {K : Type} [Field K] [NumberField K] (P : HeightOneS
   le_antisymm (P.intValuation_le_one b) (not_lt.1 fun h' => h ((P.intValuation_lt_one_iff_mem b).1 h'))
 
 
+variable (F E) in
 abbrev toId : (RInt F E)ˣ →* (AfE F E)ˣ := Units.map (RInt F E).subtype.toMonoidHom
 
 theorem exists_toId_eq {x : (AfE F E)ˣ} (hx : x ∈ intU F E) : ∃ u, toId F E u = x :=

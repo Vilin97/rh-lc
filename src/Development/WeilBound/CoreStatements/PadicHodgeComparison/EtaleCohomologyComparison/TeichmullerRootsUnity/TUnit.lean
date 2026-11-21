@@ -22,6 +22,7 @@ variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)}
 abbrev phiH (P : PAlg l ⥤ Type) (n j : ℕ) : MH P n j → MH P n j := (phiMor P n).pull j
 
 
+variable (l) in
 def tA : Acris l := ACris.periodT (untilt_epsilon (p := l))
 
 

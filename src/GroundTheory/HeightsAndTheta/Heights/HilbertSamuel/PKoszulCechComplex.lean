@@ -404,6 +404,7 @@ theorem kosD_kosD {V : Ideal (MRingOver S ι)} {R : ℕ} (z : Fin R → KH.CechC
 end KoszulCechComplex
 
 
+open KoszulCech KoszulCechComplex in
 theorem KoszulCechComplex.proof : KoszulCechComplex.Statement := by
   intro S _ K _ _ ι _ _ V α R z hz c p n
   exact ⟨kosD_mem_kosPart hz c p n, kosCech_kosD (fun j => LinearMap.mem_ker.mp (hz j).2) p n,

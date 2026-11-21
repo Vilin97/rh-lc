@@ -84,6 +84,8 @@ theorem incl_vec_mem {n : ℕ} {L : Submodule (𝓞 D.host.E) (Fin n → D.host.
   Submodule.subset_span ⟨v, hv, rfl⟩
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem mulVec_mem_of {m n : ℕ} (M : Matrix (Fin m) (Fin n) D.host.E) (L : Submodule (𝓞 D.host.E) (Fin n → D.host.E))
     (S : Submodule (Formalism.L2.Herm.intAf D.host.F D.host.E) (Fin m → Lev.EAf D))
     (hM : ∀ v ∈ L, (fun i => inc ((M *ᵥ v) i)) ∈ S) :
@@ -146,6 +148,8 @@ theorem lat_mem_Q (d : HermitianOrthogonalExtensionData Y V 1 1) (Λ : Lat Y) {v
   exact ⟨o, ho⟩
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 2000000 in
 theorem gen_props (d : HermitianOrthogonalExtensionData Y V 1 1) (Λ : Lat Y) (x : GA D Y) (y : Fin V.rank → D.host.E)
     (hy : (Lev.finE V (stabilizerEmbedding d x)⁻¹).1 *ᵥ (fun i => y i ⊗ₜ[D.host.F] (1 : Formalism.L2.Herm.Af D.host.F)) ∈
       Formalism.L2.Herm.hatL (F := D.host.F) (d.lat Λ fun _ => 1)) :
@@ -174,6 +178,8 @@ theorem gen_props (d : HermitianOrthogonalExtensionData Y V 1 1) (Λ : Lat Y) (x
     exact Submodule.mem_one.2 ⟨o, ho⟩
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem mem_smul_lattice_unitaryEmbedding : ∀ (D : D7) (Y V : HSp D) (d : HermitianOrthogonalExtensionData Y V 1 1) (Λ : Lat Y) (x : GA D Y) (𝔪 : Ideal (𝓞 D.host.E)) (w : Fin V.rank → D.host.E), w ∈ 𝔪 • latAt (d.lat Λ fun _ => 1) (stabilizerEmbedding d x) → ∃ y ∈ 𝔪 • latAt Λ x, ∃ u : 𝓞 D.host.E, u ∈ 𝔪 ∧ w = frameMat V Y d.ι *ᵥ y + (u : D.host.E) • zv d := by
   intro D Y V d Λ x 𝔪 w hw
   have hQ : latAt (d.lat Λ fun _ => 1) (stabilizerEmbedding d x) ≤ (latAt Λ x).comap (qLin d) :=

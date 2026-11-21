@@ -161,6 +161,7 @@ theorem cst_prB (y : (DegPre.BF D.toPre F).left) (a : V) :
   exact congrArg (gs _ y ⊤) n.symm
 
 
+include hϖ hv in
 theorem exists_comb {α : D.toPre.X} {I : Type} [Fintype I] {β : I → D.toPre.SecB k α} (hβ : IsBasisB D.toPre β)
     (s : I → Fam D.toPre F k)
     (hs : ∀ i, GeneratorPullback.SecScal D.toPre.P.L (DegPre.famφ D.toPre F α) (DegPre.famε k) ((s i).s α)

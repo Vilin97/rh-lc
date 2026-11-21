@@ -38,6 +38,7 @@ theorem splitsCompletely_iff_forall_finrank :
 variable [NumberField K] [NumberField L]
 
 
+variable (L) in
 theorem nonempty_placesOver : Nonempty (v.placesOver L) := by
   classical
   by_contra h

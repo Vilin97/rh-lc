@@ -89,6 +89,7 @@ variable (hS : HidaSetting p n' W Qq O Kf ι σ j w) (r : ℕ)
     (I : LocId L p nV W Qq) (ψ : Formalism.L2.Herm.awayFrom₂ L p →* Oˣ) (e : ℕ) (hdet : IsUnit sp.gram0.det) (hH : HypAtP I)
 
 
+include hH in
 theorem class_eq_iff_translate_level_zero (i i' : compL L p) (Lt Lt' : Fin nV → Submodule W (Fin (m + 1) → Qq))
     (h : ∀ v, IsLattice W (Lt v)) (h' : ∀ v, IsLattice W (Lt' v)) :
     clsC I hdet hk i Lt = clsC I hdet hk i' Lt' ↔

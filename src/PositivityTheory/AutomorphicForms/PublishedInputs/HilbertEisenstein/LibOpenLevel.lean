@@ -70,6 +70,7 @@ theorem finite_support {ω : HChar F} {c : HeightOneSpectrum (𝓞 F) → ℕ} (
   exact hw (Nat.le_zero.1 ((hH.cond w).2 fun x hu _ => MonoidHom.mem_ker.1 (key w x hu fun h => absurd h hwS)))
 
 
+variable (F) in
 def Kc (c : HeightOneSpectrum (𝓞 F) → ℕ) : Subgroup (GL (Fin 2) (Af F)) :=
   ⨅ w, (K1 w (c w)).comap (GeneralLinearGroup.map (pLoc F w))
 

@@ -57,6 +57,7 @@ namespace GlobalTheory.PMon
 open scoped Matrix
 
 
+open SubquotientAlgEquiv in
 theorem subQuot : SubQuot := by
   intro l _ P AI T a b _ _ _ _ K r ρ ρ₁ ρ₂ c _ hblk hdr
   have hF := (GlobalTheory.T.deRhamPeriodRing_field_tPow_filtration_units l P AI T).1

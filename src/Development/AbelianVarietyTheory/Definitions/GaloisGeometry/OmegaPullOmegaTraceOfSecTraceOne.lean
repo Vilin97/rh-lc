@@ -44,6 +44,7 @@ theorem sec_etale [IsFinite f] [Etale f] {U : X.Opens} (hU : IsAffineOpen U) :
 variable [IsFinite f] [Etale f]
 
 
+variable (s s') in
 def secTrace {U : X.Opens} (hU : IsAffineOpen U) : Sec s' (f ⁻¹ᵁ U) →+ Sec s U :=
   letI := secAlg s s' f U
   haveI := sec_finite (s := s) (s' := s') (f := f) hU
@@ -248,6 +249,7 @@ theorem secTrace_appSec_of_bijective {U : X.Opens} (hU : IsAffineOpen U)
   exact algTrace_algebraMap_of_bijective h b
 
 
+variable (s) in
 theorem secTrace_id {U : X.Opens} (hU : IsAffineOpen U) (b : Sec s U) :
     secTrace (f := 𝟙 X) s s hU b = b := by
   have h : Function.Bijective (appSec s s (𝟙 X) U) :=
@@ -259,6 +261,7 @@ theorem secTrace_id {U : X.Opens} (hU : IsAffineOpen U) (b : Sec s U) :
   exact secTrace_appSec_of_bijective hU h b
 
 
+variable (s) in
 theorem omegaTrace_id (j : ℕ) :
     omegaTrace (f := 𝟙 X) (Category.id_comp s) j =
       (Scheme.Modules.pushforwardId X).hom.app (Omega s j) := by
@@ -270,6 +273,7 @@ theorem omegaTrace_id (j : ℕ) :
   rfl
 
 
+variable (s) in
 theorem hodgeTrace_id (j q : ℕ) (x : hodgeH s j q) :
     hodgeTrace (f := 𝟙 X) (Category.id_comp s) j q x = x := by
   letI := algΓ s

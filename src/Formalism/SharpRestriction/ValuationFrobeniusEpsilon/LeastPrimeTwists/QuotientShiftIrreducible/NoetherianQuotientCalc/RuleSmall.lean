@@ -122,6 +122,7 @@ theorem step (hE1 : EulerAdditivityExactSequence) (hGr : RuleGr) {k : ℕ} (X : 
 end Sm
 
 
+open Sm in
 theorem ruleSmall : RuleSmall := by
   intro k X ts
   induction ts with

@@ -362,6 +362,7 @@ theorem homOfAffine_app (U : X.affineOpens) (x : Γ(G, U.1)) :
     (homOfAffine φ hφ).app U.1 x = φ U x := preHomOfAffine_app φ hφ U x
 
 
+omit φ hφ in
 theorem hom_ext_affine {a b : G ⟶ F}
     (h : ∀ U : X.Opens, IsAffineOpen U → ∀ x, a.app U x = b.app U x) : a = b := by
   ext U x

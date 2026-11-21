@@ -271,6 +271,7 @@ theorem loc_supp (V : HSp D) {Pl0 : Type} {pl : Pl0 → Formalism.L2.DIV.Pl D.ho
   exact ⟨α, h2, Subtype.ext h3.symm⟩
 
 
+set_option maxHeartbeats 1600000 in
 theorem side_adj_comm (V : HSp D) (β : GL (Fin V.rank) (EAf D)) (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E))
     (L : Formalism.L2.DIV.LevDat D.host.E ℂ V.rank) (hβ : IsBaseFrame V β Λ 1) {Pl0 : Type}
     (pl : Pl0 → Formalism.L2.DIV.Pl D.host.E) (ok : Set Pl0) (Sp : Set (Formalism.L2.DIV.Pl D.host.E))

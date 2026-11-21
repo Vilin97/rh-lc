@@ -92,6 +92,8 @@ private theorem isProper_of_isProjOver_degeneration {o Ω : Type} [CommRing o] [
   infer_instance
 
 
+open CategoryTheory Limits AlgebraicGeometry in
+open Classical in
 theorem _root_.GlobalTheory.ZH.exists_minor_model : ∀ (o Ω : Type) [CommRing o] [Field Ω]
     [Algebra o Ω] [_root_.GlobalTheory.ZH.ArithBase o Ω] (S : _root_.GlobalTheory.ZH.ThetaSys o Ω), S.HasTests →
     Module.Finite (Subfield.closure (Set.range (algebraMap o Ω) ∪ {x | ∃ i j, x = S.th j / S.th i})) Ω →

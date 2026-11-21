@@ -160,6 +160,7 @@ theorem resΓ_one_iff (P : LocPrime l) (K LL : FinExt l) (n : ℕ)
     exact W.χΓ_inj (by rw [map_one]; exact Units.ext h2)
 
 
+set_option maxHeartbeats 2000000 in
 theorem push_class {K K' LL : FinExt l} (hle : K.1 ≤ K'.1) (T : Lt K LL) (H : Subgroup ↥(GK K))
     (H' : Subgroup ↥(GK K')) (hm : ∀ g : ↥(GK K'), (⟨(g : GQ l), GK_le hle g.2⟩ : ↥(GK K)) ∈ H)
     (hm' : ∀ g : ↥H, ((g : ↥(GK K)) : GQ l) ∈ GK K') (htop : H' = ⊤)
@@ -219,6 +220,7 @@ theorem toTW_φ {K K' LL : FinExt l} (hle : K.1 ≤ K'.1) (T : Lt K LL) (b : TW 
 theorem toTW_zero {K K' LL : FinExt l} (hle : K.1 ≤ K'.1) (T : Lt K LL) : toTW hle T 0 = 0 := rfl
 
 
+set_option maxHeartbeats 1000000 in
 theorem pull_h1f (P : LocPrime l) {K K' LL : FinExt l} (hle : K.1 ≤ K'.1) (T : Lt K LL)
     (H : Subgroup ↥(GK K)) (H' : Subgroup ↥(GK K'))
     (hm : ∀ g : ↥(GK K'), (⟨(g : GQ l), GK_le hle g.2⟩ : ↥(GK K)) ∈ H)
@@ -231,6 +233,7 @@ theorem pull_h1f (P : LocPrime l) {K K' LL : FinExt l} (hle : K.1 ≤ K'.1) (T :
     ⟨c, c', hc.2, ⟨c', ⟨c'.2, c'.2.1, x, pull_f P hle T H H' hm _ _ hc' x hx⟩, rfl⟩, hc'⟩
 
 
+set_option maxHeartbeats 2000000 in
 theorem cl_fit (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (K : FinExt l) (s : ℕ)
     (LL : FinExt l) (h : Good K s LL) (T : Lt K LL) (y z : ((HW l).W K s LL h).DD T) (hyz : (y, z) ∈ ((HW l).W K s LL h).divisibleCocycles T)
     (b : TW (RW LL) T) (hb : TWmap (φRW LL) T b - b = ((F l).E K s LL h).tie.jD T y) :
@@ -248,6 +251,7 @@ theorem cl_fit (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.lo
     exact sub_add_cancel _ _
 
 
+set_option maxHeartbeats 1000000 in
 theorem lam_exists (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL) :
     ∃ lam : ↥((HW l).W K s LL h).GKs →* Multiplicative ℤ_[l], Continuous lam ∧
       (∀ g : ↥((HW l).W K s LL h).GKs, lam g = 1 ↔ ((HW l).W K s LL h).resΓ (g : ↥(GK K)) = 1) ∧

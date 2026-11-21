@@ -45,6 +45,7 @@ theorem fix_pat (hν : ∀ a, IsUnit (ν a)) {l c : Matrix (Fin n) (Fin n) A} (h
   exact (hν j).mul_left_eq_zero.mp e
 
 
+omit hσ in
 def cOf (σ : Fin n → Fin n) (ν : Fin n → A) (l : Matrix (Fin n) (Fin n) A) : Matrix (Fin n) (Fin n) A :=
   Matrix.of fun a b => Ring.inverse (ν (σ a)) * l (σ a) (σ b) * ν (σ b)
 

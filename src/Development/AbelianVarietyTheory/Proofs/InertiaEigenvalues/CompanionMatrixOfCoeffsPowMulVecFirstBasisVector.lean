@@ -150,6 +150,7 @@ variable {F E : Type} [NontriviallyNormedField F] [NontriviallyNormedField E] [N
   [Unram F E] {r : ℕ}
 
 
+omit [Unram F E] in
 theorem continuousStar (F : Type) [NontriviallyNormedField F] [NormedAlgebra F E] [Unram F E] : ContinuousStar E :=
   ⟨(Isometry.of_dist_eq fun x y => by
     rw [dist_eq_norm, dist_eq_norm, ← star_sub, Unram.norm_star (F := F)]).continuous⟩

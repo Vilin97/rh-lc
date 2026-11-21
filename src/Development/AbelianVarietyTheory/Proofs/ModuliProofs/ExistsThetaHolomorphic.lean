@@ -23,6 +23,10 @@ open Matrix GlobalTheory.CanTh GlobalTheory.RiemannRel
 variable {g : ℕ}
 
 
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
+open scoped CategoryTheory.Obj TensorProduct in
+open Matrix in
+variable {g : ℕ} in
 theorem _root_.GlobalTheory.HolTheta.normal_form (G : Matrix (Fin g) (Fin g) ℂ) (e f : Fin g → Fin g → ℂ) (hG : G.IsHermitian)
     (hpos : ∀ z : Fin g → ℂ, z ≠ 0 → 0 < (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm G z z).re)
     (hee : ∀ j k, (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm G (e j) (e k)).im = 0) (hff : ∀ j k, (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm G (f j) (f k)).im = 0)
@@ -77,6 +81,10 @@ theorem _root_.GlobalTheory.HolTheta.normal_form (G : Matrix (Fin g) (Fin g) ℂ
   rfl
 
 
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
+open scoped CategoryTheory.Obj TensorProduct in
+open Matrix in
+variable {g : ℕ} in
 theorem _root_.GlobalTheory.HolTheta.canMult_add (a c : Fin g → ℝ) (m n m' n' : Fin g → ℤ) :
     _root_.GlobalTheory.CanTh.canMult a c (m + m') (n + n') = _root_.GlobalTheory.CanTh.canMult a c m n * _root_.GlobalTheory.CanTh.canMult a c m' n' * (-1) ^ (n ⬝ᵥ m' - m ⬝ᵥ n') := by
   have hneg : ∀ k : ℤ, ((-1 : ℂ)) ^ k = Complex.exp (k * (Real.pi * Complex.I)) := by
@@ -93,6 +101,10 @@ theorem _root_.GlobalTheory.HolTheta.canMult_add (a c : Fin g → ℝ) (m n m' n
   ring
 
 
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
+open scoped CategoryTheory.Obj TensorProduct in
+open Matrix in
+variable {g : ℕ} in
 theorem _root_.GlobalTheory.HolTheta.eq_of_cocycle {La κ : Type*} [AddCommGroup La] (bs : Module.Basis κ ℤ La) (E : La → La → ℂ)
     {χ ψ : La → ℂ} (hE : ∀ x y, E x y ≠ 0) (hχ0 : ∀ x, χ x ≠ 0) (hψ0 : ∀ x, ψ x ≠ 0)
     (hχ : ∀ x y, χ (x + y) = χ x * χ y * E x y) (hψ : ∀ x y, ψ (x + y) = ψ x * ψ y * E x y)
@@ -220,6 +232,10 @@ private theorem differentiable_matrix_mulVec (M : Matrix (Fin g) (Fin g) ℂ) :
   (LinearMap.toContinuousLinearMap (Matrix.mulVecLin M)).differentiable
 
 
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
+open scoped CategoryTheory.Obj TensorProduct in
+open Matrix in
+variable {g : ℕ} in
 theorem _root_.GlobalTheory.HolTheta.exists_theta_holomorphic : ∀ (La : Type) [AddCommGroup La] [Module.Free ℤ La] [Module.Finite ℤ La] (EF : LinearMap.BilinForm ℤ La) (χ : La → ℂ) (g m N' : ℕ) (B : Set (Fin m → ℂ)) (P : (Fin m → ℂ) → (La →+ (Fin g → ℂ))) (Hm : (Fin m → ℂ) → Matrix (Fin g) (Fin g) ℂ), 0 < N' → Function.Bijective EF → (∀ x, χ x = 1 ∨ χ x = -1) → (∀ x y, χ (x + y) = χ x * χ y * (-1) ^ EF x y) → IsOpen B → (∀ x, DifferentiableOn ℂ (fun b => P b x) B) → (∀ b ∈ B, Function.Injective (P b) ∧ DiscreteTopology (P b).range ∧ Submodule.span ℝ (Set.range (P b)) = ⊤ ∧ (Hm b).IsHermitian ∧ (∀ z : Fin g → ℂ, z ≠ 0 → 0 < (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm (Hm b) z z).re) ∧ ∀ x y, (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm (Hm b) (P b x) (P b y)).im = EF x y) → ∃ θ : (Fin m → ℂ) → (Fin g → ℂ) → ℂ, (∀ b ∈ B, θ b ≠ 0 ∧ Differentiable ℂ (θ b) ∧ ∀ x z, θ b (z + P b x) = χ x * Complex.exp (Real.pi * _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm (Hm b) z (P b x) + Real.pi / 2 * _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm (Hm b) (P b x) (P b x)) * θ b z) ∧ ∀ x, DifferentiableOn ℂ (fun b => Complex.exp (-(Real.pi / 2 / (N' : ℂ) ^ 2) * _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm (Hm b) (P b x) (P b x)) * θ b ((N' : ℂ)⁻¹ • P b x)) B := by
   intro La _ _ _ EF χ g m N' B P Hm hN hbij hpm hχ hB hPd hlat
   classical

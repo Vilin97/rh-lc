@@ -17,6 +17,7 @@ noncomputable section
 variable (K : Type*) [Field K] [NumberField K] (n : ℕ)
 
 
+variable {K n} in
 def matrixCoordEquiv {X : Type*} : Matrix (Fin n) (Fin n) X ≃ (Fin n × Fin n → X) where
   toFun := matrixCoord
   invFun z := Matrix.of fun i j ↦ z (i, j)
@@ -24,6 +25,7 @@ def matrixCoordEquiv {X : Type*} : Matrix (Fin n) (Fin n) X ≃ (Fin n × Fin n 
   right_inv _ := rfl
 
 
+variable {K n} in
 def matrixCoordTEquiv {X : Type*} : Matrix (Fin n) (Fin n) X ≃ (Fin n × Fin n → X) where
   toFun := matrixCoordT
   invFun z := Matrix.of fun i j ↦ z (j, i)
@@ -84,6 +86,7 @@ theorem mem_matrixSchwartzBruhat {Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ} :
   Iff.rfl
 
 
+variable (K) in
 def adelicMatrixFourier (Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ) (y : Matrix (Fin n) (Fin n) 𝔸[K]) :
     ℂ :=
   ∫ x, Φ x * (adelicChar K (trace (x * y)) : ℂ) ∂adelicMatrixMeasure K n

@@ -31,6 +31,7 @@ open Formalism Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotion
 variable {D : D7}
 
 
+set_option maxHeartbeats 1000000 in
 @[reducible] def nchCut (c : CutD D) (x : NChoice D) : NChoice (cut D c) := { x with }
 
 set_option maxHeartbeats 1000000 in

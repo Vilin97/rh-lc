@@ -13,6 +13,7 @@ set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 1600000
 
 
+open Polynomial in
 theorem isTranscendenceBasis_quotient_integralClosure
     (k F K : Type) [Field k] [Field F] [Field K] [Algebra k F] [Algebra k K] [Algebra F K]
     [IsScalarTower k F K] (A : Subalgebra k F) (B : Subalgebra k K)

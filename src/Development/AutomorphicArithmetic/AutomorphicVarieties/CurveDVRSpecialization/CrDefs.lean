@@ -29,6 +29,7 @@ structure Ad (k : GalLink η Ψ σ g₁ B M L Φ) (s : W.HidaSetting l L Ω) whe
   v0ω : ∃ g ∈ Dec (F := L) (s.A s.v0), PadicInt.toZMod ((cycZ L Ω l g : ℤ_[l]ˣ) : ℤ_[l]) ≠ 1
 
 
+variable (Ω L) in
 def toUpl : G (W.Lp L) Ω →* upl Ω L :=
   (galEmb ℚ (W.Lp L) Ω).codRestrict _ fun g x hx => g.commutes ⟨x, hx⟩
 

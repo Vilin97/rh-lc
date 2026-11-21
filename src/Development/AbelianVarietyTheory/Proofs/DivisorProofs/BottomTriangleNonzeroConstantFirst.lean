@@ -40,6 +40,7 @@ namespace GlobalTheory.BotClassSumSmall
 open scoped ComplexOrder
 
 
+open GlobalTheory.DefiniteClassAvg in
 theorem openCompact {D : D7} {T : Type} {A A' WW : HSp D} (X : Tri T A A' WW) (hstd : X.rA'.IsStd) :
     IsOpen (((Formalism.L2.DIV.St X.rA'.β).comap (Lev.finE A') : Subgroup (GA D A')) : Set (GA D A')) ∧
     IsCompact (((Formalism.L2.DIV.St X.rA'.β).comap (Lev.finE A') : Subgroup (GA D A')) : Set (GA D A')) := by

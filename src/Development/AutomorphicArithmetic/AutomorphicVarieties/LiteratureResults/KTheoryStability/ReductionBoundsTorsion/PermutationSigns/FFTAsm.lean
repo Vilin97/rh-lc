@@ -35,6 +35,7 @@ theorem sum_place {W : Type} {N q : ℕ} (w : Fin q → W)
     rfl
 
 
+open Classical in
 def fTL (Y : Fin q → HS L N) :
     Matrix (Fin q → Ix (InfinitePlace L) N) (Fin q → Ix (InfinitePlace L) N) ℂ →ₗ[ℂ] ℂ where
   toFun T := fT T Y

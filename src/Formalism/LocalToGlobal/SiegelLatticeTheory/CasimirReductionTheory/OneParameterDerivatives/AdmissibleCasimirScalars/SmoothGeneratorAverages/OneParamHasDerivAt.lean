@@ -172,6 +172,7 @@ theorem U_cont (v : H) : Continuous fun t : ℝ => σ (NormedSpace.exp ((t : ℂ
   exact (hσ.2.2 v).comp_continuous hc (fun t => U_mem σ hσ p hp t)
 
 
+include hσ hp in
 theorem skew_of_der {u w u' w' : H}
     (hu : HasDerivAt (fun t : ℝ => σ (NormedSpace.exp ((t : ℂ) • gen ε p)) u) u' 0)
     (hw : HasDerivAt (fun t : ℝ => σ (NormedSpace.exp ((t : ℂ) • gen ε p)) w) w' 0) :
@@ -185,6 +186,7 @@ theorem skew_of_der {u w u' w' : H}
   simpa only [U_zero σ hσ p hp] using h3
 
 
+omit hσ p hp in
 def Ev (X : Matrix (Fin n) (Fin n) ℂ) (μ : ℝ) : Submodule ℂ H where
   carrier := {u | HasDerivAt (fun t : ℝ => σ (NormedSpace.exp ((t : ℂ) • X)) u) (((μ : ℂ) * Complex.I) • u) 0}
   zero_mem' := by
@@ -217,6 +219,7 @@ theorem Ev_orth {μ ν : ℝ} (hne : μ ≠ ν) {u w : H} (hu : u ∈ Ev σ (gen
   exact (mul_eq_zero.mp h).resolve_left hne'
 
 
+include hσ hp in
 theorem bound_on_sup (Λ : Finset ℝ) (v : H) (hv : v ∈ ⨆ μ ∈ Λ, Ev σ (gen ε p) μ) :
     ‖dS σ (gen ε p) v‖ ≤ (∑ μ ∈ Λ, |μ|) * ‖v‖ := by
   obtain ⟨c, hc⟩ := (Submodule.mem_iSup_finset_iff_exists_sum _ v).mp hv
@@ -246,6 +249,7 @@ theorem bound_on_sup (Λ : Finset ℝ) (v : H) (hv : v ∈ ⨆ μ ∈ Λ, Ev σ 
     _ = (∑ μ ∈ Λ, |μ|) * ‖v‖ := (Finset.sum_mul _ _ _).symm
 
 
+include hσ hp in
 theorem isoK_le (S : Submodule ℂ H) (hfd : FiniteDimensional ℂ S) (hst : IsKStableOn ε σ S) :
     ∃ Λ : Finset ℝ, isoK ε σ S ≤ ⨆ μ ∈ Λ, Ev σ (gen ε p) μ := by
   haveI := hfd

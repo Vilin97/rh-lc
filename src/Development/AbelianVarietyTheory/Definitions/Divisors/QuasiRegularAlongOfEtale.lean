@@ -29,6 +29,7 @@ section Fil
 variable {p : Y ⟶ Sp k} {B : LB Y} {O O' : Y.Opens} {I : Y.IdealSheafData} {a b : ℕ}
 
 
+variable (I a) in
 def VanishesTo (f : H0 p B O) : Prop :=
   ∀ y ∈ I.support, ∀ hy i hi, germ i y hy hi f ∈ stalkId I y ^ a
 
@@ -75,6 +76,7 @@ theorem VanishesTo.mul {P N : LB Y} (C : ProdChart P B N) {σ : H0 p P O} {f : H
     exact Ideal.mul_mem_mul (hσ y hs hy _ ha) (hf y hs hy _ hb)
 
 
+variable (I O) in
 def SuppIn : Prop := ∀ y ∈ I.support, y ∈ O
 
 theorem suppIn_top : SuppIn ⊤ I := fun _ _ => trivial
@@ -86,6 +88,7 @@ theorem vanishesTo_restr_iff (h : SuppIn O' I) (e : O' ≤ O) {f : H0 p B O} :
   ⟨fun hf y hs _ i hi => germ_restr e i y (h y hs) hi f ▸ hf y hs (h y hs) i hi, (·.restr e)⟩
 
 
+variable (p B O I a) in
 def filTop : Submodule k (H0 p B O) where
   carrier := {f | VanishesTo I a f}
   zero_mem' y _ hy i hi := by rw [map_zero]; exact zero_mem _
@@ -97,6 +100,7 @@ def filTop : Submodule k (H0 p B O) where
 @[simp] theorem mem_filTop {f : H0 p B O} : f ∈ filTop p B O I a ↔ VanishesTo I a f := Iff.rfl
 
 
+variable (I a) in
 def Fil (V : Submodule k (H0 p B O)) : Submodule k (H0 p B O) := V ⊓ filTop p B O I a
 
 variable {V V' : Submodule k (H0 p B O)}
@@ -111,6 +115,7 @@ theorem Fil_anti (e : a ≤ b) : Fil I b V ≤ Fil I a V := fun _ h => ⟨h.1, V
 
 
 
+variable (p I B) in
 abbrev sectionsOnClosedSubscheme : Type := H0 (I.subschemeι ≫ p) (B.pull I.subschemeι) ⊤
 
 def resTo (h : SuppIn O I) : H0 p B O →ₗ[k] sectionsOnClosedSubscheme p B I := H0.pull I.subschemeι h.le
@@ -138,6 +143,7 @@ theorem resTo_eq_zero_iff (h : SuppIn O I) {f : H0 p B O} : resTo h f = 0 ↔ Va
     exact ((germ_resTo h j z hz.2 f).trans this).trans (map_zero (germ j z (Opens.mem_top z) hz.2)).symm
 
 
+variable (p I) in
 def secOn (σ : LB.Sec B) : sectionsOnClosedSubscheme p B I := resTo suppIn_top (H0.ofSec p ⊤ σ)
 
 @[simp] theorem resTo_ofSec (h : SuppIn O I) (σ : LB.Sec B) :
@@ -282,6 +288,7 @@ variable {R S : Type*} [CommRing R] [CommRing S] {ι : Type} [Finite ι] {φ : R
   {a : ℕ} {f f' : R} {γ γ' : MonoDeg ι a → S}
 
 
+variable (φ x f γ) in
 def LeadAt : Prop := ∃ m : MonoDeg ι a → R, (∀ α, φ (m α) = γ α) ∧
   f - ∑ α, monoVal x α.1 * m α ∈ Ideal.span (Set.range x) ^ (a + 1)
 
@@ -400,6 +407,7 @@ theorem hasLead_zero_iff (hM : M.IsLB) :
   exact ⟨twIdx l i j, _, (key z i j hi hj).1 (e z i j hi hj)⟩
 
 
+variable (hL s hO h) in
 theorem hasLead_sum (hM : M.IsLB) (m : MonoDeg ι a → H0 p (tw M L n) O) :
     HasLead hL s hO h (∑ α, mulMono hM hL s α h (m α)) fun α => resTo hO (m α) :=
   fun z i j hi hj => by
@@ -409,6 +417,7 @@ theorem hasLead_sum (hM : M.IsLB) (m : MonoDeg ι a → H0 p (tw M L n) O) :
       (germ_resTo hO (fun _ => twIdx n i j) z _ (m α)).symm)).mp (leadAt_sum _)
 
 
+variable (hL s) in
 def QuasiRegularAlong : Prop :=
   ∀ y ∈ (cutIdeal hL s).support, ∀ j hj, IsQuasiRegularSeq (Y.presheaf.stalk y) (secGer s j y hj)
 
@@ -420,6 +429,7 @@ theorem HasLead.unique (hM : M.IsLB) (hq : QuasiRegularAlong hL s) (e : HasLead 
     ((ker_stalkMap _ z).trans (stalkId_cutIdeal hL s j _ hj)).ge (e z i j hi hj) (e' z i j hi hj)) α⟩
 
 
+variable (hO h) in
 theorem exists_hasLead (hM : M.IsLB) (hq : QuasiRegularAlong hL s)
     (hf : VanishesTo (cutIdeal hL s) a f) : ∃ c, HasLead hL s hO h f c := by
   let τ := {t : Y.affineOpens × M.ι × L.ι // t.1.1 ≤ O ⊓ (tw M L l).U (twIdx l t.2.1 t.2.2)}
@@ -461,6 +471,7 @@ theorem exists_hasLead (hM : M.IsLB) (hq : QuasiRegularAlong hL s)
     ((hc' α t z hz).trans (ger_appLE _ _ _ _ _)).symm)).mp (key t z hz)⟩
 
 
+variable (hO h) in
 def lead (hM : M.IsLB) (hq : QuasiRegularAlong hL s) : filTop p (tw M L l) O (cutIdeal hL s) a →ₗ[k]
     (MonoDeg ι a → sectionsOnClosedSubscheme p (tw M L n) (cutIdeal hL s)) where
   toFun f := (exists_hasLead hO h hM hq f.2).choose
@@ -506,6 +517,7 @@ theorem valOn_dsOn {R : Type} [CommRing R] (x : Sp R ⟶ (cutIdeal hL s).subsche
 variable (hS : Etale ((cutIdeal hL s).subschemeι ≫ p))
 
 
+include hS in
 theorem nowhereZero_dsOn : NowhereZero (dsOn K hL s) := nowhereZero_of_exists fun z _ => by
   obtain ⟨i, hi⟩ := exists_chart K.isLB ((cutIdeal hL s).subschemeι z)
   obtain ⟨j, hj⟩ := exists_chart hL ((cutIdeal hL s).subschemeι z)
@@ -513,6 +525,8 @@ theorem nowhereZero_dsOn : NowhereZero (dsOn K hL s) := nowhereZero_of_exists fu
     ((isUnit_ger_jacFun hL K s inferInstance (ι_mem_support _ z) i j _).map _)⟩
 
 
+omit K in
+include hS in
 theorem quasiRegularAlong_of_etale : QuasiRegularAlong hL s := fun _ hy j hj =>
   isQuasiRegularSeq_secGer hL s (p := p) inferInstance hy j hj
 
@@ -550,6 +564,7 @@ theorem resTo_mulE (hO : SuppIn O (cutIdeal hL s)) (h : n + D = l)
   rfl
 
 
+variable (n) in
 def mulEDs : sectionsOnClosedSubscheme p (tw B L n) (cutIdeal hL s) ≃ₗ[k]
     sectionsOnClosedSubscheme p (tw (tens K.bundle A) L n) (cutIdeal hL s) :=
   (mulDs K hL hB s hS rfl).trans (mulEOn K hL hA hB s e he rfl)
@@ -609,6 +624,7 @@ theorem mulEDs_mulSecOn (w : L.Sec) (h : n + 1 = l) (g : sectionsOnClosedSubsche
 variable (hO : SuppIn O (cutIdeal hL s))
 
 
+variable (n) in
 def Res : H0 p (tw (tens K.bundle A) L n) O →ₗ[k] sectionsOnClosedSubscheme p (tw B L n) (cutIdeal hL s) :=
   (mulEDs K hL hA hB s hS n e he).symm.toLinearMap ∘ₗ resTo hO
 
@@ -641,6 +657,7 @@ theorem Res_eq_zero_iff (m : H0 p (tw (tens K.bundle A) L n) O) :
   rw [Res_eq_iff, map_zero, resTo_eq_zero_iff]
 
 
+variable (p B) in
 abbrev SymTarget (a : ℕ) (n : ℤ) : Type := MonoDeg (Fin D) a → sectionsOnClosedSubscheme p (tw B L n) (cutIdeal hL s)
 
 variable {a : ℕ} (h : n + a = l)

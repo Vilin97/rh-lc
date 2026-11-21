@@ -331,6 +331,7 @@ end GlobalTheory.HolDict.TorusLaw
 namespace GlobalTheory.HolDict
 
 
+open TorusLaw in
 theorem torus_law_of_killed : ∀ (n : ℕ) (ι : Type) [Fintype ι] [DecidableEq ι] (Hm : ι → Mt n) (q : ι → ℕ) (x₀ : ι → Mt n) (w : ι → Fin n → ℤ), (∀ τ, OrthFr (Hm τ) (q τ) (x₀ τ)) → ∀ f, SmFn Hm f → KilledFn Hm x₀ w f → ∀ u ∈ UG Hm, ∀ s, f (u * torEl x₀ s) = torCh w s * f u := by
   intro n ι _ _ Hm q x₀ w h f hs hk u hu s
   have key : ∀ S : Finset (ι × Fin n), ∀ v ∈ UG Hm,

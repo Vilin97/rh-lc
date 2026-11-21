@@ -140,6 +140,7 @@ theorem spMap_inj {A B : Type} [CommRing A] [CommRing B] {f g : A →+* B} (h : 
 end GlobalTheory.KeyFam.PolFamPf
 
 
+open GlobalTheory.KeyFam.PolFamPf in
 theorem GlobalTheory.KeyFam.polFam : Out.Laws → Out.Laws2 → ThetaUnifAV → GlobalTheory.TorusAlgebraic → PolFam := by
   intro hL hL2 hU hA P hg
   obtain ⟨k, K, _, _, ζ, σ, hk, ho, hζ, ⟨F⟩⟩ := GlobalTheory.T.exists_siegelFamily_over_numberField hL hL2 hU P.g hg

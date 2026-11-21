@@ -21,6 +21,7 @@ variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComple
   (X : InfinitePlace K → Matrix ι ι ℂ)
 
 
+omit [IsTotallyComplex K] in
 theorem isSat_of_le {L A S : Submodule (𝓞 K) V} (hS : IsSat (Formalism.HermitianLatticesTheory.realize b X) L S) (h : S ≤ A)
     (hA : A ≤ L) : IsSat (Formalism.HermitianLatticesTheory.realize b X) A S := by
   have mono : ∀ {A B : Submodule (𝓞 K) V}, A ≤ B →
@@ -30,6 +31,7 @@ theorem isSat_of_le {L A S : Submodule (𝓞 K) V} (hS : IsSat (Formalism.Hermit
   exact ⟨h, mono h, fun y hy hy' => hS.2.2 y (mono hA hy) hy'⟩
 
 
+omit [IsTotallyComplex K] in
 theorem rk_lt (hX : ∀ v, IsUnit (X v).det) {A S : Submodule (𝓞 K) V} (hA : A.FG)
     (hS : IsSat (Formalism.HermitianLatticesTheory.realize b X) A S) (hne : S ≠ A) :
     rk (Formalism.HermitianLatticesTheory.realize b X) S < rk (Formalism.HermitianLatticesTheory.realize b X) A := by

@@ -36,6 +36,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
 
 
+open scoped ComplexOrder in
 theorem posDef_of_isMetric {σ : c.F →+* ℂ} {y : FrPt Xo c (CAt σ)} {N : ℝ} {Gr : Mats Dw ℂ}
     (h : GlobalTheory.LamT.IsMetric y N Gr) (b : E →+* ℂ) : (Gr b).PosDef := by
   obtain ⟨Φ, u, Hm, χ, θ, Fd, w, W, -, hA, -, -, -, -, h7, h8⟩ := h

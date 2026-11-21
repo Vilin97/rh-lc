@@ -19,12 +19,14 @@ variable (K L : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L] [IsGalois K L]
 
 
+variable {K L} in
 theorem map_minpoly_eq_prod {x : 𝒪[L]} (hx : Algebra.adjoin 𝒪[K] {x} = ⊤) :
     (minpoly 𝒪[K] x).map (algebraMap 𝒪[K] 𝒪[L]) =
       ∏ σ : L ≃ₐ[K] L, (X - C (integerAlgEquiv K L σ x)) :=
   _root_.UpperTheory.Reformulated.B.MinpolyProductMap.map_minpoly_eq_prod hx
 
 
+variable {K L} in
 theorem aeval_derivative_minpoly_eq_prod [DecidableEq (L ≃ₐ[K] L)] {x : 𝒪[L]}
     (hx : Algebra.adjoin 𝒪[K] {x} = ⊤) :
     aeval x (derivative (minpoly 𝒪[K] x)) =

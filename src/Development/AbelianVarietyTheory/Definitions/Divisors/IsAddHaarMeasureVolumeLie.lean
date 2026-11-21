@@ -38,6 +38,7 @@ variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 open GlobalTheory.CuspRep
 
 
+omit [IsTotallyComplex E] in
 instance isAddHaarMeasure_volume_lie : Measure.IsAddHaarMeasure (volume : Measure (Lie E a)) :=
   haveI : Measure.IsAddHaarMeasure (volume : Measure (Fin a → Cinf E)) := Measure.pi.isAddHaarMeasure _
   Measure.pi.isAddHaarMeasure _
@@ -52,6 +53,7 @@ def smoothSpan (π : CuspSub E a) : Submodule ℂ (GA E a → ℂ) :=
 
 
 
+omit [IsTotallyComplex E] in
 theorem exists_isTestInf {y : Lie E a} (hy : y ∈ invSet E a) {U : Set (Lie E a)} (hU : U ∈ nhds y) :
     ∃ ρ : Lie E a → ℝ, IsTestInf (fun x => (ρ x : ℂ)) ∧ tsupport ρ ⊆ U ∧ (∀ x, ρ x ∈ Set.Icc (0 : ℝ) 1) ∧ ρ y = 1 := by
   obtain ⟨f, h1, h2, h3, h4, h5⟩ := exists_contDiff_tsupport_subset (n := ⊤) (s := invSet E a ∩ U) (x := y)

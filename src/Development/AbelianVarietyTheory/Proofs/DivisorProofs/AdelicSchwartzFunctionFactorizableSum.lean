@@ -191,6 +191,7 @@ theorem exists_place : Nonempty (Pl (F := F)) := by
   exact ⟨⟨M, hM.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hM (RingOfIntegers.not_isField F)⟩⟩
 
 
+open Classical in
 theorem coset_restrProd (c : ℂ) (d : 𝓞 F) (hd : d ≠ 0) (a : κ → Af F) :
     ∃ φ : ∀ v : Pl (F := F), (κ → Fv F v) → ℂ, (∀ v, φ v ∈ SB (κ → Fv F v)) ∧
       (∀ᶠ v in cofinite, φ v = stdInd F κ v) ∧

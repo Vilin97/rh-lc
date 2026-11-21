@@ -137,6 +137,7 @@ theorem finrank_piece_eq_hilbFn (y : Fin (N + 1) → Ω) (n : ℕ) :
 end HilbertPositive
 
 
+open HilbertPositive in
 theorem HilbertPositive.proof (hPos : ProjDegreePositive.Statement.{u})
     (hSec : TwistSections.Statement.{u, w}) : HilbertPositive.Statement.{u, w} := by
   intro k _ Ω _ _ N y e he hW

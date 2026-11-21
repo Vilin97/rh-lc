@@ -25,6 +25,7 @@ theorem fullLat_congr {K Rg : Type} [Field K] [NumberField K] [CommRing Rg] [Alg
   exact hl
 
 
+set_option maxHeartbeats 8000000 in
 theorem goodW_core {D : D7} (T : CoreJ D) (hT : LawsJ T) (j : ℕ) (hj : InR D j) (w : WeightFamilies.Wt D j)
     (hl : FullLat (T.cuspA j (wtA w) w.n) (valSet (T.Q.Xo j) T.Q.c (algCls (T.Q.Xo j) T.Q.c))
       fun la => isVal_valSet la) :

@@ -50,6 +50,7 @@ open GlobalTheory.LevDesc (transl)
 open ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.FieldBC
 
 
+set_option maxHeartbeats 1000000 in
 theorem pull_data : ∀ (D : D7) (T : CoreJ D) (j : ℕ) (Y : Deep T.toCore j) (e : ℕ) (o : ℝ), LawsJ T → InR D j → Y.Good e o →
     ∀ (a : (D.host.E →+* ℂ) × ℕ → ℕ) (n : ℕ), Dom a n → ∀ (G : Type) [Group G]
     (lev : G → (T.Q.Dw j).La →ₗ[𝓞 D.host.E] (T.Q.Dw j).La),
@@ -174,6 +175,7 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotio
   {Y0 : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y0 cX} {Csz : ℝ}
 
 
+set_option maxHeartbeats 1000000 in
 theorem frame_data (p : PtAt ex Csz) (i : Fin D.R.m) (Y : Cov p i) {e : ℕ} {o : ℝ} (hY : Y.Good e o) :
     ∃ (fr : TypeFrame (dat p i) Y.d.l₂) (ε : Sq D.host ≃ p.R.toRealDat.Pg) (iso' : ∀ v : Sq D.host, ZMod (D.host.g v.1) ≃+* kP (ε v).1)
       (t : LevelGroup D.host ≃* p.P.Gp), IsTypeLevel Y.d.l₂ ∧

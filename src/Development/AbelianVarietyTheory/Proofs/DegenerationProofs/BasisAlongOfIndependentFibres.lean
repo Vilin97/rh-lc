@@ -161,6 +161,7 @@ theorem existsUnique_comb {X B Y A G : Scheme.{0}} {L : LB G} (hL : L.IsLB) (q :
 end GlobalTheory.TraitBasis
 
 
+open GlobalTheory.TraitBasis in
 theorem GlobalTheory.basisAlong_of_independent_fibres : Out.Laws → ∀ (Z : Scheme.{0}) (G : Over Z) [GrpObj G] (L : LB G.left) (N n : ℕ) (T : Over Z) (b : Fin n → LB.Sec (Out.LPow G L (N : ℤ) T)), L.IsLB → IsSemiAbelian G → 1 ≤ N → (∀ (K : Type) [Field K] [IsAlgClosed K] (x : Sp K ⟶ T.left) (c : Fin n → K), (∀ (g : Sp K ⟶ (T ⊗ G).left) j, g ≫ (fst T G).left = x → ∑ i, c i * valF g _ ((b i).f j) = 0) → c = 0) → ∀ (W : Type) [CommRing W] [IsDomain W] [IsLocalRing W], GlobalTheory.LN.CDvr W → ∀ (χ : Sp W ⟶ T.left) (A : Out.PolAV (Sp (FractionRing W))) (φ : A.A.left ⟶ G.left), IsGrpPullback A.A G (Out.jK W ≫ χ ≫ T.hom) φ → LBIso A.L (L.pull φ) → n = N ^ A.g → GlobalTheory.LN.BasisAlong G L N (Over.homMk χ rfl : Over.mk (χ ≫ T.hom) ⟶ T) b := by
   intro laws Z G _ L N n T b hL hG hN H W _ _ _ hW χ A φ hφ hiso hn t
   have := hW.1

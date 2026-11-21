@@ -239,6 +239,7 @@ theorem integral_terms [IsLocalRing V] [IsNoetherianRing V] [IsIntegrallyClosed 
   linear_combination (cH (toUnit T).left z (u c)) * ha c T z J hJ
 
 
+omit [IsDomain V] in
 def kH {K : Type} [CommRing K] (ev : V →+* K) (z : (Over.mk (spMap ev)).left) :
     K →+* (Over.mk (spMap ev)).left.presheaf.stalk z := cH (𝟙 (Sp K)) z
 

@@ -182,6 +182,7 @@ theorem eigProd : EigProd k := by
   exact tensor_eig _ _ (hinj A) U₁ U₂ s₁ y hmem hy0 c hyc
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem eigFilt : EigFilt k := by
   intro n V _ _ ρ ℓ F hF h0 hℓ x c v hv hvc
   classical

@@ -81,6 +81,7 @@ theorem framepf_coordL_apply (x : ↥(NcS W T (c - 1))) (k : Fin Bs.r) :
 variable (hu : IsUnit (algebraMap (LetA O n) W.EE π'))
 
 
+include hπ0 hΔπ hR2 γ0 hu in
 theorem framepf_coordL_ker (x : ↥(NcS W T (c - 1))) :
     framepf_coordL Bs π' c hπ0 hΔπ hR2 γ0 x = 0 ↔ (x : W.DD T) ∈ PiNS W T π' 1 := by
   have hx := framepf_gco_spec Bs π' c hπ0 hR2 x

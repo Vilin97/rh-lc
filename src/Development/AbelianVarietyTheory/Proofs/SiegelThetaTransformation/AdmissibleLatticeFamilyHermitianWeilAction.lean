@@ -117,6 +117,7 @@ theorem colsIn_of_coprime {s t : ℕ} (h : s.Coprime t) {x : Matrix (Fin n) (Fin
   fun a => mem_of_coprime Λ h (h1 a) (h2 a)
 
 
+omit [IsCMField E] in
 theorem colsIn_transfer {s R m : ℕ} (hs : s.Coprime (m * R)) (h1 : ∀ v ∈ Λ, (s : E) • v ∈ Λ')
     {x : Matrix (Fin n) (Fin N) E} (hx : ColsIn Λ ((R : E) • x))
     (hx' : ColsIn Λ' (((m * R : ℕ) : E) • x)) : ColsIn Λ' ((R : E) • x) := by
@@ -231,6 +232,7 @@ theorem levelL_sum (hΛ : ∀ x, x ∈ Λ ↔ ∀ y ∈ Λ, IsIntegral ℤ (herm
   exact Finset.sum_congr rfl fun q _ => (rho_add hΛ' R q.out.2 hY φ).symm
 
 
+omit [IsCMField E] in
 theorem eq_of_agree {s L : ℕ} (hs : s.Coprime L) (h2 : ∀ v ∈ Λ', (s : E) • v ∈ Λ)
     {φ ψ : Matrix (Fin n) (Fin N) E → ℂ} (hφ : LevelL Λ' L φ) (hψ : LevelL Λ' L ψ)
     (h : ∀ x, ColsIn Λ ((L : E) • x) → ColsIn Λ' ((L : E) • x) → φ x = ψ x) : φ = ψ := by
@@ -276,6 +278,7 @@ end GlobalTheory.SW.WeilAdm
 namespace GlobalTheory.SW
 
 
+open WeilAdm WeilLevel Base in
 theorem weil_admissible : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)), IsType Ψ → ∀ (n N : ℕ), Even n → ∀ c R : ℕ, 0 < c → ∃ R' : ℕ, ∀ (M : ℕ) (φ : Fam E n N), admitted M R φ → ∀ γ ∈ UU E N, Den c γ → admitted M R' (fun Λ => weil Ψ γ (φ Λ)) := by
   classical
   intro E _ _ _ Ψ hΨ n N hn c R hc

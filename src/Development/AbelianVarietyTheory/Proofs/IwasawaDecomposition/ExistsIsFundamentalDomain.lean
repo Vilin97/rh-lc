@@ -20,6 +20,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 namespace GlobalTheory.FundDomDiscrete
 
 
+open Topology Filter in
 theorem exists_measurable_section {G : Type*} [Group G] [TopologicalSpace G]
     [IsTopologicalGroup G] [SecondCountableTopology G] [MeasurableSpace G] [OpensMeasurableSpace G]
     (Γ : Subgroup G) [DiscreteTopology Γ] :

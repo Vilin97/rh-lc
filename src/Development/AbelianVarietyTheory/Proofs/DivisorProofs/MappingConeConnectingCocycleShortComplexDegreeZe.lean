@@ -12,6 +12,7 @@ noncomputable section
 namespace GlobalTheory.EtC.ConeConn
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem cone_connecting_class : ∀ (R : Type) [CommRing R] (S : ShortComplex (Shv R))
     (hc : (CochainComplex.singleFunctor (Shv R) 0).map S.f ≫ resAug S.X₂ = resAug S.X₁ ≫ resMap R S.f)
     (φ : S.X₂ ⟶ (res R S.X₁).X 0) (ψ : S.X₃ ⟶ (res R S.X₁).X 1),

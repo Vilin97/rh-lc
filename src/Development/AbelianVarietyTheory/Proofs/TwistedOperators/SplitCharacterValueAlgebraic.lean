@@ -57,6 +57,7 @@ theorem isAlgebraic_loc {E : Type} [Field E] [NumberField E] {I : Type} [Fintype
   exact IsAlgebraic.of_pow two_pos hint.isAlgebraic
 
 
+open GlobalTheory.AdelicU GlobalTheory.AdelicU.Supp GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels in
 theorem exists_locIdele {D : D7} {e : AE D} (he : IsSplitIdem D e) (x : (AE D)ˣ) (hx : (x : AE D) = e * x + (1 - e)) :
     ∃ (w : HeightOneSpectrum (𝓞 D.host.E)) (y : (w.adicCompletion D.host.E)ˣ), x = GlobalTheory.LFun.locIdele D.host.F w y := by
   obtain ⟨v, τ, rfl⟩ := isSplitIdem_iff_exists.1 he

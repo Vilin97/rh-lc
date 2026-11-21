@@ -120,6 +120,7 @@ section Grp
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+variable (k) in
 def uEl (i t : ℕ) (c : Fin (i + 1) → k) (d : Fin (t + 1) → k) : Mir k ((i + 1) + t + 1) :=
   ⟨unip k ((i + 1) + (t + 1)) (Multiplicative.ofAdd (Fin.append c d)), MirU_le_Mir k _ ⟨_, rfl⟩⟩
 
@@ -499,6 +500,7 @@ theorem exists_polyBall_of_qC (z : τ.V ⊗[ℂ] σ.V) (hz : qC τ σ z = 0) :
     exact add_mem (twKer_one_mono _ (polyBall_mono _ u) h₁) (twKer_one_mono _ (polyBall_mono _ v) h₂)
 
 
+variable (k) in
 def Lball (i t : ℕ) (s : kˣ) : Subgroup (Mir k ((i + 1) + t + 1)) :=
   (polyBall ((i + 1) + t + 1) s).map (GlobalTheory.CompanionTheory.BZPhiPhi.unipM k ((i + 1) + t))
 

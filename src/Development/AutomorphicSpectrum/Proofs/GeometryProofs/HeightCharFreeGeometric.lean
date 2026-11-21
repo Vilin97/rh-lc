@@ -231,6 +231,7 @@ end GlobalTheory.CompanionTheory.Ar.Flat.LemFGeo
 namespace GlobalTheory.CompanionTheory.Ar.Flat
 
 
+open LemFGeo in
 theorem hfree_geom : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) [StarRing (𝓞 E)], (∀ a : 𝓞 E, star a = H.bar a) → ∀ (X : Scheme.{0}) (t : SAB H X), PowFns t → ∀ (k : Type) [Field k] [IsAlgClosed k] (p : ℕ) [Fact p.Prime] [CharP k p] (x : Sp k ⟶ X), GeomPF t x → ∀ (d r : ℕ) (g : GermAt t x d), HChar g.B r → HFree g.B r := by
   intro E _ _ _ H _ hbar X t hP k _ _ p _ _ x hG d r g hc
   obtain ⟨Q⟩ := GlobalTheory.T.abelian_quotient_of_power_fns E H X t hP k p x hG

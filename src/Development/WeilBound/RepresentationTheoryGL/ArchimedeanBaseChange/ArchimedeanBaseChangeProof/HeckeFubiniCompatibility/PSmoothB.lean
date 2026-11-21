@@ -48,6 +48,7 @@ theorem val_mem_GLs₀ (y : G n) : y.val ∈ GLs n :=
   ((Matrix.isUnit_iff_isUnit_det _).1 y.isUnit).ne_zero
 
 
+omit [NumberField E] [IsTotallyComplex E] in
 def xv (v : InfinitePlace E) (x : Lie E n) : Mat n := fun i j => x i j v
 
 omit [IsTotallyComplex E] in
@@ -64,6 +65,8 @@ theorem contDiffAt_matMul {X : Type} [NormedAddCommGroup X] [NormedSpace ℝ X] 
     (contDiffAt_pi.1 (contDiffAt_pi.1 hf i) k).mul (contDiffAt_pi.1 (contDiffAt_pi.1 hg k) j)
 
 
+open Classical in
+omit [NumberField E] [IsTotallyComplex E] in
 def uOf (x : Lie E n) : GL (Fin n) (Cinf E) := if h : IsUnit (Matrix.of x) then h.unit else 1
 
 omit [NumberField E] [IsTotallyComplex E] in

@@ -16,11 +16,13 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   {A C : Type} [Fintype A] [DecidableEq C]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype A] in
 theorem setCols_eq_add_offBlock (P : Finset C) (Y Y' : Matrix A C k) (T : Matrix A P k) :
     setCols P Y' T = setCols P Y T + setCols P (Y' - Y) 0 := by
   ext i j; by_cases h : j ∈ P <;> simp [setCols, h]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype A] in
 theorem setCols_of_add (P : Finset C) (Y : Matrix A C k) (x t : (Σ _ : A, P) → k) :
     setCols P Y (Matrix.of fun i j => (x + t) ⟨i, j⟩) =
       setCols P Y (Matrix.of fun i j => x ⟨i, j⟩) + setCols P 0 (Matrix.of fun i j => t ⟨i, j⟩) := by

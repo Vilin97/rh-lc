@@ -78,6 +78,8 @@ def seeKS (X : Formalism.L2.SG.HidaSetting.HidaSetting D) : Set X.B.I.GA := {x |
 def seeChiS (X : Formalism.L2.SG.HidaSetting.HidaSetting D) : X.B.I.GA → ℂ := fun x => star (X.chi2 x.2)
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
 structure RealT (Rc : Formalism.L2.RecT ex) (P : RowSideFamily ex) (Dcf : ∀ Zs : DefSub P.A3.fam3.amb3, DefCols (P.A3.side3 P.Ps P.ψs Zs))
     (Spf : ∀ Zs : DefSub P.A3.fam3.amb3, SPer (Dcf Zs)) (Zscf : DefSub P.A3.fam3.amb3 → IndefScale P.A3.fam3.base3)
     (S : Formalism.L2.SG.SpectralTiesReal.STiesR Rc) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] : Type 1 where

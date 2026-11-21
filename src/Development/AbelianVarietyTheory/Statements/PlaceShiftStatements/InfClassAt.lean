@@ -55,6 +55,7 @@ def Away (t : T) (w : PlL D) : Prop :=
   ∀ PP ∈ L.Q t, PP.under (𝓞 D.host.F) ∈ G.pl.S0 ∨ ∀ l : ℕ, l.Prime → (l : 𝓞 D.host.E) ∈ PP.asIdeal → (l : 𝓞 D.what₂.LL) ∉ w.asIdeal
 
 
+open Classical in
 def depL (l : ℕ) : ℕ := (G.pl.W0.filter fun PP => (l : 𝓞 D.host.E) ∈ PP.asIdeal).sup (depthAt G)
 
 variable {G} {W : G.Weil} (S : GridChoice W Set.univ)
@@ -72,6 +73,7 @@ def rowVal (v : VV ℂ (listedWt G (.grid 0 D.R.m))) : VV ℂ (wt G (.grid 0 D.R
   rhoVr (tauE D) _ (S.N.fr (.grid 0 D.R.m))⁻¹ (funOf (listedWt G (.grid 0 D.R.m)) v)
 
 
+variable (G) in
 abbrev lastPair : VV ℂ (wt G (.top D.R.m)) →ₗ[ℂ] VV ℂ (wt G (.grid D.R.m D.R.m)) →ₗ[ℂ] ℂ :=
   brPair (listedWt G (.grid D.R.m D.R.m)) G.sp.topDec.rank.symm (wt G (.top D.R.m))
 

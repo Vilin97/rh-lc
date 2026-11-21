@@ -12,6 +12,7 @@ open scoped NumberField
 namespace PI.ProdFormulaE
 
 
+open scoped Classical in
 def modF (K : Type) [Field K] [TopologicalSpace K] [IsTopologicalRing K] [LocallyCompactSpace K]
     (a : K) : ℝ := by
   classical
@@ -67,6 +68,7 @@ def IndexFormula : Prop :=
       modF K (t : K) * (Nat.card (𝒪[K] ⧸ Ideal.span {t}) : ℝ) = 1
 
 
+open IsDedekindDomain NumberField in
 def CardStep : Prop :=
   ∀ (F : Type) [Field F] [NumberField F] (p : HeightOneSpectrum (𝓞 F))
     (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]

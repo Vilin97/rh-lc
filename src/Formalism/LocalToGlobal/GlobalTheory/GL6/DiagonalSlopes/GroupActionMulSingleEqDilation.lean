@@ -188,6 +188,7 @@ theorem zero_of_group_action_zero [Fact (D.mem u).A.T.Prime] (Tf : Forms0 D u) (
     exact (LinearEquiv.map_eq_zero_iff _).1 hv
 
 
+set_option maxHeartbeats 1000000 in
 theorem multi_diamond_of_group_elem [Fact (D.mem u).A.T.Prime] (Tf : Forms0 D u) (hE : DiamondElementsExist Tf)
     (g : (D.mem u).A.vT → (ZMod (D.mem u).A.T)ˣ) : ∃ (k : (D.mem u).A.vT → ℤ)
       (δ : UPts (sigD D) (gramN D 0 (Nat.zero_le _)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)),

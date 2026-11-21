@@ -96,6 +96,7 @@ theorem continuousAt_aeval_segreRatio {K : Type} [Fintype K] {J : K → Type} {w
 end OpenNear
 
 
+open OpenNear in
 theorem open_near : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Sp Ω ⟶ X) (K : Type) [Fintype K] (J : K → Type)
     [∀ k, Fintype (J k)] (y : (Σ k, J k) → Ω),
     (∀ q : X, genPt ξ ⤳ q) → CoordTie ℤ ξ (fun c' : (k : K) → J k => ∏ k, y ⟨k, c' k⟩) →

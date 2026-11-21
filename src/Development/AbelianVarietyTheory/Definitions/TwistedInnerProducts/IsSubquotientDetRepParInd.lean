@@ -76,6 +76,7 @@ theorem isUnram_absPow (s : ℂ) : IsUnram (absPow k s) := fun x hx => by
   ext; simp [val_absPow, nabs_eq_one k hx]
 
 
+variable {k} in
 theorem isSmoothChar_of_isUnram {χ : kˣ →* ℂˣ} (h : IsUnram χ) : IsSmoothChar χ := by
   have ho : IsOpen (𝒪[k] : Set k) := Valuation.isOpen_integer
   have h1 : IsOpen ({x : kˣ | (x : k) ∈ (𝒪[k] : Set k)} ∩
@@ -99,9 +100,11 @@ theorem ord_mul (x y : kˣ) : ord k (x * y) = ord k x + ord k y := by
   ring
 
 
+variable {k} in
 theorem ord_eq_zero {x : kˣ} (hx : valuation k (x : k) = 1) : ord k x = 0 := by simp [ord, hx]
 
 
+variable {k} in
 theorem ord_eq_one {x : kˣ} (hx : valuation k (x : k) = uniformizer k) : ord k x = 1 := by
   set φ := IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt k
   have h0 : φ (uniformizer k) ≠ 0 := by simp
@@ -118,6 +121,7 @@ theorem ord_eq_one {x : kˣ} (hx : valuation k (x : k) = uniformizer k) : ord k 
   simp [ord, hx, φ, key]
 
 
+variable {k} in
 theorem ord_eq_zero_iff {x : kˣ} : ord k x = 0 ↔ valuation k (x : k) = 1 := by
   refine ⟨fun h => ?_, ord_eq_zero k⟩
   set φ := IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt k
@@ -141,6 +145,7 @@ theorem unrChar_uniformizer (α : ℂˣ) {x : kˣ} (hx : valuation k (x : k) = u
   rw [unrChar_apply, ord_eq_one k hx, zpow_one]
 
 
+variable {k} in
 theorem eq_unrChar {χ : kˣ →* ℂˣ} (h : IsUnram χ) {ϖ : kˣ}
     (hϖ : valuation k (ϖ : k) = uniformizer k) : χ = unrChar k (χ ϖ) := by
   let o : kˣ →* Multiplicative ℤ := MonoidHom.mk' (fun x => .ofAdd (ord k x)) fun x y => by
@@ -386,6 +391,7 @@ def jacB (π : Representation ℂ (GL n k) V) : Representation ℂ (n → kˣ) (
   (jac (points n) π).comp (leviTorus k n).toMonoidHom
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem jacBU_mk (π : Representation ℂ (GL n k) V) (t : n → kˣ) (v : V) :
     jacBU π t (Submodule.Quotient.mk v) = Submodule.Quotient.mk (π (diagT k n t) v) := rfl
 
@@ -465,6 +471,7 @@ def expMult (π : Representation ℂ (GL n k) V) (χ : (n → kˣ) →* ℂˣ) :
   jhMult (ofChar χ) (jacBUFixed π)
 
 
+omit [LinearOrder n] in
 def IsSpherical (π : Representation ℂ (GL n k) V) : Prop := IsSphericalFor π (KO k n)
 
 def HasSatake (π : Representation ℂ (GL n k) V) (α : n → ℂˣ) : Prop :=

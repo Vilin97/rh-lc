@@ -267,6 +267,7 @@ theorem lift_self_eq (p : CP D) :
 end VeroneseResolution
 
 
+open VeroneseResolution in
 theorem VeroneseResolution.proof : VeroneseResolution.Statement := by
   intro D _
   refine ⟨⊤, res D, CP.instMeasurableSpace, CP.instBorelSpace, fsMeasure D, isSmoothVolume_fs D,

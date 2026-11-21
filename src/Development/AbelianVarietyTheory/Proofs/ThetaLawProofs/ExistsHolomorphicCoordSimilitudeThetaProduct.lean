@@ -213,6 +213,8 @@ private lemma tensor_coeff_eq_zero_of_linearIndependent {V : Type} {N : ℕ} (T 
     exact congrFun (hk (I 0)) (Fin.tail I)
 
 
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj MeasureTheory in
+attribute [local instance] Over.cartesianMonoidalCategory in
 theorem _root_.GlobalTheory.SimilTheta.exists_holomorphic_coord_simTheta : ∀ (g m : ℕ) (a b : Fin g → ℂ)
     (al : Matrix (Fin 4) (Fin 4) ℤ) (Th : Fin (m ^ g) → (Fin g → Fin g → ℂ) → (Fin g → ℂ) → ℂ),
     _root_.GlobalTheory.KeyPow.charHalf g a b → 1 ≤ m →

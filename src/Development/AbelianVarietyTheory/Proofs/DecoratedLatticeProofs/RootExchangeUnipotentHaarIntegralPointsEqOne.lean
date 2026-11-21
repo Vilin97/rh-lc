@@ -54,6 +54,7 @@ end GlobalTheory.HaarR.UnitVolN
 end
 
 
+open GlobalTheory.RootEx.VolN in
 theorem GlobalTheory.HaarR.volN_KO_eq_one : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] (n : Type) [Fintype n] [DecidableEq n] (c p : ℕ), 1 ≤ p → p ≤ c → ∀ (ν : Measure k), IsUnitVol ν → volN ν n c p {u : N k n c p | (u : GL (n ⊕ Fin c) k) ∈ KO k (n ⊕ Fin c)} = 1 := by
   intro k _ _ _ _ _ _ n _ _ c p h1 hp ν hν
   haveI : ν.IsAddHaarMeasure := hν.1

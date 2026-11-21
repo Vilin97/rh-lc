@@ -21,6 +21,8 @@ noncomputable section
 namespace GlobalTheory.FockCoefSplit
 
 
+set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem actO_inf : ∀ (D : D7) (S T : HSp D) (a : GA D S) (b : GA D T), a ∈ GinfC S → b ∈ GinfC T →
     ∀ w : WO S T, w.map (infPart D) = 0 → actO S T a b w = w := by
   intro D S T a b ha hb w hw

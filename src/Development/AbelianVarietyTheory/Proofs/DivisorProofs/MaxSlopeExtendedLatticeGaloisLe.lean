@@ -270,6 +270,7 @@ variable {K K' V V' : Type} [Field K] [NumberField K] [IsTotallyComplex K] [Fiel
   {b' : Basis κ K' V'} {X' : InfinitePlace K' → Matrix κ κ ℂ} {N : (K →+* ℂ) → V → ℝ} {N' : (K' →+* ℂ) → V' → ℝ}
 
 
+omit [IsTotallyComplex K] [NumberField K] in
 theorem cnorm_cols (hG' : IsGram b' X' N') (φ : V →ₛₗ[algebraMap K K'] V')
     (ht : ∀ σ' x, N' σ' (φ x) = N (σ'.comp (algebraMap K K')) x) {j : ℕ} (e : Fin j → V) (w : InfinitePlace K')
     (x : Fin j → K) :

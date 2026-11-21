@@ -119,6 +119,7 @@ theorem trace_zero (X : HidaSetting D) {y : D.host.E} (hy : y + star y = 0) : Al
   · exact h5
 
 
+open Formalism.L2.SG.TermOp.Vanish in
 theorem nonRelCharC_holds : NonRelCharC := by
   intro D X Yf u u' t ht
   have hiso : t.lin ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT := t.rep.2.2.1

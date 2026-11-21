@@ -238,6 +238,7 @@ theorem eval_barP {σ : Type} (y : σ → ℂ) (P : MvPolynomial σ ℂ) :
   | mul_X P l hP => simp only [barP, map_mul, map_X, eval_X, conj_conj] at *; rw [hP]
 
 
+omit [Fintype T] in
 theorem invFam_eval {P : J → Harm.Poly ℂ T p q (Fin n)} (hP : InvFam P)
     {u : T → Matrix (Fin n) (Fin n) ℂ} (hu : ∀ t, u t ∈ Matrix.unitaryGroup (Fin n) ℂ)
     (z w z' w' : Harm.Var T p q (Fin n) → ℂ)

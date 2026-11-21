@@ -85,6 +85,7 @@ theorem rel_existsUnique (g : N.Gt) : ∃! g', I.Rel g g' :=
   ⟨I.img g, I.rel_img g, fun g' h => (I.rel_iff g g').1 h⟩
 
 
+variable {I} in
 theorem Rel.mul {g h : N.Gt} {g' h' : N'.Gt} (hg : I.Rel g g') (hh : I.Rel h h') : I.Rel (g * h) (g' * h') := by
   refine ⟨by rw [Gt.mul_b, Gt.mul_b, hg.1, hh.1, map_mul], fun χ => ?_⟩
   have a := I.θ_eq (N.c χ) g.b h.b
@@ -102,6 +103,7 @@ theorem rel_one : I.Rel 1 1 :=
   ⟨by simp, fun χ => by simp [I.h_one]⟩
 
 
+variable {I} in
 theorem Rel.pow {g : N.Gt} {g' : N'.Gt} (hg : I.Rel g g') (n : ℕ) : I.Rel (g ^ n) (g' ^ n) := by
   induction n with
   | zero => simpa using I.rel_one
@@ -170,6 +172,7 @@ theorem wQ_eq {k : ℕ} (hk : Odd k) (p : N.QT k) (p' : N'.QT k) (ep : p'.1.1.to
   linear_combination (norm := module) d + c - j • a + (j * (2 * j + 1)) • b
 
 
+variable {I} in
 theorem Rel.vt_eq {g : N.Gt} {g' : N'.Gt} (hg : I.Rel g g') (χ : N.X) :
     N'.vt g' (I.e χ) = (I.lam * I.h g.b : O'ˣ) * f (N.vt g χ) := by
   have a := hg.2 χ

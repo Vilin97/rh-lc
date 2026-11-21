@@ -18,6 +18,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsArithVar IsSecti
 open GroundTheory.Heights₂.Heights (segreChartComponents localMult)
 
 
+open Classical in
 def ChartDivisorLength.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (n m : ℕ)
     (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k) (A : HermLine ι) (s : MRing ι),

@@ -82,6 +82,7 @@ theorem exists_pull (hL : L.IsLB) {T T' : Over Z} (h : T' ⟶ T) (a : LB.Sec (LP
   rw [val_one, Units.val_one, _root_.mul_one]; rfl
 
 
+variable (G L N) in
 def Rel {T T₁ T₂ : Over Z} {m n : ℕ} (h₁ : T ⟶ T₁) (a : Fin m → LB.Sec (LPow G L (N : ℤ) T₁)) (h₂ : T ⟶ T₂)
     (b : Fin n → LB.Sec (LPow G L (N : ℤ) T₂)) (M : Matrix (Fin m) (Fin n) Γ(T.left, ⊤)) : Prop :=
   ∀ (k : Fin m) (Y : Scheme.{0}) (r : Y ⟶ (T ⊗ G).left) (z : Y) (J), Good L z J →
@@ -184,6 +185,7 @@ theorem exists_chart_local {A : LB Z} (hA : A.IsLB) {W : Type} [CommRing W] [IsL
   exact ⟨i, fun t => ((IsLocalRing.specializes_closedPoint t).map χ.continuous).mem_open (A.U i).isOpen hi⟩
 
 
+variable (G L N) in
 def TraitBasis (U : Z.Opens) {m : ℕ} (b : Fin m → LB.Sec (LPow G L (N : ℤ) (Over.mk U.ι))) : Prop :=
   ∀ (W : Type) [CommRing W] [IsDomain W] [IsLocalRing W], CDvr W → ∀ χ : Sp W ⟶ U.toScheme,
     Set.range (jK W ≫ χ ≫ U.ι) ⊆ abLocus G →

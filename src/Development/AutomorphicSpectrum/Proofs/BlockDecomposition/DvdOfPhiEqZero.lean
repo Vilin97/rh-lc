@@ -115,6 +115,7 @@ theorem eval₂_root_map : eval₂ ((AdjoinRoot.of (Q.1.map (algebraMap E K))).c
   rwa [eval₂_map] at h
 
 
+omit hj1 in
 def psiB : Fld Q →+* AdjoinRoot (Q.1.map (algebraMap E K)) :=
   AdjoinRoot.lift ((AdjoinRoot.of (Q.1.map (algebraMap E K))).comp (algebraMap E K))
     (AdjoinRoot.root (Q.1.map (algebraMap E K))) (eval₂_root_map Q)
@@ -179,6 +180,7 @@ theorem dvd_of_phi_eq_zero {g : K[X]} (h : phi j Q g = 0) : Q.1.map (algebraMap 
   exact AdjoinRoot.mk_eq_zero.1 this.symm
 
 
+omit hj1 in
 theorem involBase_phi (cK : K →+* K)
     (hj2 : ∀ x, j (cK x) = Algebra.TensorProduct.map (AlgHom.id (maximalRealSubfield E) k)
       ((IsCMField.complexConj E : E ≃ₐ[maximalRealSubfield E] E) : E →ₐ[maximalRealSubfield E] E) (j x))

@@ -202,12 +202,14 @@ def compress (X : Submodule ℂ L) [X.HasOrthogonalProjection] (T : L →L[ℂ] 
   ((X.starProjection ∘L T) ∘L X.subtypeL).codRestrict X fun _ => X.starProjection_apply_mem _
 
 
+omit [CompleteSpace L] in
 theorem inner_compress (X : Submodule ℂ L) [X.HasOrthogonalProjection] (T : L →L[ℂ] L) (y x : X) :
     ⟪y, compress X T x⟫_ℂ = ⟪(y : L), T x⟫_ℂ := by
   change ⟪(y : L), X.starProjection (T x)⟫_ℂ = _
   rw [← Submodule.inner_starProjection_left_eq_right, Submodule.starProjection_eq_self_iff.2 y.2]
 
 
+omit [CompleteSpace L] in
 theorem isCompactOperator_compress {X Y : Submodule ℂ L} [X.HasOrthogonalProjection] (hXY : X ≤ Y)
     {T : L →L[ℂ] L} {T' : Y →L[ℂ] Y} (hT : ∀ y : Y, (T' y : L) = T y) (hc : IsCompactOperator T') :
     IsCompactOperator (compress X T) := by
@@ -258,12 +260,14 @@ theorem continuous_infGL : Continuous (infGL E a) := by
   exact Continuous.units_map (corner (matN a (sInf E))) (continuous_const.add (continuous_id.matrix_map hs))
 
 
+omit [IsTotallyComplex E] in
 theorem continuous_finGL : Continuous (finGL E a) := by
   have hs : Continuous (sFin E) := (continuous_const.prodMk continuous_id :
     Continuous fun x : Af E => ((0, x) : InfiniteAdeleRing E × Af E))
   exact Continuous.units_map (corner (matN a (sFin E))) (continuous_const.add (continuous_id.matrix_map hs))
 
 
+omit [IsTotallyComplex E] in
 theorem locallyCompactSpace_GL : LocallyCompactSpace (GL (Fin a) (Cinf E)) := by
   haveI : LocallyCompactSpace (Matrix (Fin a) (Fin a) (Cinf E)) :=
     inferInstanceAs (LocallyCompactSpace (Fin a → Fin a → Cinf E))

@@ -10,6 +10,7 @@ open CategoryTheory Limits Opposite
 namespace LateralTheory.E.LocDiagPf
 
 
+open Classical in
 def g {S : Type} [CommRing S] (p : PrimeSpectrum S) (s : Finset p.asIdeal.primeCompl) : S :=
   ∏ x ∈ s, (x : S)
 

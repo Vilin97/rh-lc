@@ -89,6 +89,7 @@ theorem isMultMap_zero (M : DSModel V S) (J : Set (GA D V)) (χ : GA D V → ℂ
     refine ⟨0, ⟨[], 0, by simp, fun w _ => by simp⟩, fun w => by simp⟩
 
 
+variable (V) in
 theorem rder_smul (τ : D.what₂.Tau) (X : Matrix (Fin V.rank) (Fin V.rank) ℂ) (c : ℂ) (φ : GA D V → ℂ) :
     Rder θ V τ X (c • φ) = c • Rder θ V τ X φ := by
   funext g
@@ -107,6 +108,7 @@ theorem foldr_rder_smul (l : List (D.what₂.Tau × Matrix (Fin V.rank) (Fin V.r
     exact rder_smul θ V p.1 p.2 c _
 
 
+variable (V) in
 theorem isAutFunSm_smul {φ : GA D V → ℂ} (h : IsAutFunSm θ V φ) (c : ℂ) : IsAutFunSm θ V (c • φ) where
   left γ hγ g := by simp only [Pi.smul_apply, h.left γ hγ g]
   level := by
@@ -126,6 +128,7 @@ theorem isAutFunSm_smul {φ : GA D V → ℂ} (h : IsAutFunSm θ V φ) (c : ℂ)
     exact mul_le_mul_of_nonneg_left (hC g hg) (norm_nonneg c)
 
 
+variable (V) in
 theorem isCuspFun_smul {φ : GA D V → ℂ} (h : IsCuspFun V φ) (c : ℂ) : IsCuspFun V (c • φ) := by
   intro r C hC μ 𝓕 hμ h𝓕 g
   simp only [Pi.smul_apply]

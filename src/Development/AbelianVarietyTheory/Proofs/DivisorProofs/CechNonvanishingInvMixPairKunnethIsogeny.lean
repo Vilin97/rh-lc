@@ -28,6 +28,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.AmpleGen
 
 
+open GlobalTheory.CechPic in
 theorem cls_tw_one {X : Scheme.{0}} {M H : LB X} (hM : M.IsLB) (hH : H.IsLB) :
     cls (GlobalTheory.AbLaw.tw M H 1) (GlobalTheory.AbLaw.isLB_tw hM hH 1) = cls M hM + cls H hH := by
   refine (cls_div (A := M) (B := GlobalTheory.AbLaw.pw H (-1)) hM (GlobalTheory.AbLaw.isLB_pw hH _) (GlobalTheory.AbLaw.isLB_tw hM hH 1)).trans ?_
@@ -35,6 +36,7 @@ theorem cls_tw_one {X : Scheme.{0}} {M H : LB X} (hM : M.IsLB) (hH : H.IsLB) :
   simp
 
 
+open GlobalTheory.CechPic in
 theorem cls_mix_pull {K : Type} [Field K] (A : Over (Sp K)) [GrpObj A] {L : LB A.left} (hL : L.IsLB)
     {T : Over (Sp K)} (z : T ⟶ A) (a b : ℤ) :
     cls ((mix A L a b).pull z.left) (LB.isLB_pull (LB.isLB_linComb hL _ _) _) =
@@ -54,6 +56,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.AmpleGen
 
+open GlobalTheory.CechPic in
 theorem lbIso_pull_psiMap {K : Type} [Field K] (A : Over (Sp K)) [GrpObj A] (hA : IsAbelianScheme A)
     (a₁ b₁ a₂ b₂ : ℤ) (hs : a₁ * b₁ + a₂ * b₂ = 0) {L : LB A.left} (hL : L.IsLB) (a b : ℤ) :
     LBIso ((GlobalTheory.AbLaw.tw ((mix A L a b).pull (fst A A).left) ((mix A L a b).pull (snd A A).left) 1).pull

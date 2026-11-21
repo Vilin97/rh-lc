@@ -125,6 +125,10 @@ private lemma nrm_apply_eq_nrm_finAdele_loc {a b : F}
   rfl
 
 
+open NumberField IsDedekindDomain in
+open scoped Quaternion Topology RestrictedProduct in
+variable {ι : Type*} {R : ι → Type*} [∀ i, TopologicalSpace (R i)] {A : (i : ι) → Set (R i)} in
+variable {F : Type} [Field F] [NumberField F] in
 theorem _root_.GlobalTheory.QSA.FinAdele.traceOpen_finiteAdele : ∀ (F : Type) [Field F] [NumberField F] (a b : F), (∀ v : HeightOneSpectrum (𝓞 F), _root_.GlobalTheory.QSA.TraceOpen (v.adicCompletion F) (algebraMap F (v.adicCompletion F) a) (algebraMap F (v.adicCompletion F) b)) → (∀ᶠ v in (Filter.cofinite : Filter (HeightOneSpectrum (𝓞 F))), ∀ t ∈ v.adicCompletionIntegers F, ∃ u : ℍ[v.adicCompletion F, algebraMap F (v.adicCompletion F) a, algebraMap F (v.adicCompletion F) b], _root_.GlobalTheory.QSA.nrm u = 1 ∧ u.re = t ∧ u.imI ∈ v.adicCompletionIntegers F ∧ u.imJ ∈ v.adicCompletionIntegers F ∧ u.imK ∈ v.adicCompletionIntegers F) → _root_.GlobalTheory.QSA.TraceOpen (FiniteAdeleRing (𝓞 F) F) (algebraMap F (FiniteAdeleRing (𝓞 F) F) a) (algebraMap F (FiniteAdeleRing (𝓞 F) F) b) := by
   intro F _ _ a b hloc hint
   unfold _root_.GlobalTheory.QSA.TraceOpen

@@ -56,6 +56,7 @@ theorem eightfold_snd_assoc (x : Fin 4 → (Y ⟶ A)) (z : Fin 4 → (Y ⟶ B)) 
   rw [reassoc_of% (eightfold_snd x z i)]
 
 
+omit [GrpObj A] [GrpObj B] in
 theorem ext8 {a b : Y ⟶ G4 (A ⊗ B)} (hx : ∀ i, a ≫ prj _ i ≫ fst A B = b ≫ prj _ i ≫ fst A B)
     (hz : ∀ i, a ≫ prj _ i ≫ snd A B = b ≫ prj _ i ≫ snd A B) : a = b := by
   have h : ∀ i, a ≫ prj (A ⊗ B) i = b ≫ prj (A ⊗ B) i := fun i =>
@@ -191,6 +192,7 @@ theorem zcPair_positionB (hD : IsDual A B P) (l : A ⟶ B) [IsMonHom l] (mu : B 
 end Slots
 
 
+omit [GrpObj A] [GrpObj B] in
 theorem zcPair_pull {P : LB (A ⊗ B).left} (hP : P.IsLB) (l : A ⟶ B) (mu : B ⟶ A) (α : Matrix (Fin 4) (Fin 4) ℤ)
     {Y Y' : Over S} (h : Y' ⟶ Y) (u u' : Y ⟶ G4 (A ⊗ B)) :
     pull h.left (zcPair hP l mu α u u') = zcPair hP l mu α (h ≫ u) (h ≫ u') := by

@@ -23,6 +23,7 @@ variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Alge
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 
+omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] in
 theorem archUnitary_preserves_form (h : HermitianForm F E W) (v : Basis ι E W)
     (g : archUnitary h v) (w : InfinitePlace E) (a b : ι → ℂ) :
     star (((g : InfinitePlace E → GL ι ℂ) w : Matrix ι ι ℂ) *ᵥ a) ⬝ᵥ

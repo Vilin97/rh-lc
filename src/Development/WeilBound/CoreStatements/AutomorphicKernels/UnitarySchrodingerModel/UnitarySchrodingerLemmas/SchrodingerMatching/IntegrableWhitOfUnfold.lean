@@ -40,6 +40,8 @@ private theorem continuous_conjH' (a : GL (Fin n) (AE D)) : Continuous (conjH (D
   exact ((continuous_const.matrix_mul continuous_subtype_val).matrix_mul continuous_const).subtype_mk _
 
 
+set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem integrable_comp_conjH (lam : Measure (hermA D n)) (hlam : lam.IsAddHaarMeasure) (a : GL (Fin n) (AE D))
     {f : hermA D n → ℂ} (hf : Integrable f lam) : Integrable (fun b => f (conjH a b)) lam := by
   obtain ⟨i1, i2, i3, i4, -, -⟩ := lattice_Mx D n n
@@ -83,6 +85,8 @@ private theorem sect_wn {V : HSp D} {ψ : AddChar (AF D.host.F) ℂ} {χ : (AE D
   rw [hω.unip (nb b) b.1 (hnb b), h0, Matrix.trace_zero, trA, map_zero, AddChar.map_zero_eq_one, mul_one, mul_comm]
 
 
+set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem integrable_whit_of_unfold (hU : Unfold) :
     ∀ D n V ψ χ θ μ ω H l s ν Φ, Std D n V ψ χ θ μ ω H l s ν Φ → InRange V n →
     ∀ (lam : Measure (hermA D n)) (𝓖 : Set (hermA D n)) (nb : hermA D n → G D n), CoefData nb lam 𝓖 →

@@ -20,6 +20,7 @@ open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.Col Formal
 namespace GlobalTheory.Mem.Col2
 
 
+set_option maxHeartbeats 1600000 in
 theorem laws_all : ∀ {E K ι : Type} [Field E] [NumberField E] [StarRing E] [Field K] [NumberField K] [StarRing K] [Fintype ι] {R : Ranks} (I : ChainIn E K ι R) (J : AtIn I) (emb : ι → E →+* K) (σ : K →+* ℂ) (hc : ι → HCParam R), FOk emb σ → ∀ (hI : I.Ok), J.Ok → ∀ (Q : PerIn I) (hQ : Q.Ok) (Pl : Rows.Places K), J.Laws emb σ hc ∧ FmLaws J Q emb σ hc Pl hI hQ := by
   intro E K ι _ _ _ _ _ _ _ R I J emb σ hc hF hI hJ Q hQ Pl
   have hd := GlobalTheory.T.levelPrimeDiamond_representation I J emb σ hc hF hI hJ

@@ -115,6 +115,7 @@ def epsV (t : T) (w : Pl D.host.E) : (locGrid G t w).VertexGroup :=
   onColumn (G := locGrid G t w) fun j => if j ∈ idx D then sgnAt G t (-1) w j else 1
 
 
+variable (G) in
 def baseM (t : T) (w : Pl D.host.E) (j : ℕ) : GL (Fin ((locGrid G t w).rank (D.R.m, j))) (Kw w) :=
   if j = 0 then (stair (locGrid G t w) (unifAt w) (cosExp G w) j)⁻¹ else 1
 
@@ -222,6 +223,7 @@ def ArrP : Prop := ∀ t, ∀ w ∈ locPl ch.G t, ∀ p, IsPlc w p → ∀ (φ :
         Tm Φ = ch.W.om (.mu t D.R.m j) (a * ρ, a' * ρ') f
 
 
+open Classical in
 def LocP : Prop := ∀ t, ∀ w ∈ locPl ch.G t, ∀ p, IsPlc w p → ∀ β r r₀ h, IsPts ch t w β p.e r r₀ h → ∀ j (hj : j ≤ D.R.m),
   p.IsLoc (frRow ch.S.B t w j hj) ((r₀ j)⁻¹ * r j) ((epsV ch.G t w * (repsAt ch.G t w).elt β) (D.R.m, j)) ∧
   (Even j → (mt _ (h j * r₀ j)).map p.π * (frRow ch.S.B t w j hj).β = (frRow ch.S.B t w j hj).β *
@@ -229,6 +231,7 @@ def LocP : Prop := ∀ t, ∀ w ∈ locPl ch.G t, ∀ p, IsPlc w p → ∀ β r 
   (Odd j → ∃ δ, IsTilt ch.G j δ ∧ (mt _ (h j * r₀ j)).map p.π = (mt _ δ).map p.π)
 
 
+open Classical in
 def BesP : Prop := ∀ t, ∀ w ∈ locPl ch.G t, ∀ p, IsPlc w p → ∀ (M : Vol ch.G) (hM : M.Is t) j σ (hj : j + 2 * σ + 2 = D.R.m) vN
   (a : GA D (ch.G.V (.grid D.R.m j))), (mt (ch.G.V (.grid D.R.m j)) a).map p.π * (frRow ch.S.B t w j (by omega)).β = (frRow ch.S.B t w j (by omega)).β *
     (baseM ch.G t w j).val →
@@ -244,6 +247,7 @@ def JacP : Prop := ∀ t, ∀ w ∈ locPl ch.G t, ∀ p, IsPlc w p → ∀ (M : 
       (mvFr p a (frRow ch.S.B t w (j + 1) (by omega)) (epsV ch.G t w (D.R.m, j + 1)) (frame hc))
 
 
+variable {ch} in
 def Expands {t : T} {w : Pl D.host.E} (p : Place D (Kw w)) (j : ℕ) (hj : j + 1 < D.R.m)
     (a : Matrix (Fin (topRank (locGrid ch.G t w) (j + 1))) (Fin (topRank (locGrid ch.G t w) j)) (Kw w) ×
       Matrix (Fin (topRank (locGrid ch.G t w) (j + 1 + 1))) (Fin (topRank (locGrid ch.G t w) (j + 1))) (Kw w) → ℂ)

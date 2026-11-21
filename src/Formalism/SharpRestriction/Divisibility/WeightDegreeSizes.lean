@@ -106,6 +106,7 @@ theorem loss_bound_nonneg (L : SizeData₂ D) : 0 ≤ L.B0 := by
 def sumA (L : SizeData₂ D) : ℝ := ∑ t : D.host.TT, (L.aT t : ℝ)
 
 
+open Classical in
 def C2atG (D : D7) (L : SizeData₂ D) (C : ℝ) : Prop :=
   ∀ (i : Fin 2) u, ∀ j ∈ SizeData₂.lifts D,
     |(∑ w ∈ L.supp.filter (fun w => D.what₂.places.resChar w = D.host.g i), SizeData₂.sz w (L.E u j w)) -

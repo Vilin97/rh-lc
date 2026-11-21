@@ -44,6 +44,7 @@ theorem chartDens_annulus_nonneg (x : Fin n → ℂ) {r s : ℝ} (hr : 0 < r) (y
 end LelongNumberMonotone
 
 
+open LelongNumberMonotone in
 theorem VarLelongMono.proof (hA : VarLelongAnnulus.Statement) : VarLelongMono.Statement := by
   intro n d J A x r s hJ hdim hAf hr hrs
   have heq := hA n d J A x r s hJ hdim hAf hr hrs

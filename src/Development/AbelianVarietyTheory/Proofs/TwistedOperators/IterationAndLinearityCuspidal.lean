@@ -182,6 +182,7 @@ def downPure (P : PolDown G) (d : SchDown G t) : PureT G (downPath t D.R.m D.R.m
   downFam t D.R.m D.R.m fun j => W.fock (.mu t D.R.m j) (d j) (P j)
 
 
+variable {M t} in
 def oppPer (hM : M.Is t) (P : PolRow G × PolDown G) (d : SchRow G × SchDown G t) (φ : Fn G (.top 0)) (F : Fn G (.grid 0 D.R.m)) :
     (chain G W t hM).Var → ℂ :=
   colPer W hM _ 0 top_idx (topVN hM) (chainData G W t hM (downPure W t P.2 d.2)) (rowLift W M P.1 d.1 F) φ 1

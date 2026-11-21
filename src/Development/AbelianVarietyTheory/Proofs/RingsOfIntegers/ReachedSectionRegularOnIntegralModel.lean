@@ -71,6 +71,7 @@ theorem isSymAct_baseChange (N : ℕ) (b : T ⟶ A) {s t : LB.Sec (LPow A L.L (N
 end BC
 
 
+set_option maxHeartbeats 1000000 in
 theorem regular_of_reach : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) [StarRing (𝓞 E)], (∀ a : 𝓞 E, star a = H.bar a) → ∀ (T : CDVR) (io : c.F →+* T.Fr) (y : IntFr Xo c T io) (C : IntegralChartA3 Xo c T io y), Good3 C → ∀ (k : ℕ) (F : SecN Xo (xOf y) k), Reach Xo (sOf1 y) k F → Regular C k F := by
   intro E _ _ _ H Dw l Xo c _ _ T io y C hC k F₀ hR
   obtain ⟨-, P, hP⟩ := hC

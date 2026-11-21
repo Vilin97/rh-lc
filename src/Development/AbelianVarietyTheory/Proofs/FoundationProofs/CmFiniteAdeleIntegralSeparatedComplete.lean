@@ -108,6 +108,7 @@ theorem tensInt_separated_complete (E : Type) [Field E] [NumberField E] :
     exact add_mem (hx 1) (nsmul_mem hw 1)
 
 
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.StandardLatticesGL3 in
 theorem integral_separated_complete : ∀ (D : D7), (∀ y : AE D, (∀ N : ℕ, 0 < N → ∃ w ∈ OhE D, y = (N : AE D) * w) → y = 0) ∧ ∀ x : ℕ → AE D, (∀ N, x N ∈ OhE D) → (∀ N m : ℕ, 0 < N → 0 < m → ∃ w ∈ OhE D, x (N * m) = x N + (N : AE D) * w) → ∃ y ∈ OhE D, ∀ N : ℕ, 0 < N → ∃ w ∈ OhE D, y = x N + (N : AE D) * w :=
   fun D => tensInt_separated_complete D.host.E
 

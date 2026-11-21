@@ -217,6 +217,7 @@ lemma ioh_qminor_rep {Eop : Fin n → Fin n → (Matrix (Fin n) (Fin n) ℂ → 
   rfl
 
 
+variable (ε E) in
 def iohE (P Q : Matrix (Fin n) (Fin n) ℂ) (a b : Fin n) : Module.End ℂ (ioS ε E) :=
   ∑ c, ∑ d, (P c a * Q b d) • ioE ε E c d
 

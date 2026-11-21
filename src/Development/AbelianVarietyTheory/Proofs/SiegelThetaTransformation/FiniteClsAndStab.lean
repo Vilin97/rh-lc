@@ -357,6 +357,8 @@ private lemma exists_moves_mem_Vset_of_mem_DH {M : ℕ} {h : Matrix (Fin n) (Fin
       ring
 
 
+open Matrix Complex NumberField Filter Topology in
+open scoped ComplexConjugate ComplexOrder Real in
 theorem _root_.GlobalTheory.SW.finite_cls_and_stab : ∀ (E : Type) [Field E] [NumberField E]
     [IsCMField E] (n M : ℕ), 0 < M → Finite (_root_.GlobalTheory.SW.Cls E n M) ∧
     _root_.GlobalTheory.SW.stdL E n ∈ _root_.GlobalTheory.SW.Vset E n M ∧

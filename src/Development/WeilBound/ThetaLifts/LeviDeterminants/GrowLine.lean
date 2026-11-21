@@ -191,6 +191,7 @@ theorem phase_line (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (a b x : κ → AF
   simp [smul_eq_mul]
 
 
+omit [Fintype κ] in
 theorem snd_eq_zero {z : κ → AF F} (hz : At (evI F) z) (i : κ) : (z i).2 = 0 := by
   let w : AF F := LinearMap.inr F (Ainf F) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) 1
   have e0 : evI F w = 0 := map_zero (InfiniteAdeleRing.ringEquiv_mixedSpace F)
@@ -199,6 +200,7 @@ theorem snd_eq_zero {z : κ → AF F} (hz : At (evI F) z) (i : κ) : (z i).2 = 0
   simpa using h2
 
 
+open scoped Classical in
 theorem schr_line (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (a b : κ → AF F) (ha : At (evI F) a) (hb : At (evI F) b)
     (f : SInf F κ) (g : (κ → Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) → ℂ) (x : κ → AF F) (t : ℝ) :
     schr ψ (realAd F t • a, realAd F t • b) (pureA F f g) x =

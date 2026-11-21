@@ -73,6 +73,7 @@ theorem semiBC_fracMap {B : Obj l ↥(OL K)} {N : Type} [AddCommGroup N] [Module
     rw [hL]; exact isFrac_fracMap _ _ _ _
 
 
+variable (S) in
 theorem exists_crys : ∃ (M : FCrys l ↥(OL K)) (V : ∀ B, Eval S B (M.M B)),
     (∀ (B B' Q : Obj l ↥(OL K)) (k : Hom B B') (a : Hom B' Q) (g : Hom bk.prism Q) (x : M.M B),
       (V B').v a g (M.tr k x) = (V B).v (a.comp k) g x) ∧

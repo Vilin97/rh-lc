@@ -43,6 +43,7 @@ theorem mat_ext (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOver E w)
   Matrix.ext fun i j => ad_ext h τ (fun w => congrFun (congrFun (h1 w) i) j) (congrFun (congrFun h2 i) j)
 
 
+omit [NumberField E] in
 theorem piInf_finOne {w : InfinitePlace F} (τ : EmbOver E w) (z : AE F E) : piInf τ (finOne F • z) = 0 := by
   rw [St.piInf_smul]
   have : (finOne F).1 w = 0 := rfl

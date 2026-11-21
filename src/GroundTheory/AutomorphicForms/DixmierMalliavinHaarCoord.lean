@@ -200,6 +200,7 @@ theorem isEmbedding_coe_coe :
   Units.isOpenEmbedding_val.isEmbedding.comp Topology.IsEmbedding.subtypeVal
 
 
+include h in
 theorem secondCountableTopology : SecondCountableTopology G :=
   isEmbedding_coe_coe.secondCountableTopology
 

@@ -102,6 +102,7 @@ theorem commute_of_read (hL : Rl.toRealDat.toLevCh.Is A3.A.μ0) (hSb : Rl.toReal
     (fun k hk h => GlobalTheory.HeckeSup.model_inv_cl hW i _ _ v k hk h)
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem baseChange_comm (i : D.ntw.Tw) (j : ℕ) (b : Bool) {f : ℕ → PlE D.host → Module.End D.what₂.LL (S.WL j)}
     (hs : HeckeStabR S j f) (k k' : ℕ) (P P' : PlE D.host) (h : Commute (f k P) (f k' P')) :
     Commute (hkFR S i j b f hs k P) (hkFR S i j b f hs k' P') := by
@@ -114,6 +115,7 @@ theorem baseChange_comm (i : D.ntw.Tw) (j : ℕ) (b : Bool) {f : ℕ → PlE D.h
   rw [← map_mul, ← map_mul, hr]
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem hkComm_of_family (f : ∀ j, ℕ → PlE D.host → Module.End D.what₂.LL (S.WL j))
     (hs : ∀ j, 1 ≤ j → j ≤ D.R.m → HeckeStabR S j (f j))
     (c : ∀ i : D.ntw.Tw, Bool → ℕ → PlE D.host → FractionRing (D.ntw.O i))

@@ -22,6 +22,7 @@ section General
 variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] in
 theorem shortComplex_exact_of_forall_exists (S : ShortComplex (Rep.{u} k G))
     (h : ∀ x₂ : S.X₂, S.g.hom x₂ = 0 → ∃ x₁ : S.X₁, S.f.hom x₁ = x₂) : S.Exact := by
   rw [← ShortComplex.exact_map_iff_of_faithful _ (forget₂ (Rep.{u} k G) (ModuleCat.{u} k)),
@@ -29,6 +30,7 @@ theorem shortComplex_exact_of_forall_exists (S : ShortComplex (Rep.{u} k G))
   exact h
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] in
 theorem nsmul_id_hom_apply (A : Rep.{u} k G) (m : ℕ) (x : A) : (m • 𝟙 A).hom x = m • x := by
   induction m with
   | zero => simp
@@ -112,6 +114,7 @@ theorem δ_H0Iso_inv_eq_zero_iff (v : S.X₃.ρ.invariants) :
     exact congrArg (fun φ => φ.hom ((H0Iso S.X₂).inv.hom w)) (comp_δ hS 0 1 rfl)
 
 
+include hS in
 theorem cohomologyMap_f_injective_of_subsingleton (i : ℕ)
     (h : Subsingleton (cohomology S.X₃ i)) : Function.Injective (cohomologyMap S.f (i + 1)).hom := by
   refine (injective_iff_map_eq_zero _).2 fun x hx => ?_
@@ -121,6 +124,7 @@ theorem cohomologyMap_f_injective_of_subsingleton (i : ℕ)
   exact map_zero _
 
 
+include hS in
 theorem exists_cohomologyMap_f_eq (i : ℕ) (y : cohomology S.X₂ i)
     (hy : (cohomologyMap S.g i).hom y = 0) : ∃ x, (cohomologyMap S.f i).hom x = y :=
   (ShortComplex.moduleCat_exact_iff _).1 (cohomology_exact₂ hS i) y hy

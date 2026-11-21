@@ -272,6 +272,7 @@ end Complex
 end FiniteLengthComplex
 
 
+open FiniteLengthComplex in
 theorem homology_of_free_complex_of_isFiniteLength :
     ∀ (O : Type) [CommRing O] [IsRegularLocalRing O] (g : ℕ), ringKrullDim O = g →
       ∀ C : CochainComplex (ModuleCat.{0} O) ℕ,

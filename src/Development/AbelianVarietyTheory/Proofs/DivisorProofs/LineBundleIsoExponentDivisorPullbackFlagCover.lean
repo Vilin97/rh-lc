@@ -185,6 +185,7 @@ theorem fnOf_pull_g {Xs Ys : Scheme.{0}} [IsIntegral Xs] (M : LB Ys) (f : Xs ⟶
 end GlobalTheory.VarFlagLL
 
 
+open GlobalTheory.VarFlagLL GlobalTheory.ShFam GlobalTheory.VarFlag in
 theorem GlobalTheory.VarFlag.lbIso_LL_pull : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {Y : Model Xo c (RingHom.id c.F)} (X : GlobalTheory.FlagMod.FlagCover Y) (C : GlobalTheory.ShFam.FlagCpt Y (RingEquiv.refl c.F)) (g : C.Y.X ⟶ X.YY), g ≫ X.π = C.π ≫ GlobalTheory.Toroidal.genι Y → (∀ (K : Type) [Field K] (p : Sp K ⟶ C.Y.X), GlobalTheory.VarFlag.Rel X.F C (p ≫ g) p) → ∀ ex : Ix Dw → ℤ, ex none = 0 → LBIso (C.Y.lb (C.LEx ex)) ((X.LL ex).pull g) := by
   intro E _ _ _ H Dw l Xo c Y X C g hg hrel ex hex
   classical

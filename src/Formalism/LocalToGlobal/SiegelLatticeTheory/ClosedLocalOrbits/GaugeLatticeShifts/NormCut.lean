@@ -114,6 +114,7 @@ def UG : Set (Iof TR) := {x | ∀ v, Formalism.L2.SG.GGMirabolic.IsUni D.R.k (x 
 def psiG (x : Iof TR) : ℂ := ∏ v, Formalism.L2.SG.GGMirabolic.psiNat (TR.psi0 v) (x v)
 
 
+variable {TR} in
 def lamQ {w : D.what₂.Word} {rs : Finset (Submodule (𝓞 D.host.E) (VS D).V)} (c : ColSys X w rs) (ρ : c.Cl) :
     {Λ // Λ ∈ rs} := ⟨c.lamOf ρ, c.lam_mem ρ⟩
 
@@ -124,6 +125,7 @@ def aT (t : GTerm X u u' F0 F0' what₂ rows') : Formalism.L2.SG.PackageTie.HS (
   Formalism.L2.SG.PackageTie.hsEmb (ampN cs cs' FdN FdN' t)
 
 
+variable (F0 F0') in
 def ColPhase (sc : cs.Cl → Iof TR) (sc' : cs'.Cl → Iof TR) : Prop :=
   ∀ (t : GTerm X u u' F0 F0' what₂ rows') (ρ : cs.Cl) (ρ' : cs'.Cl), cs.lamOf ρ = t.lam → cs'.lamOf ρ' = t.lam' →
     (if kOf X u u' (cs.h ρ : X.B.I.Gf) (cs'.h ρ' : X.B.I.Gf) t.pt ∈ X.K2 then
@@ -131,6 +133,7 @@ def ColPhase (sc : cs.Cl → Iof TR) (sc' : cs'.Cl → Iof TR) : Prop :=
     psiG TR ((sc ρ)⁻¹ * iotaOf TR cs cs' t * sc' ρ')
 
 
+variable (F0) in
 def ColFree {w : D.what₂.Word} {rs : Finset (Submodule (𝓞 D.host.E) (VS D).V)} (c : ColSys X w rs)
     (A : {Λ // Λ ∈ rs} → Set (Iof TR)) (sc : c.Cl → Iof TR) : Prop :=
   ∀ q : {Λ // Λ ∈ rs},
@@ -139,6 +142,7 @@ def ColFree {w : D.what₂.Word} {rs : Finset (Submodule (𝓞 D.host.E) (VS D).
       wRow D F0 q.1 = ((Nat.card (A q) : ℝ))⁻¹
 
 
+variable (F0 F0') in
 def SatGram (S : Set (GTerm X u u' F0 F0' what₂ rows')) (A : {Λ // Λ ∈ what₂} → Set (Iof TR))
     (A' : {Λ' // Λ' ∈ rows'} → Set (Iof TR)) : Prop :=
   ∀ q : {Λ // Λ ∈ what₂} × {Λ' // Λ' ∈ rows'},
@@ -166,6 +170,7 @@ theorem blockOf_aTerm (t : GTerm X u u' F0 F0' what₂ rows') (ρ : cs.Cl) (ρ' 
     exact absurd (Finset.mem_univ _) h
 
 
+variable {TR cs cs' FdN FdN'} in
 theorem hsEmb_blk {sc : cs.Cl → Iof TR} {sc' : cs'.Cl → Iof TR} (hChi : ChiNIndep F0 F0' cs cs')
     (hPh : ColPhase F0 F0' TR cs cs' sc sc') (t : GTerm X u u' F0 F0' what₂ rows') (ρ : cs.Cl) (ρ' : cs'.Cl) :
     Formalism.L2.SG.PackageTie.hsEmb (blk cs cs' FdN FdN' t ρ ρ') =
@@ -198,6 +203,7 @@ theorem hsEmb_blk {sc : cs.Cl → Iof TR} {sc' : cs'.Cl → Iof TR} (hChi : ChiN
     rw [hb, map_zero, if_neg hposition]
 
 
+variable (F0 F0') in
 theorem normExpansionOn_tOf (hHS : HSBlocks) (hGam : GamProdSum) (hPsi : PsiNatEquiv)
     (S : Set (GTerm X u u' F0 F0' what₂ rows')) (hAbs : (tOf F0 F0' TR cs cs' FdN FdN').AbsConv)
     (hChi : ChiNIndep F0 F0' cs cs') (sc : cs.Cl → Iof TR) (sc' : cs'.Cl → Iof TR)
@@ -265,6 +271,7 @@ theorem normExpansionOn_tOf (hHS : HSBlocks) (hGam : GamProdSum) (hPsi : PsiNatE
     (hsatL := fun q => (hSat q).1) (hsatR := fun q => (hSat q).2) (hsum := hAbs.1) (hsumv := hAbs.2.1)
 
 
+variable (F0 F0') in
 theorem normExpSat_of (hHS : HSBlocks) (hGam : GamProdSum) (hPsi : PsiNatEquiv)
     (hAbs : (tOf F0 F0' TR cs cs' FdN FdN').AbsConv)
     (hChi : ChiNIndep F0 F0' cs cs') (sc : cs.Cl → Iof TR) (sc' : cs'.Cl → Iof TR)

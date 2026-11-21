@@ -14,6 +14,8 @@ open NumberField Topology ReciprocityTheory.ChartRestriction.G.FD
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
 
 
+open NumberField Topology in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 theorem _root_.GlobalTheory.PropDiscCompare.compact_of_local (X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r) (h : _root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.PropDisc X) :
     _root_.GlobalTheory.IndefiniteRowSideFullHecke.ProperlyDiscontinuousFlags.ProperlyDiscontinuousOnFlags X := by
   intro K hK hKdom

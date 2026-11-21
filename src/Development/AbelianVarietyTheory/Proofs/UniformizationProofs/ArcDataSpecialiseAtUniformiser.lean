@@ -52,6 +52,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
   [IsDomain R] [CommRing R'] [IsDomain R'] {I : Ideal R} {I' : Ideal R'} {f : O' →+* R} {u : R} {χ : Sp R ⟶ Y.X}
 
 
+set_option maxHeartbeats 1600000 in
 theorem level_specialises (hL : Laws) (hL₂ : Laws2) (hT : TwistBaseChangeStatement) (hR : AdmBase R I)
     (hR' : AdmBase R' I') (W : ArcWit Y a I f u χ) (hχ : χ ≫ Y.s = spMap f ≫ spMap b) {g : R →+* R'}
     {G' : Over (Sp R')} [GrpObj G'] [IsCommMonObj G'] {bc : G' ≅ (Over.pullback (specOf g)).obj W.t.G}
@@ -198,6 +199,7 @@ theorem level_specialises (hL : Laws) (hL₂ : Laws2) (hT : TwistBaseChangeState
       (congrArg (fun r => val (q₀.g.s z) r y J) hπκ.symm)).trans (gv z _ hz _ (spMap π) y J J' hJ hJ')
 
 
+set_option maxHeartbeats 1600000 in
 theorem specialise (hL : Laws) (hL₂ : Laws2) (hT : TwistBaseChangeStatement) (hU : UnifBaseChangeSt) (h5 : Laws5)
     (hR : AdmBase R I) (hR' : AdmBase R' I') (hf : Function.Injective f) (W : ArcWit Y a I f u χ)
     (hχ : χ ≫ Y.s = spMap f ≫ spMap b) (g : R →+* R') (hI : I.map g ≤ I') (hu : g u ≠ 0)
@@ -334,6 +336,7 @@ theorem eval_unique {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRin
 end GlobalTheory.ArcSpecialise
 
 
+open GlobalTheory.ArcSpecialise ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 theorem GlobalTheory.hasArcData_specialise : Laws → Laws2 → DVR.TwistBaseChangeStatement → UnifBaseChangeSt → Laws5 → ∀ (E : Type) [Field E] [NumberField E] [NumberField.IsCMField E] (H : Geo.Tor.Host E) (Dm : Geo.Tor.Datum H) (l : Geo.Tor.Level H) (Xo : Geo.Tor.Moduli Dm l) (c : Geo.Tor.Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Geo.Tor.Model Xo c β) (V : Type) [CommRing V] [IsDomain V] [CharZero V] [IsDiscreteValuationRing V] (b : O →+* V) (ϖ : V) (a : Geo.Tor.ArcIn Dm l β V b), Irreducible ϖ → IsAdicComplete (IsLocalRing.maximalIdeal V) V → ∀ (ev : PowerSeries V →+* V), (∀ x, ev (PowerSeries.C x) = x) → ev PowerSeries.X = ϖ → ∀ χ : Geo.Tor.Sp (PowerSeries V) ⟶ Y.X, χ ≫ Y.s = Geo.Tor.spMap (PowerSeries.C (R := V)) ≫ Geo.Tor.spMap b → Set.range (jK V ≫ Geo.Tor.spMap ev ≫ χ) ⊆ Set.range Y.j → Y.HasArcData a (Ideal.span {PowerSeries.X}) (PowerSeries.C (R := V)) PowerSeries.X χ → Y.HasArcData a (Ideal.span {ϖ}) (RingHom.id V) ϖ (Geo.Tor.spMap ev ≫ χ) := by
   intro hL hL₂ hT hU h5 E _ _ _ H Dm l Xo c O _ β Y V _ _ _ _ b ϖ a hϖ hV ev ev₁ ev₂ χ hχ hj h
   obtain ⟨W⟩ := (Y.hasArcData_iff _ _ _ _ _).1 h

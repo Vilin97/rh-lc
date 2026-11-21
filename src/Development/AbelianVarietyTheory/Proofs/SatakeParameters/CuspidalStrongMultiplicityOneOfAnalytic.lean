@@ -82,6 +82,7 @@ namespace GlobalTheory.RowRepOcc
 variable {R : Ranks} {H : Host R} {what₂ : Rows.Data R} (N : NData R H what₂) (A : NAut N)
 
 
+include A in
 theorem charZero_Kf (i : N.Loc) : CharZero (Kf N i) :=
   (RingHom.charZero_iff (ϕ := A.iotaQ i) (A.iotaQ i).injective).2 inferInstance
 

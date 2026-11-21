@@ -131,6 +131,7 @@ variable {B B' : Base} {C : Cols B} {C' : Cols B'} {a : Late B C} {a' : Late B' 
   {R : RealDat a.D A Ks} {R' : RealDat a'.D A' Ks'}
 
 
+set_option maxHeartbeats 1000000 in
 private theorem rat_of (hP : B'.toPre = B.toPre) {i : Fin a.D.R.m} {i' : Fin a'.D.R.m} (h : (i : ℕ) = i') {t : T0} {t' : T0'}
     (c1 : HEq (R'.cV i').W (R.cV i).W) (c2 : HEq (R'.cV i').ρ (R.cV i).ρ) (c3 : HEq (R'.cV i').nW (R.cV i).nW)
     (c4 : HEq (R'.cV i').iW (R.cV i).iW)

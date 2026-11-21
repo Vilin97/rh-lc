@@ -57,6 +57,7 @@ variable {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {S : ThetaSys o Ω
   [Fact p.Prime] {Y : Type} [AddCommGroup Y] {q : Y → ℝ}
 
 
+variable (ρ M q) in
 def GLab (y : Sp (PadicAlgCl p) ⟶ M.Z) (yy : S.Gam →+ ModN (S.r * S.N) Y) : Prop :=
   ∃ (c₀ : Ω) (hc : c₀ ≠ 0) (R' : Subalgebra o Ω) (fg : R'.FG) (frac : ∀ x : Ω, ∃ a ∈ R', ∃ b ∈ R', x = a / b)
     (hth : ∀ x, c₀ * S.th x ∈ R') (hev : ∀ x k, c₀ * S.ev x k ∈ R') (ρ' : (S.rechart c₀ hc R' fg frac hth hev).Real),

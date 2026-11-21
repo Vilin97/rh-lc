@@ -17,6 +17,7 @@ namespace PDich
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a N : ℕ}
 
 
+open PExpFin in
 theorem continuous_aT (F : Sm E N) (r : ℕ) (g : GA E N) : Continuous fun t : ℝ => F.1 (aT E N r t * g) := by
   set y := Matrix.GeneralLinearGroup.map (pInf E) g
   set k := Matrix.GeneralLinearGroup.map (pFin E) g

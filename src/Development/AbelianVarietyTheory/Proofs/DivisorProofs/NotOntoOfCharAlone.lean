@@ -69,6 +69,7 @@ open GlobalTheory.OnTies Formalism.IndefR.Mult Formalism.IndefR.FWT
 variable {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks} {F : Face D A}
 
 
+variable (R) in
 def PhasedLift (ph : Fin D.R.m → ℂ) : Prop :=
   ∀ i t x, (R.HW i (sg0 D A)).e (R.thG i t x) = ph i • postOn _ (R.eWf i (sg0 D A)) (R.thF i t x)
 
@@ -335,6 +336,7 @@ def OnObjLevelCompatibility (F : Face D A) (fw : FWTie J R κ v₀) (hc : LawsCo
       ActionPin (T := (run v).full) (R := R) (h v) fw i (ℓ i)
 
 
+variable (R F) in
 def TwistedRational (ph : Fin D.R.m → ℂ) : Prop :=
   ∀ w ∈ R.twPl, ∀ i, ClassSumRational R i (R.mu w) F.P0 F.ψ0⁻¹ (ph i)
 

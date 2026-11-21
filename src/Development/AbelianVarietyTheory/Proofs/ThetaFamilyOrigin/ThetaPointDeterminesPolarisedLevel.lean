@@ -127,6 +127,7 @@ end GlobalTheory.ThetaDet
 namespace GlobalTheory
 
 
+open ThetaDet in
 theorem thetaPt_determines : Out.Laws → ThetaPtDeterminesSt := by
   intro h g n k j N N' hn hodd hk hN hN' hb K _ _ hn0 P P' hg hg' ze lev lev' v hv hv'
   haveI := P.isAb

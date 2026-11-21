@@ -141,6 +141,7 @@ theorem tq_spec (e : ∀ {X : Scheme.{0}} (q : X ⟶ Spec (CommRingCat.of K)) [I
 end Main
 
 
+set_option maxHeartbeats 400000 in
 theorem term_aff : ∀ (K : Type) [Field K] [CharZero K],
     ∃ t : ∀ {X : Scheme.{0}} (q : X ⟶ Spec (CommRingCat.of K)) [Smooth q] (V : X.Opens), IsAffineOpen V → ∀ a : ℕ,
       CH.H (FV q V a) a ≃ₗ[K] OmU q V a,

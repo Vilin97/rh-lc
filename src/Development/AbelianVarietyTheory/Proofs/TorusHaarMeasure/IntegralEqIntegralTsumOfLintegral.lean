@@ -42,6 +42,7 @@ theorem integral_eq_integral_tsum_of_lintegral {α ι : Type*} [MeasurableSpace 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 
+omit [NumberField E] [IsCMField E] in
 theorem continuous_lact {r : ℕ} {Ψ : Finset (E →+* ℂ)} (δ : GL (Fin r) E) :
     Continuous (fun y : Frame Ψ r => lact δ y) := by
   refine continuous_pi fun τ => ?_

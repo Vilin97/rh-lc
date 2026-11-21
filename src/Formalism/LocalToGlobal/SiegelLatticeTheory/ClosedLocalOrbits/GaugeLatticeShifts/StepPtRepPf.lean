@@ -80,6 +80,7 @@ theorem famSc_one {n r : ℕ} (e : Fin r → Fin n → ℂ) (z : Fin n → ℂ) 
 end PtRepPf
 
 
+open PtRepPf in
 theorem real_point_representative_diagonal : StepPtRepDiag := by
   intro D X u u' sc hsc i0 w hw
   have hloc := fun v => locMain (frU X u v) (frU X u' v) rfl (i0 v) (ZhatO (ptC X v w)) (hw v) sc hsc

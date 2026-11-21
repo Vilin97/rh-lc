@@ -18,6 +18,7 @@ noncomputable section
 namespace GlobalTheory.CompanionTheory.Ar.Coc.Actp
 
 
+open MvPolynomial in
 theorem aug_jetMap {R : Type} [CommRing R] {κ κ' : Type} {m : ℕ} (φ : κ → MvPolynomial κ' R)
     (hφ : ∀ i, φ i ∈ orig R κ') :
     (jetAug : Jet R κ' m →ₐ[R] R).comp (jetMap φ hφ) = jetAug := by
@@ -127,6 +128,7 @@ end GlobalTheory.CompanionTheory.Ar.Coc.Actp
 namespace GlobalTheory.CompanionTheory.Ar.Coc
 
 
+open MvPolynomial in
 theorem actp_at_point {E : Type} [Field E] [NumberField E] [IsCMField E] (H : Host E) [StarRing (𝓞 E)]
     (hst : ∀ a : 𝓞 E, star a = H.bar a) {X0 : Scheme.{0}} (t : SAB H X0) {k : Type} [Field k] (p : ℕ)
     (x : Sp k ⟶ X0) {d : ℕ} (g : GermAt t x d)

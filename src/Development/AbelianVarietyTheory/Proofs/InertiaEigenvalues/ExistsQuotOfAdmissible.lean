@@ -164,6 +164,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {RN : ∀ (T : LocLat G Qp LL O) (A : Ob k G), (↥T.L.T →ₗ[O] (Fin A.m → k)) → Lats k n A.m → Prop}
 
 
+variable (Γ RN) in
 def Red (T : LocLat G Qp LL O) (A : Ob k G) (q : ↥T.L.T →ₗ[O] (Fin A.m → k)) (N : Lats k n A.m) : Prop :=
   Onto T A q ∧ KerIs Γ.lam q ∧ RN T A q N
 
@@ -176,6 +177,7 @@ theorem crys_tw (htw : StdAdm.TwistRule PD emb O) (hθ : IsCrysChar PD emb Γ.χ
   (htw T U _ _ h hθ).1
 
 
+variable (RN) in
 def Base (hθ : IsCrysChar PD emb Γ.χ₁⁻¹ fun i => -D.w i) (A : Ob k G) (N : Lats k n A.m) : Prop :=
   ∃ (μ : ℕ) (T : LocLat G Qp LL O) (q : ↥(tw hθ T).L.T →ₗ[O] (Fin A.m → k)),
     SumFull PD emb Γ D.t D.Ut μ T ∧ Red Γ RN (tw hθ T) A q N

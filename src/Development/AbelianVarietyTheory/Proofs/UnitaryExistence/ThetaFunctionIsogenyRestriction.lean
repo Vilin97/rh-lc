@@ -163,6 +163,7 @@ theorem exists_coc {ι : Type} [Fintype ι]
 variable {g : ℕ} {Hm : Matrix (Fin g) (Fin g) ℂ}
 
 
+open scoped MatrixOrder in
 theorem exists_theta (hH : Hm.PosDef) (Λ : AddSubgroup (Fin g → ℂ)) [hd : DiscreteTopology Λ]
     (hΛ : ∀ v, (∀ a ∈ Λ, ∃ k : ℤ, (star v ⬝ᵥ Hm.mulVec a).im = k) ↔ v ∈ Λ) :
     ∃ χ θ : (Fin g → ℂ) → ℂ, Differentiable ℂ θ ∧ θ ≠ 0 ∧ (∀ a ∈ Λ, ‖χ a‖ = 1) ∧

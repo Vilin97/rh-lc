@@ -82,6 +82,7 @@ end GlobalTheory.Cartier.DomPull
 namespace GlobalTheory.Cartier
 
 
+open DomPull in
 theorem exists_pullback_cartierDiv : ∀ (X X' : Scheme.{0}) [IsIntegral X] [IsIntegral X'] (φ : X' ⟶ X) [IsDominant φ]
     (D : CartierDiv X), ∃ D' : CartierDiv X', cls (toLB D') (isLB_toLB D') =
       cls ((toLB D).pull φ) (LB.isLB_pull (isLB_toLB D) φ) ∧

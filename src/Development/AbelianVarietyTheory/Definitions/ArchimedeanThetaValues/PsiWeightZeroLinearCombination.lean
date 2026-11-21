@@ -175,6 +175,7 @@ def toricPre (q : X → (FractionRing K)ˣ) : DegPre K where
 variable {K X}
 
 
+omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 def polar (q : X → (FractionRing K)ˣ) (a b : X) : (FractionRing K)ˣ := q (a + b) * (q a)⁻¹ * (q b)⁻¹
 
 instance (q : X → (FractionRing K)ˣ) (O : Type) [Ring O] [Module O X] : Module O (toricPre K X q).X :=

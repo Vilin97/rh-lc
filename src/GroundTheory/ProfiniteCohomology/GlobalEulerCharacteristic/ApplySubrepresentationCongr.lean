@@ -17,6 +17,7 @@ universe u w
 variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] {R : Type w} [CommMonoid R]
 
 
+omit [CommMonoid R] in
 theorem apply_subrepresentation_congr (χ : (A : Rep.{u} k G) → [IsDiscreteRep A] → R)
     {A : Rep.{u} k G} [IsDiscreteRep A] {W W' : Submodule k A} (h : W = W')
     (hW : ∀ g, W ≤ W.comap (A.ρ g)) (hW' : ∀ g, W' ≤ W'.comap (A.ρ g)) :

@@ -159,6 +159,7 @@ section Fun
 variable {O : Type} [CommRing O] (bar : O → O) (ψ : InvFun O)
 
 
+open Classical in
 def carFun : InvFun O where
   toFun n B := if h : ∃ β : LinearMap.BilinForm ℤ (Fin n → O), β ∈ balForms bar (Fin n → O) ∧ (∀ y, 0 ≤ β y y) ∧
       ∀ a b, B a b = β a b then (cdimQ bar ψ (Fin n → O) (orad h.choose) h.choose : ℝ) else 0

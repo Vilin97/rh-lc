@@ -125,6 +125,7 @@ namespace IsGradedMap
 variable {ℳ : ℤ → Submodule R M} {𝒩 : ℤ → Submodule R N} {𝒬 : ℤ → Submodule R P}
 
 
+variable (ι ℳ 𝒩) in
 theorem zero : IsGradedMap ℳ 𝒩 (0 : M →ₗ[MvPolynomial ι R] N) := fun _ _ _ => zero_mem _
 
 theorem comp {g : N →ₗ[MvPolynomial ι R] P} {f : M →ₗ[MvPolynomial ι R] N}
@@ -285,6 +286,7 @@ theorem isGradedMap_subtype (ℳ : ℤ → Submodule R M) (K : Submodule (MvPoly
     IsGradedMap (grSub ℳ K) ℳ K.subtype := fun _ _ h => h
 
 
+omit [IsScalarTower R (MvPolynomial ι R) N] in
 theorem IsGradedMap.liftQ {ℳ : ℤ → Submodule R M} {𝒩 : ℤ → Submodule R N}
     {f : M →ₗ[MvPolynomial ι R] N} (hf : IsGradedMap ℳ 𝒩 f) (K : Submodule (MvPolynomial ι R) M)
     (h : K ≤ LinearMap.ker f) : IsGradedMap (grQuot ℳ K) 𝒩 (K.liftQ f h) := by
@@ -394,6 +396,7 @@ instance grPi.decomposition [Finite κ] (ℳ : ∀ k, ℤ → Submodule R (M k))
       | add a b ha hb => rw [Pi.single_add]; exact add_mem ha hb
 
 
+variable (ι) in
 theorem isGradedMap_piProj (ℳ : ∀ k, ℤ → Submodule R (M k)) (k : κ) :
     IsGradedMap (grPi ℳ) (ℳ k) (LinearMap.proj (R := MvPolynomial ι R) k) :=
   fun _ _ h => mem_grPi.1 h k

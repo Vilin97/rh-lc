@@ -118,6 +118,7 @@ theorem val_int_lt (z : ℤ_[g]) (hz : PadicInt.toZMod z = 0) : valuation (w.adi
     ((val_lt_iff _).2 (Formalism.BasicNotions.Examples₂.LocF.norm_l_lt w g hw))
 
 
+include hw hi in
 theorem act_lift {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V) {x : V} (hx : IsLevelOne π x)
     (k : GL (Fin n) ℤ_[g]) (h : GL (Fin n) (w.adicCompletion E)) (hh : IsLiftN (red g n k) h) :

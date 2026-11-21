@@ -25,6 +25,7 @@ noncomputable section
 namespace GlobalTheory.TorusQuotientGlue
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem exists_glue (Y : Scheme.{0}) (𝒰 : Set Y.Opens)
     (hbas : ∀ U ∈ 𝒰, ∀ V ∈ 𝒰, ∀ x : Y, x ∈ U → x ∈ V → ∃ W ∈ 𝒰, x ∈ W ∧ W ≤ U ∧ W ≤ V)
     (hc : ∀ x : Y, ∃ U : 𝒰, x ∈ U.1) (F : 𝒰 ⥤ Scheme.{0})
@@ -107,6 +108,8 @@ theorem exists_glue (Y : Scheme.{0}) (𝒰 : Set Y.Opens)
     exact ⟨U, x, rfl⟩
 
 
+open ThickGlue in
+set_option backward.isDefEq.respectTransparency false in
 theorem exists_scheme (Y : Scheme.{0}) (𝒰 : Set Y.Opens) (hc : ∀ x : Y, ∃ U : 𝒰, x ∈ U.1)
     (𝒜 : Y.Opensᵒᵖ ⥤ CommRingCat.{0}) (p : 𝒜 ⟶ Y.presheaf)
     (hbo : ∀ U ∈ 𝒰, ∀ a : 𝒜.obj (op U), Y.basicOpen ((p.app (op U)).hom a) ∈ 𝒰)

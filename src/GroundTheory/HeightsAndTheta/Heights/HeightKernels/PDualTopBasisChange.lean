@@ -27,6 +27,7 @@ theorem hermLine_ext {ι : Unit → Type} [∀ k, Fintype (ι k)] {A B : Recipro
 variable {T T₂ : Type} [Fintype T] [DecidableEq T] [Fintype T₂] [DecidableEq T₂]
 
 
+omit [DecidableEq T₂] in
 theorem subst_subst {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A * B = 1) (f : MRing (dualBlocks T)) :
     intCoordSubst A (intCoordSubst B f) = f := by
   induction f using MvPolynomial.induction_on with
@@ -52,6 +53,7 @@ theorem subst_subst {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A * B
 variable {K : Type} [Field K] [NumberField K] {i : ℕ} {F : HermLattice K i}
 
 
+omit [DecidableEq T] [Fintype T₂] [DecidableEq T₂] in
 theorem basis_coe (b : Module.Basis T ℤ (dualLattice F)) (b₂ : Module.Basis T₂ ℤ (dualLattice F))
     (s : T₂) (j : Fin i) :
     (b₂ s : Fin i → K) j = ∑ t, (b.toMatrix b₂ t s : K) * (b t : Fin i → K) j := by
@@ -60,6 +62,7 @@ theorem basis_coe (b : Module.Basis T ℤ (dualLattice F)) (b₂ : Module.Basis 
   exact h.symm
 
 
+omit [DecidableEq T] [Fintype T₂] [DecidableEq T₂] in
 theorem coord_change {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLattice F)}
     {b₂ : Module.Basis T₂ ℤ (dualLattice F)}
     (hA : ∀ s j, (b₂ s : Fin i → K) j = ∑ t, (A t s : K) * (b t : Fin i → K) j) (s : T₂) :
@@ -78,6 +81,7 @@ theorem coord_change {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLattic
   rw [map_mul, map_intCast]
 
 
+omit [DecidableEq T] [Fintype T₂] [DecidableEq T₂] in
 theorem coneMap_subst {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLattice F)}
     {b₂ : Module.Basis T₂ ℤ (dualLattice F)}
     (hA : ∀ s j, (b₂ s : Fin i → K) j = ∑ t, (A t s : K) * (b t : Fin i → K) j)
@@ -100,6 +104,7 @@ theorem coneMap_subst {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLatti
     rw [mul_assoc]
 
 
+omit [DecidableEq T₂] in
 theorem ideal_map {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A * B = 1)
     {b : Module.Basis T ℤ (dualLattice F)} {b₂ : Module.Basis T₂ ℤ (dualLattice F)}
     (hA : ∀ s j, (b₂ s : Fin i → K) j = ∑ t, (A t s : K) * (b t : Fin i → K) j) :
@@ -111,6 +116,7 @@ theorem ideal_map {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A * B =
   rw [hker, Ideal.map_comap_of_surjective _ hsurj]
 
 
+omit [DecidableEq T] [Fintype T₂] [DecidableEq T₂] in
 theorem embMatrix_apply {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLattice F)}
     {b₂ : Module.Basis T₂ ℤ (dualLattice F)}
     (hA : ∀ s j, (b₂ s : Fin i → K) j = ∑ t, (A t s : K) * (b t : Fin i → K) j)
@@ -120,6 +126,7 @@ theorem embMatrix_apply {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLat
     simp only [dualEmbMatrix, hA, map_sum, map_mul, map_intCast]
 
 
+omit [DecidableEq T] [Fintype T₂] [DecidableEq T₂] in
 theorem recover_eq {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLattice F)}
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b)))
     {b₂ : Module.Basis T₂ ℤ (dualLattice F)}
@@ -145,6 +152,7 @@ theorem recover_eq {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLattice 
   ring
 
 
+omit [DecidableEq T₂] in
 theorem line_eq {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLattice F)}
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b)))
     {b₂ : Module.Basis T₂ ℤ (dualLattice F)}
@@ -160,6 +168,7 @@ theorem line_eq {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLattice F)}
 end TopDualBasisChange
 
 
+open TopDualBasisChange in
 theorem DualTopBasisChange.proof (hChange : IntCoordChange.Statement) : DualTopBasisChange.Statement := by
   intro K _ _ i F T T₂ _ _ _ _ b hb b₂ hb₂ II hi hII
   have hAB : b.toMatrix b₂ * b₂.toMatrix b = 1 := Module.Basis.toMatrix_mul_toMatrix_flip b b₂

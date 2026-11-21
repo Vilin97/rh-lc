@@ -43,6 +43,7 @@ theorem relIndex_ne_zero {G : Type*} [Group G] [TopologicalSpace G] [ContinuousM
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+set_option maxHeartbeats 1000000 in
 theorem vol_relIndex (ψ : AddChar k Circle) {h N : ℕ} (d : Fin h → ℕ) (hd : ∑ a, d a = N) {W : Type} [AddCommGroup W]
     [Module ℂ W] (ρ : Representation ℂ (Levi k fun a => Fin (d a)) W) (J : openFns d hd ρ →ₗ[ℂ] W)
     (vol : Subgroup (GL (Fin N) k) → ℝ)

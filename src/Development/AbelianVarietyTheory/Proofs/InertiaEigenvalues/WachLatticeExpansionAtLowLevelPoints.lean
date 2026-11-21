@@ -66,6 +66,7 @@ end GlobalTheory.NL.LatLevel
 namespace GlobalTheory.NL.LatLevel
 
 
+set_option maxHeartbeats 20000000 in
 theorem lattice_at_level : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (Cm : CmpOf D.loc D.locA HW F), P4 D HW F Cm := by
   intro D HW F Cm l _ K s LL h T hT

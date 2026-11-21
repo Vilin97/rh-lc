@@ -18,6 +18,7 @@ open GlobalTheory.CompanionTheory.WeilSiegel.Frame GlobalTheory.CompanionTheory.
 namespace GlobalTheory.CompanionTheory.WeilSiegel.HypMass.ScaleFib
 
 
+open scoped Pointwise in
 theorem map_mul_fv {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) (lam : Measure (Fv F v))
     [lam.IsAddHaarMeasure] (x : Fv F v) (hx : x ≠ 0) (a : ℝ≥0) (ha : ‖x‖ = (a : ℝ)⁻¹) :
     lam.map (fun y => x * y) = a • lam := by

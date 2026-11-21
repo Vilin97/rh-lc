@@ -100,6 +100,7 @@ theorem isIrreducible_cuspSubmodule_of (U : Submodule ℂ (cuspForms K n))
     rwa [← Subtype.ext e]
 
 
+variable (K n) in
 structure CuspidalAutomorphicRepresentation where
 
   carrier : Submodule ℂ (cuspForms K n)

@@ -47,6 +47,7 @@ theorem herm_map {La : Type} {g g' : ℕ} {Hm : Matrix (Fin g) (Fin g) ℂ} {Hm'
   simpa [herm] using this
 
 
+omit [IsCMField E] in
 theorem eq_zero_of_eig {ρ : E →+* ℂ} {v : Fin g → ℂ} (hv : ∀ a : 𝓞 E, tyAct ty a v = ρ a • v) {n : Fin g}
     (hn : ty n ≠ ρ) : v n = 0 := by
   by_contra h0

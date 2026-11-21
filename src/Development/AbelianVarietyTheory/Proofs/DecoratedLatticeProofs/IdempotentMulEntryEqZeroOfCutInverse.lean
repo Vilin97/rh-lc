@@ -184,6 +184,8 @@ theorem mt_list_prod (V : HSp D) {W : Type} (h : W → GA D V) (E : W → AE D)
     exact horth w y (fun e => hl.1 (e ▸ hy))
 
 
+set_option maxHeartbeats 800000 in
+open GlobalTheory.LocWeil.PlaceIdem in
 theorem prod_of_trivOff : ∀ (D : D7) (V : HSp D) (W : Type) [Fintype W] [DecidableEq W] (v : W → Pl D) (e : W → AE D),
     Function.Injective v → (∀ w, IsSplitIdem D (e w) ∧ ∃ ε, IsPlaceIdem D (v w) ε ∧
       e w + cA D (e w) = algebraMap (AF D.host.F) (AE D) ε) →

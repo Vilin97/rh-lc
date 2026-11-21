@@ -75,6 +75,7 @@ attribute [local instance] ae_ring ae_t2 ae_smul
 theorem evI_eq_zero {a : AF F} : evI F a = 0 ↔ a.1 = 0 := map_eq_zero_iff _ (RingEquiv.injective _)
 
 
+variable (F) in
 def intF : AddSubgroup (AF F) where
   carrier := {a | evI F a = 0 ∧ ∀ v, evFin F v a ∈ v.adicCompletionIntegers F}
   zero_mem' := ⟨evI_eq_zero.2 rfl, fun v => by rw [map_zero]; exact zero_mem _⟩
@@ -145,6 +146,7 @@ theorem isCompact_latHat (X : Spc F E n) (hX : X.L.FG) : IsCompact (latHat X : S
   exact isCompact_range hf
 
 
+variable (F) in
 def eF : AF F := pairA F 0 1
 
 theorem eF_mem : eF F ∈ intF F := ⟨evI_eq_zero.2 rfl, fun v => by

@@ -218,6 +218,7 @@ variable (he : ∀ (k : Matrix.unitaryGroup (Fin n) ℂ) (x y : Jd n ν → ℂ)
   ⟪e (Rm ν k.1 *ᵥ x), e (Rm ν k.1 *ᵥ y)⟫_ℂ = ⟪e x, e y⟫_ℂ)
 
 
+include he in
 theorem skew_frame (X : Mat n) (hX : Xᴴ = -X) (x y : Jd n ν → ℂ) :
     ⟪e (XA ν X *ᵥ x), e y⟫_ℂ + ⟪e x, e (XA ν X *ᵥ y)⟫_ℂ = 0 := by
   let γ : ℝ → Matrix.unitaryGroup (Fin n) ℂ := GlobalTheory.CompanionTheory.RealCount.InjHw.expU X hX
@@ -256,6 +257,7 @@ theorem herm_frame (a b : Fin n) (x y : Jd n ν → ℂ) :
   linear_combination (1 / 2 : ℂ) * h1 + (Complex.I / 2) * h2 + (1 / 2 : ℂ) * (p + q - r - s) * Complex.I_sq
 
 
+include he in
 theorem frame_model (hν : Antitone ν) :
     ∃ (σ : Matrix.unitaryGroup (Fin n) ℂ →* (L →ₗ[ℂ] L)) (K : Fin n → Fin n → Module.End ℂ L) (v : L),
       Formalism.REAL.GlRel K ∧ (∀ a b (x y : L), ⟪K a b x, y⟫_ℂ = ⟪x, K b a y⟫_ℂ) ∧ IsDerivK σ K ∧ v ≠ 0 ∧

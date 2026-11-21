@@ -111,6 +111,7 @@ theorem hom_gen (N : ℕ) (ψ : (AE D)ˣ →* ℂˣ) (h1 : ∀ u, IntU D u → �
     rw [huniq hy (ha.mul hc), map_mul, Units.val_mul, v1 a ha, v2 c hc, sgn_mul e1 e2 n1 n2, mul_pow]
 
 
+set_option maxHeartbeats 800000 in
 theorem character_at_inert_component : ∀ (D : D7) (N : ℕ) (χ : HeckeU D N) (y : 𝓞 D.host.E) (x : (AE D)ˣ), y ≠ 0 → (∀ q : ℕ, q.Prime → (InertQ D q → ZeroAt D q ((x : AE D) - inc D (y : D.host.E))) ∧ (¬ InertQ D q → ZeroAt D q ((x : AE D) - 1))) → ((χ.f x : ℂˣ) : ℂ) = sgn D (Ideal.absNorm (Ideal.span {y})) ^ N := by
   intro D N χ y x hy0 hx
   obtain ⟨hinv, ε, hε, h1, h2, h3⟩ := GlobalTheory.NormSum.HalfIdempotent.conj_involutive_and_exists_half_idempotent D

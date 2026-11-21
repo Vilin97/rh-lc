@@ -51,6 +51,7 @@ structure IsProjPrime (I : Ideal (MvPolynomial (Fin n) R)) : Prop where
 abbrev ProjCycle (R : Type*) [CommRing R] (n : ℕ) := Ideal (MvPolynomial (Fin n) R) →₀ ℕ
 
 
+open Classical in
 def localMult {A : Type*} [CommRing A] (J W : Ideal A) : ℕ :=
   by
     classical
@@ -64,6 +65,7 @@ def relComps (J : Ideal (MvPolynomial (Fin n) R)) : Set (Ideal (MvPolynomial (Fi
   {W | W ∈ J.minimalPrimes ∧ IsRelevant W}
 
 
+open Classical in
 def fundCycle [IsNoetherianRing R] (J : Ideal (MvPolynomial (Fin n) R)) : ProjCycle R n :=
   by
     classical

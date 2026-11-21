@@ -120,6 +120,7 @@ theorem basePi_of_ok (hX : X.Ok) (hPr : Pr.Ok) (u : Pr.Word) : BasePi (Pr.vT u) 
   cop := hPr.piT_cop u
 
 
+open Classical in
 theorem plUnder_vGs (hc : Formalism.BasicNotions.CMData X.F X.E) (hPr : Pr.Ok) (v : HeightOneSpectrum (𝓞 X.F)) :
     v ∈ plUnder X.F Pr.vGs ↔ (Pr.g 0 : 𝓞 X.F) ∈ v.asIdeal ∨ (Pr.g 1 : 𝓞 X.F) ∈ v.asIdeal := by
   have key : ∀ i, v ∈ plUnder X.F (Pr.vG i) ↔ (Pr.g i : 𝓞 X.F) ∈ v.asIdeal := fun i => by

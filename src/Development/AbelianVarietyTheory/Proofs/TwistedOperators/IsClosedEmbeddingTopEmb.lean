@@ -27,6 +27,13 @@ variable {a b c d : Type} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b
   [Fintype d] [DecidableEq d]
 
 
+open Matrix Topology Module in
+open scoped TensorProduct in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
+variable {a b c d : Type} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] [Fintype c] [DecidableEq c]
+  [Fintype d] [DecidableEq d] in
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype b] [DecidableEq a]
+  [DecidableEq b] [DecidableEq c] [DecidableEq d] in
 theorem _root_.GlobalTheory.RankStrataProof.mul_apply_of_cols {n : Type} (e : c ⊕ d ≃ a) {x : Matrix b a k} (hx : ∀ i j, x i (e (.inr j)) = 0)
     (g : Matrix a n k) (i : b) (l : n) : (x * g) i l = ∑ m, x i (e (.inl m)) * g (e (.inl m)) l := by
   rw [Matrix.mul_apply, ← e.sum_comp, Fintype.sum_sum_type]

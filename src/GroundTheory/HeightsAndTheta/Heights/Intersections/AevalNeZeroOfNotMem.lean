@@ -21,6 +21,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {v : (Σ k, ι k) → (Σ k', ι' k')} {P' : Ideal (MRing ι')}
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem aeval_rename_eq (G : GenFibre v P') (A : MRing ι) :
     aeval G.x' (rename v A) = algebraMap G.Φ G.Φ' (aeval G.x A) := by
   rw [aeval_rename]
@@ -28,11 +29,13 @@ theorem aeval_rename_eq (G : GenFibre v P') (A : MRing ι) :
   rw [h, MvPolynomial.aeval_algebraMap_apply]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem aeval_eq_zero_of_mem (G : GenFibre v P') {f : MRing ι'} (hf : f ∈ P') : aeval G.x' f = 0 := by
   rw [← G.genericFibre_ker_target] at hf
   exact hf
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem aeval_ne_zero_of_not_mem (G : GenFibre v P') {f : MRing ι} (hf : f ∉ imageZ v P') : aeval G.x f ≠ 0 := by
   rw [← G.ker_x] at hf
   exact hf
@@ -55,6 +58,7 @@ theorem coeffPoly_coeff_last {F : Type} [Field F] {m : ℕ} (a : Fin (m + 1) →
 end ChartFiniteness
 
 
+open ChartFiniteness in
 theorem ArithmeticIntersectionChartFinite.of_blockRatioAlg (hR : BlockRatioAlg.Statement) : ArithmeticIntersectionChartFinite.Statement := by
   intro K _ ι _ K' _ ι' _ κ v P' n G j hv hP' hP hj
   apply IntermediateField.finiteDimensional_adjoin

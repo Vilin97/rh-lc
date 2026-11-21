@@ -82,6 +82,7 @@ theorem of_eq_algebraMap (t : ACrisZero K p) :
   rfl
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_eq_add_p_pow_mul (k : ℕ) (y : ACris K p) :
     ∃ yk : ACrisZero K p, ∃ z : ACris K p,
       y = algebraMap (ACrisZero K p) (ACris K p) yk + (p : ACris K p) ^ k * z := by
@@ -100,6 +101,7 @@ theorem exists_eq_add_p_pow_mul (k : ℕ) (y : ACris K p) :
   exact (add_sub_cancel _ _).symm
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_phi_eq (y : ACris K p) :
     ∃ w : AInf K p, ∃ z : ACris K p,
       phi K p y = algebraMap (AInf K p) (ACris K p) w + (p : ACris K p) * z := by
@@ -118,6 +120,7 @@ theorem exists_phi_eq (y : ACris K p) :
     add_assoc]
 
 
+omit [CharZero K] in
 theorem phi_iterate_algebraMap (n : ℕ) (w : AInf K p) :
     (phi K p)^[n] (algebraMap (AInf K p) (ACris K p) w) =
       algebraMap (AInf K p) (ACris K p) ((φ ^ n) w) := by
@@ -127,6 +130,7 @@ theorem phi_iterate_algebraMap (n : ℕ) (w : AInf K p) :
     rw [Function.iterate_succ_apply', ih, phi_algebraMap, pow_succ', RingAut.mul_apply]
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_phi_iterate_eq (n : ℕ) (y : ACris K p) :
     ∃ w : AInf K p, ∃ z : ACris K p,
       (phi K p)^[n] y = algebraMap (AInf K p) (ACris K p) w + (p : ACris K p) ^ n * z := by
@@ -193,6 +197,7 @@ theorem thetaField_iota (y : ACris K p) :
   exact congrArg Subtype.val (RingHom.congr_fun hF y)
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_theta_eq_sum_of_phi_iterate {y : ACris K p} {N : ℕ} (hN : 1 ≤ N)
     (hy : (phi K p)^[N] y = y) {m : ℕ} (hm : 1 ≤ m) :
     ∃ c : ℕ → normInteger K, ∀ j : ℕ, ∃ e : normInteger K,

@@ -426,6 +426,7 @@ end Complex
 end FibreReduction
 
 
+open FibreReduction in
 theorem ReductionComplex.proof : ReductionComplex.Statement := by
   intro K _ _ ι _ _ Ω _ y D p a hV hp
   have : Fact p.Prime := ⟨hp⟩

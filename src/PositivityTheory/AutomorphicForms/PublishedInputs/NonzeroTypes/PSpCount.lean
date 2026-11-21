@@ -260,6 +260,7 @@ theorem cellRep_apply (c : Fin n → kˣ →* ℂˣ)
       relJac f (ρc c) (swapBlocks k (fun i j => Fin (bb.1 i j)) (relProj k g p)) v := rfl
 
 
+set_option maxHeartbeats 800000 in
 theorem cell_char (c : Fin n → kˣ →* ℂˣ)
     (bb : SizeMatrix (fun _ : Fin n => Unit) (fun a : Fin G.s => Fin (G.d a)))
     (f : ∀ i, (Σ j, Fin (bb.1 i j)) ≃ (fun _ : Fin n => Unit) i)
@@ -351,6 +352,8 @@ open P_spCount
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+open scoped Classical in
+set_option maxHeartbeats 800000 in
 theorem step_spCount {n : ℕ} (G : Grp k n) : G.SpecialCountProp := by
   intro hL c hc hres
   have hE : G.etaSp (jacU G.e (prinSeries c)) =

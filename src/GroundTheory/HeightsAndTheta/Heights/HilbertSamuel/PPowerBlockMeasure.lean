@@ -221,6 +221,7 @@ theorem aesm_map {α V : Type*} [MeasurableSpace α] [TopologicalSpace V] [Measu
 end PowerBlockMeasure
 
 
+open PowerBlockMeasure in
 theorem PowerBlockMeasure.proof (hPN : PowerBlockPointNorm.Statement) (hOS : PowerBlockOldPartSurj.Statement)
     (hZD : PrimeZariskiDense.Statement) : PowerBlockMeasure.Statement := by
   intro K _ _ ι _ Ω _ y A m N D v B J R _ _ dV hA hB hBa hV hv hgen hrel

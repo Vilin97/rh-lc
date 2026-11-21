@@ -24,6 +24,7 @@ open GlobalTheory.SplitFlip Matrix
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {Γ : Grid k}
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem update_two_add (x z : Γ.Args) (b₁ b₂ : Edge) (u u' : Matrix (Fin (Γ.rank b₁.tgt)) (Fin (Γ.rank b₁.src)) k)
     (v v' : Matrix (Fin (Γ.rank b₂.tgt)) (Fin (Γ.rank b₂.src)) k) :
     (Function.update (Function.update (x + z) b₁ (u + u')) b₂ (v + v') : Γ.Args) =
@@ -49,6 +50,7 @@ def setA (i j : ℕ) (x : Γ.Args) (Z : Matrix (Fin (Γ.rank (i + 1, j + 1))) (�
   Function.update (Function.update x (.ex i (j + 1)) Z.toCols₁) (.theta (i + 1) j) Z.toCols₂ᵀ
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem joinA_setA (i j : ℕ) (x : Γ.Args) (Z : Matrix (Fin (Γ.rank (i + 1, j + 1))) (Γ.Cols i j) k) :
     Γ.joinA i j (setA i j x Z) = Z := by
   rw [Grid.joinA, setA, Function.update_self, Function.update_of_ne (by simp), Function.update_self, transpose_transpose,
@@ -78,9 +80,11 @@ theorem mem_matLat_cols {A B₁ B₂ : Type} (c : kˣ) (Z : Matrix A (B₁ ⊕ B
   exact and_congr_right fun _ => forall_comm
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 def colsL (A B₁ B₂ : Type) : Matrix A (B₁ ⊕ B₂) k →+ Matrix A B₁ k := ⟨⟨toCols₁, rfl⟩, fun _ _ => rfl⟩
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 def colsR (A B₁ B₂ : Type) : Matrix A (B₁ ⊕ B₂) k →+ Matrix B₂ A k := ⟨⟨fun Z => Z.toCols₂ᵀ, rfl⟩, fun _ _ => rfl⟩
 
 theorem isNatDatum_small (hS : Γ.IsTensor ϖ e γ S) {i j : ℕ} (h1 : Edge.theta i j ∈ γ) (h2 : Edge.ex i j ∈ γ) (x : Γ.Args) :
@@ -118,6 +122,7 @@ theorem mem_of_update_two (hS : Γ.IsTensor ϖ e γ S) {b₁ b₂ : Edge} {x : �
   exact h (hS.2.1 _ b hb (by rwa [Function.update_of_ne h2, Function.update_of_ne h1]))
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem add_update_two {x y : Γ.Args} {b₁ b₂ : Edge} (h1 : x b₁ = 0) (h2 : x b₂ = 0) (h1' : y b₁ = 0) (h2' : y b₂ = 0) (u v) :
     x + Function.update (Function.update (0 : Γ.Args) b₁ u) b₂ v + y = Function.update (Function.update (x + y) b₁ u) b₂ v := by
   funext b

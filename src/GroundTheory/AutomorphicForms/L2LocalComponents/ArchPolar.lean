@@ -18,6 +18,7 @@ namespace AutomorphicForm
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
 
+open Reduction in
 theorem mem_archCompact_of_unitary (x : archGroup K n)
     (hr : ∀ v : {w : InfinitePlace K // IsReal w},
       realCompM v ((x : (ArchMatrix K n)ˣ) : ArchMatrix K n) ∈ unitaryGroup (Fin n) ℝ)

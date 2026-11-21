@@ -77,6 +77,7 @@ end GlobalTheory.UnipotentWeights
 namespace GlobalTheory
 
 
+open GlobalTheory.UnipotentWeights in
 theorem transvection_weightVec_expansion :
     ∀ (n : ℕ) (ι : Type) [Fintype ι] [DecidableEq ι] (Φ : GL (Fin n) ℂ → Matrix ι ι ℂ), IsPolyRep Φ →
       ∀ (i j : Fin n), i ≠ j → ∀ (μ : Fin n → ℤ) (v : ι → ℂ), IsWtVec Φ μ v →

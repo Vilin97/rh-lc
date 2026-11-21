@@ -104,6 +104,7 @@ theorem exists_basis (Hm : ι → Mt n) : ∃ (N : ℕ) (τs : Fin N → ι) (Xs
     exact Submodule.sum_mem _ fun τ _ => Submodule.subset_span ⟨τ, X τ, h τ, rfl⟩
 
 
+open scoped Matrix.Norms.Operator in
 theorem exists_chart (Hm : ι → Mt n) (hH : ∀ τ, (Hm τ).IsHermitian) (hd : ∀ τ, (Hm τ).det ≠ 0) :
     ∃ (N : ℕ) (τs : Fin N → ι) (Xs : Fin N → Mt n) (s S K : ℝ) (W : Set (ι → Mt n)),
       (∀ i, Xs i ∈ lieH (Hm (τs i))) ∧ 0 < s ∧ 0 ≤ K ∧ W ∈ nhds (1 : ι → Mt n) ∧ ∀ x ∈ W, x ∈ UG Hm →

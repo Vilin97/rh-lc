@@ -29,6 +29,7 @@ def lineSetoid : Setoid (IrrGL (k := k)) where
         exact ⟨m + n, by simp⟩ }
 
 
+variable (k) in
 def Line : Type 1 := Quotient (lineSetoid k)
 
 instance lineLinearOrder : LinearOrder (Line k) := (exists_wellOrder (Line k)).choose

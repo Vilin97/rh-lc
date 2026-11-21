@@ -265,6 +265,7 @@ section Cube
 variable {S : Scheme.{0}} (A : Over S) [GrpObj A]
 
 
+omit [GrpObj A] in
 theorem exists_cube_chart {T : Scheme.{0}} (j : T ⟶ A.left) :
     ∃ q : ((Over.pullback (j ≫ A.hom)).obj A ⊗ (Over.pullback (j ≫ A.hom)).obj A).left ⟶ (G3 A).left,
       IsPullback q ((Over.pullback (j ≫ A.hom)).obj A ⊗ (Over.pullback (j ≫ A.hom)).obj A).hom (x3 A 2).left j ∧

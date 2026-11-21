@@ -105,6 +105,7 @@ end GlobalTheory.FinPl.AllCombProof
 namespace GlobalTheory.FinPl
 
 
+open AllCombProof in
 theorem allComb : ∀ D : D7, AllComb D := by
   intro D k _ _ _ _ ι p I P hP n n' _ _ _ _ ψ hψ S T α β LS LT hLS hLT Ψ
   refine ⟨fun hΨ => ?_, overAll_unique hψ I, fun d hd f hf => ⟨?_, ?_⟩⟩

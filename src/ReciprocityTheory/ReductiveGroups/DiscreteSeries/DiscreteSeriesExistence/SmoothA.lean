@@ -182,6 +182,7 @@ variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] {ε : Fin 
   {σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)}
 
 
+variable (ε σ) in
 def smSub : Submodule ℂ H where
   carrier := {v | IsSmoothVecU ε σ v}
   add_mem' hv hw := IsSmoothVecU.add hv hw

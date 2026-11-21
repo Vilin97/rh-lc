@@ -14,6 +14,7 @@ namespace GlobalTheory.LatFin
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 
+omit [IsCMField E] in
 theorem exists_int_mul_integral (x : E) : ∃ k : ℤ, k ≠ 0 ∧ IsIntegral ℤ ((k : E) * x) := by
   have h : IsAlgebraic ℤ x :=
     (IsFractionRing.isAlgebraic_iff ℤ ℚ E).2 (Algebra.IsAlgebraic.isAlgebraic x)
@@ -21,6 +22,7 @@ theorem exists_int_mul_integral (x : E) : ∃ k : ℤ, k ≠ 0 ∧ IsIntegral �
   exact ⟨k, hk, by simpa [zsmul_eq_mul] using hi⟩
 
 
+omit [IsCMField E] in
 theorem finite_bounded (Ψ : Finset (E →+* ℂ))
     (hΨ : ∀ τ : E →+* ℂ, τ ∈ Ψ ↔ ComplexEmbedding.conjugate τ ∉ Ψ) (k : ℤ) (hk : k ≠ 0) (R : ℝ) :
     {x : E | IsIntegral ℤ ((k : E) * x) ∧ ∀ τ : Ψ, ‖τ.1 x‖ ≤ R}.Finite := by
@@ -42,6 +44,7 @@ theorem finite_bounded (Ψ : Finset (E →+* ℂ))
   exact mul_le_mul_of_nonneg_left this (norm_nonneg _)
 
 
+omit [IsCMField E] in
 theorem exists_common_den {r : ℕ} (Λ : Submodule (𝓞 E) (Fin r → E)) (hΛ : Λ.FG) :
     ∃ k : ℤ, k ≠ 0 ∧ ∀ v ∈ Λ, ∀ a, IsIntegral ℤ ((k : E) * v a) := by
   classical
@@ -73,6 +76,7 @@ theorem exists_common_den {r : ℕ} (Λ : Submodule (𝓞 E) (Fin r → E)) (hΛ
     exact this
 
 
+omit [IsCMField E] in
 theorem exists_int_smul_mem {r : ℕ} (Λ : Submodule (𝓞 E) (Fin r → E))
     (hΛ : Submodule.span E (Λ : Set (Fin r → E)) = ⊤) (v : Fin r → E) :
     ∃ k : ℤ, k ≠ 0 ∧ k • v ∈ Λ := by

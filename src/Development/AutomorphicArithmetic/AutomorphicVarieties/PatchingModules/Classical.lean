@@ -99,6 +99,7 @@ def LevMod.Classical (A : LevMod b h w) : Prop :=
   ∃ ι : Qbar l ≃+* ℂ, ∀ m : A.P, (∀ x : LevPt A ι, x.sp m = 0) → m = 0
 
 
+variable (B J) in
 def Level : Prop :=
   ∃ b : TWBase (pairOf B.u) J Empty (n * Module.finrank ℚ (Lp L)),
     ∀ (V : s.Lev) (h : (globOf r V).Hom (globOf r V0)) (q : ℕ) (v : Fin q → Plc (Lp L)) (w : Fin q → Plc L)

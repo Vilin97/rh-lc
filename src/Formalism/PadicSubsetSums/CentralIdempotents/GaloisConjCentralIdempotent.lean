@@ -33,6 +33,7 @@ structure LabelMap (C : LabelConv K) where
     lab 1 τ = X - Polynomial.C x
 
 
+variable {K} in
 def LabelMapEquivariant {C : LabelConv K} (O : LabelMap K C) : Prop :=
   (∀ (d : ℕ) (α : ℂ ≃+* ℂ) (a : ℕ),
     (∀ ζ : ℂ, ζ ^ (∏ e ∈ Finset.Icc 1 d, (q K ^ e - 1)) = 1 → α ζ = ζ ^ a) →

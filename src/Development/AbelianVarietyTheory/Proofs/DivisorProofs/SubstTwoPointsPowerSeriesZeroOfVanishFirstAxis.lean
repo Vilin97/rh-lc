@@ -334,6 +334,7 @@ theorem subst_univ (L : LogFGL v d) {hL : PS C 1 d} {h : PS C 2 d} (cL : constan
   rfl
 
 
+include hGF heig in
 theorem exists_germ_close (hR : ∀ r, IsIntV v (algebraMap R C r)) {h : PS C 2 d} (hc : B.IsCanonGauge C h) (w0 : O)
     (hu : ∀ l e, IsIntV v (u l e)) (hσ : ∀ b a, IsIntV v (σ b a)) {n : ℕ}
     (hU : ∀ x : Fin m → Fin n → O, ∃ U : PS R m d, FB.toK C U = FB.expS C ((∑ j : Fin n, ev (n := m)

@@ -66,6 +66,7 @@ def TransH (γ : M2 E N) (φ ψ : Matrix (Fin n) (Fin N) E → ℂ) : Prop :=
       (fun τ => Matrix.of fun k => z' τ k ᵥ* (hDen Ψ γ Z τ)⁻¹) = hFac Ψ γ Z z z' * thH Ψ φ Z z z'
 
 
+open Classical in
 def weil (γ : M2 E N) (φ : Matrix (Fin n) (Fin N) E → ℂ) : Matrix (Fin n) (Fin N) E → ℂ :=
   by
     classical
@@ -244,9 +245,11 @@ theorem mul_mem_DH {M : ℕ} {h g : Matrix (Fin n) (Fin n) E} (hh : h ∈ DH E n
     simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul, smul_add, mul_comm (M : E)]
 
 
+omit [IsCMField E] in
 theorem moves_one (Λ : Lt E n) : Moves 1 Λ Λ := fun v => by rw [Matrix.one_mulVec]
 
 
+omit [IsCMField E] in
 theorem moves_mul {h g : Matrix (Fin n) (Fin n) E} {Λ Λ' Λ'' : Lt E n} (h1 : Moves g Λ Λ')
     (h2 : Moves h Λ' Λ'') : Moves (h * g) Λ Λ'' := fun v => by
   rw [h1, h2, Matrix.mulVec_mulVec]
@@ -268,6 +271,7 @@ theorem classSum_congr {M : ℕ} {f g : Lt E n → ℂ} (h : ∀ Λ ∈ Vset E n
   finsum_congr fun c => by rw [h _ (Quot.out c).2]
 
 
+omit [IsCMField E] in
 theorem expo_eq_trace (x : Matrix (Fin n) (Fin N) E) (Z : CM Ψ N N) (z z' : CM Ψ n N) :
     expo Ψ x Z z z' = ∑ τ : Ψ, ((x.map τ.1 * Z τ * (x.map τ.1)ᴴ).trace +
       (x.map τ.1 * (z τ)ᵀ).trace + (z' τ * (x.map τ.1)ᴴ).trace) := by
@@ -281,6 +285,7 @@ theorem expo_eq_trace (x : Matrix (Fin n) (Fin N) E) (Z : CM Ψ N N) (z z' : CM 
 theorem swd_zero (M : ℕ) (φ : Fam E n N) (Z : CM Ψ N N) : swd Ψ M φ Z 0 0 = swDiff Ψ M φ Z := rfl
 
 
+omit [IsCMField E] in
 theorem mem_stdL {m : ℕ} (x : Fin m → E) : x ∈ stdL E m ↔ ∀ a, IsIntegral ℤ (x a) := by
   constructor
   · intro hx
@@ -330,11 +335,13 @@ theorem stdL_mem_Vset (n M : ℕ) : stdL E n ∈ Vset E n M := by
     · simp
 
 
+omit [IsCMField E] in
 theorem nat_smul_mem {m : ℕ} (Λ : Lt E m) (s : ℕ) {v : Fin m → E} (hv : v ∈ Λ) :
     (s : E) • v ∈ Λ := by
   rw [Nat.cast_smul_eq_nsmul]; exact Λ.toAddSubgroup.nsmul_mem hv s
 
 
+omit [IsCMField E] in
 theorem mem_of_coprime {m : ℕ} (Λ : Lt E m) {s R : ℕ} (h : s.Coprime R) {v : Fin m → E}
     (h1 : (s : E) • v ∈ Λ) (h2 : (R : E) • v ∈ Λ) : v ∈ Λ := by
   obtain ⟨a, b, hab⟩ : IsCoprime (s : ℤ) (R : ℤ) := Nat.isCoprime_iff_coprime.2 h
@@ -347,6 +354,7 @@ theorem mem_of_coprime {m : ℕ} (Λ : Lt E m) {s R : ℕ} (h : s.Coprime R) {v 
 
 
 
+omit [NumberField E] [IsCMField E] in
 theorem I_mem_Hn : (fun _ => I • (1 : Matrix (Fin N) (Fin N) ℂ) : CM Ψ N N) ∈ Hn Ψ N := by
   intro τ
   have : imH (I • (1 : Matrix (Fin N) (Fin N) ℂ)) = 1 := by
@@ -368,6 +376,7 @@ theorem one_mem_UU : (1 : M2 E N) ∈ UU E N := by
   rw [ccT_one]; simp
 
 
+omit [IsCMField E] in
 theorem transH_one (φ : Matrix (Fin n) (Fin N) E → ℂ) : TransH Ψ (1 : M2 E N) φ φ := by
   intro Z _ z z'
   have h11 : (1 : M2 E N).toBlocks₁₁ = 1 := by rw [← Matrix.fromBlocks_one]; rfl
@@ -384,9 +393,11 @@ theorem transH_one (φ : Matrix (Fin n) (Fin N) E → ℂ) : TransH Ψ (1 : M2 E
   · funext τ; ext k i; simp [d1]
 
 
+omit [IsCMField E] in
 theorem gidx_stdL : gidx (stdL E N) = 1 := by simp [gidx]
 
 
+omit [IsCMField E] in
 theorem thH_deg_zero (φ : Matrix (Fin n) (Fin 0) E → ℂ) (Z : CM Ψ 0 0) (z z' : CM Ψ n 0) :
     thH Ψ φ Z z z' = φ 0 := by
   unfold thH
@@ -394,6 +405,7 @@ theorem thH_deg_zero (φ : Matrix (Fin n) (Fin 0) E → ℂ) (Z : CM Ψ 0 0) (z 
   simp [expo, dotProduct]
 
 
+omit [IsCMField E] in
 theorem weil_deg_zero (γ : M2 E 0) (φ : Matrix (Fin n) (Fin 0) E → ℂ) : weil Ψ γ φ 0 = φ 0 := by
   have f : ∀ Z z z', hFac Ψ γ Z (n := n) z z' = 1 := fun Z z z' => by simp [hFac, dotProduct]
   have h : ∃ ψ, IsSB ψ ∧ TransH Ψ γ φ ψ :=

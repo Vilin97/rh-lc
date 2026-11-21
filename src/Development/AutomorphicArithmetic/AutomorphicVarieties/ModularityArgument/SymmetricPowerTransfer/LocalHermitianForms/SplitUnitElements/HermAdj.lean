@@ -27,6 +27,7 @@ private theorem herm_adj {K : Type} [Field K] {Δ τ : K} (c : K) (m : EL Δ τ)
   ring
 
 
+set_option maxHeartbeats 800000 in
 theorem UpperTheory.V.Z.Sym.Loc.One.uniq :
     ∀ (O K : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field K] [Algebra O K] (Δ τ : K), IsLoc O Δ →
     (∃ u : Oˣ, algebraMap O K u = τ ^ 2 - 4) → ∀ (c : K) (d m : EL Δ τ), IsDat c d m → ∀ S₀ S₁ : Set (Sp Δ τ), IsFix O c d m S₀ → IsFix O c d m S₁ →

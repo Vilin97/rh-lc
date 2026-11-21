@@ -51,6 +51,8 @@ theorem le_preimage_of_eq {X : Scheme.{0}} {R : Type} [CommRing R] {U : X.Opens}
   exact le_preimage_specMap_fromSpec hU (CommRingCat.ofHom φ)
 
 
+open Classical in
+variable (Dw) in
 def oneAt (σ : E →+* ℂ) (n : ℕ) (σ' : E →+* ℂ) (a : Fin (Dw.mult σ')) : ℤ := if σ' = σ ∧ (a : ℕ) = n then 1 else 0
 
 theorem oneAt_eq_zero {σ : E →+* ℂ} {n : ℕ} (h : Dw.mult σ ≤ n) : oneAt Dw σ n = 0 := by

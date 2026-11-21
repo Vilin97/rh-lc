@@ -55,6 +55,7 @@ theorem finite_form_le {Y : Type} [AddCommGroup Y] [Module.Finite ℤ Y] (q : Li
   nlinarith [mul_nonneg (mul_nonneg a₅ a₅) a₁.le, mul_nonneg a₅ a₁.le, mul_nonneg a₅ (sub_nonneg.2 (Int.add_one_le_of_lt a₁))]
 
 
+include hj in
 theorem finite_expo_lt (α : a.D₀.X) (n : ℤ) : {mu | expo a j α mu < n}.Finite := by
   refine Set.Finite.subset ((finite_form_le a.be a.be_pos (2 * n + a.be α α).toNat).preimage
     (add_left_injective α).injOn) fun mu h => ?_
@@ -105,6 +106,7 @@ theorem exists_isIntegralForm (α : a.D₀.X) (s₀ : SecBMod a.D₀ j α) {m : 
   exact ⟨f, fun mu => ⟨hm mu, eq_of_heq (h₁ _ mu rfl)⟩, h₂⟩
 
 
+variable {hW} in
 theorem IsIntegralForm.resF_eq {α : a.D₀.X} {s₀ : SecBMod a.D₀ j α} {m : ℕ} {f : ∀ χ, SecBMod P.toPre j χ}
     (h : IsIntegralForm hW j α s₀ m f) (χ : P.toPre.X) : resF P.toPre F j χ (f χ) =
       toF (R := PowerSeries k) F (PowerSeries.X ^ m) • famComp P.toPre F j χ (constFam hW F hG hj α s₀) := by
@@ -118,6 +120,7 @@ variable {A : PolAV (Spec (CommRingCat.of (FractionRing (PowerSeries k))))}
   (U : Unif (Ideal.span {PowerSeries.X}) P A G)
 
 
+include hG hj in
 theorem exists_expandsAt (α : a.D₀.X) (s₀ : SecBMod a.D₀ j α) : ∃ m₀ : ℕ, ∀ m, m₀ ≤ m →
     ∃ (f : ∀ χ, SecBMod P.toPre j χ) (σ : H0 U.LG.L j), IsIntegralForm hW j α s₀ m f ∧
       ∀ n, U.toUnifPre.ExpandsAt n j σ f := by
@@ -138,6 +141,7 @@ theorem exists_expandsAt (α : a.D₀.X) (s₀ : SecBMod a.D₀ j α) : ∃ m₀
   exact fun _ => rfl
 
 
+include hG hj in
 theorem exists_pow_smul_mem_span {C : Type} (rep : C → a.D₀.X) (hrep : ∀ α, ∃! x, ∃ mu, rep x + j • mu = α)
     {Idx : C → Type} (bas : ∀ x, Module.Basis (Idx x) k (SecBMod a.D₀ j (rep x))) (m : (Σ x, Idx x) → ℕ)
     (f : (Σ x, Idx x) → ∀ χ, SecBMod P.toPre j χ)

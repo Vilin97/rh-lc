@@ -327,6 +327,7 @@ end Datum
 end GtBaseChange
 
 
+open GtBaseChange in
 theorem gtBaseChange : GtBaseChangeSt := by
   rintro S S' f E G _ ⟨d⟩
   refine ⟨extBC f E, AddEquiv.refl _, Iso.refl _, inferInstanceAs (IsMonHom (𝟙 _)), fun χ => ?_,

@@ -56,6 +56,7 @@ theorem norm_reimV_sq (M : V → Matrix (Fin n) (Fin m) ℂ) :
   rw [Complex.sq_norm, Complex.normSq_apply]
 
 
+variable (V m) in
 def hermFam : Submodule ℝ (V → Matrix (Fin m) (Fin m) ℂ) where
   carrier := {M | ∀ v, (M v)ᴴ = M v}
   add_mem' {M N} hM hN v := by

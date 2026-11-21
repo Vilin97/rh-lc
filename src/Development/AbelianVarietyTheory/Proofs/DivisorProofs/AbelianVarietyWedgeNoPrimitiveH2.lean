@@ -101,6 +101,7 @@ theorem symm_of_prim [IsSeparated A.hom] [QuasiCompact A.hom] (hp : StructureShe
 end GlobalTheory.AbCoh.WedgeSq
 
 
+open GlobalTheory.AbCoh.WedgeSq in
 theorem GlobalTheory.AbCoh.wedgeO_noPrimO2 : ∀ (K : Type) [Field K] [IsAlgClosed K] (A : Over (Sp K)) [GrpObj A] (g : ℕ),
     IsAbelianScheme A → SmoothOfRelativeDimension g A.hom →
     GlobalTheory.AbCoh.WedgeO (OAff A.hom) ∧ GlobalTheory.AbCoh.NoPrimitiveStructureSheafH2 A := by

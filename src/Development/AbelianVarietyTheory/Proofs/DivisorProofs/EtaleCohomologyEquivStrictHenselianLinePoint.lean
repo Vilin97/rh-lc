@@ -32,6 +32,7 @@ theorem idem_of_domain {A : Type} [CommRing A] [IsDomain A] (e : A) (he : IsIdem
   · exact Or.inr (sub_eq_zero.mp h)
 
 
+attribute [local instance] Algebra.TensorProduct.rightAlgebra in
 theorem isDomain_tensor_fractionRing (T O : Type) [CommRing T] [IsDomain T] [CommRing O] [IsDomain O]
     [Algebra T O] (hinj : Function.Injective (algebraMap T O)) : IsDomain (O ⊗[T] FractionRing T) := by
   haveI : IsLocalization (Algebra.algebraMapSubmonoid O (nonZeroDivisors T))

@@ -41,6 +41,7 @@ def scaleMat {D : ℕ} (e : Fin (D + 1) → J) (m : ℕ) : Matrix J J ℚ :=
   Matrix.diagonal fun i => if i ∈ Set.range e then 1 else (m : ℚ)
 
 
+open Classical in
 theorem matAct_scaleMat {D : ℕ} (e : Fin (D + 1) → J) (m : ℕ) (y : J → Ω) :
     matAct (scaleMat e m) y = scaleOff e m y := by
   funext i

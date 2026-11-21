@@ -17,6 +17,7 @@ variable {F : Type u} [Field F] [DecidableEq F] (E E' : WeierstrassCurve F) (p :
 variable {E E'} [E.IsElliptic] [E'.IsElliptic]
 
 
+omit [DecidableEq F] [E.IsElliptic] [E'.IsElliptic] in
 theorem Isogeny.val_eq_some_x_y (φ : Isogeny E E') : φ.1 = Point.some φ.x φ.y φ.nonsingular := by
   obtain ⟨Q, ⟨x, y, h, rfl, -⟩, -⟩ := φ
   rfl

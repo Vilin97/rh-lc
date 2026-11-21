@@ -77,6 +77,7 @@ def postcomp (C : Type*) [CommRing C] [Bialgebra R C] [IsCocomm R C] (h : A →�
   map_mul' f g := toPts_injective (map_mul (ptsPush C (h : A →ₐ[R] B)) (toPts f) (toPts g))
 
 
+variable (R A) in
 def mulBy [IsCocomm R A] (n : ℕ) : A →ₐc[R] A := (toConv (BialgHom.id R A) ^ n).ofConv
 
 theorem comp_mulBy_pts [IsCocomm R A] {E : Type*} [CommRing E] [Algebra R E] (x : A →ₐ[R] E)
@@ -109,6 +110,7 @@ theorem mulBy_groupLike [IsCocomm R A] (n : ℕ) {u : A} (hu : IsGroupLikeElem R
   exact h.trans (convPow_apply_groupLike (toConv (AlgHom.id R A)) hu n)
 
 
+variable (R A) in
 abbrev augIdeal : Ideal A := RingHom.ker (counitAlgHom R A)
 
 abbrev kerIdeal (f : C →ₐc[R] A) : Ideal A := Ideal.map (f : C →ₐ[R] A) (augIdeal (R := R) (A := C))
@@ -202,6 +204,7 @@ def liftSurj (i : A →ₐc[R] B) (hi : Function.Surjective i) (f : A →ₐc[R]
   AlgHom.liftOfSurjective_apply (i : A →ₐ[R] B) hi (f : A →ₐ[R] C) h a
 
 
+variable (R A) in
 abbrev Cot : Type _ := AugCot (counitAlgHom R A)
 
 
@@ -265,6 +268,7 @@ variable [Module.Finite R A] [Module.Projective R A] [Module.Finite R C] [Module
   [IsCocomm R A] [IsCocomm R C]
 
 
+variable (R A C) in
 def dualMonoidHom :
     WithConv (C →ₐc[R] A) →* WithConv (CartierDual R A →ₐc[R] CartierDual R C) where
   toFun f := toConv (CartierDual.map f.ofConv)
@@ -319,6 +323,7 @@ theorem mu_algHom_ext {x y : AddMonoidAlgebra R (ZMod m) →ₐ[R] B}
     rw [← ZMod.natCast_zmod_val k, ← muT_pow R m, map_pow, map_pow, h]) (Subsingleton.elim _ _)
 
 
+variable (R) in
 def muPoint (u : B) (hu : u ^ m = 1) : AddMonoidAlgebra R (ZMod m) →ₐ[R] B :=
   AddMonoidAlgebra.lift R B (ZMod m)
     { toFun := fun k => u ^ (Multiplicative.toAdd k).val

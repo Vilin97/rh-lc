@@ -65,6 +65,7 @@ private theorem totallyDisconnectedSpace_finiteAdeleRing :
   exact fun x hx y hy => hi (h1 (Set.mem_image_of_mem f hx) (Set.mem_image_of_mem f hy))
 
 
+open GroundTheory.Global in
 theorem exists_clopen_superset [Fintype κ] {S : Set (κ → FiniteAdeleRing (𝓞 F) F)} (hS : IsCompact S) :
     ∃ V, IsClopen V ∧ IsCompact V ∧ S ⊆ V := by
   classical
@@ -93,6 +94,7 @@ theorem finOf_ratA_add (ξ : κ → F) (a : κ → AF F) :
     finOf (ratA ξ + a) = (fun i => algebraMap F (FiniteAdeleRing (𝓞 F) F) (ξ i)) + finOf a := rfl
 
 
+open scoped Classical in
 theorem pure_bound [Fintype κ] (f : SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ)
     {g : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ} (hg : g ∈ SB (κ → FiniteAdeleRing (𝓞 F) F))
     {K : Set (κ → AF F)} (hK : IsCompact K) :
@@ -161,6 +163,7 @@ theorem pure_bound [Fintype κ] (f : SchwartzMap (κ → mixedEmbedding.mixedSpa
     _ = M * (C * (1 + R) ^ k) * (‖V.indicator (fun _ => (1 : ℂ)) y‖ * ((1 + ‖p‖) ^ k)⁻¹) := by ring
 
 
+open scoped Classical in
 theorem schA_bound [Fintype κ] {Φ : (κ → AF F) → ℂ} (hΦ : Φ ∈ schA F κ) :
     Continuous Φ ∧ ∀ K : Set (κ → AF F), IsCompact K →
       ∃ u : (κ → F) → ℝ, Summable u ∧ ∀ ξ, ∀ a ∈ K, ‖Φ (ratA ξ + a)‖ ≤ u ξ := by

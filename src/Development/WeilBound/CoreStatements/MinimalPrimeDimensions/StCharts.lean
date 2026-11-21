@@ -99,6 +99,7 @@ theorem exists_form (h1 : StPts) [IsIntegral Z] [NoetherianSpace Z] (hE : Emb p 
 end ChowFormHeightComparison₂.CF.H
 
 
+open ChowFormHeightComparison₂.CF.H in
 theorem ChowFormHeightComparison₂.CF.stCharts (h1 : ChowFormHeightComparison₂.CF.StPts) : ChowFormHeightComparison₂.CF.StCharts := by
   intro K _ _ Z _ p B m s e hE hX
   have := hX.isNoetherian

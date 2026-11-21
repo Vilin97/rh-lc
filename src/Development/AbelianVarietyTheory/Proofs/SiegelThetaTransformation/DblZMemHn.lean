@@ -70,6 +70,7 @@ theorem det_aLin_ne_zero {x₁ x₂ : Frame X.Ψ r} (h₁ : x₁ ∈ X.dom) (h�
   linarith
 
 
+variable (X) in
 theorem aLin_swap (x₁ x₂ : Frame X.Ψ r) (τ : X.Ψ) :
     aLin X x₂ x₁ τ = (aAnti X x₁ x₂ τ).map conj := by
   ext a c
@@ -160,6 +161,7 @@ theorem posDef_imH {N : ℕ} {Z : Matrix (Fin N) (Fin N) ℂ}
     exact_mod_cast h v hv
 
 
+variable (X) in
 theorem re_kappa (τ : E →+* ℂ) : (τ X.κ0).re = 0 := by
   have h : conj (τ X.ξ0) = -τ X.ξ0 := by rw [← emb_cc, X.ξ0_im, map_neg]
   have h' := congrArg Complex.re h

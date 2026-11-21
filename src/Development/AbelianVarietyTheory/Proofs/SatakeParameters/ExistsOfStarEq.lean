@@ -56,6 +56,7 @@ theorem locK_tame {χ : HChar E} {P : HeightOneSpectrum (𝓞 E)} (h : χ.TameAt
 variable [StarRing E] {F : Type} [Field F] [NumberField F] [Algebra F E]
 
 
+omit [NumberField E] [NumberField F] in
 theorem exists_of_star_eq (hF : ∀ x : F, star (algebraMap F E x) = algebraMap F E x) (hr : Module.finrank F E = 2)
     (hc : ∃ a : E, star a ≠ a) {x : E} (hx : star x = x) : ∃ k : F, algebraMap F E k = x := by
   have : FiniteDimensional F E := Module.finite_of_finrank_eq_succ hr
@@ -148,6 +149,7 @@ theorem under_eq_iff (hF : ∀ x : F, star (algebraMap F E x) = algebraMap F E x
       rw [hcoe, hF]
 
 
+omit [StarRing E] in
 theorem valuation_up (hr : Module.finrank F E = 2)
     (hu : ∀ v : HeightOneSpectrum (𝓞 F), v.asIdeal.ramificationIdxIn (𝓞 E) = 1) (Q : HeightOneSpectrum (𝓞 E)) (x : F) :
     Q.valuation E (algebraMap F E x) = (Q.under (𝓞 F)).valuation F x := by
@@ -229,6 +231,7 @@ theorem split_prod (hF : ∀ x : F, star (algebraMap F E x) = algebraMap F E x) 
   rw [hz, map_mul, map_inv, ← hPK, inv_eq_of_mul_eq_one_right htriv, hQK]
 
 
+open Classical in
 theorem place_prod (hF : ∀ x : F, star (algebraMap F E x) = algebraMap F E x) (hr : Module.finrank F E = 2)
     (hc : ∃ a : E, star a ≠ a) (hu : ∀ v : HeightOneSpectrum (𝓞 F), v.asIdeal.ramificationIdxIn (𝓞 E) = 1)
     {χ : HChar E} (hχ : χ.TrivOn F) (ht : ∀ P, χ.TameAt P) {T : Finset (HeightOneSpectrum (𝓞 E))}

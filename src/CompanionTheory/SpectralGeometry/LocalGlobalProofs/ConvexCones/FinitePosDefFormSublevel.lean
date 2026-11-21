@@ -11,6 +11,7 @@ open NumberField ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.Toroi
 namespace GlobalTheory.CompanionTheory.Ar.Fan
 
 
+open Matrix in
 theorem posDef_coercive {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (hA : A.PosDef) :
     ∃ ε : ℝ, 0 < ε ∧ ∀ x : Fin n → ℝ, ε * ‖x‖ ^ 2 ≤ x ⬝ᵥ (A *ᵥ x) := by
   have hpos : ∀ x : Fin n → ℝ, x ≠ 0 → 0 < x ⬝ᵥ (A *ᵥ x) := by
@@ -44,6 +45,7 @@ theorem posDef_coercive {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (hA : A.PosDe
     _ = x ⬝ᵥ (A *ᵥ x) := by field_simp
 
 
+open Matrix in
 theorem sublevel_finite : ∀ (X : Type) [AddCommGroup X] [Module.Finite ℤ X] [Module.Free ℤ X]
     (β : LinearMap.BilinForm ℤ X), (∀ y z, β y z = β z y) → (∀ y, y ≠ 0 → 0 < β y y) →
     ∀ c : ℤ, {y : X | β y y ≤ c}.Finite := by

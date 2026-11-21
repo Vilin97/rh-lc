@@ -103,6 +103,7 @@ def IsCoc (α : G ℚ Ω →* Oˣ) (c : G ℚ Ω → W) : Prop :=
   IsLocallyConstant c ∧ ∀ g h, c (g * h) = c g + (α g : O) • c h
 
 
+variable (W) in
 def ShT (α : G ℚ Ω →* Oˣ) (δ : G ℚ Ω) (F : ℕ) (a : O) : Submodule O (G ℚ Ω → W) where
   carrier := {c | IsCoc α c ∧ c δ = 0 ∧ (∀ g, a • c g = 0) ∧
     (∀ A : ValuationSubring Ω, ¬ Over A F → ∀ g ∈ Ine (F := ℚ) A, c g = 0) ∧

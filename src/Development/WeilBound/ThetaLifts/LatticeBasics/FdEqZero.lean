@@ -17,6 +17,7 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.Inde
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n : ℕ}
 
 
+variable (σ) in
 structure Cpt (J : Matrix (Fin n) (Fin n) E) : Prop where
   lc : LocallyCompactSpace (UA σ J)
   sc : SecondCountableTopology (UA σ J)

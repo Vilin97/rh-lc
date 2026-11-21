@@ -194,6 +194,7 @@ theorem mem_Z1_iff_cocycle {S : Type} [CommRing S] (G : C ⥤ CommAlgCat.{0} S) 
   rw [GlobalTheory.CatCoh.commAlgFunctorCocyclesOne_eq_ker, LinearMap.mem_ker]
 
 
+variable {F a₀ a₁ ψ₀ ψ₁ ψ₂} in
 theorem ker_equiv_H1 (c0 : ψ₁ ∘ₗ a₀ = d0 F ∘ₗ ψ₀) (c1 : ψ₂ ∘ₗ a₁ = d1 F ∘ₗ ψ₁)
     (d : (P₁ ⧸ LinearMap.range a₀) →ₗ[R] P₂) (hdπ : d ∘ₗ (LinearMap.range a₀).mkQ = a₁)
     (hp : QIsoAt a₀ a₁ (d0 F) (d1 F) ψ₁) : Nonempty (LinearMap.ker d ≃ₗ[R] H1 F) := by
@@ -207,6 +208,7 @@ theorem ker_equiv_H1 (c0 : ψ₁ ∘ₗ a₀ = d0 F ∘ₗ ψ₀) (c1 : ψ₂ �
   · rwa [LinearMap.subtype_comp_codRestrict]
 
 
+variable {F a₀ a₁ ψ₀ ψ₁ ψ₂} in
 theorem ker_equiv_base {k : Type} [CommRing k] [Algebra R k] (G : C ⥤ CommAlgCat.{0} k)
     (E₀ : k ⊗[R] C0 F ≃ₗ[k] C0 G) (E₁ : k ⊗[R] C1 F ≃ₗ[k] C1 G) (E₂ : k ⊗[R] C2 F ≃ₗ[k] C2 G)
     (h01 : ∀ x, E₁ ((d0 F).baseChange k x) = d0 G (E₀ x)) (h12 : ∀ x, E₂ ((d1 F).baseChange k x) = d1 G (E₁ x))
@@ -246,6 +248,7 @@ theorem ker_equiv_base {k : Type} [CommRing k] [Algebra R k] (G : C ⥤ CommAlgC
       (fun x => congrArg E₁ (congrFun (LinearMap.baseChange_eq_ltensor ψ₁) x))
 
 
+variable {F a₀ a₁ ψ₀ ψ₁ ψ₂} in
 theorem core [Finite C] [∀ T T' : C, Finite (T ⟶ T')] [Module.Finite R P₀] [Module.Finite R P₁] [Module.Projective R P₀]
     [Module.Projective R P₁] [Module.Finite R P₂] [Module.Projective R P₂] (g : ℕ)
     (h10 : a₁ ∘ₗ a₀ = 0) (c0 : ψ₁ ∘ₗ a₀ = d0 F ∘ₗ ψ₀) (c1 : ψ₂ ∘ₗ a₁ = d1 F ∘ₗ ψ₁)

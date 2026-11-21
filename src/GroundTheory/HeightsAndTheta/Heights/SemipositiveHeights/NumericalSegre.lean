@@ -63,6 +63,7 @@ set_option maxSynthPendingDepth 1
 namespace GroundTheory.Heights₂.Heights.NumbersDVR
 
 
+open GroundTheory.Heights₂.Heights.FieldNumbers in
 theorem DivPushForwardLocalZero : FieldNumbers.DivPushForwardLocal.Statement.{0} := by
   have hq := DegZeroLocQuot.proof.{0}
   have hdzl := DegZeroLocLocal.proof hq

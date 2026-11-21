@@ -666,6 +666,7 @@ def liftId {k r : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace
 variable {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D) {θ : ℝ} (C : Choice X θ)
 
 
+variable [Fact Formalism.L2.SG.Pf.CarrierT.CoefCapAll] in
 theorem carrierDataBuilt_of_hyp (Cb : ℝ) (hLift : LiftAt3 Cb) (hCap : CapFromHC) {large₂ : SizeData₂ D} {C' Cl Cg cb Cu cT CT : ℝ}
     (hS0 : StandingHypotheses D large₂ C' Cl Cg cb Cu cT CT) (hCl1000 : 1000 ≤ Cl) (hk18 : 1801 ≤ D.R.k) (Cc C₆ : ℝ) (u u' : D.what₂.Word)
     (e : InfinitePlace D.host.E ≃ D.what₂.Tau) (he : PlaceTie X e) (CA : ℝ) (de de' : ℕ → ℝ) (l : ℕ)

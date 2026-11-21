@@ -14,6 +14,7 @@ open IsLocalRing
 namespace GlobalTheory
 
 
+open Pointwise in
 theorem modDepthGE_two_quotient_pow_of_free_of_isRegularLocalRing :
     ∀ (R : Type) [CommRing R] [IsRegularLocalRing R], 3 ≤ ringKrullDim R → ∀ f ∈ maximalIdeal R,
       f ≠ 0 → ∀ (B : Type) [CommRing B] [Algebra R B] [Module.Finite R B] [Module.Free R B]

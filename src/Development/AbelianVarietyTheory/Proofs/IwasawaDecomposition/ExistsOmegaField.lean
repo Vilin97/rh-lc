@@ -153,6 +153,7 @@ theorem exists_omega_field (Pg Q : Finset (Pl D.host.E)) : ∃ M : IntermediateF
     · exact zero_mem _
 
 
+set_option maxHeartbeats 800000 in
 theorem exists_datum (V W : HSp D) (hV : V.gram = 1) (βV : GL (Fin V.rank) (EAf D)) (hβ : IsIntM (βV⁻¹).val)
     (β : GL (Fin W.rank) (EAf D)) (e : AE D) {La : Type} [AddCommGroup La] [Module (𝓞 D.host.E) La]
     (ι : La →ₗ[𝓞 D.host.E] (Fin W.rank → D.host.E))
@@ -187,6 +188,7 @@ variable {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.L
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (i : Fin D.R.m)
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_phi {F : Face D A} (hR : R.Char F) (hV : VStd D i) (t : T0) {La : Type} [AddCommGroup La]
     [Module (𝓞 D.host.E) La] (ι : La →ₗ[𝓞 D.host.E] (Fin (Wc D i).rank → D.host.E)) (hι : LatEmb (Wc D i) ι) :
     ∃ M : IntermediateField ℚ ℂ, FiniteDimensional ℚ M ∧ ∀ M' : IntermediateField ℚ ℂ, M ≤ M' →
@@ -209,6 +211,7 @@ theorem exists_phi {F : Face D A} (hR : R.Char F) (hV : VStd D i) (t : T0) {La :
     fun b => (Submodule.Quotient.eq _).1 (Quotient.out_eq _)
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_thAd {F : Face D A} (hR : R.Char F) (t : T0) {K' : Type} [Field K'] {σ' : K' →+* ℂ}
     (c0' : VsV D i K' →ₛₗ[σ'] (R.cV i).W) {Cl : Type} (h : Cl → GA D (Vc D i)) {J' : Subgroup (Bridge.Gf (Vc D i))}
     (hle : J' ≤ levJ R i t) (hr : Bridge.IsReps (Bridge.ratF (Vc D i)) J' (fun k => FWT.fin _ (h k)))
@@ -232,6 +235,7 @@ theorem latEmb_iotaW (T : CoreJ D) (hT : LawsJ T) (i : Fin D.R.m) : LatEmb (Wc D
   exact key _ (hT.spaceW _ (inR i) _ T.toCore.good_σ₀) (rank_Wc i)
 
 
+set_option maxHeartbeats 2000000 in
 theorem exists_pins : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A : FamIn D.what₂.LL G Pl0 T0 D.R.m) (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F) (F : Face D A) (κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)) (v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec), R.Char F → Nonempty (FWTie T R κ v₀) → T.pb = R.C.P.pb → Finite T0 → QGuard R → ∀ i : Fin D.R.m, VStd D i → ∃ O' : OMDat T.toCore R i T0 id, D.what₂.embLL.toRatAlgHom.fieldRange ≤ O'.c'.F ∧ O'.Pins (κ i) (v₀ i (sg0 D A)) (iotaW T i) (T.x₀ ((i : ℕ) + 1) O'.s0) := by
   intro D G _ _ Pl0 T0 A T _ R F κ v₀ hR hfw hpb hfin hG i hV
   obtain ⟨fw⟩ := id hfw

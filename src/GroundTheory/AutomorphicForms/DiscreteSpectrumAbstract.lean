@@ -125,6 +125,7 @@ def IsMinimal (π : UnitaryRep G H) (V : Submodule ℂ H) : Prop :=
     ∀ U : Submodule ℂ H, IsClosed (U : Set H) → π.IsInvariant U → U ≤ V → U = ⊥ ∨ U = V
 
 
+omit [MeasurableSpace G] [OpensMeasurableSpace G] in
 theorem isIrreducible_restrict_of_isMinimal {V : Submodule ℂ H} [CompleteSpace V]
     (hV : π.IsInvariant V) (h : π.IsMinimal V) : (π.restrict V hV).IsIrreducible := by
   obtain ⟨hcl, -, hne, hmin⟩ := h
@@ -156,6 +157,7 @@ theorem isIrreducible_restrict_of_isMinimal {V : Submodule ℂ H} [CompleteSpace
     rwa [← this]
 
 
+omit [MeasurableSpace G] [OpensMeasurableSpace G] in
 theorem IsInvariant.inf {U V : Submodule ℂ H} (hU : π.IsInvariant U) (hV : π.IsInvariant V) :
     π.IsInvariant (U ⊓ V) :=
   fun g v hv => ⟨hU g v hv.1, hV g v hv.2⟩
@@ -187,6 +189,7 @@ theorem mem_cyclicSubspace_self (v : H) : v ∈ π.cyclicSubspace v :=
   Submodule.le_topologicalClosure _ (Submodule.subset_span ⟨1, by simp⟩)
 
 
+omit [MeasurableSpace G] [OpensMeasurableSpace G] in
 theorem cyclicSubspace_le {v : H} {V : Submodule ℂ H} (hcl : IsClosed (V : Set H))
     (hV : π.IsInvariant V) (hv : v ∈ V) : π.cyclicSubspace v ≤ V :=
   Submodule.topologicalClosure_minimal _

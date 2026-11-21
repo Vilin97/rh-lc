@@ -133,6 +133,7 @@ theorem final_algebra {c δ z ln li lc I P Q Z e y₁ y₂ s : ℂ} {r₁ r₂ r
     - (c * e * r₂ * y₂ * lc * li * Z * Q) * h5
 
 
+set_option maxHeartbeats 1000000 in
 theorem scalar_const (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT)
     (hη : IsEtaTilde D η) (hf : IsFinWeil ψ S T ΛS ΛT (η ^ S.rank) (η ^ T.rank) of) (hi : IsInfWeil ψ θ S T oi)
     (cS : ∀ τ, IsCartanInv (gramAt D S τ) (sS τ)) (cT : ∀ τ, IsCartanInv (gramAt D T τ) (sT τ)) :
@@ -248,6 +249,7 @@ theorem of_oi_comm (hψ : IsStdChar D ψ (-1)) (hS : IsSelfDualC S ΛS) (hT : Is
     (GlobalTheory.SplitDetChar.cut ε hε.1 (Matrix.GeneralLinearGroup.det (matHom T p.2))) rfl rfl⟩) p q f h
 
 
+set_option maxHeartbeats 1000000 in
 theorem isScalar_one_of_comm (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT)
     (hη : IsEtaTilde D η) (hf : IsFinWeil ψ S T ΛS ΛT (η ^ S.rank) (η ^ T.rank) of) (hi : IsInfWeil ψ θ S T oi)
     (cS : ∀ τ, IsCartanInv (gramAt D S τ) (sS τ)) (cT : ∀ τ, IsCartanInv (gramAt D T τ) (sT τ))

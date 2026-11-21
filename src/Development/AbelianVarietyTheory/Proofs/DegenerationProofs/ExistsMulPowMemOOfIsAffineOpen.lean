@@ -36,6 +36,7 @@ theorem exists_mul_pow_mem_O_of_isAffineOpen {V : M.Z.Opens} (hV : IsAffineOpen 
   exact ⟨n, fun z hz => h1 ▸ valF_mem_O hz a⟩
 
 
+variable (M) in
 theorem noetherianSpace_of_isNoetherianRing [IsNoetherianRing o] : TopologicalSpace.NoetherianSpace M.Z := by
   have := M.lft
   have := M.qc

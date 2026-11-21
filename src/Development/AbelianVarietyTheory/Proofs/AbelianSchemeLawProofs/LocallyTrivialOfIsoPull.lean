@@ -180,6 +180,7 @@ theorem bijective_app_of_restrict {Y T : Scheme.{0}} (p : Y ⟶ T) (V : T.Opens)
   exact ConcreteCategory.bijective_of_isIso (p.app V)
 
 
+open scoped CategoryTheory.Obj in
 theorem bijective_app_fst (hG : GlobalFnsSt) {S : Scheme.{0}} {A : Over S} [GrpObj A]
     (hA : IsAbelianScheme A) (T : Over S) (V : T.left.Opens) :
     Function.Bijective ((fst T A).left.app V).hom := by

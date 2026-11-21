@@ -201,6 +201,7 @@ end GlobalTheory.CellDec.Unimod
 namespace GlobalTheory.CellDec
 
 
+open GlobalTheory.CellDec.Unimod in
 theorem NA_isInvInvariant : ∀ (E : Type) [Field E] [NumberField E] (n : ℕ) [MeasurableSpace (GA E n)]
     [BorelSpace (GA E n)] (ν : Measure (GlobalTheory.CellDec.NA E n)) [ν.IsHaarMeasure], ν.IsInvInvariant := by
   intro E _ _ n _ _ ν _

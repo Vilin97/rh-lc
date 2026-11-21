@@ -55,6 +55,7 @@ theorem formI_self_ne_zero {I : (GL (Fin m) k → ℂ) →ₗ[ℂ] ℂ} (hI : Po
   exact Complex.normSq_eq_zero.1 this
 
 
+variable (ψ) in
 def cK (I : (GL (Fin m) k → ℂ) →ₗ[ℂ] ℂ) (K : Subgroup (GL (Fin m) k)) : ℂ :=
   formI ψ I (delta ψ K) (delta ψ K)
 

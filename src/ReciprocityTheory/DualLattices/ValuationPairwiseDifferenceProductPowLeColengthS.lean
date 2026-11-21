@@ -213,6 +213,7 @@ theorem v_det_le_of_cols {ι : Type} [Fintype ι] [DecidableEq ι] (L : Lat v ι
 end DeterminantValuationBounds
 
 
+open DeterminantValuationBounds in
 theorem valuation_pairwiseDifferenceProduct_pow_le_colength_sq (C : Type) [Field C] [IsAlgClosed C] (v : Valuation C NNReal) (n : ℕ)
     (a : Fin n → C) (s : ℕ) (M S : Lat v (Fin n × Fin s)) (Mτ : Fin n → Lat v (Fin s))
     (hM : IsLaStable a M) (hτ : ∀ τ, (Mτ τ).pts = projPts M.pts τ) (hS : S.pts = sumPts Mτ) :

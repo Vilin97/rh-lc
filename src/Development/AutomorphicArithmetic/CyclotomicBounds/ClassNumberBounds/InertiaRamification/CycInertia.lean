@@ -88,6 +88,7 @@ theorem map_inertia_eq (l : ℕ) [Fact l.Prime] (P : Ideal (𝓞 K)) [P.IsPrime]
     simp
 
 
+attribute [local instance] Ideal.Quotient.field in
 theorem map_stabilizer_eq (l : ℕ) [Fact l.Prime] (P : Ideal (𝓞 K)) [P.IsPrime]
     [P.LiesOver (Ideal.span {(l : ℤ)})] :
     (MulAction.stabilizer Gal(K/ℚ) P).map (galEquivZMod N K).toMonoidHom = decompUnits N l := by

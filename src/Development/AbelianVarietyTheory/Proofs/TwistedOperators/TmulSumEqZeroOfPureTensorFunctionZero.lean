@@ -100,6 +100,7 @@ theorem sum_local_eq_zero (vac : ∀ v : Pl F, (κ → Fv F v) → ℂ) (h0 : �
 section Forms
 
 
+variable (F κ) in
 def coeL : SInf F κ →ₗ[ℂ] ((κ → mixedEmbedding.mixedSpace F) → ℂ) where
   toFun f := f
   map_add' _ _ := by ext; simp
@@ -109,11 +110,13 @@ variable (F κ) in
 theorem coeL_injective : Function.Injective (coeL F κ) := fun _ _ h => SchwartzMap.ext (congrFun h)
 
 
+variable (F κ) in
 def Xf (T : Finset (Pl F)) : Option T → Type
   | none => κ → mixedEmbedding.mixedSpace F
   | some v => κ → Fv F v
 
 
+variable (F κ) in
 def Vf (T : Finset (Pl F)) : ∀ l : Option T, Submodule ℂ (Xf F κ T l → ℂ)
   | none => LinearMap.range (coeL F κ)
   | some _ => ⊤

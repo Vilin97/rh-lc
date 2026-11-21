@@ -28,6 +28,7 @@ theorem isProPGroup_iff {p : ℕ} :
       exact ⟨k, by rw [← QuotientGroup.mk_pow, QuotientGroup.eq_one_iff]; exact hk⟩
 
 
+omit [TopologicalSpace G] in
 theorem isPGroup_map_mk_iff {p : ℕ} (H U : Subgroup G) [U.Normal] :
     IsPGroup p (H.map (QuotientGroup.mk' U)) ↔ ∀ h ∈ H, ∃ k : ℕ, h ^ p ^ k ∈ U := by
   constructor

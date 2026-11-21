@@ -283,6 +283,7 @@ theorem exists_isInvariantSection_basicOpen_le {U : X.Opens} (hU : IsAffineOpen 
   rwa [aut_map_one_apply] at this
 
 
+variable (ρ) in
 theorem exists_stable_isAffineOpen [OrbitsInAffineOpens ρ] (x : X) :
     ∃ V : X.Opens, IsAffineOpen V ∧ (∀ g, V ≤ (ρ g).asIso.hom ⁻¹ᵁ V) ∧ x ∈ V := by
   obtain ⟨U, hU, hxU⟩ := OrbitsInAffineOpens.exists_isAffineOpen (ρ := ρ) x

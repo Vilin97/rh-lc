@@ -53,6 +53,7 @@ theorem mulPull_gen_labCover {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R
   rfl
 
 
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 theorem exists_mulSecK (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] (_hR : Base R) (D : DegData R (maximalIdeal R))
     (C : LabCover D) (m : ℕ) (_hm : Odd m) (θ₀ : SecK C.P.L.L C.α 1) :
     ∃ S : SecK C.P.L.L C.α (m ^ 2), MulSecK C m θ₀ S := by

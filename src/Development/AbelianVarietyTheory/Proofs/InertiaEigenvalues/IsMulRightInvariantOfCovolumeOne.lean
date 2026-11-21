@@ -76,6 +76,7 @@ theorem isInvInvariant_of_covolume_one (ν : Measure U) [SigmaFinite ν] [ν.IsM
   exact ⟨by rw [h, h4, one_smul]⟩
 
 
+omit [MeasurableInv U] in
 theorem tsum_setLIntegral_eq_index (ν : Measure U) [ν.IsMulLeftInvariant]
     (U₀ L : Subgroup U) [Countable U₀] (hle : U₀ ≤ L) {D : Set U} (hD : IsFundamentalDomain U₀ D ν)
     (ψ : U → ℝ≥0∞) :
@@ -97,6 +98,7 @@ variable {G U : Type*} [Group G] [MeasurableSpace G] [MeasurableMul₂ G] [Measu
   [Group U] [MeasurableSpace U] [MeasurableMul₂ U] [MeasurableInv U]
 
 
+omit [MeasurableSpace G] [MeasurableMul₂ G] [MeasurableInv G] [MeasurableInv U] in
 theorem tsum_setLIntegral_eq_cosets (ι : U →* G) (hι : Function.Injective ι) (ν : Measure U) [ν.IsMulLeftInvariant]
     (Γ : Subgroup G) (U₀ : Subgroup U) [Countable U₀] (hle : U₀ ≤ Γ.comap ι) {D : Set U}
     (hD : IsFundamentalDomain U₀ D ν) (φ : G → ℝ≥0∞) :
@@ -160,6 +162,7 @@ theorem tsum_setLIntegral_inv (ι : U →* G) (hι : Function.Injective ι) (hι
         rw [map_mul, hv']; congr 1; group
 
 
+omit [MeasurableInv G] in
 theorem lintegral_mul_tsum_weight (μ : Measure G) [μ.IsMulLeftInvariant] (Γ : Subgroup G) [Countable Γ] {𝓕 : Set G}
     (h𝓕 : IsFundamentalDomain Γ 𝓕 μ) {β : G → ℝ≥0∞} (hβm : Measurable β)
     (hβ : ∀ f : G → ℝ≥0∞, ∫⁻ g in 𝓕, f g ∂μ = ∫⁻ g, β g * f g ∂μ) (ρ : G → ℝ≥0∞) (hρ : Measurable ρ) (w : G) :

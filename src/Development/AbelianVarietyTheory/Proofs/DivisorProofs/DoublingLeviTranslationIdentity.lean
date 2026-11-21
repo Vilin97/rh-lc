@@ -49,6 +49,7 @@ theorem vecMulVec_mul_transpose {R : Type} [CommRing R] {k l p : ℕ} (a : Fin k
 end GlobalTheory.ThK.EvLawA
 
 
+open GlobalTheory.ThK.EvLawA in
 theorem GlobalTheory.ThK.evLaw_isoA : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
     (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' →
     ∀ e, IsEv B G.M G₁.M H.ι H'.ι (isoA H H') e → ∀ X om om' om₁ om₁', IsTriple B G X om om' → IsTriple B G₁ X om₁ om₁' →

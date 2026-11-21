@@ -165,6 +165,7 @@ theorem div_mem_normGroup {A : Type} [CommRing A] [Algebra K A]
 end Converse
 
 
+open Converse in
 theorem exists_everywhereNorm_div_of_etaProd_eq_one :
     ∀ (K L : Type) [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
       [Algebra.IsQuadraticExtension K L], ∀ (x : FinFam K) (y : InfFam K),

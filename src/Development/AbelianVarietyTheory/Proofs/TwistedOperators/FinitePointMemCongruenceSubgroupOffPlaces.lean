@@ -104,6 +104,7 @@ theorem fg_ideal_smul {R M : Type} [CommRing R] [IsNoetherianRing R] [AddCommGro
 variable {D : D7}
 
 
+set_option maxHeartbeats 1600000 in
 theorem cong_fin {S : Finset (HeightOneSpectrum (𝓞 D.host.F))} {𝔪 : Ideal (𝓞 D.host.E)} (h𝔪 : 𝔪 ≠ ⊥)
     (hS : ∀ P : HeightOneSpectrum (𝓞 D.host.E), 𝔪 ≤ P.asIdeal → P.under (𝓞 D.host.F) ∈ S) (V : HSp D) (g : GA D V)
     (hoff : ∀ v ∉ S, GlobalTheory.AdelicU.proj D.sp.cm.sig V.gram v g ∈

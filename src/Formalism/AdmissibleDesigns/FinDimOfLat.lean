@@ -51,6 +51,7 @@ theorem smul_Ow (heO : ∀ a : O, algebraMap Ow LL (eO a) = e (algebraMap O (Fra
 variable {M : Type} [AddCommGroup M] [Module O M] (j : M →ₗ[O] V)
 
 
+variable (e eO) in
 def latT (heO : ∀ a : O, algebraMap Ow LL (eO a) = e (algebraMap O (FractionRing O) a)) :
     Submodule Ow (TrV e V) where
   carrier := Set.range fun m => tr e (j m)
@@ -108,6 +109,7 @@ variable {Γ G : Type} [Group Γ] [Group G] [TopologicalSpace G] {K₀ Kk B BdR 
     (PD : PeriodData G Qp K₀ Kk B BdR) (ι : G →* Γ)
 
 
+variable (e eO) in
 def latOf (heO : ∀ a : O, algebraMap Ow LL (eO a) = e (algebraMap O (FractionRing O) a))
     (ρV : Representation O Γ V) (ρM : Representation O Γ M) (hj : Function.Injective j)
     (hjeq : ∀ γ m, j (ρM γ m) = ρV γ (j m))
@@ -225,6 +227,7 @@ variable {O : Type} [CommRing O] [IsDomain O] {LL : Type} [Field LL] [Topologica
   (hf0 : ∀ γ v, f0 (ρVP γ v) = ρVQ γ (f0 v)) (hcomm : ∀ m, f0 (jP m) = jQ (ev m))
 
 
+include hspQ hcomm in
 theorem trL_onto (hev : Function.Surjective ev) : Function.Surjective (trL e f0) := by
   intro w
   obtain ⟨c, hc, q, hq⟩ := hspQ (untr e w)

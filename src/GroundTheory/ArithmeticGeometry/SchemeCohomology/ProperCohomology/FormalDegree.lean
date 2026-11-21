@@ -118,6 +118,7 @@ lemma lsingle_mem_reesSubmodule (n : ℕ) (g : Γ(idealPow I F n, V)) :
   · exact zero_mem _
 
 
+include hF hV in
 def reesInc (n : ℕ) : Γ(idealPow I F n, V) →+ Γ(reesSheaf I F, reesPr I X ⁻¹ᵁ V) :=
   (reesSectionsEquiv I hF hV).symm.toAddMonoidHom.comp
     (AddMonoidHom.codRestrict

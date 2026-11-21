@@ -33,6 +33,7 @@ theorem isMultiProjPrime_map_red (p : ℕ) {V : Ideal (MRing ι)} (hV : IsMultiP
   exact (mem_map_red_iff p hp _).1 h'
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem charOf_mem (W : Ideal (MRing ι)) : ((charOf W : ℕ) : MRing ι) ∈ W := by
   have hg := Submodule.IsPrincipal.generator_mem (W.comap (C : ℤ →+* MRing ι))
   have hdvd : Submodule.IsPrincipal.generator (W.comap (C : ℤ →+* MRing ι)) ∣
@@ -45,6 +46,7 @@ theorem charOf_mem (W : Ideal (MRing ι)) : ((charOf W : ℕ) : MRing ι) ∈ W 
 end KleimanNef
 
 
+open KleimanNef in
 theorem KleimanNef.proof (hF : KH.KleimanNefFStatement) : KH.KleimanNefIntersectionNonneg := by
   classical
   intro K _ ι _ V n a hV hchar hdim hnef

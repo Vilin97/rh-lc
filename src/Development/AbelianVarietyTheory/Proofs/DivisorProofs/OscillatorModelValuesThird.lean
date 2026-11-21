@@ -37,6 +37,7 @@ theorem above_eq {P : HeightOneSpectrum (𝓞 D.host.E)} [DecidableEq (HeightOne
   exact ⟨eq_or_eq_cP, by rintro (rfl | rfl); exacts [rfl, under_cP P]⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem val_mul_val (hv : ∀ (k : D.host.E) (Q : HeightOneSpectrum (𝓞 D.host.E)),
       (cP Q).valuation D.host.E (star k) = Q.valuation D.host.E k)
     (χ : HChar D.host.E) {P : HeightOneSpectrum (𝓞 D.host.E)} (hP : cP P ≠ P)
@@ -194,6 +195,7 @@ theorem det_unitary (V : HSp D) (hg : V.gram = 1) (h : GA D V) :
   exact h2
 
 
+set_option maxHeartbeats 800000 in
 theorem exists_ideal (V : HSp D) (hg : V.gram = 1) (hL : Bridge.hLat V 1 = stdLat D.host.E V.rank) (h : GA D V)
     (e : AE D) (P : Finset (HeightOneSpectrum (𝓞 D.host.E))) (y : (AE D)ˣ) (he : Formalism.IndefR.Datum.IsIdemSum e P)
     (hs : SuppAt e V h) (hy : IsDetAt e V h y) (b : ℕ) (hb : ∀ Q ∈ P, (b : 𝓞 D.host.E) ∉ Q.asIdeal)

@@ -28,6 +28,7 @@ def compAtPl (V : HSp D) (v : HeightOneSpectrum (𝓞 D.host.F)) (h : Bridge.Gf 
   (matF V h).map (Algebra.TensorProduct.map (evalV D.host.F v) (AlgHom.id D.host.F D.host.E))
 
 
+variable (D) in
 def IsSplitPl (v : HeightOneSpectrum (𝓞 D.host.F)) : Prop :=
   ∃ P P' : HeightOneSpectrum (𝓞 D.host.E), P ≠ P' ∧ P.under (𝓞 D.host.F) = v ∧ P'.under (𝓞 D.host.F) = v
 

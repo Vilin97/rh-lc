@@ -125,6 +125,7 @@ theorem alt_d (n : ℕ) :
   simp [AlgebraicTopology.alternatingCofaceMapComplex, AlgebraicTopology.AlternatingCofaceMapComplex.obj]
 
 
+include he hr hd in
 noncomputable def complexIso :
     (AlgebraicTopology.alternatingCofaceMapComplex AddCommGrpCat.{1}).obj C ≅
       ((upF k).mapHomologicalComplex _).obj (cochainsComplex M) :=

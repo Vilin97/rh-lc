@@ -245,6 +245,7 @@ theorem isIntegral_w {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Geo
   exact map_isIntegral_int (d.eF : c.F →+* d.c₂.F) (isIntegral_zpow_of_pow_eq_one (hz _ c).1 (hz _ c).2 _ _)
 
 
+set_option maxHeartbeats 1000000 in
 theorem den_of_large (D : D7) (T : CoreJ D) (h : LawsJ T) (j : ℕ) (hj : InR D j) (a : (D.host.E →+* ℂ) × ℕ → ℕ)
     (n : ℕ) (hdom : Dom a n) (hn : 4 * (Module.finrank ℚ D.host.E * D.R.r) + 4 ≤ n) (f : T.toCore.R j)
     (hf : f ∈ T.toCore.cuspA j a n) : Den (T.toCore.Vs j) (fun _ => True) f := by
@@ -359,6 +360,8 @@ theorem pow_mem_cusp (D : D7) (T : Core D) (j : ℕ) (a : (D.host.E →+* ℂ) �
       exact hm a' a _ n _ f h1 hdom h2 hf
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem isLattice_latOf (D : D7) (T : CoreJ D) (h : LawsJ T) (j : ℕ) (hj : InR D j) (w : WeightFamilies.Wt D j) (hw : 0 < w.n) :
     Formalism.IndefR.FWT.FullLat (T.toCore.C j w) (T.toCore.Vs j) fun la => isVal_valSet la := by
   haveI : FiniteDimensional T.Q.c.F (T.toCore.C j w) := h.cuspFD j hj _ _ (dom_wtA w)

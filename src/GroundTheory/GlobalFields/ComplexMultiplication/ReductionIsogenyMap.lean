@@ -58,6 +58,7 @@ theorem red₂_genPt₂ : ∃ n, red₂ K W W' W' (genPt₂ K W W') = Point.some
   exact reducePoint_some_integral _ _ h₁ n
 
 
+set_option maxHeartbeats 1000000 in
 theorem red₂_genEval_eq_zero
     {ψ : ((W.baseChange K).baseChange (W'.baseChange K).toAffine.FunctionField).toAffine.Point}
     (hψ : RespectsAdd (W'.baseChange K) (W.baseChange K) ψ)
@@ -138,6 +139,7 @@ theorem reducePoint_some_ne_zero (V : WeierstrassCurve 𝒪) [V.IsElliptic] {X�
 variable [W.IsElliptic] [W'.IsElliptic]
 
 
+set_option maxHeartbeats 1000000 in
 theorem reduceFF_isogeny_ne_zero (φ : Isogeny (W.baseChange K) (W'.baseChange K)) :
     reduceFF K W W' φ.1 ≠ 0 := by
   letI : DecidableEq (ResidueField (gaussRing (gaussCurve W W'))) := Classical.decEq _

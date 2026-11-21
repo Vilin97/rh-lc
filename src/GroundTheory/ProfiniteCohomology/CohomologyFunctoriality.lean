@@ -56,6 +56,7 @@ variable [IsTopologicalGroup G] [IsTopologicalGroup H] [IsTopologicalGroup K]
 section Cochains
 
 
+omit [IsTopologicalGroup G] [IsTopologicalGroup H] in
 theorem isLocallyConstant_cochainsMapAlong {A : Rep.{u} k G} {B : Rep.{u} k H} {φ : H →* G}
     (hφ : Continuous φ) (f : Rep.res φ A ⟶ B) {n : ℕ} {x : (Fin n → G) → A}
     (hx : IsLocallyConstant x) :

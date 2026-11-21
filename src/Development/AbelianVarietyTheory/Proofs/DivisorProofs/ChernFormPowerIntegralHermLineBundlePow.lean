@@ -62,6 +62,7 @@ end GlobalTheory.HSAmp.ChPow
 namespace GlobalTheory.HSAmp
 
 
+open ChPow in
 theorem chInt_pow : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegral X] (p : X ⟶ Sp k) (D : ℕ), IsArithVar p D →
     ∀ (L : HermLB p) (n : ℕ) (w : ∀ σ, CxPts p σ → ℝ), chInt (L.pow n) D w = (n : ℝ) ^ D * chInt L D w := by
   intro k _ X _ p D _ L n w

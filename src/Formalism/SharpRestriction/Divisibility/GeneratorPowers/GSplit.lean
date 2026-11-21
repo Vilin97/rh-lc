@@ -82,6 +82,7 @@ theorem split_of_ncard {E : Type} [Field E] [NumberField E] {p : ℕ} (hp : p.Pr
   exact ⟨hMc, Multiset.toFinset_card_eq_card_iff_nodup.1 (hcard1.trans hMc.symm)⟩
 
 
+open Formalism.BasicNotions in
 theorem g_splits (D : D7) (i : Fin 2) :
     (normalizedFactors (Ideal.span {((D.host.g i : ℕ) : 𝓞 D.host.E)})).card = Module.finrank ℚ D.host.E ∧
       (normalizedFactors (Ideal.span {((D.host.g i : ℕ) : 𝓞 D.host.E)})).Nodup :=

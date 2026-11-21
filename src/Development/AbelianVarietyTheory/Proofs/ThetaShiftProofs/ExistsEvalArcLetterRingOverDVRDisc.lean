@@ -19,6 +19,7 @@ variable {K : Type} [NormedField K] [CompleteSpace K] {V F : Type} [CommRing V] 
   {t : K} (ht0 : t ≠ 0) (ht : ‖t‖ < 1)
 
 
+include hϖ ht0 in
 theorem hasSum_laurent_of_mul_eq {q : LaurentSeries F} {g : PowerSeries V} {N : ℕ}
     (h : q * (HahnSeries.ofPowerSeries ℤ F (PowerSeries.C (R := F) (a ϖ) * PowerSeries.X)) ^ N =
       HahnSeries.ofPowerSeries ℤ F (PowerSeries.map a g)) :
@@ -53,6 +54,7 @@ theorem hasSum_laurent_of_mul_eq {q : LaurentSeries F} {g : PowerSeries V} {N : 
     exact hn ⟨(n + N).toNat, by simp only; omega⟩
 
 
+include hϖ ht0 in
 theorem hasSum_lcoeffPoly {σ : Type} (Y : σ → K) {P : MvPolynomial σ (LaurentSeries F)}
     {G : MvPolynomial σ (PowerSeries V)} {N : ℕ}
     (h : P * MvPolynomial.C

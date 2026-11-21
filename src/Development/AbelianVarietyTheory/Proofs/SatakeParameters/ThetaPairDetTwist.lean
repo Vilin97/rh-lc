@@ -24,6 +24,10 @@ section Mat
 variable {α β : Type} [Fintype α]
 
 
+open MeasureTheory ValuativeRel in
+open scoped TensorProduct Topology in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  {r t : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] in
 theorem _root_.GlobalTheory.GodementJacquet.parab_mul_eMat
     (p : _root_.GlobalTheory.SmGL.parab k
       (_root_.GlobalTheory.SmGL.two (_root_.GlobalTheory.SmGL.stdSum (rfl : r + t = r + t)))) :

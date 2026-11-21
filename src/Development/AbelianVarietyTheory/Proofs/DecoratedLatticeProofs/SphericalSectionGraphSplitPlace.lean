@@ -52,6 +52,8 @@ theorem npow_zpow_neg {r : ℝ≥0} {q : ℕ} {m : ℤ} (h : (r : ℝ) = (q : �
   · rw [← Complex.natCast_log, Complex.mul_im, Complex.ofReal_im, Complex.intCast_im]; simp [Real.pi_pos.le]
 
 
+open GlobalTheory.AdelicU GlobalTheory.Doubling Formalism.UG in
+set_option maxHeartbeats 800000 in
 theorem char_value {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
     (hc : IsCMExt F E σ) {χ : (AF F ⊗[F] E)ˣ →* Circle} {v : HeightOneSpectrum (𝓞 F)}
     {w w' : HeightOneSpectrum (𝓞 E)} (h : w.under (𝓞 F) = v) (h' : w'.under (𝓞 F) = v) (hne : w ≠ w')

@@ -16,6 +16,7 @@ noncomputable section
 universe u w
 
 
+open Classical in
 def CycleSplit.Filt.Statement : Prop :=
   ∀ (S : Type u) [CommRing S] [IsNoetherianRing S] (Ω : Type w) [Field Ω] [Algebra S Ω] (N : ℕ)
     (x : Fin (N + 1) → Ω) (𝔪 : Ideal S), 𝔪.IsMaximal →

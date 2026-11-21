@@ -308,6 +308,7 @@ theorem sum_lift_coordForm (φ : S'.EqFun) : ∑ k, F.e k • b.lift (b.coordFor
   rw [Equiv.symm_apply_apply, b.sum_coord]
 
 
+include F in
 theorem mem_span_lift (φ : S'.EqFun) : φ ∈ Submodule.span L (Set.range b.lift) := by
   classical
   let ⟨F⟩ := CoefFrame.nonempty ι

@@ -236,6 +236,7 @@ end DualLatticeIndexBis
 namespace DualLatticeIndexBis
 
 
+open scoped Pointwise in
 lemma exists_codiff (E : Type) [Field E] [NumberField E] [StarRing E] :
     ∃ (δ : 𝓞 E) (K : Ideal (𝓞 E)), δ ≠ 0 ∧ K ≠ ⊥ ∧ ∀ z : E,
       (∃ o : 𝓞 E, (o : E) = (δ : E) * z) ↔

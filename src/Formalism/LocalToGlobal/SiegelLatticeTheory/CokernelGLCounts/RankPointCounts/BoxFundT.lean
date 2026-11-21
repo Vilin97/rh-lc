@@ -21,6 +21,7 @@ variable {P : Type} [Fintype P] [DecidableEq P] {α : P → Type} [∀ p, AddCom
 
 include hBd hτ hFd in
 
+include hBd hτ hFd in
 theorem box_fundT (g : ∀ q, α q) :
     ∃! γ : ∀ q, α q, (∀ p, γ p - τ p γ ∈ A p) ∧ ∀ p, mlaw B γ g p ∈ F p := by
   let c : (∀ q, α q) → ∀ p, A p := fun x p => (hFd p (τ p x + g p + B p x g)).exists.choose

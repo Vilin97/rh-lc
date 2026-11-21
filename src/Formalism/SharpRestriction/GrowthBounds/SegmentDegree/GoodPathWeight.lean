@@ -54,6 +54,7 @@ def Idx [NeZero r] (j : ℤ) (b : ℤ → ℕ) : Type :=
         dd i + ∑ c, q.2.2 (i', c) = b (X.F.fr j i'.val)}
 
 
+omit [NeZero n'] in
 def Dw (O : Type) [CommRing O] (j : ℤ) : MvPolynomial (ℤ × Fin r) O :=
   Matrix.det (Matrix.of fun a c : Fin r => (MvPolynomial.X (X.F.fr (j - 1) a.val, c) : MvPolynomial (ℤ × Fin r) O))
 
@@ -97,6 +98,7 @@ def GoodPathWeight (C₀ : ℝ) : Prop :=
           (r + K - 1) : ℕ) : ℝ)) ≤ (Nat.card (X.Tset p K j (X.restr j b)) : ℝ)
 
 
+open Classical in
 def RestMon (C₀ : ℝ) : Prop :=
   ∀ (p n' r K : ℕ) [NeZero n'] [NeZero r] [NeZero K] (X : Dat n' r),
     X.Hyp p K → C₀ ≤ X.CLa → C₀ ≤ X.Ck →

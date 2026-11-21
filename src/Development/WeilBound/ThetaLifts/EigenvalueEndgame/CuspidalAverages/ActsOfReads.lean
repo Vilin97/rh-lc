@@ -214,6 +214,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {W : Spc F E d} {v : Pl F} {t : E →ₐ[F] Fv F v} {sec : Fv F v × Fv F v → AE F E}
 
 
+variable (t) in
 def cp : UA σ W.J →* GL (Fin d) (Fv F v) := (Matrix.GeneralLinearGroup.map (piW t)).comp (Subgroup.subtype _)
 
 theorem cp_val (g : UA σ W.J) : (cp t g).1 = (mat g).map (piW t) := rfl

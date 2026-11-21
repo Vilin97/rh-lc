@@ -195,6 +195,7 @@ theorem norm_eq_of_v_eq (P : LocPrime l) (LL : FinExt l) (x : ℚ_[l]) (k : ℕ)
   omega
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_lift_dense (P : LocPrime l) (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL)
     (act : GQ l →* (PadicComplex l ≃+* PadicComplex l)) (hact : IsActC act)
     (W : LocWach (P.PD K) ↥LL.1 ↥(OL LL) (P.v LL) (Module.finrank ℚ_[l] ↥(K0 K))) (hs : W.s = s) :
@@ -243,6 +244,7 @@ theorem exists_lift_dense (P : LocPrime l) (K : FinExt l) (s : ℕ) (LL : FinExt
 end Concrete
 
 
+set_option maxHeartbeats 1000000 in
 theorem clNat : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW), adm9 D HW F →
     ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL),
     let S := sit D.loc HW l (D.locA l) K s LL h

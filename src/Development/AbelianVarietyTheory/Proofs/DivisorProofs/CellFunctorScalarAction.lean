@@ -82,6 +82,7 @@ end
 end GlobalTheory.CellLowerScalar
 
 
+open GlobalTheory.CellLowerScalar in
 theorem GlobalTheory.cellFunctor_detTensor_scalar_lower : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (χ₁ χ₂ : kˣ →* ℂˣ) (u v : ℕ)
     (b : SizeMatrix (Two (Fin (u + 1)) (Fin v)) (Two (Fin (u + v)) (Fin 1))), b.1 false true = 0 →

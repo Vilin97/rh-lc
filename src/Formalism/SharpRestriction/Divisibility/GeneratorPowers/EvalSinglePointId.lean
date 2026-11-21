@@ -279,6 +279,7 @@ theorem corr_pull_scale {Y Z : Scheme.{0}} {K : Type} [Fintype K] (φ : K → (Y
     · exact pull_res_lemma h inf_le_right hA inf_le_right (h1 j') (t'.s j')
 
 
+set_option maxHeartbeats 1000000 in
 theorem germ_order {S : Type} [CommRing S] [Algebra c.F S] [Algebra ℚ S] [StarRing (𝓞 E)] (y : FrPt Xo c S)
     (C : ChartAt Xo c y) (e' : ∀ m, FrTy y C.d C.x m) (cc : ℕ → Fin C.d → Fin C.d → S)
     (he : ∀ m, ∃ u : (Jet S (Fin 2 × Fin C.d) m)ˣ,

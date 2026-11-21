@@ -298,6 +298,8 @@ open scoped TensorProduct
 variable {D : D7} {V : HSp D} (H : Subgroup (GA D V))
 
 
+set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 200000 in
 theorem mem_refl {N : ℕ} (hN : 0 < N) (hroot : ∀ g ∈ GfC V, ∀ m : ℕ, 0 < m → g ^ m ∈ H → g ∈ H)
     (hcong : ∀ k ∈ GfC V, FinCong V N k → k ∈ H)
     (hs : ∀ e, IsSplitIdem D e → ∀ g, Formalism.L2.Theta.SuppAt e V g → g ∈ H)

@@ -133,6 +133,7 @@ variable {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscre
 include hφ
 
 
+omit [IsDomain O] [IsDiscreteValuationRing O] in
 theorem norm_le_one (x : O) : ‖φ x‖ ≤ 1 := by
   obtain ⟨p, hp, hx⟩ : IsIntegral ℤ_[l] x := Algebra.IsIntegral.isIntegral x
   by_contra hlt

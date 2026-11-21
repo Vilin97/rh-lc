@@ -20,6 +20,8 @@ variable {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {O : Type
   {Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β}
 
 
+attribute [local instance] Over.cartesianMonoidalCategory in
+open MonoidalCategory CartesianMonoidalCategory MonObj ReciprocityTheory.ChartRestriction.G.PullbackSections GlobalTheory.LieMet in
 private theorem eq_zero_of_mulVec {R : Type} [CommRing R] {φ : c.F →+* R} {x : Sp R ⟶ Z.X} (f : EigFrame Z φ x)
     (τ : E →+* ℂ) {g : ℕ} {B : Fin g → (Sp (DualNumber R) ⟶ Z.t.G.left)} (hB : ∀ k, IsTanAtG Z.t x (B k))
     (a : Matrix (Fin g) (Fin (Dw.mult τ)) R) (ha : ∀ i, IsCombAtG Z.t x B (fun k => a k i) (f.v τ i))

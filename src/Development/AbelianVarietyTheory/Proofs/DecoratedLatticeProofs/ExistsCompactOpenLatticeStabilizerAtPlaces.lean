@@ -69,6 +69,7 @@ theorem e_mul_fin {P : Pl D → Prop} {a : AE D} (ha : a ∈ idAt D P) :
   e_mul_of_supp P _ ((mem_supportedOnPlacesIdeal_iff_components_zero_elsewhere D P a).1 ha).2
 
 
+set_option maxHeartbeats 800000 in
 theorem exists_latticeCompletion_cut_to_places_finiteReal (S : HSp D) (L : Lat S) (P : Pl D → Prop) {z : Fin S.rank → Af D.host.F ⊗[D.host.F] D.host.E}
     (hz : z ∈ latHat D.host.F D.host.E (L : Set (Fin S.rank → D.host.E))) :
     ∃ y ∈ latV S L P, (∀ i, infPart D (y i) = 0) ∧

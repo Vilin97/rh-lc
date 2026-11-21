@@ -558,6 +558,7 @@ theorem coindη_inj {E : Type} [Category.{0} E] (G : E ⥤ ModuleCat.{0} R) (x :
   simpa using h2
 
 
+variable (R) in
 structure Tr (C D : Type) [Category.{0} C] [Category.{0} D] where
 
   F : C ⥤ ModuleCat.{0} R
@@ -835,6 +836,7 @@ theorem qiso_of_cone {A B : Cx R} (f : Hm A B) (h : ∀ k, (cone f).Ex k) :
     exact ⟨y, w, h1, by rw [← h2]; abel⟩
 
 
+open MainStatements.Hodge in
 theorem fubiniSt : CxSt → FubiniSt := by
   intro _ R _ C _ F D _ _ _ G m h
   have hτ : ∀ T j, ((trOf m).aug T).Ex j := by

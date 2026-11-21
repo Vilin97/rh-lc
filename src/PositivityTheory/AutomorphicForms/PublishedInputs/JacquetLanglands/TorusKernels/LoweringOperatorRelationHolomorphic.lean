@@ -86,6 +86,7 @@ theorem lowering_operator_relation_holomorphic {k c} {ω : HChar F} (h : IsOfFin
   linear_combination (1 / 2 : ℂ) * h0 + (1 / 2 : ℂ) * h2 - (Complex.I / 2) * h1 - ((k v : ℂ) / 2 * φ.1 g) * Complex.I_mul_I
 
 
+open Classical in
 def E (v : InfinitePlace F) (i j : Fin 2) : TR.Lie F 2 := TR.toL (Matrix.single i j (Pi.single v (1 : ℝ) : TR.Rinf F))
 
 theorem Eop_val (v : InfinitePlace F) (i j : Fin 2) (φ : TR.Sm F 2) (g : GA F 2) :

@@ -16,6 +16,7 @@ variable {D : D7} {u : D.what₂.Word} {A : AtTTied u} {i : ℕ} {hi : i ≤ D.R
 
 
 
+set_option maxHeartbeats 4000000 in
 theorem UpNatTie.upTie {P : LvTied u A i hi} {K : ClsTied u i hi} {W : ValTied u A.eV i hi K} (h : UpNatTie P K W) :
     UpTie P K W := by
   intro v c z hz

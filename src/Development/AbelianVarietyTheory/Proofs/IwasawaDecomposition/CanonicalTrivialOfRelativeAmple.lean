@@ -50,6 +50,7 @@ theorem trivAlong_field {S : Scheme.{0}} {A : Over S} [GrpObj A] {L : LB A.left}
 end GlobalTheory.KTrivGenericPt
 
 
+open GlobalTheory.KTrivGenericPt in
 theorem GlobalTheory.KTrivGenericPt.kTriv_of_polAt_generic : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] [CharZero R] (t : SAB H (Sp R)), IsProper t.G.hom → RelAmple t.G t.PP.L → GlobalTheory.LN.PolAt t (jK R) → KTriv t.G t.PP.L := by
   intro E _ _ _ H R _ _ _ _ t hP ha hpol
   haveI : IsProper t.G.hom := hP

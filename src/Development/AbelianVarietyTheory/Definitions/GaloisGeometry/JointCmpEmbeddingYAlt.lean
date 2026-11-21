@@ -32,6 +32,7 @@ def ValAll (Tw : TwForms D) (St : ChainCharts D u μ) : Prop :=
   ∀ i hi, ValuationCompatibleChart (Tw.fm u μ) (St i hi).eY (fun _ => True) (St i hi).chOf (St i hi).K
 
 
+set_option maxHeartbeats 2000000 in
 def foOf (Hh : Formalism.L2.Herm.SymmetricHermitianColumns D) (St : ChainCharts D u μ) (hv : ValAll Tw St) (j : ℕ) (hj : j + 1 ≤ D.R.m) :
     FormsIn (Tw.fm u μ) (j + 1) hj where
   T := (St (j + 1) hj).T
@@ -51,6 +52,9 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : G.Inst D L} {Gl : G
   {ex : Extra D L hT Gi Gl Kc Dx cX}
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
+set_option maxHeartbeats 2000000 in
 structure JIn (t : KerEntTied ex) (u : D.what₂.Word) (μ : D.what₂.Tup) where
   Gd : GroupCompatibilityAll D hT ex.cmp
   Hh : Formalism.L2.Herm.SymmetricHermitianColumns D

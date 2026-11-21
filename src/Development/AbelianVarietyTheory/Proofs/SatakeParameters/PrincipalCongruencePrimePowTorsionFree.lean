@@ -88,6 +88,7 @@ end GlobalTheory.CongTorsion
 namespace GlobalTheory
 
 
+open GlobalTheory.CongTorsion in
 theorem principalCongruence_torsionFree :
     ∀ (R : Type) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] [CharZero R] (l m a : ℕ),
       l.Prime → ¬ IsUnit (l : R) → 2 ≤ m → ∀ (x : Matrix (Fin a) (Fin a) R) (n : ℕ), 0 < n →

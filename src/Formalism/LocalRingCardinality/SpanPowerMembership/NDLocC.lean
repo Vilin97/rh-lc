@@ -24,6 +24,7 @@ theorem isAlgClosureQ : IsAlgClosure ℚ Ω := by
 variable [IsAlgClosure ℚ Ω] (j : Ω →+* PadicAlgCl l)
 
 
+omit [IsAlgClosure E Ω] [Algebra E Ω] [NumberField E] [Field E] in
 def resQ (σ : GQ l) : Ω ≃ₐ[ℚ] Ω :=
   letI : Algebra Ω (PadicAlgCl l) := j.toAlgebra
   haveI : IsScalarTower ℚ Ω (PadicAlgCl l) := IsScalarTower.of_algebraMap_eq' (Subsingleton.elim _ _)
@@ -115,6 +116,7 @@ theorem norm_le_pow (g : G E Ω) (hg : g ∈ Dec (F := E) A) (z : Ω) (n : ℕ)
   exact (div_le_one (by positivity)).mp h2
 
 
+include hj in
 theorem exists_ext (g : G E Ω) (hg : g ∈ Dec (F := E) A) :
     ∃ σ : GQ l, ∀ x, σ (j x) = j (g x) := by
   haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed E

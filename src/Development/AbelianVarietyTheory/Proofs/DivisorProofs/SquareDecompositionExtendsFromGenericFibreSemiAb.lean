@@ -24,6 +24,7 @@ noncomputable section
 namespace GlobalTheory.GenericDec
 
 
+open ReciprocityTheory.ChartRestriction.G.Pdiv.PullbackComparison in
 theorem gen_pull_div_of_gen_div {X Y : Scheme.{0}} (M N : LB X) (a : Y ⟶ X)
     (h : ∃ t : LB.Gen (LB.div (M.pull a) (N.pull a)), t.IsGen) :
     ∃ t : LB.Gen ((LB.div M N).pull a), t.IsGen := by

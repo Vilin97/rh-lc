@@ -42,12 +42,14 @@ theorem tsum_eq_sum_tsum_add_mulVec (hd : d.det ≠ 0) {κ : Type*} [Fintype κ]
   exact ((Equiv.ofBijective _ hb).summable_iff.2 hf).tsum_prod.trans (tsum_fintype _)
 
 
+omit [DecidableEq ι] in
 theorem intCast_mulVec_complex (d : Matrix ι ι ℤ) (x : ι → ℤ) :
     (fun i => ((d *ᵥ x) i : ℂ)) = d.map ((↑) : ℤ → ℂ) *ᵥ fun i => (x i : ℂ) := by
   ext i
   simp [mulVec, dotProduct]
 
 
+omit [DecidableEq ι] in
 theorem intCast_dotProduct_complex (x y : ι → ℤ) :
     ((x ⬝ᵥ y : ℤ) : ℂ) = (fun i => (x i : ℂ)) ⬝ᵥ fun i => (y i : ℂ) := by
   simp [dotProduct]

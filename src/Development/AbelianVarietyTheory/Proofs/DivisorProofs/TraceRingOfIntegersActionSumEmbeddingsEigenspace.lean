@@ -15,6 +15,7 @@ noncomputable section
 namespace GlobalTheory.UPel.HT.LieType
 
 
+open Polynomial in
 theorem toLin'_map_aeval_int {F : Type} [Field F] [NumberField F] {g : ℕ}
     (φ : 𝓞 F →+* Matrix (Fin g) (Fin g) ℂ) (x : 𝓞 F) (p : ℤ[X]) :
     Matrix.toLin' (φ (aeval x p)) = aeval (Matrix.toLin' (φ x)) (p.map (algebraMap ℤ ℂ)) := by
@@ -23,6 +24,7 @@ theorem toLin'_map_aeval_int {F : Type} [Field F] [NumberField F] {g : ℕ}
   exact (Polynomial.aeval_algHom_apply (Matrix.toLinAlgEquiv' (R := ℂ) (n := Fin g)) (φ x) _).symm
 
 
+open Polynomial in
 theorem trace_eq_sum_finrank_eigSp : ∀ (F : Type) [Field F] [NumberField F] (g : ℕ)
     (φ : 𝓞 F →+* Matrix (Fin g) (Fin g) ℂ) (c : 𝓞 F),
     (φ c).trace = ∑ τ : F →+* ℂ, (Module.finrank ℂ (eigSp φ τ) : ℂ) * τ (c : F) := by

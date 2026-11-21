@@ -20,6 +20,7 @@ open scoped NNReal
 variable {D : D7}
 
 
+open Classical in
 def vInf (w : InfinitePlace D.host.F) {n : ℕ} (x : Fin n → AE D) : ℝ≥0 :=
   Finset.univ.sup fun p : EmbOver D.host.E w × Fin n =>
     ‖infEmb p.1 (compInf D.host.F D.host.E w (x p.2))‖₊

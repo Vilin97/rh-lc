@@ -208,6 +208,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {v : AddValuation LL (WithTop ℚ)} {n : ℕ} (W : LocWach PD LL O v n)
 
 
+include W in
 theorem l_ne : ((PD.p : ℕ) : O) ≠ 0 := by
   intro h
   apply Formalism.MainNotions.LiftingTheory.tr_pLL_ne W

@@ -30,6 +30,7 @@ def AxIn (p : ℕ) : Prop :=
     ∃ y : L, (∀ σ ∈ J, σ y = y) ∧ (p : L) ^ 2 * (x - y) ∈ 𝒪[L]
 
 
+variable {K L} in
 def Detects (p r : ℕ) (A B : Subgroup (L ≃ₐ[K] L)) : Prop :=
   ∀ σ₀ ∈ A, σ₀ ∉ B → ∃ (x : L) (a : (L ≃ₐ[K] L) → ℤ),
     (∀ σ ∈ A, ∃ z ∈ 𝒪[L], σ x - x = (a σ : L) + (p : L) ^ r * z) ∧ ¬ (p : ℤ) ^ r ∣ a σ₀

@@ -174,6 +174,7 @@ def IsZKFinite (v : CuspL2 μ) : Prop :=
       ⟨v, hs⟩) '' ((isExpLieAlgebra K n).centerU : Set _)))
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_cuspForm_of_isZKFinite (v : CuspL2 μ) (hv : IsZKFinite μ v) :
     ∃ φ : cuspForms K n,
       ((cuspToL2 μ φ : cuspidalL2 μ) : Lp ℂ 2 (quotientMeasure Γ₁ μ)) = toLp μ v ∧

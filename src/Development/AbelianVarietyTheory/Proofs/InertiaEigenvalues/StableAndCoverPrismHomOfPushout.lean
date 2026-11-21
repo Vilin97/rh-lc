@@ -57,6 +57,7 @@ theorem faithfullyFlat_of_isPO {B C B' C' : Obj l R} {h : Hom B C} {k : Hom B B'
 end GlobalTheory.BSP.CoverBC
 
 
+open GlobalTheory.BSP.CoverBC in
 theorem GlobalTheory.BSP.stable_cover_of_isPO : ∀ (l : ℕ) [Fact l.Prime] (R : Type) [CommRing R] (B C B' C' : Obj l R)
     (h : Hom B C) (k : Hom B B') (k' : Hom C C') (h' : Hom B' C'),
     IsPO h k k' h' → (Stable h → Stable h') ∧ (Cover h → Cover h') := by

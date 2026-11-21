@@ -16,6 +16,7 @@ namespace GlobalTheory.Glue.EvRing
 variable {p : ℕ} [hp : Fact p.Prime] {Ω : Type} [Field Ω] [Algebra (O0 p) Ω]
 
 
+variable (p Ω) in
 def zpH : ℤ_[p] →+* Ω := (algebraMap (O0 p) Ω).comp ((algebraMap (Lau p) (O0 p)).comp HahnSeries.C)
 
 theorem zp_eq (z : ℤ_[p]) : zp Ω z = zpH (p := p) (Ω := Ω) z := rfl
@@ -78,6 +79,7 @@ end GlobalTheory.Glue.EvRing
 namespace GlobalTheory.Glue.EvRing
 
 
+open GlobalTheory.K5.Basic in
 theorem ev_ring : ∀ (p : ℕ) [Fact p.Prime], ∀ (Ω : Type) [Field Ω] [Algebra (O0 p) Ω], IsClo p Ω →
     ∀ (T : GlobalTheory.K5.Tower p Ω) (n : ℕ), ∀ (ψ : O0 p →+* Ω), IsReb T n ψ →
     (∀ (C D : HahnSeries ℤ Ω) (x x' y y' : Ω),

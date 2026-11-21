@@ -10,6 +10,7 @@ open MeasureTheory NumberField Finset
 namespace GlobalTheory
 
 
+open MeasureTheory NumberField Finset in
 theorem _root_.GlobalTheory.rootDiscr_ge_three_halves_of_totallyComplex :
     ∀ (K : Type) [Field K] [NumberField K], IsTotallyComplex K →
       Module.finrank ℚ K = 2 * _root_.Formalism.HermitianLatticesTheory.fDeg K ∧ 1 ≤ _root_.Formalism.HermitianLatticesTheory.fDeg K ∧

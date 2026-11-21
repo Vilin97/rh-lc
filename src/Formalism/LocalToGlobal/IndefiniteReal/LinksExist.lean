@@ -126,6 +126,7 @@ theorem kerY_args (hW : WeilExistsFull D) (hV : VacExistsO D) (hS : StepVecExist
       (hvX t))⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem chain_exists (hI : ItExists D A Ks F) (hO : IoChainExists D A Ks F) (hG : GoodLands D A Ks F) (R : RealDat D A Ks)
     (h : R.Pre1 F) (hK : R.KerY) : ∃ R' : RealDat D A Ks, R'.Pre1 F ∧ R'.IsChain ∧ R'.FullY := by
   obtain ⟨h1, ItX, hX⟩ := hI R h hK

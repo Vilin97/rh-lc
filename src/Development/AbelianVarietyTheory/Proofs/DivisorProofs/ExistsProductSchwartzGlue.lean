@@ -18,6 +18,7 @@ open GlobalTheory.ThK.EvAt0.PolD
 namespace GlobalTheory.ThK.EvAt0.SchwartzProd
 
 
+open scoped Classical in
 theorem exists_prod : ∀ {F : Type} [Field F] [NumberField F] {n d d₁ : ℕ} (h : d = d₁ + 2) (G : SInf F (Fin n × Fin 2))
     (f : SInf F (Fin n × Fin d₁)), ∃ g : SInf F (Fin n × Fin d), ∀ y,
       g y = G (fun p => y ((idx h).symm (Sum.inr p))) * f (fun q => y ((idx h).symm (Sum.inl q))) := by

@@ -52,6 +52,7 @@ variable {E F : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensi
   [NormedAddCommGroup F] [NormedSpace ℝ F]
 
 
+omit [FiniteDimensional ℝ E] in
 theorem exists_norm_le_inv_one_add_pow (g : 𝓢(E, F)) (k : ℕ) :
     ∃ C, 0 ≤ C ∧ ∀ x, ‖g x‖ ≤ C * ((1 + ‖x‖) ^ k)⁻¹ := by
   refine ⟨2 ^ k * (SchwartzMap.seminorm ℝ 0 0 g + SchwartzMap.seminorm ℝ k 0 g), by positivity,

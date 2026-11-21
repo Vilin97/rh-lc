@@ -178,6 +178,7 @@ end Compl
 end LocFldPf
 
 
+open LocFldPf in
 theorem locFld : LocFld := by
   intro K L _ _ _ _ j la
   let : Algebra K L := j.toAlgebra

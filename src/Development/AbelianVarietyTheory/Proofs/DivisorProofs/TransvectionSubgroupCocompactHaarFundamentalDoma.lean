@@ -57,6 +57,7 @@ theorem exists_fundamentalDomain_subset [SecondCountableTopology G] (Γ : Subgro
         exact hgK
 
 
+open Pointwise in
 theorem measure_ne_top_of_cocompact (Γ : Subgroup G) [Countable Γ] {K : Set G} (hK : IsCompact K)
     (hcov : ∀ x : G, ∃ γ ∈ Γ, γ * x ∈ K) (μ : Measure G) [μ.IsHaarMeasure] {F : Set G}
     (hF : IsFundamentalDomain Γ F μ) : μ F ≠ ⊤ := by

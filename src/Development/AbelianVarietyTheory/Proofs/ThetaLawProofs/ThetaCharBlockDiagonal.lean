@@ -80,6 +80,7 @@ end GlobalTheory.ThetaPow
 namespace GlobalTheory
 
 
+open ThetaPow in
 theorem thetaChar_blockDiagonal (j g : ℕ) (τ : Matrix (Fin g) (Fin g) ℂ) (a b : Fin g → ℝ) (G : ℕ)
     (e : Fin j × Fin g ≃ Fin G) (hs : τ.IsSymm) (hp : (τ.map Complex.im).PosDef) :
     let τ' : Matrix (Fin G) (Fin G) ℂ := Matrix.of fun p q =>

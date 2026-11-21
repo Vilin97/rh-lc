@@ -73,6 +73,7 @@ def gvE : (Fin X.B.I.n → X.B.I.E) →ₛₗ[sE X] (VS D).V where
 end LatticeCoordinateLemmas
 
 
+open LatticeCoordinateLemmas in
 theorem latOfLattice_holds {D : D7} (X : HidaSetting D) (u : D.what₂.Word) : LatOfLattice X u := by
   intro h
   haveI : RingHomSurjective (sO' X) := ⟨(RingOfIntegers.mapRingEquiv X.ιE).surjective⟩

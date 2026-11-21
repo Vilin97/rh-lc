@@ -135,6 +135,7 @@ theorem ga_ext' {g h : GA E n} (h1 : ∀ w, GeneralLinearGroup.map (cV w) g = Ge
   exact congrArg (fun x : GL (Fin n) ℂ => x i j) (h1 w)
 
 
+open Classical in
 def sV (v : InfinitePlace E) : ℂ →ₙ+* Ad E where
   toFun x := sInf E (Pi.single v x)
   map_mul' x y := by rw [Pi.single_mul, map_mul]

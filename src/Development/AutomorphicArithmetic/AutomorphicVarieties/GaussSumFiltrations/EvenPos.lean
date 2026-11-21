@@ -119,12 +119,14 @@ def BF (G : Matrix κ κ ℤ) (x y : κ → F) : F := x ⬝ᵥ (G.map (Int.cast 
 def QF (G : Matrix κ κ ℤ) (x : κ → F) : F := BF G x x / 2
 
 
+variable (F κ) in
 def LL : AddSubgroup (κ → F) := AddSubgroup.pi Set.univ fun _ => (integralClosure ℤ F).toSubring.toAddSubgroup
 
 
 def aL (a : F) : AddSubgroup (κ → F) := (LL F κ).map (DistribSMul.toAddMonoidHom (κ → F) a)
 
 
+variable (F) in
 def dualL (G : Matrix κ κ ℤ) : AddSubgroup (κ → F) where
   carrier := {y | ∀ l ∈ LL F κ, ∃ n : ℤ, Algebra.trace ℚ F (BF G y l) = n}
   zero_mem' := fun l _ => ⟨0, by simp [BF]⟩

@@ -82,6 +82,7 @@ theorem isLattice_dualSubmodule (B : LinearMap.BilinForm ℚ V) (hB : B.Nondegen
   exact Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range _))
 
 
+omit [FiniteDimensional ℚ V] in
 theorem relIndex_span_basis_eq_abs_det {ι : Type*} [DecidableEq ι] [Fintype ι]
     (b₁ b₂ : Basis ι ℚ V)
     (h : Submodule.span ℤ (Set.range b₁) ≤ Submodule.span ℤ (Set.range b₂)) :

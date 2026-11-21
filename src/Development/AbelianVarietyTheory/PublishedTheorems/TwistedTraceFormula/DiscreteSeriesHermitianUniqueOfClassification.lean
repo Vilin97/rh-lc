@@ -59,6 +59,7 @@ theorem isHCParam_of_isDS {H : Type*} [NormedAddCommGroup H] [InnerProductSpace 
 end HermitianUnique
 
 
+open HermitianUnique in
 theorem discreteSeriesHermitianUnique_iff : DiscreteSeriesHermitianUnique ↔ DiscreteSeriesUpqUnique := by
   constructor
   · intro h n ε lam hl H H' _ _ _ _ σ σ' hσ hσ'

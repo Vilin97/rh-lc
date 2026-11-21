@@ -163,6 +163,7 @@ theorem card_stab_q (t : X) (ht : t ∈ A) :
       simpa [mul_inv_rev, mul_assoc] using hc
 
 
+include hA hfree in
 theorem count [Finite (H ⧸ N)] (T : Finset X) (hTA : ∀ t ∈ T, t ∈ A)
     (hT : ∀ x ∈ A, ∃! t, t ∈ T ∧ ∃ h : H, h • t = x) :
     (nOrbs N A).Finite ∧
@@ -1003,6 +1004,7 @@ theorem gmap_mul (g h : G0 F0) (M : Submodule (𝓞 D.host.E) (VS D).V) :
 end StabilizerQuotient
 
 
+open StabilizerQuotient in
 theorem rowsGroupoid_of (hM : MMChar) : RowsGroupoid := by
   intro D u u' hT F0 what₂ hrows Z F' hzt hZ hP s hs
   have hG : GZ (Tn u) (Tn u') (ZhatL (lf D F0) F') ≠ 0 := by

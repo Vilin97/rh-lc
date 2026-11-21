@@ -97,6 +97,9 @@ private theorem coeff_mapDomain_rename_of_injective {σ τ R : Type} [CommSemiri
     exact absurd (by simp) hn
 
 
+open MvPowerSeries in
+variable {l : ℕ} [hl : Fact l.Prime] {d : ℕ} in
+variable [NeZero d] in
 theorem _root_.GlobalTheory.BiextInhab.bridge (l : ℕ) [Fact l.Prime] (d : ℕ) [NeZero d]
     {β : Type} (b : β) (s : ZMod d) :
     _root_.GlobalTheory.ThStr.laAt (l := l) (fun r : ZMod d => (r, b)) s =

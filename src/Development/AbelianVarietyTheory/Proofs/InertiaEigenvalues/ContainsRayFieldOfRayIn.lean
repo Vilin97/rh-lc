@@ -79,6 +79,7 @@ section Datum
 variable {S T : HSp D}
 
 
+open Classical in
 theorem isLevelFn_datumFn {B : Base S T} (hB : B.Good) {Q : Finset (Pl D.host.E)} (hQ : B.admitted Q)
     (hbad : ∀ PP, PP ∈ B.G.Pg ∨ PP ∈ B.de.Q ∪ Q →
       ((D.host.QS * D.host.q * Ideal.absNorm D.host.ccK : ℕ) : 𝓞 D.host.E) ∉ PP.asIdeal)
@@ -234,6 +235,7 @@ theorem coprime_pDel (l : ℕ) (hl : l.Prime) : Nat.Coprime (pDel D l) l := by
   · exact (Nat.coprime_primes D.host.pde_prime hl).2 fun e => h e.symm
 
 
+include YS hρ in
 theorem exists_cover_coprime (hRF : GlobalTheory.NT.RayField) (hT : LawsJ T) (halg : AlgTie T) (hgal : IsGalois ℚ D.LL0)
     (hval : Formalism.L2.Host.ValLL0 D Rl.C)
     (hray : RayIn D (D.host.g 0 * D.host.g 1 * D.host.pde * D.host.pde') (embLL0 D).fieldRange)

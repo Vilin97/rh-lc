@@ -49,6 +49,7 @@ theorem cone_eq (y : (Σ k, ι k) → Ω) (g : MRing ι) (a : K → ℕ) (hg : I
 end MultiHomogMemCoordinate
 
 
+open MultiHomogMemCoordinate in
 theorem MultiHomogMemCoord.proof : MultiHomogMemCoord.Statement := by
   intro K _ ι _ Ω _ y g a hg
   rw [mCoordIdeal, RingHom.mem_ker, cone_eq y g a hg, C_mul_monomial, mul_one,

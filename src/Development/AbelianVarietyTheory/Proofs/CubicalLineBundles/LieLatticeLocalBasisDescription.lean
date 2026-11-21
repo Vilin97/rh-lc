@@ -124,6 +124,7 @@ theorem exists_matrix (hψ : IsGrpPullback A G (spMap g) ψ) (hs : Smooth G.hom)
   exact ⟨M, (((LieComb.lieComb_algebra K A n v hv.1).2.2.2.2 M e' hv hM).1 he').ne_zero, fun j => ⟨e' j, h j, hM j⟩⟩
 
 
+omit [IsCommMonObj G] in
 theorem isVecOver_iff (hψ : IsGrpPullback A G (spMap g) ψ) (hv : IsLieBasis v) {M : Matrix (Fin n) (Fin n) K}
     (hM : ∀ j, ∃ w, IsVecOver g ψ (e j) w ∧ IsLieComb (M j) v w) {a : Fin n → R} {t : epsR R ⟶ G}
     (ht : IsLieComb a e t) (w : epsR K ⟶ A) : IsVecOver g ψ t w ↔ IsLieComb (∑ j, g (a j) • M j) v w := by

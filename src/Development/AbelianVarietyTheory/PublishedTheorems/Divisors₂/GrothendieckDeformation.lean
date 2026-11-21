@@ -21,6 +21,8 @@ def GrothendieckDeformation : Prop :=
 namespace GrothendieckDeformation
 
 
+set_option autoImplicit false in
+open DividedPowers in
 theorem _root_.GlobalTheory.Published.GrothendieckDeformation.grothendieckMessing (H : _root_.GlobalTheory.Published.GrothendieckDeformation) :
     _root_.GlobalTheory.Published.GrothendieckMessing := by
   unfold _root_.GlobalTheory.Published.GrothendieckMessing
@@ -28,6 +30,8 @@ theorem _root_.GlobalTheory.Published.GrothendieckDeformation.grothendieckMessin
   exact H R I κ hκ R₀ π hπ hker
 
 
+set_option autoImplicit false in
+open DividedPowers in
 theorem _root_.GlobalTheory.Published.GrothendieckDeformation.at_dualNumber (H : _root_.GlobalTheory.Published.GrothendieckDeformation) (R : Type)
     [CommRing R] :
     _root_.GlobalTheory.Published.GrothendieckMessing.At

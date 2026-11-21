@@ -81,6 +81,7 @@ theorem QFGroup.exists_denom [Finite T] (Γ : QFGroup R T) (f : T → FractionRi
 end GlobalTheory.CompanionTheory.Ar.BT
 
 
+open Classical in
 theorem GlobalTheory.CompanionTheory.Ar.BT.btOrder_full_rank : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGroup T] [Finite T]
     (Γ : QFGroup R T), ∃ d : R, d ≠ 0 ∧ ∀ f : T → R, d • f ∈ Γ.btOrder ⊤ := by
   classical

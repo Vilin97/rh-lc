@@ -37,6 +37,7 @@ variable {S : Type} [CommRing S] {K : Type} [Fintype K] [LinearOrder K] {ι : K 
 
 
 
+omit [Fintype K] [∀ k, Subsingleton (ι k)] in
 theorem isMultiHomog_one_zero : IsMultiHomog (1 : MRingOver S ι) 0 := by
   classical
   intro m hm k

@@ -39,6 +39,7 @@ end Res
 section Cores
 
 
+open scoped Classical in
 noncomputable def tateCores (n : ℤ) :
     resFunctor S.subtype ⋙ tateCohomologyFunctor (R := k) (G := S) n ⟶
       tateCohomologyFunctor (R := k) (G := G) n :=

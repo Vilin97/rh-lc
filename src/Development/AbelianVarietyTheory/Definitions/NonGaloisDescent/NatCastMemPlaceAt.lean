@@ -108,6 +108,7 @@ structure IsReading (T : CDVR) (io : F →+* T.Fr) (k : T.Fr →+* ℂ_[p]) : Pr
   int : ∀ x, ‖k x‖ ≤ 1 ↔ InV T x
 
 
+variable {φ} in
 def IsReading.alg {T : CDVR} {io : F →+* T.Fr} {k : T.Fr →+* ℂ_[p]} (h : IsReading φ T io k) :
     letI := io.toAlgebra; T.Fr →ₐ[F] PAt φ :=
   letI := io.toAlgebra
@@ -121,12 +122,14 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : D
   (Xo : Moduli Dw l) (c : Coeff l) {p : ℕ} [Fact p.Prime] (φ : c.F →+* ℂ_[p])
 
 
+variable {Xo c φ} in
 def IsReadPt {T : CDVR} {io : c.F →+* T.Fr} {k : T.Fr →+* ℂ_[p]} (h : IsReading φ T io k) (y : IntFr Xo c T io)
     (u : Ix Dw → (PAt φ)ˣ) (z : FrPt Xo c (PAt φ)) : Prop :=
   letI := io.toAlgebra
   ∃ w : FrPt Xo c (PAt φ), FrMap h.alg y.1 w ∧ FrBor u w z
 
 
+variable {Xo c φ} in
 def IsIntPt (z : FrPt Xo c (PAt φ)) : Prop :=
   ∃ (T : CDVR) (io : c.F →+* T.Fr) (k : T.Fr →+* ℂ_[p]) (h : IsReading φ T io k) (y : IntFr Xo c T io)
     (u : Ix Dw → (PAt φ)ˣ), y.IsAlg ∧ (∀ a, ‖toCp φ (u a)‖ = 1) ∧ IsReadPt h y u z

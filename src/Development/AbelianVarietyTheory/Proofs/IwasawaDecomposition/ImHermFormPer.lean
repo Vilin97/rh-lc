@@ -35,6 +35,7 @@ noncomputable section
 namespace GlobalTheory.WeilStd
 
 
+open ReciprocityTheory.PTheta Matrix in
 theorem im_hermForm_per {g : ℕ} {τ : Matrix (Fin g) (Fin g) ℂ} (hτ : τ ∈ SiegelH (Fin g))
     (k k' : Fin g → ℤ) {Hm : Matrix (Fin g) (Fin g) ℂ} (hH : Hm.IsHermitian)
     (F : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) (ρ : (Fin g → ℂ) → ℂ) (hρd : Differentiable ℂ ρ) (hρ0 : ∀ z, ρ z ≠ 0)
@@ -121,6 +122,7 @@ end GlobalTheory.WeilStd
 namespace GlobalTheory.WeilStd
 
 
+open GlobalTheory.NormalUnique in
 theorem weilIs_per : ∀ (x : KeyIn ℂ) (g : ℕ) (u : HolUnif x.P.A x.P.L g) (τ : Matrix (Fin g) (Fin g) ℂ) (a b : Fin g → ℂ) (c : ℂ),
     x.P.g = g → τ.IsSymm → (τ.map Complex.im).PosDef → charHalf g a b → c ≠ 0 →
     (∀ z, z ∈ u.Λ ↔ ∃ m n : Fin g → ℤ, z = (fun i => (m i : ℂ)) + τ.mulVec (fun i => (n i : ℂ))) →

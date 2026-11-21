@@ -149,6 +149,7 @@ theorem exists_lift {n : ℕ} (B : GL (Fin n) 𝓀[k]) :
   · simp [h, Function.surjInv_eq]
 
 
+variable (k) in
 def permO (n : ℕ) : Equiv.Perm (Fin n) →* GL (Fin n) 𝒪[k] := (Matrix.permMatrixHom (R := 𝒪[k])).toHomUnits
 
 omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in

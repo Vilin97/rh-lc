@@ -187,6 +187,7 @@ theorem cT_gram (V : HSp D) (g : GA D V) :
     _ = V.gram.map (incA D) * mt V g⁻¹ := by rw [← Matrix.mul_assoc, hu]
 
 
+set_option maxHeartbeats 2000000 in
 theorem adjO_actO (S T : HSp D) (g : GA D S) (h : GA D T) (x : WO S T) :
     adjO S T (actO S T g h x) = mt S g * adjO S T x * mt T h⁻¹ := by
   have hS := cT_gram S g⁻¹
@@ -542,6 +543,7 @@ theorem genE_mem {α : Af D.host.F} (hα : α ∈ intAf D.host.F) {a : D.host.E}
     exact liftE_smul_mem r.2 _ hx
 
 
+set_option maxHeartbeats 1000000 in
 theorem St_mulVec_mem {n : ℕ} {β : GL (Fin n) (EAf D)} {Λ : Submodule (𝓞 D.host.E) (Fin n → D.host.E)}
     (hf : Formalism.L2.DIV.IsFrame β Λ) {x : GL (Fin n) (EAf D)} (hx : x ∈ Formalism.L2.DIV.St β) {v : Fin n → EAf D}
     (hv : v ∈ Formalism.L2.Herm.hatL (F := D.host.F) Λ) :
@@ -625,6 +627,7 @@ theorem col_mem_hatL {n : ℕ} {β : GL (Fin n) (EAf D)} {Λ : Submodule (𝓞 D
   · rw [Pi.single_eq_of_ne hij]; exact zero_mem _
 
 
+set_option maxHeartbeats 2000000 in
 theorem hform_int {V : HSp D} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)} (hΛ : IsSelfDualC V Λ)
     {s : Fin V.rank → D.host.E} (hs : s ∈ Λ) {v : Fin V.rank → EAf D} (hv : v ∈ Formalism.L2.Herm.hatL (F := D.host.F) Λ) :
     (fun k => sR D (eToEAf D (s k))) ⬝ᵥ (V.gram.map (eToEAf D) *ᵥ v) ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := by
@@ -801,6 +804,7 @@ theorem isSplitIdem_cA {e : AE D} (he : IsSplitIdem D e) : IsSplitIdem D (cA D e
   refine ⟨by rw [← map_mul, h1], by rw [cA_cA, mul_comm, h2], v, ε, hv, by rw [cA_cA, add_comm, hε]⟩
 
 
+set_option maxHeartbeats 2000000 in
 theorem heisO_fix_of_latVac (ψ : AddChar (AF D.host.F) ℂ) {f₀ : WO S T → ℂ}
     (hL : IsLatVac (heisO ψ S T) (latAll S T ΛS ΛT) f₀) {P : Finset (Formalism.L2.DIV.Pl D.host.E)} {e : AE D}
     (he : IsIdemSum e P) : ∀ u ∈ latAll S T ΛS ΛT, (IsHalf e u ∨ IsHalf (cA D e) u) → heisO ψ S T u f₀ = f₀ := by
@@ -876,6 +880,7 @@ theorem map_smul_vecMulVec {m n : ℕ} (c : EAf D) (x : Fin m → EAf D) (y : Fi
   ext i j; simp only [Matrix.map_apply, Matrix.smul_apply, Matrix.vecMulVec_apply, smul_eq_mul, map_mul]
 
 
+set_option maxHeartbeats 2000000 in
 theorem frMapAdj_genE {βS : GL (Fin S.rank) (EAf D)} {βT : GL (Fin T.rank) (EAf D)} (c : EAf D)
     (τ : Fin T.rank → EAf D) (σ : Fin S.rank → EAf D) :
     frMapAdj S T βS βT (genE c τ σ) = sR D c • Matrix.vecMulVec

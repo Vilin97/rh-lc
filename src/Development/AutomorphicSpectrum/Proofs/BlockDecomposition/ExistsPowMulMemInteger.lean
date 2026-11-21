@@ -15,6 +15,7 @@ section Lat
 variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
 
 
+open GroundTheory.Automorphic.GLnLocal in
 theorem exists_pow_mul_mem_integer (a : F) :
     ∃ M : ℕ, (uniformizer F : F) ^ M * a ∈ 𝒪[F] := by
   by_cases ha : a ∈ 𝒪[F]
@@ -37,6 +38,7 @@ theorem exists_pow_mul_mem_integer (a : F) :
     exact SetLike.coe_mem _
 
 
+open GroundTheory.Automorphic.GLnLocal in
 theorem pow_mul_mem_of_le {M M' : ℕ} (h : M ≤ M') {a : F}
     (ha : (uniformizer F : F) ^ M * a ∈ 𝒪[F]) : (uniformizer F : F) ^ M' * a ∈ 𝒪[F] := by
   obtain ⟨d, rfl⟩ := Nat.exists_eq_add_of_le h

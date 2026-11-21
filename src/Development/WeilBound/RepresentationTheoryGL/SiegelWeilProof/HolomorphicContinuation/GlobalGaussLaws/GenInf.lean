@@ -121,6 +121,7 @@ theorem cT_starRingEnd (M : Matrix (Fin (n + n)) (Fin (n + n)) ℂ) : Formalism.
   ext i j; simp [Formalism.UG.cT, Matrix.conjTranspose_apply]
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_I (hL : LocRedField) (k : G D n) (τ : D.what₂.Tau) :
     ∃ I : Finset (Fin n), IsUnit (blkDm ((mat k).map (psiT D τ) * wIm I)).det := by
   set M := (mat k).map (psiT D τ) with hM

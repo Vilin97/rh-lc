@@ -105,6 +105,7 @@ theorem algebraMap_away_injective (hπ : π ≠ 0) : Function.Injective (algebra
   simp [h]
 
 
+variable {A S} in
 theorem exists_algebraMap_eq (hπ : π ≠ 0) {y : A} {z : S}
     (h : algebraMap A K y = algebraMap S K z) :
     ∃ r : R, algebraMap R A r = y := by
@@ -114,6 +115,7 @@ theorem exists_algebraMap_eq (hπ : π ≠ 0) {y : A} {z : S}
   exact ⟨r, algebraMap_away_injective A K hπ (by rw [← IsScalarTower.algebraMap_apply, hr])⟩
 
 
+variable {A S} in
 theorem exists_unit_algebraMap_eq (hπ : π ≠ 0) {y : A} (hy : IsUnit y) {z : S} (hz : IsUnit z)
     (h : algebraMap A K y = algebraMap S K z) :
     ∃ r : R, IsUnit r ∧ algebraMap R A r = y := by

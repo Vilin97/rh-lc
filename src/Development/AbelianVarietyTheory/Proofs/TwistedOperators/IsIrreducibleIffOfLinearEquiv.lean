@@ -97,6 +97,7 @@ def ev {P : Subgroup H} (ρ : Representation F P W) (x : H) : smoothPart (ind P 
   map_smul' _ _ := rfl
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] [TopologicalSpace H] [IsTopologicalGroup H] in
 def coord (l : V →ₗ[F] F) (W : Type) [AddCommGroup W] [Module F W] : V ⊗[F] W →ₗ[F] W :=
   (TensorProduct.lid F W).toLinearMap ∘ₗ l.rTensor W
 
@@ -129,6 +130,7 @@ theorem exists_sum_coord {ι : Type} (b : Module.Basis ι F V) (x : V ⊗[F] W) 
       simp [coord, TensorProduct.smul_tmul]
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] in
 theorem eq_zero_of_ev {P : Subgroup H} (ρ : Representation F P W) (t : V ⊗[F] smoothPart (ind P ρ))
     (h : ∀ x, (ev ρ x).lTensor V t = 0) : t = 0 := by
   obtain ⟨s, -, h2⟩ := exists_sum_coord (Module.Basis.ofVectorSpace F V) t
@@ -142,6 +144,7 @@ theorem eq_zero_of_ev {P : Subgroup H} (ρ : Representation F P W) (t : V ⊗[F]
   rw [this, TensorProduct.tmul_zero]
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] in
 theorem exists_tensor {P : Subgroup H} (ρ : Representation F P W) {K : Set H} (hK : IsCompact K)
     (hPK : ∀ x, ∃ p : P, ∃ w ∈ K, x = p * w) (f : H → V ⊗[F] W)
     (hf : ∀ (p : P) x, f (p * x) = (ρ p).lTensor V (f x))
@@ -372,10 +375,12 @@ def headTail (m : Fin (s + 1) → Type) : m 0 ⊕ (Σ i : Fin s, m i.succ) ≃ �
     | succ i => exact ⟨.inr ⟨i, x⟩, rfl⟩⟩
 
 
+omit [∀ i, DecidableEq (m i)] in
 theorem modExp_zero : modExp m 0 = Fintype.card (Σ i : Fin s, m i.succ) := by
   simp [modExp, Finset.sum_filter, Fin.sum_univ_succ]
 
 
+omit [∀ i, DecidableEq (m i)] in
 theorem modExp_succ (i : Fin s) :
     modExp m i.succ = -Fintype.card (m 0) + modExp (fun i : Fin s => m i.succ) i := by
   simp [modExp, Finset.sum_filter, Fin.sum_univ_succ]

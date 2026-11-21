@@ -126,6 +126,7 @@ theorem lbIso_pull_inv (hM : M.IsLB) (hu : ∃ u : LB.Gen (abelian₂ B M), u.Is
   exact eq_inv_of_mul_eq_one_left h.symm
 
 
+omit [IsCommMonObj B] in
 theorem isIntegral_left (hB : IsAbelianScheme B) : IsIntegral B.left :=
   have := forall_geometricallyIntegral_of_smooth_of_geometricallyConnected _ _ B.hom hB.smooth
     hB.geomConnected
@@ -177,6 +178,7 @@ theorem eq_zero_of_conv (h o : ℕ → ℕ) (h0 : h 0 = 0) (o0 : o 0 ≠ 0)
     exact (mul_eq_zero.1 this).resolve_right o0
 
 
+omit [IsCommMonObj B] in
 theorem isPullback_mul_snd : IsPullback μ[B].left (snd B B).left B.hom B.hom := by
   have e : fst B B * snd B B = μ[B] := by rw [Hom.mul_def, lift_fst_snd, Category.id_comp]
   let α : B ⊗ B ≅ B ⊗ B :=

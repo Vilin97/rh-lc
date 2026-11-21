@@ -45,6 +45,7 @@ theorem inv_keeps {A B : Matrix (Fin n) (Fin n) ℂ} (hBA : B * A = 1) (V : Subm
   exact x.2
 
 
+variable (ε) in
 def leviSub {a : ℕ} (W : Fin (a + 1) → Submodule ℂ (Fin n → ℂ)) : Subgroup (Formalism.REAL.UJ ε) where
   carrier := flagM ε W
   one_mem' := by
@@ -61,6 +62,7 @@ def leviSub {a : ℕ} (W : Fin (a + 1) → Submodule ℂ (Fin n → ℂ)) : Subg
     rw [← Matrix.conjTranspose_mul, uMat_mul_inv, Matrix.conjTranspose_one]
 
 
+variable (ε) in
 def compactSub : Subgroup (Formalism.REAL.UJ ε) where
   carrier := maxK ε
   one_mem' := by

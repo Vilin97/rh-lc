@@ -19,6 +19,7 @@ set_option autoImplicit false
 namespace GlobalTheory
 
 
+open MvPolynomial in
 theorem map_lap_one {T : Type} (r : T → ℕ) (n : ℕ) {k k' : Type} [Field k] [Field k'] (f : k →+* k')
     (τ τ' : T) (a : Fin (r τ)) (a' : Fin (r τ')) (P : MvPolynomial (Letter T r n) k) :
     lap r n k' 1 τ τ' a a' (MvPolynomial.map f P) = MvPolynomial.map f (lap r n k 1 τ τ' a a' P) := by
@@ -30,6 +31,7 @@ theorem map_lap_one {T : Type} (r : T → ℕ) (n : ℕ) {k k' : Type} [Field k]
   by_cases h : b = b' <;> simp [Matrix.one_apply, h]
 
 
+open MvPolynomial in
 theorem map_rowShift {T : Type} (r : T → ℕ) (n : ℕ) {k k' : Type} [Field k] [Field k'] (f : k →+* k')
     (σ : T) (i i' : Fin (r σ)) (t : k) (P : MvPolynomial (Letter T r n) k) :
     rowShift r n k' σ i i' (f t) (MvPolynomial.map f P) = MvPolynomial.map f (rowShift r n k σ i i' t P) := by

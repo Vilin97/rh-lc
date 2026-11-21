@@ -62,6 +62,7 @@ theorem pnorm_of_gram (la : Wt X.Ψ r) (F : Frame X.Ψ r → ℂ) {x : Frame X.�
   simp [h]
 
 
+omit [NumberField E] [IsCMField E] in
 theorem norm_bchar_le {Ψ : Finset (E →+* ℂ)} (la : Wt Ψ r) (C : ℝ) {b : Frame Ψ r}
     (hb : ∀ τ i, ‖b τ i i‖ ≤ C ∧ ‖(b τ i i)⁻¹‖ ≤ C) :
     ‖bchar la b‖ ≤ ∏ τ, ∏ i, C ^ (la τ i).natAbs := by
@@ -118,6 +119,7 @@ theorem bound_on (la : Wt X.Ψ r) (S : Set (Frame X.Ψ r)) (K B : ℝ)
     rw [Matrix.map_mul, Matrix.mul_assoc]
 
 
+omit [IsCMField E] in
 theorem countable_gl : Countable (GL (Fin r) E) := by
   have : Countable E := Countable.of_equiv _ (Module.finBasis ℚ E).equivFun.toEquiv.symm
   have : Countable (Matrix (Fin r) (Fin r) E) := inferInstanceAs (Countable (Fin r → Fin r → E))
@@ -160,6 +162,7 @@ theorem unfold_frames (Δ : Subgroup (GL (Fin r) E)) (𝓛 : Set (Lt E r)) (hun 
     (fun a ha L => hae.mono fun y hy => hk a ha L L.2 y hy)
 
 
+omit [NumberField E] [IsCMField E] in
 theorem mp_restrict {Ψ : Finset (E →+* ℂ)} (S : Set (Frame Ψ r)) (hmeas : MeasurableSet S)
     (f : Frame Ψ r → Frame Ψ r) (h3 : MeasurePreserving f volume volume)
     (h4 : ∀ x, f x ∈ S ↔ x ∈ S) : MeasurePreserving f (volume.restrict S) (volume.restrict S) := by

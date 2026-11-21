@@ -55,6 +55,7 @@ variable (Xo' : Moduli Dw l') (c' : Coeff l') {K : Type} [Field K] (ι : K →+*
   (e : Basis (Fin r) (Rs l) (LaMod Dw l))
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def typeSub (ψ₀ : AddChar (Rs l) K) : Submodule c'.F (Rul Xo' c') where
   carrier := {f | ∀ (γ : LaMod Dw l' ≃ₗ[𝓞 E] LaMod Dw l') (u : Matrix (Fin r) (Fin r) (Rs l)), Reads e γ u → IsUnip u →
     ∀ (p : TRing c'.F) (y y' : FrPt Xo' c' p.R), levR (liftLa γ, LinearMap.id) y y' →
@@ -78,6 +79,7 @@ def idemCoeff (X : Finset (Gz l r → K)) (χ : (Rs l)ˣ →* Kˣ) (k : Gz l r) 
   (Formalism.L2.DIV.idemOf X).coeff k * (((χ (Matrix.GeneralLinearGroup.det k))⁻¹ : Kˣ) : K)
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def idemOp (X : Finset (Gz l r → K)) (χ : (Rs l)ˣ →* Kˣ) : Rul Xo' c' →ₗ[c'.F] Rul Xo' c' :=
   ∑ k : Gz l r, HSMul.hSMul (α := c'.F) (ι (idemCoeff X χ k)) (actG Xo' c' e k)
 

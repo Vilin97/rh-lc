@@ -22,6 +22,7 @@ namespace SeparatedSmallCount
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
 
+omit [Fintype K] in
 theorem isMultiHomog_sub {f g : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) (hg : IsMultiHomog g a) :
     IsMultiHomog (f - g) a := by
   classical
@@ -87,6 +88,7 @@ theorem exists_isSectionValue {y : (Σ k, ι k) → Ω} {a : K → ℤ} {τ : �
   exact ⟨_, dg, dh, g, h, hg, hh, hd, he, hz0, rfl⟩
 
 
+omit [Fintype K] in
 theorem isSectionValue_add {y : (Σ k, ι k) → Ω} {a : K → ℤ} {τ : ℕ} {s t : Ω} {z : (Σ k, ι k) → ℂ} {v w : ℂ}
     (hv : IsSectionValue y a τ s z v) (hw : IsSectionValue y a τ t z w) :
     IsSectionValue y a τ (s + t) z (v + w) := by
@@ -148,6 +150,7 @@ theorem isBoundedH_of_sectionValue {y : (Σ k, ι k) → Ω} {A : HermLine ι} {
 end SeparatedSmallCount
 
 
+open SeparatedSmallCount in
 theorem SeparatedSmallCount.proof (hfin : SectionLatticeFinite.Statement) : SeparatedSmallCount.Statement := by
   classical
   intro K _ ι _ Ω _ y D A τ b hV _hB hb hsep

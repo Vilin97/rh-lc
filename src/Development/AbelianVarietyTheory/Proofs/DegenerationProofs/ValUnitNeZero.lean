@@ -22,6 +22,7 @@ section Reg
 variable {K C : Type} [Field K] [Field C] {Y : Scheme.{0}} {q : Y ⟶ Sp K} {σ : K →+* C}
 
 
+variable (q σ) in
 def Reg (W : Y.Opens) (F : (Sp C ⟶ Y) → C) : Prop :=
   ∃ r : Γ(Y, W), ∀ x : Sp C ⟶ Y, x ≫ q = spMap σ → ⊤ ≤ x ⁻¹ᵁ W → F x = valR x W r
 

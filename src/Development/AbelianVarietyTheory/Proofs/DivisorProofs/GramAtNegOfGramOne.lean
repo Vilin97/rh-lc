@@ -52,6 +52,7 @@ theorem sig_of_gram_one {V : HSp D} (hg : V.gram = 1) (hV : V.SigOK) (τ : D.hos
   omega
 
 
+open GlobalTheory.Grid (neg neg_gram) in
 def negFrame (A : HSp D) : CptF (neg A) := fun τ r c =>
   Sum.elim (fun _ => (0 : ℂ)) (fun k => if (k : ℕ) = (c : ℕ) then 1 else 0) r
 
@@ -108,6 +109,7 @@ theorem gramAt_neg_of_gram_one {A : HSp D} (hg : A.gram = 1) (τ : D.what₂.Tau
   split_ifs <;> simp
 
 
+open GlobalTheory.Grid (neg neg_gram sigOK_sgn isCartanInv_sgn) in
 theorem exists_pair {T : Type} {A A' WW : HSp D} (X : Tri T A A' WW) {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D}
     {α β : T → ((AE D)ˣ →* Circle)} {νH : T → Formalism.L2.Host.HChar D.host.E} {S}
     (h : X.Is ψ θ α β νH S) (hstd : X.rA.IsStd) (hA : A.SigOK) (h1 : 1 ≤ A.rank) (h1' : 1 ≤ A'.rank) (t : T) :
@@ -133,6 +135,7 @@ theorem exists_pair {T : Type} {A A' WW : HSp D} (X : Tri T A A' WW) {ψ : AddCh
     simp [compAt]
 
 
+open GlobalTheory.Grid (neg) in
 theorem one_le_bot (i j : Fin D.R.m) : 1 ≤ botBig D i j ∧ 1 ≤ botSmall D i j := by
   obtain ⟨u, hu⟩ := D.R.t_odd
   have h2 : D.R.m ≤ D.R.r := by have := D.R.m_add_three_le_k; unfold Ranks.r; omega
@@ -149,6 +152,7 @@ theorem one_le_bot (i j : Fin D.R.m) : 1 ≤ botBig D i j ∧ 1 ≤ botSmall D i
 end GlobalTheory.BottomPairData
 
 
+open GlobalTheory.BottomPairData in
 theorem GlobalTheory.BottomPairData.pair_data : GBig fun {D} T Lc _ G _ _ _ _ => ∀ (W : G.Weil) (i j : Fin D.R.m) (A A' WW : HSp D) (X : Tri T A A' WW),
   IsBottomTri W i j X → A.SigOK → ∀ t : T, ∃ (cA : CptF (GlobalTheory.Grid.neg A)) (a : GL (Fin (GlobalTheory.Grid.neg A).rank) (AE D)) (νW : Measure (WO (GlobalTheory.Grid.neg A) WW)) (𝓕W : Set (WO (GlobalTheory.Grid.neg A) WW)), Pair W.ψ W.θ (GlobalTheory.Grid.neg A) WW (GlobalTheory.BottomIPData.betaB G i j) (GlobalTheory.BottomIPData.betaB G i j / GlobalTheory.BottomIPData.alphaB Lc i j t) (fun τ => -X.rA.s τ) X.rW.s A'.rank cA a ((X.ω t).toSgn true) νW 𝓕W := by
   refine ⟨0, fun ε CF _ => ⟨0, 0, fun C _ D large₂ _ _ _ T Lc μ₀ _ G => ?_⟩⟩

@@ -154,12 +154,14 @@ theorem LocDat.hcj (Z : LocDat D) (p : PlF D) : (Z.M p).L.cj = (D.s.atP p).cj :=
 def locH (Z : LocDat D) (p : PlF D) : Loc.HermSp (Z.M p) (Vp D p) := locHerm Z.M p (Z.hcj p)
 
 
+variable (D) in
 def sgnP (p : PlF D) (a : Fin (D.R.rS + 1)) : (D.s.atP p).Ep :=
   match (D.s.atP p).split with
   | some sg => sg.e.symm ((-1) ^ (D.R.rS - a.val), 1)
   | none => 1
 
 
+variable (D) in
 def sgnP' (p : PlF D) (b : Fin (D.R.rS + 1)) : (D.s.atP p).Ep :=
   match (D.s.atP p).split with
   | some _ => sgnP D p b
@@ -183,11 +185,13 @@ theorem sgnP'_sq (p : PlF D) (b : Fin (D.R.rS + 1)) : sgnP' D p b * sgnP' D p b 
   · rw [← mul_pow]; simp
 
 
+variable (D) in
 def lattice₂ (M : ∀ p : PlF D, Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep) (p : PlF D)
     (Λ : Submodule (𝓞 D.host.E) (VS D).V) : Submodule (M p).L.O (Vp D p) :=
   Submodule.span (M p).L.O (baseChange₂ D p '' (Λ : Set (VS D).V))
 
 
+variable (D) in
 def admXi (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T)
     (F' : LFlag (VS D) D.R.rS T') : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (𝓞 D.host.E) :=
   if h : IsAdmissible Λ (gS D) F F' then h.choose else 1
@@ -233,6 +237,7 @@ def locBBne (Z : LocDat D) (p : PlF D) (Λ : Submodule (𝓞 D.host.E) (VS D).V)
   LocNG.BBne (H := locH Z p) (locTerm Z p Λ F F' Tn T'n)
 
 
+variable (D) in
 def BBTie (Z : LocDat D) : Prop :=
   ∀ (u u' : D.what₂.Word) (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
     (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)),
@@ -262,12 +267,14 @@ theorem termBBne_iff_loc (Z : LocDat D) (hT : BBTie D Z) {u u' : D.what₂.Word}
     exact ⟨(Quot.out t.cls).1, ⟨(Quot.out t.cls).2, hxm⟩, h⟩
 
 
+variable (D) in
 def below (P : HeightOneSpectrum (𝓞 D.host.E)) : PlF D where
   asIdeal := P.asIdeal.comap (algebraMap (𝓞 D.host.F) (𝓞 D.host.E))
   isPrime := Ideal.comap_isPrime _ _
   ne_bot := fun h => P.ne_bot (Ideal.eq_bot_of_comap_eq_bot h)
 
 
+variable (D) in
 def GenIffLocBB (Z : LocDat D) (u u' : D.what₂.Word) : Prop :=
   ∀ (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)) (what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)),
     IsRowReps D F0 what₂ → ∀ t : Term D u u' F0 what₂, t.generic ↔ ∀ p, ¬ locBBneT Z t p

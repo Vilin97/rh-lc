@@ -41,6 +41,7 @@ structure Base (c : Comm D) where
 variable {c : Comm D}
 
 
+open Classical in
 def Base.S (B : Base c) : Finset (GlobalTheory.FinPl.Pl D) := B.Pg.image fun PP => PP.under (𝓞 D.host.F)
 
 section Off

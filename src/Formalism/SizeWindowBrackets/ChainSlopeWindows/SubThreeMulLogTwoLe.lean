@@ -13,6 +13,7 @@ open Formalism.RankGapBounds.WeightedMeanData Formalism.LFunctionChainParameters
 set_option linter.unusedVariables false
 
 
+set_option maxHeartbeats 1000000 in
 theorem core_ineq {nT a b b' k L La B0 Nc M sA lW lk lH dI et Xpp y yD yL K h g
     cDiv cE cH cCount cSlope cSl1 cLoss : ℝ}
     (hy : 1 ≤ y) (hyD : 1 ≤ yD) (hyL : 1 ≤ yL)

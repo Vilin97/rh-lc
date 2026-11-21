@@ -27,6 +27,7 @@ theorem continuous_rpowHom (e : ℝ) : Continuous (rpowHom e) :=
   (continuous_subtype_val.rpow_const fun s => Or.inl s.2.ne').subtype_mk _
 
 
+variable (K) in
 def posIdeleHom : {r : ℝ // 0 < r} →* IdeleGroup K where
   toFun s := posIdele s.1 s.2
   map_one' := by
@@ -48,6 +49,7 @@ theorem continuous_posIdeleHom : Continuous (posIdeleHom K) :=
   continuous_posIdele_subtype
 
 
+variable (K n) in
 def scalarUnits : IdeleGroup K →* AdelicGLn.AdelicGL K n :=
   (diagUnits n).comp
     { toFun := fun u _ => u, map_one' := rfl, map_mul' := fun _ _ => rfl }
@@ -65,6 +67,7 @@ theorem scalarUnits_mul_comm (u : IdeleGroup K) (g : AdelicGLn.AdelicGL K n) :
   rw [Matrix.diagonal_mul, Matrix.mul_diagonal, mul_comm]
 
 
+variable (K) in
 def centralSection (n : ℕ) : {r : ℝ // 0 < r} →* AdelicGLn.AdelicGL K n :=
   (scalarUnits K n).comp ((posIdeleHom K).comp (rpowHom ((n * Module.finrank ℚ K : ℝ))⁻¹))
 
@@ -76,6 +79,7 @@ theorem centralSection_mul_comm (s : {r : ℝ // 0 < r}) (g : AdelicGLn.AdelicGL
   scalarUnits_mul_comm _ g
 
 
+variable (K n) in
 def detModule : AdelicGLn.AdelicGL K n →* {r : ℝ // 0 < r} :=
   (ideleModule K).comp (AdelicGLn.det K n)
 

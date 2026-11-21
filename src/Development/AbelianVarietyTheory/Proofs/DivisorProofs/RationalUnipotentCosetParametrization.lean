@@ -17,6 +17,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {J : Matrix (Fin n) (Fin n) E}
 
 
+omit [NumberField E] in
 theorem incl_inj : Function.Injective (inclR (F := F) (E := E) (AF F)) := by
   haveI : Nontrivial (AF F) := (NumberField.AdeleRing.algebraMap_injective (𝓞 F) F).nontrivial
   haveI : Nontrivial (AF F ⊗[F] E) := inferInstance
@@ -40,6 +41,7 @@ theorem inv_vec {g : UA σ J} {v w : Fin n → AE F E} (h : mat g *ᵥ v = w) : 
   rw [← h, ← mat_mul_vec, inv_mul_cancel, mat_one_vec]
 
 
+omit [NumberField E] in
 theorem mem_closure_iff (v : Fin n → AE F E) (g : UA σ J) :
     g ∈ Subgroup.closure {g : UA σ J | mat g *ᵥ v = v} ↔ mat g *ᵥ v = v := by
   refine ⟨fun h => ?_, fun h => Subgroup.subset_closure h⟩
@@ -50,6 +52,7 @@ theorem mem_closure_iff (v : Fin n → AE F E) (g : UA σ J) :
   | inv x _ hx => exact inv_vec hx
 
 
+omit [NumberField E] in
 theorem rat_act {δ : UA σ J} (hδ : δ ∈ ratU σ J) (x : Fin n → E) :
     ∃ y : Fin n → E, mat δ *ᵥ incV F x = incV F y ∧ form σ J y y = form σ J x x := by
   obtain ⟨A, hA⟩ := Subgroup.mem_subgroupOf.1 hδ

@@ -24,6 +24,7 @@ namespace GlobalTheory.ThetaJoint
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} (W : G.Weil) {M : Vol G} {t : T}
 
 
+set_option maxHeartbeats 1000000 in
 theorem isBiTheta_lastDat (hM : M.Is t) (j : ℕ) (hj : j + 2 * 0 + 2 = D.R.m) (vN : GlobalTheory.Unf.VolN (besDecAt G j 0 hj))
     (g : GA D (G.V (.grid D.R.m j)))
     (Φ₁ : WO (G.V (.grid D.R.m j)) (G.V (.grid D.R.m (j + 1))) → ℂ)
@@ -41,6 +42,7 @@ theorem isBiTheta_lastDat (hM : M.Is t) (j : ℕ) (hj : j + 2 * 0 + 2 = D.R.m) (
     (topOrthAt G (show D.R.m = j + 1 + 1 by omega)) lastTau LastSeeSawStep.lastTau_gram _ _ hΞ hΦ₂'
 
 
+set_option maxHeartbeats 1000000 in
 theorem isBiTheta_contr (hM : M.Is t) (j σ : ℕ) (hj : j + 2 * (σ + 1) + 2 = D.R.m) (vN : GlobalTheory.Unf.VolN (besDecAt G j (σ + 1) hj))
     (vN' : GlobalTheory.Unf.VolN (besDecAt G (j + 1 + 1) σ (by omega))) (vL : GlobalTheory.Unf.VolM D _ _)
     (Ψ₁ : WO (G.V (.grid D.R.m j)) (G.V (.grid D.R.m (j + 1))) → ℂ)
@@ -78,6 +80,7 @@ theorem dite_pred {α : Type} (P : α → Prop) {c : Prop} [Decidable c] {a : c 
   · rw [dite_eq_right h]; exact hb h
 
 
+set_option maxHeartbeats 1000000 in
 theorem isBiTheta_conAt (hM : M.Is t) (Φ : SchDown G t) (hΦ : ∀ j, IsThetaFunO W.ψ _ _ (Φ j)) (h : Pts G) (j : ℕ) :
     IsBiTheta W.ψ _ _ _ (conAt W hM Φ h j) := by
   unfold conAt

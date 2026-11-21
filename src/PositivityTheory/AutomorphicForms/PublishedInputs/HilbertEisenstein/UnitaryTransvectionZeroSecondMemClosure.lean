@@ -66,6 +66,7 @@ theorem hasTemperateGrowth_oddPoly : (oddPoly (F := F)).HasTemperateGrowth := by
   exact (Function.HasTemperateGrowth.const Complex.I).mul h
 
 
+variable (F) in
 def oddSchwartz : 𝓢(mixedSpace F, ℂ) :=
   SchwartzMap.smulLeftCLM ℂ oddPoly
     (SchwartzMap.compCLMOfContinuousLinearEquiv ℂ (mixedToEuclidean F)

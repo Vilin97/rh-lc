@@ -15,6 +15,7 @@ variable {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} [∀ k, Fint
   [∀ k, DecidableEq (ι k)]
 
 
+variable (ι) in
 def segMono (i : (k : K) → ι k) : MvPolynomial (Σ k, ι k) ℂ := ∏ k, X ⟨k, i k⟩
 
 theorem eval_segMono (i : (k : K) → ι k) (z : (Σ k, ι k) → ℂ) : eval z (segMono i) = segre z i := by
@@ -58,6 +59,7 @@ theorem psiPoly_homog (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1
   exact (mem_weightedHomogeneousSubmodule _ _ _ _).mp hmem
 
 
+variable (ι) in
 def idealC (P : Ideal (MRing ι)) : Ideal (MvPolynomial (Σ k, ι k) ℂ) :=
   Ideal.map (map (Int.castRingHom ℂ)) P
 

@@ -52,6 +52,11 @@ private lemma measurePreserving_update_add_of_indep [DecidableEq ι] (i : ι)
   · simp [e, c, p, hj]
 
 
+open ValuativeRel MeasureTheory ComplexConjugate in
+open scoped ComplexOrder in
+variable {G : Type} [AddGroup G] [MeasurableSpace G] [MeasurableAdd₂ G]
+  (μ : Measure G) [SigmaFinite μ] [μ.IsAddRightInvariant]
+  {ι : Type} [Fintype ι] in
 theorem _root_.GlobalTheory.SgLoc.TriShift.measurePreserving_triangular (rk : ι → ℕ) (f : ι → (ι → G) → G)
     (hf : ∀ i, Measurable (f i))
     (hd : ∀ i x y, (∀ j, rk j < rk i → x j = y j) → f i x = f i y) :

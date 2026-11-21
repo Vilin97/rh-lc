@@ -18,11 +18,14 @@ variable {K R M : Type*} [Field K] [Ring R] [Algebra K R] [IsSimpleRing R] [Fini
   [AddCommGroup M] [Module K M] [Module R M] [IsScalarTower K R M] [FiniteDimensional K M]
 
 
+omit [IsSimpleRing R] [FiniteDimensional K R] in
 instance finiteDimensional_end : FiniteDimensional K (Module.End R M) :=
   Module.Finite.of_injective (LinearMap.restrictScalarsₗ K R M M K)
     (fun _ _ h ↦ LinearMap.restrictScalars_injective K h)
 
 
+variable (K R M) in
+include K in
 theorem exists_linearEquiv_pi_simple :
     ∃ (S : Submodule R (R × M)) (r m : ℕ), IsSimpleModule R S ∧ 0 < r ∧
       Nonempty (R ≃ₗ[R] (Fin r → S)) ∧ Nonempty (M ≃ₗ[R] (Fin m → S)) := by
@@ -56,6 +59,7 @@ variable [IsSimpleRing R] [FiniteDimensional K R]
   [FiniteDimensional K M]
 
 
+variable (K R M) in
 theorem finrank_mul_finrank_end :
     finrank K R * finrank K (Module.End R M) = finrank K M ^ 2 := by
   obtain ⟨S, r, m, hS, hr, ⟨eR⟩, ⟨eM⟩⟩ := exists_linearEquiv_pi_simple K R M

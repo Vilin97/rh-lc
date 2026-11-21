@@ -222,6 +222,7 @@ theorem inter_inter (hH : IsHerm H) {A₁ A₂ : AddSubgroup V} [Finite (A₁ �
   field_simp
 
 
+omit [Module ℂ V] in
 theorem finite_quot {A₁ A₂ : AddSubgroup V} (hfg : A₂.FG) (h : ∀ x ∈ A₂, ∃ m : ℕ, 0 < m ∧ m • x ∈ A₁) :
     Finite (A₂ ⧸ A₁.addSubgroupOf A₂) := by
   have : AddGroup.FG A₂ := (AddGroup.fg_iff_addSubgroup_fg A₂).2 hfg

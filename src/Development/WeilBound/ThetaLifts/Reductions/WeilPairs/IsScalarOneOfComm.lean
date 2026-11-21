@@ -35,6 +35,7 @@ variable {σ : E →ₐ[F] E} {B : Base F E} {nS nT : ℕ} {JS : Matrix (Fin nS)
 variable {η : (AEF F E)ˣ →* Circle} {ε : AEF F E} {of oi : GAF σ JS × GAF σ JT →* Module.End ℂ (WOF F E nS nT → ℂ)}
 
 
+variable (σ JS JT) in
 def substF (p : GAF σ JS × GAF σ JT) : Module.End ℂ (WOF F E nS nT → ℂ) :=
   LinearMap.funLeft ℂ ℂ (actOF σ JS JT p.1⁻¹ p.2⁻¹)
 
@@ -53,6 +54,7 @@ theorem substF_one (f : WOF F E nS nT → ℂ) : substF σ JS JT 1 f = f := by
   rw [inv_one, inv_one, GlobalTheory.FinLatF.actOF_one]
 
 
+variable (ξ₀ B of oi) in
 def IsScalarF (p : GAF σ JS × GAF σ JT) (c : ℂ) : Prop :=
   ∀ f, IsThetaFunOF σ JS JT ξ₀ B.ψ f → of p (oi p f) = c • substF σ JS JT p f
 
@@ -254,6 +256,7 @@ theorem scalar_const (C : Ctx σ B JS JT ξ₀ θ ι) (hG : GoodLat Λ) (hR : Ra
     (phase_rat C P.res P.half hΔ hd hN' d1 d2 (zF_rat C P.half.idem ha hb hΔ))
 
 
+set_option maxHeartbeats 1000000 in
 theorem isScalar_one_of_comm (C : Ctx σ B JS JT ξ₀ θ ι) (hG : GoodLat Λ) (hR : RatSD σ JS JT ξ₀ Λ)
     (hO : IsLatRepF σ JS JT ξ₀ B.ψ hc Λ w lam Om) (P : Parts C hc lam Om η ε of oi) (hs : CartF σ JS JT ξ₀ B θ s)
     {g : GAF σ JS} {h : GAF σ JT} (hg : g ∈ GQF σ JS) (hh : h ∈ GQF σ JT)

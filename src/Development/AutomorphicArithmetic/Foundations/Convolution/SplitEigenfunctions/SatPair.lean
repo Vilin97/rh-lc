@@ -68,6 +68,7 @@ private theorem exists_fixed_pair [TopologicalSpace G] [IsTopologicalGroup G] (h
 end General
 
 
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.UG GlobalTheory.PRep GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.LFun.ConjPlace in
 private theorem sat_eq_of_eig {E : Type} [Field E] [NumberField E] {n : ℕ} {w : HeightOneSpectrum (𝓞 E)} {V W : Type}
     [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
     {σ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V} {ρ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) W}

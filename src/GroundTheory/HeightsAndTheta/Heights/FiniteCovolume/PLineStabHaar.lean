@@ -45,6 +45,7 @@ theorem LineStabHaar.measurable_invUnits : Measurable (invUnits (E := E)) := by
   exact Measurable.of_eval fun w => h0.comp (measurable_pi_apply w)
 
 
+omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] [DecidableEq ι] in
 theorem LineStabHaar.two_le_finrank {h : HermitianForm F E W} (v : Basis ι E W) {x₀ w₀ : W}
     (hx₀ : x₀ ≠ 0) (hp : IsHyperbolicPair h x₀ w₀) : 2 ≤ finrank E W := by
   have : Module.Finite E W := Module.Finite.of_basis v
@@ -59,6 +60,7 @@ theorem LineStabHaar.two_le_finrank {h : HermitianForm F E W} (v : Basis ι E W)
   simpa using hli.fintype_card_le_finrank
 
 
+omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 theorem LineStabHaar.proof (h : HermitianForm F E W) (v : Basis ι E W)
     (h1 : WittPartner.Statement h) (h2 : VecAtNeZero.Statement v)
     (h3 : TorusEmbedding.Statement h v) (h4 : LineEigenvalue.Statement h v)

@@ -116,6 +116,7 @@ theorem pull_mem_secRing (h : LevelAut Dw l) {f : Rul Xo c} (hf : f ∈ secRing 
   exact this hf
 
 
+variable (Xo c) in
 def pullSec (h : LevelAut Dw l) : secRing Xo c →ₐ[c.F] secRing Xo c :=
   ((pull Xo c h).comp (secRing Xo c).val).codRestrict _ fun f => pull_mem_secRing hpq hA h f.2
 
@@ -139,6 +140,7 @@ def pullSecOn (hpq : 1 ≤ Dw.p + Dw.q) (hA : l.A.Coprime l.M) (h : S) : secRing
 def levMat (u : Rul Xo c) : Matrix S S (Rul Xo c) := groupMat (pullOn Xo c S) u
 
 
+open Classical in
 def levDet (u : Rul Xo c) : Rul Xo c := (levMat Xo c S u).det
 
 def levTr (χ : S →* (c.F)ˣ) : Rul Xo c →ₗ[c.F] Rul Xo c := tr (pullOn Xo c S) χ
@@ -237,10 +239,12 @@ theorem IsTypeLevel.coprime (hl : IsTypeLevel l) : l.A.Coprime l.M := by
   rw [hl.1]; exact Nat.coprime_one_left _
 
 
+variable (Xo c) in
 def pullType (hl : IsTypeLevel l) (fr : TypeFrame Dw l) (g : LevelGroup D.host) : Rul Xo c →ₐ[c.F] Rul Xo c :=
   pull Xo c (typeEmb hl fr g)
 
 
+variable (Xo c) in
 def typeOp (hl : IsTypeLevel l) (fr : TypeFrame Dw l) (e : MonoidAlgebra c.F (LevelGroup D.host)) :
     Module.End c.F (Rul Xo c) :=
   algOp (pullType Xo c hl fr) e
@@ -251,6 +255,7 @@ theorem isRightAct_pullType (hpq : 1 ≤ Dw.p + Dw.q) : IsRightAct (pullType Xo 
   (isRightAct_pull hpq hl.coprime).comp (typeEmb hl fr)
 
 
+variable (Xo c) in
 def goodOp (om : ∀ i : Fin 2, (ZMod (D.host.g i))ˣ →* (c.F)ˣ) (j : Fin D.R.m) : Module.End c.F (Rul Xo c) :=
   typeOp Xo c hl fr (goodIdemTw om j)
 

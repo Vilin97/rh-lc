@@ -30,6 +30,7 @@ private theorem ringKrullDim_finite_of_finiteType_int (A : Type) [CommRing A]
   exact h
 
 
+open IsLocalRing in
 theorem _root_.GlobalTheory.ringKrullDim_lt_top_of_essFiniteType (D : Type) [CommRing D] [Algebra.EssFiniteType ℤ D] :
     ringKrullDim D < ⊤ :=
   lt_of_le_of_lt

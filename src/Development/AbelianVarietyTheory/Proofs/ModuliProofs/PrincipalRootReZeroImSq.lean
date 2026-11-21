@@ -205,6 +205,7 @@ theorem baseChange_alt (D : Datum H) (x y : ℝ ⊗[ℤ] D.La) : D.EF.baseChange
     | tmul r' y => simp [h x y, mul_comm]
 
 
+open PeriodMapPresentation in
 theorem exists_period (D : Datum H) (N₁ N₂ : Submodule (𝓞 E) D.La) (hs : ∀ z, ∃ n : ℕ, 0 < n ∧ n • z ∈ N₁ ⊔ N₂)
     (ho : ∀ x ∈ N₁, ∀ y ∈ N₂, D.EF x y = 0) (p₁ : ∀ x ∈ N₁, 0 ≤ H.rt0.im * D.EF (H.w0 • x) x)
     (p₂ : ∀ x ∈ N₂, H.rt0.im * D.EF (H.w0 • x) x ≤ 0) {g : ℕ} {ty : Fin g → (E →+* ℂ)}

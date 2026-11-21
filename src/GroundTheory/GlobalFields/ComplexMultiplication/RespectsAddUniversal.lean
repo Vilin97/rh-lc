@@ -29,6 +29,7 @@ def algPts : AddSubgroup (E.baseChange M).toAffine.Point :=
   (Point.map (W' := E) ((algebraicClosure L M).val.restrictScalars F)).range
 
 
+omit [DecidableEq M] in
 theorem isIntegral_y {x y : M} (h : (E.baseChange M).toAffine.Equation x y)
     (hx : x ∈ algebraicClosure L M) : y ∈ algebraicClosure L M := by
   set S := algebraicClosure L M

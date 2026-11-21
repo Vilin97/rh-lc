@@ -181,6 +181,7 @@ variable [MeasurableSpace F] [BorelSpace F]
   {W : Type w} [AddCommGroup W] [Module ℂ W]
 
 
+variable (F W) in
 def MultiFEStatement (ψ : AddChar F Circle) (r : ℕ) : Prop :=
   ∀ (ι : Type u) [Fintype ι] [DecidableEq ι], Fintype.card ι = r →
   ∀ (d : ι → ℕ) [∀ i, NeZero (d i)] (μ : ∀ i, Measure (GL (Fin (d i)) F))

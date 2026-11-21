@@ -23,12 +23,14 @@ section Fields
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {G : Type} [Field G] [CharZero G]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem prod_div_mem (y : (Σ k, ι k) → G) (u v : ∀ k, ι k) :
     (∏ k, y ⟨k, u k⟩) / (∏ k, y ⟨k, v k⟩) ∈ blockFnField y := by
   rw [← Finset.prod_div_distrib]
   exact prod_mem fun k _ => IntermediateField.subset_adjoin _ _ ⟨⟨k, u k⟩, ⟨k, v k⟩, rfl, rfl⟩
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem blockFnField_eq_top [Algebra ℤ G] (y : (Σ k, ι k) → G) {κ : Type} (f : κ → G) (c₀ : κ)
     (hsub : ∀ j, f j / f c₀ ∈ blockFnField y)
     (hgen : ∀ a : G, ∃ g ∈ Algebra.adjoin ℤ (Set.range fun j => f j / f c₀),

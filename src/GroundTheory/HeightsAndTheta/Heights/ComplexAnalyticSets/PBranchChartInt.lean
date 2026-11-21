@@ -133,6 +133,7 @@ theorem integrableOn_branch {n d : ℕ} {J : Ideal (MvPolynomial (Fin n) ℂ)} {
 end BranchChartInt
 
 
+open BranchChartInt in
 theorem BranchChartInt.proof (hA : HolomorphicFibreSumInt.Statement) (hS : BranchSheetAE.Statement)
     (hF : ComplexSets.FibreBound.Statement) : BranchChartInt.Statement := by
   classical

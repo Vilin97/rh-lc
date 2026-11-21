@@ -48,6 +48,7 @@ private theorem finPart_ne {F : Type} [Field F] [NumberField F] {n d : ℕ}
     exact one_ne_zero
 
 
+set_option maxHeartbeats 1000000 in
 private theorem fock_of {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {ε : Bool} {M X : HSp D} {Xs : Spc D.host.F D.host.E M.rank}
     {Ws : Spc D.host.F D.host.E X.rank} (Mo : Model D.sp.cm.sig Xs Ws)
     (hψ : IsStdChar D ψ (-1)) {θ : InfFam D} (hθ : IsInfFam θ) (A : Fr M) (B : Fr X)

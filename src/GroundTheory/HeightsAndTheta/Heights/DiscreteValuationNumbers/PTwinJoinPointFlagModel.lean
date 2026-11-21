@@ -192,6 +192,7 @@ end Pairs
 end JoinPointFlagModel
 
 
+open JoinPointFlagModel in
 theorem JoinPointFlagModel.proof (hIff : FlagPairCharacterisation.Statement.{0, 0, 0})
     (hModel : JoinPointModel.Statement) (hVert : JoinPointVerticalDivisor.Statement) :
     JoinPointFlagModel.Statement := by

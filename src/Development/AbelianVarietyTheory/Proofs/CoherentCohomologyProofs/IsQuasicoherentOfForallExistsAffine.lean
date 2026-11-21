@@ -180,6 +180,7 @@ theorem isLocalizedModule_resBasicOpen [F.IsQuasicoherent] (hU : IsAffineOpen U)
   (isQuasicoherent_restrict_fromSpec_iff F hU).mp inferInstance f
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem nonempty_presentation_Spec {R : CommRingCat.{u}} (M : (Spec R).Modules)
     [M.IsQuasicoherent] : Nonempty M.Presentation := by
   have hIso : IsIso M.fromTildeΓ := Scheme.Modules.isIso_fromTildeΓ_of_isQuasicoherent M
@@ -209,6 +210,7 @@ theorem nonempty_presentation_restrict_ι (hU : IsAffineOpen U)
     (Scheme.Modules.presentationRestrict hU.isoSpec.hom P)⟩
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem isQuasicoherent_of_affineCover {ι : Type*} (𝒰 : ι → X.Opens) (hcov : IsOpenCover 𝒰)
     (haff : ∀ i, IsAffineOpen (𝒰 i))
     (h : ∀ i (f : Γ(X, 𝒰 i)), IsLocalizedModule.Away f (resBasicOpen F f)) :
@@ -241,6 +243,7 @@ theorem isQuasicoherent_iff_forall_affine :
   exact ⟨U, hU, hx, h U hU⟩
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem isQuasicoherent_of_restrict {ι : Type*} {Y : ι → Scheme.{u}} (g : ∀ i, Y i ⟶ X)
     [∀ i, IsOpenImmersion (g i)] (hcov : ∀ x : X, ∃ i, x ∈ (g i).opensRange)
     (h : ∀ i, (F.restrict (g i)).IsQuasicoherent) : F.IsQuasicoherent := by

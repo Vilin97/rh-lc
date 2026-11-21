@@ -267,6 +267,7 @@ theorem hom_loc_zero {A B : Type} [CommRing A] [CommRing B] (φ : A →+* B) {e 
   rw [hom_loc, he, zero_mul, zero_add, sub_zero, one_mul]
 
 
+set_option maxHeartbeats 1000000 in
 theorem finite_place_products : ∀ (D : D7) (S : HSp D) (L : Lat S) (P : Pl D → Prop) (κ : GA D S), IsSelfDualC S L →
     InK S L P κ → ∀ Fs : Finset (Pl D), ∃ l : List (GA D S), (∀ y ∈ l, ∃ v, P v ∧ InK S L (· = v) y) ∧
       (∀ i j, infPart D (Formalism.L2.Theta.mt S l.prod i j) = infPart D (Formalism.L2.Theta.mt S κ i j)) ∧

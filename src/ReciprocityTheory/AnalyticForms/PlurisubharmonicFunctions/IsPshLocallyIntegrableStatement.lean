@@ -45,6 +45,7 @@ def coordDiv (S : Finset (Fin D)) : Set (Fin D → ℂ) :=
   {z | ∃ i ∈ S, z i = 0}
 
 
+open Classical in
 def limsupExt (U A : Set (Fin D → ℂ)) (v : (Fin D → ℂ) → ℝ) (z : Fin D → ℂ) : ℝ :=
   by
     classical

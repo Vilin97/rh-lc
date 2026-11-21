@@ -45,6 +45,7 @@ theorem chartEval_X_chart (hc : ∀ k, x k (c k) ≠ 0) (k : ι) :
 variable [Fintype ι] [DecidableEq ι]
 
 
+omit [DecidableEq ι] in
 theorem chartEval_chartMonomial (hc : ∀ k, x k (c k) ≠ 0) (d : ι → ℕ) :
     chartEval x c (chartMonomial c d) = 1 := by
   simp [chartMonomial, map_prod, chartEval_X_chart x c hc]
@@ -75,6 +76,7 @@ theorem chartCone_of_isWeightedHomogeneous (D : Type*) [CommRing D] [Algebra (ch
   ring
 
 
+omit [Fintype ι] [DecidableEq ι] in
 theorem chartCone_eq_zero_iff (hc : ∀ k, x k (c k) ≠ 0) (F : MvPolynomial (Coord n) ℤ) :
     chartCone x c (chartRing x c) F = 0 ↔ F ∈ orbitIdeal x := by
   let σ : MvPolynomial ι (AlgebraicClosure ℚ) →ₐ[AlgebraicClosure ℚ]
@@ -122,6 +124,7 @@ theorem mem_orbitIdeal_of_chartEval_eq_zero (hc : ∀ k, x k (c k) ≠ 0)
   simp
 
 
+attribute [local instance] MvPolynomial.weightedGradedAlgebra in
 theorem weightedHomogeneousComponent_mem_of_isMultiHomogIdeal
     {V : Ideal (MvPolynomial (Coord n) ℤ)} (hV : Geo.IsMultiHomogIdeal (ι := blockIdx n) V)
     {v : MvPolynomial (Coord n) ℤ} (hv : v ∈ V) (e : ι → ℕ) :

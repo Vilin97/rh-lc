@@ -24,6 +24,9 @@ set_option synthInstance.maxHeartbeats 400000
 namespace GlobalTheory
 
 
+open NumberField AlgebraicGeometry CategoryTheory Limits in
+open scoped Matrix nonZeroDivisors in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem _root_.GlobalTheory.cuspForms_finiteDimensional_of_isUnf : _root_.ReciprocityTheory.ChartRestriction.G.Out.SecBaseChangeSt → ∀ (E : Type) [Field E]
     [NumberField E] [IsCMField E] (H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H) (l : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H)
     (Xo : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Moduli Dw l) (c : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Coeff l) (r : ℕ) (U : ∀ σ : c.F →+* ℂ, _root_.Formalism.L2.PjFree.Unf Xo c σ r)

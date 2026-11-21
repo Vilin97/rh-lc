@@ -14,6 +14,7 @@ namespace GlobalTheory.LatticeLocalGlobal
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+omit [NumberField F] [NumberField E] in
 theorem repr_map {R R' ι : Type} [CommRing R] [Algebra F R] [CommRing R'] [Algebra F R']
     (φ : R →ₐ[F] R') (b : Module.Basis ι F E) (z : R ⊗[F] E) (k : ι) :
     (Algebra.TensorProduct.basis R' b).repr (Algebra.TensorProduct.map φ (AlgHom.id F E) z) k =
@@ -24,6 +25,7 @@ theorem repr_map {R R' ι : Type} [CommRing R] [Algebra F R] [CommRing R'] [Alge
   | tmul a e => simp [Algebra.TensorProduct.basis_repr_tmul]
 
 
+omit [NumberField E] in
 theorem ext_components (z z' : Af F ⊗[F] E)
     (h : ∀ v : HeightOneSpectrum (𝓞 F),
       Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v) (AlgHom.id F E) z =

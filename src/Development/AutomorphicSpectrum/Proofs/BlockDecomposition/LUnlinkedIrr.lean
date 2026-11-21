@@ -381,6 +381,7 @@ theorem isGeneric_of_isSubquotient (hA : GlobalTheory.Published.IrreducibleAdmis
 end GlobalTheory.CompanionTheory.BZSeg.NuPairIrr
 
 
+open GlobalTheory.CompanionTheory.BZSeg.NuPairIrr in
 theorem GlobalTheory.CompanionTheory.BZSeg.NuPairIrr.lUnlinkedIrr : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k], GlobalTheory.Published.IrreducibleAdmissibleGL → Zc.LSegJacquet k →
     GlobalTheory.Published.GeometricLemmaFiltration → GlobalTheory.BZSeg.NuPair k → GlobalTheory.BZSeg.WhitRankStd k →

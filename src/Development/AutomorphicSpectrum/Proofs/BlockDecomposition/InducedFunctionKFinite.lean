@@ -16,6 +16,7 @@ open GlobalTheory.CompanionTheory.GLK (e1 e2 f1)
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
 
+open GlobalTheory.CompanionTheory.ModelS.FFin in
 theorem GlobalTheory.CompanionTheory.ModelS.FFin.fRaw_finite (n : ℕ) (lam : Fin n → ℤ) (hl : Antitone lam) (lev : Fin n → ℕ)
     (hlev : IsLev lam lev) (F : GlobalTheory.CompanionTheory.ModelS.SmF n) (hF : F.1 = GlobalTheory.CompanionTheory.ModelS.fRaw lam lev) :
     ∃ S : Submodule ℂ (GlobalTheory.CompanionTheory.ModelS.SmF n), FiniteDimensional ℂ S ∧ F ∈ S ∧

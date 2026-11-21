@@ -78,6 +78,7 @@ theorem root_of_nil {N : ℕ} {Z : Subalgebra k (Matrix (Fin N) (Fin N) k)} (hZ 
   rwa [Polynomial.aeval_subalgebra_coe] at h7
 
 
+variable (k) in
 theorem pieceGood_of (hF : PositivityTheory.PfBern.Frob.FrobeniusReciprocity) (hS : Sect k) (hP : PieceTop k) (hD : Dich k)
     (hT : Transfer k) : PieceGood k := by
   classical

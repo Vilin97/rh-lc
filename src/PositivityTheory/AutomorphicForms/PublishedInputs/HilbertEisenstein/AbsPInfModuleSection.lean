@@ -157,6 +157,7 @@ theorem summable_beta (D : 𝓞 F) (hD : D ≠ 0) : ∃ m : ℕ, Summable (fun x
     · rw [if_neg hx, if_neg (fun h => hx ((hmem x).1 h))]
 
 
+omit [IsTotallyReal F] in
 theorem exists_bound_inf {K : Set (Ideles F)} (hK : IsCompact K) : ∃ B : ℝ, 1 ≤ B ∧ ∀ a ∈ K, ∀ v,
     ‖((a : Ideles F) : Ad F).1 v‖ ≤ B ∧ ‖((a⁻¹ : Ideles F) : Ad F).1 v‖ ≤ B := by
   set f : Ideles F → ℝ := fun a => ∑ v, (‖((a : Ideles F) : Ad F).1 v‖ + ‖((a⁻¹ : Ideles F) : Ad F).1 v‖)

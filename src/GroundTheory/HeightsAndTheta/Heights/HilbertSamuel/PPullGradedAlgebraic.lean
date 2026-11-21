@@ -82,6 +82,7 @@ theorem aeval_diagMono_ne_zero [Fintype K] {Ω : Type} [Field Ω] [CharZero Ω] 
 end PullGradedAlgebraic
 
 
+open PullGradedAlgebraic in
 theorem PullGradedAlgebraic.proof : PullGradedAlgebraic.Statement := by
   intro K _ ι _ Ω _ _ y D e L d₀ hy he hL hgr p q hpq
   classical

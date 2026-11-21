@@ -150,6 +150,7 @@ theorem eulerFactor_inv (χ : HChar E) (hχ : TrivOnF χ) (s : ℂ) (P : HeightO
 end GlobalTheory.CMVal.InvConj
 
 
+open Formalism.L2.Host.CT GlobalTheory.CMVal.InvConj in
 theorem GlobalTheory.CMVal.isHeckeL_inv_of_trivOnF : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (χ : HChar E)
     (Λ : ℂ → ℂ), TrivOnF χ → IsHeckeL χ Λ → IsHeckeL χ⁻¹ Λ := by
   intro E _ _ _ χ Λ hχ hL

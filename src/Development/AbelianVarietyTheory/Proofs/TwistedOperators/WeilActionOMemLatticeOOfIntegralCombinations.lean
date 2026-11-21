@@ -111,6 +111,7 @@ end GlobalTheory.LatMoveGen
 namespace GlobalTheory.LatMoveGen
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem actO_mem_latO : ∀ {D : D7} (S T : HSp D) (g : Formalism.L2.Theta.GA D S) (h : Formalism.L2.Theta.GA D T)
     (AS BS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)) (AT BT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)),
     (∀ s ∈ AS, ∃ (m : ℕ) (β : Fin m → Formalism.L2.Theta.AE D) (b : Fin m → Fin S.rank → D.host.E),

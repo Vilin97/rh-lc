@@ -18,6 +18,7 @@ noncomputable section
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 
+open Classical in
 def pairDens {r : ℕ} (X : Data E r) (P f0 : Frame X.Ψ r → ℂ) (W : Frame X.Ψ r → ℝ≥0∞) :
     Frame X.Ψ r → ℂ :=
   fun y => X.dom.piecewise (fun y => P y * (starRingEnd ℂ) (f0 y)) 0 y * ((W y).toReal : ℂ)

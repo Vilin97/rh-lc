@@ -19,6 +19,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory
 
 
+open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 private theorem invGenDescent_gs_appLE {Y Y' : Scheme.{0}} (τ : Y' ⟶ Y) (W : Y.Opens) (W' : Y'.Opens)
     (h : W' ≤ τ ⁻¹ᵁ W) (a : Γ(Y, W)) (x : Y') (hx : x ∈ W') :
     gs (𝟙 Y') x W' ((τ.appLE W W' h).hom a) = gs τ x W a := by
@@ -27,6 +28,7 @@ private theorem invGenDescent_gs_appLE {Y Y' : Scheme.{0}} (τ : Y' ⟶ Y) (W : 
   exact e
 
 
+open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 private theorem invariant_generator_descent {X Y Y' : Scheme.{0}} (m : Y' ⟶ Y) {T : Type} (τ : T → (Y' ⟶ Y'))
     (hτ : ∀ t, τ t ≫ m = m)
     (H : ∀ (V : Y.Opens) (a : Γ(Y', m ⁻¹ᵁ V)),

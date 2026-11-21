@@ -72,6 +72,7 @@ variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {Ω : 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
+omit [IsDomain O] [IsDiscreteValuationRing O] [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem comap_eq_ker (y : (Σ k, ι k) → Ω) :
     (pointIdeal O y).comap (C : O →+* MRing ι O) = RingHom.ker (algebraMap O Ω) := by
   ext a

@@ -73,6 +73,7 @@ namespace LocalizationIntegrallyClosedDomain
 variable {B : Type} [CommRing B] {Q : Ideal B} [Q.IsPrime]
 
 
+set_option maxHeartbeats 1600000 in
 lemma isIntegrallyClosed
     (H : ∀ s : Finset B, ∃ C : Subring B, (↑s : Set B) ⊆ (C : Set B) ∧
       ∀ (q : Ideal C) [q.IsPrime], IsDomain (Localization.AtPrime q) ∧

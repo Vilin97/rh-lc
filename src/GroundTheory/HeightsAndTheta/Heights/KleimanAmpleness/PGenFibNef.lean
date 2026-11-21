@@ -25,6 +25,7 @@ variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintyp
 variable {F₁ F₂ : Type} [Field F₁] [Field F₂] (e : F₁ ≃+* F₂)
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem isMultiHomog_map_iff (f : MRing ι F₁) (b : K → ℕ) :
     IsMultiHomog (map (e : F₁ →+* F₂) f) b ↔ IsMultiHomog f b := by
   unfold IsMultiHomog IsWeightedHomogeneous
@@ -36,10 +37,12 @@ noncomputable def quotEquiv (P : Ideal (MRing ι F₁)) :
     congr 1)
 
 
+omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem quotEquiv_mk (P : Ideal (MRing ι F₁)) (f : MRing ι F₁) :
     quotEquiv e P (Ideal.Quotient.mk P f) = Ideal.Quotient.mk _ (map (e : F₁ →+* F₂) f) := rfl
 
 
+omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem quotEquiv_smul (P : Ideal (MRing ι F₁)) (r : F₁) (x : MRing ι F₁ ⧸ P) :
     quotEquiv e P (r • x) = e r • quotEquiv e P x := by
   obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective x
@@ -52,6 +55,7 @@ theorem quotEquiv_smul (P : Ideal (MRing ι F₁)) (r : F₁) (x : MRing ι F₁
   rfl
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem quotEquiv_mem_gradedPiece (P : Ideal (MRing ι F₁)) (n : K → ℕ) (x : MRing ι F₁ ⧸ P)
     (hx : x ∈ gradedPiece P n) : quotEquiv e P x ∈ gradedPiece (P.map (map (e : F₁ →+* F₂))) n := by
   obtain ⟨f, hf, rfl⟩ := Submodule.mem_map.1 hx

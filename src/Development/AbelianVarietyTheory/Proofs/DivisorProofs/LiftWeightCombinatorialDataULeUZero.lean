@@ -28,6 +28,7 @@ def cT (j : Fin D.R.m) (τ : D.what₂.Tau) : ℝ :=
   ((Vc D j).rank : ℝ) / 2 - 1 - ((lamL j τ).detShift : ℝ)
 
 
+open Classical in
 def wts (L : SizeData₂ D) (j : Fin D.R.m) : Wts D.what₂.Tau where
   lam := lamT j
   T2 := Finset.univ.filter fun τ => (D.eTau τ : D.R.GG) ∈ D.host.thickPlaces

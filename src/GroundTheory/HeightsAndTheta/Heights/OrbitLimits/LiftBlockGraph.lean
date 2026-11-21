@@ -38,6 +38,7 @@ theorem exists_ne_zero_of_generatesOn [Fintype K] {r : ℕ} (y : (Σ k, ι k) �
 variable [CharZero Ω] [Fintype K] [∀ k, Fintype (ι k)]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem chartRingZ_le_blockFnField (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) {x : Ω} (hx : x ∈ chartRingZ y c) :
     x ∈ blockFnField y := by
   induction hx using Algebra.adjoin_induction with
@@ -87,6 +88,7 @@ theorem isArithVar_addBlock {D : ℕ} (y : (Σ k, ι k) → Ω) (n : K → ℤ) 
   · exact ⟨c k, hc k⟩
 
 
+omit [CharZero Ω] in
 theorem isMultiHomog_rename_none [DecidableEq K] {ι' : Type} [Fintype ι'] {g : MRing (fun _ : Unit => ι')} {e : Unit → ℕ}
     (hg : IsMultiHomog g e) :
     IsMultiHomog (rename (fun p : Σ _ : Unit, ι' =>
@@ -127,6 +129,7 @@ theorem isMultiHomog_rename_none [DecidableEq K] {ι' : Type} [Fintype ι'] {g :
     simp [hterm, blockDeg]
 
 
+omit [CharZero Ω] in
 theorem blockBirational_addBlock [DecidableEq K] {ι' : Type} [Fintype ι'] (y : (Σ k, ι k) → Ω) (x' : ι' → Ω)
     (hb : Birational (fun p : Σ _ : Unit, ι' => x' p.2)) :
     BlockBirational (addBlock y (liftCoords x')) (none : Option K) := by
@@ -149,6 +152,7 @@ theorem blockBirational_addBlock [DecidableEq K] {ι' : Type} [Fintype ι'] (y :
     field_simp
 
 
+omit [CharZero Ω] in
 theorem isMultiHomogIdeal_top : IsMultiHomogIdeal (⊤ : Ideal (MRing ι)) :=
   ⟨{1}, fun f hf => ⟨0, by rw [Set.mem_singleton_iff.mp hf]; exact Inter.AvoidRing.isMultiHomog_one⟩,
     Ideal.span_singleton_one.symm⟩

@@ -315,6 +315,7 @@ theorem wickExp_of (hH : HalfSt) : WickExpSt := by
   ring
 
 
+open G2 in
 theorem gauge_exp_identity (hA : ExpAddZeroConstant) (hE : ConstantCoeffSubstitution) (hG : CanonicalGaugeDiffBiadditive) (hQ : QuadraticFormDerivatives)
     (hH : HalfSt) : GaugeExpSt := by
   have hW := wickExp_of hH

@@ -12,6 +12,7 @@ noncomputable section
 namespace GlobalTheory.FlatLine
 
 
+open IntermediateField in
 theorem mem_range_of_embeddings_const {K Ω : Type} [Field K] [CharZero K] [Field Ω] [Countable Ω] [Algebra K Ω]
     [Algebra K ℂ] (P₀ : Ω →ₐ[K] ℂ) {b : Ω} {a : ℂ} (h : ∀ P : Ω →ₐ[K] ℂ, P b = a) :
     a ∈ (algebraMap K ℂ).range := by

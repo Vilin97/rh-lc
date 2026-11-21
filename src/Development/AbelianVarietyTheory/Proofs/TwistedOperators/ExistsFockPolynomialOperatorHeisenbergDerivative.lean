@@ -40,6 +40,7 @@ theorem Jm_herm (ε : Fin n → Bool) : (Formalism.REAL.Jm ε)ᴴ = Formalism.RE
   congr 1; funext a; simp only [Pi.star_apply]; split_ifs <;> simp
 
 
+open scoped ComplexOrder in
 theorem isCartanInv_of_isFrameOf {G s fr : Mn n} {ε : Fin n → Bool} (h : IsFrameOf G s ε fr) : IsCartanInv G s := by
   obtain ⟨hu', rfl, rfl⟩ := h
   have hu := (Matrix.isUnit_iff_isUnit_det _).1 hu'

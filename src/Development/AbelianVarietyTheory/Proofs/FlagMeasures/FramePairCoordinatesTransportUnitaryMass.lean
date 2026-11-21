@@ -127,6 +127,8 @@ private lemma unipotent_pairing_integral_iff_mem_stabilizer_lemma {F : Type} [Fi
     exact (d a.castSucc).2
 
 
+open ValuativeRel in
+open scoped Pointwise ENNReal Classical in
 theorem _root_.GlobalTheory.HL.CoordMass.transport :
     ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] {E : Type} [CommRing E]
       [Algebra F E] [TopologicalSpace E] [MeasurableSpace E] (M : _root_.Formalism.MainNotions.S.Loc.Model F E), M.OK →

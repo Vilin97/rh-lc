@@ -20,6 +20,7 @@ variable {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar}
 variable (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ))
 
 
+open Classical in
 structure EqCont (M : DSModel V S) (T : MMap M) : Prop where
   equiv : ∀ τ, ∀ g ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ), ∀ (v : M.Vec) (w : M.sm τ),
     (w : M.H τ) = M.rep τ g (v τ) → T (Function.update v τ w) = rTr V (atTau θ V τ g) (T v)
@@ -29,6 +30,7 @@ structure EqCont (M : DSModel V S) (T : MMap M) : Prop where
 variable {θ}
 
 
+open Classical in
 theorem eqCont_of_mem {M : DSModel V S} {J : Set (GA D V)} {χ : GA D V → ℂ} {T : MMap M}
     (hT : T ∈ Mult θ M J χ) : EqCont θ M T := by
   induction hT using Submodule.span_induction with

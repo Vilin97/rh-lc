@@ -19,6 +19,7 @@ namespace SectionProduct
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
+omit [Fintype K] in
 theorem isMultiHomog_pow {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) (j : ℕ) :
     IsMultiHomog (g ^ j) (j • d) := by
   induction j with

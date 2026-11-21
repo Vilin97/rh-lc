@@ -658,6 +658,7 @@ end Blocks
 def bwA_Ow (D : D7) (w : D.what₂.places.Pl) : Subring ℂ := (intW D.what₂.places w).map D.what₂.embLL
 
 
+open Classical in
 theorem bwA_ten_intSpan (D : D7) (w : D.what₂.places.Pl) {N : ℕ} (lam : D.what₂.Tau → DomWeight N) (τv : D.what₂.Tau)
     (f : D.what₂.Tau → MvPolynomial (Fin N × Fin N) ℤ) (hf : ∀ τ, f τ ∈ delSq ℤ N (lam τ))
     (q : MvPolynomial (Fin N × Fin N) ℂ) (hq : q ∈ bwA_span (bwA_Ow D w) le_rfl (lam τv).natW)
@@ -718,6 +719,7 @@ theorem bwA_ten_intSpan (D : D7) (w : D.what₂.places.Pl) {N : ℕ} (lam : D.wh
   exact hq' r hr
 
 
+open Classical in
 theorem bwA_intSpan_subP (D : D7) (w : D.what₂.places.Pl) {N : ℕ} (lam : D.what₂.Tau → DomWeight N) (τv : D.what₂.Tau)
     (o : D.what₂.Tau → Matrix (Fin N) (Fin N) ℂ) (ho : ∀ τ, τ ≠ τv → o τ = 1) (c : ℂ)
     (hB : ∀ g ∈ delSq ℤ N (lam τv),

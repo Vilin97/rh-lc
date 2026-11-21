@@ -81,6 +81,8 @@ def LocalDensity : Prop :=
       ∀ t : Fv F v, Valued.v (t - β) < 1 → fib t {X | X 0 ∈ L} = fib β {X | X 0 ∈ L}
 
 
+open scoped TensorProduct in
+open NumberField IsDedekindDomain MeasureTheory Topology in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.SelfDualUnramifiedPlaces.one_lt_resCard (F : Type) [Field F] [NumberField F]
     (v : HeightOneSpectrum (𝓞 F)) :
     1 < _root_.GlobalTheory.IndefiniteRowSideFullHecke.SelfDualUnramifiedPlaces.resCard F v := by
@@ -94,6 +96,8 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.SelfDualUnramifiedPlaces.
   exact_mod_cast (by omega : 1 < Ideal.absNorm v.asIdeal)
 
 
+open scoped TensorProduct in
+open NumberField IsDedekindDomain MeasureTheory Topology in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.SelfDualUnramifiedPlaces.density_factor_pos (F E : Type) [Field F] [NumberField F] [Field E]
     [NumberField E] [Algebra F E] (v : HeightOneSpectrum (𝓞 F)) (M : ℕ) (hM : 1 ≤ M) :
     0 < 1 - _root_.GlobalTheory.IndefiniteRowSideFullHecke.SelfDualUnramifiedPlaces.eta F E v ^ M *

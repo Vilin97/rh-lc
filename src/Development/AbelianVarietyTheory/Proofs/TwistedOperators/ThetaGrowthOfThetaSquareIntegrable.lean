@@ -119,6 +119,7 @@ theorem actO_nsmul (g : GA D S) (h : GA D T) (n : ℕ) (u : WO S T) : actO S T g
   | succ n ih => rw [succ_nsmul, succ_nsmul, ← ih]; unfold actO; rw [Matrix.mul_add, Matrix.add_mul]
 
 
+open GlobalTheory.AdelicU Formalism.UG in
 theorem exists_level_multiple {U : AddSubgroup (WO S T)} (hU : IsOpen (U : Set (WO S T))) :
     ∃ K₀ ∈ 𝓝 (0 : WO S T), IsCompact K₀ ∧ ∃ m : ℕ, ∀ (g : GA D S) (h : GA D T), ∃ n : ℕ, 0 < n ∧
       (n : ℝ) ≤ m * (height S g * height T h) ∧ ∀ u ∈ K₀, u.map (infPart D) = 0 → actO S T g⁻¹ h⁻¹ (n • u) ∈ U := by

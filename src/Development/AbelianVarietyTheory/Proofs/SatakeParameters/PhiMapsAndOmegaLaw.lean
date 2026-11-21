@@ -237,9 +237,11 @@ theorem of_div {a : E} (h : IntAt P (a / (qOf P : E))) : IntAt P a ∧ redP P a 
   rwa [mul_comm, ← div_eq_mul_inv]
 
 
+variable (P) in
 def red (M : ℕ → ℕ → E) : ℕ → ℕ → 𝓞 E ⧸ P.asIdeal := fun p p' => redP P (M p p')
 
 
+variable (P) in
 def IntM (b a : ℕ) (M : ℕ → ℕ → E) : Prop := ∀ p p', p < b → p' < a → IntAt P (M p p')
 
 def IsMul (n : ℕ) (A B C : ℕ → ℕ → E) : Prop := ∀ p p', C p p' = ∑ l ∈ Finset.range n, A p l * B l p'
@@ -280,6 +282,7 @@ theorem reduction_leadingMinor {t : ℕ} (hA : IntM P b a A) (h1 : t ≤ b) (h2 
   SymLevelInv.reduction_det P _ fun u u' => hA _ _ (by have := u.2; omega) (by have := u'.2; omega)
 
 
+variable (P) in
 def SuppQ (r b a : ℕ) (M : ℕ → ℕ → E) : Prop :=
   IntM P b a M ∧ ∀ p p', r ≤ p → p < b → p' < r → IntAt P (M p p' / (qOf P : E))
 
@@ -298,10 +301,12 @@ theorem SuppQ.det {r t : ℕ} (hA : SuppQ P r (r + t) (r + t) A) :
   exact dT_split fun u l hu hl => (of_div (hA.2 _ _ (by omega) (by omega) hl)).2
 
 
+variable (P) in
 def SuppG (k rS r t b a : ℕ) (M : ℕ → ℕ → E) : Prop :=
   IntM P b a M ∧ (∀ p p', a ≤ p → p < b → p' < a → IntAt P (M p p' / (qOf P : E))) ∧ Pat k rS r t a (red P M)
 
 
+variable (P) in
 def LevG (k rS r t n : ℕ) (M : ℕ → ℕ → E) : Prop :=
   IntM P n n M ∧
     (∀ p', p' < r → redP P (M p' p') = 1 ∧ ∀ p, p < n → p ≠ p' → Zs k rS r p p' → redP P (M p p') = 0) ∧
@@ -464,6 +469,7 @@ theorem entB_det {k₀ c n : ℕ} (hk : k₀ ≤ n) (ex : ℕ → ℕ) (g : Sp E
     Matrix.det_submatrix_equiv_self, LinearMap.det_toMatrix', LinearEquiv.coe_det]
 
 
+variable (E) in
 def bv (q k₀ n c : ℕ) (ex : ℕ → ℕ) (s : ℕ) : Sp E (n + c) :=
   ((q : E) ^ scE n ex (fIdx k₀ c n s)) • eN E (n + c) (fIdx k₀ c n s)
 
@@ -471,6 +477,7 @@ def co (q k₀ n c : ℕ) (ex : ℕ → ℕ) (v : Sp E (n + c)) (p : ℕ) : E :=
   ((q : E) ^ scE n ex (fIdx k₀ c n p))⁻¹ * atN v (fIdx k₀ c n p)
 
 
+variable (P) in
 def midL (k₀ n c : ℕ) (ex : ℕ → ℕ) (D : ℕ → Prop) [DecidablePred D] : Submodule (𝓞 E) (Sp E (n + c)) :=
   sclLat P (qOf P) (n + c) fun l => scE n ex l + if D (fPos k₀ c n l) then 1 else 0
 

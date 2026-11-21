@@ -82,6 +82,7 @@ def latCap (L : Submodule O C) (W : Submodule K R) : Submodule O C :=
 def spanQ (N : Submodule O C) : Submodule K R := (Submodule.span K (N : Set C)).map C.subtype
 
 
+omit [Algebra O K] [IsScalarTower O K C] in
 theorem mem_spanQ {N : Submodule O C} {F : C} (hF : F ∈ N) : (F : R) ∈ spanQ N :=
   ⟨F, Submodule.subset_span hF, rfl⟩
 

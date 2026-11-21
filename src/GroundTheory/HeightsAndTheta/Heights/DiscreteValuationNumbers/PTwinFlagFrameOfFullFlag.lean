@@ -77,6 +77,7 @@ theorem mem_of_pow_mul_mem {F Ω : Type*} [CommRing F] [Field Ω] [Algebra F Ω]
 end FlagFrameOfFullFlag
 
 
+open FlagFrameOfFullFlag in
 theorem FlagFrameOfFullFlag.proof : FlagFrameOfFullFlag.Statement := by
   intro F _ Ω _ _ K _ ι _ x e hV N E _ _ B fl
 

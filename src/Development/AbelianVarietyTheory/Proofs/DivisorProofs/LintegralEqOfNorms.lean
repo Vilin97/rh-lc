@@ -88,6 +88,7 @@ theorem ev_fderiv (hψ : IsStdChar D ψ (-1)) (F : BB ψ S T)
   exact h3.deriv.symm
 
 
+open Classical in
 theorem fderiv_vac (h : Chart θ σ) (hψ : IsStdChar D ψ (-1)) (F : BB ψ S T)
     (hF : GlobalTheory.RealWeil.Sm (rhoV hψ σ S T) F)
     (sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ) (sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ)
@@ -261,6 +262,7 @@ theorem detPlus_pairMatrix (sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.ra
   exact detPlus_blockDiagonal _ _ _ _
 
 
+open Classical in
 theorem exists_isInfWeil : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ θ : InfFam D, IsInfFam θ →
     ∀ S T : HSp D, ∃ om, GlobalTheory.WeilParts.IsInfWeil ψ θ S T om := by
   intro D ψ hψ θ hθ S T

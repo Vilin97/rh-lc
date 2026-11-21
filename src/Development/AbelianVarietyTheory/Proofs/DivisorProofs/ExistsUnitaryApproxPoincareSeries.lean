@@ -97,6 +97,7 @@ theorem exists_hasSupports_cm (q : ℕ) (φ : InvFun (𝓞 E)) (hpol : IsPolFan 
 end GlobalTheory.UPoinc.GApprox
 
 
+open GlobalTheory.UPoinc.GApprox in
 theorem GlobalTheory.UPoinc.exists_uApproxAt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H), 1 ≤ Dw.p + Dw.q → ∀ (l : Geo.Tor.Level H) (Xo : Moduli Dw l) (c : Coeff l) (C : UCompact Xo c) (X₁ : USetup C), ∀ φ : InvFun (𝓞 E), IsPolFan H.bar (min Dw.p Dw.q) φ → ∃ d : ℕ, 1 ≤ d ∧ UApproxAt X₁ φ d := by
   intro E _ _ _ H Dw hpq l Xo c C X₁ φ hpol
   obtain ⟨d₀, hd₀, hsup⟩ := exists_hasSupports_cm (H := H) (min Dw.p Dw.q) φ hpol

@@ -562,6 +562,7 @@ theorem local_span (H : SecBaseChangeSt) (S : Scheme.{0}) [IsLocallyNoetherian S
 end GlobalTheory.SecAff
 
 
+open GlobalTheory.SecAff in
 theorem GlobalTheory.exists_sections_span_affine :
     SecBaseChangeSt → ∀ (S : Scheme.{0}) [IsLocallyNoetherian S] (P : PolAV S) (n : ℕ), 1 ≤ n → ∀ U : S.Opens, IsAffineOpen U → ∃ (m : ℕ) (b : Fin (m + 1) → LB.Sec (LPow P.A P.L n (overRes (T := baseOver S) U))), ∀ (T' : Over S) [IsAffine T'.left] (h : T' ⟶ overRes (T := baseOver S) U) (b' : Fin (m + 1) → LB.Sec (LPow P.A P.L n T')), (∀ i, IsPullSec P.A P.L n (h ▷ P.A) (whiskerRight_snd h P.A) (b i) (b' i)) → Submodule.span Γ(T'.left, ⊤) (Set.range fun i => (SecM.ofSec P.A (b' i) : SecM P.A P.L n T')) = ⊤ := by
   intro H S _ P n hn U hU

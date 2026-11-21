@@ -2354,6 +2354,7 @@ theorem bf_LL_last (j : ℤ) {k : ℕ} (hk : k < r) :
   linarith [A.1.2.1, Bq.1.1]
 
 
+include hr hu hMT hstep in
 theorem bf_LL_key (j x : ℤ) (hx : x ∈ (bf_F TT r u J B).LLset j)
     (hc : (((bf_F TT r u J B).LLset j).filter (· ≤ x)).card ≤ r ∨
       ((bf_F TT r u J B).LLset j).card < (((bf_F TT r u J B).LLset j).filter (· ≤ x)).card + r) :

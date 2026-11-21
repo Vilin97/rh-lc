@@ -295,6 +295,7 @@ theorem val_det_of_mem_int (hc : Formalism.BasicNotions.CMData F E) {u : GL (Fin
   exact mul_le_of_le_one_right' (key _ (inv_mem hu))
 
 
+omit h1 h2 in
 theorem exists_u1Af (hc : Formalism.BasicNotions.CMData F E) (z : unitary E) : ∃ x : unitaryOneFiniteAdeles hc,
     Matrix.GeneralLinearGroup.det (x : GL (Fin 1) (E ⊗[F] Af F)) = unitaryOneRationalAdele F z := by
   refine ⟨⟨Matrix.GeneralLinearGroup.scalar (Fin 1) (unitaryOneRationalAdele F z), ?_⟩, Units.ext ?_⟩
@@ -308,6 +309,7 @@ theorem exists_u1Af (hc : Formalism.BasicNotions.CMData F E) (z : unitary E) : �
   · simp
 
 
+omit h1 h2 in
 theorem val_eq_pow (hc : Formalism.BasicNotions.CMData F E) {G : Type} [Group G] (dt : unitaryOneFiniteAdeles hc →* G)
     (hker : ∀ x : unitaryOneFiniteAdeles hc, dt x = 1 → (x : GL (Fin 1) (E ⊗[F] Af F)) ∈ IntegralUnitGroup hc) {z : unitary E} {x : unitaryOneFiniteAdeles hc}
     {U : Subgroup G} (hU : U = ((IntegralUnitGroup hc).subgroupOf (unitaryOneFiniteAdeles hc)).map dt) {t k : G} (hk : k ∈ U)
@@ -588,6 +590,7 @@ theorem relDet_eq_of_pinned (D : D7) (idl : D.Dt ⧸ D.UO → IdE D) (hp : RelDe
     (val_eq_pow hc dt hker hUO hk (hrat z) e L.2.1 L.2.2.1 L'.2.1 L'.2.2.1 hg hx)
 
 
+open GlobalTheory.Mem.Col2 in
 theorem pinned_of_finer (D : D7) (SQ : Finset (HeightOneSpectrum (𝓞 D.host.E))) (ε : DtQ D.host SQ ≃* D.Dt)
     (hU : D.UO = (UOQ D.host SQ).map ε.toMonoidHom) (h1 : ∀ z, D.e1Dt z = ε (e1Q D.host SQ z))
     (h2 : ∀ (N : ℕ) (L L' : SDLat D.host.E N) (t : DtQ D.host SQ), relDetQ D.host SQ N L.1 L'.1 = QuotientGroup.mk t →

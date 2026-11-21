@@ -297,6 +297,7 @@ section Agree
 variable (hr : ∀ T : Thick κ t, ∀ x ∈ rel R T.δ, ∀ y, x * y ∈ rel R T.δ)
 
 
+include hr in
 theorem natAgree {T T' : Thick κ t} (φ : T ⟶ T') (ρ : DR R (ER T) → DR R T.B) (ρ' : DR R (ER T') → DR R T'.B)
     (ha : ∀ x y, ρ (x + y) - ρ x - ρ y ∈ rel R T.δ) (hm : ∀ x y, ρ (x * y) - ρ x * ρ y ∈ rel R T.δ)
     (h0 : ∀ c, ρ (algebraMap (ER T) (DR R (ER T)) c) - algebraMap T.B (DR R T.B) (fstA T c) ∈ rel R T.δ)
@@ -338,6 +339,7 @@ theorem natAgree {T T' : Thick κ t} (φ : T ⟶ T') (ρ : DR R (ER T) → DR R 
     exact e4
 
 
+include hr in
 theorem uAgree (T : Thick κ t) (ρ : DR R (ER T) → DR R T.B)
     (ha : ∀ x y, ρ (x + y) - ρ x - ρ y ∈ rel R T.δ) (hm : ∀ x y, ρ (x * y) - ρ x * ρ y ∈ rel R T.δ)
     (h0 : ∀ c, ρ (algebraMap (ER T) (DR R (ER T)) c) - algebraMap T.B (DR R T.B) (fstA T c) ∈ rel R T.δ)
@@ -358,6 +360,7 @@ theorem uAgree (T : Thick κ t) (ρ : DR R (ER T) → DR R T.B)
     exact e
 
 
+include hr in
 theorem vAgree (T : Thick κ t) (ρ : DR R (ER T) → DR R T.B)
     (ha : ∀ x y, ρ (x + y) - ρ x - ρ y ∈ rel R T.δ) (hm : ∀ x y, ρ (x * y) - ρ x * ρ y ∈ rel R T.δ)
     (h0 : ∀ c, ρ (algebraMap (ER T) (DR R (ER T)) c) - algebraMap T.B (DR R T.B) (fstA T c) ∈ rel R T.δ)

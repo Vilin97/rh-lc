@@ -21,6 +21,7 @@ namespace FibreNormDehomRoots
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem eval_mConeMap (y : (Σ k, ι k) → Ω) (t : K → Ω) (f : MRing ι) :
     MvPolynomial.eval t (mConeMap y f) = aeval (fun p => y p * t p.1) f := by
   rw [mConeMap, aeval_def, aeval_def, eval₂_comp_left]
@@ -35,11 +36,13 @@ theorem aeval_scale {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) (y : 
   simp only [map_pow, eval_X]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem aeval_eq_zero_of_mem {y : (Σ k, ι k) → Ω} {f : MRing ι} (hf : f ∈ mCoordIdeal y) (t : K → Ω) :
     aeval (fun p => y p * t p.1) f = 0 := by
   rw [← eval_mConeMap, RingHom.mem_ker.1 hf, map_zero]
 
 
+omit [Fintype K] in
 theorem isMultiHomog_monomial {ν : (Σ k, ι k) →₀ ℕ} {d : K → ℕ} (h : ∀ k, ∑ i, ν ⟨k, i⟩ = d k) :
     IsMultiHomog (monomial ν (1 : ℤ)) d := by
   intro m hm k
@@ -47,6 +50,7 @@ theorem isMultiHomog_monomial {ν : (Σ k, ι k) →₀ ℕ} {d : K → ℕ} (h 
   exact h k
 
 
+omit [Fintype K] in
 theorem sum_single_block (k : K) (i₀ i₁ : ι k) (k' : K) :
     ∑ i, (Finsupp.single (⟨k, i₀⟩ : Σ k, ι k) 1) ⟨k', i⟩ =
       ∑ i, (Finsupp.single (⟨k, i₁⟩ : Σ k, ι k) 1) ⟨k', i⟩ := by
@@ -77,6 +81,7 @@ theorem aeval_mem_chartLatNm {y : (Σ k, ι k) → Ω} {g : MRing ι} {d : K →
   exact isIntegral_algebraMap (x := (⟨_, hmem⟩ : chartRingZ y c))
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem ringHom_aeval {A A' σ : Type*} [CommRing A] [CommRing A'] [Algebra ℤ A] [Algebra ℤ A'] (φ : A →+* A')
     (x : σ → A)
     (f : MvPolynomial σ ℤ) : φ (aeval x f) = aeval (fun p => φ (x p)) f := by
@@ -85,6 +90,7 @@ theorem ringHom_aeval {A A' σ : Type*} [CommRing A] [CommRing A'] [Algebra ℤ 
   exact RingHom.ext_int _ _
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem ringHom_aeval_eq_eval {A A' σ : Type*} [CommRing A] [CommRing A'] [Algebra ℤ A] (φ : A →+* A')
     (x : σ → A)
     (f : MvPolynomial σ ℤ) : φ (aeval x f) = eval (fun p => φ (x p)) (map (Int.castRingHom A') f) := by
@@ -93,15 +99,18 @@ theorem ringHom_aeval_eq_eval {A A' σ : Type*} [CommRing A] [CommRing A'] [Alge
   exact RingHom.ext_int _ _
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem field_ratio {F : Type*} [Field F] {x₁ c l : F} (p : F) (h₁ : x₁ ≠ 0) (hc : c ≠ 0) (hl : l ≠ 0) :
     x₁ * p / l ^ (1 * 1) / (x₁ * c / l ^ (1 * 1)) = p * c⁻¹ := by
   field_simp
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem field_chart {F : Type*} [Field F] {lb la E : F} (hl : la ≠ 0) : lb * E = lb / la * (la * E) := by
   field_simp
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem field_section {F : Type*} [Field F] {s H Ph Pe la : F} (m : ℕ) (hl : la ≠ 0) :
     s * H * (Ph * Pe ^ m) = s / la ^ m * (la * Pe) ^ m * (H * Ph) := by
   field_simp
@@ -112,6 +121,7 @@ abbrev chartClosure (y : (Σ k, ι k) → Ω) [CharZero Ω] {D : ℕ} (L : Fin (
   integralClosure (Algebra.adjoin ℚ (Set.range fun k => aeval y (L k) / aeval y (L a))) Ω
 
 
+set_option maxHeartbeats 1600000 in
 theorem proof (hG : PullFormsGeneric.Statement) (hS : PullSectionIntegral.Statement)
     (hR : CharpolyRootLift.Statement) : FibreNormDehomRoots.Statement := by
   classical

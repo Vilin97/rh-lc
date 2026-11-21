@@ -54,6 +54,7 @@ theorem cay_mem {ε : Fin (2 * r + k + 1) → Bool} {P : Mat k r} (hP : Formalis
         rw [hPJP, hg', ← hR, Matrix.mul_assoc, h1, Matrix.mul_one]
 
 
+open scoped Matrix.Norms.Operator in
 theorem cay_inG {ε : Fin (2 * r + k + 1) → Bool} {P : Mat k r} (hP : Formalism.MainNotions.S.IsCayley k r ε P)
     {Y : Mat k r} (hY : Y ∈ Formalism.MainNotions.S.lieOf (Formalism.QuantumDeterminants.Nset k r)) : inG ε (P * Y * P⁻¹) := by
   have hL := cay_left hP

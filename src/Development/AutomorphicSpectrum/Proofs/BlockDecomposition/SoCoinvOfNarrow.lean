@@ -260,6 +260,7 @@ theorem soCoinv_of (NB : NarrowBernstein) (hD : DictSt) (hK : GlobalTheory.ThK.K
     exact hχ.2
 
 
+open GlobalTheory.PRep GlobalTheory.SmGL in
 theorem soCoinv_of_narrow :
     (∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (a b : ℕ)
       (χ₁ χ₂ : kˣ →* ℂˣ), IsSmoothChar χ₁ → IsSmoothChar χ₂ → IsUnitaryChar χ₁ → IsUnitaryChar χ₂ →

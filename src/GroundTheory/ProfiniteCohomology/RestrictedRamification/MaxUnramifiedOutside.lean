@@ -25,11 +25,13 @@ def IsUnramifiedOutside (S : Set (HeightOneSpectrum (𝓞 F))) (E : Intermediate
   ∀ v ∉ S, Algebra.IsUnramifiedIn (𝓞 E) v.asIdeal
 
 
+variable (F Ω) in
 noncomputable def maxUnramifiedOutside (S : Set (HeightOneSpectrum (𝓞 F))) :
     IntermediateField F Ω :=
   ⨆ (E : IntermediateField F Ω) (_ : FiniteDimensional F E) (_ : IsUnramifiedOutside S E), E
 
 
+variable (F Ω) in
 abbrev galUnramifiedOutside (S : Set (HeightOneSpectrum (𝓞 F))) :=
   Gal(maxUnramifiedOutside (F := F) (Ω := Ω) S / F)
 

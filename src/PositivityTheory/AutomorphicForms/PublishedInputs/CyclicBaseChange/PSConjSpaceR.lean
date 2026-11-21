@@ -217,6 +217,7 @@ theorem map_map' {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (f : R �
   ext i j; rfl
 
 
+variable (M a) in
 def sA (S : Ad M ≃+* Ad M) : GA M a →* GA M a := GeneralLinearGroup.map S.toRingHom
 
 theorem sA_sA_symm (S : Ad M ≃+* Ad M) (g : GA M a) : sA M a S (sA M a S.symm g) = g :=
@@ -235,6 +236,7 @@ theorem sA_infGL (hS : Good S p) (y : GL (Fin a) (Rinf M)) :
       exact map_cornerGL_of_zero (sInf M) ((pFin M).comp S.toRingHom) hS.fin0 y)
 
 
+variable (S) in
 def finPart (k : GL (Fin a) (Af M)) : GL (Fin a) (Af M) := GeneralLinearGroup.map (pFin M) (sA M a S (finGL M a k))
 
 theorem sA_finGL (hS : Good S p) (k : GL (Fin a) (Af M)) : sA M a S (finGL M a k) = finGL M a (finPart S k) :=
@@ -242,6 +244,7 @@ theorem sA_finGL (hS : Good S p) (k : GL (Fin a) (Af M)) : sA M a S (finGL M a k
     (by rw [pFin_finGL]; rfl)
 
 
+variable (p) in
 def permL : Lie M a →L[ℝ] Lie M a :=
   LinearMap.toContinuousLinearMap
     { toFun := fun X i j => permR p (X i j)
@@ -277,6 +280,7 @@ theorem height_perm (y : GL (Fin a) (Rinf M)) : height (GeneralLinearGroup.map (
   rw [← map_inv, h1, h1]
 
 
+variable (p) in
 def permK (k : Kinf M a) : Kinf M a :=
   ⟨(k : Matrix (Fin a) (Fin a) (Rinf M)).map (permR p).toRingHom, by
     have hk := k.2
@@ -321,6 +325,7 @@ theorem lie_pull (hS : Good S p) (X : Lie M a) (φ : Sm M a) :
   rfl
 
 
+variable (S p) in
 def opS : Op M a → Op M a
   | .fin k => .fin (finPart S k)
   | .cpt k => .cpt (permK p k)
@@ -355,6 +360,7 @@ variable {M : Type} [Field M] [NumberField M] [IsTotallyReal M] {a : ℕ}
 variable {σ : M ≃+* M} {s : Ad M ≃+* Ad M} {p : InfinitePlace M ≃ InfinitePlace M}
 
 
+variable (a) in
 def pullE (hs : IsGalAd σ s) (hp : ∀ x, pInf M (s x) = permR p (pInf M x)) : Sm M a ≃ₗ[ℂ] Sm M a where
   toFun := pullL (good_alt hs hp)
   invFun := pullL (good_symm hs hp)
@@ -474,6 +480,8 @@ theorem symm_mem_ratN {r : ℕ} {x : BlockIx a r → Ad M} (hx : x ∈ ratN M a 
   rw [RingEquiv.eq_symm_apply, hs.2.1, RingEquiv.apply_symm_apply]
 
 
+include hs in
+open MeasureTheory in
 theorem isCuspidal_pull {φ : GA M a → ℂ} (hφ : IsCuspidal φ) : IsCuspidal fun g => φ (sA M a s g) := by
   intro r h0 h1 _ _ μ 𝓕 hμ hF g
   have hsc : Continuous s.symm := continuous_symm s hs.1

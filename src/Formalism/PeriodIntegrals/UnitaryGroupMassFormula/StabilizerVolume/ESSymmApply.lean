@@ -95,6 +95,7 @@ def Rm (S : Finset ι) : Measure (∀ i : {i // i ∈ S}, W i) :=
   Measure.pi (fun i : {i // i ∈ S} => (m i.1).restrict (L i.1)ᶜ)
 
 
+open Classical in
 def eS (S : Finset ι) : (∀ i, W i) ≃ᵐ (∀ i : {i // i ∈ S}, W i) × (∀ i : {i // i ∉ S}, W i) :=
   MeasurableEquiv.piEquivPiSubtypeProd W (fun i => i ∈ S)
 

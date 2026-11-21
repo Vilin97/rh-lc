@@ -48,6 +48,7 @@ lemma linRoot_eq {ι : Type} [Fintype ι] {N : ℕ} (lam : ι → Fin N → ℝ)
   rw [smul_eq_C_mul, C_neg, neg_mul]
 
 
+set_option maxRecDepth 4000 in
 lemma coeff_pow {ι : Type} [Fintype ι] [DecidableEq ι] {N : ℕ} (lam : ι → Fin N → ℝ)
     (σ : ι → Equiv.Perm (Fin N)) :
     (linRoot lam ^ dimFl ι N).coeff (permExp σ) =

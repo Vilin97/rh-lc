@@ -34,6 +34,7 @@ theorem greal_holds {D : D7} {X : HidaSetting D} (Y : Full X) : ∀ u u' (t : RT
   exact star_Gflag _ _ _ _
 
 
+variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 theorem phLoc_int_of_gap {D : D7} (X : HidaSetting D) (hg : Formalism.L2.SG.ConcreteSettingExists.GapHyp D)
     (v : InfinitePlace X.B.I.F) (d : ℝ) :
     Integrable (Formalism.L2.SG.ProjRows.phLoc (ε := X.B.I.ε v) (X.B.σ v) (X.B.w v) d) (Formalism.REAL.muG (X.B.I.ε v)) := by
@@ -44,6 +45,7 @@ theorem phLoc_int_of_gap {D : D7} (X : HidaSetting D) (hg : Formalism.L2.SG.Conc
   exact hs.const_mul (d : ℂ)
 
 
+variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 theorem finX_holds (hWu : Formalism.L2.SG.Pf.WuDecayOfGap) (hRF : Formalism.L2.SG.RowsDef.RowsFinDim) (hFL : Formalism.L2.SG.Pf.FinLeviC)
     (hK : IotaKer) :
     Formalism.L2.SG.PoincareAmplitudeLowerBounds.FinXC := by

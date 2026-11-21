@@ -14,6 +14,7 @@ attribute [local instance] MvPolynomial.gradedAlgebra
 namespace GlobalTheory.CompanionTheory.Geo
 
 
+open MvPolynomial in
 theorem exists_monic_relation {K σ : Type} [Field K] {m : ℕ} (I : Ideal (MvPolynomial σ K))
     (y : Fin m → MvPolynomial σ K)
     (hfin : Module.Finite (Algebra.adjoin K (Set.range fun k => Ideal.Quotient.mk I (y k)))
@@ -61,6 +62,7 @@ theorem exists_monic_relation {K σ : Type} [Field K] {m : ℕ} (I : Ideal (MvPo
   · simp [hq.coeff_natDegree]
 
 
+open MvPolynomial in
 theorem homogeneousComponent_aeval_mul {K σ : Type} [Field K] {m e : ℕ} (he : 0 < e)
     (y : Fin m → MvPolynomial σ K) (hy : ∀ k, (y k).IsHomogeneous e)
     (C : MvPolynomial (Fin m) K) (r t : ℕ) (b : MvPolynomial σ K) (hb : b.IsHomogeneous t) :
@@ -88,6 +90,7 @@ theorem homogeneousComponent_aeval_mul {K σ : Type} [Field K] {m e : ℕ} (he :
     simp
 
 
+open MvPolynomial in
 theorem exists_hom_relation {K σ : Type} [Field K] {m : ℕ} (I : Ideal (MvPolynomial σ K))
     (hI : ∀ f ∈ I, ∀ n : ℕ, homogeneousComponent n f ∈ I) (e : ℕ) (he : 0 < e)
     (y : Fin m → MvPolynomial σ K) (hy : ∀ k, (y k).IsHomogeneous e)

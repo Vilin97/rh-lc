@@ -27,6 +27,7 @@ noncomputable section
 namespace GlobalTheory
 
 
+open Polynomial in
 theorem trace_Eop_of_hasInfChar (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ)
     (π : GlobalTheory.CuspRep.CuspSub E a) (τ : E →+* ℂ) (m : Multiset ℂ) (h : π.HasInfChar τ m) :
     ∀ φ ∈ π.V, (∑ i : Fin a, GlobalTheory.CuspRep.Eop τ i i) φ = m.sum • φ := by

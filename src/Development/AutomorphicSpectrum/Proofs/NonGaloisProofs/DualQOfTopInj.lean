@@ -404,6 +404,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     [IsScalarTower K₀ K BdR] [IsScalarTower Qp K₀ BdR] [TopologicalSpace Qp]
 
 
+set_option maxHeartbeats 1000000 in
 theorem dual_core (PD : PeriodData G Qp K₀ K B BdR) (hTop : TopInj PD)
     {LL : Type} [Field LL] [Algebra Qp LL] [TopologicalSpace LL] {O : Type} [CommRing O] [IsDomain O]
     [Algebra O LL] [IsFractionRing O LL] (hG : GoodO (Qp := Qp) LL O)

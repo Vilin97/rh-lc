@@ -56,6 +56,7 @@ theorem trdeg_adjoin [Fintype K] [∀ k, Fintype (ι k)] (hE : EvalKerKrullDim.S
 end FibreTranscendence
 
 
+open FibreTranscendence in
 theorem FibreTranscendenceDegreeAlt.proof (hE : EvalKerKrullDim.Statement) : FibreTranscendenceDegreeAlt.Statement := by
   intro K _ ι _ K' _ ι' _ κ v p _ W' n hv hp hW hV G'
   classical

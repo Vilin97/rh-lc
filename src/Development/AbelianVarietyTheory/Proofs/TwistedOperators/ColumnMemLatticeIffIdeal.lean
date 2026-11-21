@@ -32,6 +32,7 @@ theorem tmul_mul_incA {D : D7} (y : AF D.host.F) (t e : D.host.E) :
   rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one]
 
 
+set_option maxHeartbeats 1000000 in
 theorem mem_idV_of_mem {D : D7} {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : GlobalTheory.ChiGrid.HermitianOrthogonalExtensionData A B c ε) (hε : ε ≠ 0)
     (Λ : Submodule (𝓞 D.host.E) (Fin A.rank → D.host.E)) (𝔟 : Fin c → GlobalTheory.SeeSaw.FI D) (v : GlobalTheory.FinPl.Pl D)
     (q : Fin c) (b : AE D)
@@ -125,6 +126,7 @@ theorem mem_idV_of_mem {D : D7} {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : Glo
   rwa [e] at key
 
 
+set_option maxHeartbeats 1000000 in
 theorem mem_of_mem_idV {D : D7} {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : GlobalTheory.ChiGrid.HermitianOrthogonalExtensionData A B c ε)
     (Λ : Submodule (𝓞 D.host.E) (Fin A.rank → D.host.E)) (𝔟 : Fin c → GlobalTheory.SeeSaw.FI D) (v : GlobalTheory.FinPl.Pl D)
     (q : Fin c) (b : AE D)

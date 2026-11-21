@@ -139,6 +139,7 @@ end PI.ExpIntWProof.Key
 namespace PI.ExpIntWProof
 
 
+open Key in
 theorem keyW : KeyW := by
   intro p _ x hx h
   change x / (p : ℂ_[p]) ∈ (Wp p : Set ℂ_[p])

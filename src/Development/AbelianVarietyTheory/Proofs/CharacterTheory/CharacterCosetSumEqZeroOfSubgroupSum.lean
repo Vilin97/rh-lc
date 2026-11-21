@@ -11,6 +11,7 @@ open Polynomial GlobalTheory.CuspGL GlobalTheory.BI
 namespace GlobalTheory.BI
 
 
+open Polynomial in
 theorem _root_.GlobalTheory.BI.char_coset_sum_eq_zero :
     ∀ (G : Type) [Group G] [Finite G] (χ : G → ℂ), _root_.GlobalTheory.BI.IsChar ℂ ℂ χ → ∀ H : Subgroup G,
       ∑ᶠ u : H, χ u = 0 → ∀ g : G, ∑ᶠ u : H, χ (g * u) = 0 := by

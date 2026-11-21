@@ -79,6 +79,7 @@ section Lim
 variable {R : Type} [CommRing R] [Algebra O R]
 
 
+variable (p O R) in
 abbrev redR (m : ℕ) : R →ₐ[O] R ⧸ Ideal.span {(p : R) ^ m} := Ideal.Quotient.mkₐ O _
 
 omit [Fact p.Prime] in

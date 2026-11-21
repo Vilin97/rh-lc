@@ -20,6 +20,7 @@ def gammaIso : yoneda.obj (Spec (CommRingCat.of (MvPolynomial Unit (ULift ℤ)))
       rfl)
 
 
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex Simplicial TensorProduct in
 theorem _root_.GlobalTheory.EtC.GmSec.isSheaf_gamma :
     Presieve.IsSheaf Scheme.etaleTopology.{0} (Scheme.Γ ⋙ forget CommRingCat) :=
   Presieve.isSheaf_iso _ _root_.GlobalTheory.EtC.GmSec.gammaIso
@@ -88,6 +89,7 @@ private theorem isSheaf_etaleTopology_units :
   rw [ht f hf, hA f hf]
 
 
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex Simplicial TensorProduct in
 theorem _root_.GlobalTheory.EtC.GmSec.gm_sec_bijective :
     ∀ U : Scheme.{0},
       Function.Bijective

@@ -34,6 +34,7 @@ private theorem continuous_mulMt_right_const {k r : ℕ} (x : Formalism.QuantumD
   fun_prop
 
 
+set_option maxHeartbeats 800000 in
 theorem quot_zero_real {k r : ℕ} {μG μS νq : Measure (Formalism.QuantumDeterminants.Mt k r)} [SFinite μS]
     (hq : PI.BesselPeriodGGP.IsQuotMeas μG μS νq) (f : Formalism.QuantumDeterminants.Mt k r → ℝ) (hfm : Measurable f)
     (hfi : Integrable f μG) (hin : ∀ᵐ x ∂νq, ∫ s, f (mulMt s x) ∂μS = 0) : ∫ x, f x ∂μG = 0 := by
@@ -71,6 +72,7 @@ theorem quot_zero_real {k r : ℕ} {μG μS νq : Measure (Formalism.QuantumDete
   rw [integral_eq_lintegral_pos_part_sub_lintegral_neg_part hfi, heq, sub_self]
 
 
+set_option maxHeartbeats 800000 in
 theorem quot_zero {k r : ℕ} {μG μS νq : Measure (Formalism.QuantumDeterminants.Mt k r)} [SFinite μS]
     (hq : PI.BesselPeriodGGP.IsQuotMeas μG μS νq) (F : Formalism.QuantumDeterminants.Mt k r → ℂ) (hFm : Measurable F)
     (hFi : Integrable F μG) (hin : ∀ᵐ x ∂νq, ∫ s, F (mulMt s x) ∂μS = 0) : ∫ x, F x ∂μG = 0 := by

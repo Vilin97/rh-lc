@@ -34,6 +34,7 @@ variable {D : D7} {u : D.what₂.Word} {w : D.what₂.places.Pl} {hg : GIdx D.ho
     Subgroup (GL (Fin (D.sp.X (i + 1)).rank) (D.host.E ⊗[D.host.F] v.adicCompletion D.host.F))}
 
 
+set_option maxHeartbeats 4000000 in
 def kapU (hU : SameUlocJ hi S Uloc) (p : ℕ) : awayG D.sp.cm.sig (D.sp.X (i + 1)).gram Uloc p →* S.U :=
   ((glue (epsP D.host.F p D.host.E) (isIdempotentElem_placeIdempotent D.host.F p D.host.E)).comp
     (((Formalism.L2.Forms.reGL (rankN D (i + 1) hi) _).toMonoidHom.comp
@@ -72,6 +73,7 @@ theorem kapU_off (hU : SameUlocJ hi S Uloc) (p : ℕ) (a : awayG D.sp.cm.sig (D.
   rfl
 
 
+set_option maxHeartbeats 4000000 in
 theorem exists_psiTiedJ (hU : SameUlocJ hi S Uloc) (e : D.what₂.LL →+* (D.gat u w hg).Kf)
     [IsFractionRing (D.gat u w hg).O (D.gat u w hg).Kf]
     (hrat : ChiRatAll S D.what₂.embLL) (hfin : ∃ n : ℕ, 0 < n ∧ ∀ κ, S.chi κ ^ n = 1) :
@@ -95,6 +97,7 @@ theorem exists_psiTiedJ (hU : SameUlocJ hi S Uloc) (e : D.what₂.LL →+* (D.ga
 end GlobalTheory.Mem.Top.KerTwPsi
 
 
+set_option maxHeartbeats 4000000 in
 theorem GlobalTheory.Mem.Top.KerTwPsi.psi_tied : ∀ {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} (w : ColW B f T), K.Over B.toPre → Forced K B T → Pinned K B f T w →
     ∀ (Z : w.Lt) (t : ColumnDataSplitPrimes K w Z) (Wt : Set B.places.Pl) (nch : NChoice (w.D Z)) (n : NchT w Z Wt nch) (Y : DivX (w.D Z)),
     V4.MuIsW (w.st Z) f T Wt w.I.xi → TC.QpIs w.I Y.Qp →

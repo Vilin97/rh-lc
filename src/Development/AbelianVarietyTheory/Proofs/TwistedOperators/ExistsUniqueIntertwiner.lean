@@ -123,6 +123,7 @@ theorem coe_update [DecidableEq D.what₂.Tau] (u : M.Vec) (τ : D.what₂.Tau) 
   · simp [Function.update_of_ne h]
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_of_isMultMap (hP : GlobalTheory.Published.CuspRapidDecay) {θ : D.what₂.Tau → (TensorProduct D.host.F (Ainf D.host.F) D.host.E →+* ℂ)}
     (hθ : IsInfFam θ) (μ : Measure (GA D V)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] {T : MMap M}
     (hT : IsMultMap θ M ∅ (fun _ => 1) T) :

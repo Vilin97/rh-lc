@@ -28,10 +28,12 @@ def KF {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) : Submodule �
   Submodule.span ℂ {w | ∃ v : M.Vec, (∀ τ, (v τ : M.H τ) ∈ GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction.kfin M τ) ∧ w = PiTensorProduct.tprod ℂ v}
 
 
+variable (L) in
 def levRow : Subgroup (GA D (Yc D 0)) :=
   Lev.levA (Yc D 0) (congLev D.sp.cm (Yc D 0).gram (L.ΛY 0) (Ideal.span {((D.host.g 0 * D.host.g 1 : ℕ) : 𝓞 D.host.E)}))
 
 
+variable (L) in
 abbrev Rows (θ : InfFam D) {S : D.what₂.Tau → SPar} (M : DSModel (Yc D 0) S) : Submodule ℂ (SmT M →ₗ[ℂ] (GA D (Yc D 0) → ℂ)) :=
   MultT θ M (levRow L : Set _) 1
 
@@ -65,6 +67,7 @@ def RapidRow (M : Vol G) (u : GA D (Yc D 0) → ℂ) : Prop :=
   ∀ ρ Φ n h, RapidDec (G.V (.grid n 0)) (part W M ρ Φ u n h)
 
 
+variable (G) in
 abbrev CoreVol : Type := ∀ i, GlobalTheory.Unf.Vol (G.V (.core i))
 
 def dn (v : CoreVol G) (i : ℕ) (f : Sch G (.coreDown i)) (F : Fn G (.core (i + 1))) : Fn G (.core i) :=
@@ -79,6 +82,7 @@ def Reach (v : CoreVol G) : Set (Fn G (.core 0)) :=
     ∃ c ∈ Cols G W.θ, ∃ ξ : Module.Dual ℂ (coefPlus G W.θ).W, Ψ D.R.m = pairVec (coefPlus G W.θ) ξ c}
 
 
+variable (G) in
 def per0 (M : Vol G) (F : Fn G (.core 0)) (u : GA D (Yc D 0) → ℂ) : ℂ :=
   ∫ h in M.fd (.grid 0 0), F (stabilizerEmbedding G.sp.dec0 h) * u h ∂M.ν (.grid 0 0)
 

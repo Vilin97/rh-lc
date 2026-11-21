@@ -62,6 +62,7 @@ theorem ell_apply (x : (Fin D.T.t → ℕ) × ℕ) (β : Fin r → ℕ) (y : MvP
     ell D x β y = pre (O := O) D x * (rename (chainEmb N r D.T.t) y * xiMon (KK O) N r D.T.t β) := rfl
 
 
+open Classical in
 def Lv : Finset ((Fin D.T.t → ℕ) × ℕ) :=
   ((Fintype.piFinset fun i => Finset.range (D.LL.deg (D.letterAt (D.T.pos i)) + 1)) ×ˢ
     Finset.range (D.B + 1)).filter fun x => D.LevelOK x.1 x.2

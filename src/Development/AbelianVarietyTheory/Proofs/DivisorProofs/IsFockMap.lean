@@ -66,6 +66,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {α β κ : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ] {P Q R S : ℕ}
 
 
+variable (F) in
 abbrev Tens (P Q R S : ℕ) : Type := ⨂[ℂ] _ : InfinitePlace F, Formalism.BasicNotions.TH.Pol P Q R S
 
 def SD (T : ℝ → ((κ → AF F) → ℂ) → (κ → AF F) → ℂ) (f f₁ : SInf F κ) : Prop :=

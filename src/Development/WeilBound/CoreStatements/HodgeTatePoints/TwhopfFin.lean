@@ -77,6 +77,7 @@ theorem mem_iff_section : ∀ (R : Type) [CommRing R] [IsDomain R] [IsIntegrally
     simpa using key
 
 
+open Polynomial in
 theorem exists_root_near (V : Type) [CommRing V] [IsDomain V] [ValuationRing V] [IsAlgClosed (FractionRing V)]
     (a₀ : V) (n : ℕ) : ∀ f : V[X], f.Monic → f.natDegree = n → f.eval a₀ ∈ IsLocalRing.maximalIdeal V →
       ∃ a, f.IsRoot a ∧ a - a₀ ∈ IsLocalRing.maximalIdeal V := by

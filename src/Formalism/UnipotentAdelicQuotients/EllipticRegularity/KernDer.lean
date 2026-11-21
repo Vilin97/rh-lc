@@ -14,6 +14,7 @@ open scoped ContDiff FourierTransform ENNReal
 noncomputable section
 
 
+set_option maxHeartbeats 800000 in
 lemma derivL1Norm_rescaled_difference_le {d : ℕ} (ψ : E d → ℂ) (hψ : ContDiff ℝ ∞ ψ) (hψc : HasCompactSupport ψ)
     (b : E d → ℂ) (hb : ContDiff ℝ ∞ b) (hbc : HasCompactSupport b) (x0 : E d) (r0 : ℝ) (n : ℕ) :
     ∃ K : ℝ, ∀ r : ℝ, 0 < r → r ≤ r0 →

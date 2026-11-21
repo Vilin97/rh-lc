@@ -64,6 +64,7 @@ theorem multIn_lt_aleph0_iff : multIn π ρ U < Cardinal.aleph0 ↔ FiniteDimens
   Module.rank_lt_aleph0_iff
 
 
+variable (π) in
 def homInEquiv (hU : IsSubrep ρ U) : homIn π ρ U ≃ₗ[ℂ]
     ContIntertwiningMap (.ofMonoidHom π : ContRepresentation ℂ G H) (.ofMonoidHom hU.rep : ContRepresentation ℂ G U) where
   toFun T := ⟨T.1.codRestrict U T.2.1, fun g => ContinuousLinearMap.ext fun x => Subtype.ext (T.2.2 g x)⟩
@@ -149,12 +150,14 @@ open Classical in
 def unitVec : H := if h : ∃ x : H, ‖x‖ = 1 then h.choose else 0
 
 
+variable (H) in
 theorem norm_unitVec [Nontrivial H] : ‖unitVec H‖ = 1 := by
   have h : ∃ x : H, ‖x‖ = 1 := exists_norm_eq H zero_le_one
   rw [unitVec, dite_eq_left h]
   exact h.choose_spec
 
 
+variable (H K) in
 def beForm : (H →L[ℂ] K) →ₗ[ℂ] (H →L[ℂ] K) →ₛₗ[starRingEnd ℂ] ℂ :=
   LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ) (fun T T' => ⟪T' (unitVec H), T (unitVec H)⟫_ℂ)
     (fun _ _ _ => inner_add_right _ _ _) (fun _ _ _ => inner_smul_right _ _ _)
@@ -187,6 +190,7 @@ theorem isIrrUnitary_charRep {χ : G →* Circle} (hχ : Continuous χ) : IsIrrU
 variable [CompleteSpace K]
 
 
+omit [TopologicalSpace G] in
 theorem inner_eq_be_of_norm [CompleteSpace H] (h1 : ∀ g x, ‖π g x‖ = ‖x‖) (h2 : IsTopIrreducible π)
     (h3 : ∀ g x, ‖ρ g x‖ = ‖x‖) (hT : T ∈ homIn π ρ U) (hT' : T' ∈ homIn π ρ U') (x y : H) :
     ⟪T' y, T x⟫_ℂ = be T T' * ⟪y, x⟫_ℂ := by
@@ -296,11 +300,13 @@ instance (R : IrrU G) : Nontrivial R.H := R.isIrr.irred.1
 def IrrU.ofChar (χ : G →* Circle) (hχ : Continuous χ) : IrrU G := ⟨ℂ, charRep χ, isIrrUnitary_charRep hχ⟩
 
 
+variable (G) in
 instance IrrU.setoid : Setoid (IrrU G) where
   r R R' := UEquiv R.π R'.π
   iseqv := ⟨fun _ => .refl _, .symm, .trans⟩
 
 
+variable (G) in
 def UDual : Type 1 := Quotient (IrrU.setoid G)
 
 def IrrU.cl (R : IrrU G) : UDual G := Quotient.mk _ R

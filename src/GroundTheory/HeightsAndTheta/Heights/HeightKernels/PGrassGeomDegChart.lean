@@ -219,6 +219,7 @@ theorem ptsIntegralAt_eq {Ψ : (((k : Fin 1) → plBlocks 1 1 n k) → ℂ) →�
 end GrassmannianGeometricDegreeChart
 
 
+open GrassmannianGeometricDegreeChart in
 theorem GrassGeomDegChart.proof : GrassGeomDegChart.Statement := by
   intro n
   have hex := exists_good n

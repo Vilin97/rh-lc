@@ -130,6 +130,7 @@ variable {k N : Type*} [Field k] [AddCommGroup N] [Module k N] [FiniteDimensiona
   (σN : Representation k (L.1 ≃ₐ[K.1] L.1) N)
 
 
+omit [FiniteDimensional k N] [IsGalois K.1 L.1] in
 theorem finrank_invariants_comp_bot :
     Module.finrank k (Representation.invariants (σN.comp (⊥ : Subgroup (L.1 ≃ₐ[K.1] L.1)).subtype)) =
       Module.finrank k N := by
@@ -142,6 +143,7 @@ theorem finrank_invariants_comp_bot :
   rw [htop, finrank_top]
 
 
+open Classical in
 theorem finrank_invariants_funPermRep_infinitePlace :
     Module.finrank k ((funPermRep k (L.1 ≃ₐ[K.1] L.1)
         (NumberField.InfinitePlace L.1)).tprod σN).invariants =

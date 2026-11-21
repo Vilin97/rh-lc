@@ -12,6 +12,7 @@ open Polynomial
 namespace GlobalTheory
 
 
+open Polynomial in
 theorem _root_.GlobalTheory.exists_integral_norm_natDegree_mod_eq_one :
     ∀ (k K : Type) [Field k] [IsAlgClosed k] [CharZero k] [Field K] [Algebra k[X] K] [Algebra (RatFunc k) K]
       [IsScalarTower k[X] (RatFunc k) K] [FiniteDimensional (RatFunc k) K] (N : ℕ), 1 ≤ N →

@@ -84,16 +84,20 @@ def posT {d₁ n₁ : ℕ} : Ic d₁ n₁ → (Fin n₁ ⊕ Fin 2) × (Fin d₁ 
   | .inr a => (.inl a, .inr 0)
 
 
+variable (F E) in
 def bE : Module.Basis (Fin (Module.finrank F E)) F E := Module.finBasis F E
 
 
+variable (F E) in
 def bE' : Module.Basis (Fin (Module.finrank F E)) F E :=
   (Algebra.traceForm F E).dualBasis (traceForm_nondegenerate F E) (bE F E)
 
 
+variable (F E) in
 def bA : Module.Basis (Fin (Module.finrank F E)) (AF F) (AE F E) := Algebra.TensorProduct.basis (AF F) (bE F E)
 
 
+variable (F E) in
 def bA' : Module.Basis (Fin (Module.finrank F E)) (AF F) (AE F E) := Algebra.TensorProduct.basis (AF F) (bE' F E)
 
 def coefLin {n d n₁ d₁ : ℕ} (H : Plane E n n₁) (H' : Plane E d d₁) :

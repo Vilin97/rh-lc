@@ -347,6 +347,7 @@ theorem constantCoeff_blockAct (U : ι → Matrix (Fin n) (Fin n) K) (g : Pol K 
   exact congrArg (fun φ : Pol K ι n →+* K => φ g) this
 
 
+omit [StarRing K] in
 theorem pderiv_blockAct [DecidableEq ι] (V : ι → Matrix (Fin n) (Fin n) K) (s : ι) (a t : Fin n) (g : Pol K ι n) :
     pderiv (s, (a, t)) (Formalism.GradedWeylDivisibility.blockAct K V g) =
       ∑ b : Fin n, C (V s b a) * Formalism.GradedWeylDivisibility.blockAct K V (pderiv (s, (b, t)) g) := by

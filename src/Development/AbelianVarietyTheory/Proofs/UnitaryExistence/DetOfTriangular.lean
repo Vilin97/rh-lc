@@ -33,6 +33,9 @@ lemma _root_.GlobalTheory.PerMove.inv_mulVec_apply {r : ℕ} (A : Matrix (Fin r)
     ← Matrix.cramer_eq_adjugate_mulVec, Matrix.cramer_apply]
 
 
+open NumberField Matrix in
+open scoped nonZeroDivisors in
+open scoped ComplexConjugate in
 lemma _root_.GlobalTheory.PerMove.det_of_triangular {n α : Type*} [Fintype n] [DecidableEq n] [LinearOrder α] (f : n → α)
     (hf : Function.Injective f) (M : Matrix n n ℂ) (hM : ∀ k l, f l < f k → M k l = 0) :
     M.det = ∏ k, M k k := by
@@ -247,6 +250,10 @@ private lemma sum_ite_fst_eq_sum_symm {Ψ : Finset (E →+* ℂ)} [DecidableEq �
   · intro h; exact absurd (Finset.mem_univ σ) h
 
 
+open NumberField Matrix in
+open scoped nonZeroDivisors in
+open scoped ComplexConjugate in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 theorem _root_.GlobalTheory.per_move :
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
         : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (D

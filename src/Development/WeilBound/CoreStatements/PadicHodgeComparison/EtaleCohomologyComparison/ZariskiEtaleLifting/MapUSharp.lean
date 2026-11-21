@@ -22,6 +22,7 @@ open PAlg
 variable {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O]
 
 
+variable (l) in
 structure Eps where
   e : ℕ → (Ob l)ˣ
   succ : ∀ k, e (k + 1) ^ l = e k
@@ -113,6 +114,7 @@ structure Tower {d : ℕ} (s : F.Small d) : Type 1 where
     ∃! f : A.A →+* B, f.comp A.s = o ∧ (∀ r a, A.sharp a - g r ∈ Ideal.span {(l : A.U)} → f a = g' r) ∧ ∀ k m, f (c k m) = ρ k m
 
 
+variable {κ} in
 def Tower.obj {d : ℕ} {s : F.Small d} (𝒯 : Tower κ s) : (F.pt κ).Elements :=
   ⟨𝒯.A, F.Pt.map (CommRingCat.ofHom 𝒯.g) s.y₀, 𝒯.hg ▸ F.ov_map (CommRingCat.ofHom 𝒯.g) s.ov⟩
 
@@ -127,15 +129,18 @@ theorem subEl_gT (V : F.Sub) (k : Bool) (n : ℕ) :
     gT V.fn κ k n ⋙ subThick V (bs l k n) rfl (κb κ k n) = subEl κ V ⋙ gT F κ k n := rfl
 
 
+variable (F) in
 abbrev flt (ε : Eps l) (k : Bool) (n : ℕ) (ρ : ℕ → ℕ) (hρ : Slow ρ) : Flt (Oc F κ k n) :=
   pdFlt (Lc F κ k n) ((base l).cris n) ρ hρ ε.μ (ε.μ_mem k (base l) n)
 
 
+variable (l) in
 def Local : Prop := ∀ d j : ℕ, ∃ N : ℕ, ∀ {O : Type} [CommRing O] (F : Fn O) (κ : O →+* OC l) (ε : Eps l) (k : Bool) (n : ℕ)
   (ρ : ℕ → ℕ) (hρ : Slow ρ), n ≠ 0 → (k = false ∨ ρ = 0) → F.Small d →
     RI ((Polynomial.X : Polynomial ℤ) ^ N) j (flt F κ ε k n ρ hρ).rees (gT F κ k n)
 
 
+variable (l) in
 def Main : Prop := ∀ d j : ℕ, ∃ N : ℕ, ∀ {O : Type} [CommRing O] (F : Fn O) (κ : O →+* OC l) (ε : Eps l), F.Atlas d →
   ∀ n : ℕ, (∀ k, UpTo (ε.μ ^ N) (β F κ k n j)) ∧ ∀ y, ∃ x ∈ HcFil F κ false n N j, β F κ false n j x = ε.μ ^ N • y
 

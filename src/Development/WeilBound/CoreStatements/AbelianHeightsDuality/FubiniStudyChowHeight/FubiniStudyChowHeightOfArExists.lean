@@ -109,6 +109,7 @@ private theorem isFS_fsBasis_normOf {k : Type} [CommRing k] {Z : Scheme} (p : Z 
   rfl
 
 
+open FubiniStudyChowHeightFormula₂.Fs GroundTheory.Heights₂.Heights in
 theorem FubiniStudyChowHeightFormula₂.fubiniStudyChowHeight_of_arExists (hE : GlobalTheory.Published.ArExists) : GlobalTheory.Published.FubiniStudyChowHeight := by
   intro K _ _ N e δ Y _ i _ hvar A hA hc f hf
   let Lfs := HermLB.fs (PSpace.str (𝓞 K) N) (O1_isLB (𝓞 K) N) (coord (𝓞 K) N) (FubiniStudyChowHeightFormula₂.Fs.emb (𝓞 K) N).cover A hA hc

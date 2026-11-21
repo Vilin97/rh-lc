@@ -148,6 +148,7 @@ theorem Tj_shift_self (O : Subring K) (ϖ : Kˣ) (g : GL (Fin n) K) :
   simp only [e, mul_right_inj]
 
 
+include hO in
 theorem Tj_invT (ϖ : Kˣ) {j : ℕ} (hj : j ≤ n) (g : GL (Fin n) K) :
     Tj ℂ n O' (c ϖ) j (invT c n g) = Tj ℂ n O ϖ (n - j) (dGL n ϖ n * g) := by
   classical
@@ -184,6 +185,7 @@ theorem map_mem_Ov_iff (a : w.adicCompletion E) : c a ∈ Ov E w' ↔ a ∈ Ov E
   rw [hc]
 
 
+include hc in
 theorem isSatVecGL_invT (hq : qV E w' = qV E w) {ρ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V} {x : V}
     {B : Multiset ℂˣ} (hx : IsSatVecGL w ρ x B) :
     IsSatVecGL w' (ρ.comp (invT c n).symm.toMonoidHom) x (B.map (·⁻¹)) := by

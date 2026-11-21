@@ -55,6 +55,8 @@ theorem exists_iter {S : Type} [MeasurableSpace S] {ν : Measure S} [IsFiniteMea
 end Abstract
 
 
+attribute [-instance] Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.measAF in
+open GroundTheory.Global GroundTheory.Global.IdeleGroup GlobalTheory.TateConv in
 theorem exists_majorant (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (μ : Measure (AE F E)ˣ) [μ.IsHaarMeasure] {s : ℝ} (hs : 1 < s) {U : Set (Fin (Module.finrank F E) → Af F)}
     (hU : IsCompact U) : ∃ (N : ℕ) (m : (AE F E)ˣ → ℝ), Integrable m μ ∧ (∀ l, 0 ≤ m l) ∧ ∀ l : (AE F E)ˣ,

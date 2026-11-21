@@ -43,6 +43,7 @@ theorem div_sub_mem {L : Lat ξ Ω} {q : Cpt ξ} {w σ tp tq y : Ω} (a : ℤ) (
 end GlobalTheory.CompanionTheory.Ar.Flat.PropZPf
 
 
+open GlobalTheory.CompanionTheory.Ar.Flat.PropZPf in
 theorem GlobalTheory.CompanionTheory.Ar.Flat.PropZ_holds : GlobalTheory.CompanionTheory.Ar.Flat.PropZ := by
   intro X Ω _ ξ O _ _ _ _ s _ ϖ hϖ hinj hs hg hn hconn L σ hvb htriv hgen
   obtain ⟨M, a, hM, hreg, p₀, hp₀, -, hord₀⟩ :=

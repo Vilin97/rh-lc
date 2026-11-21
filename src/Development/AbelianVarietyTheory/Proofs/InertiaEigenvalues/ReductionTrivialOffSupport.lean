@@ -24,6 +24,7 @@ theorem idemAt_mul_idem_add_conj {D : D7} {P Q' : Finset (Pl D.host.E)} (hP : Sp
     Finset.sum_eq_zero fun q hq => hP.mul_conj hPP (hQ hq), add_zero]
 
 
+set_option maxHeartbeats 6000000 in
 theorem redFn_eq_one_of_suppAt : ∀ {D : D7} {V : HSp D} (β : GL (Fin V.rank) (Lev.EAf D)) {P Q' : Finset (Pl D.host.E)}, SplitSet P → Q' ⊆ P → ∀ {PP : Pl D.host.E}, PP ∈ P → PP ∉ Q' → ∀ {κ : GA D V}, Lev.finE V κ ∈ St β → SuppAt (idem Q') V κ → redFn β PP (Lev.finE V κ) = 1 := by
   intro D V β P Q' hP hQ PP hPP hPQ κ hS hSupp
   obtain ⟨y, hy⟩ := hS

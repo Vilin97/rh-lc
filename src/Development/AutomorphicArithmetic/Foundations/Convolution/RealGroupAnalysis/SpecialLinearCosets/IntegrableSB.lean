@@ -76,6 +76,7 @@ private theorem cc_of_sq (d t : GL (Fin 2) K) (h : d * t = t * t * d) : cc t = 1
   ring
 
 
+variable (K) in
 private noncomputable def ccS : Matrix.SpecialLinearGroup (Fin 2) K →* ℝ≥0 where
   toFun g := cc (Matrix.SpecialLinearGroup.toGL g)
   map_one' := by

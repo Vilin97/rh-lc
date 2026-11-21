@@ -30,6 +30,7 @@ def gen (t : (E →+* ℂ) × Fin n × Fin n) : infU E n → ℂ := fun x => (cE
 def mono (l : List ((E →+* ℂ) × Fin n × Fin n)) : infU E n → ℂ := (l.map gen).prod
 
 
+variable (E n) in
 def polys (N : ℕ) : Submodule ℂ (infU E n → ℂ) :=
   Submodule.span ℂ (mono '' {l | l.length ≤ N})
 
@@ -40,6 +41,7 @@ theorem polys_mono {N N' : ℕ} (h : N ≤ N') : polys E n N ≤ polys E n N' :=
   Submodule.span_mono (Set.image_mono fun _ hl => le_trans hl h)
 
 
+variable (E n) in
 abbrev gens : Set (infU E n → ℂ) := {f : infU E n → ℂ | ∃ (τ : E →+* ℂ) (i j : Fin n), f = fun x => (cEmb τ x.1).val i j}
 
 theorem exists_mono_of_mem_closure {f : infU E n → ℂ} (hf : f ∈ Submonoid.closure (gens E n)) :

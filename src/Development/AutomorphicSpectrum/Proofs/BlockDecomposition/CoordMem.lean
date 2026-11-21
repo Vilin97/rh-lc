@@ -21,10 +21,12 @@ variable {Λ : Type} [CommRing Λ] {C : Type 1} [Category.{0} C] {F : C ⥤ Modu
   (he : ∀ r z, e z ∈ (Φ.S r).S T₂ ↔ ∀ a, z a ∈ (Φ.S r).S T₁)
 
 
+include he in
 theorem coord_mem (r : ℕ) (w : F.obj T₂) (hw : w ∈ (Φ.S r).S T₂) (a : ι) : e.symm w a ∈ (Φ.S r).S T₁ :=
   (he r _).1 (by simpa using hw) a
 
 
+include he in
 theorem filt_mem (p : ι → Prop) (r : ℕ) (w : F.obj T₂) (hw : w ∈ (Φ.S r).S T₂) :
     e (Finsupp.filter p (e.symm w)) ∈ (Φ.S r).S T₂ := by
   refine (he r _).2 fun a => ?_
@@ -71,6 +73,7 @@ theorem fl_coe (p : ι → Prop) (x : Φ.Pr T₂) (r : ℕ) :
     (fl Φ e he p x r).1 = e (Finsupp.filter p (e.symm (x r).1)) := rfl
 
 
+omit he in
 theorem diag {φ₂ : T₂ ⟶ T₂} {φ₁ : T₁ ⟶ T₁} {c : ι → Λ}
     (hd : ∀ a m, (F.map φ₂).hom (e (Finsupp.single a m)) = e (Finsupp.single a (c a • (F.map φ₁).hom m)))
     (w : F.obj T₂) (a : ι) : e.symm ((F.map φ₂).hom w) a = c a • (F.map φ₁).hom (e.symm w a) := by

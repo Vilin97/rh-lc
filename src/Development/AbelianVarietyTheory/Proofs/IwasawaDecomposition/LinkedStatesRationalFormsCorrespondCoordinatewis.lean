@@ -41,6 +41,7 @@ theorem exists_addEquiv_of_coord {L L' R R' : Type} [Field L] [Field L'] [Semiri
   exact ⟨AddEquiv.ofBijective ψ hb, fun y k k' hk => hF y k k' hk⟩
 
 
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 theorem cusp_type_eq_of_heq {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
     {H H' : Host E} (hH : H' = H) {l : Level H} {l' : Level H'} (hl : HEq l' l)
     {c : Coeff l} {c' : Coeff l'} (hc : HEq c' c) {Dw : ℕ → Datum H} {Dw' : ℕ → Datum H'} (hDw : HEq Dw' Dw)
@@ -61,6 +62,7 @@ theorem extendByZero_congr_of_heq {Tau : Type} (p : ℕ → ℕ) {j j' : ℕ} (h
   subst hj; cases h; rfl
 
 
+set_option maxHeartbeats 4000000 in
 theorem cusp_type_eq_dat {B B' : Base} {f : Top.Fr B.toPre} {f' : Top.Fr B'.toPre} {T : TwDat B} {T' : TwDat B'} {w : ColW B f T}
     {w' : ColW B' f' T'} {Z : w.Lt} {Z' : w'.Lt} {hX : B.fields.Ok} {hX' : B'.fields.Ok} {Wt : Set B.places.Pl}
     {Wt' : Set B'.places.Pl} (hB : B'.toPre = B.toPre) (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt')
@@ -93,6 +95,7 @@ theorem cusp_type_eq_dat {B B' : Base} {f : Top.Fr B.toPre} {f' : Top.Fr B'.toPr
   exact (by with_unfolding_all exact (M :))
 
 
+set_option maxHeartbeats 4000000 in
 theorem forms_match_dat {B B' : Base} {f : Top.Fr B.toPre} {f' : Top.Fr B'.toPre} {T : TwDat B} {T' : TwDat B'} {w : ColW B f T}
     {w' : ColW B' f' T'} {Z : w.Lt} {Z' : w'.Lt} {hX : B.fields.Ok} {hX' : B'.fields.Ok} {Wt : Set B.places.Pl}
     {Wt' : Set B'.places.Pl} (hB : B'.toPre = B.toPre) (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt')

@@ -75,6 +75,7 @@ def idF : (AF F)ˣ →* (AE F E)ˣ :=
   Units.map (algebraMap (AF F) (AE F E)).toMonoidHom
 
 
+open HeckeCharacterZeroLocus.ThmBIn in
 def IsHeckeChar (χ : (AE F E)ˣ →* Circle) : Prop :=
   Continuous χ ∧ ∀ x : Eˣ, χ (Units.map (incA F E).toMonoidHom x) = 1
 
@@ -108,6 +109,7 @@ def IsUnramAt (σ : E →ₐ[F] E) (χ : (AE F E)ˣ →* Circle) (P : HeightOneS
 
 
 open scoped Classical in
+open Classical in
 def chiAt (σ : E →ₐ[F] E) (χ : (AE F E)ˣ →* Circle) (P : HeightOneSpectrum (𝓞 E)) : ℂ :=
   if h : IsUnramAt σ χ P ∧ ∃ x, IsUnifIdele σ P x then ((χ h.2.choose : Circle) : ℂ) else 0
 

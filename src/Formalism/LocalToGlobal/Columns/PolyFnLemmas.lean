@@ -414,6 +414,7 @@ theorem map_ten (s : K →+* ℂ) (f : ι → MvPolynomial (Fin n × Fin n) K) :
   rw [MvPolynomial.map_rename]
 
 
+omit [CharZero K] in
 theorem map_mem_CSpan (s : K →+* ℂ) (lam : ι → DomWeight n) (F : MvPolynomial (ι × Fin n × Fin n) K) (hF : F ∈ VV K lam) :
     MvPolynomial.map s F ∈ CSpan lam := by
   unfold VV Formalism.GradedWeylDivisibility.tensorLat at hF

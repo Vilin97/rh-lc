@@ -19,6 +19,7 @@ variable {K : Type*} [NormedAddCommGroup K] [InnerProductSpace ℂ K] [CompleteS
 variable {π : UnitaryRep G H} {σ : UnitaryRep G K}
 
 
+omit [CompleteSpace H] in
 lemma nontrivial_endomorphisms [Nontrivial H] : Nontrivial (H →L[ℂ] H) := by
   obtain ⟨v, hv⟩ := exists_ne (0 : H)
   exact ⟨⟨1, 0, fun h => hv (by simpa using congrArg (fun T : H →L[ℂ] H => T v) h)⟩⟩

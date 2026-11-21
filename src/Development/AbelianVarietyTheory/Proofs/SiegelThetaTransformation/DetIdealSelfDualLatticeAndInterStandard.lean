@@ -124,6 +124,7 @@ theorem detSpan_bdual_mul_le (S : Submodule (𝓞 E) (Fin n → E)) : detSpan (b
   exact det_mem_one _ fun i j => hw i _ (hv j)
 
 
+omit [NumberField E] in
 theorem detSpan_bdual (S : Submodule (𝓞 E) (Fin n → E)) (J : Ideal (𝓞 E)) (hJ : J • detSpan S = 1) :
     detSpan (bdual S) = Submodule.map (Algebra.linearMap (𝓞 E) E) J := by
   classical

@@ -91,6 +91,7 @@ variable {K : Type} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ 
   [IsTotallyComplex K]
 
 
+include hK in
 theorem exists_shortModels_isogenous (M : IntermediateField K ℂ) [FiniteDimensional K M] :
     ∃ L : IntermediateField K ℂ, M ≤ L ∧ FiniteDimensional K L ∧ IsGalois K L ∧
       ∃ hL : ∀ x : ELL K, ELL.j x ∈ L,

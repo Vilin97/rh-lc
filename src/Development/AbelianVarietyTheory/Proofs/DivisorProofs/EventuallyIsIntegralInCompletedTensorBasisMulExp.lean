@@ -26,6 +26,7 @@ theorem basV_repr_mul (G : HTGroup p) (v : AwayP p) (a b : Qv v ⊗[ℚ] G.C) (k
   rw [Finset.sum_comm]
 
 
+omit [Fact p.Prime] in
 theorem eventually_rat_mem_integers (q : ℚ) :
     ∀ᶠ v in (Filter.cofinite : Filter (AwayP p)),
       algebraMap ℚ (Qv v) q ∈ v.1.adicCompletionIntegers ℚ := by

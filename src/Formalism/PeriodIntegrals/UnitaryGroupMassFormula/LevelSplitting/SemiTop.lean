@@ -43,6 +43,7 @@ theorem continuous_piMat_inv : Continuous fun g : HA R σ J => piMat (P := P) (T
   exact (continuous_piMat (P := P) (T := T)).comp continuous_inv
 
 
+variable (R) in
 def fwdM (hP : P.IsStd σ J T) (p : Nsub R σ J P × Hsub R σ J P) : Ssub R σ J P :=
   ⟨(p.1 : HA R σ J) * (p.2 : HA R σ J), (Ssub R σ J P).mul_mem (N_le_S' (R := R) hP p.1.2) (H_le_S p.2.2)⟩
 
@@ -60,6 +61,7 @@ theorem continuous_piG : Continuous fun s : Ssub R σ J P => piG hσσ hJ hP (s 
   · exact (continuous_piMat_inv (P := P) (T := T)).comp continuous_subtype_val
 
 
+variable (R) in
 def bwdM (s : Ssub R σ J P) : Nsub R σ J P × Hsub R σ J P :=
   (⟨(s : HA R σ J) * (piG (R := R) hσσ hJ hP (s : HA R σ J) s.2)⁻¹, mul_inv_piG_mem_N hσσ hJ hP s.2⟩,
     ⟨piG (R := R) hσσ hJ hP (s : HA R σ J) s.2, piG_mem_H hσσ hJ hP (s : HA R σ J) s.2⟩)
@@ -91,6 +93,7 @@ theorem fwd_bwd : Function.RightInverse (bwdM R hσσ hJ hP) (fwdM R hP) := by
   exact inv_mul_cancel_right _ _
 
 
+variable (R) in
 def homeoNH : (Nsub R σ J P × Hsub R σ J P) ≃ₜ Ssub R σ J P where
   toFun := fwdM R hP
   invFun := bwdM R hσσ hJ hP

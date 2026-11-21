@@ -67,6 +67,7 @@ def ShortFamily.standard (n : ℕ) : ShortFamily (HermitianBundle.standard K n) 
     exact (fibreNorm_standard_single K n σ _).le
 
 
+variable {K} in
 def BoundedInjection.id (E : HermitianBundle K) : BoundedInjection E E (fun _ ↦ 1) where
   toLinearMap := LinearMap.id
   injective := Function.injective_id

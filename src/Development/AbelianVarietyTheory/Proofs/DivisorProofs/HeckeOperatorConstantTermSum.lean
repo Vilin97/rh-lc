@@ -171,6 +171,8 @@ theorem sum_rep {r s N : ℕ} (h : r + s = N) {S : Finset (Fin N)} {S₁ : Finse
   exact Finset.sum_congr rfl fun c _ => hF _ _ (tri_satakeGL h h1 h2 _ _ _)
 
 
+omit [Fintype (Res hu)] in
+include hu in
 theorem finsum_Tj_levi {r s N j : ℕ} (h : r + s = N) (hj : j ≤ N) (F : GL (Fin N) (v.adicCompletion E) → ℂ)
     (hK : ∀ g, ∀ k ∈ KGL v (n := N), F (g * k) = F g) (hF : ∀ g m, Tri h g m → F g = F (blk h m)) :
     ∑ᶠ c : GL (Fin N) (v.adicCompletion E) ⧸ KGL v (n := N), Tj ℂ N (Ov E v) ϖ j c.out * F c.out =

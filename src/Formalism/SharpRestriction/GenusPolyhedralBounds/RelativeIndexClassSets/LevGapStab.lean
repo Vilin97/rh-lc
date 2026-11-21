@@ -32,6 +32,7 @@ section LocInt
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+variable (E) in
 def trV (v : HeightOneSpectrum (𝓞 F)) : E ⊗[F] v.adicCompletion F →ₗ[F] v.adicCompletion F :=
   (TensorProduct.lid F _).toLinearMap ∘ₗ (Algebra.trace F E).rTensor _
 
@@ -82,6 +83,7 @@ theorem adele_expand {ι : Type} [Fintype ι] [DecidableEq ι] (β : Module.Basi
     exact congrArg₂ (· + ·) hx hy
 
 
+variable (F E) in
 theorem loc_int_bound : ∃ c : 𝓞 F, c ≠ 0 ∧ ∀ x : 𝒜, (∀ w, prV (E := E) w x ∈ intV E w) →
     levelafC E c * x ∈ 𝒮 := by
   classical

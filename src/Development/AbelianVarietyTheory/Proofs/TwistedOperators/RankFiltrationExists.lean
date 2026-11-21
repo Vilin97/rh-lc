@@ -33,6 +33,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   {a b : Type} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
 
 
+omit [DecidableEq a] [DecidableEq b] in
 theorem isOpen_le_rank (κ : ℕ) : IsOpen {x : Matrix b a k | κ ≤ x.rank} := by
   obtain ⟨_, _⟩ := SplitWeil.Model.secondCountable_and_t2_local_field (k := k)
   exact GlobalTheory.isOpen_setOf_le_rank k b a κ

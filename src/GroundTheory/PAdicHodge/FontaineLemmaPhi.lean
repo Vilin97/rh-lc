@@ -89,6 +89,7 @@ theorem exists_phiAway_eq_add_mul {ξ : AInf K p} (hξ : RingHom.ker θ = Ideal.
       (Subalgebra.mul_mem _ (Subalgebra.mul_mem _ X.2 hz₁) hz₂)
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_phi_eq_add_mul [CharZero K] {ξ : AInf K p} (hξ : RingHom.ker θ = Ideal.span {ξ})
     {X : ACrisZero K p} (hX : (p : 𝔸) * (X : 𝔸) = algebraMap (AInf K p) 𝔸 (φ ξ) - p)
     (y : ACris K p) :
@@ -124,6 +125,7 @@ theorem theta_phi_iterate_algebraMap (n : ℕ) (w : AInf K p) :
   rw [phi_iterate_algebraMap, theta_algebraMap]
 
 
+set_option maxHeartbeats 1600000 in
 theorem p_mul_phi_mem_span_mu {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1)
     (hζ : PreTilt.untilt ((_root_.frobeniusEquiv 𝒪♭ p).symm ε) ≠ 1) {y : ACris K p}
     (hy : ∀ n : ℕ, theta K p ((phi K p)^[n] y) = 0) :

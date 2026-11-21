@@ -86,6 +86,7 @@ theorem translate_comp_flat_symm (X : PT E)
   simp only [hU, Function.comp, PT.U, e1, Hf_flat, map_sub, ContinuousLinearEquiv.symm_apply_apply]
 
 
+open Classical in
 theorem polyDeriv_comp_flat_symm (P : MvPolynomial (Letter n dim) ℂ)
     (F : (Fin n → Vsp dim) → ℂ) (v : Fin n → Vsp dim) :
     polyDeriv P (fun l => EuclideanSpace.single l 1) (F ∘ flat.symm) (flat v) =

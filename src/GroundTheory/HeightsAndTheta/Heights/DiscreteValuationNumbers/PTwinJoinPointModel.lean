@@ -112,6 +112,7 @@ end Cone
 end JoinPointModel
 
 
+open JoinPointModel in
 theorem JoinPointModel.proof : JoinPointModel.Statement := by
   intro O _ _ _ Ω _ _ K _ _ ι _ y d hW
   rw [BundleExamples.isModelOver_iff]

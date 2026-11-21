@@ -14,6 +14,7 @@ namespace GlobalTheory.Branching.Family
 variable {ι : Type} [Fintype ι]
 
 
+omit [Fintype ι] in
 theorem exists_poly_blockAct_coef {k : ℕ} (f : MvPolynomial (ι × Fin k × Fin k) ℂ)
     (l : Module.Dual ℂ (MvPolynomial (ι × Fin k × Fin k) ℂ)) :
     ∃ P : MvPolynomial (ι × Fin k × Fin k) ℂ, ∀ g : ι → Matrix (Fin k) (Fin k) ℂ,

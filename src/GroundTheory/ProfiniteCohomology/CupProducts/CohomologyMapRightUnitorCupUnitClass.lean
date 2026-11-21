@@ -27,6 +27,7 @@ end Associativity
 section Unit
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] in
 theorem d_oneCochain :
     (inhomogeneousCochains.d (𝟙_ (Rep.{u} k G)) 0).hom (oneCochain (k := k) (G := G)) = 0 := by
   funext g

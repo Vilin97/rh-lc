@@ -101,6 +101,7 @@ def eucCast {a b : ℕ} (h : a = b) : Euc a ≃ₗᵢ[ℂ] Euc b :=
   LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ (finCongr h)
 
 
+open Classical in
 def model (n : C.Tup → ℕ) (D : ℕ)
     (e0 : ∀ u, (C.mem u).P.Mt ≃ₗ[ℂ] Euc (n C.mu0)) (eTw : ∀ u μ, (C.PTw u μ).Mt ≃ₗ[ℂ] Euc (n μ))
     (eM : ∀ u, Euc (C.mem u).A.du ≃ₗ[ℂ] (C.mem u).A.Mram)

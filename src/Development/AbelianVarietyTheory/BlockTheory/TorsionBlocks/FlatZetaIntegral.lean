@@ -30,11 +30,13 @@ def FlatZetaHolomorphic : Prop :=
       ContinuousOn (flatZeta μ f a s₀) {s | s₁.re ≤ s.re}
 
 
+omit [MeasurableSpace X] in
 theorem flatIntegrand_self (f : X → ℂ) (a : X → ℝ) (s₀ : ℂ) : flatIntegrand f a s₀ s₀ = f := by
   funext x
   simp [flatIntegrand]
 
 
+omit [MeasurableSpace X] in
 theorem norm_flatIntegrand (f : X → ℂ) {a : X → ℝ} (s₀ s : ℂ) {x : X} (hx : 0 < a x) :
     ‖flatIntegrand f a s₀ s x‖ = ‖f x‖ * a x ^ (s.re - s₀.re) := by
   rw [flatIntegrand, norm_mul, Complex.norm_cpow_eq_rpow_re_of_pos hx, Complex.sub_re]

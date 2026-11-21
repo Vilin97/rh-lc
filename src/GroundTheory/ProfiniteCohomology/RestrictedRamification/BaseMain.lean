@@ -22,6 +22,7 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1))) [Fintype 
   (hodd : Odd n ∨ IsTotallyComplex K.1) (h3 : Subsingleton (cohomology (gsRoots S n) 3))
 
 
+include hℓ hnk hS in
 theorem gsBaseBijective_of_fixing (hP : GsPairingInput n ℓ)
     (hcores : ∀ U : OpenSubgroup (galUnramifiedOutside K.1 ℚ̄ S),
       Function.Surjective (compactCores (gsFinFamily S ιs) U (gsRoots S n) 3).hom)
@@ -34,6 +35,8 @@ theorem gsBaseBijective_of_fixing (hP : GsPairingInput n ℓ)
     hUeq ▸ gsBaseBijective_of_le S ιs n ℓ k hℓ hnk hS hodd h3 hP hcores W₀ hW₀ hL (hUeq ▸ hU)
 
 
+set_option maxHeartbeats 1600000 in
+include hℓ hnk hS in
 theorem exists_compactDualityHypotheses_gs_of_pairing (hP : GsPairingInput n ℓ) :
     ∃ U₀ : OpenSubgroup (galUnramifiedOutside K.1 ℚ̄ S),
       CompactDualityHypotheses (gsFinFamily S ιs) n (gsRoots S n) (gsCompactInv S ιs n hodd h3) U₀ := by
@@ -52,10 +55,12 @@ theorem exists_compactDualityHypotheses_gs_of_pairing (hP : GsPairingInput n ℓ
         U hU h }⟩
 
 
+include hℓ hnk in
 theorem gsPairingInput : GsPairingInput n ℓ := fun _ S' _ ιs' hS' _ hodd' h3' =>
   ⟨gsCompactInv_ker_left S' ιs' n ℓ k hℓ hnk hS' hodd' h3', gsCompactInv_ker_right S' ιs' n ℓ k hℓ hnk hS' hodd' h3'⟩
 
 
+include hℓ hnk hS in
 theorem exists_compactDualityHypotheses_gs :
     ∃ U₀ : OpenSubgroup (galUnramifiedOutside K.1 ℚ̄ S),
       CompactDualityHypotheses (gsFinFamily S ιs) n (gsRoots S n) (gsCompactInv S ιs n hodd h3) U₀ :=

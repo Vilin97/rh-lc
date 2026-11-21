@@ -80,6 +80,7 @@ theorem hw_kill {V : Type*} [AddCommGroup V] [Module ℂ V] {act : Mat p q →�
   simpa using this
 
 
+open GlobalTheory.RealPar.HwGen in
 theorem ofType_of_isHW (D : DSRep T) {μ : Ix p q → ℚ} {v : D.HK.V} (hv : IsHW D.HK.act μ v) :
     OfType D.HK.act μ v := by
   obtain ⟨W₀, hfin, hv₀, hW₀⟩ := D.HK.kfin v

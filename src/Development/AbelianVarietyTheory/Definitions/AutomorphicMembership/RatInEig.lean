@@ -21,9 +21,13 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.L2 Formalism.L2.Host
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
+set_option maxHeartbeats 1000000 in
 def ratL {D : D7} (L : LocAll (lay0 D)) (S : RatDat D.ntw) : RatDat (withLoc L).ntw := { S with }
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
+set_option maxHeartbeats 1000000 in
 structure NAt (hL : GlobalTheory.Published.LocalLanglandsGL) (D : D7) (cf : CharFrame D) (nch : NChoice D) (tp : TupTied D cf nch) :
     Type 1 where
   nt : NTrue hL D cf nch tp
@@ -55,6 +59,9 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type} {A3 : FamIn
   [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
+set_option maxHeartbeats 1000000 in
 structure NRow {hL : GlobalTheory.Published.LocalLanglandsGL} {cf : CharFrame D} {nch : NChoice D} {tp : TupTied D cf nch}
     (a : NAt hL D cf nch tp) (R : RealDat3 D A3 Ks) (F : Face3 D A3) (cG : G0 R.Pg D.R.r ≃* G0g D.nd) {X0 : BaseLevelRowSide D}
     (Y : R3.Read (A3 := A3) R.toRealDat F.lv2 X0) : Type 1 where

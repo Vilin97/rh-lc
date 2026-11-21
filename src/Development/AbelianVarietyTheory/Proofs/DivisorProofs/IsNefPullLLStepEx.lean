@@ -96,6 +96,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {Z : Scheme.{0}} {π : Z ⟶ Y.X} (F : Frames Y π)
 
 
+open Classical in
 theorem LL_stepEx_g_inv (σ : E →+* ℂ) {n : ℕ} (hn : n ≤ Dw.mult σ) (k k' : F.J) :
     ((show Γ(Z, F.U k ⊓ F.U k')ˣ from (F.LL (stepEx σ n)).g k k')⁻¹).val =
       ∏ a : Fin n, F.B k k' σ (a.castLE hn) (a.castLE hn) := by

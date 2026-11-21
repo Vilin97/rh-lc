@@ -115,6 +115,7 @@ theorem nonempty_equiv_of_eq {n M : ℕ} {u v : Fin n → IrrGL (k := k)} (e : u
   exact ⟨Representation.Equiv.refl _⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem position_swap (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hGK : Zc.Cos.GKLocal k) {h j : ℕ} (hj : j + 1 < h)
     (x : Fin h → IrrGL (k := k)) (d : Fin 3 → ℕ)
     (s₁ : ∀ a, ∑ b, (fac hj x a b).1 = d a) (s₂ : ∀ a, ∑ b, (fac' hj x a b).1 = d a) :
@@ -135,6 +136,7 @@ theorem position_swap (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hGK
     exact isSubquotient_of_equiv hq E
 
 
+set_option maxHeartbeats 1000000 in
 theorem core (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hGK : Zc.Cos.GKLocal k) (hW : GlobalTheory.BZMir.Leib.WhitHeredity k)
     (hR : GlobalTheory.BZSeg.WhitRankIrr k) (hC : GlobalTheory.BZSeg.CuspGeneric k) (ψ : AddChar k Circle) (hψ : Continuous ψ)
     (h1 : ψ ≠ 1) {h N j : ℕ} (hj : j + 1 < h) (x : Fin h → IrrGL (k := k)) (hc : ∀ a, (x a).IsCusp) (d : Fin 3 → ℕ)

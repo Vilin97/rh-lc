@@ -81,6 +81,7 @@ theorem lowerRamificationGroupReal_intCast (n : ℤ) :
   rw [lowerRamificationGroupReal, Int.ceil_intCast]
 
 
+variable (K L) in
 theorem lowerRamificationGroupReal_antitone : Antitone (lowerRamificationGroupReal K L) :=
   fun _ _ h ↦ lowerRamificationGroup_antitone K L (Int.ceil_mono h)
 
@@ -89,11 +90,13 @@ theorem lowerRamificationGroupReal_eq_top {t : ℝ} (ht : t ≤ -1) :
   lowerRamificationGroup_eq_top K L (Int.ceil_le.mpr (by push_cast; exact ht))
 
 
+variable (K L) in
 def herbrandPhi (u : ℝ) : ℝ :=
   ∫ t in (0 : ℝ)..u,
     ((lowerRamificationGroupReal K L t).relIndex (lowerRamificationGroup K L 0) : ℝ)⁻¹
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem relIndex_mul_card_inf {G : Type*} [Group G] (H K : Subgroup G) :
     H.relIndex K * Nat.card ↥(H ⊓ K) = Nat.card K := by
   rw [Subgroup.relIndex, mul_comm, ← Subgroup.card_mul_index (H.subgroupOf K)]
@@ -139,6 +142,7 @@ theorem antitone_indicator_lowerRamificationGroupReal (σ : L ≃ₐ[K] L) :
     split_ifs <;> norm_num
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem integral_indicator_Iic {c : ℝ} (hc : 0 ≤ c) (u : ℝ) :
     ∫ t in (0 : ℝ)..u, (Set.Iic c).indicator (fun _ ↦ (1 : ℝ)) t = min u c := by
   rcases le_total 0 u with hu | hu
@@ -294,10 +298,12 @@ theorem herbrandPhi_surjective : Function.Surjective (herbrandPhi K L) :=
   continuous_herbrandPhi.surjective tendsto_herbrandPhi_atTop tendsto_herbrandPhi_atBot
 
 
+variable (K L) in
 def herbrandPhiOrderIso : ℝ ≃o ℝ :=
   StrictMono.orderIsoOfSurjective (herbrandPhi K L) herbrandPhi_strictMono herbrandPhi_surjective
 
 
+variable (K L) in
 def herbrandPsi (v : ℝ) : ℝ :=
   (herbrandPhiOrderIso K L).symm v
 
@@ -399,6 +405,7 @@ theorem herbrandPsi_of_mem_Icc (n : ℕ) {v : ℝ}
   ring
 
 
+variable (K L) in
 def upperRamificationGroup (v : ℝ) : Subgroup (L ≃ₐ[K] L) :=
   lowerRamificationGroupReal K L (herbrandPsi K L v)
 
@@ -418,6 +425,7 @@ theorem upperRamificationGroup_zero :
     Nat.cast_zero]
 
 
+variable (K L) in
 theorem upperRamificationGroup_antitone : Antitone (upperRamificationGroup K L) :=
   fun _ _ h ↦ lowerRamificationGroupReal_antitone K L (herbrandPsi_strictMono.monotone h)
 

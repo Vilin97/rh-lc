@@ -104,6 +104,7 @@ variable (s : HidaSetting l L Ω)
 def S : Set (Plc (Lp L)) := {v | ((l : ℕ) : 𝓞 (Lp L)) ∈ v.asIdeal ∨ v ∈ s.St ∨ v = s.v0}
 
 
+variable (l L) in
 abbrev _root_.UpperTheory.V.W.Vl : Type := {v : Plc (Lp L) // ((l : ℕ) : 𝓞 (Lp L)) ∈ v.asIdeal}
 
 structure Lev where

@@ -41,6 +41,7 @@ theorem fin_mul (γ : GQ (Xp G)) (γE : UR D.sp.cm (Xp G).gram) (hm : Bridge.IsR
   rfl
 
 
+variable {θ} in
 theorem map_rat (hθ : IsInfFam θ) (V : HSp D) (lam : D.what₂.Tau → DomWeight V.rank) (γ : GQ V)
     (γE : GL (Fin V.rank) D.host.E) (h : Bridge.IsRatMat V γ γE) (v : VV D.what₂.LL lam) :
     GlobalTheory.CoefModel.mapVV D.what₂.embLL lam (rhoVr (labLL D) lam γE v) =
@@ -50,6 +51,7 @@ theorem map_rat (hθ : IsInfFam θ) (V : HSp D) (lam : D.what₂.Tau → DomWeig
     Module.End.one_apply] at h
 
 
+variable {θ} in
 theorem colOf_mem (hθ : IsInfFam θ) {Ψ : GLf G → WtSp G} (hl : ∀ γ g, Ψ (ratIn G γ * g) = rhoW G γ (Ψ g))
     (hr : ∀ g, ∀ k ∈ G.Kplus, Ψ (g * k) = Ψ g) : colOf θ Ψ ∈ Cols G θ := by
   refine (GlobalTheory.IndefiniteRowSideFullHecke.LevelPlusSubgroup.mem_cols G θ _).2 fun γ g k => ?_
@@ -112,6 +114,8 @@ theorem rowForm_Th (h : R.IsChain) (t : T) (x : (R.HX t).H) : rowForm R d.w (R.H
 end ChainVec
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
 structure Choice (R : RealDat D A Ks) where
 
   sc : Consts
@@ -226,6 +230,7 @@ theorem psiK_zero (a : Fin ch.n) : psiK ch a 0 = 0 := by
   simpa using psiK_smul ch a 0 0
 
 
+variable {ch} in
 theorem psiK_add {a : Fin ch.n} {u u' : R.HE.H} (h : ConvK ch a u) (h' : ConvK ch a u') :
     psiK ch a (u + u') = psiK ch a u + psiK ch a u' := by
   rw [psiK, map_add (f := _)]; exact fPsiPhi_add ch.W ch.M h h'
@@ -243,6 +248,7 @@ theorem realOK_of_inj (h : ∀ u, (∀ a, psiK ch a u = 0) → u = 0) : ch.RealO
 
 
 
+variable {ch} in
 theorem Choice.IsBase.is_withReal (h : ch.IsBase) {ρ' ξ'} (h' : ∀ u, (∀ a, psiK (ch.withReal ρ' ξ') a u = 0) → u = 0) :
     (ch.withReal ρ' ξ').Is := ⟨h.withReal ρ' ξ', realOK_of_inj _ h'⟩
 

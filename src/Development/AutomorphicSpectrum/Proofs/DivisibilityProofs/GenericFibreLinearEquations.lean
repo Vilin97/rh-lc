@@ -159,11 +159,13 @@ def thF : GRing Ψ N →+* CF Ψ N K :=
   (algebraMap (ΩFl Ψ N) (CF Ψ N K)).comp (algebraMap (GRing Ψ N) (ΩFl Ψ N))
 
 
+variable {K} in
 def tF (k : K) : CF Ψ N K := algebraMap (MvPolynomial K (ΩFl Ψ N)) (CF Ψ N K) (X k)
 
 variable {Ψ N K}
 
 
+omit [Fintype Ψ] in
 theorem minorPolynomial_succ (τ : Ψ) (r : ℕ) (hr : r + 1 ≤ N) (A : Fin (r + 1) → Fin N) :
     minorPolynomial Ψ N τ (r + 1) hr A = ∑ b : Fin (r + 1), (-1) ^ (r + (b : ℕ)) * X (τ, ⟨r, hr⟩, A b) *
       minorPolynomial Ψ N τ r (by omega) (fun a => A (b.succAbove a)) := by
@@ -201,6 +203,7 @@ theorem ker_xP [Fintype K] (j : K → FlBlock Ψ N) :
     RingHom.mem_ker]
 
 
+variable (Ψ N K) in
 def eF : K ⊕ (Ψ × Fin N × Fin N) → CF Ψ N K :=
   Sum.elim (tF Ψ N) (fun v => thF Ψ N K (X v))
 
@@ -291,6 +294,7 @@ theorem xP_eq_minor (j : K → FlBlock Ψ N) (k : K) (τ : Ψ) (r : ℕ) (hr : r
   exact ⟨B', by simp only [xP]; rw [h]⟩
 
 
+omit [Fintype Ψ] in
 theorem exists_scale (j : K → FlBlock Ψ N) (hj : IsChain j) (k₀ : K) (s : ℕ) (hs : s = (j k₀).2) (hsN : s ≤ N) :
     ∃ w : CF Ψ N K, w ≠ 0 ∧ w ∈ restF j k₀ ∧ ∀ B : Fin s → Fin N, StrictMono B →
       thF Ψ N K (minorPolynomial Ψ N (j k₀).1 s hsN B) * w ∈ PhiF j k₀ := by

@@ -264,6 +264,7 @@ theorem exists_seq (c : E ≃ₐ[F] E) (hc : ∀ x, c (c x) = x) (hc1 : c ≠ 1)
     exact mul_one _
 
 
+omit [NumberField F] [NumberField E] in
 def cutH (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (ε : R ⊗[F] E)
     (hε : ε * ε = ε) (hσ : sigR R σ ε = ε) : HA R σ J →* HA R σ J :=
   cut (sigR R σ) (JR R J) ε hε hσ

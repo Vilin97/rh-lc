@@ -72,6 +72,7 @@ section Smooth
 variable {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {A S A' : HSp D} {χA χS χS' χA' : (AE D)ˣ →* Circle} {oma : Om A S} {omb : Om S A'}
 
 
+open GlobalTheory.WeilVacMove GlobalTheory.BiTransfer in
 theorem isBiSmooth_avg (ha : IsWeilDatumO ψ A S χA χS oma) (hb : IsWeilDatumO ψ S A' χS' χA' omb) (hB : BiAct D)
     {K : Type} [TopologicalSpace K] [CompactSpace K] [MeasurableSpace K] [BorelSpace K] (μ : Measure K) [IsFiniteMeasure μ]
     {p : K → GA D A × GA D S} (hp : Continuous p) {c : K → ℂ} (hc : Continuous c) {G : WO A S → WO S A' → ℂ}
@@ -194,6 +195,7 @@ theorem om_integral [IsFiniteMeasure μ] {S T : HSp D} {χS χT : (AE D)ˣ →* 
   simpa only [map_smul, Pi.smul_apply, smul_eq_mul] using this
 
 
+omit [CompactSpace K] in
 theorem integral_mean [IsProbabilityMeasure μ] {A : HSp D} (hA : CoCpt A) (vA : Vol A) {j : K → GA D A} (hj : Continuous j)
     {F : GA D A → ℂ} (hF : IsContAut A F) : ∫ h in vA.𝓕, ∫ k, F (h * j k) ∂μ ∂vA.μ = ∫ h in vA.𝓕, F h ∂vA.μ := by
   obtain ⟨i1, -, i3, -, i5, -⟩ := GlobalTheory.Ker.CongTop.adelicUnitary_top_cong D A

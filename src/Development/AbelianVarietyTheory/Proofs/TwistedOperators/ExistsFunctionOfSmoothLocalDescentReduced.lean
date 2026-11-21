@@ -37,6 +37,7 @@ theorem exists_factor_pi {J : Type} [Fintype J] [DecidableEq J] (A : J → Type)
   | (intros; exact _root_.GlobalTheory.FactorThroughProjection.exists_factor_through_projection ..)
 
 
+open scoped TensorProduct in
 theorem exists_lift_geom (R S : Type) [CommRing R] [CommRing S] [Algebra R S]
     [Algebra.FiniteType R S] [Module.FaithfullyFlat R S] (k : Type) [Field k] [IsAlgClosed k]
     (χ : R →+* k) : ∃ χ' : S →+* k, χ'.comp (algebraMap R S) = χ := by
@@ -62,6 +63,7 @@ theorem exists_lift_geom (R S : Type) [CommRing R] [CommRing S] [Algebra R S]
   exact g.commutes (χ x)
 
 
+open scoped TensorProduct in
 theorem exists_preimage_of_geom (R S : Type) [CommRing R] [CommRing S] [Algebra R S]
     [_root_.IsReduced R] [Algebra.Smooth R S] [Module.FaithfullyFlat R S] (w : S)
     (h : ∀ (k : Type) [Field k] [IsAlgClosed k] (χ₁ χ₂ : S →+* k),

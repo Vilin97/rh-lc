@@ -165,6 +165,7 @@ theorem nonempty_jacB_detRep (N : ℕ) (ψ : kˣ →* ℂˣ) :
   ring
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem torusChar_mulSingle {n : Type} [Fintype n] [DecidableEq n] (χ : n → kˣ →* ℂˣ) (i : n)
     (x : kˣ) : torusChar χ (Pi.mulSingle i x) = χ i x := by
   rw [torusChar_apply, Finset.prod_eq_single i, Pi.mulSingle_eq_same]

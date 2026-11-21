@@ -1397,6 +1397,7 @@ theorem m_exists_nat_smul_mem (M : Submodule (𝓞 E) S.V) {x : S.V}
   first | exact UpperTheory.Reformulated.B.Qh47.m_exists_nat_smul_mem .. | (apply UpperTheory.Reformulated.B.Qh47.m_exists_nat_smul_mem <;> assumption) | (intros; apply UpperTheory.Reformulated.B.Qh47.m_exists_nat_smul_mem <;> assumption) | (apply @UpperTheory.Reformulated.B.Qh47.m_exists_nat_smul_mem <;> assumption) | (intros; apply @UpperTheory.Reformulated.B.Qh47.m_exists_nat_smul_mem <;> assumption) | (apply @UpperTheory.Reformulated.B.Qh47.m_exists_nat_smul_mem <;> first | assumption | infer_instance) | exact @UpperTheory.Reformulated.B.Qh47.m_exists_nat_smul_mem E ‹_› ‹_› ‹_› S M x hx | exact @UpperTheory.Reformulated.B.Qh47.m_exists_nat_smul_mem E ‹_› ‹_› ‹_› S M x | exact @UpperTheory.Reformulated.B.Qh47.m_exists_nat_smul_mem E ‹_› ‹_› ‹_› S M | exact @UpperTheory.Reformulated.B.Qh47.m_exists_nat_smul_mem E ‹_› ‹_› ‹_› S | exact @UpperTheory.Reformulated.B.Qh47.m_exists_nat_smul_mem E ‹_› ‹_› ‹_› | exact @UpperTheory.Reformulated.B.Qh47.m_exists_nat_smul_mem E ‹_› ‹_› | exact @UpperTheory.Reformulated.B.Qh47.m_exists_nat_smul_mem E ‹_› | exact @UpperTheory.Reformulated.B.Qh47.m_exists_nat_smul_mem E
 
 
+omit [StarRing E] in
 theorem m_fin_quot {M : Type} [AddCommGroup M] [Module (𝓞 E) M] [Module.Finite (𝓞 E) M]
     (N : Submodule (𝓞 E) M) (h : ∀ w : M, ∃ n : ℕ, 0 < n ∧ n • w ∈ N) : Finite (M ⧸ N) := by
   have : Module.Finite ℤ (M ⧸ N) := Module.Finite.trans (𝓞 E) _
@@ -4977,6 +4978,7 @@ theorem i_PN_lat : Submodule.IsLattice E (i_P Λ U U' ⊔ (Λ ⊓ toO S U')) := 
   intro s hs hli
   exact (LinearIndependent.iff_fractionRing _ _).mp hli
 
+include hΛ hu hc ho in
 theorem i_proj_eq : i_P Λ U U' = dualIn S (Λ ⊓ toO S U) := by
   have ho' := i_ho' ho
   have hd : U ⊓ U' = ⊥ := hc.inf_eq_bot
@@ -5011,6 +5013,7 @@ theorem projection_dual_coe (l : Λ) : ((projectionToDualIntersection Λ hΛ hu 
     U.projection U' hc (l : S.V) := rfl
 
 
+include hΛ hu hc ho in
 theorem i_glue : Nonempty
     ((Λ ⧸ ((Λ ⊓ toO S U) ⊔ (Λ ⊓ toO S U')).comap Λ.subtype) ≃ₗ[𝓞 E]
       (dualIn S (Λ ⊓ toO S U) ⧸ (Λ ⊓ toO S U).comap (dualIn S (Λ ⊓ toO S U)).subtype)) := by
@@ -5049,6 +5052,7 @@ theorem i_glue : Nonempty
   exact ⟨(Submodule.quotEquivOfEq _ _ hker.symm).trans (f.quotKerEquivOfSurjective hsurj)⟩
 
 
+include hΛ hu hc ho in
 theorem i_glue3 : Nonempty
     ((dualIn S (Λ ⊓ toO S U) ⧸ (Λ ⊓ toO S U).comap (dualIn S (Λ ⊓ toO S U)).subtype) ≃ₗ[𝓞 E]
       (dualIn S (Λ ⊓ toO S U') ⧸ (Λ ⊓ toO S U').comap (dualIn S (Λ ⊓ toO S U')).subtype)) := by
@@ -5485,6 +5489,7 @@ theorem g_genIdx_via {A B D : Submodule (𝓞 E) S.V} (hA : A.FG) (hB : B.FG) (h
     zpow_sub₀ hN, zpow_natCast, zpow_natCast]
 
 
+omit [StarRing E] in
 theorem g_locPrincipal {P₀ : Ideal (𝓞 E)} (hP : P₀.IsMaximal) :
     ∃ a ∈ P₀, a ≠ 0 ∧ ∃ j, j ∉ P₀ ∧ ∀ p ∈ P₀, ∃ o, j * p = a * o := by
   have hne : P₀ ≠ ⊥ := Ring.ne_bot_of_isMaximal_of_not_isField hP (RingOfIntegers.not_isField E)

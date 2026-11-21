@@ -34,6 +34,7 @@ theorem exists_homeomorph_of_sections {A Y Z : Type} [TopologicalSpace A] [Topol
            continuous_toFun := hcc, continuous_invFun := hp.comp hσ }, fun _ => rfl⟩
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_infHomeo {θ : InfFam D} (hθ : IsInfFam θ) :
     ∃ P : (Ainf D.host.F ⊗[D.host.F] D.host.E) ≃ₜ (D.what₂.Tau → ℂ), ∀ y τ, P y τ = θ τ y := by
   obtain ⟨σ, hσ⟩ := GlobalTheory.RealLineAt.exists_inverse_chart hθ

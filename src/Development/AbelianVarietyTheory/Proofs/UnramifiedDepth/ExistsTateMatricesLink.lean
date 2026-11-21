@@ -239,6 +239,7 @@ open scoped CategoryTheory.Obj CategoryTheory.MonObj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 
+open TateMatrices in
 theorem exists_tateMatrices_link :
   (∀ (p : ℕ) [Fact p.Prime] (κ Γ : Type) [Fintype κ] [DecidableEq κ] [AddCommGroup Γ] (τ : κ → ℕ → Γ),
     (∀ i n, (p ^ (n + 1)) • τ i n = 0) → (∀ i n, τ i n = p • τ i (n + 1)) →

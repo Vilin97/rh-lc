@@ -45,6 +45,7 @@ theorem exists_ur_lift (χ : charGrp (GK p K)) (hχ : TrivOn p K (MaximalUnramif
   exact hfq g
 
 
+variable (p K) in
 noncomputable def urOfK (a : Kˣ) : (urT p K).V :=
   toLayer p ⟨ofK p K (Additive.ofMul a), le_Kur (K := K) (ofK_mem p K _)⟩
 

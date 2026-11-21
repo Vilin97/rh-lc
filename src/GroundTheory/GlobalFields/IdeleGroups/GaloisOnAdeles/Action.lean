@@ -17,6 +17,7 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
 namespace AdeleBaseChange
 
 
+variable (K L) in
 def adeleRingAut : (L ≃ₐ[K] L) →* RingAut 𝔸[L] where
   toFun σ := adeleRingEquiv (σ : L ≃+* L)
   map_one' := adeleRingEquiv_refl
@@ -50,6 +51,7 @@ section Galois
 variable [IsGalois K L]
 
 
+open Classical in
 theorem isUnit_det_conjugates (b : Module.Basis (L ≃ₐ[K] L) K L) :
     IsUnit (Matrix.of fun σ τ : L ≃ₐ[K] L ↦ σ (b τ)).det := by
   classical
@@ -148,6 +150,7 @@ theorem coe_smul_idele (σ : L ≃ₐ[K] L) (x : IdeleGroup L) :
   rfl
 
 
+omit [NumberField K] in
 theorem smul_idele_eq_ideleEquiv (σ : L ≃ₐ[K] L) (x : IdeleGroup L) :
     σ • x = ideleEquiv (σ : L ≃+* L) x :=
   Units.ext rfl
@@ -202,6 +205,7 @@ theorem forall_smul_eq_iff_mem_range_ideleEmbedding (x : IdeleGroup L) :
 end Galois
 
 
+variable (K L) in
 def ideleClassAut : (L ≃ₐ[K] L) →* MulAut (IdeleClassGroup L) where
   toFun σ := (ideleClassEquiv (σ : L ≃+* L)).toMulEquiv
   map_one' := MulEquiv.ext fun c ↦ ideleClassEquiv_refl c

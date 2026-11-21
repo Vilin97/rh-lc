@@ -45,6 +45,7 @@ theorem rmul_apply {L : Type} [Ring L] {m n : ℕ} (g : Matrix (Fin n) (Fin n) L
 end GlobalTheory.InertHomIdx
 
 
+open GlobalTheory.FinWeilO in
 theorem GlobalTheory.InertHomIdx.heisenbergRelativeIndex_inert_move_source (D : D7) (S T : HSp D) (v : HeightOneSpectrum (𝓞 D.host.F)) (w : HeightOneSpectrum (𝓞 D.host.E)) (h : w.under (𝓞 D.host.F) = v) (hi : IsInertAt D.host.F D.host.E v w) (g : Gv S v) : GlobalTheory.FinWeil.idx (GlobalTheory.FinWeilO.latF S T (frameLat S) (frameLat T)) ((GlobalTheory.FinWeilO.latF S T (frameLat S) (frameLat T)).map (GlobalTheory.FinWeilO.rhoF S T (embV S v g, 1))) = ((GlobalTheory.FinWeilO.latF S T (frameLat S) (frameLat T)).toAddSubgroup.map (GlobalTheory.InertHomIdx.matW S T w)).relIndex (((GlobalTheory.FinWeilO.latF S T (frameLat S) (frameLat T)).toAddSubgroup.map (GlobalTheory.InertHomIdx.matW S T w)).map (GlobalTheory.InertHomIdx.rmul (locMat D.sp.cm.sig S.gram h g)⁻¹.1)) := by
   obtain ⟨ε, hns, hp⟩ := GlobalTheory.WeilAtPlace.exists_nonSplit_of_inert hi h
   have hε : IsPlaceIdem D v ε := hns.1

@@ -91,12 +91,14 @@ section Lattice
 variable {F F' : HermLattice K i}
 
 
+omit [DecidableEq T] in
 theorem latCombo_eq (b' : Module.Basis T ℤ (dualLattice F')) (c : T → ℤ) :
     latCombo b' c = ((b'.equivFun.symm c : dualLattice F') : Fin i → K) := by
   rw [Module.Basis.equivFun_symm_apply, latCombo, Submodule.coe_sum]
   rfl
 
 
+omit [DecidableEq T] in
 theorem exists_latCombo (b : Module.Basis T ℤ (dualLattice F)) (b' : Module.Basis T ℤ (dualLattice F'))
     {a : T → ℤ} (hab : ∀ t, (b t : Fin i → K) = a t • (b' t : Fin i → K)) {ψ : Fin i → K}
     (hψ : ψ ∈ dualLattice F) : ∃ e : T → ℤ, ψ = latCombo b' fun s => e s * a s := by
@@ -119,6 +121,7 @@ end Lattice
 end StackedExceptionalChart
 
 
+open StackedExceptionalChart in
 theorem DualStackedExcChart.proof (hC : DualStackedExcChartForms.Statement) : DualStackedExcChart.Statement := by
   intro K _ _ i F F' T _ _ b b' a hi hlt hcov hab k _ ρ π y₀ m g α M hX v u
   have hX' := hX

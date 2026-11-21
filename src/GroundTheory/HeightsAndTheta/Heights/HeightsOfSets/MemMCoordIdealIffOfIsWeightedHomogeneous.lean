@@ -61,12 +61,14 @@ def compDegs (f : MvPolynomial (Coord n) ℤ) : Finset (ι → ℕ) :=
   (weightedHomogeneousComponent_finsupp (w := coordDeg n) f).toFinset
 
 
+omit [Fintype ι] in
 theorem sum_compDegs (f : MvPolynomial (Coord n) ℤ) :
     ∑ m ∈ compDegs f, weightedHomogeneousComponent (coordDeg n) m f = f := by
   rw [compDegs, ← finsum_eq_sum _ (weightedHomogeneousComponent_finsupp f),
     sum_weightedHomogeneousComponent]
 
 
+omit [Fintype ι] [DecidableEq ι] in
 theorem aeval_eq_zero_of_mem_mCoordIdeal {Ω : Type*} [Field Ω] (y : Coord n → Ω)
     {f : MvPolynomial (Coord n) ℤ} (hf : f ∈ Geo.mCoordIdeal (ι := blockIdx n) y) :
     aeval y f = 0 := by
@@ -111,6 +113,7 @@ theorem mem_mCoordIdeal_iff {Ω : Type*} [Field Ω] (y : Coord n → Ω)
       (weightedHomogeneousComponent_isWeightedHomogeneous m f)).mpr (h m)
 
 
+omit [Fintype ι] [DecidableEq ι] in
 theorem aeval_flatCone {F : Type*} [CommRing F] (x : Cone n F) (f : MvPolynomial (Coord n) ℤ) :
     aeval (flatCone x) f = evalCone x f := by
   rw [aeval_def, algebraMap_int_eq]
@@ -150,11 +153,13 @@ def ArithVariety.genericPt (P : ArithVariety n) : Coord n → P.FunField :=
   fun v ↦ P.mkF (X v)
 
 
+omit [Fintype ι] [DecidableEq ι] in
 theorem aeval_eq_eval₂_int {Ω : Type*} [Field Ω] (y : Coord n → Ω) (f : MvPolynomial (Coord n) ℤ) :
     aeval y f = eval₂ (Int.castRingHom Ω) y f := by
   rw [aeval_def, algebraMap_int_eq]
 
 
+omit [Fintype ι] in
 theorem ArithVariety.eval₂_genericPt (P : ArithVariety n) (f : MvPolynomial (Coord n) ℤ) :
     eval₂ (Int.castRingHom P.FunField) P.genericPt f = P.mkF f := by
   have : eval₂Hom (Int.castRingHom P.FunField) P.genericPt = P.mkF :=
@@ -166,6 +171,7 @@ theorem ArithVariety.eval₂_genericPt (P : ArithVariety n) (f : MvPolynomial (C
   exact DFunLike.congr_fun this f
 
 
+omit [Fintype ι] in
 theorem ArithVariety.eval₂_genericPt_eq_zero_iff (P : ArithVariety n)
     (f : MvPolynomial (Coord n) ℤ) :
     eval₂ (Int.castRingHom P.FunField) P.genericPt f = 0 ↔ f ∈ P.ideal := by
@@ -200,6 +206,7 @@ section Curves
 variable {K : Type*} [Fintype K] {κ : K → Type*} [∀ k, Fintype (κ k)]
 
 
+omit [∀ k, Fintype (κ k)] in
 theorem ptsIntegral_congr (P : Ideal (Geo.MRing κ)) {e : ℕ} (φ : Fin e → ((Σ k, κ k) → ℂ) → ℝ)
     {g g' : ((Σ k, κ k) → ℂ) → ℝ} (hg : ∀ z ∈ Geo.mcPts P, g z = g' z) :
     Geo.ptsIntegral P φ g = Geo.ptsIntegral P φ g' := by
@@ -218,6 +225,7 @@ theorem ptsIntegral_congr (P : Ideal (Geo.MRing κ)) {e : ℕ} (φ : Fin e → (
   · rfl
 
 
+omit [∀ k, Fintype (κ k)] in
 theorem arInt_congr (P : Ideal (Geo.MRing κ)) (s : Geo.MRing κ) {e : ℕ}
     (L : Fin e → Geo.HermLine κ) {A A' : Geo.HermLine κ}
     (hh : ∀ z ∈ Geo.mcPts P, A.h z = A'.h z) : Geo.arInt P s A L = Geo.arInt P s A' L := by
@@ -225,6 +233,7 @@ theorem arInt_congr (P : Ideal (Geo.MRing κ)) (s : Geo.MRing κ) {e : ℕ}
   exact ptsIntegral_congr P _ fun z hz ↦ by rw [Geo.logNorm, Geo.logNorm, hh z hz]
 
 
+omit [∀ k, Fintype (κ k)] in
 theorem recR_congr (I : Ideal (Geo.MRing κ) → (m : ℕ) → (Fin m → Geo.HermLine κ) → ℝ)
     (P : Ideal (Geo.MRing κ)) {e : ℕ} (L : Fin e → Geo.HermLine κ) (s : Geo.MRing κ)
     {A A' : Geo.HermLine κ} (hh : ∀ z ∈ Geo.mcPts P, A.h z = A'.h z) :
@@ -246,12 +255,14 @@ theorem ArithVariety.mem_iff_aeval_eq_zero (P : ArithVariety n) {y : Coord n →
   exact mem_mCoordIdeal_iff_of_isWeightedHomogeneous y hg
 
 
+omit [Fintype ι] in
 theorem ArithVariety.aeval_eq_zero_of_mem (P : ArithVariety n) {y : Coord n → Ω}
     (hy : Geo.mCoordIdeal (ι := blockIdx n) y = P.ideal) {f : MvPolynomial (Coord n) ℤ}
     (hf : f ∈ P.ideal) : aeval y f = 0 :=
   aeval_eq_zero_of_mem_mCoordIdeal y (by rw [hy]; exact hf)
 
 
+omit [Fintype ι] in
 theorem ArithVariety.X_notMem_of_mem_points (P : ArithVariety n) {F : Type*} [CommRing F]
     {z : Cone n F} (hz : z ∈ P.points F) {c : (k : ι) → Fin (n k + 1)} (hc : ∀ k, z k (c k) ≠ 0)
     (k : ι) : (X ⟨k, c k⟩ : MvPolynomial (Coord n) ℤ) ∉ P.ideal :=
@@ -263,6 +274,7 @@ namespace IntegralSection
 variable {P : ArithVariety n} {a : ι → ℤ}
 
 
+omit [Fintype ι] [DecidableEq ι] in
 def valueAt (s : IntegralSection P a) (y : Coord n → Ω) : Ω :=
   aeval y s.num / aeval y s.den
 
@@ -309,6 +321,7 @@ theorem sub_mem_of_chartForm (s : IntegralSection P a) {y : Coord n → Ω}
   ring
 
 
+omit [Fintype ι] in
 theorem evalCone_rel {F : Type*} [CommRing F] {z : Cone n F} (hz : z ∈ P.points F)
     {g h m e : MvPolynomial (Coord n) ℤ} (hq : g * m - h * e ∈ P.ideal) :
     evalCone z g * evalCone z m = evalCone z h * evalCone z e := by

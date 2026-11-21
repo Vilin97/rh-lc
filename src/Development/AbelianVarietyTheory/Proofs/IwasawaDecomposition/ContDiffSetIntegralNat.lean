@@ -62,6 +62,7 @@ theorem contDiff_conjTranspose {n : ℕ} : ContDiff ℝ ∞ fun x : Matrix (Fin 
   exact (LinearMap.toContinuousLinearMap L).contDiff
 
 
+open Formalism.MainNotions.S in
 theorem exists_garding {n : ℕ} {ε : Fin n → Bool} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     [CompleteSpace H] [Nontrivial H] {σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)}
     (hσ : IsURepOn (UJset ε) σ) :

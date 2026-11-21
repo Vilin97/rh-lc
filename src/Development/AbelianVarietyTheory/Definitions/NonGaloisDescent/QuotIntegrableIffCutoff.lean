@@ -35,6 +35,7 @@ def QuotIntegrable {E : Type} [NormedAddCommGroup E] (T : Subgroup G) (μ : Meas
   Integrable (fun c : RCoset T => F (Quotient.out c)) (quotMeas T μ μT)
 
 
+omit [MeasurableSpace G] in
 theorem apply_out_mk {T : Subgroup G} {α : Type} {F : G → α} (hF : ∀ t ∈ T, ∀ x, F (t * x) = F x) (x : G) :
     F (Quotient.out (Quotient.mk (QuotientGroup.rightRel T) x)) = F x := by
   have h := Quotient.mk_out (s := QuotientGroup.rightRel T) x
@@ -56,6 +57,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Secon
   [MeasurableSpace G] [BorelSpace G] {T : Subgroup G} {μ : Measure G} {μT : Measure T}
 
 
+omit [SecondCountableTopology G] in
 theorem exists_isCosetCutoff [LocallyCompactSpace G] [T2Space G] (hT : IsClosed (T : Set G)) [μT.IsHaarMeasure]
     [μT.IsInvInvariant] : ∃ β : G → NNReal, Continuous β ∧ IsCosetCutoff T μT β := by
   obtain ⟨β, hc, h0, -, h1⟩ := GlobalTheory.bruhatFunctionExists_closedSubgroup G T hT μT inferInstance
@@ -105,6 +107,7 @@ theorem IsCosetCutoff.isQuotMeasure [SFinite μ] [μ.IsMulLeftInvariant] [SFinit
     lintegral_inv_eq_self (μ := μT) (fun t : T => (β (t * x) : ℝ≥0∞)), hβ.2, one_mul]
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] [SecondCountableTopology G] [BorelSpace G] in
 theorem IsQuotMeasure.eq_map {ν : Measure (RCoset T)} (hν : IsQuotMeasure T μ μT ν) {β : G → NNReal}
     (hβ : IsCosetCutoff T μT β) :
     ν = (μ.withDensity fun x => β x).map (Quotient.mk (QuotientGroup.rightRel T)) := by

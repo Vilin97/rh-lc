@@ -186,6 +186,7 @@ theorem exists_smul_mem (Λ : Submodule (𝓞 E) (Fin n → E)) (hΛ : Λ.FG) (x
     exact Λ.smul_mem _ (hb i)
 
 
+include A in
 theorem exists_base_smul_mem (Λ : Submodule (𝓞 E) (Fin n → E)) (x : Fin n → E)
     (h : ∀ P : HeightOneSpectrum (𝓞 E), P.asIdeal.comap (algebraMap (𝓞 F) (𝓞 E)) = p.asIdeal →
       ∃ s : 𝓞 E, s ∉ P.asIdeal ∧ s • x ∈ Λ) :

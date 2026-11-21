@@ -50,6 +50,7 @@ section OpenSubgroupOf
 variable {G : Type u} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
 
 
+omit [IsTopologicalGroup G] in
 theorem exists_eq_openSubgroupOf (U : OpenSubgroup G) (W : OpenSubgroup (U : Subgroup G)) :
     ∃ V : OpenSubgroup G, V ≤ U ∧ W = openSubgroupOf U V := by
   let V : OpenSubgroup G :=
@@ -91,6 +92,7 @@ theorem bijective_fromSubgroupOf {U V : OpenSubgroup G} (hVU : V ≤ U) (C : Rep
     (resSubgroupOfInvHom (show (V : Subgroup G) ≤ U from hVU) C) (fun _ => rfl) (fun _ => rfl) m
 
 
+include H in
 theorem t_cohomologyCores_openSubgroupOf (U V : OpenSubgroup G) (hVU : V ≤ U)
     (z : cohomology (Rep.res (openSubgroupOf U V : Subgroup (U : Subgroup G)).subtype
       (Rep.res (U : Subgroup G).subtype D)) 2) :
@@ -109,6 +111,7 @@ theorem t_cohomologyCores_openSubgroupOf (U V : OpenSubgroup G) (hVU : V ≤ U)
   exact h.symm
 
 
+include H in
 theorem bijective_t_cohomologyCores_openSubgroupOf (U V : OpenSubgroup G) (hVU : V ≤ U) :
     Function.Bijective ((H.t U).toAddMonoidHom.comp
       (cohomologyCores (openSubgroupOf U V) (Rep.res (U : Subgroup G).subtype D) 2).hom.toAddMonoidHom) := by
@@ -134,12 +137,16 @@ namespace DualityHypotheses
 variable (H : DualityHypotheses n D)
 
 
+omit [IsTopologicalGroup G] [CompactSpace G] [IsDiscreteRep D] in
+variable (n) in
 def zmodSubgroupOfHom {U V : OpenSubgroup G} (hVU : V ≤ U) :
     Rep.res (Subgroup.subgroupOfEquivOfLe (show (V : Subgroup G) ≤ U from hVU)).symm.toMonoidHom
       (zmodRep.{u} ((V : Subgroup G).subgroupOf U) n) ⟶ zmodRep.{u} (V : Subgroup G) n :=
   Rep.ofHom ⟨LinearMap.id, fun _ => rfl⟩
 
 
+omit [IsTopologicalGroup G] [CompactSpace G] [IsDiscreteRep D] in
+variable (n) in
 def zmodSubgroupOfInvHom {U V : OpenSubgroup G} (hVU : V ≤ U) :
     Rep.res (Subgroup.subgroupOfEquivOfLe (show (V : Subgroup G) ≤ U from hVU)).toMonoidHom
       (zmodRep.{u} (V : Subgroup G) n) ⟶ zmodRep.{u} ((V : Subgroup G).subgroupOf U) n :=
@@ -157,6 +164,7 @@ theorem bijective_zmodFromSubgroupOf {U V : OpenSubgroup G} (hVU : V ≤ U) (m :
     (zmodSubgroupOfHom n hVU) (zmodSubgroupOfInvHom n hVU) (fun _ => rfl) (fun _ => rfl) m
 
 
+omit [IsTopologicalGroup G] [CompactSpace G] [IsDiscreteRep D] in
 theorem resFunctor_map_zmodMulPairing_comp {U V : OpenSubgroup G} (hVU : V ≤ U)
     (hD : ∀ d : D, n • d = 0) :
     (Rep.resFunctor (Subgroup.subgroupOfEquivOfLe
@@ -175,6 +183,7 @@ theorem resFunctor_map_zmodMulPairing_comp {U V : OpenSubgroup G} (hVU : V ≤ U
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 
+omit [CompactSpace G] in
 theorem fromSubgroupOf_cupPairing {U V : OpenSubgroup G} (hVU : V ≤ U) (hD : ∀ d : D, n • d = 0)
     (a : cohomology (zmodRep.{u} ((V : Subgroup G).subgroupOf U) n) 1)
     (b : cohomology (Rep.res ((V : Subgroup G).subgroupOf U).subtype
@@ -191,6 +200,7 @@ theorem fromSubgroupOf_cupPairing {U V : OpenSubgroup G} (hVU : V ≤ U) (hD : �
     cohomologyMapAlong_resTensorHom_cup]
 
 
+include H in
 theorem isPerfectPairing_openSubgroupOf (U V : OpenSubgroup G) (hVU : V ≤ U) :
     IsPerfectPairing
       (bilinAddHom (cupPairing (zmodMulPairing n (Rep.res (openSubgroupOf U V :
@@ -224,6 +234,7 @@ theorem isPerfectPairing_openSubgroupOf (U V : OpenSubgroup G) (hVU : V ≤ U) :
       (bijective_zmodFromSubgroupOf hVU 1) (fun b a => key a b)
 
 
+include H in
 theorem groupDualityHypotheses (U : OpenSubgroup G) :
     GroupDualityHypotheses n (Rep.res (U : Subgroup G).subtype D) (H.t U).toAddMonoidHom where
   nonempty_addEquiv := H.nonempty_addEquiv
@@ -254,6 +265,7 @@ instance isDiscreteRep_dualRep_res (S : Subgroup G) (M : Rep.{u} (ULift.{u} ℤ)
   isDiscreteRep_dualRep _ _
 
 
+include H in
 theorem bijective_dualityMap (U : OpenSubgroup G) (M : Rep.{u} (ULift.{u} ℤ) (U : Subgroup G))
     [IsDiscreteRep M] [Finite M] (hM : ∀ m : M, n • m = 0) {r s : ℕ} (h : r + s = 2) :
     Function.Bijective
@@ -300,6 +312,8 @@ variable {G : Type u} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Com
   [TotallyDisconnectedSpace G] {n : ℕ} {D : Rep.{u} (ULift.{u} ℤ) G} [IsDiscreteRep D]
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G]
+  [IsDiscreteRep D] in
 theorem resTensorIso_inv_comp_resFunctor_map_evalPairing (S : Subgroup G)
     (M : Rep.{u} (ULift.{u} ℤ) G) :
     (resTensorIso S.subtype M (dualRep D M)).inv ≫ (Rep.resFunctor S.subtype).map (evalPairing D M) =
@@ -321,6 +335,7 @@ def tTop : cohomology D 2 →+ ZMod n :=
 variable [NeZero n]
 
 
+include H in
 theorem bijective_dualityMap_of_group (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) {r s : ℕ} (h : r + s = 2) :
     Function.Bijective (dualityMap D h H.tTop M) := by

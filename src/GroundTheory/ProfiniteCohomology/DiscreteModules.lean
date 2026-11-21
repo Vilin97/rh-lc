@@ -44,6 +44,7 @@ theorem isDiscreteRep_iff (A : Rep.{w} k G) :
   ⟨fun h => h.isOpen_stabilizer, fun h => ⟨h⟩⟩
 
 
+variable (k G) in
 def isDiscreteRep : ObjectProperty (Rep.{w} k G) := fun A => IsDiscreteRep A
 
 

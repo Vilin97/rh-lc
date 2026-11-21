@@ -109,6 +109,7 @@ theorem petE_sq_mul_vol : ∀ (D : D7) (j : ℕ) (H : ReciprocityTheory.ChartRes
   rfl
 
 
+set_option maxHeartbeats 1600000 in
 theorem petE_pull_good : ∀ (D : D7) (j : ℕ) (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E) (Dw : Datum H) (l : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H) (Xo : Moduli Dw l) (c : Coeff l) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ D.R.r) (dict : ∀ σ : c.F →+* ℂ, GA D (D.sp.W j) → Σ k, Frame ((U σ).X k).Ψ D.R.r) (d : DeltaDat Xo c 0) (U₂ : ∀ σ : d.c₂.F →+* ℂ, Unf d.Xo₂ d.c₂ σ D.R.r) (dict₂ : ∀ σ : d.c₂.F →+* ℂ, GA D (D.sp.W j) → Σ k, Frame ((U₂ σ).X k).Ψ D.R.r), Laws D j Xo c U dict → Laws D j d.Xo₂ d.c₂ U₂ dict₂ → d.IsLev → ∀ (a : (D.host.E →+* ℂ) × ℕ → ℕ) (n : ℕ), Dom a n → Even n → ∀ (f g : _), f ∈ cuspW Xo c U (wtZ a n) → g ∈ cuspW d.Xo₂ d.c₂ U₂ (wtZ a n) → Pull d f g → ∀ τ : d.c₂.F →+* ℂ, GoodEmb d.c₂ τ →
     petE (D.sp.W j) (dict₂ τ) (muQ1 (D.sp.W j)) (modelWt (U₂ τ) (wtZ a n)) (rdU (U₂ τ) g) =
     petE (D.sp.W j) (dict (τ.comp (d.eF : c.F →+* d.c₂.F))) (muQ1 (D.sp.W j)) (modelWt (U (τ.comp (d.eF : c.F →+* d.c₂.F))) (wtZ a n)) (rdU (U (τ.comp (d.eF : c.F →+* d.c₂.F))) f) := by

@@ -43,6 +43,7 @@ def AllPts (Q : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalis
     (Y : DivX D) (cX : ExtraC) (ex : Extra D L hT Gi Gl Kc Y cX) (Csz : ℝ) (p : PtAt ex Csz) (j : Fin D.R.m), p.Rows → More p → Q p j
 
 
+open Classical in
 def PlacesSt : Prop := AllPts fun {D _ _ _ _ _ _ _ ex _} p j => ∀ w : D.what₂.places.Pl, D.plEq w ∈ p.R.twPl →
   IntegralHeckeForms.TwOK (ex.nch.twI w) (ex.nch.k' w) (ex.nch.Q w) (GlobalTheory.TwistIndex.chosenChar ex.nch w) →
   ∀ ρ : Setup D.ntw, ρ.Good → RealPin p.R p.cG ρ →

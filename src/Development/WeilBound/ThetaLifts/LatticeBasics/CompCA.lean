@@ -18,6 +18,7 @@ open Formalism.UG (bc)
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n : ℕ} {v : Pl F}
 
 
+variable (σ v) in
 def cInt : intLoc F E v →+* intLoc F E v :=
   ((sigR (Fv F v) σ).comp (intLoc F E v).subtype).codRestrict _ fun z => sigR_mem_intLoc σ z.2
 

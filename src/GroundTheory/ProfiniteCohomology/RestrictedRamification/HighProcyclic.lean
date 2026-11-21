@@ -244,6 +244,7 @@ theorem IsPrimePowGenerator.H1Eval_surjective (hℓ : ℓ.Prime) (hσ : IsPrimeP
   rw [h, hfσ]
 
 
+omit [TotallyDisconnectedSpace G] in
 theorem primary_discreteCoind_of_primary (A : Rep.{u} k G) [IsDiscreteRep A]
     (hA : ∀ a : A, ∃ e : ℕ, ℓ ^ e • a = 0) (f : discreteCoind k G A) : ∃ e : ℕ, ℓ ^ e • f = 0 := by
   let f' : LocallyConstant G A := f
@@ -255,6 +256,7 @@ theorem primary_discreteCoind_of_primary (A : Rep.{u} k G) [IsDiscreteRep A]
   exact pow_nsmul_eq_zero_of_le (hK ⟨⟨f' x, x, rfl⟩, rfl⟩) (hkk ⟨f' x, x, rfl⟩)
 
 
+omit [TotallyDisconnectedSpace G] in
 theorem primary_coindCokernel_of_primary (A : Rep.{u} k G) [IsDiscreteRep A]
     (hA : ∀ a : A, ∃ e : ℕ, ℓ ^ e • a = 0) (x : coindCokernel A) : ∃ e : ℕ, ℓ ^ e • x = 0 := by
   have hepi : Epi (coindCokernelπ A) := (coindShortComplex_shortExact A).epi_g

@@ -167,6 +167,7 @@ theorem twN_univ : GlobalTheory.UnivChar.IsUnivChar (twN Mt nth').toD7.nexp := f
 theorem twN_psi : ∀ (i : D.ntw.Tw) (b : Bool) (u : G0g D.nd), NX.psiUTot D i b u = NX.psiUTot (twN Mt nth').toD7 i b u := fun _ _ _ => rfl
 
 
+set_option maxHeartbeats 4000000 in
 def expN (hτ : ∀ i j b kv x, 1 ≤ j → j ≤ D.R.m → NX.pG D kv ∉ placesOver D.host.E (D.ntw.l i) →
       ((E.tauG i j b kv x : (FractionRing (D.ntw.O i))ˣ) : FractionRing (D.ntw.O i)) =
         ((τ' i j b kv x : (FractionRing (D.ntw.O i))ˣ) : FractionRing (D.ntw.O i)))
@@ -189,6 +190,7 @@ def expN (hτ : ∀ i j b kv x, 1 ≤ j → j ≤ D.R.m → NX.pG D kv ∉ place
         (r i j b k Q ψ ⟨⟨h1, h2, h⟩⟩) }
 
 
+set_option maxHeartbeats 4000000 in
 def sideN {cf : CharFrame D} {Rw : RowSide D} {low : Finset ℕ}
     {Pq : HeightOneSpectrum (𝓞 (maximalRealSubfield D.host.E)) → PlE D.host} {S : RatDat D.ntw}
     {hL : ∀ j, ℕ → PlE D.host → Module.End D.what₂.LL (S.WL j)} {eig : ℕ → D.what₂.FT → ℕ → PlE D.host → ↥D.LL0}

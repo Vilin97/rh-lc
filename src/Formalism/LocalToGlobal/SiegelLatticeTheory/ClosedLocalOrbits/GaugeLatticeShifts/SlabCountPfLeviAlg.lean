@@ -330,6 +330,7 @@ theorem gd_of_point (hZ : SratZC) {σ : (VS D).V ≃ₗ[D.host.E] (VS D).V} {s :
 end LeviAlg
 
 
+open LeviAlg in
 theorem leviStabFinC_of (hWF : LeviWFinC) (hZ : SratZC) : LeviStabFinC := by
   intro D X Y u' Λ hΛ
   let G : Set ((VS D).V ≃ₗ[D.host.E] (VS D).V) := {σ | σ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT ∧

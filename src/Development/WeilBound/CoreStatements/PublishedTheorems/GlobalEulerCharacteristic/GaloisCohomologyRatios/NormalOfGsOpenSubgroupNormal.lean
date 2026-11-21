@@ -76,6 +76,7 @@ theorem normal_of_gsOpenSubgroup_normal
   infer_instance
 
 
+open scoped Classical in
 theorem card_infinitePlace_eq (K : FiniteSubfield) : Fintype.card (InfinitePlace K.1) =
     Fintype.card {v : InfinitePlace K.1 // v.IsReal} + Fintype.card {v : InfinitePlace K.1 // v.IsComplex} := by
   have h2 : Fintype.card {v : InfinitePlace K.1 // v.IsComplex} =

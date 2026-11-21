@@ -9,6 +9,7 @@ open Filter Topology
 namespace GlobalTheory
 
 
+open Polynomial in
 theorem hasDerivAt_linearMap_eval_algebraMap {A : Type*} [CommRing A] [Algebra ℝ A]
     (Φ : A →ₗ[ℝ] ℝ) (R : Polynomial A) (τ : ℝ) :
     HasDerivAt (fun t : ℝ => Φ (R.eval (algebraMap ℝ A t)))

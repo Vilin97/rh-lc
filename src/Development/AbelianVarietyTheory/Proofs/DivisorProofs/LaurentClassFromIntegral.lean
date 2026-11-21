@@ -40,6 +40,7 @@ theorem laurentProd_bijective (B C : Type) [CommRing B] [CommRing C] : Function.
     constructor <;> (apply AddMonoidAlgebra.coeff_injective; ext n; simp [laurentMap_coeff])
 
 
+open GlobalTheory.EtC.GmPhiNat in
 theorem eq_zero_of_pull_laurent_fst_snd (q : ℕ) (B C : Type) [CommRing B] [CommRing C] (n i : ℤ)
     (z : Ht q (sp (LaurentPolynomial (B × C))) n i)
     (h1 : pull _ (spMap (laurentMap (RingHom.fst B C))) _ n z = 0)

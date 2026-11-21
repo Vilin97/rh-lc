@@ -30,6 +30,8 @@ private theorem inv_mul_conj_mul_cancel {n : Type*} [Fintype n] [DecidableEq n] 
     _ = _ := by rw [h1, Matrix.one_mul, h2, Matrix.mul_one]
 
 
+open MeasureTheory Matrix in
+open scoped InnerProductSpace ENNReal in
 theorem _root_.GlobalTheory.CellAmp.Model.pairMaj_stabAct {k r : ℕ} (γ a : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) (hγ : IsUnit γ.det)
     (ha : IsUnit a.det) (b : ℝ) (p : _root_.Formalism.MainNotions.S.PairSp k r) : _root_.GlobalTheory.CellAmp.pairMaj γ b (_root_.Formalism.MainNotions.S.stabAct γ a p) = _root_.GlobalTheory.CellAmp.pairMaj γ b p :=
   congrArg (fun M => _root_.Formalism.FourierDecayAlt.B.gN M ^ (-b))
@@ -49,6 +51,8 @@ theorem _root_.GlobalTheory.CellAmp.Model.ell_one (k r : ℕ) (z : Fin (2 * r + 
     exact hz _ (Or.inl (by simp [_root_.Formalism.QuantumDeterminants.eI]))
 
 
+open MeasureTheory Matrix in
+open scoped InnerProductSpace ENNReal in
 theorem _root_.GlobalTheory.CellAmp.Model.cellData_open {k r : ℕ} (L : _root_.Formalism.MainNotions.S.LocBessel k r) (μG : Measure (_root_.Formalism.QuantumDeterminants.Mt k r))
     (g : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) (hg : g ∈ _root_.Formalism.QuantumDeterminants.UH (_root_.Formalism.QuantumDeterminants.Hpk k r)) (hinv : g⁻¹ * g = 1)
     (hG : 0 < _root_.Formalism.QuantumDeterminants.Gf k r L.z L.z' g) (hm : _root_.Formalism.FourierDecayAlt.C2.IsMonomial (_root_.Formalism.QuantumDeterminants.Zhat k r L.z L.z' g))

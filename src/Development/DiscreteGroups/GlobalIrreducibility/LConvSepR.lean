@@ -47,6 +47,7 @@ theorem repr_delta (hI : PosInt I) (hB : IsInvForm (rhoW ψ) B) {K : Subgroup (G
   exact div_mul_cancel₀ _ (cK_ne_zero hI hK)
 
 
+include hψ in
 theorem repr (hI : PosInt I) (hB : IsInvForm (rhoW ψ) B) (y x : WT (m := m) ψ) :
     I (fun g => (x : GL (Fin m) k → ℂ) g * Wf ψ hψ I B y g) = B y x := by
   obtain ⟨K, hK, hKf⟩ := exists_good_fix hψ x y

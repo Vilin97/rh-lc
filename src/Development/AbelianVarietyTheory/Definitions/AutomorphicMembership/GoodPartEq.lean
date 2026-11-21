@@ -21,9 +21,11 @@ set_option linter.style.haveILetI false
 section Spaces
 
 
+variable (a) in
 def goodPartB : type_of% (@goodPart b.D) := @fun V S θ M J χ e => (by with_unfolding_all exact ((@goodPart a.D ((V)) ((S)) ((θ)) (((ds a M))) ((J)) ((χ)) ((e))) : _))
 
 
+variable (a) in
 theorem goodPart_eq : @goodPart b.D = @goodPartB B C a b := by
   funext V S θ M J χ e
   delta goodPart
@@ -31,9 +33,11 @@ theorem goodPart_eq : @goodPart b.D = @goodPartB B C a b := by
   exact (by with_unfolding_all exact ((Eq.refl (@goodPartB B C a b V S θ M J χ e)) :))
 
 
+variable (a) in
 def partFullB : type_of% (@partFull b.D) := @fun V S θ M J χ Sb c => (by with_unfolding_all exact ((@partFull a.D ((V)) ((S)) ((θ)) (((ds a M))) ((J)) ((χ)) ((Sb)) ((c))) : _))
 
 
+variable (a) in
 theorem partFull_eq : @partFull b.D = @partFullB B C a b := by
   funext V S θ M J χ Sb c
   delta partFull
@@ -114,6 +118,7 @@ section Two
 variable {A : FamIn a.D.what₂.LL G Pl0 T a.D.R.m} {R : RealDat a.D A Ks} {F : Face a.D A}
 
 
+omit [Field Ks] [NumberField Ks] iK in
 theorem levIs_tr {L : Links.LevCh a.D T} {μ0 : T} (h : L.Is μ0) : (levCh b L).Is μ0 := by
   constructor
   case mu0 => exact (by with_unfolding_all exact (h.mu0 :))
@@ -174,6 +179,7 @@ theorem isModels_tr (h : R.IsModels) : letI := alg b iK; (real b R).IsModels := 
   case order => exact (by with_unfolding_all exact (h.order :))
 
 
+set_option maxHeartbeats 800000 in
 theorem isChainW_tr (h : R.IsChainW) : letI := alg b iK; (real b R).IsChainW := by
   letI := alg b iK
   constructor
@@ -192,6 +198,7 @@ theorem isChainW_tr (h : R.IsChainW) : letI := alg b iK; (real b R).IsChainW := 
   case Th => tr_via (fun p : type_of% R.PTh => ∀ t, OrZero (p t) (R.Th t)) (pTh_eq b R) h.Th
 
 
+set_option maxHeartbeats 800000 in
 theorem isThPW_tr (h : R.IsThPW) : letI := alg b iK; (real b R).IsThPW := by
   letI := alg b iK
   constructor
@@ -203,6 +210,7 @@ theorem isThPW_tr (h : R.IsThPW) : letI := alg b iK; (real b R).IsThPW := by
   case thG => kexactB h.thG
 
 
+set_option maxHeartbeats 800000 in
 theorem exAt_tr (h : R.ExAt) : letI := alg b iK; (real b R).ExAt := by
   letI := alg b iK
   constructor

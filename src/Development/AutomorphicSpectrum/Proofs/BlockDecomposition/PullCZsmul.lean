@@ -54,6 +54,7 @@ theorem st_pullC (n : ResMor T T' m) {j : ℕ} (z : Cn F j) :
 end GlobalTheory.CompanionTheory.EdgeMapPull
 
 
+open GlobalTheory.CompanionTheory.EdgeMapPull in
 theorem GlobalTheory.CompanionTheory.EdgeMapPull.edgeMap : CrystallineSemistableComparison.E.EdgeMap := by
   intro R R' _ _ σ C C' _ _ F F' T T' m n j x h hE
   obtain ⟨z, hz, hS, rfl⟩ := hE

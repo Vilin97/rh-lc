@@ -33,6 +33,7 @@ theorem den_eq_one_of_padicValRat_nonneg {a : ℚ} (h : ∀ p : ℕ, p.Prime →
 end FibreNormDehomIntegral
 
 
+open FibreNormDehomIntegral in
 theorem FibreNormDehomIntegral.proof (hF : FibreNormBadPrimesFinite.Statement)
     (hG : FibreNormGoodPrimeIntegral.Statement) (hB : FibreNormPrimeBound.Statement) :
     FibreNormDehomIntegral.Statement := by

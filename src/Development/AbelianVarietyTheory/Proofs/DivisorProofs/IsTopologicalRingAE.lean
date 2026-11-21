@@ -149,6 +149,7 @@ end Quasi
 section Coord
 
 
+variable (F E) in
 abbrev IxF (nS nT : ℕ) : Type := (Fin nT × Fin nS) × InfinitePlace F
 
 structure IsChartF (θ : InfinitePlace F → (Ainf F ⊗[F] E →+* ℂ)) (ι : (InfinitePlace F → ℂ) →+ AEF F E) : Prop where
@@ -183,6 +184,7 @@ def rhoVF (hψ : IsCharAF F ψ) (ι : (InfinitePlace F → ℂ) →+ AEF F E) (v
   rhoBF σ JS JT xi0 ψ hψ (iotaVF ι v)
 
 
+open Classical in
 def HMF (tau : InfinitePlace F → (E →+* ℂ)) : Matrix (IxF F nS nT) (IxF F nS nT) ℂ :=
   GlobalTheory.RealWeil.blk (fun w => ((2 * (tau w xi0).im : ℝ) : ℂ) • JT.map (tau w)) fun w => (JS.map (tau w))⁻¹
 
@@ -191,6 +193,7 @@ def compAtF (θ : InfinitePlace F → (Ainf F ⊗[F] E →+* ℂ)) (w : Infinite
   x.map ((θ w).comp (infPartF F E))
 
 
+open Classical in
 def mMF (θ : InfinitePlace F → (Ainf F ⊗[F] E →+* ℂ)) :
     GAF σ JS × GAF σ JT →* Matrix (IxF F nS nT) (IxF F nS nT) ℂ where
   toFun p := GlobalTheory.RealWeil.blk (fun w => compAtF θ w (mtF σ JT p.2)) fun w => compAtF θ w (mtF σ JS p.1⁻¹)

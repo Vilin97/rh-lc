@@ -118,6 +118,7 @@ theorem Placed.of_heq {D : D7} {G' : Type} [Group G'] [Fintype G'] {Pl0 T : Type
   exact h
 
 
+set_option maxHeartbeats 1000000 in
 theorem placed_upd {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
     {A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
     (R : RealDat3 D A3 Ks) (k : ℝ) (lam : type_of% R.lam3) (e : type_of% (R.updS k lam).err0) (F : Face3 D A3)
@@ -129,6 +130,7 @@ theorem placed_upd {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
   ⟨⟨h.1.fin, h.1.conj, h.1.mat⟩, h.2.1, h.2.2⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem exAt_upd {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
     {A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
     (R : RealDat3 D A3 Ks) (k : ℝ) (lam : type_of% R.lam3) (e : type_of% (R.updS k lam).err0) (h : R.toRealDat.ExAt) :
@@ -145,6 +147,7 @@ variable {K : Ctx} {B : GlobalTheory.Mem.Base} {f : Fr B.toPre} {T : TwDat B} {w
   {t : RowsT K w Z Wt ex.p0}
 
 
+set_option maxHeartbeats 1000000 in
 theorem exAt_of_args (a : TwArgs ex t) (x : TwIn ex) (hx : HEq a.x x) : x.R.toRealDat.ExAt := by
   obtain rfl := eq_of_heq hx
   have e := congrArg (fun s => match s with
@@ -152,6 +155,7 @@ theorem exAt_of_args (a : TwArgs ex t) (x : TwIn ex) (hx : HEq a.x x) : x.R.toRe
   exact e.mpr (exAt_upd _ _ _ _ t.exAt)
 
 
+set_option maxHeartbeats 1000000 in
 theorem placed_of_args (a : TwArgs ex t) (x : TwIn ex) (hx : HEq a.x x)
     {F0 : ∀ u, Formalism.L2.Forms.Forms0 (w.st Z).toD7 u} (P : SPack (w.st Z).toD7 F0) (S : SRest P)
     (g : GA (w.st Z).toD7 ((w.st Z).toD7.sp.Y 0)) (c : ℝ)

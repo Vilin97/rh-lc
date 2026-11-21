@@ -48,6 +48,7 @@ theorem res_eq_zero_iff (x : R) : res O R x = 0 ↔ x ∈ maximalIdeal R := by
   rw [map_eq_zero_iff _ (RingEquiv.injective _), residue_eq_zero_iff]
 
 
+variable {O R} in
 theorem res_map {R' : Type} [CommRing R'] [Algebra O R'] [IsCO O R'] (f : R →ₐ[O] R') (x : R) :
     res O R' (f x) = res O R x := by
   obtain ⟨a, ha⟩ := IsCO.res_surj (O := O) x
@@ -328,6 +329,7 @@ def Lift.TStable (r : Lift O rbar R) : Prop :=
         (Lift.map (O := O) (rbar := rbar) (R := R) (R' := R') f' r)
 
 
+variable (Γ) in
 def PhiCond (l : ℕ) : Prop :=
   ∀ H : Subgroup Γ, IsOpen (H : Set Γ) →
     Finite {φ : H →* Multiplicative (ZMod l) // IsOpen (φ.ker : Set H)}

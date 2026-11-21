@@ -163,6 +163,7 @@ section Primary
 variable {k : Type u} [CommRing k]
 
 
+omit [IsTopologicalGroup G] in
 def primarySubmodule (A : Rep.{u} k G) (p : ℕ) : Submodule k A where
   carrier := {a | ∃ k : ℕ, p ^ k • a = 0}
   add_mem' := fun {a b} ha hb => (AddCommGroup.primaryComponent A p).add_mem ha hb
@@ -176,6 +177,7 @@ theorem primarySubmodule_le_comap (A : Rep.{u} k G) (p : ℕ) (g : G) :
   fun a ⟨k, hk⟩ => ⟨k, by rw [← map_nsmul, hk, map_zero]⟩
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] in
 theorem bijective_nsmul_quotient_primarySubmodule (A : Rep.{u} k G)
     (hA : IsAddTorsion A) {p : ℕ} (hp : p.Prime) :
     Function.Bijective fun x : A ⧸ primarySubmodule A p => p • x := by
@@ -344,6 +346,7 @@ theorem subsingleton_cohomology_of_finite_of_simple {p : ℕ} {m : ℕ}
       exact ⟨k, by rw [← map_nsmul, hk, map_zero]⟩
 
 
+omit [IsTopologicalGroup G] in
 theorem finite_sup_of_finite {R M : Type*} [Ring R] [AddCommGroup M] [Module R M]
     (W₁ W₂ : Submodule R M) [Finite W₁] [Finite W₂] : Finite ↥(W₁ ⊔ W₂) := by
   refine Finite.of_surjective

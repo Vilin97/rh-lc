@@ -137,6 +137,7 @@ abbrev AInt (v : HeightOneSpectrum (𝓞 E)) : Subgroup (GL (Fin N) (v.adicCompl
 abbrev PFin : Type := Πʳ v : HeightOneSpectrum (𝓞 E), [GL (Fin N) (v.adicCompletion E), AInt E N v]
 
 
+open GroundTheory.Automorphic.AdelicGLn in
 def finInc : FiniteAdelicGL E N →* GA E N :=
   ((prodEquiv E N).symm.toMulEquiv.toMonoidHom).comp (MonoidHom.inr _ _)
 
@@ -145,6 +146,7 @@ theorem continuous_finInc : Continuous (finInc E N) :=
   (prodEquiv E N).symm.continuous.comp (continuous_const.prodMk continuous_id)
 
 
+open GroundTheory.Automorphic.AdelicGLn in
 theorem isMulRightInvariant_GA (μ : Measure (GA E N)) [μ.IsHaarMeasure] :
     μ.IsMulRightInvariant := by
   classical

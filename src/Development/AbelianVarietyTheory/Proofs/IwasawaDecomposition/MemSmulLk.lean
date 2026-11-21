@@ -280,6 +280,7 @@ variable {e : (D.mem u).A.vT ≃ {v : HeightOneSpectrum (𝓞 D.host.F) // (((D.
   {eF : ∀ v : (D.mem u).A.vT, (D.mem u).A.Fv v ≃+* (𝓞 D.host.F ⧸ (e v).1.asIdeal)}
 
 
+set_option maxHeartbeats 4000000 in
 def mkAtT (he : A.eV = e)
     (hF : ∀ v (a : 𝓞 D.host.F), eF v (A.res v (algebraMap (𝓞 D.host.F) (𝓞 D.host.E) a)) = Ideal.Quotient.mk _ a)
     (hseen : SeenCl A) (hdisc : DiscCl (u := u))

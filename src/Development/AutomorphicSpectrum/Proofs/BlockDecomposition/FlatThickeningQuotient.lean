@@ -15,6 +15,8 @@ open CategoryTheory AlgebraicGeometry GlobalTheory.LogCris CrystallineSemistable
 namespace GlobalTheory.CompanionTheory.FlatThick
 
 
+open TensorProduct in
+set_option backward.isDefEq.respectTransparency true in
 theorem flat_quotientMap {P B : Type} [CommRing P] [CommRing B] [Algebra P B] [Module.Flat P B] (I₀ : Ideal P) :
     (Ideal.quotientMap (I₀.map (algebraMap P B)) (algebraMap P B) Ideal.le_comap_map :
       P ⧸ I₀ →+* B ⧸ I₀.map (algebraMap P B)).Flat := by

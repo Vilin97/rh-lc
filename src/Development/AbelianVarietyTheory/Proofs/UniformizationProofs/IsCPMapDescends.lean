@@ -453,6 +453,7 @@ end Main
 end GlobalTheory.IsoDesc
 
 
+open GlobalTheory.IsoDesc in
 theorem GlobalTheory.isCPMap_descends : ∀ (S S' : Scheme.{0}) [ConnectedSpace S'] (f : S' ⟶ S) (X : Type) [AddCommGroup X] [Module.Free ℤ X] (G' : Over S') [GrpObj G'] [IsCommMonObj G'] [ConnectedSpace G'.left] (Q : TQ G' X) (P' : CP G') (D : Q.Desc P') (B : Over S) [GrpObj B] [IsCommMonObj B] (M : CP B) (β : Q.B.left ⟶ B.left) (hβ : β ≫ B.hom = Q.B.hom ≫ f) (hw) (w), (∀ (T : Over S') (x y : T ⟶ Q.B), toBase hβ (x * y) = toBase hβ x * toBase hβ y) → IsCPMap P' M f (Q.q.left ≫ β) hw w → ∃ v, IsCPMap D.M M f β hβ v := by
   intro S S' _ f X _ _ G _ _ _ Q P D B _ _ M β hβ hw w mul Hw
   have := Q.q_hom

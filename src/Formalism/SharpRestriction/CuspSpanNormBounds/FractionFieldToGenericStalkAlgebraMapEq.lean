@@ -200,6 +200,7 @@ namespace Model
 variable [MeasurableSpace E]
 
 
+open scoped Classical in
 def bbIntegrand (M : Model F E) {m : ℕ} (w : Pt E (m + 1)) (c : M.Cls m)
     (xy : (IL (m + 1) → E) × (IN w → E)) : ℂ := by
   classical

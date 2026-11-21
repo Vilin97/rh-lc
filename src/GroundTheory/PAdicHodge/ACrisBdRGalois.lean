@@ -34,6 +34,7 @@ theorem eq_zero_of_p_mul_eq_zero {x : ACris K p} (h : (p : ACris K p) * x = 0) :
   exact ((IsPerfectoidField.isUnit_natCast_p_bDeRhamPlus (K := K) p).mul_right_eq_zero).1 h1
 
 
+variable (K p) in
 def iotaPlus : BCrisPlus K p →+* BDeRhamPlus (normInteger K) p :=
   Localization.awayLift (iota K p) (p : ACris K p) (by
     rw [map_natCast]
@@ -72,6 +73,7 @@ theorem mk_dpow_eq_zero {x : AInf K p} (hx : x ∈ RingHom.ker (fontaineTheta (n
   ring
 
 
+set_option maxHeartbeats 2000000 in
 theorem iotaQ_log {x : AInf K p} (hx : x ∈ RingHom.ker (fontaineTheta (normInteger K) p)) (m : ℕ) :
     iotaQ K p m (log hx) = Ideal.Quotient.mk (kerAway K p ^ m)
       (∑ n ∈ Finset.range m, (logTermZero hx n : Localization.Away (p : AInf K p))) := by

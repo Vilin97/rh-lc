@@ -297,6 +297,7 @@ theorem isIntegral_modularJ_of_mul_mem {τ : ℍ} {α : ℂ} (hα : ∀ m : ℤ,
     linear_combination (τ : ℂ) * hrs - hpq
 
 
+open NumberField in
 theorem isIntegral_modularJ_of_ringOfIntegers {K : Type*} [Field K] [NumberField K]
     (hK : Module.finrank ℚ K = 2) (ι : K →+* ℂ) {τ : ℍ}
     (h : ∀ α : 𝓞 K, ∀ x ∈ Submodule.span ℤ {(τ : ℂ), 1},

@@ -69,6 +69,7 @@ theorem hermC_eq_sum_col (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) {A : 
     Finset.sum_congr rfl fun _ _ => by ring
 
 
+variable {X} in
 theorem EF_eq_coper {y : Frame X.Ψ r} (hy : ∀ τ, (mat y τ).det ≠ 0) (u v : Fin r → E) :
     ((EF X u v : ℚ) : ℂ) = I / 2 * (coper X y u ⬝ᵥ per X y v - per X y u ⬝ᵥ coper X y v) := by
   have h := congrArg (fun t : ℝ => (t : ℂ)) (EF_eq_sum X u v)

@@ -53,6 +53,7 @@ variable {La : Type} [AddCommGroup La] [Module (𝓞 E) La] {r : ℕ} (τ : 𝓞
   (hs : ∀ (P : Pl E) (a : Fin r) (t : 𝓞 E) (x : La), ρ P a (t • x) = Ideal.Quotient.mk P.asIdeal (τ t) * ρ P a x)
 
 
+include hs in
 theorem rho_eq_zero {J : Ideal (𝓞 E)} {P : Pl E} (hJ : J ≤ P.asIdeal) (hτ : ∀ t, τ (τ t) = t) {x : La}
     (hx : x ∈ (J.map (τ : 𝓞 E →+* 𝓞 E) • ⊤ : Submodule (𝓞 E) La)) (a : Fin r) : ρ P a x = 0 := by
   refine Submodule.smul_induction_on (p := fun x => ρ P a x = 0) hx (fun c hc y _ => ?_) (fun x y hx hy => ?_)
@@ -61,6 +62,7 @@ theorem rho_eq_zero {J : Ideal (𝓞 E)} {P : Pl E} (hJ : J ≤ P.asIdeal) (hτ 
   · rw [map_add (f := _), hx, hy, add_zero]
 
 
+include hs in
 theorem mem_of_rho_eq_zero (hτ : ∀ t, τ (τ t) = t) {S U : Finset (Pl E)} (hSU : S ⊆ U)
     (hker : ∀ x, (∀ P ∈ U, ∀ a, ρ P a x = 0) → x ∈ ((∏ P ∈ U, P.asIdeal).map (τ : 𝓞 E →+* 𝓞 E) • ⊤ : Submodule (𝓞 E) La))
     (x : La) (hx : ∀ P ∈ S, ∀ a, ρ P a x = 0) :
@@ -85,6 +87,7 @@ theorem mem_of_rho_eq_zero (hτ : ∀ t, τ (τ t) = t) {S U : Finset (Pl E)} (h
   rwa [← add_smul, add_sub_cancel, one_smul] at h4
 
 
+include hs in
 theorem rank_eq {n : ℕ} {P : Pl E} (N : Submodule (𝓞 E) La) (hN : ∀ x ∈ N, ∀ a, ρ P a x = 0)
     (hon : ∀ t : Fin r → kP P, ∃ x, ∀ a, ρ P a x = t a) (x : Fin n → La)
     (hx : Submodule.span (𝓞 E) (Set.range x) ⊔ N = ⊤) : (Matrix.of fun b a => ρ P a (x b)).rank = r := by
@@ -130,6 +133,7 @@ open GlobalTheory.OnCmp GlobalTheory.BigOn GlobalTheory.RealIndexBound
 open ReciprocityTheory.ChartRestriction.G.Geo.Tor (Datum Level Moduli Coeff)
 
 
+set_option maxHeartbeats 1000000 in
 theorem psi_value_full {D : D7} (T : Full D) (hT : LawsFull T) (j : ℕ) (hj : InR D j) (n : ℕ) (V : HSp D)
     (hV : T.J.V j T.J.toCore.σ₀ = V) (hr : V.rank = D.R.r) (N : ℕ) (hN : 0 < N)
     (hxN : ∀ h : GA D V, T.xi (Matrix.GeneralLinearGroup.det (finHom V h)) ^ N = 1)
@@ -190,6 +194,8 @@ theorem places_half {D : D7} (C : Formalism.L2.Host.CharFrame D) (v : HeightOneS
     exact hsq
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem datum_eq_hat_free : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A : FamIn D.what₂.LL G Pl0 T0 D.R.m) (T : Full D) [Algebra T.J.Q.c.F D.what₂.LL] (R : RealDat D A T.J.Q.c.F) (F : Face D A) (κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)) (v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec) (fw : FWTie T.J R κ v₀) (O : ∀ i, OMDat T.J.toCore R i Unit (fun _ => A.μ0)) (hT : LawsFull T), GlobalTheory.Hk3.Core R F → ∀ (i : Fin D.R.m), OMPins T.J R κ v₀ O i → R.βV i = 1 → ∀ (v : HeightOneSpectrum (𝓞 D.what₂.LL)), v ∈ R.twPl → R.tup_mu_on → QGuard R → GlobalTheory.FinalJoin2.FieldOK0 D (ownAt D v) → Formalism.L2.Host.ValLL0 D R.C → (∀ x, (((R.C.delAt (Formalism.EigenvalueLevelCeiling.plc v)).1 x : ℂˣ) : ℂ) ∈ D.what₂.embLL.range) → T.J.Q.l.Mb = ∏ PP ∈ R.Pg, PP.asIdeal → RunPin (T := T) R i (κ i).n v (ownAt D v) → ∀ (ℓ : G → (LaMod (T.Q.Dw ((i : ℕ) + 1)) T.Q.l ≃ₗ[𝓞 D.host.E] LaMod (T.Q.Dw ((i : ℕ) + 1)) T.Q.l)), LevelPin (T := T) R i ℓ → ActionPin (T := T) (R := R) hT.p fw i ℓ → ∀ χ ξR ω φ, KerDat R i (R.C.delAt (Formalism.EigenvalueLevelCeiling.plc v)) χ ξR (placesOver R (R.mu v) (ownAt D v)) ω φ → ∀ (x₀ : Fin (Vc D i).rank → (T.Q.Dw ((i : ℕ) + 1)).La), AdmX (l := T.Q.l) true x₀ → ∃ (y₀ : ∀ PP : Pl D.host.E, Matrix (Fin (Vc D i).rank) (Fin (Wc D i).rank) (kP PP)) (ζ : ℂ) (φc : (Fin (Vc D i).rank → LevQc (T.Q.Dw ((i : ℕ) + 1)) (T.dδ ((i : ℕ) + 1) (Vc D i).rank).l₂) → ℂ), (∀ PP ∈ R.Pg, (y₀ PP).rank = (Wc D i).rank) ∧ ζ ∈ D.what₂.embLL.range ∧ (∃ m : ℕ, 0 < m ∧ ζ ^ m = 1) ∧ GlobalTheory.AdTh.hatC (T.dδ ((i : ℕ) + 1) (Vc D i).rank).l₂ φc = (fun q => ζ * (O i).s0 ((T.dδ ((i : ℕ) + 1) (Vc D i).rank).eF.symm ((T.dδ ((i : ℕ) + 1) (Vc D i).rank).w x₀ q))) ∧ PhiOf R i (placesOver R (R.mu v) (ownAt D v)) (omegaFree R i (placesOver R (R.mu v) (ownAt D v)) ξR y₀) (iotaW T.J i) (Mfr (T.dδ ((i : ℕ) + 1) (Vc D i).rank).l₂ • ⊤) φc ∧ (∀ PP, PP ∈ R.Pg ∨ PP ∈ (placesOver R (R.mu v) (ownAt D v)) → (T.dδ ((i : ℕ) + 1) (Vc D i).rank).l₂.Mb ≤ PP.asIdeal ∧ ((D.host.QS * D.host.q * Ideal.absNorm D.host.ccK : ℕ) : 𝓞 D.host.E) ∉ PP.asIdeal) ∧ (∀ PP, PP ∈ R.Pg ∨ PP ∈ (placesOver R (R.mu v) (ownAt D v)) → ((badN D * (T.dδ ((i : ℕ) + 1) (Vc D i).rank).l₂.M : ℕ) : 𝓞 D.host.E) ∈ PP.asIdeal) := by
   intro D G _ _ Pl0 T0 A T _ R F κ v₀ fw O hT hC i hO hβV v _ _ hG _ _ hdel hMb hrun ℓ _ _ χ ξR ω φ hker x₀ hadm
   classical

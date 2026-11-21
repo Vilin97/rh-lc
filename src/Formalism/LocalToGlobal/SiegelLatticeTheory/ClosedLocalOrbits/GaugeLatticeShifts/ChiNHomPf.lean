@@ -265,6 +265,7 @@ section ChiTriv
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
+open Formalism.L2.SG.TermOp.Vanish in
 theorem chiTrivialC_of_nilradicalConjLevel (hK : NilradicalConjLevel) : ChiTrivialC := by
   intro D X Y u u' Λ Λ' hΛ hΛ' p s hs
   obtain ⟨x, m, hx, hxs, hm, hm'⟩ := hs

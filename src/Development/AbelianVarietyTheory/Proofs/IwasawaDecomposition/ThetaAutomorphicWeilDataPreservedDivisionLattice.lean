@@ -44,10 +44,12 @@ theorem isPolFock_tr {ψ : AddChar (GlobalTheoryTheory.GenusMassVolumes.AF D.hos
     BesDat (D := setDiv D N h) A B ι := { d with }
 
 
+set_option maxHeartbeats 4000000 in
 def thetaTiedTr {X : ThetaX D} (T : ThetaTied D X) : ThetaTied (setDiv D N h) (thTr N h X) :=
   { T with ev_aut := fun V F => (isAutFun_tr N h).1 (T.ev_aut V F) }
 
 
+set_option maxHeartbeats 4000000 in
 def weilTiedTr {X : ThetaX D} {T : ThetaTied D X} (Wl : WeilTied D X T) :
     WeilTied (setDiv D N h) (thTr N h X) (thetaTiedTr N h T) :=
   { Wl with
@@ -55,6 +57,7 @@ def weilTiedTr {X : ThetaX D} {T : ThetaTied D X} (Wl : WeilTied D X T) :
     om_tw := { Wl.om_tw with } }
 
 
+set_option maxHeartbeats 4000000 in
 theorem weilTiedEq_tr {X : ThetaX D} {T : ThetaTied D X} {Wl : WeilTied D X T} (e : WeilCompatibleEquivariance Wl) :
     WeilCompatibleEquivariance (weilTiedTr N h Wl) :=
   { e with
@@ -62,6 +65,7 @@ theorem weilTiedEq_tr {X : ThetaX D} {T : ThetaTied D X} {Wl : WeilTied D X T} (
     om_tw := { e.om_tw with } }
 
 
+set_option maxHeartbeats 4000000 in
 def allTiedTr {X : ThetaX D} {A : TH.ProvA} (a : AllTied D X A) : AllTied (setDiv D N h) (thTr N h X) A where
   T := thetaTiedTr N h a.T
   sm := ⟨a.sm.1, fun θ hθ V hV => (a.sm.2 θ hθ V hV).trans (Set.ext fun _ => isAutFunSm_tr N h)⟩
@@ -80,6 +84,8 @@ end Gen
 end GlobalTheory.Mem.Top.Bl.ThTTr
 
 
+open GlobalTheory.Mem.Top.Bl.ThTTr in
+set_option maxHeartbeats 16000000 in
 theorem GlobalTheory.Mem.Top.Bl.ThTTr.thT_setDiv : ∀ {B : Base} {f : Fr B.toPre} {T : TwDat B} (w : ColW B f T) (Z : w.Lt) {Wt : Set B.places.Pl} {nch : NChoice (w.D Z)} (n : NchT w Z Wt nch) (th : ThetaX (w.D Z)) (N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V) (h : B.Word → ℝ), ThT n th → Nonempty (ThT (nchTTr w Z N h n) (thTr (D := w.D Z) N h th)) := by
   intro B f T w Z Wt nch n th N h t
   exact ⟨{ provA := t.provA

@@ -15,6 +15,10 @@ namespace GlobalTheory.UnitFrame
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 
+open NumberField Matrix in
+open scoped nonZeroDivisors ComplexConjugate in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
+omit [IsCMField E] in
 theorem _root_.GlobalTheory.UnitFrame.trace_eq_sum_re (Ψ : Finset (E →+* ℂ))
     (hΨ : ∀ τ : E →+* ℂ, τ ∈ Ψ ↔ ComplexEmbedding.conjugate τ ∉ Ψ) (z : E) :
     ((Algebra.trace ℚ E z : ℚ) : ℝ) = ∑ τ : Ψ, 2 * (τ.1 z).re := by
@@ -49,12 +53,20 @@ theorem _root_.GlobalTheory.UnitFrame.trace_eq_sum_re (Ψ : Finset (E →+* ℂ)
   push_cast; ring
 
 
+open NumberField Matrix in
+open scoped nonZeroDivisors ComplexConjugate in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
+omit [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.UnitFrame.hermC_eq {r : ℕ} (τ : E →+* ℂ)
     (G : Matrix (Fin r) (Fin r) E) (u v : Fin r → ℂ) :
     _root_.ReciprocityTheory.ChartRestriction.G.FD.hermC τ G u v = u ⬝ᵥ (G.map τ) *ᵥ (star v) := by
   simp [_root_.ReciprocityTheory.ChartRestriction.G.FD.hermC, dotProduct, mulVec, Finset.mul_sum, mul_assoc]
 
 
+open NumberField Matrix in
+open scoped nonZeroDivisors ComplexConjugate in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
+omit [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.UnitFrame.gram_eq {r : ℕ} (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E)
     (x : Matrix (Fin r) (Fin r) ℂ) :
     _root_.ReciprocityTheory.ChartRestriction.G.FD.gram τ G x = xᵀ * (G.map τ * x.map conj) := by
@@ -62,6 +74,10 @@ theorem _root_.GlobalTheory.UnitFrame.gram_eq {r : ℕ} (τ : E →+* ℂ) (G : 
   simp [_root_.ReciprocityTheory.ChartRestriction.G.FD.gram, _root_.ReciprocityTheory.ChartRestriction.G.FD.hermC, _root_.ReciprocityTheory.ChartRestriction.G.FD.col, Matrix.mul_apply, Finset.mul_sum, mul_assoc]
 
 
+open NumberField Matrix in
+open scoped nonZeroDivisors ComplexConjugate in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
+omit [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.UnitFrame.hermC_mulVec {r : ℕ} (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E)
     (x : Matrix (Fin r) (Fin r) ℂ) (c c' : Fin r → ℂ) :
     _root_.ReciprocityTheory.ChartRestriction.G.FD.hermC τ G (x *ᵥ c) (x *ᵥ c') = c ⬝ᵥ (_root_.ReciprocityTheory.ChartRestriction.G.FD.gram τ G x) *ᵥ (star c') := by
@@ -72,6 +88,10 @@ theorem _root_.GlobalTheory.UnitFrame.hermC_mulVec {r : ℕ} (τ : E →+* ℂ) 
     ← mulVec_mulVec, ← mulVec_mulVec, hstar, dotProduct_mulVec c xᵀ, vecMul_transpose]
 
 
+open NumberField Matrix in
+open scoped nonZeroDivisors ComplexConjugate in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
+omit [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.UnitFrame.im_sum_periods {r : ℕ} (q : ℕ) (τ : E →+* ℂ)
     (G : Matrix (Fin r) (Fin r) E)
     (x : Matrix (Fin r) (Fin r) ℂ)
@@ -165,6 +185,9 @@ private lemma mem_iff_conjugate_not_mem (H : _root_.ReciprocityTheory.ChartRestr
         · simp; linarith
 
 
+open NumberField Matrix in
+open scoped nonZeroDivisors ComplexConjugate in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.UnitFrame.im_hermForm_eq :
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (D : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H) (r : ℕ) (ξ : E) (Gm : Matrix (Fin r) (Fin r) E) (φ : D.La →ₗ[𝓞 E] (Fin r → E)) (Ψ : Finset (E →+* ℂ)) (hΨ : ∀ τ, τ ∈ Ψ ↔ τ (H.rt : E) = H.rt0) (g : ℕ) (idx : Fin g ≃ Ψ × Fin r) (ty : Fin g → (E →+* ℂ)) (hty : ∀ k, ty k = if ((idx k).2 : ℕ) < D.q then ComplexEmbedding.conjugate (idx k).1.1 else (idx k).1.1), _root_.ReciprocityTheory.ChartRestriction.G.FD.cc ξ = -ξ → (∀ τ ∈ Ψ, 0 < (τ ξ).im) → (Function.Injective φ ∧ Submodule.span E (Set.range φ) = ⊤ ∧ (∀ a b, _root_.ReciprocityTheory.ChartRestriction.G.FD.cc (Gm a b) = Gm b a) ∧ Gm.det ≠ 0 ∧ ∀ x y, ((D.EF x y : ℤ) : ℚ) = Algebra.trace ℚ E (ξ * _root_.ReciprocityTheory.ChartRestriction.G.FD.herm Gm (φ x) (φ y))) → ∀ (x : _root_.ReciprocityTheory.ChartRestriction.G.FD.Frame Ψ r) (P : D.La →+ (Fin g → ℂ)), (∀ v k, P v k = if ((idx k).2 : ℕ) < D.q then _root_.ReciprocityTheory.ChartRestriction.G.FD.hermC (idx k).1.1 Gm (_root_.ReciprocityTheory.ChartRestriction.G.FD.col (_root_.ReciprocityTheory.ChartRestriction.G.FD.mat x (idx k).1) (idx k).2) (_root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb (idx k).1.1 (φ v)) else ((_root_.ReciprocityTheory.ChartRestriction.G.FD.mat x (idx k).1)⁻¹ *ᵥ _root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb (idx k).1.1 (φ v)) (idx k).2) → (∀ τ : Ψ, _root_.ReciprocityTheory.ChartRestriction.G.FD.gram τ.1 Gm (_root_.ReciprocityTheory.ChartRestriction.G.FD.mat x τ) = Matrix.diagonal fun a : Fin r => ((_root_.ReciprocityTheory.ChartRestriction.G.FD.sgn D.q (a : ℕ) : ℝ) : ℂ)) → ∀ v w, (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm (Matrix.diagonal fun k => ((2 * ‖(idx k).1.1 ξ‖ : ℝ) : ℂ)) (P v) (P w)).im = D.EF v w := by
   intro E _ _ _ H D r ξ Gm φ Ψ hΨ g idx ty hty hξ hpos hdata x P hP hgram v w

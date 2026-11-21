@@ -342,6 +342,7 @@ end Diff2
 end LocFacts
 
 
+open PI.CntNotIntW in
 theorem locDiffC_of (hDL : DualLoc) (D : D7) (Z : LocDat D) : LocDiffC D Z := by
   intro p a
   have hO : (Z.M p).L.O = (D.s.atP p).O := (Z.agree p).2.2.2.1

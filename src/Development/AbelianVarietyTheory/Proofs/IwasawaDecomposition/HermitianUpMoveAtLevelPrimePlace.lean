@@ -20,6 +20,7 @@ section G
 variable {D : D7} {u : D.what₂.Word}
 
 
+set_option maxHeartbeats 4000000 in
 theorem upCl_of_crd (A : AtTTied u) (P : ∀ i hi, LvTied u A i hi) (i : ℕ) (hi : i ≤ D.R.m) (v : (D.mem u).A.vT)
     (c : (D.mem u).C.cls i) (y : Formalism.L2.Herm.Ld D u i c)
     (γ : UJ (sigD D : D.host.E →+* D.host.E) (gramN D i hi))
@@ -82,6 +83,7 @@ section S
 variable {D : D7} {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i}
 
 
+set_option maxHeartbeats 4000000 in
 theorem crd_up (T : FormsTiedSym D u Ch chOf) (i : ℕ) (hi : i ≤ D.R.m) (v : (D.mem u).A.vT)
     (c : (D.mem u).C.cls i) (y : Formalism.L2.Herm.Ld D u i c)
     (hf : (D.fm u).fv i v c (prH T.atT T.lv i v c y) = 1)
@@ -123,6 +125,8 @@ end S
 end GlobalTheory.Mem.Col2.HAt.UpMove
 
 
+open GlobalTheory.Mem.Col2.HAt.UpMove in
+set_option maxHeartbeats 4000000 in
 theorem GlobalTheory.Mem.Col2.HAt.UpMove.up_move : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)) (F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)), (∀ u, I.StdF l Z u (F u) ∧ I.StdLvC l Z u (F u)) → CarH H F → ∀ u i v (c : ((I.rec7 l Z).mem u).C.cls i) (y : Formalism.L2.Herm.Ld (I.rec7 l Z) u i c), ∃ γ, i ≤ (I.rec7 l Z).R.m → ((I.rec7 l Z).fm u).fv i v c (prH (F u).atT (F u).lv i v c y) = 1 → UpCl (F u).atT (F u).lv i v c y γ ∧ AdOf H u i c (((I.rec7 l Z).fm u).up i v c (prH (F u).atT (F u).lv i v c y)) γ v := by
   intro B X I hOk hPins l Z H F hStd hCar u i v c y
   by_cases hi : i ≤ (I.rec7 l Z).R.m

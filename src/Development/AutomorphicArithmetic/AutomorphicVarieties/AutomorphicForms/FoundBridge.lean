@@ -44,6 +44,7 @@ theorem ofCusp_τ (k : GL (Fin a) (Af E)) (ψ : cuspForms E a) :
 
 
 
+omit [IsTotallyReal E] in
 structure Stab (U : Submodule ℂ (cuspForms E a)) : Prop where
   ρ : ∀ X, ∀ φ ∈ U, (gkModuleCusp E a).ρ X φ ∈ U
   σ : ∀ k, ∀ φ ∈ U, (gkModuleCusp E a).σ k φ ∈ U
@@ -73,6 +74,7 @@ theorem stab_comap {V : Submodule ℂ (TR.Sm E a)} (h : TR.IsStable V) : Stab (V
     exact h _ _ hψ
 
 
+omit [IsTotallyReal E] in
 theorem Stab.isIrreducible_iff {U : Submodule ℂ (cuspForms E a)} (h : Stab U) :
     (cuspSubmodule E a U h.ρ h.σ h.τ).IsIrreducible ↔ U ≠ ⊥ ∧ ∀ W ≤ U, Stab W → W = ⊥ ∨ W = U := by
   refine ⟨fun hi => ?_, fun hi => isIrreducible_cuspSubmodule_of U h.ρ h.σ h.τ hi.1

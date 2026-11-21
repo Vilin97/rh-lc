@@ -48,6 +48,7 @@ lemma map_mem_invariants {U V : Y.Opens} (h : U ≤ V) {x : Γ(X, f ⁻¹ᵁ V)}
     (mem_invariants ..).1 hx]
 
 
+set_option backward.isDefEq.respectTransparency false in
 def diagram : Y.Opensᵒᵖ ⥤ CommRingCat where
   obj U := .of (invariants f g a ha p hp U.unop)
   map {V U} i :=
@@ -220,6 +221,7 @@ private lemma of_charts_aux (P : MorphismProperty Scheme.{0}) [IsZariskiLocalAtT
   rw [← this, MorphismProperty.cancel_left_of_respectsIso P]
   exact hP i
 
+omit [QuasiCompact f] [QuasiSeparated f] [QuasiCompact g] [QuasiSeparated g] in
 lemma of_charts (P : MorphismProperty Scheme.{0}) [IsZariskiLocalAtTarget P] {ι : Type}
     (X' Y' : ι → Scheme.{0}) (u : ∀ i, X' i ⟶ X) (v : ∀ i, Y' i ⟶ Y) (f' : ∀ i, X' i ⟶ Y' i)
     [∀ i, IsOpenImmersion (v i)] (hv : ∀ y, ∃ i z, v i z = y)
@@ -227,6 +229,7 @@ lemma of_charts (P : MorphismProperty Scheme.{0}) [IsZariskiLocalAtTarget P] {ι
   of_charts_aux f P X' Y' u v f' hv h hP
 
 
+omit [QuasiCompact f] [QuasiSeparated f] [QuasiCompact g] [QuasiSeparated g] in
 lemma isPullback_of_charts {Z Q : Scheme.{0}} (b : W ⟶ Z) (q : X ⟶ Q) (q' : Z ⟶ Q) {ι : Type}
     (W' X' : ι → Scheme.{0}) (u : ∀ i, W' i ⟶ W) (v : ∀ i, X' i ⟶ X) (a' : ∀ i, W' i ⟶ X' i)
     [∀ i, IsOpenImmersion (v i)] (hv : ∀ y, ∃ i z, v i z = y)
@@ -301,6 +304,7 @@ lemma isFinite_fromQuot [IsFinite f] [IsLocallyNoetherian Y] :
         Γ(X, f ⁻¹ᵁ U.1)).toLinearMap Subtype.val_injective
 
 
+omit [QuasiCompact f] [QuasiSeparated f] [QuasiCompact g] [QuasiSeparated g] in
 theorem exists_quotient [IsFinite f] [IsAffineHom g] [IsLocallyNoetherian Y]
     (H : ∀ U : Y.affineOpens, (invariants f g a ha p hp U.1).subtype.FaithfullyFlat ∧
       IsPushout (CommRingCat.ofHom (invariants f g a ha p hp U.1).subtype)

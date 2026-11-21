@@ -57,6 +57,7 @@ theorem contr_mulSingle (ρ : ∀ a, Representation ℂ (Γ a) (X a)) (l : ∀ a
       rw [Pi.mulSingle_eq_of_ne (Finset.ne_of_mem_erase ha), map_one, Module.End.one_apply]
 
 
+omit [Fintype β] in
 theorem tprod_update_mulSingle (ρ : ∀ a, Representation ℂ (Γ a) (X a)) (x : ∀ a, X a) (j : β)
     (g : Γ j) (v : X j) :
     PiTensorProduct.tprod ℂ (Function.update x j (ρ j g v)) =

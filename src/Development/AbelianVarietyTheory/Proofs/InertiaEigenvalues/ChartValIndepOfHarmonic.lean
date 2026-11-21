@@ -20,6 +20,8 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.HarmonicAny
 
 
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ GlobalTheory.FrameBiextId GlobalTheory.ChartCmp ReciprocityTheory.ChartRestriction.G.TB.WickVanishing Formalism.MainNotions.ModuliIntegralCharts.H1.FBIdPh GlobalTheory.ChartField in
+open ReciprocityTheory.ChartRestriction.G.TB (dLin transF IsInvPair dAct) in
 theorem chartVal_indep_of_harmonic : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) [StarRing (𝓞 E)], (∀ a : 𝓞 E, star a = H.bar a) → ∀ (S : Type) [Field S] [Algebra c.F S] [Algebra ℚ S] (y : FrPt Xo c S) (C C' : ChartAt Xo c y) (k n : ℕ) (F : Fin n → LB.Sec (LPow Xo.univ.t.G Xo.univ.t.PP.L k (ptO Xo y.x))) (f : Fin n → MvPowerSeries (Fin 1 × Fin C.d) S) (f' : Fin n → MvPowerSeries (Fin 1 × Fin C'.d) S), (∀ b, IsGerm y C.d C.x C.B.A.act C.e C.wP k (F b) (f b)) → (∀ b, IsGerm y C'.d C'.x C'.B.A.act C'.e C'.wP k (F b) (f' b)) → ∀ (P : MvPolynomial (LtN Dw n) c.F), P ∈ harmK Dw.mult n c.F ComplexEmbedding.conjugate (InPsi H) (fun _ => 1) → chartVal C k f P = chartVal C' k f' P := by
   intro E _ _ _ H Dw l Xo c _ hs S _ _ _ y C C' k n F f f' hf hf' P hP
   have hAct := expActOf_of GlobalTheory.EigDir.linEig_holds
@@ -113,6 +115,7 @@ theorem chartVal_indep_of_harmonic : ∀ (E : Type) [Field E] [NumberField E] [I
     rfl
 
 
+set_option maxHeartbeats 1000000 in
 theorem sum_map_of_harmonic {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
     {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} [StarRing (𝓞 E)] (nab : NabV Xo c)
     (hnab : IsNab Xo c nab) {S S' : Type} [CommRing S] [Algebra c.F S] [Algebra ℚ S]

@@ -86,17 +86,20 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   {W : Type} [AddCommGroup W] [Module ℂ W]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem scalar_entry {n : Type} [Fintype n] [DecidableEq n] (t : kˣ) (i j : n) :
     ((GeneralLinearGroup.scalar n t : GL n k) : Matrix n n k) i j = if i = j then (t : k) else 0 := by
   simp [GeneralLinearGroup.scalar, Matrix.scalar_apply, Matrix.diagonal_apply]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem det_scalar {n : Type} [Fintype n] [DecidableEq n] (t : kˣ) :
     GeneralLinearGroup.det (GeneralLinearGroup.scalar n t : GL n k) = t ^ Fintype.card n := by
   ext
   simp [GeneralLinearGroup.scalar, Matrix.scalar_apply, Matrix.det_diagonal, Finset.prod_const]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype α] in
 theorem scalar_mem_relParab (f : ∀ i, (Σ j, c i j) ≃ m i) (t : α → kˣ) :
     (fun i => GeneralLinearGroup.scalar (m i) (t i) : Levi k m) ∈ relParab k f := by
   rw [relParab, Subgroup.mem_pi]
@@ -108,6 +111,7 @@ theorem scalar_mem_relParab (f : ∀ i, (Σ j, c i j) ≃ m i) (t : α → kˣ) 
   exact lt_irrefl _ hxy
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype α] in
 theorem relProj_scalar (f : ∀ i, (Σ j, c i j) ≃ m i) (t : α → kˣ) :
     relProj k f ⟨_, scalar_mem_relParab f t⟩ =
       fun i j => GeneralLinearGroup.scalar (c i j) (t i) := by
@@ -119,6 +123,7 @@ theorem relProj_scalar (f : ∀ i, (Σ j, c i j) ≃ m i) (t : α → kˣ) :
   simp [(f i).injective.eq_iff]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype α] in
 theorem scalar_comm (t : α → kˣ) (y : Levi k m) :
     y * (fun i => GeneralLinearGroup.scalar (m i) (t i) : Levi k m) =
       (fun i => GeneralLinearGroup.scalar (m i) (t i) : Levi k m) * y := by
@@ -184,6 +189,7 @@ section Cells
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem leviTwo_scalar_one (ϖ : kˣ) (m : Type) [Fintype m] [DecidableEq m] :
     leviTwo k (Fin 1) m (GeneralLinearGroup.scalar (Fin 1) ϖ, 1) =
       fun j => GeneralLinearGroup.scalar (Two (Fin 1) m j) (cond j 1 ϖ) := by
@@ -278,6 +284,7 @@ theorem cell_scalar_snd (χ₁ χ₂ : kˣ →* ℂˣ) (u v : ℕ) (m : Type) [F
 end Cells
 
 
+set_option maxHeartbeats 1000000 in
 theorem aeval_jac₂_scalar_eq_zero : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k], GlobalTheory.Published.GeometricLemmaFiltration → ∀ (χ₁ χ₂ : kˣ →* ℂˣ), IsSmoothChar χ₁ → IsSmoothChar χ₂ → ∀ (u v : ℕ) (m : Type) [Fintype m] [DecidableEq m] (e : Fin 1 ⊕ m ≃ Fin (u + v)) (ϖ : kˣ), Polynomial.aeval (jac₂ e (prod₂ (detRep (Fin u) χ₁) (detRep (Fin v) χ₂)) (GeneralLinearGroup.scalar (Fin 1) ϖ, 1)) ((Polynomial.X - Polynomial.C (((χ₁ * absPow k ((1 - (u : ℂ)) / 2)) ϖ : ℂˣ) : ℂ)) * (Polynomial.X - Polynomial.C (((χ₂ * absPow k ((1 - (v : ℂ)) / 2)) ϖ : ℂˣ) : ℂ))) = 0 := by
   intro k _ _ _ _ hG χ₁ χ₂ hχ₁ hχ₂ u v m _ _ e ϖ
   let c₁ : ℂ := (((χ₁ * absPow k ((1 - (u : ℂ)) / 2)) ϖ : ℂˣ) : ℂ)

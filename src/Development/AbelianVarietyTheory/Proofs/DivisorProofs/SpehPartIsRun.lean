@@ -81,6 +81,7 @@ theorem entry_of_run {n t : ℕ} (lam : DomWeight n) (p : ℕ) (hn : n < 2 * t) 
 end GlobalTheory.GalDef.RunPart
 
 
+open GlobalTheory.GalDef.RunPart in
 theorem GlobalTheory.GalDef.spehPart_is_run : ∀ (n t : ℕ) (lam : DomWeight n) (p : ℕ), n < 2 * t → GlobalTheory.GalDef.IsRunAt lam p t →
   ∀ (c : ℕ) (d : Fin c → ℕ) (M : Fin c → Multiset ℂ), (∀ i, 1 ≤ d i) → (∀ i, M i ≠ 0) →
     ∑ i, spehInf (d i) (M i) = infOfWeight lam →

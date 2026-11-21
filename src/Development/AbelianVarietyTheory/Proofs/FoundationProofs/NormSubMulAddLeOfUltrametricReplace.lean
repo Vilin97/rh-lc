@@ -23,6 +23,7 @@ noncomputable section
 namespace GlobalTheory.KZ
 
 
+open GlobalTheory.KZGlobAsm in
 theorem glob_of_shapiro_system_noLayer (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω]
     (W : R2 Ω l) (c : Coef l) (A : ValuationSubring Ω) (e : ℕ) (χ : ∀ r : ℕ, (ZMod (l ^ r))ˣ → Qbar l)
     (θ : G ℚ Ω →* (Qbar l)ˣ) (ρ : G ℚ Ω → Matrix (Fin 2) (Fin 2) (Qbar l))

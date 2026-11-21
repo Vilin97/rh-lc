@@ -136,6 +136,7 @@ theorem isUnit_den (C : Subalgebra O Ω) {d : A} (hd : d ∉ m) (z : C) (hz : (z
   rw [hz, mul_comm, ho]
 
 
+include m in
 theorem mem_of_isIntegral_loc (s : Set Ω) (hA : ∀ a : A, algebraMap A Ω a ∈ Algebra.adjoin ℤ s)
     (hB : ∀ a : Ω, _root_.IsIntegral (Algebra.adjoin ℤ s) a → a ∈ Algebra.adjoin ℤ s) {a : Ω}
     (ha : _root_.IsIntegral (Algebra.adjoin O s) a) : a ∈ Algebra.adjoin O s := by
@@ -161,6 +162,7 @@ theorem mem_of_isIntegral_loc (s : Set Ω) (hA : ∀ a : A, algebraMap A Ω a �
   exact mul_mem w.2 h1
 
 
+include m in
 theorem loc_of_contraction (s : Set Ω) (hA : ∀ a : A, algebraMap A Ω a ∈ Algebra.adjoin ℤ s)
     (𝔮 : Ideal (Algebra.adjoin O s)) (h𝔮 : 𝔮.IsPrime) (emb : Algebra.adjoin ℤ s →+* Algebra.adjoin O s)
     (hemb : ∀ b, (emb b : Ω) = b) (R : Subring Ω) (hB : ∀ b ∈ Algebra.adjoin ℤ s, b ∈ R)
@@ -196,6 +198,7 @@ theorem loc_of_contraction (s : Set Ω) (hA : ∀ a : A, algebraMap A Ω a ∈ A
     exact mul_mem (mul_mem (hB _ (hA d)) (hC _ u.2)) hi
 
 
+include m in
 theorem exists_point (T : CoordTie ℤ ξ x) {c : κ} (hc : x c ≠ 0)
     (hA : ∀ a : A, algebraMap A Ω a ∈ Algebra.adjoin ℤ (Set.range fun j => x j / x c))
     (𝔮 : Ideal (Algebra.adjoin O (Set.range fun j => x j / x c))) (h𝔮 : 𝔮.IsPrime) :

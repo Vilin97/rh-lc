@@ -37,6 +37,7 @@ variable {X : Stages} {px : PreX X.B.toPre} {I : ColIn X.B px} {hX : X.B.fields.
   {Wt : Set X.B.places.Pl}
 
 
+set_option maxHeartbeats 4000000 in
 def geoR (z : Dat X I hX T Wt) (Wt' : Set X.B.places.Pl) (h : Wt' ⊆ Wt) :
     GlobalTheory.RealGeo.GeoHalf z.core ((z.resR h).updS (kapOf (z.resR h)) (z.resR h).lam3).toRealDat fun _ => 1 :=
   ⟨(z.resGeo h).κ, (z.resGeo h).v₀,
@@ -47,6 +48,7 @@ def geoR (z : Dat X I hX T Wt) (Wt' : Set X.B.places.Pl) (h : Wt' ⊆ Wt) :
     (z.resGeo h).rhoGeo, (z.resGeo h).equivAll, (z.resGeo h).cTie, (z.resGeo h).phase⟩
 
 
+set_option maxHeartbeats 4000000 in
 def res (z : Dat X I hX T Wt) (e : z.R.toRealDat.ExAt) (Wt' : Set X.B.places.Pl) (h : Wt' ⊆ Wt) (hc : ConjStable X Wt') :
     Dat X I hX T Wt' where
   Xg := z.Xg
@@ -68,20 +70,24 @@ def res (z : Dat X I hX T Wt) (e : z.R.toRealDat.ExAt) (Wt' : Set X.B.places.Pl)
 variable (z : Dat X I hX T Wt) (e : z.R.toRealDat.ExAt) {Wt' : Set X.B.places.Pl} (h : Wt' ⊆ Wt) (hc : ConjStable X Wt')
 
 
+set_option maxHeartbeats 4000000 in
 theorem res_exAt : (res z e Wt' h hc).R.toRealDat.ExAt := intertwinersExist_scalar_update_invariant (exAt_res z h e) _ _
 
 
+set_option maxHeartbeats 4000000 in
 theorem res_inGeo (hi : GlobalTheory.RealGeo.InGeo z.geo) : GlobalTheory.RealGeo.InGeo (res z e Wt' h hc).geo := by
   have h' := (z.inGeo_resGeo_iff h).2 hi
   exact ⟨h'.jEvExists, h'.jEvBar, h'.evInj, h'.jUnif, h'.geoAct, h'.latFull, h'.dimMatch⟩
 
 
+set_option maxHeartbeats 4000000 in
 theorem restrictAdelicDataTwistedPlaces_nonzeroIndexPlaces (F0) : (res z e Wt' h hc).W1 F0 = z.W1 F0 := by
   ext w
   rw [Dat.mem_nonzero_index_places_iff_at_place_or_conjugate, Dat.mem_nonzero_index_places_iff_at_place_or_conjugate]
   exact (nz_updS (z.resR h) _ _ _ F0 _).trans (exists_congr fun j => or_congr (z.nzAt_resR F0 h j _) (z.nzAt_resR F0 h j _))
 
 
+set_option maxHeartbeats 4000000 in
 theorem res_std (hs : z.Std) : (res z e Wt' h hc).Std := by
   obtain ⟨⟨c, h1, h2, h5⟩, hV⟩ := hs
   refine ⟨⟨c, h1, fun hc' t φ g x hm => h2 hc' (inclU I (usedOf_mono I T h) t) φ g x hm, h5⟩, fun i => ?_⟩
@@ -100,6 +106,7 @@ theorem of_diag {n : ℕ} {P : Fin n → Fin n → Prop} (H : ∀ i, P i i) (i i
   (Fin.ext h : i = i') ▸ H i
 
 
+set_option maxHeartbeats 4000000 in
 theorem res_ext (z : Dat (w.st Z) w.I hX T Wt) (e : z.R.toRealDat.ExAt) {Wt' : Set B.places.Pl} (h : Wt' ⊆ Wt)
     (hc : ConjStable (w.st Z) Wt') : Ext z (res z e Wt' h hc) where
   H := HEq.rfl
@@ -189,6 +196,7 @@ theorem stepW_keep_of_ev {Q : Ctx → Prop} (h : Ev Q) (p : WP) : StepW p fun K 
   Step.of_evG ((evG_of_ev h).imp fun _ _ _ _ _ H _ _ _ _ _ _ _ _ _ => H)
 
 
+set_option maxHeartbeats 4000000 in
 theorem exists_pre2_of_fine_of_resChar_mem : GlobalTheory.Published.WeilRepresentationUnitaryPair → GlobalTheory.Published.DiscreteSeriesExists → GlobalTheory.Published.HarishChandraFinite →
     GlobalTheory.Published.CuspRapidDecay → WeightCaseCondition → StepW Start fun K B f T w => ∀ (Z : w.Lt) (hX : B.fields.Ok)
       (z : Dat (w.st Z) w.I hX T {v | B.places.resChar v ∈ T.pl}), GIs2 K w Z.G → GrpTrue Z.N f → GrpAt (w.st Z) w.I →

@@ -19,6 +19,7 @@ noncomputable section
 namespace GlobalTheory.ConeLamCont
 
 
+open scoped Classical in
 theorem proj_mem_adm {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] (y : κ → AF F) :
     (LinearMap.proj y : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ) ∈ (adeleClass F).adm κ := by
   intro g _

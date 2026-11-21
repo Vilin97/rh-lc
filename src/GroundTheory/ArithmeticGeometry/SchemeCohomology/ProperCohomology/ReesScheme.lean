@@ -66,16 +66,19 @@ section Rings
 variable {A : Type u} [CommRing A] {I : Ideal A} {X : Scheme.{u}} [X.Over (Spec (.of A))]
 
 
+variable (X) in
 def algV (V : X.Opens) : A →+* Γ(X, V) :=
   ((X ↘ Spec (.of A)).appLE ⊤ V le_top).hom.comp (Scheme.ΓSpecIso (.of A)).inv.hom
 
 variable {V : X.Opens} (hV : IsAffineOpen V)
 
 
+variable (I) in
 def reesInr (V : X.Opens) : CommRingCat.of (reesAlgebra I) ⟶ Γ(reesScheme I X, reesPr I X ⁻¹ᵁ V) :=
   (Scheme.ΓSpecIso (.of (reesAlgebra I))).inv ≫ (reesSnd I X).appLE ⊤ _ le_top
 
 
+variable (I) in
 def polyInr (V : X.Opens) : CommRingCat.of (Polynomial A) ⟶
     Γ(reesPolyScheme I X, reesPolyMap I X ⁻¹ᵁ (reesPr I X ⁻¹ᵁ V)) :=
   (Scheme.ΓSpecIso (.of (Polynomial A))).inv ≫ (reesPolySnd I X).appLE ⊤ _ le_top

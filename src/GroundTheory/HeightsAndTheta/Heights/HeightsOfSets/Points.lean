@@ -50,6 +50,7 @@ def ZariskiDense (P : ArithVariety n) (S : Set (Cone n (AlgebraicClosure ℚ))) 
     (∀ z ∈ S, evalCone z f = 0) → f ∈ P.ideal
 
 
+variable (n) in
 def whole : ArithVariety n where
   ideal := ⊥
   isPrime := Ideal.isPrime_bot
@@ -103,6 +104,7 @@ theorem contDiffOn_l2Norm_block (k : ι) :
 namespace HermLine
 
 
+variable (n) in
 def standard : HermLine n where
   deg _ := 1
   metric z := ∏ k, l2Norm (z k)
@@ -181,6 +183,7 @@ namespace IntegralSection
 variable {P : ArithVariety n} {a : ι → ℤ}
 
 
+variable (P) in
 def chartSection (c : (k : ι) → Fin (n k + 1)) : IntegralSection P (fun _ ↦ 1) where
   num := chartMonomial c 1
   den := 1

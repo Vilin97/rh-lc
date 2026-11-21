@@ -82,6 +82,7 @@ theorem update_comp_swap {α : Type*} {n : ℕ} (Φ : Fin (n + 1) → α) (p : F
 end ChartEnergySymmetry
 
 
+open ChartEnergySymmetry in
 theorem ChartEnergySymm.proof (hI : ChartIbpSymm.Statement) : ChartEnergySymm.Statement := by
   intro e A B C D T p hA hB hC hD hT
   obtain ⟨n, rfl⟩ : ∃ n, e = n + 1 := ⟨e - 1, by have := p.pos; omega⟩

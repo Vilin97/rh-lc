@@ -60,11 +60,13 @@ theorem ip_sum_left {A : Type} (t : Finset A) (f : A → Fin g → ℂ) (y : Fin
   exact Finset.sum_congr rfl fun i _ => ip_conj R y (f i)
 
 
+omit [IsCMField E] in
 theorem comp_ne {s s' : E →+* ℂ} (h : s ≠ s') :
     s.comp (algebraMap (𝓞 E) E) ≠ s'.comp (algebraMap (𝓞 E) E) :=
   fun e => h (IsLocalization.ringHom_ext (nonZeroDivisors (𝓞 E)) e)
 
 
+omit [IsCMField E] in
 theorem emb_injective (s : 𝓞 E →+* ℂ) : Function.Injective s := by
   have hc : (RingHom.ker s).comap (algebraMap ℤ (𝓞 E)) = ⊥ := by
     rw [RingHom.comap_ker]

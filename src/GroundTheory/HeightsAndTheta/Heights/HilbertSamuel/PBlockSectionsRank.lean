@@ -182,6 +182,7 @@ theorem exists_blockBasis {K : Type} {ι : K → Type} [∀ k, Fintype (ι k)] {
 end BlockSectionsRank
 
 
+open BlockSectionsRank in
 theorem BlockSectionsRank.proof (hRank : RankOfSections.Statement) (hGF : GenericFibre.Statement)
     (hSR : SectionsRank.Statement) (hArith : BlockImageArith.Statement) (hDeg : BlockImageGenDeg.Statement) :
     BlockSectionsRank.Statement := by

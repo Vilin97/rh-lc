@@ -141,6 +141,7 @@ theorem mul_mem_int {x y : RA F E} (hx : x ∈ hat1 F (intSet E)) (hy : y ∈ ha
   mul_mem_adelicCompletionOfElementSet_of_mul_mem F (fun _ ha _ hb => IsIntegral.mul ha hb) hx hy
 
 
+omit [NumberField E] in
 theorem mem_hat_intLat (z : Fin n → RA F E) :
     z ∈ hat F (intLat E n : Set (Fin n → E)) ↔ ∀ i, z i ∈ hat1 F (intSet E) := by
   constructor

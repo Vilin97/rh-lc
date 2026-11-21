@@ -20,6 +20,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory
 
 
+open scoped TensorProduct in
 theorem flat_SpecMap_of_flat_localization_maximal (V : Type) [CommRing V] (C : CommRingCat.{0})
     (f : CommRingCat.of V ⟶ C)
     (h : ∀ (m : Ideal V) [m.IsMaximal], Flat (pullback.snd (Spec.map f)

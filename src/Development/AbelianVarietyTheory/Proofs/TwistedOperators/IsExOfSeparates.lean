@@ -31,6 +31,7 @@ variable {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type} {A : FamIn 
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks}
 
 
+set_option maxHeartbeats 1000000 in
 theorem inj_of_sep_conv {ch : Choice R} (hM : R.IsModels) (hsep : Separates R ch.W ch.M ch.w ch.ρ ch.ξ)
     (hconv : ∀ a u, ConvK ch a u) (u : R.HE.H) (hu : ∀ a, psiK ch a u = 0) : u = 0 := by
   by_contra h0
@@ -66,6 +67,7 @@ theorem inj_of_sep_conv {ch : Choice R} (hM : R.IsModels) (hsep : Separates R ch
   exact (key Ψ hΨ).2
 
 
+set_option maxHeartbeats 1000000 in
 theorem isEx_of_separates (hS : GlobalTheory.IndefiniteRowSideFullHecke.LevelPlusSubgroup.FunctionalsSeparate) (hL : LinB) (hB : BaseEx) : IsEx := by
   obtain ⟨C1, hL⟩ := hL
   obtain ⟨C2, hB⟩ := hB

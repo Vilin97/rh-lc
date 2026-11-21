@@ -133,6 +133,7 @@ private theorem finite_coheight_one_inter_supp {X : Scheme.{0}} [IsIntegral X] [
   exact Set.mem_biUnion hkS (show IsGenericPoint z (k : Set X) from hteq ▸ ht)
 
 
+open GlobalTheory.Domin in
 theorem GlobalTheory.effDominates : ∀ (X : Scheme.{0}) [IsIntegral X] [IsLocallyNoetherian X] [GlobalTheory.IsNormalScheme X] [CompactSpace X] (D E : CartierDiv X), E.Eff → D.supp ≤ E.supp → ∃ c : ℕ, (c • E - D).Eff := by
   intro X _ _ _ _ D E hE hsupp
   classical

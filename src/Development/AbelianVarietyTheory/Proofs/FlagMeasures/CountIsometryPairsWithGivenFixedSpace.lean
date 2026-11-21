@@ -44,6 +44,7 @@ variable {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V]
   [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
 
+omit [NumberField K] in
 theorem finrank_le [NumberField K] (N : Submodule (𝓞 K) V) : Module.finrank (𝓞 K) N ≤ Module.finrank K V := by
   apply Module.finrank_le_of_rank_le
   rw [Module.finrank_eq_rank, IsLocalization.rank_eq K (𝓞 K)⁰ le_rfl]
@@ -84,6 +85,7 @@ theorem sub_count [IsTotallyComplex K] (N : Submodule (𝓞 K) V) (hN : N.FG) (y
   linarith
 
 
+omit [FiniteDimensional K V] in
 theorem isLattice_of_idx {L M : Submodule (𝓞 K) V} (hL : Submodule.IsLattice K L) (hM : M ≤ L)
     (h : idx L M ≠ 0) : Submodule.IsLattice K M := by
   refine ⟨?_, ?_⟩
@@ -92,6 +94,7 @@ theorem isLattice_of_idx {L M : Submodule (𝓞 K) V} (hL : Submodule.IsLattice 
   · intro s hs hli
     exact (LinearIndependent.iff_fractionRing _ _).mp hli
 
+omit [FiniteDimensional K V] [NumberField K] in
 theorem idx_latIn_le (U : Submodule K V) (L M : Submodule (𝓞 K) V) (h : idx L M ≠ 0) :
     GlobalTheory.Mass.idxN (GlobalTheory.Mass.latIn U L) (GlobalTheory.Mass.latIn U M) ≤ idx L M := by
   have e : GlobalTheory.Mass.idxN (GlobalTheory.Mass.latIn U L) (GlobalTheory.Mass.latIn U M) =
@@ -101,6 +104,7 @@ theorem idx_latIn_le (U : Submodule K V) (L M : Submodule (𝓞 K) V) (h : idx L
   exact AddSubgroup.relIndex_le_of_le_right (AddSubgroup.map_comap_le _ _) h
 
 
+omit [FiniteDimensional K V] [NumberField K] in
 theorem inf_eq_map (U : Submodule K V) (M : Submodule (𝓞 K) V) :
     M ⊓ rs (𝓞 K) U = (GlobalTheory.Mass.latIn U M).map (U.subtype.restrictScalars (𝓞 K)) := by
   ext v
@@ -113,6 +117,7 @@ theorem inf_eq_map (U : Submodule K V) (M : Submodule (𝓞 K) V) :
 variable [StarRing K]
 
 
+omit [FiniteDimensional K V] in
 theorem hRes_nondeg (h : V →ₗ⋆[K] V →ₗ[K] K) (hP : GlobalTheory.Mass.PD h) (U : Submodule K V) :
     (GlobalTheory.Mass.hRes h U).Nondegenerate := by
   obtain ⟨τ⟩ : Nonempty (K →+* ℂ) := inferInstance
@@ -126,6 +131,7 @@ theorem hRes_nondeg (h : V →ₗ⋆[K] V →ₗ[K] K) (hP : GlobalTheory.Mass.P
   exact ⟨fun x hx => key x (hx x), fun x hx => key x (hx x)⟩
 
 
+omit [FiniteDimensional K V] in
 theorem fixLat_le {H : HermSpace K V} {g : ℕ} {L₀ : Submodule (𝓞 K) V} {j x : ℕ}
     {d : Submodule (𝓞 K) V × Submodule (𝓞 K) (V × V)} (hd : IsDat H g L₀ j x d) : fixLat d.2 ≤ L₀ :=
   fun _ hv => (hd.2.2.1.1 hv).2

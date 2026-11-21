@@ -98,6 +98,7 @@ private lemma norm_le_pow_of_mem_ideal_pow {R C : Type} [CommRing R] [NormedFiel
       exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
 
 
+open Filter Topology in
 theorem _root_.GlobalTheory.Ex.AdicNormSum.main : ∀ (R : Type) [CommRing R] [IsDomain R]
     [IsNoetherianRing R] (I : Ideal R) (C : Type) [NormedField C] [IsUltrametricDist C]
     [Algebra (FractionRing R) C], _root_.GlobalTheory.Ex.CExt R I C → ∀ (Ix : Type) (x : Ix → C)

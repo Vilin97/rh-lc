@@ -53,6 +53,7 @@ theorem dual_torsionFree :
 end GlobalTheory.Ord2.CoefDual
 
 
+open GlobalTheory.Ord2.CoefDual in
 theorem GlobalTheory.Ord2.coef_dual_free_rank_one :
     ∀ (l : ℕ) [Fact l.Prime] (c : Coef l), ∃ τ : c.O →ₗ[ℤ_[l]] ℤ_[l],
       ∀ f : c.O →ₗ[ℤ_[l]] ℤ_[l], ∃! a : c.O, ∀ x, f x = τ (a * x) := by

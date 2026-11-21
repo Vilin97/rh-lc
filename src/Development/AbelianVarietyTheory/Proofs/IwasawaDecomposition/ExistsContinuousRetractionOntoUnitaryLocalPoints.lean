@@ -119,6 +119,7 @@ theorem corner_mem (g : UA E n) : cornerGL n (sIdem w) g.1 ∈ UA E n := by
   rw [cT_corner, Matrix.mul_one, ← map_mul, ← Matrix.mul_one (cT (conjAd E) _), hg, map_one]
 
 
+variable (n w) in
 def ret0 : UA E n →* UA E n := ((cornerGL n (sIdem w)).comp (UA E n).subtype).codRestrict (UA E n) corner_mem
 
 theorem infiniteProj_unitaryAdelicLocalRetractionEnd_eq_one (g : UA E n) : GeneralLinearGroup.map (pInf E) (ret0 w n g).1 = 1 :=
@@ -147,6 +148,7 @@ theorem mem_locU_ne {x : UA E n} (hx : x ∈ locU n w) {v : HeightOneSpectrum (�
   MonoidHom.mem_ker.1 (Subgroup.mem_iInf.1 (Subgroup.mem_iInf.1 (Subgroup.mem_inf.1 hx).2 v) hv)
 
 
+variable (n w) in
 def ret : UA E n →* locU n w := (ret0 w n).codRestrict (locU n w) unitaryAdelicLocalRetractionEnd_mem_localPoints
 
 theorem continuous_ret : Continuous (ret w n) := by

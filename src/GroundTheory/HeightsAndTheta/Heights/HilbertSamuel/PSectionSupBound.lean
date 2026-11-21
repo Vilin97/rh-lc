@@ -68,6 +68,7 @@ theorem exists_lower (A : HermLine ι) (hA : ContinuousOn A.h {z | ∀ k, ∃ i,
 end SectionSupBound
 
 
+open SectionBounded SectionSupBound in
 theorem SectionSupBound.proof : SectionSupBound.Statement := by
   intro K _ ι _ Ω _ y A τ e hA he
   classical

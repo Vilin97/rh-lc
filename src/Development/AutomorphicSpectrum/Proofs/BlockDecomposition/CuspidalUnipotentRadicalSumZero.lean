@@ -23,6 +23,7 @@ theorem blk_unip (b : ι → Fin s) (c : Fin s) {g : GL ι K}
   exact hg.2 i l (hi.trans hl.symm)
 
 
+omit [Fintype K] [DecidableEq K] [Fintype ι] in
 theorem entry_of_blk (b : ι → Fin s) {M : Matrix ι ι K}
     (h : ∀ c, Formalism.IrreducibleCountingLemmas.TYPES.blk K b c M = 1) (i j : ι) (hij : b i = b j) :
     M i j = if i = j then 1 else 0 := by

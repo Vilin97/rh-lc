@@ -248,6 +248,7 @@ private theorem card_finite_subgroup_dvd_prod_pow_sub_pow {n : ℕ} (G : Subgrou
     · simpa [sub_eq_zero, Matrix.one_apply, hij, Matrix.GeneralLinearGroup.map] using this
 
 
+open Matrix in
 theorem _root_.GlobalTheory.card_finite_subgroup_GL_int_dvd :
     ∀ (n : ℕ) (G : Subgroup (GL (Fin n) ℤ)), Finite G → Nat.card G ∣ 8 ^ n * (2 * n).factorial := by
   intro n G hG

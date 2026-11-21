@@ -255,6 +255,7 @@ end GlobalTheory.NabCol
 namespace GlobalTheory
 
 
+open NabCol in
 theorem nabValN_boxSer : NabColSt := by
   intro R _ d O _ _ B k _ _ _ h w0 hh q n f Λ Ix _ _ e cp u u' hcp hu P
   have hL0 : constantCoeff (B.hL k h w0) = 0 := by

@@ -33,6 +33,7 @@ theorem entry_idAt (V : HSp D) (P : Pl D → Prop) (g : GA D V) (hg : g ∈ grpA
   rw [Matrix.sub_apply]; exact Ideal.Quotient.eq.mp h2
 
 
+open GlobalTheory.LocWeil.PlaceIdem in
 theorem sum_act {W : Type} [Fintype W] (v : W → Pl D) (hv : Function.Injective v)
     (y : AE D) (hy : y ∈ idAt D (fun u => u ∈ Set.range v)) :
     (1 - ∑ w, algebraMap (AF D.host.F) (AE D) (eFin D.host.F (v w))) * y = 0 := by
@@ -71,6 +72,7 @@ theorem exists_coord {k : Type} [Field k] {N : ℕ} {Y : Type} [Fintype Y] [Deci
     _ = F.β * (F.γ * A * F.β) * F.γ := by simp only [Matrix.mul_assoc]
 
 
+open GlobalTheory.LocWeil.PlaceIdem in
 theorem exists_parts (V : HSp D) {n : ℕ} (v : Fin n → Pl D) (e : Fin n → AE D) (hv : Function.Injective v)
     (he : ∀ w, ∃ ε, IsPlaceIdem D (v w) ε ∧ e w + cA D (e w) = algebraMap (AF D.host.F) (AE D) ε)
     (g : GA D V) (hg : g ∈ grpAt V (fun u => u ∈ Set.range v)) :

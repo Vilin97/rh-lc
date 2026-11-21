@@ -72,6 +72,7 @@ end GlobalTheory.PolExtendDVR
 namespace GlobalTheory
 
 
+open PolExtendDVR IsLocalRing in
 theorem polarisation_extends_dvr : Laws → Laws2 → ∀ (V K : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [Field K] [Algebra V K] [IsFractionRing V K] (P : PolAV (Sp K)) (B : Over (Sp V)) [GrpObj B] [IsCommMonObj B] (M : GlobalTheory.UU.CP B) (φ : P.A.left ⟶ B.left), IsAbelianScheme B → IsGrpPullback P.A B (spMap (algebraMap V K)) φ → LBIso P.L (M.L.L.pull φ) → RelAmple B M.L.L ∧ KTriv B M.L.L := by
   intro h h₂ V K _ _ _ _ _ _ P B _ _ M φ hB hφ hL
   let V' := AdicCompletion (maximalIdeal V) V

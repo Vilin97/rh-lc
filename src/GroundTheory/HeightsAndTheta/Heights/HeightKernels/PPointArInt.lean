@@ -113,6 +113,7 @@ theorem sum_ringHom_restrict (κ : IntermediateField ℚ K') (H : (κ →ₐ[ℚ
 end PointArithIntersection
 
 
+open PointArithIntersection IndefiniteRowSideFullHecke.HeightsSet.CoordCurveDegree in
 theorem PointArInt.proof : PointArInt.Statement := by
   intro T _ K' _ _ y A s hP hs
   classical

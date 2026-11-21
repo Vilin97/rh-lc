@@ -101,6 +101,7 @@ section Exactness
 variable [CompactSpace G] [TotallyDisconnectedSpace G] (hN : IsClosed (N : Set G))
 
 
+include hN in
 theorem cohomologyInfl_transgression (h : cohomologyConjInvariants A N 1) :
     (cohomologyInfl A N 2).hom (transgression A N hN h) = 0 := by
   obtain ⟨z, y, hy, hyc, -, ht⟩ := isTransgression_transgression A N hN h

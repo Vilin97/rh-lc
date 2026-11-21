@@ -185,6 +185,7 @@ end PeriodDvd
 
 open PeriodDvd
 
+open PeriodDvd in
 theorem dvd_of_period_of_dvd_sum_powersetCard (q d : ℕ) (a : ℕ → ℤ) (hq : 2 ≤ q) (hd : 0 < d)
     (hinv : ∀ k l i : ℕ, k * q ^ i ≡ l [MOD q ^ d - 1] → a k = a l)
     (hsum : ∀ k s : ℕ, (d : ℤ) ∣ ∑ I ∈ (Finset.range d).powersetCard s, a (k * ∑ i ∈ I, q ^ i))

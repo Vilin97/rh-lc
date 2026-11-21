@@ -321,6 +321,7 @@ end Lat
 section Main
 
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem core (D : D7) (V W S : HSp D) (hS : S.gram = 1) (C C' : Matrix (Fin V.rank) (Fin S.rank) D.host.E)
     (h1 : adj D C * V.gram * C' = 1) (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsStdChar D ψ (-1))
     (μ : Measure (Mx D W.rank S.rank)) (hμ : μ.IsAddHaarMeasure) (μV : Measure (WO V W)) (𝓕V : Set (WO V W))

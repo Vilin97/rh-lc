@@ -170,6 +170,7 @@ namespace QCoh
 variable {X : Scheme.{0}} {F G : X.Modules} {ι : Type}
 
 
+variable (F) in
 def IsGloballyGenerated : Prop :=
   ∃ (ι : Type) (_ : Finite ι) (φ : freeModule X ι ⟶ F), Epi φ
 
@@ -190,10 +191,12 @@ def sectionsHom (s : ι → Γ(F, ⊤)) : freeModule X ι ⟶ F :=
   Sigma.desc (f := fun _ : ι => structureModule X) fun i => sectionHom (s i)
 
 
+variable (X) in
 def freeι (i : ι) : structureModule X ⟶ freeModule X ι :=
   Sigma.ι (fun _ : ι => structureModule X) i
 
 
+variable (X) in
 def freeBasis (i : ι) : Γ(freeModule X ι, ⊤) :=
   (freeι X i).app ⊤ ((structureModuleSectionsEquiv ⊤).symm 1)
 

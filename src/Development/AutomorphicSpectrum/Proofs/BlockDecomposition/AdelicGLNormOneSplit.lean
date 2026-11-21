@@ -29,6 +29,7 @@ theorem continuous_splitCentre : Continuous (splitCentre E a) := by
   exact (continuous_pi fun _ => continuous_id).matrix_diagonal
 
 
+variable (E) in
 def expIdele (t : ℝ) : IdeleGroup E := infId E (expU fun _ : InfinitePlace E => (t : ℂ))
 
 theorem pInf_expIdele (t : ℝ) (w : InfinitePlace E) :

@@ -56,6 +56,7 @@ theorem finInt {K : Type*} [TopologicalSpace K] [MeasurableSpace K] [BorelSpace 
         simp only [hv' k, Finset.mul_sum, mul_assoc]
 
 
+set_option maxHeartbeats 4000000 in
 theorem thSph_of' (hA : HelpA) (hC : HelpC) (hKAK : KAK) (hMult : Mult) (hD : DerivativeVacuumDilations) (hSph : Sph)
     (hSZ : SecZero) (hHP : HolParam) (hLC : LC) : ThSph := by
   intro m n ε c t p q e sL ρ hL G _ _ _ _ _ _ Pp Γ ι s₀ Ht sec I Λ hG _ _ μ _ _ g y

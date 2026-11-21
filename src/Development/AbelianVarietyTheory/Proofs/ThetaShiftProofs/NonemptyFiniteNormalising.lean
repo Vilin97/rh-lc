@@ -63,6 +63,7 @@ theorem val_tau_nsmul (k : ℕ) (a b : D.X) :
 end Values
 
 
+variable (D) in
 def canφ (y y' : D.X) : Fin 4 → ((𝟙_ (Over (Sp R))).left ⟶ D.P.A.left) :=
   ![(D.c y * D.c y').left, (D.c y).left, (D.c y').left, (1 : 𝟙_ (Over (Sp R)) ⟶ D.P.A).left]
 

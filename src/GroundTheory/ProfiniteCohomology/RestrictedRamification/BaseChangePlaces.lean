@@ -75,6 +75,7 @@ theorem pi_single_algebraMap_completionsOver {w : PlacesOver L v} [DecidableEq (
   · simp [hu]
 
 
+open Classical in
 def completionEmbeddingOfAlgHom :
     (placeOfAlgHom j).1.adicCompletion L →ₐ[v.adicCompletion F]
       AlgebraicClosure (v.adicCompletion F) where

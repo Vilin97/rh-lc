@@ -105,6 +105,7 @@ theorem isMonHom (hc : ∀ x, ∃ i y, f i y = x) (h₁ : ∀ i, IsGrpPullback (
     rw [h]; congr 1
 
 
+omit [GrpObj G₁] [∀ i, GrpObj (G₁' i)] in
 theorem kerSet (hc : ∀ x, ∃ i y, f i y = x) (h₁ : ∀ i, IsPullback (φ₁ i) (G₁' i).hom G₁.hom (f i))
     (h₂ : ∀ i, IsPullback (φ₂ i) (G₂' i).hom G₂.hom (f i))
     (he : ∀ i, η[G₂' i].left ≫ φ₂ i = f i ≫ η[G₂].left) (ψ : G₁ ⟶ G₂) (ψ' : ∀ i, G₁' i ⟶ G₂' i)
@@ -303,6 +304,7 @@ theorem overlap (Xo : Moduli D l) {𝔓 : Ideal (𝓞 E)} {p i : ℕ} {S V₁ V�
 end GlobalTheory.QuotGlue
 
 
+open GlobalTheory.QuotGlue in
 theorem GlobalTheory.hasQuot_of_openCover :
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (𝔓 : Ideal (𝓞 E)) (p i : ℕ) (S : Scheme.{0}) [IsReduced S] (s : S ⟶ Sp (KA l)) (o : Ob D l s) (K : Set o.t.G.left), admitted l 𝔓 p → HeckeSet D o.t 𝔓 p i K → (∀ q : S, ∃ (U : S.Opens) (o' : Ob D l (U.ι ≫ s)) (m : ObjMap o' o U.ι), q ∈ U ∧ HasQuot o' p (m.toSABMap.φ ⁻¹' K)) → HasQuot o p K := by
   intro E _ _ _ H D l Xo 𝔓 p i S _ s o K hA hH h

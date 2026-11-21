@@ -14,6 +14,7 @@ namespace GlobalTheory.CubeTop
 variable {ι : Type} [LinearOrder ι] [Fintype ι] {R : Type} [CommRing R]
 
 
+omit [LinearOrder ι] in
 theorem univ_subset {n : ℕ} (hn : Fintype.card ι = n) (s : {s : Finset ι // s.card = n}) :
     (Finset.univ : Finset ι) ⊆ s.1 :=
   (Finset.eq_univ_of_card s.1 (s.2.trans hn.symm)).ge
@@ -23,6 +24,7 @@ def topTerm (A : Cube.{0} ι R) {n : ℕ} (hn : Fintype.card ι = n) :
   LinearMap.pi fun s => Cube.res A (univ_subset hn s)
 
 
+omit [LinearOrder ι] in
 theorem topTerm_surjective (A : Cube.{0} ι R) {n : ℕ} (hn : Fintype.card ι = n) :
     Function.Surjective (topTerm A hn) := by
   intro x

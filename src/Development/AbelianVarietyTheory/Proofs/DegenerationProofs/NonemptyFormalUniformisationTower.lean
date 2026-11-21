@@ -164,6 +164,7 @@ theorem connectedSpace_thickObj [IsLocalRing R] (hI : I ≠ ⊤) (hG : IsSemiAbe
   exact (GroupConn.connectedSpace_group _ (thickObj R I e G)).1
 
 
+omit [GrpObj G] in
 theorem thickMap_fst (e : ℕ) :
     thickMap R I e G ≫ pullback.fst G.hom (thick R I (e + 1)) = pullback.fst G.hom (thick R I e) :=
   (pullback.lift_fst _ _ _).trans (Category.comp_id _)

@@ -27,9 +27,11 @@ structure IsBCC (F : GA E a → ℂ) : Prop where
   left : ∀ γ g, F (ratGL E a γ * g) = F g
 
 
+variable (E a) in
 def lieBasis : Module.Basis (Fin (Module.finrank ℝ (Lie E a))) ℝ (Lie E a) := Module.finBasis ℝ (Lie E a)
 
 
+variable (E a) in
 def lieCoord (i : Fin (Module.finrank ℝ (Lie E a))) : Lie E a →L[ℝ] ℂ :=
   Complex.ofRealCLM.comp (LinearMap.toContinuousLinearMap ((lieBasis E a).coord i))
 

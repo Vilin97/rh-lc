@@ -13,6 +13,7 @@ noncomputable section
 namespace GlobalTheory.CompanionTheory.JStable
 
 
+open Module in
 theorem exists_adapted_onb {ι : Type*} [Fintype ι] [DecidableEq ι]
     (W : Submodule ℂ (EuclideanSpace ℂ ι)) :
     ∃ (b : OrthonormalBasis ι ℂ (EuclideanSpace ℂ ι)) (T : Set ι),

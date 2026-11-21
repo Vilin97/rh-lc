@@ -170,6 +170,7 @@ end GlobalTheory.FlatLine.Spread
 namespace GlobalTheory.FlatLine
 
 
+open ReciprocityTheory.ChartRestriction.G.FD in
 theorem exists_finset_integral_of_definite : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l), Dw.q = 0 → 1 ≤ Dw.p → (∀ p : ℕ, p.Prime → l.GoodAt p) → ∀ y₀ : FrPt Xo c c.F, ∃ S : Finset c.F, (∀ s ∈ S, s ≠ 0) ∧ ∀ (T : CDVR) (io : c.F →+* T.Fr), letI := io.toAlgebra; (∀ s ∈ S, vV T.V (io s) = 0) → ∀ z : FrPt Xo c T.Fr, FrMap (Algebra.ofId c.F T.Fr) y₀ z → Integral T io z := by
   intro E _ _ _ H Dw l Xo c hq hp hg y₀
   obtain ⟨S, hS, h⟩ := Spread.spreads hq hp hg y₀

@@ -23,6 +23,7 @@ variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : 
   {hxy : ∀ i, y i ≠ 0 → x i ≠ 0}
 
 
+variable (y) in
 def toChartY (I : Chart x) (h : ∀ i ∈ I.1, y i ≠ 0) : Chart y :=
   ⟨I.1, I.2.1, fun i hi => (mem_support y).mpr (h i hi)⟩
 
@@ -123,6 +124,7 @@ theorem mem_twist_of_eq_zero (Q : LineBundle S x) (Q' : LineBundle S y) {r : Ω 
 end RestrictGenerated
 
 
+open RestrictGenerated in
 theorem RestrictGenerated.proof : RestrictGenerated.Statement.{u, w} := by
   intro S _ Ω _ _ N x K' _ _ y hxy pp _ hyp Q Q' r h hgen I
   have hX : ∀ i, (X i : Poly S N) ∈ pp ↔ y i = 0 := fun i => by

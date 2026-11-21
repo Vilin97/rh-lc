@@ -70,6 +70,7 @@ def Splits (r : ℕ) (ρ : ↥(GK K) →* GL n ↥(MaximalUnramifiedExtension l)
 def eps {α : Type} [DecidableEq α] (x y z : α) : ℤ := if z = x then -1 else if z = y then 1 else 0
 
 
+variable {P} in
 def Plus {AI : LocAinf l P} (T : LocTied l P AI) (b : P.R.B) : Prop :=
   ∃ (N : ℕ) (x : Formalism.Per.Acris l), T.eB ((l : P.R.B) ^ N * b) = algebraMap (Formalism.Per.Acris l) (Formalism.Per.Bcris l) x
 

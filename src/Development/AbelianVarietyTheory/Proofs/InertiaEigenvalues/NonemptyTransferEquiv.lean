@@ -116,6 +116,7 @@ variable {B : Type} [CommRing B] {b : Base l B} {k : Type} [Field k] {s : Sp k �
   [IsAlgClosed k] [CharZero k] (hL : Out.Laws) (o : Obj D l b s) {p : ℕ} {P : Ideal (𝓞 E)}
 
 
+include hL in
 theorem map_pow_eq (h : IsSplitPrimeOff l p P) {i : ℕ} {C : Subgroup (Pts o.t)}
     (hC : o.t.HeckeKer (𝟙_ _) D P p i C) {C₀ : Subgroup (Pts o.t)} (h₀ : IsHeckeDatum o.t P i C₀)
     (e : (C : Set (Pts o.t)) = heckeKernel o.t p P C₀) : C.map (powMonoidHom p) = C₀ := by

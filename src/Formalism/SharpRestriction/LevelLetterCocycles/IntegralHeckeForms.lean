@@ -190,6 +190,7 @@ def BasisOf (i : X.Tw) (j : ℕ) (b : Bool) (Sg : Set (Y.Dat i j b)) (S : Finset
   Submodule.span (X.O i) ((fun a => AO Y i j b (Y.th i j b a)) '' ↑S) = (Th Y i j b Sg).map (AO Y i j b)
 
 
+open Classical in
 def levs (i : X.Tw) (S : ∀ (j : ℕ) (b : Bool), Finset (Y.Dat i j b)) : Finset (PlE D.host) :=
   (Finset.Icc 1 D.R.m).biUnion fun j =>
     (Finset.univ : Finset Bool).biUnion fun b => (S j b).biUnion (Y.lev i j b)
@@ -215,6 +216,7 @@ def InclAt (i : X.Tw) (j : ℕ) (b : Bool) (Sg : Set (Y.Dat i j b)) (k : ℕ) (Q
   eThPsi Y i j b k Q ψ Sg ≤ eThPMt Y i j b k Q ψ
 
 
+open Classical in
 def GoodTw (N0 : X.Tw → ℕ) (i : X.Tw) (eps' : ℝ)
     (S : ∀ (j : ℕ) (b : Bool), Finset (Y.Dat i j b)) (A : Finset (PlE D.host)) (Q : Finset (PlE D.host)) (k' : ℕ)
     (ψ' : X.RCG i Q →* (X.Ok i k')ˣ) : Prop :=

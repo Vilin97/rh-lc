@@ -147,6 +147,12 @@ theorem _root_.GlobalTheory.TestLat.SlopeModel.exists_isMetric (H : Matrix (Fin 
   exact (hH φ).inv.transpose
 
 
+open NumberField in
+open scoped Matrix ComplexOrder in
+open scoped Kronecker MatrixOrder in
+variable {K : Type} [Field K] [NumberField K] [StarRing K] {ι : Type} [Fintype ι] {n N : ℕ}
+  {C : Type} in
+omit [StarRing K] in
 theorem _root_.GlobalTheory.TestLat.SlopeModel.nonempty_idx (lam : ι → _root_.Formalism.BasicNotions.DomWeight n) : Nonempty (_root_.Formalism.L2.DIV.VVIdx lam) := by
   have h := _root_.Formalism.L2.Col.evV_extV_ne_zero (E := ℚ) (K := ℚ) (fun _ : ι => RingHom.id ℚ) (1 : Matrix (Fin n) (Fin n) ℚ)
     lam (Rat.castHom ℂ) ⟨fun _ => 1, fun _ => by simp⟩

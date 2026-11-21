@@ -230,6 +230,7 @@ end GlobalTheory.CompanionTheory.GE.ArtinRees
 namespace GlobalTheory.CompanionTheory.GE
 
 
+open GlobalTheory.CompanionTheory.GE.ArtinRees in
 theorem artinRees_uniform {A : Type} [CommRing A] [IsNoetherianRing A] (I : Ideal A) {X : Scheme.{0}}
     [X.Over (Spec (.of A))] [IsLocallyNoetherian X] [CompactSpace X] {E : X.Modules}
     (hE : IsCoherent E) (D : Subobject E) (hD : (D : X.Modules).IsQuasicoherent) :

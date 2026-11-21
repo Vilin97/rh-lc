@@ -31,6 +31,7 @@ variable {o} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type} {A3 : FamIn3 o.L
 
 
 
+variable (YS) in
 def ys : @NExpRealS (Late.D bb) G _ _ Pl0 I0 T (famInThreeCoefficientChange bb A3) Ks _ _ (alg bb iK) (real3 bb R) ((cG)) ((S)) :=
   @NExpRealS.mk (Late.D bb) G _ _ Pl0 I0 T (famInThreeCoefficientChange bb A3) Ks _ _ (alg bb iK) (real3 bb R) ((by with_unfolding_all exact (cG :))) ((by with_unfolding_all exact (S :)))
     (fi := (by with_unfolding_all exact (YS.fi :))) (geq := (by with_unfolding_all exact (YS.geq :))) (rho := (by with_unfolding_all exact (YS.rho :))) (chi := (by with_unfolding_all exact (YS.chi :))) (eF := (by with_unfolding_all exact (YS.eF :))) (bsup := (by with_unfolding_all exact (YS.bsup :)))

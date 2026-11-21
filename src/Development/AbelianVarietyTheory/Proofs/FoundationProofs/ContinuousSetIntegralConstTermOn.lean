@@ -21,6 +21,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Secon
   {μ : Measure G} [μ.IsHaarMeasure] {φ : G → ℂ} {S : Set G}
 
 
+omit [LocallyCompactSpace G] in
 theorem exists_setIntegral_norm_le (hS : IsCompact S) :
     ∃ c : ℝ, ∀ F : L2 Γ μ, ∫ y in S, ‖lift Γ F y‖ ∂μ ≤ c * ‖F‖ := by
   set a : ℝ≥0∞ := ({γ : Γ | (γ : G) ∈ S * S⁻¹}.encard : ℝ≥0∞) with ha
@@ -51,6 +52,7 @@ theorem exists_setIntegral_norm_le (hS : IsCompact S) :
   gcongr
 
 
+omit [SecondCountableTopology G] [LocallyCompactSpace G] in
 theorem setIntegral_norm_mul_left_le (hi : LocallyIntegrable φ μ) (hS : IsCompact S) {C : Set G} (hC : IsCompact C)
     {k : G} (hk : ∀ y ∈ S, k * y ∈ C) :
     IntegrableOn (fun y => φ (k * y)) S μ ∧ ∫ y in S, ‖φ (k * y)‖ ∂μ ≤ ∫ y in C, ‖φ y‖ ∂μ := by
@@ -63,6 +65,7 @@ theorem setIntegral_norm_mul_left_le (hi : LocallyIntegrable φ μ) (hS : IsComp
   exact setIntegral_mono_set h1.norm (.of_forall fun _ => norm_nonneg _) (HasSubset.Subset.eventuallyLE hk)
 
 
+omit [SecondCountableTopology G] [LocallyCompactSpace G] [DiscreteTopology Γ] in
 theorem exists_compact_bound (hc : Cocompact Γ N) (hS : IsCompact S) : ∃ C : Set G, IsCompact C ∧
     ∀ φ : G → ℂ, LeftInv Γ φ → LocallyIntegrable φ μ → ∀ n : N,
       IntegrableOn (fun y => φ (n * y)) S μ ∧ ∫ y in S, ‖φ (n * y)‖ ∂μ ≤ ∫ y in C, ‖φ y‖ ∂μ := by
@@ -127,6 +130,7 @@ theorem constTermOn_convR (hc : Cocompact Γ N) (hφ : LeftInv Γ φ) (hm : Stro
 variable [μ.IsMulRightInvariant]
 
 
+omit [LocallyCompactSpace N] in
 theorem locallyIntegrable_lift (F : L2 Γ μ) : LocallyIntegrable (lift Γ F) μ :=
   locallyIntegrable_iff.2 fun C hC => (AutomorphicL2Local.memLp_restrict_compact G Γ μ F C hC).2
 
@@ -168,6 +172,7 @@ theorem constTermOn_ae_eq_zero (hc : Cocompact Γ N) {F : L2 Γ μ} (hF : F ∈ 
   exact (measurePreserving_mul_left μ ((q.out : N) : G)).quasiMeasurePreserving.ae h4
 
 
+omit [LocallyCompactSpace N] in
 theorem mem_of_forall_Rop_mem {W : Submodule ℂ (L2 Γ μ)} (hW : IsClosed (W : Set (L2 Γ μ))) {F : L2 Γ μ}
     (h : ∀ f : G → ℂ, Continuous f → HasCompactSupport f → Rop Γ μ f F ∈ W) : F ∈ W := by
   have := hW.completeSpace_coe

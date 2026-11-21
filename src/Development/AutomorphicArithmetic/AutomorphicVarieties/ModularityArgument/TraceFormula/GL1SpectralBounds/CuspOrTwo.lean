@@ -10,6 +10,7 @@ open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.SmGL GlobalTheory.
 open PositivityTheory.Rg.Rs PositivityTheory.Rg.BcB PositivityTheory.Rg.BcB.F UpperTheory.V.Z.Tf.GOne
 
 
+open PositivityTheory.Rg.Rs.PExpFin in
 private theorem cusp_or_exp {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
     (V : Submodule ℂ (Sm E N)) (hV : IsDiscrete V) :
     (∃ P : CuspSub E N, P.V = V) ∨ ∃ r, 0 < r ∧ r < N ∧ (ExpV r V).Nonempty := by

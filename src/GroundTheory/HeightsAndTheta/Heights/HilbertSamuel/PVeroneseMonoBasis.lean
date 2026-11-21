@@ -51,6 +51,7 @@ theorem linearIndependent_mono (D N : ℕ) :
 end VeroneseMonoBasis
 
 
+open VeroneseMonoBasis in
 theorem VeroneseMonoBasis.proof : VeroneseMonoBasis.Statement := by
   intro D n
   have hex : ∀ k : Fin (Finset.Nat.antidiagonalTuple (D + 1) (2 * n)).card,

@@ -20,6 +20,8 @@ variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Alge
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 
+omit [NumberField F] [NumberField E] [IsTotallyReal F] [IsTotallyComplex E] [Fintype ι]
+  [DecidableEq ι] in
 theorem two_le_finrank_of_isotropic [FiniteDimensional E W] (h : HermitianForm F E W) {x₀ : W}
     (hne : x₀ ≠ 0) (hiso : h.toSesq x₀ x₀ = 0) : 2 ≤ finrank E W := by
   by_contra hlt
@@ -34,6 +36,7 @@ theorem two_le_finrank_of_isotropic [FiniteDimensional E W] (h : HermitianForm F
   rw [LinearMap.zero_apply, map_smul, hiso, smul_zero]
 
 
+omit [DecidableEq ι] in
 theorem re_form_smul (P : Matrix ι ι ℂ) (b : ℂ) (y : ι → ℂ) :
     (star (b • y) ⬝ᵥ (P *ᵥ (b • y))).re = (star y ⬝ᵥ (P *ᵥ y)).re * ‖b‖ ^ 2 := by
   have hb : star b * b = ((‖b‖ ^ 2 : ℝ) : ℂ) := by

@@ -65,6 +65,8 @@ theorem lr_skew_symm (a : GL (Fin n) (AE D)) :
   fun s hs => (skewConj (a⁻¹).1 ⟨s, hs⟩).2
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem map_skewConj : ∀ (D : D7) (r : ℕ) (κ : Measure (skewA D r)), κ.IsAddHaarMeasure → ∀ a : GL (Fin r) (AE D), κ.map (skewConj a.1) = ((absA D (Matrix.GeneralLinearGroup.det a) ^ r)⁻¹ : ℝ≥0) • κ := by
   intro D n κ hκ a
   obtain ⟨i1, i2, i3, i4, -, -⟩ := lattice_Mx D n n

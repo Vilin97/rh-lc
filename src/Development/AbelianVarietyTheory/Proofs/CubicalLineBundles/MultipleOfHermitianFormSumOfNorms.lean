@@ -61,6 +61,7 @@ theorem IsSumOfNorms.sum {κ : Type} (s : Finset κ) {B : κ → M → M → R} 
 variable (g : M → M →ₗ[R] R) (herm : ∀ x y, g x y = br (g y x))
 
 
+include herm in
 theorem exists_step (e : M) (q : ℕ) (hq : g e e = q) :
     ∃ Z : M →ₗ[R] M, Z e = 0 ∧
       ∀ x y, g (Z y) (Z x) = (q : R) ^ 2 * g y x - q * (g e x * br (g e y)) := by
@@ -105,6 +106,7 @@ theorem exists_kill {κ : Type} (v : κ → M) (s : Finset κ) :
         ring
 
 
+include herm pos in
 theorem exists_split {n : ℕ} (u w : Fin n → M) (fr : ∀ a, a = ∑ i, g (w i) a • u i) :
     ∃ (N m : ℕ) (l : M →ₗ[R] (Fin m → R)) (r : (Fin m → R) →ₗ[R] M), 1 ≤ N ∧ r ∘ₗ l = LinearMap.id ∧
       ∀ x y, (N : R) * g y x = ∑ k, l x k * br (l y k) := by

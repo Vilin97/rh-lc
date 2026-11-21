@@ -45,6 +45,7 @@ theorem negT_translT [IsCommMonObj A] {T : Over S} (x : T ⟶ A) :
   rw [mul_inv, inv_inv]
 
 
+omit [GrpObj A] in
 theorem exists_conj {L : LB A.left} (hL : L.IsLB) (φ : A ⟶ A) (a b : ℤ)
     (α : LB.Gen (LB.LinComb L (K := Fin 2) ![𝟙 A.left, φ.left] ![a, -b])) (hα : α.IsGen) {T : Over S}
     (m' m : T ⊗ A ⟶ A) (e : m' ≫ φ = endT A T φ ≫ m)

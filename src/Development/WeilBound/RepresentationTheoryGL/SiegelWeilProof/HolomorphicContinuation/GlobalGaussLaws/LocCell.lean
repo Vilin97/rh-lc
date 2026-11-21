@@ -255,6 +255,7 @@ end PositivityTheory.Rg.Sw.Glob.LocCell
 namespace PositivityTheory.Rg.Sw.Glob
 
 
+open LocCell in
 theorem lIcell_of (hAw : AwayAct) (hDA : DecompAway) (hU : UnipTau) (hAI : AwayIn) (hSF : SchFP) (hLN : LNe)
     (hLc : LIcont) (hLl : LIlaw) (hLv : LIvac) : LIcell := by
   intro D n V ψ χ θ μ ω H l s ν τ ε fr ι hC hTM L hL

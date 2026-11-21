@@ -19,6 +19,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.LiePull
 
 
+set_option maxHeartbeats 800000 in
 theorem exists_lieBasis_of_tanBasis {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {X0 : Scheme.{0}}
     (t : SAB H X0) {K : Type} [CommRing K] (x0 : Sp K ⟶ X0) (A : Over (Sp K)) [GrpObj A] (θ : A.left ⟶ t.G.left)
     (hθ : IsGrpPullback A t.G x0 θ) {m : ℕ} (u : Fin m → (Sp (DualNumber K) ⟶ t.G.left))

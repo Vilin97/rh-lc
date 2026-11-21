@@ -55,6 +55,7 @@ def IsSplitPl {R : Ranks} (H : Host R) (v : HeightOneSpectrum (𝓞 H.E)) : Prop
   ∃ x : 𝓞 H.E, x ∈ v.asIdeal ∧ ∀ y : 𝓞 H.E, (y : H.E) = H.conj (x : H.E) → y ∉ v.asIdeal
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 structure NData (R : Ranks) (H : Host R) (what₂ : Rows.Data R) where
 
   Om : Type
@@ -244,6 +245,7 @@ def RamExactly {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω]
     ((∃ σ ∈ Ine (F := E) A, φ σ ≠ 1) ↔ v ∈ Q)
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 structure NTw (R : Ranks) (H : Host R) (what₂ : Rows.Data R) [NumberField what₂.LL] [StarRing what₂.LL]
     (LL0 : IntermediateField ℚ what₂.LL) (N : NData R H what₂) where
 
@@ -472,6 +474,7 @@ def SplitOut {R : Ranks} {H : Host R} {what₂ : Rows.Data R} (N : NData R H wha
   IsSplitPl H w ∧ w ∉ placesOver H.E (N.l i) ∧ w ∉ N.S i ∧ w ∉ N.Q i
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 structure NAut {R : Ranks} {H : Host R} {what₂ : Rows.Data R} (N : NData R H what₂) where
 
   iotaQ : ∀ i, FractionRing (N.O i) →+* Qbar (N.l i)
@@ -682,6 +685,7 @@ attribute [instance] NAut.finAV
 end Aut
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 structure NBC {R : Ranks} {H : Host R} {what₂ : Rows.Data R} {N : NData R H what₂} (A : NAut N) where
 
   AU : ℕ → Type
@@ -722,6 +726,7 @@ abbrev DelQM {R : Ranks} (H : Host R) (l : ℕ) (Q : Finset (PlE H)) (M : ℕ) :
   ↥Q → ZMod (l ^ M)
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 structure NExp (R : Ranks) (H : Host R) (what₂ : Rows.Data R) [NumberField what₂.LL] [StarRing what₂.LL]
     (LL0 : IntermediateField ℚ what₂.LL) (N : NData R H what₂) (tw : NTw R H what₂ LL0 N) where
 
@@ -834,6 +839,7 @@ open Polynomial
 abbrev Fb (l : ℕ) (hl : l.Prime) : Type := @Formalism.CyclotomicNorms.Fbar l ⟨hl⟩
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 structure NTypes {R : Ranks} {H : Host R} {what₂ : Rows.Data R} {N : NData R H what₂} (A : NAut N) where
 
   Mray : Type
@@ -957,6 +963,8 @@ end NTypes
 end Types
 
 
+open scoped TensorProduct in
+set_option synthInstance.maxHeartbeats 400000 in
 structure NTh (R : Ranks) (H : Host R) (what₂ : Rows.Data R) [NumberField what₂.LL] [StarRing what₂.LL]
     (LL0 : IntermediateField ℚ what₂.LL) (N : NData R H what₂) (tw : NTw R H what₂ LL0 N)
     (ex : NExp R H what₂ LL0 N tw) where

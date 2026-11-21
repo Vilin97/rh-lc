@@ -85,6 +85,7 @@ private theorem cut_pullback_iso : ∀ {X Y : Scheme.{0}} (f : Y ⟶ X) (G : X.M
     (cokernelCompIsIso _ (twistZZeroIso ((Scheme.Modules.pullback f).obj G) hL').inv).symm⟩
 
 
+open TensorProduct in
 private theorem nontrivial_fibre_of_isBaseChange {R S : Type*} [CommRing R] [CommRing S] [Algebra R S]
     {M N : Type*} [AddCommGroup M] [Module R M]
     [AddCommGroup N] [Module R N] [Module S N] [IsScalarTower R S N]
@@ -134,6 +135,7 @@ private theorem support_pullback' {X Y : Scheme.{0}} (f : Y ⟶ X) (G : X.Module
   exact h.symm
 
 
+set_option backward.isDefEq.respectTransparency.types false in
 private theorem fibre_finite_isClosed_of_affine_finite {X Y : Scheme.{0}} (f : Y ⟶ X) (V : X.Opens)
     (hV : IsAffineOpen V) (hU : IsAffineOpen (f ⁻¹ᵁ V))
     (hfin : letI := (f.app V).hom.toAlgebra; Module.Finite Γ(X, V) Γ(Y, f ⁻¹ᵁ V))
@@ -287,6 +289,7 @@ private abbrev cmpFn (k : Type) [Field k] {X Y : Scheme.{0}} [Algebra k Γ(X, �
     (AddMonoidHom.mulLeft (n : ℤ)) ∘ chiPic k G
 
 
+set_option backward.isDefEq.respectTransparency false in
 private theorem diffVanish_cmpFn (O : Type) [Field O] {X Y : Scheme.{0}}
     [AlgebraicGeometry.IsNoetherian X] [AlgebraicGeometry.IsNoetherian Y]
     [Algebra O Γ(X, ⊤)] [Algebra O Γ(Y, ⊤)] (f : Y ⟶ X)

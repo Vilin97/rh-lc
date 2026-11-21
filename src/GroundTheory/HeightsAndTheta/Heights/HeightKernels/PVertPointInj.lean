@@ -35,6 +35,7 @@ theorem isMultiHomogIdeal_of_mem_divSupp {T : Type} [Fintype T] {K' : Type} [Fie
 end VerticalPointInjective
 
 
+open VerticalPointInjective in
 theorem VertPointInj.proof (hCh : VertPointChart.Statement) : VertPointInj.Statement := by
   intro T _ K' _ _ y s hA hs hsP W hW W' hW' hWW'
   obtain ⟨t, ht⟩ := hW.2 ()

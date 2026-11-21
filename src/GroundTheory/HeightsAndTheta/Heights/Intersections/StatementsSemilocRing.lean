@@ -85,6 +85,7 @@ theorem quotMapZ_injective (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (M
   Ideal.quotientMap_injective
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem imageZ_isPrime_of_prime (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) [P'.IsPrime] :
     (imageZ v P').IsPrime :=
   Ideal.comap_isPrime _ _
@@ -148,9 +149,11 @@ namespace SemilocRing
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
+open Classical in
 def blkW : (Σ k, ι k) → K → ℕ := fun p => Pi.single p.1 1
 
 
+open Classical in
 theorem isMultiHomog_of_wh {s : MRing ι} {a : K → ℕ} (h : IsWeightedHomogeneous (blkW (ι := ι)) s a) :
     IsMultiHomog s a := by
   intro m hm k

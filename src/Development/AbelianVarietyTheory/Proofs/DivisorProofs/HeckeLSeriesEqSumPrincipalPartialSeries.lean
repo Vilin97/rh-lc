@@ -17,6 +17,7 @@ open scoped nonZeroDivisors
 namespace GlobalTheory.HeckeStrip
 
 
+open Classical in
 theorem tsum_ideal_eq_sum_classGroup_of_summable {K : Type} [Field K] [NumberField K]
     (b : ClassGroup (𝓞 K) → (Ideal (𝓞 K))⁰) (G : Ideal (𝓞 K) → ℂ) (H : ClassGroup (𝓞 K) → Ideal (𝓞 K) → ℂ)
     (hb : Function.Bijective (fun c => ClassGroup.mk0 (b c))) (h0 : G ⊥ = 0) (hsum : Summable G)

@@ -16,6 +16,7 @@ def IsMQ {k : ℕ} {E : Type*} [Field E] [Algebra ℚ E] (a : Fin k → ℤ) (α
   (∀ i, α i ^ 2 = (a i : E)) ∧ IntermediateField.adjoin ℚ (Set.range α) = ⊤
 
 
+open Classical in
 def galSign {k : ℕ} {E : Type*} [Field E] [Algebra ℚ E] (α : Fin k → E) (σ : Gal(E/ℚ)) :
     Fin k → ℤˣ :=
   by

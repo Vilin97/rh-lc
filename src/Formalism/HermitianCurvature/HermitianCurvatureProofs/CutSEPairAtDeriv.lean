@@ -171,6 +171,7 @@ theorem hsVec_smul' (a : ℂ) (A : Wq →L[ℂ] Wp) : B.hsVec (a • A) = a • 
   simp [B.hsVec]
 
 
+omit [FiniteDimensional ℂ Wp] in
 def hsVecLin : (Wq →L[ℂ] Wp) →ₗ[ℂ] PiLp 2 (fun _ : Fin (Module.finrank ℂ Wq) => Wp) where
   toFun := B.hsVec
   map_add' := hsVec_add'

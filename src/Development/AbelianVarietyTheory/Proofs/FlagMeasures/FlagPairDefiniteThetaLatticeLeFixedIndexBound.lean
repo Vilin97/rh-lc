@@ -74,6 +74,7 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
 
+omit [StarRing K] in
 theorem isLatMod_of_idx (A B : Submodule (𝓞 K) V) (S I : Submodule K V) (hA : IsLatMod A S I) (hBA : B ≤ A)
     (hI : rs (𝓞 K) I ≤ B) (h : idx A B ≠ 0) : IsLatMod B S I := by
   obtain ⟨⟨M, hM, hL⟩, hsp⟩ := hA

@@ -35,6 +35,7 @@ theorem continuous_symm (i : k ≃+* k') (hi : Continuous i) : Continuous i.symm
   exact (i.toEquiv.toHomeomorphOfContinuousOpen hi ho).symm.continuous
 
 
+variable (k) in
 theorem valuation_le_one_iff_ord (x : kˣ) : valuation k (x : k) ≤ 1 ↔ 0 ≤ GlobalTheory.SmGL.ord k x := by
   set φ := IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt k
   have h0 : φ (valuation k (x : k)) ≠ 0 := by simp
@@ -43,6 +44,7 @@ theorem valuation_le_one_iff_ord (x : kˣ) : valuation k (x : k) ≤ 1 ↔ 0 ≤
   simp [φ]
 
 
+variable (k) in
 theorem valuation_le_one_iff_nabs (x : kˣ) : valuation k (x : k) ≤ 1 ↔ GlobalTheory.SplitWeil.nabs k x ≤ 1 := by
   rw [valuation_le_one_iff_ord, GlobalTheory.LGrp.nabs_eq_zpow,
     zpow_le_one_iff_right₀ (by exact_mod_cast GlobalTheory.SplitWeil.one_lt_resCard k)]

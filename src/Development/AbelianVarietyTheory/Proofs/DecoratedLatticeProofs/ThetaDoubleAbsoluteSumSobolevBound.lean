@@ -53,6 +53,7 @@ theorem mixS_smul (c : ℂ) (f : WO S T → ℂ) (x : Mx D T.rank ρ) :
   simp only [HypDec.mixS, HypDec.integrandS_eq, Pi.smul_apply, smul_eq_mul, mul_left_comm _ c, integral_const_mul]
 
 
+variable (T) in
 def dualPt (ρ : ℕ) : Mx D ρ T.rank →+ Mx D T.rank ρ where
   toFun b := adj (incA D D.host.xi0⁻¹ • (b ⬝ giA T))
   map_zero' := by rw [Matrix.zero_mul, smul_zero, adj_zero]

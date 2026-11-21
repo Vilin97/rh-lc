@@ -83,6 +83,7 @@ theorem mem_nilradical_of_forall_algHom {K T : Type} [Field K] [IsAlgClosed K] [
   exact (map_eq_zero_iff e e.toRingHom.injective).mp this
 
 
+open TensorProduct in
 theorem exists_coords_ring {R S K B : Type} [CommRing R] [CommRing S] [Field K] [IsAlgClosed K] [CommRing B]
     [Algebra K B] {g : ℕ} (α : R →+* S) (hα : α.FiniteType) (ψ : S →+* K) [Finite (S ⧸ RingHom.ker ψ)]
     (h : RingHom.Locally (RingHom.IsStandardSmoothOfRelativeDimension g) (algebraMap K B))
@@ -177,6 +178,7 @@ theorem exists_coords_ring {R S K B : Type} [CommRing R] [CommRing S] [Field K] 
   exact h1
 
 
+open TensorProduct in
 theorem exists_chart_ring {G Z H : Scheme.{0}} (f : G ⟶ Z) {R S K : Type} [CommRing R] [CommRing S] [Field K]
     {g : ℕ} (α : R →+* S) (ρ : R →+* K) (iW : Sp S ⟶ G) (iV : Sp R ⟶ Z) [IsOpenImmersion iW] [IsOpenImmersion iV]
     (hsq : iW ≫ f = spMap α ≫ iV) (ζ : Sp K ⟶ Z) (hζ : ζ = spMap ρ ≫ iV) (h : H ⟶ pullback f ζ)

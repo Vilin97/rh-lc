@@ -230,6 +230,8 @@ private theorem exists_orderOf_eq_pred_sl2_zmod (p : ℕ) [Fact p.Prime] :
       rw [← Units.val_pow_eq_pow_val, inv_pow, hγn, inv_one, Units.val_one]
 
 
+open scoped MatrixGroups TensorProduct in
+open Matrix in
 theorem _root_.GlobalTheory.sl2_zmod_central_ext_commutator_sq_eq_one :
     ∀ (l n p a : ℕ), l.Prime → p.Prime → 5 ≤ p → p ≠ l → ∀ (E : Type) [Group E]
       (π : E →* Matrix.SpecialLinearGroup (Fin 2) (ZMod (p ^ a))), Function.Surjective π →

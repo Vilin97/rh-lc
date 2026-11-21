@@ -56,6 +56,7 @@ theorem diagUnits_posIdele (a : ℕ) {x : ℝ} (hx : 0 < x) :
   rfl
 
 
+omit [IsTotallyComplex E] in
 theorem continuous_posIdele_pos :
     Continuous fun r : {r : ℝ // 0 < r} => (posIdele (K := E) r.1 r.2 : IdeleGroup E) := by
   unfold posIdele
@@ -63,6 +64,7 @@ theorem continuous_posIdele_pos :
     (Continuous.subtype_mk ((continuous_subtype_val).pow _) _)
 
 
+omit [IsTotallyComplex E] in
 theorem ideleModule_det_diagUnits_posIdele (a : ℕ) {x : ℝ} (hx : 0 < x) :
     (IdeleGroup.ideleModule E (Matrix.GeneralLinearGroup.det
       (diagUnits a (fun _ : Fin a => posIdele (K := E) x hx))) : ℝ) = x ^ (a * Module.finrank ℚ E) := by

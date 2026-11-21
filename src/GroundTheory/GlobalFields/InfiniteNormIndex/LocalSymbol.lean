@@ -113,6 +113,7 @@ theorem completionConj_ne_one (hv : v.IsReal) (hw : w.IsComplex) :
   simp at h2
 
 
+open scoped Classical in
 theorem eq_one_or_eq_completionConj (hv : v.IsReal) (hw : w.IsComplex)
     (σ : Gal(w.Completion/v.Completion)) : σ = 1 ∨ σ = completionConj hv := by
   classical

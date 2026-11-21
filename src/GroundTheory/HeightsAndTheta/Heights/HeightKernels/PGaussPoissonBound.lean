@@ -25,6 +25,7 @@ theorem norm_toLp_sq {g : ℕ} (v : Fin g → ℝ) : ‖WithLp.toLp 2 v‖ ^ 2 =
 end PGaussPoissonBound
 
 
+open PGaussPoissonBound in
 theorem GaussPoissonBound.proof (hL : GaussLatticeIsLattice.Statement)
     (hV : GaussLatticeCovolume.Statement) (hK : GaussLatticeCoords.Statement)
     (hF : GaussFourierSelf.Statement) : GaussPoissonBound.Statement := by

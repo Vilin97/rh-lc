@@ -276,6 +276,7 @@ theorem gsLocalPlace_mul (v : S) (x : galUnramifiedOutside F Ω S) {u : galUnram
   rw [gsLocalPlace, e, placeOfAlgHom_comp]
 
 
+variable (S) in
 def mackeyPlace (p : MackeyIndex (gsOpenSubgroup S hL) (gsFinFamily S ιs)) :
     (placesOver S : Set (HeightOneSpectrum (𝓞 L))) :=
   ⟨(gsLocalPlace hL ιs p.1 p.2.out).1, p.1.1, p.1.2, (gsLocalPlace hL ιs p.1 p.2.out).2⟩
@@ -325,11 +326,14 @@ theorem mackeyPlace_surjective : Function.Surjective (mackeyPlace S hL ιs) := b
   rw [e1, gsLocalPlace_mul hL ιs v x ha h, gsLocalPlace, hx, hj]
 
 
+variable (S) in
 def mackeyPlaceEquiv :
     MackeyIndex (gsOpenSubgroup S hL) (gsFinFamily S ιs) ≃ (placesOver S : Set (HeightOneSpectrum (𝓞 L))) :=
   Equiv.ofBijective (mackeyPlace S hL ιs) ⟨mackeyPlace_injective hL ιs, mackeyPlace_surjective hL ιs⟩
 
 
+omit [IsScalarTower F L Ω] in
+variable (S) in
 def gsAutLift (x : galUnramifiedOutside F Ω S) : Gal(Ω/F) :=
   (AlgEquiv.restrictNormalHom_surjective (K₁ := maxUnramifiedOutside F Ω S) Ω x).choose
 

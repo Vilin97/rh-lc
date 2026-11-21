@@ -81,6 +81,7 @@ theorem gco_mem_levLoc (w : SG) (hw : ∀ a ∈ w.1.asIdeal, gloRho v spl halg (
       exact Subgroup.one_mem _
 
 
+include halg in
 theorem gco_fr_lat (hT : v ∉ plUnder F ST) (x : Fin n → v.adicCompletion F) :
     (∃ y ∈ latS (F := F) (v.adicCompletion F) (Formalism.BasicNotions.intV E v) (baseLb E n ST), ∀ b, gloPhi v spl (y b) = x b) ↔
       ∀ b, (((1 : GL (Fin n) (v.adicCompletion F))⁻¹ : GL (Fin n) (v.adicCompletion F)) :

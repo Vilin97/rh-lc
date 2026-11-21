@@ -49,6 +49,7 @@ def QDChoice : Prop :=
     ∃ q d : ℕ, Rowq x eps n q d ∧ QDq x eps C5 q d ∧ Boxq x eps q d
 
 
+open Classical in
 def NormPrimes : Prop :=
   ∀ eps : ℝ, 0 < eps → eps < 1 / 52 → ∃ x0 : ℝ, ∀ (s : Scale) (R : Ranks) (N d : ℕ), s.eps = eps → x0 ≤ s.x → RankVal s R →
     ModRow s N d →

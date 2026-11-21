@@ -42,6 +42,7 @@ theorem continuous_realAd' (F : Type) [Field F] [NumberField F] : Continuous (re
   Continuous.prodMk ((continuous_ofMixed' F).comp (continuous_algebraMap ℝ _)) continuous_const
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem archLine_continuous_finPart : ∀ (D : D7) (S X : HSp D) {d : ℕ} (e : Fin X.rank ≃ Fin d) (g : Matrix (Fin S.rank) (Fin S.rank) D.host.E)
     (cS : Matrix (Fin S.rank) (Fin d) (AE D) ≃+ WO S X),
     (∀ u, cS u = (HMul.hMul (uᵀ.submatrix e id) (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.incM g) : Matrix (Fin X.rank) (Fin S.rank) (AE D))) →

@@ -69,6 +69,7 @@ end GlobalTheory.SmoothForms.NormInf
 namespace GlobalTheory.SmoothForms
 
 
+open NormInf in
 theorem normInf_mul_le_and_le_height :
     ∀ (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)) (V : HSp D),
       (∀ g h : GA D V, normInf θ V (g * h) ≤ normInf θ V g * normInf θ V h) ∧

@@ -28,6 +28,7 @@ theorem continuous_entry (τ : E →+* ℂ) (i j : Fin n) :
   exact h1.comp (h2.comp h3)
 
 
+omit [NumberField E] [IsCMField E] in
 theorem coord_star' (τ : E →+* ℂ) (z : Cinf E) : coord τ (star z) = star (coord τ z) := by
   unfold coord
   split_ifs <;> rfl

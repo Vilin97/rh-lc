@@ -57,6 +57,7 @@ noncomputable def galoisMap : A ⊗[B] A →ₐ[A] (G → A) :=
     galoisMap G A B (a ⊗ₜ b) g = a * g • b := rfl
 
 
+variable {G A} in
 theorem exists_galoisMap_separating [Finite G] (P : Ideal A) (H : Set G)
     (hH : ∀ h ∈ H, ∀ a : A, h • a - a ∈ P)
     (hH' : ∀ g ∉ H, P ⊔ Ideal.span (Set.range fun a : A ↦ g • a - a) = ⊤) :
@@ -113,6 +114,7 @@ theorem exists_galoisMap_separating [Finite G] (P : Ideal A) (H : Set G)
     exact he' g (by simpa using hg) h hh
 
 
+variable {G A} in
 theorem exists_finset_separating [Finite G] (P : Ideal A) (H : Set G)
     (hH : ∀ h ∈ H, ∀ a : A, h • a - a ∈ P)
     (hH' : ∀ g ∉ H, P ⊔ Ideal.span (Set.range fun a : A ↦ g • a - a) = ⊤) :
@@ -125,6 +127,7 @@ theorem exists_finset_separating [Finite G] (P : Ideal A) (H : Set G)
   · simpa [Finset.sum_apply] using he' h hh
 
 
+variable {G A} in
 theorem exists_galois_coordinates [Finite G] (h : IsFreeRingAction G A) :
     ∃ s : Finset (A × A), (∀ g : G, g ≠ 1 → ∑ p ∈ s, p.1 * g • p.2 = 0) ∧
       ∑ p ∈ s, p.1 * p.2 = 1 := by

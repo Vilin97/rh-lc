@@ -46,6 +46,7 @@ theorem isMultiHomog_mul' {f g : MRing ι} {a b : K → ℕ} (hf : IsMultiHomog 
   simp only [Finsupp.add_apply, Finset.sum_add_distrib, Pi.add_apply, hf m1 hm1 k, hg m2 hm2 k]
 
 
+open Classical in
 theorem isMultiHomog_X' (k : K) (i : ι k) :
     IsMultiHomog (X ⟨k, i⟩ : MRing ι) (Pi.single k 1) := by
   classical

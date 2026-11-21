@@ -71,6 +71,7 @@ theorem comp_apply [DirectSum.Decomposition piece] (m : K → ℤ) (y : M) :
     comp (piece := piece) m y = (DirectSum.decompose piece y m : M) := rfl
 
 
+open Classical in
 theorem comp_smul (hM : IsMultigrading ι M piece) [DirectSum.Decomposition piece] {c : K → ℤ}
     {x : M} (hx : x ∈ piece c) (s : MRing ι F) (m : K → ℤ) :
     comp (piece := piece) m (s • x) =
@@ -98,6 +99,7 @@ theorem comp_mem_span (hM : IsMultigrading ι M piece) [DirectSum.Decomposition 
   exact Submodule.smul_mem _ _ (Submodule.mem_span_singleton_self x)
 
 
+omit [DecidableEq K] [IsScalarTower F (MRing ι F) M] in
 theorem comp_mem_sup [DirectSum.Decomposition piece] {N₁ N₂ : Submodule (MRing ι F) M}
     (h₁ : ∀ y ∈ N₁, ∀ m, comp (piece := piece) m y ∈ N₁)
     (h₂ : ∀ y ∈ N₂, ∀ m, comp (piece := piece) m y ∈ N₂) :
@@ -108,6 +110,7 @@ theorem comp_mem_sup [DirectSum.Decomposition piece] {N₁ N₂ : Submodule (MRi
   exact Submodule.add_mem_sup (h₁ a ha m) (h₂ b hb m)
 
 
+open Classical in
 theorem step [∀ k, Fintype (ι k)] (hM : IsMultigrading ι M piece) [DirectSum.Decomposition piece]
     {N N' : Submodule (MRing ι F) M} {x : M} {c : K → ℤ} {q : Ideal (MRing ι F)}
     (hx : x ∈ piece c) (hN' : N' = N ⊔ Submodule.span (MRing ι F) {x})

@@ -45,6 +45,7 @@ theorem hasMat_pt {h h' : GA D D.sp.X'} {y} (h1 : HasMat h y) (h2 : HasMat h' y)
     exact (h1.2 i j).trans (h2.2 i j).symm
 
 
+set_option maxHeartbeats 1000000 in
 theorem hasMat_exists (y : Formalism.UG.UPts (sigD D) (gramP D) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) :
     ∃ h : GA D D.sp.X', HasMat h y.1 := by
   let e := finCongr (rankP D)

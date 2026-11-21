@@ -45,6 +45,7 @@ namespace EpsWeil
 variable {R : Type} [CommRing R] (D : Type) [CommRing D] [Algebra R D]
 
 
+variable {D} in
 def epsUnit (b : D) : (DualNumber D)ˣ where
   val := 1 + TrivSqZeroExt.inr b
   inv := 1 - TrivSqZeroExt.inr b
@@ -52,6 +53,7 @@ def epsUnit (b : D) : (DualNumber D)ˣ where
   inv_val := by ext <;> simp
 
 
+variable (R) in
 def epsMap : DualNumber R →ₐ[R] DualNumber D :=
   DualNumber.lift ⟨(Algebra.ofId R _, DualNumber.eps), DualNumber.eps_mul_eps, fun _ ↦ Commute.all _ _⟩
 

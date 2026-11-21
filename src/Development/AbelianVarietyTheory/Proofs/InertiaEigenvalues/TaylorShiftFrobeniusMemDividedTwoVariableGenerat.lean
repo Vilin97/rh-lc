@@ -63,6 +63,7 @@ variable {l : ℕ} [hl : Fact l.Prime] {a : ℕ} [NeZero a]
 def nSh (e : ℕ) (p : ℕ × ℕ) : ℕ := (p.2 / e).factorial * (p.2 + p.1).descFactorial p.1
 
 
+variable (l a) in
 def wSh (e : ℕ) (x : (Wq l a)⟦X⟧) (p : ℕ × ℕ) : Wq l a :=
   (nSh e p : Wq l a) * coeff (p.2 + p.1) (frobS l a x)
 

@@ -41,6 +41,7 @@ theorem exists_isUnifV : ∀ (E : Type) [Field E] [NumberField E], ∃ ϖ : ∀ 
   exact h
 
 
+set_option maxHeartbeats 4000000 in
 theorem lintegral_unfolded_eq : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (π : CG E a), 1 ≤ a → π.IsUnitary →
     ∀ T : Finset (HeightOneSpectrum (𝓞 E)), UnrOutside T π →
     ∃ (α : {w : HeightOneSpectrum (𝓞 E) // w ∉ T} → Fin a → ℂˣ) (ℓ : Fin a) (Φ : (Fin a → Cinf E) → ℂ)

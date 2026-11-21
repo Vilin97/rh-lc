@@ -38,6 +38,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   {Ksep : Type*} [Field Ksep] [Algebra K Ksep]
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem adjoin_gen_eq_top (α : Ksep) : K⟮AdjoinSimple.gen K α⟯ = ⊤ := by
   apply map_injective K⟮α⟯.val
   rw [adjoin_map, Set.image_singleton, ← AlgHom.fieldRange_eq_map, fieldRange_val]
@@ -66,6 +67,7 @@ theorem isUnramifiedSubextension_iff_exists (E : IntermediateField K Ksep) :
     exact h
 
 
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem IsUnramifiedSubextension.ramificationIndex_eq_one {E : IntermediateField K Ksep}
     (hE : IsUnramifiedSubextension E) [ValuativeRel E] [TopologicalSpace E]
     [IsNonarchimedeanLocalField E] [ValuativeExtension K E] : (_root_.Ideal.ramificationIdx (_root_.IsLocalRing.maximalIdeal (_root_.Valuation.integer (_root_.ValuativeRel.valuation E))) (_root_.Valuation.integer (_root_.ValuativeRel.valuation K))) = 1 :=

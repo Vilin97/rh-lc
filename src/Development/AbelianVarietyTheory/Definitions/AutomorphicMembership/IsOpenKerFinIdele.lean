@@ -86,21 +86,26 @@ def expU (z : ι → ℂ) : (ι → ℂ)ˣ :=
     by funext i; simp [← Complex.exp_add], by funext i; simp [← Complex.exp_add]⟩
 
 
+omit [Fintype ι] in
 theorem expU_add (z z' : ι → ℂ) : expU (z + z') = expU z * expU z' :=
   Units.ext (funext fun i => Complex.exp_add (z i) (z' i))
 
 
+omit [Fintype ι] in
 theorem expU_zero : expU (0 : ι → ℂ) = 1 := Units.ext (funext fun _ => Complex.exp_zero)
 
 
+omit [Fintype ι] in
 theorem unit_ne_zero (u : (ι → ℂ)ˣ) (i : ι) : (u : ι → ℂ) i ≠ 0 :=
   left_ne_zero_of_mul_eq_one (congrFun u.mul_inv i)
 
 
+omit [Fintype ι] in
 theorem expU_log (u : (ι → ℂ)ˣ) : expU (fun i => Complex.log ((u : ι → ℂ) i)) = u :=
   Units.ext (funext fun i => Complex.exp_log (unit_ne_zero u i))
 
 
+omit [Fintype ι] in
 theorem continuous_expU : Continuous (expU : (ι → ℂ) → (ι → ℂ)ˣ) :=
   Units.continuous_iff.2 ⟨continuous_pi fun i => Complex.continuous_exp.comp (continuous_apply i),
     continuous_pi fun i => Complex.continuous_exp.comp (continuous_apply i).neg⟩
@@ -128,6 +133,7 @@ def extZero (ψ : (ι → ℂ)ˣ →* ℂˣ) (x : ι → ℂ) : ℂ := by
   exact if h : IsUnit x then (ψ h.unit : ℂˣ) else 0
 
 
+omit [Fintype ι] in
 theorem extZero_unit (ψ : (ι → ℂ)ˣ →* ℂˣ) (u : (ι → ℂ)ˣ) : extZero ψ u = (ψ u : ℂˣ) := by
   simp [extZero]
 

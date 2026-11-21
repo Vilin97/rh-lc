@@ -95,6 +95,7 @@ variable {k : Type u} [Field k] {Ω : Type w} [Field Ω] [Algebra k Ω] {N : ℕ
   {E : Type v} [AddCommGroup E] [Module Ω E] [Module k E] [IsScalarTower k Ω E]
 
 
+omit [Module k E] [IsScalarTower k Ω E] in
 theorem twist_sub_eq_bot {F : SubSystem k x E} (hF : ∀ I, F.sub I = ⊥) (Q : SubSystem k x Ω) (I : Chart x) :
     (F.twist Q).sub I = ⊥ := by
   refine Submodule.span_eq_bot.mpr ?_
@@ -103,12 +104,14 @@ theorem twist_sub_eq_bot {F : SubSystem k x E} (hF : ∀ I, F.sub I = ⊥) (Q : 
   rw [hy, smul_zero]
 
 
+omit [Module k E] [IsScalarTower k Ω E] in
 theorem twistPows_sub_eq_bot {F : SubSystem k x E} (hF : ∀ I, F.sub I = ⊥) :
     ∀ (t : ℕ) (L : Fin t → SubSystem k x Ω) (n : Fin t → ℕ) (I : Chart x), (F.twistPows t L n).sub I = ⊥
   | 0, _, _, I => hF I
   | t + 1, _, _, I => twist_sub_eq_bot (fun I => twistPows_sub_eq_bot hF t _ _ I) _ I
 
 
+omit [Module k E] [IsScalarTower k Ω E] in
 theorem twist_idealSys_primeOf_sub (F : SubSystem k x E) (I : Chart x) :
     (F.twist (idealSys x (primeOf (S := k) x))).sub I = ⊥ := by
   refine Submodule.span_eq_bot.mpr ?_

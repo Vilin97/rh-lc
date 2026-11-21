@@ -79,6 +79,7 @@ variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologic
   {A : Rep.{u} k G} {σ : G}
 
 
+omit [IsTopologicalGroup G] in
 theorem IsTopologicalGenerator.cocycle_eq_zero (hσ : IsTopologicalGenerator σ)
     {f : (Fin 1 → G) → A} (hlc : IsLocallyConstant f)
     (hf : (inhomogeneousCochains.d A 1).hom f = 0) (hσf : f (fun _ => σ) = 0) : f = 0 := by
@@ -117,6 +118,7 @@ variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologic
   {A : Rep.{u} k G} {σ : G}
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] in
 theorem sum_range_mul_eq_zero {a : A} {N m : ℕ} (hN : A.ρ (σ ^ N) a = a) (hm : m • a = 0) :
     ∑ i ∈ Finset.range (N * m), A.ρ (σ ^ i) a = 0 := by
   have hmem : σ ^ N ∈ stabilizer A.ρ a := hN

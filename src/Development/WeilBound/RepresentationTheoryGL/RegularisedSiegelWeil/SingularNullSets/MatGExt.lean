@@ -44,6 +44,7 @@ end PositivityTheory.Rg.Rsw.L.UnitaryGroupMatrix
 namespace PositivityTheory.Rg.Rsw.L
 
 
+open UnitaryGroupMatrix in
 theorem geng : GenG := by
   intro D n A _ h1 hA
   let S : Subgroup (G D n) :=

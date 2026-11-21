@@ -47,6 +47,7 @@ theorem formL_symm_nondeg [U : Unram F E] (A : Et F E) (v : A.Kˣ) :
 
 
 open scoped Classical in
+open Classical in
 theorem integral_indicator_char {V : Type} [AddCommGroup V] [TopologicalSpace V] [IsTopologicalAddGroup V]
     [MeasurableSpace V] [BorelSpace V] (μ : Measure V) [μ.IsAddHaarMeasure] (M : AddSubgroup V)
     (hMo : IsOpen (M : Set V)) (χ : V → ℂ) (hχ : ∀ a b, χ (a + b) = χ a * χ b) :

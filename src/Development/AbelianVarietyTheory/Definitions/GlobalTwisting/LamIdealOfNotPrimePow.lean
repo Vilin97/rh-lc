@@ -99,6 +99,7 @@ def idealsIn (g : D.G) (n : ℕ) : Set (Ideal (𝓞 K)) :=
   {I | I ≠ ⊥ ∧ IsCoprime I (Ideal.span {(M : 𝓞 K)}) ∧ Ideal.absNorm I = n ∧ D.cls I = g}
 
 
+open Classical in
 def lamIdeal (I : Ideal (𝓞 K)) : ℝ :=
   by
     classical

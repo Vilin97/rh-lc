@@ -24,6 +24,7 @@ def bund (Dc : DefCols Df) (u : Dc.Mem) (Q : KerChain K) (nF : ℕ → ℕ) (XF 
   | k + 1 => if k + 1 ≤ Q.n then ⟨nF (k + 1), XF (k + 1)⟩ else ⟨nS, XS⟩
 
 
+omit [NumberField K] [StarRing K] in
 theorem normAt_of_eq (p : Σ n : ℕ, (InfinitePlace K → Matrix (Fin n) (Fin n) ℂ)) (n : ℕ)
     (X : InfinitePlace K → Matrix (Fin n) (Fin n) ℂ) (hp : p = ⟨n, X⟩) (hc : n = p.1) (v : InfinitePlace K) (x : Fin p.1 → K) :
     Formalism.HermitianLatticesTheory.normAt (Pi.basisFun K (Fin p.1)) p.2 v x = Formalism.HermitianLatticesTheory.normAt (Pi.basisFun K (Fin n)) X v (x ∘ Fin.cast hc) := by

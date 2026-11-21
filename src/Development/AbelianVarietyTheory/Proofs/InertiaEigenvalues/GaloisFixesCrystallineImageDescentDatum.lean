@@ -25,6 +25,8 @@ variable {l : ℕ} [hl : Fact l.Prime] {a : ℕ} [NeZero a] {e : ℕ} [NeZero e]
   {ι : Type} [Fintype ι] [DecidableEq ι]
 
 
+omit [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]
+  [NormedAlgebra ℚ_[l] K] in
 theorem desc_succ_eq_zero {P : PhiMod O K l e a ι} (D : Conn P) {v : Vec K a ι} (hv : D.N v = 0) (i : ℕ) :
     D.desc (i + 1) v = 0 := by
   induction i with

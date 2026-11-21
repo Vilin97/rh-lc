@@ -52,6 +52,7 @@ def qDiv {C : CxSt F} (A : Adl C Y) : ℚ ⊗[ℤ] Y.Dv := ((A.n : ℕ) : ℚ)�
 
 
 
+omit [NumberField F] in
 def curvMet {σ : F →+* ℂ} {Δ : Y.Dv} (m : Var.Met Y σ Δ) : ChartForm Y.str σ Y.dim :=
   fun c y => ddcForm (m.wt (Var.eqn Δ y)) c y
 
@@ -119,6 +120,7 @@ def bdPull (k : s.Comp) : (Φ.C k).Y.Dv :=
     (((Φ.C k).bd_supp _).2 ((mem_support_BD_iff Φ k _).1 h))
 
 
+variable (S) in
 abbrev rootExp (x : DV.Rt D.what₂.Tau N) : Letter S.Dw → ℤ := rootEx S.Dw (DV.tauEmb D x.1) x.2
 
 def qL (k : s.Comp) (u : D.what₂.Tau → Fin N → ℚ) : ℚ ⊗[ℤ] (Φ.C k).Y.Dv :=
@@ -148,10 +150,12 @@ def CommonConst (om : ∀ k σ, ChartForm (Φ.C k).Y.str σ (Φ.C k).Y.dim) (E :
     IsRegConst (om k σ) (thW h0 k σ (fund τ i)) (rho (om k σ) (E k σ) (phW hm h0 k σ (fund τ i))) a K δ
 
 
+variable (s) in
 def dirOf (b : ℕ) (η : ℚ) (μ : Fin N → ℤ) : D.what₂.Tau → Fin N → ℚ :=
   fun _ i => (2 * b * s.T.m0 : ℕ) * varpi j i + η * μ i
 
 
+variable (s Φ) in
 structure PolDat : Type where
 
   b : ℕ

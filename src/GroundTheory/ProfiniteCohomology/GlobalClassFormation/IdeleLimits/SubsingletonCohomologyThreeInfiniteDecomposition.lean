@@ -25,6 +25,7 @@ variable {K L : Type} [Field K] [Field L] [Algebra K L] [FiniteDimensional K L] 
   (v : InfinitePlace K) (w : InfinitePlace L) [w.LiesOver v]
 
 
+include v in
 theorem subsingleton_groupCohomology_one_infiniteDecomposition :
     Subsingleton (groupCohomology (Rep.ofMulDistribMulAction (MulAction.stabilizer Gal(L/K) w)
       (w.Completion)ˣ) 1) := by
@@ -54,6 +55,7 @@ theorem subsingleton_groupCohomology_one_infiniteDecomposition :
   congr 1
 
 
+include v in
 theorem isCyclic_infiniteDecomposition : IsCyclic (MulAction.stabilizer Gal(L/K) w) := by
   have h := natCard_infiniteDecompositionGroup v w
   rcases Nat.lt_or_ge (Module.finrank v.Completion w.Completion) 2 with h2 | h2
@@ -69,6 +71,8 @@ theorem isCyclic_infiniteDecomposition : IsCyclic (MulAction.stabilizer Gal(L/K)
     exact isCyclic_of_prime_card (p := 2) h2'
 
 
+include v in
+set_option maxHeartbeats 1000000 in
 theorem subsingleton_cohomology_three_infiniteDecomposition :
     Subsingleton (cohomology (Rep.ofMulDistribMulAction (MulAction.stabilizer Gal(L/K) w)
       (w.Completion)ˣ) 3) := by

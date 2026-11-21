@@ -27,6 +27,7 @@ def lamSQ (Z : Matrix (Fin (r + 1)) (Fin (r + 1)) O) (hu : IsUnit (Z.map O.subty
     rw [LinearMap.mem_ker]; exact lamS_K O cj Z hO hu k hk)
 
 
+omit hO in
 def lamLQ (Z : Matrix (Fin (r + 1)) (Fin (r + 1)) O) (hu : IsUnit (Z.map O.subtype).det) :
     MbMod Z →ₗ[O] E :=
   (headCols Z).liftQ (lamL O Z) (fun k hk => by rw [LinearMap.mem_ker]; exact lamL_K O Z hu k hk)

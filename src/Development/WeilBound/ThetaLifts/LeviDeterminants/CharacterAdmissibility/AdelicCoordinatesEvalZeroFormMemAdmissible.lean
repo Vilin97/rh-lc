@@ -17,6 +17,7 @@ noncomputable section
 namespace PositivityTheory.ThKF0.Chr
 
 
+open GlobalTheory.SchwartzBox in
 theorem exists_boxCLM {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] {κ κ' : Type} [Fintype κ]
     [Fintype κ'] (f₂ : SchwartzMap (κ' → V) ℂ) :
     ∃ T : SchwartzMap (κ → V) ℂ →L[ℂ] SchwartzMap (κ ⊕ κ' → V) ℂ, ∀ f x, T f x = f (x ∘ Sum.inl) * f₂ (x ∘ Sum.inr) := by

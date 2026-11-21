@@ -218,6 +218,7 @@ theorem exists_analytic_on_ball {n : ℕ} {G : (Fin n → ℂ) → ℂ}
 end RiemannExtensionSlices
 
 
+open RiemannExtensionSlices in
 theorem RiemannExtensionSlices.proof : RiemannExtensionSlices.Statement := by
   intro n G hG hlim
   obtain ⟨W, hW⟩ : ∃ W : Set (Fin n → ℂ), W = {w | ∀ i, w i ≠ 0} := ⟨_, rfl⟩

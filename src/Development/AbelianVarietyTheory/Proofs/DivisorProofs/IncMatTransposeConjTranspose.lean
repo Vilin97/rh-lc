@@ -135,6 +135,8 @@ theorem extMat_mem_upq {Y : Mat R S} (hY : Y ∈ upq R S) : extMat r₀ s₀ Y �
 end Mats
 
 
+open scoped Matrix.Norms.Operator in
+set_option backward.isDefEq.respectTransparency false in
 theorem exp_mul_of_mul {m n : Type} [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n]
     {A : Matrix m m ℂ} {B : Matrix n n ℂ} {ι : Matrix m n ℂ} (h : A * ι = ι * B) :
     NormedSpace.exp A * ι = ι * NormedSpace.exp B := by

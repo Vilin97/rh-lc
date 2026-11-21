@@ -12,6 +12,7 @@ open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.
 namespace UpperTheory.V.Th
 
 
+open UpperTheory.V.GradeZeroInterpolatingElement UpperTheory.V.Ws in
 def SpPt : Prop :=
   ∀ (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] (l : ℕ) [Fact l.Prime] (c : Coef l) (D : Raw Ω c), Ctx2 D ∨ Ctx3 D →
     ∀ r, D.EPt r → Irr r → ∃ T : Tower D, T.Fit ∧ T.Deep ∧ ∀ c₁ : Coef l,

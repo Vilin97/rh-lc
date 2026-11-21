@@ -30,6 +30,7 @@ variable {ψ : AddChar k Circle} (hψ : Continuous ψ) (hψ1 : ψ ≠ 1) {m : �
   {ν : Measure (Fin (m + 1) → k)} [ν.IsAddHaarMeasure] (hν : ν (perp ψ A₀) = 1)
 
 
+include hψ hψ1 hS hA₀ hBp hBc hBg hD hCp hC hCB hν in
 theorem cov {K : Set (Fin (m + 1) → k)} (hK : IsCompact K) (h0 : (0 : Fin (m + 1) → k) ∉ K) (v : V) :
     ∫⁻ ξ in K, ENNReal.ofReal (Df gl s C ξ v v).re ∂ν ≤ ENNReal.ofReal (B v v).re := by
   classical
@@ -132,6 +133,7 @@ theorem cov {K : Set (Fin (m + 1) → k)} (hK : IsCompact K) (h0 : (0 : Fin (m +
     _ ≤ ENNReal.ofReal (B v v).re := ENNReal.ofReal_le_ofReal hbes
 
 
+include hψ hψ1 hS hA₀ hBp hBc hBg hD hCp hC hCB hν in
 theorem bessel (v : V) : ∫⁻ ξ, ENNReal.ofReal (Df gl s C ξ v v).re ∂ν ≤ ENNReal.ofReal (B v v).re := by
   classical
   let f : (Fin (m + 1) → k) → ℝ≥0∞ := fun ξ => ENNReal.ofReal (Df gl s C ξ v v).re

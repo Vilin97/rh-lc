@@ -84,6 +84,7 @@ theorem sum_proj {x : E} (hx : x ∈ ⨆ p, U p) : ∑ p, (U p).starProjection x
     simp only [map_add (f := _), Finset.sum_add_distrib, hx, hy]
 
 
+omit hU in
 theorem specOp_mem (a : ι → ℂ) (W : Submodule ℂ E) (hUW : ∀ p, U p ≤ W) (x : E) : specOp U a x ∈ W := by
   rw [specOp_apply]
   exact Submodule.sum_mem _ fun p _ => Submodule.smul_mem _ _ (hUW p (proj_mem U p x))

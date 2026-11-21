@@ -94,6 +94,7 @@ theorem der_inner {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] {c
   exact h1.mul_const k
 
 
+open Classical in
 theorem exists_globIt : ∀ (D : D7) (V W : HSp D) (S S' : D.what₂.Tau → SPar) (M : DSModel V S) (M' : DSModel W S') (aS aT : D.what₂.Tau → ℚ) (A : ∀ τ, LPol W.rank V.rank →ₗ[ℂ] M'.H τ →ₗ[ℂ] M.H τ), GlobalTheory.IndefiniteRowSideFullHecke.ContractionTensorModels.ContrTensor → GlueLaw D V.rank W.rank → (∀ τ, LocIt M M' τ (aS τ) (aT τ) (A τ)) → ∃ It I, GlobIt M M' aS aT It I := by
   intro D V W S S' M M' aS aT A hC hG hL
   have hs := hG.1

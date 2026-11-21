@@ -22,6 +22,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   {π : 𝒪[K]}
 
 
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem coe_ne_zero_of_irreducible (hπ : Irreducible π) : (π : K) ≠ 0 :=
   fun h => hπ.ne_zero (Subtype.ext h)
 
@@ -29,12 +30,14 @@ def unitUniformizerPow (hπ : Irreducible π) (u : 𝒪[K]ˣ) (k : ℤ) : Kˣ :=
   Units.map (algebraMap 𝒪[K] K : 𝒪[K] →* K) u * Units.mk0 (π : K) (coe_ne_zero_of_irreducible hπ) ^ k
 
 
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem coe_unitUniformizerPow_one (hπ : Irreducible π) (u : 𝒪[K]ˣ) :
     ((unitUniformizerPow hπ u 1 : Kˣ) : K) = (((u : 𝒪[K]) * π : 𝒪[K]) : K) := by
   rw [unitUniformizerPow, zpow_one, Units.val_mul, Units.coe_map, Units.val_mk0, Subring.coe_mul]
   rfl
 
 
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem unitUniformizerPow_mul (hπ : Irreducible π) (u : 𝒪[K]ˣ) (j : ℤ) :
     unitUniformizerPow hπ u 1 * unitUniformizerPow hπ 1 1 ^ j = unitUniformizerPow hπ u (1 + j) := by
   simp only [unitUniformizerPow, map_one, one_mul, zpow_one, mul_assoc]
@@ -57,6 +60,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 attribute [local instance] isDiscreteModule_units
 
 
+include hπ hf in
 theorem exists_lubinTate_frobenius {n : ℕ} (hn : 0 < n) (w : 𝒪[K]ˣ) :
     ∃ σ : Ω ≃ₐ[K] Ω, unramifiedDegree K Ω σ = Multiplicative.ofAdd 1 ∧
       ∀ x ∈ lubinTateTorsion Ω (hπ := hπ) hf n,
@@ -85,6 +89,7 @@ theorem exists_lubinTate_frobenius {n : ℕ} (hn : 0 < n) (w : 𝒪[K]ˣ) :
   simp [ρ0]
 
 
+include hπ hf in
 theorem apply_root_eq_psEval (m : ℕ) (w : 𝒪[K]ˣ) (σ : Ω ≃ₐ[K] Ω)
     (hσ : ∀ x ∈ lubinTateTorsion Ω (hπ := hπ) hf (m + 1),
       lubinTateGalPointMap (hπ := hπ) hf σ x = ((w⁻¹ : 𝒪[K]ˣ) : 𝒪[K]) • x) {l : Ω}
@@ -122,12 +127,14 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 attribute [local instance] isDiscreteModule_units
 
 
+omit [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension K Ω] in
 theorem inertiaDegree_unramifiedDegree_top :
     inertiaDegree (unramifiedDegree K Ω) (⊤ : Subgroup (Ω ≃ₐ[K] Ω)) = 1 := by
   rw [inertiaDegree, ← MonoidHom.range_eq_map,
     MonoidHom.range_eq_top_of_surjective _ unramifiedDegree_surjective, Subgroup.index_top]
 
 
+include hπ hf in
 theorem ramificationIndex_fixingSubgroup_lubinTateField {n : ℕ} (hn : 0 < n) :
     Abstract.ramificationIndex (unramifiedDegree K Ω) (lubinTateField Ω hπ hf n).fixingSubgroup =
       Module.finrank K (lubinTateField Ω hπ hf n) := by
@@ -138,6 +145,8 @@ theorem ramificationIndex_fixingSubgroup_lubinTateField {n : ℕ} (hn : 0 < n) :
   exact h.symm
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ω]
+  [TopologicalSpace Ω] [IsValuativeTopology Ω] [IsSepClosure K Ω] in
 theorem norm_neg_gen_eq_coeff_zero {x : Ω} (hint : IsIntegral K x) :
     Algebra.norm K (-AdjoinSimple.gen K x) = (minpoly K x).coeff 0 := by
   set pb := adjoin.powerBasis hint
@@ -151,6 +160,8 @@ theorem norm_neg_gen_eq_coeff_zero {x : Ω} (hint : IsIntegral K x) :
     ← adjoin.finrank hint, ← mul_assoc, ← mul_pow, neg_one_mul, neg_neg, one_pow, one_mul]
 
 
+include hπ hf in
+set_option maxHeartbeats 1000000 in
 theorem reciprocity_frobenius_lubinTate (m : ℕ) (U : OpenSubgroup (Ω ≃ₐ[K] Ω))
     [((U : Subgroup (Ω ≃ₐ[K] Ω)).subgroupOf
       ((⊤ : OpenSubgroup (Ω ≃ₐ[K] Ω)) : Subgroup (Ω ≃ₐ[K] Ω))).Normal]
@@ -280,6 +291,7 @@ theorem reciprocity_frobenius_lubinTate (m : ℕ) (U : OpenSubgroup (Ω ≃ₐ[K
   exact hnorm
 
 
+include hπ hf in
 theorem reciprocity_lubinTate {n : ℕ} (hn : 0 < n) (U : OpenSubgroup (Ω ≃ₐ[K] Ω))
     [((U : Subgroup (Ω ≃ₐ[K] Ω)).subgroupOf
       ((⊤ : OpenSubgroup (Ω ≃ₐ[K] Ω)) : Subgroup (Ω ≃ₐ[K] Ω))).Normal]
@@ -333,6 +345,7 @@ theorem reciprocity_lubinTate {n : ℕ} (hn : 0 < n) (U : OpenSubgroup (Ω ≃�
     add_sub_cancel]
 
 
+include hπ hf in
 theorem exists_lubinTate_action {n : ℕ} (hn : 0 < n) (u : 𝒪[K]ˣ) (k : ℤ) :
     ∃ τ : Ω ≃ₐ[K] Ω, unramifiedDegree K Ω τ = Multiplicative.ofAdd (k : ℤ̂) ∧
       ∀ x ∈ lubinTateTorsion Ω (hπ := hπ) hf n,
@@ -361,6 +374,8 @@ theorem exists_lubinTate_action {n : ℕ} (hn : 0 < n) (u : 𝒪[K]ˣ) (k : ℤ)
     rw [AlgEquiv.mul_apply, h1, e]
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ω]
+  [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension K Ω] in
 theorem normal_subgroupOf_fixingOpenSubgroup (M : IntermediateField K Ω) [FiniteDimensional K M]
     [IsGalois K M] :
     ((fixingOpenSubgroup M : Subgroup (Ω ≃ₐ[K] Ω)).subgroupOf
@@ -369,6 +384,7 @@ theorem normal_subgroupOf_fixingOpenSubgroup (M : IntermediateField K Ω) [Finit
   infer_instance
 
 
+include hπ hf in
 theorem reciprocity_lubinTate_sup {n : ℕ} (hn : 0 < n) (E : IntermediateField K Ω)
     [FiniteDimensional K E] [IsGalois K E] (hE : E ≤ maximalUnramifiedExtension K Ω)
     (u : 𝒪[K]ˣ) (k : ℤ) (τ : Ω ≃ₐ[K] Ω)

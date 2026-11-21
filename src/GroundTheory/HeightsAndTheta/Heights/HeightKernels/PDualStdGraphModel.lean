@@ -71,6 +71,7 @@ theorem modelMap_comp_graphMap [DecidableEq T]
 end StandardDualGraphModel
 
 
+open StandardDualGraphModel in
 theorem DualStdGraphModel.proof : DualStdGraphModel.Statement := by
   intro K _ _ i T _ _ b
   rw [← modelMap_comp_graphMap b]

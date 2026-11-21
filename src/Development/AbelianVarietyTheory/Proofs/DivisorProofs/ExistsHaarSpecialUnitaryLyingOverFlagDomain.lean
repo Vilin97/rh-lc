@@ -48,6 +48,7 @@ theorem norm_det_eq_one (X : Data E r) {x : Frame X.Ψ r} (hx : IsOrth X x)
   nlinarith [h5, h6]
 
 
+open UnitaryInvMeasure in
 theorem exists_haar_lying_over : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (X : Data E r)
     (x : Frame X.Ψ r) [MeasurableSpace (realSU X.Ψ X.Gm)] [BorelSpace (realSU X.Ψ X.Gm)], 1 ≤ r → IsOrth X x →
     ∃ ν : Measure (realSU X.Ψ X.Gm), ν.IsHaarMeasure ∧ ∀ φ : Frame X.Ψ r → ℝ≥0∞, Measurable φ →

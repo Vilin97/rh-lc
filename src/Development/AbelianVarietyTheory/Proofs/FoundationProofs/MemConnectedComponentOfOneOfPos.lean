@@ -69,6 +69,7 @@ theorem unramIn_of_ine {v : HeightOneSpectrum (𝓞 K)}
   exact (σ.restrictNormal_commutes L x).symm
 
 
+omit [IsAlgClosure K Ω] [NumberField L] in
 theorem isFrob_restrict {v : HeightOneSpectrum (𝓞 K)} {A : ValuationSubring Ω} (hA : IsPlaceOver A v) {σ : G K Ω}
     (hσ : IsFrob (F := K) A (normV v) σ) : GlobalTheory.NT.IsFrob L v (AlgEquiv.restrictNormalHom L σ) := by
   let f : 𝓞 L →+* A := ((algebraMap L Ω).comp (algebraMap (𝓞 L) L)).codRestrict A fun x =>

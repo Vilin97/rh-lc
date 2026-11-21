@@ -214,6 +214,7 @@ theorem locP_le_of_locLat_le {F E : Type} [Field F] [NumberField F] [Field E] [N
     mem_localization_of_mem_localLattice F E n _ B hBf hBs x (hAB _ (Submodule.subset_span ⟨x, hx, rfl⟩)) q rfl
 
 
+set_option maxHeartbeats 4000000 in
 theorem sameoff_gen {D : D7} {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i}
     (T : FormsTiedSym D u Ch chOf) (i : ℕ) (hi : i ≤ D.R.m) (v : HeightOneSpectrum (𝓞 D.host.F))
     (c c' : (D.mem u).C.cls i) (γ : GL (Fin (D.R.N i)) D.host.E) (hAd : AdC T i hi c c' γ v)
@@ -239,6 +240,7 @@ theorem sameoff_gen {D : D7} {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : �
     (locP_le_of_locLat_le q _ _ f3 s3 fun z hz => (key z).2 hz)
 
 
+set_option maxHeartbeats 4000000 in
 theorem use₆ : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)) (F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)), (∀ u, I.StdF l Z u (F u) ∧ I.StdLvC l Z u (F u)) → CarH H F → ∀ u i (hi : i ≤ (I.rec7 l Z).R.m) v (c c' : ((I.rec7 l Z).mem u).C.cls i) (γ : GL (Fin ((I.rec7 l Z).R.N i)) (I.rec7 l Z).host.E), AdC (F u) i hi c c' γ ((F u).atT.eV v).1 → ∀ q : HeightOneSpectrum (𝓞 (I.rec7 l Z).host.E), q.under (𝓞 (I.rec7 l Z).host.F) ≠ ((F u).atT.eV v).1 → Formalism.HermitianLatticesTheory.localization₂ q.asIdeal (Formalism.L2.Forms.mulLat γ.1 (clsCrd (I.rec7 l Z) u i hi c')) = Formalism.HermitianLatticesTheory.localization₂ q.asIdeal (clsCrd (I.rec7 l Z) u i hi c) := by
   intro B X I _ _ l Z H F _ _ u i hi v c c' γ hAd q hq
   exact sameoff_gen (F u) i hi _ c c' γ hAd q hq

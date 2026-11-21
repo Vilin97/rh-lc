@@ -364,6 +364,7 @@ theorem isStalk_O (B : Subalgebra ℤ A) :
     (Category.comp_id _).symm⟩
 
 
+variable (A) in
 abbrev Idx (u : A) : Type := {B : Subalgebra ℤ A // B.FG ∧ u ∈ B}
 
 instance (u : A) : IsDirected (Idx A u) (· ≤ ·) :=

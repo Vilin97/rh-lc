@@ -295,6 +295,8 @@ section Main
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {V : Type} [CommRing V] [IsLocalRing V]
 
 
+open ReciprocityTheory.ChartRestriction.G.Chart (tcoord tan_ext prodPts prodPts_tan) in
+open Formalism.L2.Pj.SaturatedCharts in
 theorem isUnivJ_of_isChartG (t : SAB H (Sp V)) (d : ℕ) (FT : Fin d → MvPowerSeries (Fin 2 × Fin d) V)
     (act : 𝓞 E → Fin d → MvPowerSeries (Fin 1 × Fin d) V) (tg : Fin d → (Sp (DualNumber V) ⟶ t.G.left))
     (xT : ∀ m, jOG (𝟙 (Sp V)) d m 1 ⟶ t.G)

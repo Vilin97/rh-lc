@@ -47,6 +47,7 @@ theorem placeIdem_smul_self {v : HeightOneSpectrum (𝓞 D.host.F)} {ε : AF D.h
   | neg x _ h => rw [smul_neg, h]
 
 
+set_option maxHeartbeats 800000 in
 theorem exists_half_character {a : AE D} (ha : IsHalfIdem D a) (V : HSp D) (χ : (AE D)ˣ →* Circle) (n : ℕ)
     (hχ : IsHeckeChar D χ) (hres : ResEta D χ n) :
     ∃ ν : GA D V →* Circle, Continuous ν ∧ (∀ g ∈ GinfC V, ν g = 1) ∧

@@ -19,6 +19,7 @@ namespace GlobalTheory.CuspGL.PsiPrimitive
 
 open scoped Classical
 
+open Classical in
 theorem finsum_sub {α : Type} [Fintype α] (p : α → Prop) (f : {a // p a} → ℂ) :
     ∑ᶠ x, f x = ∑ a, if h : p a then f ⟨a, h⟩ else 0 := by
   rw [finsum_eq_sum_of_fintype, ← Fintype.sum_subtype_add_sum_subtype p]
@@ -29,6 +30,7 @@ theorem finsum_sub {α : Type} [Fintype α] (p : α → Prop) (f : {a // p a} �
   simp only [h1, h2, Finset.sum_const_zero, add_zero]
 
 
+open Classical in
 def res {F : Type} [Field F] (s : F[X] → ℂ) {V : Type} [AddCommGroup V] [Module F V]
     [FiniteDimensional F V] (W : Submodule F V) (k : Module.End F V) : ℂ :=
   if hk : ∀ x ∈ W, k x ∈ W then psi s W (k.restrict hk) else 0

@@ -40,6 +40,8 @@ def RowDR : Prop :=
       (KHf.repL (KHf.eK (D.nbr i _ hn)) (DatS i r π dc g0 eB e₁ s Dd hD hc w).ρT (Br.iota D.nbr i _ hn))
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem bKa_clause (hBK : LargeLevelLemmas.BlochKatoAnnihilators i) (hG : K.SelfGood i) (hdR : RowDR i r π dc g0 eB e₁ s Dd hD hc) :
     ∀ w ∈ rowsN i dc, ∀ a, a ∈ HfWS i r π dc g0 eB e₁ s Dd hD hc w ↔
       ∀ b ∈ Hf₂S i r π dc g0 eB e₁ s Dd hD hc w, cupFG (DatS i r π dc g0 eB e₁ s Dd hD hc w) a b = 0 := by

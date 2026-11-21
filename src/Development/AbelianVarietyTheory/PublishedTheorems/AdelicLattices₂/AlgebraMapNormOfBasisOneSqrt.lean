@@ -40,6 +40,7 @@ theorem herm_col (G P : Matrix (Fin r) (Fin r) E) (a b : Fin r) :
   exact Finset.sum_comm
 
 
+omit [NumberField E] [IsCMField E] in
 theorem gram_eq (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (Q : Matrix (Fin r) (Fin r) ℂ) :
     gram τ G Q = Qᵀ * G.map τ * Q.map conj := by
   ext a b
@@ -96,6 +97,7 @@ theorem size_one (G G' : Matrix (Fin 1) (Fin 1) E) (hd : G.det ≠ 0) (hd' : G'.
   field_simp
 
 
+omit [NumberField E] [IsCMField E] in
 theorem congr_of_gram_eq (τ : E →+* ℂ) {Q Q' : Matrix (Fin r) (Fin r) ℂ} (hQ : Q.det ≠ 0)
     (hQ' : Q'.det ≠ 0) (h : gram τ G Q = gram τ G' Q') :
     ∃ R : Matrix (Fin r) (Fin r) ℂ, R.det ≠ 0 ∧ G'.map τ = Rᵀ * G.map τ * R.map conj := by
@@ -117,6 +119,7 @@ theorem congr_of_gram_eq (τ : E →+* ℂ) {Q Q' : Matrix (Fin r) (Fin r) ℂ} 
           simp only [Matrix.mul_assoc]
 
 
+omit [NumberField E] [IsCMField E] in
 theorem congr_conjugate (τ : E →+* ℂ)
     (h : ∃ Q : Matrix (Fin r) (Fin r) ℂ, Q.det ≠ 0 ∧ G'.map τ = Qᵀ * G.map τ * Q.map conj) :
     ∃ Q : Matrix (Fin r) (Fin r) ℂ, Q.det ≠ 0 ∧ G'.map (ComplexEmbedding.conjugate τ) =
@@ -131,6 +134,7 @@ theorem congr_conjugate (τ : E →+* ℂ)
     rw [e, e, h, Matrix.map_mul, Matrix.map_mul, Matrix.transpose_map]
 
 
+omit [NumberField E] [IsCMField E] in
 theorem congr_of_signature (Ψ : Set (E →+* ℂ))
     (hΨ : ∀ τ : E →+* ℂ, τ ∈ Ψ ∨ ComplexEmbedding.conjugate τ ∈ Ψ)
     (hs : ∀ τ ∈ Ψ, ∃ p : ℕ,
@@ -163,6 +167,7 @@ theorem of_signature (H : Landherr) (hG : ∀ a b, cc (G a b) = G b a)
   H E r G G' hG hG' hd hd' (congr_of_signature Ψ hΨ hs) hn
 
 
+omit [NumberField E] [IsCMField E] in
 theorem re_det_div_pos (hd : G.det ≠ 0) (τ : E →+* ℂ)
     (h : ∃ Q : Matrix (Fin r) (Fin r) ℂ, Q.det ≠ 0 ∧ G'.map τ = Qᵀ * G.map τ * Q.map conj) :
     0 < (τ (G.det / G'.det)).re := by
@@ -217,6 +222,7 @@ section CM
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 
+variable (E) in
 theorem exists_cc_eq_neg : ∃ θ : E, θ ≠ 0 ∧ cc θ = -θ := by
   obtain ⟨x, hx⟩ : ∃ x : E, IsCMField.complexConj E x ≠ x := by
     by_contra h

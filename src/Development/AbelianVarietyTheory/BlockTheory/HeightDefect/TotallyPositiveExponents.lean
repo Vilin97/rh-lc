@@ -83,6 +83,7 @@ def bil (B : Bal H n) (u v : XR R n) : ℝ := (B : XR R n →ₗ[ℝ] XR R n →
 def Q (B : Bal H n) (u : XR R n) : ℝ := bil B u u / 2
 
 
+open Classical in
 def vec (τ : Pl R) (i : Fin n) (z : ℂ) : XR R n := Pi.single τ (Pi.single i z)
 
 def trBil (b : Pl R → Matrix (Fin n) (Fin n) ℂ) : XR R n →ₗ[ℝ] XR R n →ₗ[ℝ] ℝ :=

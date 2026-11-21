@@ -65,6 +65,7 @@ theorem exact_cast {q : ℕ} {P : Arrow Spc} {a b : ℤ} (i : ℤ) (h : a = b) {
 end GysinPf
 
 
+open GysinPf in
 theorem LeafGysin_of (hBd : LeafBd) (hPur : LeafPur) : LeafGysin := by
   intro hH d
   obtain ⟨δ, hex, hnatδ, hredδ⟩ := hBd

@@ -56,6 +56,7 @@ theorem orderOf_eq_inertiaDeg {𝔭 : HeightOneSpectrum (𝓞 K)} (hu : UnramIn 
     exact (Nat.pow_le_pow_iff_right hq).1 (by omega)
 
 
+omit [NumberField K] [NumberField L] in
 theorem card_inertia {𝔭 : HeightOneSpectrum (𝓞 K)} (hu : UnramIn L 𝔭) (P : Ideal (𝓞 L)) [hP : P.IsPrime]
     [hPo : P.LiesOver 𝔭.asIdeal] : Nat.card (P.inertia (L ≃ₐ[K] L)) = 1 := by
   have h1 : P.inertia (L ≃ₐ[K] L) = ⊥ := (Subgroup.eq_bot_iff_forall _).2 fun τ hτ => hu τ ⟨P, hP, hPo, hτ⟩
@@ -108,6 +109,7 @@ theorem under_inv_smul [Normal K L] (g : N ≃ₐ[K] N) (Q : Ideal (𝓞 N)) :
     algebraMap_restrict_smul]
 
 
+omit [NumberField K] [NumberField L] [NumberField N] in
 theorem exists_restrictScalars [Normal K L] (g : N ≃ₐ[K] N) (hg : AlgEquiv.restrictNormalHom L g = 1) :
     ∃ τ : N ≃ₐ[L] N, τ.restrictScalars K = g := by
   refine ⟨AlgEquiv.ofRingEquiv (f := g.toRingEquiv) fun x => ?_, rfl⟩
@@ -116,6 +118,7 @@ theorem exists_restrictScalars [Normal K L] (g : N ≃ₐ[K] N) (hg : AlgEquiv.r
   exact this.symm
 
 
+omit [NumberField K] [NumberField L] [NumberField N] in
 theorem unramIn_top {𝔭 : HeightOneSpectrum (𝓞 K)} (hu : UnramIn N 𝔭) (P : HeightOneSpectrum (𝓞 L))
     [P.asIdeal.LiesOver 𝔭.asIdeal] : UnramIn N P := by
   rintro τ ⟨Q, hQ, hQo, hτ⟩
@@ -123,6 +126,7 @@ theorem unramIn_top {𝔭 : HeightOneSpectrum (𝓞 K)} (hu : UnramIn N 𝔭) (P
   exact AlgEquiv.ext fun x => DFunLike.congr_fun this x
 
 
+omit [NumberField K] [NumberField L] [NumberField N] in
 theorem minimalPeriod_eq [Normal K L] (σ : N ≃ₐ[K] N)
     (c : (N ≃ₐ[K] N) ⧸ (AlgEquiv.restrictNormalHom (F := K) (K₁ := N) L).ker) :
     Function.minimalPeriod (σ • ·) c = orderOf (AlgEquiv.restrictNormalHom L σ) := by

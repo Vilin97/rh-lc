@@ -117,6 +117,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   (hunr : (maximalIdeal 𝒪[K]).map (algebraMap 𝒪[K] B) = maximalIdeal B)
 
 
+variable (π B) in
 abbrev ltEisB (m : ℕ) : Polynomial B :=
   (ltEisenstein π m).map (algebraMap 𝒪[K] B)
 
@@ -132,6 +133,7 @@ theorem ltEisB_eq (m : ℕ) :
   rw [ltEisB, ltEisenstein, Polynomial.map_add (f := _), Polynomial.map_C, Polynomial.map_pow]
 
 
+include hπ hunr in
 theorem isDistinguishedAt_ltEisB (m : ℕ) : (ltEisB π B m).IsDistinguishedAt (maximalIdeal B) := by
   have hmon := (ltEisenstein_monic π m).1
   refine ⟨⟨fun {n} hn => ?_⟩, hmon.map _⟩
@@ -140,6 +142,7 @@ theorem isDistinguishedAt_ltEisB (m : ℕ) : (ltEisB π B m).IsDistinguishedAt (
   exact Ideal.mem_map_of_mem _ ((isEisensteinAt_ltEisenstein hπ m).mem hn)
 
 
+include hπ hunr in
 theorem algebraMap_uniformizer_mul_eq_zero {c : B} (h : algebraMap 𝒪[K] B π * c = 0) : c = 0 := by
   have hπB := irreducible_algebraMap hunr hπ
   exact (mul_eq_zero.mp h).resolve_left hπB.ne_zero
@@ -187,6 +190,7 @@ theorem rootEval_subst_ltSeries_uniformizer_pow_succ {F : B⟦X⟧} (hF : consta
     Polynomial.coe_mul, map_mul, rootEval_self, mul_zero, zero_mul]
 
 
+omit hπ hunr [IsDomain B] [IsDiscreteValuationRing B] [IsAdicComplete (maximalIdeal B) B] in
 theorem aeval_root_ltPolyIter_pow :
     Polynomial.aeval (AdjoinRoot.root (ltEisB π B m)) ((ltPolyIter π m).map (algebraMap 𝒪[K] B)) ^ (Nat.card 𝓀[K] - 1) =
       AdjoinRoot.of (ltEisB π B m) (-algebraMap 𝒪[K] B π) := by
@@ -199,6 +203,7 @@ theorem aeval_root_ltPolyIter_pow :
   rfl
 
 
+omit [IsAdicComplete (maximalIdeal B) B] in
 theorem eq_zero_of_aeval_root_ltPolyIter_mul {z : AdjoinRoot (ltEisB π B m)}
     (h : Polynomial.aeval (AdjoinRoot.root (ltEisB π B m)) ((ltPolyIter π m).map (algebraMap 𝒪[K] B)) * z = 0) : z = 0 := by
   have hq := one_lt_card_residueField' K
@@ -234,6 +239,7 @@ theorem aeval_rootEval_ltSeries_eq_zero {a : 𝒪[K]} (ha : IsUnit a) :
     (by rw [coeff_one_ltSeries]; exact ha.map _) h1
 
 
+omit hπ hunr [IsDomain B] [IsDiscreteValuationRing B] [IsAdicComplete (maximalIdeal B) B] in
 theorem map_map_ltEisB (φ : B →ₐ[𝒪[K]] B) :
     (ltEisB π B m).map (φ : B →+* B) = ltEisB π B m := by
   rw [ltEisB, Polynomial.map_map, AlgHom.comp_algebraMap_of_tower]
@@ -314,6 +320,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   (u : 𝒪[K]ˣ)
 
 
+include hφ in
 theorem exists_twistFrob_fixed_root :
     ∃ x : AdjoinRoot (ltEisB π B m), twistFrob hπ hunr m φ u x = x ∧
       Polynomial.aeval x (ltEisB ((u : 𝒪[K]) * π) B m) = 0 := by

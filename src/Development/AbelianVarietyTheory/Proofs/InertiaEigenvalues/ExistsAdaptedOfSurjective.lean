@@ -299,6 +299,7 @@ theorem potCrysDeRhamAt : PotCrysDeRhamAt P K LL := fun L K' hK h =>
     ((filSpans T K' LL _ (crys T K' LL _ h).1).spans _))
 
 
+omit T in
 theorem deRhamComparison (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P)
     (h : GlobalTheory.Per.IsStd P AI) : DeRhamComparison l P := by
   obtain ⟨T⟩ := h

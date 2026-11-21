@@ -138,6 +138,7 @@ theorem exists_wtMap {cf : CharFrame D} (X : NExpTied D) (cs : CharSide D cf) (h
 end Cell
 
 
+set_option maxHeartbeats 1600000 in
 theorem levMatch (hA : GlobalTheory.Published.GlobalArtinReciprocity) : ∀ (D : D7) (cf : CharFrame D) (Rw : RowSide D) (low : Finset ℕ) (Pq : HeightOneSpectrum (𝓞 (maximalRealSubfield D.host.E)) → PlE D.host) (S : RatDat D.ntw) (hL : ∀ j, ℕ → PlE D.host → Module.End D.what₂.LL (S.WL j)) (eig : ℕ → D.what₂.FT → ℕ → PlE D.host → ↥D.LL0) (θ : ∀ kk : Fin 2, Multiplicative (ZMod (D.host.g kk)) →* (↥D.LL0)ˣ) (Bs : SideB D cf Rw low Pq S hL eig θ), TauTrue Bs.exp → ValLL0 D cf →
     (∀ v, v ∈ placesOver D.host.E D.host.pde ∨ v ∈ placesOver D.host.E D.host.pde' → IsSplitPl D.host v) →
     (∀ v, NG.OverPl (Pq v) v) →
@@ -245,6 +246,7 @@ theorem levMatch (hA : GlobalTheory.Published.GlobalArtinReciprocity) : ∀ (D :
       exact this
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_reading : GlobalTheory.Published.GlobalArtinReciprocity → ∀ (D : D7) (cf : CharFrame D) (Rw : RowSide D) (low : Finset ℕ) (Pq : HeightOneSpectrum (𝓞 (maximalRealSubfield D.host.E)) → PlE D.host) (S : RatDat D.ntw) (hL : ∀ j, ℕ → PlE D.host → Module.End D.what₂.LL (S.WL j)) (eig : ℕ → D.what₂.FT → ℕ → PlE D.host → ↥D.LL0) (θ : ∀ kk : Fin 2, Multiplicative (ZMod (D.host.g kk)) →* (↥D.LL0)ˣ) (Bs : SideB D cf Rw low Pq S hL eig θ), TauTrue Bs.exp → CharSide D cf → ValLL0 D cf →
     (∀ v, v ∈ placesOver D.host.E D.host.pde ∨ v ∈ placesOver D.host.E D.host.pde' → IsSplitPl D.host v) →
     (∀ v, NG.OverPl (Pq v) v) →

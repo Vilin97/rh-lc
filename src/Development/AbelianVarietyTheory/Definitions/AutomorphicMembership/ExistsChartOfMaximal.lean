@@ -201,11 +201,13 @@ theorem exists_extension {U : Z.X.Opens} (f : ∀ a, Γ(Z.X, (Z.U a).1 ⊓ U))
 variable {b b' : Bool} {st st' : ((E →+* ℂ) × ℕ) ⊕ ℕ} {x : Letter Dw}
 
 
+omit hp hW in
 theorem val_ne_zero (M : LineModel Z b st x) {k : Type} [Field k] {w : Sp k ⟶ Z.X} {a : Fin Z.m} {i : Fin M.L.n}
     (ha : ⊤ ≤ w ⁻¹ᵁ (Z.U a).1) (hi : ⊤ ≤ w ⁻¹ᵁ M.L.U i) : valF w _ (M.r a i).val ≠ 0 :=
   left_ne_zero_of_mul_eq_one (valF_mul_inv (U := (Z.U a).1 ⊓ M.L.U i) (fun _ hq => ⟨ha hq, hi hq⟩) _)
 
 
+omit hp hW in
 theorem cross_eq (hty : ∀ τ k, k ≤ Dw.mult τ → k ∈ Z.ty τ) (M : LineModel Z b st x) (M' : LineModel Z b' st' x)
     {k : Type} [Field k] {w : Sp k ⟶ Z.X} {a a' : Fin Z.m} {i : Fin M.L.n} {j : Fin M'.L.n}
     (ha : ⊤ ≤ w ⁻¹ᵁ (Z.U a).1) (ha' : ⊤ ≤ w ⁻¹ᵁ (Z.U a').1) (hi : ⊤ ≤ w ⁻¹ᵁ M.L.U i) (hj : ⊤ ≤ w ⁻¹ᵁ M'.L.U j) :
@@ -227,15 +229,18 @@ def IsQuot (M : LineModel Z b st x) (M' : LineModel Z b' st' x) (i : Fin M.L.n) 
     valF w V s * valF w _ (M.r a i).val = c * valF w _ (M'.r a j).val
 
 
+variable (Z b st b' st') in
 def Bdd : Prop := ∃ m : ℕ, ∀ (y : Z.Pt) a (φ : Γ(Z.X, (Z.U a).1) →+* ↥y.C.S), spMap φ ≫ Z.chart a = y.gen →
   |lnStep (Y Z.i).t (y.gen ≫ Z.π) ((Z.fr a).bc φ) p b st - lnStep (Y Z.i).t (y.gen ≫ Z.π) ((Z.fr a).bc φ) p b' st'| ≤
     m * Real.log p
 
 
+omit hp hW in
 theorem Bdd.symm (h : Bdd Z b b' st st') : Bdd Z b' b st' st :=
   h.imp fun _ h y a φ e => (abs_sub_comm _ _).trans_le (h y a φ e)
 
 
+omit hW in
 theorem bdd_step (st : ((E →+* ℂ) × ℕ) ⊕ ℕ) : Bdd Z false true st st := by
   have := Fact.mk hp
   have hp2 : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le

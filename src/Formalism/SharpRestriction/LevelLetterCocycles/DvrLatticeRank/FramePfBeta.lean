@@ -88,6 +88,7 @@ theorem framepf_Ψβ_sum (F : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O)) (a :
     rw [← TensorProduct.sum_tmul, ← map_sum]
 
 
+include hπ0 hΔπ γ0 hβφ in
 theorem framepf_Ψβ_Pc (hT : IsCrys PD T.ρ) (F : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O))
     (p : W.DD T) (hp : p ∈ PcS W T c) :
     ∃ t, framepf_Ψβ Bs π' c hπ0 hΔπ hR2 γ0 hu βφ F p = toLA W T π' c ⊤ t := by
@@ -109,6 +110,7 @@ variable (Eπ : LetA O n) (hEu : IsUnit (algebraMap (LetA O n) W.EE Eπ))
     (hEΔ : ∀ δ ∈ W.DelF, W.γA δ Eπ = Eπ) (h' M : ℕ)
 
 
+include hπ0 hΔπ γ0 hβφ hEΔ in
 theorem framepf_Ψβ_Lam (hT : IsCrys PD T.ρ) (F : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O))
     (y : W.DD T) (hy : y ∈ LamPS W T Eπ h' c) :
     framepf_Ψβ Bs π' c hπ0 hΔπ hR2 γ0 hu βφ F y ∈ LamLA W T π' Eπ h' c ⊤ := by
@@ -126,6 +128,7 @@ theorem framepf_Ψβ_Lam (hT : IsCrys PD T.ρ) (F : Matrix (Fin Bs.r) (Fin Bs.r)
   rw [← ht, framepf_smulLA_eq, ← LinearMap.map_smul, algebraMap_smul]
 
 
+include hπ0 hΔπ γ0 hβφ in
 theorem framepf_Ψβ_J (hT : IsCrys PD T.ρ) (F : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O))
     (y : W.DD T) (hy : y ∈ JP W T π' Eπ h' M c) :
     framepf_Ψβ Bs π' c hπ0 hΔπ hR2 γ0 hu βφ F y ∈ JLA W T π' Eπ h' M c := by
@@ -149,6 +152,7 @@ theorem framepf_ι_X_pow_mul (k : ℕ) (g : PowerSeries O) :
       _ = π' * π' ^ k * framepf_ι π' (c - 1) g := by rw [this]
 
 
+include hπ0 in
 theorem framepf_φA_ι_entry (M : ℕ) (lam : O) (K : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O))
     (j k : Fin Bs.r) :
     W.φA (framepf_ι π' (c - 1) ((PowerSeries.C lam • (1 : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O)) +

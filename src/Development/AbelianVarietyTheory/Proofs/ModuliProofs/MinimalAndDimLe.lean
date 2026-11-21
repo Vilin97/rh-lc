@@ -18,6 +18,8 @@ open GlobalTheory.ZM
 namespace GlobalTheory.ZM.FullLevel
 
 
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
+open scoped CategoryTheory.Obj TensorProduct in
 theorem _root_.GlobalTheory.ZM.FullLevel.lft_of_qproj {R : Type} [CommRing R] {X : Scheme.{0}}
     {f : X ⟶ _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp R} (h : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsQProjOver f) :
     LocallyOfFiniteType f := by
@@ -46,6 +48,8 @@ private theorem krullDim_zeroLocus_le_of_isEmbedding {S T : Type} [CommRing S] [
     · exact Subtype.ext (hf.injective (congrArg Subtype.val hab))
 
 
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
+open scoped CategoryTheory.Obj TensorProduct in
 theorem _root_.GlobalTheory.ZM.FullLevel.dim_generic_chart {o K : Type} [CommRing o] [IsDomain o] [Field K]
     [Algebra o K] [IsFractionRing o K]
     {U : Scheme.{0}} (s : U ⟶ _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp o) (d : WithBot ℕ∞)
@@ -135,6 +139,8 @@ theorem _root_.GlobalTheory.ZM.FullLevel.dim_generic_chart {o K : Type} [CommRin
     _ = ringKrullDim (R ⧸ q) := by rw [hq', ringKrullDim_quotient]
 
 
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
+open scoped CategoryTheory.Obj TensorProduct in
 theorem _root_.GlobalTheory.ZM.FullLevel.charZero_of_hom {k K : Type} [Field k] [CharZero k] [Field K]
     (x : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp K ⟶ _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp k) : CharZero K :=
   (RingHom.charZero_iff (Spec.preimage x).hom.injective).1 inferInstance
@@ -152,6 +158,8 @@ private theorem isNilpotent_ker_fstHom_dualNumber {K : Type} [Field K] :
   ext <;> simp [hr, hs]
 
 
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
+open scoped CategoryTheory.Obj TensorProduct in
 theorem _root_.GlobalTheory.ZM.FullLevel.eq_constPt {k K : Type} [Field k] [CharZero k]
     [Algebra.IsAlgebraic ℚ k] [Field K]
     (x : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp (DualNumber K) ⟶ _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp k) : x = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.constPt x := by

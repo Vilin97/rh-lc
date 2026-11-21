@@ -70,6 +70,7 @@ variable {D : ℕ} {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀
   {Ω : Type} [Field Ω] [CharZero Ω]
 
 
+omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem isOpen_blockNonzero : IsOpen {z : (Σ k, ι k) → ℂ | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := by
   simp only [Set.ofPred_forall, Set.ofPred_exists]
   exact isOpen_iInter_of_finite fun k => isOpen_iUnion fun i =>
@@ -209,6 +210,7 @@ theorem local_bound (hC : ChartSupBound.Statement) (d : HSMBlockDatum D K ι Ω)
 end BlockResolutionImageSup
 
 
+open BlockResolutionImageSup in
 theorem BlockResolutionImageSup.proof (hC : ChartSupBound.Statement) : BlockResolutionImageSup.Statement := by
   intro D K _ _ ι _ Ω _ _ d
   choose N hNo hxN C hC0 hCb using fun x => local_bound hC d x

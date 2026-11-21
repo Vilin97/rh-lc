@@ -17,6 +17,7 @@ namespace GlobalTheory.RSJ
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+variable (E) in
 def pFin : Ad E →+* Af E := RingHom.snd (InfiniteAdeleRing E) (Af E)
 
 def secRow {R : Type*} [CommRing R] (y : Fin a → R) : Matrix (Fin a) (Fin a) R :=
@@ -31,6 +32,7 @@ def rowAct (ξ : Fin a → E) (g : GA E a) : Fin a → Ad E :=
   Matrix.vecMul (fun i => algebraMap E (Ad E) (ξ i)) (g : Matrix (Fin a) (Fin a) (Ad E))
 
 
+variable (E) in
 def natLat (N : ℕ) : Set (Af E) :=
   {x | ∃ z : Af E, (∀ v : HeightOneSpectrum (𝓞 E), z v ∈ v.adicCompletionIntegers E) ∧ x = (N : Af E) * z}
 
@@ -40,6 +42,7 @@ def indN (N : ℕ) (y : Fin a → Af E) : ℂ :=
   if ∀ i : Fin a, y i - (if (i : ℕ) + 1 = a then 1 else 0) ∈ natLat E N then 1 else 0
 
 
+variable (E a) in
 def detPow (x : ℝ) (g : GA E a) : ℝ := ‖((chiDet a (GlobalTheory.HeckeGal.Model.absPow E x) g : ℂˣ) : ℂ)‖
 
 def Psi (φ φ' : GA E a → ℂ) (Φ : (Fin a → Cinf E) → ℂ) (N : ℕ) (g : GA E a) (y : Fin a → Ad E) : ℂ :=

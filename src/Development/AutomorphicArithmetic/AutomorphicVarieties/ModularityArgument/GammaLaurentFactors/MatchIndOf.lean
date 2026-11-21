@@ -46,6 +46,7 @@ def TorAt (π : CuspSub K n) (v : HeightOneSpectrum (𝓞 K)) : Prop :=
   ∀ σ, π.IsLocComp v σ → Toral (IrrGL.of σ.ρ σ.smooth σ.irred)
 
 
+omit [IsTotallyComplex K] in
 def ThruAt {L : Type} [Field L] [NumberField L] [IsTotallyComplex L] [Algebra K L] (P : CuspSub L n)
     {v : HeightOneSpectrum (𝓞 K)} (w : PlacesOver L v) : Prop :=
   ∀ s, SuppAt P w.1 s → ∀ ζ hζ, IrrGL.ofChar ζ hζ ∈ s →

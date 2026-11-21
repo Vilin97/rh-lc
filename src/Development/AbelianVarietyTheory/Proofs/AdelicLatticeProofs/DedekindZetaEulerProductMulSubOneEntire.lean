@@ -12,6 +12,8 @@ open scoped ContDiff nonZeroDivisors
 namespace GlobalTheory
 
 
+open NumberField IsDedekindDomain NumberField.mixedEmbedding MeasureTheory Complex Classical in
+open scoped ContDiff nonZeroDivisors in
 theorem _root_.GlobalTheory.dedekindZeta_eulerProduct_mul_sub_one_entire (K : Type) [Field K] [NumberField K] :
     ∃ Z : ℂ → ℂ, Differentiable ℂ Z ∧ ∀ s : ℂ, 1 < s.re → Z s = (s - 1) *
       Complex.exp (∑' P : HeightOneSpectrum (𝓞 K),

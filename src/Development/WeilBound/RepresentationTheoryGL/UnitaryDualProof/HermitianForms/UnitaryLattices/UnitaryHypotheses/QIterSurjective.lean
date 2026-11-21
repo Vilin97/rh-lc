@@ -19,11 +19,13 @@ open PositivityTheory.RgUd.Form
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+variable (k) in
 def qIter (ψ : AddChar k Circle) {n : ℕ} : (j : ℕ) → (τ : MRep k (n + j)) → τ.V →ₗ[ℂ] (iterPhi k ψ j τ).V
   | 0, _ => LinearMap.id
   | j + 1, τ => (qIter ψ j (MRep.phiM k ψ τ)).comp (twKer τ.ρ (MirUin k (n + j + 1)) (mirChar k ψ (n + j))).mkQ
 
 
+variable (k) in
 def emb (n : ℕ) : (j : ℕ) → Mir k n →* Mir k (n + j)
   | 0 => MonoidHom.id _
   | j + 1 => ((levi k (n + j + 1)).comp (Mir k (n + j)).subtype).comp (emb n j)

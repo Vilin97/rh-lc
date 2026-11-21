@@ -117,6 +117,7 @@ theorem charZero_of_isArithVar {B : Type} [Fintype B] {ι : B → Type} [∀ k, 
   simpa using h1
 
 
+open Module in
 theorem flag_at (E : Type) [Field E] [NumberField E] [CharZero Ω] (hg : IsCptGen ξ)
     {K k : Type} [Field K] [Field k] [Algebra k K] (C : ACurve K) (z : Spec (CommRingCat.of K) ⟶ X) (Y : CurveIn C z)
     (G : Over X) [GrpObj G] [IsCommMonObj G] (hsm : Smooth G.hom) (act : OAct (𝓞 E) G)
@@ -166,6 +167,7 @@ end GlobalTheory.CompanionTheory.Ar.Conj.ModelNefness
 namespace GlobalTheory.CompanionTheory.Ar.Conj
 
 
+open ModelNefness GlobalTheory.CompanionTheory.Ar.Top in
 theorem m2Model_of_m2Curve : CurveSemiAbelianConjecture → RootLineDeRhamModel := by
   intro hC Ψ _ N M j p E _ _ _ H D hp hp2 hj hjN mu hdom hthr Wi hW
   haveI : Fact p.Prime := ⟨hp⟩

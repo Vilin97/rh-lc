@@ -71,6 +71,7 @@ theorem exists_flag_ne_zero {Ω : Type*} [Field Ω] {E : Type*} [AddCommGroup E]
 end SegreFlagClosureModel
 
 
+open GenericProjClosureDim GenericProjClosureDivisor SegreFlagClosureModel in
 theorem SegreFlagClosureModel.proof (hTr : SegreFlagClosureTrdeg.Statement) :
     SegreFlagClosureModel.Statement := by
   intro O _ _ _ ϖ hϖ Ω _ _ K _ _ ι _ y d hV N E _ _ B B' hB w w' x x' f g hfl M M' a₀ a₀' φ φ' hφ hφ'

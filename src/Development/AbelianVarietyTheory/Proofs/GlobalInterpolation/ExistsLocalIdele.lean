@@ -105,6 +105,7 @@ theorem val_of_unif (P : HeightOneSpectrum (𝓞 E)) (y₀ : RInt F E) (b : 𝓞
     norm_num
 
 
+include h1 h2 in
 theorem exists_unif {K : Type} [Field K] (ξ : Chr F E K) (v : HeightOneSpectrum (𝓞 F)) (hξ : inertAt E v ≤ ξ.ker)
     (P : HeightOneSpectrum (𝓞 E)) (hP : P.asIdeal.under (𝓞 F) = v.asIdeal) :
     ∃ y ∈ Formalism.L2.DIV.suppAt E v, Valued.v (ι (y : AfE F E) P) = WithZero.exp (-1 : ℤ) ∧

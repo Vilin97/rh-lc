@@ -32,6 +32,7 @@ namespace GlobalTheory.LiftFilEq
 open GlobalTheory.Published GlobalTheory.Published.GrothendieckMessing
 
 
+set_option maxHeartbeats 1000000 in
 theorem liftFil_le (k : Type) [Field k] (A₀ : Over (Sp k)) [GrpObj A₀] (A₁ A₂ : Over (Sp (DualNumber k)))
     [GrpObj A₁] [GrpObj A₂] (i₁ : A₀.left ⟶ A₁.left) (i₂ : A₀.left ⟶ A₂.left)
     (h₁ : IsGrpPullback A₀ A₁ (spMap (TrivSqZeroExt.fstHom k k k).toRingHom) i₁)

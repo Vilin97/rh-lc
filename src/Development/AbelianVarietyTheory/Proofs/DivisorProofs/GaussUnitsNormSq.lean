@@ -68,6 +68,7 @@ theorem sum_units_eq (m : Ideal R) [DecidablePred (· ∈ m)] [Fintype Rˣ]
 end GaussUnits
 
 
+open GaussUnits in
 theorem gauss_units_norm_sq : ∀ {R : Type} [CommRing R] [Fintype R] [DecidableEq R] [Fintype Rˣ]
     (m : Ideal R), (∀ x : R, IsUnit x ↔ x ∉ m) → ∀ (ψ : AddChar R ℂ),
     (∀ d : R, (∀ x, ψ (d * x) = 1) → d = 0) → ∀ (χ : Rˣ → ℂ), (∀ u v, χ (u * v) = χ u * χ v) →

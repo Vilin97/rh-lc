@@ -285,6 +285,7 @@ theorem mem_Lw {t N : ℕ} {G : Equiv.Perm (Fin t) → List (GenW k r)} {Ys : Fi
 end CapWP
 
 
+open CapWP in
 theorem capelli_words_holds : CapWordsOfParts := by
   intro _ hR hCV hD hS hDet hI k r j hj1 hjn
   have hmd := mdim0 k r
@@ -312,6 +313,7 @@ theorem capelli_words_holds : CapWordsOfParts := by
       (fun a b => Matrix.trace (Ξ * zgCV k r a b)) (fun σ u s => capGens_symb _ Ξ σ u s), cv_charpoly, hmd]
 
 
+open CapWP in
 theorem right_capelli_words_holds : CapRWordsOfParts := by
   intro _ hR hCR hD hS hDet hI k r z' Bs _ j hj1 hjk
   obtain ⟨Ys, lam, hYs⟩ := hI k (k - j) (by omega)
@@ -338,6 +340,7 @@ theorem right_capelli_words_holds : CapRWordsOfParts := by
       (fun a b => Matrix.trace (Ξ * zgB Bs a b)) (fun σ u s => capGens_symb _ Ξ σ u s)
 
 
+open CapWP in
 theorem left_capelli_words_holds : CapLWordsOfParts := by
   intro _ hL hCL hD hS hDet hI k r z Bs _ j hj1 hjk
   obtain ⟨Ys, lam, hYs⟩ := hI k (k - j) (by omega)

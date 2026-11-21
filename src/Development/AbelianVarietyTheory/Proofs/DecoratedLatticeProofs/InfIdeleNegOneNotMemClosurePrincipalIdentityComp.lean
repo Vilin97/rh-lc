@@ -116,6 +116,7 @@ theorem norm_ne_one_of_sign {w : InfinitePlace E} (hw : w.IsReal) {k : E} (hk : 
   norm_num at h1
 
 
+open GlobalTheory.RayFromArtin GlobalTheory.Mem.LocTriv in
 theorem infIdele_neg_one_not_mem :
     ∀ (E : Type) [Field E] [NumberField E] (w : InfinitePlace E), w.IsReal →
       ReciprocityTheory.Neutral.Bridge.HCFR.infIdele E w (-1) ∉ ((diagUnits E).range ⊔ infConn E).topologicalClosure := by

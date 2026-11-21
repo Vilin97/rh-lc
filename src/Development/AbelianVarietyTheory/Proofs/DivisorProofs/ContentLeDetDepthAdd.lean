@@ -157,6 +157,7 @@ end GlobalTheory.FGDepth.InertBound
 namespace GlobalTheory.FGDepth.InertBound
 
 
+open GlobalTheory.ChainCoord in
 theorem content_le_detDepth_add :
     ∀ (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : AddValuation C (WithTop ℝ)) (p : ℕ),
       p.Prime → v (p : C) = 1 → ∀ (d h : ℕ), 0 < h → ∀ (ty : Fin d → ZMod h) (G : LogFGL v d),

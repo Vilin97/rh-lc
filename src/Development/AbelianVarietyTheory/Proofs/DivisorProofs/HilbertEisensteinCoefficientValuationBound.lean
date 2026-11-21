@@ -225,6 +225,9 @@ private theorem sz_coeff_pow {r : ℝ} {φ : PowerSeries ℂ}
     ring
 
 
+open NumberField UpperHalfPlane FractionalIdeal in
+open scoped nonZeroDivisors in
+open scoped Classical MatrixGroups in
 theorem _root_.GlobalTheory.HilbFam.sz_hfun_coef : _root_.GlobalTheory.LatJet.EisExp →
     ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F], 2 ≤ Module.finrank ℚ F →
     ∀ (s N : ℕ) (L : _root_.GlobalTheory.HilbFam.Lat F), 1 ≤ s → 0 < N → _root_.GlobalTheory.HilbFam.HasLevel N L →

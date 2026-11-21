@@ -86,6 +86,7 @@ theorem infinitePlaceMeasure_zero (w : InfinitePlace K) : infinitePlaceMeasure w
     exact map_zero _
 
 
+omit [NumberField K] in
 theorem integral_infinitePlaceUnitsMeasure_of_isReal {w : InfinitePlace K} (hw : w.IsReal)
     (g : w.Completion → ℂ) :
     ∫ a : (w.Completion)ˣ, g a ∂infinitePlaceUnitsMeasure w =
@@ -105,6 +106,7 @@ theorem integral_infinitePlaceUnitsMeasure_of_isReal {w : InfinitePlace K} (hw :
   rw [div_eq_inv_mul]
 
 
+omit [NumberField K] in
 theorem integral_infinitePlaceUnitsMeasure_of_isComplex {w : InfinitePlace K} (hw : w.IsComplex)
     (g : w.Completion → ℂ) :
     ∫ a : (w.Completion)ˣ, g a ∂infinitePlaceUnitsMeasure w =

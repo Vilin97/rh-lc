@@ -34,11 +34,13 @@ theorem chartMonomial_isMultiHomog (u : ∀ k, ι k) (b : K → ℕ) :
 variable (P : Ideal (MRing ι F)) [P.IsPrime]
 
 
+omit [Fintype K] [DecidableEq K] [P.IsPrime] in
 theorem map_eq_zero_iff (f : MRing ι F) :
     algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P f) = 0 ↔ f ∈ P := by
   rw [IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
 
 
+omit [DecidableEq K] [P.IsPrime] in
 theorem map_chartMonomial (u : ∀ k, ι k) (b : K → ℕ) :
     algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P (chartMonomial u b)) =
       ∏ k, algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P))
@@ -46,6 +48,7 @@ theorem map_chartMonomial (u : ∀ k, ι k) (b : K → ℕ) :
   simp [chartMonomial, map_prod, map_pow]
 
 
+omit [DecidableEq K] in
 theorem map_chartMonomial_ne_zero (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : MRing ι F) ∉ P)
     (b : K → ℕ) :
     algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P))
@@ -142,6 +145,7 @@ theorem algebraicIndependent (hH : MChartHomog.Statement.{u}) (hP : IsMultiHomog
   exact hne (by simpa using hzero m (mem_support_iff.2 (by simpa using hne)))
 
 
+omit [Fintype K] [DecidableEq K] in
 theorem isAlgebraic_adjoin (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : MRing ι F) ∉ P) :
     Algebra.IsAlgebraic (Algebra.adjoin (chartMap P u).range (Set.range fun k =>
       algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P (X ⟨k, u k⟩))))

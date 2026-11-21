@@ -35,6 +35,7 @@ theorem WDT.of_conj (k : WDT ι r y) (hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal) {
   exact ⟨x, hx.of_conj hl P hP, k⟩
 
 
+variable (ι r y) in
 def CmpT : Prop :=
   (((l : ℕ) : 𝓞 E) ∉ w.asIdeal → WDT ι r y) ∧
     ∀ (O : Type) [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O] (Bw : LocBridge l E Ω (Dec (F := E) A) O) (hj : Induces Bw),
@@ -53,6 +54,7 @@ def LocGlobT (ι : Qbar l ≃+* ℂ) (r : G F Ω →* GL (Fin n) (Qbar l)) (w : 
     CmpT ι r (rc (algNorm σ))
 
 
+omit [IsAlgClosure F Ω] in
 def HasHTAt (r : G F Ω →* GL (Fin n) (Qbar l)) (HT : (F →+* Qbar l) → Multiset ℤ) (w : HeightOneSpectrum (𝓞 F)) : Prop :=
   ∀ A : ValuationSubring Ω, IsPlaceOver A w →
     ∀ (O : Type) [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O] (Bw : LocBridge l F Ω (Dec (F := F) A) O), Induces Bw →

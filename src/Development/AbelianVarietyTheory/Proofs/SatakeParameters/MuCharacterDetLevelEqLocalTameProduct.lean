@@ -104,6 +104,7 @@ theorem prV_eq_one {v : HeightOneSpectrum (𝓞 F)} {z : AfE F E}
   rwa [map_mul, Formalism.UG.P.afsplit_prV_eps, one_mul, map_zero, map_sub, map_one, sub_eq_zero] at e2
 
 
+omit [NumberField F] [Algebra F E] [Field F] in
 theorem exists_int_congr {P : HeightOneSpectrum (𝓞 E)} {a : E} (ha : P.valuation E a = 1) :
     ∃ b : 𝓞 E, b ∉ P.asIdeal ∧ redP P a = Ideal.Quotient.mk P.asIdeal b ∧ P.valuation E (a - b) < 1 := by
   obtain ⟨r, s, hrs⟩ := HeightOneSpectrum.exists_primeCompl_mul_eq_of_integer P a ha.le
@@ -179,6 +180,7 @@ theorem evP_div_h90_eq_one (σ : E →ₐ[F] E) (a b : (AfE F E)ˣ) (Q : HeightO
   exact (mul_eq_right₀ (b.isUnit.map (evP F Q)).ne_zero).1 e2
 
 
+variable (F) in
 def partAf (y : (AfE F E)ˣ) (S : Finset (HeightOneSpectrum (𝓞 E))) : (AfE F E)ˣ := finAf F E (part (toIdl F E y) S)
 
 theorem component_mulIndicator_of_mem (y : (AfE F E)ˣ) {S : Finset (HeightOneSpectrum (𝓞 E))} {P : HeightOneSpectrum (𝓞 E)} (h : P ∈ S) :
@@ -384,6 +386,7 @@ theorem valued_lt_of_intAtA {P : HeightOneSpectrum (𝓞 X.E)} {z : AfE X.F X.E}
   exact (HeightOneSpectrum.valuation_lt_one_iff_mem _ _).2 hqP
 
 
+set_option maxHeartbeats 800000 in
 theorem normOne_idele_eq_hilbert90_part_at_primes (hs : s.Ok) {S : Finset (HeightOneSpectrum (𝓞 X.E))} (hS : ∀ P ∈ S, conjPrime₂ P ∉ S) {y : (AfE X.F X.E)ˣ}
     (hy : Units.map ι.toRingHom.toMonoidHom y ∈ U1 (sigD D)) {P : HeightOneSpectrum (𝓞 X.E)} (hP : P ∈ S)
     {v : HeightOneSpectrum (𝓞 D.host.F)} (hv : IsOver v (seamP s P)) :
@@ -413,6 +416,8 @@ end Host
 end GlobalTheory.LevMuDet
 
 
+open GlobalTheory.LevMuDet GlobalTheory.Mem.Col2 GlobalTheory.Mem.ReadEx GlobalTheory.Mem.LocTriv Formalism.L2.Forms in
+set_option maxHeartbeats 1000000 in
 theorem GlobalTheory.LevMuDet.muOf_det_lev : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU a =>
     MuLaw t u μ dtU → ∀ i, i < D.R.m → ∀ j (hj : j ≤ D.R.m) (β : (St j hj).Ch) (κ : ((St j hj).K β).lev.U) (e : SB t μ → t.X.E),
       (∀ P : SB t μ, IntAtA (F := D.host.F) (seamP t.seam P.1)

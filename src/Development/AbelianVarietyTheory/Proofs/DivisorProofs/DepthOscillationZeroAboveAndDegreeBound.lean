@@ -23,6 +23,7 @@ namespace GlobalTheory.RefSum
 open GlobalTheory.IndefiniteRowSideFullHecke.SplitQuadraticRamification (IsBig sumSmallSpread not_isBig_iff)
 
 
+open Classical in
 theorem card_filter_inPsi_of_finrank {E : Type} [Field E] [NumberField E] [IsCMField E]
     (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) {F : ℕ} (hF : Module.finrank ℚ E = 2 * F) :
     (Finset.univ.filter (fun τ : E →+* ℂ => InPsi H τ)).card = F := by

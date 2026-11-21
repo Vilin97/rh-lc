@@ -28,6 +28,7 @@ section Rec
 variable {D : D7} {Tc : Core D} (hL : LawsCore Tc) (j : ℕ)
 
 
+variable {j} in
 def NrmTieKC (h : GenFrEx (Tc.Q.Xo j) Tc.Q.c)
     (fn : ∀ σ : Tc.Q.c.F →+* ℂ, FrPt (Tc.Q.Xo j) Tc.Q.c (CAt σ) → Ix (Tc.Q.Dw j) → ℝ)
     (yP : ∀ Z : Comp (Tc.Q.Xo j) Tc.Q.c, ∀ P : Om Z →+* ℂ, FrPt (Tc.Q.Xo j) Tc.Q.c (CAt (sgOf P)))

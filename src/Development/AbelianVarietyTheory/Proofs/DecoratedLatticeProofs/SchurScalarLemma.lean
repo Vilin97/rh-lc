@@ -109,6 +109,7 @@ theorem infGL_rat (hθ : IsInfFam θ) {K : Type} [Field K] (σ : K →+* ℂ) (e
   exact congrArg (θ τ) ((Algebra.TensorProduct.map_tmul _ _ _ _).trans (by rw [map_one]; rfl))
 
 
+open Classical in
 theorem eqv_transpose (hθ : IsInfFam θ) (hp : AllPlus M) (hc : c.Is) (hpr : IsDualPair θ M c pr)
     (lam : D.what₂.Tau → DomWeight V.rank) (φ : SmT M →ₗ[ℂ] VV ℂ lam)
     (hφ : ∀ τ, ∀ g ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ), ∀ (v : M.Vec) (w : M.sm τ), (w : M.H τ) = M.rep τ g (v τ) →
@@ -134,6 +135,7 @@ theorem eqv_transpose (hθ : IsInfFam θ) (hp : AllPlus M) (hc : c.Is) (hpr : Is
     mul_inv_cancel, map_one, rhoK_one]
 
 
+open Classical in
 theorem exists_scalar (hθ : IsInfFam θ) (hp : AllPlus M) (hc : c.Is) (hpr : IsDualPair θ M c pr) {n : ℕ} (hn : V.rank = n)
     (lam : D.what₂.Tau → DomWeight n) {K : Type} [Field K] (σ : K →+* ℂ) (emb : D.what₂.Tau → D.host.E →+* K)
     (hemb : ∀ τ x, σ (emb τ x) = tauE D τ x) (cv : VV K lam →ₛₗ[σ] c.W)

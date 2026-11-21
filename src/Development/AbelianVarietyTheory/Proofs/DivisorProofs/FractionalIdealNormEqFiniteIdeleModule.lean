@@ -43,6 +43,8 @@ theorem finprod_absNorm_zpow_count {I : FractionalIdeal (𝓞 K)⁰ K} (hI : I �
 end GlobalTheory.LatVal.InvIdealNorm
 
 
+open GlobalTheory.LatVal.InvIdealNorm in
+open scoped GlobalTheory.Idele in
 theorem GlobalTheory.LatVal.nrm_eq_modF_of_isInvIdealOf : ∀ {K : Type} [Field K] [NumberField K] (t : (Af K)ˣ)
     (𝔞 : FractionalIdeal (𝓞 K)⁰ K) (h : IsInvIdealOf t 𝔞), nrm 𝔞 = modF t := by
   intro K _ _ t 𝔞 h

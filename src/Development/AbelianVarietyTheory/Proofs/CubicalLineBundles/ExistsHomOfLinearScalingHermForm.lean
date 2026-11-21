@@ -82,6 +82,7 @@ variable {X Y : Scheme.{0}} (p : X ⟶ Sp ℂ) [LocallyOfFiniteType p] [IsReduce
 
 
 
+include hon in
 lemma exists_hom_of_values {S : Scheme.{0}} (q : Y ⟶ S) [IsSeparated q] [IsAffine S]
     (h : ∀ z, ∃ (W : X.Opens) (D : Y.Opens), IsAffineOpen D ∧ ⊤ ≤ ex z ⁻¹ᵁ W ∧
       (∀ w, ⊤ ≤ ex w ⁻¹ᵁ W → ⊤ ≤ ey w ⁻¹ᵁ D) ∧
@@ -114,6 +115,7 @@ lemma chart_le (j : PUnit → L.ι) :
   rw [h]; exact this
 
 
+include e in
 lemma exists_sec_pow (p : X ⟶ Sp ℂ) [LocallyOfFiniteType p] [IsReduced X]
     (s : (L.LinComb (K := Fin N) (fun _ => κ) (fun _ => 1)).Sec) :
     ∃ s' : (lbPow L N).Sec, ∀ (x : Sp ℂ ⟶ X) (j : PUnit → L.ι), ⊤ ≤ x ⁻¹ᵁ (lbPow L N).U j →
@@ -315,6 +317,7 @@ end Main
 end AnalyticHom
 
 
+open AnalyticHom in
 theorem exists_hom_of_linear_scaling_hermForm :
     ∀ (P P' : Out.PolAV (Sp ℂ)) (u : HolUnif P.A P.L P.g) (u' : HolUnif P'.A P'.L P'.g)
       (Hm : Matrix (Fin P.g) (Fin P.g) ℂ) (χ : u.Λ → ℂ) (Hm' : Matrix (Fin P'.g) (Fin P'.g) ℂ)

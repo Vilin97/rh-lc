@@ -14,6 +14,7 @@ open scoped BigOperators
 namespace GlobalTheory.GenusOneDatum
 
 
+open PowerSeries in
 theorem exists_fixed_of_contract {R : Type*} [CommRing R] (T : PowerSeries R → PowerSeries R)
     (hT : ∀ (n : ℕ) (x y : PowerSeries R), X ^ n ∣ x - y → X ^ (n + 1) ∣ T x - T y) :
     ∃ x, T x = x := by

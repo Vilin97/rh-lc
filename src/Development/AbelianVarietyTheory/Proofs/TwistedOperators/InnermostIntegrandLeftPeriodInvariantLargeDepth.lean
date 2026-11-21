@@ -177,6 +177,7 @@ theorem jPer_congr_above (M : GlobalTheory.FunObj.Vol G) (t : T) (C C' : BiFam G
       fun i hi hji => hC i hi (by omega)
 
 
+omit hM in
 theorem jPer_congr_window (M : GlobalTheory.FunObj.Vol G) (t : T) (C C' : BiFam G) (F : Fn G (.grid D.R.m D.R.m)) (k : ℕ)
     (hk4 : k + 1 + 1 + 2 ≤ D.R.m) (hC : ∀ i, Even i → i ≠ k → i ≠ k + 1 + 1 → C i = C' i)
     (hpres : ∀ i, Even i → i < k → ∀ ψ : GA D (G.V (.top i)) → ℂ, GlobalTheory.Unf.IsContAut _ ψ →

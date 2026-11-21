@@ -133,6 +133,7 @@ def formSpace (hH : IsSubrep (R (latticeGL E a) μ) H) : Submodule ℂ (Sm E a) 
     exact H.smul_mem c h4
 
 
+open GroundTheory.Automorphic in
 theorem exists_stable (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a))
     [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (H : Submodule ℂ (L2 (latticeGL E a) μ)) (_ : H ≤ L2cusp μ)
     (hi : IsIrredSubrep (R (latticeGL E a) μ) H) :

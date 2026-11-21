@@ -32,11 +32,13 @@ theorem unipMap_apply (h : HermitianForm F E W) (x₀ y : W) (c : E) (x : W) :
     unipMap h x₀ y c x = x + (h.toSesq x₀ x * c - h.toSesq y x) • x₀ + h.toSesq x₀ x • y := rfl
 
 
+omit [NumberField E] in
 theorem sesq_swap (h : HermitianForm F E W) (u v : W) :
     h.toSesq u v = conj F E (h.toSesq v u) :=
   (h.isSymm.eq v u).symm
 
 
+omit [NumberField E] in
 theorem sesq_smul_left (h : HermitianForm F E W) (r : E) (u v : W) :
     h.toSesq (r • u) v = conj F E r * h.toSesq u v := by
   rw [LinearMap.map_smulₛₗ₂]
@@ -96,6 +98,7 @@ theorem unipMap_mem (h : HermitianForm F E W) {La : AddSubgroup W}
   exact sub_mem (mul_mem (hint x₀ hx₀ x hx) hc) (hint y hy x hx)
 
 
+omit [NumberField E] in
 theorem conj_mem_integralClosure {c : E} (hc : c ∈ integralClosure ℤ E) :
     conj F E c ∈ integralClosure ℤ E :=
   (mem_integralClosure_iff ℤ E).2
@@ -104,6 +107,7 @@ theorem conj_mem_integralClosure {c : E} (hc : c ∈ integralClosure ℤ E) :
 end RationalUnipotent
 
 
+open RationalUnipotent in
 theorem RationalUnipotent.proof (h : HermitianForm F E W) : RationalUnipotent.Statement h := by
   intro D La x₀ w₀ hD hx₀ hp
   refine ⟨1, one_pos, ?_⟩

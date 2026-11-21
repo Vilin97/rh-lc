@@ -33,6 +33,7 @@ theorem reciprocityMap_apply_of_le {L L' : IntermediateField K Ω} [FiniteDimens
 variable [IsGalois K Ω]
 
 
+omit [NumberField K] in
 theorem restrictAb_eq_of_le {L L' : IntermediateField K Ω} [Normal K L] [Normal K L']
     (hL' : L' ≤ maximalAbelianExtension K Ω) (h : L ≤ L')
     {σ τ : maximalAbelianExtension K Ω ≃ₐ[K] maximalAbelianExtension K Ω}
@@ -63,6 +64,7 @@ instance nonempty_finiteAbelianExtensions : Nonempty (finiteAbelianExtensions K 
   ⟨⟨⊥, inferInstance, inferInstance⟩⟩
 
 
+variable {K Ω} in
 def fiberOver (c : IdeleClassGroup K) (L : finiteAbelianExtensions K Ω) :
     Set (maximalAbelianExtension K Ω ≃ₐ[K] maximalAbelianExtension K Ω) :=
   haveI := L.2.1

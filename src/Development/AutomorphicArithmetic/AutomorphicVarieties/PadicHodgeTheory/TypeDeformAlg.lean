@@ -28,6 +28,7 @@ variable {A V : Type} [CommRing A] [Algebra Q A] [AddCommGroup V] [Module A V] [
   {F P : Type} [Field F] [Algebra Q F] [CommRing P] [Algebra Q P] [Algebra F P] [IsScalarTower Q F P]
 
 
+variable (V P) in
 noncomputable def sm : A ⊗[Q] F →ₗ[Q] Module.End Q (V ⊗[Q] P) :=
   (TensorProduct.homTensorHomMap (RingHom.id Q) V P V P).comp
     (TensorProduct.map (Algebra.lsmul Q Q V : A →ₐ[Q] Module.End Q V).toLinearMap

@@ -147,6 +147,7 @@ theorem amp_const (Λ₁ : AddSubgroup K) {m : ℕ} (A : (Fin m → K) → ℂ) 
   rw [← this]; congr 1; ext k; simp
 
 
+open Classical in
 theorem root_piece [TopologicalSpace K] (R : Subring K) (ψ : AddChar K ℂ) (m : ℕ) (γ : Kˣ → ℂ)
     (hγ : IsGamma R ψ m γ) (Λ₁ : AddSubgroup K) (B Λ : Submodule R K)
     (hB : IsLat B.toAddSubgroup) (hΛ : IsLat Λ.toAddSubgroup) (hΛB : Λ ≤ B)
@@ -229,6 +230,8 @@ theorem ball_iff (B : AddSubgroup K) {m : ℕ} (x l : Fin m → K) (z : K) (hl :
 end Formalism.FourierDecayAlt.P.HessianScalingIntegrals
 
 
+open Formalism.FourierDecayAlt.P.HessianScalingIntegrals in
+open Classical in
 theorem Formalism.FourierDecayAlt.P.stationaryPhaseOfSteps : Formalism.FourierDecayAlt.A6.StationaryAssemble := by
   intro hNS hMorse hRef hMod hRF _ _ _ _ _ hRS hSM hGA _ K _ _ _ R ψ hD hn m hm γ hγ L₀ Λ₁ Q hL₀ hΛ₁
     hQ hQu

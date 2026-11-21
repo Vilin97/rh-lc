@@ -9,6 +9,7 @@ open MeasureTheory
 namespace GlobalTheory
 
 
+open Real in
 theorem schwartz_eq_fourier_synthesis :
     ∀ (V : Type) [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V] (m : SchwartzMap V ℂ),
     ∃ (d : ℕ) (A : EuclideanSpace ℝ (Fin d) →L[ℝ] V →L[ℝ] ℝ) (h : SchwartzMap (EuclideanSpace ℝ (Fin d)) ℂ),

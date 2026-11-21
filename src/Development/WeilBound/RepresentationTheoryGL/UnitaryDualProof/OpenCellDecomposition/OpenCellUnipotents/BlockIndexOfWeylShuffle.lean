@@ -24,6 +24,7 @@ theorem blk_two (i : Fin (r + m)) :
   · simp at hj ⊢
 
 
+variable (r m) in
 def w2 : Equiv.Perm (Fin (r + m)) := (finCongr (add_comm r m)).trans finAddFlip
 
 theorem weyl_shuffle_val (j : Fin (r + m)) : (w2 r m j : ℕ) = if (j : ℕ) < m then r + j else j - m := by
@@ -94,6 +95,7 @@ theorem aDiag_conj_mem_unipB (N n : ℕ) (z : kˣ) {u : GL (Fin N) k} (hu : u �
     · exact one_mul 1
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem levZ_apply (z : kˣ) (a : Fin 2) (i j : Fin (dd r m a)) :
     ((levZ k r m z a : GL (Fin (dd r m a)) k) : Matrix (Fin (dd r m a)) (Fin (dd r m a)) k) i j =
       if i = j then (if a = 0 then 1 else (z : k)) else 0 := by
@@ -101,6 +103,7 @@ theorem levZ_apply (z : kˣ) (a : Fin 2) (i j : Fin (dd r m a)) :
   split_ifs <;> simp_all [Matrix.one_apply, Matrix.scalar_apply, Matrix.diagonal_apply]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem conj_aDiag (z : kˣ) :
     pm k (wOpen (dd r m) (hdd r m)) * aDiag k (r + m) m z * (pm k (wOpen (dd r m) (hdd r m)))⁻¹ =
       leviEmb k (stdBlocks (dd r m) (hdd r m)) (levZ k r m z) := by
@@ -144,6 +147,7 @@ theorem aDiag_conj_mem_unipU (z : kˣ) {u : GL (Fin (r + m)) k} (hu : u ∈ unip
   group
 
 
+open ValuativeRel GroundTheory.Automorphic.GLnLocal in
 theorem aDiag_conj_apply_unipB (N n : ℕ) (z : kˣ) {u : GL (Fin N) k} (hu : u ∈ unipB k (Fin N)) (i j : Fin N) :
     ((aDiag k N n z * u * (aDiag k N n z)⁻¹ : GL (Fin N) k) : Matrix (Fin N) (Fin N) k) i j =
       (if (i : ℕ) < n ∧ ¬ (j : ℕ) < n then (z : k) else 1) * (u : Matrix (Fin N) (Fin N) k) i j := by
@@ -159,6 +163,7 @@ theorem aDiag_conj_apply_unipB (N n : ℕ) (z : kˣ) {u : GL (Fin N) k} (hu : u 
   · simp [hi, hj]
 
 
+open ValuativeRel GroundTheory.Automorphic.GLnLocal in
 theorem aDiag_conj_mem_congr (N n : ℕ) (z : kˣ) (hz : valuation k (z : k) ≤ 1) (c : ℕ) {u : GL (Fin N) k}
     (hu : u ∈ unipB k (Fin N)) (hK : u ∈ congruenceSubgroup k N c) :
     aDiag k N n z * u * (aDiag k N n z)⁻¹ ∈ congruenceSubgroup k N c := by

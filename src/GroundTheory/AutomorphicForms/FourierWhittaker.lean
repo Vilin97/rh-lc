@@ -96,6 +96,7 @@ theorem hasSum_partialCoeff_cusp {ϕ : AdelicGLn.AdelicGL K n → ℂ} (hϕ : ϕ
     (fun g => vecCoeff_zero_of_isCuspidal hϕ.1.continuous hϕ.1.isLeftInvariant hϕ.2 hk0 hk g) g
 
 
+variable (K) in
 def mirabolic (k : ℕ) : Subgroup (GL (Fin k) K) where
   carrier := {h | IsLastRowUnit ((h : GL (Fin k) K) : Matrix (Fin k) (Fin k) K)}
   one_mem' := by

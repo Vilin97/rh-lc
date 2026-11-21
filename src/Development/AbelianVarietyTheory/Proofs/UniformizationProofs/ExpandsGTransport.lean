@@ -184,6 +184,8 @@ end GlobalTheory.ExpGTrans
 namespace GlobalTheory
 
 
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.ExpGTrans in
+set_option maxHeartbeats 1600000 in
 theorem expandsG_transport : ∀ (R R' : Type) [CommRing R] [IsDomain R] [CommRing R'] [IsDomain
     R'] (I : Ideal R) (I' : Ideal R') (φ : R →+* R') (D : DegData R I) (D' : DegData R' I') (hD
     : IsPullDeg φ D.toPre D'.toPre) (A : PolAV (Spec (CommRingCat.of (FractionRing R)))) (A'

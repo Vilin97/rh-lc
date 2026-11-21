@@ -79,6 +79,7 @@ theorem polData_sum (hp : IsPair B M χX χW om r s r' s') {Φ : Fn F n d} (hΦ 
   simp [pureA, mul_assoc]
 
 
+variable (B W) in
 def Nice (f : UA σ W.J → ℂ) : Prop := LeftInv f ∧ UMG W f ∧ SmoothFin W B.emb f
 
 theorem nice_zero : Nice B W (0 : UA σ W.J → ℂ) :=

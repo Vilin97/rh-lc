@@ -16,9 +16,11 @@ open GlobalTheory.Doubling (absE)
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 
+variable (F) in
 abbrev Fl (v : Pl F) (n d : ℕ) : Type := (Fin n × Fin d → Fv F v) → ℂ
 
 
+variable (F) in
 def idem (v : Pl F) : AF F := LinearMap.inr F (Ainf F) (Af F) (singleFin v 1)
 
 
@@ -32,6 +34,7 @@ def opI {κ : Type} [Fintype κ] (T : ((κ → AF F) → ℂ) → (κ → AF F) 
   if h : ∃ f₁ : SInf F κ, Acts (evI F) T f f₁ then h.choose else 0
 
 
+variable (E) in
 def idAt {R : Type} [Zero R] (ev : AF F → R) : Subgroup (AE F E)ˣ :=
   Subgroup.closure {l | At ev ((l : AE F E) - 1)}
 

@@ -54,6 +54,7 @@ theorem prod_sameSum {M : Type} [CommGroup M] {Y X : Scheme.{0}} {K K' : Type} [
   | convert hS φ
 
 
+open ReciprocityTheory.ChartRestriction.G.Pdiv.PullbackComparison (gU unit_ext gU_res gU_pullU gU_pullU_congr base_eq) in
 theorem gU_pullAlong_idx {X X' Y Y' : Scheme.{0}} (L : LB X) {K : Type} [Fintype K]
     (F : X' ⟶ X) (h : Y' ⟶ Y) (φ : K → (Y ⟶ X)) (ε : K → ℤ) (ψ : K → (Y' ⟶ X'))
     (hψ : ∀ k, ψ k ≫ F = h ≫ φ k) (t : LB.Gen (LB.LinComb L φ ε)) (ht : t.IsGen)
@@ -83,6 +84,7 @@ theorem gU_pullAlong_idx {X X' Y Y' : Scheme.{0}} (L : LB X) {K : Type} [Fintype
   exact congrArg (· ^ ε k) (step k _)
 
 
+open ReciprocityTheory.ChartRestriction.G.Pdiv.PullbackComparison (gU unit_ext gU_res) in
 theorem corr_pullAlong_sameSum {X X' Y Y' : Scheme.{0}} (L : LB X) (hL : L.IsLB) {K K' : Type}
     [Fintype K] [Fintype K'] (F : X' ⟶ X) (h : Y' ⟶ Y) (φ : K → (Y ⟶ X)) (ε : K → ℤ)
     (φ' : K' → (Y ⟶ X)) (ε' : K' → ℤ) (ψ : K → (Y' ⟶ X')) (ψ' : K' → (Y' ⟶ X'))

@@ -24,6 +24,7 @@ theorem spMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (c : A
   rfl
 
 
+omit [GrpObj G] in
 theorem ringHom_ext_of_mono {R A : Type} [CommRing R] [CommRing A] (x : Sp R ⟶ X) [Mono x] {a b : R →+* A}
     (h : spMap a ≫ x = spMap b ≫ x) : a = b :=
   congrArg (fun g => g.hom) (Spec.map_injective ((cancel_mono x).1 h))

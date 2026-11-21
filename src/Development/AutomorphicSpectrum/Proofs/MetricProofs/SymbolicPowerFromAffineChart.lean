@@ -24,6 +24,7 @@ theorem mdeg_add (m n : (Σ k, ι k) →₀ ℕ) : mdeg (m + n) = mdeg m + mdeg 
   simp [mdeg, Finset.sum_add_distrib]
 
 
+open Classical in
 def part (b : K → ℕ) (s : MvPolynomial (Σ k, ι k) ℂ) : MvPolynomial (Σ k, ι k) ℂ :=
   ∑ m ∈ s.support.filter (fun m => mdeg m = b), monomial m (AddMonoidAlgebra.coeff s m)
 

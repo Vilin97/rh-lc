@@ -20,10 +20,14 @@ variable {k : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchi
   [IsMulCommutative (M ≃ₐ[k] M)]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k]
+  [FiniteDimensional k M] in
 theorem isAbelianGalois_of_isGalois : IsAbelianGalois k M :=
   { toIsGalois := inferInstance, toIsMulCommutative := inferInstance }
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k]
+  [FiniteDimensional k M] in
 theorem apply_mem_maximalAbelianExtension {Ω : Type*} [Field Ω] [Algebra k Ω]
     [IsSepClosure k Ω] (ι : M →ₐ[k] Ω) (z : M) : ι z ∈ maximalAbelianExtension k Ω :=
   have := isAbelianGalois_of_isGalois (k := k) (M := M)

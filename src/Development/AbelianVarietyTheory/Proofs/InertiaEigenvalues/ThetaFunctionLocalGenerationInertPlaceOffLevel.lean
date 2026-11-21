@@ -179,6 +179,7 @@ open GlobalTheory.InertLoc GlobalTheory.SplitScalar GlobalTheory.FinWeilO
 variable {D : D7}
 
 
+set_option maxHeartbeats 800000 in
 theorem exists_pair (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (χS χT : (AE D)ˣ →* Circle)
     (om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)) (P : Pl D.host.E) (hW : IsWeilDatumO ψ S T χS χT om)
     (hP : Formalism.DivisionValues.conjPl P = P) (hfix : VacFix ψ om P) (e : AE D) (he : IsPrimeIdem P e e) :
@@ -398,6 +399,7 @@ theorem pure_one {ι X : Type} (A : ι → (X → ℂ) → (X → ℂ)) (f : X �
   simp [opPow]
 
 
+set_option maxHeartbeats 1600000 in
 theorem step_inert : GlobalTheory.Hk3.HoweUnram → ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.LiftRows.Given R F → R.FullP → ∀ (i : Fin D.R.m) (t : T) (Sb : Finset (HeightOneSpectrum (𝓞 D.host.F))) (v : HeightOneSpectrum (𝓞 D.host.F)), v ∈ Sb → (∀ ε, IsPlaceIdem D v ε → ∀ e, IsSplitIdem D e → e * algebraMap (AF D.host.F) (AE D) ε = 0) → (∀ PP, PP ∈ R.Pg ∨ PP ∈ R.Q t → ¬ GlobalTheory.DownLift.GenFinite.Over PP v) → ∀ (f : WO (Vc D i) (Wc D i) → ℂ), GlobalTheory.DownLift.GenFinite.TypeIn R i t Sb f → GlobalTheory.DownLift.GenFinite.CleanIn R i t Sb f → GlobalTheory.DownLift.GenFinite.LikeOff R i t Sb f → f ∈ Submodule.span ℂ (GlobalTheory.DownLift.GenFinite.StepGen R i t (GlobalTheory.DownLift.GenFinite.dropPl Sb v)) := by
   intro hH D G _ _ Pl0 T A Ks _ _ _ R F hG hFP i t Sb v hv hns hoff f hT hCl hL
   classical

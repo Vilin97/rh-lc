@@ -77,6 +77,7 @@ private theorem le_of_locP_eq_forall_heightOneSpectrum {D : D7} {A B : Submodule
 end GlobalTheory.Sloc.OneDim
 
 
+open GlobalTheory.Sloc.OneDim in
 theorem GlobalTheory.Sloc.fg_eq_of_completions : ∀ (D : D7) (Z : LocDat D) (I J : Submodule (𝓞 D.host.E) D.host.E), I.FG → J.FG → (∀ p : PlF D, Submodule.span (Z.M p).L.O ((D.s.atP p).ιE '' (I : Set D.host.E)) = Submodule.span (Z.M p).L.O ((D.s.atP p).ιE '' (J : Set D.host.E))) → I = J := by
   intro D Z I J hI hJ hloc
   have hlat : ∀ p : PlF D, lattice₂ D Z.M p (I.map (lineMap D)) = lattice₂ D Z.M p (J.map (lineMap D)) := by

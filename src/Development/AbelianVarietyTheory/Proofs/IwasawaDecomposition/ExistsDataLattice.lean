@@ -97,6 +97,9 @@ private theorem finite_GL_of_integral_bounded_scaled_entries (c : E) (hc : c ≠
   exact fun a b => hγ a b
 
 
+open NumberField in
+open scoped ComplexConjugate ComplexOrder Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 theorem _root_.GlobalTheory.Member.LatData.exists_data_lattice : ∀ (E : Type) [Field E] [NumberField E] [NumberField.IsCMField E] (r : ℕ)
     (Λ : Submodule (𝓞 E) (Fin r → E)), Λ.FG → Submodule.span E (Λ : Set (Fin r → E)) = ⊤ →
     ∃ X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r, X.Λ = Λ := by

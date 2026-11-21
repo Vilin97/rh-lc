@@ -305,6 +305,7 @@ theorem locMap_comp_locResS (f : M →ₗ[Poly S N] M') (I J : StdCell N) (h : I
     rw [locRes_mk, locMap_mk, locMap_mk, locRes_mk]
 
 
+omit [Module S M] [IsScalarTower S (Poly S N) M] [Module S M'] [IsScalarTower S (Poly S N) M'] in
 theorem locMap_injective (f : M →ₗ[Poly S N] M') (hf : Function.Injective f)
     (I : Finset (Fin (N + 1))) : Function.Injective (locMap f I) :=
   by

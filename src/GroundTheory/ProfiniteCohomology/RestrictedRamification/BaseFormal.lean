@@ -347,6 +347,8 @@ variable {G : Type u} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Com
   {T : compactCohomologyRes φ D 3 →+ ZMod n}
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] [Fintype ι] [Nonempty ι] [∀ v, CompactSpace (H v)]
+  [∀ v, TotallyDisconnectedSpace (H v)] [IsTopologicalGroup G] [∀ v, IsTopologicalGroup (H v)] [IsDiscreteRep D] in
 theorem pairWith_pairingRes_zmodMulPairingRight (v : ι) (a : ZMod n)
     (h : ∀ g : H v, (Rep.res (φ v).toMonoidHom (zmodRep.{u} G n)).ρ g (ULift.up a) = ULift.up a) :
     pairWith (pairingRes (φ v).toMonoidHom (zmodMulPairingRight n D hD)) (ULift.up a) h =
@@ -363,6 +365,8 @@ variable (hyp : BaseDualityHypotheses φ D hD t T)
 include hyp
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] [∀ v, CompactSpace (H v)]
+  [∀ v, TotallyDisconnectedSpace (H v)] [Nonempty ι] [NeZero n] in
 theorem localToCompact_two_surjective :
     Function.Surjective (localToCompact φ D (fun v => Rep.res (φ v).toMonoidHom D) (fun _ => 𝟙 _) 2).hom :=
   fun _ => (ShortComplex.moduleCat_exact_iff_ker_sub_range _).1
@@ -370,6 +374,8 @@ theorem localToCompact_two_surjective :
     (@Subsingleton.elim _ hyp.three_D _ _)
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] [∀ v, CompactSpace (H v)]
+  [∀ v, TotallyDisconnectedSpace (H v)] [Nonempty ι] in
 theorem T_compactCupRes_zmodH0Class (h : 3 + 0 = 3) (a : ZMod n) (y : compactCohomologyRes φ D 3) :
     T (compactCupRes φ (zmodMulPairingRight n D hD) h y (zmodH0Class a)) = a.val • T y := by
   obtain ⟨ξ, rfl⟩ := hyp.localToCompact_two_surjective y
@@ -389,6 +395,8 @@ theorem T_compactCupRes_zmodH0Class (h : 3 + 0 = 3) (a : ZMod n) (y : compactCoh
         (𝟙 _) 0).hom (zmodH0Class a))) = a.val • ξ from funext fun v => hloc v, map_nsmul, map_nsmul]
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] [∀ v, CompactSpace (H v)]
+  [∀ v, TotallyDisconnectedSpace (H v)] [NeZero n] in
 theorem bijective_three (h : 3 + 0 = 3) : Function.Bijective (compactZmodDualityMap φ D hD T h) := by
   have := hyp.three_zmod
   have := subsingleton_compactCohomologyRes_zero φ D
@@ -396,6 +404,8 @@ theorem bijective_three (h : 3 + 0 = 3) : Function.Bijective (compactZmodDuality
   rw [Subsingleton.elim y 0, map_zero, map_zero]
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] [∀ v, CompactSpace (H v)]
+  [∀ v, TotallyDisconnectedSpace (H v)] [Nonempty ι] in
 theorem bijective_zero (h : 0 + 3 = 3) : Function.Bijective (compactZmodDualityMap φ D hD T h) := by
   have key : ∀ (a : ZMod n) (y : compactCohomologyRes φ D 3),
       compactZmodDualityMap φ D hD T h (zmodH0Class a) y = a * T y := fun a y => by
@@ -414,6 +424,8 @@ theorem bijective_zero (h : 0 + 3 = 3) : Function.Bijective (compactZmodDualityM
     rw [map_nsmul, nsmul_eq_mul, ZMod.natCast_zmod_val, mul_comm]
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] [∀ v, CompactSpace (H v)]
+  [∀ v, TotallyDisconnectedSpace (H v)] [Nonempty ι] in
 theorem bijective_one (h : 1 + 2 = 3) : Function.Bijective (compactZmodDualityMap φ D hD T h) := by
   have := hyp.finite_one
   have := hyp.finite_two
@@ -433,6 +445,8 @@ theorem bijective_one (h : 1 + 2 = 3) : Function.Bijective (compactZmodDualityMa
     rw [map_sub, LinearMap.sub_apply, map_sub, e, sub_self]
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] [∀ v, CompactSpace (H v)]
+  [∀ v, TotallyDisconnectedSpace (H v)] [Nonempty ι] [NeZero n] in
 theorem T_compactCupRes_localToCompact_zero (h : 1 + 2 = 3)
     (ξ : ∀ v, cohomology (Rep.res (φ v).toMonoidHom D) 0) (x : cohomology (zmodRep.{u} G n) 2) :
     T (compactCupRes φ (zmodMulPairingRight n D hD) h
@@ -446,6 +460,8 @@ theorem T_compactCupRes_localToCompact_zero (h : 1 + 2 = 3)
   exact (congrArg T e).trans (hyp.T_localToCompact _)
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] [∀ v, CompactSpace (H v)]
+  [∀ v, TotallyDisconnectedSpace (H v)] [Nonempty ι] [NeZero n] in
 theorem T_compactCupRes_localToCompact_one (h : 2 + 1 = 3)
     (ξ : ∀ v, cohomology (Rep.res (φ v).toMonoidHom (zmodRep.{u} G n)) 1) (y : cohomology D 1) :
     T (compactCupRes φ (zmodMulPairing n D hD) h
@@ -461,6 +477,8 @@ theorem T_compactCupRes_localToCompact_one (h : 2 + 1 = 3)
 
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] [∀ v, CompactSpace (H v)]
+  [∀ v, TotallyDisconnectedSpace (H v)] [Nonempty ι] in
 theorem compactCupRes_zmodMulPairing_eq (e : D ≃+ ZMod n) (w : compactCohomologyRes φ (zmodRep.{u} G n) 2)
     (y : cohomology D 1) :
     compactCupRes φ (zmodMulPairing n D hD) (show 2 + 1 = 3 from rfl) w y =
@@ -475,6 +493,8 @@ theorem compactCupRes_zmodMulPairing_eq (e : D ≃+ ZMod n) (w : compactCohomolo
   rfl
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] [∀ v, CompactSpace (H v)]
+  [∀ v, TotallyDisconnectedSpace (H v)] [Nonempty ι] in
 theorem eq_zero_of_forall_compactCupRes_zmodMulPairing (w : compactCohomologyRes φ (zmodRep.{u} G n) 2)
     (hw : ∀ y : cohomology D 1,
       T (compactCupRes φ (zmodMulPairing n D hD) (show 2 + 1 = 3 from rfl) w y) = 0) : w = 0 := by
@@ -495,11 +515,14 @@ theorem eq_zero_of_forall_compactCupRes_zmodMulPairing (w : compactCohomologyRes
   rw [← hinv, h0, map_zero]
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] [Nonempty ι] [NeZero n] [Fintype ι]
+  [∀ v, CompactSpace (H v)] [∀ v, TotallyDisconnectedSpace (H v)] [IsTopologicalGroup G] hyp in
 theorem nsmul_local_cohomology_D (hD' : ∀ d : D, n • d = 0) (q : ℕ)
     (c : ∀ v, cohomology (Rep.res (φ v).toMonoidHom D) q) : n • c = 0 :=
   funext fun v => nsmul_cohomology_eq_zero (Rep.res (φ v).toMonoidHom D) (fun d => hD' d) q (c v)
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] [Nonempty ι] in
 theorem injective_two (h : 2 + 1 = 3) : Function.Injective (compactZmodDualityMap φ D hD T h) := by
   classical
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
@@ -576,6 +599,8 @@ theorem nsmul_cohomology_one_D (hD' : ∀ d : D, n • d = 0) (c : cohomology D 
   nsmul_cohomology_eq_zero D hD' 1 c
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] [∀ v, CompactSpace (H v)]
+  [∀ v, TotallyDisconnectedSpace (H v)] [Nonempty ι] in
 theorem resFunctor_map_zmodToCyclic (e : D ≃+ ZMod n) (v : ι)
     (hζ : ∀ g : H v, (Rep.res (φ v).toMonoidHom D).ρ g (e.symm 1) = e.symm 1) :
     (Rep.resFunctor (φ v).toMonoidHom).map (zmodToCyclic D e hyp.triv) =
@@ -586,6 +611,7 @@ theorem resFunctor_map_zmodToCyclic (e : D ≃+ ZMod n) (v : ι)
   rw [zmodMulPairing_tmul, ZMod.cast_eq_val, natCast_zsmul, ← map_nsmul, nsmul_one, ZMod.natCast_zmod_val]
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] [Nonempty ι] in
 theorem surjective_two (h : 2 + 1 = 3) : Function.Surjective (compactZmodDualityMap φ D hD T h) := by
   classical
   intro χ
@@ -716,6 +742,7 @@ theorem surjective_two (h : 2 + 1 = 3) : Function.Surjective (compactZmodDuality
   abel
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] in
 theorem bijective_compactZmodDualityMap {r s : ℕ} (h : r + s = 3) :
     Function.Bijective (compactZmodDualityMap φ D hD T h) := by
   rcases r with _ | _ | _ | _ | r

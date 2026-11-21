@@ -474,6 +474,7 @@ theorem bc_linearIndependent_map {K K' : Type} [Field K] [Field K'] (j : K →+*
   exact b'.linearIndependent.comp _ h_inj
 
 
+open Formalism.L2.Col in
 theorem bc_local_basis {K : Type} [Field K] [NumberField K] {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
     [IsScalarTower (𝓞 K) K V] (w : HeightOneSpectrum (𝓞 K)) {A : Submodule (𝓞 K) V} (hfg : A.FG) :
     ∃ (κ : Type) (_ : Fintype κ) (β : κ → V), LinearIndependent K β ∧

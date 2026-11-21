@@ -373,6 +373,7 @@ theorem mem_of_smul_eq_zero {A M : Type} [CommRing A] [AddCommGroup M] [Module A
   rw [← e, map_add (f := _), add_smul, map_mul, mul_smul, hd, smul_zero, hP i hi, zero_add]
 
 
+set_option maxHeartbeats 2000000 in
 theorem last_row (hLb : IsBase S π) (hv : (T : 𝓞 F) ∈ v.asIdeal) (hP : P.under (𝓞 F) = v)
     (hw : ∀ w : HeightOneSpectrum (𝓞 E), w.under (𝓞 F) = v → w = P ∨ w = conjPrime₂ P)
     (h2 : π ∉ P.asIdeal ^ 2) (h3 : π ∉ (conjPrime₂ P).asIdeal)

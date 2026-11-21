@@ -105,6 +105,7 @@ def FinGradedSub.tildeCone (I : Chart x) : (M.tildeSys c).sub I →ₗ[S] ConeLa
       map_smul' := fun a y => by rw [RingHom.id_apply]; exact Submodule.coe_smul_of_tower a y }
 
 
+open Classical in
 def FinGradedSub.embedC (n : ℕ) :
     Cech.Cochain (fun I : Chart x => (M.tildeSys c).sub I) n →ₗ[S]
       Cech.Cochain (fun _ : StdCell N => ConeLaurent S x) n where

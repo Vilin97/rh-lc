@@ -85,6 +85,7 @@ theorem exists_oAct_down (hG : GlobalFnsSt) (hφ : Function.Injective i) (oB : D
   linear_combination (norm := abel) e'
 
 
+omit [IsDomain R] in
 theorem dense_range_spMap (hφ : Function.Injective i) : Dense (Set.range (spMap i)) :=
   (PrimeSpectrum.denseRange_comap_iff_ker_le_nilRadical i).2 (by
     rw [(RingHom.injective_iff_ker_eq_bot i).1 hφ]; exact bot_le)
@@ -173,6 +174,7 @@ theorem weil_of_ext (k : ℕ) (hk : 1 ≤ k) (p p' : QkPt D₀ F k) (z : F)
     (ArcInputCompare.weil_ext hB f hf k hk p p' _ h₁))]
 
 
+include hB hf in
 theorem exists_subTate (hL : Laws) {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H}
     [IsAlgClosed F] [CharZero F] [IsAlgClosed F'] [Module (𝓞 E) D₀.X] {oa : letI := H.starRing; D₀.OAct (𝓞 E)}
     (I' : TateIsoQ D D₀ oa F') :

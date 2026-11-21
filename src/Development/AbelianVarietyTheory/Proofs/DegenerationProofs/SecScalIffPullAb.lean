@@ -62,6 +62,7 @@ theorem expands_toGen (U : UnifPre I D A G) (k : ℕ) (τ : SecG U k) (g : ∀ �
   · exact (secScal_iff_pullAb _ _ (famAt D.toPre _ k α s) _ 1).2 (by rw [map_one, one_smul]; exact hs α)
 
 
+open Classical in
 theorem exists_comb (hG : GlobalFnsSt) (U : Unif I D A G) {k : ℕ} (hk : 1 ≤ k) {J : Type} [Fintype J]
     (σ : J → SecG U.toUnifPre k) (cls : J → D.toPre.X) (f : J → ∀ α, SecAb D.toPre k α)
     (h₂ : ∀ i i', (∃ m, cls i = cls i' + k • m) → cls i = cls i') (h₃ : ∀ α, ∃ i m, α = cls i + k • m)

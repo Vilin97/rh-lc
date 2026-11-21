@@ -40,6 +40,7 @@ variable {A : Type} [CommRing A] [Bialgebra k A] (x : Fin d → A) (hx : ∀ i, 
   (haug : ∀ i, Coalgebra.counit (R := k) (x i) = 0)
 
 
+include haug in
 theorem exists_eq_sum (hsurj : Function.Surjective (evA k x hx)) (u : Cot k A) :
     ∃ w : Fin d → k, u = ∑ i, w i • dUnit k (x i) := by
   obtain ⟨a, rfl⟩ := AugCot.d_surjective _ u
@@ -47,6 +48,7 @@ theorem exists_eq_sum (hsurj : Function.Surjective (evA k x hx)) (u : Cot k A) :
   exact ⟨lin f, (GlobalTheory.T.counit_cotangentClass_powerSeriesEvalAtNilpotent k d A x hx haug f).2⟩
 
 
+include haug in
 theorem eq_zero_of_sum (hsurj : Function.Surjective (evA k x hx))
     (hker : ∀ f, evA k x hx f = 0 → ∀ α : Fin d →₀ ℕ, α.degree < 2 → coeff α f = 0)
     (w : Fin d → k) (hw : ∑ i, w i • dUnit k (x i) = 0) : w = 0 := by

@@ -60,6 +60,7 @@ def DensCosB (B : AddSubgroup V → Prop) (μ : Measure V) (f : V → Y) (ι : X
           ∫ b in S, g b ∂ν
 
 
+omit [IsTopologicalAddGroup V] in
 def IsCOBasis (B : AddSubgroup V → Prop) : Prop :=
   ∀ N ∈ 𝓝 (0 : V), ∃ Λ : AddSubgroup V, B Λ ∧ IsOpen (Λ : Set V) ∧ IsCompact (Λ : Set V) ∧
     (Λ : Set V) ⊆ N

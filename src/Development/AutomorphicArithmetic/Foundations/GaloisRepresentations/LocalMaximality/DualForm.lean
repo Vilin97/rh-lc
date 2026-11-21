@@ -23,10 +23,12 @@ def Lat (A : Subalgebra ℂ F) (M : Submodule ℂ V) : Prop :=
     ∀ m ∈ M, m = ∑ k, φ k m • v k
 
 
+variable (F V V') in
 def actF : F ⊗[ℂ] F →ₐ[ℂ] Module.End ℂ (V ⊗[ℂ] V') :=
   (Module.endTensorEndAlgHom).comp (Algebra.TensorProduct.map (Algebra.lsmul ℂ ℂ V) (Algebra.lsmul ℂ ℂ V'))
 
 
+variable (V') in
 def ctrF (ψ : V →ₗ[F] F) : V ⊗[ℂ] V' →ₗ[ℂ] V' := TensorProduct.lift ((Algebra.lsmul ℂ ℂ V').toLinearMap ∘ₗ ψ.restrictScalars ℂ)
 
 def f0 {d : ℕ} (x : Fin (d + 1) → Fˣ) (j : Fin (d + 1)) (l : Fin d) : F ⊗[ℂ] F :=
@@ -38,6 +40,7 @@ def R0 {d : ℕ} (x : Fin (d + 1) → Fˣ) (I J : Finset (Fin (d + 1))) : Subalg
 def omG {d : ℕ} (x : Fin (d + 1) → Fˣ) (i : Fin (d + 1)) : F := ∏ l, ((x l : F) / x i)
 
 
+variable (V') in
 def resP (ρ : F →ₗ[ℂ] ℂ) : F ⊗[ℂ] V' →ₗ[ℂ] V' := TensorProduct.lift ((LinearMap.lsmul ℂ V') ∘ₗ ρ)
 
 end

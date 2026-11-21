@@ -72,6 +72,7 @@ variable {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E} {Dw : 
   {θ : (D.host.E →+* ℂ) → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)}
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_carries (hU : IsUnf U) (hW : ∀ k, ModelW V hr (U.X k))
     (hth : ∀ k τ, Formalism.MainNotions.StandardLattice.IsInfEmb τ.1 (th k τ)) (hD : DictLat U V hr dict io e F ik φ th x₀)
     (hθ : ∀ τ, Formalism.MainNotions.StandardLattice.IsInfEmb τ (θ τ)) (hx₀ : ∀ k, IsOrthogonalFrame (U.X k) x₀) (h δ u : GA D V) (hδ : δ ∈ GQ V)
@@ -123,6 +124,7 @@ theorem exists_carries (hU : IsUnf U) (hW : ∀ k, ModelW V hr (U.X k))
   simp only [Matrix.mul_assoc, Matrix.mul_nonsing_inv_cancel_left _ _ hx]
 
 
+set_option maxHeartbeats 1000000 in
 theorem orth_and_onto (hU : IsUnf U) (hW : ∀ k, ModelW V hr (U.X k))
     (hth : ∀ k τ, Formalism.MainNotions.StandardLattice.IsInfEmb τ.1 (th k τ)) (hD : DictLat U V hr dict io e F ik φ th x₀)
     (hθ : ∀ τ, Formalism.MainNotions.StandardLattice.IsInfEmb τ (θ τ)) (hx₀ : ∀ k, IsOrthogonalFrame (U.X k) x₀) (hι : GlobalTheory.Member.IotaOK Dw V io)
@@ -239,6 +241,7 @@ theorem base_orth (hT : LawsJ T) (hj : InR D j) (hσ : GoodEmb T.Q.c σ) (hr : (
     (GlobalTheory.TupleCover.iotaOK_and_frame T hT j hj σ hσ _ rfl hr).1 h
 
 
+set_option maxHeartbeats 1000000 in
 theorem cover_real (hT : LawsJ T) (hj : InR D j) (hσ : GoodEmb T.Q.c σ) (hr : (T.V j σ).rank = D.R.r)
     (hθ : ∀ τ, Formalism.MainNotions.StandardLattice.IsInfEmb τ (θ τ)) (C : Cover T j σ) (hC : C.IsUnif) (h δ u : GA D (T.V j σ))
     (hδ : δ ∈ GQ (T.V j σ)) (hu : u ∈ GinfC (T.V j σ)) :
@@ -317,6 +320,7 @@ theorem laU_eq (hT : LawsJ T) (hj : InR D j) (hσ : GoodEmb T.Q.c σ) (C : Cover
   rw [(hU₂.2.1 k₂).1, (hU₁.2.1 k).1, hrel]
 
 
+set_option maxHeartbeats 1000000 in
 theorem descent_comp (hT : LawsJ T) (hj : InR D j) (hσ : GoodEmb T.Q.c σ) (hr : (T.V j σ).rank = D.R.r)
     (hθ : ∀ τ, Formalism.MainNotions.StandardLattice.IsInfEmb τ (θ τ)) (C : Cover T j σ) (hC : C.IsUnif)
     {a : (D.host.E →+* ℂ) × ℕ → ℕ} {n : ℕ} (hDom : Dom a n) (Φ₂ : FDSec C.U₂.X)
@@ -413,6 +417,7 @@ end Descent
 open GlobalTheory.CoverRead GlobalTheory.Member GlobalTheory.CompRat GlobalTheory.FinalJoin
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_descent : ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j, Formalism.L2.Pj.InR D j → ∀ σ : T.Q.c.F →+* ℂ, GoodEmb T.Q.c σ → ∀ C : Cover T j σ, C.IsUnif → ∀ (a : (D.host.E →+* ℂ) × ℕ → ℕ) (n : ℕ), Dom a n → (∀ k ∈ T.Kf j σ, ∀ h, T.mu j σ (h * k) = T.mu j σ h) → ∀ Φ₂ ∈ Formalism.L2.Pj.holSub0 C.U₂.X (laU C.U₂ a n), Φ₂ ∈ Submodule.span ℂ (rdU C.U₂ '' (sec C.d.Xo₂ C.d.c₂ a n : Set (Rul C.d.Xo₂ C.d.c₂))) → (∀ k ∈ T.Kf j σ, ∀ h, adel (T.V j σ) C.dict₂ (muPin (T.V j σ) C.dict₂ (T.mu j σ) C.cc₂) Φ₂ (h * k) = adel (T.V j σ) C.dict₂ (muPin (T.V j σ) C.dict₂ (T.mu j σ) C.cc₂) Φ₂ h) → ∃ Φ ∈ Formalism.L2.Pj.holSub0 (T.U j σ).X (laU (T.U j σ) a n), adel (T.V j σ) C.dict₂ (muPin (T.V j σ) C.dict₂ (T.mu j σ) C.cc₂) Φ₂ = adel (T.V j σ) (T.dict j σ) (muPin (T.V j σ) (T.dict j σ) (T.mu j σ) (T.cE j σ)) Φ := by
   intro D T hT j hj σ hσ C hC a n hDom hmu Φ₂ hΦ₂ hsp hK
   obtain ⟨hr, -⟩ := hT.modelW j hj σ hσ

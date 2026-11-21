@@ -18,6 +18,7 @@ namespace GlobalTheory.BCT.StabDenom
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 
+omit [IsCMField E] in
 theorem exists_nat_denom {ι : Type} [Fintype ι] (a : ι → Af E) :
     ∃ d : ℕ, 0 < d ∧ ∀ (k : ι) (w : Pl E),
       (d : w.adicCompletion E) * pLoc E w (a k) ∈ w.adicCompletionIntegers E := by

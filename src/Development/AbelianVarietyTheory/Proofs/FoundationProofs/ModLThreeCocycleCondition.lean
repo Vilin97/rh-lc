@@ -87,6 +87,7 @@ theorem continuous_dTwo {χ : Γ → ℤ_[l]} (hχ : Continuous χ) {u : Γ × �
   fun_prop
 
 
+omit [ContinuousMul Γ] in
 theorem exists_dTwo_eq (χ : Γ → ℤ_[l])
     (step : ∀ c : Γ × Γ × Γ → ℤ_[l], Continuous c → IsCocycleThree χ c →
       ∃ u c', Continuous u ∧ Continuous c' ∧ IsCocycleThree χ c' ∧

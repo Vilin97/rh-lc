@@ -51,6 +51,7 @@ theorem denom_exists_int {E : Type} [Field E] [NumberField E] (e : E) :
   | (intros; exact _root_.GlobalTheory.NatMulMemRingOfIntegers.exists_nat_mul_mem_ringOfIntegers ..)
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.LieAlgebraExponentialFamilies Formalism.L2.Pj in
 theorem denomBound : ∀ (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)) (V : HSp D),
     DenomBound θ V := by
   first

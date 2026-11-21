@@ -110,6 +110,7 @@ theorem blockFnField_le (m : ℕ) :
 end GrassmannianLinesProjective
 
 
+open GrassmannianLinesProjective in
 theorem GrassLinesProj.proof (hPF : PFCoordStatement) : GrassLinesProj.Statement := by
   intro m II hII
   have hd : 1 * 1 * m + 1 = m + 1 := by ring

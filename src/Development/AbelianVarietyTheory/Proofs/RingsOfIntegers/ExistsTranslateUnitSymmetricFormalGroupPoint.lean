@@ -130,6 +130,7 @@ variable {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [IsAdi
   {k n : ℕ}
 
 
+variable (B) in
 def toSm (u : Q V d n) : Sm B n := ⟨u.1, fun i => by rw [u.2 i]; exact zero_mem _⟩
 
 theorem evA_toSm (b : Fin k → Q V d n) (f : PS V k d) : evA (fun j => toSm B (b j)) f = sb b f :=
@@ -478,6 +479,7 @@ theorem unit_ext_pref (j : t.PP.L.ι) {f g : (PS V n d)ˣ}
     exact congrArg Units.val (h ⟨z, J, hJ⟩))
 
 
+omit hX hc hj hε in
 theorem model_unit {tg : Fin d → (Sp (DualNumber V) ⟶ t.G.left)}
     (hc : IsChartG t (𝟙 (Sp V)) d B.G.F B.A.act tg (fun j : Fin d => Pi.single j (1 : V)) x)
     (hf : IsFrameG t (𝟙 (Sp V)) d x B.G.F B.A.act B.ph1 B.ph2 B.sy B.ad e) {wP : PrimTyG t} (hP : IsPrimG t wP)

@@ -96,6 +96,7 @@ def kapB (l : ℕ) (ψ : DirichletCharacter O N) : DirichletCharacter O N := kap
 def c2 (ψ : DirichletCharacter O N) : ℕ := (psi2 ψ).conductor.factorization 2
 
 
+open Classical in
 def Sb (l : ℕ) (ψ : DirichletCharacter O N) : Finset ℕ := N.primeFactors.filter fun p => p ≠ l ∧ comp p (kap l ψ) ≠ 1
 
 def Tb (l : ℕ) (ψ : DirichletCharacter O N) : Finset ℕ := insert l (Sb l ψ)

@@ -45,6 +45,8 @@ theorem exists_val_ge {K Γ : Type} [Field K] [LinearOrderedCommGroupWithZero Γ
   exact lt_irrefl _ (h3.trans_lt (max_lt h2 h1))
 
 
+set_option maxHeartbeats 2000000 in
+open Classical in
 theorem exists_sum_zero {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.F ψ) (S T : HSp D)
     (βS : GL (Fin S.rank) (Datum.EAf D)) (βT : GL (Fin T.rank) (Datum.EAf D)) {e : AE D} {PP : Pl D.host.E}
     (he : Formalism.L2.NTheta.IsIdemAt e PP) (c : Fin T.rank → AE D) (hc : ∃ i, e * c i ≠ 0) (hr : T.rank ≤ S.rank) :
@@ -229,6 +231,8 @@ theorem exists_sum_zero {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.
   exact Finset.sum_congr rfl fun k _ => hpair _
 
 
+set_option maxHeartbeats 1000000 in
+open Classical in
 theorem exists_sum_heisO_eq_zero {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D}
     {sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ}
     {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)} {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)}

@@ -121,6 +121,7 @@ theorem splitTorusPoint_mul (s t : Multiplicative X →* kˣ) :
     torusEvalInt_mul, map_mul]
 
 
+variable (k X) in
 noncomputable def splitTorusPointEquiv :
     (Multiplicative X →* kˣ) ≃* (𝟙_ (Over (Sp k)) ⟶ splitTorus (Sp k) X) :=
   { Equiv.ofBijective _ splitTorusPoint_bijective with map_mul' := splitTorusPoint_mul }

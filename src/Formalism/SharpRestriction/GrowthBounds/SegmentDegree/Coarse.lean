@@ -17,9 +17,11 @@ namespace Dat
 variable {n' r : ℕ} [NeZero n'] (X : Dat n' r) (p K : ℕ)
 
 
+open Classical in
 def toLate (j : ℤ) : Finset ℤ := (X.F.letters j).filter fun x => ¬ X.F.IsW j x
 
 
+open Classical in
 def row (j x : ℤ) (i : Fin r) : ℤ :=
   let l := ((X.F.letters j).filter fun z => Even z ∧ z < x).sort (· ≤ ·)
   l.getD (l.length - r + i.val) 0

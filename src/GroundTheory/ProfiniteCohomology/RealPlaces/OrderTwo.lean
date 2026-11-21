@@ -184,6 +184,7 @@ theorem cochainOne_c (α : A) : cochainOne A α ![c] = α := by
   simp [cochainOne, hc]
 
 
+include hG hc in
 theorem d_cochainOne (α : A) (hα : α + A.ρ c α = 0) :
     (cochainsComplex A).d 1 2 (mkCochain A (cochainOne A α) (IsLocallyConstant.of_discrete _)) =
       0 := by
@@ -214,6 +215,7 @@ variable {k G : Type} [CommRing k] [Group G] [TopologicalSpace G] [IsTopological
   (hG : ∀ g : G, g = 1 ∨ g = c) (hc : c ≠ 1)
 
 
+include hG hc in
 theorem exists_eq_cocycleOne (z : cocycles A 1) :
     ∃ (α : A) (hα : α + A.ρ c α = 0), z = cocycleOne A hG hc α hα := by
   have h11 := cocycle_one A z 1 1
@@ -238,6 +240,7 @@ theorem exists_eq_cocycleOne (z : cocycles A 1) :
     rw [cochainOne_c A hc]
 
 
+include hG in
 theorem cohomologyπ_cocycleOne_eq_zero_iff (α : A) (hα : α + A.ρ c α = 0) :
     cohomologyπ A 1 (cocycleOne A hG hc α hα) = 0 ↔ ∃ m : A, α = A.ρ c m - m := by
   rw [cohomologyπ_one_eq_zero_iff, cochainOf_cocycleOne]
@@ -277,6 +280,7 @@ theorem cochainTwo_one_right (a : A) (g : G) : cochainTwo A c a ![g, 1] = 0 := b
   simp [cochainTwo, hc.symm]
 
 
+include hG hc in
 theorem d_cochainTwo (a : A) (ha : A.ρ c a = a) :
     (cochainsComplex A).d 2 3 (mkCochain A (cochainTwo A c a) (IsLocallyConstant.of_discrete _)) =
       0 := by
@@ -297,6 +301,7 @@ theorem cochainOf_cocycleTwo (a : A) (ha : A.ρ c a = a) :
   congrArg (cochainOf A) ((cochainsComplex A).i_cyclesMk _ _ _ _)
 
 
+include hG in
 theorem cohomologyπ_cocycleTwo_eq_zero_iff (a : A) (ha : A.ρ c a = a) :
     cohomologyπ A 2 (cocycleTwo A hG hc a ha) = 0 ↔ ∃ m : A, a = m + A.ρ c m := by
   rw [cohomologyπ_two_eq_zero_iff, cochainOf_cocycleTwo]
@@ -317,6 +322,7 @@ theorem cohomologyπ_cocycleTwo_eq_zero_iff (a : A) (ha : A.ρ c a = a) :
         add_comm]
 
 
+include hG hc in
 theorem exists_eq_cocycleTwo_of_normalized (z : cocycles A 2)
     (h1 : ∀ g, cochainOf A (cocycleι A 2 z) ![1, g] = 0)
     (h2 : ∀ g, cochainOf A (cocycleι A 2 z) ![g, 1] = 0) :
@@ -345,6 +351,7 @@ variable {k G : Type} [CommRing k] [Group G] [TopologicalSpace G] [IsTopological
   (hG : ∀ g : G, g = 1 ∨ g = c) (hc : c ≠ 1)
 
 
+include hG hc in
 theorem exists_cohomologyπ_eq_cocycleTwo (z : cocycles A 2) :
     ∃ (a : A) (ha : A.ρ c a = a), cohomologyπ A 2 z = cohomologyπ A 2 (cocycleTwo A hG hc a ha) := by
   have hcc := mul_self_eq_one hG hc
@@ -380,6 +387,8 @@ theorem exists_cohomologyπ_eq_cocycleTwo (z : cocycles A 2) :
   · rw [cochainTwo_cc, ha_def]; abel
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] [DiscreteTopology G] [IsDiscreteRep A] in
+include hG hc in
 theorem norm_apply [Fintype G] (m : A) : A.ρ.norm m = m + A.ρ c m := by
   classical
   have huniv : (Finset.univ : Finset G) = {1, c} := by

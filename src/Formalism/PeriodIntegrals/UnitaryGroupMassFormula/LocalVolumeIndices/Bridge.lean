@@ -36,6 +36,7 @@ theorem Bridge_tens_eq (t : AF I.F ⊗[I.F] I.E) :
   | add s u hs hu => rw [map_add (f := _), map_add (f := _), map_add (f := _), hs, hu]
 
 
+variable {I} in
 theorem Bridge_HA_ext {R : Type} [CommRing R] [Algebra I.F R] (g h : HA R I.cm.sig I.J)
     (e : ((HA.mat R I.cm.sig I.J g : GL (Fin I.n) (R ⊗[I.F] I.E)) : Matrix (Fin I.n) (Fin I.n) (R ⊗[I.F] I.E)) =
       ((HA.mat R I.cm.sig I.J h : GL (Fin I.n) (R ⊗[I.F] I.E)) : Matrix (Fin I.n) (Fin I.n) (R ⊗[I.F] I.E))) :

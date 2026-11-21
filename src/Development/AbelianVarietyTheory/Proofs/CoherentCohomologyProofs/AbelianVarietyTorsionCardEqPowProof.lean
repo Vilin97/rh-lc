@@ -18,6 +18,8 @@ open GlobalTheory GlobalTheory.AbLaw
 namespace GlobalTheory
 
 
+open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry DirectSum TensorProduct in
+attribute [local instance] Over.cartesianMonoidalCategory in
 theorem _root_.GlobalTheory.abMulN_holds : _root_.GlobalTheory.Published.AbMulNSt :=
   _root_.GlobalTheory.UU.TorsionCount.card_torsion_points _root_.GlobalTheory.globalFns_holds
     _root_.GlobalTheory.rigidity_holds

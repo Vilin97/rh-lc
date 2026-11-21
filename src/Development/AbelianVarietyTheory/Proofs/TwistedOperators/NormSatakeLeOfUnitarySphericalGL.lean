@@ -25,6 +25,7 @@ private theorem mem_adicCompletionIntegers_iff {E : Type} [Field E] [NumberField
   simpa using h x 1
 
 
+open ValuativeRel in
 theorem resCard_completion {E : Type} [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) :
     letI := GlobalTheory.LocalData.complRel w
     haveI := GlobalTheory.LocalData.isLocalField w

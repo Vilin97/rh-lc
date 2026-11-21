@@ -112,6 +112,7 @@ theorem sub_comp {ι κ : Type} [Fintype κ] [DecidableEq κ] (c c' : ι → κ 
   simp only [← Finset.sum_smul, h, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
 
 
+open GlobalTheory.FockSubst GlobalTheory.FockCompare GlobalTheory.OrientedHeis in
 theorem exists_change {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} (S T : HSp D) (hψ : IsStdChar D ψ (-1))
     (hθ : IsInfFam θ) (sS B₁ B₂ : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ)
     (sT C₁ C₂ : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ)

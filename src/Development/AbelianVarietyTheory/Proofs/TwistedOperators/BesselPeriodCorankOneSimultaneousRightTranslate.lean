@@ -66,6 +66,7 @@ theorem inner_left (W : G.Weil) (M : Vol G) (hM : M.IsRow) {φ : Fn G (.top 0)} 
 end GlobalTheory.BplusShift
 
 
+open GlobalTheory.BplusShift in
 theorem GlobalTheory.BplusShift.bplus_rTr : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} (W : G.Weil) (M : Vol G), M.IsRow →
     ∀ φ ∈ contLeft (G.V (.top 0)), ∀ F ∈ contLeft (G.V (.grid D.R.m 0)), ∀ a : GA D (G.V (.top 0)),
       Bplus W M (rTr _ a φ) (rTr _ (embTop G a) F) = Bplus W M φ F := by

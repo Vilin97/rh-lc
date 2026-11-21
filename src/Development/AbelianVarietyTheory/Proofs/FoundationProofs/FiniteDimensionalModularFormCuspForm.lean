@@ -149,6 +149,7 @@ theorem finiteDimensional_of_isArithmetic (Γ : Subgroup (GL (Fin 2) ℝ)) [Γ.I
 end GlobalTheory.HeckeFamilyMatrices.FinDim
 
 
+open GlobalTheory.HeckeFamilyMatrices.FinDim in
 theorem GlobalTheory.HeckeFamilyMatrices.finiteDimensional_modularForm_cuspForm :
     ∀ (Γ : Subgroup SL(2, ℤ)) (k : ℤ), Γ.FiniteIndex →
       FiniteDimensional ℂ (ModularForm Γ k) ∧ FiniteDimensional ℂ (CuspForm Γ k) := by

@@ -35,6 +35,7 @@ theorem ltIdeal_one_isPrime {R Γ : Type*} [CommRing R] [LinearOrderedCommGroupW
 def tWeight [DecidableEq K] (k : K) : K → ℕ := fun k' => if k' = k then 1 else 0
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem specMap_component [DecidableEq K] {E : Type*} [Field E] (ψ : MRing ι →+* E) (k : K) (d : ℕ)
     (g : MRing ι) :
     RegularityFunctionFieldNumber.specMap ψ ∅ (weightedHomogeneousComponent (blockWeight k) d g) =
@@ -62,6 +63,7 @@ theorem specMap_component [DecidableEq K] {E : Type*} [Field E] (ψ : MRing ι �
     exact ((weightedHomogeneousComponent (R := E) (tWeight k) d).map_add _ _).symm
 
 
+set_option backward.isDefEq.respectTransparency.types false in
 theorem ker_isMultiHomogIdeal [DecidableEq K] {E : Type*} [Field E] (ψ : MRing ι →+* E) :
     IsMultiHomogIdeal (RingHom.ker (RegularityFunctionFieldNumber.specMap ψ ∅)) := by
   refine isMultiHomogIdeal_of_isHomogeneous fun k d g hg => ?_
@@ -74,6 +76,8 @@ theorem ker_isMultiHomogIdeal [DecidableEq K] {E : Type*} [Field E] (ψ : MRing 
 end RegularityValuationCentre
 
 
+set_option maxHeartbeats 400000 in
+open regularityEmbedding_holds in
 theorem RegularityValuationCentre.proof : RegularityValuationCentre.Statement := by
   intro K _ ι _ P hP Γ _ v n hn
   classical

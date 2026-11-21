@@ -44,6 +44,8 @@ private theorem exists_local_homeomorph_matrix_exp_source_zero {n : Type} [Finty
     hf.toOpenPartialHomeomorph_coe⟩
 
 
+open MeasureTheory Filter Topology in
+open Matrix in
 theorem _root_.GlobalTheory.ExpBallNhds.exp_ballU_mem_nhds : ∀ (P Q : ℕ) (r : ℝ), 0 < r →
     {g : _root_.Formalism.BasicNotions.UpqT P Q | ∃ X ∈ _root_.Formalism.BasicNotions.ballU P Q r,
       _root_.Formalism.BasicNotions.UpqT.mat g = NormedSpace.exp (X : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ)} ∈

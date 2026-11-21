@@ -316,6 +316,7 @@ def segPos (TT : Finset (Fin n')) (j : Fin (numSeg TT)) (i : Fin (segS TT j)) : 
   posAdd (segStart TT j) ((segDists TT j).get i)
 
 
+open Classical in
 def segData (p : ℕ) (TT : Finset (Fin n')) (bT : Fin n' → ℕ) (a : ℕ) (b' Y La E0 : ℝ) (j : Fin (numSeg TT)) :
     SegData (segS TT j) where
   sigma := ((List.finRange (segS TT j)).filter

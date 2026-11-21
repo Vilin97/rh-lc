@@ -65,6 +65,7 @@ theorem _root_.GlobalTheory.ThK.ModelPol.pureA_pt {κ : Type}
   simp
 
 
+open scoped Classical in
 theorem proj_adm {κ : Type} [Fintype κ] (x : κ → mixedEmbedding.mixedSpace F) (y : κ → Af F) :
     (LinearMap.proj (pt x y) : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ) ∈ (adeleClass F).adm κ := by
   intro g _

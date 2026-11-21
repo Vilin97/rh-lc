@@ -135,6 +135,8 @@ theorem continuous_symplO : Continuous fun p : WO V W × WO V W => symplO V W p.
   Formalism.IndefR.Eqv.continuous_trace.comp (continuous_const.mul Formalism.IndefR.Eqv.continuous_hO)
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 800000 in
 theorem ann_open (hψ : Continuous ψ) (hψ1 : ∀ x, ‖ψ x‖ = 1) (C : Set (Mx D W.rank ρ)) (hC : IsCompact C)
     (hΓC : ∀ a, dV.extX W a ∈ Γ → a ∈ C) :
     ∃ U : Set (Mx D W.rank ρ), IsOpen U ∧ (0 : Mx D W.rank ρ) ∈ U ∧ ∀ a' ∈ U, MxAt (fun _ => True) a' → a' ∈ ann dV ψ Γ := by
@@ -169,6 +171,7 @@ theorem ann_open (hψ : Continuous ψ) (hψ1 : ∀ x, ‖ψ x‖ = 1) (C : Set (
   exact this
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem ann_isCompact (K : Set (Mx D W.rank ρ)) (hK : IsCompact K) (hSK : ∀ a' ∈ ann dV ψ Γ, a' ∈ K)
     (U : Set (Mx D W.rank ρ)) (hU : IsOpen U) (h0 : (0 : Mx D W.rank ρ) ∈ U)
     (hUS : ∀ a' ∈ U, MxAt (fun _ => True) a' → a' ∈ ann dV ψ Γ) : IsCompact (ann dV ψ Γ : Set (Mx D W.rank ρ)) := by
@@ -202,6 +205,8 @@ end GlobalTheory.AnnPiece
 namespace GlobalTheory.AnnPiece
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1600000 in
 theorem pcBF_A₂_compact_open : OnStd fun {D} _ _ {sc} {G} W F => ∀ ρ (h : 2 * ρ + 2 ≤ D.R.m),
     IsCompact ((pcBF W F ρ h).A₂ : Set (Mx D (G.V (.grid (2 * ρ + 1) 0)).rank ρ)) ∧
     ∃ U : Set (Mx D (G.V (.grid (2 * ρ + 1) 0)).rank ρ), IsOpen U ∧ (0 : Mx D (G.V (.grid (2 * ρ + 1) 0)).rank ρ) ∈ U ∧

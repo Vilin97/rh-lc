@@ -21,6 +21,7 @@ def IsMultCell (φ : InvFun O) (M : ℕ) {X : Type} [AddCommGroup X] [Module O X
     cellMult bar (fun i => (⟨δ i, h.mem i⟩ : balForms bar X)) = M
 
 
+variable (O) in
 structure FormFamily : Type 1 where
 
   X : Type
@@ -40,6 +41,7 @@ def FormFamily.Carries (c : FormFamily O) {X : Type} [AddCommGroup X] [Module O 
   ∃ (e : X ≃ₗ[O] c.X) (s : Fin m ≃ Fin c.m), ∀ i, δ i = pull e.toLinearMap (c.δ (s i))
 
 
+variable (bar) in
 def MultCellsAmong (q : ℕ) (φ : InvFun O) (M n : ℕ) : Prop :=
   ∃ R : Fin n → FormFamily O, ∀ (X : Type) [AddCommGroup X] [Module O X] [Module.Finite O X] [Module.Projective O X],
     Module.finrank O X ≤ q → ∀ (m : ℕ) (δ : Fin m → LinearMap.BilinForm ℤ X), IsMultCell bar φ M δ → ∃ k, (R k).Carries δ

@@ -38,6 +38,7 @@ theorem exists_conjInv_root (hCM : IsCMExt F E σ) (m : Fin r) :
 end GlobalTheory.TrEll.RealTorus
 
 
+open GlobalTheory.TrEll.RealTorus in
 theorem GlobalTheory.TrEll.realTorus_norm_cxRoots : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (r : ℕ) (P : PPol σ r) (w : InfinitePlace F) (τ : EmbOver E w), Function.Bijective (PsiAll P τ) → CompactSpace (Tor P w.Completion) → ∀ i, ‖cxRoots τ.1 P i‖ = 1 := by
   intro F E _ _ _ _ _ σ hCM r P w τ hB hK i
   have hw : w.IsReal := by haveI := hCM.1; exact IsTotallyReal.isReal w

@@ -62,6 +62,9 @@ private theorem exists_zmod_mul_of_pow_eq_pow_pred_mul {R : Type*} [CommRing R] 
   omega
 
 
+open WittVector Ideal CategoryTheory Opposite Function in
+variable {p : ℕ} [Fact p.Prime] {O : Type} [CommRing O] [Fact ¬IsUnit (p : O)]
+  [IsAdicComplete (span {(p : O)}) O] in
 theorem _root_.GlobalTheory.DieudonneTest.eigen_step [IsDomain (PreTilt O p)] {ε : PreTilt O p}
     (hε : IsPrimitiveRoot (_root_.GlobalTheory.Sandwich.root ε).untilt p) {a : _root_.GlobalTheory.Sandwich.Ainf p O}
     (h : WittVector.frobenius a = WittVector.frobenius (_root_.GlobalTheory.Sandwich.xi ε) * a) :

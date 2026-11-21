@@ -52,6 +52,7 @@ theorem at_real {M : Type} [AddCommMonoid M] [Module (AF F) M] (z : M) : At (evI
     rw [map_mul, evFin_real, mul_zero, map_zero], zero_smul]
 
 
+variable (F) in
 def aS (S : Finset (Pl F)) : AF F := realAd F 1 + ∑ v ∈ S, idem F v
 
 theorem idem_mul_aS {S : Finset (Pl F)} {v : Pl F} (hv : v ∉ S) : idem F v * aS F S = 0 :=

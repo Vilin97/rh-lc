@@ -164,6 +164,7 @@ theorem IsHomFamily.descend {D : Datum H} {R R' : Type} [CommRing R] [CommRing R
 end PureType
 
 
+open PureType in
 theorem cmPoint (hT : ThetaUnifAV) (hW : Out.WeilSt) : CMPoint := by
   intro E _ _ _ H D l Xo g ty FU i Pe hP k hk _ P₀ v₀ _ hv₀ PC ψ u₀ c hg hψ hL hu hc hΛ S hS R₀ hR₀
   obtain ⟨y', t', m', v', φ', hy', hyu, -, hv', hφ'⟩ :=

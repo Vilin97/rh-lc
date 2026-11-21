@@ -146,11 +146,13 @@ theorem fnMap_fnOf {U : X.Opens} {y : Y} (hy : y ∈ s ⁻¹ᵁ U) (a : Γ(X, U)
   exact Scheme.Hom.germ_stalkMap_apply s U y hy a
 
 
+variable (s D) in
 def tw {V : X.Opens}
     (σ : Γ((Scheme.Modules.pushforward s).obj (twist (GlobalTheory.structureModule Y) (toLB D)), V)) :
     Γ(twist (GlobalTheory.structureModule Y) (toLB D), s ⁻¹ᵁ V) := σ
 
 
+variable (s D) in
 def untw {V : X.Opens} (σ : Γ(twist (GlobalTheory.structureModule Y) (toLB D), s ⁻¹ᵁ V)) :
     Γ((Scheme.Modules.pushforward s).obj (twist (GlobalTheory.structureModule Y) (toLB D)), V) := σ
 

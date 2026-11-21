@@ -45,6 +45,7 @@ theorem cohomologyπ_galUnits_eq_zero_of_coboundary (z : cocycles (galUnits.{0} 
   exact cohomologyπ_toCycles _ 1 2 _
 
 
+omit [IsGalois Kv Ωv] in
 theorem toMul_galUnitsZ_coboundary (σ : Gal(Ωv/Kv)) (a b c : Additive Ωvˣ) :
     Additive.toMul ((galUnitsZ Kv Ωv).ρ σ a - b + c) =
       σ • Additive.toMul a / Additive.toMul b * Additive.toMul c :=
@@ -307,6 +308,7 @@ variable {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L] [Algeb
 open AdicLiesOver
 
 
+include v in
 theorem isMulCoboundary₂_of_valuation (he : w.asIdeal.ramificationIdx (𝓞 K) = 1)
     (α : MulAction.stabilizer Gal(L/K) w.asIdeal × MulAction.stabilizer Gal(L/K) w.asIdeal →
       (w.adicCompletion L)ˣ) (hα : IsMulCocycle₂ α)
@@ -428,6 +430,7 @@ def ordPlace (f : F.1ˣ) : ℤ :=
   -WithZero.log ((placeOfEmbedding ι F).1.valuation F.1 (f : F.1))
 
 
+set_option maxHeartbeats 2000000 in
 theorem placeDecompHom_surjective : Function.Surjective (placeDecompHom ι F) := by
   intro d
   obtain ⟨τ, hτ⟩ : ∃ τ : compField ι F ≃ₐ[v.adicCompletion K.1] compField ι F, ∀ y,
@@ -446,6 +449,8 @@ theorem placeDecompHom_surjective : Function.Surjective (placeDecompHom ι F) :=
     decompositionAlgEquiv_algebraMap]
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 4000000 in
 theorem exists_mulCoboundary_of_ord (he : (placeOfEmbedding ι F).1.asIdeal.ramificationIdx (𝓞 K.1) = 1)
     (c : Gal(F.1/K.1) × Gal(F.1/K.1) → F.1ˣ) (hc : IsMulCocycle₂ c)
     (h : Gal(AlgebraicClosure (v.adicCompletion K.1)/v.adicCompletion K.1) → ℤ) (hh : IsLocallyConstant h)
@@ -538,6 +543,8 @@ theorem ordComp_sub (y y' : Additive (compField ι F)ˣ) :
   rw [sub_eq_add_neg, ordComp_add, ordComp_neg, ← sub_eq_add_neg]
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 4000000 in
 theorem ordComp_smul (γ : Gal(compField ι F/v.adicCompletion K.1)) (y : (compField ι F)ˣ) :
     ordComp ι F (Additive.ofMul (Units.map (γ : compField ι F →* compField ι F) y)) =
       ordComp ι F (Additive.ofMul y) := by
@@ -570,6 +577,7 @@ abbrev compDecomp : Gal(compField ι F/v.adicCompletion K.1) →* Gal(F.1/K.1) :
   decompHom (v.adicCompletion K.1) (embedComp ι F)
 
 
+set_option maxHeartbeats 4000000 in
 theorem compDecomp_restrictNormalHom
     (σ : Gal(AlgebraicClosure (v.adicCompletion K.1)/v.adicCompletion K.1)) :
     compDecomp ι F (AlgEquiv.restrictNormalHom (compField ι F) σ) =
@@ -620,6 +628,8 @@ theorem compCocycleFun_mem (c : Gal(F.1/K.1) × Gal(F.1/K.1) → F.1ˣ) (hc : Is
   exact congrArg Additive.ofMul (mm1.symm.trans (key.trans (mm2.trans (congrArg (· * _) s))))
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 4000000 in
 theorem exists_compCocycle_coboundary
     (c : Gal(F.1/K.1) × Gal(F.1/K.1) → F.1ˣ) (hc : IsMulCocycle₂ c)
     (b : Gal(AlgebraicClosure (v.adicCompletion K.1)/v.adicCompletion K.1) →
@@ -661,6 +671,8 @@ theorem exists_compCocycle_coboundary
   exact hc'0
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 4000000 in
 theorem ordComp_coboundary_eq (c : Gal(F.1/K.1) × Gal(F.1/K.1) → F.1ˣ)
     (β' : Gal(compField ι F/v.adicCompletion K.1) → Additive (compField ι F)ˣ)
     (hβ' : (groupCohomology.d₁₂ (galUnits.{0} (v.adicCompletion K.1) (compField ι F))).hom β' =
@@ -701,6 +713,7 @@ theorem ordComp_coboundary_eq (c : Gal(F.1/K.1) × Gal(F.1/K.1) → F.1ˣ)
   rw [hmul, k1, k2]
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem exists_ord_coboundary_of_mulCoboundary
     (c : Gal(F.1/K.1) × Gal(F.1/K.1) → F.1ˣ) (hc : IsMulCocycle₂ c)
     (b : Gal(AlgebraicClosure (v.adicCompletion K.1)/v.adicCompletion K.1) →

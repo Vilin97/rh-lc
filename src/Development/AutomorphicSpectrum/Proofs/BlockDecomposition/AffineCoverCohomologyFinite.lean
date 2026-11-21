@@ -298,6 +298,7 @@ theorem str_eq {O : Type} [CommRing O] {X : Scheme.{0}} (q : X ⟶ Spec (CommRin
       rs (le_top : W ≤ ⊤) (q.appTop.hom ((Scheme.ΓSpecIso (CommRingCat.of O)).inv.hom c)) := rfl
 
 
+attribute [local instance] VB.fin algebraOfOver in
 theorem finite_H_cx : ∀ {O : Type} [CommRing O] [IsNoetherianRing O] {X : Scheme.{0}} (q : X ⟶ Spec (CommRingCat.of O)) [IsProper q]
     {ι : Type} [Fintype ι] (U : ι → X.Opens) (hU : (⨆ α, U α) = ⊤) (ha : ∀ n (i : Fin (n + 1) → ι), IsAffineOpen (capO U i))
     (K : Cos.{1} O) (V : VB (fun W => ((Scheme.ΓSpecIso (CommRingCat.of O)).inv ≫ q.appLE ⊤ W le_top).hom) U K) (p : ℕ),

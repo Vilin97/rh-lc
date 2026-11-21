@@ -304,6 +304,8 @@ abbrev dualV (K : ClsTied u i hi) (v : HeightOneSpectrum (𝓞 D.host.F)) :=
     (Submodule.span (𝓞 D.host.E) (dualSet (sigD D : D.host.E →+* D.host.E) (gramN D i hi) K.lev.Lb))
 
 
+set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem cls_le_dual (K : ClsTied u i hi) (c : (D.mem u).C.cls i) : clsCrd D u i hi c ≤ Ld D u i hi c := by
   intro x hx
   apply Submodule.subset_span

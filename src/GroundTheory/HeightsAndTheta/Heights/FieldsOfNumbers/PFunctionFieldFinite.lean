@@ -28,6 +28,7 @@ def chartGens (P : Ideal (MRing ι F)) [P.IsPrime] (u : ∀ k, ι k) :
     algebraMap (MRing ι F ⧸ P) _ (Ideal.Quotient.mk P (X ⟨v.1, u v.1⟩))
 
 
+omit [Fintype K] [DecidableEq K] in
 theorem range_chartMap (P : Ideal (MRing ι F)) [P.IsPrime] (u : ∀ k, ι k) :
     (chartMap P u).range = Algebra.adjoin F (chartGens P u) :=
   aeval_range _
@@ -57,6 +58,7 @@ theorem homFracDegZero_eq (hD : MChartDehomog.Statement.{u}) (P : Ideal (MRing �
       isWeightedHomogeneous_X _ _ _, isWeightedHomogeneous_X _ _ _, hu v.1, rfl⟩
 
 
+open IntermediateField.algebraAdjoinAdjoin in
 theorem trdeg_homFracDegZero (hD : MChartDehomog.Statement.{u}) (hT : MChartTrdeg.Statement.{u})
     [∀ k, Fintype (ι k)] (P : Ideal (MRing ι F)) [P.IsPrime] (hP : IsMultiHomogIdeal P)
     (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : MRing ι F) ∉ P) :
@@ -88,6 +90,7 @@ theorem relDim_eq_trdeg (hD : MChartDehomog.Statement.{u}) (hT : MChartTrdeg.Sta
 end FunctionFieldFinite
 
 
+open FunctionFieldFinite in
 theorem FunctionFieldFinite.proof (hD : MChartDehomog.Statement.{u})
     (hT : MChartTrdeg.Statement.{u}) : FunctionFieldFinite.Statement.{u} := by
   intro F _ K K' _ _ _ _ j ι' _ P' hP' hrel

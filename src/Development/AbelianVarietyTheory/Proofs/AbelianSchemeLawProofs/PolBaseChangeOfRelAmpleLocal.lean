@@ -65,6 +65,7 @@ theorem sym_pull (h : IsGrpPullback A' A f φ) (hs : Sym A L) : Sym A' (L.pull �
   · exact hψ.symm
 
 
+omit [GrpObj A] [GrpObj A'] in
 theorem relAmple_restrict (h : IsPullback φ A'.hom A.hom f) (hL : L.IsLB) (hA : RelAmple A L)
     (V : S.Opens) (hV : IsAffineOpen V) :
     RelAmple (Over.mk (A'.hom ∣_ (f ⁻¹ᵁ V))) ((L.pull φ).pull (A'.hom ⁻¹ᵁ (f ⁻¹ᵁ V)).ι) := by

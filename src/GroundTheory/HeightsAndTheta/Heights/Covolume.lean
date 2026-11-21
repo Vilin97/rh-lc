@@ -29,6 +29,7 @@ end RealSpace
 end Real
 
 open scoped Classical in
+open Classical in
 theorem det_basisMatrix_sq : (basisMatrix K).det ^ 2 = ((discr K : ℤ) : ℂ) := by
   exact (discr_eq_basisMatrix_det_sq K).symm
 

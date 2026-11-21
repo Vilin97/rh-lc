@@ -140,6 +140,7 @@ private theorem card_true_ge_lemma_2 {k : ℕ} (u : Fin k → Fin n → ℂ)
     starRingEnd_apply]
 
 
+open Formalism.L2.SG.HidaSetting Formalism.L2.SG.PoincareInHH.Cut in
 theorem card_true_ge {k : ℕ} (u : Fin k → Fin n → ℂ) (huo : ∀ i j, BJ ε (u i) (u j) = if i = j then 1 else 0) :
     k ≤ (univ.filter fun i => ε i = true).card := by
   classical

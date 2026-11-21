@@ -7,6 +7,7 @@ public import Mathlib
 namespace ReciprocityTheory.ChartRestriction.G.T0
 
 
+set_option maxHeartbeats 1000000 in
 theorem heights_arith
     (D δ L lr lw1 hN sF laW nuS c g0 i DF PP0' PN tableLineDegreeFive tableLineDegreeTwo PI4 Prw G Pet
       aL ade aG1 aF aG2 HMM HL Hde HF SI SN Ssum δlogδ : ℝ)

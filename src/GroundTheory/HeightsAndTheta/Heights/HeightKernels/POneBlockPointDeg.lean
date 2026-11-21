@@ -73,6 +73,7 @@ theorem ringKrullDim_adjoin_eq_one {σ : Type} (w : σ → Φ') (s : Set Φ') (x
 end OneBlockPointDeg
 
 
+open OneBlockPointDeg in
 theorem OneBlockPointDeg.proof : OneBlockPointDeg.Statement := by
   classical
   intro Φ Φ' _ _ _ K _ ι _ k₀ hK w c hc hfin htr

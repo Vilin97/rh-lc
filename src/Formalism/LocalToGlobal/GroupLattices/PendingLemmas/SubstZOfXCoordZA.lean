@@ -74,6 +74,7 @@ def linI : X.ZA j → MvPowerSeries (X.ZA j) Kc
 def bc (z z' : X.ZA j) : Kc := MvPowerSeries.coeff (Finsupp.single z' 1) (linF Kc φ z)
 
 
+variable (X) in
 def zOfX (j : ℕ) : X.ZA j → MvPowerSeries (X.EA j ⊕ X.EA j) Kc
   | ⟨v, (s, a, b)⟩ =>
     if IsOddPos s then ∑ r : Fin (X.G.P.n' v / 2),

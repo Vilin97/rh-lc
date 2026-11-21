@@ -29,6 +29,7 @@ theorem hform_snd (z y : n → T) :
 
 
 include hσ Ov hS hΛ in
+include hσ hS hΛ in
 theorem map_of_first (x : GL n T) (hx : x ∈ UJ σ J)
     (h1 : ∀ y ∈ Λ, ∃ y' ∈ Λ, ∀ a, (φ (y' a)).1 = (φ (((x : Matrix n n T) *ᵥ y) a)).1)
     (h2 : ∀ y ∈ Λ, ∃ y' ∈ Λ, ∀ a, (φ (y' a)).1 = (φ ((((x⁻¹ : GL n T) : Matrix n n T) *ᵥ y) a)).1)
@@ -75,6 +76,7 @@ theorem map_of_first (x : GL n T) (hx : x ∈ UJ σ J)
 
 
 include hσ Ov hS hΛ in
+include hσ hS hΛ in
 theorem stab_of_first (x : GL n T) (hx : x ∈ UJ σ J)
     (h1 : ∀ y ∈ Λ, ∃ y' ∈ Λ, ∀ a, (φ (y' a)).1 = (φ (((x : Matrix n n T) *ᵥ y) a)).1)
     (h2 : ∀ y ∈ Λ, ∃ y' ∈ Λ, ∀ a, (φ (y' a)).1 = (φ ((((x⁻¹ : GL n T) : Matrix n n T) *ᵥ y) a)).1) :

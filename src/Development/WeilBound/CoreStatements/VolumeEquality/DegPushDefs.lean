@@ -24,6 +24,7 @@ def fnField (y : (Σ b, ι b) → Ω) : IntermediateField k Ω :=
   IntermediateField.adjoin k {t | ∃ p q : Σ b, ι b, p.1 = q.1 ∧ t = y p / y q}
 
 
+open Classical in
 def inum (y : (Σ b, ι b) → Ω) {n : ℕ} (a : Fin n → K → ℤ) : ℤ := intNum k (pointIdeal k y) a
 
 def num (y : (Σ b, ι b) → Ω) {n : ℕ} (a : Fin n → K → ℤ) : ℤ := (Module.finrank (fnField k y) Ω : ℤ) * inum k y a
@@ -89,6 +90,7 @@ def Dom {X : Scheme.{0}} {Ω Ω₃ : Type} [Field Ω] [Field Ω₃] (O : Valuati
   (∀ a ∈ regAt ξ q, i a ∈ O) ∧ ∀ a ∈ regAt ξ q, a ≠ 0 → (i a)⁻¹ ∈ O → a⁻¹ ∈ regAt ξ q
 
 
+open Classical in
 def PtDim : Prop :=
   ∀ (k : Type) [Field k] (Ω : Type) [Field Ω] [Algebra k Ω] (K : Type) [Fintype K] (ι : K → Type) [∀ b, Fintype (ι b)]
     (y : (Σ b, ι b) → Ω) (d : ℕ), IsPt k y d →

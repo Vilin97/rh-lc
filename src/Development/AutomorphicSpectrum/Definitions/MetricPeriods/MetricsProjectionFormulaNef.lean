@@ -104,6 +104,7 @@ def FT [Fintype σ] (t : ℝ) : MvPolynomial σ ℝ := formPoly (D + 1) (Re.num 
 def PB [Fintype σ] : MvPolynomial σ ℝ := formPoly (D + 1) (Re.limNum II)
 
 
+include Re in
 theorem nonempty_base : Nonempty S.X := by
   obtain ⟨z, hz, hJ⟩ :=
     GroundTheory.Heights₂.Heights.HilbertSamuel.exists_mcPts_not_mem_mcPts Re.arith Re.R.nondeg

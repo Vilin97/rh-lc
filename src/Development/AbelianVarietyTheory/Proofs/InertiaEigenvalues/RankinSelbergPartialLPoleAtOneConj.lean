@@ -26,6 +26,7 @@ noncomputable section
 namespace GlobalTheory.RSPole
 
 
+open GlobalTheory.CuspRep.CuspidalL2GL in
 theorem exists_haar_fundamentalDomains : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ),
     ∃ (μ : Measure (GA E a)) (_ : μ.IsHaarMeasure) (𝓕 𝓕' : Set (GA E a)),
       IsFundamentalDomain (ratGL E a).range 𝓕 μ ∧ IsFundamentalDomain (latticeGL E a) 𝓕' μ := by
@@ -39,6 +40,7 @@ theorem exists_haar_fundamentalDomains : ∀ (E : Type) [Field E] [NumberField E
   exact ⟨Measure.haar, inferInstance, 𝓕, 𝓕', h𝓕 _, h𝓕' _⟩
 
 
+open GlobalTheory.Petersson GlobalTheory.AutomorphicL2Unitary GlobalTheory.CuspRep.CuspidalL2GL in
 theorem setIntegral_mul_conj_ne_zero_rapid {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
     (π₀ : CuspSub E a) (ω : HChar E) (hω : ω.IsUnitary) (hωc : π₀.HasCentChar ω) (φ : Sm E a)
     (hφ : φ ∈ π₀.V ∨ φ.1 ∈ GlobalTheory.JSW.mspanR π₀) (h0 : φ ≠ 0) (μ : Measure (GA E a)) [μ.IsHaarMeasure]

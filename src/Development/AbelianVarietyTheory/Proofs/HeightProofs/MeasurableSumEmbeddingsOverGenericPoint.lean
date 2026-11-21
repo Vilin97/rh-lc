@@ -13,6 +13,7 @@ open scoped TensorProduct
 namespace GlobalTheory
 
 
+open Polynomial in
 theorem finsum_embeddings_over_eq_sum_roots {F L : Type} [Field F] [Field L] [Algebra F L]
     [Algebra.IsSeparable F L] (pb : PowerBasis F L) (τ : F →+* ℂ) {δ : ℕ} (r : Fin δ → ℂ)
     (hr : ∏ i, (X - C (r i)) = (minpoly F pb.gen).map τ) (g : (L →+* ℂ) → ℝ) (g' : ℂ → ℝ)

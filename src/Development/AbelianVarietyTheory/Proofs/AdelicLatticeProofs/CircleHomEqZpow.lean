@@ -9,6 +9,7 @@ open scoped Topology
 namespace GlobalTheory
 
 
+open MeasureTheory AddCircle in
 theorem circle_hom_eq_zpow :
     ∀ f : Circle →* Circle, Continuous f → ∃ n : ℤ, ∀ z, f z = z ^ n := by
   intro f hf

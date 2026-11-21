@@ -37,6 +37,7 @@ theorem ringHom_one_apply {R S : Type*} [Ring R] [Ring S] (f : R →+* S) (n : �
 end GlobalTheory.SplitCongNbhd
 
 
+open GlobalTheory.SplitCongNbhd in
 theorem GlobalTheory.SplitCongNbhd.exists_nhds_one_cong (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ)
     (s : SplitPlace L) (N : ℕ) (hN : 0 < N) :
     ∃ U ∈ nhds (1 : GL (Fin n) (s.v.adicCompletion (maximalRealSubfield L))),

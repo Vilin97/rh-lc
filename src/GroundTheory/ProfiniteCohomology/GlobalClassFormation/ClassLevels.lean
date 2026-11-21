@@ -26,12 +26,14 @@ theorem classSmul_of_restrictHom (g : K.1.fixingSubgroup) (c : IdeleClassGroup F
   IdeleClassLimit.smul_of_of_normal g c
 
 
+variable (K F) in
 def classLevelMor :
     Rep.res (restrictHom (F := K) (E := F)) (ideleClassRep K.1 F.1) ⟶ classLimitRep K :=
   Rep.ofHom ⟨(MonoidHom.toAdditive (IdeleClassLimit.of F)).toIntLinearMap, fun g => LinearMap.ext fun x =>
     congrArg Additive.ofMul (classSmul_of_restrictHom g x.toMul).symm⟩
 
 
+variable (K F) in
 def classLevelInfl (n : ℕ) : cohomology (ideleClassRep K.1 F.1) n ⟶ cohomology (classLimitRep K) n :=
   cohomologyMapAlong restrictHom continuous_restrictHom (classLevelMor K F) n
 
@@ -140,6 +142,7 @@ theorem exists_classLevelInfl_eq (n : ℕ) (x : cohomology (classLimitRep K) n) 
 end Colimit
 
 
+variable (K) in
 theorem isZero_cohomology_one_classLimitRep : Limits.IsZero (cohomology (classLimitRep K) 1) := by
   rw [ModuleCat.isZero_iff_subsingleton]
   have hz : ∀ x : cohomology (classLimitRep K) 1, x = 0 := by

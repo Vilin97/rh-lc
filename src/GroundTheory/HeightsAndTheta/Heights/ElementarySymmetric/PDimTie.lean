@@ -28,6 +28,7 @@ theorem ratio_mem (y : Fin (N + 1) → Ω) {i : Fin (N + 1)} (hi : y i ≠ 0) (j
   Algebra.subset_adjoin ⟨i, j, hi, rfl⟩
 
 
+open scoped IntermediateField.algebraAdjoinAdjoin in
 theorem trdeg_funField (y : Fin (N + 1) → Ω) :
     trdeg k (funField (k := k) y) = trdeg k (ratioRing (k := k) y) := by
   have : FaithfulSMul k (ratioRing (k := k) y) :=
@@ -65,6 +66,7 @@ def dehom : Poly k N →ₐ[k] Polynomial (ratioRing (k := k) y) :=
   aeval fun j => Polynomial.C (ratio y hi₀ j) * Polynomial.X
 
 
+variable (i₀) in
 def rehom : Polynomial (ratioRing (k := k) y) →ₐ[k] Polynomial Ω :=
   ((Polynomial.aeval (R := Ω) (Polynomial.C (y i₀) * Polynomial.X)).restrictScalars k).comp
     (Polynomial.mapAlgHom (ratioRing (k := k) y).val)

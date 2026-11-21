@@ -48,6 +48,7 @@ def multAt (J W : Ideal (MRing ι R)) [W.IsPrime] : ℕ∞ :=
   Module.length (Localization.AtPrime W) (LocalizedModule W.primeCompl (MRing ι R ⧸ J))
 
 open scoped Classical in
+open Classical in
 def divCycle (P : Ideal (MRing ι R)) (f : MRing ι R) (W : Ideal (MRing ι R)) : ℤ :=
   if h : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W then
     haveI : W.IsPrime := h.1.1.1
@@ -70,6 +71,7 @@ def gradedPiece (P : Ideal (MRing ι F)) (m : K → ℕ) : Submodule F (MRing ι
   (weightedHomogeneousSubmodule F (blockWeight ι) m).map (Ideal.Quotient.mkₐ F P).toLinearMap
 
 open scoped Classical in
+open Classical in
 def hilbFn (P : Ideal (MRing ι F)) (m : K → ℤ) : ℤ :=
   if ∀ k, 0 ≤ m k then (Module.finrank F (gradedPiece P (fun k => (m k).toNat)) : ℤ) else 0
 
@@ -80,6 +82,7 @@ def mixedDiff {n : ℕ} (bs : Fin n → K → ℤ) (h : (K → ℤ) → ℤ) : (
   (List.ofFn bs).foldr diffStep h
 
 open scoped Classical in
+open Classical in
 def eventualValue (f : (K → ℤ) → ℤ) : ℤ :=
   if h : ∃ c, ∀ᶠ m in Filter.atTop, f m = c then h.choose else 0
 

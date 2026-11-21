@@ -14,6 +14,7 @@ section Transport
 variable {ι : Type*} [Fintype ι] [DecidableEq ι] {A B : Type*} [CommRing A] [CommRing B]
 
 
+omit [DecidableEq ι] in
 theorem map_unitaryExpr (φ : A →+* B) {sA : A →+* A} {sB : B →+* B}
     (hs : ∀ x, φ (sA x) = sB (φ x)) (H M : Matrix ι ι A) :
     ((M.map sA)ᵀ * H * M).map φ = ((M.map φ).map sB)ᵀ * H.map φ * M.map φ := by
@@ -71,6 +72,7 @@ variable {F E R S T}
 theorem conjBase_tmul (r : R) (e : E) : conjBase F E R (r ⊗ₜ e) = r ⊗ₜ conj F E e := rfl
 
 
+variable (E) in
 noncomputable def tensorMap (f : R →ₐ[F] S) : R ⊗[F] E →ₐ[F] S ⊗[F] E :=
   Algebra.TensorProduct.map f (AlgHom.id F E)
 
@@ -120,6 +122,7 @@ theorem map_includeRight_tensorMap (f : R →ₐ[F] S) :
   exact tensorMap_includeRight f e
 
 
+variable (F E H) in
 noncomputable def unitaryMap (f : R →ₐ[F] S) : unitaryPoints F E H R →* unitaryPoints F E H S :=
   ((Matrix.GeneralLinearGroup.map
       ((tensorMap f : R ⊗[F] E →ₐ[F] S ⊗[F] E) : R ⊗[F] E →+* S ⊗[F] E)).comp
@@ -162,6 +165,7 @@ theorem map_includeRight_lid :
   simp [Algebra.TensorProduct.includeRight_apply]
 
 
+variable (F E H) in
 noncomputable def unitaryPointsRationalEquiv :
     unitaryPoints F E H F ≃* unitaryGroupMatrix (conjHom F E) H :=
   unitaryGroupMatrixCongr ((Algebra.TensorProduct.lid F E).toRingEquiv)
@@ -170,6 +174,7 @@ noncomputable def unitaryPointsRationalEquiv :
 variable {V : Type*} [AddCommGroup V] [Module E V]
 
 
+variable (F E) in
 noncomputable def unitaryPointsRationalEquivHermitian (h : HermitianForm F E V)
     (v : Basis ι E V) : unitaryPoints F E (gram h.toSesq v) F ≃* h.unitaryGroup :=
   (unitaryPointsRationalEquiv (H := gram h.toSesq v)).trans (unitaryGroupEquivMatrix h v).symm

@@ -51,6 +51,7 @@ def twYS (T : Formalism.L2.Herm.TwChTied D inQ) {Ch : D.what₂.Word → ℕ →
   (T.eY u μ i hi).symm.trans (eYS (F u) i hi)
 
 
+set_option maxHeartbeats 4000000 in
 structure TwFormsTiedS (D : D7) (Tw : TwForms D) {inQ : D.what₂.Tup → HeightOneSpectrum (𝓞 D.host.F) → Prop}
     (T : Formalism.L2.Herm.TwChTied D inQ) {H : Formalism.L2.Herm.HermColsCh D} (J : Formalism.L2.Herm.TwChJointS T H)
     (F : ∀ u, FormsTiedSym D u (H.Ch u) (H.chOf u)) where
@@ -101,6 +102,7 @@ structure TwFormsTiedS (D : D7) (Tw : TwForms D) {inQ : D.what₂.Tup → Height
   twisted_e0_at_mu0_eq_eMu0 : ∀ u x, Tw.e0 u D.what₂.mu0 x = Tw.eMu0 u 0 (Nat.zero_le _) x
 
 
+set_option maxHeartbeats 4000000 in
 structure SymmetricTwistedLevelData {Tw : TwForms D} {T : Formalism.L2.Herm.TwChTied D inQ} {H : Formalism.L2.Herm.HermColsCh D} {J : Formalism.L2.Herm.TwChJointS T H}
     {F : ∀ u, FormsTiedSym D u (H.Ch u) (H.chOf u)} (W : TwFormsTiedS D Tw T J F) where
   lv : ∀ u μ, μ ≠ D.what₂.mu0 → ∀ i, 1 ≤ i → ∀ hm : i ≤ D.R.m,

@@ -173,6 +173,7 @@ theorem exists_flag_dual (hcc : ∀ a, c (c a) = a) (hεε : ε * ε = ε) (hεc
   · rw [hy' j i i.2, Pi.single_apply]
 
 
+open Matrix in
 def sesq (c : R →+* R) {n : ℕ} (G : Matrix (Fin n) (Fin n) R) : (Fin n → R) →ₗ[R] (Fin n → R) →ₛₗ[c] R :=
   LinearMap.mk₂'ₛₗ (RingHom.id R) c (fun x y => ∑ i, ∑ j, c (y i) * G i j * x j)
     (fun x x' y => by simp only [Pi.add_apply, mul_add, Finset.sum_add_distrib])
@@ -191,6 +192,7 @@ theorem sesq_col {n p q : ℕ} (G : Matrix (Fin n) (Fin n) R) (A : Matrix (Fin n
 
 
 open scoped Matrix in
+open Matrix in
 theorem exists_flag_dual_matrix {n : ℕ} {M : AddSubgroup (Fin n → R)} (G : Matrix (Fin n) (Fin n) R)
     (hcc : ∀ a, c (c a) = a) (hεε : ε * ε = ε) (hεc : c ε = ε) (hεO : ε ∈ O)
     (hOε : ∀ a ∈ O, ε * a = a) (hmul : ∀ a ∈ O, ∀ b ∈ O, a * b ∈ O) (hcO : ∀ a ∈ O, c a ∈ O) (hP : Princ ε O)

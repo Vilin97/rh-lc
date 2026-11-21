@@ -30,6 +30,7 @@ def levOne (W : LocWach PD L O v n) (i : ZMod n) (ζ : L) : O⟦X⟧ →ₐ[O] L
   (W.lev i ζ).comp (Pi.constAlgHom O (ZMod n) O⟦X⟧)
 
 
+omit [CharZero L] [Algebra ℚ L] in
 theorem lev_eq_levOne (W : LocWach PD L O v n) (i : ZMod n) (ζ : L) (f : LetA O n) :
     W.lev i ζ f = levOne W i ζ (f i) := by
   have h := W.lev_letter i ζ (f - Pi.constAlgHom O (ZMod n) O⟦X⟧ (f i)) (sub_self (f i))

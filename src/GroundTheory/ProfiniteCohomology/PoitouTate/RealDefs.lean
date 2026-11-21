@@ -168,6 +168,7 @@ theorem ptTCompactDualMap_apply {r s : ℕ} (h : r + s = 3) (x : tateCompactCoho
   rfl
 
 
+omit [Fintype ι] [Fintype κ] in
 theorem tateCompactCupRes_ptTLocalToCompact {r s : ℕ} (h : r + s = 2) (h' : r + 1 + s = 3)
     (ξ : ptTLocal φ ψ M r) (y : cohomology (dualRep D M) s) :
     tateCompactCupRes φ ψ (evalPairing D M) h' ((ptTLocalToCompact φ ψ M r).hom ξ) y =

@@ -30,6 +30,7 @@ def GStep.act {E K : Type} [Field E] [NumberField E] [Field K] {n : ℕ} (S : GS
   { S with rp := fun b => prefRep (pref b), rp_spec := fun b => prefRep_spec (pref b) }
 
 
+open Classical in
 def cosetIn {X : Fields} {Pr : Primes X} {R : Ranks} {sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)} {S : Set ℕ}
     {mu : Tup X.F X.E X.K S} {cst : LocCst X (rowSG Pr sel mu)} {u : Pr.Word} {j : ℕ} (q : PtAt R sel mu cst u j)
     (P : rowSG Pr sel mu) : Set (Sp X.E (R.N j)) :=
@@ -85,6 +86,7 @@ def th (u : B.Word) (a : I.ι) (i : ℕ) (b : Idx I.sel (I.tup a) (I.idx a) i) (
   GamP := B.GamP
 
 
+open Classical in
 def fmIn (hPr : (B.primes X).Ok) (u : B.Word) (a : I.ι) : FmIn (I.atIn u a) B.places where
   tauOf w := tauAt hPr u w
   seenP w := decide (seenC (B.primes X) u w)

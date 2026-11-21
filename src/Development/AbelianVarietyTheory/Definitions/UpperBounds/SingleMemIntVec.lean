@@ -14,6 +14,9 @@ namespace GlobalTheory.Up.Definite
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
 
 
+open NumberField in
+open scoped ComplexConjugate ComplexOrder Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 theorem _root_.GlobalTheory.Up.Definite.herm_one (x y : Fin r → E) :
     _root_.ReciprocityTheory.ChartRestriction.G.FD.herm (1 : Matrix (Fin r) (Fin r) E) x y = ∑ a, x a * _root_.ReciprocityTheory.ChartRestriction.G.FD.cc (y a) := by
   unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.herm
@@ -25,6 +28,9 @@ theorem _root_.GlobalTheory.Up.Definite.herm_one (x y : Fin r → E) :
   · simp
 
 
+open NumberField in
+open scoped ComplexConjugate ComplexOrder Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 theorem _root_.GlobalTheory.Up.Definite.map_herm_one_self (φ : E →+* ℂ) (x : Fin r → E) :
     φ (_root_.ReciprocityTheory.ChartRestriction.G.FD.herm (1 : Matrix (Fin r) (Fin r) E) x x) = ((∑ a, ‖φ (x a)‖ ^ 2 : ℝ) : ℂ) := by
   set_option synthInstance.maxHeartbeats 100000 in
@@ -40,6 +46,10 @@ variable (E r) in
 def intVec : Submodule (𝓞 E) (Fin r → E) := Submodule.pi Set.univ fun _ => (1 : Submodule (𝓞 E) E)
 
 
+open NumberField in
+open scoped ComplexConjugate ComplexOrder Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
+omit [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.Up.Definite.mem_intVec (x : Fin r → E) :
     x ∈ _root_.GlobalTheory.Up.Definite.intVec E r ↔ ∀ a, IsIntegral ℤ (x a) := by
   simp only [_root_.GlobalTheory.Up.Definite.intVec, Submodule.mem_pi, Set.mem_univ, true_implies,
@@ -50,6 +60,10 @@ theorem _root_.GlobalTheory.Up.Definite.mem_intVec (x : Fin r → E) :
   exact y.isIntegral_coe
 
 
+open NumberField in
+open scoped ComplexConjugate ComplexOrder Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
+omit [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.Up.Definite.single_mem_intVec (b : Fin r) :
     (Pi.single b 1 : Fin r → E) ∈ _root_.GlobalTheory.Up.Definite.intVec E r := by
   rw [_root_.GlobalTheory.Up.Definite.mem_intVec]
@@ -79,12 +93,17 @@ private theorem finite_GL_of_scaled_entries_integral_bounded (c : E) (hc : c ≠
   exact fun a b => hγ a b
 
 
+open NumberField in
+open scoped ComplexConjugate ComplexOrder Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
+omit [IsCMField E] in
 theorem _root_.GlobalTheory.Up.Definite.finite_small :
     {γ : GL (Fin r) E | ∀ a b, IsIntegral ℤ ((γ : Matrix (Fin r) (Fin r) E) a b) ∧
       ∀ φ : E →+* ℂ, ‖φ ((γ : Matrix (Fin r) (Fin r) E) a b)‖ ≤ 1}.Finite := by
   simpa using finite_GL_of_scaled_entries_integral_bounded (r := r) (1 : E) one_ne_zero 1
 
 
+variable (E r) in
 noncomputable def data : Data E r where
   Ψ := (inhab (E := E)).Ψ
   cmType := inhab.cmType

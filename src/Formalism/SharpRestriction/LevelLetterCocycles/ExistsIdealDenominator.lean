@@ -159,6 +159,7 @@ def SplitLev (n : ℕ) : Prop :=
     IsSplitPl D.host w
 
 
+open scoped Classical in
 def vdd (l : ℕ) : ℝ :=
   ⨆ v : placesOver D.host.E l,
     ((UniqueFactorizationMonoid.normalizedFactors (differentIdeal ℤ (𝓞 D.host.E))).count
@@ -176,6 +177,7 @@ def GalF (i : D.ntw.Tw) (F : Subfield (KK i)) : Set (RingAut ℂ_[D.ntw.l i]) :=
   {s | (∀ x, ‖s x‖ = ‖x‖) ∧ ∀ x ∈ F, s (D.nth.iC i x) = D.nth.iC i x}
 
 
+variable (D) in
 structure Geo where
 
   pt : ∀ i j (_ : D.nth.Pt i j), PtGeo (D.ntw.l i) (D.nth.Lt i j) (D.nth.Let i j)

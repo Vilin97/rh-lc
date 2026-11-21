@@ -65,6 +65,7 @@ def pushFrame (φ : Matrix (Fin n) (Fin n) K) (X : InfinitePlace K → Matrix (F
   fun v => φ.map v.embedding * X v
 
 
+open Classical in
 def spliceFrame (v0 : InfinitePlace K) (Y : Matrix (Fin n) (Fin n) ℂ)
     (X : InfinitePlace K → Matrix (Fin n) (Fin n) ℂ) : InfinitePlace K → Matrix (Fin n) (Fin n) ℂ :=
   Function.update X v0 Y

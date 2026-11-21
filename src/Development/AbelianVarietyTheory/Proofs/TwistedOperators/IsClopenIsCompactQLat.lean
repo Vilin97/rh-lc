@@ -73,6 +73,7 @@ theorem exists_lifts (h : InDual L F) : ∃ f, Lifts L F f := by
   exact ⟨f, fun y => ⟨G y, rfl, (hf y).symm⟩⟩
 
 
+open Classical in
 theorem cosetInd_eq (q : Unif k) (f : Module.Dual 𝓀[k] (Red L)) (η : n → k) :
     cosetInd q L f η = if Lifts L (q.1 • η) f then 1 else 0 := by
   refine if_congr ⟨fun ⟨F, hF, hD⟩ y => ?_, fun h => ⟨_, h, fun y _ => by simp⟩⟩ rfl rfl
@@ -89,6 +90,7 @@ section Decomposition
 variable [Fintype n'] {L : Submodule 𝒪[k] (n' → k)} {LY : Submodule 𝒪[k] (n → k)} {x₀ : Matrix n n' k}
 
 
+open Classical in
 theorem exists_pull (h : ∀ z ∈ L, x₀ *ᵥ z ∈ LY) (fW : Module.Dual 𝓀[k] (Red LY)) :
     ∃ f₀ : Module.Dual 𝓀[k] (Red L), (∀ z : L, f₀ (Red.mk L z) = fW (Red.mk LY ⟨x₀ *ᵥ z, h z z.2⟩)) ∧
       ∀ w : Module.Dual 𝓀[k] (Red L) → ℂ, ∑ᶠ f', w f' * compInd L LY f' fW x₀ = w f₀ := by
@@ -298,6 +300,7 @@ variable [MeasurableSpace k] [BorelSpace k] (q : Unif k) {ψ : AddChar k Circle}
   (μ : Measure (n → k)) [μ.IsAddHaarMeasure] (L : Submodule 𝒪[k] (n → k)) [L.IsFullLattice k]
 
 
+omit [BorelSpace k] in
 theorem volQ_pos : 0 < volQ μ q L := by
   obtain ⟨h1, h2⟩ := isClopen_isCompact_qLat q L
   exact ENNReal.toReal_pos (h1.2.measure_ne_zero μ ⟨0, by simp⟩) h2.measure_lt_top.ne
@@ -305,6 +308,7 @@ theorem volQ_pos : 0 < volQ μ q L := by
 include hψ
 
 
+open Classical in
 theorem integrable_qLat (η : n → k) :
     Integrable (fun y => (if q.inv • y ∈ L then (1 : ℂ) else 0) * (ψ (η ⬝ᵥ y) : ℂ)) μ := by
   haveI := secondCountable k
@@ -315,6 +319,7 @@ theorem integrable_qLat (η : n → k) :
   exact continuous_subtype_val.comp (hψ.continuous.comp (continuous_const.dotProduct continuous_id))
 
 
+open Classical in
 theorem integral_qLat (η : n → k) :
     ∫ y, (if q.inv • y ∈ L then (1 : ℂ) else 0) * (ψ (η ⬝ᵥ y) : ℂ) ∂μ =
       if InDual L (q.1 • η) then (volQ μ q L : ℂ) else 0 := by
@@ -477,6 +482,7 @@ variable [Fintype n] [Fintype n'] [Fintype n''] (q : Unif k) (LY : Submodule �
   [Module ℂ A] (x' : Matrix n'' n k) (η : n → k)
 
 
+omit [Fintype n'] in
 theorem phiOne_last' (fW : {f : Module.Dual 𝓀[k] (Red LY) // f ≠ 0}) :
     phiOne (ofDual LY fW) (lastPair q L'') (withRow x' η) = latInd LY L'' x' * cosetInd q LY fW.1 η := by
   rw [phiOne_last, cosetInd_eq]

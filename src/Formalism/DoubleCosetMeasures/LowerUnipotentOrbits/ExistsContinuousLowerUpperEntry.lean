@@ -272,6 +272,7 @@ theorem coe_inv_of_det {K : Type} [CommRing K] {n : ℕ} (g : GL (Fin n) K)
 end Supp
 
 
+open Supp in
 theorem suppCompact : Formalism.DoubleCosetMeasures.SuppCompact := by
   intro K _ _ _ _ R hRo hRc s t ψ C _ _ e lam
   let P := pt s t

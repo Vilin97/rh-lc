@@ -16,6 +16,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.Cha
 namespace PositivityTheory.HtPt.Aig
 
 
+open ReciprocityTheory.ChartRestriction.G.AI.I2 in
 theorem pfCoord_of_system :
     ReciprocityTheory.ChartRestriction.G.Geo.ArithIntersectionSystemStatement → PFCoordStatement := by
   rintro ⟨II, hSys, -, hPF, -⟩

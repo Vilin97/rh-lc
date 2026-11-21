@@ -225,6 +225,7 @@ theorem exists_isPolForm {R : Type} [CommRing R] {I : Ideal R} {κ : DividedPowe
   exact ⟨_, n, fun k ↦ ⟨a k, hm _⟩, fun k ↦ ⟨b k, hm _⟩, hz, rfl⟩
 
 
+open GlobalTheory.Published.GrothendieckMessing in
 theorem exists_lift_lam : ∀ (R R₀ : Type) [CommRing R] [IsLocalRing R] [IsNoetherianRing R] [CommRing R₀] [IsLocalRing R₀] (π : R →+* R₀), Function.Surjective π → RingHom.ker π ^ 2 = ⊥ → ∀ (Y₀ : Over (Sp R₀)) [GrpObj Y₀], IsAbelianScheme Y₀ → ∀ L₀ : LB Y₀.left, L₀.IsLB → RelAmple Y₀ L₀ → KTriv Y₀ L₀ → ∃ (Y : Over (Sp R)) (_ : GrpObj Y) (i : Y₀.left ⟶ Y.left) (l : (Y₀ ⊗ Y₀).left ⟶ (Y ⊗ Y).left) (Q : LB (Y ⊗ Y).left), IsAbelianScheme Y ∧ IsGrpPullback Y₀ Y (spMap π) i ∧ IsSquare i l ∧ Q.IsLB ∧ GlobalTheory.AbDual.IsAdditive Q ∧ GlobalTheory.AbDual.IsAdditive (GlobalTheory.AbDual.swap Q) ∧ LBIso (Q.pull l) (abelian₂ Y₀ L₀) := by
   intro R R₀ _ _ _ _ _ π hπ hI2 Y₀ _ hY₀ L₀ hL₀ hamp hK
   have hI0 : RingHom.ker π ^ 2 = 0 := hI2

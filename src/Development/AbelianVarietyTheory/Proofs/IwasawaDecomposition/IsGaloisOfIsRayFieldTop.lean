@@ -107,6 +107,7 @@ theorem heckeIdeal_transport [IsGalois K N] [IsGalois K' N] (χ : (N ≃ₐ[K'] 
   rw [heckeVal_transport s hs, e, count_comap _ _ (by simpa using ha)]
 
 
+include hs in
 theorem isModulus_top_transport [IsGalois K N] [IsGalois K' N] (h : ∀ χ : (N ≃ₐ[K] N) →* ℂˣ, IsModulus N χ ⊤)
     (χ : (N ≃ₐ[K'] N) →* ℂˣ) : IsModulus N χ ⊤ := by
   have hc : ∀ J : Ideal (𝓞 K), IsCoprime J ⊤ := fun J => by

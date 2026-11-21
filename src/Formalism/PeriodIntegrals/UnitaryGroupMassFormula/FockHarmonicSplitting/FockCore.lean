@@ -69,6 +69,7 @@ private lemma finiteDimensional_homog' [Fintype σ] (n : ℕ) :
      exact Submodule.finiteDimensional_of_le hle)
 
 
+set_option maxHeartbeats 800000 in
 lemma exists_orth [Fintype σ] (K : Submodule ℂ (MvPolynomial σ ℂ)) (n : ℕ)
     (hK : K ≤ FockH1Action.homog σ n) (f : MvPolynomial σ ℂ) :
     ∃ y ∈ K, ∀ x ∈ K, FockH1Action.fockInner x (f - y) = 0 := by

@@ -26,6 +26,9 @@ variable (D : I ⥤ Scheme.{0}) {X : Scheme.{0}} (π : ∀ i, X ⟶ D.obj i)
   [∀ i, CompactSpace (D.obj i)] [∀ i, QuasiSeparatedSpace (D.obj i)]
 
 
+omit [∀ i, CompactSpace (D.obj i)] in
+set_option backward.isDefEq.respectTransparency false in
+include hc in
 theorem exists_appLE_eq {i : I} {U : (D.obj i).Opens} (hU : IsCompact (U : Set (D.obj i)))
     (s : Γ(X, π i ⁻¹ᵁ U)) :
     ∃ (j : I) (f : j ⟶ i) (t : Γ(D.obj j, D.map f ⁻¹ᵁ U)),
@@ -47,6 +50,8 @@ theorem exists_appLE_eq {i : I} {U : (D.obj i).Opens} (hU : IsCompact (U : Set (
   exact (e _ _ _ _ t).trans h
 
 
+omit [∀ i, CompactSpace (D.obj i)] in
+include hc in
 theorem exists_unit_eq {i : I} {U : (D.obj i).Opens} (hU : IsCompact (U : Set (D.obj i)))
     (s : Γ(X, π i ⁻¹ᵁ U)ˣ) :
     ∃ (j : I) (f : j ⟶ i) (t : Γ(D.obj j, D.map f ⁻¹ᵁ U)ˣ), ∀ y : X, y ∈ π i ⁻¹ᵁ U →
@@ -92,6 +97,8 @@ theorem pull_isLB_of_germ {Y Z : Scheme.{0}} (M : LB Y) (F : Z ⟶ Y) (hcov : �
     exact hco y _ _ _ (mem_pull.1 hy.1.1) (mem_pull.1 hy.1.2) (mem_pull.1 hy.2)
 
 
+omit [∀ i, CompactSpace (D.obj i)] in
+include hc in
 theorem exists_cocycle {j : I} (M : LB (D.obj j)) [Finite M.ι]
     (hM : ∀ a, IsCompact (M.U a : Set (D.obj j)))
     (h : ∀ (y : X) a b c, π j y ∈ M.U a → π j y ∈ M.U b → π j y ∈ M.U c →
@@ -126,6 +133,7 @@ theorem exists_cocycle {j : I} (M : LB (D.obj j)) [Finite M.ι]
   rwa [map_mul, gm_res _ z _ hz, gm_res _ z _ hz, gm_res _ z _ hz] at e
 
 
+include hc in
 theorem exists_lb_of_isLimit (L : LB X) (hL : L.IsLB) :
     ∃ (k : I) (M : LB (D.obj k)), M.IsLB ∧ LBIso L (M.pull (π k)) := by
   have : CompactSpace X := Scheme.compactSpace_of_isLimit D _ hc

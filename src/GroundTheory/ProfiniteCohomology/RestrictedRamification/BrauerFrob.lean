@@ -214,6 +214,7 @@ variable {K : FiniteSubfield} {v : HeightOneSpectrum (𝓞 K.1)}
   (ι : ℚ̄ →ₐ[K.1] AlgebraicClosure (v.adicCompletion K.1))
 
 
+set_option maxHeartbeats 4000000 in
 theorem compField_le_maximalUnramifiedExtension (N : FiniteSubfield) [Fact (K ≤ N)] [Normal K.1 N.1]
     (he : (placeOfEmbedding ι N).1.asIdeal.ramificationIdx (𝓞 K.1) = 1) :
     compField ι N ≤ maximalUnramifiedExtension (v.adicCompletion K.1)
@@ -256,6 +257,7 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1))) {v : Heig
   (ι : ℚ̄ →ₐ[K.1] AlgebraicClosure (v.adicCompletion K.1)) (hv : v ∉ S)
 
 
+include hv in
 theorem decompHomS_eq_one_of_unramifiedDegree_eq_one
     (g : Gal(AlgebraicClosure (v.adicCompletion K.1)/v.adicCompletion K.1))
     (hg : unramifiedDegree (v.adicCompletion K.1) (AlgebraicClosure (v.adicCompletion K.1)) g = 1) :
@@ -282,6 +284,8 @@ theorem decompHomS_eq_one_of_unramifiedDegree_eq_one
   exact h1.trans h2
 
 
+set_option maxHeartbeats 2000000 in
+include hv in
 theorem eq_zero_of_decompHomS_of_unramifiedDegree
     (χ : Additive Gal(AlgebraicClosure (v.adicCompletion K.1)/v.adicCompletion K.1) →ₜ+ QZ)
     (hχ : ∀ g, decompHomS (v.adicCompletion K.1) S ι g = 1 → χ (Additive.ofMul g) = 0)

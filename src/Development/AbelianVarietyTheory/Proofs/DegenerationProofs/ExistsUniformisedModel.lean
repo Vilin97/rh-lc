@@ -71,6 +71,7 @@ end GlobalTheory.UniformisedModel
 namespace GlobalTheory
 
 
+open UniformisedModel in
 theorem exists_uniformised_model : GlobalTheory.Published.SemistableReductionSt → ThmUSt → PolBaseChangeSt → ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] [ArithBase o Ω] (S : ThetaSys o Ω) (ρ : S.Real) (p : ℕ) [Fact p.Prime] (y₀ : S.R →+* PadicAlgCl p) (Fs : Finset (PadicAlgCl p)), ∃ u : ρ.UTest p y₀, ∀ x ∈ Fs, x ∈ Set.range (algebraMap (FractionRing u.V) (PadicAlgCl p)) := by
   intro hN hU hB o Ω _ _ _ _ S ρ p _ y₀ Fs
   haveI := ArithBase.ft (o := o) (Ω := Ω)

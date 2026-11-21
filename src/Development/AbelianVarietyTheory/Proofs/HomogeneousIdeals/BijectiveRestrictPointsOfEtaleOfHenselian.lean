@@ -47,6 +47,7 @@ theorem isClosedImmersion_equalizer_ι_of_isSeparated {X S T : Scheme.{u}} (f : 
     (isPullback_equalizer_diagonal f hab) inferInstance
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem isOpenImmersion_equalizer_ι_left_of_unramified {S : Scheme.{u}} {T X : Over S}
     [FormallyUnramified X.hom] [LocallyOfFiniteType X.hom] (a b : T ⟶ X) :
     IsOpenImmersion (equalizer.ι a b).left := by
@@ -138,6 +139,7 @@ theorem surjective_of_isNilpotent_ker {T₀ T : Scheme.{u}} (i : T₀ ⟶ T) [Is
   exact surjective_of_isDominant_of_isClosed_range _ i.isClosedEmbedding.isClosed_range
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem exists_local_lift_of_smooth {X S T₀ T : Scheme.{u}} (f : X ⟶ S) [Smooth f]
     (i : T₀ ⟶ T) [IsClosedImmersion i] (hi : IsNilpotent i.ker)
     (g : T₀ ⟶ X) (h : T ⟶ S) (w : g ≫ f = i ≫ h) (t : T) :
@@ -254,6 +256,7 @@ theorem existsUnique_lift_of_etale_of_surjective {X S : Scheme.{u}} (f : X ⟶ S
   existsUnique_lift_of_etale f _ (isNilpotent_ker_specMap π hπ') g h w
 
 
+open Polynomial in
 theorem exists_algHom_lift_of_henselian {B A : Type*} {R K : Type u} [CommRing B] [CommRing A]
     [CommRing R] [Field K] [Algebra B A] [Algebra B R] [Algebra B K] [Algebra.Etale B A]
     [HenselianLocalRing R] (π : R →ₐ[B] K) (hπ : Function.Surjective π) (φ : A →ₐ[B] K) :

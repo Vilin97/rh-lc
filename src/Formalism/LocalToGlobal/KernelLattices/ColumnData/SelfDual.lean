@@ -189,6 +189,7 @@ theorem alg_step (cc : Ideal (𝓞 D.host.K)) (hcc : cc ≠ ⊥) {N N' : ℕ}
   rwa [div_self hc0K, IntermediateField.coe_one, one_smul] at h1
 
 
+variable (D) in
 theorem coord (δ : ℂ) (hδ : δ ≠ 0) (u : D.what₂.Tau → ℂ)
     (hu : ∀ y : D.host.E, ∃ k : D.host.K,
       ∑ τ, u τ * embT D τ y = δ * D.host.φ₀ (k : D.host.E)) :

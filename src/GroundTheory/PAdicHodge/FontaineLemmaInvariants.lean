@@ -154,6 +154,8 @@ variable [CharZero F]
   (hζ : PreTilt.untilt ((_root_.frobeniusEquiv (PreTilt (normInteger F) p) p).symm ε) ≠ 1)
 
 
+include hζ in
+set_option maxHeartbeats 1600000 in
 theorem exists_algebraMap_eq_periodTCris_pow_mul_phiB {x : BCris hε} {m : ℕ} {y : BCrisPlus F p}
     (hy : algebraMap (BCrisPlus F p) (BCris hε) y = periodTCris hε ^ (m + 1) * x)
     (hθ : ∀ n : ℕ, IsPerfectoidField.thetaBDeRhamPlusField (K := F) p
@@ -207,6 +209,8 @@ theorem thetaField_iota_periodT :
   (thetaField_iota _).trans (by rw [theta_periodT]; rfl)
 
 
+include hζ in
+set_option maxHeartbeats 1600000 in
 theorem exists_bCrisPlus_fixed_eq_of_mem_maxUnramified {x : BCris hε} {k : PadicAlgCl p}
     (hk : k ∈ maxUnramified p K) (hx : iotaB hε hζ x = algebraMap 𝔹 𝔹dR (algClToBdR p k)) :
     ∃ y' : BCrisPlus ℂ_[p] p, (∀ σ : Gal(PadicAlgCl p/K), σ • y' = y') ∧
@@ -218,6 +222,8 @@ theorem exists_bCrisPlus_fixed_eq_of_mem_maxUnramified {x : BCris hε} {k : Padi
 variable [FiniteDimensional ℚ_[p] K]
 
 
+include hζ in
+set_option maxHeartbeats 1600000 in
 theorem thetaField_iotaPlus_iterate_eq_zero {x : BCris hε}
     (hx : ∀ σ : Gal(PadicAlgCl p/K), galB hε σ x = x) {m : ℕ} {y : BCrisPlus ℂ_[p] p}
     (hy : algebraMap (BCrisPlus ℂ_[p] p) (BCris hε) y = periodTCris hε ^ (m + 1) * x) (n : ℕ) :
@@ -231,6 +237,8 @@ theorem thetaField_iotaPlus_iterate_eq_zero {x : BCris hε}
     (hk.trans (algebraMap_intermediateField_bDeRham K k)) (thetaField_iota_periodT hε)
 
 
+include hζ in
+set_option maxHeartbeats 1600000 in
 theorem exists_iterate_phiB_eq (m : ℕ) (x : BCris hε)
     (hx : ∀ σ : Gal(PadicAlgCl p/K), galB hε σ x = x)
     (hxy : ∃ y : BCrisPlus ℂ_[p] p,
@@ -250,6 +258,7 @@ theorem iterate_phiPlus_algebraMap_padic (n : ℕ) (q : ℚ_[p]) :
   | succ n ih => rw [Function.iterate_succ_apply', ih, phiPlus_algebraMap_padic]
 
 
+include hζ in
 theorem algebraMap_bCrisPlus_bCris_injective :
     Function.Injective (algebraMap (BCrisPlus ℂ_[p] p) (BCris hε)) := fun a b h =>
   iotaPlus_injective (K := ℂ_[p]) (p := p) (IsFractionRing.injective 𝔹 𝔹dR
@@ -257,11 +266,14 @@ theorem algebraMap_bCrisPlus_bCris_injective :
       (iotaB_algebraMap hε hζ b))))
 
 
+include hζ in
 theorem iota_periodT_ne_zero : iota ℂ_[p] p (periodT hε) ≠ 0 := by
   rw [iota_periodT]
   exact fontaineT_ne_zero hε hζ
 
 
+include hζ in
+set_option maxHeartbeats 1600000 in
 theorem aeval_minpoly_eq_zero_of_iterate {y x₁ : BCrisPlus ℂ_[p] p} {m : ℕ}
     {β β₁ : PadicAlgCl p}
     (hιy : iotaPlus ℂ_[p] p y = iota ℂ_[p] p (periodT hε) ^ m * algClToBdR p β)
@@ -330,6 +342,8 @@ theorem aeval_minpoly_eq_zero_of_iterate {y x₁ : BCrisPlus ℂ_[p] p} {m : ℕ
   exact (injective_algClToBdR p) (h2.trans (map_zero _).symm)
 
 
+include hζ in
+set_option maxHeartbeats 1600000 in
 theorem exists_bCrisPlus_fixed_eq_of_iterate {x : BCris hε}
     (hx : ∀ σ : Gal(PadicAlgCl p/K), galB hε σ x = x) {m : ℕ} {y x₁ : BCrisPlus ℂ_[p] p}
     (hy : algebraMap (BCrisPlus ℂ_[p] p) (BCris hε) y = periodTCris hε ^ m * x)
@@ -362,6 +376,8 @@ theorem exists_bCrisPlus_fixed_eq_of_iterate {x : BCris hε}
   exact exists_bCrisPlus_fixed_eq_of_mem_maxUnramified hε hζ hk0 hk'
 
 
+include hζ in
+set_option maxHeartbeats 1600000 in
 theorem exists_bCrisPlus_fixed_eq (x : BCris hε)
     (hx : ∀ σ : Gal(PadicAlgCl p/K), galB hε σ x = x) :
     ∃ y : BCrisPlus ℂ_[p] p, (∀ σ : Gal(PadicAlgCl p/K), σ • y = y) ∧
@@ -372,6 +388,8 @@ theorem exists_bCrisPlus_fixed_eq (x : BCris hε)
 
 
 
+include hζ in
+set_option maxHeartbeats 1600000 in
 theorem bCris_fixed_mem_maxUnramified (x : BCris hε)
     (hx : ∀ σ : Gal(PadicAlgCl p/K), galB hε σ x = x) :
     ∃ k ∈ maxUnramified p K, iotaB hε hζ x = algebraMap 𝔹 𝔹dR (algClToBdR p k) := by

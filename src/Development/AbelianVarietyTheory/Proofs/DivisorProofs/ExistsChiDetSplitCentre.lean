@@ -36,6 +36,7 @@ theorem commute_Zalg {T : Module.End ℂ (Sm E a)} (hT : ∀ X, Commute T (lie E
   · exact S.zero_mem
 
 
+variable (E) in
 def cpowChar (s : ℂ) : HChar E :=
   ⟨MonoidHom.toHomUnits
       { toFun := fun x => Complex.exp (s * Real.log (ideleNorm (E := E) x))

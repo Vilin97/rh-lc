@@ -13,6 +13,7 @@ namespace GlobalTheory.OrdVal
 variable {O A : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CommRing A] [Algebra O A]
 
 
+omit [IsDomain O] [IsDiscreteValuationRing O] in
 theorem nonneg_of_isIntegral (u : AddValuation A (WithTop ℤ))
     (hu : ∀ r : O, 0 ≤ u (algebraMap O A r)) {x : A} (hx : IsIntegral O x) : 0 ≤ u x := by
   let v : Valuation A (Multiplicative (WithTop ℤ)ᵒᵈ) := u

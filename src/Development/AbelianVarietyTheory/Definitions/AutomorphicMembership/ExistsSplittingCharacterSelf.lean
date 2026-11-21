@@ -272,6 +272,7 @@ structure RecFun.ChrIs {θ : InfF D} {ψ : AddChar (AF D.host.F) ℂ} (Rc : RecF
   eta : Formalism.IndefR.Links.ChrEq Rc.eta C.eta
 
 
+open Formalism.IndefR.Links in
 theorem RecFun.exists_chrIs (C : Formalism.L2.Host.CharFrame D) (xi : D.what₂.Tup → Formalism.L2.Host.HChar D.host.E)
     (hf : ∀ μ, ∃ n : ℕ, 0 < n ∧ (xi μ).OrderDvd n) (ht : ∀ μ, (xi μ).TrivOn D.host.F) (θ : InfF D)
     (ψ : AddChar (AF D.host.F) ℂ) : ∃ Rc : RecFun D θ ψ, Rc.ChrIs C xi := by

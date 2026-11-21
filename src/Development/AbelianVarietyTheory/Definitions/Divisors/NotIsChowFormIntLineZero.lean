@@ -15,6 +15,9 @@ open MvPolynomial NumberField IsDedekindDomain Module Filter GlobalTheory.ChowHt
 open scoped ENNReal
 
 
+set_option autoImplicit false in
+open MvPolynomial NumberField IsDedekindDomain Module Filter in
+open scoped ENNReal in
 theorem _root_.GlobalTheory.CompHt.Test.imageDeg_zero {K V Ω : Type} [Field K] [AddCommGroup V] [Module K V]
     [Field Ω] [Algebra K Ω] (D : ℕ) :
     _root_.GlobalTheory.CompHt.imageDeg (0 : V →ₗ[K] Ω) D = 0 := by

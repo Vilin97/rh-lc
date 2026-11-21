@@ -137,6 +137,7 @@ private theorem lam_pow_right' (hD0 : IsDual A B P) (hD1 : IsDual B A (swap P)) 
     rw [pow_succ, lam_mul_right_zarhin_trick (hD0 := hD0) (hD1 := hD1) (e' := e'), ih, succ_nsmul]
 
 
+include e hD hD' in
 theorem lam_self_add_inv (q : T ⟶ (Over.pullback s).obj A) :
     lam (cls L hL) q q + lam (cls L hL) q q⁻¹ = 0 := by
   rw [← lam_mul_right_zarhin_trick (hL := hL) (hD0 := hD) (hD1 := hD') (e' := e), mul_inv_cancel, lam_one_right]

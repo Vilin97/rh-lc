@@ -45,6 +45,7 @@ abbrev PlS (B : Base) (px : PreX B.toPre) : Type := letI := B.fields.starE; Form
 abbrev PlI (B : Base) (px : PreX B.toPre) : Type := letI := B.fields.starE; Formalism.L2.Col.LevOffI (E := B.fields.E) ∅ (B.primes px).vGs ∅
 
 
+open Classical in
 def tuOf (U : Set I.ι) : Finset (Tup B.fields.F B.fields.E B.fields.K I.S) :=
   (Finset.univ.filter fun a => a ∈ U).image I.tup
 

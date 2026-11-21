@@ -237,6 +237,7 @@ open Filter Set
 variable [WellFoundedLT n] [LocallyFiniteOrderBot n]
 
 
+variable (n) in
 abbrev PosDiag := {a : n → ℝ // ∀ i, 0 < a i}
 
 abbrev UpperUnitriangular (n 𝕜 : Type*) [RCLike 𝕜] [LinearOrder n] :=

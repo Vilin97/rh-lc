@@ -24,12 +24,14 @@ variable {O K : Type*} [CommRing O] [IsDomain O] [Field K] [Algebra O K] [IsFrac
   [IsScalarTower A K V] [IsScalarTower O A V]
 
 
+omit [IsDomain O] [IsScalarTower O A K] [IsScalarTower A K V] [Algebra A K] in
 theorem exists_smul_mem {N : Submodule A V} (hN : Submodule.span K (N : Set V) = ⊤) (x : V) :
     ∃ d ∈ O⁰, d • x ∈ N :=
   (mem_span_localization_iff K O⁰ (N.restrictScalars O) x).1 (by
     rw [Submodule.coe_restrictScalars, hN]; trivial)
 
 
+omit [IsDomain O] [IsScalarTower O A K] [IsScalarTower A K V] [Algebra A K] in
 theorem exists_smul_mem_of_finite {N : Submodule A V} (hN : Submodule.span K (N : Set V) = ⊤)
     {s : Set V} (hs : s.Finite) : ∃ d ∈ O⁰, ∀ x ∈ s, d • x ∈ N := by
   induction s, hs using Set.Finite.induction_on with
@@ -43,6 +45,7 @@ theorem exists_smul_mem_of_finite {N : Submodule A V} (hN : Submodule.span K (N 
     · rw [mul_comm, mul_smul]; exact N.smul_of_tower_mem e (h x hx)
 
 
+omit [IsDomain O] [IsScalarTower O A K] [IsScalarTower A K V] [Algebra A K] in
 theorem exists_smul_le {M N : Submodule A V} (hM : M.FG)
     (hN : Submodule.span K (N : Set V) = ⊤) : ∃ d ∈ O⁰, ∀ x ∈ M, d • x ∈ N := by
   obtain ⟨s, rfl⟩ := hM

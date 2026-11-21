@@ -367,6 +367,7 @@ theorem shape_row {j : ℕ} (hj : j < D.R.m) : Shape (G.rowDec j hj) (GlobalTheo
   · omega
 
 
+variable {G} in
 theorem tilt_cols {j : ℕ} (hj₁ : j < D.R.m) {δ : GA D (G.V (.grid D.R.m j))} (h : GlobalTheory.RowVal.IsTilt G j δ) :
     ∃ l : Fin (D.R.m - 1 - j) → D.host.E,
       HMul.hMul (mt _ δ) (rat (frameMat _ _ (G.rowDec j hj₁).ι)) = rat (frameMat _ _ (G.rowDec j hj₁).ι) ∧

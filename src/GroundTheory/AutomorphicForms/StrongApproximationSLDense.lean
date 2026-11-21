@@ -150,6 +150,7 @@ theorem finiteRestrictedEquiv_symm_apply (y : FiniteRestrictedGL K n) (w : Heigh
   rw [← finiteRestrictedEquiv_apply, ContinuousMulEquiv.apply_symm_apply]
 
 
+open Classical in
 theorem localEmbedding_transvectionGL (v : HeightOneSpectrum (𝓞 K))
     (t : TransvectionStruct (Fin n) (v.adicCompletion K)) :
     localEmbedding v (transvectionGL _ _ t) = transvectionGL (Fin n) (FiniteAdeleRing (𝓞 K) K)

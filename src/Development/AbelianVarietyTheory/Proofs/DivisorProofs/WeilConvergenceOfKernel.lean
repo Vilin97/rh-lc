@@ -43,6 +43,7 @@ theorem one_le_ht {σ : E →ₐ[F] E} {d : ℕ} {J : Matrix (Fin d) (Fin d) E} 
   exact_mod_cast this
 
 
+open scoped Classical in
 theorem weilConv (hKP : KP) : WeilConv := by
   intro F E _ _ _ _ _ σ B n d X W M χX χW om r s r' s' hP hdim
   have hb := GlobalTheory.T.theta_basic_properties hKP.base F E σ B n d X W M χX χW om r s r' s' hP

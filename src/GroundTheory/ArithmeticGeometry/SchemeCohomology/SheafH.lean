@@ -120,6 +120,7 @@ lemma H.δ_apply (n₀ n₁ : ℕ) (h : n₀ + 1 = n₁) (x : Sheaf.H S.X₃ n�
     H.δ hS n₀ n₁ h x = x.comp hS.extClass h := rfl
 
 
+include hS in
 theorem H.exact₂ {n : ℕ} (y : Sheaf.H S.X₂ n) (hy : Sheaf.H.map S.g n y = 0) :
     ∃ x : Sheaf.H S.X₁ n, Sheaf.H.map S.f n x = y :=
   Ext.covariant_sequence_exact₂ _ hS y hy

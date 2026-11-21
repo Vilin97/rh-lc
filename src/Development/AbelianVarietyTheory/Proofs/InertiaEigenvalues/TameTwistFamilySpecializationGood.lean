@@ -64,6 +64,7 @@ theorem delQ_eq_one {u : UnivTwist D C} {Q : Finset (Pl D.host.E)} {x : (AE D)ˣ
   exact congrArg Multiplicative.toAdd (hx PP.1 PP.2)
 
 
+open Classical in
 theorem spec_good (D : D7) (C A : Type) [AddCommGroup C] [CommGroup A] (u : UnivTwist D C) (Q : Finset (Pl D.host.E))
     (χ : Multiplicative (↥Q → C) →* A) (h : u.Good Q) : (u.spec Q χ).Good := by
   have cc := GlobalTheory.DualPairCheck.cA_cA (D := D)

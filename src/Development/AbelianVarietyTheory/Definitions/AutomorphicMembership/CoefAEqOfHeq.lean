@@ -21,6 +21,7 @@ variable {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : T
   {Z : w.Lt} {Z' : w'.Lt} {hX : B.fields.Ok} {hX' : B'.fields.Ok} {Wt : Set B.places.Pl} {Wt' : Set B'.places.Pl}
 
 
+set_option maxHeartbeats 2000000 in
 structure Ext (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') : Prop where
   H : HEq z'.core.Q.H z.core.Q.H
   l : HEq z'.core.Q.l z.core.Q.l

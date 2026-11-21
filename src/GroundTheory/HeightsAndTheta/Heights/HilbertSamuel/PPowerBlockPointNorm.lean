@@ -294,6 +294,7 @@ end Block
 end PowerBlockPointNorm
 
 
+open PowerBlockPointNorm in
 theorem PowerBlockPointNorm.proof (h1 : SectionPointValue.Statement) (h2 : LocalRep.Statement) :
     PowerBlockPointNorm.Statement := by
   intro K _ _ ι _ Ω _ y A m N v B hA _ hv hmet q F hF

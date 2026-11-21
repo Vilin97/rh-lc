@@ -17,6 +17,8 @@ namespace GlobalTheory.QuotIntFJ
 open GlobalTheory.QuotInt
 
 
+open MeasureTheory ValuativeRel Matrix in
+set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.QuotIntFJ.quotIntFJ_unique : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] (n : Type) [Fintype n]
     [DecidableEq n] (c ρ : ℕ) (_ : 1 ≤ ρ) (_ : ρ < c) (ν : Measure k) [ν.IsAddHaarMeasure]

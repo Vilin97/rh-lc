@@ -24,6 +24,7 @@ variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 open scoped Classical
 
 
+variable (K) in
 def mixedTraceL : mixedSpace K →ₗ[ℝ] ℝ where
   toFun x := (∑ v, x.1 v) + ∑ v, (x.2 v).re
   map_add' x y := by
@@ -114,6 +115,7 @@ theorem mem_lie (X : ArchMatrix K n) : X ∈ (isExpLieAlgebra K n).lieSubalgebra
   (isExpLieAlgebra K n).mem_lieSubalgebra.2 Submodule.mem_top
 
 
+variable (K n) in
 def archTraceForm : LinearMap.BilinForm ℝ (isExpLieAlgebra K n).lieSubalgebra :=
   LinearMap.mk₂ ℝ
     (fun X Y => mixedTraceL K (trace (mat (X : ArchMatrix K n) * mat (Y : ArchMatrix K n))))
@@ -150,6 +152,7 @@ theorem archTraceForm_lie (X Y Z : (isExpLieAlgebra K n).lieSubalgebra) :
   ring
 
 
+variable (K n) in
 def archSkew : Submodule ℝ (isExpLieAlgebra K n).lieSubalgebra where
   carrier := {X | (mat (X : ArchMatrix K n))ᴴ = -mat (X : ArchMatrix K n)}
   add_mem' {X Y} hX hY := by
@@ -161,6 +164,7 @@ def archSkew : Submodule ℝ (isExpLieAlgebra K n).lieSubalgebra where
     rw [conjTranspose_smul, star_trivial, hX, smul_neg]
 
 
+variable (K n) in
 def archHerm : Submodule ℝ (isExpLieAlgebra K n).lieSubalgebra where
   carrier := {X | (mat (X : ArchMatrix K n))ᴴ = mat (X : ArchMatrix K n)}
   add_mem' {X Y} hX hY := by
@@ -437,6 +441,7 @@ theorem extensionEmbedding_symm (z : mixedSpace K) {w : InfinitePlace K} (hw : I
   exact (congrArg (fun p : mixedSpace K => p.2 ⟨w, hw⟩) this).symm
 
 
+open Reduction in
 theorem expG_mem_archCompact_of_skew (Z : archLie K n)
     (hZ : (mat (Z : ArchMatrix K n))ᴴ = -mat (Z : ArchMatrix K n)) :
     (isExpLieAlgebra K n).expG Z ∈ archCompact K n := by
@@ -490,6 +495,7 @@ theorem expG_mem_archCompact_of_skew (Z : archLie K n)
     exact one_mem _
 
 
+variable (K n) in
 theorem exists_archCartanData :
     ∃ (d : ℕ) (b : Module.Basis (Fin d) ℝ (isExpLieAlgebra K n).lieSubalgebra) (ε : Fin d → ℝ)
       (B : LinearMap.BilinForm ℝ (isExpLieAlgebra K n).lieSubalgebra),

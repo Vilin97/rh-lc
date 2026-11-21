@@ -14,6 +14,7 @@ open Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity (IsLat jL Uniformiza
 open Formalism.MainNotions.TaylorLogMetric (lamOf)
 
 
+open Filter Topology in
 theorem weierstrassP_eventuallyEq_nhdsNE_of_zero (L L' : PeriodPair)
     (h : L.weierstrassP =ᶠ[𝓝[≠] 0] L'.weierstrassP) (x : ℂ) :
     L.weierstrassP =ᶠ[𝓝[≠] x] L'.weierstrassP := by
@@ -34,6 +35,7 @@ theorem weierstrassP_eventuallyEq_nhdsNE_of_zero (L L' : PeriodPair)
   exact sub_eq_zero.1 hz
 
 
+open Filter Topology in
 theorem lattice_subset_of_weierstrassP (L L' : PeriodPair)
     (h : L.weierstrassP =ᶠ[𝓝[≠] 0] L'.weierstrassP) :
     (L.lattice : Set ℂ) ⊆ L'.lattice := by
@@ -46,6 +48,7 @@ theorem lattice_subset_of_weierstrassP (L L' : PeriodPair)
   exact absurd h2 (by decide)
 
 
+open Filter Topology in
 theorem lattice_eq_of_weierstrassP (L L' : PeriodPair)
     (h : L.weierstrassP =ᶠ[𝓝[≠] 0] L'.weierstrassP) :
     (L.lattice : Set ℂ) = L'.lattice :=

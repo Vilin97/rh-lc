@@ -117,6 +117,7 @@ theorem inK_push (h : IsGrpPullback A' A f φ) (hL : L.IsLB) {T' : Over S'} (x :
   exacts [congrArg (_ ≫ ·) k₃, congrArg (_ ≫ ·) k₂]
 
 
+variable (A L) in
 def TrivAlong (f : S' ⟶ S) : Prop :=
   ∀ (T : Over S) (a : T.left ⟶ S'), a ≫ f = T.hom → ∀ x : T ⟶ A, InK A L x → x = 1
 
@@ -187,6 +188,7 @@ section Affine
 variable [IsCommMonObj A] {R : Type} [CommRing R]
 
 
+omit [IsCommMonObj A] in
 theorem relAmple_chart (j : Sp R ⟶ S) [IsOpenImmersion j] (g : S' ⟶ Sp R) (hL : L.IsLB) (hA : RelAmple A L) :
     RelAmple ((Over.pullback (g ≫ j)).obj A) (L.pull (pullback.fst A.hom (g ≫ j))) := by
   have hL' := pull_isLB hL (pullback.fst A.hom (g ≫ j))
@@ -206,6 +208,7 @@ theorem trivAlong_dvr (hG : GlobalFnsSt) (j : Sp R ⟶ S) [IsOpenImmersion j] (h
   exact h.pull hp M.isLB _ (𝟙 _) (Category.id_comp _) x hx
 
 
+omit [IsCommMonObj A] in
 theorem trivAlong_generic [IsDomain R] [IsIntegral S] (j : Sp R ⟶ S) [IsOpenImmersion j] (U : S.Opens)
     (hU : (U : Set S).Nonempty) (h : TrivAlong A L U.ι) (F : Type) [Field F] (ψ : R →+* F)
     (hψ : Function.Injective ψ) : TrivAlong A L (spMap ψ ≫ j) := by

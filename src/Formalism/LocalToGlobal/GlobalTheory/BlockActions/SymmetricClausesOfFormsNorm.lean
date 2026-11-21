@@ -14,6 +14,7 @@ open scoped TensorProduct
 open IsDedekindDomain
 
 
+set_option maxHeartbeats 1000000 in
 theorem fvStab_holds {D : D7} {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i}
     (Tf : FormsTiedSym D u Ch chOf) : FvStab Tf := by
   intro c γ hγ v x hx

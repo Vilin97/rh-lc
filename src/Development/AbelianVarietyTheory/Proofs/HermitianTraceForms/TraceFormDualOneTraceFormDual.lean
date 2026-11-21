@@ -72,6 +72,7 @@ theorem mem_one_fractionalIdeal_iff {x : E} :
   exact ⟨fun ⟨z, hz⟩ => hz ▸ z.isIntegral_coe, fun h => ⟨⟨x, h⟩, rfl⟩⟩
 
 
+omit [IsCMField E] in
 theorem mem_inv_different_iff {x : E} :
     x ∈ ((differentIdeal ℤ (𝓞 E) : Ideal (𝓞 E)) : FractionalIdeal (𝓞 E)⁰ E)⁻¹ ↔
       ∀ a : E, IsIntegral ℤ a → ∃ k : ℤ, Algebra.trace ℚ E (x * a) = k := by
@@ -129,6 +130,7 @@ theorem fractionalIdeal_inv_smul_smul {a : FractionalIdeal (𝓞 E)⁰ E} (ha : 
   rw [← fractionalIdeal_mul_smul, inv_mul_cancel₀ ha, fractionalIdeal_one_smul]
 
 
+omit [IsCMField E] in
 theorem isLattice_fractionalIdeal_smul {a : FractionalIdeal (𝓞 E)⁰ E} (ha : a ≠ 0)
     {Λ : Submodule (𝓞 E) (Fin r → E)} (hΛ : ReciprocityTheory.MultiplicativeHeights.IsLattice Λ) :
     ReciprocityTheory.MultiplicativeHeights.IsLattice ((a : Submodule (𝓞 E) E) • Λ) := by
@@ -320,6 +322,7 @@ theorem hermDual_eq_smul_traceFormDual {ξ : E} (hξ : ξ ≠ 0) :
     (mul_ne_zero (FractionalIdeal.spanSingleton_ne_zero_iff.2 hξ) coe_different_ne_zero)]
 
 
+omit [IsCMField E] in
 theorem exists_rat_basis_of_isLattice (hΛ : ReciprocityTheory.MultiplicativeHeights.IsLattice Λ) :
     ∃ (n : ℕ) (b : Module.Basis (Fin n) ℚ (Fin r → E)),
       Submodule.span ℤ (Set.range b) = Λ.restrictScalars ℤ := by

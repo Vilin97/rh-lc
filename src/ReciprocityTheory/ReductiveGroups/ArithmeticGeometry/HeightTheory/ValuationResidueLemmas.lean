@@ -38,6 +38,7 @@ namespace Data
 variable (d : Data K ι Ω WT A)
 
 
+open ValuationResidueLemmas in
 theorem admissible_over_prime (hd : d.AxH 𝒜) (h : d.S1) (la : IsDedekindDomain.HeightOneSpectrum (𝓞 K)) (c : ι)
     (w : AddValuation (OmS (Ω c) d.D d.N) (WithTop ℤ)) (hw : w ∈ d.PlOver la c) :
     d.admitted c (d.Wres c w) ∧ IsOver (K := K) (d.Wres c w) la ∧

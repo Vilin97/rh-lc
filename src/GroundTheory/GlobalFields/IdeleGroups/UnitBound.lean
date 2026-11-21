@@ -35,6 +35,7 @@ theorem abs_log_le_iff {r M : ℝ} (hr : 0 < r) :
     Real.log_le_iff_le_exp hr, inv_le_comm₀ hr (Real.exp_pos _), Real.exp_neg]
 
 
+omit [NumberField K] in
 theorem isCompact_units_abs_log_le (w : InfinitePlace K) (M : ℝ) :
     IsCompact {z : (w.Completion)ˣ | |Real.log ‖(z : w.Completion)‖| ≤ M} := by
   rw [Units.isEmbedding_val₀.isCompact_iff]
@@ -56,6 +57,7 @@ theorem isCompact_units_abs_log_le (w : InfinitePlace K) (M : ℝ) :
       fun c hc ↦ by simpa using hc.2
 
 
+omit [NumberField K] in
 theorem isCompact_infinite_abs_log_le (M : ℝ) :
     IsCompact {y : (InfiniteAdeleRing K)ˣ |
       ∀ w : InfinitePlace K, |Real.log ‖(y : InfiniteAdeleRing K) w‖| ≤ M} := by

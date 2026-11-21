@@ -22,6 +22,7 @@ open Sub
 variable {E Ω : Type} [Field E] [NumberField E] [IsCMField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] {l : ℕ} [Fact l.Prime]
 
 
+variable (Ω l) in
 structure GoodGuard (Q : HeightOneSpectrum (𝓞 E) → Prop) : Prop where
   split : ∀ w, Q w → IsSplitAt w
   dense : ∀ S : Set (HeightOneSpectrum (𝓞 E)), S.Finite →
@@ -29,18 +30,21 @@ structure GoodGuard (Q : HeightOneSpectrum (𝓞 E) → Prop) : Prop where
       ∃ A : ValuationSubring Ω, IsPlaceOver A w ∧ IsFrob A (normV w) g⁻¹}
 
 
+variable (Ω) in
 def CoreAtQ (Q : HeightOneSpectrum (𝓞 E) → Prop) (ι : Qbar l ≃+* ℂ) (m : ℕ) : Prop :=
   ∀ U : Submodule ℂ (UA E m → ℂ), IsAutRepU U → ∀ lam : (E →+* ℂ) → DomWeight m, (∀ τ, HasWeightAt U τ (lam τ)) →
     ∃ r : G E Ω →* GL (Fin m) (Qbar l), Continuous r ∧ IsSSRep r ∧
       ∀ w B, Q w → GlobalTheory.Row9.SatU U w B → ∀ c, GlobalTheory.Row9.SphG c ι r w B fun τ => infOfWeight (lam τ)
 
 
+omit [IsAlgClosure E Ω] in
 def WeakQ (Q : HeightOneSpectrum (𝓞 E) → Prop) (ι : Qbar l ≃+* ℂ) {a : ℕ} (U : Submodule ℂ (UA E a → ℂ))
     (r : G E Ω →* GL (Fin a) (Qbar l)) : Prop :=
   Continuous r ∧ IsSSRep r ∧ ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite,
     Q w → ∀ B, SatU U w B → FrobEig ι r w (algSat a (normV w) B)
 
 
+variable (Ω) in
 def RowQ (Q : HeightOneSpectrum (𝓞 E) → Prop) (ι : Qbar l ≃+* ℂ) (a : ℕ) : Prop :=
   ∀ (U : Submodule ℂ (UA E a → ℂ)), IsAutRepU U → ∀ lam : (E →+* ℂ) → DomWeight a, (∀ τ, HasWeightAt U τ (lam τ)) →
     (∃ r : G E Ω →* GL (Fin a) (Qbar l), WeakQ Q ι U r) ∧

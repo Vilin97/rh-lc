@@ -22,6 +22,7 @@ theorem ga_mono (O : FunData K Df) {C C' : ℝ} (h : C ≤ C') : O.ga C ≤ O.ga
   nlinarith [mul_le_mul_of_nonneg_right h h1, mul_le_mul_of_nonneg_right h h2, mul_le_mul_of_nonneg_right h h3]
 
 
+set_option maxHeartbeats 800000 in
 theorem tree_leaf_parameter_arithmetic_of_bounds (O : FunData K Df) (C b : ℝ) (hC : 1 ≤ C) (h1 : leafHypothesesConst O) (h7 : LatticeConstantBound O b)
     (hb : (O.m : ℝ) * O.f * (O.N : ℝ) ^ 2 ≤ b) (hN : 80 * O.r ^ 4 ≤ O.N)
     (hL : 2 * Real.log (2 * C) ≤ Real.log b) : DegreeAndSizeBounds O C b := by

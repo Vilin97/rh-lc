@@ -31,6 +31,7 @@ theorem idelesSumInv_unitsToIdeles (x : cohomology (unitsLimitRep K) 2) :
   brauerSumInv_eq_zero ι x
 
 
+variable (K) in
 theorem sumPlaceInv_surjective : Function.Surjective (sumPlaceInv K) := by
   classical
   intro q

@@ -149,6 +149,7 @@ end Bundle
 end GlobalTheory.IsogDescent
 
 
+open GlobalTheory.IsogDescent in
 theorem GlobalTheory.isIsog_of_surjective_baseChange :
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (p : ℕ) (S S' : Scheme.{0}) [IsReduced S] (s : S ⟶ Sp (KA l)) (s' : S' ⟶ Sp (KA l)) (f : S' ⟶ S) (o₁ o₂ : Ob D l s) (o₁' o₂' : Ob D l s') (n₁ : ObjMap o₁' o₁ f) (n₂ : ObjMap o₂' o₂ f) (ψ : o₁.t.G ⟶ o₂.t.G) (ψ' : o₁'.t.G ⟶ o₂'.t.G), Surjective f → ψ'.left ≫ n₂.toSABMap.φ = n₁.toSABMap.φ ≫ ψ.left → IsIsog o₁' o₂' p ψ' → IsFinite ψ.left → Etale ψ.left → IsIsog o₁ o₂ p ψ ∧ ∀ K, KerSet ψ' (n₁.toSABMap.φ ⁻¹' K) → KerSet ψ K := by
   intro E _ _ _ H D l p S S' _ s s' f o₁ o₂ o₁' o₂' n₁ n₂ ψ ψ' hf hψ ⟨⟨hm, _, _, hsurj, hact, hL⟩, hlev⟩ hfin het

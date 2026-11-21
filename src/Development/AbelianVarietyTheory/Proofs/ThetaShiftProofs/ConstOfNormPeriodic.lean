@@ -413,6 +413,7 @@ theorem genVal_sym (hL : L.IsLB) (h : u.IsAH Hm χ)
 variable [IsCommMonObj A] {f f' : A ⟶ A} {F G : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)}
 
 
+omit [IsCommMonObj A] in
 theorem lift_mem (hF : ∀ z, u.ex (F z) = u.ex z ≫ f) (l : u.Λ) : F l ∈ u.Λ := by
   rw [← u.ker, hF, (u.ker l).2 l.2, ← ex_zero u, ← hF, map_zero]
 

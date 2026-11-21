@@ -102,6 +102,7 @@ theorem charpoly_of_isBaseChange [Module.Free R N] [Module.Finite R N] [Module.F
 variable [Module.Finite ℤ O] [Module.Flat R R']
 
 
+variable (R' ρ) in
 theorem eigenSub_baseChangeAction_of_flat (χ : O →+* R) :
     eigenSub (baseChangeAction R' ρ) ((algebraMap R R').comp χ)
       = (eigenSub ρ χ).baseChange R' := by
@@ -172,6 +173,7 @@ variable {O : Type*} [CommRing O] [Module.Finite ℤ O] {A : Type*} [CommRing A]
   {N : Type*} [AddCommGroup N] [Module A N] [Module.Finite A N] {ρ : O →+* Module.End A N}
 
 
+omit [Module.Finite ℤ O] in
 theorem isSplitting_comp_of_injective
     (h : IsSplitting fun i => (algebraMap A (FractionRing A)).comp (σ i))
     {L : Type*} [Field L] {g : A →+* L} (hg : Function.Injective g) :
@@ -182,6 +184,7 @@ theorem isSplitting_comp_of_injective
   simp
 
 
+omit [Module.Finite ℤ O] in
 theorem isSplitting_fractionRing_of_injective
     (h : IsSplitting fun i => (algebraMap A (FractionRing A)).comp (σ i))
     {B : Type*} [CommRing B] [IsDomain B] {g : A →+* B} (hg : Function.Injective g) :
@@ -193,6 +196,7 @@ variable (h : IsSplitting fun i => (algebraMap A (FractionRing A)).comp (σ i))
 include h
 
 
+variable (ρ) in
 theorem charpoly_eq_prod_of_isDomain [Module.Free A N] (a : O) :
     (ρ a).charpoly = ∏ i, (X - C (σ i a)) ^ Module.finrank A (eigenSub ρ (σ i)) := by
   apply Polynomial.map_injective _ (IsFractionRing.injective A (FractionRing A))
@@ -354,6 +358,7 @@ variable {O : Type*} [CommRing O] {V : Type*} [CommRing V] [IsDomain V] [Valuati
   {M : Type*} [AddCommGroup M] [Module V M]
 
 
+variable (V) in
 theorem flat_of_valuationRing (V' : Type*) [CommRing V'] [IsDomain V'] [Algebra V V']
     [FaithfulSMul V V'] : Module.Flat V V' :=
   Module.Flat.flat_iff_torsion_eq_bot_of_isBezout.2
@@ -425,6 +430,7 @@ theorem exists_triangular_of_mem_span [FaithfulSMul R K]
     fun _ hg => eq_map_toMatrix_of_eq_sum b b' j hli hg⟩
 
 
+omit [Fintype ι] [LinearOrder ι] in
 theorem linearIndependent_of_isBaseChange [Module.Flat R K] {f : P →ₗ[R] W}
     (hb : IsBaseChange K f) {v : ι → P} (hv : LinearIndependent R v) :
     LinearIndependent K fun i => f (v i) := by
@@ -468,6 +474,7 @@ variable {E : Type*} [Field E] [NumberField E] {A : Type*} [CommRing A] [IsDomai
   {ι : Type*} [Fintype ι] {σ : ι → 𝓞 E →+* A}
 
 
+omit [CharZero A] in
 theorem flat_int_iff_charZero : Module.Flat ℤ A ↔ CharZero A := by
   rw [Module.Flat.flat_iff_torsion_eq_bot_of_isBezout,
     ← Submodule.isTorsionFree_iff_torsion_eq_bot, Module.isTorsionFree_iff_algebraMap_injective]
@@ -564,6 +571,7 @@ end EigenSplit
 universe u v
 
 
+open EigenSplit in
 theorem eigenBundle_of_injective {E : Type*} [Field E] [NumberField E]
     {A : Type u} [CommRing A] [IsDomain A] [CharZero A] {ι : Type*} [Fintype ι] [DecidableEq ι]
     {σ : ι → 𝓞 E →+* A} (hσ : Function.Injective σ) (hc : Fintype.card ι = Module.finrank ℚ E)
@@ -681,6 +689,7 @@ theorem eigenBundle_of_injective {E : Type*} [Field E] [NumberField E]
     exact he'.exists_triangular c c' hc hc' hF
 
 
+open EigenSplit in
 theorem eigenBundle {E : Type*} [Field E] [NumberField E]
     {L : Type*} [Field L] [CharZero L] [Fintype (E →+* L)] [DecidableEq (E →+* L)]
     (hL : ∀ x : E, ((minpoly ℚ x).map (algebraMap ℚ L)).Splits)

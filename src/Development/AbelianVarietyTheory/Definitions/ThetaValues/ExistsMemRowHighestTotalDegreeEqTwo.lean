@@ -282,6 +282,7 @@ section Space
 variable [Fintype κ]
 
 
+variable (R) in
 noncomputable def rowHighest (c : T → Fin p → ℕ) (c' : T → Fin q → ℕ) :
     Submodule R (Poly R T p q κ) :=
   harmonicSubmodule R T p q κ ⊓
@@ -383,6 +384,7 @@ theorem mem_rowHighest_of_rowWeight [Fintype T] (h : IsHarmonic P)
   · rcases r with a | b <;> simp
 
 
+variable (c c') in
 theorem minorProd_mem_rowHighest [Fintype T] {ε : T → Fin p → κ → R} {φ : T → Fin q → κ → R}
     (h : IsPerp ε φ) : minorProd c c' ε φ ∈ rowHighest R c c' :=
   mem_rowHighest_of_rowWeight (isHarmonic_minorProd c c' h)
@@ -434,6 +436,7 @@ theorem orbitSpan_le_rowHighest : orbitSpan R h c c' ≤ rowHighest R c c' := by
   exact colAct_mem_rowHighest g (basePoly_mem_rowHighest h c c')
 
 
+include h in
 theorem rowHighest_ne_bot [Nontrivial R] :
     (rowHighest R c c' : Submodule R (Poly R T p q (Fin n))) ≠ ⊥ := fun e =>
   basePoly_ne_zero h c c' (by simpa [e] using basePoly_mem_rowHighest (R := R) h c c')

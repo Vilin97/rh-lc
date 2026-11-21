@@ -23,6 +23,7 @@ namespace GlobalTheory.DiscClosure
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
 
 
+variable (E N) in
 def autSub : Submodule ℂ (Sm E N) where
   carrier := {φ | IsAutForm φ}
   zero_mem' := isAutForm_const (Submodule.zero_mem _)
@@ -32,6 +33,7 @@ def autSub : Submodule ℂ (Sm E N) where
     simpa using GlobalTheory.CuspFormLin.isAutForm_smul_add c h (isAutForm_const (Submodule.zero_mem _))
 
 
+variable (μ : Measure (GA E N)) in
 def squareIntegrableSmoothSubmoduleGL : Submodule ℂ (Sm E N) where
   carrier := {φ | MemL2Quotient (latticeGL E N) μ φ.1}
   zero_mem' := ⟨fun _ _ _ => rfl, MemLp.zero⟩

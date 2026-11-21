@@ -34,6 +34,7 @@ open GlobalTheory.Mem.R3.Rw
 namespace GlobalTheory.Mem.R3.Rw.FwBase
 
 
+set_option maxHeartbeats 4000000 in
 theorem coreBaseFrames_eq_modelFrames_enlargedCoefficientBase : ∀ (B B' : Base) (f : Fr B.toPre) (f' : Fr B'.toPre) (T : TwDat B) (T' : TwDat B') (w : ColW B f T) (w' : ColW B' f' T'),
     B'.toPre = B.toPre → ∀ (Z : w.Lt) (hX : B.fields.Ok) (Wt : Set B.places.Pl) (z : Dat (w.st Z) w.I hX T Wt) (Z' : w'.Lt) (hX' : B'.fields.Ok)
     (Wt' : Set B'.places.Pl) (core' : Formalism.L2.Pj.CoreJ (w'.st Z').toD7) (alg' : Algebra core'.Q.c.F (w'.st Z').toD7.what₂.LL),

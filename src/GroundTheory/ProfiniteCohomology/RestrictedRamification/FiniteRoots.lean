@@ -25,6 +25,7 @@ variable (S : Set (HeightOneSpectrum (𝓞 F))) (n : ℕ) [NeZero n]
   (hnS : ∀ v ∉ S, ((n : ℕ) : 𝓞 F) ∉ v.asIdeal)
 
 
+include hnS in
 theorem finite_cohomology_one_rootsOfUnity [Finite S] :
     Finite (cohomology (galRootsOfUnity.{u} F (maxUnramifiedOutside F Ω S) n) 1) := by
   refine (AddMonoidHom.finite_iff_finite_ker_range (kummerPicHom (Ω := Ω) S n)).2 ⟨?_, inferInstance⟩
@@ -47,6 +48,7 @@ theorem finite_cohomology_one_rootsOfUnity [Finite S] :
     exact Subtype.ext (Subtype.mk.inj h)
 
 
+include hnS in
 theorem finite_cohomology_two_rootsOfUnity_of_finite
     (hfin : {y : cohomology (galSUnits S (maxUnramifiedOutside F Ω S)) 2 | n • y = 0}.Finite) :
     Finite (cohomology (galRootsOfUnity.{u} F (maxUnramifiedOutside F Ω S) n) 2) := by

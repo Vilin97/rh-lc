@@ -165,6 +165,7 @@ theorem fnAt_toΓ {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) (k : R
 variable {D : D7} {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
 
 
+variable (Xo c) in
 def cst : c.F →+* Γ(Xo.XF c, ⊤) := (strK (Xo := Xo) (c := c)).appTop.hom.comp (toΓ c.F)
 
 theorem fnAt_cst {S : Type} [CommRing S] (y : Sp S ⟶ Xo.XF c) (k : c.F) :
@@ -235,6 +236,8 @@ theorem exists_map (hL : ActLev (Xo := Xo) c lev) (g : G) : ∃ r : Xo.XF c ⟶ 
   · exact ⟨𝟙 _, Category.id_comp _, fun S _ _ y y' ⟨ρ, ν, hi, hm, _⟩ => absurd ⟨ρ, ν, hi, hm⟩ h⟩
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem split_rules (hq : Dw.q = 0) (hL : ActLev (Xo := Xo) c lev) (hF : GlobalTheory.DefPt.FreePt Xo c lev)
     (W : Submodule c.F (Rul Xo c)) (hW : ∀ b, ∀ f ∈ W, fnRule b * f ∈ W) (T : G → W →ₗ[c.F] W)
     (hT : ∀ g f, (T g f : Rul Xo c) = actLev c lev g f) (σ : c.F →+* ℂ) :

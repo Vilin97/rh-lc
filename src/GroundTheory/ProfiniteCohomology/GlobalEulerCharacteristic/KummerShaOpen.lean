@@ -23,6 +23,7 @@ variable {K L : FiniteSubfield} [Fact (K ≤ L)] {S : Set (HeightOneSpectrum (�
   (ιs : ∀ v : S, ℚ̄ →ₐ[K.1] AlgebraicClosure ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1))
 
 
+set_option maxHeartbeats 800000 in
 theorem ptCompactToGlobal_gsMackeyCompactIso (ℓ : ℕ)
     (c : compactCohomologyRes (gsFinFamily (placesOver S) (gsMackeyEmbeddings hL ιs))
       (gsRoots (placesOver S : Set (HeightOneSpectrum (𝓞 L.1))) ℓ) 2) :
@@ -54,6 +55,7 @@ theorem ptCompactToGlobal_gsMackeyCompactIso (ℓ : ℕ)
   exact s1.trans (s2.trans s3.symm)
 
 
+set_option maxHeartbeats 800000 in
 theorem mem_ptSha_mackey_iff (ℓ : ℕ)
     (x : cohomology (gsRoots (placesOver S : Set (HeightOneSpectrum (𝓞 L.1))) ℓ) 2) :
     (gsRootsOfUnityCohomologyIso S hL ℓ 2).hom.hom x ∈
@@ -94,6 +96,7 @@ theorem gsRootsOfUnityIso_symm_comp_rootsOfUnityToSUnits (ℓ : ℕ) [NeZero ℓ
   Rep.hom_ext (Representation.IntertwiningMap.ext (LinearMap.ext fun _ => rfl))
 
 
+set_option maxHeartbeats 800000 in
 theorem cohomologyMap_rootsOfUnityToSUnits_gsRootsOfUnityCohomologyIso (ℓ : ℕ) [NeZero ℓ]
     (x : cohomology (gsRoots (placesOver S : Set (HeightOneSpectrum (𝓞 L.1))) ℓ) 2) :
     (cohomologyMap ((Rep.resFunctor (gsSubtype S hL)).map
@@ -133,6 +136,7 @@ theorem gsRootsOfUnityCohomologyIso_hom_inv_apply (ℓ : ℕ)
   congrArg (fun φ => φ.hom x) (gsRootsOfUnityCohomologyIso S hL ℓ 2).inv_hom_id
 
 
+set_option maxHeartbeats 800000 in
 theorem mem_ptSha_mackey_iff_of_eq (ℓ : ℕ)
     {x' : cohomology (gsRoots (placesOver S : Set (HeightOneSpectrum (𝓞 L.1))) ℓ) 2}
     {x : cohomology (Rep.res (gsSubtype S hL) (gsRoots S ℓ)) 2}
@@ -145,6 +149,7 @@ theorem mem_ptSha_mackey_iff_of_eq (ℓ : ℕ)
   exact mem_ptSha_mackey_iff hL ιs ℓ x'
 
 
+set_option maxHeartbeats 800000 in
 theorem cohomologyMap_rootsOfUnityToSUnits_eq_zero_iff_of_eq (ℓ : ℕ) [NeZero ℓ]
     {x' : cohomology (gsRoots (placesOver S : Set (HeightOneSpectrum (𝓞 L.1))) ℓ) 2}
     {x : cohomology (Rep.res (gsSubtype S hL) (gsRoots S ℓ)) 2}
@@ -162,6 +167,7 @@ theorem cohomologyMap_rootsOfUnityToSUnits_eq_zero_iff_of_eq (ℓ : ℕ) [NeZero
     exact (gsSUnitsCohomologyIso S hL 2).toLinearEquiv.injective (h0.trans (map_zero _).symm)
 
 
+set_option maxHeartbeats 1600000 in
 theorem mem_ptSha_mackey_iff_exists_kummerModN {ℓ : ℕ} [NeZero ℓ] (hℓ : ℓ.Prime)
     (hℓS : ∀ v ∉ S, ((ℓ : ℕ) : 𝓞 K.1) ∉ v.asIdeal) (hK : Odd ℓ ∨ IsTotallyComplex L.1)
     (x : cohomology (Rep.res (gsSubtype S hL) (gsRoots S ℓ)) 2) :

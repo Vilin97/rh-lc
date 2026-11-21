@@ -193,6 +193,7 @@ theorem diag_case [Nonempty n] (Θ : Matrix n n K[X]) (D : n → K)
 end CofactorOrder
 
 
+open CofactorOrder in
 theorem exists_not_X_pow_dvd_adjugate_of_firstOrderKernel (K : Type) [Field K] (a m : ℕ)
     (Ψ : Matrix (Fin a) (Fin a) (Polynomial K))
     (H : ∀ x0 x1 : Fin (1 + 1) → Fin a → K, (∀ j, (Ψ.map fun p => p.coeff 0).mulVec (x0 j) = 0 ∧

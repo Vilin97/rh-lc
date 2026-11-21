@@ -45,6 +45,7 @@ theorem snd_hom : pullback.snd (q ▷ B).left (q ▷ B).left ≫ (A ⊗ B).hom =
   rw [← Over.w (q ▷ B), pullback.condition_assoc]
 
 
+variable (B) in
 def W0 : Over (Sp K) :=
   Over.mk (pullback.fst _ _ ≫ pullback.fst (q ▷ B).left (q ▷ B).left ≫ (A ⊗ B).hom : Triple (q ▷ B).left ⟶ Sp K)
 

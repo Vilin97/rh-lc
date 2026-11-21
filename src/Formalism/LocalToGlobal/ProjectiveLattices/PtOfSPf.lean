@@ -204,6 +204,7 @@ def PtOfSBody (h : LawsP T) (j : ℕ) (hj : InR D j) (hG : GenFrEx (T.Q.Xo j) T.
             evR (T.Q.Xo j) T.Q.c ((G.w k' : T.R j)) y) ^ k
 
 
+set_option maxHeartbeats 1000000 in
 theorem ptOfS_all [Finite (Comp (T.Q.Xo j) T.Q.c)] (hS : ReciprocityTheory.ChartRestriction.G.Out.SecBaseChangeAnySt)
     (hTw : ReciprocityTheory.ChartRestriction.G.Out.SecTwistSt) (hFT : GenFromTest (T.Q.Xo j) T.Q.c hG) (hV : GenValInjSt h j hG)
     {ka wL wF : WeightFamilies.Wt D j} (G : GlobalFamilyData (recPlus h j hj) ka wL wF) (hB : BIRSt h j hj hG G)

@@ -297,6 +297,7 @@ end Main
 end GlobalTheory.LatBC
 
 
+open NumberField IsDedekindDomain GlobalTheory.ExpFrame Formalism.CohomologicalDescent.DepthNonnegative Formalism.CohomologicalDescent.LD Formalism.RankGapBounds.FormsTensorLocalization Formalism.L2.Host GlobalTheory.HeckeGal in
 theorem GlobalTheory.LatBC.baseChange_lattices : ∀ (l : ℕ) [Fact l.Prime] (ι : Type) [Fintype ι] [DecidableEq ι] (N : ℕ) (F : Frame l ι N) (lam : ι → ℕ → ℕ), Function.Injective F.emb → (∀ τ, Antitone (res N (lam τ))) → ∃ b : NablaT F.O N lam →ₛₗ[F.emb] NablaT (PadicAlgCl l) N lam, Function.Injective b ∧ (∀ y, y ∈ F.latN lam ↔ ∃ x, b x = y) ∧ (∀ y, y ∈ F.latD lam ↔ ∃ x ∈ tensSub (Formalism.CohomologicalDescent.DepthNonnegative.deltaIn F.O N lam), b x = y) ∧ (∀ g x, b (grp F.O N lam g x) = grp (PadicAlgCl l) N lam (fun τ => Matrix.GeneralLinearGroup.map F.emb (g τ)) (b x)) ∧ (∀ (n : ℕ) (x : Fin n → NablaT F.O N lam), LinearIndependent F.O x → LinearIndependent (PadicAlgCl l) fun a => b (x a)) ∧ Submodule.span (PadicAlgCl l) (Set.range b) = ⊤ := by
   intro l _ ι _ _ N F lam hinj hlam
   obtain ⟨h1, h5, h6⟩ := GlobalTheory.LatBC.bc_props F.emb N lam hinj

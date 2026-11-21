@@ -147,6 +147,7 @@ private theorem len_eq (hv : v.Integers O) {κ : Type} [Fintype κ] [DecidableEq
   rw [h2, ← hBX, Matrix.map_mul, Matrix.det_mul, map_mul, h4, mul_div_cancel_left₀ _ h3]
 
 
+omit [Algebra O C] in
 private theorem full_of_stable [IsDomain O] {n s : ℕ} (a : Fin n → O) (ha : Function.Injective a)
     (M : Submodule O (Fin n × Fin s → O))
     (hst : ∀ f ∈ M, (fun y : Fin n × Fin s => a y.1 * f y) ∈ M)
@@ -199,6 +200,7 @@ private theorem killed_of_hasLen {M : Type} [AddCommGroup M] [Module O M] {x : N
   exact (Finset.dvd_prod_of_mem c (Finset.mem_univ i)).mul_right r
 
 
+omit [Algebra O C] in
 private theorem proj_span {n s h : ℕ} (a : Fin n → O) (φ : Fin h → Fin n × Fin s → O) (τ : Fin n)
     (z : Fin s → O) :
     z ∈ Submodule.span O (Set.range fun l => fun i => φ l (τ, i)) ↔

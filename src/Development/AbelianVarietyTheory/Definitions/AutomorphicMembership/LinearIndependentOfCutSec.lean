@@ -42,6 +42,7 @@ theorem valAt_ne_zero (hf : UnitAt (below y) f) : valAt y f ≠ 0 := by
 variable (y)
 
 
+omit [IsIntegral Z] in
 theorem below_comp (φ : K →+* K') : below (spMap φ ≫ y) = below y := by
   exact (Scheme.Hom.comp_apply _ _ _).trans (congrArg y (Subsingleton.elim (α := PrimeSpectrum K) _ _))
 
@@ -65,6 +66,7 @@ theorem valAt_comp (φ : K →+* K') (f : Z.functionField) : valAt (spMap φ ≫
   · rw [valAt, valAt, dite_eq_right h, dite_eq_right ((below_comp y φ).symm ▸ h), map_zero]
 
 
+variable {y} in
 theorem valAt_fnOf {U : Z.Opens} (hy : below y ∈ U) (h : genericPoint Z ∈ U) (a : Γ(Z, U)) :
     valAt y (fnOf U h a) = TangentOrigin.evalPt y U ((Points.le_preimage_iff _ _).2 hy) a := by
   rw [← algebraMap_germ hy a, valAt_algebraMap]
@@ -105,15 +107,20 @@ section Gal
 variable {Y E} (σ : AlgebraicClosure E ≃ₐ[E] AlgebraicClosure E) (y : GeomPt Y E)
 
 
+omit [NumberField F] [NumberField E] in
 theorem below_smul : below (σ • y).1 = below y.1 := below_comp _ _
 
 
+omit [NumberField F] [NumberField E] in
 theorem valAt_smul (f : Y.Fn) : valAt (σ • y).1 f = σ (valAt y.1 f) := valAt_comp _ _ _
 
 
+omit [NumberField F] [NumberField E] [Algebra F E] in
 theorem map_coef (i : Fin Y.dim) (l : Fin n) : σ (coef Y E c i l) = coef Y E c i l := σ.commutes _
 
 
+omit [NumberField F] [NumberField E] in
+variable {w c y} in
 theorem smul_mem_cutSet (hy : y ∈ cutSet Y E w c) : σ • y ∈ cutSet Y E w c := fun k hk i => by
   have := congrArg σ (hy k (below_smul σ y ▸ hk) i)
   set_option synthInstance.maxHeartbeats 100000 in
@@ -154,10 +161,12 @@ variable {Y E w c} {x : Y.X} {y : GeomPt Y E} {k k' : Fin n} {g g' e : Y.Fnˣ} {
 
 
 
+omit [NumberField F] in
 theorem isEqn_eqn (Δ : Y.Dv) (x : Y.X) : Δ.IsEqn x (eqn Δ x) := (Δ.exists_isEqn x).choose_spec
 
 
 
+omit [NumberField F] [NumberField E] in
 theorem dsVal_pick {l : Fin Y.dim → Fin n} (hc : ∀ i j, c i j = if j = l i then 1 else 0) (g : Y.Fn) :
     dsVal Y E w c y k g = valAt y.1 (jacRat Y (fun i => w (l i) / w k) * g) := by
   rw [dsVal, Finset.sum_eq_single l _ (by simp)]
@@ -168,6 +177,7 @@ theorem dsVal_pick {l : Fin Y.dim → Fin n} (hc : ∀ i j, c i j = if j = l i t
 
 
 
+omit [NumberField F] [NumberField E] in
 theorem resVal_smul (σ : AlgebraicClosure E ≃ₐ[E] AlgebraicClosure E) (Δ : Y.Dv) (f : Y.Fn) (y : GeomPt Y E) :
     resVal Y E w c Δ f (σ • y) = σ (resVal Y E w c Δ f y) := by
   rw [resVal, resVal, below_smul]

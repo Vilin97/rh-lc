@@ -26,6 +26,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     (W : LocWach PD LL O v n) {l : ℕ} [Fact l.Prime]
 
 
+omit [Fact l.Prime] in
 theorem ring_of_const {e : ℕ} (ξ : O⟦X⟧) (hξ : Associated ξ (X ^ W.DelF.card))
     (hs : W.DelF.card ≠ 0) (hinv : ∀ δ ∈ W.DelF, W.γ₀ δ ξ = ξ)
     (hfree : ∀ b : O⟦X⟧, ∃! G : Fin W.DelF.card → O⟦X⟧,
@@ -163,6 +164,7 @@ theorem roots_eq_nrm [IsLocalRing O] [IsAdicComplete (IsLocalRing.maximalIdeal O
     exact ⟨τ, key ζ _ hζ hτ⟩
 
 
+omit [IsDomain O] [CharZero O] [Algebra ℤ_[l] O] hp hχ in
 theorem exists_lift_base {F Ω : Type} [Field F] [Field Ω] [Algebra F Ω] [IsGalois F Ω]
     (f : O →+* Ω) (hf : Function.Injective f) {e : ℕ} (ϖ : Fin e → O) (hϖ : Function.Injective ϖ)
     (h1 : ∀ τ, ∃ ζ : O, IsPrimitiveRoot ζ l ∧ ϖ τ = nrm W χ ζ)
@@ -249,6 +251,7 @@ theorem card_ne_zero : (H.W K 1 LL h).DelF.card ≠ 0 := fun h0 => by
   rw [h0] at hc; omega
 
 
+set_option maxHeartbeats 800000 in
 theorem norm_ring (χ : (H.W K 1 LL h).Gam →* ℤ_[l]ˣ)
     (hχ : ∀ g, algebraMap ℤ_[l] ↥(OL LL) (χ g : ℤ_[l]) = ((H.W K 1 LL h).χΓ g : ↥(OL LL)))
     (hk : ∀ x, red l x = 1 → ∃ g, χ g = x) :
@@ -294,6 +297,7 @@ theorem norm_ring (χ : (H.W K 1 LL h).Gam →* ℤ_[l]ˣ)
     exact sub_self _
 
 
+set_option maxHeartbeats 800000 in
 theorem trace_ring (h1 : Module.finrank ↥(K0 K) ↥K.1 = 1) :
     Formalism.MainNotions.DeltaInvariantLattices.wachRingRelations (H.W K 1 LL h) 1 (l - 1) (H.W K 1 LL h).π₀
       (fun _ => Polynomial.X + Polynomial.C ((l : ℕ) : ↥(OL LL))) := by
@@ -312,6 +316,7 @@ theorem trace_ring (h1 : Module.finrank ↥(K0 K) ↥K.1 = 1) :
 end GlobalTheory.DelParam
 
 
+open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc TensorProduct GlobalTheory.NL Formalism.MainNotions.DeltaInvariantLattices in
 theorem GlobalTheory.DelParam.torsion_parameters : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL), let W := (HW l).W K s LL h; W.s = 1 → l ≠ 2 → W.DelF.card = (l - 1) / Module.finrank ↥(K0 K) ↥K.1 ∧ (∃ π' E', wachRingRelations W (Module.finrank ↥(K0 K) ↥K.1) ((l - 1) / Module.finrank ↥(K0 K) ↥K.1) π' E') ∧ (Module.finrank ↥(K0 K) ↥K.1 = 1 → wachRingRelations W 1 (l - 1) W.π₀ (fun _ => Polynomial.X + Polynomial.C ((l : ℕ) : ↥(OL LL)))) := by
   intro D HW l _ K s LL h W hs hl
   obtain rfl : 1 = s := hs.symm.trans ((HW l).W_s K s LL h)

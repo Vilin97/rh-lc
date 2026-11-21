@@ -30,6 +30,7 @@ theorem finite_secM (y : (Σ k, ι k) → Ω) (d : K → ℕ) : Module.Finite �
   exact Module.Finite.iff_fg.mpr h
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem aeval_eq_zero_of_mem {y : (Σ k, ι k) → Ω} {g : MRing ι} (hg : g ∈ mCoordIdeal y) :
     aeval y g = 0 := by
   have hext : ((aeval fun _ : K => (1 : Ω)).restrictScalars ℤ).comp (mConeMap y) = aeval y :=

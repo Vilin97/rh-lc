@@ -67,6 +67,7 @@ theorem le_comap_of_chart (pt : (Σ o, ικ o) → Φ) {A F : Type*} [CommRing A
   exact (hWp.mem_or_mem (hmin.1.2 hn)).resolve_left (huW n)
 
 
+omit [Fintype κ] [DecidableEq κ] [∀ o, Fintype (ικ o)] [IsDomain O] [IsDiscreteValuationRing O] in
 theorem support_ratDiv {P W : Ideal (MRing ικ O)} {s h : MRing ικ O} (hW : ratDiv P s h W ≠ 0) :
     W.IsPrime ∧ P ≤ W ∧ IsRelevant W := by
   have key : ∀ v, divCycle P v W ≠ 0 → W.IsPrime ∧ P ≤ W ∧ IsRelevant W := by
@@ -82,6 +83,7 @@ theorem support_ratDiv {P W : Ideal (MRing ικ O)} {s h : MRing ικ O} (hW : r
 end SegreFlagCutLiesOverProof
 
 
+open SegreFlagCutLiesOverProof in
 theorem SegreFlagCutLiesOver.proof (hChart : SegreFlagCutChartSection.Statement) :
     SegreFlagCutLiesOver.Statement := by
   intro O _ _ _ ϖ hϖ Ω _ _ K _ _ ι _ y d hV N E _ _ B B' hBB' w w' x x' f g hfl M M' a₀ a₀' φ φ' hφ hφ'

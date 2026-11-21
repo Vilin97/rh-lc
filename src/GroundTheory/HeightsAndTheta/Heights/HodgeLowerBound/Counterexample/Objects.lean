@@ -41,6 +41,7 @@ structure WeightReg (ι : K → Type) [∀ k, Fintype (ι k)] where
     ∀ z : (Σ b, ι b) → ℂ, (∀ b, ∃ i, z ⟨b, i⟩ ≠ 0) → (reg t A').h z = k * (reg t A).h z
 
 
+open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.HeightsSet in
 def weightRegRef : WeightReg (PBlk 2) where
   reg _ A := (HermLine.ofMetrics (fun k => fsMetric (PBlk 2 k)) A.a).tensor
     (constLine (A.h (fun _ => 1) / (HermLine.ofMetrics (fun k => fsMetric (PBlk 2 k)) A.a).h (fun _ => 1))

@@ -55,6 +55,7 @@ theorem cpow_eq_exp (x : Ideles K) (t : ℝ) :
   ring
 
 
+variable (K) in
 def normChar (t : ℝ) : HChar K :=
   ⟨Circle.toUnits.comp (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.UnitaryHeckeChar.normPow K t).toHom,
     Units.continuous_iff.2

@@ -268,6 +268,7 @@ theorem map_eq_sum_repr {M : Type} [Ring M] (f : A.X →+ M) (y : A.X) :
     simp only [map_sum, map_zsmul, zsmul_eq_mul]
 
 
+open Classical in
 def dualForm (w : ℂ) : (A.X →+ ℂ) →ₗ[ℂ] (A.X →+ ℂ) →ₗ⋆[ℂ] ℂ :=
   LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ)
     (fun r r' => A.coord r ⬝ᵥ ((A.BwMat w)⁻¹.map Complex.ofReal) *ᵥ star (A.coord r'))
@@ -277,6 +278,7 @@ def dualForm (w : ℂ) : (A.X →+ ℂ) →ₗ[ℂ] (A.X →+ ℂ) →ₗ⋆[ℂ
     (fun _ _ _ => by rw [map_smul, star_smul, mulVec_smul, dotProduct_smul]; rfl)
 
 
+open Classical in
 theorem dualForm_apply (w : ℂ) (r r' : A.X →+ ℂ) :
     A.dualForm w r r' = A.coord r ⬝ᵥ ((A.BwMat w)⁻¹.map Complex.ofReal) *ᵥ star (A.coord r') := rfl
 
@@ -452,6 +454,7 @@ theorem periods_polarised :
 end AnArc
 
 
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor NumberField in
 theorem AnArc.isPeriod {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} [StarRing (𝓞 E)]
     (A : AnArc (𝓞 E)) {w : ℂ} (hw : (A.BwMat w).PosDef) (D : Datum H) {g : ℕ} (ty : Fin g → (E →+* ℂ))
     (h : A.V ≃ₗ[ℂ] (Fin g → ℂ)) (hh : ∀ (a : 𝓞 E) v i, h (A.actV a v) i = ty i (a : E) * h v i)

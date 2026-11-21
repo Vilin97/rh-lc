@@ -135,6 +135,7 @@ variable (hc : Formalism.BasicNotions.CMData F E) {n r : ℕ} [NeZero n] (h : r 
   {SG : Finset (Pl E)} (P : LevFam E K r SG) (χ : ∀ w : SG, ℕ → (𝓞 E ⧸ w.1.asIdeal)ˣ →* Kˣ)
 
 
+include ht hn in
 theorem levU_parFam_eq_lev :
     levU hc n ∅ SG (parFam h t s P χ).grp =
       Formalism.L2.DIV.lev hc (1 : Matrix (Fin n) (Fin n) E) (1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) (parDat h t s P χ) := by
@@ -163,6 +164,7 @@ theorem rld_parDat_cg (c : ℕ) (w : SG) : (parDat h t s P χ).cg (c + 1) w.1 = 
   simp only [parDat, dif_pos w.2, Nat.add_sub_cancel, Subtype.coe_eta]
 
 
+include ht hn in
 theorem levChr_parFam_eq_levChar (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F))
     (h1 : x ∈ levU hc n ∅ SG (parFam h t s P χ).grp)
     (h2 : x ∈ Formalism.L2.DIV.lev hc (1 : Matrix (Fin n) (Fin n) E) (1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) (parDat h t s P χ)) :

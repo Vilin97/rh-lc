@@ -62,6 +62,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {d : ℕ} {b : Module.Basis (Fin d) F E}
 
 
+omit [NumberField F] [NumberField E] [IsTopologicalRing R] [LocallyCompactSpace R] [T2Space R] in
 theorem coordK_preimage (hc : IsHomeomorph (cf (F := F) (E := E) R b)) (lam : Measure R)
     (T : Set (Fin d → R)) :
     coordK R b lam (cf R b ⁻¹' T) = Measure.pi (fun _ => lam) T := by
@@ -97,6 +98,8 @@ theorem map_coordW (hCM : IsCMExt F E σ) (hc : IsHomeomorph (cf (F := F) (E := 
   rw [Fintype.prod_prod_type]
 
 
+omit [NumberField F] [NumberField E] [IsTopologicalRing R] [LocallyCompactSpace R]
+  [SecondCountableTopology R] [T2Space R] [MeasurableSpace R] [BorelSpace R] in
 theorem BR_eq (hc : IsHomeomorph (cf (F := F) (E := E) R b)) {M n : ℕ}
     (J : Matrix (Fin M) (Fin M) E) (B : Matrix (Fin M × Fin d) (Fin M × Fin d) F)
     (hB : ∀ x y : Fin M → R ⊗[F] E, Algebra.trace R (R ⊗[F] E) (hR R σ J x y) =

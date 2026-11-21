@@ -18,6 +18,7 @@ open IsDedekindDomain NumberField Matrix GlobalTheory.ChiGrid GlobalTheory.FunOb
 namespace GlobalTheory.FrameTransport
 
 
+open GlobalTheory.FrameTransport in
 theorem exists_surj_cls {D : D7} (V : HSp D) (fr : GL (Fin V.rank) D.host.E)
     (hfr : Formalism.UG.cT (↑D.sp.cm.sig) (fr : Matrix (Fin V.rank) (Fin V.rank) D.host.E) * V.gram *
       (fr : Matrix (Fin V.rank) (Fin V.rank) D.host.E) = 1)

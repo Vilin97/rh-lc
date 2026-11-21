@@ -14,6 +14,8 @@ open Filter Topology TopologicalSpace GlobalTheory.AnPer TensorProduct
 namespace GlobalTheory
 
 
+open Filter Topology in
+open Filter Topology TopologicalSpace TensorProduct in
 theorem _root_.GlobalTheory.tensor_hol_ext_of_values :
     ∀ {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] (W : Opens E) (D : Type) [CommRing D] [Algebra ℂ D] (x y : D ⊗[ℂ] _root_.GlobalTheory.AnPer.Hol W), (∀ (p : E) (hp : p ∈ W), Algebra.TensorProduct.lift (AlgHom.id ℂ D) ((Algebra.ofId ℂ D).comp (_root_.GlobalTheory.AnPer.Hol.ev p hp)) (fun _ _ ↦ Commute.all _ _) x = Algebra.TensorProduct.lift (AlgHom.id ℂ D) ((Algebra.ofId ℂ D).comp (_root_.GlobalTheory.AnPer.Hol.ev p hp)) (fun _ _ ↦ Commute.all _ _) y) → x = y := by
   intro E _ _ W D _ _ x y h

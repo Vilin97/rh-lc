@@ -15,6 +15,8 @@ open scoped TensorProduct ENNReal nonZeroDivisors Pointwise
 namespace GlobalTheory.SnMass.VolN.IntG
 
 
+open NumberField IsDedekindDomain MeasureTheory Matrix in
+open scoped TensorProduct ENNReal nonZeroDivisors Pointwise in
 theorem _root_.GlobalTheory.SnMass.VolN.IntG.Hpk_mulVec_esI (k r : ℕ) (a : Fin r) (y : Fin (2 * r + k + 1) → ℂ) :
     (_root_.Formalism.QuantumDeterminants.Hpk k r *ᵥ y) (_root_.Formalism.QuantumDeterminants.esI k r a) = y (_root_.Formalism.QuantumDeterminants.eI k r a) := by
   have ha := a.isLt
@@ -101,6 +103,9 @@ private lemma map_mem_differentIdeal_pow_of_involutive {E : Type} [Field E] [Num
       exact Submodule.add_mem _ ha hb
 
 
+open NumberField IsDedekindDomain MeasureTheory Matrix in
+open scoped TensorProduct ENNReal nonZeroDivisors Pointwise in
+variable {E : Type} [Field E] [NumberField E] in
 theorem _root_.GlobalTheory.SnMass.VolN.IntG.mem_dInv_two_mul (t : E ≃ₐ[ℚ] E) (ht : ∀ x, t (t x) = x) (m : ℕ) (c : E)
     (h : ∀ x ∈ ((differentIdeal ℤ (𝓞 E) : FractionalIdeal (𝓞 E)⁰ E)) ^ m,
       ∀ y ∈ ((differentIdeal ℤ (𝓞 E) : FractionalIdeal (𝓞 E)⁰ E)) ^ m,
@@ -175,6 +180,8 @@ private lemma modelEntry_eq_sq_mul_pairing_lemma_6 (σ : E →+* E) {k r : ℕ}
   field_simp
 
 
+open NumberField IsDedekindDomain MeasureTheory Matrix in
+open scoped TensorProduct ENNReal nonZeroDivisors Pointwise in
 theorem _root_.GlobalTheory.SnMass.VolN.IntG.antidiag_mem_skewLat (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E) (k r : ℕ) (J : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) E)
     (Λ : Submodule (𝓞 E) (Fin (2 * r + k + 1) → E)) (P : Matrix (Fin (2 * r + k + 1)) (Fin (r + 1)) E)

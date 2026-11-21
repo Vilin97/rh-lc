@@ -110,10 +110,12 @@ theorem lin_of (hψ : IsStd ψ) {π₁ π₀ : AE F E →+* Fv F v} {c₁ c₂ �
   rw [show ofM (c₁ (u₁ + u₀)) ⬝ᵥ ofM (c₂ (u₁ + u₀)) = 0 from h0, add_zero]; rfl
 
 
+variable (t) in
 def cW (b : GL (Fin n) (Fv F v)) (c : GL (Fin d) (Fv F v)) (u : Matrix (Fin n) (Fin d) (AE F E)) : Matrix (Fin n) (Fin d) (Fv F v) :=
   (b⁻¹).1 * u.map (piW t) * (c⁻¹).1ᵀ
 
 
+variable (σ t X W) in
 def cB (b : GL (Fin n) (Fv F v)) (c : GL (Fin d) (Fv F v)) (u : Matrix (Fin n) (Fin d) (AE F E)) : Matrix (Fin n) (Fin d) (Fv F v) :=
   -(b.1ᵀ * X.J.map t * u.map (piW (t.comp σ)) * (W.J.map t)ᵀ * c.1)
 

@@ -47,6 +47,7 @@ end GlobalTheory.LeviLineDeriv
 namespace GlobalTheory.IndLine
 
 
+open GlobalTheory.LeviLineDeriv in
 theorem hasDerivAt_chi_abs_levi : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (d d₁ : ℕ) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ : ℕ),
     H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ χ : Chr F E, IsHecke F E χ → ∀ z : ℝ, ∀ γ ∈ Lines σ W,

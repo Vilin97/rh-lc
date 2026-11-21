@@ -21,6 +21,7 @@ namespace IsExpLieAlgebra
 variable (h : IsExpLieAlgebra G 𝔤)
 
 
+variable {h} in
 theorem IsTestFunction.convDeriv {γ : G → ℂ} (hγ : h.IsTestFunction γ) (X : 𝔤) :
     h.IsTestFunction (h.convDeriv X γ) := by
   refine ⟨?_, hasCompactSupport_convDeriv hγ.2 X⟩
@@ -31,6 +32,7 @@ theorem IsTestFunction.convDeriv {γ : G → ℂ} (hγ : h.IsTestFunction γ) (X
   exact ContMDiff.comp (I' := 𝓘(ℝ, 𝔤)) h1 (contMDiff_inv 𝓘(ℝ, 𝔤) ∞)
 
 
+variable {h} in
 theorem IsTestFunction.const_mul {γ : G → ℂ} (hγ : h.IsTestFunction γ) (c : ℂ) :
     h.IsTestFunction (fun y => c * γ y) := by
   refine ⟨?_, hγ.2.mul_left⟩
@@ -41,6 +43,7 @@ theorem IsTestFunction.const_mul {γ : G → ℂ} (hγ : h.IsTestFunction γ) (c
   exact L.contDiff.comp_contMDiff hγ.1
 
 
+variable {h} in
 theorem IsTestFunction.add {γ₁ γ₂ : G → ℂ} (h₁ : h.IsTestFunction γ₁) (h₂ : h.IsTestFunction γ₂) :
     h.IsTestFunction (fun y => γ₁ y + γ₂ y) := by
   refine ⟨?_, h₁.2.add h₂.2⟩

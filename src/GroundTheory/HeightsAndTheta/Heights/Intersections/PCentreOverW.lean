@@ -20,6 +20,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {K' : Type} [Fintype K'] {ι' : K' → Type} [∀ k, Fintype (ι' k)]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem imageZ_isRelevant {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
     {y : Ideal (MRing ι')} (hy : IsRelevant y) : IsRelevant (imageZ v y) := by
   intro k

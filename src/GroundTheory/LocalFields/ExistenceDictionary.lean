@@ -18,6 +18,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 attribute [local instance] isDiscreteModule_units
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem normal_subgroupOf_top_fixingOpenSubgroup_iff (L : IntermediateField K Ω)
     [FiniteDimensional K L] :
     ((fixingOpenSubgroup L : Subgroup (Ω ≃ₐ[K] Ω)).subgroupOf
@@ -52,6 +53,7 @@ theorem isAbelianExtension_fixingOpenSubgroup_iff (L : IntermediateField K Ω) [
     exact isAbelianExtension_of_isMulCommutative le_top
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem map_baseUnitsEquiv_normGroup (L : IntermediateField K Ω) [FiniteDimensional K L] :
     (normGroup Ωˣ ⊤ (fixingOpenSubgroup L)).map
       (baseUnitsEquiv (K := K) (Ω := Ω) : fixedModule Ωˣ (⊤ : Subgroup (Ω ≃ₐ[K] Ω)) →* Kˣ) =
@@ -69,6 +71,7 @@ theorem map_baseUnitsEquiv_normGroup (L : IntermediateField K Ω) [FiniteDimensi
     rw [baseUnitsEquiv_norm, MulEquiv.apply_symm_apply]
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem mem_normGroup_iff_mem_range_normUnits (L : IntermediateField K Ω) [FiniteDimensional K L]
     (a : fixedModule Ωˣ (⊤ : Subgroup (Ω ≃ₐ[K] Ω))) :
     a ∈ normGroup Ωˣ ⊤ (fixingOpenSubgroup L) ↔ baseUnitsEquiv a ∈ (normUnits K L).range := by
@@ -80,6 +83,7 @@ theorem mem_normGroup_iff_mem_range_normUnits (L : IntermediateField K Ω) [Fini
     rwa [← baseUnitsEquiv.injective hba]
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem normGroup_eq_comap (L : IntermediateField K Ω) [FiniteDimensional K L] :
     normGroup Ωˣ ⊤ (fixingOpenSubgroup L) =
       (normUnits K L).range.comap

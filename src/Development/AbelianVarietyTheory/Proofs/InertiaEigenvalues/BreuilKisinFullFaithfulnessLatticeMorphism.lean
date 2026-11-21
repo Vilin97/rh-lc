@@ -23,6 +23,7 @@ section Lat
 variable {G : Type} [Group G] [TopologicalSpace G] {T T' : LocLat G ℚ_[l] K O}
 
 
+omit [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsUltrametricDist K] [IsUnitBall O K] in
 theorem latW_smul (f : LatHom T.L T'.L) (r : OW l O) (y : TW (OW l O) T) :
     latW f (r • y) = r • latW f y := by
   induction y using TensorProduct.induction_on with
@@ -31,6 +32,7 @@ theorem latW_smul (f : LatHom T.L T'.L) (r : OW l O) (y : TW (OW l O) T) :
   | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 
+omit [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsUltrametricDist K] [IsUnitBall O K] in
 theorem latW_frob (f : LatHom T.L T'.L) (y : TW (OW l O) T) :
     latW f (TWmap (frobOW l O) T y) = TWmap (frobOW l O) T' (latW f y) := by
   induction y using TensorProduct.induction_on with
@@ -49,6 +51,7 @@ def latZ (f : LatHom T.L T'.L) :
     map_smul' := fun z x => ((f.f.restrictScalars O).restrict f.T_le).map_smul (algebraMap ℤ_[l] O z) x }
 
 
+omit [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsUltrametricDist K] [IsUnitBall O K] in
 theorem kappa_latZ (f : LatHom T.L T'.L) :
     letI := zlLat T
     letI := zlLat T'

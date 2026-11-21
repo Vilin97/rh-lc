@@ -87,6 +87,7 @@ end GlobalTheory.LocOver.WittFrames
 namespace GlobalTheory.LocOver
 
 
+open GlobalTheory.LocOver.WittFrames Formalism.L2.SG.GramJoint in
 theorem witt_frames_at_point : ∀ (D : D7) {T T' : D.host.E} (F F00 : LFlag (VS D) D.R.rS T)
     (F' F'0 : LFlag (VS D) D.R.rS T') (w : Point D.host.E (D.R.rS + 1)), T ≠ 0 → T' ≠ 0 → Gval F F' ≠ 0 →
     IsInCell (ZhatOM (ZhatL F F')) w → ZhatOM (ZhatL F00 F'0) = ptMat w →

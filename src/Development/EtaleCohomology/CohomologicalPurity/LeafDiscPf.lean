@@ -114,6 +114,7 @@ end LateralTheory.CohomologicalPurity.Cl.DiscPf
 namespace LateralTheory.CohomologicalPurity.Cl
 
 
+open DiscPf in
 def LeafDiscNrm : Prop := ∀ (R : Type) [CommRing R] (K : Cx R) (n : ℤ) (P : PSh)
   (z : Cocycle ((chains R).obj (disc.obj P)) K n),
   ∃ (a : (free R).obj P ⟶ K.X n) (β : Cochain ((chains R).obj (disc.obj P)) K (n - 1)),

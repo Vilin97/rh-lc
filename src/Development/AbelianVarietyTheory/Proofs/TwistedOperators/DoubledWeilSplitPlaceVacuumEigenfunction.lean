@@ -31,6 +31,7 @@ variable {R : Type} [CommRing R] {E : Type} [CommRing E] [Algebra R E] (c : E �
   {α β : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β]
 
 
+omit [DecidableEq α] [DecidableEq β] in
 theorem symp_dbl (ξ : E) (JA : Matrix α α E) (JB : Matrix β β E) (x y : Matrix α (β ⊕ β) E) :
     symp (R := R) c ξ JA (dbl JB) x y =
       symp (R := R) c ξ JA JB x.toCols₁ y.toCols₁ - symp (R := R) c ξ JA JB x.toCols₂ y.toCols₂ := by

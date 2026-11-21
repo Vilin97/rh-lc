@@ -65,6 +65,7 @@ def comb (t : ∀ k, ι k) (s : ∀ k : K ⊕ K', Sum.elim ι ι' k) : ∀ k : K
   | .inr k => s (.inr k)
 
 
+omit [Fintype K] [Fintype K'] in
 theorem fnField_le_join (x : (Σ k, ι k) → Ω) (z : (Σ k, ι' k) → Ω) :
     fnField O x ≤ fnField O (joinCoord x z) := by
   refine Subfield.closure_mono (Set.union_subset_union_right _ ?_)

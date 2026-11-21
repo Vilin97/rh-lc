@@ -298,6 +298,7 @@ theorem toUX_blk (A B : HSp D) {d : ℕ} (e : Fin A.rank ⊕ Fin B.rank ≃ Fin 
   Subtype.ext (Units.ext (blkMat_submatrix e _ _))
 
 
+set_option maxHeartbeats 1000000 in
 theorem thetaInt_eq_zero (hSA : GlobalTheory.Published.StrongApproxSU) (hK : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ThetaIntegralsAgree)
     (hLM : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.LocalMatching) {μ₀ : T} (hL : L.Is μ₀) (W : G.Weil) (B : Frames G) (ρ : RealMatch W) (t : T)
     (i j : Fin D.R.m) (hst : SquareStanding G t) {A : Fr (spW G i j)} {A₁ : Fr (spW₁ G i j)} {AV : Fr (spV G i j)}

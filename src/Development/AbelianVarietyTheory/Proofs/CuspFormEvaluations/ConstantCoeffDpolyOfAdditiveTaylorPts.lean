@@ -18,6 +18,7 @@ variable {σ τ W : Type*} [Fintype σ] [DecidableEq σ] [Fintype τ] [NormedAdd
   [NormedSpace ℂ W]
 
 
+omit [DecidableEq σ] in
 theorem hasSubst_taylorDir (u : τ → W) {φ : W → σ → ℂ} (h0 : φ 0 = 0) :
     HasSubst fun i => taylorDir u fun z => φ z i := by
   refine hasSubst_of_constantCoeff_zero fun i => ?_

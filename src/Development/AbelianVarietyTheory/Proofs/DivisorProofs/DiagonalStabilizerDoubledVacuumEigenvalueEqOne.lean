@@ -93,6 +93,7 @@ theorem lDiag_box_ne_zero (hF : IsTotallyReal F) {κ : Type} [Fintype κ] {Ψ : 
   rwa [h5, zero_add] at h4
 
 
+variable (F) in
 def piE (P : HeightOneSpectrum (𝓞 E)) : AE F E →+* P.adicCompletion E :=
   (evalV E P).toRingHom.comp ((finAdEquiv F E).toRingHom.comp (finTens F E))
 

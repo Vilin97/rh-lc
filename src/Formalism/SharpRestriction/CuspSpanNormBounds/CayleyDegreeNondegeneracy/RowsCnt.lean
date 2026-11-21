@@ -106,6 +106,7 @@ theorem rows_mean_real {T : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (what₂ : Fi
           ENNReal.ofReal_sum_of_nonneg (fun Λ _ => hw Λ)]
 
 
+open Classical in
 theorem rows_sum_wRow (S : Finset (D.s.Pair u u')) :
     ∑ p ∈ S, X.wRow p =
       ∑ Λ ∈ Y.what₂, wRow D Y.F0 Λ * ((S.filter (fun p => X.abelian₂ (D.s.pfst p) = Λ)).card : ℕ) := by
@@ -119,6 +120,7 @@ theorem rows_sum_wRow (S : Finset (D.s.Pair u u')) :
   rw [Finset.sum_congr rfl hc, Finset.sum_const, nsmul_eq_mul, mul_comm]
 
 
+open Classical in
 theorem rows_count {C' Cl Cg cb Cu cT CT C0 A Ad C : ℝ} (hH : Cnt.Hyp D large₂ u u' C' Cl Cg cb Cu cT CT C0 A)
     (hC3 : UnitaryVolumeMass.MeanFlagPairCount D large₂ u u' C' Cl Cg cb Cu cT CT C0 A Ad C) (Z' Z'' : GramM D) (hZ' : RelZ D Z') (hZ'' : RelZ D Z'')
     (s : ℕ) (hs : 2 ≤ s) (hsk : s ≤ D.R.k) (De : ℝ) (hDe1 : 1 ≤ De)
@@ -141,6 +143,7 @@ end Count
 section One
 
 
+open Classical in
 theorem rows_card_le_mul {α ι : Type} (Xs : Set α) (R : α → α → Prop) (hR : ∀ a ∈ Xs, R a a) (S : Finset ι) (f : ι → α)
     (hf : ∀ i ∈ S, f i ∈ Xs) (P : ℝ≥0∞)
     (hfib : ∀ i₀ ∈ S, ∀ S' : Finset ι, S' ⊆ S → (∀ i ∈ S', R (f i₀) (f i)) → ((S'.card : ℕ) : ℝ≥0∞) ≤ P) :
@@ -219,6 +222,7 @@ def gramPairQuadrupleBound (D : D7) (large₂ : SizeData₂ D) (C : ℝ) (Z' Z''
   C ^ D.R.f * (HHZ D large₂.sc.b C Z' * HHZ D large₂.sc.b C Z'') ^ (C * (D.R.rS : ℝ) ^ 2)
 
 
+open Classical in
 theorem rows_countOne {C' Cl Cg cb Cu cT CT C0 A CSW C4 : ℝ} (hH : Cnt.Hyp D large₂ u u' C' Cl Cg cb Cu cT CT C0 A)
     (hSW : UnitaryVolumeMass.stSW D large₂ u u' C' Cl Cg cb Cu cT CT C0 A CSW) (hC4 : UnitaryVolumeMass.PartnerCountBound D large₂ u u' C' Cl Cg cb Cu cT CT C0 A C4)
     (hF : rowsSingleFibre X Y) (Z' Z'' : GramM D) (hZ' : RelZ D Z') (hZ'' : RelZ D Z'')
@@ -281,6 +285,7 @@ def wordPairTermSingleFibre (X : TermTie D) (Y : LoopTie D large₂ X u u' C1) :
     ((S.card : ℕ) : ℕ∞) ≤ cntPartners D (X.abelian₂ (D.s.pfst p₀)) (lf D Y.F0) (X.fl' (D.s.psnd p₀)) Z'
 
 
+open Classical in
 theorem rows_countOne' {C' Cl Cg cb Cu cT CT C0 A CSW C4 : ℝ} (hH : Cnt.Hyp D large₂ u u' C' Cl Cg cb Cu cT CT C0 A)
     (hSW : UnitaryVolumeMass.stSW D large₂ u u' C' Cl Cg cb Cu cT CT C0 A CSW) (hC4 : UnitaryVolumeMass.PartnerCountBound D large₂ u u' C' Cl Cg cb Cu cT CT C0 A C4)
     (hF : wordPairTermSingleFibre X Y) (Z' Z'' : GramM D) (hZ' : RelZ D Z') (hZ'' : RelZ D Z'')

@@ -21,6 +21,7 @@ variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G]
 variable [IsTopologicalGroup G]
 
 
+variable (k G) in
 def HasFiniteCohomology (P : ℕ → Prop) : Prop :=
   ∀ (A : Rep.{u} k G) [IsDiscreteRep A], Finite A → P (Nat.card A) →
     (∀ q : ℕ, Finite (cohomology A q)) ∧ ∀ q : ℕ, 3 ≤ q → Subsingleton (cohomology A q)

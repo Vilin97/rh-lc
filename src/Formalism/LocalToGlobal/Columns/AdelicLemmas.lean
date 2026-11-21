@@ -741,6 +741,7 @@ end Inj2
 section Ok
 
 
+open Formalism.UG in
 theorem globLat_defUnimod {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
     {hc : Formalism.BasicNotions.CMData F E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {L : Submodule (𝓞 E) (Fin n → E)}
     (hL : Formalism.L2.DIV.IsDefUnimod hc J L) {y : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)} (hyU : y ∈ Formalism.L2.DIV.UA hc J) :

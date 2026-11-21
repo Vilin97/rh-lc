@@ -61,6 +61,7 @@ def Ext.Res {g n : ℕ} [Fact g.Prime] (D : Ext h g n) (R : Ine (F := E) A →* 
     R t = z
 
 
+variable (h) in
 structure TameSys (g : ℕ) [Fact g.Prime] (n : ℕ) {K : Type} [Field K] [Algebra (ZMod g) K] (R : Ine (F := E) A →* Kˣ) : Prop where
   pos : 0 < n
   normV_eq : normV w = g

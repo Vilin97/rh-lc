@@ -20,6 +20,7 @@ private theorem quotient_out_sub_mem' {G : Type} [AddCommGroup G] (N : AddSubgro
 
 
 open scoped Classical in
+open Classical in
 theorem ph_finsum_quotient {A : Type} [AddCommGroup A] (P S : AddSubgroup A) (φ f : A → ℂ) (c : ℂ) (a : A)
     (hper : ∀ x, ∀ y ∈ P, φ (x + y) = φ x)
     (hfin : (Function.support fun q : A ⧸ P => φ q.out).Finite)

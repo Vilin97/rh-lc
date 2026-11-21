@@ -109,6 +109,7 @@ def pair {U : Set (E d)} (hU : IsOpen U) (ψ : E d → ℂ) (hψ : Integrable ψ
 end GlobalTheory.HCA.SolSub
 
 
+open GlobalTheory.HCA.SolSub in
 theorem GlobalTheory.HCA.solSet_closed_submodule :
     ∀ (d : ℕ) (ι : Type) (P : Sys d ι) (U : Set (E d)), IsOpen U → (∀ i n w, ContDiffOn ℝ ∞ (P.a i n w) U) →
       IsClosed (solSet P U) ∧ ∃ S : Submodule ℂ (U →ᵇ ℂ), (S : Set (U →ᵇ ℂ)) = solSet P U := by

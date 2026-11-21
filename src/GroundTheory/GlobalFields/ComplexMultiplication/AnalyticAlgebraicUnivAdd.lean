@@ -16,6 +16,7 @@ universe u
 variable {F : Type u} [Field F] {E E' : WeierstrassCurve F} [E.IsElliptic] [E'.IsElliptic]
 
 
+omit [E.IsElliptic] in
 theorem exists_univField_algHom {M : Type*} [Field M] [Algebra F M] [DecidableEq M]
     (σ : E.toAffine.FunctionField →ₐ[F] M) {u v : M}
     (h : (E.baseChange M).toAffine.Nonsingular u v)

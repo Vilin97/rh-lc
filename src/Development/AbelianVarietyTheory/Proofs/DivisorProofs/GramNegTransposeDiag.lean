@@ -22,6 +22,8 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 namespace GlobalTheory.FrameEquiv
 
 
+open Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.FWT in
+open scoped ComplexOrder in
 theorem isCartanInv_cart_model {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) (τ : D.what₂.Tau) :
     IsCartanInv (gramAt D V τ) (cart M τ) := by
   have hu := (Matrix.isUnit_iff_isUnit_det _).1 (M.fr_unit τ)

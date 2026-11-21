@@ -66,6 +66,8 @@ private theorem tensorProduct_ringHom_ext_of_comp_eq {R S E Z : Type} [CommRing 
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 
+open IsLocalRing Polynomial in
+open scoped TensorProduct in
 theorem _root_.GlobalTheory.EnlargeBaseChange.fits_baseChange : ∀ (T O : Type) [CommRing T] [IsDomain T] [IsLocalRing T] [CommRing O] [IsLocalRing O] [Algebra T O]
     [Algebra (Polynomial T) O] [IsScalarTower T (Polynomial T) O], _root_.GlobalTheory.LocAcyc.AbsIntClosed T →
     ∀ (P : Ideal (Polynomial T)) [P.IsPrime] (φ : Localization.AtPrime P →+* O),

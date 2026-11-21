@@ -46,6 +46,7 @@ theorem AETopologicalRing.exists_anti (c : E ≃ₐ[F] E) (h2 : Module.finrank F
   ring
 
 
+omit [NumberField F] in
 theorem AETopologicalRing.linearIndependent_one_anti (c : E ≃ₐ[F] E) {δ : E} (hδ : c δ = -δ)
     (h0 : δ ≠ 0) : LinearIndependent F ![(1 : E), δ] := by
   rw [LinearIndependent.pair_iff]
@@ -76,6 +77,7 @@ theorem AETopologicalRing.sigALinear_apply (c : E ≃ₐ[F] E) (a : AE F E) :
 end
 
 
+open scoped RestrictedProduct in
 theorem AETopologicalRing.t2Space_finiteAdeleRing (F : Type) [Field F] [NumberField F] :
     T2Space (FiniteAdeleRing (𝓞 F) F) :=
   inferInstanceAs (T2Space (Πʳ v : HeightOneSpectrum (𝓞 F),

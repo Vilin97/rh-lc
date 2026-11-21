@@ -113,6 +113,7 @@ lemma absV_dV (v : HeightOneSpectrum (𝓞 F)) :
     zpow_neg, zpow_natCast, Nat.cast_pow]
 
 
+variable (F) in
 theorem hasProd_absV_dV :
     HasProd (fun v : HeightOneSpectrum (𝓞 F) => absV v (dV v)) (|(discr F : ℝ)|⁻¹) := by
   have hD := differentIdeal_ne_zero' F

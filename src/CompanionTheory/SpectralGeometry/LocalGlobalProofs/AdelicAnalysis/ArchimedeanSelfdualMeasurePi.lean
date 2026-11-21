@@ -167,6 +167,7 @@ end Meas
 end GlobalTheory.CompanionTheory.SW.SdPi
 
 
+open GlobalTheory.CompanionTheory.SW.SdPi GlobalTheory.CompanionTheory.SW.RealCoord in
 theorem GlobalTheory.CompanionTheory.SW.selfDual_pi_inf : ∀ (F : Type) [Field F] [NumberField F], IsTotallyReal F → ∀ (ψ : AddChar (AF F) ℂ), IsCharAF F ψ → ∀ k : Measure (Ainf F), SelfDual k (fun s t => psiInf F ψ (s * t)) → ∀ (ι : Type) [Fintype ι], SelfDual (Measure.pi fun _ : ι => k) (fun x y => psiInf F ψ (x ⬝ᵥ y)) := by
   intro F _ _ hF ψ hψ k hk ι _
   haveI := hF

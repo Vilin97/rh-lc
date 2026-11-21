@@ -112,6 +112,7 @@ theorem pt_ext {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {
 end GlobalTheory.Reg.VecEig
 
 
+open GlobalTheory.Reg.VecEig GlobalTheory.GrpTangent in
 theorem GlobalTheory.Reg.isEigAt_iff_eig : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l), ∀ (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (M : MChart Y), ∀ (R : Type) [CommRing R] [Algebra c.F R] (f : Γ(Y.X, M.U) →+* R) (x : Sp R ⟶ Xo.X) (Λ : M.Lift f x), ∀ (τ : E →+* ℂ) (cv : Fin M.n → R) (w : Sp (DualNumber R) ⟶ Xo.univ.t.G.left), Λ.Vec cv w → (IsEigAt c τ w ↔ M.Eig f τ cv) := by
   intro E _ _ _ H Dw l Xo c O _ β Y M R _ _ f x Λ τ cv w hw
   obtain ⟨v', u', hv', hu', rfl⟩ := hw

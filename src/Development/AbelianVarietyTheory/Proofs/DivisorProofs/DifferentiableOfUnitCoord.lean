@@ -44,6 +44,7 @@ def stdWord [Fintype κ] (e : κ → ℕ) : List κ :=
   (univ : Finset κ).toList.flatMap fun x => List.replicate (e x) x
 
 
+omit [FiniteDimensional ℂ E] in
 theorem monoDeriv_eq_wordDeriv [Fintype κ] (v : κ → E) (e : κ → ℕ) (F : E → ℂ) :
     TaylorCoefficientForms.monoDeriv v e F = TensorCoordinateForms.wordDeriv v (stdWord e) F := by
   unfold TaylorCoefficientForms.monoDeriv TensorCoordinateForms.wordDeriv stdWord

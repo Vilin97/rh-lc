@@ -19,6 +19,8 @@ open ReciprocityTheory.ChartRestriction.T2 (PadicCoeff FracTop IsFGTop cupFG)
 open Formalism.RepresentationBoundsCohomology.ringDataObjects (RingData RingDef bcT bcR bcM bcChar ChainHyp ChainAB blockPoly PrimHyp AbsIrr BlockDiagonalIrreducibleAt)
 
 
+set_option maxHeartbeats 2000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 def RealDisplayAllK (ℓ : ℕ) [Fact ℓ.Prime] (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     [Algebra ℤ_[ℓ] O] [Module.Finite ℤ_[ℓ] O]
     [TopologicalSpace O] [TopologicalSpace (FractionRing O)]

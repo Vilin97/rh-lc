@@ -45,6 +45,7 @@ lemma translHom_mul (a c : 𝟙_ (Over (Sp K)) ⟶ A) :
 end FiniteQuot
 
 
+open FiniteQuot PointQuot AbelianQuotient in
 theorem exists_quotient_abelian_by_finite_points :
     ∀ (k : Type) [Field k] [IsAlgClosed k] (A : Over (Sp k)) [GrpObj A], IsAbelianScheme A → ∀ C : Subgroup (𝟙_ (Over (Sp k)) ⟶ A), Finite C → ∃ (B : Over (Sp k)) (_ : GrpObj B) (ψ : A ⟶ B), IsAbelianScheme B ∧ IsMonHom ψ ∧ IsFinite ψ.left ∧ Etale ψ.left ∧ Surjective ψ.left ∧ ∀ (k' : Type) [Field k'] [IsAlgClosed k'] (t : Sp k' ⟶ Sp k) (x : Over.mk t ⟶ A), x ≫ ψ = 1 ↔ ∃ c ∈ C, x = toUnit _ ≫ c := by
   intro k _ _ A _ hA C hC

@@ -19,6 +19,7 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
 
+omit [StarRing K] [Module K V] [IsScalarTower (𝓞 K) K V] in
 theorem idxN_span (x : V) (S : Submodule (𝓞 K) V) :
     idxN (Submodule.span (𝓞 K) {x}) S =
       Ideal.absNorm (S.comap (LinearMap.toSpanSingleton (𝓞 K) V x) : Ideal (𝓞 K)) := by

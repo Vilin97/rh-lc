@@ -28,6 +28,7 @@ theorem exists_common {α : Type} [Fintype α] (Q : α → ℕ → Prop) (hQ : �
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem prod_zpow_nsmul (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (t : ℕ) (a : K → ℤ) :
     ∏ k, y ⟨k, c k⟩ ^ (-(t • a) k) = ∏ _l : Fin t, ∏ k, y ⟨k, c k⟩ ^ (-a k) := by
   rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, ← Finset.prod_pow]

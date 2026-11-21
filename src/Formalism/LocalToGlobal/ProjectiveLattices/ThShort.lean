@@ -140,9 +140,11 @@ structure DeltaDat (n : ℕ) : Type 1 where
   φδ : (Fin n → LevQ Dw l₂) → c.F
 
 
+variable {Xo c} in
 def DeltaDat.eF {n : ℕ} (d : DeltaDat Xo c n) : c.F ≃ₐ[ℚ] d.c₂.F := IntermediateField.equivOfEq d.hF.symm
 
 
+variable {Xo c} in
 def DeltaDat.w {n : ℕ} (d : DeltaDat Xo c n) (x0 : Fin n → Dw.La) : (Fin n → LevQ Dw d.l₂) → d.c₂.F :=
   fun q => d.eF (zetaM c ^ pairL (l := l) x0 (fun b => levRep (q b)) * d.φδ q)
 
@@ -152,11 +154,13 @@ def SecMaps {X : Scheme.{0}} {A B : LB X} (w : LB.Iso A B) (a : LB.Sec A) (b : L
       (X.presheaf.map (homOfLE (inf_le_right : B.U p.1 ⊓ A.U p.2 ≤ A.U p.2)).op).hom (a.f p.2)
 
 
+variable {Xo c} in
 def DeltaDat.EtaOK {n : ℕ} (d : DeltaDat Xo c n) : Prop :=
   (∀ a, (d.Xo₂.univ.eta a ^ d.pd).left ≫ d.m.φ = d.r ≫ (Xo.univ.eta a).left) ∧
     ∀ a, (d.Xo₂.univ.etaA a ^ (d.l₂.A / l.A)).left ≫ d.m.φ = d.r ≫ (Xo.univ.etaA a).left
 
 
+variable {Xo c} in
 def FrOver {n : ℕ} (d : DeltaDat Xo c n) {k : Type} [CommRing k]
     [Algebra c.F k] [Algebra d.c₂.F k] (y₂ : FrPt d.Xo₂ d.c₂ k) (y : FrPt Xo c k) : Prop :=
   y₂.x ≫ d.r = y.x ∧ (∀ τ i, y₂.u τ i ≫ d.m.φ = y.u τ i) ∧
@@ -177,6 +181,7 @@ def FrOver {n : ℕ} (d : DeltaDat Xo c n) {k : Type} [CommRing k]
       (pm.appLE _ _ h).hom (y.s.f i) = t.f (fun _ _ => i 0)
 
 
+variable {Xo c} in
 def DeltaDat.IsLev {n : ℕ} (d : DeltaDat Xo c n) : Prop :=
   l.Dvd d.l₂ ∧ d.l₂.M = l.M * d.pd ∧ Nat.Coprime d.pd l.M ∧ d.l₂.Mb = l.Mb * d.I ∧
     d.I ⊔ d.I.map (H.bar : 𝓞 E →+* 𝓞 E) = ⊤ ∧
@@ -199,6 +204,7 @@ abbrev LaJ {n : ℕ} (d : DeltaDat Xo c n) : Type := Dw.La ⧸ (d.I.map (H.bar :
 abbrev LaI {n : ℕ} (d : DeltaDat Xo c n) : Type := Dw.La ⧸ (d.I • ⊤ : Submodule (𝓞 E) Dw.La)
 
 
+variable {Xo c} in
 def DeltaDat.PhiPin {n : ℕ} (d : DeltaDat Xo c n) (ph : (Fin n → LaJ Xo c d) → c.F)
     (ψ : (LaI Xo c d ≃ₗ[𝓞 E] LaI Xo c d) →* c.Fˣ) (x₀ : Fin n → LaJ Xo c d) : Prop :=
   (∀ x x' : Fin n → LaJ Xo c d, (∀ b : Fin n, b.val < Dw.p + Dw.q → x b = x' b) → ph x = ph x') ∧
@@ -214,6 +220,7 @@ def DeltaDat.PhiPin {n : ℕ} (d : DeltaDat Xo c n) (ph : (Fin n → LaJ Xo c d)
         (∑ b, Dw.EF (qRep (x b)) (cHalf H d.I • levRep (q b)))
 
 
+variable {Xo c} in
 def DeltaDat.PsiTie {n : ℕ} (d : DeltaDat Xo c n) (ψ : (LaI Xo c d ≃ₗ[𝓞 E] LaI Xo c d) →* c.Fˣ) : Prop :=
   ∀ (k : LaI Xo c d ≃ₗ[𝓞 E] LaI Xo c d) (g : Sim Dw) (ρ : d.Xo₂.X ≅ d.Xo₂.X),
     g.InGam l d.l₂ → (∀ a, Dw.ModN d.l₂.A (g.f d.l₂.A a - a)) → d.Xo₂.LevAut g ρ →

@@ -416,11 +416,13 @@ theorem rp_data (q : RP Y u u') :
   ⟨q.2.choose.2, q.2.choose_spec.choose.2, q.2.choose_spec.choose_spec⟩
 
 
+open Formalism.L2.SG.TermTieOf in
 def Bof (q : RP Y u u') : (VS D).V ≃ₗ[D.host.E] (VS D).V :=
   mvOf q.1.2.lam (lf D (X.Fu u)) q.l2.frame (repF q.1.2) * (q.l2.lin * q.l1.lin⁻¹) *
     (mvOf q.1.1.lam (lf D (X.Fu u)) q.l1.frame (repF q.1.1))⁻¹
 
 
+open Formalism.L2.SG.TermTieOf in
 theorem rp_moves (q : RP Y u u') :
     ∃ n₁ n₂ m₁ m₂ : (VS D).V ≃ₗ[D.host.E] (VS D).V,
       n₁ ∈ NLam q.l1.lam (lf D (X.Fu u)) ∧ n₂ ∈ NLam q.l1.lam (lf D (X.Fu u)) ∧
@@ -501,6 +503,8 @@ theorem rp_pair (hι : IotaRowC) (q : RP Y u u') :
 end Rec
 
 
+open Formalism.L2.SG.TermTieOf in
+set_option maxHeartbeats 800000 in
 theorem pairTies_of (hι : IotaRowC) : Formalism.L2.SG.TermTieOf.PairTiesAll := by
   intro D X Y hF W hI
   have hlf : ∀ u, lf D (FlagOfWord W u) = Formalism.L2.SG.Saturated.mapL (W.δ u) (W.isom u) (lf D (X.Fu u)) := fun u => rfl

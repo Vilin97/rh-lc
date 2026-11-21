@@ -54,6 +54,8 @@ theorem exists_localGaloisCohomology_order {ℓ : ℕ} (hℓ : ℓ.Prime) (w : H
     rw [← ht, ← AddMonoidHom.map_nsmul, hm, AddMonoidHom.map_zero]
 
 
+set_option maxHeartbeats 8000000 in
+include hℓ hS in
 theorem exists_char_order_gsDecomp (b : ℕ) :
     ∃ χ : Additive Gal(AlgebraicClosure (v.1.adicCompletion K.1)/v.1.adicCompletion K.1) →ₜ+ QZ,
       ℓ ^ b • χ = 0 ∧ (∀ m : ℕ, m • χ = 0 → ℓ ^ b ∣ m) ∧
@@ -89,6 +91,7 @@ theorem exists_char_order_gsDecomp (b : ℕ) :
     exact ((congrArg (m • ·) hloc).symm.trans (AddMonoidHom.map_nsmul (gsLoc K S ιs v.1) m x').symm).trans h2
 
 
+set_option maxHeartbeats 4000000 in
 theorem char_eq_proj_nsmul_of_gsDecomp {ℓ : ℕ} (hℓ : ℓ.Prime) (b : ℕ)
     (χ : Additive Gal(AlgebraicClosure (v.1.adicCompletion K.1)/v.1.adicCompletion K.1) →ₜ+ QZ)
     (hχk : ℓ ^ b • χ = 0) (hB : ∀ h, gsDecomp K S ιs v h = 1 → χ (Additive.ofMul h) = 0)
@@ -131,6 +134,8 @@ theorem char_eq_proj_nsmul_of_gsDecomp {ℓ : ℕ} (hℓ : ℓ.Prime) (b : ℕ)
   exact hg
 
 
+set_option maxHeartbeats 4000000 in
+include hℓ hS in
 theorem proj_unramifiedDegree_eq_zero_of_gsDecomp_eq_one (b : ℕ)
     (g : Gal(AlgebraicClosure (v.1.adicCompletion K.1)/v.1.adicCompletion K.1))
     (hg : gsDecomp K S ιs v g = 1) :
@@ -158,6 +163,8 @@ theorem proj_unramifiedDegree_eq_zero_of_gsDecomp_eq_one (b : ℕ)
   exact (ZMod.val_eq_zero z).1 h0
 
 
+set_option maxHeartbeats 4000000 in
+include hℓ hS in
 theorem exists_hom_zmod_pow_rangeRestrict_gsDecomp
     (σ : Gal(AlgebraicClosure (v.1.adicCompletion K.1)/v.1.adicCompletion K.1))
     (hσ : unramifiedDegree (v.1.adicCompletion K.1) (AlgebraicClosure (v.1.adicCompletion K.1)) σ =
@@ -200,6 +207,8 @@ theorem exists_hom_zmod_pow_rangeRestrict_gsDecomp
     rfl
 
 
+set_option maxHeartbeats 4000000 in
+include hℓ hS in
 theorem exists_isPrimePowGenerator_gsDecomp :
     ∃ σ : (gsDecomp K S ιs v).range, IsPrimePowGenerator ℓ σ := by
   obtain ⟨σ, hσ⟩ := exists_unramifiedDegree_eq_one (K := K) (v := v.1)
@@ -216,6 +225,8 @@ instance totallyDisconnectedSpace_range_gsDecomp : TotallyDisconnectedSpace (gsD
   inferInstance
 
 
+set_option maxHeartbeats 4000000 in
+include hℓ hS in
 theorem eq_zero_of_pow_nsmul_cohomology_range_gsDecomp {p : ℕ} (hp : 2 ≤ p)
     (x : cohomology (Rep.res (gsDecomp K S ιs v).range.subtype
       (trivRep (galUnramifiedOutside K.1 ℚ̄ S) QZ)) p) (k : ℕ) (hx : ℓ ^ k • x = 0) : x = 0 := by

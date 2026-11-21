@@ -149,6 +149,7 @@ lemma appLE_of_eq {X Y : Scheme.{0}} {f g : X ⟶ Y} (h : f = g) {U : Y.Opens} {
   subst h; rfl
 
 
+set_option backward.isDefEq.respectTransparency.types false in
 theorem app_injective_of_flat_surj {Y Z : Scheme.{0}} (q : Y ⟶ Z) [Flat q] [Surjective q] (V : Z.Opens) :
     Function.Injective (q.app V) := by
   intro a b hab

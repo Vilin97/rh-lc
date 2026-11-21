@@ -26,6 +26,7 @@ theorem map_subst_comm {A B : Type} [CommRing A] [CommRing B] (h : A →+* B) {F
   exact h2
 
 
+open GlobalTheory.CompanionTheory.LTHodge.CharEx GroundTheory.LocalField GroundTheory.LocalField.FormalGroup ValuativeRel in
 theorem exists_series_comm : ∀ {l : ℕ} [Fact l.Prime] (K : FinExt l) (π : ↥(OL K)), Irreducible π → ∀ a : ↥(OL K),
     ∃ φ : PowerSeries ↥(OL K), PowerSeries.constantCoeff φ = 0 ∧ PowerSeries.coeff 1 φ = a ∧
       PowerSeries.subst φ (ltSeries π) = PowerSeries.subst (ltSeries π) φ := by

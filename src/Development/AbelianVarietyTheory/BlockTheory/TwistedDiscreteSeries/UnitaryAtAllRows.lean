@@ -57,6 +57,7 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.w
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
 
+variable (A) in
 def DefiniteUnitary : Prop :=
   (∀ t : T, IsUnitaryAtAll (A.MtildeCSD t) (A.leftGroupActionRight t)) ∧
     ∀ (i : Fin D.R.m) (t : T), IsUnitaryAtAll (A.MtCSD i t) (A.leftGroupActionLift i t)

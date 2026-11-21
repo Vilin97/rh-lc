@@ -49,6 +49,7 @@ theorem NAinf_smul (E : EtTie W RA RW inclR φR gR πA) (T : LocLat G Qp LL O) (
   | smul c z _ h1 => rw [smul_comm]; exact Submodule.smul_mem _ _ h1
 
 
+set_option maxHeartbeats 1000000 in
 theorem sand_exps [Nontrivial O] (E : EtTie W RA RW inclR φR gR πA)
     (hA : ∀ (p q : Type) [Fintype p] [Fintype q] (Z : Matrix p q RW) (P : Matrix p p RA)
       (P' : Matrix q q RA) (Y : Matrix p q RA),
@@ -231,6 +232,8 @@ end GlobalTheory.NL.SandJumps
 namespace GlobalTheory.NL.SandJumps
 
 
+set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 200000 in
 theorem main : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (Cm : CmpOf D.loc D.locA HW F), p5eL D.loc D.locA HW F := by
   intro D HW F Cm l _ K s LL h T M hh hT hJ

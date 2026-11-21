@@ -25,6 +25,7 @@ theorem val_col_lt {n : Type} [Fintype n] [DecidableEq n] {h g : GL n k} (hh : h
     rw [map_mul]; exact Right.mul_lt_one_of_le_of_lt (val_le_one_of_mem_KO hh a c) (hg c)
 
 
+variable (k) in
 def blockGrp (r t : ℕ) : Subgroup (GL (Fin (r + t)) k) where
   carrier := {h | h ∈ KO k (Fin (r + t)) ∧
     ∀ (a : Fin (r + t)) (j : Fin r), valuation k ((h.val - 1) a (Fin.castAdd t j)) < 1}

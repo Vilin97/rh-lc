@@ -117,6 +117,7 @@ end GlobalTheory.ScalarReps
 namespace GlobalTheory.ScalarReps
 
 
+open GlobalTheory.FinPl.FrameLat in
 theorem int_at {D : D7} (P : Pl D.host.E) (ep : AE D) (hep : Formalism.L2.NTheta.IsIdemAt ep P) (N : ℕ)
     (hN : (N : 𝓞 D.host.E) ∈ P.asIdeal) (ϖ : 𝓞 D.host.E) (h1 : ϖ ∈ P.asIdeal) (h2 : ϖ ∉ P.asIdeal ^ 2) :
     finPart D (ep * incA D ((N : D.host.E) * (ϖ : D.host.E)⁻¹)) ∈ intAE D := by

@@ -209,6 +209,7 @@ end GlobalTheory.FinPl.ExtAllPf
 namespace GlobalTheory.FinPl.ExtAllPf
 
 
+set_option maxHeartbeats 2000000 in
 theorem ext_all : ∀ D : D7, GlobalTheory.FinPl.ExtAll D := by
   intro D k _ _ _ _ ι p I P hP n n' _ _ _ _ ψ hψ S A L T o ζ hζ α α₀ β hsum LA LS LT ΛA ΛT hA hS hT hlat
   have hAC := GlobalTheory.T.dataAsCombinationsAtSplitPlaces_proof D

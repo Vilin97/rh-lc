@@ -277,6 +277,7 @@ theorem rv_xR (m : ℕ) (hm : m ≤ r) : rv ∘ xR k r m hm = sR k r m hm := by
   exact rv_eI (Fin.castLE hm l)
 
 
+open scoped Classical in
 theorem AAx_mirror (E : Fin (2 * r + k + 1) → Fin (2 * r + k + 1) → A) (hG : Formalism.REAL.GlRel E)
     (y : Fin r → Fin (2 * r + k + 1) → ℂ) (m : ℕ) (hm : m ≤ r) (ℓ : ℂ)
     (hsupp : ∀ (a : Fin r) (p : Fin (2 * r + k + 1)), a.val < m → y a p ≠ 0 → r + k < p.val) :

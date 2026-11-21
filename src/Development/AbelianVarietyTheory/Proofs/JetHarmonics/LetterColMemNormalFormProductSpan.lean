@@ -18,11 +18,13 @@ open Formalism.FourierDecayAlt.P.RuleGD Formalism.FourierDecayAlt.P.TLA
 variable {P : M.Par} {A : Type} [Ring A] [StarRing A] [Algebra ℂ A] [StarModule ℂ A]
 
 
+omit [StarModule ℂ A] in
 theorem gen_mem (d : Q.NFData P A) {T : Set A} {b X : A} (hb : b ∈ bmon d) (hX : X ∈ T) :
     b * d.L.Di * X ∈ nfSpan d T 1 0 1 :=
   Submodule.subset_span ⟨b, hb, [X], rfl, by simpa using hX, by simp⟩
 
 
+omit [StarModule ℂ A] in
 theorem bounded_induction (d : Q.NFData P A) (N : Submodule ℂ A) (hN : ∀ b ∈ bmon d, b ∈ N) {E : A}
     (hE : E ∈ nfSpan d ∅ 0 0 0) : E ∈ N := by
   refine (Submodule.span_le.mpr ?_ : nfSpan d ∅ 0 0 0 ≤ N) hE

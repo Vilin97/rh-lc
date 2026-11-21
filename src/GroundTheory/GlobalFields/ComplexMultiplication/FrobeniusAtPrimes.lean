@@ -60,6 +60,7 @@ theorem residue_smul_of_isArithFrobAt {σ : L ≃ₐ[K] L} (hσ : IsArithFrobAt 
   exact hσ a
 
 
+omit [NumberField L] in
 theorem smul_notMem_of_isArithFrobAt {σ : L ≃ₐ[K] L} (hσ : IsArithFrobAt (𝓞 K) σ 𝔓.asIdeal)
     {s : 𝓞 L} (hs : s ∉ 𝔓.asIdeal) : σ • s ∉ 𝔓.asIdeal := by
   intro h
@@ -207,6 +208,7 @@ variable {K : Type*} [Field K] [NumberField K] [Algebra K ℂ] (hK : finrank ℚ
   [IsTotallyComplex K] {L : IntermediateField K ℂ} [NumberField L]
 
 
+omit [NumberField K] [IsTotallyComplex K] [NumberField L] in
 theorem algebraMap_mem_of_liesOver {𝔭 : HeightOneSpectrum (𝓞 K)} {𝔓 : HeightOneSpectrum (𝓞 L)}
     [h : 𝔓.asIdeal.LiesOver 𝔭.asIdeal] {a : 𝓞 K} (ha : a ∈ 𝔭.asIdeal) :
     algebraMap (𝓞 K) (𝓞 L) a ∈ 𝔓.asIdeal := by
@@ -214,6 +216,7 @@ theorem algebraMap_mem_of_liesOver {𝔭 : HeightOneSpectrum (𝓞 K)} {𝔓 : H
   exact ha
 
 
+omit [NumberField K] [IsTotallyComplex K] [NumberField L] in
 theorem isogBaseChange_eq_map {A A' : WeierstrassCurve L} [A.IsElliptic] [A'.IsElliptic]
     (φ : Isogeny A A') : isogBaseChange (F' := ℂ) φ = φ.map (algebraMap L ℂ) :=
   Isogeny.ext_xy
@@ -221,6 +224,8 @@ theorem isogBaseChange_eq_map {A A' : WeierstrassCurve L} [A.IsElliptic] [A'.IsE
     (by rw [isogBaseChange_y, ← ffMap_algebraMap_eq_bcEmb]; exact (Isogeny.map_y _ φ).symm)
 
 
+omit [NumberField L] in
+include hK in
 theorem exists_isogBaseChange_eq_of_isogeny {A A' : WeierstrassCurve L} [A.IsElliptic]
     [A'.IsElliptic] (hA : Nonempty (isogEnd (A.baseChange ℂ) ≃+* 𝓞 K)) (φ : Isogeny A A')
     (ψ : Isogeny (A.baseChange ℂ) (A'.baseChange ℂ)) :
@@ -265,6 +270,7 @@ theorem exists_isogBaseChange_eq_of_isogeny {A A' : WeierstrassCurve L} [A.IsEll
   exact Isogeny.ext' h2
 
 
+include hK in
 theorem exists_mem_maximalIdeal_invConst (𝔭 : HeightOneSpectrum (𝓞 K))
     (𝔓 : HeightOneSpectrum (𝓞 L)) [𝔓.asIdeal.LiesOver 𝔭.asIdeal]
     {W W' : WeierstrassCurve (localizationAt L 𝔓)} [W.IsElliptic] [W'.IsElliptic]
@@ -328,6 +334,7 @@ theorem exists_mem_maximalIdeal_invConst (𝔭 : HeightOneSpectrum (𝓞 K))
   exact ⟨m, hm, by rw [e, map_one, mul_one]⟩
 
 
+include hK in
 theorem reduceIsogeny_eq_comp_frobeniusIsogeny_of_homConstSet (𝔭 : HeightOneSpectrum (𝓞 K))
     (hv : (Ideal.absNorm 𝔭.asIdeal).Prime) (𝔓 : HeightOneSpectrum (𝓞 L))
     [𝔓.asIdeal.LiesOver 𝔭.asIdeal]
@@ -368,6 +375,7 @@ theorem reduceIsogeny_eq_comp_frobeniusIsogeny_of_homConstSet (𝔭 : HeightOneS
   exact ⟨hp, hdeg', ⟨ψ, h1, h2, h4, h5⟩, residue_j_eq_pow L p φ hdeg' hc hcφ⟩
 
 
+include hK in
 theorem reduceIsogeny_congr_eq_comp_frobeniusIsogeny (𝔭 : HeightOneSpectrum (𝓞 K))
     (hv : (Ideal.absNorm 𝔭.asIdeal).Prime) (𝔓 : HeightOneSpectrum (𝓞 L))
     [𝔓.asIdeal.LiesOver 𝔭.asIdeal] {A A' : WeierstrassCurve L} [A.IsElliptic] [A'.IsElliptic]
@@ -404,6 +412,7 @@ abbrev primeClass (𝔭 : HeightOneSpectrum (𝓞 K)) : ClassGroup (𝓞 K) :=
   ClassGroup.mk0 ⟨𝔭.asIdeal, mem_nonZeroDivisors_of_ne_zero 𝔭.ne_bot⟩
 
 
+omit [NumberField K] [IsTotallyComplex K] [NumberField L] in
 theorem ELL.j_eq_algebraMap_j {A : WeierstrassCurve L} [A.IsElliptic] {x : ELL K}
     {h : Nonempty (isogEnd (A.baseChange ℂ) ≃+* 𝓞 K)}
     (hx : (⟨A.baseChange ℂ, h⟩ : CMCurve K).toEll = x) : ELL.j x = algebraMap L ℂ A.j := by
@@ -411,6 +420,8 @@ theorem ELL.j_eq_algebraMap_j {A : WeierstrassCurve L} [A.IsElliptic] {x : ELL K
   exact WeierstrassCurve.map_j _ _
 
 
+omit [NumberField L] in
+include hK in
 theorem exists_isogeny_primeClass_smul
     (E : ELL K → WeierstrassCurve L) [∀ x, (E x).IsElliptic]
     (hE : ∀ x, ∃ h : Nonempty (isogEnd ((E x).baseChange ℂ) ≃+* 𝓞 K),
@@ -441,6 +452,7 @@ theorem exists_isogeny_primeClass_smul
   rwa [degree_isogBaseChange] at h
 
 
+include hK in
 theorem frobenius_at_primes_of_degree_one (hL : ∀ x : ELL K, ELL.j x ∈ L)
     (E : ELL K → WeierstrassCurve L) [∀ x, (E x).IsElliptic]
     (hE : ∀ x, ∃ h : Nonempty (isogEnd ((E x).baseChange ℂ) ≃+* 𝓞 K),

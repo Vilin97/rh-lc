@@ -35,9 +35,11 @@ instance mxTAG {p q : ℕ} : IsTopologicalAddGroup (Mx F E p q) :=
 instance mxBorel {p q : ℕ} : BorelSpace (Mx F E p q) := inferInstanceAs (BorelSpace (Fin p → Fin q → AE F E))
 
 
+variable (F E) in
 abbrev bsE : Module.Basis (Fin (Module.finrank F E)) F E := Module.finBasis F E
 
 
+variable (F E) in
 abbrev bsA : Module.Basis (Fin (Module.finrank F E)) (AF F) (AE F E) := Algebra.TensorProduct.basis (AF F) (bsE F E)
 
 theorem inclR_eq (x : E) : inclR (F := F) (AF F) x = (1 : AF F) ⊗ₜ[F] x := rfl
@@ -82,6 +84,7 @@ theorem exists_compact_AE : ∃ C : Set (AE F E), IsCompact C ∧ ∀ z : AE F E
     · exact LinearEquiv.symm_apply_apply _ _
 
 
+variable (F E) in
 def ratMx (p q : ℕ) : AddSubgroup (Mx F E p q) :=
   AddSubgroup.closure (Set.range fun X : Matrix (Fin p) (Fin q) E => incM F X)
 

@@ -18,6 +18,7 @@ noncomputable section
 namespace GlobalTheory.UnipotentExp
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem exp_apply_of_pattern {n : ℕ} (P : Fin n → Fin n → Prop)
     (htr : ∀ i m j, P i m → P m j → P i j) (Y : Matrix (Fin n) (Fin n) ℂ)
     (hY : ∀ i j, ¬ P i j → Y i j = 0) (i j : Fin n) (hij : ¬ P i j) :

@@ -85,6 +85,7 @@ variable {ι : Type*} [Fintype ι] {G : ι → Type*} [∀ v, Group (G v)] [∀ 
   (hten : ∀ x, Wt x = T fun v => W v (x v)) (hten' : ∀ x, Wt' x = T' fun v => W' v (x v))
 
 
+include hT hT' hS hW hW' hWt hWt' hten hten' in
 theorem oo_factor (γ : ∀ v, G v) (y : ∀ v, V' v) :
     haveI : ∀ v, CompleteSpace (V v) := fun v => FiniteDimensional.complete ℂ (V v)
     haveI := FiniteDimensional.complete ℂ Vt

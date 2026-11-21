@@ -55,6 +55,7 @@ noncomputable section
 namespace GlobalTheory.Fam.MemberFrame
 
 
+open Formalism.MainNotions.S in
 theorem member_frame_of_standing_hypotheses_window_three {D : D7} {large₂ : SizeData₂ D} {C' Cl Cg cb Cu cT CT : ℝ} (hT : Formalism.BasicNotions.Ties D) (hR : LocalBesselAndTopKernel.FamilyMidVolume D)
     (h : Cnt.Hyp0 D large₂ C' Cl Cg cb Cu cT CT 3) (h29 : 29 ≤ C') (h40 : 40 ≤ Cl)
     (hCu : Cu * large₂.sc.L ≤ (D.R.m : ℝ) - 1) : Formalism.L2.SG.RowsConc.TFrameAt D := by

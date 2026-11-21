@@ -43,6 +43,7 @@ theorem modularCharacter_eq_one_of_mem_center {H : Type*} [TopologicalSpace H] [
     _ = 1 := MeasureTheory.Measure.haarScalarFactor_self _
 
 
+omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
 theorem center_le_levi {α : Type*} [LinearOrder α] (β : Fin n → α) :
     Subgroup.center (GL (Fin n) F) ≤ levi F n β := by
   intro z hz

@@ -95,6 +95,7 @@ theorem hTens_eq (Q : Matrix α α E) (w w' : Matrix α (ν ⊕ ν) E) :
   exact Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun j _ => by ring
 
 
+omit [DecidableEq α] in
 theorem form_mul (Q : Matrix α α E) (g : UG c (stdJ ν E)) (w w' : Matrix α (ν ⊕ ν) E) :
     form c Q (w * ((g : GL (ν ⊕ ν) E) : Matrix (ν ⊕ ν) (ν ⊕ ν) E)) (w' * ((g : GL (ν ⊕ ν) E) : Matrix (ν ⊕ ν) (ν ⊕ ν) E)) =
       form c Q w w' := by
@@ -128,10 +129,12 @@ theorem form_swap (hc : ∀ z, c (c z) = z) {Q : Matrix α α E} (hQ : IsHerm c 
   rw [form, form, h, map_neg, ht, mul_neg]
 
 
+omit [DecidableEq α] in
 theorem form_left_left (Q : Matrix α α E) (x x' : Matrix α ν E) : form c Q (fromCols x 0) (fromCols x' 0) = 0 := by
   simp [form, hTens, stdJ, Fintype.sum_sum_type]
 
 
+omit [DecidableEq α] in
 theorem form_right_right (Q : Matrix α α E) (y y' : Matrix α ν E) : form c Q (fromCols 0 y) (fromCols 0 y') = 0 := by
   simp [form, hTens, stdJ, Fintype.sum_sum_type]
 

@@ -22,6 +22,7 @@ namespace CurveVerticalPointNagata
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem aeval_eq_eval₂ {S : Type*} [CommRing S] [Algebra ℤ S] (v : (Σ k, ι k) → S) (f : MRing ι) :
     aeval v f = eval₂ (Int.castRingHom S) v f := by
   rw [aeval_def, show algebraMap ℤ S = Int.castRingHom S from RingHom.ext_int _ _]
@@ -92,6 +93,7 @@ theorem coeff_aeval_C_mul_X {S : Type*} [CommRing S] [Algebra ℤ S] [Algebra �
 end CurveVerticalPointNagata
 
 
+open CurveVerticalPointNagata in
 theorem CurveVertPointNagata.proof (hCh : CurveVertPointChart.Statement) : CurveVertPointNagata.Statement := by
   intro K _ ι _ Ω _ y s d hP hs hsP W hW c hc _ _ a b hb hab
   classical

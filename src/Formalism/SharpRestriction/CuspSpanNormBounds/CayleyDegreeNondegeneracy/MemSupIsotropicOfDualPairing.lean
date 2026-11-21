@@ -63,6 +63,7 @@ theorem inner_z_orth_embedding_eq_zero (x : (D.sp.X 0).V) : (hS D).hT F0.z (D.sp
     ((le_sup_right : _ ≤ Xplus (lf D F0)) (Submodule.mem_span_singleton_self _))
 
 
+include he hz in
 theorem mem_orthLattice_iff_image_mem_sup {x : (D.sp.X 0).V} :
     x ∈ L0X D Λ (lf D F0) ↔ D.sp.iXY 0 x ∈ Λ ⊔ toO (hS D) (Xsp (lf D F0)) := by
   rw [mem_orthLattice_iff_mem_sub]
@@ -81,6 +82,7 @@ theorem exists_smul_mem_orthLattice (hΛ : Submodule.IsLattice D.host.E Λ) (x :
   exact Submodule.mem_sup_left hcx
 
 
+include he hz in
 theorem orthLattice_isLattice (hΛ : Submodule.IsLattice D.host.E Λ) (hu : Formalism.HermitianLatticesTheory.IsUnimodular (hS D).hT Λ) :
     Submodule.IsLattice D.host.E (L0X D Λ (lf D F0)) := by
   choose c hc hcM using fun i => exists_smul_mem_orthLattice F0 he hz Λ hΛ ((D.sp.X 0).frame i)

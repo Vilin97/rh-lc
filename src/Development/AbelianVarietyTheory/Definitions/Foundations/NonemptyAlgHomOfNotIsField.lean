@@ -19,6 +19,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {σ : E →ₐ[F] E} {v : HeightOneSpectrum (𝓞 F)}
 
 
+omit [NumberField E] in
 def splitProj (τ : E →ₐ[F] Fv F v) : Fv F v ⊗[F] E →ₐ[Fv F v] Fv F v :=
   Algebra.TensorProduct.lift (AlgHom.id _ _) τ fun _ _ => Commute.all _ _
 
@@ -29,6 +30,7 @@ omit [NumberField E] in
 theorem splitProj_inclR (τ : E →ₐ[F] Fv F v) (x : E) : splitProj τ (inclR (Fv F v) x) = τ x := one_mul _
 
 
+omit [NumberField E] in
 theorem splitProj_comp (τ : E →ₐ[F] Fv F v) (σ : E →ₐ[F] E) (y : Fv F v ⊗[F] E) :
     splitProj (τ.comp σ) y = splitProj τ (sigR _ σ y) := by
   induction y using TensorProduct.induction_on with

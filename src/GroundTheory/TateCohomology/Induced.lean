@@ -97,6 +97,7 @@ section Coind
 variable (B : Rep.{u} k (⊥ : Subgroup G))
 
 
+open scoped Classical in
 noncomputable def coindBotProj :
     (coind (⊥ : Subgroup G).subtype B).V →ₗ[k] (coind (⊥ : Subgroup G).subtype B).V := by
   classical
@@ -108,6 +109,7 @@ noncomputable def coindBotProj :
       simp
 
 
+open scoped Classical in
 theorem sum_coindBotProj (f : coind (⊥ : Subgroup G).subtype B) :
     ∑ g : G, (coind (⊥ : Subgroup G).subtype B).ρ g
       (coindBotProj B ((coind (⊥ : Subgroup G).subtype B).ρ g⁻¹ f)) = f := by

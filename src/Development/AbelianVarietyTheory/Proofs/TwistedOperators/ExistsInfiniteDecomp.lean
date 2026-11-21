@@ -78,6 +78,7 @@ theorem exists_finite_decomp :
   · simpa using GlobalTheory.LFun.complMap_mem w.2 ha
 
 
+open scoped NumberField.LiesOver in
 theorem exists_infinite_decomp :
     ∃ ψ : ∀ (v : InfinitePlace F) (w : {w : InfinitePlace K // w.comap (algebraMap F K) = v}),
       v.Completion ⊗[F] K →+* w.1.Completion,
@@ -139,6 +140,7 @@ section Local
 variable {F K}
 
 
+omit [NumberField F] [NumberField K] in
 theorem form_iff {A ι : Type} [CommRing A] [Algebra F A] {B : ι → Type} [∀ i, CommRing (B i)]
     [∀ i, Algebra K (B i)] (ψ : ∀ i, A ⊗[F] K →+* B i) (h1 : ∀ i x, ψ i (1 ⊗ₜ x) = algebraMap K _ x)
     (hb : Function.Bijective fun y i => ψ i y) (d : K) (x : A ⊗[F] K) :

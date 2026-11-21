@@ -78,6 +78,7 @@ theorem inQ_mvExp {f : PowerSeries ℂ} (hf : InQ f) (h0 : constantCoeff f = 0) 
   exact inQ_pow hf j k
 
 
+open Polynomial in
 theorem tri_alg (n : ℕ) (b : ℕ → ℕ → ℂ) (hb : ∀ i k, b i k ∈ Formalism.MainNotions.TaylorLogMetric.Qbar) (hb0 : ∀ i, b i 0 = 1) (q : ℕ → ℂ) (t : ℂ)
     (h : ∀ k ≤ n + 1, t ^ k / (k.factorial : ℂ) =
       ∑ i ∈ Finset.range (n + 1), q i * (if i ≤ k then b i (k - i) else 0)) :

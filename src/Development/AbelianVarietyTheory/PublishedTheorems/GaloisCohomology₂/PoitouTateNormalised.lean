@@ -12,6 +12,7 @@ open NumberField IsDedekindDomain Representation Formalism.ConjugateSelfDual Rec
 namespace GlobalTheory.Published
 
 
+open PoitouTate in
 def PoitouTateNormalised : Prop :=
   ∀ (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω]
     (l : ℕ) [Fact l.Prime] (r : ℕ), (l ≠ 2 ∨ IsTotallyComplex F) → 0 < r →

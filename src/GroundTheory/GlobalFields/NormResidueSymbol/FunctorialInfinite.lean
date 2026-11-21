@@ -52,6 +52,7 @@ variable {L L' : Type*} [Field L] [NumberField L] [Field L'] [NumberField L'] [A
   [Algebra K L'] [Algebra K' L'] [Algebra L L'] [IsScalarTower K K' L'] [IsScalarTower K L L']
 
 
+omit [NumberField K] [NumberField K'] [NumberField L] [NumberField L'] in
 theorem restrictNormal_restrictScalars_conjAt [IsGalois K L] [IsGalois K' L']
     (u' : InfinitePlace L') (hv : (u'.comap (algebraMap K' L')).IsReal) :
     ((conjAt K' u').restrictScalars K).restrictNormal L = conjAt K (u'.comap (algebraMap L L')) := by
@@ -72,6 +73,8 @@ variable [IsGalois K L] [IsMulCommutative (L ≃ₐ[K] L)] [IsGalois K' L']
   [IsMulCommutative (L' ≃ₐ[K'] L')]
 
 
+omit [NumberField K] [NumberField K'] [NumberField L] [NumberField L'] [IsGalois K L]
+  [IsMulCommutative (L ≃ₐ[K] L)] [IsGalois K' L'] [IsMulCommutative (L' ≃ₐ[K'] L')] in
 theorem restrictNormal_restrictScalars_one [Normal K L] :
     ((1 : L' ≃ₐ[K'] L').restrictScalars K).restrictNormal L = 1 := by
   ext l
@@ -80,6 +83,7 @@ theorem restrictNormal_restrictScalars_one [Normal K L] :
     AlgEquiv.one_apply]
 
 
+omit [NumberField K] [NumberField K'] in
 theorem extensionEmbeddingOfIsReal_normUnits (v' : InfinitePlace K') (hv' : v'.IsReal)
     (a : v'.Completionˣ) :
     extensionEmbeddingOfIsReal (hv'.comap (algebraMap K K'))

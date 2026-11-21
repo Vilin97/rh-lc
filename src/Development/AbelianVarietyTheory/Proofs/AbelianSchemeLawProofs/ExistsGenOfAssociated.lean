@@ -237,6 +237,7 @@ theorem exists_gen_three (hL : L.IsLB) (t : LB.Gen (Theta G L)) (ht : t.IsGen) {
 variable {B : Over S} (θ : LB.Sec (LB.LinComb L (fun _ : Fin 1 => (snd B G).left) (fun _ => 1)))
 
 
+omit [GrpObj G] [IsCommMonObj G] in
 theorem exists_sec_at (hL : L.IsLB) {T : Over S} (v : T ⟶ B) (w : T ⟶ G) :
     ∃ s : LB.Sec (LB.LinComb L (fun _ : Fin 1 => w.left) (fun _ => 1)),
       ∀ (T' : Over S) (ρ : T' ⟶ T) (z : T'.left) (J), Good L z J →

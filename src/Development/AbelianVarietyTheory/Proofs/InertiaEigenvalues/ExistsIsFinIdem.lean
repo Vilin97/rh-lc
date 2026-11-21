@@ -43,6 +43,7 @@ theorem dualLab_dualLab (d : List ℤ) : dualLab (dualLab d) = d := by
   simp [dualLab, List.map_reverse, List.map_map]
 
 
+set_option maxHeartbeats 2000000 in
 theorem partsSpan : GlobalTheory.Published.CuspRapidDecay → ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type)
     (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
     (R : RealDat D A Ks) (F : Face D A), Laws R F → R.FullP → ∀ i S, PartsSpan R i S := by

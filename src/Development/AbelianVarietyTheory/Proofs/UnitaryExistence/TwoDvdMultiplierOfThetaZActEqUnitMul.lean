@@ -16,6 +16,7 @@ noncomputable section
 namespace GlobalTheory
 
 
+open Complex Matrix NumberField Filter Topology in
 theorem _root_.GlobalTheory.entire_eq_zero_of_mul_continuous_eq_zero {E : Type*} [NormedAddCommGroup E]
     [NormedSpace ℂ E] {f t : E → ℂ} (hf : Differentiable ℂ f) (ht : Continuous t) (ht0 : t ≠ 0)
     (h : ∀ z, f z * t z = 0) (z : E) : f z = 0 := by
@@ -74,6 +75,7 @@ private theorem span_real_period_lattice_full {g : ℕ} {τ : Matrix (Fin g) (Fi
   · exact Submodule.subset_span ⟨(0, Pi.single j 1), rfl⟩
 
 
+open Complex Matrix NumberField Filter Topology in
 theorem _root_.GlobalTheory.two_dvd_of_entire_sign_periodic {g : ℕ} {τ : Matrix (Fin g) (Fin g) ℂ}
     (hτ : τ ∈ _root_.ReciprocityTheory.PTheta.SiegelH (Fin g)) {σ : (Fin g → ℂ) → ℂ} (hσ : Differentiable ℂ σ) (h0 : σ 0 ≠ 0)
     {N : (Fin g → ℤ) → (Fin g → ℤ) → ℤ}
@@ -163,6 +165,7 @@ private theorem quadratic_lattice_translate_eq {g : ℕ} (C τ τ' M : Matrix (F
   ring
 
 
+open Complex Matrix NumberField Filter Topology in
 theorem _root_.GlobalTheory.halfChar_fixed_of_theta_transform_unit :
     ∀ (g : ℕ) (γ : Matrix (Fin g ⊕ Fin g) (Fin g ⊕ Fin g) ℤ), γ ∈ Matrix.symplecticGroup (Fin g) ℤ → (∀ i j, (8 : ℤ) ∣ γ (Sum.inl i) (Sum.inr j) ∧ (8 : ℤ) ∣ γ (Sum.inr i) (Sum.inl j)) → ∀ (c : ℂ) (n n' : Fin g → ℤ), c ≠ 0 → (∀ τ ∈ _root_.ReciprocityTheory.PTheta.SiegelH (Fin g), ∀ z : Fin g → ℂ, _root_.ReciprocityTheory.PTheta.theta (_root_.ReciprocityTheory.ChartRestriction.G.Key.halfVec 0) (_root_.ReciprocityTheory.ChartRestriction.G.Key.halfVec 0) (_root_.ReciprocityTheory.ChartRestriction.G.Key.Chi.zAct γ τ z) (_root_.ReciprocityTheory.ChartRestriction.G.Key.Chi.spAct γ τ) ^ 2 = c * (_root_.ReciprocityTheory.ChartRestriction.G.Key.Chi.jAut γ τ).det * _root_.ReciprocityTheory.PTheta.eC (_root_.ReciprocityTheory.ChartRestriction.G.Key.Chi.expArg γ τ z) * _root_.ReciprocityTheory.PTheta.theta (_root_.ReciprocityTheory.ChartRestriction.G.Key.halfVec 0) (_root_.ReciprocityTheory.ChartRestriction.G.Key.halfVec 0) z τ ^ 2) → ∀ τ ∈ _root_.ReciprocityTheory.PTheta.SiegelH (Fin g), ∀ ρ : (Fin g → ℂ) → ℂ, Differentiable ℂ ρ → (∀ z, ρ z ≠ 0) → (∀ z, _root_.ReciprocityTheory.PTheta.theta (_root_.ReciprocityTheory.ChartRestriction.G.Key.halfVec n) (_root_.ReciprocityTheory.ChartRestriction.G.Key.halfVec n') (_root_.ReciprocityTheory.ChartRestriction.G.Key.Chi.zAct γ τ z) (_root_.ReciprocityTheory.ChartRestriction.G.Key.Chi.spAct γ τ) = ρ z * _root_.ReciprocityTheory.PTheta.theta (_root_.ReciprocityTheory.ChartRestriction.G.Key.halfVec n) (_root_.ReciprocityTheory.ChartRestriction.G.Key.halfVec n') z τ) → (∀ i, (2 : ℤ) ∣ (γ.toBlocks₁₁ᵀ *ᵥ n) i - n i) ∧ (∀ i, (2 : ℤ) ∣ (γ.toBlocks₂₂ᵀ *ᵥ n') i - n' i) := by
 

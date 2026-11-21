@@ -13,6 +13,7 @@ namespace GlobalTheory
 open NumberField ReciprocityTheory.ChartRestriction.G.T0 ReciprocityTheory.ChartRestriction.G.AR.Up ReciprocityTheory.ChartRestriction.G.AR.Up.AlgT
 
 
+open scoped IntermediateField.algebraAdjoinAdjoin in
 theorem trdeg_adjoin_eq_iff_exists_linearIndependent_D {K F κ : Type} [Field K] [CharZero K]
     [Field F] [Algebra K F] {D : ℕ} (hD : Algebra.trdeg K F = D) (x : κ → F) :
     Algebra.trdeg K (IntermediateField.adjoin K (Set.range x)) = D ↔

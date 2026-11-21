@@ -16,6 +16,7 @@ open CategoryTheory AlgebraicGeometry TopologicalSpace Limits ReciprocityTheory.
 namespace GlobalTheory
 
 
+set_option backward.isDefEq.respectTransparency.types false in
 theorem exists_residueDegree_pos_of_mem_range (W Z : Scheme.{0}) (g : W ⟶ Z) [QuasiCompact g]
     [LocallyOfFiniteType g] (z : Z) (hz : z ∈ Set.range g) :
     ∃ w, g w = z ∧ 0 < g.residueDegree w := by

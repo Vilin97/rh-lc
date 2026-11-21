@@ -225,6 +225,7 @@ theorem bow_core [FiniteDimensional ℂ Wp] {ε : Fin (2 * r + k + 1) → Bool} 
     linear_combination hc
 
 
+variable [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] in
 theorem besselOfW_of_local_decomposition (hDI : Formalism.FourierDecayAlt.ThreeDimData.DecInf) (hJ : PI.BesselMapUniq.BesselMapUniq) :
     Formalism.L2.SG.LocWSOf.BesselOfW := by
   intro k r z c u lam ε h H _ _ _ σ hlam hσ hgap hok hz hT hc Vp _ _ _ π hπ w hw μG μW μN ν hG hW hN hq W hWc hWeq

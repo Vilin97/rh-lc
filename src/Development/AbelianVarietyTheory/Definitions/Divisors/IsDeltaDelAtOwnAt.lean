@@ -76,6 +76,7 @@ theorem delAt_mem (h : CoreTies L EX J R) (l : ℕ) (x) : (((R.C.delAt l).1 x : 
 end CoreTies
 
 
+omit [Group G] [Fintype G] in
 theorem ownPin_of {J : CoreJ D} {r : TwoRuns J G} (h₁ : ∀ j n : ℕ, InR D j → (r.first.full.dδ j n).pd = D.host.pde)
     (h₂ : ∀ j n : ℕ, InR D j → (r.second.full.dδ j n).pd = D.host.pde') : OwnPin r := by
   intro v j n hj

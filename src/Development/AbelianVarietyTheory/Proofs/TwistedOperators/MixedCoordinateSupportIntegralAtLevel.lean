@@ -94,6 +94,8 @@ theorem mat_den {D : D7} {m : ℕ} (A : Matrix (Fin m) (Fin m) D.host.E) :
   exact hc.mul (hint (i, j))
 
 
+set_option maxHeartbeats 2000000 in
+open GlobalTheory.MixModel in
 theorem mixS_support_integral : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) →
     ∀ (V X S₀ : HSp D) (r : ℕ) (d : GlobalTheory.MixModel.HypDec V S₀ r) (μ' : Measure (Mx D X.rank r))
     (𝓕' : Set (Mx D X.rank r)), IsCovolOne (GlobalTheory.MixModel.ratMx D X.rank r) μ' 𝓕' →

@@ -226,10 +226,12 @@ section Int
 variable {L : Type} [Field L] [Valued L (WithZero (Multiplicative ℤ))] {n : ℕ}
 
 
+variable (L) in
 abbrev OL : ValuationSubring L :=
   (Valued.v : Valuation L (WithZero (Multiplicative ℤ))).valuationSubring
 
 
+variable (L n) in
 abbrev iO : GL (Fin n) (OL L) →* GL (Fin n) L := Matrix.GeneralLinearGroup.map (OL L).subtype
 
 theorem iO_apply (h : GL (Fin n) (OL L)) (i j : Fin n) :

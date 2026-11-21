@@ -30,6 +30,7 @@ open Formalism.GradedWeylDivisibility GlobalTheory.BrCompare
 variable {K : Type} [Field K] {n : ℕ}
 
 
+open GlobalTheory.Branching.AddColumn in
 theorem incl_mem (ν : Fin (n + 1) → ℕ) (hν : ν (Fin.last n) = 0) (f : MvPolynomial (Fin (n + 1) × Fin n) K)
     (hf : f ∈ dualWeyl K (n + 1) n fun i => ν i.castSucc) : BrCompare.incl K n f ∈ dualWeyl K (n + 1) (n + 1) ν := by
   unfold BrCompare.incl
@@ -116,13 +117,16 @@ variable {K : Type} [Field K] [CharZero K] {ι : Type} [Fintype ι] {n : ℕ}
   {lam : ι → DomWeight (n + 1)} {sg : ι → DomWeight n}
 
 
+variable (K sg) in
 def hiV : VV K sg := ⟨extVV K sg, extVV_mem K sg⟩
 
 
+variable (K) in
 def xiV (hI : ∀ τ, Interlace rfl (lam τ) (sg τ)) (hS : ∀ τ, SameShift (lam τ) (sg τ)) : VV K lam :=
   ⟨ten fun τ => xiBr K rfl (lam τ) (sg τ), Submodule.subset_span ⟨_, fun τ => xi_mem (hI τ) (hS τ), rfl⟩⟩
 
 
+variable (K lam sg) in
 def tr : VV K sg →ₗ[K] VV K lam :=
   (LinearMap.BilinForm.toDual (pairBK (K := K) lam) (pairingBNondegenerate_holds K ι _ lam)).symm.toLinearMap ∘ₗ
     (brStd rfl lam sg).dualMap ∘ₗ pairBK sg

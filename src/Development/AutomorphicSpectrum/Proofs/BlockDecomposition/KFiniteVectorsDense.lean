@@ -275,6 +275,7 @@ section Concrete
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+omit [IsTotallyComplex E] in
 theorem exists_openSubgroup_GLAf {W : Set (GL (Fin a) (Af E))} (hW : W ∈ 𝓝 (1 : GL (Fin a) (Af E))) :
     ∃ U : Subgroup (GL (Fin a) (Af E)), IsOpen (U : Set (GL (Fin a) (Af E))) ∧
       (U : Set (GL (Fin a) (Af E))) ⊆ W := by
@@ -283,6 +284,7 @@ theorem exists_openSubgroup_GLAf {W : Set (GL (Fin a) (Af E))} (hW : W ∈ 𝓝 
     Formalism.L2.GlobalTheoryTheory.FiltrationBoundaryCriterion.CompactFixesLatticeTheory.isOpen_intAd Formalism.L2.Col.rlt_isCompact_intAd hV) hW
 
 
+omit [IsTotallyComplex E] in
 theorem continuous_finGL : Continuous (finGL E a) := by
   refine Continuous.units_map _ ?_
   have hs : Continuous (sFin E) :=

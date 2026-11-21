@@ -18,6 +18,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 structure Pin (hL : GlobalTheory.Published.LocalLanglandsGL) (D : D7) where
   cf : CharFrame D
   C : NChoice D

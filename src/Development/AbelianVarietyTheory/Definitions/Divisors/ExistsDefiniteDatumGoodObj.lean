@@ -88,6 +88,7 @@ def embP (p : ℕ) (τ : F →+* ℂ) (a : 𝓞 F) : ZbarP p :=
 variable {S : Scheme.{0}}
 
 
+open Classical in
 def DetCondP (D : Datum F) (p : ℕ) {k : Type} [Field k] {G : Over S} [GrpObj G] (act : OAct (𝓞 F) G)
     (x : Sp k ⟶ S) (β : D.OEp p →+* k) : Prop :=
   ∃ β' : ZbarP p →+* k, (∀ y : D.OEp p, β' (Subring.inclusion (OEp_le D p) y) = β y) ∧
@@ -176,6 +177,7 @@ theorem conj_mem_type_iff (H : Host E) (τ : E →+* ℂ) :
     rw [(sq_eq_sq_iff_eq_or_eq_neg.mp hsq).resolve_left h, neg_neg]
 
 
+open Classical in
 theorem sum_mult_eq (D : Geo.Tor.Datum H) (a : E) :
     ∑ τ : E →+* ℂ, (D.mult τ : ℂ) * τ a =
       ∑ τ ∈ Finset.univ.filter (fun τ : E →+* ℂ => τ (H.rt : E) = H.rt0),

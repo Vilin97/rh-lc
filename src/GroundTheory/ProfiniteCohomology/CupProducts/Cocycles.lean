@@ -31,12 +31,14 @@ instance isDiscreteRep_tensorUnit : IsDiscreteRep (𝟙_ (Rep.{u} k G)) :=
 variable {A : Rep.{u} k G} [IsDiscreteRep A] {p : ℕ}
 
 
+omit [IsTopologicalGroup H] in
 theorem cocycles_ext {x y : cocycles A p}
     (h : cochainOf (A := A) (cocycleι (A := A) (p := p) x) =
       cochainOf (A := A) (cocycleι (A := A) (p := p) y)) : x = y :=
   cocycleι_injective (cochainOf_injective h)
 
 
+omit [IsTopologicalGroup H] in
 @[elab_as_elim]
 theorem cohomology_induction_on {C : cohomology A p → Prop} (z : cohomology A p)
     (h : ∀ x : cocycles A p, C (cohomologyπ A p x)) : C z := by
@@ -48,6 +50,7 @@ section Map
 variable {B : Rep.{u} k G} [IsDiscreteRep B]
 
 
+omit [IsTopologicalGroup H] in
 theorem cochainOf_cocycleι_cyclesMap (f : A ⟶ B) (x : cocycles A p) :
     cochainOf (A := B)
       (cocycleι (A := B) (p := p) (HomologicalComplex.cyclesMap (cochainsMap f) p x)) =
@@ -56,6 +59,7 @@ theorem cochainOf_cocycleι_cyclesMap (f : A ⟶ B) (x : cocycles A p) :
     (HomologicalComplex.cyclesMap_i (cochainsMap f) p)
 
 
+omit [IsTopologicalGroup H] in
 theorem cohomologyMap_cohomologyπ (f : A ⟶ B) (x : cocycles A p) :
     cohomologyMap f p (cohomologyπ A p x) =
       cohomologyπ B p (HomologicalComplex.cyclesMap (cochainsMap f) p x) :=

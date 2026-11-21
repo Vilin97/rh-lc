@@ -30,6 +30,7 @@ theorem toAdd_ordUnitsHom (x : Kˣ) :
   rfl
 
 
+variable {K} in
 theorem exists_ordUnitsHom_eq (n : ℤ) :
     ∃ x : Kˣ, ordUnitsHom K x = Multiplicative.ofAdd (n : ℤ̂) := by
   obtain ⟨x, hx, h⟩ := exists_ord_eq K n
@@ -148,6 +149,7 @@ theorem natCard_tate_of_isCyclic (K' L' : Subgroup (Ω ≃ₐ[K] Ω)) [(L'.subgr
   · rw [T.natCard_tateNegOne, natCard_tateNegOne_units]
 
 
+variable (K Ω) in
 theorem classFieldAxiom_units : ClassFieldAxiom (Ω ≃ₐ[K] Ω) Ωˣ := by
   intro U V hVU _ hcyc
   exact natCard_tate_of_isCyclic (U : Subgroup (Ω ≃ₐ[K] Ω)) (V : Subgroup (Ω ≃ₐ[K] Ω))

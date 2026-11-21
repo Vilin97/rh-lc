@@ -210,6 +210,7 @@ theorem exists_injective_comp {G A B C : Type} [Group G] [AddCommMonoid A] [Modu
   ⟨E.toIntertwiningMap.comp ψ, E.toLinearEquiv.injective.comp hψ⟩
 
 
+set_option maxHeartbeats 4000000 in
 theorem exists_embedding_of_prod₂ {a b : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin (a + b)) k) V) (s : IrrRep (GL (Fin a) k)) (t : IrrRep (GL (Fin b) k))
     (ha : 0 < a) (hc : IsCuspidal s.ρ) (ψ : π.IntertwiningMap (prod₂ s.ρ t.ρ)) (hψ : Function.Injective ψ) :

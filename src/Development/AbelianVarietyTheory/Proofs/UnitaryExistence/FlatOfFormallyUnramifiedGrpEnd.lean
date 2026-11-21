@@ -132,6 +132,7 @@ theorem flat_stalkMap_of_fixed {k : Type} [Field k] [IsAlgClosed k] {X : Scheme.
 end UnramifiedEndFlat
 
 
+open UnramifiedEndFlat in
 theorem flat_of_formallyUnramified_grpEnd (k : Type) [Field k] [IsAlgClosed k] (G : Over (Sp k))
     [GrpObj G] (φ : G ⟶ G) (hG : LocallyOfFiniteType G.hom) (hφ : IsMonHom φ)
     (hu : FormallyUnramified φ.left) : Flat φ.left := by

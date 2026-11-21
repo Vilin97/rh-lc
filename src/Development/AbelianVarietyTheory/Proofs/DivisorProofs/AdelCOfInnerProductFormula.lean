@@ -53,6 +53,7 @@ theorem exists_covol_lowC : ∃ (μ : Measure (WO (Vc D i) (Wc D i))) (𝓧 : Se
   exact ⟨p.1, p.2, hp⟩
 
 
+include hd hν in
 theorem scalar_bound_lowC (h7 : LevelIndexNormC R F) (h8 : MassLower D) (h9 : FormalDegreeUpperC R F) {b : ℝ} (hb : Sizes D i b)
     {μ : @Measure (Datum.WO (Vc D i) (Wc D i)) (Datum.measMx _ _)} {𝓧 : Set (Datum.WO (Vc D i) (Wc D i))}
     (hμ : Datum.IsCovolOne (ratL (Wc D i) (Vc D i)) μ 𝓧) {Fr : Frames (Wc D i)} (hFr : IsFrames (Wc D i) Fr)
@@ -90,6 +91,7 @@ theorem scalar_bound_lowC (h7 : LevelIndexNormC R F) (h8 : MassLower D) (h9 : Fo
     fun ρ => (a6 ρ).2.2
 
 
+include hd hν in
 theorem term_eval_lowC (h3 : InnerProductFormulaC R F) (h4 : FockCoefficientC R F)
     {μ : @Measure (Datum.WO (Vc D i) (Wc D i)) (Datum.measMx _ _)} {𝓧 : Set (Datum.WO (Vc D i) (Wc D i))}
     (hμ : Datum.IsCovolOne (ratL (Wc D i) (Vc D i)) μ 𝓧) {Fr : Frames (Wc D i)} (hFr : IsFrames (Wc D i) Fr)
@@ -141,6 +143,7 @@ theorem integrableOn_isLift_lowC (x : HV.H) (v : ∀ ρ, lowT (R.MW i σ) ρ) (g
   convert this using 10
 
 
+include hd hν hV in
 theorem exists_isLift_lowC (h1 : LiftIsCuspC R F) : ∃ th, IsLift R i σ ω (ptAt R i σ BW f) c io ν 𝓕 HV th := by
   refine exists_linear_lift ν 𝓕 (R.HW i σ).e (fun (v : ∀ ρ, lowT (R.MW i σ) ρ) (g : GA D (Wc D i)) U => U (fun ρ => v ρ) g)
     (fun _ _ _ _ => rfl) (fun _ _ _ _ => rfl) HV.e c.ext
@@ -157,6 +160,8 @@ theorem exists_isLift_lowC (h1 : LiftIsCuspC R F) : ∃ th, IsLift R i σ ω (pt
     rfl
 
 
+include hd hν hV in
+set_option maxHeartbeats 800000 in
 theorem form_key_lowC (hy : Bridge.IsReps (Bridge.ratF (Vc D i)) (grpOf (Vc D i) (R.βV i) (datV i R.Pg (R.Q t) P m)) y)
     (h2 : SourceLevelLawC R F) (h3 : InnerProductFormulaC R F)
     (th : HV.H →ₗ[ℂ] (R.HW i σ).H) (hth : IsLift R i σ ω (ptAt R i σ BW f) c io ν 𝓕 HV th) (v : ∀ ρ, lowT (R.MW i σ) ρ)
@@ -210,6 +215,7 @@ variable {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL
     {ν : Measure (GA D (Vc D i))} {𝓕 : Set (GA D (Vc D i))} (hν : IsMeasDef (Vc D i) (levV R i t P m) ν 𝓕)
 
 
+include hd hν in
 theorem scalar_of_form_key_lowC (h3 : InnerProductFormulaC R F) (h4 : FockCoefficientC R F) (h5 : DeltaNorm D)
     (h6 : FiniteZetaC R F) (h7 : LevelIndexNormC R F) (h8 : MassLower D) (h9 : FormalDegreeUpperC R F) {b : ℝ} (hb : Sizes D i b)
     {X : Type} [NormedAddCommGroup X] [InnerProductSpace ℂ X] [FiniteDimensional ℂ X] (th : X →ₗ[ℂ] (R.HW i σ).H)

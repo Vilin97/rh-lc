@@ -160,9 +160,11 @@ section Index
 def IsHalf (Φ : Finset (E →+* ℂ)) : Prop := ∀ τ, τ ∈ Φ ↔ conjEmb τ ∉ Φ
 
 
+variable (H) in
 def psiSet : Finset (E →+* ℂ) := Finset.univ.filter fun τ => τ (H.rt : E) = H.rt0
 
 
+variable (H) in
 theorem isHalf_psiSet : IsHalf (psiSet H) := fun τ => by
   simp only [psiSet, Finset.mem_filter, Finset.mem_univ, true_and]
   exact ⟨fun h => conj_not_mem ⟨τ, h⟩, fun h => by_contra fun h' => h (conj_mem h')⟩
@@ -522,6 +524,7 @@ section Norm
 variable {T : CDVR} {io : c.F →+* T.Fr} {K₀ : Type} [CommRing K₀] [Algebra c.F K₀] {ι : Type} [Fintype ι]
 
 
+variable (c) in
 abbrev CoefHom (io : c.F →+* T.Fr) (K₀ : Type) [CommRing K₀] [Algebra c.F K₀] : Type :=
   letI := io.toAlgebra
   K₀ →ₐ[c.F] T.Fr

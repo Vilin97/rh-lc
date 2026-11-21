@@ -146,6 +146,7 @@ theorem tgt5 (hFP : FockProd)
   · intro hk; exact absurd (Finset.mem_univ k) hk
 
 
+include hem hh in
 theorem tgt_core (hFP : FockProd)
     (he : ∀ b i, e b i ∈ (weyl O n n le_rfl (ν b)).map (toK O K)) (he' : ∀ b i, e' b i ∈ (dualWeyl O n n (ν b)).map (toK O K))
     (hee : ∀ b i k, fockR (e b i) (e' b k) = if i = k then fockR (hw K le_rfl (ν b)) (hw K le_rfl (ν b)) else 0)

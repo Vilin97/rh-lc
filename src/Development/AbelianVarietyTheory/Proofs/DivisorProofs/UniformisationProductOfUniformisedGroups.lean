@@ -166,6 +166,7 @@ theorem thickMap_pG (hD : IsSumDeg D.toPre D₁.toPre D₂.toPre p₁ p₂ q₁ 
   exact congrArg (fun z => z.left) h
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_pre (hD : IsSumDeg D.toPre D₁.toPre D₂.toPre p₁ p₂ q₁ q₂) (hA : IsSumPolAV A A₁ A₂ a₁ a₂)
     (U₁ : UnifPre I D₁ A₁ G₁) (U₂ : UnifPre I D₂ A₂ G₂)
     (wM : LB.Iso D.toPre.P.L (extLB D₁.toPre.P.L D₂.toPre.P.L p₁.left p₂.left))
@@ -251,6 +252,7 @@ theorem exists_pre (hD : IsSumDeg D.toPre D₁.toPre D₂.toPre p₁ p₂ q₁ q
     wL, ⟨gen₁, gen₂, ⟨wL, hwLgen⟩, hq₁, hq₂, hi₁, hi₂⟩, hwLgen, ht, Q⟩
 
 
+set_option maxHeartbeats 1600000 in
 theorem expands_box (hD : IsSumDeg D.toPre D₁.toPre D₂.toPre p₁ p₂ q₁ q₂)
     {U₁ : UnifPre I D₁ A₁ G₁} {U₂ : UnifPre I D₂ A₂ G₂} {U : UnifPre I D A (G₁ ⊗ G₂)}
     {wM : LB.Iso D.toPre.P.L (extLB D₁.toPre.P.L D₂.toPre.P.L p₁.left p₂.left)} (hwM : wM.IsGen)

@@ -22,6 +22,7 @@ attribute [local instance] GlobalTheory.AdelicUnitaryTop.locallyCompact_finiteAd
   GlobalTheory.AdelicUnitaryTop.secondCountable_finiteAdele GlobalTheory.AdelicUnitaryTop.t2Space_finiteAdeleRing_of_numberField
 
 
+variable (F κ) in
 def diagA : (κ → mixedEmbedding.mixedSpace F) →L[ℝ] (κ ⊕ κ → mixedEmbedding.mixedSpace F) :=
   LinearMap.toContinuousLinearMap
     { toFun := fun x => Sum.elim x x
@@ -35,6 +36,7 @@ theorem norm_le_diagA (x : κ → mixedEmbedding.mixedSpace F) : ‖x‖ ≤ ‖
     simpa [diagA_apply] using norm_le_pi_norm (diagA F κ x) (Sum.inl j)
 
 
+variable (F κ) in
 def restrA : SchwartzMap (κ ⊕ κ → mixedEmbedding.mixedSpace F) ℂ →L[ℂ] SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ :=
   SchwartzMap.compCLM ℂ (diagA F κ).hasTemperateGrowth
     ⟨1, 1, fun x => by

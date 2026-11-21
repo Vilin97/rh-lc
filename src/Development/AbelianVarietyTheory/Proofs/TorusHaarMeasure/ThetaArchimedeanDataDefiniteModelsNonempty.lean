@@ -292,6 +292,9 @@ theorem exists_archInM (X : Data E r) (hr : 0 < r) (hp : X.p0 = 0) (hΨ : Nonemp
 end Model
 
 
+open ReciprocityTheory.ChartRestriction.G.AR.Inst ReciprocityTheory.ChartRestriction.G.AR.Up GlobalTheory.RunIn GlobalTheory.Shares GlobalTheory.ArchInputs in
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem archAt_nonempty_of_definite : ∀ (D : D7) (T : Top D) (h : LawsP T) (EX : ErrX D) (p : ℕ) (hj : InR D D.R.m) (large₂ : SizeData₂ D) (H : KHyp) (C2 A2 CT : ℝ) (ka wL wF : WeightFamilies.Wt D D.R.m) (Tn nP nW : ℕ) (h0 : ℝ) (S : Scal (recB h.toLawsCore)) (nus : HeightOneSpectrum (𝓞 (recB h.toLawsCore).KO) → ℝ), ParOK T EX p D.R.m → PageOK large₂ (recPJ h D.R.m hj) H C2 A2 CT ka wL wF Tn nP nW h0 → HypC large₂ (recPJ h D.R.m hj) H C2 A2 7 0 CT S ka wL wF Tn nP nW h0 nus → ∀ (N : ℕ) (w : Fin N → (recB h.toLawsCore).Cusp D.R.m wL), NoCommonZero (T.Q.Xo D.R.m) T.Q.c (fun i => (w i).1) → Nonempty (GlobalTheory.Shares.ArchAt h D.R.m w wF Tn 1) := by
   intro D T h EX p hj large₂ H C2 A2 CT ka wL wF Tn nP nW h0 S nus hPar hPg hC N w hNZ
   classical

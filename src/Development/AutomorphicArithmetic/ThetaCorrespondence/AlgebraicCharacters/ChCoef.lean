@@ -59,6 +59,7 @@ private theorem dQ_inv {ρ₁ : Representation ↥L₁.1 ↥(GK K) V₁} {ρ₂ 
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 
+open EnlargeCoeff in
 private theorem dQ_bij {ρ₁ : Representation ↥L₁.1 ↥(GK K) V₁} {ρ₂ : Representation ↥L₂.1 ↥(GK K) V₂}
     (f : V₁ ≃ₗ[ℚ_[l]] V₂) (hf : ∀ g v, f.toLinearMap (ρ₁ g v) = ρ₂ g (f.toLinearMap v)) :
     Function.Bijective (dQ P hf) := by
@@ -115,6 +116,7 @@ private theorem exists_semi {K L₁ L₂ : FinExt l}
   exact @LinearMap.map_smul _ _ _ _ _ _ _ (Module.compHom _ θ) Φ _ _
 
 
+open EnlargeCoeff in
 private theorem eig_conj {L₁ L₂ : FinExt l}
     {V₁ V₂ : Type} [AddCommGroup V₁] [Module ↥L₁.1 V₁] [Module ℚ_[l] V₁] [IsScalarTower ℚ_[l] ↥L₁.1 V₁]
     [AddCommGroup V₂] [Module ↥L₂.1 V₂] [Module ℚ_[l] V₂] [IsScalarTower ℚ_[l] ↥L₂.1 V₂]

@@ -56,6 +56,7 @@ namespace WeierstrassCurve
 variable {R : Type u} [CommRing R] (W : WeierstrassCurve R)
 
 
+open Polynomial in
 instance free_coordinateRing : Module.Free R W.toAffine.CoordinateRing :=
   inferInstance
 

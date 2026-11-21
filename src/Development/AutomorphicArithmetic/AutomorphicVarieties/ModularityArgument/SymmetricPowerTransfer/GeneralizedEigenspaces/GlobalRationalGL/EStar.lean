@@ -18,6 +18,7 @@ open Loc Glob
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
 
 
+variable (L) in
 structure Pre where
   Δ : Lp L
   e : Lsq (Lp L) Δ ≃+* L

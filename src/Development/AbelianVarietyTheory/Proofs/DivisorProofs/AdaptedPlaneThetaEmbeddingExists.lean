@@ -142,6 +142,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 open Matrix
 
 
+variable (F) in
 def realTr : E →+ ℝ :=
   (Algebra.trace ℝ (mixedEmbedding.mixedSpace F)).toAddMonoidHom.comp (evIHom.comp
     ((Algebra.trace (AF F) (AE F E)).toAddMonoidHom.comp (inclR (F := F) (AF F)).toAddMonoidHom))

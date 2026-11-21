@@ -37,6 +37,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   [MeasurableSpace k] [BorelSpace k]
 
 
+omit [BorelSpace k] in
 theorem partial_mem_SB {I J : Type} [Fintype I] [Fintype J] (ν : Measure k) {f : (I → k) × (J → k) → ℂ}
     (hf : f ∈ SB ((I → k) × (J → k))) :
     (fun x₁ : I → k => ∫ y : J → k, f (x₁, y) ∂(Measure.pi fun _ => ν)) ∈ SB (I → k) := by

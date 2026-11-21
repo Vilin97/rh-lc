@@ -215,6 +215,7 @@ theorem exists_coprime_nsmul_mem {b : ℕ} (L : Submodule (𝓞 E) (Fin n → E)
   exact hk (hpk.trans ((hm k).1 hkx))
 
 
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 theorem perfect_range {H : Host E} (D : Datum H) {ξ : E} {G : Matrix (Fin n) (Fin n) E}
     (φ : D.La →ₗ[𝓞 E] (Fin n → E)) (hinj : Function.Injective φ)
     (hEF : ∀ x y, ((D.EF x y : ℤ) : ℚ) = Algebra.trace ℚ E (ξ * herm G (φ x) (φ y))) :
@@ -230,6 +231,7 @@ theorem perfect_range {H : Host E} (D : Datum H) {ξ : E} {G : Matrix (Fin n) (F
     rfl
 
 
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 theorem exists_coprime_scaled_isometry : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E)
     (D D' : Datum H), D'.p = D.p → D'.q = D.q → ∀ b : ℕ, 0 < b → ∃ (k : ℕ) (f : D.La →ₗ[𝓞 E] D'.La),
       k.Coprime b ∧ ∀ x y, D'.EF (f x) (f y) = (k : ℤ) ^ 2 * D.EF x y := by

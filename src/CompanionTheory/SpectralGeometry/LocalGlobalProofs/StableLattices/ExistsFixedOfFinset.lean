@@ -229,6 +229,7 @@ theorem exists_off [DecidableEq ι] (hpe : ∀ i x, p i (e i x) = x) (hpe' : ∀
         hk3 y, e2, ← mul_assoc, hrep, mul_assoc]
 
 
+include hc in
 theorem exists_isRestrTensor [CompleteSpace H] (hπ : IsTopIrreducible π) (hξ : ∀ i, ‖ξ i‖ = 1) (hw1 : ‖w‖ = 1)
     (hw : ∀ i, a i (ξ i) w = w)
     (hadj : ∀ i y y', ContinuousLinearMap.adjoint (a i y') * a i y = ⟪y', y⟫_ℂ • a i (ξ i))

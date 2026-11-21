@@ -39,6 +39,7 @@ theorem isBoundedBilinearMap_compSh :
   bound := ⟨1, one_pos, fun x y => by simpa using ContinuousLinearMap.opNorm_comp_le x y⟩
 
 
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 theorem ckOn_compSh {k r : ℕ} {f : B.Mat k r → (Wq →L[ℂ] Wp)} {A : B.Mat k r → (Wq' →L[ℂ] Wq)}
     (hf : B.CkOn ⊤ (B.GV k r) f) (hA : B.CkOn ⊤ (B.GV k r) A) :
     B.CkOn ⊤ (B.GV k r) (fun g => (f g).comp (A g)) := by
@@ -56,6 +57,7 @@ theorem ckOn_compSh {k r : ℕ} {f : B.Mat k r → (Wq →L[ℂ] Wp)} {A : B.Mat
   exact isBoundedBilinearMap_compSh.contDiff.comp_contDiffOn hp
 
 
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 theorem ckOn_fpmSh (q : KB.Pl (shP P u u') Wp Wq') {f : B.Mat P.k P.r → (Wq →L[ℂ] Wp)}
     {A : B.Mat P.k P.r → (Wq' →L[ℂ] Wq)} (p₀ : ℕ) (hf : B.CkOn ⊤ (B.GV P.k P.r) f)
     (hA : B.CkOn ⊤ (B.GV P.k P.r) A) : B.CkOn ⊤ (B.GV P.k P.r) (fpmSh q f A p₀) := by

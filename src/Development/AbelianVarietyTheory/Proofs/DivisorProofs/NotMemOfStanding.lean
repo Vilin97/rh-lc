@@ -105,6 +105,7 @@ theorem notMem_of_standing {t : T} (hst : SquareStanding G t) {w : Pl D.host.E} 
   rw [e]; exact Ideal.mul_mem_left _ _ hmem)
 
 
+set_option maxHeartbeats 1000000 in
 theorem local_charts (hL : L.Is μ₀) (W : G.Weil) (B : Frames G) (t : T) (i j : Fin D.R.m) (M : Vol G) (hst : SquareStanding G t)
     {e : Num G i j} {Bs : Base D.host.F D.host.E} {Γ : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.Geo G i j} {X : Chars D.host.F D.host.E}
     {om : Rep D.sp.cm.sig Γ.V Γ.W} {om' : Rep D.sp.cm.sig Γ.V' Γ.W} (h : IsTripleOf W M t i j e Bs Γ X) {R Rf}

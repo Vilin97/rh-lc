@@ -132,6 +132,7 @@ theorem AA_eq_one (p : SplitPt D k) (hp : p.UnitAA) : idV D.host.AA p.v = idV 1 
 end GlobalTheory.Core.Mi.LatMatch.DiUnit
 
 
+open GlobalTheory.Core.Mi.LatMatch.DiUnit in
 theorem GlobalTheory.Core.Mi.LatMatch.idV_dI_pow_unit : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (p : SplitPt D k), p.UnitAA → ∀ (n : ℕ) (a : AE D), (a ∈ idV (dI D ^ n) p.v ↔ a ∈ intAt D (· = p.v)) ∧ (a ∈ idV (dI D ^ n)⁻¹ p.v ↔ a ∈ intAt D (· = p.v)) := by
   intro D k _ _ _ _ p hp n a
   have hd : idV (dI D) p.v = idV 1 p.v := by

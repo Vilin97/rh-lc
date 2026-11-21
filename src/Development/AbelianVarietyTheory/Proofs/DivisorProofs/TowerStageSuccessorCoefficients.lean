@@ -38,6 +38,7 @@ section Planes
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 
+variable (σ) in
 def IsSum {n n₁ : ℕ} (Y : Spc F E n) (Y₁ : Spc F E n₁) (x y : Fin n → E) (ι : Matrix (Fin n) (Fin n₁) E) : Prop :=
   form σ Y.J x x = 0 ∧ form σ Y.J y y = 0 ∧ form σ Y.J x y = 1 ∧
     (∀ u, form σ Y.J (ι *ᵥ u) x = 0 ∧ form σ Y.J (ι *ᵥ u) y = 0) ∧ ιᵀ * Y.J * ι.map σ = Y₁.J ∧ (∀ u, u ∈ Y₁.L ↔ ι *ᵥ u ∈ Y.L) ∧

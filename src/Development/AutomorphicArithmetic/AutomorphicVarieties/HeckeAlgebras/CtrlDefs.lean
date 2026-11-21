@@ -44,6 +44,7 @@ theorem mem_lat (Λ : Submodule O Ω) (F : Fin m → X.Fn Ω (W.d + 1)) :
     F ∈ X.Lat m W Λ ↔ ∀ i g k, X.unt m W F i g k ∈ Λ := Iff.rfl
 
 
+variable {m} in
 abbrev ClO (τ : X.Ub →* GL (Fin m) O) (U : Subgroup X.Ub) (c : ℕ) (φ : X.I.T →* Oˣ) :
     Submodule Ω (Fin m → X.Fn Ω (W.d + 1)) :=
   X.Cl ((Matrix.GeneralLinearGroup.map (algebraMap O Ω)).comp τ) W.ξ U c ((Units.map (algebraMap O Ω).toMonoidHom).comp φ)

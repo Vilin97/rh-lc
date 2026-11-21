@@ -165,6 +165,10 @@ private theorem hol_sub_fn {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E]
     _root_.GlobalTheory.AnPer.Hol.ev_apply, _root_.GlobalTheory.AnPer.Hol.ev_apply]
 
 
+set_option autoImplicit false in
+open CategoryTheory TopologicalSpace in
+variable {I : Type} [Fintype I] {g : ℕ} {Λ : Type} [AddCommGroup Λ]
+  {F : _root_.GlobalTheory.AnPer.Fam I g Λ} in
 theorem _root_.GlobalTheory.AnPer.Charts.exists_primitive_of_rich {I : Type} [Fintype I] {g : ℕ} {Λ : Type}
     [AddCommGroup Λ] {F : _root_.GlobalTheory.AnPer.Fam I g Λ}
     (K : _root_.GlobalTheory.AnPer.Charts F) (hR : K.Rich)

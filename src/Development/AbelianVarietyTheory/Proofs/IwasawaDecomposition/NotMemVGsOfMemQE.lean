@@ -316,6 +316,7 @@ theorem exists_levQ {j : ℕ} {h : AutY X R j} (H : ChiMul Ch sel mu cst j P h) 
   exact ⟨⟨_, lam⟩, rfl, hl⟩
 
 
+variable (Pr) in
 def Rep (j : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) (h : AutY X R j) : Prop := admitted Pr j P h ∧ (P ∉ Pr.vGs → NF Pr j P h)
 
 theorem rep_one (j : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) : Rep Pr j P (1 : AutY X R j) :=
@@ -437,6 +438,7 @@ theorem psiAt_add {m2 : ℕ} {P : rowSG Pr sel mu} {hal : AutY X R m2} {N B : �
   exact this
 
 
+open Classical in
 theorem exists_chIdx_of_cst {G : ChGlob X R.m} (hd : ∀ P : rowSG Pr sel mu, DegOneUnram P.1)
     (hdis : ∀ P ∈ QE sel (mu : Chr X.F X.E X.K), P ∉ Pr.vGs) (hc : cst.Ok) (hs : cst.sharp = true) (hM : R.m ≤ cst.M)
     (hxi : XiUnitAt (rowSG Pr sel mu) G.xi0) (hW : cst.WeilTied G.σ₀ G.xi0)

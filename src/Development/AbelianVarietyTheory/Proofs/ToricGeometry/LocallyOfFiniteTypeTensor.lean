@@ -228,6 +228,7 @@ theorem locallyOfFiniteType_tensor [LocallyOfFiniteType X.hom] [LocallyOfFiniteT
 end ThetaModelGroup
 
 
+open ThetaModelGroup in
 theorem thetaModel_groupLaw : (∀ (E : Type) [NormedAddCommGroup E] [NormedSpace ℂ E] (W : Set E) (X
     Y : Over (Sp ℂ)) (a : E → (𝟙_ (Over (Sp ℂ)) ⟶ X)) (b : E → (𝟙_ (Over (Sp ℂ)) ⟶ Y)), (∀ (U
     : (X).left.Opens) (f : Γ((X).left, U)), IsOpen {w | w ∈ W ∧ ⊤ ≤ (a

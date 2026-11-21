@@ -16,6 +16,7 @@ open scoped ENNReal NNReal
 namespace MixedBoxCount
 
 
+open scoped Classical in
 theorem finite_box (F : Type) [Field F] [NumberField F] (La : Submodule ℤ (mixedSpace F))
     [DiscreteTopology La] (f : InfinitePlace F → ℝ) (hf : ∀ w, 0 < f w) :
     {y : mixedSpace F | y ∈ La ∧ ∀ w, normAtPlace w y ≤ f w}.Finite := by
@@ -32,6 +33,7 @@ theorem finite_box (F : Type) [Field F] [NumberField F] (La : Submodule ℤ (mix
   exact AddSubgroup.isClosed_of_discrete
 
 
+open scoped Classical in
 theorem normAtPlace_lt_of_mem (F : Type) [Field F] [NumberField F] (g : InfinitePlace F → ℝ≥0)
     {x : mixedSpace F} (hx : x ∈ convexBodyLT F g) (w : InfinitePlace F) : normAtPlace w x < g w := by
   rcases isReal_or_isComplex w with hw | hw
@@ -45,6 +47,7 @@ theorem normAtPlace_lt_of_mem (F : Type) [Field F] [NumberField F] (g : Infinite
 end MixedBoxCount
 
 
+open scoped Classical in
 theorem MixedBoxCount.proof (h : LatticeCountVolume.Statement) : MixedBoxCount.Statement := by
   intro F _ _ La _ _ f hf
   have hfin := MixedBoxCount.finite_box F La f hf

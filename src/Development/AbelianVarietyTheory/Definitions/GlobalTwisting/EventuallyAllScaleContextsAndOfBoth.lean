@@ -54,9 +54,11 @@ theorem LargeBaseCondition.and (h : LargeBaseCondition KP Q R) (h' : LargeBaseCo
     (eventuallyAllScaleContexts_and_of_both h h')
 
 
+variable (KP Q Q' Lk) in
 def RowL (H : ∀ 𝒜 : FamClass, RawSel Bd 𝒜 → Prop) : Prop := ∃ R : V4.Slot, LargeBaseCondition KP Q R ∧ Row (sAnd Q' R) Lk H
 
 
+variable (KP Q Q' Lk) in
 def ExBL : Prop := ∃ R : V4.Slot, LargeBaseCondition KP Q R ∧ ExB (sAnd Q' R) Lk
 
 theorem Row.strengthen {H : ∀ 𝒜 : FamClass, RawSel Bd 𝒜 → Prop} (hQ : ∀ K X f T c, Q K X f T c → Q' K X f T c) (h : Row Q' Lk H) :

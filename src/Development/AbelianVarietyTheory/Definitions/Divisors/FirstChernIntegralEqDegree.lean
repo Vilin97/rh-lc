@@ -136,10 +136,12 @@ namespace VB.Chart
 variable {E : X.Modules} {r : ℕ} (c c' c'' : Chart E r) {V W : X.Opens} {y : CxPts p σ}
 
 
+variable (p σ) in
 def crd (s : Γ(E, V)) (y : CxPts p σ) : Fin r → ℂ := fun a =>
   ev p σ (V ⊓ c.U) ((c.isFrame.basis inf_le_right).repr (resM E inf_le_left s) a) y
 
 
+variable (p σ) in
 def tr (y : CxPts p σ) : Matrix (Fin r) (Fin r) ℂ := Matrix.of fun a b => c.crd p σ (c'.e b) y a
 
 theorem crd_eq (s : Γ(E, V)) (h : W ≤ V) (h' : W ≤ c.U) (hy : y ∈ ptsIn p σ W) (a : Fin r) :
@@ -455,6 +457,7 @@ theorem ofCover_G {hE : IsVB E r} {ι : Sort*} {c : ι → Chart E r} {hc}
 def IsCInf : Prop := ∀ (c : Chart E r), ∀ y ∈ ptsIn p σ c.U, MInfAt (h.G c) y
 
 
+variable {h} in
 theorem isCInf_of_exists (H : ∀ y, ∃ c : Chart E r, y ∈ ptsIn p σ c.U ∧ MInfAt (h.G c) y) :
     h.IsCInf := fun c y hy => by
   obtain ⟨c₀, h₀, e⟩ := H y
@@ -466,6 +469,7 @@ def IsConj (h' : Met p σ' E r) : Prop :=
     h'.G c y' = (h.G c y).map star
 
 
+variable {h} in
 theorem isConj_of_exists {h' : Met p σ' E r}
     (H : ∀ (y : CxPts p σ) (y' : CxPts p σ'), y'.1 = spMap (starRingEnd ℂ) ≫ y.1 →
       ∃ c : Chart E r, y ∈ ptsIn p σ c.U ∧ h'.G c y' = (h.G c y).map star) : h.IsConj h' :=

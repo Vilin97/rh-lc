@@ -114,6 +114,7 @@ section Ver
 variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G]
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] in
 theorem map_conj_eq_of_normal {K L : Subgroup G} [(L.subgroupOf K).Normal] (hLK : L ≤ K) {τ : G}
     (hτ : τ ∈ K) : L.map (MulAut.conj τ).toMonoidHom = L := by
   ext y
@@ -130,6 +131,7 @@ variable {K K' L : OpenSubgroup G} [((L : Subgroup G).subgroupOf K).Normal]
   [((L : Subgroup G).subgroupOf K').Normal]
 
 
+omit [IsTopologicalGroup G] [CompactSpace G] in
 theorem galRestrict_injective (hK'K : K' ≤ K) :
     Function.Injective (galRestrict (K := K) (L := L) (K' := K') (L' := L) hK'K le_rfl) := by
   rw [injective_iff_map_eq_one]
@@ -141,6 +143,7 @@ theorem galRestrict_injective (hK'K : K' ≤ K) :
     exact hq
 
 
+omit [IsTopologicalGroup G] [CompactSpace G] in
 theorem mk_mem_range_galRestrict_iff (hLK' : L ≤ K') (hK'K : K' ≤ K) (k : (K : Subgroup G)) :
     (k : (K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K) ∈
       (galRestrict (K := K) (L := L) (K' := K') (L' := L) hK'K le_rfl).range ↔
@@ -194,6 +197,7 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Comp
   {D : ClassFieldData G A}
 
 
+omit [TotallyDisconnectedSpace G] in
 theorem exists_frobeniusLift_of_deg {K : OpenSubgroup G} {x : G} (hx : x ∈ (K : Subgroup G)) {N : ℕ}
     (hN : 0 < N) (hd : D.deg x = Multiplicative.ofAdd (N : ℤ̂)) :
     ∃ s : D.FrobeniusLift K, s.elt = x := by

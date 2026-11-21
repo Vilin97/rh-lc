@@ -40,6 +40,7 @@ theorem center_map {G G' : Type} [Group G] [Group G'] (φ : G ≃* G') {z : G} (
   rw [← map_mul, ← map_mul, hz g]
 
 
+set_option maxHeartbeats 2000000 in
 theorem oneMapOf_two (hR : PreChar R') (hchi : R'.grp_chiW) (hT : TieIn T' R' κ' v₀')
     (O' : OMDat T'.toCore R' i' Unit (fun _ => A'.μ0)) (hF : O'.c'.F = D'.what₂.embLL.toRatAlgHom.fieldRange)
     (hP' : O'.Pins (κ' i') (v₀' i' (sg0 D' A')) (iotaW T' i') (T'.x₀ ((i' : ℕ) + 1) O'.s0))
@@ -79,6 +80,7 @@ theorem preChar_of {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T0 : Type}
     RealDat.chain_of_weak hch.base.chain hEx, RealDat.thP_of_weak hch.base.thP hEx⟩
 
 
+set_option maxHeartbeats 4000000 in
 theorem cpt : ∀ {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : TwDat B'} (w : ColW B f T) (w' : ColW B' f' T')
     (Z : w.Lt) (Z' : w'.Lt) (hX : B.fields.Ok) (hX' : B'.fields.Ok) (Wt : Set B.places.Pl) (Wt' : Set B'.places.Pl)
     (z : Dat (w.st Z) w.I hX T Wt), Enl0 B B' → HEq w'.px w.px →

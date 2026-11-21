@@ -79,6 +79,7 @@ theorem rat_eq_zero_of_inf {x : WO S T} (hx : x ∈ ratL T S) (h0 : ∀ i j, inf
   rw [e, map_zero]
 
 
+open GlobalTheory.ThetaAllChar in
 theorem chiR_eq_zero {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.F ψ) (γ : ratL T S)
     (h : ∀ x, chiR ψ S T γ x = 1) : γ = 0 := by
   have hall : ∀ c : AF D.host.F, (c • (γ : WO S T)) ∈ ratL T S := by
@@ -97,6 +98,7 @@ theorem chiR_eq_zero {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.F �
   exact Subtype.ext h3
 
 
+open GlobalTheory.ThetaAllChar in
 theorem sum_coef_mul_translate : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (S T : HSp D) (μ : Measure (WO S T)) (𝓕 : Set (WO S T)), IsCovolOne (ratL T S) μ 𝓕 → ∀ f f₀ : WO S T → ℂ, IsThetaFunO ψ S T f → IsThetaFunO ψ S T f₀ → ∀ w x : WO S T, Summable (fun γ : ratL T S => ‖thPair μ 𝓕 f (heisO ψ S T ((γ : WO S T) + w) f₀)‖) → ∑' γ : ratL T S, thPair μ 𝓕 f (heisO ψ S T ((γ : WO S T) + w) f₀) * heisO ψ S T ((γ : WO S T) + w) f₀ x = f x * star (heisO ψ S T w f₀ x) * heisO ψ S T w f₀ x := by
   intro D ψ hψ S T μ 𝓕 hc f f₀ hf hf₀ w x hs
   obtain ⟨hμ, h𝓕, h1⟩ := hc

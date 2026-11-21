@@ -129,6 +129,7 @@ theorem addM_self : AddM V (Y.rawSelf p) := by
 end CEqGen
 
 
+open CEqGen in
 theorem cEqSelf_holds : CEqSelfSt := by
   intro C _ _ V O _ _ dd Y d _ I0 _ p _ H
   exact cEq_of (Y.rawSelf p) H

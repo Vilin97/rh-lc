@@ -89,6 +89,7 @@ theorem exists_lift_model {X Z : Type} [AddCommGroup X] [Module ℂ X] [AddCommG
     congrArg Subtype.val ((LinearEquiv.ofInjective M.e H.1).apply_symm_apply (f.codRestrict _ hm' x))⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem Laws.exists_isRaw {R : RealDat D A Ks} {F : Face D A} (h : Laws R F) (i : Fin D.R.m) (t : T) :
     ∃ th, IsRaw R i t th :=
   exists_lift_model (R.HW i (sg0 D A)) (h.models.HW i (sg0 D A)) (R.thF i t) (h.thP.thF_mem i t)

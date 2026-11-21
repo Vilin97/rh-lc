@@ -335,6 +335,7 @@ theorem pow_sub_apply_eq_zero [FiniteDimensional K V] (ψ : Algebra.adjoin O S �
   exact h1
 
 
+set_option linter.deprecated false in
 theorem exists_pt_of_isMaximal [FiniteDimensional K V] (hinj : Function.Injective (algebraMap O K))
     (hS : ∀ a ∈ S, ∀ b ∈ S, Commute a b) (hsplit : ∀ a ∈ S, ⨆ μ, a.maxGenEigenspace μ = ⊤)
     (hint : ∀ a ∈ S, ∀ μ, a.maxGenEigenspace μ ≠ ⊥ → μ ∈ (algebraMap O K).range)

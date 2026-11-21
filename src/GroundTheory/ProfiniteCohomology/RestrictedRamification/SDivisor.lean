@@ -24,6 +24,7 @@ variable {K L : Type u} [Field K] [Field L] [NumberField K] [NumberField L] [Alg
   [Algebra F L] [Algebra K L] [IsScalarTower F K L]
 
 
+omit [NumberField F] [NumberField L] in
 theorem exists_underPlace_eq (v : HeightOneSpectrum (𝓞 F)) :
     ∃ w : HeightOneSpectrum (𝓞 L), underPlace (F := F) w = v := by
   obtain ⟨⟨Q, hQ, hQv⟩⟩ := (inferInstance : Nonempty (v.asIdeal.primesOver (𝓞 L)))
@@ -31,6 +32,7 @@ theorem exists_underPlace_eq (v : HeightOneSpectrum (𝓞 F)) :
     (liesOver_iff_eq_underPlace.1 hQv).symm⟩
 
 
+omit [NumberField F] [NumberField K] [NumberField L] in
 theorem underPlace_underPlace (W : HeightOneSpectrum (𝓞 L)) :
     underPlace (F := F) (underPlace (F := K) W) = underPlace (F := F) W :=
   HeightOneSpectrum.ext (Ideal.under_under (A := 𝓞 F) (B := 𝓞 K) W.asIdeal)
@@ -266,6 +268,7 @@ theorem mem_sInvariantSubgroup {x : (maxUnramifiedOutside (Ω := Ω) S)ˣ} :
   Iff.rfl
 
 
+omit [IsGalois F Ω] in
 theorem map_algebraMap_mem_sInvariantSubgroup (a : Fˣ) :
     Units.map (algebraMap F (maxUnramifiedOutside (Ω := Ω) S) : F →* _) a ∈ sInvariantSubgroup Ω S := by
   intro σ

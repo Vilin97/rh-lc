@@ -69,6 +69,7 @@ theorem geoNum_mixed_eq_zero
 end ProjectionFormulaVertical
 
 
+open ProjectionFormulaVertical in
 theorem PFVert.proof
     (hGeo : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)], GeoNumStatement ι)
     (hR4 : ∀ (F : Type) [Field F] (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)],

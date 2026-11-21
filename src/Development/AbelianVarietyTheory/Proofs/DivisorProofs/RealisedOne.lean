@@ -32,6 +32,7 @@ theorem act_mul {R : Type} [CommRing R] [Algebra F R] {κ : Type} [Fintype κ]
   simp only [act, e, ← Matrix.mulVec_mulVec, Sum.elim_comp_inl_inr]
 
 
+variable (F) in
 def gens (κ : Type) [Fintype κ] [DecidableEq κ] : Set (Matrix (κ ⊕ κ) (κ ⊕ κ) F) :=
   {g | ∃ A : Matrix κ κ F, IsUnit A.det ∧ g = Matrix.fromBlocks A 0 0 (A⁻¹)ᵀ} ∪
     {g | ∃ C : Matrix κ κ F, Cᵀ = C ∧ g = Matrix.fromBlocks 1 0 (-C) 1} ∪ {Matrix.fromBlocks 0 1 (-1) 0}

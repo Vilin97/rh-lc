@@ -111,6 +111,7 @@ theorem length_cokN_lt_top [NeZero n] [IsDomain O] [IsDiscreteValuationRing O]
 end Generic
 
 
+set_option maxHeartbeats 1600000 in
 theorem exactness_of_N : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (Cm : CmpOf D.loc D.locA HW F), P6 D HW F := by
   intro D HW F Cm l _ K s LL h

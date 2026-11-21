@@ -177,6 +177,7 @@ variable {T K : Type} [CommRing T] [IsDomain T] [IsDiscreteValuationRing T] [Fie
   [IsFractionRing T K]
 
 
+omit [IsDiscreteValuationRing T] in
 theorem app_injective_generic {X P : Scheme.{0}} {p : X ⟶ Sp T} [Flat p] {d : P ⟶ X} {q : P ⟶ Sp K}
     (h : IsPullback d q p (spMap (algebraMap T K))) (V : X.Opens) : Function.Injective (d.app V) := by
   have : IsDominant (spMap (algebraMap T K)) := ⟨(PrimeSpectrum.denseRange_comap_iff_ker_le_nilRadical _).2

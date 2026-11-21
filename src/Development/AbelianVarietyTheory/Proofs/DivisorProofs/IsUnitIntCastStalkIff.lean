@@ -74,6 +74,7 @@ theorem exists_hom (hσ : IsStalkMap σ) {Y X Y₀ : Scheme.{0}} (p : Y ⟶ Sp R
   rw [reassoc_of% this, hwu]
 
 
+open GenSpread in
 theorem exists_lbIso (hσ : IsStalkMap σ) {Y Y₀ : Scheme.{0}} (p : Y ⟶ Sp R) [QuasiCompact p] [QuasiSeparated p]
     {φ : Y₀ ⟶ Y} {p₀ : Y₀ ⟶ Sp K} (h : IsPullback φ p₀ p (spMap σ)) {M N : LB Y}
     (hM : M.IsLB) (hN : N.IsLB) (H : LBIso (M.pull φ) (N.pull φ)) :

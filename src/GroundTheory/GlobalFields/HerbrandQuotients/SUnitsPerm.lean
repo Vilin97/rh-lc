@@ -93,6 +93,7 @@ instance (w : HeightOneSpectrum (𝓞 L)) :
   ⟨rfl⟩
 
 
+omit [NumberField K] [NumberField L] [IsGalois K L] in
 theorem eq_placeBelow_of_liesOver {w : HeightOneSpectrum (𝓞 L)} {v : HeightOneSpectrum (𝓞 K)}
     (h : w.asIdeal.LiesOver v.asIdeal) : v = placeBelow w :=
   HeightOneSpectrum.ext h.over

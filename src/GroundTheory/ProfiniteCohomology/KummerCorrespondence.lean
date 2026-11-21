@@ -16,6 +16,7 @@ variable {K : Type*} [Field K] {n : ℕ} [NeZero n] [HasEnoughRootsOfUnity K n]
 variable {L : Type*} [Field L] [Algebra K L]
 
 
+omit [NeZero n] [HasEnoughRootsOfUnity K n] in
 lemma eq_one_of_forall_mem_fixed {T : Set L} (hT : adjoin K T = ⊤) {σ : Gal(L/K)}
     (h : ∀ α ∈ T, σ α = α) : σ = 1 := by
   have hle : adjoin K T ≤ fixedField (Subgroup.zpowers σ) := by
@@ -181,12 +182,14 @@ variable (K : Type*) [Field K] (n : ℕ) [NeZero n] [HasEnoughRootsOfUnity K n]
 variable (Ω : Type*) [Field Ω] [Algebra K Ω]
 
 
+omit [NeZero n] [HasEnoughRootsOfUnity K n] in
 lemma pow_eq_algebraMap_iff (E : IntermediateField K Ω) (x : E) (a : K) :
     x ^ n = algebraMap K E a ↔ (x : Ω) ^ n = algebraMap K Ω a := by
   rw [← Subtype.val_inj, IntermediateField.coe_pow]
   rfl
 
 
+omit [NeZero n] [HasEnoughRootsOfUnity K n] in
 lemma adjoin_preimage_eq_top (S : Set Ω) :
     adjoin K (((↑) : adjoin K S → Ω) ⁻¹' S) = ⊤ := by
   apply IntermediateField.map_injective (adjoin K S).val

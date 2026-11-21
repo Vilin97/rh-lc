@@ -146,6 +146,7 @@ private theorem mapLattice_quotient_of_equivariant_equiv {G LL O V W M : Type} [
       rwa [← hzx]
 
 
+omit [IsTopologicalRing LL] in
 theorem admissible_quotient_ker_iff_full_lattices {E M : Type} [AddCommGroup E] [Module O E] [AddCommGroup M] [Module O M]
     (act : G → E → E) (π : Representation O G M)
     (p : E →ₗ[O] M) (hp : Function.Surjective p) (hact : ∀ g x, p (act g x) = π g (p x)) :
@@ -168,6 +169,7 @@ theorem admissible_quotient_ker_iff_full_lattices {E M : Type} [AddCommGroup E] 
       (quot_equiv_iff _ _ act π p hp hact).2 ⟨q', hq', hqe', hqk'⟩⟩
 
 
+omit [TopologicalSpace G] [TopologicalSpace LL] [IsTopologicalRing LL] in
 theorem resPoly_eq {V : Type} [AddCommGroup V] [Module LL V] [FiniteDimensional LL V]
     (ρ : Representation LL G V) (χ : ℕ → G →* Oˣ) (t : ℕ) :
     tableLineDegreeTwo.resPoly ρ χ t = fun g => LinearMap.charpoly (ρ g) *

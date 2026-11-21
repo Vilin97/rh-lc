@@ -32,6 +32,7 @@ theorem chains_isZero (E : Spc) (i : ℤ) (hi : 0 < i) : IsZero (((chains R).obj
 end ChainsIso
 
 
+open ChainsIso in
 theorem chains_disc_biprod_isIso : ∀ (R : Type) [CommRing R] {P₁ P₂ Q : PSh} (f₁ : P₁ ⟶ Q) (f₂ : P₂ ⟶ Q),
     IsIso (biprod.desc ((free R).map f₁) ((free R).map f₂)) →
       IsIso (biprod.desc ((chains R).map (disc.map f₁)) ((chains R).map (disc.map f₂))) := by

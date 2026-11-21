@@ -279,6 +279,7 @@ theorem integral_even_pow (j : ℕ) : ∫ c in (-1 : ℝ)..1, c ^ (2 * j) = 2 / 
 end FibreConstantClosedForm
 
 
+open FibreConstantClosedForm in
 theorem FibreConstantClosedForm.proof (h0 : ZonalBilinearFormula.Statement)
     (h1 : GHatIdentity.Statement) : FibreConstantClosedForm.Statement := by
   have key : ∀ k : ℕ, fibreConstant k = -(1 / 2) * ∑ j ∈ Finset.range k, (1 : ℝ) / (2 * j + 1) := by

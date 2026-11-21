@@ -278,6 +278,7 @@ theorem dot_imInv_chgSp (z : Fin g → ℂ) :
   ring
 
 
+omit hx in
 theorem exists_sq_law_zero : ∃ (k k' : Fin g → ℤ) (c : ℂ), c ^ 4 = 1 ∧ ∀ x ∈ X.dom, ∀ z,
     (hMat X bas' idx x).det * canFn X bas' idx (halfVec k) (halfVec k') x z ^ 2 =
       c * (hMat X bas idx x).det * canFn X bas idx 0 0 x z ^ 2 := by
@@ -316,6 +317,7 @@ theorem exists_sq_law_zero : ∃ (k k' : Fin g → ℤ) (c : ℂ), c ^ 4 = 1 ∧
 end Symplectic
 
 
+variable (X) in
 def IsProportional (κ : ℂ) (bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ) (a b : Fin g → ℝ)
     (bas' : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ) (a' b' : Fin g → ℝ) : Prop :=
   ∀ x ∈ X.dom, ∃ μ : ℂ, μ ^ 2 * (hMat X bas' idx x).det = κ * (hMat X bas idx x).det ∧
@@ -375,6 +377,7 @@ theorem IsProportional.translate (h : IsProportional X idx κ bas a b bas' a' b'
     translConst b' (u' ∘ Sum.inr) (u' ∘ Sum.inl)) ^ 2 * hμ
 
 
+variable (idx) in
 theorem exists_isProportional : ∃ k k' : Fin g → ℤ, ∀ u u' : Fin g ⊕ Fin g → ℝ,
     IsSamePt X bas bas' u u' → ∃ κ : ℂ, ‖κ‖ = 1 ∧ IsProportional X idx κ bas (u ∘ Sum.inr)
       (u ∘ Sum.inl) bas' ((fun i => (k i : ℝ) / 2) + u' ∘ Sum.inr)

@@ -19,6 +19,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
   [∀ k, Fintype (J k)] [∀ k, Fintype (J' k)] {y : (Σ k, J k) → Ω} {y' : (Σ k, J' k) → Ω'}
 
 
+omit [∀ k, Fintype (J k)] [∀ k, Fintype (J' k)] in
 theorem emb_eq (A : HodgeCpt Y S y) (B : HodgeCpt Y S y') (h : B.X ⟶ A.X) (i : Ω →+* Ω')
     (hdom : GlobalTheory.CompanionTheory.Ar.Dominates B.ξ A.ξ h i) (hf : B.f = h ≫ A.f) :
     B.emb = fun s => (i.comp A.cst).comp (labelEmb c s) := by
@@ -35,6 +36,7 @@ theorem emb_eq (A : HodgeCpt Y S y) (B : HodgeCpt Y S y') (h : B.X ⟶ A.X) (i :
     ⟨labelEmb c s a, (Algebra.IsIntegral.isIntegral (R := ℤ) a).map (labelEmb c s).toIntAlgHom⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_pull (A : HodgeCpt Y S y) (B : HodgeCpt Y S y') (h : B.X ⟶ A.X) (i : Ω →+* Ω') (x : Sp Ω ⟶ Xo.XF c)
     (hx : A.ξ ≫ A.f = x ≫ Y.j) (hS : ∀ p : ℕ, p.Prime → (p : ℤ) ∣ NumberField.discr E → p ∈ S)
     (hvb : ∀ p ∈ S, ∀ s, ((A.M.htOm A.t.PP.L (p ^ A.R p)).map (A.Vgen s).dualRestrict).IsVBOn {q | InFibre A.ξ p q}

@@ -19,6 +19,9 @@ open scoped Classical ComplexOrder
 variable {g : ℕ} [hg : Fact g.Prime]
 
 
+open Polynomial in
+open scoped Classical ComplexOrder in
+variable {g : ℕ} [hg : Fact g.Prime] in
 theorem _root_.GlobalTheory.GLq.LabelDet.isIrr_hom {G : Type} [Group G] [Fintype G] (φ : G →* ℂˣ) :
     _root_.GlobalTheory.GLq.IsIrr (fun x : G => ((φ x : ℂˣ) : ℂ)) := by
   have hchar : ∀ x : G, (FDRep.of (_root_.GlobalTheory.GLp.Model.chRep φ)).character x = φ x := by
@@ -40,12 +43,18 @@ theorem _root_.GlobalTheory.GLq.LabelDet.theta_gen_pow (L : _root_.GlobalTheory.
   _root_.GlobalTheory.GLq.Model.thetaOf_gen_pow L one_pos hx n
 
 
+open Polynomial in
+open scoped Classical ComplexOrder in
+variable {g : ℕ} [hg : Fact g.Prime] in
 theorem _root_.GlobalTheory.GLq.LabelDet.gen_one_mem (L : _root_.GlobalTheory.GLq.LabelDatum g) :
     ∃ u : (ZMod g)ˣ, algebraMap (ZMod g) (_root_.Formalism.CyclotomicNorms.Fbar g) u = L.gen 1 := by
   obtain ⟨u, hu, -⟩ := _root_.GlobalTheory.GLp.Model.exists_gen L
   exact ⟨u, hu⟩
 
 
+open Polynomial in
+open scoped Classical ComplexOrder in
+variable {g : ℕ} [hg : Fact g.Prime] in
 theorem _root_.GlobalTheory.GLq.LabelDet.det_inPar (a b : ℕ) (M : _root_.GlobalTheory.GLq.Mt g (a + b))
     (h : _root_.GlobalTheory.GLq.InPar a M) :
     M.det = (_root_.GlobalTheory.GLq.tl a M).det * (_root_.GlobalTheory.GLq.br a b M).det := by

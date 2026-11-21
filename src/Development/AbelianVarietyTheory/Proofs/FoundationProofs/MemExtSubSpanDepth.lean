@@ -57,6 +57,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarR
   {hc : CMData F E} {V : HSpace E}
 
 
+omit [NumberField F] in
 theorem mem_extSub_span_depth {R : Type} [CommRing R] [Algebra F R] {r : ℕ} {C : Matrix (Fin V.rank) (Fin r) E}
     (d : Fin r → ℕ) (i : ℕ) (y : Fin V.rank → R ⊗[F] E) :
     y ∈ extSub (F := F) V R (Submodule.span E ((fun k => vecOf V (Cᵀ k)) '' {j | d j < i})) ↔

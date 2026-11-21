@@ -12,6 +12,7 @@ open NumberField MeasureTheory GlobalTheory.CuspRep GlobalTheory.UnitaryBC Globa
 namespace PositivityTheory.Rg.Rs
 
 
+open SliceClasses in
 theorem slice_of : Dict → FinTr → Slice := by
   intro hD hFin E _ _ _ r s hr hs V hV c hc
   obtain ⟨φ₀, hφ₀V, F₀, hCT, F, hFspan, hFne, hFeig⟩ := hc

@@ -28,6 +28,7 @@ namespace GlobalTheory.MovedKappaEx
 open GlobalTheory.IdemModTwo GlobalTheory.SplitIdem
 
 
+set_option maxHeartbeats 1000000 in
 theorem mem_splitOff_of_suppSplit : ∀ {D : D7} (V : HSp D) (Q : Finset ℕ) (s : GfC V),
     GlobalTheory.UnRep.SuppSplit (GlobalTheory.Member.cF D) (∏ q ∈ Q, q) (finHom V s.1).1 → s ∈ GlobalTheory.MovedKappaEx.splitOff V Q := by
   classical

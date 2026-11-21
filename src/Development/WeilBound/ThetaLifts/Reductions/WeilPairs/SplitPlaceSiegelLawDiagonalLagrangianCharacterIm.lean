@@ -21,10 +21,12 @@ namespace GlobalTheory.SplitLagrF
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+variable (F E) in
 def dC (n : ℕ) : Matrix (Fin (n + n)) (Fin n) (AF F ⊗[F] E) :=
   ((diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AF F ⊗[F] E)).submatrix finSumFinEquiv.symm id)
 
 
+variable (F E) in
 def aC (n : ℕ) : Matrix (Fin (n + n)) (Fin n) (AF F ⊗[F] E) :=
   ((Matrix.fromRows (1 : Matrix (Fin n) (Fin n) (AF F ⊗[F] E)) (-1)).submatrix finSumFinEquiv.symm id)
 

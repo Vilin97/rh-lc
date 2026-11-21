@@ -246,6 +246,7 @@ end GlobalTheory.SymbolOne
 namespace GlobalTheory
 
 
+open SymbolOne in
 theorem constantCoeff_dmonOf_prod_linear :
     ∀ (R k : Type) [CommRing R] [CommRing k] (φ : R →+* k) (d : ℕ) (G : FGLaw R d) (ι : Type) [Fintype ι] [DecidableEq ι] (u lam : ι → Fin d → k) (α : ι → k) (al m : ι →₀ ℕ) (E : PS k 1 d), (∀ l l', al l ≠ 0 → m l' ≠ 0 → ∑ i, lam l i * u l' i = if l = l' then α l else 0) → m.degree ≤ al.degree → constantCoeff (DmonOf (G.mapF φ) u m ((∏ l, (∑ i, C (lam l i) * (X ((0 : Fin 1), i) : PS k 1 d)) ^ al l) * E)) = if m = al then (∏ l, ((al l).factorial : k) * α l ^ al l) * constantCoeff E else 0 := by
   intro R k _ _ φ d G ι _ _ u lam α al m E hpair hdeg

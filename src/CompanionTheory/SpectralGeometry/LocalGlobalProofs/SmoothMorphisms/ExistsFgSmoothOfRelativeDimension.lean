@@ -42,6 +42,7 @@ theorem preimage_dimLocus_eq_top {X S T : Scheme.{0}} (p : X ⟶ S) [Smooth p] (
   exact TopologicalSpace.Opens.mem_iSup.2 ⟨⟨W, d⟩, hW⟩
 
 
+open GlobalTheory.Spread in
 theorem exists_fg_smoothOfRelativeDimension : ∀ (k V : Type) [CommRing k] [IsNoetherianRing k]
     [CommRing V] [Algebra k V] (X : Scheme.{0}) (p : X ⟶ Sp k) (g : ℕ), Smooth p → QuasiCompact p →
     SmoothOfRelativeDimension g (pullback.snd p (spMap (algebraMap k V))) →

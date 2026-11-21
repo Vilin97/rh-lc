@@ -121,6 +121,7 @@ noncomputable def primeHS (q : (maximalIdeal v.ring).primesOver (integralClosure
   ⟨q.1, q.2.1, v.ne_bot_of_mem_primesOver q.2⟩
 
 
+omit [IsScalarTower k K K'] [IsFunctionField k K] [FiniteDimensional K K'] [Algebra.IsSeparable K K'] in
 theorem mem_of_isIntegral_of_liesOver {w : Place k K'} (h : w.LiesOver v) {x : K'}
     (hx : IsIntegral v.ring x) : x ∈ w.ring := by
   let := h.algebra
@@ -301,6 +302,7 @@ theorem ramificationIdx_primeOfPlace_eq
   rw [← hlog, neg_neg, Int.toNat_natCast]
 
 
+omit [IsFunctionField k K'] in
 theorem inertiaDeg_primeOfPlace_eq
     (q : (maximalIdeal v.ring).primesOver (integralClosure v.ring K')) :
     q.1.inertiaDeg v.ring = (v.placeOfPrime q).inertiaDeg v := by

@@ -39,6 +39,7 @@ variable {r : ℕ} {Fil : ℤ → Submodule LL E} (hFa : Antitone Fil) (D : Subm
   [FiniteDimensional LL D] {e : Fin r → ℤ → E}
 
 
+include hFa in
 theorem count_step (he : ∀ m k, e m k ∈ D ⊓ Fil (-k))
     (hS : ∀ k : ℤ, ∀ w ∈ D ⊓ Fil (-k), ∃ c : Fin r → LL,
       (∀ j < k, ∑ m, c m • e m j ∈ Fil (-j + 1)) ∧ ∑ m, c m • e m k - w ∈ Fil (-k + 1))
@@ -89,6 +90,7 @@ theorem count_step (he : ∀ m k, e m k ∈ D ⊓ Fil (-k))
   omega
 
 
+include hFa in
 theorem indep_of_span (a₀ a₁ : ℤ) (h₀ : D ≤ Fil a₀) (h₁ : D ⊓ Fil a₁ = ⊥)
     (he : ∀ m k, e m k ∈ D ⊓ Fil (-k))
     (hS : ∀ k : ℤ, ∀ w ∈ D ⊓ Fil (-k), ∃ c : Fin r → LL,
@@ -139,6 +141,7 @@ theorem indep_of_span (a₀ a₁ : ℤ) (h₀ : D ≤ Fil a₀) (h₁ : D ⊓ Fi
   exact (Submodule.mem_bot LL).1 hcU
 
 
+include hFa in
 theorem smulS_sub_cc {M : ℤ} {f : ℤ → E} (hf : LB M f) (hfF : ∀ k, f k ∈ Fil (-k))
     (g : PowerSeries LL) (j : ℤ) :
     smulS g f j - PowerSeries.constantCoeff g • f j ∈ Fil (-j + 1) := by
@@ -151,6 +154,7 @@ theorem smulS_sub_cc {M : ℤ} {f : ℤ → E} (hf : LB M f) (hfF : ∀ k, f k �
   exact hFa (show -j + 1 ≤ -(j - ((i + 1 : ℕ) : ℤ)) by push_cast; omega) (hfF _)
 
 
+include hFa in
 theorem dvd_of_dg (a₁ : ℤ) (h₁ : D ⊓ Fil a₁ = ⊥) (he : ∀ m k, e m k ∈ D ⊓ Fil (-k))
     (hind : ∀ c : Fin r → LL, (∀ j, ∑ m, c m • e m j ∈ Fil (-j + 1)) → c = 0) :
     ∀ (k : ℕ) (g : Fin r → PowerSeries LL),

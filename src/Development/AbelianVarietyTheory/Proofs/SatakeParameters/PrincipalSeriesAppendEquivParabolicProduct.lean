@@ -36,9 +36,11 @@ theorem val_dg {n : ℕ} (p : parab k (points (Fin n))) (i : Fin n) :
   rfl
 
 
+variable (k) in
 def twoBlockParabolicFirstBlock (r t : ℕ) : parab k (two (eSt r t)) →* GL (Fin r) k := (MonoidHom.fst _ _).comp (Stages.pr _)
 
 
+variable (k) in
 def midPar (r t : ℕ) : Subgroup (GL (Fin (r + t)) k) :=
   ((parab k (points (Fin r))).comap (twoBlockParabolicFirstBlock k r t)).map (parab k (two (eSt r t))).subtype
 

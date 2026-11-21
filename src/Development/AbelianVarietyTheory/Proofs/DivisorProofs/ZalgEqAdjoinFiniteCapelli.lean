@@ -14,6 +14,7 @@ noncomputable section
 namespace GlobalTheory.CuspRep
 
 
+open Finset in
 theorem zalg_eq_adjoin_finite_caps : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (b : ℕ),
     ∃ T : Finset (Module.End ℂ (Sm E b)), (∀ t ∈ T, ∃ (τ : E →+* ℂ) (u : ℂ), t = cap τ u) ∧
       Zalg E b = Algebra.adjoin ℂ (T : Set (Module.End ℂ (Sm E b))) := by

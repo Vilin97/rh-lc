@@ -122,6 +122,7 @@ theorem cmpS_mk (I : Ideal (𝓞 D.host.E)) (r : 𝓞 D.host.E) :
   exact Ideal.quotientMap_mk
 
 
+set_option maxHeartbeats 1600000 in
 theorem mem_cosSet_iff {S T : GlobalTheory.Grid.Node D} {e : AE D} (hS : Formalism.L2.DIV.IsFrame S.β S.Λ)
     (hT : Formalism.L2.DIV.IsFrame T.β T.Λ) (he0 : infPart D e = 0) {I : Ideal (𝓞 D.host.E)}
     (he_int : toEAf D e ∈ Formalism.L2.Herm.intAf D.host.F D.host.E)

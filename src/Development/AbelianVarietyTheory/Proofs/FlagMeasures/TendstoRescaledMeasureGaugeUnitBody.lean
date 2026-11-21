@@ -92,6 +92,7 @@ theorem isCompact_body (ρ : V → ℝ) (hc : Continuous ρ) (h0 : ∀ v, 0 ≤ 
   nlinarith
 
 
+omit [FiniteDimensional ℝ V] in
 theorem body_eq_smul (ρ : V → ℝ) (hs : ∀ s : ℝ, 0 ≤ s → ∀ v, ρ (s • v) = s * ρ v) {t : ℝ} (ht : 0 < t) :
     {v | ρ v ≤ t} = t • {v | ρ v ≤ 1} := by
   ext v
@@ -99,6 +100,7 @@ theorem body_eq_smul (ρ : V → ℝ) (hs : ∀ s : ℝ, 0 ≤ s → ∀ v, ρ (
     hs _ (inv_nonneg.2 ht.le), inv_mul_le_iff₀ ht, mul_one]
 
 
+omit [NormedSpace ℝ V] [FiniteDimensional ℝ V] in
 theorem exists_cutoff (ρ : V → ℝ) (hc : Continuous ρ) {s t : ℝ} (hst : s < t) :
     ∃ φ : V → ℝ, Continuous φ ∧ (∀ x, 0 ≤ φ x) ∧ (∀ x, φ x ≤ 1) ∧ (∀ x, ρ x ≤ s → φ x = 1) ∧
       ∀ x, ¬ ρ x ≤ t → φ x = 0 := by

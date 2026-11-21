@@ -61,6 +61,7 @@ theorem exists_isogeny_coords : ∃ (x y : gaussRing W)
   exact ⟨x, y, _, e'⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem degree_reduceIsogeny_le : (reduceIsogeny K W W' φ).degree ≤ φ.degree := by
   obtain ⟨x, y, h, hφ⟩ := exists_isogeny_coords K W W' φ
   have hjM : ∀ c : 𝒪, algebraMap K (W.baseChange K).toAffine.FunctionField (algebraMap 𝒪 K c) =

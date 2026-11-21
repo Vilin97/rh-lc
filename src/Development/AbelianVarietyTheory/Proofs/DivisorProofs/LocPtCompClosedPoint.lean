@@ -104,6 +104,7 @@ variable [IsOpenImmersion io]
     d _ _ (algebraMap _ Y.functionField) b a₀ * algebraMap _ Y.functionField u = δ)
 
 
+include hpull hunit hcoc h₀ hcov hδ in
 theorem exists_test (y : Y) :
     ∃ (A : Type) (_ : CommRing A) (b : Fr A) (α : A), IsTest pt d a₀ δ b α ∧ io y ∈ Set.range (pt _ b) := by
   obtain ⟨B, _, bW, hW, hyW⟩ := hcov (io y) ⟨y, rfl⟩
@@ -133,6 +134,7 @@ theorem exists_test (y : Y) :
     exact locPt_comp_closedPoint io y
 
 
+include hrange hpull hunit hcoc h₀ in
 theorem test_compat {L : Type} [CommRing L] [IsLocalRing L] (e : Fr L) {A A' : Type} [CommRing A] [CommRing A']
     {b : Fr A} {b' : Fr A'} {α : A} {α' : A'} (hb : IsTest pt d a₀ δ b α) (hb' : IsTest pt d a₀ δ b' α')
     {h : A →+* L} {h' : A' →+* L} (he : pt _ e = spMap h ≫ pt _ b) (he' : pt _ e = spMap h' ≫ pt _ b') :
@@ -170,6 +172,7 @@ theorem test_compat {L : Type} [CommRing L] [IsLocalRing L] (e : Fr L) {A A' : T
     _root_.mul_assoc, _root_.mul_assoc, ← map_mul, ← map_mul, e1]
 
 
+include hrange hpull hunit hcoc h₀ in
 theorem exists_val_of_test {R R' A : Type} [CommRing R] [CommRing R'] [CommRing A] (g : R →+* R') (a : Fr R)
     {b : Fr A} {α : A} (hb : IsTest pt d a₀ δ b α) {h : A →+* R'} (hh : spMap g ≫ pt _ a = spMap h ≫ pt _ b) :
     ∃ r, IsVal pt d a₀ δ g a r := by
@@ -183,6 +186,7 @@ theorem exists_val_of_test {R R' A : Type} [CommRing R] [CommRing R'] [CommRing 
   exact test_compat hrange hpull hunit hcoc h₀ e hb hb' (by rw [h3, h4, DetExtendZero.spMap_comp, Category.assoc]) h2
 
 
+include hrange hpull hunit hcoc h₀ hcov hδ in
 theorem exists_local {R L : Type} [CommRing R] [CommRing L] [IsLocalRing L] (g : R →+* L) (a : Fr R) :
     ∃ (e : Fr L) (A : Type) (_ : CommRing A) (b : Fr A) (α : A) (h : A →+* L),
       IsTest pt d a₀ δ b α ∧ pt _ e = spMap g ≫ pt _ a ∧ pt _ e = spMap h ≫ pt _ b := by
@@ -214,6 +218,7 @@ theorem IsVal.isUnit {R R' : Type} [CommRing R] [CommRing R'] {g : R →+* R'} {
   exact (IsLocalization.AtPrime.isUnit_to_map_iff (Localization.AtPrime P) P r).1 (isUnit_of_mul_isUnit_right h3) hr
 
 
+include hrange hpull hunit hcoc h₀ hcov hδ in
 theorem exists_val {R : Type} [CommRing R] (a : Fr R) : ∃ r, IsVal pt d a₀ δ (RingHom.id R) a r := by
   let s : Set R := {f | ∃ r, IsVal pt d a₀ δ (algebraMap R (Localization.Away f)) a r}
   have hs : ∀ P : Ideal R, P.IsPrime → ∃ f ∈ s, f ∉ P := by
@@ -256,6 +261,7 @@ theorem exists_val {R : Type} [CommRing R] (a : Fr R) : ∃ r, IsVal pt d a₀ �
   rwa [hg, ← hr ⟨f, hf⟩, IsLocalization.Away.lift_eq] at this
 
 
+include hrange hpull hunit hcoc h₀ hcov hδ in
 theorem exists_coord : ∃ f : ∀ (R : Type) [CommRing R], Fr R → R,
     (∀ (R R' : Type) [CommRing R] [CommRing R'] (g : R →+* R') (a : Fr R) (a' : Fr R'), pt _ a' = spMap g ≫ pt _ a →
       f R' a' = d _ _ g a a' * g (f R a)) ∧ (∀ (R : Type) [CommRing R] (a : Fr R), IsUnit (f R a)) ∧ f _ a₀ = δ := by
@@ -354,6 +360,7 @@ theorem chg_isUnit {g : R →+* R'} (h : IsFrame t π s V (HermitianCompactForm.
   exact ⟨Matrix.isUnit_det_of_left_inverse e1, Matrix.isUnit_det_of_left_inverse e2⟩
 
 
+variable (c t π s V τ p q) in
 def Framed (R : Type) [CommRing R] : Type :=
   Σ' (x : Sp R ⟶ X) (v : Fin p → (epsAt (x ≫ π) ⟶ t.G)) (w : Fin q → (epsAt (x ≫ π) ⟶ t.G)),
     ∃ j, IsFrame t π s V (HermitianCompactForm.chi c τ) j x v w

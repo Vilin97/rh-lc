@@ -18,6 +18,7 @@ noncomputable section
 namespace GlobalTheory.BotPairSmall.CondNu
 variable {D : D7}
 
+open GlobalTheory.Mem.Col2.SplitChar in
 theorem vl_le_of_mem_hatId {I : Ideal (𝓞 D.host.E)} {PP : HeightOneSpectrum (𝓞 D.host.E)} {n : ℕ}
     (hI : I ≤ PP.asIdeal ^ n) {x : AE D} (hx : x ∈ hatId D I) : vl D PP x ≤ WithZero.exp (-(n : ℤ)) := by
   induction hx using AddSubgroup.closure_induction with
@@ -53,6 +54,7 @@ theorem conj_smul_le (𝔪 : Ideal (𝓞 D.host.E)) : D.host.conj • (𝔪 * D.
     _ = 𝔪 := e
 
 
+open GlobalTheory.Mem.Col2.SplitChar in
 theorem vl_sub_le {T : Type} {L : LevCh D T} (P : Places L) {u : (AE D)ˣ}
     (hu : (u : AE D) - 1 ∈ hatId D (condE P * D.host.conj • condE P)) {PP : HeightOneSpectrum (𝓞 D.host.E)}
     (hv : PP.under (𝓞 D.host.F) ∈ P.S0) :
@@ -70,6 +72,7 @@ theorem vl_sub_le {T : Type} {L : LevCh D T} (P : Places L) {u : (AE D)ˣ}
     exact vl_le_of_mem_hatId ((conj_smul_le _).trans hle) (sgA_mem_hatId hu)
 
 
+open GlobalTheory.Mem.Col2.SplitChar Formalism.L2.Host in
 theorem nuH_inv_eq_one_of_cong : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {μ₀ : T}, L.Is μ₀ → ∀ (G : GridData L sc) (i j : Fin D.R.m) (u : (AE D)ˣ), IntU D u → (u : AE D) - 1 ∈ hatId D (condE G.pl * D.host.conj • condE G.pl) → (nuH G μ₀ i j)⁻¹.1 (finIdl D u) = 1 := by
   intro D T L sc μ₀ hL G i j u hu hc
   refine GlobalTheory.Mem.LocTriv.eq_one_of_local D.host.E _ (nuH G μ₀ i j)⁻¹.2.1 (finIdl D u) (finIdl_unit hu)

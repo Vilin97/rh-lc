@@ -18,6 +18,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 section Idem
 
 
+variable (F E) in
 def rI : AEF F E := algebraMap (AF F) (AEF F E) (pairA F 1 0)
 
 theorem rI_idem : rI F E * rI F E = rI F E := by

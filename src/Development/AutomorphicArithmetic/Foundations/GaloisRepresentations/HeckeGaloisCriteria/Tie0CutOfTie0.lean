@@ -140,6 +140,7 @@ theorem rowsC_cut (hc : c.Good) (h : RowsC D) : RowsC (cut D c) :=
       rw [e]; rfl }
 
 
+set_option maxHeartbeats 1000000 in
 def ledBack (L : SizeData₂ (cut D c)) : SizeData₂ D := { L with }
 
 theorem pointsAdmissible_restrictToPoints (hc : c.Good) (h : SumRepresentations.ConclusionZ D) : SumRepresentations.ConclusionZ (cut D c) := by

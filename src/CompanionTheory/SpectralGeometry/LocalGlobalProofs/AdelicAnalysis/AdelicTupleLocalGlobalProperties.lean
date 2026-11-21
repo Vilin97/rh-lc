@@ -85,6 +85,7 @@ theorem crd_v (v : HeightOneSpectrum (𝓞 F)) (X : Fin n → Fin M → AF F ⊗
   exact congrArg (evalV F v) h2
 
 
+include b in
 theorem tuple_ext (X Y : Fin n → Fin M → AF F ⊗[F] E) (hinf : projInf X = projInf Y)
     (hv : ∀ v, projV v (projFin X) = projV v (projFin Y)) : X = Y := by
   classical

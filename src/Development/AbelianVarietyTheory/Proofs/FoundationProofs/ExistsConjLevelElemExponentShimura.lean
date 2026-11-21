@@ -13,6 +13,8 @@ open Matrix GlobalTheory.KZ
 namespace GlobalTheory
 
 
+open scoped MatrixGroups TensorProduct in
+open Matrix in
 theorem _root_.GlobalTheory.exists_primitiveRoot_pow_cyclotomicCharacter {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω]
     (l n M : ℕ) [Fact l.Prime] (hM : 0 < M) (hn : l ^ n ∣ M) (s : Ω ≃ₐ[ℚ] Ω) :
     ∃ ζ : Ω, IsPrimitiveRoot ζ M ∧ ∃ i : ℕ, i.Coprime M ∧ s ζ = ζ ^ i ∧
@@ -49,6 +51,8 @@ theorem _root_.GlobalTheory.exists_primitiveRoot_pow_cyclotomicCharacter {Ω : T
   exact (ZMod.natCast_eq_natCast_iff _ _ _).2 h3
 
 
+open scoped MatrixGroups TensorProduct in
+open Matrix in
 theorem _root_.GlobalTheory.exists_sl2_conj_diag_zmod (M i : ℕ) (hi : i.Coprime M) (γ : SL(2, ℤ)) :
     ∃ δ : SL(2, ℤ), (_root_.GlobalTheory.KZ.en γ 0 0 : ZMod M) = _root_.GlobalTheory.KZ.en δ 0 0 ∧
       (_root_.GlobalTheory.KZ.en γ 0 1 : ZMod M) = (i : ZMod M) * _root_.GlobalTheory.KZ.en δ 0 1 ∧

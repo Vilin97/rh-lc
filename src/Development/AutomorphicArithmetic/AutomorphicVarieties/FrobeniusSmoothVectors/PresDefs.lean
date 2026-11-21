@@ -176,6 +176,7 @@ def co : (RingHom.ker p →ₗ[O] ResidueField O) →ₗ[ResidueField O]
 end SetLift
 
 
+variable (O) in
 def HasObs (R : Type) [CommRing R] [Algebra O R] (H : Type) [AddCommGroup H] [Module (ResidueField O) H] : Prop :=
   ∀ (C' : Type) [CommRing C'] [Algebra O C'] [IsCO O C'] (p : C' →ₐ[O] R), Function.Surjective p →
     maximalIdeal C' * RingHom.ker p = ⊥ →

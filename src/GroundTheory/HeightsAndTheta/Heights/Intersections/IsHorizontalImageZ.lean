@@ -19,6 +19,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {K' : Type} [Fintype K'] {ι' : K' → Type} [∀ k, Fintype (ι' k)]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] [Fintype K'] [∀ k, Fintype (ι' k)] in
 theorem isHorizontal_imageZ {v : (Σ k, ι k) → (Σ k', ι' k')} {W' : Ideal (MRing ι')} (h : IsHorizontal W') :
     IsHorizontal (imageZ v W') := by
   have h' : W'.comap (C : ℤ →+* MRing ι') = ⊥ := h
@@ -47,6 +48,7 @@ theorem dim_add_one_le {R : Type*} [CommRing R] {Q Q₂ : Ideal R} [Q.IsPrime] (
   simp only [Ideal.Quotient.factor_mk, Ideal.Quotient.eq_zero_iff_mem.2 hx, mul_zero]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem isRelevant_of_le {Y Z : Ideal (MRing ι)} (hZ : IsRelevant Z) (hY : Y ≤ Z) : IsRelevant Y :=
   fun k => let ⟨i, hi⟩ := hZ k; ⟨i, fun h => hi (hY h)⟩
 
@@ -119,6 +121,7 @@ theorem isMultiHomog_rename {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k'
 end ArithmeticIntersectionHorizontal
 
 
+open ArithmeticIntersectionHorizontal in
 theorem ArithmeticIntersectionHorizontal.proof (hDiv : DivSuppArithStatement) (hIm : ImageArithStatement)
     (hP0 : GroundTheory.Heights₂.Heights.Inter.PushforwardProjectivePoint.Statement) : ArithmeticIntersectionHorizontal.Statement := by
   intro I hI n hn K _ ι _ K' _ ι' _ κ v P' L L' s α W' hv hP' hP hL hLL' hs hsP hW' hh

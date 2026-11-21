@@ -89,6 +89,7 @@ theorem py_ptOf (hΔ : (curveL l L ι).Δ ≠ 0) (t : ℂ) (ht : t ∉ L.lattice
 end ScaledModelNorms
 
 
+open Formalism.L2.Th1 in
 theorem cm_integrality_of_torsion_points (hP : PtOfInt) : CMIntegrality := by
   intro L l _ hl ι lam hlam h2 h3 hD z N hN hlN hNz hz
   have hμ0 : ι.symm lam ≠ 0 := by simpa using hlam

@@ -30,6 +30,7 @@ theorem IsNTr.zt_pow (ε : Ω →+* ℂ) (l m k : ℕ) [NeZero l] : zt ε l (m +
   congr 1; push_cast; field_simp; ring
 
 
+open Classical in
 theorem IsNTr.card_filter (l n m : ℕ) [hl : Fact l.Prime] (hm : 1 ≤ m) (hmn : m ≤ n) :
     (Finset.univ.filter (fun a : (ZMod (l ^ n))ˣ => (a : ZMod (l ^ n)).val ≡ 1 [MOD l ^ m])).card = l ^ (n - m) := by
   have hd : l ^ m ∣ l ^ n := pow_dvd_pow l hmn

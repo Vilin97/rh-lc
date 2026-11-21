@@ -285,6 +285,7 @@ private theorem map_intCast_transpose_of_evenPos (G : Matrix κ κ ℤ) (hG : Ev
   rw [← Matrix.transpose_map, hs]
 
 
+set_option maxHeartbeats 800000 in
 theorem dual_level_index : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ] [DecidableEq κ] (G : Matrix κ κ ℤ), EvenPos G → (∀ y : κ → F, y ∈ dualL F G → ∀ d : 𝓞 F, d ∈ differentIdeal ℤ (𝓞 F) → ((G.det : F) * d) • y ∈ LL F κ) ∧ (∃ N : ℕ, 0 < N ∧ ∀ y ∈ dualL F G, (N : F) • y ∈ LL F κ ∧ IsIntegral ℤ ((N : F) * QF G y)) ∧ (∀ y : κ → F, (∀ ν ∈ dualL F G, ∃ n : ℤ, Algebra.trace ℚ F (BF G y ν) = n) → y ∈ LL F κ) ∧ (∀ (a : F) (y : κ → F), IsIntegral ℤ a → y ∈ dualL F G → a • y ∈ dualL F G) ∧ ((LL F κ).relIndex (dualL F G) : ℤ) = ((discr F).natAbs : ℤ) ^ Fintype.card κ * G.det ^ Module.finrank ℚ F := by
   intro F _ _ κ _ _ G hG
   have hdet : G.det ≠ 0 := (det_pos_of_evenPos hG).ne'

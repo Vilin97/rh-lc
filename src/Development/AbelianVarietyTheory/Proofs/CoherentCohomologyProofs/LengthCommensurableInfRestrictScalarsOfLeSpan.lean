@@ -56,6 +56,7 @@ theorem span_inf_restrictScalars_eq {M : Submodule R V} {W : Submodule K V}
 variable {K}
 
 
+omit [IsDomain R] [IsFractionRing R K] in
 theorem fractionField_smul_inf_restrictScalars {s : K} (hs : s ≠ 0) (Θ : Submodule R V) (W : Submodule K V) :
     s • Θ ⊓ W.restrictScalars R = s • (Θ ⊓ W.restrictScalars R) := by
   ext x
@@ -118,6 +119,7 @@ theorem log_ordFrac_algebraMap {a : R} (ha : a ≠ 0) :
   simp
 
 
+variable (K) in
 theorem relLength_ne_top_of_subset_span {A B : Submodule R V} (hA : A.FG)
     (h : (A : Set V) ⊆ Submodule.span K (B : Set V)) : relLength A B ≠ ⊤ := by
   have := Module.IsTorsionFree.trans_faithfulSMul R K V
@@ -125,6 +127,7 @@ theorem relLength_ne_top_of_subset_span {A B : Submodule R V} (hA : A.FG)
   exact ne_top_of_le_ne_top (relLength_smul_self_ne_top hA ha) (relLength_anti_right A hab)
 
 
+variable (K) in
 theorem subset_span_of_relLength_ne_top {A B : Submodule R V} (h : relLength A B ≠ ⊤) :
     (A : Set V) ⊆ Submodule.span K (B : Set V) := by
   intro x hx
@@ -152,6 +155,7 @@ theorem subset_span_of_relLength_ne_top {A B : Submodule R V} (h : relLength A B
   exact Submodule.subset_span h₁
 
 
+variable (K) in
 theorem lengthCommensurable_iff_span_eq {A B : Submodule R V} (hA : A.FG) (hB : B.FG) :
     LengthCommensurable A B ↔
       Submodule.span K (A : Set V) = Submodule.span K (B : Set V) :=

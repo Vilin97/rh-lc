@@ -94,6 +94,7 @@ private theorem pj_tr {L L' : IntermediateField k Ω} (h : L ≤ L') :
     rfl
 
 
+variable (k Ω) in
 private def Gd : (FI k Ω)ᵒᵖ ⥤ Scheme.{0} where
   obj L := geom L.unop.1 p
   map f := tr p (leOfHom f.unop)
@@ -114,6 +115,7 @@ private def Gd : (FI k Ω)ᵒᵖ ⥤ Scheme.{0} where
       rfl
 
 
+variable (k Ω) in
 private def cn : Cone (Gd k Ω p) where
   pt := geom Ω p
   π := { app := fun L => LateralTheory.EWeil.StabPf.proj L.unop.1 p

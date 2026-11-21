@@ -122,6 +122,7 @@ theorem lab_level {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] (D : DegD
 end GlobalTheory.Mum.GalSquares
 
 
+open GlobalTheory.Mum.GalSquares in
 theorem GlobalTheory.Mum.galEqN_of_squares : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R], Base R → ∀ n : ℕ, n.Prime →
     Odd n → IsUnit (n : R) → ∀ (D : DegData R (maximalIdeal R)) (A : PolAV (Sp (FractionRing R)))
     (lab : Labels D.toPre A), OneTrait D.toPre A lab → (∃ i₀ : ℕ, ∀ i : ℕ, i₀ ≤ i →

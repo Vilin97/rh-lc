@@ -113,6 +113,7 @@ theorem join_mem {u v : WO S T} (hu : u ∈ ratL T S) (hv : v ∈ ratL T S) : jo
 end GlobalTheory.DblBoxHaar
 
 
+open MeasureTheory in
 theorem GlobalTheory.DblBoxHaar.box_integral : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (S T : HSp D),
     ∃ (μ : MeasureTheory.Measure (Formalism.IndefR.Datum.WO S (GlobalTheory.Doubling.dblSp T))) (𝓕 : Set (Formalism.IndefR.Datum.WO S (GlobalTheory.Doubling.dblSp T)))
       (μ₁ : MeasureTheory.Measure (Formalism.IndefR.Datum.WO S T)) (𝓕₁ : Set (Formalism.IndefR.Datum.WO S T)),

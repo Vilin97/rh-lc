@@ -180,6 +180,7 @@ theorem rspan_eq_mspanR (π : CuspSub E a) : rspan π = mspanR π := by
     exact kerInf_mem_rspan hF ν hk
 
 
+open Classical in
 def plS (w : InfinitePlace E) : ℂ →ₙ+* Cinf E where
   toFun z := Pi.single w z
   map_mul' z z' := by ext w'; by_cases h : w' = w <;> simp [Pi.single_apply, h]

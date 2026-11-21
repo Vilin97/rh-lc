@@ -58,6 +58,7 @@ theorem isSB_member {M R : ℕ} {φ : Fam E n N} (h : admitted M R φ) {Λ : Lt 
 end GlobalTheory.SW.SwdHeat
 
 
+open GlobalTheory.SW.EisHeat GlobalTheory.SW.SwdHeat in
 theorem GlobalTheory.SW.isHeat_swd : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)), IsType Ψ → ∀ (n N : ℕ), Even n → 4 * N < n → ∀ (M R : ℕ) (φ : Fam E n N), admitted M R φ → IsHeat Ψ (swd Ψ M φ) := by
   intro E _ _ _ Ψ hΨ n N hn hN M R φ hφ
   haveI := (finite_cls_and_stab E n M hφ.pos.1).1

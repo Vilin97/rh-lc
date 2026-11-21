@@ -42,6 +42,7 @@ def phPrime (t₀ : ℂ) : PowerSeries ℂ_[l] :=
 end An
 
 
+open Classical in
 def PtOfAdd : Prop :=
   ∀ (l : ℕ) [Fact l.Prime] (L : PeriodPair) (ι : ℂ ≃+* ℂ_[l]) (s t : ℂ),
     ptOf l L ι (s + t) = ptOf l L ι s + ptOf l L ι t
@@ -62,6 +63,7 @@ def TransWpBridge : Prop :=
     inU l L ι (fun z => L.weierstrassP (z + t)) = xT (curveL l L ι) (ptOf l L ι t)
 
 
+open Classical in
 def AnalyticSys : Prop :=
   ∀ (l : ℕ) [Fact l.Prime] (L : PeriodPair) (ι : ℂ ≃+* ℂ_[l])
     (π : ℂ →+ (curveL l L ι).toAffine.Point), (∀ t, π t = ptOf l L ι t) →

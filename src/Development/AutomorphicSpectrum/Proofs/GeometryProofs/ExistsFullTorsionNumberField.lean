@@ -302,6 +302,7 @@ namespace GlobalTheory.CompanionTheory.Ar.Sl.TorsRat
 variable {L : Type} [Field L]
 
 
+open scoped CategoryTheory.Obj in
 theorem card_points (A : Over (Sp L)) [GrpObj A] (hA : IsAbelianScheme A) {g : ℕ}
     (hg : SmoothOfRelativeDimension g A.hom) {Ω : Type} [Field Ω] [IsAlgClosed Ω] (t : Sp Ω ⟶ Sp L) (n : ℕ)
     (hn : (n : Ω) ≠ 0) : Nat.card {x : Over.mk t ⟶ A // x ^ n = 1} = n ^ (2 * g) := by

@@ -71,6 +71,7 @@ theorem isAlgebraic_of_mulVec {R L : Type*} [CommRing R] [IsDomain R] [CommRing 
 end PairConeAlg
 
 
+open PairConeAlg GenericProjClosureDim in
 theorem PairConeAlg.proof : PairConeAlg.Statement := by
   intro O _ _ _ ϖ hϖ Ω _ _ K _ _ ι _ y d hV N hN E _ _ B B' hB M M' a₀ a₀' φ φ' hφ hφ' Φ _ _ _ _ e t ht
   classical

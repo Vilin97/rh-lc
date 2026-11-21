@@ -182,6 +182,7 @@ theorem toPoly_algebraMap (d : D) : toPoly Q j e (algebraMap D (Chart Q j e) d) 
 end ChartDomain
 
 
+open ChartDomain in
 theorem ChartDomain.proof : ChartDomain.Statement := by
   intro D _ _ n e Q j hQ hQD hXj
   have hxj : Ideal.Quotient.mk Q (X j) ≠ 0 := fun h => hXj (Ideal.Quotient.eq_zero_iff_mem.mp h)

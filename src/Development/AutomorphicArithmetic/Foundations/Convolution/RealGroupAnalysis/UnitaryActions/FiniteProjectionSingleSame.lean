@@ -15,6 +15,7 @@ namespace UpperTheory.ConvolutionTheory.R2
 variable {F : Type} [Field F] [NumberField F]
 
 
+variable (F) in
 def Cell : Set (G1 F) := {g | IsUnit (g 1 0)}
 theorem nmwn_val (b₁ b₂ : A F) (a : (A F)ˣ) : (nU b₁ * mD a * wW F * nU b₂).1 =
     !![-(b₁ * ((a⁻¹ : (A F)ˣ) : A F)), a - b₁ * ((a⁻¹ : (A F)ˣ) : A F) * b₂;
@@ -37,8 +38,10 @@ theorem mem_cell_iff (g : G1 F) : g ∈ Cell F ↔ ∃ b₁ a b₂, g = nU b₁ 
   ⟨fun h => ⟨_, _, _, cell_normal g (IsUnit.unit h) rfl⟩, by rintro ⟨b₁, a, b₂, rfl⟩; exact nmwn_mem_cell _ _ _⟩
 
 
+variable (F) in
 def p1 : A F →+* InfiniteAdeleRing F := RingHom.fst _ _
 
+variable (F) in
 def p2 : A F →+* FiniteAdeleRing (𝓞 F) F := RingHom.snd _ _
 
 def pv (v : HeightOneSpectrum (𝓞 F)) : A F →+* v.adicCompletion F :=
@@ -54,6 +57,7 @@ theorem eventually_intAt (g : G1 F) : ∀ᶠ v in cofinite, IntAt v g :=
   eventually_all.2 fun i => eventually_all.2 fun j => (g i j).2.2
 
 
+variable (F) in
 def eInf : A F := (1, 0)
 theorem one_sub_eInf_mul (b : A F) : (1 - eInf F) * b = (0, b.2) :=
   Prod.ext (by change (1 - 1) * b.1 = 0; simp) (by change (1 - 0) * b.2 = b.2; simp)

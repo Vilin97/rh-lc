@@ -138,11 +138,13 @@ variable {X₁ : Setup F W i} {z₁ : X₁.M.Z} {act : Matrix (Fin 8) (Fin 8) �
   {X : Type} [AddCommGroup X] {m : ℕ} {t : Fin m → V} {δ : Fin m → LinearMap.BilinForm ℤ X} (𝔪 : UMem X₁ z₁ act V ev X t δ)
 
 
+include 𝔪 in
 theorem UMem.mono_ne_zero (mu : Fin 8 → X) : mono W t δ mu ≠ 0 :=
   let ⟨_, h⟩ := 𝔪.psi mu
   right_ne_zero_of_mul (PsiCoordLocal.ne_zero_of_coord h)
 
 
+include 𝔪 in
 theorem UMem.mono_mem {mu : Fin 8 → X} (h : mu ≠ 0) : mono W t δ mu ∈ maximalIdeal V := by
   haveI := 𝔪.cn.2.2.2
   obtain ⟨u, hu⟩ := 𝔪.psi mu

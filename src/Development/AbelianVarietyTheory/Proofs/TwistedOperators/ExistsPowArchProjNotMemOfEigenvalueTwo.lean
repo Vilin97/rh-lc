@@ -26,6 +26,7 @@ namespace GlobalTheory.Twist
 open scoped TensorProduct Matrix
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_pow_projArch_not_mem_of_eigen_two : ∀ (D : D7) (V : HSp D) (g : GF V) (x : V.V), x ≠ 0 → GlobalTheory.Cusp.ratAct D.sp.cm V g x = (2 : D.host.E) • x → ∀ (w : InfinitePlace D.host.F) (K : Set (GArch D.sp.cm.sig V.gram w)), IsCompact K → ∃ n : ℕ, projArch D.sp.cm.sig V.gram w (rat V (g ^ n)) ∉ K := by
   intro D V g x hx hg w K hK
   classical

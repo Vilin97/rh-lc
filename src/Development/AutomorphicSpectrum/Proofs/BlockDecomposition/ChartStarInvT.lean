@@ -38,6 +38,8 @@ theorem invT_toUnits (k : Kinf E a) :
   rfl
 
 
+omit [IsTotallyComplex E] in
+variable (E a) in
 def trL : Lie E a →L[ℝ] Lie E a :=
   LinearMap.toContinuousLinearMap
     { toFun := fun X => toL (Matrix.of X)ᵀ
@@ -48,6 +50,7 @@ omit [IsTotallyComplex E] in
 theorem trL_apply (X : Lie E a) : trL E a X = toL (Matrix.of X)ᵀ := rfl
 
 
+omit [IsTotallyComplex E] in
 theorem toL_invT (y : GL (Fin a) (Cinf E)) :
     toL (invT a (Cinf E) y).val = trL E a (GlobalTheory.ThetaPull.invL (toL y.val)) := by
   rw [trL_apply, GlobalTheory.ThetaPull.invL]

@@ -21,6 +21,7 @@ noncomputable section
 namespace GlobalTheory.ConeData
 
 
+open GlobalTheory.XTermFinParts in
 theorem finite_parts : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
     (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' →
     ∀ (K : Subgroup (UA σ G.V.J)), IsStab B K →
@@ -47,6 +48,7 @@ theorem finite_parts : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numbe
   exact h2.symm
 
 
+open GlobalTheory.XTermSupp in
 theorem finsupp : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
     (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' →
     ∀ (K : Subgroup (UA σ G.V.J)), IsStab B K →
@@ -77,6 +79,7 @@ theorem finsupp : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFiel
   exact (smul_left_injective ℂ hne (h1.symm.trans (one_smul ℂ _).symm))
 
 
+open GlobalTheory.XTermDecay GlobalTheory.HeisSchA GlobalTheory.Published.Metaplectic GlobalTheory.DiffDecay in
 theorem arch_decay : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
     (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' →
     ∀ (K : Subgroup (UA σ G.V.J)), IsStab B K →

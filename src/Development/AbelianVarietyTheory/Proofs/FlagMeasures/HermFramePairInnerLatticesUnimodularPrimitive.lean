@@ -21,6 +21,7 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
 
+omit [StarRing K] in
 theorem exists_mult {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.IsLattice K Λ) (v : V) :
     ∃ c : K, c ≠ 0 ∧ c • v ∈ Λ := by
   obtain ⟨s, hs⟩ := exists_smul_mem hΛ v
@@ -242,6 +243,7 @@ theorem span_hermFramePair_lattice_eq_sup (N : NF H r) : Submodule.span K (N.P0 
       (le_iSup₂_of_le (f := fun (a : Fin r) (_ : N.j ≤ a.val) => line (ipow N.𝔡 ((r : ℤ) - a.val)) (N.ist a)) a ha le_rfl))
 
 
+omit [StarRing K] in
 theorem fg_inf {L : Submodule (𝓞 K) V} {S I T : Submodule K V} (hL : IsLatMod L S I) (hT : ∀ x ∈ T, x ∈ I → x = 0) :
     (L ⊓ rs (𝓞 K) T).FG := by
   obtain ⟨⟨N, hN, rfl⟩, -⟩ := hL

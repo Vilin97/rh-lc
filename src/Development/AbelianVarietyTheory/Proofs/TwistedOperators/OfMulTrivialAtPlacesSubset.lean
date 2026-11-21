@@ -56,6 +56,7 @@ theorem mul_mem_idAt {Q : GlobalTheory.FinPl.Pl D → Prop} {m n k : ℕ} (A : M
 end GlobalTheory.AscFin.CondCut
 
 
+open GlobalTheory.AscFin.CondCut in
 theorem GlobalTheory.AscFin.Cond.of_mul_grpOff : ∀ {D : D7} {V₀ W W₀ : HSp D} {ρ σ : ℕ} (dW : HypDec W W₀ σ) (p : Pieces V₀ W W₀ ρ σ) (x : Mx D W.rank ρ) (y : Mx D V₀.rank σ) (ψ : AddChar (AF D.host.F) ℂ) (P Q : GlobalTheory.FinPl.Pl D → Prop) (g₁ g₂ : GA D W), (∀ v, Q v → P v) → g₁ ∈ grpAt W Q → g₂ ∈ grpOff W Q → g₁ * g₂ = g₂ * g₁ → Cond dW p x y ψ P (g₁ * g₂) → Cond dW p x y ψ Q g₁ := by
   intro D V₀ W W₀ ρ σ dW p x y ψ P Q g₁ g₂ hQP _hg₁ hg₂ _hcomm H
   have hg₂i : g₂⁻¹ ∈ grpOff W Q := inv_mem hg₂

@@ -66,6 +66,7 @@ variable (l : ℕ) [hl : Fact l.Prime] (a : ℕ)
 def resSub : Subring (OCb l) := RingHom.eqLocus (iterateFrobenius (OCb l) l a) (RingHom.id _)
 
 
+variable {l a} in
 theorem mem_resSub {x : OCb l} : x ∈ resSub l a ↔ x ^ l ^ a = x := Iff.rfl
 
 variable [NeZero a]
@@ -93,6 +94,7 @@ def Fq.val : Fq l a →+* OCb l := (resSub l a).subtype
 theorem Fq.val_injective : Function.Injective (Fq.val l a) := Subtype.val_injective
 
 
+variable {l a} in
 theorem Fq.pow_card (x : Fq l a) : x ^ l ^ a = x :=
   (Fq.val_injective l a) (by rw [map_pow]; exact x.2)
 
@@ -224,6 +226,7 @@ theorem dvd_of_not_isUnit {w : Wq l a} (h : ¬ IsUnit w) : (l : Wq l a) ∣ w :=
   exact h (WittVector.isUnit_of_coeff_zero_ne_zero w h0)
 
 
+omit [NeZero a] in
 def Kunr : IntermediateField ℚ_[l] (Om l) := IntermediateField.adjoin ℚ_[l] {x | x ^ l ^ a = x}
 
 def unrExt : FinExt l :=
@@ -504,6 +507,7 @@ namespace PiSys
 variable {l e} (ϖ : PiSys l e)
 
 
+omit [NeZero e] in
 theorem theta_ev_eis : Per.θ l (ϖ.ev a (eis l a e)) = 0 := by
   rw [eis, map_add (f := _), map_pow, ev_X, map_natCast, map_add (f := _), map_pow, theta_teich, seqO_zero, map_natCast,
     neg_add_cancel]
@@ -924,6 +928,7 @@ def prism : Obj l ↥(OL (ϖ.field a)) where
   str := ϖ.strMap a
 
 
+omit [NeZero e] in
 theorem ev_frobS (x : (Wq l a)⟦X⟧) : ϖ.ev a (frobS l a x) = WittVector.frobenius (ϖ.ev a x) := by
   have h1 : WittVector.frobenius ϖ.teich = ϖ.teich ^ l := by
     rw [WittVector.frobenius_eq_map_frobenius, teich, WittVector.map_teichmuller, frobenius_def, map_pow]
@@ -981,10 +986,12 @@ def ratio (g : GQ l) (n : ℕ) : OC l :=
     exact div_self_le_one _)⟩
 
 
+omit [NeZero e] in
 theorem coe_ratio (g : GQ l) (n : ℕ) :
     (ϖ.ratio g n : ℂ_[l]) = algebraMap (Om l) ℂ_[l] (g (ϖ.seq n) / ϖ.seq n) := rfl
 
 
+omit [NeZero e] in
 theorem ratio_succ (g : GQ l) (n : ℕ) : ϖ.ratio g (n + 1) ^ l = ϖ.ratio g n :=
   Subtype.ext (by
     rw [SubmonoidClass.coe_pow, coe_ratio, coe_ratio, ← map_pow, div_pow, ← map_pow, ϖ.seq_succ])
@@ -994,6 +1001,7 @@ def kummer (g : GQ l) : OCb l :=
     Perfection (ModP (OC l) l) l)
 
 
+omit [NeZero e] in
 theorem coeff_kummer (g : GQ l) (n : ℕ) :
     PreTilt.coeff n (ϖ.kummer g) = Ideal.Quotient.mk (Ideal.span {((l : ℕ) : OC l)}) (ϖ.ratio g n) := rfl
 
@@ -1009,6 +1017,7 @@ theorem gal_flat (g : GQ l) : Per.σF g ϖ.flat = ϖ.kummer g * ϖ.flat :=
     rfl
 
 
+omit [NeZero e] in
 theorem untilt_kummer (g : GQ l) : (ϖ.kummer g).untilt = ϖ.ratio g 0 := by
   refine Perfection.teichmuller_spec (I := Ideal.span {((l : ℕ) : OC l)}) fun n => ⟨ϖ.ratio g n, rfl, ?_⟩
   have : ϖ.ratio g n ^ l ^ n = ϖ.ratio g 0 :=

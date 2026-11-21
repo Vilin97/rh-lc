@@ -15,6 +15,8 @@ open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.Genus
 namespace GlobalTheory.Eis.Conv.AdeleCMSplit
 
 
+open scoped TensorProduct NNReal Matrix in
+open NumberField IsDedekindDomain in
 theorem _root_.GlobalTheory.Eis.Conv.AdeleCMSplit.exists_adele_split : ∀ (F E : Type) [Field F] [NumberField F]
     [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.IsCMExt F E σ →
     ∃ e : (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF F ⊗[F] E) ≃+* (InfinitePlace E → ℂ) × FiniteAdeleRing (𝓞 E) E,

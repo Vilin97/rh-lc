@@ -36,6 +36,7 @@ theorem isGermCombination_of_mem {w : σ → ℂ} {k : ℕ} (p : Fin k → (σ �
 end GermProjectionFunctionForm
 
 
+open GermProjectionFunctionForm in
 theorem GermProjectionFunctionForm.proof : GermProjectionFunctionForm.Statement := by
   classical
   intro σ _ w k p d A hp ⟨hinj, hgen, hint⟩

@@ -35,6 +35,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
   {u : Pr.Word}
 
 
+open Classical in
 theorem inFr_intA {i j : ℕ} (p : ChPt (R := R) sel mu u i) (p' : ChPt (R := R) sel mu u j) (P : rowSG Pr sel mu)
     (w : HomE X.E (R.N i) (R.N j)) (hw : w ∈ homAt (Sall sel mu u) p.deco.1.N p'.deco.1.N) (s : Fin (R.N i)) (l : Fin (R.N j)) :
     IntAt P.1 ((inFr (frsF sel mu p P) (frsF sel mu p' P) w) (Pi.single s 1) l) := by
@@ -45,6 +46,7 @@ theorem inFr_intA {i j : ℕ} (p : ChPt (R := R) sel mu u i) (p' : ChPt (R := R)
   exact (xqMem_stdAt (P := P.1) _).1 h3 l
 
 
+open Classical in
 theorem inFr_cB_int {i j : ℕ} (p : ChPt (R := R) sel mu u i) (p' : ChPt (R := R) sel mu u j) (P : rowSG Pr sel mu)
     (w : HomE X.E (R.N i) (R.N j)) (hw : w ∈ homAt (Sall sel mu u) p.deco.1.N p'.deco.1.N) (s : Fin (R.N i)) (l : Fin (R.N j)) :
     IntAt P.1 (((qOf P.1 : X.E) ^ cst.B)⁻¹ *
@@ -57,6 +59,7 @@ theorem inFr_cB_int {i j : ℕ} (p : ChPt (R := R) sel mu u i) (p' : ChPt (R := 
   exact (cB_div_int sel mu cst P).mul (inFr_intA sel mu p p' P w hw s l)
 
 
+open Classical in
 theorem phiT_cB (hPr : Pr.Ok) {i j : ℕ} (p : ChPt (R := R) sel mu u i) (p' : ChPt (R := R) sel mu u j)
     (x w : HomE X.E (R.N i) (R.N j)) (hw : w ∈ homAt (Sall sel mu u) p.deco.1.N p'.deco.1.N) :
     phiT X.K p.deco.1 p'.deco.1 (x + ((cBof sel mu cst u : ℕ) : 𝓞 X.E) • w) = phiT X.K p.deco.1 p'.deco.1 x := by
@@ -72,6 +75,7 @@ theorem phiT_cB (hPr : Pr.Ok) {i j : ℕ} (p : ChPt (R := R) sel mu u i) (p' : C
     rfl
 
 
+open Classical in
 theorem xiEntry_invA (hPr : Pr.Ok) {G : ChGlob X R.m} {m2 : ℕ} (hL : L.Ok Ch sel mu cst G m2)
     (i : ℕ) (hi : i < m2) (al : L.β i) (be : L.β (i + 1)) (p : ChPt (R := R) sel mu u i) (p' : ChPt (R := R) sel mu u (i + 1))
     (x z : HomE X.E (R.N i) (R.N (i + 1)))
@@ -88,6 +92,7 @@ theorem xiEntry_invA (hPr : Pr.Ok) {G : ChGlob X R.m} {m2 : ℕ} (hL : L.Ok Ch s
   rw [phiT_cB sel mu cst hPr p p' x w hw, Finset.prod_congr rfl fun P _ => hxi P]
 
 
+open Classical in
 theorem xiCpl1_invA (hPr : Pr.Ok) {G : ChGlob X R.m} {m2 : ℕ} (hL : L.Ok Ch sel mu cst G m2)
     (al : L.β m2) (p₀ : ChPt (R := R) sel mu u m2) (p : ChPt (R := R) sel mu u (m2 + 1)) (Y : Set (Sp X.E (R.N (m2 + 1))))
     (x z : HomE X.E (R.N m2) (R.N (m2 + 1)))

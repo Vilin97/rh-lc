@@ -18,6 +18,7 @@ variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchi
   {n : ℕ}
 
 
+variable (F) in
 def Bdd (t : ℤ) (x : F) : Prop := valuation F x ≤ valuation F (uniformizer F : F) ^ t
 
 theorem valuation_uniformizer_pos : 0 < valuation F (uniformizer F : F) :=
@@ -191,6 +192,7 @@ theorem prod_zpow_uniformizer {ι : Type*} (s : Finset ι) (f : ι → ℤ) :
       zpow_add₀ (Cartan.uniformizer_ne_zero F)]
 
 
+variable (F n) in
 def cartanType (g : GL (Fin n) F) : Fin n → ℤ :=
   (Cartan.existsUnique_mem_doubleCoset F n g).exists.choose
 

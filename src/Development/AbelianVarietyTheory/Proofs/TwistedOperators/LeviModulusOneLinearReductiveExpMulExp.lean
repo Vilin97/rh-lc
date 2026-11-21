@@ -41,6 +41,7 @@ theorem exists_unitary_log (n : ℕ) (k : Matrix (Fin n) (Fin n) ℂ) : kᴴ * k
   GlobalTheory.T.exists_skewHermitian_log_of_unitary n k
 
 
+open scoped Matrix.Norms.L2Operator in
 theorem herm_exp_inj (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℂ) (hA : Aᴴ = A) (hB : Bᴴ = B)
     (h : NormedSpace.exp A = NormedSpace.exp B) : A = B := by
   rw [← CFC.log_exp A hA, ← CFC.log_exp B hB, h]

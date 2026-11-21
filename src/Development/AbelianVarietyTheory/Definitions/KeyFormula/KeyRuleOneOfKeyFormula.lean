@@ -60,6 +60,7 @@ def charZero' (g : ℕ) (a b : Fin g → ℂ) : Prop := a = 0 ∧ b = 0
 def charHalf (g : ℕ) (a b : Fin g → ℂ) : Prop := (∀ i, a i = 0 ∨ a i = 1 / 2) ∧ ∀ i, b i = 0 ∨ b i = 1 / 2
 
 
+open ReciprocityTheory.PTheta ReciprocityTheory.ChartRestriction.G.Key ReciprocityTheory.ChartRestriction.G.Key.Chi in
 def ThetaLaw (g : ℕ) (sp : Matrix (Fin g ⊕ Fin g) (Fin g ⊕ Fin g) ℤ) (n n' k k' : Fin g → ℤ) : Prop :=
   ∃ c : ℂ, c ^ 4 = 1 ∧ ∀ τ ∈ SiegelH (Fin g), ∀ z : Fin g → ℂ,
     theta (halfVec k) (halfVec k') (zAct sp τ z) (spAct sp τ) ^ 2 =
@@ -95,6 +96,7 @@ theorem NormalAt.mem_siegelH {x : KeyIn ℂ} {τ M : Matrix (Fin x.P.g) (Fin x.P
   exact ⟨hs, hp⟩
 
 
+open ReciprocityTheory.ChartRestriction.G.Key.Chi in
 theorem chiAt_iff_thetaLaw (g : ℕ) (sp : Matrix (Fin g ⊕ Fin g) (Fin g ⊕ Fin g) ℤ) :
     ChiAt g sp ↔ ∀ n n' : Fin g → ℤ, ∃ k k' : Fin g → ℤ,
       (∀ i, k i = 0 ∨ k i = 1) ∧ (∀ i, k' i = 0 ∨ k' i = 1) ∧ ThetaLaw g sp n n' k k' := by

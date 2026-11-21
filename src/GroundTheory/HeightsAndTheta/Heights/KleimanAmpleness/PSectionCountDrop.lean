@@ -110,6 +110,7 @@ theorem interNum_fin_congr {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [A
 end SectionCount.Drop
 
 
+open Classical in
 theorem SectionCount.Drop.proof (hF : SectionCount.Drop.Filt.Statement.{u, w})
     (hT : SectionCount.Drop.Term.Statement.{u, w}) (hH : SectionCount.Drop.HilbW.Statement.{u, w})
     (hR : GenericPointSectionInput.Statement.{u, w}) : SectionCount.Drop.Statement.{u, w} := by

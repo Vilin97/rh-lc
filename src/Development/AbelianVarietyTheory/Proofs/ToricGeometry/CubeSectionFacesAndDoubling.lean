@@ -182,6 +182,7 @@ variable {g : ℕ} {ι : Type} (W : ι → Set (Fin g → ℂ)) (c : ι → ι �
   (i₀ : ι) (h0 : (0 : Fin g → ℂ) ∈ W i₀)
 
 
+include hW hcov hc0 hT hTT hΛ hWp hTp h0 in
 theorem face (a : Fin 3) (x : Fin 3 → Fin g → ℂ)
     (hx : ∀ I : Finset (Fin 3), ∑ b ∈ I, x b ∈ W i₀) (hxa : x a = 0) :
     T (fun _ => i₀) x = T (fun _ => i₀) 0 := by
@@ -237,6 +238,7 @@ theorem face (a : Fin 3) (x : Fin 3 → Fin g → ℂ)
   simpa [this] using key
 
 
+include hW hcov hc0 hcc hT hT0 hTT hΛ hWp hTp h0 in
 theorem doubling (x : Fin 3 → Fin g → ℂ)
     (hx : ∀ I : Finset (Fin 3), ∑ b ∈ I, x b ∈ W i₀)
     (hx' : ∀ I : Finset (Fin 3), ∑ b ∈ I, (-x) b ∈ W i₀)

@@ -28,11 +28,13 @@ theorem segre_ne_zero_iff (y : (Σ k, ι k) → Ω) (f : ∀ k, ι k) :
   simp [segre, Finset.prod_ne_zero_iff]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem segre_ratio (y : (Σ k, ι k) → Ω) (f g : ∀ k, ι k) :
     segre y ⟨(), g⟩ / segre y ⟨(), f⟩ = ∏ k, y ⟨k, g k⟩ / y ⟨k, f k⟩ := by
   simp [segre, Finset.prod_div_distrib]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem prod_ratio_update [DecidableEq K] (y : (Σ k, ι k) → Ω) (f : ∀ k, ι k) (hf : ∀ k, y ⟨k, f k⟩ ≠ 0)
     (p : Σ k, ι k) :
     ∏ k, y ⟨k, Function.update f p.1 p.2 k⟩ / y ⟨k, f k⟩ = y p / y ⟨p.1, f p.1⟩ := by
@@ -43,6 +45,7 @@ theorem prod_ratio_update [DecidableEq K] (y : (Σ k, ι k) → Ω) (f : ∀ k, 
   · simp
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem chartRingZ_segre (y : (Σ k, ι k) → Ω) (f : ∀ k, ι k) (hf : ∀ k, y ⟨k, f k⟩ ≠ 0) :
     chartRingZ (segre y) (fun _ ↦ f) = chartRingZ y f := by
   classical

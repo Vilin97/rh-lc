@@ -19,6 +19,7 @@ namespace UpperTheory.V.Z.Sym.Al
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
 
 
+variable (n) in
 def away (w : Plc L) : Subgroup (UA L n) :=
   ⨅ (u : Plc L) (_ : u.under (𝓞 (Lp L)) = w.under (𝓞 (Lp L))), (cLoc u).ker
 

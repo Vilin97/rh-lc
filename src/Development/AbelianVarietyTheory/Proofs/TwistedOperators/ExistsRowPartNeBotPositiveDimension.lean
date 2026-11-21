@@ -29,6 +29,7 @@ noncomputable section
 namespace GlobalTheory.RowsPartNe
 
 
+open GlobalTheory.Mem.RowSides in
 theorem jX_injective_of_models {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m}
     {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks} (hM : R.IsModels) (t : T) :
     Function.Injective (R.jX t) := by

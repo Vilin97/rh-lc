@@ -447,6 +447,7 @@ theorem joint_harmonics (μ : Ix p q → ℚ) (μ' : Ix r s → ℚ) :
 end Joint
 
 
+open Formalism.MainNotions.SchurIrreducible in
 theorem fock_polynomials (X : ProvA) : admH2 X := by
   intro p q r s
   have hι := isFockIsometry_of_fockData (X.fock p q r s)

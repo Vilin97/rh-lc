@@ -22,6 +22,7 @@ variable {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [Algebr
   [IsUnitBall O K] (l : ℕ) [Fact l.Prime] [NormedAlgebra ℚ_[l] K] (e : ℕ) [NeZero e]
 
 
+omit [IsUnitBall O K] in
 theorem norm_tail_mul_rad_le {f : K⟦X⟧} {b : ℝ} (hb : 0 ≤ b)
     (hf : ∀ n, ‖coeff n f‖ * rad l (1 / e) ^ n ≤ b) (n : ℕ) :
     ‖tail l e f n‖ * rad l (1 / e) ^ n ≤ b := by

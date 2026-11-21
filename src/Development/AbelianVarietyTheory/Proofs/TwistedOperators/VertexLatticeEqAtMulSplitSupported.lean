@@ -239,6 +239,8 @@ theorem isFrame_mul {n : ℕ} (Λ C : Submodule (𝓞 E) (Fin n → E)) (u β : 
 end Adeles
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem finE_supp {D : D7} (V : HSp D) (e : Formalism.L2.Theta.AE D) (α : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F)
     (hsum : e + cA D e = algebraMap (AF D.host.F) (Formalism.L2.Theta.AE D) (pairA D.host.F 0 α)) (g : Formalism.L2.Theta.GA D V)
     (hs : SuppAt e V g) :
@@ -253,6 +255,7 @@ theorem finE_supp {D : D7} (V : HSp D) (e : Formalism.L2.Theta.AE D) (α : Forma
   rw [← h0, ← map_mul, ← hsum, hs i j]
 
 
+set_option maxHeartbeats 1000000 in
 theorem eqAt_latAt_mul : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheory.ChiGrid.Consts} {G : GlobalTheory.ChiGrid.GridData L sc} {W : G.Weil}
     (S : GridChoice W Set.univ) (X : Node), DefNode D.R.m X → ∀ (q : ℕ), q.Prime → ∀ e : Formalism.L2.Theta.AE D, IsSplitIdem D e →
     GlobalTheory.MovedKappaEx.OffPrime e q → ∀ g y : FinPt G X, SuppAt e (G.V X) g.1 →

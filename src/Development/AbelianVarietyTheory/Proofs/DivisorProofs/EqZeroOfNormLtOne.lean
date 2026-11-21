@@ -119,6 +119,7 @@ theorem isSymm_std (n : ℕ) : (Formalism.MainNotions.StandardLattice.stdForm E 
   rw [starRingEnd_apply, star_mul, star_star]
 
 
+omit [NumberField E] in
 theorem norm_entry_le (hφ : ∀ (φ : E →+* ℂ) (a : E), φ (star a) = starRingEnd ℂ (φ a)) {n : ℕ}
     {g : (Fin n → E) ≃ₗ[E] (Fin n → E)} (hg : g ∈ Formalism.HermitianLatticesTheory.isom (Formalism.MainNotions.StandardLattice.stdForm E n)) (j i : Fin n)
     (τ : E →+* ℂ) : ‖τ (g (Pi.single j 1) i)‖ ≤ 1 := by

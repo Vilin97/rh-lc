@@ -47,6 +47,7 @@ private lemma exact_comp_surjective {A A' B C : Type*} [Zero C] {f : A → B} {g
   rw [hfg y, Set.range_comp, hγ.range_eq, Set.image_univ]
 
 
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex in
 theorem _root_.GlobalTheory.EtC.coefSeq_exact : _root_.GlobalTheory.EtC.A7 := by
   unfold _root_.GlobalTheory.EtC.A7
   intro R _ S hS

@@ -59,6 +59,7 @@ theorem cong_inv {N : ℕ} {a : GAf L n} (ha : NG.Cong L n N a) : NG.Cong L n N 
   rw [this]; ring
 
 
+variable (L n) in
 def congSub (N : ℕ) : Subgroup (GAf L n) where
   carrier := {κ | NG.Cong L n N κ}
   mul_mem' := cong_mul

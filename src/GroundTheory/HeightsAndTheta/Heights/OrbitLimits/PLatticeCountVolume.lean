@@ -58,6 +58,7 @@ theorem measure_le_encard_mul {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ
     _ = ((A.encard : ℕ∞) : ℝ≥0∞) * μ F := setLIntegral_const _ _
 
 
+open scoped Classical in
 theorem proof : LatticeCountVolume.Statement := by
   intro E _ _ _ _ _ μ _ La _ _ S T hS hST
   set b := Module.Free.chooseBasis ℤ La

@@ -22,6 +22,7 @@ theorem prod_eq_zero_of_ne {a b c d : A} (P : PT A) (Q : PT A)
       _ = 0 := by rw [this, zero_mul]
 
 
+open Classical in
 noncomputable def meet (P Q : PT A) : PT A where
   blocks := ((P.blocks ×ˢ Q.blocks).filter (fun x => x.1 * x.2 ≠ 0)).image (fun x => x.1 * x.2)
   idem := by

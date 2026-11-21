@@ -43,6 +43,7 @@ theorem wtS_eq_sum (n : ℕ) (a : Fin n → ℤ) :
   ring
 
 
+open GlobalTheory.JSW in
 theorem localTerm_eq : ∀ (q : ℕ), 0 < q → ∀ (n : ℕ) (α β : Fin n → ℂ) (x : ℝ) (v : Fin n → ℤ), (∀ i, 0 ≤ v i) → Antitone v →
     (((q : ℝ) ^ GlobalTheory.CellDec.wtS n v : ℝ) : ℂ) *
       (GlobalTheory.JSW.sphW q α (fun i => (v i).toNat) * conj (GlobalTheory.JSW.sphW q β (fun i => (v i).toNat))) *

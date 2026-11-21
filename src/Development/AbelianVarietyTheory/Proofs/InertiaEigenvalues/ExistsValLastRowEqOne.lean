@@ -353,6 +353,8 @@ theorem lastRow_prim (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (
 end GlobalTheory.CellEvalNM
 
 
+open GroundTheory.Automorphic.FourierWhittaker (blockGL) in
+open GlobalTheory.CellEvalNM in
 theorem GlobalTheory.CellEvalNM.uIntNM_cell_eval : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m r : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E))),
     (∀ w ∉ S, ∀ x : w.adicCompletion E, (∀ y ∈ Ov E w, GlobalTheory.JSW.psiLoc w (x * y) = 1) ↔ x ∈ Ov E w) →
     ∀ (ϖ : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ), (∀ w, IsUnifV E w (ϖ w : w.adicCompletion E)) →

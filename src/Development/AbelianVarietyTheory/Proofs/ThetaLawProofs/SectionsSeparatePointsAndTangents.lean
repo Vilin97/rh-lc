@@ -215,6 +215,7 @@ theorem exists_cutting (f : X ⟶ Sp K) {H : LB X} {m : ℕ} {s : Fin (m + 1) �
 end GlobalTheory.VeryAmpleJet
 
 
+open GlobalTheory.VeryAmpleJet GlobalTheory.KeyKa.EtBaseChange GlobalTheory.PointInterp in
 theorem GlobalTheory.KeyKa.sections_separate_points_and_tangents : Out.Laws → ∀ (K : Type) [Field K] (x : KeyIn K) (n : ℕ), 4 ≤ n → (∀ (z : Pt x) (c : x.P.L.ι), ⊤ ≤ z.left ⁻¹ᵁ x.P.L.U c → (∃ s₀ : RR x n, valT (T := K) z.left (x.P.L.U c) (s₀.f c) ≠ 0) ∧ ∃ s : Fin x.P.g → RR x n, (∀ i, valT (T := K) z.left (x.P.L.U c) ((s i).f c) = 0) ∧ jac x s z c ≠ 0) ∧ ∀ (z z' : Pt x) (c c' : x.P.L.ι), z ≠ z' → ⊤ ≤ z.left ⁻¹ᵁ x.P.L.U c → ⊤ ≤ z'.left ⁻¹ᵁ x.P.L.U c' → ∃ s₀ : RR x n, valT (T := K) z.left (x.P.L.U c) (s₀.f c) = 0 ∧ valT (T := K) z'.left (x.P.L.U c') (s₀.f c') ≠ 0 := by
   intro hL K _ x n hn
   obtain ⟨m, s, hs⟩ := veryAmpleBy_of_veryAmpleAt x.P.isLB (hL.ample _ x.P n hn).2 (𝟙 x.P.A.left)

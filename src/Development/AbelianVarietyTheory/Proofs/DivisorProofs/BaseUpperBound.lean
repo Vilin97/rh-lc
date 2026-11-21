@@ -203,6 +203,7 @@ section Move
 variable {D : D7} {ρ : Setup D.ntw} (hρ : ρ.Good) (i : D.ntw.Tw) (j : Fin D.R.m) (b : Bool)
 
 
+include hρ in
 theorem exists_move {h : GA D (Vc D j)} (hh : h ∈ GfC (Vc D j)) :
     ∃ (s : Finset (Pl D.host.E)) (h' : GA D (Vc D j)) (T : PolF D (Wc D j).rank (Vc D j).rank →ₗ[ℂ] PolF D (Wc D j).rank (Vc D j).rank)
       (ζ : ℂ), (∃ n : ℕ, n ≠ 0 ∧ ζ ^ n = 1) ∧ (∀ P, ρ.theta i j b h P = ζ • ρ.theta i j b h' (T P)) ∧
@@ -229,6 +230,7 @@ variable {O : Type} [CommRing O] [IsDomain O] {M : Type} [AddCommGroup M] [Modul
   (hL : ∀ c : O, eL (algebraMap O L c) = eK (algebraMap O (FractionRing O) c))
 
 
+open GlobalTheory.BigOn.Exp in
 theorem exists_scalar_of_readExt
     (hF : ∀ (n : ℕ) (v : Fin n → M), LinearIndependent (FractionRing O) v → LinearIndependent ℂ fun c => rd (v c))
     {x t : L ⊗[O] M} {ζ : ℂ} (h : readExt rd eL hL x = ζ • readExt rd eL hL t) : x = 0 ∨ ∃ a : L, eL a = ζ ∧ x = a • t := by

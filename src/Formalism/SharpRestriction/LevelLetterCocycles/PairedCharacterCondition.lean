@@ -46,6 +46,7 @@ def chiJ (D : D7) (i : D.nd.Loc) (k : Fin 2) (v : D.nd.PlG k) : (ZMod (D.host.g 
   D.nd.chiT k v ⟨D.nd.j i - 1, by have := D.nd.j_range i; omega⟩
 
 
+open Classical in
 structure Pend (D : D7) where
   lz : ∀ k : Fin 2, LzData (D.host.g k)
   eSer_eq : ∀ (k : Fin 2) (f : (ZMod (D.host.g k))[X]),

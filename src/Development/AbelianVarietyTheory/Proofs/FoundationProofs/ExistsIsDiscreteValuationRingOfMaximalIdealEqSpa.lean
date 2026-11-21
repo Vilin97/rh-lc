@@ -283,6 +283,7 @@ theorem algebraMap_eq_zero_iff_mem_maximalIdeal (b : B) :
   exact residue_eq_zero_iff b
 
 
+omit [Algebra B W] [CommRing W] in
 theorem isUnit_adjoinRoot_mk_of_aeval_ne_zero {θ : K} (hθ : IsIntegral (ResidueField B) θ)
     {μ : B[X]} (hμm : μ.Monic) (hμ : μ.map (residue B) = minpoly (ResidueField B) θ) {g : B[X]}
     (hg : aeval θ g ≠ 0) : IsUnit (AdjoinRoot.mk μ g) := by

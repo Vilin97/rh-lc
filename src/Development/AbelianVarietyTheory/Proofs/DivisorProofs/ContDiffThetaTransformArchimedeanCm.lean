@@ -104,6 +104,7 @@ theorem darboux_real_coordsF {F E : Type} [Field F] [NumberField F] [Field E] [N
     exact Prod.ext rfl (hsnd t i).2
 
 
+set_option maxHeartbeats 2000000 in
 theorem contDiff_thetaTr_realF : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E),
     B.IsGood σ → IsStdCharF (fun w : InfinitePlace F => (B.emb w).1) B.ψ (-1) →
     ∀ (nS nT : ℕ) (JS : Matrix (Fin nS) (Fin nS) E) (JT : Matrix (Fin nT) (Fin nT) E),

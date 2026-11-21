@@ -37,6 +37,7 @@ def secW (n : ℕ) (w : Plc L) : GL (Fin n) (Kw w) →* UA L n :=
   if h : ∃ j : GL (Fin n) (Kw w) →* UA L n, (∀ g, j g ∈ locU n w) ∧ ∀ g, cLoc w (j g) = g then h.choose else 1
 
 
+variable (L) in
 def infC (n : ℕ) : UA L n →* (InfinitePlace L → GL (Fin n) ℂ) := Pi.monoidHom fun v => cEmb v.embedding
 
 
@@ -95,6 +96,7 @@ def CompEq (π : Submodule ℂ (UA L n → ℂ)) (w : Plc L) (ψ : Fin n → (Kw
   (∀ i, IsSmoothChar (ψ i)) ∧ ∃ τ, Comp π w τ ∧ Nonempty (τ.ρ.Equiv (prinSeries ψ))
 
 
+variable (L) in
 abbrev Unr : Prop := ∀ w : Plc L, Algebra.IsUnramifiedAt (𝓞 (Lp L)) w.asIdeal
 
 end UpperTheory.V.Z.Sym.Dict

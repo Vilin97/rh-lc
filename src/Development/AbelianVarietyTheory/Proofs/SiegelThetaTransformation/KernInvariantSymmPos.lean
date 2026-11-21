@@ -267,6 +267,7 @@ theorem cj_sgnM : cj (-sgnM X) = -sgnM X := by
   by_cases h : a = b <;> simp [cj, sgnM, diagonal_apply, h]
 
 
+variable {X} in
 theorem aLin_aAnti_comm {x₁ x₂ : Frame X.Ψ r} (h₁ : x₁ ∈ X.dom) (h₂ : x₂ ∈ X.dom) (τ : X.Ψ) :
     aLin X x₁ x₂ τ * (X.Gm.map τ.1)ᵀ⁻¹ * (aAnti X x₁ x₂ τ)ᵀ * -sgnM X =
       -sgnM X * (aLin X x₁ x₂ τ * (X.Gm.map τ.1)ᵀ⁻¹ * (aAnti X x₁ x₂ τ)ᵀ) := by
@@ -295,6 +296,7 @@ theorem conj_kappa (τ : X.Ψ) : conj (τ.1 X.κ0) = -τ.1 X.κ0 :=
   Complex.ext (by simp [DblPoint.re_kappa]) (by simp)
 
 
+variable {X} in
 theorem kZero_swap {x₁ x₂ : Frame X.Ψ r} (h₁ : x₁ ∈ X.dom) (h₂ : x₂ ∈ X.dom)
     (z w : Fin n → Fin g → ℂ) :
     kZero X idx x₂ x₁ z w = conj (kZero X idx x₁ x₂ (star w) (star z)) := by
@@ -326,6 +328,7 @@ theorem kZero_swap {x₁ x₂ : Frame X.Ψ r} (h₁ : x₁ ∈ X.dom) (h₂ : x�
   exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring
 
 
+variable {X} in
 theorem kZero_ortho {x : Frame X.Ψ r} (hx : ∀ τ : X.Ψ, gram τ.1 X.Gm (mat x τ) = sgnM X)
     (z w : Fin n → Fin g → ℂ) :
     kZero X idx x x z w = ((∏ τ : X.Ψ, normSq (mat x τ).det ^ (n / 2) : ℝ) : ℂ) *
@@ -381,6 +384,7 @@ theorem letterCoord_letterDir (l l' : Harm.Var X.Ψ q0 X.p0 (Fin n)) :
   by_cases hk : k = k' <;> simp [letterCoord, letterDir, Pi.single_apply, hk, -rowOf_apply]
 
 
+variable {X} in
 theorem kern_pos {m : ℕ} (P : Fin m → Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)) (hP : ∃ j, P j ≠ 0)
     {x : Frame X.Ψ r} (hx : ∀ τ : X.Ψ, gram τ.1 X.Gm (mat x τ) = sgnM X) :
     0 < (kern X hr idx P x x).re := by
@@ -411,6 +415,7 @@ theorem kern_pos {m : ℕ} (P : Fin m → Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)) (h
   · exact (mul_pos hC (apolar_norm_pos hi tpos)).le
 
 
+variable {X} in
 theorem kern_swap {m : ℕ} (P : Fin m → Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)) {x₁ x₂ : Frame X.Ψ r}
     (h₁ : x₁ ∈ X.dom) (h₂ : x₂ ∈ X.dom) :
     kern X hr idx P x₂ x₁ = conj (kern X hr idx P x₁ x₂) := by

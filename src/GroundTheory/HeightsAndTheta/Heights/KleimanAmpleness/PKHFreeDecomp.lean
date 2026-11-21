@@ -132,6 +132,7 @@ theorem embed_apply_cell [LinearOrder K] [∀ k, LinearOrder (ι k)] (a : (Σ k,
 end KHFreeDecomp
 
 
+open KHFreeDecomp in
 theorem KHFreeDecomp.full : KHFreeDecomp.Statement := by
   intro S _ K _ _ ι _ _ c d n φ hφ
   classical

@@ -93,6 +93,7 @@ theorem exists_line_of_add_add_eq_zero {x₁ y₁ x₂ y₂ x₃ y₃ : k} {h₁
 section VariableChange
 
 
+omit [DecidableEq k] in
 theorem nonsingular_variableChange_iff (W : WeierstrassCurve k) (C : VariableChange k) (x y : k) :
     W.toAffine.Nonsingular ((C.u : k) ^ 2 * x + C.r)
       ((C.u : k) ^ 3 * y + (C.u : k) ^ 2 * C.s * x + C.t) ↔ (C • W).toAffine.Nonsingular x y := by

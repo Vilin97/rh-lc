@@ -19,6 +19,7 @@ section Lemmas
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem isIrreducible_comp_invT {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin N) k) V) (h : π.IsIrreducible) :
     Representation.IsIrreducible (π.comp (invT : GL (Fin N) k →* GL (Fin N) k)) := by

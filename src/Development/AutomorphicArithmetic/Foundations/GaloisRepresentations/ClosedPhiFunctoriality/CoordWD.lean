@@ -89,6 +89,7 @@ variable {l : ℕ} [Fact l.Prime] {P : LocPrime l} {K L : FinExt l} {a : ℕ}
   (ψ₀ : (Fin a → ↥L.1) ⊗[ℚ_[l]] Bst P →+ (Fin a → OB P))
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 private noncomputable def fD : ↥(GlobalTheory.Pst.Dpst P R) →+ (Fin a → OB P) :=
   { toFun := fun x => ψ₀ x.1, map_zero' := ψ₀.map_zero, map_add' := fun x y => ψ₀.map_add x.1 y.1 }
 

@@ -45,6 +45,7 @@ variable {O C : Type} [CommRing O] [Field C] [Algebra O C]
   {U : Type} [AddCommGroup U] [Module C U] [Module O U] [IsScalarTower O C U] {n : ℕ}
 
 
+variable (C) in
 def IsLatBasis (La : Submodule O U) (w : Fin n → U) : Prop :=
   LinearIndependent C w ∧
     Submodule.span O (Set.range w) = La ⊓ (Submodule.span C (Set.range w)).restrictScalars O
@@ -248,6 +249,7 @@ theorem LieTie.unique {Y S : Scheme.{0}} {ψ : P.A.A.left ⟶ Y} {s : Y ⟶ S} {
 
 
 
+variable (P) in
 def evLie (x : LieG P.Gt) : P.OmC →ₗ[C] C :=
   (Algebra.linearMap O C ∘ₗ LinearMap.proj x ∘ₗ (omega P.Gt).subtype).liftBaseChange C
 
@@ -277,12 +279,15 @@ variable {p : ℕ} [Fact p.Prime] {C : Type} [Field C] [Algebra c.F C] {v : Valu
   [Algebra O C] [StarRing (𝓞 E)]
 
 
+variable (c C) in
 def embAt (τ : E →+* ℂ) : E →+* C := (algebraMap c.F C).comp (embF c τ)
 
 
+variable (c) in
 def embInt (hv : v.Integers O) (τ : E →+* ℂ) : 𝓞 E →+* O := embO hv (embAt c C τ)
 
 
+omit [StarRing (𝓞 E)] in
 theorem algebraMap_embInt (hv : v.Integers O) (τ : E →+* ℂ) (a : 𝓞 E) :
     algebraMap O C (embInt c hv τ a) = algebraMap c.F C (embK c τ a) := algebraMap_embO hv _ a
 
@@ -323,6 +328,8 @@ end Over
 variable [IsAlgClosed C] [CharZero C] [Algebra ℤ_[p] C] [Algebra ℤ_[p] O] [IsScalarTower ℤ_[p] O C]
 
 
+open Classical in
+variable (c) in
 def htLat (τ : E →+* ℂ) : Submodule O P.V :=
   if τ (H.rt : E) = H.rt0 then
     P.latTQuot (σ := fun φ : E →+* C => embO P.integers φ) (isSplitting_embO P.integers) (embAt c C τ)
@@ -343,6 +350,8 @@ theorem wRec_le_htLat (τ : E →+* ℂ) : P.wRec (embInt c P.integers τ) ≤ h
   (P.wRec_le_latTSub _).trans (latTSub_le_htLat P τ)
 
 
+omit [IsAlgClosed C] [CharZero C] [Algebra ℤ_[p] C] [Algebra ℤ_[p] O] [IsScalarTower ℤ_[p] O C] in
+variable {P} in
 theorem LieTie.isEig {V F : Type} [CommRing V] [Field F] [Algebra V F] {x₀ : Sp F ⟶ Xo.X} {k : F →+* C} {kO : V →+* O}
     {ψ : P.A.A.left ⟶ Xo.univ.t.G.left} (hP : PointOver P x₀ k kO ψ) {x : LieG P.Gt}
     {u : Sp (DualNumber C) ⟶ Xo.univ.t.G.left} (h : LieTie P ψ x u) {τ : E →+* ℂ} (hu : IsEigAt c τ u) :
@@ -357,6 +366,7 @@ def IsHTChange (ψ : P.A.A.left ⟶ Xo.univ.t.G.left) (z y : FrPt Xo c C) : Prop
 
 
 
+variable (p v O) in
 def IsHTFrame {T : CDVR} {io : c.F →+* T.Fr} (y₀ : IntFr Xo c T io)
     (k : letI := io.toAlgebra; T.Fr →ₐ[c.F] C) (y : FrPt Xo c C) : Prop :=
   letI := io.toAlgebra
@@ -414,6 +424,7 @@ def IsHTFrameCp (p : ℕ) [Fact p.Prime] [Algebra c.F ℂ_[p]] {T : CDVR} {io : 
   IsHTFrame p (Valued.v : Valuation ℂ_[p] ℝ≥0) 𝓞_ℂ_[p] y₀ k y
 
 
+variable (Xo c) in
 def htValSet (la : HeightOneSpectrum (𝓞 c.F)) : Set (Rul Xo c → EReal) :=
   {w | ∃ (p : ℕ) (_ : Fact p.Prime) (_ : Algebra c.F ℂ_[p]) (T : CDVR) (io : c.F →+* T.Fr) (e : ℕ)
     (y₀ : IntFr Xo c T io) (k : letI := io.toAlgebra; T.Fr →ₐ[c.F] ℂ_[p]) (y : FrPt Xo c ℂ_[p]),
@@ -421,6 +432,7 @@ def htValSet (la : HeightOneSpectrum (𝓞 c.F)) : Set (Rul Xo c → EReal) :=
       w = fun f => val_vw la p (Valued.v : Valuation ℂ_[p] ℝ≥0) (evR Xo c f y)}
 
 
+variable (Xo c) in
 def htVals : ValFam Xo c :=
   ⟨htValSet Xo c, by
     rintro la _ ⟨p, _, _, T, io, e, y₀, k, y, ho, -, h, rfl⟩
@@ -450,6 +462,7 @@ theorem IsHTFrameCp.mem {p : ℕ} [Fact p.Prime] [Algebra c.F ℂ_[p]] {T : CDVR
   simp
 
 
+variable (l) in
 def htPrimes (B : ℝ) : Set ℕ := {p | p.Prime ∧ ((p : ℝ) ≤ B ∨ p ∣ 2 * (discr E).natAbs * l.M')}
 
 theorem htPrimes_eq (B : ℝ) : htPrimes l B = ↑(((Finset.range (⌊B⌋₊ + 1)).filter Nat.Prime) ∪
@@ -466,6 +479,7 @@ theorem htPrimes_eq (B : ℝ) : htPrimes l B = ↑(((Finset.range (⌊B⌋₊ + 
 theorem htPrimes_finite (B : ℝ) : (htPrimes l B).Finite := htPrimes_eq (l := l) B ▸ Finset.finite_toSet _
 
 
+variable (Xo c) in
 def mixVals (B : ℝ) : ValFam Xo c := ValFam.patch (htPrimes l B) (htVals Xo c) (recVals Xo c)
 
 theorem mixVals_of_mem {B : ℝ} {la : HeightOneSpectrum (𝓞 c.F)} {p : ℕ} (hp : p ∈ htPrimes l B)

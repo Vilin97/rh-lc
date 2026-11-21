@@ -62,6 +62,7 @@ def blockEquiv (o : Fin r' → Fin r) (ho : Function.Injective o) : Fin r' ⊕ O
 variable {X : Fin r → Type} [∀ j, AddCommGroup (X j)] [∀ j, Module ℂ (X j)]
 
 
+open scoped Classical in
 def dropEquiv (o : Fin r' → Fin r) (ho : Function.Injective o) (φ : ∀ c : Off o, X c ≃ₗ[ℂ] ℂ) :
     (⨂[ℂ] j, X j) ≃ₗ[ℂ] ⨂[ℂ] a, X (o a) :=
   (PiTensorProduct.reindex ℂ X (blockEquiv o ho).symm).trans <|
@@ -72,6 +73,7 @@ def dropEquiv (o : Fin r' → Fin r) (ho : Function.Injective o) (φ : ∀ c : O
         (TensorProduct.rid ℂ _)
 
 
+open scoped Classical in
 theorem dropEquiv_tprod (o : Fin r' → Fin r) (ho : Function.Injective o)
     (φ : ∀ c : Off o, X c ≃ₗ[ℂ] ℂ) (x : ∀ j, X j) :
     dropEquiv o ho φ (PiTensorProduct.tprod ℂ x) =

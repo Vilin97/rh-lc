@@ -26,6 +26,7 @@ section Criteria
 variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] in
 theorem inhomogeneousCochains_d_one_apply_vec (A : Rep.{u} k G) (w : (Fin 1 → G) → A) (g h : G) :
     (inhomogeneousCochains.d A 1).hom w ![g, h] = A.ρ g (w ![h]) - w ![g * h] + w ![g] := by
   refine (inhomogeneousCochains_d_one_apply A _ ![g, h]).trans ?_
@@ -167,6 +168,7 @@ abbrev bockSeq : ShortComplex (Rep.{0} (ULift.{0} ℤ) G) where
     rfl
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] in
 theorem bockSeq_shortExact (hn : n ≠ 0) : (bockSeq G n).ShortExact where
   exact := by
     refine shortComplex_exact_of_forall_exists _ fun x hx => ?_
@@ -244,6 +246,7 @@ theorem natCast_mul_bockInt [NeZero n] (χ : G → ZMod n)
   linarith
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] in
 theorem charCocycle_eq_bockInt [NeZero n] (χ : G → ZMod n) (ψ : Additive G →+ AddCircle (1 : ℚ))
     (hψ : ∀ g : G, ψ (Additive.ofMul g) = QZ.toAddCircle (zmodToQZ n (χ g))) (g h : G) :
     charCocycle ψ (g, h) = bockInt χ g h := by

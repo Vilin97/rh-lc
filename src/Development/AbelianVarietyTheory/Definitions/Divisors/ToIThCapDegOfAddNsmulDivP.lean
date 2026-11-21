@@ -33,13 +33,16 @@ section Char
 variable (p : ℕ) [Fact p.Prime] [CharZero O] [CharP (ResidueField O) p]
 
 
+omit [IsDomain O] [IsDiscreteValuationRing O] in
 theorem natCast_ne_zero : (p : O) ≠ 0 := Nat.cast_ne_zero.2 (Fact.out : p.Prime).ne_zero
 
 
+omit [Fact p.Prime] [CharZero O] in
 theorem natCast_mem_maximalIdeal : (p : O) ∈ maximalIdeal O :=
   (residue_eq_zero_iff _).1 ((map_natCast _ p).trans (CharP.cast_eq_zero _ p))
 
 
+omit [CharP (ResidueField O) p] in
 theorem natCast_ramIdx : (ramIdx O p : ℕ∞) = IsDiscreteValuationRing.addVal O p :=
   ENat.natCast_toNat (mt IsDiscreteValuationRing.addVal_eq_top_iff.1 (natCast_ne_zero O p))
 
@@ -80,6 +83,7 @@ theorem exists_isPullback_gen (K : Type) [Field K] [Algebra O K] [IsFractionRing
 abbrev VDivQ : Type := ℚ ⊗[ℤ] Z.VDivZ
 
 
+variable {Z} in
 def toQ : Z.VDivZ →+ Z.VDivQ := (TensorProduct.mk ℤ ℚ Z.VDivZ 1).toAddMonoidHom
 
 def cDQ : Z.VDivQ →ₗ[ℚ] PicSym Z.X :=
@@ -109,6 +113,7 @@ def divP : Z.VDivZ := Z.div p (natCast_ne_zero O p)
 
 
 
+set_option linter.overlappingInstances false in
 @[reducible] def toITh [CharP (ResidueField O) p] : ITh where
   LB := SmallPic Z.X
   Ch := PicSym Z.X
@@ -146,6 +151,7 @@ theorem FlagPair.toFPair_ofSMul_Dv (fl : Flag E N) (i : Fin N) :
 end Theory
 
 
+variable (O) in
 def base : Model O where
   X := Sp O
   str := 𝟙 _
@@ -156,6 +162,7 @@ def base : Model O where
     (IsDiscreteValuationRing.ringKrullDim_eq_one O))
 
 
+variable (Z) in
 def toBase : Hom Z (base O) where
   f := Z.str
   comp_str := Category.comp_id _
@@ -216,6 +223,7 @@ theorem algebraTop_projSpace : (projSpace O N).algebraTop = algebraSections O N 
       ((PSpace.str O N).app_eq_appLE (U := ⊤))
 
 
+variable {O} in
 theorem chiLen_projSpace {g : O} (hg : g ≠ 0) {j : ℕ} (hj : j ≤ N + 1) :
     chiLenPic O (divMod ((projSpace O (N + 1)).effConst g hg).1)
       (-(j : ℤ) • cls (formalTwistingSheaf O (N + 1)) (O1_isLB O _)) =
@@ -236,6 +244,7 @@ theorem chiLen_projSpace {g : O} (hg : g ≠ 0) {j : ℕ} (hj : j ≤ N + 1) :
   · rw [Nat.choose_eq_zero_of_lt (by omega)]; simp
 
 
+variable {O} in
 theorem vDeg_div_projSpace {g : O} (hg : g ≠ 0) :
     (projSpace O (N + 1)).vDeg ((projSpace O (N + 1)).div g hg)
       (c1 (formalTwistingSheaf O (N + 1)) (O1_isLB O _) ^ (N + 1)) =

@@ -45,6 +45,7 @@ def perL (idx : Fin g ≃ X.Ψ × Fin r) (x : Frame X.Ψ r) : (X.Ψ → Fin r �
 variable {X} {bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ} (idx : Fin g ≃ X.Ψ × Fin r)
 
 
+include idx in
 theorem span_emb (hs : IsSympl X bas) {x : Frame X.Ψ r} (hx : x ∈ X.dom) :
     Submodule.span ℝ (Set.range fun (v : Fin r → E) (τ : X.Ψ) => Data.emb τ.1 v) = ⊤ := by
   have h1 : (Submodule.span ℝ (Set.range fun (v : Fin r → E) (τ : X.Ψ) => Data.emb τ.1 v)).map (perL X idx x) = ⊤ := by

@@ -60,6 +60,7 @@ theorem star_lev (k : Kinf E s) :
     rcases (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).symm j with b | b <;> simp [e, Matrix.one_apply, eq_comm] <;> split_ifs <;> simp
 
 
+variable (E r s) in
 def levK : Kinf E s →* Kinf E (r + s) where
   toFun k := ⟨(lev (Cinf E) r s (1, Unitary.toUnits k)).val, by
     refine Matrix.mem_unitaryGroup_iff.2 ?_
@@ -301,6 +302,7 @@ theorem sl_left (F : Sm E (r + s))
   exact a2 (1, γ) _
 
 
+variable (r) in
 def L₂ (L : Subgroup (GL (Fin (r + s)) (Af E))) (t : GL (Fin (r + s)) (Af E)) : Subgroup (GL (Fin s) (Af E)) :=
   L.comap ((MulAut.conj t⁻¹).toMonoidHom.comp (lev2 (Af E) r s))
 

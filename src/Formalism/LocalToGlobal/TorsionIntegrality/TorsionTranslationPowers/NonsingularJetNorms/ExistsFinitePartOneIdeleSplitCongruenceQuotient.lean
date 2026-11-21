@@ -267,6 +267,7 @@ theorem ptOf_add (s t : ℂ) : ptOf l L ι (s + t) = ptOf l L ι s + ptOf l L ι
 end Law
 
 
+open Classical in
 theorem PtOfAdd_of : PtOfAdd := by
   intro l _ L ι s t
   exact ptOf_add l L ι s t

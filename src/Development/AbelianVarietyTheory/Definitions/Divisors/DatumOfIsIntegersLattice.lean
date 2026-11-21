@@ -27,6 +27,7 @@ def ModelAt (V : ValuationSubring ℂ) (F : IntermediateField ℚ ℂ) (W : Weie
 abbrev Sq (p : ℕ) : Type := {k : Fin p // ((k : ℕ) : ZMod p) ≠ 0 ∧ IsSquare ((k : ℕ) : ZMod p)}
 
 
+open Classical in
 instance (p : ℕ) : Fintype (Sq p) := Subtype.fintype _
 
 def sqPt (p : ℕ) (t : ℂ) (k : Sq p) : ℂ := ((k.1 : ℕ) : ℂ) * t

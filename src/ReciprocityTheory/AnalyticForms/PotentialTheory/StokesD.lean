@@ -88,6 +88,7 @@ variable [CompactSpace X] [T2Space X] (A : FinHolAtlas (e + 1) X) (Φ : Fin e �
   (hG : G ⊆ (A.chart j).source) (x0 : Fin e → X) (hGU : ∀ i, G ⊆ (Φ i).U (x0 i))
 
 
+include hΦ hGo hG hGU in
 theorem st_partsHyp_piece (w ψ : X → ℝ) (hw : A.Smooth w) (hψ : A.Smooth ψ)
     (hψG : tsupport ψ ⊆ G) :
     PartsHyp (fun i => (Φ i).φ (x0 i) ∘ (A.chart j).symm)
@@ -126,6 +127,7 @@ theorem st_partsHyp_piece (w ψ : X → ℝ) (hw : A.Smooth w) (hψ : A.Smooth �
   · exact (((hΦ i).1 (x0 i) j).mono fun y hy => ⟨hy.1, hGU i hy.2⟩).of_le h3
 
 
+include hΦ hGo hG hGU in
 theorem st_nonpos_piece (hP : PartsStatement) (v θ : X → ℝ) (hv : A.Smooth v)
     (hθ : A.Smooth θ) (hθG : tsupport θ ⊆ G) :
     mInt A (Fin.cons (LocPot.ofFun v) Φ) (fun x => θ x * v x) =

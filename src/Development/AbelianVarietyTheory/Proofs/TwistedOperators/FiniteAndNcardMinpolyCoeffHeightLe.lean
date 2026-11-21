@@ -146,6 +146,7 @@ theorem norm_embedding_le_mulHeight₁ (φ : K →+* ℂ) (c : K) : ‖φ c‖ �
         (one_le_finprod fun _ => le_max_right _ _)
 
 
+variable (K) in
 theorem exists_ncard_mulHeight₁_le : ∃ (C : ℝ) (k : ℕ), ∀ B : ℝ, 1 ≤ B →
     {c : K | Height.mulHeight₁ c ≤ B}.Finite ∧
       (({c : K | Height.mulHeight₁ c ≤ B}.ncard : ℕ) : ℝ) ≤ C * B ^ k := by

@@ -35,6 +35,8 @@ def EigFrame.Tri {Z : Model Xo c β} {R R' : Type} [CommRing R] [CommRing R'] {�
     IsCombAtG Z.t x' (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ k) cf (g.v τ i)
 
 
+attribute [local instance] Over.cartesianMonoidalCategory in
+open MonObj in
 theorem isCombAtG_single {X0 : Scheme.{0}} (t : SAB H X0) {R : Type} [CommRing R] (x : Sp R ⟶ X0) {m : ℕ}
     {v : Fin m → (Sp (DualNumber R) ⟶ t.G.left)} (hv : ∀ j, IsTanAtG t x (v j)) (j : Fin m) :
     IsCombAtG t x v (Pi.single j 1) (v j) := by

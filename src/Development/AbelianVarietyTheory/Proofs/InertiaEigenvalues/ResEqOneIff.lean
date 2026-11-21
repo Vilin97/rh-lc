@@ -402,6 +402,7 @@ theorem res_eq_one_iff {P : LocPrime l} {K : FinExt l} {s : ℕ} {LL : FinExt l}
     exact Subtype.ext h
 
 
+set_option maxHeartbeats 1000000 in
 theorem nonempty_wEt : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (K : FinExt l) (s : ℕ) (LL : FinExt l), Good K s LL → ∀ (Γ : GamS P K s LL) (R : WSer Γ) (I : IoS AI R), IoW I → (∀ (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)), ∃ e : Module.Basis (Fin (Module.finrank ↥(OL LL) ↥T.L.T)) (RW LL) (TW (RW LL) T), EtBasis I T e) → Nonempty (WEt I) := by
   intro l _ P AI K s LL hg Γ R I hI h
   choose e he using h

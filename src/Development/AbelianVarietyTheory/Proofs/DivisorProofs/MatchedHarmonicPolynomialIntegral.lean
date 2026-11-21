@@ -61,6 +61,7 @@ private theorem frame_sig {n P Q P' Q' : ℕ} {M M' θ : Matrix (Fin n) (Fin n) 
     exact_mod_cast this
 
 
+open GlobalTheory.JointHarm in
 private theorem harmTy_deg {P Q R S : ℕ} {x : ℚ} {k k' : ℕ} (ek : x - cPair R S = k) (ek' : x + cPair R S = k')
     {f : Formalism.BasicNotions.TH.Pol P Q R S} (hf : f ∈ harmTy P Q R S x) : f.totalDegree ≤ P * k + Q * k' := by
   have hle : harmTy P Q R S x ≤ homog (Ln P Q R S) (P * k + Q * k') := by
@@ -80,6 +81,7 @@ private theorem harmTy_deg {P Q R S : ℕ} {x : ℚ} {k k' : ℕ} (ek : x - cPai
   exact MvPolynomial.IsHomogeneous.totalDegree_le (hle hf)
 
 
+open GlobalTheory.JointHarm in
 private theorem lowOne_le_harmTy {P Q R S : ℕ} {x : ℚ} {k k' : ℕ} (ek : x - cPair R S = k) (ek' : x + cPair R S = k') :
     GlobalTheory.KFixIrr.lowOne P Q R S x (P * k + Q * k') ≤ harmTy P Q R S x := by
   intro g hg

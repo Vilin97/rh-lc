@@ -361,6 +361,7 @@ theorem zwPoly_of_equation {X Y : K} (h : (W.map (algebraMap 𝒪 K)).toAffine.E
   rw [key, h, sub_self, zero_div]
 
 
+omit [DecidableEq K] in
 theorem mem_range_pointE_iff (P : (W.map (algebraMap 𝒪 K)).toAffine.Point) :
     P ∈ Set.range (pointE K W) ↔ ∀ (x y : K)
       (h : (W.map (algebraMap 𝒪 K)).toAffine.Nonsingular x y),

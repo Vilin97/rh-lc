@@ -262,6 +262,7 @@ private lemma polyOp_comp_lemma_2 {o₂ κ₁ κ₂ : ℕ} {Θb : _root_.Formali
       simp
 
 
+open MeasureTheory in
 theorem _root_.GlobalTheory.HatNF.polyLift_closed : ∀ (Wp Wq : Type) [NormedAddCommGroup Wp]
     [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
     [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wp] [FiniteDimensional ℂ Wq] (P : _root_.Formalism.FourierDecayAlt.M.Par)

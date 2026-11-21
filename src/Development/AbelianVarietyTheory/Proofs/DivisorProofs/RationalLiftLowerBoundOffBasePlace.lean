@@ -152,6 +152,7 @@ theorem isLevelVec_at_six (h : GlobalTheory.Hk3.Core R F) (i : Fin D.R.m) (σ : 
   exact hf
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.WeilGramSignature in
 theorem exists_full_lift_six (hA : GlobalTheory.LowRow.AdelC R F) (h : GlobalTheory.Hk3.Core R F) (i : Fin D.R.m) {b : ℝ} (hb : Sizes D i b)
     (ht : PrimeToHost R A.μ0) {σ : D.what₂.LL →+* ℂ} {s : ℂ ≃+* ℂ} (hσ : IsEmbOverK D σ s) {v : (R.MW i σ).Vec}
     (hv : IsExtVec (R.MW i σ) v) {c₀ μ' η' c c₁ H j th} (hd : IsConjDatum R i σ c₀ μ' η' c c₁ H j th) :
@@ -195,6 +196,7 @@ theorem parts_scalar_six (h : GlobalTheory.Hk3.Core R F) (i : Fin D.R.m) (σ : D
   exact (congrArg T e1).symm.trans e2
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.WeilGramSignature in
 theorem conjLift_lower_six (hA : GlobalTheory.LowRow.AdelC R F) (h : GlobalTheory.Hk3.Core R F) (i : Fin D.R.m) {b : ℝ} (hb : Sizes D i b)
     (ht : PrimeToHost R A.μ0) {σ : D.what₂.LL →+* ℂ} {s : ℂ ≃+* ℂ} (hσ : IsEmbOverK D σ s) {v : (R.MW i σ).Vec}
     (hv : IsExtVec (R.MW i σ) v) (hlog : logHookSum i (lab σ) = logHookSum i id) {c₀ μ' η' c c₁ H j th}
@@ -262,6 +264,7 @@ theorem lowForm_of_emb_six {s : ℕ} (hOk : A.fam.Ok s) (h : GlobalTheory.Hk3.Co
   exact (key _ _ _ _ _ _ _ (RealDat.nP_pos (F := F) false) rfl h2 h3 h5).trans h4.ge
 
 
+open Formalism.MainNotions.S Formalism.IndefR.Datum GlobalTheory.AdelicScalar GlobalTheory.LiftRows GlobalTheory.LowRow in
 theorem lowForm_six : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), ∀ (s : ℕ) (b : ℝ), AdelC R F → (∀ i, GalOut R i 1) → GlobalTheory.Hk3.Core R F → A.fam.Ok s → (∀ i σ, ∃ v : (R.MW i σ).Vec, IsExtVec (R.MW i σ) v) → R.LUnif → GlobalTheory.BigOn.BaseLinks R F → PrimeToHost R A.μ0 → (∀ i, Sizes D i b) → GlobalTheory.BigOn.LowForm R F b := by
   intro D G _ _ Pl0 T A Ks _ _ _ R F s b hA hG h hOk hv hU hB ht hb
   refine h.fam.tie.elim fun gramR a => a.elim fun c0R a => a.elim fun c0L hT => ?_

@@ -21,6 +21,7 @@ variable {V V₁ : Type} [AddCommGroup V] [Module Ω V] [AddCommGroup V₁] [Mod
 variable {x : (Σ k, ι k) → Ω}
 
 
+variable {o} in
 theorem up {Γ : (∀ k, ι k) → AddSubgroup V} (h : IsLatFamily o x Γ) {s t : ∀ k, ι k} (ht : mseg x t ≠ 0)
     {v : V} {m m' : ℕ} (hm : m ≤ m') (hv : (mseg x s / mseg x t) ^ m • v ∈ Γ t) :
     (mseg x s / mseg x t) ^ m' • v ∈ Γ t := by

@@ -23,6 +23,7 @@ def ChTT_at : Prop :=
   L.sc.delta1 * D.R.n / 2 ≤ (D.host.TT.card : ℝ) ∧ (D.host.TT.card : ℝ) ≤ 2 * L.sc.delta1 * D.R.n
 
 
+open Classical in
 def largeOrderResiduePrimes : Finset ℕ :=
   (Finset.range ⌈L.sc.X'⌉₊).filter (fun p =>
     p.Prime ∧ G.IsResidueClassZero D p ∧ L.sc.x ^ (L.sc.eps / 4) ≤ (addOrderOf (G.hP D p) : ℝ))
@@ -30,6 +31,7 @@ def largeOrderResiduePrimes : Finset ℕ :=
 variable {L}
 
 
+open Classical in
 def badTops (X : G.Inst D L) (p : ℕ) : Finset (G.HH D) :=
   D.host.TT.filter (fun t => ¬ G.Good X p (X.bs (G.stepP D p) t))
 

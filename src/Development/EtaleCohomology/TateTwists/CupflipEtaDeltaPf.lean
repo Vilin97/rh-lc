@@ -194,6 +194,7 @@ end
 end LateralTheory.EtaleFoundations.EtaDelta
 
 
+open LateralTheory.KummerTheory.AW LateralTheory.EtaleFoundations.EtaDelta in
 theorem LateralTheory.EtaleFoundations.cupflip_eta_delta_of : LateralTheory.EtaleFoundations.cupflip_eta_delta := by
   intro h hs R _ I J K μ E n m k hk α β η hη N t ht U x
   cases N with

@@ -27,6 +27,7 @@ theorem absNorm_map_mapRingHom (s : Em →+* K) (b : Ideal (𝓞 Em)) :
   rw [h1, Ideal.absNorm_algebraMap, h3]
 
 
+omit [NumberField Em] in
 theorem span_singleton_toAddSubgroup (x : Fin N → Em) :
     (Submodule.span (𝓞 Em) {x}).toAddSubgroup =
       (⊤ : AddSubgroup (𝓞 Em)).map (LinearMap.toSpanSingleton (𝓞 Em) _ x).toAddMonoidHom := by

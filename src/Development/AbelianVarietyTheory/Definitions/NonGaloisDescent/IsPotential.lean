@@ -28,9 +28,11 @@ variable {l : ℕ} [hl : Fact l.Prime] {a : ℕ} [NeZero a] {e : ℕ} [NeZero e]
   {G : Type} [Group G] [TopologicalSpace G]
 
 
+variable (l O) in
 def toB : OA l O →ₐ[O] OB l O := (toOB l O).comp (toOCr l O)
 
 
+variable {t ϖ} in
 def IsCrisCmp {P : PhiMod O K l e a ι} {T : LocLat G ℚ_[l] K O} (I : Ident t ϖ P T)
     (jB : (ι → OB l O) ≃ₗ[OB l O] TW (OB l O) T) : Prop :=
   ∀ (c : ι → OA l O) (z : TW (OA l O) T), I.j (inclL t ϖ P c) = TWincl (inclO l O) T z →
@@ -51,11 +53,13 @@ def IsCobOf (s : G →* GQ l) (T : LocLat G ℚ_[l] K O) (b : TW (OB l O) T) (c 
 variable [TameDescentExponentData K l e a]
 
 
+variable (K) in
 def Covers (h : GQ l) (γ : TameGal K l e a) : Prop :=
   ∀ f f' : ZMod a → A O K, (∀ τ, (f' τ : K⟦X⟧) = ringAct γ (fun σ => (f σ : K⟦X⟧)) τ) →
     galOA O h (ϖ.iTot t K f) = ϖ.iTot t K f'
 
 
+variable {t ϖ} in
 def IsGalDesc (s : G →* GQ l) {P : PhiMod O K l e a ι} {T : LocLat G ℚ_[l] K O} (I : Ident t ϖ P T)
     (Δ : Descent P) : Prop :=
   ∀ (g : G) (γ : TameGal K l e a), Covers K t ϖ (s g) γ → ∀ v v' : ME P, v'.1 = Δ.act γ v.1 →
@@ -97,9 +101,11 @@ section Ql
 variable {l : ℕ} [hl : Fact l.Prime]
 
 
+variable (l) in
 abbrev Gl : Type := ↥(GK (Formalism.MainNotions.ElementDenominator.qlExt l))
 
 
+variable (l) in
 abbrev sQ : Gl l →* GQ l := (GK (Formalism.MainNotions.ElementDenominator.qlExt l)).subtype
 
 abbrev QLat (LL : FinExt l) : Type 1 := LocLat (Gl l) ℚ_[l] ↥LL.1 ↥(OL LL)

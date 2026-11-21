@@ -59,6 +59,7 @@ theorem lpDim_wdAt {a : ℕ} (r : ↥(Dec (F := E) A) →* GL (Fin a) (Om l)) :
   · rw [wdAt_of_not_isPstAt ι Bw h hj hr, lpDim_trivWD]
 
 
+omit P ι in
 theorem exists_induces (hw : w ∈ placesOver E l) (h : IsPlaceOver A w) :
     ∃ (LL : FinExt l) (Bw : LocBridge l E Ω (Dec (F := E) A) ↥(OL LL)), Induces Bw := by
   obtain ⟨j, L0, hj, hL⟩ := GlobalTheory.PlaceBridge.exists_locBridge l E Ω w A hw h

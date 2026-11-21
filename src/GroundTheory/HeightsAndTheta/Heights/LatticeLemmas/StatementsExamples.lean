@@ -93,6 +93,7 @@ theorem fieldStdCoord_conjMap (σ : K →+* ℂ) (n : ℕ) (x : Fibre σ (Fin n 
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), PiLp.add_apply, hx, hy, map_add (f := _), PiLp.add_apply, map_add (f := _)]
 
 
+variable (K) in
 def HermitianNorms.standard (n : ℕ) : HermitianNorms K (Fin n → K) where
   form σ := coreOfInjective (fieldStdCoord σ n) (fieldStdCoord_injective σ n)
   form_conj σ x y := by
@@ -101,6 +102,7 @@ def HermitianNorms.standard (n : ℕ) : HermitianNorms K (Fin n → K) where
       map_sum, map_mul, Complex.conj_conj]
 
 
+variable (K) in
 def FullLattice.standard (n : ℕ) : FullLattice K (Fin n → K) where
   carrier := Submodule.span (𝓞 K) (Set.range fun i : Fin n ↦ (Pi.single i 1 : Fin n → K))
   fg := Submodule.fg_span (Set.finite_range _)

@@ -55,6 +55,7 @@ theorem gFin_infGL₀ (u : GL (Fin n) (Cinf E)) : gFin (infGL E n u) = 1 := pFin
 end SmoothIntegrals
 
 
+open SmoothIntegrals in
 theorem smoothOf (hTT : TensTest) : SmoothOf := by
   intro E _ _ _ a b _ _ _ _ μa _ μb _ Ma Mb ι _ D ka kb va vb T ψ U f hka hkb hψ _ _ hR
   have : BorelSpace (H E a b) := ⟨rfl⟩

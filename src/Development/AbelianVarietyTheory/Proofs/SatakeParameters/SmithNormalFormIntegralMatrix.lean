@@ -217,6 +217,7 @@ theorem v_eq_ord {y : L} (hy : y ≠ 0) :
 end GlobalTheory.Hk3.Smith
 
 
+open GlobalTheory.Hk3.Smith in
 theorem GlobalTheory.Hk3.smith_int_approx : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] (ϖ : L),
     Valued.v ϖ = ((Multiplicative.ofAdd (-1 : ℤ) : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) →
     ∀ (n n' : ℕ) (x : Matrix (Fin n') (Fin n) L),

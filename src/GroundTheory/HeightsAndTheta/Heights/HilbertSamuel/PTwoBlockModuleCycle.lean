@@ -109,6 +109,7 @@ end TwoBlock
 end TwoBlockModuleCycleAlt
 
 
+open TwoBlockModuleCycleAlt in
 theorem TwoBlockModuleCycle.proof : TwoBlockModuleCycle.Statement := by
   classical
   intro D Ω _ _ κ _ x B c l hX hx hB hsp hl e

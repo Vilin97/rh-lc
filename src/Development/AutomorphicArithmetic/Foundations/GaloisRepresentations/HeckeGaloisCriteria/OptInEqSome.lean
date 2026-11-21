@@ -17,6 +17,8 @@ section Layer
 variable {R : Ranks} {H : Host R} {what₂ : Rows.Data R}
 
 
+open Classical in
+set_option maxHeartbeats 2000000 in
 def ndCut (N : NData R H what₂) (keep : N.Loc → Prop) (Xs : ∀ i, Set (N.X i)) (ne : ∀ i, keep i → (Xs i).Nonempty) :
     NData R H what₂ :=
   { N with
@@ -127,6 +129,7 @@ theorem optIn_eq_some {X : Type} {S : Set X} {o : Option X} {x : S} : optIn S o 
     · simp only [false_iff]; rintro rfl; exact h x.2
 
 
+set_option maxHeartbeats 2000000 in
 def nautCut {N : NData R H what₂} (A : NAut N) (keep : N.Loc → Prop) (Xs : ∀ i, Set (N.X i))
     (ne : ∀ i, keep i → (Xs i).Nonempty) : NAut (ndCut N keep Xs ne) :=
   { A with
@@ -178,6 +181,7 @@ def nautCut {N : NData R H what₂} (A : NAut N) (keep : N.Loc → Prop) (Xs : �
 end Layer
 
 
+set_option maxHeartbeats 4000000 in
 def layCut (D : D7) (c : CutD D) : Lay0 D :=
   { loc := D.loc, locA := D.locA, locT := D.locT
     nd := ndCut D.nd c.keep c.Xs c.ne

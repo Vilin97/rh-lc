@@ -54,12 +54,15 @@ variable {D : D7} {θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E 
   {M : Formalism.IndefR.Mult.DSModel V S}
 
 
+variable (M) in
 abbrev Tup : Type := ∀ τ : D.what₂.Tau, GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ)
 
 
+variable (M) in
 abbrev MMK : Type := MultilinearMap ℂ (fun τ : D.what₂.Tau => GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ)) (GA D V → ℂ)
 
 
+variable (θ M) in
 structure IsPartMult (A : Submodule ℂ (GA D V → ℂ)) (s : Finset D.what₂.Tau) (p0 : Tup M)
     (lam : ∀ τ, GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ) →ₗ[ℂ] ℂ) (F : MMK M) : Prop where
   mem : ∀ u, F u ∈ A
@@ -73,6 +76,7 @@ structure IsPartMult (A : Submodule ℂ (GA D V → ℂ)) (s : Finset D.what₂.
     F (Function.update u τ w) = lam τ w • F (Function.update u τ (p0 τ))
 
 
+variable (θ M) in
 def partSub (A : Submodule ℂ (GA D V → ℂ)) (hsm : ∀ f ∈ A, IsAutFunSm θ V f) (s : Finset D.what₂.Tau) (p0 : Tup M)
     (lam : ∀ τ, GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ) →ₗ[ℂ] ℂ) : Submodule ℂ (MMK M) where
   carrier := {F | IsPartMult θ M A s p0 lam F}
@@ -107,6 +111,7 @@ def evAt (p0 : Tup M) : MMK M →ₗ[ℂ] (GA D V → ℂ) where
   map_smul' _ _ := rfl
 
 
+variable (V) in
 def rTrL (k : GA D V) : (GA D V → ℂ) →ₗ[ℂ] (GA D V → ℂ) where
   toFun := rTr V k
   map_add' _ _ := rfl

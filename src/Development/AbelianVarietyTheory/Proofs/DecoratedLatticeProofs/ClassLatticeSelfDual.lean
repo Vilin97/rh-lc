@@ -31,6 +31,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {n : Type} [Fintype n] [DecidableEq n]
 
 
+omit [NumberField F] [DecidableEq n] [Fintype n] in
 theorem mem_span_of_mem_latS (R : Type) [CommRing R] [Algebra F R] [Nontrivial R] (S : Subring (E ⊗[F] R))
     (L : Submodule (𝓞 E) (n → E)) (x : n → E)
     (hx : (fun i => inclE (F := F) R (x i)) ∈ latS (F := F) R S L) :

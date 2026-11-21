@@ -40,6 +40,7 @@ def pairing (σ : L →+* L) (δ : L) (ψ : AddChar L ℂ) {n n' : ℕ} (x y : M
 variable [Valued L (WithZero (Multiplicative ℤ))]
 
 
+variable (L) in
 def intMat (α β : Type) : Submodule (intL L) (Matrix α β L) where
   carrier := {x | ∀ i j, x i j ∈ intL L}
   add_mem' h h' i j := add_mem (h i j) (h' i j)
@@ -47,6 +48,7 @@ def intMat (α β : Type) : Submodule (intL L) (Matrix α β L) where
   smul_mem' r _ h i j := mul_mem r.2 (h i j)
 
 
+variable (L) in
 def mixLat (n' n : ℕ) : Submodule (intL L) (Matrix (Fin n') (Fin n) L) where
   carrier := {x | ∀ r c, (n' - n' / 2 ≤ r.1 ∨ n' / 2 ≤ r.1 ∧ c.1 < n / 2 → x r c = 0) ∧
     (n' / 2 ≤ r.1 → c.1 < n - n / 2 → x r c ∈ intL L)}

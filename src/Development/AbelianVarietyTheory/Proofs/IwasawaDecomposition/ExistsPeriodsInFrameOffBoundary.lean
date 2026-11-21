@@ -35,6 +35,7 @@ variable (hP : IsPeriod (Fu.Di i) (fun j => Formalism.L2.PjFree.relab c σ (e j)
       IsDerivAt0 (fun w => (Fu.ex i P w).left) (W z) (v₀ ≫ Z.m0.toSABMap.φ))
 
 
+include hP hu hy hW in
 theorem dirs_exists_comb (τ : E →+* ℂ) (w : Fin g → ℂ) (hw : ∀ j, w j ≠ 0 → (e j).1 = τ) :
     ∃ cf : Fin (Dw.mult τ) → ℂ, w = ∑ k, cf k • W ⟨τ, k⟩ := by
   choose v₀ h1 h2 h3 using hW
@@ -54,6 +55,7 @@ theorem dirs_exists_comb (τ : E →+* ℂ) (w : Fin g → ℂ) (hw : ∀ j, w j
     (fun k => W ⟨τ, k⟩) (fun k => h3 ⟨τ, k⟩) cf _).1 hc)⟩
 
 
+include hP hu hy hW in
 theorem dirs_span : ⊤ ≤ Submodule.span ℂ (Set.range W) := by
   rw [← (Pi.basisFun ℂ (Fin g)).span_eq, Submodule.span_le]
   rintro _ ⟨j, rfl⟩
@@ -64,6 +66,7 @@ theorem dirs_span : ⊤ ≤ Submodule.span ℂ (Set.range W) := by
   exact Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)
 
 
+include hP hu hy hW in
 theorem dirs_basis : ∃ b : Module.Basis (Letter Dw) ℂ (Fin g → ℂ), ⇑b = W :=
   ⟨basisOfTopLeSpanOfCardEqFinrank W (dirs_span hP hu hy hW) (by
     rw [Module.finrank_fin_fun, ← Fintype.card_congr e, Fintype.card_fin]), coe_basisOfTopLeSpanOfCardEqFinrank _ _ _⟩

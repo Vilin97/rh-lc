@@ -227,6 +227,7 @@ theorem isThetaPtOver_down {P₀ : PolAV S} {P : PolAV S'} {φ : P.A.left ⟶ P�
   exact ⟨r, fun j => (hr j).trans (congrArg (_ * ·) (congrArg (fun q => q.1 j) e).symm)⟩
 
 
+omit τ in
 theorem isThetaPt_iff {P₀ : PolAV S} {P : PolAV S'} {φ : P.A.left ⟶ P₀.A.left}
     (hp : IsGrpPullback P.A P₀.A f φ) (hw : LBIso P.L (P₀.L.pull φ))
     {k : ℕ} {I : Type} {x : I → (T ⟶ P.A)} {x₀ : I → (Over.mk (T.hom ≫ f) ⟶ P₀.A)}

@@ -176,6 +176,7 @@ end Neighbourhoods
 end ClosureLat
 
 
+open ClosureLat in
 theorem mem_closure_iff_map_mem_homLat {E : Type} [Field E] [NumberField E] (P : HeightOneSpectrum (𝓞 E)) {W Qq : Type}
     [CommRing W] [IsDomain W] [IsDiscreteValuationRing W] [Field Qq] [Algebra W Qq] [IsFractionRing W Qq] (p : ℕ)
     (hp : Irreducible (p : W)) (ρ : E →+* Qq)

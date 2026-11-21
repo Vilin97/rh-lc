@@ -50,6 +50,7 @@ theorem nsmul_integral_mem_nhds (M : ℕ) (hM : 0 < M) :
 variable {E : Type} [Field E] [NumberField E] [Algebra F E] {n : ℕ}
 
 
+omit [Algebra F E] in
 theorem exists_denom (L : Submodule (𝓞 E) (Fin n → E))
     (hsp : Submodule.span E (L : Set (Fin n → E)) = ⊤) (x : Fin n → E) :
     ∃ d : ℕ, 0 < d ∧ d • x ∈ L := by

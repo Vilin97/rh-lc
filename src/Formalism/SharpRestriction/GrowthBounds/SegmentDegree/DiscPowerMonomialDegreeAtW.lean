@@ -39,6 +39,7 @@ def discPowerMonomialDegree (j : ℤ) (b : ℤ → ℕ) (x : ℤ) : ℕ :=
       (if X.F.fr (j - 1) i.val = x then 1 else 0)
 
 
+omit [NeZero n'] [NeZero r] in
 def memdMu (j : ℤ) (u : Fin r × Fin r → ℕ) (x : ℤ) : ℕ :=
   ∑ v : Fin r × Fin r, u v * (if X.F.fr j v.1.val = x then 1 else 0)
 

@@ -142,6 +142,7 @@ end Res
 end PointsAbsMeasurable
 
 
+open PointsAbsMeasurable in
 theorem PtsAbsMeasurable.proof (hE : ResExistsStatement) : PtsAbsMeasurable.Statement := by
   intro K _ ι _ P e Ψ L A s hP hΨ hL hA hs
   obtain ⟨J, ⟨R⟩⟩ := exists_anLogRes hE hP

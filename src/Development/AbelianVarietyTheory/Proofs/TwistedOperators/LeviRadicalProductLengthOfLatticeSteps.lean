@@ -59,6 +59,7 @@ section Entries
 variable {σ : L →+* L} {N : ℕ}
 
 
+omit [Valued L (WithZero (Multiplicative ℤ))] in
 theorem leviElt_mul_rad_entries {ϖ : L} {a : ℤ} {g₀ : GU σ N} {m u : GU σ (N + 2)} (hm : IsLeviElt ϖ a g₀ m)
     (hu : u ∈ radQ σ N) :
     mat (m * u) 0 0 = ϖ ^ a ∧ (∀ j, mat (m * u) 0 (mid j) = ϖ ^ a * rowOf u j) ∧

@@ -118,9 +118,11 @@ theorem mem_intL_iff_mul {ϖ : L} {σ : L →+* L} {q : ℕ} (hU : IsUnramInv ϖ
     omega
 
 
+variable (L) in
 abbrev OV : ValuationSubring L := (Valued.v : Valuation L (WithZero (Multiplicative ℤ))).valuationSubring
 
 
+variable (L) in
 abbrev ResF : Type := OV L ⧸ IsLocalRing.maximalIdeal (OV L)
 
 theorem card_resF {ϖ : L} {σ : L →+* L} {q : ℕ} (hU : IsUnramInv ϖ σ q) : Nat.card (ResF L) = q ^ 2 :=

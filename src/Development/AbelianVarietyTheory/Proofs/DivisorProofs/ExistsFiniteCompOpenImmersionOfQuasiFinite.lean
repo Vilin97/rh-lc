@@ -91,6 +91,7 @@ theorem toBase_of_Spec (X : Scheme.{0}) (F' : X.AffineZariskiSiteᵒᵖ ⥤ Comm
   exact hP _
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem isFinite_toBase (X : Scheme.{0}) (F' : X.AffineZariskiSiteᵒᵖ ⥤ CommRingCat)
     (α' : (toOpensFunctor X).op ⋙ X.presheaf ⟶ F') (h : α'.Coequifibered)
     (hfin : ∀ V, (α'.app V).hom.Finite) : IsFinite (relativeGluingData h).toBase := by
@@ -135,6 +136,7 @@ theorem bijective_awayMap_of_range (R A B : Type) [CommRing R] [CommRing A] [Com
   GlobalTheory.T.awayMap_bijective_of_injective_of_range_eq_subalgebra R A B C φ hφ hC a b hab h
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem exists_finite_openImmersion : ∀ (U X : Scheme.{0}) (f : U ⟶ X), IsNoetherian X →
     IsSeparated f → LocallyOfFiniteType f → QuasiCompact f → LocallyQuasiFinite f →
     ∃ (T : Scheme.{0}) (q : T ⟶ X) (j : U ⟶ T), IsFinite q ∧ IsOpenImmersion j ∧ j ≫ q = f := by

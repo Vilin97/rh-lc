@@ -310,6 +310,7 @@ theorem weil_snd (hX : IsBottomTri W i j X) (s : T) :
   exact hX.is.weil' s
 
 
+set_option maxHeartbeats 1600000 in
 theorem reads_datum (hI : GlobalTheory.NormSum.Inp D) {large₂ : SizeData₂ D} (hR : GlobalTheory.SqTop.Rec large₂) (hL : L.Is μ₀) (hX : IsBottomTri W i j X)
     (hβ : X.rW.β = 1) (hB : IsBottom G s i j (GlobalTheory.SqTop.modT G s) P P') (hS : A'.rank = P'.a) (hT : WW.rank = P'.d) {κ : ℂ}
     (hv : Reads W.ψ W.θ hS hT ⊤ δ 1 (κ • P'.e0) X.vac') :

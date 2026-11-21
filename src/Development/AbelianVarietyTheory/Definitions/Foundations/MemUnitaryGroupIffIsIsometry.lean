@@ -234,6 +234,7 @@ variable {E}
   IsCMField.complexEmbedding_complexConj E τ x
 
 
+variable (E) in
 theorem exists_star_ne : ∃ x : E, star x ≠ x := by
   by_contra! H
   exact IsCMField.complexConj_ne_one E (AlgEquiv.ext H)
@@ -245,6 +246,7 @@ noncomputable instance : StarRing (𝓞 E) where
   star_add x y := map_add _ x y
 
 
+variable (E) in
 abbrev CMTensor (A : Type*) [CommRing A] [Algebra (maximalRealSubfield E) A] : Type _ :=
   StarTensor (maximalRealSubfield E) E A
 

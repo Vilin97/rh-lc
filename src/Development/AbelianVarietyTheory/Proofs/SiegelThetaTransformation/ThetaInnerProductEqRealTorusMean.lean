@@ -38,6 +38,7 @@ theorem mem_tube (w : G) : w ∈ tube p R U ↔ w - R (p w) ∈ U := Iff.rfl
 variable {p R U}
 
 
+omit [IsTopologicalAddGroup V] in
 theorem exists_compact (hR : Continuous R) (hU : IsCompact (U : Set G)) {K : Set V} (hK : IsCompact K) :
     ∃ K' : Set G, IsCompact K' ∧ p ⁻¹' K ∩ tube p R U ⊆ K' := by
   refine ⟨(fun x : G × V => x.1 + R x.2) '' ((U : Set G) ×ˢ K),

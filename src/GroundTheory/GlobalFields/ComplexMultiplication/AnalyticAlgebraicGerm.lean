@@ -105,6 +105,7 @@ noncomputable instance : DecidableEq MeroField := Classical.decEq _
 
 
 open scoped Classical in
+open Classical in
 def germ (f : ℂ → ℂ) : MeroField :=
   if h : Meromorphic f then Ideal.Quotient.mk meroNull ⟨f, h⟩ else 0
 

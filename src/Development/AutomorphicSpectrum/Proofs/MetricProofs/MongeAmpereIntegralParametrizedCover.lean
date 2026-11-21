@@ -19,6 +19,7 @@ section
 variable {e : ℕ} {X : Type} [TopologicalSpace X] [CompactSpace X] [T2Space X]
 
 
+omit [CompactSpace X] [T2Space X] in
 theorem chartPartition_norm_le_one (A : FinHolAtlas e X) (Q : ChartPartition A) (j : Fin A.n)
     (x : X) : ‖Q.χ j x‖ ≤ 1 := by
   have h : Q.χ j x ≤ ∑ k, Q.χ k x :=

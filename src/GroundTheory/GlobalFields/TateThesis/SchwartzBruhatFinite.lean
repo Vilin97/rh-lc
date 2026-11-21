@@ -59,6 +59,7 @@ theorem exists_idealFiniteAdeles_subset {W : Set 𝔸ᶠ[K]} (hW : W ∈ 𝓝 (0
   exact hdK
 
 
+variable (K) in
 def finiteSchwartzBruhat : Submodule ℂ (𝔸ᶠ[K] → ℂ) where
   carrier := {f | IsLocallyConstant f ∧ HasCompactSupport f}
   zero_mem' := ⟨IsLocallyConstant.const 0, HasCompactSupport.zero⟩
@@ -187,6 +188,7 @@ theorem integrable_of_mem_finiteSchwartzBruhat {f : 𝔸ᶠ[K] → ℂ} (hf : f 
   hf.1.continuous.integrable_of_hasCompactSupport hf.2
 
 
+variable (K) in
 def finiteFourier (f : 𝔸ᶠ[K] → ℂ) (y : 𝔸ᶠ[K]) : ℂ :=
   ∫ x, f x * (finiteAdelicChar K (x * y) : ℂ) ∂finiteAdeleMeasure K
 

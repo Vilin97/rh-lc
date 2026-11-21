@@ -52,6 +52,7 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : Formalis
   {i : Fin D.R.m}
 
 
+set_option maxHeartbeats 1000000 in
 theorem covAt_mem (hR : GlobalTheory.Hk3.Core R F) (hT : TieIn T R κ v₀) (O : OMDat T.toCore R i Unit (fun _ => A.μ0))
     (hO : O.Pins (κ i) (v₀ i (sg0 D A)) (iotaW T i) (T.x₀ ((i : ℕ) + 1) O.s0)) (c0 : ℂ) (h0 : GlobalTheory.PtId.CovAt O c0) :
     c0 ∈ (inC O.c').range ∧ ∃ m : ℕ, 0 < m ∧ c0 ^ m = 1 := by

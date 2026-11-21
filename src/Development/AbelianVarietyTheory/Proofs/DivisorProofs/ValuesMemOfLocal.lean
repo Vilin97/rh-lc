@@ -77,6 +77,8 @@ private lemma coeffs_eq_zero_of_linearIndependent_of_injective {O K X : Type} [C
     · exact htail' k
 
 
+set_option autoImplicit false in
+open MvPolynomial in
 theorem _root_.GlobalTheory.ExpCover.values_mem_of_local {l : ℕ} [Fact l.Prime] {O I G V W : Type} [CommRing O]
     [IsDomain O] [IsPrincipalIdealRing O] [Mul G]
     [AddCommGroup V] [Module O V] [Module.Finite O V] [AddCommGroup W] [Module (PadicAlgCl l) W]

@@ -186,6 +186,7 @@ variable {M : Type w} [AddCommGroup M] [Module (Poly S N) M] [Module S M]
 variable {𝓕 : GradedPMod S N F} {𝓜 : GradedPMod S N M}
 
 
+omit [IsScalarTower S (Poly S N) F] [IsScalarTower S (Poly S N) M] in
 theorem component_map (g : GradedHom 𝓕 𝓜) (y : DirectSum ℤ fun c => 𝓕.piece c) (c : ℤ) :
     (((LinearEquiv.ofBijective (DirectSum.coeLinearMap 𝓜.piece) 𝓜.isInternal).symm
       (g.toLin (DirectSum.coeLinearMap 𝓕.piece y))) c : M) = g.toLin (y c) := by

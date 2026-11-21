@@ -18,6 +18,7 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Comp
 namespace FrobeniusLift
 
 
+omit [TotallyDisconnectedSpace G] in
 def mul (s t : D.FrobeniusLift K) : D.FrobeniusLift K where
   elt := s.elt * t.elt
   mem := K.mul_mem s.mem t.mem
@@ -29,6 +30,7 @@ def mul (s t : D.FrobeniusLift K) : D.FrobeniusLift K where
     ring_nf
 
 
+omit [TotallyDisconnectedSpace G] in
 def ofDegOne {φ : G} (hφK : φ ∈ (K : Subgroup G))
     (hdφ : D.deg φ = Multiplicative.ofAdd (inertiaDegree D.deg K : ℤ̂)) : D.FrobeniusLift K where
   elt := φ
@@ -72,6 +74,8 @@ theorem valuation_norm_prime (s : D.FrobeniusLift K)
 section DegOne
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G]
+  [((L : Subgroup G).subgroupOf K).Normal] in
 theorem smul_prod_pow_div (φ : G) (y : A) (n : ℕ) :
     φ • (∏ ν : Fin n, φ ^ (ν : ℕ) • y) / ∏ ν : Fin n, φ ^ (ν : ℕ) • y = φ ^ n • y / y := by
   rw [Finset.smul_prod']
@@ -86,6 +90,7 @@ theorem smul_prod_pow_div (φ : G) (y : A) (n : ℕ) :
   rw [this, div_eq_div_iff_mul_eq_mul, ← hs', hs, mul_comm]
 
 
+omit [TotallyDisconnectedSpace G] in
 theorem valuation_eq_of_inf_ker_eq {S P : OpenSubgroup G}
     (h : (S : Subgroup G) ⊓ D.deg.ker = (P : Subgroup G) ⊓ D.deg.ker) {y : A}
     (hyS : y ∈ fixedModule A (S : Subgroup G)) (hyP : y ∈ fixedModule A (P : Subgroup G)) :
@@ -312,6 +317,7 @@ end DegOne
 section General
 
 
+omit [TotallyDisconnectedSpace G] in
 theorem exists_deg_eq (K : OpenSubgroup G) :
     ∃ φ ∈ (K : Subgroup G), D.deg φ = Multiplicative.ofAdd (inertiaDegree D.deg K : ℤ̂) := by
   obtain ⟨φ, hφ⟩ := D.relDeg_surjective K (Multiplicative.ofAdd 1)

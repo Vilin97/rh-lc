@@ -116,6 +116,7 @@ theorem norm_reimE_sq {a b : ℕ} (M : Matrix (Fin a) (Fin b) ℂ) :
   simp [reimE, reim, Real.norm_eq_abs, sq_abs, sq]
 
 
+set_option maxHeartbeats 800000 in
 theorem place_split {V : Type} [Fintype V] {a b : ℕ} {ι : Type} [Fintype ι]
     (L : EuclideanSpace ℝ ι →ₗ[ℝ] (V → Matrix (Fin a) (Fin b) ℂ)) (Q : V → Matrix (Fin a) (Fin b) ℂ → Prop)
     (hQ : ∀ x v, Q v (L x v)) (hQ0 : ∀ v, Q v 0)

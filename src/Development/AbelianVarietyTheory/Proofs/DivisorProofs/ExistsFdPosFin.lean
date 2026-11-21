@@ -25,6 +25,9 @@ noncomputable section
 namespace GlobalTheory.ThetaSchurUnitF
 
 
+open scoped TensorProduct Matrix in
+open NumberField IsDedekindDomain in
+open MeasureTheory in
 theorem _root_.GlobalTheory.ThetaSchurUnitF.exists_fd_pos_fin {F E : Type} [Field F] [NumberField F]
     [Field E] [NumberField E] [Algebra F E]
     {σ : E →ₐ[F] E} {nS nT : ℕ} {JS : Matrix (Fin nS) (Fin nS) E} {JT : Matrix (Fin nT) (Fin nT) E} {ξ₀ : E}

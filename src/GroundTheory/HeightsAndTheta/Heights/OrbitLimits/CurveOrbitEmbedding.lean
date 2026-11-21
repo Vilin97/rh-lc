@@ -20,6 +20,7 @@ namespace CurveOrbit
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
 
+omit [Fintype K] in
 theorem isMultiHomog_mul {f g : MRing ι} {a b : K → ℕ} (hf : IsMultiHomog f a) (hg : IsMultiHomog g b) :
     IsMultiHomog (f * g) (a + b) := by
   classical
@@ -28,6 +29,7 @@ theorem isMultiHomog_mul {f g : MRing ι} {a b : K → ℕ} (hf : IsMultiHomog f
   simp only [Finsupp.add_apply, Finset.sum_add_distrib, Pi.add_apply, hf m1 hm1 k, hg m2 hm2 k]
 
 
+omit [Fintype K] in
 theorem isMultiHomog_add {f g : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) (hg : IsMultiHomog g a) :
     IsMultiHomog (f + g) a := by
   classical
@@ -37,6 +39,7 @@ theorem isMultiHomog_add {f g : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a
   · exact hg m h k
 
 
+omit [Fintype K] in
 theorem isMultiHomog_sub {f g : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) (hg : IsMultiHomog g a) :
     IsMultiHomog (f - g) a := by
   classical
@@ -46,6 +49,7 @@ theorem isMultiHomog_sub {f g : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a
   · exact hg m h k
 
 
+omit [Fintype K] in
 theorem isMultiHomog_one : IsMultiHomog (1 : MRing ι) 0 := by
   classical
   intro m hm k
@@ -59,6 +63,7 @@ theorem mem_of_aeval_eq_zero (y : (Σ k, ι k) → Ω) {f : MRing ι} {d : K →
   rw [ConeTrdeg.mConeMap_of_isMultiHomog y hf, h0, map_zero, zero_mul]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem aeval_eq_zero_of_mem (y : (Σ k, ι k) → Ω) {f : MRing ι} (hf : f ∈ mCoordIdeal y) : aeval y f = 0 := by
   have hc : (MvPolynomial.eval (fun _ : K => (1 : Ω))).comp (mConeMap y).toRingHom = (aeval y).toRingHom :=
     MvPolynomial.ringHom_ext (fun n => by simp) (fun p => by simp [mConeMap])
@@ -68,11 +73,13 @@ theorem aeval_eq_zero_of_mem (y : (Σ k, ι k) → Ω) {f : MRing ι} (hf : f �
   exact this.symm
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem eval_map_eq_aeval (w : (Σ k, ι k) → ℂ) (f : MRing ι) :
     eval w (map (Int.castRingHom ℂ) f) = aeval w f := by
   rw [eval_map, aeval_def, algebraMap_int_eq]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem eval_comp (σ : Ω →+* ℂ) (y : (Σ k, ι k) → Ω) (f : MRing ι) :
     eval (fun p => σ (y p)) (map (Int.castRingHom ℂ) f) = σ (aeval y f) := by
   have : (eval (fun p => σ (y p))).comp (map (Int.castRingHom ℂ)) = σ.comp (aeval y : MRing ι →ₐ[ℤ] Ω).toRingHom :=
@@ -80,6 +87,7 @@ theorem eval_comp (σ : Ω →+* ℂ) (y : (Σ k, ι k) → Ω) (f : MRing ι) :
   exact congrArg (fun φ => φ f) this
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem mem_mcPts (σ : Ω →+* ℂ) (y : (Σ k, ι k) → Ω) {c : ∀ k, ι k} (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) :
     (fun p => σ (y p)) ∈ mcPts (mCoordIdeal y) :=
   ⟨fun k => ⟨c k, (map_ne_zero σ).mpr (hc k)⟩, fun f hf => by rw [eval_comp, aeval_eq_zero_of_mem y hf, map_zero]⟩

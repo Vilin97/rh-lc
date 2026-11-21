@@ -19,6 +19,7 @@ namespace GlobalTheory.TorusMat
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+omit [NumberField F] [NumberField E] in
 theorem prod_tens_ext {A B : Type} [CommRing A] [CommRing B] [Algebra F A] [Algebra F B] {x y : (A × B) ⊗[F] E}
     (h1 : Algebra.TensorProduct.map (AlgHom.fst F A B) (AlgHom.id F E) x =
       Algebra.TensorProduct.map (AlgHom.fst F A B) (AlgHom.id F E) y)

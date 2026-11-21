@@ -15,6 +15,8 @@ namespace Formalism.L2.SG.RealObj.EnergyConvJ
 variable {D : D7}
 
 
+set_option maxHeartbeats 800000 in
+variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] in
 theorem locQuad1_G_holds (hI : Formalism.FourierDecayAlt.ThreeDimData.Inputs) : LocQuad1_G := by
   intro D hG X w μSl νl C hQ v
   obtain ⟨τ, hτ⟩ : ∃ τ, vOf X τ = v := ⟨X.pl v, X.pl.symm_apply_apply v⟩
@@ -125,6 +127,7 @@ theorem locQuad1_G_holds (hI : Formalism.FourierDecayAlt.ThreeDimData.Inputs) : 
   exact ENNReal.mul_lt_top (lt_of_le_of_ne le_top hct) hJ
 
 
+variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] in
 theorem stepConvG_holds (hI : Formalism.FourierDecayAlt.ThreeDimData.Inputs) : StepConvG :=
   stepConvG_of (locQuadGG_G_holds hI) (locQuad1_G_holds hI)
 

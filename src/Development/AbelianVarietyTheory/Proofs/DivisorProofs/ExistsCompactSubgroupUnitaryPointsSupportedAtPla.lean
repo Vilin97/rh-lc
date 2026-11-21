@@ -45,6 +45,7 @@ open IsDedekindDomain NumberField Formalism.MainNotions.GlobalTheoryTheory.Genus
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+omit [NumberField E] in
 theorem smul_tens_single (v : HeightOneSpectrum (𝓞 F)) {u : AF F} (hu : evFin F v u = 0)
     (h1 : ∀ a b : Af F, (LinearMap.inr F (Ainf F) (Af F) (a * b) : AF F) =
       LinearMap.inr F (Ainf F) (Af F) a * LinearMap.inr F (Ainf F) (Af F) b)
@@ -71,6 +72,7 @@ theorem smul_tens_single (v : HeightOneSpectrum (𝓞 F)) {u : AF F} (hu : evFin
     exact key b hb e
 
 
+omit [NumberField E] in
 theorem smul_mat_emb_sub_one (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v : HeightOneSpectrum (𝓞 F))
     (x : GLoc σ J v) {u : AF F} (hu : evFin F v u = 0) :
     u • ((HA.mat (AF F) σ J (emb σ J v x)).1 - 1) = 0 := by
@@ -126,6 +128,7 @@ theorem mapH_eq_one_of_smul (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (
   · rw [Matrix.one_apply_ne e, Matrix.one_apply_ne e, map_zero]
 
 
+omit [NumberField E] in
 theorem eq_emb_proj_of_smul (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v : HeightOneSpectrum (𝓞 F))
     {g : GAd σ J} (hg : ∀ u : AF F, evFin F v u = 0 → u • ((HA.mat (AF F) σ J g).1 - 1) = 0) :
     g = emb σ J v (proj σ J v g) := by

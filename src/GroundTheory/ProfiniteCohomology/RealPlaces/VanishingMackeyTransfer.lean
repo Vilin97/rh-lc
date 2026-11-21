@@ -59,6 +59,7 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
   (hL : ∀ x : L.1, algebraMap L.1 ℚ̄ x ∈ maxUnramifiedOutside K.1 ℚ̄ S)
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_real_data (v : {v : InfinitePlace K.1 // v.IsReal}) (x : galUnramifiedOutside K.1 ℚ̄ S)
     (hreal : (infPlaceOfEmbedding (gsRealEmbedding S ιr v x) L : InfinitePlace L.1).IsReal) :
     ∃ (ιw : ℚ̄ →ₐ[L.1] AlgebraicClosure
@@ -199,6 +200,7 @@ def trivialRes (n : ℕ) (c : cohomology (Rep.trivial k W V) n) :
     (𝟙 (Rep.res (f p).toMonoidHom (Rep.trivial k W V))) n).hom c
 
 
+include hσ hmem he in
 theorem trivialRes_transfer (n : ℕ) :
     (Function.Injective (globalToLocal g (Rep.trivial k Γ V) (fun q => Rep.res (g q).toMonoidHom
         (Rep.trivial k Γ V)) (fun _ => 𝟙 _) n).hom → Function.Injective (trivialRes (k := k) V f n)) ∧
@@ -267,6 +269,7 @@ variable {k G : Type} [CommRing k] [Group G] [TopologicalSpace G] [IsTopological
   (W : OpenSubgroup G) (V : Type) [AddCommGroup V] [Module k V] [IsDiscreteRep (Rep.trivial k (W : Subgroup G) V)]
 
 
+omit [CompactSpace G] [∀ w, CompactSpace (F w)] in
 theorem mackeyTopRes_trivial_eq [∀ p : MackeyTopIndex ψ W, IsDiscreteRep
       (Rep.res (mackeyConjₜ W (ψ p.1.1) p.1.2.out).toMonoidHom (Rep.trivial k (W : Subgroup G) V))] (n : ℕ) :
     mackeyTopRes ψ W (Rep.trivial k (W : Subgroup G) V) n =
@@ -274,6 +277,7 @@ theorem mackeyTopRes_trivial_eq [∀ p : MackeyTopIndex ψ W, IsDiscreteRep
   rfl
 
 
+omit [CompactSpace G] [∀ w, CompactSpace (F w)] in
 theorem mackeyTopRes_transfer {Γ : Type} [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ]
     (E : (W : Subgroup G) ≃ₜ* Γ) [IsDiscreteRep (Rep.trivial k Γ V)]
     {Q : Type} {D : Q → Type} [∀ q, Group (D q)] [∀ q, TopologicalSpace (D q)] [∀ q, IsTopologicalGroup (D q)]
@@ -325,6 +329,8 @@ theorem exists_real_data_of_eq (p : MackeyTopIndex (gsRealFamily S ιr) (gsOpenS
 variable (h2S : ∀ v : HeightOneSpectrum (𝓞 K.1), ((2 : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
 
 
+set_option maxHeartbeats 1000000 in
+include h2S in
 theorem gsMackeyTop_gsOpenSubgroup (j : ℕ) :
     (4 ≤ j → GsMackeyTopInjective S ιr (gsOpenSubgroup S hL) j) ∧
       (3 ≤ j → GsMackeyTopSurjective S ιr (gsOpenSubgroup S hL) j) := by
@@ -364,6 +370,7 @@ theorem gsMackeyTop_gsOpenSubgroup (j : ℕ) :
 variable (ιs : ∀ v : S, ℚ̄ →ₐ[K.1] AlgebraicClosure ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1))
 
 
+include h2S in
 theorem gsTateCompactCohomology_coind_zmodRep_two_eq_zero
     (W : OpenSubgroup (galUnramifiedOutside K.1 ℚ̄ S)) {r : ℕ} (hr : 4 ≤ r)
     (x : gsTateCompactCohomology S ιr ιs (Rep.coind (W : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)).subtype

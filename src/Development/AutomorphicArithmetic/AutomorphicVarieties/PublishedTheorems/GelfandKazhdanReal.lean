@@ -93,6 +93,8 @@ def IsoTwist (π : TR.CuspSub F a) (η : HChar F) : Prop :=
     ∀ X φ, T (π.op (.lie X) φ) = π.op (.lie X) (T φ)
 
 
+variable (E) in
+omit [IsTotallyReal F] [IsTotallyComplex E] in
 def IsQuadCharOf (η : HChar F) : Prop :=
   ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite, ∀ v : HeightOneSpectrum (𝓞 F),
     v.asIdeal = w.asIdeal.comap (algebraMap (𝓞 F) (𝓞 E)) →

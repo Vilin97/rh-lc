@@ -55,6 +55,7 @@ theorem iTot_const {O K : Type} [CommRing O] [Algebra ℤ_[l] O] [Module.Free �
 end GlobalTheory.BKGal.CoversConv
 
 
+open GlobalTheory.BKGal.CoversConv GlobalTheory.BKReal in
 theorem GlobalTheory.BKGal.covers_action : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (ϖ : PiSys l e) (LL : FinExt l) [HasUnr a LL] [TameDescentExponentData ↥LL.1 l e a] (k : GQ l) (γ : TameGal ↥LL.1 l e a), Covers ↥LL.1 (thetaW a LL) ϖ k γ → (∀ x : Om l, x ^ l ^ a = x → k x = x ^ l ^ γ.shift.val) ∧ k (ϖ.seq 0) = (((γ.left : (↥LL.1)ˣ) : ↥LL.1) : Om l) * ϖ.seq 0 := by
   intro l _ a e _ _ ϖ LL _ _ k γ hc
   set t := thetaW a LL with ht

@@ -90,6 +90,8 @@ theorem det_trick {B : Type} [CommRing B] (J : Ideal B) (hfg : J.FG) (c : B) (h 
     exact Ideal.pow_le_self (by omega) (hcoef i)
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem mul_mem_sq_of_smul_eq_zero {A : Subalgebra R (T → R)} (n : R) (hn : ∀ x : omega A, n • x = 0) (x : A)
     (hx : x ∈ augIdeal A) : algebraMap R A n * x ∈ augIdeal A ^ 2 := by
   have h1 : (augIdeal A).toCotangent (algebraMap R A n • (⟨x, hx⟩ : augIdeal A)) = 0 := by

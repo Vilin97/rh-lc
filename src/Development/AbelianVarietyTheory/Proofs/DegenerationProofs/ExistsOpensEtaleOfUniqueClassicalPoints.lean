@@ -19,6 +19,7 @@ set_option backward.isDefEq.respectTransparency false
 namespace GlobalTheory
 
 
+open Polynomial in
 theorem exists_etale_int_surjective_of_finite_field (K : Type) [Field K] [Finite K] :
     ∃ (A : Type) (_ : CommRing A) (β : A →+* K),
       (Int.castRingHom A).Etale ∧ Function.Surjective β := by

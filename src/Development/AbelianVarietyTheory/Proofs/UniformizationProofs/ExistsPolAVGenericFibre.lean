@@ -91,6 +91,7 @@ theorem rosatiAdj {S : Scheme.{0}} (t : SAB H S) (a : NumberField.RingOfIntegers
 end GlobalTheory.GenericPol
 
 
+open GlobalTheory.GenericPol ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 theorem GlobalTheory.exists_polAV_genericFibre : ∀ (E : Type) [Field E] [NumberField E] [NumberField.IsCMField E] (H : Geo.Tor.Host E) (Dm : Geo.Tor.Datum H) (l : Geo.Tor.Level H) (Xo : Geo.Tor.Moduli Dm l) (c : Geo.Tor.Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Geo.Tor.Model Xo c β) (R : Type) [CommRing R] [IsDomain R] (χ : Geo.Tor.Sp R ⟶ Y.X) (t : Geo.Tor.SAB H (Geo.Tor.Sp R)) (_ : Geo.Tor.SABMap t Y.t χ), Set.range (jK R ≫ χ) ⊆ Set.range Y.j → ∀ g : ℕ, SmoothOfRelativeDimension g t.G.hom → ∃ (A : PolAV (Spec (CommRingCat.of (FractionRing R)))) (eA : (Over.pullback (jK R)).obj t.G ≅ A.A) (oA : letI := H.starRing; A.OAct (NumberField.RingOfIntegers E)), A.g = g ∧ IsMonHom eA.hom ∧ Geo.Tor.LBIso (A.L.pull eA.hom.left) (t.PP.L.pull (pullback.fst t.G.hom (jK R))) ∧ (letI := H.starRing; ∀ a, (Over.pullback (jK R)).map (t.act.act a) ≫ eA.hom = eA.hom ≫ oA.act a) := by
   intro E _ _ _ H Dm l Xo c O _ β Y R _ _ χ t m h g hg
   let := H.starRing

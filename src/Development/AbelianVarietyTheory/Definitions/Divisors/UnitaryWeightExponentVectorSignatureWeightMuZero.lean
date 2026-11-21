@@ -37,6 +37,7 @@ theorem ev_pull_g (j j' : PUnit → L.ι) (w : Sp S ⟶ Z') (hw : ⊤ ≤ w ⁻�
   exact ev_appLE w f _ hw hh _
 
 
+variable {L} in
 def secPull (s : L.Sec) : (L.pull f).Sec where
   f j := (f.appLE (L.U (j PUnit.unit)) _ (fun _ hp => mem_pull.1 hp)).hom (s.f (j PUnit.unit))
   compat j j' := ext_ev fun S _ w hw => by
@@ -351,6 +352,7 @@ theorem exOf_ext {la : Weight Dw} {e : Ix Dw → ℤ} (h0 : e none = 0)
       exact (exOf_small la τ i).trans (h2 τ i _)
 
 
+variable (Dw) in
 def mu0 : Weight Dw := fun _ i => if (i : ℕ) < Dw.p then 1 else -1
 
 theorem unitaryWeightExponentVector_signatureWeightMuZero : exOf Dw (mu0 Dw) 0 = fun ix => ix.elim 0 fun _ => 1 :=
@@ -480,6 +482,7 @@ theorem coef_spMap (s : X.SecO e) (k : X.F.J) (φ : S →+* S') (w : Sp S ⟶ X.
   rfl
 
 
+open Classical in
 def IsValAt (s : X.SecO e) (P : FrPt Xo c S) (a : S) : Prop :=
   ∀ (k : X.F.J) (hz : ⊤ ≤ (X.pt P ≫ X.inc) ⁻¹ᵁ X.F.U k) (Q : FrPt Xo c S) (t : Ix Dw → Sˣ),
     X.F.ChartFr k (X.pt P ≫ X.inc) hz Q → FrBor t Q P → a = (∏ ix, t ix ^ e ix).val * coef s k (X.pt P) hz
@@ -497,6 +500,7 @@ theorem exists_chartFr_frBor (P : FrPt Xo c S) (k : X.F.J) (hz : ⊤ ≤ (X.pt P
   exact ⟨Q, t, hQ, ht⟩
 
 
+open Classical in
 theorem isValAt_of_chart (s : X.SecO e) {P Q : FrPt Xo c S} {k : X.F.J} {hz : ⊤ ≤ (X.pt P ≫ X.inc) ⁻¹ᵁ X.F.U k}
     {t : Ix Dw → Sˣ} (hQ : X.F.ChartFr k (X.pt P ≫ X.inc) hz Q) (ht : FrBor t Q P) :
     IsValAt s P ((∏ ix, t ix ^ e ix).val * coef s k (X.pt P) hz) := by
@@ -560,6 +564,7 @@ theorem IsVal.eq_val {s : X.SecO e} {P : FrPt Xo c S} {a : S} (h : IsVal s P a) 
   (existsUnique_isVal s P).unique h (isVal_val s P)
 
 
+open Classical in
 theorem val_eq (s : X.SecO e) {P Q : FrPt Xo c S} {k : X.F.J} {hz : ⊤ ≤ (X.pt P ≫ X.inc) ⁻¹ᵁ X.F.U k}
     {t : Ix Dw → Sˣ} (hQ : X.F.ChartFr k (X.pt P ≫ X.inc) hz Q) (ht : FrBor t Q P) :
     val s P = (∏ ix, t ix ^ e ix).val * coef s k (X.pt P) hz :=

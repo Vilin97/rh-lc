@@ -21,6 +21,7 @@ theorem hz_of_inWb {k r : ℕ} {z : Fin (2 * r + k + 1) → ℂ} (hz : inWb k r 
   refine ⟨hz _ (Or.inl (by simp [eI])), hz _ (Or.inr (by simp only [esI]; have := a.isLt; omega))⟩
 
 
+variable [Fact Formalism.L2.SG.LitS.PfNVG.BesselNVG] in
 theorem nv_side {D : D7} {large₂ : SizeData₂ D} {C' Cl Cg cb Cu cT CT : ℝ} (hH : StandingHypotheses D large₂ C' Cl Cg cb Cu cT CT)
     (hCl : 1 ≤ Cl) (τ : D.what₂.Tau) (u : D.what₂.Word) {z : Fin (2 * D.R.rS + D.R.k + 1) → ℂ}
     (hz : inWb D.R.k D.R.rS z) (hT : 0 < Tz D.R.k D.R.rS z) {H : Type} [NormedAddCommGroup H]
@@ -47,6 +48,7 @@ theorem nv_side {D : D7} {large₂ : SizeData₂ D} {C' Cl Cg cb Cu cT CT : ℝ}
   exact hne
 
 
+variable [Fact Formalism.L2.SG.LitS.PfNVG.BesselNVG] in
 theorem nvHyp0 (D : D7) (large₂ : SizeData₂ D) (C' Cl Cg cb Cu cT CT C0 : ℝ) (hCl : 1 ≤ Cl) :
     Formalism.MainNotions.S.Pv.AmpDD.NVHyp D large₂ C' Cl Cg cb Cu cT CT C0 0 := by
   intro hH τ w w' hTT θ W hW lam' hl A hA hT hT' w0 hw0

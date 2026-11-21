@@ -74,12 +74,14 @@ lemma d_mul (a b : A) : d ε (a * b) = ε a • d ε b + ε b • d ε a := by
 variable {N : Type*} [AddCommGroup N] [Module R N]
 
 
+variable {ε} in
 lemma hom_ext {f g : AugCot ε →ₗ[R] N} (h : ∀ a, f (d ε a) = g (d ε a)) : f = g := by
   ext x
   obtain ⟨a, rfl⟩ := d_surjective ε x
   exact h a
 
 
+variable (N) in
 def pointDer : Submodule R (A →ₗ[R] N) where
   carrier := {D | ∀ a b, D (a * b) = ε a • D b + ε b • D a}
   add_mem' {D E} hD hE a b := by
@@ -299,6 +301,7 @@ variable [Algebra A B] [IsScalarTower R A B]
 end Tower
 
 
+variable (εA εB) in
 abbrev tensorAug : A ⊗[R] B →ₐ[R] R := Algebra.TensorProduct.productMap εA εB
 
 lemma tensorAug_comp_includeLeft :
@@ -386,6 +389,7 @@ lemma isBaseChange_of_isPushout [Algebra A A'] [IsScalarTower R A A']
   isBaseChange_mapBase _ h hP.out
 
 
+variable (R' ε) in
 def baseChangeAug : R' ⊗[R] A →ₐ[R'] R' :=
   Algebra.TensorProduct.lift (AlgHom.id R' R') ((Algebra.ofId R R').comp ε)
     (fun _ _ => Commute.all _ _)
@@ -533,6 +537,7 @@ lemma nonempty_basis_of_locally [IsLocalRing R]
   ⟨Module.finBasisOfFinrankEq _ _ (finrank_of_locally ε h)⟩
 
 
+open AlgebraicGeometry in
 lemma locally_iff_smoothOfRelativeDimension :
     RingHom.Locally (RingHom.IsStandardSmoothOfRelativeDimension n) (algebraMap R A) ↔
       SmoothOfRelativeDimension n (Spec.map (CommRingCat.ofHom (algebraMap R A))) :=

@@ -53,6 +53,7 @@ theorem aeval_smul_comp {K M : Type} [Field K] [AddCommGroup M] [Module K M] (B 
     smul_smul, inv_mul_cancel₀ hc, one_smul]
 
 
+set_option maxHeartbeats 800000 in
 theorem hkF_separable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
     {A3 : Formalism.L2.DIV.FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks]
     [Algebra Ks D.what₂.LL] (Rl : Formalism.IndefR.Links.RealDat3 D A3 Ks) (F : Formalism.IndefR.Links.Face3 D A3)

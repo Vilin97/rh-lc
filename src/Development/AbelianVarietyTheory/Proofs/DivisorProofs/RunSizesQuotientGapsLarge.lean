@@ -12,6 +12,7 @@ open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.L2 Forma
 namespace GlobalTheory.RunSizes
 
 
+set_option maxHeartbeats 2000000 in
 theorem core (f r k m PP TO T : ℝ) (hf : 2 ≤ f) (hr : 6 ≤ r) (hm : 0 < m) (hkm : m ≤ k)
     (hPP : f * r ^ 2 ≤ PP) (hTO : PP ^ 4 * (f * (r * (r - 1) / 2)) ^ 3 * k / m ≤ TO) (hT0 : 0 ≤ T)
     (hT : T ≤ PP ^ 2 * (f * (r * (r - 1) / 2)) ^ 2 * k / m + 1) :
@@ -84,6 +85,7 @@ theorem core (f r k m PP TO T : ℝ) (hf : 2 ≤ f) (hr : 6 ≤ r) (hm : 0 < m) 
     linarith
 
 
+set_option maxHeartbeats 2000000 in
 theorem at_point {D : D7} {L : SizeData₂ D} {P : ParameterChoice' D L} (Tp : ParamsT D L P) :
     1 ≤ D.R.f * D.R.r.choose 2 ∧
     D.R.f * D.R.r.choose 2 + 1 ≤

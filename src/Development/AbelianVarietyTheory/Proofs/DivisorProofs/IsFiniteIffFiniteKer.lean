@@ -57,6 +57,7 @@ end GlobalTheory.AV.FinKer
 namespace GlobalTheory.AV.AbVar
 
 
+open GlobalTheory.AV.FinKer in
 theorem isFinite_iff_finite_ker : ∀ (K : Type) [Field K] (A B : AbVar K) (f : A ⟶ B),
     IsFinite f.hom.left ↔ Finite (ptMap f).ker := by
   intro K _ A B f

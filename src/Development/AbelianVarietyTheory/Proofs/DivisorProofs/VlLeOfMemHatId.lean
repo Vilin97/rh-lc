@@ -21,6 +21,7 @@ noncomputable section
 namespace GlobalTheory.NuTrivSq
 variable {D : D7}
 
+open GlobalTheory.Mem.Col2.SplitChar in
 theorem vl_le_of_mem_hatId' {I : Ideal (𝓞 D.host.E)} {PP : HeightOneSpectrum (𝓞 D.host.E)} {n : ℕ}
     (hI : I ≤ PP.asIdeal ^ n) {x : AE D} (hx : x ∈ hatId D I) : vl D PP x ≤ WithZero.exp (-(n : ℤ)) := by
   induction hx using AddSubgroup.closure_induction with
@@ -35,6 +36,7 @@ theorem vl_le_of_mem_hatId' {I : Ideal (𝓞 D.host.E)} {PP : HeightOneSpectrum 
   | neg a _ ha => rwa [Valuation.map_neg]
 
 
+open GlobalTheory.Mem.Col2.SplitChar in
 theorem sgA_mem_hatId' {I : Ideal (𝓞 D.host.E)} {x : AE D} (hx : x ∈ hatId D I) :
     sgA D x ∈ hatId D (D.host.conj • I) := by
   induction hx using AddSubgroup.closure_induction with
@@ -53,6 +55,7 @@ theorem conj_conj_smul (𝔪 : Ideal (𝓞 D.host.E)) : D.host.conj • D.host.c
   rw [smul_smul, h, one_smul]
 
 
+open GlobalTheory.Mem.Col2.SplitChar in
 theorem vl_sub_le' {T : Type} {L : LevCh D T} (P : Places L) {y : AE D}
     (h1 : y ∈ hatId D (condE P)) (h2 : y ∈ hatId D (D.host.conj • condE P))
     {PP : HeightOneSpectrum (𝓞 D.host.E)} (hv : PP.under (𝓞 D.host.F) ∈ P.S0) :
@@ -74,6 +77,7 @@ theorem vl_sub_le' {T : Type} {L : LevCh D T} (P : Places L) {y : AE D}
 end GlobalTheory.NuTrivSq
 
 
+open GlobalTheory.Mem.Col2.SplitChar Formalism.L2.Host GlobalTheory.NuTrivSq in
 theorem GlobalTheory.NuTrivSq.nuH_finIdl_eq_one : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L sc) (i j : Fin D.R.m) {μ₀ : T},
     L.Is μ₀ → ∀ x : (AE D)ˣ, IntU D x → (x : AE D) - 1 ∈ hatId D (condE G.pl) →
       (x : AE D) - 1 ∈ hatId D (D.host.conj • condE G.pl) →

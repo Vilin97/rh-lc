@@ -103,6 +103,12 @@ private theorem measurePreserving_transvection_mulVec (t : TransvectionStruct κ
   exact ((hA.symm e).comp hB).comp hA
 
 
+open MeasureTheory Matrix in
+open scoped Pointwise in
+variable {F : Type} [Field F] [TopologicalSpace F] [IsTopologicalDivisionRing F] [T2Space F]
+  [LocallyCompactSpace F] [SecondCountableTopology F]
+  [MeasurableSpace F] [BorelSpace F] (ν : Measure F) [ν.IsAddHaarMeasure]
+  {κ : Type} [Fintype κ] [DecidableEq κ] in
 theorem _root_.GlobalTheory.UnipChange.smul_map_mulVec_pi (M : Matrix κ κ F) (u : Fˣ)
     (hu : (u : F) = M.det) :
     (distribHaarChar F u : ENNReal) • Measure.map M.mulVec (Measure.pi fun _ : κ => ν)

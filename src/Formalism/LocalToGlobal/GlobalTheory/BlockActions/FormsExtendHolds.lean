@@ -185,6 +185,7 @@ theorem rSym_le_N (R : Ranks) : rSym R.k (rSD R) + R.m * R.t ≤ R.N R.m - 1 := 
 theorem rSym_le_N' (R : Ranks) : rSym R.k (rSD R) ≤ R.N R.m - 1 := le_trans (Nat.le_add_right _ _) (rSym_le_N R)
 
 
+set_option maxHeartbeats 4000000 in
 theorem extB_mat (Tf : FormsTiedSym D u Ch chOf) (κ : Tf.clsP.lev.U)
     (G : GL (Fin (D.R.N D.R.m)) (D.host.E ⊗[D.host.F] (FiniteAdeleRing (𝓞 D.host.F) D.host.F)))
     (hE : IsExt D Tf.til.z0 (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) κ.1.1 G.1)
@@ -219,6 +220,7 @@ theorem extB_mat (Tf : FormsTiedSym D u Ch chOf) (κ : Tf.clsP.lev.U)
     hF1 hF2
 
 
+set_option maxHeartbeats 4000000 in
 theorem extB_mem (Tf : FormsTiedSym D u Ch chOf) (κ : Tf.clsP.lev.U)
     (G : GL (Fin (D.R.N D.R.m)) (D.host.E ⊗[D.host.F] (FiniteAdeleRing (𝓞 D.host.F) D.host.F)))
     (hE : IsExt D Tf.til.z0 (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) κ.1.1 G.1)
@@ -232,6 +234,7 @@ theorem extB_mem (Tf : FormsTiedSym D u Ch chOf) (κ : Tf.clsP.lev.U)
   rw [hMmeq, extB_mat Tf κ G hE i v h, redM_blkDg, hMpeq]
 
 
+set_option maxHeartbeats 4000000 in
 theorem extB_chi (Tf : FormsTiedSym D u Ch chOf) (κ : Tf.clsP.lev.U)
     (G : GL (Fin (D.R.N D.R.m)) (D.host.E ⊗[D.host.F] (FiniteAdeleRing (𝓞 D.host.F) D.host.F)))
     (hE : IsExt D Tf.til.z0 (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) κ.1.1 G.1)

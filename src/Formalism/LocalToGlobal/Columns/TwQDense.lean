@@ -42,6 +42,8 @@ theorem qsp_std_mulVec {M : Matrix (Fin n) (Fin n) (𝓞 F)} {x : Sp E n} (hx : 
   rw [Matrix.map_apply, ← ha, map_mul, ← IsScalarTower.algebraMap_apply]
 
 
+set_option maxHeartbeats 4000000 in
+include hint hPv hF hvP in
 theorem qsp_dense (D : 𝓞 F) (hD : D ≠ 0) (hDv : D ∈ v.asIdeal) (k : GL (Fin n) (v.adicCompletion F))
     (hk : qbInt (k : Matrix (Fin n) (Fin n) (v.adicCompletion F)))
     (hk' : qbInt ((k⁻¹ : GL (Fin n) (v.adicCompletion F)) : Matrix (Fin n) (Fin n) (v.adicCompletion F))) :

@@ -287,6 +287,8 @@ variable {ρ : W → Module.End ℂ V} {χ : W → W → ℂ} {L X Y : AddSubgro
 
 include hχl hχr hχ0 hLL hdX hdivX hdivY hfinX hfinY htf
 
+include hχl hχr hχ0 hLL hdX hdivX hdivY hfinX hfinY htf in
+open Classical in
 theorem T_formula (T : (W → ℂ) →ₗ[ℂ] V)
     (htr : ∀ Φ, IsSB L X Φ → ∀ x ∈ X, T (fun t => Φ (t + x)) = ρ x (T Φ))
     (hmo : ∀ Φ, IsSB L X Φ → ∀ y ∈ Y, T (fun t => χ t y * Φ t) = ρ y (T Φ))
@@ -358,6 +360,8 @@ theorem T_formula (T : (W → ℂ) →ₗ[ℂ] V)
     T_indk hχl hχr hχ0 hLL hdX hdivX hdivY hfinY htf T hmo hva hk]
 
 
+include hχl hχr hχ0 hLL hdX hdivX hdivY hfinX hfinY htf in
+open Classical in
 theorem model_unique (T T' : (W → ℂ) →ₗ[ℂ] V)
     (htr : ∀ Φ, IsSB L X Φ → ∀ x ∈ X, T (fun t => Φ (t + x)) = ρ x (T Φ))
     (hmo : ∀ Φ, IsSB L X Φ → ∀ y ∈ Y, T (fun t => χ t y * Φ t) = ρ y (T Φ))
@@ -371,6 +375,8 @@ theorem model_unique (T T' : (W → ℂ) →ₗ[ℂ] V)
     T_formula hχl hχr hχ0 hLL hdX hdivX hdivY hfinX hfinY htf T htr hmo hva hk hs hi hl]
 
 
+include hχl hχr hχ0 hLL hdX hdivX hdivY hfinX hfinY htf in
+open Classical in
 theorem model_mem_span (T : (W → ℂ) →ₗ[ℂ] V)
     (htr : ∀ Φ, IsSB L X Φ → ∀ x ∈ X, T (fun t => Φ (t + x)) = ρ x (T Φ))
     (hmo : ∀ Φ, IsSB L X Φ → ∀ y ∈ Y, T (fun t => χ t y * Φ t) = ρ y (T Φ))

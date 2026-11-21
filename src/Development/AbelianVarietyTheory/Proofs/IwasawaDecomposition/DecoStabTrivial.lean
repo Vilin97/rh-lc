@@ -147,6 +147,7 @@ theorem mem_Fi_of_free {E K ι : Type} [Field E] [NumberField E] [StarRing E] [F
     simp [GStep.tr, trFr_apply, frMul_one]
 
 
+set_option maxHeartbeats 1000000 in
 theorem twAtT_exists : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (l0 : I.Law0 l) (u : B.Word) (a : I.ι), ∃ t : TwAtT (I.tw l l0 Z) u a, t.eVT = Equiv.refl _ ∧ ∀ v (r : 𝓞 B.host.E), t.eFv v (I.resT l u a v r) = I.resT l u I.mu0 (t.eVT v) r := by
   intro B X I hI hP l Z l0 u a
   refine ⟨

@@ -23,6 +23,7 @@ open GlobalTheory.Mum
 namespace GlobalTheory.Mum
 
 
+set_option maxHeartbeats 1000000 in
 theorem lbIso_lam_of_extLam : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] [IsNoetherianRing R] [IsIntegrallyClosed R] (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G], IsSemiAbelian G → ∀ (L' : LB G.left) (N : LB ((Over.pullback (jK R)).obj G).left) (PP : LB (G2 G).left), L'.IsLB → N.IsLB → LBIso N (L'.pull (pullback.fst G.hom (jK R))) → ExtLam G N PP → LBIso (abelian₂ G L') PP := by
   intro R _ _ _ _ _ G _ _ hG L' N PP hL' hN hNL hE
   have hsm : Smooth G.hom := hG.smooth

@@ -103,6 +103,7 @@ section ToModel
 variable {S S' : Type} [CommRing S] [CommRing S']
 
 
+variable (Y) in
 def liftTan (y : Sp S ⟶ Xo.XF c) {w : Sp (DualNumber S) ⟶ Xo.univ.t.G.left} (hw : IsTanAt (y ≫ pullback.fst _ _) w) :
     Sp (DualNumber S) ⟶ Y.oF.t.G.left :=
   Y.m0.cart.1.lift w (spMap (algebraMap S (DualNumber S)) ≫ y) (by rw [hw.1, Category.assoc])
@@ -131,6 +132,7 @@ theorem isTanAtG_liftTan (y : Sp S ⟶ Xo.XF c) {w : Sp (DualNumber S) ⟶ Xo.un
     exact (grpPull_one Y.m.cart (Over.mk y)).symm
 
 
+variable (Y) in
 def toModel (y : Sp S ⟶ Xo.XF c) {x₀ : Sp S ⟶ Xo.X} (h₀ : y ≫ pullback.fst _ _ = x₀) {x : Sp S ⟶ Y.X}
     (hx : y ≫ Y.j = x) {w : Sp (DualNumber S) ⟶ Xo.univ.t.G.left} (hw : IsTanAt x₀ w) : TanM x Y.t.G :=
   mkT (ovT (t := Y.t) (v := liftTan Y y (h₀ ▸ hw) ≫ Y.m.φ) (hx ▸ isTanAtG_liftTan y (h₀ ▸ hw))) (smT_zero_ovT _)
@@ -229,6 +231,7 @@ theorem frX_frMap [Algebra c.F S'] {ψ : S →ₐ[c.F] S'} {P : FrPt Xo c S} {P'
     exact congrArg spMap ψ.comp_algebraMap)
 
 
+variable (Y) in
 def frVec (P : FrPt Xo c S) {x : Sp S ⟶ Y.X} (hx : frX P ≫ Y.j = x) (σ : E →+* ℂ) (i : Fin (Dw.mult σ)) :
     TanM x Y.t.G := toModel Y (frX P) (frX_fst P) hx (P.tan σ i)
 
@@ -239,6 +242,7 @@ theorem tanPull_frVec [Algebra c.F S'] {ψ : S →ₐ[c.F] S'} {P : FrPt Xo c S}
   tanPull_toModel _ _ _ _ _ (frX_frMap h) _ _ _ _ (h.2.1 σ i)
 
 
+variable (c) in
 def eigLie (x : Sp S ⟶ Y.X) (σ : E →+* ℂ) : Submodule S (TanM x Y.t.G) where
   carrier := {v | ∀ a : 𝓞 E, actR Y.t.act a v = algebraMap c.F S (embK c σ a) • v}
   zero_mem' := fun a => by rw [map_zero, smul_zero]

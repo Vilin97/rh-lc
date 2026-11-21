@@ -45,6 +45,7 @@ section Chart
 open GlobalTheory.ChartPush
 
 
+set_option maxHeartbeats 800000 in
 theorem hv_push [StarRing (𝓞 E)] {nab : NabV Xo c} {nab₂ : NabV Xo₂ c₂} (hn : IsNab Xo c nab)
     (hn₂ : IsNab Xo₂ c₂ nab₂) {ρ : Xo₂.X ⟶ Xo.X} (ν : SABMap Xo₂.univ.t Xo.univ.t ρ) {S : Type} [Field S]
     [Algebra c.F S] [Algebra c₂.F S] {y : FrPt Xo c S} {y₂ : FrPt Xo₂ c₂ S} {pm : Gx y₂.x ⟶ Gx y.x}

@@ -48,6 +48,8 @@ variable (M M' : IntermediateField K (PadicAlgCl p)) (hMM' : M ≤ M') [FiniteDi
   (hgen : ∀ σ ∈ M.fixingSubgroup, ∃ j : ℕ, ∀ y ∈ M', σ y = (τ ^ j) y)
 
 
+omit [FiniteDimensional ℚ_[p] K] [FiniteDimensional K M'] in
+include hτp hτ1 in
 theorem pow_mem_fixingSubgroup_iff (m : ℕ) : τ ^ m ∈ M'.fixingSubgroup ↔ p ∣ m := by
   constructor
   · intro hm
@@ -68,6 +70,7 @@ variable {M M'} {hMM'}
 
 
 
+variable (hMM') in
 def stepEmb (hτM : τ ∈ M.fixingSubgroup) (j : ℕ) :
     IntermediateField.extendScalars hMM' →ₐ[M] PadicAlgCl p :=
   (galOver M (τ ^ j) (pow_mem hτM j)).toAlgHom.comp (IntermediateField.extendScalars hMM').val
@@ -140,6 +143,8 @@ theorem finiteDimensional_extendScalars_of_le :
   exact Nat.pos_of_ne_zero fun h0 => by simp [h0] at h
 
 
+include hMM' hτM hτp hτ1 hgen in
+omit [FiniteDimensional ℚ_[p] K] in
 theorem natCast_mul_normTrace_eq_sum {y : PadicAlgCl p} (hy : y ∈ M') :
     (p : PadicAlgCl p) * normTrace M y = ∑ j ∈ Finset.range p, (τ ^ j) y := by
   have := finiteDimensional_extendScalars_of_le (M := M) (M' := M') (hMM' := hMM')
@@ -164,6 +169,7 @@ theorem natCast_mul_normTrace_eq_sum {y : PadicAlgCl p} (hy : y ∈ M') :
   rfl
 
 
+omit [FiniteDimensional ℚ_[p] K] in
 theorem sum_range_pow_apply_eq (τ : Gal(PadicAlgCl p/K)) (n : ℕ) (y : PadicAlgCl p) :
     ∑ j ∈ Finset.range n, (τ ^ j) y = ∑ i ∈ Finset.range n, (n.choose (i + 1) : PadicAlgCl p) *
       (((τ.toLinearMap : Module.End K (PadicAlgCl p)) - 1) ^ i) y := by
@@ -187,6 +193,7 @@ theorem sum_range_pow_apply_eq (τ : Gal(PadicAlgCl p/K)) (n : ℕ) (y : PadicAl
   exact Finset.sum_congr rfl fun j _ => (hT j y).symm
 
 
+omit [FiniteDimensional K M'] in
 theorem nrm_pow_sub_one_apply_le (τ : Gal(PadicAlgCl p/K)) (hτM' : ∀ z ∈ M', τ z ∈ M') {ρ : ℝ}
     (hρ0 : 0 ≤ ρ) (hρ : ∀ z ∈ M', nrm K (τ z - z) ≤ ρ * nrm K z) {y : PadicAlgCl p} (hy : y ∈ M') (i : ℕ) :
     (((τ.toLinearMap : Module.End K (PadicAlgCl p)) - 1) ^ i) y ∈ M' ∧
@@ -205,6 +212,7 @@ theorem nrm_pow_sub_one_apply_le (τ : Gal(PadicAlgCl p/K)) (hτM' : ∀ z ∈ M
       _ = ρ ^ (i + 1) * nrm K y := by ring
 
 
+include hMM' hτM hτp hτ1 hgen in
 theorem nrm_normTrace_mul_le (hτM' : ∀ z ∈ M', τ z ∈ M') {ρ : ℝ} (hρ0 : 0 ≤ ρ) (hρ1 : ρ ≤ 1)
     (hρ : ∀ z ∈ M', nrm K (τ z - z) ≤ ρ * nrm K z) {y : PadicAlgCl p} (hy : y ∈ M') :
     nrm K (normTrace M y) * nrm K (p : PadicAlgCl p) ≤

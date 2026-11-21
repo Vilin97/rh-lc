@@ -59,6 +59,7 @@ theorem mem_indSpace {f : G → W} :
 variable [IsTopologicalGroup G]
 
 
+variable {H σ} in
 theorem rightTranslation_mem_indSpace {f : G → W} (hf : f ∈ indSpace H σ) (g : G) :
     rightTranslation g f ∈ indSpace H σ := by
   obtain ⟨h₁, K, hK, hfK⟩ := hf

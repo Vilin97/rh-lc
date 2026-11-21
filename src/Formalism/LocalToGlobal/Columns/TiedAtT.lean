@@ -47,6 +47,7 @@ variable {K : Type} [Field K] [NumberField K] (Pl : Rows.Places K) (pw : Pl.Pl �
   (hval : ∀ w (x : K), x ≠ 0 → Pl.val w x = ((vAdd (pw w) x : ℤ) : WithTop ℤ))
 
 
+include hval in
 theorem att_val_pos (w : Pl.Pl) (x : 𝓞 K) : (0 : WithTop ℤ) < Pl.val w (x : K) ↔ x ∈ (pw w).asIdeal := by
   by_cases hx : x = 0
   · subst hx
@@ -62,6 +63,7 @@ theorem att_val_pos (w : Pl.Pl) (x : 𝓞 K) : (0 : WithTop ℤ) < Pl.val w (x :
     rw [← WithTop.coe_zero, WithTop.coe_lt_coe, neg_pos, ← WithZero.log_one, WithZero.log_lt_log h0 one_ne_zero]
 
 
+include hval in
 theorem att_resChar_mem (w : Pl.Pl) : ((Pl.resChar w : ℕ) : 𝓞 K) ∈ (pw w).asIdeal := by
   rw [← att_val_pos Pl pw hval]
   have h := Pl.val_resChar w
@@ -76,6 +78,7 @@ section Seen
 variable {X : Fields} {Pr : Primes X} (hc : CMData X.F X.E) (hX : X.Ok) (hPr : Pr.Ok) (u : Pr.Word)
 
 
+include hc in
 theorem att_mem_conjP (P : Pl X.E) (x : 𝓞 X.F) :
     algebraMap (𝓞 X.F) (𝓞 X.E) x ∈ (conjPrime₂ P).asIdeal ↔ algebraMap (𝓞 X.F) (𝓞 X.E) x ∈ P.asIdeal := by
   rw [mem_conjP, rll_cO_algebraMap hc]
@@ -103,6 +106,7 @@ variable {d : ColDat} (a : ColArgs d)
 theorem att_star_eq (x : d.host.E) : star x = d.host.conj x := Formalism.BasicNotions.Examples₂.star_eq_conj d.host x
 
 
+set_option maxHeartbeats 1000000 in
 def atTTied (hH : HostHyp d) (u : d.what₂.Word) : CF.AtTTied (D := d.colRec a) u where
   eV := tieEV d.sp.cm d.hX d.hPr u
   piU := d.piT u

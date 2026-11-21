@@ -368,6 +368,7 @@ theorem cartan_one {k : ℕ} {G B : Matrix (Fin k) (Fin k) ℂ} (h : IsONBasis G
   exact Matrix.PosDef.one
 
 
+open Classical in
 theorem replace_at {V W : HSp D} {S' : D.what₂.Tau → SPar} {θ : InfFam D} (M : DSModel W S') {c : CoefA V}
     {ω : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)} {pt : PolF D W.rank V.rank →ₗ[ℂ] (WO V W → ℂ)}
     (p q : D.what₂.Tau → ℕ) (ap am : D.what₂.Tau → ℕ → ℕ) {io : LowT M →ₗ[ℂ] c.W →ₗ[ℂ] PolF D W.rank V.rank}

@@ -36,6 +36,7 @@ variable {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D : DegPre R}
 open ReciprocityTheory.ChartRestriction.G.DVR FormalPoint
 
 
+omit [IsDomain R] [IsLocalRing S] in
 def levelPt (I : Ideal R) (φ : R →+* S) (e : ℕ) :
     (Over.map (thick R I e)).obj (Over.mk (levelMap I φ e)) ⟶ Over.mk (spMap φ) :=
   Over.homMk (adicLevelι (I.map φ) (e + 1)) (levelMap_thick I φ e).symm

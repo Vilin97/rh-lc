@@ -29,6 +29,7 @@ open GlobalTheory.Cusp GlobalTheory.Mem.AutSpace
 variable {D : D7} {θ : GlobalTheory.Mem.Th.InfF D} {V : HSp D}
 
 
+variable (θ V) in
 abbrev Mc : Submodule ℂ (GA D V → ℂ) := cuspForms θ V ⊥
 
 theorem mem_Mc_iff {φ : GA D V → ℂ} : φ ∈ Mc θ V ↔ IsAutFunSm θ V φ ∧ IsCuspFun V φ := by

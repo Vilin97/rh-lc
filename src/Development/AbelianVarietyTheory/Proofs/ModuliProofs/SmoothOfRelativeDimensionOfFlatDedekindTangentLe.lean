@@ -113,6 +113,7 @@ theorem le_ringKrullDim_quotient_of_ringEquiv {R S : Type*} [CommRing R] [CommRi
   exact hd _ h
 
 
+attribute [local instance] Algebra.TensorProduct.rightAlgebra in
 theorem exists_isStandardSmoothOfRelativeDimension_of_localization (o V K : Type) [CommRing o]
     [IsNoetherianRing o] [CommRing V] [IsDomain V] [IsDiscreteValuationRing V]
     [PerfectField (ResidueField V)] [Field K] [Algebra o V] [Algebra V K] [Algebra o K]

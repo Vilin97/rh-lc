@@ -100,6 +100,7 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.w
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
 
+set_option maxHeartbeats 1000000 in
 theorem ipWc_lift (R : RealDat D A Ks) (hW : R.models_HW) (F : Face D A) (tupT : D.what₂.Tup → T) (hm : 0 < D.R.m)
     (hTop : TopMultH R) (hinj : ∀ i t, Function.Injective (R.extV i t)) (i : Fin D.R.m) (a b : (R.HW i (sg0 D A)).H) :
     (toLiftReal R F tupT hm hTop hinj).ipWc i (PiTensorProduct.lift ((R.HW i (sg0 D A)).e a))
@@ -126,6 +127,7 @@ theorem ipVia_self' {H N : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H
   · exact absurd ⟨⟨u, rfl⟩, ⟨v, rfl⟩⟩ h
 
 
+set_option maxHeartbeats 1000000 in
 theorem ipA_ext (R : RealDat D A Ks) (F : Face D A) (tupT : D.what₂.Tup → T) (hm : 0 < D.R.m)
     (hTop : TopMultH R) (hinj : ∀ i t, Function.Injective (R.extV i t)) (μ : D.what₂.Tup) (i : Fin D.R.m)
     (a b : (R.HV i (tupT μ)).H) :
@@ -156,6 +158,7 @@ theorem lift_postOn' {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S)
   simp [postOn]
 
 
+set_option maxHeartbeats 4000000 in
 theorem thetaP_read (R : RealDat D A Ks) (F : Face D A) (tupT : D.what₂.Tup → T) (hm : 0 < D.R.m)
     (hTop : TopMultH R) (hinj : ∀ i t, Function.Injective (R.extV i t)) (hlev : R.toLevCh.Is A.μ0) (hgrp : R.IsGrp F)
     (hM : R.IsModels) (hE : R.IsThP) (IL : LiftIds (toLiftReal R F tupT hm hTop hinj))
@@ -214,6 +217,7 @@ theorem adjoint_eigen {E F : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ
     inner_smul_left]
 
 
+set_option maxHeartbeats 400000 in
 theorem adjoint_mem_levSubV {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m}
     {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (hLev : R.toLevCh.Is A.μ0)
     (hMod : R.IsModels) (hThP : R.IsThP) (hgr : R.grp_record) (hv : A.v0 = InfinitePlace.mk D.what₂.embLL)
@@ -247,6 +251,7 @@ theorem adjoint_mem_levSubV {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : T
     (congrArg (fun c : ℂ => levChi _ (R.βV i) (flagL (R.datVt i t)) κ • (c • R.extV i t (LinearMap.adjoint (R.thG i t) w) h)) hc))
 
 
+set_option maxHeartbeats 1000000 in
 theorem adjoint_mem_base_level : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type} {A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat3 D A3 Ks) (F : Face3 D A3), GlobalTheory.Published.CuspRapidDecay → R.WeakCharacterisation F → R.toRealDat.ExAt → R.PGEquiv F → ∀ (tupT : D.what₂.Tup → T) (hm : 0 < D.R.m) (hTop : RecTie.TopMultH R.toRealDat) (hinj : ∀ i t, Function.Injective (R.toRealDat.extV i t)) (i : Fin D.R.m) (w : (R.HW i (sg0 D A3.A)).H), PiTensorProduct.lift ((R.HW i (sg0 D A3.A)).e w) ∈ (RecTie.toLiftReal R.toRealDat F.lv2 tupT hm hTop hinj).Wc i → R.toRealDat.extV i (tupT D.what₂.mu0) (LinearMap.adjoint (R.thG i (tupT D.what₂.mu0)) w) ∈ (RecTie.toLiftReal R.toRealDat F.lv2 tupT hm hTop hinj).Amt D.what₂.mu0 i := by
   intro D G _ _ Pl0 I0 T A3 Ks _ _ _ R F _hCusp hC hEx _hPG tupT hm hTop hinj i w hw
   have hLev := hC.base.lev

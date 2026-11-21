@@ -46,6 +46,7 @@ theorem eq_segre_chartLift {P : Ideal (MRing ι)} {m : ℕ} {σ : Fin m ≃ ((k 
 end SegreChartSheetComparison
 
 
+open SegreChartSheetComparison in
 theorem SegreChartSheetCompare.of_segreSheetFormCompare (hF : SegreSheetFormCompare.Statement) :
     SegreChartSheetCompare.Statement := by
   intro K _ _ ι _ P e m σ i L hL

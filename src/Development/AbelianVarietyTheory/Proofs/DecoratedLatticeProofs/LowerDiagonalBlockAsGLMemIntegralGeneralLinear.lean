@@ -104,6 +104,7 @@ theorem fromBlocks_unip_mul {c d : Type} (u : Matrix A D k) (W : Matrix (A ⊕ D
   rw [fromBlocks_multiply]; simp
 
 
+variable (A) in
 def dg : GL D k →* GL (A ⊕ D) k where
   toFun G := ⟨fromBlocks 1 0 0 G.val, fromBlocks 1 0 0 (G⁻¹).val, by simp [fromBlocks_multiply],
     by simp [fromBlocks_multiply]⟩

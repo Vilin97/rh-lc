@@ -16,6 +16,7 @@ namespace Formalism.L2.SG.RealObj.EnergyConvJ
 variable {D : D7}
 
 
+variable [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] in
 theorem weilPairJ (hI : Formalism.FourierDecayAlt.ThreeDimData.Inputs) (hRT : ReproTr) (hL2 : L2RightTranslation) (hGp : GapOfHyp)
     (hLF : ∀ (D : D7), Formalism.L2.SG.ConcreteSettingExists.GapHyp D → ∀ (X : HidaSetting D) (θ : ℝ) (C : Choice X θ), LocFactor C)
     (hG : Formalism.L2.SG.ConcreteSettingExists.GapHyp D) (X : HidaSetting D) (τ : D.what₂.Tau) :

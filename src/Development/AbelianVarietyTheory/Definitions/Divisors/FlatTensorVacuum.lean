@@ -57,6 +57,7 @@ def Kept : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) → Prop
   | _ => False
 
 
+omit [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] in
 theorem Kept.not_free {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1))} (h : Kept rs) : ¬ Free (c / 2 + 1) rs := by
   rcases rs with ⟨r | r, s | s⟩ <;> simp only [Kept, Free] at h ⊢ <;> omega
 
@@ -65,14 +66,17 @@ abbrev StepVar (n : Type*) (c : ℕ) (n' : Type*) : Type _ :=
   {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free (c / 2 + 1) rs ∨ Kept rs}
 
 
+open Classical in
 def stepPt (x₀ : Matrix n n' k) (e : StepVar n c n' → k) : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k :=
   basePt c x₀ + Matrix.of fun r s => if h : Free (c / 2 + 1) (r, s) ∨ Kept (r, s) then e ⟨(r, s), h⟩ else 0
 
 
+open Classical in
 def keptPt (w : {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Kept rs} → k) : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k :=
   Matrix.of fun r s => if h : Kept (r, s) then w ⟨(r, s), h⟩ else 0
 
 
+omit [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] in
 theorem stepPt_eq (x₀ : Matrix n n' k) (e : StepVar n c n' → k) : stepPt x₀ e =
     affPt (c / 2 + 1) x₀ (fun rs => e ⟨rs.1, Or.inl rs.2⟩) + keptPt fun rs => e ⟨rs.1, Or.inr rs.2⟩ := by
   ext r s
@@ -195,6 +199,8 @@ def Reps.elt {J : G.Level} (ρ : Reps hs J) (β : Cosets hs J) : G.VertexGroup :
 
 
 variable (hs) in
+variable (hs) in
+open Classical in
 def Reps.through (J : G.Level) (h : ∀ j : ℕ, GL (Fin (G.rank (G.m, j))) k) : Reps hs J where
   base := h 0
   rep i β := if DoubleCoset.mk _ _ (h (i + 1)) = β then h (i + 1) else β.out
@@ -258,6 +264,7 @@ theorem moved_false (g : G.VertexGroup) (T : G.Args → ℂ) (z : G.Args) : move
 variable (hs) [MeasurableSpace k] [BorelSpace k] (ψ : AddChar k Circle) (ν : Measure k)
 
 
+variable (hs) in
 def flatIntegrand (S : G.Args → ℂ) (x : ColArgs G) (y : RowArgs G) (e : Vars G) : ℂ :=
   S (fill hs x y e) * (ψ (-phase x e) : ℂ)
 
@@ -266,10 +273,12 @@ variable (G) in
 def varsVol : Measure (Vars G) := Measure.pi fun _ => Measure.pi fun _ => ν
 
 
+variable (hs) in
 def flatTensor (S : G.Args → ℂ) (x : ColArgs G) (y : RowArgs G) : ℂ :=
   ∫ e, flatIntegrand hs ψ S x y e ∂(varsVol G ν)
 
 
+variable (hs) in
 def FlatIntegrable (T : G.Args → ℂ) : Prop :=
   ∀ g x y, Integrable (flatIntegrand hs ψ (moved G true g T) x y) (varsVol G ν)
 
@@ -288,6 +297,7 @@ def unf (hfin : (unfSupport ψ ν keep ρ T).Finite) : Multiset (UnfTerm G) :=
 
 
 
+variable (hs J) in
 def OneCoset (ϖ : kˣ) (e : ℕ) : Prop :=
   ∀ β ∈ unfSupport ψ ν false (Reps.through hs J (stair G ϖ e)) T, ∀ i, β i = DoubleCoset.mk _ _ (stair G ϖ e (i + 1))
 

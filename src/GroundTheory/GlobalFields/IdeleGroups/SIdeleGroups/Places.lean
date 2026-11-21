@@ -18,6 +18,7 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
 namespace AdeleBaseChange
 
 
+omit [NumberField K] in
 theorem finiteCompletionMap_eq_galHom (σ : L ≃ₐ[K] L) (w' : HeightOneSpectrum (𝓞 L))
     (h : w' = σ • comapPrime (σ : L ≃+* L) w') :
     finiteCompletionMap (σ : L ≃+* L) w' = galHom σ (comapPrime (σ : L ≃+* L) w') w' h := by
@@ -29,6 +30,7 @@ theorem finiteCompletionMap_eq_galHom (σ : L ≃ₐ[K] L) (w' : HeightOneSpectr
   exact RingHom.ext (congrFun this)
 
 
+omit [NumberField K] in
 theorem smul_snd_eq_galHom (σ : L ≃ₐ[K] L) (a : 𝔸[L]) (w w' : HeightOneSpectrum (𝓞 L))
     (h : w' = σ • w) : (σ • a).2 w' = galHom σ w w' h (a.2 w) := by
   obtain rfl : w = comapPrime (σ : L ≃+* L) w' := by
@@ -152,6 +154,7 @@ theorem comapPrime_liesOver (σ : L ≃ₐ[K] L) (w : PlacesOver L v) :
   exact (σ⁻¹ • w).2
 
 
+omit [NumberField K] in
 theorem finiteProjAbove_smul_congr (σ : L ≃ₐ[K] L) {x y : IdeleGroup L}
     (h : finiteProjAbove v x = finiteProjAbove v y) :
     finiteProjAbove v (σ • x) = finiteProjAbove v (σ • y) := by

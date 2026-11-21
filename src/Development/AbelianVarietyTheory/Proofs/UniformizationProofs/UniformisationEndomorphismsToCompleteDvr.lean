@@ -219,6 +219,7 @@ theorem act_iff {a : D.P.A ⟶ D.P.A} {a' : D'.P.A ⟶ D'.P.A} (ha : a'.left ≫
 end End
 
 
+set_option maxHeartbeats 800000 in
 theorem exists_end {I : Ideal R} {I' : Ideal R'} {φ : R →+* R'} {D : DegData R I} {D' : DegData R' I'}
     (hD : IsPullDeg φ D.toPre D'.toPre) {A : PolAV (Spec (CommRingCat.of (FractionRing R)))}
     {A' : PolAV (Spec (CommRingCat.of (FractionRing R')))} {G : Over (Spec (CommRingCat.of R))} [GrpObj G]

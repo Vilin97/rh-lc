@@ -380,6 +380,7 @@ theorem rho_mul_inv (a g : GA D V) (w : c.W) : c.ρ (a * g)⁻¹ (c.ρ a w) = c.
   rw [← Module.End.mul_apply, ← map_mul c.ρ, _root_.mul_inv_rev, inv_mul_cancel_right]
 
 
+open Classical in
 theorem exists_sobCont {S : D.what₂.Tau → SPar} (M : DSModel V S) (τ : D.what₂.Tau) [FiniteDimensional ℂ (M.H τ)]
     (T : MMap M) (v : M.Vec) (x : GA D V) : ∃ ℓ : M.H τ →ₗ[ℂ] ℂ, Sobolev₂ (lieAt V τ) (M.rep τ) ℓ ∧
       ∀ w : M.sm τ, ℓ w = T (Function.update v τ w) x := by

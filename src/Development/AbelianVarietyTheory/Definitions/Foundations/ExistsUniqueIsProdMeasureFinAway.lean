@@ -91,6 +91,7 @@ theorem exists_box_pos (μi : ∀ i, Measure (H i)) (μf : ∀ k, Measure (P k))
 
 
 
+omit [∀ i, SecondCountableTopology (H i)] [∀ k, SecondCountableTopology (P k)] in
 theorem IsRestrProd.unique {μ' : Measure G} (h : IsRestrProd p q K μi μf μ) (h' : IsRestrProd p q K μi μf μ') :
     μ = μ' := by
   have := h.haar

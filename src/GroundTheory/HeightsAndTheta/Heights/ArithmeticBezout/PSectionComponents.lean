@@ -93,6 +93,7 @@ theorem ringKrullDim_quotient_add_one_eq {P W : Ideal (MvPolynomial (Fin n) F)} 
 end SectionComponents
 
 
+open SectionComponents in
 theorem SectionComponents.proof_closed : SectionComponents.Statement := by
   intro F _ n J f hequi hf
 

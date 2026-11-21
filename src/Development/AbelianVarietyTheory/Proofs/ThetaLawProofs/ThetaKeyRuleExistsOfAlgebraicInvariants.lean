@@ -29,6 +29,7 @@ open GlobalTheory.KeyPow GlobalTheory.KeyKa
 namespace GlobalTheory.KeyHouse
 
 
+open Cardinal in
 theorem nonempty_ringHom_complex (K : Type) [Field K] [CharZero K] [Countable K] : Nonempty (K →+* ℂ) := by
   let F := FractionRing (MvPolynomial ℝ K)
   let L := AlgebraicClosure F

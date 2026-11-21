@@ -59,6 +59,7 @@ theorem eq_zero_of_off_meagre {V : Type} [TopologicalSpace V] [BaireSpace V] {D 
 end GlobalTheory.GenericDetect
 
 
+open GlobalTheory.GenericDetect in
 theorem GlobalTheory.evC_eq_zero_iff_rdU_eq_zero : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (r : ℕ) (U : Unf Xo c σ r), GoodEmb c σ → IsUnf U → ∀ (h : GenFrEx Xo c) (k : U.Comp) (Z : Comp Xo c) (x₀ : (U.X k).dom), (∃ (φ : Om Z →ₐ[c.F] CAt σ) (y' : FrPt Xo c (CAt σ)) (t : Ix Dw → (CAt σ)ˣ), FrMap φ (genFr h Z) y' ∧ FrBor t (U.un k x₀) y') → (∀ (u : (E →+* ℂ) × ℕ → ℕ) (n : ℕ), Dom u n → ∀ f ∈ sec Xo c u n, evC h Z f = 0 ↔ ∀ x ∈ (U.X k).dom, rdU U f k x = 0) := by
   intro E _ _ _ H Dw l Xo c σ r U hσ hU h k Z x₀ ⟨φ, y', t, hm, hb⟩ u n hd f hf
   obtain ⟨hL, -, -, hA⟩ := GlobalTheory.T.evaluation_laws_generic_frames_atlas_hold E H Dw l Xo c

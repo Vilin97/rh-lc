@@ -131,6 +131,7 @@ theorem exists_move {φ : R →+* V} {U : PreU I D A G} {U' : PreU I' D' A' G'} 
 end Psi
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_setting (hL : Laws) (hL2 : Laws2) (hL3 : Laws3) {R : Type} [CommRing R] [IsDomain R] {I : Ideal R}
     {G : Over (Spec (CommRingCat.of R))} [GrpObj G] [IsCommMonObj G] (P : CP G) (hS : IsSemiAbelian G)
     (hW : HypW G P.L.L) (hsp : SplitOver G I) (A : PolAV (Sp (FractionRing R)))

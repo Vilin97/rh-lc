@@ -189,6 +189,7 @@ lemma smooth_of_grpObj_of_flat (Q : Over S) [GrpObj Q] [Flat Q.hom]
 end AbelianQuotient
 
 
+open AbelianQuotient in
 theorem quotient_isAbelianScheme_of_quotientScheme :
     (∀ (X S : Scheme.{0}) (f : X ⟶ S), Smooth f → GeometricallyConnected f →
       GeometricallyIntegral f) →

@@ -23,6 +23,7 @@ namespace CurveVerticalPointResidue
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
+omit [Fintype K] in
 theorem isMultiHomog_sub' {f g : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) (hg : IsMultiHomog g a) :
     IsMultiHomog (f - g) a := by
   classical
@@ -32,6 +33,7 @@ theorem isMultiHomog_sub' {f g : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f 
   · exact hg m h k
 
 
+omit [Fintype K] in
 theorem isMultiHomog_add' {f g : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) (hg : IsMultiHomog g a) :
     IsMultiHomog (f + g) a := by
   classical
@@ -41,6 +43,7 @@ theorem isMultiHomog_add' {f g : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f 
   · exact hg m h k
 
 
+omit [Fintype K] in
 theorem isMultiHomog_C' (a : ℤ) : IsMultiHomog (C a : MRing ι) 0 := by
   classical
   intro m hm k
@@ -122,6 +125,7 @@ theorem aeval_div {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, �
 end CurveVerticalPointResidue
 
 
+open CurveVerticalPointResidue in
 theorem CurveVertPointResidue.proof (hC : CurveClosedPointChart.Statement) :
     CurveVertPointResidue.Statement := by
   intro K _ ι _ Ω _ y s d hP hs hsP W hW

@@ -23,6 +23,7 @@ namespace DegZeroLocResidue
 variable {F : Type u} [Field F] {K : Type} [DecidableEq K] {ι : K → Type}
 
 
+omit [DecidableEq K] in
 theorem fr_ne_zero (Q : Ideal (MRing ι F)) [Q.IsPrime] {h : MRing ι F} (hh : h ∉ Q) :
     fr Q h ≠ 0 := by
   rwa [Ne, IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
@@ -30,6 +31,7 @@ theorem fr_ne_zero (Q : Ideal (MRing ι F)) [Q.IsPrime] {h : MRing ι F} (hh : h
 variable {P W : Ideal (MRing ι F)} [P.IsPrime] [W.IsPrime]
 
 
+omit [DecidableEq K] in
 theorem residue_eq (hPW : P ≤ W) {f g f' g' : MRing ι F} (hg : g ∉ W) (hg' : g' ∉ W)
     (h : fr P f / fr P g = fr P f' / fr P g') : fr W f / fr W g = fr W f' / fr W g' := by
   rw [div_eq_div_iff (fr_ne_zero P fun h => hg (hPW h)) (fr_ne_zero P fun h => hg' (hPW h)),
@@ -44,6 +46,7 @@ def res (x : FractionRing (MRing ι F ⧸ P)) : FractionRing (MRing ι F ⧸ W) 
     fr W h.choose.1 / fr W h.choose.2 else 0
 
 
+omit [DecidableEq K] in
 theorem res_eq (hPW : P ≤ W) {x : FractionRing (MRing ι F ⧸ P)} {f g : MRing ι F} (hg : g ∉ W)
     (hx : x = fr P f / fr P g) : res P W x = fr W f / fr W g := by
   have h : ∃ fg : MRing ι F × MRing ι F, fg.2 ∉ W ∧ x = fr P fg.1 / fr P fg.2 := ⟨(f, g), hg, hx⟩

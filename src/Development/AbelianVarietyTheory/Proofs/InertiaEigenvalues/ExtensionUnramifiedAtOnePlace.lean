@@ -93,6 +93,7 @@ theorem adjoin_gen_eq_top (E : Type) [Field E] [Algebra E Ω] (β : Ω) (hβ : I
   rfl
 
 
+open IntermediateField in
 theorem core {E : Type} [Field E] [NumberField E] [Algebra E Ω] [IsAlgClosure E Ω] {g : ℕ} [Fact g.Prime]
     {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} (h : IsPlaceOver A w)
     (hg1 : ((g : ℕ) : 𝓞 E) ∈ w.asIdeal) (hg2 : ((g : ℕ) : 𝓞 E) ∉ w.asIdeal ^ 2) (hN : normV w = g)

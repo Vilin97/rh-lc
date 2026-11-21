@@ -22,6 +22,7 @@ namespace GlobalTheory.DeRham
 open GlobalTheory.Published GlobalTheory.Published.AbelianDeRham
 
 
+set_option maxHeartbeats 1000000 in
 theorem IsKSValue.exists_of_isAbelianScheme_ring (P : AbelianDeRham) {K : Type} [CommRing K] {A : Over (Sp K)} [GrpObj A]
     {A' : Over (Sp (DualNumber K))} [GrpObj A'] {i : A.left ⟶ A'.left}
     (h : IsGrpPullback A A' (epsRed K) i) {g : ℕ} (hA : Semi.IsAbelianScheme A')

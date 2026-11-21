@@ -69,6 +69,7 @@ theorem conj_unipU {U : Submodule E (Fin d → E)} {γ m : UA σ W.J} (hγ : γ 
     exact Submodule.subset_span ⟨u', a, b.symm⟩
 
 
+variable (σ W) in
 def stab (x : Fin d → E) : Subgroup (UA σ W.J) where
   carrier := {u | mat u *ᵥ incV F x = incV F x}
   one_mem' := Matrix.one_mulVec _

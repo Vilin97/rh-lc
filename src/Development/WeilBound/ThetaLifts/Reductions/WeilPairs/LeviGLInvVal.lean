@@ -207,6 +207,8 @@ theorem leviGL_map {R' : Type} [CommRing R'] (φ : R →+* R') (c : R →+* R) (
 end PositivityTheory.ThKW.LeviParabolicGL
 
 
+set_option maxHeartbeats 800000 in
+open PositivityTheory.ThKW.LeviParabolicGL in
 theorem PositivityTheory.ThKW.PhaseFourierInjectivity.levi : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E),
     B.IsGood σ → ∀ (nT : ℕ) (JT : Matrix (Fin nT) (Fin nT) E), IsHermND σ JT →
     ∃ m : GL (Fin nT) (AF F ⊗[F] E) →* GAF σ (GlobalTheory.WeilSchrodinger.DblTargetF.dblG JT), Continuous m ∧

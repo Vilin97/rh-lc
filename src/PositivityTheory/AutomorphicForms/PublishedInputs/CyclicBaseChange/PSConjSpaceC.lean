@@ -581,6 +581,7 @@ end Pull
 end UpperTheory.CBC.SConjSpaceCAux
 
 
+open UpperTheory.CBC.SConjSpaceCAux in
 theorem UpperTheory.CBC.SConjSpaceC_holds : UpperTheory.CBC.SConjSpaceC := by
   intro M _ _ _ σ s hs n P
   obtain ⟨d, rfl, rfl⟩ := exists_GD σ s hs

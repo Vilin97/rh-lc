@@ -56,6 +56,7 @@ variable (K) (S : Set (HeightOneSpectrum (𝓞 K.1))) (ℓ : ℕ) (hℓ : ℓ.Pr
   (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
 
 
+include hℓ hS in
 theorem exists_nsmul_eq_localPrimaryKernel (hK : ℓ ≠ 2 ∨ IsTotallyComplex K.1)
     (t : localPrimaryKernel K S ℓ) : ∃ s : localPrimaryKernel K S ℓ, ℓ • s = t := by
   classical
@@ -107,6 +108,8 @@ theorem exists_nsmul_eq_localPrimaryKernel (hK : ℓ ≠ 2 ∨ IsTotallyComplex 
     rw [AddEquiv.apply_symm_apply, sub_self]
 
 
+set_option maxHeartbeats 1000000 in
+include hℓ hS in
 theorem exists_nsmul_eq_h2SUnits (hK : ℓ ≠ 2 ∨ IsTotallyComplex K.1)
     (y : AddCommGroup.primaryComponent (cohomology (galSUnitsMax K.1 ℚ̄ S) 2) ℓ) :
     ∃ z : AddCommGroup.primaryComponent (cohomology (galSUnitsMax K.1 ℚ̄ S) 2) ℓ, ℓ • z = y := by

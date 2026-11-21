@@ -20,6 +20,8 @@ noncomputable section
 universe u
 
 
+open Classical in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem SemilocalLength.proof (h1 : SemilocalLengthSum.Statement.{u})
     (h2 : FibreRelDim.Statement.{u}) (h3 : DivCycleMinimal.Statement.{u})
     (h4 : ConeLocalLength.Statement.{u}) : SemilocalLength.Statement.{u} := by

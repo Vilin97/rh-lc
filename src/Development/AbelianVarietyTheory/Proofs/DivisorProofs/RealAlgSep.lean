@@ -37,6 +37,7 @@ theorem span_mul (hadd : ∀ (a b : B) (x : X), χ (a + b) x = χ a x * χ b x)
     exact Submodule.smul_mem _ c hu
 
 
+omit [AddCommGroup B] in
 theorem span_bdd (hn : ∀ (a : B) (x : X), ‖χ a x‖ = 1)
     {f : X → ℂ} (hf : f ∈ Submodule.span ℂ (Set.range χ)) : ∃ M : ℝ, ∀ x, ‖f x‖ ≤ M := by
   induction hf using Submodule.span_induction with

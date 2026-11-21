@@ -120,6 +120,7 @@ def IsMumfordOf [IsLocalRing R] (ξ : Sp R ⟶ S) (Q : Data R) : Prop :=
 
 
 
+variable {F j e} in
 theorem IsMumfordOf.unif [IsLocalRing R] {ξ : Sp R ⟶ S} {Q : Data R} (h : IsMumfordOf F j e ξ Q) :
   ∀ (R' : Type) [CommRing R'] [IsDomain R'] [IsLocalRing R'] (ρ : R →+* R'), IsCN R' → Function.Injective ρ → ρ.Finite →
     ∀ (D : DegData R' (maximalIdeal R')) (ε : D.toPre.X ≃+ Q.X), Refines Q ρ D.toPre ε →
@@ -228,6 +229,7 @@ theorem refines_ofDeg (D : DegPre R) (hB : D.TauBimult) : Refines (ofDeg D hB) (
     exact prod_neg_lamPts _ _ (fun q => gm q z _ (D.P.L.g (J q) (J' q)))
 
 
+open InhTate in
 def tate (k : ℤ) : Data InhTate.R where
   B := P0.A
   comm := P0.isAb.comm
@@ -252,6 +254,7 @@ def tate (k : ℤ) : Data InhTate.R where
 
 
 
+open InhTate in
 theorem not_isPos_tate_zero : ¬ (tate 0).IsPos (maximalIdeal (PowerSeries ℚ)) := fun h => by
   obtain ⟨r, hr, k, hk, u, -, hu⟩ := h (1 : ℤ) (one_ne_zero (α := ℤ))
   let J : ((TK InhTate.R).left ⟶ (tate 0).B.left) → (tate 0).M.L.ι := fun _ => PUnit.unit

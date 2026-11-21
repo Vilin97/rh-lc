@@ -100,6 +100,7 @@ def rowv (M : Matrix (Fin n) (Fin n) 𝒪[k]) (i : Fin n) : Lt G (G.bl i) → �
     (M.submatrix (Subtype.val : Lt G (G.bl i) → Fin n) Subtype.val)⁻¹)
 
 
+variable (G) in
 def Wm (M : Matrix (Fin n) (Fin n) 𝒪[k]) : Matrix (Fin n) (Fin n) 𝒪[k] :=
   Matrix.of fun i l => if h : G.bl l < G.bl i then rowv M i ⟨l, h⟩ else (1 : Matrix (Fin n) (Fin n) 𝒪[k]) i l
 

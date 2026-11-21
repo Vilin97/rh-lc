@@ -120,6 +120,7 @@ noncomputable def twistEquiv {q : ℕ} [NeZero q] {X : Scheme.{0}} (ζ : Prim q 
 end GlobalTheory.EtC.Untwist
 
 
+open GlobalTheory.EtC.Untwist in
 theorem GlobalTheory.EtC.untwist : ∀ (q : ℕ) [NeZero q] (A : Type) [CommRing A], IsUnit (q : A) →
     (∃ ζ : A, Polynomial.aeval ζ (Polynomial.cyclotomic q ℤ) = 0) → ∀ n i j : ℤ, Nonempty (Ht q (sp A) n i ≃+ Ht q (sp A) n j) := by
   intro q _ A _ hq ⟨z, hz⟩ n i j

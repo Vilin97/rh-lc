@@ -26,6 +26,8 @@ namespace GlobalTheory.LevelMoveShort
 open GlobalTheory.TraceLattice
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem isShortRule_mv {D : D7} (T : Full D) (hT : LawsFull T) {j : ℕ} (hj : InR D j) (hxi : TwistTrivialOnRational T j)
     {w : WeightFamilies.Wt D j} {n : ℕ} (hn : w.n = n) (hnV : n = D.R.nV)
     {γ : LaMod (T.Q.Dw j) T.Q.l ≃ₗ[𝓞 D.host.E] LaMod (T.Q.Dw j) T.Q.l} (hγ : DetOne γ)

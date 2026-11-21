@@ -56,6 +56,7 @@ theorem lineLat_smul {D : D7} (L : HSp D) (I : FractionalIdeal (𝓞 D.host.E)�
 end GlobalTheory.ZLineIdeal
 
 
+open GlobalTheory.SeeSaw in
 theorem GlobalTheory.ZLineIdeal.bessel_core_lattice_meets_line_of_z_ideal : OnStd fun {D} _ _ {sc} {G} _ F => ∀ ρ (h : 2 * ρ + 2 ≤ D.R.m) (v : GlobalTheory.FinPl.Pl D), GlobalTheory.SeeSaw.LineId (F.oB ρ h) (F.ζ (ρ + 1)) (lat0 F ρ h) (FractionalIdeal.spanSingleton _ ((-D.host.xi0) ^ (ρ + 1))⁻¹ * (G.pl.stA sc ^ (ρ + 1) * (G.pl.stAbar sc ^ (ρ + 1))⁻¹)) v := by
   have H0 := @GlobalTheory.T.grid_lattices_compact_selfDual_splitting
   unfold OnStd All at H0 ⊢

@@ -264,6 +264,7 @@ theorem aPlus_smul_dir (e : Bool) (c : ℂ) (z : Matrix (Fin T.rank) (Fin S.rank
     linear_combination (k * (c.im : ℂ) * B) * Complex.I_sq + (k * (A - Complex.I * B)) * hre
 
 
+open GlobalTheory.FockIndep GlobalTheory.OrientedHeis Complex in
 theorem aPlus_comm_at (hS : IsCartanInv (gramAt D S τ) sS) (hT : IsCartanInv (gramAt D T τ) sT)
     (z z' : Matrix (Fin T.rank) (Fin S.rank) ℂ) :
     Datum.aPlus (heisO ψ S T) θ τ (cplxO sS sT) z (Datum.aPlus (heisO ψ S T) θ τ (cplxO sS sT) z' f) =

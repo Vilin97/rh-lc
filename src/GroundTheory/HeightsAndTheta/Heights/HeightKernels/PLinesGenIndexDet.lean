@@ -18,6 +18,7 @@ theorem span_basis_isLattice {V : Type} [AddCommGroup V] [Module ℚ V] {ι : Ty
 end KLinesGenIndexDet
 
 
+open KLinesGenIndexDet in
 theorem LinesGenIndexDet.proof (h1 : LinesLatticeBasis.Statement) : LinesGenIndexDet.Statement := by
   intro V _ _ _ ι _ _ bA bB A B hA hB
   set MA := Submodule.span ℤ (Set.range bA)

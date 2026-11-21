@@ -196,6 +196,7 @@ theorem chi_gam_pow_ne_one {l : ℕ} [Fact l.Prime] {P : LocPrime l} {K : FinExt
   omega
 
 
+set_option maxHeartbeats 1000000 in
 theorem nonempty_cmpS : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P), LocTied l P AI →
     ∀ (K : FinExt l) (s : ℕ) (LL : FinExt l), Good K s LL → ∀ (Γ : GamS P K s LL) (R : WSer Γ) (I : IoS AI R),
     IoW I → ∀ (E : WEt I) (Mo : NS E), Nonempty (CmpS Mo) := by

@@ -14,6 +14,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo IsLocalRing
 noncomputable section
 
 
+set_option maxHeartbeats 400000 in
 theorem regularityLocalFlat_holds.proof : regularityLocalFlat_holds.Statement := by
   intro K _ ι _ P W hP hW hPW
   have := hP.1

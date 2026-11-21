@@ -17,6 +17,7 @@ noncomputable section
 namespace RankDeficientFibreInfinite
 
 
+open HolomorphicFibreInfinite in
 theorem proof : RankDeficientFibreInfinite.Statement := by
   intro k d U f hU hUne hf hinj
   classical

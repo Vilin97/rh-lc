@@ -105,6 +105,7 @@ def VecAtNeZero.Statement (v : Basis ι E W) : Prop :=
   ∀ x : W, x ≠ 0 → ∀ w : InfinitePlace E, vecAt v x w ≠ 0
 
 
+variable (E) in
 def IntegerSmallAtPlaces.Statement : Prop :=
   ∀ a ∈ integralClosure ℤ E, (∀ w : InfinitePlace E, w a < 1) → a = 0
 
@@ -116,6 +117,7 @@ variable {E : Type*} [Field E] [NumberField E]
 variable {W : Type*} [AddCommGroup W] [Module E W]
 
 
+variable (E) in
 def intSubgroup : AddSubgroup E := (algebraMap (𝓞 E) E).toAddMonoidHom.range
 
 def lineCoeffs (La : AddSubgroup W) (x : W) : AddSubgroup E :=
@@ -133,11 +135,13 @@ def weightedEmbed (c : InfinitePlace E → ℝ) : E →+ EuclideanSpace ℝ (Inf
     split_ifs <;> ring
 
 
+variable (W) in
 def LineIndexCoeffs.Statement : Prop :=
   ∀ (La : AddSubgroup W) (x : W), x ≠ 0 →
     lineIndex E La x = (intSubgroup E).relIndex (lineCoeffs La x)
 
 
+variable (W) in
 def LineCoeffsFG.Statement : Prop :=
   ∀ (La : AddSubgroup W) (x : W), La.FG → x ≠ 0 → (lineCoeffs (E := E) La x).FG
 

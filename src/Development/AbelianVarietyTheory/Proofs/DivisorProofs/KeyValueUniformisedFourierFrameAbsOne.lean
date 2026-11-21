@@ -112,6 +112,7 @@ end GlobalTheory.MBLow.KapFPf
 namespace GlobalTheory.MBLow.KapFPf
 
 
+set_option maxHeartbeats 4000000 in
 theorem kapF_of_rule4 : ∀ κ : Rule, Rule4 κ → KapF κ := by
   intro κ hR4
   obtain ⟨hHom, hFun, hTh1, hFamU⟩ := id hR4

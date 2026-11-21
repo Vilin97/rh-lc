@@ -306,6 +306,7 @@ theorem frame_eq : LL → AllUV fun {V} _ _ _ {ϖ} hϖ {D} Q {F} _ _ {v} hv {A} 
   exact Units.ext this.symm
 
 
+attribute [local instance] TorusExt.gtGroup in
 theorem value_at_torsion : LL → TwistBCSpanStatement → TWM.VRatioGtStatement → TWStatement → UUStatement → AllUV fun {V} _ _ _ {ϖ} hϖ {D} Q {F} _ _ {v} hv {A} {G} _ _ U => ∀ w₀ ρ, NormW U.toUnifPre w₀ ρ → ∀ (n : ℕ), 1 ≤ n → ∀ (p : QkPt D.toPre F n) x, QkToAkU U.toUnifPre F n p x → ∀ e, IsTorsFrame A ρ n x e → ∃ w₁ : Frm D.toPre F 1 p.g.b, w₁.IsGen ∧ GenV hϖ hv w₁ ((Q p.y : ℚ) / (n : ℚ) ^ 2) ∧ ∀ (k : ℕ), 1 ≤ k → ∀ w : Frm D.toPre F k p.g.b, (w.IsGen ∧ ∀ z J, Good D.toPre.P.L z J → val w (𝟙 _) z J = val w₁ (𝟙 _) z J ^ k) → ∀ (t : SecA A F k) s (c : F), U.ExpandsF F k w₀ t s → (∀ z J, Good A.L z J → sA t (ptSecT A.A x).left z J = @id ((TFK (R := V) F).left.presheaf.stalk z) (cst (R := V) F z c) * (val (powFrame A.A A.L x e k) (𝟙 _) z J).val) → SumV v (coef s p.g w) c := by
   intro hL hT hVR hTW hUU V _ _ _ _ hcpl ϖ hϖ D Q hQ F _ _ _ v hv A G _ _ hG U w₀ ρ hN n hn p x hx e he
   have hA : AdmBase V (maximalIdeal V) := ⟨inferInstance, inferInstance, inferInstance, hcpl⟩

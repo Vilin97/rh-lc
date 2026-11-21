@@ -64,6 +64,7 @@ def InUse (R : RealDat D A Ks) (t : T) : Prop := t = A.μ0 ∨ ∃ w, R.mu w = t
 abbrev useFam (R : RealDat D A Ks) : FamIn D.what₂.LL G Pl0 {t // InUse R t} D.R.m := subFam A (InUse R) (Or.inl rfl)
 
 
+set_option maxHeartbeats 2000000 in
 def useReal (R : RealDat D A Ks) : RealDat D (useFam R) Ks where
   toLevCh := subLev R.toLevCh (InUse R)
   hv0 := R.hv0
@@ -166,6 +167,7 @@ variable {R : RealDat D A Ks} {F : Face D A}
 
 
 
+set_option maxHeartbeats 2000000 in
 def useSide {tup : T → D.what₂.Tup} {b : Bool} {EE : Type} [NormedAddCommGroup EE] [InnerProductSpace ℂ EE]
     [FiniteDimensional ℂ EE] {S : RowSide D EE} (Y : SideTie R F tup b S) :
     SideTie (useReal R) (useFace R F) (fun t => tup t.1) b S where
@@ -180,6 +182,7 @@ def useSide {tup : T → D.what₂.Tup} {b : Bool} {EE : Type} [NormedAddCommGro
   lat_tie t := Y.lat_tie t.1
 
 
+set_option maxHeartbeats 2000000 in
 def useTie {X0 : BaseLevelRowSide D} (Y : RowsTie R F X0) : RowsTie (useReal R) (useFace R F) X0 where
   tup t := Y.tup t.1
   tup_inj _ _ e := Subtype.ext (Y.tup_inj e)
@@ -266,6 +269,9 @@ def eigOf {X0 : BaseLevelRowSide D} (Y : RowsTie R F X0) (X : DivX D) : EigIdx D
 end Metric
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
+set_option maxHeartbeats 4000000 in
 structure RowT (D : D7) (fr : CharFrame D) (xi : D.what₂.Tup → HChar D.host.E) : Type 1 where
 
   G : Type

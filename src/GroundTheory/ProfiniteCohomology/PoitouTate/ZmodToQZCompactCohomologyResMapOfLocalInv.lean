@@ -84,6 +84,7 @@ variable {n : ℕ} [NeZero n] (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((n : 
   (hK : Odd n ∨ IsTotallyComplex K.1)
 
 
+include hS hK in
 theorem subsingleton_cohomology_gs_of_nsmul (M : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S))
     [IsDiscreteRep M] (hM : ∀ m : M, n • m = 0) {r : ℕ} (hr : 3 ≤ r) :
     Subsingleton (cohomology M r) :=
@@ -91,6 +92,7 @@ theorem subsingleton_cohomology_gs_of_nsmul (M : Rep.{0} (ULift.{0} ℤ) (galUnr
     (fun _ hℓ hℓn => cdp_galUnramifiedOutside_le_two_of_dvd K S (NeZero.ne n) hS hK hℓ hℓn) M hM hr
 
 
+include hS hK in
 theorem finite_cohomology_gs_of_nsmul [Finite S]
     (M : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S)) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) (r : ℕ) : Finite (cohomology M r) := by
@@ -101,6 +103,7 @@ theorem finite_cohomology_gs_of_nsmul [Finite S]
     exact Finite.of_subsingleton
 
 
+include hS hK in
 theorem finite_compactCohomologyRes_gs_of_nsmul [Finite S]
     (M : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S)) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) (r : ℕ) : Finite (compactCohomologyRes (gsFinFamily S ιs) M r) := by
@@ -108,6 +111,7 @@ theorem finite_compactCohomologyRes_gs_of_nsmul [Finite S]
   exact finite_compactCohomologyRes_gs_of_finite K S ιs M r
 
 
+include hS in
 theorem nonempty_addEquiv_gsRoots_of_mem : Nonempty (gsRoots S n ≃+ ZMod n) := by
   have hcard : Nat.card (rootsOfUnity n (maxUnramifiedOutside K.1 ℚ̄ S)) = Nat.card (Multiplicative (ZMod n)) := by
     rw [card_rootsOfUnity_maxUnramifiedOutside K S n (NeZero.ne n) (fun v hv h => hv (hS v h)),
@@ -115,12 +119,14 @@ theorem nonempty_addEquiv_gsRoots_of_mem : Nonempty (gsRoots S n ≃+ ZMod n) :=
   exact ⟨MulEquiv.toAdditive (mulEquivOfCyclicCardEq hcard)⟩
 
 
+include hS hK in
 theorem subsingleton_cohomology_three_gsRoots : Subsingleton (cohomology (gsRoots S n) 3) :=
   subsingleton_cohomology_gs_of_nsmul S hS hK _ (nsmul_gsRoots S n) le_rfl
 
 variable [Fintype S]
 
 
+set_option maxHeartbeats 1600000 in
 theorem zmodToQZ_gsCompactInv_localToCompact (h3 : Subsingleton (cohomology (gsRoots S n) 3))
     (ξ : ∀ v : S, cohomology (Rep.res (gsFinFamily S ιs v).toMonoidHom (gsRoots S n)) 2) :
     zmodToQZ n (gsCompactInv S ιs n hK h3
@@ -186,6 +192,7 @@ variable {N : ℕ} (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((N : ℕ) : 𝓞
   (hK : Odd N ∨ IsTotallyComplex K.1)
 
 
+include hS in
 theorem mem_of_natCast_dvd_mem {d : ℕ} (hd : d ∣ N) (v : HeightOneSpectrum (𝓞 K.1))
     (hv : ((d : ℕ) : 𝓞 K.1) ∈ v.asIdeal) : v ∈ S := by
   obtain ⟨c, rfl⟩ := hd
@@ -194,6 +201,7 @@ theorem mem_of_natCast_dvd_mem {d : ℕ} (hd : d ∣ N) (v : HeightOneSpectrum (
   exact v.asIdeal.mul_mem_right _ hv
 
 
+include hK in
 theorem odd_or_isTotallyComplex_of_dvd {d : ℕ} (hd : d ∣ N) : Odd d ∨ IsTotallyComplex K.1 :=
   hK.imp (fun ho => ho.of_dvd_nat hd) id
 

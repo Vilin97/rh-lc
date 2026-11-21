@@ -171,6 +171,7 @@ theorem update_mem (τ : D.what₂.Tau) {g : Matrix (Fin V.rank) (Fin V.rank) �
     exact GlobalTheory.PointAtPlaceHom.one_mem_UH _
 
 
+open Classical in
 theorem exists_it (k : Fin D.R.m) (hk : (k : ℕ) + 1 = D.R.m) (a : ℕ) (ha : a = k) (hV : V.SigOK) (hW : W.SigOK)
     (rV : V.rank = D.R.r + k * D.R.t) (rW : W.rank = V.rank + D.R.t)
     (M : DSModel V (parB (Ptw D) a)) (M' : DSModel W (parB (Ptw D) D.R.m)) (θ : InfFam D) (hθ : IsInfFam θ)

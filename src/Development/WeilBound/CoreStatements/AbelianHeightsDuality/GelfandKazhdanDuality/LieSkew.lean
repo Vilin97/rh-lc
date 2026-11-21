@@ -27,6 +27,7 @@ theorem expG_zero (X : Lie E a) : expG X 0 = 1 := by
   simp
 
 
+open scoped Matrix.Norms.Operator in
 theorem hasDerivAt_toL_exp (X : Lie E a) (t : ℝ) :
     HasDerivAt (fun s : ℝ => toL (NormedSpace.exp (s • Matrix.of X))) (rmul X (toL (NormedSpace.exp (t • Matrix.of X)))) t := by
   let L : Matrix (Fin a) (Fin a) (Cinf E) →L[ℝ] Lie E a :=

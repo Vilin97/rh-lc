@@ -93,6 +93,8 @@ def Fired (ph : Fin D.R.m → ℂ) : Prop :=
 end Forms
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
 structure GeoHalf (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F) (ph : Fin D.R.m → ℂ) : Type 1 where
   κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)
   v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec

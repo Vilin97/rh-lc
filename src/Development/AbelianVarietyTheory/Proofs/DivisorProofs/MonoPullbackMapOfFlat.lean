@@ -64,6 +64,7 @@ def sky : X.Modules where
   isSheaf := skyPresheaf_isSheaf x M
 
 
+variable {x} in
 def skyPresheafMap {M N : ModuleCat.{u} (X.presheaf.stalk x)} (g : M ⟶ N) :
     skyPresheaf x M ⟶ skyPresheaf x N where
   app U := AddCommGrpCat.ofHom
@@ -174,6 +175,7 @@ end GlobalTheory.SkyMod
 theorem GlobalTheory.SkyMod.nonempty_adjunction : ∀ (X : Scheme.{0}) (x : X), Nonempty (GlobalTheory.SkyMod.stalkFunctor x ⊣ GlobalTheory.SkyMod.skyFunctor x) := fun _ x ↦ ⟨GlobalTheory.SkyMod.adjunction x⟩
 
 
+open GlobalTheory.SkyMod in
 theorem GlobalTheory.SkyMod.nonempty_sky_pushforward_iso : ∀ (X Y : Scheme.{0}) (f : X ⟶ Y) (x : X), Nonempty (GlobalTheory.SkyMod.skyFunctor x ⋙ Scheme.Modules.pushforward f ≅ ModuleCat.restrictScalars (f.stalkMap x).hom ⋙ GlobalTheory.SkyMod.skyFunctor (f x)) := by
   intro X Y f x
   have key : ∀ (M : ModuleCat.{0} (X.presheaf.stalk x)) (U : Y.Opens) (r : Γ(Y, U))
@@ -187,6 +189,7 @@ theorem GlobalTheory.SkyMod.nonempty_sky_pushforward_iso : ∀ (X Y : Scheme.{0}
     rfl, rfl⟩) (fun g ↦ rfl)⟩
 
 
+open GlobalTheory.SkyMod in
 theorem GlobalTheory.mono_pullback_map_of_flat : ∀ (X Y : Scheme.{0}) (f : X ⟶ Y) [Flat f] (G G' : Y.Modules)
     (φ : G ⟶ G') [Mono φ], Mono ((Scheme.Modules.pullback f).map φ) := by
   intro X Y f _ G G' φ _

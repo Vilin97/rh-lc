@@ -154,6 +154,7 @@ theorem root_conj {z z' : Fin (2 * r + k + 1) → ℂ} (hz : inWb k r z) (hz' : 
 end jacobian
 
 
+open BranchingSupport GlobalTheory.CellAmp GlobalTheory.Amp Formalism.BasicNotions GlobalTheory.CellRed in
 theorem amp_at_root (D : D7) τ w w' θ (W : LocW D.R.k D.R.rS) (hW : GoodW D τ w w' θ W)
     (lam : Fin (2 * D.R.rS + D.R.k + 1) → ℝ) (A : LocS W) (hA : GoodS D lam A) (hT : 0 < Tr D w) (hT' : 0 < Tr D w')
     {γ p} (hp : RelPt D W.z W.z' γ p) {θ' : ℝ} (hθ' : 0 < θ') {νR} (hν : RMeas D W γ θ' νR) :

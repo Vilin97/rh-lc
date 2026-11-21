@@ -127,6 +127,7 @@ theorem exists_lifts {F G : X.Modules} (φ : F ⟶ G) [Epi φ] {κ : Type} [Fint
   rw [app_resM, ht, resM_resM]
 
 
+variable (S r s) in
 structure AdaptedChart where
 
   U : X.Opens

@@ -33,6 +33,7 @@ section
 variable {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z : Later B (I.cols l))
 
 
+set_option maxHeartbeats 4000000 in
 structure TwStep (H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)) (F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u))
     (Q : Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (u : B.Word) (a : I.ι) (i : ℕ) where
   Ch : Type
@@ -249,6 +250,7 @@ theorem twStep_top (hok : I.Ok) (pins : TC.Pins B X) {H : Formalism.L2.Herm.Herm
       exact ⟨k1, hR1, hk1⟩
 
 
+set_option maxHeartbeats 8000000 in
 structure TwPack (H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)) (F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u))
     (Q : Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (u : B.Word) (a : I.ι) where
   St : ∀ i, TwStep I l Z H F Q u a i
@@ -337,6 +339,7 @@ def stab0Equiv (u : B.Word) (a : I.ι) (c : (I.stp u I.mu0 0).Cl) (c' : (I.stp u
     map_mul' := fun _ _ => Subsingleton.elim _ _ }
 
 
+set_option maxHeartbeats 4000000 in
 def twT {H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)} {F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)}
     {inQ : I.ι → HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F) → Prop}
     (Q : I.ι → Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (hQ : ∀ a v, v ∈ Q a ↔ inQ a v)
@@ -382,6 +385,7 @@ def twT {H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)} {F : ∀ u, FormsTiedSym
   DGam_one _ _ := rfl
 
 
+set_option maxHeartbeats 4000000 in
 def twJ {H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)} {F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)}
     {inQ : I.ι → HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F) → Prop}
     (Q : I.ι → Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (hQ : ∀ a v, v ∈ Q a ↔ inQ a v)
@@ -410,6 +414,7 @@ theorem idY_twYS {inQ : I.ι → HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F) �
   · exact (hF u).eYC i (by omega) (by omega) y
 
 
+set_option maxHeartbeats 8000000 in
 def twW (hok : I.Ok) (pins : TC.Pins B X) (l0 : I.Law0 l) {H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)}
     {F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)} (hF : ∀ u, I.StdF l Z u (F u))
     {inQ : I.ι → HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F) → Prop}
@@ -460,6 +465,7 @@ def twJS {H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)} {F : ∀ u, FormsTiedSy
 end
 
 
+set_option maxHeartbeats 8000000 in
 theorem tw_chains : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (l0 : I.Law0 l) (inQ : I.ι → HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F) → Prop) (H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)) (F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)), (∀ a v, inQ a v ↔ I.UnderQ a v) → (∀ u, I.StdF l Z u (F u) ∧ I.StdLvC l Z u (F u)) → CarH H F → (∀ u j v h, (F u).glevJ.fr j v h = 1) → ∃ (T : Formalism.L2.Herm.TwChTied (I.rec7 l Z) inQ) (J : Formalism.L2.Herm.TwChJointS T H) (W : TwFormsTiedS (I.rec7 l Z) (I.tw l l0 Z) T J F), Formalism.L2.Herm.TwChMu0 T ∧ I.StdW l Z l0 W ∧ Nonempty (SymmetricTwistedJointForms T F) := by
   intro B X I hok pins l Z l0 inQ H F hin hF hC hJ
   have hF' : ∀ u, I.StdF l Z u (F u) := fun u => (hF u).1

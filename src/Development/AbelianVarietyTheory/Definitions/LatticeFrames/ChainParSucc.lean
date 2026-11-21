@@ -30,6 +30,7 @@ structure Com (D : D7) where
   chi : ℕ → ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ
 
 
+open Classical in
 def Com.S (c : Com D) : Finset (HeightOneSpectrum (𝓞 D.host.F)) := c.Pg.image fun PP => PP.under (𝓞 D.host.F)
 
 def Com.chS (c : Com D) (j : ℕ) : (AE D)ˣ →* Circle := (Lift.chrStep c.μ c.η j).1

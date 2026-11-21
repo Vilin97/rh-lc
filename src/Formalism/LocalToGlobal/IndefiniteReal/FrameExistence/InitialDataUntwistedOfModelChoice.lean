@@ -79,6 +79,7 @@ structure BrgL (L : LevCh D T) (eG : G ≃* G0 L.Pg D.R.r) (cX : CoefA D.sp.X') 
 end Pieces
 
 
+variable (D) in
 def ModY : Prop :=
   (∀ j, Nonempty (DSModel (Yc D j) (parB (Ptw D) (min j D.R.m)))) ∧ Nonempty (DSModel D.sp.X' (parB (Ptw D) D.R.m))
 
@@ -86,6 +87,7 @@ def ModWAt (σ0 : D.what₂.LL →+* ℂ) (MW : ∀ i σ, DSModel (Wc D i) (parA
   ∀ i τ a, (MW i σ0).ε τ a = decide ((a : ℕ) < ((Wc D i).sig (tauE D τ)).1)
 
 
+variable (D) in
 def VPos : Prop := ∀ i, (Vc D i).IsPosDef
 
 section Junk

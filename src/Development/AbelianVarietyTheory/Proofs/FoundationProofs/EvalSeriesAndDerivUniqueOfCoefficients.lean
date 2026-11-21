@@ -16,6 +16,7 @@ namespace GlobalTheory.EvUniq
 variable {p : ℕ} [hp : Fact p.Prime] {Ω : Type} [Field Ω] [Algebra (O0 p) Ω]
 
 
+variable (Ω) in
 def zpHom : ℤ_[p] →+* Ω :=
   (algebraMap (O0 p) Ω).comp ((algebraMap (Lau p) (O0 p)).comp HahnSeries.C)
 

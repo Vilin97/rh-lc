@@ -24,6 +24,7 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
 include hnS
 
 
+set_option maxHeartbeats 1600000 in
 theorem bijective_gsRootsLocalMor_of_places (v : S) : Function.Bijective (gsRootsLocalMor S ιs n v).hom :=
   (exists_isPrimitiveRoot_maxUnramifiedOutside K S n (NeZero.ne n) hnS).elim fun _ hz =>
     Additive.ofMul.bijective.comp ((bijective_rootsOfUnityMapHom n
@@ -74,10 +75,14 @@ def GsPairingInput (n ℓ : ℕ) [NeZero n] : Prop :=
     (h3' : Subsingleton (cohomology (gsRoots S' n) 3)), GsPairingNondegenerate S' ιs' n hodd' h3'
 
 
+omit [Fintype S] [NeZero n] in
+include hnk hS in
 theorem natCast_not_mem_of_not_mem : ∀ v ∉ S, ((n : ℕ) : 𝓞 K.1) ∉ v.asIdeal :=
   fun v hv h => hv (mem_of_natCast_pow_mem S n ℓ k hnk hS v h)
 
 
+set_option maxHeartbeats 3200000 in
+include hℓ hnk hS in
 theorem gsBaseBijective_of_le (hP : GsPairingInput n ℓ)
     (hcores : ∀ U : OpenSubgroup (galUnramifiedOutside K.1 ℚ̄ S),
       Function.Surjective (compactCores (gsFinFamily S ιs) U (gsRoots S n) 3).hom)

@@ -12,6 +12,7 @@ open scoped UpperHalfPlane MatrixGroups ModularForm Manifold BigOperators
 namespace GlobalTheory.QFam
 
 
+open scoped UpperHalfPlane MatrixGroups ModularForm Manifold BigOperators in
 theorem _root_.GlobalTheory.QFam.HasQ.mdifferentiable {N : ℕ} {f : ℍ → ℂ} {a : ℕ → ℂ} (hN : 0 < N)
     (h : _root_.GlobalTheory.QFam.HasQ N f a) :
     MDifferentiable 𝓘(ℂ) 𝓘(ℂ) f := by
@@ -20,6 +21,7 @@ theorem _root_.GlobalTheory.QFam.HasQ.mdifferentiable {N : ℕ} {f : ℍ → ℂ
   exact ((_root_.GlobalTheory.QFam.hasQ_coeff_iff_hasQExpansion N f _).1 h').mdifferentiable (by exact_mod_cast hN)
 
 
+open scoped UpperHalfPlane MatrixGroups ModularForm Manifold BigOperators in
 theorem _root_.GlobalTheory.QFam.hasQ_mdifferentiable_and_isBoundedAtImInfty :
     ∀ (N : ℕ) (f : ℍ → ℂ) (a : ℕ → ℂ), 0 < N → _root_.GlobalTheory.QFam.HasQ N f a →
       MDifferentiable 𝓘(ℂ) 𝓘(ℂ) f ∧ UpperHalfPlane.IsBoundedAtImInfty f := by

@@ -54,6 +54,7 @@ theorem mem_grpOff_of_suppAt {k : Type} [Field k] [ValuativeRel k] [TopologicalS
 end GlobalTheory.SeeSaw.SepProd
 
 
+open GlobalTheory.SeeSaw.SepProd in
 theorem GlobalTheory.SeeSaw.SepProd.prod_sep : ∀ {D : D7} {c : Comm D} {v : VCom c} {n : ℕ} (G : Fin n → GLoc v), GPin G → ∀ (j' : ℕ) (xs : Fin n → GA D (c.V j')), (∀ i, SuppAt (G i).q.e (c.V j') (xs i)) → ∀ (i : Fin n), ∃ y ∈ grpOff (c.V j') (· = (G i).q.v), (List.ofFn xs).prod = xs i * y := by
   intro D c v n G hG j' xs hxs i
   refine ⟨(xs i)⁻¹ * (List.ofFn xs).prod, ?_, by rw [mul_inv_cancel_left]⟩

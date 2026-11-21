@@ -70,6 +70,7 @@ theorem redT_mem_BQ (L : Lattice (O := O) ρ) (I : Submodule O ↥L.T) (hI : Sta
   rfl
 
 
+omit [TopologicalSpace G] [TopologicalSpace V] [ContinuousAdd V] [ContinuousConstSMul LL V] in
 theorem exists_smul_mem [IsDomain O] [IsFractionRing O LL] (L : Lattice (O := O) ρ) (w : V) :
     ∃ b : O, b ≠ 0 ∧ b • w ∈ L.T := by
   first

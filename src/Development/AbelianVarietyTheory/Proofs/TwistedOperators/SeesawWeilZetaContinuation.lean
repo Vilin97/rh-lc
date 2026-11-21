@@ -65,6 +65,7 @@ theorem finPart_realAd_smul (D : D7) (t : ℝ) (y : AE D) :
   rw [Algebra.smul_def, map_mul, h0, zero_mul]
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_line (D : D7) (S X : HSp D) {d : ℕ} (e : Fin d ≃ Fin X.rank)
     (Bs : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Base D.host.F D.host.E) (hBs : Bs.IsGood D.sp.cm.sig)
     (Vs : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc D.host.F D.host.E S.rank) (Ws : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc D.host.F D.host.E d)

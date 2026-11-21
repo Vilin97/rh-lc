@@ -23,6 +23,7 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
   [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
 
+omit [StarRing K] in
 theorem exists_smul_mem {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.IsLattice K Λ) (v : V) :
     ∃ d : 𝓞 K, d ≠ 0 ∧ d • v ∈ Λ := by
   obtain ⟨s, _, b, hbv, hsL⟩ := dualLattice_basis (R := 𝓞 K) Λ hΛ.span_eq_top
@@ -43,6 +44,7 @@ theorem swap_zero {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) {x y : V} (
   rw [← hs.eq x y, H, map_zero]
 
 
+omit [NumberField K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 theorem mem_of_perp_perp {h : V →ₗ⋆[K] V →ₗ[K] K} (hn : h.Nondegenerate) (U : Submodule K V) (v : V)
     (H : ∀ y, (∀ u ∈ U, h u y = 0) → h v y = 0) : v ∈ U := by
   have : h v ∈ (U.map h).dualCoannihilator.dualAnnihilator := by

@@ -58,6 +58,7 @@ theorem exists_equiv {R L : Type} [CommRing R] [AddCommGroup L] [Module R L] [Mo
   exact hΘ D
 
 
+set_option maxHeartbeats 2000000 in
 theorem hasLogKS : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Geo.Tor.Level H) (Xo : Moduli Dw l) (c : Coeff l) (Y : Model Xo c (RingHom.id c.F)), 1 ≤ Dw.p + Dw.q → SmoothOfRelativeDimension Dw.dim (genStr Y) → ReciprocityTheory.AnForm.R.FinalTheorems.Snc (genBdIdeal Y) → (∀ x ∈ genBd Y, IsClosed ({x} : Set (gen Y)) → HasRigidChart Y x) → HasLogKS Y.t Y.s (interior Y) := by
   intro E _ _ _ H Dw l Xo c Y hr hsm hsnc hrig
   unfold HasLogKS

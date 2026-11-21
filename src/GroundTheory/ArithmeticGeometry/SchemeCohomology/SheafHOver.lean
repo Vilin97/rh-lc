@@ -85,6 +85,7 @@ section Const
 variable [HasSheafify (J.over U) AddCommGrpCat.{v}]
 
 
+omit [HasSheafify J AddCommGrpCat.{v}] in
 noncomputable def overConstHomAddEquiv (G : Sheaf (J.over U) AddCommGrpCat.{v}) :
     ((constantSheaf (J.over U) AddCommGrpCat.{v}).obj (AddCommGrpCat.of (ULift.{v} ℤ)) ⟶ G) ≃+
       G.obj.obj (op (Over.mk (𝟙 U))) :=
@@ -168,6 +169,7 @@ lemma overCohomologyMap_zero_bijective (F : Sheaf J AddCommGrpCat.{v}) :
   exact (AddEquiv.bijective _).comp (hΘ.comp (AddEquiv.bijective _))
 
 
+attribute [local instance] Ext.subsingleton_of_injective in
 theorem overCohomologyMap_bijective [EnoughInjectives (Sheaf J AddCommGrpCat.{v})] (n : ℕ) :
     ∀ F : Sheaf J AddCommGrpCat.{v}, Function.Bijective (overCohomologyMap J U F n) := by
   induction n with

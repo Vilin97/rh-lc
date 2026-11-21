@@ -142,6 +142,7 @@ end GlobalTheory.CompanionTheory.Ar.PB.Tele
 namespace GlobalTheory.CompanionTheory.Ar.PB
 
 
+open Tele in
 theorem num_sub_num : Inputs → ∀ (II : IntersectionSystem), IsFullIntersectionSystem II → ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (D : ℕ) (σ : Type) [Fintype σ] (S : AnSys D σ) (P : Ideal (MRing ι)) (Re : Realis S P) (t t' : ℝ) (w : Fin (D + 1) → σ), 0 < t → t ≤ S.t₀ → 0 < t' → t' ≤ S.t₀ → Re.num II t w - Re.num II t' w = ∑ r : Fin (D + 1), mInt S.A (fun i => S.potT (w (r.succAbove i)) (if r.succAbove i < r then t else t')) (fun x => S.phT (w r) t x - S.phT (w r) t' x) := by
   intro hIn II hII K _ ι _ D σ _ S P Re t t' w ht ht0 ht' ht'0
   have hF := hII.1

@@ -168,6 +168,7 @@ theorem bijective_smul_stalk
     simp only [germ_smul, TopCat.Presheaf.germ_res_apply]
 
 
+variable (s) in
 noncomputable def sectionHom :
     @Quiver.Hom (U : Scheme.{u}).Modules _ (SheafOfModules.unit (U : Scheme.{u}).ringCatSheaf)
       (F.restrict U.ι) :=
@@ -180,6 +181,7 @@ noncomputable def sectionHom :
         rfl))
 
 
+variable (s) in
 theorem sectionHom_app (W : (U : Scheme.{u}).Opens) (a : Γ(X, U.ι ''ᵁ W)) :
     ((sectionHom (s := s)).app W a : Γ(F, U.ι ''ᵁ W)) =
       a • F.presheaf.map (homOfLE (U.ι_image_le W)).op s := by

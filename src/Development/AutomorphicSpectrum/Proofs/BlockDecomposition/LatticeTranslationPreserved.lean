@@ -143,6 +143,7 @@ def tEquiv (a b c d : Mx D p p)
     · exact cont_add ((cont_rmul _).comp continuous_fst) ((cont_rmul _).comp continuous_snd)
 
 
+set_option maxHeartbeats 1000000 in
 theorem emb_conj (M : Maps D hn) (g : G D p) {a b c d : Mx D p p} (hg : mat g = blk4 a b c d)
     (z' : hermA D ρ) (x y x' y' : Mx D ρ p)
     (h1 : y' ⬝ a + x' ⬝ c = y) (h2 : y' ⬝ b + x' ⬝ d = x)

@@ -60,6 +60,7 @@ theorem continuous_adAt_atTau (hθ : IsInfFam θ) (hκ : Continuous κ)
     (continuous_infMat_atTau hθ hκ hU τ')
 
 
+variable (θ V τ κ) in
 def famSpan (𝒟 : Set (GA D V → ℂ)) : Submodule ℂ (K → GA D V → ℂ) :=
   Submodule.span ℂ {F | ∃ c : K → ℂ, Continuous c ∧ ∃ ψ ∈ 𝒟, F = fun k x => c k * ψ (x * atTau θ V τ (κ k))}
 
@@ -162,6 +163,7 @@ theorem famSpan_Rder : ∀ F ∈ famSpan θ V τ κ 𝒟, ∀ τ', ∀ X ∈ lie
 end Der
 
 
+variable (θ V) in
 def growN (N : ℕ) : Set (GA D V → ℂ) :=
   {ψ | IsAutFunSm θ V ψ ∧ ∀ l : List (D.what₂.Tau × Matrix (Fin V.rank) (Fin V.rank) ℂ), (∀ p ∈ l, p.2 ∈ lieAt V p.1) →
     ∀ x, ∃ C, ∀ g ∈ GinfC V, ‖l.foldr (fun p f => Rder θ V p.1 p.2 f) ψ (x * g)‖ ≤ C * normInf θ V g ^ N}

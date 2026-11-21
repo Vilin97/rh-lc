@@ -453,6 +453,7 @@ theorem existsUnique_rel_generic
 end GlobalTheory.PolExtend
 
 
+open GlobalTheory.PolExtend GlobalTheory.Algebraise in
 theorem GlobalTheory.polAV_iso_extends_of_isIntegrallyClosed : Laws → Laws2 → ∀ (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] [IsIntegrallyClosed R] [IsLocalRing R] (P P' : PolAV (Sp R)) (ψ : (Over.pullback (jK R)).obj P'.A ≅ (Over.pullback (jK R)).obj P.A), IsMonHom ψ.hom → LBIso (P'.L.pull (pullback.fst P'.A.hom (jK R))) (P.L.pull (ψ.hom.left ≫ pullback.fst P.A.hom (jK R))) → (∀ (T K : Type) [CommRing T] [IsDomain T] [IsDiscreteValuationRing T] [Field K] [Algebra T K] [IsFractionRing T K] (G G' : Over (Sp T)) [GrpObj G] [GrpObj G'], IsSemiAbelian G → IsSemiAbelian G' → ∀ f : (Over.pullback (spMap (algebraMap T K))).obj G ⟶ (Over.pullback (spMap (algebraMap T K))).obj G', IsMonHom f → ∃! F : G ⟶ G', IsMonHom F ∧ (Over.pullback (spMap (algebraMap T K))).map F = f) → ∃ Ψ : P'.A ≅ P.A, IsMonHom Ψ.hom ∧ (Over.pullback (jK R)).map Ψ.hom = ψ.hom ∧ LBIso P'.L (P.L.pull Ψ.hom.left) := by
   intro hl _ R _ _ _ _ _ P P' ψ hψ ⟨v₀, hv₀⟩ hext
   have chart : ∀ Q : PolAV (Sp R), ∃ j, ∀ s, eSec Q.A s ∈ Q.L.U j := fun Q => by

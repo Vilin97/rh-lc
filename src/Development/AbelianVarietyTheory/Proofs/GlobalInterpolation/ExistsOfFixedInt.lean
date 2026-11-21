@@ -473,6 +473,7 @@ theorem exists_frame (h : IsCMExt F E σ) (hv : UnramAt F E v) {m : ℕ}
 end Local
 
 
+open GlobalTheory.SelfDualLatticeCompare in
 theorem selfDualLattices : SelfDualLattices := by
   intro F E _ _ _ _ _ σ h M J hJ hM v hv L hL
   obtain ⟨m, rfl⟩ : ∃ m, M = m + 1 := ⟨M - 1, by omega⟩

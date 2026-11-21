@@ -126,6 +126,7 @@ end Eventual
 end MixedDiffConst
 
 
+open MixedDiffConst in
 theorem MixedDiffConst.proof (h1 : HilbDegreeBound.Statement.{u})
     (h2 : HilbEventuallyPoly.Statement.{u}) : MixedDiffConst.Statement.{u} := by
   intro F _ K _ _ ι _ I hI hrel n hn

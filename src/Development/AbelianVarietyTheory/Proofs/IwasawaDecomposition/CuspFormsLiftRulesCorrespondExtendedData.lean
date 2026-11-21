@@ -28,6 +28,7 @@ noncomputable section
 namespace GlobalTheory.Mem.R3.CuspExt
 
 
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 theorem cusp_heq {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
     {H H' : Host E} (hH : H' = H) {l : Level H} {l' : Level H'} (hl : HEq l' l)
     {c : Coeff l} {c' : Coeff l'} (hc : HEq c' c) {Dw : ℕ → Datum H} {Dw' : ℕ → Datum H'} (hDw : HEq Dw' Dw)
@@ -51,6 +52,7 @@ theorem cusp_heq {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
   · obtain rfl := eq_of_heq hx; exact HEq.rfl
 
 
+set_option maxHeartbeats 2000000 in
 theorem cusp_ext : StepW Pinned fun K B' f' T' w' => ∀ (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : ColW B f T), Enl0 B B' →
   HEq f' f → Pinned K B f T w → HEq w'.px w.px → ∀ (Z : w.Lt) (hX : B.fields.Ok) (Wt : Set B.places.Pl)
     (z : Dat (w.st Z) w.I hX T Wt), GrpTrue Z.N f → GrpAt (w.st Z) w.I → Fine z → HoldsL z.R z.F →

@@ -54,6 +54,7 @@ def inclF : AdF E →+* AdE E :=
   Algebra.TensorProduct.includeLeftRingHom (R := maximalRealSubfield E) (A := AdF E) (B := E)
 
 
+variable {E} in
 def compF (v : Plc E) : AdF E →ₐ[maximalRealSubfield E] v.adicCompletion (maximalRealSubfield E) where
   toFun a := a v
   map_one' := rfl
@@ -63,6 +64,7 @@ def compF (v : Plc E) : AdF E →ₐ[maximalRealSubfield E] v.adicCompletion (ma
   commutes' _ := rfl
 
 
+variable {E} in
 def compE (v : Plc E) : AdE E →+* (v.adicCompletion (maximalRealSubfield E) ⊗[maximalRealSubfield E] E) :=
   (Algebra.TensorProduct.map (compF v) (AlgHom.id (maximalRealSubfield E) E)).toRingHom
 
@@ -94,9 +96,11 @@ def ptsIn (n : ℕ) (R : Subring (AdE E)) : Subgroup (UA E n) where
   inv_mem' := fun {x} hx => ⟨hx.2, by rw [inv_inv]; exact hx.1⟩
 
 
+variable (E) in
 def ratPts (n : ℕ) : Subgroup (UA E n) := ptsIn n (diagE E).range
 
 
+variable (E) in
 def maxCpt (n : ℕ) : Subgroup (UA E n) := ptsIn n (intAd E)
 
 def IsLevelGrp (J : Subgroup (UA E n)) : Prop :=

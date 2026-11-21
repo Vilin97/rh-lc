@@ -12,6 +12,7 @@ open scoped Formalism.Per NNReal
 namespace GlobalTheory.BSP
 
 
+open TensorProduct in
 theorem _root_.GlobalTheory.BSP.semiBC_iff_isBaseChange (A B : Type) [CommRing A] [CommRing B]
     [Algebra A B] (M : Type)
     [AddCommGroup M] [Module A M] (N : Type) [AddCommGroup N] [Module B N] [Module A N]

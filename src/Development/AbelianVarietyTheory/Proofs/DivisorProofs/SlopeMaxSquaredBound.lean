@@ -91,6 +91,7 @@ theorem ne_bot_of_form {K K' R W : Type} [Field K] [NumberField K] [Field K'] [A
   exact hy (h4 (by rw [hsp]; exact Submodule.mem_top))
 
 
+set_option maxHeartbeats 1000000 in
 theorem latW_ne_bot (h : GramAt p i) : latW (p.T.U ((i : ℕ) + 1)) (Gk p i) ≠ ⊥ := by
   obtain ⟨-, -, hg, -, -, hs⟩ := h
   obtain ⟨y, -, hy⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hg
@@ -98,6 +99,7 @@ theorem latW_ne_bot (h : GramAt p i) : latW (p.T.U ((i : ℕ) + 1)) (Gk p i) ≠
   exact ne_bot_of_form (cuspW_wtZ _ _) hs (p.fw.e i) hb hsp hy
 
 
+set_option maxHeartbeats 1000000 in
 theorem slopeMax_le (h6 : GlobalTheory.Published.TamagawaSpecialUnitary) {PP A : ℝ} (hR : RecTied D L) (hG : GramAt p i)
     (hN : HostNum D L PP A 1) (hW : WtNum p i PP) :
     slopeMax_sq (nrmK p.fw i) (latW (p.T.U ((i : ℕ) + 1)) (Gk p i)) ≤ L.sc.x ^ (2 * A + 4) * L.sc.b := by

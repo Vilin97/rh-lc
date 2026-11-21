@@ -118,6 +118,7 @@ theorem isInvariant_iff_commute_starProjection (V : Submodule ℂ H) [V.HasOrtho
     rw [← this, hv]
 
 
+variable (π) in
 def intertwiners (σ : UnitaryRep G K) : Submodule ℂ (H →L[ℂ] K) where
   carrier := {T | ∀ (g : G) (v : H), T (π g v) = σ g (T v)}
   add_mem' {S T} hS hT g v := by simp [hS g v, hT g v]
@@ -136,6 +137,7 @@ lemma mem_intertwiners_self_iff {T : H →L[ℂ] H} :
   exact congrArg (fun S : H →L[ℂ] H => S v) (h g)
 
 
+variable (π σ) in
 structure Equiv where
 
   toLinearIsometryEquiv : H ≃ₗᵢ[ℂ] K
@@ -148,6 +150,7 @@ namespace Equiv
 end Equiv
 
 
+variable (π) in
 def IsIrreducible : Prop :=
   Nontrivial H ∧ ∀ V : Submodule ℂ H, IsClosed (V : Set H) → π.IsInvariant V → V = ⊥ ∨ V = ⊤
 

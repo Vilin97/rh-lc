@@ -36,6 +36,7 @@ open GlobalTheory.FunObj.FiniteSupport GlobalTheory.TopLevelInv.FlatStep
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k]
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem fill_moveEnd {Γ : Grid k} (hs : 1 ≤ Γ.s) (hm : 0 < Γ.m) (g : GL (Fin (Γ.rank (Γ.m, 0))) k)
     (x x' : ColArgs Γ) (y : RowArgs Γ) (e e' : Vars Γ)
     (hrest : ∀ l, l ≠ 0 → downMap hs x' e' l = downMap hs x e l)
@@ -117,6 +118,8 @@ end Local
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T}
 
 
+set_option synthInstance.maxHeartbeats 200000 in
+set_option maxHeartbeats 1000000 in
 theorem inBasis_mem_glLatCong (G : GridData L sc) {V : HSp D} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)}
     {β x : GL (Fin V.rank) (Lev.EAf D)} (hβ : IsFrame β Λ) (hx : x ∈ congLev D.sp.cm V.gram Λ G.modul) {n : ℕ} (h : n = V.rank)
     (w : Pl D.host.E) : inBasis h β w x ∈ glLatCong (unifAt w ^ cosExp G w) (SplitFlip.stdLat (Kw w) _) := by
@@ -146,6 +149,7 @@ theorem kapTop0_mem (S : GridChoice W U) (t : T) (k : FinPt G (.top 0)) (hk : fi
   inBasis_mem_glLatCong G (S.βp_is 0 (Nat.zero_le _)) hk _ w
 
 
+open GlobalTheory.RowVacScalar in
 theorem mu_one_unramAt {μ₀ : T} (hL : L.Is μ₀) (G : GridData L sc) (t : T) {v : HeightOneSpectrum (𝓞 D.host.F)}
     (hv : ∀ w ∈ locPl G t, w.under (𝓞 D.host.F) ≠ v) : GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedCharacter.CharUnramAt D (L.mu t (0 + 1)) v := by
   classical
@@ -166,6 +170,8 @@ theorem mu_one_unramAt {μ₀ : T} (hL : L.Is μ₀) (G : GridData L sc) (t : T)
     · exact hQ P hP (by rw [← hw, (GlobalTheory.IdemSupport.isConjPl_iff _ _).1 h, GlobalTheory.IdemSupport.under_cP])
 
 
+open GlobalTheory.RowVacScalar in
+set_option maxHeartbeats 1000000 in
 theorem om_first_vac (S : GridChoice W U) {μ₀ : T} (hL : L.Is μ₀) (t : T) (k : FinPt G (.top 0))
     (hk : finG (G.V (.top 0)) k ∈ G.Kplus) :
     W.om (.top t 0) (G.toPair (.top t 0 : Pair T) ((S.N.u (.top 0))⁻¹ * k * S.N.u (.top 0)).1 1) (S.Z.vac (.top t 0)) =
@@ -276,6 +282,7 @@ theorem datum_end {Γ : Grid k} (hs : 1 ≤ Γ.s) (ψ : AddChar k Circle) (ν : 
   simp only [flatTensor, flatIntegrand, mul_assoc, integral_const_mul]
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem exists_end_lift {Γ : Grid k} (hs : 1 ≤ Γ.s) (hm : 0 < Γ.m) (ϖ c : kˣ) (e : ℕ) {κ : GL (Fin (topRank Γ 0)) k}
     (hκ : κ ∈ glLatCong c (SplitFlip.stdLat k _)) :
     ∃ u ∈ glLatCong c (SplitFlip.stdLat k (Fin (Γ.rank (Γ.m, 0)))),
@@ -420,6 +427,7 @@ theorem first_mem_stdLat_iff (S : GridChoice W U) (t : T) (k : FinPt G (.top 0))
     exact GlobalTheory.LocalLatStab.actO_mem _ _ _ _ _ g⁻¹ 1 (fun y hy => (h4 y).1 hy) h1 _ hx
 
 
+set_option maxHeartbeats 800000 in
 theorem product_invariant : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T}
     (S : GridChoice W U) {t : T}, t ∈ U → ∀ {Φ : G.Datum} {β : CosFam G t} {τ : PureDat G t →₀ ℂ} {μ₀ : T},
     L.Is μ₀ → (Nat.Coprime D.host.pde (D.host.QS * D.host.q) ∧ Nat.Coprime D.host.pde' (D.host.QS * D.host.q)) → (∀ P ∈ L.Q t, ((Ideal.absNorm D.host.ccK : ℕ) : 𝓞 D.host.E) ∉ P.asIdeal) → t ∈ U → β ∈ S.supp t Φ → S.IsExpansion t Φ β τ →

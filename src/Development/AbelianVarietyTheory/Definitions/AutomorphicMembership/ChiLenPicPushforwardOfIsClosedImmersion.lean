@@ -97,6 +97,7 @@ variable (Z)
 abbrev VDivQ : Type := ℚ ⊗[ℤ] Z.VDivZ
 
 
+variable {Z} in
 def toQ : Z.VDivZ →+ Z.VDivQ := (TensorProduct.mk ℤ ℚ Z.VDivZ 1).toAddMonoidHom
 
 def cDQ : Z.VDivQ →ₗ[ℚ] PicSym Z.X := LinearMap.liftBaseChange ℚ (firstChernPic.comp Z.vCls).toIntLinearMap
@@ -126,6 +127,7 @@ variable (Z) (p : ℕ) [Fact p.Prime] [CharZero O] [CharP (ResidueField O) p]
 def divP : Z.VDivZ := Z.div p (natCast_ne_zero O p)
 
 
+set_option linter.overlappingInstances false in
 @[reducible] def toITh [CharP (ResidueField O) p] (d : ℕ) : Formalism.BasicNotions.DV.ITh where
   LB := FinLB Z.X
   Ch := PicSym Z.X
@@ -140,6 +142,7 @@ def divP : Z.VDivZ := Z.div p (natCast_ne_zero O p)
 end Theory
 
 
+variable (Z) in
 def vdiv (L L' : FinLB Z.X) (u : Z.GenIso L.lb L'.lb) : Z.VDivQ := toQ (u.div L.isLB L'.isLB)
 
 theorem firstChern_eq_sub_divisor (L L' : FinLB Z.X) (u : Z.GenIso L.lb L'.lb) : L'.c1 = L.c1 - Z.cDQ (Z.vdiv L L' u) := by
@@ -168,6 +171,8 @@ variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {B B' 
   (hf : f ≫ B.str = B'.str)
 
 
+variable (f) in
+include f in
 theorem relDim_eq_of_isIso : B'.relDim = B.relDim := by
   refine Model.relDim_eq_iff.2 (Eq.trans ?_ B.dim_eq)
   rw [← topologicalKrullDim_eq_of_isEmbedding f.isOpenEmbedding.isEmbedding f.surjective.range_eq,

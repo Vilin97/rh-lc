@@ -66,6 +66,7 @@ theorem InK.mul (hL : L.IsLB) {x y : T ⟶ B} (hx : InK B L x) (hy : InK B L y) 
   simp [Fin.prod_univ_two]
 
 
+variable (B) in
 def kSubgroup (hL : L.IsLB) (T : Over S) : Subgroup (T ⟶ B) where
   carrier := {x | InK B L x}
   one_mem' := inK_one hL T
@@ -84,6 +85,7 @@ theorem inK_of_push {S' : Scheme.{0}} {f : S' ⟶ S} {B' : Over S'} [GrpObj B'] 
   memKL_of_push h hL hL' hw x hx
 
 
+variable (B) in
 theorem inK_triv (x : T ⟶ B) : InK B (Inh.trivLB B.left) x := by
   intro p
   refine ⟨⊤, trivial, ?_⟩

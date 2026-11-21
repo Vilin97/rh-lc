@@ -30,6 +30,7 @@ theorem exists_leftInv_of_linInd {K : Type} [Field K] {a b : ℕ} (C : Matrix (F
 variable {D : D7}
 
 
+set_option maxHeartbeats 1000000 in
 theorem conj_io_gen_mem (V : HSp D) (γ : GA D (dblSp V)) (hγ : γ ∈ GQ (dblSp V))
     (γi : Matrix (Fin (V.rank + V.rank)) (Fin (V.rank + V.rank)) D.host.E)
     (hγi : (Formalism.L2.Theta.matHom (dblSp V) γ⁻¹).1 = γi.map (incA D)) (r : ℕ)

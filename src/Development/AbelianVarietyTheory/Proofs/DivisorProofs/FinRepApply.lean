@@ -69,6 +69,7 @@ def cuspMult (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+*
   Module.rank ℂ (homInto σ (finRep M) (allMaps θ M))
 
 
+variable (D) in
 def CuspDecomp : Prop :=
   ∀ (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)), IsInfFam θ →
     ∀ (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S), IsDecomp (finRep M) (allMaps θ M)

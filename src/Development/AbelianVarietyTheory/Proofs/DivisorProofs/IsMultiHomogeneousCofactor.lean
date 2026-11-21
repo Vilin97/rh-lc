@@ -45,6 +45,7 @@ theorem weight_add_of_mul {σ F : Type} [Field F] (w : σ → ℕ) {P Q : MvPoly
 end GlobalTheory.CofactorHom
 
 
+open GlobalTheory.CofactorHom in
 theorem GlobalTheory.HSShort.isMultiHomogeneous_cofactor :
     ∀ (F : Type) [Field F] (B N : ℕ) (a a₁ : Fin B → ℕ) (G G' : MvPolynomial (Fin B × Fin N) F),
       G * G' ≠ 0 → IsMultiHomogeneous a (G * G') → IsMultiHomogeneous a₁ G →

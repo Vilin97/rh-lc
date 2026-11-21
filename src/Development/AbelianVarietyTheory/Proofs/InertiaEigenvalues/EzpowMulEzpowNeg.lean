@@ -18,6 +18,7 @@ variable {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [Algebr
   {ι : Type} [Fintype ι] [DecidableEq ι]
 
 
+variable (O K l e) in
 def cterm (x : Ahat O K l e) : AdjoinRoot (Polynomial.X ^ e + Polynomial.C (l : K)) :=
   PowerSeries.constantCoeff ((AhatEq.equivAhat O K l e).symm x)
 
@@ -30,9 +31,11 @@ theorem hatR_of_mem {f : K⟦X⟧} (h : f ∈ Rpi O K l e) : hatR O l e f = toHa
   rw [dite_eq_left h]
 
 
+variable (K a) in
 def dvec (k : ι) : ZMod a → ι → K := fun _ => Pi.single k 1
 
 
+variable (ι) in
 def idx : Fin (Fintype.card ι) → ι := (Fintype.equivFin ι).symm
 
 def xiVec (P : PhiMod O K l e a ι) (k : Fin (Fintype.card ι)) : Vec K a ι := P.xi (dvec K a (idx ι k))

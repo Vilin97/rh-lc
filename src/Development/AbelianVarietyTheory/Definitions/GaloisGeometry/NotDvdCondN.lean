@@ -122,6 +122,7 @@ def JumpsLet (T : Lat K LL) (Mi hi : ZMod (Module.finrank ℚ_[l] ↥(K0 K)) →
   ∀ a, JumpsAt W T a (Set.Icc (-(Mi a : ℤ)) (hi a))
 
 
+open Classical in
 def lowCount [Fintype (↥K.1 →ₐ[ℚ_[l]] ↥LL.1)] (T : Lat K LL) (a : ZMod (Module.finrank ℚ_[l] ↥(K0 K)))
     (η : ℕ) : ℤ :=
   ∑ τ ∈ Finset.univ.filter (fun τ => Over W τ a), ∑ u ∈ Finset.Icc (-(η : ℤ)) η, multV (P.PD K) T.ρ τ u

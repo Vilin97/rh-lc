@@ -197,10 +197,12 @@ theorem delPrime_eq (Z : Comp Xo c) {u : Weight Dw} (h : vdm u ≠ 0) :
   ring
 
 
+variable (Xo c) in
 def ValFam : Type :=
   {Vs : HeightOneSpectrum (𝓞 c.F) → Set (Rul Xo c → EReal) // ∀ la, ∀ v ∈ Vs la, IsVal la v}
 
 
+variable (Xo c) in
 def recVals : ValFam Xo c := ⟨valSet Xo c (algCls Xo c), isVal_valSet⟩
 
 

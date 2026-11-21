@@ -33,6 +33,7 @@ theorem cT_smul {a b : Type} (c : R) (P : Matrix a b R) : cT s (c • P) = s c �
   Matrix.ext fun _ _ => map_mul s _ _
 
 
+variable (s J X Y) in
 structure Fr : Prop where
   ss : ∀ x, s (s x) = x
   herm : cT s J = J
@@ -93,6 +94,7 @@ theorem Fr.comm (h : Fr s J X Y) {l b : Matrix (Fin n) (Fin n) R} (hl : cT s l *
     · rw [← Matrix.mul_assoc, (h.symm.par hl hD).2.2.2, Matrix.mul_assoc, h2, Matrix.mul_zero]
 
 
+variable (s J X) in
 def eich (Z : Matrix (Fin n) (Fin k) R) (c : Matrix (Fin k) (Fin k) R) : Matrix (Fin n) (Fin n) R :=
   1 + Z * (cT s X * J) - X * (cT s Z * J) + X * c * (cT s X * J)
 
@@ -132,6 +134,7 @@ theorem Fr.eich_unitary (h : Fr s J X Y) {Z : Matrix (Fin n) (Fin k) R} (hZ : cT
     sub_neg_eq_add, hc, neg_add_cancel, eich_zero, Matrix.mul_one]
 
 
+variable (s J X Y) in
 def W1 : AddSubgroup (Matrix (Fin n) (Fin k) R) where
   carrier := {Z | cT s X * J * Z = 0 ∧ cT s Y * J * Z = 0}
   zero_mem' := by simp
@@ -139,6 +142,7 @@ def W1 : AddSubgroup (Matrix (Fin n) (Fin k) R) where
   neg_mem' ha := ⟨by rw [Matrix.mul_neg, ha.1, neg_zero], by rw [Matrix.mul_neg, ha.2, neg_zero]⟩
 
 
+variable (s k) in
 def W2 : AddSubgroup (Matrix (Fin k) (Fin k) R) where
   carrier := {c | cT s c = -c}
   zero_mem' := by simp [cT_zero]

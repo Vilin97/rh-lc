@@ -56,6 +56,7 @@ theorem exists_twPow (s : TwSec U x Z (wtOf Dw 0 1)) : ∀ n : ℕ, Nonempty (Tw
     exact ⟨(t.mul s).copy (by rw [← wtOf_add, add_zero]; push_cast; rfl)⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem span_latW_add (hU : ∀ σ, GoodEmb c σ → IsUnf (U σ)) (G G₀ : WTZ E) (hG : Even G.2)
     (hs : ∀ Z : Comp Xo c, Nonempty (TwSec U x Z G₀))
     (h : Submodule.span c.F (latW U G : Set (cuspW Xo c U G)) = ⊤) :

@@ -159,6 +159,7 @@ theorem vanMod_smul {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] {D : De
     zero_mul]
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_lead_members {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] (hB : Base R)
     (D : DegData R (maximalIdeal R)) {k : ℕ} (hk : 1 ≤ k) (b : D.toPre.SecB k 0) :
     ∃ (Φ : Fam D.toPre (FractionRing R) k) (f : ∀ α : D.toPre.X, D.toPre.SecB k α),

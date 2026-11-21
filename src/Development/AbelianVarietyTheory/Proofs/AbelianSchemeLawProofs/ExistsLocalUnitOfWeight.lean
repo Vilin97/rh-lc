@@ -34,6 +34,7 @@ theorem comp_ev (f : R →+* R') (θ : C →+* R) (φ : Multiplicative X →* R�
   apply AddMonoidAlgebra.ringHom_ext <;> intro a <;> simp [ev_single]
 
 
+variable (C X) in
 noncomputable def univ : Multiplicative X →* (AddMonoidAlgebra C X)ˣ :=
   (AddMonoidAlgebra.of C X).toHomUnits
 
@@ -41,6 +42,7 @@ theorem univ_val (x : X) :
     (univ X C (Multiplicative.ofAdd x)).val = AddMonoidAlgebra.single x 1 := rfl
 
 
+variable (C X) in
 noncomputable abbrev cst : C →+* AddMonoidAlgebra C X := AddMonoidAlgebra.singleZeroRingHom
 
 theorem cst_apply (c : C) : cst X C c = AddMonoidAlgebra.single 0 c := rfl
@@ -75,6 +77,7 @@ theorem coeff_ev (δ : C →+* R) (ψ : Multiplicative X →* Rˣ) (f : AddMonoi
     · simp [Finsupp.single_eq_of_ne' h]
 
 
+variable (R) in
 def IsTorsorOn (α : A →+* C) (ρ : C →+* AddMonoidAlgebra C X) : Prop :=
   (∀ (θ : C →+* R) (φ φ' : Multiplicative X →* Rˣ),
     (ev θ (φ * φ')).comp ρ = (ev ((ev θ φ').comp ρ) φ).comp ρ) ∧
@@ -379,6 +382,7 @@ theorem faithfullyFlat_appLE {Y B : Scheme.{0}} (q : Y ⟶ B) [Flat q] [Surjecti
 end TorsorUnit
 
 
+open TorsorUnit SplitTorusPoints in
 theorem exists_local_unit_of_weight :
     ∀ (S : Scheme.{0}) (X : Type) [AddCommGroup X] (G B : Over S) [GrpObj G] [GrpObj B] (q : G ⟶ B) (i : splitTorus S X ⟶ G), IsMonHom q → IsMonHom i → Flat q.left → Surjective q.left → QuasiCompact q.left → IsPullback i (toUnit _) q (η[B]) → IsAffineHom q.left → ∀ (χ : X) (b : B.left), ∃ (V : B.left.Opens) (_ : b ∈ V) (u : Γ(G.left, q.left ⁻¹ᵁ V)ˣ), ∀ (Z : Over S) (t : Z ⟶ splitTorus S X) (g : Z ⟶ G) (h₁ : ⊤ ≤ ((t ≫ i) * g).left ⁻¹ᵁ (q.left ⁻¹ᵁ V)) (h₂ : ⊤ ≤ g.left ⁻¹ᵁ (q.left ⁻¹ᵁ V)), (((t ≫ i) * g).left.appLE _ ⊤ h₁).hom u.val = t.left.appTop.hom (charUnit S X χ).val * (g.left.appLE _ ⊤ h₂).hom u.val := by
   intro S X _ G B _ _ q i _ _ _ _ _ hi _ χ b

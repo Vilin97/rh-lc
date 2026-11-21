@@ -19,10 +19,12 @@ namespace GlobalTheory.SliceTwo.Growth
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
 
 
+omit [IsTotallyComplex E] in
 theorem height_inv {a : ℕ} (y : GL (Fin a) (Cinf E)) : height y⁻¹ = height y := by
   unfold height; rw [inv_inv]; ring
 
 
+omit [IsTotallyComplex E] in
 theorem height_mul_right_le {a : ℕ} (c : GL (Fin a) (Cinf E)) :
     ∃ B : ℝ, 0 ≤ B ∧ ∀ y, height (y * c) ≤ B * height y := by
   obtain ⟨B, hB, h⟩ := GlobalTheory.ConstTermGrowth.height_mul_left_le (E := E) (isCompact_singleton (x := c⁻¹))
@@ -31,6 +33,7 @@ theorem height_mul_right_le {a : ℕ} (c : GL (Fin a) (Cinf E)) :
   rwa [← _root_.mul_inv_rev, height_inv, height_inv] at this
 
 
+omit [IsTotallyComplex E] in
 theorem norm_toL_blkGL_one_le {a r : ℕ} (hr : r ≤ a) (y : GL (Fin (a - r)) (Cinf E)) :
     ‖toL (blkGL hr (1, y)).val‖ ≤ 1 + ‖toL y.val‖ := by
   have h0 : (0 : ℝ) ≤ 1 + ‖toL y.val‖ := by positivity
@@ -54,6 +57,7 @@ theorem norm_toL_blkGL_one_le {a r : ℕ} (hr : r ≤ a) (y : GL (Fin (a - r)) (
       (by linarith)
 
 
+omit [IsTotallyComplex E] in
 theorem height_blkGL_one_le {a r : ℕ} (hr : r ≤ a) (y : GL (Fin (a - r)) (Cinf E)) :
     height (blkGL hr (1, y)) ≤ 3 * height y := by
   have e : (blkGL hr (1, y))⁻¹ = blkGL hr (1, y⁻¹) := by
@@ -69,6 +73,7 @@ theorem height_blkGL_one_le {a r : ℕ} (hr : r ≤ a) (y : GL (Fin (a - r)) (Ci
 end GlobalTheory.SliceTwo.Growth
 
 
+open GlobalTheory.SliceTwo.Growth in
 theorem GlobalTheory.SliceTwo.Growth.norm_slice_le : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a r : ℕ)
     (hr : r ≤ a) [MeasurableSpace (BlockIx a r → Ad E)] [BorelSpace (BlockIx a r → Ad E)]
     (μ : Measure (BlockIx a r → Ad E)) (𝓕 : Set (BlockIx a r → Ad E)), μ.IsAddHaarMeasure →

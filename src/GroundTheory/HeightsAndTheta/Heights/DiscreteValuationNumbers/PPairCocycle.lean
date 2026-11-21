@@ -412,6 +412,7 @@ theorem listNum_commute (hC2 : VerticalDivisorsCommute.Statement.{0}) {ϖ : O} (
   · simp [if_neg h, cycEval]
 
 
+omit [DecidableEq K] in
 theorem ratDiv_mul {P : Ideal (MRing ι O)} [P.IsPrime] {f g f' g' : MRing ι O} (hf : f ∉ P)
     (hg : g ∉ P) (hf' : f' ∉ P) (hg' : g' ∉ P) :
     ratDiv P (f * f') (g * g') = ratDiv P f g + ratDiv P f' g' := by
@@ -482,6 +483,8 @@ theorem sameGenericFibre_symm {τ : Type*} {x : τ → Ω} {ϖ : O} {B B' : Char
   fun c hc => (h c hc).symm
 
 
+omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] [IsDomain O] [IsDiscreteValuationRing O]
+  [Algebra O Ω] in
 theorem repr_chain (w w' : Module.Basis (Fin N) Ω E) (v : E) (j : Fin N) :
     w.repr v j = ∑ m, w'.repr v m * w.repr (w' m) j := by
   have e := congrArg (fun z => w.repr z j) (w'.sum_repr v)
@@ -519,6 +522,7 @@ theorem isFlagPair_comp {ϖ : O} {y : (Σ k, ι k) → Ω} [(pointIdeal O y).IsP
       · simp }
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem isFlagPair_refl {ϖ : O} {y : (Σ k, ι k) → Ω} [(pointIdeal O y).IsPrime]
     {B : ChartBundle O (segreVec y) N E} {w : Module.Basis (Fin N) Ω E} {x : Fin N → K → ℤ}
     (hf : IsFlagFrame y B w x) :

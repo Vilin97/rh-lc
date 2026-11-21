@@ -79,10 +79,12 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   {π : 𝒪[K]} (hπ : Irreducible π) (m : ℕ)
 
 
+include hπ in
 theorem isDistinguishedAt_ltEisenstein : (ltEisenstein π m).IsDistinguishedAt 𝓂[K] :=
   ⟨⟨fun hn => (isEisensteinAt_ltEisenstein hπ m).mem hn⟩, (ltEisenstein_monic π m).1⟩
 
 
+include hπ in
 theorem exists_sub_coe_mem_span_ltEisenstein (G : 𝒪[K]⟦X⟧) :
     ∃ h : Polynomial 𝒪[K], G - (h : 𝒪[K]⟦X⟧) ∈ Ideal.span {((ltEisenstein π m : Polynomial 𝒪[K]) :
       𝒪[K]⟦X⟧)} := by
@@ -94,6 +96,7 @@ theorem exists_sub_coe_mem_span_ltEisenstein (G : 𝒪[K]⟦X⟧) :
 variable {L : Type*} [Field L] [Algebra K L]
 
 
+include hπ in
 theorem ltEisenstein_dvd_of_aeval_eq_zero {x : L}
     (hx : Polynomial.aeval x ((ltEisenstein π m).map (algebraMap 𝒪[K] K)) = 0) {p : Polynomial 𝒪[K]}
     (hp : Polynomial.aeval x (p.map (algebraMap 𝒪[K] K)) = 0) : ltEisenstein π m ∣ p := by
@@ -139,6 +142,8 @@ theorem pow_apply_eq_psEval (σ : Ω ≃ₐ[K] Ω) (a : 𝒪[K]) {x : Ω} (hx : 
       psEval_subst' (fun _ => Hom.constantCoeff_eq_zero' _) _ _ fun _ => hx]
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ω]
+  [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω] in
 theorem exists_pow_apply_eq_self (σ : Ω ≃ₐ[K] Ω) {p : Polynomial K} (hp : p ≠ 0) {x : Ω}
     (hx : Polynomial.aeval x p = 0) : ∃ N : ℕ, 0 < N ∧ (σ ^ N) x = x :=
   _root_.GroundTheory.Variant₂.N1.exists_pow_apply_eq_self_of_aeval_eq_zero σ hp hx
@@ -151,6 +156,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   {B : Type*} [CommRing B] [Algebra 𝒪[K] B]
 
 
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem map_sub_coe_mem_span {P h : Polynomial 𝒪[K]} {G : 𝒪[K]⟦X⟧}
     (hG : G - (h : 𝒪[K]⟦X⟧) ∈ Ideal.span {(P : 𝒪[K]⟦X⟧)}) :
     PowerSeries.map (algebraMap 𝒪[K] B) G - ((h.map (algebraMap 𝒪[K] B) : Polynomial B) : B⟦X⟧) ∈
@@ -319,6 +325,8 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   {π : 𝒪[K]} (hπ : Irreducible π) (u : 𝒪[K]ˣ) (m : ℕ)
 
 
+set_option maxHeartbeats 1000000 in
+include hπ in
 theorem exists_fixed_root_ltEisenstein (σ : Ω ≃ₐ[K] Ω)
     (hσ : unramifiedDegree K Ω σ = Multiplicative.ofAdd 1) {l : Ω}
     (hl : Polynomial.aeval l ((ltEisenstein π m).map (algebraMap 𝒪[K] K)) = 0)

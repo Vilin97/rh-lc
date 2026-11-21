@@ -241,6 +241,7 @@ theorem IsAt.ord_eq [IsLocallyNoetherian X] (h : E.IsAt z) (g : X.functionField�
   exact (WithZero.exp_log ((map_ne_zero _).2 g.ne_zero)).symm
 
 
+variable (p) in
 theorem exists_isAt [LocallyOfFiniteType p] (z : X)
     [IsDiscreteValuationRing (X.presheaf.stalk z)] : ∃ E : DivOver p, E.IsAt z := by
   let V : ValuationSubring X.functionField :=
@@ -279,6 +280,7 @@ end DivOver
 section Pairs
 
 
+omit [IsIntegral X] in
 structure IsEffQDiv (Δ : X → ℚ) : Prop where
 
   finite : (Function.support Δ).Finite
@@ -295,20 +297,24 @@ def IsLogEqn (Δ : X → ℚ) (η : RatForms p n) (x : X) (m : ℕ) (g : X.funct
   ∀ z, z ⤳ x → ∀ E : DivOver p, E.IsAt z → (m : ℚ) * (E.formOrd η + Δ z) = E.ord g
 
 
+variable {p} in
 def discrep (E : DivOver p) (η : RatForms p n) (m : ℕ) (g : X.functionFieldˣ) : ℚ :=
   E.formOrd η - E.ord g / m
 
 
+variable (n) in
 def KltAt (Δ : X → ℚ) (x : X) : Prop :=
   ∃ (η : RatForms p n) (m : ℕ) (g : X.functionFieldˣ), η ≠ 0 ∧ 0 < m ∧ IsLogEqn p Δ η x m g ∧
     ∀ E : DivOver p, E.Through x → -1 < discrep E η m g
 
 
+variable (n) in
 def LcAt (Δ : X → ℚ) (x : X) : Prop :=
   ∃ (η : RatForms p n) (m : ℕ) (g : X.functionFieldˣ), η ≠ 0 ∧ 0 < m ∧ IsLogEqn p Δ η x m g ∧
     ∀ E : DivOver p, E.Through x → -1 ≤ discrep E η m g
 
 
+variable (n) in
 def IsLogCanonicalMultiple (Δ : X → ℚ) (m : ℕ) (G : CartierDiv X) : Prop :=
   ∃ η : RatForms p n, η ≠ 0 ∧ ∀ x g, G.IsEqn x g → IsLogEqn p Δ η x m g
 
@@ -407,6 +413,7 @@ theorem DivOver.formOrd_formOf_nonneg (hn : topologicalKrullDim X = n) {U : X.Op
   exact a.2
 
 
+omit [PerfectField k] [LocallyOfFiniteType p] in
 theorem DivOver.formOrd_formOf_eq_zero {U : X.Opens} (hz : z ∈ U) (hE : E.IsAt z)
     {ω : FormsOn p n U} (hω : IsFrame ω) : E.formOrd (formOf U (gen_mem hz) ω) = 0 := by
   have h0 : formOf U (gen_mem hz) ω ≠ 0 := fun h =>
@@ -435,6 +442,7 @@ theorem DivOver.formOrd_formOf_eq_zero {U : X.Opens} (hz : z ∈ U) (hE : E.IsAt
     (KaehlerDifferential.isBaseChange_of_formallyEtale k Γ(X, U) E.ring) n)
 
 
+omit [LocallyOfFiniteType p] in
 theorem kltAt_zero_of_smooth [SmoothOfRelativeDimension n p] (hn : topologicalKrullDim X = n)
     (x : X) : KltAt p n 0 x := by
   haveI := SmoothOfRelativeDimension.smooth n p
@@ -450,6 +458,7 @@ theorem kltAt_zero_of_smooth [SmoothOfRelativeDimension n p] (hn : topologicalKr
     linarith
 
 
+omit [LocallyOfFiniteType p] in
 theorem isLogCanonicalMultiple_canonical [IsLocallyNoetherian X] [SmoothOfRelativeDimension n p]
     (hn : topologicalKrullDim X = n) (D : CartierDiv X) (hm : 0 < m) :
     IsLogCanonicalMultiple p n (qWeil D m) m (m • canonical p n + D) := by

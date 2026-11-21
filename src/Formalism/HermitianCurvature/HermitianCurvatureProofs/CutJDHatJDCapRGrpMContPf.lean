@@ -94,6 +94,7 @@ open ContPf
 variable {r : ℕ} {X : Type} [NormedAddCommGroup X] [NormedSpace ℂ X]
 
 
+variable (X) in
 def aSv (Y : ℂ) (i : ℕ) : Module.End ℂ (WSm r X) := algebraMap ℂ _ Y - eS X i 3
 
 theorem cp_vABs (Y : ℂ) : ∀ i, i ≤ r → ∀ f : WSm r X,

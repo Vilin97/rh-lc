@@ -60,6 +60,7 @@ def secSp (K P : Subgroup G) (c : G → ℂ) (ρ : K →* (W →L[ℂ] W)) : Sub
   smul_mem' := fun a w hw r hr => by rw [map_smul, smul_comm, hw r hr]
 
 
+open Classical in
 def sec (K P : Subgroup G) (c : G → ℂ) (ρ : K →* (W →L[ℂ] W)) (g : G) : W →L[ℂ] W :=
   by
     classical

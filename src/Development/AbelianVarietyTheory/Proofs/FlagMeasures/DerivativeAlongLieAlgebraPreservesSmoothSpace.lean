@@ -49,10 +49,12 @@ theorem exists_coords {n : ℕ} (S : Submodule ℝ (Matrix (Fin n) (Fin n) ℂ))
 variable {D : D7} {θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)} {V : HSp D}
 
 
+variable (V) in
 def lieSub (τ : D.what₂.Tau) : Submodule ℝ (Matrix (Fin V.rank) (Fin V.rank) ℂ) :=
   GlobalTheory.UnitaryLieAlgebra.unitaryLie (gramAt D V τ)
 
 
+variable (θ) in
 def SmFam {k : ℕ} (B : (Fin k → ℝ) → GA D V) : Prop :=
   ∀ τ, (ContDiff ℝ ∞ fun t => infMat D.sp.cm.sig V.gram (θ τ) (B t)) ∧
     ContDiff ℝ ∞ fun t => infMat D.sp.cm.sig V.gram (θ τ) (B t)⁻¹
@@ -87,6 +89,7 @@ theorem smFam_oneP (hθ : IsInfFam θ) {τ : D.what₂.Tau} {X : Matrix (Fin V.r
     (contDiff_oneP hθ hX τ').comp (contDiff_apply ℝ (fun _ => ℝ) i).neg⟩
 
 
+variable (θ) in
 def prodP {k : ℕ} (τs : Fin k → D.what₂.Tau) (Xs : Fin k → Matrix (Fin V.rank) (Fin V.rank) ℂ) (t : Fin k → ℝ) :
     GA D V := (List.ofFn fun i => oneP θ V (τs i) (Xs i) (t i)).prod
 

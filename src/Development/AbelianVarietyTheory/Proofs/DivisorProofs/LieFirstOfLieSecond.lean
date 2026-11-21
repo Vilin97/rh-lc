@@ -67,6 +67,7 @@ theorem swapT_sumPl (L' : ι → Module.End ℂ (Formalism.BasicNotions.TH.Pol R
 end Tensor
 
 
+open scoped Classical in
 theorem lieFirst_of_lieSecond : LieSecond → LieFirst := by
   intro h2 F E _ _ _ _ _ σ α β κ _ _ _ _ _ P Q R S ψ τ JA JB d d' a b A C Φ om χ m hCM hψ hfr hΦ hdd hW hm
   have hfr' : Framed τ JB JA b a C A := ⟨by rw [mul_comm]; exact hfr.1, hfr.2.2, hfr.2.1⟩

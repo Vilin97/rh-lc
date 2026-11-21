@@ -208,6 +208,7 @@ theorem key {n : ℕ} (α : T → k) (M : T → Fin (n + 2) → k) (hα : Submod
   ring
 
 
+omit [Fintype T] in
 theorem cutForms_indep {n : ℕ} (M : T → Fin (n + 2) → k) (hM : LinFormsIndep M) (c : T) (j₀ : Fin (n + 2)) :
     LinFormsIndep (cutForms M c j₀) := by
   intro w hw

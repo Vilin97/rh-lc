@@ -20,6 +20,7 @@ namespace GlobalTheory.VB
 variable {X Y : Scheme.{0}} {F G H : X.Modules} {U V W : X.Opens} {ι : Type} [Fintype ι]
 
 
+variable (F G V) in
 def homGroup :
     AddSubgroup (∀ W : {W : X.Opens // W ≤ V}, Γ(F, W.1) →ₗ[Γ(X, W.1)] Γ(G, W.1)) where
   carrier := {φ | ∀ (W W' : X.Opens) (h : W ≤ V) (h' : W' ≤ W) (s : Γ(F, W)),
@@ -49,12 +50,14 @@ instance homGroupModule : Module Γ(X, V) (homGroup F G V) where
     rw [map_zero, zero_smul]
 
 
+variable (F G) in
 def homRes (h : W ≤ V) : homGroup F G V →+ homGroup F G W where
   toFun φ := ⟨fun T => φ.1 ⟨T.1, T.2.trans h⟩, fun T T' hT h' s => φ.2 T T' (hT.trans h) h' s⟩
   map_zero' := rfl
   map_add' _ _ := rfl
 
 
+variable (F G) in
 def homPresheaf : TopCat.Presheaf Ab.{0} X where
   obj V := AddCommGrpCat.of (homGroup F G V.unop)
   map f := AddCommGrpCat.ofHom (homRes F G (leOfHom f.unop))
@@ -62,6 +65,7 @@ def homPresheaf : TopCat.Presheaf Ab.{0} X where
   map_comp _ _ := rfl
 
 
+variable (F G) in
 theorem isSheaf_homPresheaf : (homPresheaf F G).IsSheaf := by
   rw [TopCat.Presheaf.isSheaf_iff_isSheafUniqueGluing]
   intro ι U sf hsf
@@ -143,6 +147,7 @@ theorem isSheaf_homPresheaf : (homPresheaf F G).IsSheaf := by
     exact (key W.1 W.2 s i _ inf_le_left inf_le_right).symm
 
 
+variable (F G) in
 def homMod : X.Modules :=
   letI : ∀ V, Module (X.ringCatSheaf.obj.obj V) ((homPresheaf F G).obj V) :=
     fun V => homGroupModule (V := V.unop)
@@ -191,6 +196,7 @@ theorem homApp_sum {κ : Type*} (t : Finset κ) (φ : κ → Γ(homMod F G, V)) 
     homApp (resM (homMod F G) h φ) h' = homApp φ (h'.trans h) := rfl
 
 
+variable (F G) in
 def homGlobalEquiv : Γ(homMod F G, ⊤) ≃+ (F ⟶ G) where
   toFun φ := homOfLinear (fun _ => homApp φ le_top) fun h s => homApp_resM φ le_top h s
   invFun φ := homMk (fun W _ => appLinear φ W) fun _ _ _ h s => app_resM φ h s
@@ -212,6 +218,7 @@ def homMap {F' G' : X.Modules} (α : F' ⟶ F) (β : G ⟶ G') : homMod F G ⟶ 
     homApp ((homMap α β).app V φ) h s = β.app W (homApp φ h (α.app W s)) := rfl
 
 
+variable (F) in
 def dual : X.Modules := homMod F (structureModule X)
 
 def dualApp (l : Γ(dual F, V)) (h : W ≤ V) : Γ(F, W) →ₗ[Γ(X, W)] Γ(X, W) := homApp l h
@@ -300,6 +307,7 @@ instance mono_dualMap (φ : F ⟶ G) [Epi φ] : Mono (GlobalTheory.CompanionTheo
   exact (map_zero _).symm
 
 
+variable (F) in
 def cartierDualToBidual : F ⟶ dual (dual F) :=
   homOfLinear (fun V =>
     { toFun s := dualMk (fun W h =>
@@ -513,6 +521,7 @@ private theorem pullbackSections_resM [F.IsQuasicoherent] (f : Y ⟶ X) (h : V �
     QCoh.res_pullbackSections f F (le_refl (f ⁻¹ᵁ U)) (hT.trans (f.preimage_mono h)) x]
 
 
+omit [DecidableEq ι] in
 theorem pullback_basis_repr [F.IsQuasicoherent] (he : IsFrame e) (f : Y ⟶ X) (h : V ≤ U)
     {T : Y.Opens} (hT : T ≤ f ⁻¹ᵁ V) (s : Γ(F, V)) (i : ι) :
     ((he.pullback f).basis (hT.trans (f.preimage_mono h))).repr
@@ -541,6 +550,7 @@ theorem val_detUnit_pullback [F.IsQuasicoherent] (he : IsFrame e) (he' : IsFrame
 end IsFrame
 
 
+variable (F r) in
 structure Chart where
 
   U : X.Opens
@@ -550,6 +560,7 @@ structure Chart where
   isFrame : IsFrame e
 
 
+variable (F r) in
 def det : LB X where
   ι := Chart F r
   U c := c.U

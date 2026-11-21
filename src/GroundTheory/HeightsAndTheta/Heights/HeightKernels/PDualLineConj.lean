@@ -22,6 +22,7 @@ def conjPerm (K : Type) [Field K] : Equiv.Perm (K →+* ℂ) :=
   Function.Involutive.toPerm _ (involutive_conjugate K)
 
 
+omit [Fintype T] [DecidableEq T] in
 theorem conj_mulVec (b : Module.Basis T ℤ (dualLattice F)) (w : (K →+* ℂ) × Fin i → ℂ) :
     (fun t => starRingEnd ℂ ((dualEmbMatrix b *ᵥ w) t)) =
       dualEmbMatrix b *ᵥ fun p => starRingEnd ℂ (w (conjugate p.1, p.2)) := by

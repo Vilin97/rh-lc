@@ -133,6 +133,7 @@ open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalC
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
 
 
+open TangentOrigin in
 theorem existsUnique_linear_lift_of_isHolTo :
     ∀ (A : Over (Sp ℂ)) [GrpObj A], IsAbelianScheme A → ∀ (L : LB A.left) (g m : ℕ)
       (u : HolUnif A L g), (∀ v, IsTangent v → ∃! w, u.IsDiff w v) →

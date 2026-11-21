@@ -15,6 +15,8 @@ namespace GlobalTheory.SplitPlaceExt
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
 
 
+open NumberField IsDedekindDomain in
+variable {L : Type} [Field L] [NumberField L] [IsCMField L] in
 theorem _root_.GlobalTheory.SplitPlaceExt.eq_of_w_eq : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L]
     (s s' : _root_.ReciprocityTheory.Aut.SplitPlace L), s'.w = s.w → s' = s := by
   intro L _ _ _ s s' h

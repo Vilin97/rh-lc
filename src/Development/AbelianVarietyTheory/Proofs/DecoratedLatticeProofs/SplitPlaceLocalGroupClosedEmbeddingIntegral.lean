@@ -87,6 +87,7 @@ theorem continuous_gl (h : ∀ g, (ofSplit q).IsLoc F (gl g) g) : Continuous gl 
   rw [map_inv]; rfl
 
 
+variable (F) in
 def comp (x : GA D V) : GL Y k :=
   have key : ∀ x y : GA D V, x * y = 1 →
       F.γ * (Formalism.L2.Theta.mt V x).map q.pr * F.β * (F.γ * (Formalism.L2.Theta.mt V y).map q.pr * F.β) = 1 := fun x y h => by

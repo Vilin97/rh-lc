@@ -10,6 +10,7 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsEqM
 namespace GlobalTheory.OffIdem
 
 
+open NumberField in
 theorem exists_common {O R ι : Type} [CommRing O] [IsDomain O] [CommRing R] (f : O →+* R) (I : ι → Ideal O) (ε : R)
     (hε : ε * ε = ε) (P : Finset ι) (h : ∀ i ∈ P, ∃ x ∈ I i, x ≠ 0 ∧ ∃ s, ε = s * f x) :
     ∃ x, x ≠ 0 ∧ (∀ i ∈ P, x ∈ I i) ∧ ∃ s, ε = s * f x := by

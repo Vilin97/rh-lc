@@ -34,6 +34,8 @@ def IsHom (A B : Ob k G) (f : (Fin A.m → k) →ₗ[k] (Fin B.m → k)) : Prop 
       map_mul' := fun g h => by ext; simp [mul_smul, Module.End.mul_eq_comp, mul_assoc, mul_comm, mul_left_comm] }
 
 
+open scoped LaurentSeries PowerSeries in
+variable {k G : Type} [Field k] [Group G] in
 theorem _root_.GlobalTheory.Models.exists_ob {M : Type} [AddCommGroup M] [Module k M]
     [Module.Finite k M] (π : Representation k G M) :
     ∃ (A : _root_.GlobalTheory.Models.Ob k G) (e : M ≃ₗ[k] (Fin A.m → k)),

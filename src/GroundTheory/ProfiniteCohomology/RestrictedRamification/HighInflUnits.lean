@@ -62,6 +62,7 @@ section Kernel
 variable {ℓ : ℕ} (hℓ : ℓ.Prime) (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
 
 
+include hℓ hS in
 theorem eq_zero_cohomology_gsKernel_of_three_le {r : ℕ} (hr : 3 ≤ r)
     (y : cohomology (Rep.res (gsKernel K S).subtype (unitsLimitRep K)) r) : y = 0 := by
   obtain ⟨U, hU, hNU, y', rfl⟩ :=
@@ -95,6 +96,7 @@ theorem eq_zero_cohomology_gsKernel_of_three_le {r : ℕ} (hr : 3 ≤ r)
   rw [← cohomologyResLE_comp (unitsLimitRep K) hEL hNE r, ConcreteCategory.comp_apply, hz, map_zero]
 
 
+include hℓ hS in
 theorem exists_coprime_nsmul_cohomology_gsKernel {i : ℕ} (hi : 1 ≤ i)
     (y : cohomology (Rep.res (gsKernel K S).subtype (unitsLimitRep K)) i) :
     ∃ m : ℕ, m.Coprime ℓ ∧ m • y = 0 := by
@@ -119,6 +121,7 @@ theorem gsUnitsInfl_apply (r : ℕ) (x : cohomology (galUnits K.1 (maxUnramified
 variable {ℓ : ℕ} (hℓ : ℓ.Prime) (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
 
 
+include hℓ hS in
 theorem isIsoModCoprime_gsUnitsInfl {r : ℕ} (hr : 1 ≤ r) : IsIsoModCoprime ℓ (gsUnitsInfl K S r) := by
   have h := isIsoModCoprime_cohomologyInfl (isClosed_gsKernel K S) ℓ hr
     (fun i hi y => exists_coprime_nsmul_cohomology_gsKernel K S hℓ hS hi y)

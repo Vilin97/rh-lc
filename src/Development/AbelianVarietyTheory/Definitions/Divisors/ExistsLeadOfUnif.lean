@@ -34,6 +34,7 @@ structure Ext (D : DegPre R) : Type 1 where
 attribute [instance] Ext.grp Ext.comm
 
 
+open ReciprocityTheory.ChartRestriction.G.DVR ReciprocityTheory.ChartRestriction.G.Semi.Rosenlicht GlobalTheory.TorusModel GlobalTheory.TorusExt GlobalTheory.Serre in
 instance (D : DegPre R) : Nonempty (Ext D) := by
   have hL := GlobalTheory.allSixLaws.1.globalFns
   obtain ⟨H, _, _, hH⟩ := exists_isGt hL (GlobalTheory.TorusModel.splitExt D)

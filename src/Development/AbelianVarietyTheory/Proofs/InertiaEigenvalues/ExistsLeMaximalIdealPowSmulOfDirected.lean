@@ -103,6 +103,7 @@ private theorem exists_limit_of_sub_mem_maximalIdeal_pow_smul (B M : Type) [Comm
   exact Submodule.sum_mem _ fun l _ => Submodule.smul_mem_smul (hL l k) Submodule.mem_top
 
 
+open TensorProduct Polynomial IsLocalRing in
 theorem _root_.GlobalTheory.Chevalley.exists_le_maximalIdeal_pow_smul_of_directed :
     ∀ (B M ι : Type) [CommRing B] [IsLocalRing B] [IsNoetherianRing B]
       [IsAdicComplete (maximalIdeal B) B] [AddCommGroup M] [Module B M] [Module.Finite B M]

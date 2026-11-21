@@ -228,6 +228,7 @@ theorem mem_invL_A_iff {f : K⟦X⟧} : f ∈ invL l (A O K) ↔ ∃ b : ℝ, �
     exact (mul_le_mul_of_nonneg_left (hb n) (pow_pos hl m).le).trans hm.le
 
 
+variable (O K) in
 abbrev Rpi : Subalgebra O K⟦X⟧ := R O K l (1 / e)
 
 theorem A_le_Rpi : A O K ≤ Rpi O K l e :=
@@ -371,6 +372,7 @@ theorem exists_div_E_pow (m : ℕ) {f : K⟦X⟧} (hf : f ∈ Rpi O K l e) :
       quotE l e h, quotE_mem_Rpi l e hh, by ring⟩
 
 
+variable (O K) in
 theorem sameJets : SameJets
     (Subalgebra.inclusion (invL_A_le_Rpi (O := O) (K := K) l e)).toRingHom
     (EIn l e (invL l (A O K))) where
@@ -434,6 +436,7 @@ variable [NeZero e] [CompleteSpace K]
 def toHat : Rpi O K l e →+* Ahat O K l e := (sameJets O K l e).toCompl
 
 
+variable {O K} in
 theorem evalₐ_toHat_eq_iff (m : ℕ) (f : Rpi O K l e) (g : invL l (A O K)) :
     AdicCompletion.evalₐ _ m (toHat O K l e f) = Ideal.Quotient.mk _ g ↔
       ∃ h ∈ Rpi O K l e, (f : K⟦X⟧) - g = E K l e ^ m * h := by
@@ -448,6 +451,7 @@ theorem toHat_eq_ofAl {f : Rpi O K l e} {g : invL l (A O K)} (h : (f : K⟦X⟧)
   exact congrArg _ (Subtype.ext h)
 
 
+variable {O K} in
 def toHatOf {B : Subalgebra O K⟦X⟧} (h : B ≤ Rpi O K l e) : B →+* Ahat O K l e :=
   (toHat O K l e).comp (Subalgebra.inclusion h).toRingHom
 

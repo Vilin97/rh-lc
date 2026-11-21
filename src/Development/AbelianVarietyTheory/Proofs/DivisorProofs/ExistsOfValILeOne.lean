@@ -14,6 +14,7 @@ variable {V F : Type} [CommRing V] [IsDomain V] [ValuationRing V] [Field F] [Alg
   [IsFractionRing V F]
 
 
+variable (V) in
 abbrev valI : Valuation F (ValuationRing.ValueGroup V F) := ValuationRing.valuation V F
 
 theorem exists_of_valI_le_one {x : F} (h : valI (V := V) x ≤ 1) : ∃ a : V, algebraMap V F a = x :=

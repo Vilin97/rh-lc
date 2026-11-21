@@ -361,6 +361,7 @@ theorem baseChangeAt (F E K L A : Type) [Field F] [CharZero F] [Field E] [Field 
 end NormBaseChange
 
 
+open NormBaseChange in
 theorem baseChange : ∀ (F E K L : Type) [Field F] [NumberField F] [Field E] [NumberField E]
     [Field K] [NumberField K] [Field L] [NumberField L] [Algebra F E] [Algebra F K] [Algebra K L]
     [Algebra E L] [Algebra F L] [IsScalarTower F K L] [IsScalarTower F E L]

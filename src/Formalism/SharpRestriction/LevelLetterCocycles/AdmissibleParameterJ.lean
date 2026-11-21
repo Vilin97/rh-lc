@@ -141,6 +141,7 @@ def jcCondition : Prop :=
     (0 : ℚ) ∉ cloudJ D j ρ ∪ lowJ D j ρ
 
 
+variable (D) in
 def JumpLowsSignCount : Prop :=
   ∀ j, 1 ≤ j → j ≤ D.R.m → ∀ ρ : D.what₂.Tau,
     {q ∈ lowJ D j ρ | q < 0}.ncard = D.R.m - j ∧ {q ∈ lowJ D j ρ | 0 < q}.ncard = j ∧

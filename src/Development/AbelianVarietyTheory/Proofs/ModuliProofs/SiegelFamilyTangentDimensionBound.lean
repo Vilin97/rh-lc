@@ -248,6 +248,7 @@ theorem exists_isLieBasis_kronecker {K : Type} [Field K] {S : Scheme.{0}} {A C :
 end Lie
 
 
+open GlobalTheory.CechPic in
 theorem cls_cube_push {S S' : Scheme.{0}} {G : Over S} {G' : Over S'} [GrpObj G] [GrpObj G'] [IsCommMonObj G]
     [IsCommMonObj G'] {f : S' ⟶ S} {φ : G'.left ⟶ G.left} (h : IsGrpPullback G' G f φ) {L : LB G.left} {L' : LB G'.left}
     (hL : L.IsLB) (hL' : L'.IsLB) (H : LBIso L' (L.pull φ)) {T : Over S} {T' : Over S'}
@@ -265,6 +266,7 @@ theorem cls_cube_push {S S' : Scheme.{0}} {G : Over S} {G' : Over S'} [GrpObj G]
       exacts [Over.OverMorphism.ext ha, Over.OverMorphism.ext hb]) I.down]
 
 
+open GlobalTheory.CechPic GlobalTheory.SharpRel in
 theorem prim_pull {o : Type} [CommRing o] {g k : ℕ} {J : Type} {b : TBase o k} {w w' : J} {S S' : Scheme.{0}}
     {s : S ⟶ Sp o} {s' : S' ⟶ Sp o} {f : S' ⟶ S} {t : TObj g k J b s} {t' : TObj g k J b s'} (m : TMap t' t f)
     (H : t.Prim w w') : t'.Prim w w' := by

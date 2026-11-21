@@ -237,6 +237,7 @@ section Uniq
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {N : ℕ}
 
 
+open GlobalTheory.CuspRep.LocUniq in
 theorem isoPart_opD {V : Submodule ℂ (Sm E N)} (hs : IsStable V) (w : HeightOneSpectrum (𝓞 E)) {X : Type}
     [AddCommGroup X] [Module ℂ X] (σ : Representation ℂ (GL (Fin N) (w.adicCompletion E)) X) (o : Op E N) {x : V}
     (hx : x ∈ isoPart σ (locRepD hs w)) : opD hs o x ∈ isoPart σ (locRepD hs w) := by
@@ -252,6 +253,7 @@ theorem isoPart_opD {V : Submodule ℂ (Sm E N)} (hs : IsStable V) (w : HeightOn
     exact LinearMap.congr_fun (lie_rt_fin X (locGL E N w g)) y.1
 
 
+open GlobalTheory.CuspRep.LocUniq in
 theorem isLocCompGL_unique {V : Submodule ℂ (Sm E N)} (hV : IsDiscrete V) (w : HeightOneSpectrum (𝓞 E))
     (σ σ' : SmIrr (GL (Fin N) (w.adicCompletion E))) (h : IsLocCompGL V w σ) (h' : IsLocCompGL V w σ') :
     Nonempty (σ.ρ.Equiv σ'.ρ) := by
@@ -285,6 +287,7 @@ section Iso
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {N : ℕ}
 
 
+variable (E N) in
 abbrev OpAlg : Subalgebra ℂ (Module.End ℂ (Sm E N)) := Algebra.adjoin ℂ (Set.range (act : Op E N → _))
 
 def opOf (o : Op E N) : OpAlg E N := ⟨act o, Algebra.subset_adjoin ⟨o, rfl⟩⟩

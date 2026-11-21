@@ -58,6 +58,7 @@ theorem char_fin_algebraMap_eq_one_iff {ψ : AddChar (AF F) ℂ} (h : IsStdChar 
     exact ⟨n, by rw [← hn, eq_intCast, Rat.cast_intCast]⟩
 
 
+variable (F) in
 abbrev codiff : FractionalIdeal (𝓞 F)⁰ F := FractionalIdeal.dual ℤ ℚ (1 : FractionalIdeal (𝓞 F)⁰ F)
 
 theorem codiff_ne_zero : codiff F ≠ 0 :=

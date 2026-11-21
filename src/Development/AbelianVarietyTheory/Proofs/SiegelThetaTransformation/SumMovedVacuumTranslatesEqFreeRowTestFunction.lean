@@ -69,6 +69,7 @@ theorem int_smul_tens (a : 𝓞 E) (hy : y ∈ tens Λ N) : (a : E) • y ∈ te
   smul_tens_left (fun _ hv => Λ.smul_mem a hv) hy
 
 
+omit [IsCMField E] in
 theorem glue {s : 𝓞 E} (hs : IsCoprime (Ideal.span {s}) 𝔪) (h1 : (s : E) • y ∈ tens Λ N)
     (h2 : ∀ m ∈ 𝔪, (m : E) • (m : E) • y ∈ tens Λ N) : y ∈ tens Λ N := by
   obtain ⟨a, m, hm, e⟩ := Lev.cop_iff.1 hs
@@ -263,6 +264,7 @@ variable (hM : (M : 𝓞 E) ∈ D.𝔪) (h𝔪 : D.𝔪 = 𝔐 * 𝔍) (hc : IsC
   (h1 : (𝔍 * conjI 𝔍) • Λ'' ≤ Λ') (h2 : (𝔍 * conjI 𝔍) • Λ' ≤ Λ'') (hL : L ∈ D.lats)
 
 
+include hM h𝔪 h0 hα h𝔞 hΛ hΛ' hΛ'' hm h1 hL in
 theorem moved_mem (hy : y ∈ tens Λ ((Ideal.span {2} * conjI D.𝔪) • L))
     (hk : ∀ k : Fin n, r ≤ (k : ℕ) → Cong X D.𝔪 (y k) 0) :
     lowD r n (cc (α : E) / (α : E)) * y ∈ tens Λ' ((Ideal.span {2} * conjI D.𝔪) • L) ∧
@@ -291,6 +293,7 @@ theorem moved_mem (hy : y ∈ tens Λ ((Ideal.span {2} * conjI D.𝔪) • L))
     exact cong_zero.2 ⟨s, (h𝔪 ▸ hs).of_mul_right_left, h⟩
 
 
+include hM h𝔪 hc h0 hα h𝔞 hΛ hΛ' hΛ'' hm h2 hL in
 theorem mem_moved (hy : y ∈ tens Λ' ((Ideal.span {2} * conjI D.𝔪) • L))
     (hu : ∀ k : Fin n, (k : ℕ) < r → Cong X D.𝔪 (y k) 0)
     (hk : ∀ k : Fin n, r ≤ (k : ℕ) → Cong X 𝔐 (y k) 0) : y ∈ tens Λ'' (D.sh L) := by
@@ -335,6 +338,7 @@ theorem mem_moved (hy : y ∈ tens Λ' ((Ideal.span {2} * conjI D.𝔪) • L))
       (Submodule.smul_mono_left (Ideal.mul_le_right.trans (conjI_mono hJ))) hy)
 
 
+include hM h𝔪 h0 hα h𝔞 hΛ hΛ' hΛ'' hm h1 in
 theorem exists_low (hy : y ∈ tens Λ'' (D.sh L)) :
     ∃ δ ∈ tens Λ'' ((Ideal.span {2} * conjI D.𝔪 * D.𝔪) • L), y - δ ∈ tens Λ' (D.sh L) := by
   have hJ : D.𝔪 ≤ 𝔍 := h𝔪 ▸ Ideal.mul_le_right

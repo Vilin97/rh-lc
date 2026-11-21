@@ -39,6 +39,7 @@ def VecOf (Q : Finset (Pl D.host.E)) (Ω : DatFn D i) (φ : WO (Vc D i) (Wc D i)
           Ω (fun PP => redM PP (frMapAdj (Vc D i) (Wc D i) (R.βV i) (R.βW i) x)) else 0) φ
 
 
+open Classical in
 def PhiOf (Q : Finset (Pl D.host.E)) (Ω : DatFn D i) {La : Type} [AddCommGroup La] [Module (𝓞 D.host.E) La]
     (ι : La →ₗ[𝓞 D.host.E] (Fin (Wc D i).rank → D.host.E)) (N : Submodule (𝓞 D.host.E) La)
     (φ : (Fin (Vc D i).rank → La ⧸ N) → ℂ) : Prop :=

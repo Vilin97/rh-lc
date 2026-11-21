@@ -65,6 +65,7 @@ theorem sum_sphericalFun_gMat (z : Fin n → ℂˣ) (r : ℕ) (y : GL (Fin n) F)
   rw [mul_assoc, h1, ← mul_assoc, inv_mul_cancel₀ hK, one_mul]
 
 
+variable (μ) in
 def zonalSpherical (z : Fin n → ℂˣ) (g : GL (Fin n) F) : ℂ :=
   (μ.real (integralGL F n : Set (GL (Fin n) F)) : ℂ)⁻¹ *
     ∫ x, (integralGL F n : Set (GL (Fin n) F)).indicator (fun _ => (1 : ℂ)) x *

@@ -35,6 +35,7 @@ variable {K Ω D m}
 def sec (x : Fin m → Ω) (i : Fin D) : ΩT Ω D m := ∑ j, X (i.succ, j) * C (x j)
 
 
+variable (K) in
 def Is (x : Fin m → Ω) : Ideal (RS K Ω D m) :=
   Ideal.span (Set.range fun i : Fin D => algebraMap (ΩT Ω D m) (RS K Ω D m) (sec x i))
 

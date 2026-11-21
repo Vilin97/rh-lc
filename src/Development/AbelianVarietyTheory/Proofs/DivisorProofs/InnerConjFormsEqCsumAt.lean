@@ -22,6 +22,7 @@ variable {K : Type} [Field K] [NumberField K] [StarRing K] {M W' ι : Type} [Add
   [NormedAddCommGroup W'] [InnerProductSpace ℂ W'] [Fintype ι]
 
 
+omit [NumberField K] in
 theorem inner_coef_of_rat (b : Module.Basis ι K M) (σ : K →+* ℂ) (c₁ : M →ₛₗ[σ] W') (pr : M →ₗ⋆[K] M →ₗ[K] K)
     (hp : ∀ a a', inner ℂ (c₁ (b a)) (c₁ (b a')) = σ (pr (b a) (b a'))) (u v : M) (hu : ∀ a, b.repr u a ∈ cmMax K) :
     inner ℂ (c₁ u) (c₁ v) = σ (pr u v) := by

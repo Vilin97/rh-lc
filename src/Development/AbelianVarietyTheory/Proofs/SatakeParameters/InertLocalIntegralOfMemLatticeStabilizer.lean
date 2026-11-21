@@ -25,6 +25,7 @@ namespace GlobalTheory.InertUmaxInt
 variable (L : Type) [Field L] [NumberField L] [IsCMField L]
 
 
+omit [IsCMField L] in
 theorem compAt_mem_tensInt (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L))) {x : AL L}
     (hx : x ∈ ALint L) :
     compAt L v x ∈ tensInt (F := maximalRealSubfield L) (v.adicCompletion (maximalRealSubfield L))
@@ -43,6 +44,7 @@ theorem compAt_mem_tensInt (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L))
 end GlobalTheory.InertUmaxInt
 
 
+open GlobalTheory.InertUmaxInt in
 theorem GlobalTheory.InertUmaxInt.loc_integral_of_mem_Umax : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ) (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L))) (w : HeightOneSpectrum (𝓞 L)) (Dv : InertDatum L n v w), ∀ u : GAf L n, u ∈ Umax L n → ∀ i j, ((Dv.loc u : GL (Fin n) (w.adicCompletion L)) : Matrix (Fin n) (Fin n) (w.adicCompletion L)) i j ∈ intL (w.adicCompletion L) := by
   intro L _ _ _ n v w Dv u hu i j
   have hP := GlobalTheory.InertUmax.entries_mem_of_range _ _ Dv.Pint

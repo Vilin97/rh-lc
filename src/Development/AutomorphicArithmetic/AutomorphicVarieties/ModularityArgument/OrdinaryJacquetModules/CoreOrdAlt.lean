@@ -29,9 +29,11 @@ def ExpOf (π : CuspSub F n) (ψ : Fin n → Dec (F := F) A →* (Qbar l)ˣ) : P
     ∀ σ, π.IsLocComp w σ → IsSubquotient σ.ρ (PS ω)
 
 
+omit [NumberField F] [IsTotallyComplex F] [IsAlgClosure F Ω] in
 def Unl (ψ : Fin n → Dec (F := F) A →* (Qbar l)ˣ) : Prop := ∀ i j, ψ i ≠ ψ j * (cycBar F Ω l).comp (Dec (F := F) A).subtype
 
 
+omit [IsAlgClosure F Ω] in
 def TU (π : CuspSub F n) (w : HeightOneSpectrum (𝓞 F)) : Prop :=
   Gam.TorAt π w ∧ ∀ s, Gam.SuppAt π w s → ImaginaryQuadraticEtaCharacter.Unl (Ideal.absNorm w.asIdeal) s
 

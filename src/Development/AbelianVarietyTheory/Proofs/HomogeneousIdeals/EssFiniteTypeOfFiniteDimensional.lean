@@ -23,6 +23,7 @@ namespace GlobalTheory.TupleNorm
 variable {L : Type} [Field L]
 
 
+open Polynomial in
 theorem pow_mem_forms (o : Type*) [CommRing o] {L : Type*} [Field L] [Algebra o L] {σ : Type*}
     (t : σ → L) [IsDedekindDomain o] [CharZero L] [Algebra.EssFiniteType o L] [Fintype σ] {e : ℕ}
     (he : 0 < e) (hv : ∀ j, 0 < j → piece o t (j * e) = piece o t e ^ j) {a : L}
@@ -171,6 +172,7 @@ theorem iSup_preimage_chart :
     (le_preimage_of_mem (W := toProj o t ht ⁻¹ᵁ chart o r i) _ hi) le_rfl⟩, hi⟩
 
 
+variable {o t ht} in
 theorem mem_range_valMap_iff {i : Fin (r + 1)} {W : (Nm o t ht).Opens}
     (hW : W = toProj o t ht ⁻¹ᵁ chart o r i) (h : ⊤ ≤ nmPoint o t ht ⁻¹ᵁ W) (a : L) :
     a ∈ Set.range (valMap (nmPoint o t ht) W h).hom ↔ IsIntegral (ratioRing o t i) a := by
@@ -206,6 +208,7 @@ def ratioField : Subfield L :=
     Set.range fun p : Fin (r + 1) × Fin (r + 1) => t p.1 / t p.2)
 
 
+variable {t} in
 theorem ratioField_eq {i : Fin (r + 1)} (hi : t i ≠ 0) :
     ratioField o t = Subfield.closure (ratioRing o t i : Set L) := by
   refine le_antisymm (Subfield.closure_le.mpr ?_) (Subfield.closure_le.mpr fun x hx => ?_)
@@ -224,6 +227,7 @@ theorem ratioField_eq {i : Fin (r + 1)} (hi : t i ≠ 0) :
     | mul x y _ _ hx hy => exact mul_mem hx hy
 
 
+variable {t} in
 theorem isAlgebraic_and_essFiniteType [FiniteDimensional (ratioField o t) L] {i : Fin (r + 1)}
     (hi : t i ≠ 0) :
     Algebra.IsAlgebraic (ratioRing o t i) L ∧ Algebra.EssFiniteType (ratioRing o t i) L := by
@@ -246,6 +250,7 @@ theorem isAlgebraic_and_essFiniteType [FiniteDimensional (ratioField o t) L] {i 
     .comp _ (ratioField o t) _⟩
 
 
+include ht in
 theorem essFiniteType_of_finiteDimensional [FiniteDimensional (ratioField o t) L] :
     Algebra.EssFiniteType o L := by
   obtain ⟨i, hi⟩ := Function.ne_iff.mp ht

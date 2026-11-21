@@ -32,6 +32,7 @@ open GlobalTheory.CellDec GlobalTheory.RSJ
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {m : ℕ}
 
 
+omit [IsTotallyComplex E] in
 theorem detPow_eq (x : ℝ) {a : ℕ} (g : GA E a) :
     detPow E a x g = Real.exp (x * GlobalTheory.Mem.Chr.CharModel.logNorm E (Matrix.GeneralLinearGroup.det g)) := by
   change ‖((GlobalTheory.Mem.Chr.CharModel.absHom E (x : ℂ) (Matrix.GeneralLinearGroup.det g) : ℂˣ) : ℂ)‖ = _
@@ -48,6 +49,7 @@ theorem single_last_eq {R : Type} [Zero R] [One R] (j : Fin (m + 1)) :
     rw [Pi.single_apply, if_neg h, if_neg (by omega)]
 
 
+omit [IsTotallyComplex E] in
 theorem isOpen_natLat {N : ℕ} (hN : 0 < N) : IsOpen (natLat E N) := by
   have hu : IsUnit (N : Af E) := by
     have e : (N : Af E) = algebraMap E (Af E) (N : E) := (map_natCast _ _).symm
@@ -68,6 +70,7 @@ theorem isOpen_natLat {N : ℕ} (hN : 0 < N) : IsOpen (natLat E N) := by
   exact GroundTheory.Global.isOpen_integralFiniteAdeles.preimage (continuous_const.mul continuous_id)
 
 
+omit [IsTotallyComplex E] in
 theorem continuous_indN {N : ℕ} (hN : 0 < N) : Continuous fun y : Fin (m + 1) → Af E => indN N y := by
   set T : Set (Fin (m + 1) → Af E) :=
     {y | ∀ i : Fin (m + 1), y i - (if (i : ℕ) + 1 = m + 1 then 1 else 0) ∈ natLat E N} with hT

@@ -84,10 +84,12 @@ def gridCom : Com D where
   a := fun k τ => -(cen D sc.cGap τ (D.R.m - k) : ℚ)
 
 
+variable (G) in
 def IsCoreLat (i : ℕ) (r : ReLat (G.V (.core i))) : Prop :=
   GlobalTheory.AdelicU.frameLat r.sp = scaleLat ((D.host.AAbar * D.host.AA⁻¹) ^ i) (G.Λ (.core i))
 
 
+variable (G) in
 @[reducible] def gridStage (v : CoreVol G) (i : ℕ) (r : ReLat (G.V (.core i)))
     (M : DSModel (G.V (.core i)) (Node.par D sc.cGap (.core i))) : PiLocalization₂ D where
   V := r.sp
@@ -98,6 +100,7 @@ def IsCoreLat (i : ℕ) (r : ReLat (G.V (.core i))) : Prop :=
   fd := (v i).𝓕
 
 
+variable (G) in
 def IsOntoMod (i : ℕ) (x₀ : Matrix (Fin (G.V (.core i)).rank) (Fin (G.V (.core (i + 1))).rank) D.host.E) : Prop :=
   x₀ ∈ homLat (G.Λ (.core (i + 1))) (G.Λ (.core i)) ∧ ∃ y₀ ∈ homLat (G.Λ (.core i)) (G.Λ (.core (i + 1))),
     x₀ * y₀ - 1 ∈ G.modul • homLat (G.Λ (.core i)) (G.Λ (.core i))

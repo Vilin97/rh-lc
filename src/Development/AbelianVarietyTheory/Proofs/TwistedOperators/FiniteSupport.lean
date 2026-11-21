@@ -54,6 +54,7 @@ def InvRule (N : GKMod r s) {Z : Type} [AddCommGroup Z] [Module ℂ Z]
   ∀ (Y : Mat r s) P y, B (fockAct2 p q r s Y P) y = B P (N.act (adjZ Y) y)
 
 
+variable (p q r s) in
 def UnitaryImage : Prop :=
   ∀ (Y Z : Type) [AddCommGroup Y] [Module ℂ Y] [NormedAddCommGroup Z] [InnerProductSpace ℂ Z]
     (B : Pol p q r s →ₗ[ℂ] Y →ₛₗ[starRingEnd ℂ] Z), AdjRule B →
@@ -66,6 +67,7 @@ def contr {A V H : Type} [AddCommGroup A] [Module ℂ A] [AddCommGroup V] [Modul
   (TensorProduct.rid ℂ A).toLinearMap ∘ₗ LinearMap.lTensor A (innerₛₗ ℂ (ι y) ∘ₗ ι)
 
 
+variable (p q) in
 def FiniteSupport {T : GrpData r s} (R : DSRep T) : Prop :=
   ∀ (A : Type) [AddCommGroup A] [Module ℂ A] (B : Pol p q r s →ₗ[ℂ] R.HK.V →ₛₗ[starRingEnd ℂ] A), InvRule R.HK B →
     ∀ P, ∃ E : Submodule ℂ R.HK.V, FiniteDimensional ℂ E ∧ ∀ y, (∀ e ∈ E, ⟪R.ι y, R.ι e⟫_ℂ = 0) → B P y = 0
@@ -85,6 +87,7 @@ structure IsCoverPair (N : GKMod r s) {Z : Type} [NormedAddCommGroup Z] [InnerPr
   inv : ∀ Y ∈ upq r s, ∀ P y, B (fockAct2 p q r s Y P) y + B P (N.act Y y) = 0
 
 
+variable (p q) in
 def CoverKer (N : GKMod r s) : Prop :=
   ∀ (Z₁ Z₂ : Type) [NormedAddCommGroup Z₁] [InnerProductSpace ℂ Z₁] [NormedAddCommGroup Z₂] [InnerProductSpace ℂ Z₂]
     (B₁ : Pol p q r s →ₗ[ℂ] N.V →ₛₗ[starRingEnd ℂ] Z₁) (B₂ : Pol p q r s →ₗ[ℂ] N.V →ₛₗ[starRingEnd ℂ] Z₂),
@@ -104,6 +107,7 @@ def KSm : Prop := ∀ τ, kFin M τ ≤ M.sm τ
 abbrev KT : Type := ⨂[ℂ] τ, kFin M τ
 
 
+variable {M} in
 def inclK (h : KSm M) : KT M →ₗ[ℂ] SmT M := PiTensorProduct.map fun τ => Submodule.inclusion (h τ)
 
 def kOp (τ : D.what₂.Tau) {k : Matrix (Fin V.rank) (Fin V.rank) ℂ} (hk : k ∈ maxCpt M τ) : Module.End ℂ (kFin M τ) :=

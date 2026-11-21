@@ -75,6 +75,7 @@ theorem expand {x : S.V} (hx : x ∈ S.spanTo g r) :
   simp [Fin.sum_univ_castSucc, h0]
 
 
+include gram dual iso in
 theorem exists_move [IsNonarchimedeanLocalField F] [CharZero F] (y : Fin r → S.V)
     (dy : ∀ a j, hf L S.Hm (g a) (y j) = if a = j.castSucc then 1 else 0)
     (iy : ∀ i j, hf L S.Hm (y i) (y j) = 0) (m : ℕ) :
@@ -143,6 +144,7 @@ theorem exists_move [IsNonarchimedeanLocalField F] [CharZero F] (y : Fin r → S
     · exact ⟨n, hn, hg, fun j _ => h j (by have := j.2; omega)⟩
 
 
+include gram dual iso in
 theorem core [IsNoetherianRing L.O] (Λ : Submodule L.O S.V) (hfg : Λ.FG)
     (hsd : ∀ y, (∀ x ∈ Λ, hf L S.Hm x y ∈ L.O) ↔ y ∈ Λ) (hg : ∀ b, g b ∈ Λ) (hgs : ∀ j, gs j ∈ Λ)
     (c : S.V) (hc : c ∈ Λ) (hc' : ∀ b, hf L S.Hm (g b) c = if b = Fin.last r then 1 else 0) :

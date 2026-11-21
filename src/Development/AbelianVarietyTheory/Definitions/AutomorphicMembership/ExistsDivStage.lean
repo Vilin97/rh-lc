@@ -210,6 +210,7 @@ theorem normAt_id (e : K →+* ℂ) {W : Type} [NormedAddCommGroup W] [InnerProd
   simp [InfinitePlace.norm_embedding_eq, InfinitePlace.apply]
 
 
+variable (K) in
 def stdLat (n : ℕ) : HLat K where
   V := Fin n → K
   ι := Fin n

@@ -21,6 +21,7 @@ variable {D : D7} {V : Type} [AddCommGroup V] [Module D.host.E V] [Module (𝓞 
   (hann : ∀ a : 𝓞 D.host.E, a • w₁ ∈ M ↔ ((T : ℕ) : 𝓞 D.host.E) ∣ a)
 
 
+include hw₁ hgen in
 theorem discriminant_one_generator : DiscGen h M 1 := by
   refine ⟨{Submodule.Quotient.mk ⟨w₁, hw₁⟩}, by simp, ?_⟩
   rw [eq_top_iff, Finset.coe_singleton]
@@ -35,6 +36,7 @@ theorem discriminant_one_generator : DiscGen h M 1 := by
   exact M.neg_mem ha
 
 
+include hw₁ hgen hann in
 theorem corank_one_mod_prime_over (p : Ideal (𝓞 D.host.F)) (hp : p.IsMaximal) (hTp : ((T : ℕ) : 𝓞 D.host.F) ∈ p) :
     eP h M p = 1 := by
   set P : Ideal (𝓞 D.host.E) := pE D.host.F D.host.E p with hP

@@ -74,6 +74,7 @@ structure IsLiftA {A : Type} [CommRing A] [IsLocalRing A] [Algebra O A] [IsLocal
   diag : (ρ.map (residue A)).IsDiag
 
 
+variable (F n) in
 def FinPt : Prop :=
   ∀ (A : Type) [CommRing A] [Algebra O A] [IsCD O A] [Algebra (ResidueField O) A] [IsScalarTower O (ResidueField O) A]
     (ρ : NRep F n A), IsLiftA O ρ → (∀ v i, ∀ g ∈ F.Iv v, F.Ψ (F.loc v g) = 1 → ρ.ψ v i g = 1) →

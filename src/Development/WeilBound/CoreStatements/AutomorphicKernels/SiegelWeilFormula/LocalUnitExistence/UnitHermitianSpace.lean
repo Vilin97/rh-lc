@@ -17,6 +17,7 @@ namespace PositivityTheory.SiegelWeilFormula.Ldexb.UnitHermitianSpace
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 
+variable (F E) in
 def unitSpc (n : ℕ) : Spc F E n := ⟨1, stdLattice E n, fun _ => 1, fun _ => 1⟩
 
 omit [NumberField F] [NumberField E] in

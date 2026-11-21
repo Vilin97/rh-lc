@@ -41,6 +41,8 @@ def Lipschitz : Prop :=
       ∑' a : (M : Set F), lhsTerm k z a = lipConst k M * ∑' ν : dualCone M z, rhsTerm k z ν
 
 
+open NumberField nonZeroDivisors in
+variable {F : Type} [Field F] [NumberField F] in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.mem_traceDual_iff {M : FractionalIdeal (𝓞 F)⁰ F} (hM : M ≠ 0) (y : F) :
     y ∈ _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.traceDual M ↔ y ∈ FractionalIdeal.dual ℤ ℚ M := by
   change (∀ a ∈ M, ∃ n : ℤ, Algebra.trace ℚ F (y * a) = n) ↔ _
@@ -49,6 +51,8 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.mem_tr
   simp [Algebra.traceForm_apply, eq_comm]
 
 
+open NumberField nonZeroDivisors in
+variable {F : Type} [Field F] [NumberField F] in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.covol_pos {M : FractionalIdeal (𝓞 F)⁰ F} (hM : M ≠ 0) :
     0 < _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.covol M := by
   refine mul_pos (Real.sqrt_pos.2 (abs_pos.2 (Int.cast_ne_zero.2 (discr_ne_zero F)))) ?_
@@ -57,6 +61,9 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.covol_
 
 
 open scoped Classical in
+open NumberField nonZeroDivisors in
+variable {F : Type} [Field F] [NumberField F] in
+open Classical in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.covol_eq_covolume [IsTotallyReal F]
     (M : (FractionalIdeal (𝓞 F)⁰ F)ˣ) :
     _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.covol (M : FractionalIdeal (𝓞 F)⁰ F) =
@@ -67,6 +74,8 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.covol_
   rfl
 
 
+open NumberField nonZeroDivisors in
+variable {F : Type} [Field F] [NumberField F] in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.TraceDualDifferent.card_realEmb [IsTotallyReal F] :
     Fintype.card (F →+* ℝ) = Module.finrank ℚ F := by
   classical

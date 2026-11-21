@@ -39,6 +39,7 @@ theorem QCM.sq_ne_neg_one_of_isReal {E : Type} [Field E] {v : InfinitePlace E} (
   nlinarith [sq_nonneg (InfinitePlace.embedding_of_isReal hv x)]
 
 
+omit [NumberField F] in
 theorem QCM.isIntegral_sqrt_neg_one {i : Ω} (hi : i ^ 2 = -1) : IsIntegral F i :=
   ⟨X ^ 2 - C (-1), monic_X_pow_sub_C _ two_ne_zero, by simp [hi]⟩
 
@@ -109,6 +110,7 @@ theorem AttRes.hasSat_trivial [IsTotallyReal F] (v : HeightOneSpectrum (𝓞 F))
   simpa using this
 
 
+omit [Algebra F Ω] in
 theorem AttRes.one_triv [IsTotallyReal F] [Algebra L Ω] {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) :
     AttRes (Ω := Ω) (TR.CuspSub.triv F (le_refl 1)) ι L 1 := by
   refine Filter.Eventually.of_forall fun w f _ =>

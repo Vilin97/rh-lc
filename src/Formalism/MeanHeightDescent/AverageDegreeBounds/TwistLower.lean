@@ -63,6 +63,7 @@ theorem covol_ideal_smul (b : Basis ι K V) (X : InfinitePlace K → Matrix ι �
   rfl
 
 
+omit [StarRing K] [IsTotallyComplex K] in
 theorem den_smul_idealSmul (I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K)
     (M : Submodule (𝓞 K) V) :
     (Ideal.span {(I.den : 𝓞 K)}) • Formalism.HermitianLatticesTheory.idealSmul (I : Submodule (𝓞 K) K) M = I.num • M := by

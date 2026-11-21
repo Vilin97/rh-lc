@@ -38,6 +38,7 @@ theorem Law.diag' (h : Law χ z f) (d0 : Y.J.det ≠ 0) (he : ∀ h h', IsEmb h 
   rw [h _ _ x (he g g).par, absE_det' d0, detInv, mul_right_comm]; simp
 
 
+variable (σ Y) in
 abbrev Cos : Type := Quotient (QuotientGroup.rightRel ((par2 σ Y).subgroupOf (rat2 σ Y)))
 
 theorem cos_eq {a b : rat2 σ Y} : (Quotient.mk _ a : Cos σ Y) = Quotient.mk _ b ↔ b.1 * a.1⁻¹ ∈ par2 σ Y :=

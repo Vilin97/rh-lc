@@ -53,6 +53,7 @@ theorem segreSqSum_pos {z : (Σ k, ι k) → ℂ} (hz : ∀ k, ∃ i, z ⟨k, i�
     ⟨i, Finset.mem_univ _, pow_pos (norm_pos_iff.mpr h) 2⟩
 
 
+omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem segre_smul (c : K → ℂ) (z : (Σ k, ι k) → ℂ) (i : (k : K) → ι k) :
     segre (fun p => c p.1 * z p) i = (∏ k, c k) * segre z i :=
   Finset.prod_mul_distrib

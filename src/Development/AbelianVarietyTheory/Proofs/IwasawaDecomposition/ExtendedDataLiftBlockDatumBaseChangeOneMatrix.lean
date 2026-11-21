@@ -49,6 +49,7 @@ private theorem app_heq {Γ Γ' W W' : Type} (hΓ : Γ' = Γ) {nW : NormedAddCom
   rw [inj (eq_of_heq he)]
 
 
+set_option maxHeartbeats 4000000 in
 private theorem hmod_fields' {B B' : Base} (q : B'.toPre = B.toPre) {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : TwDat B'}
     {w : ColW B f T} {w' : ColW B' f' T'} {Z : w.Lt} {Z' : w'.Lt}
     (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w'.st Z').toD7.R.m) (hi : (i : ℕ) = i')
@@ -81,6 +82,7 @@ private theorem theta_jL {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : T
   exact (by with_unfolding_all exact ((heq_of_eq e) :))
 
 
+set_option maxHeartbeats 4000000 in
 private theorem thG_extN {B B' : Base} (q : B'.toPre = B.toPre) {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : TwDat B'}
     {w : ColW B f T} {w' : ColW B' f' T'} {Z : w.Lt} {Z' : w'.Lt} {hX : B.fields.Ok} {hX' : B'.fields.Ok}
     {Wt : Set B.places.Pl} {Wt' : Set B'.places.Pl} {z : Dat (w.st Z) w.I hX T Wt} {z' : Dat (w'.st Z') w'.I hX' T' Wt'}

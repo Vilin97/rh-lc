@@ -63,6 +63,7 @@ def LiftIsCuspC (F : Face D A) : Prop :=
         Lift.thetaPInt ν 𝓕 (fun g h f => Datum.thetaKO ω h g f) (ptAt R i σ BW f) io (c.ext φ) (PiTensorProduct.tprod ℂ v) g
 
 
+open Datum in
 def FiniteZetaC (F : Face D A) : Prop :=
   ForLiftDataC R F fun i t σ P _ ω _ f _ _ =>
     ∀ (μ : Measure (WO (Vc D i) (Wc D i))) (𝓧 : Set (WO (Vc D i) (Wc D i))), IsCovolOne (ratL (Wc D i) (Vc D i)) μ 𝓧 →

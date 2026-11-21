@@ -25,6 +25,7 @@ variable {κ : Type*} [Fintype κ] (b : Basis κ K E)
 section Core
 
 
+variable (ι) in
 def stdSub : AddSubgroup (ι → FinAdele K ⊗[K] E) where
   carrier := stdLattice ι (FinAdele K) b (intAdeles K)
   add_mem' hx hy := stdLattice_add b hx hy
@@ -39,6 +40,7 @@ theorem mem_stdSub {x : ι → FinAdele K ⊗[K] E} :
     x ∈ stdSub ι b ↔ x ∈ stdLattice ι (FinAdele K) b (intAdeles K) := Iff.rfl
 
 
+variable (ι) in
 def integralCore : AddSubgroup (ι → FinAdele K ⊗[K] E) where
   carrier := {u | ∀ β : 𝓞 E, ((1 : FinAdele K) ⊗ₜ[K] (β : E)) • u ∈ stdSub ι b}
   add_mem' {u v} hu hv β := by
@@ -305,6 +307,7 @@ theorem mulVec_mem_coreLattice_iff (γ : unitaryPoints K E H K) (g : unitaryPoin
     mulVec_mulVec, Matrix.mul_assoc, unitaryMat_inv_mul, Matrix.mul_one]
 
 
+variable (H) in
 def transCore (g : unitaryPoints K E H (FinAdele K)) : Set (ι → FinAdele K ⊗[K] E) :=
   {z | unitaryMat g⁻¹ *ᵥ z ∈ integralCore ι b}
 
@@ -371,6 +374,7 @@ theorem coreLattice_eq_iff {g g' : unitaryPoints K E H (FinAdele K)} :
   ⟨mem_coreStabilizer_of_coreLattice_eq b, coreLattice_eq_of_mem_coreStabilizer b⟩
 
 
+variable (H) in
 theorem exists_int_smul_mem_coreLattice : ∃ N : ℤ, N ≠ 0 ∧
     ∀ (g : unitaryPoints K E H (FinAdele K)) (x : ι → K ⊗[K] E), x ∈ adelicLattice b H g →
       (N : K) • x ∈ coreLattice b H g := by

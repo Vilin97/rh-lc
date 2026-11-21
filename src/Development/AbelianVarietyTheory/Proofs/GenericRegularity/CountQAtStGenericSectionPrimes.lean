@@ -40,6 +40,7 @@ theorem sfr_zero : sfr X la w 0 = 1 := by
 
 
 
+set_option maxHeartbeats 1000000 in
 theorem countQAt_of_trdeg_le {Ω : Type} [Field Ω] [Algebra B.KO Ω] (gF : X.Forms →ₐ[B.KO] Ω)
     (htr : Algebra.trdeg B.KO Ω ≤ WeightFamilies.dimY D j) : CurveLoc.CountQAt X la N w gF := by
   by_cases h0 : ∃ a, gF (X.inc wL (w a)) ≠ 0
@@ -58,6 +59,8 @@ end Rec
 
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem countQAtSt : ∀ (D : D7) (T : Top D) (h : LawsP T) (j : ℕ) (hj : InR D j) (hG : GenFrEx (T.Q.Xo j) T.Q.c) (hT : GenFromTest (T.Q.Xo j) T.Q.c hG), CountQAtSt h j hj hG hT := by
   intro D T h j hj hG hT ka wL wF G S g0 la _ Z
   exact countQAt_of_trdeg_le (recPlus h j hj) la G.N G.w (formsEvR j hG hT Z)

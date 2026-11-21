@@ -27,10 +27,13 @@ theorem charEig_one (ι : Qbar l ≃+* ℂ) (w : HeightOneSpectrum (𝓞 F)) : C
   fun _ _ => ⟨fun _ _ => rfl, fun _ _ => by simp⟩
 
 
+omit [NumberField F] in
+variable (F Ω) in
 abbrev res (E : Type) [Field E] [Algebra F E] [Algebra E Ω] [IsScalarTower F E Ω] : G E Ω →* G F Ω :=
   AlgEquiv.restrictScalarsHom F
 
 
+omit [NumberField F] in
 def IsSign (E : Type) [Field E] [Algebra F E] [Algebra E Ω] [IsScalarTower F E Ω] (δ : G F Ω →* (Qbar l)ˣ) : Prop :=
   (∀ s, δ s = 1 ↔ s ∈ (res F Ω E).range) ∧ ∀ s, δ s = 1 ∨ δ s = -1
 

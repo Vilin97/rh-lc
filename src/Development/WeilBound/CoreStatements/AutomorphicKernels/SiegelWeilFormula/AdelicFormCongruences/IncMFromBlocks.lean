@@ -204,6 +204,7 @@ theorem rat_blocks {b : GL (Fin n ⊕ Fin n) E} (g : G2 σ Y) (hg : g ∈ rat2 �
     exact this
 
 
+variable (σ Y) in
 def cNA (b : GL (Fin n ⊕ Fin n) E) (P Q P' Q' : Matrix (Fin n) (Fin n) (AE F E))
     (h : ∀ β : nA σ Y b, P * β.1 * Q ∈ nA σ Y b) (h' : ∀ β : nA σ Y b, P' * β.1 * Q' ∈ nA σ Y b)
     (e1 : P' * P = 1) (e2 : Q * Q' = 1) (e3 : P * P' = 1) (e4 : Q' * Q = 1) : nA σ Y b ≃ₜ+ nA σ Y b where

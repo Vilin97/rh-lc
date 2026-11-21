@@ -70,6 +70,7 @@ theorem projAt_vecAt (h : HermitianForm F E W) (v : Basis ι E W) {x₀ w₀ : W
 end ComplementArchCocompact
 
 
+open ComplementArchCocompact in
 theorem ComplementArchCocompact.proof (h : HermitianForm F E W) (v : Basis ι E W) :
     ComplementArchCocompact.Statement h v := by
   classical

@@ -728,6 +728,7 @@ theorem cycMod_eq_one (hA : IsPlaceOver A v) (hl : ((l : ℕ) : 𝓞 F) ∉ v.as
   exact h4 (Subgroup.mem_top g)
 
 
+omit [IsAlgClosure F Ω] [Fact l.Prime] in
 def homOf (z : Z1 (trivDec F A l n)) : Dec (F := F) A →* Multiplicative (ZMod (l ^ n)) :=
   MonoidHom.mk' (fun g => Multiplicative.ofAdd (z.1 g)) fun g h => congrArg _ (z.2.2 g h)
 
@@ -926,6 +927,7 @@ theorem muDec_apply (g : Dec (F := F) A) (s : ZMod (l ^ n)) : muDec F A l n g s 
   simp [hμ g]
 
 
+omit [IsAlgClosure F Ω] in
 def toMu : Z1 (trivDec F A l n) ≃ₗ[ZMod (l ^ n)] Z1 (muDec F A l n) :=
   LinearEquiv.ofEq _ _ (Submodule.ext fun f => by
     simp only [mem_Z1_iff_cocycle, muDec_apply hμ, Representation.trivial_apply])

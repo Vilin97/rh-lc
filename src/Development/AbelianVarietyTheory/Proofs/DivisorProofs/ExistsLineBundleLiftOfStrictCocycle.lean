@@ -128,6 +128,7 @@ def chart (hL : L.IsLB) (hl : IsLift s i L u) (hm : mdef _ u = 0) (hB : IsBasis 
 end GlobalTheory.LBGlue
 
 
+open GlobalTheory.LBGlue in
 theorem GlobalTheory.LBLift.exists_pic_of_strict_lift : ∀ (R : Type) [CommRing R] (X X₀ : Scheme.{0}) (s : X ⟶ Sp R)
     (i : X₀ ⟶ X) (L : LB X₀) (hL : L.IsLB) (u : C1 (smallG i L ⋙ OAff s)), IsBasis (smallG i L) →
     IsLift s i L u → (∀ t t' a, IsUnit (u t t' a)) → mdef _ u = 0 →

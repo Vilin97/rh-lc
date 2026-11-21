@@ -100,6 +100,7 @@ private theorem sum_filter_lt_sum_of_strictAnti {r : ℕ} {a : Fin r → ℕ} (h
   omega
 
 
+open Finset Matrix in
 theorem _root_.GlobalTheory.IwahoriNewtonTest.intersectionNumber_baseChange : _root_.Formalism.PacketSums.IwahoriNewton := by
   unfold _root_.Formalism.PacketSums.IwahoriNewton
   intro O _ _ ϖ hϖ r a ha i₁ i₂ h1 h2 h1' h2' k hk

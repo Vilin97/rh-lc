@@ -102,6 +102,7 @@ instance additive_sheafPushforwardContinuous :
   map_add := rfl
 
 
+variable (J K) in
 def freeToPullback {V : C} {W : D} (i : W ⟶ p.obj V) :
     (GlobalTheory.SheafLES.freeYoneda K).obj W ⟶ (p.sheafPullback AddCommGrpCat.{v} J K).obj ((GlobalTheory.SheafLES.freeYoneda J).obj V) :=
   (GlobalTheory.SheafLES.freeYonedaHomEquiv W _).symm

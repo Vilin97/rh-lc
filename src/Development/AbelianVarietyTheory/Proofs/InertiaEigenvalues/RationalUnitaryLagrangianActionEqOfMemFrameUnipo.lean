@@ -33,6 +33,7 @@ theorem inv_sub_one {n : ℕ} (A B : Matrix (Fin n) (Fin n) (AE D)) (hBA : B * A
   rw [Matrix.mul_sub, hBA, Matrix.mul_one, neg_sub]
 
 
+set_option maxHeartbeats 1000000 in
 theorem ni_prop (W : HSp D) {s : ℕ} (I : Matrix (Fin W.rank) (Fin s) D.host.E) (g : GA D W) (hg : g ∈ NI W I) :
     Formalism.L2.Theta.mt W g ⬝ I.map (incA D) = I.map (incA D) ∧
     ∀ x : Fin W.rank → D.host.E, (Iᴴ * W.gram) *ᵥ x = 0 →

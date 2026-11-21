@@ -58,6 +58,7 @@ theorem sep (ψ : AddChar K ℂ) (hψ : ∀ x, (∀ y : O, ψ (x * algebraMap O 
     rwa [mul_comm]
 
 
+variable (K) in
 def lam (a : O) (m m' : ℕ) : Submodule O (Matrix (Fin m) (Fin m') K) :=
   LinearMap.range (a • (Algebra.linearMap O K).mapMatrix)
 

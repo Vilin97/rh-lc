@@ -51,6 +51,7 @@ theorem mulMap_mem (F : HermLattice K i) {k : Type} [Field k] (ρ : 𝓞 K →+*
 end DualCotangentKernel
 
 
+open DualCotangentKernel in
 theorem DualCotangentKer.proof : DualCotangentKer.Statement := by
   intro K _ _ i F T _ _b k _ ρ σ hρ hσ hsl ψ hψ
   classical

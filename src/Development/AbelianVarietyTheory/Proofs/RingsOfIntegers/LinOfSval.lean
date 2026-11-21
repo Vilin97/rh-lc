@@ -68,6 +68,7 @@ theorem le_val_prod {F : Type} [Field F] (v : AddValuation F (WithTop ℚ)) {T :
     exact add_le_add (h x) ih
 
 
+set_option maxHeartbeats 1600000 in
 theorem main : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] (ϖ : V), Irreducible ϖ → ∀ (j : ℕ) (D D' : DegData V (maximalIdeal V)) (pD : IsPowDeg D'.toPre D.toPre j) (Q : D.toPre.X → ℤ), QForm.IsQ D.toPre ϖ Q → ∀ (F : Type) [Field F] [Algebra (FractionRing V) F] (v : AddValuation F (WithTop ℚ)) (k : ℕ) (Fs : Fin j → Fam D.toPre F k) (F' : Fam D'.toPre F k), IsBoxFam pD F k F' Fs → ∀ r : Fin j → ℚ, (∀ i, NuGe D Q F v k (Fs i) (r i)) → NuGe D' (fun x => ∑ i, Q (pD.xe x i)) F v k F' (∑ i, r i) := by
   intro V _ _ _ ϖ hϖ j D D' pD Q hQ F _ _ v k Fs F' hB r hr
   unfold IsBoxFam at hB

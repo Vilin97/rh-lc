@@ -61,6 +61,7 @@ theorem linForm_single' {m : ℕ} (a : Fin m) : linForm (Pi.single a (1 : ℂ)) 
   simp [linForm, Pi.single_apply]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem segreChartSet_eq (P : Ideal (MRing ι)) {m : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (a : Fin m) :
     segreChartSet P σ (σ a) = {x | x ∈ segreCone P σ ∧ eval x (linForm (Pi.single a (1 : ℂ))) = 1} := by
   ext x

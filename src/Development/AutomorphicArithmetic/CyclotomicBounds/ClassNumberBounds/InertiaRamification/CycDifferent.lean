@@ -91,6 +91,7 @@ private theorem adjoin_toInteger_eq_top (A : Type*) [CommRing A] [Algebra A (�
 
 
 open scoped Classical in
+open Classical in
 theorem relDifferent_eq_span_prod (E : IntermediateField ℚ K) {ζ : K} (hζ : IsPrimitiveRoot ζ N) :
     differentIdeal (𝓞 E) (𝓞 K) = Ideal.span
       {∏ σ ∈ Finset.univ.filter (fun σ : Gal(K/ℚ) => σ ∈ E.fixingSubgroup ∧ σ ≠ 1),
@@ -128,6 +129,7 @@ theorem relDifferent_eq_span_prod (E : IntermediateField ℚ K) {ζ : K} (hζ : 
 
 
 open scoped Classical in
+open Classical in
 theorem map_differentIdeal_eq_span_prod (E : IntermediateField ℚ K) {ζ : K}
     (hζ : IsPrimitiveRoot ζ N) :
     (differentIdeal ℤ (𝓞 E)).map (algebraMap (𝓞 E) (𝓞 K)) = Ideal.span

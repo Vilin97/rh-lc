@@ -32,6 +32,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 
+open GlobalTheory.CompanionTheory.Ar.Flat.DegZ in
 theorem germ_degZero_prime : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) [StarRing (𝓞 E)], (∀ a : 𝓞 E, star a = H.bar a) → ∀ (X : Scheme.{0}) (t : SAB H X) (Ω : Type) [Field Ω] [CharZero Ω] (ξ : Sp Ω ⟶ X) (d r : ℕ) (M : LieModel t.G ξ (Fin d → Ω)) (S : GermSys t ξ M) (ρ : 𝓞 E →+* Module.End Ω (Fin d → Ω)) (𝓗 : HodgeLat M.lat ρ H.bar r) (O : Type) [CommRing O] [Algebra O Ω] (O' : Type) [CommRing O'] (s : X ⟶ Sp O') [IsSeparated s] [LocallyOfFiniteType s] (p : ℕ) (σ : E →+* Ω), p.Prime → Function.Injective (algebraMap O Ω) → (∀ (q : Cpt ξ) (o : O), algebraMap O Ω o ∈ regAt ξ q) → IsCptGen ξ → PowFns t → S.Gives 𝓗 → (∀ q : Cpt ξ, (p : X.residueField q.1) = 0 → FibPF t q.1) → Nat.card (E →+* Ω) = Module.finrank ℚ E → (∀ (s' : E →+* Ω) (a : 𝓞 E), s' (a : E) ∈ (algebraMap O Ω).range) → 𝓗.DegZero σ (p : Ω) := by
   intro E _ _ _ H _ hstar X t Ω _ _ ξ d r M S ρ 𝓗 O _ _ O' _ s _ _ p σ hp hinj hreg hξ hpow hgive hfib hcard hrange
     u hu hsp Γ
@@ -501,6 +502,7 @@ theorem cst_mem (𝔐 : HodgeCpt Y S y) (q : Cpt 𝔐.ξ) (o : 𝓞 c.F) : 𝔐.
   exact GlobalTheory.T.base_constants_regular 𝔐.X Ω 𝔐.ξ (𝓞 c.F) (𝔐.f ≫ Y.s) 𝔐.cst_over q o
 
 
+open CptHodge in
 theorem exists_hodgeLat (𝔐 : HodgeCpt Y S y)
     (hFibY : ∀ (p : ℕ), p.Prime → ∀ z : Y.X, (p : Y.X.residueField z) = 0 → FibPF Y.t z) (p : ℕ) (hp : p.Prime) :
     ∃ 𝓗 : HodgeLat 𝔐.M.lat 𝔐.ρ H.bar (D.p + D.q), ∀ σ : E →+* Ω, 𝓗.DegZero σ (p : Ω) := by

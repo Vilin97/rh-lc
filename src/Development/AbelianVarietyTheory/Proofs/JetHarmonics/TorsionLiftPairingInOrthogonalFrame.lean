@@ -144,6 +144,9 @@ private lemma eq_sum_beta_div_smul_of_beta_orthogonal {g d : ℕ} {Hm : Matrix (
   exact sub_eq_zero.1 hw0
 
 
+open scoped ComplexConjugate BigOperators in
+open Matrix in
+open scoped ComplexOrder in
 theorem _root_.GlobalTheory.MomOne.kapFrame : ∀ (q : ℕ) [Fact q.Prime] (lam : _root_.Formalism.L2.Ker.JMB.Qbar →+* ℂ_[q])
     (ι : ℂ ≃+* ℂ_[q]) (g : ℕ) (S : _root_.Formalism.L2.Ker.JMB.Setup g) (x : Fin g → Fin g → ℂ) (a : Fin g → ℕ) (r : ℕ)
     (b : Fin r → Fin g → ℂ) (n m s s₀ : ℕ) (eps : ℂ) (y : Fin r → Fin (q ^ n)),

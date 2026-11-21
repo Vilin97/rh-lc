@@ -171,6 +171,7 @@ theorem autFunSm_imp : ∀ θ V f, @IsAutFunSm a.D θ V f → @IsAutFunSm b.D ((
     growth := (h.growth) }
 
 
+variable (a) in
 def autFunSmB : type_of% (@IsAutFunSm b.D) := @fun θ V f => @IsAutFunSm a.D ((θ)) ((V)) ((f))
 
 
@@ -182,9 +183,11 @@ theorem multMap_imp : ∀ V S θ M J χ f, @IsMultMap a.D V S θ M J χ f → @I
     cont := (h.cont) }
 
 
+variable (a) in
 def multMapB : type_of% (@IsMultMap b.D) := @fun V S θ M J χ f => @IsMultMap a.D ((V)) ((S)) ((θ)) ((ds a M)) ((J)) ((χ)) ((f))
 
 
+variable (a) in
 theorem multMap_eq : @IsMultMap b.D = @multMapB B C a b := by
   funext V S θ M J χ f
   exact propext ⟨fun h => (multMap_imp a V S θ M J χ f h), fun h => (@multMap_imp B C a b V S θ (@ds B C b a V S M) J χ f h)⟩
@@ -196,9 +199,11 @@ theorem thetaFun_imp : ∀ ψ S T f, @IsThetaFunO a.D ψ S T f → @IsThetaFunO 
     smooth := (h.smooth) }
 
 
+variable (a) in
 def thetaFunB : type_of% (@IsThetaFunO b.D) := @fun ψ S T f => @IsThetaFunO a.D ((ψ)) ((S)) ((T)) ((f))
 
 
+variable (a) in
 theorem thetaFun_eq : @IsThetaFunO b.D = @thetaFunB B C a b := by
   funext ψ S T f
   exact propext ⟨fun h => (thetaFun_imp a ψ S T f h), fun h => (@thetaFun_imp B C a b ψ S T f h)⟩
@@ -211,9 +216,11 @@ theorem vacuum_imp : ∀ m n x1 x2 x3 x4 x5 x6 x7, @IsVacuum a.D m n x1 x2 x3 x4
     norm := (h.norm) }
 
 
+variable (a) in
 def vacuumB : type_of% (@IsVacuum b.D) := @fun m n x1 x2 x3 x4 x5 x6 x7 => @IsVacuum a.D m n ((x1)) ((x2)) ((x3)) ((x4)) ((x5)) ((x6)) ((x7))
 
 
+variable (a) in
 theorem vacuum_eq : @IsVacuum b.D = @vacuumB B C a b := by
   funext m n x1 x2 x3 x4 x5 x6 x7
   exact propext ⟨fun h => (vacuum_imp a m n x1 x2 x3 x4 x5 x6 x7 h), fun h => (@vacuum_imp B C a b m n x1 x2 x3 x4 x5 x6 x7 h)⟩
@@ -224,9 +231,11 @@ theorem placeModel_imp : ∀ m n x1 x2 x3 x4 x5 x6 x7 x8, @IsPlaceModel a.D m n 
     vac := (h.vac) }
 
 
+variable (a) in
 def placeModelB : type_of% (@IsPlaceModel b.D) := @fun m n x1 x2 x3 x4 x5 x6 x7 x8 => @IsPlaceModel a.D m n ((x1)) ((x2)) ((x3)) ((x4)) ((x5)) ((x6)) ((x7)) ((x8))
 
 
+variable (a) in
 theorem placeModel_eq : @IsPlaceModel b.D = @placeModelB B C a b := by
   funext m n x1 x2 x3 x4 x5 x6 x7 x8
   exact propext ⟨fun h => (placeModel_imp a m n x1 x2 x3 x4 x5 x6 x7 x8 h), fun h => (@placeModel_imp B C a b m n x1 x2 x3 x4 x5 x6 x7 x8 h)⟩
@@ -240,9 +249,11 @@ theorem itW_imp : ∀ V W S S' θ M M' ω pt It, @IsItW a.D V W S S' θ M M' ω 
     invg := (h.invg) }
 
 
+variable (a) in
 def itWB : type_of% (@IsItW b.D) := @fun V W S S' θ M M' ω pt It => @IsItW a.D ((V)) ((W)) ((S)) ((S')) ((θ)) ((ds a M)) ((ds a M')) ((ω)) ((pt)) ((It))
 
 
+variable (a) in
 theorem itW_eq : @IsItW b.D = @itWB B C a b := by
   funext V W S S' θ M M' ω pt It
   exact propext ⟨fun h => (itW_imp a V W S S' θ M M' ω pt It h), fun h => (@itW_imp B C a b V W S S' θ (@ds B C b a V S M) (@ds B C b a W S' M') ω pt It h)⟩
@@ -256,9 +267,11 @@ theorem pairSetup_imp : ∀ ψ θ S T x1 x2 x3 x4 x5 x6, @Fock.Sk.PairSetup a.D 
     onbT := (h.onbT) }
 
 
+variable (a) in
 def pairSetupB : type_of% (@Fock.Sk.PairSetup b.D) := @fun ψ θ S T x1 x2 x3 x4 x5 x6 => @Fock.Sk.PairSetup a.D ((ψ)) ((θ)) ((S)) ((T)) ((x1)) ((x2)) ((x3)) ((x4)) ((x5)) ((x6))
 
 
+variable (a) in
 theorem pairSetup_eq : @Fock.Sk.PairSetup b.D = @pairSetupB B C a b := by
   funext ψ θ S T x1 x2 x3 x4 x5 x6
   exact propext ⟨fun h => (pairSetup_imp a ψ θ S T x1 x2 x3 x4 x5 x6 h), fun h => (@pairSetup_imp B C a b ψ θ S T x1 x2 x3 x4 x5 x6 h)⟩
@@ -268,9 +281,11 @@ theorem inertTie_imp : ∀ G i1 i2 P I Ty T m A x1 x2 x3, @Bridge.InertTie a.D G
     okI := (h.okI) }
 
 
+variable (a) in
 def inertTieB : type_of% (@Bridge.InertTie b.D) := @fun G i1 i2 P I Ty T m A x1 x2 x3 => @Bridge.InertTie a.D G i1 i2 P I Ty T m ((A)) ((x1)) ((x2)) ((x3))
 
 
+variable (a) in
 theorem inertTie_eq : @Bridge.InertTie b.D = @inertTieB B C a b := by
   funext G i1 i2 P I Ty T m A x1 x2 x3
   exact propext ⟨fun h => (inertTie_imp a G i1 i2 P I Ty T m A x1 x2 x3 h), fun h => (@inertTie_imp B C a b G i1 i2 P I Ty T m A x1 x2 x3 h)⟩
@@ -290,9 +305,11 @@ theorem famTie_imp : ∀ G i1 i2 P T m A cR cL lR lL x x1 x2 x3 x4 x5 x6 x7 x8 x
     coefL := (h.coefL) }
 
 
+variable (a) in
 def famTieB : type_of% (@Bridge.FamTie b.D) := @fun G i1 i2 P T m A cR cL lR lL x x1 x2 x3 x4 x5 x6 x7 x8 x9 => @Bridge.FamTie a.D G i1 i2 P T m ((A)) ((cR)) ((cL)) ((lR)) ((lL)) ((famReal a x)) ((x1)) ((x2)) ((x3)) ((x4)) ((x5)) ((x6)) ((x7)) ((x8)) ((x9))
 
 
+variable (a) in
 theorem famTie_eq : @Bridge.FamTie b.D = @famTieB B C a b := by
   funext G i1 i2 P T m A cR cL lR lL x x1 x2 x3 x4 x5 x6 x7 x8 x9
   exact propext ⟨fun h => (famTie_imp a G i1 i2 P T m A cR cL lR lL x x1 x2 x3 x4 x5 x6 x7 x8 x9 h), fun h => (@famTie_imp B C a b G i1 i2 P T m A cR cL lR lL (@famReal B C b a G i1 i2 P T m A cR cL lR lL x) x1 x2 x3 x4 x5 x6 x7 x8 x9 h)⟩
@@ -311,9 +328,11 @@ theorem weilDatum_imp : ∀ ψ S T x1 x2 ω, @IsWeilDatumO a.D ψ S T x1 x2 ω �
     om_split := by rewrite [thetaFun_eq a b]; exact (h.om_split) }
 
 
+variable (a) in
 def weilDatumB : type_of% (@IsWeilDatumO b.D) := @fun ψ S T x1 x2 ω => @IsWeilDatumO a.D ((ψ)) ((S)) ((T)) ((x1)) ((x2)) ((ω))
 
 
+variable (a) in
 theorem weilDatum_eq : @IsWeilDatumO b.D = @weilDatumB B C a b := by
   funext ψ S T x1 x2 ω
   exact propext ⟨fun h => (weilDatum_imp a ψ S T x1 x2 ω h), fun h => (@weilDatum_imp B C a b ψ S T x1 x2 ω h)⟩
@@ -324,17 +343,21 @@ theorem weilFull_imp : ∀ ψ S T x1 x2 ω, @WeilFull.IsWeilFull a.D ψ S T x1 x
     real := by delta WeilFull.RealAtO; rewrite [pairSetup_eq a b]; (try rewrite [thetaFun_eq a b]); exact (h.real) }
 
 
+variable (a) in
 def weilFullB : type_of% (@WeilFull.IsWeilFull b.D) := @fun ψ S T x1 x2 ω => @WeilFull.IsWeilFull a.D ((ψ)) ((S)) ((T)) ((x1)) ((x2)) ((ω))
 
 
+variable (a) in
 theorem weilFull_eq : @WeilFull.IsWeilFull b.D = @weilFullB B C a b := by
   funext ψ S T x1 x2 ω
   exact propext ⟨fun h => (weilFull_imp a ψ S T x1 x2 ω h), fun h => (@weilFull_imp B C a b ψ S T x1 x2 ω h)⟩
 
 
+variable (a) in
 def multB : type_of% (@Mult.Mult b.D) := @fun V S θ M J χ => (@Mult (@Late.D B C a) V S θ (@ds B C b a V S M) J χ)
 
 
+variable (a) in
 theorem mult_eq : @Mult.Mult b.D = @multB B C a b := by
   funext V S θ M J χ
   delta Mult.Mult
@@ -344,9 +367,11 @@ theorem mult_eq : @Mult.Mult b.D = @multB B C a b := by
 end Leaves
 
 
+variable (a) in
 def multTB : type_of% (@MultT b.D) := @fun V S θ M J χ => (@MultT (@Late.D B C a) V S θ (@ds B C b a V S M) J χ)
 
 
+variable (a) in
 theorem multT_eq : @MultT b.D = @multTB B C a b := by
   funext V S θ M J χ
   delta MultT

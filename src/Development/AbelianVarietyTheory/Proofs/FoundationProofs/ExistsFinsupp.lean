@@ -514,6 +514,7 @@ theorem sg_jets {c : ℕ} {b : ℤ} (hM : 0 < M) (hadm : admitted c ![(A : ℚ) 
   · rcases s1 with rfl | rfl <;> simp [tc_zero, s3.U0]
 
 
+open GlobalTheory.KZ in
 theorem exp_of_hasQ {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ} (T : Tower Ω ε) (f : T.K) (g : ℍ → ℂ) {M : ℕ}
     (hM : 0 < M) (k : ℤ) (A' : ℕ → ℂ)
     (hmem : T.an f = ((fun z => g (UpperHalfPlane.ofComplex z) : ℂ → ℂ) : Mero))

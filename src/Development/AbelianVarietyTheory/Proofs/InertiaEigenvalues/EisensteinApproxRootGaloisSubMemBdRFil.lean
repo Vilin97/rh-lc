@@ -53,6 +53,7 @@ theorem mem_filtration_of_dvd (n : ℕ) (a : Per.Ainf l) (ha : Per.θ l a = 0) (
 end GlobalTheory.BSP.RootGal
 
 
+open GlobalTheory.BSP.RootGal in
 theorem GlobalTheory.BSP.approxRoot_gal_sub_mem_fil : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (n M : ℕ) (q : bk.S),
     bk.E ∣ q - (l : bk.S) ^ M * X →
     bk.E ^ n ∣ Polynomial.eval₂ PowerSeries.C q (bk.Ep.scaleRoots ((l : Wq l bk.a) ^ M)) →

@@ -29,6 +29,7 @@ theorem gOf_place (w : InfinitePlace D.host.E) :
   exact (Formalism.MainNotions.BridgeLemma.m_eq D).symm
 
 
+include e in
 theorem card_places : Fintype.card (InfinitePlace D.host.E) = D.R.f := by
   rw [Fintype.card_congr e]; exact Formalism.MainNotions.BridgeLemma.szf_card_Tau D
 

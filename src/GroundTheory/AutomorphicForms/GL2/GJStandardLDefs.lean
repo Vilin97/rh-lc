@@ -32,14 +32,17 @@ instance measurableSpace_infiniteAdelicGL : MeasurableSpace (AdelicGLn.InfiniteA
 instance borelSpace_infiniteAdelicGL : BorelSpace (AdelicGLn.InfiniteAdelicGL K n) := ⟨rfl⟩
 
 
+variable (K n) in
 def archComp : AdelicGLn.AdelicGL K n →* AdelicGLn.InfiniteAdelicGL K n :=
   (MonoidHom.fst _ _).comp (AdelicGLn.prodEquiv K n).toMonoidHom
 
 
+variable (K n) in
 def finComp : AdelicGLn.AdelicGL K n →* AdelicGLn.FiniteAdelicGL K n :=
   (MonoidHom.snd _ _).comp (AdelicGLn.prodEquiv K n).toMonoidHom
 
 
+variable (n) in
 def localComp (v : HeightOneSpectrum (𝓞 K)) :
     AdelicGLn.AdelicGL K n →* GL (Fin n) (v.adicCompletion K) where
   toFun g := AdelicGLn.finiteRestrictedEquiv K n (finComp K n g) v
@@ -95,6 +98,7 @@ def archZeta (μ : Measure (AdelicGLn.InfiniteAdelicGL K n))
   ∫ x, archIntegrand φ f s x ∂μ
 
 
+variable (n) in
 def integralGLPositiveCompacts (v : HeightOneSpectrum (𝓞 K)) :
     TopologicalSpace.PositiveCompacts (GL (Fin n) (v.adicCompletion K)) where
   carrier := integralGL (v.adicCompletion K) n
@@ -104,6 +108,7 @@ def integralGLPositiveCompacts (v : HeightOneSpectrum (𝓞 K)) :
     exact ⟨1, (integralGL _ n).one_mem⟩
 
 
+variable (n) in
 def localHaar (v : HeightOneSpectrum (𝓞 K)) : Measure (GL (Fin n) (v.adicCompletion K)) :=
   Measure.haarMeasure (integralGLPositiveCompacts n v)
 

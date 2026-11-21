@@ -61,6 +61,7 @@ def Jt (b : Bool) (t : I.A.fam.base.Tup) :
   kMat I.A.fam.base.v0.embedding (relMat (I.X.iC I.cg false t) (I.X.iC I.cr b t))
 
 
+open Classical in
 def epM (P : Subgroup G) (ψ : P →* Kˣ) : Matrix (Fin I.Sg.D) (Fin I.Sg.D) K :=
   haveI : Fintype P := Fintype.ofFinite P
   ((Nat.card P : K)⁻¹) • ∑ h : P, (((ψ h)⁻¹ : Kˣ) : K) • I.ρf (h : G)

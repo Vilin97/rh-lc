@@ -210,6 +210,7 @@ theorem gelfRep_eq (hh : Hm.IsHermitian) (hd : Hm.det ≠ 0) (hσ : IsURepOn (Fo
   exact foldr_eq _ _ _ (fun Z w => dEnd_coe hh hd hσ Z w) v
 
 
+omit [CompleteSpace H] in
 theorem eq_zero_of_inner_orbit (hd : Hm.det ≠ 0) (hσ : IsURepOn (Formalism.QuantumDeterminants.UH Hm) σ)
     (hi : IsIrredOn (Formalism.QuantumDeterminants.UH Hm) σ) {v₀ : H} (h0 : v₀ ≠ 0) {y : H}
     (hy : ∀ g ∈ Formalism.QuantumDeterminants.UH Hm, ⟪y, σ g v₀⟫_ℂ = 0) : y = 0 := by

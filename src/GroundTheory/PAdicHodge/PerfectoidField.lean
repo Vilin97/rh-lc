@@ -154,6 +154,7 @@ namespace IsPerfectoidField
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 
 
+omit [IsUltrametricDist K] in
 theorem exists_norm_mem_Ioo_of_exists_pow_eq
     (h : ∀ (x : K) (n : ℕ), 0 < n → ∃ y : K, y ^ n = x) :
     ∀ r : ℝ, r < 1 → ∃ x : K, r < ‖x‖ ∧ ‖x‖ < 1 := by

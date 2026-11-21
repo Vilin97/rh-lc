@@ -246,6 +246,7 @@ theorem epsW_mul_conj (w : E) (y : Matrix (Fin n) (Fin r) E) :
   rw [this, add_neg_cancel, Complex.exp_zero]
 
 
+variable (X) in
 def Good (w : E) (A : AddSubgroup (Matrix (Fin n) (Fin r) E)) : Prop :=
   A.FG ∧ (∀ y, y ∈ A ↔ ∀ y' ∈ A, ∃ k : ℤ, ∑ i, EF X (y i) (y' i) = k) ∧
     ∀ y ∈ A, epsW X w y ^ 2 = 1 ∧ ∀ y' ∈ A, epsW X w (y + y') =

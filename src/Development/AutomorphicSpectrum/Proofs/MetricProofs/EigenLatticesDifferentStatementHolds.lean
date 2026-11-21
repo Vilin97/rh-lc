@@ -48,6 +48,7 @@ def diffIm (s : E →+* K) : Submodule (𝓞 K) K :=
   Submodule.span (𝓞 K) ((fun x : 𝓞 E => s (x : E)) '' (differentIdeal ℤ (𝓞 E) : Set (𝓞 E)))
 
 
+variable (E K) in
 def intLat : Submodule (𝓞 K) ((E →+* K) → K) :=
   Submodule.span (𝓞 K) (Set.range fun (b : 𝓞 E) (σ : E →+* K) => σ (b : E))
 

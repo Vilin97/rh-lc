@@ -49,6 +49,7 @@ theorem blockPoly_ne_zero (ν : ℂ) (q t : ℕ) : blockPoly ν q t ≠ 0 := by
   exact zero_ne_one h0
 
 
+set_option maxHeartbeats 1000000 in
 theorem transfer_good {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type}
     {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks)
     (F : Face D A) (hL : GlobalTheory.Chain.LiftInteg D) (hC : Core R F) (hS : SchurAll R) (t : T) (P : Pl D.host.E) (hG : Good R t P)
@@ -128,6 +129,7 @@ theorem transfer_good {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type}
 end Transfer
 
 
+set_option maxHeartbeats 1000000 in
 theorem kept : GlobalTheory.Published.CuspRapidDecay → HoweUnram → ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type}
     {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks)
     (F : Face D A), Core R F → (∀ t P, Good R t P → Formalism.DivisionValues.conjPl P = P → FixAll R t P) → Kept R := by

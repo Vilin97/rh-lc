@@ -79,6 +79,7 @@ theorem finrank_quot (U : Planes k r n) : Module.finrank k ((Fin n → k) ⧸ U.
   omega
 
 
+variable (k r n) in
 structure DetBases where
 
   form : ∀ U : Planes k r n, ((Fin n → k) ⧸ U.1) [⋀^Fin r]→ₗ[k] k

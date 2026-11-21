@@ -88,6 +88,7 @@ theorem isEigFrame_iff (M : LieModel G x V) (act : OAct O G) (ρ : O →+* Modul
     exact funext fun i => sub_eq_zero.1 (this i)
 
 
+open GlobalTheory.Diag in
 def torusModel (x : Sp R ⟶ S) (X : Type) [AddCommGroup X] : LieModel (splitTorus S X) x (X →+ R) where
   pt c := epsVec _ c
   tan c := (reduces_iff (by rw [← Category.assoc, fstHom_base, Category.id_comp]) _).2

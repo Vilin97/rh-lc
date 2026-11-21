@@ -103,6 +103,7 @@ theorem coeff_taylorDir (f : W → ℂ) (m : σ →₀ ℕ) :
       ReciprocityTheory.ChartRestriction.G.I2.polyDeriv (MvPolynomial.monomial m 1) u f 0 := rfl
 
 
+omit [NormedAddCommGroup W] [NormedSpace ℂ W] in
 theorem cast_prod_factorial_ne_zero (m : σ →₀ ℕ) : ((∏ i, (m i).factorial : ℕ) : ℂ) ≠ 0 :=
   Nat.cast_ne_zero.2 (Finset.prod_ne_zero_iff.2 fun i _ => (m i).factorial_ne_zero)
 

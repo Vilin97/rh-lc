@@ -183,6 +183,7 @@ theorem eisenstein_gen (R : Fr l O) (j : O⟦X⟧ →ₐ[O] O⟦X⟧) (ht : FrTi
     ring
 
 
+omit hp [CharZero O] [Algebra ℤ_[l] O] in
 theorem eisAt_one [IsLocalRing O] [IsAdicComplete (IsLocalRing.maximalIdeal O) O]
     (hu : ¬ IsUnit (l : O)) (ξ : O⟦X⟧) (hq : lvl l O 0 ∣ ξ + (l : O⟦X⟧)) (e₀ : ℕ) (he₀ : e₀ = 1)
     (hA : HasEis W l e₀ ξ) : EisAt W l 1 ξ (Polynomial.X + Polynomial.C (l : O)) := by
@@ -205,6 +206,7 @@ theorem card_eq : (H.W K 1 LL h).DelF.card = (l - 1) / Module.finrank ↥(K0 K) 
   rw [← hc, Nat.mul_div_cancel _ h0]
 
 
+omit hl in
 theorem free_and_invariants (ξ : (↥(OL LL))⟦X⟧)
     (hξ : Associated ξ (X ^ (H.W K 1 LL h).DelF.card))
     (hinv : ∀ δ ∈ (H.W K 1 LL h).DelF, (H.W K 1 LL h).γ₀ δ ξ = ξ) :
@@ -226,6 +228,7 @@ theorem exists_eisenstein (ξ : (↥(OL LL))⟦X⟧)
   rwa [hj, he] at h1
 
 
+set_option maxHeartbeats 800000 in
 theorem trace_param (h1 : Module.finrank ↥(K0 K) ↥K.1 = 1) :
     (H.W K 1 LL h).DelF.card = l - 1 ∧
     Associated (H.W K 1 LL h).π₀₁ (X ^ (H.W K 1 LL h).DelF.card) ∧

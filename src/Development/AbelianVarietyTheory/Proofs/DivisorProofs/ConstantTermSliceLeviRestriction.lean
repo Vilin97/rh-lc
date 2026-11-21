@@ -18,6 +18,7 @@ namespace GlobalTheory.SliceTwo
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+variable (E a) in
 def contLeft : Submodule ℂ (Sm E a) where
   carrier := {f | Continuous f.1 ∧ ∀ γ g, f.1 (ratGL E a γ * g) = f.1 g}
   zero_mem' := ⟨continuous_const, fun _ _ => rfl⟩

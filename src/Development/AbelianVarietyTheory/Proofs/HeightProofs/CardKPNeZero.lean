@@ -79,6 +79,7 @@ theorem ram_finite (B : Base) (f : Fr B.toPre) (T : TwDat B) (χ : HChar B.host.
     · exact unrAt_mul (f.isDel.unr Q (h1 Q hc.1)) hψ
 
 
+open Classical in
 theorem levels_bounded : ∀ (P : Pre) (f : Fr P) (Ξ : Set (Formalism.L2.Host.HChar P.host.E)), ∃ Ms : Finset ℕ, (∀ M ∈ Ms, M ≠ 0) ∧
     ∀ (B : Base) (hB : B.toPre = P) (T : TwDat B), HEq (T.set (hB ▸ f)) Ξ → ∀ (w : B.places.Pl)
       (S : Finset (HeightOneSpectrum (𝓞 B.host.E))),

@@ -30,6 +30,7 @@ theorem sumPl_add_smul {ι : Type} [Fintype ι] [DecidableEq ι] {V : ι → Typ
   simp only [sumPl, h, Finset.sum_add_distrib, Finset.sum_smul]
 
 
+open scoped Classical in
 theorem lieScalar : GlobalTheory.FunPr.Hypotheses₂ → DerEx → VacLine → LieScalar := by
   intro hP hD hV F E _ _ _ _ _ σ α β κ _ _ _ _ _ P Q R S ψ τ JA JB d a b A C Φ om hCM hψ hFr hΦ hom
   obtain ⟨ω₀, c₀, hH, hc, hact⟩ := GlobalTheory.T.darboux_schrodinger_compatibility hP hD hV F E σ α β κ P Q R S ψ τ JA JB d a b A C Φ hCM hψ hFr hΦ

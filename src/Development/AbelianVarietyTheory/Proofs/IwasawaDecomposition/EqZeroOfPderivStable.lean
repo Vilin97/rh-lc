@@ -257,6 +257,7 @@ variable {sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ} {sT : D.w
 include hS hT
 
 
+omit hψ hθ in
 theorem omDir_cplx (τ' : D.what₂.Tau) (z' : Matrix (Fin T.rank) (Fin S.rank) ℂ) :
     omDir S T τ (cplxO (sS τ) (sT τ) z) τ' (cplxO (sS τ') (sT τ') z') = omDir S T τ z τ' z' ∧
     omDir S T τ z τ' (cplxO (sS τ') (sT τ') z') = -omDir S T τ (cplxO (sS τ) (sT τ) z) τ' z' := by

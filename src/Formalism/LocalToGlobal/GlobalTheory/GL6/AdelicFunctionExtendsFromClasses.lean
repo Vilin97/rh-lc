@@ -55,6 +55,7 @@ theorem translate_mem_span_adelic (S : StepLevel F E σ J T f bad) (emb : ι →
     rw [e]; exact Submodule.smul_mem _ r ha
 
 
+set_option maxHeartbeats 1000000 in
 theorem adelic_function_extends_from_classes (S : StepLevel F E σ J T f bad) (emb : ι → E →+* ℂ)
     (hc : ∀ τ x, emb τ (σ x) = starRingEnd ℂ (emb τ x)) (lam : ι → DomWeight n)
     {C : Type} [Fintype C] (y : C → UPts σ J (FiniteAdeleRing (𝓞 F) F)) (hs : ∀ c, RndStabTriv S (y c))

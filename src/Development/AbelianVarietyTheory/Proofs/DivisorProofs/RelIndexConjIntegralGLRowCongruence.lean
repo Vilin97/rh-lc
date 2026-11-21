@@ -40,6 +40,7 @@ theorem row_mul {R : Type} [CommRing R] (P Q : Matrix ι ι R) (t : ι) : (P * Q
   funext s; simp [Matrix.mul_apply, Matrix.vecMul, dotProduct]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem row_inv_iff {R : Type} [CommRing R] (M N : GL ι R) (t : ι) :
     (M⁻¹ * N).val t = (1 : Matrix ι ι R) t ↔ (M⁻¹).val t = (N⁻¹).val t := by
   constructor

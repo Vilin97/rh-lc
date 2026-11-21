@@ -176,6 +176,7 @@ private theorem hasDerivAt_exp_quadratic_mul_schwartz_line_zero {E : Type} [Norm
 end GlobalTheory.CompanionTheory.SchrLine
 
 
+open GlobalTheory.CompanionTheory.SchrLine in
 theorem GlobalTheory.CompanionTheory.SchrLine.exists_hasDerivAt_schr_pureA :
     ∀ (F : Type) [Field F] [NumberField F] (N : ℕ) [Invertible (2 : AF F)] (ψ : AddChar (AF F) ℂ), IsTotallyReal F →
     IsCharAF F ψ → ∀ M : ℝ →+ VA F N, IsRealLine M →

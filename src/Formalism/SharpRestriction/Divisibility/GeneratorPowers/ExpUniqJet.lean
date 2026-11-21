@@ -18,6 +18,7 @@ variable {R : Type} [CommRing R]
 abbrev zz {κ : Type} (m : ℕ) (j : κ) : Jet R κ m := Ideal.Quotient.mk _ (X j)
 
 
+variable (R) in
 def Ij (κ : Type) (m : ℕ) : Ideal (Jet R κ m) := Ideal.span (Set.range (zz (R := R) (κ := κ) m))
 
 theorem Ij_eq_map (κ : Type) (m : ℕ) :

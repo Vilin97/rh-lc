@@ -85,6 +85,7 @@ private theorem sum_pi_single_one_smul {ι : Type} (s : Finset ι) (f : ι → �
   | cons a m ih => rw [Multiset.map_cons, Multiset.sum_cons, ih, Multiset.map_cons, Multiset.singleton_add]
 
 
+open GlobalTheory.LGrp (bcParam) in
 theorem bcParam_map_mul (c : ℂˣ) (N : ℕ) (γ : Fin (N / 2) → ℂˣ) :
     (bcParam N γ).map (fun x => c * x) =
       ∑ i, ({c * γ i, c * (γ i)⁻¹} : Multiset ℂˣ) + Multiset.replicate (N % 2) c := by

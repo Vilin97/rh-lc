@@ -212,6 +212,7 @@ section Main
 variable {k : Type} [CommRing k] [Algebra ℚ k] {d : ℕ} {O : Type} [CommRing O] [StarRing O]
 
 
+set_option maxHeartbeats 2000000 in
 def regauge (B : FB k d O) (h : PS k 2 d) (h0 : ev (n := 1) ![0, pt k d 0] h = 0)
     (h1 : ev (n := 1) ![pt k d 0, 0] h = 0) : FB k d O where
   G := B.G

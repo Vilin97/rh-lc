@@ -254,17 +254,20 @@ theorem commute_mat (Ξ : AlgRep E a) (Z : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ) (hZ
 end Diff
 
 
+omit [NumberField E] in
 def expDiag (δ : Fin a → Cinf E) : GL (Fin a) (Cinf E) :=
   ⟨diagonal fun l w => Complex.exp (δ l w), diagonal fun l w => Complex.exp (-δ l w),
     by rw [diagonal_mul_diagonal, ← diagonal_one]; congr; funext l w; simp [← Complex.exp_add],
     by rw [diagonal_mul_diagonal, ← diagonal_one]; congr; funext l w; simp [← Complex.exp_add]⟩
 
 
+omit [NumberField E] in
 theorem expDiag_add (δ δ' : Fin a → Cinf E) : expDiag (δ + δ') = expDiag δ * expDiag δ' := Units.ext (by
   change diagonal _ = diagonal _ * diagonal _
   rw [diagonal_mul_diagonal]; congr; funext l w; simp [Complex.exp_add])
 
 
+omit [NumberField E] in
 theorem expDiag_zero : expDiag (0 : Fin a → Cinf E) = 1 := Units.ext (by
   change diagonal _ = 1
   rw [← diagonal_one]; congr; funext l w; simp)
@@ -300,6 +303,7 @@ theorem laurent_mul {f g : Multiplicative ℂ → ℂ} (hf : f ∈ laurent) (hg 
   congr 1; push_cast; ring
 
 
+omit [NumberField E] in
 theorem exists_coord_exp (τ τ' : E →+* ℂ) : ∃ p : ℤ × ℤ, ∀ z : Multiplicative ℂ,
     coord τ' (fun w => Complex.exp (atEmb τ z.toAdd w)) = expChar p z := by
   classical
@@ -316,9 +320,11 @@ theorem exists_coord_exp (τ τ' : E →+* ℂ) : ∃ p : ℤ × ℤ, ∀ z : Mu
     split_ifs <;> simp [expChar, Pi.single_eq_of_ne hw]
 
 
+omit [NumberField E] in
 def torus (τ : E →+* ℂ) (k : Fin a) (z : ℂ) : GL (Fin a) (Cinf E) := expDiag (Pi.single k (atEmb τ z))
 
 
+omit [NumberField E] in
 theorem reg_torus (τ : E →+* ℂ) (k : Fin a) {f : GL (Fin a) (Cinf E) → ℂ} (hf : f ∈ regFun E a) :
     (fun z : Multiplicative ℂ => f (torus τ k z.toAdd)) ∈ laurent := by
   have h1 : (1 : Multiplicative ℂ → ℂ) ∈ laurent := by
@@ -549,6 +555,7 @@ theorem commute_dmat (Ξ : AlgRep E a) (Z : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ)
   simpa [dualL_apply, dualS] using (h2 i j (X i j)).neg_right
 
 
+omit [IsTotallyComplex E] in
 theorem exists_scalar (Ξ : AlgRep E a) (Z : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ) (h : ∀ y, Z * Ξ.mat y = Ξ.mat y * Z) :
     ∃ c : ℂ, Z = c • (1 : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ) := by
   haveI : Nonempty (Fin Ξ.d) := ⟨⟨0, Ξ.pos⟩⟩

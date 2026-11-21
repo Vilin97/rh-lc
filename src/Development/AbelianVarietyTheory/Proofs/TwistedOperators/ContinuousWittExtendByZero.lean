@@ -17,6 +17,7 @@ variable {k : Type} [AddCommGroup k] [TopologicalSpace k] [IsTopologicalAddGroup
   (ν : Measure k) [ν.IsAddHaarMeasure]
 
 
+omit [T2Space k] in
 theorem integral_shear {I : Type} [Fintype I] (J : I → Prop) (S : (I → k) → (I → k))
     (hS : Continuous S) (h0 : ∀ e i, ¬ J i → S e i = 0)
     (h1 : ∀ e e' : I → k, (∀ i, ¬ J i → e i = e' i) → S e = S e')
@@ -51,6 +52,7 @@ theorem integral_shear {I : Type} [Fintype I] (J : I → Prop) (S : (I → k) �
   rw [integral_map hall.measurable.aemeasurable hf.aestronglyMeasurable]
 
 
+open Classical in
 def ext0 {I : Type} (P : I → Prop) (e : {i // P i} → k) : I → k :=
   by
     classical
@@ -66,6 +68,7 @@ theorem continuous_wittExtendByZero {I : Type} (P : I → Prop) : Continuous (ex
   · simp only [h, dite_false]; exact continuous_const
 
 
+omit [T2Space k] in
 theorem integral_glue {I B : Type} [Fintype B] (P Q : I → Prop) [Fintype {i // P i}] [Fintype {i // Q i}]
     (j : B → I) (hj : Function.Injective j) (hPj : ∀ b, ¬ P (j b)) (hQ : ∀ i, Q i ↔ P i ∨ ∃ b, j b = i)
     (g : (B → k) → I → k) (hg1 : ∀ u b, g u (j b) = u b) (hg2 : ∀ u i, (∀ b, j b ≠ i) → g u i = 0)

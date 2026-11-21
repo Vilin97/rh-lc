@@ -42,6 +42,7 @@ theorem fac_taut {B : Type} [CommRing B] {f : Spec (CommRingCat.of B) ⟶ Z} (z 
   Over.OverMorphism.ext (spec_valHom_fromSpec (B := B) z.left hU h)
 
 
+include hU in
 theorem val_comp {B C : Type} [CommRing B] [CommRing C] {f : Spec (CommRingCat.of B) ⟶ Z}
     {g : Spec (CommRingCat.of C) ⟶ Z} (q : Over.mk g ⟶ Over.mk f) (φ : B →+* C)
     (hq : q.left = Spec.map (CommRingCat.ofHom φ)) (a : Over.mk f ⟶ W) (h : ⊤ ≤ a.left ⁻¹ᵁ U)
@@ -64,6 +65,7 @@ theorem val_fac {W' : Over Z} {U' : W'.left.Opens} (hU' : IsAffineOpen U') (k : 
   ⟨comp_mem _ k hk b hb, fun s => val_comp (B := Γ(W.left, U)) hU' (fac hU z h) _ rfl k hk b hb _ s⟩
 
 
+include hU in
 theorem pt_ext {B : Type} [CommRing B] {f : Spec (CommRingCat.of B) ⟶ Z} (a b : Over.mk f ⟶ W)
     (ha : ⊤ ≤ a.left ⁻¹ᵁ U) (hb : ⊤ ≤ b.left ⁻¹ᵁ U)
     (h : ∀ s, valHom (B := B) a.left U ha s = valHom (B := B) b.left U hb s) : a = b := by
@@ -88,6 +90,7 @@ end Pts
 variable {R : Type} [CommRing R] [IsLocalRing R] {W W' : Over (Spec (CommRingCat.of R))} [GrpObj W']
 
 
+set_option maxHeartbeats 400000 in
 theorem core {N : ℕ} (j : W ⟶ W') (hinj : ∀ (Y) (y y' : Y ⟶ W), y ≫ j = y' ≫ j → y = y')
     (hker : ∀ (Y) (z : Y ⟶ W'), z ^ N = 1 ↔ ∃ y, y ≫ j = z) (U : W.left.Opens) (U' : W'.left.Opens)
     (hF : IsFinite (U.ι ≫ W.hom)) (hF' : IsFinite (U'.ι ≫ W'.hom))

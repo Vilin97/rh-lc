@@ -70,6 +70,7 @@ theorem thetaTr_rho (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) {JA : Matrix 
   exact tsum_congr fun x => schr_schr_apply ψ _ _ _ _ _ φ
 
 
+set_option maxHeartbeats 400000 in
 theorem pres_impl : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) →
     ∀ (S T : HSp D) (χS χT : (AE D)ˣ →* Circle), IsHeckeChar D χS → IsHeckeChar D χT →
       ResEta D χS S.rank → ResEta D χT T.rank →

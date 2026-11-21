@@ -50,6 +50,7 @@ theorem compFin_ind (a : InfinitePlace F → ι) (b : HeightOneSpectrum (𝓞 F)
 end GlobalTheory.QSA.PickUnit
 
 
+open GlobalTheory.QSA.PickUnit in
 theorem GlobalTheory.QSA.exists_idem_pick_unit : ∀ (F : Type) [Field F] [NumberField F] (ι : Type) [Fintype ι]
     (n u : ι → AF F), IsUnit (∑ i, u i * n i) → ∃ η : ι → AF F, (∀ i, η i * η i = η i) ∧
       (∀ i j, i ≠ j → η i * η j = 0) ∧ ∑ i, η i = 1 ∧ IsUnit (∑ i, η i * n i) := by

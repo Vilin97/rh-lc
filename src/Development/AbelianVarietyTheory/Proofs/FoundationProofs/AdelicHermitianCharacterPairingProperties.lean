@@ -42,6 +42,7 @@ theorem trace_inv {R : Type} [CommRing R] (s : R →+* R) {a b : ℕ} (x y : Mat
 end GlobalTheory.FinWeil.GamAlg
 
 
+open GlobalTheory.FinWeil.GamAlg GlobalTheory.NormSum.PtsMem in
 theorem GlobalTheory.FinWeil.gamA_alg : ∀ (D : D7), admG1 D → ∀ (cc : Ideal (𝓞 D.host.K)) (δ : ℂ), Crv D cc δ → ∀ ψ : AE D → ℂ, IsPsi D cc δ ψ → ∀ (N N' : ℕ), (∀ u ζ η, gamA ψ (actA D N N' u ζ) (actA D N N' u η) = gamA ψ ζ η) ∧ (∀ ζ : XA D N N', gamA ψ ζ ζ = 1) ∧ (∀ (r : 𝓞 D.host.E) (ζ η : XA D N N'), gamA ψ (r • ζ) η = gamA ψ ζ (sgO D r • η)) ∧ (∀ ζ η ξ : XA D N N', gamA ψ (ζ + η) ξ = gamA ψ ζ ξ * gamA ψ η ξ) ∧ (∀ ζ η ξ : XA D N N', gamA ψ ζ (η + ξ) = gamA ψ ζ η * gamA ψ ζ ξ) := by
   intro D _ cc δ _ ψ hψ N N'
   obtain ⟨hadd, -, -, hsg, -⟩ := hψ

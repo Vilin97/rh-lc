@@ -24,6 +24,7 @@ open scoped CategoryTheory.Obj
 namespace GlobalTheory
 
 
+open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry NumberField in
 theorem _root_.GlobalTheory.lawsAndExpansions :
     _root_.GlobalTheory.UT.LL ∧ _root_.ReciprocityTheory.ChartRestriction.G.DVR.TwistBCSpanStatement ∧ _root_.ReciprocityTheory.ChartRestriction.G.DVR.TWM.VRatioGtStatement ∧ _root_.ReciprocityTheory.ChartRestriction.G.DVR.TWStatement ∧ _root_.ReciprocityTheory.ChartRestriction.G.DVR.UUStatement := by
   have hLaws := _root_.GlobalTheory.allSixLaws

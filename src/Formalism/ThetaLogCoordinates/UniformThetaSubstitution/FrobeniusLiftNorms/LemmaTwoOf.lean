@@ -245,6 +245,7 @@ end Norm
 end LemTwo
 
 
+open LemTwo in
 theorem LemmaTwo_of (h1 : LemmaOne) (hL : LawSymm) : LemmaTwo := by
   open LemTwo in
   intro K _ _ _ _ p σ hU F hF H hH hd hd'

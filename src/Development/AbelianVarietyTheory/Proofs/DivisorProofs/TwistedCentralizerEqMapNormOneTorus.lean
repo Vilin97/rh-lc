@@ -222,6 +222,7 @@ theorem ofCrd_add (u v : Fin a → w.adicCompletion E) : ofCrd e b (u + v) = ofC
 end Crd
 
 
+open GlobalTheory.UnitLemma GlobalTheory.TwOrbLat in
 theorem twCent_eq_map : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (w : Pl E), ¬ IsSplitAt w → ∀ (K : GlobalTheory.UnitLemma.UQ) (e : K.E ≃+* w.adicCompletion E), (∀ x, e (K.c x) = cj w (e x)) → ∀ (a : ℕ) (B : GlobalTheory.UnitLemma.InvAlg K), B.P.Separable → ∀ (β : B.Aˣ) (ε : B.A), (ε = 1 ∨ ε = -1) → B.σ (β : B.A) = β * (ε * B.g) → ∀ (b : Module.Basis (Fin a) K.E B.A) (δ : GLw a w), (∀ i j, ((δ.val * GlobalTheory.Tw.Phi a (w.adicCompletion E))⁻¹)ᵀ i j = e (B.herm β (b i) (b j))) → twCent (thL a w) δ = B.T.map (GlobalTheory.TwOrbLat.mulGL e b) := by
   intro E _ _ _ w hw K e he a B hP β ε hε hβ b δ hG
   have hth : thL a w = thetaGL a (cj w) := by

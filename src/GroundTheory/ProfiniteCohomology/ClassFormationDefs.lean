@@ -19,6 +19,7 @@ variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologic
 section ResLE
 
 
+omit [IsTopologicalGroup G] in
 theorem continuous_subgroup_inclusion {U V : Subgroup G} (h : V ≤ U) :
     Continuous (Subgroup.inclusion h) :=
   continuous_induced_rng.2 continuous_subtype_val

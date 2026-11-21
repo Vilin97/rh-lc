@@ -26,6 +26,7 @@ theorem ua_ext {g h : UA E n} (h1 : cInf g = cInf h) (h2 : ∀ u : Pl E, cLoc u 
   Subtype.ext (ga_ext' h1 h2)
 
 
+variable (n) in
 def proj (S : Set (Pl E)) : InfinitePlace E ⊕ S → UA E n →* UA E n :=
   Sum.elim (fun v => (embU n v.embedding).subtype.comp (embRet v.embedding)) fun w => ret0 w.1 n
 

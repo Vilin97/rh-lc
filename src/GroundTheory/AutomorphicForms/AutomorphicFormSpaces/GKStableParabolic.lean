@@ -82,19 +82,23 @@ theorem continuous_parGL :
   exact continuous_parMatrix.matrix_adjugate
 
 
+variable (K n S) in
 abbrev parMeasure : Measure (PPos n S → 𝔸[K]) := Measure.pi fun _ => GroundTheory.Global.adeleMeasure K
 
 
+variable (K n S) in
 def parFundamentalDomain : Set (PPos n S → 𝔸[K]) :=
   Set.univ.pi fun _ => GroundTheory.Global.fundamentalSet K
 
 
+variable (S) in
 def constantTermPar (φ : AdelicGLn.AdelicGL K n → ℂ) (g : AdelicGLn.AdelicGL K n) : ℂ :=
   ∫ X in parFundamentalDomain K n S, φ (parGL X * g) ∂parMeasure K n S
 
 section Box
 
 
+variable (K) in
 abbrev boxMeasure : Measure 𝔸[K] :=
   (GroundTheory.Global.adeleMeasure K).restrict (GroundTheory.Global.fundamentalSet K)
 

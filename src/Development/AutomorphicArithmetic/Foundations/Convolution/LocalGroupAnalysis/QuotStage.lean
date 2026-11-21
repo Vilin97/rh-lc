@@ -27,6 +27,7 @@ def IsNrm (j : T →* G) (ν : Measure T) (ρ : G → ℝ≥0∞) : Prop := Meas
 
 
 open scoped Classical in
+open Classical in
 def qI (μ : Measure G) (j : T →* G) (ν : Measure T) (F : G → ℂ) : ℂ :=
   if h : ∃ ρ, IsNrm j ν ρ then ∫ x, F x * ((h.choose x).toReal : ℂ) ∂μ else 0
 

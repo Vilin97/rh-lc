@@ -16,6 +16,8 @@ open CategoryTheory AlgebraicGeometry NumberField GlobalTheory.ChowHt GlobalTheo
 namespace GlobalTheory.HeightUnique
 
 
+open CategoryTheory AlgebraicGeometry NumberField MvPolynomial in
+set_option autoImplicit false in
 theorem _root_.GlobalTheory.HeightUnique.linSubst_linSubst {R : Type} [CommRing R] {B N n m : ℕ} (M : Matrix (Fin N) (Fin n) R)
     (P : Matrix (Fin n) (Fin m) R) (f : MvPolynomial (Fin B × Fin N) R) :
     _root_.GlobalTheory.ChowHt.linSubst P (_root_.GlobalTheory.ChowHt.linSubst M f) = _root_.GlobalTheory.ChowHt.linSubst (M * P) f := by
@@ -30,6 +32,8 @@ theorem _root_.GlobalTheory.HeightUnique.linSubst_linSubst {R : Type} [CommRing 
   rw [Finset.sum_comm]
 
 
+open CategoryTheory AlgebraicGeometry NumberField MvPolynomial in
+set_option autoImplicit false in
 theorem _root_.GlobalTheory.HeightUnique.linSubst_one {R : Type} [CommRing R] {B N : ℕ} (f : MvPolynomial (Fin B × Fin N) R) :
     _root_.GlobalTheory.ChowHt.linSubst (1 : Matrix (Fin N) (Fin N) R) f = f := by
   unfold _root_.GlobalTheory.ChowHt.linSubst
@@ -39,6 +43,8 @@ theorem _root_.GlobalTheory.HeightUnique.linSubst_one {R : Type} [CommRing R] {B
   rw [hX, aeval_X_left_apply]
 
 
+open CategoryTheory AlgebraicGeometry NumberField MvPolynomial in
+set_option autoImplicit false in
 theorem _root_.GlobalTheory.HeightUnique.linSubst_ne_zero {R : Type} [CommRing R] {B N n : ℕ} {M : Matrix (Fin N) (Fin n) R}
     {P : Matrix (Fin n) (Fin N) R} (h : M * P = 1) {f : MvPolynomial (Fin B × Fin N) R} (hf : f ≠ 0) :
     _root_.GlobalTheory.ChowHt.linSubst M f ≠ 0 := by
@@ -50,12 +56,16 @@ theorem _root_.GlobalTheory.HeightUnique.linSubst_ne_zero {R : Type} [CommRing R
   simp [_root_.GlobalTheory.ChowHt.linSubst]
 
 
+open CategoryTheory AlgebraicGeometry NumberField MvPolynomial in
+set_option autoImplicit false in
 theorem _root_.GlobalTheory.HeightUnique.linSubst_C_mul {R : Type} [CommRing R] {B N n : ℕ} (M : Matrix (Fin N) (Fin n) R) (c : R)
     (f : MvPolynomial (Fin B × Fin N) R) :
     _root_.GlobalTheory.ChowHt.linSubst M (C c * f) = C c * _root_.GlobalTheory.ChowHt.linSubst M f := by
   simp [_root_.GlobalTheory.ChowHt.linSubst]
 
 
+open CategoryTheory AlgebraicGeometry NumberField MvPolynomial in
+set_option autoImplicit false in
 theorem _root_.GlobalTheory.HeightUnique.exists_right_inv {F : Type} [Field F] {N n : ℕ} {w : Matrix (Fin N) (Fin n) F}
     (hw : Submodule.span F (Set.range w.col) = ⊤) : ∃ P : Matrix (Fin n) (Fin N) F, w * P = 1 := by
   obtain ⟨g, hg⟩ := LinearMap.exists_rightInverse_of_surjective w.mulVecLin
@@ -81,6 +91,8 @@ private lemma isWeightedHomogeneous_aeval_of_isWeightedHomogeneous {R M σ τ : 
     (IsWeightedHomogeneous.prod _ _ _ fun i _ => (hg i).pow (d i))
 
 
+open CategoryTheory AlgebraicGeometry NumberField MvPolynomial in
+set_option autoImplicit false in
 theorem _root_.GlobalTheory.HeightUnique.linSubst_homog {R : Type} [Field R] {B N n : ℕ} (M : Matrix (Fin N) (Fin n) R)
     {a : Fin B → ℕ} {f : MvPolynomial (Fin B × Fin N) R} (hf : _root_.ReciprocityTheory.MultiplicativeHeights.IsMultiHomogeneous a f) :
     _root_.ReciprocityTheory.MultiplicativeHeights.IsMultiHomogeneous a (_root_.GlobalTheory.ChowHt.linSubst M f) := by
@@ -96,6 +108,8 @@ theorem _root_.GlobalTheory.HeightUnique.linSubst_homog {R : Type} [Field R] {B 
   exact (isWeightedHomogeneous_C _ _).mul (isWeightedHomogeneous_X _ _ _)
 
 
+open CategoryTheory AlgebraicGeometry NumberField MvPolynomial in
+set_option autoImplicit false in
 theorem _root_.GlobalTheory.HeightUnique.gaussAbs_C {K σ : Type} [Field K] [NumberField K] (w : FinitePlace K) (c : K) :
     _root_.ReciprocityTheory.MultiplicativeHeights.gaussAbs w (C c : MvPolynomial σ K) = w c := by
   classical
@@ -139,6 +153,8 @@ private lemma finsum_log_finitePlace_add_sum_log_norm_embedding {K : Type} [Fiel
   ring
 
 
+open CategoryTheory AlgebraicGeometry NumberField MvPolynomial in
+set_option autoImplicit false in
 theorem _root_.GlobalTheory.HeightUnique.formHeight_C_mul {F : Type} [Field F] [NumberField F] {B N n : ℕ} (hN : 0 < N) (δ : ℕ)
     {w : Matrix (Fin N) (Fin n) F} (hw : Submodule.span F (Set.range w.col) = ⊤)
     {A : (F →+* ℂ) → Matrix (Fin N) (Fin N) ℂ} (hA : ∀ σ, (A σ).det ≠ 0) {a : Fin B → ℕ}

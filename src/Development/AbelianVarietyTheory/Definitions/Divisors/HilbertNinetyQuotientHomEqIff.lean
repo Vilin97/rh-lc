@@ -310,6 +310,7 @@ def ResEtaPow (K : Subgroup Rˣ) (χ : Eˣ →* Circle) (n : ℕ) : Prop :=
     if a ∈ K ⊔ (Units.map (Algebra.norm R : E →* R)).range then 1 else (-1) ^ n
 
 
+variable {c} in
 theorem ResEtaPow.map_conj {ξ : E} (h : IsQuad c ξ) {K : Subgroup Rˣ} {χ : Eˣ →* Circle} {n : ℕ} (hχ : ResEtaPow K χ n)
     (z : Eˣ) : χ (Units.map (c : E →* E) z) = (χ z)⁻¹ := by
   have h1 := hχ (Units.map (Algebra.norm R : E →* R) z)
@@ -319,6 +320,7 @@ theorem ResEtaPow.map_conj {ξ : E} (h : IsQuad c ξ) {K : Subgroup Rˣ} {χ : E
   exact eq_inv_of_mul_eq_one_right h1
 
 
+omit [Invertible (2 : R)] in
 theorem ResEtaPow.triv_of_even {K : Subgroup Rˣ} {χ : Eˣ →* Circle} {n : ℕ} (hχ : ResEtaPow K χ n) (hn : Even n)
     (a : Rˣ) : χ (Units.map (algebraMap R E : R →* E) a) = 1 := by
   rw [← Circle.coe_eq_one, hχ a, hn.neg_one_pow, ite_self]

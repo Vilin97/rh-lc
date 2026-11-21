@@ -21,6 +21,7 @@ open ValuativeRel
 open GlobalTheory.Core.Mi.LatMatch
 
 
+set_option maxHeartbeats 1000000 in
 theorem GlobalTheory.Core.Mi.LatMatch.coreOff_homothetic : ∀ (D : D7) (S A L : HSp D) (o : OrthDec S A L) (ζ : Fin L.rank → D.host.E) (M M' : Lat S) (LA : Lat A) (LL : Lat L) (μ : D.host.E) (T : ℕ) (v : GlobalTheory.FinPl.Pl D) (a₀ : GA D A), IsLineVec L ζ → IsSelfDualC L LL → OrthAt o M LA LL v → TraceAt o a₀ LA M' v → SplitsAt o M' v → μ ≠ 0 → LineAt (vecB o ζ) μ M' v → star ζ ⬝ᵥ L.gram *ᵥ ζ = -(μ * star μ * (T : D.host.E)) → (T : 𝓞 D.host.F) ∉ v.asIdeal → ∃ (a : GA D A) (c : AE D), CenAt A v a ∧ NormOneAt v c ∧ SMoves S c (o.emb (a₀ * a, 1)) M M' v := by
   intro D S A L o ζ M M' LA LL μ T v a₀ hζ hLL hM hTr hSp hμ hline hn hT
   obtain ⟨Λ', hΛ', hmem⟩ := GlobalTheory.T.exists_selfDual_lineLatticeTrace_at_place D S A L o ζ M' μ T v hζ hμ hline hn hT

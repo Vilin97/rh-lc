@@ -160,6 +160,7 @@ section Tower
 variable {Ψ : Type} [Fintype Ψ]
 
 
+open Classical in
 theorem det_gram_tower (R : RiemLat E g Λ) {σ : Ψ → (𝓞 E →+* ℂ)} (hσ : IsCMFam σ) {I : Submodule (𝓞 E) Λ}
     (hI : IsIsoSub R.form I) {ρ : ℕ} {v : Fin ρ → Λ} (hv : ∀ a, v a ∈ I) (hli : LinearIndependent (𝓞 E) v) :
     (Matrix.of fun p q => (R.ip (R.P (towerZBasis hli p : Λ)) (R.P (towerZBasis hli q : Λ))).re).det =
@@ -182,6 +183,7 @@ theorem det_gram_tower (R : RiemLat E g Λ) {σ : Ψ → (𝓞 E →+* ℂ)} (h�
     (∏ τ, ((R.gram fun a => eigComp R.B (σ τ) (R.P (v a))).det.re : ℂ) ^ 2) * key
 
 
+omit [IsCMField E] in
 theorem card_basis_eq (htf : ∀ (n : ℕ) (x : Λ), n ≠ 0 → n • x = 0 → x = 0) {I : Submodule (𝓞 E) Λ} {ρ : ℕ}
     {v : Fin ρ → Λ} (hv : IsNzFamily I ρ v) {m : ℕ} (b : Module.Basis (Fin m) ℤ I) :
     m = ρ * Module.finrank ℚ E := by
@@ -214,6 +216,8 @@ theorem card_basis_eq (htf : ∀ (n : ℕ) (x : Λ), n ≠ 0 → n • x = 0 →
   omega
 
 
+omit [IsCMField E] in
+open Classical in
 theorem det_gram_index (f : Λ →+ Λ →+ ℝ) {I : Submodule (𝓞 E) Λ} {ρ : ℕ} {v : Fin ρ → Λ}
     (hv : IsNzFamily I ρ v) {m : ℕ} (b : Module.Basis (Fin m) ℤ I) (hm : m = ρ * Module.finrank ℚ E) :
     (Matrix.of fun p q => f (towerZBasis hv.2.2.1 p : Λ) (towerZBasis hv.2.2.1 q : Λ)).det =

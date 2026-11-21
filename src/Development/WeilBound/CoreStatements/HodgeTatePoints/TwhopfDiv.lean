@@ -15,6 +15,8 @@ open GlobalTheory.CompanionTheory.Ar.BT ReciprocityTheory.ChartRestriction.G.Sem
 namespace PositivityTheory.HtPt.Twhopf
 
 
+open GlobalTheory.FibreFlat in
+set_option backward.isDefEq.respectTransparency false in
 theorem flat_of_flatOver_fields {X Y S : Scheme.{0}} (f : X ⟶ Y) (g : Y ⟶ S)
     (hY : LocallyOfFinitePresentation g) (h0 : LocallyOfFinitePresentation (f ≫ g))
     (h1 : Flat (f ≫ g)) (h2 : LocallyQuasiFinite f)

@@ -76,6 +76,7 @@ def subQuotEquivOfSplitting {L : Type*} [AddCommGroup L] [Module R L] {P Q : Sub
     ((π ∘ₗ Q.subtype).quotKerEquivOfSurjective fun l => ⟨⟨σ l, h₃ l⟩, h₁ l⟩)
 
 
+variable (R M) in
 @[ext] structure FullFlag (n : ℕ) where
 
   sub : Fin (n + 1) → Submodule R M

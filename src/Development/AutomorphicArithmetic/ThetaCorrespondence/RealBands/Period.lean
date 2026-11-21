@@ -18,6 +18,8 @@ noncomputable section
 namespace UpperTheory.Lit.Cusp
 
 
+set_option maxHeartbeats 1000000 in
+open GlobalTheory.SepPer.PerNe in
 theorem exists_cusp_form_theta_period_ne_zero : GlobalTheory.Published.HarishChandraModules → GlobalTheory.Published.CasselmanWallach →
     GlobalTheory.Published.CuspRapidDecay → PackEx → DepthPays →
     Ev fun {D} _ {L} {sc} {G} W M => ∀ (M₀ : DSModel (Yc D 0) (parB (Ptw D) 0))

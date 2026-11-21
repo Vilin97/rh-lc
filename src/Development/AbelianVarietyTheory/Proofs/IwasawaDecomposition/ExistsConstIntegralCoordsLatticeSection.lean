@@ -83,6 +83,8 @@ private theorem exists_pos_int_combination_eq_zero_near_of_linearIndependent {g 
   simpa using Int.abs_lt_one_iff.1 this
 
 
+open Topology in
+set_option autoImplicit false in
 theorem _root_.GlobalTheory.ShFam.Hor.LogCh.exists_const_coords (n g r : ℕ) (B : Set (Fin n → ℂ))
     (K : (Fin n → ℂ) → Set (Fin g → ℂ))
     (lam : (Fin n → ℂ) → Fin r → Fin g → ℂ) (ζ : (Fin n → ℂ) → Fin g → ℂ) (b₀ : Fin n → ℂ)

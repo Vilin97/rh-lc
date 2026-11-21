@@ -196,6 +196,7 @@ private theorem exists_lev (Z : LocM.Mdl Y i₀) (T : ReciprocityTheory.ChartRes
   exact ⟨⟨r₀, ν', hr', π, hπ, ⟨m, hm⟩, hr⟩, ν, hj, hν, hν'.trans hn'⟩
 
 
+set_option maxHeartbeats 1000000 in
 private theorem generic_match (Z : LocM.Mdl Y i₀) [IsDiscreteValuationRing (Z.i.c.V W)]
     {T : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model (Xo i₀.l) i₀.c β} {F : Type} [Field F] [NumberField F] {e : F ≃+* i₀.c.F}
     {σ : i₀.c.F →+* ℂ} {N : ℕ} {U : Formalism.L2.PjFree.Unf (Xo i₀.l) i₀.c σ N} (Φ : FlagTor T e U) (L : Lev Z T)
@@ -367,6 +368,7 @@ private theorem link_of_match {Z : LocM.Mdl Y i₀} {T : ReciprocityTheory.Chart
   rw [Category.assoc, hν, reassoc_of% hvu σ i]
 
 
+set_option maxHeartbeats 400000 in
 private theorem exists_link (Z : LocM.Mdl Y i₀) [IsDiscreteValuationRing (Z.i.c.V W)]
     {T : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model (Xo i₀.l) i₀.c β} {F : Type} [Field F] [NumberField F] {e : F ≃+* i₀.c.F}
     {σ : i₀.c.F →+* ℂ} {N : ℕ} {U : Formalism.L2.PjFree.Unf (Xo i₀.l) i₀.c σ N} (Φ : FlagTor T e U)

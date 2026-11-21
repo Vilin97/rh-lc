@@ -293,6 +293,7 @@ theorem zId : ∀ i, constantCoeff (pt C (n := 1) dd 0 i) = 0 := fun i => by sim
 end SelfAdjointLinearTerm
 
 
+open SelfAdjointLinearTerm PartialDerivEval FirstUnitSeriesIntegrality MulLFrob in
 theorem linear_part_first_unit {C : Type} [Field C] [CharZero C] {V : VF C} {O : Type} [CommRing O] [StarRing O] {dd : ℕ}
     (Y : FBChart C V O dd) (v : Fin dd → C) :
     zl v Y.u1 = (V.l : C) • Y.sgP v - ev (n := 1) ![mulL Y.B.G.F V.l] (Y.sgP v) := by
@@ -320,6 +321,7 @@ theorem linear_part_first_unit {C : Type} [Field C] [CharZero C] {V : VF C} {O :
   ring
 
 
+open SelfAdjointLinearTerm PartialDerivEval FirstUnitSeriesIntegrality MulLFrob in
 theorem constant_zero_first_zero_self {C : Type} [Field C] [CharZero C] {V : VF C} {O : Type} [CommRing O] [StarRing O] {dd : ℕ}
     (Y : FBChart C V O dd) (e eb : Pt C 1 dd) (he0 : ∀ i, MvPowerSeries.constantCoeff (e i) = 0)
     (heb0 : ∀ i, MvPowerSeries.constantCoeff (eb i) = 0) (v : Fin dd → C) :

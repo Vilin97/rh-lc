@@ -14,6 +14,7 @@ open scoped BigOperators
 namespace GlobalTheory
 
 
+open Formalism.MainNotions.GL3Theta in
 theorem mulBy_integral_isClosed : ∀ (p : ℕ) [Fact p.Prime] (g : GL3Theta.G1 p), IsClosed {c : ℂ_[p] | IntegralMv (g.mulBy c (GL3Theta.Xv ()) : MvPowerSeries Unit ℂ_[p])} := by
   intro p _ g
   set L : MvPowerSeries Unit ℂ_[p] := g.lg (GL3Theta.Xv ()) with hLdef

@@ -15,6 +15,9 @@ open GlobalTheory GlobalTheory.Ex GlobalTheory.Ex.Arch
 namespace GlobalTheory.Ex.Arch
 
 
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry NumberField in
+open scoped CategoryTheory.Obj BigOperators in
+attribute [local instance] Over.cartesianMonoidalCategory in
 theorem _root_.GlobalTheory.Ex.Arch.towerSt_of : _root_.GlobalTheory.Ex.BrGtSt → _root_.GlobalTheory.Ex.BrWpSt → _root_.GlobalTheory.Ex.Arch.PtSt → _root_.GlobalTheory.Ex.Arch.QkSt → _root_.GlobalTheory.Ex.Arch.WpSt → _root_.GlobalTheory.Ex.Arch.TowerSt := by
   intro hGt hWp hPt hQk hWA
   unfold _root_.GlobalTheory.Ex.BrGtSt _root_.GlobalTheory.Ex.AllN at hGt

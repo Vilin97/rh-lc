@@ -89,6 +89,7 @@ theorem framepf_Ψα_smulLA (H : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O)) (
   | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add]
 
 
+include hπ0 hΔπ γ0 in
 theorem framepf_Ψα_toLA (H : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O))
     (t : ↥W.AΔ ⊗[O] ↥(⊤ : Submodule O (LcQ W T π' c))) :
     framepf_Ψα Bs π' c hπ0 hΔπ hR2 γ0 hu H (toLA W T π' c ⊤ t) ∈ PcS W T c := by
@@ -119,6 +120,7 @@ variable (Eπ : LetA O n) (hEu : IsUnit (algebraMap (LetA O n) W.EE Eπ))
     (hEΔ : ∀ δ ∈ W.DelF, W.γA δ Eπ = Eπ) (h' M : ℕ)
 
 
+include hEu hEΔ in
 theorem framepf_Lam_cancel {y : W.DD T} (hΔ : ∀ δ ∈ W.DelF, W.γD T δ (Eπ ^ h' • y) = Eπ ^ h' • y)
     (hl : (letE c : LetA O n) • (Eπ ^ h' • y) = Eπ ^ h' • y) :
     (∀ δ ∈ W.DelF, W.γD T δ y = y) ∧ (letE c : LetA O n) • y = y := by
@@ -134,6 +136,7 @@ theorem framepf_Lam_cancel {y : W.DD T} (hΔ : ∀ δ ∈ W.DelF, W.γD T δ (E�
     rw [smul_sub, smul_smul, mul_comm, ← smul_smul, hl, sub_self]
 
 
+include hπ0 hΔπ γ0 hEu hEΔ in
 theorem framepf_Ψα_Lam (H : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O)) (x : W.EE ⊗[O] LcQ W T π' c)
     (hx : x ∈ LamLA W T π' Eπ h' c ⊤) :
     framepf_Ψα Bs π' c hπ0 hΔπ hR2 γ0 hu H x ∈ LamPS W T Eπ h' c := by
@@ -151,6 +154,7 @@ theorem framepf_Ψα_Lam (H : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O)) (x :
   exact ⟨hP1, hΔ, hl⟩
 
 
+include hπ0 hΔπ γ0 in
 theorem framepf_Ψα_J (H : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O)) (x : W.EE ⊗[O] LcQ W T π' c)
     (hx : x ∈ JLA W T π' Eπ h' M c) :
     framepf_Ψα Bs π' c hπ0 hΔπ hR2 γ0 hu H x ∈ JP W T π' Eπ h' M c := by

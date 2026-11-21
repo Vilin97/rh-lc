@@ -79,6 +79,7 @@ def vol0 : DR k K :=
 def IsTop (τ : DR k K →ₗ[K] K) : Prop := τ (vol0 k K x) = 1 ∧ ∀ q, q ≠ d → ∀ y ∈ ⋀[K]^q Ω[K⁄k], τ y = 0
 
 
+variable {K} in
 def trF (τ : DR k K →ₗ[K] K) (ρ : F →ₗ[k] k) : DR k K →ₗ[k] k :=
   ρ ∘ₗ (Algebra.trace F K).restrictScalars k ∘ₗ τ.restrictScalars k
 
@@ -99,6 +100,7 @@ theorem IsFinCover.of_charZero [CharZero F] (pd : IsPd k x) (fin : FiniteDimensi
   exact ⟨pd, fin, smooth⟩
 
 
+open scoped IntermediateField.algebraAdjoinAdjoin in
 theorem IsFinCover.exists_basis (h : IsFinCover k K x) :
     ∃ b : Module.Basis (Fin d) K Ω[K⁄k], ∀ j, b j = D k K (algebraMap F K (x j.succ / x 0)) := by
   have := h.fin

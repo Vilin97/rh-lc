@@ -17,10 +17,12 @@ namespace UpperTheory.V.TR
 variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 
 
+variable (E a) in
 def regFun : Subalgebra ℂ (GL (Fin a) (Rinf E) → ℂ) :=
   Algebra.adjoin ℂ ({f | ∃ v i j, f = fun y => ((y.val i j v : ℝ) : ℂ)} ∪ {f | ∃ v, f = fun y => ((y.val.det v : ℝ) : ℂ)⁻¹})
 
 
+variable (E a) in
 structure AlgRep where
 
   d : ℕ
@@ -32,6 +34,7 @@ structure AlgRep where
 
 
 
+open Classical in
 def AlgRep.HasInfChar (Ξ : AlgRep E a) (v : InfinitePlace E) (m : Multiset ℂ) : Prop :=
   Multiset.card m = a ∧ ∀ u : ℂ, Formalism.REAL.qdet (fun i j => Ξ.dmat (toL (Matrix.single i j (Pi.single v 1)))) (u + ((a : ℂ) - 1) / 2) =
     (m.map (u + ·)).prod • (1 : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ)
@@ -76,6 +79,7 @@ def ratC (Ξ : GlobalTheory.GKCoh.AlgRep E a) : GL (Fin a) E →* Matrix (Fin Ξ
   Ξ.mat.comp ((GeneralLinearGroup.map (pInf E)).comp (ratGL E a))
 
 
+omit [IsTotallyComplex E] in
 def AlgInfChar (Ξ : GlobalTheory.GKCoh.AlgRep E a) (τ : E →+* ℂ) (m : Multiset ℂ) : Prop :=
   Multiset.card m = a ∧ ∀ u : ℂ, Formalism.REAL.qdet (fun i j => (1 / 2 : ℂ) • (Ξ.dmat (toL (Matrix.single i j (atEmb τ 1))) -
       Complex.I • Ξ.dmat (toL (Matrix.single i j (atEmb τ Complex.I))))) (u + ((a : ℂ) - 1) / 2) =
@@ -85,6 +89,7 @@ def IsFinComp (π : CuspSub E a) (σ : SmIrr (GL (Fin a) (Af E))) : Prop :=
   ∃ f : σ.V →ₗ[ℂ] π.V, f ≠ 0 ∧ ∀ g v, f (σ.ρ g v) = π.finPart g (f v)
 
 
+omit [IsTotallyComplex E] in
 def IsConjBy (σ : ℂ ≃+* ℂ) (τ τ' : SmIrr (GL (Fin a) (Af E))) : Prop :=
   ∃ T : τ.V ≃+ τ'.V, (∀ (c : ℂ) v, T (c • v) = σ c • T v) ∧ ∀ g v, T (τ.ρ g v) = τ'.ρ g (T v)
 

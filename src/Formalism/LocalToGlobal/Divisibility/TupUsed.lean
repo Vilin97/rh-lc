@@ -75,6 +75,7 @@ theorem dcPtG_of (h : RowsHoldDcPt3 P) : DcPtG P := fun u t _ x F => h u t x F
 theorem dcPt_of_G (hU : TupAllUsed P) (h : DcPtG P) : RowsHoldDcPt3 P := fun u t x F => h u t (hU t) x F
 
 
+open Classical in
 structure NumTieG (P : RowSideFamily ex) : Prop where
 
   Ij : ∀ (i : Fin D.R.m) (t : P.T), Formalism.IndefR.RecTie.Used0 D (P.I.tup t) → ∀ w,

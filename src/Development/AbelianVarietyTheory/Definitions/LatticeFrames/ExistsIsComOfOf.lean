@@ -184,6 +184,7 @@ structure TiedX {ζ₀ : Fin a.Lz.rank → (I.rec7 l Z).host.E} {PP : Formalism.
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+open GlobalTheory.FinPl in
 structure OffsetCompatibility (o : OffX a k ((B.primes X).vT v)) : Prop where
   idem : ∀ i, Formalism.L2.NTheta.IsIdemAt (o.p i).e i.1
   under : ∀ i, (o.p i).v = HeightOneSpectrum.under (𝓞 (I.rec7 l Z).host.F) (show Formalism.L2.DIV.Pl (I.rec7 l Z).host.E from i.1)
@@ -208,6 +209,7 @@ structure OffsetCompatibility (o : OffX a k ((B.primes X).vT v)) : Prop where
   sum : ∀ n h i, IsSumFrame (a.oT n h) o.ζ₀ (o.γ i) (o.γ₀ n h i)
 
 
+variable (a) in
 structure StdCol {chOf : ∀ i, ((I.rec7 l Z).mem v).C.cls i → Ch i} (F : FormsTiedSym (I.rec7 l Z) v Ch chOf) : Prop where
   is : A.Is F a.c.ψ a.c.θ
   keeps : A.Keeps F

@@ -27,6 +27,7 @@ open GlobalTheory.StdFrames GlobalTheory.IndefiniteRowSideFullHecke.ChainMatrice
 variable {D : D7}
 
 
+set_option maxHeartbeats 800000 in
 theorem exists_gfc (V : HSp D) (γ : GL (Fin V.rank) (Ef D)) (hγ : Unimod (OA D) (gramOf V γ)) :
     ∃ k ∈ Formalism.L2.Theta.GfC V, crdLat V V.L0 = lat ((Formalism.IndefR.Lev.finE V k)⁻¹ * γ) := by
   let L : Submodule (𝓞 D.host.E) V.V :=

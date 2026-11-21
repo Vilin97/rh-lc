@@ -34,6 +34,7 @@ theorem hasDerivAt_scalar_exp :
   · simpa [toL, Matrix.scalar_apply, Matrix.diagonal_apply, h] using hasDerivAt_const (0 : ℝ) (0 : ℂ)
 
 
+open GlobalTheory.UnitaryBC in
 theorem hasDerivAt_splitCentre (ψ : Sm E a) (g : GA E a) (s : ℝ) :
     HasDerivAt (fun t : ℝ => ψ.1 (g * splitCentre E a t))
       ((lie E a (fun i j => if i = j then (1 : Cinf E) else 0) ψ).1 (g * splitCentre E a s)) s := by

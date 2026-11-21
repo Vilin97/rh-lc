@@ -46,6 +46,7 @@ variable {O : Type*} (K : Type*) [CommRing O] [IsDomain O] [ValuationRing O] [Fi
   [Fact ¬IsUnit (p : O)]
 
 
+include K in
 theorem roots_modP {g : (ModP O p)[X]} (hg : g.Monic) {d : ℕ} (hd : g.natDegree = d)
     (hd0 : d ≠ 0) :
     (∃ x, g.eval x = 0) ∧ {y | ∃ x, g.eval x = 0 ∧ y = x ^ p ^ d}.Finite := by
@@ -108,6 +109,7 @@ theorem eval₂_pow_p_pow (P : (PreTilt O p)[X]) (k n : ℕ) (x : ModP O p)
     exact ih _ (eval₂_pow_p P (n + k) x hx)
 
 
+include K in
 theorem exists_root_preTilt {P : (PreTilt O p)[X]} (hP : P.Monic) (hd0 : P.natDegree ≠ 0) :
     ∃ x, P.eval x = 0 := by
   classical

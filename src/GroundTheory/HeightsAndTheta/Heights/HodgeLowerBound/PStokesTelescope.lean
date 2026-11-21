@@ -266,6 +266,7 @@ theorem top_sub_top_le (hS : StokesStep.Statement) (hI : IsIntersectionFamily I)
 end StokesTelescope
 
 
+open StokesTelescope in
 theorem StokesTelescope.proof (hS : StokesStep.Statement) : StokesTelescope.Statement := by
   intro II Ψ _ _ K _ ι _ Ω _ _ E _ _ D O Lt _ _ _ X B p q t t' hII hq hMU hN
   have hq0 : (0 : ℝ) < q := by exact_mod_cast (show 0 < q by omega)

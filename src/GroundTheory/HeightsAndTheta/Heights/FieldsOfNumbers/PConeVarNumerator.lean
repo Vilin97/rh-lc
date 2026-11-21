@@ -17,6 +17,8 @@ noncomputable section
 universe u
 
 
+set_option maxHeartbeats 400000 in
+set_option synthInstance.maxHeartbeats 200000 in
 theorem ConeVarNumerator.proof (hDZ : DegZeroLocQuot.Statement.{u}) :
     ConeVarNumerator.Statement.{u} := by
   intro F _ K _ _ ι _ P hP W hW hPW v _

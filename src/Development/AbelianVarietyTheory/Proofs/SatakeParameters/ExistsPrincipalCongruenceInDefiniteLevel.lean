@@ -64,6 +64,7 @@ theorem levFn_eq_one {D : D7} {n : ℕ} (β : GL (Fin n) (Lev.EAf D)) (L : Forma
 end GlobalTheory.VFormCong
 
 
+set_option maxHeartbeats 1600000 in
 theorem GlobalTheory.VFormCong.exists_cong_levEnv : ∀ (D : D7) (cf : CharFrame D) (nch : NChoice D) (tp : TupTied D cf nch) (X : GlobalTheory.NJoin.RealAt D cf nch tp) (M : MtFam D) (rep : D.what₂.FT → NG.FinTyp D.host.E D.R.r) (hA : GlobalTheory.NJoin.Agree X M rep) (j : Fin D.R.m) (t : X.T), ∃ N : ℕ, 0 < N ∧ ∀ κ, NG.Cong D.host.E D.R.nV N κ → ∃ h : (finHom (Vc D j)).rangeRestrict ((hA.PV j).ψ κ) ∈ (levEnv (Vc D j) (X.R.βV j) (X.R.datVt j t)).J, (levEnv (Vc D j) (X.R.βV j) (X.R.datVt j t)).χ ⟨_, h⟩ = 1 := by
   intro D cf nch tp X M rep hA j t
   classical

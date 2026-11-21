@@ -131,6 +131,7 @@ def GMod : Prop := ∀ (F : Type) [Field F] [NumberField F] (l : ℕ) [Fact l.Pr
   0 < absF z ∧ nu ι ((absF z : ℂ) * ∏ v, D.ea v (z : Af F)) = 1
 
 
+open Classical in
 def GTerm : Prop := ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (D : LDat F ι)
   (c : Pl F → ℕ) (χ : Hc c →* ℂˣ), (∀ v, c (D.pl v) = 1) → ∀ k₀ : ℕ, 2 ≤ k₀ → ∀ (N : ℕ) (t : InfinitePlace F → ℕ), (∀ v, (l - 1) * l ^ N ∣ t v) →
   ∀ (W : List (Pl F)) (r : ℕ), 1 ≤ r → (∀ v, r ≤ W.count (D.pl v)) → ∀ (n : ℕ) (a : Fin n → GF F), IsReps c W a →

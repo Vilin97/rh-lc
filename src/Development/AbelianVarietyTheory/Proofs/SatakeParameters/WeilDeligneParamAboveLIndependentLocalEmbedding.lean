@@ -156,6 +156,7 @@ variable {l : ℕ} [Fact l.Prime] (P : LocPrime l) {LL : Type} [Field LL] [Algeb
   {V : Type} [AddCommGroup V] [Module LL V] [Module ℚ_[l] V] [IsScalarTower ℚ_[l] LL V]
 
 
+variable (LL V) in
 def conjV (g : GQ l) : End LL (V ⊗[ℚ_[l]] Bst P) := onB P LL V (actSt P g).toLinearMap
 
 theorem conjV_tmul (g : GQ l) (v : V) (b : Bst P) : conjV P LL V g (v ⊗ₜ b) = v ⊗ₜ actSt P g b := rfl
@@ -307,6 +308,7 @@ variable {l : ℕ} [Fact l.Prime] (P : LocPrime l) (ι : Om l ≃+* ℂ)
   (h : IsPlaceOver A w) (hj : Induces B) (hj' : Induces B')
 
 
+open EnlargeCoeff in
 theorem mem_span_dQ {K L₁ L₂ : FinExt l}
     {V₁ V₂ : Type} [AddCommGroup V₁] [Module ↥L₁.1 V₁] [Module ℚ_[l] V₁] [IsScalarTower ℚ_[l] ↥L₁.1 V₁]
     [AddCommGroup V₂] [Module ↥L₂.1 V₂] [Module ℚ_[l] V₂] [IsScalarTower ℚ_[l] ↥L₂.1 V₂]
@@ -328,6 +330,7 @@ theorem mem_span_dQ {K L₁ L₂ : FinExt l}
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)
 
 
+open EnlargeCoeff in
 theorem wdPst_enlarge {m : ℕ} {L₁ L₂ : FinExt l} (hL : L₁.1 ≤ L₂.1) (r₁ : ↥(Dec (F := E) A) →* GL (Fin m) ↥L₁.1)
     (hV₁ : IsPst P (B.repE L₁ r₁)) :
     wdPst P ι B h hj (B.repE L₁ r₁) =

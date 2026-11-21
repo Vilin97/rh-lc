@@ -54,6 +54,8 @@ def jDT (Q : RealT Rc P Dcf Spf Zscf S Ks) (i : Fin D.R.m) (y : Fin ((P.A3.indef
   Formalism.IndefR.NX.jDL Q.Rl Q.F.lv2 i (y ∘ Fin.cast (dWL_eq Q i))
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
 structure RealRec (Q : RealT Rc P Dcf Spf Zscf S Ks) : Type 1 where
 
   tupT : D.what₂.Tup → P.T

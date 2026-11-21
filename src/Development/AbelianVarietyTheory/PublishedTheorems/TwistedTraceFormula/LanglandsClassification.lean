@@ -93,6 +93,7 @@ def TemperedLevi : Prop :=
 end Langlands
 
 
+open Langlands in
 def LanglandsClassification : Prop :=
   Induced ∧ Quotient ∧ Classification ∧ Limit ∧ StandardSpan ∧ StandardIndependent ∧ TemperedLevi
 

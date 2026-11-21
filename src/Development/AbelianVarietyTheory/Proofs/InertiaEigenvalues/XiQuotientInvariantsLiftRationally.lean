@@ -328,6 +328,7 @@ theorem zpow_mul_mem (J : ThetaL P AI) (w : P.R.BdR) (hw : w ∈ (P.PD (botExt l
       ih (c - 1), ← H (c - 1), ← mul_assoc, Units.mul_inv, one_mul, sub_add_cancel]
 
 
+omit hu in
 theorem exists_beta (LT : LocTied l P AI) (J : ThetaL P AI) (K : FinExt l) (a : ℤ) :
     ∃ β : ↥(Mxi (AinfSub l) (xiU AI) a) →+ P.R.BdR,
       (∀ (c : ℤ_[l]) m, β (c • m) = algebraMap ℤ_[l] ℚ_[l] c • β m) ∧
@@ -746,6 +747,7 @@ theorem lift_lev {l : ℕ} [Fact l.Prime] {P : LocPrime l} (AI : LocAinf l P) (L
     (fun _ _ => rfl)
 
 
+open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Formalism.MainNotions.LocalSituation GlobalTheory.Cyc in
 theorem invariants_lift : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW), adm5 D → adm7 D → ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL), let S := sit D.loc HW l (D.locA l) K s LL h; let E : S.Comparison₂ := ((F l).E K s LL h).tie; ∀ (T : LocLat S.G S.Qp S.LL S.O) (a e b : ℤ) (j : ℕ) (hle : Gj K j ≤ GK K), s ≤ j → a ≤ e → e ≤ b → IsCrysOn S S.W.GKs T → ∀ p : Qab (AinfSub l) (xiU (D.locA l)) a b →ₗ[ℤ_[l]] Qab (AinfSub l) (xiU (D.locA l)) a e, (∀ x, p (Submodule.Quotient.mk x) = Submodule.Quotient.mk x) → letI := zlMod LL T; ∀ z : (TensorProduct ℤ_[l] ↥T.L.T (Qab (AinfSub l) (xiU (D.locA l)) a e)), (∀ g, (repQ (D.locA l) (Gj K j) ((actTZ LL T).comp (Subgroup.inclusion hle)) a e) g z = z) → ∃ (k : ℕ) (x : (TensorProduct ℤ_[l] ↥T.L.T (Qab (AinfSub l) (xiU (D.locA l)) a b))), (∀ g, (repQ (D.locA l) (Gj K j) ((actTZ LL T).comp (Subgroup.inclusion hle)) a b) g x = x) ∧ LinearMap.lTensor ↥T.L.T p x = (l : ℤ_[l]) ^ k • z :=
   fun D HW _ h5 h7 l _ K s LL h T a e b j hle hsj hae heb hcr p hp =>
     lift_lev (D.locA l) (D.locT l) (GlobalTheory.ThetaTie.nonempty_thetaL D l) (HW l) K s LL h T a e b j hle hsj hae heb

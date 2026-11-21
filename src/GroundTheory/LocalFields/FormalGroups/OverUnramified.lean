@@ -91,6 +91,7 @@ variable {A B : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
   (σ : B →ₐ[A] B)
 
 
+omit [IsDomain A] [IsDiscreteValuationRing A] [Finite (ResidueField A)] in
 theorem bijective_twistOp [IsAdicComplete (maximalIdeal B) B] {π : A}
     (hπB : Irreducible (algebraMap A B π)) {v : B} (hv : IsUnit v) {d : ℕ} (hd : 2 ≤ d) :
     Function.Bijective (twistOp (σ : B →+* B) v (algebraMap A B π) d) := by
@@ -151,6 +152,7 @@ theorem bijective_twistOp [IsAdicComplete (maximalIdeal B) B] {π : A}
     exact ⟨x, sub_eq_zero.1 hx⟩
 
 
+omit [Finite (ResidueField A)] in
 theorem map_residue_map_eq_X_pow {π : A} (hmem : algebraMap A B π ∈ maximalIdeal B)
     {f : PowerSeries A} (hf : IsLubinTateSeries π f) :
     PowerSeries.map (residue B) (PowerSeries.map (algebraMap A B) f) =
@@ -247,6 +249,7 @@ variable {A B : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
 include hunr hσ hπ hf hg
 
 
+omit [IsAlgClosed (ResidueField B)] in
 theorem isTwistedLift_unique {ι : Type*} [Finite ι] {ℓ φ ψ : MvPowerSeries ι B}
     (hφ : IsTwistedLift (σ : B →+* B) (PowerSeries.map (algebraMap A B) g)
       (PowerSeries.map (algebraMap A B) f) ℓ φ)
@@ -263,6 +266,7 @@ theorem isTwistedLift_unique {ι : Type*} [Finite ι] {ℓ φ ψ : MvPowerSeries
     (fun φ e => dvd_coeff_twistedDefect σ hunr hσ hπB hf hg φ e) hψ
 
 
+omit [IsAlgClosed (ResidueField B)] in
 theorem exists_isTwistedLift {ε : B} (hε : σ ε = algebraMap A B u * ε) :
     ∃ θ : PowerSeries B, IsTwistedLift (σ : B →+* B) (PowerSeries.map (algebraMap A B) g)
       (PowerSeries.map (algebraMap A B) f) (PowerSeries.C ε * PowerSeries.X) θ := by

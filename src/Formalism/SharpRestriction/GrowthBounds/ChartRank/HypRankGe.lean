@@ -215,6 +215,7 @@ theorem mk_eq_of (S : StepIn M i hi G) (β : S.Ch) {γ : GL (Fin (D.R.N i)) D.ho
   exact hx
 
 
+set_option maxHeartbeats 1000000 in
 theorem fiBPi (S : StepIn M i hi G) (β : S.Ch) : FiBPi S β := by
   intro f hf
   have hφ : ∀ c, ∃ φ ∈ AdForms (S.K β).lev (embT D) (lamTG M i), φ ((S.K β).y c) = f c := by

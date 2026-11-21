@@ -179,6 +179,7 @@ theorem RepVV_lp {T : LocLat G Qp LL O} {c' : ZMod n} {e M : ℕ} {Λ : LetA O n
     exact InFP_lp W r h3
 
 
+include W in
 theorem isUnit_prime_sub_one (hl : 5 ≤ PD.p) (hOv : ∀ x : LL, 0 ≤ v x → ∃ y : O, algebraMap O LL y = x)
     (hinj : Function.Injective (algebraMap O LL)) : IsUnit (((PD.p - 1 : ℕ) : O)) := by
   have hv1 : v ((PD.p : ℕ) : LL) = 1 := W.v_l

@@ -70,6 +70,7 @@ theorem baseChangeAt_frame (p : PlF D) (j : Fin (nV D)) : baseChange₂ D p ((VS
   split_ifs with h1 h2 h2 <;> simp_all [eq_comm]
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_isLattice_eq_localLattice (Zd : LocDat D) (p : PlF D) (M : Submodule (Zd.M p).L.O (Vp D p)) (hfg : M.FG)
     (hsp : Submodule.span (D.s.atP p).Ep (M : Set (Vp D p)) = ⊤) :
     ∃ Λ' : Submodule (𝓞 D.host.E) (VS D).V, Submodule.IsLattice D.host.E Λ' ∧ M = lattice₂ D Zd.M p Λ' := by

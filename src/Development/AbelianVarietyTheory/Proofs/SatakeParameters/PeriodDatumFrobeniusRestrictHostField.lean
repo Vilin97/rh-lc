@@ -50,6 +50,7 @@ theorem card_quot_under {E : Type} [Field E] [NumberField E] (l : ℕ) [hl : Fac
 end GlobalTheory.FrobPeriod
 
 
+open GlobalTheory.FrobPeriod in
 theorem GlobalTheory.FrobPeriod.periodFrob_restrict : ∀ (D : D7) {l : ℕ} [Fact l.Prime] (P : LocPrime l) (K : FinExt l) (c : D.host.E →+* ↥K.1), l ∉ D.host.small → l ≠ D.host.q → l ≠ D.host.d → ∀ (x : D.host.E) (y : ↥(K0 K)), algebraMap ↥(K0 K) ↥K.1 y = c x → algebraMap ↥(K0 K) ↥K.1 ((P.PD K).σ y) = c (D.host.sigmaOf (DV.frobG D l) x) := by
   intro D l _ P K c h2 hq hd x y hy
   have hlN : ¬ l ∣ D.host.condN := fun h => by

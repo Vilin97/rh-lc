@@ -466,6 +466,8 @@ def eHT (i : T.Tw) (j : ℕ) (b : Bool) : Module.End (FractionRing (T.O i)) (FmT
 theorem eHT_idem (i : T.Tw) (j : ℕ) (b : Bool) : eHT D T S i j b * eHT D T S i j b = eHT D T S i j b := one_mul _
 
 
+set_option maxHeartbeats 800000 in
+set_option synthInstance.maxHeartbeats 400000 in
 def mkEx (In : RatIn D S) (hE : IsEmpty D.nd.Loc) (hfg : ∀ i j b, (BsupT D T S i j b).FG) (hst : HkStab D T S In) (sd : SigData D T)
     (rho : RhoFam D T) (hrho : ∀ i σ b, Continuous fun g =>
       ((rho i σ b g : GL (Fin D.R.r) (T.O0 i)) : Matrix (Fin D.R.r) (Fin D.R.r) (T.O0 i)))

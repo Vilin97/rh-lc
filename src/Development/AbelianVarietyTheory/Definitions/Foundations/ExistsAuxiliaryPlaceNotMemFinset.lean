@@ -37,6 +37,7 @@ def infCoord (g : GInf σ J) : ∀ w : InfinitePlace F, EmbOver E w → Fin n �
   fun w => archCoord σ J w (projInfArch σ J w g)
 
 
+omit [NumberField E] in
 theorem archMat_apply {w : InfinitePlace F} (τ : EmbOver E w) (g : GArch σ J w) :
     archMat σ J τ g = (matHom _ σ J g).1.map (infEmb τ) := rfl
 
@@ -66,6 +67,7 @@ theorem continuous_infCoord : Continuous (infCoord σ J) :=
   continuous_pi fun w => (continuous_archCoord σ J w).comp (continuous_projInfArch σ J w)
 
 
+variable {σ} in
 theorem isEmbedding_archMat (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w) :
     Topology.IsEmbedding (matCoord (archMat σ J τ)) := by
   let e := RingEquiv.ofBijective _ (infEmb_bijective h τ)
@@ -131,6 +133,7 @@ theorem ccArch_eq (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w) 
     · rw [(infEmb_eq_or_conj h τ τ').resolve_left e]; rfl
 
 
+omit [NumberField E] in
 theorem tensor_eq_infFin : tensor σ J fa ff = infFin σ J (tensorInf σ J fa) (tensorFin σ J ff) := by
   funext g
   simp [tensor, infFin, tensorInf, tensorFin]
@@ -206,6 +209,7 @@ theorem tensor_mem_ccAd (ha : ∀ w, fa w ∈ CcArch σ J w) (hf : IsFinFamily �
 
 
 
+variable (σ J L) in
 structure SplitAt (v : HeightOneSpectrum (𝓞 F)) where
 
   emb : E →ₐ[F] Fv F v
@@ -237,6 +241,7 @@ theorem exists_isUnif (v : HeightOneSpectrum (𝓞 F)) : ∃ ϖ : (Fv F v)ˣ, Is
   exact ⟨Units.mk0 p fun e => WithZero.exp_ne_zero (hp.symm.trans ((congrArg _ e).trans (map_zero _))), hp⟩
 
 
+open ValuativeRel in
 theorem IsUnif.valuation_eq {v : HeightOneSpectrum (𝓞 F)} {ϖ : (Fv F v)ˣ} (h : IsUnif ϖ) :
     letI := GlobalTheory.LocalData.complRel v
     haveI := GlobalTheory.LocalData.isLocalField v
@@ -347,6 +352,7 @@ theorem starFn_idem [FiniteDimensional ℂ W] : starFn (s.idem μ τ) = s.idem �
 end SplitAt
 
 
+variable (σ J L) in
 structure TypeData where
 
   S : Finset (HeightOneSpectrum (𝓞 F))
@@ -365,6 +371,7 @@ structure TypeData where
 attribute [instance] TypeData.acg TypeData.mod TypeData.fd
 
 
+variable (σ J L) in
 structure UnitaryAuxiliaryPlaceData where
 
   u : HeightOneSpectrum (𝓞 F)
@@ -412,6 +419,7 @@ def transfer {n' : ℕ} {J' : Matrix (Fin n') (Fin n') E} (j : ∀ v, GLoc σ J 
     (ff : ∀ v, GLoc σ J v → ℂ) : ∀ v, GLoc σ J' v → ℂ := fun v => ff v ∘ (j v).symm
 
 
+omit [Submodule.IsLattice E L] in
 theorem IsFinFamily.transfer {n' : ℕ} {J' : Matrix (Fin n') (Fin n') E} {L' : Submodule (𝓞 E) (Fin n' → E)}
     (h : IsFinFamily σ J L ff) (j : ∀ v, GLoc σ J v ≃ₜ* GLoc σ J' v)
     (hj : ∀ᶠ v in cofinite, ∀ g, j v g ∈ stabLoc σ J' L' v ↔ g ∈ stabLoc σ J L v) :
@@ -421,6 +429,7 @@ theorem IsFinFamily.transfer {n' : ℕ} {J' : Matrix (Fin n') (Fin n') E} {L' : 
   by_cases hg : g ∈ stabLoc σ J L v <;> simp [Orb.transfer, hv.1, unitLoc, indicator, hv.2 g, hg]
 
 
+omit [Submodule.IsLattice E L] in
 theorem exists_split_place_notMem (h : IsCMExt F E σ) (S : Finset (HeightOneSpectrum (𝓞 F))) :
     ∃ v ∉ S, Nonempty (E →ₐ[F] Fv F v) := by
   obtain ⟨a₀, ha₀, ha₁⟩ := exists_integer_conj_eq_neg h
@@ -477,12 +486,14 @@ def centMap {H H' : Type} [Group H] [Group H'] (φ : H →* H') (γ : H) : cent 
     rw [← map_mul, ← map_mul, mem_cent.1 t.2])
 
 
+variable (L) in
 def IsCentProd (γ : GAd σ J) (dta : ∀ w, Measure (cent (projArch σ J w γ))) (dtf : ∀ v, Measure (cent (proj σ J v γ)))
     (dt : Measure (cent γ)) : Prop :=
   GlobalTheory.RestrMeas.IsHaarProd (fun w => centMap (projArch σ J w) γ) (fun v => centMap (proj σ J v) γ)
     (fun v => (stabLoc σ J L v).subgroupOf (cent (proj σ J v γ))) dta dtf dt
 
 
+variable (L) in
 theorem restrGroup_cent (γ : GAd σ J) :
     GlobalTheory.RestrMeas.IsRestrGroup (fun w => centMap (projArch σ J w) γ) (fun v => centMap (proj σ J v) γ)
       fun v => (stabLoc σ J L v).subgroupOf (cent (proj σ J v γ)) := by

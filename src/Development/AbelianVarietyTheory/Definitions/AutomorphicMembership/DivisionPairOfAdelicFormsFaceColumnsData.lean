@@ -23,6 +23,9 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotio
   {cX : ExtraC}
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
+set_option maxHeartbeats 2000000 in
 structure TwIn (ex : Extra D L hT Gi Gl K Yd cX) : Type 1 where
   G : Type
   [grp : Group G]
@@ -54,6 +57,7 @@ attribute [instance] TwIn.grp TwIn.fin TwIn.alg
 variable {ex : Extra D L hT Gi Gl K Yd cX}
 
 
+set_option maxHeartbeats 2000000 in
 @[reducible] def divisionPairOfAdelicFormsFaceColumnsData (x : TwIn ex) : RowSideFamily ex where
   Gp := x.G
   Pl0 := x.Pl0
@@ -88,6 +92,9 @@ def TwIn.bR (x : TwIn ex) (m : (x.F.Dc (zsOf x.R x.F)).Mem) (i : Fin ((x.F.Dc (z
     (Pi.single (Fin.cast (congrArg (x.F.Dc (zsOf x.R x.F)).a (x.wU_wd m)).symm i) 1)))
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
+set_option maxHeartbeats 4000000 in
 structure RealIn (x : TwIn ex) (Rc : Formalism.L2.RecT ex) (S : Formalism.L2.SG.SpectralTiesReal.STiesR Rc) : Type 1 where
   psiPin : x.R.ψ = Rc.T.theta.W.ψ
   hin : ∀ u, Formalism.L2.SG.PoincareInHH.PoincareSetting.InHH S.X u S.Y.hK

@@ -28,6 +28,7 @@ open GlobalTheory.CuspRep GlobalTheory.UnitaryBC
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 
+omit [IsCMField E] in
 theorem tendsto_finAdele (z : HeightOneSpectrum (𝓞 E) → Af E) (c : Af E)
     (hz : ∀ w u, pLoc E u (z w) ∈ u.adicCompletionIntegers E) (hc : ∀ u, pLoc E u c ∈ u.adicCompletionIntegers E)
     (he : ∀ u, ∀ᶠ w in cofinite, pLoc E u (z w) = pLoc E u c) : Tendsto z cofinite (𝓝 c) := by
@@ -112,6 +113,7 @@ open GlobalTheory.CuspRep GlobalTheory.PRep Formalism.UG Formalism.BasicNotions 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 
+omit [IsCMField E] in
 theorem hasSatGL_of_isSubquotient {w : HeightOneSpectrum (𝓞 E)} {V W : Type} [AddCommGroup V] [Module ℂ V]
     [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V) (hρs : IsSmooth ρ)
     (σ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) W) (hsub : GlobalTheory.SmGL.IsSubquotient σ ρ)

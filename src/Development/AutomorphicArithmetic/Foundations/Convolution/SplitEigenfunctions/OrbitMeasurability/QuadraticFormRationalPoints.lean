@@ -27,6 +27,7 @@ private theorem quadraticForm_rational_points (δ : ℚ) (ξ : Fin 4 → ℚ) : 
   simp [q4, qr, rp, map_sub, map_mul, map_pow]
 
 
+variable (E) in
 private noncomputable def jE : G1 ℚ →* G1 E := Matrix.SpecialLinearGroup.map (am E)
 
 private theorem gl_jE (g : G1 ℚ) : gl (jE E g) = em E (gl g) := by

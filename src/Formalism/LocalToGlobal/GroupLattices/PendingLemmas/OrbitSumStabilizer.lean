@@ -91,6 +91,7 @@ theorem mem_TT (b0 : A) (hfin : Finite {γ : Γ // sm γ b0 = b0}) (B : Finset A
     γ ∈ TT sm h1 hm b0 hfin B ↔ sm γ b0 ∈ B := Set.Finite.mem_toFinset _
 
 
+include h1 hm in
 theorem sum_unfold (S : A → Prop) (Rp : Finset A) (hRp : ∀ a ∈ Rp, S a)
     (hex : ∀ a, S a → ∃! a0, a0 ∈ Rp ∧ ∃ γ, a = sm γ a0)
     (hst : ∀ a, S a → 0 < Nat.card {γ : Γ // sm γ a = a}) (B : Finset A) (hB : ∀ b ∈ B, S b) (f : A → K) :
@@ -102,6 +103,7 @@ theorem sum_unfold (S : A → Prop) (Rp : Finset A) (hRp : ∀ a ∈ Rp, S a)
   exact Nat.cast_ne_zero.2 (hst b0.1 (hRp b0.1 b0.2)).ne'
 
 
+include h1 hm in
 theorem adj (S : A → Prop) (Rp : Finset A) (hRp : ∀ a ∈ Rp, S a)
     (hex : ∀ a, S a → ∃! a0, a0 ∈ Rp ∧ ∃ γ, a = sm γ a0)
     (hst : ∀ a, S a → 0 < Nat.card {γ : Γ // sm γ a = a})

@@ -75,6 +75,8 @@ def Rig.IsStd {V : HSp D} (r : Rig V) : Prop :=
   V.gram = 1 ∧ (∀ y, y ∈ r.Λ ↔ ∀ i, ∃ b : 𝓞 D.host.E, (b : D.host.E) = y i) ∧ ∀ τ, r.s τ = 1 ∧ r.B τ = 1
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
 structure Tri (T : Type) (A A' WW : HSp D) where
 
   rA : Rig A
@@ -180,6 +182,7 @@ def beta (i j : Fin D.R.m) (_ : T) : (AE D)ˣ →* Circle := G.chi (D.R.m - i) *
 def nuH (i j : Fin D.R.m) (t : T) : Formalism.L2.Host.HChar D.host.E := R.C.mu0 j * R.xiH t / G.chiH (D.R.m - i)
 
 
+open Classical in
 def places (t : T) : Finset (Pl D.host.E) := G.toPlaceDat.W R.Pg ∪ R.Q t
 
 def IsSum (N₁ N₂ : Node D) (WW : HSp D) (Λ : Submodule (𝓞 D.host.E) (Fin WW.rank → D.host.E)) : Prop :=

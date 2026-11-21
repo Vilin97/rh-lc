@@ -86,6 +86,7 @@ theorem ofReal_reAt (v : InfinitePlace F) (x : F) : ((reAt v x : ℝ) : ℂ) = v
   rw [← rhom_apply, ofReal_rhom]
 
 
+variable (F) in
 def embEquiv : InfinitePlace F ≃ (F →+* ℂ) where
   toFun v := v.embedding
   invFun φ := InfinitePlace.mk φ

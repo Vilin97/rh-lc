@@ -83,6 +83,7 @@ private lemma dot_nonneg_sum_root_of_antitone {n : ℕ} (v : Fin n → ℝ) (c :
   · exact mul_nonneg (Nat.cast_nonneg _) (sub_nonneg.mpr (hmono a b (hc a b h0)))
 
 
+open GlobalTheory.LowestKTypeDetermines in
 theorem stepVogan : PositivityTheory.RgDs.Hilb.StepVogan := by
   intro n ε lam η hlam hη
   obtain ⟨c, hc, rfl⟩ := hη

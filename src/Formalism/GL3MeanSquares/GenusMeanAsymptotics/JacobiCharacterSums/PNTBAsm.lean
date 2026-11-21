@@ -15,6 +15,7 @@ namespace Formalism.HermitianLattices.Ext.PrimesInProgressions
 open Formalism.HermitianLattices.Ext.LogarithmicIntegralBounds Formalism.ZeroFreeDirichlet
 
 
+set_option maxHeartbeats 400000 in
 theorem psi_relative_far_range : PsiRelBOf := by
   intro hE hS hZS cA hcA
   obtain ⟨κ, hκ, hκ', hZ⟩ := hZS

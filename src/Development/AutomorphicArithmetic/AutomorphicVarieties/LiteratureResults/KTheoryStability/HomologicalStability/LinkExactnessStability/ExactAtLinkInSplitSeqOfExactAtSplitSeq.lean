@@ -57,6 +57,7 @@ private theorem map_mem_splitSeq_iff_of_pairing_preserved {R : Type} [CommRing R
   simp only [List.mem_map, forall_exists_index, and_imp, forall_apply_eq_imp_iff₂, hf]
 
 
+open LinkSplit in
 theorem exactAt_link_splitSeq : ∀ (R : Type) [CommRing R] (s : ℕ), StableRangeLe R s →
     ∀ (N m p : ℕ) (ρ : List ((Fin N → R) × (Fin N → R))), ρ ∈ splitSeq R N → ρ.length + m = N →
       s ≤ m → ExactAt (splitSeq R m) p → ExactAt (linkIn (splitSeq R N) Set.univ ρ) p := by

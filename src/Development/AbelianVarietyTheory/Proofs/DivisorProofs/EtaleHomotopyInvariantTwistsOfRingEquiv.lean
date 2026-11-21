@@ -38,6 +38,7 @@ end GlobalTheory.EtC.HInvIso
 namespace GlobalTheory.EtC
 
 
+open HInvIso in
 theorem hInv_of_ringEquiv : ∀ (q : ℕ) [NeZero q] (A B : Type) [CommRing A] [CommRing B], (A ≃+* B) → HInv q A → HInv q B := by
   intro q _ A B _ _ e hA i n
   have hsq : (Polynomial.C : B →+* Polynomial B).comp (e : A →+* B) =

@@ -9,6 +9,7 @@ open scoped BigOperators
 namespace GlobalTheory
 
 
+open scoped BigOperators in
 theorem _root_.GlobalTheory.exists_exponent_strictly_least_weight :
     ∀ (ρ : ℕ) (S : Set (Fin ρ → ℕ)), S.Nonempty → ∃ m ∈ S, ∀ c : Fin ρ → ℕ,
       (∀ i, ∑ i' ∈ Finset.Iio i, m i' * c i' < c i) →

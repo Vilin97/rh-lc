@@ -84,6 +84,7 @@ theorem gm_mul_comp {X X' Y Z : Scheme.{0}} (r : Z ⟶ Y) (q : Y ⟶ X) (q' : Y 
   rw [gm_comp r q z U hU, gm_comp r q z V hV, gm_comp r q' z W hW, h, map_mul]
 
 
+include hc in
 theorem exists_section [∀ i, QuasiSeparatedSpace (D.obj i)] {i : I} (U : (D.obj i).Opens)
     (hU : IsCompact (U : Set (D.obj i))) (s : Γ(c.pt, c.π.app i ⁻¹ᵁ U)) :
     ∃ (j : I) (f : j ⟶ i) (t : Γ(D.obj j, D.map f ⁻¹ᵁ U))
@@ -103,6 +104,7 @@ theorem exists_section [∀ i, QuasiSeparatedSpace (D.obj i)] {i : I} (U : (D.ob
       rw [← Scheme.Hom.comp_preimage, c.w]))).symm
 
 
+include hc in
 theorem exists_unit [∀ i, QuasiSeparatedSpace (D.obj i)] {i : I} (U : (D.obj i).Opens)
     (hU : IsCompact (U : Set (D.obj i))) (s : Γ(c.pt, c.π.app i ⁻¹ᵁ U)ˣ) :
     ∃ (j : I) (f : j ⟶ i) (t : Γ(D.obj j, D.map f ⁻¹ᵁ U)ˣ),
@@ -137,6 +139,7 @@ theorem exists_unit [∀ i, QuasiSeparatedSpace (D.obj i)] {i : I} (U : (D.obj i
   simp only [w]
 
 
+include hc in
 theorem exists_unit_eq {i : I} (U : (D.obj i).Opens)
     (hU : IsCompact (U : Set (D.obj i))) (s t : Γ(D.obj i, U)ˣ)
     (h : ∀ z, c.π.app i z ∈ U → gm (c.π.app i) z _ s = gm (c.π.app i) z _ t) :
@@ -256,6 +259,7 @@ theorem exists_generator_stage_of_unit_descent [∀ i, CompactSpace (D.obj i)] [
   rw [Category.id_comp, D.map_comp]
 
 
+include hc in
 theorem exists_gen_stage [∀ i, CompactSpace (D.obj i)] [∀ i, QuasiSeparatedSpace (D.obj i)] {i : I}
     {M : LB (D.obj i)} (hM : M.IsLB) (h : ∃ t : LB.Gen (M.pull (c.π.app i)), t.IsGen) :
     ∃ (j : I) (f : j ⟶ i) (t : LB.Gen (M.pull (D.map f))), t.IsGen :=

@@ -120,6 +120,7 @@ theorem locMap_mem_locPart (hVW : V ≤ W) (T : Submonoid (MRingOver S ι)) {c :
 end GeneratedRestrict
 
 
+open GeneratedRestrict in
 theorem GeneratedRestrict.proof : GeneratedRestrict.Statement := by
   intro S _ K _ _ ι _ _ V W a hVW hV I
   obtain ⟨r, z, u, hz, hu, h1⟩ := hV I

@@ -77,6 +77,7 @@ theorem attChr_ok {c η : (AE D)ˣ →* Circle} (hc : IsHeckeChar D c) (h0 : ∀
     rw [(GlobalTheory.IdeleNormChar.existsUnique_isEta D).unique h' h1, h0, MonoidHom.comp_apply, pow_add, ← mul_pow, hsq, one_pow]
 
 
+open scoped ComplexOrder in
 theorem exists_cartan {V : HSp D} (hV : V.SigOK) (τ : D.what₂.Tau) :
     ∃ s P : Matrix (Fin V.rank) (Fin V.rank) ℂ, IsCartanInv (gramAt D V τ) s ∧ ∃ ε : Fin V.rank → Bool,
       Pᴴ * gramAt D V τ * P = Formalism.REAL.Jm ε ∧ s * P = P * Formalism.REAL.Jm ε := by

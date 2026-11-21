@@ -271,6 +271,7 @@ theorem compact_transfer {V W : HSp D} {S S' : D.what₂.Tau → SPar} {ψ : Add
     signBlockDeterminant_zpow_eq_of_agree (M'.ε τ) _ hy hy₀, signBlockDeterminant_zpow_eq_of_agree (M'.ε τ) _ hy hy₀]
 
 
+set_option maxHeartbeats 1000000 in
 theorem pairLifts (D : D7) (X : ProvA) (hI : Inputs D X) (hC : CuspAll D X) : PairLifts D X := by
   intro S S' aS aT hR V W M M' θ ψ hθ ω hω f₀ It hf₀ hIt ν 𝓕 hν h𝓕 f hf F hF
   obtain ⟨χS, χT, hω', he⟩ := hω

@@ -51,6 +51,7 @@ theorem selfDual_of_perfect {E : Type} [Field E] [NumberField E] [IsCMField E] (
     simpa using (h 1).2 isIntegral_one x hx y hy
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_datum_of_rt (D : D7) (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E)
     (hrt : (H.rt : D.host.E) = D.host.sqrtMinusD) (hrt0 : H.rt0 = D.host.φ₀ D.host.sqrtMinusD) :
     ∃ D₁ : Datum H, D₁.p = 1 ∧ D₁.q = 0 := by

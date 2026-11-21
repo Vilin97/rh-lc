@@ -110,6 +110,8 @@ theorem realcont (ps : AddChar (AF F) ℂ) (hψ : IsStd ps) (κ : Type) [Fintype
   exact CQi.continuous.comp (hcont.comp CQ.continuous)
 
 
+open GlobalTheory.WeilAdm in
+set_option maxHeartbeats 1000000 in
 theorem weilAdmissible_of_heisenberg_unitary (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (κ : Type) [Fintype κ]
     (B : ((κ → AF F) × (κ → AF F)) ≃ₗ[AF F] ((κ → AF F) × (κ → AF F)))
     (O : Module.End ℂ ((κ → AF F) → ℂ))

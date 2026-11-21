@@ -39,6 +39,7 @@ theorem sFinite_of_haar {A : Type} [AddGroup A] [TopologicalSpace A] [IsTopologi
     (μ : Measure A) [μ.IsAddHaarMeasure] : SFinite μ := inferInstance
 
 
+set_option maxHeartbeats 1000000 in
 theorem map_lr {n : ℕ} (a : GL (Fin t) (AE D)) (h : GL (Fin n) (AE D))
     (hh : absA D (Matrix.GeneralLinearGroup.det h) = 1) (β : Measure (Mx D t n)) (hβ : β.IsAddHaarMeasure) :
     β.map (fun b : Mx D t n => (a.1 ⬝ b ⬝ h.1 : Mx D t n)) =
@@ -66,6 +67,7 @@ theorem map_lr {n : ℕ} (a : GL (Fin t) (AE D)) (h : GL (Fin n) (AE D))
   rw [smul_smul, inv_mul_cancel₀ hA, one_smul]
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_radN_measure (D : D7) (B W : HSp D) (t : ℕ) (d : HypDec B W t) [LocallyCompactSpace (radN d)] :
     ∃ νN : Measure (radN d), νN.IsHaarMeasure ∧ νN.IsMulRightInvariant ∧ ∀ m ∈ levM d,
       νN.map (fun n : radN d => MulAut.conjNormal m n) =

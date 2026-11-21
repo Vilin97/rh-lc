@@ -17,6 +17,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.SquareLocus
 
 
+set_option maxHeartbeats 1000000 in
 theorem translate_mul_inv_isLocus : ∀ (S : Scheme.{0}) [IsLocallyNoetherian S] (A : Over S) [GrpObj A], IsAbelianScheme A → ∀ (c : Pic A.left) (V : A.left.Opens), IsLocus c V → ∀ (T : Over S) (a : T ⟶ A), GlobalTheory.CechPic.pull (a).left c + GlobalTheory.CechPic.pull ((a)⁻¹).left c - 2 • GlobalTheory.CechPic.pull (1 : T ⟶ A).left c = 0 → IsLocus (2 • GlobalTheory.CechPic.pull (fst A T).left c) ((fst A T * (snd A T ≫ a)).left ⁻¹ᵁ V ⊓ (fst A T * (snd A T ≫ a)⁻¹).left ⁻¹ᵁ V) := by
   intro S _ A _ hA c V hV T a h
   have hsq := GlobalTheory.T.theorem_of_square_cechPicard_translates S A hA c (A ⊗ T) (fst A T) (snd A T ≫ a)

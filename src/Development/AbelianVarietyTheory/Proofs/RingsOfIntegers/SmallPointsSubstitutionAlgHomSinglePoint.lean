@@ -98,6 +98,7 @@ def jetA (κ : Type) [Fintype κ] [DecidableEq κ] (m : ℕ) : MvPowerSeries κ 
     rw [Algebra.algebraMap_eq_smul_one, this]
 
 
+variable (V) in
 abbrev limO (d n : ℕ) : Over (Sp V) := overAt (𝟙 (Sp V)) (PS V n d)
 
 def IsLimit {G : Over (Sp V)} {d : ℕ} (x : ∀ m, jOG (𝟙 (Sp V)) d m 1 ⟶ G) (X : limO V d 1 ⟶ G) : Prop :=
@@ -129,6 +130,7 @@ theorem Sm.one_val : (1 : Sm B n).1 = 0 := rfl
 theorem Sm.inv_val (x : Sm B n) : (x⁻¹).1 = compV (B.A.act (-1)) x.1 := rfl
 
 
+variable (B) in
 def Sm.act (o : O) : Sm B n →* Sm B n :=
   MonoidHom.mk' (fun x => ⟨compV (B.A.act o) x.1, fun i => small_evV _ (small_one x.2) _ (B.A.const _ i)⟩)
     fun x y => Subtype.ext (act_addV B.A o x.2 y.2)
@@ -136,9 +138,11 @@ def Sm.act (o : O) : Sm B n →* Sm B n :=
 theorem Sm.act_val (o : O) (x : Sm B n) : (Sm.act B o x).1 = compV (B.A.act o) x.1 := rfl
 
 
+variable (B) in
 def Sm.gen (j : Fin n) : Sm B n := ⟨pt V d j, fun i => by simp [pt]⟩
 
 
+variable (B) in
 def Sm.const (α : Fin d → V) (hα : Small α) : Sm B n := ⟨cpt α, fun i => by simpa [cpt] using hα i⟩
 
 def evA (a : Fin m → Sm B n) : PS V m d →ₐ[V] PS V n d :=

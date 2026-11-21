@@ -2127,6 +2127,7 @@ theorem deg_compat (a : Fin (T.pos i + 1 + 1)) :
     simp [Letters.takeD, (by omega : (a : ℕ) < N)]
 
 
+omit hS in
 theorem ycond_pull (J : ℕ) (M : WithTop ℤ) (F : MvPolynomial (Fin (T.pos i + 1 + 1) × Fin r) ℚ_[p])
     (h : rename (fun x : Fin (T.pos i + 1 + 1) × Fin r => (ιF N (T.pos i + 1) x.1, x.2)) F ∈ YCond p LL J M) :
     F ∈ YCond p (((LL.setTies T n).takeD (T.pos i + 1)).snoc (n i)) J M := by

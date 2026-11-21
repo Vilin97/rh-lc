@@ -107,6 +107,8 @@ theorem coe_prod_zpow {ι : Type} [Fintype ι] (u : ι → Circle) (k : ι → �
   exact Circle.coe_zpow _ _
 
 
+set_option maxHeartbeats 2000000 in
+open GlobalTheory.FockCompare in
 theorem exists_type (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)) (hθ : IsInfFam θ)
     (χ : (AE D)ˣ →* Circle) (hc : Continuous χ) (hF : ∀ a, χ (idF D a) = 1) :
     ∃ k : D.what₂.Tau → ℤ, ∀ x : (AE D)ˣ, finPart D (x : AE D) = 1 → χ x = ∏ τ, angle D (θ τ) x ^ k τ := by
@@ -172,6 +174,7 @@ theorem angle_inc (D : D7) {τ : D.host.E →+* ℂ} {θ : Ainf D.host.F ⊗[D.h
   rw [angle_coe, h1, map_div₀, IsCMField.complexEmbedding_complexConj]
 
 
+set_option maxHeartbeats 2000000 in
 theorem exists_conjugates : ∀ (D : D7) (Q : Par D) (χ₀ : (AE D)ˣ →* Circle), IsHeckeChar D χ₀ → (∀ a, χ₀ (idF D a) = 1) → (∀ x, FinUnit x → ∃ y : Q.c.F, ((χ₀ x : Circle) : ℂ) = Q.c.F.val.toRingHom y) → ∃ χ : (Q.c.F →+* ℂ) → (AE D)ˣ →* Circle, χ Q.c.F.val.toRingHom = χ₀ ∧ ∀ σ, IsHeckeChar D (χ σ) ∧ (∀ a, χ σ (idF D a) = 1) ∧ MuConj Q.c.F.val.toRingHom σ χ₀ (χ σ) := by
   intro D Q χ₀ hH hF hy
   obtain ⟨⟨θ, hθ⟩, hθ'⟩ := GlobalTheory.Member.infiniteAdele_bijective D

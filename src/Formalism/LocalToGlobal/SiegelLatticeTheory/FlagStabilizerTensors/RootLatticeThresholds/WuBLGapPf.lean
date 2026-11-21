@@ -101,6 +101,7 @@ theorem gapAtLeast_of (R : Ranks) (P : HCParam R)
     exact (gap_lt R P hg b a hab (Ne.symm he)).trans (le_abs_self _)
 
 
+set_option maxHeartbeats 800000 in
 theorem gapOK_of (R : Ranks) (h1801 : 1801 ≤ R.r) :
     Formalism.FourierDecayAlt.ThreeDimData.GapOK R.k R.rS (16 * (R.r : ℝ) ^ 19) := by
   have hr : R.r = R.k + R.m - 1 := rfl

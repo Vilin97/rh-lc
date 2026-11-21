@@ -85,6 +85,7 @@ theorem exists_eq_of_ker_le {O k : Type} [CommRing O] [CommRing k] [IsDomain k] 
   rfl
 
 
+open TeichSeq in
 theorem main : ∀ (C : Type) [Field C] (V : VF C) (O : Type) [CommRing O] (d : ℕ) [NeZero d] (em : ZMod d → (O →+* C)), (∀ a x, V.Ge 0 (em a x)) → (∀ a x, V.MM (em (a + 1) x - em a x ^ V.l)) → ∀ ψ : O →+* C, (∀ x, V.Ge 0 (ψ x)) → (∀ x, (∀ a, V.MM (em a x)) → V.MM (ψ x)) → ∃ a, ∀ x, V.MM (ψ x - em a x) := by
   intro C _ V O _ d _ em hint hfrob ψ hψ hker
   have : Fact V.l.Prime := ⟨V.l_prime⟩

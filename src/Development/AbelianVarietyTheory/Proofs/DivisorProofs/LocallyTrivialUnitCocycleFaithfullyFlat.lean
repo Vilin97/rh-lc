@@ -16,14 +16,17 @@ section Tensor
 variable {R B : Type} [CommRing R] [CommRing B] [Algebra R B]
 
 
+variable (R B) in
 noncomputable def m₁₂ : B ⊗[R] B →ₐ[R] B ⊗[R] (B ⊗[R] B) :=
   Algebra.TensorProduct.map (AlgHom.id R B) Algebra.TensorProduct.includeLeft
 
 
+variable (R B) in
 noncomputable def m₁₃ : B ⊗[R] B →ₐ[R] B ⊗[R] (B ⊗[R] B) :=
   Algebra.TensorProduct.map (AlgHom.id R B) Algebra.TensorProduct.includeRight
 
 
+variable (R B) in
 noncomputable def m₂₃ : B ⊗[R] B →ₐ[R] B ⊗[R] (B ⊗[R] B) :=
   Algebra.TensorProduct.includeRight
 

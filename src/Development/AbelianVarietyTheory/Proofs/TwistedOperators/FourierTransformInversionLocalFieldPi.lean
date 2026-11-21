@@ -35,6 +35,7 @@ theorem exists_box_subset {U : Set (n → k)} (hU : U ∈ 𝓝 (0 : n → k)) : 
   exact ⟨s, fun x hx => hsub fun i _ => Set.mem_iInter.mp (hs (hx i trivial)) i⟩
 
 
+omit [DecidableEq n] in
 theorem exists_box_invariant {f : (n → k) → ℂ} (hf : f ∈ SB (n → k)) :
     ∃ s : kˣ, ∀ t ∈ box n s, ∀ x, f (x + t) = f x := by
   have h1 : ∀ᶠ t in 𝓝 (0 : n → k), ∀ x ∈ tsupport f, f (x + t) = f x := by

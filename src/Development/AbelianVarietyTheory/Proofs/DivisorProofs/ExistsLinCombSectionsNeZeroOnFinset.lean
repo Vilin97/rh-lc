@@ -13,6 +13,7 @@ open scoped ENNReal ContDiff
 namespace GlobalTheory.OTY.LinComb
 
 
+open Polynomial in
 theorem exists_pow_ne_zero {Y : Type} (N : ℕ) (T : Finset Y) (v : Y → Fin N → ℂ)
     (hv : ∀ P ∈ T, v P ≠ 0) : ∃ x : ℂ, ∀ P ∈ T, ∑ k : Fin N, x ^ (k : ℕ) * v P k ≠ 0 := by
   classical

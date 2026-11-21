@@ -71,6 +71,8 @@ private theorem ncard_image_mk_eq_mul_relIndex_of_le {W : Type} [AddCommGroup W]
   rw [← hpre, ← Nat.card_coe_set_eq, e1, e2, e3, Nat.card_coe_set_eq, mul_comm]
 
 
+open ValuativeRel in
+open scoped Pointwise ENNReal Classical in
 theorem _root_.GlobalTheory.HL.ContModel.cont_eq {W : Type} [AddCommGroup W]
     {W0 A : AddSubgroup W} {S : Set W} (hA : _root_.GlobalTheory.HL.GoodSub W0 A S) :
     _root_.GlobalTheory.HL.cont W0 S =
@@ -90,6 +92,10 @@ variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F]
 variable {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E]
 
 
+open ValuativeRel in
+open scoped Pointwise ENNReal Classical in
+variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] in
+variable {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] in
 theorem _root_.GlobalTheory.HL.ContModel.gramT_rmul (L : _root_.Formalism.MainNotions.S.Loc.LocE F E) {n m : ℕ}
     (Hm : Matrix (Fin n) (Fin n) E) (x : Fin m → Fin n → E) (A : Matrix (Fin m) (Fin m) E) :
     _root_.GlobalTheory.HL.gramT L Hm (_root_.GlobalTheory.HL.rmul x A) =
@@ -116,6 +122,10 @@ theorem _root_.GlobalTheory.HL.ContModel.cj_mem (L : _root_.Formalism.MainNotion
   exact hx.map (L.cj.toAlgHom.restrictScalars 𝒪[F])
 
 
+open ValuativeRel in
+open scoped Pointwise ENNReal Classical in
+variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] in
+variable {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] in
 theorem _root_.GlobalTheory.HL.ContModel.gramT_thick (L : _root_.Formalism.MainNotions.S.Loc.LocE F E) (ϖ : 𝒪[F]) {n m : ℕ}
     (Hm : Matrix (Fin n) (Fin n) E) (Ω : Set (Fin m → Fin n → E)) (Γ : Matrix (Fin m) (Fin m) E)
     (i : ℕ) (hΩ : ∀ y ∈ Ω, _root_.GlobalTheory.HL.gramT L Hm y = Γ) :

@@ -116,6 +116,7 @@ theorem ker_reciprocity_le_commutator :
   exact Sylow.not_dvd_index P (hpd.trans (orderOf_dvd_of_pow_eq_one hmap.symm))
 
 
+variable (D) in
 noncomputable def reciprocityAb :
     Abelianization ((K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K) →*
       tateZero A (K : Subgroup G) (L : Subgroup G) :=
@@ -132,6 +133,7 @@ theorem reciprocityAb_bijective : Function.Bijective (D.reciprocityAb hLK hax) :
   exact ⟨Abelianization.of q, hq⟩
 
 
+variable (D) in
 noncomputable def reciprocityAbEquiv :
     Abelianization ((K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K) ≃*
       tateZero A (K : Subgroup G) (L : Subgroup G) :=

@@ -36,6 +36,11 @@ noncomputable def freeSheafHomEquiv (U : C) (F : Sheaf J AddCommGrpCat.{v}) :
 
 variable [HasExt.{w} (Sheaf J AddCommGrpCat.{v})]
 
+open CategoryTheory Abelian Opposite Limits TopologicalSpace in
+variable {C : Type u} [Category.{v} C] (J : GrothendieckTopology C)
+  [HasSheafify J AddCommGrpCat.{v}] in
+variable {J} in
+variable [HasExt.{w} (Sheaf J AddCommGrpCat.{v})] in
 lemma _root_.GlobalTheory.Flasque.subsingleton_H'_of_injective (I : Sheaf J AddCommGrpCat.{v}) [Injective I]
     (n : ℕ) (U : C) : Subsingleton (Sheaf.H'.{w} I (n + 1) U) :=
   Ext.subsingleton_of_injective (_root_.GlobalTheory.Flasque.freeSheaf J U) I n
@@ -62,6 +67,8 @@ lemma _root_.GlobalTheory.Flasque.injectiveShortComplex_shortExact [EnoughInject
   exact := ShortComplex.exact_of_g_is_cokernel _ (cokernelIsCokernel _)
 
 
+open CategoryTheory Abelian Opposite Limits TopologicalSpace in
+variable {A : Type u} [Category.{v} A] [Abelian A] in
 lemma _root_.GlobalTheory.Flasque.exists_hom_τ₁_eq {S T : ShortComplex A} (hS : S.ShortExact)
     [Injective T.X₂] (f : S.X₁ ⟶ T.X₁) : ∃ φ : S ⟶ T, φ.τ₁ = f := by
   have := hS.mono_f
@@ -105,6 +112,8 @@ private lemma freeSheafHomEquiv_freeSheafMap_comp' {V U : C} (i : V ⟶ U) (F : 
   rfl
 
 
+open CategoryTheory Abelian Opposite Limits TopologicalSpace in
+variable {X : TopCat.{u}} in
 theorem _root_.GlobalTheory.Flasque.isFlasque_of_injective (I : TopCat.Sheaf AddCommGrpCat.{u} X) [hI : Injective I] :
     I.IsFlasque := by
   let I' : Sheaf (Opens.grothendieckTopology X) AddCommGrpCat.{u} := I
@@ -142,6 +151,9 @@ private lemma freeSheafHomEquiv_comp' (U : C) {F G : Sheaf J AddCommGrpCat.{v}}
   rfl
 
 
+open CategoryTheory Abelian Opposite Limits TopologicalSpace in
+variable {X : TopCat.{u}} in
+variable [HasExt.{w} (Sheaf (Opens.grothendieckTopology X) AddCommGrpCat.{u})] in
 theorem _root_.GlobalTheory.Flasque.subsingleton_H'_of_isFlasque (F : TopCat.Sheaf AddCommGrpCat.{u} X)
     [hF : F.IsFlasque] (n : ℕ) (U : Opens X) : Subsingleton (F.H' (n + 1) U) := by
   let Y : TopCat.Sheaf AddCommGrpCat.{u} X :=

@@ -394,6 +394,7 @@ theorem hC_wM_pos (ψ₀ : AddChar k ℂ) (β : Matrix (Fin n) (Fin n) k) (a : �
 end GlobalTheory.CompanionTheory.Jp.Pos
 
 
+open GlobalTheory.CompanionTheory.Jp.Pos in
 theorem GlobalTheory.CompanionTheory.Jp.Pos.jpPos : GlobalTheory.CompanionTheory.Jp.JpPos := by
   intro k _ _ n r m ψ₀ _ β hr hm
   classical

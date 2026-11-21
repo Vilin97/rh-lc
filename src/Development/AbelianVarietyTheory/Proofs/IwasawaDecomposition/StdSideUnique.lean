@@ -43,6 +43,7 @@ theorem bot_or_top (U : Submodule ℂ c.W) (hU : ∀ γ ∈ GQ V, ∀ w ∈ U, c
   exact H
 
 
+omit hc in
 theorem exists_ratMat (γ : GQ V) : ∃ γE, Bridge.IsRatMat V γ γE := by
   obtain ⟨γ, ⟨g, -, hg⟩⟩ := γ
   exact ⟨g, hg.symm⟩

@@ -473,6 +473,8 @@ private lemma shift_add_lemma_3 (f g : ℕ → _root_.GlobalTheory.PsCo.Pc1.Poly
   cases k <;> simp [_root_.GlobalTheory.PsCo.Pc1.prev]
 
 
+open MvPolynomial in
+variable {n L : ℕ} in
 theorem _root_.GlobalTheory.PsCo.Pc1.A.stAlg : _root_.GlobalTheory.PsCo.Pc1.StAlg := by
   intro n ε M P hP
   have hP' : P ∈ Submodule.span ℂ (Submonoid.closure

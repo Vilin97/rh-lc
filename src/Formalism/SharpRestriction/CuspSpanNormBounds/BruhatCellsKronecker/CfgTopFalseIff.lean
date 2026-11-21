@@ -82,6 +82,7 @@ theorem vOne_arith (D : D7) (τ : D.what₂.Tau) : ∀ d j : ℕ, j + d + 2 = D.
     ring
 
 
+open Classical in
 def cfgOf (D : D7) (τ : D.what₂.Tau) : Sz.Cfg where
   k := D.R.k
   m := D.R.m

@@ -94,6 +94,7 @@ theorem cocone_w_apply {j j' : J} (f : j ⟶ j') (i : ι) (y : (F.obj j).X i) :
   congrArg (fun φ : F.obj j ⟶ t.pt => (φ.f i).hom y) (t.w f)
 
 
+omit [IsFiltered J] in
 theorem exists_homologyMap_eq_of_cocone (i : ι)
     (hsurj : ∀ x : t.pt.X i, ∃ (j : J) (y : (F.obj j).X i), ((t.ι.app j).f i).hom y = x)
     (hinj : ∀ (j : J) (y : (F.obj j).X (c.next i)), ((t.ι.app j).f (c.next i)).hom y = 0 →

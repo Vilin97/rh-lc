@@ -19,6 +19,7 @@ open GlobalTheory.Models GlobalTheory.ModelSum
 namespace GlobalTheory.ModelSum
 
 
+open GlobalTheory.LN ReciprocityTheory.ChartRestriction.G.Out in
 theorem lin_of_isEmpty {S : Scheme.{0}} (G : Over S) (L : LB G.left) (N : ℕ) {T T' : Over S} [hT : IsEmpty T'.left]
     (h : T' ⟶ T) {n : ℕ} (b : Fin n → LB.Sec (LPow G L (N : ℤ) T)) (c : Fin n → Γ(T'.left, ⊤))
     (s : LB.Sec (LPow G L (N : ℤ) T')) : Lin G L N h b c s := by
@@ -35,6 +36,7 @@ theorem subsingleton_sections_of_isEmpty {X : Scheme.{0}} [IsEmpty X] : Subsingl
   exact isEmptyElim x
 
 
+open GlobalTheory.LN ReciprocityTheory.ChartRestriction.G.Out in
 theorem trans_of_inf_eq_bot {Z : Scheme.{0}} (G : Over Z) (L : LB G.left) (N : ℕ) {n : ℕ} (r s : ℤ) {U V : Z.Opens}
     (hUV : U ⊓ V = ⊥) (thU : LB.Sec (LPow G L ((1 : ℕ) : ℤ) (Over.mk U.ι)))
     (thV : LB.Sec (LPow G L ((1 : ℕ) : ℤ) (Over.mk V.ι)))

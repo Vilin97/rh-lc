@@ -77,6 +77,8 @@ private lemma encard_mul_encard_le_isBallFam {G : Type} [AddCommGroup G] {Λ : A
         gcongr
 
 
+set_option autoImplicit false in
+open Filter Topology in
 theorem _root_.GlobalTheory.VolBr.isBallFam_encard_mul_le : ∀ (G : Type) [AddCommGroup G]
     (Λ : AddSubgroup G) (B : ℝ → Set G), _root_.GlobalTheory.VolBr.IsBallFam Λ B → ∀ n : ℕ, 0 < n →
     (B n).Finite →

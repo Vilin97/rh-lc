@@ -16,6 +16,7 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.Inde
 namespace PositivityTheory.SiegelWeilFormula.KLI
 
 
+open Complex in
 theorem tg_exp : Function.HasTemperateGrowth (fun t : ℝ => cexp (I * t)) := by
   have hd : ∀ n : ℕ, iteratedDeriv n (fun t : ℝ => cexp (I * t)) = fun t : ℝ => I ^ n * cexp (I * t) := by
     intro n

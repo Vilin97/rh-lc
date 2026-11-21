@@ -10,6 +10,7 @@ open GlobalTheory.LN
 namespace GlobalTheory.ValCrit
 
 
+open Polynomial in
 theorem _root_.GlobalTheory.ValCrit.isIntegral_of_mem_adjoin_inv {R K : Type*} [CommRing R] [Field K] [Algebra R K]
     (y : K) (hy : y ≠ 0)
     (h : y⁻¹ ∈ Algebra.adjoin R {y}) : IsIntegral R y⁻¹ := by

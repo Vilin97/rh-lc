@@ -68,6 +68,7 @@ theorem wit_pull (hL : L.IsLB) (hM : M.IsLB) {Z Z' : Scheme.{0}} {t : Z ⟶ S} {
         pullback.fst A'.hom g ≫ Φ.left from pullback.lift_fst _ _ _]
 
 
+variable (A B L M) in
 structure Pt (Z : Scheme.{0}) where
 
   t : Z ⟶ S
@@ -119,6 +120,7 @@ theorem Pt.map_comp (hL : L.IsLB) (hM : M.IsLB) {Z Z' Z'' : Scheme.{0}} (g : Z' 
     (Category.assoc _ _ _))
 
 
+variable (A B L M) in
 def homFun (hL : L.IsLB) (hM : M.IsLB) : Scheme.{0}ᵒᵖ ⥤ Type where
   obj Z := Pt A B L M Z.unop
   map g := TypeCat.ofHom (Pt.map hL hM g.unop)
@@ -130,6 +132,7 @@ def homFun (hL : L.IsLB) (hM : M.IsLB) : Scheme.{0}ᵒᵖ ⥤ Type where
     exact Pt.map_comp hL hM _ _ x
 
 
+variable (A B L M) in
 def homProj (hL : L.IsLB) (hM : M.IsLB) : homFun A B L M hL hM ⟶ yoneda.obj S where
   app Z := TypeCat.ofHom fun x => x.t
 

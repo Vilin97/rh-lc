@@ -42,6 +42,7 @@ def trunc (y : FreeE w → D.host.E) (n : ℕ) : FreeE w → D.host.E := fun q =
 def cf (y : FreeE w → D.host.E) (q : FreeE w) : D.host.E := ((Xmat w (trunc w y (hgt w q)))⁻¹) q.1.1 q.1.2
 
 
+variable (D) in
 def mOdd : ℕ := (gS D + 1) / 2
 
 def τA (q : FreeE w) (y : FreeE w → D.host.E) : D.host.E :=
@@ -50,6 +51,7 @@ def τA (q : FreeE w) (y : FreeE w → D.host.E) : D.host.E :=
   else 0
 
 
+variable (D) in
 def sLat (h : ℕ) (s : D.host.E) (_hs : D.conjF s = s) : AddSubgroup D.host.E where
   carrier := {z | z ∈ ddPow D h ∧ z + s * D.conjF z ∈ qdPow D h}
   zero_mem' := by
@@ -76,6 +78,7 @@ def Λq (q : FreeE w) : AddSubgroup D.host.E :=
   else ((Iq w q : FI D) : Submodule (𝓞 D.host.E) D.host.E).toAddSubgroup
 
 
+variable (D) in
 def TwistC : Prop :=
   ∀ (δ : ∀ p : PlF D, (D.s.atP p).Fp) (M : ∀ p : PlF D, Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep),
     (∀ p, Agree δ M p) → Odd (gS D) → ∀ (w : Point D.host.E (D.R.rS + 1)) (y : FreeE w → D.host.E),

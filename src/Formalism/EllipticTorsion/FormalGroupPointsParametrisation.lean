@@ -38,6 +38,7 @@ def FormalGroupPointsParametrisation : Prop :=
 
 
 open scoped Classical in
+open Classical in
 def FormalGroupPointsHomomorphism : Prop :=
   ∀ (K : Type u) [NormedField K] [IsUltrametricDist K] [CompleteSpace K]
     (W : WeierstrassCurve K) (w : PowerSeries K) (F₂ : MvPowerSeries (Fin 2) K),

@@ -15,6 +15,9 @@ namespace GlobalTheory.RiemannRel
 variable {g : ℕ}
 
 
+open NumberField Matrix in
+open scoped nonZeroDivisors in
+variable {g : ℕ} in
 theorem _root_.GlobalTheory.RiemannRel.hermForm_mulVec (G A B : Matrix (Fin g) (Fin g) ℂ) (v w : Fin g → ℂ) :
     _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm G (A *ᵥ v) (B *ᵥ w) = v ⬝ᵥ (Aᵀ * G * B.map (starRingEnd ℂ)) *ᵥ star w := by
   have hstar : star (B *ᵥ w) = B.map (starRingEnd ℂ) *ᵥ star w := by
@@ -31,6 +34,9 @@ theorem _root_.GlobalTheory.RiemannRel.hermForm_col (G A B : Matrix (Fin g) (Fin
   rw [_root_.GlobalTheory.RiemannRel.hermForm_mulVec]; simp [Pi.star_single]
 
 
+open NumberField Matrix in
+open scoped nonZeroDivisors in
+variable {g : ℕ} in
 theorem _root_.GlobalTheory.RiemannRel.det_ne_zero (G A B : Matrix (Fin g) (Fin g) ℂ)
     (hpos : ∀ z : Fin g → ℂ, z ≠ 0 → 0 < (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm G z z).re)
     (hM : ∀ j k, ((Aᵀ * G * A.map (starRingEnd ℂ)) j k).im = 0)
@@ -82,6 +88,9 @@ theorem _root_.GlobalTheory.RiemannRel.det_ne_zero (G A B : Matrix (Fin g) (Fin 
   · simpa using h2
 
 
+open NumberField Matrix in
+open scoped nonZeroDivisors in
+variable {g : ℕ} in
 theorem _root_.GlobalTheory.RiemannRel.symm_posDef (G A τ : Matrix (Fin g) (Fin g) ℂ) (hG : G.IsHermitian)
     (hA : A.det ≠ 0)
     (hpos : ∀ z : Fin g → ℂ, z ≠ 0 → 0 < (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm G z z).re)
@@ -194,11 +203,17 @@ theorem _root_.GlobalTheory.RiemannRel.differentiableOn_left_inverse {V : Type*}
   · simp only [Matrix.updateRow_ne hk]; exact hA k l
 
 
+open NumberField Matrix in
+open scoped nonZeroDivisors in
+variable {g : ℕ} in
 theorem _root_.GlobalTheory.RiemannRel.of_cols_mulVec (c : Fin g → Fin g → ℂ) (k : Fin g) :
     (Matrix.of fun i j => c j i) *ᵥ Pi.single k 1 = c k := by
   ext i; simp [mulVec, dotProduct, Pi.single_apply]
 
 
+open NumberField Matrix in
+open scoped nonZeroDivisors in
+variable {g : ℕ} in
 theorem _root_.GlobalTheory.RiemannRel.riemann_relations : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (D : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H) (g : ℕ) (ty : Fin g → (E →+* ℂ)) (bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] D.La), (∀ a b, D.EF (bas a) (bas b) = -_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.omegaStd a b) → (∀ P, _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsPeriod D ty P → ∃ h τ : Matrix (Fin g) (Fin g) ℂ, (∀ k, h *ᵥ P (bas (Pi.single (Sum.inl k) 1)) = Pi.single k 1 ∧ h *ᵥ P (bas (Pi.single (Sum.inr k) 1)) = τ *ᵥ Pi.single k 1) ∧ IsUnit h.det ∧ τ.IsSymm ∧ (τ.map Complex.im).PosDef ∧ ∀ h' τ' : Matrix (Fin g) (Fin g) ℂ, (∀ k, h' *ᵥ P (bas (Pi.single (Sum.inl k) 1)) = Pi.single k 1 ∧ h' *ᵥ P (bas (Pi.single (Sum.inr k) 1)) = τ' *ᵥ Pi.single k 1) → h' = h ∧ τ' = τ) ∧ ∀ (m : ℕ) (B : Set (Fin m → ℂ)) (P : (Fin m → ℂ) → (D.La →+ (Fin g → ℂ))) (h τ : (Fin m → ℂ) → Matrix (Fin g) (Fin g) ℂ), _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsHolPeriods D ty B P → (∀ b ∈ B, (∀ k, h b *ᵥ P b (bas (Pi.single (Sum.inl k) 1)) = Pi.single k 1 ∧ h b *ᵥ P b (bas (Pi.single (Sum.inr k) 1)) = τ b *ᵥ Pi.single k 1)) → ∀ i j, DifferentiableOn ℂ (fun b => h b i j) B ∧ DifferentiableOn ℂ (fun b => τ b i j) B := by
   intro E _ _ _ H D g ty bas hEF
   have hnorm : ∀ (Q : D.La →+ (Fin g → ℂ)) (h τ : Matrix (Fin g) (Fin g) ℂ),

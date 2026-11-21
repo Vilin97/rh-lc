@@ -199,6 +199,7 @@ end RO
 section Main
 
 
+open Formalism.L2.SG.Pf.SatGramActL in
 theorem right_action_three_families (hB : ChiNBiAll) (hIR : IotaRepC) (hAR : AmpRepNC) : RightActC' := by
   intro D X Y u u' hOI _ _ S hS q b hb
   obtain ⟨γ, hk, rfl⟩ := hb

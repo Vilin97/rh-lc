@@ -88,6 +88,7 @@ theorem tie_level (D : D7) {EE : Type} [NormedAddCommGroup EE] [InnerProductSpac
   · exact majAt_rdx D A P ψ (hf s) _ v hv x y
 
 
+set_option maxHeartbeats 3000000 in
 theorem ambEx_of_rx : ∀ 𝒮 : Slots, 𝒮.Rx = RX → AmbEx 𝒮 := by
   rintro ⟨Rx, Nx, Sx, Ox⟩ h
   dsimp only at h

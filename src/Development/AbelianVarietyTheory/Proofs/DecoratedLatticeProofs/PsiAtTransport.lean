@@ -136,6 +136,7 @@ def homM (P : HeightOneSpectrum (𝓞 E)) (x : HomE E a b) : Matrix (Fin b) (Fin
   (LinearMap.toMatrix' x).map (algebraMap E (P.adicCompletion E))
 
 
+omit [StarRing E] in
 theorem ratM_mul_homM (P : HeightOneSpectrum (𝓞 E)) (f : Sp E a ≃ₗ[E] Sp E a) (f' : Sp E b ≃ₗ[E] Sp E b) (x : HomE E a b) :
     ratM P f' * homM P (inFr f f' x) = homM P x * ratM P f := by
   have e : ∀ {m : ℕ} (g : Sp E m ≃ₗ[E] Sp E m), ratM P g = homM P g.toLinearMap := fun g => by
@@ -159,6 +160,7 @@ theorem mem_homS_iff (P : HeightOneSpectrum (𝓞 E)) (x : HomE E a b) :
     rwa [e, valued_algebraMap, ← CharValCompare.intAt_iff] at this
 
 
+omit [StarRing E] in
 theorem val_le_q {P : HeightOneSpectrum (𝓞 E)} (hq : ((qOf P : ℕ) : 𝓞 E) ∉ P.asIdeal ^ 2) {z : WithZero (Multiplicative ℤ)}
     (hz : z < 1) : z ≤ P.valuation E ((qOf P : ℕ) : E) := by
   have e : P.valuation E ((qOf P : ℕ) : E) = P.intValuation ((qOf P : ℕ) : 𝓞 E) := by

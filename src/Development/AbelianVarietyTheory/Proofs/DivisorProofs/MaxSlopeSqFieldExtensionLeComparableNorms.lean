@@ -23,6 +23,7 @@ variable {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V] [M
   [IsScalarTower (𝓞 K) K V] {N : (K →+* ℂ) → V → ℝ} {L : Submodule (𝓞 K) V}
 
 
+omit [Module K V] [IsScalarTower (𝓞 K) K V] in
 theorem fg_of_le (hL : L.FG) {M : Submodule (𝓞 K) V} (hM : M ≤ L) : M.FG := by
   haveI : IsNoetherian (𝓞 K) L := isNoetherian_of_fg_of_noetherian L hL
   exact isNoetherian_submodule.1 inferInstance M hM
@@ -62,6 +63,7 @@ variable {K K' V V' : Type} [Field K] [NumberField K] [Field K'] [NumberField K'
   (ι : V →ₛₗ[algebraMap K K'] V')
 
 
+omit [NumberField K] [NumberField K'] in
 theorem map_mem_of_mem_span {s : Set V} {P : Submodule (𝓞 K') V'} (hs : ∀ x ∈ s, ι x ∈ P) {x : V}
     (hx : x ∈ Submodule.span (𝓞 K) s) : ι x ∈ P := by
   induction hx using Submodule.span_induction with
@@ -75,6 +77,7 @@ theorem map_mem_of_mem_span {s : Set V} {P : Submodule (𝓞 K') V'} (hs : ∀ x
     rw [this]; exact P.smul_mem _ hx
 
 
+omit [NumberField K] [NumberField K'] in
 theorem fg_span_image {L : Submodule (𝓞 K) V} (hL : L.FG) :
     (Submodule.span (𝓞 K') (ι '' (L : Set V))).FG := by
   obtain ⟨s, rfl⟩ := hL
@@ -85,6 +88,7 @@ theorem fg_span_image {L : Submodule (𝓞 K) V} (hL : L.FG) :
     exact map_mem_of_mem_span ι (fun y hy => Submodule.subset_span (Set.mem_image_of_mem _ hy)) hx
 
 
+omit [NumberField K] [NumberField K'] [IsScalarTower (𝓞 K) K V] [IsScalarTower (𝓞 K') K' V'] in
 theorem span_image_ne_bot
     (hli : ∀ (n : ℕ) (b : Fin n → V), LinearIndependent K b → LinearIndependent K' (fun k => ι (b k)))
     {L : Submodule (𝓞 K) V} (h0 : L ≠ ⊥) : Submodule.span (𝓞 K') (ι '' (L : Set V)) ≠ ⊥ := by

@@ -44,6 +44,7 @@ variable (D : D7) (sc : Scale) (Ce : ℝ)
     (epSc D.R sc Ce (D.what₂.places.resChar w))).d = Module.finrank ℂ (D.mem u).A.Mu0)
 
 
+set_option maxHeartbeats 4000000 in
 theorem locAt_iw_C (H0 : Formalism.L2.Herm.Herm0 (recC D sc Ce Lc I ψ hd)) (hL : ∀ u, H0.lev0 u = Lc u)
     (B : GL (Fin D.R.k) D.host.E) (u : D.what₂.Word) (w : D.what₂.places.Pl)
     (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)) (v : Fin (nOrb (zH D.R.toFrame (hP D (D.what₂.places.resChar w)))))
@@ -55,6 +56,7 @@ theorem locAt_iw_C (H0 : Formalism.L2.Herm.Herm0 (recC D sc Ce Lc I ψ hd)) (hL 
   rfl
 
 
+set_option maxHeartbeats 4000000 in
 theorem pos_C (H0 : Formalism.L2.Herm.Herm0 (recC D sc Ce Lc I ψ hd)) (hL : ∀ u, H0.lev0 u = Lc u)
     (B : GL (Fin D.R.k) D.host.E) (hBs : Cmp.StdB (recC D sc Ce Lc I ψ hd) B)
     (hB : ∀ u w hg (w' : HeightOneSpectrum (𝓞 D.host.F)) (h : ((D.what₂.places.resChar w : ℕ) : 𝓞 D.host.F) ∈ w'.asIdeal),

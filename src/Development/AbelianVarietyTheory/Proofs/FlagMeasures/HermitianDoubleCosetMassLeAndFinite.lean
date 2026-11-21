@@ -25,6 +25,7 @@ variable {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E]
 variable {L : LocE F E} {r k : ℕ}
 
 
+omit [IsNonarchimedeanLocalField F] [CharZero F] in
 theorem sumCls_le (S : Frames L r k) (φ : Set S.FrP → ℝ≥0∞) (c : ℝ≥0∞) (h : ∀ C, φ C ≤ c) :
     S.sumCls φ ≤ (S.sumCls fun _ => 1) * c := by
   unfold Frames.sumCls

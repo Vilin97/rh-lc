@@ -100,6 +100,7 @@ end GlobalTheory.Mem.R3.Rw.OmExt.RootUpd
 namespace GlobalTheory.Mem.R3.Rw.OmExt
 
 
+set_option maxHeartbeats 1000000 in
 theorem coefFam_update_root : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m} {Ks : Type} [Field Ks]
     [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks)
     (c0L : ∀ i : Fin D.R.m, Formalism.IndefR.FWT.VsV D i D.what₂.LL →ₛₗ[D.what₂.embLL] (R.cV i).W),

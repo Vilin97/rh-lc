@@ -16,6 +16,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ GlobalTheory.FormalLog
 variable {k : Type} [CommRing k] {d : ℕ}
 
 
+variable (k d) in
 def Q (n : ℕ) : AddSubgroup (Pt k n d) where
   carrier := {p | ∀ i, constantCoeff (p i) = 0}
   add_mem' := fun ha hb i => by rw [Pi.add_apply, map_add (f := _), ha i, hb i, add_zero]

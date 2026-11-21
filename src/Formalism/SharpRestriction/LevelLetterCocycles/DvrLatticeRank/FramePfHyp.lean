@@ -67,6 +67,7 @@ theorem framepf_hyp_local (e s' : ℕ) (hs : 1 ≤ s') (π' : LetA O n) (E : ZMo
 end Local
 
 
+set_option maxHeartbeats 1000000 in
 theorem frame_uniformiser_unit_multiple (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (Cm : CmpOf D.loc D.locA HW F) (h1 : adm1 D HW F Cm) (l : ℕ) [hpf : Fact l.Prime] (hl : l ≠ 2)
     (K LL : FinExt l) (hG : Good K 1 LL) (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL))
@@ -91,6 +92,7 @@ theorem ramification_quotient_pos (l : ℕ) [hpf : Fact l.Prime] (hl : l ≠ 2) 
   exact (Nat.one_le_div_iff he0).mpr (Nat.le_of_dvd hl1 hd)
 
 
+set_option maxHeartbeats 1000000 in
 theorem framepf_hyp_arith (D : D7) (HW : HWOf D.loc) (l : ℕ) [hpf : Fact l.Prime] (hl : l ≠ 2)
     (K LL : FinExt l) (hG : Good K 1 LL) (h' : ℕ) (hs : 1 ≤ sK l K) :
     (∀ y : ℕ, 1 ≤ y → (((((HW l).W K 1 LL hG).χΓ ((HW l).W K 1 LL hG).gam : (↥(OL LL))ˣ) : ↥(OL LL)) ^ sK l K) ^ y ≠ 1) ∧
@@ -139,6 +141,7 @@ theorem framepf_hyp_arith (D : D7) (HW : HWOf D.loc) (l : ℕ) [hpf : Fact l.Pri
     exact ha
 
 
+set_option maxHeartbeats 1000000 in
 theorem framepf_hyps (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (Cm : CmpOf D.loc D.locA HW F) (h1 : adm1 D HW F Cm) (l : ℕ) [hpf : Fact l.Prime] (hl : l ≠ 2)
     (K LL : FinExt l) (hG : Good K 1 LL) (π' : LetA ↥(OL LL) (finrank ℚ_[l] ↥(K0 K)))

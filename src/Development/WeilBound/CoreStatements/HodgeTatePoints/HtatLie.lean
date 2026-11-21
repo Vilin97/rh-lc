@@ -61,6 +61,7 @@ theorem loc_of_charts {R : Type} [CommRing R] (x : Sp R ⟶ S) {J : Type} [Finit
   exact IsLocalizedModule.of_linearEquiv _ _ _
 
 
+variable (G) in
 def SmChart {R : Type} [CommRing R] (x : Sp R ⟶ S) (f : R) : Prop :=
   ∃ (U : G.left.Opens) (V : S.Opens) (hU : IsAffineOpen U) (_ : IsAffineOpen V) (hUV : U ≤ G.hom ⁻¹ᵁ V),
     RingHom.Smooth (G.hom.appLE V U hUV).hom ∧ ∃ u : Γ(G.left, U) →+* Localization.Away f,

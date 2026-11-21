@@ -53,6 +53,7 @@ theorem gramVol_of_pairwise_orthogonal {v : ι → V}
   rw [gramVol_of_pairwise_orthogonal (Subsingleton.pairwise), Fintype.prod_unique]
 
 
+omit [DecidableEq ι] [Fintype κ] [DecidableEq κ] in
 theorem gram_sum_smul (v : ι → V) (Y : Matrix ι κ 𝕜) :
     gram 𝕜 (fun j => ∑ i, Y i j • v i) = Yᴴ * gram 𝕜 v * Y := by
   ext a b

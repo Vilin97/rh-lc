@@ -12,6 +12,8 @@ open scoped ComplexConjugate
 namespace GlobalTheory.ComplementTypes
 
 
+open NumberField in
+open scoped ComplexConjugate in
 theorem _root_.GlobalTheory.ComplementTypes.types (E : Type) [Field E] [NumberField E]
     [IsCMField E] (H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (p q r g g' : ℕ)
     (ty : Fin g → (E →+* ℂ)) (ty' : Fin g' → (E →+* ℂ)) (hty : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsTypeFn H p q ty)

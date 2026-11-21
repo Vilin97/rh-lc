@@ -222,6 +222,7 @@ theorem smoothNear_cons {m : ℕ} {S : Set (Fin n → ℂ)} {g : (Fin n → ℂ)
 end RegRadialWeight
 
 
+open RegRadialWeight in
 theorem RegRadialWeight.proof (hS : StokesOnChart.Statement) (hM : ChartMassCompact.Statement)
     (hRP : RadialPrimitive.Statement) (hLP : MaDensLogPow.Statement) : RegRadialWeight.Statement := by
   intro n d J A u ε x a t₀ T hJ hd hA hε ha ht₀ hconst hT hint

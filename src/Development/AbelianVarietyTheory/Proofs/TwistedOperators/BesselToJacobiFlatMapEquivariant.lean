@@ -82,6 +82,7 @@ theorem evalAt_levi (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (ρ : ℕ) (B : Be
     Circle.coe_one, Complex.ofReal_one, mul_one, one_smul]
 
 
+set_option maxHeartbeats 400000 in
 theorem flBF_om : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (ρ : ℕ) (B : BesL D ρ) (J : JacL D ρ) (s : StBF ψ B J) (om' : Om B.V₀ J.W), IsWeilDatumO ψ B.V₀ J.W s.χV s.χW om' → ∀ (Ψ : WO B.V J.W → ℂ), IsThetaFunO ψ B.V J.W Ψ → ∀ h₀, ∀ n ∈ radX J.d, ∀ h', flBF s (s.om (embA B.d B.o h₀, n * J.d.emb0 h') Ψ) = s.om₀ (B.o.emb (h₀, 1), 1) (opA ψ J.d B.o B.ζ s.om₀ n h' (flBF s Ψ)) := by
   intro D ψ ρ B J s om' hom' Ψ hΨ h₀ n hn h'
   have hstd : IsStdChar D ψ (-1) := s.weil.std

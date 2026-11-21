@@ -32,6 +32,7 @@ theorem mulVec_mem_smul {m n : ℕ} {Λ : Submodule (𝓞 D.host.E) (Fin n → D
   · rw [add_mulVec]; exact add_mem hx hx'
 
 
+open GlobalTheory.FinPl in
 theorem tmul_mem_latMul {T : HSp D} {Λ' : Lat T} (𝔪 : Ideal (𝓞 D.host.E)) {P : Pl D → Prop} {γ : Af D.host.F}
     (hγ : γ ∈ intAf D.host.F) (hγP : ∀ v, ¬ P v → evalV D.host.F v γ = 0) {w : Fin T.rank → D.host.E} (hw : w ∈ 𝔪 • Λ') :
     (fun r => pairA D.host.F 0 γ ⊗ₜ[D.host.F] w r) ∈
@@ -47,6 +48,7 @@ theorem tmul_mem_latMul {T : HSp D} {Λ' : Lat T} (𝔪 : Ideal (𝓞 D.host.E))
     rw [this]; exact add_mem hw hw'
 
 
+open GlobalTheory.FinPl in
 theorem mulVec_mem_latMul {S T : HSp D} {Λ : Lat S} {Λ' : Lat T} (𝔪 : Ideal (𝓞 D.host.E)) {P : Pl D → Prop}
     {Z : Mx D T.rank S.rank} (hZ : Z ∈ hatMx (𝔪 • homLat Λ Λ')) {y : Fin S.rank → AE D} (hy : y ∈ latV S Λ P) :
     Z *ᵥ y ∈ latMul T {a | a ∈ ((𝔪 : Ideal (𝓞 D.host.E)) : GlobalTheory.SeeSaw.FI D)} Λ' P := by

@@ -20,6 +20,7 @@ def piTensorLift (f : ∀ s, X s →ₐ[A] S) : (⨂[A] s, X s) →ₐ[A] S :=
     (by simp) (fun x y => by simp [Finset.prod_mul_distrib])
 
 
+omit [DecidableEq σ] in
 @[simp] theorem piTensorLift_tprod (f : ∀ s, X s →ₐ[A] S) (x : ∀ s, X s) :
     piTensorLift f (tprod A x) = ∏ s, f s (x s) := by
   refine (PiTensorProduct.lift.tprod x).trans ?_

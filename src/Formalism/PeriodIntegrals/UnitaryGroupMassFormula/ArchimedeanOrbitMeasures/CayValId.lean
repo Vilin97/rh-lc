@@ -174,6 +174,7 @@ theorem expR_zero' {n : ℕ} (ε : Fin n → Bool) : expR ε (0 : EuclideanSpace
 end CVI
 
 
+open CVI in
 theorem cayValId_holds : CayValId := by
   intro n ε hG r₀ hr₀ f₀ hfm hfc hf
   classical

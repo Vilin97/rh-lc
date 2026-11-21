@@ -59,6 +59,8 @@ private theorem conv_mem_and_vanish_below (e : PowerSeries L) (D : Submodule L M
     rw [hm _ (by omega), smul_zero]
 
 
+open TensorProduct in
+variable {L M : Type} [Field L] [AddCommGroup M] [Module L M] in
 theorem _root_.GlobalTheory.NL.Model.latSpan_coeff {ι : Type} (ex : ι → ℤ → M)
     (D : Submodule L M) (hD : ∀ x k, ex x k ∈ D) (hs : ∀ x, ∃ m : ℤ, ∀ k < m, ex x k = 0)
     (f : ℤ → M) (hf : f ∈ _root_.GlobalTheory.NL.latSpan (LL := L) ex) :
@@ -107,6 +109,14 @@ theorem _root_.GlobalTheory.NL.Model.mem_van (W : _root_.Formalism.BasicNotions.
     PowerSeries.X_pow_dvd_iff]
 
 
+open TensorProduct in
+variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field K]
+    [Algebra Qp K₀] [Algebra Qp K] [Algebra K₀ K] [IsScalarTower Qp K₀ K]
+    {B BdR : Type} [CommRing B] [CommRing BdR] [Algebra Qp B] [Algebra K₀ B] [IsScalarTower Qp K₀ B]
+    [Algebra Qp BdR] [Algebra K₀ BdR] [Algebra K BdR] [IsScalarTower Qp K BdR]
+    [IsScalarTower K₀ K BdR] [IsScalarTower Qp K₀ BdR]
+    {PD : _root_.Formalism.WeaklyAdmissibleFiltrations.PeriodData G Qp K₀ K B BdR} {LL O : Type} [Field LL] [Algebra Qp LL]
+    [CommRing O] [Algebra O LL] [TopologicalSpace LL] {v : AddValuation LL (WithTop ℚ)} {n : ℕ} in
 theorem _root_.GlobalTheory.NL.Model.pi_van_one (W : _root_.Formalism.BasicNotions.LocWach PD LL O v n) (i : ZMod n) :
     (_root_.Formalism.BasicNotions.letπ : _root_.Formalism.BasicNotions.LetA O n) ∈ _root_.GlobalTheory.NL.van W i 1 1 ∧
       (_root_.Formalism.BasicNotions.letπ : _root_.Formalism.BasicNotions.LetA O n) ∉ _root_.GlobalTheory.NL.van W i 1 2 := by
@@ -165,6 +175,9 @@ theorem _root_.GlobalTheory.NL.Model.ex_mem_Lat (C : _root_.Formalism.BasicNotio
   _root_.GlobalTheory.NL.Model.mem_latSpan _ x
 
 
+open TensorProduct in
+variable {l : ℕ} [Fact l.Prime] {P : _root_.Formalism.BasicNotions.LocPrime l} {AI : _root_.Formalism.BasicNotions.LocAinf l P} {H : _root_.Formalism.BasicNotions.LocHW l P}
+  {F : _root_.Formalism.BasicNotions.LocFon l P AI H} {K : _root_.Formalism.BasicNotions.Loc.FinExt l} {s : ℕ} {LL : _root_.Formalism.BasicNotions.Loc.FinExt l} in
 theorem _root_.GlobalTheory.NL.Model.Lat_coeff (C : _root_.Formalism.BasicNotions.LocCmpT l P AI H F)
     (h : _root_.Formalism.BasicNotions.Loc.Good K s LL) (T : _root_.GlobalTheory.NL.Lt K LL) (i : _root_.GlobalTheory.NL.Let K)
     (ζ : ↥LL.1) (f : ℤ → T.V ⊗[ℚ_[l]] P.R.B) (hf : f ∈ _root_.GlobalTheory.NL.Lat C h T i ζ) :
@@ -210,6 +223,9 @@ private theorem levB_smul_eq_powerSeriesSmul_lemma_2 {Zl Ai : Type} [CommRing Zl
   simp only [map_smul, S.levN_eq]
 
 
+open TensorProduct in
+variable {l : ℕ} [Fact l.Prime] {P : _root_.Formalism.BasicNotions.LocPrime l} {AI : _root_.Formalism.BasicNotions.LocAinf l P} {H : _root_.Formalism.BasicNotions.LocHW l P}
+  {F : _root_.Formalism.BasicNotions.LocFon l P AI H} {K : _root_.Formalism.BasicNotions.Loc.FinExt l} {s : ℕ} {LL : _root_.Formalism.BasicNotions.Loc.FinExt l} in
 theorem _root_.GlobalTheory.NL.Model.ex_smul (C : _root_.Formalism.BasicNotions.LocCmpT l P AI H F) (h : _root_.Formalism.BasicNotions.Loc.Good K s LL)
     (T : _root_.GlobalTheory.NL.Lt K LL) (i : _root_.GlobalTheory.NL.Let K) (ζ : ↥LL.1) (a : _root_.GlobalTheory.NL.AA K LL)
     (x : ↥((H.W K s LL h).N T)) :

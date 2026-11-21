@@ -26,6 +26,7 @@ def CptAt (Φ : RadSp k r z z' π π') (c : Fin r → ℂ) : Prop :=
     ∀ g ∈ Glev k r (Fin.last r), g ∉ K → (Φ : Fn k r (Wq →L[ℂ] Wp)) c g = 0
 
 
+variable (k r z z' π π') in
 def cptSub : Submodule ℂ (RadSp k r z z' π π') where
   carrier := {Φ | ∀ c ∈ OmX r, CptAt Φ c}
   zero_mem' := fun c _ => ⟨∅, isCompact_empty, Set.empty_subset _, fun g _ _ => rfl⟩

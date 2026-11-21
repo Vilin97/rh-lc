@@ -42,6 +42,7 @@ def priceThreshold : ℝ := 9
 theorem price_threshold_ge_nine : 9 ≤ priceThreshold := by norm_num [priceThreshold]
 
 
+open Classical in
 theorem price_bound_small_primes : PriceBoundSmallPrimes := by
   intro D L X Y K hK hS hT hL u w hg hp t0 ht0 j hj
   obtain ⟨hrk, hx2⟩ := hK

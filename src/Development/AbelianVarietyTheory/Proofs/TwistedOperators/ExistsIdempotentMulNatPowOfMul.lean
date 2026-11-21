@@ -307,6 +307,7 @@ theorem good_away (S : Finset (HeightOneSpectrum (𝓞 D.host.F))) (N : ℕ)
     Af D.host.F →+* Af D.host.F ⊗[D.host.F] D.host.E) u N).symm
 
 
+set_option maxHeartbeats 800000 in
 theorem lamHat_good {V : HSp D} {β : GL (Fin V.rank) (EAf D)} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)} {N : ℕ}
     (hB : IsBaseFrame V β Λ N) {f : Af D.host.F ⊗[D.host.F] D.host.E} (hf : Good N f) :
     (∀ y ∈ Formalism.L2.NTheta.LamHat V, f • y ∈ Formalism.L2.NTheta.LamHat V) ∧

@@ -69,6 +69,7 @@ variable [IsDiscreteValuationRing V] {D : DegData V (maximalIdeal V)} {F : Type}
   [Algebra (FractionRing V) F] {O : Type} [CommRing O] [StarRing O] [Module O D.toPre.X]
 
 
+set_option maxHeartbeats 800000 in
 theorem pull_val_eq (hG : GlobalFnsSt) (oa : D.toPre.OAct O) (a : O) (N k : ℕ) (χ : D.toPre.X)
     (X : LB.Gen (LB.LinComb D.toPre.P.L (K := Fin 2) ![𝟙 D.toPre.P.A.left, (oa.onB.act a).left]
       ![((1 * (N + 1) : ℕ) : ℤ), -((1 : ℕ) : ℤ)])) (hX : X.IsGen)
@@ -125,6 +126,7 @@ theorem pull_val_eq (hG : GlobalFnsSt) (oa : D.toPre.OAct O) (a : O) (N k : ℕ)
   rfl
 
 
+set_option maxHeartbeats 800000 in
 theorem integral_of_pullAl (hG : GlobalFnsSt) (oa : D.toPre.OAct O) (a : O) (N : ℕ) (hN : 0 < N)
     (X : LB.Gen (LB.LinComb D.toPre.P.L (K := Fin 2) ![𝟙 D.toPre.P.A.left, (oa.onB.act a).left]
       ![((1 * N : ℕ) : ℤ), -((1 : ℕ) : ℤ)])) (hX : X.IsGen)

@@ -34,6 +34,7 @@ theorem weight_blockWeight (μ : (Σ k, ι k) →₀ ℕ) :
   · simp
 
 
+omit [DecidableEq K] in
 theorem aeval_monomial_one (R : Subalgebra ℤ Ω) (y : (Σ k, ι k) → Ω) (μ : (Σ k, ι k) →₀ ℕ) :
     aeval y (monomial μ (1 : R)) = ∏ p, y p ^ μ p := by
   rw [aeval_monomial, Finsupp.prod_fintype _ _ (by simp)]
@@ -51,6 +52,7 @@ theorem relSecM_le_map (R : Subalgebra ℤ Ω) (y : (Σ k, ι k) → Ω) (b : K 
   · simp [aeval_monomial_one]
 
 
+omit [Fintype K] [DecidableEq K] in
 theorem exists_chart_le (N : ℕ) (μ : (Σ k, ι k) → ℕ)
     (h : ∀ k, Fintype.card (ι k) * N < ∑ i, μ ⟨k, i⟩) : ∃ c : ∀ k, ι k, ∀ k, N ≤ μ ⟨k, c k⟩ := by
   have hk : ∀ k, ∃ i, N ≤ μ ⟨k, i⟩ := by
@@ -81,6 +83,7 @@ theorem prod_chart (z : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (N : ℕ) :
   · simp
 
 
+omit [DecidableEq K] in
 theorem chart_pow_mem (R : Subalgebra ℤ Ω) (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (N : ℕ) :
     (∏ k, y ⟨k, c k⟩) ^ N ∈ relSecM R y (fun _ => N) := by
   classical
@@ -88,6 +91,7 @@ theorem chart_pow_mem (R : Subalgebra ℤ Ω) (y : (Σ k, ι k) → Ω) (c : ∀
   exact monomial_mem_relSecM R y _ fun k => sum_chart c N k
 
 
+omit [DecidableEq K] in
 theorem exists_chart_factor (N : ℕ) (μ : (Σ k, ι k) → ℕ) (c : ∀ k, ι k) (hc : ∀ k, N ≤ μ ⟨k, c k⟩) :
     ∃ ν : (Σ k, ι k) → ℕ, (∀ k, ∑ i, ν ⟨k, i⟩ + N = ∑ i, μ ⟨k, i⟩) ∧
       ∀ z : (Σ k, ι k) → Ω, ∏ p, z p ^ μ p = (∏ p, z p ^ ν p) * (∏ k, z ⟨k, c k⟩) ^ N := by

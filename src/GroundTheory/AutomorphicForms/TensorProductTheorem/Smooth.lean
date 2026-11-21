@@ -26,6 +26,9 @@ variable {ι : Type*} {G : ι → Type*} [∀ v, Group (G v)] [∀ v, Topologica
   {π : ∀ v, Representation ℂ (G v) (V v)} {ξ : ∀ v, V v}
 
 
+omit [∀ v, TopologicalSpace (G v)] [∀ v, IsTopologicalGroup (G v)]
+  [∀ v, LocallyCompactSpace (G v)] [∀ v, T2Space (G v)] [∀ v, TotallyDisconnectedSpace (G v)]
+  hKo hKc in
 theorem tensorRep_mulSingle_tprod [DecidableEq ι] (a : ι) (k : G a) (x : ∀ v, V v) :
     tensorRep (K := K) π (RestrictedProduct.mulSingle K a k) (tprod ℂ x) =
       tprod ℂ (Function.update x a (π a k (x a))) := by
@@ -127,6 +130,7 @@ theorem isCompact_boxSubgroup_of_eq :
   isCompact_boxSubgroup hK'c (hK'e.mono fun v h => h.le)
 
 
+include hπ hξ hK'c hK'o hK'e in
 theorem coe_fixedProj_tprod {x : ∀ v, V v} (hx : IsRestricted ξ x) :
     ((fixedProj (restrictedTensorRep π ξ hξ) (isSmooth_restrictedTensorRep hπ hξ)
       (isCompact_boxSubgroup_of_eq hK'c hK'e) (isOpen_boxSubgroup hK'o hK'e)
@@ -233,6 +237,8 @@ variable (hπ : ∀ v, IsAdmissible (π v)) (hξ : ∀ᶠ v in cofinite, ξ v �
   (hK'o : ∀ v, IsOpen (K' v : Set (G v)))
 
 
+omit [∀ v, IsTopologicalGroup (G v)] [∀ v, LocallyCompactSpace (G v)] [∀ v, T2Space (G v)]
+  [∀ v, TotallyDisconnectedSpace (G v)] hKo hKc in
 def windowEmbed [DecidableEq ι] (ξ : ∀ v, V v) (S : Finset ι) :
     (⨂[ℂ] v : S, fixedVectors (π v) (K' v)) →ₗ[ℂ] ⨂[ℂ] v, V v :=
   finiteEmbed ξ S ∘ₗ PiTensorProduct.map fun v => (fixedVectors (π v) (K' v)).subtype

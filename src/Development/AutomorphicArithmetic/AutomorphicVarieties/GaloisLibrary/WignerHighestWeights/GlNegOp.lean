@@ -15,6 +15,7 @@ open Formalism.REAL Formalism.HermitianLatticeCounting.P MulOpposite
 variable {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ}
 
 
+omit [Algebra ℂ A] in
 private theorem glRel_op {X : Fin n → Fin n → A} (h : Formalism.REAL.GlRel X) : Formalism.REAL.GlRel fun i j => op (X j i) := by
   intro a b c d
   have h1 := congrArg op (h d c b a)
@@ -54,6 +55,7 @@ private theorem qdet_antipode {X : Fin n → Fin n → A} (h : Formalism.REAL.Gl
   rw [quantumDet_neg_transpose _ (glRel_op h), qdet_op h, op_smul]
 
 
+omit [Algebra ℂ A] in
 private theorem glRel_negOp {X : Fin n → Fin n → A} (h : Formalism.REAL.GlRel X) :
     Formalism.REAL.GlRel fun i j => -op (X i j) := by
   intro a b c d

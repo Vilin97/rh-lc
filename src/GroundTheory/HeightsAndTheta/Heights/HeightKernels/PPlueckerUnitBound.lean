@@ -33,6 +33,7 @@ theorem diag_eq {j m : ℕ} (Z : Matrix (Fin j) (Fin m) ℂ) (hZ : ∀ a b, ‖Z
 end PlueckerUnitBoundAlt
 
 
+open PlueckerUnitBoundAlt in
 theorem PlueckerUnitBound.proof (h : HadamardPSD.Statement) : PlueckerUnitBound.Statement := by
   intro j m Z hZ
   calc ‖(1 + Z * Zᴴ).det‖ ≤ ∏ a, ‖(1 + Z * Zᴴ : Matrix (Fin j) (Fin j) ℂ) a a‖ := h j _ (posSemidef_one_add Z)

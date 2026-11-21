@@ -152,6 +152,7 @@ theorem divFunOneLevel_mono : Monotone (divFunOneLevel ψ) := by
   exact ⟨(coindIncl hab).hom F, rfl⟩
 
 
+omit [TotallyDisconnectedSpace G] in
 theorem exists_mem_divFunOneLevel [TotallyDisconnectedSpace G] (f : divFunRepOne ψ) :
     ∃ a, f ∈ divFunOneLevel ψ a := by
   obtain ⟨hlc, hinv⟩ := f.2.2 PUnit.unit
@@ -273,6 +274,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Compa
   [TotallyDisconnectedSpace G] {I : Type} {H : I → Type} [∀ i, Group (H i)] (φ : ∀ i, H i →* G)
 
 
+omit [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G] in
 theorem ker_repHom_le_comap {k : Type} [CommRing k] {A B : Rep.{0} k G} (f : A ⟶ B) (g : G) :
     LinearMap.ker f.hom.toLinearMap ≤ (LinearMap.ker f.hom.toLinearMap).comap (A.ρ g) := by
   intro a ha
@@ -282,6 +284,7 @@ theorem ker_repHom_le_comap {k : Type} [CommRing k] {A B : Rep.{0} k G} (f : A �
   rw [show f.hom a = 0 from ha, map_zero]
 
 
+omit [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G] in
 theorem mem_divFun_ite (T : Finset I) (f : divFun φ QZ) :
     (fun i => if i ∈ T then 0 else (f : I → G → QZ) i) ∈ divFun φ QZ := by
   refine ⟨f.2.1.subset fun i hi => ?_, fun i => ?_⟩
@@ -379,6 +382,7 @@ instance isDiscreteRep_divFunSuppSequence_X₃ (T : Finset I) (j : I) (hj : j �
   (inferInstance : IsDiscreteRep (divFunRepOne (φ j)))
 
 
+omit [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G] in
 theorem single_mem_divFun (j : I) (F : G → QZ) (hF : IsLocallyConstant F ∧ ∀ (h : H j) (x : G), F (φ j h * x) = F x) :
     (Pi.single j F : I → G → QZ) ∈ divFun φ QZ := by
   refine ⟨(Set.finite_singleton j).subset fun i hi => ?_, fun i => ?_⟩

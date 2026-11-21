@@ -51,6 +51,7 @@ theorem aeval_homog {F : Type} [Field F] [Algebra ℤ F] (c : ∀ k, ι k) (p : 
 end RatioAlgebraicDependence
 
 
+open RatioAlgebraicDependence in
 theorem RatioAlgDep.proof : RatioAlgDep.Statement := by
   intro K _ ι _ Q d c p hQ
   classical

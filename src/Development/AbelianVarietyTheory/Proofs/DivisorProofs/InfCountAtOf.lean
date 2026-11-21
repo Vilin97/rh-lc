@@ -37,6 +37,7 @@ def CosK : Prop := BigC fun _ ch C b => CosNum ch C b
 def PureK : Prop := BigC fun _ ch C b => PureNum ch C b
 
 
+open IsDedekindDomain NumberField Matrix in
 theorem _root_.GlobalTheory.SumCount.infCountK_of (h1 : _root_.GlobalTheory.SumCount.DataK)
     (h2 : _root_.GlobalTheory.SumCount.CosK) (h3 : _root_.GlobalTheory.SumCount.PureK) :
     _root_.GlobalTheory.SumSize.InfCountK := by

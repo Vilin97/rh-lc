@@ -102,6 +102,7 @@ namespace GlobalTheory.SymCocAdd
 variable {R : Type} [CommRing R] {d : ℕ}
 
 
+variable (R d) in
 def PtGrp (τ : Type) : AddSubgroup (Fin d → MvPowerSeries τ R) where
   carrier := {u | ∀ i, constantCoeff (u i) = 0}
   zero_mem' := fun i => by simp
@@ -149,6 +150,7 @@ theorem subst_single {τ : Type} {a : Fin d → MvPowerSeries τ R} (ha : ∀ t,
   · rw [← coe_substAlgHom hS, map_zero]
 
 
+variable (R) in
 def corr (c : MvPowerSeries (Fin d ⊕ Fin d) R) : MvPowerSeries (Fin d) R :=
   ∑ m : Fin d, at2 c (∑ j ∈ Finset.univ.filter (· < m), Pi.single j (X j))
     (Pi.single m (X m) : Fin d → MvPowerSeries (Fin d) R)
@@ -171,6 +173,7 @@ end GlobalTheory.SymCocAdd
 namespace GlobalTheory
 
 
+open GlobalTheory.SymCocAdd in
 theorem symmetricCocycle_additive_eq_coboundary_add_alt (R : Type) [CommRing R] (d : ℕ) (c : MvPowerSeries (Fin d ⊕ Fin d) R)
     (hc : IsCoc (addLaw R d) c) (h0 : constantCoeff c = 0) :
     ∃ b : MvPowerSeries (Fin d) R, c = cob1 (addLaw R d) b +

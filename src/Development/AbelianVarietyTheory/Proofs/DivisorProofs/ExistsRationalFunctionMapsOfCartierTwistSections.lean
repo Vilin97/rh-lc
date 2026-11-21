@@ -47,6 +47,7 @@ theorem coordFn_add {D : CartierDiv Y} {W : Y.Opens}
     coordFn (a + b) i = coordFn a i + coordFn b i := rfl
 
 
+open Classical in
 def ratOn (D : CartierDiv Y) (W : Y.Opens) :
     sectionsOn (twist (GlobalTheory.structureModule Y) (toLB D)) W →+ Y.functionField where
   toFun a := if h : genericPoint Y ∈ W then

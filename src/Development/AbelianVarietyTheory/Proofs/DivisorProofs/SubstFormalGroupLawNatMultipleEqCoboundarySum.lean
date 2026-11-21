@@ -52,6 +52,7 @@ theorem constantCoeff_nmul {R : Type} [CommRing R] {d : ℕ}
 end GlobalTheory.QLog.NmulSubst
 
 
+open GlobalTheory.QLog.NmulSubst in
 theorem GlobalTheory.QLog.subst_nmul_eq (R : Type) [CommRing R] (d : ℕ)
     (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) R) (hμ : ∀ i, constantCoeff (μ i) = 0)
     (g : MvPowerSeries (Fin d) R) (n : ℕ) :

@@ -9,6 +9,7 @@ open NumberField IsDedekindDomain
 namespace GlobalTheory
 
 
+open NumberField IsDedekindDomain in
 theorem _root_.GlobalTheory.absNorm_prime_iff_inertiaDeg_eq_one_and_finite_ramified :
     ∀ (E : Type) [Field E] [NumberField E],
       (∀ P : HeightOneSpectrum (𝓞 E),

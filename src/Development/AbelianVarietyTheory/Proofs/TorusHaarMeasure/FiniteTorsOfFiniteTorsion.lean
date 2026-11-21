@@ -112,6 +112,11 @@ theorem _root_.GlobalTheory.ChartCompare.isNilpotent_nEval (f : MvPowerSeries σ
   exact mem_nilradical.mp (hle h)
 
 
+open IsLocalRing TensorProduct in
+variable {R₀ : Type} [CommRing R₀] in
+open MvPowerSeries in
+variable {σ τ : Type} [Fintype σ] [DecidableEq σ] [Fintype τ] [DecidableEq τ]
+  {S : Type} [CommRing S] [Algebra R₀ S] in
 theorem _root_.GlobalTheory.ChartCompare.nEval_subst (b : σ → MvPowerSeries τ R₀)
     (hb : ∀ s, constantCoeff (b s) = 0)
     (f : MvPowerSeries σ R₀) (a : τ → S) (ha : ∀ i, IsNilpotent (a i)) :
@@ -177,6 +182,11 @@ private theorem multiset_map_prod_sub_mem_mul_of_two_le_card (a b : σ → S) (I
     (Ideal.mul_mem_mul hB (hJ i))
 
 
+open IsLocalRing TensorProduct in
+variable {R₀ : Type} [CommRing R₀] in
+open MvPowerSeries in
+variable {σ τ : Type} [Fintype σ] [DecidableEq σ] [Fintype τ] [DecidableEq τ]
+  {S : Type} [CommRing S] [Algebra R₀ S] in
 theorem _root_.GlobalTheory.ChartCompare.nEval_sub_mem (f : MvPowerSeries σ R₀) (a b : σ → S)
     (hna : ∀ i, IsNilpotent (a i))
     (hnb : ∀ i, IsNilpotent (b i)) (I J : Ideal S) (ha : ∀ i, a i ∈ I) (hb : ∀ i, b i ∈ I)

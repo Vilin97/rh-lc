@@ -80,6 +80,7 @@ namespace HermLine
 
 
 open scoped Classical in
+open Classical in
 def toGeo (A : HermLine n) : Geo.HermLine (blockIdx n) where
   a := A.deg
   h w := if BlockNonzero (unflatCone w) then A.metric (unflatCone w) else 0

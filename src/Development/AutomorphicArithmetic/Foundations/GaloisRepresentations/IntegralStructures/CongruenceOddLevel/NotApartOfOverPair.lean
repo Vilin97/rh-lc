@@ -36,6 +36,7 @@ def EllSt : Prop :=
           (∀ g : J, σ.ρ g v = ((χ (θ g) : ℂˣ) : ℂ) • v) → GlobalTheory.SmGL.IsCuspidal σ.ρ
 
 
+open UpperTheory.Gal.Gen in
 def StepSt : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (a : ℕ), 1 ≤ a →
     ∀ (w₀ : HeightOneSpectrum (𝓞 E)), ((l : ℕ) : 𝓞 E) ∈ w₀.asIdeal → IsSplitAt w₀ →
@@ -61,6 +62,7 @@ theorem not_apart_of_overPair {E : Type} [Field E] [NumberField E] [IsCMField E]
   exact GlobalTheory.Cong.AdaptLev.not_apart_trans (GlobalTheory.Cong.AdaptLev.not_apart_symm hxu) hyv
 
 
+open UpperTheory.Gal.Gen in
 theorem intL_congr {E : Type} [Field E] [NumberField E] [IsCMField E] {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) {a : ℕ}
     {v' : HeightOneSpectrum (𝓞 E)} {lam mu : (E →+* ℂ) → DomWeight a} (h : ∀ τ, mu τ ≠ lam τ → OverPair ι v' τ)
     {f : UA E a →₀ ℂ} (hv : ∀ g ∈ f.support, ∀ u, ¬ Apart u v' → cLoc u g = 1) (hf : Loc.IntL ι lam f) : Loc.IntL ι mu f := by

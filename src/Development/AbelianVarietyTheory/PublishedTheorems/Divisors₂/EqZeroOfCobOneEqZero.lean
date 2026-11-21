@@ -229,9 +229,11 @@ theorem rigToExt_rigExtMap (f : G ⟶ H) (x : H.RigExt) :
   rfl
 
 
+variable (G) in
 abbrev LieUniv : Type := Module.Dual O G.RigExt
 
 
+variable (G) in
 def lieUnivToLie : G.LieUniv →ₗ[O] G.Lie := G.rigOfOmega.dualMap
 
 section Carry

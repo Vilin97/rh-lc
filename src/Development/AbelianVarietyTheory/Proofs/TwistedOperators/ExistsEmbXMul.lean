@@ -161,6 +161,11 @@ theorem _root_.GlobalTheory.RootEx.Unram.opE_of_ite {p : ℕ} {ψ : AddChar k Ci
   · simp
 
 
+open MeasureTheory ValuativeRel Matrix in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
+variable {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ} in
+variable [MeasurableSpace k] [BorelSpace k] in
+omit [DecidableEq n] [DecidableEq n'] in
 theorem _root_.GlobalTheory.RootEx.Unram.psi_ch_eq_one {p : ℕ} (ψ : AddChar k Circle)
     (ν : Measure k) [ν.IsAddHaarMeasure]
     (Ψ : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k → ℂ) (x₀ : Matrix n n' k)

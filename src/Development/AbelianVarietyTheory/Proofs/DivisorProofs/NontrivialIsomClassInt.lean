@@ -280,9 +280,11 @@ theorem Isometric.dual (h : L.Isometric M) : L.dual.Isometric M.dual :=
       ((isometric_tens_comm _ _).trans L.isometric_dual_tens))).trans (isometric_tens_triv _)
 
 
+variable (p) in
 def isometrySetoid : Setoid (HermLB p) := ⟨Isometric, Isometric.refl, Isometric.symm, Isometric.trans⟩
 
 
+variable (p) in
 def IsomClass : Type 1 := Quotient (isometrySetoid p)
 
 def icls (L : HermLB p) : IsomClass p := Quotient.mk _ L

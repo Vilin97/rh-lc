@@ -112,10 +112,12 @@ theorem placeInv_bijective_inr (v : HeightOneSpectrum (𝓞 K.1)) :
   brauerInvZOfIsSepClosure_bijective (v.adicCompletion K.1) (AlgebraicClosure (v.adicCompletion K.1))
 
 
+variable (K) in
 def sumPlaceInv : (⨁ v : Place K.1, localGaloisCohomology K 2 v) →+ QZ :=
   by classical exact DirectSum.toAddMonoid fun v => placeInv v
 
 
+open Classical in
 theorem sumPlaceInv_of (v : Place K.1) (t : localGaloisCohomology K 2 v) :
     sumPlaceInv K (DirectSum.of _ v t) = placeInv v t := by
   unfold sumPlaceInv

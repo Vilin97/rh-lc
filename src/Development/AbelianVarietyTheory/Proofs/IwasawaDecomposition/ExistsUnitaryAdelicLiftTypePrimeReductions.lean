@@ -32,6 +32,7 @@ section General
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [StarRing E]
 
 
+omit [StarRing E] in
 theorem val_mulVec_le {P : HeightOneSpectrum (𝓞 E)} {n : ℕ} (A : Matrix (Fin n) (Fin n) E)
     (hA : ∀ i j, P.valuation E (A i j) ≤ 1) {v : Fin n → E} (hv : ∀ i, P.valuation E (v i) ≤ 1) (i : Fin n) :
     P.valuation E ((A *ᵥ v) i) ≤ 1 := by

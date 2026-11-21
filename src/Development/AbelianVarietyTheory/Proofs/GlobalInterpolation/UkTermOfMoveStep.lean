@@ -259,6 +259,7 @@ variable {P : ST} (hP : MoveHyp ST SG P) (hP' : MoveHyp ST SG' P) {q : 𝓞 E} (
   {d : Deco E a ST SG} {d' : Deco E b ST SG'} (hd : d.Ok) (hd' : d'.Ok) {x : HomE E a b}
 
 
+include hP' hq hq2 hd hd' in
 theorem up_unique {d₁ d₂ : Deco E b ST SG'} (h₁ : d'.IsUp P q d₁) (h₂ : d'.IsUp P q d₂) (r₁ : Rel d d₁ x) (r₂ : Rel d d₂ x) :
     d₁ = d₂ := by
   obtain ⟨e, he, hfe⟩ := exists_f_one hd P
@@ -284,6 +285,7 @@ theorem up_unique {d₁ d₂ : Deco E b ST SG'} (h₁ : d'.IsUp P q d₁) (h₂ 
   exact Submodule.smul_mem_smul hq h4
 
 
+include hP hq hq2 in
 theorem dn_unique {d₁ d₂ : Deco E a ST SG} (hd₁ : d₁.Ok) (hd₂ : d₂.Ok) (h₁ : d₁.IsUp P q d) (h₂ : d₂.IsUp P q d)
     (r₁ : Rel d₁ d' x) (r₂ : Rel d₂ d' x) : d₁ = d₂ := by
   have hN : d₁.N = d₂.N := (up_N hP hq hq2 hd₁ h₁).trans (up_N hP hq hq2 hd₂ h₂).symm

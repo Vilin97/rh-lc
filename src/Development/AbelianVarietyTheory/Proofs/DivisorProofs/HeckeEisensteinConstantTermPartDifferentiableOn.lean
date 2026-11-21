@@ -76,6 +76,7 @@ theorem prod_latPt_zero (a : F) :
 end GlobalTheory.HeckeTwo.APart
 
 
+open GlobalTheory.HeckeTwo.APart in
 theorem GlobalTheory.HeckeTwo.aPart_differentiableOn : ∀ (F : Type) [Field F] [NumberField F] [NumberField.IsTotallyReal F]
     (𝔞 : GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.Frac F), DifferentiableOn ℂ (GlobalTheory.HeckeTwo.aPart 𝔞) GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.halfPlane := by
   intro F _ _ _ 𝔞

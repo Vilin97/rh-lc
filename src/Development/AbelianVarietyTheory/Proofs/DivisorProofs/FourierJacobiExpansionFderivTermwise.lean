@@ -163,6 +163,7 @@ theorem exists_bound {S : Matrix (Fin r) (Fin r) ℂ} (hpos : ((d.full σ S).map
 end GlobalTheory.MBLow.Cl.FJD
 
 
+open GlobalTheory.MBLow.Cl.FJD in
 theorem GlobalTheory.MBLow.Cl.fj_expansion_fderiv : AllCD fun {N} {g'} {r} {g} {bX} d σ => ∀ S : Matrix (Fin r) (Fin r) ℂ, S.IsSymm → ((d.full σ S).map Complex.im).PosDef → (∀ χ, Differentiable ℂ (d.fj σ S χ)) ∧ ∀ Z W, (Summable fun χ => ‖fderiv ℂ (d.fj σ S χ) Z W‖) ∧ ∑' χ, fderiv ℂ (d.fj σ S χ) Z W = fderiv ℂ (thetaChar (d.full σ S) (d.aF σ) (d.bF σ)) Z W := by
   intro N g' r g bX d σ S hS hpos
   refine ⟨differentiable_fj d σ S, fun Z W => ?_⟩

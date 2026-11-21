@@ -61,6 +61,7 @@ theorem isMultiHomogIdeal_mCoordIdeal {Ω : Type} [Field Ω] (y : (Σ k, ι k) �
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem isHomogeneous_of_isMultiHomogIdeal {R : Type} [CommRing R] {I : Ideal (MvPolynomial (Σ k, ι k) R)}
     (h : NumbersDVR.IsMultiHomogIdeal I) :
     I.IsHomogeneous (weightedHomogeneousSubmodule R (NumbersDVR.blockWeight ι)) := by
@@ -74,6 +75,8 @@ theorem isHomogeneous_of_isMultiHomogIdeal {R : Type} [CommRing R] {I : Ideal (M
 end GenFibreHomog
 
 
+open GenFibreHomog in
+attribute [local instance] MvPolynomial.weightedGradedAlgebra in
 theorem GenFibreHomog.proof : GenFibreHomog.Statement := by
   intro K _ _ ι _ Ω _ y
   have hI := isHomogeneous_of_isMultiHomogIdeal (isMultiHomogIdeal_mCoordIdeal y)

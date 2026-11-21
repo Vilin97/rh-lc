@@ -396,6 +396,7 @@ theorem rowComp_zero (g : Gc D.what₂.Tau (rowSizes D)) :
   rfl
 
 
+set_option maxHeartbeats 1000000 in
 theorem coefPsi (W : G.Weil) (h0 : PosOnb W (.top 0)) :
     ∃ A : weylSub ((rowSizes D).nR (0 : Fin ((rowSizes D).m + 1))) (psiWt (rowEntries D sc.cGap)) ≃ₗ[ℂ]
         Module.Dual ℂ (GlobalTheory.IndefiniteRowSideFullHecke.LevelPlusSubgroup.coefPlus G W.θ).W,

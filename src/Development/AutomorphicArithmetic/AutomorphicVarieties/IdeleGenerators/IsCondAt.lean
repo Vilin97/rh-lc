@@ -89,6 +89,7 @@ def HasExp (φ : GA F 2 → ℂ) (k : ℕ) (c₀ : (Af F)ˣ → ℂ) (c : Ideal 
       (φ (TR.infGL F 2 (aff y x) * finGL F 2 (aff yf 0)) / ((((∏ v, y.val v) * absF yf) ^ ((k : ℝ) / 2) : ℝ) : ℂ) - c₀ yf)
 
 
+variable (F) in
 def locSm (w : HeightOneSpectrum (𝓞 F)) : Representation ℂ (GL (Fin 2) (w.adicCompletion F)) (TR.Sm F 2) :=
   (TR.finRep F 2).comp (locGL F 2 w)
 

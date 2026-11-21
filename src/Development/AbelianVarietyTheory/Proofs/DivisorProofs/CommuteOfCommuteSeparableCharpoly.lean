@@ -96,6 +96,7 @@ private theorem commute_of_commute_of_charpoly_separable_of_isAlgClosed {L : Typ
   rw [key a b, key b a, hAB]
 
 
+open Matrix Polynomial in
 theorem _root_.GlobalTheory.commute_of_commute_separable_charpoly :
     ∀ (K : Type) [Field K] (n : ℕ) (y a b : Matrix (Fin n) (Fin n) K), y.charpoly.Separable →
       a * y = y * a → b * y = y * b → a * b = b * a := by

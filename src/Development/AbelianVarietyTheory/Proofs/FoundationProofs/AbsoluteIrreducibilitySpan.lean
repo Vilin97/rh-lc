@@ -11,6 +11,7 @@ open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.
 namespace GlobalTheory.Proof.AbsoluteIrreducibilitySpan
 
 
+open Formalism.MainNotions.N in
 theorem absIrr_of_span {Γ k : Type} [Group Γ] [Field k] {a : ℕ} (ha : 0 < a) (ρ : Γ →* GL (Fin a) k)
     (M : Γ → Matrix (Fin a) (Fin a) k) (c : Γ → k)
     (hM : ∀ g, M g = c g • (ρ g : Matrix (Fin a) (Fin a) k))

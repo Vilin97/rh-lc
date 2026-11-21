@@ -44,6 +44,7 @@ open GlobalTheory.MajTransport
 variable {n d : ℕ} {X Y : Spc F E n} {W Z : Spc F E d}
 
 
+open GlobalTheory.RealConjFac in
 theorem exists_op {M : Model σ X W} {ψ : AddChar (AF F) ℂ} {χX χW : Chr F E} {om : Rep σ X W} (hψ : IsStd ψ)
     (hw : M.IsWeil ψ χX χW om) {g : UA σ X.J} (hg : g ∈ UAt σ X (evI F)) {h : UA σ W.J} (hh : h ∈ UAt σ W (evI F)) :
     ∃ T : SInf F (Fin n × Fin d) ≃ₗ[ℂ] SInf F (Fin n × Fin d), Continuous T ∧
@@ -102,6 +103,7 @@ def reR {a a' : ℕ} (R : RealMaps F a a') (T : SInf F (Fin a × Fin (a + a')) �
 
 
 
+open GlobalTheory.MajTransport in
 theorem polMatch_transport {B : Base F E} {a a' : ℕ} {G : Geo σ a a'} {X : Chars F E} {om : Rep σ G.V G.W} {om' : Rep σ G.V' G.W}
     (hT : IsTriple B G X om om') {V : Spc F E a} {V' : Spc F E a'} {W : Spc F E (a + a')} (R₂ : RealMaps F a a')
     {g : UA σ G.V.J} (hg : g ∈ UAt σ G.V (evI F)) {g' : UA σ G.V'.J} (hg' : g' ∈ UAt σ G.V' (evI F))

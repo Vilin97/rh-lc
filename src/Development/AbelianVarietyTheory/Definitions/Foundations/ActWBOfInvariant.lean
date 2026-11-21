@@ -23,6 +23,7 @@ def secT (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (w : ℕ) (a : X.K) : X.Fn l
   fun u => (u 0) ^ w • GlobalTheory.ZetaB.clsHat X l a
 
 
+open Classical in
 def gamMod (N l M : ℕ) [NeZero M] : Finset SL(2, ZMod M) :=
   Finset.univ.filter fun γ : SL(2, ZMod M) =>
     γ ∈ (Gam N l).map (Matrix.SpecialLinearGroup.map (Int.castRingHom (ZMod M)))

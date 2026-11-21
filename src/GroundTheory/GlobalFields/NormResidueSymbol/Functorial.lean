@@ -17,6 +17,7 @@ variable {K K' L L' : Type*} [Field K] [NumberField K] [Field K'] [NumberField K
   [Algebra K' L'] [Algebra L L'] [IsScalarTower K K' L'] [IsScalarTower K L L']
 
 
+variable (K) in
 def restrictScalarsHom : (L' ≃ₐ[K'] L') →* (L' ≃ₐ[K] L') where
   toFun σ := σ.restrictScalars K
   map_one' := rfl

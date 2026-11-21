@@ -27,6 +27,8 @@ open GlobalTheory.FlagMod (ev tau tau_le spMap_ev ev_res ev_spMap le_preimage_in
 namespace GlobalTheory.DRFlag
 
 
+attribute [local instance] Over.cartesianMonoidalCategory in
+open MonObj in
 instance tanAddCommGroup {X : Scheme.{0}} {S : Type} [CommRing S] (x : Sp S ⟶ X) (G : Over X) [GrpObj G]
     [IsCommMonObj G] : AddCommGroup (TanM x G) := inferInstance
 

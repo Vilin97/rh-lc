@@ -21,6 +21,7 @@ noncomputable section
 namespace PositivityTheory.HtPt.Mf
 
 
+set_option maxHeartbeats 1000000 in
 theorem xr_normal : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Sp Ω ⟶ X), IsCptGen ξ → (∀ q : X, GlobalTheory.CompanionTheory.Ar.genPt ξ ⤳ q) → IsIntegral X ∧ (Flat.NormalCpt ξ ↔ IsNormalScheme X) := by
   intro X Ω _ ξ hgen hall
   have hdom : ∀ x : X, IsDomain (X.presheaf.stalk x) := fun x =>

@@ -74,6 +74,7 @@ theorem contDiff_normSq_ofReal : ContDiff ℝ ∞ (fun z : ℂ => ((Complex.norm
 end GlobalTheory.KappaCut
 
 
+open GlobalTheory.KappaCut in
 theorem GlobalTheory.KappaCut.exists_kappa : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ) (x₀ : GA E (m + 1)),
     ∃ κ : GA E (m + 1) → ℝ, Continuous κ ∧ (∀ h, 0 ≤ κ h) ∧ (∀ u ∈ GlobalTheory.JSW.NA E (m + 1), ∀ h, κ (u * h) = κ h) ∧
       (∃ C : Set (GA E (m + 1)), IsCompact C ∧ ∀ h, κ h ≠ 0 → ∃ u ∈ GlobalTheory.JSW.NA E (m + 1), u⁻¹ * h ∈ C) ∧

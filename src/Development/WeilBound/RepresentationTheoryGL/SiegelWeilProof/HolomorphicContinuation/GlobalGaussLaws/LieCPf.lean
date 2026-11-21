@@ -123,6 +123,7 @@ namespace PositivityTheory.Rg.Sw.Glob
 open LieCPfH
 
 
+set_option maxHeartbeats 1000000 in
 theorem lieComm_of (hAway : AwayIn) (hLNe : LNe) (hSch : SchFP) (hOp : OpCLM) (hAF : AwayFact) (hSD : SchDeriv) :
     LieComm := by
   intro D n V ψ χ θ μ ω H l s ν τ ε fr ι hC Ψ hΨA X hX P g x

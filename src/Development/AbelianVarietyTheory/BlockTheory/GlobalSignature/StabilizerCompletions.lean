@@ -89,6 +89,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   (σ : E →ₐ[F] E) {M : ℕ} (J : Matrix (Fin M) (Fin M) E)
 
 
+omit [NumberField E] in
 theorem mem_stabVec (x : Fin M → E) (k : HA (Af F) σ J) :
     k ∈ stabVec σ J x ↔ actVec σ J k (ratVec F x) = ratVec F x := by
   constructor

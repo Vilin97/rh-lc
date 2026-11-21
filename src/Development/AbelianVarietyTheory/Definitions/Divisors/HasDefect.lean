@@ -138,6 +138,7 @@ def TActs (k : ℕ) (α : Q.X) (σ σ' : Q.SecB k α) : Prop :=
   ∃ τ τ', IsTerm Y k α σ τ ∧ IsTerm Y k α σ' τ' ∧ h.Acts k τ τ'
 
 
+variable (Q) in
 def ShiftEq (k : ℕ) (mu α : Q.X) (σ : Q.SecB k α) (σ₁ : Q.SecB k (α + k • mu)) (c : R) (σ₂ : Q.SecB k (α + k • mu)) : Prop :=
   ∀ u : LB.Gen (LB.LinComb Q.P.L (DegPre.deltaφ Q (FractionRing R) k α mu) (DegPre.deltaε k)), u.IsGen →
     LB.Gen.Corr Q.P.L _ _ _ _ (LB.pullGen Q.P.L _ _ u (DegPre.zF Q (FractionRing R)).left)

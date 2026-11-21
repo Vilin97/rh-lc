@@ -12,6 +12,7 @@ open scoped TensorProduct
 universe u
 
 
+open GlobalTheory.CechPic GlobalTheory.BirigUniq in
 theorem UpperTheory.Gal.G3.pPolUniq :
     PolUniq := by
   intro S A A' _ _ _ _ hA hA' ψ hm hfin het hsurj P Q hP hQ h1 h2 h3 h4 hiso

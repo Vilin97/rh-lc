@@ -22,11 +22,13 @@ def substR (R : Type) [CommRing R] (A : Matrix T T₂ ℤ) :
   aeval fun p => ∑ t, C ((A t p.2 : ℤ) : R) * X (⟨(), t⟩ : Σ k : Unit, dualBlocks T k)
 
 
+omit [Fintype T₂] [DecidableEq T] [DecidableEq T₂] in
 theorem substR_int (A : Matrix T T₂ ℤ) : substR ℤ A = intCoordSubst A := by
   unfold substR intCoordSubst
   simp
 
 
+omit [DecidableEq T₂] in
 theorem substR_substR (R : Type) [CommRing R] {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ}
     (hAB : A * B = 1) (f : MRingOver R (dualBlocks T)) : substR R A (substR R B f) = f := by
   have h : (substR R A).comp (substR R B) = AlgHom.id R _ := by
@@ -46,6 +48,7 @@ theorem substR_substR (R : Type) [CommRing R] {A : Matrix T T₂ ℤ} {B : Matri
   exact DFunLike.congr_fun h f
 
 
+omit [DecidableEq T] in
 theorem isWH_iff {R : Type} [CommRing R] (f : MRingOver R (dualBlocks T)) (m : Unit → ℕ) :
     IsWeightedHomogeneous (NumbersDVR.blockWeight (dualBlocks T)) f m ↔ f.IsHomogeneous (m ()) := by
   have hw : ∀ d : (Σ k : Unit, dualBlocks T k) →₀ ℕ,
@@ -63,6 +66,7 @@ theorem isWH_iff {R : Type} [CommRing R] (f : MRingOver R (dualBlocks T)) (m : U
     exact h hd
 
 
+omit [DecidableEq T] [DecidableEq T₂] in
 theorem substR_isWH (R : Type) [CommRing R] (A : Matrix T T₂ ℤ) {f : MRingOver R (dualBlocks T₂)}
     {m : Unit → ℕ} (hf : IsWeightedHomogeneous (NumbersDVR.blockWeight (dualBlocks T₂)) f m) :
     IsWeightedHomogeneous (NumbersDVR.blockWeight (dualBlocks T)) (substR R A f) m := by
@@ -93,6 +97,7 @@ theorem comap_substR (R : Type) [CommRing R] {A : Matrix T T₂ ℤ} {B : Matrix
     exact hg
 
 
+omit [Fintype T₂] [DecidableEq T] [DecidableEq T₂] in
 theorem red_substR (p : ℕ) (A : Matrix T T₂ ℤ) (f : MRingOver ℤ (dualBlocks T₂)) :
     MvPolynomial.map (Int.castRingHom (ZMod p)) (substR ℤ A f) =
       substR (ZMod p) A (MvPolynomial.map (Int.castRingHom (ZMod p)) f) := by
@@ -146,6 +151,7 @@ theorem hilbFn_comap (F : Type) [Field F] {A : Matrix T T₂ ℤ} {B : Matrix T�
 end IntegralCoordGeometricNumber
 
 
+open IntegralCoordGeometricNumber in
 theorem IntCoordGeoNum.proof : IntCoordGeoNum.Statement := by
   intro T T₂ _ _ _ _ A B hAB hBA V n p hV hp hpV hdim a
   have : Fact p.Prime := ⟨hp⟩

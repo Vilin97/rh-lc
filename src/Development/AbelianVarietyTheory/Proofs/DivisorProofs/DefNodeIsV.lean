@@ -41,6 +41,7 @@ theorem off_mono {D : D7} {S S' : Finset ℕ} (h : S ⊆ S') {w : Pl D.host.E} (
   fun q hq => hw q (h hq)
 
 
+set_option maxHeartbeats 2000000 in
 theorem exists_std {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L sc) (μ0 : T) (hL : L.Is μ0)
     (U : Set T) (hU : U.Finite) : Nonempty (Std G U) := by
   classical

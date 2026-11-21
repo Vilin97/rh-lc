@@ -14,6 +14,7 @@ open scoped ComplexOrder
 namespace GlobalTheory
 
 
+open scoped MatrixOrder in
 theorem posDef_eq_conjTranspose_mul_self_of_isUnit_det :
     ∀ {p : ℕ} (P : Matrix (Fin p) (Fin p) ℂ), P.PosDef →
       ∃ A : Matrix (Fin p) (Fin p) ℂ, IsUnit A.det ∧ Aᴴ * A = P := by

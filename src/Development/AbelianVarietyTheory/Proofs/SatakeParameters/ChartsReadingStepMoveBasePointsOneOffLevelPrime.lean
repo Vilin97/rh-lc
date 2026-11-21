@@ -216,6 +216,7 @@ open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions F
 attribute [local instance] GlobalTheory.Mem.Col2.starE Formalism.BasicNotions.Host.cmStar
 
 
+set_option maxHeartbeats 1000000 in
 theorem readsMove_holds : ReadsMove := by
   intro B X I hI hP l Z u a i hi bad Ch chOf K hK
   obtain ⟨k, R⟩ := hK

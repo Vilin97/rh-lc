@@ -518,12 +518,14 @@ theorem tmul_algAct (c : O') (m : M) : h.tmul m ≫ (h.algAct O').act c = h.tmul
   exact h.hom_ext fun m ↦ by simp [tmul_smul]
 
 
+variable (O') in
 theorem comapAct_algAct : comapAct (h.algAct O') (algebraMap O O') = b := by
   obtain ⟨act, _, _, _, _⟩ := b
   simp only [comapAct, OAct.mk.injEq]
   exact funext fun c ↦ h.algAct_algebraMap c
 
 
+variable (O') in
 def algEquiv (T : Over S) : M ⊗[O] Pts a T ≃ₗ[O'] Pts (h.algAct O') T where
   toFun z := Pts.mk _ (h.equiv T z).hom
   invFun y := (h.equiv T).symm (Pts.mk b y.hom)
@@ -920,11 +922,13 @@ structure Summand (O : Type) [CommRing O] (M : Type) [AddCommGroup M] [Module O 
 variable {O : Type} [CommRing O] {M : Type} [AddCommGroup M] [Module O M]
 
 
+variable (O M) in
 theorem Summand.nonempty [Module.Finite O M] [Module.Projective O M] : Nonempty (Summand O M) := by
   obtain ⟨n, f, g, -, -, h⟩ := Module.Finite.exists_comp_eq_id_of_projective O M
   exact ⟨⟨n, g, f, h⟩⟩
 
 
+variable (O M) in
 def Summand.choose [Module.Finite O M] [Module.Projective O M] : Summand O M :=
   (Summand.nonempty O M).some
 

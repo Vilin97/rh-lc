@@ -69,6 +69,7 @@ theorem mem_of_div_eq (hj : x j ≠ 0) {pp : Ideal (Poly S N)} [hpp : pp.IsPrime
   exact (hpp.mem_or_mem h3).resolve_left (notMem_of_mem_monos_single hX hs)
 
 
+variable (x) in
 def chartPrimeIdeal (hj : x j ≠ 0) (pp : Ideal (Poly S N)) :
     Ideal (chartRing S x (singleChart hj)) where
   carrier := {a | ∃ (f s : Poly S N) (e : ℕ), f ∈ pp ∧ s ∈ monos {j} ∧ f.IsHomogeneous e ∧

@@ -77,6 +77,7 @@ def S (F : C ⥤ CommAlgCat.{0} R) (q : ℕ) : Cn (box F) (q + 1) →ₗ[R] Y F 
 def S0 (F : C ⥤ CommAlgCat.{0} R) (q : ℕ) : Cn (box F) q →ₗ[R] Y F 0 q := bi F (cst q 0) OrderHom.id
 
 
+open Classical in
 def sl (F : C ⥤ CommAlgCat.{0} R) {p : ℕ} [Fintype (Fin (p + 1) ⥤ C)] (q : ℕ) (Λ : Cn F p →ₗ[R] R) :
     Y F p q →ₗ[R] Cn F q where
   toFun y b := ∑ c : Fin (p + 1) ⥤ C,

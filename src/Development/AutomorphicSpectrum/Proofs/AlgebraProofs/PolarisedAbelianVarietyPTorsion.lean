@@ -41,6 +41,7 @@ theorem equation_map {A B : Type} [CommRing A] [CommRing B] (f : A →+* B)
   simpa only [map_add (f := _), map_mul, map_pow, WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃, WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆] using this
 
 
+open GlobalTheory.WeierstrassCurve in
 theorem exists_polAV_of_root (p : ℕ) {R C : Type} [CommRing R] [IsDomain R] [Field C] [Algebra R C]
     (hinj : Function.Injective (algebraMap R C)) (W : _root_.WeierstrassCurve R) (hΔ : IsUnit W.Δ)
     (x y : R) (hE : W.toAffine.Equation x y)
@@ -476,6 +477,7 @@ theorem isAlgClosed_residueField {C : Type} [Field C] [IsAlgClosed C] (v : Valua
 end GlobalTheory.CompanionTheory.Ar.GR.OrdPt
 
 
+open GlobalTheory.CompanionTheory.Ar.GR.OrdPt in
 theorem GlobalTheory.CompanionTheory.Ar.GR.exists_ord_point : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal) (R : Type) [CommRing R] [Algebra R C], v.Integers R → v (p : C) < 1 → IsAdicComplete (Ideal.span {(p : R)}) R → ∃ (P : Out.PolAV (Spec (CommRingCat.of R))) (z : sp (R₀ := R) R ⟶ P.A), P.g = 1 ∧ z ^ p = 1 ∧ ∀ (k : Type) [Field k] [Algebra R k], spMap (Algebra.ofId R k) ≫ z ≠ 1 := by
   intro p _ C _ _ _ v R _ _ hv hp _
   have hinj := hv.hom_inj

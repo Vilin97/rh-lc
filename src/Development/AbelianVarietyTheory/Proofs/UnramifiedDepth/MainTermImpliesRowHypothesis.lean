@@ -151,6 +151,7 @@ theorem rows_main (V : VF C) (i n0 : ℕ) :
 end GlobalTheory.MainToRows
 
 
+open GlobalTheory.MainToRows in
 theorem GlobalTheory.mainTerm_to_rowHypothesis :
     ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [NeZero d] (I J : Fin 2 → Type) [∀ g, Fintype (I g)]
       [∀ g, Fintype (J g)] (X : RowData C V d I J), X.MtoHM := by

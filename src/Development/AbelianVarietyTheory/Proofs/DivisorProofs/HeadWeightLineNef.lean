@@ -37,6 +37,7 @@ theorem isLB_chartwise {X C : Scheme.{0}} {A : LB X} (hA : A.IsLB) (g : C ⟶ X)
   exact (Opens.mem_iSup (s := A.U)).1 (hA.cover.ge (Set.mem_univ (g y)))
 
 
+open GlobalTheory.VB GlobalTheory.DualPull in
 theorem isIso_theta_of_frames {X C : Scheme.{0}} {F : X.Modules} (g : C ⟶ X)
     (h : ∀ x : X, ∃ (U : X.Opens) (n : ℕ) (e : Fin n → Γ(F, U)), x ∈ U ∧ IsFrame e) : IsIso (theta g F) := by
   have := OmegaGlobal.isQuasicoherent_of_frames h
@@ -145,6 +146,7 @@ theorem vecSec_chg (hc : ∀ (M M' : MChart Y) (j : Fin M'.n), resM _ (inf_le_ri
   simp only [← Finset.sum_smul, e₂]
 
 
+open Classical in
 theorem val_dual_LL_stepEx {j : ℕ} (hj : j ≤ Dw.mult σ) (k k' : F.J) :
     ((CechPic.dual (F.LL (NefStep.stepEx σ j))).g k k').val =
       ((F.B k k' σ).submatrix (Fin.castLE hj) (Fin.castLE hj)).det := by
@@ -192,6 +194,7 @@ theorem exists_step {j : ℕ} (hj : j ≤ Dw.mult σ) :
   · exact (congrArg (g.app (F.U k ⊓ F.U k')).hom (val_dual_LL_stepEx F σ hj k k')).trans (RingHom.map_det _ _)
 
 
+open scoped CategoryTheory.Obj in
 theorem curveTest_stepEx (hS : Published.SemiAbelianLieSeminegative) (K : Type) [Field K] [CharZero K] {j : ℕ}
     (hj : j ≤ Dw.mult σ) : NefCurveTest.CurveTest K (F.LL (NefStep.stepEx σ j)) := by
   intro C _ hs hp hc g

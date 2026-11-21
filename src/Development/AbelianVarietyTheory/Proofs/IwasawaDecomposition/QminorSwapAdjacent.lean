@@ -24,6 +24,7 @@ theorem prod_ofFn_sum_smul {n : ℕ} {ι : Type} [Fintype ι] (a : Fin n → ι 
   exact h
 
 
+omit [Algebra ℂ A] in
 theorem prod_ofFn_adjacent : ∀ (m : ℕ) (i : Fin m) (g₁ g₂ g₃ g₄ : Fin (m + 1) → A),
     (∀ k, k ≠ i.castSucc → k ≠ i.succ → g₂ k = g₁ k ∧ g₃ k = g₁ k ∧ g₄ k = g₁ k) →
     g₁ i.castSucc * g₁ i.succ + g₂ i.castSucc * g₂ i.succ =

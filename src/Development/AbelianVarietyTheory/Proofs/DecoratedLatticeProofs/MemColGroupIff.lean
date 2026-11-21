@@ -100,6 +100,7 @@ theorem mem_latHat_iff {n : ℕ} {L : Set (Fin n → D.host.E)} (hL : ∀ z, z �
     | neg y _ hy => rw [Pi.single_neg]; exact neg_mem hy
 
 
+set_option maxHeartbeats 1000000 in
 theorem moves_iff {V : HSp D} {L : GlobalTheory.FinPl.Lat V} (hL : ∀ z, z ∈ L ↔ z ∈ intVec D V.rank) {κ : GA D V} {n : ℕ} (hn : V.rank = n)
     {y : GL (Fin n) (EF D)} (hy : finM V hn κ = y.1) :
     GlobalTheory.FinPl.Moves V κ L L (fun _ => True) ↔ IsInt (F := D.host.F) (E := D.host.E) y := by

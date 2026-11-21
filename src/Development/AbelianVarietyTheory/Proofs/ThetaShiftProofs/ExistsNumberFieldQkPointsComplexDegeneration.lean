@@ -98,6 +98,7 @@ theorem val_comp (M : IntermediateField (FractionRing R) L) :
     M.val.toRingHom.comp (algebraMap (FractionRing R) M) = algebraMap (FractionRing R) L := RingHom.ext fun _ => rfl
 
 
+variable (D) in
 def definedOver (M : IntermediateField (FractionRing R) L) : AddSubgroup (GtPtF D L) :=
   (gtExt D M.val.toRingHom (val_comp M)).range
 
@@ -197,6 +198,7 @@ structure IsTower (h₁ : IsPullDeg α D₀ D₁) (h₂ : IsPullDeg β D₁ D) (
     ∀ x : Z ⟶ D.P.A.left, om h.w z J J'' x = om h₁.w z J J' (x ≫ proj h₂) * om h₂.w z J' J'' x
 
 
+open GlobalTheory.FieldPull in
 theorem exists_isTower (h₁ : IsPullDeg α D₀ D₁) (h : IsPullDeg (β.comp α) D₀ D) :
     ∃ h₂ : IsPullDeg β D₁ D, IsTower h₁ h₂ h := by
   have p₁ : IsGrpPullback D₁.P.A D₀.P.A (spMap α) (proj h₁) := pull_grp h₁

@@ -31,6 +31,7 @@ theorem normal_fixer (p m : ℕ) : (fixer ρ p m).Normal := ⟨fun a ha g y hy =
 variable [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [IsDomain R] [CharP R p]
 
 
+omit [CharP R p] in
 theorem exists_fixer_subset
     (hopen : ∀ (y : R) (m : ℕ), 0 < m → y ^ p ^ m = y → ∀ᶠ g in 𝓝 (1 : G), ρ g y = y)
     (U : Set G) (hU : IsOpen U) (hJU : ∀ g, (∀ m, 0 < m → g ∈ fixer ρ p m) → g ∈ U) :
@@ -53,6 +54,7 @@ theorem exists_fixer_subset
   exact Set.disjoint_left.1 (Set.disjoint_iff_inter_eq_empty.2 hmU) hc hg
 
 
+omit [CharP R p] in
 theorem exists_fixer_dvd
     (hopen : ∀ (y : R) (m : ℕ), 0 < m → y ^ p ^ m = y → ∀ᶠ g in 𝓝 (1 : G), ρ g y = y)
     {r : ℕ} (M : G → Matrix (Fin r) (Fin r) ℤ_[p]) (hM : Continuous M)
@@ -82,6 +84,7 @@ theorem dvd_iff_constantCoeff (x : WittVector p R) :
   rfl
 
 
+omit [IsDomain R] in
 theorem isUnit_of_constantCoeff (x : WittVector p R) (hx : IsUnit (WittVector.constantCoeff x)) :
     IsUnit x := by
   obtain ⟨y, hy⟩ := hx.exists_right_inv

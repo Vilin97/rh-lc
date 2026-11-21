@@ -177,6 +177,7 @@ def LW : LAlg (Ainf.R0 p O ε) :=
   { carrier := WRing p O ϖ, alg := (toW p O hv ε hε ϖ hϖ).toAlgebra, loc := W_local p O hv ϖ hϖ }
 
 
+omit hϖ in
 def LK : LAlg (Ainf.R0 p O ε) :=
   { carrier := ResK O hv, alg := ((resO O hv).comp (Ainf.thetaBar p O hv ε hε)).toAlgebra }
 
@@ -188,6 +189,7 @@ def piWL : LHom (LW p O hv ε hε ϖ hϖ) ((Ainf.ainfTowerL p O hv ε hε).R 0) 
     TowerExample.isLocalHom_of_surj _ (piW_surj p O hv ϖ hϖ)⟩
 
 
+omit hϖ in
 def rho1L : LHom ((Ainf.ainfTowerL p O hv ε hε).R 0) (LK p O hv ε hε) :=
   ⟨{ toRingHom := rho1 p O hv
      commutes' := fun _ => rfl },

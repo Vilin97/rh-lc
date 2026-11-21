@@ -369,11 +369,13 @@ theorem det_map_ne_zero {n : Type*} [Fintype n] [DecidableEq n] (τ : E →+* �
   exact (map_ne_zero τ).2 hG0
 
 
+omit [NumberField E] [IsCMField E] in
 theorem hermC_eq_dotProduct (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (u v : Fin r → ℂ) :
     FD.hermC τ G u v = u ⬝ᵥ G.map τ *ᵥ star v :=
   (HermDiag.dotProduct_mulVec_comp_eq_sum conj (G.map τ) u v).symm
 
 
+omit [NumberField E] [IsCMField E] in
 theorem gram_eq (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (P : Matrix (Fin r) (Fin r) ℂ) :
     FD.gram τ G P = Pᵀ * G.map τ * P.map conj := by
   ext a b
@@ -402,6 +404,7 @@ theorem negIndex_map_conjugate (τ : E →+* ℂ) {G : Matrix n n E}
   negIndex_map_conj (isHermitian_map τ hG)
 
 
+omit [DecidableEq n] in
 theorem map_congr {m : Type*} (τ : E →+* ℂ) (G : Matrix n n E) (P : Matrix n m E) :
     (Pᵀ * G * P.map FD.cc).map τ = (P.map τ)ᵀ * G.map τ * (P.map τ).map conj := by
   have h : (P.map FD.cc).map τ = (P.map τ).map conj := by

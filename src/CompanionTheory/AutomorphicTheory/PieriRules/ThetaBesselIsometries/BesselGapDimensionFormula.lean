@@ -142,6 +142,7 @@ theorem kern_meas {k r : ℕ} (R : Rep k r) {Wp : Type} [NormedAddCommGroup Wp] 
   exact this
 
 
+set_option maxHeartbeats 1600000 in
 theorem norm_integral (hy : HypsG) (k r : ℕ) (ε : Fin (2 * r + k + 1) → Bool) (mu : Fin (2 * r + k + 1) → ℝ) (h : ℝ)
     (R : Rep k r) (Wp : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [CompleteSpace Wp]
     [FiniteDimensional ℂ Wp] (z : Fin (2 * r + k + 1) → ℂ) (π : Mx k r → (Wp →L[ℂ] Wp)) (u : ℕ → ℝ)

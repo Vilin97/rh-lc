@@ -52,6 +52,7 @@ theorem killsForm_of_X_pow_mul {Y : Scheme.{0}} (φ : Y ⟶ PSpace R N) {n : ℕ
   rwa [formOn_X_pow_mul k hf hh] at this
 
 
+attribute [local instance] MvPolynomial.gradedAlgebra in
 theorem homogeneousComponent_X_pow_mul (k : Fin (N + 1)) (m d : ℕ)
     (f : MvPolynomial (Fin (N + 1)) R) :
     homogeneousComponent (m + d) (X k ^ m * f) = X k ^ m * homogeneousComponent d f := by

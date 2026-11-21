@@ -55,6 +55,7 @@ variable {d M n : ℕ} (b : Module.Basis (Fin d) F E) (S : Finset (HeightOneSpec
   (A : ∀ v : HeightOneSpectrum (𝓞 F), Set (Fin n → Fin M → Fv F v ⊗[F] E))
 
 
+include b in
 theorem isClosed_boxF (hA : ∀ v, IsCompact (A v)) : IsClosed (boxF A) := by
   have h : boxF A = ⋂ v, projV v ⁻¹' A v := by
     ext X

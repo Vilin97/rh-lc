@@ -29,6 +29,7 @@ theorem finEmb_mul_centralSection_inv_mem (u : AdelicGLn.FiniteAdelicGL K n) :
   · rw [detModule_centralSection hn, mul_inv_cancel]
 
 
+variable (K n) in
 def finProjFun (u : AdelicGLn.FiniteAdelicGL K n) : AdelicGLn.AdelicGL K n :=
   finEmb K n u * (centralSection K n (detModule K n (finEmb K n u)))⁻¹
 

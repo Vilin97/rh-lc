@@ -11,6 +11,7 @@ open scoped InnerProductSpace
 namespace GlobalTheory.SgInf
 
 
+open scoped Matrix.Norms.L2Operator in
 theorem isCompact_closed_inter_opn_le {n : ℕ} (S : Set (Matrix (Fin n) (Fin n) ℂ)) (hS : IsClosed S)
     (R : ℝ) : IsCompact {g | g ∈ S ∧ opn g ≤ R} := by
 

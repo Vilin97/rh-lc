@@ -67,6 +67,7 @@ theorem dualMap_epsMul (φ : S →+* T) (a : S) {Y : Scheme.{0}} (v : Sp (DualNu
 variable {Dw : Datum H} {l : Level H} {c : Coeff l} {w : Vecs Dw t S} {χ : (E →+* ℂ) → 𝓞 E →+* S}
 
 
+variable (c x w χ) in
 def FramesSeparate : Prop :=
   ∀ r s : S, (∀ (k : Type) [Field k] (φ : S →+* k) (f : c.F →+* k), IsFrame t f (spMap φ ≫ x) (w.bc φ) →
     (∀ σ a, f (embK c σ a) = φ (χ σ a)) → φ r = φ s) → r = s
@@ -162,6 +163,7 @@ theorem isSplitting_embV {l : Level H} (c : Coeff l) (hp : p.Prime) (hW : (p : �
 variable {Z : Mdl Y i₀} {U : Z.X.Opens} {hU : IsAffineOpen U} {w : Vecs Dw (Y Z.i).t Γ(Z.X, U)}
 
 
+variable (hU) in
 theorem fn_ext_affine {f g : Γ(Z.X, U)} (h : ∀ (k : Type) [Field k] (φ : Γ(Z.X, U) →+* k),
     Set.range (spMap φ ≫ hU.fromSpec) ⊆ Z.opn → φ f = φ g) : f = g :=
   fn_ext Z fun k _ x hx ho => by

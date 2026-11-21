@@ -82,6 +82,7 @@ variable (s : FinalTheorems S κ) (L : CmList A) (k : s.Comp)
 abbrev fd : Data D.host.E N := (s.U κ.σ₀).X k
 
 
+include s in
 theorem j_le : j ≤ N := le_of_isUnf _ s.isUnf S.p_eq
 
 abbrev lab : D.what₂.Tau ≃ (s.fd k).Ψ := cmEquiv _ s.isUnf L.ψ k

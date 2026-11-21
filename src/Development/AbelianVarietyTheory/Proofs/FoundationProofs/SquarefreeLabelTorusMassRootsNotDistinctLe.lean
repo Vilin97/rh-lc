@@ -313,6 +313,7 @@ private theorem sum_icc_prod_add_mul_pow_le (N : ℕ) {r : ℝ} (hr0 : 0 ≤ r) 
     _ = 2 * r ^ 2 / (1 - r) ^ 3 := by field_simp <;> ring
 
 
+open Polynomial Classical in
 theorem _root_.GlobalTheory.BadShare.mass_not_rootsApart_le : ∀ (g : ℕ) [Fact g.Prime], ∀ N : ℕ, 2 ^ 12 ≤ g →
     (_root_.GlobalTheory.BadShare.mass g N fun f => ¬ _root_.GlobalTheory.BadShare.RootsApart g N f) ≤ 23 * Real.log g / Real.sqrt g := by
   intro g _ N hg

@@ -91,6 +91,7 @@ variable {Y : Set (GL (Fin n) F)} (hYo : IsOpen Y)
   (hYQ : ∀ g ∈ Y, ∀ q ∈ blockUpper F n γ, g * q ∈ Y)
 
 
+include hYo hCY hYQ in
 theorem cellJacquet_eq_zero_of_mk_eq_zero {f : parabolicIndSpace F n β σ}
     (hf : f ∈ supportedIn σ Y)
     (h0 : Representation.Coinvariants.mk ((parabolicInd F n β σ).comp
@@ -143,6 +144,7 @@ theorem cellJacquet_eq_zero_of_mk_eq_zero {f : parabolicIndSpace F n β σ}
   rw [avgOver_eq_zero_of_forall (fun k _ => by unfold cellFun; rw [hg0]; rfl), map_zero, smul_zero]
 
 
+variable (γ w) in
 def jacquetSupported (Y : Set (GL (Fin n) F)) :
     supportedIn σ Y →ₗ[ℂ] jacquetFiltration γ (σ := σ) Y :=
   ((Representation.Coinvariants.mk _).comp (supportedIn σ Y).subtype).codRestrict _
@@ -174,6 +176,7 @@ theorem cellJacquetMap_eq_of_jacquetSupported_eq {f f' : supportedIn σ Y}
   rw [LinearMap.mem_ker, map_sub, h, sub_self]
 
 
+variable (γ w) in
 def gradedJacquetMap :
     jacquetFiltration γ (σ := σ) Y →ₗ[ℂ] indSpace (cellLeviSub F β γ w) (cellInducing β γ w σ) where
   toFun x := cellJacquetMap γ w σ hYo hCY

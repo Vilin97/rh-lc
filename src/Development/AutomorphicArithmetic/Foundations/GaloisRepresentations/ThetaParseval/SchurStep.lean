@@ -29,6 +29,7 @@ def lift (M : Model σ X W) (om : Rep σ X W) (Φ : Fn F n d) (φ : UA σ X.J �
 def mc (M : Model σ X W) (φ : UA σ X.J → ℂ) (g : UA σ X.J) : ℂ := pet M.μ M.dom (fun y => φ (y * g)) φ
 
 
+variable (σ X) in
 def gInf : Subgroup (UA σ X.J) := Subgroup.closure (UAt σ X (evI F))
 
 
@@ -57,6 +58,7 @@ section CM
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 
+variable (E) in
 abbrev cj : E →ₐ[maximalRealSubfield E] E := (IsCMField.complexConj E).toAlgHom
 
 structure IsBr {n : ℕ} (X : Spc (maximalRealSubfield E) E n) (e : GlobalTheory.UnitaryBC.UA E n ≃ₜ* UA (cj E) X.J) : Prop where

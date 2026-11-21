@@ -94,6 +94,7 @@ structure OpRelX : Prop where
     (twoPowerModulus E (ph j) (ta j) (uV A.R j) i (yV A.R j i))) = 0
 
 
+variable (b) in
 def OpAt (T : TWGrp G0) : Prop :=
   ∃ E : ℕ, ∀ N, ∃ A : OpMod b (T.h N) T.q N, OpRelX A (T.Nq N) (T.ph N) (T.ta N) E
 

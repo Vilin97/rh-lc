@@ -111,6 +111,7 @@ theorem mulVec_int {ι : Type} [Fintype ι] (A : Matrix ι ι F)
   exact sum_mem fun j _ => mul_mem (hA i j) (hw j)
 
 
+include v in
 theorem det_gG [Algebra.IsSeparable F E] (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {M a : ℕ}
     (J : Matrix (Fin M) (Fin M) E) (hJ : J.det ≠ 0) : (gG b σ J a).det ≠ 0 := by
   classical

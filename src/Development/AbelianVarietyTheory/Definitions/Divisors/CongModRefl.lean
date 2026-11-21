@@ -35,9 +35,11 @@ theorem Pull.fibConst {d : DeltaDat Xo c 0} {f : Rul Xo c} {g : Rul d.Xo₂ d.c�
   fun k _ _ _ _ hk y₂ y₂' y h₁ h₂ => (h k hk y₂ y h₁).trans (h k hk y₂' y h₂).symm
 
 
+variable (Dw l) in
 abbrev LaQ : Type := Dw.La ⧸ (l.Mb • ⊤ : Submodule (𝓞 E) Dw.La)
 
 
+variable (Dw l) in
 abbrev Gam : Type := LaQ Dw l ≃ₗ[𝓞 E] LaQ Dw l
 
 def IsLift (lift : Gam Dw l → Dw.La →ₗ[𝓞 E] Dw.La) : Prop :=

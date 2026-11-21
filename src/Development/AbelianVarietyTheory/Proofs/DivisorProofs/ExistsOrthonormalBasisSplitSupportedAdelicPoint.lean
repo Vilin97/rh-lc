@@ -21,6 +21,7 @@ noncomputable section
 namespace GlobalTheory.FunObj.StdVertex
 
 
+set_option maxHeartbeats 6000000 in
 theorem exists_std_vertex : ∀ (D : D7) (V : HSp D) (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)), V.SigOK →
     (∀ τ, V.sig τ = (V.rank, 0)) → IsSelfDualC V Λ → ∀ S : Finset ℕ, (∀ q ∈ S, q.Prime) →
     ∃ (fr : GL (Fin V.rank) D.host.E) (u : GfC V),

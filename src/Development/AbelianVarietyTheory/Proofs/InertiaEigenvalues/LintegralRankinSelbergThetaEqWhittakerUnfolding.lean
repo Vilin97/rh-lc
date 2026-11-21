@@ -219,6 +219,7 @@ theorem measurable_wW (ℓ : Fin a) (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ) (η 
 end GlobalTheory.RSUnfoldW
 
 
+open GlobalTheory.RSUnfoldW GlobalTheory.CuspGeneric GlobalTheory.MirTower in
 theorem GlobalTheory.RSUnfold.lintegral_theta_eq_whit : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (ℓ : Fin a), (ℓ : ℕ) + 1 = a →
     ∀ (π : CuspSub E a), π.IsUnitary → ∀ (F : GA E a → ℂ), F ∈ GlobalTheory.JSW.mspanR π →
     ∀ (Φ : (Fin a → Cinf E) → ℂ), Continuous Φ → HasCompactSupport Φ → tsupport Φ ⊆ GlobalTheory.RSTheta.rowSet E ℓ →

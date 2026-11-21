@@ -216,6 +216,7 @@ theorem sval_scale {X Y Z : Scheme.{0}} {L : LB X} {K : Type} [Fintype K] {φ : 
     (congrArg₂ (· * ·) (gs_res r z le_top (hJ.mem _ r) _) rfl))
 
 
+omit ν z in
 theorem isGenSec_base (P : PolAV (Sp R)) (t : H0 P.L 1)
     (ht : ∀ s : H0 P.L 1, ∃ r : R, ∀ j, s.f j = resTop _ (scal P.A.hom r) * t.f j) :
     IsGenSec P.A P.L 1 (T := baseOver (Sp R)) (VVRank.pullTo (φ' := fun _ : Fin 1 => (snd (baseOver (Sp R)) P.A).left)

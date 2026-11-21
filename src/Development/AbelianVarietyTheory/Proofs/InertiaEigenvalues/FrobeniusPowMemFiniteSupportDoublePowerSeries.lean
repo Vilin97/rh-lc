@@ -53,6 +53,7 @@ theorem bd_X : Bd 1 (X : K⟦X⟧⟦X⟧) := by
   · simp
 
 
+variable (K) in
 def fin : Subring K⟦X⟧⟦X⟧ where
   carrier := {F | ∃ M, Bd M F}
   mul_mem' := by

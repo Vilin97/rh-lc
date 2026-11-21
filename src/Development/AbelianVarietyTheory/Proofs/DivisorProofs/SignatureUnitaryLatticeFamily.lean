@@ -207,6 +207,7 @@ theorem conj_mem_congSU {G : Matrix (Fin r) (Fin r) E} {L : Set (Fin r → E)}
     exact h1
 
 
+open Classical in
 theorem covolume_le_sum {Ψ : Finset (E →+* ℂ)} {G : Matrix (Fin r) (Fin r) E} {L : Set (Fin r → E)} {M : ℕ}
     (μ : Measure (realSU Ψ G)) [μ.IsMulLeftInvariant]
     (A : Finset (Matrix (Fin r) (Fin r) (RA (maximalRealSubfield E) E)))

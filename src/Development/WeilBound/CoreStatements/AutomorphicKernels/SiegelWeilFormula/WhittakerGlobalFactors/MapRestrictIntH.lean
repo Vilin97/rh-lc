@@ -21,6 +21,7 @@ theorem hermVec_hermV (σ : E →ₐ[F] E) {d : ℕ} (b : Module.Basis (Fin d) F
   hermVec_map (evalV F v) σ b n y i
 
 
+omit [NumberField E] in
 theorem mem_latH_iff_vec (σ : E →ₐ[F] E) {d : ℕ} (b : Module.Basis (Fin d) F E) (n : ℕ)
     (v : HeightOneSpectrum (𝓞 F)) (S : HermR (Fv F v) σ n) :
     S ∈ latH σ b v n ↔ ∀ i, hermVec (Fv F v) σ b n S i ∈ v.adicCompletionIntegers F := by

@@ -11,6 +11,7 @@ open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.FrobeniusOrbi
 namespace GlobalTheory
 
 
+open NumberField IsDedekindDomain in
 theorem _root_.GlobalTheory.exists_heightOneSpectrum_natCast_mem (L : Type*) [Field L] [NumberField L] {p : ℕ}
     (hp : p.Prime) :
     ∃ v : HeightOneSpectrum (𝓞 L), ((p : ℕ) : 𝓞 L) ∈ v.asIdeal := by
@@ -42,6 +43,8 @@ private theorem exists_injective_units_zmod_hom_units_complex (p : ℕ) [Fact p.
     Subtype.val_injective.comp (mulEquivOfCyclicCardEq hc).injective⟩
 
 
+open NumberField IsDedekindDomain in
+open Classical in
 theorem _root_.GlobalTheory.nonempty_piBar_and_omg :
     ∀ (R : _root_.Formalism.BasicNotions.Ranks) (H : _root_.Formalism.BasicNotions.Host R), Nonempty (_root_.Formalism.L2.Host.PiBar H) ∧ Nonempty (_root_.Formalism.L2.Host.Omg H) := by
   intro R H

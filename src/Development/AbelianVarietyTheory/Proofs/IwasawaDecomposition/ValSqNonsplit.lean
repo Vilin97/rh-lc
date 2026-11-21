@@ -81,6 +81,7 @@ theorem cpow_sqrt (q r t : ℕ) :
     Complex.ofReal_zpow]
 
 
+set_option maxHeartbeats 1000000 in
 theorem psiL_gal {D : D7} {cf : CharFrame D} {C : NChoice D} {tp : TupTied D cf C} (T : NCharTied D cf C tp)
     (nct : NChTie D C) (hψ : PsiChoiceCompatible D cf C tp) (a : D.nd.Loc) (H1 : NC.HC D.host.E)
     (hH : ∀ (j : Fin D.R.m), j.1 + 1 = D.nd.j a → ∀ x, H1.χ x = (cf.mu0 j * cf.delAt (D.nd.l a) * cf.eta⁻¹).1 x)

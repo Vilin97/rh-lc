@@ -290,6 +290,7 @@ theorem trans {κ₂ : Lv A} (s₂ : FinalTheorems S κ₂) (h : κ.l.Dvd κ₂.
 end FinalTheorems
 
 
+open Formalism.L2.Geo (datW datW_N datW_j) in
 structure SrcFam (A : Amb D) : Type 1 where
 
   sig : ∀ N j : ℕ, 2 ≤ N → j ≤ N → Sig A N j

@@ -35,6 +35,7 @@ def IntLog [IsUltrametricDist K] (f e : K⟦X⟧) : Prop :=
   Formalism.L2.Th1.C.IsLogPair f e ∧ CoefLe 1 (derivative K f) ∧ Formalism.L2.Th1.C.FGInt (Formalism.G.unitBall K) f e
 
 
+open Formalism.L2.Th1.CM in
 def EndOmega : Prop :=
   ∀ (d : ℕ) (L : PeriodPair), d % 4 = 3 → HasCMBy d L →
     ∀ (l : ℕ) [Fact l.Prime], 5 ≤ l → ¬ l ∣ d → (¬ ∃ a : ZMod l, a ^ 2 = -(d : ZMod l)) →

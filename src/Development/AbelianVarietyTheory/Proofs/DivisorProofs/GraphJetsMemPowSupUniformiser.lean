@@ -49,6 +49,7 @@ theorem ker_productMap_le_span {κ κ' : Type} [Field κ] [Field κ'] [Algebra �
   rwa [RingHom.mem_ker.1 hx, TensorProduct.tmul_zero, sub_zero] at h
 
 
+set_option maxHeartbeats 1000000 in
 theorem jets_mem_pow_sup : ∀ {K κ κ' : Type} [Field K] [Field κ] [Field κ'] [Algebra ℂ K] [Algebra ℂ κ] [Algebra ℂ κ']
     (R : Subring K) (π : R →+* κ) (ρ : κ →ₐ[ℂ] κ') (E : Place (algebraMap ℂ K))
     (𝔭 : Ideal (tens (κ' := κ') (placeAlg E))) [𝔭.IsPrime] (t : E.ring),

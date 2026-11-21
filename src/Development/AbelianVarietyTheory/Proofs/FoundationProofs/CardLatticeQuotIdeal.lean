@@ -68,6 +68,7 @@ theorem relIndex_smul {K : Type} [Field K] [NumberField K]
   exact_mod_cast (mul_right_cancel₀ h0 h).symm
 
 
+open GlobalTheory.NormSum.MovedLattice in
 theorem coefLat_eq (D : D7) (cc : Ideal (𝓞 D.host.K)) :
     coefLat D cc = ((ext D cc * D.host.AA0 : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E) :
       Submodule (𝓞 D.host.E) D.host.E) := by

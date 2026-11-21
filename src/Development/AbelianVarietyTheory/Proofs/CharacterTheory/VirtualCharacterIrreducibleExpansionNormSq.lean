@@ -68,6 +68,7 @@ private theorem sum_mul_inv_irreducible_lemma_2 {G : Type} [Group G] [Fintype G]
     simpa [hG] using this
 
 
+open Polynomial in
 theorem _root_.GlobalTheory.BI.virt_expand : ∀ (G : Type) [Group G] [Finite G]
     (φ : G → ℂ), φ ∈ _root_.GlobalTheory.BI.Virt ℂ ℂ G →
     ∃ c : (G → ℂ) →₀ ℤ, (∀ χ ∈ c.support, _root_.GlobalTheory.BI.IsIrrChar ℂ ℂ χ) ∧

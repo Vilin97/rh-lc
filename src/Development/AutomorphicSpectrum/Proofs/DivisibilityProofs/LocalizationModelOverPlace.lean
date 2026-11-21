@@ -39,6 +39,7 @@ variable {A O : Type} [CommRing A] [CommRing O] [Algebra A O] (m : Ideal A) [m.I
   [IsLocalization.AtPrime O m]
 
 
+include m in
 theorem injective_toField [Algebra A Ω] [Algebra O Ω] [IsScalarTower A O Ω]
     (hA : Function.Injective (algebraMap A Ω)) : Function.Injective (algebraMap O Ω) := by
   refine (injective_iff_map_eq_zero _).2 fun a ha => ?_
@@ -54,6 +55,7 @@ theorem injective_toField [Algebra A Ω] [Algebra O Ω] [IsScalarTower A O Ω]
     | exact hu.mul_right_eq_zero.1 hs'
 
 
+include m in
 theorem pointIdeal_eq_map [Algebra A Ω] [Algebra O Ω] [IsScalarTower A O Ω] :
     pointIdeal O y = (pointIdeal A y : Ideal (MRing ι A)).map (MvPolynomial.map (algebraMap A O)) := by
   refine le_antisymm (fun g hg => ?_) (Ideal.map_le_iff_le_comap.2 fun f hf => Ideal.mem_comap.2 (map_mem_iff.2 hf))
@@ -69,6 +71,7 @@ theorem pointIdeal_eq_map [Algebra A Ω] [Algebra O Ω] [IsScalarTower A O Ω] :
   exact (Ideal.mul_unit_mem_iff_mem _ hu).1 (by rw [hs']; exact Ideal.mem_map_of_mem _ hf)
 
 
+include m in
 theorem isAlgebraic_int [IsDomain A] [Module.Finite ℤ A] : Algebra.IsAlgebraic ℤ O := by
   haveI : Algebra.IsAlgebraic A O := IsLocalization.isAlgebraic O m.primeCompl
   exact Algebra.IsAlgebraic.trans ℤ A O

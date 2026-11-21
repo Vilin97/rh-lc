@@ -30,6 +30,7 @@ theorem translate_mem {A : Subalgebra R (T → R)} (hA : IsHopfOrder A) {f : T �
   exact key _ (hA.comul f hf)
 
 
+omit [CommGroup T] in
 theorem mul_mem_prodSpan {A : Subalgebra R (T → R)} {a b : T → R} (ha : a ∈ A) (hb : b ∈ A)
     {g : T × T → R} (hg : g ∈ prodSpan A) : (fun z => a z.1 * b z.2 * g z) ∈ prodSpan A := by
   induction hg using Submodule.span_induction with

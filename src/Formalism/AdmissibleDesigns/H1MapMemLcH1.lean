@@ -134,6 +134,7 @@ def k0 (c' : Fin D.R.t) : {a : Fin D.R.nV // RepresentationBoundsCohomology.blk 
   ⟨Fin.natAdd D.R.r c', RepresentationBoundsCohomology.blkG_natAdd D.R.r D.R.t c'⟩
 
 
+variable (Dd) in
 def blkEquiv (c' : Fin D.R.t) : blockRestrictedRepresentationType (RepresentationBoundsCohomology.blk D.R) Dd.ρk c'.succ ≃ₗ[D.nd.O i] KO (D.nd.O i) where
   toFun m := m (k0 c')
   invFun x := fun _ => x
@@ -143,6 +144,7 @@ def blkEquiv (c' : Fin D.R.t) : blockRestrictedRepresentationType (Representatio
   right_inv _ := rfl
 
 
+omit [∀ k, IsScalarTower Dd.T' Dd.R' (blockRestrictedRepresentationType (RepresentationBoundsCohomology.blk D.R) Dd.ρk k)] in
 theorem chi_ratio (c' : Fin D.R.t) (g : GE D.nd) :
     (((D.nd.chi i 1 g)⁻¹ : (D.nd.O i)ˣ) : D.nd.O i) * ((D.nd.chi i ((c' : ℕ) + 1) g : (D.nd.O i)ˣ) : D.nd.O i) =
       ((((Units.map (algebraMap ℤ_[D.nd.l i] (D.nd.O i)).toMonoidHom).comp

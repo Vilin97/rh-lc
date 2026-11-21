@@ -18,6 +18,7 @@ namespace GlobalTheory.CoefWtLine
 open Formalism.GradedWeylDivisibility
 
 
+open Classical in
 def blkW (ι : Type) (n : ℕ) : ι × Fin n × Fin n → ι → Fin n → ℕ :=
   fun v => Pi.single v.1 (Pi.single v.2.1 1)
 

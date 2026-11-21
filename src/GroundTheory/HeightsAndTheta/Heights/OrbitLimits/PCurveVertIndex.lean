@@ -21,6 +21,7 @@ namespace CurveVerticalIndex
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem span_toAddSubgroup (y : (Σ k, ι k) → Ω) (x : Ω) :
     (Submodule.span (curveRing y) {x}).toAddSubgroup = curveMul y x := by
   ext z
@@ -33,6 +34,7 @@ theorem span_toAddSubgroup (y : (Σ k, ι k) → Ω) (x : Ω) :
     exact ⟨⟨b, hb⟩, by rw [Subring.smul_def, smul_eq_mul, mul_comm]⟩
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem genIndex_eq_card (y : (Σ k, ι k) → Ω) (a : K → ℤ) {x : Ω} (hx : x ∈ curveSectionMod y a) :
     genIndex (chartLat y a 1) (curveMul y x) = Nat.card (curveSectionQuot y a x) := by
   have hle : curveMul y x ≤ chartLat y a 1 := by

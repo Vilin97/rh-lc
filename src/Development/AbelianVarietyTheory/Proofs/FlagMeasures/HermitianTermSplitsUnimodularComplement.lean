@@ -37,6 +37,7 @@ variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchim
   [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E]
 
 
+omit [IsNonarchimedeanLocalField F] [CharZero F] in
 theorem eq_zero_of_forall_hf (L : LocE F E) {n : ℕ} {Hm : Matrix (Fin n) (Fin n) E}
     (hd : IsUnit Hm.det) {z : Fin n → E} (hz : ∀ v, hf L Hm z v = 0) : z = 0 := by
   have h1 : Matrix.vecMul z Hm = 0 := by
@@ -49,6 +50,7 @@ theorem eq_zero_of_forall_hf (L : LocE F E) {n : ℕ} {Hm : Matrix (Fin n) (Fin 
   simpa [Matrix.vecMul_vecMul, Matrix.mul_nonsing_inv _ hd] using this
 
 
+omit [IsNonarchimedeanLocalField F] [CharZero F] in
 theorem cj_mem (L : LocE F E) {x : E} (hx : x ∈ L.O) : L.cj x ∈ L.O := by
   rw [L.O_def] at hx ⊢
   exact hx.map ((L.cj : E →ₐ[F] E).restrictScalars 𝒪[F])

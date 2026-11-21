@@ -17,6 +17,9 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E] {σ : E →ₐ[F] E} {n 
   {J : Matrix (Fin n) (Fin n) E}
 
 
+open scoped TensorProduct in
+variable {F E : Type} [Field F] [Field E] [Algebra F E] {σ : E →ₐ[F] E} {n : ℕ}
+  {J : Matrix (Fin n) (Fin n) E} in
 theorem _root_.GlobalTheory.FrameGram.hE_swap (hσ : ∀ x, σ (σ x) = x)
     (hJ : ∀ i j, σ (J j i) = J i j) (x y : Fin n → E) :
     σ (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.hE σ J y x) = _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.hE σ J x y := by
@@ -105,6 +108,7 @@ theorem gram_snoc (hσ : ∀ x, σ (σ x) = x) (hJ : ∀ i j, σ (J j i) = J i j
 end Alg
 
 
+open scoped TensorProduct in
 theorem _root_.GlobalTheory.FrameGram.conj_invol {F E : Type} [Field F] [NumberField F] [Field E]
     [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} (h : _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.IsCMExt F E σ) (x : E) : σ (σ x) = x := by
   obtain ⟨-, -, -, hτ⟩ := h

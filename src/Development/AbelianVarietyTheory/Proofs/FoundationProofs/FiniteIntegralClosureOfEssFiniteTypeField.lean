@@ -207,6 +207,7 @@ theorem coneHom_of_isHomogeneous (ρ : σ → L) {p : MvPolynomial σ o} {n : �
     map_prod, map_pow, Polynomial.algebraMap_apply, mul_assoc, Finsupp.degree_apply]
 
 
+attribute [local instance] MvPolynomial.gradedAlgebra in
 theorem isHomogeneous_ker_coneHom (ρ : σ → L) :
     (RingHom.ker (coneHom o ρ)).IsHomogeneous (MvPolynomial.homogeneousSubmodule σ o) := by
   intro n p hp
@@ -553,6 +554,7 @@ theorem isFinite_fromNormalization_of_dense [IsReduced X] {D : Set X} (hD : Dens
     (RingHom.finite_algebraMap.mpr this)
 
 
+omit g in
 theorem finite_genericPoints_inter [IsLocallyNoetherian X] (W : X.Opens)
     (hW : IsCompact (W : Set X)) : (genericPoints X ∩ W).Finite := by
   haveI : CompactSpace W.toScheme := isCompact_iff_compactSpace.mp hW
@@ -618,6 +620,7 @@ theorem isFinite_fromNormalization_of_genericallyFinite [IsIntegral X] [CharZero
   isFinite_fromNormalization_of_isIntegral f g hfin.finiteType.essFiniteType
 
 
+omit f in
 theorem isFinite_fromNormalization_SpecMap_fromSpecStalk (y : Y) {L : Type u} [Field L]
     [CharZero L] (φ : Y.presheaf.stalk y ⟶ .of L) (hφ : φ.hom.EssFiniteType) :
     IsFinite (Spec.map φ ≫ Y.fromSpecStalk y).fromNormalization := by

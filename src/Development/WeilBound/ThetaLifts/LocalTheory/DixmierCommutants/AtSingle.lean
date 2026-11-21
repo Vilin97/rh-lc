@@ -63,9 +63,11 @@ theorem idele_two (hσ : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (x y : (Fv F v
   · rw [map_mul, Circle.coe_mul, a5, b5, chrW_conj hσ t hχ, map_mul, map_inv, inv_inv, Units.val_mul]
 
 
+variable (H) in
 def fr : Matrix (Fin d) (Fin d) E := Matrix.of fun i c => Sum.elim (H.ι i) (fun b => cond b (H.y i) (H.x i)) (e.symm c)
 
 
+variable (W₁) in
 def gm : Matrix (Fin d) (Fin d) E := reindex e e (fromBlocks W₁.J 0 0 (Matrix.of fun b b' => cond b (cond b' 0 (-1)) (cond b' 1 0)))
 
 variable {e}
@@ -217,6 +219,7 @@ theorem mem_unip (h : IsSec σ t sec) {C} (hC : Fr σ t W W₁ H e C) {g : UA σ
     exact Finset.sum_congr rfl fun s _ => by rw [mulVec_smul, ha, smul_add, smul_smul]
 
 
+variable (e) in
 def bl {k : Type} [Field k] (g : Matrix (Fin d₁) (Fin d₁) k) (x y : k) : Matrix (Fin d) (Fin d) k :=
   reindex e e (fromBlocks g 0 0 (diagonal fun b => cond b y x))
 

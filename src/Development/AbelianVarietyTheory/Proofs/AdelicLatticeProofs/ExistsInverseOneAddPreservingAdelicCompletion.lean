@@ -22,6 +22,9 @@ def intAdeles : Subring (FiniteAdeleRing (𝓞 F) F) where
   neg_mem' ha v := neg_mem (ha v)
 
 
+open NumberField IsDedekindDomain in
+open scoped TensorProduct Matrix in
+variable (F : Type) [Field F] [NumberField F] in
 theorem _root_.GlobalTheory.UnRep.Nakayama.mem_jacobson (a : _root_.GlobalTheory.UnRep.Nakayama.intAdeles F)
     (ha : ∀ v, Valued.v (a.1 v) < 1) :
     a ∈ Ideal.jacobson (⊥ : Ideal (_root_.GlobalTheory.UnRep.Nakayama.intAdeles F)) := by
@@ -106,6 +109,9 @@ private lemma one_tmul_mem_hat {S : Set (Fin n → E)} {x : Fin n → E} (hx : x
     ⟨1, fun v ↦ one_mem (v.adicCompletionIntegers F), x, hx, rfl⟩
 
 
+open NumberField IsDedekindDomain in
+open scoped TensorProduct Matrix in
+open NumberField IsDedekindDomain in
 theorem _root_.GlobalTheory.UnRep.exists_inverse_one_add_preserving_hat : ∀ (F E : Type) [Field F] [NumberField F]
     [Field E] [NumberField E] [Algebra F E] (n : ℕ) (L : Submodule (𝓞 E) (Fin n → E)), L.FG →
     Submodule.span E (L : Set (Fin n → E)) = ⊤ → ∀ (N : ℕ) (e : FiniteAdeleRing (𝓞 F) F),

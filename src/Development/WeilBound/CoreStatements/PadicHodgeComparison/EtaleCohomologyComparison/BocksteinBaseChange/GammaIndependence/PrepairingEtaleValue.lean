@@ -54,6 +54,7 @@ theorem gammaE_id {M : Model l K} {a a' : D.Ch M} (m : D.Mo (𝟙 M.X) (Category
   exact this
 
 
+include hL in
 theorem gammaE_indep {M : Model l K} (hM : G M) (a a' : D.Ch M) (n : ℕ) (u : M.T n) (φ : Module.Dual K (HdR M.q n)) :
     gamma hF β κ a n (E.e a n u) φ = gamma hF β κ a' n (E.e a' n u) φ := by
   obtain ⟨b, ⟨m₁⟩, ⟨m₂⟩⟩ := hL.refine M M (𝟙 M.X) (Category.id_comp _) hM hM a a'
@@ -99,6 +100,7 @@ theorem cP_not {M : Model l K} (hM : ¬ G M) (n : ℕ) (v : M.V n) (φ : Module.
   rw [cP, dite_eq_right hM]; rfl
 
 
+include hL in
 theorem isPow_beta (hE : EtSide G) {M : Model l K} (hM : G M) (a : D.Ch M) (x : (D.H a).N 2) (hx : D.c1H a x) :
     ∀ (k : ℕ) (z : (D.H a).N (2 * k)), IsPow (N := (D.H a).N) (D.H a).one (D.H a).cup x k z →
       ∃ v : M.T (2 * k), β.β a (2 * k) z = R.t ^ k • E.e a (2 * k) v := by

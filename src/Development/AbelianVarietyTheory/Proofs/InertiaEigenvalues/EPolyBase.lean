@@ -23,6 +23,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     (W : LocWach PD LL O v n₀) {k : Type} [Field k] [Algebra O k]
 
 
+omit [TopologicalSpace G] [Algebra Qp LL] [TopologicalSpace LL] in
 theorem exists_c (hk : (PD.p : k) = 0) (u : Oˣ) (hu : (u : O) = 1 + (PD.p : O)) :
     ∃ c : ℤ → O, WachUse.IsC PD LL c ∧ ∀ a, algebraMap O k (c a) = -(a : k) := by
   have hU : algebraMap O LL (u : O) = 1 + (PD.p : LL) := by rw [hu]; simp

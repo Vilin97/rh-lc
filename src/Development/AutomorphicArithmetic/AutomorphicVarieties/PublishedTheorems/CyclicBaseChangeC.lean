@@ -28,6 +28,7 @@ def IsNormChar (η : HChar F) : Prop :=
     normV w = normV (w.under (𝓞 F)) ^ f → η.val (w.under (𝓞 F)) ^ f = 1
 
 
+variable {E} in
 def WeakBC (sat : HeightOneSpectrum (𝓞 F) → Multiset ℂˣ → Prop) (satE : HeightOneSpectrum (𝓞 E) → Multiset ℂˣ → Prop) : Prop :=
   ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite, ∀ f : ℕ, normV w = normV (w.under (𝓞 F)) ^ f →
     ∃ B, sat (w.under (𝓞 F)) B ∧ satE w (B.map (· ^ f))

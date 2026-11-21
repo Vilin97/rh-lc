@@ -112,6 +112,7 @@ theorem isUnif_unifAt (w : Pl D.host.E) : IsUnif (unifAt w) := by
   exact WithZero.lt_mul_exp_iff_le (by simp) |>.1 (by simpa [← WithZero.exp_add] using h1)
 
 
+open Classical in
 def locPl (G : GridData L sc) (t : T) : Finset (Pl D.host.E) := G.pl.W0 ∪ L.Q t
 
 
@@ -131,6 +132,7 @@ theorem depthAt_of_notMem (G : GridData L sc) {w : Pl D.host.E} (hw : w ∉ G.pl
   simp [depthAt, cosExp, hw]
 
 
+variable (L) in
 def muBase : ℕ → HChar D.host.E
   | 0 => 1
   | j + 1 => if h : j < D.R.m then L.C.mu0 ⟨j, h⟩ else 1
@@ -177,9 +179,11 @@ theorem isTame_muBase (w : Pl D.host.E) (j : ℕ) : IsTame ((muBase L j).loc w)�
   rw [MonoidHom.inv_apply, isTame_loc this x hx, inv_one]
 
 
+open Classical in
 def atPl (w : Pl D.host.E) (x : Kw w) : AE D := ((comp_toAd D).surj (RestrictedProduct.single _ w x)).choose
 
 
+open Classical in
 theorem atPl_spec (w : Pl D.host.E) (x : Kw w) :
     infPart D (atPl w x) = 0 ∧ ∀ Q, cpt (D := D) Q (toEAf D (atPl w x)) = (Pi.single w x : ∀ Q, Kw Q) Q :=
   have h := ((comp_toAd D).surj (RestrictedProduct.single _ w x)).choose_spec
@@ -302,6 +306,7 @@ def givenDatum (Φ : G.Datum) : ∀ b : Edge,
   | _ => 0
 
 
+variable (G) in
 def givenLevel : (locGrid G t w).Level
   | (_, 0) => glLatCong (unifAt w ^ cosExp G w) (stdLat (Kw w) _)
   | (0, j + 1) => (stepGroup L t w (j + 1)).map (reGL (ixFin G t w (j + 1))).toMonoidHom

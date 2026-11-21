@@ -490,6 +490,7 @@ theorem ramifiedMultiplicityOne_of_bernstein (hBe : Narrow) : RamifiedMultiplici
 end
 
 
+open GlobalTheory.PRep GlobalTheory.SmGL in
 theorem first_cohomology_ramified_narrow (NB : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (a b : ℕ) (χ₁ χ₂ : kˣ →* ℂˣ), IsSmoothChar χ₁ → IsSmoothChar χ₂ → IsUnitaryChar χ₁ → IsUnitaryChar χ₂ → (a ≠ b ∨ χ₁ ≠ χ₂) → (prod₂ (detRep (Fin a) χ₁) (detRep (Fin b) χ₂)).IsIrreducible) : PositivityTheory.ThKG.Loc.RamifiedMultiplicityOne :=
   ramifiedMultiplicityOne_of_bernstein NB
 

@@ -41,12 +41,14 @@ def tauLL (D : D7) (τ : D.what₂.Tau) (x : D.host.E) : D.what₂.LL :=
   D.embE (D.host.sigmaOf (D.eTau τ : D.R.GG) x)
 
 
+open scoped TensorProduct in
 def PiGLevel (D : D7) (lev : LevelData D) (X : ErrX D) : Prop :=
   letI := D.host.cmStar
   ∀ u (i : Fin 2) (v : HeightOneSpectrum (𝓞 D.host.F)) (h : (D.host.g i : 𝓞 D.host.F) ∈ v.asIdeal),
     Valued.v (((lev u).splitG i v h) ((D.host.conj (X.piG i : D.host.E)) ⊗ₜ[D.host.F] (1 : v.adicCompletion D.host.F))).1 < 1
 
 
+open scoped TensorProduct in
 def PiTLevel (D : D7) (lev : LevelData D) (X : ErrX D) : Prop :=
   letI := D.host.cmStar
   ∀ u (v : (D.mem u).A.vT) (z : intV D.host.E (X.vPl u v)),
@@ -119,12 +121,15 @@ def EatC {D : D7} (L : SizeData₂ D) (c : ErrC) (j p : ℕ) : ℝ :=
     (∑ τ : D.what₂.Tau, wj D j τ) / ((p : ℝ) ^ 2 - 1)
 
 
+open Classical in
 def kindA (D : D7) (p : ℕ) : Finset (Bool × HH D) := Finset.univ.filter fun z => ¬ IsSg D p ∧ z.1 = false
 
 
+open Classical in
 def kindBC (D : D7) (p : ℕ) : Finset (Bool × HH D) := Finset.univ.filter fun z => IsSg D p ∨ z.1 = true
 
 
+open Classical in
 def topsBC (D : D7) (p : ℕ) : Finset (Bool × HH D) := (kindBC D p).filter fun z => IsTopPl D z
 
 

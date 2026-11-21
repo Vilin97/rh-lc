@@ -340,6 +340,7 @@ variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintyp
   {F : Type u} [Field F]
 
 
+omit [DecidableEq K] in
 theorem relDim_cases {I Q : Ideal (MRing ι F)} [hQ : Q.IsPrime] (hIQ : I ≤ Q) :
     relDim Q < relDim I ∨ (Q ∈ I.minimalPrimes ∧ relDim Q = relDim I) := by
   have hmono : StrictMono (fun x : WithBot ℕ∞ =>

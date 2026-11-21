@@ -19,6 +19,7 @@ open GroundTheory.Global GroundTheory.Automorphic GroundTheory.Automorphic.Reduc
 namespace GlobalTheory.CompanionTheory.Conc
 
 
+open PositivityTheory.Rg.Rs.diffstep in
 theorem diffStepU (K : Type) [Field K] [NumberField K] (n : ℕ) (ι : Type)
     (f₀ f₁ : ι → AdelicGLn.AdelicGL K n → ℂ) (m : ℕ → ℝ) (r : ℕ) (hr : 0 < r) (hrn : r < n) (hN : UFam f₁)
     (hlip' : ∀ R : ℝ, ∃ (Q₀ : Set (AdelicGLn.AdelicGL K n)) (C : ℝ), IsCompact Q₀ ∧ 0 ≤ C ∧

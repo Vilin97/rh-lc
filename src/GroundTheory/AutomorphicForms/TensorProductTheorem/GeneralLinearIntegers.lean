@@ -127,6 +127,7 @@ end Local
 variable {V : Type u} [AddCommGroup V] [Module ℂ V]
 
 
+variable (K n) in
 structure TensorDecomposition (ρ : Representation ℂ (FiniteAdelicGL K n) V) where
 
   W : HeightOneSpectrum (𝓞 K) → Type u

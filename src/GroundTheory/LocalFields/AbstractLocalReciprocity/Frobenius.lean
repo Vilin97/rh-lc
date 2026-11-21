@@ -151,6 +151,7 @@ theorem frobeniusClosure_inf_ker (hd : Continuous d) (hL : IsOpen (L : Set G))
   exact L.mul_mem (L.mul_mem (hU0 hσk) hj.1) (L.inv_mem (hU0 hU))
 
 
+omit [TotallyDisconnectedSpace G] in
 theorem map_frobeniusClosure (hd : Continuous d)
     (hσ : σ ∈ Subgroup.normalizer ((L ⊓ d.ker : Subgroup G) : Set G)) {N : ℕ}
     (hdσ : d σ = Multiplicative.ofAdd (N : ℤ̂)) :
@@ -210,6 +211,7 @@ theorem isOpen_frobeniusClosure (hd : Continuous d) (hL : IsOpen (L : Set G))
   exact Subgroup.isOpen_of_isClosed_of_finiteIndex _ isClosed_frobeniusClosure
 
 
+omit [TotallyDisconnectedSpace G] in
 theorem inertiaDegree_frobeniusClosure (hd : Continuous d)
     (hσ : σ ∈ Subgroup.normalizer ((L ⊓ d.ker : Subgroup G) : Set G)) {N : ℕ} (hN : N ≠ 0)
     (hdσ : d σ = Multiplicative.ofAdd (N : ℤ̂)) :

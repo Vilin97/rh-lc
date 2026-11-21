@@ -21,6 +21,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 namespace GlobalTheory.OntoCore
 
 
+set_option maxHeartbeats 1000000 in
 theorem holSub0_le_span_cuspA : ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j, InR D j → ∀ w : WeightFamilies.Wt D j, w.LastPos → 8 * D.R.f * D.R.r + 4 ≤ w.n → ∀ σ, GoodEmb T.Q.c σ → Formalism.L2.Pj.holSub0 (T.U j σ).X (laU (T.U j σ) (wtA w) w.n) ≤ Submodule.span ℂ (rdU (T.U j σ) '' (T.cuspA j (wtA w) w.n : Set (T.R j))) := by
   intro D T h j hj w hw hn σ hσ
   have hr : 1 ≤ D.R.r := by unfold Ranks.r; have := D.R.two_le_m; omega

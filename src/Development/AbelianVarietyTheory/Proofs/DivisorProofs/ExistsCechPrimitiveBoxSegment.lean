@@ -249,6 +249,8 @@ private theorem iUnion_ball_smul_Icc_union {g : ℕ} (w₀ : Fin g → ℂ) (ρ 
     · exact Or.inr ⟨u, ⟨hum, h2⟩, h⟩
 
 
+set_option autoImplicit false in
+open Set Metric in
 theorem _root_.GlobalTheory.exists_cechPrimitive_box_segment : ∀ {P : Type} [NormedAddCommGroup P] [NormedSpace ℂ P] [FiniteDimensional ℂ P] {g : ℕ} {K : Type} (W : K → Set (P × (Fin g → ℂ))) (c : K → K → P × (Fin g → ℂ) → ℂ) (ω : K → Fin g → P × (Fin g → ℂ) → ℂ) (V : Set P), IsOpen V → (∀ k, IsOpen (W k)) → (∀ p : P × (Fin g → ℂ), p.1 ∈ V → ∃ k, p ∈ W k) → (∀ k l, AnalyticOnNhd ℂ (c k l) (W k ∩ W l)) → (∀ k l m, ∀ p ∈ W k, p ∈ W l → p ∈ W m → c k m p = c k l p + c l m p) → (∀ k a, AnalyticOnNhd ℂ (ω k a) (W k)) → (∀ k a b, ∀ p ∈ W k, fderiv ℂ (ω k b) p (0, Pi.single a 1) = fderiv ℂ (ω k a) p (0, Pi.single b 1)) → (∀ k l a, ∀ p ∈ W k, p ∈ W l → ω k a p - ω l a p = fderiv ℂ (c k l) p (0, Pi.single a 1)) → ∀ z₀ ∈ V, ∀ w₀ : Fin g → ℂ, ∃ (Z : Set P) (C : Set (Fin g → ℂ)) (G : K → P × (Fin g → ℂ) → ℂ), IsOpen Z ∧ z₀ ∈ Z ∧ Z ⊆ V ∧ IsOpen C ∧ Convex ℝ C ∧ 0 ∈ C ∧ w₀ ∈ C ∧ ((∀ k, AnalyticOnNhd ℂ (G k) (W k ∩ Z ×ˢ C)) ∧ (∀ k a, ∀ p ∈ W k, p ∈ Z ×ˢ C → fderiv ℂ (G k) p (0, Pi.single a 1) = ω k a p) ∧ ∀ k l, ∀ p ∈ W k, p ∈ W l → p ∈ Z ×ˢ C → G k p - G l p = c k l p) := by
   intro P _ _ _ g K W c ω V hV hW hcov hc hcoc hω hcl hdiff z₀ hz₀ w₀
   have hloc : ∀ (Z : Set P), IsOpen Z → ∀ (w : Fin g → ℂ) (r : ℝ) (k₀ : K), Z ×ˢ ball w r ⊆ W k₀ →

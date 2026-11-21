@@ -173,6 +173,7 @@ theorem placeIdem_facts {v : HeightOneSpectrum (𝓞 D.host.F)} {ε : AF D.host.
     · rw [h0 w hw]; exact zero_mem _
 
 
+set_option maxHeartbeats 1600000 in
 theorem normOne_int {v : HeightOneSpectrum (𝓞 D.host.F)} {ε : AF D.host.F} (hε : NonSplitAt D v ε)
     {u : AE D} (hu : cA D u * u = 1) (hs : algebraMap (AF D.host.F) (AE D) ε * (u - 1) = u - 1) :
     finPart D u ∈ intAE D := by
@@ -235,6 +236,7 @@ theorem det_supp {R : Type} [CommRing R] {n : ℕ} (ε : R) (hε : ε * ε = ε)
   linear_combination c * hε
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_unit_root {v : HeightOneSpectrum (𝓞 D.host.F)} {ε : AF D.host.F} (hε : NonSplitAt D v ε)
     (V : HSp D) (g : GA D V) (hg : SuppPl ε V g) : ∃ x : (AE D)ˣ, IsDetRoot V g x ∧ infPart D (x : AE D) = 1 ∧
       algebraMap (AF D.host.F) (AE D) ε * ((x : AE D) - 1) = (x : AE D) - 1 ∧

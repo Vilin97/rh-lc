@@ -16,6 +16,8 @@ open scoped TensorProduct
 namespace GlobalTheory.SepRing
 
 
+set_option synthInstance.maxHeartbeats 200000 in
+set_option maxHeartbeats 1000000 in
 theorem isDomain_tensor_of_reg (k K S : Type) [Field k] [Field K] [Algebra k K]
     [FiniteDimensional k K] [IsPurelyInseparable k K] [CommRing S] [IsLocalRing S]
     [IsNoetherianRing S] [Algebra k S]
@@ -63,6 +65,8 @@ end GlobalTheory.SepRing
 namespace GlobalTheory.SepRing
 
 
+set_option synthInstance.maxHeartbeats 200000 in
+set_option maxHeartbeats 1000000 in
 theorem exists_complete_local_geomDomain : ∀ (k k' : Type) [Field k] [CommRing k'] [IsDomain k']
     [Algebra k k'], Module.Finite k k' → ∃ (C : Type) (_ : CommRing C) (_ : IsLocalRing C)
     (_ : IsNoetherianRing C) (_ : Algebra k C), IsAdicComplete (maximalIdeal C) C ∧

@@ -569,6 +569,7 @@ theorem exists_gl_of_equiv {L L' : Submodule 𝒪[k] (n → k)} [L.IsFullLattice
   rfl
 
 
+omit [Fintype n] [DecidableEq n] in
 theorem Pair.exists_split (P : Pair k n) :
     ∃ (K : Submodule 𝒪[k] P.lat) (e : (K × 𝒪[k]) ≃ₗ[𝒪[k]] P.lat), ∀ z, P.fn (e z) = residue 𝒪[k] z.2 := by
   have := Submodule.IsLattice.free k P.lat
@@ -632,6 +633,7 @@ variable (k n) in
 def stdLat : Submodule 𝒪[k] (n → k) := LinearMap.range ((Algebra.linearMap 𝒪[k] k).compLeft n)
 
 
+omit [Fintype n] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem mem_stdLat {x : n → k} : x ∈ stdLat k n ↔ ∀ i, x i ∈ 𝒪[k] :=
   ⟨fun ⟨y, hy⟩ i => hy ▸ (y i).2, fun h => ⟨fun i => ⟨x i, h i⟩, rfl⟩⟩
 

@@ -287,6 +287,7 @@ end Geo
 end GlobalTheory.ChartBaseChange
 
 
+open GlobalTheory.ChartBaseChange in
 theorem GlobalTheory.integralChart_baseChange : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l), letI := H.starRing; ∀ (T : CDVR) (io : c.F →+* T.Fr) (y : IntFr Xo c T io) (Ch : IntegralChartA3 Xo c T io y) (T' : CDVR) (φ : T.V →+* T'.V) (t' : SAB H (Sp T'.V)) (_ : SABMap t' Ch.I.G (spMap φ)), ∃ (F' : FGLaw T'.V (chD Ch.ch)) (x' : ∀ m : ℕ, algOver T'.V (JetR T'.V (Fin 1 × Fin (chD Ch.ch)) m) ⟶ t'.G) (act' : Germ.OAct (𝓞 E) F'), F'.F = (fun i => MvPowerSeries.map φ (Ch.FT i)) ∧ (∀ a, act'.act a = fun i => MvPowerSeries.map φ (Ch.actT a i)) ∧ IsChartJ t'.G F' x' ∧ ChartActs t'.G x' t'.act.toRingAct act' := by
   intro E _ _ _ H Dw l Xo c T io y Ch T' φ t' mp
   letI := H.starRing

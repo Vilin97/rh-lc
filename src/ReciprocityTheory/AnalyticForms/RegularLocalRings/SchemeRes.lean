@@ -18,10 +18,12 @@ variable {K : Type} [Fintype K] [Nonempty K] {ι : K → Type} [∀ k, Fintype (
 variable {P D : Ideal (MvPolynomial (Σ k, ι k) ℂ)} {hP : IsMultiHomogIdeal P}
 
 
+open Classical in
 def WData.idxEquiv (w : WData P D hP) : w.Idx ≃ Fin (Fintype.card w.Idx) :=
   Fintype.equivFin w.Idx
 
 
+open Classical in
 def WData.toAlgRes (w : WData P D hP) {e : ℕ} (he : ∀ x : w.M, ringKrullDim (w.W.presheaf.stalk x.1) = e)
     (hD : IsMultiHomogIdeal D) (hcomp : ∀ Q ∈ P.minimalPrimes, IsRelevant Q → ¬ D ≤ Q) :
     AlgRes ι P D e where

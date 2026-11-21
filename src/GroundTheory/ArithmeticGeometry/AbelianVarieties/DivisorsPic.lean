@@ -245,6 +245,7 @@ theorem finsum_ordAtIdeal_algebraMap {a : W.toAffine.CoordinateRing} (ha : a ≠
   exact (natDegree_norm_eq_finsum_count W ha).symm
 
 
+omit [DecidableEq F] in
 theorem finsum_ordAtIdeal_add_ordInfty {f : W.toAffine.FunctionField} (hf : f ≠ 0) :
     ∑ᶠ v, ordAtIdeal W v f + ordInfty W f = 0 := by
   obtain ⟨⟨a, s⟩, rfl⟩ := IsLocalization.mk'_surjective W.toAffine.CoordinateRing⁰ f

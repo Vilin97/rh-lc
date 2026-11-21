@@ -71,6 +71,7 @@ theorem Sec.exists_mv (s : S.Sec) (d : S.D) : ∃ g : S.G, g • s.rep (S.cls d)
   exact (S.cls_eq_iff d (s.rep (S.cls d))).1 (s.spec _).symm
 
 
+variable {S} in
 def Sec.mv (s : S.Sec) (d : S.D) : S.G := (s.exists_mv d).choose
 
 variable {S} in
@@ -85,9 +86,11 @@ structure Ok : Prop where
   inv : ∀ (g : S.G) (x y : S.V), S.pair (S.ρ g x) (S.ρ g y) = S.pair x y
 
 
+variable {S} in
 @[reducible] def Ok.fintypeCl (h : S.Ok) : Fintype S.Cl := @Fintype.ofFinite _ h.fin_orb
 
 
+variable {S} in
 @[reducible] def Ok.fintypeStab (h : S.Ok) (d : S.D) : Fintype (MulAction.stabilizer S.G d) :=
   @Fintype.ofFinite _ (h.fin_stab d)
 
@@ -324,6 +327,7 @@ theorem ofMap_op_apply (tr : S'.G →* S.G) (p : S'.D → S.D) (T : S.V →ₗ[K
   simp
 
 
+open Classical in
 def ofNbr (tr : S'.G →* S.G) (nb : S'.D → Finset S.D) (T : S.V →ₗ[K] S'.V)
     (hn : ∀ g d' d, tr g • d ∈ nb (g • d') ↔ d ∈ nb d') (hT : ∀ g x, T (S.ρ (tr g) x) = S'.ρ g (T x)) :
     LocOp S S' where
@@ -548,6 +552,7 @@ def intDel : Submodule (𝓞 K) F.Forms := Submodule.pi Set.univ fun b => (F.mem
 abbrev Cl : Type := Σ b, (F.mem b).Cl
 
 
+variable {F} in
 @[reducible] def Ok.fintypeCl (h : F.Ok) : Fintype F.Cl :=
   letI : ∀ b, Fintype (F.mem b).Cl := fun b => (h b).fintypeCl
   inferInstance

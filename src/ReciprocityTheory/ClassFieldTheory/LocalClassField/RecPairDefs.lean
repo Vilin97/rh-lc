@@ -29,6 +29,7 @@ def pairBr (a : Kˣ) (χ : charGrp (GK p K)) : Br p K :=
 def pairK (a : Kˣ) (χ : charGrp (GK p K)) : QZ := invBr p K (pairBr p K a χ)
 
 
+variable {p K L} in
 def resChar (h : K ≤ L) : charGrp (GK p K) →+ charGrp (GK p L) where
   toFun χ := ⟨χ.1.comp (MonoidHom.toAdditive (resGK h)),
     (show IsLocallyConstant fun g : GK p K => χ.1 (Additive.ofMul g) from χ.2).comp_continuous

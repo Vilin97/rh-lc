@@ -149,6 +149,7 @@ def heckeFamI (c : DecoPts S E n ST SG) (S0 : Set (HeightOneSpectrum (𝓞 E))) 
     LevOffI ST SG S0 × List ℕ → End K S.EqFun := fun x => (heckeI c x.1.1.asIdeal x.2).op
 
 
+variable (ST SG) in
 abbrev HeckeIx (S0 : Set (HeightOneSpectrum (𝓞 E))) : Type :=
   (LevOff ST SG S0 × ℕ) ⊕ (LevOffI ST SG S0 × List ℕ)
 

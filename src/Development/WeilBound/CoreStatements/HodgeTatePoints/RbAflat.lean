@@ -22,6 +22,7 @@ variable {C : Type} [Field C] {R : Type} [CommRing R] [Algebra R C]
   {F : Type} [Field F] {N : Type} [AddCommGroup N] [Module F N]
 
 
+variable (C) in
 noncomputable def Phi (p f : ℕ) {n : ℕ} (b : Module.Basis (Fin n) F N) (σ : MulChar F R) :
     (Fin n × Fin f → R) →ₗ[R] (N → C) :=
   Fintype.linearCombination R

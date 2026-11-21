@@ -35,6 +35,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   (hP : ∀ x : 𝓞 E, x ∈ P.asIdeal ↔ Valued.v (φ x) < 1)
 
 
+include hφ hP in
 theorem splitEmbedding_valued_eq_intValuation_integer (n : ℕ) : ∀ y : 𝓞 E, y ≠ 0 → P.intValuation y = WithZero.exp (-(n : ℤ)) →
     Valued.v (φ y) = WithZero.exp (-(n : ℤ)) := by
   induction n with

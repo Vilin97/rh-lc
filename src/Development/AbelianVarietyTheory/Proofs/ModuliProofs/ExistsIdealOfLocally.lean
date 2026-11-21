@@ -137,6 +137,7 @@ theorem span_map_eq_top {R R' I : Type} [CommRing R] [CommRing R'] (y : R →+* 
   rwa [Ideal.map_span, Ideal.map_top, ← Set.range_comp] at this
 
 
+open ReciprocityTheory.ChartRestriction.G.Out in
 theorem isThetaPtOver_of_iso {S : Scheme.{0}} (P : PolAV S) {k : ℕ} {T T₀ : Over S} (β : T ⟶ T₀) [IsIso β.left]
     {I : Type} {x₀ : I → (T₀ ⟶ P.A)} (hk : ∀ i, x₀ i ^ (k ^ 2) = 1) {v₀ : I → Γ(T₀.left, ⊤)}
     (H : IsThetaPtOver P k x₀ v₀) : IsThetaPtOver P k (fun i => β ≫ x₀ i) (fun i => β.left.appTop.hom (v₀ i)) := by
@@ -150,6 +151,7 @@ theorem isThetaPtOver_of_iso {S : Scheme.{0}} (P : PolAV S) {k : ℕ} {T T₀ : 
   exact ⟨r, fun j => (hr j).trans (congrArg (_ * ·) (congrArg (fun q => q.1 j) e).symm)⟩
 
 
+open ReciprocityTheory.ChartRestriction.G.Out in
 theorem isThetaPt_of_local {S : Scheme.{0}} (P : PolAV S) {k : ℕ} {T : Over S} {I : Type} {x : I → (T ⟶ P.A)}
     {v : I → Γ(T.left, ⊤)} (ho : Odd k) (hu : IsUnit (k : Γ(T.left, ⊤))) (hk : ∀ i, x i ^ (k ^ 2) = 1)
     (H : ∀ p : T.left, ∃ (T' : Over S) (j : T' ⟶ T), IsOpenImmersion j.left ∧ p ∈ Set.range j.left ∧

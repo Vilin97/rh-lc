@@ -31,6 +31,7 @@ namespace GlobalTheory.DepthFix
 variable {D : D7}
 
 
+open GlobalTheory.SplitScalar GlobalTheory.SplitHecke in
 theorem om_split_cong {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D}
     {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)} {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)}
     {χS χT : (AE D)ˣ →* Circle} {om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)}
@@ -110,6 +111,7 @@ theorem exp_lt_one {n : ℕ} (hn : 0 < n) : WithZero.exp (-(n : ℤ)) < (1 : Wit
   rw [← WithZero.exp_zero, WithZero.exp_lt_exp]; omega
 
 
+set_option maxHeartbeats 800000 in
 theorem char_eq_one {c : (AE D)ˣ →* Circle} {χ : Formalism.L2.Host.HChar D.host.E} (hc : ChrEq c χ) {w : Pl D.host.E} {n : ℕ}
     (hn : 0 < n) (hl : χ.LevelLe w n) {e : AE D} (he : Formalism.L2.NTheta.IsIdemAt e w) {x : (AE D)ˣ} {a : AE D}
     (hx : (x : AE D) = e * a + (1 - e))
@@ -293,6 +295,7 @@ theorem det_cong {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {g : GA D V} {w 
   exact h1
 
 
+set_option maxHeartbeats 1000000 in
 theorem smAt_act {S T : HSp D} {βS : GL (Fin S.rank) (Lev.EAf D)} {βT : GL (Fin T.rank) (Lev.EAf D)} {g : GA D S}
     {h : GA D T} {w : Pl D.host.E} {c : WithZero (Multiplicative ℤ)} (hg0 : Lev.finE S g ∈ St βS)
     (hg : SmAt w c (Comparison₂.fr βS βS ((Lev.finE S g).val - 1))) (hh : SmAt w c (Comparison₂.fr βT βT ((Lev.finE T h).val - 1)))
@@ -401,6 +404,7 @@ theorem depthLe_att {μ₀ : T₀} (hL : L.Is μ₀) (G : GridData L sc) {i : �
   · exact a
 
 
+set_option maxHeartbeats 2000000 in
 theorem fix_pair {μ₀ : T₀} (hL : L.Is μ₀) (hq : OffQ D) (G : GridData L sc) {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D}
     {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)} {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)}
     {χS χT : (AE D)ˣ →* Circle} {om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)}

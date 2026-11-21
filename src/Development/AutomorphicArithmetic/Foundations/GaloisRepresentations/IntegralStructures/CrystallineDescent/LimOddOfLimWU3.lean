@@ -60,6 +60,7 @@ theorem limU_of_limOdd (hC : GlobalTheory.CongPhi.ClosedPhi) (h : LimOdd) : LimU
 variable {E Ω : Type} [Field E] [NumberField E] [IsCMField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] {l : ℕ} [Fact l.Prime]
 
 
+variable (Ω) in
 def CoreAtP (p : HeightOneSpectrum (𝓞 E) → Prop) (ι : Qbar l ≃+* ℂ) (m : ℕ) : Prop :=
   ∀ U : Submodule ℂ (UA E m → ℂ), IsAutRepU U → ∀ lam : (E →+* ℂ) → DomWeight m, (∀ τ, HasWeightAt U τ (lam τ)) →
     ∃ r : G E Ω →* GL (Fin m) (Qbar l), Continuous r ∧ IsSSRep r ∧
@@ -75,6 +76,7 @@ def AllUd : Prop :=
     ∀ n : ℕ, 1 ≤ n → CoreAtP Ω (UsPl (E := E) d) ι n
 
 
+variable (Ω) in
 def RowP (p : HeightOneSpectrum (𝓞 E) → Prop) {a : ℕ} (π : CuspSub E a) (ι : Qbar l ≃+* ℂ) : Prop :=
   ∃ r : G E Ω →* GL (Fin a) (Qbar l), Continuous r ∧ IsSSRep r ∧
     ∀ w B, p w → (CG.mk π).HasSat w B → ∀ c, GlobalTheory.RoadU.SphAt c π ι r w B

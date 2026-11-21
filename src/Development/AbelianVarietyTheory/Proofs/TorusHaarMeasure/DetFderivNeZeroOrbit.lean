@@ -17,6 +17,7 @@ namespace GlobalTheory.OrbitCoord
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 
+omit [NumberField E] [IsCMField E] in
 theorem rmul_left_cancel {r : ℕ} {Ψ : Finset (E →+* ℂ)} {o a c : Frame Ψ r}
     (ho : ∀ τ, (mat o τ).det ≠ 0) (h : rmul o a = rmul o c) : a = c := by
   funext τ

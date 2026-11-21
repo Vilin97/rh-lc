@@ -27,6 +27,7 @@ theorem mem_integer_iff_ord {x : F} (hx : x ≠ 0) : x ∈ 𝒪[F] ↔ 0 ≤ ord
   rw [← mem_valBall_zero_iff, mem_valBall_iff_le_ord hx]
 
 
+omit [MeasurableSpace F] [BorelSpace F] in
 theorem inv_mul_mem_of_ord_le {m y : F} (hm : m ≠ 0) (hy : y ≠ 0 → ord m ≤ ord y) :
     m⁻¹ * y ∈ 𝒪[F] := by
   rcases eq_or_ne y 0 with rfl | h0
@@ -46,6 +47,7 @@ theorem le_ord_of_mem {n : ℕ} {y : F} (h0 : y ≠ 0)
   omega
 
 
+omit [MeasurableSpace F] [BorelSpace F] in
 theorem ord_lower_right {n : ℕ} (hn : 1 ≤ n) {x : GL (Fin 2) F} {d : Fˣ} (h : GammaZeroLevelMembership n x d) :
     ord (d : F) = 0 := by
   obtain ⟨hx, hc, hd⟩ := h

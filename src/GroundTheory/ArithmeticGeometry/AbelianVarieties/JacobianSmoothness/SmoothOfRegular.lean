@@ -41,6 +41,8 @@ lemma ker_le_maximalIdeal : RingHom.ker (algebraMap P S) ≤ maximalIdeal P := b
 variable [IsNoetherianRing P]
 
 
+omit [Algebra k P] [Algebra k S] [IsScalarTower k P S] in
+include hsurj in
 lemma spanFinrank_quotient_le (J : Ideal P) [IsLocalRing (P ⧸ J)]
     (hcov : RingHom.ker (algebraMap P S) ≤ J ⊔ maximalIdeal P ^ 2) :
     (maximalIdeal (P ⧸ J)).spanFinrank ≤ (maximalIdeal S).spanFinrank := by
@@ -101,6 +103,8 @@ lemma spanFinrank_quotient_le (J : Ideal P) [IsLocalRing (P ⧸ J)]
     _ = (maximalIdeal S).spanFinrank := by rw [Set.ncard_def, hGc, ENat.toNat_natCast]
 
 
+omit [Algebra k P] [Algebra k S] [IsScalarTower k P S] in
+include hsurj in
 lemma ker_le_span_of_spanFinrank_le {κ : Type} [Fintype κ] (f : κ → P)
     (hfI : ∀ i, f i ∈ RingHom.ker (algebraMap P S))
     (hcov : RingHom.ker (algebraMap P S) ≤ Ideal.span (Set.range f) ⊔ maximalIdeal P ^ 2)

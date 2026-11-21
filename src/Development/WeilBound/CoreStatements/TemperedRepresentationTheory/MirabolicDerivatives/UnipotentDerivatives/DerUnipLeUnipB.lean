@@ -59,6 +59,7 @@ section DerChars
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+variable (k) in
 def whitCharFrom (ψ : AddChar k Circle) (N n : ℕ) : unipB k (Fin N) →* ℂˣ where
   toFun u := Circle.toUnits (ψ (∑ p : Fin N × Fin N with (p.2 : ℕ) = p.1 + 1 ∧ n ≤ (p.1 : ℕ),
     (u : GL (Fin N) k).val p.1 p.2))
@@ -71,10 +72,12 @@ def whitCharFrom (ψ : AddChar k Circle) (N n : ℕ) : unipB k (Fin N) →* ℂ�
     exact congrArg _ (congrArg _ (Finset.sum_congr rfl fun p hp => unipB_mul_apply u v (Finset.mem_filter.1 hp).2.1))
 
 
+variable (k) in
 def derChar (ψ : AddChar k Circle) (N n : ℕ) : derUnip k N n →* ℂˣ :=
   (whitCharFrom k ψ N n).comp (Subgroup.inclusion (derUnip_le_unipB k N n))
 
 
+variable (k) in
 def derCharM (ψ : AddChar k Circle) (m n : ℕ) : derUnipM k m n →* ℂˣ :=
   (derChar k ψ (m + 1) n).comp (Subgroup.subgroupOfEquivOfLe (derUnip_le_Mir k m n)).toMonoidHom
 

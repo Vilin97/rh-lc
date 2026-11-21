@@ -27,6 +27,7 @@ theorem mapDomain_fst_apply (μ : (Σ κ, ι κ) →₀ ℕ) (κ : K) :
   simp [Finsupp.single_apply]
 
 
+omit [Fintype K] [∀ κ, Fintype (ι κ)] in
 theorem mConeMap_monomial (y : (Σ κ, ι κ) → Ω) (μ : (Σ κ, ι κ) →₀ ℕ) (r : ℤ) :
     mConeMap y (monomial μ r) = monomial (μ.mapDomain Sigma.fst) (aeval y (monomial μ r)) := by
   rw [mConeMap, aeval_monomial, aeval_monomial, monomial_eq,

@@ -137,6 +137,7 @@ end GlobalTheory.EndLoc.ActUnr
 namespace GlobalTheory.EndLoc
 
 
+open ActUnr in
 theorem formallyUnramified_actRep : ∀ (S : Scheme.{0}) (A : Over S) [GrpObj A] [IsCommMonObj A] (Q : LB (A ⊗ A).left)
     (O : Type) [Ring O] (bar : O → O) (R : ActRep A Q bar), IsAbelianScheme A → FormallyUnramified R.π := by
   intro S A _ _ Q O _ bar Rp hA

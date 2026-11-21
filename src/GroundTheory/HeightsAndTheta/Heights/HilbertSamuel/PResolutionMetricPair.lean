@@ -353,6 +353,7 @@ end Datum
 end ResolutionMetricPair
 
 
+open ResolutionMetricPair in
 theorem ResolutionMetricPair.proof (h : BergmanDensChartSum.Statement) : ResolutionMetricPair.Statement := by
   intro D Ω _ _ κ _ d m₁ P0₁ hm₁ hP0₁ hsp₁
   obtain ⟨t, ht⟩ := isCompact_univ.elim_finite_subcover (nbhd d) (isOpen_nbhd d)

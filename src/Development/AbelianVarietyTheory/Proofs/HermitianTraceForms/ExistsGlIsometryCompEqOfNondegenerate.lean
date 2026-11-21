@@ -267,6 +267,7 @@ section MatrixForm
 variable {E : Type*} [Field E] {c : E →+* E} {n : Type*} [Fintype n] [DecidableEq n]
 
 
+omit [DecidableEq n] in
 theorem dotProduct_congr_mulVec {m : Type*} [Fintype m] (c : E →+* E) (G : Matrix n n E)
     (P : Matrix n m E) (x y : m → E) :
     x ⬝ᵥ (Pᵀ * G * P.map c) *ᵥ (c ∘ y) = (P *ᵥ x) ⬝ᵥ G *ᵥ (c ∘ (P *ᵥ y)) := by

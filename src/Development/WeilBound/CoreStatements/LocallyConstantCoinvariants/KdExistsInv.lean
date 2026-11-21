@@ -108,6 +108,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   [Fintype κ] {JA : Matrix α α (AE F E)} {JB : Matrix β β (AE F E)}
 
 
+variable (σ t JA JB) in
 structure Grams : Prop where
   uA : IsUnit (JA.map (piW t))
   uB : IsUnit (JB.map (piW t))
@@ -115,6 +116,7 @@ structure Grams : Prop where
     JB.map (piW (t.comp σ)) = (-ε) • (JB.map (piW t))ᵀ
 
 
+variable (σ t JA JB) in
 def coord (u : Matrix α β (AE F E)) : (α × β → Fv F v) × (α × β → Fv F v) :=
   (ofM (-(JA.map (piW t) * u.map (piW (t.comp σ)) * (JB.map (piW t))ᵀ)), ofM (-u.map (piW t)))
 

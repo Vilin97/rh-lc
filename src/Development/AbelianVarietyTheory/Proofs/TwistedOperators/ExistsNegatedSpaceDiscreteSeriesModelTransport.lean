@@ -256,6 +256,7 @@ theorem modelTr_negM : ModelTr (RingHom.id ℂ) true θ (negM M) M (smTEquiv M �
 end GlobalTheory.NegModel
 
 
+open GlobalTheory.NegModel in
 theorem GlobalTheory.negModel_tr : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S),
     ∃ (M₁ : DSModel (sgn true V) fun τ => GlobalTheory.SignedHC.flip (S τ)) (κ : SmT M₁ ≃+ SmT M),
       ModelTr (RingHom.id ℂ) true θ M₁ M κ :=

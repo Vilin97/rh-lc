@@ -69,6 +69,8 @@ variable {V : Type} [AddCommGroup V] [Module R V] [TopologicalSpace V] [IsTopolo
   [MeasurableSpace V] [BorelSpace V]
 
 
+omit [IsTopologicalRing R] [T2Space R] [LocallyCompactSpace R] [SecondCountableTopology R]
+  [MeasurableSpace R] [BorelSpace R] [T2Space V] in
 theorem exists_map_smul (μ : Measure V) [μ.IsAddHaarMeasure] {c : R} (hc : IsUnit c) :
     ∃ d : ℝ≥0, d ≠ 0 ∧ μ.map (fun x : V => c • x) = d • μ := by
   let e : V ≃ₜ+ V :=
@@ -84,6 +86,9 @@ theorem exists_map_smul (μ : Measure V) [μ.IsAddHaarMeasure] {c : R} (hc : IsU
     Measure.isAddLeftInvariant_eq_smul _ μ⟩
 
 
+omit [IsTopologicalRing R] [T2Space R] [LocallyCompactSpace R] [SecondCountableTopology R]
+  [MeasurableSpace R] [BorelSpace R] [IsTopologicalAddGroup V] [LocallyCompactSpace V]
+  [SecondCountableTopology V] [T2Space V] [MeasurableSpace V] [BorelSpace V] in
 theorem exists_compact_pull (ho : IsOpenUnits R) {S : Set R} (hS : IsCompact S) {s : R → R}
     (hs : ContinuousOn s S) (hu : ∀ u ∈ S, IsUnit (s u)) {K : Set V} (hK : IsCompact K) :
     ∃ K' : Set V, IsCompact K' ∧ ∀ u ∈ S, ∀ x, s u • x ∈ K → x ∈ K' := by
@@ -94,6 +99,7 @@ theorem exists_compact_pull (ho : IsOpenUnits R) {S : Set R} (hS : IsCompact S) 
   rw [smul_smul, Ring.inverse_mul_cancel _ (hu u hu'), one_smul]
 
 
+omit [IsTopologicalRing R] [LocallyCompactSpace R] in
 theorem exists_avg_const (ho : IsOpenUnits R) (μ : Measure V) [μ.IsAddHaarMeasure]
     (ν : Measure R) [ν.IsOpenPosMeasure] [IsFiniteMeasureOnCompacts ν]
     {S : Set R} (hS : IsCompact S) {s : R → R} (hsm : Measurable s)
@@ -297,6 +303,8 @@ theorem exists_fibreFamily (hR : Nice R) (μ : Measure V) [μ.IsAddHaarMeasure]
         exact (hcu.comp (continuous_id.mul continuous_const)).continuousAt
 
 
+omit [TopologicalSpace R] [IsTopologicalRing R] [T2Space R] [LocallyCompactSpace R]
+  [SecondCountableTopology R] [MeasurableSpace R] [BorelSpace R] [ContinuousSMul R V] [T2Space V] in
 theorem null_of_finite_curve (μ : Measure V) [μ.IsAddHaarMeasure] {Z : Set V} (hZ : MeasurableSet Z)
     {L : ℝ → V} (hL : Continuous L) (h : ∀ x : V, {t : ℝ | x + L t ∈ Z}.Finite) : μ Z = 0 := by
   have hc : Continuous (fun p : V × ℝ => p.1 + L p.2) := by fun_prop

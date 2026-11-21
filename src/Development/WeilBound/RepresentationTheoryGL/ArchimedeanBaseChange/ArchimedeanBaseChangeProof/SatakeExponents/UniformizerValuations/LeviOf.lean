@@ -29,6 +29,7 @@ def mconv {w : Pl E} (u₁ u₂ : GLw a w × GLw b w → ℂ) (m : GLw a w × GL
 def leviOf (h : a + b = n) (w : Pl E) (K' : Subgroup (GLw n w)) : Set (GLw a w × GLw b w) := {m | blk h w m 0 ∈ K'}
 
 
+variable (E) in
 def LocOpUniformizer : Prop :=
   ∀ (n a b : ℕ) (h : a + b = n) (w : Pl E) (K' : Subgroup (GLw n w)), IsOpen (K' : Set (GLw n w)) →
     K' ≤ GlobalTheory.LFun.KGL w (n := n) → (∀ k ∈ GlobalTheory.LFun.KGL w (n := n), ∀ k' ∈ K', k * k' * k⁻¹ ∈ K') →

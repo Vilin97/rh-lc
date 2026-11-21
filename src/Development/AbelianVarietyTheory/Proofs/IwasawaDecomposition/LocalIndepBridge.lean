@@ -146,6 +146,7 @@ variable {l : ℕ} [Fact l.Prime] (P : LocPrime l)
 
 
 
+variable (LL V) in
 def conjdR (g : GQ l) : V ⊗[ℚ_[l]] P.R.BdR ≃ₗ[LL] V ⊗[ℚ_[l]] P.R.BdR :=
   AlgebraTensorModule.congr (LinearEquiv.refl LL V) (P.actQdR g).toLinearEquiv
 

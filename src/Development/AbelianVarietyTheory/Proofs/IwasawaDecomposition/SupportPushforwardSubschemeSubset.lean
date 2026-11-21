@@ -106,6 +106,7 @@ theorem exists_mem_nonzeroLocus {M : LB X} (hM : M.IsLB) {J : X.Modules}
 end SerreCriterion
 
 
+open SerreCriterion in
 theorem isAmpleLB_of_subsingleton_coh_one (X : Scheme.{0}) [AlgebraicGeometry.IsNoetherian X]
     (L : LB X) (hL : L.IsLB)
     (h : ∀ F : X.Modules, IsFiniteQC F →

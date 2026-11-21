@@ -12,6 +12,7 @@ open PowerSeries GlobalTheory.NB.LT
 namespace GlobalTheory.NB.LT
 
 
+open scoped PowerSeries.WithPiTopology in
 theorem exists_algHom_X_add_C {O : Type} [CommRing O] (I : Ideal O) [h : IsAdicComplete I O]
     (c : O) (hc : c ∈ I) : ∃ t : O⟦X⟧ →ₐ[O] O⟦X⟧, t X = X + C c := by
   let : WithIdeal O := ⟨I⟩

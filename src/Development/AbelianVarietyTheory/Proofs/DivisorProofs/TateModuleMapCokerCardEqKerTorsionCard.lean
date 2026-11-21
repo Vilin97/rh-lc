@@ -167,6 +167,7 @@ end GlobalTheory.TateCoker
 namespace GlobalTheory
 
 
+open GlobalTheory.TateCoker in
 theorem tate_map_coker_card : ∀ (l : ℕ) [Fact l.Prime] (M N : Type) [CommGroup M] [CommGroup N] (φ : M →* N), (∀ x : M, ∃ y, y ^ l = x) → Function.Surjective φ → Finite φ.ker → Function.Injective (Tate.map l φ) ∧ Nat.card (Tate l N ⧸ LinearMap.range (Tate.map l φ)) = Nat.card {x : M // φ x = 1 ∧ ∃ n : ℕ, x ^ l ^ n = 1} := by
   intro l _ M N _ _ φ hd hs hf
   refine ⟨map_injective', ?_⟩

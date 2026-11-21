@@ -68,6 +68,7 @@ lemma natDegree_eq_zero_of_inv {F : Type} [Field F] (a b : F[X])
   omega
 
 
+set_option backward.isDefEq.respectTransparency false in
 lemma exists_extension {W Z Y S : Scheme.{0}} [IsIntegral Z]
     (hZ : ∀ x : Z, ValuationRing (Z.presheaf.stalk x)) (w : W ⟶ Z) [IsOpenImmersion w] [Nonempty W]
     (sZ : Z ⟶ S) (sY : Y ⟶ S) [IsProper sY] [Y.IsSeparated] [S.IsSeparated] (u : W ⟶ Y)
@@ -347,12 +348,15 @@ noncomputable def ev {A : Type} [CommRing A] [Algebra K A] (c : L →ₐ[K] A) (
     exact c.commutes r
 
 
+variable (K L) in
 noncomputable def inc : L[X] →ₐ[K] L[T;T⁻¹] := (toLaurentAlg : L[X] →ₐ[L] L[T;T⁻¹]).restrictScalars K
 
 
+variable (K L) in
 noncomputable def cst : L →ₐ[K] L[T;T⁻¹] := (inc K L).comp CAlgHom
 
 
+variable (L) in
 noncomputable def tU : (L[T;T⁻¹])ˣ := (isUnit_T (R := L) 1).unit
 
 lemma ev_comp_inc {A : Type} [CommRing A] [Algebra K A] (c : L →ₐ[K] A) (x : Aˣ) :

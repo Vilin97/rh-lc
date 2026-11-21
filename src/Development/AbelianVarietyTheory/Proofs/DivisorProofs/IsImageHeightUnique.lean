@@ -15,6 +15,9 @@ open MvPolynomial NumberField Module GlobalTheory.ChowHt GlobalTheory.CompHt
 namespace GlobalTheory.ImageHeightUnique
 
 
+set_option autoImplicit false in
+open MvPolynomial NumberField Module in
+open scoped Matrix in
 theorem _root_.GlobalTheory.ImageHeightUnique.map_linSubst {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {B N n : ℕ} (M : Matrix (Fin N) (Fin n) R)
     (f : MvPolynomial (Fin B × Fin N) R) :
     MvPolynomial.map φ (_root_.GlobalTheory.ChowHt.linSubst M f) = _root_.GlobalTheory.ChowHt.linSubst (M.map φ) (MvPolynomial.map φ f) := by
@@ -390,6 +393,11 @@ private theorem frameNorm_toMatrix_map_mul_eq_of_isFrame {Nm : (K →+* ℂ) →
   exact (sq_eq_sq₀ n1 n2).1 hsq'
 
 
+set_option autoImplicit false in
+open MvPolynomial NumberField Module in
+open scoped Matrix in
+variable {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
+  [IsScalarTower (𝓞 K) K V] {N : ℕ} in
 theorem _root_.GlobalTheory.ImageHeightUnique.formHeight_linSubst {Nm : (K →+* ℂ) → V → ℝ} {L : Submodule (𝓞 K) V} {n n' B : ℕ} {b b' : Basis (Fin N) K V}
     {w : Matrix (Fin N) (Fin n) K} {w' : Matrix (Fin N) (Fin n') K} {A A' : (K →+* ℂ) → Matrix (Fin N) (Fin N) ℂ}
     (h : _root_.GlobalTheory.CompHt.IsFrame Nm L b w A) (h' : _root_.GlobalTheory.CompHt.IsFrame Nm L b' w' A') (δ : ℕ) (f : MvPolynomial (Fin B × Fin N) K) :
@@ -431,6 +439,11 @@ theorem _root_.GlobalTheory.ImageHeightUnique.formHeight_linSubst {Nm : (K →+*
   simp only [hfin, harch]
 
 
+set_option autoImplicit false in
+open MvPolynomial NumberField Module in
+open scoped Matrix in
+variable {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
+  [IsScalarTower (𝓞 K) K V] {N : ℕ} in
 theorem _root_.GlobalTheory.ImageHeightUnique.isImageHeight_unique {Ω : Type} [Field Ω] [Algebra K Ω] {Nm : (K →+* ℂ) → V → ℝ} {L : Submodule (𝓞 K) V}
     {ev : V →ₗ[K] Ω} {D : ℕ} {x y : ℝ} (hx : _root_.GlobalTheory.CompHt.IsImageHeight Nm L ev D x) (hy : _root_.GlobalTheory.CompHt.IsImageHeight Nm L ev D y) : x = y := by
   obtain ⟨N₁, n₁, b₁, w₁, A₁, δ₁, f₁, hF₁, hC₁, hx₁⟩ := hx
@@ -457,6 +470,9 @@ theorem _root_.GlobalTheory.ImageHeightUnique.isImageHeight_unique {Ω : Type} [
   exact mul_left_cancel₀ hδ.ne' this
 
 
+set_option autoImplicit false in
+open MvPolynomial NumberField Module in
+open scoped Matrix in
 theorem _root_.GlobalTheory.ImageHeightUnique.imageHeight_eq : ∀ (K V Ω : Type) [Field K] [NumberField K] [AddCommGroup V] [Module K V] [Module (𝓞 K) V]
     [IsScalarTower (𝓞 K) K V] [Field Ω] [Algebra K Ω] (Nm : (K →+* ℂ) → V → ℝ) (L : Submodule (𝓞 K) V)
     (ev : V →ₗ[K] Ω) (D : ℕ) (h : ℝ), _root_.GlobalTheory.CompHt.IsImageHeight Nm L ev D h → _root_.GlobalTheory.CompHt.imageHeight Nm L ev D = h := by

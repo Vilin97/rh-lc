@@ -254,6 +254,7 @@ theorem delta_ne_zero {D : D7} {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} (hc : Crv
 end GlobalTheory.InertSign
 
 
+open GlobalTheory.InertSign in
 theorem GlobalTheory.InertSign.vacuum_inert : ∀ D : D7, odd3 D := by
   intro D cc δ hc N N' _ e0 he0 W g g' L₁ L₁' sg sg' mg mg'
   have hδ := delta_ne_zero hc

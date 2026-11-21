@@ -41,6 +41,8 @@ private lemma norm_entry_le_linftyOp_norm {n : ℕ} (A : Matrix (Fin n) (Fin n) 
       exact_mod_cast Finset.le_sup (f := fun i => ∑ k, ‖A i k‖₊) (Finset.mem_univ i)
 
 
+open Matrix Filter Topology in
+attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra in
 theorem _root_.GlobalTheory.UnitaryLog.exists_log_unitary (n : ℕ)
     (G : Matrix (Fin n) (Fin n) ℂ) (hG : IsUnit G.det) :
     ∃ δ₁ C : ℝ, 0 < δ₁ ∧ ∀ (u : Matrix (Fin n) (Fin n) ℂ) (δ : ℝ), uᴴ * G * u = G → δ ≤ δ₁ →

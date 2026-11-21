@@ -73,6 +73,7 @@ theorem isGenPt_neg_genericPoint : IsGenPt E (-genericPoint E) :=
   isGenPt_neg (show IsGenPt E (genericPoint E) from transcendental_genX E)
 
 
+variable (E) in
 noncomputable def negFF : E.toAffine.FunctionField →ₐ[F] E.toAffine.FunctionField :=
   genEval E (-genericPoint E) isGenPt_neg_genericPoint
 

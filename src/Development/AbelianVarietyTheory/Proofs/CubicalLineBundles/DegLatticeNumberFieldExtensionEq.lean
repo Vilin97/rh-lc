@@ -400,6 +400,8 @@ private lemma log_relIndex_map_lemma_4 (h : _root_.ReciprocityTheory.GeometryOfN
       hIH, neg_div, neg_div, hN]
 
 
+open NumberField Module in
+open scoped nonZeroDivisors in
 theorem _root_.GlobalTheory.deg_span_image_eq :
     ∀ (K K' : Type) [Field K] [NumberField K] [Field K'] [NumberField K'] (j : K →+* K') (n : ℕ)
       (h : _root_.ReciprocityTheory.GeometryOfNumbersTheory.HermFam K (Fin n → K)) (h' : _root_.ReciprocityTheory.GeometryOfNumbersTheory.HermFam K' (Fin n → K')) (Λ : Submodule (𝓞 K) (Fin n → K)), Λ.FG →

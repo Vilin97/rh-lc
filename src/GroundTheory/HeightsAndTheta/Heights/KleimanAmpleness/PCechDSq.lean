@@ -60,6 +60,7 @@ theorem restrictTo_eq {i : ℕ} (s : Cech.Cochain G i) (K : Cell U) (L : Cech.Id
 end CechDSq
 
 
+open CechDSq in
 theorem CechDSq.proof : CechDSq.Statement := by
   intro n U R _ G _ _ ρ hρ i s
   classical

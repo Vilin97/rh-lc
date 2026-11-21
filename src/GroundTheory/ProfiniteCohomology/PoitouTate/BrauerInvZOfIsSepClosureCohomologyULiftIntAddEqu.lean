@@ -121,6 +121,8 @@ theorem bijective_dualToCartierDual {n : ℕ} [NeZero n] (hn : (n : F) ≠ 0)
       _ ≤ Nat.card (dualRep D M) := card_dualRep_le hD
 
 
+omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [IsSepClosure F Fsep]
+  [IsTopologicalGroup G] [IsDiscreteRep D] [IsDiscreteRep M] [Finite M] in
 theorem tensorHom_dualToCartierDual_cartierPairing :
     (𝟙 (Rep.res ψ.toMonoidHom M) ⊗ₘ dualToCartierDual ψ D ρ M) ≫
         cartierPairing F Fsep (Rep.res ψ.toMonoidHom M) =
@@ -132,6 +134,7 @@ theorem tensorHom_dualToCartierDual_cartierPairing :
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 
+omit [Finite M] in
 theorem localDualityPairing_dualToCartierDual [Finite M] {r s : ℕ} (h : r + s = 2)
     (ξ : cohomology (Rep.res ψ.toMonoidHom M) r)
     (η : cohomology (Rep.res ψ.toMonoidHom (dualRep D M)) s) :

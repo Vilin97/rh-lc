@@ -19,6 +19,7 @@ def IsFund (p : ℕ) (σ : MulChar F R) : Prop :=
   ∀ a b, σ (a + b) - σ a - σ b ∈ Ideal.span {(p : R)}
 
 
+variable (F) in
 def FStable (M : Submodule R (N → C)) : Prop :=
   ∀ a : F, ∀ g ∈ M, (fun x => g (a • x)) ∈ M
 

@@ -40,6 +40,7 @@ theorem lift_id_one (h : IsGrpPullback A' A f φ) (sq : IsSquare φ φ₂) :
   exact (Category.id_comp _).symm.trans this
 
 
+omit [GrpObj A] [GrpObj A'] in
 theorem lift_swap (sq : IsSquare φ φ₂) :
     (lift (snd A' A') (fst A' A')).left ≫ φ₂ = φ₂ ≫ (lift (snd A A) (fst A A)).left := by
   have := GlobalTheory.SiegelPull.lift_sq sq (T := Over.mk (φ₂ ≫ (A ⊗ A).hom)) (T' := A' ⊗ A') (𝟙 _) (snd A' A') (fst A' A')

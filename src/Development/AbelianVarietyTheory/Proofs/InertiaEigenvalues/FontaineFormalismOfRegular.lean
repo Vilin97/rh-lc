@@ -230,6 +230,7 @@ theorem comparison_bijective (hf : FracInv PD) (hu : LineUnit PD) [FiniteDimensi
     (isCrys_iff_span PD hf hu ρ).1 h]
 
 
+omit [IsDomain B] in
 theorem baseChange_mem {ρ : Representation LL G V} {ρ' : Representation LL G V'} {f : V →ₗ[LL] V'}
     (hf : IsEquivariant ρ ρ' f) (x : B ⊗[Qp] V) (hx : x ∈ DcrisK₀ PD ρ) :
     (f.restrictScalars Qp).baseChange B x ∈ DcrisK₀ PD ρ' := by
@@ -320,6 +321,7 @@ theorem tensorCrys (hf : FracInv PD) (hu : LineUnit PD) : TensorCrys PD LL := by
     exact this
 
 
+omit [IsDomain B] in
 theorem exists_dual_equiv (V : Type) [AddCommGroup V] [Module LL V] [Module Qp V] [IsScalarTower Qp LL V]
     [FiniteDimensional LL V] : ∃ (lam : LL →ₗ[Qp] Qp) (e : Dual LL V ≃ₗ[Qp] Dual Qp V),
       ∀ f v, e f v = lam (f v) := by
@@ -398,6 +400,8 @@ theorem tensorB_eq (f : V →ₗ[LL] V') (x : V ⊗[Qp] B) :
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 
+omit [IsDomain B] [FiniteDimensional Qp LL] in
+variable {LL} in
 theorem left_exact {V₀ : Type} [AddCommGroup V₀] [Module LL V₀] [Module Qp V₀] [IsScalarTower Qp LL V₀]
     {ρ₀ : Representation LL G V₀} {ρ : Representation LL G V} {ρ' : Representation LL G V'}
     {i : V₀ →ₗ[LL] V} {p : V →ₗ[LL] V'} (hi : IsEquivariant ρ₀ ρ i) (hp : IsEquivariant ρ ρ' p)
@@ -466,6 +470,7 @@ theorem dcrisExact (hf : FracInv PD) : DcrisExact PD LL := by
   omega
 
 
+omit [FiniteDimensional Qp LL] in
 theorem exists_pow_sigma (hc : Nat.card (K₀ →ₐ[Qp] LL) = finrank Qp K₀) (τ τ' : K₀ →ₐ[Qp] LL) :
     ∃ n : ℕ, ∀ c, τ' c = τ (PD.σ^[n] c) := by
   haveI := PD.finK₀
@@ -492,6 +497,8 @@ theorem exists_pow_sigma (hc : Nat.card (K₀ →ₐ[Qp] LL) = finrank Qp K₀) 
   rfl
 
 
+omit [IsDomain B] [FiniteDimensional Qp LL] in
+variable {LL} in
 theorem letter_le (ρ : Representation LL G V) [Module.Finite LL ↥(Dcris PD ρ)] (τ τ' : K₀ →ₐ[Qp] LL)
     (h : ∀ c, τ' c = τ (PD.σ c)) : finrank LL ↥(DcrisL PD ρ τ') ≤ finrank LL ↥(DcrisL PD ρ τ) := by
   haveI : Module.Finite LL ↥(DcrisL PD ρ τ) := Submodule.finiteDimensional_of_le inf_le_left
@@ -520,6 +527,8 @@ theorem letter_le (ρ : Representation LL G V) [Module.Finite LL ↥(Dcris PD ρ
     fun x y hxy => Subtype.ext (h4 (congrArg Subtype.val hxy))
 
 
+omit [IsDomain B] [FiniteDimensional Qp LL] in
+variable {LL} in
 theorem finrank_eq_sum_letters [FiniteDimensional Qp K₀] [Fintype (K₀ →ₐ[Qp] LL)]
     (hc : Fintype.card (K₀ →ₐ[Qp] LL) = finrank Qp K₀) {M : Type} [AddCommGroup M] [Module LL M]
     (m : K₀ → M →ₗ[LL] M) (hadd : ∀ a b x, m (a + b) x = m a x + m b x)

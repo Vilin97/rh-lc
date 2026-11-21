@@ -224,6 +224,7 @@ theorem projection_mem_partial_span (X : ι → Submodule O (MvPolynomial σ O))
 end PartialSpanProjection
 
 
+open PartialSpanProjection in
 theorem atl : ATL := by
   intro O _ _ _ ι σ _ _ π X hX hfin hsat F hF
   have hq : ∀ j, ∃ q : MvPolynomial σ O →ₗ[O] MvPolynomial σ O, (∀ A, q A ∈ X j) ∧ ∀ x ∈ X j, q x = x := by

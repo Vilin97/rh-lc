@@ -127,6 +127,7 @@ def noArch (X : Type) [Group X] : ∀ _ : Empty, X →* PUnit := fun _ => 1
 variable {pa : ∀ w, X →* Ya w} {pf : ∀ v, X →* Yf v} {K K' : ∀ v, Subgroup (Yf v)}
 
 
+omit [∀ v, TopologicalSpace (Yf v)] in
 theorem exists_extend_one {V' : Type} {j : V' → V} (hj : Function.Injective j) (y : ∀ v', Yf (j v')) :
     ∃ z : ∀ v, Yf v, (∀ v', z (j v') = y v') ∧ ∀ v ∉ range j, z v = 1 := by
   have : ∀ v, ∃ z : Yf v, (∀ v' (e : j v' = v), z = e ▸ y v') ∧ (v ∉ range j → z = 1) := fun v => by
@@ -249,6 +250,7 @@ variable [LocallyCompactSpace X] [SecondCountableTopology X] [∀ w, IsTopologic
   [∀ w, LocallyCompactSpace (Ya w)] [∀ w, T2Space (Ya w)]
 
 
+omit [∀ w, IsTopologicalGroup (Ya w)] in
 theorem IsHaarProd.unique (hK : ∀ v, IsOpen (K v : Set (Yf v))) (hK' : ∀ v, IsCompact (K v : Set (Yf v)))
     (h : IsHaarProd pa pf K μa μf μ) (h' : IsHaarProd pa pf K μa μf μ') : μ = μ' := by
   obtain ⟨h1, h2, h3, h4⟩ := h
@@ -272,6 +274,7 @@ variable [∀ w, SecondCountableTopology (Ya w)] [∀ v, IsTopologicalGroup (Yf 
   [∀ v, SecondCountableTopology (Yf v)]
 
 
+omit [LocallyCompactSpace X] [SecondCountableTopology X] [∀ w, T2Space (Ya w)] in
 theorem IsRestrGroup.exists_factor (h : IsRestrGroup pa pf K) (μa : ∀ w, Measure (Ya w)) (μf : ∀ v, Measure (Yf v))
     [∀ w, (μa w).IsHaarMeasure] [∀ v, (μf v).IsHaarMeasure] (ν : Measure X) [ν.IsHaarMeasure] (S : Finset V) :
     ∃ c : ℝ≥0∞, ∀ (A : ∀ w, Set (Ya w)) (B : ∀ v, Set (Yf v)), (∀ w, MeasurableSet (A w)) →
@@ -352,6 +355,7 @@ theorem IsRestrGroup.existsUnique_isHaarProd (h : IsRestrGroup pa pf K) (μa : �
   rw [Measure.smul_apply, hc A B hA hB, smul_eq_mul, ← mul_assoc, e', one_mul]
 
 
+omit [∀ w, SecondCountableTopology (Ya w)] [∀ v, LocallyCompactSpace (Yf v)] [∀ v, SecondCountableTopology (Yf v)] in
 theorem IsHaarProd.isMulRightInvariant (h : IsHaarProd pa pf K μa μf μ) (hX : IsRestrGroup pa pf K)
     [∀ w, (μa w).IsMulRightInvariant] [∀ v, (μf v).IsMulRightInvariant] : μ.IsMulRightInvariant := by
   refine ⟨fun g => IsHaarProd.unique hX.isOpen_K hX.isCompact_K ?_ h⟩
@@ -374,6 +378,8 @@ variable {X' : Type} [Group X'] [TopologicalSpace X'] [MeasurableSpace X'] [Bore
   [LocallyCompactSpace X'] [SecondCountableTopology X']
 
 
+omit [LocallyCompactSpace X] [SecondCountableTopology X] [∀ w, T2Space (Ya w)] [∀ v, IsTopologicalGroup (Yf v)]
+  [∀ v, LocallyCompactSpace (Yf v)] [∀ v, SecondCountableTopology (Yf v)] [∀ v, BorelSpace (Yf v)] in
 theorem IsHaarProdFin.prod_arch {pf' : ∀ v, X' →* Yf v} {ν : Measure X'} (h : IsHaarProdFin pf' K μf ν)
     [ha : ∀ w, (μa w).IsHaarMeasure] (e : ((∀ w, Ya w) × X') ≃ₜ* X)
     (ea : ∀ w p, pa w (e p) = p.1 w) (ef : ∀ v p, pf v (e p) = pf' v p.2) :
@@ -391,6 +397,10 @@ theorem IsHaarProdFin.prod_arch {pf' : ∀ v, X' →* Yf v} {ν : Measure X'} (h
   rw [Measure.prod_prod, h5 S hS B hB, Measure.pi_pi]
 
 
+omit [LocallyCompactSpace X] [SecondCountableTopology X] [∀ w, IsTopologicalGroup (Ya w)] [∀ w, BorelSpace (Ya w)]
+  [∀ w, LocallyCompactSpace (Ya w)] [∀ w, T2Space (Ya w)] [∀ w, SecondCountableTopology (Ya w)]
+  [∀ v, IsTopologicalGroup (Yf v)] [∀ v, LocallyCompactSpace (Yf v)] [∀ v, SecondCountableTopology (Yf v)]
+  [∀ v, BorelSpace (Yf v)] [LocallyCompactSpace X'] [SecondCountableTopology X'] in
 theorem IsHaarProd.map {pa' : ∀ w, X' →* Ya w} {pf' : ∀ v, X' →* Yf v} {ν : Measure X'}
     (h : IsHaarProd pa' pf' K μa μf ν) (e : X' ≃ₜ* X) (ea : ∀ w x, pa w (e x) = pa' w x)
     (ef : ∀ v x, pf v (e x) = pf' v x) : IsHaarProd pa pf K μa μf (ν.map e) :=

@@ -90,6 +90,7 @@ theorem fourierBessel_centralTerm_const_on_orbit {σ : ℕ} (B : BesLev D σ) {S
     GlobalTheory.MixPer.Decomp.gram_mt]
 
 
+set_option maxHeartbeats 1000000 in
 theorem flatFB_source {σ : ℕ} {J : JacLev D (σ + 1)} {B : BesLev D σ} (s : StepFB ψ J B) {Ψ : WO J.W B.V → ℂ}
     (hΨ : IsThetaFunO ψ J.W B.V Ψ) {n : GA D J.W} (hn : n ∈ flagN J.d) :
     flatFB s (s.om (n, 1) Ψ) = (psiFlag ψ J.d n * ψ (cenS J.d B.L (zl B) n)) •

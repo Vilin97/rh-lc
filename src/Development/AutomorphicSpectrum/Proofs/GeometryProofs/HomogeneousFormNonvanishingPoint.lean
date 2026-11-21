@@ -109,6 +109,7 @@ theorem multiHomog_rename_inl {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog 
     exact Sum.inl_ne_inr (congrArg Sigma.fst hq)
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] [Fintype K₂] [∀ k, Fintype (ι₂ k)] in
 theorem rename_inl_mem {Ω : Type} [Field Ω] (y₁ : (Σ k, ι k) → Ω) (y₂ : (Σ k, ι₂ k) → Ω) {f : MRing ι}
     (hf : f ∈ mCoordIdeal y₁) : rename (joinInl ι ι₂) f ∈ mCoordIdeal (joinVec y₁ y₂) := by
   have key : ∀ g : MRing ι, mConeMap (joinVec y₁ y₂) (rename (joinInl ι ι₂) g) =
@@ -142,6 +143,7 @@ theorem aeval_mem_int {Ω : Type} [Field Ω] [Algebra ℚ Ω] {σ : Type} (A : S
   | mul_X p i hp => rw [map_mul, aeval_X]; exact mul_mem hp (hv i)
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem seg_ratio_update [DecidableEq K] {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (c₀ : (k : K) → ι k)
     (hc : ∀ k, y ⟨k, c₀ k⟩ ≠ 0) (k : K) (i : ι k) :
     (∏ k', y ⟨k', Function.update c₀ k i k'⟩) / ∏ k', y ⟨k', c₀ k'⟩ = y ⟨k, i⟩ / y ⟨k, c₀ k⟩ := by
@@ -181,6 +183,7 @@ theorem blockFnField_joinPt (y : (Σ k, ι k) → Ω) (x' : Fin (r + 1) → Ω)
       ⟨joinInl _ _ p, joinInl _ _ q, by simp [joinInl, hpq], rfl⟩
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem adjoin_ratios_eq (y : (Σ k, ι k) → Ω) (x' : Fin (r + 1) → Ω) {N : ℕ}
     (E : Fin (N + 1) ≃ ((k : K) → ι k)) (c : (k : K ⊕ Unit) → joinIdx ι (fun _ : Unit => Fin (r + 1)) k)
     (a : Fin (N + 1)) (hEa : ∀ k, E a k = c (Sum.inl k)) (hc : ∀ k, y ⟨k, c (Sum.inl k)⟩ ≠ 0) :

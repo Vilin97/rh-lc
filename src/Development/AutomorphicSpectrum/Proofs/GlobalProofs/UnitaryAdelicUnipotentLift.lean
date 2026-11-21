@@ -185,6 +185,7 @@ theorem blk_pair (h : l + d ≤ r) (Z W : Matrix (Fin n) (Fin r) E) :
   ext; rfl
 
 
+variable (σ J X Y) in
 def IsBlockPoint (h : l + d ≤ r) (u : GAd σ J) : Prop :=
   ∃ P Q : Matrix (Fin d) (Fin d) (AF F ⊗[F] E), (GlobalTheory.AdelicU.matHom (AF F) σ J u).1 =
     1 + adMat F (GlobalTheory.BlockForms.blkCols h X) * P * adMat F (Formalism.UG.cT (σ : E →+* E) (GlobalTheory.BlockForms.blkCols h Y) * J) +

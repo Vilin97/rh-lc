@@ -148,6 +148,7 @@ theorem petN_smul_right (N : ℕ) (c : ℂ) (f f' : GAf L n → a.W) :
   simp only [petN, classSum_smul_right]; ring
 
 
+variable (L n) in
 def projAF {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (GQ L n) W) :
     (GAf L n → W) →ₗ[ℂ] (GAf L n → W) :=
   (NG.AFall L n ρ).subtype ∘ₗ

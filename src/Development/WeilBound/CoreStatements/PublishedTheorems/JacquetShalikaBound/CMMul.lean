@@ -47,6 +47,7 @@ def inU (m : ℕ) (g : GL (Fin n) F) : Prop :=
 def Div {ι : Type} (c : ℕ) (A : Matrix ι ι F) : Prop := ∀ i j, ∃ y ∈ 𝒪[F], A i j = (uniformizer F : F) ^ c * y
 
 
+variable (F) in
 def lat (m M : ℕ) : Set (Fin m → F) := {x | ∀ i, (uniformizer F : F) ^ M * x i ∈ 𝒪[F]}
 
 def PsiOK (ψ : AddChar F ℂ) : Prop :=

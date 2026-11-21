@@ -38,6 +38,11 @@ theorem lift_congr {B : Type} [Semiring B] [Algebra R B] {f g : Letter → B} (h
 variable {M : Type} [AddCommGroup M] [Module R M]
 
 
+open scoped MatrixGroups TensorProduct in
+open Matrix in
+variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ} in
+variable {R : Type} [CommRing R] {A : Set _root_.GlobalTheory.KZ.Letter} in
+variable {M : Type} [AddCommGroup M] [Module R M] in
 theorem _root_.GlobalTheory.KZ.SSAdm.lift_sub_smul_mem {f : _root_.GlobalTheory.KZ.Letter → Module.End R M}
     {lam : _root_.GlobalTheory.KZ.Letter → R} {W : Submodule R M}
     (hW : ∀ T ∈ A, ∀ x ∈ W, f T x ∈ W) {x : M} (hx : ∀ T ∈ A, f T x - lam T • x ∈ W)

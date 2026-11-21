@@ -322,6 +322,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 namespace GlobalTheory.CompanionTheory.NullFr
 
 
+set_option maxHeartbeats 1600000 in
 theorem nullSing_of_idemEx : IdemEx → NullSing := by
   intro hI D r t V b₀ hb S e he ν hν
   haveI : IsTopologicalRing (AE D) := GlobalTheory.Doubling.isTopologicalRing_tens

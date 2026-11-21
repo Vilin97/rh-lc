@@ -37,6 +37,7 @@ theorem mem_stab_conj {L S : Submodule R (n → A)} {b : GL n A} (h : ∀ y, y �
     exact h1
 
 
+omit [CommRing R] [Algebra R A] in
 theorem conj_eq_of_smul {m m' : GL n A} {w : A} (h : m.1 = w • m'.1) (z : GL n A) :
     m⁻¹ * z * m = m'⁻¹ * z * m' := by
   have hc : m * m'⁻¹ * z = z * (m * m'⁻¹) := by

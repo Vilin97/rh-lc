@@ -135,6 +135,7 @@ theorem isogenyPullback_eq_invConst_smul (φ : Isogeny E E') :
   rw [isogenyPullback_invariantDifferential_eq_smul, ← algebraMap_invConst, algebraMap_smul]
 
 
+variable (E) in
 theorem invConst_mulIsogeny (n : ℤ) (hn : n ≠ 0) : invConst (mulIsogeny E n hn) = n :=
   (algebraMap F E.toAffine.FunctionField).injective (by
     rw [algebraMap_invConst, isogCoeff_mulIsogeny, map_intCast])

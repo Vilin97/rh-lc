@@ -64,10 +64,12 @@ theorem exists_ptN_le {P : FDSec X} (hP : P ∈ holSub X la) :
     (le_iSup (fun p : FPt X => ENNReal.ofReal ((X p.1).pnorm (la p.1) (P p.1) p.2)) p)⟩
 
 
+omit [Fintype Cp] in
 theorem ptN_add_le (P Q : FDSec X) (z : Σ k, FD.Frame (X k).Ψ r) : ptN la (P + Q) z ≤ ptN la P z + ptN la Q z :=
   pnorm_add_le _ _ _ _ _
 
 
+omit [Fintype Cp] in
 theorem ptN_smul (a : ℂ) (P : FDSec X) (z : Σ k, FD.Frame (X k).Ψ r) : ptN la (a • P) z = ‖a‖ * ptN la P z :=
   pnorm_smul _ _ _ _ _
 

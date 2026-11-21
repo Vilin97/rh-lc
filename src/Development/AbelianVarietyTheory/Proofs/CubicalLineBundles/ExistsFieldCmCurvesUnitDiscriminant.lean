@@ -173,6 +173,7 @@ theorem finite_latticeJ (σ : K →+* ℂ) (hσ : ¬ ComplexEmbedding.IsReal σ)
 end CMCurves
 
 
+open CMCurves in
 theorem exists_field_cm_curves_unit_discriminant :
     ∀ (K : Type) [Field K] [NumberField K], Module.finrank ℚ K = 2 → ∀ (σ : K →+* ℂ),
     ¬ NumberField.ComplexEmbedding.IsReal σ →

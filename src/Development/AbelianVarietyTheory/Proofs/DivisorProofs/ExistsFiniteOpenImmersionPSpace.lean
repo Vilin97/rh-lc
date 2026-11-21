@@ -106,6 +106,7 @@ theorem isFinite_fromNormalization_int {X Y : Scheme.{u}} {o : CommRingCat.{u}}
     (RingHom.finite_algebraMap.mpr this)
 
 
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 theorem exists_finite_openImmersion_pSpace : ∀ (o : Type) [CommRing o] [IsNoetherianRing o]
     [Algebra.FiniteType ℤ o] (m : ℕ) (X : Scheme.{0}) (f : X ⟶ PSpace o m), IsIntegral X →
     Geo.Tor.IsNormalScheme X → LocallyOfFiniteType f → QuasiCompact f → IsSeparated f →

@@ -30,6 +30,7 @@ theorem map_ideal_prod {A B K : Type} [CommRing A] [CommRing B] [Fintype K] (f :
 end PsiInProd
 
 
+open PsiInPull PsiInPow PsiInProd in
 theorem psiIn_prod_of_isPowDeg : ∀ (R : Type) [CommRing R] [IsDomain R] (j : ℕ) (D D' : DegPre R)
     (pD : IsPowDeg D' D j) (x : D'.X) (J : Fin j → Ideal R),
     (∀ i, D.PsiIn (pD.xe x i) (J i)) → D'.PsiIn x (∏ i, J i) := by

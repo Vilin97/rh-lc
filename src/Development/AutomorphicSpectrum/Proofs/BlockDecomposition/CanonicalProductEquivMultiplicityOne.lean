@@ -179,6 +179,7 @@ theorem decWord_append {p q : ℕ} (Γ' : Fin p → Segment k) (Γ'' : Fin q →
   refine Fin.addCases (fun i => ?_) (fun i => ?_) i <;> simp
 
 
+set_option maxHeartbeats 1000000 in
 theorem inv_append (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hU : LUnlinkedIrr k) (hJ : LSegJacquet k) {p q : ℕ}
     (Γ' : Fin p → Segment k) (Γ'' : Fin q → Segment k) (y' : Fin p → IrrGL (k := k)) (y'' : Fin q → IrrGL (k := k))
     (hI : Inv Γ' y') (hne : ∀ j r, Γ' j ≠ Γ'' r) (heq : ∀ r s, Γ'' r = Γ'' s) (hc : IsCanon Γ'')
@@ -248,6 +249,7 @@ theorem inv_of_canon (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hU :
     rwa [Fin.append_castAdd_natAdd, Fin.append_castAdd_natAdd] at key
 
 
+set_option maxHeartbeats 1000000 in
 theorem groupCount : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k],
     GlobalTheory.Published.IrreducibleAdmissibleGL → LSegJacquet k → LUnlinkedIrr k → ∀ {h N : ℕ} (Γ : Fin h → Segment k)
     (y : Fin h → IrrGL (k := k)) (hd : ∑ a, (y a).1 = N), IsCanon Γ → (∀ i, IsLSeg (Γ i) (y i).rep) →

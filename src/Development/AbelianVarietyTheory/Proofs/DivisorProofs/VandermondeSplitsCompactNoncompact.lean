@@ -78,6 +78,7 @@ end GlobalTheory.PsCo.PcEF.VandermondeCompactNoncompactSplit
 namespace GlobalTheory.PsCo.PcEF
 
 
+open VandermondeCompactNoncompactSplit in
 theorem vandermonde_splits_compactNoncompact : VdmSplit := by
   intro n ε t
   rw [lhs_eq, wden_eq, mode_eq, mode_split, sign_eq, swap_eq, lhs_split]

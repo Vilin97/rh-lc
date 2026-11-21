@@ -22,6 +22,8 @@ theorem sumElim_weylM_map {F : Type} [Field F] {κ : Type} [Fintype κ] [Decidab
   simp [Matrix.map_neg, Matrix.neg_mulVec, dotProduct_comm b a', sub_eq_add_neg]
 
 
+set_option synthInstance.maxHeartbeats 200000 in
+set_option maxHeartbeats 1600000 in
 theorem darboux_change_rat : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (n d : ℕ)
     (JX : Matrix (Fin n) (Fin n) E) (JW : Matrix (Fin d) (Fin d) E)
     (c₁ c₂ : Darboux (symp (R := AF F) (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JX) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JW)) (Fin n × Fin d)),

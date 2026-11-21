@@ -173,6 +173,7 @@ theorem contDiff_entries {k : ℕ} (Xs : Fin k → Matrix (Fin n) (Fin n) ℂ) :
 end
 
 
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 theorem smoothOnH_iff_mem (hH : Jᴴ = J) (h2 : J * J = 1) (hσ : IsURepOn (UH J) σ) (v : H) :
     PI.UpqRep.SmoothOnH J (fun g => σ g v) ↔ v ∈ smSub J σ := by
   have hJ : IsUnit J := IsUnit.of_mul_eq_one _ h2

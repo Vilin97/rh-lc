@@ -71,6 +71,7 @@ theorem orthogonal_of_preserves {E : Type*} [NormedAddCommGroup E] [InnerProduct
 end GlobalTheory.CompanionTheory.Hypotheses₂.HCA.InvBasis
 
 
+open GlobalTheory.CompanionTheory.Hypotheses₂.HCA.InvBasis in
 theorem GlobalTheory.CompanionTheory.Hypotheses₂.HCA.exists_basis_lieOf_orthogonal : ∀ {n : ℕ} {G : Set (Matrix (Fin n) (Fin n) ℂ)} (_hG : IsLinRed G), ∃ (d : ℕ) (b : Fin d → Matrix (Fin n) (Fin n) ℂ), (∀ i, b i ∈ HCSS.lieOf G) ∧ LinearIndependent ℝ b ∧ (∀ X ∈ HCSS.lieOf G, ∃ r : Fin d → ℝ, X = ∑ i, r i • b i) ∧ ∀ k ∈ maxCpt G, ∃ O : Matrix (Fin d) (Fin d) ℝ, Oᵀ * O = 1 ∧ ∀ i, k * b i * k⁻¹ = ∑ l, O l i • b l := by
   open GlobalTheory.CompanionTheory.Hypotheses₂.HCA.InvBasis in
     intro n G hG

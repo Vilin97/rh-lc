@@ -79,6 +79,7 @@ def gen (O : Type) [CommRing O] : Set (RRing O n' (r + K)) := Gen O p K X.F (X.X
 def NN (O : Type) [CommRing O] : Submodule O (RRing O n' (r + K)) := Submodule.span O (X.gen p K O)
 
 
+omit [NeZero n'] [NeZero r] [NeZero K] in
 def bound (Crk : ℝ) : ℝ := (1 - Crk * (X.F.TT.card : ℝ) * (r : ℝ) ^ 2 * k (r := r) K / X.Y) *
     ∏ t ∈ X.F.TT, ((Nat.choose (X.deg t + (r + K) - 1) (r + K - 1) : ℕ) : ℝ)
 

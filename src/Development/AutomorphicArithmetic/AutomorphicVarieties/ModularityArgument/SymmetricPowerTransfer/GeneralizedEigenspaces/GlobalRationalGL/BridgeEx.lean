@@ -23,6 +23,7 @@ abbrev un (w : Plc L) : Pl (Lp L) := w.under (𝓞 (Lp L))
 abbrev cjF : Af L →+* Af L := conjFin (IsCMField.complexConj L).toRingEquiv
 
 
+variable (L) in
 structure RingBr where
   Δ : Lp L
   e : Lsq (Lp L) Δ ≃+* L
@@ -55,11 +56,13 @@ structure RingBr.Split (R : RingBr L) (w : Plc L) where
   K : ∀ (n : ℕ) (g : GL (Fin n) (Kv (un w))), GeneralLinearGroup.map (i : Kv (un w) →+* Kw w) g ∈ GlobalTheory.LFun.KGL w (n := n) ↔ g ∈ KO _ (Fin n)
 
 
+variable (L) in
 def SUA : Subgroup (UA L 2) := (GeneralLinearGroup.det.comp (UA L 2).subtype).ker
 
 abbrev mL {n : ℕ} (w : Plc L) (x : UA L n) : Matrix (Fin n) (Fin n) (Kw w) := (cLoc w x : GL (Fin n) (Kw w))
 
 
+variable (L) in
 structure Bridge extends RingBr L where
   bG : GA Δ ≃* finU L 3
   bG_loc : ∀ g w, mL w (bG g : UA L 3) = (g.1 (un w) : Matrix (Fin 3) (Fin 3) _).map (ρ _ w rfl)

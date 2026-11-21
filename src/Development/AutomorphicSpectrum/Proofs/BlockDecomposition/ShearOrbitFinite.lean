@@ -73,6 +73,7 @@ theorem continuous_shearGL (n : ℕ) {r : kˣ} (hr : valuation k (r : k) < 1) :
     exact (continuous_const.sub (hinv.smul hv)).congr fun b => (GlobalTheory.CompanionTheory.MirPair.ShearOrbit.shearGL_inv_val n b.1 (hne b)).symm
 
 
+omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 theorem continuous_levi (m : ℕ) : Continuous (levi k m) := by
   have hmat : Continuous (GlobalTheory.BZMir.glEmbHom k m) := by
     apply continuous_matrix

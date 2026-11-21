@@ -92,6 +92,7 @@ def infIncl (F : Type) [Field F] [NumberField F] : Ainf F →ₗ[F] AF F where
   map_smul' c _ := Prod.ext rfl (smul_zero c).symm
 
 
+set_option maxHeartbeats 2000000 in
 theorem infIdem_smul (D : D7) (z : AE D) :
     pairA D.host.F 1 0 • z = TensorProduct.map (infIncl D.host.F) LinearMap.id
       (Algebra.TensorProduct.map (fstA D.host.F) (AlgHom.id D.host.F D.host.E) z) := by
@@ -196,6 +197,7 @@ namespace GlobalTheory.ThetaLevel
 open Matrix
 
 
+set_option maxHeartbeats 1000000 in
 theorem thetaTr_level : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) →
     ∀ (S T : HSp D) (JA : Matrix (Fin T.rank) (Fin T.rank) D.host.E) (JB : Matrix (Fin S.rank) (Fin S.rank) D.host.E)
       (ξ : AF D.host.F ⊗[D.host.F] D.host.E), JA = T.gramᵀ →

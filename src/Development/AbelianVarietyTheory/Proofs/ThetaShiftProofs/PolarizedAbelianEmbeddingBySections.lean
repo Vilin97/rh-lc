@@ -575,6 +575,7 @@ section Group
 variable {S : Scheme.{0}} (A : Over S) [GrpObj A] {L : LB A.left} {N : ℕ}
 
 
+omit [GrpObj A] in
 theorem exists_isPullback_restrict {U : S.Opens} {φ : X' ⟶ A.left} {f' : X' ⟶ Y'}
     {g : Y' ⟶ U.toScheme} (sq : IsPullback φ f' A.hom (g ≫ U.ι)) :
     ∃ h : X' ⟶ (A.hom ⁻¹ᵁ U).toScheme, h ≫ (A.hom ⁻¹ᵁ U).ι = φ ∧

@@ -247,6 +247,7 @@ theorem lbIso_pullback_O1_toProj : LBIso ((O1 R M).pull (toProj f s hs)) L :=
 variable {f s}
 
 
+include hs in
 theorem exists_chart_of_iSup_nonzeroLocus (y : Y) : ∃ k, y ∈ L.U k :=
   (Opens.mem_iSup.1 (hs.ge (Set.mem_univ y))).elim fun _ h => exists_chart_of_mem_nonzeroLocus h
 
@@ -292,6 +293,7 @@ theorem toProj_eq_of_secMaps {t : Fin (M + 1) → L'.Sec} (ht : ⨆ i, nonzeroLo
   exact ⟨L'.U l ⊓ L.U k, ⟨hl, hk⟩, k, inf_le_right, l, inf_le_left, _, fun j => hw j (l, k)⟩
 
 
+include hs in
 theorem iSup_nonzeroLocus_of_secMaps (hL : L.IsLB) (hL' : L'.IsLB) {t : Fin (M + 1) → L'.Sec}
     {w : LB.Iso L L'} (hw : ∀ j, SecMaps w (s j) (t j)) : ⨆ i, nonzeroLocus (t i) = ⊤ :=
   (iSup_congr fun i => ((hw i).nonzeroLocus_eq hL hL').symm).trans hs
@@ -305,6 +307,7 @@ theorem toProj_secPull (g : Z ⟶ Y) :
 end
 
 
+variable (R M) in
 theorem toProj_coord :
     toProj (PSpace.str R M) (coord R M) (iSup_nonzeroLocus_coord R M) = 𝟙 (PSpace R M) :=
   (eq_toProj_of_locally _ (Category.id_comp _) fun y => (exists_mem_chart R M y).elim fun i hi =>

@@ -67,6 +67,7 @@ theorem longestWeyl_mul_self : (longestWeyl : GL (Fin n) F) * longestWeyl = 1 :=
   rw [this, map_one]
 
 
+omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
 theorem thetaT_eq_longestWeyl (g : GL (Fin n) F) :
     thetaT g = longestWeyl * theta g * longestWeyl := by
   have hs : sigma g = longestWeyl * transposeGL g * longestWeyl :=

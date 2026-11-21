@@ -105,6 +105,7 @@ theorem coeff_logTrunc_charpolyRev {S : Type} [CommRing S] [Algebra ℝ S] {N : 
 end LogTrace
 
 
+open LogTrace in
 theorem trace_pow_eq_sum_smul_coeff_charpolyRev_pow :
     ∀ n : ℕ, 1 ≤ n → ∃ c : ℕ → ℝ, ∀ (S : Type) [CommRing S] [Algebra ℝ S] (N : ℕ)
       (L : Matrix (Fin N) (Fin N) S),

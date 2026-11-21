@@ -70,6 +70,7 @@ section XiPf
 variable {D : Formalism.BasicNotions.D7}
 
 
+set_option maxHeartbeats 1000000 in
 theorem xiTyped_of_ctx {Zd : LocDat D} {u u' : D.what₂.Word} {F0 : FlagG (VS D) D.R.rS (CntLocal.Tn u)}
     {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)} (hctx : CtxP u u' F0 what₂) : XiTyped Zd u u' F0 what₂ := by
   intro γ w hγ p g hs k b hkb

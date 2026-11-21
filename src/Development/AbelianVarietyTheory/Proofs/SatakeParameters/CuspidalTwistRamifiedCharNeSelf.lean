@@ -20,6 +20,7 @@ variable {G V : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Add
   {ρ : Representation ℂ G V} (hρ : GlobalTheory.PRep.IsSmooth ρ) {H : Subgroup G} (hH : IsCompact (H : Set G))
 
 
+include hρ hH in
 theorem idem_comm (T : Module.End ℂ V) (hT : ∀ g, T * ρ g = ρ g * T) (v : V) :
     T (GlobalTheory.LocGL.idem hρ hH v) = GlobalTheory.LocGL.idem hρ hH (T v) := by
   have h1 : v - GlobalTheory.LocGL.idem hρ hH v ∈ GlobalTheory.PRep.twKer ρ H 1 := (GlobalTheory.LocGL.idem_eq_zero_iff hρ hH).1 (by
@@ -219,6 +220,7 @@ theorem no_eigvec (p : CuspSub E a) (ha : 1 ≤ a) (η : HChar E) (v : HeightOne
 end GlobalTheory.TwistRamified
 
 
+open GlobalTheory.CuspRep in
 theorem GlobalTheory.TwistRamified.twist_ne : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), 1 ≤ a →
     ∀ (π : CG E a) (η : HChar E) (v : HeightOneSpectrum (𝓞 E)) (B : Multiset ℂˣ), π.HasSat v B → ¬ η.UnrAt v →
     π.twist η ≠ π := by

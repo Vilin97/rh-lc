@@ -37,6 +37,7 @@ theorem kB_mem (q : {Λ // Λ ∈ Y.what₂ u'}) (γ : Formalism.L2.SG.Pf.Act.Ga
   exact γ.2
 
 
+variable (Y) in
 theorem isoG_lift (q : {Λ // Λ ∈ Y.what₂ u'}) (γ : Formalism.L2.SG.Pf.Act.GamL (Y.cs u') q) :
     RatLink X (γ.1 : X.B.I.GA) (Formalism.L2.SG.Pf.Act.isoG γ.1) ∧
       Formalism.L2.SG.Pf.Act.isoG γ.1 ∈ Formalism.L2.SG.Saturated.AutF q.1 (lf D (X.Fu u')) := by
@@ -47,6 +48,7 @@ theorem isoG_lift (q : {Λ // Λ ∈ Y.what₂ u'}) (γ : Formalism.L2.SG.Pf.Act
   exact ⟨hx, hβ⟩
 
 
+variable (Y) in
 def act (q : {Λ // Λ ∈ Y.what₂ u'}) (γ : Formalism.L2.SG.Pf.Act.GamL (Y.cs u') q) (t : TT Y u u') : TT Y u u' :=
   Formalism.L2.SG.Pf.SatGramActR.tmap (γ.1 : X.B.I.GA) (Formalism.L2.SG.Pf.Act.isoG γ.1)
     Formalism.L2.SG.Pf.SatGramActR.autFConjN_holds (isoG_lift Y q γ).1 t

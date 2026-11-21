@@ -333,6 +333,7 @@ theorem chartLat_le_nm (y : (Σ k, ι k) → Ω) (a : K → ℤ) (τ : ℕ) : ch
 end Mono
 
 
+open Mono in
 theorem G3.proof (hLR : LocalRep.Statement) (hCS : ConstantShift.Statement) (h6 : ArithmeticVolumeBig.Statement)
     (h7 : G7.Statement) (hPack : PackingStatement) : G3.Statement := by
   intro K _ ι _ Ω _ _ y D M L' P0 P0' II a iota hD hII har hb hM hL hLc ha hio hbd

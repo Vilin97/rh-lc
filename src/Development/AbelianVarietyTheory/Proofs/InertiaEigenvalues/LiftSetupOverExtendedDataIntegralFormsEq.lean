@@ -50,6 +50,7 @@ theorem vec_up {S T : HSp D} (B : Base S T) (Q ω) :
   exact kc% rfl
 
 
+open Classical in
 theorem vecAt_up {S T : HSp D} (B : Base S T) (Q φ) :
     (baseUp r B).vecAt (kc% Q) (kc% φ) = kc% (B.vecAt Q φ) := by
   show (baseUp r B).F.vec (baseUp r B).G (kc% (B.de.Q ∪ Q)) (kc% (B.locFn Q φ)) = _

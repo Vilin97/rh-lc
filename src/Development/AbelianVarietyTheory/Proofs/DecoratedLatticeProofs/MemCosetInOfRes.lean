@@ -310,6 +310,7 @@ theorem good_of_xi (hI : I.Ok) (ht : I.IsTw) {i : ℕ} (hi : i + 1 + 1 = B.R.m) 
   exact fun P hP => mem_cosetIn_of_res hi _ hP (degOne_of_ok hI a P).2 (Keep.res_of_xiAt hi (hI.sharp _) hh hx P hP)
 
 
+set_option maxHeartbeats 1600000 in
 theorem repY_mem (hI : I.Ok) (hA : A.Is) (hj : j + 1 = B.R.m) (β : Ch j) (hk : A.kb j β = TC.kStd X u (B.R.N j))
     (P : rowSG (B.primes X) I.sel (I.tup a)) : repY (A.p0 j β).1.2 ∈ cosetIn (A.p0 j β) P := by
   have hi : j ≤ B.R.m := by omega

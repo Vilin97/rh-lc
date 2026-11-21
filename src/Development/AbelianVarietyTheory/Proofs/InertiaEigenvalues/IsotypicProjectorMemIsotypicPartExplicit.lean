@@ -16,6 +16,7 @@ variable {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [Algebr
   [Fact l.Prime] [NormedAlgebra ℚ_[l] K] [NeZero e] [NeZero a] [TameDescentExponentData K l e a]
 
 
+omit [NeZero e] in
 theorem act_inertia_diagScale {P : PhiMod O K l e a ι} (Δ : Descent P) (ξ : rootsOfUnity e K)
     (s : ZMod a → K) (w : Vec K a ι) :
     Δ.act (TameGal.inertia ξ) (diagScale K a ι s w) =

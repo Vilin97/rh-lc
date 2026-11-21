@@ -105,6 +105,8 @@ private lemma span_map_toK_delSq_eq_nablaSq (K : Type) [Field K] [NumberField K]
   rw [← _root_.Formalism.GradedWeylDivisibility.lclosedeq_applyWord_map, _root_.Formalism.GradedWeylDivisibility.lclosedeq_hw_map]
 
 
+open NumberField MvPolynomial Pointwise in
+variable (K : Type) [Field K] [NumberField K] in
 theorem _root_.GlobalTheory.StdLatSpan.std_fg_span : ∀ (K : Type) [Field K] [NumberField K] (ι : Type)
     [Fintype ι] (n : ℕ) (lam : ι → _root_.Formalism.BasicNotions.DomWeight n),
     (_root_.Formalism.L2.DIV.nabStd K lam).FG ∧ (_root_.Formalism.L2.DIV.delStd K lam).FG ∧

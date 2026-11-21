@@ -107,6 +107,7 @@ private theorem mem_of_subtype_baseChange_eq_one_tmul {K L : Type} {V : Type*} [
   exact h2
 
 
+set_option maxHeartbeats 200000 in
 private theorem no_down (p : ℕ) [Fact p.Prime] (hK : (p : K) = 0) (hL : (p : L) = 0)
     (h : IsGrpPullback A' A (spMap (algebraMap K L)) φ) (d : ℕ) (hA : IsAbelianScheme A)
     (hd : SmoothOfRelativeDimension d A.hom) (e g : A ⟶ A) (e' g' : A' ⟶ A')

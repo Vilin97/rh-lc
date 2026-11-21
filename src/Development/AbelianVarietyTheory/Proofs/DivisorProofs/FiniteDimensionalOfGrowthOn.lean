@@ -72,6 +72,7 @@ theorem mul_mem_cuspOn {Z : Comp Xo c} {G G' : WTZ E} (hG : Even G.2) (hG' : Eve
       ((mem_holSub_iff _ _ _).1 (hg.2 σ hσ) k).1
 
 
+omit [NumberField E] [IsCMField E] in
 theorem even_nsmul {G : WTZ E} (hG : Even G.2) (n : ℕ) : Even (n • G).2 := by
   rw [Prod.smul_snd, nsmul_eq_mul]; exact hG.mul_left n
 

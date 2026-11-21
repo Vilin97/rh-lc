@@ -27,6 +27,7 @@ private theorem prI_map (i : I) (a : (∀ i, V i) →ₗ[F] (∀ i, V i)) (b : V
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 
+open Classical in
 private def inI (B : Type) [AddCommGroup B] [Module F B] (i : I) : V i ⊗[F] B →ₗ[F] (∀ i, V i) ⊗[F] B :=
   AlgebraTensorModule.map (LinearMap.single F V i) LinearMap.id
 

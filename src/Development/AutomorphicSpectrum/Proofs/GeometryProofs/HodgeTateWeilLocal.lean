@@ -172,6 +172,7 @@ end GlobalTheory.CompanionTheory.Ar.HTLift
 namespace GlobalTheory.CompanionTheory.Ar
 
 
+open GlobalTheory.CompanionTheory.Ar.HTLift in
 theorem htLat_exists_lifts : ∀ (X : Scheme.{0}) [IsLocallyNoetherian X] (Ω : Type) [Field Ω] [CharZero Ω] (ξ : Spec (CommRingCat.of Ω) ⟶ X), IsCptGen ξ → Flat.NormalCpt ξ → ∀ (G : Over X) [GrpObj G], IsSemiAbelian G → ∀ (L : LB G.left) (n : ℕ), 1 ≤ n → FullTorsion G ξ n → ∀ e, GenWeil G L ξ n e → ∀ (E : Type) [AddCommGroup E] [Module Ω E] (M : LieModel G ξ E) (q : Cpt ξ), (∃ U : X.Opens, q.1 ∈ U ∧ ∃ w : (Over.mk ξ ⟶ G) → Module.Dual Ω E, ∀ y, y ^ n = 1 → ∀ q' : Cpt ξ, q'.1 ∈ U → M.IsHTAt L n y q' (w y)) ∧ ∀ (y : Over.mk ξ ⟶ G) (w w' : Module.Dual Ω E), y ^ n = 1 → M.IsHTAt L n y q w → (M.IsHTAt L n y q w' ↔ ∃ u ∈ M.omLat q, w' = w + n • u) := by
   intro X _ Ω _ _ ξ hg hN G _ hS L n hn hF e hW E _ _ M q
   refine ⟨?_, fun y w w' hy hw => GlobalTheory.T.hodge_tate_weil_unique X Ω ξ hg hN G hS L n hn hF e hW E M y q w w' hy hw⟩

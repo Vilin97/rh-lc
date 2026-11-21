@@ -33,6 +33,7 @@ def IsTensorMap (p₁ : G →* G₁) (p₂ : G →* G₂) (π₁ : G₁ →* (H�
   DenseRange J ∧ ∀ g x y, π g (J (x ⊗ₜ y)) = J (π₁ (p₁ g) x ⊗ₜ π₂ (p₂ g) y)
 
 
+variable (H₁ H₂) in
 abbrev HTensor : Type := Completion (H₁ ⊗[ℂ] H₂)
 
 def hTensor (p₁ : G →* G₁) (p₂ : G →* G₂) (π₁ : G₁ →* (H₁ →L[ℂ] H₁)) (π₂ : G₂ →* (H₂ →L[ℂ] H₂)) :
@@ -146,6 +147,7 @@ variable {G G₁ G₂ H K W : Type} [Group G] [Group G₁] [Group G₂] [NormedA
   [NormedAddCommGroup K] [InnerProductSpace ℂ K] [AddCommGroup W] [Module ℂ W]
 
 
+variable (H) in
 def postRep (ρ : G →* (K →L[ℂ] K)) : Representation ℂ G (H →L[ℂ] K) where
   toFun g := (ContinuousLinearMap.compL ℂ H K K (ρ g)).toLinearMap
   map_one' := by ext; simp
@@ -198,6 +200,7 @@ def homPi (e : ∀ i, Γ i →* G) (δ : ∀ i, Γ i →* (Hs i →L[ℂ] Hs i))
   smul_mem' := fun c _ h => ⟨fun y => U.smul_mem c (h.1 y), fun i g y => by simp [h.2 i g y]⟩
 
 
+variable (Hs) in
 def postRepPi (ρ : G →* (K →L[ℂ] K)) : Representation ℂ G (ContinuousMultilinearMap ℂ Hs K) where
   toFun g := (ContinuousLinearMap.compContinuousMultilinearMapL ℂ Hs K K (ρ g)).toLinearMap
   map_one' := by ext; simp
@@ -222,10 +225,12 @@ variable {j : G₁ →* G} {e : ∀ i, Γ i →* G} {σ : Representation ℂ G�
   {T : W →ₗ[ℂ] ContinuousMultilinearMap ℂ Hs K}
 
 
+omit [Fintype ι] in
 theorem mem_homPi : Φ ∈ homPi e δ ρ U ↔
     (∀ y, Φ y ∈ U) ∧ ∀ i g y, Φ (Function.update y i (δ i g (y i))) = ρ (e i g) (Φ y) := Iff.rfl
 
 
+omit [Fintype ι] in
 theorem mem_homTensorPi : T ∈ homTensorPi j e σ δ ρ U ↔ (∀ w y, T w y ∈ U) ∧
     (∀ g w y, T (σ g w) y = ρ (j g) (T w y)) ∧
       ∀ i g w y, T w (Function.update y i (δ i g (y i))) = ρ (e i g) (T w y) :=
@@ -233,14 +238,17 @@ theorem mem_homTensorPi : T ∈ homTensorPi j e σ δ ρ U ↔ (∀ w y, T w y �
     fun h => ⟨fun w => ⟨h.1 w, fun i g => h.2.2 i g w⟩, fun g w => ContinuousMultilinearMap.ext (h.2.1 g w)⟩⟩
 
 
+omit [Fintype ι] in
 theorem homTensorPi_mono (h : U ≤ U') : homTensorPi j e σ δ ρ U ≤ homTensorPi j e σ δ ρ U' :=
   fun _ hT => ⟨fun w => ⟨fun y => h ((hT.1 w).1 y), (hT.1 w).2⟩, hT.2⟩
 
 
+omit [Fintype ι] in
 theorem multTensorPi_congr {W' : Type} [AddCommGroup W'] [Module ℂ W'] {σ' : Representation ℂ G₁ W'} (f : σ.Equiv σ') :
     multTensorPi j e σ δ ρ U = multTensorPi j e σ' δ ρ U := rank_homInto_congr f _ _
 
 
+omit [Fintype ι] in
 theorem toContinuousLinearMap_mem_homIn (h : Φ ∈ homPi e δ ρ U) (y : ∀ i, Hs i) (i : ι) :
     Φ.toContinuousLinearMap y i ∈ homIn (δ i) (ρ.comp (e i)) U :=
   ⟨fun _ => h.1 _, fun g x => by

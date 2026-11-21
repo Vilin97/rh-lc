@@ -56,6 +56,7 @@ theorem class_apply_same_degree {N : ℕ} {V : Type} [AddCommGroup V] [Module �
   exact (clsGL_apply π hl c).trans (cls_apply π hl c)
 
 
+omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 theorem class_apply_other_degree {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V)
     (y : IrrGL (k := k)) (hy : y.1 ≠ N) : cl0 π y = 0 := by
   unfold cl0

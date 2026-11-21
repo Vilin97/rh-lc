@@ -31,6 +31,7 @@ theorem unipCoord_apply (h : HermitianForm F E W) (v : Basis ι E W) (x₀ w₀ 
   rfl
 
 
+omit [NumberField E] in
 theorem continuous_unipCoord (h : HermitianForm F E W) (v : Basis ι E W) (x₀ w₀ : W) :
     Continuous (unipCoord h v x₀ w₀) := by
   refine continuous_pi fun w => ?_

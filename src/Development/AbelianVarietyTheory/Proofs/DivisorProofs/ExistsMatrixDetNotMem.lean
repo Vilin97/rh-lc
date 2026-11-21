@@ -374,6 +374,7 @@ private theorem span_singleton_smul_le_iff {R M : Type*} [CommRing R] [AddCommGr
     exact N'.smul_mem c (h x hx)
 
 
+omit [IsCMField E] in
 theorem trivAt_act {γ : Matrix (Fin n) (Fin n) E} {Λ : GenLat E n} {m : ℕ}
     (h : (actLat γ ⟨stdLat E n⟩).TrivAt m) (hΛ : Λ.TrivAt m) : (actLat γ Λ).TrivAt m := by
   obtain ⟨k1, hk1, h1, h1'⟩ := h
@@ -394,6 +395,7 @@ theorem trivAt_act {γ : Matrix (Fin n) (Fin n) E} {Λ : GenLat E n} {m : ℕ}
     exact this
 
 
+omit [IsCMField E] in
 theorem exists_levOK {γ : Matrix (Fin n) (Fin n) E} {Λ : GenLat E n} {N M : ℕ}
     (h : (actLat γ ⟨stdLat E n⟩).TrivAt 2) (hΛ : Λ.LevOK N M) : ∃ N', (actLat γ Λ).LevOK N' M := by
   obtain ⟨k, hk, -, h1'⟩ := h

@@ -17,6 +17,7 @@ namespace PositivityTheory.Rg.Rsw.L.LFixW
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [FiniteDimensional F E]
 
 
+variable (F E) in
 abbrev bE : Module.Basis (Fin (Module.finrank F E)) F E := Module.finBasis F E
 
 abbrev bV (v : HeightOneSpectrum (𝓞 F)) : Module.Basis (Fin (Module.finrank F E)) (Fv F v) (Fv F v ⊗[F] E) :=
@@ -42,6 +43,7 @@ theorem den_ne (x : E) : den x ≠ 0 := (Classical.choose_spec (exists_den x)).1
 theorem den_int (x : E) : IsIntegral ℤ ((den x : E) * x) := (Classical.choose_spec (exists_den x)).2
 
 
+variable (F E) in
 def trM : Matrix (Fin (Module.finrank F E)) (Fin (Module.finrank F E)) F := fun i j => Algebra.trace F E (bE F E i * bE F E j)
 
 theorem trM_det : (trM F E).det ≠ 0 := by

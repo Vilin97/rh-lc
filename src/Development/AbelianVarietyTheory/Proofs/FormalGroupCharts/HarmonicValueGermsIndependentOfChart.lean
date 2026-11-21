@@ -58,6 +58,7 @@ theorem chartVal_eq {y : FrPt Xo c S} (C : ChartAt Xo c y) (k : ℕ) {n : ℕ} (
   exact (Finsupp.mapDomain_apply_of_injective (ltEquiv Dw n).injective m ⟨ℓ.1, ℓ.2, b⟩).symm
 
 
+omit [StarRing (𝓞 E)] [Algebra ℚ S] in
 theorem exp_facts (G : FGLaw S (dL Dw)) (uvec : Lt1 Dw → Fin (dL Dw) → S)
     (hb : ∀ v : Fin (dL Dw) → S, ∃! a : Lt1 Dw → S, ∀ j, ∑ ℓ, a ℓ * uvec ℓ j = v j) (φ : Pt S 1 (dL Dw))
     (h : IsExpOf G.F uvec φ) :
@@ -90,6 +91,8 @@ theorem exp_facts (G : FGLaw S (dL Dw)) (uvec : Lt1 Dw → Fin (dL Dw) → S)
 end
 
 
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ GlobalTheory.FrameBiextId GlobalTheory.ChartCmp ReciprocityTheory.ChartRestriction.G.TB.WickVanishing Formalism.MainNotions.ModuliIntegralCharts.H1.FBIdPh in
+open ReciprocityTheory.ChartRestriction.G.TB (dLin transF IsInvPair dAct) in
 theorem chartVal_indep : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) [StarRing (𝓞 E)], (∀ a : 𝓞 E, star a = H.bar a) → ∀ (S : Type) [Field S] [Algebra c.F S] [Algebra ℚ S] (y : FrPt Xo c S) (C C' : ChartAt Xo c y) (k n : ℕ) (F : Fin n → LB.Sec (LPow Xo.univ.t.G Xo.univ.t.PP.L k (ptO Xo y.x))) (f : Fin n → MvPowerSeries (Fin 1 × Fin C.d) S) (f' : Fin n → MvPowerSeries (Fin 1 × Fin C'.d) S), (∀ b, IsGerm y C.d C.x C.B.A.act C.e C.wP k (F b) (f b)) → (∀ b, IsGerm y C'.d C'.x C'.B.A.act C'.e C'.wP k (F b) (f' b)) → ∀ (a : (E →+* ℂ) × ℕ → ℕ) (P : MvPolynomial (LtN Dw n) c.F), P ∈ harmA c a n → chartVal C k f P = chartVal C' k f' P := by
   intro E _ _ _ H Dw l Xo c _ hs S _ _ _ y C C' k n F f f' hf hf' a P hP
   have hAct := expActOf_of GlobalTheory.EigDir.linEig_holds

@@ -253,6 +253,7 @@ lemma key (hK : KyFanDet) {Wx Wy Wz : Matrix (Fin n) (Fin n) ℂ}
 end HornW
 
 
+open HornW in
 theorem horn_of (hK : KyFanDet) : Horn := by
   intro n X Y Z U ξ η ζ hX hY hZ hU hE
   obtain ⟨hξ, Wx, hWx, rfl⟩ := hX

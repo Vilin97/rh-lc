@@ -19,6 +19,7 @@ theorem locallyCompact_of_goodChar [T2Space R] {ψ : AddChar R ℂ} {O : Subring
   exact h.compact.locallyCompactSpace_of_mem_nhds_of_addGroup (h.isOpen.mem_nhds O.zero_mem)
 
 
+omit [CommRing R] [IsTopologicalRing R] in
 theorem integrable_pair {κ : Type} (μ : @Measure (κ → R) (borel _))
     (hμ : @IsFiniteMeasureOnCompacts _ (borel _) _ μ) (φ φ' : SB (κ → R)) :
     @Integrable _ _ _ _ (borel _) (fun x => (starRingEnd ℂ) ((φ : (κ → R) → ℂ) x) * (φ' : (κ → R) → ℂ) x) μ := by
@@ -35,6 +36,7 @@ theorem integrable_pair {κ : Type} (μ : @Measure (κ → R) (borel _))
   exact Continuous.integrable_of_hasCompactSupport hcont hsupp
 
 
+omit [CommRing R] [IsTopologicalRing R] in
 def form {κ : Type} (μ : @Measure (κ → R) (borel _)) (hμ : @IsFiniteMeasureOnCompacts _ (borel _) _ μ) :
     SB (κ → R) →ₗ⋆[ℂ] SB (κ → R) →ₗ[ℂ] ℂ :=
   LinearMap.mk₂'ₛₗ (starRingEnd ℂ) (RingHom.id ℂ) (fun φ φ' => pair μ φ φ')
@@ -64,6 +66,7 @@ def form {κ : Type} (μ : @Measure (κ → R) (borel _)) (hμ : @IsFiniteMeasur
       simp [mul_left_comm])
 
 
+omit [CommRing R] [IsTopologicalRing R] in
 theorem pair_conj {κ : Type} (μ : @Measure (κ → R) (borel _)) (φ φ' : (κ → R) → ℂ) :
     (starRingEnd ℂ) (pair μ φ φ') = pair μ φ' φ := by
   show (starRingEnd ℂ) (∫ x, (starRingEnd ℂ) (φ x) * φ' x ∂μ) = ∫ x, (starRingEnd ℂ) (φ' x) * φ x ∂μ
@@ -73,6 +76,7 @@ theorem pair_conj {κ : Type} (μ : @Measure (κ → R) (borel _)) (φ φ' : (κ
   rw [map_mul, Complex.conj_conj, mul_comm]
 
 
+omit [IsTopologicalRing R] in
 theorem pair_pos {κ : Type} (μ : @Measure (κ → R) (borel _))
     (hμ : @Measure.IsAddHaarMeasure _ _ _ (borel _) μ) (φ : SB (κ → R)) (hφ : φ ≠ 0) :
     0 < (pair μ (φ : (κ → R) → ℂ) φ).re := by

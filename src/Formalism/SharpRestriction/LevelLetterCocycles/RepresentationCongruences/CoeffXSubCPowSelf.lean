@@ -147,6 +147,7 @@ theorem crisMap_coords (W : LocWach PD LL O v n) {T₁ T₂ : LocLat G Qp LL O} 
   exact Finset.sum_comm
 
 
+set_option maxHeartbeats 1000000 in
 theorem lift2a [NeZero n] [Fintype (K →ₐ[Qp] LL)] [IsDomain O] [IsDiscreteValuationRing O]
     [IsAdicComplete (IsLocalRing.maximalIdeal O) O] (W : LocWach PD LL O v n)
     {T₁ T₂ : LocLat G Qp LL O} (F : LatHom T₁.L T₂.L) {b w S η m : ℕ} {up : ZMod n → Bool}

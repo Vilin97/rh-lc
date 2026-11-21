@@ -62,6 +62,7 @@ theorem mem_coneIdeal_iff (y : Fin N → Ω) (g : MvPolynomial (Fin N) K) :
 theorem isPrime_coneIdeal (y : Fin N → Ω) : (coneIdeal K y).IsPrime := RingHom.ker_isPrime _
 
 
+attribute [local instance] MvPolynomial.gradedAlgebra in
 theorem isHomogeneous_coneIdeal (y : Fin N → Ω) :
     (coneIdeal K y).IsHomogeneous (homogeneousSubmodule (Fin N) K) := fun d g hg => by
   have e : ((DirectSum.decompose (homogeneousSubmodule (Fin N) K) g d : _) : MvPolynomial (Fin N) K) =
@@ -320,6 +321,7 @@ theorem vdm_smul {R : Type} [CommRing R] (t : R) (la : ι → Fin N → R) :
 def stdWt (ι : Type) (N : ℕ) : ι → Fin N → ℤ := fun _ i => (N : ℤ) - 1 - (i : ℕ)
 
 
+omit [Fintype ι] in
 theorem strictAnti_stdWt (τ : ι) : StrictAnti (stdWt ι N τ) := fun i l h => by
   have : (i : ℕ) < l := h
   simp only [stdWt]; omega

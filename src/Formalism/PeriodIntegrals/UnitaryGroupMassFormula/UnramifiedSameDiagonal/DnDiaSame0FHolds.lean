@@ -23,6 +23,8 @@ theorem inv_mulVec_self {E : Type} [Field E] {n : ℕ} (g : GL (Fin n) E) (z : F
   rw [Matrix.mulVec_mulVec, ← Units.val_mul, inv_mul_cancel, Units.val_one, Matrix.one_mulVec]
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 4000000 in
 theorem dnk_latP_smul (T : Forms0 D u) (v : (D.mem u).A.vT) (c c1 c2 : (D.mem u).C.cls 0)
     (g : Module.Dual ((D.mem u).A.Fv v) ((D.fm u).lk 0 v c)) (μ : (D.mem u).A.Fv v) (hμ : μ ≠ 0)
     (γ γ' : GL (Fin (D.R.N 0)) D.host.E)
@@ -61,6 +63,8 @@ theorem dnk_latP_smul (T : Forms0 D u) (v : (D.mem u).A.vT) (c c1 c2 : (D.mem u)
   exact localization_smul_cancel _ γ γ' eq1
 
 
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem dn_same_loc (T : Forms0 D u) (v : (D.mem u).A.vT) (k : ℤ) (hμ : ((k : ℤ) : (D.mem u).A.Fv v) ≠ 0)
     (c c2 c1 c3 c1' : (D.mem u).C.cls 0) (γd : GL (Fin (D.R.N 0)) D.host.E) (hγd : γd ∈ UJ (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _)))
     (hLc : mulLat (γd : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) (clsCrd D u 0 (Nat.zero_le _) c2) = clsCrd D u 0 (Nat.zero_le _) c)
@@ -190,6 +194,8 @@ theorem dn_same_loc (T : Forms0 D u) (v : (D.mem u).A.vT) (k : ℤ) (hμ : ((k :
   rw [pr_congr T v c3 ⟨_, hmem2⟩ ⟨_, hmem⟩ (congrArg (fun t => (algebraMap (𝓞 D.host.F) (𝓞 D.host.E) r) • t) eΓz), hval, pr_congr T v c1' ⟨(algebraMap (𝓞 D.host.F) (𝓞 D.host.E) r) • z, Submodule.smul_mem _ _ hz⟩ ⟨_, hz2⟩ eback.symm, hd]
 
 
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem dn_same_one (T : Forms0 D u) (v : (D.mem u).A.vT) (a : ((D.mem u).A.Fv v)ˣ) (k : ℤ)
     (hk : (k : (D.mem u).A.Fv v) = a) (δ : UPts (sigD D) (gramN D 0 (Nat.zero_le _)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F))
     (hδ : IsDia T.cls0.lev (T.atT.eV v).1 (T.atT.eV v).2 k δ) (c c2 c1 c3 : (D.mem u).C.cls 0)
@@ -264,6 +270,8 @@ theorem dn_same_one (T : Forms0 D u) (v : (D.mem u).A.vT) (a : ((D.mem u).A.Fv v
   exact mul_mem hm κd.2
 
 
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem dnDiaSame0F_holds (T : Forms0 D u) : DnDiaSame0F T := by
   intro v a k hk δ hδ c γd hγd κd hrel
   obtain ⟨hLc, hLd⟩ := diamond_lattice_transport T v k δ hδ c ((D.fm u).dil 0 v a c) γd hγd κd hrel

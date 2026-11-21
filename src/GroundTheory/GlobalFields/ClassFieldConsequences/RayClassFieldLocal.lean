@@ -22,16 +22,22 @@ variable {k : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchi
   [IsGalois k M] [IsMulCommutative (M ≃ₐ[k] M)]
 
 
+omit [CharZero k] [IsGalois k M] [IsMulCommutative (M ≃ₐ[k] M)] [ValuativeRel M] [TopologicalSpace M]
+  [IsNonarchimedeanLocalField M] [ValuativeExtension k M] [FiniteDimensional k M] in
+variable (k) in
 theorem exists_ord_eq_one_units : ∃ π : kˣ, ord (π : k) = 1 := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[k]
   have h0 : (ϖ : k) ≠ 0 := by exact_mod_cast hϖ.ne_zero
   exact ⟨Units.mk0 _ h0, ord_uniformizer hϖ⟩
 
 
+omit [CharZero k] [IsGalois k M] [IsMulCommutative (M ≃ₐ[k] M)] [ValuativeRel M] [TopologicalSpace M]
+  [IsNonarchimedeanLocalField M] [ValuativeExtension k M] [FiniteDimensional k M] in
 theorem ord_zpow_units {π : kˣ} (hπ : ord (π : k) = 1) (n : ℤ) : ord ((π ^ n : kˣ) : k) = n := by
   rw [Units.val_zpow_eq_zpow_val, ord_zpow π.ne_zero, hπ, mul_one]
 
 
+omit [ValuativeRel M] [TopologicalSpace M] [IsNonarchimedeanLocalField M] [ValuativeExtension k M] in
 theorem natCard_quotient_range_normUnits :
     Nat.card (kˣ ⧸ (normUnits k M).range) = Module.finrank k M := by
   have e : kˣ ⧸ (normUnits k M).range ≃* (M ≃ₐ[k] M) :=
@@ -99,6 +105,7 @@ theorem isEquiv_valuation_valued :
   ValuativeRel.isEquiv _ _
 
 
+variable {v} in
 theorem mem_unitFiltrationUnits_zero_iff_valued {x : (v.adicCompletion K)ˣ} :
     x ∈ unitFiltrationUnits (v.adicCompletion K) 0 ↔ Valued.v (x : v.adicCompletion K) = 1 := by
   rw [mem_unitFiltrationUnits_zero_iff]

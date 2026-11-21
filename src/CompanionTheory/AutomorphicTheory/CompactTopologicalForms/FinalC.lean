@@ -21,6 +21,7 @@ theorem nfTopDomAll_of_tieC (hT : CompanionTheory.NFCpt.NFTieHatC) : NFTopDomAll
   CompanionTheory.NFCpt.nfTopDomAll_of_C hT LimitNormalForms.normal_form_hat_product_bessel LimitNormalForms.normal_form_jacobi_cutoff
 
 
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 theorem thmBpAt_dom (h3 : NFTopDomAll)
     (Cb C₃ CΛ C₀ : ℝ) (hC₃ : 0 ≤ C₃) (hCΛ : 0 ≤ CΛ) (hC₀ : 1 / 2 ≤ C₀) :
     ∃ C₄ c₃ Cc Cc' Cc'' : ℝ, ∀ (Wp Wq : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
@@ -66,6 +67,7 @@ open scoped ENNReal
 noncomputable section
 
 
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 theorem thmBpAt_eqR_dom (h3 : NFTopDomAll)
     (Cb C₃ CΛ C₀ : ℝ) (hC₃ : 0 ≤ C₃) (hCΛ : 0 ≤ CΛ) (hC₀ : 1 / 2 ≤ C₀) :
     ∃ C₄ c₃ Cc Cc' Cc'' : ℝ, ∀ (P : M.Par) (Wp Wq : Type)

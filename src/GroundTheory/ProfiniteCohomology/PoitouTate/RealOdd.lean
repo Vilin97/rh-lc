@@ -28,6 +28,7 @@ variable {F : Type} [Group F] [TopologicalSpace F] [IsTopologicalGroup F] [Finty
   (hn : Odd n) (B : Rep.{0} (ULift.{0} ℤ) F) [IsDiscreteRep B] (hB : ∀ b : B, n • b = 0)
 
 
+include hn hB in
 theorem isZero_cohomology_of_card_two_of_odd [CompactSpace F] [TotallyDisconnectedSpace F]
     (hcard : Fintype.card F = 2) (m : ℕ) : IsZero (cohomology B (m + 1)) := by
   refine @ModuleCat.isZero_of_subsingleton _ _ _ ⟨fun x y => ?_⟩
@@ -47,6 +48,8 @@ theorem isZero_cohomology_of_card_two_of_odd [CompactSpace F] [TotallyDisconnect
   rw [hz x, hz y]
 
 
+omit [TopologicalSpace F] [IsTopologicalGroup F] [IsDiscreteRep B] in
+include hn hB in
 theorem exists_norm_of_orderTwo_of_odd {c : F} (hG : ∀ g : F, g = 1 ∨ g = c) (hc : c ≠ 1) :
     ∀ x ∈ B.ρ.invariants, ∃ m, B.ρ.norm m = x := by
   intro x hx
@@ -64,6 +67,7 @@ variable {n : ℕ} (hn : Odd n) (A : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutsi
   (hA : ∀ a : A, n • a = 0)
 
 
+include hn hA in
 theorem isZero_cohomology_gsReal_of_odd (w : {v : InfinitePlace K.1 // v.IsReal}) (m : ℕ) :
     IsZero (cohomology (Rep.res (gsRealFamily S ιr w).toMonoidHom A) (m + 1)) := by
   have key := isZero_cohomology_of_card_two_of_odd hn (Rep.res (gsRealFamily S ιr w).toMonoidHom A) hA
@@ -72,6 +76,8 @@ theorem isZero_cohomology_gsReal_of_odd (w : {v : InfinitePlace K.1 // v.IsReal}
   exact key
 
 
+omit [IsDiscreteRep A] in
+include hn hA in
 theorem exists_norm_gsReal_of_odd (w : {v : InfinitePlace K.1 // v.IsReal}) :
     ∀ x ∈ (Rep.res (gsRealFamily S ιr w).toMonoidHom A).ρ.invariants,
       ∃ m, (Rep.res (gsRealFamily S ιr w).toMonoidHom A).ρ.norm m = x := by
@@ -82,6 +88,7 @@ theorem exists_norm_gsReal_of_odd (w : {v : InfinitePlace K.1 // v.IsReal}) :
   exact key
 
 
+include hn hA in
 theorem bijective_tateForget_gs_of_odd (m : ℕ) :
     Function.Bijective (tateForget (gsFinFamily S ιs) (gsRealFamily S ιr) A
       (fun v => Rep.res (gsFinFamily S ιs v).toMonoidHom A) (fun _ => 𝟙 _)
@@ -94,6 +101,7 @@ theorem bijective_tateForget_gs_of_odd (m : ℕ) :
   exact (ConcreteCategory.isIso_iff_bijective _).1 this
 
 
+include hn hA in
 theorem bijective_tateForget_gs_of_odd' {m : ℕ} (hm : 1 ≤ m) :
     Function.Bijective (tateForget (gsFinFamily S ιs) (gsRealFamily S ιr) A
       (fun v => Rep.res (gsFinFamily S ιs v).toMonoidHom A) (fun _ => 𝟙 _)
@@ -139,6 +147,8 @@ def gsOddTrace : tateCompactCohomologyRes (gsFinFamily S ιs) (gsRealFamily S ι
       (fun w => Rep.res (gsRealFamily S ιr w).toMonoidHom (gsRoots S N)) (fun _ => 𝟙 _) 3).hom.toAddMonoidHom
 
 
+omit [Fintype S] [NeZero N] in
+include hodd in
 theorem gsReal_two_eq_zero_of_odd (w : {v : InfinitePlace K.1 // v.IsReal})
     (x : cohomology (Rep.res (gsRealFamily S ιr w).toMonoidHom (gsRoots S N)) 2) : x = 0 :=
   (ModuleCat.subsingleton_of_isZero
@@ -153,6 +163,7 @@ theorem gsOddTrace_apply (z : tateCompactCohomologyRes (gsFinFamily S ιs) (gsRe
   rfl
 
 
+set_option maxHeartbeats 1000000 in
 theorem gsOddTrace_localToCompact
     (ξ : ptTLocal (gsFinFamily S ιs) (gsRealFamily S ιr) (gsRoots S N) 2) :
     zmodToQZ N (gsOddTrace S ιr ιs hS hodd ((ptTLocalToCompact (gsFinFamily S ιs) (gsRealFamily S ιr)
@@ -178,6 +189,8 @@ theorem gsOddTrace_localToCompact
     _ = _ := congrArg (∑ v, gsLocalInvRootsQZ S ιs N v (ξ.1 v) + ·) h2.symm
 
 
+set_option maxHeartbeats 1000000 in
+include hS in
 theorem bijective_tateCompactDualityMap_gs_of_odd (M : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S))
     [IsDiscreteRep M] [Finite M] (hM : ∀ m : M, N • m = 0) {r s : ℕ} (h : r + s = 3) (hs : 1 ≤ s) :
     Function.Bijective (tateCompactDualityMap (gsFinFamily S ιs) (gsRealFamily S ιr) (gsRoots S N) h
@@ -190,6 +203,7 @@ theorem bijective_tateCompactDualityMap_gs_of_odd (M : Rep.{0} (ULift.{0} ℤ) (
     (gsFinFamily S ιs) (gsRealFamily S ιr) (dualEvalPairing (gsRoots S N) M) _ y x))
 
 
+include hS hodd in
 theorem gsOddTatePoitouTateHypotheses [Nonempty S] :
     TatePoitouTateHypotheses (gsFinFamily S ιs) (gsRealFamily S ιr) (gsRoots S N)
       (gsOddTrace S ιr ιs hS hodd) (gsLocalInvRootsQZ S ιs N) (gsRealInvRootsQZ S ιr N) := by

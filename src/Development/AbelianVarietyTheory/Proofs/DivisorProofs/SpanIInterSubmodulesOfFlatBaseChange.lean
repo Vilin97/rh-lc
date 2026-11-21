@@ -69,6 +69,7 @@ theorem tensorMap_tmul {R R₁ K L : Type} [CommRing R] [CommRing R₁] [CommRin
 end GlobalTheory.Desc.FlatInter
 
 
+open GlobalTheory.Desc.FlatInter in
 theorem GlobalTheory.Desc.spanBy_iInter_of_flat : ∀ (R R₁ K L : Type) [CommRing R] [CommRing R₁] [CommRing K] [CommRing L] [Algebra R R₁] [Algebra R K] [Module.Flat R R₁] (θ : K →+* L) (c : R₁ →+* L), (∀ a : R, θ (algebraMap R K a) = c (algebraMap R R₁ a)) → (∀ (n : ℕ) (u : Fin n → K) (r : Fin n → R₁), ∑ j, c (r j) * θ (u j) = 0 → ∑ j, u j ⊗ₜ[R] r j = 0) → ∀ (J : Type) [Finite J] [Nonempty J] (N : J → Submodule R K), spanBy c (θ '' ⋂ j, (N j : Set K)) = ⋂ j, spanBy c (θ '' (N j : Set K)) := by
   intro R R₁ K L _ _ _ _ _ _ _ θ c hc hinj J _ _ N
   let Φ := tensorMap θ c hc

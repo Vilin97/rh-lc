@@ -14,6 +14,7 @@ def openFiniteIndex : Set (Subgroup G) :=
   {H | IsOpen (H : Set G) ∧ H.FiniteIndex}
 
 
+variable {G} in
 def quotientMapOfLE {H H' : Subgroup G} (h : H ≤ H') : G ⧸ H →* G ⧸ H' :=
   QuotientGroup.map H H' (MonoidHom.id G) h
 

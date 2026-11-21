@@ -67,6 +67,7 @@ theorem prodTerm_eq_mul_char (m : Fin n → A.X) (v : A.V) :
   ring
 
 
+variable {a} in
 theorem prodTerm_add_Pw_y (ha : ∑ i, a i = 0) (m : Fin n → A.X) (y : A.X) (v : A.V) :
     A.prodTerm th w a (fun i => m i + y) v =
       (A.psi y * eTwoPi (v.1 y) * eTwoPi (w * A.q y)) ^ n * A.prodTerm th w a m (v + A.Pw w (La.mk y 0 0)) := by
@@ -82,6 +83,7 @@ theorem prodTerm_add_Pw_y (ha : ∑ i, a i = 0) (m : Fin n → A.X) (y : A.X) (v
     Fintype.card_fin]
 
 
+variable {a th} in
 theorem prodTerm_add_periodTranslation_lattice (h : th ∈ A.Theta 1 0) (ha : ∑ i, a i = 0) (m : Fin n → A.X) (l : A.abelian₂) (v : A.V) :
     A.prodTerm th w a m (v + A.P0 (La.mk 0 0 l)) = A.ah l v.2 ^ n * A.prodTerm th w a m v := by
   have h0 : ∀ s : Finset (Fin n), ∑ i ∈ s, A.H (a i).2 l = A.H (∑ i ∈ s, (a i).2) l := fun s => by
@@ -102,6 +104,7 @@ theorem prodTerm_add_periodTranslation_lattice (h : th ∈ A.Theta 1 0) (ha : �
     Fintype.card_fin]
 
 
+variable {a} in
 theorem term_prodCoeff (ha : ∑ i, a i = 0) (α μ : A.X) (v : A.V) :
     A.term n α (A.prodCoeff th w a α) μ v * eTwoPi (w * A.exponent n α μ) =
       ∑' m : {m : Fin n → A.X // ∑ i, m i = α + n • μ}, A.prodTerm th w a m v := by
@@ -207,6 +210,7 @@ theorem exists_translates_ne_zero (h0 : th ≠ 0) {j : ℕ} (hj : 2 ≤ j) (v : 
   · exact Fin.cases hx2 (fun _ => hx1) i
 
 
+omit hT h hw in
 theorem exists_Sum_ne_zero_at (A : AnArc O) {T₀ : ℝ} (hT : A.IsConvLine T₀) {th₁ : (Fin A.gB → ℂ) → ℂ}
     (h : th₁ ∈ A.Theta 1 0) (h0 : th₁ ≠ 0) {w : ℂ} (hw : T₀ < w.im) {j : ℕ} (hj : 2 ≤ j) (v : A.V) :
     ∃ α, ∃ th ∈ A.Theta j α, A.Sum j α th w v ≠ 0 := by

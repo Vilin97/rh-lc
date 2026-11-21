@@ -19,6 +19,7 @@ open scoped nonZeroDivisors
 namespace GlobalTheory.RawThetaSup
 
 
+set_option maxHeartbeats 800000 in
 theorem exists_small_inv (K : Type) [Field K] [NumberField K] [IsTotallyComplex K] (ξ : K) (x : ℝ) (hx : 0 < x)
     (hξ : ∀ τ : K →+* ℂ, ‖τ ξ‖ = x) (A B : FractionalIdeal (𝓞 K)⁰ K)
     (h : FractionalIdeal.spanSingleton (𝓞 K)⁰ ξ * A * B * (differentIdeal ℤ (𝓞 K) : FractionalIdeal (𝓞 K)⁰ K) = 1)

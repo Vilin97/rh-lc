@@ -119,6 +119,8 @@ end GlobalTheory.GoodSS.Heart
 namespace GlobalTheory.GoodSS.Heart
 
 
+set_option maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem hL_separable_good : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
     {A3 : Formalism.L2.DIV.FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks]
     [Algebra Ks D.what₂.LL] (Rl : Formalism.IndefR.Links.RealDat3 D A3 Ks) (F : Formalism.IndefR.Links.Face3 D A3)

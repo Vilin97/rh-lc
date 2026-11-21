@@ -58,6 +58,7 @@ theorem dense_F : DenseRange (algebraMap F (Af F)) := by
 variable [IsTotallyReal F]
 
 
+open Formalism.L2.SG.Pf.StdChar in
 theorem eq_psiStd (ψ : AddChar (AF F) ℂ) (h1 : IsCharAF F ψ) (h2 : Formalism.L2.SG.LocVol.IsStdChar ψ) (x : AF F) :
     ψ x = psiStd F x := by
   obtain ⟨hcont, -, htriv, -⟩ := h1
@@ -124,6 +125,7 @@ def LocTrDual : Prop :=
       Formalism.L2.SG.LocVol.dV v * x ∈ v.adicCompletionIntegers F
 
 
+open Formalism.L2.SG.Pf.StdChar in
 theorem condAllTR_of (hL : LocTrDual) (F : Type) [Field F] [NumberField F] [IsTotallyReal F]
     (ψ : AddChar (AF F) ℂ) (h1 : IsCharAF F ψ) (h2 : Formalism.L2.SG.LocVol.IsStdChar ψ)
     (v : HeightOneSpectrum (𝓞 F)) (x : Fv F v) :

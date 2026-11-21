@@ -71,6 +71,7 @@ theorem isNilpotent_of_trace_pow [CharZero k] (A : Matrix (Fin n) (Fin n) k)
 variable [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem trace_pow_eq {Z : Subalgebra k (Matrix (Fin n) (Fin n) k)} {x x₀ : Matrix (Fin n) (Fin n) k}
     (h : pZ Z x = pZ Z x₀) (i : ℕ) (hi : i < 2 * n + 1) : trace (x ^ i) = trace (x₀ ^ i) := by
   have h1 : ((1 : Z) : Matrix (Fin n) (Fin n) k) =
@@ -117,6 +118,7 @@ theorem isNilpotent_aeval_charpoly [CharZero k] {Z : Subalgebra k (Matrix (Fin n
     Matrix.trace_zero]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem pow_eq_zero_of_isNilpotent {N : Matrix (Fin n) (Fin n) k} (hN : IsNilpotent N) : N ^ n = 0 := by
   have h := isNilpotent_charpoly_sub_pow_of_isNilpotent hN
   have h0 : N.charpoly - X ^ Fintype.card (Fin n) = 0 := h.eq_zero

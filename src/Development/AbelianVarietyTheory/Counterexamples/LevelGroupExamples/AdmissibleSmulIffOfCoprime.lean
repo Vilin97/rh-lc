@@ -33,6 +33,12 @@ theorem _root_.GlobalTheory.LevelCoverDatum.pd_pos (d : _root_.Formalism.L2.Pj.D
   omega
 
 
+set_option autoImplicit false in
+open NumberField in
+open CategoryTheory in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H}
+  {l : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H} in
+variable {Xo : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Moduli Dw l} {c : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Coeff l} {n : ℕ} in
 theorem _root_.GlobalTheory.LevelCoverDatum.half_mul_conj (d : _root_.Formalism.L2.Pj.DeltaDat Xo c n) (h : d.IsLev) :
     d.I * d.I.map (H.bar : 𝓞 E →+* 𝓞 E) = Ideal.span {(d.pd : 𝓞 E)} := by
   obtain ⟨-, hM, -, hMb, -⟩ := h
@@ -46,6 +52,13 @@ theorem _root_.GlobalTheory.LevelCoverDatum.half_mul_conj (d : _root_.Formalism.
   exact mul_left_cancel₀ hne h2
 
 
+set_option autoImplicit false in
+open NumberField in
+open CategoryTheory in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H}
+  {l : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H} in
+variable {Xo : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Moduli Dw l} {c : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Coeff l} {n : ℕ} in
+set_option synthInstance.maxHeartbeats 200000 in
 theorem _root_.GlobalTheory.LevelCoverDatum.isLev_smul (d : _root_.Formalism.L2.Pj.DeltaDat Xo c n) (h : d.IsLev) (a : d.c₂.F) (ha : a ≠ 0) :
     _root_.Formalism.L2.Pj.DeltaDat.IsLev { d with cδ := a • d.cδ } := by
   obtain ⟨h1, h2, h3, h4, h5, h6, h7, h8, h9⟩ := h
@@ -79,6 +92,12 @@ theorem _root_.GlobalTheory.LevelCoverDatum.zetaM_cover (d : _root_.Formalism.L2
   field_simp
 
 
+set_option autoImplicit false in
+open NumberField in
+open CategoryTheory in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H}
+  {l : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H} in
+variable {Xo : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Moduli Dw l} {c : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Coeff l} {n : ℕ} in
 theorem _root_.GlobalTheory.LevelCoverDatum.noDelta_w (nab : _root_.Formalism.L2.Pj.NabV Xo c)
     (m : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.SABMap Xo.univ.t Xo.univ.t (𝟙 Xo.X)) (x0 : Fin n → Dw.La) :
     (_root_.Formalism.L2.Pj.noDelta Xo c nab m n).w x0 = _root_.Formalism.L2.Pj.x0Dat c x0 := by
@@ -89,6 +108,12 @@ theorem _root_.GlobalTheory.LevelCoverDatum.noDelta_w (nab : _root_.Formalism.L2
   rfl
 
 
+set_option autoImplicit false in
+open NumberField in
+open CategoryTheory in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H}
+  {l : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H} in
+variable {Xo : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Moduli Dw l} {c : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Coeff l} {n : ℕ} in
 theorem _root_.GlobalTheory.LevelCoverDatum.noDelta_etaOK (nab : _root_.Formalism.L2.Pj.NabV Xo c)
     (m : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.SABMap Xo.univ.t Xo.univ.t (𝟙 Xo.X)) :
     (_root_.Formalism.L2.Pj.noDelta Xo c nab m n).EtaOK ↔ (∀ a, (Xo.univ.eta a).left ≫ m.φ = (Xo.univ.eta a).left) ∧

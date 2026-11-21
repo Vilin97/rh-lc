@@ -152,6 +152,7 @@ theorem higherDirectImagesVanish_of_isAffineHom (g : Y ⟶ X) [IsAffineHom g] (G
     exact (cohOn.toH' G (g ⁻¹ᵁ W) n).symm.injective.subsingleton
 
 
+variable (G V n) in
 theorem cohOn.pull_id_bijective [IsAffineHom g] [G.IsQuasicoherent] :
     Function.Bijective (cohOn.pull hσ (𝟙 ((Scheme.Modules.pushforward g).obj G))
       (le_refl (g ⁻¹ᵁ V)) n) :=
@@ -159,6 +160,7 @@ theorem cohOn.pull_id_bijective [IsAffineHom g] [G.IsQuasicoherent] :
     (SheafPull.pushComparison_bijective.{u, u} (higherDirectImagesVanish_of_isAffineHom g G) n V)
 
 
+variable (F n) in
 theorem cohOn.pull_restrict_bijective [IsOpenImmersion g] (h : W ≤ g ⁻¹ᵁ V) (h' : V ≤ g ''ᵁ W) :
     Function.Bijective
       (cohOn.pull hσ (G := F.restrict g) ((Scheme.Modules.restrictAdjunction g).unit.app F) h n) :=
@@ -187,6 +189,7 @@ theorem cohOn.pushforwardEquiv_apply (V : X.Opens) (n : ℕ)
       cohOn.pull (σ := RingHom.id R) hg (𝟙 _) (le_refl (g ⁻¹ᵁ V)) n x := rfl
 
 
+variable {G} in
 theorem cohOn.pushforwardEquiv_map {G' : Y.Modules} [G'.IsQuasicoherent] (s : G ⟶ G')
     (V : X.Opens) (n : ℕ) (x : cohOn ((Scheme.Modules.pushforward g).obj G) V n) :
     cohOn.pushforwardEquiv R hg G' V n
@@ -207,6 +210,7 @@ def coh.pushforwardEquiv (n : ℕ) :
   cohOn.pushforwardEquiv R hg G ⊤ n
 
 
+variable {G} in
 theorem coh.pushforwardEquiv_map {G' : Y.Modules} [G'.IsQuasicoherent] (s : G ⟶ G')
     (n : ℕ) (x : coh ((Scheme.Modules.pushforward g).obj G) n) :
     coh.pushforwardEquiv R hg G' n (cohOn.map R ((Scheme.Modules.pushforward g).map s) ⊤ n x) =

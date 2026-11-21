@@ -18,10 +18,12 @@ open PositivityTheory.SiegelWeilFormula PositivityTheory.SiegelWeilFormula.KWhit
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 
+variable (E) in
 def OE (v : HeightOneSpectrum (𝓞 F)) : AddSubgroup (v.adicCompletion F ⊗[F] E) :=
   AddSubgroup.closure {z | ∃ a ∈ v.adicCompletionIntegers F, ∃ o : 𝓞 E, z = a ⊗ₜ[F] (o : E)}
 
 
+variable (E) in
 def lat (v : HeightOneSpectrum (𝓞 F)) (n : ℕ) : AddSubgroup (Fin n → v.adicCompletion F ⊗[F] E) :=
   AddSubgroup.pi Set.univ fun _ => OE E v
 

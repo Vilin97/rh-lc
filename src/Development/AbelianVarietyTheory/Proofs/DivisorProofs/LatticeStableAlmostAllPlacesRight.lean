@@ -15,6 +15,8 @@ open Matrix
 namespace GlobalTheory.AdelMatLatRight
 
 
+open NumberField IsDedekindDomain in
+open Matrix in
 theorem _root_.GlobalTheory.AdelMatLatRight.transpose_mem_latAtV {F E : Type} [Field F] [NumberField F]
     [Field E] [NumberField E] [Algebra F E] {n d : ℕ}
     (X : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E n) (Y : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E d)

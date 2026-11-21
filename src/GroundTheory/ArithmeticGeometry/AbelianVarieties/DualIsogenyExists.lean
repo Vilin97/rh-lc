@@ -151,6 +151,7 @@ theorem comp_mulIsogeny (φ : Isogeny E E') (n : ℤ) (hn : n ≠ 0) :
   Subtype.ext (by rw [comp_mulIsogeny_val, mulIsogeny_comp_val])
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem exists_lift (φ : Isogeny E E') {L : Type u} [Field L] [Algebra F L]
     (P : (E'.baseChange L).toAffine.Point) (hP : IsGenPt E' P) :
     ∃ τ : E.toAffine.FunctionField →ₐ[F] AlgebraicClosure L,

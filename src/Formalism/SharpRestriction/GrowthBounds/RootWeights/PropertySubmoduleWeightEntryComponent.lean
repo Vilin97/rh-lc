@@ -36,6 +36,7 @@ theorem propertySubmodule_dividedPower_stable (hT : TransvectionExpansion) (a b 
     simp [LaurentPolynomial.T_pow]
 
 
+open Classical in
 def weightEntryComponent (a : Fin n) (w : ℤ) (y : MvPolynomial (ι × Fin n) R) : MvPolynomial (ι × Fin n) R :=
   ∑ m ∈ y.support.filter (fun m => wtS LL S m a = w), monomial m (y.coeff m)
 

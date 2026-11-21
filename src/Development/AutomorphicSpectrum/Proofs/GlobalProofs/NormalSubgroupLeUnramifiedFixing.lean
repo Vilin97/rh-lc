@@ -14,6 +14,7 @@ namespace GlobalTheory.CompanionTheory.GlobalFiniteness
 variable {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω]
 
 
+omit [NumberField F] [Algebra F Ω] [Field F] in
 theorem mem_of_isIntegral_int (A : ValuationSubring Ω) {y : Ω} (hy : IsIntegral ℤ y) : y ∈ A := by
   have h1 : IsIntegral A y := hy.tower_top
   obtain ⟨z, hz⟩ := (IsIntegrallyClosed.isIntegral_iff (R := A) (K := Ω)).mp h1

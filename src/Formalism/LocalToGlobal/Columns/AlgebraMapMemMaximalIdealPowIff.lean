@@ -512,6 +512,7 @@ theorem eW_ne_zero_rat (w : HeightOneSpectrum (𝓞 K)) : (eW w : ℚ) ≠ 0 :=
   Nat.cast_ne_zero.2 (eW_pos w).ne'
 
 
+omit [IsScalarTower (𝓞 K) K V] in
 theorem lenUW_mul_eW (w : HeightOneSpectrum (𝓞 K)) (A B : Submodule (𝓞 K) V) :
     lenUW w A B * (eW w : ℚ) = ((lenW w A B).toNat : ℚ) :=
   div_mul_cancel₀ _ (eW_ne_zero_rat w)

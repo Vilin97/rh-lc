@@ -40,6 +40,7 @@ theorem val_add (P : Pair p) (a b : ℤ) (σ : k →+* ℂ) (y : CxPts p σ) {f 
 end GlobalTheory.HSAmp.ValAdd
 
 
+open GlobalTheory.HSAmp.ValAdd in
 theorem GlobalTheory.HSAmp.val_additive : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegral X] (p : X ⟶ Sp k) (P : Pair p),
     ∀ (a b : ℤ) (σ : k →+* ℂ) (y : CxPts p σ), ∃ ℓ : P.H a b →+ ℂ, ∀ f : P.H a b, ℓ f = val P a b σ y f := by
   intro k _ X _ p P a b σ y

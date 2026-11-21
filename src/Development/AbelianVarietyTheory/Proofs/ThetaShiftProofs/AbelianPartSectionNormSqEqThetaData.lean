@@ -22,6 +22,7 @@ open MonoidalCategory CartesianMonoidalCategory MonObj MeasureTheory
 namespace GlobalTheory.AbelianPartNorm
 
 
+open GlobalTheory.KeyIsoNormal in
 theorem exists_unif {P : Out.PolAV (Sp ℂ)} {rig : LB.Gen (P.L.pull (eSec P.A))} {th : P.L.Sec} {v : ℝ}
     (hv : Arch.IsThNormAt P rig th (RingHom.id ℂ) v) :
     ∃ (n : ℕ) (u : HolUnif P.A P.L n) (Hm : Matrix (Fin n) (Fin n) ℂ) (χ : u.Λ → ℂ)
@@ -165,6 +166,7 @@ theorem im_form_real {g : ℕ} {τ : Matrix (Fin g) (Fin g) ℂ} (hs : τ.IsSymm
   ring
 
 
+open GlobalTheory.ThetaMean in
 theorem mem_of_integral {g : ℕ} {τ : Matrix (Fin g) (Fin g) ℂ} (hs : τ.IsSymm) (hp : (τ.map Complex.im).PosDef)
     (x : Fin g → ℂ) (hx : ∀ a b : Fin g → ℤ, ∃ k : ℤ, (k : ℝ) = (x ⬝ᵥ
       ((τ.map Complex.im)⁻¹).map (fun x : ℝ => (x : ℂ)) *ᵥ

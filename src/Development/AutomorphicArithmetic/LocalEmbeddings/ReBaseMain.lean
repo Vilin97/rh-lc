@@ -57,6 +57,7 @@ theorem polMatch_iso {R R₃ : RealMaps F a a'} {Rf Rf₃ : FinMaps F a a'} {ψ�
     simp only [lhs, rhs, ← Finset.smul_sum, h1]
 
 
+variable (B G V V' Z) in
 def kapId : (AE F E)ˣ :=
   ∏ v : B.P, locIdele F (splitPrime (B.τ v))
     (Units.map (complMap (splitPrime_under (B.τ v))).toMonoidHom (kap G V V' Z v.1))

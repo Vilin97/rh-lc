@@ -54,6 +54,7 @@ namespace GlobalTheory.RawLift
 open GlobalTheory.RawLift.VecNonzero
 
 
+open scoped ComplexOrder in
 theorem isCartanInv_one_of_onb {k : ℕ} {Gm B : Matrix (Fin k) (Fin k) ℂ} (h : IsONBasis Gm 1 B k) : IsCartanInv Gm 1 := by
   obtain ⟨ε, hε, hG, -⟩ := h
   have e1 : ∀ a, (ε a : ℂ) = 1 := fun a => by

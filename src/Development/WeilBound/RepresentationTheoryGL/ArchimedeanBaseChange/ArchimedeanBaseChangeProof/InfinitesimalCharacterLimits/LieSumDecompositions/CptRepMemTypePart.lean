@@ -233,6 +233,7 @@ end PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.Leaf2Aux.Alg
 namespace PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.Leaf2Aux
 
 
+open Alg in
 theorem core_of (h1 : PairLin) (h2 : PairRt) (h3 : PairLie) (h4 : GrowQHolds) : Core := by
   intro E _ _ _ N U hU hUA hUP φ hφU hφA hφ0
   have : (Measure.haar : Measure (GA E N)).IsMulRightInvariant := GlobalTheory.CovolGL.isMulRightInvariant E N _

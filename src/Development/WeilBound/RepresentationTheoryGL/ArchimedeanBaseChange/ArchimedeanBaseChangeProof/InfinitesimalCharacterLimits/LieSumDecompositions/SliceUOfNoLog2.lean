@@ -16,6 +16,7 @@ open NumberField MeasureTheory GlobalTheory.CuspRep GlobalTheory.UnitaryBC Globa
 namespace PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.SliceUniqueness
 
 
+open LieSumUnipotentSlice PositivityTheory.Rg.Rs.SliceClasses in
 theorem sliceU_of_noLog2 (hNL : NoLog) : SliceU := by
   intro E _ _ _ r s hr hs U hU hFG hSI hReg φ hφU c hc
   have hD := dict_holds

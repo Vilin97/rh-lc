@@ -76,6 +76,7 @@ theorem vac_ne (h : M.IsGood B.ψ) (v) : M.vac v ≠ 0 := (h.vac v).2.1
 theorem vac_sb (h : M.IsGood B.ψ) (v) : M.vac v ∈ SB _ := (h.vac v).1
 
 
+variable (B M) in
 def SS : ∀ v : Pl F, Submodule ℂ (Fl F v n d) := Function.update (fun _ => SB _) B.v₁ (Submodule.span ℂ (M.SoLoc B.ψ B.τ₁))
 
 theorem SS_self : SS B M B.v₁ = Submodule.span ℂ (M.SoLoc B.ψ B.τ₁) := Function.update_self ..

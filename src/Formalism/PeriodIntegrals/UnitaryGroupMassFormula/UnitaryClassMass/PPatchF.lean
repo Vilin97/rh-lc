@@ -22,6 +22,7 @@ theorem adT_idem (T : Set (HeightOneSpectrum (𝓞 F))) : adT T * adT T = adT T 
   exact Prod.ext (mul_zero _) (evT_mul_of_subset (subset_refl T))
 
 
+variable (E) in
 def epsT (T : Set (HeightOneSpectrum (𝓞 F))) : AF F ⊗[F] E := adT T ⊗ₜ[F] (1 : E)
 
 theorem epsT_idem (T : Set (HeightOneSpectrum (𝓞 F))) : epsT E T * epsT E T = epsT E T := by

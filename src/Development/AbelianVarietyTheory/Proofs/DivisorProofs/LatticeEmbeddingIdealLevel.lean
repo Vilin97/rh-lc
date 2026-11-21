@@ -15,6 +15,7 @@ set_option maxHeartbeats 800000
 namespace GlobalTheory.BasePoint
 
 
+open GlobalTheory.AdjDatumNe in
 theorem exists_point {O La ι : Type} [CommRing O] [AddCommGroup La] [Module O La] (P : Finset ι) (k : ι → Type)
     [∀ i, CommRing (k i)] (φ : ∀ i, O → k i) (crt : ∀ t : ∀ i, k i, ∃ c, ∀ i ∈ P, φ i c = t i) {n r : ℕ}
     (ρ : ∀ i, Fin r → La →+ k i) (hs : ∀ i a c x, ρ i a (c • x) = φ i c * ρ i a x) (J : Submodule O La)

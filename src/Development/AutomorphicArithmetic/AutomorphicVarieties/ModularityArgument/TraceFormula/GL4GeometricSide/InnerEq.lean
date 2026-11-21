@@ -230,6 +230,7 @@ def LocAct : Prop := ForRl fun _ _ _ _ n π _ _ _ D => ∀ w lam, ChAt π w lam 
       ∫ y : G n, phiOf M T k y * along w g (D.i u).1.1 y.val ∂μC = val (infOf lam) * (D.i (P u)).1.1 g
 
 
+attribute [local instance] PositivityTheory.Rg.BcB.E.borelH in
 def OpForm : Prop := ForRl fun E _ _ _ n π K _ μf D => ∀ lam : InfinitePlace E → Fin n → ℤ, (∀ w, ChAt π w (lam w)) →
   ∀ [MeasurableSpace (Un n)] [BorelSpace (Un n)] (ν : Measure (Un n)) [ν.IsHaarMeasure], ν Set.univ = 1 →
   ∀ [MeasurableSpace (G n)] [BorelSpace (G n)] (μC : Measure (G n)) [μC.IsHaarMeasure]

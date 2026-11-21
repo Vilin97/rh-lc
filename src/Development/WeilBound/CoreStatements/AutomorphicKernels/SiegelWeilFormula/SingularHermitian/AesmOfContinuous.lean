@@ -71,6 +71,7 @@ theorem chi_add (d : SD σ) (T : nF σ d.Y d.b) (β β' : nA σ d.Y d.b) :
   rw [AddSubgroup.coe_add, Matrix.mul_add, Matrix.trace_add, map_add (f := _), neg_add, AddChar.map_add_eq_mul]
 
 
+set_option maxHeartbeats 800000 in
 theorem fc_shift (d : SD σ) {nb : nA σ d.Y d.b → d.G} {lam : Measure (nA σ d.Y d.b)} {𝓖 : Set (nA σ d.Y d.b)}
     (hCD : CoefData (σ := σ) (Y := d.Y) d.b nb lam 𝓖) (f : d.G → ℂ) (hinv : ∀ γ ∈ rat2 σ d.Y, ∀ g, f (γ * g) = f g)
     (T : nF σ d.Y d.b) (β₁ : nA σ d.Y d.b) (z : d.G) :

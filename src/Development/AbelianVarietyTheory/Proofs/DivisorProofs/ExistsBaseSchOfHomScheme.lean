@@ -76,6 +76,7 @@ namespace GlobalTheory.UCanon.BaseSch
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
 
+set_option maxHeartbeats 800000 in
 theorem of_homScheme (D' : Datum H) {l : Geo.Tor.Level H} (c : Coeff l) (X : Type) [AddCommGroup X] [Module (𝓞 E) X]
     (Cs : Scheme.{0}) (g : Cs ⟶ Sp c.F)
     (oC : Obj D' (LowDat.lowLevel l) (baseKA (LowDat.lowLevel l)) (g ≫ lowMap c (RingHom.id c.F)))

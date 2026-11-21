@@ -132,6 +132,7 @@ variable (B : Pre)
 def uI : ℂˣ := Units.mk0 Complex.I Complex.I_ne_zero
 
 
+open Classical in
 @[reducible] def ch (u : B.Word) : ColumnChain B.R (Tau B.R) (B.hcW u) :=
   haveI : Fact (B.T u).Prime := ⟨B.T_prime u⟩
   { chain B.R (Tau B.R) (B.hcW u) (B.T u) with
@@ -141,6 +142,7 @@ def uI : ℂˣ := Units.mk0 Complex.I Complex.I_ne_zero
     rho'_norm := fun _ _ _ => by simp [uI] }
 
 
+open Classical in
 @[reducible] def member (u : B.Word) : Member B.R (Tau B.R) (B.hcW u) :=
   haveI : Fact (B.T u).Prime := ⟨B.T_prime u⟩
   { C := ch B u
@@ -182,6 +184,7 @@ def uI : ℂˣ := Units.mk0 Complex.I Complex.I_ne_zero
   rhoDetPrime_eq_muTilde_mul_chi_pow _ _ _ := rfl
 
 
+open Classical in
 def cols (B : Base) : Cols B where
   toCols0 := cols0 B.toPre
   fm u :=

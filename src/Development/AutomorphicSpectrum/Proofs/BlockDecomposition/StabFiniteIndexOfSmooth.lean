@@ -62,6 +62,7 @@ theorem avg_translate (ρ : Representation ℂ G V) (K : Subgroup G) {x : V}
 end GlobalTheory.CompanionTheory.KAvg
 
 
+open GlobalTheory.OrbitAvg GlobalTheory.CompanionTheory.KAvg in
 theorem GlobalTheory.CompanionTheory.KAvg.kInvForm : PositivityTheory.SphericalProduct.KInvForm := by
   unfold PositivityTheory.SphericalProduct.KInvForm
   intro G _ _ _ K _ hc V _ _ ρ hs v₀ hv₀ hne

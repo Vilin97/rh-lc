@@ -44,6 +44,7 @@ variable {E : Type*} [AddCommGroup E] [Module (𝓞 K) E] [Module.Finite (𝓞 K
   [Module.Projective (𝓞 K) E]
 
 
+omit [NumberField K] [Module.Projective (𝓞 K) E] in
 theorem fibre_finite (σ : K →+* ℂ) : Module.Finite ℂ (Fibre σ E) := by
   have : Module.Finite ℂ (ComplexAt σ) := Module.Finite.equiv (ofComplex σ).toLinearEquiv
   exact Module.Finite.trans (ComplexAt σ) (Fibre σ E)

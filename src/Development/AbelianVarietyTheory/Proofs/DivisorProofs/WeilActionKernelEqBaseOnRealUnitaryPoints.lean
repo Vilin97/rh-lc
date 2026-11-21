@@ -42,6 +42,7 @@ theorem exists_idele_all {D : D7} {θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.h
   exact ⟨⟨a z, a z⁻¹, m, by rw [mul_comm, m]⟩, a1 z, a3 z⟩
 
 
+set_option maxHeartbeats 800000 in
 theorem exists_isDetRoot_pow {D : D7} (V : HSp D) {u : GA D V} (hu : u ∈ GinfC V) (n : ℕ) (hn : 0 < n) :
     ∃ y : (AE D)ˣ, IsDetRoot V u (y ^ n) := by
   obtain ⟨θ, hθ⟩ := GlobalTheory.AdelicU.exists_isInfFam D

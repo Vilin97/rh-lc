@@ -65,6 +65,7 @@ include hb
 end Places
 
 
+open GlobalTheory.MemN.TypesInhab in
 theorem goodSeriesIdempotent_central_idempotent (D : D7) :
     D.ntypes.e0 ∈ Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd)) ∧ D.ntypes.e0 * D.ntypes.e0 = D.ntypes.e0 := by
   classical

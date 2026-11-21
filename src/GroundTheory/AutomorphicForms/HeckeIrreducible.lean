@@ -26,6 +26,7 @@ section General
 variable {V : Type*} [AddCommGroup V] [Module ℂ V] {ρ : Representation ℂ G V}
 
 
+omit [μ.IsHaarMeasure] in
 theorem heckeAct_mul [IsFiniteMeasureOnCompacts μ] [μ.IsMulLeftInvariant] (a b : HeckeAlgebra μ)
     {v : V} (hv : v ∈ smoothVectors ρ) :
     heckeAct μ ρ (a * b : HeckeAlgebra μ) v = heckeAct μ ρ a (heckeAct μ ρ b v) := by
@@ -48,6 +49,8 @@ theorem heckeAct_idem_apply (g : G) {v : V} (hv : v ∈ fixedVectors ρ K) :
   rfl
 
 
+omit [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] [MeasurableSpace G]
+  [BorelSpace G] [IsTopologicalGroup G] in
 theorem mem_span_orbit [ρ.IsIrreducible] {v : V} (hv : v ≠ 0) (w : V) :
     w ∈ Submodule.span ℂ (range fun g => ρ g v) := by
   set S := Submodule.span ℂ (range fun g => ρ g v)

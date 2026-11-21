@@ -127,6 +127,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Compa
   (U : OpenSubgroup G)
 
 
+omit [IsTopologicalGroup G] [CompactSpace G] in
 theorem coindTrace_naturality {k : Type} [CommRing k] [(U : Subgroup G).FiniteIndex]
     {A B : Rep.{0} k G} (φ : A ⟶ B) :
     Rep.coindMap (U : Subgroup G).subtype ((Rep.resFunctor (U : Subgroup G).subtype).map φ) ≫

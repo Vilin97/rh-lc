@@ -43,6 +43,7 @@ def datXP (R : RealDat D A Ks) (t : T) (P : Formalism.L2.DIV.LevelP R.Pg D.R.r �
   datY _ D.R.r D.R.t D.R.m r_le_X R.Pg (R.Q t) P R.chi (R.xiR t) Frm.B
 
 
+open Classical in
 def SsetF (R : RealDat D A Ks) (t : T) : Finset (HeightOneSpectrum (𝓞 D.host.F)) :=
   (R.Sb ∪ R.Q t).image (Formalism.L2.DIV.underPl D.host.F)
 

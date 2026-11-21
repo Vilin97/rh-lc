@@ -225,6 +225,7 @@ instance StableAffineOpens.preorder : Preorder (StableAffineOpens ρ) where
     (b := ⟨_, V.isAffineOpen⟩) (c := ⟨_, W.isAffineOpen⟩) h h'
 
 
+variable {ρ} in
 theorem StableAffineOpens.toOpens_le {U V : StableAffineOpens ρ} (f : U ⟶ V) :
     U.toOpens ≤ V.toOpens := by
   obtain ⟨s, hs⟩ := f.le
@@ -375,6 +376,7 @@ noncomputable abbrev stableAffineCover : X.OpenCover where
     exact ⟨⟨V, hV, hst⟩, hV.range_fromSpec.ge hx⟩
 
 
+set_option backward.isDefEq.respectTransparency false in
 noncomputable instance locallyDirected_stableAffineCover : (stableAffineCover ρ).LocallyDirected where
   trans f := Spec.map (X.presheaf.map (homOfLE (StableAffineOpens.toOpens_le ρ f)).op)
   trans_id U := by rw [← Spec.map_id]; congr 1; exact X.presheaf.map_id _

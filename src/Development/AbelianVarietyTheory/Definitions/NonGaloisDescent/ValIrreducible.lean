@@ -16,6 +16,7 @@ private theorem sigma_smul_eq_conj_smul (e : K.E) (v : B.A) : B.σ (e • v) = K
   rw [Algebra.smul_def, map_mul, B.σ_alg, ← Algebra.smul_def]
 
 
+variable {K : _root_.GlobalTheory.UnitLemma.UQ} (B : _root_.GlobalTheory.UnitLemma.InvAlg K) in
 theorem _root_.GlobalTheory.UnitLemma.Basic.trace_sigma (u : B.A) :
     Algebra.trace K.E B.A (B.σ u) = K.c (Algebra.trace K.E B.A u) := by
   classical
@@ -43,18 +44,21 @@ theorem _root_.GlobalTheory.UnitLemma.Basic.trace_sigma (u : B.A) :
     Algebra.coe_lmul_eq_mul, LinearMap.mul_apply', hb', hrepr, ← map_mul, B.σ_σ]
 
 
+variable {K : _root_.GlobalTheory.UnitLemma.UQ} (B : _root_.GlobalTheory.UnitLemma.InvAlg K) in
 theorem _root_.GlobalTheory.UnitLemma.Basic.herm_smul_left (x y z : B.A) (e : K.E) :
     B.herm x (e • y) z = e * B.herm x y z := by
   unfold _root_.GlobalTheory.UnitLemma.InvAlg.herm
   rw [mul_smul_comm, smul_mul_assoc, map_smul, smul_eq_mul]
 
 
+variable {K : _root_.GlobalTheory.UnitLemma.UQ} (B : _root_.GlobalTheory.UnitLemma.InvAlg K) in
 theorem _root_.GlobalTheory.UnitLemma.Basic.herm_smul_right (x y z : B.A) (e : K.E) :
     B.herm x y (e • z) = K.c e * B.herm x y z := by
   unfold _root_.GlobalTheory.UnitLemma.InvAlg.herm
   rw [sigma_smul_eq_conj_smul, mul_smul_comm, map_smul, smul_eq_mul]
 
 
+variable {K : _root_.GlobalTheory.UnitLemma.UQ} (B : _root_.GlobalTheory.UnitLemma.InvAlg K) in
 theorem _root_.GlobalTheory.UnitLemma.Basic.herm_symm (x : B.A) (hx : B.σ x = x) (y z : B.A) :
     B.herm x z y = K.c (B.herm x y z) := by
   unfold _root_.GlobalTheory.UnitLemma.InvAlg.herm
@@ -63,6 +67,7 @@ theorem _root_.GlobalTheory.UnitLemma.Basic.herm_symm (x : B.A) (hx : B.σ x = x
   ring
 
 
+variable {K : _root_.GlobalTheory.UnitLemma.UQ} (B : _root_.GlobalTheory.UnitLemma.InvAlg K) in
 theorem _root_.GlobalTheory.UnitLemma.Basic.herm_mul_left (x u y z : B.A) :
     B.herm x (u * y) z = B.herm x y (B.σ u * z) := by
   unfold _root_.GlobalTheory.UnitLemma.InvAlg.herm
@@ -71,6 +76,7 @@ theorem _root_.GlobalTheory.UnitLemma.Basic.herm_mul_left (x u y z : B.A) :
   ring
 
 
+variable {K : _root_.GlobalTheory.UnitLemma.UQ} (B : _root_.GlobalTheory.UnitLemma.InvAlg K) in
 theorem _root_.GlobalTheory.UnitLemma.Basic.herm_norm (x u y z : B.A) :
     B.herm (x * (u * B.σ u)) y z = B.herm x (u * y) (u * z) := by
   unfold _root_.GlobalTheory.UnitLemma.InvAlg.herm

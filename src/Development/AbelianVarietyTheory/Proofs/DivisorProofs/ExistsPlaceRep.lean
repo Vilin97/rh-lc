@@ -134,6 +134,7 @@ theorem placeRep_comm (V : HSp D) {τ τ' : D.what₂.Tau} (h : τ ≠ τ') (x :
       exact ((matDer_commute h X.1 Y.1).smul_left c).smul_right c'
 
 
+open Classical in
 def polyLie (V : HSp D) : GlobalTheory.AutFinLit.LieC V →ₗ⁅ℂ⁆ Module.End ℂ (PolyE V) :=
   DirectSum.toLieAlgebra _ (fun τ => (placeRep V τ).toLieHom.comp (UniversalEnvelopingAlgebra.ι ℂ)) fun τ τ' h x y => by
     change placeRep V τ (UniversalEnvelopingAlgebra.ι ℂ x) * placeRep V τ' (UniversalEnvelopingAlgebra.ι ℂ y) -

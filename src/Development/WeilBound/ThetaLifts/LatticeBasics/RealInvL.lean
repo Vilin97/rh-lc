@@ -68,6 +68,7 @@ theorem hasDerivAt_hl (a : V) (L : V →L[ℝ] ℝ) (f : 𝓢(V, ℂ)) (x : V) :
 end Line
 
 
+open Complex in
 theorem temperate_exp : Function.HasTemperateGrowth (fun t : ℝ => cexp (I * t)) := by
   have hd : ∀ n : ℕ, iteratedDeriv n (fun t : ℝ => cexp (I * t)) = fun t : ℝ => I ^ n * cexp (I * t) := by
     intro n
@@ -290,6 +291,7 @@ theorem act_add (k : UA σ Y.J × UA σ W.J) (u v : Matrix (Fin n) (Fin d) (AE F
   rw [actAB, Matrix.mul_add, Matrix.add_mul]; rfl
 
 
+open scoped Classical in
 def Impl (om : Rep σ Y W) (k : UA σ Y.J × UA σ W.J) (A : SInf F (Fin n × Fin d) →L[ℂ] SInf F (Fin n × Fin d)) : Prop :=
   ∀ f : SInf F (Fin n × Fin d), ∀ g ∈ SB (Fin n × Fin d → Af F), om k (pureA F f g) = pureA F (A f) g
 

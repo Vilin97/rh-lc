@@ -169,6 +169,7 @@ section Main
 variable {D : D7} {L : SizeData₂ D}
 
 
+set_option maxHeartbeats 1600000 in
 theorem sizeRows_of (P : ParameterChoice' D L) (T : ParamsT D L P) (hC : P.CnW = 10) (hS : SizesAt L)
     (hn : L.sc.x ^ (2 + 8 * L.sc.eps) ≤ (D.R.n : ℝ))
     (hm0 : Real.sqrt (L.sc.x * L.sc.delta1) ≤ (D.R.m : ℝ)) (hm1 : (D.R.m : ℝ) ≤ 2 * Real.sqrt (L.sc.x * L.sc.delta1))

@@ -91,6 +91,7 @@ lemma row_y (σ : E →ₐ[F] E) (J₁ : Matrix (Fin d₁) (Fin d₁) E) (q : Ma
 end GlobalTheory.ParabExtract
 
 
+open GlobalTheory.PlaneLeviExt GlobalTheory.ParabExtract in
 theorem GlobalTheory.ParabExtract.extract : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (d d₁ : ℕ) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ r s r₁ s₁ : ℕ), B.IsGood σ →
     W.IsSkew σ B r s → W₁.IsSkew σ B r₁ s₁ → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ v : Pl (F := F),

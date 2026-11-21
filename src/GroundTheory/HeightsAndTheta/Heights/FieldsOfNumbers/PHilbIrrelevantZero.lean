@@ -22,6 +22,7 @@ variable {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K �
   [∀ k, Fintype (ι k)]
 
 
+omit [Fintype K] in
 theorem mem_of_isMultiHomog_of_block_le {I : Ideal (MRing ι F)} {k : K}
     (hk : ∀ i : ι k, (X ⟨k, i⟩ : MRing ι F) ∈ I) {b : K → ℕ} (hb : 1 ≤ b k)
     {f : MRing ι F} (hf : IsWeightedHomogeneous (blockWeight ι) f b) : f ∈ I := by

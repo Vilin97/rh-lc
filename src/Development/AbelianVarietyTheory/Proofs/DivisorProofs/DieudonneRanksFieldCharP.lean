@@ -51,6 +51,7 @@ variable (hW : Published.BarsottiTateDieudonne.WittModule) {K : Type} [Field K] 
 include hW h
 
 
+omit hW in
 theorem range_rigExtMap_relFrob (G : PDivGroup p K) :
     LinearMap.range (rigExtMap (relFrob h G)) = Submodule.span K (Set.range (absFrob h G).rig) := by
   refine le_antisymm ?_ (Submodule.span_le.2 ?_)

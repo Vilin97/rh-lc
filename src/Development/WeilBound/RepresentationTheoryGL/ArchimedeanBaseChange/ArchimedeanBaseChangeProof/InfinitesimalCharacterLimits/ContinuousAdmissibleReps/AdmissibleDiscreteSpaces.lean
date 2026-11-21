@@ -14,6 +14,7 @@ namespace PositivityTheory.Rg.BcB.SpectralAccumulation.AdmDiscPf
 variable {E : Type} [Field E] {n : ℕ}
 
 
+variable (E n) in
 def contK : Submodule ℂ (Kinf E n → ℂ) where
   carrier := {f | Continuous f}
   add_mem' := fun hf hg => hf.add hg
@@ -126,6 +127,7 @@ theorem cont_rS (W : Submodule ℂ (Kinf E n → ℂ)) :
 end AdmDiscPf
 
 
+open AdmDiscPf in
 theorem admissible_discrete_spaces : AdmDisc := by
   intro E _ _ _ M K' W' hK' hW' V hV
   obtain ⟨φ₀, hφ₀, h0⟩ := (Submodule.ne_bot_iff _).1 hV.ne_bot

@@ -18,6 +18,7 @@ namespace Reduction
 variable {𝕜 : Type*} [RCLike 𝕜] {m : ℕ}
 
 
+variable (m) in
 def expPosDiag : (Fin (m + 1) → ℝ) ≃ₜ PosDiag (Fin (m + 1)) where
   toFun x := ⟨fun i => Real.exp (x i), fun i => Real.exp_pos _⟩
   invFun a := fun i => Real.log (a.1 i)
@@ -30,6 +31,7 @@ def expPosDiag : (Fin (m + 1) → ℝ) ≃ₜ PosDiag (Fin (m + 1)) where
       fun a => (a.2 i).ne'
 
 
+variable (𝕜 m) in
 def expDiag : (Fin (m + 1) → ℝ) ≃ₜ diagPosSubgroup (Fin (m + 1)) 𝕜 :=
   (expPosDiag m).trans diagPosHomeomorph
 

@@ -191,6 +191,7 @@ variable {G : Type*} [Group G] [TopologicalSpace G] {V W : Type*} [AddCommGroup 
   [AddCommGroup W] [Module ℂ W] {ρ : Representation ℂ G V}
 
 
+omit [TopologicalSpace G] in
 theorem map_mem_coinvariantsKer {π : Representation ℂ G W} (p : Representation.IntertwiningMap ρ π)
     (N : Subgroup G) {x : V} (hx : x ∈ Representation.Coinvariants.ker (ρ.comp N.subtype)) :
     p x ∈ Representation.Coinvariants.ker (π.comp N.subtype) := by

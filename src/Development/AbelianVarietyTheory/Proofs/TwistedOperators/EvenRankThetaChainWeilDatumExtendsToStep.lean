@@ -43,6 +43,7 @@ noncomputable section
 namespace GlobalTheory.EvenOnto.StepExists
 
 
+set_option maxHeartbeats 1000000 in
 theorem stepEx : GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.HarishChandraModules → GlobalTheory.Published.CuspRapidDecay →
     GlobalTheory.Published.CasselmanWallach → ∀ D : D7, StepEx D := by
   intro h1 h2 h3 h4 D c hc k hk s s' hs hs' ω f hpre

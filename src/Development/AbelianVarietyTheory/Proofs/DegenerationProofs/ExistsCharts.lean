@@ -128,6 +128,7 @@ theorem exists_full_over (t : SAB H S) {B L : Type} [Field B] [CharZero B] [Fiel
     exact ⟨w, by rw [← Category.assoc, ← Over.comp_left, hw, hg'], fun a => by rw [← Category.assoc, hw, hy]⟩
 
 
+open ThetaPtExist GlobalTheory.ZM GlobalTheory.ThetaLocal in
 theorem exists_affine_theta (hG : GlobalFnsSt) (hB : SecBaseChangeAnySt) (P : PolAV S) (k : ℕ)
     (hk : Odd k) {T : Over S} (hu : IsUnit (k : Γ(T.left, ⊤))) {I : Type} [Finite I] (y : I → (T ⟶ P.A))
     (hy : ∀ i, y i ^ (k ^ 2) = 1) (p : T.left) :

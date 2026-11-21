@@ -161,6 +161,7 @@ private lemma orbital_comp_lemma_2 {Wq' : Type} [NormedAddCommGroup Wq'] [InnerP
   · exact (h₁ ⟨θ, hθ', hint'⟩).elim
 
 
+open Matrix in
 theorem _root_.GlobalTheory.WigSh.contraction_maps_at_representatives :
     ∃ c₃ : ℝ, ∀ (Wp : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [FiniteDimensional ℂ
         Wp] (Wq : Type) [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ

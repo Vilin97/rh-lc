@@ -134,6 +134,7 @@ theorem rows_deg_term (h : rows_Hyps Y C' Cl Cg cb Cu cT CT C0 A c Cpr Ca C2 Ch 
   exact Real.sqrt_le_sqrt h2
 
 
+include Y in
 theorem rows_thmA_deg (hThA : VanishingOnXAndXPlus.adm14 D u u') (hSt : Cnt.Stand D u u') (hG0 : @LatticeDeterminantFactorization D X u u') (hrd : 0 < D.host.rdE)
     (p : D.s.Pair u u') (hG1 : D.s.Gterm (D.s.pfst p) ≠ 0) (hG2 : D.s.Gterm (D.s.psnd p) ≠ 0) (hs : 2 ≤ D.s.s0 p)
     (hnd : ¬ ndP X p) :

@@ -27,6 +27,7 @@ theorem one_le_m (R : Ranks) : 1 ≤ R.m := by
   omega
 
 
+set_option maxHeartbeats 4000000 in
 structure ColsTiedSym (D : D7) where
   herm : Formalism.L2.Herm.ColsHermS D
   forms : ∀ u : D.what₂.Word, FormsTiedSym D u (herm.base.Ch u) (herm.base.chOf u)

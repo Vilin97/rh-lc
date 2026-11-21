@@ -11,6 +11,7 @@ set_option maxHeartbeats 1000000
 namespace GlobalTheory
 
 
+open Polynomial in
 theorem adjoinRoot_X_pow_sub_C_uniformizer_isDomain :
     ∀ (R : Type) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] (π : R) (e : ℕ),
       Irreducible π → 0 < e → IsDomain (AdjoinRoot (Polynomial.X ^ e - Polynomial.C π : Polynomial R)) := by

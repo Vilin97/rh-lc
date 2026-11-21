@@ -192,16 +192,19 @@ variable {l : ℕ} [hl : Fact l.Prime] {a : ℕ} [NeZero a] {e : ℕ} [NeZero e]
 def iR : (ZMod a → A O K) →ₐ[O] OW l O := (inclO l O).comp (ϖ.iTot t K)
 
 
+omit [NeZero e] [NormedAlgebra ℚ_[l] K] in
 theorem iR_toAc (s : (Wq l a)⟦X⟧) : iR K t ϖ (toAc t K s) = 1 ⊗ₜ inclW l (ϖ.ev a s) :=
   congrArg (inclO l O) (ϖ.iTot_toAc t K s)
 
 
+omit [NeZero e] [NormedAlgebra ℚ_[l] K] in
 theorem iR_E : iR K t ϖ (fun _ => EIn l e _) = 1 ⊗ₜ inclW l (ϖ.ev a (eis l a e)) :=
   congrArg (inclO l O) (ϖ.iTot_E t K)
 
 theorem iR_injective : Function.Injective (iR K t ϖ) := inclO_injective.comp (ϖ.iTot_injective t K)
 
 
+omit [NeZero e] [NormedAlgebra ℚ_[l] K] in
 theorem iR_apply (f : ZMod a → A O K) :
     iR K t ϖ f = ∑ τ, idem (constW t) τ * inclO l O (ϖ.iA O K (f τ)) := by
   change inclO l O (∑ τ, _) = _
@@ -226,6 +229,7 @@ theorem exists_iW_eq {k : ℕ} {r : OW l O} {f : ZMod a → A O K}
 variable {K}
 
 
+omit [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsUltrametricDist K] [IsUnitBall O K] in
 theorem TWmap_smul {G : Type} [Group G] [TopologicalSpace G] (T : LocLat G ℚ_[l] K O) (r : OW l O)
     (x : TW (OW l O) T) : TWmap (frobOW l O) T (r • x) = frobOW l O r • TWmap (frobOW l O) T x := by
   induction x using TensorProduct.induction_on with
@@ -442,6 +446,7 @@ theorem exists_basis {V : Type} [AddCommGroup V] [Module (OW l O) V] [Module (WC
   exact ⟨fun τ => equivA O K (f τ), by simp only [hf, iR_apply, hg', ε]⟩
 
 
+omit [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsUltrametricDist K] [IsUnitBall O K] in
 theorem kappa_smul {G : Type} [Group G] [TopologicalSpace G] (T : LocLat G ℚ_[l] K O) (w : WCb l) :
     letI := zlLat T
     ∀ y : WCb l ⊗[ℤ_[l]] ↥T.L.T, kappa T (w • y) = ((1 : O) ⊗ₜ[ℤ_[l]] w) • kappa T y := by
@@ -455,6 +460,7 @@ theorem kappa_smul {G : Type} [Group G] [TopologicalSpace G] (T : LocLat G ℚ_[
   | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 
+omit [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsUltrametricDist K] [IsUnitBall O K] in
 theorem kappa_frob {G : Type} [Group G] [TopologicalSpace G] (T : LocLat G ℚ_[l] K O) :
     letI := zlLat T
     ∀ y : WCb l ⊗[ℤ_[l]] ↥T.L.T, kappa T (TensorProduct.map (frobW l).toLinearMap LinearMap.id y) =
@@ -475,6 +481,7 @@ def mulZ {G : Type} [Group G] [TopologicalSpace G] (T : LocLat G ℚ_[l] K O) (c
     map_smul' := fun z x => smul_comm c (algebraMap ℤ_[l] O z) x }
 
 
+omit [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsUltrametricDist K] [IsUnitBall O K] in
 theorem kappa_mulZ {G : Type} [Group G] [TopologicalSpace G] (T : LocLat G ℚ_[l] K O) (c : O) :
     letI := zlLat T
     ∀ y : WCb l ⊗[ℤ_[l]] ↥T.L.T, kappa T ((mulZ T c).lTensor (WCb l) y) = c • kappa T y := by

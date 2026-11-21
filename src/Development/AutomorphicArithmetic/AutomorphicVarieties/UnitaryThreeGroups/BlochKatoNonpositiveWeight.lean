@@ -38,6 +38,7 @@ private theorem char_finext (l : ℕ) [Fact l.Prime] (Γ : Type) [Group Γ] [Top
   simp only [hh, map_mul, h1, mul_one]
 
 
+open TensorProduct in
 private theorem desc {l : ℕ} [Fact l.Prime] {H : Type} [Group H] [TopologicalSpace H] (φ : H →* GQ l)
     (κ : H →* (PadicAlgCl l)ˣ) (E₀ : IntermediateField ℚ_[l] (PadicAlgCl l)) [FiniteDimensional ℚ_[l] E₀]
     (hκ : ∀ g, (κ g : PadicAlgCl l) ∈ E₀) (c : H → PadicAlgCl l) (hc : c ∈ Loc.finiteCocycles φ (Loc.chRep κ)) :

@@ -87,6 +87,7 @@ theorem val_level_zero (z : ZMod (l ^ 0)) : z.val = 0 := by
 variable {Ω : Type} [Field Ω] [Algebra ℚ Ω]
 
 
+variable (Ω l) in
 def cycRes : G ℚ Ω →* ZMod l :=
   (ZMod.castHom (dvd_pow_self l one_ne_zero) (ZMod l)).toMonoidHom.comp ((Units.coeHom (ZMod (l ^ 1))).comp (cycMod ℚ Ω l 1))
 
@@ -186,6 +187,7 @@ end GlobalTheory.K4.TwistClauses
 namespace GlobalTheory.K4
 
 
+open TwistClauses in
 theorem twist_clauses : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (ι : Qbar l ≃+* ℂ) (e : ℕ)
   (gN : Newform (2 * e + 1)) (A : ValuationSubring Ω) (W : R2 Ω l) (ε : Ω →+* ℂ) (X : Tower Ω ε)
   (pr : X.Fn l → Fin 2 → Qbar l) (N : ℕ) [NeZero N] (cw : ZMod N → Qbar l) (c d : ℕ) (gm : (ZMod l)ˣ → SL(2, ℤ))

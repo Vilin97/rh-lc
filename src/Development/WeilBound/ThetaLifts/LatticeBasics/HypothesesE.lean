@@ -17,16 +17,19 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 def SiegelWeilAniso : Prop := SWAniso ∧ SWAnisoX
 
 
+variable (σ Y) in
 def IsFrame2 (b : GL (Fin n ⊕ Fin n) E) : Prop :=
   (∃ ε : ℤˣ, b.1ᵀ * dbl Y.J * b.1.map σ = Matrix.fromBlocks 0 1 (((ε : ℤ) : E) • 1) 0) ∧
     ∃ t : GL (Fin n) E, b.1.toCols₁ = diagCols (Fin n) * t.1
 
 
+variable (F E) in
 def intHat : AddSubgroup (AE F E) :=
   AddSubgroup.closure {z | ∃ a : AF F, evI F a = 0 ∧ (∀ v, evFin F v a ∈ v.adicCompletionIntegers F) ∧
     ∃ o : 𝓞 E, z = a • inclR (F := F) (AF F) (o : E)}
 
 
+variable (F) in
 def finOne : AF F := LinearMap.inr F (Ainf F) (Af F) 1
 
 def inFrame (b : GL (Fin n ⊕ Fin n) E) (x : G2 σ Y) : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (AE F E) :=
@@ -37,6 +40,7 @@ def IsStdK (B : Base F E) (b : GL (Fin n ⊕ Fin n) E) (K : Subgroup (G2 σ Y)) 
     ∀ k' ∈ ({k, k⁻¹} : Set (G2 σ Y)), ∀ i j, finOne F • inFrame b k' i j ∈ intHat F E
 
 
+variable (σ Y) in
 def modFun : Submodule ℂ (G2 σ Y → ℂ) :=
   Submodule.span ℂ {f | Continuous f ∧ ∃ N : ℕ, ∀ x, ‖f x‖ ≤ (ht2 x : ℝ) ^ N}
 

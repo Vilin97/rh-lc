@@ -44,6 +44,7 @@ theorem chartDens_weight_mono (hN : RegDensNonneg.Statement) (hA : IsFiniteProje
 end RegFixedBallMass
 
 
+open RegFixedBallMass in
 theorem RegFixedBallMass.proof (hN : RegDensNonneg.Statement) (hS : StokesOnChart.Statement)
     (hL : LogIntegrable.Statement) (hC : ChartMassCompact.Statement) : RegFixedBallMass.Statement := by
   intro n d J A u R hJ hdim hA hu

@@ -65,6 +65,7 @@ theorem indep (hinj : Function.Injective (algebraMap O LL)) (hV : Formalism.Main
   simp
 
 
+omit [NeZero n] in
 theorem frame_inv_poly' (hinj : Function.Injective (algebraMap O LL)) {d : ℕ}
     (sol : Fin d → ℕ → Fin d → LL) (hsol0 : ∀ k, sol k 0 = Pi.single k 1) (M κ : ℕ)
     (yy : Fin d → ℕ → Fin d → O) (hyy : ∀ k, ∀ r < M, ∀ m, algebraMap O LL (yy k r m) = (PD.p : LL) ^ κ * sol k r m)

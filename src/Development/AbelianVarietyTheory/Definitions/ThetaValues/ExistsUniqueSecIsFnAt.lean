@@ -87,6 +87,7 @@ theorem res_appLE (h : Z ⟶ Y) {U U' : Y.Opens} {V V' : Z.Opens} (hU : U' ≤ U
       (Scheme.Hom.map_appLE h e' (homOfLE hU).op).symm)
 
 
+omit [Unique K] in
 theorem wchart_le_of_comp {φ : Y ⟶ X} {ψ : Z ⟶ X} {h : Z ⟶ Y} (e : h ≫ φ = ψ) (j : K' → L.ι) :
     LB.wchart L (fun _ : K' => ψ) j ≤
       h ⁻¹ᵁ LB.wchart L (fun _ : K => φ) (fun _ => j default) := by
@@ -133,6 +134,7 @@ variable {A : Over (Sp ℂ)} [GrpObj A] {L : LB A.left} {g : ℕ} (u : HolUnif A
   {T : Over (Sp ℂ)} (p : 𝟙_ (Over (Sp ℂ)) ⟶ T)
 
 
+variable (A) in
 def fibreIncl : A ⟶ T ⊗ A := lift (toUnit A ≫ p) (𝟙 A)
 
 
@@ -200,6 +202,7 @@ theorem fr_zpow_ne_zero {k : ℤ} {j : Fin 1 → L.ι} {z : Fin g → ℂ}
   zpow_ne_zero m (u.fr_ne _ z ((exAt_mem_chart_iff u p k j z).1 hj))
 
 
+variable {u p} in
 theorem IsFnAt.eq_div {k : ℤ} {s : LB.Sec (LPow A L k T)} {θ : (Fin g → ℂ) → ℂ}
     (h : IsFnAt u p k s θ) {j : Fin 1 → L.ι} {z : Fin g → ℂ}
     (hj : ⊤ ≤ exAt u p z ⁻¹ᵁ (LPow A L k T).U j) :
@@ -218,6 +221,7 @@ theorem isFnAt_of_exists_chart {k : ℤ} {s : LB.Sec (LPow A L k T)} {θ : (Fin 
   ring
 
 
+variable {u p} in
 theorem IsFnAt.unique (hL : L.IsLB) {k : ℤ} {s : LB.Sec (LPow A L k T)}
     {θ θ' : (Fin g → ℂ) → ℂ} (h : IsFnAt u p k s θ) (h' : IsFnAt u p k s θ') : θ = θ' := by
   funext z
@@ -249,6 +253,7 @@ theorem isFnAt_zero (k : ℤ) : IsFnAt u p k (H1.SectionArithmetic.secZero (LPow
   exact map_zero _
 
 
+variable (A L) in
 def secOfFun (r : Γ(T.left, ⊤)) : LB.Sec (LPow A L 0 T) where
   f j := liftFun A _ r
   compat j j' := by
@@ -278,10 +283,12 @@ theorem mem_ptChart_iff {x : T ⟶ A} {z : Fin g → ℂ} (hx : p ≫ x = u.ex z
   rfl
 
 
+variable (u p) in
 theorem comp_one_eq_ex_zero : p ≫ (1 : T ⟶ A) = u.ex 0 := by
   rw [ex_zero, MonObj.comp_one]
 
 
+variable (p) in
 theorem valAt'_rigT {rig : LB.Gen (L.pull (eSec A))} (hrig : u.IsRig rig) (k : ℤ)
     (j : Fin 1 → L.ι) (hj : ⊤ ≤ (u.ex 0).left ⁻¹ᵁ L.U (j 0)) :
     valAt' p.left (LB.wchart L (fun _ : Fin 1 => (1 : T ⟶ A).left) j)

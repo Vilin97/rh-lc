@@ -42,6 +42,7 @@ end GlobalTheory.HSNef.ChangePair
 namespace GlobalTheory.HSNef
 
 
+open GlobalTheory.VolBr.NuEq ChangePair in
 theorem change_pair : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegral X] (p : X ⟶ Sp k), ∀ (P : Pair p) (a b a' b' : ℤ) (M N : HermLB p), P.Rep a b M → P.Rep a' b' N → ∃ Q : Pair p, Q.L = M ∧ Q.A = N ∧ ∀ (i j : ℤ) (R : ℝ), Q.Bl i j R = P.Bl (i * a + j * a') (i * b + j * b') R := by
   intro k _ X _ p P a b a' b' M N ⟨ρ, hρ, hu, hn⟩ ⟨ρ', hρ', hu', hn'⟩
   let Q : Pair p := ⟨M, N, ρ, ρ', hρ, hρ'⟩

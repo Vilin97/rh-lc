@@ -62,6 +62,8 @@ theorem isUnit_iff_val_eq {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuat
     exact IsUnit.of_mul_eq_one w' e'
 
 
+open MonObj in
+attribute [local instance] gtGroup in
 theorem scale_at_model : ∀ (o' Ω : Type) [CommRing o'] [Field Ω] [Algebra o' Ω] (S : ThetaSys o' Ω) (ρ : S.Real)
     (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [CharZero V],
     IsAdicComplete (maximalIdeal V) V → IsUnit ((S.r * S.N : ℕ) : V) →

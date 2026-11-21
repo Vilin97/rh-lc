@@ -189,6 +189,7 @@ theorem exists_coords {O₀ O : Type} [CommRing O₀] [IsDomain O₀] [IsDiscret
     exact (SelmerLevel.fracComp b).sum_p x
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem bkG_le_extCond (l : ℕ) [Fact l.Prime] (P : LocPrime l) (E Ω : Type) [Field E] [Field Ω] [Algebra E Ω]
     (Gw : Subgroup (Ω ≃ₐ[E] Ω)) (O₀ O : Type) [CommRing O₀] [IsDomain O₀] [IsDiscreteValuationRing O₀]
     [Algebra ℤ_[l] O₀] [Module.Finite ℤ_[l] O₀] [TopologicalSpace O₀] [CommRing O] [IsDomain O]

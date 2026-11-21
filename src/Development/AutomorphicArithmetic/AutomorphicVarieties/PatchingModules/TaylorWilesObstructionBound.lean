@@ -82,6 +82,7 @@ theorem residOf_Ip_le (u : V0.frame.St) : (residOf r).Ip u ≤ r.Ip u := by
   exact ⟨⟨Subtype.val γ, h1, rfl⟩, h2⟩
 
 
+variable {r} in
 def pairOf {B : Type} [CommRing B] [Algebra O B] [IsCO O B] (u : Pair r B) : Pair (residOf r) B :=
   ⟨u.D, u.ψ, u.cont, u.red, fun v i => ⟨(u.psi v i).cont, (u.psi v i).red, (u.psi v i).mu⟩, u.P, u.Ord,
     fun w g hg => u.I w g (residOf_Ip_le r w hg)⟩
@@ -112,6 +113,7 @@ structure TWPl (T : TWGrp (globOf r V0)) where
     PadicInt.toZMod ((V0.ε g : ℤ_[l]ˣ) : ℤ_[l]) = 1
 
 
+variable (s) in
 def LocCFT : Prop :=
   ∃ d : Vl l L → ℕ, ∑ᶠ v, d v = Module.finrank ℚ (Lp L) ∧ ∀ v : Vl l L,
     Nonempty (LocAb l (Dec (F := L) (s.A v)) ((Ine (F := L) (s.A v)).subgroupOf (Dec (F := L) (s.A v))) (d v))
@@ -143,6 +145,7 @@ def TaylorWilesObstructionBound : Prop :=
     T.Eig x al → T.B2 k
 
 
+variable {r} in
 def HasAut (B : UniversalOrdinaryDeterminantRing r) (J : Ideal B.B) : Prop :=
   ∀ T : TWGrp (globOf r V0), TWPl r T → Nonempty (TWAut (pairOf B.u) J Empty (n * Module.finrank ℚ (Lp L)) T)
 

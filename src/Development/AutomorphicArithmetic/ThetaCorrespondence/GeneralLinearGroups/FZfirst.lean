@@ -100,6 +100,7 @@ private theorem exists_unit_one_add_generator (hBZ : GlobalTheory.Published.Bern
   exact ⟨⟨_, Z Δ⟩, hd, hS.of_equiv (.refl _) (segProdEquiv Δ hd)⟩
 
 
+set_option maxHeartbeats 1000000 in
 private theorem glue {n s : ℕ} (π : IrrRep (GL (Fin n) k)) (d : Fin s → ℕ) (e : (Σ a, Fin (d a)) ≃ Fin n)
     (σ : ∀ a, IrrRep (GL (Fin (d a)) k)) (φ : π.ρ.IntertwiningMap (multiProd e fun a => (σ a).ρ))
     (hφ : Function.Injective φ) (t : Fin s → ℕ) (u : ∀ a, Fin (t a) → IrrGL (k := k))

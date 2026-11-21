@@ -63,6 +63,7 @@ theorem mem_fixingSubgroup_iff_restrictNormal_eq_one (g : ℚ̄ ≃ₐ[ℚ] ℚ�
     exact h1.symm
 
 
+variable [IsMulCommutative (F.1 ≃ₐ[ℚ] F.1)] in
 theorem commutator_mem_fixingSubgroup (a b : ℚ̄ ≃ₐ[ℚ] ℚ̄) :
     (a * b)⁻¹ * (b * a) ∈ F.1.fixingSubgroup := by
   rw [mem_fixingSubgroup_iff_restrictNormal_eq_one]
@@ -82,6 +83,7 @@ instance isMulCommutative_compositum :
   exact ⟨Subtype.property _, commutator_mem_fixingSubgroup F _ _⟩
 
 
+omit [IsMulCommutative (F.1 ≃ₐ[ℚ] F.1)] in
 theorem restrictNormal_restrictHom (g : K.1.fixingSubgroup) :
     ((restrictHom (E := compositum K F) g).restrictScalars ℚ).restrictNormal F.1 =
       (g : ℚ̄ ≃ₐ[ℚ] ℚ̄).restrictNormal F.1 := by

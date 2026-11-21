@@ -78,6 +78,7 @@ theorem ofUnitaryMulModulePow_bijective :
     exact ⟨(χ, Multiplicative.ofAdd σ), h⟩
 
 
+variable (K) in
 def unitaryDecomposition : QuasiCharacter K ≃* HeckeCharacter K × Multiplicative ℝ :=
   (MulEquiv.ofBijective _ ofUnitaryMulModulePow_bijective).symm
 

@@ -17,6 +17,9 @@ section
 variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
 
 
+open NumberField Matrix in
+open scoped ENNReal Classical in
+variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V] in
 theorem _root_.GlobalTheory.Mass.GenusOrb.trace_pos_of_PD (h : V →ₗ⋆[K] V →ₗ[K] K)
     (hp : _root_.GlobalTheory.Mass.PD h) (x : V) (hx : x ≠ 0) :
     0 < Algebra.trace ℚ K (h x x) := by
@@ -43,6 +46,8 @@ def autEquiv (h : V →ₗ⋆[K] V →ₗ[K] K) (M : Submodule (𝓞 K) V) :
 end
 
 
+open NumberField Matrix in
+open scoped ENNReal Classical in
 theorem _root_.GlobalTheory.Mass.GenusOrb.main : ∀ (K V : Type) [Field K] [NumberField K]
     [StarRing K] [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V]
     [IsScalarTower (𝓞 K) K V] (h : V →ₗ⋆[K] V →ₗ[K] K), _root_.Formalism.HermitianLatticesTheory.IsCMUnram K → h.IsSymm →

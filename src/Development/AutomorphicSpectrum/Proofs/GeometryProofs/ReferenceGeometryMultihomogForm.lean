@@ -31,6 +31,7 @@ variable {K : Type} [Fintype K] {J : K → Type} [∀ k, Fintype (J k)]
 def bdeg (m : (Σ k, J k) →₀ ℕ) : K → ℕ := fun k => ∑ i, m ⟨k, i⟩
 
 
+open Classical in
 def bcomp (g : MRing J) (d : K → ℕ) : MRing J :=
   ∑ m ∈ g.support.filter (fun m => bdeg m = d), monomial m (AddMonoidAlgebra.coeff g m)
 

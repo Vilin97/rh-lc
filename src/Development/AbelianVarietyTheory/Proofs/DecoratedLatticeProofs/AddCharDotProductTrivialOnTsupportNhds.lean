@@ -243,6 +243,7 @@ theorem exists_adm (hχ : HasConductor χ c) (g : SB (n → k)) : ∃ s : kˣ, a
 
 
 open scoped Classical in
+open Classical in
 def ell (χ : AddChar k Circle) (μ : Measure (n → k)) (B : SB (n → k) →ₗ[ℂ] SB (n → k) →ₗ[ℂ] ℂ)
     (g : SB (n → k)) : ℂ :=
   if h : ∃ s : kˣ, admitted χ s g.1 then (μ.real (box n h.choose) : ℂ)⁻¹ * B (ind h.choose) g else 0

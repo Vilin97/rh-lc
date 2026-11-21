@@ -23,6 +23,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 open GlobalTheory.CuspRep GlobalTheory.CuspGeneric GlobalTheory.CuspRep.Generic
 
 
+variable (σ W) in
 structure Ctx : Prop where
   cm : IsCMExt F E σ
   skew : ∀ i j, σ (W.J j i) = -W.J i j
@@ -48,6 +49,7 @@ theorem Ctx.lat (C : Ctx σ W) (U : Submodule E (Fin d → E)) : Lat ((ratU σ W
     ((continuous_subtype_val.comp continuous_subtype_val).subtype_mk _) ii, (C.good U).cov⟩
 
 
+variable (σ W) in
 abbrev Av (U : Submodule E (Fin d → E)) (f c : UA σ W.J → ℂ) : Prop :=
   IsAv ((ratU σ W.J).subgroupOf (unipU σ W U)) (fun a => a.1) f c
 

@@ -181,6 +181,7 @@ theorem clear_step {K L : Cx R} {n : ℤ} (z : Cocycle K L n) (k : ℕ)
 end GlobalTheory.EtC.RowVanish
 
 
+open GlobalTheory.EtC.RowVanish GlobalTheory.EtC.ClsBasic GlobalTheory.EtC.HCElements in
 theorem GlobalTheory.EtC.vanish_of_rowExact : ∀ (R : Type) [CommRing R] (F : Shv R) (E : Spc) (P : PSh) (g : disc.obj P ⟶ E),
     IsIso (g.app (op ⦋0⦌)) →
     ∀ (n : ℕ) (x : H R E F n), pull R g F n x = 0 →

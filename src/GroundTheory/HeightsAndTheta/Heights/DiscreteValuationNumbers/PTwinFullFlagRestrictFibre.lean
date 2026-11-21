@@ -100,6 +100,7 @@ theorem inv_mem_locAlg : f⁻¹ ∈ locAlg x Q :=
   (inv_mem_of_rs_ne_zero hPQ (chartRing_sub hPQ hs hf).1 hf0).1
 
 
+include hPQ hs hf hf0 in
 theorem mem_locAlg_of_pow_mul {a : Ω} {n : ℕ} (ha : f ^ n * a ∈ chartRing O (mseg x) s) : a ∈ locAlg x Q := by
   have hf' : f ≠ 0 := ne_zero_of_rs_ne_zero hPQ hf0
   have e : a = f⁻¹ ^ n * (f ^ n * a) := by
@@ -117,6 +118,7 @@ theorem frame_pow_mem (q : Fin N) : ∃ n : ℕ, f ^ n • b q ∈ B.lat s := by
   · simp [Pi.single_apply]
 
 
+include hPQ hs hf hf0 hlat in
 theorem frame_mem_stalk (q : Fin N) : b q ∈ stalk O x Q B := by
   obtain ⟨n, hn⟩ := frame_pow_mem hlat q
   have hf' : f ≠ 0 := ne_zero_of_rs_ne_zero hPQ hf0
@@ -126,6 +128,7 @@ theorem frame_mem_stalk (q : Fin N) : b q ∈ stalk O x Q B := by
   exact smul_mem_stalk hPQ (pow_mem (inv_mem_locAlg hPQ hs hf hf0) n) (lat_le_stalk hs hn)
 
 
+include hPQ hs hf hf0 hlat in
 theorem stalk_coords {m : V} (hm : m ∈ stalk O x Q B) :
     ∃ a : Fin N → Ω, (∀ q, a q ∈ locAlg x Q) ∧ m = ∑ q, a q • b q := by
   induction hm using AddSubgroup.closure_induction with
@@ -158,6 +161,7 @@ theorem stalk_coords {m : V} (hm : m ∈ stalk O x Q B) :
     exact ⟨-a, fun q => neg_mem (ha q), by simp [neg_smul, Finset.sum_neg_distrib]⟩
 
 
+include hPQ hs hf hf0 hlat in
 theorem resMap_sum {a : Fin N → Ω} (ha : ∀ q, a q ∈ locAlg x Q) (m : stalk O x Q B)
     (hm : (m : V) = ∑ q, a q • b q) :
     resMap O x Q B m = ∑ q, rs x Q (a q) • resMap O x Q B ⟨b q, frame_mem_stalk hPQ hs hf hf0 hlat q⟩ := by
@@ -170,6 +174,7 @@ theorem resMap_sum {a : Fin N → Ω} (ha : ∀ q, a q ∈ locAlg x Q) (m : stal
   exact Finset.sum_congr rfl fun q _ => resMap_smul hPQ (ha q) ⟨b q, _⟩
 
 
+include hPQ hs hf hf0 hlat in
 theorem exists_coordMap (bas : Module.Basis (Fin N) Ω V) (hbas : ∀ q, bas q = b q) :
     ∃ φ : resFibre O x Q B →ₗ[FractionRing (MRingOver (kap O) ι ⧸ Q)]
         (Fin N → FractionRing (MRingOver (kap O) ι ⧸ Q)),
@@ -218,6 +223,7 @@ theorem exists_coordMap (bas : Module.Basis (Fin N) Ω V) (hbas : ∀ q, bas q =
   rfl
 
 
+include hPQ hs hf hf0 hlat in
 theorem frame_res_basis (hb : LinearIndependent Ω b) (hsp : Submodule.span Ω (Set.range b) = ⊤) :
     LinearIndependent (FractionRing (MRingOver (kap O) ι ⧸ Q))
         (fun q => resMap O x Q B ⟨b q, frame_mem_stalk hPQ hs hf hf0 hlat q⟩) ∧
@@ -262,6 +268,7 @@ theorem frame_res_basis (hb : LinearIndependent Ω b) (hsp : Submodule.span Ω (
     | add u v hu hv => rw [Submodule.Quotient.mk_add]; exact add_mem hu hv
 
 
+include hPQ hs hf hf0 hlat in
 theorem frame_res_lat (e : resFibre O x Q B) :
     (∃ n : ℕ, rs x Q f ^ n • e ∈ resLat O x Q B s) ↔
       ∃ a : Fin N → FractionRing (MRingOver (kap O) ι ⧸ Q),

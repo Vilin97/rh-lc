@@ -219,6 +219,8 @@ private lemma exists_integer_valued_sub_le_exp_neg (x : v.adicCompletionIntegers
   exact ha
 
 
+open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum WithZero Polynomial in
+variable {K : Type} [Field K] [NumberField K] (v : HeightOneSpectrum (𝓞 K)) in
 theorem _root_.GlobalTheory.LocalDifferentProduct.card_quot_map {I : Ideal (𝓞 K)} (hI : I ≠ 0) :
     Nat.card (v.adicCompletionIntegers K ⧸
       I.map (algebraMap (𝓞 K) (v.adicCompletionIntegers K))) =
@@ -261,6 +263,7 @@ theorem _root_.GlobalTheory.LocalDifferentProduct.card_quot_map {I : Ideal (𝓞
 end Local
 
 
+open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum WithZero Polynomial in
 theorem _root_.GlobalTheory.LocalDifferentProduct.finprod_card_quot_map {K : Type} [Field K] [NumberField K] {I : Ideal (𝓞 K)} (hI : I ≠ 0) :
     (Function.mulSupport fun v : HeightOneSpectrum (𝓞 K) => Nat.card (v.adicCompletionIntegers K ⧸
       I.map (algebraMap (𝓞 K) (v.adicCompletionIntegers K)))).Finite ∧
@@ -285,6 +288,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 end Relative
 
 
+open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum WithZero Polynomial in
 theorem _root_.GlobalTheory.LocalDifferentProduct.prod_normDifferentV : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E]
     [Algebra F E] [StarRing E] (σ : E →ₐ[F] E), _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.IsCMExt F E σ → (∀ x : E, star x = σ x) →
     _root_.Formalism.HermitianLatticesTheory.IsCMUnram E → (Function.mulSupport (_root_.GlobalTheory.IndefiniteRowSideFullHecke.LocalDualIndex.normDifferentV F)).Finite ∧

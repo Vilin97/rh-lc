@@ -58,6 +58,8 @@ section Bar
 variable {k G : Type u} [CommRing k] [Group G]
 
 
+set_option backward.defeqAttrib.useBackward true in
+set_option backward.isDefEq.respectTransparency false in
 lemma diagonalSuccIsoFree_inv_single (m : ℕ) (f : Fin m → G) (g : G) (r : k) :
     (diagonalSuccIsoFree k G m).inv.hom (Finsupp.single f (MonoidAlgebra.single g r)) =
       MonoidAlgebra.single (g • Fin.partialProd f) r := by

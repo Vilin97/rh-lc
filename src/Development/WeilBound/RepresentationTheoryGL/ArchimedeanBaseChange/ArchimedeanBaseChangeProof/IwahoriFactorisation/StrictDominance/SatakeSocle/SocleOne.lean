@@ -21,6 +21,7 @@ def msOne {n : ℕ} (ξ : Fin n → kˣ →* ℂˣ) (hξ : ∀ i, IsUnram (ξ i)
     Segment.single (IrrGL.ofChar (ξ i) (isSmoothChar_of_isUnram (hξ i))) (IrrGL.isCusp_ofChar _ _)
 
 
+variable (k) in
 def atUnif {n : ℕ} (ξ : Fin n → kˣ →* ℂˣ) : Fin n → ℂˣ := fun i => ξ i (Zls.unifU k)
 
 def AbsAnti {n : ℕ} (α : Fin n → ℂˣ) : Prop := Antitone fun i => ‖((α i : ℂˣ) : ℂ)‖

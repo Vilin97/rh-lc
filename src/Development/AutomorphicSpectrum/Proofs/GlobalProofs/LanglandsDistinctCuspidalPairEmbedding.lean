@@ -230,6 +230,7 @@ theorem exists_map_two_step (hBZ : BernsteinZelevinskyFiniteness) {D : ℕ} (hD 
     · exact absurd (h v) hv
 
 
+variable (k) in
 theorem exists_jac_map_of_ne (hG : GeometricLemma) (n : Type) [Fintype n] [DecidableEq n] (d : Fin 2 → ℕ)
     (σ : ∀ i, Irr k (d i)) (hσ : ∀ i, 0 < d i ∧ IsCuspidal (σ i).π) (hd : d 0 ≠ d 1)
     (e : (Σ i, Fin (d i)) ≃ n) (e' : (Σ i, Fin (d (Equiv.swap 0 1 i))) ≃ n) :
@@ -271,6 +272,8 @@ theorem exists_jac_map_of_ne (hG : GeometricLemma) (n : Type) [Fintype n] [Decid
     ((h4 (b.symm G0) f₀ g₀).some.trans E₀)
 
 
+set_option maxHeartbeats 2000000 in
+variable (k) in
 theorem exists_jac_map_of_eq (hG : GeometricLemma) (hBZ : BernsteinZelevinskyFiniteness) (n : Type) [Fintype n]
     [DecidableEq n] {D : ℕ} (hD : 0 < D) (σ : Fin 2 → Irr k D) (hc : ∀ i, IsCuspidal (σ i).π)
     (hne : ¬ Nonempty ((σ 0).π.Equiv (σ 1).π)) (e e' : (Σ _ : Fin 2, Fin D) ≃ n) :

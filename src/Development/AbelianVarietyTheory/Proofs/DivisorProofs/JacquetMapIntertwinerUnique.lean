@@ -80,6 +80,7 @@ theorem jacquet_line_block_inr_inr (a b : ℕ) (i : Fin 1) : JacLine.blk3 a b (S
   congrArg (JacLine.blk3 a b) ((sum3 (a + b)).symm_apply_apply _).symm
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem unip_shape {a b : ℕ} {u : GL (Fin (a + (b + 2))) k} (hu : u ∈ unipRad k (part3 a b)) :
     u.val.submatrix (JacLine.blk3 a b) (JacLine.blk3 a b) =
       fromBlocks 1 (of fun i j => u.val (JacLine.blk3 a b (Sum.inl i)) (JacLine.blk3 a b (Sum.inr j))) 0
@@ -99,6 +100,7 @@ theorem unip_shape {a b : ℕ} {u : GL (Fin (a + (b + 2))) k} (hu : u ∈ unipRa
   · exact (congrArg₂ u.val (jacquet_line_block_inr_inr a b i) (jacquet_line_block_inr_inr a b j)).trans (h2 2 i j)
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem levi_shape {a b : ℕ} (l : Levi k (fun i : Fin 3 => Fin (blk3 (a + b) i))) :
     (leviEmb k (part3 a b) l).val.submatrix (JacLine.blk3 a b) (JacLine.blk3 a b) =
       fromBlocks (of fun _ _ => ((GeneralLinearGroup.det (l 0) : kˣ) : k)) 0 0

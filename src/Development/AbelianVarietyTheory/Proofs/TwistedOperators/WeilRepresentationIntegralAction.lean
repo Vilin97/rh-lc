@@ -36,6 +36,7 @@ theorem continuous_toMixed : Continuous (InfiniteAdeleRing.ringEquiv_mixedSpace 
       (continuous_apply _)
 
 
+variable (F) in
 def splitEquiv (κ : Type) :
     ((κ → mixedEmbedding.mixedSpace F) × (κ → FiniteAdeleRing (𝓞 F) F)) ≃+ (κ → AF F) where
   toFun p := fun i => (((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (p.1 i), p.2 i) : AF F)
@@ -61,6 +62,7 @@ theorem evI_splitEquiv (κ : Type) (p : (κ → mixedEmbedding.mixedSpace F) × 
   (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply _
 
 
+variable (F) in
 def intPts (κ : Type) : Set (κ → FiniteAdeleRing (𝓞 F) F) :=
   Set.univ.pi fun _ => {b | ∀ v : HeightOneSpectrum (𝓞 F), b.1 v ∈ v.adicCompletionIntegers F}
 
@@ -75,9 +77,11 @@ theorem zero_mem_intPts (κ : Type) : (0 : κ → FiniteAdeleRing (𝓞 F) F) �
   fun _ _ v => zero_mem (v.adicCompletionIntegers F)
 
 
+variable (F) in
 def g0 (κ : Type) : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ := (intPts F κ).indicator 1
 
 
+variable (F) in
 def r0 (κ : Type) : (κ → AF F) → ℂ := fun x => g0 F κ (fun i => (x i).2)
 
 theorem standard_vector_mem_schwartz_bruhat (κ : Type) [Fintype κ] : g0 F κ ∈ SB (κ → FiniteAdeleRing (𝓞 F) F) := by

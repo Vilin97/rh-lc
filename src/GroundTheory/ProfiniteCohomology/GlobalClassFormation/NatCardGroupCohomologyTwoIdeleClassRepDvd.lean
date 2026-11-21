@@ -77,6 +77,7 @@ noncomputable def groupCohomologyResIdeleClassIso (H : Subgroup Gal(L/K)) (n : â
 variable [IsGalois K L]
 
 
+omit [IsGalois K L] in
 theorem isPGroup_gal_fixedField_sylow {p : â„•} (P : Sylow p Gal(L/K)) :
     IsPGroup p Gal(L/fixedField (P : Subgroup Gal(L/K))) :=
   P.isPGroup'.of_equiv (subgroupEquivGalFixedField _)

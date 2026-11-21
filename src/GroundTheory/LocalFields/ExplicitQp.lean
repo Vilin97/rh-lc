@@ -24,6 +24,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 attribute [local instance] isDiscreteModule_units
 
 
+include hf in
 theorem localReciprocity_symm_lubinTateField {n : ℕ} (hn : 0 < n) (u : 𝒪[K]ˣ) (k : ℤ)
     {τ : Ω ≃ₐ[K] Ω} (hτd : unramifiedDegree K Ω τ = Multiplicative.ofAdd (k : ℤ̂))
     (hτ : ∀ x ∈ lubinTateTorsion Ω (hπ := hπ) hf n,
@@ -48,6 +49,7 @@ theorem localReciprocity_symm_lubinTateField {n : ℕ} (hn : 0 < n) (u : 𝒪[K]
   rfl
 
 
+include hf in
 theorem apply_val_of_mk_eq_localReciprocityLimit {n : ℕ} (hn : 0 < n) (u : 𝒪[K]ˣ) (k : ℤ)
     {g : Ω ≃ₐ[K] Ω}
     (hg : (g : TopologicalAbelianization (Ω ≃ₐ[K] Ω)) =
@@ -140,6 +142,8 @@ theorem psEval_add {σ : Type*} [Finite σ] (f g : MvPowerSeries σ 𝒪[K]) {x 
   exact (hasSum_psEval' (f + g) x hx).unique (by rw [psTerm_add]; exact h)
 
 
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ω] [TopologicalSpace Ω]
+  [IsValuativeTopology Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω] in
 theorem psEval_X_mul_X [TopologicalSpace Ω] (x : Fin 2 → Ω) :
     psEval (MvPowerSeries.X 0 * MvPowerSeries.X 1 : MvPowerSeries (Fin 2) 𝒪[K]) x = x 0 * x 1 := by
   classical
@@ -198,6 +202,7 @@ theorem val_smul_of_mem_torsion {n : ℕ}
   rw [this, val_natCast_smul]
 
 
+omit [TopologicalSpace Ω] [IsValuativeTopology Ω] [Algebra.IsAlgebraic ℚ_[p] Ω] in
 theorem valuation_sub_one_lt_one {n : ℕ} {ζ : Ω} (hζ : ζ ^ (p ^ n) = 1) :
     valuation Ω (ζ - 1) < 1 := by
   have hp1 : valuation Ω (p : Ω) < 1 := by

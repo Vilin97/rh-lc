@@ -153,12 +153,15 @@ def std (n : ℕ) : HolAtlas (V n) n :=
 def Pt : Type := {x : A.ι × M // x.2 ∈ (A.e x.1).source}
 
 
+variable {A} in
 abbrev Pt.pt (x : A.Pt) : M := x.1.2
 
 
+variable {A} in
 abbrev Pt.ch (x : A.Pt) : OpenPartialHomeomorph M (V n) := A.e x.1.1
 
 
+variable {A} in
 abbrev Pt.crd (x : A.Pt) : V n := x.ch x.pt
 
 abbrev Fld : Type := A.Pt → Alt n

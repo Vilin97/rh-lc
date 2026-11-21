@@ -347,6 +347,7 @@ variable {Y₁ : Model Xo c (algebraMap (𝓞 c.F) c.F)}
   {Sys : PB.AnSys (Top.dimFl (CMType H) (D.p + D.q)) (Option (RootIx D))} {Fx : FixedData Y₁ Sys}
 
 
+omit [Field Ω] [Algebra c.F Ω] in
 theorem exists_genFrame (Or : RootOrigin Y₁ S RM Fx) : Nonempty (GenFrame Or) := by
   letI := cstAlg Or
   obtain ⟨z, hz, hzs⟩ := exists_pt Or.𝔐

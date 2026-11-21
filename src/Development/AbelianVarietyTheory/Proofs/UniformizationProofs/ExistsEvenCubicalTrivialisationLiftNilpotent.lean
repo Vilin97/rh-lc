@@ -217,6 +217,7 @@ variable {A : Type} [CommRing A] {J : Ideal A} {X : Type} [AddCommGroup X]
   {w : LB.Iso P₀.L.L (P.L.L.pull F)} {i : splitTorus _ X ⟶ G} {i₀ : splitTorus _ X ⟶ G₀}
 
 
+variable (w) in
 def Reduces (t : LB.Gen (LB.LinComb P.L.L (K := Fin 2) ![i.left, (1 : splitTorus _ X ⟶ G).left] ![1, -1]))
     (σ₀ : CubTriv P₀.c i₀) : Prop :=
   ∀ (T : Over (Spec (CommRingCat.of (A ⧸ J)))) (z : T.left) (C₀) (C), Good P₀.L.L z C₀ → Good P.L.L z C →

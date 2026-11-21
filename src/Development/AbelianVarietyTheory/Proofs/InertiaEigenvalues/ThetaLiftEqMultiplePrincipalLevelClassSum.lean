@@ -76,6 +76,7 @@ theorem lev_eq_of {F E LL : Type} [Field F] [NumberField F] [Field E] [NumberFie
   rfl
 
 
+open GlobalTheory.ConjTwist in
 theorem ser_transl {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
     {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (i : Fin D.R.m) (t : T0)
     {χS χT : (AE D)ˣ →* Circle} (hom : IsWeilDatumO R.ψ (Vc D i) (Wc D i) χS χT (R.ωP i t)) (hθ : IsInfFam R.θ)
@@ -88,6 +89,7 @@ theorem ser_transl {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A 
     smul_eq_mul]
 
 
+open GlobalTheory.ConjTwist GlobalTheory.FlatVecSum in
 theorem sum_eq_classSum {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
     {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (j : Fin D.R.m) (t : T0)
     {B : Base (Vc D j) (Wc D j)} (hB : BaseOf R j B) (ψ : Twist D Circle) {c0 : ℂ} (hc0 : c0 ≠ 0) {z' : GA D (Vc D j)}
@@ -114,6 +116,7 @@ theorem sum_eq_classSum {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type
   rfl
 
 
+open Classical GlobalTheory.ConjTwist GlobalTheory.FlatVecSum in
 theorem thF_eq_classSum_princ : ∀ (D : D7) (X : RealSide D) (E : IntegralHeckeForms.XD D) (Y : SerSide X E) (i : D.ntw.Tw) (j : Fin D.R.m) (b : Bool) (t : X.T),
     X.R.xi t = (Y.Z.ρ.B i j b).de.chi → X.R.Q t = (Y.Z.ρ.B i j b).de.Q → ∀ (y : (X.R.HV j t).H) (u : ∀ ρ, lowT (X.R.MW j (sg0 D X.A3.A)) ρ),
     ∃ (m : ℕ) (h₀ : Fin m → GA D (Vc D j)) (c : ℂ) (z : Bridge.Gf (Vc D j)),

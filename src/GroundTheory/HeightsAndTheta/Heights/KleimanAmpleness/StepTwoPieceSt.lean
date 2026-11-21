@@ -37,6 +37,7 @@ variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : 
   {E : Type v} [AddCommGroup E] [Module Ω E] [Module S E] [IsScalarTower S Ω E]
 
 
+variable (S x E) in
 def FinGradedSub.zero : FinGradedSub (S := S) (x := x) E where
   piece _ := ⊥
   smul_mem _ _ _ m _ hm := by

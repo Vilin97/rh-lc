@@ -92,6 +92,7 @@ section Frames
 variable {A : Over (Sp ℂ)} [GrpObj A] {L : LB A.left} {g : ℕ}
 
 
+open PullHermitian in
 theorem exists_frame_ratio (hL : L.IsLB) (u u₀ : HolUnif A L g) (F : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ))
     (hF : ∀ z, u₀.ex (F z) = u.ex z) :
     ∃ r : (Fin g → ℂ) → ℂ, Differentiable ℂ r ∧ (∀ z, r z ≠ 0) ∧

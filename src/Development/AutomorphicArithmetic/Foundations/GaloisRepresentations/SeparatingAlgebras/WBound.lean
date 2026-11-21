@@ -14,6 +14,7 @@ open GlobalTheory.GalCut GlobalTheory.UnitaryBC GlobalTheory.Cong GlobalTheory.D
 open MeasureTheory GroundTheory.Automorphic.Spherical UpperTheory.Gal.Gen
 
 
+open MvPolynomial in
 private theorem continuous_coeff_blockAct' {Y : Type} [TopologicalSpace Y] {T : Type} {k n : ℕ}
     (A : Y → T → Matrix (Fin k) (Fin k) ℂ) (hA : ∀ t a b, Continuous fun x => A x t a b)
     (F : MvPolynomial (T × Fin k × Fin n) ℂ) :
@@ -60,6 +61,7 @@ private theorem continuous_detTwK' {Y : Type} [TopologicalSpace Y] {T : Type} [F
   exact (Matrix.isUnit_iff_isUnit_det _).1 (g x τ).isUnit |>.ne_zero
 
 
+open MvPolynomial in
 private theorem continuous_rhoK_coeff' {Y : Type} [TopologicalSpace Y] {T : Type} [Fintype T] {n : ℕ}
     (lam : T → DomWeight n) {d : ℕ} (B : Module.Basis (Fin d) ℂ (Formalism.L2.DIV.VV ℂ lam)) (g : Y → (T → GL (Fin n) ℂ))
     (hg : ∀ v a b, Continuous fun x => ((g x v : GL (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ) a b) (i j : Fin d) :

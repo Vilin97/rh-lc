@@ -46,6 +46,7 @@ def unfFam (U : Formalism.L2.PjFree.Unf Xo c σ r) : ∀ σ' : c.F →+* ℂ, Fo
   if h : σ = σ' then h ▸ U else { Comp := Empty, X := fun k => k.elim, un := fun k => k.elim }
 
 
+variable (Z) in
 def hodgeMet (U : Formalism.L2.PjFree.Unf Xo c σ r) : EigMet Z σ :=
   EigMet.hodge (unfFam U) (2 * Real.pi) Real.two_pi_pos (Classical.arbitrary (EigMet Z σ))
 

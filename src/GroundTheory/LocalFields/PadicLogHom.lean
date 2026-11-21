@@ -104,6 +104,7 @@ theorem tendsto_natCast_prime_pow : Tendsto (fun n : ℕ ↦ ((p ^ n : ℕ) : K)
     exact_mod_cast hn.trans (Nat.le_mul_of_pos_left n (by omega : 0 < absRamificationIndex (K := K)))))
 
 
+omit [ValuativeRel K] [IsNonarchimedeanLocalField K] in
 theorem one_add_pow_sub_one_div_eq (x : K) {m : ℕ} (hm : m ≠ 0) :
     ((1 + x) ^ m - 1) / (m : K) =
       ∑' k : ℕ, (((m - 1).choose k : ℕ) : K) * (x ^ (k + 1) / ((k + 1 : ℕ) : K)) := by

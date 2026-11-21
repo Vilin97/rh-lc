@@ -430,6 +430,7 @@ def IsLiftGG3 (O : Type) [CommRing O] [IsLocalRing O] (H GK : Subgroup GQ) (η :
   (∀ h : H, (r h).map (residue A) = (c0 h).map (fun x => residue A (algebraMap O A x)))
 
 
+open Classical in
 def IsUnivLiftGG3 (O : Type) [CommRing O] [IsLocalRing O] (H GK : Subgroup GQ) (η : GQ → O)
     (c0 : GQ → Matrix (Fin 3) (Fin 3) O)
     (P : ∀ (A : Type) [CommRing A] [IsLocalRing A] [Algebra O A], (H → Matrix (Fin 3) (Fin 3) A) → Prop)

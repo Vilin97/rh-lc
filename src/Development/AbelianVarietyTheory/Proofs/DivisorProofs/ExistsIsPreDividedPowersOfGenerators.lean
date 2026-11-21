@@ -212,6 +212,7 @@ end GlobalTheory.PDA.Gen
 namespace GlobalTheory.PDA
 
 
+open Gen in
 theorem exists_isPreDividedPowers_of_generators₂ : ∀ (B ι : Type) [CommRing B] (x : ι → B) (g : ι → ℕ → B), (∀ i, g i 0 = 1) →
     (∀ i, g i 1 = x i) → (∀ i n, n ≠ 0 → g i n ∈ Ideal.span (Set.range x)) →
     (∀ i m n, g i m * g i n = ((m + n).choose m : B) * g i (m + n)) →

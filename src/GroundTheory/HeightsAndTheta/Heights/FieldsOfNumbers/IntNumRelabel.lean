@@ -77,6 +77,7 @@ variable {K₁ K₂ : Type*} [DecidableEq K₁] [DecidableEq K₂] {ι₁ : K₁
   {F : Type*} [Field F]
 
 
+include hφ in
 theorem weight_mapDomain (d : (Σ k, ι₁ k) →₀ ℕ) :
     Finsupp.weight (blockWeight ι₂) (Finsupp.mapDomain φ d) =
       Finsupp.weight (blockWeight ι₁) d ∘ e.symm := by
@@ -92,6 +93,7 @@ theorem weight_mapDomain (d : (Σ k, ι₁ k) →₀ ℕ) :
       Equiv.symm_apply_eq]
 
 
+include hφ in
 theorem gradedPiece_map_rename (I : Ideal (MRing ι₁ F)) (d : K₂ → ℕ) :
     gradedPiece (I.map (renameEquiv F φ)) d =
       (gradedPiece I (d ∘ e)).map
@@ -118,12 +120,14 @@ theorem gradedPiece_map_rename (I : Ideal (MRing ι₁ F)) (d : K₂ → ℕ) :
     simp
 
 
+include hφ in
 theorem finrank_gradedPiece_map_rename (I : Ideal (MRing ι₁ F)) (d : K₂ → ℕ) :
     Module.finrank F (gradedPiece (I.map (renameEquiv F φ)) d) =
       Module.finrank F (gradedPiece I (d ∘ e)) := by
   rw [gradedPiece_map_rename e φ hφ, LinearEquiv.finrank_map_eq]
 
 
+include hφ in
 theorem hilbFn_map_rename (I : Ideal (MRing ι₁ F)) (m : K₂ → ℤ) :
     hilbFn (I.map (renameEquiv F φ)) m = hilbFn I (m ∘ e) := by
   unfold hilbFn
@@ -135,6 +139,7 @@ theorem hilbFn_map_rename (I : Ideal (MRing ι₁ F)) (m : K₂ → ℤ) :
   · rw [if_neg h, if_neg (mt hpos.2 h)]
 
 
+include hφ in
 theorem intNum_map_rename (I : Ideal (MRing ι₁ F)) {n : ℕ} (bs : Fin n → K₂ → ℤ) :
     intNum F (I.map (renameEquiv F φ)) bs = intNum F I (fun i => bs i ∘ e) := by
   unfold intNum

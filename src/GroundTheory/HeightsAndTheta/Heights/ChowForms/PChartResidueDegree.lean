@@ -141,6 +141,7 @@ theorem length_quotient_eq_one {O R : Type*} [CommRing O] [CommRing R] [Algebra 
 end ChartResidueDegree
 
 
+open ChartResidueDegree in
 theorem ChartResidueDegree.proof (h₁ : ChowFormBirational.Statement) (h₂ : ChartFinite.Statement)
     (h₃ : ChartKernel.Statement) (h₄ : ConeDimOfChowForm.Statement) (h₅ : ConeDimComponent.Statement)
     (h₆ : ChowFormExists.Statement) (h₇ : IncidenceGeneric.Statement) (h₈ : ChartLocalOrder.Statement) :

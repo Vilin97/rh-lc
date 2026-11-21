@@ -13,6 +13,9 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 namespace GlobalTheory
 
 
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
+open scoped CategoryTheory.Obj in
+open TensorProduct in
 theorem _root_.GlobalTheory.exists_smul_mem_of_dense_fibres :
     ∀ (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] (A : Type) [CommRing A]
       [Algebra R A] [Algebra.FiniteType R A] (A₀ : Subalgebra R A) (x : A)

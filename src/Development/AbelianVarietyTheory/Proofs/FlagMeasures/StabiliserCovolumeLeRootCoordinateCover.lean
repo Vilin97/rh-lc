@@ -19,6 +19,7 @@ open Formalism.BasicNotions Formalism.MainNotions.S Formalism.MainNotions.S.Lat 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
+open MeasureTheory in
 theorem GlobalTheory.LoopVol.packing_pinned {D : D7} {X : HidaSetting D} {Y : Full X} {u u' : D.what₂.Word} (s : TT Y u u')
     {γw g g' : X.B.I.Ginf} {μw : Measure X.B.I.Ginf} (hg : g ∈ X.SinfU u) (hg' : g' ∈ X.SinfU u')
     (hdec : s.pt.1 = g * γw * g'⁻¹) (hH : IsHaarOnSet X.B.I (Formalism.L2.SG.RealObj.StInf X u u' γw) μw)

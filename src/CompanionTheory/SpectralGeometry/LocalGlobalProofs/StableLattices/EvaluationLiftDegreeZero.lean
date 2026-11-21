@@ -406,6 +406,7 @@ theorem acycU (lev : Fin n → ℕ) (E : Fin n → Fin n → Module.End ℂ Z) (
 end Acyc
 
 
+open scoped TensorProduct in
 theorem coverU (lev : Fin n → ℕ) (E : Fin n → Fin n → Module.End ℂ V) (hE : GlRel E) :
     ∃ (Y : Type) (_ : AddCommGroup Y) (_ : Module ℂ Y) (EY : Fin n → Fin n → Module.End ℂ Y) (π : Y →ₗ[ℂ] V),
       GlRel EY ∧ Function.Surjective π ∧ (∀ a b y, π (EY a b y) = E a b (π y)) ∧

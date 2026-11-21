@@ -83,6 +83,7 @@ theorem continuous_act (γ : GL a k × GL b k) : Continuous fun x : Matrix b a k
   (continuous_const.matrix_mul continuous_id).matrix_mul continuous_const
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem rank_act (x : Matrix b a k) (γ : GL a k × GL b k) : (act x γ).rank = x.rank := by
   unfold act
   rw [rank_mul_eq_left_of_isUnit_det _ _ ((isUnit_iff_isUnit_det _).1 γ.1.isUnit),
@@ -98,6 +99,7 @@ def omega (μ : kˣ →* ℂˣ) : Representation ℂ (GL a k × GL b k) (SB (Mat
   twist (sbRep act act_one act_mul continuous_act) (omChar a b μ)
 
 
+variable (k) in
 abbrev RankIn (s : Set ℕ) : Type := {x : Matrix b a k // x.rank ∈ s}
 
 def omegaOn (μ : kˣ →* ℂˣ) (s : Set ℕ) : Representation ℂ (GL a k × GL b k) (SB (RankIn (k := k) (a := a) (b := b) s)) :=
@@ -113,6 +115,7 @@ theorem omegaOn_apply (μ : kˣ →* ℂˣ) (s : Set ℕ) (γ : GL a k × GL b k
       (omChar a b μ γ : ℂ) * Φ.1 ⟨act x.1 γ, by rw [rank_act]; exact x.2⟩ := rfl
 
 
+variable (a b) in
 def filt (μ : kˣ →* ℂˣ) (s : Set ℕ) (κ : ℕ) : Subrepresentation (omegaOn a b μ s) where
   toSubmodule :=
     { carrier := {Φ | ∀ x : RankIn (k := k) (a := a) (b := b) s, x.1.rank < κ → Φ.1 x = 0}

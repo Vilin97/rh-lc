@@ -19,6 +19,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 namespace GlobalTheory
 
 
+set_option maxHeartbeats 1000000 in
 theorem rdIndep_of_lawsM : ∀ (D : D7) (T : Core D), LawsM T → ∀ j, InR D j → ∀ σ, GoodEmb T.Q.c σ →
     RdIndep (T.Q.Xo j) T.Q.c (T.U j) σ := by
   intro D T h j hj σ hσ

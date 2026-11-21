@@ -758,6 +758,7 @@ open Formalism.L2.SG.Pf.RowDictPf
 variable {D : D7} (X : HidaSetting D)
 
 
+open Classical in
 def labT : Finset (Tup2 D) :=
   haveI : ∀ k, NeZero (D.host.g k) := fun k => ⟨(D.host.g_prime k).ne_zero⟩
   (Finset.univ.image (tupOf (D := D))).filter (fun t => ∀ k v, IsLabel D k (t k v))
@@ -767,6 +768,7 @@ open Classical in
 def RowsAdd : Prop := ∀ S : Set (Tup2 D), dimX X S = ∑ t ∈ labT, if t ∈ S then dimX X {t} else 0
 
 
+open Classical in
 def RowsGood : Prop :=
   (∀ σ k v, IsLabel D k (D.nd.lab k (D.what₂.ft σ) v)) ∧ (∀ σ, D.ntypes.goodTuple (fun k => D.nd.lab k (D.what₂.ft σ))) ∧
     ∀ t ∈ (labT (D := D)), D.ntypes.goodTuple t →

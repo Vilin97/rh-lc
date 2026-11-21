@@ -17,6 +17,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 section SchwartzBruhat
 
 
+variable (K) in
 def schwartzBruhat : Submodule ℂ (K → ℂ) where
   carrier := {f | IsLocallyConstant f ∧ HasCompactSupport f}
   add_mem' hf hg := ⟨hf.1.add hg.1, hf.2.add hg.2⟩
@@ -156,6 +157,7 @@ theorem localFourier_eq_zero_of_notMem {f : K → ℂ} {N : ℤ}
   exact Circle.coe_eq_one.mp h'
 
 
+omit [BorelSpace K] [μ.IsAddHaarMeasure] in
 theorem localFourier_add_eq {f : K → ℂ} {M : ℤ} (hfM : ∀ x, f x ≠ 0 → x ∈ valBall K M) (y : K)
     {h : K} (hh : h ∈ valBall K (addCharConductor ψ - M)) :
     localFourier μ ψ f (y + h) = localFourier μ ψ f y := by

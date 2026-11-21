@@ -196,6 +196,7 @@ theorem le_iff_fst {S : Type} [CommRing S] (v : Sp (DualNumber S) ⟶ X) (U : X.
     ext <;> simp [h1]
 
 
+open scoped LaurentSeries in
 theorem cv_chart {Ω : Type} {p : Ω → ℂ} {R : Type} [CommRing R] (W : Sp (DualNumber R) ⟶ X) (V : X.Opens)
     (f : Γ(X, V)) (φ : R →+* ℂ⸨X⸩) (ψ : Ω → (R →+* ℂ)) (hc : ∀ r, Cv p (φ r) (fun ω => ψ ω r))
     (h : ⊤ ≤ (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ W) ⁻¹ᵁ V) :

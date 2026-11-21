@@ -37,6 +37,7 @@ def box (ϖ : kˣ) (a a' : ℤ) : Set (Vars G) :=
 variable {G}
 
 
+omit [ValuativeRel k] in
 theorem vtxExp_frame (a a' : ℤ) {t c b : ℕ} (h : t + c = b) (y : Fin t ⊕ Fin c) :
     vtxExp a a' c t (frame h y) = auxiliaryVectorUniformizerExponent a a' c y := by
   rcases y with x | p

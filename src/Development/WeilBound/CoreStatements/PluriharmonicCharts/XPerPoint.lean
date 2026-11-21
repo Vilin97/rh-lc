@@ -56,6 +56,7 @@ theorem card_pairs (N : ℕ) : Fintype.card (Pairs N) = N.choose 2 := by
 end PositivityTheory.Xgp.per_point
 
 
+open PositivityTheory.Xgp.per_point in
 theorem PositivityTheory.Xgp.t_per_point : ∀ (e : ℕ) (X : Type) [TopologicalSpace X] (A : FinHolAtlas e X) (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N j : ℕ), j ≤ N → ∀ (pot : Ψ × Fin N → LocPot X) (x : X) (V : Set X) (g : Ψ → X → Matrix (Fin N) (Fin N) ℂ), IsPeriodChart A j pot x V g → e = antisymDegree Ψ N → ∀ k, x ∈ (A.chart k).source → ∃ ν : ℝ, 0 ≤ ν ∧ (IsFlagImmersionAt A g x → 0 < ν) ∧ ∀ c : Ψ × Fin N → ℝ, locDens A (fun _ => sumPot c pot) k (A.chart k x) = ν * ∏ τ : Ψ, ∏ i : Fin N, ∏ l ∈ Finset.Ioi i, ∑ m ∈ Finset.Ico i l, c (τ, m) := by
   intro e X _ A Ψ _ _ N j hj pot x V g hP he k hx
   obtain ⟨Lm, hcd, hlevi, hinj⟩ :=

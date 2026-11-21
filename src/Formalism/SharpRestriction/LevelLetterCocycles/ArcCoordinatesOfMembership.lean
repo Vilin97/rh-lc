@@ -159,6 +159,7 @@ theorem p_ne_zero : (PD.p : LL) ≠ 0 := by
   exact absurd this (by simp)
 
 
+include W in
 theorem exists_pow_mul (hV : ValRing (LL := LL) O v) (x : LL) :
     ∃ (m : ℕ) (o : O), algebraMap O LL o = (PD.p : LL) ^ m * x := by
   by_cases hx : x = 0
@@ -175,6 +176,7 @@ theorem exists_pow_mul (hV : ValRing (LL := LL) O v) (x : LL) :
   exact ⟨_, o, ho⟩
 
 
+include W in
 theorem linIndep_of_O (hV : ValRing (LL := LL) O v) {M : Type} [AddCommGroup M] [Module LL M] {d : ℕ}
     (u : Fin d → M) (hO : ∀ c : Fin d → O, ∑ k, algebraMap O LL (c k) • u k = 0 → ∀ k, c k = 0) :
     LinearIndependent LL u := by

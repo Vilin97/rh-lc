@@ -171,6 +171,7 @@ theorem coM_inj_ofS : ∀ w c, ∀ φ ∈ (D.fm u).Fi D.R.m, coMTS Tf B w c (φ 
   exact (mul_eq_zero.mp hy).resolve_left (Units.ne_zero _)
 
 
+omit hB in
 structure PendRestS (gP : D.what₂.places.Pl → (D.fm u).clsP → D.what₂.Tau → GL (Fin (D.R.N D.R.m - 1)) ℂ) : Prop where
   exP : ∀ w, ∀ φ ∈ (D.fm u).Fi D.R.m, ∀ c, ∃ P ∈ Formalism.L2.Forms.CSpan ((D.fm u).lam D.R.m),
     (∀ s, Tf.eWz ((D.mem u).P.evz φ) c s =

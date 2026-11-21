@@ -58,6 +58,7 @@ theorem eig_prodPts (hv : ∀ i, IsTangent (v i)) (x : O) (s : R)
   rfl
 
 
+omit [IsLocalRing R] [Smooth G.hom] in
 theorem existsUnique_change (hv : ∀ i, IsTangent (v i)) (k : Matrix (Fin n) (Fin n) R) (hk : IsUnit k.det)
     {w : epsR R ⟶ G} (h : ∃! cf : Fin n → R, IsLieComb cf v w) :
     ∃! cf : Fin n → R, IsLieComb cf (fun i => prodPts (k i) v) w := by

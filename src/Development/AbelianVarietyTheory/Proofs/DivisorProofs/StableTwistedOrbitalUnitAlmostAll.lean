@@ -34,6 +34,7 @@ section Ring
 variable {O : Type} [CommRing O] {n : ℕ}
 
 
+open GlobalTheory.ClassParam in
 theorem exists_cyclic [IsLocalRing O] (M : Matrix (Fin n) (Fin n) O) (hs : M.charpoly.Separable) :
     ∃ v, IsUnit (krylov M v) := by
   haveI : Subsingleton (MaximalSpectrum O) := ⟨fun a b =>
@@ -63,6 +64,7 @@ theorem conj_of_charpoly [IsLocalRing O] (a b : GL (Fin n) O) (hs : a.val.charpo
     _ = _ := by rw [← h3]; group
 
 
+open GlobalTheory.ClassParam in
 theorem commute_of_commute [IsLocalRing O] (M s t : Matrix (Fin n) (Fin n) O) (hs : M.charpoly.Separable)
     (h1 : Commute M s) (h2 : Commute M t) : Commute s t := by
   obtain ⟨v, k, hk⟩ := exists_cyclic M hs

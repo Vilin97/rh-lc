@@ -47,6 +47,7 @@ theorem mOm_wedgeOm {R' B' : Type} [CommRing R'] [CommRing B'] [Algebra R' B'] {
   Subtype.ext (map_mul e.mDR x.1 y.1)
 
 
+variable (R B) in
 def oneOm : Om R B 0 := ⟨1, by
   change _ ∈ LinearMap.range _ ^ 0
   rw [pow_zero]; exact Submodule.one_le.1 le_rfl⟩
@@ -162,6 +163,7 @@ theorem ev_self {M : C ⥤ ModuleCat.{0} R} {m : ℕ} (s : ComposableArrows C m)
   rfl
 
 
+variable (F) in
 def oneTerm : Term F 0 0 := fun s ↦ oneOm R (F.obj (s.obj (Fin.last 0)))
 
 theorem coe_ev_oneTerm {k : ℕ} (s : ComposableArrows C k) (p : Fin 1 → Fin (k + 1)) (hp : Monotone p)
@@ -230,6 +232,7 @@ theorem dTot_sg {a q n : ℕ} (h : a + q = n) (c : Term F a q) :
       · rw [totV_succ, Tot.sg_of_ne _ _ _ (fun e ↦ hQ (congrArg (· + 1) e)), map_zero, smul_zero]
 
 
+variable (F) in
 def Tot.cup {m n N : ℕ} (h : m + n = N) : Tot F m →ₗ[R] Tot F n →ₗ[R] Tot F N :=
   ∑ b : Bidegree m, ∑ b' : Bidegree n, (-1 : ℤ) ^ (b.1.2 * b'.1.1) •
     ((cupTerm F rfl rfl).compl₁₂ (LinearMap.proj b) (LinearMap.proj b')).compr₂
@@ -288,6 +291,7 @@ theorem dTot_cup {m n N : ℕ} (h : m + n = N) (x : Tot F m) (y : Tot F n) :
   · ring
 
 
+variable (F) in
 def Tot.one : Tot F 0 := Tot.sg F rfl (oneTerm F)
 
 theorem Tot.one_cup {n : ℕ} (h : 0 + n = n) (x : Tot F n) : Tot.cup F h (Tot.one F) x = x := by
@@ -340,6 +344,7 @@ theorem Tot.cup_mem_BTot_right {m n N : ℕ} (h : m + n = N) {x : Tot F m} {y : 
       smul_smul, ← mul_pow, neg_one_mul, neg_neg, one_pow, one_smul]
 
 
+variable (F) in
 def ZTot.cup {m n N : ℕ} (h : m + n = N) : ZTot F m →ₗ[R] ZTot F n →ₗ[R] ZTot F N :=
   LinearMap.mk₂ R (fun x y ↦ ⟨Tot.cup F h x.1 y.1, Tot.cup_mem_ZTot h x.2 y.2⟩)
     (fun _ _ _ ↦ Subtype.ext (LinearMap.map_add₂ _ _ _ _))
@@ -348,12 +353,14 @@ def ZTot.cup {m n N : ℕ} (h : m + n = N) : ZTot F m →ₗ[R] ZTot F n →ₗ[
     (fun _ _ _ ↦ Subtype.ext (LinearMap.map_smul _ _ _))
 
 
+variable (F) in
 def Hyp.cup {m n N : ℕ} (h : m + n = N) : Hyp F m →ₗ[R] Hyp F n →ₗ[R] Hyp F N :=
   LinearMap.liftQ₂ _ _ ((ZTot.cup F h).compr₂ (Hyp.mk F N))
     (fun x hx ↦ LinearMap.ext fun y ↦ Hyp.mk_eq_zero.2 (Tot.cup_mem_BTot_left h hx y.2))
     (fun y hy ↦ LinearMap.ext fun x ↦ Hyp.mk_eq_zero.2 (Tot.cup_mem_BTot_right h x.2 hy))
 
 
+variable (F) in
 def Hyp.one : Hyp F 0 := Hyp.mk F 0 ⟨Tot.one F, Tot.one_mem⟩
 
 theorem Hyp.one_cup {n : ℕ} (h : 0 + n = n) (x : Hyp F n) : Hyp.cup F h (Hyp.one F) x = x := by

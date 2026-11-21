@@ -136,6 +136,7 @@ namespace GlobalTheory.PlaceSpaces
 variable {D : D7}
 
 
+open scoped ComplexOrder in
 theorem fr_cart_isCartanInv {V : HSp D} (A : Fr V) (τ : D.what₂.Tau) : IsCartanInv (gramAt D V τ) (A.cart τ) := by
   have h1 : A.fr τ * (A.fr τ)⁻¹ = 1 := Matrix.mul_nonsing_inv _ ((Matrix.isUnit_iff_isUnit_det _).1 (A.fr_unit τ))
   have h2 : (A.fr τ)⁻¹ * A.fr τ = 1 := mul_eq_one_comm.1 h1
@@ -272,6 +273,7 @@ theorem skew_dual (S : HSp D) {d : ℕ} (e : Fin S.rank ≃ Fin d) (y : Fin d �
 end GlobalTheory.PlaceSpaces
 
 
+open GlobalTheory.PlaceSpaces in
 theorem GlobalTheory.PlaceSpaces.spaces_of_triple : ∀ (D : D7) (W W₁ X : HSp D) (A : Fr W) (A₁ : Fr W₁) (B : Fr X) (α β : (AE D)ˣ →* Circle), IsTriple W W₁ X α β →
     ∀ p q : ℕ, (∀ τ, Formalism.UG.HasSignature (gramAt D W τ) (W.rank - p) p ∧ Formalism.UG.HasSignature (gramAt D W₁ τ) (W₁.rank - q) q ∧
       Formalism.UG.HasSignature (gramAt D X τ) (X.rank - (p + q)) (p + q)) →

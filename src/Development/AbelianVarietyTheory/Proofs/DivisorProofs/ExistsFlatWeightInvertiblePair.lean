@@ -47,6 +47,7 @@ open Formalism.L2.Pj GlobalTheory.Dict GlobalTheory.ClsVal
 open scoped Classical
 
 
+set_option maxHeartbeats 1000000 in
 theorem holSub0_le_span_cusp_upto : Formalism.MainNotions.ModuliIntegralCharts.H1.ChartIndepSt2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Geo.Tor.Level H) (Xo : Moduli Dw l) (c : Coeff l) (r : ℕ) (U : ∀ σ : c.F →+* ℂ, Formalism.L2.PjFree.Unf Xo c σ r), 1 ≤ r → l.A = 1 → (∀ σ, GoodEmb c σ → Formalism.L2.PjFree.IsUnf (U σ)) → ∀ σ, GoodEmb c σ → (∀ k k', ((U σ).X k).Gm = ((U σ).X k').Gm ∧ ((U σ).X k).ξ0 = ((U σ).X k').ξ0) → ∀ (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ), Dom a n → LastPos Dw a → 4 * (Module.finrank ℚ E * r) + 4 ≤ n → (∀ k, GlobalTheory.LargeCover.PrincUpTo ((U σ).X k) l.M (Formalism.L2.PjFree.laU (U σ) a n k)) → (∀ k, ChiOne ((U σ).X k) (Formalism.L2.PjFree.laU (U σ) a n k)) → GlobalTheory.Dict.holSub0 (U σ).X (Formalism.L2.PjFree.laU (U σ) a n) ≤ Submodule.span ℂ (Formalism.L2.PjFree.rdU (U σ) '' (Formalism.L2.PjFree.cusp Xo c U a n : Set (Rul Xo c))) := by
   intro hC E _ _ _ H Dw l Xo c r U hr hA hU σ hσ hG a n hdom hlast hn hP hχ
   have hrk : r = Dw.p + Dw.q := (hU σ hσ).1
@@ -182,6 +183,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {r : ℕ}
 
 
+open AlgebraicGeometry in
 theorem framesOn_model : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (r : ℕ) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r), NeatUnf U → ∀ (Z : Comp Xo c) (σ : c.F →+* ℂ), GoodEmb c σ → ∃ k, framesOn (U σ) Z = {z | z.1 = k ∧ z.2 ∈ ((U σ).X z.1).dom} := by
   intro E _ _ _ H Dw l Xo c r U hL Z σ hσ
   obtain ⟨q, hq⟩ : ∃ q : (U σ).Comp ≃ Comp Xo c, ∀ k (y : ((U σ).X k).dom) (s : Sp (CAt σ)),
@@ -243,6 +245,7 @@ theorem cuspOn_fd_span : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
       exact AllWt.rdU_mul (U σ) _ _
 
 
+open GlobalTheory.FlatCore.MulSpan in
 theorem horizGen_mul_mem_span : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (r : ℕ) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r), NeatUnf U → ∀ (Z : Comp Xo c) (σ : c.F →+* ℂ), GoodEmb c σ → ∀ (k0 : (U σ).Comp), framesOn (U σ) Z = {z | z.1 = k0 ∧ z.2 ∈ ((U σ).X z.1).dom} → ∀ (τ' : ((U σ).X k0).Ψ) (m : ℤ) (b b' : (E →+* ℂ) × ℕ → ℕ) (n : ℕ), Dom b n → Dom b' n → (∀ ρ i, i < Dw.mult ρ → 1 ≤ b' (ρ, i)) → 4 * (finrank ℚ E * r) + 4 ≤ n → SumDvd U b' n → modelWt (U σ) (wtZ b' n) k0 = modelWt (U σ) (wtZ b n) k0 + m • modelFlat r τ' → ∀ f ∈ cuspOn U Z (wtZ b n), (fun y : ↥((U σ).X k0).dom => horizGen τ' y.1 ^ m * rdU (U σ) f k0 y.1) ∈ Submodule.span ℂ ((fun g : Rul Xo c => fun y : ↥((U σ).X k0).dom => rdU (U σ) g k0 y.1) '' (cuspOn U Z (wtZ b' n) : Set (Rul Xo c))) := by
   intro E _ _ _ H Dw l Xo c r U hL Z σ hσ k0 hk τ' m b b' n hb hb' hpos hn hdv hw f hf
   have hP : rdU (U σ) f ∈ holSub (U σ).X (modelWt (U σ) (wtZ b n)) := (mem_cuspW.1 (cuspOn_le U Z _ hf)).2 σ hσ
@@ -437,6 +440,7 @@ theorem res_ind {U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r} (hL : NeatUnf U) (Z 
     · exact hoff f hs k y hz
 
 
+open GlobalTheory.FlatPair in
 theorem exists_flat_pair : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E)
     (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (r : ℕ) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r), NeatUnf U → ∀ (Z : Comp Xo c) (τ : Psi H), ∃ (G : WTZ E) (f g : Rul Xo c), Even G.2 ∧
       f ∈ cuspOn U Z G ∧ g ∈ cuspOn U Z (G + wtOf Dw (flatWt Dw τ) 0) ∧ f ≠ 0 ∧ IsFlatQuot U Z τ f g := by
@@ -531,6 +535,7 @@ theorem exists_flat_pair : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   ring
 
 
+open GlobalTheory.SecDivision ReciprocityTheory.ChartRestriction.G GlobalTheory.Reg GlobalTheory.GenericFrames GlobalTheory.FlagTan in
 theorem exists_quot : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (r : ℕ) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r), NeatUnf U → ∀ (Z : Comp Xo c) (e e' : Ix Dw → ℤ) (f g : Rul Xo c), f ∈ secZ Xo c e → f ∈ suppOn Z → g ∈ secZ Xo c e' → g ∈ suppOn Z → f ≠ 0 → ∀ σ, GoodEmb c σ → ∀ q : FDSec (U σ).X, (∀ k, ContinuousOn (q k) ((U σ).X k).dom) → (∀ z ∈ framesOn (U σ) Z, rdU (U σ) g z.1 z.2 = q z.1 z.2 * rdU (U σ) f z.1 z.2) → ∃ s ∈ secZ Xo c (e' - e), idem Z * s = s ∧ s * f = g := by
   intro E _ _ _ H Dw l Xo c r U hL Z e e' f g hf hfZ hg hgZ hf0 σ hσ q hq hfg
   obtain ⟨-, -, h, -⟩ := evLaws_genFr_atlas E H Dw l Xo c

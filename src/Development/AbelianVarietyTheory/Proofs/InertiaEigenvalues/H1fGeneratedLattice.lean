@@ -17,6 +17,7 @@ open Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.Weakl
 namespace GlobalTheory.H1fGeneration
 
 
+set_option maxHeartbeats 1000000 in
 theorem h1fGen_tied : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P), LocTied l P AI → ∀ (K LL : FinExt l) [Fintype (↥K.1 →ₐ[ℚ_[l]] ↥LL.1)] (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)) [IsTopologicalAddGroup T.V], FiniteCohomologyGeneratorsBound (P.PD K) T.L := by
   intro l _ P AI hT K LL _ T _ hG hC hcont
   have hO := (GlobalTheory.LocalIntegers.good_integers l LL).1

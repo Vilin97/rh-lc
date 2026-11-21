@@ -29,6 +29,8 @@ variable [IsTopologicalGroup G] {A : Rep.{u} k G} {A' : Rep.{u} k' G} [IsDiscret
   [IsDiscreteRep A'] (e : A ≃+ A') (he : ∀ (g : G) (a : A), e (A.ρ g a) = A'.ρ g (e a))
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] [IsDiscreteRep A] [IsDiscreteRep A'] in
+include he in
 theorem addEquiv_inhomogeneousCochains_d (i : ℕ) (f : (Fin i → G) → A) (g : Fin (i + 1) → G) :
     e ((inhomogeneousCochains.d A i).hom f g) =
       (inhomogeneousCochains.d A' i).hom (fun h => e (f h)) g := by
@@ -47,6 +49,7 @@ theorem addEquiv_inhomogeneousCochains_d (i : ℕ) (f : (Fin i → G) → A) (g 
   rw [hk, hk', map_zsmul]
 
 
+include he in
 theorem cochainsAddEquiv_d (i j : ℕ) (x : (cochainsComplex A).X i) :
     cochainsAddEquiv e j (((cochainsComplex A).d i j).hom x) =
       ((cochainsComplex A').d i j).hom (cochainsAddEquiv e i x) := by

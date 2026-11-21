@@ -251,6 +251,7 @@ theorem cls_part
   rfl
 
 
+include hf hf' in
 theorem cxSumAtM_unfold
     (hA : ∀ (h : G.GAf × Gr G 1) (z : Fin G.n → ℂ), 0 < (star z ⬝ᵥ (herm G v β *ᵥ z)).re →
       Set.Finite {y : grp G β | FixL G v β y z ∧

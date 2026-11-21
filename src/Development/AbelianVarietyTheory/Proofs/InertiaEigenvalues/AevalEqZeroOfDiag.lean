@@ -59,6 +59,7 @@ theorem aeval_comm {Q' : Type} [AddCommGroup Q'] [Module O Q'] (π : Q →ₗ[O]
       Polynomial.aeval_X, Module.End.mul_apply, Module.End.mul_apply, ih, h]
 
 
+open Classical in
 theorem finrank_ker_of_diag [IsDomain O] [IsPrincipalIdealRing O] [IsFractionRing O F] [Module.Free O Q]
     [Module.Finite O Q] (f : Q →ₗ[O] Q) (S : Multiset F) (h : DiagWith (f.baseChange F) S) (c : O) :
     Module.finrank O (LinearMap.ker (f - c • LinearMap.id)) = S.count (algebraMap O F c) := by
@@ -89,6 +90,7 @@ theorem finrank_ker_of_diag [IsDomain O] [IsPrincipalIdealRing O] [IsFractionRin
   rfl
 
 
+open Classical in
 theorem quot_clauses [IsDomain O] [IsPrincipalIdealRing O] [IsFractionRing O F] (P P' : Submodule O Q)
     (γ : Q →ₗ[O] Q) (hP : ∀ x ∈ P, γ x ∈ P)
     (hs : P'.submoduleOf P ≤ (P'.submoduleOf P).comap (γ.restrict hP))
@@ -165,6 +167,7 @@ theorem adapted_basis (D : Submodule F M) [FiniteDimensional F D] (A : ℤ → S
   rfl
 
 
+open GlobalTheory.SenLines.Coords in
 theorem spanIsLines_of_onto {N : Type} (L : N → ℤ → M) {r : ℕ} (u : Fin r → ℤ) (d : Fin r → M)
     (hd : LinearIndependent F d) (A : ℤ → Submodule F M)
     (hA : ∀ a, A a = Submodule.span F (d '' {k | a ≤ u k})) (h1 : ∀ x k, L x k ∈ A (-k))
@@ -386,6 +389,7 @@ theorem EkNΔ_eq {g : W.Gam} (hJ : QFrame W g J) (k : ℕ) : tableLineDegreeTwo.
   rfl
 
 
+omit T J i in
 theorem count_pairs {r : ℕ} (u : Fin r → ℤ) (y k : ℕ) (x : ℤ) :
     ((Finset.univ.filter fun p : Fin r × Fin ((k : ℤ) - -(y : ℤ)).toNat => -x = -(y : ℤ) - u p.1 + (p.2 : ℕ)).card : ℤ) =
       ∑ j ∈ Finset.Icc (1 - (k : ℤ)) (y : ℤ), ((Finset.univ.filter fun s => x - j = u s).card : ℤ) := by
@@ -406,6 +410,7 @@ theorem count_pairs {r : ℕ} (u : Fin r → ℤ) (y k : ℕ) (x : ℤ) :
     omega
 
 
+open Formalism.MainNotions in
 theorem lines_of_coeff (hK : Function.Surjective (algebraMap K₀ K)) (τ : K →ₐ[Qp] LL)
     (hτ : τ.comp (IsScalarTower.toAlgHom Qp K₀ K) = W.emb i) (ζ : LL)
     (hD : ∀ x k, W.levN T i ζ x k ∈ DeltaInvariantLattices.ιDi W T i)
@@ -441,6 +446,7 @@ theorem lines_of_coeff (hK : Function.Surjective (algebraMap K₀ K)) (τ : K �
     hF _ _ (Submodule.sub_mem _ (Submodule.smul_mem _ _ (hD' x k)) hw.1) h4⟩
 
 
+open Formalism.MainNotions in
 theorem clauses_of_lines [CharZero LL] [IsDomain O] [IsPrincipalIdealRing O] [IsFractionRing O LL]
     (hJ : QFrame W W.gam J) {r : ℕ} (b : Module.Basis (Fin r) (LetA O n) ↥(W.N T))
     (hb : ∀ k, (b k : W.DD T) ∈ W.NΔ T) (ζ : LL) (hζ : IsPrimitiveRoot ζ PD.p)
@@ -490,6 +496,7 @@ theorem clauses_of_lines [CharZero LL] [IsDomain O] [IsPrincipalIdealRing O] [Is
     exact hχ' _ (sub_ne_zero.2 hne) (by rw [zpow_sub₀ hχ, h, div_self (zpow_ne_zero _ hχ)])
 
 
+open Formalism.MainNotions in
 theorem senLat_of_tie [CharZero LL] [IsDomain O] [IsPrincipalIdealRing O] [IsFractionRing O LL]
     {Zl Ai : Type} [CommRing Zl] [CommRing Ai] [Algebra Zl O] [Algebra Zl Ai]
     {RW : Type} [CommRing RW] [Algebra O RW]
@@ -529,6 +536,8 @@ theorem senLat_of_tie [CharZero LL] [IsDomain O] [IsPrincipalIdealRing O] [IsFra
 end Generic
 
 
+open Formalism.MainNotions in
+set_option maxHeartbeats 1000000 in
 theorem senLat_of_coeff {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P} (hT : LocTied l P AI)
     {H : LocHW l P} {E : LocFon l P AI H} (C : LocCmpT l P AI H E) {K LL : FinExt l} (hA : CaseA K LL)
     (Pt : ZMod (Module.finrank ℚ_[l] ↥(K0 K)) → ↥LL.1 → (↥K.1 →ₐ[ℚ_[l]] ↥LL.1) → Prop)
@@ -566,6 +575,7 @@ theorem senLat_of_coeff {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf 
 end GlobalTheory.SenMult
 
 
+open GlobalTheory.AdmLoc GlobalTheory.TopSteps Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions in
 theorem GlobalTheory.SenMult.stmtSen : ∀ (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (Cm : CmpOf D.loc D.locA HW F), InvariantsGenerators.SenOperatorTheorem D HW F Cm :=
   fun D HW _ Cm h l _ K LL hA => GlobalTheory.SenMult.senLat_of_coeff (D.locT l) (Cm l) hA (DeltaInvariantLattices.ptK D.loc HW hA.2.2)

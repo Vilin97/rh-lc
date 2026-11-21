@@ -29,6 +29,8 @@ theorem hermCocompact (D : D7) (r : ℕ) :
   rwa [sub_neg_eq_add, add_comm]
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 2000000 in
 theorem hermFourierZero (D : D7) (r : ℕ) (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsCharAF D.host.F ψ)
     (lam : Measure (hermA D r)) (hH : lam.IsAddHaarMeasure) (𝓖 : Set (hermA D r))
     (h𝓖 : IsAddFundamentalDomain (ratHerm D r) 𝓖 lam) (φ : hermA D r → ℂ) (hφ : Continuous φ)

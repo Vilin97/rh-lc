@@ -136,6 +136,7 @@ theorem vmv_mulVec (u v w : ι → R) : vecMulVec u v *ᵥ w = (v ⬝ᵥ w) • 
   ring
 
 
+variable (σ J) in
 theorem eich_mulVec (e u : ι → R) (c : R) (x : ι → R) :
     eich σ J e u c *ᵥ x = x + hf σ J x e • u - hf σ J x u • e + (c * hf σ J x e) • e := by
   simp only [eich, Matrix.add_mulVec, Matrix.sub_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec,

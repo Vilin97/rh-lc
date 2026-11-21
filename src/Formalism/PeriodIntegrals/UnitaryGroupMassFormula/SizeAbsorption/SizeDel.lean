@@ -121,6 +121,7 @@ private lemma fin_lemma_5 (x n T R C0 V e : ℝ) (hx : 0 < x) (hn0 : 0 ≤ n) (h
   linarith
 
 
+set_option maxHeartbeats 800000 in
 theorem stepA : StepA := by
   unfold StepA
   intro K eps

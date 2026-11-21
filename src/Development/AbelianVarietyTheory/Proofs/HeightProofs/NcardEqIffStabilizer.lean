@@ -18,6 +18,10 @@ open scoped IntermediateField Pointwise
 variable {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
 
 
+set_option autoImplicit false in
+open NumberField IsDedekindDomain Polynomial in
+open scoped IntermediateField Pointwise in
+variable {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L] in
 theorem _root_.GlobalTheory.FieldSize.RaySplit.ncard_eq_primesOver (𝔭 : HeightOneSpectrum (𝓞 K)) :
     {Q : HeightOneSpectrum (𝓞 L) | Q.asIdeal.comap (algebraMap (𝓞 K) (𝓞 L)) = 𝔭.asIdeal}.ncard =
       (𝔭.asIdeal.primesOver (𝓞 L)).ncard := by
@@ -167,6 +171,10 @@ private theorem false_of_ringHom_real_of_isTotallyComplex {F : Type} [Field F] [
   simp [ComplexEmbedding.conjugate_coe_eq]
 
 
+set_option autoImplicit false in
+open NumberField IsDedekindDomain Polynomial in
+open scoped IntermediateField Pointwise in
+variable {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L] in
 theorem _root_.GlobalTheory.FieldSize.RaySplit.ncard_eq_finrank_iff : ∀ (K R : Type) [Field K] [NumberField K] [IsTotallyComplex K] [Field R] [NumberField R]
     [Algebra K R] [IsAbelianGalois K R] (n : ℕ), 0 < n → _root_.GlobalTheory.FieldSize.IsRay R (Ideal.span {(n : 𝓞 K)}) →
     ∀ 𝔭 : HeightOneSpectrum (𝓞 K), (n : 𝓞 K) ∉ 𝔭.asIdeal →

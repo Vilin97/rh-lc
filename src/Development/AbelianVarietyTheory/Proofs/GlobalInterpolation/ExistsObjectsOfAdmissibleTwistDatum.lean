@@ -19,6 +19,7 @@ theorem ObjCP.imp {Q Q' : Par → PtProp} (h : ObjCP Q) (hi : ∀ (κ : Par) (p 
     ⟨p, e1, e2, e3, e4, e5, hi κ p e6⟩⟩) h
 
 
+open GlobalTheory.EX.DC in
 theorem ObjCP.and_q0Pt {Q : Par → PtProp} (h : ObjCP Q) : ObjCP (fun κ => (Q κ).and twistingGlobalPointProp) := by
   obtain ⟨ε0, h0, h⟩ := h
   refine ⟨ε0, h0, fun eps C8 C5 c6 Cb a1 a2 a3 a4 => ?_⟩
@@ -69,6 +70,7 @@ theorem ObjCP.and_q0Pt {Q : Par → PtProp} (h : ObjCP Q) : ObjCP (fun κ => (Q 
     exact hX.le.trans hXb
 
 
+open GlobalTheory.EX.DC GlobalTheory.EX.OB.Bridge in
 theorem objCP_and_of_recExP (QO : Par → ∀ D : D7, Obj D → Prop) (hLP : LevelPrime) (hRec : RecExP QO) :
     ObjCP (fun κ => (ptO (QO κ)).and (TamePt.and (MinkPt.and TwPt))) := by
   obtain ⟨ε0, h0, hRec⟩ := hRec

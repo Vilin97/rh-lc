@@ -41,6 +41,7 @@ theorem mem_symN (hc : 1 ≤ c) {g : GL (n ⊕ Fin c) k}
   · exact Subgroup.mem_sup_right (Subgroup.subset_closure hg)
 
 
+omit [Fintype n'] [DecidableEq n'] in
 theorem mul_stepPt_apply {b : Matrix (n ⊕ Fin c) (n ⊕ Fin c) k} (hb : b.BlockTriangular (midLev (c / 2)))
     (x₀ : Matrix n n' k) (e : StepVar (n := n) (c := c) (n' := n') → k) (r : n ⊕ Fin c) (j : Fin c)
     (h : symLev c r = symLev c (Sum.inr j : n ⊕ Fin c)) :
@@ -66,6 +67,7 @@ theorem mul_stepPt_apply {b : Matrix (n ⊕ Fin c) (n ⊕ Fin c) k} (hb : b.Bloc
 variable [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+omit [Fintype n'] in
 theorem exists_symR_mul (hc : 1 ≤ c) (ψ : AddChar k Circle) {γ δ : ValueGroupWithZero k} (hγ : 1 ≤ γ)
     (hψ : ∀ a : k, (∀ t, valuation k t ≤ δ → ψ (a * t) = 1) → valuation k a ≤ γ)
     (h : GL (n ⊕ Fin c) k) (x₀ : Matrix n n' k) (e : StepVar (n := n) (c := c) (n' := n') → k)
@@ -263,6 +265,7 @@ theorem char_eq_one {S : G.Args → ℂ} {x : ColArgs G} {y : RowArgs G} (hne : 
   rwa [AddChar.map_neg_eq_inv, inv_eq_one] at h2
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem tensor_shift {ϖ : kˣ} {e : ℕ} {T : G.Args → ℂ} (hT : G.IsTensor ϖ e (oppositePath G.m) T)
     (g : G.VertexGroup) (x : ColArgs G) (y : RowArgs G) (v : Vars G) {d : Shifts G} (hd : IsAuxiliaryHeckeCharacter d)
     (hb : ∀ (j : ℕ) (h : j < G.m - 1), Bd (valuation k ((ϖ ^ e : kˣ) : k)) (((g (G.m, j + 1))⁻¹).val *

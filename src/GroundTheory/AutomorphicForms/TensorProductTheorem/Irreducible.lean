@@ -36,6 +36,7 @@ theorem tprod_ne_zero {ξ x : ∀ v, V v} (hx : IsRestricted ξ x) (h0 : ∀ v, 
   simp [hl] at this
 
 
+omit [∀ v, Module ℂ (V v)] in
 theorem nontrivial_of_isIrreducible {H : Type*} [Group H] {W : Type*} [AddCommGroup W]
     [Module ℂ W] {σ : Representation ℂ H W} (h : σ.IsIrreducible) : Nontrivial W := by
   by_contra hW
@@ -134,6 +135,7 @@ theorem coe_windowEmbedFixed (t : ⨂[ℂ] v : S, fixedVectors (π v) (K' v)) :
   rfl
 
 
+include hπ hK'c hK'o hK'e in
 theorem lift_adjoin_heckeOps (v : S) {a : End ℂ (fixedVectors (π v) (K' v))}
     (ha : a ∈ Algebra.adjoin ℂ (heckeOps (hπ v) (hK'c v) (hK'o v))) :
     ∃ A ∈ Algebra.adjoin ℂ (heckeOps (isSmooth_restrictedTensorRep hπ hξ)

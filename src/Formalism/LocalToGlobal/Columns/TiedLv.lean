@@ -97,6 +97,7 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG : Fi
   (d : DecoSet E n ST SG) {a : 𝓞 E} (ha : SepElt ST a) (P : ST)
 
 
+include ha in
 theorem lv_LshKer_eq : d.1.LshKer P = d.1.L ⊔ P.1.asIdeal • d.1.Lsh := by
   classical
   apply le_antisymm
@@ -164,6 +165,7 @@ def dPrk (t : 𝓞 E) : ↥(d.1.LshKer P) →ₗ[𝓞 E] d.lk P :=
 variable {t : 𝓞 E} (hat : a * t - 1 ∈ P.1.asIdeal)
 
 
+include hat in
 theorem fv_dPr (z : ↥d.1.Lsh) : d.fv P (dPr d ha P t z) = d.1.f P z.1 := by
   unfold DecoSet.fv dPr
   rw [lvPr_apply, modP.lift_mk]
@@ -176,6 +178,7 @@ theorem fv_dPr (z : ↥d.1.Lsh) : d.fv P (dPr d ha P t z) = d.1.f P z.1 := by
   rw [h1, one_mul]
 
 
+include hat in
 theorem dPrk_te {q : 𝓞 E} (hq : q ∈ P.1.asIdeal) (z : Sp E n) (hz : z ∈ d.1.Lsh) (hf : d.1.f P z = 1)
     (h : q • z ∈ d.1.LshKer P) : dPrk d ha P t ⟨q • z, h⟩ = d.te P q := by
   have hm : q • d.e1 P ∈ d.1.kerAt P := d.2.smul_mem_kerAt P hq (d.first_raising_mem_equivariant P)
@@ -207,6 +210,7 @@ theorem tie_Ld_eq (c : cls) : Formalism.L2.Forms.dualL (hc.sig : X.E →+* X.E) 
   exact rlc_span_dualSet hc n _
 
 
+include hPr in
 theorem tie_Lk_eq (c : cls) (P : Pr.vT u) (I : Ideal (𝓞 X.E)) (hI : I = P.1.asIdeal) :
     Q.lat c ⊔ I • Formalism.L2.Forms.dualL (hc.sig : X.E →+* X.E) Q.J (Q.lat c) = (s c).1.LshKer P := by
   rw [tie_Ld_eq, hI, lv_LshKer_eq (s c) (sepElt_of_ok hPr u) P, Q.hlat]
@@ -306,6 +310,7 @@ theorem lv_Pv_eq (hH : HostHyp d) (u : d.what₂.Word) (v : d.Pr.vT u) : (atTTie
     | (show RingHom.ker (Ideal.Quotient.mk v.1.asIdeal) = v.1.asIdeal; exact Ideal.mk_ker)
 
 
+set_option maxHeartbeats 1000000 in
 def levelAgreement (hS : SpStd d.toColBase) (hH : HostHyp d) (u : d.what₂.Word) (i : ℕ) (hi : i ≤ d.R.m) :
     CF.LvTied (D := d.colRec a) u (atTTied a hH u) i hi where
   pr := fun v c => tiePr d.sp.cm d.hPr d.σ₀ u (d.repr u i) (stepCrd a hS hH u i hi) v c

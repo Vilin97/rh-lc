@@ -90,9 +90,11 @@ end Ring
 variable {A : Type} [CommRing A]
 
 
+variable (A) in
 def dCol (e : n ⊕ n ≃ ι) : Matrix ι n A := (fromRows 1 1 : Matrix (n ⊕ n) n A).submatrix e.symm id
 
 
+variable (A) in
 def fCol (e : n ⊕ n ≃ ι) : Matrix ι n A := (fromRows 1 0 : Matrix (n ⊕ n) n A).submatrix e.symm id
 
 variable (e : n ⊕ n ≃ ι)

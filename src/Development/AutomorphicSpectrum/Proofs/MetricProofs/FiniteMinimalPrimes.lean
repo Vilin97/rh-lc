@@ -31,13 +31,16 @@ theorem rep_mem (x : Pts P) : rep x ∈ conePts P := x.2.choose_spec.1
 theorem proj_rep (x : Pts P) : proj (rep x) = x.1 := x.2.choose_spec.2
 
 
+variable (P) in
 def src (p : (k : K) → ι k) : Set (Pts P) := {x | ∀ k, rep x ⟨k, p k⟩ ≠ 0}
 
 
+variable (P) in
 def coord (p : (k : K) → ι k) (x : Pts P) : Fin (Fintype.card (Σ k, ι k)) → ℂ :=
   renPt (affCoord p (rep x))
 
 
+variable (P) in
 def ideal (p : (k : K) → ι k) : Ideal (MvPolynomial (Fin (Fintype.card (Σ k, ι k))) ℂ) :=
   (chartIdeal P p).map (renR (Σ k, ι k) : MvPolynomial (Σ k, ι k) ℂ →+* _)
 
@@ -47,6 +50,7 @@ def lift (p : (k : K) → ι k) (q : Σ k, ι k) : MvPolynomial (Fin (Fintype.ca
   if q.2 = p q.1 then 1 else X (Fintype.equivFin (Σ k, ι k) q)
 
 
+variable (P) in
 def bd (D : Ideal (MvPolynomial (Σ k, ι k) ℂ)) (p : (k : K) → ι k) :
     Ideal (MvPolynomial (Fin (Fintype.card (Σ k, ι k))) ℂ) :=
   ((chartIdeal (P ⊔ D) p).map (renR (Σ k, ι k) : MvPolynomial (Σ k, ι k) ℂ →+* _)).radical
@@ -55,13 +59,16 @@ theorem finite_minimalPrimes (I : Ideal (MvPolynomial (Σ k, ι k) ℂ)) : I.min
   Ideal.finite_minimalPrimes_of_isNoetherianRing _ I
 
 
+variable (P) in
 def rc (D : Ideal (MvPolynomial (Σ k, ι k) ℂ)) : ℕ := (finite_minimalPrimes (P ⊔ D)).toFinset.card
 
 
+variable (P) in
 def compIdeal (D : Ideal (MvPolynomial (Σ k, ι k) ℂ)) (k : Fin (rc P D)) : Ideal (MvPolynomial (Σ k, ι k) ℂ) :=
   ((finite_minimalPrimes (P ⊔ D)).toFinset.equivFin.symm k).1
 
 
+variable (P) in
 def comp (D : Ideal (MvPolynomial (Σ k, ι k) ℂ)) (k : Fin (rc P D)) : Set (Pts P) :=
   {x | ∀ f ∈ compIdeal P D k, eval (rep x) f = 0}
 

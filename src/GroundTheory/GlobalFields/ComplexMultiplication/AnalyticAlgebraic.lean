@@ -16,6 +16,7 @@ namespace Elliptic
 variable {L₁ L₂ : PeriodPair}
 
 
+variable (L₁ L₂) in
 def latticeHomEquiv : latticeHom L₁ L₂ ≃+ isogHom (weierstrassCurve L₁) (weierstrassCurve L₂) where
   toFun := latticeToHom
   invFun Q := ⟨_, homConst_mem_latticeHom Q⟩

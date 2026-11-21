@@ -52,10 +52,12 @@ def locMat (h : w.under (𝓞 F) = v) : GLoc σ J v →* GL (Fin n) (w.adicCompl
   (bc (toCompl h)).comp (matHom _ σ J)
 
 
+variable (w) in
 def latAt : Submodule (Ov E w) (Fin n → w.adicCompletion E) :=
   Submodule.span (Ov E w) ((fun x i => algebraMap E (w.adicCompletion E) (x i)) '' (L : Set (Fin n → E)))
 
 
+variable (w) in
 def IsFrameAt (a : GL (Fin n) (w.adicCompletion E)) : Prop :=
   ∀ y : Fin n → w.adicCompletion E, (∀ i, y i ∈ Ov E w) ↔ a.1 *ᵥ y ∈ latAt w L
 
@@ -119,6 +121,7 @@ def HasParam (h : w.under (𝓞 F) = v) (ρ : Representation ℂ (GLoc σ J v) V
 
 
 
+variable (n) in
 def IsSysParam (h : w.under (𝓞 F) = v) (c : List ℤ → ℂ) (B : Multiset ℂˣ) : Prop :=
   (IsSplit (E := E) v ∧ B.card = n ∧
     ∀ j ≤ n, c (List.replicate j 1 ++ List.replicate (n - j) 0) = satEig (qV E w) n B j) ∨
@@ -206,6 +209,7 @@ def IsParamVecOff (ρ : Representation ℂ (GAd σ J) V) (x : V) (c : Fam E) : P
 def IsParamFun (f : GAd σ J → V) (c : Fam E) : Prop := IsParamVecOff σ J L S (rightReg ℂ _ V) f c
 
 
+variable (n) in
 def IsSysParamOff (c : HeightOneSpectrum (𝓞 E) → List ℤ → ℂ) (B : Fam E) : Prop :=
   ∀ v ∉ S, ∀ (w : HeightOneSpectrum (𝓞 E)) (h : w.under (𝓞 F) = v), IsSysParam σ n h (c w) (B w)
 
@@ -218,22 +222,27 @@ section Characters
 open Formalism.L2.Host (HChar IsUnitAt IsUnifAt atFin unif)
 
 
+variable (F E) in
 def IsHecke (χ : (AF F ⊗[F] E)ˣ →* Circle) : Prop :=
   Continuous χ ∧ ∀ x : Eˣ, χ (Units.map (inclR (F := F) (AF F)).toMonoidHom x) = 1
 
 
+variable (F) in
 def IsHeckeF (χ : (AF F)ˣ →* Circle) : Prop :=
   Continuous χ ∧ ∀ a : Fˣ, χ (Units.map (algebraMap F (AF F)).toMonoidHom a) = 1
 
 
+variable (F E) in
 def ideleMap : (AF F)ˣ →* (AF F ⊗[F] E)ˣ := Units.map (algebraMap (AF F) (AF F ⊗[F] E)).toMonoidHom
 
 
+variable (F E) in
 def IsEta (η : (AF F)ˣ →* Circle) : Prop :=
   Continuous η ∧ (∀ a : Fˣ, η (Units.map (algebraMap F (AF F)).toMonoidHom a) = 1) ∧
     (∀ x : (AF F ⊗[F] E)ˣ, η (Units.map (Algebra.norm (AF F) : AF F ⊗[F] E →* AF F) x) = 1) ∧ η ≠ 1
 
 
+variable (F E) in
 def ResEta (χ : (AF F ⊗[F] E)ˣ →* Circle) (k : ℕ) : Prop :=
   AllSome (IsEta F E) fun η => ∀ a, χ (ideleMap F E a) = η a ^ k
 
@@ -247,6 +256,7 @@ theorem isUnitary_toHChar (χ : (AF F)ˣ →* Circle) (h : IsHeckeF F χ) : (toH
 theorem IsEta.isHeckeF {η : (AF F)ˣ →* Circle} (h : IsEta F E η) : IsHeckeF F η := ⟨h.1, h.2.1⟩
 
 
+variable (F E) in
 def toFinAd : Af F ⊗[F] E →+* FiniteAdeleRing (𝓞 E) E :=
   letI : Algebra F (FiniteAdeleRing (𝓞 E) E) :=
     ((algebraMap E (FiniteAdeleRing (𝓞 E) E)).comp (algebraMap F E)).toAlgebra
@@ -265,6 +275,7 @@ theorem toFinAd_bijective : Function.Bijective (toFinAd F E) := by
     ⟨GlobalTheory.AdeleBaseChange.map_injective h, GlobalTheory.AdeleBaseChange.map_surjective h⟩
 
 
+variable (F E) in
 def finAdEquiv : Af F ⊗[F] E ≃+* FiniteAdeleRing (𝓞 E) E := RingEquiv.ofBijective _ toFinAd_bijective
 
 theorem finAdEquiv_apply {v : HeightOneSpectrum (𝓞 F)} {w : HeightOneSpectrum (𝓞 E)} (h : w.under (𝓞 F) = v)
@@ -277,10 +288,12 @@ theorem finAdEquiv_apply {v : HeightOneSpectrum (𝓞 F)} {w : HeightOneSpectrum
   | add a b ha hb => simp only [map_add (f := _), ← ha, ← hb]; rfl
 
 
+variable (F E) in
 def extZero : Af F ⊗[F] E →ₙ+* AF F ⊗[F] E :=
   GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.tensNU (R' := AF F) (LinearMap.inr F (Ainf F) (Af F)) fun _ _ => Prod.ext (mul_zero _).symm rfl
 
 
+variable (F E) in
 def ofFinIdele : (Af F ⊗[F] E)ˣ →* (AF F ⊗[F] E)ˣ :=
   Units.map
     { toFun := fun y => 1 - extZero F E 1 + extZero F E y
@@ -295,6 +308,7 @@ def ofFinIdele : (Af F ⊗[F] E)ˣ →* (AF F ⊗[F] E)ˣ :=
         linear_combination h1 - h2 - h3 }
 
 
+variable (F) in
 def locIdele (w : HeightOneSpectrum (𝓞 E)) : (w.adicCompletion E)ˣ →* (AF F ⊗[F] E)ˣ :=
   (ofFinIdele F E).comp ((Units.map (finAdEquiv F E).symm.toRingHom.toMonoidHom).comp (GlobalTheory.CMVal.single w))
 
@@ -375,10 +389,12 @@ abbrev IsParamFunV {X : Type} [AddCommGroup X] [Module ℂ X] (f : GA D V → X)
   IsParamFun D.sp.cm.sig V.gram (frameLat V) (S : Set _) f c
 
 
+variable (D) in
 abbrev IsSysParamD (n : ℕ) (c : HeightOneSpectrum (𝓞 D.host.E) → List ℤ → ℂ) (B : Fam D.host.E) : Prop :=
   IsSysParamOff D.sp.cm.sig n (S : Set _) c B
 
 
+variable (D) in
 abbrev LSD (c : Fam D.host.E) (μ : (AE D)ˣ →* Circle) (s : ℂ) : ℂ := LSTw (F := D.host.F) (S : Set _) c (val μ) s
 
 end Record

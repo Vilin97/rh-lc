@@ -79,6 +79,7 @@ theorem pre_dτ_stable_of_kStable (W : Submodule ℂ V) (hW : Formalism.REAL.KSt
     exact W.zero_mem
 
 
+include hcont hder in
 theorem pre_kStable_of_stable (W : Submodule ℂ V)
     (hW : ∀ k : KG ε, ∀ v ∈ W, ((τ k : unitary (V →L[ℂ] V)) : V →L[ℂ] V) v ∈ W) :
     Formalism.REAL.KStable ε (preUnits dτ) W := by
@@ -120,6 +121,7 @@ theorem pre_kStable_of_stable (W : Submodule ℂ V)
   exact W.sub_mem (W.smul_mem _ (hK _ h1 v hv)) (W.smul_mem _ (hK _ h2 v hv))
 
 
+include hcont hder in
 theorem pre_kSpan_stable (x : V) (k : KG ε) :
     ∀ v ∈ Formalism.REAL.kSpan ε (preUnits dτ) x,
       ((τ k : unitary (V →L[ℂ] V)) : V →L[ℂ] V) v ∈ Formalism.REAL.kSpan ε (preUnits dτ) x := by
@@ -134,6 +136,7 @@ theorem pre_kSpan_stable (x : V) (k : KG ε) :
   exact exp_mem_of_stable _ _ (pre_dτ_stable_of_kStable dτ _ hS Y hY)
 
 
+include hcont hder in
 theorem irred_of_gen {Λ : Fin n → ℝ} (w : V)
     (hwt : ∀ a, dτ (Matrix.single a a 1) w = ((Λ a : ℝ) : ℂ) • w)
     (hhw : ∀ a b, a < b → ε a = ε b → dτ (Matrix.single a b 1) w = 0)

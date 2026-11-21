@@ -385,6 +385,7 @@ def XiTyped : Prop :=
           (algebraMap (𝓞 D.host.E) D.host.E)) k b)) = (g.q : (D.s.atP p).Fp) * x)
 
 
+variable (D) in
 def UInt : Prop := ∀ p : PlF D, (D.s.atP p).ιF ((uP p : ℚ) : D.host.F) ∈ 𝒪[(D.s.atP p).Fp]
 
 variable {Zd u u' F0 what₂}

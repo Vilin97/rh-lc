@@ -92,6 +92,7 @@ theorem mem_primeIdealOf_iff {U : X.Opens} (hU : IsAffineOpen U) (x : U) (s : Γ
   rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
 
 
+include hη hp in
 theorem primeIdealOf_eq_span {U : X.Opens} (hU : IsAffineOpen U) (h : η ∈ U) :
     (hU.primeIdealOf ⟨η, h⟩).asIdeal =
       Ideal.span {X.presheaf.map (homOfLE (le_top : U ≤ ⊤)).op t} := by
@@ -126,6 +127,7 @@ theorem primeIdealOf_eq_span {U : X.Opens} (hU : IsAffineOpen U) (h : η ∈ U) 
     exact fun hm => hηt hm.2
 
 
+include hη hp in
 theorem dvd_iff_notMem_basicOpen {U : X.Opens} (hU : IsAffineOpen U) (h : η ∈ U) (s : Γ(X, U)) :
     X.presheaf.map (homOfLE (le_top : U ≤ ⊤)).op t ∣ s ↔ η ∉ X.basicOpen s := by
   rw [← Ideal.mem_span_singleton, ← primeIdealOf_eq_span hη hp hU h]
@@ -134,6 +136,7 @@ theorem dvd_iff_notMem_basicOpen {U : X.Opens} (hU : IsAffineOpen U) (h : η ∈
 variable [IsIntegral X]
 
 
+include hη hp in
 theorem isDiscreteValuationRing_stalk [IsLocallyNoetherian X] :
     IsDiscreteValuationRing (X.presheaf.stalk η) ∧
       Irreducible (X.presheaf.germ ⊤ η trivial t) := by
@@ -201,6 +204,7 @@ private theorem exists_section_restrict_eq_of_germ_eq {V : X.Opens} (hV : IsAffi
   exact hrr ▸ hr'u
 
 
+include hη in
 theorem exists_res_eq {W : X.Opens} (r : Γ(X, W ⊓ X.basicOpen t))
     (hr : ∀ h : η ∈ W, ∃ z : X.presheaf.stalk η, algebraMap _ X.functionField z =
       X.presheaf.germ _ (genericPoint X) (genericPoint_mem_inf hp h) r) :
@@ -261,6 +265,7 @@ theorem exists_res_eq {W : X.Opens} (r : Γ(X, W ⊓ X.basicOpen t))
   exact ⟨s, hs none⟩
 
 
+include hη hp in
 theorem isUnit_of_isUnit_res {W : X.Opens} {s : Γ(X, W)}
     (hs : IsUnit (X.presheaf.map (homOfLE (inf_le_left : W ⊓ X.basicOpen t ≤ W)).op s))
     (hsη : η ∈ W → η ∈ X.basicOpen s) : IsUnit s := by
@@ -339,6 +344,7 @@ theorem compatible_of_res_eq {D : X.Opens} (hD : genericPoint X ∈ D) {r : ∀ 
   ring
 
 
+omit [IsIntegral X] in
 theorem mem_basicOpen_of_compatible (hg : ∀ a b, IsUnit (g a b)) {s : ∀ a, Γ(X, U a)}
     (hs : ∀ a b, X.presheaf.map (homOfLE inf_le_left).op (s a) =
       g a b * X.presheaf.map (homOfLE inf_le_right).op (s b))
@@ -353,6 +359,7 @@ theorem mem_basicOpen_of_compatible (hg : ∀ a b, IsUnit (g a b)) {s : ∀ a, �
 variable [IsLocallyNoetherian X]
 
 
+include hη hp in
 theorem existsUnique_zpow_mul (hU : ∀ x : X, ∃ a, x ∈ U a) (hg : ∀ a b, IsUnit (g a b))
     (τ : Γ(X, X.basicOpen t)ˣ)
     (hτ : (τ : Γ(X, X.basicOpen t)) = X.presheaf.map (homOfLE le_top).op t)
@@ -421,6 +428,7 @@ theorem existsUnique_zpow_mul (hU : ∀ x : X, ∃ a, x ∈ U a) (hg : ∀ a b, 
       hs' a₀, map_mul, germ_res, hφ n']
 
 
+include hη hp in
 theorem exists_zpow_mul_isUnit (hU : ∀ x : X, ∃ a, x ∈ U a) (hg : ∀ a b, IsUnit (g a b))
     (τ : Γ(X, X.basicOpen t)ˣ)
     (hτ : (τ : Γ(X, X.basicOpen t)) = X.presheaf.map (homOfLE le_top).op t)

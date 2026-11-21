@@ -457,6 +457,7 @@ theorem pEl_mul_neg (B : Fin r → Fin (k + 1) → ℂ) (S : Matrix (Fin r) (Fin
   · ext a b; simp [Rad.herm_neg_left, Rad.herm_neg_right]
 
 
+set_option synthInstance.maxSize 1024 in
 theorem range_eq_and_injective_parabolic_unipotent_product {β : Fin r → ℕ} (hβ : ∀ a b : Fin r, j ≤ b.val → (β a = β b ↔ j ≤ a.val)) :
     lebR0 k r j β = (volume : Measure ((UTin β → ℂ) × PTop k r j)).map fun q =>
       (Matrix.of.symm (pTop k r j q.2 * uEmb k r (upperIn β q.1)) : Mt k r) := by
@@ -523,6 +524,7 @@ theorem lebesgue_right_mul_invariant {β : Fin r → ℕ} (hβ : ∀ a b : Fin r
   rw [e, ← Measure.map_map (continuous_rmulM _).measurable (continuous_rmulM _).measurable, h1, h2]
 
 
+set_option synthInstance.maxSize 1024 in
 theorem isHaarOn_range {β : Fin r → ℕ} (hβ : ∀ a b : Fin r, j ≤ b.val → (β a = β b ↔ j ≤ a.val)) :
     IsHaarOn (Set.range (rEl k r j β)) (lebR0 k r j β) := by
   have hemb : MeasurableEmbedding fun q => (Matrix.of.symm (rEl k r j β q) : Mt k r) :=

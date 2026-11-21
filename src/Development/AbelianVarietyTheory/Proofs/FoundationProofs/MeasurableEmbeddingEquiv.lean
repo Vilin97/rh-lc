@@ -95,6 +95,7 @@ theorem isRegSS_conj_iff (ha : IsUnit a) (hι : ∀ g, ι' (e g) = a * ι g * a�
     Matrix.nonsing_inv_mul_cancel_left _ _ ((Matrix.isUnit_iff_isUnit_det _).1 ha)]
 
 
+variable (e) in
 theorem isCompact_cent_iff (s : H) : IsCompact (cent (e s) : Set H') ↔ IsCompact (cent s : Set H) := by
   rw [isCompact_iff_compactSpace, isCompact_iff_compactSpace]
   exact ⟨fun _ => (centEquiv e s rfl).toHomeomorph.symm.compactSpace,

@@ -178,6 +178,7 @@ theorem mem_ofBundle {F : B.X.Modules} (θ : F ⟶ B.om) [Mono θ] (hF hθ) {V :
   simp [LinearMap.mem_range]
 
 
+variable (B) in
 def top : Lat B :=
   ofBundle (𝟙 _) (have := B.t.semi; have := B.t.semi.smooth; exists_isFrame_omega B.t.G) fun _ _ s => ⟨s, rfl⟩
 
@@ -195,6 +196,7 @@ theorem ext {L L' : Lat B} (h : ∀ V, L.N.sec V = L'.N.sec V) : L = L' := by
 end Lat
 
 
+variable (Y i₀) in
 structure Step : Type where
 
   B : Mdl Y i₀
@@ -222,6 +224,7 @@ def Step.Holds (t : Step Y i₀) (Z : Mdl Y i₀) : Prop :=
         ∀ j : Fin n, t.k ≤ (j : ℕ) → ∑ l, φ (a j l) * tanEv t.B.t hv h (t.L.N.incl.app V (m l)) = 0
 
 
+open Classical in
 def stepTy (s : Finset (Step Y i₀)) (σ : E →+* ℂ) : Finset ℕ := (s.filter fun t => t.σ = σ).image Step.k
 
 theorem mem_stepTy {s : Finset (Step Y i₀)} {σ : E →+* ℂ} {r : ℕ} : r ∈ stepTy s σ ↔ ∃ t ∈ s, t.σ = σ ∧ t.k = r := by
@@ -236,6 +239,7 @@ open Classical in
 def flagClosure (Z : Mdl Y i₀) (s : Finset (Step Y i₀)) : Mdl Y i₀ := if h : ∃ Z', IsFlagCl Z s Z' then h.choose else Z
 
 
+open Classical in
 def allSteps {B : Mdl Y i₀} (L : Lat B) : Finset (Step Y i₀) :=
   Finset.univ.image fun q : Σ σ : E →+* ℂ, Fin (Dw.mult σ + 1) => ⟨B, L, q.1, q.2, Nat.lt_succ_iff.1 q.2.2⟩
 

@@ -38,6 +38,7 @@ theorem singleV_mem_intAf (v : HeightOneSpectrum (𝓞 F)) (y : v.adicCompletion
   · rw [evalV_singleV_ne v _ hw]; exact zero_mem _
 
 
+variable (F E) in
 def intA : AddSubgroup ((𝔸 F) ⊗[F] E) :=
   AddSubgroup.closure {y | ∃ a ∈ intAf F, ∃ x : 𝓞 E, y = a ⊗ₜ[F] (x : E)}
 

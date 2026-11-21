@@ -163,6 +163,8 @@ theorem trace_gen_mem (hT : LawsFull T) (hj : InR D j) (hxi : TwistTrivialOnRati
     fun u => ⟨hx u, by simpa [hn] using ax u, (hf u).2.2⟩⟩, rfl⟩
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem trace_mem_thetaEig (hT : LawsFull T) (hj : InR D j) (hxi : TwistTrivialOnRational T j) (hn : w.n = D.R.nV)
     (hl : w.LastPos) (hρ : ∀ g F, ρ g (z.symm (1 ⊗ₜ F)) = z.symm (1 ⊗ₜ act g F)) (hact : IsLevAct T.toTop h j w ℓ act)
     (hdet : ∀ u ∈ U, DetOne (ℓ u)) {y : Fin n → K} (hy : y ∈ spanK z ((recPJ h j hj).shortTh w : Set _)) :
@@ -225,6 +227,7 @@ theorem clauses_of_onTie {T : Full D} [Algebra T.J.Q.c.F D.what₂.LL] {R : Real
     rwa [trace_of_mem_eig h1 hψ he] at this
 
 
+variable (A) in
 def TiedAt (hinj : Function.Injective D.what₂.OtoLL) (EX : ErrX D) (O : OnObj S P oc) (inc : P →* G) (U : Subgroup G)
     (ψ : U →* D.what₂.LLˣ)
     (Q : ∀ (B : WeightFamilies.Prov D) (P6 : ModuliIntegralCharts.Prov D) (j : ℕ), WeightAlgebra.PJ D B P6 j → ℕ → (ka wL wF : WeightFamilies.Wt D j) → ℕ → Prop)

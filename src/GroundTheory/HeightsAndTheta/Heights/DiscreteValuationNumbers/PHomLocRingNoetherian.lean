@@ -41,6 +41,7 @@ abbrev img : MRing ι R →+* FractionRing (MRing ι R ⧸ P) :=
 variable {P}
 
 
+omit [DecidableEq K] in
 theorem img_eq_zero_iff {f : MRing ι R} : img P f = 0 ↔ f ∈ P := by
   simp [img, Ideal.Quotient.eq_zero_iff_mem]
 
@@ -53,6 +54,7 @@ theorem img_component_congr (hP : IsMultiHomogIdeal P) {u v : MRing ι R} (huv :
   exact hP _ huv d
 
 
+omit [DecidableEq K] in
 theorem img_ne_zero {W : Ideal (MRing ι R)} (hPW : P ≤ W) {t : MRing ι R} (ht : t ∉ W) :
     img P t ≠ 0 := fun h0 => ht (hPW (img_eq_zero_iff.mp h0))
 
@@ -63,6 +65,7 @@ theorem quot_mem {W : Ideal (MRing ι R)} {b : K → ℕ} {f g : MRing ι R} (hf
 end HomLocRingNoetherian
 
 
+open HomLocRingNoetherian in
 theorem HomLocRingNoetherian.proof (hmem : HomLocRingMem.Statement.{u}) :
     HomLocRingNoetherian.Statement.{u} := by
   intro R _ _ K _ _ ι _ P W _ hP hW _ hPW

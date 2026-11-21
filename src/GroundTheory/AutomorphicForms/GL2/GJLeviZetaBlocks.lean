@@ -108,6 +108,7 @@ theorem blockIndicator_const (b : Set.range β) {i j : Fin n} (h : β i = β j) 
   simp only [blockIndicator, this]
 
 
+variable (F) in
 def blockUnif (b : Set.range β) : levi F n β :=
   ⟨Cartan.diagPow F n (blockIndicator b), diagPow_mem_levi _⟩
 
@@ -125,6 +126,7 @@ theorem ordDet_blockUnif (b : Set.range β) :
   exact Fintype.card_congr (Equiv.subtypeEquivRight fun i => by simp)
 
 
+variable (F) in
 def blockOrd (b : Set.range β) (m : levi F n β) : ℤ :=
   LocalField.ord ((leviBlock F m b : GL (Fiber β b) F) : Matrix (Fiber β b) (Fiber β b) F).det
 
@@ -221,6 +223,7 @@ end Blocks
 section LocallyConstant
 
 
+variable (F n β) in
 def leviIntegral : Subgroup (levi F n β) := (integralGL F n).subgroupOf (levi F n β)
 
 theorem isOpen_leviIntegral : IsOpen (leviIntegral F n β : Set (levi F n β)) :=

@@ -42,6 +42,7 @@ end Ring
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {a : ℕ}
 
 
+omit [IsCMField E] in
 def barL : Lie E a →L[ℝ] Lie E a :=
   LinearMap.toContinuousLinearMap
     { toFun := fun X i j => star (X i j)
@@ -49,6 +50,7 @@ def barL : Lie E a →L[ℝ] Lie E a :=
       map_smul' := fun t X => by funext i j; simp }
 
 
+variable (E a) in
 def barA : GA E a →* GA E a := GeneralLinearGroup.map (conjAd E)
 
 theorem barA_barA (g : GA E a) : barA E a (barA E a g) = g := by
@@ -82,6 +84,7 @@ theorem bar_mem_Sm {φ : GA E a → ℂ} (hφ : φ ∈ Sm E a) : (fun g => φ (b
     fun _ hx => (chart_bar φ g hx).2).congr fun _ hx => (chart_bar φ g hx).1
 
 
+variable (E a) in
 def pull : Sm E a ≃ₗ[ℂ] Sm E a where
   toFun φ := ⟨fun g => φ.1 (barA E a g), bar_mem_Sm φ.2⟩
   invFun φ := ⟨fun g => φ.1 (barA E a g), bar_mem_Sm φ.2⟩
@@ -176,6 +179,7 @@ theorem Zalg_pull {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) :
     exact ⟨x' * y', mul_mem h1 h3, fun φ => by simp [h2, h4]⟩
 
 
+omit [IsCMField E] in
 theorem height_bar (y : GL (Fin a) (Cinf E)) :
     height (GeneralLinearGroup.map (starRingEnd (Cinf E)) y) = height y := by
   have h1 : ∀ y : GL (Fin a) (Cinf E), ‖toL (GeneralLinearGroup.map (starRingEnd (Cinf E)) y).val‖ = ‖toL y.val‖ :=
@@ -214,6 +218,7 @@ theorem bar_mem_ratN {r : ℕ} {x : BlockIx a r → Ad E} (hx : x ∈ ratN E a r
   exact ⟨fun p => IsCMField.complexConj E (y p), funext fun p => (conjAd_algebraMap (y p)).symm⟩
 
 
+open MeasureTheory in
 theorem isCuspidal_pull {φ : GA E a → ℂ} (hφ : IsCuspidal φ) : IsCuspidal fun g => φ (barA E a g) := by
   intro r h0 h1 _ _ μ 𝓕 hμ hF g
   let β : (BlockIx a r → Ad E) ≃ₜ+ (BlockIx a r → Ad E) :=

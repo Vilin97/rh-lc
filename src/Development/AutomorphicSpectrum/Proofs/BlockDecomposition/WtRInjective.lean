@@ -31,6 +31,7 @@ theorem wtR_injective : Function.Injective (wtR : (Fin n → ℤ) → Fin n → 
   simpa [wtR] using this
 
 
+open Classical in
 def harmZ (lam : Fin n → ℤ) : Finset (Fin n → ℤ) :=
   ((univ : Finset (Fin n → Fin n)).filter fun lev => IsLev lam fun a => (lev a : ℕ)).image
     fun lev => muZ lam fun a => (lev a : ℕ)

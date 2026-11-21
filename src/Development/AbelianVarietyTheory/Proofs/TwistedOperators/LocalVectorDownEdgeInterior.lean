@@ -29,6 +29,7 @@ namespace GlobalTheory.ChainCol
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
+set_option maxHeartbeats 1000000 in
 theorem locVec_col {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type} {A : FamIn D.what₂.LL Γ Pl0 T D.R.m}
     {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks} {F : Face D A} {large₂ : SizeData₂ D}
     (s : HidaSetting large₂ R F) (ch : Choice R) (hch : ch.Is) (t : T) (j : Fin D.R.m) (g : Sch ch.G (.down t 0 j))

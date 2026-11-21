@@ -101,11 +101,15 @@ theorem coe_algebraMap_integer_intermediateField (E : IntermediateField K Ω) (a
   rfl
 
 
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [TopologicalSpace Ω]
+  [IsValuativeTopology Ω] [Algebra.IsAlgebraic K Ω] [HasUnramifiedRoots K Ω] in
 theorem valuation_algebraMap_eq_one_iff (x : K) :
     valuation Ω (algebraMap K Ω x) = 1 ↔ valuation K x = 1 := by
   simpa using valuation_algebraMap_eq_iff (G := Ω) x 1
 
 
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [TopologicalSpace Ω]
+  [IsValuativeTopology Ω] [Algebra.IsAlgebraic K Ω] [HasUnramifiedRoots K Ω] in
 theorem not_isUnit_algebraMap_uniformizer (E : IntermediateField K Ω) {ϖ : 𝒪[K]}
     (hϖ : Irreducible ϖ) : ¬ IsUnit (algebraMap 𝒪[K] 𝒪[E] ϖ) := by
   rw [isUnit_integer_intermediateField_iff, coe_algebraMap_integer_intermediateField,
@@ -186,6 +190,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   [Algebra.IsAlgebraic K L]
 
 
+variable (K L) in
 def integerAlgEquivOfIsAlgebraic : (L ≃ₐ[K] L) →* (𝒪[L] ≃ₐ[𝒪[K]] 𝒪[L]) where
   toFun ρ :=
     { toFun x := ⟨ρ x, by
@@ -216,6 +221,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   [Algebra K Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω] [HasUnramifiedRoots K Ω]
 
 
+omit [TopologicalSpace Ω] [IsValuativeTopology Ω] [Algebra.IsAlgebraic K Ω] in
 instance isAlgebraic_maximalUnramifiedExtension : Algebra.IsAlgebraic K 𝔼 :=
   inferInstance
 
@@ -319,6 +325,7 @@ theorem isAlgebraic_of_pow_card_pow_eq_self {y : k'} {n : ℕ} (hn : n ≠ 0)
     by simp [hy]⟩
 
 
+omit [Algebra k k'] in
 theorem splits_X_pow_card_pow_sub_X_of_isPrimitiveRoot {m : ℕ} {ζ : k'}
     (hζ : IsPrimitiveRoot ζ (Nat.card k ^ m - 1)) :
     Splits (X ^ (Nat.card k ^ m) - X : k'[X]) := by

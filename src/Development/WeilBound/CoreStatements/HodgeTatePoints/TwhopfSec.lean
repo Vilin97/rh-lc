@@ -133,6 +133,7 @@ theorem mem_order : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGro
   exact ⟨fun h => Algebra.adjoin_le (S := btSub Γ U) (fun _ hx => hx) h, fun h => Algebra.subset_adjoin h⟩
 
 
+open GlobalTheory.CompanionTheory.Ar.BT.SubOrder in
 theorem sub_order : ∀ (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed R] (T : Type) [CommGroup T] [Finite T] (Γ : QFGroup R T) (U : Γ.G.left.Opens), Γ.IsFinOpenSub U → ∃ (H : Subgroup T) (A : Subalgebra R (H → R)), (∀ t, t ∈ H ↔ ⊤ ≤ (Γ.pt t).left ⁻¹ᵁ U) ∧ IsHopfOrder A ∧ ∀ f : H → R, f ∈ A ↔ ∃ s : Γ(Γ.G.left, U), ∀ (t : H) (h : ⊤ ≤ (Γ.pt t).left ⁻¹ᵁ U), valAt (Γ.pt t).left U h s = algebraMap R _ (f t) := by
   intro R _ _ _ T _ _ Γ U hF
   open GlobalTheory.CompanionTheory.Ar.BT.SubOrder in

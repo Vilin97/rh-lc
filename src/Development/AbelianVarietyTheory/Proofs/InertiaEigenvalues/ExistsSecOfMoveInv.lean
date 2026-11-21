@@ -122,6 +122,7 @@ theorem evR_frBor {a : (E →+* ℂ) × ℕ → ℕ} {f : Rul Xo c} (hf : f ∈ 
   exact (GlobalTheory.borDesc_and_wtField E H Dw l Xo c).2 a n f hf k t y y' (hAT k y) (hAT k y') h
 
 
+open GlobalTheory.ShortDescent in
 theorem exists_sec_of_moveInv (d : DeltaDat Xo c n) (hlev : d.IsLev) {a : (E →+* ℂ) × ℕ → ℕ} {n' : ℕ}
     (G : Rul d.Xo₂ d.c₂) (hG : G ∈ sec d.Xo₂ d.c₂ a n') (hinv : MoveInv d G) :
     ∃ f ∈ sec Xo c a n', ∀ (k : Type) [Field k] [IsAlgClosed k] [Algebra c.F k] [Algebra d.c₂.F k],

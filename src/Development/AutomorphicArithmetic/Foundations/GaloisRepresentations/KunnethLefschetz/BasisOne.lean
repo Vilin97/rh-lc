@@ -14,6 +14,7 @@ section Defs
 variable {k : Type} [Field k]
 
 
+variable (k) in
 structure GysT where
   g : ∀ (q : ℕ) {d e : ℕ} {Z X : Scheme.{0}} {p : X ⟶ S k} {ι : Z ⟶ X}, IsPair d e p ι → ∀ {n m i j : ℤ}, n + 2 * d = m → i + d = j →
     Ht q (sch.obj Z) n i →+ Ht q (sch.obj X) m j
@@ -42,6 +43,7 @@ def OffPts {X : Scheme.{0}} {p : X ⟶ S k} (s : Finset (Pt p)) (U : X.Opens) : 
   (U : Set X) = (⋃ y ∈ s, Set.range y.1)ᶜ
 
 
+variable (k) in
 def LowT (q : ℕ) : Prop :=
   ((∀ z : Ht q (sch.obj (S k)) 0 0, ∃ a : ℕ, z = a • one q (sch.obj (S k))) ∧ ∀ a : ℕ, a • one q (sch.obj (S k)) = 0 → q ∣ a) ∧
   ∀ {X : Scheme.{0}} (p : X ⟶ S k), IsProper p → ∀ z : Ht q (sch.obj X) 0 0,

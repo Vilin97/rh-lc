@@ -619,6 +619,7 @@ theorem continuous_phR (v : V D T.rank S.rank) : Continuous fun x : WO S T => ph
   exact continuous_finset_sum _ fun ρ _ => (continuous_eM_left _ _ _ _).comp (continuous_compAt ρ)
 
 
+variable (S T) in
 def lH (v : V D T.rank S.rank) : V D T.rank S.rank →+ ℝ where
   toFun u := phR S T (Lb D _ _ u) v
   map_zero' := by
@@ -630,6 +631,7 @@ def lH (v : V D T.rank S.rank) : V D T.rank S.rank →+ ℝ where
     rw [map_add (f := _), phR_add_left]
 
 
+variable (S T) in
 def lCL (v : V D T.rank S.rank) : V D T.rank S.rank →L[ℝ] ℝ :=
   (lH S T v).toRealLinearMap ((continuous_phR v).comp continuous_Lb)
 

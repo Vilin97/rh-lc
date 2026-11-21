@@ -94,6 +94,8 @@ theorem isFrame_pull_iff {E : Type} [Field E] [NumberField E] [IsCMField E] {H :
 end GlobalTheory.FrameMove
 
 
+open GlobalTheory.FrameMove in
+set_option maxHeartbeats 1000000 in
 theorem GlobalTheory.chartFrameTransport : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H)
     (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) [StarRing (𝓞 E)], ChartFrameTrSt Xo c := by
   intro E _ _ _ H Dw l Xo c _ _ T io y I d B B' tgT xT eT wPT hF hA h1 h2 hs had hch hfr hpr _ hrig

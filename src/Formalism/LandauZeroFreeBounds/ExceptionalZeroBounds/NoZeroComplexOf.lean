@@ -30,6 +30,7 @@ lemma sum_mult_re_one_div_sub_zeros_nonneg {q : ℕ} [NeZero q] (χ : DirichletC
     mul_nonneg (Nat.cast_nonneg _) (re_one_div_sub_zero_pos_ter χ hχ ρ (hZ ρ hρ) σ t hσ).le
 
 
+set_option maxHeartbeats 1000000 in
 theorem zeroFreeNonRealCharOfBounds : NoZeroComplexOf := by
   unfold NoZeroComplexOf LocalZeros LLogDerivRight Positivity NoZeroComplex InRegion
   intro hLZ hLD hPos

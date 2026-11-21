@@ -60,6 +60,9 @@ private lemma idealUnit_span_mem_rayP_of_sub_one_mem {𝔮 : Ideal (𝓞 K)} {a 
   exact Subgroup.subset_closure ⟨a, h, rfl⟩
 
 
+open NumberField IsDedekindDomain in
+open scoped nonZeroDivisors in
+variable {K : Type} [Field K] [NumberField K] in
 theorem _root_.GlobalTheory.Mem.RayData.mem_principalRay_iff (𝔮 : Ideal (𝓞 K)) (x : (FractionalIdeal (𝓞 K)⁰ K)ˣ) :
     x ∈ _root_.GlobalTheory.Mem.An.rayP 𝔮 ↔ ∃ (a b : 𝓞 K) (ha : a ≠ 0) (hb : b ≠ 0), a - 1 ∈ 𝔮 ∧ b - 1 ∈ 𝔮 ∧
       x * _root_.GlobalTheory.Mem.RayData.idealUnit _ (_root_.GlobalTheory.Mem.RayData.span_ne_bot hb) = _root_.GlobalTheory.Mem.RayData.idealUnit _ (_root_.GlobalTheory.Mem.RayData.span_ne_bot ha) := by
@@ -154,6 +157,8 @@ private lemma exists_coprime_idealUnit_mul_mem_rayP {𝔮 I : Ideal (𝓞 K)}
     exact idealUnit_span_mem_rayP_of_sub_one_mem hc0 hc1
 
 
+open NumberField IsDedekindDomain in
+open scoped nonZeroDivisors in
 theorem _root_.GlobalTheory.Mem.RayData.card_eq_rayNo : ∀ (K : Type) [Field K] [NumberField K] (M : ℕ), M ≠ 0 →
     ∀ D : _root_.GlobalTheory.Mem.RayData K M,
     Fintype.card D.G =

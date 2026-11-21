@@ -156,6 +156,7 @@ theorem multAt_map_rename (P Q : Ideal (MRing ι R)) [Q.IsPrime] (hPQ : P ≤ Q)
 end JoinDivCycle
 
 
+open JoinDivCycle in
 theorem JoinDivCycle.proof : JoinDivCycle.Statement := by
   intro R _ _ K _ ι _ P f
   classical

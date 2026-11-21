@@ -17,6 +17,9 @@ open GlobalTheory.ModelData
 namespace GlobalTheory.ModelData.Scalar
 
 
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry NumberField in
+open scoped CategoryTheory.Obj BigOperators in
+attribute [local instance] Over.cartesianMonoidalCategory in
 theorem _root_.GlobalTheory.ModelData.Scalar.tx_congr {O : Type} [CommRing O] [TopologicalSpace O] (N : _root_.GlobalTheory.Ex.NumD O) {m : ℕ} (hm : Odd m)
     {p p' : N.QT (m ^ 2)} (h : N.QEq p p') : N.tx m p = N.tx m p' := by
   unfold _root_.GlobalTheory.Ex.NumD.QEq at h
@@ -108,6 +111,11 @@ private theorem tx_label_nsmul_eq_of_odd [TopologicalSpace O]
   exact _root_.GlobalTheory.ModelData.Scalar.tx_congr N hm h3
 
 
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry NumberField in
+open scoped CategoryTheory.Obj BigOperators in
+attribute [local instance] Over.cartesianMonoidalCategory in
+variable {O : Type} [CommRing O] {N : _root_.GlobalTheory.Ex.NumD O} {La : Type} [AddCommGroup La] {EF : LinearMap.BilinForm ℤ La}
+  {ζ : ℕ → Oˣ} {lab : ∀ k : ℕ, La → N.QT k} in
 theorem _root_.GlobalTheory.ModelData.Scalar.scalar_const : ∀ (C : Type) [NormedField C] (N N' : _root_.GlobalTheory.Ex.NumD C) (La : Type) [AddCommGroup La] (EF : LinearMap.BilinForm ℤ La) (ζ ζ' : ℕ → Cˣ) (lab : ∀ k : ℕ, La → N.QT k) (lab' : ∀ k : ℕ, La → N'.QT k) (n : ℕ), Odd n → _root_.GlobalTheory.ModelData.Labels N EF ζ lab → _root_.GlobalTheory.ModelData.Labels N' EF ζ' lab' → (∀ j, ∃ c : Cˣ, ∀ x, N'.tx (n ^ j) (lab' _ x) = c * N.tx (n ^ j) (lab _ x)) → (∃ x, N.tx (n ^ 1) (lab _ x) ≠ 0) → ∃ c₀ : C, c₀ ≠ 0 ∧ ∀ j x, N'.tx (n ^ j) (lab' _ x) = c₀ * N.tx (n ^ j) (lab _ x) := by
   intro C _ N N' La _ EF ζ ζ' lab lab' n hn hL hL' hc hx
   obtain ⟨x₀, hx₀⟩ := hx

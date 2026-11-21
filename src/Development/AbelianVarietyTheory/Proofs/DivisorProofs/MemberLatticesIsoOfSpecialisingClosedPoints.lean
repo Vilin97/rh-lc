@@ -73,6 +73,7 @@ variable {g n : ℕ} {F : SFam g n (zetaAway n)} {W : Matrix (Fin 8) (Fin 8) ℤ
   (𝔫 : UMem X₁ z₁ act V ev X t δ) {ξ : Sp V ⟶ Y.Z}
 
 
+include 𝔫 in
 theorem base_of_uMem : GlobalTheory.Mum.Base V :=
   ⟨⟨𝔫.cn.1, inferInstance, 𝔫.cn.2.1, 𝔫.cn.2.2.1⟩, 𝔫.cn.2.2.2⟩
 

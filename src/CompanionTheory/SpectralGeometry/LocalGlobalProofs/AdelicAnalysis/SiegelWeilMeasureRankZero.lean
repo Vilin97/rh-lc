@@ -55,6 +55,7 @@ theorem coordHerm_univ (σ : E →ₐ[F] E) {d : ℕ} (b : Module.Basis (Fin d) 
   simp
 
 
+omit [MeasurableSpace R] in
 theorem fib_univ (σ : E →ₐ[F] E) {M : ℕ} (J : Matrix (Fin M) (Fin M) E)
     (μ : Measure (Fin 0 → Fin M → R ⊗[F] E)) (ν : Measure (HermR R σ 0))
     (m : HermR R σ 0 → Measure (Fin 0 → Fin M → R ⊗[F] E))

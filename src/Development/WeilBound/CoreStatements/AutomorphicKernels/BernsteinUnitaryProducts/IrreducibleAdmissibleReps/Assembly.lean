@@ -70,6 +70,7 @@ theorem isSmooth_sub {ρ : Representation ℂ G X} (hρ : IsSmooth ρ) (S : Subr
   exact Subtype.ext_iff
 
 
+omit [TopologicalSpace G] in
 theorem eq_bot_or_eq_top_of_equiv_twist {σ : Representation ℂ G D} {τ : Representation ℂ G Z} {χ : G →* ℂˣ}
     (e : σ.Equiv (twist τ χ)) (hτ : τ.IsIrreducible) (I : Submodule ℂ D) (hI : ∀ g, ∀ y ∈ I, σ g y ∈ I) :
     I = ⊥ ∨ I = ⊤ := by
@@ -97,6 +98,7 @@ theorem eq_bot_or_eq_top_of_equiv_twist {σ : Representation ℂ G D} {τ : Repr
     exact congrArg Subrepresentation.toSubmodule hS
 
 
+omit [TopologicalSpace G] in
 theorem range_ne_bot_ne_top (DS : A →ₗ[ℂ] D) (DT : B →ₗ[ℂ] D) (Dp : D →ₗ[ℂ] B) (hinj : Function.Injective DS)
     [Nontrivial A] [Nontrivial B] (h0 : ∀ a, Dp (DS a) = 0) (h1 : ∀ b, Dp (DT b) = b) :
     LinearMap.range DS ≠ ⊥ ∧ LinearMap.range DS ≠ ⊤ := by

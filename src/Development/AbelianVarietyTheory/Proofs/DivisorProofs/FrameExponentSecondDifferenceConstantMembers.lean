@@ -183,6 +183,7 @@ theorem exp_eq (𝔪 : GlobalTheory.GSep.GMem X₁ z₁ act V ev X t δ) {p q : 
   exact (ZMod.natCast_eq_natCast_iff _ _ _).2 h
 
 
+attribute [local instance] GlobalTheory.TorusExt.gtGroup in
 theorem lifts_of_frExp (𝔪 : GlobalTheory.GSep.GMem X₁ z₁ act V ev X t δ)
     {x : X₁.S.Gam → (TFK (R := V) (FractionRing V) ⟶ 𝔪.A.A)} {fr : ∀ a, FrAt (x a)}
     (hx : ∀ a, (x a).left ≫ 𝔪.φ = spMap 𝔪.yK ≫ (X₁.ρ.pt a).left)

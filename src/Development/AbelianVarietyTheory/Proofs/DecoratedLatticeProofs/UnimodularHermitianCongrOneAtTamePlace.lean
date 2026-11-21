@@ -33,6 +33,7 @@ def sub : Subring hid.Corner where
   one_mem' := hεO
 
 
+include hid h0 hadd hneg hmul hεO in
 theorem exists_congr_one (c : A →+* A) (hc : ∀ x, c (c x) = x) (hcO : ∀ a ∈ O, c a ∈ O) (hcε : c ε = ε)
     (hεa : ∀ a ∈ O, ε * a = a)
     (hloc : ∀ x ∈ O, c x = x → (∃ y ∈ O, x * y = ε) ∨ (∃ y ∈ O, (ε - x) * y = ε))

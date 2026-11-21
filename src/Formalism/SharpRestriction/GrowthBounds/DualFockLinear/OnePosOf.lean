@@ -28,6 +28,7 @@ theorem Ed_comm_eq (K : Type) [Field K] (m : ℕ) (vec : Bool) (d : ℕ) (a b : 
   · simp [letterRowOperator]
 
 
+set_option maxHeartbeats 2000000 in
 theorem onePos_of (hOB : OpBound) (hAdj : RestAdj) (hSt : RestStab) (hT : RestTheta) (hW : RestWt) (hR : RestRep)
     (hR2 : RestRep2) : OnePos := by
   intro K _ _ m hm vec d c ν hν hνc β hβ s hs

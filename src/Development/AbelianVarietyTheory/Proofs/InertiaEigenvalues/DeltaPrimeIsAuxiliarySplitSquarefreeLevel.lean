@@ -44,6 +44,7 @@ namespace GlobalTheory.SeriesTie.BaseRat
 variable {D : D7}
 
 
+open Classical in
 theorem isIdemSum_halfIdem {Pg Q : Finset (Formalism.L2.DIV.Pl D.host.E)} (h : PlacesOK Pg Q) :
     IsIdemSum (halfIdem Pg Q) (Pg.image Formalism.L2.DIV.conjPl ∪ Q) := by
   obtain ⟨he, hR⟩ := GlobalTheory.ExportSeries.LatHalf.conj_placesOK h
@@ -253,6 +254,7 @@ theorem tieIn_of_fw (fw : FWTie T Rl.toRealDat κ v₀) : TieIn T Rl.toRealDat �
   ⟨fw.laws, fw.alg_eq, fw.kap, fw.hv₀, fw.chiR, fw.x0⟩
 
 
+include YS in
 theorem exists_goodCover_pdAt (hRF : GlobalTheory.NT.RayField) (hT : LawsJ T) (ha : AlgTie T) (hval : Formalism.L2.Host.ValLL0 D Rl.C)
     (hray : RayIn D (D.host.g 0 * D.host.g 1 * D.host.pde * D.host.pde') (embLL0 D).fieldRange)
     (hsp : D.host.cls D.host.pde = PrimeClass.splitK ∧ D.host.cls D.host.pde' = PrimeClass.splitK) (l : ℕ) (j : Fin D.R.m) (n : ℕ)
@@ -312,6 +314,7 @@ theorem mu_level (hlev : Rl.toLevCh.Is A3.A.μ0) (hT : TieIn T Rl.toRealDat κ v
   rw [hMV.2 _ _ hxy, hMV.2 g x hx, map_mul, hχ, mul_one]
 
 
+variable (T κ v₀) in
 def ReadsAs {j : Fin D.R.m} (hV : T.V ((j : ℕ) + 1) T.σ₀ = Wc D j) (c : ℂ) : Prop :=
   ∀ f : Cu T κ j, ∃ x : NX.FmK S ((j : ℕ) + 1),
     castDict hV (T.phiJ ((j : ℕ) + 1) T.σ₀ (wtA (κ j)) (f : T.R ((j : ℕ) + 1))) = c • evW YS v₀ j (Subtype.val x)
@@ -429,6 +432,7 @@ variable {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 I0 T0 : Type} {A3 : FamIn3 D.w
   {v₀ : ∀ (j : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (Rl.MW j σ).Vec}
 
 
+include YS in
 theorem isLevDatum_vecBase {F : Face D A3.A} (hT : LawsJ T) (hcore : GlobalTheory.Hk3.Core Rl.toRealDat F) (hgal : IsGalois ℚ D.LL0)
     (hval : Formalism.L2.Host.ValLL0 D Rl.C)
     (hroots : ∀ (k : Fin 2) (z : ℂ), z ^ (D.host.g k * (D.host.g k - 1)) = 1 → z ∈ (embLL0 D).fieldRange)
@@ -579,6 +583,7 @@ theorem chi_mem_of_levelOf {N : NData D.R D.host D.what₂} {X : NTw D.R D.host 
 end Main
 
 
+open GlobalTheory.BigOn.Exp in
 theorem ratBase_of_ratHyp : GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.Published.RayClassFieldSt → GlobalTheory.SerStd.SeriesRatS → ∀ (D : D7) (Γ : Type) [Group Γ] [Fintype Γ] (Pl0 I0 T0 : Type) (A3 : FamIn3 D.what₂.LL Γ Pl0 I0 (List ℕ) T0 D.R.m) (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (Rl : RealDat3 D A3 T.Q.c.F) (cG : Formalism.L2.DIV.G0 Rl.Pg D.R.r ≃* G0g D.nd) (S : NX.RatDat D.ntw) (YS : NX.NExpRealS Rl cG S) (F : Face D A3.A) (κ : ∀ j : Fin D.R.m, WeightFamilies.Wt D ((j : ℕ) + 1)) (v₀ : ∀ (j : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (Rl.MW j σ).Vec) (O : ∀ j, OMDat T.toCore Rl.toRealDat j Unit (fun _ => A3.A.μ0)) (ρ : Setup D.ntw) (hρ : ρ.Good) (i : D.ntw.Tw) (j : Fin D.R.m) (b : Bool) (hV : T.V ((j : ℕ) + 1) T.σ₀ = Wc D j), RealPin Rl cG ρ → ρ.LevelOf D.nexp → RatHyp T Rl F κ v₀ O i j hV → (D.host.cls D.host.pde = PrimeClass.splitK ∧ D.host.cls D.host.pde' = PrimeClass.splitK) → ∀ ν, IsRatScalar T Rl κ v₀ hV (ρ.B i j b) ν → RatBase (realRd YS v₀ hρ i j b ν) := by
   intro _ hRF _ D Γ _ _ Pl0 I0 T0 A3 T _ Rl cG S YS F κ v₀ O ρ hρ i j b hV hpin hχ H hsp ν hν
   obtain ⟨fw⟩ := H.fw

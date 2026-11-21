@@ -21,6 +21,7 @@ variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Alge
 variable {W : Type*} [AddCommGroup W] [Module E W] {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 
+omit [NumberField F] [IsTotallyReal F] [IsTotallyComplex E] in
 theorem HaarParabolicCoordinates.proof (h : HermitianForm F E W) (v : Basis ι E W)
     (h₁ : ParabolicDecomposition.Statement h v) (h₂ : ArchUnimodular.Statement h v)
     (h₃ : MajorantStabCompact.Statement h v) (h₄ : LineStabHaar.Statement h v) :

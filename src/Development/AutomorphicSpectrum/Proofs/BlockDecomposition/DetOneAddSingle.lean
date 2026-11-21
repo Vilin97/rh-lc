@@ -32,6 +32,7 @@ def wf (e : Fin n → ℤ) (m : ℤ) (p : MvPolynomial (Fin n × Fin n) ℂ) : M
   (GLs n).indicator fun g => Qf e g * g.det ^ m * evP p g
 
 
+open scoped ComplexOrder in
 theorem gm_ne_zero (j : Fin n) {g : Mat n} (hg : g ∈ GLs n) : GlobalTheory.CompanionTheory.ModelS.gm j g ≠ 0 := by
   unfold GlobalTheory.CompanionTheory.ModelS.gm
   have hli : LinearIndependent ℂ g.row := by

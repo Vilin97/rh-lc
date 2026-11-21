@@ -155,6 +155,7 @@ theorem exists_affine_locus_pull {X Y : Scheme.{0}} {A : LB Y} (hA : A.IsLB)
   · rw [ht]; exact hs.preimage q
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem isFinite_fst {Z Z₁ Z₂ S : Scheme.{0}} [IsAffine S] (s₁ : Z₁ ⟶ S) (s₂ : Z₂ ⟶ S) [IsProper s₂]
     (ν : Z ⟶ pullback s₁ s₂) [IsFinite ν] {A₁ : LB Z₁} {A₂ : LB Z₂} (h₁ : A₁.IsLB) (h₂ : A₂.IsLB)
     (ha : ∀ y : Z₂, ∃ (d : ℕ) (s : Out.H0 A₂ d), 1 ≤ d ∧ y ∈ Out.nonzeroLocus s ∧

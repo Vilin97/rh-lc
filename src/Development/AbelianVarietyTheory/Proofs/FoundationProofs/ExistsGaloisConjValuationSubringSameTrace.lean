@@ -251,6 +251,12 @@ private lemma mem_of_mem_of_inv_core_mem [FiniteDimensional F L] (W₁ W₂ U U'
   exact (valuation_lt_one_iff_inv_not_mem' U' s hs0).1 h2 (hcen s hsS hs0 hsU)
 
 
+open scoped MatrixGroups TensorProduct in
+open Matrix in
+open Finset in
+open scoped Pointwise in
+variable {F L : Type} [Field F] [Field L] [Algebra F L] in
+open scoped Pointwise in
 theorem _root_.GlobalTheory.KZ.ES.exists_conj_of_same_trace : ∀ (F L : Type) [Field F] [Field L]
     [Algebra F L] [FiniteDimensional F L] [IsGalois F L] (W₁ W₂ : ValuationSubring L),
     (∀ a : F, algebraMap F L a ∈ W₁ ↔ algebraMap F L a ∈ W₂) →

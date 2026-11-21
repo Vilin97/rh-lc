@@ -62,6 +62,7 @@ def ConstEquiv : Prop :=
         (T.dict ((i : ℕ) + 1) (res T σ)) (T.mu ((i : ℕ) + 1) (res T σ)) (T.cE ((i : ℕ) + 1) (res T σ)) ρ chi ℓ
 
 
+omit [Algebra T.Q.c.F D.what₂.LL] in
 def IsKappa : Prop :=
   ∀ τ : D.what₂.Tau,
     (∀ k : Fin (D.R.sigW ((i : ℕ) + 1)).1, w.aP τ k = aPl D i ((Wc D i).sig (tauE D τ)).1 τ k) ∧

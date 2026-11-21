@@ -266,6 +266,7 @@ theorem exists_K (c u : Fin r → EuclideanSpace ℂ (Fin (2 * r + k + 1))) (hc 
   · rw [← hκc, ← WithLp.toLp_ofLp 2 (c a), ← hκ]
 
 
+open InnerProductSpace in
 theorem iwasawa : ∀ (k r : ℕ), ∀ g ∈ GG k r, ∃ n ∈ Nset k r, ∃ a : Fin r → ℝ, (∀ b, 0 < a b) ∧ ∃ m ∈ UH (Hb k), ∃ κ ∈ (GG k r ∩ (Matrix.unitaryGroup (Fin (2 * r + k + 1)) ℂ : Set (Mat k r))), g = n * uEmb k r (Matrix.diagonal fun b => (a b : ℂ)) * mEmb k r m * κ := by
   intro k r g hg
   have hgu := UH_det Hpk_sq hg

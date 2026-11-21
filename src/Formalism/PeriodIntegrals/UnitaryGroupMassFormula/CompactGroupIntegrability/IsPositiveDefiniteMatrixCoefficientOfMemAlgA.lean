@@ -89,6 +89,7 @@ lemma isPositiveDefinite_matrix_coefficient_of_mem_algA [FiniteDimensional ℂ S
   exact IsPD.sum _ fun i _ => (ha i).mul (IsPD.const _)
 
 
+variable (σ S) in
 def Ugood : Submodule ℂ S where
   carrier := {u | ∀ w : H, IsPD (fun h : UG N => ⟪w, σ h (u : H)⟫_ℂ)}
   add_mem' := by

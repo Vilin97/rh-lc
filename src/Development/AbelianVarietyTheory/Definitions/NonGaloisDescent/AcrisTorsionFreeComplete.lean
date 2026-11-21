@@ -100,10 +100,12 @@ instance : IsLocalization.Away ((l : ℕ) : Per.Acris l) (BcrisP l) :=
   inferInstanceAs (IsLocalization.Away _ (Localization.Away ((l : ℕ) : Per.Acris l)))
 
 
+variable {l} in
 def plusLift {S : Type} [CommRing S] (f : Per.Acris l →+* S) (h : IsUnit ((l : ℕ) : S)) : BcrisP l →+* S :=
   IsLocalization.Away.lift ((l : ℕ) : Per.Acris l) (g := f) (by rwa [map_natCast])
 
 
+variable {l} in
 theorem plusLift_alg {S : Type} [CommRing S] (f : Per.Acris l →+* S) (h : IsUnit ((l : ℕ) : S))
     (x : Per.Acris l) : plusLift f h (algebraMap _ _ x) = f x :=
   IsLocalization.Away.lift_eq _ _ x
@@ -148,11 +150,13 @@ theorem ker_theta : RingHom.ker (Per.θ l) = Ideal.span {xi C.ε} := by
 end Core
 
 
+variable (l) in
 theorem acris_torsionFree_complete : (∀ x : Per.Acris l, ((l : ℕ) : Per.Acris l) * x = 0 → x = 0) ∧
     IsAdicComplete (Ideal.span {((l : ℕ) : Per.Acris l)}) (Per.Acris l) :=
   ⟨(acris_basic l).2.1, (acris_basic l).1⟩
 
 
+variable (l) in
 theorem thetaD_onto_ker : Function.Surjective (Per.θD l) ∧ RingHom.ker (Per.θD l) = Per.FilP l 1 :=
   ⟨(thetaD_props l).1, Ideal.ext fun y => (thetaD_props l).2.1 y⟩
 

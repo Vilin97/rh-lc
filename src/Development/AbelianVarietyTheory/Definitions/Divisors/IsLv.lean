@@ -64,9 +64,11 @@ structure Crd (C D : Matrix (Fin n) (Fin j) E) (Z : Matrix (Fin n) (Fin m) E) (J
   onD : (matHom _ σ J u).1 * adMat F D = adMat F D - adMat F Z * plus σ J₀ b + adMat F C * c
 
 
+variable (F E) in
 abbrev tor (l : Fin j → ℤ) : GL (Fin j) (AF F ⊗[F] E) := GlobalTheory.Eis.Conv.dg (GlobalTheory.Eis.Conv.halfE F E) l
 
 
+variable (F) in
 abbrev bse : ℝ := 4 ^ Fintype.card (InfinitePlace F)
 
 end GlobalTheory.SphEis

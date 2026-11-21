@@ -84,6 +84,7 @@ theorem vV_pos (T : CDVR) {t : T.V} (ht : ¬ IsUnit t) (h0 : t ≠ 0) : 0 < vV T
   omega
 
 
+variable {Xo c} in
 theorem chart_ties {T : CDVR} {io : c.F →+* T.Fr} {y : IntFr Xo c T io} {C3 : IntChart T io y}
     {C : Type} [Field C] [CharZero C] {V : VF C} {ie : T.Fr →+* C} (hie : EmbOK T V ie)
     {k : ℕ} {Y : FBChart C V (𝓞 E) (chD C3.ch)} (hY : IsBC C3 ie k Y) :

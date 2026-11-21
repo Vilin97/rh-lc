@@ -309,6 +309,7 @@ end Main
 end HZeroRowPlaceData
 
 
+open HZeroRowPlaceData in
 theorem HZeroRowPlaceData.full : GlobalSectionsComparisonStatement := by
   intro S _ K _ _ ι _ _ Ω _ _ y n hy
   choose c₀ hc₀ using hy

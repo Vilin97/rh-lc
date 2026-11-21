@@ -227,6 +227,7 @@ theorem free_at (hp : p ≠ 0) (hn : IsNilpotent (p : R)) {V W : X.Opens} (h : W
     (fun r' _ => (hQp r').1)
 
 
+include hI in
 theorem off_at (hp : p ≠ 0) (hn : IsNilpotent (p : R)) {W : X.Opens} {d : ℕ} (c : Coord q W d) (r j : ℕ) (hj : j ≠ r) :
     Subsingleton (HU (GF (nlFun γ p X q κ) r) (SQ q κ γ p W) j) := by
   obtain ⟨E, σ, θ, hGr, hbot, -⟩ := frame_at (γ := γ) (p := p) (κ := κ) hI hp hn c

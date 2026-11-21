@@ -70,6 +70,7 @@ variable (T : StepData k x) (Jg : FinGradedSub (S := k) (x := x) Ω)
     f.IsHomogeneous e ∧ (e : ℤ) = c ∧ z = aeval x f})
 
 
+include hJg in
 theorem claim_le : ∀ c, Jg.piece c ≤ (coordGraded k x).piece c := by
   intro c
   rw [hJg]
@@ -78,6 +79,7 @@ theorem claim_le : ∀ c, Jg.piece c ≤ (coordGraded k x).piece c := by
   exact ⟨f, e, hf, he, rfl⟩
 
 
+include hJg in
 theorem claim_kill : ∀ (f : Poly k N) (e : ℕ), f ∈ T.J → f.IsHomogeneous e → ∀ (a : ℤ),
     ∀ z ∈ (coordGraded k x).piece a, aeval x f • z ∈ Jg.piece (a + e) := by
   intro f e hf hfe a z hz

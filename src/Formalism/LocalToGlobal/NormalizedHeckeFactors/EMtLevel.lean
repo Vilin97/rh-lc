@@ -24,6 +24,7 @@ open Formalism.L2.NT
 namespace Formalism.L2
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 structure NormalizedTwistCompatibility (D : D7) (C : NChoice D) (I : TwIn D) where
 
   gal : NGalTied D

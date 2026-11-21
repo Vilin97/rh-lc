@@ -9,10 +9,12 @@ namespace ReciprocityTheory.ChartRestriction.G.I2
 open MeasureTheory
 
 
+open Complex in
 noncomputable def fockIP {g : ℕ} (F G : EuclideanSpace ℂ (Fin g) → ℂ) : ℂ :=
   ((Real.pi ^ g)⁻¹ : ℝ) * ∫ z, F z * (starRingEnd ℂ) (G z) * (Real.exp (-‖z‖ ^ 2) : ℂ)
 
 
+open Complex in
 noncomputable def fockU {g : ℕ} (a : EuclideanSpace ℂ (Fin g)) (F : EuclideanSpace ℂ (Fin g) → ℂ) :
     EuclideanSpace ℂ (Fin g) → ℂ :=
   fun z => cexp ((∑ i, z i * (starRingEnd ℂ) (a i)) - (‖a‖ ^ 2 / 2 : ℝ)) * F (z - a)

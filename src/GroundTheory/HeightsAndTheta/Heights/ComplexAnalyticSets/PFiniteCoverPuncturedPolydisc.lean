@@ -131,6 +131,7 @@ theorem mem_strip_of_exp (hc : c 0 = 0) {ρ : ℝ} (hρ0 : 0 < ρ) (hρ1 : ρ �
 end FiniteCoverPuncturedPolydisc
 
 
+open FiniteCoverPuncturedPolydisc in
 theorem FiniteCoverPuncturedPolydisc.proof : FiniteCoverPuncturedPolydisc.Statement := by
   intro e N c r Y _ p hr hc hcov hfib
   classical

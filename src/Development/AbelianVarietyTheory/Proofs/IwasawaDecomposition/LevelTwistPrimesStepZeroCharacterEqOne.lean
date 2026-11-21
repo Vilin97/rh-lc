@@ -484,6 +484,7 @@ theorem k_triv {i : Fin 2} {v : HeightOneSpectrum (𝓞 B.host.F)} (h : (B.host.
   hR.k_off () v (T_notMem X u i h) (fun ⟨P, hP, _⟩ => notMem_twistPrimes_initialTuple I P hP) (Or.inl rfl)
 
 
+include hR in
 theorem mem_Uloc (hI : I.Ok) (hG : G.piG = X.piG) (i : Fin 2) (v : HeightOneSpectrum (𝓞 B.host.F))
     (h : (B.host.g i : 𝓞 B.host.F) ∈ v.asIdeal) (x : GL (Fin (B.R.N 0)) (B.host.E ⊗[B.host.F] v.adicCompletion B.host.F))
     (hx : x ∈ levelVL B.sp.cm.sig (1 : Matrix (Fin (B.R.N 0)) (Fin (B.R.N 0)) B.host.E) v S.Lb) :
@@ -517,6 +518,8 @@ theorem mem_Uloc (hI : I.Ok) (hG : G.piG = X.piG) (i : Fin 2) (v : HeightOneSpec
       exact one_mem _
 
 
+set_option maxHeartbeats 800000 in
+include hR in
 theorem chi_prod (hI : I.Ok) (x : S.U) : ∃ h : GLG B.host.E (B.R.N 0) (B.primes X).vGs,
     (∀ w, h w ∈ uniUT (B.R.N 0) (𝓞 B.host.E ⧸ w.1.asIdeal) B.R.k []) ∧ (∀ w : (B.primes X).vGs, IsRed w.1 x.1 ((h w)⁻¹).1) ∧
       ((S.chi x : ℂˣ) : ℂ) = ∏ w : (B.primes X).vGs, B.embLL (I.Ch.psi0 w (supSum B.R.k (SX B.R.k B.R.m 0) (h w).1)) := by

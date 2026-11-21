@@ -44,6 +44,7 @@ variable {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] {I : Ideal R}
   {T : TowerR I P X} (a : T.Alg)
 
 
+omit [IsDomain R] [IsLocalRing R] [IsCommMonObj G] in
 theorem isGrpPullback_thickMap (e : ℕ) :
     IsGrpPullback (thickObj R I e G) (thickObj R I (e + 1) G) (thickTrans R I e) (thickMap R I e G) :=
   (isGrpPullback_pullback G (thick R I (e + 1))).cancel ((isGrpPullback_pullback G (thick R I e)).congr
@@ -51,6 +52,7 @@ theorem isGrpPullback_thickMap (e : ℕ) :
     (pullback.lift_snd _ _ _)
 
 
+omit [IsDomain R] in
 theorem exists_section [IsAdicComplete I R] {B : Over (Spec (CommRingCat.of R))}
     (x : ∀ e : ℕ, Spec (CommRingCat.of (R ⧸ I ^ (e + 1))) ⟶ B.left) (hx : ∀ e, x e ≫ B.hom = thick R I e)
     (hc : ∀ e, thickTrans R I e ≫ x (e + 1) = x e) : ∃ c : 𝟙_ _ ⟶ B, ∀ e, thick R I e ≫ c.left = x e := by

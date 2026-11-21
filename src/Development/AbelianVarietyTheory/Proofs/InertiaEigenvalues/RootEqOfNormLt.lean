@@ -143,6 +143,7 @@ theorem exists_level (K : FinExt l) {x : Om l} (hx : x ∈ Kinf K) : ∃ i, 1 �
   exact ⟨i + 1, by omega, hmono (Nat.le_succ i) hi⟩
 
 
+open GlobalTheory.UnramValue in
 theorem mem_rootRing {c : Om l} (hc : c ∈ MaximalUnramifiedExtension l) (h1 : ‖c‖ ≤ 1) :
     ∃ m : ℕ, 0 < m ∧ ¬ l ∣ m ∧ c ∈ rootRing l m := by
   have hp : l.Prime := Fact.out
@@ -186,6 +187,7 @@ theorem root_eq_of_norm_lt {m : ℕ} (hm : 0 < m) (hl : ¬ l ∣ m) {a b : Om l}
   | (intros; exact _root_.GlobalTheory.RootsOfUnityClose.eq_of_pow_eq_one_of_norm_sub_lt_one ..)
 
 
+open GlobalTheory.UnramValue in
 theorem exists_root (K : FinExt l) {c : Om l} (hc : c ∈ K0 K) (h1 : ‖c‖ = 1) :
     ∃ ω ∈ K0 K, ∃ m : ℕ, 0 < m ∧ ¬ l ∣ m ∧ ω ^ m = 1 ∧ ‖c - ω‖ < 1 := by
   have hp : l.Prime := Fact.out
@@ -473,6 +475,8 @@ theorem eps_ne_one : AI.ε - 1 ≠ 0 := by
   linarith
 
 
+open scoped Formalism.Per in
+open GlobalTheory.TiltAlgClosed in
 theorem invariant_approx : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (K : FinExt l) (x : OCb l), (∀ h ∈ Hinf K, AI.actT h x = x) → ∀ n : ℕ, ∃ y ∈ Subring.closure (Set.range AI.εroot ∪ {xb | ∃ c : Om l, c ∈ K0 K ∧ ∃ m : ℕ, 0 < m ∧ ¬ l ∣ m ∧ c ^ m = 1 ∧ IsTiltOf c m xb}), (AI.ε - 1) ^ n ∣ x - y := by
   intro l _ P AI K x hx n
   have hp : l.Prime := Fact.out

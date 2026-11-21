@@ -31,6 +31,7 @@ theorem qf_inv_transpose_mulVec {g : ℕ} (B : Matrix (Fin g) (Fin g) ℝ) (hB :
 end PGaussDualMin
 
 
+open PGaussDualMin in
 theorem GaussDualMin.proof : GaussDualMin.Statement := by
   intro g B hB μ hμ hμ0
   classical

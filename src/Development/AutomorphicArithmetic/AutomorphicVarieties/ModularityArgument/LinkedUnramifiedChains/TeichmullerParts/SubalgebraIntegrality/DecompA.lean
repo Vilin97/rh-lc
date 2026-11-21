@@ -17,6 +17,7 @@ open NumberField IsDedekindDomain GlobalTheory.CuspRep GlobalTheory.UnitaryBC
 namespace UpperTheory.V.Z.J.D.Dc
 
 
+open GlobalTheory.DefU in
 theorem autProj (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (M : Submodule ℂ (autU E n))
     (hM : FiniteDimensional ℂ M) :
     ∃ (κ : Type) (_ : Fintype κ) (σ : κ → Submodule ℂ (UA E n → ℂ)) (P : κ → autU E n →ₗ[ℂ] autU E n),
@@ -140,6 +141,7 @@ theorem coreP {κ : Type} [Fintype κ] (A : Submodule ℂ Y) (tf : Y →ₗ[ℂ]
     exact sub_eq_zero.2 e2
 
 
+open GlobalTheory.DefU in
 theorem absMain {I J : Type} [Fintype J] [FiniteDimensional ℂ D] (A : Submodule ℂ Y) (tf : Y →ₗ[ℂ] D →ₗ[ℂ] (UA E n → ℂ))
     (r : UA E n → D → D) (hinj : ∀ F ∈ A, (∀ ℓ, tf F ℓ = 0) → F = 0)
     (hsur : ∀ Φ : D →ₗ[ℂ] (UA E n → ℂ), (∀ ℓ, IsAutFormU (Φ ℓ)) → (∀ ℓ, ∀ x ∈ infU E n, RU E n x (Φ ℓ) = Φ (r x ℓ)) →

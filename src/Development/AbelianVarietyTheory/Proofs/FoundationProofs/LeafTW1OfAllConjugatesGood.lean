@@ -63,6 +63,7 @@ variable {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarT
   {W : Type} [AddCommGroup W] [Module (FractionRing O') W] [Module O' W] [IsScalarTower O' (FractionRing O') W]
 
 
+omit [IsScalarTower (𝓞 K) K V] in
 theorem relLength_read (h : Induces emb v) (rd : V →ₛₗ[emb] W) {ι : Type} [Fintype ι] (b : Module.Basis ι K V)
     (hli : LinearIndependent (FractionRing O') fun a => rd (b a)) :
     ∃ e : ℕ, 0 < e ∧ (∀ n : ℕ, IsDiscreteValuationRing.addVal O' (n : O') =
@@ -220,6 +221,7 @@ def Reads (e : V →ₗ[K] V) (Θ Θψ : Submodule (𝓞 K) V) (rd : V →ₛₗ
 variable {Y E i j b k Q φ O'}
 
 
+omit [IsDomain O'] [IsDiscreteValuationRing O'] [NumberField K] in
 theorem Reads.comap {V' : Type} [AddCommGroup V'] [Module K V'] [Module (𝓞 K) V'] [IsScalarTower (𝓞 K) K V']
     {e : V →ₗ[K] V} {Θ Θψ : Submodule (𝓞 K) V} {rd : V →ₛₗ[emb] FmExt Y i j b O'}
     (h : Reads Y E i j b k Q φ O' e Θ Θψ rd) (f : V' →ₗ[K] V) (hf : Function.Bijective f) {e' : V' →ₗ[K] V'}

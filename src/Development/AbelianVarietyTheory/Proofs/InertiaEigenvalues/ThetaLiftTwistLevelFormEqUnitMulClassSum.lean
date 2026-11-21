@@ -34,6 +34,7 @@ section General
 variable {D : D7} {S T : HSp D}
 
 
+open GlobalTheory.LevTransl in
 theorem sum_om_fock {B : Base S T} (hB : B.Good) (hS : S.SigOK) {ψ : Twist D Circle} (hψ : ψ.Good) (hQ : B.admitted ψ.Q)
     {ω : PairRep S T} (hω : B.IsWeil ψ.chi ω) {F : Finset (Bridge.Gf S)} (hF : ∀ u ∈ F, u ∈ B.levJ ψ)
     (hU : ∀ κ ∈ B.levJ ψ, ∃! u, u ∈ F ∧ u⁻¹ * κ ∈ (princ B).levJ ψ) (P : PolF D T.rank S.rank) :
@@ -67,6 +68,7 @@ theorem sum_om_fock {B : Base S T} (hB : B.Good) (hS : S.SigOK) {ψ : Twist D Ci
     _ = _ := by rw [hv]
 
 
+open GlobalTheory.ClassSumPrinc in
 theorem classSum_princ {B : Base S T} (hB : B.Good) (hS : S.SigOK) {ψ : Twist D Circle} (hψ : ψ.Good) (hQ : B.admitted ψ.Q)
     {ω : PairRep S T} (hω : B.IsWeil ψ.chi ω) {m : ℕ} {h₀ : Fin m → GA D S} (hC₀ : IsClassSystem S ((princ B).levJ ψ) h₀)
     {I : Type} [Fintype I] {h : I → GA D S} (hC : IsClassSystem S (B.levJ ψ) h) {F : Bridge.Gf S → PolF D T.rank S.rank}
@@ -106,6 +108,7 @@ theorem transl_mem_formsC {B : Base S T} {ψ : Twist D Circle} {z : Bridge.Gf S}
 end General
 
 
+open Classical in
 theorem thF_eq_princ {D : D7} (X : RealSide D) {j : Fin D.R.m} {B : Base (Vc D j) (Wc D j)} (hB : BaseOf X.R.toRealDat j B)
     {ψ : Twist D Circle} {t : X.T} (htup : IsTupOf X.R.toRealDat B ψ t) {c0 : ℂ} (hc0 : c0 ≠ 0) {z' : GA D (Vc D j)}
     (hz' : z' ∈ GfC (Vc D j)) (hzc : finPt (Vc D j) z' ∈ Subgroup.center (Bridge.Gf (Vc D j)))

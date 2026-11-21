@@ -380,6 +380,7 @@ open NumberField Classical Formalism.BasicNotions Formalism.MainNotions Formalis
 open scoped BigOperators
 
 
+open GlobalTheory.NormSum.RepAt GlobalTheory.NormSum.PtsMem in
 theorem GlobalTheory.NormSum.exists_rep_trivial_at : ∀ D : D7, oddRep D := by
   intro D N p hp g
   obtain ⟨v, hv, hw⟩ := exists_place p hp

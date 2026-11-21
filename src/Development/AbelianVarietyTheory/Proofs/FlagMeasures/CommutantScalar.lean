@@ -19,6 +19,7 @@ variable {ι : Type} [Fintype ι] {H : ι → Type} [∀ i, NormedAddCommGroup (
   {tens : (∀ i, H i) → Hs}
 
 
+omit [Fintype ι] [∀ i, NormedAddCommGroup (H i)] [∀ i, InnerProductSpace ℂ (H i)] in
 theorem ext_vec (hd : Dense (Submodule.span ℂ (Set.range tens) : Set Hs)) {u u' : Hs}
     (h : ∀ y, ⟪tens y, u⟫_ℂ = ⟪tens y, u'⟫_ℂ) : u = u' := by
   have key : (innerSL ℂ (u - u') : Hs →L[ℂ] ℂ) = 0 := by
@@ -32,6 +33,7 @@ theorem ext_vec (hd : Dense (Submodule.span ℂ (Set.range tens) : Set Hs)) {u u
   exact sub_eq_zero.mp (inner_self_eq_zero.mp h0)
 
 
+omit [Fintype ι] [∀ i, NormedAddCommGroup (H i)] [∀ i, InnerProductSpace ℂ (H i)] in
 theorem ext_op (hd : Dense (Submodule.span ℂ (Set.range tens) : Set Hs)) {A A' : Hs →L[ℂ] Hs}
     (h : ∀ x, A (tens x) = A' (tens x)) : A = A' := ContinuousLinearMap.ext_on hd (by rintro _ ⟨x, rfl⟩; exact h x)
 
@@ -245,6 +247,7 @@ theorem commutant_scalar [∀ i, CompleteSpace (H i)] [CompleteSpace Hs]
     smul_apply, one_apply_eq_self, inner_smul_right, hi, mul_comm]
 
 
+omit [DecidableEq ι] in
 theorem tensor_rep [∀ i, CompleteSpace (H i)] [CompleteSpace Hs] [∀ i, TopologicalSpace (G i)]
     (hi : ∀ x y, ⟪tens x, tens y⟫_ℂ = ∏ i, ⟪x i, y i⟫_ℂ)
     (hd : Dense (Submodule.span ℂ (Set.range tens) : Set Hs))

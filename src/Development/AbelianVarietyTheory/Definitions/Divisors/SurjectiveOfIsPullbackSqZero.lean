@@ -130,10 +130,12 @@ def Presents.ofSurjective {X : Scheme.{0}} {s : X ⟶ Sp R} {i : X₀ ⟶ X} (hi
   ⟨y, isOpen, base, nat, red, S.cover_of_surjective hi y red⟩
 
 
+include hI in
 theorem surjective_spMap_p (U : AffOp X₀) : Surjective (spMap (S.p U)) :=
   surjective_spMap_sqZero (S.p U) (S.surj U) (map_sq hI _) fun b hb ↦ (S.ker U b).1 hb
 
 
+include hI in
 theorem Presents.surjective {X : Scheme.{0}} {s : X ⟶ Sp R} {i : X₀ ⟶ X} (P : S.Presents s i) : Surjective i := by
   refine ⟨fun x ↦ ?_⟩
   obtain ⟨U, q, rfl⟩ := P.cover x

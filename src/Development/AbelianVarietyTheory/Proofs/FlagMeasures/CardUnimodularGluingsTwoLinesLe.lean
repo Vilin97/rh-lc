@@ -216,6 +216,10 @@ private lemma star_mul_mul_fst_mem_integers_of_mem
   simpa using this
 
 
+open MeasureTheory NumberField Matrix Finset in
+open scoped nonZeroDivisors in
+variable {E : Type} [Field E] [NumberField E] in
+variable [StarRing E] in
 theorem _root_.GlobalTheory.GlueLines.card_gluings_le : ∀ (E : Type) [Field E] [NumberField E] [StarRing E],
     _root_.Formalism.HermitianLatticesTheory.IsCMUnram E → ∀ (β₁ β₂ : E) (N₁ N₂ : Submodule (𝓞 E) E) (𝔫 : Ideal (𝓞 E)), star β₁ = β₁ →
     star β₂ = β₂ → β₁ ≠ 0 → β₂ ≠ 0 → Submodule.IsLattice E N₁ → Submodule.IsLattice E N₂ →

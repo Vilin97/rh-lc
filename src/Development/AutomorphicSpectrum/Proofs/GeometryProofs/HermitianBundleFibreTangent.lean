@@ -17,6 +17,7 @@ noncomputable section
 namespace GlobalTheory.CompanionTheory.Ar.HodgeBC
 
 
+open GroundTheory.Heights₂.Heights in
 theorem span_one_tmul {L : Type} [Field L] (e : L →+* ℂ) (V : Type) [AddCommGroup V] [Module (𝓞 L) V] :
     Submodule.span ℂ {w : Fibre e V | ∃ y : V, w = (1 : ComplexAt e) ⊗ₜ[𝓞 L] y} = ⊤ := by
   rw [eq_top_iff]
@@ -77,6 +78,7 @@ private theorem exists_tanAt_comp_of_sabMap {E : Type} [Field E] [NumberField E]
     simp [epsAt]
 
 
+open LieMove in
 theorem hodge_along {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {X₀ X₁ X₂ : Scheme.{0}}
     {t₀ : SAB H X₀} {t₁ : SAB H X₁} {t₂ : SAB H X₂} {f₀ : X₀ ⟶ X₁} {f₁ : X₁ ⟶ X₂} (m₀ : SABMap t₀ t₁ f₀)
     (m₁ : SABMap t₁ t₂ f₁) (z : Sp ℂ ⟶ X₀) (p : Sp ℂ ⟶ X₂) (hp : p = (z ≫ f₀) ≫ f₁)

@@ -36,6 +36,7 @@ theorem fixed_of_two {L : Type} [Field L] (c : L →+* L) (z : L) (k k' : Lˣ)
   linear_combination c (k : L) * h' - c (k' : L) * h
 
 
+open Classical in
 theorem rat_points : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R), IsRationalUnitaryDeterminantMap H (e1T H) ∧ (letI := H.cmStar; ∀ z : unitary H.E, ∃ k : (H.E)ˣ, (z : H.E) * H.conj (k : H.E) = k) := by
   intro R H
   have hcm : IsCMField H.E := H.isCMField_hostE

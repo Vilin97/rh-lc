@@ -90,6 +90,7 @@ variable (E : Type) [Field E] [Algebra F E]
 
 
 open scoped Classical in
+open Classical in
 def eta (v : HeightOneSpectrum (𝓞 F)) : ℝ :=
   if IsField (Fv F v ⊗[F] E) then -1 else 1
 
@@ -148,6 +149,8 @@ def EulerProductOfDensities : Prop :=
         (∃ a : Fˣ, ScalesInf F ψ a) ∧ ∀ a : Fˣ, ScalesInf F ψ a → DensityProduct F E ψ a M
 
 
+open scoped TensorProduct in
+open NumberField IsDedekindDomain in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.LocalAdditiveCharacterDual.star_eq_sigma {F E : Type} [Field F] [NumberField F] [Field E]
     [NumberField E] [Algebra F E] [StarRing E] (σ : E →ₐ[F] E) (h : _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.IsCMExt F E σ)
     (hu : _root_.Formalism.HermitianLatticesTheory.IsCMUnram E) (x : E) :

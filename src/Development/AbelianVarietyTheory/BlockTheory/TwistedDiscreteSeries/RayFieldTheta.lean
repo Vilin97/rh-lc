@@ -30,6 +30,7 @@ section Tuple
 variable {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks)
 
 
+variable (D) in
 def embK : D.host.K →+* D.what₂.LL := D.embE.comp (algebraMap D.host.K D.host.E)
 
 def tupLevel (t : T0) : ℕ :=

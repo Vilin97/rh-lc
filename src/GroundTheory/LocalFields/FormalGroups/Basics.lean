@@ -104,6 +104,7 @@ theorem substPoint_inv_subst {φ : PowerSeries R} (hφ : PowerSeries.constantCoe
     x.prop _
 
 
+variable (F G) in
 @[ext]
 structure Hom (F G : FormalGroup R) where
 

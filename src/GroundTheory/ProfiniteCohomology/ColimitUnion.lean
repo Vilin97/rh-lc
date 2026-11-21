@@ -75,6 +75,8 @@ theorem subrepCochainsCocone_inj (n : ℕ) (i : ι)
 variable [CompactSpace G]
 
 
+omit [IsTopologicalGroup G] [IsDiscreteRep A] in
+include hW in
 theorem exists_forall_mem_of_isLocallyConstant [Nonempty ι] [IsDirectedOrder ι]
     (hunion : ∀ a : A, ∃ i, a ∈ W i) {n : ℕ} {f : (Fin n → G) → A} (hf : IsLocallyConstant f) :
     ∃ j, ∀ g, f g ∈ W j := by
@@ -105,6 +107,7 @@ theorem subrepCochainsCocone_surj [Nonempty ι] [IsDirectedOrder ι]
   rfl
 
 
+include hW in
 theorem exists_cohomologyMap_subtype_eq [Nonempty ι] [IsDirectedOrder ι]
     (hunion : ∀ a : A, ∃ i, a ∈ W i) (n : ℕ) (x : cohomology A n) :
     ∃ (i : ι) (y : cohomology (A.subrepresentation (W i) (hstable i)) n),

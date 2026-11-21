@@ -75,6 +75,7 @@ theorem idem_mul_idem_of_ne {Z Z' : Comp Xo c} (h : Z ≠ Z') : idem Z * idem Z'
       ((idem_notMem_iff Z' y q).1 h1.2)
 
 
+variable (Xo c) in
 theorem sum_idem [Fintype (Comp Xo c)] : ∑ Z : Comp Xo c, idem Z = 1 := by
   classical
   refine funext fun p => funext fun y => ?_

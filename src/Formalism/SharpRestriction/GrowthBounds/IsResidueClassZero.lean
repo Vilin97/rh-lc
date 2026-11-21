@@ -277,6 +277,7 @@ def Cand (D : D7) (L : SizeData₂ D) (K : Consts) (p : ℕ) : Prop :=
     (L.sc.p0 D.R.k ≤ (p : ℝ) → ¬ InBand D K L.sc p)
 
 
+open Classical in
 def goodReps (X : Inst D L) (p : ℕ) : Finset (HH D) := (reps X p).filter (fun t0 => Good X p t0)
 
 def Sig (X : Inst D L) (K : Consts) (a b : HH D → ℤ) (p : ℕ) : ℝ :=
@@ -451,6 +452,7 @@ def lowFE (L : SizeData₂ D) (u : D.what₂.Word) (w : D.what₂.places.Pl) : �
   ∑ j ∈ SizeData₂.lifts D, ((L.F j w : ℝ) - (L.E u j w : ℝ))
 
 
+open Classical in
 def NP (X : Inst D L) (Y : LatInst D) (K : Consts) (u : D.what₂.Word) (w : D.what₂.places.Pl)
     (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)) :
     Submodule (D.gat u w hg).O (D.gat u w hg).Fn :=

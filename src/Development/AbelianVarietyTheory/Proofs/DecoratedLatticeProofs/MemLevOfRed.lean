@@ -31,6 +31,7 @@ section
 variable {D : D7} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+set_option maxHeartbeats 1000000 in
 theorem mul_moved (p : GlobalTheory.LocMod.Place D k) {π' : EAf D →+* k} (hπ : ∀ a, π' (toEAf D a) = p.π a) (V : HSp D)
     (t x : GA D V) (β : GL (Fin V.rank) (Lev.EAf D)) (y : GL (Fin V.rank) (Formalism.L2.Herm.intAf D.host.F D.host.E))
     (hy : Formalism.L2.DIV.frGL β y = Lev.finE V (t⁻¹ * x * t)) {M : Matrix (Fin V.rank) (Fin V.rank) k}
@@ -59,6 +60,7 @@ theorem mul_moved (p : GlobalTheory.LocMod.Place D k) {π' : EAf D →+* k} (hπ
   rw [← h1, ← Matrix.mul_assoc, ← Matrix.map_mul, h7, Matrix.map_mul, Matrix.mul_assoc, h4, Matrix.mul_assoc]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem conj_eq {n : ℕ} {Y : Type} [Fintype Y] [DecidableEq Y] (F : GlobalTheory.LocMod.Frame k n Y) (bas W : GL Y k) (σ : Fin n ≃ Y)
     (N : Matrix (Fin n) (Fin n) k)
     (h : F.β * W.val * F.γ * (F.β * bas.val).submatrix id σ = (F.β * bas.val).submatrix id σ * N) :

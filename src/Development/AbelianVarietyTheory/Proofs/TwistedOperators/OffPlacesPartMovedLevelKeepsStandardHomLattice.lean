@@ -199,6 +199,7 @@ theorem finE_cut_mem_St (V : HSp D) (β Uf K : GL (Fin V.rank) (Lev.EAf D)) (g :
 end GlobalTheory.OffPartLattice
 
 
+open GlobalTheory.OffPartLattice Matrix in
 theorem GlobalTheory.OffPartLattice.offPart_keeps_stdLatO : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T} (S : GridChoice W U) {t : T},
     t ∈ U → ∀ {Φ : G.Datum} {β : CosFam G t} (j : ℕ) (hj : j + 1 < D.R.m) (k : FinPt G (.top (j + 1))),
     finG (G.V (.top (j + 1))) k ∈ S.levTop t Φ β (j + 1) hj → ∀ e : AE D, IsIdemSum e (locPl G t) →

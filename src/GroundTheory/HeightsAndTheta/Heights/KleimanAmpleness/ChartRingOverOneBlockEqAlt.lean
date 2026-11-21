@@ -24,6 +24,7 @@ variable {F : Type} [Field F] {Ω : Type} [Field Ω] [Algebra F Ω]
 variable {κ : Type} [Fintype κ]
 
 
+omit [Fintype κ] in
 theorem chartRingOver_oneBlock_eq (x : κ → Ω) (c : Unit → κ) :
     chartRingOver F (IndefiniteRowSideFullHecke.Kleiman2.oneBlock x) c = Algebra.adjoin F (Set.range fun i => x i / x (c ())) := by
   unfold chartRingOver
@@ -36,6 +37,7 @@ theorem chartRingOver_oneBlock_eq (x : κ → Ω) (c : Unit → κ) :
     exact ⟨⟨(), a⟩, rfl⟩
 
 
+omit [Fintype κ] in
 theorem mem_secOver_oneBlock (x : κ → Ω) (n : ℤ) (t : Ω) :
     t ∈ secOver F (IndefiniteRowSideFullHecke.Kleiman2.oneBlock x) (fun _ => n) ↔
       ∀ j, x j ≠ 0 → t * x j ^ (-n) ∈ Algebra.adjoin F (Set.range fun i => x i / x j) := by
@@ -49,6 +51,7 @@ theorem mem_secOver_oneBlock (x : κ → Ω) (n : ℤ) (t : Ω) :
     exact h (c ()) (hc ())
 
 
+omit [Fintype κ] in
 theorem secOver_oneBlock_comp {κ' : Type} (σ : κ' ≃ κ) (x : κ → Ω) (n : ℤ) :
     secOver F (IndefiniteRowSideFullHecke.Kleiman2.oneBlock (x ∘ σ)) (fun _ => n) = secOver F (IndefiniteRowSideFullHecke.Kleiman2.oneBlock x) (fun _ => n) := by
   ext t
@@ -66,6 +69,7 @@ theorem secOver_oneBlock_comp {κ' : Type} (σ : κ' ≃ κ) (x : κ → Ω) (n 
     exact h (σ j') hj'
 
 
+omit [Fintype κ] in
 theorem relDim_oneBlock_eq_iff (P : Ideal (MvPolynomial (Σ _ : Unit, κ) F)) (e : ℕ) :
     FieldNumbers.relDim P = ((e : ℕ) : WithBot (WithTop ℤ)) ↔
       ringKrullDim (MvPolynomial (Σ _ : Unit, κ) F ⧸ P) = ((e + 1 : ℕ) : WithBot ℕ∞) := by

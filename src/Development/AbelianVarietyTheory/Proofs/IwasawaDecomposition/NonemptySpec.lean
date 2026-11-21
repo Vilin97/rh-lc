@@ -116,6 +116,7 @@ variable (B0 : LocBase0 D.host D.what₂) (C : NChoice D) (hs : HeckeStd0 B0) (h
 attribute [local instance] LocBase0.algOc
 
 
+set_option maxHeartbeats 1000000 in
 theorem nonempty_spec
     (hTwE : ∀ (a : LocT B0) (x : D.LL0) (y : D.ntw.O0 (C.twI (wOf B0 a))),
       algebraMap (D.ntw.O0 (C.twI (wOf B0 a))) (FractionRing (D.ntw.O0 (C.twI (wOf B0 a)))) y =

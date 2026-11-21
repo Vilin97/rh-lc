@@ -21,6 +21,7 @@ namespace GlobalTheory.SphLineComm
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+variable (F) in
 def intAd : AddSubgroup (AF F) where
   carrier := {a | evI F a = 0 ∧ ∀ w : Pl (F := F), evFin F w a ∈ w.adicCompletionIntegers F}
   add_mem' {a b} ha hb := by

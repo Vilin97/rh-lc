@@ -60,6 +60,7 @@ structure Models (c : K) (d m : EL Δ τ) (δ : U3 Δ) (ι : (Etau K τ)ˣ →* 
   tor : ∀ z x, P (tor Δ z x) = (ι z : Matrix (Fin 3) (Fin 3) (Lsq K Δ)) *ᵥ P x
 
 
+open Classical in
 def hs (D x : K) : ℂ := if ∃ a b : K, a ^ 2 - D * b ^ 2 = x then 1 else -1
 
 
@@ -112,6 +113,7 @@ structure IsFix (c : K) (d m : EL Δ τ) (S : Set (Sp Δ τ)) : Prop where
     simp [tor, e, e', mul_assoc]
 
 
+open Classical in
 def lcount (c : K) (d m : EL Δ τ) : ℂ :=
   letI := torAct (K := K) Δ τ
   wcount (Cint O τ) fun S : Set (Sp Δ τ) => if IsFix O c d m S then 1 else 0
@@ -148,6 +150,7 @@ def ZK (K : Type) [Field K] [Algebra O K] : Subgroup (GL (Fin 2) K) :=
   (GeneralLinearGroup.scalar (Fin 2) : Kˣ →* GL (Fin 2) K).range ⊔ KG O K
 
 
+open Classical in
 def fZK (χ : Kˣ →* ℂˣ) (g : GL (Fin 2) K) : ℂ :=
   if h : ∃ z : Kˣ, (GeneralLinearGroup.scalar (Fin 2) z)⁻¹ * g ∈ KG O K then ((χ h.choose)⁻¹ : ℂˣ) else 0
 
@@ -158,6 +161,7 @@ def gOrb (j : Etau K τ →ₐ[K] Matrix (Fin 2) (Fin 2) K) (χ : Kˣ →* ℂˣ
     (Units.map (j : Etau K τ →* Matrix (Fin 2) (Fin 2) K) z)
 
 
+open Classical in
 def uOrb (ι : (Etau K τ)ˣ →* U3 Δ) (δ : U3 Δ) : ℂ :=
   orb ι (Cint O τ) (theta Δ) (KU O Δ) (fun g => if g ∈ KU O Δ then 1 else 0) δ
 

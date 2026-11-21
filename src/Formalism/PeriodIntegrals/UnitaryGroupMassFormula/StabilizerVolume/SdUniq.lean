@@ -75,6 +75,7 @@ variable {V : Type} [AddCommGroup V] [TopologicalSpace V] [IsTopologicalAddGroup
   (hχ : ∀ x t y, χ (t + x) y = χ t y * χ x y) (L : AddSubgroup V)
 
 
+include hχ in
 theorem transform_indicator (hLo : IsOpen (L : Set V)) (y : V) :
     ∫ x, (L : Set V).indicator (fun _ => (1 : ℂ)) x * χ x y ∂μ =
       (ann χ L).indicator (fun _ => ((μ.real (L : Set V) : ℝ) : ℂ)) y := by
@@ -110,6 +111,7 @@ theorem transform_indicator (hLo : IsOpen (L : Set V)) (y : V) :
     · exact h
 
 
+include hχ in
 theorem testEx_of_lattice (hLc : IsCompact (L : Set V)) (hLo : IsOpen (L : Set V))
     (hA : IsClosed (ann χ L)) (K : Set V) (hK : IsCompact K) (hAK : ann χ L ⊆ K) :
     TestEx μ χ := by

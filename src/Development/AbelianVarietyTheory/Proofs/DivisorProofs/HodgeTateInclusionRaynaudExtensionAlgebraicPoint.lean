@@ -204,6 +204,7 @@ variable {p : ℕ} {O : Type} [CommRing O] {G : Over (Sp O)}
   (Val : ∀ (R : Type) [CommRing R] [Algebra O R], (specO O R ⟶ G) → R → Prop)
 
 
+variable (p) in
 def LimOf {A : Type} [CommRing A] [Algebra O A] (g : specO O A ⟶ G) (k : A) : Prop :=
   ∀ (R : Type) [CommRing R] [Algebra O R] (θ : A →ₐ[O] R), IsNilpotent (p : R) → Val R (ptMap θ ≫ g) (θ k)
 
@@ -256,6 +257,7 @@ theorem exists_limOf {A : Type} [CommRing A] [Algebra O A] [IsPrecomplete (Ideal
   exact this
 
 
+include hmap huniq hone hmul hex in
 theorem exists_tv_of_values {C : Type} [Field C] [IsAlgClosed C] [CharZero C] {v : Valuation C ℝ≥0} [Algebra O C]
     (hv : v.Integers O) (hp : p ≠ 0) [hc : IsAdicComplete (Ideal.span {(p : O)}) O] [IsCommMonObj G]
     (hG : ∀ N, 1 ≤ N → IsFinite (torsion G N).hom ∧ Flat (torsion G N).hom) :
@@ -394,6 +396,7 @@ variable [IsAlgClosed C] [CharZero C] {V : Type} [CommRing V] [IsLocalRing V] [A
   {d : ℕ} {x : JetSer.Fam G (Fin d)} (hx : Chart.IsUnivChart G d x) (L : FGLaw V d) (hL : JetSer.IsLawOf x L.F)
 
 
+include hπ hx hL in
 theorem exists_tv_of_series {u : PS O 1 d} (hu : IsCh (L.mapF (algebraMap V O)) u) :
     ∃ χ : Tv P.Gt p, ∀ (n : ℕ) (R : Type) [CommRing R] [Algebra O R], (p : R) ^ n = 0 →
       ∀ w : specO O (DualNumber R) ⟶ torsion P.Gt (p ^ n),
@@ -433,6 +436,7 @@ theorem exists_tv_of_series {u : PS O 1 d} (hu : IsCh (L.mapF (algebraMap V O)) 
     exact ⟨k, h, hk⟩
 
 
+include hπ hx hL in
 theorem smul_mem_htSpan {N : ℕ} {u : Fin N → PS O 1 d} (hu : ∀ k, IsCh (L.mapF (algebraMap V O)) (u k)) {c : O}
     (hc : ∀ f : Fin d → O, c • f ∈ Submodule.span O (Set.range fun k => dl (u k))) :
     ∀ f ∈ omega P.Gt, c • f ∈ htSpan P.Gt p := by

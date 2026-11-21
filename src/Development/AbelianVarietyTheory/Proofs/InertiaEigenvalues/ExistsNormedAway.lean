@@ -13,6 +13,7 @@ namespace GlobalTheory.AwayNorm
 variable {R N : Type} [CommRing R] [CommRing N] [Algebra R N]
 
 
+variable {R N : Type} [CommRing R] [CommRing N] [Algebra R N] in
 theorem _root_.GlobalTheory.AwayNorm.exists_normed_away : ∀ (p : ℕ) (R : Type) [CommRing R],
     2 ≤ p →
     _root_.GlobalTheory.Decompl.LAdic.Good p R →

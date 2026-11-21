@@ -67,6 +67,7 @@ theorem exists_fg_lbIso_of_isPullback {k : Type} [Field k] {C : Type} [CommRing 
 end GlobalTheory.RootFG
 
 
+open GlobalTheory GlobalTheory.RootFG in
 theorem GlobalTheory.RootFG.root_fg : ∀ (S : Scheme.{0}) (A : Over S) [GrpObj A], IsAbelianScheme A → ∀ (P : LB (G2 A).left),
     P.IsLB → ∀ (k : Type) [Field k] (t : Sp k ⟶ S) (C : Type) [CommRing C] [Algebra k C],
     Root A P (spMap (algebraMap k C) ≫ t) → ∃ B : Subalgebra k C, B.FG ∧ Root A P (spMap (algebraMap k B) ≫ t) := by

@@ -104,6 +104,7 @@ theorem over_comp_appTop {S : Scheme.{0}} {X Y Z : Over S} (f : X ⟶ Y) (g : Y 
   rw [Over.comp_left, Scheme.Hom.comp_appTop]; rfl
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_coboundary : ∀ (K : Type) [Field K] [IsAlgClosed K] (N : Over (Sp K)) [GrpObj N] [IsCommMonObj N], IsFinite N.hom → ∀ c : Γ((N ⊗ N).left, ⊤)ˣ, (∀ (T : Over (Sp K)) (x y z : T ⟶ N), GlobalTheory.CharKer.pullTop (lift x y).left c * GlobalTheory.CharKer.pullTop (lift (x * y) z).left c = GlobalTheory.CharKer.pullTop (lift y z).left c * GlobalTheory.CharKer.pullTop (lift x (y * z)).left c) → (∀ (T : Over (Sp K)) (x y : T ⟶ N), GlobalTheory.CharKer.pullTop (lift x y).left c = GlobalTheory.CharKer.pullTop (lift y x).left c) → ∃ u : Γ(N.left, ⊤)ˣ, ∀ (T : Over (Sp K)) (x y : T ⟶ N), GlobalTheory.CharKer.pullTop (lift x y).left c * GlobalTheory.CharKer.pullTop (x * y).left u = GlobalTheory.CharKer.pullTop x.left u * GlobalTheory.CharKer.pullTop y.left u := by
   intro K _ _ N _ _ hf c hcoc hsym
   obtain ⟨B, _, _, hcc, hfin, e, he⟩ := GlobalTheory.CharExists.pres K N hf

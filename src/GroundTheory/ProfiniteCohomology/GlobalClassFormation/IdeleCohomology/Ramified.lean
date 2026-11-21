@@ -33,6 +33,7 @@ theorem ramified_dvd_differentIdeal {w : HeightOneSpectrum (𝓞 L)}
   exact (dvd_pow_self _ (by omega)).trans this
 
 
+variable (K L) in
 theorem finite_setOf_ramified :
     {w : HeightOneSpectrum (𝓞 L) | w.asIdeal.ramificationIdx (𝓞 K) ≠ 1}.Finite :=
   (Ideal.finite_factors (differentIdeal_ne_bot (A := 𝓞 K) (B := 𝓞 L))).subset

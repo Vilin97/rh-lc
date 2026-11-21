@@ -32,6 +32,7 @@ variable {D : D7} {X : Formalism.L2.Herm.Herm0 D} {u : D.what₂.Word} {w : D.wh
   (B : GL (Fin (D.sp.X (i + 1)).rank) D.host.E)
 
 
+set_option maxHeartbeats 1000000 in
 def locJ : LocAt D.host.F D.host.E (D.R.N (i + 1)) (gatCh (gatJ Lv (i + 1)) em) where
   rk := t.rk.trans (rankN D (i + 1) hi)
   pl := (X.g u w hg).pl
@@ -53,6 +54,7 @@ theorem locJ_UJ (c : cmp) (γ : ((gatCh (gatJ Lv (i + 1)) em).lev c).Γ) :
   reGL_mem_UJ (rankN D (i + 1) hi) _ (D.sp.X (i + 1)).gram _ (gramN_apply D (i + 1) hi) _ (t.gamI c γ).2
 
 
+set_option maxHeartbeats 4000000 in
 theorem locJ_actB (hB : FrRatJ t B) : (locJ hi t B).ActB := by
   refine LocAt.actB_of (locJ hi t B) (rankN D (i + 1) hi) B (fun c γ => (t.gamI c γ).1) rfl (fun _ _ => rfl) ?_
   intro c v γ a b a' b' ha hb
@@ -61,6 +63,7 @@ theorem locJ_actB (hB : FrRatJ t B) : (locJ hi t B).ActB := by
   exact h1
 
 
+set_option maxHeartbeats 4000000 in
 theorem locGood_locJ : LocGood (sigD D) (gramN D (i + 1) hi) (locJ hi t B) where
   herm := isHerm_re (rankN D (i + 1) hi) _ (D.sp.X (i + 1)).gram _ (gramN_apply D (i + 1) hi) (gram_herm D.sp.cm (D.sp.X (i + 1)))
   det := det_re (rankN D (i + 1) hi) (D.sp.X (i + 1)).gram _ (gramN_apply D (i + 1) hi) (gram_det_unit D.sp.cm (D.sp.X (i + 1)))

@@ -91,6 +91,7 @@ theorem hom_total (φ : MonH X →+ ℕ) {κ : Type} [Fintype κ] (sg : κ → R
 end Hom
 
 
+open Formalism.MainNotions.G.PolBridge Formalism.MainNotions.G.GLWeightTheory in
 theorem ycond_factor (D : Formalism.BasicNotions.D7) {K : Type} [Field K] [CharZero K] {N r : ℕ} [NeZero r] (LL : ChainLetters N) (jj : ℕ)
     (M : WithTop ℤ) (Gu Gr : MvPolynomial (Fin N × Fin r) K) (dr : Fin N → ℕ) (hr : Gr ∈ Pol K r dr) (hne : Gr ≠ 0)
     (h : Gu * Gr ∈ YCond K (r := r) LL jj M) (cov : ℕ) (hcov : ∑ i, (if LL.vec i then 0 else dr i) ≤ cov) :

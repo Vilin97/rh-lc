@@ -39,6 +39,7 @@ theorem isClosed_proLRes [ContinuousMul G] : IsClosed (proLRes l G : Set G) := b
   exact isClosed_iInter fun N => N.1.toOpenSubgroup.isClosed
 
 
+variable {G} in
 def proLResOf (H : Subgroup G) : Subgroup G := (proLRes l H).map H.subtype
 
 

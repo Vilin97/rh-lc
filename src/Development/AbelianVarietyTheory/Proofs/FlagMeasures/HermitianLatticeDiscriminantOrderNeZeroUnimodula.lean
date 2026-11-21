@@ -62,6 +62,7 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
   [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
 
+omit [StarRing K] [FiniteDimensional K V] in
 theorem idxN_ne_zero {X Y : Submodule (𝓞 K) V} (hX : Submodule.IsLattice K X) (hY : Y.FG) :
     idxN Y X ≠ 0 := by
   obtain ⟨d, hd, hdY⟩ := indexBasic_denom (nonZeroDivisors (𝓞 K)) Y X hY

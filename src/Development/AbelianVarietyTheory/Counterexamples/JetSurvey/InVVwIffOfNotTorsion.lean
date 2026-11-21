@@ -38,6 +38,7 @@ theorem exists_symLift_top (P : PolAV S) {N : ℕ} (hN : Odd N) {T : Over S} (x 
   exact SymLiftOdd.exists_symLift g P.isAb P.isLB hN hx θ hθ hnu
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.SectionsGroupRank VVCompare CommPairing in
 theorem act_pull (P : PolAV S) {N : ℕ} (hN : Odd N) {T T' : Over S} (u : T' ⟶ T) {x : T ⟶ P.A}
     {θ : ThetaGrp P.A P.L N T} {θ' : ThetaGrp P.A P.L N T'} (H : SymLift P.A P.L N N x θ)
     (H' : SymLift P.A P.L N N (u ≫ x) θ') {s t : LB.Sec (LPow P.A P.L N T)} (a : IsActOf P.A P.L N θ s t) :

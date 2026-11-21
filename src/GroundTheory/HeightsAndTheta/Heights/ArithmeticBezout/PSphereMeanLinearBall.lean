@@ -61,6 +61,7 @@ theorem fsLog_nrmv_nonpos (n : ℕ) (y w : Fin n → ℂ) :
 end SphereMeanLinearBall
 
 
+open SphereMeanLinearBall in
 theorem SphereMeanLinearBall.proof (h1 : SphereMeanLinear.Statement) : SphereMeanLinearBall.Statement := by
   intro n y hy
   set g : (Fin n → ℂ) → ℝ := fun w => fsLog (HermNorm.std n) (nrmv (HermNorm.std n) w) y with hg

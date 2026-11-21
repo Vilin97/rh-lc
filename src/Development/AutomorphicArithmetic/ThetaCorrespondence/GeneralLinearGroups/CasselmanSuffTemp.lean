@@ -30,6 +30,7 @@ def ExpWeak {h : ℕ} (x : Fin h → IrrGL (k := k)) : Prop :=
     (∀ j : Fin h, j.val + 1 < h → ∏ i ∈ Finset.univ.filter (· ≤ j), ‖c i‖ ≤ 1) ∧ ∏ i, ‖c i‖ = 1
 
 
+variable (k) in
 def CasselmanNecSq : Prop :=
   ∀ (N : ℕ) {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V),
     1 ≤ N → IsSmooth π → π.IsIrreducible → IsSqIntCoeff π →
@@ -42,6 +43,7 @@ def MaxExpWeak {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Repres
   ∀ (x : Fin 2 → IrrGL (k := k)) (hd : ∑ a, (x a).1 = N), (∀ a, 0 < (x a).1) → jm x hd π ≠ 0 → ExpWeak x
 
 
+variable (k) in
 def CasselmanSuffTemp : Prop :=
   ∀ (N : ℕ) {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V),
     1 ≤ N → IsSmooth π → π.IsIrreducible → UnitaryCentral π → MaxExpWeak π → IsTemperedCoeff π

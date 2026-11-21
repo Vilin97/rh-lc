@@ -31,6 +31,7 @@ theorem app_smul {X V : Type} [TopologicalSpace X] [AddCommGroup V] [Module ℂ 
     simp [app, h, h']
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem om_smul' {a b : Type} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] (μ : kˣ →* ℂˣ) (g : GL a k) (h : GL b k)
     (z : ℂ) (Φ : Matrix b a k → ℂ) : om μ g h (z • Φ) = z • om μ g h Φ := by
   funext x
@@ -38,6 +39,7 @@ theorem om_smul' {a b : Type} [Fintype a] [DecidableEq a] [Fintype b] [Decidable
   ring
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [BorelSpace k] in
 theorem opE_smul (ψ : AddChar k Circle) (ν : Measure k) (p : ℕ) (z : ℂ)
     (Φ : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k → ℂ) : opE ψ ν p (z • Φ) = z • opE ψ ν p Φ := by
   funext x
@@ -45,6 +47,7 @@ theorem opE_smul (ψ : AddChar k Circle) (ν : Measure k) (p : ℕ) (z : ℂ)
   rw [integral_const_mul]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [BorelSpace k] in
 theorem opEFJ_smul (ψ : AddChar k Circle) (ν : Measure k) (p : ℕ) (z : ℂ) (Φ₀ : (n' → k) → ℂ)
     (Φ : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k → ℂ) : opEFJ ψ ν p Φ₀ (z • Φ) = z • opEFJ ψ ν p Φ₀ Φ := by
   funext x
@@ -96,6 +99,7 @@ theorem tInt_left {p : ℕ} (hp : 1 ≤ p) (hpc : p ≤ c) {ψ : AddChar k Circl
   linear_combination (a * a * B (E h) (σ h F)) * h3
 
 
+omit [BorelSpace k] in
 theorem tInt_right (ψ : AddChar k Circle) (ν : Measure k) (μ : kˣ →* ℂˣ) (p : ℕ) (σ : Representation ℂ (GL (n ⊕ Fin c) k) A)
     (B : SB (Matrix n n' k) →ₗ[ℂ] A →ₗ[ℂ] ℂ) (F : A) (Φ : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k → ℂ)
     (j : GL (n ⊕ Fin c) k) (l : ℂˣ) (h1 : om μ 1 j Φ = ((l⁻¹ : ℂˣ) : ℂ) • Φ) (h2 : σ j F = (l : ℂ) • F)

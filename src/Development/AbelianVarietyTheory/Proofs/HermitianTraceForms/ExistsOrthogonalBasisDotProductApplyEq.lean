@@ -78,6 +78,7 @@ theorem exists_orthogonal_basis_cons_of_ker {V : Type*} [AddCommGroup V] [Module
   · exact hv' i j (ne_of_apply_ne _ hij)
 
 
+universe u in
 theorem exists_orthogonal_basis_fin (h2 : (2 : E) ≠ 0) (d : ℕ) :
     ∀ {V : Type u} [AddCommGroup V] [Module E V] [FiniteDimensional E V]
       (B : V →ₗ[E] V →ₛₗ[c] E), (∀ x y, c (B x y) = B y x) → finrank E V = d →

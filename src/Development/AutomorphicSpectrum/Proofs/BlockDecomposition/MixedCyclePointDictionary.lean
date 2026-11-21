@@ -90,6 +90,7 @@ end GlobalTheory.CompanionTheory.MixZ.PtDictProof
 namespace GlobalTheory.CompanionTheory.MixZ
 
 
+open GlobalTheory.CompanionTheory.MixZ.PtDictProof in
 theorem ptDict : PtDict := by
   intro m n Z _ j _ d hd
   have hP := isMultiProjPrime_ptIdeal m n (j (genericPoint Z))

@@ -24,10 +24,12 @@ variable {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] {ϖ : 
   (D : DegData V (maximalIdeal V))
 
 
+include hϖ in
 theorem exists_QVal (χ : D.toPre.X) : ∃ n : ℤ, QVal D.toPre ϖ χ n :=
   exists_genHasVal hϖ D.toPre.P.L D.toPre.P.isLB _ _ _ _ (D.toPre.psi χ) (D.toPre.psi_gen χ)
 
 
+include hϖ in
 theorem QVal_unique {χ : D.toPre.X} {n m : ℤ} (hn : QVal D.toPre ϖ χ n) (hm : QVal D.toPre ϖ χ m) : n = m :=
   genHasVal_unique hϖ D.toPre.P.L D.toPre.P.isLB _ _ _ _ _ hn hm
 
@@ -62,6 +64,7 @@ theorem rigK_val : GenHasVal ϖ D.toPre.P.L (fun _ : PUnit => 𝟙 _ ≫ eSec D.
     (by rw [Category.comp_id]; rfl)
 
 
+include hϖ in
 theorem tau_val (hQ : IsQ D.toPre ϖ Q) (a b : D.toPre.X) :
     ∃ (φ : _) (hφ : _), (∀ k, φ k ≫ D.toPre.P.A.hom = 𝟙 _) ∧
       GenHasVal ϖ D.toPre.P.L φ _ hφ _ (D.toPre.tau a b) (bOf D.toPre Q a b) := by
@@ -77,6 +80,7 @@ theorem tau_val (hQ : IsQ D.toPre ϖ Q) (a b : D.toPre.X) :
   exact ⟨_, _, by secTac, h3⟩
 
 
+include hϖ in
 theorem bOf_add_left (hQ : IsQ D.toPre ϖ Q) (a a' b : D.toPre.X) :
     bOf D.toPre Q (a + a') b = bOf D.toPre Q a b + bOf D.toPre Q a' b := by
   have hL := D.toPre.P.isLB
@@ -95,6 +99,7 @@ theorem bOf_add_left (hQ : IsQ D.toPre ϖ Q) (a a' b : D.toPre.X) :
   linarith
 
 
+include hϖ in
 theorem Q_neg (hQ : IsQ D.toPre ϖ Q) (χ : D.toPre.X) : Q (-χ) = Q χ := by
   have hL := D.toPre.P.isLB
   have hsym := genHasVal_pullGen_of (ϖ := ϖ) D.toPre.P.L _ _ D.toPre.sym D.toPre.sym_gen (D.toPre.c χ).left (D.toPre.xK χ)
@@ -105,6 +110,7 @@ theorem Q_neg (hQ : IsQ D.toPre ϖ Q) (χ : D.toPre.X) : Q (-χ) = Q χ := by
   linarith
 
 
+include hϖ in
 theorem Q_zero (hQ : IsQ D.toPre ϖ Q) : Q 0 = 0 := by
   have h := bOf_add_left hϖ D hQ 0 0 0
   simp only [bOf, add_zero] at h
@@ -116,6 +122,7 @@ theorem bOf_comm (χ χ' : D.toPre.X) : bOf D.toPre Q χ χ' = bOf D.toPre Q χ'
   ring
 
 
+include hϖ in
 theorem two_Q_eq (hQ : IsQ D.toPre ϖ Q) (χ : D.toPre.X) : 2 * Q χ = bOf D.toPre Q χ χ := by
   have h := bOf_add_left hϖ D hQ χ (-χ) χ
   have h0 := Q_zero hϖ D hQ
@@ -125,12 +132,14 @@ theorem two_Q_eq (hQ : IsQ D.toPre ϖ Q) (χ : D.toPre.X) : 2 * Q χ = bOf D.toP
   linarith
 
 
+include hϖ in
 theorem Q_pos (hQ : IsQ D.toPre ϖ Q) {χ : D.toPre.X} (hχ : χ ≠ 0) : 1 ≤ Q χ := by
   have h := genHasVal_ge_of_in hϖ D.toPre.P.L D.toPre.P.isLB (D.toPre.c χ).left (D.toPre.xK χ) (ptK_eq D.toPre χ)
     (-1) (D.toPre.psi χ) 1 (fun j W hW hle h => by rw [pow_one]; exact D.psi_pos χ hχ j W hW hle h) (hQ χ)
   exact_mod_cast h
 
 
+include hϖ in
 def bHom (hQ : IsQ D.toPre ϖ Q) : D.toPre.X →+ D.toPre.X →+ ℤ :=
   AddMonoidHom.mk' (fun a => AddMonoidHom.mk' (fun b => bOf D.toPre Q a b) (fun b b' => by
       rw [bOf_comm D (Q := Q) a (b + b'), bOf_add_left hϖ D hQ, bOf_comm D (Q := Q) b a,
@@ -141,6 +150,7 @@ include hϖ in
 lemma bHom_apply (hQ : IsQ D.toPre ϖ Q) (a b : D.toPre.X) : bHom hϖ D hQ a b = bOf D.toPre Q a b := rfl
 
 
+include hϖ in
 lemma gram_int_pos (hQ : IsQ D.toPre ϖ Q) {d : ℕ} (b : Module.Basis (Fin d) ℤ D.toPre.X) (m : Fin d → ℤ)
     (hm : m ≠ 0) : 0 < ∑ i, ∑ j, m i * bOf D.toPre Q (b i) (b j) * m j := by
   have hv : ∑ i, m i • b i ≠ 0 := by
@@ -171,6 +181,8 @@ lemma gram_int_pos (hQ : IsQ D.toPre ϖ Q) {d : ℕ} (b : Module.Basis (Fin d) �
   linarith
 
 
+open Matrix in
+include hϖ in
 theorem gram_posDef (hQ : IsQ D.toPre ϖ Q) {d : ℕ} (b : Module.Basis (Fin d) ℤ D.toPre.X) :
     (Matrix.of fun i j => (bOf D.toPre Q (b i) (b j) : ℝ)).PosDef := by
   classical
@@ -297,6 +309,7 @@ theorem exists_rosati_gen (hLaws : Laws) {O : Type} [Ring O] [StarRing O] [Modul
   exact ReciprocityTheory.ChartRestriction.G.Geo.Tor.exists_ros hLaws.globalFns D.toPre.P.isAb D.toPre.P.isLB _ _ (ιD.onB.rosati a)
 
 
+include hϖ in
 theorem bOf_balance (hLaws : Laws) {O : Type} [Ring O] [StarRing O] [Module O D.toPre.X] (ιD : D.OAct O)
     (hQ : IsQ D.toPre ϖ Q) (a : O) (χ χ' : D.toPre.X) :
     bOf D.toPre Q (a • χ) χ' = bOf D.toPre Q χ (star a • χ') := by

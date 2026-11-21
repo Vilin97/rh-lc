@@ -76,6 +76,7 @@ private theorem exists_residue_read {L : Type} [Field L] [NumberField L] (w : He
         MonoidHom.one_apply]
 
 
+open Classical in
 theorem delta_exists : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (p : ℕ), p.Prime → p % 15 = 1 → SplitsC H.E p → DeltaExists (H := H) p := by
   intro R H p hp h15 hs
   obtain ⟨c, hc, hcm, -⟩ := GlobalTheory.Mem.HostCM.host_cm R H

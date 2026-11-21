@@ -69,6 +69,7 @@ theorem relIndex_latticeImage {F : Type*} [Field F] [NumberField F] (H K : AddSu
   exact AddSubgroup.relIndex_map_map_of_injective _ _ (mixedEmbedding_injective F)
 
 
+open scoped Classical in
 theorem proof (h1 : LatticeImageZLattice.Statement) (h2 : CovolumeRelIndex.Statement)
     (h4 : EmbeddingSumPlaces.Statement) (h5 : MixedBoxCount.Statement) : NumberFieldBoxCount.Statement := by
   intro F _ _ B hB hBf

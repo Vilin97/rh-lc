@@ -54,6 +54,7 @@ theorem exists_form {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type} 
   cx_form (R.toCx3 F) F.cr false (hH.prim.pos false) (hRw.what₂ false).1 hRw.lifts0.1 (hH.prim.sumE false) hH.prim.dimParts i
 
 
+set_option maxHeartbeats 1000000 in
 theorem coefFam_roots {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m} {Ks : Type}
     [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks)
     (c0L : ∀ i : Fin D.R.m, Formalism.IndefR.FWT.VsV D i D.what₂.LL →ₛₗ[D.what₂.embLL] (R.cV i).W)
@@ -75,6 +76,7 @@ variable {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : TwDat B} {T' : T
   {Z : w.Lt} {Z' : w'.Lt} {hX : B.fields.Ok} {hX' : B'.fields.Ok} {Wt : Set B.places.Pl} {Wt' : Set B'.places.Pl}
 
 
+set_option maxHeartbeats 4000000 in
 theorem heq_io (q : B'.toPre = B.toPre) (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w'.st Z').toD7.R.m) (hi : (i : ℕ) = i')
     {S : (w.st Z).toD7.what₂.Tau → SPar} {S' : (w'.st Z').toD7.what₂.Tau → SPar}
     (M : Formalism.IndefR.Mult.DSModel (Wc (w.st Z).toD7 i) S) (M' : Formalism.IndefR.Mult.DSModel (Wc (w'.st Z').toD7 i') S')
@@ -107,6 +109,7 @@ theorem heq_io (q : B'.toPre = B.toPre) (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w
   exact HEq.rfl
 
 
+set_option maxHeartbeats 4000000 in
 theorem heq_pol (q : B'.toPre = B.toPre) (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w'.st Z').toD7.R.m) (hi : (i : ℕ) = i')
     (ι : (w.st Z).toD7.what₂.LL →+* (w'.st Z').toD7.what₂.LL)
     (hι : ∀ y, (w'.st Z').toD7.what₂.embLL (ι y) = (w.st Z).toD7.what₂.embLL y)
@@ -128,6 +131,7 @@ section Lift
 open OmExt LiftUnit Formalism.DivisionValues Formalism.L2.Col
 
 
+set_option maxHeartbeats 4000000 in
 theorem coef_schur (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hE : Enl0 B B') (hN : ExtN z z')
     (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w'.st Z').toD7.R.m) (hii : (i : ℕ) = i')
     (c0L) (hc : OmExt.CoefFam z.R.toRealDat c0L) (c0L'') (hc'' : OmExt.CoefFam z'.R.toRealDat c0L'') :
@@ -158,6 +162,7 @@ theorem coef_schur (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' 
   exact ⟨μ, fun v v' hv => hμ v v' (eq_of_heq hv)⟩
 
 
+set_option maxHeartbeats 8000000 in
 theorem agree_root (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hE : Enl0 B B') (hf : HEq f' f)
     (hpx : HEq w'.px w.px) (hstd : z.Std) (hB : z'.Std) (hN : ExtN z z')
     (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w'.st Z').toD7.R.m) (hii : (i : ℕ) = i')
@@ -214,6 +219,7 @@ theorem agree_root (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' 
     (heq_of_eq hv2'.symm).trans (hjh.trans (heq_of_eq hv2))⟩
 
 
+set_option maxHeartbeats 4000000 in
 theorem one_lift (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hE : Enl0 B B') (hf : HEq f' f)
     (hpx : HEq w'.px w.px) (hstd : z.Std) (hB : z'.Std) (hN : ExtN z z')
     (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w'.st Z').toD7.R.m) (hii : (i : ℕ) = i')
@@ -250,6 +256,7 @@ theorem one_lift (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T'
 end Lift
 
 
+set_option maxHeartbeats 2000000 in
 theorem exists_roots (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hE : Enl0 B B') (hf : HEq f' f)
     (hpx : HEq w'.px w.px) (hstd : z.Std) (hB : z'.Std) (hN : ExtN z z') (hH : Holds z.R z.F)
     (c0L) (hc : OmExt.CoefFam z.R.toRealDat c0L) (c0L'') (hc'' : OmExt.CoefFam z'.R.toRealDat c0L'') (i' : Fin (w'.st Z').toD7.R.m) :
@@ -267,6 +274,7 @@ theorem exists_roots (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX
   · exact ⟨1, 1, one_ne_zero, one_pow _, fun i hi => absurd ⟨i, hi⟩ h⟩
 
 
+set_option maxHeartbeats 2000000 in
 theorem sameModel_extN (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hN : ExtN z z')
     (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w'.st Z').toD7.R.m) (hi : (i : ℕ) = i') :
     GlobalTheory.TwInputs.Move.SameModel (z.R.MW i (sg0 _ (famR (w.st Z) w.I hX (usedOf w.I T Wt) z.Xg z.tr).A)) (z'.R.MW i' (sg0 _ (famR (w'.st Z') w'.I hX' (usedOf w'.I T' Wt') z'.Xg z'.tr).A)) := by
@@ -278,6 +286,7 @@ theorem sameModel_extN (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I 
     s.ε.trans (m.2.2.2.2.2.1.symm.trans s'.ε.symm), s.fr.trans (m.2.2.2.2.2.2.1.symm.trans s'.fr.symm)⟩
 
 
+set_option maxHeartbeats 2000000 in
 theorem io_at (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hE : Enl0 B B') (hN : ExtN z z')
     (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w'.st Z').toD7.R.m) (hi : (i : ℕ) = i')
     (u : ∀ τ, lowT (z.R.MW i (sg0 _ (famR (w.st Z) w.I hX (usedOf w.I T Wt) z.Xg z.tr).A)) τ) (u' : ∀ τ, lowT (z'.R.MW i' (sg0 _ (famR (w'.st Z') w'.I hX' (usedOf w'.I T' Wt') z'.Xg z'.tr).A)) τ)
@@ -292,6 +301,7 @@ theorem io_at (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt
   exact (by with_unfolding_all exact (k :))
 
 
+set_option maxHeartbeats 4000000 in
 theorem io_of_extN (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hE : Enl0 B B') (hf : HEq f' f)
     (hpx : HEq w'.px w.px) (hstd : z.Std) (hB : z'.Std) (hN : ExtN z z') (hH : Holds z.R z.F)
     (ι : (w.st Z).toD7.what₂.LL →+* (w'.st Z').toD7.what₂.LL)

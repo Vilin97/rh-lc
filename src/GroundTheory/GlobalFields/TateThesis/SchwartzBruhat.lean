@@ -34,6 +34,7 @@ def schwartzBruhatTensor (φ : 𝓢(mixedSpace K, ℂ)) (g : 𝔸ᶠ[K] → ℂ)
   fun x ↦ φ (homeomorphMixedSpace K x.1) * g x.2
 
 
+variable (K) in
 def schwartzBruhat : Submodule ℂ (𝔸[K] → ℂ) :=
   Submodule.span ℂ {F | ∃ φ : 𝓢(mixedSpace K, ℂ), ∃ g ∈ finiteSchwartzBruhat K,
     F = schwartzBruhatTensor φ g}
@@ -63,6 +64,7 @@ theorem integrable_of_mem_schwartzBruhat {F : 𝔸[K] → ℂ} (hF : F ∈ schwa
   | smul c G _ hG => exact hG.smul c
 
 
+variable (K) in
 def adelicFourier (F : 𝔸[K] → ℂ) (y : 𝔸[K]) : ℂ :=
   ∫ x, F x * (adelicChar K (x * y) : ℂ) ∂adeleMeasure K
 

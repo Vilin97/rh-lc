@@ -131,6 +131,7 @@ variable (h₀ : s₀.IsGen)
     Good L.L z I → val s₀ a z I = cubV c z I (t ≫ i) (t' ≫ i) x * val s₀ b z I * val s₀ d z I)
 
 
+include h₀ in
 theorem exists_reduces (hJ : IsNilpotent J) {Y : Over (Spec (CommRingCat.of A))} [IsAffine Y.left] (x : Y ⟶ G) :
     ∃ s, s.IsGen ∧ Reduces i s₀ x s := by
   have hL : L.L.IsLB := L.3
@@ -184,6 +185,7 @@ private theorem mul_assoc_comm_law {U : Type} [CommGroup U] {Gq F θ Vt Vt' Gt G
   ac_rfl
 
 
+include h₀ l₀ in
 theorem exists_lift_affine [IsMonHom i] (hJ : IsNilpotent J) {Y : Over (Spec (CommRingCat.of A))} [IsAffine Y.left]
     (x : Y ⟶ G) : ∃ s, s.IsGen ∧ Reduces i s₀ x s ∧ LawOne c i x s := by
   have hL : L.L.IsLB := L.3
@@ -266,6 +268,7 @@ private theorem comp_opnI_mem {S : Scheme.{0}} {Z Y : Over S} (U : Y.left.Opens)
   exact (y.left z).2
 
 
+include h₀ l₀ in
 theorem exists_glued [IsMonHom i] (hJ : IsNilpotent J) :
     ∃ s : LB.Gen (LB.LinComb L.L (lamφ i) Oε), s.IsGen ∧ ∀ U : G.left.affineOpens, ∃ s',
       Reduces i s₀ (opnι G U.1) s' ∧ LawOne c i (opnι G U.1) s' ∧
@@ -384,6 +387,7 @@ theorem exists_glued [IsMonHom i] (hJ : IsNilpotent J) :
   exact congrArg (fun m => val (s' U) m z I) (congrArg Over.Hom.left hqκ)
 
 
+include h₀ l₀ in
 theorem exists_lift [IsMonHom i] (hJ : IsNilpotent J) :
     ∃ s : LB.Gen (LB.LinComb L.L (lamφ i) Oε), s.IsGen ∧
       (∀ (Z : Over (Spec (CommRingCat.of A))) (t : Z ⟶ 𝕋) (x : Z ⟶ G) (a : Z.left ⟶ pullback (𝕋 ⊗ G).hom (red J)),
@@ -479,6 +483,7 @@ private theorem eq_mul_of_two_factorizations {U : Type} [CommGroup U] {W F Ft Ft
   exact mul_right_cancel (h1.trans h2.symm)
 
 
+include h₀ l₀ in
 theorem nonempty_biTriv [IsMonHom i] (hJ : IsNilpotent J)
     (m₀ : ∀ (Z : Over (Spec (CommRingCat.of A))) (t : Z ⟶ 𝕋) (x x' : Z ⟶ G)
       (a b d : Z.left ⟶ pullback (𝕋 ⊗ G).hom (red J)), a ≫ pullback.fst _ _ = (lift t (x * x')).left →

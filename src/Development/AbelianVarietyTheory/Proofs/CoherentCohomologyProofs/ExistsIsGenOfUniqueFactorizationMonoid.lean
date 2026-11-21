@@ -482,6 +482,7 @@ section Spectrum
 variable {R : Type} [CommRing R] {L M : LB (Sp R)}
 
 
+variable (R) in
 def globalRingEquiv : R ≃+* Γ(Sp R, ⊤) :=
   (Scheme.ΓSpecIso (CommRingCat.of R)).symm.commRingCatIsoToRingEquiv
 
@@ -493,6 +494,7 @@ theorem spec_smul_top {S : CommRingCat.{0}} (F : (Spec S).Modules) (r : S) (s : 
   congrArg (fun a : Γ(Spec S, ⊤) => a • s) (resG_self (X := Spec S) le_top _)
 
 
+variable (L) in
 def globalEquivSp :
     (modulesSpecToSheaf (R := CommRingCat.of R).obj (toMod L)).presheaf.obj (op ⊤) ≃ₗ[R]
       LB.Sec L where
@@ -534,6 +536,7 @@ theorem exists_toMod_iso_tilde {S : CommRingCat.{0}} (N : ModuleCat.{0} S)
   exact exists_toMod_iso_of_invertible (tilde N)
 
 
+variable (R) in
 theorem exists_sec_linearEquiv (N : Type*) [AddCommGroup N] [Module R N] [Module.Invertible R N] :
     ∃ L : LB (Sp R), L.IsLB ∧ Nonempty (LB.Sec L ≃ₗ[R] N) := by
   obtain ⟨L, hL, ⟨φ⟩⟩ := exists_toMod_iso_tilde (S := CommRingCat.of R)
@@ -549,6 +552,7 @@ theorem exists_isGen_of_subsingleton_pic [Subsingleton (CommRing.Pic R)] (hL : L
   (exists_isGen_iff_free hL).2 inferInstance
 
 
+variable (R) in
 theorem subsingleton_pic_iff : Subsingleton (CommRing.Pic R) ↔
     ∀ L : LB (Sp R), L.IsLB → ∃ t : LB.Gen L, t.IsGen := by
   refine ⟨fun _ _ => exists_isGen_of_subsingleton_pic, fun h =>

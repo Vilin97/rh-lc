@@ -36,6 +36,7 @@ theorem height_le_one_of_forall_le {A : Type} [CommRing A] [IsDomain A] [IsNoeth
   · exact h.ge
 
 
+attribute [local instance] Algebra.TensorProduct.rightAlgebra in
 theorem trdeg_le_succ_trdeg_quotient (A : Type) [CommRing A] [IsDomain A]
     [Algebra.FiniteType ℤ A] (q : Ideal A) [q.IsPrime] (hq1 : q.height ≤ 1)
     (hint : ∀ n : ℤ, (n : A) ∈ q → n = 0) {d e : ℕ} (hd : Algebra.trdeg ℤ A = d)

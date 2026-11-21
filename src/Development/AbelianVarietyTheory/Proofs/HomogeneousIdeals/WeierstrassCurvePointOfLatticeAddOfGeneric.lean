@@ -210,6 +210,9 @@ private theorem latticePoint_add_of_not_mem {z w : ℂ} (hz : z ∉ L.lattice)
     ring
 
 
+open Filter PeriodPair WeierstrassCurve in
+open scoped Topology in
+variable (L : PeriodPair) in
 theorem _root_.GlobalTheory.latticePoint_add (z w : ℂ) :
     _root_.GlobalTheory.latticePoint L (z + w) =
       _root_.GlobalTheory.latticePoint L z + _root_.GlobalTheory.latticePoint L w := by
@@ -291,6 +294,9 @@ theorem _root_.GlobalTheory.latticePoint_eq_iff {z w : ℂ} :
     _root_.GlobalTheory.latticePoint_neg, ← sub_eq_add_neg, sub_eq_zero]
 
 
+open Filter PeriodPair WeierstrassCurve in
+open scoped Topology in
+variable (L : PeriodPair) in
 theorem _root_.GlobalTheory.weierstrassP_add {z w : ℂ} (hz : z ∉ L.lattice)
     (hw : w ∉ L.lattice) (hne : ℘[L] z ≠ ℘[L] w) :
     ℘[L] (z + w) = ((℘'[L] z - ℘'[L] w) / (℘[L] z - ℘[L] w)) ^ 2 / 4 - ℘[L] z - ℘[L] w ∧
@@ -299,6 +305,9 @@ theorem _root_.GlobalTheory.weierstrassP_add {z w : ℂ} (hz : z ∉ L.lattice)
   weierstrassP_add_and_deriv_add_of_ne L hz hw hne
 
 
+open Filter PeriodPair WeierstrassCurve in
+open scoped Topology in
+variable (L : PeriodPair) in
 theorem _root_.GlobalTheory.weierstrassP_add_add_sub {z w : ℂ} (hz : z ∉ L.lattice)
     (hw : w ∉ L.lattice) (hne : ℘[L] z ≠ ℘[L] w) :
     ℘[L] (z + w) + ℘[L] (z - w) - 2 * ℘[L] w =
@@ -319,6 +328,9 @@ theorem _root_.GlobalTheory.weierstrassP_add_add_sub {z w : ℂ} (hz : z ∉ L.l
   linear_combination 4 * hy
 
 
+open Filter PeriodPair WeierstrassCurve in
+open scoped Topology in
+variable (L : PeriodPair) in
 theorem _root_.GlobalTheory.weierstrassP_second_ne_zero {w : ℂ} (hw : w ∉ L.lattice)
     (h : ℘'[L] w = 0) : 6 * ℘[L] w ^ 2 - L.g₂ / 2 ≠ 0 := by
   intro h6

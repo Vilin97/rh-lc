@@ -34,6 +34,7 @@ variable {K E : FiniteSubfield} [Fact (K ≤ E)] [IsGalois K.1 E.1]
 attribute [local instance] normal_subgroupOf_of_isGalois
 
 
+variable (K E) in
 def quotGalEquiv :
     (K.1.fixingSubgroup ⧸ E.1.fixingSubgroup.subgroupOf K.1.fixingSubgroup) ≃* Gal(E.1/K.1) :=
   (QuotientGroup.quotientMulEquivOfEq (ker_restrictHom (F := K) (E := E)).symm).trans
@@ -44,6 +45,7 @@ instance isDiscreteRep_res_classLimitRep (S : Subgroup K.1.fixingSubgroup) :
   isDiscreteRep_res_res classRep K.1.fixingSubgroup S
 
 
+omit [Fact (K ≤ E)] [IsGalois K.1 E.1] in
 theorem mem_invariants_of (c : IdeleClassGroup E.1) :
     Additive.ofMul (IdeleClassLimit.of E c) ∈
       ((Rep.res (E.1.fixingSubgroup.subgroupOf K.1.fixingSubgroup).subtype (classLimitRep K)).ρ).invariants :=
@@ -51,6 +53,7 @@ theorem mem_invariants_of (c : IdeleClassGroup E.1) :
     (Subgroup.mem_subgroupOf.1 h.2) c)
 
 
+variable (K E) in
 def classInvMor : Rep.res (quotGalEquiv K E).toMonoidHom (ideleClassRep K.1 E.1) ⟶
     (classLimitRep K).quotientToInvariants (E.1.fixingSubgroup.subgroupOf K.1.fixingSubgroup) :=
   Rep.ofHom ⟨LinearMap.codRestrict _ (MonoidHom.toAdditive (IdeleClassLimit.of E)).toIntLinearMap

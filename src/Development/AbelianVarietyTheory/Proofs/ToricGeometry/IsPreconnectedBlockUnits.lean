@@ -23,6 +23,8 @@ theorem _root_.GlobalTheory.PeriodConn.hermForm_conj_mul {g : ℕ} (Hm N : Matri
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
 
+open NumberField Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} in
 theorem _root_.GlobalTheory.PeriodConn.isPeriod_mulVec {D : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H} {g : ℕ}
     {ty : Fin g → (E →+* ℂ)} {P : D.La →+ (Fin g → ℂ)}
     (hP : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsPeriod D ty P) {A : Matrix (Fin g) (Fin g) ℂ} (hA : A.det ≠ 0)
@@ -81,6 +83,8 @@ theorem _root_.GlobalTheory.PeriodConn.isPeriod_mulVec {D : _root_.ReciprocityTh
       exact him x y
 
 
+open NumberField Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} in
 theorem _root_.GlobalTheory.PeriodConn.entry_eq_zero {D : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H} {g : ℕ}
     {ty : Fin g → (E →+* ℂ)} {P P' : D.La →+ (Fin g → ℂ)}
     (hP : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsPeriod D ty P) (hP' : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsPeriod D ty P') {A : Matrix (Fin g) (Fin g) ℂ}

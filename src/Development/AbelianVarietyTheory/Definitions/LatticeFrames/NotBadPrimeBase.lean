@@ -24,6 +24,7 @@ variable {D : D7}
 theorem idx_top {j m : ℕ} (h : j + 2 * 0 + 2 = m) : m - 1 = j + 1 := by omega
 
 
+set_option maxHeartbeats 1000000 in
 structure Geo (D : D7) where
 
   vol : ∀ j, Vol (Yc D j)
@@ -110,6 +111,7 @@ def volLev (t : T) (j : ℕ) : ℝ :=
 def cIOf (t : T) (j : ℕ) : ℂ := (Nat.card P.H : ℂ) * (g.κ (j + 1) : ℂ) * (volLev R g t j : ℂ)
 
 
+set_option maxHeartbeats 1000000 in
 structure RowCh (t : T) where
   vP : ∀ j, WO (Yc D j) (Yc D (j + 1)) → ℂ
   vT : ∀ j, j + 2 * 0 + 2 = D.R.m → WO (Yc D (j + 1)) D.sp.X' → ℂ
@@ -179,6 +181,7 @@ structure GeoMeas : Prop where
   volT : ∀ t, g.volT.μ = ENNReal.ofReal (g.κ D.R.m * volLev R g t (D.R.m - 1)) • R.νX t
 
 
+variable {R g} in
 theorem GeoMeas.cIOf_ne_zero (h : GeoMeas R g) (t : T) (j : ℕ) (hj : j < D.R.m) : cIOf R P g t j ≠ 0 := by
   have hv : volLev R g t j ≠ 0 := fun h0 => by
     rcases Nat.lt_or_ge (j + 1) D.R.m with h1 | h1

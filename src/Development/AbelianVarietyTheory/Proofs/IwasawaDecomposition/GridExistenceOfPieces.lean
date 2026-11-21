@@ -65,6 +65,7 @@ end GlobalTheory.Mem.LiteralAutomorphy
 namespace GlobalTheory.Mem.LiteralAutomorphy
 
 
+set_option maxHeartbeats 3200000 in
 theorem exGrid_of : WeilEx → IsEx → NFAll → NFSq → CarryG → CarryW → CarryS → TrEasy → TrPhase → TrJet → TrBot → TrSq → KeyFin →
     GKeyFin → ExGrid := by
   classical

@@ -127,6 +127,7 @@ variable {P : Ideal (MRing ι)} {D e : ℕ} (R : AnLogRes P ⊤ D) {Y : Type*} [
   (B : FinHolAtlas e Y) {V : Y → Set Y} {μ : Y → Y → (Σ k, ι k) → ℂ} {h : Y → R.X}
 
 
+include R in
 theorem local_orbit (hVm : ∀ y, y ∈ V y)
     (hc : ∀ y y', ∀ u ∈ V y ∩ V y', SameOrbit (μ y u) (μ y' u))
     (hh : ∀ y, SameOrbit (R.lift (h y) (h y)) (μ y y)) {x : R.X} {y y' : Y}

@@ -90,6 +90,7 @@ private theorem crd_dotProduct_sub_eq_neg_sum_EF (hs : IsSympl X bas) (Z Z' : Ma
     ← Finset.sum_sub_distrib]
 
 
+variable (bas) in
 noncomputable def famOf (u : (Fin n × Fin g → ℚ) × (Fin n × Fin g → ℚ)) : Matrix (Fin n) (Fin r) E :=
   Matrix.of fun k => vecQ X bas (Sum.elim (fun i => u.1 (k, i)) fun i => u.2 (k, i))
 

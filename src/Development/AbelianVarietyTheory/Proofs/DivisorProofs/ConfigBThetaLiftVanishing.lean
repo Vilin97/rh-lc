@@ -168,6 +168,7 @@ end GlobalTheory.WtDisj
 namespace GlobalTheory.WtDisj
 
 
+set_option maxHeartbeats 1000000 in
 theorem twPart_disjoint_offPart_beta : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (a b : ℕ) (G : Geo σ a (b + 2)) (G₁ : Geo σ a b) (H : Plane E (b + 2) b)
     (H' : Plane E (a + (b + 2)) (a + b)), CfgB B G G₁ H H' →

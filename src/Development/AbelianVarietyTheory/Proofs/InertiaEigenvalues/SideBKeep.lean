@@ -45,9 +45,11 @@ variable {hE Sp F} {L : TwL T} {ex : NExp D.R D.host D.what₂ D.LL0 D.nd (T.ntw
   {th' : NTh D.R D.host D.what₂ D.LL0 D.nd (T.ntw hE F L) ({ ex with } : NExp D.R D.host D.what₂ D.LL0 D.nd (T.ntw hE F L))}
 
 
+set_option maxHeartbeats 4000000 in
 def twFC (X : TwFrameC (recE hE Sp F ex h0 th).toD7) : TwFrameC (recL hE Sp F L ex h0 th').toD7 := { X with }
 
 
+set_option maxHeartbeats 4000000 in
 def expC (X : NExpTied (recE hE Sp F ex h0 th).toD7) : NExpTied (recL hE Sp F L ex h0 th').toD7 :=
   { X with
     mtV := fun i j b k Q ψ h1 h2 h =>
@@ -56,6 +58,7 @@ def expC (X : NExpTied (recE hE Sp F ex h0 th).toD7) : NExpTied (recL hE Sp F L 
       { X.mtV i j b k Q ψ h1 h2 h with } }
 
 
+set_option maxHeartbeats 4000000 in
 theorem sideB_keep {Rw : RowSide D} {low : Finset ℕ}
     {Pq : HeightOneSpectrum (𝓞 (maximalRealSubfield D.host.E)) → PlE D.host} {S : RatDat D.ntw}
     {hL : ∀ j, ℕ → PlE D.host → Module.End D.what₂.LL (S.WL j)} {eig : ℕ → D.what₂.FT → ℕ → PlE D.host → ↥D.LL0}

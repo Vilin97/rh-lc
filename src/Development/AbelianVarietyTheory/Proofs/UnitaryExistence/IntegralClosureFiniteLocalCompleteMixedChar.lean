@@ -16,6 +16,7 @@ open IsLocalRing
 namespace GlobalTheory
 
 
+open IsLocalRing in
 theorem _root_.GlobalTheory.finite_normalisation_of_finite_over_normal (A S : Type) [CommRing A] [IsDomain A]
     [IsNoetherianRing A] [IsIntegrallyClosed A] [CommRing S] [IsDomain S] [CharZero S]
     [Algebra A S] [FaithfulSMul A S] [Module.Finite A S] :

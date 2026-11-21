@@ -131,6 +131,7 @@ end GlobalTheory.ClosedFibre
 namespace GlobalTheory.ClosedFibre
 
 
+open MvPolynomial in
 theorem gen_basicOpen {X : Scheme.{0}} {R : Type} [CommRing R] (p : X ⟶ Spec (CommRingCat.of R)) {N₀ : X.Opens}
     (hN₀ : IsAffineOpen N₀) {m : ℕ} (r : Fin m → Γ(X, N₀))
     (hgen : ∀ g : Γ(X, N₀), ∃ P Q : MvPolynomial (Fin m) R, IsUnit (eval₂ (GlobalTheory.AbLaw.cst p N₀) r Q) ∧

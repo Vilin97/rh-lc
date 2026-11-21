@@ -58,6 +58,7 @@ theorem fixingSubgroupHomeomorph_apply
   rfl
 
 
+omit [IsGalois K Ω] in
 theorem maximalAbelianExtension_le_restrictScalars :
     maximalAbelianExtension K Ω ≤ (maximalAbelianExtension E Ω).restrictScalars K := by
   intro y hy
@@ -90,6 +91,7 @@ instance isSepClosure_intermediateField (E : IntermediateField K Ω) : IsSepClos
 variable (E : IntermediateField K Ω) [FiniteDimensional K E]
 
 
+variable (K) in
 def unitsEquivFixingOpen :
     fixedModule Ωˣ ((fixingOpenSubgroup E : OpenSubgroup (Ω ≃ₐ[K] Ω)) : Subgroup (Ω ≃ₐ[K] Ω)) ≃* Eˣ :=
   unitsEquivOfForall _ E
@@ -155,6 +157,7 @@ theorem extendScalars_restrictScalars' (L : IntermediateField E Ω) :
   rw [IntermediateField.mem_extendScalars, IntermediateField.mem_restrictScalars]
 
 
+variable (K) in
 def baseChangeArtinMap : Eˣ →* (maximalAbelianExtension E Ω ≃ₐ[E] maximalAbelianExtension E Ω) :=
   (topologicalAbelianizationEquiv E Ω).toMulEquiv.toMonoidHom.comp
     ((topologicalAbelianizationMap (fixingSubgroupHomeomorph E).toMulEquiv.toMonoidHom
@@ -163,6 +166,7 @@ def baseChangeArtinMap : Eˣ →* (maximalAbelianExtension E Ω ≃ₐ[E] maxima
         (unitsEquivFixingOpen K E).symm.toMonoidHom))
 
 
+omit [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension K Ω] in
 theorem baseChangeArtinMap_apply (x : Eˣ)
     (g : ((fixingOpenSubgroup E : OpenSubgroup (Ω ≃ₐ[K] Ω)) : Subgroup (Ω ≃ₐ[K] Ω)))
     (hg : (QuotientGroup.mk g : TopologicalAbelianization _) =
@@ -194,6 +198,9 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 attribute [local instance] isDiscreteModule_units
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ω]
+  [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension K Ω] in
+variable {E} in
 theorem isAbelianExtension_fixingOpenSubgroup_of_le {F : IntermediateField K Ω} (h : E ≤ F)
     [FiniteDimensional K F] [IsAbelianGalois E (IntermediateField.extendScalars h)] :
     IsAbelianExtension (fixingOpenSubgroup E) (fixingOpenSubgroup F) := by
@@ -213,6 +220,8 @@ theorem isAbelianExtension_fixingOpenSubgroup_of_le {F : IntermediateField K Ω}
   exact this
 
 
+omit [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension K Ω] in
+variable {E} in
 theorem restrictAb_baseChangeArtinMap_eq_one {F : IntermediateField K Ω} (h : E ≤ F)
     [FiniteDimensional K F] [IsAbelianGalois E (IntermediateField.extendScalars h)] (x : Eˣ)
     (hx : x ∈ (normUnits E (IntermediateField.extendScalars h)).range) :

@@ -71,6 +71,7 @@ theorem evR_eq_of_marked_pow [inst : Algebra c.F ℂ] (hσ : GoodEmb c (algebraM
   linear_combination h1 - (1 / 2 : ℂ) * h2
 
 
+set_option maxHeartbeats 1000000 in
 theorem mem_cusp_of_thetaSum (d : DeltaDat Xo c n) {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Formalism.L2.PjFree.Unf Xo c σ r) (hr1 : 1 ≤ r)
     (hU : ∀ σ, GoodEmb c σ → Formalism.L2.PjFree.IsUnf (U σ)) (hA : l.A = 1) (hlev : d.IsLev) (hA₂ : d.l₂.A = 1)
     [StarRing (𝓞 E)] (hnab : IsNab d.Xo₂ d.c₂ d.nab₂) (Λ : GenLat E n) (N : ℕ) (hun : Λ.Unimod) (hT : Λ.TrivAt d.l₂.M)

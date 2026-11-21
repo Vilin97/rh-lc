@@ -473,6 +473,7 @@ theorem invCoeff_invariantDifferential : invCoeff E (invariantDifferential E) = 
 variable {E} {E' : WeierstrassCurve F} [E'.IsElliptic]
 
 
+variable (E E') in
 noncomputable def homCoeff : isogHom E E' →+ E.toAffine.FunctionField where
   toFun Q := invCoeff E (omegaAt E' Q.1)
   map_zero' := by
@@ -494,9 +495,11 @@ theorem isogenyPullback_invariantDifferential_eq_smul (φ : Isogeny E E') :
   rw [isogenyPullback_invariantDifferential, isogCoeff, homCoeff_smul]
 
 
+variable (E) in
 noncomputable def homIdentity : isogHom E E := ⟨genericPoint E, respectsAdd_genericPoint⟩
 
 
+variable (E) in
 theorem homCoeff_zsmul_homIdentity (n : ℤ) : homCoeff E E (n • homIdentity E) = n := by
   rw [map_zsmul]
   show n • invCoeff E (invariantDifferential E) = _

@@ -93,9 +93,11 @@ def ioOf : WIo (serOf W hs hp hL) RA RW inclR φR gR πA :=
   { E with ioE_φ := hI.1, ioE_γ := hI.2 }
 
 
+set_option maxHeartbeats 1000000 in
 def etOf : WEt (ioOf E hs hp hL hI) := { W, E with }
 
 
+set_option maxHeartbeats 1000000 in
 def clOf : WCl (etOf E hs hp hL hI) := { W, E with }
 
 
@@ -110,6 +112,7 @@ theorem nOf_ind (W : LocWach PD LL O v n) (T : LocLat G Qp LL O) (p : Submodule 
   unfold nOf; split_ifs <;> assumption
 
 
+set_option maxHeartbeats 1000000 in
 def latOf {Zl : Type} [CommRing Zl] (zl : PowerSeries Zl →+* LetA O n) (h1 : IsCrys PD W.one.ρ)
     (hP : ∀ T, @Module.Projective (PowerSeries Zl) _ ↥(W.N T) _ (Module.compHom _ zl)) :
     WN (etOf E hs hp hL hI) zl where
@@ -165,25 +168,32 @@ abbrev GamL := gamOf (H.W K s LL h) (H.W_s K s LL h)
 variable (hL : Laws H F h)
 
 
+set_option maxHeartbeats 400000 in
 abbrev SerL := serOf (H.W K s LL h) (H.W_s K s LL h) (p_prime P K) hL.lev
 
 
+set_option maxHeartbeats 400000 in
 abbrev IoL := ioOf (F.E K s LL h).tie (H.W_s K s LL h) (p_prime P K) hL.lev hL.io
 
 
+set_option maxHeartbeats 400000 in
 theorem ioW : IoW (Γ := GamL H h) (R := SerL H F h hL) (IoL H F h hL) := (F.E K s LL h).inertia_action_on_roots
 
 
+set_option maxHeartbeats 400000 in
 abbrev EtL := etOf (F.E K s LL h).tie (H.W_s K s LL h) (p_prime P K) hL.lev hL.io
 
 
+set_option maxHeartbeats 400000 in
 abbrev ClL := clOf (F.E K s LL h).tie (H.W_s K s LL h) (p_prime P K) hL.lev hL.io
 
 
+set_option maxHeartbeats 400000 in
 abbrev LatL :=
   latOf (F.E K s LL h).tie (H.W_s K s LL h) (p_prime P K) hL.lev hL.io _ hL.one (H.W_proj K s LL h)
 
 
+set_option maxHeartbeats 400000 in
 theorem latL_N {T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)} (hT : IsCrys (P.PD K) T.ρ) :
     (LatL H F h hL).N T = (H.W K s LL h).N T := nOf_crys _ hT
 
@@ -212,6 +222,7 @@ def evL (W : LocWach PD L O v n) (i : ZMod n) (ζ : L) : O⟦X⟧ →ₐ[O] L⟦
   (W.lev i ζ).comp (AlgHom.pi fun _ => AlgHom.id O O⟦X⟧)
 
 
+omit [CharZero L] [Algebra ℚ L] in
 theorem lev_eq_evL (W : LocWach PD L O v n) (i : ZMod n) (ζ : L) (a : LetA O n) :
     W.lev i ζ a = evL W i ζ (a i) := by
   have := W.lev_letter i ζ (a - fun _ => a i) (by simp)

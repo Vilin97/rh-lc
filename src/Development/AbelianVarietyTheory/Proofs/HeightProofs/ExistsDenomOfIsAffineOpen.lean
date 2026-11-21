@@ -107,6 +107,7 @@ theorem exists_glue (H : IsPullback φ π p (spMap (algebraMap R K))) [Flat p] (
     ((congrArg (gs φ z _) (hs ⟨_, hz⟩)).trans (ha _ z (hx _)))
 
 
+omit [IsDomain R] in
 theorem cst_mul {Z : Scheme.{0}} (q : Z ⟶ Sp R) (z : Z) (a b : R) : cst q z (a * b) = cst q z a * cst q z b := by
   rw [cst, map_mul, gs_mul q z ⊤ trivial]; rfl
 

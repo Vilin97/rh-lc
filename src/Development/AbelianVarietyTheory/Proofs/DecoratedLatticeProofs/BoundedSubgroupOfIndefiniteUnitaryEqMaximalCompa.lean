@@ -27,6 +27,7 @@ theorem norm_eigenvalue_le_one {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) (C : �
   | (intros; exact _root_.GlobalTheory.EigenvalueNormBound.norm_eigenvalue_le_one ..)
 
 
+open scoped ComplexOrder in
 theorem eq_one_of_posSemidef {n : ℕ} (p q : Matrix (Fin n) (Fin n) ℂ) (hp : p.PosSemidef)
     (hqp : q * p = 1) (C : ℝ) (hC : ∀ k : ℕ, ∀ i j, ‖(p ^ k) i j‖ ≤ C)
     (hC' : ∀ k : ℕ, ∀ i j, ‖(q ^ k) i j‖ ≤ C) : p = 1 := by
@@ -75,6 +76,7 @@ theorem eq_one_of_posSemidef {n : ℕ} (p q : Matrix (Fin n) (Fin n) ℂ) (hp : 
     _ = 1 := by rw [← mul_assoc, hU, hU2]
 
 
+open scoped ComplexOrder in
 theorem eq_Kset_of_bounded : ∀ (n : ℕ) (ε : Fin n → Bool) (G' : Set (Matrix (Fin n) (Fin n) ℂ)), G' ⊆ Formalism.MainNotions.S.UJset ε → Formalism.REAL.Kset ε ⊆ G' → (∀ a ∈ G', ∀ b ∈ G', a * b ∈ G') → (∀ a ∈ G', a⁻¹ ∈ G') → (∃ C : ℝ, ∀ a ∈ G', ∀ i j, ‖a i j‖ ≤ C) → G' = Formalism.REAL.Kset ε := by
   intro n ε G' hU hK hmul hinv ⟨C, hC⟩
   refine Set.Subset.antisymm (fun a ha => ?_) hK

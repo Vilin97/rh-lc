@@ -13,6 +13,7 @@ open Formalism.BasicNotions.TH Formalism.MainNotions.SchurIrreducible GlobalTheo
 namespace GlobalTheory.FockAlg
 
 
+open GlobalTheory.JointHarm GlobalTheory.FockSeq in
 theorem harmonic_homog_of_type : ∀ (p q r s : ℕ),
     (∀ (μ : Ix p q → ℚ) (P : Pol p q r s), P ≠ 0 → OfType (fockAct1 p q r s) μ P →
       P ∈ harm1 p q r s →

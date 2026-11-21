@@ -47,6 +47,7 @@ theorem liftV_one_mul_comp (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTens
     · rw [GlobalTheory.AdelicU.evalV_singleFin_ne hw, GlobalTheory.AdelicU.evalV_singleFin_ne hw, zero_mul]
 
 
+omit [NumberField F] [NumberField E] in
 theorem trace_baseChange_tmul [FiniteDimensional F E] (R : Type) [CommRing R] [Algebra F R] (a : R) (e : E) :
     Algebra.trace R (R ⊗[F] E) (a ⊗ₜ[F] e) = a * algebraMap F R (Algebra.trace F E e) := by
   have h1 : a ⊗ₜ[F] e = a • ((1 : R) ⊗ₜ[F] e) := by

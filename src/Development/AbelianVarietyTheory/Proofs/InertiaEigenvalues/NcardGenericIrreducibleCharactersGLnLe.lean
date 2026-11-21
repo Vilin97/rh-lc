@@ -49,6 +49,7 @@ end GlobalTheory.GLq.GenericCount
 namespace GlobalTheory.GLq
 
 
+open GlobalTheory.GLq.GenericCount in
 theorem card_generic_irr_le : ∀ (g : ℕ) [Fact g.Prime] (ψ : AddChar (ZMod g) ℂ), ψ ≠ 1 → ∀ n : ℕ, 0 < n →
     Set.ncard {ρ : Gn g n → ℂ | IsIrr ρ ∧ wh ψ ρ ≠ 0} ≤ g ^ n - g ^ (n - 1) := by
   intro g _ ψ hψ n hn

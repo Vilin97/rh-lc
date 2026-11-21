@@ -261,6 +261,7 @@ variable {Ψ : Type} [Fintype Ψ] {p q : ℕ} {Ω : Type} [Field Ω] {n : Ψ ⊕
   {K₀ : Type} [Fintype K₀] {J₀ : K₀ → Type} [∀ k, Fintype (J₀ k)] (x₀ : (Σ k, J₀ k) → Ω) (m : Ψ ⊕ Ψ → ℕ)
 
 
+omit [Fintype Ψ] [Fintype K₀] in
 theorem eq_fullW_iff (t : StepIx Ψ p q) (hk : ∀ r, blkF Ψ p q K₀ r ≠ some (.inr t)) (τ : Ψ) (hp : 0 < p) :
     (⟨.inr t, hk⟩ : NonPluckerBlocks (blkF Ψ p q K₀)) = fullW τ hp ↔ t.1 = .inl τ ∧ (t.2 : ℕ) + 1 = p := by
   constructor
@@ -277,6 +278,7 @@ theorem eq_fullW_iff (t : StepIx Ψ p q) (hk : ∀ r, blkF Ψ p q K₀ r ≠ som
     omega
 
 
+omit [Fintype Ψ] [Fintype K₀] in
 theorem eq_fullO_iff (t : StepIx Ψ p q) (hk : ∀ r, blkF Ψ p q K₀ r ≠ some (.inr t)) (τ : Ψ) (hq : 0 < q) :
     (⟨.inr t, hk⟩ : NonPluckerBlocks (blkF Ψ p q K₀)) = fullO τ hq ↔ t.1 = .inr τ ∧ (t.2 : ℕ) + 1 = q := by
   constructor
@@ -390,6 +392,7 @@ theorem posOf_injective (s : Ψ ⊕ Ψ) : Function.Injective (posOf (Ψ := Ψ) p
   · exact (omEmb_strictMono p q).injective
 
 
+omit [Fintype Ψ] in
 theorem step_facts (r : Ψ × Fin (p + q)) (s : Ψ ⊕ Ψ) (i₀ : Fin (rk Ψ p q s)) (hi : (i₀ : ℕ) = 0)
     (hst : stepOf Ψ p q r = ⟨s, i₀⟩) :
     stepCols (p + q) p r.2 = {posOf p q s i₀} ∧
@@ -576,6 +579,7 @@ theorem detFac_eq {i : Fin (p + q)} (T : Matrix (Fin (p + q)) (Fin (p + q)) Ω) 
   rw [minorIJ_wIdx, minorIJ_omIdx]
 
 
+variable (A x₀) in
 def aW (F : FrameD n J₀ Ω p q) (τ : Ψ) : Ω := if h : 0 < p then (zW A x₀ F τ h)⁻¹ else 1
 
 theorem aW_eq (F : FrameD n J₀ Ω p q) (r : Ψ × Fin (p + q)) (h : p ≤ (r.2 : ℕ) + 1) :

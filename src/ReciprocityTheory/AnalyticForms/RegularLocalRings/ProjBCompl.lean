@@ -18,6 +18,7 @@ def projBCompl (P D : Ideal (MvPolynomial (Σ k, ι k) ℂ)) (hP : IsMultiHomogI
   ⟨(projB P D hP : Set (projX P hP))ᶜ, (projB P D hP).isClosed.isOpen_compl⟩
 
 
+variable (P D : Ideal (MvPolynomial (Σ k, ι k) ℂ)) (hP : IsMultiHomogIdeal P) in
 structure WData where
 
   W : Scheme.{0}

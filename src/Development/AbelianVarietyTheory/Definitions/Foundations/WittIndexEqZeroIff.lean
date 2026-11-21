@@ -128,6 +128,7 @@ theorem mapVec_mem (φ : R →ₐ[F] R') {W : Submodule E V.V} {y : Fin V.rank �
   funext i; simp [mapVec]
 
 
+omit [NumberField E] [StarRing E] in
 theorem repr_map {ι : Type} (b : Module.Basis ι F E) (φ : R →ₐ[F] R') (u : R ⊗[F] E) (j : ι) :
     (Algebra.TensorProduct.basis R' b).repr (Algebra.TensorProduct.map φ (AlgHom.id F E) u) j =
       φ ((Algebra.TensorProduct.basis R b).repr u j) := by
@@ -441,6 +442,7 @@ theorem unip_le_par : 𝔉.unip hc R ≤ 𝔉.par hc R := fun _ hg => mem_par.2 
   Fin.lastCases (mem_unip.1 hg).2.1 (fun j => ((mem_unip.1 hg).1 j).1) i
 
 
+variable {𝔉 hc R} in
 theorem conj_mem_unip {p : HA R hc.sig V.gram} (hp : p ∈ 𝔉.par hc R) (hg : g ∈ 𝔉.unip hc R) :
     p * g * p⁻¹ ∈ 𝔉.unip hc R :=
   mem_unip.2 ⟨fun i => conj_mem_trivOn (mem_par.1 hp _) (mem_par.1 hp _) ((mem_unip.1 hg).1 i),

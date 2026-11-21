@@ -32,6 +32,7 @@ theorem bdd_of_fg {Λ : Submodule (𝓞 E) (Fin p → E)} (h : Λ.FG) : GlobalTh
   | smul b x _ hx => rw [smul_comm]; exact Submodule.smul_mem _ _ hx
 
 
+omit [NumberField E] in
 theorem ιMulti_single_ne_zero :
     exteriorPower.ιMulti E p (fun j : Fin p => (Pi.single j (1 : E) : Fin p → E)) ≠ 0 := by
   intro h
@@ -44,6 +45,7 @@ theorem ιMulti_single_ne_zero :
   exact one_ne_zero this
 
 
+omit [NumberField E] in
 theorem idx_eq (Λ : Submodule (𝓞 E) (Fin p → E)) (J : Ideal (𝓞 E)) (hJ : J • GlobalTheory.BetaEx.detSpan Λ = 1) :
     GlobalTheory.FlatCM.idx E p Λ (Submodule.span (𝓞 E) (Set.range fun a => (Pi.single a (1 : E) : Fin p → E))) = J := by
   rw [GlobalTheory.FlatCM.idx, GlobalTheory.FlatCM.Model.detSpan_span]

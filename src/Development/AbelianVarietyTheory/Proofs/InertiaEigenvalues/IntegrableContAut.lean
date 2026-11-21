@@ -169,6 +169,7 @@ theorem map_piRep_proj {G U : Type} [Group G] [AddCommGroup U] [Module ℂ U] {�
   map_heckeVec hK hφ (LinearMap.proj j) (fun _ _ => rfl) F
 
 
+set_option maxHeartbeats 1000000 in
 theorem param_down (hH : GlobalTheory.Hk3.HoweUnram) {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {χS χT : (AE D)ˣ →* Circle}
     {om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)} (hW : IsWeilDatumO ψ S T χS χT om) (hle : T.rank ≤ S.rank)
     {v : HeightOneSpectrum (𝓞 D.host.F)} {w : HeightOneSpectrum (𝓞 D.host.E)} (h : w.under (𝓞 D.host.F) = v)
@@ -397,6 +398,8 @@ section Coord
 variable {D : D7}
 
 
+open GlobalTheory.DownLift.Params in
+set_option maxHeartbeats 1000000 in
 theorem paramFun_definite {V : HSp D} (c : CoefA V) (hc : c.Is)
     {β : GL (Fin V.rank) (Formalism.IndefR.Lev.EAf D)} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)} (hβ : IsSDFrame V β Λ 1)
     {L : LevDat D.host.E ℂ V.rank} {S : Finset (HeightOneSpectrum (𝓞 D.host.F))}
@@ -442,6 +445,7 @@ variable {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
 
+open GlobalTheory.DownLift.Params in
 theorem paramV_coord (R : RealDat D A Ks) {F : Face D A} (hC : GlobalTheory.Hk3.Core R F) (i : Fin D.R.m) (t : T) (h)
     (hh : GlobalTheory.Hk3.IsOpsV R i t h) (s : GlobalTheory.DownLift.Sys D) (y : (R.HV i t).H) (hy : GlobalTheory.DownLift.IsEigV R i t h s y)
     (B : GlobalTheory.LFun.Fam D.host.E) (hB : GlobalTheory.LFun.IsSysParamD D (GlobalTheory.IndefiniteRowSideFullHecke.LabelSettingScalars.badPl R t) (Vc D i).rank s B)
@@ -470,6 +474,8 @@ theorem thetaKO_sum {S T : HSp D} (om : GA D S × GA D T →* Module.End ℂ (WO
     simp [thetaKO, map_sum, Finset.sum_apply]
 
 
+open GlobalTheory.DownLift.Params in
+set_option maxHeartbeats 4000000 in
 theorem unrCorr_inert : GlobalTheory.Hk3.HoweUnram → ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type)
     (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
     (R : RealDat D A Ks) (F : Face D A), GlobalTheory.LiftRows.Given R F → R.FullP →

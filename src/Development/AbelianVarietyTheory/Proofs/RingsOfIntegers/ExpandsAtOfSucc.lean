@@ -21,6 +21,7 @@ variable {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D : DegData R I}
   {G : Over (Spec (CommRingCat.of R))} [GrpObj G] [IsCommMonObj G] (U : UnifPre I D A G)
 
 
+omit [IsDomain R] [GrpObj G] [IsCommMonObj G] in
 theorem thickMap_comp_fGl (I : Ideal R) (e : ℕ) (G : Over (Spec (CommRingCat.of R))) :
     thickMap R I e G ≫ fGl I G (e + 1) = fGl I G e := by
   unfold thickMap fGl fstG

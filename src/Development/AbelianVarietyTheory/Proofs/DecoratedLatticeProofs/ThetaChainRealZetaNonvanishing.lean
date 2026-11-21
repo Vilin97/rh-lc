@@ -26,6 +26,7 @@ noncomputable section
 namespace GlobalTheory.RealZetaProof
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction in
 theorem realZeta : GlobalTheory.Published.HarishChandraModules → ∀ D : D7, GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction.ArchOnRecord D → GlobalTheory.ChainOnto.RealZeta D := by
   intro hHC D hA hgap c hc k hk s s' hs hs' p hp m X hmX
   obtain ⟨hWexp, hvac⟩ := GlobalTheory.T.thetaChainStep_weilDatum_nonzero_fockVacuum D hgap c hc k hk s s' hs hs' p hp hk

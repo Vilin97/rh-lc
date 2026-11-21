@@ -97,58 +97,71 @@ theorem mdbar_neg (A : E → Matrix m n ℂ) (z ξ : E) : mdbar (fun x => -A x) 
   ext a b; simp [dbar_neg]
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem MContDiffAt.of_le (h : MContDiffAt k A z) (hjk : j ≤ k) : MContDiffAt j A z :=
   fun a b => (h a b).of_le hjk
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem MContDiffAt.diff (h : MContDiffAt 1 A z) (a : m) (b : n) :
     DifferentiableAt ℝ (fun x => A x a b) z := (h a b).differentiableAt one_ne_zero
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem mContDiffAt_const (C : Matrix m n ℂ) : MContDiffAt k (fun _ : E => C) z :=
   fun _ _ => contDiffAt_const
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem MContDiffAt.add (h : MContDiffAt k A z) (h' : MContDiffAt k B z) :
     MContDiffAt k (fun x => A x + B x) z := fun a b => (h a b).add (h' a b)
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem MContDiffAt.sub (h : MContDiffAt k A z) (h' : MContDiffAt k B z) :
     MContDiffAt k (fun x => A x - B x) z := fun a b => (h a b).sub (h' a b)
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem MContDiffAt.neg (h : MContDiffAt k A z) : MContDiffAt k (fun x => -A x) z :=
   fun a b => (h a b).neg
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem MContDiffAt.smul {f : E → ℂ} (hf : ContDiffAt ℝ k f z) (h : MContDiffAt k A z) :
     MContDiffAt k (fun x => f x • A x) z := fun a b => hf.mul (h a b)
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem MContDiffAt.transpose (h : MContDiffAt k A z) : MContDiffAt k (fun x => (A x)ᵀ) z :=
   fun a b => h b a
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem MContDiffAt.conjTranspose (h : MContDiffAt k A z) : MContDiffAt k (fun x => (A x)ᴴ) z :=
   fun a b => conjCLE.contDiff.contDiffAt.comp z (h b a)
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem MContDiffAt.submatrix {m' n' : Type*} (h : MContDiffAt k A z) (f : m' → m) (g : n' → n) :
     MContDiffAt k (fun x => (A x).submatrix f g) z := fun a b => h (f a) (g b)
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem MContDiffAt.mul [Fintype n] {B : E → Matrix n l ℂ} (h : MContDiffAt k A z)
     (h' : MContDiffAt k B z) : MContDiffAt k (fun x => A x * B x) z := fun a b => by
   simp only [Matrix.mul_apply]
   exact ContDiffAt.sum fun c _ => (h a c).mul (h' c b)
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem MContDiffAt.det [Fintype n] [DecidableEq n] {A : E → Matrix n n ℂ}
     (h : MContDiffAt k A z) : ContDiffAt ℝ k (fun x => (A x).det) z := by
   simp only [det_apply']
   exact ContDiffAt.sum fun σ _ => contDiffAt_const.mul (contDiffAt_prod fun c _ => h _ _)
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem MContDiffAt.inv [Fintype n] [DecidableEq n] {A : E → Matrix n n ℂ}
     (h : MContDiffAt k A z) (hu : IsUnit (A z).det) : MContDiffAt k (fun x => (A x)⁻¹) z := by
   intro a b
@@ -160,11 +173,13 @@ theorem MContDiffAt.inv [Fintype n] [DecidableEq n] {A : E → Matrix n n ℂ}
   exacts [contDiffAt_const, h c d]
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem MContDiffAt.eventually_isUnit [Fintype n] [DecidableEq n] {A : E → Matrix n n ℂ}
     (h : MContDiffAt k A z) (hu : IsUnit (A z).det) : ∀ᶠ x in 𝓝 z, IsUnit (A x).det :=
   (h.det.continuousAt.eventually_ne hu.ne_zero).mono fun _ hx => hx.isUnit
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem MContDiffAt.eventually_two [Finite m] [Finite n] (h : MContDiffAt 2 A z) :
     ∀ᶠ x in 𝓝 z, MContDiffAt 2 A x :=
   eventually_all.2 fun a => eventually_all.2 fun b => (h a b).eventually (by simp)
@@ -286,29 +301,35 @@ def dualGram (H : Matrix n n ℂ) : Matrix n n ℂ := H⁻¹ᵀ
 variable {U : Set E} {H H' : E → Matrix n n ℂ} {z : E} {j k : WithTop ℕ∞}
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem IsPosFrame.isHermFrame (h : IsPosFrame U H) : IsHermFrame U H :=
   ⟨h.isOpen, h.smooth, fun z hz => (h.posDef z hz).isHermitian,
     fun z hz => (isUnit_iff_isUnit_det _).1 (h.posDef z hz).isUnit⟩
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem IsHermFrame.mContDiffAt (h : IsHermFrame U H) (hz : z ∈ U) : MContDiffAt ∞ H z :=
   fun a b => (h.smooth a b).contDiffAt (h.isOpen.mem_nhds hz)
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem IsHermFrame.two (h : IsHermFrame U H) (hz : z ∈ U) : MContDiffAt 2 H z :=
   (h.mContDiffAt hz).of_le (by norm_cast)
 
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem IsHermFrame.eventually_herm (h : IsHermFrame U H) (hz : z ∈ U) :
     ∀ᶠ x in 𝓝 z, (H x).IsHermitian := mem_of_superset (h.isOpen.mem_nhds hz) h.herm
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem IsHermFrame.of_mContDiffAt (hU : IsOpen U) (h : ∀ z ∈ U, MContDiffAt ∞ H z)
     (h1 : ∀ z ∈ U, (H z).IsHermitian) (h2 : ∀ z ∈ U, IsUnit (H z).det) : IsHermFrame U H :=
   ⟨hU, fun a b z hz => (h z hz a b).contDiffWithinAt, h1, h2⟩
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem IsHermFrame.isPosFrame (h : IsHermFrame U H) (h' : ∀ z ∈ U, (H z).PosDef) :
     IsPosFrame U H := ⟨h.isOpen, h.smooth, h'⟩
 
@@ -590,16 +611,20 @@ def extTrace (H : E → Matrix (m ⊕ l) (m ⊕ l) ℂ) (z ξ η : E) : ℂ :=
 variable {U : Set E} {H : E → Matrix (m ⊕ l) (m ⊕ l) ℂ} {z : E} {k : WithTop ℕ∞}
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] [Fintype m] [Fintype l] [DecidableEq m]
+  [DecidableEq l] in
 theorem MContDiffAt.subGram (h : MContDiffAt k H z) : MContDiffAt k (fun x => subGram (H x)) z :=
   fun a b => h (Sum.inl a) (Sum.inl b)
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] [Fintype l] [DecidableEq l] in
 theorem MContDiffAt.quotGram (h : MContDiffAt k H z) (hu : IsUnit (HermFrame.subGram (H z)).det) :
     MContDiffAt k (fun x => quotGram (H x)) z :=
   (h.submatrix Sum.inr Sum.inr).sub (((h.submatrix Sum.inr Sum.inl).mul (h.subGram.inv hu)).mul
     (h.submatrix Sum.inl Sum.inr))
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem IsHermFrame.sub (h : IsHermFrame U H) (hu : ∀ z ∈ U, IsUnit (subGram (H z)).det) :
     IsHermFrame U fun x => subGram (H x) :=
   .of_mContDiffAt h.isOpen (fun _ hz => (h.mContDiffAt hz).subGram)
@@ -607,6 +632,7 @@ theorem IsHermFrame.sub (h : IsHermFrame U H) (hu : ∀ z ∈ U, IsUnit (subGram
 
 
 
+omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 theorem IsPosFrame.sub (h : IsPosFrame U H) : IsPosFrame U fun x => subGram (H x) :=
   (h.isHermFrame.sub fun z hz =>
     (isUnit_iff_isUnit_det _).1 (posDef_subGram (h.posDef z hz)).isUnit).isPosFrame

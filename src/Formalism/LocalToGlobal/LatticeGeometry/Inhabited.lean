@@ -223,6 +223,7 @@ def flagDegZ (lam : ι → Fin N → ℤ) : ℤ := degFlZ ι N (linRootZ ι N la
 end FlagZ
 
 
+open Classical in
 @[reducible] def geoDegenerate (F : Type) [Field F] [NumberField F] [StarRing F] (Tau : Type) [Fintype Tau] : DV.Geo F where
   Var := ℕ
   dim := fun N => Formalism.DegreeFormula.dimFl Tau N

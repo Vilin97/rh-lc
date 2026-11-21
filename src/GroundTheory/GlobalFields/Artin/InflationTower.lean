@@ -23,6 +23,7 @@ variable {K F L : Type*} [Field K] [NumberField K] [Field F] [NumberField F] [Fi
   [IsGalois K F] [IsGalois K L]
 
 
+omit [NumberField K] [NumberField F] [NumberField L] [IsGalois K L] in
 theorem algebraMap_restrictNormalHom_smul (σ : Gal(L/K)) (x : 𝓞 F) :
     algebraMap (𝓞 F) (𝓞 L) (AlgEquiv.restrictNormalHom F σ • x) =
       σ • algebraMap (𝓞 F) (𝓞 L) x := by

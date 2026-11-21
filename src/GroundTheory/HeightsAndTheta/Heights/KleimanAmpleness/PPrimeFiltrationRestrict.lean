@@ -28,6 +28,7 @@ def RegularAt (a : Ω) : Prop :=
   ∃ b c : chartRing S x (singleChart hj), ψ c ≠ 0 ∧ a * (c : Ω) = b
 
 open scoped Classical in
+open Classical in
 def residueAt (a : Ω) : K' :=
   if h : RegularAt hj ψ a then ψ h.choose / ψ h.choose_spec.choose else 0
 

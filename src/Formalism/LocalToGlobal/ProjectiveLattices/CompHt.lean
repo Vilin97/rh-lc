@@ -86,15 +86,19 @@ section Laws
 variable (d : Data c.F (Comp Xo c) (fun Z => Om Z) (WTZ E) (fun Z => AC Z))
 
 
+variable (Xo c) in
 def CompNe : Prop := Nonempty (Comp Xo c)
 
 
+variable (Xo c) in
 def FnFG : Prop := ∀ Z : Comp Xo c, (⊤ : IntermediateField c.F (Om Z)).FG
 
 
+variable (Xo c) in
 def FnTrdeg (Dd : ℕ) : Prop := ∀ Z : Comp Xo c, Algebra.trdeg c.F (Om Z) = Dd
 
 
+variable (Xo c) in
 def FnAlgClosed : Prop :=
   ∀ (Z : Comp Xo c) (a : Om Z), IsAlgebraic c.F a → a ∈ (algebraMap c.F (Om Z)).range
 

@@ -23,10 +23,12 @@ def Lifts (L : Submodule 𝒪[k] (n → k)) (F : n → k) (f : Module.Dual 𝓀[
   ∀ y : L, ∃ s : 𝒪[k], (s : k) = F ⬝ᵥ (y : n → k) ∧ residue 𝒪[k] s = f (Red.mk L y)
 
 
+open Classical in
 def cosetInd (q : Unif k) (L : Submodule 𝒪[k] (n → k)) (f : Module.Dual 𝓀[k] (Red L)) (η : n → k) : ℂ :=
   if ∃ F : n → k, Lifts L F f ∧ InDual L (η - q.inv • F) then 1 else 0
 
 
+open Classical in
 def datum (q : Unif k) (P : Pair k n') (LY : Submodule 𝒪[k] (n → k)) (x₀ : Matrix n n' k) (y : n → k) : ℂ :=
   if (∀ z ∈ P.ker, x₀ *ᵥ z ∈ LY) ∧ q.inv • y + x₀ *ᵥ P.vec ∈ LY then 1 else 0
 
@@ -40,6 +42,7 @@ def qvec (q : Unif k) (P : Pair k n') : Red P.ker :=
 def resUnit (ε : 𝒪[k]ˣ) : 𝓀[k]ˣ := Units.map (residue 𝒪[k]).toMonoidHom ε
 
 
+open Classical in
 def term (q : Unif k) (χ : AddChar 𝓀[k] ℂ) (ε : 𝓀[k]ˣ) (P : Pair k n') (LY : Submodule 𝒪[k] (n → k))
     (fW : Module.Dual 𝓀[k] (Red LY)) (x₀ : Matrix n n' k) : ℂ :=
   if h : ∀ z ∈ P.ker, x₀ *ᵥ z ∈ LY then
@@ -48,6 +51,7 @@ def term (q : Unif k) (χ : AddChar 𝓀[k] ℂ) (ε : 𝓀[k]ˣ) (P : Pair k n'
   else 0
 
 
+open Classical in
 def compInd (L : Submodule 𝒪[k] (n' → k)) (LY : Submodule 𝒪[k] (n → k)) (f' : Module.Dual 𝓀[k] (Red L))
     (fW : Module.Dual 𝓀[k] (Red LY)) (x₀ : Matrix n n' k) : ℂ :=
   if ∃ h : ∀ z ∈ L, x₀ *ᵥ z ∈ LY, ∀ z : L, fW (Red.mk LY ⟨x₀ *ᵥ z, h z z.2⟩) = f' (Red.mk L z) then 1 else 0
@@ -61,6 +65,11 @@ def lastKer (L : Submodule 𝒪[k] (n'' → k)) : Submodule 𝒪[k] (n'' ⊕ Fin
   L.map (inX k n'' 1) ⊔ Submodule.span 𝒪[k] {avec k n'' 1 1}
 
 
+open MeasureTheory ValuativeRel Matrix IsLocalRing in
+open scoped Pointwise in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  {n n' n'' : Type} [Fintype n] [Fintype n'] [Fintype n''] in
+omit [Fintype n''] in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.mem_lastKer {L : Submodule 𝒪[k] (n'' → k)} {y : n'' ⊕ Fin 1 → k} :
     y ∈ _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.lastKer L ↔ y ∘ Sum.inl ∈ L ∧ y (Sum.inr 0) ∈ 𝒪[k] := by
   unfold _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.lastKer
@@ -86,6 +95,11 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.mem_la
       simp [_root_.GlobalTheory.LatPair.inX, _root_.GlobalTheory.LatPair.avec, Subring.smul_def]
 
 
+open MeasureTheory ValuativeRel Matrix IsLocalRing in
+open scoped Pointwise in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  {n n' n'' : Type} [Fintype n] [Fintype n'] [Fintype n''] in
+omit [Fintype n''] in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.lastKer_eq (q : _root_.GlobalTheory.LatPair.Unif k)
     (L : Submodule 𝒪[k] (n'' → k)) :
     _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.lastKer L = _root_.GlobalTheory.LatPair.gluedLat q 1 2 L 0 := by
@@ -218,6 +232,7 @@ def ClassSumFormula : Prop :=
           θ (dia (resUnit ε) (FFStar q (resChar ψ hψ q) φ) P') (phiOne P' Q)
 
 
+open Classical in
 def LastStep : Prop :=
   ∀ (q : Unif k) (LY : Submodule 𝒪[k] (n → k)) [LY.IsFullLattice k] (L'' : Submodule 𝒪[k] (n'' → k)) [L''.IsFullLattice k],
     (∀ (fW : {f : Module.Dual 𝓀[k] (Red LY) // f ≠ 0}) (x' : Matrix n'' n k) (η : n → k),

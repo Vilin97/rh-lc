@@ -240,6 +240,7 @@ theorem cc_hRow (o : Orb) : constantCoeff (Y.raw (p o)).hRow = 0 := by
   rw [ReciprocityTheory.ChartRestriction.G.TB.WickVanishing.Nab.cc_h Y.gauge, smul_zero]
 
 
+set_option maxHeartbeats 400000 in
 theorem one_row (hs : PairsSep Y p) (gr : ∀ o, MvPowerSeries (WV (I o)) C)
     (hg : ∀ o, gr o ∈ ExpInt (Y.raw (p o)) V) :
     ∃ f : MvPowerSeries (Fin dd) C, IntS V f ∧ ∀ (τ : Type) (v : WVO I → τ),

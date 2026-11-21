@@ -20,6 +20,7 @@ namespace ProjSpace
 variable {A B : Type u} [CommRing A] [CommRing B] [Algebra A B] {n : ℕ} {Y : Scheme.{u}}
 
 
+variable (A B n) in
 def baseChangeIso :
     projectiveSpace B n ≅
       pullback (toSpecBase A n) (Spec.map (CommRingCat.ofHom (algebraMap A B))) :=
@@ -59,12 +60,14 @@ lemma toBaseChange_toSpecBase
     _ = _ := congrArg (fun f => ι ≫ f) (baseChangeIso_inv_toSpecBase (A := A) (B := B) (n := n))
 
 
+variable (A) in
 def twistingSheafBaseChangeIso (g : Y ⟶ projectiveSpace B n) (k : ℤ) :
     ProjScheme.twistingSheaf (g ≫ baseChangeMap A B n) k ≅ ProjScheme.twistingSheaf g k :=
   ((Scheme.Modules.pullbackComp g (baseChangeMap A B n)).app _).symm ≪≫
     (Scheme.Modules.pullback g).mapIso (pullbackTwistingSheafIso A B n k)
 
 
+variable (A) in
 def twistBaseChangeIso (g : Y ⟶ projectiveSpace B n) (F : Y.Modules) (k : ℤ) :
     ProjScheme.twist (g ≫ baseChangeMap A B n) F k ≅ ProjScheme.twist g F k :=
   whiskerLeftIso F (twistingSheafBaseChangeIso A g k)

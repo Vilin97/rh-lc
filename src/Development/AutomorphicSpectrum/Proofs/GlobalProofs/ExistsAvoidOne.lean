@@ -106,6 +106,7 @@ end GlobalTheory.CompanionTheory.Hypotheses₂.Shintani
 namespace GlobalTheory.CompanionTheory.Hypotheses₂
 
 
+open GlobalTheory.CompanionTheory.Hypotheses₂.Shintani in
 theorem siegelKlingen : GlobalTheory.Published.SiegelKlingen := by
   classical
   intro F _ _ _ 𝔣 h𝔣 ε hε

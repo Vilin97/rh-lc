@@ -35,6 +35,7 @@ theorem chart_mem_curveSectionMod (c : ∀ k, ι k) (d : K → ℕ) :
   · simp
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem exists_mul_mem_of_mem_chartRingZ (m : Ideal (curveRing y)) (hm : m.IsPrime) (c : ∀ k, ι k)
     (h : ∀ p : Σ k, ι k, ∃ a b : curveRing y, b ∉ m ∧ (b : Ω) * (y p / y ⟨p.1, c p.1⟩) = a)
     {z : Ω} (hz : z ∈ chartRingZ y c) :
@@ -64,6 +65,7 @@ theorem exists_mul_mem_of_mem_chartRingZ (m : Ideal (curveRing y)) (hm : m.IsPri
 end CurveSectionQuotientLocal
 
 
+open CurveSectionQuotientLocal in
 theorem CurveSectionQuotLocal.proof : CurveSectionQuotLocal.Statement := by
   intro K _ ι _ Ω _ y s d _hy _hs _hsP m c hm hc hrat a b hb hba
   set x := aeval y s with hx_def

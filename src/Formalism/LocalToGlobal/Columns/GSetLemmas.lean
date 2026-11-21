@@ -185,6 +185,7 @@ theorem iso_integral_structure_equivariant (N : S.D → Submodule (𝓞 K) S.V) 
   exact e.rho g x
 
 
+include e in
 theorem ok (h : S.Ok) : S'.Ok where
   fin_orb := by
     have := h.fin_orb

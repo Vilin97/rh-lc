@@ -214,6 +214,7 @@ end Triple
 end OverMove
 
 
+open OverMove in
 theorem exists_levMove_of_frOver : Laws → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (n : ℕ) (d : DeltaDat Xo c n), @ToroidalLevelCompatibility E _ _ _ H Dw → l.Dvd d.l₂ → d.l₂.M = l.M * d.pd → d.EtaOK → ∀ (r' : d.Xo₂.X ⟶ Xo.X) (m' : SABMap d.Xo₂.univ.t Xo.univ.t r'), DeltaDat.EtaOK { d with r := r', m := m' } → ∀ (k : Type) [Field k] [IsAlgClosed k] [Algebra c.F k] [Algebra d.c₂.F k], (∀ a : c.F, algebraMap d.c₂.F k (d.eF a) = algebraMap c.F k a) → ∀ (y : FrPt Xo c k) (y₂ y₂' : FrPt d.Xo₂ d.c₂ k), FrOver d y₂ y → FrOver { d with r := r', m := m' } y₂' y → ∃ (g : Sim Dw) (ρ : d.Xo₂.X ≅ d.Xo₂.X) (ν : SABMap d.Xo₂.univ.t d.Xo₂.univ.t ρ.hom), g.InGam l d.l₂ ∧ d.Xo₂.LevAut g ρ ∧ IsLevMove ρ.hom ν (g.f d.l₂.M) (g.f d.l₂.A) ∧ FrMove ρ.hom ν y₂ y₂' := by
   intro hL E _ _ _ H Dw l Xo c n d hN hd hM hE r' m' hE' k _ _ _ _ hk y y₂ y₂' h h'
   have hpd : d.pd = d.l₂.M / l.M := by

@@ -15,13 +15,16 @@ open scoped TensorProduct ENNReal NNReal
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+variable (E) in
 def eR (v : HeightOneSpectrum (𝓞 F)) : ℝ := (PositivityTheory.SiegelWeilFormula.Gen.eSp E v).re
 
 
+variable (E) in
 def cfac (v : HeightOneSpectrum (𝓞 F)) : ℝ≥0 :=
   Real.toNNReal (1 - eR E v / (Ideal.absNorm v.asIdeal : ℝ))⁻¹
 
 
+variable (F E) in
 def IsLamLim (Λ : ℂ) : Prop :=
   Tendsto (fun s : ℝ => ∏' v : HeightOneSpectrum (𝓞 F),
       (1 - PositivityTheory.SiegelWeilFormula.Gen.eSp E v * (Ideal.absNorm v.asIdeal : ℂ) ^ (-(s : ℂ)))) (𝓝[>] 1) (𝓝 Λ)

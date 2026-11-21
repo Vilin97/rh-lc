@@ -16,6 +16,9 @@ section
 variable {G : Type} [Group G] {V : Type} [AddCommGroup V] [Module ℂ V] {ρ : Representation ℂ G V}
 
 
+open Matrix in
+open scoped Kronecker ComplexOrder TensorProduct in
+variable {G : Type} [Group G] {V : Type} [AddCommGroup V] [Module ℂ V] {ρ : Representation ℂ G V} in
 theorem _root_.GlobalTheory.ClassFin.isIrreducible_toRepresentation_of_isAtom (σ : Subrepresentation ρ) (h : IsAtom σ) :
     σ.toRepresentation.IsIrreducible := by
   let F : Subrepresentation σ.toRepresentation → Subrepresentation ρ := fun τ =>
@@ -97,6 +100,8 @@ private theorem iSup_atoms_toSubmodule_eq_whole_of_semisimple {G : Type} [Group 
   exact congrArg Subrepresentation.toSubmodule hαtop
 
 
+open Matrix in
+open scoped Kronecker ComplexOrder TensorProduct in
 theorem _root_.GlobalTheory.ClassFin.isSemisimpleRepresentation_tprod : ∀ (G : Type) [Group G] (V : Type) [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V) (W : Type) [AddCommGroup W] [Module ℂ W] (ρ' : Representation ℂ G W) [FiniteDimensional ℂ V] [FiniteDimensional ℂ W], ρ.IsSemisimpleRepresentation → ρ'.IsSemisimpleRepresentation → (ρ.tprod ρ').IsSemisimpleRepresentation := by
   intro G _ V _ _ ρ W _ _ ρ' _ _ hρ hρ'
   let J := {σ : Subrepresentation ρ // IsAtom σ} × {τ : Subrepresentation ρ' // IsAtom τ}

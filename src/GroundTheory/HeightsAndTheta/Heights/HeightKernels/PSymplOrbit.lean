@@ -27,6 +27,7 @@ theorem symplCons_one_zero {R : Type*} [CommRing R] {n : ℕ} :
 end PSymplOrbit
 
 
+open PSymplOrbit in
 theorem SymplOrbit.proof (h1 : SymplExtMem.Statement) (h2 : SymplExtVecMul.Statement)
     (h3 : SymplTwoRow.Statement) (h4 : SymplGcd.Statement) (h5 : SymplCons.Statement) :
     SymplOrbit.Statement := by

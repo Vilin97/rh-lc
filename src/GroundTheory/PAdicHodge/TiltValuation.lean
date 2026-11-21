@@ -27,6 +27,7 @@ theorem mem_span_singleton_iff_norm_le {a x : normInteger K'} :
 end Integers
 
 
+omit [Fact p.Prime] [IsPerfectoidField K p] in
 theorem mk_eq_mk_iff_norm_sub_le {a b : normInteger K} :
     Ideal.Quotient.mk (Ideal.span {(p : normInteger K)}) a =
         Ideal.Quotient.mk (Ideal.span {(p : normInteger K)}) b ↔
@@ -35,6 +36,7 @@ theorem mk_eq_mk_iff_norm_sub_le {a b : normInteger K} :
   simp
 
 
+omit [Fact p.Prime] [IsPerfectoidField K p] in
 theorem mk_eq_zero_iff_norm_le {a : normInteger K} :
     Ideal.Quotient.mk (Ideal.span {(p : normInteger K)}) a = 0 ↔ ‖(a : K)‖ ≤ ‖(p : K)‖ := by
   rw [← map_zero (Ideal.Quotient.mk (Ideal.span {(p : normInteger K)})),
@@ -96,6 +98,7 @@ theorem norm_untilt_le_one (x : PreTilt (normInteger K) p) :
   mem_normInteger.1 (x.untilt).2
 
 
+variable (K p) in
 def tiltNorm : MulRingNorm (PreTilt (normInteger K) p) where
   toFun x := ‖((x.untilt : normInteger K) : K)‖
   map_zero' := by simp

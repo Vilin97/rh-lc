@@ -205,6 +205,7 @@ private theorem multiProd_placing {h N : ℕ} {d : Fin h → ℕ} (e e' : (Σ i,
   exact isSubquotient_of_equiv φ
 
 
+set_option maxHeartbeats 1000000 in
 private theorem cell (hG : GlobalTheory.Published.GeometricLemma) (hBZ : GlobalTheory.Published.BernsteinZelevinskyFiniteness)
     {h : ℕ} (w : Fin h → IrrGL (k := k)) {b : Fin h → Fin h → ℕ} (hr : ∀ i, ∑ j, b i j = (w i).1)
     (hc : ∀ j, ∑ i, b i j = (w j).1) (f : ∀ i, (Σ j, Fin (b i j)) ≃ Fin (w i).1)

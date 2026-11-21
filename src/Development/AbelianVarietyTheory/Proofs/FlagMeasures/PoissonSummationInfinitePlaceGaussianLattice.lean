@@ -16,6 +16,8 @@ namespace GlobalTheory.FlagBase.PoissonV
 variable (ι κ : Type) [Fintype ι] [Fintype κ]
 
 
+open MeasureTheory NumberField Matrix Finset in
+variable (ι κ : Type) [Fintype ι] [Fintype κ] in
 theorem _root_.GlobalTheory.FlagBase.PoissonV.measurePreserving_curry :
     MeasurePreserving (MeasurableEquiv.curry ι κ ℂ) volume volume := by
   have h : MeasurePreserving (MeasurableEquiv.curry ι κ ℂ).symm volume volume := by
@@ -72,6 +74,7 @@ private theorem inner_toLp_conj_eq_sum_re_dotProduct (u : EuclideanSpace ℂ (ι
   congr 1 <;> exact Finset.sum_congr rfl fun w _ => Finset.sum_congr rfl fun a _ => mul_comm _ _
 
 
+open MeasureTheory NumberField Matrix Finset in
 theorem _root_.GlobalTheory.FlagBase.poisson_gaussV (E : Type) [Field E] [NumberField E] (j : ℕ)
     (L : Submodule ℤ (_root_.GlobalTheory.FlagBase.VecInf E j))
     [DiscreteTopology L] (hL : IsZLattice ℝ L) :

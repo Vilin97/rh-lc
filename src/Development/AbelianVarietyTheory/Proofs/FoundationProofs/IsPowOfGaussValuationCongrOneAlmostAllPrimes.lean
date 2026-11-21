@@ -189,6 +189,7 @@ theorem mem_of_fixed {F E : Type} [Field F] [Field E] [Algebra F E] (L : Interme
 end GlobalTheory.KZ.ES.Exact
 
 
+open GlobalTheory.KZ.ES.Exact in
 theorem GlobalTheory.KZ.ES.pow_of_gauss_congr_one : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (ε : Ω →+* ℂ) (X : Tower Ω ε), (∃ φ : ℂ → ℂ, DifferentiableOn ℂ φ Hs ∧ X.an X.jK = (φ : Mero)) → ∀ (l M₀ : ℕ), l.Prime → 0 < M₀ → l ∣ M₀ → ∃ S : Finset ℕ, ∀ q : ℕ, q.Prime → q ∉ S → ∀ V : ValuationSubring Ω, ((q : ℕ) : Ω) ∈ V.nonunits → ∀ W : ValuationSubring X.K, Gauss X.jK V W → ∀ (n k : ℕ) (U : X.Kˣ), U ∈ X.Un (l ^ n) → Lev X (M₀ * l ^ k) U → W.valuation ((U : X.K) - 1) < 1 → ∃ g : X.Kˣ, U = g ^ (l ^ n) := by
   intro Ω _ _ _ ε X hhol l M₀ hl hM₀ hlM
   obtain ⟨S, hS⟩ := GlobalTheory.T.gaussValuation_unique_on_lthRoot_level_fields ε X hhol l M₀ hl hM₀

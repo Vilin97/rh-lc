@@ -96,6 +96,7 @@ theorem smul_mem_O {N : Submodule (Zd.M p).L.O (Vp D p)} {c : (D.s.atP p).Ep} (h
   N.smul_mem ⟨c, hc⟩ hv
 
 
+set_option maxHeartbeats 1000000 in
 theorem latP_XS {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') :
     lattice₂ D Zd.M p (XS D F'.fl) =
       Submodule.span (Zd.M p).L.O (Set.range fun a : Fin D.R.rS => locF' Zd p F' a.castSucc) := by

@@ -15,6 +15,9 @@ open scoped Pointwise
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω]
 
 
+open NumberField IsDedekindDomain Polynomial Module in
+open scoped Pointwise in
+variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] in
 theorem _root_.GlobalTheory.TameCharUnique.mem_Ine_of_wild {A : ValuationSubring Ω} {σ : _root_.Formalism.ConjugateSelfDual.G E Ω}
     (hσ : ∀ y : Ω, y ≠ 0 → A.valuation (σ y / y - 1) < 1) : σ ∈ _root_.ReciprocityTheory.Gal.Ine (F := E) A := by
   have hval : ∀ y : Ω, A.valuation (σ y) = A.valuation y := by
@@ -48,6 +51,10 @@ theorem _root_.GlobalTheory.TameCharUnique.mem_Ine_of_wild {A : ValuationSubring
 variable [IsAlgClosure E Ω]
 
 
+open NumberField IsDedekindDomain Polynomial Module in
+open scoped Pointwise in
+variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] in
+variable [IsAlgClosure E Ω] in
 theorem _root_.GlobalTheory.TameCharUnique.mem_of_tameGen {A : ValuationSubring Ω} {γ : _root_.Formalism.ConjugateSelfDual.G E Ω}
     (hγ : _root_.Formalism.BasicNotions.TameGenAt A γ)
     (S : Subgroup (_root_.ReciprocityTheory.Gal.Ine (F := E) A)) (hS : IsClosed (S : Set (_root_.ReciprocityTheory.Gal.Ine (F := E) A)))
@@ -91,6 +98,10 @@ private lemma exists_pow_fixes_finiteDimensional (K : IntermediateField E Ω)
   · exact hfix j i h fun x hx => (hij' x hx).symm
 
 
+open NumberField IsDedekindDomain Polynomial Module in
+open scoped Pointwise in
+variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] in
+variable [IsAlgClosure E Ω] in
 theorem _root_.GlobalTheory.TameCharUnique.eq_zero_of_wild {A : ValuationSubring Ω}
     {w : HeightOneSpectrum (𝓞 E)} (h : _root_.Formalism.ConjugateSelfDual.IsPlaceOver A w)
     {l : ℕ} [Fact l.Prime] (hlw : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal)
@@ -129,6 +140,10 @@ theorem _root_.GlobalTheory.TameCharUnique.eq_zero_of_wild {A : ValuationSubring
     one_mul] at hnorm
 
 
+open NumberField IsDedekindDomain Polynomial Module in
+open scoped Pointwise in
+variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] in
+variable [IsAlgClosure E Ω] in
 theorem _root_.GlobalTheory.TameCharUnique.exists_eq_mul : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : _root_.Formalism.ConjugateSelfDual.IsPlaceOver A w) (l : ℕ) [Fact l.Prime], ((l : ℕ) : 𝓞 E) ∉ w.asIdeal → ∀ (t t' : _root_.ReciprocityTheory.Gal.Ine (F := E) A →* Multiplicative ℤ_[l]), Continuous t → Continuous t' → Function.Surjective t' → ∃ c : ℤ_[l], ∀ σ, (t σ).toAdd = c * (t' σ).toAdd := by
   intro E Ω _ _ _ _ _ A w h l _ hlw t t' ht ht' hsurj
   obtain ⟨γ, hγ⟩ := _root_.GlobalTheory.TameInertiaGen.exists_tameGenAt_of_valuationSubring (E := E) A

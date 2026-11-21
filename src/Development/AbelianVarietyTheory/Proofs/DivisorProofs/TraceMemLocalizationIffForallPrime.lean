@@ -72,6 +72,7 @@ variable (F K : Type) [Field F] [Field K] [Algebra A F] [IsFractionRing A F] [Al
   [Algebra.IsSeparable F K]
 
 
+omit [CharZero (IsLocalRing.ResidueField A)] in
 theorem trace_mem_iff (z : K) :
     (∀ b : B, Algebra.trace F K (z * algebraMap B K b) ∈ (algebraMap A F).range) ↔
       ∀ d ∈ differentIdeal A B, ∃ c : B, algebraMap B K c = z * algebraMap B K d := by
@@ -147,6 +148,7 @@ section Transfer
 variable {B B' : Type} [CommRing B] [CommRing B'] [Algebra B B'] (M : Submonoid B) [IsLocalization M B']
 
 
+include M in
 theorem gen_up (Q' : Ideal B') [hQ : Q'.IsPrime] (s : B)
     (hs : ∀ y ∈ Q'.under B, ∃ c r : B, r ∉ Q'.under B ∧ r * y = c * s) :
     ∀ y ∈ Q', ∃ c r : B', r ∉ Q' ∧ r * y = c * algebraMap B B' s := by
@@ -161,6 +163,7 @@ theorem gen_up (Q' : Ideal B') [hQ : Q'.IsPrime] (s : B)
     linear_combination e2 + algebraMap B B' r * hb
 
 
+include M in
 theorem loc_down {K : Type} [CommRing K] [Algebra B K] [Algebra B' K] [IsScalarTower B B' K] (Q' : Ideal B')
     [hQ : Q'.IsPrime] (w : K) (c r : B') (hr : r ∉ Q') (h : algebraMap B' K r * w = algebraMap B' K c) :
     ∃ c r : B, r ∉ Q'.under B ∧ algebraMap B K r * w = algebraMap B K c := by

@@ -121,6 +121,7 @@ theorem isBe_ne_zero {𝔞 : Ideal (𝓞 E)} (h0 : 𝔞 ≠ ⊥) {β : c.F} (h :
   exact pow_ne_zero _ (Nat.cast_ne_zero.2 (Ideal.absNorm_eq_zero_iff.not.2 h0)) this.symm
 
 
+variable {Dw c} in
 theorem isBe_unique {𝔞 : Ideal (𝓞 E)} (h0 : 𝔞 ≠ ⊥) {β β' : c.F} (h : IsBe Dw c 𝔞 β) (h' : IsBe Dw c 𝔞 β') :
     ∃ ζ : c.F, IsOfFinOrder ζ ∧ β' = ζ * β := by
   have hβ := isBe_ne_zero h0 h

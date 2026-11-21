@@ -18,6 +18,7 @@ namespace GlobalTheory.GalCut
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] [IsCMField E] {l : ℕ} [Fact l.Prime] {a : ℕ}
 
 
+omit [IsAlgClosure E Ω] in
 def Weak (π : CuspSub E a) (ι : Qbar l ≃+* ℂ) (r : G E Ω →* GL (Fin a) (Qbar l)) : Prop :=
   Continuous r ∧ UpperTheory.V.Af.AttC ι r π
 

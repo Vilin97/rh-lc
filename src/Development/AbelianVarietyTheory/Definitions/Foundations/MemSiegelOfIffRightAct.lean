@@ -459,6 +459,7 @@ theorem IwasawaOf.hgtOf_mul (h : IwasawaOf e mat ν K) (p : siegelOf e mat) {k :
 variable [TopologicalSpace A] [IsTopologicalRing A] [T2Space A] [TopologicalSpace G] [IsTopologicalGroup G]
 
 
+omit [IsTopologicalGroup G] in
 theorem iwasawaOf_of_isCompact (hm : Continuous mat) (hν : Continuous ν) (hK : IsCompact (K : Set G))
     (h : ∀ g : G, ∃ p : siegelOf e mat, ∃ k ∈ K, g = p * k) : IwasawaOf e mat ν K :=
   isIwasawa_of_isCompact (isClosed_siegelOf hm) (hν.comp (continuous_aOf hm)) hK h

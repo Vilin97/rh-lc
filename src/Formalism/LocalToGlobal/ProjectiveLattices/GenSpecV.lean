@@ -56,6 +56,7 @@ theorem gsvVec_w (cc : Fin n → L) :
   exact congrArg (· ≫ x) h1
 
 
+variable (xc) in
 def gsvW (cc : Fin n → L) : tEps x ⟶ Xo.univ.t.G := Over.homMk (gsvVec x xc cc) (gsvVec_w cc)
 
 variable (xc) in

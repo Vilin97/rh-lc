@@ -47,6 +47,7 @@ theorem normRatio_torus {f : MRingOver ℂ ι} {k₀ : K} {n : ℕ} (hf : IsMult
   rw [mul_div_mul_left _ _ this]
 
 
+omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem isOpen_blockNonzero : IsOpen {z : (Σ k, ι k) → ℂ | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := by
   simp only [Set.ofPred_forall, Set.ofPred_exists]
   exact isOpen_iInter_of_finite fun k => isOpen_iUnion fun i =>

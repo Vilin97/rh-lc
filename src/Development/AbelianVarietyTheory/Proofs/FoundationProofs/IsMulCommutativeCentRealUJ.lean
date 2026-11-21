@@ -177,6 +177,7 @@ variable (k) {R : Type} [Ring R] [Algebra k R] [TopologicalSpace R] [IsTopologic
   [FiniteDimensional k R]
 
 
+include k in
 theorem eventually_isUnit : ∀ᶠ x in 𝓝 (1 : R), IsUnit x := by
   let b := Module.finBasis k R
   have hc : Continuous fun x : R => (Algebra.leftMulMatrix b x).det :=
@@ -186,6 +187,7 @@ theorem eventually_isUnit : ∀ᶠ x in 𝓝 (1 : R), IsUnit x := by
   exact hx.isUnit
 
 
+variable {k} in
 theorem eventually_exists_unitary (h2 : (2 : k) ≠ 0) (s : R →ₗ[k] R) (hm : ∀ a b, s (a * b) = s b * s a)
     (hs : ∀ a, s (s a) = a) {g : R} (hg : g * s g = 1) :
     ∀ᶠ y in 𝓝 (1 : R), ∀ h, s h * h = 1 → h * y = y * g → ∃ u : Rˣ, s u * u = 1 ∧ h * u = u * g := by
@@ -263,6 +265,7 @@ section Classes
 variable {A n : Type} [CommRing A] [IsArtinianRing A] [Fintype n] [DecidableEq n]
 
 
+omit [IsArtinianRing A] in
 theorem charpoly_conj_GL (g x : GL n A) : (x⁻¹ * g * x).1.charpoly = g.1.charpoly := by
   rw [Units.val_mul, Units.val_mul, Matrix.charpoly_mul_comm, ← mul_assoc, Units.mul_inv, one_mul]
 

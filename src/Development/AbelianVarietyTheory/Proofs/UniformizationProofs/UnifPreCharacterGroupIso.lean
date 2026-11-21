@@ -128,6 +128,7 @@ theorem match_unique (g : GtCoord I D e G) (g' : GtCoord I D' e G) {f f' : D'.X 
     (h' _ _ z J J' hJ hJ' c c' x).symm).trans (k _))
 
 
+omit hI [IsLocalRing R] [IsNoetherianRing R] in
 theorem match_down {D D' : DegData R I} {A A' : PolAV (Spec (CommRingCat.of (FractionRing R)))}
     (U : UnifPre I D A G) (U' : UnifPre I D' A' G) {f : D'.toPre.X → D.toPre.X}
     (h : Match (U.gt (e + 1)) (U'.gt (e + 1)) f) : Match (U.gt e) (U'.gt e) f := by
@@ -150,6 +151,7 @@ theorem match_down {D D' : DegData R I} {A A' : PolAV (Spec (CommRingCat.of (Fra
 end CharAgree
 
 
+open CharAgree in
 theorem unifPre_characterGroup_iso : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] (I : Ideal R), AdmBase R I → ∀ (D D' : DegData R I) (A A' : PolAV (Spec (CommRingCat.of (FractionRing R)))) (G : Over (Spec (CommRingCat.of R))) [GrpObj G] [IsCommMonObj G], IsSemiAbelian G → ∀ (U : UnifPre I D A G) (U' : UnifPre I D' A' G), ∃ xe : D'.toPre.X ≃+ D.toPre.X, (∀ (e : ℕ) (Z : Scheme.{0}) (r : Z ⟶ (thickObj R I e G).left) (z : Z) (J : (Z ⟶ D.toPre.P.A.left) → D.toPre.P.L.ι) (J' : (Z ⟶ D'.toPre.P.A.left) → D'.toPre.P.L.ι), Geo.Tor.Good D.toPre.P.L z J → Geo.Tor.Good D'.toPre.P.L z J' → r ≫ (U.gt e).pG.left = r ≫ (fstG I e G).left ≫ G.hom ≫ eSec D.toPre.P.A → r ≫ (U'.gt e).pG.left = r ≫ (fstG I e G).left ≫ G.hom ≫ eSec D'.toPre.P.A → ∀ x, Geo.Tor.val ((U.gt e).t (xe x)) r z J = Geo.Tor.val ((U'.gt e).t x) r z J') := by
   intro R _ _ _ I hR D D' A A' G _ _ _ U U'
   obtain ⟨hN, -, -, hC⟩ := hR

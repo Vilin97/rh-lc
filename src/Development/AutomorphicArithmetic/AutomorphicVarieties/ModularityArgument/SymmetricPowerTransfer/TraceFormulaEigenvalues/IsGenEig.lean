@@ -75,6 +75,7 @@ def opF (f : G → ℂ) (φ : G → V) (g : G) : V := ∑ᶠ x : G ⧸ B.U, f (s
 
 
 open scoped Classical in
+open Classical in
 def R (f : G → ℂ) : Module.End ℂ B.Forms :=
   if h : ∃ L : Module.End ℂ B.Forms, ∀ φ, (L φ).1 = s.opF f φ.1 then h.choose else 0
 

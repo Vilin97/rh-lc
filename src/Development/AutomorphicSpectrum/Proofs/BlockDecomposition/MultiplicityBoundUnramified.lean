@@ -218,6 +218,7 @@ theorem not_dvd_of_not_lvl {σ : R →+* R} {ϖ : R} {q : ℕ} {ε : ℤ} (h : I
 end GlobalTheory.CompanionTheory.GunrNuBound
 
 
+open GlobalTheory.CompanionTheory.GunrNuBound in
 theorem GlobalTheory.CompanionTheory.GunrNuBound.nuBound : PositivityTheory.SiegelWeilFormula.Gunr.NuBound := by
   classical
   intro R _ σ ϖ q ε h n k r hr hx

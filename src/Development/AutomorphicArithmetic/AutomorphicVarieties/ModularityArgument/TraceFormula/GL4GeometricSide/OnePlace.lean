@@ -61,6 +61,7 @@ private theorem twist {A : Module.End ℂ V} (hA : A * A = 1) (hE : ∀ a b, A *
     rw [this]; exact mul_mem hu hv
 
 
+variable (E1 E2) in
 private def cyc (x : V) : Submodule ℂ V where
   carrier := {y | ∃ a ∈ alg E1 E2, a x = y}
   add_mem' := by

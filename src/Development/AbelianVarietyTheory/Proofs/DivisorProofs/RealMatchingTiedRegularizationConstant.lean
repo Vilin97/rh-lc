@@ -262,6 +262,7 @@ theorem gridFr_unique {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L s
 
 
 
+open GlobalTheory.SquareConv in
 theorem standing_of_size {large₂ : SizeData₂ D} (hs : GlobalTheory.IndefiniteRowSideFullHecke.LevelPlusSubgroup.SizeRows large₂) (hx : 11 ≤ D.host.splitBound) {T : Type}
     {L : LevCh D T} {μ₀ : T} (hL : L.Is μ₀) {sc : Consts} (G : GridData L sc) (t : T) : SquareStanding G t := by
   classical

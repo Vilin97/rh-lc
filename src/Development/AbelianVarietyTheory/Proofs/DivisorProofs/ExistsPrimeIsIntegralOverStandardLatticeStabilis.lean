@@ -50,6 +50,7 @@ end Ad
 end GlobalTheory.NormSum.IntOver
 
 
+open GlobalTheory.NormSum.IntOver GlobalTheory.NormSum.RepAt GlobalTheory.NormSum.PtsMem in
 theorem GlobalTheory.NormSum.exists_prime_integralOver :
     ∀ (D : Formalism.BasicNotions.D7) (N : ℕ) (h : ↥(Formalism.MainNotions.StandardLatticesGL3.GA D N)), ∃ p : ℕ, p.Prime ∧ GlobalTheory.NormSum.IntegralOver D p h := by
   intro D N h

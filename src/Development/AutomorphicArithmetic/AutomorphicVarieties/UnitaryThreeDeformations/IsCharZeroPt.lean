@@ -27,6 +27,7 @@ variable {O R Γ : Type} [CommRing O] [IsLocalRing O] [CommRing R] [Algebra O R]
   (u : Γ →* GG (m := 3) (R := R))
 
 
+variable (O) in
 def wpart (j : ℤ) : Submodule O R where
   carrier := {x | ∀ (R' : Type) [CommRing R'] [Algebra O R'] [IsCO O R'] (f f' : R →ₐ[O] R') (t : R'ˣ),
     push f' u = conjBy (tor t) (push f u) → f' x = ((t ^ j : R'ˣ) : R') * f x}

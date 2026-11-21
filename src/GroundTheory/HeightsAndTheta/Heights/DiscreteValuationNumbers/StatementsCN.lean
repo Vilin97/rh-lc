@@ -27,6 +27,7 @@ def shiftFn (s : K → ℤ) (f : (K → ℤ) → ℤ) : (K → ℤ) → ℤ := f
 variable {ι : K → Type*}
 
 open scoped Classical in
+open Classical in
 def idealCycle {R : Type*} [CommRing R] (J W : Ideal (MRing ι R)) : ℤ :=
   if h : W ∈ J.minimalPrimes ∧ IsRelevant W then
     haveI : W.IsPrime := h.1.1.1

@@ -65,6 +65,7 @@ theorem rsp_right {X : Submodule ℂ (Kinf E n → ℂ)} {w : Kinf E n → ℂ} 
   | smul a x _ hx => exact Submodule.smul_mem _ a hx
 
 
+omit [NumberField E] [IsCMField E] in
 theorem fd_rsp_lt (X : Submodule ℂ (Kinf E n → ℂ)) [FiniteDimensional ℂ X] : FiniteDimensional ℂ (rsp (lt X)) := by
   set Y := lt X with hY
   have : FiniteDimensional ℂ Y := Submodule.finiteDimensional_of_le (lt_le X)

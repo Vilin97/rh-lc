@@ -334,6 +334,7 @@ def quotSL {R S : Type} [CommRing R] [CommRing S] (e : R ≃+* S) [RingHomInvPai
     rfl
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem lenOlSelf {D : D7} (i : D.nd.Loc) : LenOlSelf i := by
   intro w hw
   unfold lenOl eON

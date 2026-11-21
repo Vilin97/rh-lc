@@ -29,6 +29,8 @@ abbrev StdFrame {D : D7} {V : HSp D} {n : ℕ} (hF : D.host.F = maximalRealSubfi
   Formalism.IndefR.principalLevelFrame.StdPsi hF P
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
 structure RealAt (D : D7) (cf : CharFrame D) (nch : NChoice D) (tp : TupTied D cf nch) : Type 1 where
   G : Type
   [grp : Group G]

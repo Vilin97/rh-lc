@@ -75,6 +75,7 @@ theorem cont_chart {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHolAtlas e 
 end PositivityTheory.Xgp.per_int
 
 
+open PositivityTheory.Xgp.per_int in
 theorem PositivityTheory.Xgp.t_per_int : ∀ (e : ℕ) (X : Type) [TopologicalSpace X] [CompactSpace X] [T2Space X] (A : FinHolAtlas e X) (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N j : ℕ) (U : Set X) (th : Ψ × Fin N → LocPot X) (ph : Ψ × Fin N → X → ℝ), j ≤ N → e = antisymDegree Ψ N → IsOpen U → IsNull A Uᶜ → (∀ p, IsPotential A (th p)) → (∀ p, A.SmoothOn U (ph p)) → IsUniformised A U j (fun p => th p + LocPot.ofFun (ph p)) → (∀ w : Fin e → Ψ × Fin N, MIntegrable A (fun i => th (w i) + LocPot.ofFun (ph (w i))) (fun _ => 1)) → ∃ v : ℝ, 0 < v ∧ toWt (formPoly e fun w => mInt A (fun i => th (w i) + LocPot.ofFun (ph (w i))) (fun _ => 1)) = C v * antisymDelta Ψ N := by
   intro e X _ _ _ A Ψ _ _ N j U th ph hj he hU hN hth hph hun hI
   let pot : Ψ × Fin N → LocPot X := fun p => th p + LocPot.ofFun (ph p)

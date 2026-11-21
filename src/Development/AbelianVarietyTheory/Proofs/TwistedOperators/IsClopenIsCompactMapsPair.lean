@@ -38,6 +38,7 @@ theorem isClopen_lattice (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] : IsC
   exact (continuous_apply i).comp (continuous_const.matrix_mulVec continuous_id)
 
 
+omit [Fintype n] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem maps_stdLat_iff {x : Matrix n n' k} :
     (∀ y ∈ stdLat k n', x *ᵥ y ∈ stdLat k n) ↔ ∀ i j, x i j ∈ 𝒪[k] := by
   classical

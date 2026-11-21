@@ -338,6 +338,9 @@ private lemma supFrom_zero_bd {a b : ℕ} (u : _root_.GlobalTheory.GLq.Mt g a)
     exact entN_eq_zero_of_le v (Or.inr (by omega))
 
 
+open Polynomial in
+open scoped Classical in
+variable {g : ℕ} [Fact g.Prime] in
 theorem _root_.GlobalTheory.GLm.OpenCell.openCell : ∀ (g : ℕ) [Fact g.Prime] (ψ : AddChar (ZMod g) ℂ) (a b n : ℕ) (σ : Equiv.Perm (Fin n)) (Φ : _root_.GlobalTheory.GLq.Gn g a → _root_.GlobalTheory.GLq.Gn g b → ℂ), n = a + b → (∀ j : Fin n, (σ j : ℕ) = if (j : ℕ) < a then b + j else j - a) → ((Finset.univ.filter fun x : _root_.GlobalTheory.GLq.Gn g n => _root_.Formalism.MainNotions.ArithmeticCylinders.IsUniUp (x : _root_.GlobalTheory.GLq.Mt g n) ∧ _root_.GlobalTheory.GLq.InPar a (((_root_.GlobalTheory.GLm.pm g σ)⁻¹ * x * _root_.GlobalTheory.GLm.pm g σ : _root_.GlobalTheory.GLq.Gn g n) : _root_.GlobalTheory.GLq.Mt g n)).card : ℂ)⁻¹ * (∑ x : _root_.GlobalTheory.GLq.Gn g n, if _root_.Formalism.MainNotions.ArithmeticCylinders.IsUniUp (x : _root_.GlobalTheory.GLq.Mt g n) ∧ _root_.GlobalTheory.GLq.InPar a (((_root_.GlobalTheory.GLm.pm g σ)⁻¹ * x * _root_.GlobalTheory.GLm.pm g σ : _root_.GlobalTheory.GLq.Gn g n) : _root_.GlobalTheory.GLq.Mt g n) then (ψ (_root_.GlobalTheory.GLm.supFrom 0 (x : _root_.GlobalTheory.GLq.Mt g n)))⁻¹ * Φ (_root_.GlobalTheory.GLq.toG (_root_.GlobalTheory.GLq.tl a (((_root_.GlobalTheory.GLm.pm g σ)⁻¹ * x * _root_.GlobalTheory.GLm.pm g σ : _root_.GlobalTheory.GLq.Gn g n) : _root_.GlobalTheory.GLq.Mt g n))) (_root_.GlobalTheory.GLq.toG (_root_.GlobalTheory.GLq.br a b (((_root_.GlobalTheory.GLm.pm g σ)⁻¹ * x * _root_.GlobalTheory.GLm.pm g σ : _root_.GlobalTheory.GLq.Gn g n) : _root_.GlobalTheory.GLq.Mt g n))) else 0) = _root_.GlobalTheory.GLq.wh ψ (fun x => _root_.GlobalTheory.GLq.wh ψ (Φ x)) := by
   intro g _ ψ a b n σ Φ hn hσ
   subst hn

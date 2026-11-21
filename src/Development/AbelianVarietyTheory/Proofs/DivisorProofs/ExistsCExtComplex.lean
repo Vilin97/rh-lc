@@ -130,6 +130,7 @@ end GlobalTheory.UMin.KeySmall
 namespace GlobalTheory.UMin.KeySmall
 
 
+set_option maxHeartbeats 4000000 in
 theorem norm_key_eq_one : ∀ κ : Rule, Rule4 κ → ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [CharZero V],
     IsAdicComplete (IsLocalRing.maximalIdeal V) V →
     ∀ (D : DegData V (IsLocalRing.maximalIdeal V)) (x : KeyIn (FractionRing V)) (G : Over (Sp V)) [GrpObj G] [IsCommMonObj G],
@@ -294,6 +295,8 @@ end GlobalTheory.UMin.KeySmall
 namespace GlobalTheory.UMin.KeySmall
 
 
+open Cardinal IsLocalRing GlobalTheory.RatNorm in
+set_option maxHeartbeats 800000 in
 theorem exists_cExt_complex : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [CharZero V], #V ≤ 𝔠 →
     ∃ (C : Type) (_ : NontriviallyNormedField C) (_ : IsUltrametricDist C) (_ : CompleteSpace C) (_ : IsAlgClosed C)
       (_ : CharZero C) (_ : Algebra (FractionRing V) C), CExt V (IsLocalRing.maximalIdeal V) C ∧ Nonempty (C ≃+* ℂ) := by
@@ -362,6 +365,7 @@ theorem exists_cExt_complex : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscre
       (Cardinal.eq.1 (by rw [hC, Cardinal.mk_complex]))
 
 
+open Cardinal GlobalTheory.KeyEven in
 theorem key_unit_unif (κ : Rule) (hR : Rule4 κ) (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [CharZero V]
     (hcpl : IsAdicComplete (IsLocalRing.maximalIdeal V) V) (hcV : #V ≤ 𝔠)
     (D : DegData V (IsLocalRing.maximalIdeal V)) (x : KeyIn (FractionRing V)) (G : Over (Sp V)) [GrpObj G] [IsCommMonObj G]
@@ -402,6 +406,7 @@ theorem dualMapR_eq_of_map {R R' : Type} [CommRing R] [CommRing R'] (f : R →+*
   rfl
 
 
+open Cardinal GlobalTheory.KeyEven in
 theorem key_unit_trait (κ : Rule) (hR : Rule4 κ) (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [CharZero V]
     (hA : IsAdicComplete (IsLocalRing.maximalIdeal V) V) (hF : #V ≤ 𝔠)
     (G : Over (Sp V)) [GrpObj G] [IsCommMonObj G] (L : RigLB G) (σ : L.L.Sec) (x : KeyIn (FractionRing V))

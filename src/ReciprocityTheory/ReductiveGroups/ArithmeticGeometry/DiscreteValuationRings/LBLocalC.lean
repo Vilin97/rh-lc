@@ -151,6 +151,7 @@ lemma genHasVal_units {X : Scheme.{0}} (L : LB X) {Ix : Type} [Fintype Ix]
   · exact (inv_mul_cancel_right _ _).symm
 
 
+set_option maxHeartbeats 1000000 in
 lemma genHasVal_top {X : Scheme.{0}} (L : LB X) {Ix : Type} [Fintype Ix]
     (φ : Ix → (Spec (CommRingCat.of V) ⟶ X)) (ε : Ix → ℤ) (t : LB.Gen (LB.LinComb L (fun k => jK V ≫ φ k) ε)) {n : ℤ}
     (hn : GenHasVal ϖ L φ (fun k => jK V ≫ φ k) (fun _ => rfl) ε t n) (j₀ : Ix → L.ι)
@@ -189,6 +190,7 @@ lemma genHasVal_top {X : Scheme.{0}} (L : LB X) {Ix : Type} [Fintype Ix]
     congr 1
 
 
+omit [IsDiscreteValuationRing V] in
 theorem isDominant_jK : IsDominant (jK V) := by
   constructor
   have hinj : Function.Injective (algebraMap V (FractionRing V)) := IsFractionRing.injective V _

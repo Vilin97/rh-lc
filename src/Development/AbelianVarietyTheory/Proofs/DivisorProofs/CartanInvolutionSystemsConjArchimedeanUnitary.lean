@@ -18,6 +18,7 @@ noncomputable section
 namespace GlobalTheory.ConjCartan
 
 
+open scoped ComplexOrder in
 theorem exists_conj_cartan_matrix : ∀ (n : ℕ) (M θ₁ θ₂ : Matrix (Fin n) (Fin n) ℂ), Mᴴ = M → IsCartan M θ₁ → IsCartan M θ₂ →
     ∃ u v : Matrix (Fin n) (Fin n) ℂ, u * v = 1 ∧ uᵀ * M * u.map star = M ∧ u * θ₁ = θ₂ * u := by
   intro n M θ₁ θ₂ hM h1 h2
@@ -112,6 +113,7 @@ theorem piInf_inclR {w : InfinitePlace F} (τ : EmbOver E w) (x : E) : piInf τ 
   simp [piInf, inclR, compInf, infEmb_tmul]
 
 
+variable (F E) in
 def archIdeal : Ideal (AE F E) where
   carrier := {z | At (evI F) z}
   add_mem' := fun {a b} ha hb u hu => by rw [smul_add, ha u hu, hb u hu, add_zero]

@@ -43,6 +43,7 @@ end GlobalTheory.BetaArchPf
 namespace GlobalTheory.SqTop
 
 
+open GlobalTheory.BetaArchPf in
 theorem betaArch_of_transport : GlobalTheory.IndefiniteRowSideFullHecke.LatticeNormTransport.Transport → FieldDat → LBound → TorEx → BetaArch := by
   intro hTr hFD hLB hTE
   obtain ⟨CF1, hF1⟩ := hFD

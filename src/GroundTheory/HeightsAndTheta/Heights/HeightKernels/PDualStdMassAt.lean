@@ -26,6 +26,8 @@ theorem segre_const (z : (Σ _ : Unit, T) → ℂ) (t : T) :
 
 
 open scoped Classical in
+omit [Fintype T] [DecidableEq T] in
+open Classical in
 theorem recover_planePt {i : ℕ} {F : HermLattice K i} (b : Module.Basis T ℤ (dualLattice F))
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b))) (σ : K →+* ℂ) (v : Fin i → ℂ) :
     dualRecover b hb (fun t => dualPlanePt b σ v ⟨(), t⟩) =
@@ -36,6 +38,7 @@ theorem recover_planePt {i : ℕ} {F : HermLattice K i} (b : Module.Basis T ℤ 
     Fintype.sum_prod_type]
 
 
+omit [Fintype T] [DecidableEq T] in
 theorem proj_segre_planePt {i : ℕ} {F : HermLattice K i} (b : Module.Basis T ℤ (dualLattice F))
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b))) (σ : K →+* ℂ) (v : Fin i → ℂ) :
     dualProj b hb (segre (dualPlanePt b σ v)) = v := by
@@ -113,6 +116,7 @@ theorem fibre_eq (hOn : DualPtsOnPlane.Statement) (hOf : DualPtsOfPlane.Statemen
     exact ⟨_, hOf K (D + 1) F T b hb σ _ hv, rfl, proj_segre_planePt b hb σ _⟩
 
 
+omit [Fintype T] [DecidableEq T] in
 theorem planePt_injective {D : ℕ} {F : HermLattice K (D + 1)} (b : Module.Basis T ℤ (dualLattice F))
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b))) (y : Fin D → ℂ) :
     Function.Injective fun σ : K →+* ℂ => segre (ι := dualBlocks T) (dualPlanePt b σ (Fin.cons 1 y)) := by

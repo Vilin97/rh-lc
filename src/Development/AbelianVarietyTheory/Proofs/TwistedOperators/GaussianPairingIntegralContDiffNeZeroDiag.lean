@@ -184,12 +184,14 @@ theorem contDiffOn_gaussMoment (n : ℕ) :
     exact_mod_cast this
 
 
+omit [MeasurableSpace V] [BorelSpace V] in
 def toCont (N : V →ₗ[ℝ] V →ₗ[ℝ] ℂ) : V →L[ℝ] V →L[ℝ] ℂ :=
   LinearMap.toContinuousLinearMap
     ((LinearMap.toContinuousLinearMap : (V →ₗ[ℝ] ℂ) ≃ₗ[ℝ] (V →L[ℝ] ℂ)).toLinearMap ∘ₗ N)
 
 
 
+omit [MeasurableSpace V] [BorelSpace V] in
 def pairForm (M : ℝ → V →ₗ[ℝ] V →ₗ[ℝ] ℂ) (p : ℝ × ℝ) : V →L[ℝ] V →L[ℝ] ℂ :=
   toCont (M p.1 + (M p.2).compr₂ (Complex.conjAe.toLinearMap))
 

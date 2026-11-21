@@ -27,6 +27,7 @@ lemma gram_diag {l : Type*} [Fintype l] (P : Matrix l l ℤ) (G : Matrix l l ℝ
 end PSymplGramMem
 
 
+open PSymplGramMem in
 theorem SymplGramMem.proof : SymplGramMem.Statement := by
   intro n P G hP hG hGpd
   set P' : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) ℝ := P.map (Int.cast : ℤ → ℝ) with hP'

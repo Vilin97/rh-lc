@@ -135,6 +135,7 @@ theorem mt_mul (B : HSp D) (g h : GA D B) : mt B (g * h) = mt B g * mt B h := by
 theorem mt_one (B : HSp D) : mt B 1 = 1 := by simp [Formalism.L2.Theta.mt]
 
 
+set_option maxHeartbeats 1000000 in
 theorem closure_prop (B : HSp D) {ρ : ℕ} (e : Fin ρ → B.V) (n : GA D B) (hn : n ∈ Subgroup.closure (NS B e)) :
     (∀ s ∈ spanA B e, (mt B n).mulVec s ∈ spanA B e) ∧
       ∀ x : B.V, (∀ i, B.hD x (e i) = 0) → actV B n x - vecA B x ∈ spanA B e := by

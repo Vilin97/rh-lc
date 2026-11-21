@@ -177,6 +177,7 @@ theorem half_prod {l l₂ : Level H} {pd : ℕ} {I : Ideal (𝓞 E)} (hM : l₂.
     exact_mod_cast (by omega : l.M ≠ 0)
   exact mul_left_cancel₀ h0 h1
 
+set_option maxHeartbeats 1000000 in
 theorem datum_inv_char : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (n : ℕ) (d : DeltaDat Xo c n), d.l₂.M = l.M * d.pd → Nat.Coprime d.pd l.M → d.l₂.Mb = l.Mb * d.I → d.I ⊔ d.I.map (H.bar : 𝓞 E →+* 𝓞 E) = ⊤ → l.Dvd d.l₂ → ∀ (ph : (Fin n → LaJ Xo c d) → c.F) (ψ : (LaI Xo c d ≃ₗ[𝓞 E] LaI Xo c d) →* c.Fˣ) (x₀ : Fin n → LaJ Xo c d), d.PhiPin ph ψ x₀ → ∀ g : Sim Dw, g.InGam l d.l₂ → ∃ (kI : LaI Xo c d ≃ₗ[𝓞 E] LaI Xo c d) (σq : LevQ Dw d.l₂ ≃ LevQ Dw d.l₂), (∀ a : Dw.La, (Submodule.Quotient.mk (g.f d.l₂.M a) : LaI Xo c d) = kI (Submodule.Quotient.mk a)) ∧ (∀ a, σq (Submodule.Quotient.mk a) = Submodule.Quotient.mk (g.f d.l₂.M a)) ∧ ∀ (x0 : Fin n → Dw.La) (q : Fin n → LevQ Dw d.l₂), d.w x0 (fun b => σq.symm (q b)) = d.eF (((ψ kI)⁻¹ : c.Fˣ) : c.F) * d.w x0 q := by
   intro E _ _ _ H Dw l Xo c n d hM hcop hb hsup hdvd ph ψ x₀ hpin g hg
   obtain ⟨-, hgM, -⟩ := hg

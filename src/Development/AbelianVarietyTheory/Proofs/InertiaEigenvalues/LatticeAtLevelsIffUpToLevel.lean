@@ -122,6 +122,7 @@ theorem single_mem_shiftSer {F : Submodule L M} (k : ℤ) {d : M} (hd : d ∈ F)
   · simp [Pi.single_eq_of_ne h]
 
 
+open GlobalTheory.SenLines.Coords in
 theorem spanIsLines_of_graded_onto {N : Type} (E : N → ℤ → M) {r : ℕ} (u : Fin r → ℤ) (d : Fin r → M)
     (hd : LinearIndependent L d) (A : ℤ → Submodule L M)
     (hA : ∀ a, A a = Submodule.span L (d '' {k | a ≤ u k})) (h1 : ∀ x k, E x k ∈ A (-k))
@@ -575,6 +576,7 @@ theorem low_guard_iff [CharZero LL] : (∃ j : ℕ, j < W.s ∧ IsPrimitiveRoot 
     exact ⟨j', by omega, hζ⟩
 
 
+omit i ζ in
 theorem coeffForm_iff_spans [CharZero LL] (hT : IsCrys PD T.ρ) (Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Prop)
     (hPt : ∀ i ζ τ, Pt i ζ τ → (SpanAt W T i ζ τ ↔ CoeffAt W T i ζ τ)) :
     p4 W Pt T ↔ ∀ i ζ, (∀ j : ℕ, j < W.s → IsPrimitiveRoot ζ (PD.p ^ j) →
@@ -746,6 +748,7 @@ theorem pt_iff (τ : ↥K.1 →ₐ[ℚ_[l]] ↥LL.1) :
   exact congrArg τs (Subtype.ext hxy.symm)
 
 
+set_option maxHeartbeats 1000000 in
 theorem mid_iff (ht : LocTied l P AI) (hT : IsCrys (P.PD K) T.ρ) (τ : ↥K.1 →ₐ[ℚ_[l]] ↥LL.1)
     (hpt : GlobalTheory.NL.Pt H h i ζ τ) : SpanAt (H.W K s LL h) T i ζ τ ↔ CoeffAt (H.W K s LL h) T i ζ τ := by
   have hl : l.Prime := Fact.out
@@ -767,6 +770,7 @@ def UpToLevel : Prop :=
     (∀ τ : ↥(Ks K s) →ₐ[ℚ_[l]] ↥LL.1, H.IsPt h i ζ τ → SpanAt (H.W K s LL h) T i ζ (resEmb h τ))
 
 
+set_option maxHeartbeats 1000000 in
 theorem upToLevel_iff (ht : LocTied l P AI) (hT : IsCrys (P.PD K) T.ρ) :
     p4 (H.W K s LL h) (GlobalTheory.NL.Pt H h) T ↔ UpToLevel H h T := by
   haveI : CharZero ↥LL.1 := algebraRat.charZero _
@@ -778,6 +782,7 @@ theorem upToLevel_iff (ht : LocTied l P AI) (hT : IsCrys (P.PD K) T.ρ) :
   exact g τs h1
 
 
+set_option maxHeartbeats 1000000 in
 theorem latticeAtLevels_iff_upToLevel {F : LocFon l P AI H} (C : LocCmpT l P AI H F) :
     LatticeAtLevels l P AI H F C ↔ ∀ (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL)
       (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)), IsCrys (P.PD K) T.ρ → UpToLevel H h T := by

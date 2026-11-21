@@ -129,6 +129,7 @@ theorem lpChar_lpOfChar (x : WD h) (ξ : Weil h →* ℂˣ) (hξ : WeilDeligne.I
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 
+variable (w) in
 theorem resCard_eq_normV : resCard (w.adicCompletion E) = normV w := by
   have : (Valued.v : Valuation (w.adicCompletion E) (WithZero (Multiplicative ℤ))).Compatible :=
     Valuation.Compatible.ofValuation _

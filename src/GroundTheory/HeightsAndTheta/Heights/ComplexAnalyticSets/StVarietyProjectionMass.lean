@@ -20,6 +20,7 @@ def rowsProj {n d : ℕ} (U : Matrix (Fin n) (Fin n) ℂ) (s : Fin d → Fin n)
   WithLp.toLp 2 ((U.submatrix s id).mulVec fun j => z j)
 
 
+open Classical in
 def VarietyProjectionMass.Statement : Prop :=
   ∀ (n d : ℕ) (J : Ideal (MvPolynomial (Fin n) ℂ)), J.IsPrime →
     ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ J) = d →

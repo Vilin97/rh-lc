@@ -15,6 +15,7 @@ noncomputable section
 universe u
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem isReduced_tensorProduct_of_forall_field {k : Type*} [Field k] (C : Type*) [CommRing C]
     [Algebra k C]
     (h : ∀ (E : Type u) [Field E] [Algebra k E] [Algebra.EssFiniteType k E], IsReduced (C ⊗[k] E))
@@ -79,6 +80,7 @@ theorem isReduced_fractionRing_mvPolynomial_tensorProduct (K : Type u) [Field K]
     (AlgEquiv.injective _)
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem isReduced_tensorProduct_field_of_perfectField (K : Type u) [Field K] [PerfectField K]
     (L : Type u) [Field L] [Algebra K L] (E : Type u) [Field E] [Algebra K E]
     [Algebra.EssFiniteType K E] : IsReduced (L ⊗[K] E) := by

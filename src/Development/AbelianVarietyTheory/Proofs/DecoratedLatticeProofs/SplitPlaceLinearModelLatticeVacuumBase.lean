@@ -90,6 +90,7 @@ theorem lamUnram : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topologic
   GlobalTheory.T.splitPlaceLocalCharacter_isUnramified_of_heckeUnramified
 
 
+open GlobalTheory.PlaceModel GlobalTheory.PlaceDatum GlobalTheory.SplitHecke GlobalTheory.ThetaMove in
 theorem extFunAct : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (p : SplitPt D k) (S T : HSp D) (n n' : Type) [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n']
     (α : Frame p S n') (β : Frame p T n) (Ψ : Matrix n n' k → ℂ) (g : GL n' k) (h : GL n k) (t : WO S T),

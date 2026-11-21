@@ -35,6 +35,7 @@ theorem valTw_eq (χ : HChar L) (v : HeightOneSpectrum (𝓞 L)) : χ.valTw (1 /
     Complex.ofReal_natCast, Complex.ofReal_neg]
 
 
+open Classical in
 def cnt (a : 𝓞 L) (v : HeightOneSpectrum (𝓞 L)) : ℕ :=
   (Associates.mk v.asIdeal).count (Associates.mk (Ideal.span {a} : Ideal (𝓞 L))).factors
 

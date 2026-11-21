@@ -94,6 +94,7 @@ theorem lev_galTate (l : ℕ) [Fact l.Prime] (σ : Ω ≃ₐ[K] Ω) (t : Tate l 
     (galTate A l σ t).lev n = galPts A σ (t.lev n) := rfl
 
 
+variable (K) in
 def inertia (V : ValuationSubring Ω) : Subgroup (Ω ≃ₐ[K] Ω) :=
   (V.inertiaSubgroup K).map (V.decompositionSubgroup K).subtype
 

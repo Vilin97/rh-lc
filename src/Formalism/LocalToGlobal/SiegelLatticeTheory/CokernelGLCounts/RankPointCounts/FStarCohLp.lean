@@ -160,6 +160,7 @@ variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) {u u' : D.what₂.Word}
   {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
 
+set_option maxHeartbeats 1000000 in
 theorem starIdentG (γ : TermDef.Term D u u' F0 what₂) (Z : PairVal.MatR D) (hC : Ctx γ Z)
     (hgen : ∀ p, (locH Zd p).IsGeneric (tLoc Zd p γ)) (F'₂ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E))
     (hZ : ZhatL (lf D F0) F'₂ = Z) (hc : starCompat γ F'₂) (hU : starInU γ F'₂)
@@ -283,6 +284,7 @@ theorem starIdentG (γ : TermDef.Term D u u' F0 what₂) (Z : PairVal.MatR D) (h
 variable (u u' F0 what₂)
 
 
+set_option maxHeartbeats 1000000 in
 theorem starExists2_of_parts (hP : CtxP u u' F0 what₂) (hGen : CohGen Zd u u' F0 what₂)
     (hIo : CohIota Zd u u' F0 what₂) (hGood : CohGood Zd u u' F0 what₂) : StarExists2 Zd u u' F0 what₂ := by
   intro γ Z hC

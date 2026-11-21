@@ -99,6 +99,7 @@ theorem germ_fun_smul (i : B.ι) (y : Y) (hy : y ∈ O) (hi : y ∈ B.U i) (a : 
     (congrArg (· * _) (ger_resG _ _ _ _))
 
 
+variable (p) in
 def const (y : Y) : k →+* Y.presheaf.stalk y := (ger (U := ⊤) y trivial).comp (algX p ⊤)
 
 theorem ger_algX (y : Y) (hy : y ∈ O) (c : k) : ger y hy (algX p O c) = const p y c := by
@@ -135,6 +136,7 @@ def restr (h : O' ≤ O) : H0 p B O →ₗ[k] H0 p B O' where
   ger_resG (inf_le_inf_right _ h) y _ _
 
 
+variable (p) in
 def ofSec (O : Y.Opens) : LB.Sec B →+ H0 p B O where
   toFun σ := LB.ofSec σ O
   map_zero' := sec_ext fun _ => map_zero _

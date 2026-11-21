@@ -30,6 +30,7 @@ def maxCpt (M : DSModel V S) (τ : D.what₂.Tau) : Set (Matrix (Fin V.rank) (Fi
   {g | M.fr τ * g * (M.fr τ)⁻¹ ∈ Formalism.REAL.Kset (M.ε τ)}
 
 
+open Classical in
 def IsGKMap (θ : InfFam D) (M : DSModel V S) (J : Set (GA D V)) (χ : GA D V → ℂ) (μ : Measure (GA D V))
     (𝓕 : Set (GA D V)) (T₀ : KMap M) : Prop :=
   (∀ u, IsAutFun V (T₀ u)) ∧

@@ -79,6 +79,7 @@ def PartC (T : LocLat G Qp LL O) (M h : ℕ) : Prop :=
 end Generic
 
 
+open TensorProduct in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.LocalRingStructure.letters_neZero {l : ℕ} [Fact l.Prime] (K : _root_.Formalism.BasicNotions.Loc.FinExt l) :
     NeZero (Module.finrank ℚ_[l] ↥(_root_.Formalism.BasicNotions.Loc.K0 K)) := by
   haveI : FiniteDimensional ℚ_[l] ↥(K : IntermediateField ℚ_[l] (_root_.Formalism.BasicNotions.Loc.Om l)) := K.2

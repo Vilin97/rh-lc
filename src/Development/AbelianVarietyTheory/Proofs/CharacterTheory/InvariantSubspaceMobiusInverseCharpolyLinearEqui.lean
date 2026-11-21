@@ -10,6 +10,7 @@ open Polynomial GlobalTheory.CuspGL
 namespace GlobalTheory.CuspGL
 
 
+open Polynomial in
 theorem _root_.GlobalTheory.CuspGL.invariantSubspaceMobiusInverseRec_linearEquiv_conj {F : Type} [Field F]
     (s : F[X] → ℂ) (n : ℕ) :
     ∀ (V V' : Type) [AddCommGroup V] [Module F V] [FiniteDimensional F V] [AddCommGroup V']
@@ -42,6 +43,7 @@ theorem _root_.GlobalTheory.CuspGL.invariantSubspaceMobiusInverseRec_linearEquiv
     congr 1
 
 
+open Polynomial in
 theorem _root_.GlobalTheory.CuspGL.psi_conj (F : Type) [Field F]
     (s : F[X] → ℂ) (V V' : Type) [AddCommGroup V] [Module F V]
     [FiniteDimensional F V] [AddCommGroup V'] [Module F V'] [FiniteDimensional F V']

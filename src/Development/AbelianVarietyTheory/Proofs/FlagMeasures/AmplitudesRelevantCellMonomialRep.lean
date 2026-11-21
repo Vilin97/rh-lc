@@ -90,6 +90,7 @@ theorem zhat_of_zhatO {z z' : Fin (2 * r + k + 1) → ℂ} {g : MatKR k r} {Z : 
   simp
 
 
+open GlobalTheory.ThA.OrbSq in
 theorem monomial_of_pt {z z' : Fin (2 * r + k + 1) → ℂ} {g : MatKR k r} (hg : g ∈ UH (Hpk k r))
     {p : Point ℂ (r + 1)} (h : ZhatO k r z z' g = ptMat p) :
     (∃ d : Fin (r + 1) → ℂ, (∀ a, d a ≠ 0) ∧ Zhat k r z z' g = C2.monoP (permOf p) d) ∧
@@ -113,6 +114,7 @@ theorem monomial_of_pt {z z' : Fin (2 * r + k + 1) → ℂ} {g : MatKR k r} (hg 
   · rw [if_neg e, if_neg (fun e' => e (by rw [e', permOf_invol])), star_zero]
 
 
+open GlobalTheory.ThA.OrbSq P.Dx1.Rel in
 theorem relevant {z z' : Fin (2 * r + k + 1) → ℂ} (hz : inWb k r z) (hz' : inWb k r z') {γ : MatKR k r}
     (hγ : γ ∈ UH (Hpk k r)) {q : Point ℂ (r + 1)} (hZ : ZhatO k r z z' γ = ptMat q) (c : ℝ) :
     ∀ a ∈ RStab k r γ, psi k r z c a = psi k r z' c (γ⁻¹ * a * γ) := by
@@ -286,6 +288,7 @@ theorem haar_conj {g : MatKR k r} (hg : g ∈ UH (Hpk k r)) {μ : Measure (Mt k 
   · exact fun e => h.ne_zero ((Measure.map_eq_zero_iff hm.aemeasurable).1 e)
 
 
+open GlobalTheory.ThA.OrbSq P P.Dx2 in
 theorem root_haar (hk : 1 ≤ k) {z z' : Fin (2 * r + k + 1) → ℂ} (hz : inWb k r z) (hz' : inWb k r z')
     (hT : 0 < Tz k r z) (hT' : 0 < Tz k r z') {g : MatKR k r} (hg : g ∈ UH (Hpk k r)) (hpos : 0 < Gf k r z z' g)
     {γ : Point ℂ (r + 1)} {d : Fin (r + 1) → ℂ} (hd : ∀ a, d a ≠ 0) (hZw : Zhat k r z z' g = C2.monoP (permOf γ) d)
@@ -352,6 +355,7 @@ theorem exists_orbQuot (L : LocBessel k r) (hκ : L.κN ≠ ⊤) {g : MatKR k r}
 theorem psi_ne (z : Fin (2 * r + k + 1) → ℂ) (c : ℂ) (a : MatKR k r) : psi k r z c a ≠ 0 := Complex.exp_ne_zero _
 
 
+open BranchingSupport GlobalTheory.CellAmp GlobalTheory.Amp Formalism.BasicNotions Finset in
 theorem amp_at_monomial : ∀ (D : D7) τ w w' θ (W : LocW D.R.k D.R.rS) (hW : GoodW D τ w w' θ W) (lam0 : Fin (2 * D.R.rS + D.R.k + 1) → ℝ) (A₀ : LocS W) (hA : GoodS D lam0 A₀) (hT : 0 < Tr D w) (hT' : 0 < Tr D w'), 0 < θ → 0 < D.host.ka / gg D → ∀ γ p, RelPt D W.z W.z' γ p → ∀ θ' : ℝ, 0 < θ' → ∀ νR, RMeas D W γ θ' νR → ∃ (g₀ : MatKR D.R.k D.R.rS) (μR ν₀ : Measure (Mt D.R.k D.R.rS)) (ν : Measure (PairSp D.R.k D.R.rS)) (s : ℂ), CellData (toBessel D τ w w' θ W lam0 A₀ hW hA hT hT') W.μG g₀ μR ν₀ ν ∧ ν₀ {x | Matrix.of x ∉ UH (Hpk D.R.k D.R.rS)} = 0 ∧ (∀ l, DminN W.z W.z' γ l = DminN W.z W.z' g₀ l) ∧ ∀ (lam : Fin (2 * D.R.rS + D.R.k + 1) → ℝ) (A : LocS W), GoodS D lam A → A.J νR γ = s • A.J ν₀ g₀ := by
   intro D τ w w' θ W hW lam0 A₀ hA hT hT' _ hka γ p hp θ' hθ' νR hν
   obtain ⟨q, μ', ⟨n, hn, n', hn', g, rfl, hZ, μ₀, h0, h1, rfl⟩, hq⟩ := hν

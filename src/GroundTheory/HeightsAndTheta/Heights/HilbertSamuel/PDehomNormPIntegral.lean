@@ -103,6 +103,7 @@ theorem coeff_mem_of_dehom_coeff_mem {Ω : Type} [Field Ω] [CharZero Ω] {D : �
 end DehomNormPIntegral
 
 
+open DehomCharpolyForms DehomNormPIntegral in
 theorem DehomNormPIntegral.proof : DehomNormPIntegral.Statement := by
   intro Ω _ _ D l P _ hP hgen p hp M hM j m u hu c hchom hcp μ
   classical

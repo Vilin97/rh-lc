@@ -393,6 +393,8 @@ private theorem relIndex_symm_of_blockFrameMatrix_lemma_2 {F : Type} [Field F] [
   exact ⟨by exact_mod_cast h3.symm, h2⟩
 
 
+open ValuativeRel MeasureTheory in
+open scoped Pointwise ENNReal Classical in
 theorem _root_.GlobalTheory.HL.TraceVol.trace_volume : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] (L : _root_.Formalism.MainNotions.S.Loc.LocE F E), ∀ (r k : ℕ) (S : _root_.GlobalTheory.HL.Frames L r k), ∀ (d : S.Datum) (Λ : Submodule L.O S.V), S.IsTerm d Λ → ∀ d' Λ', S.IsTerm d' Λ' → ∀ (J : ℕ) (Yy : Submodule L.O S.V), J ≤ r + 1 → Yy = (S.spanTo S.f J ⊔ S.spanTo S.f' J).restrictScalars L.O → (S.M d Λ ⊓ Yy).toAddSubgroup.relIndex (S.M d' Λ' ⊓ Yy).toAddSubgroup = (S.M d' Λ' ⊓ Yy).toAddSubgroup.relIndex (S.M d Λ ⊓ Yy).toAddSubgroup ∧ (S.M d Λ ⊓ Yy).toAddSubgroup.relIndex (S.M d' Λ' ⊓ Yy).toAddSubgroup ≠ 0 := by
   intro F _ _ _ _ _ E _ _ _ L r k S d Λ hT d' Λ' hT' J Yy hJ hYy
   subst hYy

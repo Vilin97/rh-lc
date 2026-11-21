@@ -139,6 +139,7 @@ def rho (b : S.β) : S.G b →* Module.End K (VV K lam) where
     rw [smul_mul_smul_comm]
 
 
+open Classical in
 @[reducible] def fam : GFam K where
   β := S.β
   V := VV K lam
@@ -322,12 +323,14 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
 def autO (N : Submodule (𝓞 E) (Sp E n)) : Subgroup (Sp E n ≃ₗ[E] Sp E n) := UF E n ⊓ autLat N
 
 
+variable (E n) in
 def autOrd : Set ℕ :=
   {a | ∃ N : Submodule (𝓞 E) (Sp E n), Submodule.IsLattice E N ∧ Formalism.HermitianLatticesTheory.IsUnimodular (hStd E n) N ∧ a = Nat.card (autO N)}
 
 def gamRanks (R : Ranks) : Finset ℕ := (Finset.Icc 1 R.m).image R.N ∪ {R.rankX', R.rankY (R.m - 1), R.nV}
 
 
+variable (E) in
 def gamOrd (R : Ranks) : Set ℕ := ⋃ n ∈ gamRanks R, autOrd E n
 
 
@@ -685,6 +688,7 @@ variable {E K : Type} [Field E] [NumberField E] [Field K] {n : ℕ} {S : GStep E
   {ST : Finset (HeightOneSpectrum (𝓞 E))} (A : TDat S ST)
 
 
+set_option maxHeartbeats 1600000 in
 structure Laws (T : ℕ) : Prop where
   lv_rank : ∀ P c, Module.finrank (Res P.1) (A.lv P c) = n
   lk_rank : ∀ P c, Module.finrank (Res P.1) (A.lk P c) = n
@@ -739,6 +743,7 @@ structure FmLaws (Pl : Rows.Places K) (hI : I.Ok) (hQ : Q.Ok) : Prop where
     (locW Pl w (BLat J emb hc i (fam i) P) : Set ((I.S i).hlat emb (lamT hc i) (fam i)).V) = ⊤
 
 
+set_option maxHeartbeats 1600000 in
 def forms {Pl : Rows.Places K} (Z : FmIn J Pl) (hI : I.Ok) (hJ : J.Ok) (hQ : Q.Ok) (l : J.Laws emb σ hc)
     (lf : FmLaws J Q emb σ hc Pl hI hQ) (_hT : Q.Over J) :
     MemberForms K σ Pl ι hc (I.chain emb σ hI hc) (J.atT emb σ hI hJ hc l) (Q.per emb σ hI hQ hc) where
@@ -840,6 +845,7 @@ def Ys.Off (y : Ys X n) (P : HeightOneSpectrum (𝓞 X.E)) : Prop :=
     Formalism.HermitianLatticesTheory.localization₂ w.asIdeal N' = Formalism.HermitianLatticesTheory.localization₂ w.asIdeal N) → y.ys N' = y.ys N
 
 
+variable (ST SG Q) in
 def PtY (y : Ys X n) : Type := {p : DecoF X.E n ST SG Q × Set (Sp X.E n) // p.2 ∈ y.ys p.1.deco.1.N}
 
 @[reducible] def ptYAct (y : Ys X n) (Λ : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K n Q) :
@@ -853,6 +859,7 @@ def PtY (y : Ys X n) : Type := {p : DecoF X.E n ST SG Q × Set (Sp X.E n) // p.2
     rw [map_mul, mul_smul]) (Set.image_image (fun v => g.1.1 v) (fun v => h.1.1 v) p.1.2).symm)
 
 
+open Classical in
 def prefRep {G D : Type} [Group G] [MulAction G D] (pref : D → Prop) (q : MulAction.orbitRel.Quotient G D) : D :=
   if h : ∃ p, Quotient.mk (MulAction.orbitRel G D) p = q ∧ pref p then h.choose else Quotient.out q
 
@@ -864,6 +871,7 @@ theorem prefRep_spec {G D : Type} [Group G] [MulAction G D] (pref : D → Prop) 
   · exact Quotient.out_eq q
 
 
+variable (ST) in
 @[reducible] def stepY (y : Ys X n) (β : Type) [Fintype β] [DecidableEq β] (Λ : β → LevFam X.E X.K n SG)
     (Θ : β → LevQFam X.E X.K n Q) (pref : DecoF X.E n ST SG Q → Prop) : GStep X.E X.K n where
   β := β
@@ -878,11 +886,13 @@ theorem prefRep_spec {G D : Type} [Group G] [MulAction G D] (pref : D → Prop) 
   rp_spec b := @prefRep_spec _ _ _ (ptYAct y (Λ b) (Θ b)) fun p => pref p.1.1
 
 
+open Classical in
 def PtY.mv {y : Ys X n} (p : PtY ST SG Q y) (d : DecoSet X.E n ST SG) : PtY ST SG Q y :=
   if h : (∀ (P : Q) (x : Sp X.E n), p.1.1.1.2 P x ∈ d.1.at P.1 ↔ x ∈ stdAt X.E n P.1) ∧ p.1.2 ∈ y.ys d.1.N
   then ⟨(⟨(d, p.1.1.1.2), h.1⟩, p.1.2), h.2⟩ else p
 
 
+variable (ST) in
 def tdatY (T : ℕ) (y : Ys X n) (β : Type) [Fintype β] [DecidableEq β] (Λ : β → LevFam X.E X.K n SG)
     (Θ : β → LevQFam X.E X.K n Q) (pref : DecoF X.E n ST SG Q → Prop) : TDat (stepY ST y β Λ Θ pref) ST where
   N _ p := p.1.1.deco.1.N

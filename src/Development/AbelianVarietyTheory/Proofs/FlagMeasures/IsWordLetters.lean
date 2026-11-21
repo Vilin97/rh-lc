@@ -220,6 +220,7 @@ theorem vand_eq_Vand {n : ℕ} (x : Fin n → ℝ) (y : ℕ → ℝ) (h : ∀ i 
     omega
 
 
+open Classical in
 def cfg (D : D7) (u : D.what₂.Word) (τ : D.what₂.Tau) : Sz.Cfg where
   k := D.R.k
   m := D.R.m
@@ -361,6 +362,7 @@ theorem num_bound (k m r : ℕ) (B P ae c ka : ℝ) (hm : m = 2 * r + 2) (h40 : 
         gcongr
 
 
+set_option maxHeartbeats 1600000 in
 theorem tcrit_low (D : D7) (large₂ : SizeData₂ D) (C' Cl Cg cb Cu cT CT C0 : ℝ) (hCl : 40 ≤ Cl)
     (hVV : ∀ τ, VV D τ = vand (lamSH D.R (D.hc τ))) (hb' : Real.sqrt large₂.sc.b ≤ large₂.sc.b') (hx : large₂.sc.x ≤ D.R.k) :
     UnitaryVolumeMass.stTcritLow D large₂ C' Cl Cg cb Cu cT CT C0 := by

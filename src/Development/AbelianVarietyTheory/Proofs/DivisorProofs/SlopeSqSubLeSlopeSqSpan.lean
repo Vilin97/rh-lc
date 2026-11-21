@@ -84,6 +84,7 @@ theorem relIndex_span {R S M W : Type} [CommRing R] [CommRing S] [Algebra R S] [
   rfl
 
 
+open scoped ComplexOrder in
 theorem det_le_of_dense {K ι κ : Type} [Field K] [Fintype ι] [Fintype κ] {j : ℕ} (σ : K →+* ℂ) (hσ : DenseRange σ)
     (A : Matrix ι (Fin j) ℂ) (B : Matrix κ (Fin j) ℂ) (t : ℝ)
     (h : ∀ x : Fin j → K, Formalism.HermitianLatticesTheory.cnorm (A *ᵥ fun k => σ (x k)) ≤ t * Formalism.HermitianLatticesTheory.cnorm (B *ᵥ fun k => σ (x k))) :

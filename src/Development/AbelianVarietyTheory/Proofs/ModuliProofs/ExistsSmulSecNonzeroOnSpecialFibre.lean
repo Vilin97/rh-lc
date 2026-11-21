@@ -370,6 +370,7 @@ end Main
 end GlobalTheory.PrimSec
 
 
+open GlobalTheory.PrimSec in
 theorem GlobalTheory.exists_smul_sec_nonzero_on_special_fibre : ∀ (O K : Type) [CommRing O] [IsDomain O] [ValuationRing O] [Ring.DimensionLEOne O] [Field K] [IsAlgClosed K] [Algebra O K] [IsFractionRing O K] (X XK : Scheme.{0}) (f : X ⟶ Sp O) (j : XK ⟶ X) (fK : XK ⟶ Sp K), IsPullback j fK f (spMap (algebraMap O K)) → Smooth f → QuasiCompact f → GeometricallyIntegral f → ∀ M : LB X, M.IsLB → ∀ σ : LB.Sec (M.pull j), (∃ i, σ.f i ≠ 0) → ∃ (c : K) (s : LB.Sec M), c ≠ 0 ∧ (∀ i, (j.app (M.U i)).hom (s.f i) = cst fK (j ⁻¹ᵁ M.U i) c * rs XK (le_pull M j le_rfl) (σ.f (fun _ => i))) ∧ ∃ x ∈ Out.nonzeroLocus s, f x = IsLocalRing.closedPoint O := by
   intro O K _ _ _ _ _ _ _ _ X XK f j fK H hs _ hg M hM σ hσ
   obtain ⟨x₀, hx₀⟩ := f.surjective (IsLocalRing.closedPoint O)

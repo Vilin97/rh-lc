@@ -57,6 +57,7 @@ theorem cycHerbrand_eq_of_mulEquiv (e : H ≃* G) (f : V ≃+ W)
   · rw [cycHerbrand_eq, cycHerbrand_eq, Nat.card_congr e0, Nat.card_congr e1]
 
 
+omit [Fintype H] [Fintype G] in
 theorem mem_zpowers_mulEquiv (e : H ≃* G) {τ : H} (hτ : ∀ h, h ∈ Subgroup.zpowers τ) (g : G) :
     g ∈ Subgroup.zpowers (e τ) := by
   obtain ⟨n, hn⟩ := Subgroup.mem_zpowers_iff.1 (hτ (e.symm g))
@@ -228,6 +229,7 @@ theorem integerUnitsAddEquiv_decomposition (σ : MulAction.stabilizer Gal(L/K) w
   rfl
 
 
+omit [IsGalois K L] in
 theorem isUnramified_adicCompletion (he : w.asIdeal.ramificationIdx (𝓞 K) = 1) :
     GroundTheory.LocalField.IsUnramified (v.adicCompletion K) (w.adicCompletion L) :=
   (GroundTheory.LocalField.isUnramified_iff _ _).2 (by
@@ -242,6 +244,8 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
   (v : HeightOneSpectrum (𝓞 K)) (w : HeightOneSpectrum (𝓞 L)) [w.asIdeal.LiesOver v.asIdeal]
 
 
+open AdicLiesOver in
+include v in
 theorem subsingleton_cycTateZero_adicCompletionIntegers_units
     (he : w.asIdeal.ramificationIdx (𝓞 K) = 1)
     [Fintype (MulAction.stabilizer Gal(L/K) w.asIdeal)]
@@ -260,6 +264,8 @@ theorem subsingleton_cycTateZero_adicCompletionIntegers_units
   exact (Nat.card_eq_one_iff_unique.1 h1).1
 
 
+open AdicLiesOver in
+include v in
 theorem subsingleton_cycTateNegOne_adicCompletionIntegers_units
     (he : w.asIdeal.ramificationIdx (𝓞 K) = 1)
     [Fintype (MulAction.stabilizer Gal(L/K) w.asIdeal)]

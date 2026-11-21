@@ -20,6 +20,7 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
   [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
 
+omit [StarRing K] in
 theorem exists_section (M : Submodule (𝓞 K) V) (hM : M.FG) (φ : V →ₗ[K] K) (h0 : ∃ y ∈ M, φ y ≠ 0) :
     ∃ v ∈ Submodule.span K (M : Set V), φ v = 1 ∧ ∀ y ∈ M, φ y • v ∈ M := by
   let J : Submodule (𝓞 K) K := M.map (φ.restrictScalars (𝓞 K))
@@ -51,6 +52,7 @@ theorem exists_section (M : Submodule (𝓞 K) V) (hM : M.FG) (φ : V →ₗ[K] 
   exact key 1 h1
 
 
+omit [NumberField K] in
 theorem det_smul_mem (H : HermSpace K V) (Λ : Submodule (𝓞 K) V) {j : ℕ} (x x' : Fin j → V)
     (hx : ∀ a, x a ∈ Λ) (hG : ∀ a b, H.B (x a) (x' b) ∈ (1 : Submodule (𝓞 K) K)) (p : Fin j → K)
     (hp : ∀ b, H.B (∑ a, p a • x a) (x' b) ∈ (1 : Submodule (𝓞 K) K)) :

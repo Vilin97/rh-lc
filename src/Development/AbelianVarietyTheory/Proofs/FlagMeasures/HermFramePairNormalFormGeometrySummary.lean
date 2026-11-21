@@ -895,6 +895,10 @@ end GlobalTheory.DegCnt.NFGeom
 namespace GlobalTheory.DegCnt
 
 
+open NumberField in
+open scoped Pointwise ENNReal Classical in
+variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
+  {H : _root_.Formalism.HermitianLatticeCounting.S6.HermSpace K V} {r : ℕ} (N : _root_.GlobalTheory.DegCnt.NF H r) in
 theorem _root_.GlobalTheory.DegCnt.NF.geometry : ∀ (K V : Type) [Field K]
     [NumberField K] [StarRing K] [AddCommGroup V] [Module K V] [FiniteDimensional K V]
     [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (H : _root_.Formalism.HermitianLatticeCounting.S6.HermSpace K V), _root_.Formalism.HermitianLatticesTheory.IsCMUnram K →

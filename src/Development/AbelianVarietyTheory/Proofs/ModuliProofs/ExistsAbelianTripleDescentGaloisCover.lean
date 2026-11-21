@@ -219,6 +219,7 @@ theorem cubeCls_adj (act : OAct (𝓞 E) A) (hact : ∀ x, (t.act.act x).left �
       · exact hy
 
 
+omit hG hA [Flat π] [Surjective π] [QuasiCompact π] in
 theorem pull_cubeCls_prim (act : OAct (𝓞 E) A) (hact : ∀ x, (t.act.act x).left ≫ φ = φ ≫ (act.act x).left) :
     pull φ (cubeCls ![𝟙 A, act.act H.w0] c) = cls t.PP.L t.PP.isLB := by
   let U : Over.mk (t.G.hom ≫ π) ⟶ A := Over.homMk φ gp.1.w

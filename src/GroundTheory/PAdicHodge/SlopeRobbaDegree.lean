@@ -22,6 +22,7 @@ variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K] [Complete
   [IsDiscreteValuationRing (normInteger K)]
 
 
+variable (K) in
 def dvUnif : K := ((IsDiscreteValuationRing.exists_irreducible (normInteger K)).choose : K)
 
 theorem irreducible_dvUnif :

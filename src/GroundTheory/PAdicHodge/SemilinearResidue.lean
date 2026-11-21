@@ -44,6 +44,7 @@ theorem linearIndependent_of_notMem_span (v : ℕ → V) : ∀ m : ℕ,
       ⟨ih (fun j hj => h j (Nat.lt_succ_of_lt hj)), h m (Nat.lt_succ_self m)⟩
 
 
+variable (k) in
 theorem exists_rel [FiniteDimensional k V] (v : ℕ → V) :
     ∃ m, (∃ c : ℕ → k, v m = ∑ i ∈ range m, c i • v i) ∧
       LinearIndependent k (fun i : Fin m => v i) := by

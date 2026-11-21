@@ -23,6 +23,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {Ψ : Type} [Fintype
   [AddCommGroup Λ] [Module (𝓞 E) Λ] {F : UnivFam E Ψ j j' n g Λ} (C : LatEmb F) (R : RiemLat E g Λ)
 
 
+open Classical in
 theorem perExt_I_of_pBar {τ : Ψ} {y : Fin (j + j') → ℂ} (h : C.pBar R τ y = 0) :
     C.perExt R (Pi.single τ (Complex.I • y)) = Complex.I • C.perExt R (Pi.single τ y) := by
   ext k
@@ -32,6 +33,7 @@ theorem perExt_I_of_pBar {τ : Ψ} {y : Fin (j + j') → ℂ} (h : C.pBar R τ y
     ((C.perExt R (Pi.single τ (Complex.I • y))) k) * Complex.I_mul_I
 
 
+open Classical in
 theorem pPart_of_pBar {τ : Ψ} {y : Fin (j + j') → ℂ} (h : C.pBar R τ y = 0) :
     C.pPart R τ y = C.perExt R (Pi.single τ y) := by
   have h1 := perExt_I_of_pBar C R h
@@ -40,6 +42,7 @@ theorem pPart_of_pBar {τ : Ψ} {y : Fin (j + j') → ℂ} (h : C.pBar R τ y = 
   linear_combination (-(1 / 2 : ℂ) * (C.perExt R (Pi.single τ y)) k) * Complex.I_mul_I
 
 
+open Classical in
 theorem Fm_single (τ : Ψ) (y x : Fin (j + j') → ℂ) :
     C.Fm (Pi.single τ y) (Pi.single τ x) =
       2 * (embOf (F.σ τ) C.xi * (star x ⬝ᵥ (C.gr τ *ᵥ y))).re := by

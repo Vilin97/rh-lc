@@ -94,6 +94,7 @@ theorem commensurable_map_conj {G : Type} [Group G] {A B : Subgroup G} (h : A.Co
 end GlobalTheory.CosetFin
 
 
+open GlobalTheory.CosetFin in
 theorem GlobalTheory.testProd_support_finite : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (L : G.Level) (f : G.GAf → ℂ),
     IsTest (MonoidHom.id _) L.K.toSubgroup L.K.toSubgroup f →
       (∀ k ∈ L.K.toSubgroup, ∀ k' ∈ L.K.toSubgroup, ∀ g, f (k * g * k') = f g) →

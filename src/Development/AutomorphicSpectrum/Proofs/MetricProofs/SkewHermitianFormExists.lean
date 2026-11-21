@@ -88,6 +88,7 @@ theorem sesq_skew {V : Type} [AddCommGroup V] [Module E V] [Module ℚ V]
   linear_combination this
 
 
+omit [IsCMField E] in
 theorem exists_nat_integral {Λ : Type} [AddCommGroup Λ] [Module.Finite ℤ Λ] (F : Λ → Λ → E)
     (h1 : ∀ x x' y, F (x + x') y = F x y + F x' y) (h2 : ∀ x y y', F x (y + y') = F x y + F x y') :
     ∃ m : ℕ, m ≠ 0 ∧ ∀ x y, (m : E) * F x y ∈ integralClosure ℤ E := by

@@ -178,6 +178,8 @@ private lemma associated_pow_sub_one_prime_of_lt_prime {l : ℕ} [Fact l.Prime] 
   exact (associated_mul_unit_left _ _ hS).trans hu
 
 
+open PowerSeries in
+variable {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [CharZero O] [Algebra ℤ_[l] O] in
 theorem _root_.GlobalTheory.CycFr.exists_frame [IsDiscreteValuationRing O]
     [IsAdicComplete (IsLocalRing.maximalIdeal O) O]
     (Δ : Subgroup ℤ_[l]ˣ) [Finite Δ] (u : ℤ_[l]ˣ) (ξ : O⟦X⟧) (hl2 : l ≠ 2) (hl : ¬ IsUnit (l : O))

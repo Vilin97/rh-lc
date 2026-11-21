@@ -139,6 +139,7 @@ theorem finite_small (F : Type) [Field F] [NumberField F] (ρ : InfinitePlace F 
     exact (hα _).le
 
 
+open Classical in
 theorem sum_le_of_fibres {α ι : Type} [Fintype ι] (a : α → ℝ) (φ : α → ι → ℤ)
     (g : ι → ℤ → ℝ) (K : ℕ) (ha : ∀ r, 0 ≤ a r) (hg : ∀ w k, 0 ≤ g w k)
     (hgs : ∀ w, Summable (g w)) (hle : ∀ r, a r ≤ ∏ w, g w (φ r w))
@@ -180,6 +181,7 @@ theorem sum_le_of_fibres {α ι : Type} [Fintype ι] (a : α → ℝ) (φ : α �
   exact ⟨hsum, hsum.tsum_le_of_sum_le key⟩
 
 
+open Classical in
 theorem fibre_card (F : Type) [Field F] [NumberField F] (ρ : InfinitePlace F → (F →+* ℝ))
     (S : Finset (𝓞 F)) (hS : ∀ α : 𝓞 F, (∀ w, |ρ w (α : F)| < 1) → α ∈ S)
     (x : InfinitePlace F → ℝ) (T : Finset (𝓞 F)) (n : InfinitePlace F → ℤ) :

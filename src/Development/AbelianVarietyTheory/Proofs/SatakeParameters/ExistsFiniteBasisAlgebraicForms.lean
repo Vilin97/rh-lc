@@ -21,6 +21,7 @@ noncomputable section
 namespace GlobalTheory.IntStruct
 
 
+open MvPolynomial in
 theorem exists_coord_eq_sum_coeff {σ : Type} {d : ℕ} (V : Submodule ℂ (MvPolynomial σ ℂ)) (B : Module.Basis (Fin d) ℂ V)
     (i : Fin d) : ∃ (s : Finset (σ →₀ ℕ)) (a : s → ℂ), ∀ v : V, B.repr v i = ∑ m : s, a m * coeff m.1 (v : MvPolynomial σ ℂ) := by
   classical

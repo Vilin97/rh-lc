@@ -38,6 +38,7 @@ variable {V : Type} [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Modul
   [IsScalarTower (𝓞 K) K V]
 
 
+open HermitianSublattices LocalSpans idealPowerSpanBounds localizedQuotients integralBasisSpans traceDeterminantCongruences reductionMapsOfForms localValuationFiltration in
 theorem exists_gram_det (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm)
     (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
     (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal)

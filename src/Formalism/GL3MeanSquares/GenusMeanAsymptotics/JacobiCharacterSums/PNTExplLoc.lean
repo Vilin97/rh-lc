@@ -115,6 +115,7 @@ private theorem exists_factor_zeros_differentiableOn_nonvanishing (f : ℂ → �
     exact hkne ρ hρ
 
 
+open Filter Topology Metric in
 theorem ex_landau_ord_core (f : ℂ → ℂ) (z₀ : ℂ) (r B : ℝ) (hr : 0 < r) (hB : 1 ≤ B)
     (hf : DifferentiableOn ℂ f (Metric.closedBall z₀ r)) (hfz₀ : f z₀ ≠ 0)
     (hbound : ∀ z ∈ Metric.closedBall z₀ r, ‖f z‖ ≤ B * ‖f z₀‖) :

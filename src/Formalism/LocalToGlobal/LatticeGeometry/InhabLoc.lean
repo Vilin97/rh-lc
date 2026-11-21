@@ -74,6 +74,7 @@ theorem flDim_eq (f r : ℕ) : f * (r * (r - 1) / 2) - f * (r - 1) + f * (r - 1)
   Nat.sub_add_cancel (Nat.mul_le_mul_left _ (le_choose_two r))
 
 
+open Matrix in
 theorem pd_of_int {Y : Type} [AddCommGroup Y] (β : Y →ₗ[ℤ] Y →ₗ[ℤ] ℝ)
     (hsymm : ∀ a b, β a b = β b a) (hint : ∀ a b, ∃ z : ℤ, β a b = z) (hpos : ∀ a, a ≠ 0 → 0 < β a a)
     {n : ℕ} (b : Module.Basis (Fin n) ℤ Y) (x : Fin n → ℝ) (hx : x ≠ 0) :
@@ -513,6 +514,7 @@ variable (D : D7) (r j p : ℕ) (c : CF p) (ρ : ℕ)
     (abs_le_pmM D d (r + j) τ _ (Finset.Icc_subset_Icc (by omega) (by omega)))
 
 
+open Classical in
 @[reducible] def locBT (hp : 2 ≤ p ∨ ρ = 0) (hd : ρ * (2 * D.R.f) ≤ D.R.f * r) :
     BoundaryLocalData.LocB D (locT D r j p c ρ) where
   chX := fun {_} y => XT D (Fin (rkB ρ y) → 𝓞 D.host.E)

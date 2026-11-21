@@ -222,6 +222,7 @@ theorem exists_isUnitDet {e : AE D} {S : Finset (Pl D.host.E)} (he : IsIdemSum e
   exact ⟨x', a, b, by rw [d]; exact w.2⟩
 
 
+set_option maxHeartbeats 2000000 in
 theorem nu_eq {ν : (AE D)ˣ →* Circle} {e : AE D} {S : Finset (Pl D.host.E)} (he : IsIdemSum e S) {n c : ℕ}
     (hl : ∀ x, Formalism.L2.Pj.FinUnit x → (∃ y ∈ intAE D, finPart D (x : AE D) - 1 = n • y) → ν x = 1) {k : ℕ}
     {N N' Z : Matrix (Fin k) (Fin k) (EAf D)} (hN : IsIntM N) (hZ : IsIntM Z)
@@ -275,6 +276,7 @@ theorem nu_eq {ν : (AE D)ˣ →* Circle} {e : AE D} {S : Finset (Pl D.host.E)} 
 end
 
 
+set_option maxHeartbeats 2000000 in
 theorem unitChar_eq_of_natCong : ∀ (D : D7) (ν : (AE D)ˣ →* Circle) (e : AE D) (Sf : Finset (Formalism.L2.DIV.Pl D.host.E)), IsIdemSum e Sf → ∀ N : ℕ, 0 < N → (∀ w ∈ Sf, ((N : ℕ) : 𝓞 D.host.E) ∈ w.asIdeal) → (∀ u : (AE D)ˣ, infPart D (u : AE D) = 1 → (∃ w ∈ Formalism.L2.Herm.intAf D.host.F D.host.E, toEAf D (u : AE D) = 1 + (N : Lev.EAf D) * w) → (∃ w ∈ Formalism.L2.Herm.intAf D.host.F D.host.E, toEAf D ((u⁻¹ : (AE D)ˣ) : AE D) = 1 + (N : Lev.EAf D) * w) → ν u = 1) → ∀ {k : ℕ} (P Q : Matrix (Fin k) (Fin k) (Lev.EAf D)), IsIntM (D := D) P → (∀ a b, ∃ w ∈ Formalism.L2.Herm.intAf D.host.F D.host.E, Q a b - P a b = (N : Lev.EAf D) * w) → GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.unitChar ν e Q = GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.unitChar ν e P := by
   intro D ν e Sf he N _ hSf hν k P Q hP hQ
   choose Z hZ hZe using hQ

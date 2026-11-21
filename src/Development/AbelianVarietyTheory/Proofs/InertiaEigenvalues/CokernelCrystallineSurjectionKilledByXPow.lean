@@ -413,6 +413,7 @@ theorem exists_kernel_padic {l : ℕ} [Fact l.Prime] (K LL : FinExt l) (T₁ T�
 end GlobalTheory.NL.CokerKill
 
 
+open GlobalTheory.NL.CokerKill in
 theorem GlobalTheory.NL.CokerKill.X_pow_kills_coker : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (Cm : CmpOf D.loc D.locA HW F), lem3 D HW F := by
   intro D HW F Cm l _ K s LL hG T₁ T₂ π M h c1 c2
   obtain ⟨_, hcomp, hu⟩ := GlobalTheory.FinExtIntegers.dvr_complete LL

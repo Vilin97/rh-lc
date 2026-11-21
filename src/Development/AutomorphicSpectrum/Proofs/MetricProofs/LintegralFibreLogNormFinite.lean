@@ -125,6 +125,7 @@ theorem cell_mass_lt_top {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type
 end GlobalTheory.CompanionTheory.Ar.Pub.CxChart
 
 
+open GlobalTheory.CompanionTheory.Ar.Pub.CxChart in
 theorem GlobalTheory.CompanionTheory.Ar.Pub.CxChart.logNorm_mass_lt_top : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (Q : Ideal (MRingOver ℂ ι)) (e : ℕ) (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ))
     (L : Fin e → HermLine ι) (A : HermLine ι) (s : MRingOver ℂ ι) (a : K → ℕ),

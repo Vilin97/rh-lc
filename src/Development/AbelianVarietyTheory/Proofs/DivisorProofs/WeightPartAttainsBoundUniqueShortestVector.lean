@@ -69,6 +69,7 @@ variable {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {S : ThetaSys o Ω
   {y₀ : S.R →+* PadicAlgCl p} {u : ρ.UTest p y₀}
 
 
+set_option maxHeartbeats 1000000 in
 theorem coef_proj (hLL : LL) (hU : UTorsSt) [ArithBase o Ω] [CharZero u.V] (l : u.Lab) (Φ : u.Geom)
     {w₀ : W0 u.U.toUnifPre} (hw₀ : w₀.IsGen) (α : u.D.toPre.X) (i : S.J) {t : SecA u.A (PadicAlgCl p) S.N}
     (ht : IsComb Φ.s (fun j => y₀ (algebraMap o S.R (S.proj _ (l.wt α) j i))) t)
@@ -120,6 +121,7 @@ theorem coef_proj (hLL : LL) (hU : UTorsSt) [ArithBase o Ω] [CharZero u.V] (l :
 attribute [local instance] gtGroup
 
 
+set_option maxHeartbeats 1000000 in
 theorem pull_term (hL : LL) (hT : TwistBCSpanStatement) (hVR : TWM.VRatioGtStatement) (hTW : TWStatement)
     (hUU : UUStatement) {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [CharZero V]
     (hcp : IsAdicComplete (maximalIdeal V) V) {ϖ : V} (hϖ : Irreducible ϖ) {D : DegData V (maximalIdeal V)}
@@ -182,6 +184,7 @@ theorem pull_term (hL : LL) (hT : TwistBCSpanStatement) (hVR : TWM.VRatioGtState
     v.map_mul, v.map_mul, hb, ← hr, WithTop.coe_zero, zero_add]
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_point : ∀ {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] [ArithBase o Ω] {S : ThetaSys o Ω} {ρ : S.Real} {p : ℕ}
     [Fact p.Prime] {y₀ : S.R →+* PadicAlgCl p} (u : ρ.UTest p y₀) (l : u.Lab),
     LL → TwistBCSpanStatement → TWM.VRatioGtStatement → TWStatement → UUStatement → UTorsSt →
@@ -235,6 +238,7 @@ theorem exists_point : ∀ {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] 
     exact hgv w hw hw0 σ₁ hσ₁
 
 
+set_option maxHeartbeats 1000000 in
 theorem val_value : ∀ {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] [ArithBase o Ω] {S : ThetaSys o Ω} {ρ : S.Real} {p : ℕ}
     [Fact p.Prime] {y₀ : S.R →+* PadicAlgCl p} (u : ρ.UTest p y₀) (l : u.Lab),
     LL → TwistBCSpanStatement → TWM.VRatioGtStatement → TWStatement → UUStatement → UTorsSt →
@@ -297,6 +301,7 @@ theorem val_value : ∀ {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] [Ar
     simpa using hlt
 
 
+set_option maxHeartbeats 1600000 in
 theorem main : ∀ {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] [ArithBase o Ω] {S : ThetaSys o Ω} {ρ : S.Real} {p : ℕ} [Fact p.Prime] {y₀ : S.R →+* PadicAlgCl p} (u : ρ.UTest p y₀) (l : u.Lab), (∀ a : o, ‖y₀ (algebraMap o S.R a)‖ ≤ 1) → ∀ (m k : ℕ), S.N = m ^ 2 → 2 ≤ k → k ∣ m → ∀ ν : u.D.toPre.X, (∀ χ : u.D.toPre.X, m • χ ≠ 0 → l.q ν < l.q (ν + m • χ)) → ∃ h ∈ l.yy.ker, k • m • h = 0 ∧ ‖∑ j, y₀ (algebraMap o S.R (S.proj _ (l.wt (m • ν)) j ρ.i₀)) * y₀ ⟨S.ev h j, S.ev_mem h j⟩‖ = S.delta y₀ * Real.exp (-l.q ν) := by
   intro o Ω _ _ _ _ S ρ p _ y₀ u l hint m k hNm hk hkm ν hν
   obtain ⟨hL, hL2⟩ := GlobalTheory.abelianSchemeLaws_all

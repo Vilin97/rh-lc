@@ -35,6 +35,7 @@ open MvPolynomial Formalism.L2.Ker
 variable {K : Type} [Field K] {ι : Type} [Fintype ι] {a b : ℕ}
 
 
+omit [Fintype ι] in
 theorem jetLin_monomial (J : (DVar ι a b →₀ ℕ) → K) (μ : ((ι × Fin b × Fin b) ⊕ DVar ι a b) →₀ ℕ) (c : K) :
     jetLin J (monomial μ c) = monomial (μ.comapDomain Sum.inl Sum.inl_injective.injOn)
       (c * J (μ.comapDomain Sum.inr Sum.inr_injective.injOn)) := by
@@ -53,6 +54,7 @@ theorem jetMap_sum {α : Type} (s : Finset α) (r : α → K) (J : α → (DVar 
   simp only [jetMap, h, LinearMap.comp_apply, LinearMap.sum_apply, LinearMap.smul_apply]
 
 
+omit [Fintype ι] in
 theorem map_subD {L : Type} [Field L] (s : K →+* L) (P : Formalism.L2.DIV.Pol K ι a) :
     MvPolynomial.map s (subD K ι a b P) = subD L ι a b (MvPolynomial.map s P) := by
   induction P using MvPolynomial.induction_on with
@@ -535,6 +537,7 @@ def sharpPol (hc : X.Tau → HCParam R) (i : ℕ) (x : (A.F i).V) : Formalism.L2
   MvPolynomial.map σ ((A.eV i x).1 * ∏ τ, Formalism.L2.Ker.frDet X.K (R.N i) τ ^ nuEnd hc i τ)
 
 
+variable {A} in
 theorem Tied.sharp_ev {hc : X.Tau → HCParam R} (h : A.Tied hc) (i : ℕ) (hi : i < R.m) (x : (A.F i).V) :
     (A.chain σ hc).sharp i (A.ev σ i x) = polFn X σ _ (A.sharpPol σ hc i x) := by
   funext (y : Fr X σ (R.N i))
@@ -553,6 +556,7 @@ theorem Tied.sharp_ev {hc : X.Tau → HCParam R} (h : A.Tied hc) (i : ℕ) (hi :
   rfl
 
 
+variable {A} in
 theorem Tied.de_mul_ev {hc : X.Tau → HCParam R} (h : A.Tied hc) (i : ℕ) (hi : i < R.m) (x : (A.F (i + 1)).V) (y : Fr X σ (R.N (i + 1))) :
     (∏ τ, deFr y τ ^ sD hc i τ) * A.ev σ (i + 1) x y = polFn X σ _ (MvPolynomial.map σ (A.eV (i + 1) x).1) y := by
   show (∏ τ, (y.1 τ).det ^ sD hc i τ) * evFr _ (shiftOf (A.lam (i + 1))) σ (A.eV (i + 1) x).1 y = _
@@ -566,6 +570,7 @@ def JetTie (hc : X.Tau → HCParam R) (J : A.JetFam) : Prop :=
     (A.rho i c * A.rho' i c') • J i c c' (A.sharpPol σ hc i x)
 
 
+variable {A} in
 theorem Tied.unfolds_iff {hc : X.Tau → HCParam R} (h : A.Tied hc) (J : A.JetFam) :
     A.Unfolds σ hc (A.unfJet σ J) ↔ A.JetTie σ hc J := by
   refine forall_congr' fun i => forall_congr' fun hi => forall_congr' fun c => forall_congr' fun c' => forall_congr' fun x => ?_
@@ -581,6 +586,7 @@ theorem Tied.unfolds_iff {hc : X.Tau → HCParam R} (h : A.Tied hc) (J : A.JetFa
   rfl
 
 
+variable {A} in
 theorem Tied.exists_jetTie {hc : X.Tau → HCParam R} (h : A.Tied hc) : ∃ J : A.JetFam, A.JetTie σ hc J := by
   refine ⟨fun i c c' => fnPol X σ _ ∘ₗ (A.chain σ hc).unf i c c' ∘ₗ polFn X σ _, fun i hi c c' x => ?_⟩
   have h1 : A.rho i c ≠ 0 := fun h => by simpa [h] using A.rho_norm i hi c

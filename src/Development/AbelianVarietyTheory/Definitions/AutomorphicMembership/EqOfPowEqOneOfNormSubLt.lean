@@ -72,6 +72,7 @@ theorem kur_algHom_ext {B : Type*} [Semiring B] [Algebra ℚ_[l] B] {f g : ↥(M
   IntermediateField.adjoin_algHom_ext ℚ_[l] fun _ ⟨m, h0, hm, hx⟩ => h _ m h0 hm (Subtype.ext hx)
 
 
+variable (l) in
 def frobUr : ↥(MaximalUnramifiedExtension l) →ₐ[ℚ_[l]] ↥(MaximalUnramifiedExtension l) := (GlobalTheory.MemLoc.exists_frobenius_Kur l).choose
 
 theorem frobUr_root (c : ↥(MaximalUnramifiedExtension l)) (m : ℕ) (h0 : 0 < m) (hm : ¬ l ∣ m) (hc : c ^ m = 1) :
@@ -389,6 +390,7 @@ theorem IsPst.finiteDimensional (h : IsPst P ρ) : FiniteDimensional ↥(Maximal
   ((isPst_iff P ρ).mp h).1
 
 
+omit [FiniteDimensional ℚ_[l] V] in
 theorem phiD_bijective [FiniteDimensional ↥(MaximalUnramifiedExtension l) (DpstUr P ρ)] : Function.Bijective (phiD P ρ) := by
   refine ⟨phiD_injective P ρ, ?_⟩
   let j : DpstUr P ρ →+ DpstUr P ρ := (phiD P ρ).toAddMonoidHom
@@ -416,6 +418,7 @@ theorem phiD_bijective [FiniteDimensional ↥(MaximalUnramifiedExtension l) (Dps
   exact key _ hy
 
 
+omit [FiniteDimensional ℚ_[l] V] in
 theorem isNilpotent_monD [FiniteDimensional ↥(MaximalUnramifiedExtension l) (DpstUr P ρ)] : IsNilpotent (monD P ρ) := by
   have hp : ∀ (n : ℕ) (x : ↥(Dpst P ρ)), (urEnd P ρ (monD P ρ) (monD_mulD P ρ) ^ n) (toUr P ρ x) =
       toUr P ρ ((monD P ρ ^ n) x) := by
@@ -438,6 +441,7 @@ theorem isNilpotent_monD [FiniteDimensional ↥(MaximalUnramifiedExtension l) (D
   exact ⟨n, LinearMap.ext fun x => (toUr P ρ).injective (by rw [← hp, hn]; rfl)⟩
 
 
+omit [FiniteDimensional ℚ_[l] V] in
 theorem exists_actD_eq_one [FiniteDimensional ↥(MaximalUnramifiedExtension l) (DpstUr P ρ)] : ∃ K' : FinExt l,
     ∀ g : ↥(GK K), (g : GQ l) ∈ GK K' → (∀ c, actD P ρ g * mulD P ρ c = mulD P ρ c * actD P ρ g) →
       actD P ρ g = 1 := by

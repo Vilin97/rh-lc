@@ -57,6 +57,7 @@ end GlobalTheory.CellVanishing
 namespace GlobalTheory.RowVal
 
 
+open GlobalTheory.CellVanishing in
 theorem cellVan_holds : CellVan := by
   intro ι _ H _ _ _ _ _ _ _ _ A B R K l hl hS ρ μ ρ' μ' hM X S b w q z α hw hdist hinv hsupp hz hrel
   haveI := Classical.decEq (∀ i, H i)

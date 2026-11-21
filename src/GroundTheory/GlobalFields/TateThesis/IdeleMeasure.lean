@@ -325,6 +325,7 @@ theorem map_mul_left_volume_complex {z : ℂ} (hz : z ≠ 0) :
   exact h
 
 
+omit [NumberField K] in
 theorem map_mul_left_infinitePlaceMeasure (w : InfinitePlace K) {a : w.Completion} (ha : a ≠ 0) :
     Measure.map (a * ·) (infinitePlaceMeasure w) =
       ENNReal.ofReal (‖a‖ ^ w.mult)⁻¹ • infinitePlaceMeasure w := by

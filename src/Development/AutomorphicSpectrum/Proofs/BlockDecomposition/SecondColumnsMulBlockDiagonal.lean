@@ -62,6 +62,7 @@ theorem map_char {A : Type} [AddCommGroup A] [TopologicalSpace A] [IsTopological
   rw [smul_smul, inv_mul_cancel₀ hc0, one_smul]
 
 
+set_option maxHeartbeats 1200000 in
 theorem map_right (a b : ℕ) (μ : Measure (Mx D a b)) (hμ : μ.IsAddHaarMeasure) (g : GL (Fin b) (AE D)) :
     μ.map (fun y => mm y g.1) =
       ((absA D (Matrix.GeneralLinearGroup.det g))⁻¹ ^ a : ℝ≥0) • μ := by

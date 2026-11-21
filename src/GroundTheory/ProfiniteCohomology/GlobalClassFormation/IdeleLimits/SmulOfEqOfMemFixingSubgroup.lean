@@ -62,6 +62,7 @@ instance : CommGroup IdeleLimit :=
     (fun _ _ h ↦ ideleMap h)))
 
 
+set_option maxHeartbeats 1000000 in
 def of (F : FiniteSubfield) : IdeleGroup F.1 →* IdeleLimit where
   toFun x := (⟦⟨F, x⟩⟧ : DirectLimit (fun F : FiniteSubfield ↦ IdeleGroup F.1)
     (fun _ _ h ↦ ideleMap h))

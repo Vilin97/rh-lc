@@ -185,6 +185,7 @@ theorem mem_lead (F : FlagD H r) (Λ : Submodule (𝓞 K) V) (a : Fin r) (t : K)
     exact ⟨x, hx, _, (F.Xa a.val).neg_mem h, by abel⟩
 
 
+omit [NumberField K] [FiniteDimensional K V] in
 theorem step (F : FlagD H r) {Λ J : Submodule (𝓞 K) V} (hJ : J ≤ Λ) (a : Fin r) :
     idx (latF F Λ (a.val + 1) ⊔ J) (latF F Λ a.val ⊔ J) = idx (lead F Λ a.castSucc) (lead F J a.castSucc) := by
   rw [idx_sup le_sup_right]
@@ -228,6 +229,7 @@ theorem idx_side (F F' : FlagD H r) (Λ : Submodule (𝓞 K) V) {j : ℕ} (hj : 
 end Flag
 
 
+omit [FiniteDimensional K V] in
 theorem del_sup (H : HermSpace K V) (M : Submodule (𝓞 K) V) (I : Submodule K V)
     (h0 : I ⊓ Submodule.span K (M : Set V) = ⊥)
     (hI : ∀ i ∈ I, ∀ y ∈ Submodule.span K (M : Set V) ⊔ I, H.B i y = 0) :

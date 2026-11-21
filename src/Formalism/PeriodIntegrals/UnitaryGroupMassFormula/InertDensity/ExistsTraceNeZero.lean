@@ -17,6 +17,7 @@ omit [Fintype L] [Algebra K L] in
 theorem one_lt_q : 1 < Fintype.card K := Fintype.one_lt_card
 
 
+variable (K) in
 def conj : L →+* L := (FiniteField.frobeniusAlgHom K L).toRingHom
 
 

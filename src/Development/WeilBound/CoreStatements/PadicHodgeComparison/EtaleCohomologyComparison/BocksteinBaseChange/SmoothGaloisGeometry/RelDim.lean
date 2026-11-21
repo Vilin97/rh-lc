@@ -74,6 +74,7 @@ theorem isOpen_chart (n : ℕ) : IsOpen {x | Chart f n x} := by
 end RelDim
 
 
+open RelDim in
 theorem exists_smoothOfRelativeDimension {K : Type} [Field K] {X : Scheme.{0}} (f : X ⟶ Spec (CommRingCat.of K))
     [Smooth f] [ConnectedSpace X] : ∃ d, SmoothOfRelativeDimension d f := by
   obtain ⟨x0⟩ := (inferInstance : Nonempty X)

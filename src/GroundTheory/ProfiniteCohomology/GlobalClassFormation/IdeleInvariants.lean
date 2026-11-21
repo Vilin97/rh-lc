@@ -23,6 +23,7 @@ variable {K E : FiniteSubfield} [Fact (K ≤ E)] (ι : LocalEmbeddings K) (ιE :
 section Places
 
 
+set_option maxHeartbeats 4000000 in
 theorem placeInv_idelesResField_inr (y : cohomology (limitRep K) 2) (v : HeightOneSpectrum (𝓞 K.1))
     (w : PlacesOver E.1 v) :
     placeInv (.inr w.1) (idelesLimitCohomologyEquiv ιE (by norm_num : 1 ≤ 2) ((idelesResField K E 2).hom y) (.inr w.1)) =
@@ -40,6 +41,7 @@ theorem placeInv_idelesResField_inr (y : cohomology (limitRep K) 2) (v : HeightO
   exact key w hι'
 
 
+set_option maxHeartbeats 4000000 in
 theorem placeInv_idelesResField_inl (y : cohomology (limitRep K) 2) (v : InfinitePlace K.1) (w : v.placesOver E.1) :
     placeInv (.inl (w : InfinitePlace E.1))
         (idelesLimitCohomologyEquiv ιE (by norm_num : 1 ≤ 2) ((idelesResField K E 2).hom y) (.inl w)) =
@@ -98,6 +100,8 @@ theorem sumPlaceInv_eq_sum (D : ⨁ w : Place E.1, localGaloisCohomology E 2 w) 
   exact Finset.sum_congr rfl fun w _ => sumPlaceInv_of w (D w)
 
 
+set_option maxHeartbeats 4000000 in
+open Classical in
 theorem idelesSumInv_idelesResField_of (u : Place K.1) (t : localGaloisCohomology K 2 u) :
     idelesSumInv ιE ((idelesResField K E 2).hom
         ((idelesLimitCohomologyEquiv ι (by norm_num : 1 ≤ 2)).symm (DirectSum.of _ u t))) =

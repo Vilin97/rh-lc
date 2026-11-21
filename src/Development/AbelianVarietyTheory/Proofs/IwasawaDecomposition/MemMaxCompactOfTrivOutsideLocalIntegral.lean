@@ -53,6 +53,7 @@ theorem eq_zero_of_compAt (z : AL L) (hz : ∀ v, compAt L v z = 0) : z = 0 := b
   rw [hAB, hA, hB]; simp
 
 
+open Classical in
 def sgl (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L)))
     (r : v.adicCompletion (maximalRealSubfield L)) : AFplus L :=
   ⟨Pi.single (M := fun w : HeightOneSpectrum (𝓞 (maximalRealSubfield L)) =>
@@ -88,6 +89,7 @@ theorem one_tmul_sgl_mem (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L)))
   · rw [sgl_ne L v r hw]; exact zero_mem _
 
 
+omit [IsCMField L] in
 theorem exists_lift (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L)))
     (y : L ⊗[maximalRealSubfield L] v.adicCompletion (maximalRealSubfield L))
     (hy : y ∈ tensInt (F := maximalRealSubfield L) (v.adicCompletion (maximalRealSubfield L))

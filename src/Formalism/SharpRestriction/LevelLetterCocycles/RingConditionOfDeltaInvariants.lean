@@ -60,10 +60,12 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {v : AddValuation LL (WithTop ℚ)} {n : ℕ} [NeZero n] {W : LocWach PD LL O v n}
 
 
+variable (W) in
 abbrev Ring9 : Prop :=
   Formalism.MainNotions.DeltaInvariantLattices.wachRingRelations W 1 (PD.p - 1) W.π₀ (fun _ => Polynomial.X + Polynomial.C ((PD.p : ℕ) : O))
 
 
+variable (W) in
 def Inv1 (a : PowerSeries O) : Prop := ∀ δ ∈ W.DelF, W.γ₀ δ a = a
 
 theorem diag_mem_AΔ {a : PowerSeries O} (h : Inv1 W a) : (fun _ => a : LetA O n) ∈ W.AΔ := by
@@ -215,6 +217,7 @@ theorem baseIdOf_full (hR : Ring9 W) : (baseIdOf hR).Full := by
   exact ιOf_full hR a ha
 
 
+variable (W) in
 def qP₁ : PowerSeries O := W.π₀₁ + ((PD.p : ℕ) : PowerSeries O)
 
 theorem ι_q (hR : Ring9 W) : ιOf hR (baseIdOf hR).Bs.q = qP₁ W := by

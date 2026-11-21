@@ -17,6 +17,7 @@ section Alg
 variable {I R D : Type*} [Fintype I] [DecidableEq I] [CommRing R] [CommRing D] [Algebra R D]
 
 
+omit [DecidableEq I] in
 theorem mvAeval_add_of_mul_eq_zero (t n : I → D) (hn : ∀ i j, n i * n j = 0)
     (P : MvPolynomial I R) :
     MvPolynomial.aeval (fun i ↦ t i + n i) P =
@@ -65,6 +66,7 @@ theorem aeval_truncTotal_succ (N : ℕ) (t : I → D) (F : MvPowerSeries I R) :
   rw [MvPolynomial.aeval_monomial, Finsupp.prod_fintype _ _ (by simp), Algebra.smul_def]
 
 
+omit [Fintype I] [DecidableEq I] in
 theorem ideal_pow_eq_bot_of_prod {J : Ideal D} {k : ℕ}
     (h : ∀ s : Fin k → D, (∀ a, s a ∈ J) → ∏ a, s a = 0) : J ^ k = ⊥ := by
   rw [Submodule.pow_eq_span_pow_set, Submodule.span_eq_bot]
@@ -74,6 +76,7 @@ theorem ideal_pow_eq_bot_of_prod {J : Ideal D} {k : ℕ}
   exact h _ fun a => (f a).2
 
 
+omit [DecidableEq I] in
 theorem aeval_pderiv_truncTotal_mul {J : Ideal D} {N : ℕ} (hJ : J ^ (N + 1) = ⊥) {t : I → D}
     (ht : ∀ i, t i ∈ J) {x : D} (hx : x ∈ J) (F : MvPowerSeries I R) (i : I) :
     MvPolynomial.aeval t (MvPolynomial.pderiv i (MvPowerSeries.truncTotal (N + 1) F)) * x =

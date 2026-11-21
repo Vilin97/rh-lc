@@ -24,6 +24,7 @@ variable {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [Algebr
   (l : ℕ) [hl : Fact l.Prime] [NormedAlgebra ℚ_[l] K] (e : ℕ) [NeZero e]
 
 
+omit [IsUltrametricDist K] in
 theorem eq_sum_monomial_add (x : K⟦X⟧) (N : ℕ) : x = ∑ n ∈ Finset.range N, monomial n (coeff n x) +
     X ^ N * PowerSeries.mk fun n => coeff (n + N) x := by
   ext n
@@ -37,6 +38,7 @@ theorem eq_sum_monomial_add (x : K⟦X⟧) (N : ℕ) : x = ∑ n ∈ Finset.rang
   · omega
 
 
+omit [NeZero e] in
 theorem exists_sum_monomial_add {x : K⟦X⟧} (hx : x ∈ S O K e) (m : ℕ) : ∃ N₀, ∀ N ≥ N₀, ∃ h ∈ S O K e,
     x = ∑ n ∈ Finset.range N, monomial n (coeff n x) + (l : K⟦X⟧) ^ m * h := by
   have h0 : (l : K) ^ m ≠ 0 := pow_ne_zero _ (BK.l_ne_zero l)
@@ -62,14 +64,17 @@ theorem exists_sum_monomial_add {x : K⟦X⟧} (hx : x ∈ S O K e) (m : ℕ) : 
     · rw [zero_add, mul_inv_cancel_left₀ h0]
 
 
+omit [NeZero e] in
 theorem monomial_mem_invL (n : ℕ) (c : K) : monomial n c ∈ invL l (A O K) := by
   rw [monomial_eq_C_mul_X_pow]
   exact mul_mem (HasK.C_mem c) (pow_mem HasU.X_mem n)
 
 
+variable (O K) in
 abbrev Sb : Subalgebra O K⟦X⟧ := S O K e ⊓ invL l (A O K)
 
 
+omit [NeZero e] in
 theorem sameJets_Sb : SameJets (Subalgebra.inclusion (inf_le_left : Sb O K l e ≤ S O K e)).toRingHom
     (l : Sb O K l e) where
   div m x := by
@@ -180,9 +185,11 @@ theorem exists_extend_S (htf : ∀ x : R, (l : R) * x = 0 → x = 0) [IsAdicComp
   exact ⟨{ toRingHom := g, commutes' := fun o => (hg (algebraMap O _ o)).trans (f.commutes o) }, hg⟩
 
 
+variable (K) in
 def descN (i : ℕ) : Module.End K K⟦X⟧ := Polynomial.aeval (N K).toLinearMap (descPochhammer K i)
 
 
+omit [IsUltrametricDist K] in
 theorem coeff_descN (i : ℕ) (f : K⟦X⟧) (n : ℕ) :
     coeff n (descN K i f) = (n.descFactorial i : K) * coeff n f := by
   induction i generalizing f with
@@ -195,6 +202,7 @@ theorem coeff_descN (i : ℕ) (f : K⟦X⟧) (n : ℕ) :
     ring
 
 
+omit [NeZero e] in
 theorem descN_mem_S (i : ℕ) {f : K⟦X⟧} (hf : f ∈ S O K e) : descN K i f ∈ S O K e := by
   have key : ∀ n, ‖coeff n (descN K i f)‖ * wS K e n ≤ ‖coeff n f‖ * wS K e n := fun n => by
     rw [coeff_descN, norm_mul]
@@ -220,16 +228,19 @@ scoped instance algZlBcris : Algebra ℤ_[l] (Per.Bcris l) :=
   ((Per.aB l).comp (algebraMap ℤ_[l] (Ainf l))).toAlgebra
 
 
+variable (l) in
 def ainfToAcris : Ainf l →ₐ[ℤ_[l]] Per.Acris l where
   toRingHom := algebraMap (Ainf l) (Per.Acris l)
   commutes' _ := rfl
 
 
+variable (l) in
 def acrisToBcris : Per.Acris l →ₐ[ℤ_[l]] Per.Bcris l where
   toRingHom := algebraMap (Per.Acris l) (Per.Bcris l)
   commutes' _ := (GlobalTheory.RingIface.aB_eq_alg l _).symm
 
 
+variable (l) in
 def frobC : Per.Acris l →ₐ[ℤ_[l]] Per.Acris l where
   toRingHom := GlobalTheory.MemLoc.phiA l
   commutes' z := ((GlobalTheory.CrisMaps.phiA_extends l).alg _).trans (congrArg (algebraMap (Ainf l) _) (phiA_zl_pt z))
@@ -239,6 +250,7 @@ def galC (g : GQ l) : Per.Acris l →ₐ[ℤ_[l]] Per.Acris l where
   commutes' z := ((GlobalTheory.CrisMaps.sigA_extends g).alg _).trans (congrArg (algebraMap (Ainf l) _) ((galA g).commutes z))
 
 
+variable (l) in
 def frobB : Per.Bcris l →ₐ[ℤ_[l]] Per.Bcris l where
   toRingHom := Per.φB l
   commutes' z := ((GlobalTheory.MemLoc.ActLaws.act_laws l).2.2.2.2.2.2.1 _).trans (congrArg (Per.aB l) (phiA_zl_pt z))
@@ -304,27 +316,35 @@ section Coeff
 variable {a : ℕ} [NeZero a] {O : Type} [CommRing O] [Algebra ℤ_[l] O] (t : Wq l a →ₐ[ℤ_[l]] O)
 
 
+variable (l O) in
 abbrev OCr : Type := O ⊗[ℤ_[l]] Per.Acris l
 
 
+variable (l O) in
 abbrev OB : Type := O ⊗[ℤ_[l]] Per.Bcris l
 
 
+variable (l O) in
 def toOCr : OA l O →ₐ[O] OCr l O := Algebra.TensorProduct.map (AlgHom.id _ _) (ainfToAcris l)
 
 
+variable (l O) in
 def toOB : OCr l O →ₐ[O] OB l O := Algebra.TensorProduct.map (AlgHom.id _ _) (acrisToBcris l)
 
 
+variable (l O) in
 def frobOCr : OCr l O →ₐ[O] OCr l O := Algebra.TensorProduct.map (AlgHom.id _ _) (frobC l)
 
 
+variable (O) in
 def galOCr (g : GQ l) : OCr l O →ₐ[O] OCr l O := Algebra.TensorProduct.map (AlgHom.id _ _) (galC g)
 
 
+variable (l O) in
 def frobOB : OB l O →ₐ[O] OB l O := Algebra.TensorProduct.map (AlgHom.id _ _) (frobB l)
 
 
+variable (O) in
 def galOB (g : GQ l) : OB l O →ₐ[O] OB l O := Algebra.TensorProduct.map (AlgHom.id _ _) (galB g)
 
 theorem toOCr_tmul (o : O) (w : Ainf l) : toOCr l O (o ⊗ₜ w) = o ⊗ₜ ainfToAcris l w := rfl
@@ -444,10 +464,12 @@ theorem iB_of_mem (f : ZMod a → S O K e) :
     rw [sub_zero]; exact (ϖ.iSl_of_mem O K _ _).symm).symm
 
 
+variable (O a) in
 def muDiv (g : ↥(GK (ϖ.field a))) (n : ℕ) : OCr l O :=
   1 ⊗ₜ dpow (ϖ.mu g) (ϖ.theta_mu (ϖ.gal_pi a g)) n
 
 
+variable (O) in
 theorem galOCr_iS_monomial (g : GQ l) (n : ℕ) (c : K) (h : monomial n c ∈ S O K e) :
     galOCr O g (ϖ.iS O K ⟨_, h⟩) = (1 ⊗ₜ ainfToAcris l (ϖ.mu g) + 1) ^ n * ϖ.iS O K ⟨_, h⟩ := by
   obtain ⟨k, b, hb⟩ := exists_pow_mul_mem (O := O) l c
@@ -464,6 +486,8 @@ theorem galOCr_iS_monomial (g : GQ l) (n : ℕ) (c : K) (h : monomial n c ∈ S 
   rw [mul_sub, h3, mul_left_comm, h2, mul_smul_comm, sub_self]
 
 
+variable (O a) in
+omit [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] in
 theorem sum_muDiv_descFactorial (g : ↥(GK (ϖ.field a))) {n M : ℕ} (h : n < M) :
     ∑ i ∈ Finset.range M, ϖ.muDiv a O g i * (n.descFactorial i : OCr l O) =
       (1 ⊗ₜ ainfToAcris l (ϖ.mu g) + 1) ^ n := by
@@ -478,6 +502,7 @@ theorem sum_muDiv_descFactorial (g : ↥(GK (ϖ.field a))) {n M : ℕ} (h : n < 
   exact congrArg (· * (n.choose i : OCr l O)) h1
 
 
+variable (O a) in
 theorem taylor_S (g : ↥(GK (ϖ.field a))) (f : S O K e) (r : ℕ) : ∃ M₀, ∀ M ≥ M₀, (l : OCr l O) ^ r ∣
     galOCr O g (ϖ.iS O K f) -
       ∑ i ∈ Finset.range M, ϖ.muDiv a O g i * ϖ.iS O K ⟨descN K i f, descN_mem_S e i f.2⟩ := by

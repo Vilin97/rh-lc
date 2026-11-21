@@ -215,6 +215,7 @@ def extG (W : GRep G Qp LL O) (f : G → W.V) (hf : ∀ g h, f (g * h) = f g + W
     exact ((W.cont z.1).add (hc.const_smul z.2)).prodMk continuous_const
 
 
+variable (G Qp LL O) in
 def trivG : GRep G Qp LL O where
   V := LL
   ρ := Representation.trivial LL G LL
@@ -326,6 +327,7 @@ theorem actVB_congr {G' : Type} [Group G'] {K₀' K' : Type} [Field K₀'] [Fiel
   | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 
+omit [TopologicalSpace G] [TopologicalSpace LL] [IsTopologicalRing LL] in
 theorem descend [CharZero LL] (H : Subgroup G) [H.FiniteIndex]
     {V : Type} [AddCommGroup V] [Module LL V] [Module Qp V] [IsScalarTower Qp LL V]
     (ρ : Representation LL G V) (f : G → V) (hf : ∀ g h, f (g * h) = f g + ρ g (f h)) (y : V ⊗[Qp] B)

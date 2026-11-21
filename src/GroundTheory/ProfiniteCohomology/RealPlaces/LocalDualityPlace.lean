@@ -22,6 +22,7 @@ attribute [local instance 2000] Rep.hV2
 variable {K : FiniteSubfield} (v : InfinitePlace K.1) (hv : v.IsReal)
 
 
+include hv in
 theorem exists_isComplex_infCompletion_algEquiv : ∃ (F : FiniteSubfield) (_ : Fact (K ≤ F))
     (w : v.placesOver F.1), (w : InfinitePlace F.1).IsComplex ∧
       Nonempty ((w : InfinitePlace F.1).Completion ≃ₐ[v.Completion] AlgebraicClosure v.Completion) := by
@@ -48,6 +49,7 @@ theorem exists_isComplex_infCompletion_algEquiv : ∃ (F : FiniteSubfield) (_ : 
   nlinarith [sq_nonneg (InfinitePlace.Completion.extensionEmbeddingOfIsReal hv x)]
 
 
+include hv in
 theorem finrank_infAlgClosure_of_isReal :
     Module.finrank v.Completion (AlgebraicClosure v.Completion) = 2 := by
   obtain ⟨F, _, w, hw, ⟨e⟩⟩ := exists_isComplex_infCompletion_algEquiv v hv
@@ -56,6 +58,7 @@ theorem finrank_infAlgClosure_of_isReal :
   exact (GroundTheory.Global.InfinitePlace.finrank_completion_eq_two_iff (w : InfinitePlace F.1)).2 ⟨hv, hw⟩
 
 
+include hv in
 theorem extensionEmbeddingOfIsReal_norm_pos (y : AlgebraicClosure v.Completion) (hy : y ≠ 0) :
     0 < InfinitePlace.Completion.extensionEmbeddingOfIsReal hv (Algebra.norm v.Completion y) := by
   obtain ⟨F, _, w, hw, ⟨e⟩⟩ := exists_isComplex_infCompletion_algEquiv v hv
@@ -69,6 +72,7 @@ theorem extensionEmbeddingOfIsReal_norm_pos (y : AlgebraicClosure v.Completion) 
   exact (GroundTheory.Global.InfinitePlace.mem_normSubgroup_iff hv hw _).1 hmem
 
 
+include hv in
 theorem neg_one_not_mem_range_norm_infAlgClosure :
     (-1 : v.Completion) ∉ Set.range (Algebra.norm v.Completion :
       AlgebraicClosure v.Completion → v.Completion) := by

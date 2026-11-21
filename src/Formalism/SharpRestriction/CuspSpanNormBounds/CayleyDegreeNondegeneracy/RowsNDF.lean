@@ -117,6 +117,7 @@ theorem rows_stVol_mono {C' Cl Cg cb Cu cT CT C0 A c' c : ℝ} (h1 : c' ≤ c) (
       _ ≤ _ := Real.one_le_rpow o2 (mul_nonneg (by linarith) hr2)
 
 
+include Y in
 theorem rows_dim_pos {C' Cl Cg cb Cu cT CT C0 : ℝ} (hH : Cnt.Hyp0 D large₂ C' Cl Cg cb Cu cT CT C0) (hF : UnitaryVolumeMass.FormAt D u) :
     0 < dimPi (hc := D.hcW) u := by
   obtain ⟨-, hD, hC0⟩ := hH

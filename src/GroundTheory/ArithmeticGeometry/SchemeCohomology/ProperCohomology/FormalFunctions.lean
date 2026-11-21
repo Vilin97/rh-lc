@@ -141,6 +141,7 @@ lemma exists_towerComp_formalτQ_eq_zero (q : ℕ) :
   rw [hc n yČ hι, map_zero]
 
 
+include hF in
 theorem formalFunctions_mem_range (q : ℕ) {x : ∀ n, Sheaf.H.{u} (modulesAb (quotPow I F n)) q}
     (hx : x ∈ towerLimit (E := fun m => Sheaf.H.{u} (modulesAb (quotPow I F m)) q)
       (formalτE I F q)) (n : ℕ) : x n ∈ LinearMap.range (formalβ I F q n) := by

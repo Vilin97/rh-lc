@@ -34,6 +34,7 @@ theorem bsmul_mem {P : Ideal (MRing ι)} (hP : IsMultiHomogIdeal P) {c : K → �
     exact hle hf
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem segre_bsmul (c : K → ℂ) (z : (Σ k, ι k) → ℂ) :
     segre (bsmul c z) = fun i => (∏ k, c k) * segre z i := by
   funext i
@@ -73,6 +74,7 @@ theorem lift_spec [DecidableEq K] {P : Ideal (MRing ι)} (hP : IsMultiHomogIdeal
   rw [one_mul]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem differentiableAt_lift [DecidableEq K] {e : ℕ} (i0 : (k : K) → ι k) (k0 : K)
     {h : (Fin e → ℂ) → ((k : K) → ι k) → ℂ} {y : Fin e → ℂ} (hd : DifferentiableAt ℂ h y)
     (hne : h y i0 ≠ 0) : DifferentiableAt ℂ (fun y' => lift i0 k0 (h y')) y := by

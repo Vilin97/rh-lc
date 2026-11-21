@@ -75,6 +75,7 @@ theorem volume_image_eq_zero (W I : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matri
 end VarMassNearSmall
 
 
+open VarMassNearSmall in
 theorem VarMassNearSmall.proof (hCMC : ChartMassCompact.Statement) : VarMassNearSmall.Statement := by
   classical
   intro n d W I φ f hW hdim hφ hI hf hfc δ hδ

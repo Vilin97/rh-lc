@@ -51,6 +51,7 @@ theorem mul_sub_eq_of_triple_product_one {A : Type} [CommRing A] (P Q T d e : A)
 end SlopeTestRemainingChoices
 
 
+set_option maxHeartbeats 1000000 in
 theorem uloc_acts_trivially_on_dual_quotient {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {n : ℕ} [NeZero n] {T f : ℕ} {bad : Set (HeightOneSpectrum (𝓞 F))}
     (S : Formalism.L2.Forms.StepLevel F E σ (1 : Matrix (Fin n) (Fin n) E) T f bad) (p q : 𝓞 E) (hqp : (q : E) = σ (p : E))

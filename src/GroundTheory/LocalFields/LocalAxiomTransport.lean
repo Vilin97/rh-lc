@@ -73,6 +73,7 @@ noncomputable def quotientEquiv : K ⧸ L.subgroupOf K ≃* Γ :=
     (QuotientGroup.quotientKerEquivOfSurjective T.hom T.surjective_hom)
 
 
+include T in
 theorem relIndex_eq_natCard : L.relIndex K = Nat.card Γ :=
   Nat.card_congr T.quotientEquiv.toEquiv
 
@@ -140,6 +141,7 @@ theorem map_ker_norm [Fintype Γ] [(L.subgroupOf K).FiniteIndex] :
     exact ⟨T.equiv.symm m, (T.norm_eq_one_iff _).2 (by simpa using hm), by simp⟩
 
 
+omit [(L.subgroupOf K).Normal] in
 theorem augmentation_eq_map :
     augmentation A K L =
       (GroundTheory.LocalField.augmentation Γ M).map
@@ -161,6 +163,7 @@ theorem augmentation_eq_map :
     rw [map_div, Subgroup.coe_div, h]
 
 
+omit [(L.subgroupOf K).Normal] in
 theorem mem_augmentation_iff (a : fixedModule A L) :
     (a : A) ∈ augmentation A K L ↔ T.equiv a ∈ GroundTheory.LocalField.augmentation Γ M := by
   rw [T.augmentation_eq_map]

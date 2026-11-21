@@ -111,6 +111,7 @@ theorem coordClass_ne_zero {p : Σ k, ι k} (hp : (X p : MRing ι) ∉ P) : coor
   rwa [aeval_X] at h
 
 
+open Classical in
 def birPoint (c : ∀ k, ι k) (hc : ∀ k, (X ⟨k, c k⟩ : MRing ι) ∉ P) (p : Σ k, ι k) : fnField P :=
   ⟨coordClass P p / coordClass P ⟨p.1, c p.1⟩,
     ⟨Pi.single p.1 1, X p, X ⟨p.1, c p.1⟩, isMultiHomog_X' p.1 p.2, isMultiHomog_X' p.1 (c p.1),

@@ -48,6 +48,7 @@ structure Raw.Ok (p : Raw Lc n) : Prop where
   ne : ∃ x, p.f x ≠ 0
 
 
+variable (Lc n) in
 def PP : Type := {p : Raw Lc n // p.Ok}
 
 def PP.ker (p : PP Lc n) : Set (Fin n → Lc.K) := {x | x ∈ p.1.L ∧ p.1.f x = 0}

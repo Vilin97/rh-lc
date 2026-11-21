@@ -20,6 +20,7 @@ def IsComplexConjugation (c : Ω ≃ₐ[E] Ω) : Prop :=
   ∃ j : Ω →+* ℂ, ∀ x, j (c x) = starRingEnd ℂ (j x)
 
 
+variable (E Ω) in
 def hilbertSubgroup : Subgroup (Ω ≃ₐ[E] Ω) :=
   (Subgroup.closure ((commutator (Ω ≃ₐ[E] Ω) : Set (Ω ≃ₐ[E] Ω)) ∪
     {σ | ∃ A : ValuationSubring Ω, σ ∈ (A.inertiaSubgroup E).map (A.decompositionSubgroup E).subtype} ∪

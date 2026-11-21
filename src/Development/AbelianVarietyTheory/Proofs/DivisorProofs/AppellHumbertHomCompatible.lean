@@ -125,6 +125,7 @@ def chi {M : LB A.left} (u : HolUnif A M g) (χ : u.Λ → ℂ) (z : Fin g → �
   if h : z ∈ u.Λ then χ ⟨z, h⟩ else 0
 
 
+omit [IsCommMonObj A] in
 theorem semichar {M : LB A.left} (hM : M.IsLB) (u : HolUnif A M g) {Hm : Matrix (Fin g) (Fin g) ℂ}
     {χ : u.Λ → ℂ} (hF : IsFactorAH u Hm χ) {l m : Fin g → ℂ} (hl : l ∈ u.Λ) (hm : m ∈ u.Λ) :
     chi u χ (l + m) * Complex.exp ((Real.pi : ℂ) / 2 * (hf Hm l m + hf Hm m l)) =

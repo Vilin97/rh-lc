@@ -18,6 +18,9 @@ namespace GlobalTheory.HAtBasis
 variable {K : Type} [Field K] [NumberField K]
 
 
+open NumberField IsDedekindDomain MvPolynomial in
+open scoped Matrix in
+variable {K : Type} [Field K] [NumberField K] in
 theorem _root_.GlobalTheory.HAtBasis.isLattice_of_basisAt {n : ℕ} (w : HeightOneSpectrum (𝓞 K))
     {M : Submodule (𝓞 K) (Fin n → K)} (hM : M.FG)
     {B : GL (Fin n) K} (hB : _root_.Formalism.L2.DIV.IsBasisAt w M B) : Submodule.IsLattice K M := by
@@ -47,6 +50,11 @@ theorem _root_.GlobalTheory.HAtBasis.isLattice_of_basisAt {n : ℕ} (w : HeightO
 variable {ι : Type} [Fintype ι] {a : ℕ}
 
 
+open NumberField IsDedekindDomain MvPolynomial in
+open scoped Matrix in
+variable {K : Type} [Field K] [NumberField K] in
+variable {ι : Type} [Fintype ι] {a : ℕ} in
+omit [NumberField K] in
 theorem _root_.GlobalTheory.HAtBasis.polyAction_invTranspose_inv (lam : ι → _root_.Formalism.BasicNotions.DomWeight a)
     (B : ι → GL (Fin a) K) (F : _root_.Formalism.L2.DIV.Pol K ι a) :
     _root_.Formalism.L2.DIV.actP lam (fun τ => _root_.Formalism.BasicNotions.inside₂ K a (B τ))⁻¹ F =
@@ -88,6 +96,10 @@ private theorem exists_notMem_mul_eq_integer_of_valuation_le_one {K : Type} [Fie
   field_simp
 
 
+open NumberField IsDedekindDomain MvPolynomial in
+open scoped Matrix in
+variable {K : Type} [Field K] [NumberField K] in
+variable {ι : Type} [Fintype ι] {a : ℕ} in
 theorem _root_.GlobalTheory.HAtBasis.mem_HAt_iff : ∀ (K : Type) [Field K]
     [NumberField K] (w : HeightOneSpectrum (𝓞 K)) (ι : Type) [Fintype ι] (a : ℕ)
     (lam : ι → _root_.Formalism.BasicNotions.DomWeight a) (M : ι → Submodule (𝓞 K) (Fin a → K)) (B : ι → GL (Fin a) K),

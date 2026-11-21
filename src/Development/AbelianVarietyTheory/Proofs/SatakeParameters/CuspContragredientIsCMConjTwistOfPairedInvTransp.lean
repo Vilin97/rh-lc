@@ -15,6 +15,7 @@ namespace GlobalTheory.ConjDualPair
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {a : ℕ}
 
 
+variable (L a) in
 def phiA : GA L a := finGL L a (PhiU a (Af L)) * infGL L a (PhiU a (Cinf L))
 
 theorem toUnits_PhiK : Unitary.toUnits (PhiK L a) = PhiU a (Cinf L) := Units.ext rfl

@@ -126,6 +126,7 @@ lemma eta_rel (hP : IsogenyP) (hd : ZetaHasDeriv) (hq : ZetaQuasi) (L : PeriodPa
 end S2IsogenyPsi
 
 
+open S2IsogenyPsi in
 theorem quasiPeriodConstIsogeny_of (hP : IsogenyP) (hd : ZetaHasDeriv) (hq : ZetaQuasi) (he : EtaSplit)
     (hc : KerRepsCard) : QuasiPeriodConstIsogeny := by
   intro L α S hα hst hS

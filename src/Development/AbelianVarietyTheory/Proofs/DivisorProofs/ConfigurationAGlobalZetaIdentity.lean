@@ -221,6 +221,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {Φ : Tens F (a - G.p) G.p (a + a' - (G.p + G.q)) (G.p + G.q) →ₗ[ℂ] SInf F (Fin a × Fin (a + a'))}
 
 
+open GlobalTheory.KFixIrr in
 theorem top_weights (hKP : KP) (hM : IsMatched B G X om om' Rm Rf) (hD : IsFockData B G.M A C Φ) :
     ∃ x₁ y₁ : InfinitePlace F → ℂ, (∀ w, x₁ w + y₁ w = (B.mα w : ℂ) - B.mβ w) ∧
     ∀ (w : InfinitePlace F) (r : Fin (a + a' - (G.p + G.q))) (s : Fin (G.p + G.q)),

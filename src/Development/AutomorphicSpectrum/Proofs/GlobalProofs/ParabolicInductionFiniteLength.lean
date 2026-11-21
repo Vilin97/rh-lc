@@ -35,6 +35,7 @@ theorem blockUpper_le_parab : blockUpper k (∑ a, d a) (pos d) ≤ parab k (std
   exact hg
 
 
+variable (k d) in
 def leviTo : levi k (∑ a, d a) (pos d) →* Levi k (fun a => Fin (d a)) :=
   (leviProj k (stdE d)).comp (Subgroup.inclusion (levi_le_blockUpper.trans (blockUpper_le_parab k d)))
 
@@ -63,6 +64,7 @@ theorem leviTo_leviProj (p : blockUpper k (∑ a, d a) (pos d)) :
   simp [GroundTheory.Automorphic.Parabolic.blockDiagPart, pos_stdE]
 
 
+variable (k d) in
 def invHalf : levi k (∑ a, d a) (pos d) →* ℂˣ :=
   ((invSqrtModular k (∑ a, d a) (pos d)).comp leviIncl).toHomUnits
 
@@ -81,6 +83,7 @@ theorem isSmoothChar_invHalf : IsSmoothChar (invHalf k d) := by
   exact GroundTheory.Automorphic.Parabolic.invSqrtModular_leviIncl_of_mem m hm
 
 
+variable (k d) in
 def adj : levi k (∑ a, d a) (pos d) →* ℂˣ :=
   invHalf k d * (deltaHalf k (fun a => Fin (d a))).comp (leviTo k d)
 
@@ -244,6 +247,7 @@ theorem hasFiniteLength_parInd_std (ρ : Representation ℂ (Levi k fun a => Fin
   exact ⟨hφ.wellFoundedGT, hφ.wellFoundedLT⟩
 
 
+open GlobalTheory.BlockReorder in
 theorem inductionFiniteLength : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k], GlobalTheory.SmGL.InductionFiniteLength k := by
   intro k _ _ _ _ α n m _ _ _ _ _ _ e W _ _ ρ hρ hl

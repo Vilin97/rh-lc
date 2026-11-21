@@ -121,6 +121,7 @@ theorem exists_eigLin (s : 𝓞 E →+* ℂ) :
            map_smul' := fun c x => by simpa [h0] using hl c x 0 }, fun _ => rfl⟩
 
 
+omit [IsCMField E] in
 theorem emb_injective (s : 𝓞 E →+* ℂ) : Function.Injective s := by
   have hc : (RingHom.ker s).comap (algebraMap ℤ (𝓞 E)) = ⊥ := by
     rw [RingHom.comap_ker]
@@ -134,6 +135,7 @@ theorem extEmb_apply (s : 𝓞 E →+* ℂ) (a : 𝓞 E) : extEmb s (algebraMap 
   IsFractionRing.lift_algebraMap (emb_injective s) a
 
 
+omit [IsCMField E] in
 theorem exists_ext (s : 𝓞 E →+* ℂ) : ∃ t : E →+* ℂ, t.comp (algebraMap (𝓞 E) E) = s :=
   ⟨extEmb s, RingHom.ext (extEmb_apply s)⟩
 

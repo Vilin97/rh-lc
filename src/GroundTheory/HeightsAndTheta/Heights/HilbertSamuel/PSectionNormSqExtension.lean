@@ -405,6 +405,7 @@ end Levi
 end SectionNormSqExtension
 
 
+open SectionNormSqExtension in
 theorem SectionNormSqExtension.proof (h₁ : LeviLogFlat.Statement) (h₂ : LeviHolPerturb.Statement)
     (h₃ : LeviCompHol.Statement) (h₄ : LeviFSInvariant.Statement) : SectionNormSqExtension.Statement := by
   intro K _ _ ι _ Ω _ y A m N v hsm hconj hv hgen

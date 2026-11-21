@@ -65,6 +65,7 @@ def Realised2 (hR : Ring9 W) (e : W.DD W.one) : Prop :=
         BrProps2 D e (cutsOf hC) (kdOf ty) (bbOf ty) j (gPar Gp S η) Gp S η h
 
 
+variable (W) in
 structure BrHyp2 (Cc : ℝ) : Prop where
 
   s_one : W.s = 1

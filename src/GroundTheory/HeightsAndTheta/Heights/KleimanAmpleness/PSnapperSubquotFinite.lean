@@ -76,6 +76,8 @@ theorem isNoetherianRing_chart [IsNoetherianRing S] (I : Chart x) : IsNoetherian
 end SnapperSubquotientFinite
 
 
+set_option maxHeartbeats 1000000 in
+open SnapperQuotientAdditivity SnapperSubquotientFinite in
 theorem SnapperSubquotFinite.proof (hfin : SnapperFinite.Statement.{u, v, w}) :
     SnapperSubquotFinite.Statement.{u, v, w} := by
   intro k _ Ω _ _ N x E _ _ _ _ F F₁ F₂ hfg h1 h21 i

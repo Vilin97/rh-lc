@@ -55,6 +55,7 @@ theorem seg_map_inv {K : Type} [Field K] [NumberField K] (w : HeightOneSpectrum 
   ring
 
 
+set_option maxHeartbeats 1600000 in
 theorem transferOn_isSplit : ∀ D : D7, TransferOn D fun v => IsSplit (E := D.host.E) v := by
   intro D ψ S T χS χT om hW t ht v hv hunr w h U hU f hf X _ _ ρ x B hx X' _ _ ρ' b hb hne
   obtain ⟨eS, heS⟩ := (GlobalTheory.T.exists_unitaryCharts_allFinitePlaces_frameLattice D S v w h).1 hv

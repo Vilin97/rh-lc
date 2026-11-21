@@ -49,6 +49,10 @@ private lemma norm_natCast_prime_lt_one_inertia_eigenvalues : ‖(l : K)‖ < 1 
   exact Padic.norm_p_lt_one
 
 
+open PowerSeries Filter Topology Matrix in
+variable {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [Algebra O K]
+  [_root_.GlobalTheory.BK.IsUnitBall O K] {l e a : ℕ} {ι : Type} [Fintype ι] [DecidableEq ι]
+  [Fact l.Prime] [NormedAlgebra ℚ_[l] K] in
 theorem _root_.GlobalTheory.BK.mem_S_of_approx {f : K⟦X⟧}
     (h : ∀ k : ℕ, ∃ s ∈ _root_.GlobalTheory.BK.S O K e, ∀ m : ℕ,
       ∃ g ∈ _root_.GlobalTheory.BK.S O K e,
@@ -108,6 +112,12 @@ theorem _root_.GlobalTheory.BK.PhiMod.smul_mem_MM {f : K⟦X⟧}
 variable [NeZero e]
 
 
+open PowerSeries Filter Topology Matrix in
+variable {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [Algebra O K]
+  [_root_.GlobalTheory.BK.IsUnitBall O K] {l e a : ℕ} {ι : Type} [Fintype ι] [DecidableEq ι]
+  [Fact l.Prime] [NormedAlgebra ℚ_[l] K] in
+variable (P : _root_.GlobalTheory.BK.PhiMod O K l e a ι) in
+variable [NeZero e] in
 theorem _root_.GlobalTheory.BK.PhiMod.l_pow_smul_phi_mem_MM {k : ℕ} {v : _root_.GlobalTheory.BK.Vec K a ι}
     (hv : _root_.GlobalTheory.BK.E K l e ^ k • v ∈
       P.Mext (_root_.GlobalTheory.BK.S O K e)) :

@@ -140,6 +140,9 @@ private theorem cubeComplex_presheafCube_exactAt_add_one_of_card (n : ℕ) :
           ((_root_.GlobalTheory.cubeFunctor _ R).mapIso (_root_.GlobalTheory.presheafCubeUpperFaceIso P V U e i)).symm
 
 
+open CategoryTheory AlgebraicGeometry Limits TopologicalSpace Opposite in
+variable {T : TopCat.{w}} {ι : Type} in
+variable [LinearOrder ι] [Finite ι] (F : TopCat.Sheaf AddCommGrpCat.{w} T) [F.IsFlasque] in
 theorem _root_.GlobalTheory.subsingleton_cechAbH_succ_of_isFlasque (V : Opens T) (U : ι → Opens T) (p : ℕ) :
     Subsingleton (_root_.GlobalTheory.cechAbH F.obj V U (p + 1)) := by
   have := Fintype.ofFinite ι

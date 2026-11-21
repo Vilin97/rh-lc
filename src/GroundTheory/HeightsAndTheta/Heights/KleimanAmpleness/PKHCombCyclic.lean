@@ -125,6 +125,7 @@ theorem block_pair (J : ∀ k, Finset (ι k)) (n : ℕ) (f : CombC S J n) (I : C
     rw [dif_neg hOK, dif_neg (fun h => hOK (hiff.mpr h)), add_zero]
 
 
+open Classical in
 theorem singOne_cocycle (J : ∀ k, Finset (ι k)) (n : ℕ) (hJ : ∀ k, J k = ∅ ∨ J k = Finset.univ) :
     combD S J n (singOne S J n) = 0 := by
   funext I
@@ -166,6 +167,7 @@ theorem singOne_cocycle (J : ∀ k, Finset (ι k)) (n : ℕ) (hJ : ∀ k, J k = 
     exact Finset.notMem_erase i _ this
 
 
+open Classical in
 theorem contract_cocycle (J : ∀ k, Finset (ι k)) (n : ℕ) (k : K) (i₀ : ι k) (hJ : J k = ∅)
     (φ g : CombC S J n) (hφ : combD S J n φ = 0)
     (hg1 : ∀ I : CombCell ι J n, (I.1.1 k).card = 1 →

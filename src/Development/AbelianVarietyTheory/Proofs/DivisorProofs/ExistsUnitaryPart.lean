@@ -229,6 +229,7 @@ theorem exists_isLevLift (l : Level H) (V : HSp D) (ι : Dw.La →ₗ[𝓞 D.hos
   rfl
 
 
+open GlobalTheory.UnifEvery in
 theorem exists_isReduction : ∀ (D : D7) (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E) (Dw : Datum H) (l : Level H) (V : Formalism.BasicNotions.TH.HSp D) (ι : Dw.La →ₗ[𝓞 D.host.E] (Fin (@HSpace.rank D.host.E _ _ D.host.cmStar V) → D.host.E)), LatEmb V ι → ∃ red : GlobalTheory.IndefiniteRowSideFullHecke.LiftedCharacterResidue.stabLat V →* GlobalTheory.IndefiniteRowSideFullHecke.LevelStructureAutomorphisms.LevelAut Dw l, GlobalTheory.LevDesc.IsReduction V ι red := by
   intro D H Dw l V ι hι
   have hs : ∀ k : GlobalTheory.IndefiniteRowSideFullHecke.LiftedCharacterResidue.stabLat V, (k : GA D V) ∈ GlobalTheory.IndefiniteRowSideFullHecke.EmbeddingLevelSets.levSet V 1 := fun k =>

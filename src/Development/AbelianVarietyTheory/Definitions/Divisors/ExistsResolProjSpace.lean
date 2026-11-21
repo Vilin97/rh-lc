@@ -78,6 +78,7 @@ theorem isConjInv_fam : f.fam.IsConjInv := isConjInv_ofGram _ _ fun σ i j => by
   simpa [P, sub_eq_zero] using this
 
 
+include f in
 theorem isFull [IsScalarTower (𝓞 F) F V] : IsFull M := by
   refine ⟨f.isFrame.span ▸ Submodule.fg_span (Set.finite_range _), top_le_iff.1 fun x _ => ?_⟩
   have h : f.b.equivFun x ∈ Submodule.span F (Set.range f.w.col) := f.isFrame.full ▸ trivial
@@ -95,6 +96,7 @@ section Moving
 variable {Y : Scheme.{0}} {p : Y ⟶ Sp F} {U : Y.Opens} {D : ℕ} {B : LB Y}
 
 
+omit [NumberField F] in
 theorem restr_pull (hB : B.IsLB) {T : Scheme.{0}} (r : T ⟶ Y) {O O' : T.Opens} (h : O ≤ r ⁻¹ᵁ U) (h' : O' ≤ O)
     (f : H0 p B U) : restr h' (H0.pull r h f) = H0.pull r (h'.trans h) f :=
   ext_germ fun z hz => (exists_chart (LB.isLB_pull hB r) z).imp fun i hi => ⟨hi,
@@ -349,6 +351,7 @@ open Classical in
 def rangeIf : Submodule F X := if q then LinearMap.range ψ else ⊥
 
 
+omit [NumberField F] [Module (𝓞 F) S] [IsScalarTower (𝓞 F) F S] [Module (𝓞 F) X] [IsScalarTower (𝓞 F) F X] in
 theorem rangeIf_le : rangeIf ψ q ≤ LinearMap.range ψ := by
   unfold rangeIf
   split_ifs
@@ -358,10 +361,12 @@ def invIf : rangeIf ψ q →ₗ[F] S :=
   (LinearEquiv.ofInjective ψ hψ).symm.toLinearMap ∘ₗ Submodule.inclusion (rangeIf_le ψ q)
 
 
+omit [NumberField F] [Module (𝓞 F) S] [IsScalarTower (𝓞 F) F S] [Module (𝓞 F) X] [IsScalarTower (𝓞 F) F X] in
 theorem apply_invIf (x : rangeIf ψ q) : ψ (invIf ψ hψ q x) = x :=
   congrArg Subtype.val ((LinearEquiv.ofInjective ψ hψ).apply_symm_apply ⟨x, rangeIf_le ψ q x.2⟩)
 
 
+omit [NumberField F] [Module (𝓞 F) S] [IsScalarTower (𝓞 F) F S] [Module (𝓞 F) X] [IsScalarTower (𝓞 F) F X] in
 theorem invIf_injective : Function.Injective (invIf ψ hψ q) := fun x y e =>
   Subtype.ext (by rw [← apply_invIf ψ hψ, e, apply_invIf])
 

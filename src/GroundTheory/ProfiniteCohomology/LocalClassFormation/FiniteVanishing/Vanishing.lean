@@ -116,6 +116,7 @@ theorem apply_eq_of_isProPGroup {ℓ : ℕ} (hℓ : ℓ.Prime) {P : Subgroup Gal
 variable (K Ksep) [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem nonempty_zmod_addEquiv_rootsOfUnity {ℓ : ℕ} (hℓ : ℓ.Prime) (hℓK : (ℓ : K) ≠ 0) :
     Nonempty (ZMod ℓ ≃+ Additive (rootsOfUnity ℓ Ksep)) := by
   have : Fact ℓ.Prime := ⟨hℓ⟩

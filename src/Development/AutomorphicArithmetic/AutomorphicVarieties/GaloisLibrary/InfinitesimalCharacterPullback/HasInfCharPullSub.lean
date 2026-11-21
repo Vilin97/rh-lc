@@ -61,6 +61,7 @@ theorem coord_atEmb_of_ne {τ τ' : E →+* ℂ} (h : InfinitePlace.mk τ' ≠ I
 variable (j : E ≃+* F)
 
 
+omit [NumberField E] [IsTotallyComplex E] [NumberField F] [IsTotallyComplex F] in
 def cinf : Cinf E →+* Cinf F := RingHom.pi fun u => coord (u.embedding.comp (j : E →+* F))
 
 omit [NumberField E] [NumberField F] [IsTotallyComplex F] in
@@ -138,6 +139,8 @@ theorem norm_cinf_le (x : Cinf E) : ‖cinf j x‖ ≤ ‖x‖ :=
   (pi_norm_le_iff_of_nonneg (norm_nonneg _)).2 fun _ => norm_coord_le _ x
 
 
+omit [IsTotallyComplex E] [IsTotallyComplex F] in
+variable (a) in
 def lieMap : Lie E a →L[ℝ] Lie F a :=
   LinearMap.toContinuousLinearMap
     { toFun := fun X i k => cinf j (X i k)
@@ -155,6 +158,7 @@ theorem continuous_adm : Continuous (adm j) := by
   exact ((continuous_infEq F).comp ((continuous_cinf j).comp h)).prodMap (continuous_finMap j)
 
 
+variable (a) in
 def gaMap : GA E a →* GA F a := GeneralLinearGroup.map (adm j)
 
 theorem gaMap_gaMap (g : GA E a) : gaMap a j.symm (gaMap a j g) = g :=
@@ -192,6 +196,7 @@ theorem gaMap_mem_Sm {φ : GA F a → ℂ} (hφ : φ ∈ Sm F a) : (fun g => φ 
     fun _ hx => (chart_gaMap j φ g hx).2).congr fun _ hx => (chart_gaMap j φ g hx).1
 
 
+variable (a) in
 def pull : Sm F a ≃ₗ[ℂ] Sm E a where
   toFun φ := ⟨fun g => φ.1 (gaMap a j g), gaMap_mem_Sm j φ.2⟩
   invFun φ := ⟨fun g => φ.1 (gaMap a j.symm g), gaMap_mem_Sm j.symm φ.2⟩
@@ -219,6 +224,7 @@ theorem lie_pull (X : Lie E a) (φ : Sm F a) : lie E a X (pull a j φ) = pull a 
   rfl
 
 
+omit [IsTotallyComplex E] [IsTotallyComplex F] in
 def opMap : Op E a → Op F a
   | .fin k => .fin (GeneralLinearGroup.map (finMap j) k)
   | .cpt k => .cpt ⟨(cinf j).mapMatrix k.1, Matrix.mem_unitaryGroup_iff.2 (by

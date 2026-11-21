@@ -45,6 +45,7 @@ def gF : pullback (prS p ι s ≫ pullback.snd p s) (rA A) ⟶ pullback (pullbac
   pullback.lift (pullback.fst _ _ ≫ prS p ι s) (pullback.snd _ _) (by rw [Category.assoc, pullback.condition])
 
 
+variable {ι p s} in
 def hF (w : Spec (CommRingCat.of (IsLocalRing.ResidueField A)) ⟶ W) (hw : w ≫ ι = rA A ≫ s) :
     pullback (pullback.snd p s) (rA A) ⟶ pullback (prS p ι s ≫ pullback.snd p s) (rA A) :=
   pullback.lift (pullback.lift (pullback.fst _ _) (pullback.snd _ _ ≫ w)

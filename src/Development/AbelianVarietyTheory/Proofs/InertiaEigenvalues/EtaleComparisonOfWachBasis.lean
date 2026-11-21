@@ -107,6 +107,7 @@ theorem etale_comparison_of_wach_basis (T : LocLat G Qp LL O) (hT : IsCrys PD T.
 end Generic
 
 
+set_option maxHeartbeats 1600000 in
 theorem main : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW),
     p1eL D.loc D.locA HW F := by
   intro D HW F l _ K s LL h T hT

@@ -96,11 +96,13 @@ structure Tab (L : SizeData₂ D) where
   gs : ℕ → ℕ → ℝ
 
 
+open Classical in
 def etaSum (L : SizeData₂ D) (j : ℕ) : ℝ :=
   ∑ w ∈ L.supp.filter (fun w => D.what₂.muAt w ≠ D.what₂.mu0),
     SizeData₂.lwP w * (D.what₂.places.ramIdx w : ℝ) * (D.what₂.etaJ j w : ℝ)
 
 
+open Classical in
 def twAt (L : SizeData₂ D) (l : ℕ) : Finset D.what₂.places.Pl :=
   L.supp.filter (fun w => D.what₂.muAt w ≠ D.what₂.mu0 ∧ D.what₂.places.resChar w = l)
 

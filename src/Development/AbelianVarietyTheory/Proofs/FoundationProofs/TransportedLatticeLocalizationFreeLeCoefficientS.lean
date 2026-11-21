@@ -49,6 +49,7 @@ theorem exists_smul_le_of_fg (N N' : Submodule (𝓞 K) V) (hfg : N'.FG)
   | smul c y _ hy => rw [smul_comm]; exact N.smul_mem _ hy
 
 
+omit [Module K V] [IsScalarTower (𝓞 K) K V] in
 theorem mem_of_forall_locP (N : Submodule (𝓞 K) V) {x : V}
     (h : ∀ w : HeightOneSpectrum (𝓞 K), x ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal N) : x ∈ N := by
   by_contra hx

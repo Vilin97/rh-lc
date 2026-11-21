@@ -545,6 +545,7 @@ theorem exists_sep {e : K → ℕ} (he : ∀ k, 1 ≤ e k) {z w : (Σ k, ι k) �
 end AvoidFormFinite
 
 
+open AvoidFormFinite in
 theorem AvoidFormFinite.proof : AvoidFormFinite.Statement := by
   intro K _ ι _ S G e he hG hS hcone
   classical

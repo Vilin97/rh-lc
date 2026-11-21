@@ -97,6 +97,7 @@ theorem torsion_mem (h20 : (2 : k) ≠ 0) (h2 : (2 : k)⁻¹ ∈ V) (h30 : (3 : 
   linear_combination y ^ 2 * he
 
 
+open IsLocalRing in
 theorem torsion_inj (h20 : (2 : k) ≠ 0) (h2 : (2 : k)⁻¹ ∈ V) (h30 : (3 : k) ≠ 0) (h3 : (3 : k)⁻¹ ∈ V)
     (hΔ : IsUnit W.Δ) {x y x' y' : k} (h : (W.map V.subtype).toAffine.Nonsingular x y)
     (h' : (W.map V.subtype).toAffine.Nonsingular x' y') (h12 : 12 • Point.some x y h = 0)
@@ -198,6 +199,7 @@ theorem valuation_eq_one (w : HeightOneSpectrum (𝓞 M)) {a : 𝓞 M} (ha : a �
   le_antisymm (w.valuation_le_one a) (not_lt.1 fun h => ha ((w.valuation_lt_one_iff_mem a).1 h))
 
 
+omit [NumberField H] in
 theorem valuation_sub_lt [Algebra H M] (w : HeightOneSpectrum (𝓞 M)) (σ : M ≃ₐ[H] M)
     (hσ : ∀ x : 𝓞 M, σ • x - x ∈ w.asIdeal) {x : M} (hx : w.valuation M x ≤ 1) : w.valuation M (σ x - x) < 1 := by
   obtain ⟨n, d, h⟩ := w.exists_primeCompl_mul_eq_of_integer x hx
@@ -225,6 +227,7 @@ theorem inv_natCast_mem (w : HeightOneSpectrum (𝓞 M)) {n : ℕ} (hn : (n : �
   rw [Valuation.mem_valuationSubring_iff, map_inv₀, this, inv_one]
 
 
+open Classical in
 theorem inertia_fixes [Algebra F H] [Algebra H M] [Algebra F M] [IsScalarTower F H M] (A : WeierstrassCurve F)
     (w : HeightOneSpectrum (𝓞 M)) (v : HeightOneSpectrum (𝓞 F)) (hv : v.asIdeal = w.asIdeal.under (𝓞 F))
     (h2 : ((2 : ℕ) : 𝓞 M) ∉ w.asIdeal) (h3 : ((3 : ℕ) : 𝓞 M) ∉ w.asIdeal) (C : VariableChange F)
@@ -300,6 +303,7 @@ variable {F H M : Type} [Field F] [NumberField F] [Field H] [NumberField H] [Fie
 include hsub
 
 
+open Classical in
 theorem exists_point {z : M} (hz : algebraMap M ℂ z ∈ torsionCoords (A.baseChange ℂ) 12) :
     ∃ (x y : M) (h : (A.baseChange M).toAffine.Nonsingular x y), 12 • Point.some x y h = 0 ∧ (z = x ∨ z = y) := by
   obtain ⟨x, y, h, h12, hz⟩ := hz

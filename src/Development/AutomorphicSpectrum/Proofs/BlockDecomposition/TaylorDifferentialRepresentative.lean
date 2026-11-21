@@ -16,6 +16,7 @@ noncomputable section
 namespace GlobalTheory.CompanionTheory.ConeLocal
 
 
+open GlobalTheory.CompanionTheory.CocProd in
 theorem d_eq_of_rep {R : Type} [CommRing R] {C : Type 1} [Category.{0} C] {A : C ⥤ CommAlgCat.{0} R} {a b : IdF A} {n : ℕ}
     (f g : CH.Cn (CH.modF A) n) {c : CH.H (sq a b) n}
     (hf : CrystallineSemistableComparison.Pb.Rep a b (fun u => f u) c) (hg : CrystallineSemistableComparison.Pb.Rep a b (fun u => g u) c) :

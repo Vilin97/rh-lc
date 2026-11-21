@@ -211,6 +211,7 @@ variable {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Spec (CommRingCat.of Ω) 
   {L : Lat ξ V} {ρ : 𝓞 E →+* Module.End Ω V} {bar : 𝓞 E ≃+* 𝓞 E} {r : ℕ} (𝓗 : HodgeLat L ρ bar r) (σ : E →+* Ω)
 
 
+include 𝓗 in
 theorem finiteDimensional : FiniteDimensional Ω V := by
   obtain ⟨-, -, b, hb, -⟩ := 𝓗.vb ⟨genPt ξ, specializes_rfl⟩ trivial
   exact ⟨hb ▸ Submodule.fg_span (Set.finite_range b)⟩

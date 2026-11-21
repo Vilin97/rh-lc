@@ -122,6 +122,7 @@ theorem arithVar_bot (k₀ : K) (hk : ∀ a : K, a = k₀) {n : ℕ} (σ : ι k�
     exact add_comm _ _
 
 
+omit p in
 theorem ptsIntegral_bot (II : IntersectionSystem) (hII : IsIntersectionSystem II) (k₀ : K) (hk : ∀ a : K, a = k₀)
     {n : ℕ} (σ : ι k₀ ≃ Fin (n + 1)) (L : HermLine ι) (hL : IsSmoothHerm L) (ha : L.a k₀ = 1) :
     ptsIntegral (⊥ : Ideal (MRing ι)) (pot fun _ : Fin n => L) (fun _ => 1) = 1 := by

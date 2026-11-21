@@ -19,6 +19,7 @@ open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.Basi
 variable {l : ℕ} [Fact l.Prime]
 
 
+set_option maxHeartbeats 1600000 in
 theorem bcAt_fin (hJ : Formalism.MainNotions.N.GlobalTheory.CoefJumpGen) (Th : LocTheory) (K LL LL' : FinExt l)
     (hLL : LL.1 ≤ LL'.1) :
     Formalism.MainNotions.WachCoordinates.BCAt ((Th l).PD K) (LL := ↥LL.1) (O := ↥(OL LL)) (O' := ↥(OL LL'))

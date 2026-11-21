@@ -44,10 +44,12 @@ variable {S X : Scheme.{0}} {π : X ⟶ S} {e : S ⟶ X} (he : e ≫ π = 𝟙 S
   {W : X.Opens}
 
 
+include he in
 theorem preimage_eq (c : IsChart π e U W) : e ⁻¹ᵁ W = U :=
   le_antisymm ((le_preimage_iff he).1 (e.preimage_mono c.le_base)) c.le
 
 
+include he in
 theorem isQuasicoherent_restrict_ideal (c : IsChart π e U W) :
     ((ideal e).restrict c.affine.fromSpec).IsQuasicoherent := by
   have := (isVB_structureModule X).isQuasicoherent
@@ -75,6 +77,7 @@ variable {S X : Scheme.{0}} {π : X ⟶ S} {e : S ⟶ X} (he : e ≫ π = 𝟙 S
   {W : X.Opens}
 
 
+include he in
 theorem isQuasicoherent_conormal : (conormal e).IsQuasicoherent := by
   refine GlobalTheory.QCoh.isQuasicoherent_of_forall_exists_affine _ fun x => ?_
   obtain ⟨U, W, hx, -, c⟩ := exists_isChart he (x := x) (V := ⊤) trivial
@@ -93,6 +96,7 @@ namespace GlobalTheory.ConormalFrame
 open GlobalTheory.QCoh
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem isBaseChange_pullbackSections {X Y : Scheme.{0}} (f : X ⟶ Y) (G : Y.Modules)
     {U : X.Opens} {V : Y.Opens} (hU : IsAffineOpen U) (hV : IsAffineOpen V)
     [(G.restrict hV.fromSpec).IsQuasicoherent] (e : U ≤ f ⁻¹ᵁ V) :
@@ -152,6 +156,7 @@ theorem ofAugCot_bijective (c : IsChart π e U W) : Function.Bijective (c.ofAugC
       rfl
 
 
+include he in
 theorem exists_isFrame [Smooth π] (x : S) :
     ∃ (U : S.Opens) (n : ℕ) (s : Fin n → Γ(conormal e, U)), x ∈ U ∧ IsFrame s := by
   have := isQuasicoherent_conormal he

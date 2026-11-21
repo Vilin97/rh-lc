@@ -40,6 +40,7 @@ theorem cut_tmul (P : Pl D → Prop) (a : Af D.host.F) (x : D.host.E) :
   rfl
 
 
+set_option maxHeartbeats 800000 in
 theorem cut_finPart (P : Pl D → Prop) (u : AE D) (hu : u ∈ idAt D P) : cut P (finPart D u) = u := by
   unfold idAt at hu
   rw [Ideal.mem_inf] at hu

@@ -176,6 +176,7 @@ theorem ses : IsSESLat (Qp := S.Qp) (incHom S Yt p e₀ hpe hp hint he₀) (proj
     exact hy
 
 
+include hinj in
 theorem tb_part1 (E : S.Comparison₂) (hTB : TBat S E) (e M0 h0 cB : ℕ) (Ve : LocLat S.G S.Qp S.LL S.O)
     (h1 : Module.finrank S.LL Ve.V = 1)
     (hχ : ∀ g x, Ve.ρ g x = ((algebraMap S.Qp S.LL (S.PD.χ g : S.Qp))⁻¹) ^ e • x)

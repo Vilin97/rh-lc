@@ -28,6 +28,7 @@ theorem nM_zero : nM (0 : Matrix (Fin n) (Fin n) (AE F E)) = 1 := by
   simp [nM, Matrix.fromBlocks_one]
 
 
+variable (σ n) in
 def nCond (ε : ℤˣ) : AddSubgroup (Matrix (Fin n) (Fin n) (AE F E)) where
   carrier := {β | βᵀ = -((((ε : ℤ) : AE F E)) • β.map (cA σ))}
   add_mem' := by
@@ -53,6 +54,7 @@ omit [NumberField E] in
 theorem inclR_int (z : ℤ) : inclR (F := F) (AF F) ((z : ℤ) : E) = ((z : ℤ) : AE F E) := map_intCast _ z
 
 
+omit [NumberField E] in
 theorem nM_form (e : AE F E) (β : Matrix (Fin n) (Fin n) (AE F E)) :
     (nM β)ᵀ * Matrix.fromBlocks 0 1 (e • 1) 0 * (nM β).map (cA σ) =
       Matrix.fromBlocks 0 1 (e • 1) (e • β.map (cA σ) + βᵀ) := by
@@ -91,6 +93,7 @@ theorem nU_mem {b : GL (Fin n ⊕ Fin n) E} {ε : ℤˣ} (hσ : ∀ a, σ (σ a)
     _ = dbl (incM F Y.J) := by rw [h1, h2, Matrix.one_mul, Matrix.mul_one]
 
 
+variable (σ Y) in
 def nbE (b : GL (Fin n ⊕ Fin n) E) (β : nA σ Y b) : G2 σ Y := by
   classical
   exact if h : nU b β.1 ∈ UG (cA σ) (dbl (incM F Y.J)) then ⟨nU b β.1, h⟩ else 1
@@ -180,6 +183,7 @@ theorem nb_continuous {b : GL (Fin n ⊕ Fin n) E} (hσ : ∀ a, σ (σ a) = a) 
   · exact (continuous_const.matrix_mul (continuous_nM.comp continuous_subtype_val.neg)).matrix_mul continuous_const
 
 
+variable (σ Y) in
 def nRat (b : GL (Fin n ⊕ Fin n) E) : AddSubgroup (nA σ Y b) where
   carrier := {β | ∃ T, β.1 = incM F T}
   add_mem' := by

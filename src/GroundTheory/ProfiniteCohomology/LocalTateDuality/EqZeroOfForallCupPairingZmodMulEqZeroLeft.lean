@@ -34,6 +34,7 @@ theorem unitsInvariantOpen_mul (W : Subgroup Gal(Ksep/K)) (a b : (fixedField W)�
   rw [map_mul, ofMul_mul]
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [IsSepClosure K Ksep] in
 theorem natCast_fixedField_ne_zero (hn : (n : K) ≠ 0) (W : Subgroup Gal(Ksep/K)) :
     (n : fixedField W) ≠ 0 := by
   rw [← map_natCast (algebraMap K (fixedField W))]

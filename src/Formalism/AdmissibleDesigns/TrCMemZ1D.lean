@@ -119,6 +119,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     (r : GG →* A) (χ : GG →* T'ˣ) (E : A) (Dw : Subgroup GG) (eG : Dw ≃* G)
 
 
+variable (PD LL O M) in
 structure CoefDict (e : ℕ) where
   Ce : TwLat PD LL O e
   u : M ≃+ (Ce.V ⧸ Ce.L.T)

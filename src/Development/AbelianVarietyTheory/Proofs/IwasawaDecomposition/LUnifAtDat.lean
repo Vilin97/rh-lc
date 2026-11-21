@@ -26,6 +26,7 @@ namespace GlobalTheory.Mem.Top.Bl
 open Formalism.IndefR.FWT Formalism.L2.Pj Formalism.IndefR.Mult
 
 
+set_option maxHeartbeats 1000000 in
 theorem lUnif_atDat : GlobalTheory.Published.HarishChandraFinite → GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Hk3.HoweUnram →
     GlobalTheory.Mem.Top.Bl.AtDat fun _ B f T w Z hX Wt z => z.R.toRealDat.LUnif := by
   intro _ _ _

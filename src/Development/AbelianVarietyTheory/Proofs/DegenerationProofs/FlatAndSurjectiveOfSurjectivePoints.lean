@@ -21,6 +21,7 @@ open GlobalTheory.SS
 namespace GlobalTheory.SS
 
 
+open UnramifiedEndFlat in
 theorem flat_of_isDominant_grpHom (K : Type) [Field K] [IsAlgClosed K]
     (G G' : Over (Sp K)) [GrpObj G] [GrpObj G'] [IrreducibleSpace G.left] [IsIntegral G'.left]
     [LocallyOfFiniteType G.hom] [LocallyOfFiniteType G'.hom] (φ : G ⟶ G') [IsMonHom φ]

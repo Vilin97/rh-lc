@@ -20,6 +20,7 @@ section GroupAlgebra
 variable {K : Type} [Field K] [CharZero K] {G : Type} [Group G] [Fintype G]
 
 
+open Classical in
 def typeSum (P : Subgroup G) (ψ : P →* Kˣ) (χ : G → K) : K := ∑ h : P, χ (h : G) * (((ψ h)⁻¹ : Kˣ) : K)
 
 end GroupAlgebra

@@ -65,6 +65,7 @@ theorem isReps_image {Λ₁ Λ₂ M₁ M₂ : AddSubgroup V} {S : Finset V} (hS 
   | (intros; exact _root_.GlobalTheory.TransportLemma.main ..)
 
 
+omit [DecidableEq V] in
 theorem repsOf_of_exists {Λ₁ Λ₂ : AddSubgroup V} (h : ∃ S, IsReps Λ₁ Λ₂ S) : IsReps Λ₁ Λ₂ (repsOf Λ₁ Λ₂) := by
   unfold repsOf
   exact Classical.epsilon_spec h
@@ -111,6 +112,7 @@ theorem tPull_one (z : TaylorLogMetric.VC D a b) :
     Matrix.one_mul, Matrix.mul_one]
 
 
+variable (cc δ) in
 def TT (e : Matrix (Fin a) (Fin a) D.host.E) (e' : Matrix (Fin b) (Fin b) D.host.E) (he : e * star e = 1) (he' : e' * star e' = 1) :
     TaylorLogMetric.VC D a b ≃+ TaylorLogMetric.VC D a b where
   toFun := tPull D (TaylorLogMetric.tor0 D cc δ) e e'

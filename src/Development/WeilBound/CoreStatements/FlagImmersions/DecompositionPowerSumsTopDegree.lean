@@ -18,6 +18,7 @@ public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PHomogeneousCo
 open MvPolynomial Filter Topology GlobalTheory.CompanionTheory.Ar.Top
 
 
+open GroundTheory.Heights₂.Heights.RestTerms in
 theorem RootFieldNumerics.coinv_above_top : CoinvAboveTopGeneral.Statement :=
   CoinvAboveTopGeneral.proof (CoinvAboveTop.proof
     (CoinvPolynomialReduction.proof (CoinvMonomialReduction.proof CoinvStepReduction.proof))

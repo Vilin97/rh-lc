@@ -49,6 +49,7 @@ def GoodT (L : SizeData₂ D) (T : Finset (G.HH D)) (h t0 : G.HH D) : Prop :=
 def BadT (X : G.Inst D L) (h t : G.HH D) (T : Finset (G.HH D)) : Prop := ¬ GoodT L T h (X.bs h t)
 
 
+open Classical in
 def ServedOrbitsSecondMoment (X : G.Inst D L) (Cb : ℝ) : Prop :=
   ∀ h : G.HH D, L.sc.x ^ (L.sc.eps / 4) ≤ (addOrderOf h : ℝ) → ∀ t : G.HH D,
     (∑ T : Finset (G.HH D), if t ∈ T ∧ BadT X h t T then UnusedSlot33.bern L.sc.delta1 T else 0) ≤
@@ -435,6 +436,7 @@ theorem log_deriv_L_one_congr_primitive {N1 N2 : ℕ} [NeZero N1] [NeZero N2] (�
 end Chars
 
 
+open Formalism.MainNotions.ZetaZeroFreeRegion Formalism.MainNotions.LnkBr in
 theorem char_at {D : D7} (L : SizeData₂ D) (x eps c6 C5 : ℝ) : Char_at L x eps c6 C5 := by
   intro e AD' he hAD
   subst he
@@ -1155,10 +1157,12 @@ theorem exists_rowBasis (D : D7) (V : D.what₂.EE ≃ₗᵢ[ℂ] D.what₂.EE) 
   exact ⟨f, fun k => by rw [hf (Sum.inl k) ⟨k, rfl⟩]; rfl⟩
 
 
+open Module in
 def bN (D : D7) (u : D.what₂.Word) : Basis (D.div.Nu u).ι ℂ (D.what₂.Mu u) :=
   Basis.mk (D.jN_basis u).1 (le_of_eq (D.jN_basis u).2.symm)
 
 
+open Module in
 def bE (D : D7) : Basis D.div.RR.ι ℂ D.what₂.EE := Basis.mk D.jEE_basis.1 (le_of_eq D.jEE_basis.2.symm)
 
 theorem bN_apply (D : D7) (u : D.what₂.Word) (j : (D.div.Nu u).ι) : bN D u j = D.jN u ((D.div.Nu u).b j) := by
@@ -1446,6 +1450,7 @@ variable {D : D7} (L : SizeData₂ D)
 def lE (w : D.what₂.places.Pl) : ℝ := SizeData₂.lwP w * (D.what₂.places.ramIdx w : ℝ)
 
 
+open Classical in
 def suppT (u : D.what₂.Word) : Finset D.what₂.places.Pl :=
   L.supp.filter (fun w => D.what₂.places.resChar w = (D.mem u).A.T)
 
@@ -1475,6 +1480,7 @@ theorem Ee_eq' (u : D.what₂.Word) : L.Ee u = UnitWeightPartition.Ee L.supp (Si
   exact Finset.sum_congr rfl (fun w _ => sz_eq w _)
 
 
+open Classical in
 def Places_at (C : ℝ) : Prop :=
   ∀ u, ∃ (sg' : D.what₂.places.Pl → ℝ) (de muMu muMaxMu PT Rd LT RX : ℝ),
     UnitWeightPartition.HypLow L.supp (suppT L u) (SizeData₂.lifts D) lE L.gainD L.F (L.E u) L.tau L.io (fun w => (L.lenMN u w : ℝ)) sg'
@@ -1487,6 +1493,7 @@ def Places_at (C : ℝ) : Prop :=
     RX ≤ C * L.sc.X'' D.R.n
 
 
+open Classical in
 theorem slopesN_at_of (C : ℝ) (hC : 4 ≤ C) (hio : 0 ≤ IOsum L) (h : Places_at L C) : SlopesN_at L C := by
   intro u
   obtain ⟨sg', de, muMu, muMaxMu, PT, Rd, LT, RX, h1, h2, h3, h4, h5⟩ := h u

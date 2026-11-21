@@ -106,6 +106,7 @@ theorem inv_ιCD_σB (g : GQ l) (b : Per6.Bcris l) : ιCD l (Per6.σB g b) = Per
   inv_equivariant (ιCD_fac l) (cB_isFrac l) (σB_comp g) (Per6.σD g) (inv_cD_galCris g) b
 
 
+variable (l) in
 def invPlusD : ACris.BCrisPlus ℂ_[l] l →+* Per6.BdR l :=
   (algebraMap (Per6.BdRp l) (Per6.BdR l)).comp (ACris.iotaPlus ℂ_[l] l)
 

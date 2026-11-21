@@ -23,11 +23,13 @@ scoped instance afSC : SecondCountableTopology (AF F) := GlobalTheory.AdelicUnit
 scoped instance afBorel : BorelSpace (AF F) := ⟨rfl⟩
 
 
+variable (F) in
 def lamA : Measure (AF F) := Measure.addHaar
 
 instance lamA_haar : (lamA F).IsAddHaarMeasure := by unfold lamA; infer_instance
 
 
+variable (F) in
 def fA : AddSubgroup (AF F) := (algebraMap F (AF F)).range.toAddSubgroup
 
 instance countable_fA : Countable (fA F) := by
@@ -134,6 +136,7 @@ theorem shear_mp' {X Y : Type} [MeasurableSpace X] [MeasurableSpace Y] [AddGroup
     (Filter.Eventually.of_forall fun x => map_add_right_eq_self ν (s x))
 
 
+open scoped Pointwise in
 theorem fd_prod {X Y : Type} [AddCommGroup X] [AddCommGroup Y] [MeasurableSpace X] [MeasurableSpace Y]
     [MeasurableAdd X] [MeasurableAdd Y] {Γ : AddSubgroup X} {Δ : AddSubgroup Y} [Countable Γ] [Countable Δ]
     {μ : Measure X} {ν : Measure Y} [SFinite μ] [SFinite ν] [μ.IsAddRightInvariant] [ν.IsAddRightInvariant] {s : Set X} {t : Set Y}

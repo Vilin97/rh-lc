@@ -24,6 +24,7 @@ def lineDeg (r : (K →+* ℂ) → ℝ) (ρ : HeightOneSpectrum (𝓞 K) → ℝ
   (∑ᶠ la, ρ la * lw K la) - (∑ σ, Real.log (r σ)) / (finrank ℚ K : ℝ)
 
 
+omit [NumberField K] in
 theorem fin_mul {ρ : HeightOneSpectrum (𝓞 K) → ℝ} (h : (Function.support ρ).Finite)
     (g : HeightOneSpectrum (𝓞 K) → ℝ) : (Function.support fun la => ρ la * g la).Finite :=
   h.subset (Function.support_mul_subset_left _ _)
@@ -435,6 +436,7 @@ theorem val_eq {w} {v : Rul Xo c → EReal} (hv : v ∈ valOn Z w) : v s.sig = (
   (image_eq_singleton_iff.1 (s.val_fin w)).2 v hv
 
 
+include s in
 theorem hasPts : HasPts U Z :=
   ⟨fun σ => ⟨(image_eq_singleton_iff.1 (s.norm_inf σ)).1, fun _ hz hd =>
     tested_of_homN_ne _ x hd ((s.homN_eq hz).symm ▸ (s.cInf_pos σ).ne')⟩,
@@ -477,6 +479,7 @@ def copy (s : ConstSec U x Z la δ) (h : la = la') (h' : δ = δ') : ConstSec U 
     sig_mem := h ▸ s.sig_mem, inv_mem := h ▸ s.inv_mem, norm_inf := h ▸ s.norm_inf, val_fin := h' ▸ s.val_fin }
 
 
+variable (x) in
 def one (h : HasPts U Z) : ConstSec U x Z 0 0 where
   sig := idem Z
   inv := idem Z

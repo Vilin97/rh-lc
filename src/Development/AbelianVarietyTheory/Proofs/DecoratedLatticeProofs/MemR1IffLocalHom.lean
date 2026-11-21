@@ -118,6 +118,7 @@ theorem isRight_iff (r : A ⊕ Fin c) : r.isRight ↔ M ≤ (e r).val := by
   · simp [he i]
 
 
+include he in
 theorem inR_locHom_iff (x : Sp E (M + c) ≃ₗ[E] Sp E (M + c)) : VolN.InR 1 (locHom ι e x) ↔ ColCond x := by
   have hval : ∀ r s, (locHom ι e x).val r s = ι (x (Pi.single (e s) 1) (e r)) := fun r s => rfl
   have hone : ∀ r s, (1 : Matrix (A ⊕ Fin c) (A ⊕ Fin c) k) r s = ι ((Pi.single (e s) (1 : E) : Sp E (M + c)) (e r)) := by

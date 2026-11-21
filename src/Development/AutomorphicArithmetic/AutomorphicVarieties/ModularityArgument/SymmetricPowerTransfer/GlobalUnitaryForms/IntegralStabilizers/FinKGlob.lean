@@ -212,6 +212,7 @@ theorem det_fin [IsTotallyReal F] (hneg : ∀ σ : F →+* ℝ, σ Δ < 0) (hΔ 
     ⟨(lam_int hc hy 0 1).1, fun σ => k1 σ _ (f σ).2.1⟩, (lam_int hc hy 0 1).2, fun σ => k2 σ _ (f σ).2.2.2⟩
 
 
+variable (Δ) in
 def rho : DA Δ →* MM Δ where
   toFun g v := mt (g.1 v)
   map_one' := rfl

@@ -332,6 +332,7 @@ theorem mono_cutHom_iff [IsLocallyNoetherian X] [F.IsQuasicoherent] :
     Mono (cutHom F hL s) ↔ assPoints F ⊆ nonzeroLocus s := (isMulBy_cutHom F hL s).mono_iff hL
 
 
+include hL in
 theorem mono_secHom_iff [IsLocallyNoetherian X] [F.IsQuasicoherent] :
     Mono (secHom F s) ↔ assPoints F ⊆ nonzeroLocus s := by
   have := isQuasicoherent_twist (F := F) hL
@@ -400,6 +401,7 @@ theorem interNum_cons_eq_interNum_cut (hP : ∀ i, (P i).IsLB) (h : FiniteCohTwi
     (interNum_cokernel _ hP (h.twist (isLB_lbZPow hL (-1))) h).symm
 
 
+omit [Mono (cutHom F hL s)] in
 theorem interNum_cons_eq_interNumSub [Mono (cutHom (structureModule X) hL s)]
     (hP : ∀ i, (P i).IsLB) (h : FiniteCohTwists k (structureModule X)) :
     interNum k (structureModule X) (Fin.cons L P : Fin (d + 1) → LB X) =
@@ -475,12 +477,15 @@ theorem exists_sum_mono_cutHom (hL : L.IsLB) {ι : Type*} [Fintype ι] (s : ι �
   ⟨c, (mono_cutHom_iff F hL _).2 hc⟩
 
 
+variable (k) in
+include k in
 theorem IsGenerated.exists_mono_cutHom (h : IsGenerated L) : ∃ s, Mono (cutHom F h.isLB s) :=
   have ⟨_, s, hs⟩ := h
   have ⟨_, hc⟩ := exists_sum_mono_cutHom (k := k) F h.isLB s hs
   ⟨_, hc⟩
 
 
+omit [AlgebraicGeometry.IsNoetherian X] in
 theorem IsAmpleLB.exists_mono_cutHom [IsLocallyNoetherian X] (h : IsAmpleLB L) :
     ∃ n, 1 ≤ n ∧ ∃ s : (lbPow L n).Sec, Mono (cutHom F (isLB_lbPow h.isLB n) s) ∧
       IsAffineOpen (nonzeroLocus s) :=

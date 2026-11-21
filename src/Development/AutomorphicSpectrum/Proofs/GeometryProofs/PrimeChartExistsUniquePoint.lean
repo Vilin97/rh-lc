@@ -100,6 +100,7 @@ end GlobalTheory.CompanionTheory.Ar.ChartPrimes
 namespace GlobalTheory.CompanionTheory.Ar
 
 
+open ChartPrimes in
 theorem chart_point_of_prime : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Spec (CommRingCat.of Ω) ⟶ X) (o : Type)
     [CommRing o] [Algebra o Ω] (κ : Type) (x : κ → Ω), CoordTie o ξ x → ∀ (c : κ), x c ≠ 0 →
     ∀ I : Ideal (Algebra.adjoin o (Set.range fun j => x j / x c)), I.IsPrime →

@@ -47,6 +47,7 @@ private theorem continuous_matrix_exp' (n : ℕ) : Continuous (fun M : Matrix (F
   exact NormedSpace.exp_continuous
 
 
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 theorem exists_height_le (hθ : IsInfFam θ) (V : HSp D) (τ : D.what₂.Tau) :
     ∀ᶠ X in 𝓝 (0 : Matrix (Fin V.rank) (Fin V.rank) ℂ), X ∈ lieAt V τ →
       ∀ t ∈ Set.Icc (0 : ℝ) 1, height V (oneP θ V τ X t) ≤ 2 := by

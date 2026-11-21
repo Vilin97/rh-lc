@@ -59,6 +59,7 @@ theorem exists_derivation (ρ : R →ₐ[ℂ] ℂ) (hρ : ∀ r, ρ r = 0 → r 
     ring
 
 
+omit [IsLocalRing R] [Module.Finite ℂ R] in
 def jetOf {B : Type} [CommRing B] (ρ : R →ₐ[ℂ] ℂ) (κ : R →ₗ[ℂ] ℂ) (h1 : κ 1 = 0) (e : B →+* R)
     (h : ∀ f r, κ (r * e f) = ρ r * κ (e f) + ρ (e f) * κ r) : B →+* DualNumber ℂ where
   toFun f := (ρ (e f), κ (e f))
@@ -476,6 +477,7 @@ theorem snd_preimage_le (ρ : R →ₐ[ℂ] ℂ) (x : spO R ⟶ A) (hx : resPt �
     exact ha
 
 
+omit [IsLocalRing R] [Module.Finite ℂ R] in
 theorem first_order_transl (ρ : R →ₐ[ℂ] ℂ) (x : spO R ⟶ A) (κ : R →ₗ[ℂ] ℂ) (w : Fin g → ℂ)
     (hκ : ∀ (W : A.left.Opens) (h : ⊤ ≤ x.left ⁻¹ᵁ W) (f : Γ(A.left, W)),
         (∀ r, κ (r * evalPt (R := R) x.left W h f) =

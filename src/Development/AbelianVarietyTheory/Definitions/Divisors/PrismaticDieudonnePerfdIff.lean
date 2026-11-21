@@ -130,6 +130,7 @@ def bcTate (t : G.Tate) : (G.baseChange O').Tate :=
     (bcTate O' t).pt n (r ⊗ₜ a) = r * algebraMap O O' (t.pt n a) := rfl
 
 
+omit [Fact p.Prime] in
 theorem isGroupLikeElem_one_tmul (χ : G.dual.Tate) (n : ℕ) :
     IsGroupLikeElem O' ((1 : O') ⊗ₜ[O] charElem χ n) where
   counit_eq_one := by simp [(isGroupLikeElem_charElem χ n).counit_eq_one]
@@ -333,6 +334,7 @@ theorem K_mu (n : ℕ) : K D (ConstTate.ofMu (eps S)) n = ⊤ := by
   | succ n ih => rw [K_succ, ih, Submodule.comap_top]
 
 
+open scoped Formalism.Per in
 theorem exists_constTate (p : ℕ) [Fact p.Prime] : ∃ S : CycPerfd p, IsPrimitiveRoot (zeta S.ε 1) p ∧
     ∀ G : PDivGroup p S.R, ∃ c : ConstTate (eps S) G, Function.Bijective c.toTate := by
   obtain ⟨e, he⟩ := GlobalTheory.MemLoc.Model.exists_isEps p

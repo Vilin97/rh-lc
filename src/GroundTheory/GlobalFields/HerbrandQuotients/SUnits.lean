@@ -22,12 +22,14 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
 variable (S : Set (HeightOneSpectrum (𝓞 L))) [Finite S]
 
 
+omit [IsGalois K L] in
 theorem hasHerbrandQuotient_sUnitRep (hS : ∀ (g : L ≃ₐ[K] L), ∀ w ∈ S, g • w ∈ S)
     {σ : L ≃ₐ[K] L} (hσ : ∀ g, g ∈ Subgroup.zpowers σ) :
     GroundTheory.GroupCoh.HasHerbrandQuotient (cycSubOne (sUnitRep S hS) σ) (cycNorm (sUnitRep S hS)) :=
   hasHerbrandQuotient_cycSubOne_of_finite _ hσ
 
 
+omit [IsGalois K L] in
 theorem finite_quotient_range_valuationVector :
     Finite ((S → ℤ) ⧸ (SUnit.valuationVector (K := L) S).toAddMonoidHom.range) := by
   have hn : (-(classNumber L : ℤ)) ≠ 0 := by
@@ -38,6 +40,7 @@ theorem finite_quotient_range_valuationVector :
   rfl
 
 
+omit [IsGalois K L] [Finite S] in
 theorem exact_ofUnits_valuationVector :
     Function.Exact (SUnit.ofUnits (K := L) S).toAdditive
       (SUnit.valuationVector (K := L) S).toAddMonoidHom := by

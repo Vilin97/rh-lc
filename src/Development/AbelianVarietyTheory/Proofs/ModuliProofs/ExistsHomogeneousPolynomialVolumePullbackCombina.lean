@@ -94,6 +94,7 @@ theorem squeeze {Φ : MvPolynomial κ ℝ} {g : ℕ} (hΦ : Φ.IsHomogeneous g) 
 variable {g : ℕ} {V : (I → ℤ) → ℝ → Prop} {Am VA Eff : (I → ℤ) → Prop}
 
 
+omit [Fintype I] in
 theorem eval_eq_of_ample
     (dom : ∀ x y, Am x → ∀ᶠ t : ℕ in atTop, Eff (t • x - y) ∧ Am (t • x - y))
     (va : ∀ x, Am x → ∃ d : ℕ, 1 ≤ d ∧ VA (d • x))

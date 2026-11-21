@@ -93,6 +93,7 @@ variable {S S' Z : Scheme.{0}} {B : Over S} {B' : Over S'} [GrpObj B] [IsCommMon
   {f : S' ⟶ S} {F : B'.left ⟶ B.left}
 
 
+omit [IsCommMonObj B] [IsCommMonObj B'] in
 theorem toBase_mul (h : IsGrpPullback B' B f F) (T : Over S') (x y : T ⟶ B') :
     toBase h.1.w (x * y) = toBase h.1.w x * toBase h.1.w y :=
   Over.OverMorphism.ext (h.2 T x y _ _ rfl rfl).symm

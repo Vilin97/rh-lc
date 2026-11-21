@@ -201,6 +201,7 @@ theorem exists_vanishing (lam : Qbar →+* ℂ_[l]) (h2 : l ∉ D.host.small) (h
 end GlobalTheory.EigenGenerator
 
 
+open GlobalTheory.EigenGenerator in
 theorem GlobalTheory.EigenGenerator.norm_generator_eq_one : ∀ (D : D7) (l : ℕ) [Fact l.Prime] (lam : Qbar →+* ℂ_[l]), l ∉ D.host.small → l ≠ D.host.q → ∀ (M : IntermediateField ℚ ℂ) [NumberField M], (∀ τ x, embT D τ x ∈ M) → ∀ (τ : D.what₂.Tau) (s : M), ellT D M τ = Submodule.span (𝓞 M) {s} → ‖lamC lam (s : ℂ)‖ = 1 := by
   intro D l _ lam h2 hq M _ hM τ s hs
   rw [← lamM_apply]

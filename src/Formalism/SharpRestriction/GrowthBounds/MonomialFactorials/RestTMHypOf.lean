@@ -58,6 +58,7 @@ private theorem setTies_deg_succ_pos_eq_of_strictMono {N : ℕ} (LL : GM.M.Lette
   rw [dite_eq_left hex, hc]
 
 
+set_option maxHeartbeats 400000 in
 theorem restTMHyp_of {CYb Cde Ck CD Cb Cc : ℝ} (hH : flipOneThree.HI C0 CYb Cde Ck CD Cb Cc X)
     (hS : RestTMSize C0 CE1 CE2 X) : RestTMHyp C0 CE1 CE2 X := by
   intro dl hdl a ha x hx

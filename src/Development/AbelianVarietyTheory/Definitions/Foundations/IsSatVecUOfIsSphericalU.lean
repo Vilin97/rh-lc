@@ -113,6 +113,7 @@ variable {E : Type} [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) {
   {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
 
 
+variable (n) in
 abbrev KGL : Subgroup (GL (Fin n) (w.adicCompletion E)) := GLint (Fin n) (Ov E w)
 
 def IsSatVecGL (ρ : Representation ℂ (GL (Fin n) (w.adicCompletion E)) V) (x : V) (B : Multiset ℂˣ) : Prop :=
@@ -186,6 +187,7 @@ theorem isSatVecGL_of_isSpherical {α : Fin n → ℂˣ} {φ : GL (Fin n) (w.adi
     rfl
 
 
+variable (w) in
 def psSpaceGL (α : Fin n → ℂˣ) : Submodule ℂ (GL (Fin n) (w.adicCompletion E) → ℂ) where
   carrier := {φ | ∀ b g, IsUpperB E w b → φ (b * g) = chiDelta E w (fun i => (α i : ℂ)) b * φ g}
   add_mem' h h' b g hb := by simp [h b g hb, h' b g hb, mul_add]
@@ -193,6 +195,7 @@ def psSpaceGL (α : Fin n → ℂˣ) : Submodule ℂ (GL (Fin n) (w.adicCompleti
   smul_mem' c φ h b g hb := by simp [h b g hb, mul_left_comm]
 
 
+variable (w) in
 def psFunGL (α : Fin n → ℂˣ) : Representation ℂ (GL (Fin n) (w.adicCompletion E)) (psSpaceGL w α) :=
   sub (rightReg ℂ _ ℂ) _ fun g φ h b y hb => by
     simpa [rightReg, LinearMap.funLeft, mul_assoc] using h b (y * g) hb
@@ -272,6 +275,7 @@ theorem isSatVecU_of_isSphericalU (hU : IsUnramInv ϖ σ q) {φ : GU σ n → �
       Final.SatakeInert L ϖ σ q n (n / 2) hU (by omega) (by omega) _ (fun i => (α i).ne_zero) t ht φ h]
 
 
+variable (σ) in
 def psSpaceU (q : ℕ) (α : Fin (n / 2) → ℂˣ) : Submodule ℂ (GU σ n → ℂ) where
   carrier := {φ | ∀ b g, IsBorelU b → φ (b * g) = chiDeltaU q (fun i => (α i : ℂ)) b * φ g}
   add_mem' h h' b g hb := by simp [h b g hb, h' b g hb, mul_add]
@@ -279,6 +283,7 @@ def psSpaceU (q : ℕ) (α : Fin (n / 2) → ℂˣ) : Submodule ℂ (GU σ n →
   smul_mem' c φ h b g hb := by simp [h b g hb, mul_left_comm]
 
 
+variable (σ) in
 def psFunU (q : ℕ) (α : Fin (n / 2) → ℂˣ) : Representation ℂ (GU σ n) (psSpaceU σ q α) :=
   sub (rightReg ℂ _ ℂ) _ fun g φ h b y hb => by
     simpa [rightReg, LinearMap.funLeft, mul_assoc] using h b (y * g) hb

@@ -47,10 +47,12 @@ variable {K}
 
 
 
+variable (K) in
 def pm {ι : Type} [Fintype ι] [DecidableEq ι] (σ : Equiv.Perm ι) : GL ι K :=
   (Matrix.permMatrixHom (n := ι) (R := K)).toHomUnits σ
 
 
+variable (K) in
 def patSet {ι : Type} [Fintype ι] [DecidableEq ι] (Φ : ι → ι → Prop) : Set (GL ι K) :=
   {u | ∀ i j, (i = j → (u : Matrix ι ι K) i j = 1) ∧ (i ≠ j → ¬ Φ i j → (u : Matrix ι ι K) i j = 0)}
 
@@ -58,6 +60,7 @@ def patChar {ι : Type} [Fintype ι] [DecidableEq ι] (E : ι → ι → K) (ψ�
   ψ₀ (∑ i, ∑ j, E i j * (u : Matrix ι ι K) i j)
 
 
+open Classical in
 def wh {ι : Type} [Fintype ι] [DecidableEq ι] (Φ : ι → ι → Prop) (E : ι → ι → K) (ψ₀ : AddChar K ℂ)
     (χ : GL ι K → ℂ) : ℂ :=
   by
@@ -68,6 +71,7 @@ def IsPat {ι : Type} (Φ : ι → ι → Prop) : Prop := (∀ i, ¬ Φ i i) ∧
 
 
 
+variable (K) in
 def cutE (N k : ℕ) (i j : Fin N) : K := if (j : ℕ) = i + 1 ∧ (j : ℕ) ≠ k then 1 else 0
 
 

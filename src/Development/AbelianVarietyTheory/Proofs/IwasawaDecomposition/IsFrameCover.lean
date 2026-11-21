@@ -45,6 +45,7 @@ theorem down_std (τ : T) (k : ℕ) (h : k ≤ m τ) : Down (std τ k h) := by
   exact Fin.ext this
 
 
+variable (m) in
 abbrev En : Type := Σ k : ℕ, {e : Fin k → Let m // Down e}
 
 abbrev stdEn (τ : T) (k : ℕ) (h : k ≤ m τ) : En m := ⟨k, std τ k h, down_std τ k h⟩
@@ -117,9 +118,11 @@ structure IsCover (c D : ∀ b, Let m → Fin (M + 1) → Γ(X, (V b).1)) : Prop
       InBlock (fun z => φ ∘ c b z) (fun z => φ' ∘ c b' z)
 
 
+variable (m) in
 abbrev CR (U : X.affineOpens) : Type := MvPolynomial (CellVar m) Γ(X, U.1)
 
 
+variable (m) in
 def cbase (U : X.affineOpens) : Sp (CR m U) ⟶ X := spMap (MvPolynomial.C : Γ(X, U.1) →+* CR m U) ≫ U.2.fromSpec
 
 def uvec {U : X.affineOpens} (c : Let m → Fin (M + 1) → Γ(X, U.1)) (w : Pm m) : Let m → Fin (M + 1) → CR m U :=
@@ -155,12 +158,14 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 abbrev Tn (R : Type) [CommRing R] : Type := Sp (DualNumber R) ⟶ t.G.left
 
 
+open GlobalTheory.FactorDepth in
 theorem exists_comb {R : Type} [CommRing R] {x : Sp R ⟶ X} {n : ℕ} {u : Fin n → Tn t R} (hu : ∀ j, IsTanAtG t x (u j))
     (a : Fin n → R) : ∃ w, IsTanAtG t x w ∧ IsCombAtG t x u a w :=
   ⟨_, isTanAtG_of _ (combT_tan _ (fun j => ovT (hu j)) (fun j => smT_zero_ovT _) a),
     (isCombAtG_iff t x (fun j => ovT (hu j)) a _).2 rfl⟩
 
 
+open GlobalTheory.FactorDepth in
 theorem comb_unique {R : Type} [CommRing R] {x : Sp R ⟶ X} {n : ℕ} {u : Fin n → Tn t R} (hu : ∀ j, IsTanAtG t x (u j))
     {a : Fin n → R} {w w' : Tn t R} (h : IsCombAtG t x u a w) (h' : IsCombAtG t x u a w') : w = w' :=
   ((isCombAtG_iff t x (fun j => ovT (hu j)) a _).1 h).symm.trans ((isCombAtG_iff t x (fun j => ovT (hu j)) a _).1 h')

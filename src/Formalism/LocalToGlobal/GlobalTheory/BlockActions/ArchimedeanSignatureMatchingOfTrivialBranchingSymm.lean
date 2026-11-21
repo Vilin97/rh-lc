@@ -104,6 +104,7 @@ theorem trEv_eqS (Tf : FormsTiedSym D u Ch chOf) (φ : Fn D u D.R.m) (c : (D.fm 
     rw [← Matrix.mul_assoc, atInf_mul_inv, Matrix.one_mul]
 
 
+set_option maxHeartbeats 2000000 in
 theorem val_repS (Tf : FormsTiedSym D u Ch chOf) (φ : Formalism.MainNotions.product_first_zeroth_parts.Fn D u D.R.m) (hφ : φ ∈ (D.fm u).Fi D.R.m) (c : (D.fm u).clsP) :
     ∃ P ∈ Formalism.L2.Forms.CSpan ((D.fm u).lam D.R.m), ∀ s, Tf.eWz ((D.mem u).P.evz φ) c s =
       fnOf _ (shiftOf (lamT u D.R.m)) (mZ u Tf.til.z0) P ((Tf.val D.R.m le_rfl (Or.inr rfl)).eY s) := by

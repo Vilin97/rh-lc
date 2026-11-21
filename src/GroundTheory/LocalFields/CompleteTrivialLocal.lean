@@ -309,6 +309,8 @@ theorem val_coe_smul_F {j : ℕ} (σ : Gal(L/K)) (y : D.filt.F j) :
   rw [StableFiltration.coe_smul_F, val_smul]
 
 
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeExtension K L]
+  [FiniteDimensional K L] in
 theorem smul_theta_mem (j : ℕ) (c : 𝒪[K]) : c • D.π ^ (D.k + j) • D.θ ∈ D.lat (D.k + j) := by
   have : D.π ^ (D.k + j) • (1 : Gal(L/K)) D.θ ∈ D.lat (D.k + j) := Submodule.subset_span ⟨1, rfl⟩
   simpa using Submodule.smul_mem _ c this
@@ -437,11 +439,16 @@ variable {K L : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarc
   [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L] [IsGalois K L]
 
 
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel L] [TopologicalSpace L]
+  [IsNonarchimedeanLocalField L] [ValuativeExtension K L] [FiniteDimensional K L] [IsGalois K L] in
+open scoped Pointwise in
 theorem normalLattice_eq_smul_span (π : 𝒪[K]) (θ : L) (s : ℕ) :
     normalLattice π θ s = π ^ s • Submodule.span 𝒪[K] (Set.range fun σ : Gal(L/K) => σ θ) := by
   rw [normalLattice, ← Set.smul_set_range, Submodule.span_smul]
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel L]
+  [TopologicalSpace L] [IsNonarchimedeanLocalField L] [ValuativeExtension K L] in
 theorem span_conjugates_eq_top {θ : L} (hθ : LinearIndependent K fun σ : Gal(L/K) => σ θ) :
     Submodule.span K (Set.range fun σ : Gal(L/K) => σ θ) = ⊤ := by
   have := (basisOfLinearIndependentOfCardEqFinrank hθ
@@ -462,6 +469,7 @@ theorem isOpen_units (j : ℕ) : IsOpen (D.units j : Set 𝒪[L]ˣ) := by
 attribute [local instance] action
 
 
+omit [TopologicalSpace L] [IsNonarchimedeanLocalField L] [IsGalois K L] in
 theorem subsingleton_tate :
     Subsingleton (TateZero Gal(L/K) (D.units 0)) ∧ Subsingleton (TateNegOne Gal(L/K) (D.units 0)) :=
   subsingleton_tate_of_complete D.filt D.filt_zero D.filt_complete D.filt_separated
@@ -470,6 +478,7 @@ theorem subsingleton_tate :
 end NormalLatticeData
 
 
+open scoped Pointwise in
 theorem exists_openSubgroup_units_tateTrivial :
     ∃ (π : 𝒪[K]) (θ : L) (k : ℕ), Irreducible π ∧ (LinearIndependent K fun σ : Gal(L/K) => σ θ) ∧
       Submodule.span K (Set.range fun σ : Gal(L/K) => σ θ) = ⊤ ∧

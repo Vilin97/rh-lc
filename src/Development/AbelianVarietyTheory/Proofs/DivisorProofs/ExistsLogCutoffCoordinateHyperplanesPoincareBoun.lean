@@ -195,6 +195,9 @@ private lemma fderiv_prod_logCutoff_coordVec {n : ℕ} (k : ℕ) (S : Finset (Fi
     exact h1.unique h2
 
 
+open MeasureTheory Filter Topology in
+open scoped ContDiff Matrix in
+set_option autoImplicit false in
 theorem _root_.GlobalTheory.GoodTop.exists_logCutoff_hyperplanes {n : ℕ} (S : Finset (Fin n)) :
     ∃ (C : ℝ) (χ : ℕ → _root_.ReciprocityTheory.L2DbarEstimates.V n → ℝ),
     (∀ k, ContDiff ℝ ∞ (χ k)) ∧ (∀ k v, 0 ≤ χ k v ∧ χ k v ≤ 1) ∧

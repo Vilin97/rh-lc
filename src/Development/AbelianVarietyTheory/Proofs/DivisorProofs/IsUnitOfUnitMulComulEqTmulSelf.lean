@@ -9,6 +9,7 @@ open scoped TensorProduct
 namespace GlobalTheory
 
 
+open TensorProduct in
 theorem isUnit_of_unit_mul_comul_eq_tmul_self (K H : Type) [Field K] [CommRing H] [HopfAlgebra K H]
     (c : H ⊗[K] H) (hc : IsUnit c) (u : H) (hu : u ≠ 0)
     (h : c * Coalgebra.comul (R := K) u = u ⊗ₜ[K] u) : IsUnit u := by

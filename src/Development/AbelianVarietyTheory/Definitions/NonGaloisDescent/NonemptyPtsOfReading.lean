@@ -77,6 +77,7 @@ theorem ev_some {y z} (h : Z.pt y = some z) (f) : T.ev i _ b f y = valAt YS fw j
 theorem ev_none {y} (h : Z.pt y = none) (f) : T.ev i _ b f y = 0 := by rw [Z.ev_eq, h]; rfl
 
 
+include Z in
 theorem exists_ev_eq (z : Pts YS (T.iC i) b ((j : ℕ) + 1)) :
     ∃ (y : T.Pt i ((j : ℕ) + 1)) (u : ℂ_[D.ntw.l i]), ‖u‖ = 1 ∧ ∀ f, valAt YS fw j z.1 (toK YS j b f) = u * T.ev i _ b f y := by
   obtain ⟨y, z', t, hy, ht, hb⟩ := Z.cover z
@@ -84,6 +85,7 @@ theorem exists_ev_eq (z : Pts YS (T.iC i) b ((j : ℕ) + 1)) :
 
 
 
+include Z in
 theorem norm_le_iff {B : ℝ} (hB : 0 ≤ B) (f : D.nexp.Fm i ((j : ℕ) + 1) b) : (∀ y, ‖T.ev i _ b f y‖ ≤ B) ↔
     ∀ z : Pts YS (T.iC i) b ((j : ℕ) + 1), ‖valAt YS fw j z.1 (toK YS j b f)‖ ≤ B := by
   refine ⟨fun h z => ?_, fun h y => ?_⟩
@@ -115,6 +117,7 @@ theorem hecke {k P} (h : HkIdx i k P) : ∃ s : T0.Q.c.F, ‖embC YS (T.iC i) b 
 
 
 
+include Z in
 theorem detects : Detects YS fw (T.iC i) b j := fun x hx => by
   obtain ⟨f, rfl⟩ := (toK YS j b).surjective x
   have : f = 0 := T.ev_inj i _ b (funext fun y => by
@@ -125,6 +128,7 @@ theorem detects : Detects YS fw (T.iC i) b j := fun x hx => by
 end SideTie
 
 
+variable {YS} in
 theorem mem_span_toK {i : D.ntw.Tw} {j : Fin D.R.m} {b : Bool} {s : Set (D.nexp.Fm i ((j : ℕ) + 1) b)}
     {s' : Set (NX.Fm S i ((j : ℕ) + 1) b)} (h : ∀ f, f ∈ s ↔ toK YS j b f ∈ s') (f : D.nexp.Fm i ((j : ℕ) + 1) b) :
     f ∈ Submodule.span (D.ntw.O i) s ↔ toK YS j b f ∈ Submodule.span (D.ntw.O i) s' := by
@@ -258,12 +262,14 @@ theorem allEv_ball {j : Fin D.R.m} {b : Bool} {B : ℝ} (hB : 0 ≤ B) (f : D.ne
     exact hB
 
 
+variable (YS fw) in
 def evN (j : ℕ) : ∀ b, D.nexp.Fm i j b →+ (AllPts YS iC j → ℂ_[D.ntw.l i]) :=
   extLift (α := fun j => ∀ b, D.nexp.Fm i j b →+ (AllPts YS iC j → ℂ_[D.ntw.l i])) (allEv YS fw iC) (fun _ _ => 0) j
 
 theorem evN_succ (j : Fin D.R.m) : evN YS fw (iC := iC) ((j : ℕ) + 1) = allEv YS fw iC j := extLift_succ _ _ j
 
 
+variable (YS iC) in
 def fmUrN (j : ℕ) : ∀ b, AddSubgroup (D.nexp.Fm i j b) :=
   extLift (α := fun j => ∀ b, AddSubgroup (D.nexp.Fm i j b))
     (fun j b => (ratForms S _ b (kurAt YS iC b)).comap (toK YS j b).toAddEquiv.toAddMonoidHom) (fun _ _ => ⊤) j
@@ -273,6 +279,7 @@ theorem mem_fmUrN (j : Fin D.R.m) (b : Bool) (f) :
   rw [fmUrN, extLift_succ]; rfl
 
 
+variable (YS fw iC) in
 def hkUnitN (j : ℕ) (b : Bool) (k : ℕ) (P : PlE D.host) : ℂ_[D.ntw.l i] :=
   extLift (α := fun _ => ℂ_[D.ntw.l i]) (fun j => hkUnit YS fw iC j b k P) (fun _ => 1) j
 

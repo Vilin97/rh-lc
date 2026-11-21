@@ -29,6 +29,7 @@ theorem continuous_finPart (D : D7) : Continuous (finPart D) := by
   exact continuous_snd.comp hc
 
 
+set_option maxHeartbeats 1000000 in
 theorem bounded_den : ∀ (D : D7) (K : Set (AE D)), IsCompact K → ∃ L : ℕ, 0 < L ∧ ∀ k ∈ K, ∀ x : D.host.E,
     finPart D (incA D x) = finPart D k → IsIntegral ℤ ((L : D.host.E) * x) := by
   intro D K hK

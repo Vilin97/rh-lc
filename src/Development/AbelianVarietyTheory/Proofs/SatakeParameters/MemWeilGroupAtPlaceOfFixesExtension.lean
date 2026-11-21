@@ -68,6 +68,7 @@ end GlobalTheory.AboveL.WeilUp
 namespace GlobalTheory.AboveL
 
 
+open GlobalTheory.AboveL.WeilUp in
 theorem mem_weil_of_fix : ∀ (K L Ω : Type) [Field Ω] [Field K] [NumberField K] [Algebra K Ω] [IsAlgClosure K Ω] [Field L] [NumberField L] [Algebra L Ω] [IsAlgClosure L Ω] [Algebra K L] [IsScalarTower K L Ω] (A : ValuationSubring Ω) (v : HeightOneSpectrum (𝓞 K)) (v' : HeightOneSpectrum (𝓞 L)) (h : IsPlaceOver A v) (h' : IsPlaceOver A v') (σ : Weil h) (g : G L Ω), (∀ z : Ω, (σ : G K Ω) z = g z) → g ∈ Weil h' := by
   intro K L Ω _ _ _ _ _ _ _ _ _ _ _ A v v' h h' σ g hg
   obtain ⟨f, hf⟩ := normV_eq_pow v v' (comap_eq_of_placeOver h h')

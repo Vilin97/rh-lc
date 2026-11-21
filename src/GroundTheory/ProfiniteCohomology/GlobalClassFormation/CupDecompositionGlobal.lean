@@ -77,6 +77,7 @@ theorem normal_subgroupOf_of_isGalois [IsGalois K.1 E.1] :
 attribute [local instance] normal_subgroupOf_of_isGalois
 
 
+omit [Fact (K ≤ E)] in
 theorem isOpen_subgroupOf_fixingSubgroup :
     IsOpen ((E.1.fixingSubgroup.subgroupOf K.1.fixingSubgroup : Subgroup K.1.fixingSubgroup) :
       Set K.1.fixingSubgroup) :=

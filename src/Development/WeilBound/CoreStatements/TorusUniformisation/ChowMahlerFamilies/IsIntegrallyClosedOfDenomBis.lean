@@ -292,6 +292,7 @@ theorem qhom_eq_one {E : Type} [Field E] [NumberField E] (N n : ℕ) (y : Fin N 
     exact ⟨y' i, by simp⟩
 
 
+open PositivityTheory.HtPt.Htat in
 theorem exists_coords {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} (D : Datum H) {S : Scheme.{0}}
     (t : SAB H S) {Ω : Type} [Field Ω] (ξ : Sp Ω ⟶ S) (p m : ℕ) [Fact p.Prime] (hm : 1 ≤ m)
     {ev : D.La → (Over.mk ξ ⟶ t.G)} {ζ₀ : Ωˣ} (hev : IsParam D t ξ (p ^ m) ev ζ₀)

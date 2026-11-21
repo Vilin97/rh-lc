@@ -67,6 +67,7 @@ abbrev withPsi (D : DegPre R) (psi : ∀ χ : D.X, LB.Gen (LB.LinComb D.P.L (K :
 namespace Cmp
 
 
+omit [IsDomain R] in
 theorem spMap_ringHom_id : spMap (RingHom.id R) = 𝟙 _ := by
   simp [spMap]
 

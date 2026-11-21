@@ -346,6 +346,8 @@ theorem jumpsLet_quot (M h : ZMod n → ℕ)
 end Generic
 
 
+set_option maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem defect_torsion : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (Cm : CmpOf D.loc D.locA HW F), Pr2d D HW F := by
   intro D HW F Cm l _ K s LL h T₀ T₁ T₂ ι π M hh c₀ c₁ c₂ hJ hses

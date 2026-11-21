@@ -13,6 +13,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.Ff UpperT
 open scoped Classical
 
 
+open scoped nonZeroDivisors in
 private theorem one_le_of_mem {d : 𝓞 ℚ} (hd0 : d ≠ 0) {e : ℚ} (he : e ≠ 0)
     (h : algebraMap ℚ (FiniteAdeleRing (𝓞 ℚ) ℚ) (algebraMap (𝓞 ℚ) ℚ d * e) ∈
       integralFiniteAdeles (𝓞 ℚ) ℚ) :
@@ -45,6 +46,7 @@ private theorem norm_rt (w : InfinitePlace ℚ) (c : ℚ) : ‖(rt c : A ℚ).1 
   rw [← h2, h, InfinitePlace.norm_embedding_eq, Rat.infinitePlace_apply, Rat.cast_abs]
 
 
+open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction in
 private theorem idele_le {K1 : Set (FiniteAdeleRing (𝓞 ℚ) ℚ)} (hK : IsCompact K1) (w : InfinitePlace ℚ) :
     ∃ M : ℝ, 0 < M ∧ ∀ x : IdeleGroup ℚ, ((x : A ℚ)).2 ∈ K1 → ab x ≤ M * ‖(x : A ℚ).1 w‖ := by
   obtain ⟨S, hS, hSm⟩ := exists_isCompact_mul_mem_of_ideleModule_mem_Icc (K := ℚ) one_pos 1

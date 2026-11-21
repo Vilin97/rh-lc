@@ -197,6 +197,7 @@ end GlobalTheory.FinPl.AllBij
 namespace GlobalTheory.FinPl
 
 
+open AllBij in
 theorem allBijective_all : ∀ D : D7, AllBijective D := by
   intro D k _ _ _ _ ι p q χ hχ ε n _ _ A S a hinj I
   have hsub : ∀ i, grpAt A (· = (p i).v) ≤ grpAt A fun v => ∃ i, v = (p i).v :=

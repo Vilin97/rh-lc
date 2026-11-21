@@ -91,6 +91,7 @@ theorem isPullO_zero_iff {Y A : Over (Sp R)} (f : Y ⟶ A) (c : HO1 A.hom) : IsP
 end Axes
 
 
+open Axes in
 theorem axesO1_of_cohomology_structure : (∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (g : ℕ), IsAbelianScheme A →
     SmoothOfRelativeDimension g A.hom → (Module.Finite R (HO1 A.hom) ∧ Module.Projective R (HO1 A.hom) ∧
       ∀ p : PrimeSpectrum R, Module.rankAtStalk (HO1 A.hom) p = g) ∧

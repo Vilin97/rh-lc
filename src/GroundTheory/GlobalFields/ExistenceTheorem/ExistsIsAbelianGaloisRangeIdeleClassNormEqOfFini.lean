@@ -192,10 +192,12 @@ theorem exists_intermediateField_range_ideleClassNorm_eq_of_finiteIndex
   exact ⟨f.fieldRange, inferInstance, inferInstance, (range_ideleClassNorm_congr τ).trans hL⟩
 
 
+variable (K Ω) in
 abbrev FiniteAbelianSubfield : Type u :=
   {L : IntermediateField K Ω // FiniteDimensional K L ∧ IsAbelianGalois K L}
 
 
+variable (K) in
 abbrev OpenFiniteIndexSubgroup : Type u :=
   {N : Subgroup (IdeleClassGroup K) // IsOpen (N : Set (IdeleClassGroup K)) ∧ N.FiniteIndex}
 
@@ -222,6 +224,7 @@ theorem normGroup_surjective : Function.Surjective (normGroup (K := K) (Ω := Ω
   exact ⟨⟨L, h1, h2⟩, Subtype.ext hL⟩
 
 
+variable (K Ω) in
 def normGroupOrderIso : FiniteAbelianSubfield K Ω ≃o (OpenFiniteIndexSubgroup K)ᵒᵈ where
   toEquiv := (Equiv.ofBijective normGroup ⟨normGroup_injective, normGroup_surjective⟩).trans
     OrderDual.toDual

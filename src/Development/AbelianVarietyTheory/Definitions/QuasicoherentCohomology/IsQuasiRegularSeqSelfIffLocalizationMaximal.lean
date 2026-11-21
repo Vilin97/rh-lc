@@ -128,6 +128,7 @@ def mk : ↥(I ^ a • ⊤ : Submodule R M) →ₗ[R] powGr I M a := Submodule.m
 theorem mk_surjective : Function.Surjective (mk I M a) := Submodule.mkQ_surjective _
 
 
+variable {I M a} in
 theorem mk_eq_zero (x : ↥(I ^ a • ⊤ : Submodule R M)) :
     mk I M a x = 0 ↔ (x : M) ∈ (I ^ (a + 1) • ⊤ : Submodule R M) :=
   Submodule.Quotient.mk_eq_zero _
@@ -153,6 +154,7 @@ instance isScalarTower {A : Type*} [Semiring A] [SMul A R] [IsScalarTower A R R]
     exact smul_assoc s r x
 
 
+variable {M} in
 def map {N : Type*} [AddCommGroup N] [Module R N] (g : M →ₗ[R] N) :
     powGr I M a →ₗ[R ⧸ I] powGr I N a :=
   LinearMap.extendScalarsOfSurjective Ideal.Quotient.mk_surjective <|
@@ -165,6 +167,7 @@ def toQuot : powGr I M a →ₗ[R] M ⧸ (I ^ (a + 1) • ⊤ : Submodule R M) :
   Submodule.mapQ _ _ (Submodule.subtype _) le_rfl
 
 
+variable {I M a} in
 @[simp] theorem toQuot_mk (x : ↥(I ^ a • ⊤ : Submodule R M)) :
     toQuot (I := I) (M := M) (a := a) (mk I M a x) = Submodule.Quotient.mk (x : M) := rfl
 
@@ -175,6 +178,7 @@ theorem toQuot_injective : Function.Injective (toQuot (I := I) (M := M) (a := a)
   rwa [toQuot_mk, Submodule.Quotient.mk_eq_zero, ← mk_eq_zero] at hx
 
 
+variable {I a} in
 def mulElem (r : R) (hr : r ∈ I ^ a) : (M ⧸ (I • ⊤ : Submodule R M)) →ₗ[R ⧸ I] powGr I M a :=
   LinearMap.extendScalarsOfSurjective Ideal.Quotient.mk_surjective <|
     Submodule.mapQ _ _
@@ -185,6 +189,7 @@ def mulElem (r : R) (hr : r ∈ I ^ a) : (M ⧸ (I • ⊤ : Submodule R M)) →
         exact Submodule.smul_mem_smul hr hx
 
 
+variable {I M a} in
 theorem mulElem_mk (r : R) (hr : r ∈ I ^ a) (x : M) :
     mulElem I M a r hr (Submodule.Quotient.mk x) =
       mk I M a ⟨r • x, Submodule.smul_mem_smul hr trivial⟩ := rfl
@@ -231,6 +236,7 @@ theorem monoToPowGr_mk (f : ι → R) (a : ℕ) (c : MonoDeg ι a → M) :
   simp
 
 
+variable (M) in
 theorem monoToPowGr_surjective (f : ι → R) (a : ℕ) : Function.Surjective (monoToPowGr M f a) := by
   intro x
   obtain ⟨⟨x, hx⟩, rfl⟩ := powGr.mk_surjective _ M a x

@@ -17,6 +17,7 @@ variable {k : Type} [Field k] {ι κ : Type} [LinearOrder ι] [LinearOrder κ]
   {E E' E'' : Type} [AddCommGroup E] [Module k E] [AddCommGroup E'] [Module k E'] [AddCommGroup E''] [Module k E'']
 
 
+variable (k ι κ E'') in
 def biD : (Finset ι × Finset κ → E'') →ₗ[k] (Finset ι × Finset κ → E'') :=
   LinearMap.pi fun x =>
     (∑ i ∈ x.1, GlobalTheory.cubeSign x.1 i • LinearMap.proj (R := k) (φ := fun _ : Finset ι × Finset κ => E'') (x.1.erase i, x.2)) +

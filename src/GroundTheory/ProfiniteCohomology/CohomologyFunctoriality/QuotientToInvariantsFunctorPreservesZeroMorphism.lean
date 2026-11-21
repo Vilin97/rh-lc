@@ -66,6 +66,8 @@ instance isDiscreteRep_map_res_X₃ : IsDiscreteRep (X.map (Rep.resFunctor U.sub
 variable {X}
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] [IsDiscreteRep X.X₁] [IsDiscreteRep X.X₂]
+  [IsDiscreteRep X.X₃] in
 theorem shortExact_map_res (hX : X.ShortExact) : (X.map (Rep.resFunctor U.subtype)).ShortExact :=
   (Rep.shortExact_res U.subtype).2 hX
 
@@ -83,6 +85,7 @@ variable (X : ShortComplex (Rep.{u} k G)) [IsDiscreteRep X.X₁] [IsDiscreteRep 
   [IsDiscreteRep X.X₃] (N : Subgroup G) [N.Normal]
 
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] in
 instance quotientToInvariantsFunctor_preservesZeroMorphisms :
     (Rep.quotientToInvariantsFunctor.{u} k N).PreservesZeroMorphisms where
   map_zero _ _ := by

@@ -22,6 +22,7 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
   (Rl : RealDat3 D A3 Ks) (cG : Formalism.L2.DIV.G0 Rl.Pg D.R.r ≃* G0g D.nd) (S : RatDat D.ntw) (Y : NExpRealS Rl cG S)
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def PinFor (hk : ∀ i j b, ℕ → PlE D.host → Module.End (FractionRing (D.ntw.O i)) (D.nexp.Fm i j b)) : Prop :=
   ∀ (hL : ∀ j, ℕ → PlE D.host → Module.End D.what₂.LL (S.WL j)) (hs : ∀ j, 1 ≤ j → j ≤ D.R.m → HeckeStabR S j (hL j)),
     Reads Rl cG S Y hL → ∃ u : ∀ i : D.ntw.Tw, Bool → PlE D.host → (D.ntw.O i)ˣ,
@@ -67,6 +68,7 @@ theorem j_injective (hU : Rl.toRealDat.LUnif) (i : Fin D.R.m) (σ : D.what₂.LL
 
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem hkFR_of_smul (i : D.ntw.Tw) (j : ℕ) (b : Bool) {f : ℕ → PlE D.host → Module.End D.what₂.LL (S.WL j)}
     (hs : HeckeStabR S j f) (k : ℕ) (P : PlE D.host) :
     (f k P = 0 → hkFR S i j b f hs k P = 0) ∧ (f k P = 1 → hkFR S i j b f hs k P = 1) := by

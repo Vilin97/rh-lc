@@ -30,6 +30,7 @@ theorem linearMap_apply_add_apply {R M N P : Type*} [CommRing R] [AddCommGroup M
   rw [map_add (f := _), LinearMap.add_apply]
 
 
+set_option maxHeartbeats 1600000 in
 theorem gsRootsToUnitsCompact_comparison_cup (h : gsUnitsCompact S ιs 1)
     (x : cohomology (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) 1) :
     (gsRootsToUnitsCompact S ιs n 3).hom ((gsRootsComparison S ιs n 3).hom
@@ -58,6 +59,7 @@ theorem gsRootsToUnitsCompact_comparison_cup (h : gsUnitsCompact S ιs 1)
       (show 2 + 1 = 3 from rfl) w x) ea'))).trans eb
 
 
+set_option maxHeartbeats 1600000 in
 theorem gsRootsToUnitsCompact_cup_eq (ℓ k : ℕ) (hℓ : ℓ.Prime) (hnk : n = ℓ ^ k)
     (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
     (d : GsUnitsDatum S) (z : cocycles (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) 1) :
@@ -113,12 +115,14 @@ theorem prod_ofFinite_eq {M : Type*} [CommMonoid M] (f : S → M) :
   exact Subsingleton.elim _ _
 
 
+omit [NeZero n] in
 theorem sPresentation_fst (a : ∀ w : S, ((w : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1)ˣ) :
     sPresentation S (a, 1) = ∏ w : S, SIdeleClassGroup.mk S (finiteEmbedding (w : HeightOneSpectrum (𝓞 K.1)) (a w)) := by
   rw [sPresentation_apply, toAdd_one, map_zero, toMul_zero, mul_one, placesIdele_apply, map_prod]
   exact prod_ofFinite_eq S _
 
 
+set_option maxHeartbeats 1600000 in
 theorem zmodToQZ_charEquiv_gsUnitsClass
     (χ : ContinuousMonoidHom (galUnramifiedOutside K.1 ℚ̄ S) (Multiplicative (ZMod n))) (d : GsUnitsDatum S) :
     zmodToQZ n (Multiplicative.toAdd (charEquiv ℚ̄ (Set.toFinite S) hodd χ (Additive.toMul (gsUnitsClass S d)))) =

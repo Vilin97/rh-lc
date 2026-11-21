@@ -43,6 +43,7 @@ theorem abs_det_mulLeft_mixedSpace (c : mixedSpace K) :
       Complex.normSq_eq_norm_sq]
 
 
+omit [NumberField K] in
 theorem normAtPlace_homeomorphMixedSpace (x : InfiniteAdeleRing K) (w : InfinitePlace K) :
     normAtPlace w (homeomorphMixedSpace K x) = ‖x w‖ := by
   rcases w.isReal_or_isComplex with hw | hw
@@ -64,6 +65,7 @@ theorem homeomorphMixedSpace_mul (x y : InfiniteAdeleRing K) :
   simp only [homeomorphMixedSpace_apply, map_mul]
 
 
+variable (K) in
 theorem infiniteAdeleMeasure_apply (E : Set (InfiniteAdeleRing K)) :
     infiniteAdeleMeasure K E = selfDualMeasure K (homeomorphMixedSpace K '' E) := by
   rw [infiniteAdeleMeasure, MeasurableEquiv.map_apply]

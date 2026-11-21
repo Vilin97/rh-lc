@@ -34,6 +34,7 @@ theorem measurableSet_mcPts (P : Ideal (MRing ι)) : MeasurableSet (mcPts P) := 
   exact h1.measurableSet.inter h2.measurableSet
 
 
+omit [Fintype K] in
 theorem isMultiHomog_sum_smul_map {r : ℕ} {e : K → ℕ} {g : Fin r → MRing ι} (hg : ∀ i, IsMultiHomog (g i) e)
     (c : Fin r → ℂ) : IsMultiHomog (∑ i, c i • map (Int.castRingHom ℂ) (g i)) e := by
   classical
@@ -44,10 +45,12 @@ theorem isMultiHomog_sum_smul_map {r : ℕ} {e : K → ℕ} {g : Fin r → MRing
 variable {Ω : Type} [Field Ω]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem chartLat_le_chartLatNm (y : (Σ k, ι k) → Ω) (a : K → ℤ) (τ : ℕ) : chartLat y a τ ≤ chartLatNm y a τ :=
   fun _ hs c hc => isIntegral_algebraMap (R := chartRingZ y c) (A := Ω) (x := ⟨_, hs c hc⟩)
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem finite_chartLat (y : (Σ k, ι k) → Ω) (a : K → ℤ) (τ : ℕ) (hfin : Module.Finite ℤ (chartLatNm y a τ)) :
     Module.Finite ℤ (chartLat y a τ) ∧
       Module.finrank ℤ (chartLat y a τ) ≤ Module.finrank ℤ (chartLatNm y a τ) := by
@@ -60,6 +63,7 @@ theorem finite_chartLat (y : (Σ k, ι k) → Ω) (a : K → ℤ) (τ : ℕ) (hf
 end SectionL2Lattice
 
 
+open SectionL2Lattice in
 theorem SectionL2Lattice.proof (hV : SectionPointValue.Statement) (hF : RealFormsOnPoints.Statement)
     (hG : L2GramLattice.Statement) (hN : NmSectionsRankBound.Statement) (hB : SectionSupBound.Statement) :
     SectionL2Lattice.Statement := by

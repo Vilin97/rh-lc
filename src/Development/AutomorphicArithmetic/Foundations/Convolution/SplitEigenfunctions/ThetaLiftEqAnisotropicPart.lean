@@ -27,6 +27,7 @@ def SLP (M : Meas ℚ) (φ : GL (Fin 2) (A E) → ℂ) : ℂ := ∫ g in M.D, φ
 
 def UPer (D : Dat ℚ E) (M : Meas ℚ) (φ : GL (Fin 2) (A E) → ℂ) : ℂ := UI fun z => SLP M fun x => φ (x * sZ D z)
 
+variable (E) in
 structure MeasE where
   μ : Measure (G1 E)
   D : Set (G1 E)

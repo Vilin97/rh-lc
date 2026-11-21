@@ -92,6 +92,7 @@ theorem isLatVac_span {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {�
       simp only [heisO, Pi.smul_apply, smul_eq_mul] at e1 ⊢; rw [mul_left_comm, e1]
 
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem exists_sum_eq {D : D7} (𝔫 : Ideal (𝓞 D.host.F)) {α : Af D.host.F} (hα : α ∈ Formalism.MainNotions.StandardLattice.intAf D.host.F)
     (h0 : ∀ v : FinPl D, 𝔫 ≤ v.asIdeal → evalV D.host.F v α = 0) :
     ∃ (s : Finset (𝓞 D.host.F)) (β : 𝓞 D.host.F → Af D.host.F), (∀ n ∈ s, n ∈ 𝔫) ∧ (∀ n, β n ∈ Formalism.MainNotions.StandardLattice.intAf D.host.F) ∧
@@ -201,6 +202,7 @@ theorem heisO_sum {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (x : W
   exact Finset.sum_congr rfl fun q _ => mul_left_comm _ _ _
 
 
+set_option maxHeartbeats 800000 in
 theorem mem_span : ∀ {D : D7} {δ t0 : ℂ} {Q : ℕ} (P : Pair D ⊤ δ t0 Q) (X : Data P) (r : D.host.E), IsExact P X r →
   ∀ (𝔪 : Ideal (𝓞 D.host.E)) (o : ℕ) (f₀ φ : WO X.A X.B → ℂ), Reads X.ψ X.θ X.rkA X.rkB ⊤ δ r P.e0 f₀ →
     Reads X.ψ X.θ X.rkA X.rkB ⊤ δ r (cosetVec P 𝔪 o) φ →
@@ -238,6 +240,8 @@ theorem mem_span : ∀ {D : D7} {δ t0 : ℂ} {Q : ℕ} (P : Pair D ⊤ δ t0 Q)
   exact sum_mem fun q _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨z q, hz q, rfl⟩)
 
 
+set_option synthInstance.maxHeartbeats 200000 in
+set_option maxHeartbeats 800000 in
 theorem smul_finPt {D : D7} {S T : HSp D} {a d : ℕ} (hS : S.rank = a) (hT : T.rank = d) (r : D.host.E) (n : 𝓞 D.host.F)
     (z : Matrix (Fin d) (Fin a) D.host.E) : algebraMap D.host.F (AF D.host.F) n • finPt hS hT r z =
       finPt hS hT r (algebraMap (𝓞 D.host.F) (𝓞 D.host.E) n • z) := by
@@ -250,6 +254,7 @@ theorem smul_finPt {D : D7} {S T : HSp D} {a d : ℕ} (hS : S.rank = a) (hT : T.
   ring
 
 
+set_option maxHeartbeats 800000 in
 theorem psi_symplO_skew : ∀ {D : D7} {δ t0 : ℂ} {Q : ℕ} (P : Pair D ⊤ δ t0 Q) (X : Data P) (r : D.host.E), IsExact P X r →
   ∀ (𝔪 : Ideal (𝓞 D.host.E)) (Sf : Finset (FinPl D)), GoodMod D 𝔪 Sf →
   ∀ LB : Lat X.B, IsSelfDualC X.B LB →

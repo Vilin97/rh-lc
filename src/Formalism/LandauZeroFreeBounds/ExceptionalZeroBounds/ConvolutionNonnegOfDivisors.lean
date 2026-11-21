@@ -41,6 +41,7 @@ lemma character_convolution_eq {N N' M : ℕ} (χ : DirichletCharacter ℂ N) (�
       rw [← map_mul, ← Nat.cast_mul, Nat.div_mul_cancel hdvd]
 
 
+set_option backward.isDefEq.respectTransparency.types false in
 lemma prime_power_coefficient_nonneg {N N' M : ℕ} {χ : DirichletCharacter ℂ N} {χ' : DirichletCharacter ℂ N'}
     {ψ : DirichletCharacter ℂ M} (hχ : χ ^ 2 = 1) (hψ : ∀ n : ℕ, ψ (n : ZMod M) = χ (n : ZMod N) * χ' (n : ZMod N'))
     {p : ℕ} (hp : p.Prime)

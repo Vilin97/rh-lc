@@ -14,6 +14,7 @@ namespace Formalism.MainNotions.N.Pv.LocalLengthBound
 open Formalism.WeaklyAdmissibleFiltrations Formalism.BasicNotions Formalism.BasicNotions.Loc
 
 
+set_option maxHeartbeats 800000 in
 theorem ptTrans_rec (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
     (h9 : Formalism.MainNotions.DeltaInvariantLattices.P9 D HW F) :
     Formalism.MainNotions.WachCoordinates.AtCaseA fun l _ K LL h => PtTrans ((HW l).W K 1 LL h.2.2) := by

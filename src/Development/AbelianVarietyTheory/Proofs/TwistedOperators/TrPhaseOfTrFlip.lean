@@ -74,6 +74,7 @@ theorem castCos_heq {Γ Γ' : Grid k} (hΓ : Γ = Γ') {hs : 1 ≤ Γ.s} {hs' : 
 end Loc2
 
 
+set_option maxHeartbeats 4000000 in
 theorem trPhase_of_trFlip : TrFlip → TrPhase := by
   intro hF X X' T T' L L' sc G G' W W' S S' μ₀ μ₀' ι hA M σ hS t' Φ' β' hβ'
   obtain ⟨Φ, hΦ⟩ := hF X X' T T' L L' sc G G' W W' S S' μ₀ μ₀' ι hA Φ'

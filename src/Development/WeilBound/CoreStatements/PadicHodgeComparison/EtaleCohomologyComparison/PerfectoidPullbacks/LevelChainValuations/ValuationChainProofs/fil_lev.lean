@@ -34,6 +34,7 @@ theorem pdP_B_bot (hL : L.Good) : pdP L.γB m = ⊥ := by
   · exact absurd (facts l K).t_mem ht
 
 
+omit d hc in
 theorem quoM_bMap (hQ : ∀ T, QB L M s T → QA L M s (((nmB M hL).mor 0).obj T)) (r : ℤ) (j : ℕ) (z : HO (QA L M s) j)
     (hz : quoM (QA L M s) r j z = 0) : quoM (QB L M s) r j (bMap M s hL hQ j z) = 0 := by
   have e : quoM (QB L M s) r j (bMap M s hL hQ j z) =

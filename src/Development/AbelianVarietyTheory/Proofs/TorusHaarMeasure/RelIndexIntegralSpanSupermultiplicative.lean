@@ -26,6 +26,7 @@ theorem relIndex_mul_le_of_le {A : Type} [AddCommGroup A] (M₁ M₂ W₁ W₂ �
   exact sup_le (inf_le_inf_left _ le_sup_left) (inf_le_inf_left _ le_sup_right)
 
 
+omit [IsCMField E] in
 theorem span_le_inf_span {r : ℕ} (Λ : Submodule (𝓞 E) (Fin r → E)) {ι : Type}
     (w : ι → Fin r → E) (hw : ∀ a, w a ∈ Λ) :
     (Submodule.span (𝓞 E) (Set.range w)).toAddSubgroup ≤

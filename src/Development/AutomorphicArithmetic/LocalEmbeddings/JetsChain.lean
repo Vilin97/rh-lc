@@ -214,6 +214,7 @@ theorem ptF_rat {x x' : ∀ n, GfC (V n)} (hx : ∀ j < N, ∃ γ ∈ ratFin (V 
       rw [(hc n hn).2.2.2.2.1 q hq, ptF_left hc hF hFa x n (by omega) q hq]) hγ _
 
 
+omit hF in
 theorem liftC_left (μ : ∀ n, Measure (GA D (V n))) (fd : ∀ n, Set (GA D (V n))) :
     ∀ n ≤ N, ∀ γ ∈ GQ (V n), ∀ g, liftC μ fd ker F n (γ * g) = liftC μ fd ker F n g
   | 0, _, γ, hγ, g => hFa γ hγ g

@@ -306,6 +306,7 @@ theorem tprod_ne_zero {ι V : Type} [Fintype ι] [DecidableEq ι] [AddCommGroup 
   simp [hℓ] at this
 
 
+open GlobalTheory.KFixIrr in
 theorem chi_le_tensSpan {ι : Type} [Fintype ι] [DecidableEq ι] {P Q R S : ℕ} (x : ι → ℚ) (hPR : P ≤ R) (hQS : Q ≤ S)
     (k k' : ι → ℕ) (hk : ∀ w, 0 < k w) (hk' : ∀ w, 0 < k' w) (ek : ∀ w, x w - cPair R S = k w)
     (ek' : ∀ w, x w + cPair R S = k' w) (m : ℕ) (hm : ∀ m' < m, chiPart ι P Q R S x ⊓ degLE ι P Q R S m' = ⊥) :
@@ -342,6 +343,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {Φ : Tens F (a - G.p) G.p (a + a' - (G.p + G.q)) (G.p + G.q) →ₗ[ℂ] SInf F (Fin a × Fin (a + a'))}
 
 
+open GlobalTheory.KFixIrr in
 theorem low_weights (hKP : KP) (hM : IsMatched B G X om om' Rm Rf) (hD : IsFockData B G.M A C Φ) (w : InfinitePlace F)
     (r : Fin (a + a' - (G.p + G.q))) (s : Fin (G.p + G.q)) :
     lowPartInf B G.M Rm.p ≤ ⨆ n : ℕ × ℕ,

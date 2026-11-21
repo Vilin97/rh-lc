@@ -93,12 +93,14 @@ variable {Qp LL V : Type} [Field Qp] [Field LL] [Algebra Qp LL] [AddCommGroup V]
   [Module Qp V] [IsScalarTower Qp LL V] {R : Type} [CommRing R] [Algebra Qp R]
 
 
+variable (Qp LL V) in
 def mu (b : R) : V ⊗[Qp] R →ₗ[LL] V ⊗[Qp] R :=
   AlgebraTensorModule.map LinearMap.id (LinearMap.mulLeft Qp b)
 
 theorem mu_tmul (b c : R) (v : V) : mu Qp LL V b (v ⊗ₜ c) = v ⊗ₜ (b * c) := rfl
 
 
+variable (Qp V R) in
 def muHom : R →ₐ[Qp] Module.End Qp (V ⊗[Qp] R) :=
   (Module.End.lTensorAlgHom Qp R V).comp (Algebra.lmul Qp R)
 
@@ -509,6 +511,7 @@ theorem mem_FilV_local [IsDomain P.R.BdR] (K LL : FinExt l) (T : Lt K LL) (τ : 
   exact ⟨g, fun c => by rw [P.PD_actdR, hσ₀, P.actQdR_Om, hg]⟩
 
 
+variable {P} in
 theorem ddR_le {AI : LocAinf l P} (ht : LocTied l P AI) (K LL : FinExt l) (T : Lt K LL)
     (hc : Nat.card (↥K.1 →ₐ[ℚ_[l]] ↥LL.1) = finrank ℚ_[l] ↥K.1)
     (hc0 : Nat.card (↥(K0 K) →ₐ[ℚ_[l]] ↥LL.1) = finrank ℚ_[l] ↥(K0 K)) (hT : IsCrys (P.PD K) T.ρ)
@@ -523,6 +526,7 @@ theorem ddR_le {AI : LocAinf l P} (ht : LocTied l P AI) (K LL : FinExt l) (T : L
   exact Submodule.sum_mem _ fun j _ => mu_iota_mem (P.PD K) T hc hc0 τ (c j) (d j) (hd j)
 
 
+variable {P} in
 theorem component_tied {AI : LocAinf l P} (ht : LocTied l P AI) (K LL : FinExt l) (T : Lt K LL)
     (hc : Nat.card (↥K.1 →ₐ[ℚ_[l]] ↥LL.1) = finrank ℚ_[l] ↥K.1)
     (hc0 : Nat.card (↥(K0 K) →ₐ[ℚ_[l]] ↥LL.1) = finrank ℚ_[l] ↥(K0 K)) (hT : IsCrys (P.PD K) T.ρ)
@@ -554,6 +558,7 @@ theorem component_tied {AI : LocAinf l P} (ht : LocTied l P AI) (K LL : FinExt l
 end Local
 
 
+set_option maxHeartbeats 1000000 in
 theorem component : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL), let W := (HW l).W K s LL h; ∀ T : Lt K LL, IsCrys ((D.loc l).PD K) T.ρ → ∀ (i : Let K) (ζ : ↥LL.1) τ ι, Comp (HW l) h i ζ τ ι → τ.comp (IsScalarTower.toAlgHom ℚ_[l] ↥(K0 K) ↥K.1) = W.emb i → (∀ (r : ℕ) (d : Fin r → T.V ⊗[ℚ_[l]] (D.loc l).R.B) (b : Fin r → (D.loc l).R.BdR), (∀ a, d a ∈ Di (HW l) h T i) → LinearIndependent ↥LL.1 d → ∑ a, mulVR T (b a) (ιV ((D.loc l).PD K) (LL := ↥LL.1) (V := T.V) (d a)) ∈ compKer T ι → ∀ a, b a = 0) ∧ (∀ d ∈ Di (HW l) h T i, ∀ a : ℤ, ιV ((D.loc l).PD K) (LL := ↥LL.1) (V := T.V) d ∈ FilAt ((D.loc l).PD K) T τ a ↔ ιV ((D.loc l).PD K) (LL := ↥LL.1) (V := T.V) d ∈ compKer T ι ⊔ FilV ((D.loc l).PD K) (LL := ↥LL.1) (V := T.V) a) ∧ (∀ w ∈ DdRE ((D.loc l).PD K) T.ρ τ, ∃ d ∈ Di (HW l) h T i, ιV ((D.loc l).PD K) (LL := ↥LL.1) (V := T.V) d - w ∈ ⨆ (τ' : ↥K.1 →ₐ[ℚ_[l]] ↥LL.1) (_ : τ' ≠ τ), DdRE ((D.loc l).PD K) T.ρ τ') ∧ Module.finrank ↥LL.1 ↥(Di (HW l) h T i) = Module.finrank ↥LL.1 T.V := by
   intro D HW l _ K s LL h W T hT i ζ τ ι hC hτ
   obtain ⟨-, -, -, hc, hc0⟩ := Points.points D HW l K s LL h

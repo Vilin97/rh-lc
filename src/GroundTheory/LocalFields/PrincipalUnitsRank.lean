@@ -33,6 +33,7 @@ noncomputable def padicIntEquivInteger : ℤ_[p] ≃+* 𝒪[ℚ_[p]] where
 variable [CharP 𝓀[K] p] [CharZero K]
 
 
+variable (K) in
 noncomputable def padicIntHom : ℤ_[p] →+* K :=
   (CharZero.padicHom K p).comp PadicInt.Coe.ringHom
 
@@ -40,6 +41,7 @@ theorem padicIntHom_mem (a : ℤ_[p]) : padicIntHom (K := K) p a ∈ 𝒪[K] :=
   CharZero.valuation_padicHom_padicInt_le_one K p a
 
 
+variable (K) in
 noncomputable def padicIntHomInteger : ℤ_[p] →+* 𝒪[K] :=
   (padicIntHom (K := K) p).codRestrict 𝒪[K] (padicIntHom_mem p)
 
@@ -76,6 +78,7 @@ theorem padicIntHom_mem_valBall_zero (a : ℤ_[p]) :
   exact padicIntHom_mem p a
 
 
+variable (K) in
 noncomputable def valBallSubmodule (m : ℤ) : Submodule ℤ_[p] K where
   carrier := valBall (K := K) m
   add_mem' := add_mem
@@ -102,6 +105,7 @@ noncomputable def valBallSubmoduleZeroEquiv : valBallSubmodule (K := K) p 0 ≃�
   map_smul' _ _ := rfl
 
 
+variable (K) in
 noncomputable def valBallSubmoduleEquiv (m : ℤ) :
     valBallSubmodule (K := K) p 0 ≃ₗ[ℤ_[p]] valBallSubmodule (K := K) p m :=
   have hy := exists_normalizedValuation_eq (K := K) (-m)
@@ -144,6 +148,7 @@ theorem rank_valBallSubmodule (m : ℤ) :
   exact (Cardinal.cast_toNat_of_lt_aleph0 (Module.rank_lt_aleph0 _ _)).symm
 
 
+variable (K) in
 noncomputable def padicLogLinear : Additive (unitFiltrationUnits K 1) →ₗ[ℤ_[p]] K where
   toFun := padicLog K
   map_add' := map_add _

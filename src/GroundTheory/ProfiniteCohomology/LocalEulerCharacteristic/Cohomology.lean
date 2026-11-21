@@ -32,6 +32,7 @@ theorem rootsOfUnityTwoInv_apply (V : OpenSubgroup Gal(Ksep/K))
   AddMonoidHom.comp_apply _ _ x
 
 
+include hl in
 theorem rootsOfUnityTwoInv_injective (V : OpenSubgroup Gal(Ksep/K)) :
     Function.Injective (rootsOfUnityTwoInv (K := K) (Ksep := Ksep) l V) :=
   ((localClassFormationOfIsSepClosure K Ksep).inv_bijective V).1.comp
@@ -40,6 +41,7 @@ theorem rootsOfUnityTwoInv_injective (V : OpenSubgroup Gal(Ksep/K)) :
       (subsingleton_cohomology_one_galUnits_open K Ksep V))
 
 
+include hl in
 theorem range_rootsOfUnityTwoInv (V : OpenSubgroup Gal(Ksep/K)) :
     (rootsOfUnityTwoInv (K := K) (Ksep := Ksep) l V).range = (zmodToQZ l).range := by
   have : NeZero l := ⟨by rintro rfl; exact hl Nat.cast_zero⟩

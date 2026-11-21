@@ -67,6 +67,8 @@ variable {X : Scheme.{u}} {t : Γ(X, ⊤)} {η : X}
 
 include hj
 
+omit [IsIntegral X] [IsLocallyNoetherian X] in
+include hj in
 theorem exists_transport (r : ∀ a, Γ(Y, W a))
     (hr : ∀ a b, Y.presheaf.map (homOfLE inf_le_left).op (r a) =
       j.appLE (U a ⊓ U b) (W a ⊓ W b) (inf_le_inf (hW a).le (hW b).le) (g a b) *
@@ -105,6 +107,7 @@ theorem exists_transport (r : ∀ a, Γ(Y, W a))
 
 include hη hp
 
+include hη hp hj in
 theorem existsUnique_zpow_mul_appLE (hU : ∀ x : X, ∃ a, x ∈ U a) (hg : ∀ a b, IsUnit (g a b))
     (τ : Γ(Y, ⊤)ˣ) (hτ : (τ : Γ(Y, ⊤)) = j.appTop t) {r : ∀ a, Γ(Y, W a)}
     (hr : ∀ a b, Y.presheaf.map (homOfLE inf_le_left).op (r a) =
@@ -122,6 +125,7 @@ theorem existsUnique_zpow_mul_appLE (hU : ∀ x : X, ∃ a, x ∈ U a) (hg : ∀
     (hr0.imp fun a ha h ↦ ha (h0 a h))
 
 
+include hη hp hj in
 theorem exists_isUnit_appLE_eq (hU : ∀ x : X, ∃ a, x ∈ U a) (hg : ∀ a b, IsUnit (g a b))
     {r : ∀ a, Γ(Y, W a)}
     (hr : ∀ a b, Y.presheaf.map (homOfLE inf_le_left).op (r a) =

@@ -191,6 +191,7 @@ theorem redMat_eq (k : GLint E n P) {A : Matrix (Fin n) (Fin n) (𝓞 E ⧸ P.as
   exact this
 
 
+variable (n P) in
 def redGL : GLint E n P →* GL (Fin n) (𝓞 E ⧸ P.asIdeal) :=
   MonoidHom.toHomUnits
     { toFun := redMat
@@ -228,6 +229,7 @@ theorem redP_mul_det (k : GLint E n P) (hk : redGL n P k = 1) (a : E) :
   · rw [(det_glint k).2, ← redGL_val, hk, Units.val_one, Matrix.det_one]
 
 
+variable (n P) in
 def prinCong (c : ℕ) : Subgroup (GLint E n P) where
   carrier := {k | ∀ x ∈ stdAt E n P, ((qOf P : E) ^ c)⁻¹ • (k.1 x - x) ∈ stdAt E n P}
   one_mem' := fun x _ => by
@@ -372,6 +374,7 @@ theorem mem_stdAt_succ {x : Sp E N} : x ∈ stdAt E N P ↔ prH E hN x ∈ stdAt
   · exact h.2
 
 
+variable (P) in
 def extI : GLint E n P →* GLint E N P where
   toFun j := ⟨sumE hN j.1 1, fun x => by
     rw [mem_stdAt_succ hN, mem_stdAt_succ hN, prH_sumE, sumE_last, Units.val_one, one_mul, j.2]⟩

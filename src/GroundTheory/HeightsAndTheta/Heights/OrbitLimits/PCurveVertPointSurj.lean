@@ -19,6 +19,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo HilbertSamuel.Section
 noncomputable section
 
 
+open CurveVerticalPointSurjective in
 theorem CurveVertPointSurj.proof (hFin : CurveRingFinite.Statement) (hC : CurveClosedPointChart.Statement) :
     CurveVertPointSurj.Statement := by
   classical

@@ -550,6 +550,7 @@ theorem annihilators_of (χ : D →* (ZMod n)ˣ) (hχ : ContAction (charRep χ))
 end Main
 
 
+open NumberField IsDedekindDomain Formalism.ConjugateSelfDual GlobalTheory.TameQuot GlobalTheory.WeilDeligne in
 theorem unramifiedOrthogonality_of (hF : LocalFiniteness) (hD : LocalTateDuality)
     (hE : LocalEulerChar) : UnramifiedOrthogonality := by
   intro F Ω _ _ _ _ _ l _ r M _ _ _ _ _ A rho v hr hA hl hI hc

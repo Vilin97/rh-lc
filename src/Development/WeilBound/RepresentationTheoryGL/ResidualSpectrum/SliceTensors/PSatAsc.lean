@@ -68,6 +68,7 @@ theorem term_eq {a d : ℕ} (w : HeightOneSpectrum (𝓞 E)) (B₀ : Multiset �
   ring
 
 
+omit [IsTotallyComplex E] in
 theorem sum_rev {d : ℕ} (w : HeightOneSpectrum (𝓞 E)) (B₀ : Multiset ℂˣ) :
     ∑ i : Fin d, satTw w (-(spehExp d i : ℂ)) B₀ = ∑ i : Fin d, satTw w (spehExp d i : ℂ) B₀ := by
   refine Fintype.sum_equiv Fin.revPerm _ _ fun i => ?_

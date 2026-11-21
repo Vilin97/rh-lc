@@ -50,6 +50,7 @@ def IsFamilyOf (y : (Σ k, J k) → Ω) (D : (∀ k, J k) → LieLatticeData Ω 
 namespace Fam
 
 
+omit [IsDomain O] [IsDiscreteValuationRing O] [∀ k, Fintype (J k)] in
 theorem mem_coordLat_iff (y : (Σ k, J k) → Ω) (L : Lat ξ V) {m : ℕ} (b : Fin m → V) (c : ∀ k, J k) (a : Fin m → Ω) :
     a ∈ coordLat O y L b c ↔ ∀ q : Cpt ξ, InChart ξ (mseg y) c q → (∀ o : O, algebraMap O Ω o ∈ regAt ξ q) →
       ∑ i, a i • b i ∈ L q := by
@@ -57,6 +58,7 @@ theorem mem_coordLat_iff (y : (Σ k, J k) → Ω) (L : Lat ξ V) {m : ℕ} (b : 
 
 
 
+omit [IsDomain O] [IsDiscreteValuationRing O] [∀ k, Fintype (J k)] in
 theorem chartRing_le_regAt (y : (Σ k, J k) → Ω) (c : ∀ k, J k) (q : Cpt ξ) (h1 : InChart ξ (mseg y) c q)
     (h2 : ∀ o : O, algebraMap O Ω o ∈ regAt ξ q) {a : Ω} (ha : a ∈ chartRing O (mseg y) c) : a ∈ regAt ξ q := by
   induction ha using Algebra.adjoin_induction with

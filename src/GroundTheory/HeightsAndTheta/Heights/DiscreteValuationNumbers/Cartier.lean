@@ -118,6 +118,7 @@ variable {K : Type*} [DecidableEq K] {ι : K → Type*}
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
 
+omit [IsDomain O] [IsDiscreteValuationRing O] in
 theorem IsVerticalDivisor.of_unit_off_special {P : Ideal (MRing ι O)} {ϖ : O} {b : K → ℤ}
     {f g : MRing ι O}
     (degrees : ∃ bf bg : K → ℕ, IsMultiHomog f bf ∧ IsMultiHomog g bg ∧

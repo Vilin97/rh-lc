@@ -296,6 +296,7 @@ theorem tsum_coords (D : D7) (W : HSpace D.host.E) (s : Bool) (β : D.host.F)
   rw [← eq.tsum_eq]; rfl
 
 
+set_option maxHeartbeats 1000000 in
 theorem ratio_of_setting (hL5 : PlaceSplittingTypes.SelfDualLatticeDensity) (hR3 : ActionCoordinates.RealPlaceMeasures)
     (hEu : LocalAdditiveCharacterDual.EulerProductOfDensities)
     (hSW : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E),

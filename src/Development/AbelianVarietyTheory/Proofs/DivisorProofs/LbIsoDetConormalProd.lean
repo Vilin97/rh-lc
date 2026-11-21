@@ -30,6 +30,7 @@ variable {S : Scheme.{0}} {F F₁ F₂ : S.Modules} {p₁ : F₁ ⟶ F} {p₂ : 
     (he₁ : VB.IsFrame e₁) (he₂ : VB.IsFrame e₂)
 
 
+include h h₁ h₂ h₃ h₄ in
 theorem repr_left (hV : V ≤ U) (y : Γ(F, V)) (i : Fin n) :
     ((GlobalTheory.TorusCot.isFrame_append h h₁ h₂ h₃ h₄ he₁ he₂).basis hV).repr y (Fin.castAdd m i) =
       (he₁.basis hV).repr (i₁.app V y) i := by
@@ -55,6 +56,7 @@ theorem repr_left (hV : V ≤ U) (y : Γ(F, V)) (i : Fin n) :
   exact LinearMap.congr_fun key y
 
 
+include h h₁ h₂ h₃ h₄ in
 theorem repr_right (hV : V ≤ U) (y : Γ(F, V)) (i : Fin m) :
     ((GlobalTheory.TorusCot.isFrame_append h h₁ h₂ h₃ h₄ he₁ he₂).basis hV).repr y (Fin.natAdd n i) =
       (he₂.basis hV).repr (i₂.app V y) i := by
@@ -80,6 +82,7 @@ theorem repr_right (hV : V ≤ U) (y : Γ(F, V)) (i : Fin m) :
   exact LinearMap.congr_fun key y
 
 
+include h h₁ h₂ h₃ h₄ in
 theorem detUnit_append {U' : S.Opens} {e₁' : Fin n → Γ(F₁, U')} {e₂' : Fin m → Γ(F₂, U')}
     (he₁' : VB.IsFrame e₁') (he₂' : VB.IsFrame e₂') (hV : V ≤ U) (hV' : V ≤ U') :
     (GlobalTheory.TorusCot.isFrame_append h h₁ h₂ h₃ h₄ he₁ he₂).detUnit

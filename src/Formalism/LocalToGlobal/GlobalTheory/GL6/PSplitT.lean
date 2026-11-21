@@ -217,6 +217,7 @@ theorem host_conj_involutive (x : D.host.E) : D.host.conj (D.host.conj x) = x :=
   exact D.host.conj_conj x
 
 
+set_option maxHeartbeats 1000000 in
 theorem splitAtT_of_tied (A : AtTTied u) : SplitAtT A := by
   intro v
   obtain ⟨pb, hpb⟩ : ∃ pb : 𝓞 D.host.E, (pb : D.host.E) = D.host.conj (A.piU : D.host.E) :=

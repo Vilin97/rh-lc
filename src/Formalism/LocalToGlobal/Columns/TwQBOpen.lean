@@ -19,6 +19,7 @@ section Div
 variable {F : Type} [Field F] [NumberField F] {v : HeightOneSpectrum (𝓞 F)} {n : ℕ}
 
 
+set_option maxHeartbeats 2000000 in
 theorem qbK_of_div {c : v.adicCompletion F} (hc : c ∈ v.adicCompletionIntegers F) (hc1 : Valued.v c < 1)
     {k : GL (Fin n) (v.adicCompletion F)} (hk : qbDiv c ((k : Matrix (Fin n) (Fin n) (v.adicCompletion F)) - 1)) : k ∈ qbK c := by
   classical
@@ -105,6 +106,7 @@ variable {F E K : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Sta
   (hQ : ∀ P : Q, conjPrime₂ P.1 ≠ P.1) (hΘ : ThetaOpen Θ)
 
 
+set_option maxHeartbeats 2000000 in
 theorem qbDF_spec (P : Q) : ∃ D : 𝓞 F, D ≠ 0 ∧ D ∈ (underPl F P.1).asIdeal ∧ ∃ w ∈ ((qv F P.1).adicCompletionIntegers F),
     algebraMap (𝓞 F) ((qv F P.1).adicCompletion F) D = qbF hc hQ P (qbD hc Θ hQ hΘ P) * w := by
   obtain ⟨b, hb⟩ := qsp_norm_mem hc (qbPi hc hQ P)
@@ -147,6 +149,7 @@ theorem qbDF_prop (P : Q) : qbDF hc Θ hQ hΘ P ≠ 0 ∧ qbDF hc Θ hQ hΘ P �
   Classical.choose_spec (qbDF_spec hc Θ hQ hΘ P)
 
 
+set_option maxHeartbeats 4000000 in
 theorem qbOpen : QOpen (qbLoc hc Θ hQ hΘ) where
   princ P := by
     classical

@@ -38,6 +38,7 @@ variable {G : Over S} [GrpObj G] {pr : Fin n → (G ⟶ A)} (hmon : ∀ u, IsMon
   {W : Matrix (Fin n) (Fin n) ℤ} {L : LB G.left} (hL : L.IsLB) (hLW : cls L hL = quad π W pr)
 
 
+include hadd hsym hLW hmon huniv in
 theorem trivAlong_of_kernelAlong {S' : Scheme.{0}} (g : S' ⟶ S) (hdet : (W + W.transpose).det = 1)
     (hker : ∀ (T : Over S) (a : T.left ⟶ S'), a ≫ g = T.hom → ∀ x : T ⟶ A,
       pair π (snd A T ≫ x) (fst A T) = 0 → x = 1) : TrivAlong G L g := by
@@ -86,6 +87,7 @@ theorem trivAlong_of_kernelAlong {S' : Scheme.{0}} (g : S' ⟶ S) (hdet : (W + W
   exact congrArg (fun q => q.left) e
 
 
+include hadd hsym hLW hmon huniv in
 theorem kernelAlong_of_trivAlong {S' : Scheme.{0}} (g : S' ⟶ S) (u₀ : Fin n) (hK : TrivAlong G L g)
     (T : Over S) (a : T.left ⟶ S') (ha : a ≫ g = T.hom) (x : T ⟶ A)
     (hx : pair π (snd A T ≫ x) (fst A T) = 0) : x = 1 := by

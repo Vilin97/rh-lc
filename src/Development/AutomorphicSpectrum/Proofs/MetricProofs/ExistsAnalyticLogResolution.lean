@@ -90,6 +90,7 @@ theorem exists_span_of_fibre (A : Type) [CommRing A] [Algebra ℚ A] [Algebra A 
   exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
 
 
+open scoped IntermediateField.algebraAdjoinAdjoin in
 theorem card_le_of_smooth (σ : Type) [Fintype σ] (Ω : Type) [Field Ω] [CharZero Ω] (u : σ → Ω)
     (V : Submodule ℂ (σ → ℂ)) (w : σ → ℂ)
     (hker : ∀ g : MvPolynomial σ ℚ, aeval u g = 0 → eval w (map (algebraMap ℚ ℂ) g) = 0)
@@ -154,6 +155,7 @@ theorem card_le_finrank_jacSpanAt (K : Type) [Fintype K] (ι : K → Type) [∀ 
     (fun g hg => Submodule.subset_span ⟨_, hkerC g hg, rfl⟩) (hsm p hp) e htr
 
 
+open ReciprocityTheory.AnForm.R ReciprocityTheory.AnForm.R.JacobianCriterionAlt in
 theorem exists_params_of_regular {m : ℕ} (I : Ideal (MvPolynomial (Fin m) ℂ)) (t : Fin m → ℂ)
     (hI : ∀ h ∈ I, eval t h = 0) (e : ℕ) (hreg : IsRegularLocalRing (locRing I t))
     (hd : ringKrullDim (locRing I t) = e) :
@@ -254,6 +256,7 @@ theorem isUnit_algebraMap_locRing' {n : ℕ} (I : Ideal (MvPolynomial (Fin n) �
   rwa [← IsScalarTower.algebraMap_apply] at this
 
 
+open GlobalTheory.CompanionTheory.Ar.Cmp.SncRes in
 theorem nonempty_algRes (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Ω : Type) [Field Ω]
     [CharZero Ω] (y : (Σ k, ι k) → Ω) (e : ℕ) (hP : IsArithVar (mCoordIdeal y) (e + 1))
     (hsm : SmoothGenericFibreM y) :

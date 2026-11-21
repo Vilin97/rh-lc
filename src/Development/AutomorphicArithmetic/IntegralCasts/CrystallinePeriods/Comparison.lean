@@ -189,6 +189,7 @@ theorem toRange_algebraMap (n : ℕ) (a : AcrisZero p R) :
   exact (AdicCompletion.ofAlgEquiv _).symm.commutes _
 
 
+omit [IsDomain R] [ValuationRing R] [CharZero R] [IsAlgClosed (FractionRing R)] in
 def rangeMap {m n : ℕ} (g : AinfInv p R ⧸ AinfInv.kerTheta p R ^ n →+*
       AinfInv p S ⧸ AinfInv.kerTheta p S ^ m) (e : AcrisZero p R →+* AcrisZero p S)
     (h : ∀ a, g (AcrisZero.toQuot (p := p) (R := R) n a) = AcrisZero.toQuot (p := p) (R := S) m (e a)) :

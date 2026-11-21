@@ -31,6 +31,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {SS : Finset ℕ} {Ω : Type} [Field Ω] {K : Type} [Fintype K] {J : K → Type} {y : (Σ k, J k) → Ω}
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem lat_act_of_model_rf (𝔐 : HodgeCpt Y SS y) (q : Cpt 𝔐.ξ) (x : 𝓞 E) (e : 𝔐.Li) (he : e ∈ 𝔐.M.lat q) :
     𝔐.ρ x e ∈ 𝔐.M.lat q := by
   have := 𝔐.t.act.hom x
@@ -45,6 +46,7 @@ theorem lat_act_of_model_rf (𝔐 : HodgeCpt Y SS y) (q : Cpt 𝔐.ξ) (x : 𝓞
 end Act
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem isUnit_int_of_inFibre_rf {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Spec (CommRingCat.of Ω) ⟶ X}
     {R : Type} [CommRing R] [IsLocalRing R] (z : Spec (CommRingCat.of R) ⟶ X) (h : genPt ξ ⤳ centre z)
     {p : ℕ} (hp : p.Prime) (hf : InFibre ξ p ⟨centre z, h⟩) {d : ℤ} (hd : ¬ (p : ℤ) ∣ d) : IsUnit (d : R) := by

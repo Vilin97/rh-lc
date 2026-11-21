@@ -24,6 +24,7 @@ namespace GlobalTheory.SplitGenus
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
 
 
+omit [IsCMField E] in
 theorem exists_matrix {M : Type} [AddCommGroup M] [Module (𝓞 E) M] (φ ψ : M →ₗ[𝓞 E] (Fin r → E))
     (hf : Function.Injective φ) (hspan : Submodule.span E (Set.range φ) = ⊤) :
     ∃ A : Matrix (Fin r) (Fin r) E, ∀ x, A *ᵥ φ x = ψ x := by
@@ -91,6 +92,7 @@ theorem trace_nsmul (G : Matrix (Fin r) (Fin r) E) (ξ : E) (N : ℕ) (u v : Fin
   rw [h3, map_smul, smul_eq_mul]
 
 
+omit [IsCMField E] in
 theorem denseRange_emb [IsTotallyComplex E] (τ : E →+* ℂ) : DenseRange τ := by
   have hn : ¬ ComplexEmbedding.IsReal τ := IsTotallyComplex.complexEmbedding_not_isReal τ
   obtain ⟨x, hx⟩ : ∃ x, (τ x).im ≠ 0 := by

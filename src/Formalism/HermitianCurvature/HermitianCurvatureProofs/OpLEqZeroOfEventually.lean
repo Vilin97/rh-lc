@@ -30,6 +30,7 @@ def LCptAt (Φ : RadSp k r z z' π π') (c : Fin r → ℂ) : Prop :=
     ∀ c' ∈ U, VanOut Φ c' K
 
 
+variable (k r z z' π π') in
 def lcSub : Submodule ℂ (RadSp k r z z' π π') where
   carrier := {Φ | ∀ c ∈ OmX r, LCptAt Φ c}
   zero_mem' := fun c _ => ⟨Set.univ, isOpen_univ, trivial, ∅, isCompact_empty, Set.empty_subset _,

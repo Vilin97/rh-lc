@@ -91,6 +91,7 @@ end Pd
 variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)}
 
 
+variable (l) in
 def TFil : Prop := ∀ (A : PAlg l) (n : ℕ), A.cris n (tA l) ∈ B.JJ false A n
 
 def TT (P : PAlg l ⥤ Type) (r n : ℕ) : SubF (modF (AcrEl P n)) where
@@ -160,9 +161,11 @@ def IsLift (e : E.EtFam l K) {M : Model l K} (r : ℕ) {j : ℕ} (v : M.T j) (x 
     (tMor ht ((B.schFn M.p).pt (okToOC l K)) r n).pull j (e M n j (v.lev n))
 
 
+variable (l) in
 def zA : ℤ_[l] →+* Acris l := (algebraMap (AInf ℂ_[l] l) (ACris.ACris ℂ_[l] l)).comp (IsPerfectoidField.padicIntToWitt l)
 
 
+variable (l) in
 def θA : Acris l →+* ℂ_[l] := (θD l).comp (ACris.iota ℂ_[l] l)
 
 structure Half1 (Lf : ∀ {M : Model l K} (r : ℕ) {j : ℕ}, M.T j → Fam M r j → Prop) : Prop where
@@ -185,6 +188,7 @@ structure Half1 (Lf : ∀ {M : Model l K} (r : ℕ) {j : ℕ}, M.T j → Fam M r
     ∃ x, IsFirstChernClassInFamily D x ∧ Lf 1 v x
 
 
+set_option maxHeartbeats 1000000 in
 structure Half2 (γ : ∀ {M : Model l K} {r j : ℕ}, Fam M r j → ∀ a, Module.Dual K (Hdg M.q a j) →+ ℂ_[l]) : Prop where
   add : ∀ {M : Model l K}, M.Sm → ∀ {r j : ℕ} (x y : Fam M r j), Comp x → Comp y → ∀ a, γ (x + y) a = γ x a + γ y a
   lin : ∀ {M : Model l K}, M.Sm → ∀ {r j : ℕ} (c : Acris l) (x : Fam M r j), Comp x → ∀ a φ, γ (c • x) a φ = θA l c * γ x a φ

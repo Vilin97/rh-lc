@@ -100,6 +100,7 @@ theorem quad_eq {ι : Type} [Fintype ι] (X : Matrix (l ⊕ l) (l ⊕ l) ℝ) (u
   ring
 
 
+variable (l) in
 structure Meta : Type 1 where
   G : Type
   [grp : Group G]

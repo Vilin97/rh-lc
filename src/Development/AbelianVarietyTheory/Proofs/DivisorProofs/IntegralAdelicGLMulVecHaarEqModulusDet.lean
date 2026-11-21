@@ -94,6 +94,7 @@ def coordCE (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Al
 end GlobalTheory.JacSubst
 
 
+open GlobalTheory.ModuLR GlobalTheory.GaugeEx GlobalTheory.JacSubst in
 theorem GlobalTheory.JacSubst.integral_mulVec : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (d : ℕ) (t : GL (Fin d) (AE F E)),
     ∀ μ : @Measure (Fin d → AE F E) (borel _), @Measure.IsAddHaarMeasure _ _ _ (borel _) μ →
     ∀ f : (Fin d → AE F E) → ℂ, ∫ u, f ((t : Matrix (Fin d) (Fin d) (AE F E)) *ᵥ u) ∂μ =

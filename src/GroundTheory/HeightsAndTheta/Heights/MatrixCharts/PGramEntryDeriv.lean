@@ -52,6 +52,7 @@ theorem mul_three_le_mul_three {x y z X Y W : ℝ} (hx0 : 0 ≤ x) (hy0 : 0 ≤ 
 end MCGramEntryDeriv
 
 
+open MCGramEntryDeriv in
 theorem GramEntryDeriv.proof : GramEntryDeriv.Statement := by
   intro E _ _ g k F Z p a e e' hF hZ j l
   have hent : ∀ q, ((F q)ᴴ * (Z q).map (fun x : ℝ => (x : ℂ)) * F q) j l =

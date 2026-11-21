@@ -70,6 +70,7 @@ private lemma recover_colE_vec_from_embX_product {k : Type} [Field k] {n : Type}
   rw [Matrix.mulVec_mulVec, Units.inv_mul, Matrix.one_mulVec]
 
 
+open MeasureTheory ValuativeRel Matrix in
 theorem _root_.GlobalTheory.RootEx.ProperTriple.proper_triple : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] (n : Type) [Fintype n] [DecidableEq n] (c ρ : ℕ) (_ : 1 ≤ ρ)
     (_ : ρ < c) (C : Set (GL (n ⊕ Fin c) k)) (_ : IsCompact C),

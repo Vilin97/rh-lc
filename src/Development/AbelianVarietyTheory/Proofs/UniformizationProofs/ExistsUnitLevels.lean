@@ -152,6 +152,8 @@ variable {A : PolAV (Spec (CommRingCat.of (FractionRing R)))} {G : Over (Spec (C
 
 
 
+omit [IsDomain R] [GrpObj G] [IsCommMonObj G] in
+open FormalPoint in
 theorem reduction_succ (x : Over.mk (spMap φ) ⟶ G) (e : ℕ) :
     adicLevelMap (I.map φ) (Nat.le_succ (e + 1)) ≫ reduction I x (e + 1) = reduction I x e ≫ thickMap R I e G := by
   have h₄ : thickMap R I e G ≫ (fstG I (e + 1) G).left = (fstG I e G).left :=

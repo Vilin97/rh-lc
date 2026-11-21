@@ -22,6 +22,8 @@ open GlobalTheory.SS
 namespace GlobalTheory.SS.NeutralPart
 
 
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
+open scoped CategoryTheory.Obj in
 theorem _root_.GlobalTheory.SS.NeutralPart.geometricallyConnected_of_section {X S : Scheme.{0}} (f : X ⟶ S) [LocallyOfFiniteType f]
     [QuasiCompact f] (e : S ⟶ X) (he : e ≫ f = 𝟙 S)
     (h : ∀ s : S, _root_.IsConnected (f ⁻¹' {s})) : GeometricallyConnected f := by

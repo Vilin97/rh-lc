@@ -94,6 +94,7 @@ end GlobalTheory.TwV.Xc.Emat
 end
 
 
+open GlobalTheory.TwV.Xc.Emat in
 theorem GlobalTheory.TwV.Xc.eMat_unitary_det : ∀ (E : Type) [Field E] [NumberField E] [StarRing E] (σ : E →+* E), (∀ x, σ x = star x) → ∀ (a N : ℕ) (hr : a = N) (J : Matrix (Fin N) (Fin N) E) (crd : GL (Fin N) E), cT σ crd.1 * crd.1 = J → IsOrthCo σ J (stdCo σ J) ∧ ∀ g ∈ UJ σ J, eMat hr σ J g * star (eMat hr σ J g) = 1 ∧ (eMat hr σ J g).det = g.1.det := by
   intro E _ _ _ σ hσ a N hr J crd hcrd
   subst hr

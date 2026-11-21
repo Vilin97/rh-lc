@@ -141,6 +141,10 @@ theorem _root_.GlobalTheory.HermLineZeros.exists_anisotropic (h : _root_.Formali
   norm_num
 
 
+open scoped TensorProduct in
+open NumberField IsDedekindDomain MeasureTheory Topology in
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+  {σ : E →ₐ[F] E} in
 theorem _root_.GlobalTheory.HermLineZeros.finite_zeros_on_line : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.IsCMExt F E σ → ∀ (M : ℕ), 1 ≤ M → ∀ (J : Matrix (Fin M) (Fin M) E), _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.IsHermND σ J → ∀ (K : Type) [Field K] [Algebra F K], ∃ y : Fin M → K ⊗[F] E, ∀ x : Fin M → K ⊗[F] E, {t : K | _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.qR K σ J (x + t • y) = 0}.Finite := by
   intro F E _ _ _ _ _ σ h M hM J hJ K _ _
   obtain ⟨y₀, a, ha, hy⟩ := _root_.GlobalTheory.HermLineZeros.exists_anisotropic h hM hJ

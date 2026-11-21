@@ -69,6 +69,7 @@ theorem inv_natCast_mem (v : HeightOneSpectrum (𝓞 F)) (n : ℕ) (hn : (n : �
   exact le_of_eq (h2.trans (by rw [map_inv₀, h1, inv_one]))
 
 
+omit [NumberField E] in
 theorem inv_mem_intLoc (v : HeightOneSpectrum (𝓞 F)) (n : ℕ) (hn : (n : 𝓞 F) ∉ v.asIdeal) [CharZero E] (x y : 𝓞 E)
     (h : x * y = n) : (1 : Fv F v) ⊗ₜ[F] (x : E)⁻¹ ∈ intLoc F E v := by
   have hn0 : n ≠ 0 := by rintro rfl; exact hn (by simp)

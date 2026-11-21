@@ -30,6 +30,7 @@ namespace GlobalTheory.IndLine.LowGen
 open GlobalTheory.IndLine.PGenReal
 
 
+open GlobalTheory.ThK.RealUniq in
 theorem pGen_of_kStab_adapted (hKP : GlobalTheory.ThK.KP) {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     {σ : E →ₐ[F] E} {B : Base F E} {a a' d₁ i₀ i₁ : ℕ} {G : Geo σ a a'} {W₁ : Spc F E d₁} {H' : Plane E (a + a') d₁}
     (hH' : H'.IsAdapted σ B G.W W₁ i₀ i₁) {X : Chars F E} {om : Rep σ G.V G.W} {om' : Rep σ G.V' G.W} {R : RealMaps F a a'}

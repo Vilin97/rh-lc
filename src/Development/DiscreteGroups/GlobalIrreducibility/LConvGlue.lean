@@ -23,6 +23,7 @@ variable {k : Type} [Field k]
 theorem longElt_mul_self (n : ℕ) : longElt n k * longElt n k = 1 := Units.ext (antidiag_mul_self n k)
 
 
+variable (k) in
 def theta (n : ℕ) : GL (Fin n) k →* GL (Fin n) k :=
   (MulAut.conj (longElt n k)).toMonoidHom.comp (GlobalTheory.CuspRep.invT n k)
 

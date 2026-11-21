@@ -184,6 +184,7 @@ def LatAt {X : Type} [AddCommGroup X] (m : I → X →+ X) (c : T → X →+ ZMo
     Compat f gγ ζ L m c s a φ tι
 
 
+variable (G) in
 def RkAt (w : M.Z) (r : ℕ) : Prop :=
   ∃ (X : Type) (_ : AddCommGroup X) (_ : Module.Free ℤ X) (_ : Module.Finite ℤ X) (κ : Type) (_ : Field κ)
     (s : Sp κ ⟶ M.Z) (G₀ : Over (Sp κ)) (_ : GrpObj G₀) (φ : G₀.left ⟶ G.left) (tι : splitTorus (Sp κ) X ⟶ G₀),
@@ -192,6 +193,7 @@ def RkAt (w : M.Z) (r : ℕ) : Prop :=
 variable {f gγ ζ L}
 
 
+omit [GrpObj G] in
 theorem Compat.equiv {X X' : Type} [AddCommGroup X] [AddCommGroup X'] {m : I → X →+ X} {c : T → X →+ ZMod L}
     {m' : I → X' →+ X'} {c' : T → X' →+ ZMod L} {A : Type} [CommRing A] {s : Sp A ⟶ M.Z} {a : o →+* A}
     {G₀ : Over (Sp A)} {φ : G₀.left ⟶ G.left} {tι : splitTorus (Sp A) X ⟶ G₀} (h : Compat f gγ ζ L m c s a φ tι)
@@ -217,6 +219,7 @@ theorem Compat.equiv {X X' : Type} [AddCommGroup X] [AddCommGroup X'] {m : I →
       exact hv
 
 
+omit [GrpObj G] in
 theorem Compat.pull {X : Type} [AddCommGroup X] {m : I → X →+ X} {c : T → X →+ ZMod L} {A B : Type} [CommRing A]
     [CommRing B] {s : Sp A ⟶ M.Z} {a : o →+* A} {G₀ : Over (Sp A)} [GrpObj G₀] {φ : G₀.left ⟶ G.left}
     {tι : splitTorus (Sp A) X ⟶ G₀} (h : Compat f gγ ζ L m c s a φ tι) (b : A →+* B) {G₁ : Over (Sp B)} [GrpObj G₁]

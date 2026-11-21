@@ -187,6 +187,7 @@ end GlobalTheory.SemicharIndep
 namespace GlobalTheory
 
 
+open SemicharIndep in
 theorem torusAt_eps_indep : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (X : DataX E r), (∃ w0 : 𝓞 E, ∀ u ∈ X.Λ, ∀ v ∈ X.Λ, ∃ k : ℤ, Algebra.trace ℚ E (X.ξ0 * herm X.Gm u (((w0 : E) - cc (w0 : E)) • v)) - Algebra.trace ℚ E (X.ξ0 * herm X.Gm u v) = 2 * k) → ∀ (x x' : Frame X.Ψ r) (A : TorusAt X.toData x) (A' : TorusAt X.toData x') (γ : GL (Fin r) E), IsUStab X.Gm X.Λ γ → ∀ v ∈ X.Λ, A'.T.eps (A'.φ ((γ : Matrix (Fin r) (Fin r) E).mulVec v)) = A.T.eps (A.φ v) := by
   intro E _ _ _ r X _ x x' A A' γ hγ v hv
   obtain ⟨a, ha⟩ := B_int X hv (smul_mem X.toData A.w0 hv)

@@ -518,6 +518,7 @@ end
 end Rosenlicht
 
 
+open Rosenlicht in
 theorem splitTorus_rigidity (K : Type u) [Field K] (X : Type u) [AddCommGroup X] [TwoUniqueSums X]
     (Y : Type u) [AddCommGroup Y]
     (f : splitTorus (Spec (.of K)) X ⊗ splitTorus (Spec (.of K)) X ⟶ splitTorus (Spec (.of K)) Y)

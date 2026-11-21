@@ -24,6 +24,7 @@ universe u
 variable {V : Type u} [AddCommGroup V] [Module ℂ V] {π : Representation ℂ (GL (Fin n) F) V}
 
 
+variable (F) in
 def IsGammaFactor (π : Representation ℂ (GL (Fin n) F) V) (μ : Measure (GL (Fin n) F))
     (ψ : AddChar F Circle) (γ : RatFunc ℂ) : Prop :=
   ∀ Φ : Matrix (Fin n) (Fin n) F → ℂ, IsSchwartzBruhat Φ → ∀ v : V,
@@ -34,10 +35,12 @@ def IsGammaFactor (π : Representation ℂ (GL (Fin n) F) V) (μ : Measure (GL (
 
 
 
+variable (F) in
 abbrev qInv : ℂ := ((LocalField.residueCard F : ℂ))⁻¹
 
 
 
+omit [MeasurableSpace F] [BorelSpace F] in
 theorem qs_one_sub (s : ℂ) : qs F (1 - s) = qInv F / qs F s := by
   have h1 : qs F (1 - s) * qs F s = qs F 1 := by rw [← qs_add, sub_add_cancel]
   have h2 : qs F 1 = qInv F := by rw [qs, Complex.cpow_neg_one]
@@ -54,6 +57,7 @@ theorem qs_one_sub (s : ℂ) : qs F (1 - s) = qInv F / qs F s := by
 
 
 
+omit [MeasurableSpace F] [BorelSpace F] in
 theorem exists_eq_C_mul_X_pow_of_mem {ε : RatFunc ℂ} (h : ε ∈ laurentSubalgebra)
     (h' : ε⁻¹ ∈ laurentSubalgebra) (hε : ε ≠ 0) :
     ∃ (r : ℂ) (i a : ℕ), r ≠ 0 ∧

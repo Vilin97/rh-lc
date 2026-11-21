@@ -454,6 +454,7 @@ section Chars
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 
+variable (F E) in
 def toIdele : (AE F E)ˣ →* Idele E := Units.map (toAdele F E).toMonoidHom
 
 theorem coe_toIdele (x : (AE F E)ˣ) : (toIdele F E x : AdeleRing (𝓞 E) E) = toAdele F E x := rfl
@@ -470,6 +471,7 @@ def ideleEquiv (h : IsCMExt F E σ) : (AE F E)ˣ ≃ₜ* Idele E :=
 theorem ideleEquiv_apply (h : IsCMExt F E σ) (x : (AE F E)ˣ) : ideleEquiv h x = toIdele F E x := rfl
 
 
+variable (F) in
 def pull (χ : UnitaryHeckeChar E) : (AE F E)ˣ →* Circle := χ.toHom.comp (toIdele F E)
 
 theorem isHeckeChar_pull (χ : UnitaryHeckeChar E) : IsHeckeChar F E (pull F χ) :=

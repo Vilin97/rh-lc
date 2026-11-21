@@ -249,6 +249,7 @@ theorem two_le_r (D : D7) : 2 ≤ D.R.r := by have := D.R.m_add_three_le_k; have
 theorem r_lt_nV (D : D7) : D.R.r < D.R.nV := by have := t_pos D; unfold Ranks.nV; omega
 
 
+set_option maxHeartbeats 1000000 in
 theorem local_red (hL : R.toLevCh.Is A.μ0) (hPg : ∀ PP ∈ R.Pg, ∃ kv : (Σ k : Fin 2, D.nd.PlG k), PP = D.naut.plGw kv.1 kv.2)
     (i : Fin D.R.m) (t : T) (Pl : LevelP R.Pg D.R.r ℂ) {hF : D.host.F = maximalRealSubfield D.host.E}
     (P : principalLevelFrame.RowPsi (Vc D i) D.R.nV) (hP : R3.StdFrame hF P) {W : Type} [AddCommGroup W] [Module ℂ W]
@@ -320,6 +321,7 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type} {A3 : FamIn
   [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat3 D A3 Ks} {F : Face3 D A3} {X0 : BaseLevelRowSide D}
 
 
+set_option maxHeartbeats 2000000 in
 theorem cen_used (Y : R3.Read (A3 := A3) R.toRealDat F.lv2 X0) (cG : G0 R.Pg D.R.r ≃* G0g D.nd) (hB : R.toRealDat.BaseW F.lv2)
     (hK : Keep (A3 := A3) R.toRealDat F.lv2 cG) (hO : A3.A.fam.Ok 1) (hC : CenRead Y cG) (M : MtFam D) (ad : MtAd Y M)
     (μ : D.what₂.Tup) (hμ : Used0 D μ) (i : Fin D.R.m) (h1 : 1 ≤ (i : ℕ) + 1) (h2 : (i : ℕ) + 1 ≤ D.R.m)
@@ -437,6 +439,8 @@ theorem cen_heq {K : Type} [Field K] [NumberField K] [StarRing K] {G : Type} [Gr
   exact (tL μ).cen z a ha x
 
 
+open Formalism.L2.Indef Formalism.L2.Rows Formalism.IndefR.Cx GlobalTheory.Mem.R3.Tr in
+set_option maxHeartbeats 4000000 in
 theorem cenRead_state {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {P : Pre2 K w} (x : St P) :
     CenRead x.r.Y x.m.z.cG := by
   intro i t z a ha v
@@ -454,6 +458,7 @@ theorem cenRead_state {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : C
 
 
 
+set_option maxHeartbeats 2000000 in
 theorem labTie_withLoc {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {P : Pre2 K w}
     (x : St P) (Lc : LocAll (lay0 (Dof x))) :
     GlobalTheory.SerSys.LabTie (withLoc Lc) fun k => GlobalTheory.Mem.TypePl.labDat ((withLoc Lc).host.g k) :=

@@ -18,6 +18,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 variable {A D : Type} [Fintype A] [DecidableEq A] [Fintype D] [DecidableEq D]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 def rowOpMat (i₀ : A) (w : A → k) : Matrix A A k :=
   replicateCol Unit (Pi.single i₀ (1 : k)) * replicateRow Unit w
 
@@ -45,6 +46,7 @@ theorem det_one_add_rowOpMat (i₀ : A) (w : A → k) (hw : w i₀ = 0) : (1 + r
   simp [hw]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 def unipRowGL (i₀ : A) (w : A → k) (hw : w i₀ = 0) : GL A k :=
   ⟨1 + rowOpMat i₀ w, 1 - rowOpMat i₀ w,
     by simp [add_mul, mul_sub, rowOpMat_mul_self i₀ w hw],

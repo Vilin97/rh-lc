@@ -15,6 +15,9 @@ variable {G : Type} [Group G] (Γ : Subgroup G)
 abbrev cls (g : G) : Quotient (QuotientGroup.rightRel Γ) := Quotient.mk _ g
 
 
+open MeasureTheory in
+open scoped Pointwise in
+variable {G : Type} [Group G] (Γ : Subgroup G) in
 theorem _root_.GlobalTheory.AutQuotCheck.cls_eq_iff (g g' : G) :
     _root_.GlobalTheory.AutQuotCheck.cls Γ g = _root_.GlobalTheory.AutQuotCheck.cls Γ g' ↔ ∃ γ ∈ Γ, g' = γ * g := by
   rw [Quotient.eq, QuotientGroup.rightRel_apply]
@@ -40,6 +43,9 @@ theorem _root_.GlobalTheory.AutQuotCheck.measurable_cls [MeasurableSpace G] :
     Measurable (_root_.GlobalTheory.AutQuotCheck.cls Γ) := fun _ hs => hs
 
 
+open MeasureTheory in
+open scoped Pointwise in
+variable {G : Type} [Group G] (Γ : Subgroup G) in
 theorem _root_.GlobalTheory.AutQuotCheck.map_restrict_eq [MeasurableSpace G] [Countable Γ]
     [MeasurableConstSMul Γ G] (μ : Measure G) [SMulInvariantMeasure Γ G μ] {F F' : Set G}
     (h : IsFundamentalDomain Γ F μ) (h' : IsFundamentalDomain Γ F' μ) :
@@ -62,6 +68,11 @@ variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   (Γ : Subgroup G) [Countable Γ]
 
 
+open MeasureTheory in
+open scoped Pointwise in
+variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
+  [LocallyCompactSpace G] [SecondCountableTopology G] [MeasurableSpace G] [BorelSpace G]
+  (Γ : Subgroup G) [Countable Γ] in
 theorem _root_.GlobalTheory.AutQuotCheck.rightInvariant_of_covolume (μ : Measure G) [μ.IsHaarMeasure] {F : Set G}
     (h : IsFundamentalDomain Γ F μ) (h0 : μ F ≠ 0) (h1 : μ F ≠ ⊤) (g : G) :
     μ.map (· * g) = μ := by

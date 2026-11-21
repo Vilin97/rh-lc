@@ -65,6 +65,7 @@ theorem zcoord_formSection (p : polyGrading ι R n) (i : L.ι) :
     gammaCoord_gammaOf, sectionsOn.res_refl, LinearMap.id_apply]
 
 
+include hL in
 theorem eq_zero_of_gammaCoord {F : X.Modules} {V : X.Opens} {i : L.ι} (h : V ≤ L.U i)
     {y : GammaStar R x F V} (hy : y ∈ gammaGrading R x F V n)
     (h0 : sectionsOn.toΓ _ _ (gammaCoord R x F V i y) = 0) : y = 0 := by
@@ -124,6 +125,7 @@ theorem isAffineOpen_biInf_coord (s : Finset (Fin (N + 1))) (hs : s.Nonempty) :
     rw [nonzeroLocus_coord]; exact isAffineOpen_chart R N i) s hs
 
 
+variable {R N} in
 theorem chartEval_coord (i : Fin (N + 1)) {U : (PSpace R N).Opens} (h : U ≤ chart R N i)
     (p : MvPolynomial (Fin (N + 1)) R) :
     chartEval (L := O1 R N) R (ProjSpace.coord R N) i h p = aeval (ratioOn U i h) p := by
@@ -212,6 +214,7 @@ def grHEquiv (n : ℤ) (p : ℕ) :
     (cechHEquivCoh R (iSup_nonzeroLocus_coord R N) (isAffineOpen_biInf_coord R N) _ p)
 
 
+variable {N} in
 theorem formSection_bijective (hN : 1 ≤ N) (n : ℤ) :
     Function.Bijective (formSection R (ProjSpace.coord R N) (O1_isLB R N) n) := by
   have hφ := isGradedMap_polyToGamma R (ProjSpace.coord R N) (O1_isLB R N)
@@ -226,11 +229,13 @@ theorem formSection_bijective (hN : 1 ≤ N) (n : ℤ) :
   exact (GrSum.pieceEquiv _ n).symm.bijective.comp h₃
 
 
+variable {N} in
 def formsEquivSections (hN : 1 ≤ N) (n : ℤ) :
     polyGrading (Fin (N + 1)) R n ≃ₗ[R] sectionsOn (sheafO R N n) ⊤ :=
   .ofBijective _ (formSection_bijective R hN n)
 
 
+variable {N} in
 def formsEquivCohZero (hN : 1 ≤ N) (n : ℤ) :
     polyGrading (Fin (N + 1)) R n ≃ₗ[R] coh (sheafO R N n) 0 :=
   (formsEquivSections R hN n).trans (cohOn.zeroEquiv R _ ⊤).symm
@@ -238,6 +243,7 @@ def formsEquivCohZero (hN : 1 ≤ N) (n : ℤ) :
 
 
 
+variable {R N} in
 theorem formSec_eq {n : ℕ} {f : MvPolynomial (Fin (N + 1)) R} (hf : f.IsHomogeneous n) :
     ProjSpace.formSec n f hf =
       Twist.formSec (ProjSpace.coord R N) (mem_polyGrading_natCast.2 hf) :=
@@ -252,11 +258,13 @@ theorem subsingleton_coh (n : ℤ) {p : ℕ} (h0 : p ≠ 0) (hp : p ≠ N) :
   (grHEquiv R N n p).symm.injective.subsingleton
 
 
+variable {N} in
 theorem nonempty_basis_coh_top (hN : 1 ≤ N) (n : ℤ) :
     Nonempty (Module.Basis (NegExp N n) R (coh (sheafO R N n) N)) :=
   (nonempty_basis_grH_top R N n hN).map fun b => b.map (grHEquiv R N n N)
 
 
+variable {N} in
 theorem subsingleton_coh_top (hN : 1 ≤ N) {n : ℤ} (hn : -(N : ℤ) ≤ n) :
     Subsingleton (coh (sheafO R N n) N) :=
   have ⟨b⟩ := nonempty_basis_coh_top R hN n
@@ -296,12 +304,14 @@ instance free_coh (n : ℤ) (p : ℕ) : Module.Free R (coh (sheafO R N n) p) :=
   (finite_free_coh R N n p).2
 
 
+variable {N} in
 theorem finrank_coh_zero [Nontrivial R] (hN : 1 ≤ N) (n : ℤ) :
     Module.finrank R (coh (sheafO R N n) 0) = (n + N).toNat.choose N := by
   obtain ⟨b⟩ := nonempty_basis_polyGrading R N n
   rw [Module.finrank_eq_nat_card_basis (b.map (formsEquivCohZero R hN n)), card_natVec N hN]
 
 
+variable {N} in
 theorem finrank_coh_top [Nontrivial R] (hN : 1 ≤ N) (n : ℤ) :
     Module.finrank R (coh (sheafO R N n) N) = (-n - 1).toNat.choose N := by
   obtain ⟨b⟩ := nonempty_basis_coh_top R hN n

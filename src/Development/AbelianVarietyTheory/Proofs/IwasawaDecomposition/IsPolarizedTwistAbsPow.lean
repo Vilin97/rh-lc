@@ -125,6 +125,7 @@ variable [IsTotallyComplex E] (hL : GlobalTheory.Published.LocalLanglandsGL) (hF
 
 
 
+include hF in
 theorem exists_hasSat (π : CG E a) (h : IsPlaceOver A w) (hu : (locPar hL π h).unr) :
     ∃ B : Multiset ℂˣ, π.HasSat w B ∧ (locPar hL π h).frobEig = B.map fun b => ((b⁻¹ : ℂˣ) : ℂ) := by
   induction π using Quotient.inductionOn with | _ π =>
@@ -235,6 +236,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 variable {R : Ranks} {H : Host R} {what₂ : Rows.Data R} {N : NData R H what₂} {A : NAut N} {l : ℕ} [Fact l.Prime]
 
 
+variable (N) in
 def FrobFam (ι : Qbar l ≃+* ℂ) (f : PlE H → ℂ[X]) : Prop :=
   ∃ F : Qbar l → G H.E N.Om → Qbar l, (∀ z, Continuous (F z)) ∧
     ∀ᶠ w in cofinite, ∀ (B : ValuationSubring N.Om) (σ : G H.E N.Om), IsPlaceOver (F := H.E) B w →
@@ -273,6 +275,7 @@ theorem FrobFam.eq_of_split (hC : GlobalTheory.Published.ChebotarevDegreeOne) {f
   rw [← a _ σ (N.plOm.2 w) hσ, ← a' _ σ (N.plOm.2 w) hσ, hF]
 
 
+variable (A ι) in
 def CuspFam : Prop := ∀ (a : ℕ), 1 ≤ a → ∀ π : A.CG a, A.csd π → ∀ s : ℝ, GlobalTheory.GalOfCusp.RegAlgShift A π s →
   FrobFam N ι fun w => galPol A (A.lpTw (A.locG π w) (s + (1 - (a : ℝ)) / 2))
 
@@ -327,6 +330,7 @@ variable {hL : GlobalTheory.Published.LocalLanglandsGL} (hF : GlobalTheory.Publi
   (C : CGTrue hL D T)
 
 
+include hF in
 theorem readsCusp : haveI := host_isCMField D.host; ReadsCusp D.naut fun a π => (C.e a π).1 := by
   have := host_isCMField D.host
   refine ⟨fun a _ => Subtype.val_injective.comp (C.e a).injective, fun a π _ => (C.e a π).2, fun a π w _ hu => ?_⟩

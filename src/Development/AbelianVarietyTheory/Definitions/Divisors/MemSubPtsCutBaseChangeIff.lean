@@ -122,6 +122,7 @@ def baseHom : k →+* K := (Spec.preimage (x ≫ S.str)).hom
 theorem comp_str : x ≫ S.str = spMap (S.baseHom x) := (Spec.map_preimage _).symm
 
 
+variable {S} in
 theorem baseHom_ptOver {φ : k →+* K} (x : S.PtOver φ) : S.baseHom x.1 = φ := by
   rw [baseHom, x.2, Spec.preimage_map]; rfl
 
@@ -172,6 +173,7 @@ theorem coords_spMap_comp (τ : K →+* K') : S.coords (spMap τ ≫ x) = fun j 
   funext fun _ => S.val_spMap_comp x τ _
 
 
+variable {S} in
 theorem BasePointFree.coords_ne_zero (h : S.BasePointFree) (x : Sp K ⟶ S.Y) : S.coords x ≠ 0 := by
   obtain ⟨j, hj⟩ := Opens.mem_iSup.1 (h.ge (Set.mem_univ (ptOf x)))
   exact fun e => (S.val_ne_zero_iff x _).2 hj (congrFun e j)
@@ -216,6 +218,7 @@ theorem mem_imageIdeal_iff {d : ℕ} {g : MvPolynomial (Fin S.N) k} (hg : g.IsHo
   exact h1.trans (zfun_zero i).symm
 
 
+attribute [local instance] MvPolynomial.gradedAlgebra in
 theorem isHomogeneous_imageIdeal : S.imageIdeal.IsHomogeneous (homogeneousSubmodule (Fin S.N) k) :=
   Ideal.homogeneous_span _ _ fun _ ⟨d, hg, _⟩ => ⟨d, hg⟩
 
@@ -263,6 +266,7 @@ theorem isPullback_baseChange :
     IsPullback (S.bcFst E) (S.baseChange E).str S.str (spMap (algebraMap k E)) := IsPullback.of_hasPullback _ _
 
 
+variable {S E} in
 def toBase {Ω : Type} [Field Ω] [Algebra E Ω] [Algebra k Ω] [IsScalarTower k E Ω] (x : (S.baseChange E).Pt Ω) :
     S.Pt Ω :=
   ⟨x.1 ≫ S.bcFst E, by
@@ -285,6 +289,7 @@ theorem exists_coords_baseChange {K : Type} [Field K] (x : Sp K ⟶ (S.baseChang
   exact ⟨c, hc, funext fun j => (valR_appLE x _ _ ((S.baseChange E).le_chartAt x) _).trans (h _)⟩
 
 
+variable {S} in
 theorem IsVariety.baseChange (h : S.IsVariety) : (S.baseChange E).IsVariety := by
   have := smoothOfRelativeDimension_isStableUnderBaseChange.{0} S.D
   have := h.conn
@@ -293,6 +298,7 @@ theorem IsVariety.baseChange (h : S.IsVariety) : (S.baseChange E).IsVariety := b
     inferInstanceAs (GeometricallyConnected (pullback.snd _ _)), h.one_le⟩
 
 
+variable {S} in
 theorem BasePointFree.baseChange (h : S.BasePointFree) : (S.baseChange E).BasePointFree :=
   top_le_iff.1 fun y _ => by
     obtain ⟨j, hj⟩ := Opens.mem_iSup.1 (h.ge (Set.mem_univ (S.bcFst E y)))

@@ -160,6 +160,7 @@ end GlobalTheory.MemLoc.PdModP
 
 namespace GlobalTheory.MemLoc
 
+open PdModP in
 theorem dvd_of_forall_fil_add : ∀ (l : ℕ) [Fact l.Prime], ∀ s : Per.Acris0 l,
     (∀ n : ℕ, ∃ (u w : Per.Acris0 l), s = u + (l : Per.Acris0 l) * w ∧ (u : Per.AinfP l) ∈ Per.kerP l ^ n) →
     (l : Per.Acris0 l) ∣ s := by

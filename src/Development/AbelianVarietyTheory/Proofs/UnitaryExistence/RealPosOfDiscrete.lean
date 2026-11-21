@@ -16,6 +16,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 namespace GlobalTheory.PeriodFormPos
 
 
+open Matrix in
 theorem real_pos_of_int_pos {ι : Type} [Fintype ι] (M : ι → ι → ℤ) (hs : ∀ i k, M i k = M k i)
     (hM : ∀ z : ι → ℤ, z ≠ 0 → 0 < ∑ i, ∑ k, z i * z k * M i k) (x : ι → ℝ) (hx : x ≠ 0) :
     0 < ∑ i, ∑ k, x i * x k * (M i k : ℝ) := by

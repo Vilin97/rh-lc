@@ -21,6 +21,8 @@ noncomputable section
 universe u
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem SemilocalResidueLength.proof (hRes : DegZeroLocResidue.Statement.{u})
     (hFR : SemilocalFiniteRank.Statement.{u}) (hLoc : DegZeroLocLocalize.Statement.{u}) :
     SemilocalResidueLength.Statement.{u} := by

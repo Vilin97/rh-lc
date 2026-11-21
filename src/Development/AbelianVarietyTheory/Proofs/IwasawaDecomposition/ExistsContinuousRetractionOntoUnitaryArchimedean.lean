@@ -21,6 +21,7 @@ theorem gl_ext_evGL {a b : GL (Fin n) (Cinf E)} (h : ∀ w, evGL w a = evGL w b)
   exact congrArg (fun x : GL (Fin n) ℂ => x i j) (h w)
 
 
+open Classical in
 def atPlace (v : InfinitePlace E) : Cinf E →ₙ+* Cinf E where
   toFun x := Pi.single v (x v)
   map_mul' x y := Pi.single_mul (α := fun _ : InfinitePlace E => ℂ) v (x v) (y v)

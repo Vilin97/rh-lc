@@ -22,6 +22,7 @@ theorem set_eq_preimage {ι : Type} [Fintype ι] [DecidableEq ι] (A : Matrix ι
 end PSymplBoxVolume
 
 
+open PSymplBoxVolume in
 theorem SymplBoxVolume.proof : SymplBoxVolume.Statement := by
   intro ι _ _ A a hA ha
   rw [set_eq_preimage, MeasureTheory.Measure.addHaar_preimage_linearMap _ (by rwa [LinearMap.det_toLin'])

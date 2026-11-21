@@ -230,6 +230,7 @@ structure TWMaps (ex : ℕ) where
     A.p.D.tr (MonoidAlgebra.single g 1 * q2El (ph j) (ta j) (A.U j) i (A.s (MvPowerSeries.X (j, i))))) ^ ex • m = 0
 
 
+variable (u J σ D) in
 structure TWAut (T : TWGrp G0) : Type 1 where
   b : TWBase u J σ D
   ut : Fin T.q → Fin n → O

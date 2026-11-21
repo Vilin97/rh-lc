@@ -28,6 +28,7 @@ def NormalFrameConditionsDiagonal (Pg : Finset (Pl D.host.E)) (βY : ∀ j, GL (
   NormalClausesG Pg βY βW ∧ XBasesG Pg βY
 
 
+variable (D) in
 def FramesExistDiagonal (Pg : Finset (Pl D.host.E)) : Prop :=
   ∃ (ΛY : ∀ j, Submodule (𝓞 D.host.E) (Fin (Yc D j).rank → D.host.E))
     (ΛX : Submodule (𝓞 D.host.E) (Fin D.sp.X'.rank → D.host.E))

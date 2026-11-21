@@ -36,6 +36,7 @@ theorem isMultiHomog_rename {R : Type} [CommRing R] {f : MvPolynomial (Σ k, ι 
   exact isMultiHomog_joinForm hf
 
 
+omit [Fintype K'] [∀ k, Fintype (ι k)] [∀ k, Fintype (ι' k)] in
 theorem rename_weightedHomogeneousComponent [DecidableEq K] [DecidableEq K'] {R : Type} [CommRing R]
     (b : K → ℕ) (h : MvPolynomial (Σ k, ι k) R) :
     rename (liftVar ι') (weightedHomogeneousComponent (blockWeight ι) b h) =
@@ -74,6 +75,7 @@ theorem comap_isMultiProjPrime {R : Type} [CommRing R]
 end JoinPointVerticalDivisor
 
 
+open JoinPointVerticalDivisor in
 theorem JoinPointVerticalDivisor.proof : JoinPointVerticalDivisor.Statement := by
   intro O _ _ _ Ω _ _ K _ ι _ y b f g hD
   obtain ⟨⟨α, β, hf, hg, hb⟩, hfP, hgP, hU⟩ := hD

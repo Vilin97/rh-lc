@@ -606,6 +606,7 @@ private lemma eisenstein_zpow_smul_mem_baseChangeSpan_of_pow_smul [NeZero a] (H 
   ring
 
 
+open PowerSeries in
 theorem _root_.GlobalTheory.BK.PhiMod.jumps_subset_Icc_iff : ∀ (O K : Type) [CommRing O] [NormedField K]
     [IsUltrametricDist K] [Algebra O K] [_root_.GlobalTheory.BK.IsUnitBall O K] (l e a : ℕ) (ι : Type)
     [Fintype ι] [DecidableEq ι] [Fact l.Prime] [NormedAlgebra ℚ_[l] K] [NeZero e] [NeZero a]

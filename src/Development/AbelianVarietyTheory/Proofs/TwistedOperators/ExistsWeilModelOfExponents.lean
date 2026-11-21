@@ -205,6 +205,7 @@ theorem isVac_of_bot {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
     simp [GlobalTheory.WeilM.Darboux.rho, GlobalTheory.WeilM.schr, GlobalTheory.WeilM.symp, GlobalTheory.WeilM.hTens]
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_weil_transp {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (ε : Bool) (S X : HSp D)
     (Vs : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc D.host.F D.host.E S.rank) (Ws : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc D.host.F D.host.E X.rank)
     (hJ : Vs.J = GlobalTheory.RealDict.sgE (D := D) ε • S.gram)

@@ -18,10 +18,12 @@ namespace GlobalTheory.GKCoh
 variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 
 
+variable (E a) in
 def regFun : Subalgebra ℂ (GL (Fin a) (Cinf E) → ℂ) :=
   Algebra.adjoin ℂ ({f | ∃ τ i j, f = fun y => coord τ (y.val i j)} ∪ {f | ∃ τ, f = fun y => (coord τ y.val.det)⁻¹})
 
 
+variable (E a) in
 structure AlgRep where
 
   d : ℕ
@@ -36,6 +38,7 @@ open Classical in
 def extGL (f : GL (Fin a) (Cinf E) → ℂ) (x : Lie E a) : ℂ := if h : IsUnit (Matrix.of x) then f h.unit else 0
 
 
+omit [NumberField E] in
 theorem extGL_val (f : GL (Fin a) (Cinf E) → ℂ) (y : GL (Fin a) (Cinf E)) : extGL f (toL y.val) = f y := by
   have h : IsUnit (Matrix.of (toL y.val)) := y.isUnit
   have e : h.unit = y := Units.ext h.unit_spec
@@ -118,6 +121,7 @@ theorem mat_mul_dmat (Ξ : AlgRep E a) (y : GL (Fin a) (Cinf E)) (X : Matrix (Fi
 end AlgRep
 
 
+variable (E a) in
 abbrev Herm : Submodule ℝ (Matrix (Fin a) (Fin a) (Cinf E)) := selfAdjoint.submodule ℝ (Matrix (Fin a) (Fin a) (Cinf E))
 
 def adHerm (k : Kinf E a) (X : Herm E a) : Herm E a := ⟨k.1 * X.1 * star k.1, IsSelfAdjoint.conjugate X.2 k.1⟩

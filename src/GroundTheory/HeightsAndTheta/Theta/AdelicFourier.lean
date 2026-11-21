@@ -23,6 +23,7 @@ variable {K : Type*} [Field K] [NumberField K]
 variable {X : Type*} [AddCommGroup X] [Module K X] [FiniteDimensional K X]
 
 
+variable (K X) in
 abbrev AdelicPoints : Type _ := 𝔸[K] ⊗[K] X
 
 instance : TopologicalSpace (AdelicPoints K X) := moduleTopology 𝔸[K] (AdelicPoints K X)

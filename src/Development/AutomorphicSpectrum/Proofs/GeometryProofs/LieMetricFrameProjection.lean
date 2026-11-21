@@ -17,6 +17,7 @@ open GlobalTheory.CompanionTheory.Ar.RootHt GroundTheory.Heights₂.Heights
 namespace GlobalTheory.CompanionTheory.Ar.RootHt.ArchB
 
 
+open scoped ComplexOrder in
 theorem core_gram_det_ne_zero {V : Type} [AddCommGroup V] [Module ℂ V] (core : InnerProductSpace.Core ℂ V) {n : ℕ}
     (v : Fin n → V) (hv : LinearIndependent ℂ v) :
     (Matrix.of fun a b => core.inner (v a) (v b)).det ≠ 0 := by
@@ -57,6 +58,7 @@ theorem isTanAt_of_valAt {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Sp Ω ⟶
 end GlobalTheory.CompanionTheory.Ar.RootHt.ArchB
 
 
+open GlobalTheory.CompanionTheory.Ar.RootHt.ArchB in
 theorem GlobalTheory.CompanionTheory.Ar.RootHt.ArchB.gramAt_det_ne_zero : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Sp Ω ⟶ X) (K : Type) (J : K → Type)
     (y : (Σ k, J k) → Ω) (G : Over X) [GrpObj G] [IsCommMonObj G] [Smooth G.hom]
     (Li : Type) [AddCommGroup Li] [Module Ω Li] (M : LieModel G ξ Li) (h : LieMetric M y) (z : Sp ℂ ⟶ X)

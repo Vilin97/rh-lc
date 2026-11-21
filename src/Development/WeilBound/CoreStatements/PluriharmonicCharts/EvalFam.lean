@@ -12,6 +12,7 @@ namespace PositivityTheory.Xgp.c_bm_exists_boundary
 open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.AnForm.M GlobalTheory.CompanionTheory.Ar.Cmp GlobalTheory.CompanionTheory.Ar.Cmp.SncRes
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_res {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω] [CharZero Ω]
     (x : (Σ k, ι k) → Ω) (e : ℕ) (J : Ideal (MRing ι)) (hP : IsArithVar (mCoordIdeal x) (e + 1))
     (hJ : IsMultiHomogIdeal J) (hJP : ¬ J ≤ mCoordIdeal x) (hsnc : IsSncModel x e J) :

@@ -15,6 +15,7 @@ open GlobalTheory GlobalTheory.CxPts
 namespace GlobalTheory
 
 
+open AffinePoints in
 theorem exists_eq_of_continuous_quotient_algHom {A : Type} [CommRing A] [IsDomain A] [Algebra ℂ A]
     [Algebra.FiniteType ℂ A] [IsIntegrallyClosed A] {ψ : (A →ₐ[ℂ] ℂ) → ℂ} (hψ : Continuous ψ)
     {a b : A} (hb : b ≠ 0) (hab : ∀ e : A →ₐ[ℂ] ℂ, e b * ψ e = e a) :
@@ -52,6 +53,7 @@ theorem isIntegrallyClosed_sections_of_isDomain {Y : Scheme.{0}}
       (Localization.AtPrime p)).toRingEquiv
 
 
+open AffinePoints in
 theorem exists_ev_eq_of_continuousOn_quotient :
     ∀ (Y : Scheme.{0}) (p : Y ⟶ Sp ℂ) (D : ℕ), SmoothOfRelativeDimension D p → ∀ (V : Y.Opens), IsAffineOpen V → IsDomain Γ(Y, V) → ∀ φ : CxPts p (RingHom.id ℂ) → ℂ, ContinuousOn φ (ptsIn p (RingHom.id ℂ) V) → ∀ a b : Γ(Y, V), b ≠ 0 → (∀ y ∈ ptsIn p (RingHom.id ℂ) V, ev p (RingHom.id ℂ) V b y * φ y = ev p (RingHom.id ℂ) V a y) → ∃ c : Γ(Y, V), ∀ y ∈ ptsIn p (RingHom.id ℂ) V, ev p (RingHom.id ℂ) V c y = φ y := by
   intro Y p D hp U hU hdom φ hφ a b hb hab

@@ -25,6 +25,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo Filter Topology Measu
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem sheetDensity_finset_sum {e : ℕ} (Q : Ideal (MRing ι))
     (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) (φ : Fin e → ((Σ k, ι k) → ℂ) → ℝ)
     {T : Type*} (S : Finset T) (u : T → ((Σ k, ι k) → ℂ) → ℝ) (y : Fin e → ℂ)

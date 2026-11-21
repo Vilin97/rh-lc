@@ -81,6 +81,8 @@ variable [IsNoetherianRing A] [IsProper (X ↘ Spec (.of A))] {F} (hF : IsCohere
   (hU : iSup 𝔘 = ⊤) (hUaff : ∀ (m : ℕ) (t : Fin (m + 1) → ι), IsAffineOpen (⨅ a, 𝔘 (t a)))
 
 
+omit [IsNoetherianRing A] [IsProper (X ↘ Spec (.of A))] in
+include hF hU hUaff in
 theorem exists_reesCech_addEquiv :
     ∃ e : cechH (reesPre I F) 𝔘 p ≃+ Sheaf.H.{u} (modulesAb (reesSheaf I F)) p,
       ∀ (r : reesAlgebra I) x, e (cechHMap 𝔘 (modulesAbMap (reesMul I F r)).hom p x) = r • e x := by
@@ -103,6 +105,7 @@ theorem exists_reesCech_addEquiv :
   rfl
 
 
+include hF hU hUaff in
 theorem finite_reesCech :
     @Module.Finite (reesAlgebra I) (cechH (reesPre I F) 𝔘 p) _ _ (reesCechModule I F 𝔘 p) := by
   let := reesCechModule I F 𝔘 p

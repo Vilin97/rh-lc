@@ -117,6 +117,7 @@ section Row
 variable {D : D7} {cf : CharFrame D} {nch : NChoice D} {tp : TupTied D cf nch} (X : GlobalTheory.NJoin.RealAt D cf nch tp)
 
 
+set_option maxHeartbeats 1000000 in
 theorem ipM_theta {μ : D.what₂.Tup} (hμ : Used0 D μ) (j : Fin D.R.m) (x : D.what₂.Mt μ (j.1 + 1)) (y : D.what₂.Mj (j.1 + 1))
     (T T' : MMap (X.R.MW j (sg0 D X.A))) (hT : PiTensorProduct.lift T = (X.IL.jMj j y).1)
     (hT' : PiTensorProduct.lift T' = (X.IL.jMj j (D.what₂.thetaP μ (j.1 + 1) x)).1) :
@@ -181,6 +182,7 @@ theorem ext_pre {V : HSp D} {n : ℕ} (c : CoefA V) (hc : ∀ h ∈ GfC V, c.ρ 
   rw [hp, hc _ (inv_mem (PV.into _)), Module.End.one_apply]
 
 
+set_option maxHeartbeats 1000000 in
 theorem ext_real (hV : X.R.models_cV) (A : GlobalTheory.NJoin.Agree X M rep) {μ : D.what₂.Tup} (hμ : Used0 D μ) (j : Fin D.R.m)
     (x : D.what₂.Mt μ (j.1 + 1)) :
     (X.R.cV j).ext (fun k => (A.eW μ hμ j).symm ((M μ (j.1 + 1) (by omega) (by omega)).real x (A.a j * preF (A.PV j) k))) =

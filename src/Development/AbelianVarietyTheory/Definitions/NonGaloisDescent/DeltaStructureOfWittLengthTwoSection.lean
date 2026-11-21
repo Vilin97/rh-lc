@@ -68,6 +68,7 @@ theorem gh_add (x y : W2 l A) : gh (x + y) = gh x + gh y := by
   simp only [gh]; linear_combination -l_mul_cc l x.fst y.fst
 
 
+omit hl in
 theorem gh_mul (x y : W2 l A) : gh (x * y) = gh x * gh y := by
   change (x.fst * y.fst) ^ l + (l : A) * (x.fst ^ l * y.snd + y.fst ^ l * x.snd + (l : A) * x.snd * y.snd) = _
   simp only [gh]; ring
@@ -78,6 +79,7 @@ theorem ext_gh {σ : Type} {x y : W2 l (MvPolynomial σ ℤ)} (h0 : x.fst = y.fs
   exact add_left_cancel h1
 
 
+omit hl in
 theorem exists_lift (x : W2 l A) :
     ∃ y : W2 l (MvPolynomial A ℤ), mapF (MvPolynomial.eval₂Hom (Int.castRingHom A) id) y = x :=
   ⟨⟨MvPolynomial.X x.fst, MvPolynomial.X x.snd⟩, W2.ext (by simp [mapF]) (by simp [mapF])⟩

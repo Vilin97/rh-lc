@@ -39,6 +39,7 @@ theorem trace_nondeg (l : κ → mixedEmbedding.mixedSpace F)
   simpa [apply_ite] using this
 
 
+variable (F κ) in
 structure Co (l : Type) [Fintype l] where
   e1 : (κ → mixedEmbedding.mixedSpace F) ≃L[ℝ] EuclideanSpace ℝ l
   e2 : (κ → mixedEmbedding.mixedSpace F) ≃ₗ[ℝ] EuclideanSpace ℝ l

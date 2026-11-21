@@ -231,6 +231,7 @@ variable {F Ω : Type u} [Field F] [Field Ω] [Algebra F Ω] [DecidableEq Ω]
 variable {E E' : WeierstrassCurve F} [E.IsElliptic] [E'.IsElliptic]
 
 
+omit [DecidableEq Ω] in
 theorem galFF_bcEmb (g : Ω ≃ₐ[F] Ω) (f : E.toAffine.FunctionField) :
     galFF E g (bcEmb (F' := Ω) E f) = bcEmb (F' := Ω) E f := by
   have e : (galFF E g).toRingHom.comp (bcEmb (F' := Ω) E).toRingHom =
@@ -291,6 +292,7 @@ theorem exists_pointMap_isogBaseChange_eq [PerfectField F] [IsAlgClosed Ω] [Dec
     exact ⟨.some a b hab, rfl⟩
 
 
+variable (Ω) in
 noncomputable def pointHomOver [PerfectField F] [IsAlgClosed Ω] [DecidableEq F] (φ : Isogeny E E') :
     E.toAffine.Point →+ E'.toAffine.Point :=
   AddMonoidHom.mk' (fun P => (exists_pointMap_isogBaseChange_eq (Ω := Ω) φ P).choose)

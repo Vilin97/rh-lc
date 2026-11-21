@@ -17,6 +17,7 @@ open GlobalTheory.ZM
 namespace GlobalTheory
 
 
+open MvPolynomial in
 theorem homogeneousComponent_mul_mem_span_degree {K σ : Type} [Field K] (I : Ideal (MvPolynomial σ K)) {d₀ d e : ℕ}
     (h₀ : d₀ ≤ d) (he : d ≤ e) {F : MvPolynomial σ K} (hF : F ∈ Ideal.span {G | G ∈ I ∧ G.IsHomogeneous d₀})
     (a : MvPolynomial σ K) :

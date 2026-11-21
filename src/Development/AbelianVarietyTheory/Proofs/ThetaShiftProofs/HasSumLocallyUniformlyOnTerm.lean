@@ -171,6 +171,7 @@ def IsConvLine (T₀ : ℝ) : Prop :=
   ∀ μ : A.X, (A.H (A.ct μ) (A.ct μ)).re / 2 - (A.T μ μ).im ≤ T₀ * A.be μ μ
 
 
+variable {A} in
 theorem IsConvLine.mono {T₀ T₁ : ℝ} (h : A.IsConvLine T₀) (hT : T₀ ≤ T₁) : A.IsConvLine T₁ := fun μ =>
   (h μ).trans (mul_le_mul_of_nonneg_right hT (by exact_mod_cast A.be_self_nonneg μ))
 
@@ -314,9 +315,11 @@ theorem hasSumLocallyUniformlyOn_term (hj : j ≠ 0) (h : th ∈ A.Theta j α) :
   SCV.hasSumLocallyUniformlyOn_of_locally_normal (locally_normal hT hj h)
 
 
+omit hT in
 theorem isOpen_above (T : ℝ) : IsOpen {p : ℂ × A.V | T < p.1.im} := isOpen_lt continuous_const (by fun_prop)
 
 
+omit hT in
 theorem differentiable_term_mul (h : Differentiable ℂ th) (μ : A.X) :
     Differentiable ℂ fun p : ℂ × A.V => A.term j α th μ p.2 * eTwoPi (p.1 * A.exponent j α μ) := by
   have := A.differentiable_term j α h μ
@@ -353,6 +356,7 @@ theorem hasSum_fderiv_term (hj : j ≠ 0) (h : th ∈ A.Theta j α) {w : ℂ} (h
 variable [NeZero j]
 
 
+omit hT in
 theorem hasSum_level {E : Type*} [NormedAddCommGroup E] [CompleteSpace E] {f : A.X → E} {a : E} (hf : HasSum f a) :
     HasSum (fun n : ℤ => ∑ μ ∈ A.level j α n, f μ) a := by
   convert hf.tsum_fiberwise (A.exponent j α) using 2 with n
@@ -360,6 +364,7 @@ theorem hasSum_level {E : Type*} [NormedAddCommGroup E] [CompleteSpace E] {f : A
   rw [this, Finset.tsum_subtype']
 
 
+omit hT in
 theorem coeff_FSum_mul (w : ℂ) (v : A.V) (n : ℤ) : (A.FSum j α th v).coeff n * eTwoPi w ^ n =
     ∑ μ ∈ A.level j α n, A.term j α th μ v * eTwoPi (w * A.exponent j α μ) := by
   rw [coeff_FSum, Finset.sum_mul]
@@ -367,17 +372,20 @@ theorem coeff_FSum_mul (w : ℂ) (v : A.V) (n : ℤ) : (A.FSum j α th v).coeff 
   rw [e_mul_intCast, A.mem_level.1 hμ]
 
 
+omit hT in
 theorem differentiable_coeff_FSum (h : Differentiable ℂ th) (n : ℤ) :
     Differentiable ℂ fun v => (A.FSum j α th v).coeff n :=
   Differentiable.fun_sum fun μ _ => A.differentiable_term j α h μ
 
 
+omit hT in
 theorem fderiv_coeff_FSum (h : Differentiable ℂ th) (n : ℤ) (v v₀ : A.V) :
     fderiv ℂ (fun v => (A.FSum j α th v).coeff n) v v₀ = ∑ μ ∈ A.level j α n, fderiv ℂ (A.term j α th μ) v v₀ := by
   simp only [coeff_FSum]
   rw [fderiv_fun_sum fun μ _ => A.differentiable_term j α h μ v, sum_apply]
 
 
+omit hT in
 theorem fderiv_coeff_FSum_eq_zero {n : ℤ} (hn : n < -A.be α α) (v : A.V) :
     fderiv ℂ (fun v => (A.FSum j α th v).coeff n) v = 0 := by
   simp only [A.coeff_FSum_eq_zero j α th _ hn, fderiv_fun_const, Pi.zero_apply]

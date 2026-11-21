@@ -827,6 +827,7 @@ section LiftMore2
 variable {X : Fields} (A : Amb X) (a b : ℕ) (Sall : Finset (HeightOneSpectrum (𝓞 X.E)))
 
 
+variable {a b} in
 theorem lf_isLift_of_liftS (hAA : A.AAUnit Sall) (N : Submodule (𝓞 X.E) (Sp X.E a)) (N' : Submodule (𝓞 X.E) (Sp X.E b)) {c D : ℕ} (hD : 0 < D)
     (hcD : c ∣ D) {x s : HomE X.E a b} (h : IsLiftS Sall (perO A.AA N N') D x s) : A.IsLift Sall N N' c x s := by
   obtain ⟨k, rfl⟩ := hcD
@@ -849,6 +850,7 @@ theorem lf_isLift_of_liftS (hAA : A.AAUnit Sall) (N : Submodule (𝓞 X.E) (Sp X
       Nat.cast_mul, mul_inv_cancel₀ (mul_ne_zero hc hk), one_smul]
 
 
+variable {a b} in
 theorem lf_exists_liftS (hAA : A.AAUnit Sall) (hAA0 : A.AA ≠ ⊥) (N : Submodule (𝓞 X.E) (Sp X.E a)) (N' : Submodule (𝓞 X.E) (Sp X.E b))
     (hN : IsSdLat N) (hN' : IsSdLat N') {D : ℕ} (hD : 0 < D) {x : HomE X.E a b} (hx : x ∈ divLat D (homAt Sall N N')) :
     ∃ s, IsLiftS Sall (perO A.AA N N') D x s := by
@@ -859,6 +861,7 @@ theorem lf_exists_liftS (hAA : A.AAUnit Sall) (hAA0 : A.AA ≠ ⊥) (N : Submodu
   exact homAt_le_locP_perO Sall A.AA N N' hN.1.fg hP (hAA P hP) h1
 
 
+variable {a b} in
 theorem lf_halfB_iff (hAA : A.AAUnit Sall) (N : Submodule (𝓞 X.E) (Sp X.E a)) (N' : Submodule (𝓞 X.E) (Sp X.E b)) (hN : N.FG) {c g : ℕ} (hc : 0 < c)
     (hg : 0 < g) {w : HomE X.E a b} (hw : w ∈ halfAO Sall (perO A.AA N N') g) :
     w ∈ halfBO Sall (perO A.AA N N') c ↔ w ∈ mulLat c (homAt Sall N N') := by
@@ -1676,6 +1679,7 @@ theorem qu_sgl_int (v : HeightOneSpectrum (𝓞 F)) (x : v.adicCompletion F) (hx
     rw [Formalism.L2.G.sgl_apply_ne F v x h]; exact zero_mem _
 
 
+variable (E) in
 def quE (v : HeightOneSpectrum (𝓞 F)) : RInt F E :=
   ⟨(1 : E) ⊗ₜ[F] Formalism.L2.G.sgl F v 1, qu_right _ (qu_sgl_int v 1 (one_mem _))⟩
 

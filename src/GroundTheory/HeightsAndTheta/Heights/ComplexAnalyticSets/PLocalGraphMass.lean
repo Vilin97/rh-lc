@@ -174,6 +174,7 @@ theorem frameFibreCount_ball_le (b : OrthonormalBasis (Fin n) ℂ (EuclideanSpac
 end LocalGraphMass
 
 
+open LocalGraphMass in
 theorem LocalGraphMass.proof (hPF : ProjectionFormula.Statement) : LocalGraphMass.Statement := by
   intro n d b I₀ S hd hS R
   classical

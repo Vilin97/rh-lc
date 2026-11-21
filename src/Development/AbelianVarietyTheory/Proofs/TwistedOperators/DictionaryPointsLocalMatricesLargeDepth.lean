@@ -122,6 +122,7 @@ theorem elt_zero {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L sc) (t
   (onColumn_apply (G := locGrid G t w) _ 0).trans rfl
 
 
+open Classical in
 theorem localization₂ : Big fun ch => LocP ch := by
   refine ⟨0, fun ε CF _ => ⟨0, fun D large₂ _ _ Γ _ _ Pl0 T A Ks _ _ _ R F s ch hch _ => ?_⟩⟩
   intro t w hw p hp β r r₀ h hpts j hj

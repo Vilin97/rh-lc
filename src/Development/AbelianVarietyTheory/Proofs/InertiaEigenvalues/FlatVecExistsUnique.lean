@@ -73,6 +73,7 @@ theorem exists_model_of_fix {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D 
     rw [← this, htr, smul_add, smul_comm e k u]
 
 
+open Classical in
 theorem omegaFlat_congr {a b : ℕ} (Q : Finset (Pl D.host.E)) (r : ℕ) (ξ : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ)
     {y y' : ∀ PP : Pl D.host.E, Matrix (Fin a) (Fin b) (kP PP)} (h : ∀ PP ∈ Q, y PP = y' PP) :
     GlobalTheory.ConjTwist.omegaFlat Q r ξ y = GlobalTheory.ConjTwist.omegaFlat Q r ξ y' := by

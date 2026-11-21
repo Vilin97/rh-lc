@@ -111,6 +111,7 @@ theorem pol_int (hP : GlobalTheory.Published.Principalisation) (h : IsArithVar p
 end GlobalTheory.MixPolar
 
 
+open GlobalTheory.MixPolar in
 theorem GlobalTheory.MixPolar.mixArch_eq_sum : GlobalTheory.Published.Principalisation → ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegral X] [IsLocallyNoetherian X] (p : X ⟶ Sp k) (D : ℕ), IsArithVar p D → ∀ (L : Fin D → HermLB p) (M : HermLB p) (s : M.B.Sec) (hs : genericPoint X ∈ nonzeroLocus s), MixHt.mixArch L M (isRatSec_ratOfSec s hs) = ∑ᶠ σ : k →+* ℂ, Mix.int (fun i => MLine.ofHerm (L i) σ) ((MLine.ofHerm M σ).logSec s) := by
   intro hP k _ X _ _ p D h L M s hs
   have := h.finite_emb

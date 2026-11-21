@@ -12,6 +12,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo (HermLine IsSmoothHerm IsArithVar 
 set_option maxSynthPendingDepth 1
 
 
+attribute [local instance] MvPolynomial.algebraMvPolynomial in
 theorem GlobalTheory.CompanionTheory.Ar.Num.divCycle_map_localisation :
     ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (R R' : Type) [CommRing R] [CommRing R'] [Algebra R R'] (Mo : Submonoid R) [IsLocalization Mo R'] (P : Ideal (MRing ι R)) (f : MRing ι R) (W' : Ideal (MRing ι R')), W'.IsPrime → divCycle (P.map (MvPolynomial.map (algebraMap R R'))) (MvPolynomial.map (algebraMap R R') f) W' = divCycle P f (W'.comap (MvPolynomial.map (algebraMap R R'))) := by
   intro K _ _ ι _ R R' _ _ _ Mo _ P f W' hW'

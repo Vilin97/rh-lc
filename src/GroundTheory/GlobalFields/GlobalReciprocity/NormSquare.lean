@@ -24,6 +24,7 @@ variable (K L : FiniteSubfield) [hKL : Fact (K ≤ L)]
   [(L.1.fixingSubgroup.subgroupOf K.1.fixingSubgroup).Normal]
 
 
+omit [(L.1.fixingSubgroup.subgroupOf K.1.fixingSubgroup).Normal] in
 theorem normClass_ideleClassNorm (c : IdeleClassGroup L.1) :
     normClass K L (FiniteSubfield.ideleClassNorm hKL.out c) = 1 := by
   change (QuotientGroup.mk (fixedEquiv K (FiniteSubfield.ideleClassNorm hKL.out c)) :
@@ -50,6 +51,8 @@ variable {K L K' L' : FiniteSubfield} [hKL : Fact (K ≤ L)]
   [(L'.1.fixingSubgroup.subgroupOf K'.1.fixingSubgroup).Normal]
 
 
+omit [(L.1.fixingSubgroup.subgroupOf K.1.fixingSubgroup).Normal]
+  [(L'.1.fixingSubgroup.subgroupOf K'.1.fixingSubgroup).Normal] in
 theorem normTateZero_normClass (hK : K ≤ K') (hL : L ≤ L') (c : IdeleClassGroup K'.1) :
     normTateZero (openSubgroup_le hK) (openSubgroup_le hL) (openSubgroup_le hKL'.out)
         (openSubgroup_le hKL.out) (normClass K' L' c) =

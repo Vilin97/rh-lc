@@ -49,6 +49,7 @@ theorem cube_cls (hA : IsAbelianScheme A) {L : LB (G2 A).left} (hL : L.IsLB) {T 
   abel
 
 
+omit [IsCommMonObj A] in
 theorem pull_eq_zero_of_factor {X : Scheme.{0}} {c : Pic X} {Y Z : Scheme.{0}} (f : Y ⟶ X) (g : Z ⟶ Y)
     (h : pull f c = 0) : pull (g ≫ f) c = 0 := by
   rw [pull_comp, h, map_zero]

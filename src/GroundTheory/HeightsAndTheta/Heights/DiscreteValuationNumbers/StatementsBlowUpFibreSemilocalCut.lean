@@ -39,6 +39,7 @@ def blowUpOverLoc (P W : Ideal (MRing ι R)) [P.IsPrime] (u : J → MRing ι R) 
     blowUpLocRing P u Q
 
 
+omit [DecidableEq K] in
 theorem blowUpEval_liftForm (P : Ideal (MRing ι R)) (u : J → MRing ι R) (f : MRing ι R) :
     blowUpEval P u (liftForm f) = Ideal.Quotient.mk P f := by
   show Polynomial.eval 1 (aeval (blowUpSubst P u) (liftForm f)) = _

@@ -29,6 +29,7 @@ theorem mem_O_of_pow_eq_one {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω]
   exact y.2
 
 
+variable {g n : ℕ} {F : SFam g n (zetaAway n)} {W : Matrix (Fin 8) (Fin 8) ℤ} {Z : Scheme.{0}} {i : F.X ⟶ Z} in
 theorem base_mem (X₁ : Setup F W i) (z₁ : X₁.M.Z) : GSum.base X₁ z₁ ∈ X₁.S.supI X₁.M z₁ := by
   have h : (X₁.S.supI X₁.M z₁).Nonempty := by
     obtain ⟨x, hx⟩ := X₁.div z₁

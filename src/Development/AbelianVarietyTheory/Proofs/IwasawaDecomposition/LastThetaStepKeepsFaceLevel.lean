@@ -32,6 +32,7 @@ theorem liftsExist_top (R : RealDat D A Ks) (hl : R.toLevCh.Is A.μ0) (t : T) (g
     (GlobalTheory.ChainEquiv.places_sep R.toLevCh _ hl t).2 g0
 
 
+set_option maxHeartbeats 2000000 in
 theorem topLev_of_clauses (R : RealDat D A Ks) (F : Face D A) (hl : R.toLevCh.Is A.μ0) (hM : R.IsModels) (hc : R.IsChain)
     (hS : ∀ t j, j < D.R.m → SchurMult R.θ (R.MY j) (levS _ (R.βY j) (R.datYt t j R.triv))
       (levChi _ (R.βY j) (R.datYt t j R.triv)) (R.νY t j) (R.fdY t j)) : TopLev R F := by
@@ -66,6 +67,7 @@ theorem topLev_of_clauses (R : RealDat D A Ks) (F : Face D A) (hl : R.toLevCh.Is
 end TopLevProof
 
 
+set_option maxHeartbeats 2000000 in
 theorem topLev_holds : (GlobalTheory.Published.DiscreteSeriesCover ∧ GlobalTheory.Published.HarishChandraModules ∧ GlobalTheory.Published.CasselmanWallach ∧ GlobalTheory.Published.HarishChandraFinite ∧ GlobalTheory.Published.CuspRapidDecay) → ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 I0 T : Type) (A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat3 D A3 Ks) (F : Face3 D A3) (cG : G0 R.Pg D.R.r ≃* G0g D.nd), Pins R F cG → Holds R F → GlobalTheory.Mem.R3.DTheta.TopLev R.toRealDat F.lv2 := by
   intro hC D G _ _ Pl0 I0 T A3 Ks _ _ _ R F cG hP hH
   exact topLev_of_clauses R.toRealDat F.lv2 hP.char.base.lev hP.char.base.models

@@ -219,6 +219,7 @@ theorem vNum_vecCons_eq (W : Ideal (MRing ι O)) {k : ℕ} (b : K → ℤ) (L : 
   simp only [Matrix.cons_val_zero, Matrix.cons_val_succ]
 
 
+omit [DecidableEq K] in
 theorem foldr_diffStep_perm {l₁ l₂ : List (K → ℤ)} (hl : l₁.Perm l₂) (h : (K → ℤ) → ℤ) :
     l₁.foldr diffStep h = l₂.foldr diffStep h := by
   induction hl with
@@ -234,6 +235,7 @@ theorem vNumL_perm (W : Ideal (MRing ι O)) {l₁ l₂ : List (K → ℤ)} (hl :
   rw [vNumL_eq_foldr, vNumL_eq_foldr, foldr_diffStep_perm hl]
 
 
+omit [DecidableEq K] in
 theorem classList_single_add_perm {σ : Type*} (cls : σ → K → ℤ) (s : σ) (μ : σ →₀ ℕ) :
     (classList cls (Finsupp.single s 1 + μ)).Perm (cls s :: classList cls μ) := by
   rw [← Multiset.coe_eq_coe]
@@ -242,6 +244,7 @@ theorem classList_single_add_perm {σ : Type*} (cls : σ → K → ℤ) (s : σ)
   simp [Finsupp.toMultiset_single]
 
 
+omit [DecidableEq K] in
 theorem classList_length_of_mem_support {σ : Type*} (cls : σ → K → ℤ) {H : MvPolynomial σ ℤ}
     {t : ℕ} (hH : H.IsHomogeneous t) {μ : σ →₀ ℕ} (hμ : μ ∈ H.support) :
     (classList cls μ).length = t := by

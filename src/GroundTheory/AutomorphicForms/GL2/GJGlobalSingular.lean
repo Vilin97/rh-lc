@@ -60,6 +60,7 @@ theorem integrableOn_mul_tsum_comp {ψ : AdelicGLn.AdelicGL K n → ℂ} (hψc :
       ((hsum g).comp_injective he) (hsum g)
 
 
+set_option maxHeartbeats 800000 in
 theorem setIntegral_mul_tsum_det_eq_zero (hn : 2 ≤ n) {ψ : AdelicGLn.AdelicGL K n → ℂ}
     (hψc : Continuous ψ) (hψl : IsLeftInvariant ψ) (hψ : IsCuspidal ψ)
     (hψb : ∃ C, ∀ g ∈ normOneGL (K := K) (n := n), ‖ψ g‖ ≤ C)
@@ -118,6 +119,7 @@ theorem setIntegral_mul_tsum_det_eq_zero (hn : 2 ≤ n) {ψ : AdelicGLn.AdelicGL
     exact this
 
 
+set_option maxHeartbeats 800000 in
 theorem setIntegral_mul_tsum_eq_tsum_GL (hn : 2 ≤ n) {ψ : AdelicGLn.AdelicGL K n → ℂ}
     (hψc : Continuous ψ) (hψl : IsLeftInvariant ψ) (hψ : IsCuspidal ψ)
     (hψb : ∃ C, ∀ g ∈ normOneGL (K := K) (n := n), ‖ψ g‖ ≤ C)

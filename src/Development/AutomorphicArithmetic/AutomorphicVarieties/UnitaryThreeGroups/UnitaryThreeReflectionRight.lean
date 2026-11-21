@@ -44,6 +44,7 @@ section Twisted
 variable {m : ℕ} {R S : Type*} [CommRing R] [CommRing S]
 
 
+variable (R) in
 def Jmat (m : ℕ) : Matrix (Fin m) (Fin m) R := fun i j => if j = i.rev then 1 else 0
 
 theorem Jmat_mul_Jmat (m : ℕ) : Jmat (R := R) m * Jmat (R := R) m = 1 := by
@@ -94,6 +95,7 @@ theorem theta_mul (g h : GL (Fin m) R) : theta (g * h) = theta g * theta h := by
   simp only [theta, trInv_mul, mul_assoc, hJ]
 
 
+variable (m R) in
 def thetaAut : MulAut (GL (Fin m) R) where
   toFun := theta
   invFun := theta
@@ -102,6 +104,7 @@ def thetaAut : MulAut (GL (Fin m) R) where
   map_mul' := theta_mul
 
 
+variable (m R) in
 def sgnAct : ℤˣ →* MulAut (GL (Fin m) R) where
   toFun s := if s = 1 then 1 else thetaAut (m := m) (R := R)
   map_one' := if_pos rfl
@@ -241,6 +244,7 @@ def torGL (t : Rˣ) : GL (Fin 3) R where
   inv_val := by rw [Matrix.diagonal_mul_diagonal]; simp only [Units.inv_mul]; exact Matrix.diagonal_one
 
 
+variable (R) in
 def tor : Rˣ →* GL (Fin 3) R where
   toFun := torGL
   map_one' := by
@@ -261,6 +265,7 @@ theorem theta_tor (t : Rˣ) : theta (tor t) = tor t := by
     simp [Matrix.mul_apply, Fin.sum_univ_three, Jmat, wt1, Matrix.diagonal, Fin.rev]
 
 
+variable (R) in
 def gw (j : ℤ) : Submodule R (Matrix (Fin 3) (Fin 3) R) where
   carrier := {X | ∀ a b, wt a b ≠ j → X a b = 0}
   add_mem' := fun hX hY a b h => by simp [hX a b h, hY a b h]
@@ -268,6 +273,7 @@ def gw (j : ℤ) : Submodule R (Matrix (Fin 3) (Fin 3) R) where
   smul_mem' := fun c X hX a b h => by simp [hX a b h]
 
 
+variable (R) in
 def unitaryThreeTorusLieAlgebra : Submodule R (Matrix (Fin 3) (Fin 3) R) :=
   Submodule.span R {Matrix.diagonal fun i => ((wt1 i : ℤ) : R)}
 

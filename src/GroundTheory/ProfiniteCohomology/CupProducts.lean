@@ -22,6 +22,7 @@ variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G]
 section Discrete
 
 
+omit [TopologicalSpace G] in
 theorem stabilizer_inf_le_stabilizer_tmul (A B : Rep.{u} k G) (a : A) (b : B) :
     stabilizer A.ρ a ⊓ stabilizer B.ρ b ≤
       stabilizer (A ⊗ B).ρ (a ⊗ₜ[k] b : (A ⊗ B : Rep k G)) := by
@@ -89,10 +90,12 @@ theorem cupCochain_zero_right (h : p + q = n) (f : (Fin p → G) → A) :
 section Elements
 
 
+variable (A) in
 def cochainOf [IsDiscreteRep A] {i : ℕ} (a : (cochainsComplex A).X i) : (Fin i → G) → A :=
   (a : locallyConstantCochains A i).1
 
 
+variable (A) in
 def mkCochain [IsDiscreteRep A] {i : ℕ} (c : (Fin i → G) → A) (hc : IsLocallyConstant c) :
     (cochainsComplex A).X i :=
   (⟨c, hc⟩ : locallyConstantCochains A i)
@@ -158,6 +161,7 @@ section Cocycles
 variable {A B : Rep.{u} k G} [IsDiscreteRep A] [IsDiscreteRep B] {p q n : ℕ}
 
 
+variable (A p) in
 def cocycleι : cocycles A p →ₗ[k] (cochainsComplex A).X p :=
   ((cochainsComplex A).iCycles p).hom
 

@@ -104,6 +104,7 @@ def eO : PlaneGramData.TL J Dt.nL r ≃ ((Σ j : ZMod J, Fin (Dt.nL j)) ⊕ (Fin
   right_inv := by rintro (⟨j, l⟩ | ⟨j, m⟩) <;> simp
 
 
+open Classical in
 abbrev toData : TwistData (G.KK O) where
   r := r
   J := J

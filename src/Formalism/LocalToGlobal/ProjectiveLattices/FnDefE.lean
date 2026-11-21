@@ -113,6 +113,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.WeightAl
 variable {D : D7} {Tc : Core D} (hL : LawsCore Tc) (j : ℕ)
 
 
+variable {j} in
 def CompOf (cm : ∀ σ : Tc.Q.c.F →+* ℂ, (Tc.U j σ).Comp → Comp (Tc.Q.Xo j) Tc.Q.c) : Prop :=
   ∀ (σ : Tc.Q.c.F →+* ℂ) (k : (Tc.U j σ).Comp) (x : ((Tc.U j σ).X k).dom) (q : PrimeSpectrum (CAt σ)),
     cspB_lift ((Tc.U j σ).un k x).x ((Tc.U j σ).un k x).x_over q ∈

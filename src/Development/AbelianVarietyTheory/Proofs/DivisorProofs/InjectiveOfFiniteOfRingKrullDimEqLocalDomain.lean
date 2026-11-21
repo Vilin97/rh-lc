@@ -11,6 +11,7 @@ open IsLocalRing
 namespace GlobalTheory
 
 
+open IsLocalRing in
 theorem _root_.GlobalTheory.injective_of_finite_of_ringKrullDim_eq_of_local_domain :
     ∀ (B R : Type) [CommRing B] [IsDomain B] [IsLocalRing B] [IsNoetherianRing B] [CommRing R]
       [IsLocalRing R] (ψ : B →+* R), ψ.Finite → ringKrullDim R = ringKrullDim B →

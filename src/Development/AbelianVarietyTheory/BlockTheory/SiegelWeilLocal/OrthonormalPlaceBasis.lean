@@ -44,6 +44,7 @@ variable (B : RowsAut)
 abbrev gInf : Type := ∀ v : InfinitePlace B.I.F, gLie (B.I.ε v)
 
 
+open Classical in
 def atPlace (v : InfinitePlace B.I.F) (X : gLie (B.I.ε v)) : gInf B := Pi.single v X
 
 def orbit (E : gInf B) (w : B.Hs) (t : ℝ) : B.Hs := B.σs (fun v => expU (t • E v)) w
@@ -79,6 +80,8 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.OrthonormalPlaceBasis.ste
   Submodule.span_mono fun _ ⟨l, u, hl, hu, hy⟩ => ⟨l, u, hl.trans h, hu, hy⟩
 
 
+open NumberField Matrix in
+variable (B : _root_.Formalism.MainNotions.S.RowsAut) in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.OrthonormalPlaceBasis.tens_w_mem {d : InfinitePlace B.I.F → ℝ}
     (h : _root_.GlobalTheory.Count.IsDSData B d) (P : ℕ) :
     B.tens B.w ∈ _root_.GlobalTheory.IndefiniteRowSideFullHecke.OrthonormalPlaceBasis.VP B P ∧ ‖B.tens B.w‖ = 1 := by

@@ -53,6 +53,7 @@ section PD
 variable (X : PT E) (bs : Fin nb → Block E n X.dim)
 
 
+open Classical in
 def lst (T : Choice bs) : List (Fin n × Vsp X.dim) :=
   by
     classical

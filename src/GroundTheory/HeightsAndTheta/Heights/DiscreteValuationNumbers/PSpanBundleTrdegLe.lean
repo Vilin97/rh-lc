@@ -14,6 +14,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo IntermediateField.alg
 noncomputable section
 
 
+set_option maxHeartbeats 400000 in
 theorem SpanBundleTrdegLe.proof : SpanBundleTrdegLe.Statement := by
   intro F _ Ω _ _ K _ ι y M i G c a H _hc hH hGH Φ _ _ s
 

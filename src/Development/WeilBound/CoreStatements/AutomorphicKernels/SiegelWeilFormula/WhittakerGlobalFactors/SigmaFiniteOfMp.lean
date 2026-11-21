@@ -48,6 +48,7 @@ theorem sigmaFinite_of_mp {X Y : Type*} [MeasurableSpace X] [MeasurableSpace Y] 
   exact e.symm.measurableEmbedding.sigmaFinite_map
 
 
+omit [NumberField E] in
 theorem coordHerm_congr {R : Type} [CommRing R] [Algebra F R] [TopologicalSpace R]
     {m₁ m₂ : MeasurableSpace R} (h : m₁ = m₂) (l₁ : @Measure R m₁) (l₂ : @Measure R m₂) (hl : ∀ s, l₁ s = l₂ s)
     (σ : E →ₐ[F] E) {d : ℕ} (b : Module.Basis (Fin d) F E) (n : ℕ) :

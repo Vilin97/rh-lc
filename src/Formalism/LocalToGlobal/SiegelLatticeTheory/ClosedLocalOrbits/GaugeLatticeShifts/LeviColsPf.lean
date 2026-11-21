@@ -148,6 +148,7 @@ variable {D : D7} {X : Formalism.L2.SG.HidaSetting.HidaSetting D} (TR : TypedRed
   {what₂ rows' : Finset (Submodule (𝓞 D.host.E) (VS D).V)} (cs : ColSys X u what₂) (cs' : ColSys X u' rows')
 
 
+variable (F0 F0') in
 def AdmPar : Prop :=
   ∀ t : GTerm X u u' F0 F0' what₂ rows',
     Good X (kOf X u u' (cs.h (cs.base t.lam) : X.B.I.Gf) (cs'.h (cs'.base t.lam') : X.B.I.Gf) t.pt)

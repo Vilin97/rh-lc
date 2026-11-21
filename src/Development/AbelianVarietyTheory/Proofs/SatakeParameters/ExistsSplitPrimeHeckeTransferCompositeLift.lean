@@ -209,6 +209,7 @@ theorem step_match {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {χS χT : (AE
   · rfl
 
 
+open Formalism.L2.JoinChr in
 theorem val_conj {χ : (AE D)ˣ →* Circle} {n : ℕ} (hχ : ResEta D χ n) {P : Pl D.host.E} (u : UnrPl P χ)
     {e : AE D} {ϖ : 𝓞 D.host.E} {x : (AE D)ˣ} (he : Formalism.L2.NTheta.IsIdemAt e (conjPl P))
     (h1 : ϖ ∈ (conjPl P).asIdeal) (h2 : ϖ ∉ (conjPl P).asIdeal ^ 2) (hx : (x : AE D) = e * incA D (ϖ : D.host.E) + (1 - e)) :

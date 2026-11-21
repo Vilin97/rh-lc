@@ -22,6 +22,7 @@ namespace GlobalTheory.Diag
 variable (S : Scheme.{u}) {X Y Z : Type u} [AddCommGroup X] [AddCommGroup Y] [AddCommGroup Z]
 
 
+omit [AddCommGroup X] [AddCommGroup Y] [AddCommGroup Z] in
 theorem isPullback_toUnit_of_lift {K G H : Over S} {i : K ⟶ G} {f : G ⟶ H} {e : 𝟙_ (Over S) ⟶ H}
     (hw : i ≫ f = toUnit _ ≫ e)
     (hmono : ∀ {T : Over S} {a b : T ⟶ K}, a ≫ i = b ≫ i → a = b)
@@ -109,6 +110,7 @@ theorem diagMap_chi (u : Y →+ X) (y : Y) : (diagMap S u).left.appTop.hom (chi 
   rfl
 
 
+variable {S} in
 theorem hom_ext {T : Over S} {s t : T ⟶ splitTorus S X}
     (h : ∀ x, (coord s).hom (AddMonoidAlgebra.single x 1) =
       (coord t).hom (AddMonoidAlgebra.single x 1)) : s = t :=
@@ -123,12 +125,14 @@ theorem diagMap_comp (u : Y →+ X) (v : Z →+ Y) : diagMap S (u.comp v) = diag
       ← Category.id_comp (diagMap S (u.comp v)), coord_comp_diagMap_single]; rfl
 
 
+variable {S} in
 theorem coord_one (T : Over S) (x : X) :
     (coord (1 : T ⟶ splitTorus S X)).hom (AddMonoidAlgebra.single x 1) = 1 := by
   rw [← MonObj.comp_one (1 : T ⟶ splitTorus S X), ← diagMap_zero, coord_comp_diagMap_single,
     AddMonoidHom.zero_apply, ← AddMonoidAlgebra.one_def, map_one]
 
 
+variable {S} in
 def ofCoord (T : Over S) (φ : torusRing ZU X ⟶ Γ(T.left, ⊤)) : T ⟶ splitTorus S X :=
   Over.homMk (pullback.lift (T.left.toSpecΓ ≫ Spec.map φ) T.hom (specULiftZIsTerminal.hom_ext _ _))
     (pullback.lift_snd _ _ _)
@@ -141,6 +145,7 @@ theorem coord_ofCoord (T : Over S) (φ : torusRing ZU X ⟶ Γ(T.left, ⊤)) :
   simp
 
 
+variable {S} in
 def ofChar (T : Over S) (g : Multiplicative X →* Γ(T.left, ⊤)) : T ⟶ splitTorus S X :=
   ofCoord T (CommRingCat.ofHom (AddMonoidAlgebra.liftNCRingHom
     ((Int.castRingHom _).comp (ULift.ringEquiv : ULift.{u} ℤ ≃+* ℤ).toRingHom) g
@@ -164,6 +169,7 @@ theorem coord_single_add {T : Over S} (t : T ⟶ splitTorus S X) (x y : X) :
   rw [← map_mul, AddMonoidAlgebra.single_mul_single, _root_.one_mul]
 
 
+variable {S} in
 theorem coord_mul {T : Over S} (s t : T ⟶ splitTorus S X) (x : X) :
     (coord (s * t)).hom (AddMonoidAlgebra.single x 1) =
       (coord s).hom (AddMonoidAlgebra.single x 1) * (coord t).hom (AddMonoidAlgebra.single x 1) := by
@@ -250,6 +256,7 @@ theorem isPullback_torsion (n : ℕ) :
   rw [mulN_eq_diagMap]; exact isPullback_ker S _
 
 
+variable (X) in
 def torsionIso (n : ℕ) :
     torsion (splitTorus S X) n ≅ splitTorus S (X ⧸ (nsmulAddMonoidHom n : X →+ X).range) :=
   (isPullback_torsion S n).isoPullback.symm
@@ -328,6 +335,7 @@ theorem isPullback_groupRing :
     (CommRingCat.isPushout_of_isPushout ZU.{u} (AddMonoidAlgebra ZU.{u} X) R (AddMonoidAlgebra R X))
 
 
+variable {S R} in
 theorem exists_isPullback (g : S ⟶ Spec (.of R)) :
     ∃ a : (splitTorus S X).left ⟶ Spec (.of (AddMonoidAlgebra R X)),
       IsPullback a (splitTorus S X).hom
@@ -464,6 +472,7 @@ theorem baseChangeIso_hom_torusFst (X : Type u) [AddCommGroup X] :
   (isPullback_baseChange f X).isoPullback_hom_fst
 
 
+omit [AddCommGroup X] [AddCommGroup Y] [AddCommGroup Z] in
 theorem isMonHom_of_comp {B : Scheme.{u}} (h : S ⟶ B) (g : S' ⟶ B) (e : g = f ≫ h) (G : Over B)
     [GrpObj G] (φ : (Over.pullback f).obj ((Over.pullback h).obj G) ⟶ (Over.pullback g).obj G)
     (hφ : φ.left ≫ pullback.fst _ _ = pullback.fst _ _ ≫ pullback.fst _ _) : IsMonHom φ := by
@@ -568,6 +577,7 @@ instance isSemiAbelian : IsSemiAbelian (splitTorus S X) where
   fibres := fun _ _ _ p => ⟨torusExtension S X p⟩
 
 
+omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 theorem isGrpPullback {S S' : Scheme.{0}} (f : S' ⟶ S) :
     ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsGrpPullback (splitTorus S' X) (splitTorus S X) f
       ((baseChangeIso f X).inv.left ≫ pullback.fst (splitTorus S X).hom f) := by

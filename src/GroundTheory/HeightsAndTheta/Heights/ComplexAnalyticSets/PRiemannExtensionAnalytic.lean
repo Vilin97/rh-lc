@@ -236,6 +236,7 @@ theorem local_extension {k : ℕ} {U : Set (Fin k → ℂ)} {g f : (Fin k → �
 end RiemannExtensionAnalytic
 
 
+open RiemannExtensionAnalytic in
 theorem RiemannExtensionAnalytic.proof : RiemannExtensionAnalytic.Statement := by
   intro k U g f hU hg hne hf hb
   have hloc := fun τ (hτ : τ ∈ U) => local_extension hU hg hne hf hb hτ

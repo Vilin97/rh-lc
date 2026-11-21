@@ -102,10 +102,12 @@ theorem psum_hom {T : Over S} {T' : Over S'} (ρ : (T' ⟶ G') →* (T ⟶ G)) {
   | cons k l ih => exact (map_mul ρ _ _).trans (congrArg (ρ (x k) * ·) ih)
 
 
+omit [IsCommMonObj G] [IsCommMonObj G'] in
 def pushHom (h : IsGrpPullback G' G f φ) (T : Over S') : (T ⟶ G') →* (Over.mk (T.hom ≫ f) ⟶ G) :=
   MonoidHom.mk' (pushPt h.1.w) fun x y => Over.OverMorphism.ext (h.2 T x y _ _ rfl rfl).symm
 
 
+omit [IsCommMonObj G] in
 def preHom {T T' : Over S} (U : T' ⟶ T) : (T ⟶ G) →* (T' ⟶ G) :=
   MonoidHom.mk' (U ≫ ·) fun x y => MonObj.comp_mul U x y
 

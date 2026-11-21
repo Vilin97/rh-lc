@@ -46,6 +46,7 @@ theorem actB_inv (k : G2 σ Y) (u : Matrix (Fin m) (Fin n ⊕ Fin n) (AE F E)) :
   simp
 
 
+variable (om K) in
 def kfin : Submodule ℂ ((κ ⊕ κ → AF F) → ℂ) where
   carrier := {Φ | ∃ N : Submodule ℂ ((κ ⊕ κ → AF F) → ℂ), FiniteDimensional ℂ N ∧ N ≤ schA F _ ∧ Φ ∈ N ∧ ∀ k ∈ K, ∀ Ψ ∈ N, om k Ψ ∈ N}
   zero_mem' := ⟨⊥, inferInstance, bot_le, zero_mem _, fun k _ g hg => by rw [(Submodule.mem_bot ℂ).1 hg, map_zero]; exact zero_mem _⟩

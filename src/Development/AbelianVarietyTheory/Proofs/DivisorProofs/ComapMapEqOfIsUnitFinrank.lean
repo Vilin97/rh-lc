@@ -15,6 +15,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.Poinc.Sep
 
 
+open Module in
 theorem comap_map_eq_of_isUnit_finrank : ∀ (V V' : Type) [CommRing V] [IsDomain V] [IsIntegrallyClosed V] [CommRing V'] [IsDomain V'] [Algebra V V'] [Module.Finite V V'], Function.Injective (algebraMap V V') → IsUnit ((Module.finrank V V' : ℕ) : V) → ∀ I : Ideal V, (I.map (algebraMap V V')).comap (algebraMap V V') = I := by
   intro V V' _ _ _ _ _ _ _ hinj hunit I
   refine le_antisymm ?_ Ideal.le_comap_map

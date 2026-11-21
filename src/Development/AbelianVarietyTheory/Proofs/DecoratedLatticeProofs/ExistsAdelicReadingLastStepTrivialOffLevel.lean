@@ -106,6 +106,7 @@ theorem exists_basePt_on (S : StepLevel F E σ J T f bad) (k : GL (Fin n) (E ⊗
 end Gen
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_mv {I : TC B X} (hI : I.Ok) (hP : TC.Pins B X) {l : I.Laws} {Z : TC.Later B (I.cols l)} {u : B.Word} {a : I.ι}
     {Ch : ℕ → Type} (A : TwDat I l Z u a Ch) (hA : A.Is) (i : ℕ) (hi : i ≤ B.R.m) (β : Ch i)
     (S : Set (HeightOneSpectrum (𝓞 B.host.F))) (hSf : S.Finite) (hST : ∀ v ∈ S, (B.T u : 𝓞 B.host.F) ∉ v.asIdeal) :
@@ -273,6 +274,7 @@ theorem isRed_one_of_inv {P : HeightOneSpectrum (𝓞 E)} {k : GL (Fin n) (AfE F
 end Red
 
 
+set_option maxHeartbeats 1000000 in
 theorem isRed_one_of_topPt (I : TC B X) (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word)
     (a : I.ι) (k : TC.GA B (B.R.N B.R.m))
     (hkl : Formalism.L2.Herm.Carries k (Formalism.L2.Col.stdLat B.host.E (B.R.N B.R.m)) (Formalism.L2.Col.stdLat B.host.E (B.R.N B.R.m)))
@@ -428,6 +430,7 @@ theorem mvW_spec (hI : I.Ok) (hP : TC.Pins B X) (A : TwDat I l Z u a Ch) (hA : A
   exact mvLift_spec hI hP A hA i hi β
 
 
+set_option maxHeartbeats 2000000 in
 def moved (hI : I.Ok) (hP : TC.Pins B X) (A : TwDat I l Z u a Ch) (hA : A.Is) : TwDat I l Z u a Ch where
   bad := A.bad
   chOf := A.chOf
@@ -488,6 +491,7 @@ section Main
 variable {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {u : B.Word} {a : I.ι} {Ch : ℕ → Type}
 
 
+set_option maxHeartbeats 4000000 in
 theorem moved_is (hI : I.Ok) (hP : TC.Pins B X) (A : TwDat I l Z u a Ch) (hA : A.Is) : (moved hI hP A hA).Is := by
   have hPr := l.pr
   have wU : ∀ i (hi : i ≤ B.R.m) β, mvB hI hP A hA i hi β ∈ Formalism.L2.Herm.UstdAf B.sp.cm (B.R.N i) := by
@@ -602,6 +606,7 @@ theorem moved_is (hI : I.Ok) (hP : TC.Pins B X) (A : TwDat I l Z u a Ch) (hA : A
     exact ⟨n, hn, fun κ => h ⟨(mvEl hI hP A hA i hi β).1 * κ.1 * (mvEl hI hP A hA i hi β).1⁻¹, κ.2⟩⟩
 
 
+set_option maxHeartbeats 4000000 in
 theorem exists_twDat_top_trivial : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (Ch : ℕ → Type) (A : TwDat I l Z u a Ch), A.Is → Nonempty (Unique (Ch B.R.m)) → ∃ A' : TwDat I l Z u a Ch, A'.Is ∧ (∀ i, i < B.R.m → ∀ β, A'.kb i β = A.kb i β) ∧ ∀ β (v : HeightOneSpectrum (𝓞 B.host.F)), ((B.T u : ℕ) : 𝓞 B.host.F) ∉ v.asIdeal → ¬ I.UnderQ a v → Formalism.UG.bc (Formalism.UG.prV (E := B.host.E) v) (A'.kb B.R.m β) = 1 := by
   intro B X I hI hP l Z u a Ch A hA _
   refine ⟨moved hI hP A hA, moved_is hI hP A hA, fun i hi β => ?_, fun β v hv hq => ?_⟩

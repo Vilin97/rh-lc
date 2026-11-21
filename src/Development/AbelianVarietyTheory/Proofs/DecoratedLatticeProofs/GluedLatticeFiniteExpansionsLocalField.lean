@@ -69,6 +69,7 @@ theorem card_ne_zero (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] : ((resCa
   exact h
 
 
+omit [Fintype n] in
 theorem withCol_split (x : Matrix n (n' ⊕ Fin 1) k) :
     withCol (x.submatrix id Sum.inl) (fun i => x i (Sum.inr 0)) = x := by
   ext i (j | j)
@@ -130,6 +131,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   [Fintype n] [Fintype n']
 
 
+open Classical in
 theorem glued_col (q : Unif k) (χ : AddChar 𝓀[k] ℂ) (hχ : χ ≠ 1) (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k]
     (P : Pair k n') :
     latInd (gluedS q 1 P.ker P.vec) L = ((resCard k : ℂ) ^ Fintype.card n)⁻¹ •

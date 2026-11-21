@@ -11,6 +11,7 @@ open scoped Pointwise
 namespace GlobalTheory
 
 
+open Pointwise in
 theorem measure_addFundamentalDomain_lt_top_of_cocompact {G : Type} [AddGroup G]
     [TopologicalSpace G] [IsTopologicalAddGroup G] [MeasurableSpace G] [BorelSpace G]
     (Γ : AddSubgroup G) [Countable Γ] {K : Set G} (hK : IsCompact K)

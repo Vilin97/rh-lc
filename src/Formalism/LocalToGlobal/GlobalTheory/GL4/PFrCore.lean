@@ -20,6 +20,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {n : Type} [Fintype n] [DecidableEq n]
 
 
+variable (F) in
 def vi (x : n → E) : n → 𝒜 := fun i => ιA (x i)
 
 theorem vi_mem_hat {Λ : Submodule (𝓞 E) (n → E)} {x : n → E} (hx : x ∈ Λ) : vi F x ∈ hat F Λ :=

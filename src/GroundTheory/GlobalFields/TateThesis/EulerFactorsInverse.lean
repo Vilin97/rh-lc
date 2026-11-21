@@ -39,6 +39,7 @@ theorem eq_of_forall_exp_mul_I {a b : ℝ}
   omega
 
 
+omit [NumberField K] in
 theorem exists_extensionEmbedding_eq_ofReal (w : InfinitePlace K) (r : ℝ) :
     ∃ a : w.Completion, extensionEmbedding w a = r := by
   by_cases hw : w.IsReal

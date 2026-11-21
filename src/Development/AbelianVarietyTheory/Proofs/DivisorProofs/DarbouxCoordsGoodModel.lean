@@ -27,6 +27,7 @@ section Levi
 variable {F : Type} [Field F] [NumberField F] {κ : Type}
 
 
+open scoped Classical in
 theorem levi_mapsTo [Fintype κ] [DecidableEq κ] (A : Matrix κ κ F) (hA : IsUnit A.det) :
     ∀ Φ ∈ schA F κ, LinearMap.funLeft ℂ ℂ (fun x : κ → AF F => A⁻¹.map (algebraMap F (AF F)) *ᵥ x) Φ ∈ schA F κ := by
   let gI : F →+* mixedEmbedding.mixedSpace F := (evIr (F := F)).comp (algebraMap F (AF F))
@@ -56,6 +57,7 @@ theorem levi_mapsTo [Fintype κ] [DecidableEq κ] (A : Matrix κ κ F) (hA : IsU
   exact fun Φ hΦ => hle hΦ
 
 
+open scoped Classical in
 theorem bijOn_levi [Fintype κ] [DecidableEq κ] (A : Matrix κ κ F) (hA : IsUnit A.det) :
     Set.BijOn (LinearMap.funLeft ℂ ℂ (fun x : κ → AF F => A⁻¹.map (algebraMap F (AF F)) *ᵥ x))
       (schA F κ : Set ((κ → AF F) → ℂ)) (schA F κ : Set ((κ → AF F) → ℂ)) := by
@@ -237,6 +239,8 @@ theorem hasOpB_unipM : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (A
 end GlobalTheory.SympChangeBij
 
 
+open GlobalTheory.SympChange GlobalTheory.SympChangeBij in
+open scoped Classical in
 theorem GlobalTheory.SympChangeBij.change_of_coordinates_bij : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (n d : ℕ) (X : Spc F E n) (W : Spc F E d) (M : Model σ X W) (r s r' s' : ℕ), B.IsGood σ → X.IsHerm σ B r s →
     W.IsSkew σ B r' s' → M.IsGood B.ψ →

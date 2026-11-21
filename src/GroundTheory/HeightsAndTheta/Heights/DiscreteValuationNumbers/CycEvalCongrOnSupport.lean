@@ -28,10 +28,12 @@ theorem powMonomial_isMultiHomog (e : K → ℕ) (i : ∀ k, ι k) :
   exact h
 
 
+omit [Fintype K] [DecidableEq K] in
 theorem liftForm_C_eq {J : Type} (a : R) : liftForm (ι := ι) (J := J) (C a : MRing ι R) = C a := by
   simp [liftForm]
 
 
+omit [Fintype K] [DecidableEq K] in
 theorem cycEval_congr_on_support {n n' : Ideal (MRing ι R) → ℤ} (Z : Ideal (MRing ι R) → ℤ)
     (h : ∀ W, Z W ≠ 0 → n W = n' W) : cycEval n Z = cycEval n' Z := by
   unfold cycEval
@@ -42,6 +44,8 @@ theorem cycEval_congr_on_support {n n' : Ideal (MRing ι R) → ℤ} (Z : Ideal 
 
 
 open scoped Classical in
+omit [Fintype K] [DecidableEq K] in
+open Classical in
 theorem cycEval_ite (p : Ideal (MRing ι R) → Prop) (A B : Ideal (MRing ι R) → ℤ)
     (Z : Ideal (MRing ι R) → ℤ) (hZ : (Function.support Z).Finite) :
     cycEval (fun W => if p W then A W else B W) Z =
@@ -54,6 +58,7 @@ theorem cycEval_ite (p : Ideal (MRing ι R) → Prop) (A B : Ideal (MRing ι R) 
   split_ifs <;> ring
 
 
+omit [Fintype K] [DecidableEq K] in
 theorem vecCons_liftMDeg {d : ℕ} (c : K → ℕ) (L : Fin d → K → ℤ) :
     Matrix.vecCons (fun k => ((liftMDeg c k : ℕ) : ℤ)) (liftDegs L) =
       liftDegs (Matrix.vecCons (fun k => (c k : ℤ)) L) := by

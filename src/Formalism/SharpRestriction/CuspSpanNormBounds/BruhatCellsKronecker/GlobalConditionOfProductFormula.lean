@@ -194,6 +194,7 @@ theorem exists_common (p : HeightOneSpectrum (𝓞 F)) (S : Finset E) (c : E)
     · rw [cmul, mul_comm (a : F), map_mul, mul_assoc]; exact int_smul_mem _ b _ (hS y hy)
 
 
+omit H in
 theorem memLocalizedAt_inv (p : HeightOneSpectrum (𝓞 F)) (I : FractionalIdeal (𝓞 E)⁰ E) (hI : I ≠ 0) (c : E)
     (h : ∀ x ∈ I, atP p (1 : FractionalIdeal (𝓞 E)⁰ E) (x * c)) : atP p I⁻¹ c := by
   have hN : IsNoetherian (𝓞 E) (I : Submodule (𝓞 E) E) := FractionalIdeal.isNoetherian I
@@ -220,6 +221,7 @@ theorem memLocalizedAt_inv (p : HeightOneSpectrum (𝓞 F)) (I : FractionalIdeal
     exact ((1 : FractionalIdeal (𝓞 E)⁰ E) : Submodule (𝓞 E) E).smul_mem r ih1
 
 
+omit H in
 theorem exists_val_eq (p : HeightOneSpectrum (𝓞 F)) (hδ : δ p ≠ 0) :
     ∃ c : F, valuation (A p).Fp ((A p).ιF c) = valuation (A p).Fp (δ p) := by
   have := (A p).lf
@@ -395,6 +397,7 @@ theorem locGen_diff (p : HeightOneSpectrum (𝓞 F)) :
     rwa [one_mul, div_mul_cancel₀ _ hac] at this
 
 
+omit H in
 theorem LocGen.inv {p : HeightOneSpectrum (𝓞 F)} {I : FractionalIdeal (𝓞 E)⁰ E} {c : E} (hI : I ≠ 0) (h : LocGen p I c) :
     LocGen p I⁻¹ c⁻¹ := by
   refine ⟨inv_ne_zero h.1, fun x => ⟨fun hx => ?_, fun hx => ?_⟩⟩

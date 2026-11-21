@@ -89,6 +89,7 @@ theorem eig_bc {S T : Type} [CommRing S] [Algebra c.F S] [CommRing T] [Algebra c
     RingHom.coe_coe, AlgHom.commutes]
 
 
+variable (Xo c) in
 def BcGenRSt : Prop :=
   ∀ (p : TRing c.F) (T : Type) [CommRing T] [Algebra c.F T] (ψ : p.R →ₐ[c.F] T) (y : FrPt Xo c p.R),
     ∃ s' : LB.Sec (PPx (spMap ψ.toRingHom ≫ y.x)),
@@ -99,6 +100,7 @@ def BcGenRSt : Prop :=
         ∀ i, s''.f i = scal (spMap ψ.toRingHom ≫ y.x) a i * s'.f i
 
 
+variable (Xo c) in
 def BcLieRSt : Prop :=
   ∀ (p : TRing c.F) (T : Type) [CommRing T] [Algebra c.F T] (ψ : p.R →ₐ[c.F] T) (y : FrPt Xo c p.R)
     (τ : E →+* ℂ) (w : Sp (DualNumber T) ⟶ Xo.univ.t.G.left),

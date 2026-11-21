@@ -15,6 +15,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 section Filtration
 
 
+variable (K) in
 noncomputable def principalFiltration (k : ℕ) : AddSubgroup (Additive (unitFiltrationUnits K 1)) :=
   Subgroup.toAddSubgroup ((unitFiltrationUnits K (k + 1)).comap (unitFiltrationUnits K 1).subtype)
 

@@ -457,6 +457,7 @@ def oEquiv : D.ntw.O i ≃+* D'.ntw.O i' :=
 theorem frac_heq (x : FractionRing (D.ntw.O i)) : HEq (fracEquiv (h.oEquiv hi) x) x := fracEquiv_ringCast_heq _ _ x
 
 
+include hi in
 theorem sideEmb_heq (b : Bool) (x : ↥D'.LL0) : HEq (sideEmb D.ntw i b (e x)) (sideEmb D'.ntw i' b x) :=
   heq_fracMap h.Tw_eq h.set.O0 h.set.crO0 h.set.O h.set.crO h.set.algO hi (D.ntw.O_inj i) (D'.ntw.O_inj i')
     (by cases b; exacts [h.emb0b i i' hi x, h.emb0 i i' hi x])

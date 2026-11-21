@@ -55,12 +55,14 @@ variable (hb : IsTorsChar n b) (ψ : D →ₐ[R] D₁) (x : Pt A D) (z₀ : Pt A
     b E ((spOver β ≫ z₀) * (spOver α ≫ z₀)⁻¹) = β a - α a)
 
 
+include hz₀ in
 theorem val_tors {D' F : Type} [CommRing D'] [Algebra R D'] [CommRing F] [Algebra R F] (φ : D →ₐ[R] D')
     (z : Pt A D') (hz : z ^ n = spOver φ ≫ x) (ρ : D' →ₐ[R] F) (φ' : D₁ →ₐ[R] F) (h : ρ.comp φ = φ'.comp ψ) :
     ((spOver ρ ≫ z) * (spOver φ' ≫ z₀)⁻¹) ^ n = 1 :=
   pow_mul_inv_eq_one (root_map φ ρ x z hz) (by rw [root_map ψ φ' x z₀ hz₀, h])
 
 
+include hb hz₀ in
 theorem map_val {D' F G : Type} [CommRing D'] [Algebra R D'] [CommRing F] [Algebra R F] [CommRing G] [Algebra R G]
     (φ : D →ₐ[R] D') (z : Pt A D') (hz : z ^ n = spOver φ ≫ x) (ρ : D' →ₐ[R] F) (φ' : D₁ →ₐ[R] F)
     (h : ρ.comp φ = φ'.comp ψ) (g₁ : F →ₐ[R] G) :
@@ -71,6 +73,7 @@ theorem map_val {D' F G : Type} [CommRing D'] [Algebra R D'] [CommRing F] [Algeb
   rfl
 
 
+include hb hz₀ ha in
 theorem val_indep {D' F : Type} [CommRing D'] [Algebra R D'] [CommRing F] [Algebra R F] (φ : D →ₐ[R] D')
     (z : Pt A D') (hz : z ^ n = spOver φ ≫ x) (ρ : D' →ₐ[R] F) (α β : D₁ →ₐ[R] F) (hα : ρ.comp φ = α.comp ψ)
     (hβ : ρ.comp φ = β.comp ψ) : val b z₀ a ρ α z = val b z₀ a ρ β z := by
@@ -89,6 +92,7 @@ def IsVal {D' : Type} [CommRing D'] [Algebra R D'] (φ : D →ₐ[R] D') (z : Pt
     ρ e = val b z₀ a ρ φ' z
 
 
+include hb hz₀ ha in
 theorem exists_isVal (hψ : (ψ : D →+* D₁).FaithfullyFlat) {D' : Type} [CommRing D'] [Algebra R D']
     (φ : D →ₐ[R] D') (z : Pt A D') (hz : z ^ n = spOver φ ≫ x) : ∃ e : D', IsVal (b := b) ψ z₀ a φ z e := by
   obtain ⟨E', _, _, ρ₀, φ₀, hff, hsq⟩ := GlobalTheory.exists_pushout_faithfullyFlat R D D₁ D' ψ φ hψ

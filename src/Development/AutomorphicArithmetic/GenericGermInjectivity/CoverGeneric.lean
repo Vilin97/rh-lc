@@ -41,6 +41,7 @@ theorem cover_biInf (hU : IsAffCover p U B) (s : Finset ι) (h : s.Nonempty) :
   exact hU.affine s h
 
 
+variable (p) in
 def gm (hinst : inst = ffAlg p) (hU : IsAffCover p U B) (a : ℕ) (s : Finset ι) :
     letI := algΓ p; (cechCube ℂ (Omega p a) ⊤ U).obj s →ₗ[ℂ] DR ℂ Z.functionField :=
   letI := algΓ p

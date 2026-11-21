@@ -82,6 +82,7 @@ theorem bijective_dualToCartier {n : ℕ} [NeZero n] (hL : Nonempty (galRootsOfU
       _ ≤ Nat.card (dualRep D M) := card_dualRep_le hD
 
 
+omit [IsTopologicalGroup G] [IsDiscreteRep D] [IsDiscreteRep M] in
 theorem tensorHom_dualToCartier_cartierPairing :
     (𝟙 (Rep.res ψ.toMonoidHom M) ⊗ₘ dualToCartier ψ D ρ M) ≫
         cartierPairing K L (Rep.res ψ.toMonoidHom M) =
@@ -120,6 +121,7 @@ variable [FiniteDimensional K L] [IsGalois K L] (h2 : Module.finrank K L ≤ 2)
   (hinv : ∀ z, inv z = realInv K L h2 hN ((cohomologyMap ρ 2).hom z))
 
 
+include hG hc hneg hconj hroots hinv in
 theorem exists_orderTwo_pairing_zero {n : ℕ} [NeZero n] (hD : Nonempty (D ≃+ ZMod n))
     (hρ : Function.Injective ρ.hom) (hM : ∀ m : M, n • m = 0)
     (χ : cohomology (Rep.res ψ.toMonoidHom (dualRep D M)) 2 →+ QZ) :
@@ -139,6 +141,7 @@ theorem exists_orderTwo_pairing_zero {n : ℕ} [NeZero n] (hD : Nonempty (D ≃+
   rw [AddEquiv.symm_apply_apply]
 
 
+include hG hc hneg hconj hroots hinv in
 theorem exists_orderTwo_pairing_two {n : ℕ} [NeZero n] (hD : Nonempty (D ≃+ ZMod n))
     (hρ : Function.Injective ρ.hom) (hM : ∀ m : M, n • m = 0)
     (χ : cohomology (Rep.res ψ.toMonoidHom (dualRep D M)) 0 →+ QZ)
@@ -223,6 +226,8 @@ variable (M : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S)) [IsDis
 variable [NeZero n] (hD : Nonempty (gsRoots S n ≃+ ZMod n)) (hM : ∀ m : M, n • m = 0)
 
 
+set_option maxHeartbeats 400000 in
+include hD hM in
 theorem surjective_gsRealPairing_zero (w : {v : InfinitePlace K.1 // v.IsReal}) :
     Function.Surjective
       (ptLocalPairing (gsRealFamily S ιr) (gsRoots S n) M (gsRealInvRootsQZ S ιr n) w
@@ -247,6 +252,8 @@ theorem surjective_gsRealPairing_zero (w : {v : InfinitePlace K.1 // v.IsReal}) 
   exact ⟨ξ, AddMonoidHom.ext fun η => (ptLocalPairing_apply _ _ _ _ _ _ _ _).trans (hξ η)⟩
 
 
+set_option maxHeartbeats 400000 in
+include hD hM in
 theorem exists_gsRealPairing_two (w : {v : InfinitePlace K.1 // v.IsReal})
     (χ : cohomology (Rep.res (gsRealFamily S ιr w).toMonoidHom (dualRep (gsRoots S n) M)) 0 →+ QZ)
     (hχ : ∀ x ∈ normClasses (Rep.res (gsRealFamily S ιr w).toMonoidHom (dualRep (gsRoots S n) M)),

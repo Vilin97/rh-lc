@@ -93,6 +93,7 @@ theorem abs_indicator_mul_le (S : Set (Fin n → ℂ)) (f : (Fin n → ℂ) → 
 end ChartIntCountAdd
 
 
+open ChartIntCountAdd in
 theorem ChartIntCountAdd.proof (hCM : ChartMassCompact.Statement) : ChartIntCountAdd.Statement := by
   intro n d W A f φ E hW hdim hA hf hfc hφ hEm hE
   have hfin : ∀ y, (fibre W A y).Finite := fun y =>

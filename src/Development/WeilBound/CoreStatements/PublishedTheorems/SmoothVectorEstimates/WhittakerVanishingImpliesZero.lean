@@ -24,6 +24,7 @@ variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 def rtFun (h : GA E a) (φ : XB E a) : XB E a := φ.compContinuous ⟨fun g => g * h, continuous_mul_const h⟩
 
 
+variable (E a) in
 def Rt : GA E a →* (XB E a →L[ℂ] XB E a) where
   toFun h := LinearMap.mkContinuous
     { toFun := rtFun h, map_add' := fun _ _ => rfl, map_smul' := fun _ _ => rfl } 1
@@ -72,6 +73,7 @@ variable [IsTotallyComplex E]
 def cInf : GA E a →* GL (Fin a) (Cinf E) := GeneralLinearGroup.map (pInf E)
 
 
+variable (E a) in
 def repI : GL (Fin a) (Cinf E) →* (XB E a →L[ℂ] XB E a) := (Rt E a).comp (infGL E a)
 
 def Om (n : ℕ) (m : Pl E → ℕ) (g : GA E a) : Prop := Mir n (cInf g) ∧ ∀ w, Mir (m w) (cLoc w g)
@@ -132,6 +134,7 @@ def G6 : Prop := ForE fun E _ _ _ a => ∀ ψ, StdPsi ψ → ∀ (S : Finset (Pl
   YOK ψ S Y → YOK ψ S Y' → ∀ n m, n + 1 < a → St ψ S Y Y' n m → St ψ S Y Y' (n + 1) m
 
 
+open Classical in
 def G7 : Prop := ForE fun E _ _ _ a => ∀ ψ, StdPsi ψ → ∀ (S : Finset (Pl E)) (Y Y' : Submodule ℂ (XB E a)),
   YOK ψ S Y → YOK ψ S Y' → ∀ n m, ∀ w ∈ S, m w + 1 < a → St ψ S Y Y' n m →
     St ψ S Y Y' n (Function.update m w (m w + 1))

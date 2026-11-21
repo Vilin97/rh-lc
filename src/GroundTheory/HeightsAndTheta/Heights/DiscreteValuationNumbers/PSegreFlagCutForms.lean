@@ -334,6 +334,7 @@ end Chart
 end SegreFlagCutForms
 
 
+open SegreFlagCutForms in
 theorem SegreFlagCutForms.proof : SegreFlagCutForms.Statement := by
   intro O _ _ _ ϖ hϖ Ω _ _ K _ _ ι _ y d hV N E _ _ B B' hB w w' x x' f g hfl M M' a₀ a₀' φ φ' hφ hφ'
     Φ _ _ _ _ e t ht k hk S hS

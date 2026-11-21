@@ -23,6 +23,7 @@ theorem nonempty_monomialOrder (σ : Type) [Finite σ] : Nonempty (MonomialOrder
   exact ⟨MonomialOrder.degLex⟩
 
 
+open MvPolynomial MonomialOrder in
 theorem mem_span_of_aeval_eq_zero {O O' : Type} [CommRing O] [CommRing O'] [IsDomain O'] [Algebra O O']
     (hinj : Function.Injective (algebraMap O O')) {n R : ℕ} (hn : 0 < n) {ζ : O'} (hζ : IsPrimitiveRoot ζ n)
     (h : MvPolynomial (Fin R ⊕ Fin R) O)
@@ -99,6 +100,7 @@ theorem mem_span_of_aeval_eq_zero {O O' : Type} [CommRing O] [CommRing O'] [IsDo
       · simp [b, Finset.mem_singleton.1 (hx (.inr i))]
 
 
+open Polynomial in
 theorem det_eq_mul_X_pow {k ι : Type} [Field k] (n r e : ℕ) (t : ℕ → Matrix (Fin n) (Fin n) k) (q : ι)
     (he : (e : k) ≠ 0) :
     ∃ (w : MvPolynomial ι k) (ν : ℕ), w.coeff 0 ≠ 0 ∧ ν ≤ r * n ∧
@@ -156,6 +158,7 @@ theorem det_eq_mul_X_pow {k ι : Type} [Field k] (n r e : ℕ) (t : ℕ → Matr
     ring
 
 
+open Module in
 private theorem index_span_matrix_eq_val_det (O : Type) [CommRing O] [IsDomain O]
     [IsDiscreteValuationRing O] (W : Type) [AddCommGroup W] [Module O W] (l n : ℕ)
     (bs : Fin n → W) (m : Matrix (Fin n) (Fin n) O) (hbs : LinearIndependent O bs)
@@ -317,6 +320,7 @@ theorem sIdx_le_of_coords {O O' : Type} [CommRing O] [IsDomain O] [IsDiscreteVal
   linarith
 
 
+open IsLocalRing in
 theorem isUnit_det_of_eigen {O : Type} [CommRing O] [IsLocalRing O] [IsAlgClosed (ResidueField O)] {W : Type}
     [AddCommGroup W] [Module O W] {n : ℕ} {bs : Fin n → W} (hbs : LinearIndependent O bs) {κ : Type}
     (good : ℕ → κ → Prop) (T : ℕ → κ → Module.End O W) (t : ℕ → κ → Matrix (Fin n) (Fin n) O)
@@ -467,6 +471,7 @@ theorem IsChi.unique {V ι A : Type} [Fintype ι] [CommGroup A] {n : ℕ} {P : �
   MonoidHom.ext fun x => (h x.toAdd).trans (h' x.toAdd).symm
 
 
+open MvPolynomial in
 theorem exists_coords {O W V ι : Type} [CommRing O] [AddCommGroup W] [Module O W] [Fintype ι] {N n : ℕ}
     (bs : Fin n → W) (P : ι → V) (Q : Finset V) (w : W ⊗[O] AddMonoidAlgebra O (↥Q → ZMod N))
     (hw : w ∈ LinearMap.range ((Submodule.span O (Set.range bs)).subtype.rTensor _)) :

@@ -47,6 +47,7 @@ theorem eig_line {n : ℕ} (G : Matrix (Fin n) (Fin n) ℂ) (hs : G.charpoly.Sep
   exact ⟨c, (congrArg Subtype.val hc).symm⟩
 
 
+open ComplexOrder in
 theorem iso_bot_C {n : ℕ} (G B Bi : Matrix (Fin n) (Fin n) ℂ) (hB : B * Bi = 1) (hinv : Gᴴ * B * G = B)
     (hs : G.charpoly.Separable) (hz : ∀ z, G.charpoly.IsRoot z → ‖z‖ = 1) (S : Submodule ℂ (Fin n → ℂ))
     (hst : ∀ x ∈ S, G *ᵥ x ∈ S) (hiso : ∀ x ∈ S, ∀ y ∈ S, star x ⬝ᵥ (B *ᵥ y) = 0) : S = ⊥ := by

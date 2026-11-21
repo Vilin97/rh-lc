@@ -81,6 +81,8 @@ structure Struct : Prop where
   βcomm : ∀ i x, Commute (F.β i).op (F.g x i).op ∧ Commute (F.β i).op (star (F.g x i).op)
 
 
+set_option synthInstance.maxHeartbeats 1000000 in
+set_option maxHeartbeats 2000000 in
 def toGenIn (hD : DiagAlg) (h : F.Struct) : GenIn π S T F₀.K F₀.W where
   ι := F₀.C.ι
   B := F.B

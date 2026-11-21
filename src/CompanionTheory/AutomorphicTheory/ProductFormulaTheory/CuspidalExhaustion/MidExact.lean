@@ -61,6 +61,7 @@ variable {nA nB m m' N : ℕ} {VA VB V₁ V₂ V₃ : Type} [AddCommGroup VA] [M
   [AddCommGroup V₁] [Module ℂ V₁] [AddCommGroup V₂] [Module ℂ V₂] [AddCommGroup V₃] [Module ℂ V₃]
 
 
+set_option maxHeartbeats 1000000 in
 theorem tripleProductMap_injective (h2 : m + nB = m') (h1 : nA + m' = N) (PA : Representation ℂ (GL (Fin nA) k) VA)
     (PB : Representation ℂ (GL (Fin nB) k) VB) {τ₁ : Representation ℂ (GL (Fin m) k) V₁}
     {τ₂ : Representation ℂ (GL (Fin m) k) V₂} {τ₃ : Representation ℂ (GL (Fin m) k) V₃}

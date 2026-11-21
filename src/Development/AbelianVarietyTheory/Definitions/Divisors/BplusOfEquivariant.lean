@@ -279,6 +279,7 @@ theorem embRel_iff {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : HermitianOrthogo
   ⟨H.2 g, fun e => e ▸ H.1⟩
 
 
+variable (G) in
 def embTop : GA D (G.V (.top 0)) → GA D (G.V (.grid D.R.m 0)) :=
   stabilizerEmbedding (G.rowDec 0 (by have := D.R.two_le_m; omega))
 

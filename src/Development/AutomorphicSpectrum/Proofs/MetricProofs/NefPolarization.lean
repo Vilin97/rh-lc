@@ -34,6 +34,7 @@ end GlobalTheory.CompanionTheory.Ar.PB.NefPolProof
 namespace GlobalTheory.CompanionTheory.Ar.PB
 
 
+open GlobalTheory.CompanionTheory.Ar.PB.NefPolProof in
 theorem nefPol : NefPol := by
   intro hIn D σ _ S Fl hFl K _ ι _ Ω _ _ y Re hJ hBir I hI n hn
   have hK : Nonempty K := Re.arith.1

@@ -216,6 +216,7 @@ theorem pushR_one : pushR G (1 : sp (R₀ := R') P ⟶ (Over.pullback (fB R R'))
   exact mul_eq_left.mp h1
 
 
+variable (R R') in
 def dualMapA : DualNumber R →ₐ[R] DualNumber R' :=
   { dualMapR (algebraMap R R') with
     commutes' := fun r => by ext <;> simp [dualMapR, TrivSqZeroExt.algebraMap_eq_inl'] }

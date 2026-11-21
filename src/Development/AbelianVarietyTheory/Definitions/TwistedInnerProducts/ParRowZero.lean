@@ -58,6 +58,7 @@ variable {D : D7} {V A : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) {
   (π : ∀ τ, Matrix (Fin A.rank) (Fin A.rank) ℂ → Module.End ℂ (Wt τ))
 
 
+open Classical in
 def SepBes (β : (∀ τ, Wt τ) → M.Vec → ℂ) : Prop :=
   ∀ τ x v, ∃ b ∈ GlobalTheory.RealBessel.besselForms (gramAt D V τ) (gramAt D A τ) (F τ) (e τ) (χ τ) (M.rep τ) (π τ) (M.sm τ),
     ∀ y u, β (Function.update x τ y) (Function.update v τ u) = b y u

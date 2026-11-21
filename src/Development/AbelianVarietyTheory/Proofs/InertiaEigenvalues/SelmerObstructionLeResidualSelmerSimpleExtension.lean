@@ -151,14 +151,17 @@ variable {I : Type} {D : I → Type} [∀ i, Group (D i)] [∀ i, TopologicalSpa
   (φ : ∀ i, D i →* Γ) (hφ : ∀ i, Continuous (φ i))
 
 
+variable (ρ') in
 def res1 : H1 ρ' →ₗ[R] ∀ i, H1 (ρ'.comp (φ i)) := LinearMap.pi fun i => resH1 ρ' (φ i) (hφ i)
 
 
+variable (ρ') in
 abbrev Cok (L' : LocCond ρ' φ) : Type :=
   ((∀ i, H1 (ρ'.comp (φ i))) ⧸ Submodule.pi Set.univ L') ⧸
     LinearMap.range ((Submodule.pi Set.univ L').mkQ ∘ₗ res1 ρ' φ hφ)
 
 
+include hinj hex hsurj hc in
 theorem exists_obstruction [ContinuousMul Γ] (L' : LocCond ρ' φ) (L : LocCond ρ φ) (L'' : LocCond ρ'' φ)
     (hL : ∀ i, ∀ x ∈ L' i, mapH1 (ρ'.comp (φ i)) (ρ.comp (φ i)) u continuous_of_discreteTopology
       (fun g m => hu (φ i g) m) x ∈ L i)
@@ -250,6 +253,7 @@ variable {F Ω : Type} [Field F] [NumberField F] [IsTotallyComplex F] [Field Ω]
   (S : Finset (HeightOneSpectrum (𝓞 F))) (A : Formalism.GaloisCohomology.Places F Ω)
 
 
+variable (F) in
 abbrev Ab : Type := {v : HeightOneSpectrum (𝓞 F) // ((l : ℕ) : 𝓞 F) ∈ v.asIdeal}
 
 abbrev locAb (v : Ab F l) : Dec (F := F) (A.1 v.1) →* GS Ω (S : Set (HeightOneSpectrum (𝓞 F))) := locHom _ (A.1 v.1)
@@ -299,6 +303,7 @@ theorem ine_le_NS {S : Set (HeightOneSpectrum (𝓞 F))} {v : HeightOneSpectrum 
   exact ⟨v, hv, A, hA, hσ⟩
 
 
+omit [IsAlgClosure F Ω] in
 theorem exists_descent (S : Set (HeightOneSpectrum (𝓞 F))) (ρ : Representation Λ (G F Ω) M) (hc : ContAction ρ)
     (h : ∀ v ∉ S, ∀ A : ValuationSubring Ω, IsPlaceOver A v → ∀ σ ∈ Ine (F := F) A, ∀ m, ρ σ m = m) :
     ∃ ρS : Representation Λ (GS Ω S) M, ContAction ρS ∧ ρS.comp (toGS Ω S) = ρ := by

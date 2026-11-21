@@ -75,6 +75,7 @@ theorem isPullback_of_bij {P A B D : CommRingCat.{0}} (f₁ : P ⟶ A) (f₂ : P
     rw [this]; rfl
 
 
+open IsLocalRing in
 theorem ring_lemma : ∀ (C : Type) [CommRing C] [IsLocalRing C] [IsArtinianRing C] (e : C), e ∈ IsLocalRing.maximalIdeal C → (∀ a ∈ IsLocalRing.maximalIdeal C, a * e = 0) → e ≠ 0 → ∃ (P : CommRingCat.{0}) (i : CommRingCat.of C ⟶ P) (p σ : P ⟶ CommRingCat.of C) (q : P ⟶ CommRingCat.of (DualNumber (IsLocalRing.ResidueField C))), i ≫ p = 𝟙 _ ∧ i ≫ σ = 𝟙 _ ∧ IsPullback p σ (CommRingCat.ofHom (Ideal.Quotient.mk (Ideal.span {e}))) (CommRingCat.ofHom (Ideal.Quotient.mk (Ideal.span {e}))) ∧ IsPullback p q (CommRingCat.ofHom (IsLocalRing.residue C)) (CommRingCat.ofHom (TrivSqZeroExt.fstHom (IsLocalRing.ResidueField C) (IsLocalRing.ResidueField C) (IsLocalRing.ResidueField C)).toRingHom) ∧ IsLocalRing P ∧ IsArtinianRing P ∧ Function.Surjective p ∧ Function.Surjective q := by
   intro C _ _ _ e he hm hne
   have hee : e * e = 0 := hm e he

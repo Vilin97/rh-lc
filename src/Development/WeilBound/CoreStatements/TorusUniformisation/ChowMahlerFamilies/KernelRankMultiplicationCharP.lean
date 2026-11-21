@@ -47,6 +47,7 @@ variable {k : Type} [Field k] {r : ℕ} {B : Type} [CommRing B] [Algebra k B]
 abbrev Sq (k : Type) [Field k] (r : ℕ) : Type := TrivSqZeroExt k (Fin r → k)
 
 
+variable (k r B) in
 noncomputable def c0 : B ⊗[k] Sq k r →ₐ[k] B :=
   (Algebra.TensorProduct.rid k k B).toAlgHom.comp (Algebra.TensorProduct.map (AlgHom.id k B) (fstHom k k _))
 
@@ -389,12 +390,14 @@ theorem span_sq {I : Type} (c : I → R) (hc : ∀ i j, c i * c j = 0) : Ideal.s
   exact hc i j
 
 
+variable (k) in
 def th1 {d : ℕ} (m : ℕ) (a : Fin d → R) (ha : ∀ i j, a i * a j = 0) : Jet k (Fin 1 × Fin d) (m + 1) →ₐ[k] R :=
   liftJet (aeval fun q => a q.2) (by
     simp only [aeval_X]
     exact le_bot_iff.1 ((Ideal.pow_le_pow_right (by omega)).trans (span_sq _ fun i j => ha _ _).le))
 
 
+variable (k) in
 def th2 {d : ℕ} (a b : Fin d → R) (ha : ∀ i j, a i * a j = 0) (hb : ∀ i j, b i * b j = 0) :
     Jet k (Fin 2 × Fin d) 3 →ₐ[k] R :=
   liftJet (aeval fun q => ![a, b] q.1 q.2) (by

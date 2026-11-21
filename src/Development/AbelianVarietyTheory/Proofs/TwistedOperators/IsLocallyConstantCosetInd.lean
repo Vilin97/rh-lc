@@ -17,6 +17,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [T2Spa
 local instance (p : Prop) : Decidable p := Classical.propDecidable p
 
 
+open Classical in
 def cosetInd (K : Subgroup G) (ho : IsOpen (K : Set G)) (hK : IsCompact (K : Set G)) (g : G) :
     SB G := by
   classical

@@ -101,6 +101,7 @@ end GlobalTheory.EtC.SecProd
 namespace GlobalTheory.EtC
 
 
+open SecProd in
 theorem sec_prod : ∀ (R : Type) [CommRing R] (A B : Type) [CommRing A] [CommRing B] (F : Shv R),
     Function.Bijective fun s : Sec F (Spec (CommRingCat.of (A × B))) =>
       (Sec.res (Spec.map (CommRingCat.ofHom (RingHom.fst A B))) s,

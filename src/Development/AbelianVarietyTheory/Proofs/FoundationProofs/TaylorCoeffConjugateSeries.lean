@@ -131,6 +131,7 @@ theorem coeff_taylor_of_hasSum (n : ℕ) :
     exact mul_right_cancel₀ h4 h1
 
 
+omit [DecidableEq σ] in
 theorem eventually_summable_of_ne_zero {c : (σ →₀ ℕ) → ℂ}
     (hf : Continuous fun z : σ → ℂ => ∑' α : σ →₀ ℕ, c α * ∏ j, z j ^ α j)
     (h0 : (fun z : σ → ℂ => ∑' α : σ →₀ ℕ, c α * ∏ j, z j ^ α j) ≠ 0) :

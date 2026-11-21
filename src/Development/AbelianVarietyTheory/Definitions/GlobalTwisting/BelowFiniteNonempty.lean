@@ -148,6 +148,7 @@ theorem below_finite_nonempty (hX : X.Ok) (hPr : Pr.Ok) {P : Pr.vT u} (hP : Move
 end Position
 
 
+variable {sel u} in
 theorem T_notMem_rowSG (hPr : Pr.Ok) (hsel : IsSel X sel) (hT : Pr.T u ∈ S) :
     ∀ w ∈ rowSG Pr sel mu, (Pr.T u : 𝓞 X.E) ∉ w.asIdeal := by
   classical

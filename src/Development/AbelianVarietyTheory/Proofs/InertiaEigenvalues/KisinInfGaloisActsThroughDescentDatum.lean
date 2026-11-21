@@ -23,6 +23,7 @@ variable {l : ℕ} [hl : Fact l.Prime] {a e : ℕ} [NeZero a] [NeZero e]
   [TameDescentExponentData K l e a] (t : Wq l a →ₐ[ℤ_[l]] O) (ϖ : PiSys l e)
 
 
+variable (O) in
 def actS (γ : TameGal K l e a) : (ZMod a → S O K e) →+* (ZMod a → S O K e) where
   toFun f τ := ⟨ringAct γ (fun σ => (f σ : K⟦X⟧)) τ, rot_S.ringAct_mem γ (fun σ => (f σ).2) τ⟩
   map_one' := funext fun τ => Subtype.ext (by
@@ -94,6 +95,7 @@ variable {l : ℕ} [hl : Fact l.Prime] {a e : ℕ} [NeZero a] [NeZero e]
   [TameDescentExponentData K l e a] (t : Wq l a →ₐ[ℤ_[l]] O) (ϖ : PiSys l e)
 
 
+omit [TameDescentExponentData K l e a] in
 theorem pow_mul_iB (N : ℕ) (F : ZMod a → invL l (S O K e)) (G : ZMod a → S O K e)
     (hG : ∀ τ, (G τ : K⟦X⟧) = (l : K⟦X⟧) ^ N * F τ) :
     (l : OB l O) ^ N * ϖ.iB t K F = toOB l O (ϖ.iC t K G) := by
@@ -156,6 +158,8 @@ theorem TWact_TWincl {R R' : Type} [CommRing R] [CommRing R'] [Algebra O R] [Alg
 end Tensor
 
 
+omit [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsUltrametricDist K] [IsUnitBall O K]
+  [TameDescentExponentData K l e a] [NeZero a] [NeZero e] [NormedAlgebra ℚ_[l] K] in
 theorem galOB_toB (s : GQ l) (x : OA l O) : galOB O s (toB l O x) = toB l O (galOA O s x) := by
   rw [toB, AlgHom.comp_apply, AlgHom.comp_apply, galOB_toOB, galOCr_toOCr]
 

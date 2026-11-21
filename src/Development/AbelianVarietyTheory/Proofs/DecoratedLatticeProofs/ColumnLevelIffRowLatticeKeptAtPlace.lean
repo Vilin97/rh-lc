@@ -27,6 +27,7 @@ noncomputable section
 namespace GlobalTheory.Core.Mi.LevRow
 
 
+open GlobalTheory.FinPl.OrbitCoset in
 theorem embA_mem_grpAt {D : D7} {S S₀ A B : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (o : OrthDec S₀ A B) (P : GlobalTheory.FinPl.Pl D → Prop)
     {a : GA D A} (ha : a ∈ grpAt A P) : embA d o a ∈ grpAt S P :=
   wittCoreEmbedding_mem_supportedSubgroup d P (emb_mem_grpAt' o ha)

@@ -174,6 +174,7 @@ theorem deltaHalf_mulSingle (a : α) (g : GL (m a) k) :
   · simp
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem det_leviEmb_mulSingle (e : (Σ a, m a) ≃ n) (a : α) (g : GL (m a) k) :
     GeneralLinearGroup.det (leviEmb k e (Pi.mulSingle a g)) = GeneralLinearGroup.det g := by
   rw [det_leviEmb, Finset.prod_eq_single a, Pi.mulSingle_eq_same]
@@ -182,6 +183,7 @@ theorem det_leviEmb_mulSingle (e : (Σ a, m a) ≃ n) (a : α) (g : GL (m a) k) 
   · simp
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem val_blockScalar (e : (Σ a, m a) ≃ n) (a : α) (z : kˣ) :
     (blockScalar e a z : Matrix n n k) = diagonal fun i => if blk e i = a then (z : k) else 1 := by
   ext i j
@@ -199,6 +201,7 @@ theorem val_blockScalar (e : (Σ a, m a) ≃ n) (a : α) (z : kˣ) :
     exact h (congrArg Sigma.fst (e.injective h'))
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem mem_range_leviEmb {e : (Σ a, m a) ≃ n} {g : GL n k} :
     g ∈ Set.range (leviEmb k e) ↔ ∀ i j, blk e i ≠ blk e j → (g : Matrix n n k) i j = 0 := by
   constructor

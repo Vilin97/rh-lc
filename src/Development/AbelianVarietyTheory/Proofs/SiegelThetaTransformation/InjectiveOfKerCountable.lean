@@ -37,6 +37,7 @@ theorem injective_of_ker_countable {V W : Type} [AddCommGroup V] [Module ℂ V] 
   exact not_countable_complex this
 
 
+open MonObj in
 theorem exists_isometry [Algebra c.F ℂ] {r g g' : ℕ} {X : Data E r} {bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ}
     {idx : Fin g ≃ X.Ψ × Fin r} {e : Fin g ≃ Lt1 Dw} {x : Frame X.Ψ r} {L : Lt E r} {y : FrPt Xo c ℂ}
     (A : AnFib X bas idx e x L y) (hs : IsSympl X bas) (hx : x ∈ X.dom) (hg : g = g') {σ' : KA l →+* ℂ}

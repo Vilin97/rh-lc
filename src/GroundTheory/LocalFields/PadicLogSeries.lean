@@ -16,6 +16,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 section Summation
 
 
+variable (K) in
 theorem exists_normalizedValuation_eq (n : ℤ) :
     ∃ y : K, normalizedValuation K y = WithZero.exp n := by
   obtain ⟨y, hy⟩ := ValuativeRel.valuation_surjective
@@ -23,6 +24,7 @@ theorem exists_normalizedValuation_eq (n : ℤ) :
   exact ⟨y, by rw [normalizedValuation_apply, hy]; simp⟩
 
 
+variable (K) in
 def valBall (n : ℤ) : AddSubgroup K where
   carrier := {x | normalizedValuation K x ≤ WithZero.exp (-n)}
   zero_mem' := by simp
@@ -144,6 +146,7 @@ end Arithmetic
 section CharZero
 
 
+variable (K) in
 noncomputable def absRamificationIndex : ℕ := (ord ((ringChar 𝓀[K] : ℕ) : K)).toNat
 
 variable (p : ℕ) [hp : Fact p.Prime] [CharP 𝓀[K] p] [CharZero K]

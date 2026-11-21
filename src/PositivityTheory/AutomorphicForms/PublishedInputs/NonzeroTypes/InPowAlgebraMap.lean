@@ -21,6 +21,7 @@ abbrev red (n r : ℕ) : GL (Fin n) 𝒪[k] →* GL (Fin n) (𝒪[k] ⧸ IsLocal
   Matrix.GeneralLinearGroup.map (Ideal.Quotient.mk (IsLocalRing.maximalIdeal 𝒪[k] ^ r))
 
 
+variable (k) in
 def H (n r : ℕ) : Subgroup (GL (Fin n) k) := (red (k := k) n r).ker.map (incl n)
 
 theorem inPow_algebraMap (r : ℕ) (y : 𝒪[k]) :

@@ -134,6 +134,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : D
 variable (Xo : Moduli Dw l) (c : Coeff l)
 
 
+set_option maxHeartbeats 400000 in
 theorem thetaFrame_trait :
   ∀ (T : CDVR) (io : c.F →+* T.Fr) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β),
     ∀ (yt : Sp T.V ⟶ Y.X) (z : Sp T.Fr ⟶ Xo.XF c),

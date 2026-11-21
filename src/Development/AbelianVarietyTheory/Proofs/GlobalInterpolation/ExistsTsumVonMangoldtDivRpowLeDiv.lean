@@ -11,6 +11,9 @@ open scoped Classical
 namespace GlobalTheory.Lin
 
 
+open ArithmeticFunction.vonMangoldt (residueClass LFunctionResidueClassAux LFunctionResidueClassAux_real
+  eqOn_LFunctionResidueClassAux residueClass_apply_zero continuousOn_LFunctionResidueClassAux
+  abscissaOfAbsConv_residueClass_le_one) in
 theorem exists_tsum_vonMangoldt_div_rpow_le_div :
     ∃ C : ℝ, 1 ≤ C ∧ ∀ s : ℝ, 0 < s → s ≤ 1 →
       Summable (fun n : ℕ => Λ n / (n : ℝ) ^ (1 + s)) ∧

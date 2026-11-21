@@ -53,6 +53,7 @@ end GlobalTheory.LocGen
 namespace GlobalTheory
 
 
+open GlobalTheory.LocGen in
 theorem fracIdeal_locGen : ∀ (D : D7) (I : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E), I ≠ 0 →
     ∀ v : HeightOneSpectrum (𝓞 D.host.F), ∃ a : D.host.E, a ≠ 0 ∧ ∃ c : 𝓞 D.host.F, c ∉ v.asIdeal ∧
       ((c : D.host.F) : D.host.E) * a ∈ I ∧

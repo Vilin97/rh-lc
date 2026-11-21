@@ -151,6 +151,7 @@ private theorem lieLat_loc : ∀ (K : Type) [Field K] [NumberField K] (F : SemiF
         rw [Pi.smul_apply, smul_eq_mul, map_mul, ← IsScalarTower.algebraMap_apply, mul_smul, algebraMap_smul K t]
 
 
+open Formalism.L2.Pj GlobalTheory.ShFam.Pad in
 private theorem comb_push {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
     {X : Scheme.{0}} (t : SAB H X) {S : Type} [CommRing S] (x : Sp S ⟶ X) (G' : Over (Sp S)) [GrpObj G']
     (φ : G'.left ⟶ t.G.left) (hp : IsGrpPullback G' t.G x φ) {n : ℕ} {c : Fin n → S} {v : Fin n → (epsR S ⟶ G')}
@@ -162,6 +163,7 @@ private theorem comb_push {E : Type} [Field E] [NumberField E] [IsCMField E] {H 
   exact ⟨fun i => pushPt hp.1.w (u i), fun i => (congrArg (· ≫ φ) (hu i)).trans (Category.assoc _ _ _), (pr u).symm⟩
 
 
+open Formalism.MainNotions.DIV.Cons (intO) in
 private theorem norm_int_le {K C : Type} [Field K] [NumberField K] [NontriviallyNormedField C] [IsUltrametricDist C]
     (j : K →+* C) (a : 𝓞 K) : ‖j (algebraMap (𝓞 K) K a)‖ ≤ 1 := by
   have := GlobalTheory.ShFam.Pad.Guard.intO_valRing C
@@ -196,6 +198,7 @@ private theorem exists_norm_one {K C : Type} [Field K] [NumberField K] [Nontrivi
   simpa using key 1 h1
 
 
+open Formalism.MainNotions.DIV.Cons (intO) in
 private theorem local_basis {K C : Type} [Field K] [NumberField K] [NontriviallyNormedField C] [IsUltrametricDist C]
     (F : SemiFib K) (j : K →+* C) :
     ∃ (R : Type) (_ : CommRing R) (f : 𝓞 K →+* R) (g : R →+* K) (ρ : R →+* ↥(intO C)) (G : Over (Sp R)) (_ : GrpObj G)
@@ -236,6 +239,8 @@ private theorem local_basis {K C : Type} [Field K] [NumberField K] [Nontrivially
     rwa [algebraMap_smul]
 
 
+open Formalism.L2.Pj GlobalTheory.ShFam.Pad in
+open Formalism.MainNotions.DIV.Cons (intO) in
 private theorem mem_latDR_iff_span {E : Type} [Field E] [NumberField E] [IsCMField E]
     {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {X : Scheme.{0}} (t : SAB H X) (hX : X.IsSeparated)
     {K C : Type} [Field K] [NumberField K] [NontriviallyNormedField C] [IsUltrametricDist C]

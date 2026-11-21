@@ -90,6 +90,8 @@ theorem swapOm_apply {S T S' T' : HSp D} (L : WO S' T' ≃ₗ[AE D] WO S T) (φ 
 end GlobalTheory.SwapWeil
 
 
+set_option maxHeartbeats 1600000 in
+open GlobalTheory.SwapWeil in
 theorem GlobalTheory.SwapWeil.isWeilDatumO_swap : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T S' T' : HSp D), S'.rank = T.rank → T'.rank = S.rank →
     ∀ (L : WO S' T' ≃ₗ[AE D] WO S T) (φ : GA D S' →* GA D T) (φ' : GA D T' →* GA D S),
     Continuous L → Continuous L.symm → (∀ x, L x ∈ ratL T S ↔ x ∈ ratL T' S') →

@@ -32,6 +32,7 @@ lemma cA_cA (σ : E →ₐ[F] E) (hσ : ∀ z, σ (σ z) = z) (a : AE F E) : cA 
 end GlobalTheory.PlaneLeviBlock
 
 
+open GlobalTheory.PlaneLeviExt GlobalTheory.PlaneLeviBlock in
 theorem GlobalTheory.PlaneLeviBlock.levi_block : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (d d₁ : ℕ) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ r s r₁ s₁ : ℕ),
     B.IsGood σ → W.IsSkew σ B r s → W₁.IsSkew σ B r₁ s₁ → H'.IsAdapted σ B W W₁ i₀ i₁ →

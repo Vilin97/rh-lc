@@ -29,6 +29,7 @@ theorem twoBlock_mul_transpose {n : ℕ} {c d x y : ℤ} (h : x * c + y * d = 1)
 end PSymplTwoRow
 
 
+open PSymplTwoRow in
 theorem SymplTwoRow.proof : SymplTwoRow.Statement := by
   intro n c d x y h
   refine ⟨fromBlocks (twoBlock n c d x y) 0 0 (twoBlock n x y c d), ?_, ?_⟩

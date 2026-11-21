@@ -210,6 +210,7 @@ variable {R R₀ : Type} [CommRing R] [IsDomain R] [CommRing R₀] [IsDomain R�
   {A A' : PolAV (Sp (FractionRing R))} {G G' : Over (Sp R)} [GrpObj G] [IsCommMonObj G] [GrpObj G'] [IsCommMonObj G']
 
 
+set_option maxHeartbeats 1600000 in
 theorem theta_move (U : UnifPre I D A G) (U' : UnifPre I D' A' G') {D₀ : DegPre R₀} {f : Sp R ⟶ Sp R₀}
     {φ : D.toPre.P.A.left ⟶ D₀.P.A.left} {φ' : D'.toPre.P.A.left ⟶ D₀.P.A.left}
     (gp : IsGrpPullback D.toPre.P.A D₀.P.A f φ) (gp' : IsGrpPullback D'.toPre.P.A D₀.P.A f φ')

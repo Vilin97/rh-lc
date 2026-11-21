@@ -172,6 +172,7 @@ theorem finrank_le_of_step {K V W : Type*} [Field K] [AddCommGroup V] [Module K 
 end SectionCount.Drop.Filt
 
 
+open SectionCount.Drop.Filt in
 theorem SectionCount.Drop.Filt.proof (hK : SectionCount.Drop.Filt.Kernel.Statement.{u, w})
     (hS : SectionCount.Drop.Filt.Step.Statement.{u, w})
     (hF : SectionCount.Drop.Filt.Finite.Statement.{u, w}) :

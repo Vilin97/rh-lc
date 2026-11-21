@@ -182,6 +182,7 @@ variable {W T} (Bs : FramepfBas W T) (π' : LetA O n) (i : ZMod n)
       ∀ j, a j = PowerSeries.subst (π' j) (f j))
 
 
+include hπ0 hR2 in
 theorem framepf_coord {x : W.DD T} (hx : x ∈ NcS W T i) :
     ∃ g : Fin Bs.r → PowerSeries O, x = ∑ k, framepf_ι π' i (g k) • Bs.b k := by
   have memNcS : ∀ z : W.DD T, z ∈ NcS W T i ↔
@@ -202,6 +203,7 @@ theorem framepf_coord {x : W.DD T} (hx : x ∈ NcS W T i) :
   · simp [framepf_ι, letE, Pi.single_apply, hj]
 
 
+include hπ0 hΔπ hR2 in
 theorem framepf_subst_inj (γ0 : ∀ δ ∈ W.DelF, PowerSeries.constantCoeff (W.γ₀ δ PowerSeries.X) = 0)
     {g g' : PowerSeries O} (h : PowerSeries.subst (π' i) g = PowerSeries.subst (π' i) g') : g = g' := by
   have ha : PowerSeries.HasSubst (π' i) := PowerSeries.HasSubst.of_constantCoeff_zero' (hπ0 i)
@@ -262,6 +264,7 @@ theorem framepf_letE_ι (g : PowerSeries O) : letE i * framepf_ι π' i g = fram
   · simp [letE, framepf_ι, Pi.single_apply, hj]
 
 
+include hπ0 hΔπ hR2 in
 theorem framepf_coord_uniq (γ0 : ∀ δ ∈ W.DelF, PowerSeries.constantCoeff (W.γ₀ δ PowerSeries.X) = 0)
     {g g' : Fin Bs.r → PowerSeries O}
     (h : ∑ k, framepf_ι π' i (g k) • Bs.b k = ∑ k, framepf_ι π' i (g' k) • Bs.b k) : g = g' := by
@@ -286,6 +289,7 @@ theorem framepf_vec_add (H H' : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O)) (k
   simp only [framepf_vec, Matrix.add_apply, framepf_ι_add π' i (hπ0 i), add_smul, Finset.sum_add_distrib]
 
 
+include hπ0 in
 theorem framepf_γ_vec (Gs : PowerSeries O) (hGs0 : PowerSeries.constantCoeff Gs = 0)
     (hGs : W.γ₀ W.gam (π' i) = PowerSeries.subst (π' i) Gs)
     (Γ : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O))
@@ -361,6 +365,7 @@ theorem framepf_letE_mem (m : Fin Bs.r) : (letE i : LetA O n) • Bs.b m ∈ NcS
   · rw [smul_smul, hEE]
 
 
+include hπ0 hΔπ hR2 in
 theorem framepf_Γ (hu : IsUnit (algebraMap (LetA O n) W.EE π'))
     (hγN : ∀ y ∈ W.NΔ T, ∃ d ∈ W.N T, W.γD T W.gam y - y = π' • d) :
     ∃ Γ : Matrix (Fin Bs.r) (Fin Bs.r) (PowerSeries O),

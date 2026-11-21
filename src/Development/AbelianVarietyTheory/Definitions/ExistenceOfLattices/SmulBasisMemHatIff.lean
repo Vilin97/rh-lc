@@ -15,6 +15,9 @@ open scoped TensorProduct
 variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E]
 
 
+open NumberField IsDedekindDomain in
+open scoped TensorProduct in
+variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] in
 theorem _root_.GlobalTheory.AdLat.Model.integral_iff (x : F) :
     (∀ v, algebraMap F (FiniteAdeleRing (𝓞 F) F) x v ∈ v.adicCompletionIntegers F) ↔
       x ∈ (algebraMap (𝓞 F) F).range := by
@@ -39,6 +42,9 @@ theorem _root_.GlobalTheory.AdLat.Model.sg_tmul (c : E ≃ₐ[F] E) (a : FiniteA
   simp [_root_.GlobalTheory.AdLat.sg]
 
 
+open NumberField IsDedekindDomain in
+open scoped TensorProduct in
+variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] in
 theorem _root_.GlobalTheory.AdLat.Model.hermA_smul_left (c : E ≃ₐ[F] E) {n : ℕ} (G : Matrix (Fin n) (Fin n) E)
     (t : _root_.GlobalTheory.AdLat.RA F E) (x y : Fin n → _root_.GlobalTheory.AdLat.RA F E) :
     _root_.GlobalTheory.AdLat.hermA c G (t • x) y = t * _root_.GlobalTheory.AdLat.hermA c G x y := by
@@ -47,6 +53,9 @@ theorem _root_.GlobalTheory.AdLat.Model.hermA_smul_left (c : E ≃ₐ[F] E) {n :
   ring
 
 
+open NumberField IsDedekindDomain in
+open scoped TensorProduct in
+variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] in
 theorem _root_.GlobalTheory.AdLat.Model.hermA_smul_right (c : E ≃ₐ[F] E) {n : ℕ} (G : Matrix (Fin n) (Fin n) E)
     (t : _root_.GlobalTheory.AdLat.RA F E) (x y : Fin n → _root_.GlobalTheory.AdLat.RA F E) :
     _root_.GlobalTheory.AdLat.hermA c G x (t • y) =
@@ -56,6 +65,9 @@ theorem _root_.GlobalTheory.AdLat.Model.hermA_smul_right (c : E ≃ₐ[F] E) {n 
   ring
 
 
+open NumberField IsDedekindDomain in
+open scoped TensorProduct in
+variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] in
 theorem _root_.GlobalTheory.AdLat.Model.hermA_symm (c : E ≃ₐ[F] E) (hc : ∀ x, c (c x) = x) {n : ℕ}
     (G : Matrix (Fin n) (Fin n) E)
     (hG : ∀ a b, c (G a b) = G b a) (x y : Fin n → _root_.GlobalTheory.AdLat.RA F E) :

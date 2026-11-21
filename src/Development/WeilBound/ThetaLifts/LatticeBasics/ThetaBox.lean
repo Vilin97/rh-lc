@@ -25,6 +25,7 @@ theorem sl_int (h : Φ ∈ schA F (κ ⊕ κ)) (a) : Integrable (sl a Φ) (adele
   integrable_of_mem_schwartzBruhatPi ((sl_mem h).1 a)
 
 
+variable (F κ) in
 def lD : ((κ ⊕ κ → AF F) → ℂ) →ₗ[ℂ] ℂ := (LinearMap.exists_extend
   ({ toFun Φ := adelicFourierPi F (sl 0 Φ.1) 0
      map_add' Φ Ψ := congrFun (adelicFourierPi_add (sl_int Φ.2 0) (sl_int Ψ.2 0)) 0

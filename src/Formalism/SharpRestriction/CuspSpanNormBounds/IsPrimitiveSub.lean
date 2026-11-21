@@ -57,6 +57,7 @@ def idx (A B : Submodule (𝓞 E) S.V) : ℕ := Nat.card (A ⧸ B.comap A.subtyp
 def nrm (τ : E →+* ℂ) (x : S.V) : ℝ := (τ (S.hT x x)).re
 
 
+omit [NumberField E] in
 def placeProd (X : (E →+* ℂ) → ℝ) : ℝ := Real.sqrt (∏ τ : E →+* ℂ, X τ)
 
 def NE (g : ℕ) : ℝ := (g : ℝ) ^ (Module.finrank ℚ E)
@@ -277,6 +278,7 @@ def NLam {T : E} (F : LFlag S r T) : Set (S.V ≃ₗ[E] S.V) :=
     (∀ x ∈ orth S (Xsp F), n x - x ∈ Xsp F)}
 
 
+omit [NumberField E] [StarRing E] in
 def ZEquiv {n : ℕ} (Z Z₂ : Matrix (Fin n) (Fin n) E) : Prop :=
   ∃ A B : Matrix (Fin n) (Fin n) (𝓞 E),
     (∀ a b, a < b → A a b = 0) ∧ (∀ a, A a a = 1) ∧ (∀ a b, b < a → B a b = 0) ∧ (∀ a, B a a = 1) ∧

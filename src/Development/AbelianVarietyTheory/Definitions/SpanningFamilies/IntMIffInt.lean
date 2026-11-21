@@ -23,6 +23,7 @@ def Quad {M : Type} [AddCommGroup M] (S : AddSubgroup M) (f : M → ℂ) : Prop 
 variable {κ ι : Type} [Fintype κ] [Fintype ι]
 
 
+open Classical in
 def Shape (φ : Matrix κ ι ℚ → ℂ) : Prop :=
   by classical
      exact IsSB φ ∧ ∃ (c : ℂ) (a : Matrix κ ι ℚ) (S : AddSubgroup (Matrix κ ι ℚ)) (f : Matrix κ ι ℚ → ℂ),

@@ -68,6 +68,7 @@ theorem norm_entry_le_norm_archMatrix (M : ArchMatrix K n) (i j : Fin n) :
   exact NNReal.coe_le_coe.2 (h1.trans h2)
 
 
+variable (K n) in
 def archMat : Matrix (Fin n) (Fin n) 𝔸[K] →+* ArchMatrix K n :=
   (archMatrixEquiv K n).toRingHom.comp
     ((RingHom.fst (InfiniteAdeleRing K) (FiniteAdeleRing (𝓞 K) K)).mapMatrix)

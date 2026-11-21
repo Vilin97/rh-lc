@@ -88,6 +88,7 @@ theorem ptB_fst (z : Fin d.A.gB → ℂ) : ptB d z ≫ fst _ _ = base := lift_fs
 theorem ptB_prB (z : Fin d.A.gB → ℂ) : ptB d z ≫ DegPre.prB D ℂ = d.u.ex z := lift_snd _ _
 
 
+omit [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] in
 theorem comp_toUnit_comp {T B : Over (Sp ℂ)} (x : 𝟙_ (Over (Sp ℂ)) ⟶ T) (y : 𝟙_ (Over (Sp ℂ)) ⟶ B) :
     x ≫ toUnit T ≫ y = y := by
   rw [← Category.assoc, Subsingleton.elim (x ≫ toUnit T) (𝟙 _), Category.id_comp]
@@ -234,6 +235,7 @@ theorem famFn_smul {k : ℕ} (ζ : ℂ) (s : Fam D ℂ k) (α : d.A.X) : famFn d
   exact mul_right_cancel₀ (by simp [frAt_ne_zero]) e₃
 
 
+include d in
 theorem tauBimult : D.TauBimult := by
   intro a a' b
   obtain ⟨b, rfl⟩ := d.eX.surjective b

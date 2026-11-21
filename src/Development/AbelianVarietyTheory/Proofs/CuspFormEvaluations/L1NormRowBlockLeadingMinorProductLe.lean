@@ -76,6 +76,7 @@ noncomputable def embVec (τ : E →+* ℂ) : (κ → E) →+ EuclideanSpace ℂ
 
 
 
+omit [Fintype κ] in
 theorem embVec_smul (τ : E →+* ℂ) (x : E) (v : κ → E) : embVec τ (x • v) = τ x • embVec τ v := by
   ext k; simp
 

@@ -25,6 +25,7 @@ namespace GlobalTheory.DblVacLineTransp
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+omit [NumberField F] [NumberField E] in
 theorem symp_transpose {R : Type} [CommRing R] {K : Type} [CommRing K] [Algebra R K] (c : K →ₐ[R] K)
     {α β : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β] (ξ : K) (JA : Matrix α α K) (JB : Matrix β β K)
     (x y : Matrix α β K) : symp (R := R) c ξ JB JA xᵀ yᵀ = symp (R := R) c ξ JA JB x y := by
@@ -63,6 +64,7 @@ theorem mem_latAtV_transpose {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl
   ⟨fun h => by simpa using transpose_mem_latAtV Y X v h, transpose_mem_latAtV X Y v⟩
 
 
+open GlobalTheory.DblVacLine in
 theorem dbl_line_co {σ : E →ₐ[F] E} {n d : ℕ} {X : Spc F E n} {Y : Spc F E d} {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ)
     (v : Pl (F := F)) (hunr : PsiUnr ψ v) (hX : X.L.IsLattice E) (hY : Y.L.IsLattice E)
     (hsd : ∀ z : Matrix (Fin n) (Fin d) (AE F E), At (evFin F v) z → (z ∈ latAtV X Y v ↔ ∀ γ ∈ latAtV X Y v,

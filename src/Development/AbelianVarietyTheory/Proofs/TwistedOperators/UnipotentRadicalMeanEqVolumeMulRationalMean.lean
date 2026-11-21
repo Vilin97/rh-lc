@@ -102,6 +102,7 @@ def coord (V : HSp D) {s k : ℕ} (M : Matrix (Fin s) (Fin V.rank) D.host.E) (B 
     (B.map (incA D) : Matrix (Fin V.rank) (Fin k) (AE D))
 
 
+set_option maxHeartbeats 2000000 in
 theorem mem_NI_prop (V : HSp D) {r k : ℕ} (C : Matrix (Fin V.rank) (Fin r) D.host.E)
     (B : Matrix (Fin V.rank) (Fin k) D.host.E) (hB : adj D C * V.gram * B = 0) {g : GA D V} (hg : g ∈ NI V C) :
     (mt V g - 1) ⬝ C.map (incA D) = 0 ∧
@@ -222,6 +223,7 @@ section Surj
 open GlobalTheory.MixModel (rat gA giA half ofMat)
 
 
+set_option maxHeartbeats 4000000 in
 theorem coord_surj (V V' : HSp D) {r s : ℕ} (C C' : Matrix (Fin V.rank) (Fin r) D.host.E)
     (B : Matrix (Fin V.rank) (Fin V'.rank) D.host.E) (hs : IsIsoSplit V V' C B) (h1 : adj D C * V.gram * C' = 1)
     (h3 : adj D C' * V.gram * B = 0) (m : Matrix (Fin s) (Fin r) D.host.E) (hm : m.rank = s)

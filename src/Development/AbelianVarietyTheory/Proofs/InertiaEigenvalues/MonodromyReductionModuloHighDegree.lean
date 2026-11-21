@@ -335,6 +335,7 @@ theorem norm_e (l a : ℕ) [Fact l.Prime] [NormedAlgebra ℚ_[l] K] [NeZero a] [
   exact (Fact.out : l.Prime).one_lt.ne' (Nat.dvd_one.1 ((Nat.dvd_add_right h).1 h1))
 
 
+variable (l a) in
 def isoCoef (c : ZMod e) (ζ : rootsOfUnity e K) : ZMod a → K⟦X⟧ :=
   fun τ => C ((e : K)⁻¹ * (TameGal.inertia ζ⁻¹ : TameGal K l e a).root τ ^ c.val)
 

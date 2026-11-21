@@ -32,6 +32,7 @@ theorem isLocalRing_trivSqZeroExt (M : Type) [AddCommGroup M] [Module O M] [Modu
     exact isUnit_or_isUnit_one_sub_self _
 
 
+omit [IsLocalRing O] in
 def dirPt {n : ℕ} (e : MvPowerSeries (Fin n) O →ₐ[O] O) (c : Fin n → O) :
     MvPowerSeries (Fin n) O →ₐ[O] DualNumber O :=
   addDer ((inlS O O).comp e) (TrivSqZeroExt.inrHom O O ∘ₗ

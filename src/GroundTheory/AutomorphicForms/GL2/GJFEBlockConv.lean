@@ -127,6 +127,7 @@ variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchi
   {m : ℕ}
 
 
+variable (m) in
 structure IsCentralCoeff (α : ℂ) (c : GL (Fin m) F → ℂ) : Prop where
   continuous : Continuous c
   ne_zero : α ≠ 0

@@ -290,6 +290,7 @@ private theorem linear_log_bound_le_K_mul_M (K M L lC l4 lB lQ lK E1 E : ℝ) (h
   nlinarith
 
 
+set_option maxHeartbeats 800000 in
 theorem UpperPlace_holds : UpperPlace := by
   unfold UpperPlace
   intro ε x hε hx k m Δ C₃ u v b w hm2 hmeven hk2 hmk hΔ hC₃ hI hu

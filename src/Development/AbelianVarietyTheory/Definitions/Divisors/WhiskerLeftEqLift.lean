@@ -78,6 +78,7 @@ theorem famCls_surj {T : Over S} (c : (addF A).obj (Opposite.op T)) :
   exact ⟨N, ⟨hN, (isAdditive_iff hN).2 hc⟩, rfl⟩
 
 
+omit [GrpObj A] in
 theorem whiskerLeft_eq_lift {T T' : Over S} (u : T' ⟶ T) : A ◁ u = lift (fst A T') (snd A T' ≫ u) := by
   ext <;> simp
 

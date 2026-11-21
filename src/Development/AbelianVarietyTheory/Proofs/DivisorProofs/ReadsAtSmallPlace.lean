@@ -255,6 +255,7 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotio
   {Y : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y cX} {Csz : ℝ} (p : PtAt ex Csz)
 
 
+set_option maxHeartbeats 4000000 in
 theorem reads_rank (j : Fin D.R.m) (w : HeightOneSpectrum (𝓞 D.what₂.LL)) [Fact (Formalism.EigenvalueLevelCeiling.plc w).Prime] (lamW : D.what₂.Tau → ℕ → ℕ)
     (cs : D.what₂.Tau → ℤ) (hS : Shift (fun τ => lamLdef (D := D) (Vc D j).rank ((j : ℕ) + 1) τ) lamW cs) {N : ℕ}
     (e0 : D.what₂.LL →+* PadicAlgCl (Formalism.EigenvalueLevelCeiling.plc w)) (io : PadicAlgCl (Formalism.EigenvalueLevelCeiling.plc w) ≃+* ℂ)

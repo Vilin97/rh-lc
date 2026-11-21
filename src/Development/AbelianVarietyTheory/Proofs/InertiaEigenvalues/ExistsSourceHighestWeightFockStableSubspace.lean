@@ -286,6 +286,7 @@ lemma pure_eigen (w : GlobalTheory.ExportSeries.Weight D n) (Q : PolF D m n) (hQ
 end GlobalTheory.NHwExist
 
 
+open GlobalTheory.NHwExist in
 theorem GlobalTheory.exists_nHw_of_fockS_stable : ∀ (D : D7) (n m : ℕ) (w : GlobalTheory.ExportSeries.Weight D n) (V : Submodule ℂ (PolF D m n)), FiniteDimensional ℂ V → V ≠ ⊥ → (∀ P ∈ V, ∀ (τ : D.what₂.Tau) (a b : Fin n), GlobalTheory.LowestKType.sop w τ a b P ∈ V) → ∃ P ∈ V, P ≠ 0 ∧ ∃ lam : D.what₂.Tau → Fin n → ℂ, GlobalTheory.LowestKType.IsNHw w lam P := by
   classical
   intro D n m w V hfin hne hst

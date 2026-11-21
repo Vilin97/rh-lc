@@ -12,6 +12,7 @@ namespace GroundTheory.Heights₂.Heights.Targets
 open NumberField NumberField.InfinitePlace
 
 
+open scoped Classical in
 theorem EmbeddingSumPlaces.proof : EmbeddingSumPlaces.Statement := by
   intro F _ _ g hg
   rw [← Finset.univ.sum_fiberwise (fun σ => InfinitePlace.mk σ)]

@@ -51,6 +51,7 @@ theorem isMod_ker (hθ : IsInfFam θ) (hκ : IsKerSys θ V W κ) (f : M) (h : GA
     ring
 
 
+variable (κ) in
 def lift (μ : Measure (GA D V)) (𝓕 : Set (GA D V)) (f : M) (F : GA D V → ℂ) : GA D W → ℂ :=
   fun h => ∫ g in 𝓕, κ f g h * F g ∂μ
 
@@ -82,6 +83,7 @@ theorem lift_smul_right (c : ℂ) (F : GA D V → ℂ) (f : M) : lift κ μ 𝓕
   exact integral_const_mul _ _
 
 
+variable (θ κ μ 𝓕) in
 def Compat (T : (GA D W → ℂ) → (GA D W → ℂ)) : Prop :=
   ∀ f, ∃ f', (∀ g, T (κ f g) = κ f' g) ∧ ∀ F ∈ Decay θ V, T (lift κ μ 𝓕 f F) = lift κ μ 𝓕 f' F
 

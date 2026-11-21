@@ -37,6 +37,7 @@ theorem exists_unit_ratio {X Y : Scheme.{0}} {M : LB X} (hM : M.IsLB) {K : Type}
 variable {S : Scheme.{0}} {B : Over S} [GrpObj B] [IsCommMonObj B]
 
 
+omit [IsCommMonObj B] in
 theorem exists_rigidified_sym {L : LB B.left} (hL : L.IsLB)
     (t : LB.Gen (LB.LinComb L (K := Fin 2) ![(ι[B]).left, 𝟙 B.left] ![1, -1])) (ht : t.IsGen) :
     ∃ u : LB.Gen (LB.LinComb L (K := Fin 2) ![(ι[B]).left, 𝟙 B.left] ![1, -1]), u.IsGen ∧

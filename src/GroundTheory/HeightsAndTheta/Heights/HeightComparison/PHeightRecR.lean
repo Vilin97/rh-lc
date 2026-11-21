@@ -20,6 +20,7 @@ noncomputable section
 variable {ι : Type} [Fintype ι] [DecidableEq ι] {n : ι → ℕ}
 
 
+omit [DecidableEq ι] in
 theorem mConeMap_of_isMultiHomog {Ω : Type*} [Field Ω] (y : Coord n → Ω)
     (s : MvPolynomial (Coord n) ℤ) (a : ι → ℕ) (hs : Geo.IsMultiHomog (ι := blockIdx n) s a) :
     Geo.mConeMap (ι := blockIdx n) y s = C (eval₂ (Int.castRingHom Ω) y s) * ∏ k, X k ^ a k := by

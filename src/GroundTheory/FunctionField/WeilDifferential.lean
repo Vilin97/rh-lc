@@ -128,6 +128,7 @@ end Divisor
 open Divisor
 
 
+variable (k K) in
 def weilDifferentials : Submodule k (Module.Dual k (Repartition k K)) where
   carrier := {ω | ∃ D : Divisor k K, ω ∈ weilSpace D}
   add_mem' := by
@@ -139,6 +140,7 @@ def weilDifferentials : Submodule k (Module.Dual k (Repartition k K)) where
     exact ⟨D, Submodule.smul_mem _ c h⟩
 
 
+variable (k K) in
 def WeilDifferential : Type _ := weilDifferentials k K
 
 namespace WeilDifferential

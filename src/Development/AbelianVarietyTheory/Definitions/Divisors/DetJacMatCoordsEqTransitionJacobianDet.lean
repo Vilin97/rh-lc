@@ -39,6 +39,7 @@ instance secondCountableTopology [LocallyOfFiniteType p] [QuasiCompact p] :
     SecondCountableTopology (CxPts p σ) := PtsOver.secondCountableTopology p _
 
 
+variable {p} in
 theorem compactSpace (h : IsProjOver p) : CompactSpace (CxPts p σ) := PtsOver.compactSpace h _
 
 def ptsIn (U : Y.Opens) : Set (CxPts p σ) := {y | ⊤ ≤ y.1 ⁻¹ᵁ U}

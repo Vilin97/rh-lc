@@ -32,6 +32,7 @@ def chiE (χ : Formalism.MainNotions.N.GE D.nd →* (D.nd.O i)ˣ) : Br.G D.nbr i
   (Units.map (inc D i w hw L' h).toMonoidHom).comp (Br.locChi D.nbr i w hw χ)
 
 
+include h in
 theorem nonempty_embE : Nonempty (Br.Kw D.nbr i w hw →ₐ[ℚ_[D.nd.l i]] ↥L'.1) :=
   ⟨((D.nbr i w hw).Kw.1.val).codRestrict L'.1.toSubalgebra
     fun x => h ((D.nbr i w hw).LL_split (D.nbr i w hw).Kw.1.val x)⟩
@@ -211,6 +212,7 @@ theorem multV_cycPow_line [Algebra.IsSeparable Qp K] [FiniteDimensional Qp LL] (
 end Periods
 
 
+set_option maxHeartbeats 1600000 in
 theorem BlockE.of_splitting (i : D.nd.Loc) (r : D.nd.X i → (Formalism.MainNotions.N.GE D.nd →* GL (Fin D.R.nV) (D.nd.O i)))
     (ρ : D.nd.X i → (Formalism.MainNotions.N.GE D.nd →* GL (Fin D.R.r) (D.nd.O i))) (π : D.nd.X i)
     (hc : BlockRepresentationsSemisimple.IsComplement D.nd i (r π) (ρ π)) : BlockE D i r ρ π := by

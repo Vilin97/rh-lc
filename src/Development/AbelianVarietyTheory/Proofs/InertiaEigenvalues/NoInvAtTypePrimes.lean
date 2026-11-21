@@ -50,6 +50,7 @@ theorem det_inv_transpose_sub_one_ne_zero {M : Matrix n n R} (hu : IsUnit M.det)
   exact h (by simpa [h3] using h2.symm)
 
 
+omit [IsDomain R] in
 theorem det_scaled_sub_one_ne_zero [IsLocalRing R] (P : Matrix n n R) (c : Rˣ)
     (h : (P.map (IsLocalRing.residue R) - (IsLocalRing.residue R (c : R)) • (1 : Matrix n n _)).det ≠ 0) :
     ((((c⁻¹ : Rˣ) : R) • P) - 1).det ≠ 0 := by

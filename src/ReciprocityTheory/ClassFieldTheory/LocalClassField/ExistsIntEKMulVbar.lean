@@ -115,6 +115,7 @@ def degLK : ℕ := (subG p K L).index
 abbrev GalLK : Type := GK p K ⧸ subG p K L
 
 
+variable {p K L} in
 def resGK (h : K ≤ L) : GK p L →* GK p K where
   toFun σ := { σ.toRingEquiv with commutes' := fun x => σ.commutes ⟨x.1, h x.2⟩ }
   map_one' := rfl
@@ -151,6 +152,7 @@ theorem resGK_continuous (h : K ≤ L) : Continuous (resGK h) := by
   exact congrArg _ (Set.mem_iInter.1 hσ i)
 
 
+variable {p K L} in
 theorem subG_normal_of_stable (h : ∀ (σ : GK p K), ∀ x ∈ L, σ x ∈ L) : (subG p K L).Normal := by
   refine ⟨fun n hn g x hx => ?_⟩
   show g (n (g⁻¹ x)) = x
@@ -255,6 +257,7 @@ def layerUIncl [(subG p K L).Normal] : Pair (layerU p K L) (layer p K L) :=
       | H σ => rfl)
 
 
+variable {p K} in
 def layerInfl {L L' : IntermediateField ℚ_[p] (PadicAlgCl p)} (h : L ≤ L') [(subG p K L).Normal]
     [(subG p K L').Normal] : Pair (layer p K L) (layer p K L') where
   φ := QuotientGroup.map (subG p K L') (subG p K L) (MonoidHom.id _) (fun _ hσ x hx => hσ x (h hx))
@@ -294,6 +297,7 @@ abbrev Br : Type := (kbarT p K).H 2
 def BrLK [(subG p K L).Normal] : Submodule ℤ (Br p K) := LinearMap.range ((layerInf p K L).hom.H 2)
 
 
+variable {p K L} in
 def resPair (h : K ≤ L) : Pair (kbarT p K) (kbarT p L) where
   φ := resGK h
   u := LinearMap.id
@@ -302,6 +306,7 @@ def resPair (h : K ≤ L) : Pair (kbarT p K) (kbarT p L) where
   equiv _ _ := rfl
 
 
+variable {p K L} in
 def BrKer (h : K ≤ L) : Submodule ℤ (Br p K) := LinearMap.ker ((resPair h).hom.H 2)
 
 abbrev urT : TRep ℤ (GalLK p K (MaximalUnramifiedExtension p K)) := layer p K (MaximalUnramifiedExtension p K)

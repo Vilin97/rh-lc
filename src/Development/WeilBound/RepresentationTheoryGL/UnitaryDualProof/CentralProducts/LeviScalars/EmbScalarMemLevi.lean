@@ -24,6 +24,7 @@ theorem bb_eq_false {n N : ℕ} (i : Fin N) : bb n N i = false ↔ (i : ℕ) < n
   simp [bb]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem unip_entries {n N : ℕ} {g : GL (Fin N) k}
     (hg : g ∈ GroundTheory.Automorphic.Parabolic.unipotentRadical k N (bb n N)) (i j : Fin N)
     (hij : ¬ ((i : ℕ) < n ∧ n ≤ (j : ℕ))) :

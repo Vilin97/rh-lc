@@ -61,6 +61,7 @@ def chC (e : ℕ) : GG e →* ℂˣ := (Units.map (Int.castRingHom ℂ).toMonoid
 
 
 open scoped Classical in
+open Classical in
 def HostCharSum : Prop :=
   ∀ e : ℕ,
     (∀ χ : GG e →* ℂˣ,

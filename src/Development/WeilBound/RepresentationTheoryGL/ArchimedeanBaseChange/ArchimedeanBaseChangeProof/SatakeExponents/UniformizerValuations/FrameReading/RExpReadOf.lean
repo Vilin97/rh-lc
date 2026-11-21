@@ -72,6 +72,7 @@ theorem smul_cancel {M : Type} [AddCommGroup M] [Module ℂ M] {δ dh c p d : �
   exact (smul_right_injective M hne h).symm
 
 
+set_option maxHeartbeats 1000000 in
 theorem sat_of_eig (hSub : PExp.SubEig) (hCC0 : PExp.CosetCount) (hTE : PExp.TorusExp) (hDl : PExp.DlBridge)
     (hES : PExp.ExpToSat) {m : ℕ} (P : Pre E m) (w : Pl E) (ϖ : (w.adicCompletion E)ˣ)
     (hϖ : ordL (ϖ : w.adicCompletion E) = 1) (ξ : Fin m → ℂˣ) (hm : N3.Mono ξ) (u : _)

@@ -237,6 +237,7 @@ end Frames
 end FlagPairJoinRight
 
 
+open FlagPairJoinRight in
 theorem FlagPairJoinRight.proof (hVert : JoinVerticalDivisorRight.Statement) :
     FlagPairJoinRight.Statement := by
   intro O _ _ _ Ω _ _ K _ ι _ x K' _ ι' _ z K₂ _ ι₂ _ w N V _ _ E E' EF E'F hp hp' φ EB E'B hB hB'

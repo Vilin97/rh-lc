@@ -71,6 +71,7 @@ theorem valAt_leftInv (hL : LawsM C) (O : OMDat C R i Tp tup) (cc) (κ : WeightF
     (hn ▸ hfs k) γ hγ g
 
 
+set_option maxHeartbeats 1000000 in
 theorem ser_of_exact (hL : LawsM C) (O : OMDat C R i Unit (fun _ => A.μ0)) (M : OMDat C R i Tp tup) (hle : O.c'.F ≤ M.c'.F)
     (hlev : M.lev = O.lev) {κ : WeightFamilies.Wt D ((i : ℕ) + 1)} (hn : κ.n = (Vc D i).rank) {v₀ ι x₀ x₁} (hO : O.Pins κ v₀ ι x₀)
     (hM : M.Pins κ v₀ ι x₁) (hspan : ClassSumsSpan O κ) (cE cF : ∀ s : C.Q.c.F →+* ℂ, (C.U ((i : ℕ) + 1) s).Comp → ℂ)
@@ -158,6 +159,7 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : Formalis
   {i : Fin D.R.m} {Tp Tp' : Type} {tup : Tp → T0} {tup' : Tp' → T0}
 
 
+open GlobalTheory.AdTh.CoverVal in
 theorem exists_covAt_root (hR : GlobalTheory.Hk3.Core R F) (hT : TieIn T R κ v₀) (O : OMDat T.toCore R i Tp tup)
     (hO : O.Pins (κ i) (v₀ i (sg0 D A)) (iotaW T i) (T.x₀ ((i : ℕ) + 1) O.s0)) :
     ∃ c0 : ℂ, (∃ m : ℕ, 0 < m ∧ c0 ^ m = 1) ∧ GlobalTheory.PtId.CovAt O c0 := by
@@ -204,6 +206,7 @@ theorem coefficientMap_extremalTensor_eq_of_sameExtension (O : OMDat T.toCore R 
   exact (extC_hw O hO (c := c) hc).symm.trans (extC_hw M hM ((h c).1 hc))
 
 
+set_option maxHeartbeats 1000000 in
 theorem ioAt_transfer (hC : GlobalTheory.Hk3.Core R F) (hT : TieIn T R κ v₀) (hI : IoExt R) (O₀ : OMDat T.toCore R i Tp tup)
     (O : OMDat T.toCore R i Tp' tup') (hP₀ : O₀.Pins (κ i) (v₀ i (sg0 D A)) (iotaW T i) (T.x₀ ((i : ℕ) + 1) O₀.s0))
     (hP : O.Pins (κ i) (v₀ i (sg0 D A)) (iotaW T i) (T.x₀ ((i : ℕ) + 1) O.s0)) (he : O₀.c0' O₀.hw = O.c0' O.hw) {ka₀ : ℂ}
@@ -240,6 +243,7 @@ theorem ioAt_transfer (hC : GlobalTheory.Hk3.Core R F) (hT : TieIn T R κ v₀) 
   exact MvPolynomial.map_injective _ (inC O.c').injective (h2.trans (map_zero _).symm)
 
 
+omit [Algebra T.Q.c.F D.what₂.LL] in
 theorem exists_ccIs_family {θ : InfFam D} {V W : HSp D} {hr : W.rank = D.R.r} {j : ℕ} {σ : T.Q.c.F →+* ℂ}
     (hV : T.V j σ = W) {om : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)} {f₀ : WO V W → ℂ} {cst : (T.U j σ).Comp → ℂ}
     (h : CcIs θ V W hr (T.U j σ) (castDict hV (T.dict j σ)) (castDict hV (T.mu j σ)) (T.x₀ j σ) om f₀ cst) :
@@ -251,6 +255,7 @@ theorem exists_ccIs_family {θ : InfFam D} {V W : HSp D} {hr : W.rank = D.R.r} {
   exact h
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_common (hCI : Formalism.MainNotions.ModuliIntegralCharts.H1.ChartIndepSt2) (hC : GlobalTheory.Hk3.Core R F) (hT : TieIn T R κ v₀) (hI : IoExt R)
     (O : OMDat T.toCore R i Tp tup) (M : OMDat T.toCore R i Tp' tup')
     (hO : O.Pins (κ i) (v₀ i (sg0 D A)) (iotaW T i) (T.x₀ ((i : ℕ) + 1) O.s0))
@@ -283,6 +288,7 @@ open GlobalTheory.ConjTwist GlobalTheory.GalTw ReciprocityTheory.ChartRestrictio
 open Classical
 
 
+set_option maxHeartbeats 1000000 in
 theorem ser_at_core_constants : Formalism.MainNotions.ModuliIntegralCharts.H1.ChartIndepSt2 → ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A : FamIn D.what₂.LL G Pl0 T0 D.R.m) (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F) (F : Face D A) (κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)) (v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec) (O : ∀ i, OMDat T.toCore R i Unit (fun _ => A.μ0)) (ph : Fin D.R.m → ℂ), 8 * D.R.f * D.R.r + 4 ≤ D.R.nV → GlobalTheory.Hk3.Core R F → Finite T0 → Nonempty (FWTie T R κ v₀) → IoExt R → QGuard R → ∀ i : Fin D.R.m, OMPins T R κ v₀ O i → PhaseTie T R κ v₀ O ph i → ∀ (Tp : Type) (tup : Tp → T0) (M : OMDat T.toCore R i Tp tup), M.Pins (κ i) (v₀ i (sg0 D A)) (iotaW T i) (T.x₀ ((i : ℕ) + 1) M.s0) → M.lev = (O i).lev → (∀ c, ExtC R i (inC (O i).c') (O i).c0' c ↔ ExtC R i (inC M.c') M.c0' c) → ∃ (ζ : ℂ) (z : G), IsRoot1 ζ ∧ z ∈ Subgroup.center G ∧ ∀ (t : Tp) (h : M.Cl' t → GA D (Vc D i)) (J' : Subgroup (Bridge.Gf (Vc D i))), RepsR R i (tup t) h (M.bad t) J' (M.Lh t) (M.gam t) (M.vol t) → ∀ (y : (R.HV i (tup t)).H) (x : M.Cl' t → VsV D i M.c'.F), Place R i (tup t) h M.c0' y x → ∀ f ∈ sec (T.Q.Xo ((i : ℕ) + 1)) M.c' (wtA (κ i)) (Vc D i).rank, GlobalTheory.OneMapAll.IsSum M t x f → ∀ g : GA D (Wc D i), ph i * R.thF i (tup t) y (v₀ i (sg0 D A)) g = ζ * T.cE ((i : ℕ) + 1) M.s0 (M.dict g).1 * (lieFac (T.Q.Dw ((i : ℕ) + 1)) (xiR D) (wtA (κ i)) : ℂ) * M.mu g * rdU (unfBC M.hle (T.U ((i : ℕ) + 1)) (inC M.c')) (actLev M.c' M.lev2 z f) (M.dict g).1 (M.dict g).2 := by
   intro hCI D G _ _ Pl0 T0 A T _ R F κ v₀ O ph hsz hR _ ⟨fw⟩ hI _ i hpins htie Tp tup M hM hlev hext
   have hT : TieIn T R κ v₀ := ⟨fw.laws, fw.alg_eq, fw.kap, fw.hv₀, fw.chiR, fw.x0⟩

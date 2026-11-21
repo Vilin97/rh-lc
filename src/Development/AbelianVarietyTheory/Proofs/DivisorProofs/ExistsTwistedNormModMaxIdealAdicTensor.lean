@@ -59,6 +59,7 @@ theorem norm_expand {R : Type*} [CommRing R] (a b t e : R) :
 end GlobalTheory.ResidueNorm
 
 
+open GlobalTheory.ResidueNorm in
 theorem GlobalTheory.ResidueNorm.exists_norm_mod_small : ∀ (v : HeightOneSpectrum ℤ) (L : Type) [Field L] [NumberField L] (c : L →ₐ[ℚ] L), (∀ x, c (c x) = x) →
     ∀ (κ : Type) (bL : Module.Basis κ ℚ L),
     Valued.v (2 : v.adicCompletion ℚ) = 1 → IsIntB v bL 1 →

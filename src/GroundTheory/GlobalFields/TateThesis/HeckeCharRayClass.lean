@@ -30,11 +30,13 @@ def complexUnitsHom {w : InfinitePlace K} (hw : w.IsComplex) : ℂˣ →ₜ* (w.
 
 
 
+omit [NumberField K] in
 theorem realUnitsHom_surjective {w : InfinitePlace K} (hw : w.IsReal) (a : (w.Completion)ˣ) :
     realUnitsHom hw (Units.map (ringEquivRealOfIsReal hw : w.Completion →+* ℝ).toMonoidHom a) = a :=
   Units.ext ((ringEquivRealOfIsReal hw).symm_apply_apply _)
 
 
+omit [NumberField K] in
 theorem complexUnitsHom_surjective {w : InfinitePlace K} (hw : w.IsComplex) (a : (w.Completion)ˣ) :
     complexUnitsHom hw
       (Units.map (ringEquivComplexOfIsComplex hw : w.Completion →+* ℂ).toMonoidHom a) = a :=
@@ -136,6 +138,7 @@ theorem infiniteSign_apply_val (x : (InfiniteAdeleRing K)ˣ) (w : {w : InfiniteP
   rfl
 
 
+omit [NumberField K] in
 theorem infinitePositive_eq_ker : infinitePositive K = (infiniteSign K).ker := by
   ext x
   rw [mem_infinitePositive, MonoidHom.mem_ker]

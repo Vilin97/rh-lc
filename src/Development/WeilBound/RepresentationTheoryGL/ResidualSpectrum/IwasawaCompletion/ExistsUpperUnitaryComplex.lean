@@ -74,6 +74,7 @@ theorem exists_upper_unitary_complex {N : ℕ} (g : Matrix (Fin N) (Fin N) ℂ) 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
 
 
+omit [NumberField E] [IsTotallyComplex E] in
 theorem exists_borel_unitary {N : ℕ} (y : GL (Fin N) (Cinf E)) :
     ∃ (b : GL (Fin N) (Cinf E)) (k : Kinf E N),
       (∀ i j : Fin N, j < i → (b : Matrix (Fin N) (Fin N) (Cinf E)) i j = 0) ∧ y = b * Unitary.toUnits k := by

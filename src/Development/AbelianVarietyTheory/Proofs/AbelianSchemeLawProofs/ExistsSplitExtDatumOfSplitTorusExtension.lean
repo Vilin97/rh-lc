@@ -364,6 +364,7 @@ theorem IsFrame.trans_id {χ : X} {O : RigLB B} {u : ∀ j, Γ(G.left, q.left �
 include hk
 
 
+omit [IsMonHom i] in
 theorem IsFrame.exists_gen_zero {O : RigLB B} {u : ∀ j, Γ(G.left, q.left ⁻¹ᵁ O.L.U j)ˣ}
     (h : IsFrame q i 0 O u) : ∃ t : LB.Gen O.L, t.IsGen := by
   refine exists_gen_descent q O.L (fun j => (u j)⁻¹) (fun j Z g₁ g₂ z e h₁ h₂ => ?_)
@@ -374,6 +375,7 @@ theorem IsFrame.exists_gen_zero {O : RigLB B} {u : ∀ j, Γ(G.left, q.left ⁻�
     exact inv_eq_div_mul_inv _ _
 
 
+omit [IsMonHom i] in
 theorem IsFrame.exists_iso_add {χ χ' : X} {O O' O'' : RigLB B}
     {u : ∀ j, Γ(G.left, q.left ⁻¹ᵁ O.L.U j)ˣ} {u' : ∀ j, Γ(G.left, q.left ⁻¹ᵁ O'.L.U j)ˣ}
     {u'' : ∀ j, Γ(G.left, q.left ⁻¹ᵁ O''.L.U j)ˣ} (h : IsFrame q i χ O u)
@@ -431,6 +433,7 @@ theorem cover_tensorHom : (@Surjective ⊓ @Flat ⊓ @QuasiCompact : MorphismPro
   exact ⟨⟨inferInstance, inferInstance⟩, inferInstance⟩
 
 
+omit hk [IsMonHom q] [IsMonHom i] [Flat q.left] [Surjective q.left] [QuasiCompact q.left] in
 theorem IsFrame.exists_gen_linComb {χ : X} {O : RigLB B}
     {u : ∀ j, Γ(G.left, q.left ⁻¹ᵁ O.L.U j)ˣ} (h : IsFrame q i χ O u) {Y Y' : Over S} (π : Y' ⟶ Y)
     [Flat π.left] [Surjective π.left] [QuasiCompact π.left] {K : Type} [Fintype K]

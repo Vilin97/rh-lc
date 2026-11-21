@@ -44,6 +44,7 @@ theorem gfpVec_w (cc : Fin n → L) :
   simp only [gfpVec, Category.assoc, pullback.condition, reassoc_of% hw]
 
 
+variable (xc) in
 def gfpW (cc : Fin n → L) : tEps x ⟶ Xo.univ.t.G := Over.homMk (gfpVec x xc cc) (gfpVec_w cc)
 
 variable (xc) in

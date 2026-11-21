@@ -17,12 +17,14 @@ variable (K Ksep : Type) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNona
   [Field Ksep] [Algebra K Ksep] [IsSepClosure K Ksep] {n : ℕ} (hn : (n : K) ≠ 0)
 
 
+include hn in
 theorem subsingleton_cohomology_galois (U : OpenSubgroup Gal(Ksep/K))
     (M : Rep (ULift.{0} ℤ) (U : Subgroup Gal(Ksep/K))) [IsDiscreteRep M] (hM : ∀ m : M, n • m = 0)
     (r : ℕ) (hr : 3 ≤ r) : Subsingleton (cohomology M r) :=
   subsingleton_cohomology_of_three_le K Ksep hn U M hM hr
 
 
+include hn in
 theorem finite_cohomology_galois (U : OpenSubgroup Gal(Ksep/K))
     (M : Rep (ULift.{0} ℤ) (U : Subgroup Gal(Ksep/K))) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) (r : ℕ) : Finite (cohomology M r) := by
@@ -37,18 +39,21 @@ theorem finite_cohomology_galois (U : OpenSubgroup Gal(Ksep/K))
     exact Finite.of_subsingleton
 
 
+include hn in
 theorem finite_cohomology_galois_le_two : ∀ (U : OpenSubgroup Gal(Ksep/K))
     (M : Rep (ULift.{0} ℤ) (U : Subgroup Gal(Ksep/K))) [IsDiscreteRep M] [Finite M],
     (∀ m : M, n • m = 0) → ∀ r ≤ 2, Finite (cohomology M r) :=
   fun U M _ _ hM r _ => finite_cohomology_galois K Ksep hn U M hM r
 
 
+include hn in
 theorem subsingleton_cohomology_three_galois : ∀ (U : OpenSubgroup Gal(Ksep/K))
     (M : Rep (ULift.{0} ℤ) (U : Subgroup Gal(Ksep/K))) [IsDiscreteRep M] [Finite M],
     (∀ m : M, n • m = 0) → Subsingleton (cohomology M 3) :=
   fun U M _ _ hM => subsingleton_cohomology_galois K Ksep hn U M hM 3 le_rfl
 
 
+include hn in
 theorem subsingleton_cohomology_galois_top (M : Rep (ULift.{0} ℤ) Gal(Ksep/K)) [IsDiscreteRep M]
     (hM : ∀ m : M, n • m = 0) (r : ℕ) (hr : 3 ≤ r) : Subsingleton (cohomology M r) :=
   have := subsingleton_cohomology_galois K Ksep hn ⊤
@@ -56,6 +61,7 @@ theorem subsingleton_cohomology_galois_top (M : Rep (ULift.{0} ℤ) Gal(Ksep/K))
   (bijective_cohomologyRes_top M r).1.subsingleton
 
 
+include hn in
 theorem finite_cohomology_galois_top (M : Rep (ULift.{0} ℤ) Gal(Ksep/K)) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) (r : ℕ) : Finite (cohomology M r) :=
   have : Finite (Rep.res ((⊤ : OpenSubgroup Gal(Ksep/K)) : Subgroup Gal(Ksep/K)).subtype M) :=

@@ -170,6 +170,7 @@ theorem locFin_fock2' (P Q R S : ℕ) (Y : Mat R S) (hY : IsKC Y) (c : ℂ) :
   exact ⟨W, hW, hv, fun y hy => W.add_mem (hs Y hY y hy) (W.smul_mem c hy)⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem kstab_skew : GlobalTheory.RealLift.ActsLaws → GlobalTheory.RealLift.LineEx → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (n d P Q R S : ℕ) (X : Spc F E n) (W : Spc F E d) (om : Rep σ X W)
     (C : InfinitePlace F → Matrix (Fin d) (Formalism.BasicNotions.TH.Ix R S) ℂ) (Φ : GlobalTheory.RealLift.Tens F P Q R S →ₗ[ℂ] SInf F (Fin n × Fin d))
@@ -235,6 +236,7 @@ theorem kstab_skew : GlobalTheory.RealLift.ActsLaws → GlobalTheory.RealLift.Li
   simpa using N.sub_mem hmem (N.smul_mem (c w * Y.trace) hT)
 
 
+set_option maxHeartbeats 1000000 in
 theorem kstab : GlobalTheory.RealLift.ActsLaws → GlobalTheory.RealLift.LineEx →
     ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (n d P Q R S : ℕ) (X : Spc F E n) (W : Spc F E d) (om : Rep σ X W)

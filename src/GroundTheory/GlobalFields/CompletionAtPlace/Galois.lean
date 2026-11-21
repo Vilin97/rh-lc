@@ -156,6 +156,7 @@ theorem adicCompletionRingHomOf_algebraMap_adicCompletion (σ : L ≃ₐ[K] L)
       adicCompletionRingHomOf_algebraMap, AlgEquiv.commutes]
 
 
+omit [NumberField K] in
 theorem smul_asIdeal_of_mem_stabilizer (σ : MulAction.stabilizer Gal(L/K) w.asIdeal) :
     (σ : Gal(L/K)) • w.asIdeal = w.asIdeal :=
   MulAction.mem_stabilizer_iff.1 σ.2
@@ -193,6 +194,7 @@ theorem continuous_decompositionAlgEquiv (σ : MulAction.stabilizer Gal(L/K) w.a
   continuous_adicCompletionRingHomOf σ.1 (smul_asIdeal_of_mem_stabilizer w σ)
 
 
+omit [w.asIdeal.LiesOver v.asIdeal] in
 theorem valued_decompositionAlgEquiv (σ : MulAction.stabilizer Gal(L/K) w.asIdeal)
     (y : w.adicCompletion L) : Valued.v (decompositionAlgEquiv v w σ y) = Valued.v y :=
   valued_adicCompletionRingHomOf σ.1 (smul_asIdeal_of_mem_stabilizer w σ) y
@@ -223,6 +225,7 @@ theorem decompositionToLocal_algebraMap (σ : MulAction.stabilizer Gal(L/K) w.as
   decompositionAlgEquiv_algebraMap v w σ x
 
 
+omit [w.asIdeal.LiesOver v.asIdeal] in
 theorem decompositionToLocal_injective : Function.Injective (decompositionToLocal v w) := by
   rw [injective_iff_map_eq_one]
   intro σ hσ

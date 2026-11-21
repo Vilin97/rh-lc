@@ -19,6 +19,7 @@ noncomputable section
 
 
 open scoped Classical in
+open Classical in
 def sheetThrough {n d : ℕ} (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix (Fin d) (Fin n) ℂ)
     (x : Fin n → ℂ) : (Fin d → ℂ) → Fin n → ℂ :=
   if hs : ∃ s, IsSheetAt J A x s then hs.choose else 0

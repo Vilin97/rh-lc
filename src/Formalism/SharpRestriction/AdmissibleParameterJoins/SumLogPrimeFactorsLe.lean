@@ -586,6 +586,7 @@ theorem log_T_le (hT : SizeTu L) (u : D.what₂.Word) :
     _ ≤ 2 * L.sc.X'' D.R.n := by linarith
 
 
+set_option maxHeartbeats 800000 in
 theorem fN_le (hN : SizeN L) (hEta : SizeEta L) (hNodes : SizeNodes L) :
     (D.R.f : ℝ) * D.R.N D.R.m * Real.log ((D.R.f : ℝ) * D.R.N D.R.m) ≤ 10 * L.sc.X'' D.R.n ∧
     0 ≤ (D.R.f : ℝ) * D.R.N D.R.m * Real.log ((D.R.f : ℝ) * D.R.N D.R.m) := by

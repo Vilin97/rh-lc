@@ -73,6 +73,7 @@ theorem IsAdditive.evc_one {M : LB (A ⊗ T).left} (hM : M.IsLB) (h : IsAdditive
   exact left_eq_add.1 e
 
 
+variable (A B) in
 structure IsDual (P : LB (A ⊗ B).left) : Prop where
   isLB : P.IsLB
   additive : IsAdditive P
@@ -81,6 +82,7 @@ structure IsDual (P : LB (A ⊗ B).left) : Prop where
     ∃! x : T ⟶ B, LBIso M (ev P (fst A T) (snd A T ≫ x))
 
 
+variable (A B) in
 structure IsPerfect (P : LB (A ⊗ B).left) : Prop where
   isLB : P.IsLB
   zero_left : Triv (ev P (1 : B ⟶ A) (𝟙 B))

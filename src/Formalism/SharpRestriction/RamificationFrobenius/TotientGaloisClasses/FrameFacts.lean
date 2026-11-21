@@ -355,6 +355,7 @@ theorem chC_ne_one : φ.chC ≠ 1 := by
 
 
 open scoped Classical in
+open Classical in
 theorem hostCharSum :
     (∀ χ : φ.GG →* ℂˣ,
       (∑ g ∈ Finset.univ.filter (fun g : φ.GG => g ∉ φ.Psi), starRingEnd ℂ ((χ g : ℂˣ) : ℂ)) =
@@ -549,6 +550,7 @@ theorem thick_key {L : ℕ} (T : Finset ℕ) (hT : ∀ s ∈ T, 4 * L * s < φ.n
 
 
 open scoped Classical in
+open Classical in
 theorem thick_part_one {L : ℕ} (T : Finset ℕ) (hT : ∀ s ∈ T, 4 * L * s < φ.n0) (hR : NoRel T L)
     (u₀ t x : φ.A) (hord : 4 * L < addOrderOf x) (i₀ : ℤ) :
     ((Finset.Ico i₀ (i₀ + L)).filter (fun i : ℤ => φ.InTranslate T u₀ (t + i • x))).card ≤ 2 := by
@@ -603,6 +605,7 @@ theorem thick_part_two {L : ℕ} (T : Finset ℕ) (hT : ∀ s ∈ T, 4 * L * s <
 
 
 open scoped Classical in
+open Classical in
 theorem hostThickOrbit {L : ℕ} (T : Finset ℕ) (hT : ∀ s ∈ T, 4 * L * s < φ.n0) (hR : NoRel T L)
     (u₀ t x : φ.A) :
     (4 * L < addOrderOf x → ∀ i₀ : ℤ,

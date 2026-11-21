@@ -86,6 +86,7 @@ theorem exists_orthogonal_summand_embedding_hom {A B : HSp D} {c : ℕ} {ε : D.
   exact ((hrel h _).1 ((embRel_iff d h _).2 rfl))
 
 
+variable (G) in
 theorem isV_last : (G.node (.grid D.R.m D.R.m)).IsV (rankV D D.R.m D.R.m) 0 := by
   have h := G.isV (X := .grid D.R.m D.R.m) ⟨le_rfl, le_rfl⟩ (by
     intro j hj
@@ -95,9 +96,11 @@ theorem isV_last : (G.node (.grid D.R.m D.R.m)).IsV (rankV D D.R.m D.R.m) 0 := b
   simpa [Node.neg, Node.rank] using h
 
 
+variable (G) in
 theorem isDefinite_last : IsDefiniteSpace (G.V (.grid D.R.m D.R.m)) := GlobalTheory.RowClaim.TermVolDef.isDefiniteSpace_of_isV (isV_last G)
 
 
+variable (G) in
 theorem one_le_rank_last : 1 ≤ (G.V (.grid D.R.m D.R.m)).rank := by
   rw [(isV_last G).rank, rankV, sLen]
   have := D.R.two_le_m

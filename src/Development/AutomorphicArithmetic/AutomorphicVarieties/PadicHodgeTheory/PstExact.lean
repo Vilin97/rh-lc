@@ -120,6 +120,7 @@ theorem dmap_exact (h1 : Function.Injective i) (h2 : Function.Exact i p) :
 variable [FiniteDimensional ↥LL.1 V₀] [FiniteDimensional ↥LL.1 V₁] [FiniteDimensional ↥LL.1 V₂]
 
 
+include hi in
 theorem isPst_exact {AI : LocAinf l P} (T : LocTied l P AI) (h1 : Function.Injective i) (h2 : Function.Exact i p)
     (h3 : Function.Surjective p) (hV : IsPst P ρ₁) :
     IsPst P ρ₀ ∧ IsPst P ρ₂ ∧ Function.Surjective (dmap P hp) := by
@@ -161,6 +162,7 @@ variable {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P} (T : LocTi
   (Bw : LocBridge l E Ω (Dec (F := E) A) O) (h : IsPlaceOver A w) (hj : Induces Bw) {LL : FinExt l}
 
 
+include T in
 theorem charPol_exact
     {V₀ V₁ V₂ : Type} [AddCommGroup V₀] [Module ↥LL.1 V₀] [Module ℚ_[l] V₀] [IsScalarTower ℚ_[l] ↥LL.1 V₀]
     [AddCommGroup V₁] [Module ↥LL.1 V₁] [Module ℚ_[l] V₁] [IsScalarTower ℚ_[l] ↥LL.1 V₁]
@@ -247,6 +249,7 @@ theorem charPol_zero {ρ : Representation ↥LL.1 ↥(GK Bw.Kw) (Fin 0 → ↥LL
     LetterDim.finrank_wdSpace l P ι _ _ _ ρ hV, finrank_fin_fun]
 
 
+include T in
 theorem charPol_equiv {n : ℕ} {ρ₁ ρ₂ : Representation ↥LL.1 ↥(GK Bw.Kw) (Fin n → ↥LL.1)}
     (e : (Fin n → ↥LL.1) ≃ₗ[↥LL.1] (Fin n → ↥LL.1)) (he : ∀ g x, e (ρ₁ g x) = ρ₂ g (e x)) (hV : IsPst P ρ₁) :
     IsPst P ρ₂ ∧ ∀ σ, (wdPst P ι Bw h hj ρ₁).charPol σ = (wdPst P ι Bw h hj ρ₂).charPol σ := by
@@ -256,6 +259,7 @@ theorem charPol_equiv {n : ℕ} {ρ₁ ρ₂ : Representation ↥LL.1 ↥(GK Bw.
   exact ⟨p₂, fun σ => by rw [H, charPol_zero ι Bw h hj p₀, one_mul]⟩
 
 
+include T in
 theorem tri (n : ℕ) : ∀ (r : ↥(Dec (F := E) A) →* GL (Fin n) ↥LL.1) (c : Fin n → ↥(Dec (F := E) A) →* GL (Fin 1) ↥LL.1),
     (∀ g i j, j < i → (r g).val i j = 0) →
     (∀ g i, (r g).val i i = (c i g).val 0 0) →
@@ -333,6 +337,7 @@ theorem exists_diag {n : ℕ} {r : ↥(Dec (F := E) A) →* GL (Fin n) (Om l)}
   exact er g i
 
 
+include T in
 theorem flag {n : ℕ} (r : ↥(Dec (F := E) A) →* GL (Fin n) (Om l))
     (c : Fin n → ↥(Dec (F := E) A) →* GL (Fin 1) (Om l)) (M : GL (Fin n) (Om l))
     (hr : ∀ g i j, j < i → (M * r g * M⁻¹).val i j = 0) (hc : ∀ g i, (M * r g * M⁻¹).val i i = (c i g).val 0 0) :

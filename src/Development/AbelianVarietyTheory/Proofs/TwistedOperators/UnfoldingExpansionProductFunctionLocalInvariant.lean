@@ -42,6 +42,7 @@ theorem isAdmissible_flips {ψ : AddChar k Circle} {ϖ : kˣ} {e : ℕ} (hϖ : I
     · simp only [Grid.flipLevel, Function.update_of_ne hX]; exact hJ X
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem prod_edgeFactor_col {j : ℕ} (hj : j + 1 < Γ.m) (g : GL (Fin (Γ.rank (Γ.m, j + 1))) k)
     (hg : valuation k (gdet g : k) = 1) :
     ((oppositePath Γ.m).map (Γ.edgeFactor .one (Pi.mulSingle (Γ.m, j + 1) g))).prod =

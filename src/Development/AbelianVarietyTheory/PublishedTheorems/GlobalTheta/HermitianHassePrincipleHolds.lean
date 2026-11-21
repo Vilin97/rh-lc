@@ -256,6 +256,7 @@ theorem exists_represent (hc : ∀ t, σ (σ t) = t)
   linear_combination hw1
 
 
+omit [NumberField F] [NumberField E] in
 theorem posIndex_of_congr {τ : E →+* ℂ} (hτ : ∀ x, τ (σ x) = conj (τ x)) {r : ℕ}
     {G G' : Matrix (Fin r) (Fin r) E} (h : Congr (σ : E →+* E) G G') :
     GlobalTheory.Inertia.posIndex (G'.map τ) = GlobalTheory.Inertia.posIndex (G.map τ) := by
@@ -350,6 +351,7 @@ theorem congr_of_invariants (hσ : σ ≠ 1) (hG : ∀ a b, σ (G a b) = G b a)
     ring
 
 
+omit [NumberField F] in
 theorem exists_real_extension (ρ : F →+* ℝ) :
     ∃ (v : InfinitePlace F) (φ : v.Completion →+* ℝ), ∀ s : F, φ (algebraMap F _ s) = ρ s := by
   have hρ : ComplexEmbedding.IsReal (Complex.ofRealHom.comp ρ) :=

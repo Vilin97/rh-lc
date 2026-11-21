@@ -60,6 +60,7 @@ theorem evalAt_mul [Module.Finite R A] [Module.Projective R A] [IsCocomm R A]
   (CartierDual.isPrimitiveElem_iff_mul b.1).1 (isPrimitiveElem_of_mem_ker b.2) φ ψ
 
 
+variable (R A) in
 def primTangent [Module.Finite R A] [Module.Projective R A] [IsCocomm R A] :
     LinearMap.ker (cobOne R A) →ₗ[R] Module.Dual R (Cot R (CartierDual R A)) where
   toFun b := AugCot.lift _ (CartierDual.evalAt R A b.1) (evalAt_mul b)

@@ -27,6 +27,7 @@ theorem cosetFamily_mem (p : ℤ × (Fin n × Fin n → F)) (ij : Fin n × Fin n
   cosetInd_valBall_mem p.1 (p.2 ij)
 
 
+omit [MeasurableSpace F] [BorelSpace F] in
 theorem isSchwartzBruhat_matrixTensor {g : Fin n × Fin n → F → ℂ}
     (hg : ∀ ij, g ij ∈ LocalField.schwartzBruhat F) : IsSchwartzBruhat (matrixTensor g) := by
   rw [isSchwartzBruhat_iff_comp_symm]
@@ -37,6 +38,7 @@ theorem isSchwartzBruhat_matrixTensor {g : Fin n × Fin n → F → ℂ}
   exact localTensor_mem hg
 
 
+omit [MeasurableSpace F] [BorelSpace F] in
 theorem exists_matrixTensor_decomp {Φ : Matrix (Fin n) (Fin n) F → ℂ} (hΦ : IsSchwartzBruhat Φ) :
     ∃ (S : Finset (ℤ × (Fin n × Fin n → F))) (c : ℤ × (Fin n × Fin n → F) → ℂ),
       ∀ X, Φ X = ∑ p ∈ S, c p * matrixTensor (cosetFamily p) X := by
@@ -109,6 +111,7 @@ theorem norm_leviIntegrandB (κ : levi F n β →* ℝ≥0) (Ψ : Matrix (Fin n)
   ring
 
 
+omit [IsNonarchimedeanLocalField F] in
 instance borelSpace_GL : BorelSpace (GL (Fin n) F) := by
   refine ⟨?_⟩
   have hM : (measurableSpace_matrix : MeasurableSpace (Matrix (Fin n) (Fin n) F)) =

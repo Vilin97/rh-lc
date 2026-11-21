@@ -82,6 +82,7 @@ variable {K : Type} [Field K] [NumberField K] (la : HeightOneSpectrum (𝓞 K)) 
   {D N : ℕ}
 
 
+set_option maxHeartbeats 1000000 in
 theorem free_indep (htr : Algebra.trdeg K Ω = D) (x : Fin N → Ω) (j0 : Fin N) (hx : x j0 ≠ 0)
     {F : Type} [Field F] [Algebra Ω F] (w : AddValuation F (WithTop ℤ)) (u : Fin (D + 1) × Fin N → F)
     (hu : ∀ p, u p ∈ vRing w)
@@ -100,6 +101,7 @@ theorem free_indep (htr : Algebra.trdeg K Ω = D) (x : Fin N → Ω) (j0 : Fin N
     (card_free j0) (aeval_subst x j0 hx u hrel) (ValuationResidueLemmas.indep_u (K := K) (Ω := Ω) w la (fun p => ⟨u p, hu p⟩) h0 h1)).2.2
 
 
+set_option maxHeartbeats 1000000 in
 theorem gauss_one (htr : Algebra.trdeg K Ω = D) (x : Fin N → Ω) (j0 : Fin N) (hx : x j0 ≠ 0)
     {F : Type} [Field F] (w : AddValuation F (WithTop ℤ)) (ι : Ω →+* F) (u : Fin (D + 1) × Fin N → F)
     (h0 : ∀ P : MvPolynomial (Fin (D + 1) × Fin N) (𝓞 K),

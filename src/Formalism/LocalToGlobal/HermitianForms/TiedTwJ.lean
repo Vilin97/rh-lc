@@ -23,6 +23,7 @@ def redJ (F : ∀ u, FormsTied D u) (u : D.what₂.Word) (a : Fin 2) (v : Height
     (reGL (rankN D (D.R.m - 1) (Nat.sub_le _ _)) _ x))
 
 
+set_option maxHeartbeats 2000000 in
 structure TwistedJointForms (T : Formalism.L2.Herm.TwChTied D inQ) (F : ∀ u, FormsTied D u) where
 
   J_g : ∀ u μ (h : 1 ≤ D.R.m - 1) (a : Fin 2) (v : HeightOneSpectrum (𝓞 D.host.F)) (hv : (D.host.g a : 𝓞 D.host.F) ∈ v.asIdeal),

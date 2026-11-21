@@ -18,6 +18,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {α β κ : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ] {P Q R S : InfinitePlace F → ℕ}
 
 
+variable (F) in
 abbrev TensD (P Q R S : InfinitePlace F → ℕ) : Type := ⨂[ℂ] w : InfinitePlace F, Formalism.BasicNotions.TH.Pol (P w) (Q w) (R w) (S w)
 
 def FramedD (τ : ∀ w : InfinitePlace F, EmbOver E w) (JA : Matrix α α (AE F E)) (JB : Matrix β β (AE F E)) (a b : ℂ)

@@ -15,6 +15,8 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 namespace GlobalTheory
 
 
+open NumberField Matrix in
+open scoped nonZeroDivisors in
 theorem _root_.GlobalTheory.finrank_int_eq_mul_of_finite {O M : Type*} [CommRing O] [IsDomain O] [CharZero O]
     [Module.Free ℤ O] [Module.Finite ℤ O] [AddCommGroup M] [Module O M] [Module.Finite O M] :
     Module.finrank ℤ M = Module.finrank ℤ O * Module.finrank O M := by
@@ -69,6 +71,9 @@ theorem _root_.GlobalTheory.finrank_int_eq_mul_of_finite {O M : Type*} [CommRing
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 
+open NumberField Matrix in
+open scoped nonZeroDivisors in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.datum_free_int {H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} (D : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H) : Module.Free ℤ D.La := by
   haveI := D.fin
   haveI := D.proj
@@ -78,6 +83,9 @@ theorem _root_.GlobalTheory.datum_free_int {H : _root_.ReciprocityTheory.ChartRe
   exact Module.free_of_finite_type_torsion_free'
 
 
+open NumberField Matrix in
+open scoped nonZeroDivisors in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.datum_finrank_int {H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} (D : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H) :
     Module.finrank ℤ D.La = 2 * (Module.finrank ℚ E / 2 * (D.p + D.q)) := by
   haveI := D.fin
@@ -146,6 +154,9 @@ private lemma host_bar_w0 (H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.T
   · exact sub_eq_zero.mp h3
 
 
+open NumberField Matrix in
+open scoped nonZeroDivisors in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.exists_symplectic_basis_adapted_mod_eight :
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (D : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H) (g : ℕ),
       g = Module.finrank ℚ E / 2 * (D.p + D.q) → ∃ (bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] D.La),

@@ -26,6 +26,7 @@ section General
 variable {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω]
 
 
+variable (F Ω) in
 def rootFix (n : ℕ) : Subgroup (G F Ω) where
   carrier := {g | ∀ ζ : Ω, ζ ^ n = 1 → g ζ = ζ}
   one_mem' := fun _ _ => rfl

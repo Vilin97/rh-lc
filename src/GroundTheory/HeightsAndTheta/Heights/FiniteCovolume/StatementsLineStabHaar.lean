@@ -55,10 +55,12 @@ theorem mem_lineStab {h : HermitianForm F E W} {v : Basis ι E W} {x₀ : W} {g 
   Iff.rfl
 
 
+omit [NumberField E] in
 theorem vecFixGroup_le_lineStab (h : HermitianForm F E W) (v : Basis ι E W) (x₀ : W) :
     vecFixGroup h v x₀ ≤ lineStab h v x₀ := fun g hg w => ⟨1, by rw [one_smul]; exact hg w⟩
 
 
+omit [NumberField E] in
 theorem isClosed_lineStab (h : HermitianForm F E W) (v : Basis ι E W) (x₀ : W) :
     IsClosed (lineStab h v x₀ : Set (archUnitary h v)) := by
   have : (lineStab h v x₀ : Set (archUnitary h v)) = ⋂ w, (fun g : archUnitary h v =>

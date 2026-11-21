@@ -203,6 +203,7 @@ theorem exists_prod_le {σ : E →ₐ[F] E} (hσ : IsCMExt F E σ) {n : ℕ} {J 
     _ = 2 * (L * H) ^ r * Q ^ r := by rw [mul_pow, mul_pow, mul_pow]; ring
 
 
+set_option maxHeartbeats 1000000 in
 theorem height_le_pow : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E), IsHermND σ J → ∀ (r : ℕ) (X Y : Matrix (Fin n) (Fin r) E), IsWittFrame σ J X Y → ∀ (K : Subgroup (GAd σ J)) (Ω : Set (GAd σ J)) (c : ℝ), IsCompact (K : Set (GAd σ J)) → IsCompact Ω → Ω ⊆ minParOne σ J X → 0 < c → ∃ (C : ℝ≥0) (A : ℕ), ∀ g ∈ siegelSet σ J X Y Ω c K, ∀ γ ∈ ratPts σ J, height σ J g ≤ C * height σ J (γ * g) ^ A := by
   intro F E _ _ _ _ _ σ hσ n J hJ r X Y hW K Ω c hK hΩ hΩ' hc
   have hcont : Continuous fun g : GAd σ J => (height σ J g : ℝ) :=

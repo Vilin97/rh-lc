@@ -15,6 +15,7 @@ namespace GlobalTheory.BrauerRealise
 variable {G : Type} [Group G] [Fintype G]
 
 
+omit [Fintype G] in
 theorem isIrreducible_of_sum_char_mul_char_inv [Fintype G] {k : Type} [Field k] [CharZero k] {V : Type}
     [AddCommGroup V] [Module k V] [FiniteDimensional k V] (ρ : Representation k G V)
     (h : ∑ x, ρ.character x * ρ.character x⁻¹ = (Nat.card G : k)) : ρ.IsIrreducible := by

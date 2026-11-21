@@ -93,6 +93,7 @@ theorem map_maximalIdeal (hU : IsUnrExt K K' d φ) :
     (IsDiscreteValuationRing.irreducible_iff_uniformizer _).1 h2]
 
 
+open scoped nonZeroDivisors in
 theorem exists_trace_unit_of_span (K K' : UQ) (d : ℕ) (φ : K.E →+* K'.E) (hU : IsUnrExt K K' d φ)
     (hB : ∃ u : Fin d → K'.O, ∀ y : K'.O, ∃ a : Fin d → K.O,
       algebraMap K'.O K'.E y = ∑ i, φ (algebraMap K.O K.E (a i)) * algebraMap K'.O K'.E (u i)) :

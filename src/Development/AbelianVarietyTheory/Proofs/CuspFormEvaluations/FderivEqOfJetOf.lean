@@ -178,6 +178,7 @@ private theorem appLE_specMap_comp_fromSpecStalk_eq_germ {Y : Scheme.{0}} {y : Y
   congr 2
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem jetOf_eq_of_jetPt {g : ℕ} {Y : Scheme.{0}} (e e' : (Fin g → ℂ) → (Sp ℂ ⟶ Y)) (hol : IsHolFam e)
     (hol' : IsHolFam e') (m : ℕ) (h : PullbackSections.jetPt e hol m = PullbackSections.jetPt e' hol' m) (U : Y.Opens) (hU : e 0 cpt ∈ U)
     (hU' : e' 0 cpt ∈ U) (f : Γ(Y, U)) :

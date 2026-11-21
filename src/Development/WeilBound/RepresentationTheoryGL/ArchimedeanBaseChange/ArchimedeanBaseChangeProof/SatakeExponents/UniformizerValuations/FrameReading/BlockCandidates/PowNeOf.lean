@@ -26,6 +26,7 @@ def Chi {E : Type} [Field E] [NumberField E] [IsCMField E] {B : Block E} {Γ : T
     χ ⟨X, StarAlgebra.subset_adjoin ℂ _ (Or.inr rfl)⟩ ≠ 0
 
 
+set_option maxHeartbeats 1000000 in
 def ChiTr : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (π : Submodule ℂ (UA E n → ℂ))
   (S T : Finset (Pl E)) (K : ∀ w : Pl E, Subgroup (GLw n w)) (W : ∀ N : ℕ, Submodule ℂ (Kinf E N → ℂ)) (G : GenIn π S T K W)
   (Q : Prop), G.c G.a₀ G.i₀ = 1 →
@@ -55,12 +56,14 @@ abbrev BO (χ : Rd.ChAlg (fun x => F.g x i) (X F i) →⋆ₐ[ℂ] ℂ) : Type :
 end
 
 
+set_option maxHeartbeats 2000000 in
 def LimAt : Prop := ∀ (hR : Rd.ReadLimit) (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ), 1 ≤ n →
   ∀ (π : Submodule ℂ (UA E n → ℂ)) (S T : Finset (Pl E)) (F₀ : Frame0 hR π S) (F : RunFrame F₀ T), F.Struct →
   ∀ (i : F₀.C.ι) (χ : Rd.ChAlg (fun x => F.g x i) (X F i) →⋆ₐ[ℂ] ℂ),
     Chi (fun x => F.g x i) (X F i) (fun x => (F.ug x).p F.fam F.i₀) χ → Nonempty (BO F i χ)
 
 
+set_option maxHeartbeats 2000000 in
 def Ident : Prop := ∀ (hR : Rd.ReadLimit) (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ)
   (π : Submodule ℂ (UA E n → ℂ)) (S T : Finset (Pl E)) (F₀ : Frame0 hR π S) (F : RunFrame F₀ T)
   (i : F₀.C.ι) (χ : Rd.ChAlg (fun x => F.g x i) (X F i) →⋆ₐ[ℂ] ℂ),

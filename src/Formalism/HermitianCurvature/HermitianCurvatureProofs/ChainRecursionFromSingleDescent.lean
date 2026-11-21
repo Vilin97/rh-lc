@@ -1030,6 +1030,7 @@ theorem fam_diff {Φ : Fn k r (Wq →L[ℂ] Wp)} (h : FamFF k r z z' π π' L Dc
   exact hev.mono fun c' hc' => hFe (c', g) hc' hg
 
 
+variable (z z' π π') in
 def RS (L : Fin (r + 1)) (Dc Dc₀ : (Fin r → ℂ) → Set (Mx k r)) (S : Set (Fin r → ℂ))
     (Φ Ψ : Fn k r (Wq →L[ℂ] Wp)) : Prop :=
   FamFF k r z z' π π' L Dc Φ ∧ FamFF k r z z' π π' L Dc₀ Ψ ∧
@@ -1244,6 +1245,7 @@ theorem step_fam (hCS : ChainStep) (hR : ResMem) (hFO : FamOps) (hTP : TPreserve
   exact (hCS Wp Wq k r z z' π π' l D' Y a b hz hz' hdom' (Φ c₀) hJ₀ c₀ hc₀ g hg hgD').symm
 
 
+variable (z z' π π') in
 def RK (D : Set (Mx k r)) (l : Fin r) (Φ Ψ : Fn k r (Wq →L[ℂ] Wp)) : Prop :=
   FamFF k r z z' π π' l.castSucc (Dcell D l.castSucc) Φ ∧ Ind l.val Φ ∧
     FamFF k r z z' π π' l.succ (Dcell D l.succ) Ψ ∧
@@ -1447,6 +1449,7 @@ theorem fam_congr (hS : SData z z' L Dc Dc (OmX r)) {Φ Ψ : Fn k r (Wq →L[ℂ
     fun c hc => ff_congr (hS.d c hc) (h.2 c hc) (fun g hg => he c hc g hg.1 hg.2)⟩
 
 
+variable (π π') in
 def famData (hS : SData z z' L Dc Dc (OmX r)) : HatData (Fn k r (Wq →L[ℂ] Wp)) :=
   mkData (E := Wq →L[ℂ] Wp) L Dc (FamFF k r z z' π π' L Dc) fam_zero (fun _ _ h h' => fam_add h h')
     (fun s _ h => fam_smul s h) (fun Φ h => fam_congr hS h (fun _ hc _ hg hgD => cutP_on Φ hc hg hgD))

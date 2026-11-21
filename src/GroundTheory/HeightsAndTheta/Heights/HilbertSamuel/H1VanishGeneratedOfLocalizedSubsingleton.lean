@@ -24,6 +24,8 @@ variable {S : Type} [CommRing S] {K : Type} [Fintype K] [LinearOrder K] {ι : K 
   {M : Type} [AddCommGroup M] [Module (MRingOver S ι) M] [Module S M] [IsScalarTower S (MRingOver S ι) M]
 
 
+omit [Fintype K] [LinearOrder K] [∀ k, Fintype (ι k)] [∀ k, LinearOrder (ι k)] [Module S M]
+  [IsScalarTower S (MRingOver S ι) M] in
 theorem loc_subsingleton_of_kill {T : Submonoid (MRingOver S ι)} {u : MRingOver S ι} (hu : u ∈ T)
     (hk : ∀ y : M, u • y = 0) : Subsingleton (LocalizedModule T M) := by
   have h0 : ∀ x : LocalizedModule T M, x = 0 := by
@@ -51,6 +53,7 @@ theorem h1_vanish_generated_of_localized_subsingleton
     exact (h 0 I).elim _ _
 
 
+omit [LinearOrder K] [∀ k, LinearOrder (ι k)] in
 theorem isMGraded_punit : KH.IsMGraded S ι (fun _ : K → ℤ => (⊥ : Submodule S PUnit)) := by
   refine ⟨DirectSum.isInternal_submodule_of_iSupIndep_of_iSup_eq_top (fun _ => disjoint_bot_left)
     (Subsingleton.elim _ _), fun _ _ _ _ _ _ => (Submodule.mem_bot _).2 (Subsingleton.elim _ _)⟩

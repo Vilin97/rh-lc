@@ -221,6 +221,12 @@ theorem _root_.GlobalTheory.ShortLawsCompare.isUnit_idealAt {n b : ℕ} {Λ : _r
   rw [← FractionalIdeal.coe_mul, mul_inv_cancel₀ hJ, FractionalIdeal.coe_one]
 
 
+set_option autoImplicit false in
+open NumberField MvPolynomial in
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H}
+  {l : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H} in
+variable (c : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Coeff l) in
 theorem _root_.GlobalTheory.ShortLawsCompare.isBeta_ratio {n : ℕ} {Λ : _root_.Formalism.L2.Pj.GenLat E n} (hU : Λ.Unimod)
     (hT : Λ.TrivAt l.M) {β β' : c.F}
     (h : _root_.GlobalTheory.IndefiniteRowSideFullHecke.BlockLatticeAdmissibility.IsBeta Dw c Λ β) (h' : _root_.GlobalTheory.IndefiniteRowSideFullHecke.BlockLatticeAdmissibility.IsBeta Dw c Λ β') :
@@ -257,6 +263,12 @@ theorem _root_.GlobalTheory.ShortLawsCompare.isBeta_ratio {n : ℕ} {Λ : _root_
   simpa using this
 
 
+set_option autoImplicit false in
+open NumberField MvPolynomial in
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H}
+  {l : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H} in
+variable (c : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Coeff l) in
 theorem _root_.GlobalTheory.ShortLawsCompare.isBeta_mul {n : ℕ} {Λ : _root_.Formalism.L2.Pj.GenLat E n} {β ζ : c.F}
     (h : _root_.GlobalTheory.IndefiniteRowSideFullHecke.BlockLatticeAdmissibility.IsBeta Dw c Λ β) (hζ : IsOfFinOrder ζ) :
     _root_.GlobalTheory.IndefiniteRowSideFullHecke.BlockLatticeAdmissibility.IsBeta Dw c Λ (ζ * β) := by
@@ -297,6 +309,7 @@ section Objects
 variable (c : Coeff l) {n₁ n₂ : ℕ}
 
 
+omit [IsCMField E] in
 theorem blockLat_eq (Λ₁ : GenLat E n₁) (Λ₂ : GenLat E n₂) : BlockLatticeAdmissibility.blockLat Λ₁ Λ₂ = BlockProductLattices.blockLat Λ₁ Λ₂ := rfl
 
 theorem latAdm_iff {n : ℕ} (bad : ℕ) (Λ : GenLat E n) : BlockLatticeAdmissibility.LatAdm l bad Λ ↔ BlockProductLattices.LatOK bad l.M Λ := Iff.rfl

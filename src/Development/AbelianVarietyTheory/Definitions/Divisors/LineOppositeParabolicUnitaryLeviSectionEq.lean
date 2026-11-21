@@ -494,6 +494,7 @@ theorem mul_antiJ_apply (n : ℕ) (A : Matrix (Fin n) (Fin n) L) (i j : Fin n) :
   simp
 
 
+omit [Valued L (WithZero (Multiplicative ℤ))] in
 theorem mem_GU_iff (σ : L →+* L) (n : ℕ) (g : GL (Fin n) L) :
     g ∈ GU σ n ↔ ∀ i j, (g⁻¹).val i j = σ (g.val j.rev i.rev) := by
   have h1 : g ∈ GU σ n ↔ cT σ g.val * antiJ L n = antiJ L n * (g⁻¹).val := by
@@ -513,6 +514,7 @@ def SelfDualBlocks {n : ℕ} (b : Fin n → α) : Prop := ∀ i j, b i.rev < b j
 theorem selfDualBlocks_id (n : ℕ) : SelfDualBlocks (id : Fin n → Fin n) := fun _ _ => Fin.rev_lt_rev
 
 
+omit [Valued L (WithZero (Multiplicative ℤ))] in
 theorem blockProj_mem_GU (σ : L →+* L) {n : ℕ} {b : Fin n → α} (hb : SelfDualBlocks b) (q : blockQ L b)
     (hq : (q : GL (Fin n) L) ∈ GU σ n) : blockProj b q ∈ GU σ n := by
   rw [mem_GU_iff] at hq ⊢

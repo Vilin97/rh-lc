@@ -143,6 +143,7 @@ theorem conjVec_smul (z : ℂ) {x0 x1 : VsV D i ℂ} (h : ConjVec i τ x0 x1) : 
   rfl
 
 
+set_option maxHeartbeats 800000 in
 theorem classSum_conj (hz : RelConj M w τ) {p κ ζ : ℂ} (hκ0 : κ ≠ 0) {ψ ψ' : Twist D Circle} (hQ : ψ'.Q = ψ.Q)
     {ω ω' : PairRep (Vc D i) (Wc D i)}
     (H : ∀ h ∈ GfC (Vc D i), ∀ x x' : VsV D i ℂ, ConjVec i τ x x' → ConjFun M w τ ζ

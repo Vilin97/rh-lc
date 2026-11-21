@@ -38,6 +38,7 @@ theorem continuous_inv_entry (i j : ι) :
   exact h.matrix_elem i j
 
 
+omit [DecidableEq ι] in
 theorem finPartPi_mulVec (M : Matrix ι ι 𝔸[K]) (x : ι → 𝔸[K]) :
     finPartPi (M *ᵥ x) = M.map Adele2.finRingHom *ᵥ finPartPi x := by
   funext i
@@ -47,6 +48,7 @@ theorem finPartPi_mulVec (M : Matrix ι ι 𝔸[K]) (x : ι → 𝔸[K]) :
   exact Finset.sum_congr rfl fun j _ ↦ map_mul _ _ _
 
 
+omit [DecidableEq ι] in
 theorem infPartPi_mulVec (M : Matrix ι ι 𝔸[K]) (x : ι → 𝔸[K]) :
     infPartPi (M *ᵥ x) = M.map Adele2.infRingHom *ᵥ infPartPi x := by
   funext i
@@ -56,6 +58,7 @@ theorem infPartPi_mulVec (M : Matrix ι ι 𝔸[K]) (x : ι → 𝔸[K]) :
   exact Finset.sum_congr rfl fun j _ ↦ map_mul _ _ _
 
 
+omit [DecidableEq ι] in
 theorem norm_mulVec_le (M : Matrix ι ι (mixedSpace K)) (u : ι → mixedSpace K) :
     ‖M *ᵥ u‖ ≤ (∑ i, ∑ j, ‖M i j‖) * ‖u‖ := by
   have hc : 0 ≤ ∑ i, ∑ j, ‖M i j‖ :=

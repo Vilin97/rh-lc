@@ -90,6 +90,7 @@ theorem secVal_comp (ξ' : Spec (CommRingCat.of Ω') ⟶ X') (f : X' ⟶ X) (U :
   rfl
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem secVal_spec (ξ : Spec (CommRingCat.of Ω) ⟶ X) (i : Ω →+* Ω') (U : X.Opens)
     (h : genPt (Spec.map (CommRingCat.ofHom i) ≫ ξ) ∈ U) (h' : genPt ξ ∈ U) (s : Γ(X, U)) :
     secVal (Spec.map (CommRingCat.ofHom i) ≫ ξ) U h s = i (secVal ξ U h' s) := by
@@ -222,6 +223,7 @@ theorem chart_step {o : Type} [CommRing o] {Ω : Type} [Field Ω] [Algebra o Ω]
     exact (hs _).1 ((mem_chRing_iff M' hne hV hg' _).2 ⟨b, rfl⟩)
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem isFinite_of_charts {o : Type} [CommRing o] {Ω : Type} [Field Ω] [Algebra o Ω] {κ : Type} [Finite κ]
     {x : κ → Ω} (M : PModel o x) (Ω' : Type) [Field Ω'] [Algebra Ω Ω'] [Algebra o Ω'] [IsScalarTower o Ω Ω']
     {κ' : Type} [Finite κ'] {y : κ' → Ω'} (M' : PModel o y) (f : M'.X ⟶ M.X) (e : κ → κ') :

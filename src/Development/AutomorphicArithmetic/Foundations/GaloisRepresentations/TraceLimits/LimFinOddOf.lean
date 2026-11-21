@@ -17,6 +17,7 @@ open GlobalTheory.GalCut GlobalTheory.UnitaryBC GlobalTheory.Cong GlobalTheory.P
 namespace UpperTheory.Gal.Lim
 
 
+open GlobalTheory.Cong.OffTLimit GlobalTheory.CongL.UnitLim in
 theorem limWU4_of : ∀ (Rk : ℕ → Prop) (Ty : UnitaryAutomorphicTypeClass) (Gen : ℕ → ℕ → Multiset ℂˣ → Prop) (Wt : SeedWtU),
     SeedWU4 Rk Ty Gen Wt → CongUW4 Rk Ty Gen Wt → LimWU4 Rk := by
   intro Rk Ty Gen Wt hSd hC E Ω _ _ _ _ _ _ l _ ι a ha hRk d hF T hT U hU w₀ v' hw₀ hsp₀ hv' hspv hvap

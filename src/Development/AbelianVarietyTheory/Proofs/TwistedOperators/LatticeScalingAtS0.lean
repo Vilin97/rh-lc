@@ -165,6 +165,7 @@ theorem modul_not_le {T : Type} {L : LevCh D T} (P : Places L) (sc : Consts) {Q 
 end GlobalTheory.DepthMap
 
 
+open GlobalTheory.DepthMap in
 theorem GlobalTheory.DepthMap.smul_mulVec_mem_latV : All fun {D} _ _ {sc} {G} _ _ => ∀ i, i < D.R.m → ∀ u ∈ latRow G i, ∀ v ∈ G.pl.S0, ∀ y ∈ latV (G.V (.grid (i + 1) 0)) (G.Λ (.grid (i + 1) 0)) (· = v), ∀ s ∈ GlobalTheory.SeeSaw.idV (D.host.AA⁻¹ * ((G.pl.modul sc : Ideal (𝓞 D.host.E)) : GlobalTheory.SeeSaw.FI D)⁻¹) v, s • (u *ᵥ y) ∈ latV (G.V (.grid i 0)) (G.Λ (.grid i 0)) (· = v) := by
   intro D hD T L μ0 hL sc G W M hM i hi u hu v hv y hy s hs
   classical

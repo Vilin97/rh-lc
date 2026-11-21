@@ -28,6 +28,7 @@ def chiIdem (χ : G → K) : MonoidAlgebra K G :=
 def idemOf (X : Finset (G → K)) : MonoidAlgebra K G := ∑ χ ∈ X, chiIdem χ
 
 
+open Classical in
 def lvlIdem (P : Subgroup G) (ψ : P →* Kˣ) : MonoidAlgebra K G :=
   ∑ h : P, MonoidAlgebra.single (h : G) ((Nat.card P : K)⁻¹ * ((ψ h⁻¹ : Kˣ) : K))
 

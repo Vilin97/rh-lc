@@ -20,6 +20,7 @@ variable {K E Kv Ωv : Type u} [Field K] [Field E] [Field Kv] [Field Ωv] [Algeb
   [Algebra K Kv] [Algebra Kv Ωv] [Algebra K Ωv] [IsScalarTower K Kv Ωv]
 
 
+variable (Kv) in
 noncomputable def decompHom [Normal K E] (ι : E →ₐ[K] Ωv) : Gal(Ωv/Kv) →* Gal(E/K) :=
   letI : Algebra E Ωv := ι.toRingHom.toAlgebra
   haveI : IsScalarTower K E Ωv := IsScalarTower.of_algebraMap_eq fun x => (ι.commutes x).symm
@@ -161,6 +162,7 @@ variable {K Ω Kv Ωv : Type u} [Field K] [NumberField K] [Field Ω] [Algebra K 
   [Field Kv] [Field Ωv] [Algebra K Kv] [Algebra Kv Ωv] [Algebra K Ωv] [IsScalarTower K Kv Ωv]
 
 
+variable (Kv) in
 noncomputable def decompHomS (S : Set (HeightOneSpectrum (𝓞 K))) (ι : Ω →ₐ[K] Ωv) :
     Gal(Ωv/Kv) →* galUnramifiedOutside K Ω S :=
   decompHom Kv (ι.comp (maxUnramifiedOutside K Ω S).val)

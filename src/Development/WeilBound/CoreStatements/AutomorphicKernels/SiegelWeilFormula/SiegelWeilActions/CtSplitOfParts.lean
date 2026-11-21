@@ -42,6 +42,7 @@ def FirstEq : Prop := ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
     ∑' q : {q : Cs d // LagrangianCondition L (rep q)}, tm L f s₁ z nb lam 𝓖 T uM ν 𝓤 (rep q.1) x = first L f s₁ z nb' lam' 𝓖' T' x
 
 
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} in
 structure CLaw {d : SD σ} (R : RD d) (L : LD d) (w₁ : d.G) (cM : (Fin L.n → AE F E) × AF F → d.G)
     (κ : Measure ((Fin L.n → AE F E) × AF F)) : Prop where
   comm : ∀ w (τ : ℝ) (y : GR d.n) (g : G2 σ L.Y), IsDil (Pi.single L.i₀ 1) τ y → L.j g * R.ι w y = R.ι w y * L.j g
@@ -70,6 +71,7 @@ def SecLaw : Prop := ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
     sec2 L f s₁ z nb lam 𝓖 T uM ν 𝓤 (R.ι w y * x) = Complex.exp (τ * (d.n - 2 * z)) * sec2 L f s₁ z nb lam 𝓖 T uM ν 𝓤 x
 
 
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} in
 theorem phz_par {d : SD σ} {f : d.G → ℂ} {s₁ : ℂ} (hf : IsSec d.K d.χ s₁ f) (z : ℂ) {τ : ℝ} {p : d.G} {t : GL (Fin d.n) (AE F E)}
     (hp : IsPar p t) (ha : (absE F E (Matrix.GeneralLinearGroup.det t) : ℝ) = Real.exp (-(2 * τ)))
     (hχ : (d.χ (Matrix.GeneralLinearGroup.det t) : ℂ) = 1) (g : d.G) :
@@ -113,6 +115,7 @@ theorem secLaw_of : SecUnf → SecLaw := by
   rw [tsum_mul_left]; ring
 
 
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} in
 theorem lhs_eq_tsum {d : SD σ} (L : LD d) (f : d.G → ℂ) (s₁ z : ℂ) (nb : nA σ d.Y d.b → d.G) (lam : Measure (nA σ d.Y d.b))
     (𝓖 : Set (nA σ d.Y d.b)) (T : nF σ d.Y d.b) (uM : (Fin L.n → AE F E) → d.G) (ν : Measure (Fin L.n → AE F E))
     (𝓤 : Set (Fin L.n → AE F E)) (hν : ν 𝓤 = 1) (hlam : lam 𝓖 = 1) (x : d.G)

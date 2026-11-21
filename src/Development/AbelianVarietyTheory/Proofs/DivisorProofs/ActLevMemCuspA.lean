@@ -159,6 +159,7 @@ theorem carried_of_eval (hW : R.models_HW) (hg : R.models_gW) {i : Fin D.R.m} {�
   exact (h u).trans (congrArg (c * ·) (actW_apply R i g hk σ _ v u).symm)
 
 
+set_option maxHeartbeats 800000 in
 theorem isGeoAct_levRep (ht : TieIn T R κ v₀) (hW : R.models_HW) (hg : R.models_gW) (i : Fin D.R.m) {Tp : Type} {tup : Tp → T0}
     (O : OMDat T.toCore R i Tp tup) (hL : ActLev (Xo := T.Q.Xo ((i : ℕ) + 1)) T.Q.c O.lev2)
     (hk : ∀ g, ∃ k, Lev.IsLevelLift (Wc D i) (R.βW i) (R.datWp i R.triv) (R.eG g) k)
@@ -244,6 +245,7 @@ theorem mu_lift (hR : R.toLevCh.Is A.μ0) (ht : TieIn T R κ v₀) (hpb : T.pb =
   exact inv_mul_cancel₀ (Circle.coe_ne_zero _)
 
 
+variable (T) in
 def frameRead (i : Fin D.R.m) (σ : T.Q.c.F →+* ℂ) (hV : T.V ((i : ℕ) + 1) σ = Wc D i) (c : (T.U ((i : ℕ) + 1) σ).Comp → ℂ)
     (f : T.R ((i : ℕ) + 1)) (h : GA D (Wc D i)) : ℂ :=
   c (castDict hV (T.dict ((i : ℕ) + 1) σ) h).1 * rdU (T.U ((i : ℕ) + 1) σ) f (castDict hV (T.dict ((i : ℕ) + 1) σ) h).1

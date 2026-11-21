@@ -142,6 +142,7 @@ theorem subsingleton_of_divisible {X : Type} [AddCommGroup X] [Module.Free ℤ X
   exact b.repr.injective.subsingleton
 
 
+attribute [local instance] TorusExt.gtGroup in
 theorem subsingleton_characters (h₁ : Out.Laws) (h₂ : Out.Laws2) (hT : GlobalTheory.ZH.UTorsSt) {o : Type} [CommRing o]
     {g n j : ℕ} {J : Type} {b : TBase o ((n ^ j) ^ 2)} (W : Type) [CommRing W] [IsDomain W] [IsDiscreteValuationRing W]
     [CharZero W] (hc : IsAdicComplete (IsLocalRing.maximalIdeal W) W) {s : Sp (FractionRing W) ⟶ Sp o}

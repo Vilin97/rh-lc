@@ -2484,6 +2484,7 @@ theorem bt_48' {y : ℝ} (h : 48 ≤ y) : 48 * y ^ 2 ≤ y ^ 3 := by
   exact mul_le_mul_of_nonneg_right h (by positivity)
 
 
+set_option maxHeartbeats 1000000 in
 theorem bt_H_of (L : SizeData₂ D) (K : Consts) (hK : K.Nonneg) (Ce : ℝ) (hCe : 0 < Ce) (hsz : SizesAt L)
     (hA : ∀ de x : ℝ, 0 < de → de ≤ 1 → 3 ≤ x →
       (goodG' (rG L.sc) de (hG L.sc) x : ℝ) ≤ Ce * Real.log x / de ∧
@@ -2854,6 +2855,7 @@ theorem bt_tau_pt (X : Inst D L) (K : Consts) (C : ℝ) (hC : 0 ≤ C) (hT : Cor
   · ring
 
 
+open Classical in
 theorem bt_Ta_at (X : Inst D L) (K : Consts) (C : ℝ) (hC : 0 ≤ C) (hM : CornerGLContinuity.MertensBound D)
     (hF : ∀ w, L.tau w = tauP X K (aL L) (bL L) (D.what₂.places.resChar w)) (hT : CornerGLContinuity.CutSizes D L X K C)
     (hNB : ∀ p t0, t0 ∈ VV X K (aL L) (bL L) p → 1 ≤ (Nv X p t0 : ℝ) * (L.sc.a / p)) :

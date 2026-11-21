@@ -67,6 +67,7 @@ theorem acoord_sum_vecMul {R M : Type*} [CommRing R] [AddCommGroup M] [Module R 
   rw [Finset.sum_comm]
 
 
+open Formalism.MainNotions.WachCoordinates.Br Formalism.MainNotions.UnusedSlot80.PhiPowers Formalism.MainNotions.UnusedSlot80.SatW Formalism.MainNotions.UnusedSlot80.SatPW in
 theorem repVV_zero_coord [FiniteDimensional Qp LL] (W : LocWach PD LL O v n)
     (hcase : Formalism.MainNotions.LiftingTheory.CaseA W) (hP9 : Formalism.MainNotions.DeltaInvariantLattices.P9W W) (hinj : Function.Injective (algebraMap O LL))
     (T : LocLat G Qp LL O) (hT : IsCrys PD T.ρ) (c' : ZMod n) (e M : ℕ) (hM : 1 ≤ M) (Λ : LetA O n)

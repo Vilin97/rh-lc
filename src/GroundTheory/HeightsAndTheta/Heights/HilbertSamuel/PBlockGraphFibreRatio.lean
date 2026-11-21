@@ -134,6 +134,7 @@ end Block
 end BlockGraphFibreRatio
 
 
+open BlockGraphFibreRatio in
 theorem BlockGraphFibreRatio.proof : BlockGraphFibreRatio.Statement := by
   intro D K _ _ ι _ Ω _ _ κ _ y k₀ M N x hy hB hI G k i j hj
   classical

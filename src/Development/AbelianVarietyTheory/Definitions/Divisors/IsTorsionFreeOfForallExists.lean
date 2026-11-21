@@ -63,9 +63,11 @@ theorem genericPoint_mem {x : X} (hx : x ∈ V) : genericPoint X ∈ V :=
   (genericPoint_specializes x).mem_open V.isOpen hx
 
 
+variable (F) in
 abbrev genStalk : Type := (F.presheaf.stalk (genericPoint X) :)
 
 
+variable (F) in
 def genRank : ℕ := Module.finrank X.functionField (genStalk F)
 
 theorem genRank_congr (φ : F ≅ G) : genRank F = genRank G :=
@@ -100,6 +102,7 @@ theorem genRank_cokernel (i : G ⟶ F) [Mono i] [h : IsFiniteQC F] :
   this
 
 
+variable (F) in
 def IsTorsionFree : Prop :=
   ∀ (V : X.Opens) (h : genericPoint X ∈ V) (s : Γ(F, V)), F.presheaf.germ V _ h s = 0 → s = 0
 
@@ -183,6 +186,7 @@ theorem IsProjCurve.finiteCoh (h : IsProjCurve k C) (F : C.Modules) [IsFiniteQC 
     FiniteCoh k F := finiteCoh_of_isProjOver (algebraMap_eq_strHom k C) F h.isProjOver
 
 
+omit [Field k] [Algebra k Γ(C, ⊤)] in
 theorem suppDim_le_zero [IsIntegral C] (hd : topologicalKrullDim C = 1) {F : C.Modules} [IsFiniteQC F]
     (h : genRank F = 0) : QCoh.suppDim F ≤ 0 := by
   have := topologicalKrullDim_add_one_le (QCoh.isClosed_support F) isClosed_univ
@@ -204,6 +208,7 @@ theorem degOfRank_congr (φ : F ≅ G) : degOfRank k F r = degOfRank k G r := by
   rw [degOfRank, degOfRank, chi_congr k φ]
 
 
+variable {k} in
 theorem degOfRank_shortExact {S : ShortComplex X.Modules} (hS : S.ShortExact)
     (h₁ : FiniteCoh k S.X₁) (h₃ : FiniteCoh k S.X₃) :
     degOfRank k S.X₂ (r + s) = degOfRank k S.X₁ r + degOfRank k S.X₃ s := by
@@ -261,6 +266,7 @@ theorem deg_le_of_genRank_eq (i : G ⟶ F) [Mono i] [IsFiniteQC G] [IsFiniteQC F
 end IsProjCurve
 
 
+variable (k) in
 def degLB (L : LB X) : ℤ := deg k (toMod L)
 
 variable {L M N : LB X}
@@ -304,15 +310,19 @@ def IsProjCurve.degPic (hC : IsProjCurve k X) : CechPic.Pic X →+ ℤ :=
 
 
 
+variable (k) in
 def subDegs (F : X.Modules) : Set ℤ :=
   {d | ∃ (G : X.Modules) (i : G ⟶ F), IsCohSub i ∧ deg k G = d}
 
 
+variable (k) in
 def IsMaxSubDeg (F : X.Modules) (P : ℤ) : Prop := IsGreatest (subDegs k F) P
 
 theorem IsCohSub.deg_mem {i : G ⟶ F} (h : IsCohSub i) : deg k G ∈ subDegs k F := ⟨G, i, h, rfl⟩
 
 
+variable (k) in
+open ZeroObject in
 theorem zero_mem_subDegs (F : X.Modules) : 0 ∈ subDegs k F :=
   ⟨0, 0, isCohSub_of_isZero (isZero_zero _) _, deg_eq_zero_of_isZero k (isZero_zero _)⟩
 

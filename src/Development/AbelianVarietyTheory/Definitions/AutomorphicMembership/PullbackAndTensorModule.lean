@@ -89,6 +89,7 @@ abbrev isTensor : IsTensor (Λ.obj a) (Λ.act a) G a Λ.L := Λ.pres.isTensor a
 end Group
 
 
+variable (E) in
 def stdForm (n : ℕ) : HermForm E (Fin n → E) :=
   HermForm.ofFun (fun x y => ∑ i, x i * star (y i)) (fun x y z => by simp [add_mul, Finset.sum_add_distrib])
     (fun c x y => by simp [Finset.mul_sum, _root_.mul_assoc]) (fun x y => by simp [mul_comm])
@@ -125,15 +126,18 @@ def ofGenLat {n : ℕ} (Γ : Formalism.L2.Pj.GenLat E n) (hL : Submodule.IsLatti
     exact ⟨fun ⟨c, hc⟩ => ⟨star c, congrArg star hc⟩, fun ⟨c, hc⟩ => ⟨star c, (congrArg star hc).trans (star_star _)⟩⟩
 
 
+omit [NumberField E] [IsCMField E] in
 theorem mem_stdLat {n : ℕ} (x : Fin n → E) : x ∈ Formalism.L2.Pj.stdLat E n ↔ ∀ i, ∃ c : 𝓞 E, algebraMap (𝓞 E) E c = x i := by
   simp [Formalism.L2.Pj.stdLat, Submodule.mem_pi, Submodule.mem_one]
 
 
+omit [NumberField E] [IsCMField E] in
 theorem single_mem_stdLat {n : ℕ} (i : Fin n) : (Pi.single i 1 : Fin n → E) ∈ Formalism.L2.Pj.stdLat E n :=
   (mem_stdLat _).2 fun j => ⟨Pi.single (M := fun _ => 𝓞 E) i 1 j, by
     by_cases h : j = i <;> simp [h]⟩
 
 
+variable (E) in
 def stdEquiv (n : ℕ) : Formalism.L2.Pj.stdLat E n ≃ₗ[𝓞 E] (Fin n → 𝓞 E) where
   toFun x i := ⟨x.1 i, by obtain ⟨c, hc⟩ := (mem_stdLat _).1 x.2 i; exact hc ▸ c.isIntegral_coe⟩
   invFun v := ⟨fun i => algebraMap (𝓞 E) E (v i), (mem_stdLat _).2 fun i => ⟨v i, rfl⟩⟩
@@ -143,6 +147,7 @@ def stdEquiv (n : ℕ) : Formalism.L2.Pj.stdLat E n ≃ₗ[𝓞 E] (Fin n → �
   right_inv _ := rfl
 
 
+omit [NumberField E] [IsCMField E] in
 theorem isLattice_stdLat (n : ℕ) : Submodule.IsLattice E (Formalism.L2.Pj.stdLat E n) where
   fg := Module.Finite.iff_fg.1 (Module.Finite.equiv (stdEquiv E n).symm)
   span_eq_top := eq_top_iff.2 fun x _ => by
@@ -162,6 +167,7 @@ theorem unimod_stdLat (n : ℕ) : (⟨Formalism.L2.Pj.stdLat E n⟩ : Formalism.
     exact ⟨star c, (congrArg star hc).trans (star_star (v i))⟩
 
 
+variable (E) in
 def std (n : ℕ) : Unim E := ofGenLat ⟨Formalism.L2.Pj.stdLat E n⟩ (isLattice_stdLat n) (unimod_stdLat n)
 
 theorem gramE_std (n : ℕ) : (std E n).gramE = (1 : Matrix (Fin n) (Fin n) E) := by

@@ -45,6 +45,7 @@ open scoped Classical
 variable {F : Type} [Field F] [NumberField F]
 
 
+variable (F) in
 def trForm {κ : Type} [Fintype κ] (y : κ → AF F) : (κ → mixedEmbedding.mixedSpace F) →L[ℝ] ℝ :=
   LinearMap.toContinuousLinearMap
     ((Algebra.trace ℝ (mixedEmbedding.mixedSpace F)).comp
@@ -55,6 +56,7 @@ theorem trForm_apply {κ : Type} [Fintype κ] (y : κ → AF F) (z : κ → mixe
   simp [trForm, LinearMap.sum_apply]
 
 
+variable (F) in
 def mult {κ : Type} [Fintype κ] (y : κ → AF F) : (κ → mixedEmbedding.mixedSpace F) →L[ℝ] ℂ :=
   (-(2 * Real.pi * Complex.I)) • (Complex.ofRealCLM.comp (trForm F y))
 
@@ -63,6 +65,7 @@ theorem mult_apply {κ : Type} [Fintype κ] (y : κ → AF F) (z : κ → mixedE
   simp [mult]
 
 
+variable (F) in
 def heisD {κ : Type} [Fintype κ] (v : κ → mixedEmbedding.mixedSpace F) (y : κ → AF F) :
     SInf F κ →ₗ[ℂ] SInf F κ :=
   (LineDeriv.lineDerivOpCLM ℂ (SInf F κ) v + SchwartzMap.smulLeftCLM ℂ (⇑(mult F y))).toLinearMap
@@ -135,6 +138,7 @@ theorem exists_heisLine_deriv {E : Type} [Field E] [NumberField E] [Algebra F E]
 end GlobalTheory.HeisDeriv
 
 
+open GlobalTheory.HeisDeriv in
 theorem GlobalTheory.HeisDeriv.exists_actsD_heisLine : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
     {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ X W) (ψ : AddChar (AF F) ℂ), IsStd ψ →
     ∀ u : Matrix (Fin n) (Fin d) (AE F E), At (evI F) u →

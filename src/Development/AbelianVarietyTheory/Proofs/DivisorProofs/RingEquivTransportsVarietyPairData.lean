@@ -239,6 +239,7 @@ theorem effAt_iff {n : ℕ} (R : Subring K) (η : Forms c n) (φ : K →₀ ℚ)
     exact h _ ((isPrimeOf_place e he E R).2 hE)
 
 
+include he in
 theorem isLocModel_map {R : Subring K} (h : IsLocModel c R) : IsLocModel c' (R.map e.toRingHom) where
   const_mem a := ⟨c a, h.const_mem a, he a⟩
   isLocalRing := by
@@ -264,6 +265,7 @@ theorem isLocModel_iff (R : Subring K) : IsLocModel c R ↔ IsLocModel c' (R.map
   rwa [hR] at h'
 
 
+include he in
 theorem trBasis_map {n : ℕ} {x : Fin n → K} (h : TrBasis c x) : TrBasis c' (e ∘ x) := by
   letI := c.toAlgebra
   letI := c'.toAlgebra

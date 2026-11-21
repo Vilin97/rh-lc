@@ -83,6 +83,7 @@ theorem inv_up (X0 : Matrix (Fin D.R.rS) (Fin D.R.rS) D.host.E) (hup : ∀ b a, 
 end LatB
 
 
+open LatB LatA Alg in
 theorem dictLatB_holds : DictLatB := by
   intro D X u n hn hLQ
   obtain ⟨hXs, hxs, hMs⟩ := hLQ

@@ -26,6 +26,7 @@ variable {D : D7}
 instance instFactG' (k : Fin 2) : Fact (D.host.g k).Prime := ⟨D.host.g_prime k⟩
 
 
+open Classical in
 theorem ES_inter (S S' : Set (Tup2 D)) : ES S * ES S' = ES (S ∩ S') := by
   rw [ES_eq, ES_eq, ES_eq, Finset.sum_mul_sum]
   simp only [Ea_mul]
@@ -50,6 +51,7 @@ theorem Ea_zero (a : CV D) (h : tupOf a ∉ labT (D := D)) : Ea a = 0 := by
   rfl
 
 
+open Classical in
 theorem ES_split (S : Set (Tup2 D)) : ES S = ∑ t ∈ (labT (D := D)).filter (· ∈ S), ES {t} := by
   simp only [ES_eq]
   have e1 : ∑ a ∈ Finset.univ.filter (fun a : CV D => tupOf a ∈ S), Ea a =
@@ -104,6 +106,7 @@ theorem hat_sum {ι : Type} (F : Finset ι) (f : ι → X.B.I.Gf → ℂ) (γ : 
   unfold hat; rw [Finset.mul_sum]
 
 
+open Classical in
 theorem eT_split (S : Set (Tup2 D)) :
     eT X S = fun x => ∑ t ∈ (labT (D := D)).filter (· ∈ S), eT X {t} x := by
   refine hat_inj hS (biInv_eT X S) (biInv_sum _ _ fun t => biInv_eT X {t}) fun γ => ?_
@@ -164,6 +167,7 @@ theorem isRConvF_sum {ι : Type} (F : Finset ι) (f : ι → X.B.I.Gf → ℂ)
   exact Finset.sum_congr rfl fun i _ => (h i).2 x y
 
 
+open Classical in
 theorem reT_split (S : Set (Tup2 D)) : ReT X S = ∑ t ∈ (labT (D := D)).filter (· ∈ S), ReT X {t} := by
   have h := isRConvF_sum X ((labT (D := D)).filter (· ∈ S)) (fun t => eT X {t}) (fun t => ReT X {t})
     (fun t => reT_spec X (etInt_holds X) {t})

@@ -81,14 +81,17 @@ abbrev splitPre : DegPre K := toricPre K X fun _ => 1
 variable {X}
 
 
+omit [IsDomain K] [Module.Free ℤ X] [Module.Finite ℤ X] in
 theorem polar_one (a b : X) : polar (K := K) (fun _ : X => 1) a b = 1 := by simp [polar]
 
 
+omit [Module.Free ℤ X] [Module.Finite ℤ X] in
 theorem polar_one_smul {O : Type} [Ring O] [StarRing O] [Module O X] (a : O) (y z : X) :
     polar (K := K) (fun _ : X => 1) (a • y) z = polar (K := K) (fun _ : X => 1) y (star a • z) :=
   (polar_one K _ _).trans (polar_one K _ _).symm
 
 
+variable (X) in
 def splitOAct (O : Type) [Ring O] [StarRing O] [Module O X] : (splitPre K X).OAct O :=
   toricOAct _ O (polar_one_smul K)
 
@@ -201,10 +204,12 @@ theorem qkExt_qkPt {F' : Type} [Field F'] [Algebra (FractionRing K) F'] (f : F �
   · exact fun e => ⟨congrArg QkPt.y e, (pt_bijective _ F').1 (congrArg QkPt.g e)⟩
 
 
+omit [Algebra (FractionRing K) F] in
 theorem pow_eq_one_of_prim {ζ : ℕ → Fˣ} (h : ∀ n, 0 < n → IsPrimitiveRoot (ζ n) n) (n : ℕ) : ζ n ^ n = 1 :=
   n.eq_zero_or_pos.elim (fun e => by rw [e, pow_zero]) fun hn => (h n hn).pow_eq_one
 
 
+variable (H) in
 def tateIsoQ (ζ : ℕ → Fˣ) (hp : ∀ n, 0 < n → IsPrimitiveRoot (ζ n) n)
     (hc : ∀ n m, 0 < n → 0 < m → ζ (n * m) ^ m = ζ n) :
     TateIsoQ (hypDatum H) (splitPre K (𝓞 E)) (arcAct H K) F where
@@ -238,6 +243,7 @@ theorem isPrimitiveRoot_arcRoot {a : ℕ} (h : a ∣ l.M') : IsPrimitiveRoot (ar
   exact h1.map_of_injective ((algebraMap k (FractionRing k)).comp bF).injective
 
 
+variable (l) in
 def arcForm : LinearMap.BilinForm ℤ (𝓞 E) := (2 * l.M' : ℤ) • trForm H
 
 def arcIn : ArcIn (hypDatum H) l (RingHom.id c.F) k bF where

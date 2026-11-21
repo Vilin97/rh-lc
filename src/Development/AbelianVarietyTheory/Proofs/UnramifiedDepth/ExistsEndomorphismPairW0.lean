@@ -30,6 +30,7 @@ variable {d : ℕ} {I : Fin 2 → Type} (X : RawChart C d I (Fin dd))
   (hlg : X.lg = fun i => un1 (Y.lg i)) (hex : X.ex = fun i => un1 (Y.ex i)) (hh : X.h = Y.h)
 
 
+include hlg hex hh in
 theorem isEnd_act_raw (a : O) : IsEnd X V (dLin (Y.B.A.act a)) (dLin (Y.B.A.act (star a))) := by
   have g : ∀ b, GP (Y.B.A.act b) := fun b i => Y.B.A.const b i
   refine isEnd_of_hom_raw Y X hlg hex hh _ _ (g _) (g _) (Y.B.A.hom _) (Y.B.A.hom _) (Y.intAct _) (Y.intAct _) ?_
@@ -43,6 +44,7 @@ theorem isEnd_act_raw (a : O) : IsEnd X V (dLin (Y.B.A.act a)) (dLin (Y.B.A.act 
   exact Y.intAd a
 
 
+include hlg hex hh in
 theorem gauge_at_linearPart_action_eq_hermitianLift (a : O) : un1 (Y.B.hL C Y.h a) =
     hAt X (endP X 1 (MvPowerSeries.X : Fin dd → MvPowerSeries (Fin dd) C))
       (endP X (dLin (Y.B.A.act a)) (MvPowerSeries.X : Fin dd → MvPowerSeries (Fin dd) C)) := by

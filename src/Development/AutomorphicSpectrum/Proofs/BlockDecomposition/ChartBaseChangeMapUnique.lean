@@ -14,6 +14,7 @@ open CrystallineSemistableComparison.Onto GlobalTheory.CompanionTheory.Surjectio
 variable {K : Type} [Field K] {n d : ℕ}
 
 
+variable (K n d) in
 def tau : Bp K n d := ∏ e, MvPolynomial.X e
 
 theorem mon_congr {M : AddSubmonoid (Gam n d)} {g g' : Gam n d} (h : g = g') (hg : g ∈ M) (hg' : g' ∈ M) :

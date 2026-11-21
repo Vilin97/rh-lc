@@ -133,6 +133,7 @@ theorem baseChange {N : ℕ} {S T : Type} [CommRing S] [Algebra c.F S] [CommRing
     exact h1
 
 
+open GlobalTheory.ThetaValueWeight in
 theorem triangular {N : ℕ} {S : Type} [CommRing S] [Algebra c.F S] {y y' : FrPt Xo c S} {t : Ix Dw → Sˣ}
     (hb : FrBor t y y') (p : ptO Xo y.x ⟶ Xo.univ.t.G) (p' : ptO Xo y'.x ⟶ Xo.univ.t.G) (hp : p'.left = p.left)
     {w : S} (hw : IsNullVal Xo c N y p w) : IsNullVal Xo c N y' p' ((t none : Sˣ) * w) := by

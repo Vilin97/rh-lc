@@ -94,6 +94,7 @@ theorem torsionHom_of_mulN (Pr : MorphismProperty Scheme.{0}) [Pr.IsStableUnderB
 end ExtensionTorsion
 
 
+open ExtensionTorsion in
 theorem isFinite_flat_torsion_of_isGt :
     ∀ (S : Scheme.{0}) (E : SplitExt S) (G : Over S) [GrpObj G] [IsCommMonObj G], E.IsGt G → ∀ N : ℕ, 1 ≤ N → IsFinite (torsion E.B N).hom → Flat (torsion E.B N).hom → IsFinite (torsion G N).hom ∧ Flat (torsion G N).hom := by
   rintro S E G _ _ ⟨D⟩ N hN h1 h2

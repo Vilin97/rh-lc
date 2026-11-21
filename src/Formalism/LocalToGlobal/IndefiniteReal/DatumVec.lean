@@ -129,6 +129,7 @@ def PlaceModelExistsSum (D : D7) : Prop :=
       ∃ Tm, IsPlaceModel ψ (symplO S T) (heisO ψ S T) (cA D e) (latO S T ΛS ΛT fun _ => True) 1 f₀ Tm
 
 
+open Classical in
 def StepVecExists (D : D7) : Prop :=
   ∀ (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D)
     (sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ) (sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ)
@@ -141,6 +142,7 @@ def StepVecExists (D : D7) : Prop :=
     ∀ f₀, IsVacO ψ θ S T sS sT ΛS ΛT f₀ → ∃ f, IsStepVecOf ψ θ S T sS sT ΛS ΛT βS βT LS χj Q ξ f₀ f
 
 
+open Classical in
 def ThPVecExists (D : D7) : Prop :=
   ∀ (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D)
     (sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ) (sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ)

@@ -141,6 +141,7 @@ theorem tBall_mass (ν : Measure (Mt k r)) (h : IsHaarOn (UWb k r) ν) (m : Mat 
 end GE
 
 
+open GE in
 theorem gaugeExists_of (hH : HaarDens) (hL : ChartLim) : GaugeExists := by
   intro k r hk
   obtain ⟨νh, hνh, δ, hδc, hδ0, hδt, ε, hε, hball⟩ := hH k r hk

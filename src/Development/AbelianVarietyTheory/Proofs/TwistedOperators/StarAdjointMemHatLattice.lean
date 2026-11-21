@@ -81,6 +81,7 @@ theorem smul_mem_hatMx_of_mem_latO {D : D7} {T : Type} {L : LevCh D T} {sc : Con
 end GlobalTheory.LineDepthZero
 
 
+open GlobalTheory.LineDepthZero in
 theorem GlobalTheory.AscFin.BoxBF.lineAdj_zero_dep : OnStd fun {D} _ _ {sc} {G} W F => ∀ (h : 2 * 0 + 2 ≤ D.R.m), ∀ u ∈ (pcBF W F 0 h).Γ₀, ∀ e : AE D, IsIdemSum e G.pl.W0 → e • (incA D D.host.xi0⁻¹ • GlobalTheory.IndefiniteRowSideFullHecke.SkewGramHalfModule.starAdj _ _ (((F.oB 0 h).resS (G.V (.core (2 * 0 + 1))) u).2)) ∈ hatMx (G.modul • homLat (G.Λ (.core (2 * 0 + 1))) (Submodule.span (𝓞 D.host.E) {F.ζ 0})) := by
   intro D hD T L μ0 hL sc G W Mv hM F hF h u hu e he
   have hx := GlobalTheory.T.bessel_step_line_component_mem_hom_lattice D hD T L μ0 hL sc G W Mv hM F hF 0 h u hu

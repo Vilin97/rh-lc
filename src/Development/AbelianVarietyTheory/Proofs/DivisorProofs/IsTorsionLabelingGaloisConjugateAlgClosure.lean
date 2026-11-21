@@ -56,6 +56,7 @@ end GlobalTheory.Mum.GalConjLabels
 namespace GlobalTheory.Mum
 
 
+open GalConjLabels in
 theorem labTors_galConj : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R], Base R → ∀ (D : DegData R (maximalIdeal R)) (A : PolAV (Sp (FractionRing R))) (σ : Kb R →ₐ[FractionRing R] Kb R) (k : ℕ), 1 ≤ k → ∀ (x x' : QkPt D.toPre (Kb R) k → (TFK (R := R) (Kb R) ⟶ A.A)), LabTors D.toPre A k x → (∀ p p', QkExt σ.toRingHom p p' → (x' p').left = spMap σ.toRingHom ≫ (x p).left) → LabTors D.toPre A k x' := by
   intro R _ _ _ hR D A σ k hk x x' hx hxx'
   haveI : CharZero R := hR.2

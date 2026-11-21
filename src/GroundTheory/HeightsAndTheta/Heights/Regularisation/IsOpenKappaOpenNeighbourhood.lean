@@ -311,6 +311,7 @@ theorem projLineCharts_potential_zero (j : Fin 2) : projLineCharts.u (fun _ => 0
   funext fun z => by simp [RegCharts.u]
 
 open scoped Classical in
+open Classical in
 def projLineChartData : RegChartData p1 where
   toRegCharts := projLineCharts
   Yo := {(OnePoint.infty : OnePoint ℂ)}ᶜ

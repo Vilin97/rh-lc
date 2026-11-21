@@ -106,6 +106,7 @@ lemma range_reesΦ :
     · exact (Finsupp.notMem_support_iff.1 hk).symm
 
 
+include hF hU in
 theorem exists_cechK_eq_pow_smul [IsProper (X ↘ Spec (.of A))] (hUtop : iSup 𝔘 = ⊤) :
     ∃ c, ∀ n, cechK I 𝔘 p (F := F) (n + c) = I ^ n • cechK I 𝔘 p c := by
   refine exists_eq_pow_smul_of_fg I (smul_cechK_le I 𝔘 p) ?_

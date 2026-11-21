@@ -76,6 +76,9 @@ private lemma mFourierCoeff_lift_eq_integral {ι : Type} [Fintype ι] (g : C(Uni
   ring
 
 
+open Matrix Complex NumberField Filter Topology in
+open scoped ComplexConjugate ComplexOrder Real Classical in
+open MeasureTheory in
 theorem _root_.GlobalTheory.exists_fourier_expansion_tube :
     ∀ (ι : Type) [Fintype ι] (Ω : Set (ι → ℝ)) (f : (ι → ℂ) → ℂ), IsOpen Ω → Convex ℝ Ω →
       DifferentiableOn ℂ f {z | (fun i => (z i).im) ∈ Ω} →

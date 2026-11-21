@@ -17,6 +17,7 @@ variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 variable {κ : Type*} [Fintype κ] (b : Basis κ K E)
 
 
+variable (K) in
 abbrev IntBasisIdx := Free.ChooseBasisIndex ℤ (𝓞 K)
 
 def ratCoords (x : ι → K ⊗[K] E) : (ι × κ) × IntBasisIdx K → ℚ :=

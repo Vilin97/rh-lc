@@ -33,6 +33,7 @@ def hTrans (σ : ℂ) (ν y : ℝ) : ℂ :=
 def cConst (σ : ℂ) : ℂ := hTrans σ 0 1
 
 
+variable (F) in
 def kFac (σ : ℂ) : ℂ :=
   ∏ _τ : Emb F, ((2 * (Real.pi : ℂ) * I)⁻¹ ^ 2 * ((2 * Real.pi : ℝ) : ℂ) ^ (-2 * σ))
 

@@ -51,6 +51,7 @@ theorem grpScheme_square_hom_ext_fst_snd {f g : ⋀[R]^2 M →ₗ[R] N}
   exact h _ _
 
 
+variable (R M) in
 def wB : M →ₗ[R] M →ₗ[R] ⋀[R]^2 M :=
   LinearMap.mk₂ R (fun a b ↦ exteriorPower.ιMulti R 2 ![a, b])
     (fun _ _ _ ↦ Subtype.ext (by simp [ExteriorAlgebra.ιMulti_apply, add_mul]))
@@ -115,12 +116,14 @@ section Coh
 variable {R : Type} [CommRing R] {C : Type} [Category.{0} C] {F : C ⥤ CommAlgCat.{0} R}
 
 
+variable (F) in
 def fn2 : cechDeRhamTotalCocyclesTwo F →ₗ[R] Z2 F where
   toFun c := ⟨c.1.1, (mem_cechDeRhamTotalCocyclesTwo_iff.1 c.2).1⟩
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
 
 
+variable (F) in
 def rho : Hyp2 F →ₗ[R] H2 F :=
   Submodule.mapQ _ _ (fn2 F) (by rintro _ ⟨g, rfl⟩; exact ⟨g.1, rfl⟩)
 
@@ -311,6 +314,7 @@ theorem inj_N (hs : Function.Surjective (toO F)) (hcl : Closed1 F = ⊤) (c : To
   exact h2
 
 
+set_option maxHeartbeats 1000000 in
 theorem surj_step (hcl : Closed1 F = ⊤) (τ : H1 F →ₗ[R] cechDeRhamTotalCocyclesOne F)
     (hτ : ∀ v, H1.mk F (cechDeRhamTotalCocyclesOne.fn F (τ v)) = v) (mu : Z1 F ⊗[R] Glob1 F →ₗ[R] A1 F)
     (hmu : ∀ (f : Z1 F) (w : Glob1 F) (T T' : C) (φ : T ⟶ T'), mu (f ⊗ₜ w) T T' φ = f.1 T T' φ • w.1 T')
@@ -365,6 +369,7 @@ theorem surj_step (hcl : Closed1 F = ⊤) (τ : H1 F →ₗ[R] cechDeRhamTotalCo
   rw [e3, map_add (f := _), map_add (f := _), map_add (f := _), e1, e2, add_zero, add_zero, add_comm]
 
 
+set_option maxHeartbeats 1000000 in
 theorem wedgeHyp_of (hproj : Module.Projective R (H1 F)) (hcl : Closed1 F = ⊤)
     (hs : Function.Surjective (toO F)) (hW : Wedge F) (halt : ∀ c, cupHyp F c c = 0)
     (mu : Z1 F ⊗[R] Glob1 F →ₗ[R] A1 F)

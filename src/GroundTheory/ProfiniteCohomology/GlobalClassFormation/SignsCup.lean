@@ -163,6 +163,7 @@ theorem continuous_iCharFun : Continuous (iCharFun K) := by
     exact hh
 
 
+variable (K) in
 def iChar : Additive K.1.fixingSubgroup →ₜ+ QZ where
   toFun := iCharFun K
   map_zero' := iCharFun_of_fix rfl

@@ -33,6 +33,7 @@ def stabSub (v : V) : AddSubgroup (Fin (m + 1) → k) where
     rw [← Module.End.mul_apply, ← map_mul, ← colEl_add, neg_add_cancel, colEl_zero, map_one, Module.End.one_apply]
 
 
+variable (k) in
 def charSub {n : ℕ} (ψ : AddChar k Circle) (ξ : Fin n → k) : AddSubgroup (Fin n → k) where
   carrier := {x | ψ (ξ ⬝ᵥ x) = 1}
   add_mem' {a b} ha hb := by
@@ -44,6 +45,7 @@ def charSub {n : ℕ} (ψ : AddChar k Circle) (ξ : Fin n → k) : AddSubgroup (
     rw [dotProduct_neg, AddChar.map_neg_eq_inv, ha, inv_one]
 
 
+variable (k) in
 def annSub {n : ℕ} (ψ : AddChar k Circle) (A : AddSubgroup (Fin n → k)) : AddSubgroup (Fin n → k) where
   carrier := {ξ | ∀ a ∈ A, ψ (ξ ⬝ᵥ a) = 1}
   add_mem' {a b} ha hb := by

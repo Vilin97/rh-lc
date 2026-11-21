@@ -161,6 +161,7 @@ theorem exists_action {L : RigLB G} {c : CubicalStr G L} (s : BiTriv c i) (σ : 
   rw [va _ _ z J hJ, val_mul hJ, val_pull hJ, ← Over.comp_left, lift_fst]
 
 
+omit [GrpObj H] in
 theorem prod_lam {T : Over S} (t : T ⟶ H) (x : T ⟶ G) {U : Type} [CommGroup U] (h : (T.left ⟶ G.left) → U) :
     ∏ k : Fin 4, h ((lift t x).left ≫ lamφ i k) ^ Oε k =
       h ((t ≫ i) * x).left * (h (t ≫ i).left)⁻¹ * (h x.left)⁻¹ * h (1 : T ⟶ G).left := by

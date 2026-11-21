@@ -18,6 +18,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 namespace GlobalTheory.Hk3
 
 
+open Formalism.L2.Col in
 theorem eigSum_mul_proj_eq {E I C : Type} [AddCommGroup E] [Module ℂ E] [FiniteDimensional ℂ E]
     (h : I → Module.End ℂ E) (e : Module.End ℂ E) (Ec : C → Submodule ℂ E) (lab : C → I → ℂ)
     (he : e * e = e) (hr : (⨆ c, Ec c) = LinearMap.range e)

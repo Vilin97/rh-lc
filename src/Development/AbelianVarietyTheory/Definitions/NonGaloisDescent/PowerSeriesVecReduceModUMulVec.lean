@@ -18,6 +18,7 @@ section Vecs
 variable {O K : Type} [CommRing O] [NormedField K] [Algebra O K] {a : ℕ} {ι : Type}
 
 
+variable (ι) in
 def vecs (B : Subalgebra O K⟦X⟧) : Submodule B (ι → K⟦X⟧) where
   carrier := {v | ∀ i, v i ∈ B}
   add_mem' hv hw i := B.add_mem (hv i) (hw i)
@@ -55,6 +56,7 @@ def frobV (l : ℕ) [Fact l.Prime] : (ι → K⟦X⟧) →ₗ[K] (ι → K⟦X�
     frobV l v i = frob K l (v i) := rfl
 
 
+variable (K a) in
 def frobTot (l : ℕ) [Fact l.Prime] : (ZMod a → K⟦X⟧) →ₐ[K] (ZMod a → K⟦X⟧) :=
   AlgHom.pi fun τ => (frob K l).comp (Pi.evalAlgHom K (fun _ : ZMod a => K⟦X⟧) (τ - 1))
 
@@ -350,6 +352,7 @@ theorem app_mem_ext (F : Hom P Q) {B : Subalgebra O K⟦X⟧} (hB : A O K ≤ B)
     mul_mem (hB (frob_mem_A l (F.mem _ i j))) (hm j), rfl⟩
 
 
+variable (P) in
 def scalar (c : O) : Hom P P where
   mat _ := algebraMap O K⟦X⟧ c • (1 : Matrix ι ι K⟦X⟧)
   mem τ i j := by
@@ -423,13 +426,16 @@ theorem invE_invL_S_le_RpiE : invE l e (invL l (S O K e)) ≤ RpiE O K l e :=
 variable {ι}
 
 
+variable (O) in
 def hatV (v : ι → K⟦X⟧) : ι → AhatE O K l e := fun i => hat O l e (v i)
 
 
+variable (O) in
 def hatSpan (N : Set (ι → K⟦X⟧)) : Submodule (Ahat O K l e) (ι → AhatE O K l e) :=
   Submodule.span _ (hatV O l e '' (N ∩ vecs (RpiE O K l e)))
 
 
+variable (O K ι) in
 def Mhatc : Submodule (Ahat O K l e) (ι → AhatE O K l e) := hatSpan O l e (Mc O K ι)
 
 theorem mem_Mhatc {w : ι → AhatE O K l e} :
@@ -473,6 +479,7 @@ def Eunit : (invE l e (A O K))ˣ :=
   (IsLocalization.Away.algebraMap_isUnit (S := invE l e (A O K)) (EIn l e (A O K))).unit
 
 
+variable {a} in
 def rankOne (j : ZMod a → ℤ) : PhiMod O K l e a Unit where
   mat τ := Units.map (Matrix.scalar Unit).toMonoidHom (Eunit O K l e ^ j τ)
 

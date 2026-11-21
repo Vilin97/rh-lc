@@ -145,6 +145,7 @@ abbrev intInf (F : Type) [Field F] [NumberField F] : AddSubgroup (Ainf F) :=
   ((algebraMap F (Ainf F)).comp (algebraMap (𝓞 F) F)).toAddMonoidHom.range
 
 
+omit [NumberField E] in
 theorem coordW_congr {F : Type} [Field F] [Algebra F E] {R : Type} [CommRing R] [Algebra F R] [TopologicalSpace R]
     {m₁ m₂ : MeasurableSpace R} (h : m₁ = m₂) (l₁ : @Measure R m₁) (l₂ : @Measure R m₂) (hl : ∀ s, l₁ s = l₂ s)
     {d : ℕ} (b : Module.Basis (Fin d) F E) (n M : ℕ) :

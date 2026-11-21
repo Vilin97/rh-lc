@@ -380,6 +380,7 @@ theorem exists_chartData [DecidableEq K] (y : (Σ k, ι k) → Ω) (A : HermLine
 def blockDeg (μ : (Σ k, ι k) →₀ ℕ) : K → ℕ := fun k => ∑ i, μ ⟨k, i⟩
 
 
+open Classical in
 def comp (g : MRing ι) (δ : K → ℕ) : MRing ι :=
   ∑ μ ∈ g.support.filter (fun μ => blockDeg μ = δ), monomial μ (AddMonoidAlgebra.coeff g μ)
 

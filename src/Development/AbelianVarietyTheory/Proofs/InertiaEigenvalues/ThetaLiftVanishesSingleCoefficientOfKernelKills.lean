@@ -254,6 +254,7 @@ theorem thF_eq_sum (hP : R.IsThP)
 end GlobalTheory.GenRealSchur
 
 
+open GlobalTheory.GenRealSchur in
 theorem GlobalTheory.GenRealSchur.lift_vanish_single : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.LiftRows.Given R F → R.FullP → ∀ (i : Fin D.R.m) (t : T) (y : (R.HV i t).H), R.thF i t y = 0 → ∀ (x : LowT (R.MW i (sg0 D A))) (w : (R.cV i).W) (l : (R.cV i).W →ₗ[ℂ] ℂ) (g : GA D (Wc D i)), downInt R i t y (R.ptP i t (R.ioP i x w)) l g = 0 := by
   intro D G _ _ Pl0 T A Ks _ _ _ R F hG hF i t y hy x w l g
   have hM := hG.core.models

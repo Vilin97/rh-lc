@@ -237,6 +237,7 @@ theorem rootWeight_eq_sum (g : (ZMod N)ˣ) (hg : g ≠ 1) :
 
 
 open scoped Classical in
+open Classical in
 theorem sum_rootWeight_eq_avgCondExp (H : Subgroup (ZMod N)ˣ) :
     ∑ g ∈ Finset.univ.filter (fun g : (ZMod N)ˣ => g ∉ H),
         rootWeight l (addOrderOf ((g : ZMod N) - 1)) =

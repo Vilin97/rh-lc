@@ -33,6 +33,7 @@ private lemma latticeEquivProd_symm_coe (L : PeriodPair) (p : ℤ × ℤ) :
     PeriodPair.latticeBasis]
 
 
+open scoped UpperHalfPlane MatrixGroups Matrix ModularForm ComplexConjugate in
 lemma _root_.GlobalTheory.WpFam.hasSum_rows_G2_add_weierstrassP (τ : ℍ) (z : ℂ) :
     HasSum (fun n : ℤ => ∑' m : ℤ, 1 / (z + n * τ + m) ^ 2)
       (EisensteinSeries.G2 τ + (_root_.GlobalTheory.QFam.tauPair τ).weierstrassP z) := by

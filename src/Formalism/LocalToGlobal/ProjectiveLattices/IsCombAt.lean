@@ -47,6 +47,7 @@ def IsTanAt {S : Type} [CommRing S] (x : Sp S ⟶ Xo.X) (v : Sp (DualNumber S) �
     spMap (TrivSqZeroExt.fstHom S S S).toRingHom ≫ v = (1 : Over.mk x ⟶ Xo.univ.t.G).left
 
 
+variable (c) in
 def IsEigAt {S : Type} [CommRing S] [Algebra c.F S] (τ : E →+* ℂ)
     (v : Sp (DualNumber S) ⟶ Xo.univ.t.G.left) : Prop :=
   ∀ a : 𝓞 E, v ≫ (Xo.univ.t.act.act a).left = spMap (epsMul (algebraMap c.F S (embK c τ a))) ≫ v

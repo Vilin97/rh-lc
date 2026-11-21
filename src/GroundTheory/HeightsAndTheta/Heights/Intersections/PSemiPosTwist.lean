@@ -124,6 +124,7 @@ end Levi
 end SemipositiveTwist
 
 
+open SemipositiveTwist in
 theorem SemiPosTwist.proof (hB : TorusInvLevi.Statement) : SemiPosTwist.Statement := by
   intro K _ ι _ M hM
   classical

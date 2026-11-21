@@ -107,6 +107,7 @@ theorem admissible_of_slice_zero (ε : κ ≃ κ₀ ⊕ κ₁) : ∀ l ∈ (adel
   rw [glue_map ε (fun z : AF F => InfiniteAdeleRing.ringEquiv_mixedSpace F z.1), glue_map ε (fun z : AF F => z.2)]
 
 
+open scoped Classical in
 theorem reindex_mem {κ' : Type} [Fintype κ'] (τ : κ ≃ κ')
     {Φ : (κ → AF F) → ℂ} (hΦ : Φ ∈ schA F κ) : (fun x : κ' → AF F => Φ (x ∘ τ)) ∈ schA F κ' := by
   induction hΦ using Submodule.span_induction with

@@ -382,6 +382,7 @@ theorem q_fix (δ : V ≃ₗ[E] V) (W : Submodule E V) (hW : W.map (δ : V →�
 end QuotGen
 
 
+set_option maxHeartbeats 800000 in
 theorem globStep_holds (hK : X.LevelSubgroupCharacter) : GlobalCondition X u hK := by
   intro _hL hC h γ hγ hfo
   obtain ⟨hGF, hH⟩ := Subgroup.mem_inf.1 γ.2

@@ -20,6 +20,7 @@ namespace IdeleGroup
 variable (S : Set (HeightOneSpectrum (𝓞 K)))
 
 
+variable (L) in
 abbrev SIdelesProduct : Type _ :=
   ((v : InfinitePlace K) → (w : v.placesOver L) → (w.1.Completion)ˣ) ×
     ((v : S) → (w : PlacesOver L v.1) → (w.1.adicCompletion L)ˣ) ×
@@ -78,6 +79,7 @@ theorem mem_placesOver_comap (u : InfinitePlace L) :
   (InfinitePlace.liesOver_iff_comap_eq _ u).2 rfl
 
 
+omit [NumberField K] in
 theorem sIdelesToProduct_injective : Function.Injective (sIdelesToProduct (L := L) S) := by
   intro x y h
   refine Subtype.ext (Units.ext (adele_ext (funext fun u ↦ ?_) fun u ↦ ?_))

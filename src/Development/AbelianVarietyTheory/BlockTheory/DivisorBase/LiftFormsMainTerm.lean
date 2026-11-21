@@ -35,6 +35,8 @@ variable {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL
 
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
 structure LiftInput (R : RealDat D A Ks) (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ) where
 
   mu : (AE D)ˣ →* Circle

@@ -22,6 +22,7 @@ open GlobalTheory.LB
 variable {M : LB X} {V W : X.Opens}
 
 
+variable (M) in
 def resBasicOpen (a : Γ(X, V)) : SecOn M V →ₗ[Γ(X, V)] SecOn M (X.basicOpen a) :=
   QCoh.resBasicOpen (toMod M) a
 
@@ -176,6 +177,7 @@ theorem isBaseChange_pull (hM : M.IsLB)
   simp [hl, hE]
 
 
+variable (M) in
 def baseChangeHom (w : π ≫ f = f' ≫ Spec.map (CommRingCat.ofHom (algebraMap R R')))
     (V : X.Opens) (V' : X'.Opens) (e : V' ≤ π ⁻¹ᵁ V) :
     R' ⊗[R] SecOnR f M V →ₗ[R'] SecOnR f' (M.pull π) V' :=
@@ -234,6 +236,7 @@ variable {κ : Type} {f : X ⟶ Spec (CommRingCat.of R)} {f' : X' ⟶ Spec (Comm
   {π : X' ⟶ X} (M : LB X) (D : κ → X.Opens)
 
 
+variable {M D} in
 theorem flat_cechLB_X [LinearOrder κ] [Finite κ] (f : X ⟶ Spec (CommRingCat.of R)) [Flat f]
     (hM : M.IsLB) (hD : ∀ s : Finset κ, s.Nonempty → IsAffineOpen (⨅ i ∈ s, D i)) (p : ℕ) :
     Module.Flat R ((cechLB f M D).X p) :=
@@ -257,6 +260,7 @@ theorem secCubeBaseChange_app_tmul
     ((secCubeBaseChange M D w).app s).hom (c ⊗ₜ[R] x) = c • secCubePull M D w s x := rfl
 
 
+variable {M} in
 theorem secCubeBaseChange_app_bijective (hM : M.IsLB)
     (H : IsPullback π f' f (Spec.map (CommRingCat.ofHom (algebraMap R R')))) {s : Finset κ}
     (hs : IsAffineOpen (⨅ i ∈ s, D i)) :
@@ -282,6 +286,7 @@ theorem d_secTermBaseChange [LinearOrder κ]
       (GlobalTheory.Cube.d_termBaseChange R' (secCube f M D) p x))
 
 
+variable {M D} in
 theorem secTermBaseChange_bijective [Finite κ] (hM : M.IsLB)
     (H : IsPullback π f' f (Spec.map (CommRingCat.ofHom (algebraMap R R')))) (p : ℕ)
     (hD : ∀ s : Finset κ, s.card = p → IsAffineOpen (⨅ i ∈ s, D i)) :

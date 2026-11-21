@@ -47,6 +47,7 @@ theorem prod_ite_zero (κ : ℂ) :
   exact if_pos rfl
 
 
+variable {W} in
 theorem isExpansion_zero {U : Set T} (S : GridChoice W U) (t : T) (Φ : G.Datum) (β : CosFam G t) (hβ : β ∉ S.supp t Φ)
     {τ : PureDat G t →₀ ℂ} (h : S.IsExpansion t Φ β τ) : S.IsExpansion t Φ β 0 := by
   obtain ⟨e, he, -, -⟩ := h

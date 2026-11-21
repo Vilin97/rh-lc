@@ -255,6 +255,7 @@ theorem exists_homs (hinj : Function.Injective (algebraMap O K)) {X ι ρ τ : T
        commutes' := fun c => (halg c).2 j }, fun _ => rfl⟩⟩
 
 
+open MvPolynomial in
 theorem det_generic_blocks (hinj : Function.Injective (algebraMap O K)) {ι ρ τ G N : Type}
     [Fintype ι] [DecidableEq ι] [Fintype ρ] [DecidableEq ρ] [Fintype τ] [DecidableEq τ]
     [Fintype G] [DecidableEq G] [Fintype N]
@@ -295,6 +296,7 @@ theorem det_generic_blocks (hinj : Function.Injective (algebraMap O K)) {ι ρ �
     simp
 
 
+open MvPolynomial in
 theorem det_generic_eq_zero (hinj : Function.Injective (algebraMap O K)) {ι G N : Type}
     [Fintype ι] [DecidableEq ι] [Fintype G] [DecidableEq G] [Fintype N]
     (a : N → G → G → Matrix ι ι O) (v : G → ι → K) (hv : v ≠ 0)

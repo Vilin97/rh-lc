@@ -23,6 +23,7 @@ variable {M : Type*} [NormedAddCommGroup M] [InnerProductSpace ℂ M] {ε : Fin 
   {E : Fin n → Fin n → Module.End ℂ M} {V : Submodule ℂ M} {lam : Fin n → ℝ}
 
 
+omit [NormedAddCommGroup M] [InnerProductSpace ℂ M] in
 theorem two_lt_of_gap {a b : Fin n} (hε : ε a ≠ ε b) {h : ℝ} (hbig : 2 * (n : ℝ) < h) : 2 < h := by
   have hab : a ≠ b := fun e => hε (by rw [e])
   have ha := a.isLt

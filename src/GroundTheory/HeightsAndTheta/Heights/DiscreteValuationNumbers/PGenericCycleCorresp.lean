@@ -159,6 +159,7 @@ end DVR
 end GenericCycleCorresp
 
 
+attribute [local instance] MvPolynomial.algebraMvPolynomial in
 theorem GenericCycleCorresp.proof : GenericCycleCorresp.Statement.{u} := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P s _ _ _ n
   classical

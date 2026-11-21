@@ -37,11 +37,13 @@ variable (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   [Fintype n] [DecidableEq n] {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
 
 
+variable (n) in
 def toKO : GL n 𝒪[k] ≃* KO k n :=
   MonoidHom.ofInjective fun _ _ h => Units.ext (Matrix.ext fun i j =>
     Subtype.ext (congrArg (fun g : GL n k => (g : Matrix n n k) i j) h))
 
 
+variable (n) in
 def redK : KO k n →* GL n 𝓀[k] :=
   (GeneralLinearGroup.map (IsLocalRing.residue 𝒪[k])).comp (toKO k n).symm.toMonoidHom
 
@@ -152,9 +154,11 @@ def parahoric (e : (Σ a, m a) ≃ n) : Subgroup (GL n k) := levelPre (parab �
 def proRad (e : (Σ a, m a) ≃ n) : Subgroup (GL n k) := levelPre (unipRad 𝓀[k] e)
 
 
+variable (m) in
 def leviK : Subgroup (Levi k m) := Subgroup.pi Set.univ fun a => KO k (m a)
 
 
+variable (m) in
 def leviKOne : Subgroup (Levi k m) := Subgroup.pi Set.univ fun a => KOne k (m a)
 
 def jMinus (e : (Σ a, m a) ≃ n) : Subgroup (GL n k) := unipRadLower k e ⊓ KOne k n
@@ -168,6 +172,7 @@ def parahoricProj (e : (Σ a, m a) ≃ n) : parahoric k e →* Levi 𝓀[k] m :=
     fun p => (mem_levelPre.1 p.2).2)
 
 
+variable (m) in
 def redLevi : leviK k m →* Levi 𝓀[k] m :=
   MonoidHom.pi fun a => (redK k (m a)).comp
     (((Pi.evalMonoidHom (fun a => GL (m a) k) a).comp (leviK k m).subtype).codRestrict _ fun g => g.2 a trivial)
@@ -175,6 +180,7 @@ def redLevi : leviK k m →* Levi 𝓀[k] m :=
 variable {k}
 
 
+omit [Fintype α] [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] in
 theorem mem_parahoric {e : (Σ a, m a) ≃ n} {g : GL n k} : g ∈ parahoric k e ↔ g ∈ KO k n ∧
     ∀ a b (i : m a) (j : m b), b < a → valuation k ((g : Matrix n n k) (e ⟨a, i⟩) (e ⟨b, j⟩)) < 1 := by
   simp only [parahoric, mem_levelPre, mem_parab_iff, redK_eq_zero_iff, exists_prop]
@@ -200,20 +206,24 @@ theorem parahoricProj_eq_one_iff (e : (Σ a, m a) ≃ n) (p : parahoric k e) :
   (coe_mem_unipRad _ _).symm.trans (coe_mem_levelPre (H := unipRad 𝓀[k] e) ⟨(p : GL n k), levelPre_le_KO _ p.2⟩).symm
 
 
+omit [Fintype α] [LinearOrder α] in
 theorem redLevi_apply (g : leviK k m) (a : α) : redLevi k m g a = redK k (m a) ⟨g.1 a, g.2 a trivial⟩ := rfl
 
 
+omit [Fintype α] [LinearOrder α] in
 theorem redLevi_surjective : Function.Surjective (redLevi k m) := fun x => by
   choose g hg using fun a => redK_surjective (x a)
   exact ⟨⟨fun a => g a, fun a _ => (g a).2⟩, funext hg⟩
 
 
+omit [Fintype α] [LinearOrder α] in
 theorem redLevi_eq_one_iff (g : leviK k m) : redLevi k m g = 1 ↔ (g : Levi k m) ∈ leviKOne k m :=
   ⟨fun h a _ => (redK_eq_one_iff ⟨g.1 a, g.2 a trivial⟩).1 (congrFun h a),
     fun h => funext fun a => (redK_eq_one_iff ⟨g.1 a, g.2 a trivial⟩).2 (h a trivial)⟩
 
 
 
+omit [LinearOrder α] in
 theorem leviEmb_mem_KO (e : (Σ a, m a) ≃ n) {g : Levi k m} (hg : g ∈ leviK k m) : leviEmb k e g ∈ KO k n := by
   have key : ∀ {g : Levi k m}, g ∈ leviK k m → StepData.IntM (leviEmb k e g).val := by
     intro g hg i j
@@ -227,6 +237,7 @@ theorem leviEmb_mem_KO (e : (Σ a, m a) ≃ n) {g : Levi k m} (hg : g ∈ leviK 
   exact StepData.mem_KO.2 ⟨key hg, by rw [← map_inv]; exact key (inv_mem hg)⟩
 
 
+omit [LinearOrder α] in
 theorem redK_leviEmb (e : (Σ a, m a) ≃ n) (g : leviK k m) :
     redK k n ⟨leviEmb k e g, leviEmb_mem_KO e g.2⟩ = leviEmb 𝓀[k] e (redLevi k m g) := by
   ext i j
@@ -250,6 +261,7 @@ theorem parahoricProj_leviEmb (e : (Σ a, m a) ≃ n) (g : leviK k m) :
 theorem KOne_le_proRad (e : (Σ a, m a) ≃ n) : KOne k n ≤ proRad k e := KOne_le_levelPre _
 
 
+omit [LinearOrder α] in
 theorem jLevi_le_KOne (e : (Σ a, m a) ≃ n) : jLevi k e ≤ KOne k n := by
   rintro _ ⟨g, hg, rfl⟩
   have h : g ∈ leviK k m := fun a _ => StepData.KOne_le_KO (hg a trivial)
@@ -285,9 +297,11 @@ variable {R : Type} [Field R] {N h : ℕ} {d : Fin h → ℕ}
 end Finite
 
 
+variable (k) in
 abbrev unitIncl : 𝒪[k]ˣ →* kˣ := Units.map (algebraMap 𝒪[k] k).toMonoidHom
 
 
+variable (k) in
 abbrev unitRes : 𝒪[k]ˣ →* 𝓀[k]ˣ := Units.map (IsLocalRing.residue 𝒪[k]).toMonoidHom
 
 theorem valuation_eq_one_iff {x : kˣ} : valuation k (x : k) = 1 ↔ ∃ u, unitIncl k u = x := by
@@ -323,6 +337,7 @@ theorem isSmoothChar_of_isTame {χ' : kˣ →* ℂˣ} (h : IsTame χ') : IsSmoot
   exact Subgroup.isOpen_of_mem_nhds _ (g := 1) (Filter.mem_of_superset (ho.mem_nhds (by simp)) h)
 
 
+variable (k) in
 theorem exists_uniformizer : ∃ ϖ : kˣ, valuation k (ϖ : k) = uniformizer k := by
   obtain ⟨x, hx⟩ := valuation_surjective (K := k) (uniformizer k)
   exact ⟨Units.mk0 x fun h => uniformizer_ne_zero (by rw [← hx, h, map_zero]), hx⟩
@@ -352,10 +367,12 @@ theorem exists_isTameLift (χ : 𝓀[k]ˣ →* ℂˣ) {ϖ : kˣ} (hϖ : valuatio
     simp
 
 
+variable (k n) in
 def zkHom : kˣ × KO k n →* GL n k :=
   (GeneralLinearGroup.scalar n).noncommCoprod (KO k n).subtype fun z g => GeneralLinearGroup.scalar_commute z (g : GL n k)
 
 
+variable (k n) in
 def ZK : Subgroup (GL n k) := (zkHom k n).range
 
 theorem mem_ZK {g : GL n k} : g ∈ ZK k n ↔ ∃ z : kˣ, ∃ x ∈ KO k n, GeneralLinearGroup.scalar n z * x = g :=

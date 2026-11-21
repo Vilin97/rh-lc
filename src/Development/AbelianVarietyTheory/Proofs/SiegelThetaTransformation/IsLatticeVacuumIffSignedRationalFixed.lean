@@ -167,6 +167,7 @@ def fixGroup (hH : ∀ u ∈ H, ∀ u' ∈ H, ψ (symplO S T u u') = 1) (hω : �
 end Sign
 
 
+set_option maxHeartbeats 1000000 in
 theorem isLatVac_iff : ∀ (D : D7) (S T : HSp D) (C : Ctx S T), ∀ w : D.host.E, IsIntegral ℤ w → w + cc w = 1 → IdemTwo w → ∀ (M : ℕ), ∀ Λ ∈ Vset D.host.E S.rank M, ∀ L : Lt D.host.E T.rank, SelfD C.X L → ∀ f, C.IsTh f → (IsLatVac (heisO C.ψ S T) (hatA S T (tens Λ L)) f ↔ ∀ y ∈ tens Λ L, epsW C.X w y • C.rho (finW S T y) f = f) := by
   intro D S T C w hw hw1 hw2 M Λ hΛ L hL f hf
   have hA : ∀ o : 𝓞 D.host.E, ∀ y ∈ tens Λ L, (o : D.host.E) • y ∈ tens Λ L := fun o y hy =>

@@ -101,6 +101,7 @@ theorem orb_starI (m : Ideal R) : orb (starI m) = orb m := by
   rw [orb, orb, starI_starI, Set.pair_comm]
 
 
+open Classical in
 noncomputable def wit (G : Matrix I I R) (S : Set (Ideal R)) : I → R := Classical.epsilon fun x => ∀ n ∈ S, hf G x x ∉ n
 
 theorem wit_spec [Nonempty I] (G : Matrix I I R) (hG : Gᴴ = -G) (hdet : IsUnit G.det) (m : Ideal R)

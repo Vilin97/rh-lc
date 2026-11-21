@@ -58,6 +58,7 @@ theorem H0.val_smul {q : S ⟶ Sp k} {N : LB S} {O : S.Opens} (x : Sp R ⟶ S) {
   rw [base_smul, val_fun_smul, evalPt_algX_of_eq q x hx]
 
 
+variable (R) in
 abbrev PtsOver [Algebra k R] (q : S ⟶ Sp k) : Type :=
   {x : Sp R ⟶ S // x ≫ q = spMap (algebraMap k R)}
 
@@ -101,6 +102,7 @@ theorem exists_generator [IsFinite q] [Etale q] (hN : N.IsLB) : ∃ e : H0 q N �
 variable (Ω : Type) [Field Ω] [IsAlgClosed Ω] [Algebra E Ω] [IsFinite q] [Etale q]
 
 
+omit [IsAlgClosed Ω] in
 theorem finite_ptsOver : Finite (PtsOver Ω q) := by
   have : IsAffine S := isAffine_of_isAffineHom q
   let := (algX q ⊤).toAlgebra
@@ -169,6 +171,7 @@ theorem finrank_H0On :
   (finite_finrank_lineBundleSections_finiteEtale _ Ω (LB.isLB_pull hB _)).2
 
 
+variable {Ω} in
 theorem eq_zero_of_forall_valOn_eq_zero (i : PtsOver Ω (I.subschemeι ≫ p) → B.ι)
     (hi : ∀ x : PtsOver Ω (I.subschemeι ≫ p), ⊤ ≤ (x.1 ≫ I.subschemeι) ⁻¹ᵁ B.U (i x))
     {g : sectionsOnClosedSubscheme p B I} (h : ∀ x : PtsOver Ω (I.subschemeι ≫ p), valOn x.1 (i x) (hi x) g = 0) : g = 0 :=

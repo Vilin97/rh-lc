@@ -180,6 +180,7 @@ theorem rpow_ratio {K c d e : ℝ} (hK : 0 < K) (hc : 0 < c) (hd : 0 < d) (he : 
   field_simp
 
 
+set_option maxHeartbeats 1000000 in
 theorem line_of_tens (hH : Hyps) (hKF : AmpKF) (hCC : CellConv) (D : D7) {τ w w' θ} {W : LocW D.R.k D.R.rS}
     [CompleteSpace W.Wp] [CompleteSpace W.Wq] (hcd : cdScaleTie D)
     (hθ : 0 < θ) (hka : 0 < D.host.ka / gg D) (hT : 0 < Tr D w) (hT' : 0 < Tr D w') (hW : GoodW D τ w w' θ W)
@@ -496,6 +497,7 @@ theorem scale_le {b v g Cg : ℝ} (hb : Real.exp 1 < b) (hv : 1 ≤ v) (hvb : 2 
     exact this.trans (mul_le_mul hgb (by nlinarith) (by linarith) (by linarith))
 
 
+set_option maxHeartbeats 1000000 in
 theorem minor_line : Hyps → AmpKF → CellConv → ∀ Cg cb Cu cT CT C0 C1 : ℝ, ∃ C : ℝ, ∀ Cn : ℝ, ∃ m₀ : ℝ, ∀ (D : D7) (large₂ : SizeData₂ D) (C' Cl : ℝ), 1000 ≤ Cl → Big D large₂ Cl m₀ → cdScaleTie D → HypZ D large₂ C' Cl Cg cb Cu cT CT C0 → ∀ τ w w', HypTT D w w' → ∀ θ, normWin D large₂ C1 θ → ∀ W, GoodW D τ w w' θ W → ∀ lam', l1dist lam' (lamD D τ) ≤ Cn * D.R.k * (D.R.m : ℝ) ^ 3 → ∀ A₀ : LocS W, GoodS D lam' A₀ → ∀ l : ℕ, l ≤ D.R.rS + 1 → ∃ s : ℝ, (s = 1 ∨ s = -1) ∧ ∀ AI : Finset (Fin (2 * D.R.rS + D.R.k + 1)) → LocS W, (∀ I, I.card = l → (∃ A : LocS W, GoodS D (lam' + s • epsI I) A) → GoodS D (lam' + s • epsI I) (AI I)) → ∃ a : Finset (Fin (2 * D.R.rS + D.R.k + 1)) → ℂ, (∀ I, I.card = l → (¬ ∃ A : LocS W, GoodS D (lam' + s • epsI I) A) → a I = 0) ∧ (∑ I ∈ univ.filter (fun I => I.card = l), ‖a I‖) ≤ large₂.sc.b ^ (C * (D.R.m : ℝ) ^ 2) ∧ ∀ μsec, IsSection D.R.k D.R.rS W.z W.z' μsec → ∀ γ p, RelPt D W.z W.z' γ p → ∀ θ', normWin D large₂ C1 θ' → ∀ νR, RMeas D W γ θ' νR → DminN W.z W.z' γ l • jhUnit D w w' A₀ μsec νR γ = ∑ I ∈ univ.filter (fun I => I.card = l), a I • jhUnit D w w' (AI I) μsec νR γ := by
   intro hH hKF hCC Cg cb Cu cT CT C0 C1
   refine ⟨2 * (2 * Cg + 2) + 2 * (|CT| + 20 * max 2 Cu) + 2 * max 2 Cu, fun Cn => ?_⟩

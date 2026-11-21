@@ -87,6 +87,7 @@ theorem isVal_zero : IsVal y w 0 0 :=
   ⟨0, 0, 1, homog_zero 0, homog_one, by simp, by simp, by simp⟩
 
 
+variable (y w) in
 def locRing : Subring Ω where
   carrier := {a | ∃ v, IsVal y w a v}
   mul_mem' := fun ⟨_, hv⟩ ⟨_, hu⟩ => ⟨_, hv.mul hu⟩

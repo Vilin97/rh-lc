@@ -259,6 +259,7 @@ end Oriented
 section Theta
 
 
+open scoped Classical in
 theorem rename_mem_schA {F : Type} [Field F] [NumberField F] {κ κ' : Type} [Fintype κ] [Fintype κ'] (σ : κ ≃ κ')
     {Φ : (κ → AF F) → ℂ} (hΦ : Φ ∈ GlobalTheory.WeilM.schA F κ) : (fun x : κ' → AF F => Φ (x ∘ σ)) ∈ GlobalTheory.WeilM.schA F κ' := by
   induction hΦ using Submodule.span_induction with
@@ -460,6 +461,7 @@ theorem moves_sgn {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} (hθ : IsInfF
   exact Submodule.subset_span ⟨t, Z, hZ, Q, rfl⟩
 
 
+open scoped GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels in
 theorem om_mem_schA {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
     {n d : ℕ} {X : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E n} {W : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E d} {Mo : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ X W}
     {ψ : AddChar (AF F) ℂ} {χX χW : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Chr F E} {om : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep σ X W}

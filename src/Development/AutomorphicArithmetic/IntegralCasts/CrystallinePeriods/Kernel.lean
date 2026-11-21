@@ -217,6 +217,7 @@ theorem coeff_zero_xi (ϖ : PFlat p R) : (xi ϖ).coeff 0 = -ϖ.1 := by
   simp
 
 
+omit [IsAdicComplete (span {(p : R)}) R] in
 theorem isUnit_iff_isUnit_coeff (x : Ainf p R) : IsUnit x ↔ IsUnit (x.coeff 0) := by
   refine ⟨fun h => h.map WittVector.constantCoeff, fun h => ?_⟩
   obtain ⟨c, hc⟩ := p_dvd_sub_teich x

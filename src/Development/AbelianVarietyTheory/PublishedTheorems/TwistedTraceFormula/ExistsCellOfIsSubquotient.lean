@@ -40,6 +40,7 @@ def relEmb (f : ∀ i, (Σ j, c i j) ≃ m i) : (∀ i, Levi k (c i)) →* Levi 
   MonoidHom.pi fun i => (leviEmb k (f i)).comp (Pi.evalMonoidHom (fun i => Levi k (c i)) i)
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype α] in
 theorem relEmb_mem_normalizer (f : ∀ i, (Σ j, c i j) ≃ m i) (g : ∀ i, Levi k (c i)) :
     relEmb k f g ∈ Subgroup.normalizer (relUnip k f : Set (Levi k m)) :=
   Subgroup.mem_normalizer_iff.2 fun u => forall₂_congr fun i _ =>
@@ -67,6 +68,7 @@ def relInd (f : ∀ i, (Σ j, c i j) ≃ m i) (ρ : Representation ℂ (∀ i, L
   smInd (relParab k f) ((twist ρ (relDeltaHalf k c)).comp (relProj k f))
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype α] [LinearOrder β] in
 theorem relEmb_apply (f : ∀ i, (Σ j, c i j) ≃ m i) (g : ∀ i, Levi k (c i)) (i : α) :
     relEmb k f g i = leviEmb k (f i) (g i) := rfl
 
@@ -137,14 +139,17 @@ def Segment.ofChar (χ : kˣ →* ℂˣ) (h : IsSmoothChar χ) (l : ℕ) (hl : 0
   ⟨1, one_pos, (IrrRep.det (Fin 1) χ h).cl, ⟨_, rfl, isCuspidal_detRep_one h⟩, l, hl⟩
 
 
+omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 theorem isSmoothChar_one {G : Type} [Group G] [TopologicalSpace G] : IsSmoothChar (1 : G →* ℂˣ) := by
   unfold IsSmoothChar; simp
 
 
+variable (k) in
 def GrothGL.unit : GrothGL k :=
   Finsupp.single ⟨0, (IrrRep.det (Fin 0) 1 isSmoothChar_one).cl⟩ 1
 
 
+variable (k) in
 def JacquetOfInducedFiltration : Prop :=
   ∀ (α β n : Type) [Fintype α] [LinearOrder α] [Fintype β] [LinearOrder β] [Fintype n] [DecidableEq n]
     (m : α → Type) [∀ i, Fintype (m i)] [∀ i, DecidableEq (m i)]
@@ -159,6 +164,7 @@ def JacquetOfInducedFiltration : Prop :=
               Nonempty ((subQuot (S t.succ) (S t.castSucc)).Equiv (cellFunctor f g ρ))
 
 
+variable (k) in
 def CellSemisimplification : Prop :=
   ∀ (α β : Type) [Fintype α] [LinearOrder α] [Fintype β] [LinearOrder β]
     (m : α → Type) [∀ i, Fintype (m i)] [∀ i, DecidableEq (m i)]
@@ -176,6 +182,7 @@ def CellSemisimplification : Prop :=
               jhMult τ.ρ (piTensor fun j => multiProd (g j) fun i => (s i j).rep.ρ)
 
 
+variable (k) in
 def IsSegmentClass (Z : ∀ Δ : Segment k, IrrCl (GL (Fin (Δ.len * Δ.d)) k)) : Prop :=
   ∀ (Δ : Segment k) (σ : IrrRep (GL (Fin Δ.d) k)), σ.cl = Δ.start →
     ∀ (e : (Σ _ : Fin Δ.len, Fin Δ.d) ≃ Fin (Δ.len * Δ.d)) (π : IrrRep (GL (Fin (Δ.len * Δ.d)) k)),
@@ -184,6 +191,7 @@ def IsSegmentClass (Z : ∀ Δ : Segment k, IrrCl (GL (Fin (Δ.len * Δ.d)) k)) 
       (π.cl = Z Δ ↔ Nonempty ((jac e π.ρ).Equiv (piTensor (segTerm σ.ρ Δ.len))))
 
 
+variable (k) in
 def IsProductIso {A : Type 1} [CommRing A] (Ψ : GrothGL k ≃+ A) : Prop :=
   Ψ (GrothGL.unit k) = 1 ∧
     ∀ (r t : ℕ) (V W : Type) [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]

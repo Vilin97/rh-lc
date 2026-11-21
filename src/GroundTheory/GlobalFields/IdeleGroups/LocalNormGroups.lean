@@ -31,6 +31,8 @@ theorem finiteLocalNorm_mulSingle (v : HeightOneSpectrum (𝓞 K)) [DecidableEq 
     LocalField.coe_normUnits]
 
 
+omit [NumberField K] in
+open scoped Classical in
 theorem infiniteLocalNorm_mulSingle (v : InfinitePlace K) (w : v.placesOver L)
     (z : ((w : InfinitePlace L).Completion)ˣ) :
     infiniteLocalNorm L v (Pi.mulSingle w z) =
@@ -41,6 +43,7 @@ theorem infiniteLocalNorm_mulSingle (v : InfinitePlace K) (w : v.placesOver L)
     LocalField.coe_normUnits]
 
 
+variable (L) in
 theorem nonempty_infinitePlacesOver (v : InfinitePlace K) : Nonempty (v.placesOver L) := by
   obtain ⟨w, hw⟩ : ∃ w : InfinitePlace L, w.comap (algebraMap K L) = v :=
     InfinitePlace.comap_surjective v

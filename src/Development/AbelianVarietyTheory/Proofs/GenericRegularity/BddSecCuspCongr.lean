@@ -46,6 +46,8 @@ private lemma fj_eq_of_eqOn_dom (la : _root_.ReciprocityTheory.ChartRestriction.
   simp only [key]
 
 
+open NumberField in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} (X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r) in
 theorem _root_.GlobalTheory.DomCongr.bddSec_cusp_congr : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     (r : ℕ) (X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r), ∀ (la : _root_.ReciprocityTheory.ChartRestriction.G.FD.Wt X.Ψ r) (P Q : _root_.ReciprocityTheory.ChartRestriction.G.FD.Frame X.Ψ r → ℂ),
     (∀ x ∈ X.dom, P x = Q x) → (X.IsBddSec la P → X.IsBddSec la Q) ∧

@@ -16,6 +16,7 @@ instance gradedAlgebra : GradedAlgebra W.gr :=
 def originA (h : W.HasOrigin) : W.A →ₐ[O] O := (W.origin h).comp W.A.val
 
 
+omit [DecidableEq X] in
 def quot {R' : Type} [CommRing R'] [Algebra O R'] (p : R →ₐ[O] R') (hp : Function.Surjective p)
     (h : IsHomog O W.wt (RingHom.ker (p.comp W.π))) : WPres O X R' where
   σ := W.σ

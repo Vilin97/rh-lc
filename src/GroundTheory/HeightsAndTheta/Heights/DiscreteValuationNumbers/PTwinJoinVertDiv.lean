@@ -14,6 +14,7 @@ open MvPolynomial
 open IndefiniteRowSideFullHecke.NumbersDVR.Bundles (liftVar pullDeg joinCoord mcIdeal IsVertDiv)
 
 
+open JoinPointVerticalDivisor in
 theorem JoinVerticalDivisor.proof : JoinVerticalDivisor.Statement := by
   intro O _ _ _ Ω _ _ K _ ι _ x K' _ ι' _ z b f g hD
   obtain ⟨⟨α, β, hf, hg, hb⟩, hfP, hgP, hU⟩ := hD

@@ -510,6 +510,7 @@ theorem leadMinor_r (Z : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) D.host.E) 
   unfold leadMinorE; rw [dif_pos (Nat.le_succ _)]; rfl
 
 
+set_option maxHeartbeats 1600000 in
 theorem detG (hA : ∀ p, Agree δ M p) (u u' : D.what₂.Word) (p : PlF D) (g : Loc.SplitG (M p).L)
     (hsM : (M p).split = some g) {F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)}
     {F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)} (w : Point D.host.E (D.R.rS + 1))

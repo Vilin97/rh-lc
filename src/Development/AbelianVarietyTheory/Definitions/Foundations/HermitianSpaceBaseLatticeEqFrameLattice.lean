@@ -18,6 +18,7 @@ section Lattice
 variable (F : Type) [Field F] [NumberField F] {E : Type} [Field E] [NumberField E] [Algebra F E] {n : ℕ}
 
 
+variable (E) in
 def intLoc (v : HeightOneSpectrum (𝓞 F)) : Subring (Fv F v ⊗[F] E) where
   carrier := AddSubgroup.closure {z | ∃ a ∈ v.adicCompletionIntegers F, ∃ x : 𝓞 E, z = a ⊗ₜ[F] (x : E)}
   zero_mem' := zero_mem _
@@ -71,6 +72,7 @@ theorem sigR_mem_intLoc (σ : E →ₐ[F] E) {v : HeightOneSpectrum (𝓞 F)} {y
     (fun y hy => by rw [map_neg]; exact neg_mem hy) hy
 
 
+variable (F) in
 def latLoc (L : Submodule (𝓞 E) (Fin n → E)) (v : HeightOneSpectrum (𝓞 F)) :
     Submodule (intLoc F E v) (Fin n → Fv F v ⊗[F] E) where
   carrier := AddSubgroup.closure {y | ∃ a ∈ v.adicCompletionIntegers F, ∃ x ∈ L, y = fun i => a ⊗ₜ[F] x i}
@@ -109,9 +111,11 @@ theorem latLoc_induction {L : Submodule (𝓞 E) (Fin n → E)} {v : HeightOneSp
   | neg y _ hy => exact hneg y hy
 
 
+variable (E n) in
 abbrev stdLattice : Submodule (𝓞 E) (Fin n → E) := Formalism.UG.stdLat (𝓞 E)
 
 
+omit [NumberField E] in
 theorem mem_latLoc_stdLattice {v : HeightOneSpectrum (𝓞 F)} {y : Fin n → Fv F v ⊗[F] E} :
     y ∈ latLoc F (stdLattice E n) v ↔ ∀ i, y i ∈ intLoc F E v := by
   constructor

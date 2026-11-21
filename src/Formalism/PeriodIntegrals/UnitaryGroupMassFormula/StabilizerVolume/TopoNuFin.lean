@@ -56,6 +56,7 @@ theorem zero_mem_latV (a M : ℕ) : (0 : Fin a → Fin M → Fv F v ⊗[F] E) �
   exact fun _ _ _ => zero_mem _
 
 
+include b in
 theorem exists_clopen_compact {a M : ℕ} {K : Set (Fin a → Fin M → Fv F v ⊗[F] E)}
     (hK : IsCompact K) : ∃ C, IsClopen C ∧ IsCompact C ∧ K ⊆ C := by
   classical

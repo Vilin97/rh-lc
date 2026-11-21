@@ -41,6 +41,7 @@ attribute [instance] TorsRep.cr TorsRep.alg
 variable {G : Over (Spec (CommRingCat.of R))} [GrpObj G] {p : ℕ}
 
 
+variable (G p) in
 structure IsTorsPts {N : Type} [AddCommGroup N] (pt : N → (sp (R₀ := R) R ⟶ G)) : Prop where
   inj : Function.Injective pt
   add : ∀ x y, pt (x + y) = pt x * pt y
@@ -68,6 +69,7 @@ def vanIdeal (T : TorsRep G p) {N : Type} (pt : N → (sp (R₀ := R) R ⟶ G)) 
     simp [ha k hk φ h]
 
 
+variable (G) in
 structure IsFinFlatSub (B : Type) [CommRing B] [Algebra R B] (h : sp (R₀ := R) B ⟶ G) : Prop where
   proj : Module.Projective R B
   fin : Module.Finite R B

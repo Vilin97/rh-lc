@@ -88,6 +88,8 @@ private theorem valuation_algebraMap_cO (a : K.O) :
     valuation_algebraMap_isUnit_eq_one K _ u.isUnit, valuation_algebraMap_irreducible_eq K hϖ hcϖ]
 
 
+open IsLocalRing Polynomial in
+variable (K : _root_.GlobalTheory.UnitLemma.UQ) in
 theorem _root_.GlobalTheory.UnitLemma.UnramNorm.val_c (x : K.E) :
     _root_.GlobalTheory.UnitLemma.val K.O (K.c x) = _root_.GlobalTheory.UnitLemma.val K.O x := by
   unfold _root_.GlobalTheory.UnitLemma.val
@@ -176,6 +178,8 @@ private theorem exists_add_mul_cO_notMem_maximalIdeal (e : K.O) :
   exact Ideal.sub_mem _ hx (Ideal.mul_mem_right _ _ h1)
 
 
+open IsLocalRing Polynomial in
+variable (K : _root_.GlobalTheory.UnitLemma.UQ) in
 theorem _root_.GlobalTheory.UnitLemma.UnramNorm.unram_quadratic_facts :
     ∀ (K : _root_.GlobalTheory.UnitLemma.UQ), (∀ u : K.Oˣ, K.c (algebraMap K.O K.E u) = algebraMap K.O K.E u →
     ∃ z : K.Oˣ, algebraMap K.O K.E u = algebraMap K.O K.E z * K.c (algebraMap K.O K.E z)) ∧

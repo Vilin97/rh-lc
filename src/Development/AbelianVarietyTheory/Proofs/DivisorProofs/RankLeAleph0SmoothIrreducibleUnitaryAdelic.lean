@@ -167,6 +167,7 @@ end GlobalTheory.FinTypCount
 namespace GlobalTheory
 
 
+open GlobalTheory.FinTypCount in
 theorem FinTyp.rank_le_aleph0 : ∀ {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
     (π : Formalism.L2.NG.FinTyp L n), Module.rank ℂ π.S ≤ Cardinal.aleph0 := by
   intro L _ _ _ n π

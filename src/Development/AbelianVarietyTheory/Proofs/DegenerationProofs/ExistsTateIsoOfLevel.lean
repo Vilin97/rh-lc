@@ -270,6 +270,7 @@ theorem exists_spread (hG : GlobalFnsSt) (hB : SecBaseChangeAnySt) {F K κ : Typ
     · exact (congrArg (fun q => q.left.appTop.hom (w a)) eJ).symm
 
 
+set_option maxHeartbeats 800000 in
 theorem exists_full (hL : Laws) (hB : SecBaseChangeAnySt) {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
     {D : Datum H} {l : Geo.Tor.Level H} {B F K κ : Type} [CommRing B] {bs : Base l B} [Field F] [Field K] [IsAlgClosed K]
     [CharZero K] [Field κ] {S : Scheme.{0}} (sF : S ⟶ Sp F) [LocallyOfFiniteType sF] (e : B →+* F) {sB : S ⟶ Sp B}

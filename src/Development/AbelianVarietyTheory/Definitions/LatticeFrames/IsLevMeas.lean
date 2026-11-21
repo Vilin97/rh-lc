@@ -32,6 +32,7 @@ structure Twist (D : D7) where
   ξ : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ
 
 
+open Classical in
 structure Twist.Is (c : Com D) (w : Twist D) : Prop where
   com : c.Is
   union : c.Pg = w.Pg ∪ w.Q
@@ -188,6 +189,7 @@ def idxQ (PP : Pl D.host.E) (j : ℕ) : ℝ :=
 def volOne (PP : Pl D.host.E) (j : ℕ) : ℝ := zinv PP 0 D.R.r * ((Ideal.absNorm PP.asIdeal : ℝ) ^ (D.R.r * (j * D.R.t)))⁻¹
 
 
+open Classical in
 def Twist.S₀ (w : Twist D) : Set (HeightOneSpectrum (𝓞 D.host.F)) := (w.Pg.image fun PP => PP.under (𝓞 D.host.F) : Finset _)
 
 def kapOf (w : Twist D) (k : ℕ) (p : Step c s s') (m : Measure (WO s.V s'.V)) (X : Set (WO s.V s'.V)) (mR : Measure (GinfC s.V))

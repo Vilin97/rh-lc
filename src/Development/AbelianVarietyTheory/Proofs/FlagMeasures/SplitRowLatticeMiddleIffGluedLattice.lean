@@ -110,6 +110,7 @@ structure IsHypFrame (h : V →ₗ⋆[K] V →ₗ[K] K) (e f : Fin r → V) : Pr
   ef : ∀ a b, h (e a) (f b) = if a = b then 1 else 0
 
 
+attribute [local instance] Formalism.BasicNotions.Host.cmStar in
 theorem hypFrame (D : D7) : IsHypFrame (hS D).hT D.sp.hypE D.sp.hypF :=
   ⟨(hS D).herm, D.sp.hyp_ee, D.sp.hyp_ff, D.sp.hyp_ef⟩
 
@@ -397,6 +398,8 @@ theorem mem_genus_of_unimodular {Λ : LatV D} (h1 : Submodule.IsLattice D.host.E
     (hS D).standardTuple_isLattice h1 P hP (k _ (hS D).standardTuple_isLattice.fg (hS D).baseLattice_isUnimodular P hP) (k _ h1.fg h2 P hP)
 
 
+open Matrix in
+open scoped ENNReal in
 theorem main : ∀ (D : D7) (u : D.what₂.Word) (F0 : Fb D u) (Λ : LatV D), 1 ≤ Tu D u → IsBase D u F0 → IsRowLat D F0 Λ → (IsSplit D F0 Λ → Λ ⊓ toO (hS D) (Wb D) ∈ glueSet D u (L0X D Λ (lf D F0)) ∧ Lsub Λ (lf D F0) = (Λ ⊓ toO (hS D) (Wb D)) ⊔ toO (hS D) F0.X) ∧ (∀ L' : LatW D, ∀ L ∈ glueSet D u L', IsRowLat D F0 (XS D F0 ⊔ L ⊔ YS D) ∧ IsSplit D F0 (XS D F0 ⊔ L ⊔ YS D) ∧ (XS D F0 ⊔ L ⊔ YS D) ⊓ toO (hS D) (Wb D) = L) := by
   rintro D u F0 Λ - ⟨he, hz⟩ ⟨-, ⟨hlat, huni, hlift, hconv, hprim⟩, hX⟩
   refine ⟨fun hsp => ?_, ?_⟩

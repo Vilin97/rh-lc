@@ -68,6 +68,7 @@ theorem apply_add_symm {A : Type*} [TopologicalSpace A] [AddCommGroup A] (T : (A
   simp
 
 
+set_option maxHeartbeats 1000000 in
 theorem domination : ∀ {D : D7} {n ρ p : ℕ} {hn : ρ + p = n} (M : Maps D hn) (m : Meas D ρ p)
     (ψ : AddChar (AF D.host.F) ℂ), IsCharAF D.host.F ψ → ∀ (b₀ : HermE D ρ) (χ : (AE D)ˣ →* Circle) (s : ℂ)
     (f : G D n → ℂ), IsLaw χ s f → ∀ g : G D n,

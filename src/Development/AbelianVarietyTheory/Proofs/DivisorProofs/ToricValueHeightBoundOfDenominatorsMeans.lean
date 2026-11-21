@@ -161,6 +161,7 @@ end GlobalTheory.HeightMeanValueBounds
 
 namespace GlobalTheory.SqTop
 
+open GlobalTheory.FunObj GlobalTheory.FunObj.SqNum GlobalTheory.ChiGrid in
 theorem thbSt_of_inputs : GlobalTheory.IndefiniteRowSideFullHecke.ClassZetaValuationBounds.ToricDenominator → FieldDat → TorEx → DenEx → DenSum → BetaArch → ThbSt := by
   intro hTD hFD hTor _ hDS hBA
   obtain ⟨F1, hF⟩ := hFD

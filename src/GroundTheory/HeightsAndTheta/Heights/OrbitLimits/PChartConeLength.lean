@@ -27,6 +27,7 @@ namespace ChartConeLength
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem aeval_algebraMap_X (i : (k : K) → ι k) (f : MvPolynomial (Σ k, ι k) ℂ) :
     aeval (fun q => algebraMap (MvPolynomial (Σ k, ι k) ℂ) (ConeRing i) (X q)) f =
       algebraMap (MvPolynomial (Σ k, ι k) ℂ) (ConeRing i) f := by
@@ -77,6 +78,7 @@ theorem map_algebraMap_eq_map_ratioMap (i : (k : K) → ι k) {Q : Ideal (MRing 
     exact Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨_, ⟨f, hf, rfl⟩, rfl⟩)
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem comap_ratioMap_map (i : (k : K) → ι k) (Y : Ideal (DehomRing i)) :
     (Y.map (ratioMap i)).comap (ratioMap i) = Y := by
   refine le_antisymm (fun g hg => ?_) Ideal.le_comap_map
@@ -84,6 +86,7 @@ theorem comap_ratioMap_map (i : (k : K) → ι k) (Y : Ideal (DehomRing i)) :
   rwa [Ideal.map_map, evalOne_comp_ratioMap, Ideal.map_id, evalOne_ratioMap] at h
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem isRadical_map_dehom (i : (k : K) → ι k) {P' : Ideal (MvPolynomial (Σ k, ι k) ℂ)} (hrad : P'.IsRadical)
     (heq : P'.map (algebraMap _ (ConeRing i)) = (P'.map (dehom i)).map (ratioMap i)) :
     (P'.map (dehom i)).IsRadical := by
@@ -95,6 +98,7 @@ theorem isRadical_map_dehom (i : (k : K) → ι k) {P' : Ideal (MvPolynomial (Σ
   exact h1
 
 
+omit [Fintype K] in
 theorem isMultiHomogIdeal_sup_span {P : Ideal (MRing ι)} (hP : IsMultiHomogIdeal P) {s : MRing ι} {a : K → ℕ}
     (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a) : IsMultiHomogIdeal (P ⊔ Ideal.span {s}) := by
   obtain ⟨S, hS, rfl⟩ := hP
@@ -107,6 +111,7 @@ theorem isMultiHomogIdeal_sup_span {P : Ideal (MRing ι)} (hP : IsMultiHomogIdea
 end ChartConeLength
 
 
+open ChartConeLength in
 theorem ChartConeLength.proof (hT : ConeRingLaurent.Statement) (hN : ChartDehomIdeal.Statement) :
     ChartConeLength.Statement := by
   intro K _ _ ι _ P n m σ i A s hP hs W hW hWh W' hW' W'' hW'' hle

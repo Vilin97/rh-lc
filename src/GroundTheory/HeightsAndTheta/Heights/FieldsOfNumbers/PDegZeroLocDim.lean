@@ -22,10 +22,12 @@ variable {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K �
   [∀ k, Fintype (ι k)]
 
 
+omit [DecidableEq K] in
 theorem finiteType_quotient_mRing (I : Ideal (MRing ι F)) : Algebra.FiniteType F (MRing ι F ⧸ I) :=
   Algebra.FiniteType.of_surjective (Ideal.Quotient.mkₐ F I) (Ideal.Quotient.mkₐ_surjective F I)
 
 
+omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem chartMonomial_not_mem (Q : Ideal (MRing ι F)) [Q.IsPrime] (u : ∀ k, ι k)
     (hu : ∀ k, (X ⟨k, u k⟩ : MRing ι F) ∉ Q) (b : K → ℕ) : chartMonomial u b ∉ Q := by
   unfold chartMonomial

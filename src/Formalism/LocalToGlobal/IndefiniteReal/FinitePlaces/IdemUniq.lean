@@ -75,6 +75,7 @@ theorem intAE_mul {z z' : Af D.host.F ⊗[D.host.F] D.host.E} (hz : z ∈ intAE 
   | neg x _ hx => rw [neg_mul]; exact neg_mem hx
 
 
+set_option maxHeartbeats 800000 in
 theorem idem_class (P : HeightOneSpectrum (𝓞 D.host.E)) (hP : ¬ Lev.IsConjPl (D := D) P P)
     (e₀ : AE D) (ι : D.host.E →ₐ[D.host.F] (belowPl P).adicCompletion D.host.F)
     (hs₀ : e₀ + cA D e₀ = phiE (belowPl P) 1)

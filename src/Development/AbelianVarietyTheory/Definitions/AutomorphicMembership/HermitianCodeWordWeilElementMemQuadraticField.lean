@@ -116,6 +116,7 @@ def tauAt (w : HeightOneSpectrum (𝓞 X.K)) : Pr.vT u ≃ X.Tau :=
   else Fintype.equivOfCardEq (by rw [Fintype.card_coe, hPr.vT_card u]; rfl)
 
 
+include hPr in
 theorem eq_of_sees {w : HeightOneSpectrum (𝓞 X.K)} {τ : X.Tau} {P P' : Pr.vT u} (h : SeesP w τ P.1 ∨ SeesPbar w τ P.1)
     (h' : SeesP w τ P'.1 ∨ SeesPbar w τ P'.1) : P = P' := by
   have key : ∀ A B : Pr.vT u, A.1 ≠ conjPrime₂ B.1 := fun A B e =>
@@ -132,6 +133,7 @@ theorem eq_of_sees {w : HeightOneSpectrum (𝓞 X.K)} {τ : X.Tau} {P P' : Pr.vT
     exact congrArg conjPrime₂ (h.symm.trans h')
 
 
+include hPr in
 theorem T_mem_vT (P : Pr.vT u) : ((Pr.T u : ℕ) : 𝓞 X.E) ∈ P.1.asIdeal := hPr.vT_norm u P.1 P.2 ▸ Ideal.absNorm_mem _
 
 theorem tauAt_sees (hX : X.AbelianUnramifiedExtensionConditions) {w : HeightOneSpectrum (𝓞 X.K)} (hw : ((Pr.T u : ℕ) : 𝓞 X.K) ∈ w.asIdeal) (P : Pr.vT u) :

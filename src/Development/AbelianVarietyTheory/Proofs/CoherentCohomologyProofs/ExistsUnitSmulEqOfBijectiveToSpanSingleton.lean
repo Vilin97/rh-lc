@@ -85,6 +85,7 @@ variable {R S A A' : Type*} [CommRing R] [CommRing S] [CommRing A] [CommRing A']
   [MulSemiringAction G A] [SMulCommClass G R A] [MulSemiringAction G A'] [SMulCommClass G S A']
 
 
+variable (S) in
 def fixedSubalgebraMap (f : A →ₐ[R] A') (hf : ∀ (g : G) a, f (g • a) = g • f a) :
     FixedPoints.subalgebra R A G →ₐ[R] FixedPoints.subalgebra S A' G where
   toFun x := ⟨f x, fun g ↦ by rw [← hf, x.2 g]⟩
@@ -127,6 +128,8 @@ theorem isInvariant_of_isBaseChange [Finite G] [Module.Flat R S] [Algebra.IsInva
   exact key ⟨y, hy⟩
 
 
+omit [MulSemiringAction G A] [SMulCommClass G R A] [MulSemiringAction G A']
+  [SMulCommClass G S A'] in
 theorem faithfulSMul_of_isBaseChange [Module.Flat R S] [FaithfulSMul R A]
     (f : A →ₐ[R] A') (hb : IsBaseChange S f.toLinearMap) : FaithfulSMul S A' := by
   rw [faithfulSMul_iff_algebraMap_injective]

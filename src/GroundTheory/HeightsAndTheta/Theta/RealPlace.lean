@@ -67,13 +67,17 @@ theorem two_ne_zero_of_infinitePlace (w : InfinitePlace K) : (2 : K) ≠ 0 := by
   exact two_ne_zero this
 
 
+omit [Algebra.IsQuadraticExtension K E] in
+variable (E) in
 def IsNonsplitAt (w : InfinitePlace K) : Prop := IsField (w.Completion ⊗[K] E)
 
 
+variable (K E) in
 noncomputable def quadD (w : InfinitePlace K) : K :=
   (exists_algEquiv_quadraticAlgebra K E (two_ne_zero_of_infinitePlace w)).choose
 
 
+variable (K E) in
 noncomputable def quadPsi (w : InfinitePlace K) : E ≃ₐ[K] QuadraticAlgebra K (quadD K E w) 0 :=
   (exists_algEquiv_quadraticAlgebra K E (two_ne_zero_of_infinitePlace w)).choose_spec.choose
 
@@ -123,6 +127,7 @@ theorem realPlaceD_neg (hE : IsNonsplitAt E w) : realPlaceD (E := E) hw < 0 := b
     _ = 0 := by rw [mul_assoc, hprod, mul_zero]
 
 
+omit [Algebra.IsQuadraticExtension K E] in
 theorem isNonsplitAt_of_algEquiv {d : K} (ψ : E ≃ₐ[K] QuadraticAlgebra K d 0)
     (hd : ringEquivRealOfIsReal hw (algebraMap K w.Completion d) < 0) : IsNonsplitAt E w :=
   MulEquiv.isField (MulEquiv.isField (Field.toIsField ℂ) (quadComplexEquiv _ hd).toMulEquiv)

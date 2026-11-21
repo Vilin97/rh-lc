@@ -20,6 +20,7 @@ open _root_.WittVector Laurent Polynomial WittTilt
 variable {p : ℕ} [hp : Fact p.Prime]
 
 
+variable (p) in
 def sig (ρ : ℝ) : ℝ := Real.log ρ / Real.log (p : ℝ)⁻¹
 
 theorem inv_p_pos : (0 : ℝ) < (p : ℝ)⁻¹ := inv_pos.2 (Nat.cast_pos.2 hp.out.pos)

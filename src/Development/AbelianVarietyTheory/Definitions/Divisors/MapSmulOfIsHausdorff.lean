@@ -84,6 +84,7 @@ instance : Module ℤ_[p] (Tate p M) where
   zero_smul t := ext fun n => by rw [lev_smul, digit_zero, pow_zero, lev_zero]
 
 
+variable (p) in
 def map {M' : Type} [CommGroup M'] (f : M →* M') : Tate p M →ₗ[ℤ_[p]] Tate p M' where
   toFun t := mk (fun n => f (t.lev n)) fun n =>
     ⟨by rw [← map_pow, lev_pow, map_one], by rw [← map_pow, lev_succ]⟩

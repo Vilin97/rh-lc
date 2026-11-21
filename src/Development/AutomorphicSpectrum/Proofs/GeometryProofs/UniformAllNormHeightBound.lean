@@ -137,6 +137,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
 
 
+variable (E) in
 def clearN (S : Finset ℕ) (u : GlobalTheory.AllWt.Weight Dw) : ℕ := ∏ p ∈ S, p ^ ⌈2 * exTwo E p * GlobalTheory.CovHt.l1 u⌉₊
 
 theorem clearN_ne_zero {S : Finset ℕ} (hS : ∀ p ∈ S, p.Prime) (u : GlobalTheory.AllWt.Weight Dw) : clearN E S u ≠ 0 :=
@@ -251,6 +252,7 @@ theorem trOf_sub (Rd : Reading Fr h Z) (u : GlobalTheory.AllWt.Weight Dw) (a b :
 end Tr
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem modelSmall_encard_le [IsGalois ℚ E] (hGv : Top.Given) {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r)
     (h : GenFrEx Xo c) (e : Comp Xo c → Rul Xo c) (hL : CompLaws U h e) (hUn : Ref.UnifAll Xo c) {x : ℝ}
     (hx : ∀ σ, GoodEmb c σ → ∀ k (τ : E →+* ℂ), ‖τ ((U σ).X k).ξ0‖ = x)

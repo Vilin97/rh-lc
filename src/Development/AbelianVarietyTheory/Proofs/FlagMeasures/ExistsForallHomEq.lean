@@ -34,6 +34,8 @@ private theorem exists_ringHom_zmod_ker_eq {E : Type} [Field E] [NumberField E] 
   simp [RingHom.mem_ker, Ideal.Quotient.eq_zero_iff_mem]
 
 
+open NumberField Module Matrix in
+open scoped ENNReal in
 theorem _root_.GlobalTheory.NormOneSplit.mem_span_iff {E : Type} [Field E] [NumberField E] {T : ℕ}
     (hT : T.Prime)
     (hs : ∀ P : Ideal (𝓞 E), P.IsMaximal → ((T : 𝓞 E) ∈ P) →
@@ -221,6 +223,8 @@ private theorem comp_mapRingHom_star_ne_of_split {F E : Type} [Field F] [NumberF
   exact (hs P hPm hTP).2 (Ideal.pow_le_pow_right h2le (hle2 hTmap))
 
 
+open NumberField Module Matrix in
+open scoped ENNReal in
 theorem _root_.GlobalTheory.NormOneSplit.card_norm_classes : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E], _root_.Formalism.BasicNotions.CMData F E → ∀ T : ℕ, T.Prime → (∀ P : Ideal (𝓞 E), P.IsMaximal → ((T : 𝓞 E) ∈ P) → Ideal.absNorm P = T ∧ (T : 𝓞 E) ∉ P ^ 2) → ∀ c : 𝓞 E, star (c : E) = (c : E) → IsCoprime c (T : 𝓞 E) → Nat.card {a : 𝓞 E ⧸ Ideal.span {(T : 𝓞 E)} // ∃ x y : 𝓞 E, Ideal.Quotient.mk _ x = a ∧ (y : E) = star (x : E) ∧ x * y - c ∈ Ideal.span {(T : 𝓞 E)}} = (T - 1) ^ finrank ℚ F := by
   intro F E _ _ _ _ _ _ hcm T hT hs c hc hcop
   haveI : Fact T.Prime := ⟨hT⟩

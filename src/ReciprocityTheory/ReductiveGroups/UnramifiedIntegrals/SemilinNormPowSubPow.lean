@@ -23,6 +23,7 @@ theorem semilin_norm_sub_le {a b : K} {t : ℝ} (ha : ‖a‖ ≤ t) (hb : ‖b�
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha (by rwa [norm_neg]))
 
 
+omit [CompleteSpace K] [CharZero K] in
 theorem semilin_norm_pow_sub_pow {a b : K} (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1) (n : ℕ) :
     ‖a ^ n - b ^ n‖ ≤ ‖a - b‖ := by
   induction n with
@@ -40,6 +41,7 @@ theorem semilin_norm_pow_sub_pow {a b : K} (ha : ‖a‖ ≤ 1) (hb : ‖b‖ �
         _ = ‖a - b‖ := mul_one _
 
 
+omit [CompleteSpace K] [CharZero K] in
 theorem FrobField.norm_sq_sub_pow_le {l : ℕ} {σ : K →+* K} (h : FrobField K l σ) (x : K) (hx : ‖x‖ ≤ 1) :
     ‖σ (σ x) - x ^ (l ^ 2)‖ ≤ ‖(l : K)‖ := by
   have hp : x ^ (l ^ 2) = (x ^ l) ^ l := by rw [← pow_mul, sq]
@@ -73,6 +75,7 @@ theorem semilin_root {l : ℕ} (hR : ResClosed K l) {m : ℕ} (hm : 2 ≤ m) (a 
   simpa [add_assoc] using hev
 
 
+open Filter Topology in
 theorem lang_semilinear {l : ℕ} {σ : K →+* K} (h : FrobField K l σ) (hR : ResClosed K l)
     (c : K) (hc : ‖c‖ = 1) : ∃ ε : K, ‖ε‖ = 1 ∧ ε = c * σ (σ ε) := by
   have hl2 : 2 ≤ l := h.prime.two_le

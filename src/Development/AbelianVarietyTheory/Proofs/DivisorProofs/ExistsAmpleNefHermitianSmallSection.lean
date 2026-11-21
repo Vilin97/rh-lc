@@ -37,6 +37,7 @@ end GlobalTheory.AmpleNefSmall
 namespace GlobalTheory.AmpleNefSmall
 
 
+open ProjSpace in
 theorem exists_ample_nef_smallSec : GlobalTheory.Published.ArCalc → ∀ (k : Type) [CommRing k] (X : Scheme.{0})
     [IsIntegral X] (p : X ⟶ Sp k) (D : ℕ), IsArithVar p D →
     ∃ A : HermLB p, IsAmpleLB A.B ∧ A.IsNef D ∧ ∃ s ∈ A.smallSec, s ≠ 0 := by

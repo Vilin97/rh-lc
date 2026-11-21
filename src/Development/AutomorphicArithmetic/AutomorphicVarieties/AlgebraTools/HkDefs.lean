@@ -17,6 +17,7 @@ def pairs : Finset (Fin n × Fin n) := Finset.univ.filter fun p => p.1 < p.2
 def De : MvPolynomial (Fin n) R := ∏ p ∈ pairs n, (X p.2 - X p.1)
 
 
+variable {R} in
 def NN (q : R) : MvPolynomial (Fin n) R := ∏ p ∈ pairs n, (X p.2 - C q * X p.1)
 
 variable {R n}
@@ -25,6 +26,7 @@ def alt (x : MvPolynomial (Fin n) R) : MvPolynomial (Fin n) R := ∑ w : Perm (F
 
 
 open scoped Classical in
+open Classical in
 def dd (x : MvPolynomial (Fin n) R) : MvPolynomial (Fin n) R :=
   if h : ∃ y, De R n * y = alt x then h.choose else 0
 
@@ -33,6 +35,7 @@ def invSet (w : Perm (Fin n)) : Finset (Fin n × Fin n) := (pairs n).filter fun 
 def invN (w : Perm (Fin n)) : ℕ := (invSet w).card
 
 
+variable (n) in
 def poin (q : R) : R := ∑ w : Perm (Fin n), q ^ invN w
 
 def IsDual {ι : Type} [Fintype ι] (a b : ι → MvPolynomial (Fin n) R) : Prop :=

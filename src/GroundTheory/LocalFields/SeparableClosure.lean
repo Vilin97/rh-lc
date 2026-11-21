@@ -240,6 +240,7 @@ variable {K Ω : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonar
   [Algebra K Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω]
 
 
+omit [TopologicalSpace Ω] [IsValuativeTopology Ω] in
 theorem exists_algebraMap_valuation_lt (γ : (ValueGroupWithZero Ω)ˣ) :
     ∃ a : K, a ≠ 0 ∧ valuation Ω (algebraMap K Ω a) < γ := by
   let := normedField K

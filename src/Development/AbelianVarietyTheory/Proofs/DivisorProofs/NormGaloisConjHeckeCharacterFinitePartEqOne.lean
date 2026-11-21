@@ -27,6 +27,7 @@ theorem norm_sigma_ratio {E : Type} [Field E] [NumberField E] [IsCMField E] (σ 
 end GlobalTheory.CMVal.NormConj
 
 
+open GlobalTheory.CMVal.NormConj in
 theorem GlobalTheory.CMVal.norm_conj_finPart : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {I : Type} [Fintype I]
     (φ : I → E →+* ℂ) (hφ : IsCMType φ) (s : ℕ) (κ : I → ℕ) (c : Ideal (OF E)) (hc : c ≠ ⊥) (χ : HChar E)
     (hχ : HasInf χ φ (fun i => (κ i : ℤ) + s)) (hu : ∀ u ∈ hatOUnits c, finPart χ u = 1) (σ : ℂ ≃+* ℂ) (y : (Af E)ˣ),

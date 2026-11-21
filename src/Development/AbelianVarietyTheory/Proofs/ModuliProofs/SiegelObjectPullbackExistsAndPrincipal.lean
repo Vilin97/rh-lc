@@ -34,6 +34,7 @@ theorem push_surjective (h : IsGrpPullback A' A f φ) (T : Over S') : Function.S
     Over.OverMorphism.ext (h.1.lift_fst _ _ _)⟩
 
 
+omit [GrpObj A] [GrpObj A'] in
 theorem lift_sq (sq : IsSquare φ φ₂) {T : Over S} {T' : Over S'} (χ : T.left ⟶ T'.left) (x' y' : T' ⟶ A')
     {Z : Over S} (ψ : T.left ⟶ Z.left) (x y : Z ⟶ A) (hx : χ ≫ x'.left ≫ φ = ψ ≫ x.left)
     (hy : χ ≫ y'.left ≫ φ = ψ ≫ y.left) : χ ≫ (lift x' y').left ≫ φ₂ = ψ ≫ (lift x y).left := by
@@ -46,6 +47,7 @@ theorem lift_sq (sq : IsSquare φ φ₂) {T : Over S} {T' : Over S'} (χ : T.lef
       Category.assoc, ← Over.comp_left, lift_snd]
 
 
+omit [GrpObj A] [GrpObj A'] in
 theorem diag_iso (sq : IsSquare φ φ₂) {P : LB (A ⊗ A).left} {P' : LB (A' ⊗ A').left}
     (H : LBIso P' (P.pull φ₂)) :
     LBIso (P'.pull (lift (𝟙 A') (𝟙 A')).left) ((P.pull (lift (𝟙 A) (𝟙 A)).left).pull φ) := by

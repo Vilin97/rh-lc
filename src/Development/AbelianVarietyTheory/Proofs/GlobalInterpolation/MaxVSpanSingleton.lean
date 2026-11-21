@@ -201,6 +201,10 @@ theorem _root_.GlobalTheory.CharVal.mem_locP' (I : Submodule (𝓞 E) E) (x : E)
   Iff.rfl
 
 
+open NumberField IsDedekindDomain in
+open scoped Pointwise in
+variable {E : Type} [Field E] [NumberField E] in
+variable {P : HeightOneSpectrum (𝓞 E)} {I J : Submodule (𝓞 E) E} {γ δ : WithZero (Multiplicative ℤ)} in
 theorem _root_.GlobalTheory.CharVal.MaxV.mem_locP (h : _root_.GlobalTheory.CharVal.MaxV P I γ) (h0 : γ ≠ 0) (x : E) :
     x ∈ _root_.Formalism.HermitianLatticesTheory.localization₂ P.asIdeal I ↔ P.valuation E x ≤ γ := by
   rw [_root_.GlobalTheory.CharVal.mem_locP']

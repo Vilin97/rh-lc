@@ -19,6 +19,7 @@ open GlobalTheory.Doubling (absE)
 variable (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+open GroundTheory.Global GroundTheory.Global.AdeleBaseChange in
 def eqv : AE F E ≃+* 𝔸[E] := (GroundTheory.BlockD.ThmBHecke.adeleEquiv F E).toRingEquiv
 
 variable {F E}

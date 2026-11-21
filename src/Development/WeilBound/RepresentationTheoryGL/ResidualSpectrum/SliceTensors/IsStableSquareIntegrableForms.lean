@@ -64,6 +64,7 @@ theorem isSqInt_act (hF : GlobalTheory.Published.AutomorphicFormsFiniteGL) (o : 
       (ContAut.continuous_of_isOpen_stab E N φ h.level) hm
 
 
+variable (E N) in
 def ainv : Submodule ℂ (Sm E N) where
   carrier := {φ | ∀ t g, φ.1 (splitCentre E N t * g) = φ.1 g}
   add_mem' := fun {φ ψ} ha hb t g => by

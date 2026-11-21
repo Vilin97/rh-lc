@@ -104,6 +104,7 @@ theorem movY_other {j : ℕ} (hj : j + 1 + 1 < D.R.m) (k : GA D (G.V (.grid D.R.
     Function.update_of_ne (fun h => h2 (by simpa [Fin.ext_iff] using h))]
 
 
+omit G in
 theorem moveArgs_col {K : Type} [Field K] (Γ : Grid K) {m j : ℕ} (hj : j + 1 + 1 < m) (κ : GL (Fin (Γ.rank (m, j + 1))) K)
     (z z' : Γ.Args) (hex : ∀ i l, z' (.ex i l) = z (.ex i l)) (hex0 : ∀ i l, l ≠ m → z (.ex i l) = 0)
     (hth0 : ∀ i l, i ≠ m → z' (.theta i l) = 0 ∧ z (.theta i l) = 0)

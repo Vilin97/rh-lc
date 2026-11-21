@@ -147,6 +147,7 @@ theorem affine_pair {V : X.Opens} {W : Y.Opens} (hV : IsAffineOpen V) (hW : IsAf
       (Y.residueField (genericPoint Y))
 
 
+omit hη hd in
 theorem genericPoint_mem_basicOpen {V : X.Opens} {h : Γ(X, V)} (hh : h ≠ 0) :
     genericPoint X ∈ X.basicOpen h := by
   rcases (V : Set X).eq_empty_or_nonempty with hV | hV
@@ -202,6 +203,7 @@ theorem eq_genericPoint {y : Y} (hy : π y = genericPoint X) : y = genericPoint 
   exact PrimeSpectrum.ext hqbot
 
 
+omit hη hd [IsIntegral X] [IsIntegral Y] in
 theorem finite_app_of_le {V U : X.Opens} [IsFinite (π ∣_ V)] (hU : IsAffineOpen U) (e : U ≤ V) :
     IsAffineOpen (π ⁻¹ᵁ U) ∧ (π.app U).hom.Finite := by
   haveI hR : MorphismProperty.RespectsIso (@IsFinite : MorphismProperty Scheme.{0}) :=

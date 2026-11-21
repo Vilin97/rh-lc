@@ -124,6 +124,7 @@ theorem realAll_mul (hθ : IsInfFam θ) {M M' : D.what₂.Tau → Matrix (Fin V.
   rw [GlobalTheory.PointAtPlaceHom.infMat_mul, (realAll_spec hθ hM).2 ρ, (realAll_spec hθ hM').2 ρ]
 
 
+open Classical in
 theorem realAll_eq_atTau_mul (hθ : IsInfFam θ) {M : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ}
     (hM : ∀ ρ, M ρ ∈ Formalism.QuantumDeterminants.UH (gramAt D V ρ)) (τ : D.what₂.Tau) :
     realAll θ V M = atTau θ V τ (M τ) * realAll θ V (Function.update M τ 1) := by
@@ -273,11 +274,13 @@ section Kappa
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc}
 
 
+variable (G) in
 def rowU (j : Fin D.R.m) : Gc D.what₂.Tau (rowSizes D) →* UG D.what₂.Tau (G.V (.top j)).rank :=
   (MonoidHom.compLeft (castU (rank_top G (j := j) j.2.le).symm) D.what₂.Tau).comp
     ((Pi.evalMonoidHom (fun j : Fin (rowSizes D).m => UG D.what₂.Tau ((rowSizes D).nR j)) j).comp (MonoidHom.fst _ _))
 
 
+variable (G) in
 def colU (i : Fin (D.R.m + 1)) : Gc D.what₂.Tau (rowSizes D) →* UG D.what₂.Tau (G.V (.grid i D.R.m)).rank :=
   (MonoidHom.compLeft (castU (rank_gridM G (i := i) (Nat.lt_succ_iff.1 i.2)).symm) D.what₂.Tau).comp
     ((Pi.evalMonoidHom (fun i : Fin ((rowSizes D).m + 1) => UG D.what₂.Tau ((rowSizes D).nC i)) i).comp (MonoidHom.snd _ _))

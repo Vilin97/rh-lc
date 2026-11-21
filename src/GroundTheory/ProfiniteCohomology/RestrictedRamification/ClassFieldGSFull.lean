@@ -78,6 +78,7 @@ def precompPosEquiv (h : Odd n ∨ IsTotallyComplex K) :
 variable {Ω : Type u} [Field Ω] [Algebra K Ω] [IsGalois K Ω]
 
 
+variable (Ω) {S n} in
 def charEquiv [IsAlgClosure K Ω] (hS : S.Finite) [NeZero n] (h : Odd n ∨ IsTotallyComplex K) :
     ContinuousMonoidHom (galUnramifiedOutside K Ω S) (Multiplicative (ZMod n)) ≃*
       (SIdeleClassGroup S →* Multiplicative (ZMod n)) :=

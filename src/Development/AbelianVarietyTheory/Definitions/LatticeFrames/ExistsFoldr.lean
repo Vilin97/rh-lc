@@ -26,6 +26,10 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 end Mu
 
 
+open MeasureTheory IsDedekindDomain NumberField Matrix ValuativeRel in
+open scoped TensorProduct in
+attribute [local instance] _root_.Formalism.BasicNotions.Host.cmStar in
+variable {D : _root_.Formalism.BasicNotions.D7} {c : _root_.GlobalTheory.SeeSaw.Comm D} {v : _root_.GlobalTheory.SeeSaw.VCom c} in
 theorem _root_.GlobalTheory.SeeSaw.GModel.phi_sb (G : _root_.GlobalTheory.SeeSaw.GLoc v) :
     (∀ j a H, (G.S.T (Fin D.R.t)).Phi j a H ∈
       _root_.GlobalTheory.SplitWeil.SB _) ∧

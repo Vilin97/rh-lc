@@ -118,6 +118,7 @@ theorem twist_eq (M : FinGradedSub (S := S) (x := x) E) (Q : FinGradedSub (S := 
 end TwistTildeProof
 
 
+open TwistTildeProof in
 theorem TwistTilde.proof : TwistTilde.Statement := by
   intro S _ Ω _ _ N x E _ _ _ _ M Q
   exact ⟨prod M Q, fun c => rfl, twist_eq M Q⟩

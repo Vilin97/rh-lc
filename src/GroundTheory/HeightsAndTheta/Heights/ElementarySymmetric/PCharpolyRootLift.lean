@@ -205,6 +205,7 @@ theorem exists_ringHom_extend_of_isIntegral {R S K : Type*} [CommRing R] [CommRi
 end CharpolyRootLift
 
 
+open IntermediateField.algebraAdjoinAdjoin in
 theorem CharpolyRootLift.proof : CharpolyRootLift.Statement := by
   intro Ω _ _ D l P _ hP hgen j m u c hlj hc0 hhom hchar a hu ζ hζa w hw
   have hl := CharpolyRootLift.ne_zero_of_generic hgen

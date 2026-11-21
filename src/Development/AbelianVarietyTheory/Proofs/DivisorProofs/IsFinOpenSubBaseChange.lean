@@ -11,6 +11,8 @@ open scoped TensorProduct Classical
 namespace GlobalTheory
 
 
+open Matrix NumberField in
+open scoped TensorProduct Classical in
 theorem _root_.GlobalTheory.finite_monic_coeff_bdd_mul_isIntegral (K : Type) [Field K] [NumberField K]
     (d D : ℕ) (B : ℝ) (hD : 0 < D) :
     {P : Polynomial K | P.Monic ∧ P.natDegree ≤ d ∧ ∀ k, IsIntegral ℤ ((D : K) * P.coeff k) ∧

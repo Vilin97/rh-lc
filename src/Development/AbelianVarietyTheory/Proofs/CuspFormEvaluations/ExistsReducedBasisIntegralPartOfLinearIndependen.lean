@@ -139,6 +139,7 @@ theorem norm_conjCoeffs_sq [DecidableEq σ] {D : ℕ} {P : MvPolynomial σ K}
   simp only [conjCoeffs, coeff_map, AddMonoidHom.coe_mk, ZeroHom.coe_mk]
 
 
+omit [NumberField K] in
 theorem finrank_le_one_add_pow {W : Submodule K (MvPolynomial σ K)} {D : ℕ}
     (hD : ∀ P ∈ W, P.totalDegree ≤ D) : finrank K W ≤ (1 + D) ^ Fintype.card σ := by
   classical

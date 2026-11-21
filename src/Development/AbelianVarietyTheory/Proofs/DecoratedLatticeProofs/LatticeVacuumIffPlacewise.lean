@@ -44,6 +44,7 @@ theorem pairA_mul (a b : Af D.host.F) :
 theorem pairA_zero : pairA D.host.F 0 (0 : Af D.host.F) = 0 := rfl
 
 
+open Classical in
 theorem latVac_of_places (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (LS : Lat S) (LT : Lat T) (P : Pl D → Prop)
     (f : WO S T → ℂ) (hf : IsThetaFunO ψ S T f) (hv : ∀ v, P v → Vac ψ S T LS LT (· = v) f) :
     IsLatVac (heisO ψ S T) (latO S T (LS : Set _) (LT : Set _) P) f := by

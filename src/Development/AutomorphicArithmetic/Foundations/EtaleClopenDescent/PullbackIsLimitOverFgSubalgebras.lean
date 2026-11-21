@@ -85,6 +85,7 @@ private def toBase : stages R q ⟶ (rings R).op ⋙ Scheme.Spec where
   naturality s t h := lvl_snd t.unop.2.1 s.unop.2.1 (leOfHom h.unop : t.unop.1 ≤ s.unop.1) q
 
 
+variable {R q} in
 private def stagesCone {Y : Scheme.{0}} {g : Y ⟶ Sp Ω} {v : Y ⟶ D} (w : v ≫ q = g ≫ toR R) :
     Cone (stages R q) where
   pt := Y
@@ -94,6 +95,7 @@ private def stagesCone {Y : Scheme.{0}} {g : Y ⟶ Sp Ω} {v : Y ⟶ D} (w : v �
         (bcLift_lvl t.unop.2.1 s.unop.2.1 (leOfHom h.unop : t.unop.1 ≤ s.unop.1) w).symm }
 
 
+variable {R q} in
 private def stagesIsLimit (hR : R.FG) {Y : Scheme.{0}} {g : Y ⟶ Sp Ω} {v : Y ⟶ D}
     (hp : IsPullback v g q (toR R)) : IsLimit (stagesCone hp.w) := by
   classical
@@ -116,6 +118,7 @@ private def stagesToConstantSpec : stages R q ⟶ (Functor.const _).obj (Sp R) w
       simpa [stages] using e
 
 
+variable {R q} in
 private theorem factor (hR : R.FG) (hq : FP q) {Y Z : Scheme.{0}} {g : Y ⟶ Sp Ω} {v : Y ⟶ D}
     (hp : IsPullback v g q (toR R)) (qZ : Z ⟶ Sp R) (hZ : LocallyOfFinitePresentation qZ)
     (a : Y ⟶ Z) (ha : a ≫ qZ = v ≫ q) :

@@ -87,6 +87,7 @@ theorem scaledCoord_mul_eq_sum (hq0 : (q : E) ≠ 0) {n c : ℕ} (κ κ' : Sp E 
   ring
 
 
+variable (P q) in
 def ob2M {n c : ℕ} (κ : Sp E (n + c) ≃ₗ[E] Sp E (n + c)) : Matrix (Fin (n + c)) (Fin (n + c)) (𝓞 E ⧸ P.asIdeal) :=
   fun l l' => redP P (κ (Pi.single l' 1) l * (q : E) ^ (LocE.scE n (fun i => i + 1) l'.1 - LocE.scE n (fun i => i + 1) l.1))
 

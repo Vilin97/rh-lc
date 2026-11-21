@@ -322,6 +322,7 @@ theorem minus_l (mm1 : Ya - 1 ∈ fw.inv) : ∀ Y ∈ (fw.minus L a Ya).inv, Tw 
     exact cj_eq_self_of_commute hW.fi_f _ (hW.kap.mul_right ((h1.mul_right h2).smul_right _).neg_right)
 
 
+omit m0 in
 theorem minus_m (ihc : Commute (io f : SlopeTestRemainingChoices S A) fw.c) (mm1 : Ya - 1 ∈ fw.inv) : Tw f fi (star s) (fw.m L Ya) := by
   obtain ⟨hcc, hcc'⟩ := hF.c_ci
   have hci : Commute (io f : SlopeTestRemainingChoices S A) fw.ci := by

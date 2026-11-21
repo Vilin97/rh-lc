@@ -43,6 +43,9 @@ private theorem isGVal_unique' {F : Type} [Field F] [NumberField F] {k : ℕ}
   · exact (h₁ hk).unique (h₁' hk)
 
 
+set_option autoImplicit false in
+open NumberField UpperHalfPlane in
+open scoped Classical MatrixGroups nonZeroDivisors in
 theorem _root_.GlobalTheory.HilbFam.gval_eq_of_isGVal : ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (k : ℕ) (L : _root_.GlobalTheory.HilbFam.Lat F) (b a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.Emb F → ℂ) (G : ℂ),
     _root_.GlobalTheory.HilbFam.IsGVal k L b a G → _root_.GlobalTheory.HilbFam.gval k L b a = G := by
   intro F _ _ _ k L b a G hG

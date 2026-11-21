@@ -58,6 +58,7 @@ def Compat (V : X.Opens) (s : ∀ α, κ α → Γ(X, V ⊓ U α)) : Prop :=
       rs (show V ⊓ U α ⊓ U β ≤ V ⊓ U β from inf_le_inf_right _ inf_le_left) (s β k')
 
 
+variable {U κ g} in
 theorem Compat.on {V : X.Opens} {s : ∀ α, κ α → Γ(X, V ⊓ U α)} (hs : Compat U κ g V s) (α β : ι)
     (k : κ α) {T : X.Opens} (h₁ : T ≤ V ⊓ U α) (h₂ : T ≤ U α ⊓ U β) (h₃ : T ≤ V ⊓ U β) :
     rs h₁ (s α k) = ∑ k' : κ β, rs h₂ (g α β k k') * rs h₃ (s β k') := by
@@ -98,6 +99,7 @@ instance secGroupModule (V : X.Opens) : Module Γ(X, V) (secGroup U κ g V) wher
     rw [map_zero, zero_mul]
 
 
+variable {U κ g} in
 theorem smul_val {V : X.Opens} (a : Γ(X, V)) (s : secGroup U κ g V) (α : ι) (k : κ α) :
     (a • s).1 α k = rs inf_le_left a * s.1 α k := rfl
 
@@ -270,6 +272,7 @@ variable {X : Scheme.{0}} {ι : Type} {U : ι → X.Opens} {κ : ι → Type} [�
   {g : ∀ α β, κ α → κ β → Γ(X, U α ⊓ U β)}
 
 
+open Classical in
 def frame (hg : IsCoc U κ g) (β : ι) (k : κ β) : Γ(toMod U κ g, U β) :=
   show secGroup U κ g (U β) from ofCoord hg le_rfl (Pi.single k 1)
 

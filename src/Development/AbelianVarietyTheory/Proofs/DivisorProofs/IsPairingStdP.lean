@@ -44,6 +44,7 @@ def stdP (P₁ : V₁ → V₁ → ℝ) (k : ℕ) (x y : V₁ × (Fin k → ℝ)
 def jStd (k : ℕ) (w : V₁ × V₁) : (V₁ × (Fin k → ℝ)) × (V₁ × (Fin k → ℝ)) := ((w.1, 0), (w.2, 0))
 
 
+variable (V₁) in
 def LStd (k : ℕ) : Set ((V₁ × (Fin k → ℝ)) × (V₁ × (Fin k → ℝ))) :=
   {l | ∃ b : Fin k → ℝ, l = ((0, 0), (0, b))}
 
@@ -135,6 +136,7 @@ open NumberField GlobalTheory.WeilM GlobalTheory.IndefiniteRowSideFullHecke.Weil
 variable {F : Type} [Field F] [NumberField F]
 
 
+variable (F) in
 def trP (κ : Type) [Fintype κ] (y b : κ → mixedEmbedding.mixedSpace F) : ℝ :=
   Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (∑ i, y i * b i)
 

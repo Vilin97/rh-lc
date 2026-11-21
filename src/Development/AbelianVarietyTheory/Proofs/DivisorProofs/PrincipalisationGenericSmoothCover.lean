@@ -32,6 +32,7 @@ theorem isPullback_rat (k K : Type) [CommRing k] [IsDomain k] [Module.Finite ℤ
 variable {k : Type} [CommRing k] {X : Scheme.{0}} {p : X ⟶ Sp k} {D : ℕ}
 
 
+attribute [local instance] Algebra.TensorProduct.rightAlgebra in
 theorem genericFibre [IsIntegral X] (h : IsArithVar p D) {K : Type} [Field K] [Algebra k K]
     [IsFractionRing k K] {Y : Scheme.{0}} {j : Y ⟶ X} {q : Y ⟶ Sp K}
     (H : IsPullback j q p (spMap (algebraMap k K))) :

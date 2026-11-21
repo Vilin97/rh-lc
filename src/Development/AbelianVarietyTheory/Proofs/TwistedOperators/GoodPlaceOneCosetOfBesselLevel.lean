@@ -59,6 +59,7 @@ theorem yZero_mul {V₀ : HSp D} {ρ : ℕ} (z : Fin V₀.rank → D.host.E) (u 
   rw [← Finset.mul_sum, ell_mul u hu j]
 
 
+set_option maxHeartbeats 1000000 in
 theorem cond_red : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (V₀ W W₀ : HSp D) (ρ : ℕ) (dW : HypDec W W₀ ρ) (p : Pieces V₀ W W₀ ρ ρ) (z : Fin V₀.rank → D.host.E) (P : GlobalTheory.FinPl.Pl D → Prop) (r g : GA D W), r ∈ Rgrp W (xZero dW) → Cond dW p (xZero dW) (yZero V₀ ρ z) ψ P (r * g) → Cond dW p (xZero dW) (yZero V₀ ρ z) ψ P g := by
   intro D ψ V₀ W W₀ ρ dW p z P r g hr H
   have hr' : r⁻¹ ∈ Rgrp W (xZero dW) := inv_mem hr
@@ -119,6 +120,7 @@ namespace GlobalTheory.OneCosetGood
 open GlobalTheory.FinPl (Lat idAt intAt grpAt InK)
 
 
+set_option maxHeartbeats 1000000 in
 theorem oneCoset_good : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (V V₀ W W₀ : HSp D) (ρ : ℕ) (dV : HypDec V V₀ ρ) (dW : HypDec W W₀ ρ) (p : Pieces V₀ W W₀ ρ ρ) (z : Fin V₀.rank → D.host.E) (LV : Lat V) (LV₀ : Lat V₀) (LW : Lat W) (LW₀ : Lat W₀) (v : GlobalTheory.FinPl.Pl D), GoodAt dV dW (xZero dW) ψ LV LV₀ LW LW₀ v → StdAt dV dW p LV LW v → (0 < ρ → ∀ a ∈ idAt D (· = v), dW.incAdj V₀ (a • yZero V₀ ρ z) ∈ latO V₀ W (LV₀ : Set _) (LW : Set _) (· = v) ↔ a ∈ intAt D (· = v)) → ∀ h ∈ grpAt W (· = v), (∀ κ, GlobalTheory.FinPl.InK W LW (· = v) κ → Cond dW p (xZero dW) (yZero V₀ ρ z) ψ (· = v) (h * κ)) → CosetAt W (Rgrp W (xZero dW)) LW v h := by
   intro D ψ hψ V V₀ W W₀ ρ dV dW p z LV LV₀ LW LW₀ v hG hS hlast h hh hC
   obtain ⟨n, hnN, hnG, t, ht, htG, γ, hγ, κ, hκ, rfl⟩ :=

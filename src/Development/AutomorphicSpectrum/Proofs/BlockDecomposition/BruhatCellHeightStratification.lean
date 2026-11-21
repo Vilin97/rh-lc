@@ -99,12 +99,14 @@ variable (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   {h N : ℕ} (d : Fin h → ℕ) (hd : ∑ a, d a = N)
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem parab_eq_blockUpper :
     parab k (stdBlocks d hd) = blockUpper k N (blkNat d hd) := by
   ext g
   exact Iff.rfl
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem unipB_le_blockUpper : unipB k (Fin N) ≤ blockUpper k N (idxNat (N := N)) := by
   intro g hg
   obtain ⟨p, -, rfl⟩ := Subgroup.mem_map.1 hg

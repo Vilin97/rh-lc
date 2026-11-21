@@ -88,6 +88,7 @@ theorem levelsG_empty (j : ℕ) (hj : M < j) : IsEmpty ((levelsG X Fl M Nj hN Ch
   | succ j => exact ⟨fun c => absurd c.1 (by omega)⟩
 
 
+set_option maxHeartbeats 2000000 in
 def levelsG_tie (i : ℕ) (hi : i < M) (β : Ch i hi) :
     GChartTie X (levelsG X Fl M Nj hN Ch St) i (fun a : (St i hi β).comp => ⟨hi, β, a⟩)
       (St i hi β).J (St i hi β).Lb (St i hi β).Uloc (St i hi β).ψ (St i hi β).eps where

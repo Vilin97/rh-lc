@@ -30,6 +30,7 @@ section grp
 variable {G : Type*} [Group G] (H : Subgroup G) [H.Normal] (hH : ∀ a ∈ H, ∀ b ∈ H, a * b = b * a) (s : G)
 
 
+include hH in
 theorem exists_twist_subgroup_nl : ∃ I : Subgroup G, ∀ x, x ∈ I ↔ ∃ h ∈ H, x = s * h * s⁻¹ * h⁻¹ := by
   have hc : ∀ a ∈ H, s * a * s⁻¹ ∈ H := fun a ha => Subgroup.Normal.conj_mem inferInstance a ha s
   refine ⟨{ carrier := {x | ∃ h ∈ H, x = s * h * s⁻¹ * h⁻¹}

@@ -43,6 +43,7 @@ open scoped TensorProduct
 namespace GlobalTheory.NeatOne
 
 
+set_option maxHeartbeats 1000000 in
 theorem eq_one_of_lev_cong {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts}
     {Y0 : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y0 cX} {Csz : ℝ} (p : PtAt ex Csz) (i : Fin D.R.m) (g : p.P.Gp)
     (hg : ∀ x : (p.T.Q.Dw ((i : ℕ) + 1)).La, (p.O i).lev g x - x ∈ p.T.Q.l.Mb • (⊤ : Submodule (𝓞 D.host.E) (p.T.Q.Dw ((i : ℕ) + 1)).La)) :
@@ -76,6 +77,7 @@ theorem eq_one_of_lev_cong {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : F
   rw [← map_one p.R.eG] at he; exact p.R.eG.injective he
 
 
+open Classical in
 theorem exists_cofactor {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts}
     {Y0 : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y0 cX} {Csz : ℝ} (p : PtAt ex Csz) (i : Fin D.R.m) (P : Pl D.host.E) (hP : P ∈ p.R.Pg) :
     ∃ J : Ideal (𝓞 D.host.E), J ≤ Mfr p.T.Q.l ∧ P.asIdeal ⊔ J = ⊤ ∧
@@ -97,6 +99,7 @@ theorem exists_cofactor {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Form
   · rw [← mul_assoc, Finset.mul_prod_erase p.R.Pg (fun Q => Q.asIdeal) hP, ← hp, hhalf]
 
 
+open GlobalTheory.LevelUnip in
 theorem unip_mod_place {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts}
     {Y0 : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y0 cX} {Csz : ℝ} (p : PtAt ex Csz) (i : Fin D.R.m) (g : p.P.Gp) (P : Pl D.host.E) (hP : P ∈ p.R.Pg)
     (hU : p.R.eG g ⟨P, hP⟩ ∈ unip (kP P) D.R.r) (z : (p.T.Q.Dw ((i : ℕ) + 1)).La) :

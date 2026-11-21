@@ -121,6 +121,7 @@ theorem cTB_le (l N h n t e vd g : ℕ) (hl : l.Prime) (U : Finset ℤ) (U' : Se
   omega
 
 
+open Formalism.BasicNotions Formalism.BasicNotions.Loc in
 theorem exists_up {l : ℕ} [Fact l.Prime] {N : ℕ} {K LL : FinExt l} (hC : Cyc N K LL) :
     ∃ K' : FinExt l, K.1 ≤ K'.1 ∧ Good K' (sN l N) LL ∧ Ks K' (sN l N) = K'.1 ∧ (GK K').Normal ∧
       padicValNat l (Module.finrank ℚ_[l] ↥K'.1 / Module.finrank ℚ_[l] ↥K.1) ≤ Nat.log l N + 1 :=

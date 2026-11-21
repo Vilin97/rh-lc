@@ -16,6 +16,7 @@ variable {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V]
 def Bd (m : ℕ) (f : V → ℂ) (C : ℝ) : Prop := ∀ j ≤ m, ∀ x, (1 + ‖x‖) ^ m * ‖iteratedFDeriv ℝ j f x‖ ≤ C
 
 
+variable (V) in
 def P (m : ℕ) : Seminorm ℂ (SchwartzMap V ℂ) := (Finset.Iic (m, m)).sup (schwartzSeminormFamily ℂ V ℂ)
 
 theorem P_cont (m : ℕ) : Continuous (P V m) :=

@@ -282,6 +282,7 @@ abbrev cQ (T : CoreJ D) (i : Fin D.R.m) (hV : T.V ((i : ℕ) + 1) T.σ₀ = Wc D
   T.cE ((i : ℕ) + 1) T.σ₀ (castDict hV (T.dict ((i : ℕ) + 1) T.σ₀) q.out).1
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_base (hV : T.V ((i : ℕ) + 1) T.σ₀ = Wc D i) (hn : κ.n = (Vc D i).rank)
     {O : OMDat T.toCore R i Unit fun _ => A.μ0} (hP : O.Pins κ v₀ ι x₀) {ph : ℂ}
     (hrow : O.OneMapOf κ v₀ (T.cE ((i : ℕ) + 1) O.s0) ph)
@@ -312,6 +313,7 @@ theorem exists_base (hV : T.V ((i : ℕ) + 1) T.σ₀ = Wc D i) (hn : κ.n = (Vc
     ring
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_transfer (hT : LawsJ T) (hV : T.V ((i : ℕ) + 1) T.σ₀ = Wc D i) (hn : κ.n = (Vc D i).rank)
     {Tp : Type} {tup : Tp → T0} {O : OMDat T.toCore R i Tp tup} (hP : O.Pins κ v₀ ι x₀)
     (hE : O.EquivAt κ (T.cE ((i : ℕ) + 1) O.s0))
@@ -355,6 +357,7 @@ theorem span_read {W : HSp D} {I : Type} (θ : I → AutQ W → ℂ) (a b c d : 
     · simp only [Pi.smul_apply, smul_eq_mul]; linear_combination r * h3 q
 
 
+set_option maxHeartbeats 2000000 in
 theorem oneMapOf_of_ptIdent (hT : LawsJ T) (hV : T.V ((i : ℕ) + 1) T.σ₀ = Wc D i) (hn : κ.n = (Vc D i).rank)
     {O : OMDat T.toCore R i Unit fun _ => A.μ0} (hP : O.Pins κ v₀ ι x₀) {ph : ℂ}
     (hrow : O.OneMapOf κ v₀ (T.cE ((i : ℕ) + 1) O.s0) ph)
@@ -411,6 +414,7 @@ theorem oneMapOf_of_ptIdent (hT : LawsJ T) (hV : T.V ((i : ℕ) + 1) T.σ₀ = W
     exact ((mul_eq_zero.1 e3.symm).resolve_right (div_ne_zero hc0 hc0')).symm
 
 
+set_option maxHeartbeats 2000000 in
 theorem const_ratio_mem (hT : LawsJ T) (hV : T.V ((i : ℕ) + 1) T.σ₀ = Wc D i) (hn : κ.n = (Vc D i).rank)
     {O : OMDat T.toCore R i Unit fun _ => A.μ0} (hF : O.c'.F = D.what₂.embLL.toRatAlgHom.fieldRange)
     (hP : O.Pins κ v₀ ι x₀) {ph : ℂ} (hrow : O.OneMapOf κ v₀ (T.cE ((i : ℕ) + 1) O.s0) ph)

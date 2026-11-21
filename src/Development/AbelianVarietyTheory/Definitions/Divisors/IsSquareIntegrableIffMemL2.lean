@@ -25,6 +25,7 @@ def IsSm (f : GAd σ J → ℂ) : Prop :=
     ContDiff ℝ ∞ fun t : Fin k → ℝ => f (g * (List.ofFn fun i => γ i (t i)).prod)
 
 
+variable {σ J} in
 def dop (z : List (ℝ → GAd σ J) →₀ ℂ) (f : GAd σ J → ℂ) : GAd σ J → ℂ :=
   fun g => z.sum fun l c => c * l.foldr lineDer f g
 
@@ -66,6 +67,7 @@ def IsSqInt (φ : GAd σ J → ℂ) : Prop :=
 variable {σ J} {r : ℕ} {H H' K K' N : Subgroup (GAd σ J)} {φ c c' : GAd σ J → ℂ} {C : Matrix (Fin n) (Fin r) E}
 
 
+omit [NumberField E] in
 theorem kfin_iff : FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k : K => fun g => φ (g * k))) ↔
     GlobalTheory.Doubling.IsKFinite K φ := by
   rw [show (Set.range fun k : K => fun g => φ (g * k)) = {Ψ | ∃ k ∈ K, Ψ = fun g => φ (g * k)} from
@@ -76,6 +78,7 @@ theorem kfin_iff : FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k : 
 
 
 
+omit [NumberField E] in
 theorem isMaxCpt_infPts (h : IsCompact (infPts σ J : Set (GAd σ J))) : IsMaxCpt σ J (infPts σ J) :=
   ⟨⟨le_rfl, h⟩, fun _ hK _ => hK.1⟩
 
@@ -85,6 +88,7 @@ theorem le_one_of_pow_mul_le {t a M : ℝ} (ha : 0 < a) (h : ∀ k : ℕ, t ^ k 
   exact hk.not_ge (h k)
 
 
+open scoped ComplexOrder in
 theorem eq_one_of_powers_compact {b Q : Matrix (Fin n) (Fin n) ℂ} {S : Set (Matrix (Fin n) (Fin n) ℂ)} (hS : IsCompact S)
     (hQ : Q * (bᴴ * b) = 1) (h1 : ∀ k : ℕ, (bᴴ * b) ^ k ∈ S) (h2 : ∀ k : ℕ, Q ^ k ∈ S) : bᴴ * b = 1 := by
   have hP := Matrix.posSemidef_conjTranspose_mul_self b
@@ -127,6 +131,7 @@ theorem conj_mem_UJ {R : Type} [CommRing R] {s : R →+* R} {A D : Matrix (Fin n
   simpa only [← Matrix.mul_assoc, h1, Matrix.one_mul, Units.mul_inv_cancel_right] using this
 
 
+variable (σ J) in
 def majCpt (c : ∀ w : InfinitePlace F, GL (Fin n) (w.Completion ⊗[F] E)) : Subgroup (GAd σ J) :=
   infPts σ J ⊓ ⨅ w, (stabArch σ J w (c w)).comap (projArch σ J w)
 
@@ -195,12 +200,14 @@ theorem isMaxCpt_majCpt (h : IsCMExt F E σ) {c : ∀ w : InfinitePlace F, GL (F
   exact Matrix.map_injective (infEmb_bijective h τ).1 (h4.trans (Matrix.map_one _ (map_zero _) (map_one _)).symm)
 
 
+omit [NumberField E] in
 theorem isConstTerm_iff : IsConstTerm σ J C φ c ↔ IsConstTermOn σ J (unipRad σ J C) φ c := Iff.rfl
 
 theorem isConstTerm_iff_unipFlag : IsConstTerm σ J C φ c ↔ IsConstTermOn σ J (unipFlag σ J C fun _ => 0) φ c := by
   rw [unipFlag_const]; rfl
 
 
+omit [NumberField E] in
 theorem isConstTermOn_const (N : Subgroup (GAd σ J)) (a : ℂ) : IsConstTermOn σ J N (fun _ => a) fun _ => a :=
   fun μ 𝓕 _ _ h _ => by simp [Measure.real, h]
 
@@ -287,6 +294,7 @@ theorem IsConstTermOn.continuous {d : Fin r → ℕ} (hc : IsConstTermOn σ J (u
 end Flag
 
 
+omit [NumberField F] [NumberField E] in
 theorem isIsoCols_of_isWittFrame {X Y : Matrix (Fin n) (Fin r) E} (hW : IsWittFrame σ J X Y) (hσ : ∀ x, σ (σ x) = x)
     (hJ : IsHermND σ J) {k : ℕ} (hk : k ≤ r) : IsIsoCols σ J (X.submatrix id (Fin.castLE hk)) := by
   have yx : Formalism.UG.cT (σ : E →+* E) Y * J * X = 1 := by

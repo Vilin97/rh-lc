@@ -23,6 +23,7 @@ namespace StackedGraphImage
 variable {K : Type} [Field K] [NumberField K] {i : ℕ} {T : Type} [Fintype T] [DecidableEq T]
 
 
+omit [Fintype T] [DecidableEq T] in
 theorem coord_stacked {F F' : HermLattice K i} {b : Module.Basis T ℤ (dualLattice F)}
     {b' : Module.Basis T ℤ (dualLattice F')} {a : T → ℤ}
     (hab : ∀ t, (b t : Fin i → K) = a t • (b' t : Fin i → K)) (p : Σ _ : Unit, T) :
@@ -186,6 +187,7 @@ theorem fibre_deg (hGr : GraphStatement) (hDim : FibreDimStatement) {F F' : Herm
 end StackedGraphImage
 
 
+open StackedGraphImage in
 theorem DualStackedGraphImage.proof (hGr : GraphStatement) (hDim : FibreDimStatement) :
     DualStackedGraphImage.Statement := by
   intro K _ _ i F F' T _ _ b b' a hi hab

@@ -228,6 +228,7 @@ theorem Rder_mem {τ : D.what₂.Tau} {X : Matrix (Fin V.rank) (Fin V.rank) ℂ}
     simpa only [mul_assoc] using this
 
 
+variable (θ V) in
 def rho (τ : D.what₂.Tau) (X : lieU (gramAt D V τ)) : Module.End ℂ (goodFun θ V) where
   toFun F := ⟨Rder θ V τ X.1 F.1, Rder_mem X.2 F.2⟩
   map_add' F F' := Subtype.ext ((GlobalTheory.MultMem.linOn_Rder X.2).2.1 _ F.2.1 _ F'.2.1)
@@ -321,6 +322,7 @@ theorem star_mem_good {F : GA D V → ℂ} (hF : F ∈ goodFun θ V) : star F �
     fun y hy τ x => ⟨congrArg star (hF.2 y hy τ x).1, fun g hg g' hg' => congrArg star ((hF.2 y hy τ x).2 g hg g' hg')⟩⟩
 
 
+variable (θ V) in
 def conjG : goodFun θ V →ₗ⋆[ℂ] goodFun θ V where
   toFun F := ⟨star F.1, star_mem_good F.2⟩
   map_add' F F' := Subtype.ext (star_add _ _)
@@ -329,6 +331,7 @@ def conjG : goodFun θ V →ₗ⋆[ℂ] goodFun θ V where
 theorem conjG_conjG (F : goodFun θ V) : conjG θ V (conjG θ V F) = F := Subtype.ext (star_star _)
 
 
+variable (θ V) in
 def kappa : Module.End ℂ (goodFun θ V) →+* Module.End ℂ (goodFun θ V) where
   toFun a := (conjG θ V).comp (a.comp (conjG θ V))
   map_one' := LinearMap.ext conjG_conjG

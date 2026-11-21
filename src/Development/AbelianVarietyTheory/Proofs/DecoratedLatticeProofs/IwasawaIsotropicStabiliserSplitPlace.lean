@@ -31,6 +31,7 @@ theorem map_keeps (f : A →+* R) {M : Matrix n n A} {j : Matrix n ρ A} {p : Ma
 def lev : (ρ ⊕ s) ⊕ ρ → ℕ := Sum.elim (Sum.elim (fun _ => 0) fun _ => 1) fun _ => 2
 
 
+omit [DecidableEq ρ] [DecidableEq s] in
 theorem keeps_cols (ε : n ≃ (ρ ⊕ s) ⊕ ρ) {e e' : Matrix n ρ A} {i : Matrix n s A} {B b : GL n A}
     (hB : B.1 = (Matrix.fromCols (Matrix.fromCols e i) e').submatrix id ε) (hb : b.1.BlockTriangular (lev ∘ ε)) :
     ∃ a : Matrix ρ ρ A, (B * b * B⁻¹).1 * e = e * a := by
@@ -45,6 +46,7 @@ theorem keeps_cols (ε : n ≃ (ρ ⊕ s) ⊕ ρ) {e e' : Matrix n ρ A} {i : Ma
   simpa [Matrix.mul_apply, h2, h3] using h1
 
 
+omit [DecidableEq ρ] [DecidableEq s] in
 theorem keeps_rows (ε : n ≃ (ρ ⊕ s) ⊕ ρ) {p p' : Matrix ρ n A} {q : Matrix s n A} {B b : GL n A}
     (hB : (B⁻¹).1 = (Matrix.fromRows (Matrix.fromRows p q) p').submatrix ε id) (hb : b.1.BlockTriangular (lev ∘ ε)) :
     ∃ c : Matrix ρ ρ A, p' * (B * b * B⁻¹).1 = c * p' := by
@@ -59,6 +61,7 @@ theorem keeps_rows (ε : n ≃ (ρ ⊕ s) ⊕ ρ) {p p' : Matrix ρ n A} {q : Ma
   simpa [Matrix.mul_apply, h2] using h1
 
 
+omit [DecidableEq s] [Fintype s] in
 theorem keeps_dual {G x x' : Matrix n n A} {e f : Matrix n ρ A} {c : Matrix ρ ρ A} {xi Gi : Matrix n n A}
     (hx : x * xi = 1) (hG : G * Gi = 1) (h : x'.transpose * G * x = G) (hf : e.transpose * G * f = 1)
     (hc : e.transpose * G * x = c * (e.transpose * G)) : ∃ a : Matrix ρ ρ A, x' * e = e * a := by

@@ -123,6 +123,7 @@ def selP {W : Type*} (Z : Set W) (V : ℕ → Set W) : ℕ → W → Prop
   | k + 1, y => y ∈ V k
 
 
+open Classical in
 def selT {W G : Type*} (g₁ : G) (Z : Set W) (V : ℕ → Set W) (f : ℕ → W → G) : ℕ → W → G
   | 0, _ => g₁
   | k + 1, y => (V k ∩ Z).piecewise (f k) (fun _ => g₁) y

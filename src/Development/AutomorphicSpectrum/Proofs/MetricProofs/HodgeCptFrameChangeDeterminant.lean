@@ -202,6 +202,7 @@ theorem exists_blkF_of_not_full (K₀ : Type) (t : StepIx Ψ p q) (ht : (t.2 : �
     exact congrArg (fun z => (⟨.inr τ, z⟩ : StepIx Ψ p q)) (Fin.ext (by simp))
 
 
+variable (Ψ p q) in
 def baseFun (K₀ : Type) : K₀ ⊕ FullStep Ψ p q → NonPluckerBlocks (blkF Ψ p q K₀)
   | .inl k => ⟨.inl k, fun r => by
       classical
@@ -225,6 +226,7 @@ theorem baseFun_bijective (K₀ : Type) : Function.Bijective (baseFun Ψ p q K�
         exact absurd hr (hk r)
 
 
+variable (Ψ p q) in
 def baseEquiv (K₀ : Type) : K₀ ⊕ FullStep Ψ p q ≃ NonPluckerBlocks (blkF Ψ p q K₀) :=
   Equiv.ofBijective _ (baseFun_bijective K₀)
 

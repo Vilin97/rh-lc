@@ -25,6 +25,7 @@ section Tame
 variable {X : Type} [AddCommGroup X] [Module ℂ X] {j : X →ₗ[ℂ] (WO V W → ℂ)} {r r' : ℕ} {S S' : X → X}
 
 
+variable (ψ θ j r S) in
 def Tame : Prop :=
   (∀ U x, j x ∈ thetaLevel ψ V W U → j (S x) ∈ thetaLevel ψ V W U) ∧
     ∃ c : ℝ≥0, ∀ μ 𝓕 d x, IsThetaFunO ψ V W (j x) → sobO ψ θ μ 𝓕 d (j (S x)) ≤ c * sobO ψ θ μ 𝓕 (d + r) (j x)
@@ -140,6 +141,7 @@ private theorem single_eq_vecL_single (i : Fin W.rank) (j : Fin V.rank) (τ : D.
 end Tame
 
 
+variable (ψ V W) in
 def coeB : BB ψ V W →ₗ[ℂ] (WO V W → ℂ) where
   toFun F := F.1
   map_add' _ _ := rfl

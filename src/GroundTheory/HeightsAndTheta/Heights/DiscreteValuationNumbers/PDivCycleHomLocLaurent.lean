@@ -407,6 +407,7 @@ theorem ev_mem_locC (p : Lau P W) : ev T hPW hT p ∈ locC hPW := by
 def evC : Lau P W →+* locC hPW := (ev T hPW hT).codRestrict (locC hPW) (ev_mem_locC T hPW hT)
 
 
+include hT in
 theorem incAC_isLocalHom : IsLocalHom (incAC hPW) := by
   letI := (algQC hPW).toAlgebra
   haveI := wbar_isPrime hPW
@@ -436,6 +437,7 @@ theorem incAC_isLocalHom : IsLocalHom (incAC hPW) := by
   field_simp
 
 
+include hT in
 theorem map_maximalIdeal_incAC [IsLocalRing (homLocRing P W)] (hWh : IsMultiHomogIdeal W) :
     letI := (algQC hPW).toAlgebra
     haveI := wbar_isPrime hPW
@@ -495,6 +497,7 @@ variable [Fintype K] {P W : Ideal (MRing ι R)} [P.IsPrime] [W.IsPrime]
   (T : ∀ k, ι k) (hPW : P ≤ W) (hT : ∀ k, (X ⟨k, T k⟩ : MRing ι R) ∉ W)
 
 
+include hT in
 theorem flat_incAC (hPh : IsMultiHomogIdeal P) :
     letI := (incAC hPW).toAlgebra
     Module.Flat (homLocRing P W) (locC hPW) := by
@@ -529,6 +532,7 @@ theorem flat_incAC (hPh : IsMultiHomogIdeal P) :
   exact Module.Flat.trans (homLocRing P W) (Lau P W) (locC hPW)
 
 
+include hT in
 theorem length_quotient_incAC (hPh : IsMultiHomogIdeal P) (hWh : IsMultiHomogIdeal W)
     [IsLocalRing (homLocRing P W)] (a : homLocRing P W) :
     Module.length (locC hPW) (locC hPW ⧸ Ideal.span {incAC hPW a}) =

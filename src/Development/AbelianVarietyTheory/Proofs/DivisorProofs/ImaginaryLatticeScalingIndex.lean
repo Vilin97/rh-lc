@@ -114,6 +114,7 @@ theorem finrank_imLat : Module.finrank ℤ (imLat E) = fdeg E := by
 end GlobalTheory.LieDisc.ImIndex
 
 
+open GlobalTheory.LieDisc.ImIndex in
 theorem GlobalTheory.LieDisc.relIndex_mulLeft_imLat : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ),
     Unr E → 1 ≤ r →
       (AddSubgroup.map (AddMonoidHom.mulLeft (r : E)) (imLat E)).relIndex (imLat E) = r ^ fdeg E := by

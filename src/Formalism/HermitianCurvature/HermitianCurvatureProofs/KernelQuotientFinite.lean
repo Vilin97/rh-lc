@@ -13,6 +13,7 @@ open scoped ComplexConjugate
 namespace Formalism.FourierDecayAlt.P.A5x4
 
 
+open Formalism.DoubleCosetMeasures.P Formalism.DoubleCosetMeasures.P.Supp in
 theorem isCompact_intPairs {K : Type} [CommRing K] [TopologicalSpace K] [IsTopologicalRing K]
     [T2Space K] (R : Subring K) (hRc : IsCompact (R : Set K)) (s : List ℕ) (t : ℕ → Kˣ) :
     IsCompact {p : lowW K s t × upUniG K s.sum |

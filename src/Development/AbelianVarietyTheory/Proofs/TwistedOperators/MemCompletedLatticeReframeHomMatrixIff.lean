@@ -87,6 +87,7 @@ theorem map_latO (LT : Set (Fin T.rank → D.host.E)) (P : HeightOneSpectrum (�
 end GlobalTheory.AdSpan.ReVec.Lat
 
 
+open GlobalTheory.AdSpan.ReVec.Lat in
 theorem GlobalTheory.AdSpan.ReVec.latO_reW_iff : ∀ (D : D7) (S T : HSp D) (b : Module.Basis (Fin S.rank) D.host.E S.V)
     (LT : Set (Fin T.rank → D.host.E)) (u : WO (reS S b) T),
     u ∈ latO (reS S b) T (L0c D (reS S b)) LT (fun _ => True) ↔

@@ -170,6 +170,7 @@ theorem gens_of_psiUnitOn {R : Type} [CommRing R] [IsDomain R] (D : DegPre R) (h
   GlobalTheory.DDataGens.main R D hb hU
 
 
+open GlobalTheory.UChart in
 theorem fromBase_self {V : Type} [CommRing V] [IsDomain V] (Q : DegPre V) (τ₀ : Gens Q) (h : ∀ a b, (τ₀ a b).IsGen) :
     FromBase Q τ₀ (RingHom.id V) := by
   have hs : spMap (RingHom.id V) = 𝟙 (Sp V) := Spec.map_id _

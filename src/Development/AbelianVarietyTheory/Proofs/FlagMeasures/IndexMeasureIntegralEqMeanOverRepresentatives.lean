@@ -41,6 +41,8 @@ private lemma apply_eq_of_quotient_mk_eq_of_invariant {B : AddSubgroup W} {φ : 
   rwa [add_neg_cancel_left, eq_comm] at this
 
 
+open scoped Pointwise Classical in
+variable {W : Type} [AddCommGroup W] in
 theorem _root_.GlobalTheory.IdxInt.cint_eq_mean_reps {W : Type} [AddCommGroup W]
     (A B : AddSubgroup W) (φ : W → ℂ) (R : Finset W)
     (hBA : B ≤ A) (hinv : ∀ w, ∀ b ∈ B, φ (w + b) = φ w) (hsupp : ∀ w, w ∉ A → φ w = 0)

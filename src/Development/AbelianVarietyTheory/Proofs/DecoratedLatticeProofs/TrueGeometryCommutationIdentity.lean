@@ -108,6 +108,7 @@ theorem inBox_of_orb (E : QExt G χ) {y : E.Ch (G.s + 1)} {z} (hz : z ∈ box _ 
   rwa [sub_add_cancel] at this
 
 
+set_option maxHeartbeats 4000000 in
 @[reducible] def restr (E : QExt G χ) : QExt G χ :=
   { E with
     Ch := fun j => {y : E.Ch j // InBox E j y}
@@ -142,6 +143,7 @@ variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws
 abbrev Orb := SameOrb ((G.T E.δ E.tame E.η).lev (G.s + 1) 0 rfl).J (box (XIx (Fin B.R.k) (Fin B.R.t) (G.s + 1)) (G.ϖ ^ E.M))
 
 
+variable (G) in
 abbrev locV (e : XIx (Fin B.R.k) (Fin B.R.t) (G.s + 1) ≃ Fin (B.R.N (G.s + 1))) (z : Formalism.L2.Col.Sp B.fields.E (B.R.N (G.s + 1))) :
     XIx (Fin B.R.k) (Fin B.R.t) (G.s + 1) → G.k := fun r => (ofSplit G.q).pr (z (e r))
 
@@ -152,6 +154,7 @@ def OrbAt (j : ℕ) (y : E.Ch j) (β : Ch₀ j) : Prop :=
 variable {A E} {P : BadPr I a} {hψ : Continuous G.ψk} {sg : ℂ}
 
 
+set_option maxHeartbeats 1000000 in
 theorem orb_iff (hI : I.Ok)
     (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (I.rec7 l Z))) G.s (E.tw hψ sg))
     (hM : E.M = (I.cst a).M) (b : Idx I.sel (I.tup a) (I.idx a) (G.s + 1)) (hQ : P.1 ∈ I.Q a) {e}
@@ -192,6 +195,7 @@ theorem orbAt_unique {j : ℕ} (hj : j + 1 = B.R.m) {y y' : E.Ch j} {β : Ch₀ 
   exact E.cos_inj _ _ (H.trans (h rfl e he) (H.symm (h' rfl e he)))
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_orbAt (hI : I.Ok) (hA : A.Is)
     (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (I.rec7 l Z))) G.s (E.tw hψ sg))
     (hM : E.M = (I.cst a).M) {j : ℕ} (hj : j + 1 = B.R.m) (β : Ch₀ j) (hk : A.kb j β = TC.kStd X u (B.R.N j)) :
@@ -213,6 +217,7 @@ theorem exists_orbAt (hI : I.Ok) (hA : A.Is)
   exact hy
 
 
+set_option maxHeartbeats 1000000 in
 theorem lev_of_orbAt (hI : I.Ok) (hA : A.Is)
     (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (I.rec7 l Z))) G.s (E.tw hψ sg))
     (hM : E.M = (I.cst a).M) {j : ℕ} (hj : j + 1 = B.R.m) (b : Idx I.sel (I.tup a) (I.idx a) j) (hQ : P.1 ∈ I.Q a) {y : E.Ch j}
@@ -229,6 +234,7 @@ theorem lev_of_orbAt (hI : I.Ok) (hA : A.Is)
   exact h1
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_vec (hI : I.Ok) (hA : A.Is)
     (tw : GlobalTheory.TwBridge.AtTwist (R := B.R) (k := G.k) I.sel (I.tup a) (I.cst a) B.embLL P (G.q.pr.comp (incA (I.rec7 l Z))) G.s (E.tw hψ sg))
     (hM : E.M = (I.cst a).M) {j : ℕ} (hj : j + 1 = B.R.m) (b : Idx I.sel (I.tup a) (I.idx a) j) {y : E.Ch j} (hy : InBox E j y) :

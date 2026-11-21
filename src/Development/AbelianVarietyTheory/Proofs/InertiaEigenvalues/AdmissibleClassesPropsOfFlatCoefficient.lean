@@ -174,6 +174,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {M : Type} [AddCommGroup M] [Module O M] {W : Representation O G M}
 
 
+omit [TopologicalSpace G] in
 theorem lTensor_twCoef (χ : G →* Oˣ) {X X' : Type} [AddCommGroup X] [Module O X] [AddCommGroup X'] [Module O X']
     (f : X →ₗ[O] X') (g : G) (m : M ⊗[O] X) :
     f.lTensor M (twCoef W χ X g m) = twCoef W χ X' g (f.lTensor M m) := by

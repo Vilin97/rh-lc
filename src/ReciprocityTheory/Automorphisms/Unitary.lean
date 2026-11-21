@@ -90,6 +90,7 @@ noncomputable def compAt (v : HeightOneSpectrum (𝓞 L⁺)) : AL L →+* L ⊗[
   (Algebra.TensorProduct.map (AlgHom.id L⁺ L) (evalAt L v)).toRingHom
 
 
+variable {L} in
 noncomputable def SplitPlace.proj (s : SplitPlace L) : AL L →+* s.v.adicCompletion L⁺ :=
   (Algebra.TensorProduct.lift s.i (evalAt L s.v) (fun _ _ => Commute.all _ _)).toRingHom
 
@@ -140,15 +141,18 @@ noncomputable def Umax (n : ℕ) : Subgroup (GA L n) where
     exact conjAL_mem_ALint L (ha j i)
 
 
+variable {L} in
 noncomputable def SplitPlace.loc (s : SplitPlace L) (n : ℕ) :
     GA L n →* GL (Fin n) (s.v.adicCompletion L⁺) :=
   (Matrix.GeneralLinearGroup.map s.proj).comp (GA L n).subtype
 
 
+variable {L} in
 def TrivOutside {n : ℕ} (T : Set (HeightOneSpectrum (𝓞 L⁺))) (x : GA L n) : Prop :=
   ∀ v, v ∉ T → (x.1 : Matrix (Fin n) (Fin n) (AL L)).map (compAt L v) = 1
 
 
+variable {L} in
 noncomputable def Level {n : ℕ} {ι : Type*} (s : ι → SplitPlace L)
     (H : ∀ a, Subgroup (GL (Fin n) ((s a).v.adicCompletion L⁺))) : Subgroup (GA L n) :=
   Umax L n ⊓ ⨅ a, (H a).comap (SplitPlace.loc L (s a) n)

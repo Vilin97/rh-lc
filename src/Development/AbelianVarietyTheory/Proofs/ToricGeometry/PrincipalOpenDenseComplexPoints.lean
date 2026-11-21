@@ -14,6 +14,7 @@ open scoped BigOperators Real
 namespace GlobalTheory
 
 
+open AffinePoints in
 theorem algHom_mem_closure_nonvanishing (A : Type) [CommRing A] [IsDomain A] [Algebra ℂ A]
     [Algebra.FiniteType ℂ A] (f : A) (hf : f ≠ 0) :
     {x : A → ℂ | ∃ φ : A →ₐ[ℂ] ℂ, ⇑φ = x ∧ x 1 ≠ 0} ⊆

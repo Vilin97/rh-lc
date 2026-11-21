@@ -214,6 +214,7 @@ theorem congr_iff_of_five (h2 : (2 : K) ≠ 0)
 end Abstract
 
 
+open ValuativeRel in
 theorem isotropic_five_of_localField (K : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] (h2 : (2 : K) ≠ 0) (a : Fin 5 → K) :
     ∃ x : Fin 5 → K, x ≠ 0 ∧ ∑ i, a i * x i ^ 2 = 0 := by

@@ -21,6 +21,7 @@ section Finite
 variable (v : HeightOneSpectrum (𝓞 K))
 
 
+omit [NumberField K] [NumberField L] [NumberField M] in
 theorem liesOver_below_of_placesOver (u : PlacesOver M v) :
     (below L u.1).asIdeal.LiesOver v.asIdeal :=
   (below_eq_iff _ v).1 (by rw [below_below, (below_eq_iff u.1 v).2 inferInstance])
@@ -30,6 +31,7 @@ def belowPlace (u : PlacesOver M v) : PlacesOver L v :=
 
 
 
+omit [NumberField K] [NumberField L] [NumberField M] in
 instance liesOver_belowPlace (u : PlacesOver M v) :
     u.1.asIdeal.LiesOver (belowPlace L M v u).1.asIdeal :=
   liesOver_below (K := L) u.1
@@ -74,6 +76,7 @@ end Finite
 section Infinite
 
 
+omit [NumberField K] [NumberField L] in
 theorem isConj_conjAt_of_isReal [IsGalois K L] {w : InfinitePlace L}
     (hv : (w.comap (algebraMap K L)).IsReal) : IsConj w.embedding (conjAt K w) := by
   by_cases hw : w.IsReal
@@ -82,6 +85,7 @@ theorem isConj_conjAt_of_isReal [IsGalois K L] {w : InfinitePlace L}
   · exact isConj_conjAt (isRamified_iff.2 ⟨not_isReal_iff_isComplex.1 hw, hv⟩)
 
 
+omit [NumberField K] [NumberField L] [NumberField M] in
 theorem restrictNormal_conjAt [IsGalois K L] [IsGalois K M] (w : InfinitePlace M)
     (hv : (w.comap (algebraMap K M)).IsReal) :
     (conjAt K w).restrictNormal L = conjAt K (w.comap (algebraMap L M)) := by

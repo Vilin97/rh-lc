@@ -157,10 +157,12 @@ theorem starT_tmap (f : R →ₐ[ℚ] R') (x : R ⊗[ℚ] D) :
   | add x y hx hy => simp only [map_add (f := _), MulOpposite.unop_add, hx, hy]
 
 
+variable (R) in
 def formE (a : R ⊗[ℚ] D) (c : R) : R ⊗[ℚ] D :=
   a * ((1 : R) ⊗ₜ β) * (starT σ R a).unop - algebraMap R (R ⊗[ℚ] D) c * ((1 : R) ⊗ₜ β)
 
 
+variable (R) in
 def commE (a : R ⊗[ℚ] D) : R ⊗[ℚ] D := a * ((1 : R) ⊗ₜ y) - ((1 : R) ⊗ₜ y) * a
 
 theorem formE_map (f : R →ₐ[ℚ] R') (a : R ⊗[ℚ] D) (c : R) :
@@ -175,6 +177,7 @@ theorem commE_map (f : R →ₐ[ℚ] R') (a : R ⊗[ℚ] D) :
   simp only [commE, map_sub, map_mul, Algebra.TensorProduct.map_tmul, map_one, AlgHom.id_apply]
 
 
+variable (R) in
 def cond (X : Matrix (Fin (Module.finrank ℚ D + 1)) (Fin (Module.finrank ℚ D + 1)) R) :
     (Fin (Module.finrank ℚ D + 1) × Fin (Module.finrank ℚ D + 1)) ⊕
       (Fin (Module.finrank ℚ D) ⊕ Fin (Module.finrank ℚ D)) → R
@@ -331,6 +334,7 @@ theorem mem_zeroLocus_iff {R : Type} [CommRing R] [Algebra ℚ R] (g : GL (Fin (
   simp only [HeckeCharacterZeroLocus.zeroLocusGL, locusSet, Set.mem_setOf_eq, Set.forall_mem_range, aeval_cond]
 
 
+variable (D) in
 def blkU (R : Type) [CommRing R] [Algebra ℚ R] :
     (R ⊗[ℚ] D)ˣ × Rˣ →* GL (Fin (Module.finrank ℚ D + 1)) R :=
   (Units.map (blk D R).toMonoidHom).comp (MulEquiv.prodUnits.symm.toMonoidHom)
@@ -371,6 +375,7 @@ theorem isGroupLocus : HeckeCharacterZeroLocus.IsGroupLocus (locusSet D σ β y)
     exact (mem_locus_iff σ β y _).2 ⟨z⁻¹, tc_inv σ β y z hz, map_inv _ _⟩
 
 
+variable (D) in
 def tcSub (R : Type) [CommRing R] [Algebra ℚ R] : Subgroup ((R ⊗[ℚ] D)ˣ × Rˣ) where
   carrier := {z | GlobalTheory.TorCls.TC D σ β y R z}
   mul_mem' {z w} hz hw := tc_mul σ β y z w hz hw

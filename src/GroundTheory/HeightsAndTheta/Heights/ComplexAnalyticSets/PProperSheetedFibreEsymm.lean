@@ -205,6 +205,7 @@ theorem analyticOnNhd_of_differentiableOn (hcirc : ParametricCircleIntegralAnaly
 end ProperSheetedFibreEsymm
 
 
+open ProperSheetedFibreEsymm in
 theorem ProperSheetedFibreEsymm.proof (hcount : UnbranchedProperCountConstant.Statement)
     (hriem : RiemannExtensionAnalytic.Statement) (hcirc : ParametricCircleIntegralAnalytic.Statement) :
     ProperSheetedFibreEsymm.Statement := by

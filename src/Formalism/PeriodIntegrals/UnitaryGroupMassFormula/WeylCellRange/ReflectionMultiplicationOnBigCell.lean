@@ -85,6 +85,7 @@ theorem Wm_empty (k r : ℕ) (c : Fin r → ℂ) : Wm k r ∅ c = 1 := by
   simp [Wm, Matrix.one_apply, Fin.val_inj]
 
 
+set_option maxHeartbeats 800000 in
 theorem reflection_mul_weyl_cell (k r : ℕ) (S : Finset ℕ) (c : Fin r → ℂ) (a : Fin r) (ha : a.val ∉ S) :
     w1 k r a (c a) * Wm k r S c = Wm k r (insert a.val S) c := by
   ext p q
@@ -133,6 +134,7 @@ theorem wCell_last (k r : ℕ) (c : Fin r → ℂ) : wCell k r (Fin.last r) c = 
     exact ⟨⟨j, hj⟩, rfl⟩
 
 
+set_option maxHeartbeats 800000 in
 theorem Wm_range_apply (k r : ℕ) (c : Fin r → ℂ) (p x : Fin (2 * r + k + 1)) :
     Wm k r (Finset.range r) c p x = if x = swp k r p then cf k r c p else 0 := by
   have hp := p.isLt

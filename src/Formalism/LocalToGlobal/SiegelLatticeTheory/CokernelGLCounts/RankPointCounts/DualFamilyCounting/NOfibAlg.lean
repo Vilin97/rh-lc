@@ -237,6 +237,7 @@ end N
 end Alg
 
 
+open Alg in
 theorem dictGram_holds : DictGram := by
   intro D X u n hn
   refine ⟨fun b a h => Xq_lower hn h, fun a => Xq_diag hn a, fun b => pW_inW X _, ?_⟩

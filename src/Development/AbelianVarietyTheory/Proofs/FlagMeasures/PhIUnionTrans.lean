@@ -88,6 +88,7 @@ def patChar (ψ : AddChar (ZMod g) ℂ) (E : Fin N → Fin N → Prop) (hE : ∀
 theorem patChar_val (ψ : AddChar (ZMod g) ℂ) (E : Fin N → Fin N → Prop) (hE : ∀ a, ¬ E a a) (H : Subgroup (Gn g N))
     (hm) (x : H) : (patChar ψ E hE H hm x : ℂ) = ψ (sumAt E ((x : Gn g N) : Mt g N)) := rfl
 
+set_option maxHeartbeats 1000000 in
 theorem tr_ePat (ψ : AddChar (ZMod g) ℂ) (Φ E : Fin N → Fin N → Prop) (H : Subgroup (Gn g N))
     (hH : ∀ x, x ∈ H ↔ InPat Φ (x : Mt g N)) (χ : Gn g N → ℂ) :
     tr (ePat g N Φ E ψ) χ =

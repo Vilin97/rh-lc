@@ -25,6 +25,7 @@ open scoped TensorProduct Classical
 namespace GlobalTheory.LKCx.FiniteClassIntegralRoots
 
 
+open Polynomial in
 theorem exists_emb_isRoot' {F C E : Type} [Field F] [NumberField F] [Ring C] [Algebra F C]
     [Algebra ℚ C] [IsScalarTower ℚ F C] [FiniteDimensional F C] [Field E] [Algebra ℚ E] [IsAlgClosed E]
     (y : C) (μ : E) (h : ((minpoly ℚ y).map (algebraMap ℚ E)).IsRoot μ) :
@@ -206,6 +207,7 @@ theorem integral_of_term_ne_zero' : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p)
       (fun w μ hμ => hk3 w μ (by rw [hw1, ← inv_inv P.γ]; exact hμ)) hA'⟩
 
 
+open GlobalTheory.LKMid.Northcott in
 theorem finite_pol_marked' : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p), G.a = 1 → ∀ N : ℕ, 0 < N →
     {P0 : Polynomial G.F | ∃ P : Pair G, (∃ μ, P.Mark μ) ∧ P.pol = P0 ∧
       IsIntegral ℤ ((N : ℤ) • (P.γ : G.C)) ∧ IsIntegral ℤ ((N : ℤ) • ((P.γ⁻¹ : G.Cˣ) : G.C))}.Finite := by

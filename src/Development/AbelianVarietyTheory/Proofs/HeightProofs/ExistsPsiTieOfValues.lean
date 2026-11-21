@@ -73,6 +73,7 @@ theorem sub_eq_nsmul_of_split {L A : Type} [AddCommGroup L] [AddCommGroup A] (j 
   abel
 
 
+set_option maxHeartbeats 1000000 in
 theorem congOne_det (V : HSp D) (io : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E)) (hio : LatEmb V io)
     {l l₂ : Level H} {p : ℕ} {I : Ideal (𝓞 D.host.E)} (hM : l₂.M = l.M * p) (hcop : p.Coprime l.M)
     (hMb : l₂.Mb = l.Mb * I) (s : Dw.La →ₗ[𝓞 D.host.E] Dw.La)
@@ -147,6 +148,7 @@ theorem exists_basis_lift {R L : Type} [CommRing R] [AddCommGroup L] [Module R L
     (Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)) h0
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_psiTie_of_values (V : HSp D) {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {n r : ℕ}
     (d : DeltaDat Xo c n) (hr : V.rank = r) (io : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E))
     (hι : IotaOK Dw V io) (hpq : 1 ≤ Dw.p + Dw.q) (x₀ : (D.host.E →+* ℂ) → Matrix (Fin r) (Fin r) ℂ)

@@ -142,6 +142,7 @@ abbrev Col (D : D7) (u : D.what₂.Word) (j : ℕ) : Type := (D.mem u).C.cls j �
 theorem idx_step {j σ m : ℕ} (h : j + 2 * (σ + 1) + 2 = m) : j + 1 + 1 + 2 * σ + 2 = m := by omega
 
 
+set_option maxHeartbeats 1000000 in
 structure Dat (D : D7) (u : D.what₂.Word) extends Geo D where
 
   p : ∀ j, GlobalTheory.ChainOnto.Step c (toGeo.st j) (toGeo.st (j + 1))

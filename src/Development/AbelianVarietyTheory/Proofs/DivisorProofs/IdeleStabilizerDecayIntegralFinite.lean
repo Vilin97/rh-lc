@@ -262,6 +262,7 @@ theorem continuous_vec : Continuous (vec F E) :=
   continuous_pi fun i => (continuous_evI F).comp ((continuous_apply i).comp (continuous_coord F E))
 
 
+variable (F E) in
 theorem exists_bilin : ∃ L : (Fin (Module.finrank F E) → mixedSpace F) →L[ℝ]
     (Fin (Module.finrank F E) → mixedSpace F) →L[ℝ] (Fin (Module.finrank F E) → mixedSpace F),
     (∀ v w, L v w = (∑ i, v i • mat F E (bas F E i)) *ᵥ w) ∧
@@ -322,6 +323,7 @@ theorem exists_mem_stab (v : Fin (Module.finrank F E) → mixedSpace F)
   rw [IsUnit.unit_spec, this]
 
 
+variable (F) in
 theorem isCompact_inf (R : ℝ) : IsCompact {a : Ainf F | ‖InfiniteAdeleRing.ringEquiv_mixedSpace F a‖ ≤ R} := by
   let e := InfiniteAdeleRing.ringEquiv_mixedSpace F
   have hc : Continuous e.symm := by
@@ -344,6 +346,7 @@ theorem isCompact_inf (R : ℝ) : IsCompact {a : Ainf F | ‖InfiniteAdeleRing.r
     exact mem_closedBall_zero_iff.1 hy
 
 
+variable (F E) in
 theorem exists_compact (R : ℝ) : ∃ K : Set (AE F E), IsCompact K ∧
     ∀ g ∈ stab F E, ‖vec F E g.1‖ ≤ R → g.1 ∈ K := by
   haveI : IsModuleTopology (AF F) (AE F E) := ⟨rfl⟩
@@ -379,6 +382,7 @@ end Ideles
 end GlobalTheory.IdeleArchBound
 
 
+open GlobalTheory.IdeleArchBound in
 theorem GlobalTheory.IdeleArchBound.lintegral_stab_lt_top :
     ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (s : ℕ), 1 ≤ s →
     ∃ N : ℕ, ∀ μ : Measure (AE F E)ˣ, μ.IsHaarMeasure →

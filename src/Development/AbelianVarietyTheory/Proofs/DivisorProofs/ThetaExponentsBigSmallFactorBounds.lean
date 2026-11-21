@@ -150,6 +150,7 @@ theorem card_psi (F : ℕ) (hF : Module.finrank ℚ E = 2 * F) :
   omega
 
 
+open Classical in
 theorem big_le (u : Weight Dw) (k n B : ℕ) (hk : 2 ≤ k) (hkp : k ≤ Dw.p + 1) (hanti : ∀ τ, Antitone (u τ))
     (hz : ∀ τ (i : Fin (Dw.p + Dw.q)), (i : ℕ) + 2 = k → u τ i = 0) (hB : ∀ τ i, |u τ i| ≤ B) (τ : E →+* ℂ) :
     ∑ f ∈ Finset.univ.filter (fun f : Lt1 Dw => IsBig k f ∧ f.1 = τ), gap Dw (thA Dw u n) f ≤ B + 1 := by
@@ -206,6 +207,7 @@ theorem cloud_eq (u : Weight Dw) (k n : ℕ) (hk : 2 ≤ k) (hkp : k ≤ Dw.p + 
     simp
 
 
+open Classical in
 theorem row_le (u : Weight Dw) (k n B : ℕ) (Sg : ℝ) (hk : 2 ≤ k) (hkp : k ≤ Dw.p + 1) (hu : WtBd Dw k n u B Sg)
     (τ : E →+* ℂ) :
     ∑ j : Fin (Dw.mult τ), (if IsSmall (⟨τ, j⟩ : Lt1 Dw) ∨ IsSpread k (⟨τ, j⟩ : Lt1 Dw) then

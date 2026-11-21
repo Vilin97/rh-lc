@@ -40,6 +40,7 @@ def IdemSame (z : Dat (w.st Z) w.I hX T Wt) (Xg : Finset (Gc B' w'.px → B'.LL)
   ∀ (g' : Gc B' w'.px) (g : Gc B w.px), HEq g' g → B'.embLL ((idemOf Xg).coeff g') = B.embLL ((idemOf z.Xg).coeff g)
 
 
+set_option maxHeartbeats 1000000 in
 def JSpan (z : Dat (w.st Z) w.I hX T Wt) (Wt' : Set B'.places.Pl)
     (R' : RealDat3 (w'.st Z').toD7 (famR (w'.st Z') w'.I hX' (usedOf w'.I T' Wt') Xg tr) Ks) : Prop :=
   ∀ (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w'.st Z').toD7.R.m), (i : ℕ) = i' →
@@ -70,6 +71,7 @@ theorem eq_cj_one_smul {H : Type} [AddCommGroup H] [Module ℂ H] (s : Bool) (v 
   rw [map_one, one_smul]
 
 
+set_option maxHeartbeats 8000000 in
 theorem charW_keep (X : Stages) (px : PreX X.B.toPre) (I : Col2.ColIn X.B px) (hX : X.B.fields.Ok) (U : Set I.ι)
     (Xg : Finset (Gc X.B px → X.B.LL)) (tr₀ : TrI X.B px) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks X.toD7.what₂.LL]
     (R₀ : RealDat3 X.toD7 (famR X I hX U Xg tr₀) Ks) (cG : G0 R₀.Pg X.toD7.R.r ≃* G0g X.toD7.nd) (hI : Inputs X.toD7)

@@ -169,6 +169,10 @@ private theorem finrank_span_map_algebraMap_eq {σ K L : Type} [Field K] [Field 
   rw [← hspan, finrank_span_eq_card hli, Fintype.card_fin]
 
 
+open MvPolynomial Filter in
+open scoped ENNReal in
+open Module TensorProduct in
+attribute [local instance] MvPolynomial.gradedAlgebra in
 theorem _root_.GlobalTheory.HilbBaseChange.idealHilbertPoly_map : ∀ (K L : Type) [Field K] [Field L] [Algebra K L] (N : ℕ) (P : Ideal (MvPolynomial (Fin N) K)), (∀ g ∈ P, ∀ n : ℕ, homogeneousComponent n g ∈ P) → (∀ g ∈ P.map (MvPolynomial.map (algebraMap K L) : MvPolynomial (Fin N) K →+* MvPolynomial (Fin N) L), ∀ n : ℕ, homogeneousComponent n g ∈ P.map (MvPolynomial.map (algebraMap K L) : MvPolynomial (Fin N) K →+* MvPolynomial (Fin N) L)) ∧ _root_.GlobalTheory.idealHilbertPoly (P.map (MvPolynomial.map (algebraMap K L) : MvPolynomial (Fin N) K →+* MvPolynomial (Fin N) L)) = _root_.GlobalTheory.idealHilbertPoly P := by
   intro K L _ _ _ N P hP
   have hW : ∀ n : ℕ,

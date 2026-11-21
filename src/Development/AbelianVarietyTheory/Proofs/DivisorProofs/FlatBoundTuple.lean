@@ -178,11 +178,13 @@ theorem fromBlocks_mul_fromRows' {R : Type} [CommRing R] {l m₁ m₂ k₁ k₂ 
   ext (i | i) j <;> simp [mul_apply, Fintype.sum_sum_type]
 
 
+variable (n₁) in
 def rotC : Matrix ((Fin n₁ ⊕ Fin 2) ⊕ (Fin n₁ ⊕ Fin 2)) ((Fin n₁ ⊕ Fin 2) ⊕ (Fin n₁ ⊕ Fin 2)) E :=
   fromBlocks (fromBlocks 1 0 0 !![2⁻¹, 0; 0, 1]) (fromBlocks 0 0 0 !![2⁻¹, 0; 0, -1])
     (fromBlocks 0 0 0 !![0, 2⁻¹; -1, 0]) (fromBlocks 1 0 0 !![0, 2⁻¹; 1, 0])
 
 
+variable (n₁) in
 def rotCinv : Matrix ((Fin n₁ ⊕ Fin 2) ⊕ (Fin n₁ ⊕ Fin 2)) ((Fin n₁ ⊕ Fin 2) ⊕ (Fin n₁ ⊕ Fin 2)) E :=
   fromBlocks (fromBlocks 1 0 0 !![1, 0; 0, 2⁻¹]) (fromBlocks 0 0 0 !![0, -2⁻¹; 1, 0])
     (fromBlocks 0 0 0 !![1, 0; 0, -2⁻¹]) (fromBlocks 1 0 0 !![0, 2⁻¹; 1, 0])
@@ -228,6 +230,7 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E] [CharZero E] {σ : E →
   {J : Matrix (Fin n) (Fin n) E} {J₁ : Matrix (Fin n₁) (Fin n₁) E} {ι : Matrix (Fin n) (Fin n₁) E} {x y : Fin n → E}
 
 
+variable (σ J J₁ ι x y) in
 def rotG : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) E :=
   (Matrix.fromBlocks (frameT ι x y) (0 : Matrix (Fin n) (Fin n₁ ⊕ Fin 2) E) 0 (frameT ι x y) :
       Matrix (Fin n ⊕ Fin n) ((Fin n₁ ⊕ Fin 2) ⊕ (Fin n₁ ⊕ Fin 2)) E) * (rotC n₁ : Matrix _ _ E) *
@@ -351,6 +354,7 @@ theorem extM_unitary (hQ : Q * ι = 1) (h2 : Qᵀ * K₁ = K * ι.map c) (h3 : �
   rw [extM_form hQ h2 h3, hg]; exact h1.symm
 
 
+variable (c K K₁ ι Q) in
 def extHom (hQ : Q * ι = 1) (h2 : Qᵀ * K₁ = K * ι.map c) (h3 : ιᵀ * K = K₁ * Q.map c) : UG c K₁ →* UG c K where
   toFun g := ⟨⟨extM ι Q g.1.1, extM ι Q (g.1⁻¹ : GL k A).1, by rw [extM_mul hQ, Units.mul_inv, extM_one],
     by rw [extM_mul hQ, Units.inv_mul, extM_one]⟩, extM_unitary hQ h2 h3 _ g.2⟩

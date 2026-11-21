@@ -117,6 +117,7 @@ theorem inner_kAvg_ne_zero (hσ : IsURepOn (UJset ε) σ) {y : H} (hy : y ≠ 0)
   exact_mod_cast hpos.ne'
 
 
+omit [CompleteSpace H] in
 theorem exists_clm_kAvg (hσ : IsURepOn (UJset ε) σ) {e : KG ε → ℂ} (he : Continuous e) :
     ∃ Q : H →L[ℂ] H, ∀ w, Q w = kAvg ε σ e w := by
   let L : H →ₗ[ℂ] H :=

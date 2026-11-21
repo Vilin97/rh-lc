@@ -66,6 +66,7 @@ def WeightI {n' m : ℕ} (TT : Finset (Fin n')) (Y a bl bu : ℝ) (ccl : ℕ) (a
     ∀ s ∈ TT, aw s ∈ IaZ m Y a ∧ bw s ∈ IbZ bl bu
 
 
+open Classical in
 def tI (C₀ C : ℝ) (p n' m : ℕ) (TT : Finset (Fin n')) (G' N₁ : ℕ) (a b' : ℝ) (ccl cStar : ℕ)
     (aw bw : Fin n' → ℤ) : ℝ :=
   let k : ℝ := (m : ℝ) + 1

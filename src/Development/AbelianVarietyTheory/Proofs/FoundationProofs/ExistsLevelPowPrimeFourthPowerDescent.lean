@@ -58,6 +58,7 @@ theorem exists_dvd_pow_mul_coprime (M : ℕ) (hM : 0 < M) :
 end GlobalTheory.KZ.ES.DescInv
 
 
+open GlobalTheory.KZ.ES.DescInv in
 theorem GlobalTheory.KZ.ES.desc_pow_four : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (ε : Ω →+* ℂ) (X : Tower Ω ε),
     ∀ (l n M : ℕ), l.Prime → 0 < M → 6 * l ∣ M → ∀ f : X.Kˣ,
     (∀ γ ∈ CongruenceSubgroup.Gamma M, ∃ g : X.Kˣ, X.sl (ofSL γ) (f : X.K) = f * (g : X.K) ^ (l ^ n)) →

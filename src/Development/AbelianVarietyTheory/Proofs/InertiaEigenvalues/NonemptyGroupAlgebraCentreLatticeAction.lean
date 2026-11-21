@@ -50,6 +50,7 @@ abbrev CenR (D : D7) (i : D.nd.Loc) : Subalgebra (D.nd.O i) (MonoidAlgebra (D.nd
   Subalgebra.center (D.nd.O i) (MonoidAlgebra (D.nd.O i) (G0g D.nd))
 
 
+variable (D) in
 def psi (i : D.nd.Loc) (z : MonoidAlgebra (D.nd.O i) (G0g D.nd)) :
     Module.End ℂ (D.what₂.Mt (D.nd.mu i) (D.nd.j i)) :=
   D.ntypes.onMt (D.nd.mu i) (D.nd.j i) (mapCoef (iotaO D.nd D.naut i) z)

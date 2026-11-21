@@ -84,6 +84,7 @@ variable {L : SizeData₂ D} {HW : HWOf D.loc} {F : FonOf D.loc D.locA HW} {i : 
     {Cx : Formalism.MainNotions.TruncatedSeriesCountingIdentities.CoefExt D i w hw} {hG : Good (D.nbr i w hw).Kw 1 Cx.LL}
 
 
+variable (ρ π hG) in
 structure WordBaseC (Wd : WordDat (nLet i w hw)) : Prop where
   zeta : ∃ ζ : ↥Cx.LL.1, IsPrimitiveRoot ζ (D.nd.l i)
   mult : ∀ T₂ : LatW i w hw Cx, IsTwistedDualOfGaloisRep i ρ π w hw Cx T₂ →

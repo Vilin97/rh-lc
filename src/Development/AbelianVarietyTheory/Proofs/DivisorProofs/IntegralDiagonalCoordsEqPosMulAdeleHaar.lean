@@ -59,6 +59,7 @@ theorem continuous_shiftOf : Continuous (shiftOf : (κ → AdeleRing (𝓞 F) F)
   exact (GroundTheory.Global.homeomorphMixedSpace F).continuous.comp (continuous_fst.comp (continuous_apply i))
 
 
+variable (F κ) in
 def glueEquiv : (Vi F κ × Vf F κ) ≃+ (κ → AdeleRing (𝓞 F) F) where
   toFun := glue
   invFun := shiftOf
@@ -84,6 +85,7 @@ theorem exists_glue_measure :
     Set.univ isOpen_univ Set.univ_nonempty (by rw [h]; rfl)
 
 
+variable (F κ) in
 def glueMEquiv :
     letI : MeasurableSpace (AdeleRing (𝓞 F) F) := GroundTheory.Global.measurableSpace_adeleRing F
     (Vi F κ × Vf F κ) ≃ᵐ (κ → AdeleRing (𝓞 F) F) :=

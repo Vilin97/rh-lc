@@ -41,6 +41,8 @@ variable (hU : ∀ i j b M (d : Dat i j b), 1 ≤ j → j ≤ D.R.m →
   thU i j b ∅ M d = th i j b d ⊗ₜ[D.ntw.O i] (1 : AddMonoidAlgebra (D.ntw.O i) (DelQM D.host (D.ntw.l i) ∅ M)))
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 def keepExp (E : NExpTied D) : NExpTied (keepTw D Dat th lev thPsi h1 thU thP MtLat h2 h3 nth').toD7 :=
   { E with
     acgWt := E.acgWt
@@ -58,6 +60,8 @@ variable (cf : CharFrame D) (Rw : RowSide D) (low : Finset ℕ)
   (θ : ∀ kk : Fin 2, Multiplicative (ZMod (D.host.g kk)) →* (↥D.LL0)ˣ)
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 def keepSideB (Bs : SideB D cf Rw low Pq S hL eig θ) :
     SideB (keepTw D Dat th lev thPsi h1 thU thP MtLat h2 h3 nth').toD7 ((keepTw D Dat th lev thPsi h1 thU thP MtLat h2 h3 nth').cf cf) ((keepTw D Dat th lev thPsi h1 thU thP MtLat h2 h3 nth').row Rw) low Pq
       ((keepTw D Dat th lev thPsi h1 thU thP MtLat h2 h3 nth').rat S) hL eig θ :=

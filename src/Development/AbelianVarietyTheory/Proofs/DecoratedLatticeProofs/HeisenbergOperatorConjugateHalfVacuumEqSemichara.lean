@@ -46,6 +46,7 @@ theorem mem_localization_of_mem_halfBO {E : Type} [Field E] [NumberField E] [Sta
   exact h1
 
 
+set_option maxHeartbeats 400000 in
 theorem off_part_mem (D : D7) (S T : HSp D) (Λ : AddSubgroup (WO S T))
     (hstab : ∀ w : AE D, finPart D w ∈ intAE D → ∀ u ∈ Λ, w • u ∈ Λ)
     (e : AE D) (SS : Finset (Formalism.L2.DIV.Pl D.host.E)) (he : IsIdemSum e SS) (c : ℕ) (hc : 0 < c) (d : 𝓞 D.host.E) (hd0 : d ≠ 0)
@@ -62,6 +63,9 @@ theorem off_part_mem (D : D7) (S T : HSp D) (Λ : AddSubgroup (WO S T))
   exact add_mem (hstab _ ha₁ _ hcY) (hstab _ ha₂ _ hdY)
 
 
+open GlobalTheory.LatVac in
+set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem heisO_conjHalf_eq : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D) (a b : ℕ) (hS : S.rank = a) (hT : T.rank = b) (δ : ℂ) (sc : ℝ), StdPair θ S T δ sc ψ → ∀ (e : AE D) (SS : Finset (Formalism.L2.DIV.Pl D.host.E)), IsIdemSum e SS → ∀ (N : Submodule (𝓞 D.host.E) (Fin a → D.host.E)) (N' : Submodule (𝓞 D.host.E) (Fin b → D.host.E)) (c : ℕ), 0 < c → Odd c → (∀ Q ∈ SS, ((D.host.QS * D.host.q * D.host.d : ℕ) : 𝓞 D.host.E) ∉ Q.asIdeal) → LaFacts (tauE D) δ D.host.d sc (D.host.AA0 : Submodule (𝓞 D.host.E) D.host.E) N N' → ∀ (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)) (ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)), IsSelfDualC S ΛS → IsSelfDualC T ΛT → (ΛS : Set (Fin S.rank → D.host.E)) = latFr S hS N → (ΛT : Set (Fin T.rank → D.host.E)) = latFr T hT N' → ∀ f₀, IsVacO ψ θ S T (fun _ => 1) (fun _ => 1) (latFr S hS N) (latFr T hT N') f₀ → ∀ y' ∈ halfBO SS (perO (D.host.AA0 : Submodule (𝓞 D.host.E) D.host.E) N N') c, heisO ψ S T (((LinearMap.toMatrix' (y')).reindex (finCongr hT.symm) (finCongr hS.symm)).map fun r => cA D e * incA D r) f₀ = alV D.host.d sc (embH (tauE D) δ y') • heisO ψ S T (GlobalTheory.VacUnique.finRat S T ((LinearMap.toMatrix' (y')).reindex (finCongr hT.symm) (finCongr hS.symm))) f₀ := by
   intro D ψ θ S T a b hS hT δ sc hP e SS he N N' c hc hcP h2qd hLa ΛS ΛT hSd hTd hΛS hΛT f₀ hf₀ y' hy'
   set M : Matrix (Fin T.rank) (Fin S.rank) D.host.E :=

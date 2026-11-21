@@ -36,6 +36,7 @@ def StageAt {D : D7} {G' : Type} [Group G'] [Fintype G'] {Pl0 T : Type} {A : Fam
     RowJ R eE P.X P.inst P.G t S.j
 
 
+set_option maxHeartbeats 1000000 in
 theorem stageAt_upd {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
     {A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
     (R : RealDat3 D A3 Ks) (k : ℝ) (lam : type_of% R.lam3) (e : type_of% (R.updS k lam).err0) (F : Face3 D A3)
@@ -47,6 +48,7 @@ theorem stageAt_upd {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
   ⟨⟨h.1.fin, h.1.conj, h.1.mat⟩, h.2.1, h.2.2⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem spectralStage_point_rowPlacement_transfer : ∀ (K : Ctx) (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : ColW B f T) (Z : w.Lt) (Wt : Set B.places.Pl) (L : SizeData₂ (w.st Z).toD7) (hT : GatTies (w.st Z).toD7) (Gi : Formalism.MainNotions.G.Inst (w.st Z).toD7 L) (Gl : Formalism.MainNotions.G.LatInst (w.st Z).toD7) (Kc : Formalism.MainNotions.G.Consts) (Yd : DivX (w.st Z).toD7) (cX : ExtraC) (ex : Extra (w.st Z).toD7 L hT Gi Gl Kc Yd cX) (t : RowsT K w Z Wt ex.p0) (a : TwArgs ex t) (F0 : ∀ u, Formalism.L2.Forms.Forms0 (w.st Z).toD7 u) (s : SAt (D := (w.st Z).toD7) t.r.z.R.toRealDat t.r.z.F.lv2 t.r.Y.eE F0), SeeAt a.x.R.toRealDat a.x.F.lv2 s.P.X s.P.inst s.t ∧ EvalTieT (MP a.x.R.toRealDat) a.x.R.toRealDat.ν0 a.x.R.toRealDat.fd0 (EP a.x.R.toRealDat a.x.F.lv2) s.P.X s.P.G (iotaX s.P.X s.P.inst).toMulEquiv s.t s.c ∧ RowJ a.x.R.toRealDat a.x.Y.eE s.P.X s.P.inst s.P.G s.t s.S.j := by
   intro K B f T w Z Wt L hT Gi Gl Kc Yd cX ex t a F0 s
   have h : StageAt (D := (w.st Z).toD7) t.r.z.R.toRealDat t.r.z.F.lv2 t.r.Y.eE s.P s.S s.t s.c := ⟨s.see, s.ev, s.rowJ⟩

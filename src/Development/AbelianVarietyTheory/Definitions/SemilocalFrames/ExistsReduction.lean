@@ -201,10 +201,12 @@ def residueEquiv : (𝓞 I.E ⧸ w.asIdeal) ≃+* ZMod p :=
     (RingHom.quotientKerEquivOfSurjective (f := fr.r.comp (psi I.F I.E)) (ZMod.ringHom_surjective _))
 
 
+include fr in
 theorem absNorm_eq : Ideal.absNorm w.asIdeal = p := by
   rw [Ideal.absNorm_apply, Submodule.cardQuot_apply, Nat.card_congr fr.residueEquiv.toEquiv, Nat.card_zmod]
 
 
+include fr in
 theorem prime : p.Prime := by
   have h0 : p ≠ 0 := by
     rw [← fr.absNorm_eq, Ne, Ideal.absNorm_eq_zero_iff]

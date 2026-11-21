@@ -16,6 +16,8 @@ open NumberField IsDedekindDomain Matrix CrossDiaZero
 variable {D : D7} {u : D.what₂.Word}
 
 
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem upSame_one (T : Forms0 D u) (v : (D.mem u).A.vT) (a : ((D.mem u).A.Fv v)ˣ) (k : ℤ)
     (hk : (k : (D.mem u).A.Fv v) = a) (δ : UPts (sigD D) (gramN D 0 (Nat.zero_le _)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F))
     (hδ : IsDia T.cls0.lev (T.atT.eV v).1 (T.atT.eV v).2 k δ) (c c2 : (D.mem u).C.cls 0)
@@ -152,6 +154,8 @@ theorem upSame_one (T : Forms0 D u) (v : (D.mem u).A.vT) (a : ((D.mem u).A.Fv v)
   exact mul_mem hmm κd.2
 
 
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem upSame (T : Forms0 D u) : Formalism.L2.GlobalTheoryTheory.UnramifiedDiagonal.UpDiaSame0F T := by
   intro v a k hk δ hδ c γd hγd κd hx
   set c2 := (D.fm u).dil 0 v a c with hc2

@@ -480,6 +480,7 @@ variable {D : Formalism.BasicNotions.D7} {M : ∀ p : PlF D, Loc.Model (D.s.atP 
   {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
 
+variable (u u' F0 what₂) in
 def EligRel : Prop :=
   ∀ (γ : TermDef.Term D u u' F0 what₂) (w : Point D.host.E (D.R.rS + 1)), EligAt γ w → γ.relevant
 

@@ -23,6 +23,7 @@ section Glob
 variable {E : Type} [Field E] [NumberField E] {n : ℕ}
 
 
+variable (E) in
 def psiR (x : Cinf E) : ℂ := (𝐞 (-TG.tr E x) : ℂ)
 
 def conv [IsTotallyComplex E] (f : GA E n → ℂ) (α : Lie E n → ℂ) (g : GA E n) : ℂ := ∫ x, chart f g x * α x

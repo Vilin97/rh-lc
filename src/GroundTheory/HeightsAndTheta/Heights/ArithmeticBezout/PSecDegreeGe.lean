@@ -51,6 +51,7 @@ theorem map_eval_specRest (ψ : k →+* R) (φ : R →+* S) (f : MvPolynomial (F
 end SecDegreeGe
 
 
+open SecDegreeGe in
 theorem SecDegreeGe.proof (hFin : SecFiniteUnit.Statement) (hSpec : SecRankSpecialize.Statement) :
     SecDegreeGe.Statement := by
   intro k E _ _ _ _ n e δ Q g y hQ hg hδ hne

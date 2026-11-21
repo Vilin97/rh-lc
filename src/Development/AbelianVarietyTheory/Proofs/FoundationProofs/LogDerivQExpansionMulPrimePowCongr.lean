@@ -15,6 +15,7 @@ open scoped MatrixGroups
 namespace GlobalTheory.Glue.DlPow
 
 
+open scoped MatrixGroups in
 theorem _root_.GlobalTheory.Glue.DlPow.isAlgebraic_of_tower {Ω : Type} [Field Ω] [Algebra ℚ Ω]
     {ε : Ω →+* ℂ} (X : _root_.GlobalTheory.KZ.Tower Ω ε) :
     Algebra.IsAlgebraic ℚ Ω := by
@@ -90,6 +91,7 @@ private lemma hahnSeries_coeff_pow_mem_valuationSubring {Ω : Type} [Field Ω] (
     exact hahnSeries_coeff_mul_mem_valuationSubring A ih hx r
 
 
+open scoped MatrixGroups in
 theorem _root_.GlobalTheory.Glue.DlPow.isDl_mul_lpow_cong : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω]
     [IsAlgClosure ℚ Ω] {ε : Ω →+* ℂ} (X : _root_.GlobalTheory.KZ.Tower Ω ε)
     (A : ValuationSubring Ω) (l : ℕ) [Fact l.Prime], (l : Ω) ∈ A.nonunits →

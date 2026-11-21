@@ -145,6 +145,7 @@ end Gen
 open NumberField Formalism.BasicNotions
 
 
+variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
 theorem genus_one_datum_exists (hInv : Formalism.L2.KerInert.Sigma.InvAlg) : Formalism.L2.KerInert.GenusOneModelExists := by
   intro D cc δ hcurve hδ12 p _ hcop h5 hIn lam
   have hp : p.Prime := Fact.out

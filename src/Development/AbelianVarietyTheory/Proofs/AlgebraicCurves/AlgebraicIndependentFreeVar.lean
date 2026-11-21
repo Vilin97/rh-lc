@@ -23,6 +23,9 @@ def freeVarIndex {D N : ℕ} (j₀ : Fin (N + 1)) : SVar D N → TVar D N :=
 end SectionPoint
 
 
+open NumberField in
+open scoped TensorProduct in
+open MvPolynomial in
 theorem _root_.GlobalTheory.existsUnique_ringHom_OmS :
     ∀ (K Ω L : Type) [Field K] [Field Ω] [Algebra K Ω] [Field L] [Algebra K L] (D N : ℕ)
       (j₀ : Fin (N + 1)) (x : Fin N → Ω) (τ : _root_.ReciprocityTheory.ChartRestriction.G.T0.TVar D N → L) (φ : Ω →ₐ[K] L),

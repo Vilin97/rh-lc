@@ -32,6 +32,7 @@ theorem ereal_coe_sum {α : Type} (s : Finset α) (g : α → ℝ) :
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 
+open Classical in
 theorem card_filter_inPsi (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) :
     (Finset.univ.filter (fun τ : E →+* ℂ => InPsi H τ)).card = Module.finrank ℚ E / 2 := by
   rw [← GlobalTheory.LamF.card_psiSet H, ← Nat.card_eq_finsetCard]
@@ -39,6 +40,7 @@ theorem card_filter_inPsi (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host
     rw [Finset.mem_filter]; exact ⟨fun h => h.2, fun h => ⟨Finset.mem_univ _, h⟩⟩)
 
 
+open Classical in
 theorem sumBig_le {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H} {F k : ℕ} {Mb : ℝ} {cx : Lt1 Dw → ℕ}
     (hF : Module.finrank ℚ E = 2 * F)
     (h : ∀ τ : E →+* ℂ, ((∑ f ∈ Finset.univ.filter (fun f : Lt1 Dw => IsBig k f ∧ f.1 = τ), cx f : ℕ) : ℝ) ≤ Mb) :

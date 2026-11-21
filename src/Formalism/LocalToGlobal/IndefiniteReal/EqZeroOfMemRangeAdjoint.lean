@@ -65,6 +65,7 @@ theorem lin_uQ_injective (hW : (lv (fc X.zs) b).WF) (hn : 0 < X.nP b) (hIso : X.
 end CxData
 
 
+open CxData in
 theorem cutRows {Bs : DefBase K} {A : DefAmb Bs} {X : CxData A} {fc : DefSub A → DefFace Bs} (cr : Crd A fc)
     (cv : CrdV A) (b : Bool) : X.CutRows cr cv b := by
   intro hW hpos hIso hZ hV0' hRat hDn hUp hB hParts

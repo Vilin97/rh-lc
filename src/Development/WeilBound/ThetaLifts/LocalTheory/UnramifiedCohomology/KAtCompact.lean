@@ -70,6 +70,7 @@ namespace US
 variable {n : ℕ} {X : Spc F E n}
 
 
+variable (σ X) in
 def uSub (v : Pl F) : Subgroup (UA σ X.J) where
   carrier := UAt σ X (evFin F v)
   one_mem' := fun u _ => by rw [show mat (1 : UA σ X.J) = 1 from rfl, sub_self, smul_zero]

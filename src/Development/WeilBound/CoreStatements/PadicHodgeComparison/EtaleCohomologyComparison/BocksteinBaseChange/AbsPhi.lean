@@ -70,6 +70,7 @@ structure CrysCmp where
     ∀ (v : N.V n) (f : Module.Dual C.K₀ (I.D M n)), c M n (Model.pullV u hu n v) f = c N n v (f ∘ₗ I.pull u hu n)
 
 
+variable {G} in
 structure BPhi {D : Dat R} (β : BMap G D) where
   pull : ∀ {M N : Model l K} {u : M.X ⟶ N.X} {hu : u ≫ N.p = M.p} {a : D.Ch M} {b : D.Ch N}, D.Mo u hu a b →
     ∀ j, (D.H' b).N j →+ (D.H' a).N j

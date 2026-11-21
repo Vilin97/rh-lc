@@ -168,6 +168,7 @@ theorem hilbert_schmidt_zero_map {E F : Type*} [NormedAddCommGroup E] [InnerProd
   simp [hs2, frK, LinearMap.trace_id]
 
 
+set_option maxHeartbeats 4000000 in
 theorem theoremFSharp_of (hLA : FrameLA1) : TheoremFSharp := by
   intro K W κ κ₁ I _ _ _ _ _ _ _ _ _ _ _ _ _ _ V ι _ _ _ _ _ _ b' X' cc b X N B h v Y Y' Ball γ
     s u HH e η δ hX' hX hY hY' hccFG hccSpan hNFG hNSpan hR hBN hht hs hu hmax hHH hHH0

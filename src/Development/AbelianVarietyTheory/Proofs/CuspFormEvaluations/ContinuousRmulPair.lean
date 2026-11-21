@@ -15,6 +15,7 @@ open NumberField ReciprocityTheory.ChartRestriction.G.FD ReciprocityTheory.Chart
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 
+omit [NumberField E] [IsCMField E] in
 theorem bor_eq_pi (Ψ : Finset (E →+* ℂ)) (r : ℕ) :
     Bor Ψ r = Set.univ.pi fun _ : Ψ => Set.univ.pi fun a : Fin r => Set.univ.pi fun c : Fin r =>
       if c < a then ({0} : Set ℂ) else if c = a then ({0}ᶜ : Set ℂ) else Set.univ := by
@@ -43,6 +44,7 @@ theorem bor_eq_pi (Ψ : Finset (E →+* ℂ)) (r : ℕ) :
     rwa [if_neg (lt_irrefl a), if_pos rfl] at this
 
 
+omit [NumberField E] [IsCMField E] in
 theorem isPreconnected_bor (Ψ : Finset (E →+* ℂ)) (r : ℕ) : IsPreconnected (Bor Ψ r) := by
   rw [bor_eq_pi]
   refine isPreconnected_univ_pi fun _ => isPreconnected_univ_pi fun a =>
@@ -55,6 +57,7 @@ theorem isPreconnected_bor (Ψ : Finset (E →+* ℂ)) (r : ℕ) : IsPreconnecte
   · exact isPreconnected_univ
 
 
+omit [NumberField E] [IsCMField E] in
 theorem continuous_rmul_pair (Ψ : Finset (E →+* ℂ)) (r : ℕ) :
     Continuous fun p : Frame Ψ r × Frame Ψ r => rmul p.1 p.2 := by
   refine continuous_pi fun τ => continuous_pi fun a => continuous_pi fun c => ?_

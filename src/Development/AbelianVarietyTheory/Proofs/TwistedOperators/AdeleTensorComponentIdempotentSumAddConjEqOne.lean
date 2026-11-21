@@ -36,6 +36,8 @@ theorem compFin_tensAt_ne {u v : HeightOneSpectrum (𝓞 D.host.F)} (h : u ≠ v
   | add y z hy hz => simp only [map_add (f := _), hy, hz, add_zero]
 
 
+set_option maxHeartbeats 1000000 in
+open Classical in
 theorem compFin_add_cA_eq_one : ∀ {D : D7} (Z : Finset (Pl D.host.E)) (e : AE D), IsIdemSum e Z → ∀ PP ∈ Z,
     compFin D.host.F D.host.E (PP.under (𝓞 D.host.F)) (e + cA D e) = 1 := by
   intro D Z e he PP hPP

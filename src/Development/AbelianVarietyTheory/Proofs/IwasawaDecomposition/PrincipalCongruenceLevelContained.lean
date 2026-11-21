@@ -189,6 +189,9 @@ theorem natCast_isUnit (F : Subfield E) {m : ℕ} (hm : 0 < m) : IsUnit (m : Fin
 end GlobalTheory.LatCongImage
 
 
+open GlobalTheory.LatCongImage in
+set_option maxHeartbeats 1000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem GlobalTheory.LatCongImage.finCong_mem_levN : ∀ (D : D7) (V : HSp D) (n : ℕ) (P : principalLevelFrame.RowPsi V n) (hF : D.host.F = maximalRealSubfield D.host.E), StdFrame hF P → ∀ N : ℕ, 0 < N → ∃ N' : ℕ, 0 < N' ∧ ∀ k ∈ GfC V, GlobalTheory.Member.FinCong V N' k → k ∈ principalLevelFrame.levN P N := by
   intro D V n P hF hstd N hN
   obtain ⟨⟨β, β', hββ', hβ'β, hmat⟩, -⟩ := hstd

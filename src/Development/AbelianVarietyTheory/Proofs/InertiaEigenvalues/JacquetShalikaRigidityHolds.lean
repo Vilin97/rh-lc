@@ -250,6 +250,7 @@ theorem unrOutside_of_twist {a : ℕ} {σ σ₀ : CG E a} {s : ℝ} (he : σ = �
 end GlobalTheory.JSW.Rigid
 
 
+open GlobalTheory.JSW.Rigid in
 theorem GlobalTheory.JSW.jacquetShalikaRigidity_holds : GlobalTheory.Published.JacquetShalikaRigidity := by
   intro E _ _ _ ι κ _ _ m m' π π' hm hm' hw
   classical

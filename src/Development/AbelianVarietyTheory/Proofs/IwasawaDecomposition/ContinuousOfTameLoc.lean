@@ -120,6 +120,7 @@ theorem continuous_of_tameLoc {v : HeightOneSpectrum (𝓞 L)} {θ : (v.adicComp
     simpa using hx
 
 
+open Classical in
 theorem exists_modelChar : ∀ (L : Type) [Field L] [NumberField L] (I : Type) [Fintype I] (φ : I → L →+* ℂ), (Function.Bijective fun i => InfinitePlace.mk (φ i)) → ∀ (n : I → ℤ) (S : Finset (HeightOneSpectrum (𝓞 L))) (θ : ∀ v : HeightOneSpectrum (𝓞 L), (v.adicCompletion L)ˣ →* ℂˣ), (∀ v ∈ S, TameLoc v (θ v)) → ∃ ψ : Ideles L →* ℂˣ, Continuous ψ ∧ (∀ x, ‖((ψ x : ℂˣ) : ℂ)‖ = 1) ∧ (∀ i (k : Lˣ), ((ψ (infIdele L (InfinitePlace.mk (φ i)) (atInf _ k)) : ℂˣ) : ℂ) = (φ i (k : L) / ((‖φ i (k : L)‖ : ℝ) : ℂ)) ^ n i) ∧ (∀ v ∈ S, ∀ x, ψ (localIdele L v x) = θ v x) ∧ (∀ v ∉ S, ∀ x, ψ (localIdele L v x) = 1) ∧ ∀ k : Lˣ, ψ (diagUnits L k) = ψ (infDiag k) * ∏ v ∈ S, θ v (atFin v k) := by
   intro L _ _ I _ φ hφ n S θ hθ
   choose e hec he using fun i => GlobalTheory.InfTypeLocal.exists_ext (φ i)

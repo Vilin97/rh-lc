@@ -177,6 +177,7 @@ end Self2
 end SelfLinear
 
 
+open Formalism.IncomingBounds ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ MaximalIdealCongruence RowTiePE0 RowTiePProj RowTiePLSmall SelfLinear in
 theorem noLin_self (hAdj : ALinAdjSt) (hPL : ProjLieSelfSt) {C : Type} [Field C] [CharZero C] {V : VF C}
     {O : Type} [CommRing O] [StarRing O] {dd : ℕ} (Y : FBChart C V O dd) {d : ℕ} [NeZero d] {I0 : Type} [Fintype I0]
     (p : SelfData Y d I0) (g : Fin 2) (a0 : ZMod d) (u0 : Fin dd → C) (hu0 : ∀ i, V.Ge 0 (u0 i))

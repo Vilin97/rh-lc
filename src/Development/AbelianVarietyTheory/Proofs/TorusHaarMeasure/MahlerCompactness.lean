@@ -231,6 +231,10 @@ theorem norm_herm_le {y : X.Ψ → Matrix (Fin r) (Fin r) ℂ} (hy : IntegralBas
     _ = _ := by simp
 
 
+open NumberField Module in
+open Matrix in
+open scoped ComplexConjugate in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} (X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r) in
 theorem _root_.GlobalTheory.FlagMahler.Qy_smul_le (y : X.Ψ → Matrix (Fin r) (Fin r) ℂ) (α : E) (v : Fin r → E) :
     _root_.ReciprocityTheory.ChartRestriction.G.FD.QuadraticLatticeForms.Qy X y (α • v) ≤ (∑ σ : X.Ψ, ‖σ.1 α‖ ^ 2) * _root_.ReciprocityTheory.ChartRestriction.G.FD.QuadraticLatticeForms.Qy X y v := by
   unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.QuadraticLatticeForms.Qy
@@ -490,6 +494,10 @@ private theorem norm_entry_le_of_gram_eq_diagonal_sgn (τ : X.Ψ) (W : Matrix (F
   rw [norm_mul, transpose_apply, conjTranspose_apply, norm_star]
 
 
+open NumberField Module in
+open Matrix in
+open scoped ComplexConjugate in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} (X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r) in
 theorem _root_.GlobalTheory.FlagMahler.mahler_compactness : _root_.ReciprocityTheory.ChartRestriction.G.FD.MahlerCompactnessCriterion (E := E) := by
   classical
   unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.MahlerCompactnessCriterion

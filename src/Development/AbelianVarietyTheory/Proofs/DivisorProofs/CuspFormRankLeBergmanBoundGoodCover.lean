@@ -53,6 +53,7 @@ open GlobalTheory.AllWt (ptN petE muOn muPart framesOn bergE bergOn modelWt mem_
 open scoped ENNReal
 
 
+set_option maxHeartbeats 1000000 in
 theorem rkC_le_of_bergLe : ∀ (D : D7) (T : Core D) (j : ℕ) (Y : Deep T j) (e : ℕ) (o : ℝ), Y.Good e o →
     ∀ (la : AllWt.Weight (T.Q.Dw j)) (Z : Comp Y.d.Xo₂ Y.d.c₂) (β : ℝ), 0 ≤ β →
     BergLe Z Y.U (fun _ => D.sp.W j) Y.dict la β → (Y.rkC la Z : ℝ) ≤ β := by

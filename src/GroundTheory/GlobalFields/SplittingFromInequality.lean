@@ -29,6 +29,7 @@ theorem IdeleGroup.infiniteProj_diagonal (w : InfinitePlace K) (a : Kˣ) :
   Units.ext (IdeleGroup.coe_infiniteProj_diagonal w a)
 
 
+variable (L) in
 theorem exists_diagonal_mul_mem_localNorms (S : Finset (HeightOneSpectrum (𝓞 K)))
     (x : IdeleGroup K) :
     ∃ a : Kˣ, (∀ v ∈ S, IdeleGroup.finiteProj v (IdeleGroup.diagonal K a * x) ∈

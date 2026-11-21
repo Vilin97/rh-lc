@@ -20,16 +20,19 @@ variable {nb : nA σ d.Y d.b → d.G} {uM : (Fin L.n → AE F E) → d.G} {nb' :
   {cM : (Fin L.n → AE F E) × AF F → d.G} {δ : E}
 
 
+variable (L) in
 def kom (uM : (Fin L.n → AE F E) → d.G) (nb' : nA σ L.Y L.b → G2 σ L.Y) (p : (Fin L.n → AE F E) × nA σ L.Y L.b) : d.G :=
   L.j (nb' p.2) * uM p.1 * (L.j (nb' p.2))⁻¹ * (uM p.1)⁻¹
 
 
+variable (L) in
 def tau (uM : (Fin L.n → AE F E) → d.G) (nb' : nA σ L.Y L.b → G2 σ L.Y) (δ : E) (p : (Fin L.n → AE F E) × nA σ L.Y L.b) :
     (Fin L.n → AE F E) × AF F :=
   (fun k => inFrame d.b (kom L uM nb' p) (Sum.inl L.i₀) (Sum.inr (L.em k)),
     ellA δ (inFrame d.b (kom L uM nb' p) (Sum.inl L.i₀) (Sum.inr L.i₀)))
 
 
+variable (L) in
 def Du (u : Fin L.n → AE F E) : Matrix (Fin d.n) (Fin d.n) (AE F E) := (uA L (-u))ᵀ.map (cA σ)
 
 theorem frame_uM (h : Hyp L nb uM nb' w₁ cM δ) (u : Fin L.n → AE F E) :

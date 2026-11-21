@@ -81,6 +81,7 @@ theorem intS_inCol (col : Fin 2) {f : PS C 1 dd} (hf : IntS V f) : IntS V (inCol
   exact intS_subst V (fun _ => MvPowerSeries.constantCoeff_X _) (fun _ => intS_X V _) hf
 
 
+omit [CharZero C] in
 theorem coeff_inCol (col : Fin 2) (f : PS C 1 dd) (μ : Fin 2 × Fin dd →₀ ℕ) (hμ : μ.degree ≤ 1) :
     MvPowerSeries.coeff μ (inCol col (un1 f)) = MvPowerSeries.coeff μ
       (MvPowerSeries.C (MvPowerSeries.constantCoeff f) +

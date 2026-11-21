@@ -228,6 +228,7 @@ theorem hermFlag_pairing_cramer_of_leadingCoeffs (F F' : FlagD H r) (Λ : Submod
   exact (congrFun hv b).symm
 
 
+open GlobalTheory.DegCnt.IdealPow in
 theorem cramer (F F' : FlagD H r) (Λ : Submodule (𝓞 K) V)
     (hint : ∀ x ∈ Λ, ∀ y ∈ Λ, H.B x y ∈ (1 : Submodule (𝓞 K) K)) {𝔡 : Ideal (𝓞 K)} (h : 𝔡 ≠ ⊥)
     (hs : ∀ x ∈ 𝔡, ∃ y ∈ 𝔡, (y : K) = star (x : K))

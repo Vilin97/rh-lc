@@ -208,6 +208,7 @@ variable {S S' : Scheme.{0}} {f : S' ⟶ S} {G : Over S'} {H B : Over S} [GrpObj
   [IsCommMonObj H] [GrpObj B] [IsCommMonObj B]
 
 
+omit [GrpObj G] [IsCommMonObj G] [IsCommMonObj H] in
 theorem cubV_toBase {L : RigLB H} (c : CubicalStr H L) (F : (Over.map f).obj G ⟶ H)
     (hF : (show G.left ⟶ H.left from F.left) ≫ H.hom = G.hom ≫ f) {T : Over S'} (z : T.left) (J)
     (x y u : T ⟶ G) :
@@ -272,12 +273,14 @@ theorem sym_of_cp {S : Scheme.{0}} {B : Over S} [GrpObj B] [IsCommMonObj B] (M :
     exacts [rfl, (Category.comp_id _).symm]) M.sym M.sym_gen⟩
 
 
+omit [IsDomain R] in
 theorem isLocalRing_quot (hI : I ≠ ⊤) (e : ℕ) : IsLocalRing (R ⧸ I ^ (e + 1)) := by
   have : Nontrivial (R ⧸ I ^ (e + 1)) := Ideal.Quotient.nontrivial_iff.2 fun h =>
     hI (top_le_iff.1 (h ▸ Ideal.pow_le_self (Nat.succ_ne_zero e)))
   exact IsLocalRing.of_surjective' _ Ideal.Quotient.mk_surjective
 
 
+omit [IsDomain R] [IsLocalRing R] [IsCommMonObj G] in
 theorem isGrpPullback_thickMap (e : ℕ) :
     IsGrpPullback (thickObj R I e G) (thickObj R I (e + 1) G) (thickTrans R I e) (thickMap R I e G) :=
   (isGrpPullback_pullback G (thick R I (e + 1))).cancel
@@ -342,6 +345,7 @@ section Principal
 variable {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] {I : Ideal R}
 
 
+omit [IsDomain R] in
 theorem isAdicComplete_quot [IsNoetherianRing R] (h : IsAdicComplete (IsLocalRing.maximalIdeal R) R) (J : Ideal R)
     [IsLocalRing (R ⧸ J)] : IsAdicComplete (IsLocalRing.maximalIdeal (R ⧸ J)) (R ⧸ J) := by
   have := GlobalTheory.isAdicComplete_map_of_finite (IsLocalRing.maximalIdeal R) (R ⧸ J)
@@ -349,6 +353,7 @@ theorem isAdicComplete_quot [IsNoetherianRing R] (h : IsAdicComplete (IsLocalRin
     IsLocalRing.map_maximalIdeal_of_surjective _ Ideal.Quotient.mk_surjective] at this
 
 
+omit [IsDomain R] in
 theorem kTriv_closedFibre {J : Ideal R} (hJ : J ≠ ⊤) {B : Over (Sp R)} [GrpObj B] {B₀ : Over (Sp (R ⧸ J))} [GrpObj B₀]
     {b : B₀.left ⟶ B.left} (hb : IsGrpPullback B₀ B (spMap (Ideal.Quotient.mk J)) b) {M : LB B.left} {M₀ : LB B₀.left}
     (hM : M.IsLB) (hM₀ : M₀.IsLB) {v : LB.Iso M₀ (M.pull b)} (hv : v.IsGen) (hK : KTriv B₀ M₀) :

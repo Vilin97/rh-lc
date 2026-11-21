@@ -167,6 +167,7 @@ end GlobalTheory.CovDom.FrameCrd
 namespace GlobalTheory.CovDom
 
 
+open GlobalTheory.CovDom.FrameCrd in
 theorem frame_dual_lat : ∀ (D : D7) (X : HidaSetting D) (u : D.what₂.Word),
     GlobalTheory.SgAlg.IsFrame (D.sp.cm.sig : D.host.E →+* D.host.E) (Jc X) (algebraMap D.host.F D.host.E (Tc u)) (Pc X u) ∧
     GlobalTheory.SgAlg.IsDual (D.sp.cm.sig : D.host.E →+* D.host.E) (Jc X) (Pc X u) (fc X) ∧

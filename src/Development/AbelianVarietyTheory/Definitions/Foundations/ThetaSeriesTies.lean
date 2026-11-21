@@ -87,6 +87,7 @@ def IsKernel (ξ : Formalism.L2.Host.HChar D.host.E) (Q : Finset (Pl D.host.E)) 
       R.Pg Q ξR (R.vacP i) φ
 
 
+open Classical in
 def placesOver (t : T0) (p : ℕ) : Finset (Pl D.host.E) := (R.Q t).filter fun PP => (p : 𝓞 D.host.E) ∈ PP.asIdeal
 
 def thetaBase (U : Subgroup G) (ψ : U →* D.what₂.LLˣ) (ph : ℂ) (v : HeightOneSpectrum (𝓞 D.what₂.LL)) (p : ℕ) :
@@ -99,9 +100,11 @@ def thetaTuple (U : Subgroup G) (ψ : U →* D.what₂.LLˣ) (ph : ℂ) (t : T0)
   Submodule.span (𝓞 D.what₂.LL) (seriesSet R i U ψ ph (R.ωP i t) (R.vP i t))
 
 
+variable (A) in
 abbrev srcDim (t : T0) (U : Subgroup G) (ψ : U →* D.what₂.LLˣ) : ℕ := (A.MtCSD i t).lvlDim (A.leftGroupActionLift i t) U ψ
 
 
+variable (A) in
 def srcForm (t : T0) (U : Subgroup G) (ψ : U →* D.what₂.LLˣ) :
     (Fin (srcDim A i t U ψ) → D.what₂.LL) →ₗ[D.what₂.LL] (A.MtCSD i t).Forms :=
   ((A.MtCSD i t).basis.equivFun.symm : (Fin (A.MtCSD i t).dim → D.what₂.LL) →ₗ[D.what₂.LL] (A.MtCSD i t).Forms) ∘ₗ

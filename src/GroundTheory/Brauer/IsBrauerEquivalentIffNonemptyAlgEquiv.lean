@@ -19,10 +19,13 @@ variable {K : Type u} [Field K] {A : Type v} [Ring A] [Algebra K A]
   [Algebra.IsCentral K A] [IsSimpleRing A] [FiniteDimensional K A]
 
 
+omit [FiniteDimensional K A] in
+variable (K A) in
 theorem mulLeftRight_injective : Function.Injective (AlgHom.mulLeftRight K A) :=
   RingHom.injective (AlgHom.mulLeftRight K A).toRingHom
 
 
+variable (K A) in
 theorem mulLeftRight_bijective : Function.Bijective (AlgHom.mulLeftRight K A) := by
   refine ⟨mulLeftRight_injective, ?_⟩
   have h := LinearMap.injective_iff_surjective_of_finrank_eq_finrank

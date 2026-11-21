@@ -90,6 +90,7 @@ end Eval
 end SemilocRankFrac
 
 
+open SemilocRankFrac in
 theorem SemilocRankFrac.proof (hR : RankFracDegree.Statement) (hF : SemilocFinite.Statement)
     (hC : SemilocChartRatio.Statement) : SemilocRankFrac.Statement := by
   intro K _ ι _ K' _ ι' _ κ v P' n G s α W i' hv hP' _ hQ hs hsQ hW hi'

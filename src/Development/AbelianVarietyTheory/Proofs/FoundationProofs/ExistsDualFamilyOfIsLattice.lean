@@ -281,6 +281,7 @@ end DualFrame
 variable {σ J} {L L' : Submodule (𝓞 E) (Fin n → E)}
 
 
+omit [NumberField F] in
 theorem isLattice_dualGlob (hJ : J.det ≠ 0) (hL : Submodule.IsLattice E L) :
     Submodule.IsLattice E (dualGlob σ J L) := by
   classical

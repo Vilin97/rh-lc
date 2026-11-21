@@ -252,6 +252,7 @@ end GlobalTheory.CompanionTheory.Ar.GeoModel.Seg
 namespace GlobalTheory.CompanionTheory.Ar.GeoModel
 
 
+open Seg in
 theorem exists_isSncModel_of_sncPts : ∀ (Ω : Type) [Field Ω] [CharZero Ω] (X : Scheme.{0}) (ξ : Sp Ω ⟶ X) (K : Type) [Fintype K] (J : K → Type) [∀ k, Fintype (J k)] (y : (Σ k, J k) → Ω) (e : ℕ) (B : Set (Cpt ξ)), CoordTie ℤ ξ (fun c' : (k : K) → J k => ∏ k, y ⟨k, c' k⟩) → (∀ p ∈ B, Char0 ξ p) → SncPts ξ e B → ∃ bd : Ideal (MRing J), Cmp.IsSncModel y e bd ∧ ∀ (z : Spec (CommRingCat.of ℂ) ⟶ X) w, CoordsAt ξ y z w → (w ∈ mcPts bd ↔ ∃ h : genPt ξ ⤳ centre z, (⟨centre z, h⟩ : Cpt ξ) ∈ B) := by
   intro Ω _ _ X ξ K _ J _ y e B hT hB hP
   obtain ⟨c₀, -⟩ := hT.cover ⟨genPt ξ, specializes_rfl⟩

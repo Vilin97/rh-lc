@@ -102,6 +102,7 @@ theorem trans_eq_of_heq' (X : Stages) {px : PreX X.B.toPre} {Pg Pg' : Finset (Pl
   rfl
 
 
+set_option maxHeartbeats 4000000 in
 theorem datExS_evLg (h1 : GlobalTheory.Published.DiscreteSeriesCover) (h2 : GlobalTheory.Published.HarishChandraModules) (h3 : GlobalTheory.Published.CuspRapidDecay)
     (h4 : GlobalTheory.Published.CasselmanWallach) (h5 : GlobalTheory.Published.WeilRepresentationUnitaryPair) (h6 : GlobalTheory.Published.DiscreteSeriesExists)
     (h7 : GlobalTheory.Published.HarishChandraFinite) :

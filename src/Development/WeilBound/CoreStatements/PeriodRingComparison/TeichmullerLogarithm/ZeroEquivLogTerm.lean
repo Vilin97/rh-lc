@@ -38,6 +38,7 @@ theorem zeroEquiv_logTerm (u : Reformulated.AutPerF.Ainf l (NC l))
   exact gamma_eq_dpow l (n + 1) (u - 1)
 
 
+set_option maxHeartbeats 1000000 in
 theorem acrisNHom_log (u : Reformulated.AutPerF.Ainf l (NC l))
     (hu : Reformulated.AutPerF.Ainf.theta l (NC l) u = 1)
     (hx : u - 1 ∈ RingHom.ker (fontaineTheta (normInteger ℂ_[l]) l)) :

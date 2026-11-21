@@ -160,6 +160,7 @@ lemma smooth_right {ε : Fin n → Bool} {k : Matrix (Fin n) (Fin n) ℂ} (hk : 
     hF.comp hc.contDiffOn (fun _ hx => hx), fun g hg hgJ => hfF (g * k) hg (inUJ_mul_flag_measures' hgJ hk)⟩
 
 
+open GlobalTheory.CapelliCentral in
 def rightEnd {ε : Fin n → Bool} {k : Matrix (Fin n) (Fin n) ℂ} (hk : inUJ ε k) :
     Module.End ℂ (smoothSpace ε ℂ) where
   toFun F := mk (fun x => F.1 (x * k)) (smooth_right hk F.2.1)

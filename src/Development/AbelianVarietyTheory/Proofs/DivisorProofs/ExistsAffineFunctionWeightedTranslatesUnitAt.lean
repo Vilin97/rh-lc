@@ -62,6 +62,7 @@ theorem residue_liftStalk_eq_iff (σ : X.functionField →+* X.functionField) (h
 end GlobalTheory.CharIndepAt
 
 
+open GlobalTheory.CharIndepAt in
 theorem GlobalTheory.CharIndepAt.main : ∀ (X : Scheme.{0}) [IsIntegral X] (U : X.Opens), IsAffineOpen U → ∀ (x : X) (hx : x ∈ U)
     (ι : Type) [Fintype ι] (σ : ι → X.functionField →+* X.functionField) (u : ι → X.functionField),
     (∀ i f, RegAt x f → RegAt x (σ i f)) → (∀ i f, ZeroAt x f → ZeroAt x (σ i f)) →

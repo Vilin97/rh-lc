@@ -70,6 +70,7 @@ theorem le_of_add_one_le' {a : WithBot ℕ∞} {n : ℕ} (h : a + 1 ≤ ((n + 1 
 end TwoBlockModuleFinite
 
 
+open TwoBlockModuleFinite in
 theorem TwoBlockModuleFinite.proof : TwoBlockModuleFinite.Statement := by
   classical
   have hA := CoordArithOfFnField.proof

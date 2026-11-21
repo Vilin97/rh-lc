@@ -20,6 +20,7 @@ variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) {u u' : D.what₂.Word}
   {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
 
+variable (u') (F0) in
 def GenXiRev : Prop :=
   ∀ (Λ : Submodule (𝓞 D.host.E) (VS D).V) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (p : PlF D),
     IsRowLat D F0 Λ → AdmWit Λ (gS D) (lf D F0) F' 1 → IsLift Λ F' →

@@ -88,6 +88,7 @@ theorem pow_surj_abelian (k : Type) [Field k] [IsAlgClosed k] (B : Over (Sp k)) 
 end GlobalTheory.SS.SemiDivisible
 
 
+open GlobalTheory.SS.SemiDivisible in
 theorem GlobalTheory.SS.torusExtension_points_divisible : ∀ (k : Type) [Field k] [IsAlgClosed k] (G : Over (Sp k)) [GrpObj G] [IsCommMonObj G], Nonempty (TorusExtension G) → ∀ (n : ℕ), 1 ≤ n → ∀ y : (𝟙_ (Over (Sp k)) ⟶ G), ∃ x : (𝟙_ (Over (Sp k)) ⟶ G), x ^ n = y := by
   rintro k _ _ G _ _ ⟨E⟩ n hn
   letI := E.addCommGroup

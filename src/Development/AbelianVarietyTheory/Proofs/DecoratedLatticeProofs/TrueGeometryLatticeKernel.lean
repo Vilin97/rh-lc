@@ -83,6 +83,7 @@ theorem embX_mem {s κ τ : ℕ} (S : SymData k s κ) (g : GL (XIx (Fin κ) (Fin
   exact (h2 g hg).1
 
 
+set_option maxHeartbeats 1000000 in
 theorem colGroup_of_red {D : D7} (q : GlobalTheory.FinPl.SplitPt D k) {PP : Formalism.L2.DIV.Pl D.host.E} (hq : Formalism.L2.NTheta.IsIdemAt q.e PP)
     (V : HSp D) {n κ τ : ℕ} (hr : V.rank = n) (hn : n = κ) (F : Frame k V.rank (XIx (Fin κ) (Fin τ) 0)) (hF : IsStdFr xPos F)
     {x : GA D V} {y : GL (Fin n) (GlobalTheory.AdForm.EF D)} (hy : GlobalTheory.AdForm.finM V hr x = y.1)

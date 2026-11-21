@@ -11,6 +11,7 @@ open Formalism.REAL Finset
 namespace GlobalTheory.CapelliNegT
 
 
+open Finset in
 theorem _root_.GlobalTheory.CapelliNegT.glRel_negT_and_qdet :
     ∀ (A : Type) [Ring A] [Algebra ℂ A] (n : ℕ) (E : Fin n → Fin n → A), _root_.Formalism.REAL.GlRel E →
       _root_.Formalism.REAL.GlRel (fun a b => -E b a) ∧

@@ -70,6 +70,7 @@ private lemma le_mul_sum_sum_of_ofReal_le_ennreal_sum (s s' : Finset ℕ) (f P :
 
 end PairsPf
 
+open PairsPf in
 theorem pair_count_bound_of_siegel_mass : GlobalTheory.Mass.MaxMass → Formalism.HermitianLatticesTheory.SiegelMassRatio → PairsP := by
   intro hMM hSR
   unfold PairsP

@@ -19,6 +19,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele (finiteC
 variable {K E : Type} [Field K] [NumberField K] [Field E] [NumberField E] [Algebra K E]
 
 
+omit [NumberField K] in
 theorem valued_algebraMap {R : Type} [CommRing R] [IsDedekindDomain R] [Algebra R K] [IsFractionRing R K]
     (v : HeightOneSpectrum R) (k : K) :
     Valued.v (algebraMap K (v.adicCompletion K) k) = v.valuation K k :=
@@ -89,6 +90,7 @@ theorem factor_upIdele (t : (Af K)ˣ) (w : HeightOneSpectrum (𝓞 E)) :
   ring
 
 
+open Classical in
 theorem sum_fiber (v : HeightOneSpectrum (𝓞 K)) (s : Finset (HeightOneSpectrum (𝓞 E)))
     (hs : ∀ w : HeightOneSpectrum (𝓞 E), w.under (𝓞 K) = v → w ∈ s) :
     ∑ w ∈ s with w.under (𝓞 K) = v, w.asIdeal.ramificationIdx (𝓞 K) * w.asIdeal.inertiaDeg (𝓞 K) =

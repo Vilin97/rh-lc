@@ -87,6 +87,7 @@ def adlOf {C : CxSt F} (hm : Mets Y C) (w : Sym E →₀ ℤ) : Adl C Y.Y where
   lg := lgOf Y w
 
 
+variable (Dw) in
 def rootSym (a : ℕ → Bool) (R : Option ℝ) (τ : E →+* ℂ) (i : ℕ) : Sym E →₀ ℤ :=
   if i < Dw.p then Finsupp.single (a, R, .inl (τ, i)) 1
   else Finsupp.single (a, R, .inl (conjEmb τ, Dw.p + Dw.q - 1 - i)) (-1)
@@ -96,6 +97,7 @@ def wholeSym (a : ℕ → Bool) (R : Option ℝ) {g : ℕ} : Fin g ⊕ Fin g →
   | .inr k => Finsupp.single (a, R, .inr (Fin.rev k)) (-1)
 
 
+variable (Dw) in
 def detSym (a : ℕ → Bool) (R : Option ℝ) (τ : E →+* ℂ) : Sym E →₀ ℤ :=
   ∑ i ∈ Finset.range (Dw.p + Dw.q), rootSym Dw a R τ i
 

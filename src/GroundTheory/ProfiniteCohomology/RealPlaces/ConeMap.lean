@@ -136,6 +136,7 @@ variable {A B C : Rep.{u} k G} [IsDiscreteRep A] [IsDiscreteRep B] [IsDiscreteRe
   {br : ∀ w, Rep.res (ψ w).toMonoidHom B ⟶ Bᵣ w} {cr : ∀ w, Rep.res (ψ w).toMonoidHom C ⟶ Cᵣ w}
 
 
+omit [IsTopologicalGroup G] in
 theorem normCochains_naturality (gᵣ : ∀ w, Aᵣ w ⟶ Bᵣ w) :
     normCochains Aᵣ ≫ piMap (fun w => cochainsMap (gᵣ w)) =
       degZeroMap (piRepHom gᵣ) ≫ normCochains Bᵣ := by
@@ -162,6 +163,7 @@ noncomputable abbrev tateLocalMap : tateLocalComplex Aᵥ Aᵣ ⟶ tateLocalComp
   prodMapCx (piMap fun v => cochainsMap (gᵥ v)) (piMap fun w => cochainsMap (gᵣ w))
 
 
+include hg hgr in
 theorem tateCompactRes_naturality :
     tateCompactRes φ ψ A Aᵥ a Aᵣ ar ≫ tateLocalMap gᵥ gᵣ =
       tateGlobalMap g gᵣ ≫ tateCompactRes φ ψ B Bᵥ b Bᵣ br := by
@@ -360,6 +362,7 @@ theorem tateCompactδ_tateCompactCohomologyMap₁₂ (n : ℕ) :
   exact h
 
 
+include hS hSᵥ hSᵣ in
 theorem tateCompactCohomology_exact₂ (n : ℕ) :
     (ShortComplex.mk _ _ (tateCompactCohomologyMap_f_g φ ψ S Sᵥ s Sᵣ sr n)).Exact := by
   have h := (tateCompactCochains_shortExact φ ψ s sr hS hSᵥ hSᵣ).homology_exact₂ n

@@ -224,6 +224,7 @@ theorem exists_mult_of_rapid (hG : GlobalTheory.IndefiniteRowSideFullHecke.KType
 end Factor
 
 
+set_option maxHeartbeats 1000000 in
 theorem ioPair_of_rapid (D : D7) (X : ProvA) (hX : ChosenSeries X) (h3 : Formalism.MainNotions.SchurIrreducible.ArchimedeanRallisUpDownLine X) (hC : LiftCusp D)
     (hL : GlobalTheory.IndefiniteRowSideFullHecke.RapidDecayLift.LiftProps D) (hG : GlobalTheory.IndefiniteRowSideFullHecke.KTypeExtension.GKExtension D) (hF : GlobalTheory.IndefiniteRowSideFullHecke.VacuumFockVectors.VacuumFock D)
     (hV : VacChar D) (hB : ModelsAreCoverSeries D) (hdec : GlobalTheory.Published.CuspRapidDecay)

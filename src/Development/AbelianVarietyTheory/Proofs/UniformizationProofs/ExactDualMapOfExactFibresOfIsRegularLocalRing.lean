@@ -28,6 +28,7 @@ theorem extZero_of_isRegularLocalRing (R : Type) [CommRing R] [IsRegularLocalRin
 end DualCokernel
 
 
+open DualCokernel in
 theorem exact_dualMap_of_exact_fibres_of_isRegularLocalRing :
     ∀ (A : Type) [CommRing A] [IsRegularLocalRing A] (g : ℕ), ringKrullDim A = g →
       ∀ C : CochainComplex (ModuleCat.{0} A) ℕ,

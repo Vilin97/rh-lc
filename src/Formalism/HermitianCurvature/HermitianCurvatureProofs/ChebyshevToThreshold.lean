@@ -73,6 +73,7 @@ end Formalism.FourierDecayAlt.P.Jx10
 namespace Formalism.FourierDecayAlt.P
 
 
+open Classical in
 theorem local_kernel_psd : Formalism.FourierDecayAlt.J.LocalKernelPSD := by
   intro hag hgram K _ _ _ R ψ hLD α η Y
   rw [(hag α Y _).1, ← (hag α Y _).2]

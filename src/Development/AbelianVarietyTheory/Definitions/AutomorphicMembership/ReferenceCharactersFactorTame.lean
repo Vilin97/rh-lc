@@ -107,6 +107,7 @@ def detIdl (SB : Finset (HeightOneSpectrum (𝓞 E))) (N : Submodule (𝓞 E) (S
       if w ∈ SB ∨ conjPrime₂ w ∈ SB then 1 else localIdele E w (atFin w (unif w)) ^ (ordSub w (detSub N)).toNat
 
 
+omit [StarRing E] in
 theorem finite_ordSub {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice E N) :
     {w | ordSub w (detSub N) ≠ 0}.Finite :=
   (ordSub_detSub_lattice E n N hN.fg hN.span_eq_top).1
@@ -286,6 +287,7 @@ theorem IsPtOf.extTo {SQ : Finset (HeightOneSpectrum (𝓞 E))} (hQ : SQ ⊆ Q) 
     rw [h.fr ⟨P.1, hQ P.2⟩, extTo_fr, ptFr_of_mem p (Finset.disjoint_right.1 hd P.2) (hQ P.2)]⟩
 
 
+variable (hc) in
 theorem isPtOf_base [NeZero n] : IsPtOf hc 1 (DecoF.base E n ST SG Q) := by
   have h1 : ∀ (x : Sp E n) i, pullV (1 : GL (Fin n) (AfE F E)) x i = Formalism.UG.inclE (F := F) (FiniteAdeleRing (𝓞 F) F) (x i) :=
     fun x i => by simp [pullV]
@@ -345,6 +347,7 @@ theorem sigR_mem_rInt {r : AfE F E} (hr : r ∈ RInt F E) : Formalism.UG.sigR hc
   exact h hr
 
 
+omit [StarRing E] in
 theorem exists_approx_small (z : AfE F E) (T : Finset (HeightOneSpectrum (𝓞 E))) {γ : WithZero (Multiplicative ℤ)} (hγ : γ ≠ 0) :
     ∃ (y : E) (N : ℕ) (r : AfE F E), r ∈ RInt F E ∧ (∀ P ∈ T, Valued.v (N : P.adicCompletion E) < γ) ∧
       z = Formalism.UG.inclE (F := F) (FiniteAdeleRing (𝓞 F) F) y + N * r := by
@@ -358,6 +361,7 @@ theorem exists_approx_small (z : AfE F E) (T : Finset (HeightOneSpectrum (𝓞 E
   rfl
 
 
+omit [StarRing E] in
 theorem valued_nat_mul_lt {P : HeightOneSpectrum (𝓞 E)} {N : ℕ} {r : AfE F E} (hr : r ∈ RInt F E)
     {γ : WithZero (Multiplicative ℤ)} (h : Valued.v (N : P.adicCompletion E) < γ) : Valued.v (adAt F P (N * r)) < γ := by
   rw [map_mul, map_natCast, map_mul]
@@ -390,6 +394,7 @@ theorem valued_sigR (P : HeightOneSpectrum (𝓞 E)) (z : AfE F E) :
   rwa [DetClass.sigR_sigR (fun x => star_star x), CharValCompare.conjP_conjP] at h
 
 
+include hc in
 theorem exists_real_approx {P : HeightOneSpectrum (𝓞 E)} (hP : conjPrime₂ P ≠ P) (u : (P.adicCompletion E)ˣ) :
     ∃ k : Fˣ, Valued.v ((u : P.adicCompletion E) - algebraMap E _ (algebraMap F E k)) < Valued.v (u : P.adicCompletion E) := by
   classical
@@ -657,6 +662,7 @@ theorem rhoAt'_eq_hecke {ξ : HChar H.E} (h : KDq H SQ ≤ (ξ.1.comp (finPartI 
   rfl
 
 
+variable (H) in
 def toDtQ {SQ : Finset (HeightOneSpectrum (𝓞 H.E))} (h : Q ⊆ SQ) : DtQ H SQ →* DtQ H Q :=
   QuotientGroup.map (KDq H SQ) (KDq H Q) (MonoidHom.id _) (KDq_anti H h)
 

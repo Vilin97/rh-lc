@@ -161,6 +161,7 @@ theorem reads_std (hI : GlobalTheory.NormSum.Inp D) {δ t0 : ℂ} {Q : ℕ} (P :
 variable {T : Type} {L : LevCh D T} {sc : GlobalTheory.ChiGrid.Consts}
 
 
+open GlobalTheory.FunObj.SqNum GlobalTheory.FunObj.StdDatum GlobalTheory.Mem.Col2.SplitChar in
 theorem killsCong {μ₀ : T} (hL : L.Is μ₀) (G : GlobalTheory.ChiGrid.GridData L sc) (t : T) (i j : Fin D.R.m) :
     KillsCong (G.nu t i (j + 1)) (GlobalTheory.SqTop.modT G t) := by
   intro x u hxu hu hm

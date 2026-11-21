@@ -96,9 +96,11 @@ variable {y : (TF (R := R) F).left} {J : ((TF (R := R) F).left ⟶ D.P.A.left) �
   {J' : ((TF (R := R) F).left ⟶ D'.P.A.left) → D'.P.L.ι}
 
 
+variable (y J J') in
 def omP (x : TF (R := R) F ⟶ D'.P.A) : ((TF (R := R) F).left.presheaf.stalk y)ˣ := om pD.w y J J' x.left
 
 
+variable (y J J') in
 def omL (x b : TF (R := R) F ⟶ D'.P.A) : ((TF (R := R) F).left.presheaf.stalk y)ˣ :=
   (omP pD y J J' (x * b))⁻¹ * omP pD y J J' x * omP pD y J J' b * (omP pD y J J' 1)⁻¹
 

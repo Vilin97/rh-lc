@@ -47,6 +47,7 @@ theorem ptHom_grpObj_inv {A : Type} [CommRing A] (ρ : R →+* A) (P : Fin 3 →
   (congrArg (_ ≫ ·) (inv_left W)).trans (ptHom_negHom W ρ P hP)
 
 
+omit [W.IsElliptic] in
 theorem exists_grpObj_isAddLawHom (hΔ : IsUnit W.Δ) :
     ∃ _ : GrpObj (schemeOver W), IsCommMonObj (schemeOver W) ∧ η[schemeOver W].left = zero W ∧
       IsAddLawHom W μ[schemeOver W] ∧

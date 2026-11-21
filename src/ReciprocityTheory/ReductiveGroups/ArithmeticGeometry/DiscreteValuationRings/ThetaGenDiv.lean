@@ -71,6 +71,7 @@ def expR (U : UnifPre I D A G) (e : ℕ) (p : (PUnit.{1} → D.toPre.P.L.ι) × 
       (res (U.expWeight_le_chart_weight e p j₁ jf jt α.2) (((U.gt e).t α.1).s (jt α.1))).val
 
 
+set_option maxHeartbeats 1000000 in
 theorem expandsAt_of_div (U : UnifPre I D A G) [Flat G.hom] {ϖ : R} (hϖ : ϖ ≠ 0) (hI : I = Ideal.span {ϖ})
     (σ τ : H0 U.LG.L 1) (hστ : ∀ j, σ.f j = toW G.hom _ ϖ * τ.f j)
     (f g : ∀ α, D.toPre.SecB 1 α) (hfg : ∀ α j, (f α).f j = toW D.toPre.P.A.hom _ ϖ * (g α).f j)

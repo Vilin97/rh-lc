@@ -59,6 +59,7 @@ section IsoOfBijective
 variable {k Γ : Type u} [CommRing k] [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ]
 
 
+omit [TopologicalSpace Γ] [IsTopologicalGroup Γ] in
 def invOfBijective {A B : Rep.{u} k Γ} (f : A ⟶ B) (hf : Function.Bijective f.hom) : B ⟶ A :=
   Rep.ofHom ⟨(LinearEquiv.ofBijective f.hom.toLinearMap hf).symm.toLinearMap, fun g => LinearMap.ext fun b => by
     set e := LinearEquiv.ofBijective f.hom.toLinearMap hf
@@ -156,6 +157,7 @@ theorem gsRootsLocalMor_hom_apply (v : S) (ζ : Additive (rootsOfUnity n (maxUnr
   rfl
 
 
+set_option maxHeartbeats 1600000 in
 theorem bijective_gsRootsLocalMor [NeZero n] (hμ : ∀ ζ : ℚ̄, ζ ^ n = 1 → ζ ∈ K.1) (v : S) :
     Function.Bijective (gsRootsLocalMor S ιs n v).hom := by
   obtain ⟨z, hz⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot ℚ̄ n

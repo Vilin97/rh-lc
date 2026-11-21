@@ -58,6 +58,7 @@ section Indep
 variable [StarRing K]
 
 
+omit [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 theorem norm_realize_sq {ι : Type} [Fintype ι] [DecidableEq ι] (b : Basis ι K V)
     (X : InfinitePlace K → Matrix ι ι ℂ) (x : V) :
     ‖Formalism.HermitianLatticesTheory.realize b X x‖ ^ 2 = ∑ v, Formalism.HermitianLatticesTheory.normAt b X v x ^ 2 := by
@@ -69,6 +70,7 @@ theorem norm_realize_sq {ι : Type} [Fintype ι] [DecidableEq ι] (b : Basis ι 
   simp [Formalism.HermitianLatticesTheory.realize, Formalism.HermitianLatticesTheory.realizeRaw, sq]
 
 
+omit [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 theorem IsGram.norm_realize {ι κ : Type} [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ] {b : Basis ι K V}
     {X : InfinitePlace K → Matrix ι ι ℂ} {b' : Basis κ K V} {X' : InfinitePlace K → Matrix κ κ ℂ}
     {N : (K →+* ℂ) → V → ℝ} (h : IsGram b X N) (h' : IsGram b' X' N) (x : V) :
@@ -95,6 +97,7 @@ theorem IsGram.rk_deg {ι κ : Type} [Fintype ι] [DecidableEq ι] [Fintype κ] 
     (fun m => h.norm_realize h' m.1)]
 
 
+omit [NumberField K] [StarRing K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 theorem IsGram.hasGram {ι : Type} [Fintype ι] [DecidableEq ι] {b : Basis ι K V} {X : InfinitePlace K → Matrix ι ι ℂ}
     {N : (K →+* ℂ) → V → ℝ} (h : IsGram b X N) : HasGram N := by
   let e := Fintype.equivFin ι
@@ -287,6 +290,7 @@ theorem exOf_weightOf (a : (E →+* ℂ) × ℕ → ℤ) (m : ℤ) : exOf Dw (we
 variable (Xo : Moduli Dw l) (c : Coeff l)
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def secZ (e : Ix Dw → ℤ) : Submodule c.F (Rul Xo c) where
   carrier := {f | IsNatural (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) f ∧
     ∀ (p : TRing c.F) (t : Ix Dw → (p.R)ˣ) (y y' : FrPt Xo c p.R), FrBor t y y' →
@@ -309,6 +313,7 @@ theorem mem_secZ {e : Ix Dw → ℤ} {f : Rul Xo c} : f ∈ secZ Xo c e ↔
 theorem mem_secZ_exZ {G : WTZ E} {f : Rul Xo c} : f ∈ secZ Xo c (exZ Dw G) ↔ GlobalTheory.IndefiniteRowSideFullHecke.ZeroWeightSections.IsSecZ G f := Iff.rfl
 
 
+variable (Xo c) in
 theorem secZ_nat (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ) : secZ Xo c (fun i => (ex Dw a n i : ℤ)) = sec Xo c a n := by
   ext f
   rw [← exZ_wtZ, mem_secZ_exZ, GlobalTheory.IndefiniteRowSideFullHecke.ZeroWeightSections.isSecZ_wtZ]
@@ -324,6 +329,7 @@ theorem mul_mem_secZ {e e' : Ix Dw → ℤ} {f g : Rul Xo c} (hf : f ∈ secZ Xo
     ring
 
 
+variable (Xo c) in
 theorem secZ_mul_le (e e' : Ix Dw → ℤ) : secZ Xo c e * secZ Xo c e' ≤ secZ Xo c (e + e') :=
   Submodule.mul_le.2 fun _ hf _ hg => mul_mem_secZ hf hg
 

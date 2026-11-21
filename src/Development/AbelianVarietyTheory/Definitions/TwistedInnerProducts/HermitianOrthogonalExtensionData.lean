@@ -162,6 +162,7 @@ theorem princGL_mono (β : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) {I I' :
 end Princ
 
 
+variable (D) in
 structure Node where
 
   V : HSp D

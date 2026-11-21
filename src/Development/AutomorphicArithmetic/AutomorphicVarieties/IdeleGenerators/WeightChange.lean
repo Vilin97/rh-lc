@@ -53,6 +53,7 @@ def HolMul : Prop :=
       ∀ 𝔪, 𝔪 ≠ ⊥ → ‖ι.symm (a' 𝔪 - a 𝔪)‖ < 1
 
 
+open Classical in
 def HolB : Prop :=
   ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (k : ℕ) (c : Pl F → ℕ) (ω : HChar F) (φ : TR.Sm F 2) c₀ a (w : Pl F),
     IsHol k c ω φ → HasExp φ.1 k c₀ a → ∃ (ψ : TR.Sm F 2) (u : (Af F)ˣ), IsHol k (Function.update c w (c w + 1)) ω ψ ∧

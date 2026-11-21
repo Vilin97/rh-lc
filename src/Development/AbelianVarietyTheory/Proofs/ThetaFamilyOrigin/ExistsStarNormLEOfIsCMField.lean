@@ -208,6 +208,7 @@ theorem trace_conj_mul_pos [IsCMField E] (x : E) (hx : x ≠ 0) :
 end StarNormBound
 
 
+open StarNormBound in
 theorem exists_starNormLE_of_isCMField : ∀ (E : Type) [Field E] [NumberField E] [NumberField.IsCMField E]
     [StarRing (NumberField.RingOfIntegers E)],
     (∀ a : NumberField.RingOfIntegers E, ((star a : NumberField.RingOfIntegers E) : E) =

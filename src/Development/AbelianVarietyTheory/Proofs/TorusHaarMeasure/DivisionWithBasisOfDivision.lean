@@ -211,6 +211,11 @@ private lemma sum_mul_norm_unitVec_sq_eq (c : _root_.ReciprocityTheory.ChartRest
     exact absurd (Finset.mem_univ e) h
 
 
+open NumberField in
+open MeasureTheory Topology Asymptotics Filter Metric in
+open scoped ENNReal in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
+variable {X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r} in
 theorem _root_.GlobalTheory.DivisionVolume.margin_iff (h0 : 0 < X.p0) (h1 : X.p0 < r)
     (la : _root_.ReciprocityTheory.ChartRestriction.G.FD.Wt X.Ψ r) (m : ℝ) :
     (∀ x0, _root_.ReciprocityTheory.ChartRestriction.G.AR.Up.IsOrth X x0 → ∀ z ∈ _root_.ReciprocityTheory.ChartRestriction.G.AR.Up.OmF X x0, ∀ ξ : Fin (_root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.nd X) → ℂ,

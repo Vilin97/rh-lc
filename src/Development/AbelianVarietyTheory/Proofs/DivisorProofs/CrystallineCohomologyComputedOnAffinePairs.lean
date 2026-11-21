@@ -73,6 +73,7 @@ end GlobalTheory.PDForm.AffPair
 namespace GlobalTheory.PDForm
 
 
+open AffPair in
 theorem crystallineCohomology_computed_on_affinePairs : ∀ (R : Type) [CommRing R] (I : Ideal R) (κ : DividedPowers I) (X : Scheme.{0})
     (t : X ⟶ Sp R) (Y : Scheme.{0}) (i : X ⟶ Y),
     (∀ U V : Y.Opens, IsAffineOpen U → IsAffineOpen V → IsAffineOpen (U ⊓ V)) →

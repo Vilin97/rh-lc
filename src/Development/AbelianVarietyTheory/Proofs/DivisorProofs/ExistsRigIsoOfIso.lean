@@ -25,6 +25,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.RigLBIso
 
 
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 theorem exists_rig_iso_of_iso : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonObj G] (L₁ L₂ : RigLB G), LBIso L₁.L L₂.L → ∃ wL : LB.Iso L₁.L L₂.L, wL.IsGen ∧ LB.Gen.Maps (LB.linCombIso wL (K := PUnit) (fun _ => eSec G) (fun _ => 1)) L₁.rig L₂.rig := by
   rintro S G _ _ L₁ L₂ ⟨w, hw⟩
   have hw₀ : PGen (isoPullId w (F := 𝟙 G.left) rfl) := isoPullId_pgen hw rfl

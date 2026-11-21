@@ -205,6 +205,7 @@ theorem _root_.GlobalTheory.QuadricSection.measurable_sectMat {P Q : ℕ} (β : 
   · exact _root_.GlobalTheory.QuadricSection.measurable_qrefl _ x₀ i j
 
 
+open MeasureTheory Matrix in
 theorem _root_.GlobalTheory.QuadricSection.exists_isSection : ∀ (P Q : ℕ) (β : ℝ) (x₀ : _root_.GlobalTheory.IndefiniteRowSideFullHecke.PerpendicularEmbedding.Sp P Q), β ≠ 0 →
     _root_.GlobalTheory.IndefiniteRowSideFullHecke.PerpendicularEmbedding.qf x₀ = β →
     ∃ s : _root_.GlobalTheory.IndefiniteRowSideFullHecke.PerpendicularEmbedding.Sp P Q → _root_.Formalism.BasicNotions.UpqT P Q, _root_.GlobalTheory.IndefiniteRowSideFullHecke.PerpendicularEmbedding.IsSection β x₀ s := by

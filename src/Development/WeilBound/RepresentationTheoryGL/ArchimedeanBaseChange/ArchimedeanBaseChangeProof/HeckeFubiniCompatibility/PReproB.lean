@@ -42,6 +42,7 @@ instance (N : ℕ) : (nuN N).IsHaarMeasure := by unfold nuN; infer_instance
 instance (N : ℕ) : IsFiniteMeasure (nuN N) := CompactSpace.isFiniteMeasure
 
 
+open Classical in
 def jvMat (v : InfinitePlace E) (u : Matrix (Fin N) (Fin N) ℂ) : Matrix (Fin N) (Fin N) (Cinf E) :=
   Matrix.of fun i j w => if w = v then u i j else (1 : Matrix (Fin N) (Fin N) ℂ) i j
 

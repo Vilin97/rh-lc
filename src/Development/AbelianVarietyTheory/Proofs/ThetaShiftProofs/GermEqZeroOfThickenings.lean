@@ -336,6 +336,7 @@ theorem top_le_secChart {jL : U.LG.L.ι} (hL : ⊤ ≤ x ⁻¹ᵁ U.LG.L.U jL) :
   fun _ hz => Set.mem_iInter.2 fun _ => hL hz
 
 
+variable (U) in
 theorem expandsAt_value {e k : ℕ} {σ : H0 U.LG.L k} {f : ∀ α : D.toPre.X, D.toPre.SecB k α}
     (h : U.ExpandsAt e k σ f) : ∃ F : Finset D.toPre.X, ∀ (S : Type) [CommRing S] (s : Sp S ⟶ Sp R)
       (g : GtPt D.toPre (Over.mk s)) (x : Sp S ⟶ G.left) (T : Type) [CommRing T] [IsLocalRing T] (ρ : S →+* T)
@@ -473,6 +474,7 @@ theorem isTau_tau (h : IsFormalPt U J g x) (hL : ⊤ ≤ x ⁻¹ᵁ U.LG.L.U jL)
   exact (exists_isTau h hL hM).choose_spec
 
 
+omit [IsLocalRing S] in
 theorem IsTau.unique (h : IsFormalPt U J g x) {a b : S} (ha : IsTau U J x jL jM a) (hb : IsTau U J x jL jM b) :
     a = b :=
   eq_of_forall_mk_eq J fun e => by
@@ -597,6 +599,7 @@ theorem exists_isZero (P : DegPre R) (T : Over (Sp R)) : ∃ g : GtPt P T, g.IsZ
     (c.trans (((isCub_cubV P.cub hJ).face₃ _ _).trans (v _ y J hJ).symm))
 
 
+variable (U) in
 theorem isFormalPt_zero (φ : R →+* S) {g : GtPt D.toPre (Over.mk (spMap φ))} (hg : g.IsZero) :
     IsFormalPt U (I.map φ) g (spMap φ ≫ eSec G) := by
   intro e
@@ -620,6 +623,7 @@ theorem isFormalPt_zero (φ : R →+* S) {g : GtPt D.toPre (Over.mk (spMap φ))}
     exact ((val_corr hJ (hg.2 χ) _).trans (val_one _)).symm
 
 
+variable (U) in
 theorem map_secVal_eq {e k : ℕ} {σ : H0 U.LG.L k} {f : ∀ α : D.toPre.X, D.toPre.SecB k α}
     (h : U.ExpandsAt e k σ f) : ∃ F : Finset D.toPre.X, ∀ (S : Type) [CommRing S] [IsLocalRing S] (J : Ideal S)
       [IsAdicComplete J S] (s : Sp S ⟶ Sp R) (g : GtPt D.toPre (Over.mk s)) (x : Sp S ⟶ G.left),
@@ -649,6 +653,7 @@ theorem map_secVal_eq {e k : ℕ} {σ : H0 U.LG.L k} {f : ∀ α : D.toPre.X, D.
     map_tau_mul_wVal hx hL hM ρ hρ H.1, one_pow, _root_.one_mul]
 
 
+variable (U) in
 theorem expansion_unique [IsNoetherianRing R] [IsAdicComplete I R] {k : ℕ} {σ : H0 U.LG.L k}
     {f f' : ∀ α : D.toPre.X, D.toPre.SecB k α} (h : ∀ e, U.ExpandsAt e k σ f) (h' : ∀ e, U.ExpandsAt e k σ f') :
     f = f' := by

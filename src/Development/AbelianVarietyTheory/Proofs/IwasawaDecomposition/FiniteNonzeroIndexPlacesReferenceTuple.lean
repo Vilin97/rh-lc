@@ -27,12 +27,14 @@ theorem preX_eq {P : Pre} {X Y : PreX P} (h : X.piG = Y.piG) (h' : X.piT = Y.piT
   @ColIn.mk B (preX X Y) I.C I.Ch I.sel I.S I.ι I.finι I.tup I.tup_inj I.mu0 I.muStar I.muStar' I.trueColumn_tuple_trivial_eq_one I.xi I.cst I.idx I.J
 
 
+set_option maxHeartbeats 2000000 in
 theorem laws {X : PreX B.toPre} (I : ColIn B X) (Y : PreX B.toPre) (l : TC.Laws I) : TC.Laws (colIn I Y) :=
   ⟨l.pr, l.ch, l.lev, l.per, l.ovr, l.atL, l.fmL, l.xi0, l.idx0, l.bij0, l.lat⟩
 
 variable {f : Top.Fr B.toPre} {T : TwDat B}
 
 
+set_option maxHeartbeats 4000000 in
 @[reducible] def colW (w : ColW B f T) (Y : PreX B.toPre) : ColW B f T where
   px := preX w.px Y
   I := colIn w.I Y
@@ -50,21 +52,25 @@ variable {f : Top.Fr B.toPre} {T : TwDat B}
   val := w.val
 
 
+set_option maxHeartbeats 4000000 in
 @[reducible] def dat (w : ColW B f T) (Y : PreX B.toPre) (Z : w.Lt) (hX : B.fields.Ok) (Wt : Set B.places.Pl) (z : R3.Dat (w.st Z) w.I hX T Wt) :
     R3.Dat (w.st Z) (colIn w.I Y) hX T Wt :=
   @R3.Dat.mk (w.st Z) (preX w.px Y) (colIn w.I Y) hX T Wt z.Xg z.tr z.core z.alg z.alg_eq z.R z.cG z.geo z.pins
     ⟨z.lev.is, z.lev.C, z.lev.xiH, z.lev.Pg, z.lev.Q, z.lev.beta⟩ z.idG z.good z.mu z.fieldValues_mem_fixedField z.Ks_le
 
 
+set_option maxHeartbeats 4000000 in
 theorem pinned {K : Ctx} (w : ColW B f T) (Y : PreX B.toPre) (h : Pinned K B f T w) : Pinned K B f T (colW w Y) := by
   obtain ⟨p⟩ := h
   exact ⟨⟨p.isTw, p.jets, p.hX, p.above, p.half, p.d3b, p.selectedPlacesAgree, p.vals, p.roots⟩⟩
 
 
+set_option maxHeartbeats 4000000 in
 theorem grpAt (w : ColW B f T) (Y : PreX B.toPre) (Z : w.Lt) (h : GrpAt (w.st Z) w.I) : GrpAt (w.st Z) (colIn w.I Y) :=
   ⟨h.pl, h.idem, h.cen⟩
 
 
+set_option maxHeartbeats 4000000 in
 theorem fine (w : ColW B f T) (Y : PreX B.toPre) (Z : w.Lt) (hX : B.fields.Ok) (Wt : Set B.places.Pl)
     (z : R3.Dat (w.st Z) w.I hX T Wt) (h : Fine z) : Fine (w := colW w Y) (Z := Z) (dat w Y Z hX Wt z) := by
   refine ⟨?_, ?_, ?_, ?_⟩
@@ -74,14 +80,17 @@ theorem fine (w : ColW B f T) (Y : PreX B.toPre) (Z : w.Lt) (hX : B.fields.Ok) (
   · exact (by with_unfolding_all exact (h.2.2.2 :))
 
 
+set_option maxHeartbeats 4000000 in
 theorem holdsL (w : ColW B f T) (Y : PreX B.toPre) (Z : w.Lt) (hX : B.fields.Ok) (Wt : Set B.places.Pl)
     (z : R3.Dat (w.st Z) w.I hX T Wt) (h : HoldsL z.R z.F) : HoldsL (dat w Y Z hX Wt z).R (dat w Y Z hX Wt z).F := (by with_unfolding_all exact (h :))
 
 
+set_option maxHeartbeats 4000000 in
 theorem nonzeroIndexPlaces_adelicDataResized_eq (w : ColW B f T) (Y : PreX B.toPre) (Z : w.Lt) (hX : B.fields.Ok) (Wt : Set B.places.Pl)
     (z : R3.Dat (w.st Z) w.I hX T Wt) : (dat w Y Z hX Wt z).W1 (fun _ _ => 0) = z.W1 (fun _ _ => 0) := rfl
 
 
+set_option maxHeartbeats 4000000 in
 theorem seedW {K : Ctx} {P : Pre} {f : Top.Fr P} {F F₀ : IntermediateField ℚ ℂ} {X Y : PreX P} {S : Set ℕ}
     {L : IntermediateField ℚ ℂ} (h : SeedW K P f F F₀ X S L) (hG : X.piG = Y.piG) (hT : X.piT = Y.piT) : SeedW K P f F F₀ Y S L := by
   obtain ⟨B₀, f₀, T₀, w₀, Z₀, hX₀, Wt₀, z₀, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12⟩ := h
@@ -135,6 +144,7 @@ theorem exists_gens_LLC (B : Base) : ∃ S₂ : Finset ℂ, (∀ z ∈ S₂, IsA
     exact Finset.mem_coe.2 (Finset.mem_image.2 ⟨i, Finset.mem_univ _, rfl⟩)
 
 
+set_option maxHeartbeats 1000000 in
 theorem finite_nonzeroIndexPlaces_referenceTuple (w : ColW B f T) (Z : w.Lt) (hX : B.fields.Ok) (Wt : Set B.places.Pl)
     (z : R3.Dat (w.st Z) w.I hX T Wt) (hH : HoldsL z.R z.F) : (z.W1 fun _ _ => 0).Finite := by
   have hok := hH.ok.ok2

@@ -256,6 +256,7 @@ theorem isPIProj_of_equiv {G G' H : Type} [Group G] [Group G'] [NormedAddCommGro
   simpa using h4 fun i => φ (g i)
 
 
+open PI.UpqRep in
 theorem exists_isPIProj_UJ {n : ℕ} (ε : Fin n → Bool) (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     [CompleteSpace H] [Nontrivial H] (ρ : UJ ε →* (H →L[ℂ] H)) (hiso : ∀ g v, ‖ρ g v‖ = ‖v‖)
     (hc : ∀ v, Continuous fun g => ρ g v) : ∃ P, IsPIProj ρ P := by

@@ -87,6 +87,7 @@ variable {F : Type} [Field F] [NumberField F]
 open GlobalTheory.LocalGlobalChar
 
 
+variable (F) in
 abbrev RS (S : Finset (HeightOneSpectrum (𝓞 F))) : Type := Ainf F × ((v : S) → Fv F v.1)
 
 def toRS (S : Finset (HeightOneSpectrum (𝓞 F))) : AF F →ₐ[F] RS F S :=

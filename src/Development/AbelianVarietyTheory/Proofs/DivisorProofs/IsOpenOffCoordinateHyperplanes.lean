@@ -12,6 +12,8 @@ open scoped ContDiff Matrix
 namespace GlobalTheory.GoodTop
 
 
+open MeasureTheory Filter Topology in
+open scoped ContDiff Matrix in
 theorem _root_.GlobalTheory.GoodTop.isOpen_offHyp_of_isOpen {n : ℕ} (S : Finset (Fin n)) (U : Set (_root_.ReciprocityTheory.L2DbarEstimates.V n)) (hU : IsOpen U) :
     IsOpen (_root_.GlobalTheory.GoodTop.offHyp S U) := by
   unfold _root_.GlobalTheory.GoodTop.offHyp

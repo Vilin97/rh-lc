@@ -88,6 +88,7 @@ variable {D : D7} (X : HidaSetting D) (Y : Formalism.L2.SG.Full.Full X) (u u' : 
   (κ : Term D u u' (X.Fu u) (Y.what₂ u) → ℕ)
 
 
+set_option maxHeartbeats 1600000 in
 theorem finPhaseC_of (hNR : Formalism.L2.SG.PairVal.NormRepExists D u u' (X.Fu u) (Y.what₂ u))
     (h1 : Formalism.L2.SG.Pf.RowForm.LiftAtSomeC X Y u u' κ) : Formalism.L2.SG.Pf.FinitePhase.FinPhaseC X Y u u' κ := by
   intro R ρ s hrel L U hL hU hZ

@@ -21,6 +21,7 @@ variable {nb : nA σ d.Y d.b → d.G} {uM : (Fin L.n → AE F E) → d.G} {nb' :
   {cM : (Fin L.n → AE F E) × AF F → d.G} {δ : E}
 
 
+variable (L) in
 def sExp (e : AE F E) (b : Fin L.n → AE F E) : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n ⊕ Fin d.n) (AE F E) :=
   Matrix.fromBlocks 1 (∑ j, (Matrix.single L.i₀ (L.em j) (b j) + Matrix.single (L.em j) L.i₀ (-(e * cA σ (b j))))) 0 1
 
@@ -75,6 +76,7 @@ theorem nq_cM (h : Hyp L nb uM nb' w₁ cM δ) (c : (Fin L.n → AE F E) × AF F
 namespace B
 
 
+variable (L) in
 def sb (e : AE F E) (b : Fin L.n → AE F E) : Matrix (Fin d.n) (Fin d.n) (AE F E) :=
   ∑ j, (Matrix.single L.i₀ (L.em j) (b j) + Matrix.single (L.em j) L.i₀ (-(e * cA σ (b j))))
 
@@ -194,6 +196,7 @@ private theorem isHecke_div_and_resEtaPow_div {M : Type} [AddCommMonoid M] (f : 
     exact fun k h => (L.rng (L.em k)).2 ⟨k, rfl⟩ h
 
 
+open B in
 theorem row_sC (h : Hyp L nb uM nb' w₁ cM δ) (e : AE F E) (b u : Fin L.n → AE F E) (a : AF F) :
     (∀ j, (sExp L e b * inFrame d.b (cM (u, a))) (Sum.inl L.i₀) (Sum.inl (L.em j)) = u j) ∧
     (∀ j, (sExp L e b * inFrame d.b (cM (u, a))) (Sum.inl L.i₀) (Sum.inr (L.em j)) = b j) ∧
@@ -229,6 +232,7 @@ theorem row_sC (h : Hyp L nb uM nb' w₁ cM δ) (e : AE F E) (b u : Fin L.n → 
 namespace W
 
 
+variable (L) in
 def Wm (a b : AE F E) : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n ⊕ Fin d.n) (AE F E) :=
   1 - Matrix.single (Sum.inl L.i₀) (Sum.inl L.i₀) 1 - Matrix.single (Sum.inr L.i₀) (Sum.inr L.i₀) 1 +
     Matrix.single (Sum.inl L.i₀) (Sum.inr L.i₀) a + Matrix.single (Sum.inr L.i₀) (Sum.inl L.i₀) b
@@ -301,6 +305,7 @@ theorem mul_Wm_apply_inl_i0 (M : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n ⊕ Fin d
 end W
 
 
+open W in
 theorem w1_conj_sExp_mem_par2 (h : Hyp L nb uM nb' w₁ cM δ) {e : AE F E} {b : Fin L.n → AE F E} {s : d.G}
     (hs : inFrame d.b s = sExp L e b) : w₁ * s * w₁⁻¹ ∈ par2 σ d.Y := by
   obtain ⟨a, b', ha, hb, hw⟩ := h.wf

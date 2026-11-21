@@ -155,6 +155,7 @@ theorem ne_bot_of_cop {M : ℕ} (hM : 2 ≤ M) {I : Ideal (𝓞 K)} (h : IsCopri
   · exact (Module.finrank_pos (R := ℤ) (M := 𝓞 K)).ne' h2
 
 
+open Classical in
 def rcl (M : ℕ) (I : Ideal (𝓞 K)) : (rayCon K M).Quotient :=
   by
     classical

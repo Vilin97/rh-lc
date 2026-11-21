@@ -528,6 +528,7 @@ theorem reg_mul (a b : I.Ginf) : R (a * b, 1) = (R (a, 1)).comp (R (b, 1)) := by
   exact rp_mul hFD hReg (rp_inst I μf a) (rp_inst_inv I μf a) (by rw [← e]; exact rp_inst I μf (a * b))
 
 
+include hfd hR in
 theorem ind_tendsto {s : Set I.GA} (hs : MeasurableSet s) (hμs : (I.muA μf).restrict fund s ≠ ∞) :
     Tendsto (fun g : I.Ginf => R (g, 1) (indicatorConstLp 2 hs hμs (1 : ℂ))) (𝓝 1)
       (𝓝 (indicatorConstLp 2 hs hμs (1 : ℂ))) := by
@@ -800,6 +801,7 @@ theorem ind_tendsto {s : Set I.GA} (hs : MeasurableSet s) (hμs : (I.muA μf).re
   exact (Lp.norm_def _).symm
 
 
+include hfd hR in
 theorem all_tendsto (F : I.L2 μf fund) : Tendsto (fun g : I.Ginf => R (g, 1) F) (𝓝 1) (𝓝 F) := by
   have hiso : ∀ (g : I.Ginf) (H : I.L2 μf fund), ‖R (g, 1) H‖ = ‖H‖ :=
     fun g H => reg_norm I μf fund hfd R hR g H

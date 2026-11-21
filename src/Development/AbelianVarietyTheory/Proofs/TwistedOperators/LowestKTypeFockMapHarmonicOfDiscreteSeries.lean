@@ -259,6 +259,7 @@ theorem polDer_smul {τ : D.what₂.Tau} {X : Matrix (Fin W.rank) (Fin W.rank) �
   exact (hP z).const_mul c
 
 
+variable (θ ω pt) in
 def harmSub (d : ℕ) : Submodule ℂ (PolF D W.rank V.rank) where
   carrier := {P | ∀ τ, IsHarm M' τ (actTgt θ ω τ) pt d P}
   add_mem' := by

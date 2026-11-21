@@ -179,6 +179,7 @@ theorem nonempty_equiv_multiProd_one {π : Representation ℂ (GL n k) V} (hπ :
 end Invariance
 
 
+variable (k) in
 abbrev IrrGL : Type 1 := Σ n : ℕ, IrrCl (GL (Fin n) k)
 
 namespace IrrGL
@@ -189,6 +190,7 @@ def of {N : ℕ} (π : Representation ℂ (GL (Fin N) k) V) (hs : IsSmooth π) (
   ⟨N, (⟨V, π, hs, hi⟩ : IrrRep _).cl⟩
 
 
+omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 theorem of_eq_of {N : ℕ} {π : Representation ℂ (GL (Fin N) k) V} {hs : IsSmooth π} {hi : π.IsIrreducible}
     {σ : Representation ℂ (GL (Fin N) k) W} {hs' : IsSmooth σ} {hi' : σ.IsIrreducible} :
     of π hs hi = of σ hs' hi' ↔ Nonempty (π.Equiv σ) := by
@@ -536,6 +538,7 @@ def IsSpeh (x : IrrGL (k := k)) (d : ℕ) (π : Representation ℂ (GL (Fin N) k
   ∃ hd : ∑ a, (spehFactor x d a).1 = N, IsCosocle π (prodIrr (spehFactor x d) hd)
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem unipB_mul_apply (u v : unipB k (Fin N)) {i j : Fin N} (hij : (j : ℕ) = i + 1) :
     ((u * v : unipB k (Fin N)) : GL (Fin N) k).val i j = (u : GL (Fin N) k).val i j + (v : GL (Fin N) k).val i j := by
   have hu := mem_unipRad.1 u.2

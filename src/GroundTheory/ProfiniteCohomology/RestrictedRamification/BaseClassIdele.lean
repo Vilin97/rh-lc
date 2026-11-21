@@ -269,6 +269,7 @@ theorem gsUnitsClass_apply (d : GsUnitsDatum S) :
   rfl
 
 
+omit [Finite S] in
 theorem mul_sInvOfUnit_mem_sUnitsMax (t : Additive (sInvariantSubgroup (F := K.1) ℚ̄ S)) (x : (K.1)ˣ)
     (h : divS S (Additive.ofMul x) = -divAbove S t) :
     ((Additive.toMul (t + Additive.ofMul (sInvOfUnit S x)) : sInvariantSubgroup (F := K.1) ℚ̄ S) :

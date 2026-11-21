@@ -67,6 +67,7 @@ lemma common_order {y : Fin D → K} {j : Fin D} (c : ℕ → K) (hc : ∀ k, �
 end GlobalTheory.DegreeBound
 
 
+open GlobalTheory.DegreeBound in
 theorem GlobalTheory.totalDegree_le_of_integral_at_infinity : ∀ {K : Type} [Field K] {D : ℕ} (y : Fin D → K),
     AlgebraicIndependent ℤ y → ∀ (j : Fin D), y j ≠ 0 → ∀ (T₀ : MvPolynomial (Fin D) ℤ) (q : ℕ)
     {ι : Type} (z : ι → K), (∀ i, ∃ (N : ℕ) (C : MvPolynomial (Fin D) ℤ), C.totalDegree ≤ N ∧

@@ -30,6 +30,7 @@ variable {K : Type} {ι : K → Type} {R R' : Type} [CommRing R] [CommRing R'] [
   (M₀ : Submonoid R) [IsLocalization M₀ R']
 
 
+include M₀ in
 theorem ringKrullDim_quotient_map_le (I : Ideal (MRing ι R)) :
     ringKrullDim (MRing ι R' ⧸ I.map (algebraMap (MRing ι R) (MRing ι R'))) ≤
       ringKrullDim (MRing ι R ⧸ I) := by
@@ -57,6 +58,7 @@ theorem weightedHomogeneousComponent_map [DecidableEq K] (b : K → ℕ) (y : MR
   split_ifs <;> simp
 
 
+include M₀ in
 theorem isMultiHomogIdeal_map [DecidableEq K] {I : Ideal (MRing ι R)} (hI : IsMultiHomogIdeal I) :
     IsMultiHomogIdeal (I.map (algebraMap (MRing ι R) (MRing ι R'))) := by
   classical
@@ -76,6 +78,7 @@ theorem isMultiHomogIdeal_map [DecidableEq K] {I : Ideal (MRing ι R)} (hI : IsM
   exact Ideal.mem_map_of_mem _ (hI x x.2 b)
 
 
+include M₀ in
 theorem cycEval_divCycle_map (P : Ideal (MRing ι R)) (f : MRing ι R)
     (hdisj : ∀ W ∈ (P ⊔ Ideal.span {f}).minimalPrimes,
       Disjoint ((M₀.map (C (σ := Σ k, ι k)) : Submonoid (MRing ι R)) : Set (MRing ι R)) W)

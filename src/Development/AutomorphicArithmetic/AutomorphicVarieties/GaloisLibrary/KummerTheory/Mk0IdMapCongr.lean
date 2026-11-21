@@ -56,6 +56,7 @@ theorem class_map_mk0 (τ : K ≃+* K') (I : (Ideal (𝓞 K))⁰) : clMap τ (Cl
   class_fun_mk0 τ I
 
 
+variable (K) in
 def ClDual (N : ℕ) (R M : Type) [CommRing R] [AddCommGroup M] [Module R M] : Submodule R (ClassGroup (𝓞 K) → M) where
   carrier := {θ | (∀ a b, θ (a * b) = θ a + θ b) ∧ ∀ v ∈ Above K N, θ (primeCl v) = 0}
   zero_mem' := ⟨by simp, by simp⟩
@@ -79,6 +80,7 @@ def SelK (S : Set (HeightOneSpectrum (𝓞 K))) (n : ℕ) : Subgroup Kˣ where
   inv_mem' {a} ha v hv := by rw [ordv_inv]; exact (ha v hv).neg_right
 
 
+variable (K) in
 def powK (n : ℕ) : Subgroup Kˣ := (powMonoidHom n : Kˣ →* Kˣ).range
 
 def radCl (n : ℕ) (a : Kˣ) : ClassGroup (𝓞 K) := ∏ᶠ v : HeightOneSpectrum (𝓞 K), primeCl v ^ (ordv v a / n)
@@ -115,9 +117,11 @@ def EqEig (N : ℕ) (U : Subgroup (G F Ω)) (ρ : Representation R (G F Ω) M) (
   EqHom N U ρ ⊓ conjCond U σ (s • LinearMap.id)
 
 
+variable (R M) in
 def restr {U V : Subgroup (G F Ω)} (h : U ≤ V) : (V → M) →ₗ[R] (U → M) := LinearMap.funLeft R M (Subgroup.inclusion h)
 
 
+variable (R M) in
 def funRep (U : Subgroup (G F Ω)) [U.Normal] : Representation R (G F Ω) (U → M) where
   toFun g := LinearMap.funLeft R M (conjHom U g)
   map_one' := LinearMap.ext fun φ => funext fun u => congrArg φ (Subtype.ext (by simp [conjHom]))

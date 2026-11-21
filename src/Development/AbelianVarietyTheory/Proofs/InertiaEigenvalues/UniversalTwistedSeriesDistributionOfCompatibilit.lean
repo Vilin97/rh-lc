@@ -154,6 +154,7 @@ open Formalism.IndefR.Links (PolF)
 variable {D : D7} {N : NData D.R D.host D.what₂} {X : NTw D.R D.host D.what₂ D.LL0 N}
 
 
+set_option maxHeartbeats 4000000 in
 theorem thURel_of_tie {ρ : Setup X} (hρ : ρ.Good) {Y : NExp D.R D.host D.what₂ D.LL0 N X} (rd : Rds Y ρ) (T : Comparison₂ hρ rd)
     (hU : GlobalTheory.UnivChar.IsUnivChar Y) (hH : ∀ i j b, HeckeRead (rd i j b))
     (hR : ∀ i, X.NonzeroIndexPlace i → ∀ j b, RatUniv (rd i j b)) :

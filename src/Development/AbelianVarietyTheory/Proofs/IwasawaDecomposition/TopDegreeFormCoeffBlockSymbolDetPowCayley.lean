@@ -77,6 +77,7 @@ theorem constantCoeff_sumMap (p q : ℕ) (P : MvPolynomial (Fin p × Fin p) ℂ)
 end GlobalTheory.CayleyBlock
 
 
+open GlobalTheory.CayleyBlock ReciprocityTheory.PGsh MvPolynomial in
 theorem GlobalTheory.topCoeff_blockSym_det_pow : ∀ (p q : ℕ) (h1 : Fintype.card (Unit × Fin p × Fin q) = p * q),
     GlobalTheory.GoodMetric.topCoeff ((GlobalTheory.DomainDens.blockSym h1 ()).det ^ q) =
       ∏ i ∈ Finset.range p, (((q + i).factorial : ℂ) / i.factorial) := by

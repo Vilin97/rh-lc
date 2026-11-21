@@ -79,6 +79,7 @@ theorem cycMod_conjBack (l : ℕ) [Fact l.Prime] (r : ℕ) (g : G F Ω) :
   rw [mul_comm, ← mul_assoc, mul_inv_cancel, one_mul]
 
 
+omit hA in
 theorem continuous_conjBack [Algebra.IsAlgebraic F Ω] : Continuous (conjBack σ τ hστ) := by
   haveI : Algebra.IsIntegral F Ω := inferInstance
   refine continuous_of_continuousAt_one _ ?_
@@ -107,6 +108,8 @@ theorem continuous_conjBack [Algebra.IsAlgebraic F Ω] : Continuous (conjBack σ
   exact Finset.sum_congr rfl fun i _ => by rw [map_smul, hb]
 
 
+omit hA in
+include hA hστ in
 theorem exists_place_map {v : HeightOneSpectrum (𝓞 F)} (hAv : IsPlaceOver A v) :
     ∃ v' : HeightOneSpectrum (𝓞 F), IsPlaceOver A' v' ∧ normV v' = normV v ∧
       ∀ ϖ : 𝓞 F, ϖ ∈ v.asIdeal → ϖ ∉ v.asIdeal ^ 2 → ∃ ϖ' : 𝓞 F, ϖ' ∈ v'.asIdeal ∧

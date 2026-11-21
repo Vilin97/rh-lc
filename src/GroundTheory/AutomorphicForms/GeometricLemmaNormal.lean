@@ -112,12 +112,14 @@ variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchi
   {n : ℕ}
 
 
+variable (F) in
 def normLeviParSqrtModular (γ δ : Fin n → ℕ) : leviPar F n γ δ →* ℂ where
   toFun l := ((NNReal.sqrt (modularCharacter l) : ℝ) : ℂ)
   map_one' := by simp
   map_mul' l l' := by simp [NNReal.sqrt_mul]
 
 
+variable (F) in
 def normLeviParInvSqrtModular (γ δ : Fin n → ℕ) : leviPar F n γ δ →* ℂ where
   toFun l := (normLeviParSqrtModular F γ δ l)⁻¹
   map_one' := by simp
@@ -127,6 +129,7 @@ variable {β : Fin n → ℕ} {W : Type*} [AddCommGroup W] [Module ℂ W]
   (σ : Representation ℂ (levi F n β) W)
 
 
+variable (β) in
 def innerJacquetRep (δ : Fin n → ℕ) :
     Representation ℂ (leviPar F n β δ)
       (Representation.Coinvariants (σ.comp (leviUnipotent F n β δ).subtype)) :=
@@ -135,6 +138,7 @@ def innerJacquetRep (δ : Fin n → ℕ) :
 variable {γ : Fin n → ℕ} (w : Equiv.Perm (Fin n))
 
 
+variable (γ) in
 def normInducing : Representation ℂ (cellLeviSub F β γ w) (innerJacquetSpace β γ w σ) :=
   twist ((normLeviParSqrtModular F γ (β ∘ w)).comp (cellLeviSubIncl F β γ w))
     ((innerJacquetRep β σ (γ ∘ ⇑w⁻¹)).comp ((cellInnerHom β γ w).comp (cellLeviSubIncl F β γ w)))
@@ -275,6 +279,7 @@ theorem prod_modulus_ne_zero (μ : Fin n → ℤ) (P : Fin n × Fin n → Prop) 
     div_ne_zero (modulus_uniformizer_zpow_ne_zero _) (modulus_uniformizer_zpow_ne_zero _)
 
 
+variable (F β γ w) in
 def cellScalarHom : leviPar F n γ (β ∘ w) →* ℂ :=
   ((invSqrtModular F n γ).comp (leviIncl.comp (Subgroup.inclusion
       (cellLeviParabolic_le_levi (F := F) (β := β) (γ := γ) (w := w))))) *
@@ -283,6 +288,7 @@ def cellScalarHom : leviPar F n γ (β ∘ w) →* ℂ :=
       (Subgroup.inclusion (cellLeviParabolic_le_blockUpper (F := F) (β := β) (γ := γ) (w := w)))))
 
 
+variable (F β γ w) in
 def normScalarHom : leviPar F n γ (β ∘ w) →* ℂ :=
   normLeviParSqrtModular F γ (β ∘ w) *
     (normLeviParInvSqrtModular F β (γ ∘ ⇑w⁻¹)).comp ((cellInnerHom β γ w).comp

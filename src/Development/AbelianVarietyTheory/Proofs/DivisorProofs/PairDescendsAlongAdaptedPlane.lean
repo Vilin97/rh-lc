@@ -135,6 +135,7 @@ theorem isotropic {B : Base F E} {n n₁ d : ℕ} {X : Spc F E n} {X₁ : Spc F 
   linear_combination h1 + h2 - h3 + h4
 
 
+omit [NumberField F] [NumberField E] in
 theorem eq_zero_of_mixed {n n₁ d : ℕ} {J : Matrix (Fin n) (Fin n) E} {J₁ : Matrix (Fin n₁) (Fin n₁) E} {x y : Fin n → E}
     {ι : Matrix (Fin n) (Fin n₁) E} (hxy : form σ J x y = 1) (hιy : ∀ u, form σ J (ι *ᵥ u) y = 0)
     (hg : ιᵀ * J * ι.map σ = J₁) (hdet : J₁.det ≠ 0) (a : Fin d → E) (z : Matrix (Fin n₁) (Fin d) E)

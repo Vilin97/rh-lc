@@ -315,6 +315,7 @@ theorem two_cube_le (y n : ℝ) (hy : 0 ≤ y) (hn : 4 ≤ n) : 2 * y ^ 3 ≤ Re
   linarith
 
 
+set_option maxHeartbeats 1000000 in
 theorem leafSizes_of_page (O : OnObj S P c) (C2 : ℝ) (hC2 : 0 ≤ C2) (hC : 1 ≤ c.C)
     (hx : 3 ≤ O.x) (hxC : 3 * c.C * C2 ≤ O.x)
     (hEps : ExponentSmallBound O) (hN4 : HalfDegreeAtLeastFour O) (h1246 : DegreeAtLeastFortyFour O) (h29 : DimensionExceedsDegreeByThree O) (h21 : RankAndLengthLowerBounds O) (hW : LeafW O)

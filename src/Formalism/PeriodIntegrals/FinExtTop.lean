@@ -32,6 +32,7 @@ end PI.FinExtTop
 namespace PI
 
 
+open PI.FinExtTop in
 def FinExtTop : Prop :=
   ∀ (ℓ : ℕ) [Fact ℓ.Prime] (O O' : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     [TopologicalSpace O] [Algebra ℤ_[ℓ] O] [Module.Finite ℤ_[ℓ] O]

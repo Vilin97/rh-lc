@@ -151,6 +151,7 @@ theorem comb_ne_zero (R : RiemLat E g Λ) {ι : Type} [Fintype ι] (b : Module.B
 end GlobalTheory.CompanionTheory.Ar.Cusp.FirstMin
 
 
+open GlobalTheory.CompanionTheory.Ar.Cusp.FirstMin in
 theorem GlobalTheory.CompanionTheory.Ar.Cusp.continuous_first_minimum : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (g : ℕ) (Λ : Type) [AddCommGroup Λ] [Module (𝓞 E) Λ] (X : Type) [TopologicalSpace X] (R : X → RiemLat E g Λ), (∀ v, Continuous fun x => (R x).P v) → (Continuous fun x => (R x).Hm) → Continuous fun x => (R x).lam1 := by
   intro E _ _ _ g Λ _ _ X _ R hP hH
   rcases isEmpty_or_nonempty X with hX | ⟨⟨x₀⟩⟩

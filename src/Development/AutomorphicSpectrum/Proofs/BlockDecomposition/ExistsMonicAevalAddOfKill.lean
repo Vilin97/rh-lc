@@ -277,6 +277,7 @@ theorem exists_monic_compact_part {W : Type} [AddCommGroup W] [Module ℂ W] [Fi
   exact e4
 
 
+variable (E a) in
 def archHomeo : archGroup E a ≃ₜ* GL (Fin a) (Cinf E) where
   toFun := toGL E a
   invFun y := archEquiv E a (Matrix.GeneralLinearGroup.map (infEq E).toRingHom y)

@@ -95,6 +95,7 @@ theorem pow_mem (D : ℕ) (Ω : Type) [Field Ω] [CharZero Ω] (κ : Type) (x : 
 end ProjFrameBasePtFree
 
 
+open ProjFrameBasePtFree in
 theorem ProjFrameBasePtFree.proof : ProjFrameBasePtFree.Statement := by
   intro D Ω _ _ κ _ x e hfr k₂ i
   obtain ⟨N, hN⟩ := pow_mem D Ω κ x e hfr ⟨(), i ()⟩

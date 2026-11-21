@@ -57,6 +57,7 @@ def IsFormalParam (j : JetPts G x d) : Prop :=
 
 
 
+omit [GrpObj G] in
 def TanIs (j : JetPts G x d) (v : Sp (DualNumber S) ⟶ G.left) (c : Fin d → S) : Prop :=
   v = (algMap x (jetVec c) ≫ j 1).left
 

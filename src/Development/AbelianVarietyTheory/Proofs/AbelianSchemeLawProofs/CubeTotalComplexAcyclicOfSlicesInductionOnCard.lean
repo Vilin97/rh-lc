@@ -54,6 +54,7 @@ section Supp
 variable {ι : Type} {R : Type u} [Ring R]
 
 
+open Classical in
 noncomputable def supp (A : Cube.{v} ι R) (P : Set (Finset ι)) (hP : P.OrdConnected) :
     Cube.{v} ι R := by
   classical
@@ -101,6 +102,7 @@ theorem comap_supp {κ : Type} (g : Finset κ → Finset ι) (hg : Monotone g) (
     comap g hg (supp A P hP) = supp (comap g hg A) (g ⁻¹' P) (hP.preimage_mono hg) := rfl
 
 
+open Classical in
 noncomputable def suppMapApp (φ : A ⟶ B) (hP : P.OrdConnected) (hP' : P'.OrdConnected)
     (s : Finset ι) : (supp A P hP).obj s →ₗ[R] (supp B P' hP').obj s := by
   classical
@@ -158,6 +160,7 @@ noncomputable def suppIsoSelf (A : Cube.{v} ι R) (hP : P.OrdConnected) (h : ∀
   isoMk (fun s => suppEquiv A hP (h s)) fun hst x => suppEquiv_res hst _ _ x
 
 
+open Classical in
 noncomputable def suppIncl (A : Cube.{v} ι R) (hP : P.OrdConnected) (hU : IsUpperSet P) :
     supp A P hP ⟶ A := by
   classical
@@ -409,10 +412,12 @@ theorem map_part_union_map_part (h : Codisjoint (Set.range e) (Set.range f)) (u 
   · exact Or.inr ⟨k, hj, rfl⟩
 
 
+omit [LinearOrder ι] in
 theorem isUpperSet_nonempty : IsUpperSet {s : Finset ι | s.Nonempty} :=
   fun _ _ h hs => Finset.Nonempty.mono h hs
 
 
+omit [LinearOrder ι] in
 theorem ordConnected_nonempty : Set.OrdConnected {s : Finset ι | s.Nonempty} :=
   isUpperSet_nonempty.ordConnected
 
@@ -605,6 +610,7 @@ noncomputable def truncOverHomologyIsoEmpty [Finite ι] (h : IsCompl (Set.range 
   suppEmptyHomologyIso h hQ A n
 
 
+omit [LinearOrder κ] in
 theorem Cube.isUpperSet_nonempty_ne_singleton (k : κ) :
     IsUpperSet {t : Finset κ | t.Nonempty ∧ t ≠ {k}} := by
   rintro s t hst ⟨hs, hs'⟩
@@ -827,6 +833,7 @@ open Cube
 variable {ι κ ν : Type} [LinearOrder ι] [LinearOrder κ] [LinearOrder ν] {R : Type u} [Ring R]
 
 
+omit [LinearOrder ι] [LinearOrder κ] in
 instance finite_sumLex [Finite ι] [Finite κ] : Finite (ι ⊕ₗ κ) := inferInstanceAs (Finite (ι ⊕ κ))
 
 noncomputable def Cube.trunc₃ (A : Cube.{v} ((ι ⊕ₗ κ) ⊕ₗ ν) R) : Cube.{v} ((ι ⊕ₗ κ) ⊕ₗ ν) R :=

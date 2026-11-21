@@ -18,6 +18,9 @@ open Formalism.GradedWeylDivisibility
 variable {K : Type} [Field K]
 
 
+open NumberField IsDedekindDomain MvPolynomial in
+open scoped Matrix in
+variable {K : Type} [Field K] in
 theorem _root_.GlobalTheory.SubstMem.rename_mem_dualWeyl {a b : ℕ} (hab : a ≤ b) (ν : Fin a → ℕ) (ν' : Fin b → ℕ)
     (h1 : ∀ i, ν' (Fin.castLE hab i) = ν i) (h2 : ∀ j : Fin b, a ≤ (j : ℕ) → ν' j = 0)
     (f : MvPolynomial (Fin a × Fin a) K) (hf : f ∈ _root_.Formalism.GradedWeylDivisibility.dualWeyl K a a ν) :
@@ -85,6 +88,9 @@ theorem _root_.GlobalTheory.SubstMem.rename_mem_dualWeyl {a b : ℕ} (hab : a �
       exact DFunLike.congr_fun key f
 
 
+open NumberField IsDedekindDomain MvPolynomial in
+open scoped Matrix in
+variable {K : Type} [Field K] in
 theorem _root_.GlobalTheory.SubstMem.det_pow_mem (a m : ℕ) :
     _root_.Formalism.GradedWeylDivisibility.initMinor K (id : Fin a → Fin a) le_rfl ^ m ∈ _root_.Formalism.GradedWeylDivisibility.dualWeyl K a a (fun _ => m) := by
   refine _root_.Formalism.GradedWeylDivisibility.dualWeyl_of_eq (_root_.Formalism.GradedWeylDivisibility.dualWeyl_pow (_root_.Formalism.GradedWeylDivisibility.initMinor_mem (R := K) (id : Fin a → Fin a) le_rfl) m) ?_
@@ -166,6 +172,9 @@ private theorem frDet_eq_blockEmb_initMinor_id {K : Type} [Field K] {ι : Type} 
   simp [_root_.Formalism.GradedWeylDivisibility.blockEmb]
 
 
+open NumberField IsDedekindDomain MvPolynomial in
+open scoped Matrix in
+variable {K : Type} [Field K] in
 theorem _root_.GlobalTheory.SubstMem.substAdj_sharp_mem : ∀ (K : Type) [Field K] (ι : Type) [Fintype ι]
     (a b : ℕ) (hab : a < b) (lam : ι → _root_.Formalism.BasicNotions.DomWeight a) (lam' : ι → _root_.Formalism.BasicNotions.DomWeight b) (s s' : ι → ℤ)
     (n : ι → ℕ), _root_.GlobalTheory.IndefiniteRowSideFullHecke.SubstitutionAdjoint.WtCompat hab lam lam' s s' n →

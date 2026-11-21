@@ -156,6 +156,9 @@ variable {F F' Ω Ω' : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [I
   (hf : ∀ u : Ω'ˣ, ((Additive.toMul (f.hom (Additive.ofMul u)) : Ωˣ) : Ω) = ε.symm u)
 
 
+omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [ValuativeRel F']
+  [TopologicalSpace F'] [IsNonarchimedeanLocalField F'] in
+include hε hf in
 theorem cohomologyMapAlong_galCupClass_transport (χ : Additive Gal(Ω'/F') →ₜ+ QZ) (a : Fˣ) :
     (cohomologyMapAlong ρ hρc f 2).hom (galCupClass F' Ω' χ (Units.map e.toRingHom.toMonoidHom a)) =
       galCupClass F Ω (contCharComp χ ρ hρc) a := by
@@ -169,6 +172,7 @@ theorem cohomologyMapAlong_galCupClass_transport (χ : Additive Gal(Ω'/F') →�
   rw [← hε, RingEquiv.symm_apply_apply]
 
 
+include hε hρ in
 theorem brauerInvZOfIsSepClosure_galCupClass_transport (he : ∀ x y : F, e x ≤ᵥ e y ↔ x ≤ᵥ y)
     (χ : Additive Gal(Ω'/F') →ₜ+ QZ) (a : Fˣ) :
     brauerInvZOfIsSepClosure F Ω (galCupClass F Ω (contCharComp χ ρ hρc) a) =
@@ -183,6 +187,7 @@ theorem brauerInvZOfIsSepClosure_galCupClass_transport (he : ∀ x y : F, e x �
   rw [hρ, hg y hy, localArtinMap_transport e he ε hε a hy]
 
 
+include hε hρ hf in
 theorem brauerInvZOfIsSepClosure_cohomologyMapAlong_transport (he : ∀ x y : F, e x ≤ᵥ e y ↔ x ≤ᵥ y)
     (x : cohomology (galUnitsZ F' Ω') 2) :
     brauerInvZOfIsSepClosure F Ω ((cohomologyMapAlong ρ hρc f 2).hom x) = brauerInvZOfIsSepClosure F' Ω' x := by

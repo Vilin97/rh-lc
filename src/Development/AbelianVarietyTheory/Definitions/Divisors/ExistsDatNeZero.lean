@@ -41,6 +41,7 @@ def Sm (W : K → X.left.Opens) {D : Type} [CommRing D] [Algebra R D] (x : Pt X 
   ∃ i, ⊤ ≤ x.left ⁻¹ᵁ W i
 
 
+variable (X) in
 def whole : Unit → X.left.Opens := fun _ ↦ ⊤
 
 theorem sm_whole {D : Type} [CommRing D] [Algebra R D] (x : Pt X D) : Sm (whole X) x := ⟨(), fun _ _ ↦ trivial⟩
@@ -140,6 +141,7 @@ def cotPt : D →ₐ[R] (cotExt R D).C :=
 def cotSnd : (cotExt R D).C →ₗ[R] Cot R D := TrivSqZeroExt.sndHom R (Cot R D)
 
 
+variable {R D} in
 def cotVal {X : Over (Sp R)} (f : Z1 (O (dp0 R) (X.hom ≫ 𝟙 _))) (y : Pt X D) : Cot R D :=
   let y' : Pt X (cotExt R D).C := spOver (cotPt R D) ≫ y
   cotSnd R D ((cotExt R D).val y'.left y'.w f - fv f D (cotExt R D).C (cotPt R D) y)
@@ -175,6 +177,7 @@ def Dat.om (n : ℕ) : Cot R (G.A n) :=
   cotVal d.f (t.y n) - dUnit R (d.h n)
 
 
+variable (t c) in
 def IsCan (x : G.RigExt) : Prop :=
   ∃ (d : Dat t c) (z : G.cocycles) (w : G.omega), (∀ n, z.1 n = d.coc n) ∧ (∀ n, w.1 n = d.om n) ∧ x = G.rigMk (z, w)
 
@@ -200,6 +203,7 @@ def ptV (v : epsR R ⟶ B) {D : Type} [CommRing D] [Algebra R D] (x : Pt A D) : 
   lift (spOver (TrivSqZeroExt.inlAlgHom R D D) ≫ x) (spOver (EpsWeil.epsMap R D) ≫ v)
 
 
+variable (B) in
 def pt0 {D : Type} [CommRing D] [Algebra R D] (x : Pt A D) : Pt (A ⊗ B) D := lift x 1
 
 def chartsA (P : LB (A ⊗ B).left) : P.ι → A.left.Opens := fun i ↦ (AbDual.inl A B).left ⁻¹ᵁ P.U i
@@ -218,6 +222,7 @@ def sndPull (u : Fn1 (A ⊗ B)) (v : epsR R ⟶ B) : Fn1 A := fun D _ _ D' _ _ �
 abbrev epsExt (R D : Type) [CommRing R] [CommRing D] [Algebra R D] : SqExt R := SqExt.ofModule R D D
 
 
+variable (B) in
 abbrev thickAt {D : Type} [CommRing D] [Algebra R D] (x : Pt A D) : Thick (dp0 R) ((A ⊗ B).hom ≫ 𝟙 _) :=
   (epsExt R D).thick (pt0 B x).left (pt0 B x).w
 

@@ -40,6 +40,7 @@ variable {F : Type} [Field F] {e : F ≃+* c.F} {X W : Scheme.{0}} {jB : W ⟶ X
   {τ : E →+* ℂ}
 
 
+omit [NumberField E] [IsCMField E] in
 def cf (dual : Bool) {M : X.Modules} {U V : X.Opens} {f : Fin r → Γ(M, U)} (hf : VB.IsFrame f)
     {g : Fin r → Γ(M, V)} (hg : VB.IsFrame g) {K : Type} [CommRing K] (z : Sp K ⟶ X) (h1 : ⊤ ≤ z ⁻¹ᵁ (V ⊓ U))
     (h2 : ⊤ ≤ z ⁻¹ᵁ (U ⊓ V)) (a b : Fin r) : K :=

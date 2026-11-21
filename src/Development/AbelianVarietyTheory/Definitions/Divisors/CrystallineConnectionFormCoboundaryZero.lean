@@ -74,11 +74,13 @@ def diagMap [Algebra B B'] [IsScalarTower R B B'] :
     ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl', ← IsScalarTower.algebraMap_apply]
 
 
+variable {B B'} in
 theorem fst_diagMap [Algebra B B'] [IsScalarTower R B B'] (c : TrivSqZeroExt B Ω[B⁄R]) :
     (diagMap R B B' c).fst = algebraMap B B' c.fst := by
   exact add_zero _
 
 
+variable {B B'} in
 theorem snd_diagMap [Algebra B B'] [IsScalarTower R B B'] (c : TrivSqZeroExt B Ω[B⁄R]) :
     (diagMap R B B' c).snd = KaehlerDifferential.map R R B B' c.snd := by
   exact zero_add _

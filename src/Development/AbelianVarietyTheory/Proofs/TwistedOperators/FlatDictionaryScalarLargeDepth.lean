@@ -94,6 +94,7 @@ section Grid0
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts}
 
 
+variable (G : GridData L sc) in
 def grid0 (w : Pl D.host.E) : Grid (Kw w) where
   m := D.R.m
   r := D.R.r
@@ -111,6 +112,7 @@ def eps0 (w : Pl D.host.E) : (grid0 G w).VertexGroup :=
     else 1
 
 
+variable (G : GridData L sc) in
 def stair0 (w : Pl D.host.E) : (grid0 G w).VertexGroup :=
   onColumn (G := grid0 G w) fun j => if j + 2 ≤ D.R.m then stair (grid0 G w) (unifAt w) (cosExp G w) j else 1
 
@@ -138,6 +140,7 @@ theorem elt_stair (G : GridData L sc) (t : T) (w : Pl D.host.E)
 end Grid0
 
 
+open Classical in
 theorem scal : Big fun ch => ScalP ch := by
   refine ⟨0, fun ε CF _ => ⟨0, fun D large₂ _ _ Γ _ _ Pl0 T A Ks _ _ _ R F s ch hch _ => ?_⟩⟩
   have hL : R.toLevCh.Is A.μ0 := s.core.lev

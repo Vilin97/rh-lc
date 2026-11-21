@@ -32,6 +32,7 @@ private theorem cmp_rT {W : Type} [AddCommGroup W] [Module ℂ W] {d : ℕ} (S :
   | tmul φ v => simp only [LinearMap.rTensor_tmul, cmp_tmul, map_smul]
 
 
+variable (E a) in
 private def csSub : Submodule ℂ (Sm E a) where
   carrier := {φ | Pf.Cs φ.1}
   zero_mem' := ⟨0, fun _ _ => rfl⟩

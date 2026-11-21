@@ -19,6 +19,7 @@ def degPi (D : D7) (u : D.what₂.Word) (j : ℕ) : ℝ := ∑ τ : D.what₂.Ta
 def topSum {D : D7} (L : SizeData₂ D) : ℝ := ∑ t : D.host.TT, (L.aT t : ℝ)
 
 
+open Classical in
 def sizeOffTops (D : D7) (j : ℕ) : ℝ :=
   ∑ τ ∈ Finset.univ.filter (fun τ : D.what₂.Tau => τ ∉ topsOf D.host D.eTau), wj D j τ
 

@@ -46,6 +46,7 @@ theorem localIdele_inj (v : HeightOneSpectrum (𝓞 L)) : Function.Injective (lo
   rw [← finEv_local_self v x, h, finEv_local_self]
 
 
+open Classical in
 theorem exists_hecke_level {F : Type} [Field F] [NumberField F] [Algebra F L] {c : L ≃ₐ[F] L} {I : Type} [Fintype I]
     {φ : I → L →+* ℂ} (h : CMData F c φ) (e : I → ℤ) (S : Finset (HeightOneSpectrum (𝓞 L)))
     (θ : ∀ v : HeightOneSpectrum (𝓞 L), (v.adicCompletion L)ˣ →* ℂˣ) (hθc : ∀ v ∈ S, Continuous (θ v))

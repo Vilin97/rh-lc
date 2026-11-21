@@ -141,6 +141,7 @@ variable {k : Type} [Field k] [Algebra O k] {l : ℕ} [Fact l.Prime] [CharP k l]
   {ι : k⸨X⸩ →ₐ[k] k⸨X⸩}
 
 
+variable (k l) in
 def DelAct : Prop :=
   ∃ e : {δ // δ ∈ W.DelF} ≃ {z : ℤ_[l] // z ^ (l - 1) = 1}, ∀ δ a,
     PowerSeries.map (algebraMap O k) (W.γ₀ δ.1 a) =

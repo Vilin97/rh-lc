@@ -140,10 +140,12 @@ variable {F : Type} [Field F] [NumberField F]
 def vm (x : Fin 2 → F) (P : Matrix (Fin 2) (Fin 2) ℤ) : Fin 2 → F := x ᵥ* P.map (Int.cast : ℤ → F)
 
 
+omit [NumberField F] in
 theorem vm_apply (x : Fin 2 → F) (P : Matrix (Fin 2) (Fin 2) ℤ) (j : Fin 2) : vm x P j = x 0 * P 0 j + x 1 * P 1 j := by
   simp [vm, Matrix.vecMul, dotProduct, Fin.sum_univ_two]
 
 
+omit [NumberField F] in
 theorem vm_vm (x : Fin 2 → F) {P Q Z : Matrix (Fin 2) (Fin 2) ℤ} {D : ℕ} (h : P * Q = 1 + (D : ℤ) • Z) :
     vm (vm x P) Q = x + (D : 𝓞 F) • vm x Z := by
   have h' : ∀ i j, ((P i 0 * Q 0 j + P i 1 * Q 1 j : ℤ) : F) = (((1 : Matrix (Fin 2) (Fin 2) ℤ) i j + D * Z i j : ℤ) : F) :=
@@ -180,6 +182,7 @@ theorem mem_twist (N : ℕ) (L : Lat F) (α : Matrix (Fin 2) (Fin 2) (ZMod N)) (
     exact ⟨_, ⟨l, hl, rfl⟩, _, ⟨z, hz, rfl⟩, by rw [← e]; rfl⟩
 
 
+omit [NumberField F] in
 theorem vm_add_smul (x z : Fin 2 → F) (a : 𝓞 F) (P : Matrix (Fin 2) (Fin 2) ℤ) :
     vm (x + a • z) P = vm x P + a • vm z P := by
   funext j

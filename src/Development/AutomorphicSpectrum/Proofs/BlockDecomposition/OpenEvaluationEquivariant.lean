@@ -17,6 +17,7 @@ namespace GlobalTheory.CompanionTheory.BZPhiPG.TwO
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+variable (k) in
 def uM (n : ℕ) (w : Fin n → k) : Mir k n :=
   ⟨unip k n (Multiplicative.ofAdd w), MirU_le_Mir k _ ⟨_, rfl⟩⟩
 

@@ -54,6 +54,7 @@ theorem component_mem [DecidableEq K] {J : Ideal (MRing ι)} (hJ : IsMultiHomogI
   · simp [h, funext_iff]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem exists_component_not_mem {J : Ideal (MRing ι)} {f : MRing ι} (hf : f ∉ J) :
     ∃ D : K → ℕ, weightedHomogeneousComponent (multiDegWeight ι) D f ∉ J := by
   by_contra h
@@ -66,6 +67,7 @@ theorem exists_component_not_mem {J : Ideal (MRing ι)} {f : MRing ι} (hf : f �
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem component_mul_right [DecidableEq K] {f g : MRing ι} {i j : K → ℕ}
     (hg : IsWeightedHomogeneous (multiDegWeight ι) g j) :
     weightedHomogeneousComponent (multiDegWeight ι) (i + j) (f * g) =
@@ -75,6 +77,7 @@ theorem component_mul_right [DecidableEq K] {f g : MRing ι} {i j : K → ℕ}
     ((mem_weightedHomogeneousSubmodule _ _ _ _).mpr hg)
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem component_mul_of_not_le [DecidableEq K] {f g : MRing ι} {j n : K → ℕ}
     (hg : IsWeightedHomogeneous (multiDegWeight ι) g j) (h : ¬ j ≤ n) :
     weightedHomogeneousComponent (multiDegWeight ι) n (f * g) = 0 := by
@@ -85,6 +88,7 @@ theorem component_mul_of_not_le [DecidableEq K] {f g : MRing ι} {j n : K → �
 end LocRingPow
 
 
+open LocRingPow in
 theorem LocRingPow.proof : LocRingPow.Statement := by
   classical
   intro K _ ι _ P s t a W x u v b y hPp hPh hs hsP hW ht htW hx hu hv huW hvW hy

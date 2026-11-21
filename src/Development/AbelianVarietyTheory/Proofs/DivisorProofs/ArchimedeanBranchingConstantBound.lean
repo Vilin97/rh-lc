@@ -65,6 +65,7 @@ theorem log_prod_le {ι : Type} [Fintype ι] (a : ι → ℝ) (c : ℝ) (h0 : �
 end GlobalTheory.InfSize
 
 
+open GlobalTheory.InfSize in
 theorem GlobalTheory.InfSize.main : ∃ CF0 : ℝ, ∀ CF : ℝ, CF0 ≤ CF → ∃ K0 : ℝ, ∀ ε : ℝ, ∃ x₀ : ℝ, ∀ (D : D7) (large₂ : SizeData₂ D), large₂.sc.eps = ε → x₀ ≤ large₂.sc.x →
     ∀ (Γ : Type) [Group Γ] [Fintype Γ] (Pl0 T : Type) (A : FamIn D.what₂.LL Γ Pl0 T D.R.m)
       (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), HidaSetting large₂ R F →

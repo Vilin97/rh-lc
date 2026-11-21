@@ -256,6 +256,7 @@ variable (I : TateIso D k Q (fun a x => ρ a x) e) (hu : Uniq e) (hρ : IsAct ρ
 include I hu hρ hco
 
 
+omit hP in
 theorem triv_of_primary {n : ℕ} (hn : 0 < n) {x y : Q} (hx : x ^ n = 1) (hy : y ^ n = 1) {r s : ℕ}
     (h : ∀ a ∈ P.map (H.bar : 𝓞 E →+* 𝓞 E) ^ r, ρ a x = 1)
     (h' : ∀ a ∈ P.map (H.bar : 𝓞 E →+* 𝓞 E) ^ s, ρ a y = 1) : e n x y 1 := by
@@ -414,6 +415,7 @@ theorem exists_subgroup [IsAlgClosed k] [CharZero k] (hf : Finite {x : Q // x ^ 
 
 
 
+omit h₁ h₂ in
 theorem eq_kerSet [IsAlgClosed k] [CharZero k] (hf : Finite {x : Q // x ^ p = 1}) (C : Subgroup Q)
     (c₁ : ∀ x ∈ C, ∀ a, ρ a x ∈ C)
     (c₃ : ∀ x ∈ C, ∀ a ∈ Ideal.span {(p : 𝓞 E)} * P.map (H.bar : 𝓞 E →+* 𝓞 E), ρ a x = 1)

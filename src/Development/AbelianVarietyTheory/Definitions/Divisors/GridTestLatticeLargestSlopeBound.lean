@@ -74,6 +74,7 @@ def LaP (τ : D.what₂.Tau) : DomWeight (Xp G).rank where
   anti _ _ h := (La D sc.cGap τ).anti h
 
 
+variable (D) in
 abbrev emb : D.what₂.Tau → D.host.E →+* D.what₂.LL := labLL D
 
 abbrev WtSp : Type := VV D.what₂.LL (LaP G)

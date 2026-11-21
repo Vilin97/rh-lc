@@ -378,6 +378,7 @@ theorem bij_std (Q₀ : ObjectProperty (Thick (nlFun γ p X q κ))) (hQ : Used Q
 end GlobalTheory.CompanionTheory.ZarCosieve
 
 
+open GlobalTheory.CompanionTheory.ZarCosieve in
 theorem GlobalTheory.CompanionTheory.ZarCosieve.main : ∀ {O R : Type} [CommRing O] [CommRing R] {I : Ideal R} {γ : DividedPowers I} {p : ℕ} {X : Scheme.{0}}
     {q : X ⟶ Spec (CommRingCat.of O)} {κ : O →+* R ⧸ I} (Q₀ : ObjectProperty (Thick (nlFun γ p X q κ))) (hQ : Used Q₀)
     (𝒱 : Set X.Opens) (Q' : ObjectProperty (Thick (nlFun γ p X q κ))) (h : St Q₀ 𝒱 ≤ Q') (h' : Q' ≤ St Q₀ {sSup 𝒱})

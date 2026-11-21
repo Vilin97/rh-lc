@@ -48,6 +48,7 @@ theorem cmpConst_ne_zero {ka : ℂ} (hka : ka ≠ 0) (δ : ℤˣ) (d : ℕ) : cm
   exact mul_ne_zero hka (mul_ne_zero (mul_ne_zero (pow_ne_zero _ h3) (pow_ne_zero _ (by norm_num))) (pow_ne_zero _ (inv_ne_zero h2)))
 
 
+omit [Algebra T.Q.c.F D.what₂.LL] in
 theorem ccIs_transport {θ : InfFam D} {V W : HSp D} {hr : W.rank = D.R.r} {j : ℕ} {σ σ' : T.Q.c.F →+* ℂ} (e : σ = σ')
     (hV : T.V j σ = W) (hV' : T.V j σ' = W) {om : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)} {f₀ : WO V W → ℂ}
     {cst : (T.U j σ).Comp → ℂ}

@@ -56,6 +56,7 @@ end Roots
 variable {D : D7}
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_fun_of_val {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
     {n r : ℕ} (d : DeltaDat Xo c n) (V : HSp D) (hr : V.rank = r) (ι : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E))
     (x₀ : (D.host.E →+* ℂ) → Matrix (Fin r) (Fin r) ℂ) (hio : IotaOK Dw V ι) (hpos : 1 ≤ Dw.p + Dw.q)
@@ -160,6 +161,7 @@ theorem exists_coeff_cover (t : T0) (h : Lev.IsTwistPlaces D.host.g (R.Q t)) (hr
 end Cover
 
 
+set_option maxHeartbeats 1000000 in
 theorem coversAt_over_field (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F)
     (hT : LawsJ T) (hL : R.toLevCh.Is A.μ0) (hr : R.fam_roots) (hV : XiVal R) (hC : CoverField T R) (i : Fin D.R.m) (n : ℕ)
     (I : T0 → Ideal (𝓞 D.host.E)) (l₂ : T0 → Level T.Q.H)

@@ -25,6 +25,7 @@ theorem card_quot_pow {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationR
   exact hq
 
 
+open Module Submodule in
 theorem card_coker {R M ι : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     [AddCommGroup M] [Module R M] [Fintype ι] (b : Basis ι R M) {p : R} (hp : Irreducible p)
     (φ : M →ₗ[R] M) (hφ : Function.Injective φ) :

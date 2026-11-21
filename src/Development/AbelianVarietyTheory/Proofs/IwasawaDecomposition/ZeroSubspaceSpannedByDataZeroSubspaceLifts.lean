@@ -26,6 +26,7 @@ variable {K : Type} [Field K] [NumberField K] [StarRing K] {σ : K →+* ℂ} {M
   [InnerProductSpace ℂ M] [AddCommGroup W] [Module ℂ W]
 
 
+omit [NumberField K] [StarRing K] in
 theorem mulVec_map_injective {a b : ℕ} (Θ : Matrix (Fin a) (Fin b) K) (hΘ : Function.Injective Θ.mulVec) :
     Function.Injective (Θ.map σ).mulVec := by
   obtain ⟨g, hg⟩ := Θ.mulVecLin.exists_leftInverse_of_injective (LinearMap.ker_eq_bot.2 hΘ)

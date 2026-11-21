@@ -23,6 +23,7 @@ variable {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z : TC.Later B
 abbrev ColT (i : ℕ) : Type := (I.chain l u a).cls i → (I.chain l u a).Y i → ℂ
 
 
+set_option maxHeartbeats 1000000 in
 structure TwDat (Ch : ℕ → Type) where
   bad : ℕ → Set (HeightOneSpectrum (𝓞 B.host.F))
   chOf : ∀ i, (I.stp u a i).Cl → Ch i

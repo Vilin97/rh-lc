@@ -58,6 +58,8 @@ theorem relIndex_map_of_proj_left {X Y : Type} [AddCommGroup X] [AddCommGroup Y]
 end GlobalTheory.LocKerMod
 
 
+set_option maxHeartbeats 1000000 in
+open GlobalTheory.LFun in
 theorem GlobalTheory.LocKerMod.latIndex_embV_inert : ∀ (D : D7) (T : HSp D) (v : HeightOneSpectrum (𝓞 D.host.F))
     (w : HeightOneSpectrum (𝓞 D.host.E)) (h : w.under (𝓞 D.host.F) = v), IsInertAt D.host.F D.host.E v w →
     ∀ g : GlobalTheory.FinZeta.Gv T v, latIndex T (GlobalTheory.FinZeta.embV T v g) = GlobalTheory.LocKerMod.idxAt T w h g := by

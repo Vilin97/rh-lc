@@ -293,6 +293,8 @@ private lemma isLog_commute {ι : Type} [Fintype ι] [DecidableEq ι] {H A : Mat
   simp only [mul_comm]
 
 
+open Matrix Polynomial in
+open scoped Kronecker ComplexOrder TensorProduct in
 theorem _root_.GlobalTheory.ClassFin.exists_conj_harm_of_span : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (σ : Type) [Fintype σ] (τ : σ ≃ σ) (g : σ → Matrix ι ι ℂ), (∀ s, g (τ s) * g s = 1) → Submodule.span ℂ (Set.range g) = ⊤ → ∃ P : Matrix ι ι ℂ, IsUnit P.det ∧ _root_.GlobalTheory.ClassFin.Harm (fun s => P * g s * P⁻¹) := by
   intro ι _ _ σ _ τ g hτ hspan
   have hdet : ∀ s, IsUnit (g s).det := fun s => Matrix.isUnit_det_of_left_inverse (hτ s)

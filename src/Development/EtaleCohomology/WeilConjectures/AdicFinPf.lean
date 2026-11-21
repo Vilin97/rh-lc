@@ -30,6 +30,7 @@ theorem red_smul {Q q : ℕ} [NeZero Q] [NeZero q] (h : q ∣ Q) (c : ZMod Q) (z
   rw [ZMod.castHom_apply, ZMod.cast_eq_val, Nat.cast_smul_eq_nsmul]
 
 
+open LateralTheory.KummerTheory in
 theorem gen_mod {ι : Type*} (g : ι → Hl l E n i)
     (hg : ∀ x : Hl l E n i, ∃ t y, x = g t + ((l : ℤ_[l]) ^ 1) • y) :
     ∀ (k : ℕ) (x : Hl l E n i), ∃ m ∈ Submodule.span ℤ_[l] (Set.range g), ∃ y, x = m + ((l : ℤ_[l]) ^ k) • y := by

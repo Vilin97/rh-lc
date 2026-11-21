@@ -20,6 +20,7 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG : Fi
 
 
 
+omit [StarRing E] in
 theorem exists_coprime_mem (p : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E)))
     (hS : ∀ Q ∈ S, ((p : ℕ) : 𝓞 E) ∉ Q.asIdeal) : ∃ a : ℕ, a.Coprime p ∧ ∀ Q ∈ S, ((a : ℕ) : 𝓞 E) ∈ Q.asIdeal := by
   classical

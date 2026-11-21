@@ -55,6 +55,7 @@ theorem lRootInt_succ (m : ℕ) : lRootInt (l := l) (m + 1) ^ l = lRootInt m :=
     rw [← GlobalTheory.Pst.lRoot_succ l m, coe_pow'])
 
 
+variable (l) in
 def lFlat : 𝒪♭ := IsPerfectoidField.ofCompatible l lRootInt lRootInt_succ
 
 theorem coe_untilt_iterate_lFlat (n : ℕ) :

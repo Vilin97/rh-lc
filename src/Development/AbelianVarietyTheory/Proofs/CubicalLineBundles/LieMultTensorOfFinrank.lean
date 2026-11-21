@@ -18,6 +18,7 @@ open GlobalTheory GlobalTheory.CM
 namespace GlobalTheory.CM
 
 
+open GlobalTheory.TensorDet GlobalTheory.Serre in
 theorem lieMult_tensor_of_finrank {O O' M R k : Type} [CommRing O] [CommRing O'] [Algebra O O'] [AddCommGroup M]
     [Module O M] [Module O' M] [IsScalarTower O O' M] [Module.Finite O M] [Module.Projective O M] [CommRing R]
     [Field k] [Algebra O k] {G A : Over (Sp R)} [GrpObj G] [IsCommMonObj G] [GrpObj A] [IsCommMonObj A]
@@ -63,6 +64,7 @@ theorem lieMult_tensor_of_finrank {O O' M R k : Type} [CommRing O] [CommRing O']
   rwa [Category.id_comp] at h2
 
 
+open GlobalTheory.TensorDet GlobalTheory.Serre in
 theorem hasType_of_isTen : Out.PolBaseChangeSt → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (R : Type) [CommRing R] [CharZero R] (ω : R) (C : Ell H R ω) (D : Datum H) (h : D.La → D.La → OK H) (T : PAT H (Sp R)), Nonempty (IsTen C D h T) → HasType H T.t.act (2 * ω - 1) (D.p + D.q) 0 := by
   rintro - E _ _ _ H R _ _ ω C D h T ⟨t⟩ k _ _ β hβ χ
   have : CharZero k := β.charZero_iff hβ |>.1 inferInstance

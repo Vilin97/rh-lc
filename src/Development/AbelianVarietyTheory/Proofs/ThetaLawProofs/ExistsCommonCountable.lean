@@ -40,6 +40,7 @@ noncomputable section
 namespace GlobalTheory.KeyRoot
 
 
+open GlobalTheory.KeyCancel in
 theorem keyVia_cancel {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] {x : KeyIn R} {x' : KeyIn R'}
     {x'' : KeyIn R''} {f : R →+* R'} {f' : R' →+* R''} {φ w φ'' w''} (H : KeyVia x' x f φ w)
     (H'' : KeyVia x'' x (f'.comp f) φ'' w'') : ∃ φ' w', φ' ≫ φ = φ'' ∧ KeyVia x'' x' f' φ' w' := by

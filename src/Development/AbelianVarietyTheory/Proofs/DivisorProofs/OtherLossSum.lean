@@ -209,6 +209,7 @@ theorem first_term {D : D7} {L : SizeData₂ D} (h : SizesAt L) {j : ℕ} (hj : 
     _ = _ := by ring
 
 
+set_option maxHeartbeats 800000 in
 theorem eatI_bound {D : D7} {L : SizeData₂ D} (h : SizesAt L) {K : Consts} {c : ErrC} (h1 : K.dl1 = 5) (h2 : K.dl2 = 4)
     (h3 : c.c6 = 12) {j : ℕ} (hj : j ∈ SizeData₂.lifts D) {p : ℕ} (hp : 2 ≤ p) (hpb : (p : ℝ) ≤ L.sc.b) :
     |EatI L K c j p - EatX L c j p| * Real.log p ≤

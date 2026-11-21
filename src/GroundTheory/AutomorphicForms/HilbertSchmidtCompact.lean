@@ -56,6 +56,7 @@ theorem sub_hsTruncation_apply_basis {ι : Type*} [DecidableEq ι] (b : HilbertB
   split_ifs <;> simp
 
 
+omit [CompleteSpace K] in
 theorem hsNormSq_sub_hsTruncation (T : H →L[𝕜] K) (F : Finset (exists_hilbertBasis 𝕜 H).choose) :
     hsNormSq (T - hsTruncation (stdHilbertBasis (𝕜 := 𝕜) (H := H)) T F) =
       ∑' i : {i // i ∉ F}, ‖T (stdHilbertBasis (𝕜 := 𝕜) (H := H) i)‖ₑ ^ 2 := by

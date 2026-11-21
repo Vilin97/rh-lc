@@ -110,6 +110,7 @@ variable {Ω : Type*} [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValu
 variable {π : 𝒪[K]} (hπ : Irreducible π) {f g : PowerSeries 𝒪[K]}
 
 
+variable (Ω) in
 def lubinTateLimit (hπ : Irreducible π) : IntermediateField K Ω :=
   ⨆ n, lubinTateField Ω hπ (isLubinTateSeries_ltPoly π) n
 

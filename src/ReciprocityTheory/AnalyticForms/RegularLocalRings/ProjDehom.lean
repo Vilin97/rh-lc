@@ -36,6 +36,7 @@ instance locallyOfFiniteType_toSpecC {P : Ideal (MvPolynomial (Σ k, ι k) ℂ)}
   exact @locallyOfFiniteType_comp _ _ _ (Proj.toSpecZero (segreGrading P)) _ h1 h2
 
 
+open Classical in
 def chartUpd (p : (k : K) → ι k) (q : Σ k, ι k) : (k : K) → ι k :=
   Function.update p q.1 q.2
 

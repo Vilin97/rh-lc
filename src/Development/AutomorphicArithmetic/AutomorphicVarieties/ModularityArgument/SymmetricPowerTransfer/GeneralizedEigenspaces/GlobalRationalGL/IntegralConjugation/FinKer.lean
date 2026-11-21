@@ -29,6 +29,7 @@ private theorem fin_snd {L : Type} [Field L] [NumberField L] {n : ℕ} (g : GL (
   by_cases h : i = j <;> simp [Matrix.one_apply, h]
 
 
+open Formalism.UG GlobalTheory.BCT.FinPtLoc in
 private theorem fin_mem {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} (g : GL (Fin n) (Af L))
     (hg : cT (cjF (L := L)) g.val * g.val = 1) : finGL L n g ∈ UA L n := by
   show cT (conjAd L) (finGL L n g).val * 1 * (finGL L n g).val = 1

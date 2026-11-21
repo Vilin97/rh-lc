@@ -147,6 +147,7 @@ theorem exists_sec_locus [IsReduced A.left] [LocallyOfFiniteType A.hom] (u : Hol
     exact mul_ne_zero h (pow_ne_zero _ (div_ne_zero (pow_ne_zero _ (u.fr_ne _ _ hi)) (u.fr_ne _ _ hj)))
 
 
+open Complex Matrix LatticeHom in
 theorem exists_complementary (u : HolUnif A L g) (hL : L.IsLB) {Hm : Matrix (Fin g) (Fin g) ℂ} {χ : u.Λ → ℂ}
     (h : u.IsAH Hm χ) (F : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) (hF : ∀ l ∈ u.Λ, F l ∈ u.Λ) (κ : ℕ)
     (hpos : ∀ z, z ≠ 0 → (hermForm Hm (F z) (F z)).re < κ * (hermForm Hm z z).re) (a : ℕ) :
@@ -272,6 +273,7 @@ end GlobalTheory.PositiveAmple
 namespace GlobalTheory
 
 
+open PositiveAmple in
 theorem relAmple_of_hermForm_pos : Out.Laws → Out.Laws2 → ThetaUnifAV → ∀ (P : Out.PolAV (Sp ℂ)) (u : HolUnif P.A P.L P.g) (Hm : Matrix (Fin P.g) (Fin P.g) ℂ) (χ : u.Λ → ℂ) (f : P.A ⟶ P.A) (F : (Fin P.g → ℂ) →ₗ[ℂ] (Fin P.g → ℂ)) (κ : ℕ), u.IsAH Hm χ → IsMonHom f → (∀ z, u.ex (F z) = u.ex z ≫ f) → (∀ z, z ≠ 0 → (hermForm Hm (F z) (F z)).re < κ * (hermForm Hm z z).re) → Out.RelAmple P.A (LB.LinComb P.L (K := Fin 2) ![𝟙 P.A.left, f.left] ![(κ : ℤ), -1]) := by
   intro hL _ hT P u Hm χ f F κ hu _ hF hpos
   have := P.isAb.proper

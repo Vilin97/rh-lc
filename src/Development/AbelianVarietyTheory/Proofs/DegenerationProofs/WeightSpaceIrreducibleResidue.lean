@@ -266,6 +266,7 @@ end GlobalTheory.WeightIrred
 namespace GlobalTheory
 
 
+open WeightIrred in
 theorem weightSpace_irreducible_residue : GlobalTheory.UT.LL → ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] [ArithBase o Ω] (S : ThetaSys o Ω) (ρ : S.Real) (p : ℕ) [Fact p.Prime] (y : o →+* OO p) (T : AddSubgroup S.Gam), S.IsoFree T → ∀ (c : T →+ ZMod S.N) (W : Submodule (kb p) (S.J → kb p)), (∀ v ∈ W, ((S.proj T c).map fun a => IsLocalRing.residue (OO p) (y a)).mulVec v = v) → (∀ h ∈ S.perp T, ∀ v ∈ W, ((S.ρ h).map fun a => IsLocalRing.residue (OO p) (y a)).mulVec v ∈ W) → W = ⊥ ∨ ∀ v, ((S.proj T c).map fun a => IsLocalRing.residue (OO p) (y a)).mulVec v = v → v ∈ W := by
   intro hL o Ω _ _ _ hA S ρ p _ y T hT c W hW hst
   have : IsDomain o := hA.inj.isDomain _

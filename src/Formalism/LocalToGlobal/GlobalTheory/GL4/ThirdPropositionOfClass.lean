@@ -22,6 +22,7 @@ section Orth
 variable {D : D7} {u : D.what₂.Word} (CV : ColVal D u)
 
 
+open Classical in
 def prjC (c : (D.mem u).C.cls 0) : ((D.fm u).lat 0).V →ₗ[D.what₂.LL] ((D.fm u).lat 0).V :=
   ((coE CV (hTV0 D u)).symm : ((D.mem u).C.cls 0 → VV D.what₂.LL ((D.fm u).lam 0)) →ₗ[D.what₂.LL] ((D.fm u).lat 0).V) ∘ₗ
     (LinearMap.single D.what₂.LL (fun _ : (D.mem u).C.cls 0 => VV D.what₂.LL ((D.fm u).lam 0)) c ∘ₗ

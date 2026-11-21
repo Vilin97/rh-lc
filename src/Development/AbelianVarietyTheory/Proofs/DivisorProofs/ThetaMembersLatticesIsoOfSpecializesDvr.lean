@@ -160,6 +160,7 @@ variable {Y : RatModel X₁.o₁ X₁.Ω₁} {πY : Y.Z ⟶ X₁.M.Z} {U₀ : Y.
   (𝔫 : GMem X₁ z₁ act V ev X t δ) {ξ : Sp V ⟶ Y.Z}
 
 
+include 𝔫 in
 theorem base_of_gMem : GlobalTheory.Mum.Base V :=
   ⟨⟨𝔫.cn.1, inferInstance, 𝔫.cn.2.1, 𝔫.cn.2.2.1⟩, 𝔫.cn.2.2.2⟩
 

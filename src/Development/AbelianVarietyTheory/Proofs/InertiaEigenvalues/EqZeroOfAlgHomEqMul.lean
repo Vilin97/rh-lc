@@ -10,6 +10,7 @@ open PowerSeries GlobalTheory.CycFr
 namespace GlobalTheory.CycFr
 
 
+open PowerSeries in
 theorem _root_.GlobalTheory.CycFr.eq_act_of_comm {l : ℕ} [Fact l.Prime] {O : Type}
     [CommRing O] [IsDomain O] [CharZero O]
     [Algebra ℤ_[l] O] (φ₀ g : O⟦X⟧ →ₐ[O] O⟦X⟧) (c : ℤ_[l]) (hφ : φ₀ X = (1 + X) ^ l - 1)

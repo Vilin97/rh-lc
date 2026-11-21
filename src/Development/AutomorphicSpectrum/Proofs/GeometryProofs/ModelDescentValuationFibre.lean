@@ -120,6 +120,7 @@ variable {O Ω O' Ω' : Type} [CommRing O] [Field Ω] [Algebra O Ω] [CommRing O
   [IsScalarTower O Ω Ω'] {K : Type} [Fintype K] {J : K → Type}
 
 
+variable (Ω') in
 abbrev bcPt (y : (Σ k, J k) → Ω) : (Σ k, J k) → Ω' := fun v => algebraMap Ω Ω' (y v)
 
 theorem segreVec_bcPt (y : (Σ k, J k) → Ω) (c : ∀ k, J k) :
@@ -347,6 +348,7 @@ theorem isMultiHomog_map {f : MRing J O} {b : K → ℕ} (h : IsMultiHomog f b) 
   exact h fun h0 => hd (by rw [h0, map_zero])
 
 
+open GroundTheory.Heights₂.Heights.NumbersDVR in
 theorem isVerticalDivisor_ext [Fintype K] [IsDomain O] [IsDiscreteValuationRing O] [IsDomain O']
     [IsDiscreteValuationRing O'] (y : (Σ k, J k) → Ω)
     (hinj : Function.Injective (algebraMap O Ω)) {ϖ : O} {ϖ' : O'} (hϖ : Irreducible ϖ)

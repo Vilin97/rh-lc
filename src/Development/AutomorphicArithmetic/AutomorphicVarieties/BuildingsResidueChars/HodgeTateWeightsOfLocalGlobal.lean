@@ -20,6 +20,7 @@ private theorem norm_hom {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l]
   rfl
 
 
+open Formalism.BasicNotions.Loc in
 private theorem ex_emb {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] {l : ℕ}
     [Fact l.Prime] {A : ValuationSubring Ω} {w : Plc F} (h : IsPlaceOver A w) {O : Type} [CommRing O]
     [Algebra ℤ_[l] O] [TopologicalSpace O] (Bw : LocBridge l F Ω (Dec (F := F) A) O)

@@ -49,6 +49,8 @@ open GlobalTheory.RowEx
 namespace GlobalTheory
 
 
+set_option maxHeartbeats 4000000 in
+open GlobalTheory.FunObj GlobalTheory.FunObj.SqNum GlobalTheory.BigTop.Fun in
 theorem Mem.LiteralAutomorphy.trSq_holds : GlobalTheory.Mem.LiteralAutomorphy.TrSq := by
   intro X X' T T' L L' sc G G' W W' S S' μ₀ μ₀' ι h M σ hs
   obtain ⟨⟨hpre, -, -, ⟨f, f', hff, hC, hC'⟩, hbase, hxi, -, -⟩, hg, -, -⟩ := h

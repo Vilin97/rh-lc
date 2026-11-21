@@ -108,6 +108,7 @@ end GlobalTheory.CompanionTheory.Ar.Flat.PerGram
 namespace GlobalTheory.CompanionTheory.Ar.Flat
 
 
+open PerGram in
 theorem hodgeGram_iff_period : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (σ : KA l →+* ℂ) (g : ℕ) (ty : Fin g → (E →+* ℂ)) (FU : FamilyUnif Xo σ ty) (i : Fin FU.n) (P : (FU.Di i).La →+ (Fin g → ℂ)) (Hm : Matrix (Fin g) (Fin g) ℂ), IsPeriod (FU.Di i) ty P → Hm.IsHermitian → (∀ x y, (hermForm Hm (P x) (P y)).im = (FU.Di i).EF x y) → ∀ (y : Sp ℂ ⟶ Xo.X), y = FU.u i P → ∀ (m : ℕ) (v : Fin m → (epsAt y ⟶ Xo.univ.t.G)) (W : Fin m → Fin g → ℂ) (Γ : Matrix (Fin m) (Fin m) ℂ), (∀ a, IsDerivAt0 (fun z => (FU.ex i P z).left) (W a) (v a).left) → (IsHodgeGram Xo.univ.t.G Xo.univ.t.PP.L y v Γ ↔ ∀ a b, Γ a b = Real.pi * hermForm Hm (W a) (W b)) := by
   intro E _ _ _ H D l Xo σ g ty FU i P Hm hP _ hIm y hy m v W Γ hd
   subst hy

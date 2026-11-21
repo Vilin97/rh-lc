@@ -63,6 +63,7 @@ theorem ofReal_finsum {α : Type*} (f : α → ℝ) : ((∑ᶠ a, f a : ℝ) : �
     rw [finsum_of_infinite_support hs, finsum_of_infinite_support hs', Complex.ofReal_zero]
 
 
+open Matrix in
 theorem sum_norm_sq_unitary {ι : Type*} [Fintype ι] [DecidableEq ι] (U : Matrix ι ι ℂ)
     (hU : U ∈ Matrix.unitaryGroup ι ℂ) (v : ι → ℂ) :
     ∑ i, ‖∑ j, U i j * v j‖ ^ 2 = ∑ i, ‖v i‖ ^ 2 := by

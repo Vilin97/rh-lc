@@ -93,6 +93,7 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.
   (O : OMDat T.toCore R i Unit fun _ => A.μ0) (κ : WeightFamilies.Wt D ((i : ℕ) + 1)) (v₀ : (R.MW i (sg0 D A)).Vec)
 
 
+set_option maxHeartbeats 1000000 in
 theorem cover_const (hT : LawsJ T) (hL : R.toLevCh.Is A.μ0)
     (hP : O.Pins κ v₀ (iotaW T i) (T.x₀ ((i : ℕ) + 1) O.s0)) :
     ∃ u : O.c'.F, (∃ m : ℕ, 0 < m ∧ u ^ m = 1) ∧ (O.dδ ()).cδ = (O.dδ ()).eF u • 1 := by

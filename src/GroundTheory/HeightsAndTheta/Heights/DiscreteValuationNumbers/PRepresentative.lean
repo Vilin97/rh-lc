@@ -111,6 +111,7 @@ theorem exists_form_not_mem_of_isRelevant [Fintype K] {H : Ideal (MRing ι R)} [
     exact hi k (hH.mem_of_pow_mem _ hk)
 
 
+omit [DecidableEq K] in
 theorem divCycle_eq_of_sub_mem {P : Ideal (MRing ι R)} {x y : MRing ι R} (h : x - y ∈ P) :
     divCycle P x = divCycle P y := by
   have hI : P ⊔ Ideal.span {x} = P ⊔ Ideal.span {y} := by

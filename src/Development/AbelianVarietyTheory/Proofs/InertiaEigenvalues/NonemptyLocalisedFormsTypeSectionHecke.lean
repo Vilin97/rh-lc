@@ -113,6 +113,7 @@ namespace GlobalTheory.PendOf.SecProof
 open GlobalTheory.EtaJoin.TypeTieProof Formalism.L2.NG Formalism.AUTREP ReciprocityTheory.Aut
 
 
+set_option maxHeartbeats 1600000 in
 theorem main : ∀ (D : D7) (M : MtFam D) (i : D.nd.Loc), HeckeTied D M → HeckeRational D M → AVTied D M →
     GlobalTheory.EtaJoin.SplitUnif D → GlobalTheory.EtaJoin.HeckeScalar M i → Nonempty (Sec D i) := by
   intro D M i HT HR AV _ HS

@@ -24,6 +24,7 @@ section General
 variable {S : Type u} [CommRing S] {E : Type v} [AddCommGroup E] [Module S E] {m : ℕ} {U : Finset (Fin m)}
 
 
+variable (S E U) in
 abbrev dE (p : ℕ) : Cochain (fun _ : Cell U => E) p →ₗ[S] Cochain (fun _ : Cell U => E) (p + 1) :=
   Cech.d (fun _ : Cell U => E) (Cech.idRes S E U) p
 
@@ -100,13 +101,16 @@ variable {S : Type u} [CommRing S] {E : Type v} [AddCommGroup E] [Module S E] {�
   {x : Fin (N + 1) → Ω} {y : Fin (r + 1) → Ω}
 
 
+variable (E x y) in
 abbrev W (p q : ℕ) : Type v := Cochain (fun _ : Chart x => Cochain (fun _ : Chart y => E) q) p
 
 
+variable (S E x y) in
 def vW (p q : ℕ) : W E x y p q →ₗ[S] W E x y (p + 1) q :=
   Cech.d (fun _ : Chart x => Cochain (fun _ : Chart y => E) q) (Cech.idRes S _ (support x)) p
 
 
+variable (S E x y) in
 def hW (p q : ℕ) : W E x y p q →ₗ[S] W E x y p (q + 1) :=
   Cech.mapC (fun _ : Chart x => dE S E (support y) q) p
 

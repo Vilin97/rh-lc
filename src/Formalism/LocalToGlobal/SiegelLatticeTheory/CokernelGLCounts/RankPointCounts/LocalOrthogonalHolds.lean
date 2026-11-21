@@ -22,6 +22,7 @@ variable {D : Formalism.BasicNotions.D7} (Zd : LocDat D) {u u' : D.what₂.Word}
   {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
 
+set_option maxHeartbeats 1000000 in
 theorem localOrthogonal_holds : PartialIsometryExtension Zd u u' F0 what₂ := by
   intro γ Z F'₂ φ φ' Λ₂ hB β₀ hβ₀ hfr hW0 hOm p w hw hm hm₂
   have hStar := hB.2.2.1

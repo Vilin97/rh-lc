@@ -38,6 +38,7 @@ def gsRealH0Card
   Nat.card (cohomology (Rep.res (gsRealFamily S ιr v).toMonoidHom M) 0)
 
 
+open scoped Classical in
 def gsEulerRatio
     (ιr : ∀ v : {v : InfinitePlace K.1 // v.IsReal}, ℚ̄ →ₐ[K.1] AlgebraicClosure v.1.Completion) : ℚ :=
   eulerChar M * (Nat.card M : ℚ) ^ Fintype.card (InfinitePlace K.1) /

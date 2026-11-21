@@ -36,6 +36,7 @@ theorem left_and_zero {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGr
   exact h.unique hR IsQuotIntL1.zero
 
 
+open scoped Pointwise Topology in
 theorem isClosed_of_locallyCompactSpace {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [T2Space G]
     (R : Subgroup G) [LocallyCompactSpace R] : IsClosed (R : Set G) := by
   obtain ⟨K, hKn, hK⟩ := local_compact_nhds (x := (1 : R)) (n := Set.univ) Filter.univ_mem

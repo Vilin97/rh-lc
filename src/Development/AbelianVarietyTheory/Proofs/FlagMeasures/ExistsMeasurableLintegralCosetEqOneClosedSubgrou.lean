@@ -9,6 +9,9 @@ open MeasureTheory
 namespace GlobalTheory
 
 
+open MeasureTheory in
+open scoped ENNReal in
+open scoped Pointwise in
 theorem _root_.GlobalTheory.exists_measurable_lintegral_coset_eq_one
     (G H : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [LocallyCompactSpace G]
     [T2Space G] [SecondCountableTopology G] [MeasurableSpace G] [BorelSpace G] [Group H]

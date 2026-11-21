@@ -53,6 +53,7 @@ theorem pderiv_X_ite [DecidableEq κ] (i j : κ) :
 
 
 open scoped Classical in
+open Classical in
 theorem coeff_subst_kill (e : ι → κ) {b : κ → MvPowerSeries κ A} (hb0 : ∀ i, b (e i) = 0)
     (hb1 : ∀ k, k ∉ Set.range e → b k = X k) (f : MvPowerSeries κ A) (α : κ →₀ ℕ) :
     coeff α (subst b f) = if ∀ i, α (e i) = 0 then coeff α f else 0 := by

@@ -37,6 +37,7 @@ theorem levelTransitionG_trans {p q r : GLevel K} (h₁ : p ≤ q) (h₂ : q ≤
     (levelTransition_comp_levelTransition (K := K) (F := p.1) (E := q.1) (M := r.1) n)
 
 
+variable (K) in
 structure LevelDecomposition where
 
   L : Place K.1 → GLevel K → Type
@@ -68,6 +69,7 @@ attribute [instance] LocalLimit.grp
 variable {n} (D : LevelDecomposition K n) (T : LocalLimit D) (hn : 1 ≤ n)
 
 
+include hn in
 def levelSum (p : GLevel K) : cohomology (ideleRep K.1 p.1.1) n →+ ⨁ v : Place K.1, T.T v :=
   (DFinsupp.mapRange.addMonoidHom fun v => (T.infl v p).comp (D.e v p).toAddMonoidHom).comp
     (idelesCohomologyEquiv hn).symm.toAddMonoidHom

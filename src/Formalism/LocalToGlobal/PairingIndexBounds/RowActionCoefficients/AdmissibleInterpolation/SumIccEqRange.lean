@@ -233,6 +233,7 @@ end Blocks
 end FrameUnitLemmas
 
 
+open FrameUnitLemmas in
 theorem xUnit_of (hS : XShape) : XUnit := by
   intro p _ X Kc _ _ Oc hO hp j L L'' g g' hL hL'' i0 hi0
   have hr : ∀ v, i0 v ≤ X.G.P.m + 1 := fun v => by

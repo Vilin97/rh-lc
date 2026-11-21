@@ -74,6 +74,7 @@ theorem isOpen_ann (ψ : AddChar k Circle) (hψ : Continuous ψ) (n : ℕ) (t : 
 end GlobalTheory.CompanionTheory.MirFourier
 
 
+open GlobalTheory.CompanionTheory.MirFourier in
 theorem GlobalTheory.CompanionTheory.MirFourier.fourier : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k], GlobalTheory.BZMir.Fun.Fourier k := by
   intro k _ _ _ _ ψ hψ h1 n V _ _ τ hτ v hv

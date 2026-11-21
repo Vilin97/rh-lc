@@ -129,6 +129,7 @@ end GlobalTheory.CompanionTheory.CartGL.UnitBall
 namespace GlobalTheory.CompanionTheory.CartGL
 
 
+open UnitBall in
 theorem cartan_unitBall (L : Type) [NontriviallyNormedField L] [IsUltrametricDist L] [ProperSpace L]
     (n : ℕ) (p : Lˣ) (hp : IsUnif p) (g : GL (Fin n) L) :
     ∃ a : Fin n → ℤ, Antitone a ∧ ∃ k₁ ∈ congK L n 1 zero_le_one le_rfl,

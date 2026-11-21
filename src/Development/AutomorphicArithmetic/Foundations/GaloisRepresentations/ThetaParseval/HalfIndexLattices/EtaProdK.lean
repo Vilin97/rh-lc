@@ -244,6 +244,7 @@ private theorem exists_idele_eta_neg_one_at_place {σ : E →ₐ[F] E} (hcm : Is
     simp [GlobalTheory.QuadSymbol.eta, hnm, GlobalTheory.IdeleNormChar.signToCircle]
 
 
+set_option maxHeartbeats 1000000 in
 private theorem eta_prod_all {σ : E →ₐ[F] E} {B : Base F E} (hcm : IsCMExt F E σ)
     (hun : Algebra.Unramified (𝓞 F) (𝓞 E)) {η : (AEF F E)ˣ →* Circle}
     (h1 : IsHeckeCharF η) (h2 : ResEtaF η 1) (h3 : HasExp B.emb η (fun _ => 1)) (h4 : UnramInert σ η)

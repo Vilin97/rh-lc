@@ -155,6 +155,7 @@ theorem exists_geoFun_eq (hProp : PB.Proportional) (hI : PB.Inputs) (II : Inters
 end RealProp
 
 
+open RealProp in
 theorem rootTower_proportional_of_unif : PB.Proportional → PB.Inputs → ∀ II : IntersectionSystem,
     IsFullIntersectionSystem II → ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) [Nonempty Ψ] (T : RootTower Ψ N)
     (R : RealTower T), R.Unif → T.Proportional := by

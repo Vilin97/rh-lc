@@ -31,6 +31,7 @@ namespace GlobalTheory.NL.PoleCrys
 section Algebra
 
 
+open PowerSeries in
 theorem constantCoeff_algHom {L : Type} [CommRing L] (γ : L⟦X⟧ →ₐ[L] L⟦X⟧) (h0 : constantCoeff (γ X) = 0)
     (a : L⟦X⟧) : constantCoeff (γ a) = constantCoeff a := by
   conv_lhs => rw [PowerSeries.eq_shift_mul_X_add_const a]
@@ -39,6 +40,7 @@ theorem constantCoeff_algHom {L : Type} [CommRing L] (γ : L⟦X⟧ →ₐ[L] L�
   simp
 
 
+open PowerSeries in
 theorem eq_zero_of_fixed {L ι : Type} [Field L] [Fintype ι] [DecidableEq ι] (γ : L⟦X⟧ →ₐ[L] L⟦X⟧)
     (h0 : constantCoeff (γ X) = 0) (hu : ∀ k : ℕ, 0 < k → coeff 1 (γ X) ^ k ≠ 1) (G : ι → ι → L⟦X⟧)
     (hG : ∀ i j, constantCoeff (G i j) = if i = j then 1 else 0) (d : ι → L⟦X⟧)
@@ -426,6 +428,8 @@ theorem isUnit_prod (hinj : Function.Injective inclR) (φA : O ⊗[Zl] Ai →ₐ
     exact ih.map _
 
 
+include hI in
+set_option maxHeartbeats 1000000 in
 theorem mem_of_layers (ιA : Ai →+* B)
     (hβ₀ : ∀ (o : O) (w : Ai), β (o ⊗ₜ[Zl] w) = algebraMap O LL o ⊗ₜ[Qp] ιA w)
     (zl : PowerSeries Zl →+* LetA O n) (h1 : IsCrys PD W.one.ρ)
@@ -524,6 +528,7 @@ theorem exists_disc' (hT : LocTied l P AI) (h : Good K s LL) (Γ : GamS P K s LL
 end Concrete
 
 
+set_option maxHeartbeats 1000000 in
 theorem solvable (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (l : ℕ) [Fact l.Prime]
     (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL) (hL : Laws (HW l) (F l) h) (J : Multiset ℕ) (r : ℕ)
     (C : Set (LetA ↥LL.1 (Module.finrank ℚ_[l] ↥(K0 K)))) (t : LetA ↥LL.1 (Module.finrank ℚ_[l] ↥(K0 K)))
@@ -539,6 +544,8 @@ theorem solvable (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.
     (funext fun j => γL_apply (SerL (HW l) (F l) h hL) _ (w j))).trans k3
 
 
+set_option maxHeartbeats 2000000 in
+set_option synthInstance.maxHeartbeats 200000 in
 theorem main : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW), P7 D HW F := by
   intro D HW F l _ K s LL h T hT J y z hy hz hyz
   refine Classical.byContradiction fun hcon => ?_

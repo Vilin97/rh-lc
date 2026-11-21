@@ -102,6 +102,7 @@ theorem fst_mem_span (A : LocAt F E n G) (hW : LocInt A)
     exact Submodule.smul_mem _ c hx
 
 
+set_option maxHeartbeats 400000 in
 theorem lbAt_gen (A : LocAt F E n G) (hW : LocInt A)
     (hAlg : ∀ v (a : (A.pl v).1.adicCompletion F), A.spl v ((1 : E) ⊗ₜ[F] a) = (a, a))
     (Lb : Submodule (𝓞 E) (Fin n → E)) (hfr : FrAtB A Lb) (v : Fin G.P.nV) :

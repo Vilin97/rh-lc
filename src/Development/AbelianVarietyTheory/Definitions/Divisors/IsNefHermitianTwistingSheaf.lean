@@ -29,6 +29,7 @@ variable {A u hu}
 end Two
 
 
+omit [IsIntegral X] in
 theorem isNef_of_small {D : ℕ} (hX : IsArithVar p D) (L : HermLB p) (hs : L.SemiPos D) (hf : ArInt.NefFib L)
     (hg : ∀ x : X, ∃ u ∈ L.smallSec, x ∈ nonzeroLocus u) : L.IsNef D where
   semiPos := hs

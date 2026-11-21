@@ -18,6 +18,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] [FiniteD
   {σ : E →ₐ[F] E} {M : ℕ} {J : Matrix (Fin M) (Fin M) E} {r : ℕ}
 
 
+set_option maxHeartbeats 800000 in
 theorem continuous_uT (P : Frame E M r) (a b : Fin r) :
     Continuous fun g : HA (Af F) σ J => uT (Af F) σ J P g a b := by
   have h1 : Continuous fun g : HA (Af F) σ J => lin (Af F) σ J g (ratV (F := F) (Af F) (P.e b)) :=

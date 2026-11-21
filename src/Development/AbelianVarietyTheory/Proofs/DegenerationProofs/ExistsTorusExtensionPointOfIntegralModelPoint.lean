@@ -31,6 +31,7 @@ variable {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D : DegData R I}
   [IsCommMonObj G] (U : UnifPre I D A G) {S : Type} [CommRing S] {φ : R →+* S} [IsLocalRing S]
 
 
+open FormalPoint RedTotal in
 theorem exists_gtPt [IsAdicComplete (I.map φ) S] (x : Over.mk (spMap φ) ⟶ G) :
     ∃ g : GtPt D.toPre (Over.mk (spMap φ)), ∀ (e : ℕ) (Z : Scheme.{0}) (r : Z ⟶ Sp S)
       (y : Z ⟶ (thickObj R I e G).left), y ≫ (fstG I e G).left = r ≫ x.left →

@@ -22,6 +22,8 @@ theorem mulLat_one_GL {n : ℕ} (L : Submodule (𝓞 D.host.E) (Fin n → D.host
   simp
 
 
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem eSame_one (T : Forms0 D u) (v : (D.mem u).A.vT) (a : ((D.mem u).A.Fv v)ˣ) (k : ℤ)
     (hk : (k : (D.mem u).A.Fv v) = a) (δ : UPts (sigD D) (gramN D 0 (Nat.zero_le _)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F))
     (hδ : IsDia T.cls0.lev (T.atT.eV v).1 (T.atT.eV v).2 k δ) (c c1 c3 : (D.mem u).C.cls 0)
@@ -106,6 +108,8 @@ theorem eSame_one (T : Forms0 D u) (v : (D.mem u).A.vT) (a : ((D.mem u).A.Fv v)�
   exact hm
 
 
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem eSame (T : Forms0 D u) : Formalism.L2.GlobalTheoryTheory.UnramifiedDiagonal.EDiaSame0F T := by
   intro v a k hk δ hδ c
   classical

@@ -103,6 +103,7 @@ theorem nS_inv (t : F) : (nS t)⁻¹ = nS (-t) := by
   simp [Matrix.mul_fin_two, Matrix.one_fin_two]
 
 
+variable (E) in
 theorem submonoid_eq_top [Unram F E] (S : Submonoid (SpecialLinearGroup (Fin 2) F)) (hw : wS F ∈ S)
     (hn : ∀ t : F, (∀ y : F, ‖y‖ < 1 → ‖t * y‖ ≤ 1) → nS t ∈ S) (x : SpecialLinearGroup (Fin 2) F) : x ∈ S := by
   have hgen := GlobalTheory.T.closure_weyl_and_integral_unipotents_eq_univ F E

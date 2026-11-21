@@ -266,6 +266,7 @@ namespace GlobalTheory.DenSumPf
 open Formalism.BasicNotions Formalism.IndefR.Links GlobalTheory.ChiGrid GlobalTheory.FunObj.SqNum GlobalTheory.SqTop
 
 
+set_option maxHeartbeats 1000000 in
 theorem denSum (hZ : GlobalTheory.IndefiniteRowSideFullHecke.ZetaValueIdeals.ZetaDenominators) (_hF : FieldDat) : DenSum := by
   refine ⟨0, fun ε CF _ => ⟨8000, 1, fun C hC D large₂ _ _ hR T Lc μ₀ _ G => ?_⟩⟩
   intro i j s hs1 hs2 n hn S hS

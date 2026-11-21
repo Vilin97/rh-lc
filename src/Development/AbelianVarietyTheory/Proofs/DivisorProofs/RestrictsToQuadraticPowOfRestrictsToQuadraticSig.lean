@@ -36,9 +36,11 @@ theorem sig_ne {σ : E →ₐ[F] E} (h : IsCMExt F E σ) : ∃ x, σ x ≠ x := 
   exact (NumberField.InfinitePlace.isComplex_mk_iff.1 hc2) hr
 
 
+variable (F E) in
 abbrev normI : (AF F ⊗[F] E)ˣ →* (AF F)ˣ := Units.map (Algebra.norm (AF F) : AF F ⊗[F] E →* AF F)
 
 
+variable (F E) in
 abbrev normGrp : Subgroup (AF F)ˣ :=
   (Units.map (algebraMap F (AF F)).toMonoidHom).range ⊔ (normI F E).range
 

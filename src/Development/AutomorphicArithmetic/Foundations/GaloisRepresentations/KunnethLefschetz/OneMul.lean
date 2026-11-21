@@ -53,6 +53,7 @@ def cup0 (q : ℕ) {X : Scheme.{0}} {n m r : ℤ} (h : n + m = r) (a : Ht q (sch
     Ht q (sch.obj X) r 0 := (cup q a b).cast h (add_zero 0)
 
 
+variable (k) in
 structure Gys0 (l : ℕ) where
   g : ∀ (j : ℕ) {d e : ℕ} {Z X : Scheme.{0}} {p : X ⟶ S k} {ι : Z ⟶ X}, IsPair d e p ι → ∀ {n m : ℤ}, n + 2 * d = m →
     Ht (l ^ j) (sch.obj Z) n 0 →+ Ht (l ^ j) (sch.obj X) m 0
@@ -88,6 +89,7 @@ def Gys0.q (G : Gys0 k l) {d e : ℕ} {Z X : Scheme.{0}} {p : X ⟶ S k} {ι : Z
     (hn : n + 2 * d = m) : V l Z n →ₗ[ℚ_[l]] V l X m := (G.hl h hn).baseChange ℚ_[l]
 
 
+variable (k l) in
 structure GysQ where
   g : ∀ {d e : ℕ} {Z X : Scheme.{0}} {p : X ⟶ S k} {ι : Z ⟶ X}, IsPair d e p ι → ∀ {n m : ℤ}, n + 2 * d = m →
     V l Z n →ₗ[ℚ_[l]] V l X m
@@ -115,20 +117,24 @@ abbrev GysQ.diag (G : GysQ k l) (d : ℕ) {X : Scheme.{0}} (p : X ⟶ S k) : V l
   G.cls d d (pullback.fst p p ≫ p) (pullback.diagonal p)
 
 
+variable (l) in
 abbrev ext2 {X : Scheme.{0}} (p : X ⟶ S k) {a b n : ℤ} (h : a + b = n) (u : V l X a) (v : V l X b) : V l (pullback p p) n :=
   cupV l (pullback p p) h (pb l (pullback.fst p p) a u) (pb l (pullback.snd p p) b v)
 
 
+variable (l) in
 def IsInt {d : ℕ} {X : Scheme.{0}} (p : X ⟶ S k) (lam : V l X (2 * d) →ₗ[ℚ_[l]] ℚ_[l]) {m n : ℤ} (h : 2 * d + m = n)
     (Λ : V l (pullback p p) n →ₗ[ℚ_[l]] V l X m) : Prop :=
   (∀ u v, Λ (ext2 l p h u v) = lam u • v) ∧ ∀ (a b : ℤ) (h' : a + b = n), b ≠ m → ∀ u v, Λ (ext2 l p h' u v) = 0
 
 
+variable (l) in
 def powV {X : Scheme.{0}} (x : V l X 2) : ∀ j : ℕ, V l X (2 * j)
   | 0 => oneV l X
   | j + 1 => cupV l X (by push_cast; ring) (powV x j) x
 
 
+variable (l) in
 structure PBQ {E Z : Scheme.{0}} (r : E ⟶ Z) (ξ : V l E 2) : Prop where
   span : ∀ n : ℤ, Submodule.span ℚ_[l] {z : V l E n | ∃ (j : ℕ) (a : ℤ) (h : a + 2 * j = n) (u : V l Z a),
     z = cupV l E h (pb l r a u) (powV l ξ j)} = ⊤

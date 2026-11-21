@@ -94,6 +94,7 @@ variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAl
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
 
 
+open TameWeilRepresentationIrreducibility in
 private theorem pair_of_gen (φ : Weil h) (hφ : deg φ = -1) : ∃ t₀ : Ine (F := E) A,
     (∀ (n : ℕ) (a : WDRep h (Fin n → ℂ)), (∀ σ : Weil h, Formalism.MainNotions.BlochKatoReduction.IsWild A (σ : G E Ω) → a.ρ σ = 1) →
       a.ρ (ineIncl h t₀) * a.ρ φ = a.ρ φ * a.ρ (ineIncl h t₀) ^ normV w ∧

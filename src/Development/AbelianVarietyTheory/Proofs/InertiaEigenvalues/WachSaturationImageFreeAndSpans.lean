@@ -86,6 +86,7 @@ end GlobalTheory.NL.SatFree
 namespace GlobalTheory.NL.SatFree
 
 
+set_option maxHeartbeats 1600000 in
 theorem satM_free_loc {l : ℕ} [Fact l.Prime] {P : LocPrime l} (H : LocHW l P) (K : FinExt l)
     (s : ℕ) (LL : FinExt l) (h : Good K s LL) (T₁ T₂ : Lt K LL) (π : LatHom T₁.L T₂.L)
     (c1 : IsCrys (P.PD K) T₁.ρ) (c2 : IsCrys (P.PD K) T₂.ρ)

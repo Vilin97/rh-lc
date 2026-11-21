@@ -72,6 +72,7 @@ theorem continuous_single (v : InfinitePlace E) : Continuous (single v) :=
     exact continuous_mulSingle (A := fun _ : InfinitePlace E => ℂ) v)
 
 
+variable (E) in
 abbrev below (v : InfinitePlace E) : InfinitePlace (maximalRealSubfield E) := v.comap (algebraMap (maximalRealSubfield E) E)
 
 def iota (v : InfinitePlace E) : (below E v).Completion →+* ℂ :=

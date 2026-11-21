@@ -32,6 +32,7 @@ theorem circ_id (A B A' B' : Circle) : A'⁻¹ * B' = (A⁻¹ * B) * ((A' * A⁻
   field_simp
 
 
+set_option maxHeartbeats 1600000 in
 theorem vacTw : Big fun ch => VacTw ch := by
   obtain ⟨C, h⟩ := Big.and (Big.and GlobalTheory.T.exists_vacuumBasePointFamily_every_tuple GlobalTheory.T.vacuumBasePoint_unique_all_tuples) (Big.and GlobalTheory.T.twistCharacter_mem_twistFiniteValueProductSubgroup GlobalTheory.T.unfoldingJointData_twist_ratio_at_detRoots)
   refine ⟨C, fun ε CF hC => ?_⟩

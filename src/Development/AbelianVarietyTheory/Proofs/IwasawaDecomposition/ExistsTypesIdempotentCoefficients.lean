@@ -189,6 +189,7 @@ theorem goodTupleIdempotent_coeff_mem_subring (T : NTypes A) (S : Subring ℂ) (
   · exact zero_mem S
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def types0 [IsEmpty N.Loc] (hl : ∀ k w (p : A.LP w), A.items₂ k w p = (X - 1) ^ A.lpDim p)
     (hi : ∀ w (p : A.LP w) σ, A.inePol p σ = (X - 1) ^ A.lpDim p)
     (hc : ∀ k, H.g k % (H.QS * H.q * H.d) = 1)

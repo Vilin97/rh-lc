@@ -54,6 +54,7 @@ theorem nonempty_perf_of_isProper {R : Type} [CommRing R] [IsNoetherianRing R] {
   exact perf_of_projective_model R Y f M (Fin m) _ K φ hM hc hD' ⟨fun p => ⟨h2 p, h4 p⟩, h7⟩
 
 
+open FibreLift in
 theorem exists_pull_eq_smul {R : Type} [CommRing R] [IsNoetherianRing R] {Y : Scheme.{0}} (f : Y ⟶ Sp R)
     [IsProper f] [Flat f] {M : LB Y} (hM : M.IsLB) {K : Type} [Field K] (g : R →+* K)
     (hg : ∀ y : K, ∃ a b : R, g b ≠ 0 ∧ y * g b = g a) {Y₀ : Scheme.{0}} {π : Y₀ ⟶ Y} {f₀ : Y₀ ⟶ Sp K}
@@ -88,6 +89,7 @@ theorem exists_pull_eq_smul {R : Type} [CommRing R] [IsNoetherianRing R] {Y : Sc
   exact (GlobalTheory.LB.appLE_resG π (P.le i) le_rfl _).symm
 
 
+open AmpleNear in
 theorem relAmple_near_fibre {R : Type} [CommRing R] [IsNoetherianRing R] (B : Over (Sp R)) [IsProper B.hom]
     [Flat B.hom] {L : LB B.left} (hL : L.IsLB) {K : Type} [Field K] (g : R →+* K)
     (hg : ∀ y : K, ∃ a b : R, g b ≠ 0 ∧ y * g b = g a)
@@ -126,6 +128,7 @@ theorem relAmple_near_fibre {R : Type} [CommRing R] [IsNoetherianRing R] (B : Ov
   exact relAmple_of_affine_loci ((Over.pullback j).obj B) _ (LB.isLB_pull hL _) hd s hs hs'
 
 
+open FibreAmple in
 theorem relAmple_of_geometricFibres {S : Scheme.{0}} [IsLocallyNoetherian S] (A : Over S) [IsProper A.hom]
     [Flat A.hom] {M : LB A.left} (hM : M.IsLB)
     (hfib : ∀ (K : Type) [Field K] [IsAlgClosed K] (y : Sp K ⟶ S), IsAmpleLB (M.pull (pullback.fst A.hom y))) :

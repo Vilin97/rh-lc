@@ -17,6 +17,7 @@ namespace UpperTheory.Gal.TP.Skew
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+variable (F E) in
 def stdSpc (n : ℕ) : Spc F E n where
   J := 1
   L := Submodule.pi Set.univ fun _ => (1 : Submodule (𝓞 E) E)
@@ -24,6 +25,7 @@ def stdSpc (n : ℕ) : Spc F E n where
   bas := fun _ => 1
 
 
+variable (F) in
 def skewSpc (δ : E) (𝔞 : Submodule (𝓞 E) E) (d : ℕ) : Spc F E d where
   J := δ • 1
   L := Submodule.pi Set.univ fun _ => 𝔞

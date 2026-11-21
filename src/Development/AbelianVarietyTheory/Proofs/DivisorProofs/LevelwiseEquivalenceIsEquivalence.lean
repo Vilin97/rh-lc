@@ -40,6 +40,7 @@ theorem cpull_bij_of_iso {K L : Cx R} (f : K ⟶ L) [IsIso f] (I : Cx R) (n : �
 end GlobalTheory.EtC.LevelCmp
 
 
+open GlobalTheory.EtC.LevelCmp in
 theorem GlobalTheory.EtC.levelwise_eqv : GlobalTheory.EtC.A3 := by
   intro R _ E E' f F hlev
   obtain ⟨hle, hnat, -⟩ := GlobalTheory.T.chains_map_and_d_eq_sum_neg_one_pow_smul_delta R

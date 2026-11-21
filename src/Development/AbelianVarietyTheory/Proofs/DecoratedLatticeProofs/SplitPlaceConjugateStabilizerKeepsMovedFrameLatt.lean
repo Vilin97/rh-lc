@@ -75,6 +75,7 @@ theorem int_of_mem_St (q : GlobalTheory.FinPl.SplitPt D k) {PP : Formalism.L2.DI
   exact int_mul (int_mul (int_one_sub _ _) hZi) (int_one_sub _ _)
 
 
+open scoped Pointwise in
 theorem moves_of_mem_St : ∀ {D : D7} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (q : GlobalTheory.FinPl.SplitPt D k) {PP : Formalism.L2.DIV.Pl D.host.E}, Formalism.L2.NTheta.IsIdemAt q.e PP → ∀ (S : HSp D) (L : GlobalTheory.FinPl.Lat S), IsSelfDualC S L → ∀ {Y : Type} [Fintype Y] [DecidableEq Y] (F : GlobalTheory.LocMod.Frame k S.rank Y), (∀ y : Y → k, (∀ i, y i ∈ 𝒪[k]) ↔ (fun i => q.sec ((F.β *ᵥ y) i)) ∈ GlobalTheory.FinPl.latV S L (· = q.v)) → ∀ (t : GA D S) (β : GL (Fin S.rank) (Lev.EAf D)) (e : Y ≃ Fin S.rank), GlobalTheory.LocMod.MovedTo (GlobalTheory.LocMod.ofSplit q) S t β (F.β.submatrix id e.symm) → ∀ g : GA D S, Lev.finE S (t⁻¹ * g * t) ∈ Formalism.L2.DIV.St β → GlobalTheory.FinPl.Moves S g L L (· = q.v) := by
   intro D k _ _ _ _ q PP hq S L hL Y _ _ F hF t β e hM g hg
   obtain ⟨gl, h1, h2⟩ := GlobalTheory.GlEmbed.exists_gl D k q S Y F.β F.γ F.βγ F.γβ

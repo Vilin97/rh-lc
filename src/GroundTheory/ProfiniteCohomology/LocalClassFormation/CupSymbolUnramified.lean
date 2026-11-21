@@ -142,6 +142,7 @@ noncomputable def charIndex : ℕ+ :=
     (Subgroup.FiniteIndex.index_ne_zero (H := ((charKerOpen ψ).toOpenSubgroup : Subgroup Gal(Ω/F))))⟩
 
 
+omit [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension F Ω] in
 theorem charAdd_eq_zero_of_mem_fixingSubgroup
     (hψ : ∀ g ∈ (unramifiedDegree F Ω).ker, ψ (Additive.ofMul g) = 0) :
     ∀ g ∈ (unramifiedLevel F Ω (charIndex ψ)).fixingSubgroup, ψ (Additive.ofMul g) = 0 := by
@@ -177,6 +178,8 @@ variable {F Ω : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarc
   [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension F Ω]
 
 
+omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [ValuativeRel Ω]
+  [TopologicalSpace Ω] [IsValuativeTopology Ω] [ValuativeExtension F Ω] in
 theorem exists_cocycle_brauerInflation (E : IntermediateField F Ω) [FiniteDimensional F E] [Normal F E]
     (c : cocycles₂ (galUnits.{0} F E)) :
     ∃ z : cocycles (galUnits.{0} F Ω) 2,

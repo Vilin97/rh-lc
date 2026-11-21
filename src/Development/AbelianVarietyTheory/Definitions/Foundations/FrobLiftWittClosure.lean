@@ -339,6 +339,9 @@ def basisL (hu : (p : R) ∈ nonunits R) : Module.Basis (Fin p) (lev R p m) (UpL
       rw [map_mul, up_ev])
 
 
+open PowerSeries in
+variable {R : Type} [CommRing R] (p : ℕ) [hp : Fact p.Prime] (m : ℕ) (hm : 1 ≤ m) in
+variable [IsAdicComplete (Ideal.span {(p : R)}) R] in
 theorem _root_.GlobalTheory.Col.Model.nrm_ev (hu : (p : R) ∈ nonunits R) (h : PowerSeries R) :
     _root_.GlobalTheory.Col.nrm p m hm (_root_.GlobalTheory.Col.ev R p (m + 1) h) = _root_.GlobalTheory.Col.ev R p m (_root_.GlobalTheory.Col.normOp p h) := by
   have hN1 : _root_.GlobalTheory.Col.normOp p h =

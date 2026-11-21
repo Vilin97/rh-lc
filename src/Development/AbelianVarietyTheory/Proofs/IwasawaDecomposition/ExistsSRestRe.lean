@@ -29,6 +29,7 @@ variable {D : D7} {F : ∀ u, Forms0 D u} (P : SPack D F) (hD : Module.finrank �
   (hF : FinX (reY ⟨P.toNew hD j, N, hh⟩ P.Y))
 
 
+set_option maxHeartbeats 4000000 in
 def sIsoRe (hR : Formalism.L2.Theta.RealTied D) (hL : Formalism.L2.SG.Pf.LocCP.LocTied D) :
     SIso (reD D ⟨P.toNew hD j, N, hh⟩).s (sOf hF) where
   cd := by
@@ -81,6 +82,7 @@ end GlobalTheory.Mem.SRe
 namespace GlobalTheory.Mem.SRe
 
 
+set_option maxHeartbeats 4000000 in
 theorem exists_sRest_re : ∀ (D : D7) (F : ∀ u, Forms0 D u) (P : SPack D F) (hD : Module.finrank ℂ (HHX P.X) = D.what₂.Dall) (j : D.what₂.EE ≃ₗᵢ[ℂ] EEC P.X P.G) (N : ∀ u, Submodule (𝓞 D.what₂.LL) (D.div.Nu u).V) (hh : D.what₂.Word → ℝ) (F' : ∀ u, Forms0 (reD D ⟨P.toNew hD j, N, hh⟩) u) (hs : SameForms0LevelsAndValues ⟨P.toNew hD j, N, hh⟩ F F') (hF : FinX (reY ⟨P.toNew hD j, N, hh⟩ P.Y)), Integrable P.X.ph (Formalism.L2.SG.ProjRows.muInf P.X.B.I) → Formalism.L2.SG.Pf.LocCP.LocTied D → Formalism.L2.Theta.RealTied D → D.what₂.Dstar = StandardLattice.DstarD D → ∃ S : SRest (P.re ⟨P.toNew hD j, N, hh⟩ hs hF), S.j = j.trans (eEECre ⟨P.toNew hD j, N, hh⟩ P.G) := by
   intro D F P hD j N hh F' hs hF hph hL hR hDs
   have hR' := (real_reS D (P.toNew hD j)).1 hR

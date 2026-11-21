@@ -110,6 +110,7 @@ theorem actVB_sum_tmul {G : Type} [Group G] {Qp K₀ K : Type} [Field Qp] [Field
   rw [hc, smul_tmul, smul_tmul, ← tmul_sub, ← hz i, Algebra.algebraMap_eq_smul_one]
 
 
+set_option maxHeartbeats 1600000 in
 theorem mem_HfD_of_coords (P : LocPrime l) (K LL : FinExt l) (s : ℕ) (hK : K.1 ≤ Ks K s)
     (V : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)) (c : GQ l → ℚ_[l])
     (hV : ∀ (g : ↥(GK K)) (x : V.V), V.ρ g x = c g • x) {n : ℕ}
@@ -258,6 +259,7 @@ theorem scalar_of_isCob (D : Formalism.BasicNotions.D7) (h2 : adm2 D) (h4 : Arch
   rwa [hc g g.2] at this
 
 
+set_option maxHeartbeats 800000 in
 theorem mem_HfD_of_isCob (D : Formalism.BasicNotions.D7) (h2 : adm2 D) (h4 : ArchimedeanSignatureMatching D) (K LL : FinExt l) (s : ℕ)
     (hs : Lev l s) (hK : K.1 ≤ Ks K s) (hle : Gj K s ≤ GK K) (e N r : ℕ)
     (Y : Type) [AddCommGroup Y] [Module ℤ_[l] Y]
@@ -327,6 +329,7 @@ theorem lift_equivariant {G : Type} [Group G] [TopologicalSpace G] {Qp LL O : Ty
   exact h1
 
 
+set_option maxHeartbeats 800000 in
 theorem mem_HfD_of_lattice (D : Formalism.BasicNotions.D7) (h2 : adm2 D) (h4 : ArchimedeanSignatureMatching D) (K LL : FinExt l) (s : ℕ)
     (hs : Lev l s) (hK : K.1 ≤ Ks K s) (hle : Gj K s ≤ GK K) (e N : ℕ)
     (Y V : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL))
@@ -358,6 +361,7 @@ theorem mem_HfD_of_lattice (D : Formalism.BasicNotions.D7) (h2 : adm2 D) (h4 : A
   exact key
 
 
+set_option maxHeartbeats 800000 in
 theorem class_bound : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW), admitted D HW F → ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL), let S := sit D.loc HW l (D.locA l) K s LL h; let E : S.Comparison₂ := ((F l).E K s LL h).tie; TBat S E := by
   intro D HW F hA l _ K s LL h S E e M0 h0 Yt Y Z Ve ι π hses _ hZ _ hVe hcr hW yt hyt _ φ hφ f hf
   obtain ⟨-, h2, -, h4, h5, -, h7, -, -⟩ := hA

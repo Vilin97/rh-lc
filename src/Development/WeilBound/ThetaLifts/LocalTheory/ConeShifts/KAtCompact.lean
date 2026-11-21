@@ -33,6 +33,7 @@ theorem cont_wt {ν : Chr F E} (hν : Continuous ν) (z : ℕ) : Continuous (wt 
     ((Complex.continuous_ofReal.comp (NNReal.continuous_coe.comp GlobalTheory.Doubling.continuous_absE)).pow z)
 
 
+variable (σ X) in
 def uSub (v : Pl F) : Subgroup (UA σ X.J) where
   carrier := UAt σ X (evFin F v)
   one_mem' := fun u _ => by rw [show mat (1 : UA σ X.J) = 1 from rfl, sub_self, smul_zero]

@@ -201,6 +201,7 @@ theorem exists_value {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {z : (Σ k
 end VertFactorPos
 
 
+open VertFactorPos in
 theorem VertFactorPos.proof : VertFactorPos.Statement := by
   intro II Ψ _ K _ ι _ Ω _ _ E _ _ D p hp z hz
   have hex : ∃ c : (k : K) → ι k, ∀ k, z ⟨k, c k⟩ ≠ 0 :=

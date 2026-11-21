@@ -41,6 +41,7 @@ def OffAll (n : ℕ) (Λ : (K →+* ℂ) → Multiset ℂ) (t : Pl K → Multise
   ∀ S : Set (Pl F), S.Finite → OffFam F n {w : Pl K | w.under (𝓞 F) ∈ S} S Λ t
 
 
+variable (K) in
 def LiftPlus [IsTotallyComplex F] [IsTotallyComplex K] (n : ℕ) : Prop :=
   ∀ π : CG F n, ∃ (ι : Type) (_ : Fintype ι) (m : ι → ℕ) (P : ∀ i, CG K (m i)), (∀ i, 1 ≤ m i) ∧ Nonempty ι ∧
     WeakBC π.HasSat (R.sumSat P)

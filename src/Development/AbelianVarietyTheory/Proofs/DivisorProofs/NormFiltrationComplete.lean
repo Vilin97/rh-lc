@@ -129,6 +129,7 @@ end GlobalTheory.NormEq.Cmpl
 namespace GlobalTheory.NormEq
 
 
+open Cmpl in
 theorem filtrationComplete_filt : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] [CompleteSpace L]
     (σ : L →+* L) (ϖ : L) (q : ℕ) (h : IsUnramInv ϖ σ q) (P : GlobalTheory.UTr.Csr (GlobalTheory.NormEq.sigO σ h.2.1)),
     GroundTheory.LocalField.FiltrationComplete (GlobalTheory.NormEq.filt h P) := by

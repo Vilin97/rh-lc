@@ -73,6 +73,7 @@ variable {N : ℕ} [NeZero N] {L : Type*} [Field L] [NumberField L] [IsCyclotomi
 include hζ
 
 
+set_option maxHeartbeats 800000 in
 theorem adjoin_top : Algebra.adjoin E {ζ} = ⊤ := by
   have h1 : Algebra.adjoin ℚ ({ζ} : Set L) = ⊤ := IsCyclotomicExtension.adjoin_primitive_root_eq_top hζ
   refine eq_top_iff.2 fun x hxt => ?_
@@ -280,6 +281,7 @@ theorem log_norm_weight (u : ZMod N) (hu : u ≠ 1) :
 
 local instance (p : Prop) : Decidable p := Classical.propDecidable p
 
+open Classical in
 theorem log_rd (U : Subgroup (ZMod N)ˣ)
     (hU : ∀ (σ : L ≃ₐ[ℚ] L) (u : (ZMod N)ˣ), σ ζ = ζ ^ (u : ZMod N).val →
       ((∀ x : E, σ (algebraMap E L x) = algebraMap E L x) ↔ u ∈ U)) :

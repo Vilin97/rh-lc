@@ -94,9 +94,11 @@ private theorem a_q (δ : C.Δ) : C.a δ ≫ H.q = H.q := by
   simpa only [Category.assoc, pullback.lift_snd] using this
 
 
+variable (H) in
 private abbrev sB (g : H.Γ) : pullback (H.s g ≫ H.q) (spf τ) ⟶ pullback H.q (spf τ) := bcMap (spf τ) (H.s g) rfl
 
 
+variable (H) in
 private abbrev tB (g : H.Γ) : pullback (H.s g ≫ H.q) (spf τ) ⟶ pullback H.q (spf τ) := bcMap (spf τ) (H.t g) (H.comm g)
 
 private abbrev aB (δ : C.Δ) : pullback H.q (spf τ) ⟶ pullback H.q (spf τ) := bcMap (spf τ) (C.a δ) (a_q C δ)

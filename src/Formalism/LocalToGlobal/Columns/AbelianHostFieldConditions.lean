@@ -125,6 +125,7 @@ structure AbelianUnramifiedExtensionConditions : Prop where
 
 
 
+variable {X} in
 theorem Ok.f_pos (h : X.Ok) : 0 < X.f := by
   show 0 < Fintype.card X.Tau
   rw [h.card_Tau]
@@ -141,6 +142,7 @@ def embC (σ₀ : X.K →+* ℂ) (τ : X.Tau) : X.E →+* ℂ := σ₀.comp (X.e
 end Fields
 
 
+open Classical in
 def divs {A : Type} [CommRing A] [IsDedekindDomain A] (a : A) : Finset (HeightOneSpectrum A) :=
   open Classical in
   if h : {P : HeightOneSpectrum A | a ∈ P.asIdeal}.Finite then h.toFinset else ∅
@@ -222,6 +224,7 @@ theorem natCast_dvd_intCast {E : Type} [Field E] [NumberField E] {c : ℕ} {n : 
   exact (Int.pow_dvd_pow_iff hpos).1 hd
 
 
+variable {Pr} in
 theorem PiGCong.g_cong (h : Pr.PiGCong) (hn : ∀ i, Pr.piG i * X.conjO (Pr.piG i) = (Pr.g i : 𝓞 X.E)) (i : Fin 2) :
     Pr.g i ≡ 1 [MOD Pr.cond] := by
   have hx := h i

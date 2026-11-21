@@ -128,6 +128,7 @@ theorem detChar_zero {n : ℕ} (g : GL (Fin n) k) : ((detChar (Fin n) (absPow k 
   simp [detChar]
 
 
+set_option maxHeartbeats 2000000 in
 theorem pair_iter (ψ : AddChar k Circle) (hc : Continuous ψ) (h1 : ψ ≠ 1) (n : ℕ) : ∀ (j s : ℕ) (τ τ' : MRep k (n + 1 + j)),
     IsSmooth τ.ρ → IsSmooth τ'.ρ → ∀ B : τ.V →ₗ[ℂ] τ'.V →ₗ[ℂ] ℂ,
     (∀ (p : Mir k (n + 1 + j)) v v', B (τ.ρ p v) (τ'.ρ p v') =
@@ -151,6 +152,7 @@ theorem pair_iter (ψ : AddChar k Circle) (hc : Continuous ψ) (h1 : ψ ≠ 1) (
     exact hB₂ g w w'
 
 
+set_option maxHeartbeats 2000000 in
 theorem pair_deriv (ψ : AddChar k Circle) (hc : Continuous ψ) (h1 : ψ ≠ 1) (n j : ℕ) {V V' : Type} [AddCommGroup V]
     [Module ℂ V] [AddCommGroup V'] [Module ℂ V'] (π : Representation ℂ (GL (Fin (n + 1 + j + 1)) k) V)
     (π' : Representation ℂ (GL (Fin (n + 1 + j + 1)) k) V') (hs : IsSmooth π) (hs' : IsSmooth π')

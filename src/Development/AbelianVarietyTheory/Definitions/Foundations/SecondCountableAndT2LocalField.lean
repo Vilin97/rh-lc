@@ -143,6 +143,7 @@ theorem measurableEmbedding_val (n : Type*) [Fintype n] [DecidableEq n] :
 
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem om_mem_SB {a b : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
     (μ : kˣ →* ℂˣ) (g : GL a k) (h : GL b k) {Φ : Matrix b a k → ℂ} (hΦ : Φ ∈ SB (Matrix b a k)) :
     om μ g h Φ ∈ SB (Matrix b a k) := by

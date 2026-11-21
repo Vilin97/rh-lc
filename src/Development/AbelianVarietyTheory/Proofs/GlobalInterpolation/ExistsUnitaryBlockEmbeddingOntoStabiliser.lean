@@ -141,6 +141,9 @@ private lemma blk_mul_global_interpolation (e : Option (Fin P' ⊕ Fin Q') ≃ (
       Matrix.mul_apply]
 
 
+open MeasureTheory Matrix Filter Topology in
+open scoped ENNReal NNReal in
+variable {P Q P' Q' : ℕ} in
 theorem _root_.GlobalTheory.BlockEmbedding.exists_blockEmb : ∀ (P Q P' Q' : ℕ) (e : Option (Fin P' ⊕ Fin Q') ≃ (Fin P ⊕ Fin Q)),
     _root_.GlobalTheory.CompactDualQuot.SignCompat e → ∃ j : _root_.Formalism.BasicNotions.UpqT P' Q' →* _root_.Formalism.BasicNotions.UpqT P Q, _root_.GlobalTheory.CompactDualQuot.IsBlockEmb e j ∧ Topology.IsClosedEmbedding j ∧
       Set.range j = {g | _root_.GlobalTheory.IndefiniteRowSideFullHecke.PerpendicularEmbedding.act g (_root_.GlobalTheory.CompactDualQuot.baseVec e) = _root_.GlobalTheory.CompactDualQuot.baseVec e} := by

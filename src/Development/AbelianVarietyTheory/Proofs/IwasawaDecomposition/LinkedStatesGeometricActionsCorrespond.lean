@@ -53,6 +53,7 @@ variable {B B' : Base} {f : Top.Fr B.toPre} {f' : Top.Fr B'.toPre} {T : TwDat B}
   {Wt' : Set B'.places.Pl}
 
 
+set_option maxHeartbeats 2000000 in
 theorem cusp_gen (hB : B'.toPre = B.toPre) (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hx : ExtN z z')
     (j : Fin (w.st Z).toD7.R.m) (j' : Fin (w'.st Z').toD7.R.m) (hj : (j : ℕ) = j') :
     z'.core.R ((j' : ℕ) + 1) = z.core.R ((j : ℕ) + 1) ∧
@@ -77,6 +78,7 @@ theorem cusp_gen (hB : B'.toPre = B.toPre) (z : Dat (w.st Z) w.I hX T Wt) (z' : 
   exact ⟨hR, hm, hs⟩
 
 
+set_option maxHeartbeats 2000000 in
 theorem act_gen (hB : B'.toPre = B.toPre) (hf : HEq f' f) (hp : HEq w'.px w.px) (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hx : ExtN z z')
     (j : Fin (w.st Z).toD7.R.m) (j' : Fin (w'.st Z').toD7.R.m) (hj : (j : ℕ) = j')
     (g : Gc (w.st Z).B w.px) (g' : Gc (w'.st Z').B w'.px) (hg : HEq g' g)
@@ -109,6 +111,7 @@ theorem act_gen (hB : B'.toPre = B.toPre) (hf : HEq f' f) (hp : HEq w'.px w.px) 
   exact GlobalTheory.Mem.R3.ActExt.act_heq (w.st Z).toD7 j ((j : ℕ) + 1) e1 e2 e3 e4 e5 e6 e7 e8 e9 hA hU h h' g g' hg r r' hr
 
 
+set_option maxHeartbeats 4000000 in
 theorem rho_gen     (hB : B'.toPre = B.toPre) (hf : HEq f' f) (hpx : HEq w'.px w.px)
     {Z : w.Lt} {Z' : w'.Lt} {hX : B.fields.Ok} {hX' : B'.fields.Ok} {Wt : Set B.places.Pl} {Wt' : Set B'.places.Pl}
     (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hx : ExtN z z')

@@ -445,6 +445,7 @@ theorem coeff_substInv_mem (hu : ∀ i, constantCoeff (u i) = 0) {S : Subring R}
     (fun i => higherPart_mem_coeffsInDeg (hu i) (mem_coeffsInDeg.2 (huS i))) i) d hd
 
 
+omit [Fintype σ] in
 theorem two_le_order_sub_X_iff :
     (∀ i, (2 : ℕ∞) ≤ (u i - X i).order) ↔
       (∀ i, constantCoeff (u i) = 0) ∧ linearPart u = 1 := by

@@ -25,10 +25,12 @@ namespace GlobalTheory.ThetaFunctionalUnique
 variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
 
+variable (F κ) in
 abbrev boxInd (a : F) : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ :=
   (GlobalTheory.EvAdm.scaledInt F κ a : Set (κ → FiniteAdeleRing (𝓞 F) F)).indicator (fun _ => (1 : ℂ))
 
 
+variable (F κ) in
 abbrev cosInd (a : F) (r : κ → FiniteAdeleRing (𝓞 F) F) : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ :=
   {y | y - r ∈ GlobalTheory.EvAdm.scaledInt F κ a}.indicator (fun _ => (1 : ℂ))
 

@@ -31,6 +31,7 @@ theorem secMap_comp_spMap (t : X' ⟶ Sp k') (W : X'.Opens) (r : k) :
   rw [algΓ_comp_spMap]
 
 
+variable (s s' g) in
 def appSecS (U : X.Opens) : Sec s U →+* Sec s' (g ⁻¹ᵁ U) := (g.app U).hom
 
 theorem semiHom_appSecS (hg : g ≫ s = s' ≫ spMap φ) (U : X.Opens) :

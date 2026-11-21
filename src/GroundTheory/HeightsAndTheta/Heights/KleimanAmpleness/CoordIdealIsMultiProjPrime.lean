@@ -37,6 +37,7 @@ def cechSign [LinearOrder ι] (J : Finset ι) (j : ι) : ℤ := (-1) ^ (J.filter
 
 
 open scoped Classical in
+open Classical in
 def cechD [LinearOrder ι] (C : CechSystem ι k) : (∀ I, C.V I) →ₗ[k] (∀ I, C.V I) :=
   LinearMap.pi fun J => if C.good J then
     ∑ j ∈ J, cechSign J j • ((C.res (Finset.erase_subset j J)).comp (LinearMap.proj (J.erase j)))
@@ -44,6 +45,7 @@ def cechD [LinearOrder ι] (C : CechSystem ι k) : (∀ I, C.V I) →ₗ[k] (∀
 
 
 open scoped Classical in
+open Classical in
 def cechC (C : CechSystem ι k) (i : ℕ) : Submodule k (∀ I, C.V I) :=
   Submodule.pi Set.univ fun I => if C.good I ∧ I.card = i + 1 then C.piece I else ⊥
 

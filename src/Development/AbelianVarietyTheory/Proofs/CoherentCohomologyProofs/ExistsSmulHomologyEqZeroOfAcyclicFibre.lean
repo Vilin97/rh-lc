@@ -50,6 +50,7 @@ theorem exists_smul_mem_range_of_exact_fibre {R : Type*} [CommRing R] {A B C : T
   exact hv.symm
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem exists_smul_homology_eq_zero_of_acyclic_fibre (R : Type) [CommRing R] [IsNoetherianRing R]
     (K : Type) [Field K] (χ : R →+* K) (C : CochainComplex (ModuleCat.{0} R) ℕ) (n : ℕ)
     (hn : ∀ p, n < p → IsZero (C.X p)) (hflat : ∀ p, Module.Flat R (C.X p))

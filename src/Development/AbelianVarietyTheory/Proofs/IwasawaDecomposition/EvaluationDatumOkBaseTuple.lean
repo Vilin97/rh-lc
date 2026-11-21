@@ -67,6 +67,7 @@ theorem n1_detStd (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) {n : ℕ
   rwa [seamOf_lat] at h
 
 
+set_option maxHeartbeats 1000000 in
 theorem jetsRat_chi (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (hJ : ColIn.JetsIn I)
     (χ : Submodule (𝓞 B.host.E) B.host.E → ℂ) (hχ : ∀ 𝔞, TaylorLogMetric.N1 (I.rec7 l Z) 𝔞 → χ 𝔞 = I.chi 𝔞) (a : I.ι) (u : B.Word)
     (i : ℕ) (hi : i < B.R.m) :
@@ -128,6 +129,7 @@ namespace GlobalTheory.Mem.Col2.TC.RcHyp
 variable {B : Base} {X : PreX B.toPre}
 
 
+set_option maxHeartbeats 1000000 in
 theorem chTh_ok_chi (I : TC B X) (h : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l))
     (hJ : ColIn.JetsIn I) (χ : Submodule (𝓞 B.host.E) B.host.E → ℂ) (hχ : ∀ 𝔞, TaylorLogMetric.N1 (I.rec7 l Z) 𝔞 → χ 𝔞 = I.chi 𝔞)
     (a : I.ι) (u : B.Word) :

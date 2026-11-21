@@ -11,6 +11,7 @@ open Formalism.BasicNotions.TH Formalism.MainNotions.SchurIrreducible GlobalTheo
 namespace GlobalTheory.PolarU
 
 
+open scoped Matrix.Norms.Operator in
 theorem summable_sinhc_series_mat {n : Type} [Fintype n] [DecidableEq n] (A : Matrix n n ℂ) :
     Summable fun k : ℕ => (((2 * k + 1).factorial : ℂ)⁻¹) • A ^ (2 * k) := by
   have h0 : Summable fun m : ℕ => ‖((m.factorial : ℂ)⁻¹) • A ^ m‖ :=

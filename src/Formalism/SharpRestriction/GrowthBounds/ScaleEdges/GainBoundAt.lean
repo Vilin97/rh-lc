@@ -51,6 +51,7 @@ structure Basic (p n' m r : ℕ) (TT : Finset (Fin n')) (L₁ : ℕ) (de h x a Y
   two_le_Y : 2 ≤ Y
 
 
+set_option maxHeartbeats 800000 in
 theorem hyps_basic {C : ℝ} (hC : 1 ≤ C) {p n' m r : ℕ} {TT : Finset (Fin n')} {L₁ L₂ : ℕ} {de h x : ℝ}
     {lam0 : Fin n' → Fin (m + 1) → ℤ} {aT bT : Fin n' → ℤ} {a Y : ℝ} {cpp c0 Dp cStar : ℕ}
     (H : Hyps C p n' m r TT L₁ L₂ de h x lam0 aT bT a Y cpp c0 Dp cStar) :
@@ -288,6 +289,7 @@ def GainBoundAt (CLa Crk Cdeg : ℝ) (p n' : ℕ) [NeZero n'] (O : Type) [CommRi
 def E0 (p r k N₁ G' c' : ℕ) : ℕ := 15 * c' * (N₁ + r * k) * (p ^ G') ^ 2
 
 
+set_option maxHeartbeats 800000 in
 theorem symbol_space_at (D : Formalism.BasicNotions.D7) (CLa Ck Crk Cdeg : ℝ) (h26 : Formalism.MainNotions.SelectionLemmas.Conclusion2 D CLa Ck Crk Cdeg) :
     ∃ C₁ : ℝ, 1 ≤ C₁ ∧ ∀ C : ℝ, C₁ ≤ C →
     ∀ (p : ℕ) (W Qq O Kf : Type) [CommRing W] [IsDomain W] [IsDiscreteValuationRing W] [Field Qq] [Algebra W Qq]
@@ -439,6 +441,7 @@ theorem symbol_space_at (D : Formalism.BasicNotions.D7) (CLa Ck Crk Cdeg : ℝ) 
     linarith
 
 
+set_option maxHeartbeats 800000 in
 theorem hypII_at (CLa' CD Csz : ℝ) :
     ∃ C₁ : ℝ, 1 ≤ C₁ ∧ ∀ C : ℝ, C₁ ≤ C →
     ∀ (p n' m r : ℕ) [NeZero n'] (TT : Finset (Fin n')) (L₁ L₂ : ℕ) (de h x : ℝ)

@@ -61,6 +61,7 @@ def SupportReindex (hK : X.LevelSubgroupCharacter) (Dt' : Set X.B.I.GA) : Prop :
         ∑ ρ', ∑' c : ColCl cs cs' ρ ρ', ‖Ph X u' hK T' ((ColCl.pt cs cs' c)⁻¹ * (y, aC cs ρ))‖ₑ
 
 
+variable (F0) in
 def SlabAbs (hK : X.LevelSubgroupCharacter) (Dt' : Set X.B.I.GA) : Prop :=
   ∀ (Ωs : cs.Cl → Set X.B.I.Ginf), (∀ ρ, Formalism.L2.SG.HidaSetting.IsSFund X.B.I (NOcol F0 cs ρ) (Ωs ρ)) →
   ∀ (T : Cu X u hK) (T' : Cu X u' hK) (ρ : cs.Cl),
@@ -68,6 +69,7 @@ def SlabAbs (hK : X.LevelSubgroupCharacter) (Dt' : Set X.B.I.GA) : Prop :=
       ∂(Formalism.L2.SG.ProjRows.muInf X.B.I) < ⊤
 
 
+variable (F0 F0') in
 def OrbitUnfold (hK : X.LevelSubgroupCharacter) : Prop :=
   ∀ (Ωs : cs.Cl → Set X.B.I.Ginf), (∀ ρ, Formalism.L2.SG.HidaSetting.IsSFund X.B.I (NOcol F0 cs ρ) (Ωs ρ)) →
   ∀ (T : Cu X u hK) (T' : Cu X u' hK) (ρ : cs.Cl) (ρ' : cs'.Cl),
@@ -85,6 +87,7 @@ def OrbitUnfold (hK : X.LevelSubgroupCharacter) : Prop :=
         else 0
 
 
+variable (F0 F0') in
 def TermVal (hK : X.LevelSubgroupCharacter) : Prop :=
   ∀ (T : Cu X u hK) (T' : Cu X u' hK) (t : GTerm X u u' F0 F0' what₂ rows') (ρ : cs.Cl) (ρ' : cs'.Cl),
     TermOn cs cs' t ρ ρ' →
@@ -106,6 +109,7 @@ variable {D : D7} {X : Formalism.L2.SG.HidaSetting.HidaSetting D} {u u' : D.what
   (cs : ColSys X u what₂) (cs' : ColSys X u' rows') (FdN FdN' : Set X.B.I.Ginf)
 
 
+variable (X u) in
 theorem psiFinU_one : X.psiFinU u 1 = 1 := by
   unfold Formalism.L2.SG.HidaSetting.HidaSetting.psiFinU Formalism.L2.SG.HidaSetting.psiFin
   have hf : X.B.I.fmat 1 = 1 := by simp [Formalism.MainNotions.S.AutInst.fmat]
@@ -337,6 +341,7 @@ variable {D : D7} {X : Formalism.L2.SG.HidaSetting.HidaSetting D} {u u' : D.what
   (cs : ColSys X u what₂) (cs' : ColSys X u' rows')
 
 
+variable (F0 F0') in
 def OrbitAlg : Prop :=
   ∀ (ρ : cs.Cl) (ρ' : cs'.Cl), ∃ (N : Subgroup X.B.I.Ginf) (lift : N → X.B.I.GA),
     (N : Set X.B.I.Ginf) = NOcol F0 cs ρ ∧ Countable N ∧ Countable (ColCl cs cs' ρ ρ') ∧

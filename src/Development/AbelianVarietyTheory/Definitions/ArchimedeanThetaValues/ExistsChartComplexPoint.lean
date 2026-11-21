@@ -339,6 +339,7 @@ def dict : GtDict (toricPre ℂ A.X q) (toricOAct q O h) where
     field_simp
 
 
+omit [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] in
 theorem mem_Theta (j : ℕ) (α : A.X) (θ : (Fin A.gB → ℂ) → ℂ) : θ ∈ A.Theta j α :=
   ⟨by
     rw [show θ = fun _ => θ 0 from funext fun z => congrArg θ (Subsingleton.elim _ _)]
@@ -368,10 +369,13 @@ def secFn : (dict A q hq h).SecFn where
 def psiFrac (x : A.X) : (FractionRing ℂ)ˣ := Units.map (algebraMap ℂ (FractionRing ℂ)).toMonoidHom (A.psi x)
 
 
+omit [IsEmpty (Fin A.gB)] in
 theorem algebraMap_psiFrac (x : A.X) : algebraMap (FractionRing ℂ) ℂ (psiFrac A x) = A.psi x :=
   (IsScalarTower.algebraMap_apply ℂ (FractionRing ℂ) ℂ _).symm
 
 
+omit [IsEmpty (Fin A.gB)] [IsScalarTower ℂ (FractionRing ℂ) ℂ] in
+include hq in
 theorem polar_bal (a : O) (y z : A.X) : polar q (a • y) z = polar q y (star a • z) := by
   have key : ∀ y z, algebraMap (FractionRing ℂ) ℂ (polar q y z) = eTwoPi (A.T y z) := fun y z => by
     have h1 := (A.psi y).ne_zero

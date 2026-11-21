@@ -74,6 +74,7 @@ theorem isNilpotent_wdN [FiniteDimensional ↥(MaximalUnramifiedExtension l) (Dp
   exact ⟨n, wd_ext P ι ρ fun x => by rw [hp, hn]; simp⟩
 
 
+variable {P ρ} in
 theorem IsPst.finite [FiniteDimensional ↥LL.1 V] (hV : IsPst P ρ) :
     FiniteDimensional ↥(MaximalUnramifiedExtension l) (DpstUr P ρ) :=
   haveI := LL.2
@@ -203,11 +204,13 @@ def IsJumpsAt (τ : E →+* Om l) (J : Multiset ℤ) : Prop :=
     IsInduced Bw τ τ' ∧ ∀ n : ℤ, (J.count n : ℤ) = Bw.multE P LL' r' τ' n
 
 
+omit [NumberField E] in
 theorem IsCrysAt.isPotCrysAt (hr : IsCrysAt P Bw r) : IsPotCrysAt P Bw r := by
   obtain ⟨LL', r', h1, h2⟩ := hr
   exact ⟨LL', r', h1, Bw.Kw, le_rfl, h2⟩
 
 
+omit [NumberField E] in
 theorem IsModel.unique {LL' : FinExt l} {r₁ r₂ : ↥Gw →* GL (Fin a) ↥LL'.1} (h₁ : IsModel Bw r LL' r₁)
     (h₂ : IsModel Bw r LL' r₂) : r₁ = r₂ := by
   ext g i j

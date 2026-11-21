@@ -188,6 +188,7 @@ theorem coefficientField_reading_at_embedding_prod {LL : Type} [Field LL] (f : L
     pow_factor hs (Circle.coe_ne_zero _) _ _ hm, Complex.ofReal_pow]
 
 
+set_option maxHeartbeats 1600000 in
 theorem exists_ideal_conj (V : HSp D) (hg : V.gram = 1) (hL : Bridge.hLat V 1 = Formalism.L2.Pj.stdLat D.host.E V.rank) (h : GA D V)
     (e : AE D) (P : Finset (HeightOneSpectrum (𝓞 D.host.E))) (y : (AE D)ˣ) (he : Formalism.IndefR.Datum.IsIdemSum e P)
     (hs : SuppAt e V h) (hy : IsDetAt e V h y) (b : ℕ) (hb : ∀ Q ∈ P, (b : 𝓞 D.host.E) ∉ Q.asIdeal)

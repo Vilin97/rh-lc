@@ -22,6 +22,7 @@ theorem residue_aeval_integer (p : 𝒪[K][X]) (x : 𝒪[L]) :
   congr 1
 
 
+variable (K) in
 theorem adjoin_eq_top_of_residue_of_addVal_eq_one {x : 𝒪[L]}
     (hx : Algebra.adjoin 𝓀[K] {residue 𝒪[L] x} = ⊤) {π : 𝒪[L]}
     (hπA : π ∈ Algebra.adjoin 𝒪[K] {x}) (hπ : addVal 𝒪[L] π = 1) :
@@ -77,6 +78,7 @@ theorem adjoin_eq_top_of_residue_of_addVal_eq_one {x : 𝒪[L]}
   exact hnak Submodule.mem_top
 
 
+variable (K L) in
 theorem exists_integer_adjoin_eq_top : ∃ x : 𝒪[L], Algebra.adjoin 𝒪[K] {x} = ⊤ := by
   classical
   obtain ⟨ξ, hξ⟩ := Field.exists_primitive_element_of_finite_top 𝓀[K] 𝓀[L]

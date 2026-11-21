@@ -42,6 +42,7 @@ theorem piInf_cA {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {w : InfinitePlace F}
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 
+omit [NumberField E] in
 theorem piInf_inclR {w : InfinitePlace F} (τ : EmbOver E w) (e : E) :
     piInf τ (inclR (F := F) (AF F) e) = τ.1 e := by
   simp [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.piInf, GlobalTheory.AdelicU.infEmb, GlobalTheory.AdelicU.compInf, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR]

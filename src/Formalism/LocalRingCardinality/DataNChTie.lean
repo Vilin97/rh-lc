@@ -11,6 +11,7 @@ namespace Formalism.BasicNotions
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 structure NChTie (D : D7) (c : NChoice D) : Prop where
 
   twOf_eq : ∀ a : D.nd.Loc, D.ntw.twOf a = c.twI (D.nd.w a)

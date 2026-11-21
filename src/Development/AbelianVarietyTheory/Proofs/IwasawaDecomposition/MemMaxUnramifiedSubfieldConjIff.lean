@@ -104,6 +104,7 @@ variable {LL : Type} [Field LL] [Algebra ℚ_[l] LL] {V : Type} [AddCommGroup V]
   [IsScalarTower ℚ_[l] LL V] {ρ₁ : Representation LL ↥(GK K₁) V} {ρ₂ : Representation LL ↥(GK K₂) V}
 
 
+omit hK in
 theorem actQdR_mem_Fil (K K' : FinExt l) (a : ℤ) {b : P.R.BdR} (hb : b ∈ (P.PD K).Fil a) :
     P.actQdR g b ∈ (P.PD K').Fil a := by
   obtain ⟨K₀, hg⟩ : ∃ K₀ : FinExt l, g ∈ GK K₀ := by
@@ -119,6 +120,7 @@ theorem actQdR_mem_Fil (K K' : FinExt l) (a : ℤ) {b : P.R.BdR} (hb : b ∈ (P.
   exact h2
 
 
+omit hK in
 theorem mem_FilV_iff (K K' : FinExt l) (a : ℤ) (x : V ⊗[ℚ_[l]] P.R.BdR) :
     x ∈ FilV (P.PD K) (LL := LL) (V := V) a ↔
       rightCongr LL V (P.actQdR g).toLinearEquiv x ∈ FilV (P.PD K') (LL := LL) (V := V) a := by
@@ -225,6 +227,7 @@ variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAl
   (B₁ : LocBridge l E Ω (Dec (F := E) A) O₁) (B₂ : LocBridge l E Ω (Dec (F := E) A) O₂)
 
 
+omit [NumberField E] in
 theorem exists_conj (h₁ : GlobalTheory.Pst.Induces B₁) (h₂ : GlobalTheory.Pst.Induces B₂) :
     ∃ g : GQ l, (∀ x, g (B₁.j x) = B₂.j x) ∧ (∀ x, x ∈ B₁.Kw.1 ↔ g x ∈ B₂.Kw.1) ∧
       ∀ (σ₁ : ↥(GK B₁.Kw)) (σ₂ : ↥(GK B₂.Kw)), (σ₂ : GQ l) * g = g * σ₁ → B₁.e.symm σ₁ = B₂.e.symm σ₂ := by

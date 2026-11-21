@@ -30,6 +30,7 @@ theorem isLocalHomeomorph_addMonoidHom_of_eventuallyEq {ψ : OpenPartialHomeomor
     simp [← this]
 
 
+omit [IsTopologicalAddGroup A] in
 theorem discreteTopology_ker_of_isLocalHomeomorph (he : IsLocalHomeomorph e) :
     DiscreteTopology e.ker := by
   obtain ⟨U, hU, hU0, hinj⟩ := he.isLocallyInjective 0
@@ -144,6 +145,7 @@ theorem analyticAt_doubling : AnalyticAt ℂ (fun x => m (x, x)) 0 :=
   AnalyticAt.comp (f := fun x : V => (x, x)) h.analyticAt (analyticAt_id.prod analyticAt_id)
 
 
+omit h in
 noncomputable def twoEquiv (V : Type*) [NormedAddCommGroup V] [NormedSpace ℂ V] : V ≃L[ℂ] V :=
   ContinuousLinearEquiv.equivOfInverse ((2 : ℂ) • ContinuousLinearMap.id ℂ V)
     ((2 : ℂ)⁻¹ • ContinuousLinearMap.id ℂ V) (fun x => by simp [smul_smul])

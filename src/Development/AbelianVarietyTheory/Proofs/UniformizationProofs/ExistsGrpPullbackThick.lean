@@ -225,6 +225,7 @@ theorem mono_thick (I : Ideal R) (e : ℕ) : Mono (thick R I e) := by
   infer_instance
 
 
+omit [IsDomain R] [IsDomain R'] in
 theorem exists_grpPullback_thick (φ : R →+* R') (I : Ideal R) (I' : Ideal R')
     {G : Over (Spec (CommRingCat.of R))} [GrpObj G] [IsCommMonObj G]
     {G' : Over (Spec (CommRingCat.of R'))} [GrpObj G'] [IsCommMonObj G']

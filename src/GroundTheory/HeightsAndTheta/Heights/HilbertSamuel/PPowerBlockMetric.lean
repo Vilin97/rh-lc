@@ -541,6 +541,7 @@ theorem conj_graphLine {S : ((Σ k, ι k) → ℂ) → ℝ}
 end PowerBlockMetric
 
 
+open PowerBlockMetric in
 theorem PowerBlockMetric.proof (hExt : SectionNormSqExtension.Statement) : PowerBlockMetric.Statement := by
   intro K _ _ ι _ Ω _ y A P0 m N v hP0 hsemi hconj hv hgen
   obtain ⟨S, hSs, hSp, hSt, hSc, hSv, hSl⟩ := hExt K ι Ω y A m N v hsemi.1 hconj hv hgen

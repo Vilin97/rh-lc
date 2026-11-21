@@ -129,6 +129,7 @@ private theorem f_fock (hX : IsBottomTri W i j X) (t : T) (τ : D.what₂.Tau) :
     hX.is.isVac.2.theta (f_theta hX t) (hX.is.isVac.2.fock τ)
 
 
+set_option maxHeartbeats 1000000 in
 private theorem real_fix (hX : IsBottomTri W i j X) (t : T) (hr : A.rank ≤ WW.rank) (n : D.what₂.Tau → ℕ)
     (hn : ∀ τ, HasInfExp D (betaB G i j / alphaB L i j t) τ ((n τ : ℚ) + (WW.rank : ℚ) / 2))
     {k : GA D (GlobalTheory.Grid.neg A)} (hk : k ∈ GinfC (GlobalTheory.Grid.neg A)) :
@@ -377,6 +378,7 @@ private theorem openOff_eq (hX : IsBottomTri W i j X) (Λ : Lat (GlobalTheory.Gr
 end GlobalTheory.BottomLoc
 
 
+open GlobalTheory.BottomIPData GlobalTheory.BottomLoc in
 theorem _root_.GlobalTheory.T.definiteBottom_localDoublingIntegral_converges : GBig fun {D} T Lc _ G _ _ _ _ => ∀ (W : G.Weil) (i j : Fin D.R.m) (A A' WW : HSp D) (X : Tri T A A' WW),
   IsBottomTri W i j X → ∀ t : T, ∀ (cA : CptF (GlobalTheory.Grid.neg A)) (a : GL (Fin (GlobalTheory.Grid.neg A).rank) (AE D)) (νW : Measure (WO (GlobalTheory.Grid.neg A) WW)) (𝓕W : Set (WO (GlobalTheory.Grid.neg A) WW)), Pair W.ψ W.θ (GlobalTheory.Grid.neg A) WW (GlobalTheory.BottomIPData.betaB G i j) (GlobalTheory.BottomIPData.betaB G i j / GlobalTheory.BottomIPData.alphaB Lc i j t) (fun τ => -X.rA.s τ) X.rW.s A'.rank cA a ((X.ω t).toSgn true) νW 𝓕W →
   ∃ P : PolF D WW.rank A.rank, ∀ m : Measure (GA D (GlobalTheory.Grid.neg A)), m.IsHaarMeasure →

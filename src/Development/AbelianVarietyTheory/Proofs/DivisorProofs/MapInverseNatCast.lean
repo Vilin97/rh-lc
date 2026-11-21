@@ -130,6 +130,7 @@ theorem IsGenLab.weil_one [ArithBase o Ω] [ArithBase o' Ω'] (h : IsGenLab ρ �
 end Add
 
 
+variable (ρ x) in
 def TV (m : ℕ) (t h : S'.Gam) (κ : S.Gam) (v : Ω') : Prop :=
   IsTwVal ρ.P S'.N m ρ.th₁ (ρ.fr κ) (genTo _) (x (S'.r • t)) (x h) ((Scheme.ΓSpecIso (CommRingCat.of Ω')).inv.hom v)
 
@@ -191,6 +192,7 @@ theorem zetaN_neg_mul (c : ZMod S'.N) : S'.ζN ^ (-c).val * S'.ζN ^ c.val = 1 :
   rw [← pow_add, pow_eq_pow_mod _ zetaN_pow_level, ← ZMod.val_add, neg_add_cancel, ZMod.val_zero, pow_zero]
 
 
+variable (S') in
 def partV (H : AddSubgroup S'.Gam) (i : S'.J) (a h : S'.Gam) : Ω' :=
   ∑ j, algebraMap o' Ω' (S'.proj (S'.perp H) (wtChar S' _ a) j i) * S'.ev h j
 
@@ -213,6 +215,7 @@ theorem map_inverse_natCast (σ : Ω' →+* Ω') (n : ℕ) :
   · rw [Ring.inverse_non_unit _ h, map_zero, map_zero]
 
 
+variable (ρ') in
 def IsConj (σ : Ω' →+* Ω') (g : S'.Gam → S'.Gam) : Prop :=
   ∃ (P₀ : PolAV (Sp Ω')) (b : P₀.A.left ⟶ ρ'.P.A.left) (t : P₀.A.left ⟶ P₀.A.left),
     IsGrpPullback P₀.A ρ'.P.A (spMap S'.R.val.toRingHom) b ∧ IsGrpPullback P₀.A P₀.A (spMap σ) t ∧
@@ -252,6 +255,7 @@ theorem IsGenLab.exists_conj (hx : IsGenLab ρ ρ' lab φ P₀ a a' x) (σ : Ω'
     · rw [Category.assoc, Category.assoc, ht₂, reassoc_of% e₀, e₀, Category.comp_id]
 
 
+open Classical in
 theorem exists_parts [ArithBase o Ω] [ArithBase o' Ω'] (hS : USame ρ ρ' lab φ) {m : ℕ} (hm : S'.N = m ^ 2)
     (H : AddSubgroup S'.Gam) (x₀ : S.Gam) (h₀ : S.th x₀ ≠ 0) (h₀' : S'.th (lab x₀) ≠ 0) :
     ∃ f : S'.Gam → S.Gam → Ω',

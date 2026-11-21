@@ -204,6 +204,7 @@ theorem ofPull_iso {A B : LB Y} (hA : A.IsLB) (hB : B.IsLB) (h : LBIso A B) : (o
 end FLB
 
 
+variable (i) in
 structure FLBOn (κ : Type) : Type where
 
   U : ∀ e, κ → (X e).Opens
@@ -226,6 +227,7 @@ instance small_quotient : Small.{0} (Quotient (FLB.setoid (i := i))) := by
   exact ⟨(L.reindex j h).toOn, Quotient.sound (L.reindex_iso j h)⟩
 
 
+variable (i) in
 def FPic : Type := Shrink.{0} (Quotient (FLB.setoid (i := i)))
 
 def fcls (L : FLB i) : FPic i := equivShrink _ (Quotient.mk _ L)

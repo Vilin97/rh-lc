@@ -11,6 +11,8 @@ open scoped WithZero TensorProduct
 namespace GlobalTheory.CNorm
 
 
+open NumberField IsDedekindDomain Polynomial in
+open scoped WithZero TensorProduct in
 theorem _root_.GlobalTheory.CNorm.algebraMap_norm_tensor_eq_prod_conjugates (F E K : Type) [Field F] [Field E] [Algebra F E]
     [FiniteDimensional F E] [IsGalois F E] [CommRing K] [Algebra F K] (y : K ⊗[F] E) :
     algebraMap K (K ⊗[F] E) (Algebra.norm K y) =

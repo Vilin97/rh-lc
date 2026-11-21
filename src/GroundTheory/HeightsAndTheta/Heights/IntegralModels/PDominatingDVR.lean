@@ -22,6 +22,7 @@ theorem isFractionRing_of_subalgebra {A K : Type*} [CommRing A] [IsDomain A] [Fi
   · simpa using Subtype.ext h
 
 
+set_option maxHeartbeats 400000 in
 theorem DominatingDVR.proof (hKA : KrullAkizuki.Statement) (hBU : BlowUpChart.Statement) :
     DominatingDVR.Statement := by
   intro A _ _ _ _ hAf K _ _ _

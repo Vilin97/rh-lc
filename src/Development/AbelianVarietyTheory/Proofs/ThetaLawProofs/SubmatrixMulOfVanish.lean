@@ -166,6 +166,7 @@ private lemma det_even_submatrix_homotopy_product_eq_one (deg : Ix → ℕ) (D h
     exact Matrix.det_isEmpty
 
 
+variable {R Ix : Type} [CommRing R] [Fintype Ix] [DecidableEq Ix] in
 theorem _root_.GlobalTheory.TorsionUnique.torsSq_unique : ∀ (R Ix : Type) [CommRing R] [Fintype Ix] [DecidableEq Ix]
     (deg : Ix → ℕ) (D : Matrix Ix Ix R) (t t' : R),
     _root_.GlobalTheory.KeyKa.IsCx deg D → _root_.GlobalTheory.KeyKa.TorsSq deg D t →

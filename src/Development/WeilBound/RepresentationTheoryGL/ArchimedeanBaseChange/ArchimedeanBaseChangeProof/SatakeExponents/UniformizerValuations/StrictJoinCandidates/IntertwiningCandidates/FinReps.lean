@@ -27,6 +27,7 @@ theorem fin_reps {X : Type} {α : Type 1} [Finite X] (Q : X → α → Prop) :
   exact this
 
 
+set_option maxHeartbeats 4000000 in
 def ClauseB {hR : Rd.ReadLimit} {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} {π : Submodule ℂ (UA E n → ℂ)}
     {S : Finset (Pl E)} (F₀ : Frame0 hR π S) (d : LocData E n) : Prop :=
   ∀ w ∈ F₀.d₀.S₀, ∃ (k : ℕ) (Dl : Fin k → Pre E n), ∀ i s₁ s₂ Pa Pb D, F₀.Cand d i s₁ s₂ Pa Pb D →
@@ -35,6 +36,7 @@ def ClauseB {hR : Rd.ReadLimit} {E : Type} [Field E] [NumberField E] [IsCMField 
         FiniteDimensional ℂ ↥(fixed (prodAt (Dl j) w) (F₀.d₀.K' w))
 
 
+set_option maxHeartbeats 4000000 in
 theorem candB (hEq : StrictEqv) (hSPr : StrictProd) (hSJ : StrictJoin) (hII : IsoInv) (hAd : AdmProd)
     {hR : Rd.ReadLimit} {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} {π : Submodule ℂ (UA E n → ℂ)}
     {S : Finset (Pl E)} (F₀ : Frame0 hR π S) (d : LocData E n) (kA kB : F₀.C.ι → ℕ)

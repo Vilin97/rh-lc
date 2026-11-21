@@ -65,6 +65,7 @@ private theorem herm_of_lat {D : D7} (B : Base D.host.F D.host.E) (τf : Infinit
     exact GlobalTheory.TripleSpace.isCartan_neg_conj (hs _)
 
 
+open scoped ComplexOrder in
 private theorem skew_of_lat {D : D7} (B : Base D.host.F D.host.E) (τf : InfinitePlace D.host.F → D.what₂.Tau)
     (hB : ∀ w x, (B.emb w).1 x = conj (tauE D (τf w) x)) (X : HSp D) {k : ℕ} (e : Fin k ≃ Fin X.rank)
     (Λ₀ : Submodule (𝓞 D.host.E) (Fin X.rank → D.host.E)) (hA : IsSelfDualC X Λ₀)

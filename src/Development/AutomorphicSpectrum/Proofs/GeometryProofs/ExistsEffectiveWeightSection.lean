@@ -129,6 +129,7 @@ theorem comb_a {G : RefGeo Y} (A : G.An) (ν : RootIx D → ℤ) (κ : G.K) :
   simp [Finset.sum_apply]
 
 
+open Classical in
 theorem isEff_of_data (G : RefGeo Y) (n : RootIx D → ℤ) (e : G.Ω) (b : G.Ω) (dβ : G.K → ℕ)
     (i₀ : ∀ k, G.J k) (hi₀ : ∀ k, G.y ⟨k, i₀ k⟩ ≠ 0)
     (he : e ∈ chartLat G.y (fun κ => (∑ r, (-n r) • G.xdeg r) κ - 1 - dβ κ) 1)

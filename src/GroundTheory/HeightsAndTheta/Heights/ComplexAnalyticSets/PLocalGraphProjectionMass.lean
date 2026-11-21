@@ -117,6 +117,7 @@ theorem lintegral_count_le (U : Matrix (Fin n) (Fin n) ℂ)
 end LocalGraphProjectionMass
 
 
+open LocalGraphProjectionMass in
 theorem LocalGraphProjectionMass.proof (hPF : ProjectionFormula.Statement) :
     LocalGraphProjectionMass.Statement := by
   intro n d b I₀ S hd hS U hU B hB

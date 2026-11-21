@@ -49,6 +49,7 @@ theorem cover_rs (hPQ : redIdeal O (mcIdeal O x) ≤ Q) {s : ∀ k, ι k} (hs : 
   simp [hne] at h
 
 
+variable (B) in
 def resBundle (hPQ : redIdeal O (mcIdeal O x) ≤ Q) :
     ChartBundle (kap O) (mseg (genPt (kap O) Q)) N (resFibre O x Q B) where
   lat := resLat O x Q B
@@ -106,6 +107,7 @@ theorem finrank_span_low {F E : Type*} [Field F] [AddCommGroup E] [Module F E] {
   rw [e, finrank_span_eq_card (hb.comp _ (Fin.castLE_injective _)), Fintype.card_fin]
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_resFlag (hPQ : redIdeal O (mcIdeal O x) ≤ Q) (hrel : IsRelevant Q) (fl : FullFlag O x B) :
     ∃ fl' : FullFlag (kap O) (genPt (kap O) Q) (resBundle B hPQ),
       fl'.deg = fl.deg ∧ ∀ i, fl'.Vs i = resSub O x Q B (fl.Vs i) := by

@@ -61,6 +61,7 @@ theorem conj_maps_inv_iff {A : Type} [CommRing A] {n : ℕ} (J x : GL (Fin n) A)
   exact conj_maps_iff J x⁻¹ hJ
 
 
+set_option maxHeartbeats 800000 in
 theorem exists_point_carrying_frameLat : ∀ (D : D7) (V : HSp D) (β : GL (Fin V.rank) (Formalism.IndefR.Lev.EAf D)) (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)) (N : ℕ), IsBaseFrame V β Λ N → ∃ a : GfC V, GlobalTheory.IndefiniteRowSideFullHecke.IsometryCarriesCharacter.IsLatIsom V V (frameLat V) Λ (finE V (a : GA D V)).val ∧ ∀ g : GfC V, finE V ((a * g * a⁻¹ : GfC V) : GA D V) ∈ St β ↔ ∀ v, finLoc V v g ∈ Kv V v := by
   intro D V β Λ N hβ
   obtain ⟨β₀, -, hβ₀⟩ := GlobalTheory.T.exists_baseFrame_selfDual_hermitianFrameLattice D V

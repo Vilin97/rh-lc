@@ -59,6 +59,7 @@ private lemma exists_const_lintegral_comp_continuousLinearEquiv {n a b : ℕ} (A
     | simp [ENNReal.smul_def]
 
 
+set_option maxHeartbeats 800000 in
 theorem ap_local_blowup (n d : ℕ) (hd : 1 ≤ d) (hMVd : ∀ k, MVStatement k)
     (hMVI : MVIntStatement d) (U : Set (V n)) (hU : IsOpen U) (p : V n → V d)
     (hp : DifferentiableOn ℂ p U) (v0 : V n) (hv0 : v0 ∈ U) (hp0 : p v0 = 0)

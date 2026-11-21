@@ -32,6 +32,7 @@ def alphaB (L : LevCh D T) (i j : Fin D.R.m) (t : T) : (AE D)ˣ →* Circle := L
 def betaB (G : GridData L sc) (i j : Fin D.R.m) : (AE D)ˣ →* Circle := G.ch.chi (D.R.m - i) * L.eta ^ (rankV D i j % 2)
 
 
+open Classical in
 def sfB (G : GridData L sc) (t : T) : Finset (GlobalTheory.IndefiniteRowSideFullHecke.SphericalVolumeLift.FinPl D) :=
   (locPl G t).image fun w => w.under (𝓞 D.host.F)
 

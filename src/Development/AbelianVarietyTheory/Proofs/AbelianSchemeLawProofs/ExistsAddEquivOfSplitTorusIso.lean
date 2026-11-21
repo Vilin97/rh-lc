@@ -72,6 +72,7 @@ theorem exists_addMonoidHom [ConnectedSpace S]
 end SplitTorusHom
 
 
+open SplitTorusHom in
 theorem exists_addEquiv_of_splitTorus_iso :
     ∀ (S : Scheme.{0}) [ConnectedSpace S] (X X' : Type) [AddCommGroup X] [AddCommGroup X']
       (θ : splitTorus S X' ≅ splitTorus S X), IsMonHom θ.hom →

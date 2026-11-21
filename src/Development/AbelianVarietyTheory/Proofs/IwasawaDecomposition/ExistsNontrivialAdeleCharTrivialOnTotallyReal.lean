@@ -39,6 +39,8 @@ private theorem sum_infinitePlace_embedding_eq_trace (F : Type) [Field F] [Numbe
     (fun φ : F →ₐ[ℚ] ℂ => φ x) (fun _ => rfl)
 
 
+open NumberField IsDedekindDomain MeasureTheory Topology in
+open scoped TensorProduct NNReal ENNReal in
 theorem _root_.GlobalTheory.GaugeEx.CharZero.exists_isCharAF :
     ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F], ∃ ψ, _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.IsCharAF F ψ := by
   intro F _ _ _

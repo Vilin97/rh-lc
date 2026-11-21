@@ -170,6 +170,7 @@ theorem exists_wedge (P : AbelianDeRham.Free) {A : Over (Sp R)} [GrpObj A] {g : 
   simp [wedgeDual, ex, ey]
 
 
+set_option maxHeartbeats 1000000 in
 theorem snd_polForm (P : AbelianDeRham) {A : Over (Sp R)} [GrpObj A] {n : ℕ} (hA : IsAbelianScheme A)
     (hn : SmoothOfRelativeDimension n A.hom) {A' : Over (Sp (DualNumber R))} [GrpObj A'] {i : A.left ⟶ A'.left}
     (h : IsGrpPullback A A' (DeRham.epsRed R) i) {Y : Scheme.{0}} {L : LB Y} (hL : L.IsLB) {π' : A'.left ⟶ Y}

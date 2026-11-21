@@ -204,6 +204,7 @@ theorem selF_obs (h : SelObs bkP i s κ Q) (K B B'' : ModuleCat.{0} Λ) (hK : Is
   exact h1
 
 
+include hM in
 theorem exists_matrix (hK : KernelRep) [IsNoetherianRing Λ] [IsAdicComplete (IsLocalRing.maximalIdeal Λ) Λ]
     [Finite (IsLocalRing.ResidueField Λ)] (h1 : SelLeft bkP i s κ Q) (h2 : SelColim bkP i s κ Q)
     (h3 : SelObs bkP i s κ Q) :

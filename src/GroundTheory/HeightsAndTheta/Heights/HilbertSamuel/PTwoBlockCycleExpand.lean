@@ -203,6 +203,7 @@ theorem isMultiHomog_twoBlockNum (l : Ix κ → ℤ) :
 end TwoBlockCycleExpand
 
 
+open TwoBlockCycleExpand in
 theorem TwoBlockCycleExpand.proof : TwoBlockCycleExpand.Statement := by
   classical
   have hA := CoordArithOfFnField.proof

@@ -25,6 +25,7 @@ variable {k : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchi
 variable {a b : Type*} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
 
 
+omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] in
 theorem intM_submatrix_iff (e : a ≃ b) (M : Matrix a a k) :
     GlobalTheory.StepData.IntM (M.submatrix e.symm e.symm) ↔ GlobalTheory.StepData.IntM M :=
   ⟨fun h i j => by simpa using h (e i) (e j), fun h _ _ => h _ _⟩
@@ -34,6 +35,7 @@ theorem reGL_mem_KO_iff (e : a ≃ b) (g : GL a k) : reGL e g ∈ KO k b ↔ g �
     intM_submatrix_iff, intM_submatrix_iff]
 
 
+omit [Fintype a] [Fintype b] [DecidableEq b] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem symm_sub_one_apply [Fintype a] [Fintype b] [DecidableEq b] (e : a ≃ b) (h : GL b k) (x y : a) :
     (((reGL e).symm h).val - 1) x y = (h.val - 1) (e x) (e y) := by
   simp [reGL_symm_val, Matrix.one_apply]

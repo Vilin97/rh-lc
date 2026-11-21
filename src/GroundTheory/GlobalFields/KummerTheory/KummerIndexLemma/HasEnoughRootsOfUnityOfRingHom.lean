@@ -26,6 +26,7 @@ abbrev localUnits : Subgroup (v.adicCompletion K)ˣ :=
   (Submonoid.ofClass (v.adicCompletionIntegers K)).units
 
 
+variable {v} in
 theorem mem_localUnits_iff {x : (v.adicCompletion K)ˣ} :
     x ∈ localUnits v ↔ Valued.v (x : v.adicCompletion K) = 1 := by
   have hx : Valued.v (x : v.adicCompletion K) ≠ 0 := (Valuation.ne_zero_iff _).2 x.ne_zero

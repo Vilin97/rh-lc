@@ -250,6 +250,7 @@ theorem Z_hA_mL' {d w : VA X.B.I} (hd : d ∈ mL X.B.I X.B.g) (hw : w ∈ X.B.I.
   exact Z_sig X.B.I X.B.g (Z_hA_mL X hd hw)
 
 
+omit hJ hE in
 theorem Z_pair {x x' y y' : VA X.B.I} (hx : x - x' ∈ mL X.B.I X.B.g) (hy : y - y' ∈ mL X.B.I X.B.g)
     (hyL : y ∈ X.B.I.Lf) (hx'L : x' ∈ X.B.I.Lf) :
     ZMod' X.B.I X.B.g (hA X.B.I x y - hA X.B.I x' y') := by

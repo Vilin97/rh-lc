@@ -26,6 +26,7 @@ theorem coeff_comp (e : ℕ) (Q : MvPolynomial σ (reesAlgebra I)) (m : σ →�
   · push_neg at h; rw [h]; simp
 
 
+open scoped Classical in
 noncomputable def liftFun (I : Ideal R) (e : ℕ) (r : R) : reesAlgebra I :=
   if h : r ∈ I ^ e then ⟨Polynomial.monomial e r, (mem_reesAlgebra_iff I _).2 (fun i => by
     rw [Polynomial.coeff_monomial_apply]; split_ifs with hi

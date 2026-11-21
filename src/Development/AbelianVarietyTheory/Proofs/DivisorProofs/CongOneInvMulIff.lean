@@ -28,6 +28,7 @@ namespace GlobalTheory.CongReps
 variable (D : D7) (𝔪 : Ideal (𝓞 D.host.E))
 
 
+variable {D 𝔪} in
 theorem mul_mem_hatId {t x : AE D} (ht : t ∈ OhE D) (hx : x ∈ hatId D 𝔪) : t * x ∈ hatId D 𝔪 := by
   unfold hatId at hx ⊢
   induction hx using AddSubgroup.closure_induction with
@@ -39,11 +40,13 @@ theorem mul_mem_hatId {t x : AE D} (ht : t ∈ OhE D) (hx : x ∈ hatId D 𝔪) 
   | neg y _ hy => rw [mul_neg]; exact neg_mem hy
 
 
+variable {D 𝔪} in
 theorem inc_sub_mem {r r' : 𝓞 D.host.E} (h : r - r' ∈ 𝔪) :
     inc D (r : D.host.E) - inc D (r' : D.host.E) ∈ hatId D 𝔪 :=
   AddSubgroup.subset_closure ⟨r - r', h, 1, one_mem _, by push_cast; rw [map_sub, mul_one]⟩
 
 
+variable {D 𝔪} in
 theorem exists_rep (h𝔪 : 𝔪 ≠ ⊥) {s : AE D} (hs : s ∈ OhE D) :
     ∃ r : 𝓞 D.host.E, s - inc D (r : D.host.E) ∈ hatId D 𝔪 := by
   have hn : 0 < Ideal.absNorm 𝔪 := Nat.pos_of_ne_zero (Ideal.absNorm_eq_zero_iff.not.2 h𝔪)
@@ -63,6 +66,7 @@ def congRel (N : ℕ) : Setoid {k : GA D N // k ∈ intG D N} where
     rwa [sub_add_sub_cancel] at this
 
 
+variable {D 𝔪} in
 theorem congOne_inv_mul_iff {N : ℕ} {r : GA D N} (hr : r ∈ intG D N) (k : GA D N) :
     CongOne D 𝔪 (r⁻¹ * k) ↔ ∀ i j, ((k : GL (Fin N) (AE D)) : Matrix (Fin N) (Fin N) (AE D)) i j -
       ((r : GL (Fin N) (AE D)) : Matrix (Fin N) (Fin N) (AE D)) i j ∈ hatId D 𝔪 := by
@@ -96,6 +100,7 @@ def red (x : AE D) : 𝓞 D.host.E ⧸ 𝔪 :=
   if h : ∃ r : 𝓞 D.host.E, x - inc D (r : D.host.E) ∈ hatId D 𝔪 then Ideal.Quotient.mk 𝔪 h.choose else 0
 
 
+variable {D 𝔪} in
 theorem sub_mem_of_red_eq (h𝔪 : 𝔪 ≠ ⊥) {x y : AE D} (hx : x ∈ OhE D) (hy : y ∈ OhE D) (h : red D 𝔪 x = red D 𝔪 y) :
     x - y ∈ hatId D 𝔪 := by
   have ex := exists_rep h𝔪 hx

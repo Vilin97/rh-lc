@@ -60,6 +60,7 @@ def glue {a b : ℕ} (P : D.what₂.Tau → LPol b a) : PolF D b a :=
   ∏ τ, MvPolynomial.rename (fun s => (τ, s)) (P τ)
 
 
+open Classical in
 def GlueLaw (D : D7) (a b : ℕ) : Prop :=
   Submodule.span ℂ (Set.range (glue : (D.what₂.Tau → LPol b a) → PolF D b a)) = ⊤ ∧
     ∀ (τ : D.what₂.Tau) (ε : Fin a → Bool) (ε' : Fin b → Bool) (P : D.what₂.Tau → LPol b a),

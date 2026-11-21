@@ -38,6 +38,9 @@ def torusNo (c : E ≃ₐ[F] E) (G : Matrix (Fin n) (Fin n) E) (L : Set (Fin n �
   ENat.card (Quot fun a b : {t // IsTA c t} => TEquiv c G L M a.1 b.1)
 
 
+open NumberField IsDedekindDomain Matrix in
+open scoped TensorProduct in
+variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {n : ℕ} in
 theorem _root_.GlobalTheory.UCls.isKM_one (c : E ≃ₐ[F] E) (G : Matrix (Fin n) (Fin n) E)
     (L : Set (Fin n → E)) (M : ℕ) :
     _root_.GlobalTheory.UCls.IsKM c G L M 1 := by

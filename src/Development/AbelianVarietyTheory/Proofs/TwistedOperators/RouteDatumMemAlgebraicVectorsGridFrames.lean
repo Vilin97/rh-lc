@@ -166,6 +166,7 @@ theorem exists_boxT_ptF (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ)
 end Box
 
 
+open GlobalTheory.Doubling in
 theorem cart_frSum {V H : HSp D} (A : Fr V) (B : Fr H) (τ : D.what₂.Tau) :
     (GlobalTheory.SquareComm.frSum A B).cart τ = blkMat finSumFinEquiv (A.cart τ) (B.cart τ) := by
   have ha : IsUnit (A.fr τ).det := (Matrix.isUnit_iff_isUnit_det _).1 (A.fr_unit τ)

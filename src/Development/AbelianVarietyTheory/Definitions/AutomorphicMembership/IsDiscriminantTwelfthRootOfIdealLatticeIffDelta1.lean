@@ -72,9 +72,11 @@ def IsDgen (cD : ι → ℂ) : Prop :=
 def SplitK (p : ℕ) : Prop := p = 2 ∨ jacobiSym (-(H.d : ℤ)) p = 1
 
 
+variable (ι) in
 abbrev IsoK : Type := IsoKG H.K H.E H.conj ι
 
 
+variable {H} in
 def AtP (γ : IsoK H ι) (p : ℕ) : Prop :=
   (∀ x : Fin 4 → H.E, (∀ a, x a ∈ H.AA0) → ∃ s : ℕ, Nat.Coprime s p ∧
     ∀ w, (s : H.K) * γ.g x w ∈ (algebraMap (𝓞 H.K) H.K).range) ∧
@@ -82,10 +84,12 @@ def AtP (γ : IsoK H ι) (p : ℕ) : Prop :=
     ∃ s : ℕ, Nat.Coprime s p ∧ ∀ a, (s : H.E) * γ.g.symm v a ∈ H.AA0
 
 
+variable {H} in
 def detRel (γ γ₀ : IsoK H ι) : H.K :=
   LinearMap.det ((γ₀.g.symm.trans γ.g : (Fin 4 × ι → H.K) ≃ₗ[H.K] _) : (Fin 4 × ι → H.K) →ₗ[H.K] (Fin 4 × ι → H.K))
 
 
+variable {H} in
 structure KapIn (γ₀ : IsoK H ι) where
   pp : ℕ → IsDedekindDomain.HeightOneSpectrum (𝓞 H.K)
   pp_over : ∀ p, p.Prime → SplitK H p → ((p : ℕ) : 𝓞 H.K) ∈ (pp p).asIdeal
@@ -98,10 +102,12 @@ structure KapIn (γ₀ : IsoK H ι) where
     = H.φ₀ (((pi p : 𝓞 H.K) : H.K) : H.E) / H.φ₀ (H.conj (((pi p : 𝓞 H.K) : H.K) : H.E))
 
 
+variable {H} in
 def KapIn.yP {γ₀ : IsoK H ι} (k : KapIn γ₀) (p : ℕ) : ℤ :=
   -WithZero.log ((k.pp p).valuation H.K (detRel (k.gaP p) γ₀))
 
 
+variable {H} in
 def KapIn.kappa {γ₀ : IsoK H ι} (k : KapIn γ₀) : ℂ :=
   ∏ᶠ p : {p : ℕ // p.Prime ∧ SplitK H p}, k.rt p ^ (-(k.yP p))
 

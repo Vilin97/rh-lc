@@ -168,6 +168,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {L : Ty
   {L' : Type} [Field L'] [NumberField L'] [Algebra L L']
 
 
+variable (L) in
 abbrev baseF {F : Type} [Field F] (f : L' →+* F) : Sp F ⟶ Sp (𝓞 L) :=
   spMap (f.comp (algebraMap (𝓞 L') L')) ≫ spMap (algebraMap (𝓞 L) (𝓞 L'))
 

@@ -103,6 +103,7 @@ theorem map_mem_of_lt_one_iff (g : Ω ≃ₐ[K] Ω)
   exact mem_of_isIntegral V hR (ht.map (g.restrictScalars R))
 
 
+include hR in
 theorem smul_eq_of_lt_one_iff (g : Ω ≃ₐ[K] Ω)
     (hg : ∀ b : Ω, IsIntegral R b → (V.valuation (g b) < 1 ↔ V.valuation b < 1)) : g • V = V := by
   have hgi : ∀ y : Ω, g (g⁻¹ y) = y := fun y => by
@@ -122,6 +123,7 @@ theorem smul_eq_of_lt_one_iff (g : Ω ≃ₐ[K] Ω)
     exact map_mem_of_lt_one_iff R K Ω V hR g⁻¹ hg' h
 
 
+include hR in
 theorem mem_inertia_of_sub_lt_one (g : Ω ≃ₐ[K] Ω)
     (h : ∀ b : Ω, IsIntegral R b → V.valuation (g b - b) < 1) : g ∈ inertia K V := by
   have hg : g • V = V := smul_eq_of_lt_one_iff R K Ω V hR g fun b hb => lt_one_iff_of_sub_lt V (h b hb)

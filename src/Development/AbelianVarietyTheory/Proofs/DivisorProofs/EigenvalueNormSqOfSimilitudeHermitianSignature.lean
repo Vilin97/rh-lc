@@ -39,6 +39,7 @@ end GlobalTheory.EigenvalueNormSignature
 namespace GlobalTheory
 
 
+open GlobalTheory.EigenvalueNormSignature in
 theorem eig_norm_sq_of_similitude : ∀ (n : ℕ) (h Q Γ : Matrix (Fin n) (Fin n) ℂ) (hh : h.IsHermitian) (Z : GL (Fin n) ℂ) (c : ℝ),
     sigPosH hh ≤ 1 → sigPosH hh + sigNegH hh = n → Q = (Z : Matrix (Fin n) (Fin n) ℂ)ᴴ * h * Z → c ≠ 0 →
     Γᴴ * Q * Γ = (c : ℂ) • Q →

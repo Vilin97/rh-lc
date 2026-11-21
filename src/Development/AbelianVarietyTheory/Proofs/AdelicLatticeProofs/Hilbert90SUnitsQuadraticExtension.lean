@@ -95,6 +95,8 @@ private lemma valuation_algebraMap_eq_of_unit_at_under {F E : Type} [Field F] [N
   rcases Int.eq_one_or_neg_one_of_mul_eq_neg_one hl.symm with h1 | h1 <;> omega
 
 
+open NumberField IsDedekindDomain in
+open scoped WithZero in
 theorem _root_.GlobalTheory.QNorm.hilbert90_sUnits_quadratic_extension_qnorm : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
     [NumberField E] [Algebra F E] (δ : F) (θ : E) (σ : E ≃ₐ[F] E), _root_.GlobalTheory.QNorm.IsQuad δ θ σ →
     ∀ (S : Finset (HeightOneSpectrum (𝓞 F))) (SE : Finset (HeightOneSpectrum (𝓞 E))),

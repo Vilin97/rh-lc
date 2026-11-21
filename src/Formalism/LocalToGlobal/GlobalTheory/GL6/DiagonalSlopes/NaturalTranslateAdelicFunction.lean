@@ -42,6 +42,7 @@ theorem is_translate_inverse (T : Forms0 D u) (γ : UJ (sigD D : D.host.E →+* 
   rw [← Matrix.mul_assoc, at_infinity_mul_inv, Matrix.one_mul]
 
 
+set_option maxHeartbeats 4000000 in
 theorem up_move_natural (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls 0)
     (z : ↥(Ld D u 0 (Nat.zero_le _) c)) (hz : (D.fm u).fv 0 v c (T.lv0.pr v c z) = 1) :
     ∃ (γ : UJ (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _)))
@@ -57,6 +58,7 @@ theorem up_move_natural (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.c
   rfl
 
 
+set_option maxHeartbeats 4000000 in
 theorem down_move_natural (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls 0)
     (g : Module.Dual ((D.mem u).A.Fv v) ((D.fm u).lk 0 v c)) (hg0 : g ≠ 0) :
     ∃ (γ : UJ (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _)))
@@ -107,6 +109,7 @@ theorem class_eq_of_rational_translate (T : Forms0 D u) (c c' : (D.mem u).C.cls 
   T.cls0.y_bij.1 (rnd_cls _ γ hγ _ _ κ h)
 
 
+set_option maxHeartbeats 4000000 in
 theorem U_op_preserves_forms_zero (T : Forms0 D u) (v : (D.mem u).A.vT) (φ : (D.mem u).C.cls 0 → (D.mem u).C.Y 0 → ℂ)
     (hφ : φ ∈ (D.fm u).Fi 0) : Formalism.MainNotions.product_first_zeroth_parts.Uop D u 0 v φ ∈ (D.fm u).Fi 0 := by
   classical
@@ -148,6 +151,7 @@ theorem U_op_preserves_forms_zero (T : Forms0 D u) (v : (D.mem u).A.vT) (φ : (D
   simp
 
 
+set_option maxHeartbeats 4000000 in
 theorem D_op_preserves_forms_zero (T : Forms0 D u) (v : (D.mem u).A.vT) (φ : (D.mem u).C.cls 0 → (D.mem u).C.Y 0 → ℂ)
     (hφ : φ ∈ (D.fm u).Fi 0) : Formalism.MainNotions.product_first_zeroth_parts.Dop D u 0 v φ ∈ (D.fm u).Fi 0 := by
   classical
@@ -202,6 +206,7 @@ def IsUpMvF (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls 0) (x : (
     ∀ h, (D.fm u).upT 0 v c x h = natTr0 T γ κ h
 
 
+set_option maxHeartbeats 2000000 in
 theorem U_op_eq_move_sum (T : Forms0 D u) (v : (D.mem u).A.vT) (ψ : Fn D u 0)
     {g : UPts (sigD D) (gramN D 0 (Nat.zero_le _)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F) → Fr D 0 (Nat.zero_le _) → ℂ}
     (hg : g ∈ AdFun T.cls0.lev (embT D))
@@ -240,6 +245,7 @@ def UpDiaMatch0F (T : Forms0 D u) : Prop :=
       ∀ x, (Mv2 (σ x)).1⁻¹ * κd.1 * (Mv x).1 ∈ T.cls0.lev.U
 
 
+set_option maxHeartbeats 4000000 in
 theorem diamond_commutes_U_distinct (T : Forms0 D u) (hM : UpDiaMatch0F T) (v v' : (D.mem u).A.vT) (hvv : v ≠ v')
     (a : ((D.mem u).A.Fv v')ˣ) (φ : Fn D u 0) (hφ : φ ∈ (D.fm u).Fi 0) :
     dia D u 0 v' a (Uop D u 0 v φ) = Uop D u 0 v (dia D u 0 v' a φ) := by
@@ -324,6 +330,7 @@ def IsDnMvF (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls 0) (x : M
     ∀ h, (D.fm u).dnT 0 v c x h = natTr0 T γ κ h
 
 
+set_option maxHeartbeats 2000000 in
 theorem D_op_eq_move_sum (T : Forms0 D u) (v : (D.mem u).A.vT) (ψ : Fn D u 0)
     {g : UPts (sigD D) (gramN D 0 (Nat.zero_le _)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F) → Fr D 0 (Nat.zero_le _) → ℂ}
     (hg : g ∈ AdFun T.cls0.lev (embT D))
@@ -362,6 +369,7 @@ def DnDiaMatch0F (T : Forms0 D u) : Prop :=
       ∀ x, (Mv2 (σ x)).1⁻¹ * κd.1 * (Mv x).1 ∈ T.cls0.lev.U
 
 
+set_option maxHeartbeats 4000000 in
 theorem diamond_commutes_D_distinct (T : Forms0 D u) (hM : DnDiaMatch0F T) (v v' : (D.mem u).A.vT) (hvv : v ≠ v')
     (a : ((D.mem u).A.Fv v')ˣ) (φ : Fn D u 0) (hφ : φ ∈ (D.fm u).Fi 0) :
     dia D u 0 v' a (Dop D u 0 v φ) = Dop D u 0 v (dia D u 0 v' a φ) := by
@@ -525,6 +533,7 @@ theorem mul_lattice_dual_comm {F E : Type} [Field F] [NumberField F] [Field E] [
     rwa [mulVec_mulVec, ← Units.val_mul, inv_mul_cancel, Units.val_one, one_mulVec] at this
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem level_stabilises_base_lattice (T : Forms0 D u) (κ : T.cls0.lev.U) :
     κ.1 ∈ stabGL (latS (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)
       (tensInt (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F) (intOE D.host.E) (intAd D.host.F))
@@ -533,6 +542,7 @@ theorem level_stabilises_base_lattice (T : Forms0 D u) (κ : T.cls0.lev.U) :
     (fun w => (T.cls0.lev.Uloc_lev w (((T.cls0.lev.U_eq _).1 κ.2).2 w)).2)
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem diamond_stabilises_base_lattice (T : Forms0 D u) (v' : (D.mem u).A.vT) (k : ℤ)
     (δ : UPts (sigD D) (gramN D 0 (Nat.zero_le _)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F))
     (hδ : IsDia T.cls0.lev (T.atT.eV v').1 (T.atT.eV v').2 k δ) :
@@ -545,6 +555,8 @@ theorem diamond_stabilises_base_lattice (T : Forms0 D u) (v' : (D.mem u).A.vT) (
   · rw [hδ.1 w hw]; exact one_mem _
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem diamond_lattice_transport (T : Forms0 D u) (v' : (D.mem u).A.vT) (k : ℤ)
     (δ : UPts (sigD D) (gramN D 0 (Nat.zero_le _)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F))
     (hδ : IsDia T.cls0.lev (T.atT.eV v').1 (T.atT.eV v').2 k δ) (c c2 : (D.mem u).C.cls 0)
@@ -576,6 +588,8 @@ end DiaLat
 section DiaFun
 
 
+set_option maxHeartbeats 20000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem diamond_class_function (T : Forms0 D u) (v v' : (D.mem u).A.vT) (hvv : v ≠ v') (k : ℤ)
     (δ : UPts (sigD D) (gramN D 0 (Nat.zero_le _)) (FiniteAdeleRing (𝓞 D.host.F) D.host.F))
     (hδ : IsDia T.cls0.lev (T.atT.eV v').1 (T.atT.eV v').2 k δ) (c c2 : (D.mem u).C.cls 0)

@@ -65,6 +65,7 @@ theorem mat_one_inv (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E
 end ParityOfCoefficients
 
 
+open ParityOfCoefficients in
 theorem parity_of (hC : CoefEq) (hF : FourierInj) : Parity := by
   intro F E _ _ _ _ _ σ B n d X W M χX χW om r s r' s' hp
   obtain ⟨μ, hμ, hneg⟩ := exists_haar (F := F) (κ := Fin n × Fin d)

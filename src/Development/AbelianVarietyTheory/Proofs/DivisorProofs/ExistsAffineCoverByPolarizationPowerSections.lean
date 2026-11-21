@@ -69,6 +69,7 @@ def chartPullPowTop :
 end GlobalTheory.AmpleCover
 
 
+open GlobalTheory.AmpleCover in
 theorem GlobalTheory.AmpleCover.exists_affine_cover_secM : ∀ (K : Type) [Field K] (P₀ : Out.PolAV (Sp K)), ∃ (k : ℕ) (I : Type) (s : I → SecM (𝟙 P₀.A.left) P₀.L k), 1 ≤ k ∧ ⨆ i, Out.nonzeroLocus (s i) = ⊤ ∧ ∀ i, IsAffineOpen (Out.nonzeroLocus (s i)) ∧ ((Out.nonzeroLocus (s i) : P₀.A.left.Opens) : Set P₀.A.left).Nonempty := by
   intro K _ P₀
   obtain ⟨N, hN, M, s, hcov, hs⟩ := P₀.ample ⊤ (isAffineOpen_top _)

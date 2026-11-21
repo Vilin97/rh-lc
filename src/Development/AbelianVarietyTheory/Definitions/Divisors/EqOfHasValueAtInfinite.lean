@@ -52,6 +52,13 @@ private theorem valuation_det_le_one_of_entries_integer {y : GL n k}
   exact (Valuation.mem_integer_iff _ _).mp (SetLike.coe_mem _)
 
 
+open MeasureTheory Matrix in
+open ValuativeRel in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  {n : Type} [Fintype n] [DecidableEq n] in
+variable [MeasurableSpace (GL n k)] in
+variable {μ : Measure (GL n k)} {Ξ : Matrix n n k → ℂ} {c : GL n k → ℂ} in
+omit [MeasurableSpace (GL n k)] in
 theorem _root_.GlobalTheory.LGrp.nabs_det_of_mem_KO {x : GL n k}
     (hx : x ∈ _root_.GlobalTheory.SplitWeil.KO k n) :
     _root_.GlobalTheory.SplitWeil.nabs k (GeneralLinearGroup.det x) = 1 := by
@@ -125,6 +132,13 @@ private theorem exists_unit_ord_eq_one_and_nabs_eq_inv_resCard :
   · omega
 
 
+open MeasureTheory Matrix in
+open ValuativeRel in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  {n : Type} [Fintype n] [DecidableEq n] in
+variable [MeasurableSpace (GL n k)] in
+variable {μ : Measure (GL n k)} {Ξ : Matrix n n k → ℂ} {c : GL n k → ℂ} in
+omit [MeasurableSpace (GL n k)] in
 theorem _root_.GlobalTheory.LGrp.nabs_eq_zpow (x : kˣ) :
     _root_.GlobalTheory.SplitWeil.nabs k x =
       (_root_.GlobalTheory.SplitWeil.resCard k : ℝ) ^ (-_root_.GlobalTheory.SmGL.ord k x) := by

@@ -24,6 +24,7 @@ variable (U : Submodule ℂ (cuspForms K n))
   (hτ : ∀ g, ∀ φ ∈ U, finRepCusp K n g φ ∈ U)
 
 
+include hρ in
 theorem uActionCusp_mem (u : UEnv K n) {φ : cuspForms K n}
     (hφ : φ ∈ U) : uActionCusp K n u φ ∈ U := by
   obtain ⟨t, rfl⟩ : ∃ t, UniversalEnvelopingAlgebra.mkAlgHom ℝ _ t = u :=

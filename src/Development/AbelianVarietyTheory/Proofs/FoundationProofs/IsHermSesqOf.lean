@@ -186,6 +186,7 @@ theorem klat_facts (hc : Crv D cc δ) {A : AddSubgroup (VC D N N')} (hA : KLat D
 end GlobalTheory.ConjNorm.Inter
 
 
+open GlobalTheory.ThetaInter GlobalTheory.ConjNorm.Inter in
 theorem GlobalTheory.ConjNorm.unitary_all : ∀ D : D7, IntertwinerUnitary D := by
   intro D cc δ hc N N' A₁ A₂ h₁ h₂ th hth
   obtain ⟨f₁, s₁, d₁, c₁⟩ := klat_facts hc h₁

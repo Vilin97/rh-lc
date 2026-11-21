@@ -77,6 +77,7 @@ theorem sg_sg (d : GL (Fin n) E) (X : Matrix (Fin n) (Fin n) E) :
   simp only [Matrix.mul_assoc]
 
 
+omit [NumberField E] [IsCMField E] in
 theorem inv_mem (g : GL (Fin n) E) : (g⁻¹ : GL (Fin n) E).val ∈ Algebra.adjoin E {g.val} := by
   have hdet : g.val.det ≠ 0 := ((Matrix.isUnit_iff_isUnit_det _).1 g.isUnit).ne_zero
   have hc : g.val.charpoly.coeff 0 ≠ 0 := by

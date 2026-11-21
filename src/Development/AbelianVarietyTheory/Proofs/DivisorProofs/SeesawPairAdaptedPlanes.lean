@@ -110,6 +110,7 @@ theorem repB (x : Fin n → E) (ι' : Matrix (Fin d) (Fin d₁) E) (z₂ : Fin d
   exact Finset.sum_congr rfl fun k _ => by ring
 
 
+variable (σ) in
 abbrev sy (X : Spc F E n) (W : Spc F E d) := symp (cA σ) (-1 : AE F E) (incM F X.J) (incM F W.J)
 
 open GlobalTheory.MixedLagrX in

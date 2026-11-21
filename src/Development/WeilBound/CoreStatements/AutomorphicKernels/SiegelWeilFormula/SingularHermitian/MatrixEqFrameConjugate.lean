@@ -186,6 +186,7 @@ theorem form_w (d : SD σ) (R : RD d) (w : InfinitePlace F) (x : d.G) :
 end UnitaryGroupBasics
 
 
+open UnitaryGroupBasics in
 theorem split (d : SD σ) (R : RD d) (w : InfinitePlace F) (g : d.G) :
     ∃ (y : GR d.n) (x : d.G), g = R.ι w y * x ∧ ∀ y' : GR d.n, x * R.ι w y' = R.ι w y' * x := by
   have hζ0 := Krd.zeta_ne R.hζ
@@ -244,6 +245,7 @@ theorem cw_unip (d : SD σ) (R : RD d) (w : InfinitePlace F) (u : GR d.n) (H : M
 end UnitaryGroupBasics
 
 
+open UnitaryGroupBasics in
 theorem nbw (d : SD σ) (R : RD d) (w : InfinitePlace F) {nb : nA σ d.Y d.b → d.G} (h : IsNMap d.b nb)
     (nr : (Fin d.n → Fin d.n → ℝ) → GR d.n) (hnr : ∀ x, mR (nr x) = nU (herm x)) :
     ∃ β : (Fin d.n → Fin d.n → ℝ) → nA σ d.Y d.b, Continuous β ∧ ∀ x, R.ι w (nr x) = nb (β x) := by
@@ -269,6 +271,7 @@ theorem nbw (d : SD σ) (R : RD d) (w : InfinitePlace F) {nb : nA σ d.Y d.b →
   · rw [h]; exact hP x
 
 
+open UnitaryGroupBasics in
 theorem charW (d : SD σ) (R : RD d) (w : InfinitePlace F) {nb : nA σ d.Y d.b → d.G} (h : IsNMap d.b nb)
     (nr : (Fin d.n → Fin d.n → ℝ) → GR d.n) (hnr : ∀ x, mR (nr x) = nU (herm x))
     (β : (Fin d.n → Fin d.n → ℝ) → nA σ d.Y d.b) (hβ : ∀ x, R.ι w (nr x) = nb (β x)) (T : nF σ d.Y d.b) :

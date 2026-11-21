@@ -28,6 +28,7 @@ noncomputable section
 namespace GlobalTheory.CompanionTheory.Ar.Sl.KeyDegArch
 
 
+open scoped CategoryTheory.Obj in
 theorem isAb_of_isGrpPullback {S S' : Scheme.{0}} {f : S' ⟶ S} {A : Over S} {A' : Over S'} [GrpObj A] [GrpObj A']
     {φ : A'.left ⟶ A.left} (h : IsGrpPullback A' A f φ) (hA : IsAbelianScheme A) : IsAbelianScheme A' := by
   have hB := Out.TLinPf.isAb_pullback f A hA

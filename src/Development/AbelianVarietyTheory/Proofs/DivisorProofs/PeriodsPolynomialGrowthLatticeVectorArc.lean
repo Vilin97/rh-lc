@@ -15,6 +15,7 @@ open ReciprocityTheory.ChartRestriction.G.FD (Data Frame Bor rmul lact mat col d
 namespace GlobalTheory.ShFam.PerPoly
 
 
+open scoped CategoryTheory.MonObj in
 theorem exists_transfer_iff {S S' S0 : Scheme.{0}} {G : Over S} {G' : Over S'} {G0 : Over S0} [GrpObj G] [GrpObj G']
     [GrpObj G0] {f : S' ⟶ S} {f0 : S' ⟶ S0} {φ : G'.left ⟶ G.left} {φ0 : G'.left ⟶ G0.left}
     (h : IsGrpPullback G' G f φ) (h0 : IsGrpPullback G' G0 f0 φ0) (q : Sp ℂ ⟶ S') {y : Sp ℂ ⟶ S} {y0 : Sp ℂ ⟶ S0}

@@ -57,14 +57,17 @@ def IsSqReps (R : Finset kˣ) : Prop :=
 end Lev
 
 
+variable (k) in
 abbrev th (n : ℕ) : GL (Fin n) k →* GL (Fin n) k := GlobalTheory.CuspRep.invT n k
 
 
+variable (k) in
 def Phi : GL (Fin 3) k := ⟨!![0, 0, 1; 0, -1, 0; 1, 0, 0], !![0, 0, 1; 0, -1, 0; 1, 0, 0],
   by ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_three],
   by ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_three]⟩
 
 
+variable (k) in
 def th' : GL (Fin 3) k →* GL (Fin 3) k := (MulAut.conj (Phi k)).toMonoidHom.comp (th k 3)
 
 namespace Lev

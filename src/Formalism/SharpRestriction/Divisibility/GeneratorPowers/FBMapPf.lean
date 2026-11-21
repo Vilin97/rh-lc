@@ -155,6 +155,7 @@ section FB
 variable {O : Type} [CommRing O] [StarRing O] (B : FB R d O)
 
 
+set_option maxHeartbeats 1000000 in
 def mapFB : FB R' d O where
   G := mapG ψ B.G
   A := mapA ψ B.A

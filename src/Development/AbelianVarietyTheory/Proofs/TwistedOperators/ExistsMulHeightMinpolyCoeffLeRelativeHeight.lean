@@ -16,6 +16,8 @@ theorem mult_le_two (F : Type) [Field F] [NumberField F] (w : InfinitePlace F) :
   unfold InfinitePlace.mult; split_ifs <;> norm_num
 
 
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
+open Classical in
 theorem exists_mulHeight_coeff_minpoly_le : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E], ∃ (c : ℝ) (a : ℕ),
     ∀ (x : E) (j : ℕ), Height.mulHeight₁ ((minpoly F x).coeff j) ≤ c * (GlobalTheory.RatCount.htE F x : ℝ) ^ a := by
   intro F E _ _ _ _ _

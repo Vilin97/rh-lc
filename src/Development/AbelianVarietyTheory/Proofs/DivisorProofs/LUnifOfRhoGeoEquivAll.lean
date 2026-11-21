@@ -342,6 +342,7 @@ theorem rhoIs_of_eqAt (t : FWTie T R κ v₀) (he : R.models_HW) (hw : R.models_
     exact congrArg (· * _) (Complex.conj_conj _)
 
 
+variable (T R κ O) in
 def EquivConstExist : Prop :=
   ∀ (i : Fin D.R.m) (σ : T.Q.c.F →+* ℂ), GoodEmb T.Q.c σ → ∀ hV : T.V ((i : ℕ) + 1) σ = Wc D i,
     ∃ c', CUnit c' ∧ EqAt T R κ (O i) σ hV c'

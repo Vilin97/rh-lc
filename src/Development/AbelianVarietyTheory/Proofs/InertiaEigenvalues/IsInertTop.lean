@@ -54,12 +54,14 @@ def clsScal (χ : (AE D)ˣ →* Circle) (y : (AE D)ˣ) {n : ℕ} (Λ : GenLat D.
     Λ.La.toAddSubgroup).index : ℝ) ^ r) : ℝ) : ℂ)⁻¹
 
 
+variable (Dw) in
 def IsLetters {m n : ℕ} (lt : LtN Dw n ≃ FVar D m n) : Prop :=
   ∀ ℓ, (lt ℓ).2.2 = ℓ.2.2 ∧ ((ℓ.1 = tauE D (lt ℓ).1 ∧ ((lt ℓ).2.1 : ℕ) = ℓ.2.1) ∨
     (ℓ.1 = conjEmb (tauE D (lt ℓ).1) ∧ ((lt ℓ).2.1 : ℕ) = Dw.p + ℓ.2.1))
 
 
 
+variable (Dw) in
 def degA (a : (D.host.E →+* ℂ) × ℕ → ℕ) : ℕ := ∑ τ : D.host.E →+* ℂ, ∑ j : Fin (Dw.mult τ), a (τ, j)
 
 variable {l : Geo.Tor.Level H} {Xo : Moduli Dw l}

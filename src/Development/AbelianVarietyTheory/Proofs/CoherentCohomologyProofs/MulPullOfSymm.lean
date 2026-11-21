@@ -26,6 +26,7 @@ namespace GlobalTheory.MulPullAny
 open GlobalTheory.MulPull
 
 
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 theorem iso_of_hasGen {X : Scheme.{0}} {L : LB X} {F : X ⟶ X} {m : ℤ}
     (h : HasGen L (K := Fin 2) ![F, 𝟙 X] ![1, -m]) :
     ∃ w : LB.Iso (AbLaw.pw L m) (L.pull F), w.IsGen := by

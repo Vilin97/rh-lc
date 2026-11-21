@@ -53,6 +53,7 @@ theorem lifts_nonempty (V : Z.Opens) : Nonempty (Lifts q V) :=
      hv := fun T g => anyLift_spec q T g }⟩
 
 
+open Classical in
 def ext {V V' : Z.Opens} (h : V' ≤ V) (Λ' : Lifts q V') : Lifts q V where
   v T g := if hT : inU q V' T.obj then Λ'.v ⟨T.obj, hT⟩ (rs h g) else anyLift q T g
   hv T g := by

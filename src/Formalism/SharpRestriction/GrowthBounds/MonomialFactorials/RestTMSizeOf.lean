@@ -13,6 +13,7 @@ open MvPolynomial Finset Formalism.MainNotions.G Formalism.MainNotions.flipOneTh
 variable {C0 CE1 CE2 : ℝ} {X : flipOneThree.Inst}
 
 
+variable (C0 CE1 CE2 X) in
 def aTopPt (dl : DCl X) (a : Fin X.s → ℕ) : Fin X.s → ℕ :=
   ovr (uTop (X.S C0 CE1 CE2)) a (fun i => topA C0 CE1 CE2 X dl (uTop (X.S C0 CE1 CE2) i))
 

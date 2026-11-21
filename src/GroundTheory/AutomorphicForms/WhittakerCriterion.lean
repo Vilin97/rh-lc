@@ -80,6 +80,7 @@ def BiEquivariantSigmaInvariant (H : Subgroup G) (χ : H → ℂ) (σ : G ≃ₜ
     ∀ f, D (compHomeoL σ f) = D f
 
 
+omit [IsTopologicalGroup G] in
 theorem map_inv_of_antiHom (σ : G ≃ₜ G) (hσ : ∀ x y, σ (x * y) = σ y * σ x) (x : G) :
     σ x⁻¹ = (σ x)⁻¹ := by
   have h1 : σ 1 = 1 := by
@@ -98,6 +99,7 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Loca
   {V : Type*} [AddCommGroup V] [Module ℂ V] {ρ : Representation ℂ G V}
 
 
+omit [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] in
 theorem heckeAct_apply_act [μ.IsMulRightInvariant] {f : G → ℂ} (hf : f ∈ locallyConstantCompactSupport G ℂ ℂ) {v : V}
     (hv : v ∈ smoothVectors ρ) (g : G) :
     heckeAct μ ρ f (ρ g v) = heckeAct μ ρ (fun x => f (x * g⁻¹)) v := by
@@ -117,6 +119,7 @@ theorem normInd_mem {K : Subgroup G} (hKc : IsCompact (K : Set G)) (hKo : IsOpen
   indicator_mem_locallyConstantCompactSupport hKc hKo _
 
 
+omit [LocallyCompactSpace G] [TotallyDisconnectedSpace G] in
 theorem heckeAct_normInd {K : Subgroup G} (hKc : IsCompact (K : Set G)) (hKo : IsOpen (K : Set G))
     {v : V} (hv : v ∈ fixedVectors ρ K) : heckeAct μ ρ (normInd μ K) v = v := by
   have hvs : v ∈ smoothVectors ρ := mem_smoothVectors_of_mem_fixedVectors hKo hv
@@ -230,6 +233,7 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Loca
   (μ : Measure G) [μ.IsHaarMeasure]
 
 
+omit [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] [μ.IsHaarMeasure] in
 theorem compHomeoL_convS [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
     [μ.IsMulLeftInvariant] [μ.IsInvInvariant] (σ : G ≃ₜ G)
     (hσ : ∀ x y, σ (x * y) = σ y * σ x) (hσμ : μ.map σ = μ)
@@ -305,6 +309,7 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Loca
   {V : Type*} [AddCommGroup V] [Module ℂ V] {ρ : Representation ℂ G V}
 
 
+omit [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] in
 def annihilatorSubrep (W : Subrepresentation (contragredient ρ)) : Subrepresentation ρ where
   toSubmodule :=
     { carrier := {v | ∀ ξ ∈ W, (ξ : Module.Dual ℂ V) v = 0}
@@ -339,6 +344,7 @@ theorem exists_ne_zero_contragredient (h : IsAdmissible ρ) {v : V} (hv : v ≠ 
   exact e
 
 
+omit [IsTopologicalGroup G] [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] in
 theorem isSmooth_subrep (hρ : IsSmooth ρ) (W : Subrepresentation ρ) :
     IsSmooth (V := W.toSubmodule) W.toRepresentation := fun w => by
   have : (stabilizerOf (V := W.toSubmodule) W.toRepresentation w : Set G) =
@@ -486,6 +492,7 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Loca
   {V : Type*} [AddCommGroup V] [Module ℂ V] {ρ : Representation ℂ G V}
 
 
+omit [LocallyCompactSpace G] [TotallyDisconnectedSpace G] [μ.IsMulRightInvariant] in
 theorem apply_heckeAct_normInd (hρ : IsSmooth ρ) {K : Subgroup G} (hKc : IsCompact (K : Set G))
     (hKo : IsOpen (K : Set G)) {ξ : smoothVectors (Representation.dual ρ)}
     (hξ : ξ ∈ fixedVectors (contragredient ρ) K) (v : V) :

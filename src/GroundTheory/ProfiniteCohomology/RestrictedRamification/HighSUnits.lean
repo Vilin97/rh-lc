@@ -29,6 +29,7 @@ variable (K : FiniteSubfield) (S : Set (HeightOneSpectrum (𝓞 K.1))) (ιs : Lo
   (hD : ∀ p : ℕ, 2 ≤ p → ∀ x : cohomology (gsDiv K S ιs QZ) p, ∀ k : ℕ, ℓ ^ k • x = 0 → x = 0)
 
 
+include hℓ hD in
 theorem eq_zero_of_pow_nsmul_cohomology_gsDiv_int {q : ℕ} (hq : 3 ≤ q) (x : cohomology (gsDiv K S ιs ℤ) q)
     (k : ℕ) (hx : ℓ ^ k • x = 0) : x = 0 := by
   have hX := divFunSequence_shortExact (gsDecomp K S ιs)
@@ -49,6 +50,7 @@ theorem eq_zero_of_pow_nsmul_cohomology_gsDiv_int {q : ℕ} (hq : 3 ≤ q) (x : 
   exact e
 
 
+include hℓ hS hD in
 theorem eq_zero_of_pow_nsmul_cohomology_galUnitsModSUnits {q : ℕ} (hq : 3 ≤ q)
     (x : cohomology (galUnitsModSUnits K.1 ℚ̄ S) q) (k : ℕ) (hx : ℓ ^ k • x = 0) : x = 0 := by
   have hP := picSequence_shortExact K S ιs
@@ -65,6 +67,7 @@ theorem eq_zero_of_pow_nsmul_cohomology_galUnitsModSUnits {q : ℕ} (hq : 3 ≤ 
       (exists_coprime_smul_picInfRep K S ιs ℓ hℓ hS) p r) k hx
 
 
+include hℓ hS hD in
 theorem isIsoModCoprime_sUnitsToUnits {r : ℕ} (hr : 4 ≤ r) :
     IsIsoModCoprime ℓ (cohomologyMap (sUnitsToUnits S (maxUnramifiedOutside K.1 ℚ̄ S)) r).hom.toAddMonoidHom := by
   have hQ := sUnitsQuotSequence_shortExact K.1 ℚ̄ S

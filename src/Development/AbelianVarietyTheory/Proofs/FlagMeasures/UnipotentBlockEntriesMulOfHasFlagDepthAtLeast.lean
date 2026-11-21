@@ -48,6 +48,7 @@ end GlobalTheory.SnMass.VolN.LeftMul
 namespace GlobalTheory.SnMass.VolN
 
 
+open GlobalTheory.SnMass.VolN.LeftMul in
 theorem cM_mul_of_dep : ∀ (k r : ℕ) (g x : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) (d : ℕ),
     Dep k r d (g - 1) → Dep k r 1 (x - 1) → ∀ β : Bk r, degB r β ≤ d →
       cM k r β (Matrix.of.symm (g * x)) = cM k r β (Matrix.of.symm x) + cM k r β (Matrix.of.symm g) := by

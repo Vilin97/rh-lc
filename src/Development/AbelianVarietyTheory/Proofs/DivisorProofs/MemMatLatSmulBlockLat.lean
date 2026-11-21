@@ -15,21 +15,25 @@ variable {k : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchi
 variable {A D : Type*} [DecidableEq D]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem setCols_add (P : Finset D) (Y Z : Matrix A D k) (T : Matrix A P k) :
     setCols P (Y + Z) T = setCols P Y T + setCols P Z 0 := by
   ext i j
   by_cases h : j ∈ P <;> simp [setCols, h]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [DecidableEq D] in
 theorem pairCols_add [Fintype A] (P : Finset D) (Y Z : Matrix A D k) (T : Matrix A P k) :
     pairCols P (Y + Z) T = pairCols P Y T + pairCols P Z T := by
   simp [pairCols, mul_add, Finset.sum_add_distrib]
 
 
+omit [DecidableEq D] in
 theorem mem_matLat_diagLat {c : D → kˣ} {X : Matrix A D k} :
     X ∈ matLat (diagLat c) ↔ ∀ i j, valuation k (X i j) ≤ valuation k (c j : k) := Iff.rfl
 
 
+omit [DecidableEq D] in
 theorem mem_matLat_smul_stdLat {c : kˣ} {X : Matrix A D k} :
     X ∈ matLat (c • stdLat) ↔ ∀ i j, valuation k (X i j) ≤ valuation k (c : k) := by
   rw [stdLat, smul_diagLat, mem_matLat_diagLat]

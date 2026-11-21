@@ -35,6 +35,7 @@ def phi0 : blockRestrictedRepresentationType (RepresentationBoundsCohomology.blk
   LinearEquiv.ofBijective (H0.toKOG i Dd) ⟨H0.toKOG_injective i Dd, toKOG_surjective i Dd⟩
 
 
+variable {i r ρ π g0 eB e₁ s Dd} in
 theorem invariants_map_equivariant
     (hD : Formalism.RepresentationBoundsCohomology.ringDataObjects.RingDef (D.nd.O i) (D.nd.T i) (RepresentationBoundsCohomology.repX D.nd r) π (chiU D.nd i 1) (epsU D.nd i) g0 eB e₁ s Dd)
     (hN : RepresentationBoundsCohomology.NormAt D.nd r ρ π) (g : GE D.nd) (m : blockRestrictedRepresentationType (RepresentationBoundsCohomology.blk D.R) Dd.ρk 0) :
@@ -42,6 +43,7 @@ theorem invariants_map_equivariant
   exact H0.toKOG_equiv hD hN g m
 
 
+variable {i r ρ π g0 eB e₁ s Dd} in
 theorem tieSel1_rec
     (hD : Formalism.RepresentationBoundsCohomology.ringDataObjects.RingDef (D.nd.O i) (D.nd.T i) (RepresentationBoundsCohomology.repX D.nd r) π (chiU D.nd i 1) (epsU D.nd i) g0 eB e₁ s Dd)
     (hN : RepresentationBoundsCohomology.NormAt D.nd r ρ π)
@@ -53,6 +55,7 @@ theorem tieSel1_rec
   exact tieSel1_of (hBk := hBk)
 
 
+variable {i r ρ π g0 eB e₁ s Dd} in
 theorem tieSel1_rec_loc
     (hD : Formalism.RepresentationBoundsCohomology.ringDataObjects.RingDef (D.nd.O i) (D.nd.T i) (RepresentationBoundsCohomology.repX D.nd r) π (chiU D.nd i 1) (epsU D.nd i) g0 eB e₁ s Dd)
     (hN : RepresentationBoundsCohomology.NormAt D.nd r ρ π)

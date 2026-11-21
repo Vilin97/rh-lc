@@ -371,6 +371,7 @@ theorem cechOpen_le (f : Z' ⟶ Z) (τ : κ → ι) (hτ : ∀ i, U' i ≤ f ⁻
   exact (Finset.inf_le hj).trans (hτ j)
 
 
+set_option maxHeartbeats 800000 in
 theorem gm_pull (hinst : inst = ffAlg p) (hinst' : inst' = ffAlg p') (hU : IsAffCover p U B)
     (hU' : IsAffCover p' U' B') (f : Z' ⟶ Z) (hf : f ≫ p = p')
     (ψ : Z.functionField →ₐ[ℂ] Z'.functionField)
@@ -741,6 +742,7 @@ private theorem mapDR_eq_semiHom_mDR (K L : Type) [Field K] [Field L] [Algebra �
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 
+set_option maxHeartbeats 800000 in
 theorem gm_trace (hc : c ≫ p = p') (hinst : inst = ffAlg p) (hinst' : inst' = ffAlg p')
     (hU : IsAffCover p U B) (hU' : IsAffCover p' (fun i => c ⁻¹ᵁ U i) B')
     (hg : GermCompat c (algebraMap Z.functionField Y.functionField))

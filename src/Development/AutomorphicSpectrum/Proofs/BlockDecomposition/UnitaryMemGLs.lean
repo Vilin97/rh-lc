@@ -39,6 +39,7 @@ theorem fderiv_post {E F : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [No
   rw [e, this]; rfl
 
 
+variable (n V) in
 def Sm : Submodule ℂ (Mat n → V) where
   carrier := {f | ContDiffOn ℝ ∞ f (GLs n) ∧ ∀ g, g ∉ GLs n → f g = 0}
   add_mem' := fun {a b} ha hb => ⟨ha.1.add hb.1, fun g hg => by simp [ha.2 g hg, hb.2 g hg]⟩
@@ -78,6 +79,7 @@ theorem Dm_apply (X : Mat n) (h : Sm n V) {g : Mat n} (hg : g ∈ GLs n) : (Dm X
   Dmf_apply X h hg
 
 
+variable (n V) in
 def DA : Mat n →+ Module.End ℂ (Sm n V) where
   toFun := Dm
   map_zero' := by

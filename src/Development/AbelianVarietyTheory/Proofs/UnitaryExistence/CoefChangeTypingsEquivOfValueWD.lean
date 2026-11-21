@@ -92,9 +92,11 @@ abbrev FromT {S : Type} [CommRing S] [Algebra c.F S] (y : FrPt Xo c S) : Prop :=
   FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) y
 
 
+variable (Xo c) in
 abbrev ValueWD : Prop := EvalWD (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z)
 
 
+variable (Xo c) in
 abbrev HasBC : Prop :=
   ∀ (S : Type) [CommRing S] [Algebra c.F S] (T : Type) [CommRing T] [Algebra c.F T] (φ : S →ₐ[c.F] T)
     (y : FrPt Xo c S), ∃ z : FrPt Xo c T, FrMap φ y z

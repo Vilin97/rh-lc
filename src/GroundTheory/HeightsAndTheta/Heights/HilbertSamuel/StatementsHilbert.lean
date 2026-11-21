@@ -34,6 +34,7 @@ def modMultAt {R : Type*} [CommRing R] (M : Type*) [AddCommGroup M] [Module (MRi
   Module.length (Localization.AtPrime W) (LocalizedModule W.primeCompl M)
 
 
+open Classical in
 def topCycleNum (F : Type*) [Field F] (ι : K → Type*) (M : Type*) [AddCommGroup M] [Module (MRing ι F) M] (d : ℕ) (bs : Fin d → K → ℤ) :
     ℤ :=
   ∑ᶠ W : Ideal (MRing ι F),
@@ -107,6 +108,7 @@ def HilbertIncrement.Statement : Prop :=
         C * ((∑ k, (a k : ℝ)) + 1) ^ ((d : ℝ) - 1)
 
 
+open Classical in
 def IntersectionRecursion.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
     [∀ k, Fintype (ι k)] (q : Ideal (MRing ι F)) (d : ℕ), IsMultiProjPrime q →

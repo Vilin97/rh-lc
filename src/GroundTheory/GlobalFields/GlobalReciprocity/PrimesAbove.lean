@@ -35,6 +35,7 @@ instance liesOver_placeBelow {F E : FiniteSubfield} [Fact (F ≤ E)] :
 variable {P}
 
 
+omit [P.IsPrime] in
 theorem comap_smul {F E : FiniteSubfield} [Fact (F ≤ E)]
     [(E.1.fixingSubgroup.subgroupOf F.1.fixingSubgroup).Normal] (g : F.1.fixingSubgroup) :
     ((g : ℚ̄ ≃ₐ[ℚ] ℚ̄) • P).comap (algebraMap (𝓞 E.1) (𝓞 ℚ̄)) =
@@ -91,6 +92,7 @@ theorem exists_placeBelow_eq (K : FiniteSubfield) (v : HeightOneSpectrum (𝓞 K
   exact ⟨Q, hQ, hQ0, HeightOneSpectrum.ext hQv⟩
 
 
+include hP in
 theorem exists_liesOver_prime : ∃ p : ℕ, p.Prime ∧ P.LiesOver (Ideal.span {(p : ℤ)}) := by
   have : Algebra.IsIntegral ℤ (𝓞 ℚ̄) := inferInstanceAs (Algebra.IsIntegral ℤ (integralClosure ℤ ℚ̄))
   have hI : (P.comap (algebraMap ℤ (𝓞 ℚ̄))).IsPrime := Ideal.comap_isPrime _ _

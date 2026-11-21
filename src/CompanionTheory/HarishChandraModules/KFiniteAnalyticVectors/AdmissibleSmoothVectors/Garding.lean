@@ -95,6 +95,7 @@ theorem contDiff_avg {H : Type*} [NormedAddCommGroup H] [NormedSpace ℝ H] [Com
 end Gard
 
 
+open Gard in
 theorem garding_finite_smooth_vectors : GardingFin := by
   intro n ε H _ _ _ σ hσ Y _ hY v hv
   obtain ⟨⟨h1, hm⟩, hiso, hcont⟩ := hσ

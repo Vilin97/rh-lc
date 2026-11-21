@@ -192,6 +192,7 @@ theorem ideleMap_local (v : HeightOneSpectrum (𝓞 F)) (k : Fˣ) :
       exact (Finset.prod_eq_one fun P hP => ev_local_ne (fun e : w = P => hw (e ▸ mem_aboveF.1 hP)) _).symm
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele in
 theorem resFin_eq_one_of_away (χ : HChar E) (S : Finset (HeightOneSpectrum (𝓞 F)))
     (h : ∀ v ∉ S, ∀ k, χ.resFin v k = 1) (v : HeightOneSpectrum (𝓞 F)) (k : Fˣ) : χ.resFin v k = 1 := by
   have e : ∀ (v : HeightOneSpectrum (𝓞 F)) (k : Fˣ),

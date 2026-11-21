@@ -107,6 +107,7 @@ theorem class_product_irreducible_fold (hM : MulCls k) : ∀ (h N : ℕ) (x : Fi
     rfl
 
 
+variable (k) in
 theorem prodList (h : MulCls k) : ProdList k :=
   fun n N x hd => (class_product_irreducible_fold h n N x hd).2
 

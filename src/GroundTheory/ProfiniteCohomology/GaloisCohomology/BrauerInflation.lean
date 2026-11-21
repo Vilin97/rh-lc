@@ -166,6 +166,7 @@ section Profinite
 variable {K L : Type u} [Field K] [Field L] [Algebra K L] [IsGalois K L]
 
 
+omit [IsGalois K L] in
 theorem fixedField_le_of_le {U V : OpenNormalSubgroup Gal(L/K)} (h : V ≤ U) :
     fixedField (U : Subgroup Gal(L/K)) ≤ fixedField (V : Subgroup Gal(L/K)) :=
   fun _ hx => (mem_fixedField_iff _ _).2 fun σ hσ => (mem_fixedField_iff _ _).1 hx σ (h hσ)

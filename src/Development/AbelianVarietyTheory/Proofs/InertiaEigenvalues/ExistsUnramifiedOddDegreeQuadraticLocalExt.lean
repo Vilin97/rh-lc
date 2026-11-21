@@ -92,6 +92,7 @@ theorem root_unique (f : W[X]) (hsep : (f.map v).Separable) {a b : W} (ha : f.ev
 end Hensel
 
 
+open ReciprocityTheory.ChartRestriction.G.Semi in
 theorem exists_ring (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     [IsAdicComplete (maximalIdeal O) O] [Finite (ResidueField O)] (p : ℕ) [Fact p.Prime] [CharP (ResidueField O) p]
     {q f d : ℕ} (hq : Nat.card (ResidueField O) = q ^ 2) (hf : q = p ^ f) (hd : Odd d) (c : O →+* O)

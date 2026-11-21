@@ -95,6 +95,7 @@ section Dual
 open Matrix Formalism.L2.GlobalTheoryTheory.Br Formalism.UG
 
 
+set_option maxHeartbeats 1000000 in
 theorem mem_dual_tilde_iff {D : D7} {u : D.what₂.Word} {Ch : ℕ → Type} {chOf : ∀ i, (D.mem u).C.cls i → Ch i}
     (Tf : FormsTiedSym D u Ch chOf) (c : (D.fm u).clsP) (a : Fin (D.R.N D.R.m - 1) → D.host.E) (t : D.host.E) :
     iXc D a + (t / ((D.mem u).A.T : D.host.E)) • Tf.til.z0 ∈
@@ -132,6 +133,7 @@ theorem mem_dual_tilde_iff {D : D7} {u : D.what₂.Word} {Ch : ℕ → Type} {ch
     exact ⟨⟨_, r.2.map (sigD D : D.host.E →+* D.host.E).toIntAlgHom⟩, rfl⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_isLocBasis_dual (D : D7) (u : D.what₂.Word) (Ch : ℕ → Type) (chOf : ∀ i, (D.mem u).C.cls i → Ch i)
     (Tf : FormsTiedSym D u Ch chOf) (w : D.what₂.places.Pl) (c : (D.fm u).clsP) (B : GL (Fin (D.R.N D.R.m - 1)) D.host.E)
     (hB : IsLocBasis (D.what₂.places.resChar w) (Tf.clsP.lat c : Set (Fin (D.R.N D.R.m - 1) → D.host.E)) B) :
@@ -208,6 +210,7 @@ theorem local_of_mem_delAtr {E K : Type} [Field E] [NumberField E] [Field K] [Nu
   exact (vl_mem_delAtr_iff Pl pw hval emb s hpw J lam lam' hn M hM F).1 hF w B hB
 
 
+set_option maxHeartbeats 1000000 in
 theorem mem_SP_of_coord_integral (D : D7) (u : D.what₂.Word) (Ch : ℕ → Type) (chOf : ∀ i, (D.mem u).C.cls i → Ch i)
     (Tf : FormsTiedSym D u Ch chOf) (B : D.what₂.places.Pl → (D.fm u).clsP → GL (Fin (D.R.N D.R.m - 1)) D.host.E)
     (hB : ∀ w c, IsLocBasis (D.what₂.places.resChar w) (Tf.clsP.lat c : Set (Fin (D.R.N D.R.m - 1) → D.host.E)) (B w c))
@@ -287,6 +290,7 @@ theorem root_mem_intW (D : D7) (w : D.what₂.places.Pl) (r : D.what₂.LL) (n :
   exact lt_irrefl _ this
 
 
+set_option maxHeartbeats 4000000 in
 theorem exists_integralPendingObject_symmetricFormsLevel : ∀ (D : D7) (u : D.what₂.Word) (Ch : ℕ → Type) (chOf : ∀ i, (D.mem u).C.cls i → Ch i) (Tf : FormsTiedSym D u Ch chOf), Formalism.L2.Rows.LowerMapTieS Tf → Formalism.L2.Ker.BeOnTie D u → (∃ n : ℕ, 0 < n ∧ ∀ x : (Tf.cls D.R.m le_rfl (Or.inr rfl)).lev.U, (((Tf.cls D.R.m le_rfl (Or.inr rfl)).lev.chi x : ℂˣ) : ℂ) ^ n = 1 ∧ ∃ r : D.what₂.LL, D.what₂.embLL r = (((Tf.cls D.R.m le_rfl (Or.inr rfl)).lev.chi x : ℂˣ) : ℂ)) → ∃ P : Formalism.MainNotions.product_first_zeroth_parts.Pend D u, Formalism.MainNotions.product_first_zeroth_parts.ArchimedeanSignatureMatching P := by
   intro D u Ch chOf Tf hMap hBe hχ
   choose B hB using GlobalTheory.ClsPLocBasis.exists_isLocBasis_clsP D u Ch chOf Tf

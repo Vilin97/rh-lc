@@ -59,6 +59,9 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.CentralizerTensorForms.hf
   simp [dotProduct, mulVec, Finset.mul_sum, mul_assoc]
 
 
+open Matrix NumberField in
+open scoped TensorProduct in
+variable {A : Type} [CommRing A] {n : Type} [Fintype n] [DecidableEq n] in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.CentralizerTensorForms.form_adj (σ : A →+* A) {J : Matrix n n A} (hJ : IsUnit J.det)
     (l : Matrix n n A) (y y' : n → A) :
     _root_.GlobalTheory.IndefiniteRowSideFullHecke.CentralizerTensorForms.form σ J y (l *ᵥ y') =

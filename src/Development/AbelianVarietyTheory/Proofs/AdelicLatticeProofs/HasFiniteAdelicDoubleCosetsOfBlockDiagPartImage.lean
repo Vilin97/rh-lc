@@ -266,6 +266,9 @@ private lemma linExt_map_algebraMap {R : Type} [CommRing R] [Algebra ℚ R] (c :
     simp [_root_.GlobalTheory.ClassFin.linExt, map_sum, map_mul]
 
 
+open Matrix in
+open scoped Kronecker ComplexOrder TensorProduct in
+variable {ι : Type} [Fintype ι] [DecidableEq ι] in
 theorem _root_.GlobalTheory.ClassFin.cf_of_cf_blk_image : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (Γ : Set (Matrix ι ι ℂ)) (e : Matrix ι ι ℚ) (R : Type) [CommRing R] [Algebra ℚ R] (R₀ : Subring R), _root_.GlobalTheory.ClassFin.IsQGroup Γ → e * e = e → (∀ g ∈ Γ, (1 - e.map (algebraMap ℚ ℂ)) * g * e.map (algebraMap ℚ ℂ) = 0) → _root_.GlobalTheory.ClassFin.AdelicPair R R₀ → _root_.GlobalTheory.ClassFin.CF (_root_.GlobalTheory.ClassFin.blk e '' Γ) R R₀ → _root_.GlobalTheory.ClassFin.CF Γ R R₀ := by
   intro ι _ _ Γ e R _ _ R₀ hΓ he hblock hR hCF
   classical

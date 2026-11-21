@@ -36,6 +36,7 @@ theorem untilt_iterate_ofCompatible (y : ℕ → 𝒪) (hy : ∀ n, y (n + 1) ^ 
   rw [e, IsPerfectoidField.untilt_ofCompatible, zero_add]
 
 
+omit hp in
 theorem pow_eq_pow_of_mod_eq {M : Type*} [Monoid M] {ζ : M} {N u v : ℕ} (hζ : ζ ^ N = 1)
     (h : u % N = v % N) : ζ ^ u = ζ ^ v := by
   rw [← Nat.mod_add_div u N, ← Nat.mod_add_div v N, pow_add, pow_add, pow_mul, pow_mul, hζ, one_pow,

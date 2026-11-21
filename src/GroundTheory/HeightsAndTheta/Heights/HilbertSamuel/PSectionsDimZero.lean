@@ -213,6 +213,7 @@ theorem eventualValue_eq {f : (K → ℤ) → ℤ} {v : ℤ} (h : ∀ᶠ m in at
 end SectionsDimZero
 
 
+open SectionsDimZero in
 theorem SectionsDimZero.proof : SectionsDimZero.Statement := by
   intro K _ ι _ Ω _ _ y a n hP
   classical

@@ -42,6 +42,7 @@ theorem conv_mul_left {f f' : G → ℂ} {k : G} (hf : ∀ y, f (k * y) = f y) (
   simp only [hf]
 
 
+omit [MeasurableMul G] [μ.IsMulLeftInvariant] in
 theorem conv_mul_right {f f' : G → ℂ} {k : G} (hf' : ∀ y, f' (y * k) = f' y) (x : G) :
     GlobalTheory.AutomorphicL2Unitary.conv μ f f' (x * k) = GlobalTheory.AutomorphicL2Unitary.conv μ f f' x := by
   simp only [GlobalTheory.AutomorphicL2Unitary.conv, ← mul_assoc, hf']

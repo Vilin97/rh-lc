@@ -207,6 +207,7 @@ private lemma aeval_eq_sum_range_of_natDegree_lt {l : ℕ} [Fact l.Prime] {F : I
   simp [Algebra.smul_def]
 
 
+open GlobalTheory.Cyc.IntBasis in
 theorem GlobalTheory.Cyc.integers_eq_sum_zeta_pow : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (i : ℕ), 2 ≤ i → ∀ ζ : Om l, IsPrimitiveRoot ζ (l ^ i) → (∀ x : Om l, x ∈ Ks K i → ‖x‖ ≤ 1 → ∃ y : Fin l → Om l, (∀ a, y a ∈ Ks K (i - 1) ∧ ‖y a‖ ≤ 1) ∧ x = ∑ a : Fin l, ζ ^ (a : ℕ) * y a) ∧ ∀ y : Fin l → Om l, (∀ a, y a ∈ Ks K (i - 1)) → ∑ a : Fin l, ζ ^ (a : ℕ) * y a = 0 → ∀ a, y a = 0 := by
   intro l _ K i hi ζ hζ
   have hlp : l.Prime := Fact.out

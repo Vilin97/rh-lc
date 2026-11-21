@@ -129,6 +129,7 @@ theorem vec_bc_of_chart {S : Type} [CommRing S] {x : Sp S ⟶ X} {n : ℕ}
   rfl
 
 
+variable (t) in
 theorem exists_affine_chart {Y : Scheme.{0}} (i : Y ⟶ X) (y : Y) :
     ∃ (U : Y.Opens) (hU : IsAffineOpen U), y ∈ U ∧ ∃ (x : Sp Γ(Y, U) ⟶ X) (_ : x = hU.fromSpec ≫ i)
       (_ : ReciprocityTheory.ChartRestriction.G.Chart.Chart ((Over.pullback x).obj t.G)) (n : ℕ)
@@ -213,6 +214,8 @@ theorem exists_projectors {L : Type} [CommRing L] (φ : c.F →+* L) {x : Sp L �
 end GlobalTheory.ShFam.EigSpread
 
 
+open AlgebraicGeometry CategoryTheory Limits NumberField ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.BasicNotions Formalism.L2.Pj
+  GlobalTheory.Toroidal GlobalTheory.Cartier GlobalTheory.ShFam GlobalTheory.FlagBundle GlobalTheory.ShFam.EigLoc GlobalTheory.LieLocBasis GlobalTheory.ShFam.EigSpread in
 theorem GlobalTheory.ShFam.EigSpread.exists_stable_eigFrame : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : Model Xo c β) (z : gen Z), ∃ (U : (gen Z).Opens) (hU : IsAffineOpen U) (φ : c.F →+* Γ(gen Z, U)) (f : EigFrame Z φ (hU.fromSpec ≫ genι Z)), z ∈ U ∧ hU.fromSpec ≫ genStr Z = spMap φ ∧ f.Stable := by
   intro E _ _ _ H Dw l Xo c O _ β Z z
   obtain ⟨U₀, hU₀, hz, x₀, hx₀, C, n, xc, hx⟩ := exists_affine_chart Z.t (genι Z) z

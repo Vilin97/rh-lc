@@ -39,6 +39,7 @@ theorem sum_card_mul_modExp : ∑ a, (Fintype.card (m a) : ℤ) * modExp m a = 0
   split_ifs <;> simp [mul_comm]
 
 
+variable (k) in
 theorem deltaHalf_scalar (t : kˣ) :
     deltaHalf k m (fun a => Matrix.GeneralLinearGroup.scalar (m a) t) = 1 := by
   have h1 : modulus k m (fun a => Matrix.GeneralLinearGroup.scalar (m a) t) = 1 := by

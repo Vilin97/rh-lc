@@ -47,6 +47,7 @@ theorem perp_of_embP' (hι : HSpace.IsIsomEmb A T ι) :
     _ = _ := by rw [hG]; simp only [Matrix.mul_assoc]
 
 
+set_option maxHeartbeats 1000000 in
 theorem mt_of_embRel (hι : HSpace.IsIsomEmb A T ι) {g : GA D T} {h : GA D A} (hr : EmbRel T A ι g h) :
     mt T g = (frameMat T A ι).map (incA D) * mt A h * (embP' A T ι).map (incA D) +
       (1 - (frameMat T A ι * embP' A T ι).map (incA D)) := by

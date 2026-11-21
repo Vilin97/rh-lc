@@ -28,6 +28,7 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1))) [Fintype 
   (hM : ∀ m : M, N • m = 0)
 
 
+omit [Fintype S] [NeZero N] in
 instance isDiscreteRep_dualRep_gsRoots : IsDiscreteRep (dualRep (gsRoots S N) M) :=
   isDiscreteRep_dualRep (gsRoots S N) M
 

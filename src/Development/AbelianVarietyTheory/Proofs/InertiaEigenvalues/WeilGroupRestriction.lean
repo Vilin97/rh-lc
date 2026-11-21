@@ -36,6 +36,7 @@ theorem normV_eq_pow_of_isPlaceOver {A : ValuationSubring Ω} {v : HeightOneSpec
   exact (Ideal.absNorm_pow_inertiaDeg v.asIdeal v'.asIdeal).symm
 
 
+variable (K) in
 def resG : G L Ω →* G K Ω where
   toFun σ := σ.restrictScalars K
   map_one' := AlgEquiv.ext fun _ => rfl

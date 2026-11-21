@@ -13,6 +13,8 @@ open scoped InnerProductSpace ComplexOrder TensorProduct Pointwise Classical
 namespace GlobalTheory.RowLev
 
 
+open MeasureTheory NumberField IsDedekindDomain Matrix in
+open scoped InnerProductSpace ComplexOrder TensorProduct Pointwise Classical in
 theorem _root_.GlobalTheory.RowLev.intAf_approx_inter_unit_conj : ∀ (I : _root_.Formalism.MainNotions.S.AutInst) (g : ℕ), 1 ≤ g →
     (∀ z ∈ _root_.Formalism.MainNotions.S.IntAf I.F I.E, ∃ a : 𝓞 I.E, ∃ z' ∈ _root_.Formalism.MainNotions.S.IntAf I.F I.E,
       z = _root_.Formalism.UG.inclE (F := I.F) (_root_.Formalism.MainNotions.S.Af I.F) (a : I.E) + (g : (I.E ⊗[I.F] _root_.Formalism.MainNotions.S.Af I.F)) * z') ∧

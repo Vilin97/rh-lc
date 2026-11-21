@@ -55,6 +55,7 @@ theorem zK_cls_eq {C : Type 1} [Category.{0} C] {g : C ⥤ Thick (smFun X q)} {D
     (CH.cx _).cls (zK Λ s) hz = (CH.cx _).cls (zK Λ' s) hz' := GlobalTheory.T.cone_cocycle_class_independent Λ Λ' s hs hz hz'
 
 
+omit [CharZero K] in
 theorem zK_precomp {C C' : Type 1} [Category.{0} C] [Category.{0} C'] {g : C ⥤ Thick (smFun X q)} {D : E.LineData X}
     (Λ : CLiftK g D) (h : C' ⥤ C) (s : ℕ) :
     zK (Λ.precomp h) s = (CH.Mor.restrict (g ⋙ O (smFun X q)) h).pullC 2 (zK Λ s) := by

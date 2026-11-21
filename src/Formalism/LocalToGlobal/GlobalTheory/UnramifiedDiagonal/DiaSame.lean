@@ -62,6 +62,7 @@ def DnDiaSame0F (T : Forms0 D u) : Prop :=
       ∀ x, (Mv2 (σ x)).1⁻¹ * κd.1 * (δ.1⁻¹ * (Mv x).1 * δ.1) ∈ T.cls0.lev.U
 
 
+set_option maxHeartbeats 4000000 in
 theorem diaU_same (T : Forms0 D u) (hM : UpDiaSame0F T) (v : (D.mem u).A.vT)
     (a : ((D.mem u).A.Fv v)ˣ) (φ : Fn D u 0) (hφ : φ ∈ (D.fm u).Fi 0) :
     dia D u 0 v a (Uop D u 0 v φ) = Uop D u 0 v (dia D u 0 v a φ) := by
@@ -132,6 +133,7 @@ theorem diaU_same (T : Forms0 D u) (hM : UpDiaSame0F T) (v : (D.mem u).A.vT)
     m hx2, hχ]
 
 
+set_option maxHeartbeats 4000000 in
 theorem diaD_same (T : Forms0 D u) (hM : DnDiaSame0F T) (v : (D.mem u).A.vT)
     (a : ((D.mem u).A.Fv v)ˣ) (φ : Fn D u 0) (hφ : φ ∈ (D.fm u).Fi 0) :
     dia D u 0 v a (Dop D u 0 v φ) = Dop D u 0 v (dia D u 0 v a φ) := by

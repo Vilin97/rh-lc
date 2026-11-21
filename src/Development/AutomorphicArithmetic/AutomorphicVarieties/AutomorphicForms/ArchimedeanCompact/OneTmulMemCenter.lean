@@ -171,6 +171,7 @@ theorem one_tmul_mem_center {z : UEnv E a} (hz : z ∈ (isExpLieAlgebra E a).cen
   | add x y hx hy => rw [add_mul, mul_add, hx, hy]
 
 
+omit [IsTotallyComplex E] in
 theorem exists_re_im_center {w : UC E a} (hw : w ∈ Subalgebra.center ℂ (UC E a)) :
     ∃ p ∈ (isExpLieAlgebra E a).centerU, ∃ q ∈ (isExpLieAlgebra E a).centerU, w = (1 : ℂ) ⊗ₜ p + Complex.I ⊗ₜ q :=
   Fb.exists_re_im w fun _ => Subalgebra.mem_center_iff.1 hw _

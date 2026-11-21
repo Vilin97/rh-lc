@@ -48,6 +48,7 @@ end Transport
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+omit [IsTotallyComplex E] in
 theorem invA_invA (g : GA E a) : PositivityTheory.PRW.GKD.invA E a (PositivityTheory.PRW.GKD.invA E a g) = g := by
   have h := (GlobalTheory.DiscreteUnit.transInv (Ad E) a).left_inv g
   exact (congrArg (GlobalTheory.DiscreteUnit.transInv (Ad E) a) (Units.ext rfl : PositivityTheory.PRW.GKD.invA E a g =
@@ -81,6 +82,7 @@ theorem invW_symm (w : HeightOneSpectrum (𝓞 E)) (g : GL (Fin a) (w.adicComple
   (MulEquiv.symm_apply_eq _).2 (invW_invW w g).symm
 
 
+omit [IsTotallyComplex E] in
 theorem invT_locGL (w : HeightOneSpectrum (𝓞 E)) (g : GL (Fin a) (w.adicCompletion E)) :
     invT a (Af E) (locGL E a w g) = locGL E a w ((invW w a).symm g) := by
   rw [invW_symm]

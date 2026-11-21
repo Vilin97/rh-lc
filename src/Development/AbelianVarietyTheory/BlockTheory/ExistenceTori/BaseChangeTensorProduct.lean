@@ -77,6 +77,7 @@ def IsExt (σ' : KT T j N →+* ℂ) : Prop := ∀ a : T.Q.c.F, σ' (algebraMap 
 
 
 
+variable (T j N) in
 abbrev CfT (w : WeightFamilies.Wt D j) : Type := KT T j N ⊗[T.Q.c.F] Cf T j w
 
 instance instModuleCfT (w : WeightFamilies.Wt D j) : Module (KT T j N) (CfT T j N w) := TensorProduct.leftModule

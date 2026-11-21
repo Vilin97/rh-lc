@@ -107,6 +107,7 @@ theorem abs_maDensity_mix_le {e : ℕ} {M N : Matrix (Fin (e + 1)) (Fin (e + 1))
 end ChartEnergyIntegrableAlt
 
 
+open ChartEnergyIntegrableAlt in
 theorem ChartEnergyIntegrable.proof (hCmp : HermFormCompare.Statement) (hHess : ChartHessCompare.Statement) :
     ChartEnergyIntegrable.Statement := by
   intro e M N hM hN k

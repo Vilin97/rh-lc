@@ -222,6 +222,7 @@ theorem ker_classT (L : Lattice (O := O) ρ) (hρ : ∀ x, Continuous fun g => �
 
 
 
+omit [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O LL] in
 theorem ker_redMap_le (L : Lattice (O := O) ρ) (hρ : ∀ x, Continuous fun g => ρ g x) (I : Ideal O) :
     LinearMap.ker (redMap I (cobT PD L hρ)) ≤ galoisLatticeModIdealInvariants L I := by
   intro y hy
@@ -235,6 +236,8 @@ theorem ker_redMap_le (L : Lattice (O := O) ρ) (hρ : ∀ x, Continuous fun g =
   exact Submodule.smul_mono le_rfl le_top h
 
 
+omit [TopologicalSpace G] [TopologicalSpace V] [IsTopologicalAddGroup V] [ContinuousConstSMul LL V]
+  [IsFractionRing O LL] in
 theorem h0_mod_uniformizer_le_rank (L : Lattice (O := O) ρ) {ϖ : O} (hϖ : Irreducible ϖ) :
     h0ModResidueDim L ϖ ≤ finrank O ↥L.T := by
   haveI hI : (Ideal.span {ϖ}).IsMaximal := PrincipalIdealRing.isMaximal_of_irreducible hϖ

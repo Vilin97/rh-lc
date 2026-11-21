@@ -60,6 +60,7 @@ def IsLeftSmooth (a : normOneGL (K := K) (n := n) → ℂ) : Prop :=
       ∀ u ∈ U, ∀ x, a (finOne K n u * x) = a x
 
 
+variable (K n) in
 def trForm (X Y : (isExpLieAlgebra K n).lieSubalgebra) : ℝ :=
   Algebra.trace ℝ _ (Matrix.trace ((X : ArchMatrix K n) * (Y : ArchMatrix K n)))
 

@@ -250,6 +250,7 @@ def chartSecond (b : Module.Basis T ℤ (dualLattice F)) (b' : Module.Basis T �
     rw [map_add (f := _), graphSecondForm_add, map_add (f := _)])
 
 
+omit [DecidableEq T] in
 theorem latCombo_equivFun (b : Module.Basis T ℤ (dualLattice F)) (b' : Module.Basis T ℤ (dualLattice F'))
     {a : T → ℤ} (hab : ∀ t, (b t : Fin i → K) = a t • (b' t : Fin i → K)) (φ : dualLattice F) :
     latCombo b' (fun s => b.equivFun φ s * a s) = (φ : Fin i → K) := by

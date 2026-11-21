@@ -212,6 +212,7 @@ lemma segre_resLE_comp_segreRetr (k : Fin (n + 1)) (l : Fin (m + 1)) :
       rfl
 
 
+variable (n m) in
 instance isClosedImmersion_segre : IsClosedImmersion (segre A n m) := by
   rw [IsZariskiLocalAtTarget.iff_of_iSup_eq_top (P := @IsClosedImmersion)
     (fun c => Proj.basicOpen (grading A (n * m + n + m)) (X c)) iSup_basicOpen_X]

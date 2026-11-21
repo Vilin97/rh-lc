@@ -147,6 +147,7 @@ theorem formal_exp_law : ExpLawSt := by
   exact e2
 
 
+open Formalism.FG.SolveVAux in
 theorem dLin_comp1 {d : ℕ} (φ ψ : Pt k 1 d) (hψ : ∀ i, constantCoeff (ψ i) = 0) :
     dLin (comp1 φ ψ) = dLin φ * dLin ψ := by
   classical

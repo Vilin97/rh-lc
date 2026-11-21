@@ -131,6 +131,7 @@ variable [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDi
   {D : ClassFieldData G A} {K L : OpenSubgroup G}
 
 
+omit [TotallyDisconnectedSpace G] in
 instance finiteIndex_inf_ker (d : G →* Multiplicative ℤ̂) (K L : OpenSubgroup G) :
     (((L : Subgroup G) ⊓ d.ker).subgroupOf ((K : Subgroup G) ⊓ d.ker)).FiniteIndex := by
   have h : ((L : Subgroup G) ⊓ d.ker).subgroupOf ((K : Subgroup G) ⊓ d.ker) =
@@ -142,6 +143,7 @@ instance finiteIndex_inf_ker (d : G →* Multiplicative ℤ̂) (K L : OpenSubgro
   infer_instance
 
 
+omit [TotallyDisconnectedSpace G] in
 theorem toAdd_deg_mem_multiples (K : OpenSubgroup G) {k : G} (hk : k ∈ (K : Subgroup G)) :
     Multiplicative.toAdd (D.deg k) ∈ multiples (inertiaDegree D.deg K) := by
   obtain ⟨y, hy⟩ := (D.mem_map_deg_iff K).1 ⟨k, hk, rfl⟩

@@ -18,6 +18,7 @@ namespace CurveVerticalPointInjective
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem coord_ne_zero (y : (Σ k, ι k) → Ω) (p : Σ k, ι k)
     (hp : (X p : MRing ι) ∉ mCoordIdeal y) : y p ≠ 0 := by
   intro h0
@@ -38,6 +39,7 @@ theorem isMultiHomogIdeal_of_mem_divSupp (y : (Σ k, ι k) → Ω) (s : MRing ι
 end CurveVerticalPointInjective
 
 
+open CurveVerticalPointInjective in
 theorem CurveVertPointInj.proof (hCh : CurveVertPointChart.Statement) : CurveVertPointInj.Statement := by
   intro K _ ι _ Ω _ y s d hA hs hsP W hW W' hW' hWW'
   choose c hc using hW.2

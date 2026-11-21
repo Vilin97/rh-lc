@@ -21,9 +21,11 @@ instance finiteDimensional_wsp (lam : InfinitePlace E → DomWeight n) : FiniteD
   Module.Finite.of_basis (Basis.piTensorProduct fun v => Module.finBasis ℂ _)
 
 
+variable (E n) in
 def splitFin : UA E n →* finU E n := (GlobalTheory.UnitarySplit.dense_and_split E n).2.2.2.choose
 
 
+variable (E n) in
 def splitInf : UA E n →* infU E n := (GlobalTheory.UnitarySplit.dense_and_split E n).2.2.2.choose_spec.choose
 
 theorem continuous_splitFin : Continuous (splitFin E n) :=

@@ -72,6 +72,7 @@ theorem memLp_mul_right (B : RowsAut) (f : B.I.GA → ℂ) (hf : ∀ γ ∈ B.I.
   exact (Lp.memLp (B.R g (hm.toLp f))).ae_eq h
 
 
+open Classical in
 theorem mult_props {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar}
     (θ : D.what₂.Tau → (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ))
     (M : DSModel V S) (J : Set (GA D V)) (χ : GA D V → ℂ) (T : MMap M) (hT : T ∈ Mult θ M J χ) :

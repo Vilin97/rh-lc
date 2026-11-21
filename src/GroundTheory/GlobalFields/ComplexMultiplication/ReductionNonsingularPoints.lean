@@ -20,6 +20,7 @@ variable {𝒪 : Type*} [CommRing 𝒪] [IsDomain 𝒪] [IsDiscreteValuationRing
   [(W.map (algebraMap 𝒪 K)).IsElliptic] [DecidableEq K] [DecidableEq (ResidueField 𝒪)]
 
 
+omit [DecidableEq (ResidueField 𝒪)] in
 theorem add_notMem_of_notMem_range {X₁ Y₁ X₂ Y₂ : K} (h₁ : (curveK K W).Nonsingular X₁ Y₁)
     (hX₁ : X₁ ∉ Set.range ι) (h₂ : (curveK K W).Nonsingular X₂ Y₂) (hX₂ : X₂ ∉ Set.range ι)
     {x y : 𝒪} (h : (curveK K W).Nonsingular (ι x) (ι y)) :

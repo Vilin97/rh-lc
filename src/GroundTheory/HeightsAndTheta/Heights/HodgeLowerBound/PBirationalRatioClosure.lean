@@ -37,6 +37,7 @@ theorem aeval_eq_prod_mul (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ 
   rw [Finset.prod_pow_eq_pow_sum, hg m hm k]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem aeval_mem_closure (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (g : MRing ι) :
     aeval (fun p ↦ y p / y ⟨p.1, c p.1⟩) g ∈ Subfield.closure (coneRatios y c) := by
   induction g using MvPolynomial.induction_on with

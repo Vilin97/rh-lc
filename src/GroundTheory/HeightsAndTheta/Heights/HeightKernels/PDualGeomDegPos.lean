@@ -64,6 +64,7 @@ theorem isGoodProj (hOn : DualPtsOnPlane.Statement) {D : ℕ} {F : HermLattice K
 end DualGeometricDegreePositive
 
 
+open DualGeometricDegreePositive in
 theorem DualGeomDegPos.proof (hDeg : DegreeStatement) (hInd : PtsIndepStatement)
     (hArith : DualArithVar.Statement) (hSemi : DualLineSemipositive.Statement)
     (hOn : DualPtsOnPlane.Statement) (hMass : DualStdMassAt.Statement) :

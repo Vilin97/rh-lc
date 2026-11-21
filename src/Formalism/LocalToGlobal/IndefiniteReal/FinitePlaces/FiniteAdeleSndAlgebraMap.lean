@@ -67,6 +67,7 @@ variable {D : D7} (δ : D.host.E) (hδ : D.sp.cm.sig δ = -δ) (hδ0 : δ ≠ 0)
   (hΔ : algebraMap D.host.F D.host.E Δ = δ * δ)
 
 
+include hΔ hδ0 hδ in
 theorem exists_splitIdem' (v : HeightOneSpectrum (𝓞 D.host.F)) (s : v.adicCompletion D.host.F)
     (hs : s * s = algebraMap D.host.F (v.adicCompletion D.host.F) Δ) :
     ∃ e, IsSplitIdem D e ∧ e + cA D e = algebraMap (AF D.host.F) (AE D) (epv v) := by

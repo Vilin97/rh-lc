@@ -45,6 +45,7 @@ theorem homotopy_ring (A D an cr : ι → R)
   simp
 
 
+omit [DecidableEq ι] in
 theorem sq_ring (A an : ι → R)
     (h1 : ∀ i j, Commute (an i) (A j)) (h2 : ∀ i j, Commute (A i) (A j))
     (h4 : ∀ i j, an i * an j + an j * an i = 0) :

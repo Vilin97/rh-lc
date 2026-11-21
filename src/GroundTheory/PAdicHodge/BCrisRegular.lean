@@ -52,6 +52,7 @@ variable {ε : PreTilt (normInteger ℂ_[p]) p} (hε : PreTilt.untilt ε = 1)
   (hζ : PreTilt.untilt ((_root_.frobeniusEquiv (PreTilt (normInteger ℂ_[p]) p) p).symm ε) ≠ 1)
 
 
+include hζ in
 theorem isUnit_iotaPlus_periodT :
     IsUnit (((algebraMap 𝔹 𝔹dR).comp (iotaPlus ℂ_[p] p))
       (algebraMap (ACris ℂ_[p] p) (BCrisPlus ℂ_[p] p) (periodT hε))) := by
@@ -75,6 +76,7 @@ theorem iotaB_injective : Function.Injective (iotaB hε hζ) :=
 variable {K : IntermediateField ℚ_[p] (PadicAlgCl p)}
 
 
+set_option maxHeartbeats 1600000 in
 theorem iotaB_galB (σ : Gal(PadicAlgCl p/K)) (x : BCris hε) :
     iotaB hε hζ (galB hε σ x) = σ • iotaB hε hζ x :=
   awayLift_comp_eq _ (isUnit_iotaPlus_periodT hε hζ) (galB hε σ) ((galBdRField σ : 𝔹dR ≃+* 𝔹dR) : 𝔹dR →+* 𝔹dR)
@@ -85,12 +87,15 @@ theorem iotaB_galB (σ : Gal(PadicAlgCl p/K)) (x : BCris hε) :
 variable [FiniteDimensional ℚ_[p] K]
 
 
+set_option maxHeartbeats 1600000 in
 theorem bCris_fixed (x : BCris hε) (hx : ∀ σ : Gal(PadicAlgCl p/K), galB hε σ x = x) :
     ∃ k : K, iotaB hε hζ x = algebraMap K 𝔹dR k := by
   obtain ⟨k, hk⟩ := bDeRham_fixed K (iotaB hε hζ x) fun σ => by rw [← iotaB_galB, hx σ]
   exact ⟨k, hk.symm⟩
 
 
+set_option maxHeartbeats 1600000 in
+omit [FiniteDimensional ℚ_[p] K] in
 theorem exists_bCris_fixed {k : PadicAlgCl p} (hk : k ∈ maxUnramified p K) :
     ∃ x : BCris hε, (∀ σ : Gal(PadicAlgCl p/K), galB hε σ x = x) ∧
       iotaB hε hζ x = algebraMap 𝔹 𝔹dR (algClToBdR p k) := by

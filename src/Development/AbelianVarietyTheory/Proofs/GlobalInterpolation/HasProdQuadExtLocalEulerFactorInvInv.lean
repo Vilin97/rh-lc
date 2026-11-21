@@ -85,6 +85,10 @@ private theorem conjIdeal_eq_smul_of_star_eq (τ : Gal(E/F)) (hs : ∀ x : E, st
     rw [hs]; rfl
 
 
+open scoped TensorProduct Pointwise in
+open NumberField IsDedekindDomain in
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+  [StarRing E] in
 theorem _root_.GlobalTheory.EtaEulerProduct.inert_or_split {σ : E →ₐ[F] E} (h : _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.IsCMExt F E σ)
     (hs : ∀ x : E, star x = σ x) (hE : _root_.Formalism.HermitianLatticesTheory.IsCMUnram E) (v : HeightOneSpectrum (𝓞 F)) :
     (IsField (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv F v ⊗[F] E) ∧ (v.asIdeal.primesOver (𝓞 E)).ncard = 1 ∧
@@ -209,6 +213,7 @@ def below (F : Type) [Field F] [NumberField F] [Algebra F E] (P : {P : Ideal (�
     (RingOfIntegers.not_isField E)⟩ : HeightOneSpectrum (𝓞 E))
 
 
+omit [StarRing E] in
 def fibreEquiv (v : HeightOneSpectrum (𝓞 F)) :
     {P : {P : Ideal (𝓞 E) // P.IsMaximal} // below F P = v} ≃ v.asIdeal.primesOver (𝓞 E) where
   toFun P := ⟨P.1.1, P.1.2.isPrime, ⟨by obtain ⟨P, rfl⟩ := P; rfl⟩⟩
@@ -422,6 +427,10 @@ private theorem summable_absNorm_maximal_rpow_neg (K : Type) [Field K] [NumberFi
   exact_mod_cast hc
 
 
+open scoped TensorProduct Pointwise in
+open NumberField IsDedekindDomain in
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
+  [StarRing E] in
 theorem _root_.GlobalTheory.EtaEulerProduct.hasProd_eulerInv_inv : ∀ (F E : Type) [Field F] [NumberField F]
     [Field E] [NumberField E] [Algebra F E] [StarRing E] (σ : E →ₐ[F] E), _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.IsCMExt F E σ →
     (∀ x : E, star x = σ x) → _root_.Formalism.HermitianLatticesTheory.IsCMUnram E → ∀ M : ℕ, 2 ≤ M →

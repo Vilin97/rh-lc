@@ -18,6 +18,7 @@ namespace SectionBoundedMul
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
 
+omit [Fintype K] in
 theorem isMultiHomog_mul {g h : MRing ι} {a b : K → ℕ} (hg : IsMultiHomog g a)
     (hh : IsMultiHomog h b) : IsMultiHomog (g * h) (a + b) := by
   classical
@@ -27,6 +28,7 @@ theorem isMultiHomog_mul {g h : MRing ι} {a b : K → ℕ} (hg : IsMultiHomog g
   rw [hg m₁ hm₁ k, hh m₂ hm₂ k]
 
 
+omit [Fintype K] in
 theorem isMultiHomog_sub {g h : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d)
     (hh : IsMultiHomog h d) : IsMultiHomog (g - h) d := by
   classical
@@ -36,6 +38,7 @@ theorem isMultiHomog_sub {g h : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d
   · exact hh m hm
 
 
+omit [Fintype K] in
 theorem isMultiHomog_monomial (e : (Σ k, ι k) →₀ ℕ) (r : ℤ) :
     IsMultiHomog (monomial e r : MRing ι) (fun k => ∑ i, e ⟨k, i⟩) := by
   classical
@@ -75,11 +78,13 @@ theorem isMultiHomog_chartMono (c : ∀ k, ι k) (d : K → ℕ) : IsMultiHomog 
   exact hm
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem aeval_chartMono (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (d : K → ℕ) :
     aeval y (chartMono c d) = ∏ k, y ⟨k, c k⟩ ^ d k := by
   simp [chartMono, map_prod]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem eval_chartMono (z : (Σ k, ι k) → ℂ) (c : ∀ k, ι k) (d : K → ℕ) :
     eval z (map (Int.castRingHom ℂ) (chartMono c d)) = ∏ k, z ⟨k, c k⟩ ^ d k := by
   simp [chartMono, map_prod]
@@ -160,6 +165,7 @@ theorem exists_chartForm (y : (Σ k, ι k) → Ω) (a : K → ℤ) (n : ℕ) {s 
 end SectionBoundedMul
 
 
+open SectionBoundedMul in
 theorem SectionBoundedMul.proof : SectionBoundedMul.Statement := by
   intro K _ ι _ Ω _ y A n m C C' s t hs ht hbs hbt dg dh g h z hg hh hdeg he hz
   choose c hc using hz.1

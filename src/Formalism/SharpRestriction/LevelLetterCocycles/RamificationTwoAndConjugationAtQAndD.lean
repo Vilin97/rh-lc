@@ -27,6 +27,7 @@ variable {O LL : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Fi
     [Algebra O LL] [IsFractionRing O LL]
 
 
+variable (O LL) in
 abbrev OL : Submodule O LL := LinearMap.range (Algebra.linearMap O LL)
 
 variable {V V' W W' : Type} [AddCommGroup V] [Module LL V] [Module O V] [IsScalarTower O LL V]
@@ -451,6 +452,8 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     [IsFractionRing O LL]
 
 
+variable (LL) in
+include LL in
 theorem p_ne_zero : ((PD.p : ℕ) : O) ≠ 0 := by
   intro h0
   have hQ : ((PD.p : ℕ) : Qp) ≠ 0 := by
@@ -888,6 +891,8 @@ theorem mem_integers_iff_alt {x : LL} : x ∈ OL O LL ↔ ∃ a : O, x = algebra
     exact ⟨a, rfl⟩
 
 
+omit [TopologicalSpace G] [TopologicalSpace Qp] [TopologicalSpace LL] [IsTopologicalRing LL]
+  [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O LL] in
 theorem cyclotomic_mul_mem_integers (L1 : Lattice (O := O) (charRep (cycLL PD LL))) (hL1 : L1.T = OL O LL) (g : G)
     {x : LL} (hx : x ∈ OL O LL) : ((cycLL PD LL g : LLˣ) : LL) * x ∈ OL O LL := by
   have h := L1.stable g x (by rw [hL1]; exact hx)
@@ -905,6 +910,7 @@ theorem equivariance_defect_mem_lattice {X U : GRep G Qp LL O} (LY : Lattice (O 
   exact (Submodule.Quotient.eq LT.T).mp h1.symm
 
 
+omit [TopologicalSpace Qp] [IsTopologicalRing LL] in
 theorem shear_pairing_mem_integers {X U X' U' : GRep G Qp LL O} (PX : X.V →ₗ[LL] X'.V →ₗ[LL] LL)
     (PU : U.V →ₗ[LL] U'.V →ₗ[LL] LL) (Y : Submodule O X.V) (ψ : X.V →ₗ[LL] U.V)
     (ψt : U'.V →ₗ[LL] X'.V) (hψt : ∀ x f, PX x (ψt f) = PU (ψ x) f) (T' : Submodule O U'.V)

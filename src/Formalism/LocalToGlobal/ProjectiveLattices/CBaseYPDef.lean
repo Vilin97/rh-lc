@@ -29,6 +29,7 @@ def RdAt (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (σ : c.F →+* ℂ) (y : F
 
 
 
+variable (Xo c) in
 def CBaseEx (h : GenFrEx Xo c) : Prop :=
   ∀ (Z : Comp Xo c) (P : Om Z →+* ℂ), ∃ y : FrPt Xo c (CAt (sgOf P)), FrMap (PAlg P) (genFr h Z) y
 

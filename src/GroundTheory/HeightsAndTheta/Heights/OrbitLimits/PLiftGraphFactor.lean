@@ -83,6 +83,7 @@ theorem conj_fsLineZ (n : K → ℤ) : IsConjInvariantH (fsLineZ (ι := ι) n) :
 end LiftGraphFactor
 
 
+open LiftGraphFactor in
 theorem LiftGraphFactor.proof (hExt : SectionNormSqExtension.Statement) : LiftGraphFactor.Statement := by
   intro K _ _ ι _ Ω _ y N a r v hv hgen
   classical

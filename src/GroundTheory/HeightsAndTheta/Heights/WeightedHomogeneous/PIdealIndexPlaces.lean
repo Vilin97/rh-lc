@@ -51,6 +51,7 @@ theorem genIndex_ideal {L : Type*} [Field L] [NumberField L] {A B : Ideal (𝓞 
 end IdealIndexPlaces
 
 
+open IdealIndexPlaces in
 theorem IdealIndexPlaces.proof : IdealIndexPlaces.Statement := by
   intro L _ _ ι _ y hy
   obtain ⟨⟨b, hb⟩, hint⟩ :=

@@ -11,6 +11,7 @@ open Filter Topology
 namespace GlobalTheory.LinSchur
 
 
+open Classical in
 theorem exists_finset_eq_sum_cind {X : Type} [AddCommGroup X] [TopologicalSpace X] [IsTopologicalAddGroup X]
     (L : AddSubgroup X) (hL : IsOpen (L : Set X)) (f : X → ℂ) (hf : f ∈ GlobalTheory.WeilM.SB X)
     (hper : ∀ Y, ∀ C ∈ L, f (Y + C) = f Y) :

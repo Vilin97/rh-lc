@@ -44,6 +44,7 @@ theorem swapEquiv_apply (D : D7) (w : Af D.host.F ⊗[D.host.F] D.host.E) :
     swapEquiv D w = Formalism.IndefR.Lev.swapAE D w := rfl
 
 
+set_option maxHeartbeats 2000000 in
 theorem exists_int_unit_root : ∀ (D : D7) (z : (Af D.host.F ⊗[D.host.F] D.host.E)ˣ),
     (z : Af D.host.F ⊗[D.host.F] D.host.E) ∈ intAE D →
     (∃ y₀ : (Af D.host.F ⊗[D.host.F] D.host.E)ˣ, (y₀ : Af D.host.F ⊗[D.host.F] D.host.E) =

@@ -109,6 +109,7 @@ theorem smul_sum_smul_sum {N α β γ : Type} [AddCommGroup N] [Module K N] [Fin
   exact (Finset.sum_congr rfl fun _ _ => Finset.sum_comm).trans Finset.sum_comm
 
 
+open DeRham Cris in
 theorem IsKS.of_frChg {Φ : Finset (E →+* ℂ)} {g : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) K}
     {a : K} {y y' : FrPt Xo c K} (h : FrChg g a y y') {x' : Sp (DualNumber K) ⟶ Xo.X} {M' : HIx Dw Φ → K}
     (hM : IsKS Φ y' x' M') : IsKS Φ y x' (ksChg Φ g M') := by

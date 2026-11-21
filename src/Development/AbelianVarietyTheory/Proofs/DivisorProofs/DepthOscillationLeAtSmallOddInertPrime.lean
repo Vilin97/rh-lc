@@ -24,6 +24,7 @@ namespace GlobalTheory.RefSum.OscInert
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
 
 
+open Classical in
 theorem two_mul_card_psi_le :
     2 * (Finset.univ.filter (fun τ : E →+* ℂ => InPsi H τ)).card ≤ Module.finrank ℚ E := by
   have hne : starRingEnd ℂ H.rt0 ≠ H.rt0 := by
@@ -51,6 +52,7 @@ theorem two_mul_card_psi_le :
   omega
 
 
+open Classical in
 theorem card_big_fiber_le {Dw : Datum H} {F k m : ℕ} (hS : Shape Dw F k m) (τ : E →+* ℂ) :
     (Finset.univ.filter (fun f : Lt1 Dw => IsBig k f ∧ f.1 = τ)).card ≤ m + 1 := by
   obtain ⟨h1, h2, h3, h4, h5, h6⟩ := hS

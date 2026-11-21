@@ -29,6 +29,7 @@ theorem finrank_biSup_indep {K V ι : Type*} [DivisionRing K] [AddCommGroup V] [
     rw [hs, ← Submodule.finrank_sup_add_finrank_inf_eq, hd.eq_bot, finrank_bot, add_zero]
 
 
+open Classical in
 noncomputable def goodRows (D : D7) (i : D.nd.Loc) : Finset D.what₂.FT :=
   Finset.univ.filter (fun σ => D.nd.goodRow σ ∧ AtM D.nd D.naut i σ)
 
@@ -70,6 +71,7 @@ theorem sum_mult_le (D : D7) (hZ : SumRepresentations.ConclusionZ D) (i : D.nd.L
 end GlobalTheory.MultiplicityBound
 
 
+open GlobalTheory.MultiplicityBound in
 theorem GlobalTheory.NLink.multLe_of_rank : ∀ (D : D7) (L : SizeData₂ D), SumRepresentations.Conclusion42 D → SumRepresentations.ConclusionZ D → Rows.IsotInternal D.what₂ →
     KillingConditions.LocalisationUniqueness D → MultLe L := by
   intro D L h42 hZ hI h2 j hj w hw

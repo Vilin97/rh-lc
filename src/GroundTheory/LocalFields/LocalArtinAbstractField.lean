@@ -102,6 +102,7 @@ end Embedding
 section Intrinsic
 
 
+variable (K L) in
 def localArtinMapOfField : Kˣ →* (L ≃ₐ[K] L) :=
   have : Algebra.IsSeparable K L := IsGalois.to_isSeparable
   artinOfEmbedding (IsSepClosed.lift : L →ₐ[K] SeparableClosure K)

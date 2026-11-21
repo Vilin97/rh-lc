@@ -93,6 +93,7 @@ theorem trdeg_closure_of_rat {E : Type} [Field E] {iQ : Algebra ℚ E} (s : Set 
 end FlagArithVar
 
 
+open FlagArithVar in
 theorem FlagArithVar.proof : FlagArithVar.Statement := by
   intro Ψ _ _ _ N hN
   have hc : ∀ q, yFl Ψ N ⟨q, leadIdx Ψ N q⟩ ≠ 0 := fun q => by

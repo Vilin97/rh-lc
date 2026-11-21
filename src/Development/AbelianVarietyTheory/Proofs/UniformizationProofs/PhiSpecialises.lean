@@ -295,6 +295,7 @@ theorem fam_comm (x : D'.X) (κ : Fin 4) : DegPre.famφ D' F x κ ≫ (hD.e.hom.
     (congrArg (· ≫ (snd T D.P.A).left ≫ D.famφB (hD.xe x) κ) (Category.id_comp Θ))
 
 
+variable (Θ) in
 def SecMaps {k : ℕ} (x : D'.X) (s : SecT D T k (hD.xe x))
     (s' : LB.Sec (LB.LinComb D'.P.L (DegPre.famφ D' F x) (DegPre.famε k))) : Prop :=
   ∀ (Z : Scheme.{0}) (r : Z ⟶ (DegPre.BF D' F).left) (z : Z) (p : Fin 4 → D.P.L.ι) (q : Fin 4 → D'.P.L.ι),

@@ -233,6 +233,7 @@ theorem common_denom {y : (Σ k, ι k) → Ω} {a : K → ℤ} {n r : ℕ} (hrel
 end SectionPointValue
 
 
+open SectionPointValue in
 theorem SectionPointValue.proof : SectionPointValue.Statement := by
   intro K _ ι _ Ω _ y A hrel hA
   refine ⟨fun n => w y A n, fun n s => val_continuousOn hA s.2, ?_, ?_, ?_, ?_⟩

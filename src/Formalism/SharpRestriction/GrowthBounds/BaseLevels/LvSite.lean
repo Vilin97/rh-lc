@@ -47,6 +47,7 @@ def lbOf (Fo : FormsIn M (i + 1) hi) (β : Fo.Ch) : Submodule (𝓞 D.host.E) (F
   reL (rankN D (i + 1) hi).symm (Fo.K β).lev.Lb
 
 
+set_option maxHeartbeats 4000000 in
 theorem sameU_of (Fo : FormsIn M (i + 1) hi) (β : Fo.Ch) : SameUlocJ hi (Fo.K β).lev (ulocOf Fo β) := fun v =>
   (Subgroup.map_comap_eq_self_of_surjective (f := (reGL (rankN D (i + 1) hi) _).toMonoidHom)
     (reGL (rankN D (i + 1) hi) _).surjective ((Fo.K β).lev.Uloc v)).symm
@@ -54,6 +55,7 @@ theorem sameU_of (Fo : FormsIn M (i + 1) hi) (β : Fo.Ch) : SameUlocJ hi (Fo.K �
 end Step
 
 
+set_option maxHeartbeats 1000000 in
 structure StepD {i : ℕ} {hi : i + 1 ≤ D.R.m} (Fo : FormsIn M (i + 1) hi) where
 
   B : GL (Fin (D.sp.X (i + 1)).rank) D.host.E
@@ -102,6 +104,7 @@ def lv : Levels Fl :=
     (fun i hi => (Z.Fo i hi).Ch) (fun i hi β => (Z.S i hi).chart β)
 
 
+set_option maxHeartbeats 4000000 in
 def loc (i : ℕ) (hi : i + 1 ≤ D.R.m) : LocIn X0 u w hg (Z.lv Fl ht) i (Z.Fo i hi).Ch :=
   haveI := Z.chFin
   haveI : ∀ β, Fintype ((Z.S i hi).chart β).comp := fun β => @Fintype.ofFinite _ ((Z.S i hi).fin β)

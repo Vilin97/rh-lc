@@ -13,6 +13,7 @@ open NumberField NumberField.InfinitePlace
 variable {K : Type*} [Field K] [NumberField K]
 
 
+omit [NumberField K] in
 theorem apply_eq_abs_embedding_of_isReal {v : InfinitePlace K} (hv : v.IsReal) (x : K) :
     v x = |embedding_of_isReal hv x| := by
   rw [← norm_embedding_of_isReal hv x, Real.norm_eq_abs]
@@ -60,6 +61,7 @@ theorem exists_units_neg_iff_mem (S : Set {v : InfinitePlace K // v.IsReal}) :
     exact ⟨⟨fun h' => by linarith [h.1], fun h' => absurd h' hv⟩, ⟨fun _ => hv, fun _ => by linarith [h.1]⟩⟩
 
 
+omit [NumberField K] in
 theorem extensionEmbeddingOfIsReal_algebraMap {v : InfinitePlace K} (hv : v.IsReal) (x : K) :
     Completion.extensionEmbeddingOfIsReal hv (algebraMap K v.Completion x) = embedding_of_isReal hv x :=
   Completion.extensionEmbeddingOfIsReal_coe hv (WithAbs.toAbs v.1 x)

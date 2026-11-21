@@ -27,6 +27,12 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   {ι n : Type} [Fintype n] [DecidableEq n] {c : ℕ}
 
 
+open MeasureTheory IsDedekindDomain NumberField Matrix ValuativeRel in
+open scoped TensorProduct nonZeroDivisors in
+open scoped Pointwise in
+attribute [local instance] _root_.Formalism.BasicNotions.Host.cmStar in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  {ι n : Type} [Fintype n] [DecidableEq n] {c : ℕ} in
 theorem _root_.GlobalTheory.LevX.conj_embX_val (ϖ : kˣ) (ord : ι ≃ n ⊕ Fin c) (g : GL n k) :
     ((_root_.GlobalTheory.StepData.typeFrame ϖ ord).bas⁻¹ *
         _root_.GlobalTheory.RootEx.embX c g *
@@ -35,6 +41,12 @@ theorem _root_.GlobalTheory.LevX.conj_embX_val (ϖ : kˣ) (ord : ι ≃ n ⊕ Fi
     _root_.GlobalTheory.RootEx.embA, _root_.GlobalTheory.RootEx.embX, Matrix.fromBlocks_multiply]
 
 
+open MeasureTheory IsDedekindDomain NumberField Matrix ValuativeRel in
+open scoped TensorProduct nonZeroDivisors in
+open scoped Pointwise in
+attribute [local instance] _root_.Formalism.BasicNotions.Host.cmStar in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  {ι n : Type} [Fintype n] [DecidableEq n] {c : ℕ} in
 theorem _root_.GlobalTheory.LevX.mem_KO_of_embX_mem_stabLat (ϖ : kˣ) (ord : ι ≃ n ⊕ Fin c) {g : GL n k}
     (h : _root_.GlobalTheory.RootEx.embX c g ∈
       _root_.GlobalTheory.StepData.stabLat (_root_.GlobalTheory.StepData.typeFrame ϖ ord).bas) :
@@ -74,6 +86,12 @@ private lemma mulVec_apply_mem_integer_of_entries_mem_integer {M : Matrix n n k}
   exact Subring.sum_mem _ fun j _ => Subring.mul_mem _ (hM i j) (hy j)
 
 
+open MeasureTheory IsDedekindDomain NumberField Matrix ValuativeRel in
+open scoped TensorProduct nonZeroDivisors in
+open scoped Pointwise in
+attribute [local instance] _root_.Formalism.BasicNotions.Host.cmStar in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+  {ι n : Type} [Fintype n] [DecidableEq n] {c : ℕ} in
 theorem _root_.GlobalTheory.LevX.smul_stdLat_of_mem_KO {g : GL n k} (h : g ∈ _root_.GlobalTheory.SplitWeil.KO k n) :
     g • _root_.GlobalTheory.SplitLat.stdLat k n = _root_.GlobalTheory.SplitLat.stdLat k n := by
   obtain ⟨h₁, h₂⟩ := (_root_.GlobalTheory.SplitFlip.mem_KO_iff _).1 h

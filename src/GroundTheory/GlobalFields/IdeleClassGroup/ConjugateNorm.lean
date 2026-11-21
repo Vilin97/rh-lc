@@ -17,6 +17,7 @@ variable {K L M : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Fi
   {ι : Type*} [Fintype ι]
 
 
+omit [NumberField K] [NumberField L] [NumberField M] in
 theorem det_conjugates_ne_zero [DecidableEq ι] (τ : ι → (M ≃ₐ[K] M))
     (hτ : Function.Injective fun i ↦ (τ i : M →ₐ[K] M).comp (IsScalarTower.toAlgHom K L M))
     (b : Module.Basis ι K L) :

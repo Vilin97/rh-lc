@@ -404,6 +404,7 @@ theorem kap_roots (U : Scheme.{0}) (hq : IsUnit (q : Γ(U, ⊤))) (b : Sec Gm U)
 end GlobalTheory.EtC.KummerSeq
 
 
+open GlobalTheory.EtC.KummerSeq in
 theorem GlobalTheory.EtC.kummer_sequence : ∀ (q : ℕ) [NeZero q], ∃ κ : (restr (Int.castRingHom (ZMod q))).obj (tw q 1) ⟶ Gm, Mono κ ∧ κ ≫ ((q : ℤ) • 𝟙 Gm) = 0 ∧ (∀ (U : Scheme.{0}) (ζ : Prim q Γ(U, ⊤)) (u : (Γ(U, ⊤))ˣ), (u : Γ(U, ⊤)) = ζ.1 → Sec.map κ (show Sec ((restr (Int.castRingHom (ZMod q))).obj (tw q 1)) U from twGen 1 ζ) = unitSec u) ∧ (∀ (U : Scheme.{0}), IsUnit (q : Γ(U, ⊤)) → ∀ b : Sec Gm U, Sec.map ((q : ℤ) • 𝟙 Gm) b = 0 → ∃ a, Sec.map κ a = b) ∧ ∀ (U : Scheme.{0}), IsUnit (q : Γ(U, ⊤)) → ∀ b : Sec Gm U, Loc U fun V g => ∃ c : Sec Gm V, Sec.map ((q : ℤ) • 𝟙 Gm) c = Sec.res g b := by
   intro q _
   refine ⟨kap q, kap_mono, kap_q, ?_, fun U hq b hb => kap_ker U hq b hb, fun U hq b => kap_roots U hq b⟩

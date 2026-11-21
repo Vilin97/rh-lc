@@ -50,6 +50,7 @@ theorem inv_val_eq (y : GL (Fin a) (Cinf E)) :
 end RapidCoef
 
 
+open RapidCoef in
 theorem isRapidInf_mul_adCoef : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (X : Type)
     [MeasurableSpace X] (ν : Measure X) (k : X → ℂ) (γ : X → GL (Fin a) (Cinf E)), IsRapidInf ν k γ →
       ∀ p, IsRapidInf ν (fun x => k x * adCoef (γ x) p) γ := by

@@ -34,6 +34,7 @@ theorem exists_UG {J g : Matrix β β E} (hJ : IsUnit J.det) (hg : gᵀ * J * g.
   exact ⟨⟨Matrix.nonsingInvUnit g (isUnit_iff_exists_inv.mpr ⟨_, h1⟩), hg⟩, rfl⟩
 
 
+omit [DecidableEq α] in
 theorem rule_of_conj [Invertible (2 : R)] {C : TestClass R} {ψ : AddChar R ℂ} {ξ : E} {JA : Matrix α α E} {JB : Matrix β β E}
     {κ : Type} [Fintype κ] {d : Darboux (symp c ξ JA JB) κ} {χ : Eˣ →* Circle} {C1 : Matrix β ν E} {C2 : Matrix β ν' E}
     {om : UG c JB →* Module.End ℂ ((κ → R) → ℂ)} (hs : IsSplitting C ψ d (actB c) om) (γ : UG c JB) (s : Matrix ν' ν E)

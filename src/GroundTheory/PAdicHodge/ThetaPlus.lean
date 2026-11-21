@@ -265,6 +265,7 @@ theorem toBDeRhamPlus_mem_span_pow_iff {ξ : 𝕎R♭}
     Ideal.span_singleton_pow, mem_span_singleton]
 
 
+omit [IsAdicComplete (span {(p : R)}) R] in
 theorem eq_zero_of_algebraMap_mul_eq_zero {x : 𝕎R♭} (hx : x ∈ nonZeroDivisors 𝕎R♭) {y : 𝔸}
     (h : algebraMap 𝕎R♭ 𝔸 x * y = 0) : y = 0 := by
   obtain ⟨⟨w, s⟩, rfl⟩ := IsLocalization.mk'_surjective (Submonoid.powers (p : 𝕎R♭)) y

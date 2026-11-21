@@ -284,6 +284,7 @@ theorem mem_spanAlg [CharZero k] (hS : ∀ M : Submodule k (MvPolynomial (Fin N 
 end GlobalTheory.NablaDensity
 
 
+open GlobalTheory.NablaDensity in
 theorem GlobalTheory.NablaDensity.endo_eq_sum_sqAct : ∀ (k : Type) [Field k] [CharZero k] (N : ℕ) (lam : DomWeight N),
     (∀ M : Submodule k (MvPolynomial (Fin N × Fin N) k), M ≤ nablaSq k N lam →
       (∀ g : GL (Fin N) k, ∀ f ∈ M, sqAct k N lam g f ∈ M) → M = ⊥ ∨ M = nablaSq k N lam) →

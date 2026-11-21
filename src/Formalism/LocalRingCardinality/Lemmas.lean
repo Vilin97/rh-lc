@@ -78,6 +78,7 @@ theorem RRV_finrank : finrank D.what₂.LL D.div.RR.V = D.what₂.Drows := by
   omega
 
 
+variable {D} in
 theorem RRFull.rank (h : D.RRFull) : D.div.Drows = D.what₂.Drows := by
   unfold DivData.Drows HLat.rank Formalism.HN.rkK
   rw [h.2, finrank_top]
@@ -93,6 +94,7 @@ theorem NuV_finrank (u : D.what₂.Word) : finrank D.what₂.LL (D.div.Nu u).V =
   omega
 
 
+variable {D} in
 theorem NuFull.rank (h : D.NuFull) (u : D.what₂.Word) : D.div.d u = (D.mem u).A.du := by
   unfold DivData.d dU HLat.rank Formalism.HN.rkK
   rw [(h u).2, finrank_top]
@@ -279,6 +281,9 @@ theorem liftBaseChange_injective [Module.Flat A O]
   exact h1 (liftBaseChange_injective_top hO φ b hb hst)
 
 
+omit [CommRing A] [IsDomain A] [Algebra A K] [IsFractionRing A K] [CommRing O] [Algebra A O] [Algebra O Kf] [Algebra A Kf]
+  [IsScalarTower A O Kf] [IsScalarTower A K Kf] [Module A V] [IsScalarTower A K V] [Module O W] [IsScalarTower O Kf W]
+  [Module A W] [IsScalarTower A O W] [IsScalarTower A K W] [IsScalarTower A Kf W] in
 theorem li_tower {ι' : Type*} (φ : V →ₗ[K] W) (b : Basis ι K V) (hb : LinearIndependent Kf (φ ∘ b))
     (e : ι' → V) (he : LinearIndependent K e) : LinearIndependent Kf (φ ∘ e) := by
   have h4 : Function.Injective (φ.liftBaseChange Kf) := by
@@ -460,6 +465,7 @@ theorem toO_injective : Function.Injective (toO w σ hσ) := by
   exact IsFractionRing.injective A K (σ.injective this)
 
 
+include hσ in
 theorem isUnit_of_val_one (x : K) (hx : w.valuation K x = 1) (c : O) (hc : algebraMap O Kf c = σ x) :
     IsUnit c := by
   have hx0 : x ≠ 0 := by
@@ -690,6 +696,7 @@ variable {A K : Type*} [CommRing A] [IsDedekindDomain A] [Field K] [Algebra A K]
   (σ : K →+* Kf) (hσ : ∀ x : K, w.valuation K x ≤ 1 ↔ σ x ∈ Set.range (algebraMap O Kf))
 
 
+include hσ in
 theorem span_image_le_of_loc {V W : Type*} [AddCommGroup V] [Module K V] [Module A V] [IsScalarTower A K V]
     [AddCommGroup W] [Module Kf W] [Module O W] [IsScalarTower O Kf W]
     (φ : V →+ W) (hφ : ∀ (a : K) x, φ (a • x) = σ a • φ x) (T : Set V) (N : Submodule A V)
@@ -752,6 +759,7 @@ variable {A K : Type*} [CommRing A] [IsDedekindDomain A] [Field K] [Algebra A K]
   (σ : K →+* Kf) (hσ : ∀ x : K, w.valuation K x ≤ 1 ↔ σ x ∈ Set.range (algebraMap O Kf))
 
 
+include hσ in
 theorem fg_span_image {V W : Type*} [AddCommGroup V] [Module K V] [Module A V] [IsScalarTower A K V]
     [AddCommGroup W] [Module Kf W] [Module O W] [IsScalarTower O Kf W]
     (φ : V →+ W) (hφ : ∀ (a : K) x, φ (a • x) = σ a • φ x) (N : Submodule A V) (hN : N.FG) :
@@ -829,6 +837,7 @@ theorem addVal_toO_uniformizer (hsurj : ∀ c : O, ∃ x : K, σ x = algebraMap 
     exact fun h => h hmemw
 
 
+include hσ in
 theorem length_valuationRing (hsurj : ∀ c : O, ∃ x : K, σ x = algebraMap O Kf c)
     {V W ι : Type*} [AddCommGroup V] [Module K V] [Module A V] [IsScalarTower A K V]
     [AddCommGroup W] [Module Kf W] [Module O W] [IsScalarTower O Kf W]
@@ -1156,6 +1165,7 @@ theorem length_quotient_ne_top₂ {L : SizeData₂ D} (X : Inst D L) (Y : LatIns
     rfl
 
 
+omit c in
 theorem frac_of_ties (hT : GatTies D) (u : D.what₂.Word) (w : D.what₂.places.Pl)
     (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)) :
     IsFractionRing (D.gat u w hg).O (D.gat u w hg).Kf := by

@@ -257,6 +257,7 @@ theorem extFun_homog (hpol : IsPolFan H.bar q φ) (htw : IsTwInv H φ) (n k : �
     exact minVal_smul ht n B
 
 
+variable (H q φ) in
 theorem evalR_extFun {X : Type} [AddCommGroup X] [Module (𝓞 E) X] [Module.Finite (𝓞 E) X]
     (hX : Module.finrank (𝓞 E) X ≤ q) {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} (hB : B ∈ psdCone H.bar X) :
     evalR (extFun H q φ) B = evalR φ B := by

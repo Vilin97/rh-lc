@@ -27,6 +27,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 variable {D : D7} {N : NData D.R D.host D.what₂} {X : NTw D.R D.host D.what₂ D.LL0 N}
 
 
+variable (X) in
 def sideEmb (i : X.Tw) (b : Bool) : ↥D.LL0 →+* FractionRing (X.O i) :=
   (IsFractionRing.map (A := X.O0 i) (B := X.O i) (K := FractionRing (X.O0 i)) (L := FractionRing (X.O i))
     (X.O_inj i)).comp (if b then X.emb0 i else X.emb0b i)
@@ -273,12 +274,14 @@ end Read
 section Comparison₂
 
 
+variable (X) in
 def InRange (i : X.Tw) (Q : Finset (Pl D.host.E)) : Prop :=
   (∀ P ∈ Q, IsSplitPl D.host P) ∧ ClsQ (D := D) Q ∧ Disjoint Q (X.S0 i)
 
 def normProd (s : Finset (Pl D.host.E)) : ℕ := ∏ v ∈ s, Ideal.absNorm v.asIdeal
 
 
+open Classical in
 def grpSum (Y : NExp D.R D.host D.what₂ D.LL0 N X) {i : X.Tw} {j : ℕ} {b : Bool} (ch : Set (Pl D.host.E))
     (Q : Finset (Pl D.host.E)) (M : ℕ) (x : (↥(half ch (admissibleConjugatePairPlaces X i Q M)) → ZMod (X.l i ^ M)) → Y.Fm i j b) :
     Y.Fm i j b ⊗[X.O i] AddMonoidAlgebra (X.O i) (DelQM D.host (X.l i) Q M) :=
@@ -378,6 +381,7 @@ theorem nonempty_dat : Nonempty (Y.Dat i ((j : ℕ) + 1) b) := by
 end CellTie
 
 
+variable (Y) in
 abbrev Rds (ρ : Setup X) : Type := ∀ i j b, Rd ρ Y i j b
 
 abbrev Comparison₂ (rd : Rds Y ρ) : Type := ∀ i j b, CellTie hρ Y (rd i j b)

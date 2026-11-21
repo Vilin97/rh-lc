@@ -62,6 +62,7 @@ lemma isMultiHomog_of_lex {x : MRing ι R} {i : Lex (Fin (Fintype.card K) → �
   exact lexDeg_injective h
 
 
+omit [Fintype K] [DecidableEq K] in
 lemma coe_decompose {σ M : Type*} [AddCommMonoid M] {_ : DecidableEq M} (w : σ → M)
     [GradedRing (weightedHomogeneousSubmodule R w)] (r : MvPolynomial σ R) (i : M) :
     (DirectSum.decompose (weightedHomogeneousSubmodule R w) r i : MvPolynomial σ R) =

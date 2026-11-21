@@ -136,6 +136,7 @@ end GlobalTheory.Desc.EmbeddingLemmas
 namespace GlobalTheory.Desc
 
 
+open GlobalTheory.Desc.EmbeddingLemmas in
 theorem nonempty_emb : ∀ σ : Setup, σ.Common → Nonempty (Emb σ) := by
   intro σ _
   obtain ⟨hG, k₀, hk₀, b₀, hb₀, hb₀0⟩ := GlobalTheory.T.abelianSchemeDescent_gradedFamily_nonzero σ

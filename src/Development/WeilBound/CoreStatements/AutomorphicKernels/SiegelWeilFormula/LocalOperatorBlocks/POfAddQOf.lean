@@ -54,6 +54,7 @@ theorem rhoFun_spec (h : LocHyp sg L) {k : GR n} (hk : InK (mR k)) (P : PX m n) 
   exact Classical.choose_spec (k_poly h k hk P)
 
 
+open scoped Classical in
 def rhoOf (h : LocHyp sg L) (k : GR n) : PX m n →ₗ[ℂ] PX m n where
   toFun := rhoFun h k
   map_add' P Q := by

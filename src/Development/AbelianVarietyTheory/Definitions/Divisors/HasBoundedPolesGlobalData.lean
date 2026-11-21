@@ -84,6 +84,7 @@ def baseChange : Tuple E where
   th := GlobalTheory.chartSec (chartPullZPow (GlobalTheory.chartPullPull T.L (T.bcFst E)) T.j₀) T.th
 
 
+variable {T} in
 theorem IsGeometric.baseChange (h : T.IsGeometric) : (T.baseChange E).IsGeometric := by
   refine ⟨h.alg.baseChange E, fun e => h.bd_ne (top_le_iff.1 fun y _ => ?_)⟩
   have : Surjective (spMap (algebraMap F E)) := ⟨Function.surjective_to_subsingleton _⟩
@@ -92,6 +93,7 @@ theorem IsGeometric.baseChange (h : T.IsGeometric) : (T.baseChange E).IsGeometri
   exact e.ge (Set.mem_univ z)
 
 
+variable {T} in
 theorem IsGeometric.nonempty_U (h : T.IsGeometric) : (T.U : Set T.Y).Nonempty :=
   Set.nonempty_compl.2 fun e => h.bd_ne (Closeds.ext e)
 
@@ -217,6 +219,7 @@ abbrev SecOn (j : ℕ) : Type := sectionsOnClosedSubscheme G.str (tw G.L₂ G.L 
 variable {G s} (hs : G.IsGood s)
 
 
+include hs in
 theorem IsGood.suppIn_e : SuppIn (nonzeroLocus G.e) (G.ideal s) := fun y hy => G.U_le (hs.inU y hy)
 
 def IsGood.res (j : ℕ) : G.Sec j →ₗ[F] G.SecOn s j :=
@@ -292,6 +295,7 @@ theorem extSpace_global (j : ℕ) : extSpace (G.toExt E j) (G.global j) = (G.bas
   exact congrArg _ (funext fun f => restr_pullChart _ _ _ _ _ _ f)
 
 
+variable {G E} in
 theorem isGood_baseChange_iff {s : Fin G.D → Fin G.N → E} : (G.baseChange E).IsGood s ↔ G.IsGoodSection E s :=
   ⟨fun h => ⟨⟨h.finite, h.etale⟩, h.inU⟩, fun h => ⟨h.finiteEtale.finite, h.finiteEtale.etale, h.inOpen⟩⟩
 
@@ -544,6 +548,7 @@ theorem positivity : (geo F hM).Positivity := by
   exact nonzeroLocus_secZero.le this
 
 
+omit hM in
 theorem cls_adj {Y : Scheme.{0}} {K L : LB Y} (hK : K.IsLB) (hL : L.IsLB) (M j : ℕ) (h₁ h₂ h₃) :
     cls (tw (tens K (tens L (tw L L M))) L j) h₁ = cls (tens K (lbPow L (M + 1))) h₂ + cls (lbPow L (j + 1)) h₃ := by
   have h := isLB_tens hL (isLB_tw hL hL M)

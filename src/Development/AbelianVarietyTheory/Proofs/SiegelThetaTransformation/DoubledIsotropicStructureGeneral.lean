@@ -215,6 +215,7 @@ theorem apply_right_mem {u : W → W}
   simpa using this
 
 
+omit hσ hh hn hd in
 theorem map_prodMap_left {u : W →ₗ[E] W} (hi : Function.Injective u)
     (hu : ∀ x ∈ (left I).orthogonalBilin h, u x - x ∈ left I) :
     I.map (u.prodMap LinearMap.id) = I := by
@@ -225,6 +226,7 @@ theorem map_prodMap_left {u : W →ₗ[E] W} (hi : Function.Injective u)
       (hi.prodMap Function.injective_id) I)).symm
 
 
+omit hσ hh hn hd in
 theorem map_prodMap_right {u : W →ₗ[E] W} (hi : Function.Injective u)
     (hu : ∀ y ∈ (right I).orthogonalBilin h, u y - y ∈ right I) :
     I.map (LinearMap.id.prodMap u) = I := by
@@ -235,6 +237,7 @@ theorem map_prodMap_right {u : W →ₗ[E] W} (hi : Function.Injective u)
       (Function.injective_id.prodMap hi) I)).symm
 
 
+omit hσ hh hn hd in
 theorem map_prodMap_transvection {ξ : W} (hξ : ξ ∈ left I) (b : E) {u : W →ₗ[E] W}
     (hu : ∀ v, u v = v + (b * h v ξ) • ξ) : I.map (u.prodMap LinearMap.id) = I := by
   refine map_prodMap_left hI ?_ fun x _ => ?_

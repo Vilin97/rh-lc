@@ -32,6 +32,7 @@ theorem finite_height_eq_one_mem {a : A} (ha : a ≠ 0) :
   exact mem_minimalPrimes_span_singleton_of_height_eq_one hp ha hap
 
 
+omit [IsNoetherianRing A] in
 theorem krullDimLE_one_of_height_eq_one (p : Ideal A) [p.IsPrime] (hp : p.height = 1)
     (B : Type*) [CommRing B] [Algebra A B] [IsLocalization.AtPrime B p] :
     Ring.KrullDimLE 1 B := by
@@ -177,12 +178,14 @@ theorem mem_range_of_forall_height_eq_one_of_projective [Module.Projective A M]
 
 
 omit [IsDomain A] [IsNoetherianRing A] [IsIntegrallyClosed A] in
+omit [IsNoetherianRing A] [IsIntegrallyClosed A] in
 theorem isTorsionFree_of_isLocalizedModule (f : M →ₗ[A] V) [IsLocalizedModule A⁰ f] :
     Module.IsTorsionFree A V :=
   ⟨fun r hr => ((Module.End.isUnit_iff _).mp
     (IsLocalizedModule.map_units f (⟨r, hr.mem_nonZeroDivisors⟩ : A⁰))).1⟩
 
 
+omit [IsDomain A] [IsNoetherianRing A] [IsIntegrallyClosed A] in
 theorem injective_of_isLocalizedModule_nonZeroDivisors [Module.IsTorsionFree A M]
     (f : M →ₗ[A] V) [IsLocalizedModule A⁰ f] : Function.Injective f :=
   (IsLocalizedModule.injective_iff_isRegular A⁰ f).mpr fun c =>
@@ -280,6 +283,7 @@ noncomputable def heightOneOrd_vw (p : Ideal A) [p.IsPrime] (hp : p.height = 1) 
   WithZero.log (heightOneOrdHom K p hp x)
 
 
+omit [IsDomain A] [IsNoetherianRing A] in
 theorem ord_map_ringEquiv {B : Type*} [CommRing B] (e : A ≃+* B) (a : A) :
     Ring.ord B (e a) = Ring.ord A a := by
   let := (e : A →+* B).toAlgebra
@@ -398,6 +402,7 @@ section Ord
 variable (p : Ideal A) [p.IsPrime] (hp : p.height = 1)
 
 
+omit [IsIntegrallyClosed A] in
 theorem heightOneOrdHom_eq_valuation_inv (B : Type*) [CommRing B] [IsDomain B]
     [IsDiscreteValuationRing B] [Algebra A B] [IsLocalization.AtPrime B p] [Algebra B K]
     [IsScalarTower A B K] [IsFractionRing B K] (x : K) :

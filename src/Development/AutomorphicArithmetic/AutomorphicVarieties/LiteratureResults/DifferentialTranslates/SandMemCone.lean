@@ -15,6 +15,7 @@ namespace UpperTheory.V.Lit.Dr
 variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 
 
+variable (E a) in
 def HV : Submodule ℝ (Lie E a) where
   carrier := {x | IsSelfAdjoint (Matrix.of x)}
   add_mem' h h' := IsSelfAdjoint.add h h'
@@ -31,6 +32,7 @@ def hv : Herm E a ≃ₗ[ℝ] HV E a where
 
 
 
+variable (E a) in
 def hOne : HV E a := hv ⟨1, IsSelfAdjoint.one _⟩
 
 omit [NumberField E] in
@@ -58,6 +60,7 @@ theorem sand_val (g : GL (Fin a) (Cinf E)) (p : HV E a) :
     Matrix.of (sand g p).1 = g.val * Matrix.of p.1 * star g.val := rfl
 
 
+variable (E a) in
 def cone : Set (HV E a) := {p | ∃ g : GL (Fin a) (Cinf E), sand g (hOne E a) = p}
 
 theorem hOne_mem_cone : hOne E a ∈ cone E a := ⟨1, by rw [map_one]; rfl⟩

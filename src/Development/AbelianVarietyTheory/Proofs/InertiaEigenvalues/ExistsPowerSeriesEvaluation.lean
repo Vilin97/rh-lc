@@ -68,6 +68,8 @@ theorem ev_dvd_iff {L A : Type*} [Field L] [CommRing A] [IsDomain A] (t : A) (ht
     simpa [hX] using map_dvd ev h
 
 
+open Reformulated.AutPerF Formalism in
+open scoped Formalism.Per in
 theorem main (l : ℕ) [Fact l.Prime] {B L : Type*} [CommRing B] [Field L]
     (e : B ≃+* BdR l (Per.OC l)) (Fil : ℤ → B → Prop)
     (hF : ∀ a x, Fil a x ↔ e x ∈ BdR.fil l (Per.OC l) a) (t : B) (π : BdRPlus l (Per.OC l))
@@ -114,6 +116,8 @@ theorem main (l : ℕ) [Fact l.Prime] {B L : Type*} [CommRing B] [Field L]
       rw [map_zero]; exact BdR.eq_zero_of_forall_mem_fil fun a => (hF _ _).1 (hb a))
 
 
+open Reformulated.AutPerF Formalism in
+open scoped Formalism.Per in
 theorem exists_gen (l : ℕ) [Fact l.Prime] (x : BdR l (Per.OC l))
     (h1 : x ∈ BdR.fil l (Per.OC l) 1) (h2 : x ∉ BdR.fil l (Per.OC l) 2) :
     ∃ π : BdRPlus l (Per.OC l), RingHom.ker (BdRPlus.theta l (Per.OC l)) = Ideal.span {π} ∧
@@ -142,6 +146,7 @@ theorem main' (l : ℕ) [Fact l.Prime] {B L : Type*} [CommRing B] [Field L]
   exact main l e Fil hF t π hπ ht ι hι
 
 
+open Reformulated.AutPerF in
 theorem mem_zero_of_isIntegral (l : ℕ) [Fact l.Prime] {F B : Type*} [Field F] [CommRing B]
     [Algebra F B] (e : B ≃+* BdR l (Per.OC l))
     (h : ∀ c : F, ∃ y : BdRPlus l (Per.OC l), algebraMap _ _ y = e (algebraMap F B c))

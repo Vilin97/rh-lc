@@ -182,6 +182,7 @@ theorem adele_ext (s : SplitPlace L) {z z' : AL L} (h1 : s.proj z = s.proj z')
   rw [hx, hy]; simp
 
 
+open Classical in
 def single (v : HeightOneSpectrum (𝓞 L⁺)) (a : v.adicCompletion L⁺) : AFplus L :=
   ⟨Pi.single (M := fun u : HeightOneSpectrum (𝓞 L⁺) => u.adicCompletion L⁺) v a, by
     filter_upwards [(Set.finite_singleton v).compl_mem_cofinite] with u hu
@@ -384,6 +385,7 @@ theorem eventually_cong (s : SplitPlace L) {δ : 𝓞 L} (h0 : (δ : L) ≠ 0) (
 end Group
 
 
+open Formalism.AUTREP Formalism.L2.NG in
 theorem exists_local_component {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} (π : FinTyp L n) (s : SplitPlace L)
     (W : Submodule ℂ (GAf L n → ℂ)) (hW : W ≤ π.S) (h0 : W ≠ ⊥)
     (hst : ∀ x : GAf L n, TrivOutside {s.v} x → ∀ f ∈ W, rt L n x f ∈ W)

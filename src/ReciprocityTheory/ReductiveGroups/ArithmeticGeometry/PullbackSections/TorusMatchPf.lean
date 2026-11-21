@@ -133,6 +133,7 @@ theorem index_lt_complementSignature_of_not_mem {ρ : E →+* ℂ} (h : ρ ∉ (
   omega
 
 
+include hU in
 def wt (i : ReciprocityTheory.ChartRestriction.G.I2.Idx A.T.dim) : ℂ :=
   if h : i.1 ∈ (U.X k).Ψ then
     (Real.sqrt ((U.X k).c ⟨i.1, h⟩) : ℂ) *

@@ -174,6 +174,10 @@ variable {F : Type} [Field F] [NumberField F] {E : Type} [Field E] [Algebra F E]
   (v : HeightOneSpectrum (𝓞 F)) (σ : E →ₐ[F] E)
 
 
+open scoped TensorProduct in
+open NumberField IsDedekindDomain in
+variable {F : Type} [Field F] [NumberField F] {E : Type} [Field E] [Algebra F E]
+  (v : HeightOneSpectrum (𝓞 F)) (σ : E →ₐ[F] E) in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.SelfDualLatticeActions.sigR_mem {z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.SelfDualLatticeActions.Ev E v}
     (hz : z ∈ _root_.GlobalTheory.IndefiniteRowSideFullHecke.SelfDualLatticeActions.OEv E v) :
     _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv F v) σ z ∈ _root_.GlobalTheory.IndefiniteRowSideFullHecke.SelfDualLatticeActions.OEv E v := by

@@ -153,6 +153,7 @@ theorem int_of_uni (hQ : ∀ P ∈ Q, conjPrime₂ P ∉ Q) {k : GL (Fin n) (AfE
 def mat (f : Sp E n ≃ₗ[E] Sp E n) : Matrix (Fin n) (Fin n) E := Matrix.of fun i j => f (Pi.single j 1) i
 
 
+omit [NumberField E] [StarRing E] in
 theorem mat_mulVec (f : Sp E n ≃ₗ[E] Sp E n) (v : Sp E n) (i : Fin n) : ∑ j, mat f i j * v j = f v i := by
   set_option synthInstance.maxHeartbeats 100000 in
     conv_rhs => rw [← Finset.univ_sum_single v, map_sum, Finset.sum_apply]
@@ -163,6 +164,7 @@ theorem mat_mulVec (f : Sp E n ≃ₗ[E] Sp E n) (v : Sp E n) (i : Fin n) : ∑ 
   rfl
 
 
+omit [NumberField E] [StarRing E] in
 theorem mat_symm_mul (f : Sp E n ≃ₗ[E] Sp E n) : mat f.symm * mat f = 1 := by
   ext i j
   rw [Matrix.mul_apply]
@@ -211,6 +213,7 @@ theorem carries_globLat (x : GL (Fin n) (AfE F E)) :
     (Module.Finite.iff_fg.2 stdLat_lattice.fg) stdLat_lattice.span_eq_top x
 
 
+omit [StarRing E] in
 theorem mulVec_int {k : Matrix (Fin n) (Fin n) (AfE F E)} (hk : ∀ i j, k i j ∈ RInt F E) {z : Fin n → AfE F E}
     (hz : ∀ i, z i ∈ RInt F E) (i : Fin n) : k.mulVec z i ∈ RInt F E := by
   simp only [Matrix.mulVec, dotProduct]
@@ -305,6 +308,7 @@ theorem exists_modify (hQ : ∀ P ∈ Q, conjPrime₂ P ∉ Q) {x : GL (Fin n) (
       if_neg h']
 
 
+variable (hc) in
 theorem exists_isPtOf_cm (n : ℕ) (ST SG Q : Finset (HeightOneSpectrum (𝓞 E))) (p : DecoF E n ST SG Q)
     (h1 : Disjoint ST SG) (h2 : Disjoint ST Q) (h3 : Disjoint SG Q)
     (h4 : ∀ P ∈ uSG ST (uSG SG Q), conjPrime₂ P ∉ uSG ST (uSG SG Q)) : ∃ g : GL (Fin n) (AfE F E), IsPtOf hc g p := by

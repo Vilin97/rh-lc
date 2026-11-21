@@ -214,6 +214,7 @@ def Represents {H : Over (Spec (CommRingCat.of R))} [GrpObj H] (Φ : ∀ T, (T �
   ∀ (T : Over (Spec (CommRingCat.of R))) (x x' : T ⟶ H), GtPt.IsAdd (Φ T x) (Φ T x') (Φ T (x * x'))
 
 
+include hG in
 theorem exists_ringAct {H : Over (Spec (CommRingCat.of R))} [GrpObj H] [IsCommMonObj H]
     {Φ : ∀ T, (T ⟶ H) ≃ GtPt D T} (h : Represents Φ) :
     ∃ ρ : RingAct H O, ∀ (a : O) (T) (x : T ⟶ H), IsSmulPt oa a (Φ T x) (Φ T (x ≫ ρ.act a)) := by

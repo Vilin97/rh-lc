@@ -42,6 +42,7 @@ theorem map_genericPoint_eq (ψ : W.toAffine.FunctionField →ₐ[F] W.toAffine.
   ⟨_, rfl⟩
 
 
+omit [DecidableEq F] in
 theorem algHom_ext_gen {L : Type*} [Field L] [Algebra F L]
     {ψ₁ ψ₂ : W.toAffine.FunctionField →ₐ[F] L} (hx : ψ₁ (genX W) = ψ₂ (genX W))
     (hy : ψ₁ (genY W) = ψ₂ (genY W)) : ψ₁ = ψ₂ := by
@@ -57,6 +58,7 @@ theorem algHom_ext_gen {L : Type*} [Field L] [Algebra F L]
 variable [W.IsElliptic]
 
 
+omit [DecidableEq F] in
 theorem algHom_eq_of_map_genericPoint
     {ψ₁ ψ₂ : W.toAffine.FunctionField →ₐ[F] W.toAffine.FunctionField}
     (h : Point.map ψ₁ (genericPoint W) = Point.map ψ₂ (genericPoint W)) : ψ₁ = ψ₂ := by
@@ -70,6 +72,7 @@ theorem map_id_genericPoint :
     Point.map (AlgHom.id F W.toAffine.FunctionField) (genericPoint W) = genericPoint W := rfl
 
 
+omit [DecidableEq F] [W.IsElliptic] in
 theorem exists_algebraMap_eq_of_isAlgebraic [IsAlgClosed F] {u : W.toAffine.FunctionField}
     (hu : IsAlgebraic F u) : ∃ c : F, algebraMap F W.toAffine.FunctionField c = u := by
   have hint := hu.isIntegral

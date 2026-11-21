@@ -29,6 +29,7 @@ theorem eltAt {k : Type} [Field k] {Gr : GlobalTheory.SplitFlip.Grid k} {hs : 1 
   simp only [dif_pos hi]
 
 
+set_option maxHeartbeats 1600000 in
 theorem cover_at : Big fun ch => ∀ s, CoverAt ch s := by
   refine big_mono (fun {D} _ _ _ _ _ _ _ _ _ _ _ ch h => ?_) (Big.and GlobalTheory.T.rowTest_mem_latticeStabilizer_of_localMatrices GlobalTheory.T.exists_periodGroup_point_lifting_rowGroup_localElements)
   obtain ⟨h5, h7⟩ := h

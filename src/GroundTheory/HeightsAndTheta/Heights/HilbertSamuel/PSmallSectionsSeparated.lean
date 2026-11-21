@@ -105,6 +105,7 @@ theorem rep_add {y : (Σ k, ι k) → Ω} {a : K → ℤ} {τ : ℕ} {s t : Ω} 
 end SmallSectionsSeparated
 
 
+open SmallSectionsSeparated in
 theorem SmallSectionsSeparated.proof (hG : GridSeparation.Statement) : SmallSectionsSeparated.Statement := by
   intro K _ ι _ Ω _ y D A hV hB hA
   obtain ⟨C, hC, hZ⟩ := hG K ι Ω y D A hV hB hA

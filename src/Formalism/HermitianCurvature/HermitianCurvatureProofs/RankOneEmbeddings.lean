@@ -905,6 +905,7 @@ theorem cW_nonneg (c : Fin r → ℂ) : 0 ≤ cWeight k r c := by
   exact Finset.prod_nonneg fun a _ => pow_nonneg (norm_nonneg _) _
 
 
+set_option maxHeartbeats 800000 in
 theorem engine {μG μN μb μW μW' : Measure (Mt k r)} [SFinite μN] [SFinite μb] [SFinite μW] [SFinite μW'] (T T' : ℝ)
     (G0 : (Fin r → ℂ) → Mt k r) (hG0 : Measurable G0) (ES : ℂ → Mt k r) (hES : Measurable ES) (C1 C2 : ℝ≥0)
     (hIt : ∀ f : Mt k r → ℝ≥0∞, Measurable f → ∫⁻ g, f g ∂μG = (C1 : ℝ≥0∞) * ∫⁻ c : Fin r → ℂ,

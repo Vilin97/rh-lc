@@ -131,6 +131,7 @@ def IsGeo {O : Type} [CommRing O] {bar : O → O} {q s : ℕ} {W : Matrix (Fin s
       𝔪.Terms x₀ lab (Φ.term y)
 
 
+open Classical in
 def ZHAbove (X₁ : GSet) (Y : RatModel X₁.o₁ X₁.Ω₁) (πY : Y.Z ⟶ X₁.M.Z) : Prop :=
   ∃ (U₀ : Y.Z.Opens) (EE : Y.Lat X₁.S.J), Nonempty (ZHOut X₁.ρ Y U₀ EE) ∧ X₁.S.Over₀ Y U₀ ∧ X₁.S.IsEE Y U₀ EE ∧
     X₁.M.IsHom Y (AlgHom.id X₁.o₁ X₁.Ω₁) πY ∧ IsProper πY

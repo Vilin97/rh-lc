@@ -89,6 +89,7 @@ theorem exists_char_of_fixed {K G W : Type} [Field K] [CharZero K] [Group G] [Fi
   · exact absurd h0 hf
 
 
+open GlobalTheory.BI Formalism.L2.DIV GlobalTheory.FinGL GlobalTheory.FiniteGL GlobalTheory.Parabolic GlobalTheory.IndefiniteRowSideFullHecke.LevelCuspCharacters GlobalTheory.ParamLabel GlobalTheory.GoodTypeGeneric in
 theorem sum_typeChar_radical {p : ℕ} [Fact p.Prime] {r : ℕ} (s : GlobalTheory.IndefiniteRowSideFullHecke.LevelCuspCharacters.SSParam p ℂ r)
     (hs : GlobalTheory.IndefiniteRowSideFullHecke.LevelCuspCharacters.IsRegularParam s) {a : ℕ} (h0 : 0 < a) (ha : a < r)
     (hA : ∀ A : Finset (GlobalTheory.IndefiniteRowSideFullHecke.LevelCuspCharacters.Cyc s.1), ∑ c ∈ A, GlobalTheory.IndefiniteRowSideFullHecke.LevelCuspCharacters.cycLen s.1 c ≠ a)
@@ -160,6 +161,7 @@ theorem sum_typeChar_radical {p : ℕ} [Fact p.Prime] {r : ℕ} (s : GlobalTheor
   simpa only [hchar, MonoidHom.id_apply] using h1
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke GlobalTheory.DimPartsCompare GlobalTheory.FinGL GlobalTheory.Parabolic GlobalTheory.FiniteGL in
 theorem hypH_of_goodProj : GlobalTheory.Published.GreenCuspidal → ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type}
     {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks)
     (F : Face D A), Given R F → ∀ (W : Type) [AddCommGroup W] [Module ℂ W] [FiniteDimensional ℂ W]

@@ -156,6 +156,7 @@ theorem exists_frame (h : LF O (ϖ : k) nrm q) (g : GL (Fin n) k) : ∃ (t : GL 
     exact (fromBlocks_mul_fromRows _ _ _ _ _ _).trans (by simp)
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem exists_dual (J : GL (Fin n) k) {p J₂ : GL (Fin n ⊕ Fin n) k} (hJ : J₂.1 = fromBlocks J.1 0 0 (-J.1)) {t : GL (Fin n) k}
     (h : p.1 * fromRows 𝟙 𝟙 = fromRows 𝟙 𝟙 * t.1) : ∃ t' : GL (Fin n) k,
       (J₂⁻¹).1 * (p⁻¹).1ᵀ * J₂.1 * fromRows 𝟙 𝟙 = fromRows 𝟙 𝟙 * t'.1 ∧

@@ -81,6 +81,7 @@ theorem card_torsion_congr {A B : Type} [Group A] [Group B] (e : A ≃* B) (N : 
 end TorsionCount
 
 
+open TorsionCount in
 theorem torusQuotient_card_torsion :
     ∀ (S : Scheme.{0}) (X : Type) [AddCommGroup X] [Module.Free ℤ X] [Module.Finite ℤ X] (G : Over S) [GrpObj G]
       [IsCommMonObj G] (Q : TQ G X) (K : Type) [Field K] [IsAlgClosed K] (p : Spec (CommRingCat.of K) ⟶ S) (N : ℕ),

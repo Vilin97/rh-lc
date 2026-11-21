@@ -20,6 +20,7 @@ open Formalism.IndefR.Datum
 variable {D : D7} {ψ : AddChar (AF D.host.F) ℂ}
 
 
+set_option maxHeartbeats 800000 in
 theorem lat_ann (hψ : IsStdChar D ψ (-1)) (S T : HSp D) {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)}
     {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)} (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) {x : WO S T}
     (hx : x ∈ latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) (fun _ => True))

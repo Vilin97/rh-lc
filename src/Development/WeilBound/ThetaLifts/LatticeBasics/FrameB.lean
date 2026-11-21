@@ -73,6 +73,7 @@ theorem inD_mem {B : Base F E} (hB : B.IsGood σ) {w : Pl E} (hw : Formalism.UG.
   rwa [map_mul, hx1, one_mul] at h2
 
 
+variable (σ v) in
 def Uni (J : Matrix (Fin n) (Fin n) E) (g : GL (Fin n) (Fv F v ⊗[F] E)) : Prop :=
   Int (intLoc F E v) (g.1ᵀ * J.map (inclR (F := F) (Fv F v)) * g.1.map (sigR _ σ)) ∧
     ∃ G', Int (intLoc F E v) G' ∧ G' * (g.1ᵀ * J.map (inclR (F := F) (Fv F v)) * g.1.map (sigR _ σ)) = 1

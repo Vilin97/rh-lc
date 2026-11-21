@@ -192,6 +192,7 @@ def toBaseChange : SemiBialgHom (algebraMap R R') A (R' ⊗[R] A) where
 @[simp] theorem toBaseChange_apply (a : A) : toBaseChange R R' A a = (1 : R') ⊗ₜ[R] a := rfl
 
 
+variable {R A} in
 theorem toBaseChange_pts_bijective (B : Type) [CommRing B] [Algebra R B] [Algebra R' B]
     (hB : ∀ r, algebraMap R B r = algebraMap R' B (algebraMap R R' r)) :
     Function.Bijective ((toBaseChange R R' A).pts B hB) := by
@@ -435,6 +436,7 @@ def baseChangeMap (f : G ⟶ H) : G.baseChange O' ⟶ H.baseChange O' :=
     (baseChangeMap O' f).app n = bcMap O' (f.app n) := rfl
 
 
+variable {O'} in
 theorem baseChange_hom_ext {G' : PDivGroup p O'} {f g : G' ⟶ G.baseChange O'}
     (h : ∀ n a, f.app n (1 ⊗ₜ a) = g.app n (1 ⊗ₜ a)) : f = g :=
   hom_ext fun n => bc_hom_ext (h n)
@@ -466,6 +468,7 @@ def SemiHom.lift {G' : PDivGroup p O'} (s : SemiHom (algebraMap O O') G' G) :
   (s.app n).liftBC_tmul r a
 
 
+variable (G) in
 def semiHomEquiv (G' : PDivGroup p O') :
     SemiHom (algebraMap O O') G' G ≃ (G' ⟶ G.baseChange O') where
   toFun := SemiHom.lift

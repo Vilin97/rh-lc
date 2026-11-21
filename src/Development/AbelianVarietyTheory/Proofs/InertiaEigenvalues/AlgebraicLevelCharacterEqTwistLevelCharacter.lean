@@ -49,6 +49,7 @@ theorem resRep_spec {L : Type} [Field L] [NumberField L] [IsCMField L] (s : Reci
   exact lt_of_le_of_lt (Valuation.map_sub _ _ _) (max_lt h2 hux)
 
 
+open Classical in
 theorem psiU_prod (i : D.ntw.Tw) (b : Bool)
     (hUup : D.nexp.U = NX.Uup (fun kv : (Σ kk : Fin 2, D.nd.PlG kk) => D.host.g kv.1) D.R.r)
     (hgen : NX.IsStdGeneric (fun kv : (Σ kk : Fin 2, D.nd.PlG kk) => D.host.g kv.1) D.R.r (D.nexp.psiU i b))

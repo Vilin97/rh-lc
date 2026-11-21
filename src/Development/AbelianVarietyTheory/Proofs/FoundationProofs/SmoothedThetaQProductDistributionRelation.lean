@@ -58,6 +58,7 @@ theorem _root_.GlobalTheory.Sieg.prod_cthFac_mul_pow {c m : ℕ} {ζ : ℂ} (hζ
   ring
 
 
+open scoped UpperHalfPlane MatrixGroups Manifold in
 theorem _root_.GlobalTheory.Sieg.prod_cth_mul_ee : ∀ (c m : ℕ) (q t : ℂ), 1 < c →
     Nat.Coprime c 6 → 0 < m → Nat.Coprime c m →
     ‖q‖ < 1 → q ≠ 0 → t ≠ 0 → (∀ n : ℤ, q ^ n * t ^ (c * m) ≠ 1) →

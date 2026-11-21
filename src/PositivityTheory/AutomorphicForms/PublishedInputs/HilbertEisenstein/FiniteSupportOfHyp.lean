@@ -46,6 +46,7 @@ theorem exists_int_of_val (x : F)
   exact ⟨s, hs.symm⟩
 
 
+omit [IsTotallyReal F] in
 theorem exists_den_compact {ι : Type} [Finite ι] {C : Set (Ideles F)} (hC : IsCompact C)
     (f : ι → Ideles F → Af F) (hf : ∀ i, Continuous (f i)) :
     ∃ d : 𝓞 F, d ≠ 0 ∧ ∀ a ∈ C, ∀ i, ∀ w : HeightOneSpectrum (𝓞 F),

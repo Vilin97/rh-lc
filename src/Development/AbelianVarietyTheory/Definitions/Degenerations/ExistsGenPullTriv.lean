@@ -132,6 +132,7 @@ theorem exists_gen_pull_triv {Y Z : Scheme.{0}} (φ : Fin 2 → (Y ⟶ Y)) (ε :
   exact ⟨scaleGen u o, scaleGen_isGen u ho, fun j => _root_.mul_one _⟩
 
 
+omit [IsLocalRing R] in
 theorem torusAlg_repWt (I : Ideal R) (X : Type) [AddCommGroup X] (χ : X) (e : ℕ) :
     (torusAlg I X).RepWt 1 χ e := by
   have hu := isWt_of_retraction (i := (bcIso (thick R I e) X).hom) (bcIso (thick R I e) X).inv

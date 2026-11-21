@@ -149,6 +149,7 @@ variable [CompactSpace X] [T2Space X] (A : FinHolAtlas (e + 1) X) (Φ : Fin e �
   (hG : G ⊆ (A.chart j).source) (x0 : Fin e → X) (hGU : ∀ i, G ⊆ (Φ i).U (x0 i))
 
 
+include hΦ hG hGU in
 theorem st_locDens_piece (u : X → ℝ) (hu : A.Smooth u) {y : Fin (e + 1) → ℂ}
     (hy : y ∈ (A.chart j).target ∩ (A.chart j).symm ⁻¹' G) :
     locDens A (Fin.cons (LocPot.ofFun u) Φ) j y =
@@ -192,6 +193,7 @@ theorem st_locDens_piece (u : X → ℝ) (hu : A.Smooth u) {y : Fin (e + 1) → 
     rw [st_hessC_congr heq, hessC_add_potential hf2 hh, hessC_re_of_analyticAt (hK y hyS), add_zero]
 
 
+include hΦ hGo hG hGU in
 theorem st_left_piece (w ψ : X → ℝ) (hw : A.Smooth w) (hψ : A.Smooth ψ) (hψG : tsupport ψ ⊆ G) :
     mInt A (Fin.cons (LocPot.ofFun w) Φ) ψ =
       ∫ y in (A.chart j).target ∩ (A.chart j).symm ⁻¹' G,
@@ -221,6 +223,7 @@ theorem st_left_piece (w ψ : X → ℝ) (hw : A.Smooth w) (hψ : A.Smooth ψ) (
   simp only [h1, h2]
 
 
+include hΦ hGo hG hGU in
 theorem st_right_piece (w ψ : X → ℝ) (hw : A.Smooth w) (hψ : A.Smooth ψ) (hψG : tsupport ψ ⊆ G) :
     mInt A (Fin.cons (LocPot.ofFun ψ) Φ) w =
       ∫ y in (A.chart j).target ∩ (A.chart j).symm ⁻¹' G,
@@ -261,6 +264,7 @@ theorem st_right_piece (w ψ : X → ℝ) (hw : A.Smooth w) (hψ : A.Smooth ψ) 
     simp [h0]
 
 
+include hΦ hGo hG hGU in
 theorem st_symm_piece (hP : ReciprocityTheory.AnForm.A.PartsStatement) (w ψ : X → ℝ) (hw : A.Smooth w)
     (hψ : A.Smooth ψ) (hψG : tsupport ψ ⊆ G) :
     mInt A (Fin.cons (LocPot.ofFun w) Φ) ψ = mInt A (Fin.cons (LocPot.ofFun ψ) Φ) w := by

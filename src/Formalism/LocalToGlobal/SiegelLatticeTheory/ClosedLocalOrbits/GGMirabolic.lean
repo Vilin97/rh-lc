@@ -26,6 +26,7 @@ variable {k}
 def psiNat (ψ₀ : AddChar F ℂ) (x : GL (Fin k) F) : ℂ := if IsUni k x then psiU ψ₀ x else 0
 
 
+variable (F k) in
 def cardU : ℕ := Nat.card {x : GL (Fin k) F // IsUni k x}
 
 def gam (ψ₀ : AddChar F ℂ) (x : GL (Fin k) F) : ℂ :=

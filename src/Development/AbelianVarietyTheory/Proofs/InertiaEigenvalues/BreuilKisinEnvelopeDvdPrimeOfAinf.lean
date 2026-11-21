@@ -56,6 +56,7 @@ theorem coeff_map {S A S' A' ι : Type} [CommRing S] [CommRing A] [CommRing S'] 
 end GlobalTheory.BSP.EnvPush
 
 
+open GlobalTheory.BSP.EnvPush in
 theorem GlobalTheory.BSP.envPush_dvd_l : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (En : Env bk bk.prism (bk.toP bk.E) (bk.toP X)) (An : Env bk (ainfObj K) (bk.ev bk.E) (bk.ev X)) (q : Hom En.Q An.Q), q.comp En.inl = An.inl.comp bk.ι → q.comp En.inr = An.inr → ∀ x : En.Q.A, ((l : ℕ) : An.Q.A) ∣ q.f x → ((l : ℕ) : En.Q.A) ∣ x := by
   intro l _ K bk En An q hl hr x hx
   have hql : ∀ y : bk.prism.A, q.f (En.inl.f y) = An.inl.f (bk.ι.f y) := fun y =>

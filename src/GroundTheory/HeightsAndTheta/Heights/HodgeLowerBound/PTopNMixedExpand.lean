@@ -33,6 +33,7 @@ variable {II : IntersectionSystem} {Ψ : Type} [Fintype Ψ] [DecidableEq Ψ] {Ω
   {D : ComponentData II Ψ K ι Ω E} {O Lt : Type} [CommRing O] [AddCommGroup Lt] [Module O Lt]
 
 
+omit [DecidableEq Ψ] in
 theorem NbarQ_h_eq (X : ComponentSetting D O Lt) (B p q : ℕ) (t : ℝ)
     {z : (Σ k, ι k) → ℂ} (hz : z ∈ mcPts (mCoordIdeal D.y)) :
     (X.NbarQ B p q t).h z = (muReg X.H X.S B t).h z ^ q * D.A'.h z ^ p := by
@@ -73,6 +74,7 @@ theorem NbarQ_h_eq (X : ComponentSetting D O Lt) (B p q : ℕ) (t : ℝ)
 end TopNMixedExpand
 
 
+open TopNMixedExpand in
 theorem TopNMixedExpand.proof (hIso : HilbertSamuel.IsomInvariance.Statement) (hS : MuRegSmooth.Statement) :
     TopNMixedExpand.Statement := by
   intro II Ψ _ _ K _ ι _ Ω _ _ E _ _ D O Lt _ _ _ X B p q hII hp hpq

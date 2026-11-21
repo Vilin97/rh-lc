@@ -365,6 +365,7 @@ open scoped Pointwise
 variable {D : D7}
 
 
+set_option maxHeartbeats 400000 in
 theorem frobOut_of_inertK {p : ℕ} [hp : Fact p.Prime] (hp2 : p ≠ 2) (hI : Formalism.MainNotions.GL3Theta.InertK D p) : FrobOut D p := by
   classical
   let G := 𝓞 D.host.E ≃ₐ[ℤ] 𝓞 D.host.E
@@ -527,6 +528,7 @@ end frob
 end GlobalTheory.NormUnitInert
 
 
+open Formalism.BasicNotions NumberField IsDedekindDomain Formalism.MainNotions Formalism.MainNotions.G Formalism.MainNotions.FormalGroupSystem Formalism.L2.G.Pend Formalism.L2.Ker Formalism.L2.PairingIndexBounds.F GlobalTheory.TwU TensorProduct in
 theorem GlobalTheory.normUnit_of_inert : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (lam : TaylorLogMetric.Qbar →+* ℂ_[p]), p ≠ 2 → GL3Theta.InertK D p →
     ∀ z : D.host.E, z * D.host.conj z = 1 → ‖TaylorLogMetric.lamC lam (∏ τ : D.what₂.Tau, TaylorLogMetric.embT D τ z)‖ = 1 :=
   fun _ _ _ lam hp2 hI => GlobalTheory.NormUnitInert.normUnitK_of_inertK lam hp2 hI

@@ -159,6 +159,8 @@ theorem exists_split (S : Finset ℕ) (m : ℕ) (hm : 0 < m) :
     · exact ((Nat.Prime.dvd_mul hp).1 hd).elim (h2 p hp) (h2' p hp)
 
 
+open GlobalTheory.CompanionTheory.Ar.OrVert Top HodgeCpt in
+set_option maxHeartbeats 1000000 in
 theorem unit_off (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H)
     (Xo : Moduli D l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F))
     (Sys : PB.AnSys (Top.dimFl (CMType H) (D.p + D.q)) (Option (RootIx D))) (Fx : FixedData Y Sys)

@@ -101,6 +101,7 @@ theorem continuous_aeval_mvPolynomial [IsTopologicalRing C] (q : MvPolynomial σ
   | mul_X P i hP => simp only [map_mul, aeval_X]; exact hP.mul (continuous_apply i)
 
 
+variable (σ R C) in
 noncomputable def mvPolynomialHomeomorph [IsTopologicalRing C] :
     (MvPolynomial σ R →ₐ[R] C) ≃ₜ (σ → C) where
   toFun p i := p (X i)
@@ -111,6 +112,7 @@ noncomputable def mvPolynomialHomeomorph [IsTopologicalRing C] :
   continuous_invFun := continuous_iff.2 continuous_aeval_mvPolynomial
 
 
+omit [TopologicalSpace C] in
 theorem exists_comap_eq_of_surjective (φ : A →ₐ[R] B) (hφ : Function.Surjective φ)
     (p : A →ₐ[R] C) (hp : ∀ a, φ a = 0 → p a = 0) : ∃ q : B →ₐ[R] C, comap φ q = p := by
   refine ⟨(Ideal.Quotient.liftₐ (RingHom.ker φ) p hp).comp

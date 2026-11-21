@@ -18,6 +18,7 @@ namespace GlobalTheory.HeckeExtend
 variable {F : Type} [Field F] [NumberField F]
 
 
+variable (F) in
 theorem intF_isOpen (M : ℕ) (hM : 0 < M) : IsOpen (intF F M) := by
   let S : AddSubgroup (Af F) :=
     { carrier := {c | ∃ a : Af F, (∀ v, a v ∈ v.adicCompletionIntegers F) ∧ c = M • a}

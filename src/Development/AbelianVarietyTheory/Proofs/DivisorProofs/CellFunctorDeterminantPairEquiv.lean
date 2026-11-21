@@ -34,6 +34,7 @@ theorem midCol_mem_parab (g : ∀ j, (Σ i, c j i) ≃ Fin (blk3 m j)) {j : Fin 
   exact absurd h (lt_irrefl _)
 
 
+variable (k m) in
 def midColDrop : Levi k (fun j : Fin 3 => Fin (blk3 m j)) →* Levi k (fun j : Fin 3 => Fin (blk3 m j)) where
   toFun x := Function.update x 1 1
   map_one' := by simp
@@ -109,6 +110,7 @@ def midColRes (F : smoothPart (ind (relParab k g) (midColSrc g ρ))) :
       exact (congrArg F.1.1 (map_mul (midIncl k m) x h)).trans (congrFun (congrArg Subtype.val hh) _)⟩
 
 
+variable {g ρ} in
 def midColExt (hZ : {z : Levi k (fun j : Fin 3 => Fin (blk3 m j)) |
       ∀ w : X, midColSrc g ρ ⟨midColDrop k m z, midColDrop_mem g z⟩ w = w} ∈ nhds 1)
     (φ : IndSp (g 1) (ρ.comp (MonoidHom.mulSingle (fun j => Levi k (c j)) 1))) :
@@ -154,6 +156,7 @@ def midColExt (hZ : {z : Levi k (fun j : Fin 3 => Fin (blk3 m j)) |
       rw [e1, e2, map_mul, Module.End.mul_apply, h2]⟩
 
 
+variable {g ρ} in
 theorem nonempty_midCol_equiv (hZ : {z : Levi k (fun j : Fin 3 => Fin (blk3 m j)) |
       ∀ w : X, midColSrc g ρ ⟨midColDrop k m z, midColDrop_mem g z⟩ w = w} ∈ nhds 1) :
     Nonempty (Representation.Equiv ((relInd g ρ).comp (midIncl k m))

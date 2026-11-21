@@ -32,6 +32,7 @@ structure Irr (n : ℕ) : Type 1 where
 attribute [instance] Irr.acg Irr.mod
 
 
+variable {k} in
 def Irr.ofDet (n : ℕ) (χ : kˣ →* ℂˣ) (h : IsSmoothChar χ) : Irr k n where
   V := ℂ
   π := detRep (Fin n) χ
@@ -42,9 +43,11 @@ def Irr.ofDet (n : ℕ) (χ : kˣ →* ℂˣ) (h : IsSmoothChar χ) : Irr k n wh
 instance (n : ℕ) : Inhabited (Irr k n) := ⟨Irr.ofDet n 1 (isSmoothChar_of_isUnram fun _ _ => rfl)⟩
 
 
+variable {k} in
 @[reducible] def Irr.toIrrRep {n : ℕ} (π : Irr k n) : IrrRep (GL (Fin n) k) := ⟨π.V, π.π, π.smooth, π.irr⟩
 
 
+variable {k} in
 @[reducible] def Irr.ofIrrRep {n : ℕ} (σ : IrrRep (GL (Fin n) k)) : Irr k n := ⟨σ.V, σ.ρ, σ.smooth, σ.irr⟩
 
 

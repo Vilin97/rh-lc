@@ -79,6 +79,7 @@ theorem inl_symm_eq_zero {F : Type} [Field F] [NumberField F] (g : mixedEmbeddin
 end AdaptedJ
 
 
+open AdaptedJ in
 theorem exists_plane_pair : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (n d d₁ r s r' s' i₀ i₁ : ℕ) (X : Spc F E n) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (M₁ : Model σ X W₁)
     (hd : d = d₁ + 2), B.IsGood σ → X.IsHerm σ B r s → W.IsSkew σ B r' s' → H'.IsAdapted σ B W W₁ i₀ i₁ →

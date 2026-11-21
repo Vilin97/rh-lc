@@ -65,6 +65,7 @@ theorem exists_infinite_equiv :
 end Inf
 
 
+open GlobalTheory.LFun in
 theorem exists_tensor_adele_equiv :
     ∃ (Φ : AF F ⊗[F] E ≃+* AdeleRing (𝓞 E) E) (j : Ainf F ⊗[F] E ≃+* InfiniteAdeleRing E),
       Continuous Φ ∧ Continuous Φ.symm ∧ (∀ x : E, j ((1 : Ainf F) ⊗ₜ[F] x) = algebraMap E (InfiniteAdeleRing E) x) ∧
@@ -76,6 +77,7 @@ theorem exists_tensor_adele_equiv :
     fun z => Prod.ext (congrArg j (hs z).1) (congrArg (finAdEquiv F E) (hs z).2)⟩
 
 
+open GlobalTheory.LFun in
 theorem exists_hchar (χ : (AF F ⊗[F] E)ˣ →* Circle) (hχ : IsHecke F E χ) :
     ∃ (H : Formalism.L2.Host.HChar E) (u : Neutral.B1.Ideles E →* (AF F ⊗[F] E)ˣ),
       (∀ y, H.1 y = Circle.toUnits (χ (u y))) ∧ Function.Surjective u ∧

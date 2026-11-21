@@ -10,6 +10,7 @@ open NumberField IsDedekindDomain Neutral.B1 ReciprocityTheory.Neutral.Bridge.HC
 namespace GlobalTheory
 
 
+open NumberField IsDedekindDomain in
 theorem _root_.GlobalTheory.exists_continuous_extension_adicCompletion (E : Type) [Field E] [NumberField E] (l : ℕ)
     [Fact l.Prime] (τ : E →+* _root_.Formalism.ConjugateSelfDual.Qbar l) (v : HeightOneSpectrum (𝓞 E))
     (h : ∀ x : E, v.valuation E x < 1 ↔ ‖τ x‖ < 1) :

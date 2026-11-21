@@ -81,6 +81,7 @@ end GlobalTheory.CompanionTheory.ConeInt
 namespace GlobalTheory.CompanionTheory.ConeInt
 
 
+open GlobalTheory.SiegelSet in
 theorem lintegral_cone_lt_top : ∀ (F : Type) [Field F] [NumberField F] (n r : ℕ) (c : ℝ), 0 < c → ∃ m₀ : ℕ, ∀ m : ℕ, m₀ ≤ m →
     ∫⁻ t in cone r c, ENNReal.ofReal (∏ i, (t i)⁻¹ ^ m) * ENNReal.ofReal ((modulus F n t * ∏ i, t i)⁻¹) < ⊤ := by
   intro F _ _ n r c hc

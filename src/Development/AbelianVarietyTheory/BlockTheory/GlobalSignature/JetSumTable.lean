@@ -26,6 +26,7 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {a b : ℕ}
 def adj (x : HomE E a b) : HomE E b a := Matrix.toLin' (LinearMap.toMatrix' x).conjTranspose
 
 
+omit [NumberField E] in
 theorem adj_single (x : HomE E a b) (α : Fin a) (β : Fin b) :
     adj x (Pi.single β 1) α = star (x (Pi.single α 1) β) := by
   rw [adj, Matrix.toLin'_apply, Matrix.mulVec_single_one]

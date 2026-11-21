@@ -79,6 +79,7 @@ section Mat
 variable {R : Type} [CommRing R]
 
 
+variable (R) in
 def hAB : Submodule R (M4 R) where
   carrier := {Y | ∀ i j, ¬ lamW i < lamW j → Y i j = 0}
   zero_mem' _ _ _ := rfl
@@ -86,6 +87,7 @@ def hAB : Submodule R (M4 R) where
   smul_mem' c a ha i j h := by simp [ha i j h]
 
 
+variable (R) in
 def uM : Submodule R (M4 R) := hAB R ⊓ sp4 R
 
 def IsSUp (X : M4 R) : Prop := ∀ i j, j ≤ i → X i j = 0

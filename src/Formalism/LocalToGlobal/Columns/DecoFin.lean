@@ -22,6 +22,7 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
   {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
 
+variable (E) in
 def PosStar : Prop := ∀ a : E, a ≠ 0 → 0 < Algebra.trace ℚ E (star a * a)
 
 theorem posStar_of_conj (h : ∀ (τ : E →+* ℂ) (a : E), τ (star a) = starRingEnd ℂ (τ a)) :
@@ -275,6 +276,7 @@ section Glue
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
 
 
+variable (E) in
 def cO : 𝓞 E →+* 𝓞 E := RingOfIntegers.mapRingHom (starRingEnd E)
 
 theorem algebraMap_cO (r : 𝓞 E) : algebraMap (𝓞 E) E (cO E r) = star (algebraMap (𝓞 E) E r) := rfl

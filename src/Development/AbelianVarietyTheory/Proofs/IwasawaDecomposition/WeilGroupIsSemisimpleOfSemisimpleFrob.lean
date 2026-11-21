@@ -100,6 +100,7 @@ private theorem isSemisimple_of_isUnit_of_pow_isSemisimple {V : Type*} [AddCommG
   exact minpoly.aeval ℂ (f ^ m)
 
 
+open NumberField IsDedekindDomain Polynomial Module in
 theorem _root_.GlobalTheory.WeilDeligne.isSemisimple_of_isSemisimple_frob :
     ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
       (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : _root_.Formalism.ConjugateSelfDual.IsPlaceOver A w) (V : Type)

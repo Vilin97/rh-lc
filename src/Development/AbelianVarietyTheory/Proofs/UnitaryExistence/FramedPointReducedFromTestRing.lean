@@ -228,6 +228,7 @@ theorem x_of_descended {R A S₀ T₁ T : Type} [CommRing R] [CommRing A] [CommR
       ← hψ₁, Category.assoc]
 
 
+set_option maxHeartbeats 800000 in
 theorem exists_fg_descent (hB : Out.SecBaseChangeSt) {S : Type} [CommRing S] [Algebra c.F S]
     (y : FrPt Xo c S) :
     ∃ S₁ : Subalgebra c.F S, S₁.FG ∧ ∃ y₁ : FrPt Xo c S₁, FrMap S₁.val y₁ y := by

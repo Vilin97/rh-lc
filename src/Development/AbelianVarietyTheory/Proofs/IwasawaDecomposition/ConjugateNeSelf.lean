@@ -48,6 +48,7 @@ theorem isUPt_ratPt (γ₀ : GL (Fin n) L) (h : γ₀ ∈ GQ0 L n) : IsUPt (ratP
   simpa [ratPt, conjT, Matrix.map_mul, Matrix.transpose_map] using this
 
 open scoped Classical in
+open Classical in
 def tauPt (τ : L →+* ℂ) (B : GL (Fin n) ℂ) : (L →+* ℂ) → Matrix (Fin n) (Fin n) ℂ := fun σ =>
   if σ = τ then B.val else if σ = ComplexEmbedding.conjugate τ then (B⁻¹).valᵀ else 1
 

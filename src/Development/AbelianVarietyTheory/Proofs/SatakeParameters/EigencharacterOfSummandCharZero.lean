@@ -124,6 +124,7 @@ theorem eigen_transfer {n m : ℕ} (ρ : Γ →* GL (Fin n) K) (σ : Γ →* GL 
 end GlobalTheory.EigTwist
 
 
+open GlobalTheory.EigTwist in
 theorem GlobalTheory.eigenCharTwist_holds : EigenCharTwist := by
   intro K _ _ Γ _ n ρ L χ hρ hL hc hv
   obtain ⟨v, hv0, hv⟩ := hv

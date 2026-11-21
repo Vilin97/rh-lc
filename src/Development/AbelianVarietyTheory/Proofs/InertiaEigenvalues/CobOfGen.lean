@@ -16,6 +16,7 @@ noncomputable section
 namespace GlobalTheory.LocalH2Injective
 
 
+open GlobalTheory.TateTop in
 theorem cob_of_gen {l : ℕ} [Fact l.Prime] {Γ : Type} [Group Γ] [TopologicalSpace Γ]
     [ContinuousMul Γ] [CompactSpace Γ] {χ : Γ →* ℤ_[l]ˣ} (hχ : Continuous fun g => (χ g : ℤ_[l]))
     (hG : ∀ r, ∃ c, GlobalTheory.TateTop.Gen χ (r + 1) c)

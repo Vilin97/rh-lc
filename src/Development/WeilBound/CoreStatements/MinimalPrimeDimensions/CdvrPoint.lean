@@ -81,6 +81,7 @@ theorem point_of_val {K Ω : Type} [Field K] [NumberField K] [Field Ω] [Algebra
     exact Ideal.Quotient.eq_zero_iff_mem.1 ((map_eq_zero_iff φ hφi).1 this)
 
 
+set_option maxHeartbeats 1000000 in
 theorem cdvr_point {K Ω : Type} [Field K] [NumberField K] [Field Ω] [Algebra K Ω]
     {Γ : Type} [LinearOrderedCommGroupWithZero Γ]
     (la : HeightOneSpectrum (𝓞 K)) (ν : Valuation Ω Γ)
@@ -297,6 +298,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
 
 
+set_option maxHeartbeats 2000000 in
 theorem fin_small_gen {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (Z : Comp Xo c) (G : WTZ E)
     (hFG : (latOn U Z G).FG) (hsp : Submodule.span c.F (latOn U Z G : Set (cuspOn U Z G)) = ⊤)
     (hB : GlobalTheory.DegVal.BirOn U Z G) {Γ : Type} [LinearOrderedCommGroupWithZero Γ]

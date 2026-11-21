@@ -136,6 +136,7 @@ end Local
 variable {E : Type} [Field E] [NumberField E] {w : HeightOneSpectrum (𝓞 E)} {n : ℕ}
 
 
+variable (w n) in
 theorem integralGL_eq : integralGL (w.adicCompletion E) n = GLint (Fin n) (Ov E w) := by
   have hO : Ov E w = (ValuativeRel.valuation (w.adicCompletion E)).integer :=
     Subring.ext fun x => (GroundTheory.Global.mem_valuationInteger_iff w x).symm
@@ -143,10 +144,12 @@ theorem integralGL_eq : integralGL (w.adicCompletion E) n = GLint (Fin n) (Ov E 
   rfl
 
 
+variable (w) in
 theorem isUnifV_uniformizer : IsUnifV E w (GLnLocal.uniformizer (w.adicCompletion E) : w.adicCompletion E) :=
   GroundTheory.Global.valued_of_irreducible_integer w (GLnLocal.irreducible_uniformizer _)
 
 
+variable (w) in
 theorem Tj_eq_indicator {r : ℕ} (hr : r ≤ n) :
     Tj ℂ n (Ov E w) (GLnLocal.uniformizer (w.adicCompletion E) : w.adicCompletion E) r =
       (minusculeSet (w.adicCompletion E) n r).indicator fun _ => (1 : ℂ) := by

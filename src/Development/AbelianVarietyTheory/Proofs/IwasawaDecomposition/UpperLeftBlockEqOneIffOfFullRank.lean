@@ -294,6 +294,7 @@ theorem redK_entry (R : RealDat D A Ks) (X : HidaSetting D) (h : X.B.I = Formali
   exact congrFun (congrFun (GlobalTheory.RedFrame.upperLeftBlock_eq_submatrix_of_rank_eq (R.dat0 R.triv).hr hrank _) i) j
 
 
+open Formalism.L2.SG.Pf.RowDictPf in
 theorem fixRed_redK (R : RealDat D A Ks) (X : HidaSetting D) (h : X.B.I = Formalism.L2.SG.InstExistsPf.instOf D)
     (hιE : ∀ x : X.B.I.E, HEq (X.ιE x) x)
     (eR : G' ≃* G0g D.nd) (plg : (Σ k : Fin 2, D.nd.PlG k) ≃ R.Pg)

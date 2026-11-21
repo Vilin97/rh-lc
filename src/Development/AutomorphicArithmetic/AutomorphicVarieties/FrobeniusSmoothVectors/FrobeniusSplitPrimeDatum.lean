@@ -17,6 +17,7 @@ variable {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] (l : ℕ) [F
   [CharP (ResidueField O) l]
 
 
+variable (Ω O) in
 abbrev omO : G ℚ Ω →* (ResidueField O)ˣ := GC.cycF ℚ Ω l (ResidueField O)
 
 structure Gen (η : G ℚ Ω →* ℤˣ) (Ψ : G ℚ Ω →* Oˣ) (σ : G ℚ Ω) (B : ValuationSubring Ω) (M : ℕ) (Hb : Subgroup (G ℚ Ω)) : Prop where
@@ -41,6 +42,7 @@ structure Gen (η : G ℚ Ω →* ℤˣ) (Ψ : G ℚ Ω →* Oˣ) (σ : G ℚ Ω
   teich : ∀ B' : ValuationSubring Ω, ¬ B'.valuation (l : Ω) < 1 → ∀ s ∈ Ine (F := ℚ) B' ⊓ Hb, barChar O Ψ s = 1 → Ψ s = 1
 
 
+variable (Ω) in
 def Hth (w : ℕ) : Subgroup (G ℚ Ω) where
   carrier := {s | ∃ a : ℕ, ∀ ζ : Ω, ζ ^ w = 1 → s ζ = ζ ^ a ^ l} ∩ {s | ∃ a : ℕ, ∀ ζ : Ω, ζ ^ w = 1 → s⁻¹ ζ = ζ ^ a ^ l}
   one_mem' := ⟨⟨1, by simp⟩, ⟨1, by simp⟩⟩
@@ -54,6 +56,7 @@ def Hth (w : ℕ) : Subgroup (G ℚ Ω) where
     exact ⟨h2, by show ∃ a : ℕ, ∀ ζ : Ω, ζ ^ w = 1 → s⁻¹⁻¹ ζ = ζ ^ a ^ l; rw [inv_inv]; exact h1⟩
 
 
+variable (Ω) in
 def Hlay (m : ℕ) : Subgroup (G ℚ Ω) := (cycMod ℚ Ω l (m + 1) ^ (l - 1)).ker
 
 structure FrobeniusSplitPrimeDatum (η : G ℚ Ω →* ℤˣ) (M : ℕ) (H₀ : Subgroup (G ℚ Ω)) : Prop where

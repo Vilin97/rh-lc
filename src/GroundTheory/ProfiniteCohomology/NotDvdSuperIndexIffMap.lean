@@ -59,6 +59,7 @@ variable [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G]
 variable {p : ℕ} [hp : Fact p.Prime]
 
 
+omit [TotallyDisconnectedSpace G] in
 theorem not_dvd_superIndex_iff_map (H : Subgroup G) :
     ¬ Supernatural.ofNat p ∣ superIndex H ↔
       ∀ U : OpenNormalSubgroup G, ¬ p ∣ (H.map (QuotientGroup.mk' (U : Subgroup G))).index := by
@@ -74,6 +75,7 @@ theorem isProSylow_iff {P : Subgroup G} (hP : IsClosed (P : Set G)) :
   exact ⟨fun h => h.2, fun h => ⟨hP, h⟩⟩
 
 
+omit [CompactSpace G] [TotallyDisconnectedSpace G] in
 noncomputable def sylowSystem (p : ℕ) [Fact p.Prime] (H : Subgroup G) :
     OpenNormalSubgroup G ⥤ Type _ where
   obj U := {S : Sylow p (G ⧸ (U : Subgroup G)) //

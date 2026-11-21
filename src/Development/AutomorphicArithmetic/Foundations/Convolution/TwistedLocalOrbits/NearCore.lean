@@ -147,6 +147,7 @@ end Loc
 end UpperTheory.ConvolutionTheory.Loc.NearIdentityCentralizer
 
 
+open UpperTheory.ConvolutionTheory.Loc.NearIdentityCentralizer UpperTheory.ConvolutionTheory.Loc.BallG UpperTheory.V.Z.Tf.Orb in
 theorem UpperTheory.ConvolutionTheory.Loc.nearCore :
     ∀ (k E : Type) [Field k] [CharZero k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
         [Field E] [ValuativeRel E] [TopologicalSpace E] [IsNonarchimedeanLocalField E]

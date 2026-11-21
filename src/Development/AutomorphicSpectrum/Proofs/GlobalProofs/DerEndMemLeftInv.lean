@@ -37,6 +37,7 @@ variable {D : D7} [IsTotallyComplex D.host.E] {θ : D.what₂.Tau → (Ainf D.ho
   {V : HSp D} {m : ℕ} {X Y : Matrix (Fin V.rank) (Fin m) D.host.E}
 
 
+open GlobalTheory.CuspRep GlobalTheory.Mem.RealTranslate in
 theorem resX (hW : IsWittFrame D.sp.cm.sig V.gram X Y) {l d : ℕ} (h : l + d ≤ m)
     {ι : GlobalTheory.CuspRep.GA D.host.E d →* GA D V} (hι : GlobalTheory.BlockForms.IsBlockEmb D.sp.cm.sig V.gram X Y h ι)
     {C : GL (Fin V.rank) D.host.E} (hC : GlobalTheory.BlockForms.IsAdapted D.sp.cm.sig V.gram X Y C) (τ : D.what₂.Tau)
@@ -66,6 +67,7 @@ theorem resX (hW : IsWittFrame D.sp.cm.sig V.gram X Y) {l d : ℕ} (h : l + d �
   linear_combination ((derEnd hθ τ Ex F).1 (ι x) + (derEnd hθ τ Ey F).1 (ι x)) * (-1 / 2 : ℂ) * Complex.I_mul_I
 
 
+open GlobalTheory.CuspRep GlobalTheory.Mem.RealTranslate in
 theorem resY (hW : IsWittFrame D.sp.cm.sig V.gram X Y) {l d : ℕ} (h : l + d ≤ m)
     {ι : GlobalTheory.CuspRep.GA D.host.E d →* GA D V} (hι : GlobalTheory.BlockForms.IsBlockEmb D.sp.cm.sig V.gram X Y h ι)
     {C : GL (Fin V.rank) D.host.E} (hC : GlobalTheory.BlockForms.IsAdapted D.sp.cm.sig V.gram X Y C) (τ : D.what₂.Tau)
@@ -306,6 +308,7 @@ theorem derEnd_mem_leftInv (hθ : IsInfFam θ) (U : Subgroup (GA D V)) (τ : D.w
   simp only [RderC, Rder, Pi.add_apply, Pi.smul_apply, mul_assoc, hF u hu]
 
 
+open GlobalTheory.CuspRep in
 theorem core [IsTotallyComplex D.host.E] (hθ : IsInfFam θ) {m : ℕ} {X : Matrix (Fin V.rank) (Fin m) D.host.E} (T : Finset (Fin m))
     {l d : ℕ} (ι : GlobalTheory.CuspRep.GA D.host.E d →* GA D V) (hN : 2 * (l + d) ≤ V.rank)
     (hsm : ∀ F : GlobalTheory.Mem.AutSpace.SmFun θ V, (fun x => F.1 (ι x)) ∈ Sm D.host.E d)
@@ -417,6 +420,7 @@ theorem span_conj_rev (P Q : Matrix (Fin n) (Fin n) ℂ) (hPQ : P * Q = 1) (hQP 
 end Units
 
 
+open GlobalTheory.CuspRep in
 theorem monic_block : ∀ (D : D7) [IsTotallyComplex D.host.E] (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)), IsInfFam θ →
     ∀ (V : HSp D) (c : D.what₂.Tau → ℕ → ℂ) (m : ℕ) (X Y : Matrix (Fin V.rank) (Fin m) D.host.E),
     IsWittFrame D.sp.cm.sig V.gram X Y → ∀ (T : Finset (Fin m)) (l d : ℕ) (h : l + d ≤ m)

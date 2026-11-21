@@ -22,6 +22,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo
 noncomputable section
 
 
+open FlagBundleSectionDivProof GenericProjClosureDivisor in
 theorem SegreFlagCutDivisor.proof (hSpec : SegreFlagCutSpecialize.Statement)
     (hChart : SegreFlagCutChart.Statement) : SegreFlagCutDivisor.Statement := by
   have hModel : SegreFlagClosureModel.Statement :=

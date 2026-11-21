@@ -54,6 +54,7 @@ theorem mem_maximalIdeal_smul_of_secMap_eq_zero {R : Type*} [CommRing R] [IsLoca
 end SecRankSpecialize
 
 
+open SecRankSpecialize in
 theorem SecRankSpecialize.proof : SecRankSpecialize.Statement := by
   intro R K κ _ _ _ _ _ _ _ _ n e Q y hsurj hfin
   classical

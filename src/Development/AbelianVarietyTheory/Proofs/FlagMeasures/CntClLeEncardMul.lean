@@ -35,6 +35,7 @@ theorem lead_eq {E : Type} [Field E] {n : ℕ} {Z Z₂ : Matrix (Fin n) (Fin n) 
   · rfl
 
 
+open GlobalTheory.Mass GlobalTheory.LoopC.DetCard Formalism.HermitianLatticesTheory in
 theorem det_index {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
     [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (h : V →ₗ⋆[K] V →ₗ[K] K)
     (hK : IsCMUnram K) (hs : h.IsSymm) (M P : Submodule (𝓞 K) V) (hM : M.FG) (hI : IsIntegralLat h M) (hP : P ≤ M)

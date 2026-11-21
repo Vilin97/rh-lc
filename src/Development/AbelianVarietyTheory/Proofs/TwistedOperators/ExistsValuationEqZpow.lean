@@ -20,6 +20,8 @@ end Plain
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+open MeasureTheory ValuativeRel Matrix in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem _root_.GlobalTheory.StepData.NormalForm.exists_valuation_eq_zpow {ϖ : kˣ} (hϖ : valuation k (ϖ : k) = uniformizer k)
     (d : kˣ) : ∃ e : ℤ, valuation k (d : k) = valuation k (ϖ : k) ^ e := by
   set φ := IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt k
@@ -68,6 +70,8 @@ private lemma latOf_mul_of_mem_KO' {K : Type} [Field K] [ValuativeRel K]
     simpa [mul_assoc] using hw.2
 
 
+open MeasureTheory ValuativeRel Matrix in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem _root_.GlobalTheory.StepData.NormalForm.normalFormModN : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k], _root_.GlobalTheory.IndefiniteRowSideFullHecke.NormalRepresentationLattice.NormalFormModN k := by
   intro k _ _ _ _ ϖ hϖ n _ _ c h

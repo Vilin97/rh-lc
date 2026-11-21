@@ -24,6 +24,7 @@ def chartSection {m : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → 
     (map (Int.castRingHom ℂ) s)
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem eval_chartSection {m : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k) (s : MRing ι)
     (x : Fin m → ℂ) :
     eval x (chartSection σ i s) = eval (chartLift σ i x) (map (Int.castRingHom ℂ) s) := by

@@ -61,6 +61,7 @@ theorem exists_locGen (v : Pl F) : ∃ δ : E, δ ≠ 0 ∧ InD δ ∧ ∀ z, In
   simp [Matrix.mulVec, dotProduct]
 
 
+omit [NumberField F] in
 theorem gram_loc {J : Matrix (Fin n) (Fin n) E} (hJ : J.det ≠ 0) {L : Submodule (𝓞 E) (Fin n → E)} (hL : L.FG)
     {I : E → Prop} (hI : ∀ z, I z → ∀ b : 𝓞 E, I (z * b)) (hd : ∀ y, y ∈ L ↔ ∀ x ∈ L, I (form σ J y x))
     {δ : E} (hδ : I δ) (hmax : ∀ z, I z → LocInt v (δ⁻¹ * z))

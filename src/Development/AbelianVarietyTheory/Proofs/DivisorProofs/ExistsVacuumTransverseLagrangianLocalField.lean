@@ -151,6 +151,7 @@ theorem schr_mem_SB (hψ : ∀ y ∈ 𝒪[k], ψ y = 1) (w : (κ → k) × (κ �
       (hφ.2.comp_homeomorph (Homeomorph.addRight w.1))⟩
 
 
+omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem schr_ind (hψ : ∀ y ∈ 𝒪[k], ψ y = 1) (w : (κ → k) × (κ → k)) (h1 : ∀ i, w.1 i ∈ 𝒪[k])
     (h2 : ∀ i, ⅟(2 : k) * w.2 i ∈ 𝒪[k]) :
     schr ψ w (Set.indicator {y : κ → k | ∀ r, y r ∈ 𝒪[k]} (fun _ => (1 : ℂ))) =
@@ -190,6 +191,8 @@ theorem exists_fix_ind (hψ : ∀ y ∈ 𝒪[k], ψ y = 1) {Y Y' : Type} [Fintyp
     simpa [l, mul_left_comm] using this
 
 
+open GlobalTheory.IrredSB in
+omit [Invertible (2 : k)] in
 theorem finite_quot [CharZero k] (Y Y' : Type) [Fintype Y] [Fintype Y'] {N : ℕ} (hN : 0 < N) :
     Finite ((intMat k Y Y' × intMat k Y Y') ⧸
       (nsmulAddMonoidHom N : intMat k Y Y' × intMat k Y Y' →+ intMat k Y Y' × intMat k Y Y').range) := by
@@ -213,6 +216,7 @@ theorem finite_quot [CharZero k] (Y Y' : Type) [Fintype Y] [Fintype Y'] {N : ℕ
 end GlobalTheory.LagVac
 
 
+open GlobalTheory.WeilM GlobalTheory.VacLoc GlobalTheory.IrredSB in
 theorem GlobalTheory.LagVac.exists_vacuum : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k]
     [Invertible (2 : k)] {κ : Type} [Fintype κ] {n d : ℕ} (ψ0 : AddChar k ℂ), Continuous ψ0 →
     (∀ x : k, (∀ y ∈ 𝒪[k], ψ0 (x * y) = 1) ↔ x ∈ 𝒪[k]) →

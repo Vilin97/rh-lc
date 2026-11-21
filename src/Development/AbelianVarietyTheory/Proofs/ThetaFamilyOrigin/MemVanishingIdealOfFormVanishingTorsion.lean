@@ -18,6 +18,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.TorsionForm
 
 
+open TorsionZero in
 theorem exists_sec_of_form {K : Type} [Field K] {X : Scheme.{0}} [IsIntegral X] (p : X ⟶ Sp K) {L : LB X}
     (hL : L.IsLB) {N d : ℕ} {J : Type} (s : J → (lbPow L N).Sec) {F : MvPolynomial J K}
     (hF : F.IsHomogeneous d) :

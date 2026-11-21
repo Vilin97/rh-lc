@@ -163,6 +163,7 @@ end Abstract
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+open GroundTheory.Automorphic.Parabolic (isotypicPart isotypicKernel) in
 private theorem exists_irr_quot {G V W : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [AddCommGroup V]
     [Module ℂ V] [AddCommGroup W] [Module ℂ W] {b : ℕ} (ψ : GL (Fin b) k →* G) (hψ : Continuous ψ)
     (hdec : ∀ g, ∃ (h : GL (Fin b) k) (g' : G), g = ψ h * g' ∧ ∀ x, ψ x * g' = g' * ψ x)

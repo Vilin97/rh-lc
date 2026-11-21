@@ -27,6 +27,7 @@ namespace GlobalTheory.CompanionTheory.Clozel
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+variable (E a) in
 def scalarCurve (s : ℝ) : GL (Fin a) (Cinf E) :=
   Units.map (Matrix.scalar (Fin a)).toMonoidHom (expU fun _ : InfinitePlace E => (s : ℂ))
 

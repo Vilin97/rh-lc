@@ -119,6 +119,7 @@ theorem Good.kernel {G : GA E a → ℂ} (hG : Good G) {X : Type} [MeasurableSpa
   exact ⟨kSpan_le_Sm hm, fun l => kSpan_decays_growth _ (word_mem_kSpan l _ hm)⟩
 
 
+variable (E a) in
 def goodSub : Submodule ℂ (GA E a → ℂ) where
   carrier := {F | Good F}
   add_mem' := Good.add

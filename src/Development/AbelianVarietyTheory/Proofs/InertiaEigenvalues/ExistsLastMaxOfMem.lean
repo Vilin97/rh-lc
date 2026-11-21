@@ -130,6 +130,7 @@ end GlobalTheory.BK.HatInj
 namespace GlobalTheory.BK
 
 
+open HatInj in
 theorem toHat_injective (O K : Type) [CommRing O] [NormedField K] [IsUltrametricDist K]
     [Algebra O K] [IsUnitBall O K] (l e : ℕ) [Fact l.Prime] [NormedAlgebra ℚ_[l] K] [NeZero e]
     [CompleteSpace K] : Function.Injective (toHat O K l e) := by

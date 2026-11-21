@@ -174,6 +174,7 @@ end Final
 end StackedGraphBihomogeneous
 
 
+open StackedGraphBihomogeneous in
 theorem DualStackedGraphBihomog.proof : DualStackedGraphBihomog.Statement := by
   intro K _ _ i F F' T _ _ b b' a hb f hf
   exact ⟨f.support.image bideg, bipart f, sum_bipart f,

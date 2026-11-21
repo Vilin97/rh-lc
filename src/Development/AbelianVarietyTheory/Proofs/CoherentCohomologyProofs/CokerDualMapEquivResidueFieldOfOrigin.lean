@@ -77,6 +77,7 @@ variable {R' : Type} [CommRing R'] [Algebra R R'] {Y' : Scheme.{0}} {π : Y' ⟶
   {f' : Y' ⟶ Spec (CommRingCat.of R')}
 
 
+omit [Fintype κ] in
 theorem cech_d (f : Y ⟶ Spec (CommRingCat.of R)) (M : LB Y) (D : κ → Y.Opens) (p : ℕ) :
     ((cechLB f M D).d p (p + 1)).hom = Cube.d (secCube f M D) (p + 1) :=
   congrArg ModuleCat.Hom.hom (cechLB_d f M D p)
@@ -139,6 +140,7 @@ theorem exact_of_h1Zero (hM : M.IsLB) (hc : ⨆ i, D i = ⊤)
   · exact (d_secTermBaseChange M D H.w 1 x).trans (congrArg _ hx)
 
 
+omit [Fintype κ] in
 theorem coord_secTermBaseChange (w : π ≫ f = f' ≫ Spec.map (CommRingCat.ofHom (algebraMap R R')))
     {a : ℕ} (v : Fin a → R') (x : Fin a → C.X 0) (p : κ × M.ι)
     (h : π ⁻¹ᵁ ((⨅ l ∈ ({p.1} : Finset κ), D l) ⊓ M.U p.2) ≤

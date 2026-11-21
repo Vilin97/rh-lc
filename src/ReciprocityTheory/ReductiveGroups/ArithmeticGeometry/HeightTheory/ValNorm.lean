@@ -17,6 +17,7 @@ variable {O F L : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [F
   [IsDedekindDomain (integralClosure O L)] [IsFractionRing (integralClosure O L) L]
 
 
+variable (O F L) in
 noncomputable def hoEquiv : HeightOneSpectrum (integralClosure O L) ≃
     {Q : Ideal (integralClosure O L) // Q.IsMaximal} where
   toFun v := ⟨v.asIdeal, v.isMaximal⟩
@@ -27,6 +28,7 @@ noncomputable def hoEquiv : HeightOneSpectrum (integralClosure O L) ≃
   right_inv Q := Subtype.ext (exists_heightOne O F L Q.1 Q.2).choose_spec
 
 
+include F in
 theorem norm_integral (b : integralClosure O L) (hb : b ≠ 0) {ϖ : O} (hϖ : Irreducible ϖ) :
     ∃ u : O, IsUnit u ∧
       Algebra.norm F (algebraMap (integralClosure O L) L b) = algebraMap O F
@@ -185,6 +187,8 @@ theorem norm_eq_places (y : L) (hy : y ≠ 0) {ϖ : O} (hϖ : Irreducible ϖ) :
   exact congrArg (fun n : ℕ => (n : ℤ)) (ValPl.resDeg_addv (F := F) v).symm
 
 
+variable (O L) in
+include F in
 theorem placesOver_finite : (PlacesOver O L).Finite := by
   obtain ⟨e, he⟩ := placesOver_bij (O := O) (F := F) (L := L)
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible O

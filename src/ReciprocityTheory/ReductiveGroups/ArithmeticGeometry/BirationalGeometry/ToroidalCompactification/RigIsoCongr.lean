@@ -87,6 +87,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 variable {D : Datum H} {l : Level H} {Xo : Moduli D l} {c : Coeff l} {O : Type} [CommRing O] {β : O →+* c.F}
 
 
+set_option maxHeartbeats 1600000 in
 theorem ArcWit.baseChange (hC : Out.CubePullSt) (hP : Out.PolBaseChangeSt) (hU : Out.UnifBaseChangeSt) (h5 : Out.Laws5)
     (hQ : QkPullExistsSt) (hO : PolOActPullSt) {Y : Model Xo c β} {O' : Type} [CommRing O'] [IsDomain O']
     {b : O →+* O'} {a : ArcIn D l β O' b} {R R' : Type} [CommRing R] [IsDomain R] [CommRing R'] [IsDomain R']

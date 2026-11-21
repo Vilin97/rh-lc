@@ -44,6 +44,7 @@ variable {R ι : Type*} [CommRing R] [Fintype ι] [DecidableEq ι] {A : ι → T
   [∀ i, Module.Finite R (A i)]
 
 
+omit [∀ i, Module.Free R (A i)] [∀ i, Module.Finite R (A i)] in
 theorem leftMulMatrix_pi {κ : ι → Type*} [∀ i, Fintype (κ i)] [∀ i, DecidableEq (κ i)]
     (b : ∀ i, Module.Basis (κ i) R (A i)) (x : ∀ i, A i) :
     Algebra.leftMulMatrix (Pi.basis b) x =
@@ -98,6 +99,7 @@ theorem tensorPiHom_tmul (x : v.Completion) (l : L) (w : v.placesOver L) :
   simp [tensorPiHom, AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply]
 
 
+variable {v} in
 theorem finrank_completion_pos (w : InfinitePlace L) [w.LiesOver v] :
     0 < Module.finrank v.Completion w.Completion := by
   rcases w.isUnramified_or_isRamified K with h | h
@@ -115,6 +117,7 @@ instance instFintypePlacesOver [NumberField L] : Fintype (v.placesOver L) :=
 variable [NumberField K] [NumberField L]
 
 
+open scoped Classical in
 theorem sum_finrank_completion :
     ∑ w : v.placesOver L, Module.finrank v.Completion (w : InfinitePlace L).Completion =
       Module.finrank K L := by
@@ -134,6 +137,7 @@ theorem finrank_tensor :
   Module.finrank_baseChange
 
 
+omit [NumberField K] in
 theorem denseRange_algebraMap_piPlacesOver :
     DenseRange (algebraMap L (PiPlacesOver (L := L) v)) := by
   classical

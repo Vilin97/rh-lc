@@ -24,6 +24,7 @@ variable {M' : Type w} [AddCommGroup M'] [Module (Poly S N) M'] [Module S M']
   [IsScalarTower S (Poly S N) M']
 
 
+omit [IsScalarTower S (Poly S N) M] in
 theorem smul_mem_of_mem_polyGraded (𝓜 : GradedPMod S N M) {a c : ℤ} {p : Poly S N} {m : M}
     (hp : p ∈ (polyGraded S N).piece a) (hm : m ∈ 𝓜.piece c) : p • m ∈ 𝓜.piece (c + a) := by
   change p ∈ weightedHomogeneousSubmodule S (fun _ => (1 : ℤ)) a at hp
@@ -77,6 +78,7 @@ def cohomMapShift {𝓜 : GradedPMod S N M} {𝓜' : GradedPMod S N M'} (f : M �
 variable (𝓜 : GradedPMod S N M) {r : ℕ} (b : Module.Basis (Fin r) (Poly S N) M) (d : Fin r → ℤ)
 
 
+omit [IsScalarTower S (Poly S N) M] in
 theorem coord_mem_piece (hb : ∀ j, b j ∈ 𝓜.piece (d j)) {a : ℤ} {m : M} (hm : m ∈ 𝓜.piece a)
     (j : Fin r) : b.coord j m ∈ (polyGraded S N).piece (a - d j) := by
   classical
@@ -123,6 +125,7 @@ theorem cohomMapShift_mk {𝓜 : GradedPMod S N M} {𝓜' : GradedPMod S N M'} (
   ⟨_, rfl, fun _ => rfl⟩
 
 
+omit [Module S M] [IsScalarTower S (Poly S N) M] in
 theorem sum_locMap_basis (I : Finset (Fin (N + 1))) (y : LocMod S N M I) :
     ∑ j, locMap (LinearMap.toSpanSingleton (Poly S N) M (b j)) I (locMap (b.coord j) I y) = y := by
   have h1 : ∀ j, locMap (LinearMap.toSpanSingleton (Poly S N) M (b j)) I (locMap (b.coord j) I y) =
@@ -194,6 +197,7 @@ theorem sum_freeIncl_freeCoord (i : ℕ) (c : ℤ) (x : cohom 𝓜 i c) :
     exact (map_sum (Submodule.mkQ _) w Finset.univ).symm.trans (congrArg _ hz)
 
 
+omit [IsScalarTower S (Poly S N) M] in
 theorem smul_basis_mem (c : ℤ) (j : Fin r) (p : (polyGraded S N).piece (c - d j)) :
     (p : Poly S N) • b j ∈ 𝓜.piece c := by
   have h := smul_mem_of_mem_polyGraded 𝓜 p.2 (hb j)

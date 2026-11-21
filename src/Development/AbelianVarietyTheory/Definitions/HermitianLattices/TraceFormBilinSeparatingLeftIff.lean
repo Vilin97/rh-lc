@@ -134,6 +134,7 @@ def skewGram (ξ0 : E) (B : LinearMap.BilinForm ℚ (Fin r → E)) : Matrix (Fin
     (-ξ0)⁻¹ * traceRep (B.flip (Pi.single b 1) ∘ₗ LinearMap.single ℚ (fun _ : Fin r => E) a)
 
 
+omit [IsCMField E] in
 theorem trace_skewGram {ξ0 : E} (h0 : ξ0 ≠ 0) (B : LinearMap.BilinForm ℚ (Fin r → E))
     (a b : Fin r) (t : E) :
     Algebra.trace ℚ E (t * (-ξ0 * skewGram ξ0 B a b)) = B (Pi.single a t) (Pi.single b 1) := by

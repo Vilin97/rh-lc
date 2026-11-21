@@ -99,6 +99,7 @@ def mk (X : Finset ι → ModuleCat.{v} R) (ρ : ∀ {s t : Finset ι}, s ⊆ t 
   map_id s := ModuleCat.hom_ext (LinearMap.ext (ρ_self s))
   map_comp f g := ModuleCat.hom_ext (LinearMap.ext fun x => (ρ_comp (leOfHom f) (leOfHom g) x).symm)
 
+variable (ι R) in
 @[simps]
 def homMk {A B : Cube.{v} ι R} (φ : ∀ s, A.obj s →ₗ[R] B.obj s)
     (hφ : ∀ {s t : Finset ι} (h : s ⊆ t) (x : A.obj s), φ t (res A h x) = res B h (φ s x)) :
@@ -666,6 +667,7 @@ variable {ι : Type} [LinearOrder ι] {R : Type u} [Ring R] {S : Type u'} [Ring 
 
 
 
+omit [LinearOrder ι] in
 theorem Cube.isIso_termComparison_restrictScalars (A : Cube.{v} ι S) (p : ℕ) :
     IsIso (Cube.termComparison (ModuleCat.restrictScalars f) A p) := by
   rw [ConcreteCategory.isIso_iff_bijective]
@@ -820,6 +822,7 @@ theorem homology_directSum_bijective {K : κ → CochainComplex (ModuleCat.{v} R
 variable {ι : Type}
 
 
+omit [DecidableEq κ] in
 noncomputable def Cube.directSum (A : κ → Cube.{v} ι R) : Cube.{v} ι R :=
   Cube.mk (fun s => ModuleCat.of R (⨁ k, (A k).obj s))
     (fun h => DirectSum.lmap fun k => Cube.res (A k) h)
@@ -833,6 +836,7 @@ noncomputable def Cube.directSumIncl (A : κ → Cube.{v} ι R) (k : κ) : A k �
     fun h x => (DirectSum.lmap_lof (fun k => Cube.res (A k) h) k x).symm
 
 
+omit [DecidableEq κ] in
 noncomputable def Cube.directSumProj (A : κ → Cube.{v} ι R) (k : κ) : Cube.directSum A ⟶ A k :=
   Cube.homMk (fun s => DirectSum.component R κ (fun k => (A k).obj s) k) fun _ _ => rfl
 
@@ -873,6 +877,7 @@ noncomputable def cubeHomologyDirectSumEquiv (A : κ → Cube.{v} ι R) (p : ℕ
     (Cube.exists_sum_directSum A p))
 
 
+omit [DecidableEq κ] in
 theorem cubeComplex_directSum_exactAt_iff (A : κ → Cube.{v} ι R) (p : ℕ) :
     (cubeComplex (Cube.directSum A)).ExactAt p ↔ ∀ k, (cubeComplex (A k)).ExactAt p := by
   classical

@@ -23,6 +23,7 @@ section Generic
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ a, Fintype (ι a)] {k : Type} [Field k]
 
 
+omit [Fintype K] [DecidableEq K] [∀ a, Fintype (ι a)] in
 theorem X_mem_mIdealOver_iff {Ω : Type} [Field Ω] [Algebra k Ω] (y : (Σ a, ι a) → Ω) (p : Σ a, ι a) :
     (X p : NumbersDVR.MRing ι k) ∈ mIdealOver k y ↔ y p = 0 := by
   change mConeMapOver k y (X p) = 0 ↔ _
@@ -33,6 +34,7 @@ def genPtOf (W : Ideal (NumbersDVR.MRing ι k)) [W.IsPrime] :
   fun p => algebraMap _ _ (Ideal.Quotient.mk W (X p))
 
 
+omit [Fintype K] [DecidableEq K] [∀ a, Fintype (ι a)] in
 theorem aeval_genPtOf (W : Ideal (NumbersDVR.MRing ι k)) [W.IsPrime] (g : NumbersDVR.MRing ι k) :
     aeval (genPtOf W) g = algebraMap _ (FractionRing (NumbersDVR.MRing ι k ⧸ W)) (Ideal.Quotient.mk W g) := by
   have h : (aeval (genPtOf W) : NumbersDVR.MRing ι k →ₐ[k] FractionRing (NumbersDVR.MRing ι k ⧸ W)) =

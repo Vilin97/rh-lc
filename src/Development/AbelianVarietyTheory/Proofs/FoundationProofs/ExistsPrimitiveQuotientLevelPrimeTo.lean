@@ -405,6 +405,9 @@ private lemma exists_prim_mul_of_mem_bddRing {X : _root_.GlobalTheory.KZ.Tower �
   · rw [← mul_assoc, ← map_mul, mul_inv_cancel₀ hr0, map_one, one_mul]
 
 
+open scoped MatrixGroups TensorProduct in
+open Matrix in
+variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] {ε : Ω →+* ℂ} in
 theorem _root_.GlobalTheory.KZ.ES.Quot.quot_prim : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (ε : Ω →+* ℂ) (X : _root_.GlobalTheory.KZ.Tower Ω ε), (∃ φ : ℂ → ℂ, DifferentiableOn ℂ φ _root_.GlobalTheory.KZ.Hs ∧ X.an X.jK = (φ : _root_.GlobalTheory.KZ.Mero)) → ∀ (l M₀ : ℕ), l.Prime → 0 < M₀ → ∃ S : Finset ℕ, ∀ q : ℕ, q.Prime → q ∉ S → ∀ V : ValuationSubring Ω, ((q : ℕ) : Ω) ∈ V.nonunits → ∀ (k : ℕ) (f : X.K), f ≠ 0 → _root_.GlobalTheory.KZ.ES.Lev X (M₀ * l ^ k) f → ∃ (M' : ℕ) (a b : X.K) (c : Ω), 0 < M' ∧ Nat.Coprime q M' ∧ M₀ * l ^ k ∣ M' ∧ _root_.GlobalTheory.KZ.ES.Lev X M' a ∧ _root_.GlobalTheory.KZ.ES.Lev X M' b ∧ _root_.GlobalTheory.KZ.ES.Prim X V a ∧ _root_.GlobalTheory.KZ.ES.Prim X V b ∧ c ≠ 0 ∧ f * b = algebraMap Ω X.K c * a := by
   intro Ω _ _ _ ε X hj l M₀ hl hM₀
   obtain ⟨S, hS⟩ := exists_finset_lev_mem_closure_bddRing X hj hl hM₀

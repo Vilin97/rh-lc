@@ -27,6 +27,7 @@ private lemma finsum_mem_le_of_subset_of_nonneg {S D : Set ℂ} (f : ℂ → ℝ
   exact Finset.sum_le_sum_of_subset_of_nonneg (by simpa using hSD) (fun x _ _ => hf x)
 
 
+open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology in
 theorem _root_.GlobalTheory.ZeroWindow.count_zeros_window : ∃ C : ℝ, 0 < C ∧ ∀ (N : ℕ) [NeZero N]
     (χ : DirichletCharacter ℂ N), χ.IsPrimitive → ∀ t : ℝ,
     {ρ : ℂ | 0 < ρ.re ∧ ρ.re < 1 ∧ |ρ.im - t| ≤ 1 ∧ LFunction χ ρ = 0}.Finite ∧

@@ -28,6 +28,7 @@ theorem gelfand_value_fin_zero {k : ℕ} (hk : k = 0) (x y : Fin k → ℂ) (m :
   subst hk; simp [GlobalTheory.Dec.gelfVal]
 
 
+set_option maxHeartbeats 4000000 in
 theorem limAtOf_holds : LimAtOf := by
   intro hSq hLev hGI _ hR E _ _ _ n hn π S T F₀ F h i χ hχ
   have : Countable (Pl E) := Small.countable_pl E

@@ -307,6 +307,7 @@ end GlobalTheory.CompanionTheory.Ar.Flat.ExpLift
 namespace GlobalTheory.CompanionTheory.Ar.Flat
 
 
+open ExpLift in
 theorem exists_linear_lift_of_additive_family : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] (g n : ℕ) (M : LieModel G (𝟙 (Sp R)) (Fin g → R)) (B : Set (Fin n → ℂ)) (ψ : (Fin n → ℂ) → (R →+* ℂ)) (e : FamExp G M B ψ) (m : ℕ) (B' : Set (Fin n → ℂ)) (u : ∀ b : Fin n → ℂ, (Fin m → ℂ) → (Over.mk (spMap (ψ b)) ⟶ G)), IsOpen B' → B' ⊆ B → (∀ b ∈ B', ∀ z w, u b (z + w) = u b z * u b w) → IsHolTo (B' ×ˢ Set.univ) (fun bz : (Fin n → ℂ) × (Fin m → ℂ) => (u bz.1 bz.2).left) → ∃ h : (Fin n → ℂ) → ((Fin m → ℂ) →ₗ[ℂ] (Fin g → ℂ)), (∀ z, DifferentiableOn ℂ (fun b => h b z) B') ∧ ∀ b ∈ B', (∀ z, e.ex b (h b z) = u b z) ∧ (∀ h' : (Fin m → ℂ) →ₗ[ℂ] (Fin g → ℂ), (∀ z, e.ex b (h' z) = u b z) → h' = h b) ∧ ∀ z v, IsDerivAt0 (fun z => (u b z).left) z v ↔ IsDerivAt0 (fun z => (e.ex b z).left) (h b z) v := by
   intro R _ G _ _ g n M B ψ e m B' u hB' hsub hu hhol
   classical

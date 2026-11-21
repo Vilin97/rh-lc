@@ -43,6 +43,7 @@ theorem exists_equiv_map_eq (M L : Submodule O Y) [Submodule.IsFullLattice F M] 
   exact (bM.extendOfIsFullLattice F).equiv_apply i (bL.extendOfIsFullLattice F) e
 
 
+omit [IsDiscreteValuationRing O] in
 theorem exists_smul_mem (Λ : Submodule O Y) [h : Submodule.IsLattice F Λ] (y : Y) :
     ∃ s : O, s ≠ 0 ∧ s • y ∈ Λ := by
   have hy : y ∈ Submodule.span F (Λ : Set Y) := by rw [h.span_eq_top]; trivial

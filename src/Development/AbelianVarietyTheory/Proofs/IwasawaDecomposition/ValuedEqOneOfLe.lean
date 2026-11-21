@@ -30,6 +30,7 @@ def cmp (P : HeightOneSpectrum (𝓞 L)) : FI L →* (P.adicCompletion L)ˣ :=
 
 
 
+variable (L) in
 def finP : Ideles L →* FI L := Units.map (MonoidHom.snd (InfiniteAdeleRing L) (FiniteAdeleRing (𝓞 L) L))
 
 theorem cmp_val (P : HeightOneSpectrum (𝓞 L)) (u : FI L) :

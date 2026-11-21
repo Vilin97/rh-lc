@@ -105,6 +105,7 @@ variable (h : CopyTw D D' ι e) {X : RealSide D} {X' : RealSide D'} (m : RealMov
   {hL hL'} (H : HkAd X Sb hL) (H' : HkAd X' Sb' hL')
 
 
+include hfi hl hl' hSb hSb' H H' in
 theorem hk_intertwine {i : D.ntw.Tw} {i' : D'.ntw.Tw} (j : Fin D.R.m) (k : ℕ) {P : PlE D.host} {P' : PlE D'.host} (hP : HEq P P')
     (p0 : P ∉ D.ntw.S0 i) (p1 : P' ∉ D'.ntw.S0 i') (p2 : IsSplitPl D'.host P') (p3 : k ≤ D'.R.r)
     (y : ((NX.ratDatR X.R X.cG kKs hk).A ((j : ℕ) + 1)).WK) (hy) :
@@ -124,6 +125,7 @@ theorem hk_intertwine {i : D.ntw.Tw} {i' : D'.ntw.Tw} (j : Fin D.R.m) (k : ℕ) 
   exact (fiOfEq X' (NX.idxOf_succ D' (h.cm j))).e.injective (reading_injective X' _ (e2.trans e0'.symm))
 
 
+include hfi hl hl' hSb hSb' H H' in
 theorem hkLaw_move (hsup) {hs c} (hs') {c'} (hc : SameUnits c c') (L : HkLaw D _ YS.eF hL hs c) :
     HkLaw D' (dat h m YS) (tie h m YS hsup).eF hL' hs' c' := by
   intro i' j b h1 h2 k P' x p1 p2 p3

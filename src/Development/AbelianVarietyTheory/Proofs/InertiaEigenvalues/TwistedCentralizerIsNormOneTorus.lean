@@ -239,6 +239,7 @@ end Cent
 end GlobalTheory.Tw.CentralizerAdjoin
 
 
+open GlobalTheory.Tw.CentralizerAdjoin in
 theorem GlobalTheory.Tw.twisted_centraliser :
     ∀ (n : ℕ) (R : Type) [CommRing R] [StarRing R] [IsArtinianRing R] [IsReduced R] (δ : Matrix (Fin n) (Fin n) R),
       Reg δ → (∀ g h, adj δ (g * h) = adj δ h * adj δ g) ∧ (∀ (c : R) g h, adj δ (c • g + h) = star c • adj δ g + adj δ h) ∧

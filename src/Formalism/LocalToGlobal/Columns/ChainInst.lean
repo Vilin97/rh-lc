@@ -467,6 +467,7 @@ theorem ciLift_one : ciLift P 1 = 1 := by
   simp
 
 
+variable (P) in
 def ciLiftO {n : ℕ} (M : Matrix (Fin n) (Fin n) (𝓞 E ⧸ P.asIdeal)) : Matrix (Fin n) (Fin n) (𝓞 E) := M.map (ciLift P)
 
 variable (P) in
@@ -753,6 +754,7 @@ theorem ciLamGv_congr (ψ₀ : AddChar (𝓞 E ⧸ P.asIdeal) K) (χ : ℕ → (
     exact (h _ _ (hb s) (hb s')).2.2
 
 
+variable (P) in
 def ciPhiCond (q : ℕ) (sharp : Bool) (k₀ r t j c n : ℕ) (M : ℕ → ℕ → E) : Prop :=
   (∀ p p', p < n + c → p' < r + (j - 1) * t → IntAt P (M p p')) ∧
     (∀ p p', r + (j - 1) * t ≤ p → p < n + c → p' < r + (j - 1) * t → IntAt P (M p p' / (q : E))) ∧
@@ -774,6 +776,7 @@ theorem ciPhiG_eq (ψ₀ : AddChar (𝓞 E ⧸ P.asIdeal) K) (χ : ℕ → (𝓞
   split_ifs <;> rfl
 
 
+open Classical in
 theorem ciPhiG_congr (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hq0 : (q : E) ≠ 0) (ψ₀ : AddChar (𝓞 E ⧸ P.asIdeal) K)
     (χ : ℕ → (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (sharp : Bool) {k₀ r t j c' n' c n : ℕ} (x x' : HomE E (n' + c') (n + c))
     (hk : k₀ < r + (j - 1) * t) (hr1 : 1 ≤ r) (hra : r ≤ r + (j - 1) * t) (han : r + (j - 1) * t ≤ n + c)

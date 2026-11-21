@@ -205,6 +205,7 @@ theorem integrable_of_lintegral_eq_one {α : Type} [MeasurableSpace α] {μ : Me
 variable [TopologicalSpace G] [IsTopologicalGroup G] [SecondCountableTopology G] [BorelSpace G]
 
 
+open GlobalTheory.Tw in
 theorem IsQuotIntL1.cutoff [SFinite μG] [μG.IsMulLeftInvariant] [SFinite μR] [μR.IsInvInvariant]
     (h : IsQuotIntL1 μR μG f z) {β : G → ℝ≥0} (hβ : IsCosetCutoff R μR β) :
     Integrable (fun x => (β x : ℝ) • f x) μG ∧ z = ∫ x, (β x : ℝ) • f x ∂μG := by
@@ -251,6 +252,7 @@ theorem IsQuotIntL1.unique (hR : IsClosed (R : Set G)) (h : IsQuotIntL1 μR μG 
   rw [(h.cutoff hβ).2, (h'.cutoff hβ).2]
 
 
+open GlobalTheory.Tw in
 theorem isQuotIntL1_iff (hR : IsClosed (R : Set G)) (hm : Measurable f) :
     IsQuotIntL1 μR μG f z ↔
       (∀ s ∈ R, ∀ x, f (s * x) = f x) ∧ QuotIntegrable R μG μR f ∧ z = quotInt R μG μR f := by

@@ -30,6 +30,7 @@ theorem dMod_one_eq [Finite (ModN (AA hL 1) ℓ)] :
   exact dMod_one_eq_pf hL hζ M hM hΓ
 
 
+set_option maxHeartbeats 800000 in
 theorem poitou_tate_H2_nat [Fintype S] (hℓS : ∀ v ∉ S, ((ℓ : ℕ) : 𝓞 K.1) ∉ v.asIdeal)
     (hKK : Odd ℓ ∨ IsTotallyComplex K.1)
     (ιs : ∀ v : S, ℚ̄ →ₐ[K.1] AlgebraicClosure ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1)) :
@@ -62,6 +63,7 @@ theorem poitou_tate_H2_nat [Fintype S] (hℓS : ∀ v ∉ S, ((ℓ : ℕ) : 𝓞
     _ = _ := by rw [Finset.prod_pow_eq_pow_sum]
 
 
+set_option maxHeartbeats 800000 in
 theorem poitou_tate_H2_int [Fintype S] (hℓS : ∀ v ∉ S, ((ℓ : ℕ) : 𝓞 K.1) ∉ v.asIdeal)
     (hcop : Nat.Coprime (gsOpenSubgroup S hL : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)).index ℓ)
     (hK : ℓ ≠ 2 ∨ IsTotallyComplex L.1) [Finite (ModN (AA hL 1) ℓ)]

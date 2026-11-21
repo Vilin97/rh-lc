@@ -9,6 +9,7 @@ open MeasureTheory FourierTransform
 namespace GlobalTheory
 
 
+open MeasureTheory FourierTransform in
 theorem _root_.GlobalTheory.exists_pos_integral_comp_equiv_haar {V E : Type} [NormedAddCommGroup V] [NormedSpace ℝ V]
     [FiniteDimensional ℝ V] [MeasurableSpace V] [BorelSpace V]
     [NormedAddCommGroup E] [InnerProductSpace ℝ E]
@@ -32,6 +33,7 @@ theorem _root_.GlobalTheory.exists_pos_integral_comp_equiv_haar {V E : Type} [No
     · simp
 
 
+open MeasureTheory FourierTransform in
 theorem _root_.GlobalTheory.exists_equiv_inner_eq_form {V E : Type} [NormedAddCommGroup V] [NormedSpace ℝ V]
     [FiniteDimensional ℝ V] [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     [FiniteDimensional ℝ E] (T : V ≃L[ℝ] E) (B : V →ₗ[ℝ] V →ₗ[ℝ] ℝ)
@@ -67,6 +69,7 @@ theorem _root_.GlobalTheory.exists_equiv_inner_eq_form {V E : Type} [NormedAddCo
   rfl
 
 
+open MeasureTheory FourierTransform in
 theorem _root_.GlobalTheory.fourier_inversion_haar_symm_form :
     ∀ {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V] [MeasurableSpace V] [BorelSpace V] (B : V →ₗ[ℝ] V →ₗ[ℝ] ℝ), (∀ x y, B x y = B y x) → (∀ x, (∀ y, B x y = 0) → x = 0) → ∀ μ : Measure V, μ.IsAddHaarMeasure → (∃ c : ℝ, 0 < c ∧ ∀ Φ : V → ℂ, Continuous Φ → Integrable Φ μ → Integrable (fun y => ∫ x, Φ x * Complex.exp (2 * Real.pi * Complex.I * ((B x y : ℝ) : ℂ)) ∂μ) μ → ∀ z, ∫ y, (∫ x, Φ x * Complex.exp (2 * Real.pi * Complex.I * ((B x y : ℝ) : ℂ)) ∂μ) * Complex.exp (2 * Real.pi * Complex.I * ((B y z : ℝ) : ℂ)) ∂μ = (c : ℂ) * Φ (-z)) ∧ ∀ Φ : SchwartzMap V ℂ, Integrable (⇑Φ) μ ∧ Integrable (fun y => ∫ x, Φ x * Complex.exp (2 * Real.pi * Complex.I * ((B x y : ℝ) : ℂ)) ∂μ) μ := by
   intro V _ _ _ _ _ B hs hn μ hμ

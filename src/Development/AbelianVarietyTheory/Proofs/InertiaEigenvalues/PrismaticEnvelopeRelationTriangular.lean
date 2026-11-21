@@ -21,12 +21,14 @@ theorem C_mem_supp (S : Set ℕ) (c : A) : MvPolynomial.C c ∈ MvPolynomial.sup
   rw [← MvPolynomial.algebraMap_eq]; exact Subalgebra.algebraMap_mem _ c
 
 
+omit hl in
 theorem cc_mem_ideal {R : Type} [CommRing R] (I : Ideal R) {x : R} (y : R) (hx : x ∈ I) : cc l x y ∈ I := by
   unfold cc
   exact Ideal.sum_mem _ fun k hk =>
     Ideal.mul_mem_right _ _ (Ideal.mul_mem_left _ _ (Ideal.pow_mem_of_mem _ hx k (Finset.mem_Ioo.1 hk).1))
 
 
+omit hl in
 theorem cc_mem_sub {R : Type} [CommRing R] [Algebra A R] (S : Subalgebra A R) {x y : R} (hx : x ∈ S)
     (hy : y ∈ S) : cc l x y ∈ S := by
   unfold cc

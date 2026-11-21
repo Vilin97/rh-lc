@@ -68,6 +68,7 @@ theorem ratSpan_smul (D : D7) {N : ℕ} (lam : D.what₂.Tau → DomWeight N) (r
   | neg x _ hx => rw [smul_neg]; exact neg_mem hx
 
 
+open Classical in
 theorem ratSpan_ten (D : D7) {N : ℕ} (lam : D.what₂.Tau → DomWeight N) (τv : D.what₂.Tau)
     (f : D.what₂.Tau → MvPolynomial (Fin N × Fin N) ℤ) (hf : ∀ τ, f τ ∈ delSq ℤ N (lam τ))
     (q : MvPolynomial (Fin N × Fin N) ℂ) (hq : q ∈ bwA_span (ratO D) le_rfl (lam τv).natW) (r : D.what₂.LL) :
@@ -108,6 +109,7 @@ theorem ratSpan_ten (D : D7) {N : ℕ} (lam : D.what₂.Tau → DomWeight N) (τ
     exact hx (r * r')
 
 
+open Classical in
 theorem ratSpan_subP (D : D7) {N : ℕ} (lam : D.what₂.Tau → DomWeight N) (τv : D.what₂.Tau)
     (o : D.what₂.Tau → Matrix (Fin N) (Fin N) ℂ) (ho : ∀ τ, τ ≠ τv → o τ = 1) (c : ℂ)
     (hB : ∀ g ∈ delSq ℤ N (lam τv),
@@ -204,6 +206,7 @@ theorem atInf_ratO (M : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) (τ : D
   exact ratO_mem D _
 
 
+set_option maxHeartbeats 1000000 in
 theorem ratC_tr (T : Forms0 D u) (hC : LocalLatticeBases.ChiFin0 T)
     (γ : UJ (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _))) (κ : T.cls0.lev.U)
     (h : (D.mem u).C.Y 0 → ℂ) (hh : RatC T h) :

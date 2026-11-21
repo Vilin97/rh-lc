@@ -224,6 +224,7 @@ theorem exists_row {n : ℕ} {σ : E ≃+* E} (hσ : Isom σ) (t : Fin n → Eˣ
     field_simp
 
 
+open GlobalTheory.PRep GlobalTheory.SmGL in
 theorem exists_conj {n : ℕ} {σ : E ≃+* E} (hσ : Isom σ) (t : Fin n → Eˣ) {r ρ : ValueGroupWithZero E} (hr : r ≤ ρ)
     (hρ : ρ < 1) (ht : ∀ j l, j < l → valuation E ((t j : E) / t l) ≤ ρ) (b : GL (Fin n) E)
     (hb1 : ∀ j l, valuation E (b.val j l) ≤ 1) (hc1 : ∀ j l, valuation E (b⁻¹.val j l) ≤ 1)

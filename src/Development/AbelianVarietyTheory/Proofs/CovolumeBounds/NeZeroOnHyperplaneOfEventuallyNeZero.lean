@@ -53,6 +53,7 @@ theorem differentiableOn_intervalIntegral_comp_clm {E : Type*} [NormedAddCommGro
 variable {ι : Type*} [Fintype ι] [DecidableEq ι] {r : ι → ℝ}
 
 
+omit [Fintype ι] in
 theorem update_mem_polydisc {z : ι → ℂ} (hz : z ∈ univ.pi fun j => ball (0 : ℂ) (r j)) {i : ι}
     {t : ℂ} (ht : t ∈ ball (0 : ℂ) (r i)) : update z i t ∈ univ.pi fun j => ball (0 : ℂ) (r j) := by
   intro j _

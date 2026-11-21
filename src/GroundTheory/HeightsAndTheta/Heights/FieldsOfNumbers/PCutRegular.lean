@@ -23,6 +23,7 @@ namespace CutRegular
 variable {K : Type} [DecidableEq K] {ι : K → Type} {F : Type u} [Field F]
 
 
+omit [DecidableEq K] in
 theorem mixedDiff_snoc {n : ℕ} (bs : Fin n → K → ℤ) (c : K → ℤ) (h : (K → ℤ) → ℤ) :
     mixedDiff (Fin.snoc (α := fun _ => K → ℤ) bs c) h = mixedDiff bs (diffStep c h) := by
   unfold mixedDiff
@@ -30,6 +31,7 @@ theorem mixedDiff_snoc {n : ℕ} (bs : Fin n → K → ℤ) (c : K → ℤ) (h :
   simp only [Fin.snoc_castSucc, Fin.snoc_last]
 
 
+omit [DecidableEq K] in
 theorem foldr_diffStep_eventually_zero {h : (K → ℤ) → ℤ}
     (hh : ∀ᶠ m in Filter.atTop, h m = 0) :
     ∀ l : List (K → ℤ), ∀ᶠ m in Filter.atTop, l.foldr diffStep h m = 0 := by
@@ -44,6 +46,7 @@ theorem foldr_diffStep_eventually_zero {h : (K → ℤ) → ℤ}
     simp only [List.foldr_cons, diffStep, h1, h2, sub_self]
 
 
+omit [DecidableEq K] in
 theorem eventualValue_eq_zero {f : (K → ℤ) → ℤ} (hf : ∀ᶠ m in Filter.atTop, f m = 0) :
     eventualValue f = 0 := by
   unfold eventualValue
@@ -135,6 +138,7 @@ theorem isMultiHomogIdeal_sup_span {P : Ideal (MRing ι F)} (hP : IsMultiHomogId
   · exact Ideal.zero_mem _
 
 
+omit [DecidableEq K] in
 theorem colon_eq_of_not_mem {P : Ideal (MRing ι F)} [hP : P.IsPrime] {s : MRing ι F}
     (hs : s ∉ P) : P.colon (Ideal.span {s}) = P := by
   ext g
@@ -142,6 +146,7 @@ theorem colon_eq_of_not_mem {P : Ideal (MRing ι F)} [hP : P.IsPrime] {s : MRing
   exact ⟨fun h => (hP.mem_or_mem h).resolve_right hs, fun h => P.mul_mem_right s h⟩
 
 
+omit [DecidableEq K] in
 theorem relDim_eq_natCast_iff [Fintype K] (I : Ideal (MRing ι F)) (d : ℕ) :
     relDim I = ((d : ℕ) : WithBot (WithTop ℤ)) ↔
       ringKrullDim (MRing ι F ⧸ I) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) := by
@@ -214,6 +219,7 @@ theorem le_of_height_add {h : ℕ∞} {x : WithBot ℕ∞} {e : ℕ} (hh : h ≤
         exact_mod_cast this
 
 
+omit [DecidableEq K] in
 theorem ringKrullDim_sup_span_add_one_le {P : Ideal (MRing ι F)} [P.IsPrime] {s : MRing ι F}
     (hs : s ∉ P) :
     ringKrullDim (MRing ι F ⧸ (P ⊔ Ideal.span {s})) + 1 ≤ ringKrullDim (MRing ι F ⧸ P) := by
@@ -256,6 +262,7 @@ theorem ringKrullDim_minimalPrime [Fintype K] [∀ k, Fintype (ι k)] {P W : Ide
 end CutRegular
 
 
+open CutRegular in
 theorem CutRegular.proof (h1 : HilbExactDivide.Statement.{u}) (h2 : MultEqualsCoeff.Statement.{u})
     (_h3 : IntNumSymm.Statement.{u}) : CutRegular.Statement.{u} := by
   intro F _ K _ _ ι _ P hP n hdim c s hs hsP bs

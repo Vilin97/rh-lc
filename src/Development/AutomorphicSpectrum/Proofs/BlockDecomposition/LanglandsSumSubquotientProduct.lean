@@ -34,6 +34,7 @@ theorem isL_of_exhaust {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k
   exact ⟨𝔭, h𝔭.of_equiv (IrrGL.equivOf τ.ρ τ.smooth τ.irr).symm⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem isSubquotient_prodIrr {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hSoc : LSocleGL k)
     (hSeg : LSegJacquet k) (hFree : LOrderFree k) (hEx : ∀ x : IrrGL (k := k), ∃ 𝔪 : Multiset (Segment k), IsL 𝔪 x.rep)

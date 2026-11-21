@@ -519,10 +519,12 @@ abbrev hat (g : (D.sp.X 0).V ≃ₗ[D.host.E] (D.sp.X 0).V) :
   g.prodCongr (LinearEquiv.refl D.host.E D.host.E)
 
 
+variable (F0) in
 def Induces (γ : (VS D).V ≃ₗ[D.host.E] (VS D).V) (g : (D.sp.X 0).V ≃ₗ[D.host.E] (D.sp.X 0).V) : Prop :=
   ∀ p, γ (sumMap D F0 p) - sumMap D F0 (hat g p) ∈ F0.X
 
 
+include he hz hT in
 theorem exists_ext {g} (hg : g ∈ Formalism.HermitianLatticesTheory.isom (D.sp.X 0).hT) :
     ∃ γ ∈ stabF D F0, (∀ a, γ (F0.e a) = F0.e a) ∧ Induces F0 γ g := by
   have hg' : ∀ x y, (D.sp.X 0).hT (g x) (g y) = (D.sp.X 0).hT x y := hg
@@ -584,6 +586,7 @@ private lemma hT_sub_of_mem_orth_of_mem (D : D7) {T : D.host.E} (F0 : FlagG (VS 
   simp only [map_sub, LinearMap.sub_apply, h1, h3, h4, sub_zero]
 
 
+include he hz hT in
 theorem exists_res {γ} (hγ : γ ∈ stabF D F0) : ∃ g ∈ Formalism.HermitianLatticesTheory.isom (D.sp.X 0).hT, Induces F0 γ g := by
   have hγi : ∀ x y, (VS D).hT (γ x) (γ y) = (VS D).hT x y := hγ.1
   have hγz : γ F0.z = F0.z := hγ.2.2
@@ -725,6 +728,7 @@ theorem induced_eq {γ g} (hγ : γ ∈ stabF D F0) (h : Induces F0 γ g) (x : p
   exact F0.X.sub_mem h3 h2
 
 
+include he hz hT in
 theorem card_autLz
     (hlift : ∀ Λ₁ Λ₂ : LatV D, IsRowLat D F0 Λ₁ → IsRowLat D F0 Λ₂ → Lsub Λ₁ (lf D F0) = Lsub Λ₂ (lf D F0) →
       ∃ n ∈ stabF D F0, (∀ x ∈ orth (hS D) F0.X, n x - x ∈ F0.X) ∧ Formalism.HermitianLatticesTheory.gmap n Λ₁ = Λ₂)
@@ -777,12 +781,14 @@ theorem card_autLz
   exact Nat.card_congr (Equiv.ofBijective Ψ ⟨hinj, hsurj⟩).symm
 
 
+variable (D) in
 @[reducible] def actW : MulAction (Formalism.HermitianLatticesTheory.isom (D.sp.X 0).hT) (LatW D) where
   smul g L := Formalism.HermitianLatticesTheory.gmap g.1 L
   one_smul L := gmap_one' L
   mul_smul g g' L := gmap_mul' g.1 g'.1 L
 
 
+variable (D) in
 @[reducible] def actWE : MulAction (Formalism.HermitianLatticesTheory.isom (D.sp.X 0).hT)
     (Submodule (𝓞 D.host.E) ((D.sp.X 0).V × D.host.E)) where
   smul g L := Formalism.HermitianLatticesTheory.gmap (hat g.1) L
@@ -792,6 +798,7 @@ theorem card_autLz
 end Count
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.DiscriminantKernelAutomorphisms GlobalTheory.RowMassCompare in
 theorem rows_sum (D : D7) (u : D.what₂.Word) (hp : (Tu D u).Prime) (h3 : 3 ≤ Tu D u)
     (hs : SplitsCompletely (E := D.host.E) (Tu D u)) (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E))
     (he : F0.e = D.sp.hypE) (hz : F0.z = D.zmOf u) (what₂ : Finset (LatV D)) (hrows : IsRowReps D F0 what₂)

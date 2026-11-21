@@ -95,6 +95,8 @@ theorem om_vac_split (hW : IsWeilDatumO ψ S T χS χT om) (kS : S.SigOK) (kT : 
   simp [splitFacO, GlobalTheory.SplitScalar.heisO_zero]
 
 
+set_option maxHeartbeats 1000000 in
+open Classical in
 theorem om_vac (hW : IsWeilDatumO ψ S T χS χT om) (kS : S.SigOK) (kT : T.SigOK)
     (cS : ∀ τ, IsCartanInv (gramAt D S τ) (sS τ)) (cT : ∀ τ, IsCartanInv (gramAt D T τ) (sT τ))
     (dS : IsSelfDualC S ΛS) (dT : IsSelfDualC T ΛT) (fS : IsFrame βS ΛS) (fT : IsFrame βT ΛT)
@@ -210,6 +212,8 @@ variable {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D} {χS χT
   {βS : GL (Fin S.rank) (Lev.EAf D)} {βT : GL (Fin T.rank) (Lev.EAf D)} {f₀ f : WO S T → ℂ}
 
 
+set_option maxHeartbeats 1000000 in
+open Classical in
 theorem step_law (hW : IsWeilDatumO ψ S T χS χT om) (kS : S.SigOK) (kT : T.SigOK)
     (cS : ∀ τ, IsCartanInv (gramAt D S τ) (sS τ)) (cT : ∀ τ, IsCartanInv (gramAt D T τ) (sT τ))
     (dS : IsSelfDualC S ΛS) (dT : IsSelfDualC T ΛT) (fS : IsFrame βS ΛS) (fT : IsFrame βT ΛT)
@@ -312,6 +316,7 @@ theorem levRes_chrStep (hL : L.Is μ0) (t : T0) (j : Fin D.R.m) :
 end Chars
 
 
+open Formalism.IndefR.Mult in
 theorem stepVec_lifts : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks), R.toLevCh.Is A.μ0 → R.models_inf → R.chain_ωY → R.chain_vY → ∀ t k, k + 1 < D.R.m → ∀ (g0 : G0 R.Pg D.R.r) κ κ', IsLevelLift (Yc D k) (R.βY k) (R.datYt t k R.triv) g0 κ → IsLevelLift (Yc D (k + 1)) (R.βY (k + 1)) (R.datYt t (k + 1) R.triv) g0 κ' → (levChi _ (R.βY k) (flagL (R.datYt t k R.triv)) κ)⁻¹ • R.ωY t k (κ, κ') (R.vY t k) = (levChi _ (R.βY (k + 1)) (flagL (R.datYt t (k + 1) R.triv)) κ')⁻¹ • R.vY t k := by
   intro D G _ _ Pl0 T0 A Ks _ _ _ R hL _ hω hv t k hk g0 κ κ' hκ hκ'
   have hk' : k < D.R.m := Nat.lt_of_succ_lt hk

@@ -31,6 +31,7 @@ theorem rTrans_lift {V V₀ W W₀ : HSp D} {ρ σ : ℕ} (s : Step ψ V V₀ W 
 end GlobalTheory.Unf.IterProof
 
 
+open GlobalTheory.Unf.IterProof in
 theorem GlobalTheory.Unf.iter_of_doubleStep_lastLaw : ∀ D : D7, DoubleStep D → LastLaw D → IT D := by
   intro D hD hL ψ T ρ B c
   induction c with

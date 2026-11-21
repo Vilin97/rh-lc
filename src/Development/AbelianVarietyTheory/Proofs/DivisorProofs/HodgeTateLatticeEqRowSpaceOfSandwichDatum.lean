@@ -22,6 +22,7 @@ variable {p : ℕ} [Fact p.Prime] {O : Type} [CommRing O] [Fact ¬IsUnit (p : O)
   [IsAdicComplete (Ideal.span {(p : O)}) O]
 
 
+variable (p O) in
 def ghostHom (n : ℕ) : Ainf p O →+* O where
   toFun := ghost p O n
   map_one' := by

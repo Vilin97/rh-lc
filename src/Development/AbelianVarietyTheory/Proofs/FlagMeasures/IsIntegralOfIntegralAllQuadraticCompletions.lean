@@ -102,6 +102,7 @@ theorem isIntegral_of_quadratic (y a b : E) (ha : IsIntegral ℤ a) (hb : IsInte
 end GlobalTheory.HL.GlueInt
 
 
+open GlobalTheory.HL.GlueInt in
 theorem GlobalTheory.HL.isIntegral_of_forall_mem_O : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
     [Algebra F E] {sig : E →ₐ[F] E} (A : Places F E sig), ∀ (y : E), (∀ p, (A.loc p).ιE y ∈ (A.L p).O) →
     IsIntegral ℤ y := by

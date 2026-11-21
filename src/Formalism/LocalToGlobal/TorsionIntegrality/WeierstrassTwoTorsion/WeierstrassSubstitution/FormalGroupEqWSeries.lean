@@ -159,6 +159,7 @@ theorem sub_cancel {f : MvPowerSeries (Fin 2) R}
   simp
 
 
+open Formalism.ELL.WeierstrassChordSeries in
 theorem vieta' {A : Type*} [CommRing A] {a1 a2 a3 a4 a6 l n z1 z2 z3 : A}
     (hz : ∀ f : A, f * (z1 - z2) = 0 → f = 0)
     (h1 : G a1 a2 a3 a4 a6 z1 (l * z1 + n) = 0) (h2 : G a1 a2 a3 a4 a6 z2 (l * z2 + n) = 0)

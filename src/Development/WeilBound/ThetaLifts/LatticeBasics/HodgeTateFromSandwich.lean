@@ -35,6 +35,7 @@ def zint {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (om : Rep σ X W) (ν : @Me
   (a (e (g, 1)) : ℂ) ^ (s - ((d : ℂ) - n) / 2) * coef om ν Φ g
 
 
+variable (σ Y) in
 def locGrp (v : Pl F) : Subgroup (UA σ Y.J) := Subgroup.closure (UAt σ Y (evFin F v))
 
 def IntAt (v : Pl F) (g : UA σ Y.J) : Prop :=
@@ -47,6 +48,8 @@ def IsSphAt (K : Subgroup (G2 σ Y)) (χ : Chr F E) (v : Pl F) (z : ℂ) (f : G2
     f (p * k) = (χ (Matrix.GeneralLinearGroup.det t) : ℂ) * ((absE F E (Matrix.GeneralLinearGroup.det t) : ℝ) : ℂ) ^ z
 
 
+open Classical in
+variable (E) in
 def locD (n : ℕ) (v : Pl F) (s : ℂ) : ℂ :=
   ∏ i ∈ Finset.range n, (1 - (if Nonempty (E →ₐ[F] Fv F v) then 1 else -1) ^ (n - (i + 1)) *
     (Ideal.absNorm v.asIdeal : ℂ) ^ (-(2 * s + (i + 1 : ℕ))))⁻¹

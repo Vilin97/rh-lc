@@ -9,6 +9,7 @@ namespace ReciprocityTheory.CA
 open Polynomial
 
 
+attribute [local instance] Polynomial.algebra Polynomial.isLocalization in
 theorem height_le_one_of_comap_C_eq_bot {A : Type*} [CommRing A] [IsDomain A]
     (Q : Ideal A[X]) [Q.IsPrime] (hQ : Q.comap C = ⊥) : Q.height ≤ 1 := by
 

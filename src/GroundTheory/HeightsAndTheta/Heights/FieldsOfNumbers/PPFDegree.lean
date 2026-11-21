@@ -44,6 +44,7 @@ theorem weight_apply_eval {σ : Type*} (w : σ → K' → ℕ) (d : σ →₀ �
 variable [DecidableEq K] [DecidableEq K']
 
 
+omit [DecidableEq K] [DecidableEq K'] in
 theorem weight_mapDomain {σ τ M : Type*} [AddCommMonoid M] (w : τ → M) (g : σ → τ)
     (d : σ →₀ ℕ) : Finsupp.weight w (Finsupp.mapDomain g d) = Finsupp.weight (w ∘ g) d := by
   simp only [Finsupp.weight_apply]
@@ -123,6 +124,7 @@ theorem isMultiProjPrime_contractPrime {P' : Ideal (MRing ι' F)} (hP' : IsMulti
     exact hi
 
 
+omit [DecidableEq K] [DecidableEq K'] in
 theorem contractFracMap_algebraMap (P' : Ideal (MRing ι' F)) [P'.IsPrime]
     (a : MRing (fun k => ι' (j k)) F) :
     contractFracMap j P' (algebraMap _ _ (Ideal.Quotient.mk (contractPrime j P') a)) =
@@ -146,6 +148,7 @@ theorem map_homFracDegZero_le (P' : Ideal (MRing ι' F)) [P'.IsPrime] :
   rw [map_div₀, contractFracMap_algebraMap, contractFracMap_algebraMap]
 
 
+omit [DecidableEq K] [DecidableEq K'] in
 theorem pullDeg_sub (bf bg : K → ℕ) :
     pullDeg j (fun k => (bf k : ℤ) - bg k) =
       fun k' => ((Function.extend j bf 0 k' : ℕ) : ℤ) - ((Function.extend j bg 0 k' : ℕ) : ℤ) := by

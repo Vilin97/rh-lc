@@ -45,6 +45,7 @@ end GlobalTheory.SameAtOfLoc
 namespace GlobalTheory
 
 
+open GlobalTheory.SameAtOfLoc in
 theorem sameAt_of_localized_eq : ∀ {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
     (Q : HeightOneSpectrum (𝓞 E)) (A B : Submodule (𝓞 E) (Sp E n)), Submodule.IsLattice E A →
     Submodule.IsLattice E B → localization₂ Q.asIdeal A = localization₂ Q.asIdeal B → SameAt Q A B := by

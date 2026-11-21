@@ -90,6 +90,7 @@ variable [DecidableEq K] [DecidableEq (ResidueField 𝒪)]
 local notation "ι" => algebraMap 𝒪 K
 local notation "ρ" => residue 𝒪
 
+omit [IsFractionRing 𝒪 K] in
 theorem add_some_integral {x₁ y₁ x₂ y₂ ℓ : 𝒪} (h₁ : (curveK K W).Nonsingular (ι x₁) (ι y₁))
     (h₂ : (curveK K W).Nonsingular (ι x₂) (ι y₂)) (n₁ : (curveRed W).Nonsingular (ρ x₁) (ρ y₁))
     (n₂ : (curveRed W).Nonsingular (ρ x₂) (ρ y₂))
@@ -228,6 +229,7 @@ theorem add_of_residue_eq {x₁ y₁ x₂ y₂ : 𝒪} (h₁ : (curveK K W).Nons
   exact ⟨_, _, h₃, n₃, e, e'⟩
 
 
+omit [DecidableEq K] [DecidableEq (ResidueField 𝒪)] in
 theorem addX_notMem_range {x₁ x₂ s : 𝒪} (hs : s ∈ maximalIdeal 𝒪) (hs0 : s ≠ 0) :
     (curveK K W).addX (ι x₁) (ι x₂) (ι s)⁻¹ ∉ Set.range ι := by
   rintro ⟨r, hr⟩
@@ -390,6 +392,7 @@ theorem residue_vVal [IsAdicComplete (maximalIdeal 𝒪) 𝒪] {z : 𝒪} (hz : 
   exact (residue_eq_zero_iff _).2 h
 
 
+omit [DecidableEq (ResidueField 𝒪)] in
 theorem add_of_notMem_range [IsAdicComplete (maximalIdeal 𝒪) 𝒪] [(W.map ι).IsElliptic]
     {X₁ Y₁ : K} (h₁ : (curveK K W).Nonsingular X₁ Y₁) (hX : X₁ ∉ Set.range ι) {x₂ y₂ : 𝒪}
     (h₂ : (curveK K W).Nonsingular (ι x₂) (ι y₂)) :
@@ -627,6 +630,7 @@ theorem reducePoint_some_notMem {X Y : K} (h : (curveK K W).Nonsingular X Y)
   rw [reducePoint, dite_eq_right (fun h' => hX h'.1)]
 
 
+omit [IsAdicComplete (maximalIdeal 𝒪) 𝒪] [(W.map (algebraMap 𝒪 K)).IsElliptic] in
 theorem point_cases (P : (curveK K W).Point) :
     P = 0 ∨ (∃ (X Y : K) (h : (curveK K W).Nonsingular X Y), P = .some _ _ h ∧
       X ∉ Set.range (algebraMap 𝒪 K)) ∨
@@ -673,6 +677,7 @@ theorem zero_mem_E0Set : (0 : (curveK K W).Point) ∈ E0Set K W := by
 variable [DecidableEq K] [DecidableEq (ResidueField 𝒪)]
 
 
+omit [IsAdicComplete (maximalIdeal 𝒪) 𝒪] [(W.map (algebraMap 𝒪 K)).IsElliptic] in
 theorem add_mem_and_reduce_of_exists {P Q : (curveK K W).Point}
     (H : ∃ (x₃ y₃ : 𝒪) (h₃ : (curveK K W).Nonsingular (algebraMap 𝒪 K x₃) (algebraMap 𝒪 K y₃))
       (n₃ : (curveRed W).Nonsingular (residue 𝒪 x₃) (residue 𝒪 y₃)),
@@ -741,6 +746,8 @@ theorem add_mem_and_reduce {P Q : (curveK K W).Point} (hP : P ∈ E0Set K W)
         exact ⟨mem_E0Set_some_integral K W h₃ n₃, rfl⟩
 
 
+omit [DecidableEq K] [DecidableEq (ResidueField 𝒪)] [IsAdicComplete (maximalIdeal 𝒪) 𝒪]
+  [(W.map (algebraMap 𝒪 K)).IsElliptic] in
 theorem neg_mem_and_reduce {P : (curveK K W).Point} (hP : P ∈ E0Set K W) :
     -P ∈ E0Set K W ∧ reducePoint K W (-P) = -reducePoint K W P := by
   rcases point_cases K W P with rfl | ⟨X, Y, h, rfl, hX⟩ | ⟨x, y, h, rfl⟩

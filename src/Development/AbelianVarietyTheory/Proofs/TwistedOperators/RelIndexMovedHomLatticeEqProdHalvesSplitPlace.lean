@@ -180,6 +180,7 @@ theorem split_index {Λ : AddSubgroup (WO S T)} {g : GA D T} {ε c r : AE D}
   exact key
 
 
+open GlobalTheory.SplitScalar GlobalTheory.FinWeil GlobalTheory.WeilParts in
 theorem idx_dec : ∀ (D : D7) (S T : HSp D) (ε : AE D), IsSplitIdem D ε → ∀ g : GA D T, SuppAt ε T g →
     GlobalTheory.FinWeil.idx (GlobalTheory.FinWeilO.latF S T (frameLat S) (frameLat T))
       ((GlobalTheory.FinWeilO.latF S T (frameLat S) (frameLat T)).map (GlobalTheory.FinWeilO.rhoF S T (1, g))) =

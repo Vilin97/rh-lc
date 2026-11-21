@@ -111,6 +111,7 @@ def CrysLat (T : LocLat G Qp LL O) : Prop :=
     IsCrys PD T.ρ
 
 
+variable (LL O) in
 def HodgeExact : Prop :=
   (∀ (T₁ T₂ : LocLat G Qp LL O) (F : LatHom T₁.L T₂.L), CrysLat PD T₁ → CrysLat PD T₂ → F.Onto →
     ∀ (τ : K →ₐ[Qp] LL) (a : ℤ), IsJumpV PD T₂.ρ τ a → IsJumpV PD T₁.ρ τ a) ∧

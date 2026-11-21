@@ -112,6 +112,7 @@ lemma constBF_alg (a : R) (W : (DegPre.BF D.toPre (FractionRing R)).left.Opens) 
   rfl
 
 
+set_option maxHeartbeats 1000000 in
 theorem terms_vanish [IsDiscreteValuationRing R] {ϖ : R} (hϖ : Irreducible ϖ) (hI : I = maximalIdeal R)
     (F : Fam D.toPre (FractionRing R) 1) (g : ∀ α, D.toPre.SecB 1 α)
     (hgF : ∀ α, GeneratorPullback.SecScal D.toPre.P.L (DegPre.famφ D.toPre (FractionRing R) α) (DegPre.famε 1) (F.s α)

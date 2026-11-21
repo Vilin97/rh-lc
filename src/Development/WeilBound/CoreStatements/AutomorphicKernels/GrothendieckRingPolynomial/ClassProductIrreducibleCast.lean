@@ -272,6 +272,7 @@ namespace PositivityTheory.Groth
 open PositivityTheory.Groth.GrothendieckCommutativity
 
 
+set_option maxHeartbeats 1000000 in
 theorem comm (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] : Comm k := by
   intro x y
   have hxy : ∑ a, (![x, y] a).1 = x.1 + y.1 := by simp [Fin.sum_univ_two]

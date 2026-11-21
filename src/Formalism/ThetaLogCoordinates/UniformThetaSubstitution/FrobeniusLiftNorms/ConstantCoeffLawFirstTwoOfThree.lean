@@ -19,6 +19,7 @@ open Formalism.DworkPowerSeriesWeights (Integral mvExp)
 namespace GramFrameCompositionLinFacts
 
 
+open MvPowerSeries in
 theorem continuous_pderiv {R τ : Type} [CommRing R] [TopologicalSpace R] [IsTopologicalSemiring R]
     (e : τ) :
     let := WithPiTopology.instTopologicalSpace (σ := τ) (R := R)
@@ -33,6 +34,7 @@ theorem continuous_pderiv {R τ : Type} [CommRing R] [TopologicalSpace R] [IsTop
   exact (WithPiTopology.continuous_coeff R _).mul continuous_const
 
 
+open MvPowerSeries in
 theorem pderiv_subst {R σ τ : Type} [CommRing R] [Fintype σ] {a : σ → MvPowerSeries τ R}
     (ha : HasSubst a) (e : τ) (H : MvPowerSeries σ R) :
     pderiv (R := R) e (subst a H) = ∑ i, subst a (pderiv (R := R) i H) * pderiv (R := R) e (a i) := by

@@ -40,6 +40,7 @@ theorem key {x y : IrrGL (k := k)} (hx : x.IsCusp) (hy : y.IsCusp) {N : ℕ} (hd
 end CuspPair
 
 
+open CuspPair in
 theorem cuspPairIrr_of (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (h : GlobalTheory.BZSeg.NuPair k) : GlobalTheory.BZSeg.CuspPairIrr k := by
   intro x y N hd hx hy h1 h2

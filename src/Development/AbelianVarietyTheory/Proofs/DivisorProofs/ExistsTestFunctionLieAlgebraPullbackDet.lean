@@ -20,10 +20,12 @@ namespace GlobalTheory.GLExt
 variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 
 
+variable (E a) in
 def toLCLM : Matrix (Fin a) (Fin a) (Cinf E) →L[ℝ] Lie E a :=
   LinearMap.toContinuousLinearMap (Matrix.ofLinearEquiv ℝ).symm.toLinearMap
 
 
+variable (E a) in
 def ofCLM : Lie E a →L[ℝ] Matrix (Fin a) (Fin a) (Cinf E) :=
   LinearMap.toContinuousLinearMap (Matrix.ofLinearEquiv ℝ).toLinearMap
 

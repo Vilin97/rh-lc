@@ -80,6 +80,7 @@ theorem isField_away : IsField (Localization.Away (p : R)) :=
 namespace BdRPlus
 
 
+omit [IsDomain R] [ValuationRing R] [CharZero R] in
 def xi (ϖ : PFlat p R) : BdRPlus p R := algebraMap (Ainf p R) _ (Ainf.xi ϖ)
 
 omit [IsDomain R] [ValuationRing R] [CharZero R] in
@@ -137,6 +138,7 @@ instance isAdicComplete_ker_theta : IsAdicComplete (RingHom.ker (theta p R)) (Bd
   exact AdicCompletion.isAdicComplete_self _ AinfInv.kerTheta_fg
 
 
+omit [CharZero R] in
 theorem theta_surjective : Function.Surjective (theta p R) := fun y =>
   let ⟨x, hx⟩ := AinfInv.theta_surjective (p := p) y
   ⟨algebraMap _ _ x, hx⟩

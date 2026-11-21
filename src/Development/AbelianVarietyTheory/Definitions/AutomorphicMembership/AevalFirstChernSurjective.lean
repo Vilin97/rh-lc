@@ -34,6 +34,7 @@ def ofFintype (L : LB X) (hL : L.IsLB) [Fintype L.ι] : FinLB X :=
 def dual (L : FinLB X) : FinLB X := ⟨L.n, L.U, fun i j => (L.g i j)⁻¹, isLB_dual L.isLB⟩
 
 
+variable (X) in
 def triv : FinLB X := ofFintype (LB.triv X) (LB.isLB_triv X)
 
 @[simp] theorem cls_dual (L : FinLB X) : L.dual.cls = -L.cls := CechPic.cls_dual L.isLB _
@@ -135,6 +136,7 @@ def ofUnits (M : LB Z.X) (hM : M.IsLB) (u : ∀ i, Γ(Z.X, Z.gen ⊓ M.U i))
   ⟨M, hM, LB.mkSec u h, hu⟩
 
 
+variable (Z) in
 def zero : VPair Z :=
   ofUnits (LB.triv _) (LB.isLB_triv _) (fun _ => 1) (fun _ => isUnit_one) fun _ _ => by
     change _ = resG Z.X _ 1 * _
@@ -190,6 +192,7 @@ theorem isSum_neg : IsSum P P.neg (zero Z) := by
 theorem IsIsom.refl : IsIsom P P := ⟨idIso P.M, idIso_isGen P.isLB, fun p q => P.eqn_rel p q _ _ _⟩
 
 
+variable {P P'} in
 theorem IsIsom.isSum (H : IsIsom P P') : IsSum P (zero Z) P' := fun i _ k => by
   obtain ⟨w, -, hw⟩ := H
   refine ⟨res (le_inf inf_le_right (inf_le_left.trans inf_le_left)) (Twist.isoUnit w k i), ?_⟩
@@ -210,6 +213,7 @@ instance isNoetherian : AlgebraicGeometry.IsNoetherian Z.X := isNoetherian_of_is
 def Comp : Type := irreducibleComponents Z.X
 
 
+variable {Z} in
 abbrev Comp.opens (C : Z.Comp) : Z.X.Opens := IsNormalScheme.component C
 
 def comp (C : Z.Comp) : Model O where
@@ -227,12 +231,14 @@ theorem exists_comp (x : Z.X) : ∃ C : Z.Comp, x ∈ C.opens :=
   ⟨⟨_, irreducibleComponent_mem_irreducibleComponents x⟩, mem_irreducibleComponent⟩
 
 
+variable {Z} in
 theorem mem_basicOpen_const {x : Z.X} {g : O} : x ∈ Z.X.basicOpen (Z.const g) ↔ g ∉ (Z.str x).asIdeal := by
   change x ∈ Z.X.basicOpen (Z.str.appTop ((Scheme.ΓSpecIso (.of O)).inv g)) ↔ _
   rw [← Scheme.preimage_basicOpen_top, basicOpen_eq_of_affine]
   rfl
 
 
+variable {Z} in
 theorem mem_gen_iff_eq_bot {x : Z.X} : x ∈ Z.gen ↔ (Z.str x).asIdeal = ⊥ := by
   refine ⟨fun h => by_contra fun h' => h (PrimeSpectrum.ext
     (eq_maximalIdeal ((Z.str x).isPrime.isMaximal h'))), fun h h' => ?_⟩
@@ -299,6 +305,7 @@ namespace VPair
 variable {Z} {P P' P'' : VPair Z}
 
 
+variable (Z) in
 def const (g : O) (hg : g ≠ 0) : VPair Z :=
   ofUnits (LB.triv _) (LB.isLB_triv _) (fun _ => resG Z.X le_top (Z.const g))
     (fun _ => Z.isUnit_const hg inf_le_left) fun _ _ => by
@@ -310,6 +317,7 @@ section Pull
 variable {B : Model O} {f : B.X ⟶ Z.X} (hf : f ≫ Z.str = B.str)
 
 
+variable (P) in
 def pull : VertDiv B where
   M := P.M.pull f
   isLB := Semi.LB.isLB_pull P.isLB f
@@ -317,6 +325,7 @@ def pull : VertDiv B where
   isUnit j := ((P.isUnit (j ⟨⟩)).map (f.appLE _ _ (LB.pull_inf_le f _ j)).hom).map _
 
 
+variable (P) in
 theorem eqn_pull (j : (P.pull hf).M.ι) {W : B.X.Opens} (h : W ≤ B.gen ⊓ (P.pull hf).M.U j) {V : Z.X.Opens}
     (hV : V ≤ Z.gen ⊓ P.M.U (j ⟨⟩)) (e : W ≤ f ⁻¹ᵁ V) :
     (P.pull hf).eqn j h = (f.appLE V W e).hom (P.eqn (j ⟨⟩) hV) := by
@@ -402,6 +411,7 @@ theorem isIsom_of_comp (h : ∀ C, (P.pull (Z.compι_str C)).cls = (P'.pull (Z.c
   exact (hb p q).symm
 
 
+variable (P) in
 def toProd : SmallPic Z.X × ∀ C, (Z.comp C).VDivZ :=
   (smallCls P.M P.isLB, fun C => (P.pull (Z.compι_str C)).cls)
 
@@ -411,15 +421,18 @@ theorem toProd_eq_iff : P.toProd = P'.toProd ↔ IsIsom P P' :=
       simpa [toProd] using (h.isSum.pull (Z.compι_str C)).cls_eq.symm)⟩
 
 
+variable (P P') in
 theorem toProd_add : (P.add P').toProd = P.toProd + P'.toProd :=
   Prod.ext (map_add (smallPicEquiv Z.X).symm (cls _ P.isLB) (cls _ P'.isLB))
     (funext fun C => ((isSum_add P P').pull (Z.compι_str C)).cls_eq)
 
 
+variable (Z) in
 theorem toProd_zero : (zero Z).toProd = 0 :=
   Prod.ext (map_zero (smallPicEquiv Z.X).symm) (funext fun C => cls_pull_zero (Z.compι_str C))
 
 
+variable (P) in
 theorem toProd_neg : P.neg.toProd = -P.toProd :=
   Prod.ext ((congrArg (smallPicEquiv Z.X).symm (cls_dual P.isLB _)).trans (map_neg _ _)) (funext fun C =>
     eq_neg_of_add_eq_zero_right ((P.isSum_neg.pull (Z.compι_str C)).cls_eq.symm.trans (cls_pull_zero _)))
@@ -443,12 +456,14 @@ namespace VPair
 variable {Z} {P P' P'' : VPair Z}
 
 
+variable (P) in
 def cls : Z.VDivZ := ⟨P.toProd, P, rfl⟩
 
 theorem cls_eq_iff : P.cls = P'.cls ↔ IsIsom P P' := Subtype.ext_iff.trans toProd_eq_iff
 
 
 
+variable (Z) in
 @[simp] theorem cls_zero : (zero Z).cls = 0 := Subtype.ext (toProd_zero Z)
 
 
@@ -487,6 +502,7 @@ theorem picSymPull_mem_symDeg {X Y : Scheme.{0}} (f : Y ⟶ X) {n : ℕ} {x : Pi
   exact Submodule.subset_span ⟨fun i => smallPull f (g i), by simp [picSymPull]⟩
 
 
+variable (Z) in
 def vDeg (d : ℕ) : Z.VDivZ →+ (PicSym Z.X →ₗ[ℚ] ℚ) :=
   ∑ C ∈ Finset.univ.filter fun C : Z.Comp => (Z.comp C).relDim = d,
     (LinearMap.lcomp ℚ ℚ (picSymPull (Z.compι C)).toLinearMap).toAddMonoidHom.comp ((Z.comp C).vDeg.comp (Z.vRes C))

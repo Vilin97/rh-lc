@@ -118,6 +118,7 @@ theorem exists_iota (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOver 
   rw [add_sub_cancel_left, hL _ u hu]
 
 
+variable (σ) in
 def sB (JA : Matrix α α (AE F E)) (JB : Matrix β β (AE F E)) (u v : Matrix α β (AE F E)) : ℝ :=
   -Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F (symp (R := AF F) (cA σ) (-1) JA JB u v))
 

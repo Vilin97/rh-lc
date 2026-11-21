@@ -37,6 +37,7 @@ theorem val_eq_uniformizer_of_ord {k : Type} [Field k] [ValuativeRel k] [Topolog
 end GlobalTheory.CompanionTheory.DlBridgeAt
 
 
+open GlobalTheory.CompanionTheory.DlBridgeAt in
 theorem GlobalTheory.CompanionTheory.DlBridgeAt.dlBridge : PositivityTheory.Rg.BcB.F.Tail.PExp.DlBridge := by
   intro E _ _ _ w ϖ hϖ
   have hord : ord (w.adicCompletion E) ϖ = 1 := (GlobalTheory.CompanionTheory.CtS.NuVal.ord_eq_ordL_unit w ϖ).trans hϖ

@@ -44,6 +44,7 @@ theorem uAction_lieEq (X : TR.Lie F a) (φ : TR.Sm F a) :
   rfl
 
 
+open Classical in
 theorem exists_stdBasis (F : Type) [Field F] [NumberField F] (a : ℕ) :
     ∃ b : Module.Basis (InfinitePlace F × Fin a × Fin a) ℝ (TR.Lie F a),
       ∀ l, b l = TR.toL (Matrix.single l.2.1 l.2.2 (Pi.single l.1 1)) := by

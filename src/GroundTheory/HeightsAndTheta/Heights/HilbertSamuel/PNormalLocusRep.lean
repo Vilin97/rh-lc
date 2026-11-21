@@ -37,6 +37,7 @@ theorem isFractionRing_chartRingZ (y : (Σ k, ι k) → Ω) (hbir : Birational y
   rw [hgh, mul_assoc, mul_div_assoc, div_self (mul_ne_zero hh0 hP), mul_one]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem charZero_of_isHorizontal (y : (Σ k, ι k) → Ω) (hH : IsHorizontal (mCoordIdeal y)) : CharZero Ω := by
   refine charZero_of_inj_zero fun n hn => ?_
   have hmem : ((n : ℤ) : ℤ) ∈ (mCoordIdeal y).comap (C : ℤ →+* MRing ι) := by
@@ -47,6 +48,7 @@ theorem charZero_of_isHorizontal (y : (Σ k, ι k) → Ω) (hH : IsHorizontal (m
   exact_mod_cast hmem
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem charZero_chartRingZ [CharZero Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) : CharZero (chartRingZ y c) :=
   charZero_of_inj_zero fun n hn => by
     have : ((n : chartRingZ y c) : Ω) = 0 := by rw [hn]; rfl
@@ -95,6 +97,7 @@ theorem exists_conductor [CharZero Ω] (y : (Σ k, ι k) → Ω) (hbir : Biratio
     exact mul_mem r.2 hx
 
 
+omit [Fintype K] in
 theorem isMultiHomog_prod {J : Type} (s : Finset J) (H : J → MRing ι) (N : J → K → ℕ)
     (hH : ∀ j ∈ s, IsMultiHomog (H j) (N j)) : IsMultiHomog (∏ j ∈ s, H j) (∑ j ∈ s, N j) := by
   classical
@@ -116,6 +119,7 @@ theorem notMem_mCoordIdeal (y : (Σ k, ι k) → Ω) {f : MRing ι} {d : K → �
 end NormalLocusRep
 
 
+open NormalLocusRep in
 theorem NormalLocusRep.proof : NormalLocusRep.Statement := by
   intro K _ ι _ Ω _ y D hV hbir
   classical

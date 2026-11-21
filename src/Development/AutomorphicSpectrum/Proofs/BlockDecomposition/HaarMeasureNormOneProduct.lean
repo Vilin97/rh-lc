@@ -14,6 +14,7 @@ open NumberField MeasureTheory Topology GlobalTheory.AutomorphicL2Unitary Global
 namespace GlobalTheory.CompanionTheory.HaarSplit
 
 
+open GroundTheory.Automorphic.Reduction in
 theorem map_prod_eq_smul (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (ha : 0 < a)
     (μ : Measure (GA E a)) [μ.IsHaarMeasure] (ν : Measure (normOneGL (K := E) (n := a))) [ν.IsHaarMeasure] :
     ∃ c : ENNReal, c ≠ 0 ∧ c ≠ ⊤ ∧

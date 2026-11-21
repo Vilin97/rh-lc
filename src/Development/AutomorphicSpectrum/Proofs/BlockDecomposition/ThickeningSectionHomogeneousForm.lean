@@ -41,6 +41,8 @@ theorem formOn_eq_zero_iff {R : Type} [CommRing R] {N : ℕ} (k : Fin (N + 1))
   exact GlobalTheory.ProjSpace.formOn_chart_inj R N k hf _
 
 
+open scoped GlobalTheory.ProjSpace in
+attribute [local instance] MvPolynomial.gradedAlgebra in
 theorem exists_formOn_eq {R : Type} [CommRing R] {N : ℕ} (k : Fin (N + 1))
     (s : Γ(PSpace R N, GlobalTheory.ProjSpace.chart R N k)) :
     ∃ (n : ℕ) (f : MvPolynomial (Fin (N + 1)) R) (hf : f.IsHomogeneous n),

@@ -43,6 +43,7 @@ theorem red_surj (C : Type) [CommRing C] (p : Sp (DualNumber C)) : ∃ q : Sp C,
 variable {X : Scheme.{0}} {U : X.Opens} (hU : IsAffineOpen U)
 
 
+include hU in
 theorem top_le {C : Type} [CommRing C] (t : Sp (DualNumber C) ⟶ X) (u : Γ(X, U) →+* C)
     (h : red C ≫ t = spMap u ≫ hU.fromSpec) : ⊤ ≤ t ⁻¹ᵁ U := by
   intro p _

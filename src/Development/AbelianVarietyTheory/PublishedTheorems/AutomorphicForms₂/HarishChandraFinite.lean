@@ -50,6 +50,7 @@ def forms (U : Subgroup (GA D V)) (ε : D.what₂.Tau → Fin V.rank → Bool)
 end AutFin
 
 
+open AutFin in
 def HarishChandraFinite : Prop :=
   ∀ (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)), IsInfFam θ →
   ∀ (V : HSp D) (U : Subgroup (GA D V)), IsOpen (U : Set (GA D V)) →
@@ -77,6 +78,7 @@ theorem conj_mem_UH {n : ℕ} {e : Fin n → Bool} {P G : Matrix (Fin n) (Fin n)
     _ = G := by rw [h1, mul_nonsing_inv _ hd, Matrix.mul_one, Matrix.mul_one, hk, h]
 
 
+open Classical in
 theorem isAtTau_kAt (hθ : IsInfFam θ) (τ : D.what₂.Tau) {e : Fin V.rank → Bool}
     {P : Matrix (Fin V.rank) (Fin V.rank) ℂ} (hP : IsUnit P) (h : Pᴴ * Formalism.REAL.Jm e * P = gramAt D V τ)
     (k : Formalism.REAL.KG e) : IsAtTau θ V τ (P⁻¹ * Formalism.REAL.toMK k * P) (kAt θ V τ e P k) := by

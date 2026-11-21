@@ -33,6 +33,7 @@ theorem quo_mul_star (z : (Etau K τ)ˣ) : quo z * star (quo z) = 1 := by
     _ = 1 := by simp
 
 
+variable (O) in
 def mulE (y : (EL Δ τ)ˣ) : Sp Δ τ ≃ₗ[O] Sp Δ τ where
   toFun x := (x.1, y * x.2)
   invFun x := (x.1, (y⁻¹ : (EL Δ τ)ˣ) * x.2)

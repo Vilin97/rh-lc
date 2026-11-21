@@ -24,6 +24,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.AbLaw.SecBC
 
 
+open GlobalTheory.AbLaw in
 theorem GlobalTheory.AbLaw.SecBC.exists_h1Zero_of_abVar
     (hV : ∀ (K : Type) [Field K] [IsAlgClosed K] (B : Over (Spec (CommRingCat.of K))) [GrpObj B] [IsCommMonObj B]
       (M : LB B.left), IsAbelianScheme B → M.IsLB → RelAmple B M → ∀ a : ℕ, 1 ≤ a → FirstCohomologyVanishes (pw M (a : ℤ)))

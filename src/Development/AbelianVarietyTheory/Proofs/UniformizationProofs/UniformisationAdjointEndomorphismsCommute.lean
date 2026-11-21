@@ -207,6 +207,7 @@ variable (hL : LL) {R : Type} [CommRing R] [IsDomain R] [CharZero R] {I : Ideal 
   (hG : IsSemiAbelian G) {U : Unif I D A G}
 
 
+include hL hR hG in
 theorem keeps_of_add (E : EndU U.toUnifPre) (h : D.toPre.X →+ D.toPre.X) (m : ℕ) (E₁ : EndU U.toUnifPre)
     (h₁ : D.toPre.X →+ D.toPre.X) (eG : E₁.aG = E.aG * 𝟙 G ^ m) (eA : E₁.aA = E.aA * 𝟙 A.A ^ m)
     (eh : ∀ y, h₁ y = h y + m • y) (F : Type) [Field F] [IsAlgClosed F] [Algebra (FractionRing R) F]
@@ -241,6 +242,7 @@ theorem keeps_of_add (E : EndU U.toUnifPre) (h : D.toPre.X →+ D.toPre.X) (m : 
     exact (hf _ _).2 (mul_right_cancel a)
 
 
+include hL hR hG in
 theorem exists_add (E : EndU U.toUnifPre) (m : ℕ) : ∃ E₁ : EndU U.toUnifPre, E₁.aG = E.aG * 𝟙 G ^ m ∧
     E₁.aA = E.aA * 𝟙 A.A ^ m ∧ ∀ y, E₁.h y = E.h y + m • y := by
   obtain ⟨M, mG, mA, -, mh, -⟩ := (GlobalTheory.IntEnd.exists_nsmul_and_neg hL R I hR D A G hG U).1 m
@@ -256,6 +258,7 @@ theorem exists_add (E : EndU U.toUnifPre) (m : ℕ) : ∃ E₁ : EndU U.toUnifPr
   exact ⟨E₁, mG ▸ eG, mA ▸ eA, fun y => by rw [eh, AddMonoidHom.add_apply, mh]⟩
 
 
+include hL hR hG in
 theorem exists_keeps (h₁ : TwistBCSpanStatement) (h₂ : TWM.VRatioGtStatement) (h₃ : TWStatement) (h₄ : UUStatement)
     (E E' : EndU U.toUnifPre) (hE : Function.Injective E.h) (hE' : Function.Injective E'.h)
     (adj : LBIso (cubeLB G ![fst G G ≫ E.aG, snd G G] U.LG.L) (cubeLB G ![fst G G, snd G G ≫ E'.aG] U.LG.L)) :

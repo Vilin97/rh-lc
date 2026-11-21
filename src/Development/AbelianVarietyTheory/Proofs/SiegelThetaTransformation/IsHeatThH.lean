@@ -20,6 +20,7 @@ variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V] [FiniteDimension
   {ι : Type*} {U : Set V}
 
 
+omit [FiniteDimensional ℂ V] in
 theorem convexOn_norm_term (c : ℂ) (L : V →L[ℂ] ℂ) :
     ConvexOn ℝ Set.univ fun p => ‖c * cexp (L p)‖ := by
   have h : ConvexOn ℝ Set.univ fun p => Real.exp ((L p).re) := by
@@ -172,6 +173,7 @@ theorem form_dir₃ (x : Matrix (Fin n) (Fin N) E) (τ : Ψ) (k : Fin n) (a : Fi
   · simp
 
 
+open Classical in
 theorem line₁ (Z : CF Ψ N N) (z z' : CF Ψ n N) (τ : Ψ) (a b : Fin N) (s : ℂ) :
     (Z, z, z') + s • ((dir Ψ τ a b, 0, 0) : CF Ψ N N × CF Ψ n N × CF Ψ n N) =
       (Z + s • dir Ψ τ a b, z, z') := by simp
@@ -208,6 +210,7 @@ theorem heat_dir (φ : Matrix (Fin n) (Fin N) E → ℂ)
 end GlobalTheory.SW.ExpSum
 
 
+open GlobalTheory.SW.ExpSum in
 theorem GlobalTheory.SW.isHeat_thH : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)), IsType Ψ → ∀ (n N : ℕ) (φ : Matrix (Fin n) (Fin N) E → ℂ), IsSB φ → IsHeat Ψ (thH Ψ φ) := by
   intro E _ _ _ Ψ hΨ n N φ hφ
   have hs : ∀ p ∈ {p : CF Ψ N N × CF Ψ n N × CF Ψ n N | (p.1 : CM Ψ N N) ∈ Hn Ψ N},

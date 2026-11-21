@@ -41,6 +41,7 @@ end GlobalTheory.Mum.FieldVA
 namespace GlobalTheory.Mum
 
 
+open GlobalTheory.Mum.FieldVA in
 theorem veryAmpleAlong_field (hA : AmpleSt) (K : Type) [Field K] (P : PolAV (Sp K)) :
     ∃ (m : ℕ) (b : Fin (m + 1) → H0 P.L 4), VeryAmpleAlong P.A.hom (𝟙 P.A.left) P.L b := by
   obtain ⟨m, t, hcov, hs⟩ := GlobalTheory.ZH.CrdMove.immBy_lbPow hA K P 4 le_rfl

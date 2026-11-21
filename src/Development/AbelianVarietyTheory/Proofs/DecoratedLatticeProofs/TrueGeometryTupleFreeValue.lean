@@ -163,6 +163,7 @@ theorem lev_facts {X : Fields} {Pr : Primes X} {R : Ranks} {Ch : Chars X Pr R.m}
     exact mem_par_iff (c := 0) (s := s) hA.compl W.unif rfl hn he' W.tame γ
 
 
+open GlobalTheory.Mem.Col2 in
 theorem pow_smul_rep_mem {X : Fields} {Pr : Primes X} {R : Ranks}
     {sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)} {S₀ : Set ℕ} {mu : Tup X.F X.E X.K S₀}
     {cst : LocCst X (rowSG Pr sel mu)} {u : Pr.Word} {j : ℕ} (p : PtAt R sel mu cst u j) (h : j + 1 = R.m) (P : rowSG Pr sel mu)
@@ -323,6 +324,7 @@ theorem prV_toEAf_eq_zero (v : GlobalTheory.FinPl.Pl D) (y : AE D) (h : GlobalTh
   rw [h, map_zero]
 
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem bc_prV_eq_one (S : HSp D) {P : GlobalTheory.FinPl.Pl D → Prop} {g : GA D S} (hg : g ∈ GlobalTheory.FinPl.grpAt S P) {m : ℕ} (hm : S.rank = m)
     (x : GL (Fin m) (EF D)) (hx : x.1 = finM S hm g) (v : GlobalTheory.FinPl.Pl D) (hv : ¬ P v) :
     Formalism.UG.bc (Formalism.UG.prV (E := D.host.E) v) x = 1 := by
@@ -359,6 +361,7 @@ theorem bc_prV_eq_one (S : HSp D) {P : GlobalTheory.FinPl.Pl D → Prop} {g : GA
 end Split
 
 
+set_option maxHeartbeats 2000000 in
 theorem uloc_iff {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {u : B.Word} {a : I.ι}
     {Ch₀ : ℕ → Type} (hOk : I.Ok) (hP : TC.Pins B X) (A : TwDat I l Z u a Ch₀) (hA : A.Is) (P : BadPr I a)
     {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]

@@ -10,6 +10,7 @@ open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComp
 namespace GlobalTheory.EtC
 
 
+open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex in
 theorem _root_.GlobalTheory.EtC.loc_iff_etale_affine_points : ∀ (U : Scheme.{0})
     (P : ∀ V : Scheme.{0}, (V ⟶ U) → Prop),
     (∀ (V W : Scheme.{0}) (g : V ⟶ U) (k : W ⟶ V), P V g → P W (k ≫ g)) →

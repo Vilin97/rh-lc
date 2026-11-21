@@ -280,6 +280,7 @@ theorem cT_fromBlocks {l m : Type} (a : Matrix l l A) (b : Matrix l m A) (c : Ma
   rfl
 
 
+variable (s R) in
 def DiagProp (A : Type) [CommRing A] [Algebra R A] (s : A →+* A) (ι : Type) [Fintype ι] [DecidableEq ι] : Prop :=
   ∀ S : Matrix ι ι A, cT s S = S → IsUnit S.det →
     ∃ (g : Matrix ι ι A) (D : ι → Rˣ), IsUnit g.det ∧

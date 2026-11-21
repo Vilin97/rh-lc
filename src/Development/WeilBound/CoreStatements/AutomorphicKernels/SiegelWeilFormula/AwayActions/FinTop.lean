@@ -38,6 +38,7 @@ theorem step_of_triv (hT : TAll) (hA : AuxiliaryPrimeFunction) (hD : AdDecomp) (
 end SDf
 
 
+variable (F) in
 theorem exists_schwartz_ne {κ : Type} [Fintype κ] :
     ∃ (φ : 𝓢(κ → mixedEmbedding.mixedSpace F, ℂ)) (v : κ → mixedEmbedding.mixedSpace F), φ v ≠ 0 := by
   let b : ContDiffBump (0 : κ → mixedEmbedding.mixedSpace F) := ⟨1, 2, zero_lt_one, one_lt_two⟩

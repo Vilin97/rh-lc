@@ -61,6 +61,7 @@ theorem str_of_over {T : Type} [CommRing T] [Algebra c.F T] {z : FrPt Xo c T} {x
   rw [← h, Category.assoc, Z.jQ_over, ptF_snd]
 
 
+variable {C} in
 def algOf {T : Type} [CommRing T] [Algebra c.F T] {y : C.Y.X} (ψ : St C y →+* T) {p : Sp T ⟶ C.Y.X}
     (h : spMap ψ ≫ pt C y = p) (hp : p ≫ C.π ≫ genStr Z = spMap (algebraMap c.F T)) : St C y →ₐ[c.F] T :=
   { ψ with commutes' := fun a => DFunLike.congr_fun (sp_inj (f := ψ.comp (algebraMap c.F (St C y))) (by
@@ -100,9 +101,11 @@ theorem exists_spec {y y' : C.Y.X} (h : y' ⤳ y) : ∃ sp : St C y →ₐ[c.F] 
   exact (congrArg (_ ≫ ·) k).trans (toFk_pt C y')
 
 
+variable (C) in
 def rationalEigenFrame : EigFrame Z (algebraMap c.F (Fk C)) (gpt C ≫ C.π ≫ genι Z) := C.f0
 
 
+variable (C) in
 structure Chart (y : C.Y.X) (P : FrPt Xo c (St C y)) (t : Ix Dw → (Fk C)ˣ) : Prop where
   ov : GlobalTheory.AllWt.ptF P ≫ Z.jQ = pt C y ≫ C.π
   bm : BM (toFk C y) t P (fr0 C)
@@ -114,6 +117,7 @@ section Wit
 variable {C : FlagCpt Z e} {T T' : Type} [CommRing T] [Algebra c.F T] [CommRing T'] [Algebra c.F T']
 
 
+variable (C) in
 structure Wit (p : Sp T ⟶ C.Y.X) (z : FrPt Xo c T) : Type where
   y : C.Y.X
   ψ : St C y →ₐ[c.F] T

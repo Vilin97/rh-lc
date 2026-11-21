@@ -41,6 +41,7 @@ end Pullback
 section Sums
 
 open scoped Classical in
+open Classical in
 theorem finsum_sub_mul_eq_of_support {α : Type*} (Z₁ Z₂ n : α → ℤ) (p : α → Prop)
     (h₁ : (Function.support Z₁).Finite) (h₂ : (Function.support Z₂).Finite)
     (hv : ∀ W, Z₁ W - Z₂ W ≠ 0 → p W) :

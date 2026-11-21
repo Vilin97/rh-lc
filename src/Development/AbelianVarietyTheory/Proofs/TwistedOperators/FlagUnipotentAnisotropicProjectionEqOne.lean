@@ -104,6 +104,7 @@ theorem witt_anisotropic_block_flag_mul_embedded {n : GA D S} (hn : n ∈ flagN 
     Matrix.one_mul]
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_emb_of_fix {k : GA D S₀} (hk : mt S₀ k ⬝ o.jB = o.jB) : ∃ a : GA D A, o.emb (a, 1) = k := by
   have h1 : o.pB ⬝ (mt S₀ k ⬝ o.jA) = 0 := by
     have e : adj o.jB ⬝ (gA S₀ ⬝ (mt S₀ k ⬝ o.jA)) = 0 := by

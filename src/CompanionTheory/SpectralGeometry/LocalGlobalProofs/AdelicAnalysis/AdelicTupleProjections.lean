@@ -44,6 +44,7 @@ theorem continuous_mapTup {d n M : ℕ} (b : Module.Basis (Fin d) F E) (f : R �
     (continuous_mapTens b f hf).comp ((continuous_apply i).comp (continuous_apply a))
 
 
+omit [IsTopologicalRing S] [TopologicalSpace S] [CommRing S] [Algebra F S] in
 def tupHomeo {d : ℕ} (b : Module.Basis (Fin d) F E) (n M : ℕ) :
     (Fin n → Fin M → R ⊗[F] E) ≃ₜ (Fin n → Fin M → Fin d → R) :=
   Homeomorph.piCongrRight fun _ => Homeomorph.piCongrRight fun _ => TopK.coordHomeo R b

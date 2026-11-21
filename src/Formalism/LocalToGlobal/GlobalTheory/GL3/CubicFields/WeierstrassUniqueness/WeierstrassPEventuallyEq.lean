@@ -72,6 +72,7 @@ open Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity (IsLat jL Uniformiza
 open Formalism.MainNotions.TaylorLogMetric (lamOf)
 
 
+open Filter Topology in
 theorem weierstrassP_eventuallyEq (L L' : PeriodPair) (h2 : L.g₂ = L'.g₂) (h3 : L.g₃ = L'.g₃) :
     L.weierstrassP =ᶠ[𝓝[≠] 0] L'.weierstrassP := by
   set f := L.weierstrassPExcept 0

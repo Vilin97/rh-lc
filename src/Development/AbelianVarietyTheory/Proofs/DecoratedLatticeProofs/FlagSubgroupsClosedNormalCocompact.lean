@@ -266,6 +266,7 @@ theorem exists_pick (D : D7) : ∃ C : Set (AE D), IsCompact C ∧ ∃ pick : AE
   exact ⟨pick, h0 0 rfl, hp⟩
 
 
+set_option maxHeartbeats 800000 in
 theorem unip_cols_cocompact : ∀ (D : D7) (ρ : ℕ) (j : Fin ρ), ∃ K : Set (UX D ρ), IsCompact K ∧ ∀ u : UX D ρ, (∀ l : Fin ρ, l ≤ j → ∀ s : Fin ρ, u.1.1 s l = (1 : Matrix (Fin ρ) (Fin ρ) (AE D)) s l) → ∃ γ ∈ UXQ D ρ, (∀ l : Fin ρ, l ≤ j → ∀ s : Fin ρ, γ.1.1 s l = (1 : Matrix (Fin ρ) (Fin ρ) (AE D)) s l) ∧ ∃ k ∈ K, u = γ * k := by
   intro D ρ j
   obtain ⟨C, hC, pick, hp0, hp⟩ := exists_pick D

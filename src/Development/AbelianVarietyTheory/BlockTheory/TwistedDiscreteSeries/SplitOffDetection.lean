@@ -20,6 +20,7 @@ section Local
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
 
 
+variable (l) in
 structure IsSplitOff (P : Ideal (𝓞 E)) (p : ℕ) : Prop where
   max : P.IsMaximal
   split : P ⊔ P.map (H.bar : 𝓞 E →+* 𝓞 E) = ⊤

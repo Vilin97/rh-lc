@@ -128,6 +128,7 @@ theorem SelfConjugatePlaceSetting.en_fst (H : SelfConjugatePlaceSetting r cc a t
     rw [add_assoc, h2, add_zero]
 
 
+variable (r tau gm) in
 def PsiS (o : Orb) {M : ℕ} (col : Fin M → Fin N) :
     MvPolynomial (Fin M × WV fun _ => IIs r tau o) C →ₐ[C] MvPolynomial (Letter T r n) C :=
   (subG r tau gm plc).comp (rename fun x : Fin M × WV fun _ => IIs r tau o =>

@@ -13,6 +13,7 @@ open scoped LaurentPolynomial
 namespace GlobalTheory.CompanionTheory.AicStep
 
 
+open Polynomial in
 theorem aic_step : ∀ (B : Type) [CommRing B] (T : Type) [CommRing T] (π : B) (g : B →+* T), IsCompl π g → π ∈ nonZeroDivisors B → AIC B → VAL π → ∀ P : Polynomial T, P.Monic → 0 < P.natDegree → ∀ (M : ℕ) (a : B), P.eval (g a) ∈ Ideal.span {g π ^ (P.natDegree * M)} → ∃ a₁ : B, a₁ - a ∈ Ideal.span {π ^ M} ∧ P.eval (g a₁) ∈ Ideal.span {g π ^ (P.natDegree * (M + 1))} := by
   open Polynomial in
   intro B _ T _ π g hC hπ hA hV P hP hd M a ha

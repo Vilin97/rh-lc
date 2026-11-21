@@ -31,6 +31,7 @@ variable {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {l : ℕ} [F
   {L : Type} [Field L] [NumberField L] [IsCMField L] [Algebra L Ω] [IsAlgClosure L Ω] {Φ : Fr.Frame l (ResidueField c.O)}
 
 
+variable (σ M) in
 structure IsKa (ι : Qbar l ≃+* ℂ) (n : ℕ) (ka : G L Ω →* (Qbar l)ˣ) : Prop where
   alg : Sd.IsAlgChar ι ka
   conj : ∀ s s' : G L Ω, galEmb ℚ L Ω s' = σ * galEmb ℚ L Ω s * σ⁻¹ → ka s * ka s' = cycBar L Ω l s ^ (1 - (n : ℤ))

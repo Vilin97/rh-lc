@@ -13,6 +13,7 @@ namespace Formalism.MainNotions.G.GLWeightTheory
 open Formalism.MainNotions.G
 
 
+open Classical in
 def matrixSubst {R B : Type*} [CommRing R] [CommRing B] {ι : Type*} {n : ℕ} (LL : Letters ι) (S : Set ι)
     (φ : R →+* B) (m m' : Matrix (Fin n) (Fin n) B) :
     MvPolynomial (ι × Fin n) R →+* MvPolynomial (ι × Fin n) B :=

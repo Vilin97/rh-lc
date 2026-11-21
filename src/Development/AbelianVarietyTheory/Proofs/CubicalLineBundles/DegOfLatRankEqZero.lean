@@ -28,6 +28,7 @@ end Lattice
 variable {K : Type} [Field K] [NumberField K] {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 
+omit [NumberField K] in
 theorem eigLat_le {P : Out.PolAV (Sp (𝓞 K))} (F : GenFib P) {O : Type} [CommRing O] (act : OAct O P.A)
     (τ : O →+* 𝓞 K) : F.eigLat act τ ≤ F.lieLat :=
   Submodule.span_mono fun _ ⟨u, hu, _⟩ => ⟨u, hu⟩

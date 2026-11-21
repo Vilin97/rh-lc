@@ -69,6 +69,7 @@ theorem span_grid_eq_span_range (d : ℕ) (Φ : (σ → A) → V)
     exact ⟨x, hx, rfl⟩
 
 
+omit [Finite σ] [CharZero K] in
 theorem exists_poly_dual_sum_monomial_smul (d : ℕ) (s : Finset (σ →₀ ℕ)) (v : (σ →₀ ℕ) → V)
     (hs : ∀ a ∈ s, ∀ i, a i ≤ d) (l : Module.Dual K V) :
     ∃ P : MvPolynomial σ K, (∀ i, P.degreeOf i ≤ d) ∧ ∀ x : σ → A,

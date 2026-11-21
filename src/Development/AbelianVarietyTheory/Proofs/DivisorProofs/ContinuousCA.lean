@@ -28,6 +28,7 @@ theorem cA_cA (hσ : ∀ a, σ (σ a) = a) (z : AE F E) : cA σ (cA σ z) = z :=
     simp [hσ]
 
 
+variable (F E) in
 theorem topAE : IsTopologicalRing (AE F E) ∧ LocallyCompactSpace (AE F E) ∧ SecondCountableTopology (AE F E) ∧
     T2Space (AE F E) := by
   haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E

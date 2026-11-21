@@ -47,6 +47,7 @@ theorem isIrrChar_mul_char {H : Type} [Group H] {χ : H → ℂ} (hχ : IsIrrCha
 end GlobalTheory.CliffTwo
 
 
+open GlobalTheory.CliffTwo in
 theorem GlobalTheory.Shin.coset_pair_eq_zero_or_twist :
     ∀ (G Γ : Type) [Group G] [Finite G] [Group Γ] [Fintype Γ] (φ : Γ →* MulAut G) (s : Γ),
     (Nat.card Γ).Prime → s ≠ 1 → ∀ χ χ' : G ⋊[φ] Γ → ℂ, IsIrrChar ℂ ℂ χ → IsIrrChar ℂ ℂ χ' →

@@ -30,6 +30,7 @@ theorem rank_col (G : GridData L sc) {j : ℕ} (hj : j ≤ D.R.m) : (G.V (.grid 
   · rw [colY_lt L hk]; exact Comparison₂.rank_Yc hk.le
 
 
+open Classical in
 def topPl (L : LevCh D T) (t : T) : Finset (Pl D.host.E) := L.Pg ∪ L.Q t
 
 

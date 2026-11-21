@@ -13,6 +13,7 @@ open GlobalTheory.CompanionTheory.Ar.RootHt GroundTheory.Heights₂.Heights
 namespace GlobalTheory.CompanionTheory.Ar.RootHt
 
 
+open scoped ComplexOrder in
 theorem gramDet_ne_zero_of_linearIndependent :
     ∀ (L : Type) [Field L] [NumberField L] (B : HermitianBundle.{0} L) (σ : L →+* ℂ) (n : ℕ)
     (f : Fin n → B.carrier), LinearIndependent (𝓞 L) f → B.gramDet σ f ≠ 0 := by

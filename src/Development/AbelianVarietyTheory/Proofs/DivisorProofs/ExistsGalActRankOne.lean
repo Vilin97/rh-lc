@@ -23,6 +23,7 @@ variable {R : Type} [CommRing R] [IsLocalRing R] {S : Scheme.{0}}
 end
 
 
+open GlobalTheory.TorsionFormCompare in
 theorem isPullUnif_refl {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D : DegData R I}
     {A : PolAV (Sp (FractionRing R))} {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G] (U : Unif I D A G)
     (hD : IsPullDeg (RingHom.id R) D.toPre D.toPre) (hid : IsIdPull hD)

@@ -169,11 +169,13 @@ variable {A : Type} [CommRing A] {K : Type} [Field K] [Algebra A K]
   {E : Type} [Field E] [NumberField E]
 
 
+omit [NumberField E] in
 theorem mem_eigSp {ρ : 𝓞 E →+* Module.End K V} {σ : E →+* K} {x : V} :
     x ∈ eigSp ρ σ ↔ ∀ a : 𝓞 E, ρ a x = σ (a : E) • x := by
   simp [eigSp, Submodule.mem_iInf, sub_eq_zero]
 
 
+omit [NumberField E] in
 theorem eigSp_eq (ρ : 𝓞 E →+* Module.End K V) (σ : E →+* K) :
     eigSp ρ σ = GlobalTheory.EigenSplit.eigenSub ρ (σ.comp (algebraMap (𝓞 E) E)) := by
   ext x
@@ -297,6 +299,7 @@ theorem regAct_basis (k) :
   simp [regAct, Algebra.TensorProduct.basis_apply]
 
 
+omit [NumberField E] in
 theorem val_le_one (v : Valuation K NNReal) (σ : E →+* K) (x : 𝓞 E) : v (σ (x : E)) ≤ 1 :=
   (Valuation.integer.integers v).isIntegral_iff_v_le_one.1
     ((map_isIntegral_int σ (RingOfIntegers.isIntegral_coe x)).tower_top)

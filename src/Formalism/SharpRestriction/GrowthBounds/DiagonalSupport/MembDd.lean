@@ -227,6 +227,7 @@ end Ph
 end DdG
 
 
+open DdG in
 theorem restDdG_holds : RestDdG := by
   intro p _ n' r K _ _ _ O _ _ _ _S Fr TT L₁ L₂ N₁ G' deg d Y cP hF J _ Dt dPl dNo ka rho No Go hMH
   obtain ⟨⟨hTied, -, -⟩, hBlock, -, -, hPol⟩ := hMH

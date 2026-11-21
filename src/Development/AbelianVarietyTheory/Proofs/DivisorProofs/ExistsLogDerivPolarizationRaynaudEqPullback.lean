@@ -176,6 +176,7 @@ theorem epsTo_inr (S : Type) [CommRing S] [Algebra R S] (c : R) :
   ext <;> simp [SqZero.epsTo, SqZero.dualTo_apply, TrivSqZeroExt.algebraMap_eq_inl']
 
 
+open GlobalTheory.InvFieldRing in
 theorem isInv_pbT (φ : G ⟶ G') [IsMonHom φ] {v : TanM (𝟙 (Sp R)) G} {d : Fld G.left} (hd : IsInv G v d) {g : ℕ}
     {w : Fin g → TanM (𝟙 (Sp R)) G'} {d' : Fin g → Fld G'.left} (hd' : ∀ a, IsInv G' (w a) (d' a)) (c : Fin g → R)
     (hc : pushL φ v = ∑ a, c a • w a) (U : G'.left.Opens) (s : Γ(G'.left, U)) (W : G.left.Opens)

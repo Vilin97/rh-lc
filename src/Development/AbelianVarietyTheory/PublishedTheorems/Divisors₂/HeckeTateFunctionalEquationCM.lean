@@ -19,9 +19,11 @@ namespace GlobalTheory.HeckeEps
 variable {E : Type} [Field E] [NumberField E]
 
 
+variable (E) in
 def stdChar : AddChar (AF E) ℂ := (GlobalTheory.StdCharUnique.existsUnique_isStdChar E).exists.choose
 
 
+variable (E) in
 theorem isStdChar_stdChar : GlobalTheory.IndefiniteRowSideFullHecke.LocalDualIndex.IsStdChar E (stdChar E) :=
   (GlobalTheory.StdCharUnique.existsUnique_isStdChar E).exists.choose_spec
 

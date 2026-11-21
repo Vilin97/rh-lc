@@ -231,6 +231,11 @@ theorem _root_.GlobalTheory.MainTerm.Adapted.mainVec_level_one
     simp [hc] at hc0
 
 
+open Classical in
+variable {C : Type} [Field C] in
+variable {V : _root_.Formalism.L2.FormalSeriesBounds.VF C} {d : ℕ} {I J : Type} [Fintype I] [Fintype J] in
+variable {G : _root_.Formalism.L2.FormalSeriesBounds.Cart V d I J} {S : _root_.Formalism.L2.FormalSeriesBounds.Sys G} {Z : Type} {D : _root_.Formalism.BaseCaseIdentities.Data C Z I} {a : ZMod d}
+  {i : ℕ} in
 theorem _root_.GlobalTheory.MainTerm.isSat_tan (S : _root_.Formalism.L2.FormalSeriesBounds.Sys G) {N : ℕ} (em : Fin N ↪ I) :
     _root_.Formalism.L2.FormalSeriesBounds.IsSat V (fun δ => S.tan (em δ)) := by
   have hu : V.v (Matrix.of S.tan).det = 0 := S.unimod

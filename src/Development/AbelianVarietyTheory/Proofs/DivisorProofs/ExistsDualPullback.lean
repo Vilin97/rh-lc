@@ -158,6 +158,7 @@ theorem dualApp_pullForm (l : Γ(dual F, V)) {W : X.Opens} (h : W ≤ V) (hT : T
   rw [resG_appLE, resG_appLE, dualApp_resM l h, appLE_resG]
 
 
+variable (F) in
 def pullFormHom :
     dual F ⟶ (Scheme.Modules.pushforward f).obj (dual ((Scheme.Modules.pullback f).obj F)) :=
   homOfLinear (fun V =>
@@ -177,6 +178,7 @@ def pullFormHom :
       rw [dualApp_pullForm f _ h, dualApp_pullForm f _ (h.trans hV), dualApp_res]
 
 
+variable (F) in
 def theta : (Scheme.Modules.pullback f).obj (dual F) ⟶ dual ((Scheme.Modules.pullback f).obj F) :=
   adj f (pullFormHom f F)
 

@@ -52,6 +52,7 @@ theorem evAt_γ (z : W.Gam → ℤ_[PD.p]ˣ)
   exact evR_congr PD.p (s + 1) hlm hyA _ rfl _
 
 
+omit [IsLocalRing O] [IsAdicComplete (IsLocalRing.maximalIdeal O) O] [IsDomain O] [CharZero O] in
 theorem gen_of (z : W.Gam → ℤ_[PD.p]ˣ)
     (hz : ∀ g, algebraMap ℤ_[PD.p] O (z g : ℤ_[PD.p]) = (W.χΓ g : O))
     (hZinj : Function.Injective (algebraMap ℤ_[PD.p] O))

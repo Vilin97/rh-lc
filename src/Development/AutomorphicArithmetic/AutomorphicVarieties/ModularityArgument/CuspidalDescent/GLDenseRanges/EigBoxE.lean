@@ -88,6 +88,7 @@ variable {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [NumberField L] [IsCMF
   {n : ℕ} {s : HidaSetting l L Ω} {V : s.Lev} {c : Coef l} {m : ℕ}
 
 
+variable (n s) in
 def sec0 : GLw n (s.w s.v0) →* Ga l L n := (secS n s).comp (MonoidHom.inr _ _)
 
 abbrev eC (Q : QData V) (τ₀ : KT n (wt s) →* GL (Fin m) c.O) (d : ℕ) (a : GLw n (s.w s.v0) →₀ ℤ) (N : ℕ) :=

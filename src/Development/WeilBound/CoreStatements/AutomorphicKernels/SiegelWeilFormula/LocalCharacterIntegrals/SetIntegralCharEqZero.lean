@@ -48,6 +48,7 @@ theorem trace_sigR (hcm : IsCMExt F E σ) (a : Fv F v ⊗[F] E) :
   rw [← sigE_apply hcm, Algebra.trace_eq_of_algEquiv]
 
 
+variable (σ) in
 def cs {p q : ℕ} (x : Matrix (Fin p) (Fin q) (Fv F v ⊗[F] E)) : Matrix (Fin q) (Fin p) (Fv F v ⊗[F] E) :=
   (x.map (sigR (Fv F v) σ))ᵀ
 
@@ -233,6 +234,7 @@ theorem mul_le_half_of_small {C r : ℝ} (hC : 0 ≤ C) (hr : r ≤ 1 / (2 * (C 
   nlinarith
 
 
+variable (v) in
 theorem exists_normPres (σ : E →ₐ[F] E) (n : ℕ) : ∃ r > 0, ∀ x : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E),
     nM v x ≤ r → ∀ b : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E), nM v (cs σ (1 + x) * b * (1 + x)) = nM v b := by
   obtain ⟨C, hC, h⟩ := exists_nM_pert v σ n
@@ -249,6 +251,7 @@ theorem exists_normPres (σ : E →ₐ[F] E) (n : ℕ) : ∃ r > 0, ∀ x : Matr
     subst this; simp
 
 
+variable (v) in
 theorem exists_inv (n : ℕ) : ∃ r > 0, ∀ x : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E), nM v x ≤ r →
     ∃ x' : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E), (1 + x) * (1 + x') = 1 ∧ (1 + x') * (1 + x) = 1 ∧
       nM v x' ≤ nM v x := by
@@ -285,6 +288,7 @@ theorem exists_inv (n : ℕ) : ∃ r > 0, ∀ x : Matrix (Fin n) (Fin n) (Fv F v
     linarith
 
 
+variable (v) in
 theorem exists_quad (σ : E →ₐ[F] E) {n : ℕ} (T : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E)) :
     ∃ C, 0 ≤ C ∧ ∀ x b : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E),
       ‖trPair (Fv F v) T (cs σ x * b * x)‖ ≤ C * nM v x ^ 2 * nM v b := by
@@ -328,6 +332,7 @@ theorem nM_single_le {p q : ℕ} (i : Fin p) (j : Fin q) (w : Fv F v ⊗[F] E) :
   · rw [Matrix.single_apply, if_neg h, nA_zero]; exact nA_nonneg w
 
 
+variable (v) in
 theorem exists_nontriv (σ : E →ₐ[F] E) (hcm : IsCMExt F E σ) {ψ : AddChar (AF F) ℂ} (hψ : IsCharAF F ψ) {n : ℕ}
     (T : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E)) (hT : IsUnit T.det) :
     ∃ C > 0, ∀ b : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E), 0 < nM v b → ∀ r : ℝ, C ≤ r * nM v b →
@@ -398,6 +403,7 @@ instance secondCountable_Herm (n : ℕ) : SecondCountableTopology (HermR (Fv F v
   TopologicalSpace.Subtype.secondCountableTopology _
 
 
+variable (σ) in
 def conjM {n : ℕ} (a b : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E)) : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E) :=
   cs σ a * b * a
 

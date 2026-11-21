@@ -38,6 +38,7 @@ theorem rep_smul {G X : Type} [Group G] [TopologicalSpace X] {W : G → (X → �
 end GlobalTheory.GammaOneProof
 
 
+open GlobalTheory.GammaOneProof in
 theorem GlobalTheory.JR.gammaOne_holds : GammaOne := by
   intro F E _ _ _ _ _ A ψ hψ x μ hsd ω γ W hW r j hj
   obtain ⟨hΛo, hΛc, hT⟩ := GlobalTheory.T.hermitianLattice_isOpen_isCompact_test F E A r j

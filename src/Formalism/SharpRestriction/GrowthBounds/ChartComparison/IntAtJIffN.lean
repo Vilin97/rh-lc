@@ -62,6 +62,7 @@ theorem sTw_ne (β : S.Ch) (cl : {c // S.chOf c = β}) (B' : GL (Fin (D.R.N i)) 
     (Finset.prod_ne_zero_iff.2 fun τ _ => zpow_ne_zero _ (atInf_det_unit (embT D) B'⁻¹ τ).ne_zero)
 
 
+set_option maxHeartbeats 1000000 in
 theorem intAtJ_iff_N (w : D.what₂.places.Pl) (β : S.Ch) (hU : S.TwUnit w β) (x : (M.lat i).V) (cl : {c // S.chOf c = β}) :
     S.IntAtJ w β x cl ↔ S.IntAtN w β x cl := by
   refine forall_congr' fun B' => forall_congr' fun hB => ?_

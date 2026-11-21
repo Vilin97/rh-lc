@@ -97,6 +97,7 @@ end Twist
 section SpOf
 
 
+open Formalism.IndefR.Cx in
 theorem inner_spOf {D : D7} {X : HidaSetting D} (s : Bool) {Bs : DefBase D.what₂.LL} {Df : DefSide Bs} (Dc : DefCols Df)
     (hK : X.LevelSubgroupCharacter) (Gd : GoodOp X) (wdD : Dc.Mem → D.what₂.Word) (pw : ∀ x, PerW X hK (wdD x))
     (bR : ∀ x, Fin (Dc.a x) → (D.mem (wdD x)).A.Mram) (x : Dc.Mem) (v : Formalism.IndefR.Links.Tw s (HHX X))

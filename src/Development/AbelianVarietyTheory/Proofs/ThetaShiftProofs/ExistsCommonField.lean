@@ -247,6 +247,7 @@ theorem gtRel_iff (u : D.X → Fˣ) (g₀ : GtPtF D F) (g : GtPtF D' F) :
       (congrArg (fun q : ((Sp F).presheaf.stalk y)ˣ => q * vS (g.s (e χ)) y J') (pr χ y J J')).trans (H χ y J J' hJ hJ')⟩
 
 
+include gp hT hc hw in
 theorem exists_gtRel (hG : GlobalFnsSt) (u : D.X → Fˣ) (hu : ∀ a b, u (a + b) = u a * u b) (g₀ : GtPtF D F) :
     ∃ g : GtPtF D' F, GtRel w e u g₀ g := by
   obtain ⟨b, hb⟩ := pushF_surjective gp hT g₀.b
@@ -319,6 +320,7 @@ theorem exists_gtRel (hG : GlobalFnsSt) (u : D.X → Fˣ) (hu : ∀ a b, u (a + 
   exact vt χ y J J' hJ hJ'
 
 
+include gp hT hc hw in
 theorem GtRel.unique {u : D.X → Fˣ} {g₀ : GtPtF D F} {g g' : GtPtF D' F} (h : GtRel w e u g₀ g)
     (h' : GtRel w e u g₀ g') : g = g' := by
   obtain ⟨b₁, v₁⟩ := (gtRel_iff gp hT hc hw u g₀ g).1 h
@@ -370,6 +372,7 @@ theorem GtRel.isAdd (hG : GlobalFnsSt) {u u' u'' : D.X → Fˣ} (hu : ∀ χ, u'
   linear_combination (norm := abel) a₁ - c₁ - c₂ + c₃
 
 
+include gp hT hc hw in
 theorem GtRel.over_zero {u : D.X → Fˣ} {g₀ : GtPtF D F} {g : GtPtF D' F} (h : GtRel w e u g₀ g) (hb : g₀.b = 1) :
     g.b = 1 ∧ ∀ χ (y : Sp F) J J', Good D.P.L y J → Good D'.P.L y J' →
       vS (g.s (e χ)) y J' = unitStk y (u χ) * vS (g₀.s χ) y J := by
@@ -394,6 +397,7 @@ theorem GtRel.isZero {u : D.X → Fˣ} (hu : ∀ χ, u χ = 1) {g₀ : GtPtF D F
   exact (hv χ y J J' hJ hJ').trans (by rw [hu, map_one, z₃, _root_.mul_one])
 
 
+include gp hT hc hw in
 theorem GtRel.torus {u : D.X → Fˣ} {g₀ : GtPtF D F} {g : GtPtF D' F} (h : GtRel w e u g₀ g) {t : D.X → F}
     (hb : g₀.b = DegPre.zeroF D F)
     (ht : ∀ χ j, LB.Coh D.P.L (DegPre.gtφ D F g₀.b χ) j → ⊤ ≤ LB.wchart D.P.L (DegPre.gtφ D F g₀.b χ) j →
@@ -458,6 +462,7 @@ theorem psi_val {v : Fˣ} {χ : D.X} (hψ : GenRel w (LB.pullGen _ _ _ (D'.psi (
   exact H
 
 
+include gp hT hc hw hr in
 theorem GtRel.isIota {u v : D.X → Fˣ} (hψ : ∀ χ, GenRel w (LB.pullGen _ _ _ (D'.psi (e χ)) (jFK (R := R') F))
     (LB.pullGen _ _ _ (D.psi χ) (jFK (R := R) F)) (v χ : F)) {x : D.X} (hu : ∀ χ, v (x + χ) = u χ * v x * v χ)
     {g₀ : GtPtF D F} {g : GtPtF D' F} (h : GtRel w e u g₀ g) (H : GtPtF.IsIota x g₀) : GtPtF.IsIota (e x) g := by

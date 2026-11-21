@@ -88,6 +88,7 @@ theorem aeval_ratio_eq_zero {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {w 
 end LiftGraphPoints
 
 
+open LiftGraphPoints in
 theorem LiftGraphPoints.proof : LiftGraphPoints.Statement := by
   classical
   intro K _ ι _ Ω _ y n r v hv hgen w hw

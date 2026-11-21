@@ -216,6 +216,7 @@ variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] {n : ℕ}
   {ξ : G ℚ Ω → G ℚ Ω → Qbar l}
 
 
+variable (c n S ξ) in
 def zc (i : Ix c) (p : GS Ω (S : Set Pl) × GS Ω (S : Set Pl)) : ZMod (l ^ n) :=
   crd c n i (ξ (Quotient.out p.1) (Quotient.out p.2))
 

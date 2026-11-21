@@ -328,6 +328,7 @@ theorem Tj_apply (hϖ : IsUnifV E w ϖ) {N : ℕ} (j : ℕ) (g : GL (Fin N) (w.a
   · rfl
 
 
+open Classical in
 theorem hecke_eq_sum (hϖ : IsUnifV E w ϖ) {V : Type} [AddCommGroup V] [Module ℂ V] {N : ℕ}
     (ρ : Representation ℂ (GL (Fin N) (w.adicCompletion E)) V) (x : V)
     (hx : ∀ κ ∈ GLint (Fin N) (Ov E w), ρ κ x = x) (j : ℕ) (hj : j ≤ N) :

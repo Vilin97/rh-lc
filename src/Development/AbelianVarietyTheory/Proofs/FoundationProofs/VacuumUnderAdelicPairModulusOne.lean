@@ -301,6 +301,7 @@ theorem norm_lamC_of_root {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_[p]) {a
 end GlobalTheory.NormSum.VacMove
 
 
+open GlobalTheory.NormSum.VacMove in
 theorem GlobalTheory.NormSum.vacuum_under_adelic_pair : ∀ (D : D7), Inp D → ∀ (cc : Ideal (𝓞 D.host.K)) (δ : ℂ), Crv D cc δ → ∀ (N N' : ℕ), Even (N * N') → ∀ e0 ∈ Th D (tor0 D cc δ) (stdL D N) (stdL D N'), ∀ (W : WeilO D cc δ N N' e0) (g : GA D N) (g' : GA D N') L₁ L₁', Moves D (g : GL (Fin N) (AE D)) L₁ → Moves D (g' : GL (Fin N') (AE D)) L₁' → ∃ c : ℂ, Mod1All c ∧ (W.Om g g' e0 = fun z => c * Iop D (tor0 D cc δ) (La0 D (tor0 D cc δ) N N') (La D (tor0 D cc δ) L₁ L₁') e0 z) ∧ ∀ (p : ℕ) [Fact p.Prime] (lam : Qbar →+* ℂ_[p]) (k' : GA D N'), k' ∈ intG D N' → TrivAt D p (g : GL (Fin N) (AE D)) → TrivAt D p ((g' * k' : GA D N') : GL (Fin N') (AE D)) → ‖lamC lam c‖ = 1 := by
   intro D hI cc δ hc N N' hev e0 he W g g' L₁ L₁' h h'
   obtain ⟨c, hce⟩ := exists_scalar hI hc he W g g' h h'

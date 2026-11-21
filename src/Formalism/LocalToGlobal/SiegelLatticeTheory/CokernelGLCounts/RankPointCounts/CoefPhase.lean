@@ -41,6 +41,7 @@ def PhaseLoc : Prop :=
 end Steps
 
 
+variable (D : Formalism.BasicNotions.D7) in
 def PsiProdE : Prop :=
   ∀ x : D.host.E,
     (Function.mulSupport fun p : PlF D => (D.s.atP p).psiE ((D.s.atP p).ιE x)).Finite ∧

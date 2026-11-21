@@ -281,6 +281,7 @@ section Main
 variable {p : ℕ} [Fact p.Prime] {O : Type} [CommRing O]
 
 
+variable (p O) in
 def PDivGroup.dualFunctor : PDivGroup p O ⥤ (PDivGroup p O)ᵒᵖ where
   obj G := op G.dual
   map f := (dualHom _ _ f).op

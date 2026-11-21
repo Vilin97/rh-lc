@@ -65,6 +65,7 @@ variable {Γ H : Type} [Group Γ] [Group H] [TopologicalSpace Γ] [TopologicalSp
   (hr : ∀ g c, D.ρ (θ g) (rr c) = rr ((χ g : ZMod N) * c))
 
 
+include hM hr in
 theorem dualGen : ∃ eD : TDual (ZMod N) M ≃+ (dualRep D A).V,
     (∀ g f, eD (twDual χ ρ g f) = (dualRep D A).ρ (θ g) (eD f)) ∧
       ∀ f m, (eD f : A.V →ₗ[ULift.{0} ℤ] D.V) (eM m) = rr (f m) := by
@@ -106,6 +107,7 @@ theorem exists_root_of_primitive {L : Type} [Field L] {N : ℕ} (hN0 : N ≠ 0) 
     IsUnit.unit_spec _⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem gsRoots_act_rootOf (Kf : FiniteSubfield) [NumberField Kf.1] [IsAlgClosure Kf.1 (AlgebraicClosure ℚ)]
     (S : Finset (HeightOneSpectrum (𝓞 Kf.1))) {l r : ℕ} [Fact l.Prime] [NeZero (l ^ r)]
     (ζ : AlgebraicClosure ℚ) (hζ : IsPrimitiveRoot ζ (l ^ r))

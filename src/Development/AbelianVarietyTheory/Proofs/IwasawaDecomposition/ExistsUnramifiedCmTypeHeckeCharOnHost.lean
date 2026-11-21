@@ -16,6 +16,7 @@ open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.FrobeniusOrbi
 namespace GlobalTheory.Mem.ChiPsiExist
 
 
+open Classical in
 theorem exists_chiPsi : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R), ∃ χ : HChar H.E, IsChiPsi H χ := by
   intro R H
   obtain ⟨c, -, hcm, -⟩ := GlobalTheory.Mem.HostCM.host_cm R H

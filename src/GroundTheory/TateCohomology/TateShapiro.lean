@@ -82,6 +82,7 @@ open scoped Classical
 variable {k G : Type u} [CommRing k] [Group G] (S : Subgroup G)
 
 
+open scoped Classical in
 noncomputable def toResCoind (B : Rep.{u} k S) : B ⟶ res S.subtype (coind S.subtype B) :=
   Rep.ofHom ⟨LinearMap.codRestrict _
     (LinearMap.pi fun g : G => if h : g ∈ S then B.ρ ⟨g, h⟩ else 0) (fun b => by
@@ -110,6 +111,7 @@ noncomputable def toResCoind (B : Rep.{u} k S) : B ⟶ res S.subtype (coind S.su
         rfl)⟩
 
 
+open scoped Classical in
 lemma toResCoind_apply (B : Rep.{u} k S) (b : B) (x : G) :
     ((toResCoind S B).hom b).1 x = if h : x ∈ S then B.ρ ⟨x, h⟩ b else 0 := by
   change (if h : x ∈ S then B.ρ ⟨x, h⟩ else 0) b = _
@@ -118,6 +120,7 @@ lemma toResCoind_apply (B : Rep.{u} k S) (b : B) (x : G) :
 variable [Fintype G] [Fintype S]
 
 
+open scoped Classical in
 lemma sum_toResCoind (B : Rep.{u} k S) (b : B) (g : G) :
     ∑ h : G, ((toResCoind S B).hom b).1 (g * h) = B.ρ.norm b := by
   rw [show (∑ h : G, ((toResCoind S B).hom b).1 (g * h)) =
@@ -164,6 +167,7 @@ noncomputable def tateShapiroMap (B : Rep.{u} k S) :
     (shapiroCochainsHomotopyEquiv S B).hom (shapiro_comm_zero S B)
 
 
+omit [Fintype G] [Fintype S] in
 lemma toResCoind_naturality {B B' : Rep.{u} k S} (φ : B ⟶ B') :
     toResCoind S B ≫ (resFunctor S.subtype).map (coindMap S.subtype φ) = φ ≫ toResCoind S B' := by
   classical
@@ -176,11 +180,13 @@ lemma toResCoind_naturality {B B' : Rep.{u} k S} (φ : B ⟶ B') :
   · exact map_zero _
 
 
+omit [Fintype G] [Fintype S] in
 lemma freeLift_comp_hom {H : Type u} [Group H] {B B' : Rep.{u} k H} (φ : B ⟶ B') {α : Type u}
     (x : α → B) : freeLift k H B x ≫ φ = freeLift k H B' (fun a => φ.hom (x a)) :=
   free_ext _ _ _ _ _ fun i => by simp
 
 
+omit [Fintype G] [Fintype S] in
 lemma shapiroCochains_naturality {B B' : Rep.{u} k S} (φ : B ⟶ B') :
     (shapiroCochainsHomotopyEquiv S B).hom ≫ cochainsMap (MonoidHom.id G) (coindMap S.subtype φ) =
       cochainsMap (MonoidHom.id S) φ ≫ (shapiroCochainsHomotopyEquiv S B').hom := by
@@ -229,6 +235,7 @@ noncomputable def tateShapiroMapShortComplex (X : ShortComplex (Rep.{u} k S)) :
   comm₂₃ := tateShapiroMap_naturality S X.g
 
 
+omit [Fintype S] in
 lemma shortExact_map_coindFunctor {X : ShortComplex (Rep.{u} k S)} (hX : X.ShortExact) :
     (X.map (coindFunctor k S.subtype)).ShortExact := by
   classical
@@ -291,6 +298,7 @@ theorem tateAcyclic_coind_of_sum_eq (M : Rep.{u} k S) (φ : M.V →ₗ[k] M.V)
   tateAcyclic_of_sum_eq _ (coindNormLift S M φ) (sum_coindNormLift S M φ hφ)
 
 
+omit [Fintype G] in
 lemma fromCoindRes_id_surjective (B : Rep.{u} k S) :
     Function.Surjective (fromCoindRes B LinearMap.id).hom := by
   classical
@@ -309,6 +317,7 @@ noncomputable abbrev coindBotShiftShortComplex (B : Rep.{u} k S) : ShortComplex 
     (kernel.condition _)
 
 
+omit [Fintype G] in
 lemma coindBotShiftShortComplex_shortExact (B : Rep.{u} k S) :
     (coindBotShiftShortComplex S B).ShortExact := by
   have : Epi (fromCoindRes B LinearMap.id) :=

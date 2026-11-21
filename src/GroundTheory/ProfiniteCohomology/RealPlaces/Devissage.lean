@@ -40,6 +40,7 @@ theorem nsmul_D (d : D) : n • d = 0 :=
   nsmul_eq_zero_of_nonempty_addEquiv H.nonempty_addEquiv d
 
 
+include H in
 theorem exists_devissage (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) :
     ∃ (I Q : Rep.{u} (ULift.{u} ℤ) G) (_ : IsDiscreteRep I) (_ : IsDiscreteRep Q) (_ : Finite I)
@@ -93,6 +94,7 @@ namespace TateCompactDualityHypotheses
 variable (H : TateCompactDualityHypotheses φ ψ n D t U₀)
 
 
+include H in
 theorem injective_zero (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) :
     Function.Injective (tateCompactDualityMap φ ψ D (rfl : 0 + 3 = 3) t M) := by
@@ -110,6 +112,7 @@ theorem injective_zero (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finite
   exact (injective_iff_map_eq_zero _).1 (injective_cohomologyMap_zero i hi) x h2
 
 
+include H in
 theorem surjective_zero (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) :
     Function.Surjective (tateCompactDualityMap φ ψ D (rfl : 0 + 3 = 3) t M) := by
@@ -154,6 +157,7 @@ theorem bijective_zero (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finite
 variable {r s : ℕ} (h₁ : r + 1 + s = 3) (h₀ : r + (s + 1) = 3) (hs : 1 ≤ s)
 
 
+include H hs in
 theorem injective_succ
     (ih : ∀ (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finite M], (∀ m : M, n • m = 0) →
       Function.Bijective (tateCompactDualityMap φ ψ D h₀ t M))
@@ -195,6 +199,7 @@ theorem injective_succ
   exact congrArg (fun F => F.hom v) (comp_δ hS r (r + 1) rfl)
 
 
+include H hs in
 theorem surjective_succ
     (ih : ∀ (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finite M], (∀ m : M, n • m = 0) →
       Function.Bijective (tateCompactDualityMap φ ψ D h₀ t M))
@@ -268,6 +273,7 @@ namespace TateCompactDualityHypotheses
 variable (H : TateCompactDualityHypotheses φ ψ n D t U₀)
 
 
+include H in
 theorem bijective_tateCompactDualityMap (M : Rep.{u} (ULift.{u} ℤ) G) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) {r s : ℕ} (h : r + s = 3) (hs : 1 ≤ s) :
     Function.Bijective (tateCompactDualityMap φ ψ D h t M) := by

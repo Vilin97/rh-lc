@@ -49,6 +49,7 @@ theorem denom_fin {K : Set (Af F)} (hK : IsCompact K) :
   exact hei.mul hdx
 
 
+variable (F) in
 def uFin : AF F := pairA F 0 1
 
 theorem evI_uFin : evI F (uFin F) = 0 := by

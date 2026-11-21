@@ -121,6 +121,7 @@ variable {K E : FiniteSubfield} [Fact (K ≤ E)]
   (ιK : ℚ̄ →ₐ[K.1] Ωv) (ιE : ℚ̄ →ₐ[E.1] Ωw) (hι : ∀ x, e (ιE x) = ιK x)
 
 
+include hι in
 theorem unitsLocalRes_unitsResField (n : ℕ) (x : cohomology (unitsLimitRep K) n) :
     (unitsLocalRes Ew ιE n).hom ((unitsResField K E n).hom x) =
       (cohomologyMapAlong (fieldConjHom Kv L e hL) (continuous_fieldConjHom Kv L e hL) (fieldConjUnitsMor Kv L e hL) n).hom
@@ -148,6 +149,7 @@ theorem unitsLocalRes_unitsResField (n : ℕ) (x : cohomology (unitsLimitRep K) 
   exact (congrArg (fun φ => φ.hom x) h)
 
 
+include hL hι in
 theorem unitsLocalRes_unitsResField_eq_zero (n : ℕ) (x : cohomology (unitsLimitRep K) n)
     (hx : (unitsScalarsRes Kv Ωv L n).hom ((unitsLocalRes Kv ιK n).hom x) = 0) :
     (unitsLocalRes Ew ιE n).hom ((unitsResField K E n).hom x) = 0 := by

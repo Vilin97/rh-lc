@@ -72,6 +72,7 @@ theorem finrank_cot_congr {k X Y : Type} [Field k] [CommRing X] [CommRing Y] [Bi
 end GlobalTheory.PDivGroup.DimSum
 
 
+open Module PDiv in
 theorem GlobalTheory.PDivGroup.chart_dim_add_finrank_dual_lie : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C]
     [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal) (O : Type) [CommRing O] [Algebra O C]
     [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O] [IsDomain O], v.Integers O →

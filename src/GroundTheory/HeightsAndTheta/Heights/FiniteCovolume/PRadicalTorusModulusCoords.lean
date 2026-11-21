@@ -30,6 +30,7 @@ theorem heisMat_conj_scale {g : Matrix ι ι ℂ} (hg : gᴴ * H * g = H) {α : 
   module
 
 
+omit [DecidableEq ι] in
 theorem heisS_conj_smul (α : ℂ) (y : ι → ℂ) (t : ℝ) :
     heisS H (starRingEnd ℂ α • y) (Complex.normSq α * t) = (Complex.normSq α : ℂ) * heisS H y t := by
   have e : hForm H (starRingEnd ℂ α • y) (starRingEnd ℂ α • y) =

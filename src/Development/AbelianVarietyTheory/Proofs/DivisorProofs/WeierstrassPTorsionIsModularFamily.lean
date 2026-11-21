@@ -109,6 +109,7 @@ private lemma isTauOf_tauPair_denom_smul (γ : SL(2, ℤ)) (τ : ℍ) :
     exact ⟨_, _, (key u v).symm⟩
 
 
+open scoped UpperHalfPlane MatrixGroups Matrix ModularForm ComplexConjugate in
 theorem _root_.GlobalTheory.WpFam.isFam_wp_wpd : ∀ (N : ℕ) [NeZero N],
     _root_.GlobalTheory.QFam.IsFam (_root_.GlobalTheory.WpFam.vact N) 2
         (_root_.GlobalTheory.WpFam.wp N) ∧

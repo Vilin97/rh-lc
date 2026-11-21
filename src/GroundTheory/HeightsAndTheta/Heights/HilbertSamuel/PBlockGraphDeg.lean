@@ -46,6 +46,7 @@ theorem x'_ne_zero {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι 
 end BlockGraphDeg
 
 
+open BlockGraphDeg in
 theorem BlockGraphDeg.proof (hGr : GraphStatement) (hImg : BlockGraphImage.Statement)
     (hEx : GenFibreExistsStatement) (hDim : FibreDimStatement)
     (hEU : ∀ (F : Type) [Field F] (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)],

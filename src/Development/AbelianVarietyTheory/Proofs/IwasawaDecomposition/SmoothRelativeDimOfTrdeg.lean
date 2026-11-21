@@ -65,6 +65,7 @@ private lemma trdeg_eq_of_ringEquiv {K L K' L' : Type} [Field K] [CommRing L] [F
   simp [this]
 
 
+open AlgebraicGeometry CategoryTheory Limits in
 theorem _root_.GlobalTheory.RelDimFibCrit.trdeg_affine {X Y : Scheme.{0}} (f : X ⟶ Y) (U : Y.Opens)
     (hU : IsAffineOpen U) (V : X.Opens) (hV : IsAffineOpen V) (e : V ≤ f ⁻¹ᵁ U)
     (p : PrimeSpectrum Γ(X, V)) :

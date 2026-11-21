@@ -10,6 +10,7 @@ open MeasureTheory ValuativeRel Matrix GlobalTheory.SplitWeil GlobalTheory.RootE
 namespace GlobalTheory
 
 
+open MeasureTheory ValuativeRel Matrix in
 theorem _root_.GlobalTheory.exists_weakIntegral_of_isLocallyConstant_of_isCompact :
     ∀ (U : Type) [TopologicalSpace U] [T2Space U] [MeasurableSpace U] [OpensMeasurableSpace U] (m : Measure U) [IsFiniteMeasureOnCompacts m] (V : Type) [AddCommGroup V] [Module ℂ V] (T : U → V) (_ : IsLocallyConstant T) (K : Set U) (_ : IsCompact K) (_ : ∀ u, u ∉ K → T u = 0), ∃ w : V, ∀ l : V →ₗ[ℂ] ℂ, l w = ∫ u, l (T u) ∂m := by
   intro U _ _ _ _ m _ V _ _ T hT K hK hzero

@@ -103,6 +103,7 @@ def Coh (φ : K → (Y ⟶ X)) (j : K → L.ι) : Prop :=
   ∀ k₁ k₂, φ k₁ = φ k₂ → j k₁ = j k₂
 
 
+open scoped Classical in
 def SameSum (φ : K → (Y ⟶ X)) (ε : K → ℤ) (φ' : K' → (Y ⟶ X)) (ε' : K' → ℤ) : Prop :=
   by
     classical

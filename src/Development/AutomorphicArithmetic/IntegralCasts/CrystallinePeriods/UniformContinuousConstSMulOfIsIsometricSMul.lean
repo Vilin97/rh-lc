@@ -123,6 +123,7 @@ theorem norm_smul_eq (g : G) (x : C) : ‖g • x‖ = ‖x‖ := by
   simpa using (isometry_smul C g).dist_eq x 0
 
 
+omit hp in
 instance : MulSemiringAction G O where
   smul g x := ⟨g • (x : C), (mem_iff _).2 (by rw [norm_smul_eq]; exact norm_le_one x)⟩
   one_smul x := Subtype.ext (one_smul G (x : C))
@@ -149,6 +150,7 @@ instance (priority := 100) uniformContinuousConstSMul_of_isIsometricSMul :
   ⟨fun g => (isometry_smul E g).uniformContinuous⟩
 
 
+open UniformSpace in
 instance completionMulSemiringAction : MulSemiringAction G (Completion E) where
   __ := (inferInstance : DistribMulAction G (Completion E))
   smul_one g := by rw [← Completion.coe_one, ← Completion.coe_smul, smul_one]

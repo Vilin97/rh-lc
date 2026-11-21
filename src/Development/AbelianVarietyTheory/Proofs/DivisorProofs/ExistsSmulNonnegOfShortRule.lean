@@ -176,6 +176,7 @@ theorem vLa_pos_of_mem {K : Type} [Field K] [NumberField K] (la : IsDedekindDoma
   omega
 
 
+open IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions in
 theorem exists_smul_nonneg_of_shortRule (D : D7) (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E) (Dw : Datum H) (l : Level H)
     (Xo : Moduli Dw l) (c : Coeff l) (n : ℕ) (d : DeltaDat Xo c n) [StarRing (𝓞 D.host.E)] (hlev : d.IsLev)
     (hnab : IsNab d.Xo₂ d.c₂ d.nab₂)

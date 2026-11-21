@@ -23,6 +23,7 @@ instance valuativeExtension_charTower (k : ℕ) : ValuativeExtension K (charTowe
   GroundTheory.LocalField.intermediateField_valuativeExtension_left _
 
 
+variable (K η) in
 def artinLevel (n : ℕ) : ℕ := sInf {k | ¬ artinImage K η n ≤ unitsOneAdd p (k + 1)}
 
 theorem artinLevel_spec {n : ℕ} (h : artinImage K η n ≠ ⊥) :
@@ -122,6 +123,7 @@ theorem upperRamificationGroup_charTower_eq_map (hη : Continuous η) {k n : ℕ
     exact mul_mem hσ' (unitsOneAdd_antitone (min_le_right _ _) h2')
 
 
+omit [FiniteDimensional ℚ_[p] K] in
 theorem relIndex_charTowerGal {s t : ℕ} (hs : 2 ≤ s) (hst : s ≤ t) {a : ℤ_[p]ˣ} (haR : a ∈ η.range)
     (ha : a ∈ unitsOneAdd p s) (ha' : a ∉ unitsOneAdd p (s + 1)) :
     (charTowerGal η t).relIndex (charTowerGal η s) = p ^ (t - s) := by

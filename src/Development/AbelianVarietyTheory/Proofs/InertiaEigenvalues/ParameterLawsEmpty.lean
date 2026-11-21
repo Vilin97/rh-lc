@@ -62,6 +62,7 @@ theorem cancel_of_tie {D : D7} (T : WDTie D.nd D.naut) :
   rw [← T.sum, ← T.sum, h]
 
 
+open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.LocLanglands GlobalTheory.SmGL GlobalTheory.PRep GlobalTheory.SplitWeil in
 theorem locG_rankOne_eq_rcAt {hL : GlobalTheory.Published.LocalLanglandsGL} {D : D7} {cf : CharFrame D} (T : WDTie D.nd D.naut)
     (cg : CGTrue hL D T) (cs : CharSide D cf) (π : D.naut.CG 1) (w : PlE D.host)
     (ξ : (w.adicCompletion D.host.E)ˣ →* ℂˣ) (h : IsComp (cs.e1 π).1 w ξ) :
@@ -95,6 +96,7 @@ theorem locG_rankOne_eq_rcAt {hL : GlobalTheory.Published.LocalLanglandsGL} {D :
   rfl
 
 
+open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.LocLanglands GlobalTheory.SmGL GlobalTheory.PRep GlobalTheory.SplitWeil in
 theorem rankOneUnitary {hL : GlobalTheory.Published.LocalLanglandsGL} {D : D7} {cf : CharFrame D} (T : WDTie D.nd D.naut)
     (cg : CGTrue hL D T) (cs : CharSide D cf) : RankOneUnitary T := by
   intro π w σ _ α hα
@@ -108,6 +110,7 @@ theorem rankOneUnitary {hL : GlobalTheory.Published.LocalLanglandsGL} {D : D7} {
   · simp at hα
 
 
+open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.LocLanglands GlobalTheory.SmGL GlobalTheory.PRep GlobalTheory.SplitWeil GlobalTheory.LocGL in
 theorem rankTwo (hAF : GlobalTheory.Published.AutomorphicFormsFiniteGL) (hT : GlobalTheory.Published.CohomologicalCsdTempered)
     (hRP : GlobalTheory.Published.RegularAlgebraicPurity) {hL : GlobalTheory.Published.LocalLanglandsGL} {D : D7} (T : WDTie D.nd D.naut)
     (cg : CGTrue hL D T) (a : ℕ) (π : D.naut.CG a) (ha : 2 ≤ a) (hc : D.naut.csd π) (hr : D.naut.ralg π)

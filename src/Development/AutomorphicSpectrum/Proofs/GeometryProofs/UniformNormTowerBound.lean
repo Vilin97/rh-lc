@@ -412,6 +412,7 @@ end GlobalTheory.CompanionTheory.Ar.Plug.Arch
 namespace GlobalTheory.CompanionTheory.Ar.Plug
 
 
+open GlobalTheory.CompanionTheory.Ar.Plug.Arch in
 theorem vs_arch : Top.Given → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (r : ℕ) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (h : GenFrEx Xo c) (e : Comp Xo c → Rul Xo c), CompLaws U h e → ∀ x : ℝ, (∀ σ, GoodEmb c σ → ∀ k (τ : E →+* ℂ), ‖τ ((U σ).X k).ξ0‖ = x) → ∀ (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) [DecidableEq (CMType H)] (T : Top.RootTower (CMType H) (Dw.p + Dw.q)) (o : Top.GoodOrigin Y T) (B : ℕ) (b : T.Comp) (Fr : Small.GenFrame (o.toTowerOrigin.Or B b)) (Z : Comp Xo c) (Rd : Reading Fr h Z) (u : GlobalTheory.AllWt.Weight Dw) (s : (T.M B b).Ω) (R : ℝ), 0 ≤ R → HodgeLe (o.toTowerOrigin.Or B b) u s R → ∀ f ∈ GlobalTheory.AllWt.secZ Xo c (GlobalTheory.AllWt.exOf Dw u 0), evC h Z f = trOf Rd u s → ∀ σ, GoodEmb c σ → ∀ z ∈ GlobalTheory.AllWt.framesOn (U σ) Z, GlobalTheory.AllWt.homN (U σ) x (GlobalTheory.AllWt.wtOf Dw u 0) f z ≤ (o.toTowerOrigin.Or B b).Fl.deg * R := by
   intro hG E _ _ _ H Dw l Xo c r U h e hL x hx Y _ T o B b Fr Z Rd u s R hR hH f hf hev σ hσ z hz
   obtain ⟨k, y₀⟩ := z

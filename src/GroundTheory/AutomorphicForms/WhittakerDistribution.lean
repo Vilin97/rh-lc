@@ -689,6 +689,7 @@ theorem sub_sigma_mem_rel (hψ : Continuous ψ₀) (hψ₁ : ψ₀ ≠ 1) {f : G
   exact key ⟨hf, subset_univ _⟩
 
 
+omit [ValuativeRel F] [IsNonarchimedeanLocalField F] in
 theorem twoSided_mem [IsTopologicalRing F] {f : GL (Fin n) F → ℂ}
     (hf : f ∈ locallyConstantCompactSupport (GL (Fin n) F) ℂ ℂ) (a b : GL (Fin n) F) :
     (fun x => f (a⁻¹ * x * b)) ∈ locallyConstantCompactSupport (GL (Fin n) F) ℂ ℂ := by
@@ -696,6 +697,7 @@ theorem twoSided_mem [IsTopologicalRing F] {f : GL (Fin n) F → ℂ}
   exact hf.2.comp_homeomorph ((Homeomorph.mulLeft a⁻¹).trans (Homeomorph.mulRight b))
 
 
+omit [ValuativeRel F] [IsNonarchimedeanLocalField F] in
 theorem comp_sigma_mem [IsTopologicalRing F] {f : GL (Fin n) F → ℂ}
     (hf : f ∈ locallyConstantCompactSupport (GL (Fin n) F) ℂ ℂ) :
     (fun x => f (sigma x)) ∈ locallyConstantCompactSupport (GL (Fin n) F) ℂ ℂ :=

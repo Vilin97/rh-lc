@@ -69,6 +69,7 @@ theorem exists_good : ∃ m, Good Ξ e m := by
   rw [h2, map_one]
 
 
+open Classical in
 def QS : ℕ := Nat.find (exists_good Ξ e)
 
 open Classical in

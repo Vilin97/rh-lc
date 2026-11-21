@@ -30,6 +30,7 @@ section Algebra
 variable {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ}
 
 
+omit [Algebra ℂ A] in
 theorem glRel_op {X : Fin n → Fin n → A} (h : Formalism.REAL.GlRel X) : Formalism.REAL.GlRel fun i j => op (X j i) := by
   intro a b c d
   have h1 := congrArg op (h d c b a)

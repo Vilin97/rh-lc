@@ -187,6 +187,8 @@ private lemma expo_cons0' (y : Matrix (Fin n) (Fin N) E)
   simp [dotProduct, mulVec, Fin.sum_univ_succ]
 
 
+open Matrix Complex NumberField Filter Topology in
+open scoped ComplexConjugate ComplexOrder Real Classical in
 theorem _root_.GlobalTheory.SW.thH_siegel_operator : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     (Ψ : Finset (E →+* ℂ)), _root_.GlobalTheory.SW.IsType Ψ → ∀ (n N : ℕ)
     (φ : Matrix (Fin n) (Fin (N + 1)) E → ℂ), _root_.GlobalTheory.SW.IsSB φ →

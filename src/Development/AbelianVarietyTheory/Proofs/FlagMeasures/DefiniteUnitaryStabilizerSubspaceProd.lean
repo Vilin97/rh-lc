@@ -44,6 +44,9 @@ private lemma isom_apply_mem_of_smul_eq {h : V →ₗ⋆[K] V →ₗ[K] K} {g : 
   exact Submodule.mem_map_of_mem hx
 
 
+open NumberField Matrix in
+open scoped ENNReal Classical in
+variable {K V : Type} [Field K] [StarRing K] [AddCommGroup V] [Module K V] in
 theorem _root_.GlobalTheory.Mass.StabSplit.smul_perp (h : V →ₗ⋆[K] V →ₗ[K] K) (g : _root_.Formalism.HermitianLatticesTheory.isom h)
     (U : Submodule K V) (hg : g • U = U) :
     g • _root_.GlobalTheory.Mass.perp h U = _root_.GlobalTheory.Mass.perp h U := by
@@ -176,6 +179,8 @@ private lemma apply_add_add_of_mem_perp {h : V →ₗ⋆[K] V →ₗ[K] K} (hs :
   ring
 
 
+open NumberField Matrix in
+open scoped ENNReal Classical in
 theorem _root_.GlobalTheory.Mass.StabSplit.main : ∀ (K V : Type) [Field K] [NumberField K]
     [StarRing K] [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V]
     [IsScalarTower (𝓞 K) K V] (h : V →ₗ⋆[K] V →ₗ[K] K), _root_.Formalism.HermitianLatticesTheory.IsCMUnram K → h.IsSymm →

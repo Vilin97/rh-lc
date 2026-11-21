@@ -136,6 +136,7 @@ end
 end GlobalTheory.CompanionTheory.Ar.Num.ZpVert
 
 
+open GlobalTheory.CompanionTheory.Ar.Num.ZpVert in
 theorem GlobalTheory.CompanionTheory.Ar.Num.vertAt_eq_cycList : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι ℤ)) (D : ℕ), IsArithVar P (D + 1) → ∀ (p : Nat.Primes) (a : K → ℕ) (f : MRing ι ℤ), IsMultiHomog f a → f ∉ P → ∀ l : List (K → ℤ), l.length = D → vertAt p P f l = cycList (divCycle (extTo (ZP p) P) (MvPolynomial.map (Int.castRingHom (ZP p)) f)) l := by
   intro K _ _ ι _ P D hP p a f hf hfP l hl
   classical

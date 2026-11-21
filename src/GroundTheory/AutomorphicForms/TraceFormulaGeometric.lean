@@ -31,6 +31,7 @@ variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Loca
 variable (μ : Measure G) [μ.IsHaarMeasure] [μ.IsMulRightInvariant]
 
 
+omit [LocallyCompactSpace G] [T2Space G] [SecondCountableTopology G] [μ.IsMulRightInvariant] in
 theorem setIntegral_smul_set {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] (a : G)
     (s : Set G) (F : G → E) : ∫ x in a • s, F x ∂μ = ∫ x in s, F (a * x) ∂μ := by
   have h := (measurePreserving_mul_left μ a).setIntegral_preimage_emb

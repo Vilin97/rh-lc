@@ -35,6 +35,7 @@ open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G Recip
 open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
 
 
+attribute [-instance] GlobalTheory.CompHS.cuspAddCommGroup in
 private theorem chart_bound {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
     {Dw : Datum H} {l : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H} {Xo : Moduli Dw l} {c : Coeff l} {r : ℕ}
     {U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r} {x : ℝ} {D : D7} {V : (c.F →+* ℂ) → HSp D}

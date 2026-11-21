@@ -24,6 +24,15 @@ namespace GlobalTheory.HeightOneCompletion
 open IsLocalRing
 
 
+set_option autoImplicit false in
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
+open NumberField IsDedekindDomain in
+open scoped CategoryTheory.Obj CategoryTheory.MonObj TensorProduct NNReal in
+attribute [local instance] Over.cartesianMonoidalCategory in
+attribute [local instance] _root_.GlobalTheory.CompHt.algPadicInt _root_.GlobalTheory.CompHt.algPadicField
+  _root_.GlobalTheory.CompHt.towerPadic _root_.GlobalTheory.CompHt.factPadic
+  _root_.GlobalTheory.PadicComplexHost.isAdicComplete in
+open IsLocalRing in
 theorem _root_.GlobalTheory.HeightOneCompletion.exists_cdvr_of_height_eq_one :
     ∀ (A : Type) [CommRing A] [IsDomain A] [IsIntegrallyClosed A] [IsNoetherianRing A] [CharZero A]
       (𝔭 : PrimeSpectrum A), 𝔭.asIdeal.height = 1 →

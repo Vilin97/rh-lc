@@ -354,6 +354,7 @@ private theorem exists_ringOfIntegers_eq_algEquiv_apply {E : Type} [Field E] [Nu
   ⟨⟨f (x : E), (NumberField.RingOfIntegers.isIntegral_coe x).map f.toAlgHom.toRingHom.toIntAlgHom⟩, rfl⟩
 
 
+open NumberField IsDedekindDomain in
 theorem conjPl_unique {E : Type} [Field E] [NumberField E] (cj : E ≃ₐ[ℚ] E)
     (u v v' : HeightOneSpectrum (𝓞 E))
     (h : ∀ x y : 𝓞 E, (y : E) = cj (x : E) → (x ∈ u.asIdeal ↔ y ∈ v.asIdeal))
@@ -365,6 +366,7 @@ theorem conjPl_unique {E : Type} [Field E] [NumberField E] (cj : E ≃ₐ[ℚ] E
   exact (h x y hx').symm.trans (h' x y hx')
 
 
+open NumberField IsDedekindDomain in
 theorem conjPl_unique' {E : Type} [Field E] [NumberField E] (cj : E ≃ₐ[ℚ] E)
     (u u' v : HeightOneSpectrum (𝓞 E))
     (h : ∀ x y : 𝓞 E, (y : E) = cj (x : E) → (x ∈ u.asIdeal ↔ y ∈ v.asIdeal))
@@ -375,6 +377,7 @@ theorem conjPl_unique' {E : Type} [Field E] [NumberField E] (cj : E ≃ₐ[ℚ] 
   exact (h x y hy).trans (h' x y hy).symm
 
 
+open NumberField IsDedekindDomain Pointwise in
 theorem ef_conj {E : Type} [Field E] [NumberField E] (cj : E ≃ₐ[ℚ] E)
     (u w : HeightOneSpectrum (𝓞 E))
     (h : ∀ x y : 𝓞 E, (y : E) = cj (x : E) → (x ∈ u.asIdeal ↔ y ∈ w.asIdeal)) :
@@ -725,6 +728,7 @@ theorem multW_eq (hπ : π ∈ D.nd.Z i) (hg0 : D.nd.l i ≠ D.host.g 0) (hg1 : 
 variable {ep : Bool}
 
 
+set_option maxHeartbeats 1600000 in
 theorem jump_bound_of_admitted (hL : hypL i) (hD : hypDecl i dc ep) (hπ : π ∈ D.nd.Z i) (hG2 : admG2 i r ep)
     (hBl : ambBlock i r ρ π) (h56 : ColumnH0Vanishing i ρ π dc) (hBK : admBK i) (hTie : TruncatedSeriesCountingIdentities.LocalCoefficientCompatibility i)
     (hW : ambW i ρ π dc) (hFil : ambFil i r ρ π dc) (hCont : ambCont i r ρ π) :
@@ -755,6 +759,7 @@ theorem jump_bound_of_admitted (hL : hypL i) (hD : hypDecl i dc ep) (hπ : π �
   exact h
 
 
+set_option maxHeartbeats 1600000 in
 theorem length_bound_of_admitted (e' : ℕ) (c0 : HeightOneSpectrum (𝓞 D.host.E) → ℕ) (hL : hypL i)
     (hD : hypDecl i dc ep) (hπ : π ∈ D.nd.Z i) (hG2 : admG2 i r ep) (hBl : ambBlock i r ρ π)
     (hBK : admBK i) (hTie : TruncatedSeriesCountingIdentities.LocalCoefficientCompatibility i) (hLift : LiftExponentDualPlaces i r dc e') (hH0 : H0ColumnLengthBound i ρ π dc c0)

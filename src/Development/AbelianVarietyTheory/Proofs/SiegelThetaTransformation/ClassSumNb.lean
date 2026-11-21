@@ -229,6 +229,7 @@ theorem sum_nb {M : ℕ} [Fintype (Cls E n M)] {P : Ideal (𝓞 E)} {A : Lt E n}
 end NbAvg
 
 
+open NbAvg in
 theorem classSum_nb :
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n M q : ℕ) (P : Ideal (𝓞 E)), 0 < M → GoodPrime M q P → ∀ f : Lt E n → ℂ, (∀ h ∈ DH E n M, ∀ Λ ∈ Vset E n M, ∀ Λ' ∈ Vset E n M, Moves h Λ Λ' → f Λ' = f Λ) → ((q : ℂ) - 1) * classSum M (fun Λ => ∑ᶠ Λ' ∈ Nb M P Λ, f Λ') = ((q : ℂ) ^ n - 1) * classSum M f := by
   intro E _ _ _ n M q P hM hP f hf

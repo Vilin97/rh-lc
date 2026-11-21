@@ -72,6 +72,7 @@ theorem rdU_eq {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Reciproci
   · exact absurd (by rw [e, dite_eq_right hx]) h
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_ratio {D : D7} (V : HSp D) {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E} {Dw : Datum H}
     {l : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H} {Xo : Moduli Dw l} {c : Coeff l} {σ : c.F →+* ℂ} {r : ℕ} (hr : V.rank = r)
     (U : Unf Xo c σ r) (dict : GA D V → Σ k, Frame (U.X k).Ψ r)
@@ -146,6 +147,7 @@ theorem exists_ratio {D : D7} (V : HSp D) {H : ReciprocityTheory.ChartRestrictio
   ring
 
 
+attribute [local instance] Formalism.BasicNotions.Host.cmStar in
 theorem formPlus_of {D : D7} {Q : Par D} (hQ : Q.Pins) {j : ℕ} (hj : InR D j) {V : HSp D} (hV : V = D.sp.W j)
     {io : (Q.Dw j).La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E)} (hL : LatEmb V io) (hI : LatIsom V (Q.Dw j).EF io) :
     FormPlus V io := by
@@ -242,6 +244,8 @@ open scoped TensorProduct
 namespace GlobalTheory.ShortMove
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem actLev_short : Formalism.MainNotions.ModuliIntegralCharts.H1.ChartIndepSt2 → ∀ (D : D7) (T : Full D), LawsFull T → ∀ (j : ℕ) (hj : InR D j), (∀ γ₀ ∈ Formalism.L2.Theta.GQ (T.V j T.σ₀), T.xi (Matrix.GeneralLinearGroup.det (Formalism.L2.Theta.finHom (T.V j T.σ₀) γ₀)) = 1) → ∀ (w : WeightFamilies.Wt D j), D.R.r ≤ w.n → ∀ (γ : LaMod (T.Q.Dw j) T.Q.l ≃ₗ[𝓞 D.host.E] LaMod (T.Q.Dw j) T.Q.l), ∀ f ∈ T.toTop.sh j w, ∃ (u : 𝓞 T.Q.c.F) (f' : T.R j), f' ∈ T.toTop.sh j w ∧ actLev (Xo := T.Q.Xo j) T.Q.c (levFull (T.Q.Dw j) T.Q.l) γ f = (u : T.Q.c.F) • f' := by
   intro hC D T hT j hj hxi w hw γ f hf
   have hL := GlobalTheory.firstFiveLaws.1

@@ -256,6 +256,7 @@ variable {S : Finset (Fin g)} (hA : IsAdapted X bas ξ S)
 include hA
 
 
+omit hs in
 theorem IsAdapted.symm_apply_eq_zero {v : X.Λ} (hv : (v : Fin r → E) ∈ Submodule.span E {ξ})
     {t : Fin g ⊕ Fin g} (ht : ∀ k ∈ S, t ≠ Sum.inl k) : bas.symm v t = 0 := by
   have h := (hA v).1 hv
@@ -269,6 +270,7 @@ theorem IsAdapted.symm_apply_eq_zero {v : X.Λ} (hv : (v : Fin r → E) ∈ Subm
   | smul c u _ hu => rw [map_smul, Pi.smul_apply, hu, smul_zero]
 
 
+omit hs in
 theorem IsAdapted.symm_smul_eq_zero (hξ : ξ ∈ X.Λ) (α : 𝓞 E) {t : Fin g ⊕ Fin g}
     (ht : ∀ k ∈ S, t ≠ Sum.inl k) : bas.symm (α • ⟨ξ, hξ⟩) t = 0 :=
   hA.symm_apply_eq_zero (Submodule.mem_span_singleton.2 ⟨α, rfl⟩) ht
@@ -429,6 +431,7 @@ variable {bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ} (hs : IsSympl X bas)
 include hs hA
 
 
+include idx in
 theorem IsAdapted.part_ne_zero (hξ : X.IsIso ξ) {x : Frame X.Ψ r} (hx : x ∈ X.dom) (τ : X.Ψ) :
     perLt X x ξ τ ≠ 0 ∧ perGe X x ξ τ ≠ 0 := by
   have hc := (c_pos X τ).ne'
@@ -633,6 +636,7 @@ theorem IsAdapted.flowCoeff_eq_zero (hξ : X.IsIso ξ) (n : ℕ) (a b : Fin n �
       rw [Finset.sum_congr rfl fun j _ => mul_left_comm _ _ _, ← Finset.mul_sum, h1, mul_zero]
 
 
+include idx in
 theorem IsAdapted.exists_unip (hξ : X.IsIso ξ) {x : Frame X.Ψ r} (hx : x ∈ X.dom) :
     ∃ K, coper X (rmul x (unip X K)) ξ = 0 :=
   exists_unip_coper_eq_zero hξ.2.1 (fun τ => (hx τ).1)

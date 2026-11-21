@@ -113,12 +113,14 @@ variable {ι : Type*} [Fintype ι] {E : ι → X.Modules}
 end Pi
 
 
+variable (k F) in
 theorem finiteCoh_of_isAffine_of_finite [IsAffine X] [Module.Finite k Γ(X, ⊤)]
     [QCoh.IsFiniteQC F] : FiniteCoh k F :=
   have : Module.Finite Γ(X, ⊤) (coh F 0) := Module.Finite.equiv (coh.zeroEquiv F).symm
   .of_acyclic (Module.Finite.trans Γ(X, ⊤) _) fun _ hn ↦ coh.subsingleton_of_isAffine F hn
 
 
+variable (k X) in
 theorem chi_structureModule_of_isAffine [IsAffine X] :
     chi k (structureModule X) = Module.finrank k Γ(X, ⊤) := by
   rw [chi_eq_hdim_zero k fun _ hn ↦ coh.subsingleton_of_isAffine _ hn, hdim_def,
@@ -372,9 +374,11 @@ def chiPic (F : X.Modules) : Pic X → ℤ :=
 variable {F G : X.Modules} {M N : LB X}
 
 
+variable (F) in
 @[simp] theorem chiPic_cls (hM : M.IsLB) : chiPic k F (cls M hM) = chi k (twist F M) := rfl
 
 
+variable (F) in
 @[simp] theorem chiPic_zero : chiPic k F 0 = chi k F := (chi_congr k (Twist.trivIso F)).symm
 
 theorem chiPic_congr (e : F ≅ G) : chiPic k F = chiPic k G := by
@@ -383,12 +387,14 @@ theorem chiPic_congr (e : F ≅ G) : chiPic k F = chiPic k G := by
   exact chi_congr k ((twistFunctor M).mapIso e)
 
 
+variable (F) in
 theorem chiPic_twist (hM : M.IsLB) (c : Pic X) :
     chiPic k (twist F M) c = chiPic k F (cls M hM + c) := by
   obtain ⟨N, hN, rfl⟩ := cls_surj c
   exact (nonempty_twist_twist_iso_of_cls_eq F hM hN (isLB_tens hM hN) rfl).elim (chi_congr k)
 
 
+variable (F) in
 theorem chi_twistZ (hM : M.IsLB) (n : ℤ) : chi k (twistZ F M n) = chiPic k F (n • cls M hM) := by
   rw [← cls_lbZPow hM n (Twist.isLB_lbZPow hM n), chiPic_cls]
 
@@ -415,6 +421,7 @@ theorem of_shortExact₃ (hS : S.ShortExact) (h₁ : FiniteCohTwists k S.X₁)
 end FiniteCohTwists
 
 
+variable (k F) in
 theorem finiteCohTwists_of_isAffine_of_finite [IsAffine X] [Module.Finite k Γ(X, ⊤)]
     [QCoh.IsFiniteQC F] : FiniteCohTwists k F := fun _ hM ↦
   have := Twist.isFiniteQC_twist (F := F) hM
@@ -512,17 +519,20 @@ theorem topSelf_def (M : LB X) (d : ℕ) :
     topSelfIntersection k M d = interNum k (structureModule X) fun _ : Fin d ↦ M := rfl
 
 
+variable (F) in
 theorem interNum_eq_multiDiff (hL : ∀ i, (L i).IsLB) :
     interNum k F L = multiDiff (fun i ↦ cls (L i) (hL i)) (chiPic k F) 0 :=
   Finset.sum_congr rfl fun S _ ↦ by
     rw [zero_sub, ← cls_lbInvProd hL S (isLB_lbInvProd hL S), chiPic_cls, smul_eq_mul]
 
 
+variable (F) in
 theorem interNum_twist_eq_multiDiff (hL : ∀ i, (L i).IsLB) (hM : M.IsLB) :
     interNum k (twist F M) L = multiDiff (fun i ↦ cls (L i) (hL i)) (chiPic k F) (cls M hM) := by
   rw [interNum_eq_multiDiff k _ hL, funext (chiPic_twist k F hM), multiDiff_translate, add_zero]
 
 
+variable (F) in
 theorem interNum_lbZPow_eq_multiDiff (hM : M.IsLB) (a : ι → ℤ) :
     interNum k F (fun i ↦ lbZPow M (a i)) = multiDiff a (fun n ↦ chi k (twistZ F M n)) 0 := by
   have e := congrFun (multiDiff_comap (zmultiplesHom _ (cls M hM)) a (chiPic k F)) 0
@@ -536,16 +546,19 @@ theorem interNum_congr (e : F ≅ G) (L : ι → LB X) : interNum k F L = interN
     congrArg (_ * ·) (chi_congr k ((twistFunctor (lbInvProd L S)).mapIso e))
 
 
+variable (F) in
 theorem interNum_congr_cls (hL : ∀ i, (L i).IsLB) (hL' : ∀ i, (L' i).IsLB)
     (h : ∀ i, cls (L i) (hL i) = cls (L' i) (hL' i)) : interNum k F L = interNum k F L' := by
   rw [interNum_eq_multiDiff k F hL, interNum_eq_multiDiff k F hL', funext h]
 
 
+variable (F) in
 theorem interNum_congr_lbIso (hL : ∀ i, (L i).IsLB) (hL' : ∀ i, (L' i).IsLB)
     (h : ∀ i, LBIso (L i) (L' i)) : interNum k F L = interNum k F L' :=
   interNum_congr_cls k F hL hL' fun i ↦ (cls_eq_iff _ _).2 (h i)
 
 
+variable (F) in
 theorem interNum_comp_equiv (hL : ∀ i, (L i).IsLB) (e : κ ≃ ι) :
     interNum k F (L ∘ e) = interNum k F L := by
   rw [interNum_eq_multiDiff k F hL, interNum_eq_multiDiff k F (L := L ∘ e) fun i ↦ hL (e i),
@@ -553,10 +566,12 @@ theorem interNum_comp_equiv (hL : ∀ i, (L i).IsLB) (e : κ ≃ ι) :
   rfl
 
 
+variable (F) in
 theorem interNum_comp_perm (hL : ∀ i, (L i).IsLB) (σ : Equiv.Perm ι) :
     interNum k F (L ∘ σ) = interNum k F L := interNum_comp_equiv k F hL σ
 
 
+variable (F) in
 @[simp] theorem interNum_of_isEmpty [IsEmpty ι] (L : ι → LB X) : interNum k F L = chi k F := by
   rw [interNum_eq_multiDiff k F isEmptyElim, multiDiff_of_isEmpty, chiPic_zero]
 
@@ -618,6 +633,7 @@ theorem interNum_one (hM : M.IsLB) :
 end Cons
 
 
+variable (F) in
 theorem interNum_eq_zero_of_cls_eq_zero (hL : ∀ i, (L i).IsLB) (i : ι)
     (h : cls (L i) (hL i) = 0) : interNum k F L = 0 := by
   rw [interNum_eq_multiDiff k F hL, multiDiff_eq_shiftAct,
@@ -625,6 +641,7 @@ theorem interNum_eq_zero_of_cls_eq_zero (hL : ∀ i, (L i).IsLB) (i : ι)
   rfl
 
 
+variable (F) in
 theorem interNum_const_eq_multiDiff (hM : M.IsLB) :
     interNum k F (fun _ : ι ↦ M) = multiDiff (fun _ : ι ↦ 1) (fun n ↦ chi k (twistZ F M n)) 0 := by
   rw [← interNum_lbZPow_eq_multiDiff k F hM]
@@ -632,6 +649,7 @@ theorem interNum_const_eq_multiDiff (hM : M.IsLB) :
     fun _ ↦ by rw [cls_lbZPow hM, one_zsmul]
 
 
+variable (F) in
 theorem interNum_const_eq_sum (hM : M.IsLB) (d : ℕ) :
     interNum k F (fun _ : Fin d ↦ M) = ∑ j ∈ Finset.range (d + 1),
       (-1 : ℤ) ^ j * d.choose j * chi k (twistZ F M (-j)) := by
@@ -644,6 +662,7 @@ theorem interNum_const_eq_sum (hM : M.IsLB) (d : ℕ) :
   exact Finset.sum_congr rfl fun j _ ↦ by ring
 
 
+variable (F) in
 theorem interNum_lbZPow_of_polynomial (hM : M.IsLB) {d : ℕ} (p : Polynomial ℚ)
     (hp : p.natDegree ≤ d) (h : ∀ n : ℤ, (chi k (twistZ F M n) : ℚ) = p.eval (n : ℚ))
     (a : Fin d → ℤ) :
@@ -657,6 +676,7 @@ theorem interNum_lbZPow_of_polynomial (hM : M.IsLB) {d : ℕ} (p : Polynomial �
   exact e₁.symm
 
 
+variable (F) in
 theorem interNum_const_of_polynomial (hM : M.IsLB) {d : ℕ} (p : Polynomial ℚ)
     (hp : p.natDegree ≤ d) (h : ∀ n : ℤ, (chi k (twistZ F M n) : ℚ) = p.eval (n : ℚ)) :
     (interNum k F (fun _ : Fin d ↦ M) : ℚ) = d.factorial * p.coeff d := by
@@ -773,10 +793,12 @@ theorem chi_structureModule_Spec : chi k (structureModule (Spec A)) = Module.fin
     ((coh.zeroUnitSpecEquiv A).restrictScalars k).finrank_eq]
 
 
+omit [Algebra k Γ(Spec A, ⊤)] [IsScalarTower k A Γ(Spec A, ⊤)] in
 abbrev algebraΓSpecOf : Algebra k Γ(Spec A, ⊤) :=
   ((algebraMap A Γ(Spec A, ⊤)).comp (algebraMap k A)).toAlgebra
 
 
+omit [Algebra k Γ(Spec A, ⊤)] [IsScalarTower k A Γ(Spec A, ⊤)] in
 theorem isScalarTower_algebraΓSpecOf :
     letI := algebraΓSpecOf k A
     IsScalarTower k A Γ(Spec A, ⊤) :=

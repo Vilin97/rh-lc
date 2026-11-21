@@ -60,6 +60,7 @@ variable {ι : Type*} [Fintype ι] [DecidableEq ι] (𝔪 : ι → Ideal B) [h�
 
 omit [Fintype ι] in
 
+omit [Fintype ι] in
 theorem length_tensor_quot (hinj : Function.Injective 𝔪) (i j : ι) :
     Module.length (C i) (C i ⊗[B] (B ⧸ 𝔪 j)) = if i = j then 1 else 0 := by
   have : IsLocalRing (C i) := IsLocalization.AtPrime.isLocalRing (C i) (𝔪 i)
@@ -81,6 +82,7 @@ theorem length_tensor_quot (hinj : Function.Injective 𝔪) (i j : ι) :
 
 omit [Fintype ι] [DecidableEq ι] in
 
+omit [Fintype ι] [DecidableEq ι] in
 theorem pi_mk_injective (hall : ∀ M : Ideal B, M.IsMaximal → ∃ i, M = 𝔪 i) (N : Type*)
     [AddCommGroup N] [Module B N] :
     Function.Injective (LinearMap.pi fun i => TensorProduct.mk B (C i) N 1) := by

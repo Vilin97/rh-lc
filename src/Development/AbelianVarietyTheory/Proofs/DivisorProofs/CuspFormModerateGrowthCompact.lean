@@ -105,6 +105,7 @@ theorem isAutForm_continuous_locModerate {φ : Sm E a} (hA : IsAutForm φ) : Con
       _ = _ := by rw [mul_pow]; ring
 
 
+variable (π : CuspSub E a) in
 def regSpan : Submodule ℂ (GA E a → ℂ) where
   carrier := {F | F ∈ rspan π ∧ Continuous F ∧ IsLocModerate F}
   add_mem' := fun {F G} hF hG => by
@@ -201,6 +202,7 @@ theorem locSpan_le_regSpan {π : CuspSub E a} {φ : Sm E a} (hφ : φ ∈ π.V) 
 end GlobalTheory.JSW.MirSemi
 
 
+open NumberField IsDedekindDomain GlobalTheory.CuspRep Formalism.UG GlobalTheory.LFun Matrix MeasureTheory in
 theorem GlobalTheory.JSW.MirSemi.locSpan_continuous_moderate :
     ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E)))
       (π : CuspSub E a) (φ : Sm E a), φ ∈ π.V → ∀ F ∈ GlobalTheory.JSW.MirSemi.locSpan S φ.1, Continuous F ∧

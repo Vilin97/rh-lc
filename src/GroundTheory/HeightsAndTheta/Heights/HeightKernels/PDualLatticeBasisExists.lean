@@ -73,6 +73,7 @@ theorem dualLattice_fg (F : HermLattice K i) : (dualLattice F).FG := by
 end DualLatticeBasisExistsAlt
 
 
+open DualLatticeBasisExistsAlt in
 theorem DualLatticeBasisExists.proof : DualLatticeBasisExists.Statement := by
   intro K _ _ i F
   classical

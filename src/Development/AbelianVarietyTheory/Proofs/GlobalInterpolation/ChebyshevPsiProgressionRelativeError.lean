@@ -295,6 +295,7 @@ lemma etaChoice (c d : ℝ) (hc : 0 < c) (hd : 0 < d) :
     nlinarith [mul_nonneg (sub_nonneg.2 h4) (sub_nonneg.2 hl)]
 
 
+set_option maxHeartbeats 1000000 in
 theorem psiAP_relative : ∃ c₀ : ℝ, 0 < c₀ ∧ ∀ c₁ : ℝ, 0 < c₁ → c₁ ≤ c₀ → ∃ c₂ c₃ C : ℝ, 0 < c₂ ∧ 0 < c₃ ∧ 0 < C ∧ ∀ (M : ℕ) [NeZero M] (b : ℕ) (θ : ℤ) (β u : ℝ), 3 ≤ M → Nat.Coprime b M → ExcData c₁ M b θ β → (M : ℝ) ^ c₂ ≤ u → |(M.totient : ℝ) * psiAP M b u - (u - θ * (u ^ β / β))| ≤ C * (Real.exp (-c₃ * Real.log u / Real.log M) + Real.exp (-Real.sqrt (c₃ * Real.log u))) * (u - θ * (u ^ β / β)) := by
   obtain ⟨c₀, hc₀, hX⟩ := GlobalTheory.T.exceptionalDirichletZero_unique_zeroFreeRegion
   refine ⟨c₀, hc₀, fun c₁ hc₁ hc₁' => ?_⟩

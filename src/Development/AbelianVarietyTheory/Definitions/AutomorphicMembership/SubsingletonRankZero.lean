@@ -17,6 +17,8 @@ namespace GlobalTheory.CuspRep.Model
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+variable (E) in
+omit [IsTotallyComplex E] in
 def absC (s : ℂ) : HChar E := ⟨absHom E s, (absChar E s).2⟩
 
 theorem logNorm_infId (u : (Cinf E)ˣ) : logNorm E (infId E u) = ∑ w, 2 * Real.log ‖(u : Cinf E) w‖ := by

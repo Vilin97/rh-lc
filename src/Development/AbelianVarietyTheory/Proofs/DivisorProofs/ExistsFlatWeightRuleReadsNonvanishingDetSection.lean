@@ -106,9 +106,11 @@ theorem ptF_map {φ : S →ₐ[c.F] T} {y : FrPt Xo c S} {z : FrPt Xo c T} (h : 
     exact congrArg spMap φ.comp_algebraMap.symm
 
 
+variable (Y) in
 abbrev pt (y : FrPt Xo c S) : Sp S ⟶ Y.X := ptF y ≫ Y.jQ ≫ genι Y
 
 
+variable (Y) in
 def fr (y : FrPt Xo c S) : EigFrame Y (algebraMap c.F S) (pt Y y) := EigFrame.ofFrPt Y y rfl
 
 theorem sameVec_fr (y : FrPt Xo c S) (τ : E →+* ℂ) (i : Fin (Dw.mult τ)) : SameVec Y y (y.u τ i) ((fr Y y).v τ i) :=

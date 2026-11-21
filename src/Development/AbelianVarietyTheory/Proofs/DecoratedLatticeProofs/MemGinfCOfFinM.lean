@@ -185,6 +185,7 @@ theorem top_lev_chi : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC
 end GlobalTheory.AdForm.EvzDecomp
 
 
+open GlobalTheory.AdForm.EvzDecomp in
 theorem GlobalTheory.AdForm.TwDat.Is.evz_decomp : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (Ch₀ : ℕ → Type) (A : TwDat I l Z u a Ch₀), A.Is → ∀ θ, IsInfFam θ → ∀ emb : GA (I.rec7 l Z) (I.rec7 l Z).sp.X' →* GA (I.rec7 l Z) ((I.rec7 l Z).sp.X B.R.m), IsEmbTop (D := (I.rec7 l Z)) (TC.z0 X u) emb → ∀ (bad : Set (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (K : ClassesAtPrimes (D := (I.rec7 l Z)) (u := u) (I.fm l u a) bad), I.ReadsP a K.lev.Lb K.lev.U K.lev.chi (fun c => (K.y c).1) K.lat (fun c s => (K.stabI c s).1) → ∀ c h, GlobalTheory.Core.Rk.Top.HasMat h (K.y c).1 → ∃ γ ∈ GQ ((I.rec7 l Z).sp.X B.R.m), ∃ k ∈ GinfC ((I.rec7 l Z).sp.X B.R.m), ∃ κ : A.U B.R.m (A.chOf B.R.m ((I.perIn u a).tilC c)), emb h = γ * (A.h B.R.m _ ⟨(I.perIn u a).tilC c, rfl⟩ * k) * κ.1 ∧ ∀ φ ∈ (I.fm l u a).Fi B.R.m, ∀ y : (I.chain l u a).Y B.R.m, ∃ y' : (I.chain l u a).Y B.R.m, IsTr (G := fun _ => 1) (infM θ _ (rankN (I.rec7 l Z) B.R.m le_rfl) k) ⟨y.1, y.2⟩ ⟨y'.1, y'.2⟩ ∧ (A.chi B.R.m _ κ : ℂ) * φ ((I.perIn u a).tilC c) y' = (I.per l u a).evz φ c y := by
   intro B X I hOk hPins l Z u a Ch₀ A hA θ hθ emb hEmb bad K hRP c h hM
   have hExt := ext_finM_emb I hOk hPins l Z u emb hEmb h (K.y c).1 hM

@@ -141,6 +141,7 @@ def cst (k : K.K) : Hol F.V →+* Hol (K.W k) :=
   (Hol.comap Prod.fst (fun _ _ ↦ analyticAt_fst) (K.base k)).toRingHom
 
 
+variable {K} in
 def sh {l : Λ} {k k' : K.K} (h : K.le l k' k) : Hol (K.W k) →+* Hol (K.W k') :=
   (Hol.comap (F.shift l) (F.shift_analytic l (K.base k')) (K.maps h)).toRingHom
 
@@ -197,6 +198,7 @@ theorem dw_cst (k : K.K) (a : Fin g) (f : Hol F.V) : dw a (K.cst k f) = 0 := by
   exact e1.trans rfl
 
 
+variable (K) in
 structure Obj : Type 1 where
 
   k : K.K
@@ -254,6 +256,7 @@ theorem hom_ext {T T' : K.Obj} {f f' : T ⟶ T'} (h : ∀ c, f.φ c = f'.φ c) (
 @[simp] theorem comp_deg {T T' T'' : K.Obj} (f : T ⟶ T') (f' : T' ⟶ T'') : (f ≫ f').deg = f.deg + f'.deg := rfl
 
 
+variable (K) in
 @[reducible] def Oc : K.Obj ⥤ CommAlgCat.{0} (Hol F.V) where
   obj T := CommAlgCat.of _ T.C
   map f := CommAlgCat.ofHom f.φ
@@ -261,15 +264,18 @@ theorem hom_ext {T T' : K.Obj} {f f' : T ⟶ T'} (h : ∀ c, f.φ c = f'.φ c) (
 theorem mp_Oc {T T' : K.Obj} (f : T ⟶ T') : mp K.Oc f = f.φ := rfl
 
 
+variable (K) in
 def perZ (per : Λ →+ Hol F.V) : Z1 K.Oc :=
   ⟨fun _ T' f ↦ algebraMap (Hol F.V) T'.C (per f.deg), fun T T' T'' f f' ↦ by
     change algebraMap _ T''.C (per (f.deg + f'.deg)) = f'.φ (algebraMap _ _ _) + algebraMap _ T''.C _
     rw [AlgHom.commutes, per.map_add, (algebraMap (Hol F.V) T''.C).map_add]⟩
 
 
+variable (K) in
 def perCl (per : Λ →+ Hol F.V) : H1 K.Oc := H1.mk _ (K.perZ per)
 
 
+variable (K) in
 @[reducible] def triv (k : K.K) : K.Obj where
   k := k
   C := Hol (K.W k)

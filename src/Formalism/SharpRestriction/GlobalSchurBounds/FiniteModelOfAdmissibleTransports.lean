@@ -336,6 +336,7 @@ lemma S_span (i : ℕ) (w : D.what₂.places.Pl) :
   exact Submodule.span_mono (fun x hx => Submodule.subset_span hx)
 
 
+variable (D u) in
 def LatticeChainWithoutLast (C : ℝ) : Prop :=
   ∀ w, OverT D u w →
     (∀ i, i < D.R.m →
@@ -1010,6 +1011,7 @@ theorem Pt_integral (P : Pend D u) (h4 : ArchimedeanSignatureMatching P) (hPF : 
   rwa [Equiv.apply_symm_apply, e] at this
 
 
+variable (D u) in
 def ClassMapInjectiveBijectiveNorms : Prop :=
   Function.Injective (D.fm u).til ∧
   (∀ c, Function.Bijective ((D.fm u).stabMap c)) ∧

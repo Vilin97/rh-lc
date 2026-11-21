@@ -78,6 +78,7 @@ def conjEquiv (s : L →+* L) (b : GL (Fin n) L) (hb : cT s b.1 * 1 * b.1 = anti
 end GlobalTheory.InertSatake
 
 
+open GlobalTheory.InertSatake in
 theorem GlobalTheory.InertSatake.sph_iff_isSat : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (π : AU E n)
     (w : HeightOneSpectrum (𝓞 E)), Algebra.IsUnramifiedAt (𝓞 (maximalRealSubfield E)) w.asIdeal → ¬ IsSplitAt w →
     (π.Sph w ↔ ∃ α, π.IsSat w α) := by

@@ -22,6 +22,7 @@ section Basics
 variable {G : Type} [Group G] [Fintype G] (S : Subgroup G) [Fintype S]
 
 
+omit [Fintype G] in
 noncomputable def tateOneClass : tateCohomology (Rep.trivial ℤ S ℤ) 0 :=
   ((tateCohomologyZeroIso (R := ℤ) (G := S)).app (Rep.trivial ℤ S ℤ)).inv.hom
     (Submodule.Quotient.mk ⟨(1 : ℤ), fun _ => rfl⟩)

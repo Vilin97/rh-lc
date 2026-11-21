@@ -37,6 +37,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {v : Pl F} {w : HeightOneSpectrum (𝓞 E)}
 
 
+variable (σ) in
 def USub (X : Spc F E n) (v : Pl F) : Subgroup (UA σ X.J) where
   carrier := UAt σ X (evFin F v)
   one_mem' := fun u _ => by

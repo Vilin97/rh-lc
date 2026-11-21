@@ -102,6 +102,7 @@ def hkFR (i : tw.Tw) (j : ℕ) (b : Bool) (hL : ℕ → PlE D.host → Module.En
 end Hecke
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 structure NExpRealH (Rl : RealDat3 D A3 Ks) (cG : Formalism.L2.DIV.G0 Rl.Pg D.R.r ≃* G0g D.nd) (S : RatDat D.ntw)
     (Y : NExpRealS Rl cG S) where
   hL : ∀ j, ℕ → PlE D.host → Module.End D.what₂.LL (S.WL j)
@@ -123,6 +124,7 @@ section NMjR
 variable {D : D7}
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 structure NMjR (X : DivX D) (c : NChoice D) where
   eMj : ∀ w j, (X.MjH j).V →ₛₗ[c.embW w]
     FractionRing (c.Oe w) ⊗[D.ntw.O (c.twI w)] D.nexp.Fm (c.twI w) j (c.sd w)
@@ -145,6 +147,7 @@ variable {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type}
   {A3 : Formalism.L2.DIV.FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 structure NMjRR (Rl : RealDat3 D A3 Ks) (cG : Formalism.L2.DIV.G0 Rl.Pg D.R.r ≃* G0g D.nd) (S : RatDat D.ntw)
     (Y : NExpRealS Rl cG S)
     (X : DivX D) (c : NChoice D) (jD : ∀ j, (X.MjH j).V →ₗ[D.what₂.LL] S.WL j)

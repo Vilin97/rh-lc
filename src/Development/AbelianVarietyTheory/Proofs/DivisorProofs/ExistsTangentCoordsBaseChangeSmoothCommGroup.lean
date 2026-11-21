@@ -72,6 +72,7 @@ theorem isTanOver_epsInv (w : epsPtR (spMap (algebraMap W R')) ⟶ G)
     (Category.id_comp (X := Spec (CommRingCat.of (DualNumber R'))) w.left)).trans hw
 
 
+variable (v) in
 def coordPt (c : Fin n → R') : epsPtR (spMap (algebraMap W R')) ⟶ G :=
   epsHom ≫ tanExp v c
 
@@ -116,6 +117,7 @@ theorem coordPt_smul (s : R') (c : Fin n → R') :
       (Category.id_comp (X := Spec (CommRingCat.of (DualNumber R'))) (tanExp v c).left)).symm
 
 
+variable (v) in
 def lieMat (hv : IsLieBasis v) (u : G ⟶ G) : Matrix (Fin n) (Fin n) W := by
   classical
   exact if h : ∀ i, IsTangent (v i ≫ u) then

@@ -52,6 +52,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {T : LocLat G Qp LL O} {C : Coord W (baseIdOf hR) T} {c : ZMod n}
 
 
+open Classical in
 theorem evaluation_expansion_at_root (s : ℕ) (D : Type) [AddCommGroup D] [Module LL D]
     (g : Rs LL PD.p s → D) (ζ : Rs LL PD.p s) : evK ζ (toKsD W s D g) = g ζ := by
   rw [toKsD, LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.coe_coe, evaluation_comm_tensor,
@@ -81,6 +82,7 @@ theorem rho_product_unit_mul {ell : ℕ}
   ring
 
 
+open Classical in
 theorem levelCond_iff (ell : ℕ)
     (hk1b : ∀ s < ell, ∃ ε : (PowerSeries (KsW W s))ˣ,
       rhoL hR c s ((baseIdOf hR).Bs.p s) = (ε : PowerSeries (KsW W s)) * PowerSeries.X)

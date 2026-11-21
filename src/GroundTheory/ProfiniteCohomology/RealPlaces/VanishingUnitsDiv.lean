@@ -52,6 +52,7 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
   (ιs : ∀ v : S, ℚ̄ →ₐ[K.1] AlgebraicClosure ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1))
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_two_nsmul_finLocal (v : HeightOneSpectrum (𝓞 K.1))
     (a : cohomology (galUnits.{0} (v.adicCompletion K.1) (AlgebraicClosure (v.adicCompletion K.1))) 2) :
     ∃ u, 2 • u = a := by
@@ -109,6 +110,8 @@ section Div
 variable (h2S : ∀ v : HeightOneSpectrum (𝓞 K.1), ((2 : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
 
 
+set_option maxHeartbeats 2000000 in
+include h2S in
 theorem exists_realUnitsRes_two_eq
     (t : ∀ w : {v : InfinitePlace K.1 // v.IsReal}, cohomology (realUnits w) 2) :
     ∃ g : cohomology (galSUnitsMax K.1 ℚ̄ S) 2, ∀ w, (realUnitsRes S ιr 2 w).hom g = t w := by
@@ -169,6 +172,8 @@ theorem exists_realUnitsRes_two_eq
     exact absurd (Finset.mem_univ w) h
 
 
+set_option maxHeartbeats 1000000 in
+include h2S in
 theorem exists_eq_two_nsmul_add_unitsGlobalToLocal (t : UnitsLoc S 2) :
     ∃ (t' : UnitsLoc S 2) (g : cohomology (galSUnitsMax K.1 ℚ̄ S) 2),
       t = 2 • t' + unitsGlobalToLocal S ιr ιs 2 g := by
@@ -183,6 +188,8 @@ theorem exists_eq_two_nsmul_add_unitsGlobalToLocal (t : UnitsLoc S 2) :
     rw [smul_zero, zero_add, unitsGlobalToLocal_snd, hg w]
 
 
+set_option maxHeartbeats 1000000 in
+include h2S in
 theorem exists_two_nsmul_unitsTate_three (z : unitsTateCohomology S ιr ιs (2 + 1)) : ∃ z', 2 • z' = z := by
   obtain ⟨N, hN⟩ := isOfFinAddOrder_iff_nsmul_eq_zero.1
     (isTorsion_cohomology (galSUnitsMax K.1 ℚ̄ S) (n := 2 + 1) (by norm_num) (unitsToGlobal S ιr ιs (2 + 1) z))
@@ -204,6 +211,8 @@ theorem exists_two_nsmul_unitsTate_three (z : unitsTateCohomology S ιr ιs (2 +
   rw [add_smul, one_smul, add_sub_cancel_left]
 
 
+set_option maxHeartbeats 1000000 in
+include h2S in
 theorem exists_two_nsmul_unitsTate_of_four_le {m : ℕ} (hm : 3 ≤ m + 1)
     (x : unitsTateCohomology S ιr ιs (m + 1 + 1)) : ∃ x', 2 • x' = x := by
   obtain ⟨N, hN⟩ := isOfFinAddOrder_iff_nsmul_eq_zero.1
@@ -223,6 +232,7 @@ theorem exists_two_nsmul_unitsTate_of_four_le {m : ℕ} (hm : 3 ≤ m + 1)
   rw [smul_smul, show 2 * (c + 1) = (2 * c + 1) + 1 by ring, add_smul, hbx, one_smul, zero_add]
 
 
+include h2S in
 theorem exists_two_nsmul_unitsTateCohomology {r : ℕ} (hr : 3 ≤ r) (x : unitsTateCohomology S ιr ιs r) :
     ∃ x', 2 • x' = x := by
   obtain ⟨m, rfl⟩ : ∃ m, r = m + 1 + 1 := ⟨r - 2, by omega⟩

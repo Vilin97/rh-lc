@@ -74,6 +74,7 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type} {A3 : FamIn
   {cG : G0 R.Pg D.R.r ≃* G0g D.nd} {X0 : BaseLevelRowSide D} {Y : Read (A3 := A3) R.toRealDat F.lv2 X0}
 
 
+set_option maxHeartbeats 1000000 in
 theorem eW_jW_eq (Z : ReadL R F X0 Y) (i : Fin D.R.m) (y) :
     Y.mj.eW i (Z.jW i y) = GlobalTheory.Mem.LiftTheta.goodForm R.toRealDat F.lv2 false i y :=
   (Z.jW_read i y).trans (congrArg ((R.FW i).j (sg0 D A3.A)) (Fintype.linearCombination_apply _ _ _))
@@ -109,6 +110,7 @@ theorem chiKs (hP : Pins R F cG) (i : Fin D.R.m) : (R.FW i).ChiKs := by
   exact ⟨y, D.what₂.embLL.injective (hy.trans ((Units.coe_prod _ _).trans (hP.char.base.grp.chiW i g).symm))⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem jW_lat (Z : ReadL R F X0 Y) (hP : Pins R F cG) (hH : Holds R F) (i : Fin D.R.m) :
     OLatTie D.what₂.embLL (D.what₂.MjLat ((i : ℕ) + 1)) (Z.jW i) ((s0Of R F).M i) := by
   have he := eW_inj Y i
@@ -148,6 +150,7 @@ theorem jW_lat (Z : ReadL R F X0 Y) (hP : Pins R F cG) (hH : Holds R F) (i : Fin
         rfl) _
 
 
+set_option maxHeartbeats 1000000 in
 theorem jW_norm (Z : ReadL R F X0 Y) (hH : Holds R F) (i : Fin D.R.m) (x : Fin ((s0Of R F).dW i) → D.what₂.LL) :
     Formalism.HermitianLatticesTheory.cnorm (Formalism.HermitianLatticesTheory.fcoord (Pi.basisFun D.what₂.LL _) ((s0Of R F).XW i) (InfinitePlace.mk D.what₂.embLL) x) =
       ‖Z.jW i x‖ := by

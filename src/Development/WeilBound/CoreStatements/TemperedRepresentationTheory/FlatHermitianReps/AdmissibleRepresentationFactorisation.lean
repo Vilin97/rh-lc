@@ -92,6 +92,7 @@ theorem eq_zero_of_apply_unitVec {D : D7} {V : HSp D} {S : D.what₂.Tau → SPa
   simp at hpos
 
 
+set_option maxHeartbeats 400000 in
 theorem finiteDimensional_of_bump {G E : Type} [Group G] [TopologicalSpace G] [MeasurableSpace G]
     [OpensMeasurableSpace G] [NormedAddCommGroup E] [InnerProductSpace ℂ E] [CompleteSpace E]
     {π : G →* (E →L[ℂ] E)} (hπ : IsUnitaryRep π) (μ : Measure G) [IsFiniteMeasureOnCompacts μ] [μ.IsOpenPosMeasure]

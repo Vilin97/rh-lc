@@ -274,6 +274,7 @@ theorem inner_toLp_rho (w : l ⊕ l → ℝ) (φ f : Sch l) :
   rw [h1, h2]
 
 
+omit [DecidableEq l] in
 theorem hasDerivAt_inner_rho (w : l ⊕ l → ℝ) (φ f : Sch l) :
     HasDerivAt (fun t : ℝ => inner ℂ (φ.toLp 2 volume) (rho (t • w) (f.toLp 2 volume)))
       (inner ℂ (φ.toLp 2 volume) ((dRho w f).toLp 2 volume)) 0 := by

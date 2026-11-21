@@ -15,6 +15,7 @@ namespace UpperTheory.V.Th.Coc
 variable {O R X : Type} [CommRing O] [CommRing R] [Algebra O R] [CommRing X] [Algebra O X] {n : ℕ}
 
 
+variable (X) in
 abbrev bar (Z : Matrix (Fin n) (Fin n) O) : Matrix (Fin n) (Fin n) X := Z.map (algebraMap O X)
 
 def repR {G : Type} [Group G] (x : R →ₐ[O] O) (ρ : G →* Matrix (Fin n) (Fin n) O) :

@@ -212,12 +212,14 @@ theorem exists_inv_one_add {s : 𝒜} (hs : s ∈ 𝒮) : ∃ t ∈ 𝒮, (1 + (
   exact congrArg Subtype.val ht
 
 
+open Classical in
 def idem (P : ℕ → Prop) : 𝔸 := mkInt (fun v => if P (pr v) then 1 else 0) fun v => by
   split_ifs
   · exact one_mem _
   · exact zero_mem _
 
 
+variable (E) in
 def eps (P : ℕ → Prop) : 𝒜 := (1 : E) ⊗ₜ[ℚ] idem P
 
 theorem eps_mem (P : ℕ → Prop) : eps E P ∈ 𝒮 := one_tmul_mem (mkInt_mem _ _)

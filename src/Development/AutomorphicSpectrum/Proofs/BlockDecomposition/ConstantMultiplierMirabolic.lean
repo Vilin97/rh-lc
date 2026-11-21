@@ -138,6 +138,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {ι : Type} [Fintype ι] [DecidableEq ι]
 
 
+variable (F E ι) in
 abbrev mpp : GL ι (AE F E) →* GL ι 𝔸[E] := Matrix.GeneralLinearGroup.map (eqv F E).toRingHom
 
 theorem tInv_mem_kGL {E R : Type} [Field E] [CommRing R] (A : Ad E R) (κ : GL ι R) (h : κ ∈ A.kGL ι) :

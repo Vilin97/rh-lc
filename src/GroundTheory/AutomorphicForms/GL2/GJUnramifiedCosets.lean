@@ -22,6 +22,7 @@ variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchi
   {n : ℕ}
 
 
+variable (F) in
 def digitSum (m : ℕ) (a : Fin m → 𝓀[F]) : F :=
   ∑ t : Fin m, (residueLift F (a t) : F) * ϖ ^ (t : ℕ)
 
@@ -115,9 +116,11 @@ theorem eq_of_bdd_digitSum_sub (m : ℕ) {a b : Fin m → 𝓀[F]}
 abbrev UpperPairs (n : ℕ) : Type := {p : Fin n × Fin n // p.1 < p.2}
 
 
+variable (F) in
 abbrev NormalData (l : Fin n → ℕ) : Type _ := ∀ p : UpperPairs n, Fin (l p.1.1) → 𝓀[F]
 
 
+variable (F) in
 def normalMat (l : Fin n → ℕ) (c : NormalData F l) : Matrix (Fin n) (Fin n) F :=
   fun i j => if h : i < j then digitSum F (l i) (c ⟨(i, j), h⟩) else if i = j then ϖ ^ l i else 0
 
@@ -146,6 +149,7 @@ theorem det_normalMat_ne_zero (l : Fin n → ℕ) (c : NormalData F l) : (normal
   exact Finset.prod_ne_zero_iff.2 fun i _ => pow_ne_zero _ (Cartan.uniformizer_ne_zero F)
 
 
+variable (F) in
 def normalGL (l : Fin n → ℕ) (c : NormalData F l) : GL (Fin n) F :=
   ((Matrix.isUnit_iff_isUnit_det _).2 (isUnit_iff_ne_zero.2 (det_normalMat_ne_zero l c))).unit
 
@@ -407,6 +411,7 @@ theorem normalGL_apply_mem (l : Fin n → ℕ) (c : NormalData F l) (i j : Fin n
     exact (𝒪[F]).zero_mem
 
 
+variable (F n) in
 def integralShell (k : ℕ) : Set (GL (Fin n) F) :=
   {g | (∀ i j, g i j ∈ 𝒪[F]) ∧ GodementJacquet.ordDet g = k}
 
@@ -499,6 +504,7 @@ variable [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)]
   {μ : Measure (GL (Fin n) F)} [μ.IsHaarMeasure]
 
 
+variable (μ) in
 def integralHecke (k : ℕ) : SphericalHecke μ (F := F) (n := n) :=
   indicatorHecke μ (integralShell F n k) (isCompact_integralShell k) (isOpen_integralShell k)
     fun a ha x => ⟨by simpa using mul_mem_integralShell_iff (g := x) (k := k) ha (integralGL F n).one_mem,

@@ -91,6 +91,7 @@ theorem absV_nonneg (v : PlX X) : 0 ≤ absV v (dV v) := by
 end Loc
 
 
+variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 theorem normalizing_arithmetic_holds : NcArith := by
   intro D X hb hK FdN FdN' u u' X0 ψ τ Rw I H H₁ i1 i2 i3 i4 i5 T sd C Th F0 what₂ vR Q M δ i0 i0' νq a'
     ha hRR hS hR hχ hstd hcong hVo hVt hIx hOm hDP hRMp hFD hPC hP

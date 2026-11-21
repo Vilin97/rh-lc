@@ -21,6 +21,7 @@ namespace GlobalTheory.Mass.Genus
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}
 
 
+omit [NumberField F] [Algebra F E] in
 theorem exists_den (Λ N : Submodule (𝓞 E) (Fin n → E)) (hΛ : Λ.FG)
     (hN : Submodule.span E (N : Set (Fin n → E)) = ⊤) : ∃ m : ℤ, m ≠ 0 ∧ ∀ x ∈ Λ, m • x ∈ N := by
   obtain ⟨m', hm', hs⟩ := csGlob_single N hN
@@ -115,6 +116,7 @@ theorem eps_congr (v : HeightOneSpectrum (𝓞 F)) {g h : GL (Fin n) 𝒜}
   exact this
 
 
+omit [NumberField F] [NumberField E] in
 theorem fixed_mem (σ : E →ₐ[F] E) (hr : Module.finrank F E = 2) (hne : ∃ z, σ z ≠ z) (e : E) (he : σ e = e) :
     ∃ a : F, algebraMap F E a = e := by
   obtain ⟨z, hz⟩ := hne
@@ -289,6 +291,7 @@ theorem card_stabAt (hΛ : Module.Finite (𝓞 E) Λ) (hsp : Submodule.span E (�
 end GlobalTheory.Mass.Genus
 
 
+open GlobalTheory.Mass.Genus Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
 theorem GlobalTheory.Mass.classMass_lattice_eq_genus_mass {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
     [Algebra F E] {σ : E →ₐ[F] E} {M : ℕ} {J : Matrix (Fin M) (Fin M) E} (hσ : IsCMExt F E σ) (hJ : IsHermND σ J)
     (hd : IsTotDef σ J) (hs : ∀ e, (σ : E →+* E) ((σ : E →+* E) e) = e) (Λ : Submodule (𝓞 E) (Fin M → E))
@@ -347,6 +350,7 @@ theorem GlobalTheory.Mass.classMass_lattice_eq_genus_mass {F E : Type} [Field F]
     simpa only [hgN] using h
 
 
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
 theorem GlobalTheory.Mass.unitaryMass_lattice_eq_genus_mass {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
     [Algebra F E] {σ : E →ₐ[F] E} {M : ℕ} {J : Matrix (Fin M) (Fin M) E} (hσ : IsCMExt F E σ) (hJ : IsHermND σ J)
     (hd : IsTotDef σ J) (hs : ∀ e, (σ : E →+* E) ((σ : E →+* E) e) = e) (Λ : Submodule (𝓞 E) (Fin M → E))

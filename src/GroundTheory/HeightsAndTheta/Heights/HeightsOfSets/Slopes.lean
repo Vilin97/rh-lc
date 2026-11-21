@@ -73,6 +73,7 @@ abbrev firstIncl (K : Type*) [Field K] : 𝓞 K →ₗ[𝓞 K] (Fin 2 → 𝓞 K
 
 
 
+variable (K) in
 def standardFlag : Fin 3 → Submodule (𝓞 K) (HermitianBundle.standard K 2).carrier :=
   ![⊥, LinearMap.range (firstIncl K), ⊤]
 

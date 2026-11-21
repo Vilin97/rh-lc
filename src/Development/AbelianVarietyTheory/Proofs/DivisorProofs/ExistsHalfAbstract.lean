@@ -252,6 +252,7 @@ theorem char_eq_of_mul_conj (hc : IsCMExt F E σ) {χ : (AEF F E)ˣ →* Circle}
   exact mul_right_cancel h2
 
 
+variable (σ J) in
 def cutDet (ε : AEF F E) (h : ε * ε = ε) : GAF σ J →* (AEF F E)ˣ :=
   (Units.map (cut ε h)).comp ((Matrix.GeneralLinearGroup.det (n := Fin n) (R := AEF F E)).comp (matHomF σ J))
 

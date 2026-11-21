@@ -20,6 +20,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open Formalism.L2.SG.DataInst Formalism.L2.SG.CntLocal Formalism.L2.SG.RowsConc Formalism.L2.SG.RealObj
 
 
+open Formalism.L2.SG.AdBridge Formalism.L2.SG.DataInst Formalism.L2.SG.RealObj in
 def CarrierP : Prop :=
   ∃ C₄ CA₀ : ℝ, 1 ≤ C₄ ∧ ∀ CA : ℝ, CA₀ ≤ CA → 1 ≤ CA →
     ∀ C0 CG CDel cT Cb : ℝ, 1 ≤ C0 → 0 ≤ CG → 4 < CDel → 0 < cT → 0 < Cb → 1 < cT * Cb →
@@ -40,6 +41,7 @@ def CarrierP : Prop :=
         (lOf D (deOf D τ u) (deOf D τ u'))
 
 
+open Formalism.L2.SG.AdBridge Formalism.L2.SG.CntLocal Formalism.L2.SG.DataInst Formalism.L2.SG.RowsConc in
 theorem theoremS_rec2P
     (hLMA : ∀ D : D7, LocalModelAt D) (hDIA : ∀ D : D7, Formalism.L2.SG.Pf.LocCP.LocTied D → DensInputAt D) (hRIA : ∀ D : D7, RowsInputP D)
     (hNG : Formalism.L2.SG.RowsPos.RowNGP)
@@ -125,6 +127,7 @@ theorem theoremS_rec2P
     exact hRNG
 
 
+open Formalism.L2.SG.AdBridge Formalism.L2.SG.CntLocal Formalism.L2.SG.DataInst Formalism.L2.SG.RowsConc in
 theorem theoremS_rec3P
     (hLMA : ∀ D : D7, LocalModelAt D) (hDIA : ∀ D : D7, Formalism.L2.SG.Pf.LocCP.LocTied D → DensInputAt D) (hRIA : ∀ D : D7, RowsInputP D)
     (hNG : Formalism.L2.SG.RowsPos.RowNGP) (hCar : CarrierP) (Cthr : ℝ) :

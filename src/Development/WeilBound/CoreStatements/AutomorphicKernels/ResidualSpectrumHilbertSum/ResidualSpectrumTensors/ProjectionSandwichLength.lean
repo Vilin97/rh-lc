@@ -17,6 +17,7 @@ namespace PositivityTheory.RSHS.ProjectionSandwichLength
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {N : ℕ}
 
 
+omit [IsTotallyComplex E] in
 theorem eq_of_isAbsPow {ν ν' : HChar E} {s : ℝ} (h : ν.IsAbsPow s) (h' : ν'.IsAbsPow s) : ν = ν' := by
   have h0 : (ν * ν'⁻¹).IsAbsPow 0 := by
     refine ⟨fun v x hx => ?_, fun v => ?_, fun k => ?_⟩

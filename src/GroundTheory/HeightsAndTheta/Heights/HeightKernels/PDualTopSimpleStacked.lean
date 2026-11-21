@@ -165,6 +165,7 @@ theorem degSecond_eq (k : Unit ⊕ Unit) :
   · simp [degSecond_inr]
 
 
+open IndefiniteRowSideFullHecke.Inter in
 theorem logNorm_eq {F F' : HermLattice K i} {b : Module.Basis T ℤ (dualLattice F)}
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b)))
     {b' : Module.Basis T ℤ (dualLattice F')} (hb' : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b')))
@@ -191,6 +192,7 @@ theorem logNorm_eq {F F' : HermLattice K i} {b : Module.Basis T ℤ (dualLattice
   rw [hcz t, norm_mul, mul_div_mul_left _ _ (norm_ne_zero_iff.mpr hc)]
 
 
+open IndefiniteRowSideFullHecke.Inter in
 theorem step (hHor : DualStackedGraphHorizontal.Statement) {F F' : HermLattice K i}
     {b : Module.Basis T ℤ (dualLattice F)} (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b)))
     {b' : Module.Basis T ℤ (dualLattice F')} (hb' : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b')))
@@ -353,6 +355,7 @@ theorem geomDeg_proj_eq_one (hGF : GrassFibreDegree.Statement) {II : Intersectio
 end TopDualSimpleStacked
 
 
+open TopDualSimpleStacked IndefiniteRowSideFullHecke.Inter in
 theorem DualTopSimpleStacked.proof (hAI3 : Inter.PushforwardArithIntersection.Statement) (hGr : GraphStatement)
     (hImg : DualStackedGraphImage.Statement) (hHor : DualStackedGraphHorizontal.Statement)
     (hFib : DualStackedGraphFibre.Statement) (hGF : GrassFibreDegree.Statement) :

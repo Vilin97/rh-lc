@@ -419,6 +419,7 @@ theorem arcBasis_iff (ρ : (E →+* ℂ) → (𝓞 E →+* A)) (e : ∀ τ : E �
   exact ⟨fun τ k => v (e τ k), fun τ k => hv _, fun τ => (isEigBasis_iff hG W _ fun k => hv _).1 (h τ)⟩
 
 
+include W in
 theorem IsEigBasis.of_cor {O' : Type} [CommRing O'] {β' : O' →+* c.F} {Y' : Model Xo c β'} {b' : O' →+* A}
     {a' : ArcIn Dw l β' A b'} {χ' : Sp (PowerSeries A) ⟶ Y'.X} (W' : Wit Y' a' χ')
     {p : IsPullDeg (RingHom.id A) a.D₀ a'.D₀} (hl : ∀ (x : 𝓞 E) y, p.xe (x • y) = x • p.xe y)

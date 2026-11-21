@@ -42,6 +42,7 @@ theorem nonempty_isogEnd_congr {L : Type} [Field L] [Algebra L ℂ] {B B' : Weie
   exact h
 
 
+include hK in
 theorem exists_uniformization_level (σ : ℂ ≃ₐ[K] ℂ) (s : IdeleGroup K)
     (hs : ∀ x : maximalAbelianExtension K (algebraicClosure K ℂ),
       ((artinMap K (algebraicClosure K ℂ) (IdeleClassGroup.mk K s) x : algebraicClosure K ℂ) : ℂ) =

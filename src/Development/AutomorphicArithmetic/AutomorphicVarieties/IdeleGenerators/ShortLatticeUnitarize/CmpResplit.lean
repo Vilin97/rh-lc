@@ -114,6 +114,7 @@ section Sp
 variable {W : Type} [AddCommGroup W] [Module ℂ W]
 
 
+variable (W) in
 def Cen (ω : (Af F)ˣ →* ℂˣ) : Submodule ℂ (GF F → W) where
   carrier := {f | ∀ z g, f (g * zc F z) = (ω z : ℂ) • f g}
   add_mem' h h' z g := by simp [h z g, h' z g]
@@ -127,6 +128,7 @@ def Sp (Q : DefQuat F) (R : Representation ℂ (GF F) W) (c : Pl F → ℕ) (ω 
 end Sp
 
 
+variable (F) in
 structure LDat {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) where
 
   pl : InfinitePlace F → Pl F

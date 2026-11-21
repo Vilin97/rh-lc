@@ -47,6 +47,7 @@ theorem fam_ev {M : LB (A ⊗ U).left} (hM : Fam A M) {T : Over S} (t : T ⟶ U)
     exact (isAdditive_iff hM.isLB).1 hM.add Y a a' (y ≫ t)
 
 
+omit [GrpObj A] in
 theorem same_ev_iff {M M' : LB (A ⊗ U).left} (hM : M.IsLB) (hM' : M'.IsLB) {T Y : Over S} (t t' : T ⟶ U)
     (y : Y ⟶ T) :
     Same A (ev M (fst A T) (snd A T ≫ t)) (ev M' (fst A T) (snd A T ≫ t')) y y ↔ Same A M M' (y ≫ t) (y ≫ t') := by

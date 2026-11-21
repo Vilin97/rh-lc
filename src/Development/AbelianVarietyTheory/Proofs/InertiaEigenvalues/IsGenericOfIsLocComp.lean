@@ -107,6 +107,7 @@ theorem coe_locPsi (hψ : StdPsi ψ) (w : HeightOneSpectrum (𝓞 E)) (y : w.adi
     (locPsi hψ w y : ℂ) = ψ (sFin E (sLoc E w y)) := rfl
 
 
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField in
 theorem isGeneric_of_isLocComp : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (P : CuspSub E a)
     (w : HeightOneSpectrum (𝓞 E)) (σ : SmIrr (GL (Fin a) (w.adicCompletion E))), P.IsLocComp w σ →
     GlobalTheory.LocGL.IsGeneric σ.ρ := by

@@ -195,11 +195,13 @@ theorem pushComparison_bijective_of_class (P : AbSheaf Y → Prop)
       exact fun y ↦ ⟨0, @Subsingleton.elim _ this _ _⟩
 
 
+omit [HasExt.{w} (AbSheaf X)] in
 def HigherDirectImagesVanish (G : AbSheaf Y) : Prop :=
   ∀ (n : ℕ), 0 < n → ∀ (V : Opens X) (α : Sheaf.H'.{w'} G n ((Opens.map f).obj V)), ∀ x ∈ V,
     ∃ (W : Opens X) (i : W ⟶ V), x ∈ W ∧ res G n ((Opens.map f).map i) α = 0
 
 
+omit [HasExt.{w} (AbSheaf X)] in
 theorem higherDirectImagesVanish_of_basis (G : AbSheaf Y)
     (h : ∀ (V : Opens X), ∀ x ∈ V, ∃ W ≤ V, x ∈ W ∧
       ∀ n, 0 < n → Subsingleton (Sheaf.H'.{w'} G n ((Opens.map f).obj W))) :
@@ -210,6 +212,7 @@ theorem higherDirectImagesVanish_of_basis (G : AbSheaf Y)
 variable {f}
 
 
+omit [HasExt.{w} (AbSheaf X)] in
 theorem HigherDirectImagesVanish.epi {S : ShortComplex (AbSheaf Y)} (hS : S.ShortExact)
     (h : HigherDirectImagesVanish.{w'} f S.X₁) : Epi ((push f).map S.g) := by
   refine epi_push_map f S.g fun V t x hx ↦ ?_
@@ -221,6 +224,7 @@ theorem HigherDirectImagesVanish.epi {S : ShortComplex (AbSheaf Y)} (hS : S.Shor
 
 
 
+omit [HasExt.{w} (AbSheaf X)] in
 theorem HigherDirectImagesVanish.quotient {S : ShortComplex (AbSheaf Y)} (hS : S.ShortExact)
     [Injective S.X₂] (h : HigherDirectImagesVanish.{w'} f S.X₁) :
     HigherDirectImagesVanish.{w'} f S.X₃ := by

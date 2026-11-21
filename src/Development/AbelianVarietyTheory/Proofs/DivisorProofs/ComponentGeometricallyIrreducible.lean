@@ -125,6 +125,7 @@ theorem algClosed_kap {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Re
 end GlobalTheory.GeomIrrComp
 
 
+open GlobalTheory.GeomIrrComp in
 theorem GlobalTheory.GeomIrrComp.exists_open_irreducibleSpace_baseChange : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H)
     (Xo : Moduli Dw l) (c : Coeff l), FnAlgClosed Xo c → ∀ Z : Comp Xo c,
     ∃ U : (Xo.XF c).Opens, (U : Set (Xo.XF c)) = Z ∧ ∀ (k : Type) [Field k] (f : c.F →+* k),

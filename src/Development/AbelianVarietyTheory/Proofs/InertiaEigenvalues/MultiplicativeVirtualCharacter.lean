@@ -88,6 +88,7 @@ theorem sum_flatMap_replicate {ι α M : Type} [AddCommMonoid M] (s : Finset ι)
 end GlobalTheory.WeilDeligne.VirtualTrace
 
 
+open GlobalTheory.WeilDeligne.VirtualTrace in
 theorem GlobalTheory.WeilDeligne.VirtualTrace.prod_zpow_eq_one_of_trace_zero :
     ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
     (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (f : WD h → ℂˣ),

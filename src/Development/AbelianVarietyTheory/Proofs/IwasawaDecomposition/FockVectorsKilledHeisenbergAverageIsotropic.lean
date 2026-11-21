@@ -172,6 +172,7 @@ theorem val_sub_lt (φ : Datum.EAf D →+* Fv D.host.F v)
     exact hres ⟨_, hU (Fin.castLE hr j) i⟩ h1
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_const {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.F ψ) (S T : HSp D)
     (βS : GL (Fin S.rank) (Datum.EAf D)) (βT : GL (Fin T.rank) (Datum.EAf D)) (he : Formalism.L2.NTheta.IsIdemAt e PP)
     (c : Fin T.rank → AE D) (hc : ∃ i, e * c i ≠ 0) (hr : T.rank ≤ S.rank) :
@@ -240,6 +241,8 @@ theorem exists_const {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.F �
       ((div_lt_one₀ (zero_lt_iff.2 ((Valuation.ne_zero_iff _).2 hj0))).2 hrow)
 
 
+set_option maxHeartbeats 1000000 in
+open Classical in
 theorem exists_eigen {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D}
     {sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ} {sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ}
     {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)} {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)}

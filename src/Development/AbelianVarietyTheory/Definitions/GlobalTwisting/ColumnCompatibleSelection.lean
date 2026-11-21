@@ -62,6 +62,8 @@ def zsc {D : D7} {O : Obj D} (P : Formalism.L2.Rows.RowSideFamily O.ex) (Del h0 
     { z with l6m := fun j => z.l6m j - c * z.l6u, l6u := 0 }
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
 structure Bundle (D : D7) (O : Obj D) (c : ℝ) : Type 1 where
   R : Formalism.L2.RecT O.ex
   S : Formalism.L2.SG.SpectralTiesReal.STiesR R

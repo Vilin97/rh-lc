@@ -54,6 +54,10 @@ private theorem level_Mb_ne_bot : l.Mb ≠ ⊥ := by
   omega
 
 
+open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField in
+open scoped CategoryTheory.Obj TensorProduct Pointwise in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} (D : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum H)
+  (l : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H) in
 theorem _root_.GlobalTheory.SimMb.exists_left_inv (g : D.La →ₗ[𝓞 E] D.La)
     (hg : ∀ x, g x ∈ l.Mb • (⊤ : Submodule (𝓞 E) D.La) → x ∈ l.Mb • (⊤ : Submodule (𝓞 E) D.La)) :
     ∃ h : D.La →ₗ[𝓞 E] D.La, ∀ x, h (g x) - x ∈ l.Mb • (⊤ : Submodule (𝓞 E) D.La) := by

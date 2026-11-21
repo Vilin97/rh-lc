@@ -77,6 +77,7 @@ def blockMap (φ : R →+* S) : Levi R m →* Levi S m :=
     blockMap φ L a = GeneralLinearGroup.map φ (L a) := rfl
 
 
+omit [Fintype α] [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] in
 theorem map_mem_parab (e : (Σ a, m a) ≃ n) (φ : R →+* S) (p : parab R e) :
     GeneralLinearGroup.map φ (p : GL n R) ∈ parab S e :=
   mem_parab.2 fun i j h => by

@@ -185,6 +185,7 @@ end GlobalTheory.Core.Deg
 namespace GlobalTheory.Core.Deg
 
 
+open Formalism.HermitianLatticeCounting.LatticeSumBounds in
 theorem corankSums_expLoss : ∀ C : ℝ, 1 ≤ C → ∃ K₀ : ℝ, ∀ (k m f : ℕ) (b g v NT Gam : ℝ) (Xi : ℕ → ℝ),
     Formalism.HermitianLatticeCounting.LatticeSumBounds.Params C K₀ k m f b g v NT 1 → Formalism.HermitianLatticeCounting.LatticeSumBounds.XiHyp C k m f b v NT Xi → 0 ≤ Gam →
     Gam ≤ Real.exp ((k : ℝ) / 8) →

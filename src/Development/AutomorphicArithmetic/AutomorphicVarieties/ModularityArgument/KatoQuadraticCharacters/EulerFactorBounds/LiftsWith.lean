@@ -44,6 +44,7 @@ def Cnd (l N : ℕ) (g : SL(2, ℤ)) {M : ℕ} (m : Matrix (Fin 2) (Fin 2) (ZMod
     (en g 1 0 : ZMod l) * ((m 0 0).val : ZMod l) = (en g 0 0 : ZMod l) * ((m 1 0).val : ZMod l)
 
 
+open Classical in
 def Xi (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (n N M₀ M w : ℕ) [NeZero M] (g : SL(2, ℤ)) (x y : Row M₀)
     (P : (ZMod M)ˣ → Prop) (a : Fam X M₀) : X.Fn l := fun u =>
   ∑ m ∈ Finset.univ.filter (fun m : GL (Fin 2) (ZMod M) =>

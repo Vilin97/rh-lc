@@ -54,6 +54,7 @@ variable {A A' B B' : Rep.{u} k G} [IsDiscreteRep A] [IsDiscreteRep A'] [IsDiscr
   [IsDiscreteRep B'] {p q n : ℕ}
 
 
+omit [TopologicalSpace H] [IsTopologicalGroup H] in
 theorem cohomologyMap_tensorHom_cup (f : A ⟶ A') (g : B ⟶ B') (h : p + q = n)
     (x : cohomology A p) (y : cohomology B q) :
     cohomologyMap (f ⊗ₘ g) n (cup h x y) = cup h (cohomologyMap f p x) (cohomologyMap g q y) := by
@@ -70,6 +71,7 @@ theorem cohomologyMap_tensorHom_cup (f : A ⟶ A') (g : B ⟶ B') (h : p + q = n
   exact tensorHom_cupCochain f g h _ _ s
 
 
+omit [TopologicalSpace H] [IsTopologicalGroup H] in
 theorem cohomologyMap_whiskerRight_cup (f : A ⟶ A') (h : p + q = n) (x : cohomology A p)
     (y : cohomology B q) :
     cohomologyMap (f ▷ B) n (cup h x y) = cup h (cohomologyMap f p x) y := by

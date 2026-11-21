@@ -50,6 +50,7 @@ private theorem root_small {x : Qbar l} (h : x ^ l = 1) : ‖x - 1‖ < 1 := by
   exact (pow_lt_one_iff_of_nonneg (norm_nonneg _) hl.out.ne_zero).1 h3
 
 
+variable (l) in
 private def U : Subgroup (Qbar l)ˣ where
   carrier := {u | ‖(u : Qbar l) - 1‖ < 1}
   one_mem' := by simp

@@ -18,6 +18,7 @@ open GlobalTheory.MinorFrame
 variable {ι : Type} [Fintype ι] [DecidableEq ι]
 
 
+omit [DecidableEq ι] in
 theorem totalDegree_colSub_le {d a : ℕ} (g : ι → Matrix (Fin a) (Fin a) ℂ) (P : Pol ι d a) :
     (colSub g P).totalDegree ≤ P.totalDegree := by
   have hX : ∀ y : Var ι d a, (colSub g (X y : Pol ι d a)).totalDegree ≤ 1 := by

@@ -185,6 +185,7 @@ theorem ew_lint_le (p : KB.Pl P Wp Wq) {A : ℝ} (hAB : B.AB P.k P.r ≤ A) (hT 
 end place
 
 
+set_option maxHeartbeats 1600000 in
 theorem dominated_L2_truncation_bound_holds : DominatedL2TruncationBound := by
   intro Cb C₁
   refine ⟨max C₁ 0 + 21, ?_⟩

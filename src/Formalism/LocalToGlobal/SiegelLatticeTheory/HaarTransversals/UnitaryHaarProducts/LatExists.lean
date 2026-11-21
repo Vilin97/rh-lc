@@ -1071,6 +1071,7 @@ end Formalism.L2.SG.Pf.LatEx
 namespace Formalism.L2.SG.Pf
 
 
+variable [Fact Formalism.HermitianLattices.Ext.L3.HermRepUnram] in
 theorem latExists_of (hPC : LatEx.PrimesInClasses) (D : Formalism.BasicNotions.D7) : Formalism.L2.SG.SplitPrimeNormLemmas.LatExists D :=
   LatEx.latExists_of_steps D (LatEx.satBasis_of LatEx.satBasisV_holds) hPC (LatEx.ddG_of D LatEx.splitDiff_holds)
 

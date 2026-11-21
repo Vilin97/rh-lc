@@ -152,6 +152,7 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1))) [Fintype 
   (hodd : Odd n ∨ IsTotallyComplex K.1)
 
 
+set_option maxHeartbeats 2000000 in
 theorem placeInv_gsLocalRes_of_bock (t : sInvariantSubgroup ℚ̄ S)
     (z : cocycles (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) 1)
     (χ : ContinuousMonoidHom (galUnramifiedOutside K.1 ℚ̄ S) (Multiplicative (ZMod n)))
@@ -239,6 +240,7 @@ theorem nsmul_divChar (χ : ContinuousMonoidHom (galUnramifiedOutside K.1 ℚ̄ 
   rw [divChar_apply, ← map_nsmul, nsmul_eq_mul, ZMod.natCast_self, zero_mul, map_zero]
 
 
+set_option maxHeartbeats 2000000 in
 theorem sum_localInvU_eq_neg_divChar (t : sInvariantSubgroup ℚ̄ S)
     (z : cocycles (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) 1)
     (χ : ContinuousMonoidHom (galUnramifiedOutside K.1 ℚ̄ S) (Multiplicative (ZMod n)))

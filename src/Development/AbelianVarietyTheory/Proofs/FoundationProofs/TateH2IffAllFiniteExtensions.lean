@@ -128,6 +128,7 @@ variable {G LL O LL' O' M' : Type} [Group G] [TopologicalSpace G] [Field LL] [Co
   [ContinuousConstSMul O' M']
 
 
+omit [TopologicalSpace G] in
 def rangeLattice (hinj : Function.Injective (algebraMap O LL)) (χ : G →* LLˣ)
     (hχ : ∀ g, ((χ g : LLˣ) : LL) ∈ Set.range (algebraMap O LL)) :
     Lattice (O := O) (charRep χ) where

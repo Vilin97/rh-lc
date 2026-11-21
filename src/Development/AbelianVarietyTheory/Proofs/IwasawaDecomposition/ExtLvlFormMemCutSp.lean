@@ -66,6 +66,7 @@ theorem lvlForm_eq_sum (x : Fin (S.lvlDim act P ψ) → K) :
   simp only [lvlForm, Module.Basis.equivFun_symm_apply]
 
 
+open Classical in
 def lvlAvgF (act : Representation K G₀ S.Forms) (P : Subgroup G₀) (ψ : P →* Kˣ) (f : S.Forms) : S.Forms :=
   ∑ p : P, ((Nat.card P : K)⁻¹ * ((ψ p⁻¹ : Kˣ) : K)) • act (p : G₀) f
 
@@ -93,6 +94,7 @@ variable {G : Type} [Group G] {W : Type} [AddCommGroup W] [Module ℂ W]
   {K : Type} [Field K] {G₀ : Type} [Group G₀] [Fintype G₀]
 
 
+open Classical in
 def cutAvgL {Q : Subgroup G} (ch : Q →* ℂˣ) (red : Q →* G₀) (hred : Function.Surjective red) (σ : K →+* ℂ)
     (P : Subgroup G₀) (ψ : P →* Kˣ) (W : Type) [AddCommGroup W] [Module ℂ W] : (G → W) →ₗ[ℂ] (G → W) :=
   ∑ p : P, (σ ((Nat.card P : K)⁻¹ * ((ψ p⁻¹ : Kˣ) : K)) * (((ch (hred (p : G₀)).choose)⁻¹ : ℂˣ) : ℂ)) •

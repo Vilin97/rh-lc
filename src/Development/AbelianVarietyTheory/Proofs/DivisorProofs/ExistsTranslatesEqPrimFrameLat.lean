@@ -106,6 +106,7 @@ theorem isPrimFrame_succ_iff [Fintype D] {ϖ : kˣ} (hϖ : IsUnif ϖ) {Λ : Subm
     exact Fin.cases hc0 (h2 _ ((add_mem_cancel_left (smul_mem_of_int hc0 h0)).1 hc))
 
 
+open Classical in
 theorem indicator_isPrimFrame_succ [Fintype D] [Fintype 𝓀[k]] {ϖ : kˣ} (hϖ : IsUnif ϖ)
     {Λ : Submodule 𝒪[k] (D → k)} (l : 𝓀[k] → 𝒪[k]) (hl : ∀ r, IsLocalRing.residue _ (l r) = r)
     (Y : Matrix (Fin (n + 1)) D k) :
@@ -145,6 +146,7 @@ theorem indicator_isPrimFrame_succ [Fintype D] [Fintype 𝓀[k]] {ϖ : kˣ} (hϖ
     simp [hy]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 def consBlock (u : k) (c : Fin n → k) (γ : Matrix (Fin n) (Fin n) k) : Matrix (Fin (n + 1)) (Fin (n + 1)) k :=
   Matrix.of (Fin.cons (Fin.cons u c) fun i => Fin.cons 0 (γ i))
 
@@ -168,6 +170,7 @@ theorem consBlock_mul_mem {Λ : Submodule 𝒪[k] (D → k)} (u : k) (c : Fin n 
 end Step
 
 
+open Classical in
 theorem exists_comb_isPrimFrame.{u} {k : Type u} [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] [Fintype D] {ϖ : kˣ} (hϖ : IsUnif ϖ) (Λ : Submodule 𝒪[k] (D → k)) (n : ℕ) :
     ∃ (ι : Type u) (_ : Fintype ι) (m : ι → ℂ) (γ : ι → Matrix (Fin n) (Fin n) k) (j : ι → ℕ),

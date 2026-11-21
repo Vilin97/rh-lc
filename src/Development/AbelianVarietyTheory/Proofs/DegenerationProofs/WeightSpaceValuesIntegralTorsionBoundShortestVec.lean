@@ -160,6 +160,7 @@ variable (hLL : LL) (hT : TwistBCSpanStatement) (hVR : TWM.VRatioGtStatement) (h
   (hint : ∀ a : o, ‖y₀ (algebraMap o S.R a)‖ ≤ 1)
 
 
+include hLL hT hVR hTW hUU hϖ hQ hv hnv hw₀ hexp hprim hc hint in
 theorem norm_le_delta (hU : UTorsSt) : ‖c‖ ≤ S.delta y₀ := by
   have hN : 2 ≤ S.N := S.N_ge
   have hr : 1 ≤ S.r := S.r_pos
@@ -187,6 +188,7 @@ theorem val_nonneg (a : o) : ((0 : ℚ) : WithTop ℚ) ≤ v (y₀ (algebraMap o
   (norm_le_of_val hnv).2 (by simpa using hint a)
 
 
+include hLL hT hVR hTW hUU hϖ hQ hv hnv hw₀ hexp hprim hc hint in
 theorem nuGe_basis (r : ℚ) (hrc : (r : WithTop ℚ) ≤ v c) (j : S.J) (σ : Fam u.D.toPre (PadicAlgCl p) S.N)
     (hσ : u.U.ExpandsF (PadicAlgCl p) S.N w₀ (Φ.s j) σ) : NuGe u.D Q (PadicAlgCl p) v S.N σ r := by
   have hN : 2 ≤ S.N := S.N_ge
@@ -217,6 +219,7 @@ theorem nuGe_basis (r : ℚ) (hrc : (r : WithTop ℚ) ≤ v c) (j : S.J) (σ : F
   rwa [add_zero] at this
 
 
+include hLL in
 theorem exists_qk_zero (hU : UTorsSt) (l : u.Lab) {h : S.Gam} (hh : h ∈ l.yy.ker) :
     ∃ ph : QkPt u.D.toPre (PadicAlgCl p) (S.r * S.N), ph.y = 0 ∧ QkToAkU u.U.toUnifPre (PadicAlgCl p) (S.r * S.N) ph (Φ.pt h) := by
   have hA : AdmBase u.V (maximalIdeal u.V) := ⟨inferInstance, inferInstance, inferInstance, u.complete⟩
@@ -228,6 +231,7 @@ theorem exists_qk_zero (hU : UTorsSt) (l : u.Lab) {h : S.Gam} (hh : h ∈ l.yy.k
   exact ⟨p', hp', (hf.1 p' _).2 (hpk.symm.trans ((hf.2.2.1 pk p').2 he))⟩
 
 
+include hLL hw₀ in
 theorem support (hU : UTorsSt) [ArithBase o Ω] (l : u.Lab) (α : u.D.toPre.X) (i : S.J) (d : PadicAlgCl p)
     {t : SecA u.A (PadicAlgCl p) S.N} (ht : IsComb Φ.s (fun j => d * y₀ (algebraMap o S.R (S.proj _ (l.wt α) j i))) t)
     {σ : Fam u.D.toPre (PadicAlgCl p) S.N} (hσ : u.U.ExpandsF (PadicAlgCl p) S.N w₀ t σ) (β : u.D.toPre.X)

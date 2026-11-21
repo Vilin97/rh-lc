@@ -29,6 +29,7 @@ theorem secRow_eq_rowMat {R : Type} [CommRing R] (y : Fin (m + 1) → R) :
   · rw [if_neg h, if_neg (fun e => h (Fin.ext (by simpa using e)))]
 
 
+omit [NumberField E] [IsTotallyComplex E] in
 theorem secInv_eq_inv_rowGL {y : Fin (m + 1) → Cinf E} (hy : y ∈ GlobalTheory.RSTheta.rowSet E (Fin.last m)) :
     secInv y = (GlobalTheory.RSTheta.rowGL (Fin.last m) y)⁻¹ := by
   have hu := GlobalTheory.RSTheta.isUnit_of_mem_rowSet hy

@@ -26,6 +26,7 @@ structure UMeas where
 variable {E : Type} [Field E] [NumberField E]
 
 
+variable (E) in
 def em : GL (Fin 2) (A ℚ) →* GL (Fin 2) (A E) := Matrix.GeneralLinearGroup.map (AdeleBaseChange.adeleMap ℚ E)
 
 def Per (M : Meas ℚ) (U : UMeas) (χ : HChar ℚ) (φ : GL (Fin 2) (A E) → ℂ) : ℂ :=

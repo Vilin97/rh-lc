@@ -110,6 +110,9 @@ private lemma rpow_sq_mul_eq_inv_zpow_mul_rpow {d t : ℝ} (hd : 0 ≤ d) (ht : 
     Real.rpow_intCast]
 
 
+open NumberField MeasureTheory Topology in
+open scoped ContDiff ENNReal Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.NormFactor.norm_bchar_mul_nfac_rmul {r : ℕ} (X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r) (la : _root_.ReciprocityTheory.ChartRestriction.G.FD.Wt X.Ψ r)
     {x b : _root_.ReciprocityTheory.ChartRestriction.G.FD.Frame X.Ψ r} (hx : x ∈ X.dom) (hb : b ∈ _root_.ReciprocityTheory.ChartRestriction.G.FD.Bor X.Ψ r) :
     ‖_root_.ReciprocityTheory.ChartRestriction.G.FD.bchar la b‖ * X.nfac la (_root_.ReciprocityTheory.ChartRestriction.G.FD.rmul x b) = X.nfac la x := by
@@ -125,6 +128,9 @@ theorem _root_.GlobalTheory.NormFactor.norm_bchar_mul_nfac_rmul {r : ℕ} (X : _
   rw [hbc, ← mul_assoc, mul_inv_cancel₀ hne, one_mul]
 
 
+open NumberField MeasureTheory Topology in
+open scoped ContDiff ENNReal Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.NormFactor.nfacRmul_holds : _root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.NfacRmulStatement (E := E) := by
   unfold _root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.NfacRmulStatement
   intro r X la x hx b hb
@@ -133,6 +139,9 @@ theorem _root_.GlobalTheory.NormFactor.nfacRmul_holds : _root_.ReciprocityTheory
   exact _root_.GlobalTheory.NormFactor.norm_bchar_mul_nfac_rmul X la hx hb
 
 
+open NumberField MeasureTheory Topology in
+open scoped ContDiff ENNReal Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.NormFactor.dmin_lact {r : ℕ} (X : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data E r) {γ : GL (Fin r) E}
     (hγ : γ ∈ X.Γ) (x : _root_.ReciprocityTheory.ChartRestriction.G.FD.Frame X.Ψ r) (τ : X.Ψ) (i : Fin (r + 1)) :
     _root_.ReciprocityTheory.ChartRestriction.G.FD.dmin X.Gm (_root_.ReciprocityTheory.ChartRestriction.G.FD.lact γ x) τ i = _root_.ReciprocityTheory.ChartRestriction.G.FD.dmin X.Gm x τ i := by
@@ -140,6 +149,9 @@ theorem _root_.GlobalTheory.NormFactor.dmin_lact {r : ℕ} (X : _root_.Reciproci
   rw [_root_.ReciprocityTheory.ChartRestriction.G.AR.Up.OntoS.gram_lact X hγ x τ]
 
 
+open NumberField MeasureTheory Topology in
+open scoped ContDiff ENNReal Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.NormFactor.nfacLact_holds : _root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.NfacLactStatement (E := E) := by
   unfold _root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.NfacLactStatement
   intro r X la γ hγ x _
@@ -147,6 +159,9 @@ theorem _root_.GlobalTheory.NormFactor.nfacLact_holds : _root_.ReciprocityTheory
   simp only [_root_.GlobalTheory.NormFactor.dmin_lact X hγ]
 
 
+open NumberField MeasureTheory Topology in
+open scoped ContDiff ENNReal Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.NormFactor.pnormInv_holds : _root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.PnormInvStatement (E := E) := by
   unfold _root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.PnormInvStatement
   intro r X la P hP γ hγ x hx b hb
@@ -164,6 +179,9 @@ theorem _root_.GlobalTheory.NormFactor.pnormInv_holds : _root_.ReciprocityTheory
   ring
 
 
+open NumberField MeasureTheory Topology in
+open scoped ContDiff ENNReal Matrix in
+variable {E : Type} [Field E] [NumberField E] [IsCMField E] in
 theorem _root_.GlobalTheory.NormFactor.nfac_transform :
     _root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.NfacRmulStatement (E := E) ∧ _root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.NfacLactStatement (E := E) ∧ _root_.ReciprocityTheory.ChartRestriction.G.AR.Inst.PnormInvStatement (E := E) :=
   ⟨_root_.GlobalTheory.NormFactor.nfacRmul_holds, _root_.GlobalTheory.NormFactor.nfacLact_holds, _root_.GlobalTheory.NormFactor.pnormInv_holds⟩

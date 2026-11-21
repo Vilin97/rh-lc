@@ -78,6 +78,7 @@ theorem divCycle_congr {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
 end FlagBundleSectionDivProof
 
 
+open FlagBundleSectionDivProof in
 theorem FlagBundleSectionDiv.proof (hDim : FlagBundleDim.Statement)
     (hSat : MultAtOfSaturated.Statement.{0}) (hForm : ProjIdealFormValue.Statement)
     (hTrunc : TruncSpecialize.Statement) (hChart : FlagBundleChartSection.Statement) :

@@ -14,6 +14,7 @@ open MvPolynomial
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
 
+open scoped Classical in
 theorem isHomogeneous_of_isMultiHomogIdeal' {K : Type*} [DecidableEq K] {ι : K → Type*}
     {R : Type*} [CommRing R] {I : Ideal (MRing ι R)} (hI : IsMultiHomogIdeal I) :
     (by

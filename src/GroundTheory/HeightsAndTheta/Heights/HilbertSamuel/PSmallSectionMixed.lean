@@ -314,6 +314,7 @@ theorem isNefBigDatum_zcomb (hD : GroundTheory.Heights₂.Heights.Inter.DegreeGe
 end SmallSectionMixedAlt
 
 
+open SmallSectionMixedAlt in
 theorem SmallSectionMixed.proof (hG4 : G4.Statement) (hG41 : ArithmeticVolumeDimensionOne.Statement)
     (hD : GroundTheory.Heights₂.Heights.Inter.DegreeGeneric.Statement) (hB : NefPlusAmpleDegree.Statement) :
     SmallSectionMixed.Statement := by

@@ -337,6 +337,7 @@ end Vanish
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 
+set_option maxHeartbeats 600000 in
 theorem theta_quot {k : Type} [Field k] {H : Host E} (tK : SAB H (Sp k)) (T : TorusExtension tK.G)
     (M : LB T.B.left) (hM : M.IsLB) (hbun : LBIso tK.PP.L (M.pull T.q.left)) :
     letI := T.grpB

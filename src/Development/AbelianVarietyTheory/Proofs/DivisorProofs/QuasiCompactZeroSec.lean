@@ -129,6 +129,7 @@ section Phi
 variable {O : Type} [CommRing O]
 
 
+variable (A : Over (Sp O)) [GrpObj A] in
 def Wmod : Type := Γ(omega A, ⊤)
 
 instance (A : Over (Sp O)) [GrpObj A] : AddCommGroup (Wmod A) :=

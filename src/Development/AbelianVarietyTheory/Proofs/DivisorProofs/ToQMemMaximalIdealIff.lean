@@ -24,6 +24,7 @@ theorem mem_placeAlg {E : Place (algebraMap ℂ K)} {e : K} : e ∈ placeAlg E �
   Iff.rfl
 
 
+variable (κ') in
 def tensMap (A : Subalgebra ℂ K) : A ⊗[ℂ] κ' →ₐ[ℂ] K ⊗[ℂ] κ' :=
   Algebra.TensorProduct.map A.val (AlgHom.id ℂ κ')
 

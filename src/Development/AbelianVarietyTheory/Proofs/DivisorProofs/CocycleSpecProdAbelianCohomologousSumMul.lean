@@ -50,6 +50,7 @@ theorem cohom_of_cob {R : Type} [CommRing R] {X : Over (Sp R)} {K : Type} {W : K
 end GlobalTheory.PtExt.SurjD
 
 
+open GlobalTheory.PtExt.SurjD in
 theorem GlobalTheory.PtExt.cohom_sumMul_fv_of_abelian : GlobalTheory.Published.AbelianHodgeDeRham → ∀ (R : Type) [CommRing R] (B : Over (Sp R)) [GrpObj B] (g : ℕ), IsAbelianScheme B → SmoothOfRelativeDimension g B.hom → ∀ (D : Type) [CommRing D] [Algebra R D] (u : Fn1 (SpAlg R D ⊗ B)), IsCoc (whole _) u → ∃ (n : ℕ) (d : Fin n → D) (β : Fin n → Z1 (O (dp0 R) (B.hom ≫ 𝟙 _))), Cohom (whole _) u (sumMul d fun i ↦ fv (β i)) := by
   intro H R _ B _ g hB hg D _ _ u hu
   obtain ⟨B', _, π, q, hpb, hB', hg', hq, hfst, hsnd⟩ := GlobalTheory.T.exists_abelianScheme_baseChange_spec_algebra_prod R D B g hB hg

@@ -28,6 +28,7 @@ abbrev closedFibre : Set X := (X ↘ Spec (.of A)).base ⁻¹' {closedPoint A}
 variable {X}
 
 
+omit [IsNoetherianRing A] [IsLocalRing A] in
 lemma mem_basicOpen_algebraMap_iff (x : X) (a : A) :
     x ∈ X.basicOpen (algebraMap A Γ(X, ⊤) a) ↔ a ∉ ((X ↘ Spec (.of A)).base x).asIdeal := by
   have h1 : algebraMap A Γ(X, ⊤) a = (X ↘ Spec (.of A)).appTop ((Scheme.ΓSpecIso (.of A)).inv a) :=
@@ -36,6 +37,7 @@ lemma mem_basicOpen_algebraMap_iff (x : X) (a : A) :
   rfl
 
 
+omit [IsNoetherianRing A] in
 lemma exists_mem_basicOpen_of_not_mem_closedFibre {x : X} (hx : x ∉ closedFibre (A := A) X) :
     ∃ a ∈ maximalIdeal A, x ∈ X.basicOpen (algebraMap A Γ(X, ⊤) a) := by
   set y := (X ↘ Spec (.of A)).base x
@@ -48,6 +50,7 @@ lemma exists_mem_basicOpen_of_not_mem_closedFibre {x : X} (hx : x ∉ closedFibr
   exact ⟨a, ha, (mem_basicOpen_algebraMap_iff x a).2 hay⟩
 
 
+omit [IsNoetherianRing A] in
 lemma not_mem_basicOpen_of_mem_closedFibre {x : X} (hx : x ∈ closedFibre (A := A) X) {a : A}
     (ha : a ∈ maximalIdeal A) : x ∉ X.basicOpen (algebraMap A Γ(X, ⊤) a) := by
   rw [mem_basicOpen_algebraMap_iff, not_not]
@@ -56,9 +59,11 @@ lemma not_mem_basicOpen_of_mem_closedFibre {x : X} (hx : x ∈ closedFibre (A :=
   exact ha
 
 
+variable (A X) in
 abbrev fibreQuot (n : ℕ) : X.Modules := quotPow (maximalIdeal A) (𝟙_ X.Modules) n
 
 
+variable (A X) in
 abbrev fibreOne (n : ℕ) : Γ(fibreQuot A X n, ⊤) :=
   (quotPowπ (maximalIdeal A) (𝟙_ X.Modules) n).app ⊤ (1 : Γ(X, ⊤))
 

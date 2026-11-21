@@ -235,6 +235,7 @@ theorem xiCpl1_law {u : Pr.Word} {al : L.β m2} {b : L.β (m2 + 1)} (hX : X.Ok) 
     mul_assoc]
 
 
+set_option maxHeartbeats 1000000 in
 theorem firstCoupledKernel_equivariant_cosets {u : Pr.Word} {T : ChTh W sel mu u m2} (b : L.β (m2 + 1))
     (hX : X.Ok) (hPr : Pr.Ok) (hsel : IsSel X sel) (hS : Pr.T u ∈ S ∧ ∀ i, Pr.g i ∈ S) (hL : L.Ok Ch sel mu cst G m2)
     (hT : ChTh.Ok (Ch := Ch) cst T) (al : L.β m2) (g : FrmG (L.levG m2 al) (L.levQ m2 al))
@@ -268,6 +269,7 @@ theorem cp1EquivOn {u : Pr.Word} {T : ChTh W sel mu u m2} (b : L.β (m2 + 1)) (h
 end Main
 
 
+open GlobalTheory.Mem.Col2 GlobalTheory.LvT GlobalTheory.LvT.Built in
 theorem kAt_equiv : ∀ (X : Fields) (Pr : Primes X) (R : Ranks) (W : Wts X Pr.Word R) (Ch : Chars X Pr R.m) (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) (S : Set ℕ) (mu : Tup X.F X.E X.K S) (cst : LocCst X (rowSG Pr sel mu)) (L : ChIdx X Pr R (QE sel (mu : Chr X.F X.E X.K))) (G : ChGlob X R.m) (m2 : ℕ) (u : Pr.Word) (i : ℕ) (A : Formalism.L2.Ker.Amb X), X.Ok → Pr.Ok → Ch.Ok → IsSel X sel → Pr.T u ∈ S → (∀ k, Pr.g k ∈ S) → L.Ok Ch sel mu cst G m2 → cst.sharp = true → ChTh.Ok (Ch := Ch) cst (Formalism.L2.Ker.chTh W Ch sel mu cst A u m2) → i + 2 = R.m → ∀ b b' (g : (stepAt sel mu cst L (topLev Ch sel mu cst (rPsymF (R := R) Ch)) u i).G b) (g' : (stepAt sel mu cst L (topLev Ch sel mu cst (rPsymF (R := R) Ch)) u (i + 1)).G b') (d : (stepAt sel mu cst L (topLev Ch sel mu cst (rPsymF (R := R) Ch)) u i).D b) (d' : (stepAt sel mu cst L (topLev Ch sel mu cst (rPsymF (R := R) Ch)) u (i + 1)).D b'), kAt W Ch sel mu cst L A u i b b' (letI := (stepAt sel mu cst L (topLev Ch sel mu cst (rPsymF (R := R) Ch)) u i).actD b; g • d) (letI := (stepAt sel mu cst L (topLev Ch sel mu cst (rPsymF (R := R) Ch)) u (i + 1)).actD b'; g' • d') = (stepAt sel mu cst L (topLev Ch sel mu cst (rPsymF (R := R) Ch)) u (i + 1)).rho X.emb (W.lamTrue u (i + 1)) b' g' ∘ₗ kAt W Ch sel mu cst L A u i b b' d d' ∘ₗ (stepAt sel mu cst L (topLev Ch sel mu cst (rPsymF (R := R) Ch)) u i).rho X.emb (W.lamTrue u i) b g⁻¹ := by
   intro X Pr R W Ch sel S mu cst L G m2 u i A hX hPr _ hsel hT hg hL _ hTh hi b b' g g' d d'
   obtain rfl : m2 = i := by have := hL.hm; omega

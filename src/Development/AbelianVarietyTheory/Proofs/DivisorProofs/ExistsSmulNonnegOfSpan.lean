@@ -159,6 +159,7 @@ theorem trivAt_of_dvd {Λ : GenLat E n} {b ℓ : ℕ} (h : Λ.TrivAt b) (hd : �
 end Lattices
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_smul_nonneg_large (D : D7) (T : Core D) (h : LawsM T) (j : ℕ) (hj : InR D j)
     (hG : ∀ k k', ((T.U j T.σ₀).X k).Gm = ((T.U j T.σ₀).X k').Gm ∧ ((T.U j T.σ₀).X k).ξ0 = ((T.U j T.σ₀).X k').ξ0)
     (a : (D.host.E →+* ℂ) × ℕ → ℕ) (n : ℕ) (hdom : Dom a n) (hn : 4 * (Module.finrank ℚ D.host.E * D.R.r) + 4 ≤ n)

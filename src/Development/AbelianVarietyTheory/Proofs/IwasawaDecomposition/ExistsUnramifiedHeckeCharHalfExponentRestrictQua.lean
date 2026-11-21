@@ -172,6 +172,8 @@ theorem val_finite (D : D7) (ι : (Af D.host.F ⊗[D.host.F] D.host.E) ≃+* Af 
     rw [a, WithZero.log_one, neg_zero, zpow_zero]
 
 
+set_option maxHeartbeats 1000000 in
+open GlobalTheory.FockCompare in
 theorem val_infinite (D : D7) (c : (AE D)ˣ →* Circle) (χ : HChar D.host.E) (hc : ChrEq c χ) (hu : ∀ P, χ.UnrAt P)
     (n : D.R.Psi → ℤ) (hn : χ.HasInf (embPsi D.host) n)
     (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)) (hθ : IsInfFam θ) (x : (AE D)ˣ)
@@ -253,6 +255,8 @@ theorem idF_norm (D : D7) (x : (AE D)ˣ) :
   exact GlobalTheory.Published.algebraMap_norm_tensor (E := D.host.E) (AF D.host.F) (x : AE D)
 
 
+set_option maxHeartbeats 1000000 in
+open GlobalTheory.FockCompare in
 theorem isEta_res (D : D7) (c : (AE D)ˣ →* Circle) (χ : HChar D.host.E) (hc : ChrEq c χ) (h : IsEtaT D.host χ) :
     IsEta D (c.comp (idF D)) := by
   classical

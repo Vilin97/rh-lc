@@ -25,6 +25,9 @@ theorem upZero_apply (x : GL (Fin κ ⊕ Fin (s + 1)) k) : upZero S t x =
       ((S.T t).bas 0 (s + 1) (Nat.zero_add _))⁻¹ := rfl
 
 
+open ValuativeRel Matrix in
+variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
+variable {s κ : ℕ} (S : _root_.GlobalTheory.SymChain.SymData k s κ) (t : Type) [Fintype t] [DecidableEq t] in
 theorem _root_.GlobalTheory.LevZeroGen.upZero_mem_lev (x : GL (Fin κ ⊕ Fin (s + 1)) k) :
     _root_.GlobalTheory.LevZeroGen.upZero S t x ∈
         ((S.T t).lev 0 (s + 1)

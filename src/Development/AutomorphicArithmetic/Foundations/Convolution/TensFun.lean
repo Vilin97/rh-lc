@@ -173,6 +173,7 @@ def msOf (L : Ix K n → ℂ) (τ : K →+* ℂ) : Multiset ℂ := Finset.univ.v
 def hval (t : Pl K → Multiset ℂ) (x : Pl K × Fin n) : ℂ := (t x.1).esymm (x.2 + 1)
 
 
+variable (K n) in
 structure Datum where
   r : ℕ
   two : 2 ≤ r
@@ -192,6 +193,7 @@ def Datum.Pt (b : Datum K n) (S : Set (Pl K)) (Λ : (K →+* ℂ) → Multiset �
       ∀ w ∉ S, t w = ∑ i, (B i w).map (· * (Ideal.absNorm w.asIdeal : ℂ) ^ (-lam i))
 
 
+open Classical in
 def admitted (S : Set (Pl K)) (F : KF (Ix K n) (Pl K × Fin n)) : Prop :=
   (∀ w : (K →+* ℂ) → Equiv.Perm (Fin n), map (ren fun x : Ix K n => (x.1, w x.1 x.2)) F = F) ∧ ∀ x ∈ F.vars, x.1 ∉ S
 

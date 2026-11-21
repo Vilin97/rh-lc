@@ -132,6 +132,7 @@ variable {E : Type} [AddCommGroup E] [Module Ω E] [Module S E] [IsScalarTower S
 
 
 
+omit [Module S E] [IsScalarTower S Ω E] in
 theorem mem_twist_twistSys_iff (F : Kleiman.SubSystem S x E) (c : ℤ) (I : Kleiman.Chart x)
     {i : Fin (N + 1)} (hi : i ∈ I.1) (z : E) :
     z ∈ (F.twist (Kleiman.twistSys S x c)).sub I ↔ ∃ y ∈ F.sub I, z = x i ^ c • y := by

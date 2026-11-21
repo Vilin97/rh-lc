@@ -24,12 +24,14 @@ theorem weight_blockWeight_apply (e : (Σ k, ι k) →₀ ℕ) (k : K) :
   simp [blockWeight, Pi.single_apply]
 
 
+omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem blockWeight_unit (v : Σ _ : Unit, ∀ k, ι k) :
     blockWeight (fun _ : Unit => ∀ k, ι k) v = fun _ => 1 := by
   funext u
   simp [blockWeight]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem segreMap_isMultiHomog {m : ℕ} {p : MRing (fun _ : Unit => ∀ k, ι k) F}
     (hp : IsWeightedHomogeneous (blockWeight (fun _ : Unit => ∀ k, ι k)) p (fun _ => m)) :
     IsWeightedHomogeneous (blockWeight ι) (segreMap F p) (fun _ => m) := by
@@ -61,6 +63,7 @@ theorem segreMap_isMultiHomog {m : ℕ} {p : MRing (fun _ : Unit => ∀ k, ι k)
     exact IsWeightedHomogeneous.prod _ _ _ fun v _ => (hX v).pow _
 
 
+omit [DecidableEq K] in
 theorem monomial_mem_map_segreMap (m : ℕ) :
     ∀ e : (Σ k, ι k) →₀ ℕ, (∀ k, ∑ i, e ⟨k, i⟩ = m) →
       monomial e (1 : F) ∈ (weightedHomogeneousSubmodule F
@@ -138,6 +141,7 @@ def segreQuotMap (q : Ideal (MRing ι F)) :
   Ideal.quotientMapₐ (I := segrePrime F q) q (segreMap F) fun _ h => h
 
 
+omit [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem segreQuotMap_injective (q : Ideal (MRing ι F)) : Function.Injective (segreQuotMap F q) := by
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a ha

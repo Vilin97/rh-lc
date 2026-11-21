@@ -13,6 +13,7 @@ open GlobalTheory.FormalPoint
 namespace GlobalTheory.AdicColimit
 
 
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry in
 theorem _root_.GlobalTheory.AdicColimit.isAdicColimit_spec_of_isLocalRing (R : Type) [CommRing R] (I : Ideal R) (A : Type) [CommRing A]
     [IsLocalRing A] (φ : R →+* A) (hA : IsAdicComplete (I.map φ) A) :
     _root_.GlobalTheory.AdicColimit.IsAdicColimit I (Over.mk (Spec.map (CommRingCat.ofHom φ))) := by

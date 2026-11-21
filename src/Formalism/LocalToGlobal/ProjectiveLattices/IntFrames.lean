@@ -91,6 +91,7 @@ theorem genFibre (hC : ReciprocityTheory.ChartRestriction.G.Out.CubePullSt) : Ge
   exact ⟨_, n2, m2, trivial⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem intFrames_of (hC : ReciprocityTheory.ChartRestriction.G.Out.CubePullSt) (hG : GenFibreSt Xo c) (hL : LieFreeSt Xo c)
     (hT : ThetaFrameSt Xo c) (hS : SpreadSt Xo c) : IntFramesSt Xo c := by
 

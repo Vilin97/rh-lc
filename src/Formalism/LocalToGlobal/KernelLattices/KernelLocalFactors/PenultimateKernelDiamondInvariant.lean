@@ -50,6 +50,7 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {K : Type} [Field K] 
   {V V' : Type} [AddCommGroup V] [Module K V] [AddCommGroup V'] [Module K V']
 
 
+omit [StarRing E] in
 theorem kerOf_congr (th : ThDist E K a b SB V V') (Sall : Finset (HeightOneSpectrum (𝓞 E))) (cA cB : ℕ)
     (N : Submodule (𝓞 E) (Sp E a)) (fr : Frs E a SB) (N' : Submodule (𝓞 E) (Sp E b)) (fr' : Frs E b SB)
     {Ξ Ξ' : HomE E a b → K} (h : ∀ x, Ξ x = Ξ' x) :
@@ -277,6 +278,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (Ch : Chars X Pr R.m)
   (mu : Tup X.F X.E X.K S) (cst : LocCst X (rowSG Pr sel mu)) (L : ChIdx X Pr R (QE sel (mu : Chr X.F X.E X.K))) {u : Pr.Word}
 
 
+open Classical in
 theorem frsF_isFr {j : ℕ} (p : ChPt (R := R) sel mu u j) (P : rowSG Pr sel mu) : IsFrAt P.1 p.deco.1.N (frsF sel mu p P) := by
   unfold frsF
   by_cases h : P.1 ∈ Pr.vGs
@@ -757,6 +759,7 @@ theorem intAt_qpow3 (w : HeightOneSpectrum (𝓞 X.E)) (k : ℕ) : IntAt w ((qOf
   exact intAt_natCast_kernel_local_factors _ _
 
 
+open Classical in
 theorem coupling_index_scaled_mem_local {n : ℕ} {N : Submodule (𝓞 X.E) (Sp X.E n)} {Y : Set (Sp X.E n)} (hY : Y ∈ ybSet sel mu cst N)
     (w : rowSG Pr sel mu) (hw : w.1 ∉ Pr.vGs) :
     Y.Nonempty ∧ ∀ a ∈ Y, ((qOf w.1 : X.E) ^ cst.M) • a ∈ localization₂ w.1.asIdeal N := by

@@ -65,6 +65,7 @@ def IjIdx (μ : D.what₂.Tup) (j : ℕ) (w : D.what₂.places.Pl) : ℤ :=
   Formalism.HermitianLatticesTheory.lidx (D.plEq w).asIdeal (X.MjH j).L (thTj X μ j)
 
 
+variable (D) in
 def jwIdx (μ : D.what₂.Tup) (j : ℕ) (w : D.what₂.places.Pl) : ℤ :=
   Formalism.HermitianLatticesTheory.lidx (D.plEq w).asIdeal (TjL D μ j) (TjDual D μ j)
 
@@ -199,6 +200,7 @@ def IsLatIn {R W : Type} [CommRing R] [AddCommGroup W] [Module R W] (M V : Submo
 end NForms
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def NChoice.thPe (D : D7) (c : NChoice D) (w : D.what₂.places.Pl) (j : ℕ) :
     FractionRing (c.Oe w) ⊗[D.ntw.Ok (c.twI w) (c.k' w)]
         D.nexp.MtV (c.twI w) j (c.sd w) (c.k' w) (c.Q w) ((c.psi' w).comp (D.ntw.art (c.twI w) (c.Q w))) →ₗ[FractionRing (c.Oe w)]
@@ -209,12 +211,14 @@ def NChoice.thPe (D : D7) (c : NChoice D) (w : D.what₂.places.Pl) (j : ℕ) :
       (FractionRing (c.Oe w))
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 def NChoice.toFracE (D : D7) (c : NChoice D) (w : D.what₂.places.Pl) (j : ℕ) :
     c.Oe w ⊗[D.ntw.O (c.twI w)] D.nexp.Fm (c.twI w) j (c.sd w) →ₗ[D.ntw.O (c.twI w)]
       FractionRing (c.Oe w) ⊗[D.ntw.O (c.twI w)] D.nexp.Fm (c.twI w) j (c.sd w) :=
   ((Algebra.linearMap (c.Oe w) (FractionRing (c.Oe w))).restrictScalars (D.ntw.O (c.twI w))).rTensor _
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem NChoice.thPe_one (D : D7) (c : NChoice D) (w : D.what₂.places.Pl) (j : ℕ)
     (m : D.nexp.MtV (c.twI w) j (c.sd w) (c.k' w) (c.Q w) ((c.psi' w).comp (D.ntw.art (c.twI w) (c.Q w)))) :
     NChoice.thPe D c w j ((1 : FractionRing (c.Oe w)) ⊗ₜ m) =
@@ -231,6 +235,7 @@ theorem NChoice.thPe_one (D : D7) (c : NChoice D) (w : D.what₂.places.Pl) (j :
   | add x y hx hy => rw [TensorProduct.tmul_add, map_add (f := _), hx, hy, map_add (f := _)]
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 structure NMj (D : D7) (X : DivX D) (c : NChoice D) where
 
   eMj : ∀ w j, (X.MjH j).V →+ (c.Oe w ⊗[D.ntw.O (c.twI w)] D.nexp.Fm (c.twI w) j (c.sd w))

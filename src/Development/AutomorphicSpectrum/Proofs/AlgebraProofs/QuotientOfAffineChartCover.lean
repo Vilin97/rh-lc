@@ -89,6 +89,7 @@ theorem prop_of_charts (Q : MorphismProperty Scheme.{0}) [IsZariskiLocalAtTarget
 end GlobalTheory.CompanionTheory.FreeQuotGlue
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem GlobalTheory.CompanionTheory.FreeQuotGlue.exists_of_affineCharts : ∀ {P X : Scheme.{0}} (a b : P ⟶ X), (∀ x : X, ∃ V : X.Opens, x ∈ V ∧ HasAffineChart a b V) → ∃ (Y : Scheme.{0}) (q : X ⟶ Y), IsFinite q ∧ Flat q ∧ LocallyOfFinitePresentation q ∧ Surjective q ∧ IsPullback a b q q := by
   intro P X a b h
   let 𝒰 : Set X.Opens := {V | HasAffineChart a b V}

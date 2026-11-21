@@ -174,6 +174,7 @@ theorem gen_of_gen {N : ℕ} {K : Type} [Fintype K] [DecidableEq K] {ι : K → 
 end ModelChangeGen
 
 
+open ModelChangeGen in
 theorem ModelChangeGen.proof (hT : ModelTwistGenerated.Statement) : ModelChangeGen.Statement := by
   intro F _ Ω _ _ N K _ _ ι _ y k₀ e K' _ _ ι' _ y' k₀' e' hy hy' hx β β' hs n h hh
   have hpts := modelPts_eq_of_base F y k₀ e y' k₀' e' hy hy' hx

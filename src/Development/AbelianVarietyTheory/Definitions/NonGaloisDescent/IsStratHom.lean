@@ -71,6 +71,7 @@ def prism : Obj l ↥(OL K) where
 def toP : bk.S ≃+* bk.prism.A := RingEquiv.refl _
 
 
+variable {bk} in
 def hf {B : Obj l ↥(OL K)} (f : Hom bk.prism B) : bk.S →+* B.A := f.f
 
 def ι : Hom bk.prism (ainfObj K) where

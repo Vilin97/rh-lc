@@ -492,6 +492,7 @@ theorem sep {Ω : Type} [Field Ω] [Algebra B.KO Ω] (gF : (xplus X E hM).Forms 
     exact nval_lt_of_pos h'.T n2 ha'
 
 
+omit h in
 theorem valSep_fam {ι : Type} [Finite ι] (Ω : ι → Type) [∀ Z, Field (Ω Z)] [∀ Z, Algebra B.KO (Ω Z)]
     (gF : ∀ Z, (xplus X E hM).Forms →ₐ[B.KO] Ω Z) (val : ∀ Z (u : WeightFamilies.Wt D j), B.Cusp j u → Ω Z)
     (hval : ∀ Z u F, gF Z ((xplus X E hM).inc u F) = val Z u F)

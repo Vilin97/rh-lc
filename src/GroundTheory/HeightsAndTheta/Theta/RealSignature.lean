@@ -13,6 +13,7 @@ open Matrix GroundTheory.Automorphic
 variable {ι : Type*} [Fintype ι] [DecidableEq ι] {H : Matrix ι ι ℂ}
 
 
+omit [Fintype ι] [DecidableEq ι] in
 theorem map_starRingEnd_transpose (M : Matrix ι ι ℂ) : (M.map (starRingEnd ℂ))ᵀ = Mᴴ := by
   ext i j
   simp

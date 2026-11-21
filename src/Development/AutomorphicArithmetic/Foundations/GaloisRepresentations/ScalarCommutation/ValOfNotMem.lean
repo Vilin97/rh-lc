@@ -205,6 +205,7 @@ private theorem rho_idem {p q : ℕ} [Fact p.Prime] (hq : q.Prime) (hqp : q ≠ 
   exact one_ne_zero this
 
 
+open Classical in
 private def secAdd {p : ℕ} (v₀ : AwayP p) : v₀.1.adicCompletion ℚ →+ AfP p where
   toFun x := ⟨Pi.single v₀ x, by
     have : ({v₀}ᶜ : Set (AwayP p)) ∈ Filter.cofinite := by simp

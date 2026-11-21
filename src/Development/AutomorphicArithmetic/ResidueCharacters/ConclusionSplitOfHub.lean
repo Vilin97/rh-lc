@@ -103,6 +103,7 @@ open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual Reciproc
 namespace UpperTheory.N
 
 
+open Classical in
 def withDc {D : D7} (X : KillingConditions.HubData D) (i : D.nd.Loc) (dc : TruncatedSeriesCountingIdentities.Decl D i) : KillingConditions.HubData D :=
   { X with dc := Function.update X.dc i dc }
 

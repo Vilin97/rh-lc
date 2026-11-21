@@ -28,6 +28,7 @@ def ballM (c : kˣ) (x₀ : Matrix (Fin n) (Fin r) k) : Set (Matrix (Fin n) (Fin
   {x | ∀ i l, valuation k (x i l - x₀ i l) ≤ valuation k (c : k)}
 
 
+variable (k n r) in
 def idem (j : ℕ) : Matrix (Fin n) (Fin r) k := Matrix.of fun i l => if (i : ℕ) = l ∧ (l : ℕ) < j then 1 else 0
 
 def IsGerm [MeasurableSpace k] (ν : Measure k) (B : SB (Matrix (Fin n) (Fin r) k) →ₗ[ℂ] W →ₗ[ℂ] V)

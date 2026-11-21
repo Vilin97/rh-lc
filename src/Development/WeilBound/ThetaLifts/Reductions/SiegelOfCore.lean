@@ -43,6 +43,7 @@ theorem isClosed_logCone (c : ℝ) : IsClosed {s : Fin r → ℝ | (fun i => Rea
     isClosed_le (by fun_prop) (by fun_prop))
 
 
+open scoped Pointwise in
 theorem siegelSet_eq (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hW : IsWittFrame σ J X Y) {a : (Fin r → ℝ) → GAd σ J}
     (ha : IsTorus σ J X Y a) (K : Subgroup (GAd σ J)) (Ω : Set (GAd σ J)) (c : ℝ) :
     siegelSet σ J X Y Ω c K = Ω * a '' {s : Fin r → ℝ | (fun i => Real.exp (s i)) ∈ cone r c} * (K : Set (GAd σ J)) := by

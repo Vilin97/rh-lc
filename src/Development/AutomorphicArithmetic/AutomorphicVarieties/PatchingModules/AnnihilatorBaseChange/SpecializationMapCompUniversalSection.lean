@@ -67,6 +67,7 @@ structure Tup (R : Type) [CommRing R] [Algebra O R] [IsCO O R] : Type 1 where
   y_mem : ∀ j i, y j i ∈ maximalIdeal R
 
 
+variable {Λ A} in
 def Tup.Maps {R R' : Type} [CommRing R] [Algebra O R] [IsCO O R] [CommRing R'] (t : Tup Λ A R) (f : R →+* R')
     (D' : GDet n R' (Ph0 Λ)) (ψ' : ∀ v, Fin n → L.Gv v →* R'ˣ) (s' : R') (U' y' : Fin T.q → Fin n → R') : Prop :=
   t.D.map f = D' ∧ (∀ v i, pushCh f (t.ψ v i) = ψ' v i) ∧ f t.s = s' ∧ (∀ j i, f (t.U j i) = U' j i) ∧

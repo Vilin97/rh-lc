@@ -80,6 +80,7 @@ noncomputable section
 namespace GlobalTheory.CuspGeo
 
 
+open Formalism.MainNotions.LeviCoordinates in
 theorem nearInst : ∀ I : AutInst, NearInst I := by
   intro I Kp hKo
   have hmem : ∀ {g : I.GA}, g ∈ I.GFset ↔ g ∈ rr_GF I := fun {g} => by

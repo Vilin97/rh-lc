@@ -48,6 +48,7 @@ theorem transl_apply (g : G) (f : SB X) (x : X) :
   rfl
 
 
+variable (X) in
 def eqv (χ : G →* ℂˣ) : Submodule ℂ (Distr X) where
   carrier := {D | ∀ (g : G) (f : SB X), D (transl g f) = (χ g : ℂ) * D f}
   add_mem' {D E} hD hE g f := by
@@ -71,6 +72,7 @@ variable {G X : Type*} [Group G] [MulAction G X] [TopologicalSpace X]
 abbrev Fib (p : X → G ⧸ H) : Type _ := {x : X // p x = ((1 : G) : G ⧸ H)}
 
 
+omit [TopologicalSpace X] [ContinuousConstSMul G X] in
 theorem smul_mem_fib {p : X → G ⧸ H} (hp : ∀ (g : G) (x : X), p (g • x) = g • p x) (h : H)
     (z : Fib p) : p ((h : G) • z.1) = ((1 : G) : G ⧸ H) := by
   rw [hp, z.2, MulAction.Quotient.smul_mk, smul_eq_mul, mul_one, QuotientGroup.eq]

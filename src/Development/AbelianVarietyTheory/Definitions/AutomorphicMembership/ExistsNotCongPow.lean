@@ -262,20 +262,25 @@ def qPow (s : ℝ) : ℂˣ :=
     exact Or.inl (Nat.cast_ne_zero.mpr (one_lt_normV w).ne_bot))
 
 
+omit [IsAlgClosure E Ω] in
 @[simp] theorem coe_qPow (s : ℝ) : (qPow w s : ℂ) = ((normV w : ℕ) : ℂ) ^ ((s : ℝ) : ℂ) := rfl
 
 
+omit [IsAlgClosure E Ω] in
 @[simp] theorem qPow_zero : qPow w 0 = 1 := Units.ext (by simp)
 
 
+omit [IsAlgClosure E Ω] in
 theorem qPow_add (s t : ℝ) : qPow w (s + t) = qPow w s * qPow w t := Units.ext (by
   simp only [coe_qPow, Units.val_mul, Complex.ofReal_add]
   exact Complex.cpow_add _ _ (Nat.cast_ne_zero.mpr (one_lt_normV w).ne_bot))
 
 
+omit [IsAlgClosure E Ω] in
 theorem coe_qPow_one : (qPow w 1 : ℂ) = ((normV w : ℕ) : ℂ) := by simp
 
 
+omit [IsAlgClosure E Ω] in
 theorem norm_qPow (s : ℝ) : ‖(qPow w s : ℂ)‖ = ((normV w : ℕ) : ℝ) ^ s := by
   rw [coe_qPow, Complex.norm_natCast_cpow_of_pos (zero_lt_one.trans (one_lt_normV w))]
   simp

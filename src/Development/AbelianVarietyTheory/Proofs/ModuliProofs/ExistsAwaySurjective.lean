@@ -225,6 +225,7 @@ theorem local_of_ring [IsAffineHom f] (Q : MorphismProperty Scheme.{0}) (K : Typ
 end Geometry
 
 
+set_option backward.isDefEq.respectTransparency.types false in
 theorem main : ∀ (R : Type) [CommRing R] [IsNoetherianRing R] (Γ' X : Scheme.{0}) (s : X ⟶ Sp R) (f : Γ' ⟶ X) (P : Set (Ideal R)), (∀ (q₀ : Ideal R) (f₀ : R), q₀.IsPrime → f₀ ∉ q₀ → ∃ p₀ ∈ P, p₀.IsPrime ∧ q₀ ≤ p₀ ∧ f₀ ∉ p₀) → IsProper s → Flat s → IsProper f → Flat (f ≫ s) → (∀ q ∈ P, ∃ (K : Type) (_ : Field K) (x : R →+* K), RingHom.ker x = q ∧ IsIso (pullback.snd f (pullback.fst s (spMap x)))) → IsIso f := by
   intro R _ _ Γ' X s f P hP₀ _ _ _ _ h
   have hP : ∀ q : Ideal R, q.IsPrime → ∃ p ∈ P, p.IsPrime ∧ q ≤ p := fun q hq => by

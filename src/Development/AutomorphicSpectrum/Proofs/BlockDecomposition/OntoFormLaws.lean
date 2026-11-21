@@ -213,6 +213,7 @@ theorem smul_form (c g₀ : A) (g : Fin a → A) : c • form K g₀ g = form K 
   simp [form, mul_smul]
 
 
+variable (K A a) in
 theorem span_forms : Submodule.span K {ω : Om K A a | ∃ g₀ g, ω = form K g₀ g} = ⊤ := by
   classical
   set S := Submodule.span K {ω : Om K A a | ∃ g₀ g, ω = form K g₀ g} with hS

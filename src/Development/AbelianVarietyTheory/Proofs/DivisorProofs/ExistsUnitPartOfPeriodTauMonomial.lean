@@ -30,6 +30,7 @@ theorem commGroup_seven_term_product_rearrange {G : Type} [CommGroup G] (a b c A
     _ = _ := by simp
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_isUnitTau : ∀ {R : Type} [CommRing R] [IsDomain R] (Q : DegPre R) {m : ℕ} (t : Fin m → R) (gam : Fin m → LinearMap.BilinForm ℤ Q.X), IsMonomial Q t gam → (∀ i y z, gam i y z = gam i z y) → (∀ i, t i ≠ 0) → ∀ y z, ∃ τ₀, IsUnitTau Q t gam y z τ₀ := by
   intro R _ _ Q m t gam hM hsym ht y z
   obtain ⟨n1, p1, hp1⟩ := GlobalTheory.UnitPart.exists_isUnitPart Q t gam hM (y + z)

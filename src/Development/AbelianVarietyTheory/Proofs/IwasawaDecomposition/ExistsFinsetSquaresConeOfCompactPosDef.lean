@@ -126,6 +126,7 @@ theorem tendsto_floor_div (x : ℝ) :
     linarith [mul_comm x (N : ℝ)]
 
 
+open scoped MatrixOrder in
 theorem local_step (P₀ : Matrix ι ι ℝ) (h : P₀.PosDef) :
     ∃ S : Finset (ι → ℤ), ∀ᶠ P in 𝓝 P₀, P.IsHermitian → P ∈ cone S := by
   have hP₀s : ∀ a b, P₀ a b = P₀ b a := fun a b => by

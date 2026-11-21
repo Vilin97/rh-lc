@@ -119,6 +119,7 @@ section Approx
 variable {F : Type*} [NormedField F] [IsUltrametricDist F]
 
 
+omit hp in
 theorem norm_pow_sub_pow_le {a b : F} (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1) (n : ℕ) :
     ‖a ^ n - b ^ n‖ ≤ ‖a - b‖ := by
   rw [← geom_sum₂_mul, norm_mul]
@@ -129,6 +130,7 @@ theorem norm_pow_sub_pow_le {a b : F} (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1) 
     (pow_le_one₀ (norm_nonneg _) hb)
 
 
+omit hp in
 theorem norm_pow_p_sub_pow_p_le {a b : F} (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1) (hp1 : ‖(p : F)‖ ≤ 1)
     {e : ℕ} (he : 1 ≤ e) (hab : ‖a - b‖ ≤ ‖(p : F)‖ ^ e) :
     ‖a ^ p - b ^ p‖ ≤ ‖(p : F)‖ ^ (e + 1) := by
@@ -155,6 +157,7 @@ theorem norm_pow_p_sub_pow_p_le {a b : F} (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤
       (pow_le_one₀ (norm_nonneg _) hb) (by positivity) (norm_nonneg _)).trans (mul_one _).le
 
 
+omit hp in
 theorem norm_pow_pow_sub_pow_pow_le {a b : F} (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1) (hp1 : ‖(p : F)‖ ≤ 1)
     {e : ℕ} (he : 1 ≤ e) (hab : ‖a - b‖ ≤ ‖(p : F)‖ ^ e) (r : ℕ) :
     ‖a ^ p ^ r - b ^ p ^ r‖ ≤ ‖(p : F)‖ ^ (e + r) := by

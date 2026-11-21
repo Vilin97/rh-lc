@@ -25,6 +25,7 @@ variable {k : Type} [CommRing k] {X : Scheme.{0}} {p : X ⟶ Sp k} [IsIntegral X
   {E : X.Modules} {r : ℕ} {h : VMetric p E r}
 
 
+omit [IsIntegral X] in
 theorem charZero_residueField_genericPoint (Y : Scheme.{0}) [IsIntegral Y] (hc : CharZero Γ(Y, ⊤)) :
     CharZero (Y.residueField (genericPoint Y)) := by
   have h₁ : CharZero Y.functionField := charZero_of_injective_ringHom

@@ -40,6 +40,7 @@ open GlobalTheory.DeRham (spOver spOver_comp)
 attribute [local instance] Over.cartesianMonoidalCategory
 
 
+open GlobalTheory.PDivGroup.CotDim in
 theorem GlobalTheory.PDivGroup.finrank_cot_add_finrank_cot_dual_le_of_cast_eq_zero (p : ℕ) [Fact p.Prime]
     (k : Type) [Field k] (hp : (p : k) = 0) (Γ : PDivGroup p k) :
     Module.finrank k (Cot k (Γ.A 1)) + Module.finrank k (Cot k (Γ.dual.A 1)) ≤ Γ.height := by

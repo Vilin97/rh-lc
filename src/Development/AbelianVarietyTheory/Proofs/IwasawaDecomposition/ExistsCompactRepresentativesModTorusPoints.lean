@@ -93,6 +93,7 @@ theorem continuous_fibrePt {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V]
 end Fibre
 
 
+attribute [local instance] ptTopology in
 theorem exists_isCompact_mod_torusPts : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] (y : Sp ℂ ⟶ X) (g : ℕ)
     (e : (Fin g → ℂ) → (Over.mk y ⟶ G)) (E : TorusExtension ((Over.pullback y).obj G)), IsSemiAbelian G →
     (∀ z w, e (z + w) = e z * e w) → Function.Surjective e → IsHolTo Set.univ (fun z => (e z).left) →

@@ -82,6 +82,7 @@ theorem mem_map_of_mem_gens_basicOpen [Fintype ι] {U : X.Opens} (hU : IsAffineO
   exact Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ (Ideal.subset_span hgen))
 
 
+variable (w) in
 def idealSheaf [Fintype ι] : X.IdealSheafData where
   ideal U := idealOn w U.1
   map_ideal_basicOpen U f := by

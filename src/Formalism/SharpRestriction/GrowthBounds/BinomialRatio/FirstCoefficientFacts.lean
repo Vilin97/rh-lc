@@ -78,6 +78,7 @@ theorem prod_letters {n' : ℕ} (TT : Finset (Fin n')) (h2 : 2 ≤ numSeg TT) (f
   ring
 
 
+set_option maxHeartbeats 800000 in
 theorem seg_num {k Q a b' Y E0 N1 La m cm A0 mN e1 e2 : ℝ} (hk5 : 5 ≤ k) (hQ1 : 1 ≤ Q) (hb : 0 < b') (hba : b' ≤ a)
     (hY1 : 1 ≤ Y) (hE : 0 ≤ E0) (hN1 : 1 ≤ N1) (hLa1 : 1 ≤ La) (hkm : k = mN + 1) (hm4 : 1 ≤ mN)
     (hA0lo : a / (2 * Q) ≤ A0) (hkQ : k ^ 3 * Q ≤ b') (hm : 0 ≤ m) (hcm : cm < m + 1) (hcm0 : 0 ≤ cm) (t1 : 0 < e1)

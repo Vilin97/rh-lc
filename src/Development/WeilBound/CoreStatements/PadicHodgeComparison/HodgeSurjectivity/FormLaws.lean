@@ -32,6 +32,7 @@ def omMap (φ : A →ₐ[K] B) (a : ℕ) : Om K A a →ₗ[K] Om K B a :=
 
 variable (K)
 
+variable (K) in
 def relOm (I : Ideal A) (a : ℕ) : Submodule A (Om K A a) :=
   Submodule.span A {ω | ∃ (g₀ : A) (g : Fin a → A), (g₀ ∈ I ∨ ∃ k, g k ∈ I) ∧ ω = form K g₀ g}
 

@@ -109,6 +109,7 @@ theorem eval_map_splitFirst (J : Ideal (MvPolynomial (Fin e × Fin n) F)) (t : F
 end ChartChoiceAlgClosed
 
 
+open ChartChoiceAlgClosed in
 theorem ChartChoiceAlgClosed.proof (h₁ : IncIdealPrime.Statement) (h₂ : ChowFormMultiHomog.Statement) :
     ChartChoiceAlgClosed.Statement := by
   intro F _ _ n e I f q hI hf hq

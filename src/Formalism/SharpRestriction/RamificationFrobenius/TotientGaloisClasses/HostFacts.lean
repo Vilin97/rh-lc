@@ -176,6 +176,7 @@ theorem odd_of_coprime {p : ℕ} (h : Nat.Coprime p H.condN) : p % 2 = 1 := by
   exact (Nat.Prime.coprime_iff_not_dvd Nat.prime_two).1 (Nat.Coprime.coprime_dvd_left h2p h) H.two_dvd_condN
 
 
+variable {H} in
 theorem PsQ.psAt_eq (hP : H.PsQ) {p : ℕ} (h : Nat.Coprime p H.condN) : H.psAt p = jacobiSym (-(H.q : ℤ)) p := by
   rw [H.psAt_of_coprime h, hP, jacobi_neg_recip H.q_mod_four (H.odd_of_coprime h)]
   exact jacobi_congr ((H.val_unitOfCoprime h).of_dvd H.q_dvd_condN)

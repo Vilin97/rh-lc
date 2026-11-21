@@ -201,6 +201,7 @@ theorem lowest_degree_le_iff_types (D : Formalism.BasicNotions.D7) (h2 : Formali
   (generated_weight_lemma_of_reducibility D h2 (valuationsAdditive_D7 D) K (Fin N) Lt r S e he).2 G M
 
 
+open Classical in
 theorem combined_weight_of_nested_sets (D : Formalism.BasicNotions.D7) (X : Formalism.MainNotions.flipOneThree.Inst) (h2 : Formalism.MainNotions.CovariantDegrees.adm2 D)
     (h15 : Formalism.MainNotions.CovariantDegrees.SaturatedLowerSetSpan D) : Formalism.MainNotions.flipOneThree.adm8 D X := by
   intro N LL q J M hJ

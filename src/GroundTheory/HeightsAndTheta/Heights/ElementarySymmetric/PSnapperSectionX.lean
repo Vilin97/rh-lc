@@ -40,6 +40,7 @@ theorem quotDevissage : SnapperQuotDevissage.Statement.{u, w, w} :=
 end SnapperSectionClosed
 
 
+open SnapperSectionClosed in
 theorem SnapperSection.full : SnapperSection.Statement.{u, w} :=
   SnapperSection.proof quotAdd quotDevissage MulQuotEq.proof SectionNonvanish.proof SectionMulInj.proof
 

@@ -224,6 +224,7 @@ theorem endInt_omega (hInv : Formalism.L2.KerInert.Sigma.InvAlg) (D : D7) (p : �
   exact Formalism.L2.KerInert.VC.endInt_varChange _ hcoef0 _ hu.le hui.le hr hs ht _ hE0
 
 
+open Formalism.L2.Th1.C.Pts in
 theorem endInt_OK (D : D7) (p : ℕ) [Fact p.Prime] (g : G1 p) (hOk : g.Ok) (ι : ℂ ≃+* ℂ_[p])
     (hι : Formalism.L2.KerInert.IotaExt g.lam ι)
     (hEg : Formalism.L2.Th1.C.EndInt (RB p) (Formalism.L2.Th1.A.logSer g.W) (Formalism.L2.Th1.A.expSer g.W)

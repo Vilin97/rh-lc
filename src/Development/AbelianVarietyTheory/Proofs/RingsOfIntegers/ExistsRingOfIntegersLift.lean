@@ -12,6 +12,7 @@ open NumberField
 namespace GlobalTheory.PlaceInt
 
 
+open NumberField in
 theorem _root_.GlobalTheory.PlaceInt.exists_ringOfIntegers_lift (E : Type) [Field E] [NumberField E]
     (V : Type) [CommRing V]
     [IsDomain V] [IsIntegrallyClosed V] (k : Type) [Field k] [Algebra V k] [IsFractionRing V k]
@@ -32,6 +33,7 @@ theorem _root_.GlobalTheory.PlaceInt.exists_ringOfIntegers_lift (E : Type) [Fiel
     hf⟩
 
 
+open NumberField Polynomial IsLocalRing in
 theorem _root_.GlobalTheory.PlaceInt.placeIdem : _root_.ReciprocityTheory.ChartRestriction.G.PullbackSections.PlaceIdemSt := by
   unfold _root_.ReciprocityTheory.ChartRestriction.G.PullbackSections.PlaceIdemSt
   intro E _ _ V _ _ _ _ k _ _ _ P hP hP0

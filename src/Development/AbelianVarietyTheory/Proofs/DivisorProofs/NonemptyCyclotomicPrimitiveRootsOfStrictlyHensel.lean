@@ -10,6 +10,7 @@ open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComp
 namespace GlobalTheory.EtC
 
 
+open Polynomial in
 theorem prim_of_strictlyHenselian : ∀ (q : ℕ) (A : Type) [CommRing A], SH A → IsUnit (q : A) → Nonempty (Prim q A) := by
   intro q A _ hSH hq
   obtain ⟨hH, hsep⟩ := hSH

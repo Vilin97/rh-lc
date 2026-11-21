@@ -177,6 +177,7 @@ theorem low_inGam (N : ℕ) (hN0 : 0 < N) : InGam N (low (-(N : F))) := by
 end GlobalTheory.HilbertThetaSeries.ThetaLevel
 
 
+open GlobalTheory.HilbertThetaSeries.ThetaLevel in
 theorem GlobalTheory.HilbertThetaSeries.theta_level_eighth_root : ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (κ : Type) [Fintype κ] [DecidableEq κ] (G : Matrix κ κ ℤ), EvenPos G → ∀ t : ℕ, G.det = (t : ℤ) ^ 2 → ∀ k : ℕ, Fintype.card κ = 2 * k → ∃ N : ℕ, 0 < N ∧ ∀ γ : GL (Fin 2) F, InGam N γ → ∃ ζ : ℂ, ζ ^ 8 = 1 ∧ sl0 k (toInf γ) (th G oneL) = ζ • th G oneL := by
   intro F _ _ _ κ _ _ G hG t ht k hk
   obtain ⟨N, hN0, hN⟩ := (GlobalTheory.T.dualLattice_index_eq_discr_pow_mul_det_pow F κ G hG).2.1

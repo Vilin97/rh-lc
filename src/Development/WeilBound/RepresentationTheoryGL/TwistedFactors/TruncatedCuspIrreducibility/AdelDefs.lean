@@ -28,12 +28,14 @@ def blk {R : Type} [CommRing R] (m₁ : GL (Fin a) R) (m₂ : GL (Fin b) R) : GL
       Matrix.mul_zero, Matrix.zero_mul, add_zero, zero_add, Matrix.fromBlocks_one, Matrix.submatrix_one_equiv]
 
 
+variable (a b) in
 def HP (g : G1 K (a + b)) : ℝ :=
   sInf {t | ∃ (X : UPos (a + b) a → 𝔸[K]) (m₁ : AdelicGLn.AdelicGL K a) (m₂ : AdelicGLn.AdelicGL K b)
     (k : AdelicGLn.AdelicGL K (a + b)), k ∈ (maxCompact : Subgroup (AdelicGLn.AdelicGL K (a + b))) ∧
       (g : AdelicGLn.AdelicGL K (a + b)) = unipGL X * blk m₁ m₂ * k ∧ t = Real.log (detModule K a m₁).1}
 
 
+variable (K a b) in
 def ParΓ : Subgroup (Gam K (a + b)) :=
   Subgroup.closure {γ | ∀ i j : Fin (a + b), a ≤ (i : ℕ) → (j : ℕ) < a →
     (((γ : G1 K (a + b)) : AdelicGLn.AdelicGL K (a + b)) : Matrix (Fin (a + b)) (Fin (a + b)) 𝔸[K]) i j = 0}
@@ -68,6 +70,7 @@ structure IsSec {μ₁ : Measure (G1 K a)} {μ₂ : Measure (G1 K b)} (τ₁ : S
         f x = ∑ i, φ i m₁ * ψ i m₂
 
 
+variable (K n) in
 structure TypeDat where
   U : Subgroup (G1 K n)
   isOpen : ∃ O : Set (AdelicGLn.AdelicGL K n), IsOpen O ∧ ∀ g : G1 K n, g ∈ U ↔

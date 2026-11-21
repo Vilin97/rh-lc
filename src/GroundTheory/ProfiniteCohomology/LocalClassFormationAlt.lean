@@ -31,6 +31,7 @@ theorem index_openSubgroup (U : OpenSubgroup Gal(Ksep/K)) :
   rw [finrank_eq_fixingSubgroup_index, fixingSubgroup_fixedField_openSubgroup]
 
 
+omit [IsGalois K Ksep] in
 theorem fixedField_le_fixedField {U V : OpenSubgroup Gal(Ksep/K)} (h : V ≤ U) :
     fixedField (U : Subgroup Gal(Ksep/K)) ≤ fixedField (V : Subgroup Gal(Ksep/K)) :=
   fun _ hx => (mem_fixedField_iff _ _).2 fun σ hσ => (mem_fixedField_iff _ _).1 hx σ (h hσ)
@@ -149,6 +150,8 @@ theorem localInv_bijective (U : OpenSubgroup Gal(Ksep/K)) : Function.Bijective (
     ⟨(ModuleCat.mono_iff_injective _).1 inferInstance, (ModuleCat.epi_iff_surjective _).1 inferInstance⟩
 
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ksep]
+  [TopologicalSpace Ksep] [IsValuativeTopology Ksep] [ValuativeExtension K Ksep] in
 theorem isZero_H1_open (U : OpenSubgroup Gal(Ksep/K)) :
     Limits.IsZero (cohomology (Rep.res (U : Subgroup Gal(Ksep/K)).subtype (galUnits.{0} K Ksep)) 1) :=
   (isZero_cohomology_one_galUnits (K := fixedField (U : Subgroup Gal(Ksep/K))) (L := Ksep)).of_iso

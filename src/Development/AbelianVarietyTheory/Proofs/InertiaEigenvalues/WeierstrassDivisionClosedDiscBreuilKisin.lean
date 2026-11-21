@@ -123,6 +123,7 @@ theorem div_ball (hl : 0 < l) (hρ0 : 0 < ρ)
 theorem norm_C_zero : ‖toDisc l (X : R⟦X⟧) ρ (C (0 : R))‖ ≤ ((1 : ℝ≥0) : ℝ) := norm_toDisc_le _
 
 
+variable (l ρ R) in
 def cMap [Fact l.Prime] : Disc l (0 : R) 1 →+* Disc l (X : R⟦X⟧) ρ :=
   Disc.map (u := (0 : R)) (ρ := 1) (C : R →+* R⟦X⟧) norm_C_zero
 

@@ -89,6 +89,7 @@ theorem exists_of_mem_curveRing (hf : ∀ k, y ⟨k, f k⟩ ≠ 0) {b : Ω} (hb 
 end CurveClosedPointChartAlt
 
 
+open CurveClosedPointChartAlt in
 theorem CurveClosedPointChart.proof : CurveClosedPointChart.Statement := by
   classical
   intro K _ ι _ Ω _ y hP m hm

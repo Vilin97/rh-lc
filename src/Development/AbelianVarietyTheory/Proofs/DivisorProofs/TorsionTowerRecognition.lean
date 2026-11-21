@@ -151,6 +151,7 @@ theorem qPt_add {k : ℕ} {p p' : QkPt D C k} {q q' : N.QT k} (h : ν.QPt p q) (
     exact hc
 
 
+include he hb he' hb' in
 theorem exists_tower {f : ∀ k, QkPt D C k → (TFK (R := W) C ⟶ A.A)} {f' : ∀ k, QkPt D' C k → (TFK (R := W) C ⟶ A.A)}
     (G : GoodLab D A C f) (G' : GoodLab D' A C f') (n : ℕ) (hn : 1 ≤ n) :
     ∃ w : TowerIso N N' n, ∀ j p p' q q', ν.QPt p q → ν'.QPt p' q' →

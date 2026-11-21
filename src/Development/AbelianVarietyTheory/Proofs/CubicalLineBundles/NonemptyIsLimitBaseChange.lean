@@ -101,6 +101,8 @@ theorem cone_preimage_le {i j : I} (f : j ⟶ i) (U : (D.obj i).Opens) :
   rw [← Scheme.Hom.comp_preimage, w]
 
 
+set_option backward.isDefEq.respectTransparency false in
+include hc in
 theorem exists_appLE_π_eq {i : I} {U : (D.obj i).Opens} (hU : IsAffineOpen U)
     (s : Γ(X, π i ⁻¹ᵁ U)) :
     ∃ (j : I) (f : j ⟶ i) (t : Γ(D.obj j, D.map f ⁻¹ᵁ U)),
@@ -119,6 +121,7 @@ theorem exists_appLE_π_eq {i : I} {U : (D.obj i).Opens} (hU : IsAffineOpen U)
   exact (e _ _ _ _ t).trans h
 
 
+include hc in
 theorem exists_unit_π_eq {i : I} {U : (D.obj i).Opens} (hU : IsAffineOpen U)
     (s : Γ(X, π i ⁻¹ᵁ U)ˣ) :
     ∃ (j : I) (f : j ⟶ i) (t : Γ(D.obj j, D.map f ⁻¹ᵁ U)ˣ), ∀ y : X, y ∈ π i ⁻¹ᵁ U →
@@ -148,6 +151,7 @@ theorem exists_unit_π_eq {i : I} {U : (D.obj i).Opens} (hU : IsAffineOpen U)
     (homOfLE (cone_preimage_le D π w (g ≫ f) U)) y hy _).symm
 
 
+include hc in
 theorem exists_pullU_eq {i : I} {U : (D.obj i).Opens} (hU : IsCompact (U : Set (D.obj i)))
     (s t : Γ(D.obj i, U)ˣ)
     (h : ∀ y : X, π i y ∈ U → gm (π i) y U s = gm (π i) y U t) :
@@ -158,6 +162,7 @@ theorem exists_pullU_eq {i : I} {U : (D.obj i).Opens} (hU : IsCompact (U : Set (
   exact ⟨j, f, Units.ext hf⟩
 
 
+include hc in
 theorem exists_units_of_isLimit {i : I} [QuasiSeparatedSpace (D.obj i)] {A : Type} [Finite A]
     (V : A → (D.obj i).Opens) (hV : ∀ a, IsAffineOpen (V a)) (G : ∀ a b, Γ(D.obj i, V a ⊓ V b)ˣ)
     (s : ∀ a, Γ(X, π i ⁻¹ᵁ V a)ˣ)
@@ -243,6 +248,7 @@ theorem gm_div_pull_g {Y Z : Scheme.{0}} (M N : LB Y) (F : Z ⟶ Y) (z : Z) (p q
     (congrArg (·⁻¹) (gm_pull_g M F (𝟙 Z) z _ _ (mem_pull.2 hz.1.2) (mem_pull.2 hz.2.2)))
 
 
+include hc in
 theorem exists_lbIso_of_isLimit {i : I} [CompactSpace (D.obj i)] [QuasiSeparatedSpace (D.obj i)]
     (M N : LB (D.obj i)) (hM : M.IsLB) (hN : N.IsLB) (h : LBIso (M.pull (π i)) (N.pull (π i))) :
     ∃ (j : I) (f : j ⟶ i), LBIso (M.pull (D.map f)) (N.pull (D.map f)) := by
@@ -376,6 +382,7 @@ theorem isAffineHom_baseChangeMap (f : A →ₐ[k] A') : IsAffineHom (baseChange
 end
 
 
+variable (R₀) in
 def baseChangeDiagram : (FGAbove R₀)ᵒᵖ ⥤ Scheme.{0} where
   obj R := pullback pB (spMap (algebraMap k R.unop.1))
   map {R T} f := baseChangeMap pB (Subalgebra.inclusion (show T.unop.1 ≤ R.unop.1 from leOfHom f.unop))

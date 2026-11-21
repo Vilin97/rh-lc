@@ -74,6 +74,7 @@ theorem logCard_le_lambda (h : Real.log (Fintype.card G) ≤ lam0) :
     Real.log (Fintype.card G) ≤ (RecNums.ofNum Nd eJ δ Tl Nc lam0 C0 ce Ch Sw C1 H).lam0 := h
 
 
+include hZ in
 theorem logCardGroup_le_lambda (Zs : DefSub A3.fam3.amb3) (C CH : ℝ) (h : Real.log (Fintype.card G) ≤ lam0) :
     ((Zsc Zs).num C CH).la ≤ (RecNums.ofNum Nd eJ δ Tl Nc lam0 C0 ce Ch Sw C1 H).lam0 := by
   show (Zsc Zs).la ≤ lam0
@@ -93,6 +94,7 @@ theorem eigenvalue_sum_le_closed_of (Zs : DefSub A3.fam3.amb3) (C CH : ℝ)
     _ ≤ ∑ j, ((Zsc Zs).num C CH).l6 j := Finset.sum_le_sum fun j _ => hl6 j
 
 
+include hZ in
 theorem levelThree_bound_closed (Zs : DefSub A3.fam3.amb3) (C CH : ℝ) :
     ∑ j, ((Zsc Zs).num C CH).l3 j ≤
       (∑ j, ∑ ρ, (RecNums.ofNum Nd eJ δ Tl Nc lam0 C0 ce Ch Sw C1 H).pq j *
@@ -117,12 +119,14 @@ theorem levelThree_bound_closed (Zs : DefSub A3.fam3.amb3) (C CH : ℝ) :
   rw [e1, e2]
 
 
+include hZ in
 theorem delta_nonneg (Zs : DefSub A3.fam3.amb3) (C CH : ℝ) : 0 ≤ ((Zsc Zs).num C CH).de := by
   show 0 ≤ (Zsc Zs).de
   rw [hZ.de]
   positivity
 
 
+include hZ in
 theorem delta_mul_Q_le_one (Zs : DefSub A3.fam3.amb3) (C CH Q : ℝ)
     (hg : 24 * (Nd.R.f : ℝ) * (Nd.R.r : ℝ) * Q ≤ ((min (Nd.g 0) (Nd.g 1) : ℕ) : ℝ)) :
     3 * ((Zsc Zs).num C CH).de * Q ≤ 1 := by

@@ -231,6 +231,7 @@ theorem bijective_toSecO : Function.Bijective (toSecO : H0 (flagStr X) (X.LL e) 
     ((isoOver_of_isOpenImmersion X.inc (opensRange_inc X).ge).bijective_pull (X.F.isLB_LL e) _ le_top)
 
 
+variable (X e) in
 def ruleOf : H0 (flagStr X) (X.LL e) (flagOpen X) →ₗ[c.F] secZ Xo c e where
   toFun m := ⟨FlagCover.toRule (toSecO m), FlagCover.toRule_mem_secZ _⟩
   map_add' m m' := Subtype.ext <| funext₂ fun p P => by
@@ -256,10 +257,12 @@ theorem bijective_ruleOf : Function.Bijective (ruleOf X e) := by
   exact ⟨m, Subtype.ext hs⟩
 
 
+variable (X e) in
 def secOf : secZ Xo c e ≃ₗ[c.F] H0 (flagStr X) (X.LL e) (flagOpen X) :=
   (LinearEquiv.ofBijective _ bijective_ruleOf).symm
 
 
+open Classical in
 theorem evR_eq_val_secOf {S : Type} [CommRing S] [Algebra c.F S] [_root_.IsReduced S] (f : secZ Xo c e)
     {P Q : FrPt Xo c S} {k : X.F.J} {z : Sp S ⟶ X.YY} {hz : ⊤ ≤ z ⁻¹ᵁ X.F.U k} (hO : ⊤ ≤ z ⁻¹ᵁ flagOpen X)
     {t : Ix Dw → Sˣ} (hQ : X.F.ChartFr k z hz Q) (ht : FrBor t Q P) :
@@ -301,6 +304,7 @@ section Component
 variable {Y : Model Xo c (RingHom.id c.F)} (X : FlagCover Y) (Z : Comp Xo c)
 
 
+variable (Y) in
 def barComp : Y.X.Opens := ⟨(closure (Y.j '' (Z : Set (Xo.XF c))ᶜ))ᶜ, isClosed_closure.isOpen_compl⟩
 
 theorem j_mem_barComp (x : Xo.XF c) : Y.j x ∈ barComp Y Z ↔ x ∈ (Z : Set (Xo.XF c)) := by

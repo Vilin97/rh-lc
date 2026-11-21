@@ -180,6 +180,7 @@ def NuGoodSt : Prop :=
       (DF Dw a < resCharOf la → nuW Xo c la lv.M a nW = 0)
 
 
+open Formalism.L2.Indef Formalism.L2.Indef.Tree in
 structure NumTie {K : Type} [Field K] [NumberField K] [StarRing K] {Bs : DefBase K} {Df : DefSide Bs} {S : IndefData Df}
     {P : Type} [Group P] [Finite P] {oc : OnConst} (O : OnObj S P oc) (N : NumDatum) (ι : Bs.J → ℕ) (DL : Bs.J → ℕ) : Prop where
   k_eq : O.k = N.R.k
@@ -194,6 +195,7 @@ structure NumTie {K : Type} [Field K] [NumberField K] [StarRing K] {Bs : DefBase
   DF_ge : ∀ j, (DL j : ℝ) ≤ O.DF
 
 
+open Formalism.L2.Indef Formalism.L2.Indef.Tree Formalism.L2.Indef.Tree.DepthCond in
 def LeafGoodSt : Prop :=
   ∀ C1 : ℝ, 0 ≤ C1 → ∃ C0 : ℝ,
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (lv : Level H) (Dw : ℕ → Datum H)

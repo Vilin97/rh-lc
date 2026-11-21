@@ -30,6 +30,7 @@ def detPow (g : GL (Fin n) F) (s : ℂ) : ℂ :=
   (absDet g : ℂ) ^ s
 
 
+variable (F) in
 def qs (s : ℂ) : ℂ :=
   (LocalField.residueCard F : ℂ) ^ (-s)
 

@@ -10,6 +10,7 @@ open NumberField IsDedekindDomain
 namespace GlobalTheory.CompanionTheory.Counting
 
 
+open GroundTheory.Automorphic.CuspidalSpectrum in
 theorem exists_ncard_entrywiseBox_le (K : Type) [Field K] [NumberField K] (n : ℕ)
     (𝒦 : Set (FiniteAdeleRing (𝓞 K) K)) (h𝒦 : IsCompact 𝒦) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ T : Fin n → Fin n → ℝ, (∀ i j, 0 ≤ T i j) →

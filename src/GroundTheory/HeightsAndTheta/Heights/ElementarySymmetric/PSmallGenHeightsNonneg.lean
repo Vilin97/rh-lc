@@ -236,6 +236,7 @@ theorem arInt_nonpos {W : Ideal (MRing ι)} {A : HermLine ι} {s : MRing ι}
 end SmallGenHeightsNonneg
 
 
+open SmallGenHeightsNonneg in
 theorem SmallGenHeightsNonneg.proof : SmallGenHeightsNonneg.Statement := by
   intro K _ ι _ P A II q w hII hA hAnn hw hgen hsmall W hW hPW
   obtain ⟨j, hj⟩ := hgen W hW.2.1 hPW

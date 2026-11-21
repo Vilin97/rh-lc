@@ -94,6 +94,7 @@ variable {R} in
 def onRings (F : Shv R) : CommRingCat.{0} ⥤ ModuleCat.{1} (ULift.{1} R) := Scheme.Spec.rightOp ⋙ F.obj
 
 
+variable {R} in
 def Finitary (F : Shv R) : Prop := PreservesFilteredColimitsOfSize.{0, 0} (onRings F)
 
 
@@ -143,6 +144,7 @@ def IsStalk {S : Scheme.{0}} (O : Type) [CommRing O] (s : Spec (CommRingCat.of O
     s = Spec.map (CommRingCat.ofHom (algebraMap A O)) ≫ j
 
 
+variable {R} in
 def Gen (F : Shv R) (S : Scheme.{0}) (g : Sec F S) : Prop :=
   ∀ (U : Scheme.{0}) (s : U ⟶ S),
     (∀ (x : Sec F U) (u : U), ∃ (V : Scheme.{0}) (j : V ⟶ U) (v : V) (c : R), Etale j ∧ j v = u ∧
@@ -150,6 +152,7 @@ def Gen (F : Shv R) (S : Scheme.{0}) (g : Sec F S) : Prop :=
     ∀ c : R, Nonempty U → (ULift.up c : ULift.{1} R) • Sec.pull s g = 0 → c = 0
 
 
+variable {R} in
 def val {P : PSh} {F : Shv R} (s : (free R).obj P ⟶ F) (U : Scheme.{0}) (x : P.obj (op U)) : Sec F U :=
   (s.hom.app (op U)).hom (freeGen R P U x)
 
@@ -159,15 +162,18 @@ def cechPt {Y X : Scheme.{0}} (f : Y ⟶ X) (k : ℕ) {U : Scheme.{0}} (x : U �
     (fun i => by rw [← yoneda.map_comp, h i])).app (op U) (𝟙 U)
 
 
+variable {R} in
 def cobd {E : Spc} {F : Shv R} {n : ℕ} (s : (free R).obj (E.obj (op ⦋n⦌)) ⟶ F) : (free R).obj (E.obj (op ⦋n + 1⦌)) ⟶ F :=
   ∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) • ((free R).map (SimplicialObject.δ E i) ≫ s)
 
 
+variable {R} in
 def IsCls {E : Spc} {F : Shv R} {n : ℕ} (s : (free R).obj (E.obj (op ⦋n⦌)) ⟶ F) (x : H R E F n) : Prop :=
   ∃ z : Cocycle ((chains R).obj E) (res R F) n, CohomologyClass.mk z = x ∧
     z.1 = Cochain.single (p := -(n : ℤ)) (q := 0) ((chainsXIso R E n).hom ≫ s ≫ resι R F) n
 
 
+variable {R} in
 def Z1 (F : Shv R) (A B : Type) [CommRing A] [CommRing B] [Algebra A B] : AddSubgroup ((onRings F).obj (CommRingCat.of (B ⊗[A] B))) :=
   AddMonoidHom.eqLocus
     ((onRings F).map (CommRingCat.ofHom (Algebra.TensorProduct.map (AlgHom.id A B)

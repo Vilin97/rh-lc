@@ -19,6 +19,7 @@ namespace GlobalTheory.Core.Rk
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
+set_option maxHeartbeats 2000000 in
 structure Tower (D : D7) extends LevCh D Unit where
 
   θ : InfFam D

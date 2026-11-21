@@ -17,6 +17,8 @@ noncomputable section
 namespace GlobalTheory.FamTrace
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem prV_toEAf_eq_swap (D : D7) (v : HeightOneSpectrum (𝓞 D.host.F)) (a : AE D) :
     Formalism.UG.prV (E := D.host.E) v (Formalism.IndefR.Datum.toEAf D a) =
       GlobalTheory.StabConjIndex.swap v (GlobalTheory.AdelicU.compFin D.host.F D.host.E v a) := by
@@ -26,6 +28,7 @@ theorem prV_toEAf_eq_swap (D : D7) (v : HeightOneSpectrum (𝓞 D.host.F)) (a : 
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 
+set_option maxHeartbeats 1000000 in
 theorem bc_prV_mem_levelVL_of_moves : ∀ (D : D7) (S : HSp D) (n : ℕ) (hn : S.rank = n) (L : GlobalTheory.FinPl.Lat S)
     (Λ : Submodule (𝓞 D.host.E) (Fin n → D.host.E)), L.FG →
     (∀ x : Fin n → D.host.E, x ∈ Λ ↔ (fun i => x (finCongr hn i)) ∈ L) →

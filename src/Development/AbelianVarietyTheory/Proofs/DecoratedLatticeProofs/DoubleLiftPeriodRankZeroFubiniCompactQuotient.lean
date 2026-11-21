@@ -138,6 +138,7 @@ end GlobalTheory.Unf.LastSteps
 namespace GlobalTheory.Unf.LastSteps
 
 
+open EvalCont in
 theorem lastLaw : ∀ D : D7, LastLaw D := by
   intro D ψ T B t φ Φ₁ Φ₂ F hφ hF hΦ₁ hΦ₂
   obtain ⟨-, iA2, -, -, -, -, -⟩ := GlobalTheory.Mem.AdelicGroupTop.adelic_unitary_topology D B.A

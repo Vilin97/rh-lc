@@ -187,6 +187,7 @@ theorem congAt_one_of_redGL {D : D7} {X : Fields} (s : Seam D X) {n : ℕ} {P : 
   split_ifs <;> simp
 
 
+set_option maxHeartbeats 1000000 in
 theorem funMoved_mul_lev {D : D7} {X : Fields} (s : Seam D X) {i : ℕ} {hi : i ≤ D.R.m} {T : ℕ} {bad : Set (HeightOneSpectrum (𝓞 D.host.F))}
     (lev : StepLevel D.host.F D.host.E (sigD D) (gramN D i hi) T D.R.f bad) {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))} (P : ST)
     (v : HeightOneSpectrum (𝓞 D.host.F)) (h : (T : 𝓞 D.host.F) ∈ v.asIdeal) (ι : lev.fM v h →+ 𝓞 X.E ⧸ P.1.asIdeal)

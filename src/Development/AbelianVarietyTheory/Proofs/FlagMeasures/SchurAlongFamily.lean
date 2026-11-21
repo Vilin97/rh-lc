@@ -26,6 +26,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.S
 namespace GlobalTheory.GapAmp
 
 
+open BranchingSupport GlobalTheory.CellAmp GlobalTheory.Amp Formalism.BasicNotions Formalism.MainNotions.S Formalism.QuantumDeterminants in
 theorem bessel_schur_gap (hH : GlobalTheory.GapIn.Hyp) (D : D7) (large₂ : SizeData₂ D) (C' Cl Cg cb Cu cT CT C0 : ℝ)
     (hCl : 1000 ≤ Cl) : BSch D large₂ C' Cl Cg cb Cu cT CT C0 := by
   intro hZ
@@ -36,6 +37,7 @@ theorem bessel_schur_gap (hH : GlobalTheory.GapIn.Hyp) (D : D7) (large₂ : Size
   exact_mod_cast (D.mem w).A.T_prime.pos
 
 
+open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.S in
 theorem schur_along_family : Formalism.HermitianLatticesTheory.SiegelMassRatio → GlobalTheory.GapIn.Hyp → BpJoin.ThmBpDS →
     ∀ Cg cb Cu cT CT C0 C1 : ℝ, ∃ C thr : ℝ, ∀ (eps : ℝ) (Fm : FamP eps), thr ≤ sC' Fm → thr ≤ sCl Fm →
       PX.RanksF Fm C0 Cg cb Cu cT CT →

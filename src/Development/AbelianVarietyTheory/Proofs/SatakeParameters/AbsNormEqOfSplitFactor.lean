@@ -71,6 +71,7 @@ theorem absNorm_eq_of_splitAt (h2 : Module.finrank F E = 2) {v : HeightOneSpectr
     exact absNorm_eq_of_split_factor h2 hv hne.symm (hm.trans (mul_comm _ _))
 
 
+omit [NumberField E] [Field E] [Algebra F E] in
 theorem plc_eq_absNorm {v : HeightOneSpectrum (𝓞 F)} (hq : (Ideal.absNorm v.asIdeal).Prime) :
     Formalism.EigenvalueLevelCeiling.plc v = Ideal.absNorm v.asIdeal := by
   have h6 : ringChar (𝓞 F ⧸ v.asIdeal) ∣ Ideal.absNorm v.asIdeal := by

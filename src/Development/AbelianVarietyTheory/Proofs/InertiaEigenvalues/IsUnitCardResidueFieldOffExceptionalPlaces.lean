@@ -56,6 +56,7 @@ theorem isUnit_of_coprime {A : Type} [CommRing A] [IsLocalRing A] (q l : ℕ) (h
 end GlobalTheory.ResidueUnit
 
 
+open GlobalTheory.ResidueUnit in
 theorem GlobalTheory.ResidueUnit.isUnit_card_residueField_Ok {D : D7} {N : NData D.R D.host D.what₂} (X : NTw D.R D.host D.what₂ D.LL0 N)
     (i : X.Tw) (k : ℕ) (PP : Pl D.host.E) :
     PP ∉ X.S0 i → IsUnit ((Nat.card (kP PP) : ℕ) : X.Ok i k) := by

@@ -164,6 +164,7 @@ private theorem pseudo_character_sum_comp_perm {M A : Type*} [Monoid M] [CommRin
     rw [Equiv.Perm.coe_mul, ← Function.comp_assoc, hf, hswap]
 
 
+open Polynomial in
 theorem _root_.GlobalTheory.PsChar.cayleyHamilton (k R : Type) [Field k] [CharZero k] [Ring R] [Algebra k R]
     (d : ℕ) (T : R →ₗ[k] k) (h : _root_.GlobalTheory.PsChar.IsPsChar d (fun x => T x)) (x : R) :
     ∃ p : Polynomial k, p.Monic ∧ p.natDegree = d ∧ ∀ y : R, T (Polynomial.aeval x p * y) = 0 := by

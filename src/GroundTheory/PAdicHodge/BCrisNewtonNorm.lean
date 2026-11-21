@@ -55,6 +55,7 @@ theorem convergesAt_toB (z : 𝔸) {ρ : ℝ} (hρ0 : 0 < ρ) (hρ1 : ρ < 1) :
   exact convergesAt_shift hρ0 (convergesAt_zcoeff_incl x hρ0 hρ1) M
 
 
+variable (K p) in
 def gn (ρ : ℝ) (z : 𝔸) : ℝ := gaussNorm ((teichLift K p).coeffB (toB K p z)) ρ
 
 variable {ρ : ℝ}

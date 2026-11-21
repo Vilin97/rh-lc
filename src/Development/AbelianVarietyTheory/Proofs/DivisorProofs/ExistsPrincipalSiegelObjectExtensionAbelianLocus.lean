@@ -44,6 +44,7 @@ section Bundle
 variable {O K : Type} [CommRing O] [IsDomain O] [Field K] [Algebra O K] [IsFractionRing O K]
 
 
+omit [IsDomain O] [Field K] [Algebra O K] [IsFractionRing O K] in
 theorem pic_local [IsLocalRing O] (c : Pic (Sp O)) : c = 0 := by
   obtain ⟨D, hD, rfl⟩ := cls_surj c
   obtain ⟨i, hi⟩ := exists_chart hD (IsLocalRing.closedPoint O)
@@ -181,6 +182,7 @@ theorem exists_lev [IsIntegrallyClosed O] (hA : IsAbelianScheme A) (h : IsGrpPul
   · rw [MonObj.comp_pow, K1, ← map_pow, tors', map_one, MonObj.comp_one]
 
 
+omit [IsDomain O] [IsFractionRing O K] in
 theorem push_lev (h : IsGrpPullback A' A (spMap (algebraMap O K)) ψ) {u' : 𝟙_ (Over (Sp K)) ⟶ A'}
     {u : 𝟙_ (Over (Sp O)) ⟶ A} (hu : u'.left ≫ ψ = spMap (algebraMap O K) ≫ u.left) (T : Over (Sp K)) :
     pushHom h T (toUnit T ≫ u') = toUnit (Over.mk (T.hom ≫ spMap (algebraMap O K))) ≫ u := by
@@ -194,6 +196,7 @@ end Level
 section Extend
 
 
+open SiegelPull in
 theorem extend (O K : Type) [CommRing O] [IsRegularLocalRing O] [Field K] [Algebra O K] [IsFractionRing O K]
     {B : Type} [CommRing B] (ζ : B) (hζ : IsUnit ζ) (g n : ℕ) (hn : n ≠ 0) (hnB : IsUnit (n : B))
     (s' : Sp O ⟶ Sp B) (s₀ : Sp K ⟶ Sp B) (hs₀ : spMap (algebraMap O K) ≫ s' = s₀) (A : Over (Sp O)) [GrpObj A]

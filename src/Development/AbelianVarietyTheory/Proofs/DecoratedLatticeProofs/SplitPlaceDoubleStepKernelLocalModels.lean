@@ -25,6 +25,7 @@ noncomputable section
 namespace GlobalTheory.LastKerLoc
 
 
+open GlobalTheory.LocFlat.CFac in
 theorem lastLoc : ∀ (D : D7), LastLoc D := by
   intro D k _ _ _ _ _ _ p ν hν ψ hψ ψk hχ ρ B S X T L'' o'' τ hL hτ s z₀ hs hz n n' Z _ _ _ _ _ _ FA F₀ FS FT FX hcore hFX T₁ T₂ hT₁ hT₂
   classical

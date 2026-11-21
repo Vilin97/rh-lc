@@ -556,6 +556,7 @@ theorem inert_Kur (σ : PadicAlgCl l ≃ₐ[MaximalUnramifiedExtension l (⊥ : 
 end GlobalTheory.IntTate
 
 
+open GlobalTheory.IntTate ReciprocityTheory.Neutral.Cmp in
 theorem GlobalTheory.IntTate.integral_tate_inertia : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (A : ValuationSubring Ω), A.valuation (l : Ω) < 1 →
   ∀ (j : ℕ), 1 ≤ j → ∀ F : Finset Ω, ∃ c : ℕ, ∀ (n : ℕ) (x : Ω), x ∈ A →
   (∀ s ∈ Ine (F := ℚ) A, (∀ y ∈ F, s y = y) → CgA A l n (s x) ((((cycMod ℚ Ω l n s : ZMod (l ^ n)).val : ℕ) : Ω) ^ j * x)) →

@@ -15,6 +15,7 @@ open scoped IntermediateField BigOperators Topology
 namespace GlobalTheory.CMModel
 
 
+open GlobalTheory.ConjPoint PeriodPair in
 theorem exists_conj_kernel_mul : ∀ (p : ℕ) (F : IntermediateField ℚ ℂ) (L : PeriodPair) (t : ℂ), p.Prime → p % 4 = 3 → 3 < p → Datum p F L t → ∀ σ : ℂ ≃+* ℂ, (∀ x ∈ F, σ x = x) → ∃ c : ℕ, ¬ p ∣ c ∧ ∀ k : ℕ, GlobalTheory.ConjPoint.IsConj L L σ ((k : ℂ) * t) ((k : ℂ) * ((c : ℂ) * t)) := by
   intro p F L t hp h4 h3 hD σ hσ
   have h₂ : L.g₂ = σ L.g₂ := (hσ _ hD.g₂_mem).symm

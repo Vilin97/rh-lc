@@ -26,6 +26,7 @@ attribute [local instance] archMulAction
 namespace UnipotentCentral
 
 
+omit [DecidableEq ι] in
 theorem pair_map {G g : Matrix ι ι ℂ} (hg : (g.map (starRingEnd ℂ))ᵀ * G * g = G)
     (a b : ι → ℂ) : star (g *ᵥ a) ⬝ᵥ (G *ᵥ (g *ᵥ b)) = star a ⬝ᵥ (G *ᵥ b) := by
   have hg' : gᴴ * G * g = G := by
@@ -34,6 +35,7 @@ theorem pair_map {G g : Matrix ι ι ℂ} (hg : (g.map (starRingEnd ℂ))ᵀ * G
     ← dotProduct_mulVec]
 
 
+omit [DecidableEq ι] in
 theorem pair_swap {G : Matrix ι ι ℂ} (hG : G.IsHermitian) (a b : ι → ℂ) :
     star b ⬝ᵥ (G *ᵥ a) = star (star a ⬝ᵥ (G *ᵥ b)) := by
   rw [← star_dotProduct, star_mulVec, hG.eq, dotProduct_mulVec, dotProduct_comm]

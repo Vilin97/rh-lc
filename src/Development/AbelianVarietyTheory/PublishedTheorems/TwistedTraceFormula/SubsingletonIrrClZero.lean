@@ -14,6 +14,7 @@ namespace GlobalTheory.SmGL.SegModel
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
 theorem subsingleton_irrCl_zero : Subsingleton (IrrCl (GL (Fin 0) k)) := by
   have key : ∀ σ : IrrRep (GL (Fin 0) k),
       Nonempty ((ofChar (1 : GL (Fin 0) k →* ℂˣ)).Equiv σ.ρ) := by

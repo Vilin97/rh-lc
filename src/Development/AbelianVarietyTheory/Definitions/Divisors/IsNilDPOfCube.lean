@@ -21,6 +21,7 @@ section Cube
 variable {A : Type} [CommRing A] {J : Ideal A} (g : A → A)
 
 open scoped Classical in
+open Classical in
 def cubePow (J : Ideal A) (g : A → A) : ℕ → A → A
   | 0, x => if x ∈ J then 1 else 0
   | 1, x => if x ∈ J then x else 0

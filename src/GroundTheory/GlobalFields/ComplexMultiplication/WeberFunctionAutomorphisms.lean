@@ -60,6 +60,7 @@ theorem mem_range_automorphismScale (hW : IsShortForm W) (u : Fˣ) :
 variable [W.IsElliptic]
 
 
+omit [CharZero F] in
 theorem scale_conditions_iff (hW : IsShortForm W) (w : F) :
     (w⁻¹ ^ 4 * W.a₄ = W.a₄ ∧ w⁻¹ ^ 6 * W.a₆ = W.a₆) ↔ w ^ automorphismOrder W = 1 := by
   have key : ∀ (k : ℕ) (c : F), c ≠ 0 → (w⁻¹ ^ k * c = c ↔ w ^ k = 1) := by
@@ -104,6 +105,7 @@ section Fibres
 variable [CharZero F] {W : WeierstrassCurve F} [W.IsElliptic]
 
 
+omit [CharZero F] [W.IsElliptic] in
 theorem IsShortForm.sq_eq (hW : IsShortForm W) {x y : F} (h : W.toAffine.Nonsingular x y) :
     y ^ 2 = x ^ 3 + W.a₄ * x + W.a₆ := by
   have := h.1
@@ -154,6 +156,7 @@ theorem exists_scale_of_weberValue_eq [IsAlgClosed F] (hW : IsShortForm W) {x₁
     exact ⟨1, one_ne_zero, by simp, by simp, by simp [h]⟩
 
 
+omit [W.IsElliptic] in
 theorem exists_automorphismPoint_of_scale (hW : IsShortForm W) {v x₁ y₁ x₂ y₂ : F} (hv : v ≠ 0)
     (h4 : v ^ 4 * W.a₄ = W.a₄) (h6 : v ^ 6 * W.a₆ = W.a₆) (hx : v ^ 2 * x₁ = x₂)
     (hy : v ^ 3 * y₁ = y₂) (h₁ : W.toAffine.Nonsingular x₁ y₁)

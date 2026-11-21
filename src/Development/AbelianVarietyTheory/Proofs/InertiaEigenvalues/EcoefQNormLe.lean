@@ -19,9 +19,11 @@ namespace GlobalTheory.SstPer
 variable {l : ℕ} [Fact l.Prime]
 
 
+variable (l) in
 def ecoefQ (k₀ k i : ℕ) : ℚ_[l] := (l : ℚ_[l]) ^ k₀ * ((i.factorial : ℚ_[l]) * (l : ℚ_[l]) ^ (k * i))⁻¹
 
 
+variable (l) in
 def ecoef (k₀ k i : ℕ) : ℤ_[l] :=
   ⟨if ‖ecoefQ l k₀ k i‖ ≤ 1 then ecoefQ l k₀ k i else 0, by
     split_ifs with h

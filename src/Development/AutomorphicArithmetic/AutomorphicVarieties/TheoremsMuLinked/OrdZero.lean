@@ -31,6 +31,7 @@ def OrdAt {H : Type} [Group H] (I : Subgroup H) (ρ : H →* GL (Fin n) K) (ψ :
     (g ∈ I → ∀ i, ((a : Matrix (Fin n) (Fin n) K) * (y g - (Loc.adGL ρ g X - X)) * (a⁻¹ : GL (Fin n) K)) i i = 0)
 
 
+variable {F} in
 structure OrdCoc {O : Type} [CommRing O] [IsLocalRing O] [Algebra ℤ_[l] O] (r : Resid F O n) (ρ : F.G₀ →* GL (Fin n) K)
     (ψ : ∀ v, Fin n → F.Gv v →* Kˣ) (z : F.Γ → Matrix (Fin n) (Fin n) K) : Prop where
   ine : ∀ u, ∀ g ∈ r.Ip u, z g = 0
@@ -61,11 +62,13 @@ def Par (x : B.Pt) : Prop :=
     (g : G L Ω) ∈ Ine (F := L) (s.A v) → (x.psi v i g / x.psi v j g * cycBar L Ω l g ^ (m j - m i)) ^ k = 1
 
 
+variable (r) in
 def OrdZero (ρ : V.frame.G₀ →* GL (Fin n) (Qbar l)) (ψ : ∀ v, Fin n → V.frame.Gv v →* (Qbar l)ˣ) : Prop :=
   ∀ (P : GL (Fin n) (Qbar l)) (R : Representation (Qbar l) V.frame.Γ (Matrix (Fin n) (Fin n) (Qbar l))),
     V.frame.IsForm c.O n ρ P → IsAdExt V.frame ρ P R → ∀ z ∈ Z1 R, OrdCoc r ρ ψ z → ∃ X, ∀ g, z g = R g X - X
 
 
+variable (V) in
 def AdZero (ρ : V.frame.G₀ →* GL (Fin n) (Qbar l)) : Prop :=
   ∀ (P : GL (Fin n) (Qbar l)) (R : Representation (Qbar l) V.frame.Γ (Matrix (Fin n) (Fin n) (Qbar l))),
     V.frame.IsForm ℤ_[l] n ρ P → IsAdExt V.frame ρ P R → ∀ z ∈ Z1 R,

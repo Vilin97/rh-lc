@@ -50,6 +50,8 @@ private lemma exists_valuation_eq_exp_two_mul_of_isSquare_completion (F : Type) 
   rw [← hv, hy, map_mul, two_mul, WithZero.exp_add, WithZero.exp_log hy0]
 
 
+open NumberField IsDedekindDomain in
+open scoped WithZero in
 theorem _root_.GlobalTheory.QNorm.exists_odd_order_at_even_elsewhere : ∀ (F : Type) [Field F] [NumberField F] (δ : Fˣ)
     (σ₀ : F →+* ℝ), ¬ IsSquare (δ : F) →
     (∀ t : F, t ≠ 0 → (∀ v : IsDedekindDomain.HeightOneSpectrum (𝓞 F),

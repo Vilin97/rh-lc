@@ -18,6 +18,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {r : ℕ}
 
 
+omit [NumberField E] in
 theorem unipMin_eq_radSet (X : Matrix (Fin n) (Fin r) E) :
     unipMin σ J X = radSet σ J X Fin.val := by
   ext u

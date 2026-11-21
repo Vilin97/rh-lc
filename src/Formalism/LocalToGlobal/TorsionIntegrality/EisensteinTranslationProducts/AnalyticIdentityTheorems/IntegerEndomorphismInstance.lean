@@ -341,6 +341,7 @@ theorem integer_endomorphism_instance : EndoZInstance := by
   · exact EndoZ.clause3 L α S hα hm hS
 
 
+open EndoZ TaylorWp in
 theorem isogeny_formula_instance : IsogenyFormulaInstance := by
   intro L α S hα hm hS
   have hX : T (fun z : ℂ => z) PowerSeries.X := ⟨analyticAt_id, taylor_ring.2.2.1⟩

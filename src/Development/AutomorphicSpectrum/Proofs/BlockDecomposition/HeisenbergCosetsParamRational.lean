@@ -110,6 +110,7 @@ theorem isUnitary_mul_inv (σ : K →+* K) {m : ℕ} {J y z : Matrix (Fin m) (Fi
 end Field
 
 
+open GlobalTheory.CompanionTheory.EisCellsAsm in
 theorem cell : ∀ {D : D7} {n ρ p : ℕ} (hn : ρ + p = n) (M : Maps D hn),
     ∃ e : ratHerm D ρ × (Cosets (P D p) (GF D p) × Matrix (Fin ρ) (Fin p) D.host.E) → Cosets (P D n) (GF D n),
       Function.Injective e ∧

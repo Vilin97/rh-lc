@@ -124,6 +124,7 @@ theorem continuous_qZ [IsTopologicalRing k] : Continuous (qZ Z) :=
   continuous_pi fun _ => (continuous_const.matrix_mul continuous_id).matrix_trace
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 def qLin (Z : Subalgebra k (Matrix (Fin n) (Fin n) k)) : Z →ₗ[k] (Fin (Module.finrank k Z) → k) where
   toFun c := qZ Z c
   map_add' a b := by simp [qZ_add]
@@ -591,6 +592,7 @@ end Main
 section Final
 
 
+variable (k) in
 theorem orbP_of [CharZero k] (h1 : ZNClosed (k := k)) (h2 : FibZN (k := k)) (h3 : Reps (k := k))
     (h4 : StepMod (k := k)) (h5 : ModBound (k := k)) : OrbP (k := k) := by
   classical

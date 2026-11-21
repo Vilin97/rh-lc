@@ -49,6 +49,7 @@ variable {O : Type} [CommRing O] [IsDomain O] [IsLocalRing O] {Γ H : Type} [Gro
   {U : Univ (GCond.noCondition O (η.comp ι) (Ψ.comp ι))} {I : Ideal U.R} {c g₁ : Γ}
 
 
+variable (N hι U I c g₁) in
 abbrev SRing : Type 1 := Univ (NormCond c g₁ (BoxCond N ι hι U I))
 
 def EntWt {G R Q : Type} [Group G] [CommRing R] [Algebra O R] [AddCommGroup Q] [Module O Q] (r : G →* GG (m := 3) (R := R)) (j : ℤ)
@@ -105,6 +106,7 @@ def trDiff {R K : Type} [CommRing R] [Algebra O R] [CommRing K] [Algebra O K] (�
   f (r σ).mat.trace - algebraMap O K (r0 η Ψ σ).mat.trace
 
 
+variable (η Ψ N ι c g₁) in
 def shaCoc (a : O) : Set (Γ → Matrix (Fin 3) (Fin 3) (O ⧸ Ideal.span {a})) :=
   {γ | IsLocallyConstant γ ∧ (∀ g, γ g ∈ gw (R := O ⧸ Ideal.span {a}) (-1)) ∧
     IsCoc ((GG.map (Ideal.Quotient.mk (Ideal.span {a}))).comp (r0 η Ψ)) γ ∧

@@ -239,6 +239,7 @@ end Inst
 end PsiCondAllPf
 
 
+open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum in
 theorem psi_conductor_all_places : Formalism.L2.SG.Pf.PsiCondAll := by
   intro D X v hv
   have hv' : ((D.host.g 0 : ℕ) : 𝓞 X.B.I.F) * ((D.host.g 1 : ℕ) : 𝓞 X.B.I.F) ∈ v.asIdeal := by

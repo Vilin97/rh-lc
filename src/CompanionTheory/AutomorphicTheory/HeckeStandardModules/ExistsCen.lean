@@ -50,6 +50,7 @@ theorem val_eq_one {A : ValuationSubring Ω} {s : 𝓞 Ω} (h : s ∉ cen A) : A
   le_antisymm (int_le A s) (not_lt.1 h)
 
 
+variable (E) in
 theorem frac [Algebra.IsAlgebraic E Ω] (A : ValuationSubring Ω) {x : Ω} (hx : x ∈ A) :
     ∃ b s : 𝓞 Ω, s ∉ cen A ∧ x * s = b := by
   obtain ⟨F, hF, y, rfl⟩ : ∃ F : IntermediateField E Ω, FiniteDimensional E F ∧ ∃ y : F, algebraMap F Ω y = x :=

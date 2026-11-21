@@ -91,6 +91,7 @@ theorem isLocallyConstant_coindHomotopyApply {n : ℕ}
     congrArg (fun φ : LocallyConstant G X => φ 1) (hg x)
 
 
+variable (k X) in
 noncomputable def coindHomotopy (n : ℕ) :
     locallyConstantCochains (discreteCoind k G X) (n + 1) →ₗ[k]
       locallyConstantCochains (discreteCoind k G X) n where
@@ -100,6 +101,7 @@ noncomputable def coindHomotopy (n : ℕ) :
   map_smul' _ _ := rfl
 
 
+omit [CompactSpace G] in
 theorem coindHomotopy_identity_apply {n : ℕ}
     (f : (Fin (n + 1) → G) → LocallyConstant G X) (φ : (Fin n → G) → LocallyConstant G X)
     (ψ : (Fin (n + 1) → G) → LocallyConstant G X)
@@ -135,6 +137,7 @@ theorem coindHomotopy_identity (n : ℕ)
   exact coindHomotopy_identity_apply (k := k) f.1 _ _ (fun _ _ => rfl) (fun _ _ => rfl) g x
 
 
+variable (k G X) in
 theorem isZero_cohomology_discreteCoind (n : ℕ) :
     Limits.IsZero (cohomology (discreteCoind k G X) (n + 1)) := by
   rw [cohomology, ← HomologicalComplex.exactAt_iff_isZero_homology,

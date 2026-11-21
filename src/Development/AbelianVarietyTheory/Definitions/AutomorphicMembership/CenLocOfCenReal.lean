@@ -44,6 +44,7 @@ structure ParIn (hL : GlobalTheory.Published.LocalLanglandsGL) (D : D7) (cf : Ch
   row : RowTrue hL D rep (fun σ w => T.e w (Rw.locR σ w)) Rw.satR
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.CMTypeEmbeddings in
 structure LiftAt (D : D7) (Rw : RowSide D) (j : ℕ) (σ : D.what₂.FT) (π : D.nbc.AU j) (μ : D.naut.CG 1) : Prop where
   csd : D.naut.csd μ
   unr : ∀ w, ¬ IsSplitPl D.host w → D.naut.unr (D.naut.locG μ w) ∧ D.naut.unr (D.naut.locG D.naut.etaTinv w)

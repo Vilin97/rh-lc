@@ -110,9 +110,11 @@ variable {n s} (V : s.Lev) (ι : Qbar l ≃+* ℂ) {lam : Wt L l n} {d : ℕ}
   (ξ : GV n (fun v : V.frame.Vl => s.w v.1) →* GL (Fin d) ℂ)
 
 
+variable (n) in
 abbrev GL' : Type := GV n (fun v : V.frame.Vl => s.w v.1)
 
 
+variable (n d) in
 def actS : Representation ℂ (GL' n V × GS n s) (Ga l L n × GL' n V → Fin d → ℂ) :=
   (rtr ℂ (Ga l L n × GL' n V) (Fin d → ℂ)).comp
     (MonoidHom.prod ((secS n s).comp (MonoidHom.snd _ _)) (MonoidHom.fst _ _))
@@ -123,6 +125,7 @@ def VS {c : Coef l} {m : ℕ} (Q : QData V) (τ₀ : KT n (wt s) →* GL (Fin m)
     fixd ((rtr ℂ (Ga l L n × GL' n V) (Fin d → ℂ)).comp (MonoidHom.inl _ _)) (KS n s)
 
 
+variable (lam) in
 def WtLink (lam' : InfinitePlace L → DomWeight n) : Prop :=
   ∀ σ : Submodule ℂ (UA L n → ℂ), IsAutRepU σ →
     ((∀ y : Emb l (fun v : V.frame.Vl => s.w v.1), HasWeightAt σ (ι.toRingHom.comp y.res) (lam y.res).dual) ↔

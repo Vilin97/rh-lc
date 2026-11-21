@@ -42,6 +42,7 @@ def G3 : Prop := ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFie
       Ell σ fE → Ell (1 : F ≃ₐ[F] F) fF → GMatch σ μE μF c fE fF → twInt θ fE = c * twInt (Twist.id μF) fF
 
 
+open Classical in
 def G4 : Prop := ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsGalois F E] (σ : E ≃ₐ[F] E),
     (∀ τ : E ≃ₐ[F] E, τ ∈ Subgroup.zpowers σ) → ∀ n : ℕ, 0 < n → (Module.finrank F E).Prime →
     ∀ [MeasurableSpace (GL (Fin n) (InfiniteAdeleRing E))] [BorelSpace (GL (Fin n) (InfiniteAdeleRing E))]

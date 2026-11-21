@@ -92,6 +92,7 @@ theorem equiv_gen {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (h : 
     (by rw [Prod.snd_mul, Prod.snd_mul, ha2, one_mul, mul_one])
 
 
+set_option maxHeartbeats 1000000 in
 theorem cont_gen {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (h : X.B.I = Formalism.L2.SG.InstExistsPf.instOf D)
     (θ : InfFam D) {S : D.what₂.Tau → SPar} (M : DSModel (D.sp.Y 0) S) (t : GA D (D.sp.Y 0))
     (c : ∀ τ, M.H τ ≃ₗᵢ⋆[ℂ] X.B.H (X.pl.symm τ)) (hθ : IsInfFam θ) (hE : ∀ x : X.B.I.E, HEq (X.ιE x) x)
@@ -170,6 +171,7 @@ theorem cont_gen {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (h : X
   exact ⟨ℓ, hℓ1, fun w => (hℓ2 w).trans (key _ _).symm⟩
 
 
+set_option maxHeartbeats 800000 in
 theorem conjMap_isAutFunSm_gen {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (h : X.B.I = Formalism.L2.SG.InstExistsPf.instOf D)
     (θ : InfFam D) {S : D.what₂.Tau → SPar} (M : DSModel (D.sp.Y 0) S) (t : GA D (D.sp.Y 0))
     (c : ∀ τ, M.H τ ≃ₗᵢ⋆[ℂ] X.B.H (X.pl.symm τ)) (hθ : IsInfFam θ) (hid : ∀ x : X.B.I.E, HEq (X.ιE x) x)

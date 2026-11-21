@@ -62,6 +62,7 @@ def LatticeNormalFormUnip : Prop :=
         moveBy n Λ = normalForm F q (Λ ⊓ X.restrictScalars O) a e z
 
 
+open Formalism.L2.Col in
 def LatticeNormalFormCoord : Prop :=
   ∀ (O F : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field F] [Algebra O F] [IsFractionRing O F]
     (q : O), Irreducible q →

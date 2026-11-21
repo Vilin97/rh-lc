@@ -96,6 +96,7 @@ theorem over_comp {R : Type} [CommRing R] [IsDomain R] {J : Ideal R} {Da Db Dc :
   rw [Functor.map_comp, Functor.map_comp, Category.assoc, hg e, ← Category.assoc, hf e, Category.assoc]
 
 
+set_option maxHeartbeats 1000000 in
 theorem two_match {X : Scheme.{0}} (u : SAB H X) (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [CharZero V]
     (hc : IsAdicComplete (maximalIdeal V) V) {t₁ t₂ : SAB H (Sp V)} (P₁ : PELUnif (maximalIdeal V) t₁)
     (P₂ : PELUnif (maximalIdeal V) t₂) (y : Sp (FractionRing V) ⟶ X) (α₁ : P₁.A.A.left ⟶ u.G.left)
@@ -207,6 +208,8 @@ theorem two_match {X : Scheme.{0}} (u : SAB H X) (V : Type) [CommRing V] [IsDoma
     (GlobalTheory.T.torsionPointOfPair_exists_torsion_injective_upToEquiv V (maximalIdeal V) hA D₂ A₂ t₂.G U₂ hG₂ _ k hk).2 p' p₂ x₂ (hxx ▸ hp') hq₂⟩
 
 
+open GlobalTheory.TorusExt GlobalTheory.Balanced in
+set_option maxHeartbeats 1000000 in
 theorem pull_tors {R V : Type} [CommRing R] [IsDomain R] [IsLocalRing R] [CharZero R] [CommRing V] [IsDomain V] [IsLocalRing V]
     (hR : AdmBase R (maximalIdeal R)) (hV : AdmBase V (maximalIdeal V)) {t : SAB H (Sp R)} (P : PELUnif (maximalIdeal R) t)
     (f : R →+* V) (hf : Function.Injective f) [IsLocalHom f] :

@@ -152,6 +152,7 @@ end Piece
 end PieceCon
 
 
+open PieceCon in
 def pieceKType {n : ℕ} {ε : Fin n → Bool} (R : KRep ε)
     (hS : KRepStableStatement) (hR : KRepRelStatement) (μ : Fin n → ℝ) (x : R.V) (hx : x ≠ 0)
     (hhi : Formalism.REAL.KHighest ε R.units μ x) : KType ε μ :=
@@ -220,6 +221,7 @@ def pieceKType {n : ℕ} {ε : Fin n → Bool} (R : KRep ε)
       rw [h1, smul_zero] }
 
 
+open PieceCon in
 theorem kRepPiece_of (hR : KRepRelStatement) (hS : KRepStableStatement) : KRepPieceStatement := by
   intro n ε R μ x hx hhi
   set W := Formalism.REAL.kSpan ε R.units x with hWdef

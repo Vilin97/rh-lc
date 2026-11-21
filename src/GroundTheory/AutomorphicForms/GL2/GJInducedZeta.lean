@@ -103,6 +103,7 @@ theorem IsSchwartzBruhat.comp_mulRight {Φ : Matrix (Fin n) (Fin n) F → ℂ}
   exact ⟨hΦ.1.comp_continuous T.continuous, hΦ.2.comp_homeomorph T⟩
 
 
+omit [Field F] [ValuativeRel F] [IsNonarchimedeanLocalField F] in
 theorem IsSchwartzBruhat.norm {Φ : Matrix (Fin n) (Fin n) F → ℂ} (hΦ : IsSchwartzBruhat Φ) :
     IsSchwartzBruhat fun X => ((‖Φ X‖ : ℝ) : ℂ) :=
   ⟨hΦ.1.comp fun z => ((‖z‖ : ℝ) : ℂ),
@@ -233,6 +234,7 @@ theorem continuous_monoidHom_of_eq_one {G : Type*} [Group G] [TopologicalSpace G
   exact hg
 
 
+variable (β) in
 def leviSqrtModular : levi F n β →* ℝ≥0 where
   toFun m := NNReal.sqrt (Measure.modularCharacter (leviIncl m))
   map_one' := by simp
@@ -349,6 +351,7 @@ theorem integral_inducedIntegrand_mul (μ𝔪 : Measure (LeviIndex n β → F))
   ring
 
 
+omit [MeasurableSpace F] [BorelSpace F] in
 theorem lintegral_eq_sum_parabolic [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)]
     (μG : Measure (GL (Fin n) F)) [μG.IsHaarMeasure]
     (μP : Measure (blockUpper F n β)) [μP.IsHaarMeasure]
@@ -385,6 +388,7 @@ theorem lintegral_eq_sum_parabolic [MeasurableSpace (GL (Fin n) F)] [BorelSpace 
     lintegral_finsetSum _ fun q _ => hmeas q]
 
 
+omit [MeasurableSpace F] [BorelSpace F] in
 theorem integral_eq_sum_parabolic [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)]
     (μG : Measure (GL (Fin n) F)) [μG.IsHaarMeasure]
     (μP : Measure (blockUpper F n β)) [μP.IsHaarMeasure]

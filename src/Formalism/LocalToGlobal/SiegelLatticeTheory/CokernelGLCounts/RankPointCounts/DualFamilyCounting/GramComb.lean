@@ -38,6 +38,7 @@ def gv (y : Fin r → S.V) (z : S.V) (N : ℕ) : Fin (r + 1) → S.V :=
   Fin.snoc (α := fun _ => S.V) y ((-((N : E)⁻¹)) • z)
 
 
+variable (E) in
 def Gam (r N' : ℕ) : Matrix (Fin (r + 1)) (Fin (r + 1)) E :=
   Matrix.of fun a b => if a = Fin.last r ∧ b = Fin.last r then -(N' : E) else 0
 

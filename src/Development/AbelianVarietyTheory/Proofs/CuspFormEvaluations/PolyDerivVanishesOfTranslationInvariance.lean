@@ -167,6 +167,7 @@ theorem polyDeriv_eq_zero_of_mem_span {ι : Type*} (v : ι → σ → ℂ) (u : 
   rw [← taylorDir_fderiv_sum u hG, taylorDir_congr u (g := 0) (hv k), taylorDir_zero]
 
 
+omit [Fintype σ] in
 theorem eventually_fderiv_eq_zero_of_invariant {G : W → ℂ} {x : W} (hG : AnalyticAt ℂ G x) {v : W}
     (hv : ∀ (w : W) (s : ℂ), G (w + s • v) = G w) : ∀ᶠ w in 𝓝 x, fderiv ℂ G w v = 0 := by
   filter_upwards [hG.eventually_analyticAt] with w hw
@@ -221,6 +222,7 @@ theorem polyDeriv_exp_balanced_mul_dir {P : Poly ℂ T p q κ} (hP : IsHarmonic 
     (fun z => by rw [hB, quad_balCoeff]) hG
 
 
+omit [Fintype T] in
 theorem det_rowForm_mem {ι : Type*} [Fintype ι] [DecidableEq ι] (t : T) (r : ι → Fin p ⊕ Fin q)
     (ε : ι → κ → ℂ) {v : ι → ℂ} (hv : v ≠ 0) {I : Ideal (Poly ℂ T p q κ)}
     (hI : ∀ k, ∑ a, v a • MvPolynomial.X (t, r a, k) ∈ I) :

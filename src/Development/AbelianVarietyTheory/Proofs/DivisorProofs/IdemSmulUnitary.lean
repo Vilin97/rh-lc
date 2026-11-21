@@ -27,6 +27,7 @@ theorem idem_smul_mul {A : Type} [CommRing A] [Algebra (AF F) A] {ε : AF F} (h�
   linear_combination (a * b - a - b + 1) * he
 
 
+variable (E) in
 def idemUnit (ε : AF F) (hε : ε * ε = ε) : (AE F E)ˣ →* (AE F E)ˣ where
   toFun l := ⟨ε • l.1 + (1 - ε) • 1, ε • (l⁻¹ : (AE F E)ˣ).1 + (1 - ε) • 1,
     by rw [idem_smul_mul hε, Units.mul_inv, ← add_smul, add_sub_cancel, one_smul],
@@ -54,9 +55,11 @@ theorem eInf_idem : eInf F * eInf F = eInf F := by
   exact h
 
 
+variable (E) in
 def unitAt (v : Pl F) : (AE F E)ˣ →* (AE F E)ˣ := idemUnit E (eFin v) (eFin_idem v)
 
 
+variable (F E) in
 def unitArch : (AE F E)ˣ →* (AE F E)ˣ := idemUnit E (eInf F) eInf_idem
 
 

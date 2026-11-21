@@ -124,6 +124,7 @@ theorem C_mul_first_not_mem {P : Ideal (MRing (dualBlocks T))} {a : T → ℤ} (
 end StackedGraphHorizontal
 
 
+open StackedGraphHorizontal in
 theorem DualStackedGraphHorizontal.proof : DualStackedGraphHorizontal.Statement := by
   intro K _ _ i F F' T _ _ b b' a _ hab t W hhor
   have ha : ∀ t, a t ≠ 0 := by

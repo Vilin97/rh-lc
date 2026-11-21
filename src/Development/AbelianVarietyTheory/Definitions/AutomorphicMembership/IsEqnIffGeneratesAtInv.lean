@@ -27,6 +27,7 @@ theorem gen_mem {U : X.Opens} {x : X} (hx : x ∈ U) : genericPoint X ∈ U :=
   ((genericPoint_spec X).mem_open_set_iff U.isOpen).2 ⟨x, trivial, hx⟩
 
 
+omit [IsIntegral X] in
 theorem memInf {U V : X.Opens} {x : X} (h : x ∈ U) (h' : x ∈ V) : x ∈ U ⊓ V := ⟨h, h'⟩
 
 def fnOf (U : X.Opens) (h : genericPoint X ∈ U) : Γ(X, U) →+* X.functionField :=
@@ -231,6 +232,7 @@ theorem germOf_eq_iff {x : X} {f g : X.functionFieldˣ} :
   rw [Units.val_mul, Units.val_inv_eq_inv_val, div_eq_inv_mul]
 
 
+variable (X) in
 def cartierGroup : AddSubgroup (∀ x : X, Germ x) where
   carrier := {D | ∀ x, ∃ U : X.Opens, x ∈ U ∧ ∃ f, ∀ y ∈ U, D y = germOf y f}
   zero_mem' _ := ⟨⊤, trivial, 1, fun _ _ => rfl⟩
@@ -243,6 +245,7 @@ def cartierGroup : AddSubgroup (∀ x : X, Germ x) where
     ⟨U, hU, f⁻¹, fun y hy => congrArg (- ·) (hf y hy)⟩
 
 
+variable (X) in
 def CartierDiv : Type := cartierGroup X
 
 instance : AddCommGroup (CartierDiv X) := inferInstanceAs (AddCommGroup (cartierGroup X))
@@ -1004,6 +1007,7 @@ theorem isDivOfForm_canonical : IsDivOfForm (canonical p d) (baseForm p d) := by
   exact hu
 
 
+variable {p d} in
 theorem IsDivOfForm.unique {η : RatForms p d} (hη : η ≠ 0) (h : IsDivOfForm D η)
     (h' : IsDivOfForm E η) : D = E := by
   apply ext_of_isEqn
@@ -1018,6 +1022,8 @@ theorem IsDivOfForm.unique {η : RatForms p d} (hη : η ≠ 0) (h : IsDivOfForm
     h' U ω hω x hx _ (by rw [Units.val_mk0, ha])⟩
 
 
+omit [SmoothOfRelativeDimension d p] in
+variable {p d} in
 theorem IsDivOfForm.smul {η : RatForms p d} (h : IsDivOfForm D η) (g : X.functionFieldˣ) :
     IsDivOfForm (D + principal g) ((g : X.functionField) • η) := by
   intro U ω hω x hx g' e

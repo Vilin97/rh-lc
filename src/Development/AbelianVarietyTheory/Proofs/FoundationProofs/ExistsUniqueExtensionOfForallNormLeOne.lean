@@ -95,6 +95,7 @@ theorem exists_padic_point_norm_lt (m : Ideal A) [m.IsMaximal] (hp : (p : A) ∈
   exact mul_lt_of_lt_one_left (norm_pos_iff.mpr hb') hψm
 
 
+omit [IsDomain A] [CharZero A] [Algebra.FiniteType ℤ A] in
 theorem isUnit_val_comp_of_ne_zero {K : IntermediateField ℚ_[p] (PadicAlgCl p)}
     (y : A →+* integralClosure ℤ_[p] K) {a : A} (h : y a ≠ 0) :
     IsUnit ((algebraMap (integralClosure ℤ_[p] K) K).comp y a) :=
@@ -134,6 +135,7 @@ theorem exists_padic_point_one_lt_norm (m : Ideal A) [m.IsMaximal] (hp : (p : A)
   exact absurd h3 (not_lt.mpr (mul_le_of_le_one_left (norm_nonneg _) (not_lt.mp hn)))
 
 
+omit [IsDomain A] [CharZero A] [Algebra.FiniteType ℤ A] [IsLocalization.Away a S] in
 theorem algebraMap_mem_range_atPrime_iff (a : A) [IsLocalization.Away a S] (m : Ideal A) [m.IsPrime]
     (L : Type*) [CommRing L] [Algebra A L] [IsLocalization.AtPrime L m]
     (F : Type*) [Field F] [Algebra A F] [FaithfulSMul A F] [Algebra S F] [Algebra L F]

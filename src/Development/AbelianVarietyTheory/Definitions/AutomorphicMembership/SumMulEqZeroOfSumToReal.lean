@@ -315,10 +315,12 @@ theorem IsStrict.of_pull {r : X →ₗ[O] X₁} (hr : Function.Surjective r) {γ
     simpa [LinearMap.sum_apply] using LinearMap.congr_fun₂ hc a b
 
 
+omit [Module.Finite O X] [Module.Finite O X₁] in
 @[simp] theorem pull_symm_pull (e : X ≃ₗ[O] X₁) (β : LinearMap.BilinForm ℤ X₁) :
     pull e.symm.toLinearMap (pull e.toLinearMap β) = β := LinearMap.ext₂ fun a b => by simp
 
 
+omit [Module.Finite O X] [Module.Finite O X₁] in
 @[simp] theorem pull_pull_symm (e : X ≃ₗ[O] X₁) (β : LinearMap.BilinForm ℤ X) :
     pull e.toLinearMap (pull e.symm.toLinearMap β) = β := LinearMap.ext₂ fun a b => by simp
 

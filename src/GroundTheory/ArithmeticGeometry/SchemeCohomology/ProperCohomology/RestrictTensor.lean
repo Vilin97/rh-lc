@@ -193,11 +193,13 @@ def sheafifyIso : (sheafifyMod X).obj ((preMod X).obj (M.restrict f) ⊗ (preMod
 end RestrictTensor
 
 
+open RestrictTensor in
 def restrictTensorIso {X Y : Scheme.{u}} (f : X ⟶ Y) [IsOpenImmersion f] (M N : Y.Modules) :
     (M ⊗ N).restrict f ≅ M.restrict f ⊗ N.restrict f :=
   (sheafifyIso f M N).symm ≪≫ tensorIso (M.restrict f) (N.restrict f)
 
 
+attribute [local instance] MvPolynomial.gradedAlgebra in
 def restrictTwistIso {A : Type u} [CommRing A] {n : ℕ} {U X : Scheme.{u}} (f : U ⟶ X)
     [IsOpenImmersion f] (i : X ⟶ projectiveSpace A n) (G : X.Modules) (k : ℤ) :
     ProjScheme.twist (f ≫ i) (G.restrict f) k ≅ (ProjScheme.twist i G k).restrict f :=

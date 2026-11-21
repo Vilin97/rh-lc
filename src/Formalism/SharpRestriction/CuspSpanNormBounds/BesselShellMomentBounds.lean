@@ -564,6 +564,7 @@ theorem ptWeightFrom_nonneg (k r : ℕ) (T T' : ℝ) : ∀ (bs : List (ℂ × �
         | cons b' bs' => exact h3 t' (by rw [List.getLast?_cons_cons]; exact ht')
 
 
+open Formalism.HermitianLatticeCounting.ExpansionTerms in
 theorem last_block {r : ℕ} (γ : Point ℂ (r + 1)) (t : ℂ) (h : γ.1.getLast? = some (t, 1)) :
     leadMinor (ptMat γ) (r + 1) le_rfl = leadMinor (ptMat γ) r (Nat.le_succ r) * t ∧
       leadMinor (ptMat γ) r (Nat.le_succ r) ≠ 0 := by

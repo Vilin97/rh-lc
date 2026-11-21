@@ -53,6 +53,8 @@ def lenModPow (L : Lattice (O := O) ρ) (n : ℕ) : ℕ∞ :=
   Module.length O (↥(latticeFiniteCocycles PD L) ⧸ (powB PD L n).comap (latticeFiniteCocycles PD L).subtype)
 
 
+omit [TopologicalSpace G] [TopologicalSpace V] [ContinuousAdd V] [ContinuousConstSMul LL V]
+  [Module Qp V] [IsScalarTower Qp LL V] in
 def lenInvD (L : Lattice (O := O) ρ) : ℕ∞ :=
   Module.length O ↥(Representation.invariants (repD L))
 
@@ -78,6 +80,7 @@ def EmbTypeUe (ep : Bool) (τ₀ : Br.Kw D.nbr i w hw →ₐ[ℚ_[D.nd.l i]] Br.
   if ep then Br.EmbTypeU D.nbr i w hw τ₀ else EmbTypeUc τ₀
 
 
+variable (i w hw) in
 def PlTypeUe (ep : Bool) : Prop := ∀ τ₀, EmbTypeUe (i := i) (w := w) (hw := hw) ep τ₀
 
 end TypeSign

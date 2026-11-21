@@ -103,6 +103,7 @@ private lemma card_submodule_finrank_eq_gaussBinom (k : Type) [Field k] [Finite 
     exact Nat.card_of_isEmpty
 
 
+open Module in
 theorem _root_.GlobalTheory.GaussCount.subspaceCount : _root_.GlobalTheory.IndefiniteRowSideFullHecke.GaussianBinomialFormula.SubspaceCount := by
   unfold _root_.GlobalTheory.IndefiniteRowSideFullHecke.GaussianBinomialFormula.SubspaceCount
   intro k _ _ V _ _ _ j
@@ -134,6 +135,7 @@ private lemma gaussBinom_sub_eq_gaussBinom {q : ℕ} (hq : 1 < q) (n a : ℕ) (h
   exact_mod_cast this
 
 
+open Module in
 theorem _root_.GlobalTheory.GaussCount.card_codim (k : Type) [Field k] [Finite k] (V : Type) [AddCommGroup V] [Module k V]
     [FiniteDimensional k V] (j : ℕ) :
     Nat.card {L : Submodule k V // finrank k (V ⧸ L) = j} =
@@ -152,6 +154,7 @@ theorem _root_.GlobalTheory.GaussCount.card_codim (k : Type) [Field k] [Finite k
     exact Nat.card_of_isEmpty
 
 
+open Module in
 theorem _root_.GlobalTheory.GaussCount.gauss_formula (q : ℕ) (R : Type) [CommRing R] (Y : R) (m : ℕ) :
     ∑ j ∈ Finset.range (m + 1),
         (-1 : R) ^ j * (q : R) ^ (j * (j - 1) / 2) * (_root_.GlobalTheory.IndefiniteRowSideFullHecke.GaussianBinomialFormula.gaussBinom q m j : R) * Y ^ j =

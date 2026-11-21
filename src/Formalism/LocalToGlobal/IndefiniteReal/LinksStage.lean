@@ -88,11 +88,13 @@ variable {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
 
+variable (D) in
 def CartanOK : Prop :=
   (∀ (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S), V.SigOK → ∀ τ, IsCartanInv (gramAt D V τ) (cart M τ)) ∧
     ∀ V : HSp D, V.SigOK → V.IsPosDef → ∀ τ, IsCartanInv (gramAt D V τ) 1
 
 
+variable (D) in
 def SelfDualOK : Prop :=
   ∀ (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)) (N : ℕ),
     IsBaseFrame V β Λ N → IsSelfDualC V Λ
@@ -115,6 +117,7 @@ def SplitAt : Prop :=
       ResEta D (Lift.chrTh (R.toLevCh.mu t) R.eta ((i : ℕ) + 1)).2 (Wc D i).rank
 
 
+open Classical in
 def IdemAt : Prop := ∀ t, Disjoint R.Pg (R.Q t) ∧ ∃ e : AE D, IsIdemSum e (R.Pg ∪ R.Q t)
 
 def FullY : Prop :=
@@ -262,11 +265,13 @@ variable {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
 
+variable (D A Ks) in
 def LiftsAt (F : Face D A) : Prop :=
   ∀ R : RealDat D A Ks, R.Pre0 F →
     LiftsExist (Yc D 0) (R.βY 0) (R.dat0 R.triv) ∧ ∀ i, LiftsExist (Wc D i) (R.βW i) (R.datWp i R.triv)
 
 
+variable (D) in
 structure Inputs : Prop where
   weil : WeilExistsFull D
   vac : VacExistsO D

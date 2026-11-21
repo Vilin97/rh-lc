@@ -23,6 +23,7 @@ open Formalism.WeaklyAdmissibleFiltrations Formalism.MainNotions.N Formalism.Bas
 variable {LL O : Type} [Field LL] [CommRing O] [Algebra O LL] {r : ℕ}
 
 
+variable (LL) in
 def incl : (Fin r → O) →ₗ[O] (Fin r → LL) := (Algebra.linearMap O LL).compLeft (Fin r)
 
 theorem incl_apply (z : Fin r → O) (a : Fin r) : incl LL z a = algebraMap O LL (z a) := rfl
@@ -111,6 +112,7 @@ theorem mem_HfD_iff {V : Type} [AddCommGroup V] [Module LL V] [Module Qp V] [IsS
 variable {H : Type} [Group H] [TopologicalSpace H] (e : H ≃* G) (he : Continuous e) (he' : Continuous e.symm)
 
 
+include he he' in
 theorem cobO_iff [IsDomain O] [IsFractionRing O LL] (L1 : Lattice (O := O) (charRep (cycLL PD LL)))
     (hL : L1.T = LinearMap.range (Algebra.linearMap O LL)) (χ : H → O)
     (hχ : ∀ g, algebraMap O LL (χ g) = ((cycLL PD LL (e g) : LLˣ) : LL)) (z : G × G → LL)
@@ -158,6 +160,7 @@ def vecRep [TopologicalSpace LL] [IsTopologicalRing LL] (ρ : Representation LL 
   cont := hρ
 
 
+include he he' in
 theorem lift_iff [TopologicalSpace Qp] [TopologicalSpace LL] [IsTopologicalRing LL] [IsDomain O]
     [IsDiscreteValuationRing O] (hG : GoodO (Qp := Qp) LL O) (hBK : bkBCore PD)
     (ρ ρ' : Representation LL G (Fin r → LL)) (M M' : H → Matrix (Fin r) (Fin r) O) (χ : H → O)

@@ -24,6 +24,7 @@ variable {V : Type u} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V]
   {Hs : Scheme.{u}} {i : Hs ⟶ H} {fs : Hs ⟶ Spec (.of (ResidueField V))}
 
 
+variable (K) in
 theorem isLocalization_away (hϖ : Irreducible ϖ) : IsLocalization.Away ϖ K := by
   refine (IsLocalization.iff_of_le_of_exists_dvd (Submonoid.powers ϖ) (nonZeroDivisors V)
     (powers_le_nonZeroDivisors_of_noZeroDivisors hϖ.ne_zero) fun a ha ↦ ?_).2 inferInstance
@@ -32,6 +33,7 @@ theorem isLocalization_away (hϖ : Irreducible ϖ) : IsLocalization.Away ϖ K :=
   exact ⟨ϖ ^ n, ⟨n, rfl⟩, hn.dvd⟩
 
 
+variable (f) in
 theorem notMem_basicOpen_iff (hϖ : Irreducible ϖ) (x : H) :
     x ∉ H.basicOpen (f.appTop ((Scheme.ΓSpecIso (.of V)).inv ϖ)) ↔ f x = closedPoint V := by
   rw [← Scheme.preimage_basicOpen_top, basicOpen_eq_of_affine]
@@ -81,6 +83,8 @@ theorem mem_range_special
     exact ⟨y, hy⟩
 
 
+variable (f) in
+omit [IsDiscreteValuationRing V] in
 theorem res_mem_nonZeroDivisors [Flat f] {c : V} (hc : c ≠ 0) {U : H.Opens}
     (hU : IsAffineOpen U) :
     H.presheaf.map (homOfLE (le_top : U ≤ ⊤)).op (f.appTop ((Scheme.ΓSpecIso (.of V)).inv c)) ∈ nonZeroDivisors Γ(H, U) := by
@@ -142,6 +146,7 @@ theorem isDiscreteValuationRing_stalk_generic (hϖ : Irreducible ϖ) [Flat f]
   isDiscreteValuationRing_stalk
 
 
+omit [IsDomain V] [IsDiscreteValuationRing V] [IsFractionRing V K] in
 theorem appTop_cst (hw : j ≫ f = fK ≫ Spec.map (CommRingCat.ofHom (algebraMap V K))) (c : V) :
     j.appTop (f.appTop ((Scheme.ΓSpecIso (.of V)).inv c)) = fK.appTop ((Scheme.ΓSpecIso (.of K)).inv (algebraMap V K c)) := by
   have h₁ := congrArg (fun φ : HK ⟶ Spec (.of V) ↦ φ.appTop ((Scheme.ΓSpecIso (.of V)).inv c)) hw

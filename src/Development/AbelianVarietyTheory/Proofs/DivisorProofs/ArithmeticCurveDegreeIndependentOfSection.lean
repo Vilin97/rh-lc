@@ -53,6 +53,7 @@ end GlobalTheory.CurveIndep
 namespace GlobalTheory.CurveIndep
 
 
+open Classical in
 theorem mixArch_zero {k : Type} [CommRing k] {Y : Scheme.{0}} [IsIntegral Y] {q : Y ⟶ Sp k}
     (L : Fin 0 → HermLB q) (N : HermLB q) {r : N.B.ι → Y.functionFieldˣ} (hr : IsRatSec N.B r) :
     mixArch L N hr = (HermLB.triv q).archInt N 0 hr := by

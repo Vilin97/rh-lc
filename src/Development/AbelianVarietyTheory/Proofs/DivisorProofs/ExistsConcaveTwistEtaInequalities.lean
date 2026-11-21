@@ -246,6 +246,7 @@ lemma twEta_mid (T y : ℝ) (hT : 2 ≤ T) (h1 : T - 1 ≤ y) (h2 : y ≤ T + 1)
 end GlobalTheory.ConcaveTwist
 
 
+open GlobalTheory.ConcaveTwist in
 theorem GlobalTheory.concave_twist_exists : ∀ T : ℝ, 300 ≤ T → ∃ η η1 η2 : ℝ → ℝ, ContDiffOn ℝ ∞ η (Set.Ioi (-1/4)) ∧ (∀ y, -1/4 < y → 0 < η y ∧ HasDerivAt η (η1 y) y ∧ HasDerivAt η1 (η2 y) y) ∧ (∀ y, 0 ≤ y → 0 ≤ η1 y ∧ η1 y ≤ 2 ∧ 2 ≤ η y ∧ η2 y < 0 ∧ η y ≤ 2 + 2 * min y (T + 1) ∧ η y + η1 y ^ 2 / (-η2 y) ≤ 8 * (1 + (min y (T + 1)) ^ 2)) ∧ (∀ y, T - 1 ≤ y → y ≤ T + 1 → 3 / 16 ≤ -η2 y ∧ T ≤ η y) := by
   intro T hT
   refine ⟨twEta T, twEta1 T, twEta2 T, contDiffOn_twEta T, ?_, ?_, ?_⟩

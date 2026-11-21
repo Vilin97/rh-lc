@@ -229,6 +229,8 @@ private lemma hasVal_map_of_compatible {p : ℕ} {B Q : Type} [CommRing B]
   rw [key, ← map_sub, hb, hs, map_mul, map_pow, map_natCast]
 
 
+open MvPowerSeries in
+set_option autoImplicit false in
 theorem _root_.GlobalTheory.QLog.hasPeriod_frob : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C]
     [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal) (O : Type) [CommRing O] [Algebra O C]
     [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O] [IsDomain O], v.Integers O →

@@ -211,6 +211,7 @@ theorem vac_line (kS : S.SigOK) (kT : T.SigOK) (hS : ∀ τ, IsCartanInv (gramAt
   exact ⟨c⁻¹ * u, by rw [mul_smul, ← hu, inv_smul_smul₀ c0]⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem mem_span (kS : S.SigOK) (kT : T.SigOK) (hS : ∀ τ, IsCartanInv (gramAt D S τ) (sS τ))
     (hT : ∀ τ, IsCartanInv (gramAt D T τ) (sT τ)) (dS : IsSelfDualC S ΛS) (dT : IsSelfDualC T ΛT) {f₀ f : WO S T → ℂ}
     (h₀ : IsVacO ψ θ S T sS sT ΛS ΛT f₀) (hf : f ∈ realVac h₀.1 h₀.2.inf fun τ => cplxO (sS τ) (sT τ)) :

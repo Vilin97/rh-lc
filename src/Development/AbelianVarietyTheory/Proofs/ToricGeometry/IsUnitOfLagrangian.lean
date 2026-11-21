@@ -13,6 +13,9 @@ namespace GlobalTheory.SiegelNormalForm
 variable {g : ℕ}
 
 
+open Complex Matrix Filter Topology in
+open scoped BigOperators Real in
+variable {g : ℕ} in
 theorem _root_.GlobalTheory.SiegelNormalForm.form_pull (P Hm : Matrix (Fin g) (Fin g) ℂ)
     (z w : Fin g → ℂ) :
     (P *ᵥ z) ⬝ᵥ Hm *ᵥ star (P *ᵥ w) = z ⬝ᵥ (Pᵀ * Hm * P.map star) *ᵥ star w := by
@@ -37,6 +40,9 @@ theorem _root_.GlobalTheory.SiegelNormalForm.form_conj {Hm : Matrix (Fin g) (Fin
   rw [← star_dotProduct_star, star_mulVec, star_star, hH.eq, dotProduct_mulVec]
 
 
+open Complex Matrix Filter Topology in
+open scoped BigOperators Real in
+variable {g : ℕ} in
 theorem _root_.GlobalTheory.SiegelNormalForm.isUnit_of_lagrangian (P Hm : Matrix (Fin g) (Fin g) ℂ)
     (f : Fin g → Fin g → ℂ)
     (hpos : ∀ z : Fin g → ℂ, z ≠ 0 → 0 < (z ⬝ᵥ Hm *ᵥ (star z)).re)
@@ -87,6 +93,9 @@ theorem _root_.GlobalTheory.SiegelNormalForm.isUnit_of_lagrangian (P Hm : Matrix
   simpa using h.symm
 
 
+open Complex Matrix Filter Topology in
+open scoped BigOperators Real in
+variable {g : ℕ} in
 theorem _root_.GlobalTheory.SiegelNormalForm.siegel_of_relations (Y : Matrix (Fin g) (Fin g) ℝ)
     (hY : Y.PosDef) (τ : Matrix (Fin g) (Fin g) ℂ)
     (h₁ : ∀ i j, ((Pi.single i 1 : Fin g → ℂ) ⬝ᵥ Y.map (↑) *ᵥ star (τ *ᵥ Pi.single j 1)).im =
@@ -166,6 +175,9 @@ theorem _root_.GlobalTheory.SiegelNormalForm.quad_add_sub {Y : Matrix (Fin g) (F
   ring
 
 
+open Complex Matrix Filter Topology in
+open scoped BigOperators Real in
+variable {g : ℕ} in
 theorem _root_.GlobalTheory.SiegelNormalForm.exists_normal_form : (∀ (g : ℕ) (Λ : Submodule ℤ (Fin g → ℂ)), DiscreteTopology Λ → Submodule.span ℝ (Λ : Set (Fin g → ℂ)) = ⊤ → ∀ (Hm : Matrix (Fin g) (Fin g) ℂ) (χ : Λ → ℂ) (Ef : LinearMap.BilinForm ℤ Λ), Hm.IsHermitian → (∀ z : Fin g → ℂ, z ≠ 0 → 0 < (z ⬝ᵥ Hm.mulVec (star z)).re) → (∀ l, ‖χ l‖ = 1) → (∀ l m : Λ, (Ef l m : ℝ) = ((l : Fin g → ℂ) ⬝ᵥ Hm.mulVec (star (m : Fin g → ℂ))).im) → Function.Bijective Ef → ∃ (φ : (Fin g → ℂ) ≃ₗ[ℂ] (Fin g → ℂ)) (τ : Matrix (Fin g) (Fin g) ℂ) (Q : (Fin g → ℂ) → ℂ) (b : Fin g → ℂ), τ.IsSymm ∧ (τ.map Complex.im).PosDef ∧ (∀ z, φ z ∈ Λ ↔ ∃ m n : Fin g → ℤ, z = (fun i => (m i : ℂ)) + τ.mulVec (fun i => (n i : ℂ))) ∧ Differentiable ℂ Q ∧ Q 0 = 0 ∧ (∀ j, b j ≠ 0) ∧ (∀ (i : Fin g) (l : Λ) z, (l : Fin g → ℂ) = φ (Pi.single i 1) → (χ l * cexp (Real.pi * (φ z ⬝ᵥ Hm.mulVec (star (l : Fin g → ℂ))) + Real.pi / 2 * ((l : Fin g → ℂ) ⬝ᵥ Hm.mulVec (star (l : Fin g → ℂ))))) = cexp (Q (z + Pi.single i 1) - Q z)) ∧ (∀ (j : Fin g) (l : Λ) z, (l : Fin g → ℂ) = φ (τ.mulVec (Pi.single j 1)) → (χ l * cexp (Real.pi * (φ z ⬝ᵥ Hm.mulVec (star (l : Fin g → ℂ))) + Real.pi / 2 * ((l : Fin g → ℂ) ⬝ᵥ Hm.mulVec (star (l : Fin g → ℂ))))) = b j * cexp (-(2 * Real.pi * I) * z j) * cexp (Q (z + τ.mulVec (Pi.single j 1)) - Q z))) := by
   intro g Λ hdisc hspan Hm χ Ef hH hpos hχ hEf hbij
   haveI : IsZLattice ℝ Λ := ⟨hspan⟩

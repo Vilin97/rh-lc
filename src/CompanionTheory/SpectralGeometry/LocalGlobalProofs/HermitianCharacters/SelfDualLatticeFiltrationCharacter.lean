@@ -257,6 +257,7 @@ theorem exists_inf {ψ : AddChar (AF F) ℂ} (hψ : IsCharAF F ψ) (w : Infinite
   norm_num
 
 
+open Classical in
 theorem continuous_singleV (v : HeightOneSpectrum (𝓞 F)) : Continuous (singleV F v) := by
   have hS : Filter.cofinite ≤ Filter.principal ({v}ᶜ : Set (HeightOneSpectrum (𝓞 F))) :=
     Filter.le_principal_iff.2 (Set.finite_singleton v).compl_mem_cofinite

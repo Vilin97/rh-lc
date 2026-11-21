@@ -143,6 +143,7 @@ def aaScalar (w : Pl D.host.E) : ℂ :=
     apow (genAt w D.host.AAbar / genAt w D.host.AA) (((bareGrid w).rank b.src * (bareGrid w).rank b.tgt : ℕ) / 4)).prod
 
 
+variable (G) in
 theorem topRank_eq (t : T) (w : Pl D.host.E) {j : ℕ} (h : j ≤ D.R.m) : topRank (locGrid G t w) j = (G.V (.top j)).rank :=
   (G.isV (X := .top j) h fun _ e => by cases e).rank.symm
 
@@ -171,15 +172,20 @@ structure GridChoice (U : Set T) where
     ∃! w', w' ∈ PA ∧ w'.under (𝓞 D.host.F) = w.under (𝓞 D.host.F)
 
 
+variable (G) in
 abbrev PureDat (t : T) : Type := (∀ j : Fin D.R.m, FinDatum G t (.top t j)) × ∀ i : Fin D.R.m, FinDatum G t (.chi i D.R.m)
 
 
+variable (G) in
 abbrev CosFam (t : T) : Type := ∀ w : locPl G t, Cosets (G := locGrid G t w) one_le_sLen (givenLevel G t w)
 
 
+variable (G) in
+open Classical in
 def keepAt (w : Pl D.host.E) : Bool := decide (w ∉ G.pl.W0)
 
 
+variable (G) in
 def repsAt (t : T) (w : Pl D.host.E) : Reps (G := locGrid G t w) one_le_sLen (givenLevel G t w) :=
   Reps.through _ _ (stair _ (unifAt w) (cosExp G w))
 
@@ -315,6 +321,7 @@ theorem SumOK.vCore_eq (h : S.SumOK t Φ) (τ : CosFam G t → PureDat G t →�
 end GridChoice
 
 
+variable (G) in
 theorem wt_top_eq : wt G (.top 0) = LaP G := funext fun τ => by
   have h : (wt G (.top 0) τ).w = (LaP G τ).w := funext (wt_top_zero G (rank_Xp G) τ)
   generalize wt G (.top 0) τ = a at h
@@ -325,6 +332,7 @@ def psiC (Ψ : GLf G → WtSp G) (x : FinPt G (.top 0)) : VV ℂ (wt G (.top 0))
   ⟨(GlobalTheory.CoefModel.mapVV D.what₂.embLL (LaP G) (Ψ (finG (Xp G) x))).1, by rw [wt_top_eq]; exact Subtype.prop _⟩
 
 
+variable (G) in
 theorem rank_zero_m : D.sp.X'.rank = (G.V (.grid 0 D.R.m)).rank := (congrArg (·.sp.rank) (colY_m L)).symm
 
 def toXf (y : FinPt G (.grid 0 D.R.m)) : Bridge.Gf D.sp.X' :=
@@ -354,6 +362,7 @@ structure SumChoice (U : Set T) extends GridChoice W U where
 variable {U : Set T} (S : SumChoice W U)
 
 
+variable {W} in
 def SumChoice.formC (t : T) (u : (R.HX t).H) (y : FinPt G (.grid 0 D.R.m)) : VV ℂ (listedWt G (.grid 0 D.R.m)) :=
   S.co ((R.HX t).e u (toXf y))
 

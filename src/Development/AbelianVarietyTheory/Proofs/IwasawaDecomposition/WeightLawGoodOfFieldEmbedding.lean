@@ -114,6 +114,7 @@ theorem gram_posDef (hb : C.HasRatBasis) (φ : K →+* ℂ) (hp : (C.gramV.map �
     ⟨c, Finset.mem_univ c, mul_pos (hw c) (hp.dotProduct_mulVec_pos hc)⟩
 
 
+omit [StarRing K] in
 theorem exists_smul_mem {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
     {M : Submodule (𝓞 K) V} {x : V} (hx : x ∈ Submodule.span K (M : Set V)) : ∃ d : 𝓞 K, d ≠ 0 ∧ d • x ∈ M := by
   first

@@ -346,6 +346,7 @@ theorem nonempty_psiOn_top (D : DegPre R) (h : ∀ χ, PsiUnitOn D χ Set.univ) 
   rw [← val_corr hJ (H χ), val_pull hJ, Category.assoc, Category.assoc, morphismRestrict_ι]
 
 
+include hD in
 theorem psiUnitOn_pull (hφ : Function.Injective φ) (x : D'.X) (h : PsiUnitOn D (hD.xe x) Set.univ) :
     PsiUnitOn D' x Set.univ := by
   obtain ⟨t, ht, H⟩ := (psiUnitOn_univ_iff D _).1 h

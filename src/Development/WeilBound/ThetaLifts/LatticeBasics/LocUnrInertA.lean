@@ -110,6 +110,7 @@ theorem mem_K {B : Base F E} {K : Subgroup (G2 σ Y)} (hK : IsStab2 B K) {k : G2
 variable (hw : IsInertAt F E v w) (h : w.under (𝓞 F) = v) {β γ : Type} [Fintype β] [DecidableEq β] [Fintype γ] [DecidableEq γ]
 
 
+variable (β) in
 def up : Matrix β β (w.adicCompletion E) →* Matrix β β (AE F E) :=
   (liftM E v β).comp (RingHom.mapMatrix (complEquiv hw h).symm.toRingHom).toMonoidHom
 

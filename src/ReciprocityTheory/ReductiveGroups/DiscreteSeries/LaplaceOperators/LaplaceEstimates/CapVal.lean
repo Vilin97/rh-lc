@@ -58,6 +58,7 @@ variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
   {σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} {E : Fin n → Fin n → Module.End ℂ D}
 
 
+variable (ε σ V) in
 def clo : Submodule ℂ H :=
   (Submodule.span ℂ {x : H | ∃ g, inUJ ε g ∧ ∃ v : D, v ∈ V ∧ x = σ g (v : H)}).topologicalClosure
 

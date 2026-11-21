@@ -70,6 +70,7 @@ section alg
 variable {k : Type} [Field k] {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ}
 
 
+open Classical in
 def ext (p : ℕ) (e : {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free p rs} → k) :
     Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k :=
   by
@@ -276,6 +277,7 @@ end alg
 end GlobalTheory.RootEx.OpELevi
 
 
+open GlobalTheory.RootEx.OpELevi in
 theorem GlobalTheory.RootEx.opE_om_embX : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] (n n' : Type) [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] (c p : ℕ) (_ : 1 ≤ p) (_ : p ≤ c) (ψ : AddChar k Circle) (ν : Measure k) [ν.IsAddHaarMeasure] (μ : kˣ →* ℂˣ) (Φ : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k → ℂ), (∀ g : GL n k, opE ψ ν p (om μ 1 (embX c g) Φ) = ((nabs k (Matrix.GeneralLinearGroup.det g) ^ (((c : ℝ) + 1) / 2 - p) : ℝ) : ℂ) • om μ 1 g (opE ψ ν p Φ)) ∧ ∀ g : GL n' k, opE ψ ν p (om μ (embX (c + 1) g) 1 Φ) = ((nabs k (Matrix.GeneralLinearGroup.det g) ^ (((c : ℝ) + 2) / 2 - p) : ℝ) : ℂ) • om μ g 1 (opE ψ ν p Φ) := by
   intro k _ _ _ _ _ _ n n' _ _ _ _ c p h1 h2 ψ ν _ μ Φ
   refine ⟨fun g => ?_, fun g => ?_⟩

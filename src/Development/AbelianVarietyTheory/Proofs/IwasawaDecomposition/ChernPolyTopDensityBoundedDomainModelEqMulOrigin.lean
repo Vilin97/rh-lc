@@ -174,6 +174,7 @@ theorem chernPoly_model_eq_subst {H : Host E} (Dw : Datum H) {n : ℕ}
 end GlobalTheory.PointChernScale
 
 
+open GlobalTheory.PointChernScale in
 theorem GlobalTheory.PointChern.chernTop_model_eq_mul : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) {n : ℕ}
     (ix : Fin n ≃ GlobalTheory.AllWt.Psi H × Fin Dw.p × Fin Dw.q) (w : ReciprocityTheory.L2DbarEstimates.V n), InDom (coordOf ix w) →
     ∃ κ : ℝ, ∀ R : MvPolynomial ((E →+* ℂ) × ℕ) ℝ,

@@ -113,6 +113,7 @@ section Numbers
 variable {K : Type*} [DecidableEq K] {ι : K → Type*}
 
 
+omit [DecidableEq K] in
 theorem diffStep_comm (a b : K → ℤ) (h : (K → ℤ) → ℤ) :
     diffStep a (diffStep b h) = diffStep b (diffStep a h) := by
   funext m
@@ -120,6 +121,7 @@ theorem diffStep_comm (a b : K → ℤ) (h : (K → ℤ) → ℤ) :
   ring
 
 
+omit [DecidableEq K] in
 theorem foldr_diffStep_perm {l₁ l₂ : List (K → ℤ)} (p : l₁.Perm l₂) (h : (K → ℤ) → ℤ) :
     l₁.foldr diffStep h = l₂.foldr diffStep h := by
   induction p with
@@ -149,6 +151,7 @@ variable {K₁ K₂ : Type} [DecidableEq K₁] [DecidableEq K₂] {ι₁ : K₁ 
   (e : K₁ ≃ K₂) (σ : (Σ k, ι₁ k) ≃ (Σ k, ι₂ k))
 
 
+omit [DecidableEq K₁] [DecidableEq K₂] in
 theorem specialIdeal_map (W : Ideal (MRing ι₁ O)) :
     specialIdeal (W.map (ren (R := O) σ : MRing ι₁ O →+* MRing ι₂ O)) =
       (specialIdeal W).map (renameEquiv (IsLocalRing.ResidueField O) σ) := by
@@ -188,6 +191,7 @@ theorem classNum_map (hσ : ∀ v, (σ v).1 = e v.1) {S : Type*} (cls : S → K�
   rfl
 
 
+omit [IsDomain O] [IsDiscreteValuationRing O] in
 theorem isMultiHomog_rename (hσ : ∀ v, (σ v).1 = e v.1) {f : MRing ι₁ O} {a : K₁ → ℕ}
     (h : IsMultiHomog f a) : IsMultiHomog (rename σ f) (a ∘ e.symm) := by
   have h' := GroundTheory.Heights₂.Heights.FieldNumbers.RenameMultiHomog.proof O K₁ K₂ e.toEmbedding ι₁ ι₂ σ
@@ -200,6 +204,7 @@ theorem isMultiHomog_rename (hσ : ∀ v, (σ v).1 = e v.1) {f : MRing ι₁ O} 
   rwa [hext] at h'
 
 
+omit [IsDomain O] [IsDiscreteValuationRing O] in
 theorem isModelOver_map [Fintype K₁] [Fintype K₂] (hσ : ∀ v, (σ v).1 = e v.1)
     (P : Ideal (MRing ι₁ O)) (d : ℕ) (h : IsModelOver P d) :
     IsModelOver (P.map (ren (R := O) σ : MRing ι₁ O →+* MRing ι₂ O)) d := by
@@ -222,6 +227,7 @@ theorem isModelOver_map [Fintype K₁] [Fintype K₂] (hσ : ∀ v, (σ v).1 = e
       Fintype.card_congr e]
 
 
+omit [IsDomain O] [IsDiscreteValuationRing O] in
 theorem isVerticalDivisor_map (hσ : ∀ v, (σ v).1 = e v.1) (P : Ideal (MRing ι₁ O)) (ϖ : O)
     (b : K₂ → ℤ) (f g : MRing ι₁ O) (h : IsVerticalDivisor P ϖ (b ∘ e) f g) :
     IsVerticalDivisor (P.map (ren (R := O) σ : MRing ι₁ O →+* MRing ι₂ O)) ϖ b (rename σ f)

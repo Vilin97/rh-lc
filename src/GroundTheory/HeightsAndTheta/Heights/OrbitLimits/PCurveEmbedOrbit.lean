@@ -50,6 +50,7 @@ theorem eq_of_sameOrbit {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype
 end CurveEmbedOrbit
 
 
+open CurveEmbedOrbit in
 theorem CurveEmbedOrbit.proof : CurveEmbedOrbit.Statement := by
   intro K _ ι _ Ω _ y R hP hB hR hRu
   classical

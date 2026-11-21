@@ -12,6 +12,8 @@ open scoped TensorProduct
 namespace GlobalTheory.St.G
 
 
+open NumberField IsDedekindDomain Matrix in
+open scoped TensorProduct in
 theorem _root_.GlobalTheory.St.G.stepLevel_tLat : ∀ (F E : Type) [Field F] [NumberField F]
     [Field E] [NumberField E] [Algebra F E] (n : ℕ) (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E)
     (T f : ℕ) (bad : Set (HeightOneSpectrum (𝓞 F))) (S : _root_.Formalism.L2.Forms.StepLevel F E σ J T f bad),

@@ -35,6 +35,7 @@ theorem rowsOf_conjTranspose {j N : ℕ} (A : Matrix (Fin j) (Fin N) ℂ)
 end PlueckerNormSqAlt
 
 
+open PlueckerNormSqAlt in
 theorem PlueckerNormSq.proof (h : CauchyBinet.Statement) : PlueckerNormSq.Statement := by
   intro j m Z
   rw [← onePipe_mul_conjTranspose, h ℂ j (j + m) (onePipe Z) (onePipe Z)ᴴ]

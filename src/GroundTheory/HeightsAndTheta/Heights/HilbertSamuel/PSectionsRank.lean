@@ -115,6 +115,7 @@ theorem finrank_sec_int [Fintype J] (x : J → Ω) (n : ℕ) :
 end SectionsRank
 
 
+open SectionsRank in
 theorem SectionsRank.proof : SectionsRank.Statement := by
   intro Ω _ _ κ _ x n
   set q := (coordIdeal ℤ x).map (MvPolynomial.map (Int.castRingHom ℚ))

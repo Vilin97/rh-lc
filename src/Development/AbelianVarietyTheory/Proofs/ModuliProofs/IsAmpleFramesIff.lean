@@ -23,6 +23,7 @@ variable {S : Scheme.{0}} (G : Over S)
 variable [GrpObj G] [IsCommMonObj G] (L : RigLB G) (N : ℕ)
 
 
+omit [GrpObj G] [IsCommMonObj G] in
 theorem relAmple_iff {O : Type} [CommRing O] (b : S ⟶ Sp O) {A : LB S} (hA : A.IsLB) :
     (Out.RelAmple (Over.mk b) A →
       ∀ z : S, ∃ (d : ℕ) (s : Out.H0 A d), 1 ≤ d ∧ z ∈ Out.nonzeroLocus s ∧ IsAffineOpen (Out.nonzeroLocus s)) ∧

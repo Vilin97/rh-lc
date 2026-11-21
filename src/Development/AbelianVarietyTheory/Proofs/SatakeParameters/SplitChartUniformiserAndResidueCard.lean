@@ -20,6 +20,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   (v : HeightOneSpectrum (𝓞 F)) (φ : E →+* v.adicCompletion F)
 
 
+omit [NumberField E] [Algebra F E] in
 theorem map_mem (x : 𝓞 E) : φ x ∈ v.adicCompletionIntegers F := by
   have h2 : IsIntegral (v.adicCompletionIntegers F) (φ x) :=
     IsIntegral.map_of_comp_eq (Int.castRingHom _) φ (RingHom.ext_int _ _) x.isIntegral_coe

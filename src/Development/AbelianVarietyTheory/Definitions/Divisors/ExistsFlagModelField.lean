@@ -168,6 +168,7 @@ def GenIn (Y : Model Xo c β) : Prop :=
       Function.Injective (ev (y ≫ Y.j) M.U h)
 
 
+variable (Y) in
 structure ECh where
   M : GChart Y
   V : Y.X.Opens

@@ -39,6 +39,7 @@ section Integral
 variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem ptsIntegral_comp_perm (P : Ideal (MRing ι)) {e : ℕ} (φ : Fin e → ((Σ k, ι k) → ℂ) → ℝ)
     (σ : Equiv.Perm (Fin e)) (g : ((Σ k, ι k) → ℂ) → ℝ) :
     ptsIntegral P (φ ∘ σ) g = ptsIntegral P φ g := by
@@ -169,6 +170,7 @@ theorem sum_cycle_comp {α : Type*} (F : α →₀ ℕ) (G : α → α →₀ �
   ring
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem comap_eq_of_vertical {W U : Ideal (MRing ι)} [W.IsPrime] [U.IsPrime] (hv : ¬ IsHorizontal W)
     (hWU : W ≤ U) : U.comap (C : ℤ →+* MRing ι) = W.comap (C : ℤ →+* MRing ι) := by
   have hmax : (W.comap (C : ℤ →+* MRing ι)).IsMaximal :=

@@ -162,6 +162,7 @@ theorem latticeFourierCoeff_fwdDiff_iter {A : E → V} (hA : ∀ x ∈ L, Functi
       one_smul]
 
 
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] in
 theorem norm_fwdDiff_iter_le (c : E) (k : ℕ) {A : E → V} (hA : ContDiff ℝ k A) {M : ℝ}
     (hM : ∀ x, ‖iteratedFDeriv ℝ k A x‖ ≤ M) (x : E) :
     ‖(fwdDiff c)^[k] A x‖ ≤ ‖c‖ ^ k * M := by
@@ -181,6 +182,7 @@ theorem norm_fwdDiff_iter_le (c : E) (k : ℕ) {A : E → V} (hA : ContDiff ℝ 
     simpa [mul_comm] using this
 
 
+omit [MeasurableSpace E] [BorelSpace E] in
 theorem exists_bound_of_lattice_periodic {W : Type*} [NormedAddCommGroup W] {f : E → W}
     (hf : ∀ x ∈ L, Function.Periodic f x) (hc : Continuous f) : ∃ M, ∀ b, ‖f b‖ ≤ M := by
   obtain ⟨M, hM⟩ := (isBounded_latticeCell L).isCompact_closure.exists_bound_of_continuousOn
@@ -213,6 +215,7 @@ theorem pow_mul_norm_latticeFourierCoeff_le {A : E → V} (hA : ∀ x ∈ L, Fun
   rwa [h4, show 2 * ‖ν‖ * 2 = 4 * ‖ν‖ by ring] at h3
 
 
+omit [InnerProductSpace ℝ E] in
 theorem average_fundamentalDomain_eq_cube [NormedSpace ℝ E] [FiniteDimensional ℝ E]
     {ι : Type*} [Fintype ι] (b : Basis ι ℝ E) (μ : Measure E) [μ.IsAddHaarMeasure] (g : E → V) :
     (μ.real (ZSpan.fundamentalDomain b))⁻¹ • ∫ y in ZSpan.fundamentalDomain b, g y ∂μ =
@@ -245,6 +248,8 @@ theorem average_fundamentalDomain_eq_cube [NormedSpace ℝ E] [FiniteDimensional
 
 
 omit [MeasurableSpace E] [BorelSpace E] in
+omit [MeasurableSpace E] [BorelSpace E] in
+variable (L) in
 theorem exists_equiv_innerDual {ι : Type*} [Fintype ι] (b : Basis ι ℤ L) :
     ∃ b' : Basis ι ℝ E, L⁎ = Submodule.span ℤ (range b') ∧ ∃ φ : (ι → ℤ) ≃ L⁎,
       ∀ n x, ⟪(φ n : E), (b.ofZLatticeBasis ℝ L).equivFun.symm x⟫ = ∑ i, n i * x i := by

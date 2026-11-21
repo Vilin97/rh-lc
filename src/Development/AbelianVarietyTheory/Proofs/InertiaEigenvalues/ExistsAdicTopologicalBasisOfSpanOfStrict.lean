@@ -16,6 +16,7 @@ namespace GlobalTheory.BSP.TopBasisCons
 variable {S A : Type} [CommRing S] [CommRing A] {s : S →+* A} {I : Ideal S} {ι : Type} {b : ι → A}
 
 
+variable (s I b) in
 def Approx (x : A) (f : ι → S) : Prop :=
   ∀ n : ℕ, ∃ F : Finset ι, (∀ i, i ∉ F → f i ∈ I ^ n) ∧ x - ∑ i ∈ F, s (f i) * b i ∈ (I ^ n).map s
 
@@ -188,6 +189,7 @@ theorem exists_approx (hS : IsPrecomplete I S) (g : ℕ → A → ι →₀ S)
 end GlobalTheory.BSP.TopBasisCons
 
 
+open GlobalTheory.BSP.TopBasisCons in
 theorem GlobalTheory.BSP.exists_topBasis_of_span_of_strict : ∀ (S A : Type) [CommRing S] [CommRing A] (s : S →+* A)
     (I : Ideal S) (ι : Type) (b : ι → A) (i₀ : ι), b i₀ = 1 → I.FG → IsAdicComplete I S →
     IsAdicComplete (I.map s) A → (∀ x : A, ∃ a : ι →₀ S, x - a.sum (fun i y => s y * b i) ∈ I.map s) →

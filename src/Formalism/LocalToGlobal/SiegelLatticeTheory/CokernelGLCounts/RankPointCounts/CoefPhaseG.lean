@@ -170,6 +170,7 @@ variable {D : Formalism.BasicNotions.D7} {M : ∀ p : PlF D, Loc.Model (D.s.atP 
   {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
 
+set_option maxHeartbeats 2000000 in
 theorem local_phase_typed_places (hA : ∀ p, Agree δ M p) : PhaseLocG M δ u u' F0 what₂ := by
   intro γ w F' L U hrel hgen hN p hMp
   obtain ⟨-, -, hLu, hUu, e⟩ := hN

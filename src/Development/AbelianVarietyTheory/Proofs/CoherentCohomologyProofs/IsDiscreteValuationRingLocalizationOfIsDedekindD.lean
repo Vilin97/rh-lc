@@ -246,6 +246,7 @@ theorem addVal_norm_eq_sum (x : S) :
     exact_mod_cast (Ideal.inertiaDeg_pos n.asIdeal R).ne'
 
 
+include R in
 theorem addVal_localization_ne_top {x : S} (hx : x ∈ nonZeroDivisors S) (n : MaximalSpectrum S) :
     addVal (A n) (algebraMap S (A n) x) ≠ ⊤ := by
   rw [Ne, addVal_eq_top_iff]
@@ -260,6 +261,7 @@ variable [∀ n, Algebra R (A n)] [∀ n, IsScalarTower R S (A n)]
 end Local
 
 
+include R in
 theorem isDiscreteValuationRing_localization_of_isDedekindDomain [IsDedekindDomain S]
     (n : MaximalSpectrum S) : IsDiscreteValuationRing (Localization.AtPrime n.asIdeal) := by
   have := NormVal.liesOver_maximalIdeal R n.asIdeal

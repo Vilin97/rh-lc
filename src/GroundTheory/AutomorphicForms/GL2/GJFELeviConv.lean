@@ -40,6 +40,7 @@ theorem IsSchwartzBruhat.exists_le_ordDet {Ψ : Matrix (Fin m) (Fin m) F → ℂ
   linarith
 
 
+variable (m) in
 def centralSat (C : Set (GL (Fin m) F)) : Set (GL (Fin m) F) :=
   {g | ∃ j : ℤ, centralUnif F m ^ j * g ∈ C}
 
@@ -289,6 +290,7 @@ theorem apply_centralPow (ρ : Representation ℂ ((∀ i, GL (Fin (d i)) F) × 
   simpa using this
 
 
+omit [DecidableEq ι] in
 theorem exists_bound_of_central [∀ i, NeZero (d i)] {c : (∀ i, GL (Fin (d i)) F) → ℂ}
     (hc : Continuous c) {β : ι → ℂ} (hβ0 : ∀ i, β i ≠ 0)
     (hβ : ∀ (j : ι → ℤ) x, c ((fun i => centralUnif F (d i) ^ j i) * x) = (∏ i, β i ^ j i) * c x)
@@ -369,6 +371,7 @@ theorem rpow_neg_mul_lt_one {q ρ σ : ℝ} (hq : 1 < q) (hρ : 0 < ρ) (h : Rea
 variable [∀ n : ℕ, MeasurableSpace (GL (Fin n) F)] [∀ n : ℕ, BorelSpace (GL (Fin n) F)]
 
 
+omit [DecidableEq ι] in
 theorem integrable_of_bound [∀ i, NeZero (d i)] (μ : ∀ i, Measure (GL (Fin (d i)) F))
     [∀ i, (μ i).IsHaarMeasure] {Ψ : ∀ i, Matrix (Fin (d i)) (Fin (d i)) F → ℂ}
     (hΨ : ∀ i, IsSchwartzBruhat (Ψ i)) {c : (∀ i, GL (Fin (d i)) F) → ℂ} (hc : Continuous c)

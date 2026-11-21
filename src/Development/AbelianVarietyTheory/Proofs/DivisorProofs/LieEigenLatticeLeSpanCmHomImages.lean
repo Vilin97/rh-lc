@@ -122,6 +122,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {K : Ty
   {A B : PAT H (Sp (𝓞 K))} {FA : GenFib A.pol} {FB : GenFib B.pol}
 
 
+open IntCoord in
 theorem smul_diff_eq {p : ℕ} {φ : Fin p → (A.t.G ⟶ B.t.G)}
     {MP : Fin p → ((Fin FA.P₀.g → K) →ₗ[K] (Fin FB.P₀.g → K))} (hMP : ∀ a, FA.IsDiffOf FB (φ a) (MP a))
     {f : A.t.G ⟶ B.t.G} {M : (Fin FA.P₀.g → K) →ₗ[K] (Fin FB.P₀.g → K)} (hM : FA.IsDiffOf FB f M) {n : ℕ}

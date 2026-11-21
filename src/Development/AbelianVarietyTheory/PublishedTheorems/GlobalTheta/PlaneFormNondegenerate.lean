@@ -605,6 +605,7 @@ theorem exists_eigen_mem (hπ : ∀ t v, π ⟨0, t⟩ v = ψ t • v) (hs : PRe
     (fun x m hm => P.apply_mem_toSubmodule _ hm) v hv hv0 fun u hu => (hT hu).2
 
 include hB hα hA h1 h2 h3 in
+include hα hA h1 h2 h3 in
 theorem irr_of_span (hψ : Continuous ψ) (hπ : ∀ t v, π ⟨0, t⟩ v = ψ t • v) {e : M} (he0 : e ≠ 0)
     (he : ∀ a ∈ A, π ⟨a, 0⟩ e = α a • e) (hsp : Submodule.span ℂ (Set.range fun x => π ⟨x, 0⟩ e) = ⊤) : IsIrrSmoothOf ψ π := by
   have hs : PRep.IsSmooth π := by
@@ -634,6 +635,7 @@ theorem irr_of_span (hψ : Continuous ψ) (hπ : ∀ t v, π ⟨0, t⟩ v = ψ t
   exact P.apply_mem_toSubmodule _ heP
 
 include hB hα hA h1 h2 h3 in
+include hα hA h1 h2 h3 in
 theorem exists_irr_sub (hψ : Continuous ψ) (hπ : ∀ t v, π ⟨0, t⟩ v = ψ t • v) {e : M} (he0 : e ≠ 0)
     (he : ∀ a ∈ A, π ⟨a, 0⟩ e = α a • e) :
     ∃ P : Subrepresentation π, e ∈ P.toSubmodule ∧ IsIrrSmoothOf ψ P.toRepresentation := by

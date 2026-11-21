@@ -22,6 +22,7 @@ def StabEqRest {D : D7} {c : LatCmp D} {Tw : TwForms D} {u : D.what₂.Word} {μ
     Nat.card ((D.chTw u μ).stab j (KA.cls j a L)) = Nat.card {γ : (Lv.lev j a).Γ // (Lv.lev j a).smul γ L = L}
 
 
+set_option linter.unusedVariables false in
 def TieStab0Inst : Prop :=
   ∀ (D : D7) (ex : TwForms D) (cc : LatCmp D) (u : D.what₂.Word) (μ : D.what₂.Tup) (w : D.what₂.places.Pl)
     (h : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)) [Fact (D.what₂.places.resChar w).Prime]

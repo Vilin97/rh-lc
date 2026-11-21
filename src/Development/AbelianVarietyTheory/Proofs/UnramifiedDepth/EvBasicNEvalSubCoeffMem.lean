@@ -65,6 +65,7 @@ lemma evBasic_nEval_eq_tEval (f : MvPowerSeries ι R₀) (a : ι → S) (N : ℕ
   · exact absurd ⟨N, ha⟩ h
 
 
+omit [DecidableEq ι] in
 lemma evBasic_exists_pow (a : ι → S) (ha : ∀ i, IsNilpotent (a i)) :
     ∃ N : ℕ, 0 < N ∧ ∀ i, a i ^ N = 0 := by
   have ha' : ∀ i, ∃ m : ℕ, a i ^ m = 0 := ha

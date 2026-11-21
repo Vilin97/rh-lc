@@ -58,6 +58,7 @@ def extendOnClosure : closureInCp E → ℂ_[p] :=
   (isDenseInducing_toClosureInCp E).extend fun y : E => ((R y : PadicAlgCl p) : ℂ_[p])
 
 
+open Classical in
 def extendToClosure (x : ℂ_[p]) : ℂ_[p] :=
   by
     classical
@@ -202,6 +203,7 @@ variable {k : IntermediateField ℚ_[p] (PadicAlgCl p)} [FiniteDimensional ℚ_[
 include hkE hmaps hfix hmul
 
 omit hkE hfix hmul in
+include hmaps in
 theorem extendToClosure_mem {x : ℂ_[p]} (hx : x ∈ closureInCp E) :
     extendToClosure E R x ∈ ((↑) : PadicAlgCl p → ℂ_[p]) '' (k : Set (PadicAlgCl p)) :=
   extendToClosure_induction hadd hbound
@@ -210,12 +212,16 @@ theorem extendToClosure_mem {x : ℂ_[p]} (hx : x ∈ closureInCp E) :
 
 
 omit [FiniteDimensional ℚ_[p] k] hmaps hmul in
+omit [FiniteDimensional ℚ_[p] k] in
+include hkE hfix in
 theorem extendToClosure_coe_of_mem {a : PadicAlgCl p} (ha : a ∈ k) :
     extendToClosure E R (a : ℂ_[p]) = a := by
   rw [extendToClosure_coe hadd hbound (hkE ha), hfix a ha]
 
 
 omit hadd hbound [FiniteDimensional ℚ_[p] k] hmaps hfix hmul in
+omit hadd hbound [FiniteDimensional ℚ_[p] k] in
+include hkE in
 theorem mul_mem_closureInCp {a : PadicAlgCl p} (ha : a ∈ k) {x : ℂ_[p]}
     (hx : x ∈ closureInCp E) : (a : ℂ_[p]) * x ∈ closureInCp E :=
   map_mem_closure (continuous_const.mul continuous_id) hx (by
@@ -224,6 +230,8 @@ theorem mul_mem_closureInCp {a : PadicAlgCl p} (ha : a ∈ k) {x : ℂ_[p]}
 
 
 omit [FiniteDimensional ℚ_[p] k] hmaps hfix in
+omit [FiniteDimensional ℚ_[p] k] in
+include hkE hmul in
 theorem extendToClosure_mul {a : PadicAlgCl p} (ha : a ∈ k) {x : ℂ_[p]}
     (hx : x ∈ closureInCp E) :
     extendToClosure E R ((a : ℂ_[p]) * x) = (a : ℂ_[p]) * extendToClosure E R x := by

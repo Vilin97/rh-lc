@@ -19,6 +19,7 @@ variable {C : Scheme.{0}} {F : C.Modules} {J : Type} {T : J → C.Opens} {κ : J
   [∀ j, Fintype (κ j)] {v : ∀ j, κ j → Γ(F, T j)} {α : Type}
 
 
+variable (v) in
 abbrev spn (e : ∀ j, α ↪ κ j) (S : Finset α) (j : J) {V : C.Opens} (h : V ≤ T j) :
     Submodule Γ(C, V) Γ(F, V) :=
   Submodule.span Γ(C, V) ((fun a => resM F h (v j (e j a))) '' (S : Set α))
@@ -68,6 +69,7 @@ theorem res_mem_spn (hv : ∀ j, IsFrame (v j)) {e : ∀ j, α ↪ κ j} {S : Fi
 variable [Fintype α] {rk : α → ℕ} {e : ∀ j, α ↪ κ j}
 
 
+variable (v rk e) in
 def IsTriangular (g : α → ∀ j j', Γ(C, T j ⊓ T j')) : Prop :=
   ∀ j j' a, ∃ cf : α → Γ(C, T j ⊓ T j'), cf a = g a j j' ∧ (∀ b, b ≠ a → rk a ≤ rk b → cf b = 0) ∧
     resM F inf_le_right (v j' (e j' a)) = ∑ b, cf b • resM F inf_le_left (v j (e j b))

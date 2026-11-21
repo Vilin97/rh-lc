@@ -217,6 +217,8 @@ theorem adjAdd (hG : Out.GlobalFnsSt) (hA : IsAbelianScheme G') {P : LB (G ⊗ G
     rwa [s₁, ← Category.assoc ρ p₂, ← Category.assoc ρ p₀, ← Category.assoc ρ p₁, r₀, r₁, r₂] at this
 
 
+omit [IsCommMonObj G] [IsCommMonObj G'] in
+include gp in
 theorem adjPoints {X : Scheme.{0}} (a : X ⟶ S') (b : X ⟶ S) (hb : b = a ≫ σ) :
     ∃ e : (Over.mk a ⟶ G') ≃* (Over.mk b ⟶ G), ∀ x, (e x).left = x.left ≫ φ := by
   subst hb

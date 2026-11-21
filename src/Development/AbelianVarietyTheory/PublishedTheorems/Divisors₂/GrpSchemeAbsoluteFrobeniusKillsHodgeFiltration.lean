@@ -27,9 +27,11 @@ section Kill
 variable {X : Scheme.{0}} {s : X ⟶ Sp R} (T : Thick (dp0 R) s)
 
 
+include hR in
 theorem cast_B : (p : T.B) = 0 := by rw [← map_natCast (algebraMap R T.B), hR, map_zero]
 
 
+include hR in
 theorem cast_B₀ : (p : T.B₀) = 0 := by rw [← map_natCast T.π, cast_B p hR T, map_zero]
 
 def lft : T.B₀ →+* T.B :=
@@ -65,6 +67,7 @@ def eta : red T ⟶ h.obj T :=
       rw [e, ← frob_sp p _ _ h0, GlobalTheory.VB.frob_naturality p hX T.x h0])
 
 
+variable {T} in
 def redMap {T' : Thick (dp0 R) s} (φ : T ⟶ T') : red T ⟶ red T' :=
   letI : Algebra R T.B₀ := (T.π.comp (algebraMap R T.B)).toAlgebra
   letI : Algebra R T'.B₀ := (T'.π.comp (algebraMap R T'.B)).toAlgebra

@@ -61,6 +61,7 @@ theorem finPart_cA (D : D7) (x : AE D) :
   GlobalTheory.UnitarySplit.map_sig (sndA D.host.F) D.sp.cm.sig x
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_trivAt_isMov : ∀ (D : D7) (S T : HSp D) (C : Ctx S T), ∀ M : ℕ, 0 < M → ∀ Λ ∈ Vset D.host.E S.rank M, ∃ h ∈ GfC S, TrivAt S (Ideal.span {(M : 𝓞 D.host.F)}) h ∧ IsMov (fmtC S h) (stdL D.host.E S.rank) Λ := by
   rintro D S T C M - Λ ⟨-, hU', k, hk0, hkM, h1, h2⟩
   have hU : (⟨Λ⟩ : GenLat D.host.E S.rank).Unimod := (GlobalTheory.Dict.GenLatCmp.unimod_iff Λ).2 hU'

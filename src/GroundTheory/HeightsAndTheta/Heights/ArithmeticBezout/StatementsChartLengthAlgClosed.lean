@@ -14,6 +14,7 @@ open MvPolynomial
 noncomputable section
 
 
+open Classical in
 def ChartLengthAlgClosed.Statement : Prop :=
   ∀ (F : Type) [Field F] [IsAlgClosed F] (n e : ℕ) (I : Ideal (MvPolynomial (Fin n) F))
     (f : MvPolynomial (Fin (e + 1) × Fin n) F) (t u : Fin n → F)

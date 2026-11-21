@@ -135,6 +135,7 @@ theorem lin_eq_zero (hs : IsSympl X bas) {x₁ x₂ : Frame X.Ψ r} (h₁ : x₁
   · rw [key, star_eq_zero.1 e2]; simp
 
 
+variable (X) in
 noncomputable def cz (x₁ x₂ : Frame X.Ψ r) (τ : X.Ψ) :
     ((Fin g → ℂ) × (Fin g → ℂ)) →ₗ[ℂ] (Fin r → ℂ) where
   toFun p := (-(τ.1 X.κ0 / 2)) • (X.Gm.map τ.1 *ᵥ (aAnti X x₁ x₂ τ)⁻¹ *ᵥ fun a =>
@@ -147,6 +148,7 @@ noncomputable def cz (x₁ x₂ : Frame X.Ψ r) (τ : X.Ψ) :
     congr 3; funext a; simp only [Pi.smul_apply, Prod.smul_fst, Prod.smul_snd]; split_ifs <;> rfl
 
 
+variable (X) in
 noncomputable def cz' (x₁ x₂ : Frame X.Ψ r) (τ : X.Ψ) :
     ((Fin g → ℂ) × (Fin g → ℂ)) →ₗ[ℂ] (Fin r → ℂ) where
   toFun p := (τ.1 X.κ0 / 2) • (((aLin X x₁ x₂ τ)⁻¹ *ᵥ fun a =>
@@ -165,6 +167,7 @@ theorem dblz'_row {n : ℕ} (x₁ x₂ : Frame X.Ψ r) (z w : Fin n → Fin g �
     dblz' X idx x₁ x₂ z w τ k = cz' X idx x₁ x₂ τ (z k, w k) := rfl
 
 
+variable (X) in
 noncomputable def bv (a₁ a₂ : Fin r → E) : Fin r → E := (X.κ0 / 4) • ((a₁ + a₂) ᵥ* X.Gm)
 
 theorem cz_per (hs : IsSympl X bas) {x₁ x₂ : Frame X.Ψ r} (h₁ : x₁ ∈ X.dom) (h₂ : x₂ ∈ X.dom)
@@ -302,6 +305,7 @@ theorem thA_smul (x : Frame X.Ψ r) (c : ℂ) (φ : TF n g) (z : Fin n → Fin g
   ring
 
 
+omit [IsCMField E] in
 theorem thH_smul {Ψ : Finset (E →+* ℂ)} {N : ℕ} (c : ℂ) (φ : Matrix (Fin n) (Fin N) E → ℂ)
     (Z : CM Ψ N N) (z z' : CM Ψ n N) : thH Ψ (c • φ) Z z z' = c * thH Ψ φ Z z z' := by
   unfold thH

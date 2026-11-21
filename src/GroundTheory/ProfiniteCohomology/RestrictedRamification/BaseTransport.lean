@@ -85,6 +85,7 @@ def transportLocalCohomology (n : ℕ) :
       (LinearMap.proj (e i)))
 
 
+omit [IsTopologicalGroup G] [IsTopologicalGroup G'] in
 theorem homologyMap_transportLocal_localCohomologyIso (n : ℕ) :
     HomologicalComplex.homologyMap (transportLocal φ φ' θ e ψ hcomm f) n ≫
         (localCohomologyIso (fun i => Rep.res (φ i).toMonoidHom A) n).hom =
@@ -171,6 +172,7 @@ variable {K₁ K₂ : Type u} [Group K₁] [TopologicalSpace K₁] [IsTopologica
   (μ₁ : A₁ ⊗ B₁ ⟶ C₁) (hμ : (Rep.resFunctor ι₀).map μ ≫ c = resTensorHom ι₀ a b ≫ μ₁)
 
 
+include hμ in
 theorem cochainsMapAlong_cupPairingCochains {r s n : ℕ} (h : r + s = n) (x : (cochainsComplex A).X r)
     (z : (cochainsComplex B).X s) :
     ((cochainsMapAlong ι₀ hι₀ c).f n).hom (cupPairingCochains μ h x z) =
@@ -200,6 +202,10 @@ variable {A' B' C' : Rep.{u} k G'} [IsDiscreteRep A'] [IsDiscreteRep B'] [IsDisc
     resTensorHom θ.toMulEquiv.toMonoidHom fA fB ≫ μ)
 
 
+omit [IsTopologicalGroup G] [IsTopologicalGroup G'] [∀ i, IsTopologicalGroup (H i)]
+  [∀ j, IsTopologicalGroup (H' j)] [IsDiscreteRep A'] [IsDiscreteRep B'] [IsDiscreteRep C']
+  [IsDiscreteRep A] [IsDiscreteRep B] [IsDiscreteRep C] in
+include hμ in
 theorem transportLocalMor_pairing (i : ι) :
     (Rep.resFunctor (ψ i).toMulEquiv.toMonoidHom).map ((Rep.resFunctor (φ' (e i)).toMonoidHom).map μ') ≫
         transportLocalMor φ φ' θ e ψ hcomm fC i =
@@ -215,6 +221,8 @@ theorem transportLocalMor_pairing (i : ι) :
     F.hom ((a : A') ⊗ₜ[k] (b : B') : (A' ⊗ B' : Rep k G'))) hμ
 
 
+omit [IsTopologicalGroup G] [IsTopologicalGroup G'] in
+include hμ in
 theorem transportLocal_pi_cup {r s n : ℕ} (hh : r + s = n)
     (y₀ : (piComplex fun j => cochainsComplex (Rep.res (φ' j).toMonoidHom A')).X r)
     (w₀ : (piComplex fun j => cochainsComplex (Rep.res (φ' j).toMonoidHom B')).X s) :
@@ -246,6 +254,7 @@ theorem transportLocal_pi_cup {r s n : ℕ} (hh : r + s = n)
     (transportLocalMor_pairing φ φ' θ e ψ hcomm fA fB fC μ' μ hμ i) hh (y₀ (e i)) (w₀ (e i))
 
 
+include hμ in
 theorem compactTransport_compactCupRes {r s n : ℕ} (h : r + s = n) (y : compactCohomologyRes φ' A' r)
     (x : cohomology B' s) :
     (compactTransport φ φ' θ e ψ hcomm fC n).hom (compactCupRes φ' μ' h y x) =

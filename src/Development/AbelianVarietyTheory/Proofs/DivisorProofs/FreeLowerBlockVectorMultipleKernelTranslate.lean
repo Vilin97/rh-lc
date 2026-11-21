@@ -367,6 +367,8 @@ variable {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.L
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
 
+open Classical in
+include h1 h2 in
 theorem datum_eq (R : RealDat D A Ks) (i : Fin D.R.m) (hr : (Wc D i).rank ≤ (Vc D i).rank) (hd : Disjoint R.Pg Q)
     (ξR : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ) {u u' : Matrix (Fin (Vc D i).rank) (Fin (Wc D i).rank) (Datum.EAf D)}
     (hu : ∀ a b, u' a b = (if a.val < (Wc D i).rank then 1 else ν) * u a b) :

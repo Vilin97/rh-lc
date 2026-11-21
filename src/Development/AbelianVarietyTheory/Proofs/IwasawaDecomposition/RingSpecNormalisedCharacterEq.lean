@@ -71,6 +71,8 @@ def RowEig (D : D7) (S : RatDat D.ntw) (eig : ℕ → D.what₂.FT → ℕ → P
 
 
 
+set_option maxHeartbeats 4000000 in
+set_option maxRecDepth 100000 in
 theorem sigSpan_copy {D D' : D7} {ι : D.what₂.LL →+* D'.what₂.LL} {e : ↥D'.LL0 ≃+* ↥D.LL0} (h : CopyAll D D' ι e)
     (hs : D.ntw.SigSpan) : D'.ntw.SigSpan := by
   copy_cases h D D'

@@ -76,6 +76,7 @@ end GlobalTheory.CompanionTheory.ColumnSplitting.IkLintProof
 namespace GlobalTheory.CompanionTheory.ColumnSplitting
 
 
+open IkLintProof in
 theorem ikLint : IkLint := by
   intro D n t B W d I θ hθ M hM hn a
   haveI := I.probK

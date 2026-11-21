@@ -68,6 +68,7 @@ theorem sigR_algebraMap_decompAt {F E : Type} [Field F] [Field E] [Algebra F E] 
   simp [sigR, Algebra.TensorProduct.algebraMap_apply]
 
 
+set_option maxHeartbeats 1000000 in
 theorem decompAt : ∀ (D : D7) (S : HSp D) (h : GA D S) (v : Pl D), ∃ hv ∈ grpAt S (· = v), ∃ h' ∈ grpOff S (· = v),
     h = hv * h' := by
   intro D S h v

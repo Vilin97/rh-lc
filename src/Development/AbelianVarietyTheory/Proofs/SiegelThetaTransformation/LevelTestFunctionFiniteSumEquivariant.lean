@@ -47,6 +47,7 @@ theorem mul_smul_mem {A B : Lt E r} {s : 𝓞 E} (hf : ∀ v ∈ A, s • v ∈ 
   map_smul_mem (LinearMap.lsmul (𝓞 E) _ s) hf 𝔪 hu
 
 
+variable (X) in
 def Near (𝔪 : Ideal (𝓞 E)) (N : Lt E r) : Prop :=
   ∃ s : 𝓞 E, IsCoprime (Ideal.span {s}) 𝔪 ∧ (∀ v ∈ N, s • v ∈ X.Λ) ∧ ∀ v ∈ X.Λ, s • v ∈ N
 

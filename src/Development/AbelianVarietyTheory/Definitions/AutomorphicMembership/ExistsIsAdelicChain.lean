@@ -107,6 +107,8 @@ variable {R : RealDat D A Ks} {F : Face D A} {tup : T → D.what₂.Tup} {b : Bo
   [InnerProductSpace ℂ EE] [FiniteDimensional ℂ EE] {S : RowSide D EE}
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
 structure MultTie (Y : SideTie R F tup b S) where
 
   eM : ∀ t j, S.Mult (tup t) j →ₗ[ℂ] R.CC t j
@@ -139,6 +141,8 @@ theorem haar_chain (hY : R.models_νY) (hY' : R.models_νY') (t : T) (j : ℕ) (
     exact ⟨(hY' t).1.1, (hY' t).2⟩
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
 structure HChain (m : ℕ) (E B : Type) [NormedAddCommGroup E] [InnerProductSpace ℂ E] [NormedAddCommGroup B]
     [InnerProductSpace ℂ B] where
 

@@ -153,6 +153,7 @@ theorem geo_agree {t₀ : T0} (O : OMDat C R i Unit (fun _ => t₀)) (M : OMDat 
   rw [mul_left_comm, e, mul_left_comm]
 
 
+set_option maxHeartbeats 1000000 in
 theorem oneMapOf_of_extends (O : OMDat C R i Unit (fun _ => A.μ0)) (M : OMDat C R i Tp tup) (t₀ : Tp) (hle : O.c'.F ≤ M.c'.F)
     (hlev : M.lev = O.lev) {κ : WeightFamilies.Wt D ((i : ℕ) + 1)} {v₀ ι x₀} (hM : M.Pins κ v₀ ι x₀)
     (hext : ∀ x, O.Plc () x → ∃ x', M.Plc t₀ x' ∧ M.thAd t₀ x' = O.thAd () x ∧

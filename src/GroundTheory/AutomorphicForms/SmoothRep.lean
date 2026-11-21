@@ -251,6 +251,7 @@ section Decomposition
 variable {ρ} {K : Subgroup G}
 
 
+omit [IsTopologicalGroup G] [LocallyCompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] in
 theorem exists_nhds_cosetSum_eq_zero (hρ : IsSmooth ρ) {x : V} (hx : x ∈ coinvariantsKer ρ K) :
     ∃ U ∈ 𝓝 (1 : G), ∀ N : Subgroup G, (N : Set G) ⊆ U →
       (∀ k ∈ K, ∀ n ∈ N, k * n * k⁻¹ ∈ N) → ∀ _ : Fintype (K ⧸ N.subgroupOf K),
@@ -361,6 +362,7 @@ theorem eq_of_invariant_of_eqOn {W : Type*} [AddCommGroup W] [Module ℂ W] {f g
 
 
 omit hρ hKc hKo in
+omit hρ in
 theorem fixedProj_map {W : Type*} [AddCommGroup W] [Module ℂ W] {σ : Representation ℂ G W}
     (hKc : IsCompact (K : Set G)) (hKo : IsOpen (K : Set G))
     (hρ : IsSmooth ρ) (hσ : IsSmooth σ) (f : Representation.IntertwiningMap ρ σ) (v : V) :

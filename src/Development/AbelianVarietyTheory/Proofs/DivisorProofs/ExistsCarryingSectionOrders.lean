@@ -41,6 +41,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {r : ℕ}
 
 
+variable (Dw) in
 theorem wtZ_zero_eq (m : ℕ) : wtZ (0 : (E →+* ℂ) × ℕ → ℕ) (2 * m) = wtOf Dw (weightOf Dw 0 m) m := by
   refine Prod.ext (funext fun x => ?_) (by simp [wtZ, wtOf])
   simp only [wtZ, wtOf, weightOf]
@@ -128,6 +129,7 @@ theorem exists_twist {U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r} {x om : ℝ} (h
 end Free
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_section {D : D7} {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l}
     {c : Coeff l} {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (x : ℝ) (V : (c.F →+* ℂ) → HSp D)
     (dict : ∀ σ, GA D (V σ) → Σ k, Frame ((U σ).X k).Ψ r) (hL : GlobalTheory.FlatCore.Laws U x) (hM : 5 ^ 4 ∣ l.M) (Z : Comp Xo c)

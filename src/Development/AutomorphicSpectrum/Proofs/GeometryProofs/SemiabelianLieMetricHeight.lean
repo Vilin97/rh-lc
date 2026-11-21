@@ -127,6 +127,7 @@ end GlobalTheory.CompanionTheory.Ar.TorusUnif
 namespace GlobalTheory.CompanionTheory.Ar.TorusUnif
 
 
+open scoped ComplexOrder in
 theorem gram_bound (X : Scheme.{0}) (Ω : Type) [Field Ω] (K : Type) [Fintype K] (J : K → Type) [∀ k, Fintype (J k)]
     (y : (Σ k, J k) → Ω) (ξ : Sp Ω ⟶ X) (hall : ∀ q : X, genPt ξ ⤳ q)
     (hT : CoordTie ℤ ξ (fun c' : (k : K) → J k => ∏ k, y ⟨k, c' k⟩)) (G : Over X) [GrpObj G] [IsCommMonObj G] [Smooth G.hom]

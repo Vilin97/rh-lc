@@ -58,6 +58,7 @@ theorem psiPlaces : PsiPlaces := by
   exact ⟨h.hψ, h1, h3, h2, GlobalTheory.ResAniso.VacSchwartz.realPar_ne_zero D θ h.hθ ψ h.hψ l h.hl, h.hl⟩
 
 
+open GlobalTheory.CompanionTheory.SiegelND.ThetaGlue in
 theorem valueSide : ValueSide := by
   intro D r V ν hν φ β hβ μH 𝓕 hμ h𝓕
   have hrank : ∀ (δ : GL (Fin V.rank) D.host.E) (ξ : Matrix (Fin V.rank) (Fin r) D.host.E),

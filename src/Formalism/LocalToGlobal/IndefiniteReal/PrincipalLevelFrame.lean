@@ -28,6 +28,7 @@ def cyc (f : Formalism.AUTREP.GAf L n → ℂ) : Submodule ℂ (Formalism.AUTREP
   Submodule.span ℂ (Set.range fun h => Formalism.L2.NG.rt L n h f)
 
 
+variable (L n) in
 def CongConj : Prop :=
   ∀ (h : Formalism.AUTREP.GAf L n) (N : ℕ), 0 < N → ∃ N' : ℕ, 0 < N' ∧
     ∀ κ, Formalism.L2.NG.Cong L n N' κ → Formalism.L2.NG.Cong L n N (h⁻¹ * κ * h)

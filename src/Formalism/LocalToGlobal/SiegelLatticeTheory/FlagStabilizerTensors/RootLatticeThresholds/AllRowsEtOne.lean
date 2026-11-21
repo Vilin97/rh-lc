@@ -297,6 +297,7 @@ theorem split_prod (F : (Σ k : Fin 2, D.nd.PlG k) → ℂ) :
   rw [Fintype.prod_sigma, Fin.prod_univ_two]
 
 
+include hS in
 theorem etOne_of (hK : KppShape X) (ψ₀ : ∀ k : Fin 2, AddChar (ZMod (D.host.g k)) ℂ) (hψ₀ : ∀ k, ψ₀ k ≠ 1) :
     EtOne X ψ₀ := by
   classical

@@ -24,6 +24,7 @@ def genPt (K : Type) [Field K] (i : ℕ) : (Σ _ : Unit, Fin i) → ProjField K 
   fun q => algebraMap (MvPolynomial (Fin i) K) (ProjField K i) (X q.2)
 
 
+omit [Fintype T] in
 theorem aeval_eq_zero_of_mem (b : Module.Basis T ℤ (dualLattice (HermLattice.standard K i)))
     {f : MRing (dualBlocks T)} (hf : f ∈ dualIdeal b) : aeval (dualLatticeCoord b) f = 0 := by
   have h : ∀ g : MRing (dualBlocks T),
@@ -77,6 +78,7 @@ theorem aeval_genPt_injective : Function.Injective (aeval (R := ℤ) (genPt K i)
 end StandardDualImageBottom
 
 
+open StandardDualImageBottom in
 theorem DualStdImageBot.proof : DualStdImageBot.Statement := by
   intro K _ _ i T _ _ b
   refine eq_bot_iff.mpr fun f hf => (Ideal.mem_bot).mpr (aeval_genPt_injective (K := K) (i := i) ?_)

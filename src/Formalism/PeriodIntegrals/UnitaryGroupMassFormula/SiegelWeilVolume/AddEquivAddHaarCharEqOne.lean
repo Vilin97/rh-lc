@@ -91,6 +91,7 @@ def cHerm (D : (Matrix (Fin n) (Fin n) (R ⊗[F] E))ˣ) : ℝ≥0 :=
   addEquivAddHaarChar (hermEquiv R σ hσ (n := n) D)
 
 
+include hJ in
 theorem fib_map_mulTup (hG : GramMulTup) (hU : IsOpen {r : R | IsUnit r}) (hL : LIP R)
     (μ : Measure (Fin n → Fin M → R ⊗[F] E)) (ν : Measure (HermR R σ n))
     [μ.IsAddHaarMeasure] [ν.IsAddHaarMeasure]
@@ -118,6 +119,7 @@ theorem fib_map_mulTup (hG : GramMulTup) (hU : IsOpen {r : R | IsUnit r}) (hL : 
   exact this
 
 
+include hJ in
 theorem fib_image_mulTup (hG : GramMulTup) (hU : IsOpen {r : R | IsUnit r}) (hL : LIP R)
     (μ : Measure (Fin n → Fin M → R ⊗[F] E)) (ν : Measure (HermR R σ n))
     [μ.IsAddHaarMeasure] [ν.IsAddHaarMeasure]

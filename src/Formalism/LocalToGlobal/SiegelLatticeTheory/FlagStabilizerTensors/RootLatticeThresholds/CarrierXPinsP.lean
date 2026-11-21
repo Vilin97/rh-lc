@@ -53,6 +53,7 @@ def XLeavesP : Prop :=
         (T.Y.FN u) (T.Y.FN u') νq (massDataY T.X T.hb T.Y u u' X0 T.ψ sd C Th vR Q i0 i0' νq).IntN a b ξ ξ' cc
 
 
+variable [Fact Formalism.L2.SG.Pf.CarrierT.CoefCapAll] in
 theorem carrierXSideP_of_leaves (Cb : ℝ) (hLift : LiftAt3 Cb) (hX : XLeavesP) : CarrierSideBoundPositive Cb := by
   intro C₆ Cc hC6
   refine ⟨max (max (max Cc Cd) Ce) 1, ?_⟩
@@ -228,6 +229,7 @@ def KFinDense : Prop :=
       (Ws.map fun w => ‖dsigW σ w (v - a)‖).sum < δ
 
 
+variable [Fact Formalism.L2.SG.SplitPrimeNormLemmas.CoefWeightedLoc] in
 theorem kFinNZ_of (hD : KFinDense) : KFinNZ := by
   intro D X θ C hB u τ hG
   have hLF := Formalism.L2.SG.Pf.LocF.locFactor_holds hG C

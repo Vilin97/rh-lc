@@ -141,6 +141,7 @@ theorem weakFEPair_Λ_congr {P Q : WeakFEPair ℂ} (hf : P.f = Q.f) (hg : P.g = 
   rfl
 
 
+omit [NumberField K] in
 theorem tsum_units_eq_tsum_sub {G : K → ℂ} (hG : Summable G) :
     ∑' ξ : Kˣ, G ξ = ∑' ξ : K, G ξ - G 0 := by
   classical

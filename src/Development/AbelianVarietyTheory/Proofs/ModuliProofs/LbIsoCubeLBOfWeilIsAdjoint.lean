@@ -72,6 +72,7 @@ theorem exists_gen_pairing (hG : GlobalFnsSt) (hA : IsAbelianScheme A) {L : RigL
   linear_combination (norm := abel) a₃ + a₁ - a₂
 
 
+omit [IsCommMonObj A] in
 theorem prod_mulT {T Z : Over S} (n : ℕ) (x : T ⟶ A) (t : Z ⟶ T) (w : Z ⟶ A) {U : Type} [CommGroup U]
     (h : (Z.left ⟶ A.left) → U) :
     ∏ i : Fin 2, h ((lift t w).left ≫ ![(mulT A T n ≫ translPt A x).left, (snd T A ^ n).left] i) ^ ![(1 : ℤ), -1] i =

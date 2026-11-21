@@ -50,6 +50,7 @@ theorem growthSob_RderC_le (hθ : IsInfFam θ) {φ : GA D V → ℂ} (hs : φ �
     exact mul_le_mul' le_rfl (wordSum_letter_le d _ φ)
 
 
+variable (θ N) in
 def cuspSub (hU : IsOpen (U : Set (GA D V))) : Submodule ℂ (GA D V → ℂ) where
   carrier := {φ | Continuous φ ∧ (∀ γ ∈ GQ V, ∀ g, φ (γ * g) = φ g) ∧ (∀ k ∈ U, k ∈ GfC V → ∀ g, φ (g * k) = φ g) ∧
     φ ∈ SmFun θ V ∧ IsCuspFun V φ ∧ ∀ d, growthSob θ V d N φ ≠ ⊤}
@@ -106,6 +107,7 @@ theorem Rder_mem_cuspSub (hθ : IsInfFam θ) {τ : D.what₂.Tau} {X : Matrix (F
       (growthSob_RderC_le hθ a4 τ X d)
 
 
+variable (θ N hU) in
 def Sp : Type := cuspSub θ N hU
 
 instance : AddCommGroup (Sp θ N hU) := inferInstanceAs (AddCommGroup (cuspSub θ N hU))
@@ -113,6 +115,7 @@ instance : AddCommGroup (Sp θ N hU) := inferInstanceAs (AddCommGroup (cuspSub �
 instance : Module ℂ (Sp θ N hU) := inferInstanceAs (Module ℂ (cuspSub θ N hU))
 
 
+variable (θ N hU) in
 def incl : Sp θ N hU →ₗ[ℂ] (GA D V → ℂ) := (cuspSub θ N hU).subtype
 
 theorem incl_mem (x : Sp θ N hU) : incl θ N hU x ∈ cuspSub θ N hU := x.2
@@ -124,6 +127,7 @@ theorem incl_fin (x : Sp θ N hU) (d : ℕ) : growthSob θ V d N (incl θ N hU x
 theorem incl_injective : Function.Injective (incl θ N hU) := Subtype.val_injective
 
 
+variable (θ N hU) in
 def sem (d : ℕ) : Seminorm ℂ (Sp θ N hU) :=
   Seminorm.of (fun x => (growthSob θ V d N (incl θ N hU x)).toReal)
     (fun x y => by
@@ -209,6 +213,7 @@ theorem continuous_of_le (T : Sp θ N hU →ₗ[ℂ] Sp θ N hU) (h : ∀ d, ∃
   exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds this (fun _ => zero_le) h
 
 
+variable (N hU) in
 def act (hθ : IsInfFam θ) (h : GinfC V) : Sp θ N hU →L[ℂ] Sp θ N hU where
   toLinearMap := (rTrLin h.1).restrict fun _ hx => rTr_mem_cuspSub hθ h.2 hx
   cont := continuous_of_le _ fun d => by
@@ -221,6 +226,7 @@ theorem RderC_mem_cuspSub (hθ : IsInfFam θ) (τ : D.what₂.Tau) (Z : Matrix (
     (Submodule.smul_mem _ _ (Rder_mem_cuspSub hθ (GlobalTheory.SmoothAutCheck.parts_mem V τ Z).2 hφ))
 
 
+variable (N hU) in
 def derL (hθ : IsInfFam θ) (τ : D.what₂.Tau) :
     Matrix (Fin V.rank) (Fin V.rank) ℂ →ₗ[ℂ] Sp θ N hU →ₗ[ℂ] Sp θ N hU :=
   LinearMap.mk₂ ℂ (fun Z x => ⟨RderC θ V τ Z (incl θ N hU x), RderC_mem_cuspSub hθ τ Z (incl_mem x)⟩)
@@ -233,6 +239,7 @@ theorem incl_derL (hθ : IsInfFam θ) (τ : D.what₂.Tau) (Z : Matrix (Fin V.ra
     incl θ N hU (derL N hU hθ τ Z x) = RderC θ V τ Z (incl θ N hU x) := rfl
 
 
+variable (N hU) in
 def der (hθ : IsInfFam θ) (τ : D.what₂.Tau) (Z : Matrix (Fin V.rank) (Fin V.rank) ℂ) : Sp θ N hU →L[ℂ] Sp θ N hU where
   toLinearMap := derL N hU hθ τ Z
   cont := continuous_of_le _ fun d => ⟨d + 1, _, ENNReal.sum_ne_top.2 fun _ _ => enorm_ne_top, fun x =>
@@ -286,6 +293,7 @@ theorem tendsto_zero_of_comm (hθ : IsInfFam θ) {α : Type} {F : Filter α} (u 
     tendsto_finsetSum Finset.univ fun (a : Fin k → _) _ => key (List.ofFn a) x
 
 
+variable (θ) in
 def pt (τ : D.what₂.Tau) (u : Matrix (Fin V.rank) (Fin V.rank) ℂ) : GinfC V := ⟨atTau θ V τ u, atTau_mem V τ u⟩
 
 theorem tendsto_act_one (hθ : IsInfFam θ) (τ : D.what₂.Tau) (x : Sp θ N hU) :

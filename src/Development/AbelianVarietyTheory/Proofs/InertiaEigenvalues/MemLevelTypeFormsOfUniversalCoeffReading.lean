@@ -35,6 +35,7 @@ variable {D : D7} {S T : HSp D}
 section Series
 
 
+open Classical in
 theorem omegaG_levT_mul_inv {n r : ℕ} (G : TypeDat D r) (hr : r ≤ n) (K : ∀ PP : Pl D.host.E, GL (Fin r) (kP PP))
     (a : G0 G.Pg r) (ha : ∀ PP : ↥G.Pg, a PP = K PP.1) (hH : a ∈ G.P.H)
     (y : ∀ PP : Pl D.host.E, Matrix (Fin n) (Fin r) (kP PP)) :
@@ -82,6 +83,7 @@ theorem lifts_of_isLiftG0 {a : G0 B.G.Pg T.rank} {κ : GA D T} (h : Lev.IsLevelL
   ⟨h.1, parLev_St h.2.1, fun PP => (congrFun h.2.2 PP).symm.trans (GlobalTheory.AdjDatumMove.restrictedBlock_self_apply _)⟩
 
 
+open Classical in
 theorem om_type (hB : B.Good) (hS : S.SigOK) {Q : Finset (Pl D.host.E)} (hQ : B.admitted Q) {ω : PairRep S T} (hω : B.IsWeil 1 ω)
     {a : G0 B.G.Pg T.rank} (hH : a ∈ B.G.P.H) {κ : GA D T} (hκ : Lifts B a κ)
     {φ φ' : ∀ PP : ↥Q, Matrix (Fin T.rank) (Fin S.rank) (kP PP.1) → ℂ} (s : ↥Q → ℂˣ)
@@ -326,6 +328,7 @@ theorem injective_rd (Z : CellTie hρ Y rd) : Function.Injective rd := by
   exact left_eq_add.1 h1
 
 
+include hρ in
 theorem exists_lift (g : G0g N) :
     ∃ κ, Lev.IsLevelLift (Wc D j) (ρ.B i j b).F.βT (ρ.B i j b).G.levT (ρ.eG i j b g) κ := by
   obtain ⟨R, h1, -, hR⟩ := (hρ.base i j b).places.split
@@ -333,6 +336,7 @@ theorem exists_lift (g : G0g N) :
     (fun P hP P' hP' => not_isConjPl_of_splitSet hR (h1 hP) (h1 hP')) _
 
 
+variable (ρ i j b) in
 def HasType (F : GA D (Wc D j) → ℂ) : Prop :=
   ∀ a (hH : a ∈ (ρ.B i j b).G.P.H) κ, Lifts (ρ.B i j b) a κ → ∀ g, F (g * κ) = (((ρ.B i j b).G.P.chi ⟨a, hH⟩ : ℂˣ) : ℂ) * F g
 
@@ -417,6 +421,7 @@ theorem coefAt_thU_mem (Q M) (d : Y.Dat i ((j : ℕ) + 1) b) (δ) : coefAt δ (Y
 omit Z hA
 
 
+variable (Y) in
 def UnivTyped : Prop := ∀ i, ∀ j ∈ Finset.Icc 1 D.R.m, ∀ b Q M (d : Y.Dat i j b),
   (∃ Xi : DelQM D.host (X.l i) Q M →₀ Y.Fm i j b,
     Y.thU i j b Q M d = Xi.sum (fun δ f => f ⊗ₜ[X.O i] AddMonoidAlgebra.single δ (1 : X.O i))) ∧

@@ -174,6 +174,8 @@ private theorem exists_unitDet {e : AE D} {S : Finset (Formalism.L2.DIV.Pl D.hos
     GlobalTheory.PlaceDatum.finPart_mem_of_toEAf (c ▸ m2)⟩
 
 
+set_option synthInstance.maxHeartbeats 100000 in
+set_option maxHeartbeats 1000000 in
 private theorem smul_inv_eq {n : ℕ} {ε : EAf D} {g B : GL (Fin n) (EAf D)} (h : ε • g.val = ε • B.val) :
     ε • (g⁻¹).val = ε • (B⁻¹).val := by
   calc ε • (g⁻¹).val = (g⁻¹).val * (ε • B.val) * (B⁻¹).val := by
@@ -182,6 +184,8 @@ private theorem smul_inv_eq {n : ℕ} {ε : EAf D} {g B : GL (Fin n) (EAf D)} (h
     _ = ε • (B⁻¹).val := by rw [Matrix.mul_smul, Units.inv_mul, Matrix.smul_mul, Matrix.one_mul]
 
 
+set_option synthInstance.maxHeartbeats 100000 in
+set_option maxHeartbeats 2000000 in
 private theorem frMapO_change {e : AE D} (A WW : HSp D) (βA βA' : GL (Fin A.rank) (EAf D)) (βW βW' : GL (Fin WW.rank) (EAf D))
     (k : GA D WW) (hk : ∀ i j, toEAf D e * (Formalism.IndefR.Lev.finE WW k).1 i j = toEAf D e * (βW' * βW⁻¹).1 i j)
     {y : WO A WW} (hh : IsHalf e y) :
@@ -212,6 +216,8 @@ namespace GlobalTheory.frameChangeUnitDeterminant
 open Formalism.IndefR.Datum
 
 
+set_option synthInstance.maxHeartbeats 100000 in
+set_option maxHeartbeats 4000000 in
 private theorem stdFst_change_frames : ∀ {D : D7} (ν : (AE D)ˣ →* Circle) (e : AE D) (S : Finset (Formalism.L2.DIV.Pl D.host.E)), IsIdemSum e S →
     ∀ (I : Ideal (𝓞 D.host.E)) (A WW : HSp D) (ΛA : Submodule (𝓞 D.host.E) (Fin A.rank → D.host.E))
     (βA βA' : GL (Fin A.rank) (EAf D)), Formalism.L2.DIV.IsFrame βA ΛA → Formalism.L2.DIV.IsFrame βA' ΛA →

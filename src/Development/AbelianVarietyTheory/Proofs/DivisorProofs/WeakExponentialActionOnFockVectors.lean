@@ -150,6 +150,7 @@ theorem exists_isExp {V : Type} [AddCommGroup V] [Module ℂ V] (L : Module.End 
 def evalAt {X : Type} (p : X) : (X → ℂ) →ₗ[ℂ] ℂ := LinearMap.proj p
 
 
+open scoped Classical in
 theorem evalAt_mem_adm (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ]
     (p : κ → Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF F) : evalAt p ∈ (GlobalTheory.WeilM.adeleClass F).adm κ := by
   intro g _
@@ -159,6 +160,7 @@ theorem evalAt_mem_adm (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype
   simp [evalAt, GlobalTheory.WeilM.pureA, mul_comm]
 
 
+open scoped Classical in
 def pureL (F : Type) [Field F] [NumberField F] {κ : Type} [Fintype κ] (g : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ) :
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F κ →ₗ[ℂ] ((κ → AdeleRing (𝓞 F) F) → ℂ) where
   toFun f := GlobalTheory.WeilM.pureA F f g

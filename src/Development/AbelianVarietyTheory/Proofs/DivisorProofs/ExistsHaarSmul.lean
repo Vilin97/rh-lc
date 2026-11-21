@@ -82,6 +82,7 @@ theorem integral_change (V : HSp D) {ν ν' : Measure (GA D V)} {𝓕 𝓕' : Se
       Complex.real_smul]
 
 
+open GlobalTheory.FinPl GlobalTheory.SmallKerInv in
 theorem kerSmall_inv {μ₀ : T} (hL : L.Is μ₀) (W : G.Weil) (B : Frames G) (ρ : RealMatch W) (t : T) (i j : Fin D.R.m) (Θ Θ')
     (hΘ : IsMatched B t ρ i j Θ Θ') (g g₁) :
     ∃ (Λ : GlobalTheory.FinPl.Lat (G.V (.grid i j))) (S : Finset (HeightOneSpectrum (𝓞 D.host.F))),
@@ -187,6 +188,7 @@ theorem exists_reg_at (hK : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorMo
     (.of_forall hbd), hsupp⟩
 
 
+open GlobalTheory.SmallConst in
 theorem reg_const (hK : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ThetaIntegralsAgree) {μ₀ : T} (hL : L.Is μ₀) (W : G.Weil) (B : Frames G)
     (ρ : RealMatch W) (t : T) (i j : Fin D.R.m) (hst : SquareStanding G t) (M : Vol G) (hM : M.Is t) (Θ Θ')
     (hΘ : IsMatched B t ρ i j Θ Θ') (g g₁) :

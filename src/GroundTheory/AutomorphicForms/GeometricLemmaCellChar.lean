@@ -30,6 +30,7 @@ variable (γ : Fin n → ℕ) (T : Fin n → Fin n → Prop) [DecidableRel T]
 abbrev PatIdx : Type := {p : Fin n × Fin n // T p.1 p.2}
 
 
+variable (F) in
 def patMat (X : PatIdx T → F) : Matrix (Fin n) (Fin n) F :=
   fun i j => if h : T i j then X ⟨(i, j), h⟩ else 0
 
@@ -73,6 +74,7 @@ theorem det_one_add_patMat (X : PatIdx T → F) : (1 + patMat F T X).det = 1 := 
   rw [this, det_one]
 
 
+variable (F) in
 def patUnip (X : PatIdx T → F) : GL (Fin n) F :=
   Matrix.GeneralLinearGroup.mkOfDetNeZero (1 + patMat F T X)
     (by rw [det_one_add_patMat hT]; exact one_ne_zero)
@@ -81,6 +83,8 @@ theorem coe_patUnip (X : PatIdx T → F) :
     ((patUnip F hT X : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) = 1 + patMat F T X := rfl
 
 
+omit hT in
+variable (T) in
 def patCoord (g : GL (Fin n) F) : PatIdx T → F := fun p => (g : Matrix (Fin n) (Fin n) F) p.1.1 p.1.2
 
 theorem patCoord_patUnip (X : PatIdx T → F) : patCoord T (patUnip F hT X) = X := by
@@ -160,6 +164,8 @@ theorem patMat_smul (c : F) (X : PatIdx T → F) : patMat F T (c • X) = c • 
   · simp [patMat_apply_of_not T h]
 
 
+omit hT hU in
+variable (T) in
 def patLeft (k : GL (Fin n) F) : (PatIdx T → F) →ₗ[F] (PatIdx T → F) where
   toFun X := fun p => ((k : Matrix (Fin n) (Fin n) F) * patMat F T X) p.1.1 p.1.2
   map_add' X Y := by
@@ -206,6 +212,7 @@ theorem patLeft_one (X : PatIdx T → F) : patLeft T (1 : GL (Fin n) F) X = X :=
   rw [Units.val_one, Matrix.one_mul, patMat_apply_of_mem T p.2]
 
 
+variable (T) in
 def patLeftEquiv {k : GL (Fin n) F} (hk : k ∈ U) : (PatIdx T → F) ≃ₗ[F] (PatIdx T → F) where
   toLinearMap := patLeft T k
   invFun := patLeft T k⁻¹
@@ -659,6 +666,7 @@ theorem diagPow_mem_cellLeviParabolic (ν : Fin n → ℤ) :
   exact lt_irrefl _ hij
 
 
+variable (β γ w) in
 theorem cellChar_eq_one_of_mem_integralGL {k : GL (Fin n) F}
     (hk : k ∈ cellLeviParabolic F β γ w) (hk' : k ∈ integralGL F n) :
     cellChar F β γ w k = 1 := by
@@ -680,6 +688,7 @@ theorem prod_patIdx {P : Fin n → Fin n → Prop} [DecidableRel P] (f : Fin n �
     f).symm
 
 
+variable (β γ w) in
 theorem cellChar_diagPow_eq_prod_zpow (ν : Fin n → ℤ) :
     cellChar F β γ w (diagPow F n ν) =
       ∏ p ∈ Finset.univ.filter (fun p : Fin n × Fin n => γ p.1 < γ p.2 ∧ β (w p.2) < β (w p.1)),
@@ -724,6 +733,7 @@ theorem cellChar_diagPow_eq_prod_zpow (ν : Fin n → ℤ) :
   rw [← _root_.zpow_neg, neg_sub]
 
 
+variable (β γ w) in
 theorem cellChar_diagPow (ν : Fin n → ℤ) :
     cellChar F β γ w (diagPow F n ν) =
       ∏ p ∈ Finset.univ.filter (fun p : Fin n × Fin n => γ p.1 < γ p.2 ∧ β (w p.2) < β (w p.1)),

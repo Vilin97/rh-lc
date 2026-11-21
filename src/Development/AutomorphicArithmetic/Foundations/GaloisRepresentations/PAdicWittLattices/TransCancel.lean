@@ -49,6 +49,7 @@ theorem Wit.w {L : Link D G} {h : G.GAf} {N N' : ℕ} {X' : GenModel gb N'} {X :
   rw [Category.assoc, φ.cart.1.w, ← Category.assoc, Over.w]
 
 
+variable (D) in
 def IsSys (f : ℕ → D.La →+ D.La) (u : ℕ → ℤ) (c k : ℕ) : Prop :=
   c.Coprime p ∧ k.Coprime p ∧ c ∣ k ^ 2 ∧
   (∀ n, 0 < n → n.Coprime p → ∀ (a : D.O) (x : D.La), ∃ z, f n (a • x) = a • f n x + n • z) ∧

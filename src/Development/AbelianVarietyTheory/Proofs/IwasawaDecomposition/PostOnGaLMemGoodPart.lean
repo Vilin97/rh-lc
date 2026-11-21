@@ -28,6 +28,7 @@ namespace GlobalTheory.ProjectedLift
 open Formalism.IndefR.Lev
 
 
+open scoped Pointwise in
 theorem not_isConjPl {D : D7} (P : Formalism.L2.Host.PiBar D.host) {k k' : Fin 2} {w w' : HeightOneSpectrum (𝓞 D.host.E)}
     (hw : P.Div k w) (hw' : P.Div k' w') : ¬ Lev.IsConjPl w w' := by
   intro hc

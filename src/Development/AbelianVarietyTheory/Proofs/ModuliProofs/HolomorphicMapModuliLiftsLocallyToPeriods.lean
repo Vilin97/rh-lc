@@ -135,6 +135,7 @@ namespace GlobalTheory
 open LocLift
 
 
+set_option maxHeartbeats 400000 in
 theorem LocLift.holomorphic_map_lifts_to_periods : ThetaUnifAV → Out.Laws → (∀ (k : Type) [Field
     k] (X : Scheme.{0}) (s
     : X ⟶ Sp k), Smooth s → IsReduced X ∧ IsNormalScheme X ∧ IsLocallyNoetherian X) → (∀ (E

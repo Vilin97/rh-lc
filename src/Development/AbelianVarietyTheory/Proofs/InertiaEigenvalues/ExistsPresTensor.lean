@@ -510,6 +510,7 @@ theorem exists_pres [IsDomain O] [IsPrincipalIdealRing O] [NeZero n] (hO : Funct
       exact Submodule.smul_mem _ _ (Submodule.mem_span_singleton_self _)
 
 
+omit [Algebra k Rk] [Algebra O Rk] [IsScalarTower O k Rk] in
 theorem exists_pres_tensor (E : EtTie W RA RW inclR φR gR πA) [IsDomain O] [IsPrincipalIdealRing O]
     (hO : Function.Injective (algebraMap O LL))
     (hm : ∀ m : Ideal W.EE, m.IsMaximal → m.map E.ioE.toRingHom ≠ ⊤)

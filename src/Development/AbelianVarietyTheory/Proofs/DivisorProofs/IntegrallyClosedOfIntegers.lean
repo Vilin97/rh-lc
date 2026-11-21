@@ -33,6 +33,7 @@ section Fin
 variable {R : Type*} [Semiring R]
 
 
+variable (R) in
 def appendEquiv (m n : ℕ) : ((Fin m → R) × (Fin n → R)) ≃ₗ[R] (Fin (m + n) → R) where
   toFun x := Fin.append x.1 x.2
   invFun z := (fun i => z (Fin.castAdd n i), fun j => z (Fin.natAdd m j))
@@ -94,6 +95,7 @@ variable {p : ℕ} [Fact p.Prime] {O : Type} [CommRing O] {G G₁ G₂ : PDivGro
   (i₁ : G₁ ⟶ G) (i₂ : G₂ ⟶ G) (q₁ : G ⟶ G₁) (q₂ : G ⟶ G₂)
 
 
+include i₁ i₂ in
 theorem exists_tateSplit (h₁ : i₁ ≫ q₁ = 𝟙 _) (h₂ : i₂ ≫ q₂ = 𝟙 _) (h₁₂ : i₁ ≫ q₂ = 0)
     (h₂₁ : i₂ ≫ q₁ = 0) (h : q₁ ≫ i₁ + q₂ ≫ i₂ = 𝟙 _) :
     ∃ T : G.Tate ≃ₗ[ℤ_[p]] G₁.Tate × G₂.Tate,
@@ -110,6 +112,7 @@ theorem exists_tateSplit (h₁ : i₁ ≫ q₁ = 𝟙 _) (h₂ : i₂ ≫ q₂ =
     fun _ => rfl, fun _ _ => rfl⟩
 
 
+include i₁ i₂ in
 theorem exists_lieSplit (h₁ : i₁ ≫ q₁ = 𝟙 _) (h₂ : i₂ ≫ q₂ = 𝟙 _) (h₁₂ : i₁ ≫ q₂ = 0)
     (h₂₁ : i₂ ≫ q₁ = 0) (h : q₁ ≫ i₁ + q₂ ≫ i₂ = 𝟙 _) :
     ∃ L : G.Lie ≃ₗ[O] G₁.Lie × G₂.Lie, ∀ x, L x = (lieMap G G₁ q₁ x, lieMap G G₂ q₂ x) :=
@@ -132,6 +135,7 @@ theorem exists_lieSplit (h₁ : i₁ ≫ q₁ = 𝟙 _) (h₂ : i₂ ≫ q₂ = 
     fun _ => rfl⟩
 
 
+include i₁ i₂ in
 theorem exists_omegaDualSplit (h₁ : i₁ ≫ q₁ = 𝟙 _) (h₂ : i₂ ≫ q₂ = 𝟙 _) (h₁₂ : i₁ ≫ q₂ = 0)
     (h₂₁ : i₂ ≫ q₁ = 0) (h : q₁ ≫ i₁ + q₂ ≫ i₂ = 𝟙 _) :
     ∃ W : G.dual.omega ≃ₗ[O] G₁.dual.omega × G₂.dual.omega,
@@ -183,6 +187,7 @@ theorem exists_filSplit (hb : ∀ x y, D.bb (Fin.append x y) = Fin.append (D₁.
      right_inv := fun w => by ext i <;> simp }, fun _ _ => rfl⟩
 
 
+variable (D₁ D₂) in
 def quotProj : (Fin (h₁ + h₂) → O) →ₗ[O] ((Fin h₁ → O) ⧸ D₁.Fil) × ((Fin h₂ → O) ⧸ D₂.Fil) :=
   (D₁.Fil.mkQ.prodMap D₂.Fil.mkQ) ∘ₗ (appendEquiv O h₁ h₂).symm.toLinearMap
 

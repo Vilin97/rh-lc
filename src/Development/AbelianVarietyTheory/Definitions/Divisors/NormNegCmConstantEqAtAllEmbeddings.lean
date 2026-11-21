@@ -165,6 +165,8 @@ theorem le_expL {L : ℝ} {e : ℕ} (h : e * Real.log 3 ≤ 3 * L) : e ≤ expL 
   Nat.le_floor ((le_div_iff₀ (Real.log_pos (by norm_num))).2 h)
 
 
+set_option genInjectivity false in
+set_option genSizeOfSpec false in
 structure Deep (T : Core D) (j : ℕ) : Type 1 where
 
   c' : Coeff T.Q.l
@@ -221,16 +223,19 @@ theorem good_resEmb {σ : Y.d.c₂.F →+* ℂ} (hσ : GoodEmb Y.d.c₂ σ) : Go
 abbrev GoodL (L o : ℝ) : Prop := Y.Good (expL L) o
 
 
+variable {Y} in
 theorem Good.deg {e : ℕ} {o : ℝ} (h : Y.Good e o) : Real.log (Module.finrank ℚ Y.d.c₂.F : ℝ) ≤ o :=
   (log_finrank_le_fieldSz _).trans h.size
 
 
+variable {Y} in
 theorem Good.rd {e : ℕ} {o : ℝ} (h : Y.Good e o) :
     Real.log |(discr Y.d.c₂.F : ℝ)| ≤ o * Module.finrank ℚ Y.d.c₂.F := by
   have hp : (0 : ℝ) < Module.finrank ℚ Y.d.c₂.F := by exact_mod_cast Module.finrank_pos
   exact (div_le_iff₀ hp).1 ((log_rd_le_fieldSz _).trans h.size)
 
 
+variable {Y} in
 theorem Good.mono {e : ℕ} {o o' : ℝ} (h : Y.Good e o) (ho : o ≤ o') : Y.Good e o' :=
   { h with size := h.size.trans ho }
 
@@ -425,6 +430,7 @@ theorem rank_pos (T : Core D) (hQ : T.Q.Pins) (j : ℕ) (hj : InR D j) : 1 ≤ (
   rw [hr]; unfold Ranks.r; omega
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_good_pin (T : Core D) (hQ : T.Q.Pins) (j : ℕ) (hj : InR D j) (c' : Coeff T.Q.l) (hle : T.Q.c.F ≤ c'.F)
     (d : DeltaDat (T.Q.Xo j) c' 0) (e : ℕ) (a1 : d.pd = 15 ^ e) (a2 : d.IsLev) (a3 : d.l₂.A = 1)
     (a4 : FnAlgClosed d.Xo₂ d.c₂) (a5 : ∀ s : ℂ ≃+* ℂ, (∀ a ∈ T.Q.c.F, s a = a) → ∀ a ∈ c'.F, s a ∈ c'.F)

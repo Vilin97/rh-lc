@@ -254,6 +254,7 @@ variable {D : D7} {u u' : D.what₂.Word} {F0 : FlagG (VS D) D.R.rS ((Tu D u : �
   {what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)}
 
 
+variable (D u u' F0 what₂) in
 structure PairSys : Type 1 where
   P : Type
   fst : P → Term D u u' F0 what₂

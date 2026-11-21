@@ -125,6 +125,7 @@ theorem gsRestrict_comp_galToFixing :
     (AlgEquiv.restrictNormal_commutes σ (maxUnramifiedOutside K.1 ℚ̄ S) y).symm
 
 
+set_option maxHeartbeats 1000000 in
 theorem gsBrauerInfl_injective : Function.Injective (gsBrauerInfl K S 2).hom := by
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
@@ -174,6 +175,7 @@ theorem gsBrauerInfl_comp_unitsLocalRes (n : ℕ) :
 end Local
 
 
+set_option maxHeartbeats 2000000 in
 theorem brauerLocal_gsBrauerInfl_inr (ιs : LocalEmbeddings K) (v : HeightOneSpectrum (𝓞 K.1))
     (x : cohomology (uliftIntToIntRep (galUnits K.1 (maxUnramifiedOutside K.1 ℚ̄ S))) 2) :
     brauerLocal ιs ((gsBrauerInfl K S 2).hom x) (.inr v) = (gsLocalRes S (ιs.fin v) 2).hom x := by
@@ -235,10 +237,12 @@ instance isDiscreteRep_quotientToInvariants_fixingSubgroupOf :
   isDiscreteRep_quotientToInvariants_of_normal _ _
 
 
+variable (E) in
 abbrev unitsInvariantsOf :=
   Representation.invariants ((unitsLimitRep K).ρ.comp (fixingSubgroupOf K E).subtype)
 
 
+omit [IsGalois K.1 E.1] in
 theorem mem_of_mem_invariants (hE : ∀ x ∈ E.1, x ∈ maxUnramifiedOutside K.1 ℚ̄ S)
     (a : unitsInvariantsOf K E) :
     (((Additive.toMul (a : Additive ℚ̄ˣ)) : ℚ̄ˣ) : ℚ̄) ∈ maxUnramifiedOutside K.1 ℚ̄ S := by

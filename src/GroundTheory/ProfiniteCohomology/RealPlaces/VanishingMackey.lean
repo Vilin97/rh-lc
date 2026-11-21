@@ -101,6 +101,7 @@ variable {ψ W N} {n : ℕ}
 include h
 
 
+omit [CompactSpace G] [∀ w, CompactSpace (F w)] in
 theorem injective_mackeyRealRes_iff :
     Function.Injective (mackeyRealRes ψ W N n) ↔ Function.Injective (mackeyTopRes ψ W N n) := by
   constructor
@@ -113,6 +114,7 @@ theorem injective_mackeyRealRes_iff :
     exact hi (funext fun p => congrFun (congrFun hcc p.1.1) p.1.2)
 
 
+omit [CompactSpace G] [∀ w, CompactSpace (F w)] in
 theorem surjective_mackeyRealRes_iff :
     Function.Surjective (mackeyRealRes ψ W N n) ↔ Function.Surjective (mackeyTopRes ψ W N n) := by
   classical

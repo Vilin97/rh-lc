@@ -102,6 +102,7 @@ theorem ac_fibre_iff (hpq : IsPullback p q g g) (hπ : IsPullback π f p t) (hF 
 variable [IsAlgClosed K] [Smooth g]
 
 
+omit [IsAlgClosed K] in
 theorem family_fibres
     (hproj : ∀ (R : Type) [CommRing R] (u : Spec (CommRingCat.of R) ⟶ Spec (CommRingCat.of K)) (X : Scheme.{0})
       (π : X ⟶ A) (f : X ⟶ Spec (CommRingCat.of R)), IsPullback π f g u → IsProjBy f)
@@ -137,6 +138,7 @@ theorem ac_of_slices
     (ac_fibre_iff hpq hπ hF _ hχ s hp hq h₀).2 hs⟩
 
 
+omit [IsAlgClosed K] in
 theorem ac_slice
     (hproj : ∀ (R : Type) [CommRing R] (u : Spec (CommRingCat.of R) ⟶ Spec (CommRingCat.of K)) (X : Scheme.{0})
       (π : X ⟶ A) (f : X ⟶ Spec (CommRingCat.of R)), IsPullback π f g u → IsProjBy f)
@@ -171,6 +173,7 @@ section Group
 variable {K : Type} [Field K] {B : Over (Spec (CommRingCat.of K))} [GrpObj B]
 
 
+omit [GrpObj B] in
 theorem pull_const (c : CechPic.Pic B.left) (T : Over (Spec (CommRingCat.of K))) (x : 𝟙_ _ ⟶ B) :
     CechPic.pull (toUnit T ≫ x).left c = 0 := by
   rw [Over.comp_left, pull_comp]

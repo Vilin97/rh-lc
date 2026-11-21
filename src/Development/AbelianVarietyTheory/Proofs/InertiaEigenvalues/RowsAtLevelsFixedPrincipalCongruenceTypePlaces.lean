@@ -171,6 +171,7 @@ variable {D : D7}
 theorem rank_zeroth_component_eq (D : D7) : (Yc D 0).rank = D.R.r := Formalism.L2.SG.InstExistsPf.rank_eq D
 
 
+set_option maxHeartbeats 1600000 in
 theorem mem_St_of_split (β₀ : GL (Fin (Yc D 0).rank) (EAf D))
     (hβ : IsFrame β₀ (Formalism.L2.Herm.crdLat (Yc D 0) (Yc D 0).L0)) (ε : EAf D) (h1 : ε * ε = ε)
     (h2 : ε * Formalism.UG.sigR D.sp.cm.sig (Formalism.L2.Herm.Af D.host.F) ε = 0) (h3 : ε ∈ Formalism.L2.Herm.intAf D.host.F D.host.E)
@@ -220,6 +221,7 @@ theorem off_conj {R S : Type} [CommRing R] [CommRing S] (θ : R ≃+* S) {m n : 
   exact congrFun (congrFun h3 a) b
 
 
+set_option maxHeartbeats 3200000 in
 theorem core (hF : D.host.F = maximalRealSubfield D.host.E) (PY : principalLevelFrame.RowPsi (Yc D 0) D.R.r) (hP : principalLevelFrame.StdPsi hF PY)
     (β : GL (Fin (Yc D 0).rank) (EAf D)) (Λ : Submodule (𝓞 D.host.E) (Fin (Yc D 0).rank → D.host.E)) (N : ℕ)
     (hβ : IsSDFrame (Yc D 0) β Λ N) {ι : Type} [Fintype ι] (s : ι → SplitPlace D.host.E)
@@ -321,6 +323,7 @@ theorem fixed_of_mem_mult {V : HSp D} {S : D.what₂.Tau → _} {θ} (M : Mult.D
   | smul a x _ hx => show a • x v (g * κ) = a • x v g; rw [hx]
 
 
+set_option maxHeartbeats 3200000 in
 theorem rows_fixed : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type} {A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat3 D A3 Ks) (F : Face3 D A3) (cG : G0 R.Pg D.R.r ≃* G0g D.nd) {X0 : BaseLevelRowSide D} (Y : GlobalTheory.Mem.R3.Read (A3 := A3) R.toRealDat F.lv2 X0), GlobalTheory.Mem.R3.Pins R F cG → ∀ (s : ∀ k : Fin 2, D.nd.PlG k → SplitPlace D.host.E) (j : ∀ k v, ℚ_[D.host.g k] ≃+* (s k v).v.adicCompletion (maximalRealSubfield D.host.E)), (∀ k v, (s k v).w = D.naut.plGw k v) → (∀ k v, Continuous (j k v)) → ∃ c : GAf D.host.E D.R.r, (∀ (k : Fin 2) (v : D.nd.PlG k) (y : GL (Fin D.R.r) ℤ_[D.host.g k]) (x : GAf D.host.E D.R.r), IsLiftAt (s k v) (j k v) y x → IsLevelLift (Yc D 0) (R.βY 0) (R.dat0 R.triv) (cG.symm (GlobalTheory.GoodTypes.facHom D k v (GlobalTheory.GLp.red (D.host.g k) D.R.r y))) (Y.PY.ψ (c * x * c⁻¹))) ∧ ∀ (b : Bool), ∀ Tm ∈ Mult.Mult R.θ (R.MY 0) (levS _ (R.βY 0) (R.dat0 (R.toRealDat.levR F.lv2 b))) (levChi _ (R.βY 0) (R.dat0 (R.toRealDat.levR F.lv2 b))), Tm ∈ KFix D s j ((principalLevelFrame.actM Y.PY (R.MY 0)).comp (MulAut.conj c).toMonoidHom) := by
   intro D G _ _ Pl0 I0 T A3 Ks _ _ _ R F cG X0 Y hP s j hs hj
   obtain ⟨plg, iso, hplg, -, -, hpe⟩ := hP.keep.grp

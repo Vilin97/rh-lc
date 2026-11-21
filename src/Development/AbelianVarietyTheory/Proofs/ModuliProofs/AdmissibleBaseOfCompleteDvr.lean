@@ -140,6 +140,7 @@ theorem exists_integral : ∃ (M : NumD C) (ν₀ : NumOf D.toPre C M) (q : Quad
   exact ⟨M, ν₀, q, I, hI, hq, h⟩
 
 
+include ν in
 theorem summable_of_data [CompleteSpace C] {m : ℕ} (hm : Odd m) (p : N.QT (m ^ 2)) :
     Summable (N.txT m p) ∧ ∀ j, j ≠ 0 → ∀ r : N.QT j, Summable (N.evT m p r.1.2) := by
   obtain ⟨M, ν₀, q, I, -, hq, hl, -⟩ := exists_integral hV D hC ν
@@ -237,6 +238,7 @@ theorem inducedBy_of_onQ (hn : 2 ≤ n) (h : SameMatch mt w) {j : ℕ} (hj : 1 �
   exact ⟨p, p', _, hp, hp', he _ p p' q hp hp', a i q⟩
 
 
+omit he hb he' hb' [IsAlgClosed C] in
 theorem onQ_of_inducedBy (hn : n ≠ 0) (h : SameMatch mt w)
     (H : ∃ e : IsPullDeg (RingHom.id V) D D', w.InducedBy ν ν' e) :
     ∃ J : NumD.Iso N N', mt.OnQ J ∧ GeoIso ν ν' J.toIso := by

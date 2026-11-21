@@ -38,6 +38,12 @@ private theorem isUnit_of_isUnit_norm' {R S : Type} [CommRing R] [CommRing S] [A
   simpa using this
 
 
+open IsDedekindDomain NumberField MeasureTheory Matrix in
+open Classical in
+open scoped TensorProduct ComplexConjugate in
+attribute [local instance] _root_.Formalism.BasicNotions.Host.cmStar _root_.GlobalTheory.LocalData.complRel
+  _root_.GlobalTheory.LocalData.isLocalField _root_.GlobalTheory.FunObj.borelKw
+  _root_.GlobalTheory.FunObj.borelSpaceKw in
 theorem _root_.GlobalTheory.LFun.resEtaPow_of_resEta : ∀ (F E : Type) [Field F]
     [NumberField F] [Field E] [NumberField E] [Algebra F E], Module.finrank F E = 2 →
     ∀ (χ : (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF F ⊗[F] E)ˣ →* Circle) (n : ℕ), _root_.GlobalTheory.LFun.ResEta F E χ n →

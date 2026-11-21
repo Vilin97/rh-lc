@@ -75,6 +75,7 @@ variable {R δ} {R' B' : Type} [CommRing R'] [CommRing B'] [Algebra R' B'] {J' :
   {σ : R →+* R'} {α : B →+* B'} (h : SemiHom σ α) (hd : IsDPMorphism δ δ' α)
 
 
+include hd in
 theorem mDR_mem_rel {x : DR R B} (hx : x ∈ rel R δ) : h.mDR x ∈ rel R' δ' := by
   refine Submodule.span_induction (p := fun y _ ↦ h.mDR y ∈ rel R' δ') ?_ ?_ ?_ ?_ hx
   · rintro y ⟨n, a, ha, rfl⟩
@@ -164,6 +165,7 @@ def hot (v : Derivation R B B) (e : ℕ → B) (n : ℕ) (x : DR R B) : DR R B :
   ∑ k ∈ Finset.range n, ((-1) ^ k * e (k + 1)) • (lie v ^ k) (ctr v x)
 
 
+variable (R δ) in
 def filDR (n : ℕ) : Ideal (DR R B) := Ideal.span (algebraMap B (DR R B) '' fil δ n) ⊔ rel R δ
 
 end Ring

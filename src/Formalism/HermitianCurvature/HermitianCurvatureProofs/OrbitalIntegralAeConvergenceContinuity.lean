@@ -373,6 +373,7 @@ def JM (D : RealPlaceData k r Wp Wq) (F : Mat k r → (Wq →L[ℂ] Wp)) (τ : �
     Wq →L[ℂ] Wp := ∫ p, xiTau D τ p • RM D F p (gqM D q) ∂D.μSS
 
 
+set_option maxHeartbeats 800000 in
 theorem sm_A (D : RealPlaceData k r Wp Wq) {F : Mat k r → (Wq →L[ℂ] Wp)} (hF : ContinuousOn F (GV k r)) :
     StronglyMeasurable fun b : ((ℝ × ℝ) × ((Fin r → ℂ) × ℂ)) × SS k r => RM D F b.2 (gqM D b.1.2) := by
   have hm : Measurable fun b : ((ℝ × ℝ) × ((Fin r → ℂ) × ℂ)) × SS k r => gqM D b.1.2 :=
@@ -1078,6 +1079,7 @@ theorem measurable_PhiM (D : RealPlaceData k r Wp Wq) : Measurable (PhiM D) := b
     measurable_snd.snd.snd) measurable_snd.snd.fst
 
 
+set_option maxHeartbeats 800000 in
 theorem sfNu (D : RealPlaceData k r Wp Wq) : SigmaFinite (nuQ D) := by
   unfold nuQ
   first

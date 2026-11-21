@@ -33,11 +33,13 @@ namespace GlobalTheory.EtLog
 variable {X : Scheme.{0}} [IsIntegral X] {U : X.Opens} (hU : IsAffineOpen U)
 
 
+include hU in
 theorem unitAt_fnOf_iff_not_mem {y : X} (hy : y ∈ U) (s : Γ(X, U)) :
     UnitAt y (fnOf U (gen_mem hy) s) ↔ s ∉ (hU.primeIdealOf ⟨y, hy⟩).asIdeal := by
   rw [unitAt_fnOf_iff hy, GlobalTheory.DetHT.RegLoc.mem_basicOpen_iff hU hy]
 
 
+include hU in
 theorem regAt_iff_frac {y : X} (hy : y ∈ U) (g : X.functionField) :
     RegAt y g ↔ ∃ a b : Γ(X, U), b ∉ (hU.primeIdealOf ⟨y, hy⟩).asIdeal ∧
       g * fnOf U (gen_mem hy) b = fnOf U (gen_mem hy) a := by
@@ -52,6 +54,7 @@ theorem regAt_iff_frac {y : X} (hy : y ∈ U) (g : X.functionField) :
     exact (regAt_fnOf hy _ a).mul hu.inv.regAt
 
 
+include hU in
 theorem unitAt_iff_frac {y : X} (hy : y ∈ U) (g : X.functionField) :
     UnitAt y g ↔ ∃ a b : Γ(X, U), a ∉ (hU.primeIdealOf ⟨y, hy⟩).asIdeal ∧
       b ∉ (hU.primeIdealOf ⟨y, hy⟩).asIdeal ∧ g * fnOf U (gen_mem hy) b = fnOf U (gen_mem hy) a := by
@@ -70,6 +73,7 @@ theorem unitAt_iff_frac {y : X} (hy : y ∈ U) (g : X.functionField) :
     exact hua.mul hu.inv
 
 
+include hU in
 theorem primeIdealOf_le_of_specializes {y z : X} (hy : y ∈ U) (hz : z ∈ U) (hzy : z ⤳ y) :
     (hU.primeIdealOf ⟨z, hz⟩).asIdeal ≤ (hU.primeIdealOf ⟨y, hy⟩).asIdeal := by
   intro s hs
@@ -78,6 +82,7 @@ theorem primeIdealOf_le_of_specializes {y z : X} (hy : y ∈ U) (hz : z ∈ U) (
   exact (GlobalTheory.DetHT.RegLoc.mem_basicOpen_iff hU hz s).1 (hzy.mem_open (X.basicOpen s).isOpen hs') hs
 
 
+include hU in
 theorem exists_specializes_of_le {y : X} (hy : y ∈ U) (Q : Ideal Γ(X, U)) (hQ : Q.IsPrime)
     (hQP : Q ≤ (hU.primeIdealOf ⟨y, hy⟩).asIdeal) :
     ∃ (z : X) (hz : z ∈ U), z ⤳ y ∧ (hU.primeIdealOf ⟨z, hz⟩).asIdeal = Q := by

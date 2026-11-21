@@ -208,6 +208,7 @@ def siegelSet (n : ℕ) (ω : Set (AdelicGLn.AdelicGL K n)) (t : ℝ) : Set (Ade
   {g | ∃ b ∈ ω, ∃ a ∈ siegelTorus n t, ∃ k ∈ maxCompact, g = b * a * k}
 
 
+open scoped Pointwise in
 theorem exists_siegelSet (n : ℕ) :
     ∃ ω : Set (AdelicGLn.AdelicGL K n), IsCompact ω ∧
       ω ⊆ (adelicBorel (K := K) (n := n) : Set (AdelicGLn.AdelicGL K n)) ∧ ∃ t : ℝ, 0 < t ∧

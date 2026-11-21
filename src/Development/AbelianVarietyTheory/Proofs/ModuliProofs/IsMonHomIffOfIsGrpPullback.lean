@@ -57,6 +57,7 @@ theorem isMonHom_of_pullback [Flat j] [Surjective j] {G H : Over S} [MonObj G] [
     rw [Functor.map_comp, Functor.map_comp, h]
 
 
+variable {j} in
 theorem isMonHom_iff_of_isGrpPullback [Flat j] [Surjective j] {G H : Over S} [GrpObj G] [GrpObj H]
     {G' H' : Over U} [GrpObj G'] [GrpObj H'] {φ : G'.left ⟶ G.left} {ψ : H'.left ⟶ H.left}
     (hG : IsGrpPullback G' G j φ) (hH : IsGrpPullback H' H j ψ) (f' : G' ⟶ H') (f : G ⟶ H)

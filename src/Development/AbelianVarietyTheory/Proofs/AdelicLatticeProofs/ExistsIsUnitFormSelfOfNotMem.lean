@@ -71,6 +71,7 @@ theorem exists_isUnit_add_mul (hσ : ∀ x, σ (σ x) = x)
   exact hn.ne_top (n.eq_top_of_isUnit_mem this hω)
 
 
+omit [IsLocalRing R] [Algebra R S] [CommRing R] in
 theorem exists_add_eq_one (hσ : ∀ x, σ (σ x) = x) (hgal : ∃ ω, IsUnit (ω - σ ω)) :
     ∃ t, t + σ t = 1 := by
   obtain ⟨ω, hω⟩ := hgal

@@ -76,6 +76,7 @@ theorem mem_eigenspace_iff₂ (P : Subgroup G) (lam : P →* LLˣ) (x : WL) :
   exact (smul_right_injective WL (Units.ne_zero _)).eq_iff
 
 
+open Classical in
 def avg (P : Subgroup G) (lam : P →* LLˣ) (x : WL) : WL :=
   ∑ p : P, ((Nat.card P : LL)⁻¹ * (((lam p)⁻¹ : LLˣ) : LL)) • twRep A p x
 

@@ -144,6 +144,7 @@ def ratForm (k : Fin D.R.m) (s : T) (x : Fin (lDim D A3.A F.lv2.P0 F.lv2.ψ0 k s
   D.what₂.jMt (Y.tup s) ((k : ℕ) + 1) (Y.eMt k s x)
 
 
+variable (F) in
 def lvlAct (k : Fin D.R.m) (s : T) (a : MonoidAlgebra D.what₂.LL G) (x : Fin (lDim D A3.A F.lv2.P0 F.lv2.ψ0 k s) → D.what₂.LL) :
     Fin (lDim D A3.A F.lv2.P0 F.lv2.ψ0 k s) → D.what₂.LL :=
   ((A3.A.fam.L k s).S.lvlOp (A3.A.fam.L k s).r (A3.A.fam.lvlA F.lv2.P0 F.lv2.ψ0).P (A3.A.fam.lvlA F.lv2.P0 F.lv2.ψ0).ψ a).mulVec x
@@ -173,6 +174,7 @@ def FrameAt (k : Fin D.R.m) (P : principalLevelFrame.RowPsi (Vc D k) D.R.nV) (s 
       Lev.levChi (Vc D k) (R.βV k) (Lev.flagL (R.datVt k s)) (P.ψ (L ((R.eG.trans cG) (c * g * c⁻¹)))) = 1)
 
 
+set_option maxHeartbeats 1000000 in
 theorem cenLoc_of (M : MtFam D) (ad : MtAd Y M) (h1 : CenRat Y cG) (h2 : ActRead Y)
     (h3 : ∀ (i : D.nd.Loc) (s : T) (k : Fin D.R.m), Y.tup s = D.nd.mu i → FrameAt Y cG k (ad.PV k) s) : CenLoc D M := by
   intro i

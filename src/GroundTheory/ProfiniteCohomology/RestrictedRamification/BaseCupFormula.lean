@@ -26,6 +26,7 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
   [NeZero n]
 
 
+omit [NeZero n] in
 theorem localInvU_eq_brauerInvOfIsSepClosure (v : HeightOneSpectrum (𝓞 K.1))
     (x : cohomology (galUnits.{0} (v.adicCompletion K.1) (AlgebraicClosure (v.adicCompletion K.1))) 2) :
     localInvU v x = brauerInvOfIsSepClosure (v.adicCompletion K.1) (AlgebraicClosure (v.adicCompletion K.1)) x :=
@@ -35,6 +36,7 @@ theorem localInvU_eq_brauerInvOfIsSepClosure (v : HeightOneSpectrum (𝓞 K.1))
       (congrArg _ (congrArg (fun f => ModuleCat.Hom.hom f x) (cohomologyMap_id 2))))
 
 
+omit [NeZero n] in
 theorem gsRootsOmegaMor_eq_gsRootsLocalMor (v : S) : gsRootsOmegaMor S ιs n v = gsRootsLocalMor S ιs n v := by
   refine Rep.hom_ext (Representation.IntertwiningMap.ext (LinearMap.ext fun ζ => ?_))
   apply Additive.toMul.injective
@@ -73,6 +75,7 @@ section ActNatural
 variable {H : Type} [Group H]
 
 
+omit [NeZero n] in
 theorem zmodActPairing_comp (D D' Z' : Rep.{0} (ULift.{0} ℤ) H) (hD : ∀ d : D, n • d = 0)
     (hD' : ∀ d : D', n • d = 0) (e : Z' →+ ZMod n) (hZ : ∀ (g : H) (z : Z'), Z'.ρ g z = z) (f : D ⟶ D') :
     zmodActPairing n D Z' hD e hZ ≫ f = (f ⊗ₘ 𝟙 Z') ≫ zmodActPairing n D' Z' hD' e hZ := by
@@ -84,6 +87,7 @@ theorem zmodActPairing_comp (D D' Z' : Rep.{0} (ULift.{0} ℤ) H) (hD : ∀ d : 
 end ActNatural
 
 
+omit [NeZero n] in
 theorem zmodMulPairingRight_gsRoots_eq :
     zmodMulPairingRight n (gsRoots S n) (nsmul_gsRoots S n) =
       zmodActPairing n (gsRoots S n) (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) (nsmul_gsRoots S n)
@@ -152,6 +156,7 @@ theorem gsZmodPairing_hμ (v : S) :
       (AddEquiv.ulift : ULift.{0} (ZMod n) ≃+ ZMod n).toAddMonoidHom (fun _ _ => rfl) (gsRootsOmegaMor S ιs n v))
 
 
+omit [NeZero n] in
 theorem gsRootsComparison_compactCupRes (y : compactCohomologyRes (gsFinFamily S ιs) (gsRoots S n) 2)
     (x : cohomology (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) 1) :
     (gsRootsComparison S ιs n 3).hom (compactCupRes (gsFinFamily S ιs)

@@ -11,6 +11,7 @@ open Matrix FockH1Action MvPolynomial
 namespace PI.FockOneDegW.HwC
 
 
+open Classical in
 theorem exists_wtvec {p q r s : ℕ} (U : Submodule ℂ (Pol p q r s))
     (hU : ∀ c : Ix p q, ∀ u ∈ U, fockAct1 p q r s (Eab c c) u ∈ U) :
     ∀ (n : ℕ) (u : Pol p q r s), u ∈ U → u ≠ 0 → (u.support.image wtv).card ≤ n →

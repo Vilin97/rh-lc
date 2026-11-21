@@ -24,6 +24,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
   {Xo : Moduli D l} {c : Coeff l} {O : Type} [CommRing O] {β : O →+* c.F}
 
 
+open Classical in
 structure HodgeTie (Y : Model Xo c β) (S : Finset ℕ) (n : ℕ) (M : Top.RootModel (CMType H) (D.p + D.q)) where
 
   A : HodgeCpt Y S M.y

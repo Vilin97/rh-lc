@@ -330,6 +330,7 @@ theorem relIndex_level (hp : ∀ i, (gp i).Prime) (hne : gp 0 ≠ gp 1) {f : ℕ
 end Record
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.SelfDualStabiliserIndex GlobalTheory.IndefiniteRowSideFullHecke.SplittingProjection in
 theorem indexKU_of_selfDualOverBase (H : SelfDualOverBase) : IndexKU := by
   intro D Lv u
   letI := D.host.cmStar

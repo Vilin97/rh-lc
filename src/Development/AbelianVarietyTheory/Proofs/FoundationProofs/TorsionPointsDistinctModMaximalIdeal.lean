@@ -169,6 +169,8 @@ private lemma norm_sub_y_le_norm_sub_x_of_torsion [DecidableEq K] {A B : K} {N :
   exact mul_le_of_le_one_left (norm_nonneg _) hl
 
 
+open WeierstrassCurve WeierstrassCurve.Affine in
+variable {K : Type} [NormedField K] [IsUltrametricDist K] in
 theorem _root_.GlobalTheory.torsion_points_distinct_mod_maximal_ideal : ∀ (K : Type) [NormedField K] [IsUltrametricDist K] [DecidableEq K] (A B : K) (N : ℕ), ‖A‖ ≤ 1 → ‖B‖ ≤ 1 → ‖(2 : K)‖ = 1 → ‖4 * A ^ 3 + 27 * B ^ 2‖ = 1 → Odd N → (∀ (x y : K) (h : (⟨0, 0, 0, A, B⟩ : WeierstrassCurve K).toAffine.Nonsingular x y), N • (WeierstrassCurve.Affine.Point.some x y h) = 0 → ‖x‖ ≤ 1) → ∀ (x y : K) (h : (⟨0, 0, 0, A, B⟩ : WeierstrassCurve K).toAffine.Nonsingular x y), N • (WeierstrassCurve.Affine.Point.some x y h) = 0 → ‖x ^ 3 + A * x + B‖ = 1 ∧ ∀ (x' y' : K) (h' : (⟨0, 0, 0, A, B⟩ : WeierstrassCurve K).toAffine.Nonsingular x' y'), N • (WeierstrassCurve.Affine.Point.some x' y' h') = 0 → x ≠ x' → ‖x - x'‖ = 1 := by
   intro K _ _ _ A B N hA hB h2 hD hN hT x y h hP
   have hy1 := norm_y_eq_one_of_nsmul_eq_zero hA hB h2 hD hN hT h hP

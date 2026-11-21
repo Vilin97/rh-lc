@@ -73,6 +73,7 @@ end GlobalTheory.EtaleCompletionRadical
 namespace GlobalTheory.EtaleCompletionRadical
 
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem isReduced_adicCompletion_tensor_residueField (A : Type) [CommRing A] [IsLocalRing A]
     [Algebra.EssFiniteType ℤ A] (P : Ideal A) [P.IsPrime] :
     _root_.IsReduced (AdicCompletion (maximalIdeal A) A ⊗[A] P.ResidueField) := by

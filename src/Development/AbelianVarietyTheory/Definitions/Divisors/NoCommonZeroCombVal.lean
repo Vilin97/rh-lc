@@ -26,6 +26,7 @@ namespace CxPts
 variable {A B : LB Y} {y : CxPts p σ} {U W : Y.Opens}
 
 
+variable (p σ) in
 def gv (B : LB Y) (i j : B.ι) : CxPts p σ → ℂ := ev p σ (B.U i ⊓ B.U j) (B.g i j).val
 
 def pick (hB : B.IsLB) (y : CxPts p σ) : B.ι := (exists_mem_ptsIn hB.cover y).choose
@@ -173,6 +174,7 @@ variable {D : ℕ} {U' U'' : Y.Opens} {η : FormsOn p D U} {η' : FormsOn p D U'
   {η'' : FormsOn p D U''}
 
 
+variable (σ) in
 def rv (hη : IsFrame η) (hη' : IsFrame η') : CxPts p σ → ℂ := ev p σ (U ⊓ U') (hη.ratio hη').val
 
 theorem rv_ne_zero (hη : IsFrame η) (hη' : IsFrame η') (h : y ∈ ptsIn p σ U)
@@ -203,6 +205,7 @@ theorem rv_chart (c c' : AlgChart p σ D) (hy : y ∈ c.e.source) (hy' : y ∈ c
 end Ratio
 
 
+variable (p σ B) in
 def fibSec : Submodule ℂ (B.ι → CxPts p σ → ℂ) where
   carrier := {s | (∀ i j y, y ∈ ptsIn p σ (B.U i) → y ∈ ptsIn p σ (B.U j) →
     s i y = gv p σ B i j y * s j y) ∧ ∀ i y, y ∉ ptsIn p σ (B.U i) → s i y = 0}
@@ -215,6 +218,7 @@ def fibSec : Submodule ℂ (B.ι → CxPts p σ → ℂ) where
     fun i y h => by simp only [Pi.smul_apply, hs.2 i y h, smul_zero]⟩
 
 
+variable (p σ) in
 def secVal : B.Sec →+ (B.ι → CxPts p σ → ℂ) where
   toFun s i := ev p σ (B.U i) (s.f i)
   map_zero' := funext₂ fun i y => by
@@ -297,6 +301,7 @@ instance : Module ℂ (SecC p σ B) :=
   (inferInstance : Module ℂ (ℂ ⊗[k] B.Sec))
 
 
+variable (p σ) in
 def of : B.Sec →+ SecC p σ B :=
   letI := σ.toAlgebra
   letI := secModuleBase p B
@@ -537,10 +542,12 @@ theorem sum_nsq_fs {hB : B.IsLB} {he : ∀ a, e a ∈ fibSec p σ B} {h : NoComm
 variable [DecidableEq α]
 
 
+variable (p σ) in
 def combVal (b : α → B.Sec) (M : Matrix α α ℂ) (a : α) : B.ι → CxPts p σ → ℂ :=
   ∑ j, M j a • secVal p σ (b j)
 
 
+omit [DecidableEq α] in
 theorem combVal_eq (b : α → B.Sec) (M : Matrix α α ℂ) (a : α) :
     combVal p σ b M a = SecC.val (∑ j, M j a • SecC.of p σ (b j)) := by
   set_option synthInstance.maxHeartbeats 100000 in
@@ -562,6 +569,7 @@ theorem noCommonZero_combVal {b : α → B.Sec} (hb : ⨆ j, nonzeroLocus (b j) 
   exact hj' (congrFun (Matrix.eq_zero_of_vecMul_eq_zero hM hv) j)
 
 
+variable (p σ) in
 def fsBasis (hB : B.IsLB) (b : α → B.Sec) (hb : ⨆ j, nonzeroLocus (b j) = ⊤) (M : Matrix α α ℂ)
     (hM : M.det ≠ 0) : Weight p σ B :=
   fs hB (combVal p σ b M) (fun a => combVal_eq (p := p) (σ := σ) b M a ▸ SecC.val_mem _)

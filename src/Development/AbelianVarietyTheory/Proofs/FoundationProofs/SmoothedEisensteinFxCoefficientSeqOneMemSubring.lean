@@ -10,6 +10,7 @@ open Finset
 namespace GlobalTheory.KummerEisensteinGalois
 
 
+open Finset in
 theorem _root_.GlobalTheory.KummerEisensteinGalois.smF_one_mem_subring : ∀ (K : Type) [Field K] [CharZero K]
     (R : Subring K) (c M : ℕ) (ζ : K) (a b : ℤ),
     0 < M → Nat.Coprime c M → ¬ (M : ℤ) ∣ a → ζ ^ b ∈ R → ζ ^ (-b) ∈ R →

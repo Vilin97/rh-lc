@@ -19,6 +19,7 @@ theorem adele_ext {x y : FiniteAdeleRing (𝓞 F) F} (h : ∀ v, evalV F v x = e
   exact Subtype.ext (funext fun v => h v)
 
 
+open Classical in
 def sglFun (w : HeightOneSpectrum (𝓞 F)) (a : w.adicCompletion F) : FiniteAdeleRing (𝓞 F) F :=
   ⟨Pi.single w a, by
     refine Filter.eventually_cofinite.2 ((Set.finite_singleton w).subset ?_)

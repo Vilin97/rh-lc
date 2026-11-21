@@ -46,6 +46,7 @@ theorem exists_unit_factor {P : Type} (A B : P → ℂ)
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r g n : ℕ}
 
 
+omit [IsCMField E] in
 theorem mul_mem_tens_of_moves {Λ Λ' : Lt E n} {K : Lt E r} {h : Matrix (Fin n) (Fin n) E}
     (m : Moves h Λ Λ') {y : Matrix (Fin n) (Fin r) E} (hy : y ∈ tens Λ K) : h * y ∈ tens Λ' K := by
   unfold tens at hy ⊢

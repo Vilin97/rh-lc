@@ -16,9 +16,11 @@ open GlobalTheory.Doubling (absE)
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n d n₁ d₁ : ℕ}
 
 
+variable (F) in
 def rk (p : Fin n → E) (q : Fin d → E) : Matrix (Fin n) (Fin d) (AE F E) := Matrix.vecMulVec (GlobalTheory.ThK.incV F p) (GlobalTheory.ThK.incV F q)
 
 
+variable (σ) in
 abbrev hh (X : Spc F E n) (W : Spc F E d) (x y : Matrix (Fin n) (Fin d) (AE F E)) : AE F E :=
   hTens (cA σ) (incM F X.J) (incM F W.J) x y
 

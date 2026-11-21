@@ -22,6 +22,7 @@ noncomputable section
 variable {K E : FiniteSubfield} [Fact (K ≤ E)] [IsGalois K.1 E.1]
 
 
+variable (E) in
 def localDegree (v : HeightOneSpectrum (𝓞 K.1)) : ℕ :=
   v.asIdeal.ramificationIdxIn (𝓞 E.1) * v.asIdeal.inertiaDegIn (𝓞 E.1)
 
@@ -41,6 +42,7 @@ theorem nonempty_heightOneSpectrum (F : Type) [Field F] [NumberField F] :
   exact ⟨⟨M, hM.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hM (RingOfIntegers.not_isField F)⟩⟩
 
 
+variable (E) in
 theorem exists_sum_mul_div_localDegree_eq_one [IsCyclic Gal(E.1/K.1)] :
     ∃ (s : Finset (HeightOneSpectrum (𝓞 K.1))) (c : HeightOneSpectrum (𝓞 K.1) → ℤ),
       (∀ v ∈ s, localDegree E v ∣ finrank K.1 E.1) ∧

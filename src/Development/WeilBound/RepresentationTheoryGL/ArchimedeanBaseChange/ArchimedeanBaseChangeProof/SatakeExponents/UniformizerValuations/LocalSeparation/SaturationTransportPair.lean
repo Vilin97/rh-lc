@@ -37,6 +37,7 @@ theorem biInv_prod {P : Pl E} {p q : P.adicCompletion E} (hp : IsUnifV E P p) (h
   rw [(Tj_mem_hecke hp i).1 ⟨_, h11⟩ ⟨_, h21⟩ g.1, (Tj_mem_hecke hq j).1 ⟨_, h12⟩ ⟨_, h22⟩ g.2]
 
 
+omit [IsCMField E] in
 theorem saturation_transport_pair {P P' : Pl E} {V : Type} [AddCommGroup V] [Module ℂ V]
     {ρ : Representation ℂ (GLw a P × GLw b P) V} {x : V} {Ba Bb : Multiset ℂˣ}
     (f : (GLw a P × GLw b P) ≃* (GLw a P' × GLw b P'))
@@ -133,6 +134,7 @@ theorem pairRtT_cw {a b : ℕ} (x : Pl E) :
 end JetMatrixAlgebra
 
 
+open JetMatrixAlgebra GlobalTheory.ThetaSatake in
 theorem thetaSat2_holds : ThetaSat2 := by
   intro E _ _ _ a b w u G Ba Bb _ hwu hs
   obtain ⟨x, rfl⟩ : ∃ x, cw x = w := ⟨cw w, GlobalTheory.ThetaPull.conjSrc_conjSrc w⟩

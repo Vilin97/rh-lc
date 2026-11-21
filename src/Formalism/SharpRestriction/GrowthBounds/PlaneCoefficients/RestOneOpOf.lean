@@ -41,6 +41,7 @@ variable (D : Formalism.BasicNotions.D7) (p : ℕ) [Fact p.Prime] {n' r K m : �
   (deg : Fin n' → ℕ) (Y : ℝ) (N₁ G' cP : ℕ) {J : ℕ} [NeZero J] (Dt : SignedChainData p O r J)
 
 
+include D in
 theorem derLev (hTP : TrDerPl) (hTN : TrDerNo) (hPD : PlDer) (hPE : PlEul) (hNO : NoOpStep) {n'' : ℕ}
     (S : UniformizedDVR p O) (hR : AdmissibleDVR p n'' O) (hB : Base Fr p Dt) (x0 : TL J Dt.nL r)
     (hu : ∀ x', posOf n' (posTL Fr x') = posOf n' (posTL Fr x0) → x' = x0) (hG : TouchAt Fr Dt x0)
@@ -72,6 +73,7 @@ theorem derLev (hTP : TrDerPl) (hTN : TrDerNo) (hPD : PlDer) (hPE : PlEul) (hNO 
         (fun ka1 hka e1 he1 nu1 => hF dPl _ ka1 th thL hpos (thLe_ka hB hG hT hka) rho2 e1 he1 nu1) nu
 
 
+include D in
 theorem mulLev (hTP : TrMulPl) (hTN : TrMulNo) (hPM : PlMul) (hNO : NoOpStep) {n'' : ℕ}
     (S : UniformizedDVR p O) (hR : AdmissibleDVR p n'' O) (hB : Base Fr p Dt) (x0 : TL J Dt.nL r)
     (hu : ∀ x', posOf n' (posTL Fr x') = posOf n' (posTL Fr x0) → x' = x0) (hG : TouchAt Fr Dt x0)

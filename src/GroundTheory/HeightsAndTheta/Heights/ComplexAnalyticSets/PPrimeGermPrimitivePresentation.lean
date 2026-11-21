@@ -130,6 +130,7 @@ theorem toGerm_mem_iff {w : σ → ℂ} {k : ℕ} {p : Fin k → (σ → ℂ) �
     refine Ideal.sum_mem _ fun i _ => Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨i, rfl⟩)
 
 
+set_option maxHeartbeats 2000000 in
 theorem proof (hFP : PrimeGermFiniteProjection.Statement) (hIC : HolGermsIntegrallyClosed.Statement)
     (hCE : CentredIntegralEquation.Statement) : PrimeGermPrimitivePresentation.Statement := by
   classical

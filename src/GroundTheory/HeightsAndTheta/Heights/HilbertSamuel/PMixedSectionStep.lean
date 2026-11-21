@@ -45,6 +45,7 @@ theorem cycR_eq_finsum (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → Recipr
 end MixedSectionInduction
 
 
+open MixedSectionInduction in
 theorem MixedSectionStep.proof (hS : SmallSectionMixed.Statement) (hR : GroundTheory.Heights₂.Heights.Inter.RatR.Statement)
     (hI : IntegralAgainstPositive.Statement) (hK : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH.KleimanNefIntersectionNonneg)
     (hE : ZCombExpand.Statement) : MixedSectionStep.Statement := by

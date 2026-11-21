@@ -56,6 +56,7 @@ theorem hasDerivAt_of_oneParam {E : Type*} [NormedRing E] [NormedAlgebra ℝ E] 
   rw [hadd, ← mul_assoc, mul_smul_comm, mul_sub, mul_one]
 
 
+attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra in
 theorem exists_generator {K W : Type} [Group K] [TopologicalSpace K] [AddCommGroup W] [Module ℂ W]
     [FiniteDimensional ℂ W] (ρ : Representation ℂ K W) (hρ : GlobalTheory.Published.AutFin.IsContRep ρ) (s : ℝ → K)
     (hs : Continuous s) (h0 : s 0 = 1) (hadd : ∀ a b, s (a + b) = s a * s b) :

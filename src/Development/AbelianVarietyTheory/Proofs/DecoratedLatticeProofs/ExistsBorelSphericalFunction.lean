@@ -19,6 +19,7 @@ section Char
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {N : ℕ}
 
 
+variable (k) in
 def unrBorel (α : Fin N → ℂˣ) : borel k (Fin N) →* ℂˣ :=
   ((torusChar fun i => SmGL.unrChar k (α i)).comp (leviTorus k (Fin N)).symm.toMonoidHom).comp
     (leviProj k (points (Fin N)))

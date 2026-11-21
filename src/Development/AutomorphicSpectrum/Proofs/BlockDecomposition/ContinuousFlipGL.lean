@@ -62,6 +62,7 @@ theorem hasSatGL_flipIrr {w : HeightOneSpectrum (𝓞 E)} (σ : SmIrr (GLw n w))
 end GlobalTheory.CompanionTheory.ConjSat
 
 
+open GlobalTheory.CompanionTheory.ConjSat in
 theorem GlobalTheory.CompanionTheory.ConjSat.satConj : PositivityTheory.Rg.BcB.F.RS.SatConj := by
   intro E _ _ _ n π w u B _ _ hc ⟨σ, ⟨hirr, f, f0, hf, hfx⟩, hB⟩
   obtain rfl := GlobalTheory.CompanionTheory.OneExDatum.eq_cw_of_conjPl hc

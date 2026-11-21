@@ -60,6 +60,7 @@ theorem isDR_of_restrict (P : LocPrime l) {K E LL : FinExt l} (hle : K.1 ≤ E.1
   GlobalTheory.T.isDeRham_of_restrict_galois_descent l P K E LL (GK_le hle) hle hs T.V T.ρ h
 
 
+set_option maxHeartbeats 1600000 in
 theorem isDR_of_isCrysOn : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc), adm7 D → ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL), let S := sit D.loc HW l (D.locA l) K s LL h; ∀ (T : LocLat S.G S.Qp S.LL S.O), IsCrysOn S S.W.GKs T → IsDR S.PD T.ρ := by
   intro D HW hF l _ K s LL h S T hT
   let E : FinExt l := ⟨Ks K s, finiteDimensional_Ks_of_good h⟩

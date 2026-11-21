@@ -83,6 +83,7 @@ theorem pk_toB_mem (k M : ℕ) {s : 𝔸} (hs : s ∈ ACris.ACrisZero ℂ_[l] l)
     (factorial_mul_dpow_xi l) (mem_adjoin_dpow l hs)
 
 
+set_option maxHeartbeats 800000 in
 theorem cris_in (l : ℕ) [Fact l.Prime] (M k : ℕ) (c : Acris l) :
     Lat.pk l k (ACris.iota ℂ_[l] l c) ∈ Lat.sub (Lat.fk l k) (xi0 l) l M := by
   obtain ⟨s, hs, hst⟩ := (ACris.embedding₂ ℂ_[l] l k c).2

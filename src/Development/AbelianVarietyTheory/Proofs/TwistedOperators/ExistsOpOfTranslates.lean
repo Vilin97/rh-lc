@@ -57,6 +57,7 @@ variable {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : 
 variable {R}
 
 
+set_option maxHeartbeats 1000000 in
 theorem span_jV (hV : R.models_HV) (hj : R.models_jV) (i : Fin D.R.m) (t : T0) : Submodule.span ℂ (Set.range (R.jV i t)) = ⊤ := by
   apply Submodule.map_injective_of_injective (hV i t).1
   rw [Submodule.map_span, Submodule.map_top, (hV i t).2.1, ← Set.range_comp]

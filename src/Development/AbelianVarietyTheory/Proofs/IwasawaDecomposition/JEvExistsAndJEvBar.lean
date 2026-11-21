@@ -51,6 +51,7 @@ noncomputable def evLin {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.wh
   map_smul' c a := by simp [evAt]
 
 
+set_option maxHeartbeats 1000000 in
 theorem jEvExists (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F)
     (κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)) (v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec)
     (hL : R.toLevCh.Is A.μ0) (hM : R.IsModels) (ht : TieIn T R κ v₀) (hp : T.pb = R.C.P.pb) : JEvExists T R κ v₀ := by

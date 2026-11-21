@@ -24,6 +24,7 @@ structure QCohSub {X Y : Scheme.{0}} (f : X ⟶ Y) (F : ∀ V : Y.Opens, Subring
 variable {X Y : Scheme.{0}} {f : X ⟶ Y} {F : ∀ V : Y.Opens, Subring Γ(X, f ⁻¹ᵁ V)}
 
 
+set_option backward.isDefEq.respectTransparency false in
 def diagram (H : QCohSub f F) : Y.AffineZariskiSiteᵒᵖ ⥤ CommRingCat where
   obj U := .of (F U.unop.1)
   map {V U} i :=
@@ -88,6 +89,8 @@ def relSpec (H : QCohSub f F) : Scheme := (glueData H).glued
 def relCover (H : QCohSub f F) : (relSpec H).OpenCover := (glueData H).cover
 
 
+set_option backward.defeqAttrib.useBackward true in
+set_option backward.isDefEq.respectTransparency false in
 def toRel (H : QCohSub f F) : X ⟶ relSpec H :=
   Scheme.OpenCover.glueMorphismsOfLocallyDirected
     ((directedCover Y).pullback₁ f)
@@ -158,6 +161,7 @@ lemma isFinite_fromRel (H : QCohSub f F)
   simp [IsAffineOpen.isoSpec_hom, e, ι_fromRel]
 
 
+set_option backward.isDefEq.respectTransparency.types false in
 def relObjIso (H : QCohSub f F) {U : Y.Opens} (hU : IsAffineOpen U) :
     Γ(relSpec H, fromRel H ⁻¹ᵁ U) ≅ .of (F U) :=
   (relSpec H).presheaf.mapIso (eqToIso
@@ -244,6 +248,7 @@ lemma isIntegral_relSpec (H : QCohSub f F) [AlgebraicGeometry.IsIntegral X] [IsD
   isIntegral_of_irreducibleSpace_of_isReduced _
 
 
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
 theorem exists_finite_cover {S : Scheme.{0}} {K : Type} [Field K] (gp : Sp K ⟶ S) [AlgebraicGeometry.IsIntegral S]
     [IsDominant gp] (F : ∀ V : S.Opens, Subring Γ(Sp K, gp ⁻¹ᵁ V)) (hF : GlobalTheory.Mum.IsFinSub gp F) :
     ∃ (S' : Scheme) (h : S' ⟶ S) (gp' : Sp K ⟶ S') (hgp : gp' ≫ h = gp),

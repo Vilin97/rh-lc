@@ -11,6 +11,7 @@ namespace GlobalTheory.DworkGhost
 
 
 open scoped Classical in
+open Classical in
 noncomputable def coeff {A : Type} [CommRing A] (l : ℕ) (φ : A →+* A) (a : A) : ℕ → A
   | n => if h : ((l : A) ^ n ∣ φ^[n] a - ∑ i : Fin n, (l : A) ^ (i : ℕ) * coeff l φ a i ^ l ^ (n - i))
       then h.choose else 0

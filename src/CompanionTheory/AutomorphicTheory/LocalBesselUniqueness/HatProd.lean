@@ -178,6 +178,7 @@ theorem realF_comp (hpl : Q.IsPlace P Bs.z Bs.z' Bs.π Bs.π') {o' κ' : ℕ} {�
     rw [trJB_congr hpl e (h2 J hJJ)]
 
 
+variable (P Bs e L o κ) in
 def RealX (X : MA.A P (MA.DQ P)) : Prop := RealF P Bs e L o κ (fun J => MA.actA P X (Gauge.trJB P Bs e J))
 
 theorem realX_zero : RealX P Bs e L o κ 0 :=

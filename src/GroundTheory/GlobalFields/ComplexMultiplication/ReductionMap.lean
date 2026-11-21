@@ -47,6 +47,7 @@ theorem map_curveRed_eq :
   rw [WeierstrassCurve.map_map, WeierstrassCurve.map_map, ResidueField.map_comp_residue]
 
 
+include hσ in
 theorem map_notMem_range {X : K₁} (hX : X ∉ Set.range (algebraMap 𝒪₁ K₁)) :
     σ X ∉ Set.range (algebraMap 𝒪₂ K₂) := by
   rintro ⟨s, hs⟩

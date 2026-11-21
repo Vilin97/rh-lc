@@ -28,6 +28,7 @@ variable {k : Type} [Field k] [NumberField k] (σ : k →+* ℂ) {W X : Type} [A
   [AddCommGroup X] [Module ℂ X] (ι : W →ₛₗ[σ] X)
 
 
+omit [NumberField k] [FiniteDimensional k W] in
 theorem aeval_read {φ : Module.End k W} {T : Module.End ℂ X} (h : ∀ x, T (ι x) = ι (φ x)) (p : k[X]) (x : W) :
     aeval T (p.map σ) (ι x) = ι (aeval φ p x) := by
   have hp : ∀ (n : ℕ) (x : W), (T ^ n) (ι x) = ι ((φ ^ n) x) := by
@@ -114,6 +115,7 @@ open scoped TensorProduct
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E] {n : ℕ}
 
 
+omit [StarRing E] in
 theorem frame_int {β β' : GL (Fin n) (E ⊗[F] Af F)} {Λ : Submodule (𝓞 E) (Fin n → E)} (h : IsFrame β Λ) (h' : IsFrame β' Λ)
     (i j : Fin n) : ((β'⁻¹ * β : GL (Fin n) (E ⊗[F] Af F)) : Matrix (Fin n) (Fin n) (E ⊗[F] Af F)) i j ∈ intAf F E := by
   have h1 : (β : Matrix (Fin n) (Fin n) (E ⊗[F] Af F)).mulVec (Pi.single j 1) ∈ hatL (F := F) Λ := by
@@ -125,6 +127,7 @@ theorem frame_int {β β' : GL (Fin n) (E ⊗[F] Af F)} {Λ : Submodule (𝓞 E)
   rwa [Matrix.mulVec_mulVec, ← Units.val_mul, Matrix.mulVec_single_one] at h2
 
 
+omit [StarRing E] in
 theorem princ_frame {β β' : GL (Fin n) (E ⊗[F] Af F)} {Λ : Submodule (𝓞 E) (Fin n → E)} (h : IsFrame β Λ) (h' : IsFrame β' Λ)
     {x : GL (Fin n) (E ⊗[F] Af F)} (hx : x ∈ St β) : x ∈ St β' ∧ ∀ PP, redFn β PP x = 1 → redFn β' PP x = 1 := by
   have inj : ∀ {A B : Matrix (Fin n) (Fin n) (intAf F E)}, A.map (intAf F E).subtype = B.map (intAf F E).subtype → A = B :=
@@ -189,6 +192,7 @@ theorem eig_conj (θ : Formalism.IndefR.Datum.InfFam D) (M : DSModel V S) (M' : 
     rw [← star_sum, ha', star_mul']
 
 
+variable (V S) in
 def Occ (J : Set (GA D V)) (I : Finset (GA D V) → ℂ → Prop) : Prop :=
   ∃ θ : Formalism.IndefR.Datum.InfFam D, IsInfFam θ ∧ ∃ M : DSModel V S, ∃ U ∈ Mult θ M J fun _ => 1, U ≠ 0 ∧
     ∀ Rr a, I Rr a → heckeOn M Rr U = a • U
@@ -359,6 +363,7 @@ theorem mem_mult_iff {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} {θ : For
   ⟨fun h => ⟨_, fun _ hT => hT, h⟩, fun ⟨_, hs, h⟩ => Submodule.span_mono hs h⟩
 
 
+set_option maxHeartbeats 4000000 in
 theorem boundAt_tr (X X' : Stages) (h : X.B.toPre = X'.B.toPre) (f : Fr X.B.toPre) (f' : Fr X'.B.toPre) (hf : HEq f f')
     (S : Finset ℂ) (H : ∀ i, BoundAt (Fr.at X f) i S) : ∀ i, BoundAt (Fr.at X' f') i S := by
   obtain ⟨B, C, W, V, S₀, N, G⟩ := X

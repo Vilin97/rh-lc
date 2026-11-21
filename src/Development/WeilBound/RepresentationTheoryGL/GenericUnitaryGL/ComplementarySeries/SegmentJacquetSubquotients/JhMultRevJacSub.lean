@@ -39,6 +39,8 @@ open SrRev
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem jhMult_rev_jac_sub (hG : GeometricLemma) (hR : RhoNuRhoReducible) {d : ℕ} (hd : 0 < d)
     (σ : IrrRep (GL (Fin d) k)) (hσ : IsCuspidal σ.ρ)
     (S : Subrepresentation (multiProd (consecBlocks 2 d) (segTerm σ.ρ 2)))

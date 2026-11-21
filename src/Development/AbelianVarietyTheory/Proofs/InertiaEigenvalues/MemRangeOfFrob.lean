@@ -116,6 +116,7 @@ theorem jD_smulA (E : EtTie W RA RW inclR φR gR πA) (T : LocLat G Qp LL O) (a 
   rw [← algebraMap_smul W.EE a x, E.jD_smul, E.ioE_ext]
 
 
+set_option maxHeartbeats 1000000 in
 theorem of_sand (E : EtTie W RA RW inclR φR gR πA)
     (hφ : ∀ a, inclR (E.io (W.φA a)) = φR (inclR (E.io a)))
     (hA : ∀ (p q : Type) [Fintype p] [Fintype q] (Z : Matrix p q RW) (S : Matrix p p RA)
@@ -163,6 +164,8 @@ theorem of_sand (E : EtTie W RA RW inclR φR gR πA)
 end Generic
 
 
+set_option synthInstance.maxHeartbeats 200000 in
+set_option maxHeartbeats 1000000 in
 theorem main : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL), let W := (HW l).W K s LL h; let E := ((F l).E K s LL h).tie; ∀ T : Lt K LL, IsCrys ((D.loc l).PD K) T.ρ → ∀ (J : Multiset ℕ) (y : W.DD T), (J.map fun j => (W.φA ^ j) W.Q).prod • y ∈ W.N T → ∀ b : TW (RW LL) T, TWmap (φRW LL) T b - b = E.jD T y → ∀ m : ℕ, (∀ j ∈ J, j ≤ m) → ∃ a : ℕ, TensorProduct.map (LinearMap.mulLeft ↥(OL LL) (inclR LL (E.io (∏ j ∈ Finset.range (m + 1), (W.φA ^ j) W.X)) ^ a)) LinearMap.id b ∈ TAinf (inclR LL) T := by
   intro D HW F l _ K s LL h W E T hT J y hy b hb m hJ
   obtain ⟨m₀, hm₀, -⟩ := GlobalTheory.NL.SandArb.sandwich D HW F l K s LL h T hT

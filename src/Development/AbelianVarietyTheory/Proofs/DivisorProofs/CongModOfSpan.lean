@@ -128,6 +128,7 @@ theorem qW_single {s : ℕ} (W : Matrix (Fin (s + 1)) (Fin (s + 1)) ℤ) {X : Ty
 end GlobalTheory.Poinc.LinearValuationCongruences
 
 
+open GlobalTheory.Poinc.LinearValuationCongruences in
 theorem GlobalTheory.Poinc.approx_of_fpre : ∀ (O : Type) [CommRing O] [Module.Finite ℤ O] (bar : O → O), BddAct bar → ∀ (q : ℕ) (φ : InvFun O), IsPolFan bar q φ → ∀ d₀, HasSupports bar q φ d₀ → ∀ (s : ℕ) (W : Matrix (Fin (s + 1)) (Fin (s + 1)) ℤ), PosW W → ∀ (N₁ p : ℕ) [Fact p.Prime], 3 ≤ N₁ → ∀ (A : Type) [CommRing A] [IsLocalRing A] [IsNoetherianRing A] (Φ : FPre bar q p A), Φ.abelian₂ → Φ.Four W N₁ → Φ.Approx φ ((W 0 0).toNat * d₀) := by
   intro O _ _ bar hB q φ hφ d₀ hS s W hW N₁ p _ hN₁ A _ _ _ Φ hLam hFour y₀ e
   obtain ⟨cW, hcW0, hcW⟩ := GlobalTheory.T.weightedLatticeQuadraticSum_ge_diagonal (s + 1) W hW

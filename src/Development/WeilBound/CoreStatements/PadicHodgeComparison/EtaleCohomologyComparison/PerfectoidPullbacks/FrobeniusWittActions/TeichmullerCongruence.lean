@@ -117,18 +117,21 @@ def ptOut (n : ℕ) (hT : TeichmullerCongruence r N) : F.ptK (κm r n) ⟶ F.ptK
   naturality _ _ _ := rfl
 
 
+variable (r) in
 def mIn (M : Model l K) (n : ℕ) (hT : TeichmullerCongruence r N) :
     Mor (Lm r M n) (B.Lc (B.schFn M.p) (okToOC l K) true n) (RingHom.id _) :=
   B.crMor (F := B.schFn M.p) (F' := B.schFn M.p) (b := B.bs l true n) (b' := B.bs l true n) (ht := rfl) (ht' := rfl)
     (RingHom.id _) rfl (DPMorphism.id _).isDPMorphism (ptIn (B.schFn M.p) n hT) fun _ _ _ => rfl
 
 
+variable (r) in
 def mOut (M : Model l K) (n : ℕ) (hT : TeichmullerCongruence r N) :
     Mor (B.Lc (B.schFn M.p) (okToOC l K) true n) (Lm r M n) (phiP l n N) :=
   B.crMor (F := B.schFn M.p) (F' := B.schFn M.p) (b := B.bs l true n) (b' := B.bs l true n) (ht := rfl) (ht' := rfl)
     (phiP l n N) rfl (dp_phiP n N) (ptOut (B.schFn M.p) n hT) fun _ _ _ => rfl
 
 
+variable (l) in
 def phiA (N : ℕ) : Acris l →+* Acris l := ACris.phi ℂ_[l] l ^ N
 
 theorem phiA_succ (N : ℕ) (a : Acris l) : phiA l (N + 1) a = ACris.phi ℂ_[l] l (phiA l N a) := by

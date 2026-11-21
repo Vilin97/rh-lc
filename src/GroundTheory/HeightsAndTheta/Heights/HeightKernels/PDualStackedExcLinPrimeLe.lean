@@ -195,6 +195,7 @@ section Second
 variable {F F' : HermLattice K i} {P : Ideal (MRing (stackedBlocks T))} [P.IsPrime]
 
 
+variable (P) in
 def secVal (b : Module.Basis T ℤ (dualLattice F)) : dualLattice F →+ FracP P :=
   AddMonoidHom.mk' (fun ψ => toFrac P (linS fun t => b.repr ψ t)) (by
     intro ψ χ
@@ -262,6 +263,7 @@ end Second
 end StackedExceptionalLinearPrimeBound
 
 
+open StackedExceptionalLinearPrimeBound StackedExceptionalFirstGeometric in
 theorem DualStackedExcLinPrimeLe.proof (hK : DualCotangentKer.Statement) : DualStackedExcLinPrimeLe.Statement := by
   intro K _ _ i F F' T _ _ b b' a _ hlt hcov hab k _ α M hdata P hPp hP hrel
   haveI := hPp

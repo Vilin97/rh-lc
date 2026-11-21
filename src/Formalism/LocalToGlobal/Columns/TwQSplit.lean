@@ -23,6 +23,7 @@ theorem qsp_exists_pi (P : Pl E) (hP : conjPrime₂ P ≠ P) : ∃ ϖ : 𝓞 E, 
   exact ⟨s, hs, fun h => hns ((mem_conjP P s).2 h)⟩
 
 
+include hc in
 theorem qsp_norm_mem (a : 𝓞 E) : ∃ b : 𝓞 F, algebraMap (𝓞 F) (𝓞 E) b = a * cO E a := by
   have h1 : star (algebraMap (𝓞 E) E (a * cO E a)) = algebraMap (𝓞 E) E (a * cO E a) := by
     rw [map_mul, algebraMap_cO, star_mul', star_star, mul_comm]
@@ -39,6 +40,7 @@ theorem qsp_norm_mem (a : 𝓞 E) : ∃ b : 𝓞 F, algebraMap (𝓞 F) (𝓞 E)
 theorem qsp_isOver (P : Pl E) : IsOver (underPl F P) P := rfl
 
 
+include hc in
 theorem qsp_exists (P : Pl E) (hP : conjPrime₂ P ≠ P) :
     ∃ ϖ : 𝓞 E, ϖ ∈ P.asIdeal ∧ cO E ϖ ∉ P.asIdeal ∧ Nonempty (Formalism.MainNotions.Gaps.LG.SplitAt hc.sig (underPl F P) (ϖ : E)) := by
   obtain ⟨ϖ, hϖ, hcϖ⟩ := qsp_exists_pi P hP

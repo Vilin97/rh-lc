@@ -275,6 +275,7 @@ theorem trace_le (D : D7) (l : ℕ) [Fact l.Prime] (hns : ¬ SplitK D l) (T v : 
 end GlobalTheory.ThLoc.KapNonSplit
 
 
+open GlobalTheory.ThLoc.KapNonSplit in
 theorem GlobalTheory.ThLoc.kappaNonSplit : ∀ D : D7, KappaOn (fun D p => ¬ SplitK D p) D := by
   intro D cc δ B hcc hδ l _ ι hns u hiso j1 _ j2
   have hnotl : ∀ p : ℕ, p.Prime → SplitK D p → p ≠ l := by

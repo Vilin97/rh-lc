@@ -324,6 +324,7 @@ theorem dExt_smul (c : ℂ) {α : A.Fld} (hα : A.IsForm α) : A.dExt (c • α)
   rfl
 
 
+variable (A) in
 def dForms : A.forms →ₗ[ℂ] A.forms where
   toFun α := ⟨A.dExt α, IsForm.dExt α.2⟩
   map_add' α β := Subtype.ext (dExt_add α.2 β.2)
@@ -331,6 +332,7 @@ def dForms : A.forms →ₗ[ℂ] A.forms where
 
 
 
+variable (A) in
 @[simp] theorem dExt_zero : A.dExt 0 = 0 := congrArg Subtype.val (map_zero A.dForms)
 
 

@@ -219,6 +219,7 @@ theorem Setup.avoid (S : Setup φ P 𝒲) (b : K → ℕ) :
     fun W hW => hav W (Finset.mem_insert_of_mem (S.fin.mem_toFinset.mpr hW))⟩
 
 
+omit [∀ k, Fintype (ι k)] in
 theorem Setup.clear (S : Setup φ P 𝒲) (b : K → ℕ) {Q : Ideal (MRing ι R)}
     (hQ : IsMultiProjPrime Q) :
     ∃ u H : MRing ι R, u ∉ Q ∧ (∃ e, IsMultiHomog u e) ∧

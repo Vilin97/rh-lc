@@ -17,6 +17,7 @@ variable {O F L : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [F
 
 variable (F) in
 
+variable (F) in
 theorem resDeg_addv (v : HeightOneSpectrum (integralClosure O L)) :
     letI := resAlg (F := F) (addv L v);
     Module.finrank (ResidueField ((vRing (addv L v)).comap (algebraMap F L)))

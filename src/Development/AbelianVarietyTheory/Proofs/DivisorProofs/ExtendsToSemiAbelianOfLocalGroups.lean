@@ -171,6 +171,7 @@ end GlobalTheory.Desc.UnionFib
 namespace GlobalTheory.Desc
 
 
+open UnionFib GroupGlue in
 theorem Emb.hasExt_of_locGrp : ∀ (σ : Setup) (E : Emb σ), σ.Common → (∀ x : Sp σ.R, ∃ g : σ.R, g ∉ x.asIdeal ∧ ∃ (H : Over (Sp (Localization.Away g))) (_ : GrpObj H) (h : H.left ⟶ E.P), E.LocGrp g H h ∧ Set.range h = E.U ∩ E.p ⁻¹' {z : Sp σ.R | g ∉ z.asIdeal}) → HasExt (awayMap σ.f) σ.A := by
   intro σ E hC hloc
   choose g hg H iH h hL hr using hloc

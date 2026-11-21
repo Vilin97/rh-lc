@@ -49,6 +49,7 @@ lemma coinvariantsKer_le_ker_norm (M : Rep.{u} R G) :
   simp
 
 
+omit [Fintype G] in
 lemma coinvariantsKer_le_comap {X Y : Rep.{u} R G} (f : X ⟶ Y) :
     Coinvariants.ker X.ρ ≤ (Coinvariants.ker Y.ρ).comap f.hom.toLinearMap := by
   refine Submodule.span_le.2 ?_
@@ -72,6 +73,7 @@ lemma mem_augmentationKerNorm_iff (M : Rep.{u} R G) (x : LinearMap.ker M.ρ.norm
     x ∈ augmentationKerNorm M ↔ (x : M) ∈ Coinvariants.ker M.ρ := Iff.rfl
 
 
+variable (R G) in
 noncomputable def tateZeroFunctor : Rep.{u} R G ⥤ ModuleCat.{u} R where
   obj M := ModuleCat.of R (M.ρ.invariants ⧸ normRangeInvariants M)
   map {X Y} f := ModuleCat.ofHom (Submodule.mapQ _ _ ((Rep.invariantsFunctor R G).map f).hom (by
@@ -91,6 +93,7 @@ noncomputable def kerNormMap {X Y : Rep.{u} R G} (f : X ⟶ Y) :
     rw [show f.hom.toLinearMap x = f.hom x from rfl, ← repHom_norm_apply, hx, map_zero])
 
 
+variable (R G) in
 noncomputable def tateNegOneFunctor : Rep.{u} R G ⥤ ModuleCat.{u} R where
   obj M := ModuleCat.of R (LinearMap.ker M.ρ.norm ⧸ augmentationKerNorm M)
   map {X Y} f := ModuleCat.ofHom (Submodule.mapQ _ _ (kerNormMap f) (fun x hx =>
@@ -184,6 +187,7 @@ noncomputable def tateZeroMapData {X Y : Rep.{u} R G} (f : X ⟶ Y) :
     (normRangeInvariants_le_comap f)
 
 
+variable (R G) in
 noncomputable def tateCohomologyZeroIso :
     tateCohomologyFunctor (R := R) (G := G) 0 ≅ tateZeroFunctor (R := R) (G := G) :=
   Functor.isoWhiskerLeft (tateComplexFunctor R G)
@@ -313,6 +317,7 @@ noncomputable def tateNegOneMapData {X Y : Rep.{u} R G} (f : X ⟶ Y) :
     (fun x hx => coinvariantsKer_le_comap f hx)
 
 
+variable (R G) in
 noncomputable def tateCohomologyNegOneIso :
     tateCohomologyFunctor (R := R) (G := G) (-1) ≅ tateNegOneFunctor (R := R) (G := G) :=
   Functor.isoWhiskerLeft (tateComplexFunctor R G)

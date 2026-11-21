@@ -66,6 +66,7 @@ theorem mono_j {V : ValuationSubring c.F} (Y : Model Xo c V.subtype) : Mono Y.j 
   infer_instance
 
 
+set_option maxHeartbeats 1000000 in
 theorem hasArcData_of_model (hV : HV) (h6 : Laws6) (hU : GlobalTheory.LN.UDvrSt) (hH : GlobalTheory.LN.HomExtSt) (hT : ThetaPtDeterminesSt)
     (hE : EndDeterminedOnTorsionSt) (hTU : ThetaUnifAV) {W₀ : ValuationSubring ℂ} (Y : Model Xo c (c.V W₀).subtype)
     {O' : Type} [CommRing O'] [IsDomain O'] [CharZero O'] {b : c.V W₀ →+* O'} {ϖ : O'}

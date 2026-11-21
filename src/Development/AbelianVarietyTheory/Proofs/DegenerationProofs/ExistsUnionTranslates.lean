@@ -205,6 +205,7 @@ theorem law_split (a : 𝟙_ (Over (Sp K)) ⟶ A) :
   group
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem le_of_law [IsDomain R] [IsDiscreteValuationRing R] [IsFractionRing R K] {M G : Model R A} (hM : Strict M)
     (m : M.Y ⊗ M.Y ⟶ G.Y) (hm : (M.prod M).j ≫ m.left = (μ[A]).left ≫ G.j) (a : 𝟙_ (Over (Sp K)) ⟶ A)
     (ha : GenIso M M (transl a).hom) (hc : Compat (M.twist (transl a)) G) : (M.twist (transl a)).Le G := by
@@ -297,6 +298,7 @@ theorem sp_inter {M G : Model R A} [IsLocalRing R] (g : M.Y ⟶ G.Y) : G.sp ∩ 
     exact ⟨(e x).trans hx, x, rfl⟩
 
 
+set_option backward.isDefEq.respectTransparency false in
 theorem meet [IsDomain R] [IsLocalRing R] [IsFractionRing R K] {M G : Model R A} (f : A ≅ A) (hf : GenIso M M f.hom)
     (g : (M.twist f).Y ⟶ G.Y) (hg : (M.twist f).j ≫ g.left = G.j) (g₀ : M.Y ⟶ G.Y) (hg₀ : M.j ≫ g₀.left = G.j) :
     (G.sp ∩ Set.range g.left ∩ Set.range g₀.left).Nonempty := by

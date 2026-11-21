@@ -272,6 +272,7 @@ theorem exists_delta (C : Formalism.L2.Host.CharFrame D) (i : D.ntw.Tw) : ∃ q 
     rfl
 
 
+open Classical in
 theorem twLev_pow (hm : RecTies p) (hF : p.R.toRealDat.IsFam) (hG : QGuard p.R.toRealDat) (hw : D.plEq w ∈ p.R.twPl) (j : Fin D.R.m)
     (hlow : ∀ P ∈ ex.nch.Q w, ((D.host.pde * D.host.pde' : ℕ) : 𝓞 D.host.E) ∉ P.asIdeal)
     {ρ : Setup D.ntw} (hρ : ρ.Good) (hp : RealPin p.R p.cG ρ) {c : (AE D)ˣ →* Circle} {a : ℕ}

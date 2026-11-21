@@ -62,6 +62,8 @@ theorem normChar_locInf {K L : Type} [Field K] [NumberField K] [Field L] [Number
   simp
 
 
+open scoped GroundTheory.Global.AdeleBaseChange in
+open GlobalTheory.UnitaryHeckeBaseChange in
 theorem ideleNorm_eq (E : Type) [Field E] [NumberField E] [IsCMField E] (x : (AdeleRing (𝓞 E) E)ˣ) :
     GlobalTheory.GalOfCusp.ideleNorm E x = GroundTheory.Global.ideleNorm (maximalRealSubfield E) E x := by
   apply Units.ext

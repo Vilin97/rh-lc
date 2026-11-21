@@ -44,6 +44,7 @@ theorem scal_rep (hrows : IsRowReps D F0 what₂) (γ : TermDef.Term D u u' F0 w
 variable (Zd : LocDat D)
 
 
+set_option maxHeartbeats 1000000 in
 theorem lprExist_of (hI : Formalism.L2.SG.Pf.ScalarFramePf.IotaStep) : LprExist Zd u u' F0 what₂ := by
   intro hrows γ Z hC F'' hP p
   obtain ⟨w, hγ, -⟩ := hC

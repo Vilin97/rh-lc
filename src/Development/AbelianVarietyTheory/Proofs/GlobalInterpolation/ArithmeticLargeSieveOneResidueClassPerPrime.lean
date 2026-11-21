@@ -430,6 +430,7 @@ private lemma norm_sum_sq_le_totient_mul_of_avoids_classes (S : Finset ℕ) :
         rw [← Finset.mul_sum]; push_cast [Nat.cast_sub hp.one_le]; ring
 
 
+open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology in
 theorem _root_.GlobalTheory.arithmetic_large_sieve_one_class : ∀ (M N Q q : ℕ) (S : Finset ℕ), 1 ≤ Q → 1 ≤ q →
     S ⊆ Finset.Ioc M (M + N) →
     (∀ p : ℕ, p.Prime → p ≤ Q → ¬ p ∣ q → ∃ c : ℕ, ∀ n ∈ S, ¬ n ≡ c [MOD p]) →

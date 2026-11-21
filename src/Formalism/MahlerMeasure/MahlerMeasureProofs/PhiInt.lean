@@ -249,6 +249,7 @@ end
 open MvPolynomial Finset
 
 
+set_option maxHeartbeats 800000 in
 theorem phi_integrality : PhiInt := by
 
   intro p hp σ r w e hw he hwe hr o n z u hu

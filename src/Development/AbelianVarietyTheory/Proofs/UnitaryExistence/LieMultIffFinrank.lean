@@ -32,6 +32,7 @@ variable {S S' : Scheme.{0}} {G : Over S} [GrpObj G] {G' : Over S'} [GrpObj G'] 
   (hact' : ∀ a, act' a = (Over.pullback g).map (b a)) (τ : O →+* k)
 
 
+include hc hg hab hact' in
 theorem lieMult_of_finrank {N : ℕ} (hN : Module.finrank k (eigLat hx act' (fun a => τ a)) = N) :
     Geo.Tor.LieMult act tk τ N := by
   let B := Module.finBasisOfFinrankEq k _ hN

@@ -128,6 +128,7 @@ end GlobalTheory.Asc.VanBessel
 namespace GlobalTheory.Asc
 
 
+open VanBessel in
 theorem vanBF : ∀ D : D7, VanBF D := by
   intro D ψ ρ B J s 𝒮 Γ₀ K hL φ G hφ hG hGK hvan Φ hΦ𝒮
   have hΦ := hL.theta Φ hΦ𝒮

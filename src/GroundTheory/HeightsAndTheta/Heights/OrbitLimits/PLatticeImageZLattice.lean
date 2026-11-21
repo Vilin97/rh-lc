@@ -30,6 +30,7 @@ theorem LatticeImageZLattice.exists_int_mul_integral {F : Type} [Field F] [Numbe
   | neg a _ ha => simpa [smul_neg] using ha.neg
 
 
+open scoped Classical in
 theorem LatticeImageZLattice.proof : LatticeImageZLattice.Statement := by
   intro F _ _ L hfg hfull
   obtain ⟨N, hN0, hLint⟩ := LatticeImageZLattice.exists_int_mul_integral L hfg

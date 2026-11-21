@@ -72,6 +72,7 @@ theorem coordIdeal_matAct (B : Matrix J J ℚ) (x : J → Ω) :
   simp [coordIdeal, RingHom.mem_ker, coneMap_matAct]
 
 
+omit [Fintype J] in
 theorem map_coordIdeal_int (x : J → Ω) :
     (coordIdeal ℤ x).map (MvPolynomial.map (Int.castRingHom ℚ)) = coordIdeal ℚ x := by
   have hring : ((coneMap ℚ x : MvPolynomial J ℚ →+* Polynomial Ω).comp

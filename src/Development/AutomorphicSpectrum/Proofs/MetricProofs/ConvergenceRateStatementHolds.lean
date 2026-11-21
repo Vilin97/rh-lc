@@ -51,6 +51,7 @@ end GlobalTheory.CompanionTheory.Ar.Giv.Rate
 namespace GlobalTheory.CompanionTheory.Ar.Giv
 
 
+open GlobalTheory.CompanionTheory.Ar.Giv.Rate in
 theorem convergenceRate_holds : ConvergenceRateStatement := by
   intro e X _ _ _ _ _ A Θ L s n m W hΘ hpos hL hS hSNC hnorm th ph phT th₀ ph₀ phT₀ C₅ C t₀
     hW hR hW₀ hR₀

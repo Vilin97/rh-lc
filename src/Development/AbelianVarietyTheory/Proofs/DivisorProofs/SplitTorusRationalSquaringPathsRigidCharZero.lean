@@ -46,6 +46,7 @@ theorem sqr_chi {S : Scheme.{0}} (X : Type) [AddCommGroup X] (a : X) :
 end SplitTorusRigid
 
 
+open SplitTorusRigid in
 theorem splitTorus_ratRigid : ∀ (Ω : Type) [Field Ω] [CharZero Ω] (X : Type) [AddCommGroup X],
     RatRigid (splitTorus (Sp Ω) X) (𝟙 (Sp Ω)) := by
   intro Ω _ _ X _ ξ hξ hr

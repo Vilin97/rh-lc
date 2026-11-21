@@ -21,6 +21,7 @@ variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω]
 variable {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)}
 
 
+variable (E) in
 def Wild (A : ValuationSubring Ω) : Subgroup (G E Ω) where
   carrier := {σ | ∀ y : Ω, y ≠ 0 → A.valuation (σ y / y - 1) < 1}
   one_mem' := fun y hy => by simp [div_self hy]
@@ -55,10 +56,12 @@ def Wild (A : ValuationSubring Ω) : Subgroup (G E Ω) where
     exact h1
 
 
+omit [NumberField E] in
 theorem mem_Wild {σ : G E Ω} :
     σ ∈ Wild E A ↔ ∀ y : Ω, y ≠ 0 → A.valuation (σ y / y - 1) < 1 := Iff.rfl
 
 
+open Pointwise in
 theorem Wild_le_Ine : Wild E A ≤ Ine (F := E) A := by
   intro σ h
   have h1 : ∀ x : Ω, x ≠ 0 → A.valuation (σ x - x) < A.valuation x := fun x hx => by
@@ -375,10 +378,12 @@ end WD
 variable {g : ℕ} [Fact g.Prime]
 
 
+variable (A w) in
 def TeichmullerInertiaLabelCondition (τ : Fbar g →* ℂ) (γ : G E Ω) : Prop :=
   normV w = g ∧ γ ∈ Ine (F := E) A ∧ IsTeich τ
 
 
+omit [IsAlgClosure E Ω] in
 theorem TeichmullerInertiaLabelCondition.of_tameGenAt {τ : Fbar g →* ℂ} {γ : G E Ω} (hw : normV w = g)
     (hγ : TameGenAt A γ) (hτ : ∀ x y, x ≠ 0 → y ≠ 0 → τ x = τ y → x = y) : TeichmullerInertiaLabelCondition A w τ γ :=
   ⟨hw, hγ.1, hτ⟩

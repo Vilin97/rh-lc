@@ -62,6 +62,7 @@ set_option maxHeartbeats 2000000
 namespace GlobalTheory.FamTraceChiCol
 
 
+open GlobalTheory.StepData GlobalTheory.RootEx GlobalTheory.SymChain in
 theorem conj_embX_toBlocks₂₂ {k : Type} [Field k] {ι n : Type} [Fintype n] [DecidableEq n] {c : ℕ}
     (ϖ : kˣ) (ord : ι ≃ n ⊕ Fin c) (g : GL n k) :
     ((typeFrame ϖ ord).bas⁻¹ * embX c g * (typeFrame ϖ ord).bas).val.toBlocks₂₂ = 1 := by

@@ -268,6 +268,7 @@ theorem isClosed_zeroSet {n : ℕ} (J : Ideal (MvPolynomial (Fin n) ℂ)) : IsCl
 end TubeFormComparison
 
 
+open TubeFormComparison in
 theorem TubeFormCompare.proof : TubeFormCompare.Statement := by
   intro n d J A P R φ _hJ _hdim hA hφ
   set K := zeroSet J ∩ Metric.closedBall (0 : Fin n → ℂ) R with hKdef

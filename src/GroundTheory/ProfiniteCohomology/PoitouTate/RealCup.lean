@@ -101,6 +101,7 @@ variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologic
   {A B C C' : Rep.{u} k G} [IsDiscreteRep A] [IsDiscreteRep B] [IsDiscreteRep C] [IsDiscreteRep C']
 
 
+omit [IsTopologicalGroup G] in
 theorem cochainsMap_normHomotopy {F' : Type u} [Group F'] [TopologicalSpace F'] [IsTopologicalGroup F'] [Fintype F'] {X Y Z Z' : Rep.{u} k F'}
     [IsDiscreteRep Y] [IsDiscreteRep Z] [IsDiscreteRep Z'] (μ : X ⊗ Y ⟶ Z) (g : Z ⟶ Z')
     {s m : ℕ} (h : s = m + 1) (e : X) (y : (cochainsComplex Y).X s) :
@@ -116,6 +117,7 @@ theorem cochainsMap_normHomotopy {F' : Type u} [Group F'] [TopologicalSpace F'] 
   exact Finset.sum_congr rfl fun a _ => Rep.hom_comm_apply g a _
 
 
+set_option maxHeartbeats 1600000 in
 theorem tateCompactCochainsResMap_cup (μ : A ⊗ B ⟶ C) (g : C ⟶ C') {r s n : ℕ} (h : r + s = n)
     (p : (tateCompactCochains φ ψ A (fun v => Rep.res (φ v).toMonoidHom A) (fun _ => 𝟙 _)
       (fun w => Rep.res (ψ w).toMonoidHom A) (fun _ => 𝟙 _)).X r) (z : (cochainsComplex B).X s) :

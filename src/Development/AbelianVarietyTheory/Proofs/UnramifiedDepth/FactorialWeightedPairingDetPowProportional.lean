@@ -179,6 +179,8 @@ private theorem pairing_cayDet_pow_mul (n k : ℕ) (F G : MvPolynomial (Fin n ×
     rw [pow_succ, mul_assoc, ih, pairing_cayDet_mul', pow_succ', Module.End.mul_apply]
 
 
+open MvPolynomial in
+variable {C : Type} [CommRing C] {n : ℕ} in
 theorem _root_.GlobalTheory.DetPowPairing.pairing_pow_proportional :
   (∀ (C : Type) [Field C] [CharZero C] (n₀ M Y : ℕ) (Q : MvPolynomial (Fin n₀ × Fin n₀) C), M ≤ Y → Q.IsHomogeneous (n₀ * M) →
     (∑ A ∈ (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ Y).support, AddMonoidAlgebra.coeff (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ Y) A * (A.prod fun _ e => (e.factorial : C)) * AddMonoidAlgebra.coeff (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ (Y - M) * Q) A) * (∑ A ∈ (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ M).support, AddMonoidAlgebra.coeff (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ M) A * (A.prod fun _ e => (e.factorial : C)) * AddMonoidAlgebra.coeff (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ M) A) = (∑ A ∈ (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ M).support, AddMonoidAlgebra.coeff (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ M) A * (A.prod fun _ e => (e.factorial : C)) * AddMonoidAlgebra.coeff (Q) A) * (∑ A ∈ (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ Y).support, AddMonoidAlgebra.coeff (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ Y) A * (A.prod fun _ e => (e.factorial : C)) * AddMonoidAlgebra.coeff (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ Y) A)) := by

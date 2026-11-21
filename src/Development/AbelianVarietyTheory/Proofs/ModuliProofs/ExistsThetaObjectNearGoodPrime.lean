@@ -131,6 +131,7 @@ theorem nearC_of_smooth [Finite J]
   exact nearC_of_grpFam h1 h2 hn hodd hj hq₁ (span_map _ hv) hG
 
 
+omit h1 hodd hj in
 theorem nearC_of_fam
     (H : ∀ {R : Type} [CommRing R] [IsNoetherianRing R] [IsReduced R] {β : o →+* R}
       {v : Ix g ((n ^ j) ^ 2) → R} {Z : Over (Sp R)} {M : LB Z.left} {th : Ix g ((n ^ j) ^ 2) → M.Sec}
@@ -155,6 +156,7 @@ theorem nearC_of_fam
   exact nearC_of_den_loc h2 h hf fun q₁ hq₁ => H hq₁ (span_map _ hv) hZ' hs
 
 
+omit h1 hodd hj in
 theorem nearC_of_unimodular
     (H : ∀ {R : Type} [CommRing R] [IsNoetherianRing R] [IsReduced R] {β : o →+* R}
       {v : Ix g ((n ^ j) ^ 2) → R} {Z : Over (Sp R)} {M : LB Z.left} {th : Ix g ((n ^ j) ^ 2) → M.Sec}

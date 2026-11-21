@@ -39,6 +39,7 @@ theorem mem_vecFixGroup {h : HermitianForm F E W} {v : Basis ι E W} {x₀ : W}
   Iff.rfl
 
 
+omit [NumberField E] in
 theorem isClosed_vecFixGroup (h : HermitianForm F E W) (v : Basis ι E W) (x₀ : W) :
     IsClosed (vecFixGroup h v x₀ : Set (archUnitary h v)) := by
   have : (vecFixGroup h v x₀ : Set (archUnitary h v)) = ⋂ w, {g : archUnitary h v |

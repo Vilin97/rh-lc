@@ -40,6 +40,7 @@ theorem embL_nil (x : IrrGL (k := k)) (h0 : x.1 = 0) : EmbL x [] := by
   exact ⟨hd, φ.symm.toIntertwiningMap, fun v w h => φ.symm.toLinearEquiv.injective h⟩
 
 
+variable (k) in
 theorem cuspEmbP (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hR : RefineP k) : CuspEmbP k := by
   have hJ : JacquetSubLeft k := GlobalTheory.T.jacquet_sub_left_of_admissible hA
   suffices H : ∀ n : ℕ, ∀ x : IrrGL (k := k), x.1 = n → ∃ l : List (IrrGL (k := k)), (∀ ρ ∈ l, ρ.IsCusp) ∧ EmbL x l from
@@ -62,6 +63,7 @@ theorem cuspEmbP (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hR : Ref
     · simpa using hR x (y 1) [y 0] l [] hy (by simpa using embL_pair hf)
 
 
+variable (k) in
 theorem suppP : SuppP k := by
   intro x a y l 𝔫 hl hx hxy hy Δ hΔ
   obtain ⟨hd, f, hf⟩ := hx
@@ -96,6 +98,7 @@ theorem irreducibleAdmissibleGL : GlobalTheory.Published.IrreducibleAdmissibleGL
   fun k _ _ _ _ n => GlobalTheory.T.irreducible_smooth_admissible_GL k (Fin n)
 
 
+variable (k) in
 theorem cuspEmbP_of_refine (hR : RefineP k) : CuspEmbP k :=
   cuspEmbP k irreducibleAdmissibleGL hR
 

@@ -19,6 +19,7 @@ open scoped CategoryTheory.Obj TensorProduct
 namespace GlobalTheory
 
 
+open LatticeHom in
 theorem exists_isMonHom_of_map_lattice :
     ThetaUnifAV → Out.Laws → ∀ (P P' : Out.PolAV (Sp ℂ)) (g : ℕ) (u : HolUnif P.A P.L g) (u' : HolUnif P'.A P'.L g) (F : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)), P.g = g → P'.g = g → (∀ z ∈ u.Λ, F z ∈ u'.Λ) → ∃ f : P.A ⟶ P'.A, IsMonHom f ∧ ∀ z, u'.ex (F z) = u.ex z ≫ f := by
   intro hT hL P P' g u u' F hg hg' hF

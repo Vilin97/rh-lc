@@ -41,6 +41,7 @@ theorem zs_withErr (e) : ((R.withErr e).toCx3 F).zs = (R.toCx3 F).zs := by
   rfl
 
 
+set_option maxHeartbeats 1000000 in
 theorem weak_characterisation_with_error (h : R.WeakCharacterisation F) (e) : (R.withErr e).WeakCharacterisation F := by
   cases_type* RealDat3.WeakCharacterisation RealDat.BaseW RealDat.IsGrp RealDat.IsFam RealDat.IsModels RealDat.IsChainW RealDat.IsThPW RealDat3.IsInert RealDat3.IsScal RealDat3.IsTup
   repeat' (first | assumption | constructor)
@@ -67,6 +68,7 @@ def Eig0 (i : Fin D.R.m) (t : T) (p : A3.fam3.base3.Ix) (l : ℝ) : Prop :=
   R.Wp3 i p ≠ ⊥ ∧ ∀ x ∈ R.Wp3 i p, R.thG i t (LinearMap.adjoint (R.thG i t) x) = (l : ℂ) • x
 
 
+variable (F) in
 def EigOff (i : Fin D.R.m) (p : A3.fam3.base3.Ix) (v : InfinitePlace D.what₂.LL) (l : ℝ) : Prop :=
   PartX F.cr (R.toCx3 F) false i p v ∧ SimX F.cr (R.toCx3 F) false i p v l
 
@@ -107,6 +109,7 @@ theorem zs_updS (kap lam) : ((R.updS kap lam).toCx3 F).zs = (R.toCx3 F).zs := by
 end RealDat3
 
 
+open Classical in
 theorem scalars_exist (R : RealDat3 D A3 Ks) : ∃ kap lam, (R.updS kap lam).IsScal F := by
 
   have hcan : ∀ {N : Type} [AddCommGroup N] [Module ℂ N] {a b : ℂ} {x : N}, x ≠ 0 → a • x = b • x → a = b := by

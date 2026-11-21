@@ -25,6 +25,7 @@ def CentIm (U : Submodule ℂ (Sm E N)) : Prop :=
   ∃ z : ℂ, z.re = 0 ∧ ∀ φ ∈ U, ∀ (t : ℝ) g, φ.1 (splitCentre E N t * g) = Complex.exp (z * t) * φ.1 g
 
 
+variable (E) in
 inductive Tr : ℕ → Type
   | leaf {N : ℕ} (V : Submodule ℂ (Sm E N)) (z : ℂ) : Tr N
   | node {r s : ℕ} (t₁ : Tr r) (t₂ : Tr s) : Tr (r + s)

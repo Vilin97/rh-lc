@@ -136,6 +136,7 @@ theorem cone_pow_le {r : ℕ} {c : ℝ} (hc : 0 < c) {t : Fin r → ℝ}
     _ ≤ t k := key _ k hk
 
 
+open NumberField in
 theorem exists_repr_le (D : D7) : ∃ C : ℝ, 0 < C ∧ ∀ y : D.host.E,
     ∑ l, |((integralBasis D.host.E).repr y l : ℝ)| ≤ C * ∑ τ, ‖tauE D τ y‖ := by
   classical

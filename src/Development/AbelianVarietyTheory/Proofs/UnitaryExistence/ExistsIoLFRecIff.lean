@@ -132,6 +132,7 @@ theorem embF_conjugate (τ : E →+* ℂ) (x : E) : embF c (ComplexEmbedding.con
   Subtype.ext (IsCMField.complexEmbedding_complexConj E τ x).symm
 
 
+variable (n) in
 def letRep : GL (Fin n) E →* Module.End c.F (MvPolynomial (LtN Dw n) c.F) :=
   ((renameEquiv c.F (Harm.thetaLetterEquiv Dw n)).toLinearEquiv.symm.conjRingEquiv : _ →* _).comp
     ((Harm.colRep c.F (Psi H) Dw.p Dw.q (Fin n)).comp (embGL (embPsi c)))

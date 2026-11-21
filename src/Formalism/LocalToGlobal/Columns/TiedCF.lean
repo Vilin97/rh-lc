@@ -56,6 +56,7 @@ def lamT (u : D.what₂.Word) (i : ℕ) : D.what₂.Tau → DomWeight (D.R.N i) 
   fun τ => shW ((D.fm u).lam i τ) ((i * (D.R.t + 1) / 2 : ℕ) : ℤ)
 
 
+set_option maxHeartbeats 1000000 in
 structure ClsTied (u : D.what₂.Word) (i : ℕ) (hi : i ≤ D.R.m) where
 
   lev : StepLevel D.host.F D.host.E (sigD D) (gramN D i hi) (D.mem u).A.T D.R.f (badG D)
@@ -121,6 +122,7 @@ abbrev Lk {u : D.what₂.Word} (A : AtTTied u) (i : ℕ) (hi : i ≤ D.R.m) (v :
   clsCrd D u i hi c ⊔ A.Pv v • Ld D u i hi c
 
 
+set_option maxHeartbeats 1000000 in
 structure LvTied (u : D.what₂.Word) (A : AtTTied u) (i : ℕ) (hi : i ≤ D.R.m) where
 
   pr : ∀ v c, ↥(Ld D u i hi c) →+ (D.fm u).lv i v c

@@ -40,6 +40,7 @@ variable {K : Type} [Field K] {G : Type} [Group G] [Fintype G]
   {T : Type} [AddCommGroup T] [Module K T] [FiniteDimensional K T]
 
 
+open Classical in
 theorem trace_formula (τ : Representation K G T) (H₀ H : Subgroup G) (χ₀ : H₀ →* (𝓞 K)ˣ)
     (χ : H →* (𝓞 K)ˣ) (a b : G) :
     LinearMap.trace K T (epP H₀ χ₀ τ ∘ₗ τ a ∘ₗ epP H χ τ ∘ₗ τ b) =
@@ -129,6 +130,7 @@ section Alg
 variable {K : Type} [Field K] {G : Type} [Group G] [Fintype G]
 
 
+open Classical in
 def epA (H : Subgroup G) (χ : H →* (𝓞 K)ˣ) : MonoidAlgebra K G :=
   ((Nat.card H : ℕ) : K)⁻¹ •
     ∑ h : H, MonoidAlgebra.single (h : G) ((((χ h⁻¹ : (𝓞 K)ˣ) : 𝓞 K) : K))
@@ -152,6 +154,7 @@ end Alg
 end NormTraceLemmas
 
 
+open NormTraceLemmas in
 theorem core_of (hC : CharFacts) (hK : KeyZero) (hS : Schur) (hP : IdemP) : Core := by
   intro K _ _ G _ _ S T _ _ _ τ H₀ χ₀ H χ hgood hM1 s
   obtain ⟨γ, δ, c, hdet, htr, he1, he2⟩ :=

@@ -53,6 +53,7 @@ theorem graphSecond_not_mem {k : Type} [Field k] {m : ℕ} {α : T → k} {M : T
 end StackedExceptionalReduced
 
 
+open StackedExceptionalCycle StackedGraphHorizontal StackedExceptionalReduced in
 theorem DualStackedExcReduced.proof (hC : DualStackedExcCoords.Statement) (hB : DualStackedExcBase.Statement)
     (hX : DualStackedExcChart.Statement) : DualStackedExcReduced.Statement := by
   intro K _ _ i F F' T _ _ b b' a hi hlt hcov hab

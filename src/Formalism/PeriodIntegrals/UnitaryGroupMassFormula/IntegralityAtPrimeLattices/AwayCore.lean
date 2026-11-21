@@ -44,6 +44,8 @@ theorem exists_not_mem_valuation_div_le_one (v0 p : HeightOneSpectrum (𝓞 F)) 
   exact (v0.intValuation_le_pow_iff_mem s _).2 hs
 
 
+set_option maxHeartbeats 2000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem away_core (Λ : Submodule (𝓞 E) (Fin n → E)) (hΛ : Formalism.L2.GlobalTheoryTheory.Comp.IsLat Λ)
     (g1 g2 : GL (Fin n) (E ⊗[F] FiniteAdeleRing (𝓞 F) F)) (v0 : HeightOneSpectrum (𝓞 F))
     (hst : ∀ q, q ≠ v0 → ∀ z ∈ Formalism.L2.Geo.Def.PC.latV q Λ,
@@ -124,6 +126,8 @@ open Formalism.BasicNotions Formalism.L2.Forms Formalism.L2.GlobalTheoryTheory.L
 variable {D : D7} {u : D.what₂.Word}
 
 
+set_option maxHeartbeats 2000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem kappa_stab_dl (T : Forms0 D u) (κ : T.cls0.lev.U) :
     κ.1 ∈ stabGL (Formalism.L2.Geo.Def.PC.latA (F := D.host.F)
       (Formalism.L2.GlobalTheoryTheory.Comp.dl (sigD D) (gramN D 0 (Nat.zero_le _)) T.cls0.lev.Lb)) := by
@@ -156,6 +160,8 @@ theorem kappa_stab_dl (T : Forms0 D u) (κ : T.cls0.lev.U) :
   simpa using inv_mem hst
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem lattices_away_from_place (T : Forms0 D u) : AwayLat0 T := by
   intro v v' hvv c c' γ η κ h1 h2
   have hΛ := dual_base_lattice_full T.cls0

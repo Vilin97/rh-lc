@@ -79,6 +79,7 @@ theorem Represents.translate' (g : GfC V) {Φ Φ' : ContinuousMultilinearMap ℂ
   exact (lift_R (g : GA D V) _).trans ((measurePreserving_mul_right μ (g : GA D V)).quasiMeasurePreserving.ae (h v))
 
 
+variable (μ) in
 def phiOf (T : MMap M) : ContinuousMultilinearMap ℂ M.H (DividedPowerChartLift V μ) :=
   open Classical in
   if h : ∃ Φ, Φ ∈ homDS M (RG V μ) (GlobalTheory.Cusp.L2cusp V μ) ∧ Represents μ Φ T then h.choose else 0
@@ -97,6 +98,7 @@ theorem phiOf_eq (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : IsInfFam θ
 variable {W : Type} [AddCommGroup W] [Module ℂ W] {σ : Representation ℂ (GfC V) W}
 
 
+variable (μ) in
 def homOf (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : IsInfFam θ) (f : W →ₗ[ℂ] MMap M) (hf : ∀ w, f w ∈ allMaps θ M) :
     W →ₗ[ℂ] ContinuousMultilinearMap ℂ M.H (DividedPowerChartLift V μ) where
   toFun w := phiOf μ (f w)
@@ -126,6 +128,7 @@ theorem homOf_mem (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : IsInfFam �
   rfl
 
 
+variable (μ) in
 def toHom (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : IsInfFam θ) :
     homInto σ (finRep M) (allMaps θ M) →ₗ[ℂ] homFinDS σ M (RG V μ) (GlobalTheory.Cusp.L2cusp V μ) where
   toFun f := ⟨homOf μ hP hθ f.1 f.2.1, homOf_mem hP hθ f.2⟩
@@ -146,6 +149,7 @@ theorem toHom_injective (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : IsIn
   exact eq_of_represents_cont (continuous_of_mem_allMaps (f.2.1 w)) (fun _ => continuous_const) hr represents_zero
 
 
+variable (σ) in
 def stab (w : W) : Subgroup (GfC V) where
   carrier := {g | σ g w = w}
   one_mem' := by simp
@@ -188,6 +192,7 @@ end GlobalTheory.AutMult.MultAssembly
 namespace GlobalTheory.AutMult
 
 
+open GlobalTheory.AutMult.MultAssembly in
 theorem cuspMult_eq_mCuspDS : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.HarishChandraFinite → GlobalTheory.Published.DixmierMalliavinFactorisation → ∀ (D : D7) (θ : D.what₂.Tau → (TensorProduct D.host.F (Ainf D.host.F) D.host.E →+* ℂ)), IsInfFam θ → ∀ (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S) (μ : Measure (GA D V)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (W : Type) [AddCommGroup W] [Module ℂ W] (σ : Representation ℂ (GfC V) W), GlobalTheory.PRep.IsSmooth σ → GlobalTheory.CuspMult.cuspMult θ M σ = mCuspDS μ σ M := by
   intro hP _ _ D θ hθ V S M μ _ _ W _ _ σ hσ
   exact (LinearEquiv.ofBijective (toHom μ hP hθ) ⟨toHom_injective hP hθ, toHom_surjective hP hθ hσ⟩).rank_eq

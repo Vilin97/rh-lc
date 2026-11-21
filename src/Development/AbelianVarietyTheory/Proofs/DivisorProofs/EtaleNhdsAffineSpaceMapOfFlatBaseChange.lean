@@ -45,6 +45,7 @@ theorem notMem_support_of_flat {B D M N : Type} [CommRing B] [CommRing D] [Algeb
   exact hf (by simpa using this)
 
 
+attribute [local instance] Algebra.TensorProduct.rightAlgebra in
 theorem mem_etaleLocus_of_flat {A B C : Type} [CommRing A] [CommRing B] [CommRing C] [Algebra A B] [Algebra A C]
     [Module.Flat A C] (Q : PrimeSpectrum (C ⊗[A] B)) (hQ : Q ∈ Algebra.etaleLocus C (C ⊗[A] B)) :
     PrimeSpectrum.comap (algebraMap B (C ⊗[A] B)) Q ∈ Algebra.etaleLocus A B := by
@@ -79,6 +80,7 @@ theorem mem_etaleLocus_of_flat {A B C : Type} [CommRing A] [CommRing B] [CommRin
     exact hi.of_comp_right (LinearEquiv.surjective _)
 
 
+attribute [local instance] Algebra.TensorProduct.rightAlgebra in
 theorem exists_etale_spec {A B C : Type} [CommRing A] [CommRing B] [CommRing C] [Algebra A B] [Algebra A C]
     [Module.Flat A C] [Algebra.FinitePresentation A B] (W : (Spec (.of (C ⊗[A] B))).Opens)
     (p : Spec (.of (C ⊗[A] B))) (hp : p ∈ W)

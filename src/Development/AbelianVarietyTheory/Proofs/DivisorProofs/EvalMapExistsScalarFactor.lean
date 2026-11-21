@@ -23,6 +23,7 @@ namespace GlobalTheory.ExpandDenom
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 
+omit [NumberField F] [NumberField E] in
 theorem trace_tmul (R : Type) [CommRing R] [Algebra F R] [FiniteDimensional F E] (a : R) (e : E) :
     Algebra.trace R (R ⊗[F] E) (a ⊗ₜ[F] e) = a * algebraMap F R (Algebra.trace F E e) := by
   have h1 : a ⊗ₜ[F] e = a • ((1 : R) ⊗ₜ[F] e) := by
@@ -78,6 +79,7 @@ theorem ev_rho_rho {n d d₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {W₁ : Spc 
 end GlobalTheory.ExpandDenom
 
 
+open GlobalTheory.ExpandDenom in
 theorem GlobalTheory.ExpandDenom.main : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (n d d₁ : ℕ) (X : Spc F E n) (W : Spc F E d) (W₁ : Spc F E d₁) (M : Model σ X W) (M₁ : Model σ X W₁) (H' : Plane E d d₁) (i₀ i₁ : ℕ),
     H'.IsAdapted σ B W W₁ i₀ i₁ → M₁.IsGood B.ψ → ∀ (e₀ : Fn F n d →ₗ[ℂ] Fn F n d₁), IsEv B M M₁ 1 H'.ι (iso0 n H') e₀ → B.IsGood σ → M.IsGood B.ψ → (∃ r s r' s' : ℕ, X.IsHerm σ B r s ∧ W.IsSkew σ B r' s') →

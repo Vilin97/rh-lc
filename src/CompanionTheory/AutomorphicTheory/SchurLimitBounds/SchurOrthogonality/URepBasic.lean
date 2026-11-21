@@ -87,6 +87,7 @@ theorem IsInvariant.topologicalClosure {V : Submodule ℂ H} (hV : π.IsInvarian
   rwa [V.isClosed_topologicalClosure.closure_eq] at this
 
 
+variable (π) in
 def intertwiners (σ : UnitaryRep G K) : Submodule ℂ (H →L[ℂ] K) where
   carrier := {T | ∀ (g : G) (v : H), T (π g v) = σ g (T v)}
   add_mem' {S T} hS hT g v := by simp [hS g v, hT g v]
@@ -147,6 +148,7 @@ end Equiv
 lemma IsEquivalent.symm (h : π.IsEquivalent σ) : σ.IsEquivalent π := ⟨h.some.symm⟩
 
 
+variable (π) in
 def IsIrreducible : Prop :=
   Nontrivial H ∧ ∀ V : Submodule ℂ H, IsClosed (V : Set H) → π.IsInvariant V → V = ⊥ ∨ V = ⊤
 

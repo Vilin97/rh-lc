@@ -186,6 +186,7 @@ theorem ker_toFractionalIdeal :
   simp only [Units.val_one, count_one]
 
 
+open Classical in
 theorem primeIdealUnit_mem_range (v : HeightOneSpectrum (𝓞 K)) :
     primeIdealUnit v ∈ (toFractionalIdeal (K := K)).range := by
   obtain ⟨x, hx⟩ := exists_ord_eq_ite v

@@ -36,6 +36,7 @@ theorem stepW_rank_large (p : WP) :
   Step.of_evG ((evG_of_ev GlobalTheory.Mem.StdSize.vstd_size_ev).imp fun _ _ _ _ _ H _ _ _ hO _ _ _ w _ Z => (H (w.st Z) hO).2)
 
 
+set_option maxHeartbeats 1000000 in
 theorem inGeo_stepW (hP : GlobalTheory.Published.CuspRapidDecay) (p : WP) :
     StepW p fun _ B' _ _ w' => ∀ (Z' : w'.Lt) (hX' : B'.fields.Ok) (U : Set w'.I.ι) (core' : CoreJ (w'.st Z').toD7)
       (alg' : Algebra core'.Q.c.F (w'.st Z').toD7.what₂.LL), letI := alg'; ∀ (Xg : Finset (Gc B' w'.px → B'.LL)) (tr : TrI B' w'.px)

@@ -167,6 +167,7 @@ variable {S₀ S₁ : Scheme.{0}} {G : Over S₀} [GrpObj G] {A : Over S₁} [Gr
   (hτ : Spec.map (CommRingCat.ofHom g) ≫ t₀ = t ≫ f) {L₀ : LB G.left} {L₁ : LB A.left}
 
 
+include hp hτ in
 theorem exists_side_map (hL₀ : L₀.IsLB) (hL₁ : L₁.IsLB) (w : LB.Iso L₁ (L₀.pull φ)) (hw : w.IsGen) (k : ℤ)
     (x : Over.mk t ⟶ A) (θ₀ : ThetaGrp G L₀ k (Over.mk t₀))
     (hx : Spec.map (CommRingCat.ofHom g) ≫ θ₀.pt.left = x.left ≫ φ)

@@ -342,6 +342,7 @@ def scalRep {R : Type} [CommRing R] (ψ : G →* Rˣ) (M : Type) [AddCommGroup M
   map_mul' g k := by ext; simp [smul_smul, mul_comm]
 
 
+open ReciprocityTheory.Gal in
 theorem exists_gen (hχ : Continuous fun g => (χ g : ℤ_[l]))
     (h1 : Nonempty (H2 ((charRep (redChar χ r)).comp (MonoidHom.id G)) ≃ₗ[ZMod (l ^ r)] ZMod (l ^ r)))
     (h2 : ∀ (M : Type) [AddCommGroup M] [Module (ZMod (l ^ r)) M] [Finite M] [TopologicalSpace M]

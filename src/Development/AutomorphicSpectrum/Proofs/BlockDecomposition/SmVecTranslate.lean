@@ -441,6 +441,7 @@ end Final
 end GlobalTheory.CompanionTheory.NodeSep
 
 
+open GlobalTheory.CompanionTheory.NodeSep in
 theorem GlobalTheory.CompanionTheory.NodeSep.nodeMod : PositivityTheory.Rg.BcB.F.RS.NodeMod := by
   intro E _ _ _ r s t₁ t₂ w X Y _ _ _ _ τ₁ τ₂ H₁ H₂
   obtain ⟨h₁, J₁, L₁, e₁, p₁⟩ := H₁

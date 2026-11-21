@@ -94,6 +94,7 @@ def IsAdmissible : Prop :=
       FiniteDimensional ℂ (LinearMap.range (kProj Mx.gk.isKFinite hc ∘ₗ (fixedVectors Mx.τ H).subtype))
 
 
+set_option maxHeartbeats 2000000 in
 theorem exists_equiv_outerTensor_gkl (hirr : Mx.IsIrreducible) (hadm : Mx.IsAdmissible) :
     ∃ (H : Subgroup L) (hHc : IsCompact (H : Set L)) (hHo : IsOpen (H : Set L))
       (c : Submodule (MonoidAlgebra ℂ K) Mx.gk.σ.asModule)

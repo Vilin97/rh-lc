@@ -22,10 +22,12 @@ def betaI {D : D7} (X : HidaSetting D) (x y : EuclideanSpace ℝ (KapI X)) : ℝ
     (BR (Ainf X.B.I.F) X.B.I.cm.sig X.B.I.J ((tupCoord X).symm x) ((tupCoord X).symm y) w)).re
 
 
+open Classical in
 def matI {D : D7} (X : HidaSetting D) : Matrix (KapI X) (KapI X) ℝ :=
   fun i j => betaI X (EuclideanSpace.single i 1) (EuclideanSpace.single j 1)
 
 
+open Classical in
 def DensMu : Prop := ∀ {D : D7} (X : HidaSetting D) (u' : D.what₂.Word) (ψ : AddChar (AF X.B.I.F) ℂ) hT μinf νinf fibInf,
     PushHyp X u' ψ hT μinf νinf fibInf →
     μinf.map (tupCoord X) = ENNReal.ofReal (Real.sqrt |(matI X).det|) • volume

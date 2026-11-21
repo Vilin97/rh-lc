@@ -83,6 +83,7 @@ noncomputable def coindTraceTermMor (c : G ⧸ (U : Subgroup G)) :
       group⟩
 
 
+omit [IsDiscreteRep A] in
 theorem resFunctor_map_coindTrace :
     (Rep.resFunctor (U : Subgroup G).subtype).map (coindTrace (U : Subgroup G) A) =
       ∑ c : G ⧸ (U : Subgroup G), coindTraceTermMor U A c := by
@@ -147,6 +148,7 @@ variable (hA : Function.Bijective fun a : A => (U : Subgroup G).index • a)
 include hA
 
 
+omit [(U : Subgroup G).Normal] in
 theorem cohomologyRes_injective_of_bijective (n : ℕ) :
     Function.Injective (cohomologyRes A (U : Subgroup G) n).hom := by
   intro x y h

@@ -38,6 +38,7 @@ theorem residue_eq_zero_iff_val_lt {v : HeightOneSpectrum (𝓞 D.host.F)} (o : 
   exact ⟨fun h => lt_of_le_of_ne o.2 h, fun h => h.ne⟩
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_levChart : ∀ (D : D7) (e : AE D) (PP : Pl D.host.E), Formalism.L2.NTheta.IsIdemAt e PP →
     ∃ (v : HeightOneSpectrum (𝓞 D.host.F)) (φ : Formalism.IndefR.Lev.EAf D →+* Fv D.host.F v)
       (ι : kP PP ≃+* IsLocalRing.ResidueField (GlobalTheory.SplitHecke.Ov D v)), LevChart e PP v φ ι := by

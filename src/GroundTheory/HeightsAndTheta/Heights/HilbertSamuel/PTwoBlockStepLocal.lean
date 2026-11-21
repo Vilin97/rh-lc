@@ -45,6 +45,7 @@ theorem choose_div_factorial {D i : ℕ} (hi : i ≤ D) (u : ℝ) :
 end TwoBlockStepLocal
 
 
+open TwoBlockStepLocal in
 theorem TwoBlockStepLocal.proof (hA : TwoBlockPieceCycle.Statement) (hM : TwoBlockCycleExpand.Statement)
     (hR : TwoBlockCoeffCycle.Statement) : TwoBlockStepLocal.Statement := by
   intro D Ω _ _ κ _ I x B m m' hI hX hx hB hm hm' hsp

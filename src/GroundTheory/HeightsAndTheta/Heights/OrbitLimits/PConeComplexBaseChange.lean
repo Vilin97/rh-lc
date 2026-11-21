@@ -24,6 +24,7 @@ namespace ConeComplexBaseChange
 variable {σ : Type} [Fintype σ]
 
 
+omit [Fintype σ] in
 theorem map_int_complex_eq :
     (MvPolynomial.map (Int.castRingHom ℂ) : MvPolynomial σ ℤ →+* MvPolynomial σ ℂ) =
       (MvPolynomial.map (algebraMap ℚ ℂ)).comp (MvPolynomial.map (Int.castRingHom ℚ)) := by

@@ -30,6 +30,7 @@ theorem killBlocks_X (S : Set K) (p : Σ k, ι k) :
   rw [killBlocks, aeval_X]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem killBlocks_monomial_of_forall (S : Set K) (m : (Σ k, ι k) →₀ ℕ) (c : ℤ)
     (h : ∀ p ∈ m.support, p.1 ∉ S) : killBlocks S (monomial m c : MRing ι) = monomial m c := by
   rw [killBlocks, aeval_monomial, monomial_eq, algebraMap_eq]
@@ -38,6 +39,7 @@ theorem killBlocks_monomial_of_forall (S : Set K) (m : (Σ k, ι k) →₀ ℕ) 
   rw [if_neg (h p hp)]
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem killBlocks_monomial_of_mem (S : Set K) (m : (Σ k, ι k) →₀ ℕ) (c : ℤ) (p : Σ k, ι k)
     (hp : p ∈ m.support) (hS : p.1 ∈ S) : killBlocks S (monomial m c : MRing ι) = 0 := by
   rw [killBlocks, aeval_monomial, Finsupp.prod]
@@ -82,6 +84,7 @@ theorem le_comap_killBlocks {P : Ideal (MRing ι)} (hP : IsMultiHomogIdeal P) (S
   · exact Ideal.zero_mem _
 
 
+omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem killBlocks_comp {S S' : Set K} (h : S ⊆ S') :
     (killBlocks S').comp (killBlocks S) = (killBlocks S' : MRing ι →ₐ[ℤ] MRing ι) := by
   refine MvPolynomial.algHom_ext fun p => ?_

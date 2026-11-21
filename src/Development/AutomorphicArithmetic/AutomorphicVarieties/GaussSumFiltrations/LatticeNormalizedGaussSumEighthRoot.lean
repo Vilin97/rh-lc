@@ -346,6 +346,7 @@ end GlobalTheory.HilbertThetaSeries.GaussPow
 namespace GlobalTheory.HilbertThetaSeries
 
 
+open GaussPow in
 theorem gaussSum_pow_eight : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ] [DecidableEq κ] (G : Matrix κ κ ℤ), EvenPos G → ∀ t : ℕ, G.det = (t : ℤ) ^ 2 → ∀ k : ℕ, Fintype.card κ = 2 * k → ∀ (N : ℕ) (a b c d : F) (T : Finset (κ → F)), 0 < N → (∀ y ∈ dualL F G, (N : F) • y ∈ LL F κ ∧ IsIntegral ℤ ((N : F) * QF G y)) → IsIntegral ℤ a → IsIntegral ℤ b → IsIntegral ℤ (c / N) → IsIntegral ℤ d → a * d - b * c = 1 → c ≠ 0 → IsReps (aL κ c) (aL κ (1 : F)) T → (wC k t c c * ∑ x ∈ T, et (a / c * QF G x)) ^ 8 = 1 := by
   intro F _ _ κ _ _ G hG t ht k hk N a b c d T hN hdual ha hb hcN hd hadbc hc0 hT
   classical

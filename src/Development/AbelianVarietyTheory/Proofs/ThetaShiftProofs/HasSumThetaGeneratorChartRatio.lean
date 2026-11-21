@@ -410,6 +410,7 @@ theorem exists_val_ne [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (Fract
   exact not_isUnit_zero hun
 
 
+open GlobalTheory.Conv in
 theorem exists_hasSum_div {A B R s : ℂ⸨X⸩} (n : ℕ) (hA : A ∈ convLaurent) (hB : B ∈ convLaurent) (hR : R ∈ convLaurent)
     (hB0 : B ≠ 0) (hR0 : R ≠ 0) (h : A = B ^ n * (R * s)) : ∃ T : ℝ, ∀ w : ℂ, T < w.im → ∀ a b r : ℂ,
       HasSum (fun m : ℤ => A.coeff m * eTwoPi w ^ m) a → HasSum (fun m : ℤ => B.coeff m * eTwoPi w ^ m) b →

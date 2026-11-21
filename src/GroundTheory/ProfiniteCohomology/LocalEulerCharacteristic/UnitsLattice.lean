@@ -90,6 +90,7 @@ noncomputable abbrev unitFiltrationAction (k : ℕ) :
   smul_one σ := Subtype.ext (smul_one σ)
 
 
+variable {F} in
 noncomputable def maxPow (F : Type*) [Field F] [ValuativeRel F] (k : ℕ) : AddSubgroup 𝒪[F] :=
   (𝓂[F] ^ k).toAddSubgroup
 
@@ -207,6 +208,8 @@ theorem unitToModN_eq_zero_iff (hp : p.Prime) {k : ℕ} (hk : e + 1 ≤ k)
     exact hyp.symm
 
 
+omit hϖ hpe in
+variable (ϖ) in
 theorem unitToModN_smul (hϖ : Irreducible ϖ) (hpe : (p : 𝒪[F]) = ϖ ^ e * ε) {k : ℕ}
     (hk : e ≤ k) (σ : F ≃ₐ[E] F) (u : Additive (unitFiltration F k)) :
     unitToModN hϖ hpe hk (σ • u) =
@@ -235,6 +238,7 @@ theorem mem_normalSub {θ : F} {x : 𝒪[F]} :
   Iff.rfl
 
 
+omit [ValuativeRel F] [FiniteDimensional E F] in
 theorem normalLattice_zero_eq (π : 𝒪[E]) (θ : F) :
     normalLattice π θ 0 = normalLattice (1 : 𝒪[E]) θ 0 := by
   simp [normalLattice]

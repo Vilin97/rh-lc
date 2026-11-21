@@ -65,6 +65,7 @@ theorem hom_ext_of_dominant {W X Y Z : Scheme.{u}} {f g : X ⟶ Y} (s : Y ⟶ Z)
 variable {U S : Scheme.{u}} (j : U ⟶ S) [QuasiCompact j] [IsSchemeTheoreticallyDominant j]
 
 
+variable {j} in
 theorem over_hom_ext_of_isPullback {X Y : Over S} [Flat X.hom] [IsSeparated Y.hom] {X' : Scheme.{u}}
     {φ : X' ⟶ X.left} {p : X' ⟶ U} (h : IsPullback φ p X.hom j) {f g : X ⟶ Y}
     (hfg : φ ≫ f.left = φ ≫ g.left) : f = g := by
@@ -93,6 +94,7 @@ theorem isIso_of_pullback {X Y : Over S} [Flat X.hom] [IsSeparated X.hom] [Flat 
   ⟨g, comp_eq_id_of_pullback j e f g hf hg⟩
 
 
+variable {j} in
 theorem comp_eq_id_of_isPullback {X Y : Over S} [Flat X.hom] [IsSeparated X.hom] [Flat Y.hom] [IsSeparated Y.hom]
     {X' Y' : Over U} {φ : X'.left ⟶ X.left} {ψ : Y'.left ⟶ Y.left}
     (hX : IsPullback φ X'.hom X.hom j) (hY : IsPullback ψ Y'.hom Y.hom j) (e : X' ≅ Y') (f : X ⟶ Y) (g : Y ⟶ X)
@@ -107,6 +109,7 @@ theorem comp_eq_id_of_isPullback {X Y : Over S} [Flat X.hom] [IsSeparated X.hom]
       e.inv_hom_id, Over.id_left, Over.id_left, Category.id_comp, Category.comp_id]
 
 
+variable {j} in
 theorem isIso_of_isPullback {X Y : Over S} [Flat X.hom] [IsSeparated X.hom] [Flat Y.hom] [IsSeparated Y.hom]
     {X' Y' : Over U} {φ : X'.left ⟶ X.left} {ψ : Y'.left ⟶ Y.left}
     (hX : IsPullback φ X'.hom X.hom j) (hY : IsPullback ψ Y'.hom Y.hom j) (e : X' ≅ Y') (f : X ⟶ Y) (g : Y ⟶ X)
@@ -189,6 +192,7 @@ theorem existsUnique_oAct_of_isGrpPullback {O : Type} [CommRing O] {G : Over S} 
   · exact over_hom_ext_of_isPullback hG.1 ((hb x).symm.trans (hf x))
 
 
+variable (j) in
 theorem existsUnique_oAct_pullback {O : Type} [CommRing O] {G : Over S} [GrpObj G] [IsCommMonObj G] [Flat G.hom]
     [IsSeparated G.hom] (i : OAct O ((Over.pullback j).obj G))
     (hi : ∀ x, ∃ f : G ⟶ G, (Over.pullback j).map f = i.act x) :

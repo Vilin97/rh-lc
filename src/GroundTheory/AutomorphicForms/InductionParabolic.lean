@@ -82,6 +82,7 @@ variable {W : Type*} [AddCommGroup W] [Module ℂ W]
 
 variable (F n β) in
 
+variable (F n β) in
 def inflateTwist (σ : Representation ℂ (levi F n β) W) : Representation ℂ (blockUpper F n β) W :=
   twist (sqrtModular F n β) (σ.comp (leviProj F n β))
 
@@ -91,11 +92,13 @@ theorem inflateTwist_apply (σ : Representation ℂ (levi F n β) W) (p : blockU
 
 variable (F n β) in
 
+variable (F n β) in
 abbrev parabolicIndSpace (σ : Representation ℂ (levi F n β) W) : Submodule ℂ (GL (Fin n) F → W) :=
   indSpace (blockUpper F n β) (inflateTwist F n β σ)
 
 variable (F n β) in
 
+variable (F n β) in
 abbrev parabolicInd (σ : Representation ℂ (levi F n β) W) :
     Representation ℂ (GL (Fin n) F) (parabolicIndSpace F n β σ) :=
   indRep (blockUpper F n β) (inflateTwist F n β σ)
@@ -119,6 +122,7 @@ variable {V : Type*} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (G
 
 variable (F n β) in
 
+variable (F n β) in
 abbrev JacquetModule : Type _ :=
   Representation.Coinvariants (π.comp (unipotentRadical F n β).subtype)
 
@@ -130,6 +134,7 @@ theorem levi_conj_mem (m : levi F n β) :
 
 variable (F n β) in
 
+variable (F n β) in
 def jacquetAction : Representation ℂ (levi F n β) (JacquetModule F n β π) where
   toFun m := coinvariantsTranslate π _ (m : GL (Fin n) F) (levi_conj_mem m)
   map_one' := Representation.Coinvariants.hom_ext (LinearMap.ext fun v => by simp)
@@ -144,6 +149,7 @@ theorem jacquetAction_mk (m : levi F n β) (v : V) :
 
 variable (F n β) in
 
+variable (F n β) in
 def jacquetRep : Representation ℂ (levi F n β) (JacquetModule F n β π) :=
   twist ((invSqrtModular F n β).comp leviIncl) (jacquetAction F n β π)
 
@@ -181,6 +187,7 @@ variable {π} {V' : Type*} [AddCommGroup V'] [Module ℂ V'] {π' : Representati
 
 variable (F n β) in
 
+variable (F n β) in
 def restrictN (f : Representation.IntertwiningMap π π') :
     Representation.IntertwiningMap (π.comp (unipotentRadical F n β).subtype)
       (π'.comp (unipotentRadical F n β).subtype) :=
@@ -188,6 +195,7 @@ def restrictN (f : Representation.IntertwiningMap π π') :
 
 variable (F n β) in
 
+variable (F n β) in
 def jacquetMap (f : Representation.IntertwiningMap π π') :
     Representation.IntertwiningMap (jacquetRep F n β π) (jacquetRep F n β π') :=
   ⟨Representation.Coinvariants.map _ _ (restrictN F n β f), fun m =>
@@ -219,6 +227,7 @@ theorem leviIncl_coe (m : levi F n β) :
 
 variable (F n β π) in
 
+variable (F n β π) in
 def jacquetAdjunction :
     Representation.IntertwiningMap (π.comp (blockUpper F n β).subtype) (inflateTwist F n β σ) ≃ₗ[ℂ]
       Representation.IntertwiningMap (jacquetRep F n β π) σ where
@@ -259,6 +268,7 @@ def jacquetAdjunction :
 
 variable (F n β) in
 
+variable (F n β) in
 def frobeniusParabolic (hπ : IsSmooth π) :
     Representation.IntertwiningMap π (parabolicInd F n β σ) ≃ₗ[ℂ]
       Representation.IntertwiningMap (jacquetRep F n β π) σ :=
@@ -274,6 +284,7 @@ theorem rankTorus_commute (e : ℕ) {y : GL (Fin n) F}
 
 variable (F n β π) in
 
+variable (F n β π) in
 def jacquetFixedMap (K : Subgroup (GL (Fin n) F)) :
     fixedVectors π K →ₗ[ℂ] fixedVectors (jacquetAction F n β π) (K.subgroupOf (levi F n β)) :=
   ((Representation.Coinvariants.mk _).comp (fixedVectors π K).subtype).codRestrict _

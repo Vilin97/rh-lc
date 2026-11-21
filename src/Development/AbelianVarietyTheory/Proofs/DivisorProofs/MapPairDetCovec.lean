@@ -110,6 +110,7 @@ def GVal (τ : E →+* ℂ) (f : Rul Xo c) {k : Type} [Field k] [Algebra c.F k] 
 variable {p : ℕ} [Fact p.Prime] [StarRing (𝓞 E)]
 
 
+variable (p E) in
 abbrev PtP : Type 1 := Point p (Valued.v : Valuation ℂ_[p] ℝ≥0) 𝓞_ℂ_[p] (𝓞 E)
 
 def PtOn (yb : Sp 𝓞_ℂ_[p] ⟶ Y.X) (yy : Sp ℂ_[p] ⟶ Xo'.XF c') (P : PtP E p) (π : P.G.left ⟶ Y.t.G.left)

@@ -42,6 +42,7 @@ theorem pull_cls_twist {N : LB (A ⊗ T).left} (hN : N.IsLB) (h : (twist A φ N)
   exact e
 
 
+variable (A) in
 theorem triv_lam_twist (N : LB (A ⊗ T).left) (hF : Fam A N) : Triv (abelian₂ (bc A φ) (twist A φ N)) := by
   have hO : (twist A φ N).IsLB := pull_isLB hF.isLB _
   have hP : (abelian₂ (bc A φ) (twist A φ N)).IsLB := LB.isLB_linComb hO _ _

@@ -90,6 +90,7 @@ theorem wh_ne {f : UA σ W.J → ℂ} (hf : IsAut (W := W) f)
   · rw [← wh_right C h H, h0]; rfl
 
 
+omit H hψ in
 theorem wh_two {u u' : Matrix (Fin d) (Fin 2) E} (h : Fr (σ : E →+* E) W.J u u') {ct : (UA σ W.J → ℂ) → UA σ W.J → ℂ}
     (H : IsCt (colSp u) ct) (hψ : StdPsi ψ) {f : UA σ W.J → ℂ} (hf : IsAut (W := W) f) (hm : Mod f)
     (h1 : Av σ W (colSp (fst u one_le_two)) f 0) {x₀} {V} (hV : V ∈ 𝓝 x₀) {b : ℕ → GL (Fin 2) (AE F E)} {y : ℕ → ℂ} (b0 : b 0 = 1)

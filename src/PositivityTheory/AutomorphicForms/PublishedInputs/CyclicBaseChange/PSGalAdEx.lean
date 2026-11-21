@@ -129,6 +129,7 @@ def finEquiv (σ : M ≃+* M) : Af M ≃+* Af M where
 end UpperTheory.CBC.GaloisActionOnAdeles
 
 
+open UpperTheory.CBC.GaloisActionOnAdeles in
 def UpperTheory.CBC.SGalAdEx : Prop :=
   ∀ (M : Type) [Field M] [NumberField M] (σ : M ≃+* M), ∃ s : Ad M ≃+* Ad M, UpperTheory.CBC.IsGalAd σ s
 

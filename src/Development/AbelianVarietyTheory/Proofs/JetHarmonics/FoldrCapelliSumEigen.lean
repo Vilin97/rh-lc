@@ -16,6 +16,7 @@ section
 variable {k r : ℕ} {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E]
 
 
+attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 theorem smoothLev_finsum_smul {ι : Type} (t : Finset ι) (c : ι → ℂ) (f : ι → B.Mat k r → E)
     (hf : ∀ i, Q.SmoothLev k r 0 Set.univ (f i)) :
     Q.SmoothLev k r 0 Set.univ (fun y => ∑ i ∈ t, c i • f i y) := by

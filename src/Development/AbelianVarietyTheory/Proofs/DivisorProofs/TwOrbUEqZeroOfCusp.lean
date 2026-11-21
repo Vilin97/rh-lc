@@ -23,6 +23,7 @@ open scoped Classical
 namespace GlobalTheory.OrbDesc
 
 
+open GlobalTheory.OrbDesc in
 theorem avg_const' {H : Type} [Group H] (c : ℂ) : GlobalTheory.BCT.avg (fun _ : H => c) = c := by
   have h : GlobalTheory.BCT.rStab (fun _ : H => c) = ⊤ := eq_top_iff.2 fun _ _ _ => rfl
   unfold GlobalTheory.BCT.avg

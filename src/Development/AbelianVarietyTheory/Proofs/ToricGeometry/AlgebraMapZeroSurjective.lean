@@ -318,6 +318,7 @@ namespace GlobalTheory
 open ProjCone
 
 
+attribute [local instance] MvPolynomial.gradedAlgebra in
 theorem exists_projModel {σ : Type} [Fintype σ] (I : Ideal (MvPolynomial σ ℂ))
     (hI : I.IsHomogeneous (homogeneousSubmodule σ ℂ)) (hP : I.IsPrime) (hX : ∃ c, X c ∉ I) (g : ℕ)
     (hg : ringKrullDim (MvPolynomial σ ℂ ⧸ I) ≤ (g + 1 : ℕ)) :

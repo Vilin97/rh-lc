@@ -48,6 +48,7 @@ structure IsEnd (e : AddMonoid.End (Additive (G ⟶ G))) : Prop where
   eq : ∀ x, (e x).toMul = x.toMul ≫ evId e
 
 
+variable (G) in
 def endRing : Subring (AddMonoid.End (Additive (G ⟶ G))) where
   carrier := {e | IsEnd e}
   mul_mem' {a b} ha hb := by

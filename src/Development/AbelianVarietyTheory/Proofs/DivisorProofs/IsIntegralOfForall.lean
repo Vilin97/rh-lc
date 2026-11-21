@@ -248,6 +248,7 @@ theorem exists_correction [IsGalois L Ω] (s : Ω ≃+* Ω) (t : L ≃+* L)
 end
 
 
+open GlobalTheory.Published.AbVarRed in
 theorem exists_lift {K Ω : Type} [Field K] [Field Ω] [Algebra K Ω] [IsGalois K Ω] (V : ValuationSubring Ω)
     (L : IntermediateField K Ω) [Normal K L] (τ : L ≃ₐ[K] L)
     (hτ : τ ∈ inertia K (V.comap (algebraMap L Ω))) :

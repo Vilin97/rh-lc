@@ -42,6 +42,7 @@ def Vo {Y : Model Xo c (RingHom.id c.F)} (C : FlagCpt Y (RingEquiv.refl c.F)) : 
   C.π ⁻¹ᵁ ⟨Set.range Y.jQ, (haveI := Y.jQ_open; Y.jQ.isOpenEmbedding.isOpen_range)⟩
 
 
+open GlobalTheory.Toroidal (gen genι genStr) in
 instance isIso_genι {Y : Model Xo c (RingHom.id c.F)} : IsIso (genι Y) := by
   have : IsIso (spMap (RingHom.id c.F)) := by
     show IsIso (Spec.map (𝟙 _))

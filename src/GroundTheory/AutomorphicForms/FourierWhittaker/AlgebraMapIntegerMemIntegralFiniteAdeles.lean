@@ -22,6 +22,7 @@ set_option linter.unusedSectionVars false
 variable {K : Type*} [Field K] [NumberField K] {ι : Type*} [Fintype ι]
 
 
+variable (K) in
 abbrev BIdx : Type _ := Free.ChooseBasisIndex ℤ (𝓞 K)
 
 def ofCoord (t : BIdx K → ℝ) : InfiniteAdeleRing K :=
@@ -79,6 +80,7 @@ theorem infiniteTrace_algebraMap_mul_ofCoord (q : K) (t : BIdx K → ℝ) :
     GroundTheory.Global.mixedTrace_mixedEmbedding, smul_eq_mul]
 
 
+variable (K) in
 def traceDualBasis : Basis (BIdx K) ℚ K :=
   (Algebra.traceForm ℚ K).dualBasis (traceForm_nondegenerate ℚ K) (integralBasis K)
 
@@ -244,10 +246,12 @@ theorem IsIntegralPeriodic.integrand_finite {f : (ι → 𝔸[K]) → ℂ} (hf :
   rw [hf.finite x z hz, pair_add, neg_add, AddChar.map_add_eq_mul, h1, mul_one]
 
 
+variable (K ι) in
 def infDomain : Set (ι → InfiniteAdeleRing K) :=
   Set.univ.pi fun _ => GroundTheory.Global.fundamentalSetInfinite K
 
 
+variable (K ι) in
 def finDomain : Set (ι → FiniteAdeleRing (𝓞 K) K) :=
   Set.univ.pi fun _ => (GroundTheory.Global.integralFiniteAdeles (𝓞 K) K : Set (FiniteAdeleRing (𝓞 K) K))
 
@@ -338,6 +342,7 @@ theorem continuous_coordEquiv_symm : Continuous (coordEquiv (K := K) (ι := ι))
   continuous_pi fun p => (continuous_apply p.2).comp (continuous_coordOf.comp (continuous_apply p.1))
 
 
+variable (K ι) in
 def cube : Set (ι × BIdx K → ℝ) := {t | ∀ p, t p ∈ Ico (0 : ℝ) 1}
 
 theorem coordEquiv_preimage_infDomain :

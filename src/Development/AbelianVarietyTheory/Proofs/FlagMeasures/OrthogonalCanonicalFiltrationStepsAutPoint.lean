@@ -199,6 +199,7 @@ variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComple
   [DecidableEq ι] (b : Module.Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
 
 
+variable (K) in
 def cK : ℝ := Real.log 2 / 2 - logDisc K / (2 * (Module.finrank ℚ K : ℝ))
 
 def nd (N : Submodule (𝓞 K) V) : ℝ :=

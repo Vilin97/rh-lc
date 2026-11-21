@@ -17,6 +17,7 @@ open UpperTheory.V.Af.Smo (EigAt)
 open scoped ComplexOrder
 
 
+open GroundTheory.Automorphic.FourierWhittaker in
 private noncomputable def latQ {E : Type} [Field E] [NumberField E] (D : Dat ℚ E) :
     vecLattice ℚ (Fin 2) ≃ AdeleRing.principalSubgroup (𝓞 E) E where
   toFun g := ⟨D.coE.symm g.1, by
@@ -30,6 +31,7 @@ private noncomputable def latQ {E : Type} [Field E] [NumberField E] (D : Dat ℚ
   right_inv y := Subtype.ext (D.coE.symm_apply_apply y.1)
 
 
+open GroundTheory.Automorphic.FourierWhittaker in
 private theorem int_zero {E : Type} [Field E] [NumberField E] (D : Dat ℚ E) (H : A E → ℂ)
     (hper : ∀ (k : E) x, H (rt k + x) = H x)
     (h0 : ∫ u in FS2 ℚ, H (D.mkE (u 0) (u 1)) ∂(adeleMeasurePi ℚ) = 0) :

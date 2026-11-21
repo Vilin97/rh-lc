@@ -18,6 +18,7 @@ variable {R O O' : Type*} [CommRing R] [CommRing O] [CommRing O'] [Algebra O O']
   [Algebra O' R] [IsScalarTower O O' R]
 
 
+variable (R O O') in
 def mulChar : R ⊗[O] O' →ₐ[R] R :=
   Algebra.TensorProduct.lift (AlgHom.id R R) (IsScalarTower.toAlgHom O O' R) fun _ _ ↦ .all _ _
 
@@ -100,6 +101,7 @@ theorem exists_eigen_of_unramified (N : Type*) [AddCommGroup N] [Module R N] [Mo
     rw [hsq, this, he₁, one_smul]
 
 
+omit [Algebra O R] in
 theorem exists_eigen_of_projective (M : Type*) [AddCommGroup M] [Module O M] [Module.Finite O M]
     [Module.Projective O M] {N L : Type*} [AddCommGroup N] [Module R N] [Module O N]
     [SMulCommClass O R N] [AddCommGroup L] [Module R L] [Module O L] [SMulCommClass O R L]
@@ -180,6 +182,7 @@ variable (k K E : Type*) [Field k] [CharZero k] [Field K] [Field E] [NumberField
   [Algebra K E]
 
 
+omit [NumberField K] in
 theorem ringOfIntegers_injective (τ : 𝓞 K →+* k) : Function.Injective τ := by
   rw [RingHom.injective_iff_ker_eq_bot]
   refine Ideal.eq_bot_of_comap_eq_bot (R := ℤ) ?_

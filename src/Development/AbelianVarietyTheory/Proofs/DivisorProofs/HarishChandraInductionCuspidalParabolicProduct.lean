@@ -30,6 +30,7 @@ theorem parab_eq_blockTri (b : Fin r → Fin s) :
     exact ⟨hg, (blockTri (κ := K) (fun i => (b i : ℕ))).inv_mem hg⟩
 
 
+omit [Fintype K] [DecidableEq K] in
 def blockGL (b : Fin r → Fin s) (c : Fin s) :
     GL (Fin (Fintype.card {i // b i = c})) K ≃* GL {i // b i = c} K :=
   glEquiv K (Fintype.equivFin {i // b i = c}).symm

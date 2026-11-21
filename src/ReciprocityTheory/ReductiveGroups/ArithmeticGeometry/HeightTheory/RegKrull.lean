@@ -64,6 +64,7 @@ theorem exists_prime_colon [IsNoetherianRing R] (s a : R) (ha : a ∉ Ideal.span
 end KrullColonIdeal
 
 
+open KrullColonIdeal in
 theorem mem_of_mem_heightOne_localizations {R K : Type*} [CommRing R] [IsDomain R] [IsNoetherianRing R]
     [IsIntegrallyClosed R] [Field K] [Algebra R K] [IsFractionRing R K] (x : K)
     (hx : ∀ p : Ideal R, p.IsPrime → p.height = 1 →

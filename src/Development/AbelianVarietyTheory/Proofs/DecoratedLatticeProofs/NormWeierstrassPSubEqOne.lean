@@ -132,6 +132,8 @@ private lemma padicComplex_norm_two_eq_one_of_ne_two (h : p ≠ 2) : ‖(2 : ℂ
   exact (Nat.prime_dvd_prime_iff_eq Fact.out Nat.prime_two).1 this
 
 
+open scoped ComplexConjugate BigOperators in
+variable {p : ℕ} [Fact p.Prime] in
 theorem _root_.GlobalTheory.Klein.norm_weierstrassP_sub_eq_one (p : ℕ) [Fact p.Prime] (ι : ℂ ≃+* ℂ_[p])
     (L : PeriodPair) (r : ℂ)
     (hG : _root_.GlobalTheory.Klein.Good ι L r) (u v : ℂ) (hu : _root_.GlobalTheory.Klein.Red ι L r u)

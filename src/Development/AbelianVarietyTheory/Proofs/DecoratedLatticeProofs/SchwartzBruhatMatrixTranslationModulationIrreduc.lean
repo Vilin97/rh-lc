@@ -181,6 +181,7 @@ theorem pair_single [DecidableEq Y] [DecidableEq Y'] (r : Y) (q : Y') (c : k) (t
   · simp
 
 
+variable (k Y Y') in
 def intMat : AddSubgroup (Matrix Y Y' k) where
   carrier := {u | ∀ r q, u r q ∈ 𝒪[k]}
   add_mem' ha hb r q := add_mem (ha r q) (hb r q)

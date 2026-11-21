@@ -20,6 +20,7 @@ variable {D : D7} (X0 : Formalism.L2.Herm.Herm0 D) (u : D.what₂.Word) (w : D.w
   {M : MemberForms D.what₂.LL D.what₂.embLL D.what₂.places D.what₂.Tau (D.hcW u) C A P}
 
 
+set_option maxHeartbeats 4000000 in
 def StepTiesD {i : ℕ} (hi : i + 1 ≤ D.R.m) (Fo : FormsIn M (i + 1) hi) (S : StepD X0 u w hg Fo) (c : LatCmp D) : Prop :=
   (∀ (β : Fo.Ch) (w' : HeightOneSpectrum (𝓞 D.host.F)) (h : ((D.what₂.places.resChar w : ℕ) : 𝓞 D.host.F) ∈ w'.asIdeal)
     (x : GL (Fin (D.sp.X (i + 1)).rank) (D.host.E ⊗[D.host.F] w'.adicCompletion D.host.F)),

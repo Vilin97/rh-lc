@@ -177,6 +177,7 @@ theorem exists_isClopen_mem_disjoint {Q : Set X} (hQ : IsCompact Q) {y : X} (hy 
   exact ⟨V, ⟨hVc.isClosed, hVo⟩, hyV, Set.subset_compl_iff_disjoint_right.mp hVQ⟩
 
 
+omit [T2Space X] [LocallyCompactSpace X] [TotallyDisconnectedSpace X] in
 theorem mem_of_forall_fiber {Y : Type*} [TopologicalSpace Y] [T2Space Y] [LocallyCompactSpace Y]
     [TotallyDisconnectedSpace Y] {U C : Set X} (hC : IsClosed C) {p : X → Y}
     (hp : Continuous p) {W : Submodule ℂ (X → ℂ)}

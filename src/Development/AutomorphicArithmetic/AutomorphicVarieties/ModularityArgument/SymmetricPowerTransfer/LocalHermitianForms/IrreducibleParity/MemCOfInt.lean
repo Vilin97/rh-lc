@@ -14,6 +14,7 @@ open QuadraticAlgebra
 variable {O : Type} [CommRing O] {K : Type} [Field K] [Algebra O K] {τ : K}
 
 
+variable (τ) in
 def sc : Kˣ →* (Etau K τ)ˣ := Units.map (algebraMap K (Etau K τ) : K →* Etau K τ)
 
 def nU : (Etau K τ)ˣ →* Kˣ := Units.map (QuadraticAlgebra.norm : Etau K τ →* K)

@@ -352,6 +352,7 @@ def hkFix {X : Type} [AddCommGroup X] [Module ℂ X] (σ : Representation ℂ (G
   map_smul' c v := Subtype.ext (hk_smul_right σ he c v)
 
 
+variable (K) in
 def heckeAlg (hKo : IsOpen (K : Set (GL ι F))) (hKc : IsCompact (K : Set (GL ι F))) :
     Subalgebra ℂ (∀ i, Module.End ℂ (fixed (ρ i) K)) where
   carrier := {T | ∃ e, IsHk K e ∧ ∀ i (x : fixed (ρ i) K), ((T i x : fixed (ρ i) K) : Y i) = hk (ρ i) K e x}

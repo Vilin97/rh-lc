@@ -137,6 +137,7 @@ theorem topologicalKrullDim_eq_succ (h : IsArithVar p D) {K : Type} [Field K] [A
     simp [hl]
 
 
+attribute [local instance] Algebra.TensorProduct.rightAlgebra in
 theorem ringKrullDim_chart (h : IsArithVar p D) {K : Type} [Field K] [Algebra k K]
     [IsFractionRing k K] {Y : Scheme.{0}} {j : Y ⟶ X} {q : Y ⟶ Sp K}
     (H : IsPullback j q p (spMap (algebraMap k K))) {A : Type} [CommRing A] [Algebra k A]

@@ -37,6 +37,7 @@ def GoodSet (φ₂ : K⟦X⟧⟦X⟧ →+* K⟦X⟧⟦X⟧) : Set (ZMod a → K�
     ∃ B ∈ QSet t K e, frob2 φ₂ z = z ^ l + (l : ZMod a → K⟦X⟧⟦X⟧) * B}
 
 
+variable (K) in
 def cstW (c : Wq l a) : ZMod a → K⟦X⟧⟦X⟧ := fun τ => C (C (algebraMap O K (emb t τ c)))
 
 end Q

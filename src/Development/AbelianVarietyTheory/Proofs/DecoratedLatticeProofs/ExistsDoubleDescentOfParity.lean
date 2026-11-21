@@ -160,6 +160,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 variable {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ}
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem exists_open_fix {Y : Type} [Fintype Y] [DecidableEq Y] (L : Level (GL Y k)) (hL : IsOpen (L.J : Set (GL Y k))) (α : GL Y k) :
     ∃ U : Subgroup (GL Y k), IsOpen (U : Set (GL Y k)) ∧ ∀ (A : Type) [AddCommGroup A] [Module ℂ A] (σ : Representation ℂ (GL Y k) A),
       IsSmoothRep σ → ∀ v : A, (∀ j : L.J, σ (j : GL Y k) v = (L.lam j : ℂ) • v) → ∀ u ∈ U, σ u (σ α v) = σ α v := by
@@ -190,6 +191,7 @@ theorem exists_isOneComb {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) {ν :
   simp only [map_mul, Module.End.mul_apply]
 
 
+omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] in
 theorem exists_covers {ι V : Type} [Zero V] {p : ℕ} {J : Subgroup (GL (n ⊕ Fin c) k)} (s : Finset ι)
     (f : ι → GL (n ⊕ Fin c) k → V) (hf : ∀ i, ∃ T, Covers p J T (f i)) (t₀ : GL (n ⊕ Fin c) k) :
     ∃ T, t₀ ∈ T ∧ ∀ i ∈ s, Covers p J T (f i) := by
@@ -221,12 +223,14 @@ theorem exists_covers_flat {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) (ν
   rw [GlobalTheory.StepData.flat, ← GlobalTheory.SplitWeil.om_mul, one_mul, mul_one]
 
 
+omit [BorelSpace k] in
 theorem xi_mem_SB (ψ : AddChar k Circle) (ν : Measure k) (μ : kˣ →* ℂˣ) (Φ : SB (Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k))
     (J : Subgroup (GL (n ⊕ Fin c) k)) (b : GL (n ⊕ Fin c) k) (h' : GL (n' ⊕ Fin (c + 1)) k) (h : GL (n ⊕ Fin c) k) :
     GlobalTheory.StepData.xi ψ ν μ Φ.1 J b h' h ∈ SB (Matrix n n' k) :=
   (SB _).smul_mem _ (GlobalTheory.RootEx.opE_mem_SB 1 ψ ν (GlobalTheory.SplitWeil.om_mem_SB μ h' h Φ.2))
 
 
+omit [MeasurableSpace k] [BorelSpace k] in
 theorem exists_isCombAt {D : D7} {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) (p : Place D k) {S T : HSp D}
     (FS : GlobalTheory.LocMod.Frame k S.rank n') (FT : GlobalTheory.LocMod.Frame k T.rank n) {Ξ : Matrix n n' k → ℂ} (hΞ : Ξ ∈ SB (Matrix n n' k)) :
     ∃ d, p.IsCombAt ψ FS FT d Ξ := by
@@ -242,6 +246,7 @@ end Local
 variable {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {σ : ℕ}
 
 
+set_option maxHeartbeats 1000000 in
 theorem exists_qstep (hψ : IsStdChar D ψ (-1)) (S : Dbl2 ψ σ) {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] (ν : Measure k) (hν : IsUnitVol ν)
     (q : GlobalTheory.FinPl.SplitPt D k) (ψk : AddChar k Circle) (hk : (ofSplit q).IsChar ψ ψk) (hc : HasConductor ψk 1)

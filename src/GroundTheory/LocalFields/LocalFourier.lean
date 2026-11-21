@@ -41,6 +41,7 @@ theorem selfDualMeasure_real_valBall_zero (ψ : AddChar K Circle) :
     NNReal.coe_rpow, NNReal.coe_natCast]
 
 
+omit [MeasurableSpace K] [BorelSpace K] in
 theorem inversion_const_eq_one_iff (n : ℤ) {r : ℝ} (hr : 0 ≤ r) :
     (residueCard K : ℝ) ^ (-n) * r ^ 2 = 1 ↔ r = (residueCard K : ℝ) ^ ((n : ℝ) / 2) := by
   have hq : (0 : ℝ) < residueCard K := by exact_mod_cast zero_lt_one.trans one_lt_residueCard
@@ -104,10 +105,12 @@ theorem range_units_val : Set.range (Units.val : Kˣ → K) = {0}ᶜ := by
     exact ⟨Units.mk0 x hx, rfl⟩
 
 
+omit [MeasurableSpace K] [BorelSpace K] in
 theorem isOpenEmbedding_units_val : IsOpenEmbedding (Units.val : Kˣ → K) :=
   ⟨Units.isEmbedding_val₀, by rw [range_units_val]; exact isOpen_compl_singleton⟩
 
 
+variable (K) in
 def multHaarConst : ℝ≥0∞ := (1 - ((residueCard K : ℝ≥0∞))⁻¹)⁻¹
 
 omit [MeasurableSpace K] [BorelSpace K] in
@@ -123,6 +126,7 @@ theorem multHaarConst_ne_top : multHaarConst K ≠ ∞ :=
   ENNReal.inv_ne_top.mpr one_sub_inv_residueCard_ne_zero
 
 
+variable (K) in
 def multHaar : Measure Kˣ :=
   Measure.comap Units.val
     (multHaarConst K • (haarIntegers K).withDensity fun x => ((modulus x : ℝ≥0∞))⁻¹)

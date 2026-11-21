@@ -32,6 +32,7 @@ def Nrm (s : Mat l) (U : Sch l →L[ℂ] Sch l) : Prop :=
   ∀ s' : Sp l, ∀ f : Sch l, Ann s'.1 f → (U f 0) ^ 2 * dd (s * s'.1) = (f 0) ^ 2 * dd s'.1
 
 
+variable (l) in
 abbrev Amb : Type := Sp l × (L2 l ≃ₗᵢ[ℂ] L2 l) × (Sch l →L[ℂ] Sch l)ˣ
 
 structure Mem (x : Amb l) : Prop where
@@ -45,6 +46,7 @@ theorem Ann.map {s s' : Mat l} {U : Sch l →L[ℂ] Sch l} (h : ∀ w f, U (dRho
   rw [← mulVec_mulVec, ← mulVec_mulVec, ← h, ← h, hf j, map_smul]
 
 
+variable (l) in
 def sub : Subgroup (Amb l) where
   carrier := {x | Mem x}
   one_mem' := ⟨fun _ => rfl, fun w f => by simp, fun w f => by simp, fun s' f _ => by simp⟩
@@ -82,6 +84,7 @@ def sub : Subgroup (Amb l) where
       exact h1.symm
 
 
+variable (l) in
 def G : Type := sub l
 
 instance : Group (G l) := inferInstanceAs (Group (sub l))

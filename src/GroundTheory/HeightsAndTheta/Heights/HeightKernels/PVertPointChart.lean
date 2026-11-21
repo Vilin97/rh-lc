@@ -78,6 +78,7 @@ theorem mem_of_aeval_eq (y : (Σ _ : Unit, T) → K') {W : Ideal (MRing (fun _ :
   rwa [sub_sub_cancel] at h1
 
 
+omit [Fintype T] in
 theorem mem_of_X_pow_mul {W : Ideal (MRing (fun _ : Unit => T))} (hWp : W.IsPrime) {t : T}
     (ht : (X ⟨(), t⟩ : MRing (fun _ : Unit => T)) ∉ W) {n : ℕ} {f : MRing (fun _ : Unit => T)}
     (h : X ⟨(), t⟩ ^ n * f ∈ W) : f ∈ W :=
@@ -95,6 +96,7 @@ theorem exists_rep (y : (Σ _ : Unit, T) → K') {t : T} (hyt : y ⟨(), t⟩ �
   rw [he, Fintype.prod_unique]
 
 
+omit [Fintype T] in
 theorem mem_chart (y : (Σ _ : Unit, T) → K') {t : T} (hyt : y ⟨(), t⟩ ≠ 0) (b : curveRing y) :
     (b : K') ∈ chartRingZ y (fun _ => t) :=
   mem_curveRing.mp b.2 (fun _ => t) (fun _ => hyt)
@@ -240,11 +242,13 @@ def locSub (y : (Σ _ : Unit, T) → K') (m : Ideal (curveRing y)) (hm : m.IsPri
     linear_combination -h
 
 
+omit [Fintype T] in
 theorem mem_locSub {y : (Σ _ : Unit, T) → K'} {m : Ideal (curveRing y)} {hm : m.IsPrime} {r : K'} :
     r ∈ locSub y m hm ↔ ∃ a b : curveRing y, b ∉ m ∧ (b : K') * r = a :=
   Iff.rfl
 
 
+omit [Fintype T] in
 theorem chart_le_locSub (y : (Σ _ : Unit, T) → K') (m : Ideal (curveRing y)) (hm : m.IsPrime) (t : T)
     (h : ∀ u : T, y ⟨(), u⟩ / y ⟨(), t⟩ ∈ locSub y m hm) {r : K'} (hr : r ∈ chartRingZ y (fun _ => t)) :
     r ∈ locSub y m hm := by
@@ -262,6 +266,7 @@ theorem chart_le_locSub (y : (Σ _ : Unit, T) → K') (m : Ideal (curveRing y)) 
 end VerticalPointChart
 
 
+open VerticalPointChart in
 theorem VertPointChart.proof (hC : CurveCharts.Statement) : VertPointChart.Statement := by
   intro T _ K' _ _ y s hy hs hsP W hW t ht
   have hWp : W.IsPrime := hW.1.1.1

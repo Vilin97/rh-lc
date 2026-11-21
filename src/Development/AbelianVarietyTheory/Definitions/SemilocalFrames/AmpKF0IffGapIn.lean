@@ -20,6 +20,7 @@ open Formalism.BasicNotions Formalism.QuantumDeterminants Formalism.MainNotions.
 theorem ampKF0_iff_gapIn : AmpKF0 ↔ GlobalTheory.GapIn.AmpKF0 := Iff.rfl
 
 
+open Formalism.MainNotions.S.Pv.AmpDDPf in
 theorem ampKF0_holds : AmpKF0 := by
   intro k r L h μG w0 l l' hOPKF γ μR νR ν hCD b hb hab' hpm v v' hv hv' ξ ξ'
   have hSchH := Formalism.FourierDecayAlt.P.schur_hermitian

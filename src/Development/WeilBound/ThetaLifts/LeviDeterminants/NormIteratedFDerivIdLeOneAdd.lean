@@ -45,6 +45,7 @@ theorem linForm_apply (B y : κ → mixedEmbedding.mixedSpace F) :
     simp [linForm, map_sum, LinearMap.sum_apply]
 
 
+open scoped Classical in
 theorem phase_line (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (a b x : κ → AF F) (hb : At (evI F) b) (t : ℝ) :
     ψ (x ⬝ᵥ (realAd F t • b) + ⅟(2 : AF F) * ((realAd F t • a) ⬝ᵥ (realAd F t • b))) =
       Complex.exp (-(2 * Real.pi * Complex.I) * ((t * linForm (fun i => evI F (b i)) (fun i => evI F (x i)) +
@@ -386,6 +387,7 @@ theorem l2Inner_self_eq_integral_norm_sq (p : 𝓢(V, ℂ)) : P μ p p = ((∫ x
   simp [Complex.conj_mul']
 
 
+omit [MeasurableSpace V] [BorelSpace V] in
 theorem eq_zero_of_neg (f : 𝓢(V, ℂ)) (a a' : V) (L L' : V →L[ℝ] ℝ) (h : op a' L' f = Complex.I • op a L f)
     (hT : L' a - L a' < 0) : f = 0 := by
   letI : MeasurableSpace V := borel V

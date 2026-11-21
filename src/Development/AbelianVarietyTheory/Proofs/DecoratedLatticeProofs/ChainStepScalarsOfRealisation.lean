@@ -208,6 +208,7 @@ namespace StepScal
 open GlobalTheory.ChainOnto
 
 
+set_option maxHeartbeats 1600000 in
 theorem mid_scalar (R : RealDat D A Ks) (hN : GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction.NodeGap D) (hSoft : SoftQ D) (hQ : QOfVal D)
     (hLP : LPos D) (hLF : LFull D) (hSL : StepLam D) (h : RangeX R) (hRC : RChain R h) (hRU : RUnif R h)
     (hRP : RowPar R) (hIP : IPDict R) (k : ℕ) (hk1 : k + 1 < D.R.m) :
@@ -324,6 +325,7 @@ namespace StepScal
 open GlobalTheory.ChainOnto
 
 
+set_option maxHeartbeats 4000000 in
 theorem top_key (R : RealDat D A Ks) (hN : GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction.NodeGap D) (hSoft : SoftQ D) (hQ : QOfVal D)
     (hLP : LPos D) (hLF : LFull D) (hSL : StepLam D) (h : RangeX R) (hRC : RChain R h)
     (hRU : RUnif R h) (hRP : RowPar R) (hIP : IPDict R) (δ : ℝ) (hδ : 0 < δ)
@@ -441,6 +443,7 @@ theorem top_key (R : RealDat D A Ks) (hN : GlobalTheory.IndefiniteRowSideFullHec
         linear_combination h1
 
 
+set_option maxHeartbeats 1600000 in
 theorem top_scalar (R : RealDat D A Ks) (hN : GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction.NodeGap D) (hSoft : SoftQ D) (hQ : QOfVal D)
     (hLP : LPos D) (hLF : LFull D) (hSL : StepLam D) (h : RangeX R) (hRC : RChain R h) (hNX : NormX R h)
     (hRU : RUnif R h) (hRP : RowPar R) (hIP : IPDict R) :
@@ -466,6 +469,7 @@ theorem top_scalar (R : RealDat D A Ks) (hN : GlobalTheory.IndefiniteRowSideFull
 end StepScal
 
 
+open StepScal in
 theorem scalars_of_realisation : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Given R F → GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction.NodeGap D → SoftQ D → QOfVal D → LPos D → LFull D → StepLam D → ∀ h : RangeX R, RChain R h → NormX R h → RUnif R h → RowPar R → IPDict R → GlobalTheory.IndefiniteRowSideFullHecke.LabelSettingScalars.Scalars R := by
   intro D G _ _ Pl0 T A Ks _ _ _ R F _ hN hSoft hQ hLP hLF hSL h hRC hNX hRU hRP hIP
   obtain ⟨rT, hrT, hT⟩ := top_scalar R hN hSoft hQ hLP hLF hSL h hRC hNX hRU hRP hIP

@@ -192,6 +192,7 @@ theorem hasDerivAt_flow {Z : Matrix (Ix P Q) (Ix R S) ℂ} (hZ : OnPos Z) {Y : M
   ring
 
 
+variable (P Q R S) in
 def base : Matrix (Ix P Q) (Ix R S) ℂ :=
   Matrix.fromBlocks (Matrix.of fun i c => if (i : ℕ) = c then 1 else 0) 0 0 (Matrix.of fun j d => if (j : ℕ) = d then 1 else 0)
 

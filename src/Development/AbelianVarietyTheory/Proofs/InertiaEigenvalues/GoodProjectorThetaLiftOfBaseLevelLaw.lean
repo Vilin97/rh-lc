@@ -91,6 +91,7 @@ theorem parLev_congr {F' E' LL : Type} [Field F'] [NumberField F'] [Field E'] [N
   rw [hr, ht, hP, hQ]
 
 
+open Classical in
 theorem levJ_le_Q (D : D7) (X : RealSide D) (E : IntegralHeckeForms.XD D) (Y : SerSide X E) (i : D.ntw.Tw) (j : Fin D.R.m) (b : Bool)
     (t : X.T) (hQ : X.R.Q t = (Y.Z.ρ.B i j b).de.Q) (k : Bridge.Gf (Vc D j))
     (hk : k ∈ (Y.Z.ρ.B i j b).levJ (Y.Z.ρ.tw i b 0 ∅ 1)) : k ∈ (levV X.R.toRealDat j t).Q := by

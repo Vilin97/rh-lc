@@ -59,6 +59,7 @@ theorem exists_idempotent [IsNoetherianRing A] [IsReduced A] (p : Ideal A) (hp :
 end ReducedNormalisationPlace
 
 
+open ReducedNormalisationPlace in
 theorem ReducedNormalisationPlace.proof : ReducedNormalisationPlace.Statement := by
   intro R _ _ _ P
   have hfin := minimalPrimes.finite_of_isNoetherianRing R

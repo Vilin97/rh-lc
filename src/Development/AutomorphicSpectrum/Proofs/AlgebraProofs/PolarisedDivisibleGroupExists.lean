@@ -321,6 +321,7 @@ theorem tate_dual_ext {G : PDivGroup p O} {χ ψ : G.dual.Tate} (h : ∀ n, char
     rw [← apply_charElem, ← apply_charElem, h])
 
 
+omit [Fact p.Prime] in
 theorem lev_surjective {La : Type} [AddCommGroup La] (n : ℕ) : Function.Surjective (lev (La := La) p n) :=
   fun t => by
     obtain ⟨a, ha⟩ := Submodule.Quotient.mk_surjective _ (Multiplicative.toAdd t)

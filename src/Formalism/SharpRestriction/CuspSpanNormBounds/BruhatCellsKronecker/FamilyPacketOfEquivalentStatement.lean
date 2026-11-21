@@ -534,6 +534,7 @@ theorem d_size_eq (hrd : 0 < D.host.rdE) {Ch : ℝ} (hCh : 0 ≤ Ch) (t : D.s.Te
   rfl
 
 
+open Classical in
 theorem rowBound_relevant {Q : D.s.Pair u u' → Prop}
     (hQ : ∀ p, Q p → D.s.Gterm (D.s.pfst p) ≠ 0 ∧ D.s.Gterm (D.s.psnd p) ≠ 0) {B : ℝ}
     (h : RowBound X Y (fun p => Q p ∧ D.s.relevant (D.s.pfst p) ∧ D.s.relevant (D.s.psnd p)) B) :

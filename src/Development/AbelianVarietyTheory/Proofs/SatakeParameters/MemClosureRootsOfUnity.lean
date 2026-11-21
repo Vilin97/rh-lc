@@ -185,6 +185,7 @@ theorem div_mem_of_mem (hp : p.Prime) {r : K} (hr : r ∈ Subring.closure (mu K 
   exact mul_mem (neg_mem (mem_W_of_mem hs)) (inv_one_sub_mem (mem_W_of_mem (pow_mem hr _)) hu1)
 
 
+omit [IsUltrametricDist K] in
 theorem div_mem (hp : p.Prime) {w : K} (hw : w ∈ W K p) (h1 : ‖w‖ < 1) : w / p ∈ W K p := by
 
   have hw' : w ∈ closure ({y : K | ‖y‖ < 1} ∩ (Subring.closure (mu K p) : Set K)) :=

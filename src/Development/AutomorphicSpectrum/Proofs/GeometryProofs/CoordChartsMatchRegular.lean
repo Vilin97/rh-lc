@@ -60,6 +60,7 @@ variable (o F : Type) [CommRing o] [IsDomain o] [Field F] [Algebra o F] [IsFract
   [Algebra o Ω] [Algebra F Ω] [IsScalarTower o F Ω]
 
 
+include F in
 theorem algebraMap_ne_zero {d : o} (hd : d ≠ 0) : algebraMap o Ω d ≠ 0 := by
   rw [IsScalarTower.algebraMap_apply o F Ω]
   exact (map_ne_zero _).2 ((map_ne_zero_iff _ (IsFractionRing.injective o F)).2 hd)

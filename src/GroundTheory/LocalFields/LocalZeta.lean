@@ -17,6 +17,7 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 section Identity
 
 
+omit [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem eq_of_eqOn_reStrip {F G : ℂ → ℂ} (hF : Differentiable ℂ F) (hG : Differentiable ℂ G)
     {a b : ℝ} (hab : a < b) (h : ∀ s : ℂ, a < s.re → s.re < b → F s = G s) : F = G := by
   have hFa : AnalyticOnNhd ℂ F Set.univ := fun z _ => hF.analyticAt z

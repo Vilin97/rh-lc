@@ -22,6 +22,7 @@ def coneQ (y : (Σ k, ι k) → Ω) : MvPolynomial (Σ k, ι k) ℚ →ₐ[ℚ] 
   aeval fun p => MvPolynomial.C (y p) * MvPolynomial.X p.1
 
 
+omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem map_mCoordIdeal (y : (Σ k, ι k) → Ω) :
     (mCoordIdeal y).map (MvPolynomial.map (Int.castRingHom ℚ)) = RingHom.ker (coneQ y) := by
   have hring : ((coneQ y : MvPolynomial (Σ k, ι k) ℚ →+* MvPolynomial K Ω).comp

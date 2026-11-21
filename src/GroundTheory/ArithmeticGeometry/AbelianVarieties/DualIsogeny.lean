@@ -107,6 +107,7 @@ theorem isIsogeny_iff (Q : (E'.baseChange E.toAffine.FunctionField).toAffine.Poi
     | some x y h => exact ⟨⟨x, y, h, rfl, hg⟩, hr⟩
 
 
+omit [E.IsElliptic] [E'.IsElliptic] in
 theorem respectsAdd_iff (Q : (E'.baseChange E.toAffine.FunctionField).toAffine.Point) :
     RespectsAdd E E' Q ↔ ∀ (L : Type u) [Field L] [Algebra F L] [DecidableEq L]
       (P₁ P₂ : (E.baseChange L).toAffine.Point) (h₁ : IsGenPt E P₁) (h₂ : IsGenPt E P₂)
@@ -153,6 +154,7 @@ theorem RespectsAdd.neg {Q : (E'.baseChange E.toAffine.FunctionField).toAffine.P
   rw [e, neg_add]
 
 
+variable (E E') in
 def isogHom : AddSubgroup (E'.baseChange E.toAffine.FunctionField).toAffine.Point where
   carrier := {Q | RespectsAdd E E' Q}
   zero_mem' := respectsAdd_zero
@@ -354,6 +356,7 @@ theorem isGenPt_add_self {L : Type*} [Field L] [Algebra F L] [DecidableEq L]
   exact isGenPt_map E _ (by rw [← two_zsmul]; exact (mulIsogeny E 2 two_ne_zero).isGenPt)
 
 
+omit [IsAlgClosed F] [DecidableEq F] in
 theorem map_genEval_neg {Q : (E'.baseChange E.toAffine.FunctionField).toAffine.Point}
     (hQ : RespectsAdd E E' Q) {L : Type u} [Field L] [Algebra F L] [DecidableEq L]
     {P : (E.baseChange L).toAffine.Point} (hP : IsGenPt E P) :
@@ -392,6 +395,7 @@ theorem isGenPt_of_mem_isogHom {Q : (E'.baseChange E.toAffine.FunctionField).toA
   ((isIsogeny_iff Q).mp ((mem_isogHom_iff.mp hQ).resolve_left h0)).1
 
 
+omit [IsAlgClosed F] [DecidableEq F] in
 theorem respectsAdd_map_genEval {Q : (E'.baseChange E.toAffine.FunctionField).toAffine.Point}
     (hQ : RespectsAdd E E' Q) (hg : IsGenPt E' Q)
     {R : (E''.baseChange E'.toAffine.FunctionField).toAffine.Point} (hR : RespectsAdd E' E'' R) :
@@ -411,6 +415,7 @@ theorem respectsAdd_map_genEval {Q : (E'.baseChange E.toAffine.FunctionField).to
   exact hR L _ _ _ _ h₃'
 
 
+variable (E) in
 abbrev isogEnd : Type u := isogHom E E
 
 noncomputable def homComp (R : isogHom E' E'') (Q : isogHom E E') : isogHom E E'' :=

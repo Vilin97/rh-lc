@@ -51,9 +51,11 @@ end Gaps
 variable {D : D7}
 
 
+variable (D) in
 def afC (V : HSp D) : Submodule ℂ (GA D V → ℂ) := Submodule.span ℂ {φ | IsAutFunSm (th0 D) V φ}
 
 
+variable (D) in
 def cuspC (V : HSp D) : Submodule ℂ (afC D V) := Submodule.span ℂ {F | IsCuspFun V F.1}
 
 

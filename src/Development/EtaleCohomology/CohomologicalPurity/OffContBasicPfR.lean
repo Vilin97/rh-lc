@@ -10,6 +10,7 @@ open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
 namespace LateralTheory.CohomologicalPurity
 
 
+set_option backward.isDefEq.respectTransparency.types false in
 def opIso {R : CommRingCat.{0}} (g : R) (U : (Spec R).Opens)
     (hU : U = PrimeSpectrum.basicOpen g) : U.toScheme ≅ Spec (CommRingCat.of (Localization.Away g)) :=
   IsOpenImmersion.isoOfRangeEq (Scheme.Opens.ι U) (Spec.map (CommRingCat.ofHom (algebraMap R _)))

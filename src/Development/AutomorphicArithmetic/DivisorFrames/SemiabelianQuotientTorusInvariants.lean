@@ -17,6 +17,8 @@ section SlopeTestRemainingChoices
 open Opposite GlobalTheory.TorusQuotientGlue
 
 
+open ThickGlue in
+set_option backward.isDefEq.respectTransparency false in
 private theorem exists_scheme' (Y : Scheme.{0}) (𝒰 : Set Y.Opens) (hc : ∀ x : Y, ∃ U : 𝒰, x ∈ U.1)
     (𝒜 : Y.Opensᵒᵖ ⥤ CommRingCat.{0}) (p : 𝒜 ⟶ Y.presheaf)
     (hbo : ∀ U ∈ 𝒰, ∀ a : 𝒜.obj (op U), Y.basicOpen ((p.app (op U)).hom a) ∈ 𝒰)

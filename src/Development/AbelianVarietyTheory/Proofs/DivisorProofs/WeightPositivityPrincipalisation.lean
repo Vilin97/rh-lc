@@ -321,6 +321,7 @@ theorem mul_ne_zero_of_inv {Z : Comp Xo c} {G : WTZ E} {f s t : Rul Xo c} (hf : 
   rw [← h1, ← h, mul_comm, ← mul_assoc, h0, zero_mul]
 
 
+open GlobalTheory.ShFam GlobalTheory.KeyFourth GlobalTheory.LamT in
 theorem exists_ne_zero_key (hL : Laws U x) : Nonempty (KeySec Xo c) ∧ ∀ (Z : Comp Xo c) (G : WTZ E), Even G.2 →
     (∃ f ∈ cuspOn U Z G, f ≠ 0) → ∃ f ∈ cuspOn U Z (G + wtOf Dw 0 (-4)), f ≠ 0 := by
   obtain ⟨κ, k₁, k₂, -, k₄, k₅, k₆, -, -⟩ := GlobalTheory.KeyFamClosing.keyFam_one
@@ -621,6 +622,7 @@ theorem mem_of_cong (hT : LawsJ T) (hG : Y.Good e o) {σ : Y.d.c₂.F →+* ℂ}
   exact Units.ext he ▸ hγ'
 
 
+set_option maxHeartbeats 1000000 in
 theorem laws_good (hT : LawsJ T) (hG : Y.Good e o) : Laws Y.U (xiR D) := by
   have hr : 1 ≤ D.R.r := by have := six_le_rank D; omega
   have hg0 : ∀ p : ℕ, p.Prime → T.Q.l.GoodAt p :=

@@ -20,6 +20,7 @@ theorem cast_sum_add_mul {ι : Type*} [Fintype ι] (f : ι → ℕ) (c n m : ℕ
   subst h; push_cast; rfl
 
 
+open scoped Classical in
 theorem dInf_eq (ιr : ∀ v : {v : InfinitePlace K.1 // v.IsReal}, ℚ̄ →ₐ[K.1] AlgebraicClosure v.1.Completion)
     (hℓS : ∀ v ∉ S, ((ℓ : ℕ) : 𝓞 K.1) ∉ v.asIdeal) :
     dInf (dN hL hζ M hM hΓ) =

@@ -157,6 +157,7 @@ theorem eq_char_mul [Module.Free ℤ X] [ConnectedSpace Y.left] [IsReduced Y.lef
 end GlobalTheory.CompanionTheory.TorusMono
 
 
+open GlobalTheory.CompanionTheory.TorusMono GlobalTheory.BiextTriv in
 theorem GlobalTheory.CompanionTheory.TorusMono.torus_unit_eq_char_mul : ∀ (S : Scheme.{0}) (X : Type) [AddCommGroup X] [Module.Free ℤ X] (Y : Over S) [ConnectedSpace Y.left] [IsReduced Y.left] (ρ : Γ((splitTorus S X ⊗ Y).left, ⊤)ˣ), ∃ χ : X, ∀ (Z : Over S) (t : Z ⟶ splitTorus S X) (y : Z ⟶ Y), (lift t y).left.appTop.hom ρ.val = (chV t χ).val * (lift (1 : Z ⟶ splitTorus S X) y).left.appTop.hom ρ.val := by
   intro S X _ _ Y _ _ ρ
   obtain ⟨χ, hχ⟩ := eq_char_mul ρ

@@ -58,6 +58,8 @@ section Record
 variable {D : D7} {T : Top D} (h : LawsP T) {j : ℕ} (hj : InR D j)
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem generic_ne_zero_of_nonZeroComp (hG : GenFrEx (T.Q.Xo j) T.Q.c) {v u : WeightFamilies.Wt D j}
     (Z : Comp (T.Q.Xo j) T.Q.c) (w : (recB h.toLawsCore).Cusp j v) (hw : evC hG Z (w : T.R j) ≠ 0)
     (g : (recB h.toLawsCore).Cusp j u) (hg : (recPJ h j hj).NonZeroComp u g) : evC hG Z (g : T.R j) ≠ 0 := by
@@ -72,6 +74,8 @@ theorem generic_ne_zero_of_nonZeroComp (hG : GenFrEx (T.Q.Xo j) T.Q.c) {v u : We
   exact fun h0 => this ((formsEvR_inc h j hj hG hT Z u g).trans h0)
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem exists_cusp_reading_ne_zero (w : WeightFamilies.Wt D j) (σ : T.Q.c.F →+* ℂ)
     (hN : ∀ k : (T.U j σ).Comp, ∃ x ∈ ((T.U j σ).X k).dom, ∃ f ∈ cutR T.C j w, rdU (T.U j σ) f k x ≠ 0) :
     ∃ F : (recB h.toLawsCore).Cusp j w, ∀ k : (T.U j σ).Comp, ∃ x ∈ ((T.U j σ).X k).dom,
@@ -104,6 +108,8 @@ theorem exists_cusp_reading_ne_zero (w : WeightFamilies.Wt D j) (σ : T.Q.c.F �
 end Record
 
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 400000 in
 theorem exists_nonZeroComp_and_ne_zero : ∀ (D : D7) (T : Top D) (h : LawsP T) (j : ℕ) (hj : InR D j) (large₂ : SizeData₂ D) (H : KHyp) (C2 A2 CT : ℝ) (ka wL wF : WeightFamilies.Wt D j) (Tn nP nW : ℕ) (h0 : ℝ) (hG : GenFrEx (T.Q.Xo j) T.Q.c), PageOK large₂ (recPJ h j hj) H C2 A2 CT ka wL wF Tn nP nW h0 → (∃ g0 : (recB h.toLawsCore).Cusp j wF, (recPJ h j hj).NonZeroComp wF g0 ∧ ∀ Z : Comp (T.Q.Xo j) T.Q.c, evC hG Z g0.1 ≠ 0) ∧ ∀ (u : WeightFamilies.Wt D j) (F : (recB h.toLawsCore).Cusp j u), (recPJ h j hj).NonZeroComp u F → (∀ Z : Comp (T.Q.Xo j) T.Q.c, evC hG Z F.1 ≠ 0) ∧ ∀ σ, GoodEmb T.Q.c σ → ∀ k : (T.U j σ).Comp, ∃ x ∈ ((T.U j σ).X k).dom, rdU (T.U j σ) F.1 k x ≠ 0 := by
   intro D T h j hj large₂ H C2 A2 CT ka wL wF Tn nP nW h0 hG hOK
   have hP := hOK.hyp

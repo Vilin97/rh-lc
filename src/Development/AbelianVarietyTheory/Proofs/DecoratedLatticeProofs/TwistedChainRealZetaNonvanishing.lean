@@ -35,6 +35,7 @@ noncomputable section
 namespace GlobalTheory.RealZetaTw
 
 
+open GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction in
 theorem realZetaTw : GlobalTheory.Published.HarishChandraModules → ∀ D : D7, GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction.ArchOnRecord D → RealZetaQ D := by
   intro hHC D hA hgap c w₁ hw k hk s s' hs hs' p hp m X hmX
   obtain ⟨hWexp, hvac⟩ := GlobalTheory.T.twisted_chain_step_weil_exponents_fock_vacuum D hgap c w₁ hw k hk s s' hs hs' p hp hk

@@ -21,6 +21,7 @@ def HeckePair (I : Subgroup G) : Prop := ∀ x : G, FinOrb I I x
 
 
 open scoped Classical in
+open Classical in
 def hk2 (ρ : Representation A G M) (K K' : Subgroup G) (x : G) : fixd ρ K' →ₗ[A] fixd ρ K :=
   if h : ∀ v ∈ fixd ρ K', dc ρ K K' x v ∈ fixd ρ K then (dc ρ K K' x).restrict h else 0
 
@@ -37,13 +38,16 @@ def trc (ρ : Representation A G M) (K I : Subgroup G) : fixd ρ I →ₗ[A] fix
 
 variable (A)
 
+variable (A) in
 abbrev permRep (I : Subgroup G) : Representation A G (MonoidAlgebra A (G ⧸ I)) := Representation.ofMulAction A G (G ⧸ I)
 
 
+variable (A) in
 def HkAlg (I : Subgroup G) : Subalgebra A (Module.End A (fixd (permRep A I) I)) :=
   Algebra.adjoin A (Set.range (hk (permRep A I) I))
 
 
+variable (A) in
 def hT (I : Subgroup G) (x : G) : HkAlg A I := ⟨hk (permRep A I) I x, Algebra.subset_adjoin ⟨x, rfl⟩⟩
 
 structure LeviFact (I : Subgroup G) where

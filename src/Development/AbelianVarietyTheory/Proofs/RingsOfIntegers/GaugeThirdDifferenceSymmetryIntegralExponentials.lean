@@ -68,6 +68,7 @@ theorem cc_expS {n : ℕ} (g : PS K n d) (hg : constantCoeff g = 0) : constantCo
     ← PowerSeries.coe_substAlgHom ha, map_one, map_one]
 
 
+variable (V d) in
 def intExp (hi : Function.Injective (algebraMap V K)) (n : ℕ) : AddSubgroup (PS K n d) where
   carrier := {g | constantCoeff g = 0 ∧ ∃ u : PS V n d, FB.toK K u = FB.expS K g}
   zero_mem' := ⟨map_zero _, 1, by rw [expS_zero, FB.toK, map_one]⟩

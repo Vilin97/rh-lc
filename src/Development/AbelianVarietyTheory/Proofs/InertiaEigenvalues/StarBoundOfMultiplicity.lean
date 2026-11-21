@@ -149,6 +149,7 @@ end GlobalTheory.NLinkTyp
 namespace GlobalTheory.NLinkTyp
 
 
+open Classical in
 theorem starH_of_local {D : D7} (L : SizeData₂ D) (C : ℝ)
     (hloc : ∀ i : D.nd.Loc, TwistedPlaces.TwLoc D i → D.nd.l i ∈ TwistedPlaces.gset D →
       (D.nd.etaLoc i : ℝ) ≤ ∑ π ∈ D.nd.Zgood i, (D.nd.mult i π : ℝ) *

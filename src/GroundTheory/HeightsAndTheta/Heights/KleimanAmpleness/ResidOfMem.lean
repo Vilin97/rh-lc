@@ -44,6 +44,7 @@ theorem RestrictGen.resid_mul {a b : Ω} (ha : a ∈ R) (hb : b ∈ R) :
 end RestrictGenAux
 
 
+open RestrictGen in
 theorem RestrictGen.proof : RestrictGen.Statement := by
   intro F _ N Ω _ _ x K' _ _ x' hxy R σ hσ Q Q' c H ρ w w' hw' hQ hQ' hH
   classical

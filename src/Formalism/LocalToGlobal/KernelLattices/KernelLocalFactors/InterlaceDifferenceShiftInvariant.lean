@@ -428,6 +428,7 @@ theorem lb_gram_det_ne : (gramB (K := K) lam).det ≠ 0 := by
   exact Fintype.linearIndependent_iff.mp (bVVfun_spec K lam).1 c (by rw [← hxdef]; exact hx0) i
 
 
+open Classical in
 theorem lb_proj_spec (p : Pol K ι n) : ∀ v ∈ VV K lam, fockB ((projVV lam p : VV K lam) : Pol K ι n) v = fockB p v := by
   have hG : IsUnit (gramB (K := K) lam).det := isUnit_iff_ne_zero.mpr (lb_gram_det_ne lam)
   have hsym : (gramB (K := K) lam)ᵀ = gramB (K := K) lam := by
@@ -820,6 +821,7 @@ section Ten
 variable {K : Type} [Field K] {ι : Type} [Fintype ι] {N n : ℕ} (hN : N = n + 1)
 
 
+open Classical in
 def lxW (τ : ι) : ι × Fin N × Fin N → ℕ := fun v => if v.1 = τ ∧ v.2.1 = iL hN then v.2.2.val + 1 else 0
 
 def LxLow (τ : ι) (D : ℤ) (P : Pol K ι N) : Prop := ∀ M ∈ P.support, ((Finsupp.weight (lxW hN τ) M : ℕ) : ℤ) < D
@@ -1988,6 +1990,7 @@ theorem hwA_slice_unique (ν : Fin N → ℕ) (ρ : Fin n → ℕ) (m m' : Fin N
   · exact h1 a j ha
 
 
+open Classical in
 def hwAw : Fin N × Fin N → ℕ := fun v => if v.1 = v.2 ∧ v.1 ≠ iL hN then 1 else 0
 
 theorem hwAw_diag (a : Fin N) (ha : a ≠ iL hN) : hwAw hN (a, a) = 1 := if_pos ⟨rfl, ha⟩
@@ -3492,6 +3495,7 @@ theorem int_brOne (hI : Interlace hN l s) (hS : SameShift l s) (f₀ : MvPolynom
   inD_brInt hN l s (inE_ioInt hN l s hI hS) f₀ hf₀
 
 
+open Formalism.MainNotions.product_first_zeroth_parts in
 theorem int_member (D : Formalism.BasicNotions.D7) (u : D.what₂.Word) (τ : D.what₂.Tau)
     (hI : Formalism.MainNotions.PrimeDegreeVariant.Interlace (Nm_succ D.R) (lamTr D u τ) (sgTr D u τ)) :
     ∀ f ∈ delSq ℤ _ (lamTr D u τ), ∃ g ∈ delSq ℤ _ (sgTr D u τ),

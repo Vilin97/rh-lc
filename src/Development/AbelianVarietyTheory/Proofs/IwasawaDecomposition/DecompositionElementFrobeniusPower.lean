@@ -23,6 +23,9 @@ theorem frobAlg_pow_apply (K L : Type*) [Field K] [Fintype K] [Field L] [Algebra
 end GlobalTheory.WeilDeligne
 
 
+open GlobalTheory.WeilDeligne Pointwise in
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 1000000 in
 theorem GlobalTheory.WeilDeligne.exists_pow_normV_resPow (E Ω : Type) [Field E] [NumberField E] [Field Ω]
     [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) :
     IsPlaceOver A w → ∀ (L : IntermediateField E Ω), FiniteDimensional E L → ∀ g : G E Ω,

@@ -92,6 +92,7 @@ theorem exists_mul_pow_mem {D D' : X.Opens} (hD : IsAffineOpen D) (h : genericPo
   exact ⟨m, b, e'.symm⟩
 
 
+omit [IsIntegral X] in
 theorem basicOpen_le_nonzeroLocus {H : LB X} (s s' : LB.Sec H) (r : Γ(X, nonzeroLocus s))
     (h : ∀ k, rs X (inf_le_right : nonzeroLocus s ⊓ H.U k ≤ H.U k) (s'.f k) =
       rs X (inf_le_left : nonzeroLocus s ⊓ H.U k ≤ nonzeroLocus s) r *

@@ -30,6 +30,7 @@ def PolarChartContDiffAt {D : D7} (X : HidaSetting D) (u' : D.what₂.Word)
   ContDiffAt ℝ 1 (PsiC X u' a κ eH) ((0 : EuclideanSpace ℝ ι), eH (TI X u' hT))
 
 
+open Classical in
 def PsiDet {D : D7} (X : HidaSetting D) (u' : D.what₂.Word)
     (hT : ∀ i j, X.B.I.cm.sig (gramE X.B.I.cm.sig X.B.I.J (tupH (frameOf X u')) j i) =
       gramE X.B.I.cm.sig X.B.I.J (tupH (frameOf X u')) i j)

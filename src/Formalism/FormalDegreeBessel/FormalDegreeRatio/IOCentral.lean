@@ -20,6 +20,7 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 abbrev IOPt {n : ℕ} (ε : Fin n → Bool) : Type := {g : Matrix (Fin n) (Fin n) ℂ // inUJ ε g}
 
 
+open Classical in
 def ioExt {n : ℕ} (ε : Fin n → Bool) {E : Type} [Zero E] (φ : IOPt ε → E) :
     Matrix (Fin n) (Fin n) ℂ → E := by
   classical

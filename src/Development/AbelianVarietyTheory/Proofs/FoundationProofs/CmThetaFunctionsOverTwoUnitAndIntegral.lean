@@ -172,6 +172,7 @@ theorem atU_th_sq : PowerSeries.constantCoeff (g.atU (GL3Theta.th0 g.abelian₂ 
   exact congrArg _ (funext hsq)
 
 
+include hok hlat hdisc h2 h3 hwp halg hnm htwo in
 theorem int_th {β : ℂ} {k : ℕ} (hβ : β ∈ Qbar) (hn : ‖lamC g.lam β‖ = 1)
     (hst : ∀ ω ∈ g.abelian₂, β * ω ∈ g.abelian₂) (htr : β + starRingEnd ℂ β = 1)
     (hN : β * starRingEnd ℂ β = ((2 * k : ℕ) : ℂ)) (hb1 : β * t₀ ∉ g.abelian₂) (hb2 : (1 - β) * t₀ ∉ g.abelian₂)
@@ -257,6 +258,7 @@ theorem exists_tau {t : ℂ} (ht : GL3Theta.Tors1 2 g.abelian₂ t) : ∃ τ : P
   · rw [← mul_assoc, PowerSeries.mul_inv_cancel _ (by rw [hE]; exact one_ne_zero), one_mul]
 
 
+include hok hlat hdisc h2 h3 hwp halg htr in
 theorem norm_xAt_tors {t : ℂ} (ht : GL3Theta.Tors1 2 g.abelian₂ t) : ‖xAt g t‖ ≤ 1 := by
   obtain ⟨-, hw, -, hE, -⟩ := GlobalTheory.EvenTheta.DatumBasic.datum_basic 2 g hok hlat h2 h3 hdisc
   obtain ⟨τ, a1, -, a3, a4, a5⟩ := exists_tau hok hlat hdisc h2 h3 halg htr ht
@@ -289,6 +291,7 @@ theorem int_E_sq : IntSer (ePhi1 g.lam g.abelian₂ g.C g.wq ^ 2) := by
   rwa [hf2, mul_assoc, PowerSeries.mul_inv_cancel _ (by rw [h0]; exact one_ne_zero), mul_one] at this
 
 
+include hok hlat hdisc h2 h3 hwp halg hnm htwo htr hx in
 theorem transl_sq {t : ℂ} (ht : GL3Theta.Tors1 2 g.abelian₂ t) : ∃ H : PowerSeries ℂ_[2], IntSer H ∧
     (‖PowerSeries.coeff 0 H‖ = 1 ∨ ‖PowerSeries.coeff 1 H‖ = 1) ∧
     g.atU (U1 g.abelian₂ t (GL3Theta.th0 g.abelian₂ t₀)) ^ 2 = ePhi1 g.lam g.abelian₂ g.C g.wq ^ 2 * H := by
@@ -351,6 +354,7 @@ theorem transl_sq {t : ℂ} (ht : GL3Theta.Tors1 2 g.abelian₂ t) : ∃ H : Pow
         PowerSeries.C κ * ePhi1 g.lam g.abelian₂ g.C g.wq ^ 2 * τ ^ 2) * hcc
 
 
+include hok hlat hdisc h2 h3 hwp halg hnm htwo htr hf hx in
 theorem transl_bdd {t : ℂ} (ht : GL3Theta.Tors1 2 g.abelian₂ t) :
     BddSer (g.atU (U1 g.abelian₂ t (GL3Theta.th0 g.abelian₂ t₀))) := by
   obtain ⟨s, ω, hs, hω, e2⟩ := tors_half ht
@@ -391,6 +395,7 @@ theorem transl_bdd {t : ℂ} (ht : GL3Theta.Tors1 2 g.abelian₂ t) :
   rwa [e, mul_assoc, PowerSeries.mul_inv_cancel _ (by rw [hf0]; exact one_ne_zero), mul_one] at hb
 
 
+include hok hlat hdisc h2 h3 hwp halg hnm htwo htr hf hx in
 theorem transl_int {t : ℂ} (ht : GL3Theta.Tors1 2 g.abelian₂ t) :
     IntSer (g.atU (U1 g.abelian₂ t (GL3Theta.th0 g.abelian₂ t₀))) ∧
       ¬ ∃ ρ : ℝ, ρ < 1 ∧ ∀ n, ‖PowerSeries.coeff n (g.atU (U1 g.abelian₂ t (GL3Theta.th0 g.abelian₂ t₀)))‖ ≤ ρ := by

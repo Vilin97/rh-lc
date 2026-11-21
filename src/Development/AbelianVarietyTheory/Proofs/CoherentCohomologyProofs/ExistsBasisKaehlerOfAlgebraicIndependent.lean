@@ -328,6 +328,7 @@ variable (F : Type*) [Field F] [Algebra V F] [IsFractionRing V F] [Algebra K F]
   [IsScalarTower K V F]
 
 
+omit [IsDomain V] [IsDiscreteValuationRing V] [Algebra.FormallySmooth K V] in
 theorem trdeg_eq_of_basis_kaehler {n : ℕ} (b : Basis (Fin n) V Ω[V⁄K]) :
     Algebra.trdeg K F = n := by
   have : Algebra.EssFiniteType V F := .of_isLocalization F V⁰
@@ -345,6 +346,7 @@ theorem exists_basis_kaehler_of_trdeg {n : ℕ} (hn : Algebra.trdeg K F = n) {t 
   exact ⟨m.succ_pos, z, b, h₀, hb⟩
 
 
+variable (V) in
 theorem trdeg_residueField_of_trdeg {n : ℕ} (hn : Algebra.trdeg K F = n) :
     Algebra.trdeg K (ResidueField V) = (n - 1 : ℕ) := by
   obtain ⟨t, ht⟩ := IsDiscreteValuationRing.exists_irreducible V

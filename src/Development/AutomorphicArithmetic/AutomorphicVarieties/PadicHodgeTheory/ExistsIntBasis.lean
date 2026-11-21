@@ -78,6 +78,7 @@ private theorem exists_int_basis {l : ℕ} [Fact l.Prime] {G : Type} [Group G] [
   exact PadicInt.norm_le_one _
 
 
+open GlobalTheory.UnramifiedRep GlobalTheory.UnramifiedCrys GlobalTheory.Cyc in
 private theorem exists_split {l : ℕ} [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (Ti : LocTied l P AI)
     (K : FinExt l) {V : Type} [AddCommGroup V] [Module ℚ_[l] V] [FiniteDimensional ℚ_[l] V] [TopologicalSpace V]
     [IsModuleTopology ℚ_[l] V] (ρ : Representation ℚ_[l] ↥(GK K) V) (hcont : ∀ x, Continuous fun g => ρ g x)
