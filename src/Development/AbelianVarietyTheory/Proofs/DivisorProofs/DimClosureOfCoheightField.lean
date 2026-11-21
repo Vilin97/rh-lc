@@ -87,7 +87,7 @@ theorem dim_closure_of_coheight {k : Type} [CommRing k] {X Z : Scheme.{0}} {p : 
     have e : strHom (ZMod l) Z ≫ spMap (Int.castRingHom (ZMod l)) = i ≫ p ≫ spMap (Int.castRingHom k) :=
       specZIsTerminal.hom_ext _ _
     have : LocallyOfFiniteType (strHom (ZMod l) Z ≫ spMap (Int.castRingHom (ZMod l))) := e ▸ inferInstance
-    have : LocallyOfFiniteType (strHom (ZMod l) Z) := locallyOfFiniteType_of_comp _ (spMap (Int.castRingHom (ZMod l)))
+    have : LocallyOfFiniteType (strHom (ZMod l) (X := Z)) := locallyOfFiniteType_of_comp _ (spMap (Int.castRingHom (ZMod l)))
     exact dim_closure_of_coheight_field (strHom (ZMod l) Z) hZ hw
   · have := CharP.charP_to_charZero Γ(Z, ⊤)
     have h := GlobalTheory.PrimeDivDim.dim_eq_of_coheight_eq_one k Z (i ≫ p) n (hX.of_isClosedImmersion i this hZ) _

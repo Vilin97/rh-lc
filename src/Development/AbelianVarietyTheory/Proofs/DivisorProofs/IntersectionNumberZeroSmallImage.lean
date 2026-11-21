@@ -19,15 +19,15 @@ noncomputable section
 namespace GlobalTheory.PullVanish
 
 theorem isLocallyNoetherian_of_proj {k : Type} [Field k] {X : Scheme.{0}} [Algebra k Γ(X, ⊤)]
-    (hp : IsProjOver (strHom k X)) : IsLocallyNoetherian X := by
+    (hp : IsProjOver (strHom k (X := X))) : IsLocallyNoetherian X := by
   obtain ⟨N, ι, _, h⟩ := hp
-  have : LocallyOfFiniteType (strHom k X) := h ▸ inferInstance
+  have : LocallyOfFiniteType (strHom k (X := X)) := h ▸ inferInstance
   exact LocallyOfFiniteType.isLocallyNoetherian (strHom k X)
 
 theorem isProjOver_red {k : Type} [Field k] {X : Scheme.{0}} [Algebra k Γ(X, ⊤)]
-    (hp : IsProjOver (strHom k X)) (Z : Closeds X) :
+    (hp : IsProjOver (strHom k (X := X))) (Z : Closeds X) :
     letI := algebraΓAlong k (redι Z)
-    IsProjOver (strHom k (Scheme.IdealSheafData.vanishingIdeal Z).subscheme) := by
+    IsProjOver (strHom k (X := (Scheme.IdealSheafData.vanishingIdeal Z).subscheme)) := by
   letI := algebraΓAlong k (redι Z)
   rw [← comp_strHom (g := redι Z) fun _ => rfl]
   exact ProjSpace.isProjOver_comp_of_isClosedImmersion _ hp
@@ -103,7 +103,7 @@ theorem redι_genericPoint {X : Scheme.{0}} (w : X)
     rwa [hy] at this
   exact (h₁.antisymm h₂).eq.symm
 
-theorem interNum_pull_eq_zero : ∀ (κ : Type) [Field κ] (e r : ℕ) (Z W : Scheme.{0}) [IsIntegral Z] [Algebra κ Γ(Z, ⊤)], IsProjOver (strHom κ Z) → topologicalKrullDim Z ≤ (e + r : ℕ) → ∀ g : Z ⟶ W, topologicalKrullDim (closure ({g (genericPoint Z)} : Set W)) < (r : ℕ) → ∀ (P : Fin e → LB Z), (∀ i, (P i).IsLB) → ∀ (A : Fin r → LB W), (∀ i, (A i).IsLB) → interNum κ (structureModule Z) (Sum.elim P fun a => (A a).pull g) = 0 := by
+theorem interNum_pull_eq_zero : ∀ (κ : Type) [Field κ] (e r : ℕ) (Z W : Scheme.{0}) [IsIntegral Z] [Algebra κ Γ(Z, ⊤)], IsProjOver (strHom κ (X := Z)) → topologicalKrullDim Z ≤ (e + r : ℕ) → ∀ g : Z ⟶ W, topologicalKrullDim (closure ({g (genericPoint Z)} : Set W)) < (r : ℕ) → ∀ (P : Fin e → LB Z), (∀ i, (P i).IsLB) → ∀ (A : Fin r → LB W), (∀ i, (A i).IsLB) → interNum κ (structureModule Z) (Sum.elim P fun a => (A a).pull g) = 0 := by
   intro κ _ e r
   induction r with
   | zero =>

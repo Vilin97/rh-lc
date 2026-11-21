@@ -40,7 +40,7 @@ theorem ratDeg_pull_eq_interNumRed : ∀ (k : Type) [CommRing k] (X : Scheme.{0}
   have hC : VB.IsProjCurve ℚ (Scheme.IdealSheafData.vanishingIdeal Z).subscheme := by
     have hs : strHom ℚ (Scheme.IdealSheafData.vanishingIdeal Z).subscheme = redι Z ≫ strHom ℚ (ratFibre p) := by
       rw [ratFibre.strHom_eq]; exact strHom_eq fun _ ↦ rfl
-    have hP : IsProper (strHom ℚ (Scheme.IdealSheafData.vanishingIdeal Z).subscheme) := by
+    have hP : IsProper (strHom ℚ (X := (Scheme.IdealSheafData.vanishingIdeal Z).subscheme)) := by
       rw [hs]; exact hZ.isProper
     exact VB.IsProperCurve.isProjCurve ℚ _
       ⟨inferInstance, (topologicalKrullDim_red Z).trans hZ.dim_eq, hP⟩

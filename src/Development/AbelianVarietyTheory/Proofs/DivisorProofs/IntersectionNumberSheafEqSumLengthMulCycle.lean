@@ -91,7 +91,7 @@ theorem eq_of_mem_closure {F : X.Modules} [IsFiniteQC F] {n : ℕ} (hd : suppDim
 
 
 variable (κ) in
-theorem interNumRed_eq_zero (hp : IsProjOver (strHom κ X)) {ι : Type} [Fintype ι]
+theorem interNumRed_eq_zero (hp : IsProjOver (strHom κ (X := X))) {ι : Type} [Fintype ι]
     {P : ι → LB X} (hP : ∀ i, (P i).IsLB) (C : Closeds X)
     (hC : topologicalKrullDim (C : Set X) < (Fintype.card ι : ℕ)) : interNumRed κ C P = 0 := by
   obtain ⟨_, A, hA⟩ := isProper_and_exists_isAmpleLB_of_isProjOver hp
@@ -104,7 +104,7 @@ theorem interNumRed_eq_zero (hp : IsProjOver (strHom κ X)) {ι : Type} [Fintype
   exact (support_pushforward_subset_image_of_isClosedImmersion (redι C) _).trans
     ((Set.image_subset_range _ _).trans (range_redι C).le)
 
-theorem interNum_eq_sum_length_mul_interNumRed : ∀ (κ : Type) [Field κ] (X : Scheme.{0}) [Algebra κ Γ(X, ⊤)], IsProjOver (strHom κ X) → ∀ (ι : Type) [Fintype ι] (P : ι → LB X), (∀ i, (P i).IsLB) → ∀ (F : X.Modules) [GlobalTheory.QCoh.IsFiniteQC F], GlobalTheory.QCoh.suppDim F ≤ (Fintype.card ι : ℕ) → ∀ S : Finset X, (∀ w ∈ GlobalTheory.QCoh.support F, topologicalKrullDim (closure ({w} : Set X)) = (Fintype.card ι : ℕ) → w ∈ S) → interNum κ F P = ∑ w ∈ S, ((Module.length (X.presheaf.stalk w) (F.presheaf.stalk w :)).toNat : ℤ) * interNumRed κ (⟨closure {w}, isClosed_closure⟩ : Closeds _) P := by
+theorem interNum_eq_sum_length_mul_interNumRed : ∀ (κ : Type) [Field κ] (X : Scheme.{0}) [Algebra κ Γ(X, ⊤)], IsProjOver (strHom κ (X := X)) → ∀ (ι : Type) [Fintype ι] (P : ι → LB X), (∀ i, (P i).IsLB) → ∀ (F : X.Modules) [GlobalTheory.QCoh.IsFiniteQC F], GlobalTheory.QCoh.suppDim F ≤ (Fintype.card ι : ℕ) → ∀ S : Finset X, (∀ w ∈ GlobalTheory.QCoh.support F, topologicalKrullDim (closure ({w} : Set X)) = (Fintype.card ι : ℕ) → w ∈ S) → interNum κ F P = ∑ w ∈ S, ((Module.length (X.presheaf.stalk w) (F.presheaf.stalk w :)).toNat : ℤ) * interNumRed κ (⟨closure {w}, isClosed_closure⟩ : Closeds _) P := by
   intro κ _ X _ hp ι _ P hP F hF
   have hf := algebraMap_eq_strHom κ X
   haveI : AlgebraicGeometry.IsNoetherian X := isNoetherian_of_isProjOver hp
@@ -210,7 +210,7 @@ theorem interNum_eq_sum_length_mul_interNumRed : ∀ (κ : Type) [Field κ] (X :
       rw [hf r]; rfl
     have hstr : strHom κ (Scheme.IdealSheafData.vanishingIdeal Z).subscheme = redι Z ≫ strHom κ X :=
       strHom_eq fun _ ↦ rfl
-    have hpZ : IsProjOver (strHom κ (Scheme.IdealSheafData.vanishingIdeal Z).subscheme) := by
+    have hpZ : IsProjOver (strHom κ (X := (Scheme.IdealSheafData.vanishingIdeal Z).subscheme)) := by
       rw [hstr]; exact ProjSpace.isProjOver_comp_of_isClosedImmersion _ hp
     have hdimZ : topologicalKrullDim (Scheme.IdealSheafData.vanishingIdeal Z).subscheme ≤
         (Fintype.card ι : ℕ) := by

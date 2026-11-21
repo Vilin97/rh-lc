@@ -33,7 +33,7 @@ noncomputable section
 namespace GlobalTheory.MixExp
 
 theorem pow_mul_le_of_cls_eq {k : Type} [Field k] {Y : Scheme.{0}} [Algebra k Γ(Y, ⊤)]
-    (h : Published.NefProductNonneg) (hp : IsProjOver (strHom k Y)) {e : ℕ}
+    (h : Published.NefProductNonneg) (hp : IsProjOver (strHom k (X := Y))) {e : ℕ}
     (hD : topologicalKrullDim Y = e) {N N' N₀ : LB Y} (hN : IsNef k N) (hN' : IsNef k N')
     (h₀ : N₀.IsLB) (a b : ℕ) (hc : cls N₀ h₀ = a • cls N hN.isLB + b • cls N' hN'.isLB) :
     (a : ℤ) ^ e * interNum k (structureModule Y) (fun _ : Fin e => N) ≤
@@ -72,10 +72,10 @@ theorem GlobalTheory.mixExp_interNumRed : GlobalTheory.Published.NefNumerics →
   intro h k _ X q hq
   letI := algebraΓOfHom q
   intro N N' N₀ hN hN' h₀ a b Z e hnef hnef' hc hZ
-  have hp : IsProjOver (strHom k X) := by rwa [strHom_eq (f := q) fun _ => rfl]
+  have hp : IsProjOver (strHom k (X := X)) := by rwa [strHom_eq (f := q) fun _ => rfl]
   letI := algebraΓAlong k (redι Z)
   have hi := appTop_algebraMap_along k (redι Z)
-  have hpZ : IsProjOver (strHom k (Scheme.IdealSheafData.vanishingIdeal Z).subscheme) := by
+  have hpZ : IsProjOver (strHom k (X := (Scheme.IdealSheafData.vanishingIdeal Z).subscheme)) := by
     obtain ⟨n, f, hf, hs⟩ := hp
     exact ⟨n, redι Z ≫ f, inferInstance, by rw [Category.assoc, hs, comp_strHom hi]⟩
   change (a : ℤ) ^ e * interNumOn k (redι Z) (fun _ : Fin e => N) ≤

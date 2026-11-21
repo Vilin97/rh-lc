@@ -169,7 +169,7 @@ theorem vanishesTo_of_isUnit (s : Fin G.D → Fin G.N → K) (g : Matrix (Fin G.
 
 end Main
 
-theorem exists_global {k : Type} [Field k] {Y : Scheme.{0}} [Algebra k Γ(Y, ⊤)] (hY : IsProjOver (GlobalTheory.strHom k Y))
+theorem exists_global {k : Type} [Field k] {Y : Scheme.{0}} [Algebra k Γ(Y, ⊤)] (hY : IsProjOver (GlobalTheory.strHom k (X := Y)))
     (p : Y ⟶ Sp k) {M L : LB Y} (hM : M.IsLB) (hL : L.IsLB) {d : ℕ} (t : Fin d → L.Sec) {n l : ℤ} (h : n + 1 = l)
     (hreg : RegSeq hL (LB.toMod M) (List.ofFn t)) (hvan : VanishFrom L (LB.toMod M) 0) (hd : (d : ℤ) ≤ n + 1)
     (f : Vanishing.H0 p (tw M L l) ⊤) (hf : VanishesTo (cutIdeal hL t) 1 f) :
@@ -189,7 +189,7 @@ theorem kerRes : Quoted → KerRes := by
   have hB : (tens G.K.bundle G.LA).IsLB := isLB_tens G.K.isLB G.isLBA
   obtain ⟨g, hg, hreg⟩ := GlobalTheory.T.exists_basis_regular_sequence_of_common_zeros K G s hs _ hB
   have hv' := vanishesTo_of_isUnit G s g hg ((vanishesTo_restr_iff hs.inU le_top).1 hv)
-  have hproj : IsProjOver (GlobalTheory.strHom K G.Y) := by
+  have hproj : IsProjOver (GlobalTheory.strHom K (X := G.Y)) := by
     rw [GlobalTheory.strHom_eq (f := G.str) fun _ => rfl]
     exact G.geom.alg.variety.proj
   obtain ⟨μ, e⟩ := exists_global hproj G.str hB G.isLB _ (Nat.cast_succ l).symm hreg (GlobalTheory.T.kawamataViehweg_vanishing_numberField_twist Q K G hnef hbig)

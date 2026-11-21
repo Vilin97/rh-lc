@@ -26,7 +26,7 @@ section Surface
 variable (k : Type) [Field k] (T : Scheme.{0}) [Algebra k Γ(T, ⊤)]
 
 def IsProjSurface : Prop :=
-  IsIntegral T ∧ topologicalKrullDim T = 2 ∧ IsProjOver (strHom k T)
+  IsIntegral T ∧ topologicalKrullDim T = 2 ∧ IsProjOver (strHom k (X := T))
 
 variable {T}
 

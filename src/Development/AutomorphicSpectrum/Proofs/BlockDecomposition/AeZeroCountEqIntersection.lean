@@ -55,7 +55,7 @@ end GlobalTheory.CompanionTheory.KoszulCount
 namespace GlobalTheory.CompanionTheory.KoszulCount
 
 theorem interNum_eq_ncard {K : Type} [Field K] [IsAlgClosed K] {X : Scheme.{0}}
-    [Algebra K Γ(X, ⊤)] (hp : IsProjOver (strHom K X)) {L : LB X} (hL : L.IsLB) (d : ℕ) :
+    [Algebra K Γ(X, ⊤)] (hp : IsProjOver (strHom K (X := X))) {L : LB X} (hL : L.IsLB) (d : ℕ) :
     ∀ (F : X.Modules) [IsFiniteQC F], FiniteCohTwists K F → suppDim F ≤ (d : ℕ) →
       ∀ t : Fin d → L.Sec, GoodStalks F t →
         interNum K F (fun _ : Fin d => L) =
@@ -113,7 +113,7 @@ theorem koszul_count : ∀ (Y : Var ℂ) (Δ : Y.Dv) (L : LB Y.X) (r : L.ι → 
   filter_upwards [GlobalTheory.T.ae_polynomial_nonvanishing _ _ Q hQ] with C hCQ
   have hct := hC C hCQ
   set t : Fin Y.dim → L.Sec := fun k => ∑ j, algebraMap ℂ Γ(Y.X, ⊤) (C k j) • b j with ht
-  have hp : IsProjOver (strHom ℂ Y.X) := by
+  have hp : IsProjOver (strHom ℂ (X := Y.X)) := by
     rw [GlobalTheory.strHom_eq Y.algebraMap_Γ]
     exact Y.isProjOver
   have hg : GoodStalks (structureModule Y.X) t :=

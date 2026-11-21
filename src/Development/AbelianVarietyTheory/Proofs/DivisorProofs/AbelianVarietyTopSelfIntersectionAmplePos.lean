@@ -40,7 +40,7 @@ theorem inter_top_pos : ∀ (K : Type) [Field K] (A : AbVar K) (c : Pic A.X.left
   letI := A.algΓ
   obtain ⟨hI, -, -⟩ := GlobalTheory.AV.AbVar.isIntegral_isLocallyNoetherian_compactSpace K A
   obtain ⟨hs, hp⟩ := GlobalTheory.AV.AbVarProj.strHom_eq_and_isProjOver K A
-  have hp' : IsProjOver (strHom K A.X.left) := by rw [hs]; exact hp
+  have hp' : IsProjOver (strHom K (X := A.X.left)) := by rw [hs]; exact hp
   exact GlobalTheory.CompanionTheory.NefKleiman.interNum_top_pos_of_isAmpleLB K A.X.left hp' A.dim
     (GlobalTheory.AV.AbVar.topologicalKrullDim_eq_dim K A) L hA
 

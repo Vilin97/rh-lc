@@ -52,7 +52,8 @@ def idxπ (U : ι → ObjectProperty C) (hU : ∀ α, Cosieve (U α)) : idxF U h
 
 def tupF (U : ι → ObjectProperty C) (hU : ∀ α, Cosieve (U α)) {p : ℕ} (i : Fin (p + 1) → ι) :
     (capT U i).FullSubcategory ⥤ (CH.cech (idxπ U hU) p).Elements where
-  obj T := ⟨T.obj, ⟨fun k => ⟨i k, T.property k⟩, fun _ _ => rfl⟩⟩
+  obj T := (CH.cech (idxπ U hU) p).elementsMk T.obj
+    ⟨fun k => ⟨i k, T.property k⟩, fun _ _ => rfl⟩
   map φ := ⟨φ.hom, Subtype.ext (funext fun k => Subtype.ext rfl)⟩
 
 variable {R : Type} [CommRing R]
@@ -191,7 +192,7 @@ theorem const_H : ∀ {R : Type} [CommRing R] {C : Type u} [Category.{v} C] (F :
   intro R _ C _ F n
   let E : C ⥤ Type := (Functor.const C).obj PUnit.{1}
   let G : C ⥤ E.Elements :=
-    { obj := fun T => ⟨T, PUnit.unit⟩
+    { obj := fun T => E.elementsMk T PUnit.unit
       map := fun φ => ⟨φ, rfl⟩ }
   let m : CH.Mor F (CH.elF E F) (RingHom.id R) := CH.Mor.restrict F (CategoryOfElements.π E)
   have hb : ∀ k, Function.Bijective (m.hom.f k) := by

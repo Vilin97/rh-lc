@@ -26,7 +26,7 @@ theorem exists_torus_hom_extension : ∀ (k : Type) [Field k] (C : Scheme.{0}) [
   intro k _ C _ hC K _ x hx G _ hG X _ _ _ i₀ _
   obtain ⟨hs, -, hc⟩ := hC
   have : IsIntegral C := GlobalTheory.LieSemineg.isIntegral_curve hs hc
-  have : Smooth (strHom k C) := SmoothOfRelativeDimension.smooth 1 _
+  have : Smooth (strHom k (X := C)) := SmoothOfRelativeDimension.smooth 1 _
   have : IsLocallyNoetherian C := LocallyOfFiniteType.isLocallyNoetherian (strHom k C)
   have hN : Geo.Tor.IsNormalScheme C :=
     GlobalTheory.SmoothNormal.isNormalScheme_of_smoothOfRelativeDimension (Sp k) C (strHom k C) 1

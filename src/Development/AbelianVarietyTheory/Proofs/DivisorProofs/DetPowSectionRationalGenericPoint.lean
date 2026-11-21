@@ -22,8 +22,8 @@ namespace GlobalTheory.Nef.SecRat
 
 theorem isIntegral_of_isGenOver (k K : Type) [Field k] [Field K] [Algebra k K] (C : Scheme.{0})
     [Algebra k Γ(C, ⊤)] (x : Sp K ⟶ C) (hx : IsGenOver k x) : IsIntegral C := by
-  have : SmoothOfRelativeDimension 1 (strHom k C) := hx.1.1
-  have : Smooth (strHom k C) := SmoothOfRelativeDimension.smooth 1 _
+  have : SmoothOfRelativeDimension 1 (strHom k (X := C)) := hx.1.1
+  have : Smooth (strHom k (X := C)) := SmoothOfRelativeDimension.smooth 1 _
   have hred : IsReduced C := isReduced_of_smooth_of_isReduced (strHom k C)
   have hd : IsDominant x := hx.2.1.1
   have hden : DenseRange x.base := hd.denseRange

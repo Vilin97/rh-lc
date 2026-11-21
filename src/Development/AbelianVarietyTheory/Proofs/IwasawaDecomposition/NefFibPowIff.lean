@@ -15,7 +15,7 @@ open CategoryTheory AlgebraicGeometry TopologicalSpace ReciprocityTheory.ChartRe
 namespace GlobalTheory.ArInt
 
 theorem interNum_one_lbPow_of_curve {κ : Type} [Field κ] {C : Scheme.{0}} [Algebra κ Γ(C, ⊤)]
-    [IsProper (strHom κ C)] {H N : LB C} (hH : IsAmpleLB H) (hd : topologicalKrullDim C = 1)
+    [IsProper (strHom κ (X := C))] {H N : LB C} (hH : IsAmpleLB H) (hd : topologicalKrullDim C = 1)
     (hN : N.IsLB) (n : ℕ) :
     interNum κ (structureModule C) ![lbPow N n] = n * interNum κ (structureModule C) ![N] := by
   induction n with
@@ -44,7 +44,7 @@ theorem nefFib_pow_iff : ∀ (k : Type) [CommRing k] [Module.Finite ℤ k] (X : 
     have e : strHom κ Z ≫ spMap (Int.castRingHom κ) = i ≫ p ≫ spMap (Int.castRingHom k) :=
       specZIsTerminal.hom_ext _ _
     have : IsProper (strHom κ Z ≫ spMap (Int.castRingHom κ)) := by rw [e]; infer_instance
-    have : IsProper (strHom κ Z) := IsProper.of_comp _ (spMap (Int.castRingHom κ))
+    have : IsProper (strHom κ (X := Z)) := IsProper.of_comp _ (spMap (Int.castRingHom κ))
     have hAZ := hA.pull_of_isClosedImmersion i
     have hN : (L.B.pull i).IsLB := LB.isLB_pull L.isLB i
     have e1 : topSelfIntersection κ ((L.pow m).B.pull i) 1 =

@@ -155,7 +155,7 @@ structure IsProperCurve : Prop where
 
   dim_eq : topologicalKrullDim C = 1
 
-  isProper : IsProper (strHom k C)
+  isProper : IsProper (strHom k (X := C))
 
 structure IsProjCurve : Prop where
 
@@ -163,11 +163,11 @@ structure IsProjCurve : Prop where
 
   dim_eq : topologicalKrullDim C = 1
 
-  isProjOver : IsProjOver (strHom k C)
+  isProjOver : IsProjOver (strHom k (X := C))
 
 structure IsSmoothProjCurve : Prop extends IsProjCurve k C where
 
-  smooth : Smooth (strHom k C)
+  smooth : Smooth (strHom k (X := C))
 
 variable {k C}
 

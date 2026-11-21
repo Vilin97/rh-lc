@@ -137,7 +137,7 @@ theorem UpperTheory.torus_weight_unit_local :
   intro hW k _ _ C _ hC G _ hG X _ _ _ u hu χ U f hU hf hw s
   have : IsIntegral C := LieSemineg.isIntegral_curve hC.1 hC.2.2
   have := hC.1
-  have : Smooth (strHom k C) := SmoothOfRelativeDimension.smooth 1 _
+  have : Smooth (strHom k (X := C)) := SmoothOfRelativeDimension.smooth 1 _
   have : IsLocallyNoetherian C := LocallyOfFiniteType.isLocallyNoetherian (strHom k C)
   have := hG.smooth
   have := hG.geomConnected

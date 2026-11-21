@@ -18,17 +18,17 @@ namespace GlobalTheory.Published
 
 def NefProductNonneg : Prop :=
   ∀ (k : Type) [Field k] [IsAlgClosed k] (X : Scheme.{0}) [Algebra k Γ(X, ⊤)] (d : ℕ),
-    IsProjOver (strHom k X) → topologicalKrullDim X = d →
+    IsProjOver (strHom k (X := X)) → topologicalKrullDim X = d →
     ∀ N : Fin d → LB X, (∀ i, IsNef k (N i)) → 0 ≤ interNum k (structureModule X) N
 
 def NefBigIff : Prop :=
   ∀ (k : Type) [Field k] [IsAlgClosed k] (X : Scheme.{0}) [IsIntegral X] [Algebra k Γ(X, ⊤)]
-    (D : ℕ), IsProjOver (strHom k X) → topologicalKrullDim X = D →
+    (D : ℕ), IsProjOver (strHom k (X := X)) → topologicalKrullDim X = D →
     ∀ N : LB X, IsNef k N → (IsBig k N ↔ 0 < topSelfIntersection k N D)
 
 def NefRiemannRoch : Prop :=
   ∀ (k : Type) [Field k] [IsAlgClosed k] (X : Scheme.{0}) [Algebra k Γ(X, ⊤)] (D : ℕ),
-    IsProjOver (strHom k X) → topologicalKrullDim X = D →
+    IsProjOver (strHom k (X := X)) → topologicalKrullDim X = D →
     ∀ L : LB X, IsNef k L →
       (fun m : ℕ => (lbH0 k (lbPow L m) : ℝ) - (topSelfIntersection k L D : ℝ) * (m : ℝ) ^ D / D.factorial)
         =O[atTop] fun m : ℕ => (m : ℝ) ^ ((D : ℤ) - 1)
@@ -54,9 +54,9 @@ theorem dim_le_of_isIntegralHom {X Y : Scheme.{0}} (π : Y ⟶ X) [IsIntegralHom
     fun I J h => Ideal.IsIntegral.comap_lt_comap (I := I.asIdeal) (J := J.asIdeal) h
 
 theorem exists_algClosed_baseChange {k : Type} [Field k] {X : Scheme.{0}} [a : Algebra k Γ(X, ⊤)]
-    (hp : IsProjOver (strHom k X)) :
+    (hp : IsProjOver (strHom k (X := X))) :
     ∃ (X' : Scheme.{0}) (_ : Algebra (AlgebraicClosure k) Γ(X', ⊤)) (π : X' ⟶ X),
-      IsProjOver (strHom (AlgebraicClosure k) X') ∧
+      IsProjOver (strHom (AlgebraicClosure k) (X := X')) ∧
       topologicalKrullDim X' = topologicalKrullDim X ∧
       (∀ L : LB X, IsNef k L → IsNef (AlgebraicClosure k) (L.pull π)) ∧
       (∀ L : LB X, L.IsLB → lbH0 (AlgebraicClosure k) (L.pull π) = lbH0 k L) ∧
@@ -75,7 +75,7 @@ theorem exists_algClosed_baseChange {k : Type} [Field k] {X : Scheme.{0}} [a : A
   have : IsIntegralHom (spMap (algebraMap k (AlgebraicClosure k))) :=
     IsIntegralHom.SpecMap_iff.mpr (algebraMap_isIntegral_iff.mpr inferInstance)
   have : IsIntegralHom π := MorphismProperty.of_isPullback (P := @IsIntegralHom) H.flip this
-  have : IsProper (strHom k X) := by rwa [strHom_eq (f := f) fun _ => rfl]
+  have : IsProper (strHom k (X := X)) := by rwa [strHom_eq (f := f) fun _ => rfl]
   refine ⟨_, algebraΓOfHom f', π, ?_, ?_, fun L h => ?_, fun L hL => ?_, fun d L hL => ?_⟩
   · rw [strHom_eq (f := f') fun _ => rfl]
     exact PosBaseChange.isProjOver_of_isPullback H hp
@@ -89,14 +89,14 @@ section AnyField
 
 variable {k : Type} [Field k] {X : Scheme.{0}} [Algebra k Γ(X, ⊤)] {D : ℕ}
 
-theorem NefProductNonneg.interNum_nonneg (h : NefProductNonneg) (hp : IsProjOver (strHom k X))
+theorem NefProductNonneg.interNum_nonneg (h : NefProductNonneg) (hp : IsProjOver (strHom k (X := X)))
     (hD : topologicalKrullDim X = D) {N : Fin D → LB X} (hN : ∀ i, IsNef k (N i)) :
     0 ≤ interNum k (structureModule X) N := by
   obtain ⟨X', _, π, hp', hd, hn, -, hi⟩ := exists_algClosed_baseChange hp
   rw [← hi D N fun i => (hN i).isLB]
   exact h _ X' D hp' (hd.trans hD) _ fun i => hn _ (hN i)
 
-theorem NefRiemannRoch.isBigO (h : NefRiemannRoch) (hp : IsProjOver (strHom k X))
+theorem NefRiemannRoch.isBigO (h : NefRiemannRoch) (hp : IsProjOver (strHom k (X := X)))
     (hD : topologicalKrullDim X = D) {L : LB X} (hL : IsNef k L) :
     (fun m : ℕ => (lbH0 k (lbPow L m) : ℝ) - (topSelfIntersection k L D : ℝ) * (m : ℝ) ^ D / D.factorial)
       =O[atTop] fun m : ℕ => (m : ℝ) ^ ((D : ℤ) - 1) := by
@@ -107,7 +107,7 @@ theorem NefRiemannRoch.isBigO (h : NefRiemannRoch) (hp : IsProjOver (strHom k X)
     (by rw [cls_lbPow hL', cls_pull hL.1, cls_pull (isLB_lbPow hL.1 m), cls_lbPow hL.1, map_nsmul]),
     h0 _ (isLB_lbPow hL.1 m), topSelf_def, hi D (fun _ => L) fun _ => hL.1, topSelf_def]
 
-theorem NefRiemannRoch.tendsto (h : NefRiemannRoch) (hp : IsProjOver (strHom k X))
+theorem NefRiemannRoch.tendsto (h : NefRiemannRoch) (hp : IsProjOver (strHom k (X := X)))
     (hD : topologicalKrullDim X = D) {L : LB X} (hL : IsNef k L) :
     Tendsto (fun m : ℕ => (lbH0 k (lbPow L m) : ℝ) / (m : ℝ) ^ D) atTop
       (nhds ((topSelfIntersection k L D : ℝ) / D.factorial)) := by
@@ -128,13 +128,13 @@ theorem NefRiemannRoch.tendsto (h : NefRiemannRoch) (hp : IsProjOver (strHom k X
   field_simp
   ring
 
-theorem NefRiemannRoch.topSelf_nonneg (h : NefRiemannRoch) (hp : IsProjOver (strHom k X))
+theorem NefRiemannRoch.topSelf_nonneg (h : NefRiemannRoch) (hp : IsProjOver (strHom k (X := X)))
     (hD : topologicalKrullDim X = D) {L : LB X} (hL : IsNef k L) : 0 ≤ topSelfIntersection k L D := by
   have h0 := ge_of_tendsto' (h.tendsto hp hD hL) fun m => (by positivity : (0 : ℝ) ≤ _)
   have hf : (0 : ℝ) < D.factorial := by positivity
   exact_mod_cast (div_nonneg_iff.1 h0).elim And.left fun h' => absurd h'.2 hf.not_ge
 
-theorem NefRiemannRoch.isBig_iff (h : NefRiemannRoch) (hp : IsProjOver (strHom k X))
+theorem NefRiemannRoch.isBig_iff (h : NefRiemannRoch) (hp : IsProjOver (strHom k (X := X)))
     (hD : topologicalKrullDim X = D) {L : LB X} (hL : IsNef k L) :
     IsBig k L ↔ 0 < topSelfIntersection k L D := by
   have ht := h.tendsto hp hD hL

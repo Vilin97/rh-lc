@@ -35,7 +35,7 @@ private theorem UpperTheory.suppDim_lt_of_genRank_zero {Z : Scheme.{0}} [IsInteg
   exact UpperTheory.withBot_enat_lt_of_add_one_le (this.trans hd)
 
 theorem UpperTheory.intersection_number_generic_rank :
-    ∀ (κ : Type) [Field κ] (Z : Scheme.{0}) [IsIntegral Z] [Algebra κ Γ(Z, ⊤)], IsProjOver (strHom κ Z) → ∀ (d : ℕ), topologicalKrullDim Z ≤ (d : WithBot ℕ∞) → ∀ (L : Fin d → LB Z), (∀ j, (L j).IsLB) → ∀ (G : Z.Modules), GlobalTheory.QCoh.IsFiniteQC G → interNum κ G L = (GlobalTheory.VB.genRank G : ℤ) * interNum κ (structureModule Z) L := by
+    ∀ (κ : Type) [Field κ] (Z : Scheme.{0}) [IsIntegral Z] [Algebra κ Γ(Z, ⊤)], IsProjOver (strHom κ (X := Z)) → ∀ (d : ℕ), topologicalKrullDim Z ≤ (d : WithBot ℕ∞) → ∀ (L : Fin d → LB Z), (∀ j, (L j).IsLB) → ∀ (G : Z.Modules), GlobalTheory.QCoh.IsFiniteQC G → interNum κ G L = (GlobalTheory.VB.genRank G : ℤ) * interNum κ (structureModule Z) L := by
   intro κ _ Z _ _ hp d hd L hL
   have hf := algebraMap_eq_strHom κ Z
   have h1 : ∀ {F : Z.Modules} [QCoh.IsFiniteQC F], FiniteCohTwists κ F :=

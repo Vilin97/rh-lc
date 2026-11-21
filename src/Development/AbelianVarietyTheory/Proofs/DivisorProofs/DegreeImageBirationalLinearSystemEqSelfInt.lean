@@ -92,7 +92,7 @@ theorem degree_image_eq_topSelf : Quoted → ∀ (F : Type) [Field F] [NumberFie
     funext m
     rw [one_mul]
   have hstr : strHom F S.Y = S.str := strHom_eq fun _ => rfl
-  have hproj : IsProjOver (strHom F S.Y) := hstr ▸ hV.proj
+  have hproj : IsProjOver (strHom F (X := S.Y)) := hstr ▸ hV.proj
   have hnef : IsNef F S.L := IsGenerated.isNef_of_isProjOver ⟨S.N, S.b, hb⟩ hV.proj
   have hYd := topologicalKrullDim_eq S hV
   have h0 := Q.nef.2.2.topSelf_nonneg hproj hYd hnef

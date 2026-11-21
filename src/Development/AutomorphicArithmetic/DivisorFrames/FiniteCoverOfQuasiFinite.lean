@@ -109,7 +109,7 @@ theorem UpperTheory.finite_cover_of_quasi_finite :
           ∀ p : Sp k ⟶ C, p ≫ strHom k C = 𝟙 _ → ∀ y : Over.mk p ⟶ G,
             ∃ (m : Fin n) (g₀ : Over.mk p ⟶ Z m) (w : Over.mk p ⟶ G), ⊤ ≤ w.left ⁻¹ᵁ W ∧ y = (g₀ ≫ z m) * w := by
   intro k _ _ C _ hC G _ h₁ h₂ W hW hZ
-  have : IsProper (strHom k C) := by
+  have : IsProper (strHom k (X := C)) := by
     obtain ⟨N, i, hi, e⟩ := hC.2.1
     have := isProper_str k N
     rw [← e]

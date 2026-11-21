@@ -41,8 +41,8 @@ theorem vanishFrom_adj_of_nef_big : Quoted → ∀ (K : Type) [Field K] [NumberF
   obtain ⟨hprop, A₀, hA₀⟩ := (isProjOver_iff_isProper_and_exists_isAmpleLB _).1 hV.proj
   haveI := hprop
   have hstr : strHom K G.Y = G.str := strHom_eq fun _ => rfl
-  have hproj : IsProjOver (strHom K G.Y) := hstr ▸ hV.proj
-  haveI : IsProper (strHom K G.Y) := hstr ▸ hprop
+  have hproj : IsProjOver (strHom K (X := G.Y)) := hstr ▸ hV.proj
+  haveI : IsProper (strHom K (X := G.Y)) := hstr ▸ hprop
 
   have hLnef : IsNef K G.L := IsGenerated.isNef_of_isProjOver (L := G.L) ⟨G.N, G.b, G.geom.alg.bpf⟩ hV.proj
   have hLj : IsNef K (lbPow G.L j) := hLnef.pow hA₀ j
@@ -146,7 +146,7 @@ theorem res_onto : Quoted → ∀ (K : Type) [Field K] [NumberField K] (G : Geo 
   have hB : (tens G.K.bundle G.L₂).IsLB := isLB_tens G.K.isLB G.isLB₂
   have hB' : (G.adj₂ 0).IsLB := isLB_tw hB G.isLB _
   obtain ⟨g, hg, hreg⟩ := GlobalTheory.T.exists_basis_regular_sequence_of_common_zeros K G s hs _ hB
-  have hproj : IsProjOver (GlobalTheory.strHom K G.Y) := by
+  have hproj : IsProjOver (GlobalTheory.strHom K (X := G.Y)) := by
     rw [GlobalTheory.strHom_eq (f := G.str) fun _ => rfl]
     exact G.geom.alg.variety.proj
   have hinv : ∀ {O : G.Y.Opens} {f : Vanishing.H0 G.str (G.adj₂ 0) O},

@@ -22,8 +22,8 @@ theorem IsAmpleLB.tens_of_isNef : GlobalTheory.Published.NefNumerics → ∀ (k 
   haveI := isIntegral_red hZ
   letI := algebraΓAlong k (redι Z)
   have hi := appTop_algebraMap_along k (redι Z)
-  have hp : IsProjOver (strHom k X) := by rwa [strHom_eq (f := f) fun _ => rfl]
-  have hp' : IsProjOver (strHom k (Scheme.IdealSheafData.vanishingIdeal Z).subscheme) := by
+  have hp : IsProjOver (strHom k (X := X)) := by rwa [strHom_eq (f := f) fun _ => rfl]
+  have hp' : IsProjOver (strHom k (X := (Scheme.IdealSheafData.vanishingIdeal Z).subscheme)) := by
     obtain ⟨n, e, he, hs⟩ := hp
     exact ⟨n, redι Z ≫ e, inferInstance, by rw [Category.assoc, hs, comp_strHom hi]⟩
   exact IsNef.isPsEff h k _ hp' _ (hN.pull_of_isClosedImmersion (redι Z) hi)

@@ -32,7 +32,7 @@ theorem nef_big_of_cls_eq_smul_add_smul : GlobalTheory.Published.NefNumerics →
   intro hNN k _ X _ q hq
   letI := algebraΓOfHom q
   intro N N' hN hN' a b hNn hNb hN'n ha
-  have hp : IsProjOver (strHom k X) := by
+  have hp : IsProjOver (strHom k (X := X)) := by
     rwa [strHom_eq (f := q) fun _ => rfl]
   obtain ⟨_, hH⟩ := exists_isAmpleLB_of_isProjOver hq
   refine ⟨tens (lbPow N a) (lbPow N' b), isLB_tens (isLB_lbPow hN a) (isLB_lbPow hN' b), ?_, ?_, ?_⟩

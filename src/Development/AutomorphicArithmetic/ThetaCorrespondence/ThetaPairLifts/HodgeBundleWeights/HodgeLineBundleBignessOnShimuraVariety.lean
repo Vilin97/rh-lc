@@ -68,7 +68,7 @@ theorem hodgeLineBundle_isBig : _root_.GlobalTheory.CovTop.PublishedHodgeBundleT
   letI := algebraΓOfHom (s₀ TF.Y Z)
   have hf : ∀ r : c.F, algebraMap c.F Γ(X₀ TF.Y Z, ⊤) r =
       (s₀ TF.Y Z).appTop ((Scheme.ΓSpecIso (.of c.F)).inv r) := fun _ => rfl
-  have hp' : IsProjOver (strHom c.F (X₀ TF.Y Z)) := by rw [strHom_eq hf]; exact hproj
+  have hp' : IsProjOver (strHom c.F (X := (X₀ TF.Y Z))) := by rw [strHom_eq hf]; exact hproj
   have h2 := isLB_lbPow hδ 2
   have hNl := LB.isLB_div h2 hB
   have hNp : CechPic.pull (π₀ TF.X Z) (cls _ hNl) = cls (L₀ TF.X Z w) (isLB_L₀ TF.X Z _) := by

@@ -83,13 +83,13 @@ section Nef
 
 variable {k : Type} [Field k] {X Y : Scheme.{0}} [Algebra k Γ(X, ⊤)] {H H' L M : LB X}
 
-theorem exists_hasNonzeroSec [IsProper (strHom k X)] (hH : IsAmpleLB H) (hM : M.IsLB) {Z : Closeds X}
+theorem exists_hasNonzeroSec [IsProper (strHom k (X := X))] (hH : IsAmpleLB H) (hM : M.IsLB) {Z : Closeds X}
     (hi : IsIrreducible (Z : Set X)) (hd : topologicalKrullDim (Z : Set X) ≤ 1)
     (hp : IsCompleteCurve k Z → 0 < interNumRed k Z ![M]) :
     ∃ r, 1 ≤ r ∧ HasNonzeroSec ((lbPow M r).pull (redι Z)) := by
   letI := algebraΓAlong k (redι Z)
   have := isIntegral_red hi
-  have : IsProper (strHom k (Scheme.IdealSheafData.vanishingIdeal Z).subscheme) := by
+  have : IsProper (strHom k (X := (Scheme.IdealSheafData.vanishingIdeal Z).subscheme)) := by
     rw [← comp_strHom (appTop_algebraMap_along k (redι Z))]
     infer_instance
   have hH' := hH.pull_of_isClosedImmersion (redι Z)
@@ -126,7 +126,7 @@ theorem exists_hasNonzeroSec [IsProper (strHom k X)] (hH : IsAmpleLB H) (hM : M.
     exact (lineBundleGlobalSectionsDim_pos_iff (finite_coh_zero_twist_of_isProjOver (algebraMap_eq_strHom k _) hproj (LB.isLB_triv _))).2
       (isGenerated_triv _).hasNonzeroSec
 
-theorem isNef_pull {E : Type} [Field E] [Algebra E Γ(Y, ⊤)] [IsProper (strHom k X)] (h : IsNef k L)
+theorem isNef_pull {E : Type} [Field E] [Algebra E Γ(Y, ⊤)] [IsProper (strHom k (X := X))] (h : IsNef k L)
     (hH : IsAmpleLB H) {H' : LB Y} (hH' : IsAmpleLB H') (g : Y ⟶ X) (hg : IsClosedMap g) : IsNef E (L.pull g) := by
   have hL := LB.isLB_pull h.isLB g
   have hA := LB.isLB_pull hH.isLB g
@@ -219,7 +219,7 @@ theorem isNef_baseChange (hf : IsProjOver f) {L : LB X} :
   intro h
   have := isFinite_proj H
   obtain ⟨hp, A, hA⟩ := (isProjOver_iff_isProper_and_exists_isAmpleLB f).1 hf
-  have : IsProper (strHom k X) := by rwa [strHom_eq (f := f) fun _ => rfl]
+  have : IsProper (strHom k (X := X)) := by rwa [strHom_eq (f := f) fun _ => rfl]
   exact isNef_pull h hA (hA.pull_of_isAffineHom π) π π.isClosedMap
 
 theorem isBig_baseChange (hf : IsProjOver f) {L : LB X} :

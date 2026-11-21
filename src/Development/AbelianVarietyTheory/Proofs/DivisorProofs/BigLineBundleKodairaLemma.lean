@@ -55,7 +55,7 @@ open GlobalTheory.QuotSep
 theorem exists_nsmul_cls_eq_add_toPic_of_isBig : ∀ (k : Type) [Field k] [Infinite k] (X : Scheme.{0}) [IsIntegral X] (p : X ⟶ Sp k), IsProjOver p → ∀ (M A : LB X) (hM : letI := algebraΓOfHom p; IsBig k M) (hA : IsAmpleLB A), ∃ (a : ℕ) (D : CartierDiv X), 0 < a ∧ D.Eff ∧ a • cls M (letI := algebraΓOfHom p; hM.isLB) = cls A hA.isLB + toPic D := by
   intro k _ _ X _ p hp M A hM hA
   letI := algebraΓOfHom p
-  have hp' : IsProjOver (strHom k X) := by rwa [strHom_eq (f := p) fun _ => rfl]
+  have hp' : IsProjOver (strHom k (X := X)) := by rwa [strHom_eq (f := p) fun _ => rfl]
   have := isNoetherian_of_isProjOver hp'
   suffices h : ∃ a : ℕ, 0 < a ∧ ∃ (N : LB X) (hN : N.IsLB),
       cls N hN = a • cls M hM.isLB - cls A hA.isLB ∧ HasNonzeroSec N by

@@ -92,7 +92,7 @@ theorem genRank_pushforward {Z Z' : Scheme.{0}} [IsIntegral Z] [IsIntegral Z'] (
   rw [h1, e.finrank_eq, finrank_app_eq_residueDegree f h hU hx']
 
 theorem interNumOn_eq_residueDegree_mul : ∀ (κ : Type) [Field κ] (Z Z' : Scheme.{0}) [IsIntegral Z]
-    [IsIntegral Z'] [Algebra κ Γ(Z, ⊤)] (f : Z' ⟶ Z) [IsFinite f], IsProjOver (strHom κ Z) →
+    [IsIntegral Z'] [Algebra κ Γ(Z, ⊤)] (f : Z' ⟶ Z) [IsFinite f], IsProjOver (strHom κ (X := Z)) →
     topologicalKrullDim Z = 1 → f (genericPoint Z') = genericPoint Z → ∀ N : LB Z, N.IsLB →
     interNumOn κ f ![N] = (f.residueDegree (genericPoint Z') : ℤ) *
       interNum κ (structureModule Z) ![N] := by

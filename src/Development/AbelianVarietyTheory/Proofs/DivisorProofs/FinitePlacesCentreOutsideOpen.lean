@@ -45,7 +45,7 @@ theorem finite_centre_not_mem (k K E : Type) [Field k] [IsAlgClosed k] [CharZero
   obtain ⟨ev1, ev2, -, -, ev5, ev6, -⟩ := GlobalTheory.T.evalSectionAtRingPoint_spMap_comp_restrict_stalk
   let f : Γ(C, V') →+* E := (algebraMap K E).comp (evAt x hxV')
   haveI := hC.1
-  haveI : Smooth (strHom k C) := SmoothOfRelativeDimension.smooth 1 _
+  haveI : Smooth (strHom k (X := C)) := SmoothOfRelativeDimension.smooth 1 _
   have eV : V' ≤ strHom k C ⁻¹ᵁ ⊤ := fun _ _ => trivial
   let ψ := ((strHom k C).appLE ⊤ V' eV).hom
   have hft : ψ.FiniteType :=

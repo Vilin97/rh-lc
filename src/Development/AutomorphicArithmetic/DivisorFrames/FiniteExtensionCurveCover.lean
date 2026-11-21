@@ -185,8 +185,8 @@ theorem UpperTheory.finite_extension_curve_cover :
   obtain ⟨hs, hp, hg⟩ := hC
   haveI : IsIntegral C := LieSemineg.isIntegral_curve hs hg
   have hdC : topologicalKrullDim C = 1 := LieSemineg.dim_curve hs
-  haveI : IsProper (strHom k C) := isProper_of_proj hp
-  haveI : Smooth (strHom k C) := hs.smooth
+  haveI : IsProper (strHom k (X := C)) := isProper_of_proj hp
+  haveI : Smooth (strHom k (X := C)) := hs.smooth
   let f : Sp K' ⟶ C := spMap (algebraMap K K') ≫ x
   haveI : QuasiCompact f := QuasiCompact.of_comp f (strHom k C)
   haveI : QuasiSeparated f := QuasiSeparated.of_comp f (strHom k C)
@@ -222,14 +222,14 @@ theorem UpperTheory.finite_extension_curve_cover :
   have hdim : topologicalKrullDim f.normalization = 1 :=
     ((Published.dim_le_of_isIntegralHom π).antisymm
       (PosBaseChange.dim_le_of_isClosedMap π.isClosedMap hsurj)).trans hdC
-  haveI : LocallyOfFiniteType (strHom k f.normalization) := hstr ▸ inferInstance
-  haveI : IsProper (strHom k f.normalization) := hstr ▸ inferInstance
+  haveI : LocallyOfFiniteType (strHom k (X := f.normalization)) := hstr ▸ inferInstance
+  haveI : IsProper (strHom k (X := f.normalization)) := hstr ▸ inferInstance
   haveI : IsLocallyNoetherian f.normalization :=
     LocallyOfFiniteType.isLocallyNoetherian (strHom k f.normalization)
   haveI : IsIntegral f.normalization := inferInstance
   haveI : GlobalTheory.IsNormalScheme f.normalization := inferInstance
   have hD := isDedekind_of_normal f.normalization hdim.le
-  haveI : Smooth (strHom k f.normalization) :=
+  haveI : Smooth (strHom k (X := f.normalization)) :=
     CurveThrough.smooth_of_dedekind_charts k _ _ hD
   refine ⟨f.normalization, inferInstance, π, x', ⟨?_, ?_, ?_⟩, hx', hstr, hπ, ⟨hsurj⟩,
     f.toNormalization_fromNormalization⟩

@@ -83,7 +83,7 @@ theorem exists_effCartier_compl (X : Scheme.{0}) [IsReduced X] (U : X.Opens) (hU
   rfl
 
 theorem tendsto_zero_of_dim_lt (h : GlobalTheory.Published.NefRiemannRoch) {k : Type} [Field k] {X : Scheme.{0}} [Algebra k Γ(X, ⊤)]
-    (hp : IsProjOver (strHom k X)) {D : ℕ} (hD : topologicalKrullDim X + 1 ≤ D) {L : LB X} (hL : IsNef k L) :
+    (hp : IsProjOver (strHom k (X := X))) {D : ℕ} (hD : topologicalKrullDim X + 1 ≤ D) {L : LB X} (hL : IsNef k L) :
     Tendsto (fun m : ℕ => (lbH0 k (lbPow L m) : ℝ) / (m : ℝ) ^ D) atTop (nhds 0) := by
   rcases isEmpty_or_nonempty X with hX | hX
   · refine tendsto_const_nhds.congr fun m => ?_

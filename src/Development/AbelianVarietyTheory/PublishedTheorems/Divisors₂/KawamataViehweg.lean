@@ -20,7 +20,7 @@ namespace GlobalTheory.Published
 def KawamataViehweg : Prop :=
   ∀ (k : Type) [Field k] [IsAlgClosed k] [CharZero k] (X : Scheme.{0}) [Algebra k Γ(X, ⊤)]
     [IsIntegral X] (D : ℕ) [SmoothOfRelativeDimension D (strHom k X)],
-    IsProjOver (strHom k X) →
+    IsProjOver (strHom k (X := X)) →
     ∀ (K : CanonLB (strHom k X) D) (N : LB X), IsNef k N → IsBig k N →
       ∀ q : ℕ, 0 < q → Subsingleton (coh (LB.toMod (tens K.bundle N)) q)
 

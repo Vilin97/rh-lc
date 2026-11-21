@@ -26,7 +26,7 @@ theorem centre_place : ∀ (k K : Type) [Field k] [IsAlgClosed k] [CharZero k] [
   obtain ⟨hC, hg, hstr⟩ := hx
   haveI : IsIntegral C := GlobalTheory.LieSemineg.isIntegral_curve hC.1 hC.2.2
   haveI := hC.1
-  haveI : Smooth (strHom k C) := SmoothOfRelativeDimension.smooth 1 _
+  haveI : Smooth (strHom k (X := C)) := SmoothOfRelativeDimension.smooth 1 _
   haveI : GlobalTheory.IsNormalScheme C := isNormalScheme_of_smooth (strHom k C)
   haveI : IsLocallyNoetherian C := LocallyOfFiniteType.isLocallyNoetherian (strHom k C)
   haveI := hg.2

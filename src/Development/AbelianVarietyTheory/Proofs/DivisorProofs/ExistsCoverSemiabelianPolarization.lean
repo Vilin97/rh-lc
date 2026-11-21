@@ -211,7 +211,7 @@ private theorem isCurve_of_isSmoothProjCurve {k : Type} [Field k] [IsAlgClosed k
     (h : IsSmoothProjCurve k C) : IsCurve k C := by
   have := h.isIntegral
   have := h.smooth
-  have : LocallyOfFiniteType (strHom k C) := inferInstance
+  have : LocallyOfFiniteType (strHom k (X := C)) := inferInstance
   refine ⟨NefCurveTest.smoothOfRelativeDimension_one _ h.dim_eq, h.isProjOver, ?_⟩
   exact geometricallyConnected_of_isAlgClosed _
 
@@ -266,8 +266,8 @@ private theorem goodCover_of_cover {k : Type} [Field k] [IsAlgClosed k] {C₀ C�
       ∃ (m : Fin n) (g₀ : Over.mk p ⟶ Z m) (w : Over.mk p ⟶ G₀), ⊤ ≤ w.left ⁻¹ᵁ W ∧ y = (g₀ ≫ z m) * w)
     (hrat : ∀ m, RatOver ((Over.pullback π).obj (Z m)) x₁) : GoodCover u₁ := by
   intro g
-  have hs : SmoothOfRelativeDimension 1 (strHom k C₁) := hC₁.1
-  have : Smooth (strHom k C₁) := SmoothOfRelativeDimension.smooth 1 _
+  have hs : SmoothOfRelativeDimension 1 (strHom k (X := C₁)) := hC₁.1
+  have : Smooth (strHom k (X := C₁)) := SmoothOfRelativeDimension.smooth 1 _
   let s₁ := G₁.hom ≫ strHom k C₁
   have : LocallyOfFiniteType s₁ := inferInstance
   have : JacobsonSpace G₁.left := LocallyOfFiniteType.jacobsonSpace s₁

@@ -25,22 +25,22 @@ open GlobalTheory GlobalTheory.QCoh GlobalTheory.CechPic GlobalTheory.Twist
 namespace GlobalTheory
 
 theorem IsNef.isPsEff_pull_red_of_dim_le (k : Type) [Field k] [Infinite k] (d : ℕ)
-    (H : ∀ (Y : Scheme.{0}) [Algebra k Γ(Y, ⊤)], IsProjOver (strHom k Y) →
+    (H : ∀ (Y : Scheme.{0}) [Algebra k Γ(Y, ⊤)], IsProjOver (strHom k (X := Y)) →
       topologicalKrullDim Y ≤ (d : ℕ) → ∀ A N : LB Y, IsAmpleLB A → IsNef k N →
         IsAmpleLB (CechPic.tens A N))
-    (X : Scheme.{0}) [Algebra k Γ(X, ⊤)] (hX : IsProjOver (strHom k X)) (M : LB X)
+    (X : Scheme.{0}) [Algebra k Γ(X, ⊤)] (hX : IsProjOver (strHom k (X := X))) (M : LB X)
     (hM : IsNef k M) (Z : Closeds X) (hZ : IsIrreducible (Z : Set X))
     (hd : topologicalKrullDim (Z : Set X) ≤ (d : ℕ)) : IsPsEff (M.pull (redι Z)) := by
   letI := algebraΓAlong k (redι Z)
   have := isIntegral_red hZ
   obtain ⟨B, hB⟩ := exists_isAmpleLB_of_isProjOver hX
-  have : IsProper (strHom k X) := by
+  have : IsProper (strHom k (X := X)) := by
     obtain ⟨N, i, hi, e⟩ := hX
     have := isProper_str k N
     rw [← e]
     infer_instance
   have hA := hB.pull_of_isClosedImmersion (redι Z)
-  have : IsProper (strHom k (Scheme.IdealSheafData.vanishingIdeal Z).subscheme) := by
+  have : IsProper (strHom k (X := (Scheme.IdealSheafData.vanishingIdeal Z).subscheme)) := by
     rw [← comp_strHom (appTop_algebraMap_along k (redι Z))]
     infer_instance
   have hN := hM.pull_of_isClosedImmersion (redι Z) (appTop_algebraMap_along k (redι Z))

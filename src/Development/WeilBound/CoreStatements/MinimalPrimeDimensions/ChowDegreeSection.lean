@@ -173,7 +173,7 @@ theorem stVert (h1 : StPts) (h2 : StPull) (h3 : StDiv) : StVert := by
   have hsurj : Function.Surjective (algebraMap (𝓞 K) κ) :=
     v.asIdeal.algebraMap_residueField_surjective
   have hEκ : Emb (strHom κ Z) s := V.emb_base hπ hE
-  have hPκ : IsProjOver (strHom κ Z) := isProjOver_of_surjective_base hsurj (V.eq_comp_spMap hπ) hP
+  have hPκ : IsProjOver (strHom κ (X := Z)) := isProjOver_of_surjective_base hsurj (V.eq_comp_spMap hπ) hP
   have hred : reduceMod v (ptIdeal p s (genericPoint Z)) = ptIdeal (strHom κ Z) s (genericPoint Z) := by
     rw [V.ptIdeal_base hπ]
     exact Ideal.map_comap_of_surjective _ (MvPolynomial.map_surjective _ hsurj) _

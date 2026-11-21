@@ -79,7 +79,7 @@ theorem pos_of_bound {h : ℕ → ℕ} {d C m₀ : ℕ} {a : ℤ} {c : ℝ} (hc 
     nlinarith [h6, hreal, h7, h8]
 
 theorem topSelf_pos : ∀ (k : Type) [Field k] [Infinite k] (X : Scheme.{0}) [IsIntegral X]
-    [Algebra k Γ(X, ⊤)], IsProjOver (strHom k X) → ∀ d : ℕ, topologicalKrullDim X = (d : ℕ) →
+    [Algebra k Γ(X, ⊤)], IsProjOver (strHom k (X := X)) → ∀ d : ℕ, topologicalKrullDim X = (d : ℕ) →
     ∀ A : LB X, IsAmpleLB A → 0 < topSelfIntersection k A d := by
   intro k _ _ X _ _ hp d hd A hA
   obtain ⟨D, hD, c, hc, hf⟩ := (IsAmpleLB.isBig k X hp A hA).growth

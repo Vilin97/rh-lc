@@ -57,8 +57,8 @@ theorem isNef_of_pull : ∀ (F : Type) [Field F] [NumberField F] (Y X : Scheme.{
   have hnef' : IsNef F L' := hnef
   obtain ⟨hPX, A, hA⟩ := (isProjOver_iff_isProper_and_exists_isAmpleLB sX).1 hX
   obtain ⟨hPY, A', hA'⟩ := (isProjOver_iff_isProper_and_exists_isAmpleLB p).1 hY
-  have : IsProper (strHom F X) := by rwa [strHom_eq (f := sX) fun _ => rfl]
-  have : IsProper (strHom F Y) := by rwa [strHom_eq (f := p) fun _ => rfl]
+  have : IsProper (strHom F (X := X)) := by rwa [strHom_eq (f := sX) fun _ => rfl]
+  have : IsProper (strHom F (X := Y)) := by rwa [strHom_eq (f := p) fun _ => rfl]
   refine ⟨hL, fun Z hZ => ?_⟩
   obtain ⟨C, hCi, hCd, hCZ⟩ := exists_curve_over F Y X π sX p hπ hX hY hs Z hZ.1 hZ.2
   have hC : IsCompleteCurve F C := (isCompleteCurve_iff (f := p) (fun _ => rfl)).2 ⟨hCi, hCd⟩

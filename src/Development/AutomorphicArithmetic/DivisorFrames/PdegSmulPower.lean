@@ -18,7 +18,7 @@ open scoped Classical
 private theorem isProper_strHom_of_not_mem_gen {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     (p : ℕ) [Fact p.Prime] [CharP (ResidueField O) p] [Finite (ResidueField O)] (B : Vert.Model O)
     {Z : Scheme.{0}} (i : Z ⟶ B.X) [IsClosedImmersion i] [IsIntegral Z] [Algebra (ZMod p) Γ(Z, ⊤)]
-    (h : i (genericPoint Z) ∉ B.gen) : IsProper (strHom (ZMod p) Z) := by
+    (h : i (genericPoint Z) ∉ B.gen) : IsProper (strHom (ZMod p) (X := Z)) := by
   let φ : O →+* Γ(Z, ⊤) := ((Scheme.ΓSpecIso (.of O)).inv ≫ (i ≫ B.str).appTop).hom
   have hφ : ∀ a ∈ maximalIdeal O, φ a = 0 := fun a ha => by
     have e : φ a = i.appTop (B.const a) := by

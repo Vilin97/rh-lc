@@ -24,10 +24,10 @@ theorem num_cons_eq_mul_of_supp_eq_range : ∀ (F : Type) [Field F] (Y : Var F) 
   intro F _ Y W hW Θ hΘ hsupp
   letI := algebraΓOfHom (W.p₁ ≫ Y.str)
   have hstr : strHom F W.Z = W.p₁ ≫ Y.str := GlobalTheory.strHom_eq fun _ => rfl
-  have hp : IsProjOver (strHom F W.Z) := hstr ▸ W.proj
+  have hp : IsProjOver (strHom F (X := W.Z)) := hstr ▸ W.proj
   have : IsLocallyNoetherian W.Z := by
     obtain ⟨N, ι, _, h⟩ := hp
-    have : LocallyOfFiniteType (strHom F W.Z) := h ▸ inferInstance
+    have : LocallyOfFiniteType (strHom F (X := W.Z)) := h ▸ inferInstance
     exact LocallyOfFiniteType.isLocallyNoetherian (strHom F W.Z)
   obtain ⟨s, hs, e⟩ := GlobalTheory.RatSecCycle.exists_sec_divOfSec_eq Θ hΘ
   set η := genericPoint Y.X

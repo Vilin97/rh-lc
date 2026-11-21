@@ -38,7 +38,7 @@ theorem semiNeg_descends_baseChange : ∀ (k : Type) [Field k] (C : Scheme.{0}) 
     have : IsProper f := by
       obtain ⟨N, j, hj, e⟩ := h2
       have := isProper_str k N
-      change IsProper (strHom k C)
+      change IsProper (strHom k (X := C))
       rw [← e]
       infer_instance
     have hinst : (‹Algebra k Γ(C, ⊤)›) = algebraΓOfHom f :=

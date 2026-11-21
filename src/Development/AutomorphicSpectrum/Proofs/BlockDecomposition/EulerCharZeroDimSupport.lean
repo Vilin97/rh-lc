@@ -24,11 +24,11 @@ open GlobalTheory.CompanionTheory.KoszulCount
 namespace GlobalTheory.CompanionTheory.KoszulCount
 
 theorem interNumRed_eq_one_of_eq_singleton {K : Type} [Field K] [IsAlgClosed K] {X : Scheme.{0}}
-    [Algebra K Γ(X, ⊤)] (hp : IsProjOver (strHom K X)) (Z : Closeds X) {w : X}
+    [Algebra K Γ(X, ⊤)] (hp : IsProjOver (strHom K (X := X))) (Z : Closeds X) {w : X}
     (hZ : (Z : Set X) = {w}) (P : Fin 0 → LB X) : interNumRed K Z P = 1 := by
   letI := algebraΓAlong K (redι Z)
   have hk := appTop_algebraMap_along K (redι Z)
-  have hX : IsProper (strHom K X) := (isProper_and_exists_isAmpleLB_of_isProjOver hp).1
+  have hX : IsProper (strHom K (X := X)) := (isProper_and_exists_isAmpleLB_of_isProjOver hp).1
   have hrange : Set.range (redι Z) = {w} := (range_redι Z).trans hZ
 
   have hsub : Subsingleton (Scheme.IdealSheafData.vanishingIdeal Z).subscheme := by
@@ -54,7 +54,7 @@ theorem interNumRed_eq_one_of_eq_singleton {K : Type} [Field K] [IsAlgClosed K] 
   haveI : Nonempty (Scheme.IdealSheafData.vanishingIdeal Z).subscheme := ⟨p⟩
   haveI : IsIntegral (Scheme.IdealSheafData.vanishingIdeal Z).subscheme :=
     isIntegral_red (hZ ▸ isIrreducible_singleton)
-  have hpr : IsProper (strHom K (Scheme.IdealSheafData.vanishingIdeal Z).subscheme) := by
+  have hpr : IsProper (strHom K (X := (Scheme.IdealSheafData.vanishingIdeal Z).subscheme)) := by
     rw [← comp_strHom hk]
     infer_instance
   haveI : IsFinite (strHom K (Scheme.IdealSheafData.vanishingIdeal Z).subscheme) :=
@@ -84,7 +84,7 @@ theorem interNumRed_eq_one_of_eq_singleton {K : Type} [Field K] [IsAlgClosed K] 
   rw [← e2]
   simp
 
-theorem chi_eq_ncard_support : ∀ {K : Type} [Field K] [IsAlgClosed K] {X : Scheme.{0}} [Algebra K Γ(X, ⊤)], IsProjOver (strHom K X) → ∀ (F : X.Modules) [IsFiniteQC F], suppDim F ≤ (0 : ℕ) → (∀ x : X, Module.length (X.presheaf.stalk x) (F.presheaf.stalk x :) ≤ 1) → chi K F = ((support F).ncard : ℤ) ∧ ∀ x ∈ support F, IsClosed ({x} : Set X) := by
+theorem chi_eq_ncard_support : ∀ {K : Type} [Field K] [IsAlgClosed K] {X : Scheme.{0}} [Algebra K Γ(X, ⊤)], IsProjOver (strHom K (X := X)) → ∀ (F : X.Modules) [IsFiniteQC F], suppDim F ≤ (0 : ℕ) → (∀ x : X, Module.length (X.presheaf.stalk x) (F.presheaf.stalk x :) ≤ 1) → chi K F = ((support F).ncard : ℤ) ∧ ∀ x ∈ support F, IsClosed ({x} : Set X) := by
   intro K _ _ X _ hp F _ hd hlen
   haveI : AlgebraicGeometry.IsNoetherian X := isNoetherian_of_isProjOver hp
   have hdim0 : ∀ w ∈ support F,

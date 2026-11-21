@@ -80,8 +80,8 @@ theorem vanishFrom_adj : Quoted → ∀ (K : Type) [Field K] [NumberField K] (G 
   obtain ⟨hprop, A₀, hA₀⟩ := (isProjOver_iff_isProper_and_exists_isAmpleLB _).1 hV.proj
   haveI := hprop
   have hstr : strHom K G.Y = G.str := strHom_eq fun _ => rfl
-  have hproj : IsProjOver (strHom K G.Y) := hstr ▸ hV.proj
-  haveI : IsProper (strHom K G.Y) := hstr ▸ hprop
+  have hproj : IsProjOver (strHom K (X := G.Y)) := hstr ▸ hV.proj
+  haveI : IsProper (strHom K (X := G.Y)) := hstr ▸ hprop
 
   have hLnef : IsNef K G.L := IsGenerated.isNef_of_isProjOver (L := G.L) ⟨G.N, G.b, G.geom.alg.bpf⟩ hV.proj
   have hLj : IsNef K (lbPow G.L j) := hLnef.pow hA₀ j

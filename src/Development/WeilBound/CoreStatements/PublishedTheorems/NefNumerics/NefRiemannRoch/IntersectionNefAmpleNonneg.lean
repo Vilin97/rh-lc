@@ -26,14 +26,14 @@ open GlobalTheory GlobalTheory.QCoh GlobalTheory.CechPic GlobalTheory.Twist
 namespace GlobalTheory
 
 theorem interNum_cons_nef_ample_nonneg :
-    ∀ (k : Type) [Field k] [Infinite k] (X : Scheme.{0}) [Algebra k Γ(X, ⊤)], IsProjOver (strHom k X) → ∀ (d : ℕ) (F : X.Modules) [IsFiniteQC F], suppDim F ≤ (d + 1 : ℕ) → ∀ (N : LB X) (P : Fin d → LB X), IsNef k N → (∀ i, IsAmpleLB (P i)) → 0 ≤ interNum k F (Fin.cons N P : Fin (d + 1) → LB X) := by
+    ∀ (k : Type) [Field k] [Infinite k] (X : Scheme.{0}) [Algebra k Γ(X, ⊤)], IsProjOver (strHom k (X := X)) → ∀ (d : ℕ) (F : X.Modules) [IsFiniteQC F], suppDim F ≤ (d + 1 : ℕ) → ∀ (N : LB X) (P : Fin d → LB X), IsNef k N → (∀ i, IsAmpleLB (P i)) → 0 ≤ interNum k F (Fin.cons N P : Fin (d + 1) → LB X) := by
   intro k _ _ X _ hp d
   have hf := algebraMap_eq_strHom k X
   haveI := isNoetherian_of_isProjOver hp
   induction d with
   | zero =>
     intro F _ hF N P hN _
-    haveI : IsProper (strHom k X) := (isProper_and_exists_isAmpleLB_of_isProjOver hp).1
+    haveI : IsProper (strHom k (X := X)) := (isProper_and_exists_isAmpleLB_of_isProjOver hp).1
     have hN' := (isNef_iff hf).1 hN
     have e : (Fin.cons N P : Fin (0 + 1) → LB X) = ![N] := by
       ext i; fin_cases i; rfl

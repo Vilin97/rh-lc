@@ -127,7 +127,7 @@ theorem topSelf_le_growthOn : GlobalTheory.Published.NefNumerics → ∀ (E : Ty
   let S : LinSys c.F := ⟨Y₀ X Z, str₀ X Z, dimFlag Dw, L₀ X Z u, isLB_L₀ X Z u, 0, Fin.elim0⟩
   have hS : S.IsVariety := ⟨hV.1, hV.2.1, hV.2.2, hD⟩
   haveI : IsIntegral (Y₀ X Z) := hS.isIntegral
-  have hp : IsProjOver (strHom c.F (Y₀ X Z)) := by
+  have hp : IsProjOver (strHom c.F (X := (Y₀ X Z))) := by
     rw [strHom_eq (f := str₀ X Z) fun _ => rfl]
     exact hV.2.1
   have hdim : topologicalKrullDim (Y₀ X Z) = dimFlag Dw := ImageDegree.topologicalKrullDim_eq S hS

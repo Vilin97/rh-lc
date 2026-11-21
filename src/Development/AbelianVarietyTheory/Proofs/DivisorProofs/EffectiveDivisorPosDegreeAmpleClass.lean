@@ -72,10 +72,10 @@ theorem interNumRed_pos {K : Type} [Field K] (A : AbVar K) (n : ℕ) (hdim : A.d
   letI := A.algΓ
   obtain ⟨hint, hnoeth, -⟩ := isIntegral_isLocallyNoetherian_compactSpace K A
   obtain ⟨hstr, hproj⟩ := AbVarProj.strHom_eq_and_isProjOver K A
-  have hp : IsProjOver (strHom K A.X.left) := hstr ▸ hproj
+  have hp : IsProjOver (strHom K (X := A.X.left)) := hstr ▸ hproj
   have hX : topologicalKrullDim A.X.left = ((n + 1 : ℕ) : WithBot ℕ∞) := by
     rw [topologicalKrullDim_eq_dim, hdim]
-  have : LocallyOfFiniteType (strHom K A.X.left) := by
+  have : LocallyOfFiniteType (strHom K (X := A.X.left)) := by
     obtain ⟨N, j, _, h⟩ := hp
     exact h ▸ inferInstance
   set C : Closeds A.X.left := ⟨closure {w}, isClosed_closure⟩ with hC
@@ -97,7 +97,7 @@ theorem inter_cons_pos : ∀ (K : Type) [Field K] (A : AbVar K) (n : ℕ), A.dim
   letI := A.algΓ
   obtain ⟨hint, hnoeth, hcpt⟩ := isIntegral_isLocallyNoetherian_compactSpace K A
   obtain ⟨hstr, hproj⟩ := AbVarProj.strHom_eq_and_isProjOver K A
-  have hp : IsProjOver (strHom K A.X.left) := hstr ▸ hproj
+  have hp : IsProjOver (strHom K (X := A.X.left)) := hstr ▸ hproj
   have hX : topologicalKrullDim A.X.left = ((n + 1 : ℕ) : WithBot ℕ∞) := by
     rw [topologicalKrullDim_eq_dim, hdim]
   have hcons : ∀ j, ((Fin.cons M (fun _ : Fin n => L) : Fin (n + 1) → LB A.X.left) j).IsLB :=

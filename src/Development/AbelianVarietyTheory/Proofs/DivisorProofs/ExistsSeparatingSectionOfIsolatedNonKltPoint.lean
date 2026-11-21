@@ -40,7 +40,7 @@ theorem exists_sec_sep_of_lcCut : GlobalTheory.Published.NadelVanishingPair → 
     have e := Rat.num_div_den (ρ - d)
     rw [← ha, Int.cast_natCast] at e
     exact e.symm
-  have hpS : IsProjOver (strHom ℂ X) := by rwa [strHom_eq (f := p) fun _ => rfl]
+  have hpS : IsProjOver (strHom ℂ (X := X)) := by rwa [strHom_eq (f := p) fun _ => rfl]
   have hNa : IsAmpleLB (lbPow N a) := (isAmpleLB_pow_iff hN.isLB ha1).2 hN
   have hdeg' : ∀ C : Closeds X, IsCompleteCurve ℂ C → (interNumRed ℂ C ![M] : ℚ) =
       interNumRed ℂ C ![toLB (m' • G + m • D₀)] / ((m * m' : ℕ) : ℚ) +

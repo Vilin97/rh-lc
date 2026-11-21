@@ -26,7 +26,7 @@ theorem lbIso_pull_comp {X Y Z : Scheme.{0}} {L : LB X} (hL : L.IsLB) (a : Y ⟶
 
 theorem isProjOver_fibre {k : Type} [CommRing k] [Module.Finite ℤ k] {X : Scheme.{0}} {p : X ⟶ Sp k}
     (hp : IsProjOver p) (l : ℕ) [Fact l.Prime] {Z : Scheme.{0}} (i : Z ⟶ X) [IsClosedImmersion i]
-    [Algebra (ZMod l) Γ(Z, ⊤)] : IsProjOver (strHom (ZMod l) Z) := by
+    [Algebra (ZMod l) Γ(Z, ⊤)] : IsProjOver (strHom (ZMod l) (X := Z)) := by
   obtain ⟨N, e, he, -⟩ := hp
   have hb : IsFinite (spMap (Int.castRingHom k)) := by
     rw [spMap, IsFinite.SpecMap_iff]

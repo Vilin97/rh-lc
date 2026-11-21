@@ -131,9 +131,9 @@ theorem height_pull_vertical : ∀ (k : Type) [CommRing k] (X Y : Scheme.{0}) (p
     rw [← CharP.cast_eq_zero_iff Γ(clo y, ⊤) l n, ← map_natCast g.appTop.hom n,
       map_eq_zero_iff _ hinj]⟩
   letI instZ : Algebra (ZMod l) Γ(clo (π y), ⊤) := ZMod.algebra _ l
-  have hWp : IsProjOver (strHom (ZMod l) (clo y)) :=
+  have hWp : IsProjOver (strHom (ZMod l) (X := (clo y))) :=
     GlobalTheory.FibreProj.isProjOver_closed_fibre k Y q E hY (clo y) (cloι y) l
-  have hZp : IsProjOver (strHom (ZMod l) (clo (π y))) :=
+  have hZp : IsProjOver (strHom (ZMod l) (X := (clo (π y)))) :=
     GlobalTheory.FibreProj.isProjOver_closed_fibre k X p D hX (clo (π y)) (cloι (π y)) l
   have hgs : g ≫ strHom (ZMod l) (clo (π y)) = strHom (ZMod l) (clo y) :=
     comp_strHom fun r => congrFun (congrArg DFunLike.coe

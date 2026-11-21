@@ -49,7 +49,7 @@ theorem interNumRed_pull_curve {k : Type} [Field k] {M W : Scheme.{0}} (p : W �
   have hsW : strHom k W = p := strHom_eq (fun _ => rfl)
   have hsZ : strHom k (Scheme.IdealSheafData.vanishingIdeal C).subscheme = g ≫ p :=
     (strHom_eq (f := redι C ≫ f ≫ p) (fun _ => rfl)).trans (Category.assoc _ _ _).symm
-  have hpZ : IsProper (strHom k (Scheme.IdealSheafData.vanishingIdeal C).subscheme) := by
+  have hpZ : IsProper (strHom k (X := (Scheme.IdealSheafData.vanishingIdeal C).subscheme)) := by
     have := hC.isProper
     rw [hsM] at this
     rw [hsZ, Category.assoc]
@@ -107,8 +107,8 @@ theorem interNumRed_pull_curve {k : Type} [Field k] {M W : Scheme.{0}} (p : W �
       algebraMap k Γ((Scheme.IdealSheafData.vanishingIdeal C).subscheme, ⊤) r :=
     appTop_algebraΓOfHom φ (g.imageι ≫ p) (by rw [reassoc_of% e]; exact Category.assoc _ _ _)
   have hsI : strHom k g.image = g.imageι ≫ p := strHom_eq (fun _ => rfl)
-  have : IsProper (strHom k g.image) := by rw [hsI]; infer_instance
-  have hproj : IsProjOver (strHom k g.image) := ProperCurve.isProjOver_of_isProper _ hdZ
+  have : IsProper (strHom k (X := g.image)) := by rw [hsI]; infer_instance
+  have hproj : IsProjOver (strHom k (X := g.image)) := ProperCurve.isProjOver_of_isProper _ hdZ
   have : IsProper (g.imageι ≫ strHom k W) := by rw [hsW]; infer_instance
   refine ⟨⟨Set.range g.imageι, g.imageι.isClosedEmbedding.isClosed_range⟩,
     isCompleteCurve_range g.imageι hdZ, φ.residueDegree (genericPoint _), fun L hL => ?_⟩

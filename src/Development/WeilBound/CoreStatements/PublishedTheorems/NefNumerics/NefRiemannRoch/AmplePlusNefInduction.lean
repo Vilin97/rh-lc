@@ -40,7 +40,7 @@ theorem withBot_eq_succ_of_le_of_not_le {t : WithBot ℕ∞} {d : ℕ} (h1 : t �
       have : n = d + 1 := by omega
       subst this; rfl
 
-theorem isAmpleLB_tens_of_isNef_succ : ∀ (k : Type) [Field k] [Infinite k] (d : ℕ), (∀ (Y : Scheme.{0}) [Algebra k Γ(Y, ⊤)], IsProjOver (strHom k Y) → topologicalKrullDim Y ≤ (d : ℕ) → ∀ A N : LB Y, IsAmpleLB A → IsNef k N → IsAmpleLB (tens A N)) → (∀ (Y : Scheme.{0}) [Algebra k Γ(Y, ⊤)], IsProjOver (strHom k Y) → topologicalKrullDim Y ≤ (d + 1 : ℕ) → ∀ A N : LB Y, IsAmpleLB A → IsNef k N → IsAmpleLB (tens A N)) := by
+theorem isAmpleLB_tens_of_isNef_succ : ∀ (k : Type) [Field k] [Infinite k] (d : ℕ), (∀ (Y : Scheme.{0}) [Algebra k Γ(Y, ⊤)], IsProjOver (strHom k (X := Y)) → topologicalKrullDim Y ≤ (d : ℕ) → ∀ A N : LB Y, IsAmpleLB A → IsNef k N → IsAmpleLB (tens A N)) → (∀ (Y : Scheme.{0}) [Algebra k Γ(Y, ⊤)], IsProjOver (strHom k (X := Y)) → topologicalKrullDim Y ≤ (d + 1 : ℕ) → ∀ A N : LB Y, IsAmpleLB A → IsNef k N → IsAmpleLB (tens A N)) := by
   intro k _ _ d ih Y _ hproj hdimY A N hA hN
   refine IsAmpleLB.tens_of_forall_isPsEff k Y (strHom k Y) hproj A N hA hN.isLB ?_
   intro Z hZ
@@ -53,7 +53,7 @@ theorem isAmpleLB_tens_of_isNef_succ : ∀ (k : Type) [Field k] [Infinite k] (d 
   haveI hint : IsIntegral Z' := isIntegral_of_irreducibleSpace_of_isReduced Z'
   have hdim : topologicalKrullDim Z' ≤ topologicalKrullDim Y :=
     (redι Z).isClosedEmbedding.isInducing.topologicalKrullDim_le
-  have hpZ : IsProjOver (strHom k Z') := by
+  have hpZ : IsProjOver (strHom k (X := Z')) := by
     obtain ⟨n, i, hi, hcomp⟩ := hproj
     refine ⟨n, redι Z ≫ i, ?_, ?_⟩
     · exact IsClosedImmersion.comp _ _

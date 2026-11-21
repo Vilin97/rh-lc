@@ -39,7 +39,7 @@ theorem nef_pull (hN : GlobalTheory.Published.NefNumerics) {F E : Type} [Field F
   letI := algebraΓOfHom pY
   obtain ⟨hpp, A, hA⟩ := (isProjOver_iff_isProper_and_exists_isAmpleLB pX).1 hX
   obtain ⟨B, hB⟩ := exists_isAmpleLB_of_isProjOver hY
-  have : IsProper (strHom F X) := by rw [strHom_eq (f := pX) fun _ => rfl]; exact hpp
+  have : IsProper (strHom F (X := X)) := by rw [strHom_eq (f := pX) fun _ => rfl]; exact hpp
   exact NefFieldExt.isNef_pull hN hL hA hB g
 
 section Descent

@@ -92,7 +92,7 @@ private theorem diffVanish_pull {k : Type} [Field k] {X X' : Scheme.{0}} [IsLoca
       exact add_le_add_left hc 1
 
 private theorem interNum_pull_eq_zero {k : Type} [Field k] {X X' : Scheme.{0}} [IsLocallyNoetherian X]
-    [Algebra k Γ(X', ⊤)] (hp : IsProjOver (strHom k X')) (f : X' ⟶ X) {A : LB X} (hA : IsAmpleLB A) {n : ℕ}
+    [Algebra k Γ(X', ⊤)] (hp : IsProjOver (strHom k (X := X'))) (f : X' ⟶ X) {A : LB X} (hA : IsAmpleLB A) {n : ℕ}
     {S : Set X} (hS : IsClosed S) (hf : ∀ x, f x ∈ S) (hn : topologicalKrullDim S < n) {L : Fin n → LB X}
     (hL : ∀ i, (L i).IsLB) : interNum k (GlobalTheory.structureModule X') (fun i => (L i).pull f) = 0 := by
   have := isNoetherian_of_isProjOver hp
@@ -250,7 +250,7 @@ theorem UpperTheory.pullback_degree_of_line_bundles :
   have hp0 : (p : Γ(X, ⊤)) ≠ 0 := Nat.cast_ne_zero.2 hp.out.ne_zero
   have hp0' : (p : Γ(X', ⊤)) ≠ 0 := Nat.cast_ne_zero.2 hp.out.ne_zero
   have hproj : ∀ (Z : Scheme.{0}) (i : Z ⟶ X') [IsClosedImmersion i] [IsIntegral Z] [Algebra (ZMod p) Γ(Z, ⊤)],
-      i (genericPoint Z) = ζ → IsProjOver (strHom (ZMod p) Z) := fun Z i _ _ _ _ =>
+      i (genericPoint Z) = ζ → IsProjOver (strHom (ZMod p) (X := Z)) := fun Z i _ _ _ _ =>
     GlobalTheory.T.closed_subscheme_mod_l_projective _ _ _ _ hX' _ i p
   have : IsProper q := (isProper_and_exists_isAmpleLB_of_isProjOver hQ.isProjOver).1
   split_ifs with hη
@@ -265,7 +265,7 @@ theorem UpperTheory.pullback_degree_of_line_bundles :
     have : CharP Γ(Z, ⊤) p := (CharP.charP_iff_prime_eq_zero hp.out).2 hZl
     letI inst : Algebra (ZMod p) Γ(Z, ⊤) := ZMod.algebra _ p
     have hZ := hproj Z i hz
-    have : IsProper (strHom (ZMod p) Z) := (isProper_and_exists_isAmpleLB_of_isProjOver hZ).1
+    have : IsProper (strHom (ZMod p) (X := Z)) := (isProper_and_exists_isAmpleLB_of_isProjOver hZ).1
     have := isNoetherian_of_isProjOver hZ
     let γ := i ≫ g
     have : QuasiCompact γ := inferInstance
@@ -282,7 +282,7 @@ theorem UpperTheory.pullback_degree_of_line_bundles :
     have : CharP Γ(γ.image, ⊤) p := φ.appTop.hom.charP hinj p
     letI inst' : Algebra (ZMod p) Γ(γ.image, ⊤) := ZMod.algebra _ p
     have hZ' := GlobalTheory.T.closed_subscheme_mod_l_projective _ _ _ _ hQ _ γ.imageι p
-    have : IsProper (strHom (ZMod p) γ.image) := (isProper_and_exists_isAmpleLB_of_isProjOver hZ').1
+    have : IsProper (strHom (ZMod p) (X := γ.image)) := (isProper_and_exists_isAmpleLB_of_isProjOver hZ').1
     have hs : φ ≫ strHom (ZMod p) γ.image = strHom (ZMod p) Z := by
       letI := algebraΓOfHom (φ ≫ strHom (ZMod p) γ.image)
       refine (strHom_eq fun _ => rfl).symm.trans ?_

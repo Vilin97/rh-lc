@@ -47,7 +47,7 @@ private theorem exists_retr {R S K : Type} [CommRing R] [CommRing S] [Field K] [
 
 private theorem valuationRing_stalk {k : Type} [Field k] {C : Scheme.{0}} [Algebra k Γ(C, ⊤)] (h : IsCurve k C)
     [IsIntegral C] (c : C) : ValuationRing (C.presheaf.stalk c) := by
-  have : Smooth (strHom k C) := have := h.1; SmoothOfRelativeDimension.smooth 1 _
+  have : Smooth (strHom k (X := C)) := have := h.1; SmoothOfRelativeDimension.smooth 1 _
   have hn := (GlobalTheory.isNormalScheme_iff C).1 (GlobalTheory.isNormalScheme_of_smooth (strHom k C))
   have : IsLocallyNoetherian C := LocallyOfFiniteType.isLocallyNoetherian (strHom k C)
   have hd : ringKrullDim (C.presheaf.stalk c) ≤ 1 := by

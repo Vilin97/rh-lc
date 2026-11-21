@@ -28,7 +28,7 @@ namespace GlobalTheory.Published
 
 def SemiAbelianLieSeminegative : Prop :=
   ∀ (k : Type) [Field k] [CharZero k] (C : Scheme.{0}) [Algebra k Γ(C, ⊤)],
-    SmoothOfRelativeDimension 1 (strHom k C) → IsProjOver (strHom k C) → GeometricallyConnected (strHom k C) →
+    SmoothOfRelativeDimension 1 (strHom k (X := C)) → IsProjOver (strHom k (X := C)) → GeometricallyConnected (strHom k (X := C)) →
     ∀ (G : Over C) [GrpObj G] [IsSemiAbelian G] (W : C.Modules) (r : ℕ), IsVB W r →
       ∀ i : W ⟶ Lie G, Mono i → interNum k (structureModule C) ![det W r] ≤ 0
 
@@ -40,12 +40,12 @@ section Curve
 
 variable {k : Type} [Field k] {C : Scheme.{0}} [Algebra k Γ(C, ⊤)]
 
-theorem isIntegral_curve (hs : SmoothOfRelativeDimension 1 (strHom k C))
-    (hc : GeometricallyConnected (strHom k C)) : IsIntegral C :=
-  have : Smooth (strHom k C) := SmoothOfRelativeDimension.smooth 1 _
+theorem isIntegral_curve (hs : SmoothOfRelativeDimension 1 (strHom k (X := C)))
+    (hc : GeometricallyConnected (strHom k (X := C))) : IsIntegral C :=
+  have : Smooth (strHom k (X := C)) := SmoothOfRelativeDimension.smooth 1 _
   isIntegral_of_smooth_of_geometricallyConnected (strHom k C)
 
-theorem dim_curve [Nonempty C] (hs : SmoothOfRelativeDimension 1 (strHom k C)) : topologicalKrullDim C = 1 := by
+theorem dim_curve [Nonempty C] (hs : SmoothOfRelativeDimension 1 (strHom k (X := C))) : topologicalKrullDim C = 1 := by
   have key : topologicalKrullDim (Set.univ : Set C) = (1 : ℕ) := by
     refine topologicalKrullDim_eq_of_forall_exists_isOpen Set.univ_nonempty fun x _ => ?_
     obtain ⟨U, hU, hx, -⟩ := Opens.isBasis_iff_nbhd.1 C.isBasis_affineOpens (Opens.mem_top x)
@@ -56,7 +56,7 @@ theorem dim_curve [Nonempty C] (hs : SmoothOfRelativeDimension 1 (strHom k C)) :
       (SmoothDim.ringKrullDim_affineOpen k _ _ _ hs U hU ⟨x, hx⟩)
   exact (topologicalKrullDim_eq_of_isEmbedding (e := (id : C → C)) Topology.IsEmbedding.id Set.range_id).symm.trans key
 
-theorem interNum_det_dual (hp : IsProjOver (strHom k C)) (hd : topologicalKrullDim C = 1) {W : C.Modules} {r : ℕ}
+theorem interNum_det_dual (hp : IsProjOver (strHom k (X := C))) (hd : topologicalKrullDim C = 1) {W : C.Modules} {r : ℕ}
     (hW : IsVB W r) : interNum k (structureModule C) ![det (VB.dual W) r] =
       -interNum k (structureModule C) ![det W r] := by
   obtain ⟨_, H, hH⟩ := isProper_and_exists_isAmpleLB_of_isProjOver hp
@@ -94,8 +94,8 @@ namespace GlobalTheory.Published.SemiAbelianLieSeminegative
 open GlobalTheory.LieSemineg
 
 variable (h : SemiAbelianLieSeminegative) {k : Type} [Field k] [CharZero k] {C : Scheme.{0}} [Algebra k Γ(C, ⊤)]
-  (hs : SmoothOfRelativeDimension 1 (strHom k C)) (hp : IsProjOver (strHom k C))
-  (hc : GeometricallyConnected (strHom k C)) (G : Over C) [GrpObj G] [IsSemiAbelian G]
+  (hs : SmoothOfRelativeDimension 1 (strHom k (X := C))) (hp : IsProjOver (strHom k (X := C)))
+  (hc : GeometricallyConnected (strHom k (X := C))) (G : Over C) [GrpObj G] [IsSemiAbelian G]
 
 include h hs hp hc
 

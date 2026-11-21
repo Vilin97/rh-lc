@@ -39,7 +39,7 @@ theorem key (p : ℕ) [Fact p.Prime] {m : ℕ} {n : Fin (m + 1) → ℕ} (a : Fi
     exact GlobalTheory.T.euler_characteristic_dimension_zero m n Z f p hd _
   | succ d ih =>
     intro Z _ f _ _ hd L hL hc
-    have hp : IsProjOver (strHom (ZMod p) Z) :=
+    have hp : IsProjOver (strHom (ZMod p) (X := Z)) :=
       VertProj.isProjOver_strHom_zmod ℤ _ (mpStr ℤ m n) _ (isArithVar_mpStr m n) Z f p
     have hf := algebraMap_eq_strHom (ZMod p) Z
     have : AlgebraicGeometry.IsNoetherian Z := isNoetherian_of_isProjOver hp

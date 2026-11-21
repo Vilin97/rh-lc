@@ -21,7 +21,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.NeronCurve
 
 def IsCurve (k : Type) [Field k] (C : Scheme.{0}) [Algebra k Γ(C, ⊤)] : Prop :=
-  SmoothOfRelativeDimension 1 (strHom k C) ∧ IsProjOver (strHom k C) ∧ GeometricallyConnected (strHom k C)
+  SmoothOfRelativeDimension 1 (strHom k (X := C)) ∧ IsProjOver (strHom k (X := C)) ∧ GeometricallyConnected (strHom k (X := C))
 
 def SemiNeg (k : Type) [Field k] {C : Scheme.{0}} [Algebra k Γ(C, ⊤)] (F : C.Modules) : Prop :=
   ∀ (W : C.Modules) (r : ℕ), IsVB W r → ∀ i : W ⟶ F, Mono i → interNum k (structureModule C) ![det W r] ≤ 0

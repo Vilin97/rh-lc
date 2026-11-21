@@ -61,7 +61,7 @@ theorem hodge_bundle_nef_and_big : _root_.GlobalTheory.CovTop.Hypotheses'' → G
   have hf₀ : ∀ r : c.F, algebraMap c.F Γ(Y₀ TF.X Z, ⊤) r =
       (str₀ TF.X Z).appTop ((Scheme.ΓSpecIso (.of c.F)).inv r) := fun _ => rfl
   have hs₀ : strHom c.F (Y₀ TF.X Z) = str₀ TF.X Z := strHom_eq hf₀
-  have hp₀ : IsProjOver (strHom c.F (Y₀ TF.X Z)) := hs₀ ▸ hpr
+  have hp₀ : IsProjOver (strHom c.F (X := (Y₀ TF.X Z))) := hs₀ ▸ hpr
   obtain ⟨hprop₀, H₀, hH₀⟩ := (isProjOver_iff_isProper_and_exists_isAmpleLB _).1 hpr
   have nef : ∀ w : AllWt.Weight Dw, GapGe 0 w → IsNef c.F (L₀ TF.X Z w) :=
     fun w hw => _root_.GlobalTheory.T.base_weight_line_bundle_is_nef hP hN hL E H Dw l Xo c TF Z hF w hw
@@ -101,7 +101,7 @@ theorem hodge_bundle_nef_and_big : _root_.GlobalTheory.CovTop.Hypotheses'' → G
       (fun j => finite_coh_zero_twist_of_isProjOver hf₀ hpr (isLB_lbPow (isLB_L₀ TF.X Z la) j))
   have bigpull : ∀ (k : Type) [Field k] (X Y : Scheme.{0}) [IsIntegral X] (p : X ⟶ Sp k) (g : Y ⟶ X), IsProjOver (g ≫ p) → topologicalKrullDim Y = topologicalKrullDim X → Dense (Set.range g) → ∀ N : LB X, (letI := algebraΓOfHom p; IsBig k N) → (letI := algebraΓOfHom (g ≫ p); IsBig k (N.pull g)) := fun k _ X Y _ p g hp hd hg N hN => GlobalTheory.BigPull.isBig_pull k X Y p g hp hd hg N hN
   obtain ⟨hprop₁, H₁, hH₁⟩ := (isProjOver_iff_isProper_and_exists_isAmpleLB _).1 R.proj
-  haveI : IsProper (strHom c.F (Y₀ TF.X Z)) := hs₀ ▸ hprop₀
+  haveI : IsProper (strHom c.F (X := (Y₀ TF.X Z))) := hs₀ ▸ hprop₀
   haveI : IsProper (R.σ ≫ str₀ TF.X Z) := hprop₁
   haveI : IsProper R.σ := IsProper.of_comp R.σ (str₀ TF.X Z)
   have hcl : IsClosedMap R.σ := Scheme.Hom.isClosedMap R.σ

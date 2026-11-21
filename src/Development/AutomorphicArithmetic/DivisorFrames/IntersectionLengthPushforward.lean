@@ -69,7 +69,7 @@ theorem UpperTheory.intersection_length_pushforward :
     refine (Category.assoc _ _ _).trans ((congrArg (Z.toSpecΓ ≫ ·)
       ((Spec.map_comp _ _).symm.trans (congrArg Spec.map e))).trans ?_)
     rw [Spec.map_comp, ← Scheme.toSpecΓ_naturality_assoc, toSpecΓ_SpecMap_ΓSpecIso_inv, Category.comp_id]
-  have hp : IsProjOver (strHom (ResidueField O) Z) :=
+  have hp : IsProjOver (strHom (ResidueField O) (X := Z)) :=
     RegCoverExists.isProjOver_of_comp_spMap (residue O)
       (h₁ ▸ ProjSpace.isProjOver_comp_of_isClosedImmersion i B.isProjOver)
   have hL' : ∀ j, ((L j).pull i).IsLB := fun j => LB.isLB_pull (hL j) i

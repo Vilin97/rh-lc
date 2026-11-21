@@ -41,7 +41,7 @@ theorem UpperTheory.smooth_point_quasi_finite_neighbourhood :
         ∀ (G : Over C), Smooth G.hom → ∀ p : Sp k ⟶ C, p ≫ strHom k C = 𝟙 _ → ∀ g : Over.mk p ⟶ G,
         ∃ (Z : Over C) (z : Z ⟶ G) (g₀ : Over.mk p ⟶ Z), QFin Z ∧ g₀ ≫ z = g := by
   intro k _ _ C _ hC G hG p hp g
-  have : Smooth (strHom k C) := have := hC.1; SmoothOfRelativeDimension.smooth 1 _
+  have : Smooth (strHom k (X := C)) := have := hC.1; SmoothOfRelativeDimension.smooth 1 _
   have : IsLocallyNoetherian C := LocallyOfFiniteType.isLocallyNoetherian (strHom k C)
   let g₁ : Spec (.of k) ⟶ G.left := g.left
   have hg₁ : g₁ ≫ G.hom = p := Over.w g

@@ -41,7 +41,7 @@ theorem isBig_of_smul_cls_eq_add_ampleAt : GlobalTheory.Published.NefNumerics �
   intro N N₁ N₂ hN h₁ h₂ a x _ ha e hx hn₂
   have hf : ∀ r, algebraMap k Γ(X, ⊤) r = q.appTop ((Scheme.ΓSpecIso (.of k)).inv r) :=
     algebraΓOfHom_algebraMap q
-  have hp : IsProjOver (strHom k X) := (strHom_eq hf) ▸ hq
+  have hp : IsProjOver (strHom k (X := X)) := (strHom_eq hf) ▸ hq
   obtain ⟨m, A, s, hm, hA, hAmp, hxs⟩ := hx
   have hD := Semi.LB.isLB_div (isLB_lbPow h₁ m) hA
   have hsec : HasNonzeroSec (LB.div (lbPow N₁ m) A) := ⟨s, sec_ne_zero_of_mem hxs⟩

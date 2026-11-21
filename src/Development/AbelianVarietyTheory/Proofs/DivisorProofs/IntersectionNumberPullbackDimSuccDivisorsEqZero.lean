@@ -21,7 +21,7 @@ namespace GlobalTheory.FlagPush
 theorem Dbl.num_eq_zero_of_isPull : ∀ (F : Type) [Field F] (Y : Var F) (W : Dbl Y), W.Small → ∀ (q : W.Z ⟶ Y.X) [IsDominant q] (y : Fin (Y.dim + 1) → CartierDiv W.Z) (e : Fin (Y.dim + 1) → Y.Dv), (∀ i, IsPull q (y i) (e i)) → W.num y = 0 := by
   intro F _ Y W hW q _ y e h
   letI := algebraΓOfHom (W.p₁ ≫ Y.str)
-  have hp : IsProjOver (strHom F W.Z) := by
+  have hp : IsProjOver (strHom F (X := W.Z)) := by
     rw [strHom_eq (f := W.p₁ ≫ Y.str) fun _ => rfl]
     exact W.proj
   have hd : topologicalKrullDim W.Z ≤ (0 + (Y.dim + 1) : ℕ) := by

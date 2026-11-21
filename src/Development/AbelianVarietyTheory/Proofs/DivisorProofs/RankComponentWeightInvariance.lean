@@ -72,8 +72,8 @@ open Limits
 
 namespace GlobalTheory.JetRank
 
-theorem isProjOver_along {k : Type} [Field k] {X Z : Scheme.{0}} [Algebra k Γ(X, ⊤)] (hp : IsProjOver (strHom k X))
-    (i : Z ⟶ X) [IsClosedImmersion i] : letI := algebraΓAlong k i; IsProjOver (strHom k Z) := by
+theorem isProjOver_along {k : Type} [Field k] {X Z : Scheme.{0}} [Algebra k Γ(X, ⊤)] (hp : IsProjOver (strHom k (X := X)))
+    (i : Z ⟶ X) [IsClosedImmersion i] : letI := algebraΓAlong k i; IsProjOver (strHom k (X := Z)) := by
   letI := algebraΓAlong k i
   obtain ⟨n, e, he, hs⟩ := hp
   exact ⟨n, i ≫ e, inferInstance, by rw [Category.assoc, hs, comp_strHom (appTop_algebraMap_along k i)]⟩
@@ -90,7 +90,7 @@ theorem dim_zeroScheme_le [IsIntegral X] [IsLocallyNoetherian X] {L : LB X} (hL 
   exact (topologicalKrullDim_eq_of_isEmbedding (secIdeal hL t).subschemeι.isClosedEmbedding.isEmbedding
     (secIdeal hL t).range_subschemeι).symm
 
-theorem globalSections_dim_le_div_add_restriction [IsIntegral X] (hp : IsProjOver (strHom k X)) {L B : LB X} (hL : L.IsLB) (hB : B.IsLB) {t : L.Sec}
+theorem globalSections_dim_le_div_add_restriction [IsIntegral X] (hp : IsProjOver (strHom k (X := X))) {L B : LB X} (hL : L.IsLB) (hB : B.IsLB) {t : L.Sec}
     (ht : t ≠ 0) : letI := algebraΓAlong k (secIdeal hL t).subschemeι
     lbH0 k B ≤ lbH0 k (LB.div B L) + lbH0 k (B.pull (secIdeal hL t).subschemeι) := by
   letI := algebraΓAlong k (secIdeal hL t).subschemeι
@@ -107,7 +107,7 @@ theorem globalSections_dim_le_div_add_restriction [IsIntegral X] (hp : IsProjOve
     ((hdim_congr k 0 (Twist.projIso B _ _)).symm.trans ?_)))
   exact hdim_pushforward k (appTop_algebraMap_along k _) _ 0
 
-theorem interNum_nonneg (hN : GlobalTheory.Published.NefNumerics) (hp : IsProjOver (strHom k X)) {d : ℕ}
+theorem interNum_nonneg (hN : GlobalTheory.Published.NefNumerics) (hp : IsProjOver (strHom k (X := X))) {d : ℕ}
     (hd : topologicalKrullDim X ≤ d) {P : Fin d → LB X} (hP : ∀ i, IsNef k (P i)) :
     0 ≤ interNum k (structureModule X) P := by
   rcases hd.eq_or_lt with h | h
@@ -115,7 +115,7 @@ theorem interNum_nonneg (hN : GlobalTheory.Published.NefNumerics) (hp : IsProjOv
   · exact (interNum_eq_zero_of_isProjOver (algebraMap_eq_strHom k X) _ hp
       (by rwa [QCoh.suppDim_structureModule, Fintype.card_fin]) fun i => (hP i).isLB).ge
 
-theorem interNum_cons_nonneg [IsIntegral X] (hN : GlobalTheory.Published.NefNumerics) (hp : IsProjOver (strHom k X)) {d : ℕ}
+theorem interNum_cons_nonneg [IsIntegral X] (hN : GlobalTheory.Published.NefNumerics) (hp : IsProjOver (strHom k (X := X))) {d : ℕ}
     (hd : topologicalKrullDim X ≤ (d + 1 : ℕ)) {B : LB X} {P : Fin d → LB X} (hB : B.IsLB) (hs : HasNonzeroSec B)
     (hP : ∀ i, IsNef k (P i)) : 0 ≤ interNum k (structureModule X) (Fin.cons B P : Fin (d + 1) → LB X) := by
   obtain ⟨t, ht⟩ := hs
@@ -129,7 +129,7 @@ theorem interNum_cons_nonneg [IsIntegral X] (hN : GlobalTheory.Published.NefNume
   exact interNum_nonneg hN (isProjOver_along hp _) (dim_zeroScheme_le hB ht hd)
     fun i => (hP i).pull_of_isClosedImmersion _ hi
 
-theorem interNum_mono [IsIntegral X] (hN : GlobalTheory.Published.NefNumerics) (hp : IsProjOver (strHom k X)) {d : ℕ}
+theorem interNum_mono [IsIntegral X] (hN : GlobalTheory.Published.NefNumerics) (hp : IsProjOver (strHom k (X := X))) {d : ℕ}
     (hd : topologicalKrullDim X ≤ (d + 1 : ℕ)) {P Q R : Fin (d + 1) → LB X} (hP : ∀ i, IsNef k (P i))
     (hQ : ∀ i, IsNef k (Q i)) (hR : ∀ i, (R i).IsLB) (hR' : ∀ i, IsNef k (R i) ∨ HasNonzeroSec (R i))
     (e : ∀ i, cls (Q i) (hQ i).isLB = cls (P i) (hP i).isLB + cls (R i) (hR i)) :
@@ -163,7 +163,7 @@ theorem interNum_mono [IsIntegral X] (hN : GlobalTheory.Published.NefNumerics) (
 theorem cons_const {α : Type*} (a : α) (d : ℕ) : (Fin.cons a (fun _ : Fin d => a) : Fin (d + 1) → α) = fun _ => a :=
   funext fun i => Fin.cases rfl (fun _ => rfl) i
 
-theorem interNum_cons_le [IsIntegral X] (hN : GlobalTheory.Published.NefNumerics) (hp : IsProjOver (strHom k X)) {d : ℕ}
+theorem interNum_cons_le [IsIntegral X] (hN : GlobalTheory.Published.NefNumerics) (hp : IsProjOver (strHom k (X := X))) {d : ℕ}
     (hd : topologicalKrullDim X ≤ (d + 1 : ℕ)) {B L L' P Q : LB X} (hB : IsNef k B) (hL : IsNef k L) (hL' : IsNef k L')
     (hP : P.IsLB) (hQ : IsNef k Q) (n : ℕ) (hs : HasNonzeroSec P) (e₁ : cls L' hL'.isLB = cls L hL.isLB + cls P hP)
     (e₂ : n • cls L' hL'.isLB = cls B hB.isLB + cls Q hQ.isLB) :
@@ -182,9 +182,9 @@ theorem interNum_cons_le [IsIntegral X] (hN : GlobalTheory.Published.NefNumerics
 end Nef
 
 theorem exists_step {k : Type} [Field k] {X : Scheme.{0}} [IsIntegral X] [a : Algebra k Γ(X, ⊤)]
-    (hp : IsProjOver (strHom k X)) {d : ℕ} (hd : topologicalKrullDim X ≤ (d + 1 : ℕ)) {L : LB X} (hL : IsGenerated L) :
+    (hp : IsProjOver (strHom k (X := X))) {d : ℕ} (hd : topologicalKrullDim X ≤ (d + 1 : ℕ)) {L : LB X} (hL : IsGenerated L) :
     ∃ (K : Type) (_ : Field K) (H : Scheme.{0}) (_ : Algebra K Γ(H, ⊤)) (ρ : H ⟶ X),
-      IsProjOver (strHom K H) ∧ topologicalKrullDim H ≤ d ∧ (IsIntegral H ∨ IsEmpty H) ∧
+      IsProjOver (strHom K (X := H)) ∧ topologicalKrullDim H ≤ d ∧ (IsIntegral H ∨ IsEmpty H) ∧
       (∀ B : LB X, B.IsLB → lbH0 k B ≤ lbH0 k (LB.div B L) + lbH0 K (B.pull ρ)) ∧
       ∀ (e : ℕ) (P : Fin e → LB X), (∀ i, (P i).IsLB) →
         interNum K (structureModule H) (fun i => (P i).pull ρ) =
@@ -203,7 +203,7 @@ theorem exists_step {k : Type} [Field k] {X : Scheme.{0}} [IsIntegral X] [a : Al
   obtain ⟨hpr, -⟩ := (isProjOver_iff_isProper_and_exists_isAmpleLB f).1 hp
   have := GlobalTheory.T.isIntegral_baseChange_rationalFunctionField_finiteVars k N X _ f f' π H
   obtain ⟨t, ht, hH⟩ := GlobalTheory.T.isIntegral_or_isEmpty_generic_member_linearSystem k N X _ f f' π H L hLB b hb
-  have hp' : IsProjOver (strHom K (pullback f (spMap (algebraMap k K)))) := by
+  have hp' : IsProjOver (strHom K (X := (pullback f (spMap (algebraMap k K))))) := by
     rw [strHom_eq (f := f') fun _ => rfl]
     exact PosBaseChange.isProjOver_of_isPullback H hp
   have hL' := LB.isLB_pull hLB π
@@ -231,7 +231,7 @@ theorem exists_step {k : Type} [Field k] {X : Scheme.{0}} [IsIntegral X] [a : Al
     · exact Fin.cases rfl (fun _ => rfl) i
 
 theorem globalSections_dim_le_of_intersection_bound (hN : GlobalTheory.Published.NefNumerics) (d : ℕ) : ∀ (k : Type) [Field k] (X : Scheme.{0}) [IsIntegral X]
-    [Algebra k Γ(X, ⊤)], IsProjOver (strHom k X) → topologicalKrullDim X ≤ d → ∀ {L : LB X}, IsGenerated L →
+    [Algebra k Γ(X, ⊤)], IsProjOver (strHom k (X := X)) → topologicalKrullDim X ≤ d → ∀ {L : LB X}, IsGenerated L →
     ∀ (a : ℕ) {B : LB X}, B.IsLB → (∀ e, d = e + 1 →
       interNum k (structureModule X) (Fin.cons B (fun _ : Fin e => L) : Fin (e + 1) → LB X) < (a + 1) * topSelfIntersection k L d) →
     (lbH0 k B : ℤ) ≤ (a + d).choose d * topSelfIntersection k L d := by
@@ -466,7 +466,7 @@ theorem topSelf_pull (hN : GlobalTheory.Published.NefNumerics) {k : Type} [Field
     (M : Modif p U D) (hc' : GeometricallyConnected M.str) :
     letI := algebraΓOfHom p
     letI := algebraΓOfHom M.str
-    IsIntegral M.X ∧ IsProjOver (strHom k M.X) ∧ topologicalKrullDim M.X = D ∧
+    IsIntegral M.X ∧ IsProjOver (strHom k (X := M.X)) ∧ topologicalKrullDim M.X = D ∧
       (∀ B : LB Y, B.IsLB → lbH0 k (B.pull M.σ) = lbH0 k B) ∧
       ∀ B : LB Y, IsNef k B → IsNef k (B.pull M.σ) ∧ topSelfIntersection k (B.pull M.σ) D = topSelfIntersection k B D := by
   letI := algebraΓOfHom p
@@ -482,10 +482,10 @@ theorem topSelf_pull (hN : GlobalTheory.Published.NefNumerics) {k : Type} [Field
   obtain ⟨hpr, A, hA⟩ := (isProjOver_iff_isProper_and_exists_isAmpleLB p).1 hp
   obtain ⟨hpr', A', hA'⟩ := (isProjOver_iff_isProper_and_exists_isAmpleLB M.str).1 M.proj
   have : IsProper M.σ := IsProper.of_comp M.σ p
-  have : IsProper (strHom k Y) := e ▸ hpr
+  have : IsProper (strHom k (X := Y)) := e ▸ hpr
   have h0 := GlobalTheory.T.modification_globalSectionsDim_pull_eq k Y p U D hs hp M
-  have hp₁ : IsProjOver (strHom k Y) := by rw [e]; exact hp
-  have hp₂ : IsProjOver (strHom k M.X) := by rw [e']; exact M.proj
+  have hp₁ : IsProjOver (strHom k (X := Y)) := by rw [e]; exact hp
+  have hp₂ : IsProjOver (strHom k (X := M.X)) := by rw [e']; exact M.proj
   refine ⟨inferInstance, hp₂, hd', h0, fun B hB => ?_⟩
   have hB' : IsNef k (B.pull M.σ) := PosBaseChange.isNef_pull hB hA hA' M.σ M.σ.isClosedMap
   refine ⟨hB', ?_⟩

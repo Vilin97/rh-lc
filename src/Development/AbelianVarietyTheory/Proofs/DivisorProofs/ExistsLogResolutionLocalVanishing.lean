@@ -24,7 +24,7 @@ theorem exists_logRes_subsingleton_cohOn_one : GlobalTheory.Published.Principali
   intro hPr X _ _ p n hp hn η m G Z hη hm hZ
   letI := algebraΓOfHom p
   obtain ⟨-, H, hH⟩ := (isProjOver_iff_isProper_and_exists_isAmpleLB p).1 hp
-  have hpS : IsProjOver (strHom ℂ X) := by rwa [strHom_eq (f := p) fun _ => rfl]
+  have hpS : IsProjOver (strHom ℂ (X := X)) := by rwa [strHom_eq (f := p) fun _ => rfl]
   have hbig : IsBig ℂ H := IsAmpleLB.isBig ℂ X hpS H hH
   obtain ⟨Y, _, s, _, K, B, hlog, hZB, a, Fd, A, hA, hFd⟩ :=
     GlobalTheory.T.exists_log_resolution_big_bundle hPr ℂ X p n hp hn η m G hη Z hZ H hH.isLB hbig

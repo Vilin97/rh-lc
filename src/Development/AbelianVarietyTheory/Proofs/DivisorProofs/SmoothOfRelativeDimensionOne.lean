@@ -74,8 +74,8 @@ theorem exists_smooth_finite {k : Type} [Field k] [IsAlgClosed k] {D : Scheme.{0
     CurveThrough.smooth_of_dedekind_charts k _ _ (NormCurve.isDedekindDomain_sections f s htr)⟩
 
 def CurveTest (K : Type) [Field K] {X : Scheme.{0}} (L : LB X) : Prop :=
-  ∀ (C : Scheme.{0}) [Algebra K Γ(C, ⊤)], SmoothOfRelativeDimension 1 (strHom K C) → IsProjOver (strHom K C) →
-    GeometricallyConnected (strHom K C) → ∀ g : C ⟶ X, 0 ≤ interNum K (structureModule C) ![L.pull g]
+  ∀ (C : Scheme.{0}) [Algebra K Γ(C, ⊤)], SmoothOfRelativeDimension 1 (strHom K (X := C)) → IsProjOver (strHom K (X := C)) →
+    GeometricallyConnected (strHom K (X := C)) → ∀ g : C ⟶ X, 0 ≤ interNum K (structureModule C) ![L.pull g]
 
 theorem CurveTest.pull {K : Type} [Field K] {X Y : Scheme.{0}} {L : LB X} (h : CurveTest K L) (hL : L.IsLB)
     (π : Y ⟶ X) : CurveTest K (L.pull π) := fun C _ hs hp hc g => by

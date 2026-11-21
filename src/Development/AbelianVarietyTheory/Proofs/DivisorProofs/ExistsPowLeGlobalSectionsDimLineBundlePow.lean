@@ -179,7 +179,7 @@ theorem exists_pow_le_globalSectionsDim_lineBundlePow [IsIntegral X] [CompactSpa
     (IsLocalFn.monomial (hs.pow a) hya)
   simpa using this
 
-theorem finiteType_algebraOpen [LocallyOfFiniteType (strHom k X)] {U : X.Opens}
+theorem finiteType_algebraOpen [LocallyOfFiniteType (strHom k (X := X))] {U : X.Opens}
     (hU : IsAffineOpen U) : letI := algebraOpen k U; Algebra.FiniteType k Γ(X, U) := by
   have h := ((strHom k X).finiteType_appLE (isAffineOpen_top _) hU le_top).comp
     (RingHom.FiniteType.of_surjective (Scheme.ΓSpecIso (.of k)).inv.hom
@@ -203,11 +203,11 @@ end AmpleBig
 
 open AmpleBig in
 theorem IsAmpleLB.isBig : ∀ (k : Type) [Field k] (X : Scheme.{0}) [IsIntegral X]
-    [Algebra k Γ(X, ⊤)], IsProjOver (strHom k X) → ∀ A : LB X, IsAmpleLB A → IsBig k A := by
+    [Algebra k Γ(X, ⊤)], IsProjOver (strHom k (X := X)) → ∀ A : LB X, IsAmpleLB A → IsBig k A := by
   intro k _ X _ _ hp A hA
   have := hA.compactSpace
   have := hA.quasiSeparatedSpace
-  have : IsProper (strHom k X) := by
+  have : IsProper (strHom k (X := X)) := by
     obtain ⟨N, i, hi, e⟩ := hp
     have := isProper_str k N
     rw [← e]

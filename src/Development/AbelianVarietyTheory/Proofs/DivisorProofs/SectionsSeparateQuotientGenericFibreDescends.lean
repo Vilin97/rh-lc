@@ -48,8 +48,8 @@ open Filter
 
 open GlobalTheory.ThickeningDetermines (secIdeal)
 
-theorem isProjOver_along {k : Type} [Field k] {X Z : Scheme.{0}} [Algebra k Γ(X, ⊤)] (hp : IsProjOver (strHom k X))
-    (i : Z ⟶ X) [IsClosedImmersion i] : letI := algebraΓAlong k i; IsProjOver (strHom k Z) := by
+theorem isProjOver_along {k : Type} [Field k] {X Z : Scheme.{0}} [Algebra k Γ(X, ⊤)] (hp : IsProjOver (strHom k (X := X)))
+    (i : Z ⟶ X) [IsClosedImmersion i] : letI := algebraΓAlong k i; IsProjOver (strHom k (X := Z)) := by
   letI := algebraΓAlong k i
   obtain ⟨n, e, he, hs⟩ := hp
   exact ⟨n, i ≫ e, inferInstance, by rw [Category.assoc, hs, comp_strHom (appTop_algebraMap_along k i)]⟩
@@ -66,7 +66,7 @@ theorem dim_zeroScheme_le [IsIntegral X] [IsLocallyNoetherian X] {L : LB X} (hL 
   exact (topologicalKrullDim_eq_of_isEmbedding (secIdeal hL t).subschemeι.isClosedEmbedding.isEmbedding
     (secIdeal hL t).range_subschemeι).symm
 
-theorem globalSections_dim_le_div_add_restriction [IsIntegral X] (hp : IsProjOver (strHom k X)) {L B : LB X} (hL : L.IsLB) (hB : B.IsLB) {t : L.Sec}
+theorem globalSections_dim_le_div_add_restriction [IsIntegral X] (hp : IsProjOver (strHom k (X := X))) {L B : LB X} (hL : L.IsLB) (hB : B.IsLB) {t : L.Sec}
     (ht : t ≠ 0) : letI := algebraΓAlong k (secIdeal hL t).subschemeι
     lbH0 k B ≤ lbH0 k (LB.div B L) + lbH0 k (B.pull (secIdeal hL t).subschemeι) := by
   letI := algebraΓAlong k (secIdeal hL t).subschemeι
@@ -92,7 +92,7 @@ theorem nef_pull (hN : GlobalTheory.Published.NefNumerics) {F E : Type} [Field F
   letI := algebraΓOfHom pY
   obtain ⟨hpp, A, hA⟩ := (isProjOver_iff_isProper_and_exists_isAmpleLB pX).1 hX
   obtain ⟨B, hB⟩ := exists_isAmpleLB_of_isProjOver hY
-  have : IsProper (strHom F X) := by rw [strHom_eq (f := pX) fun _ => rfl]; exact hpp
+  have : IsProper (strHom F (X := X)) := by rw [strHom_eq (f := pX) fun _ => rfl]; exact hpp
   exact NefFieldExt.isNef_pull hN hL hA hB g
 
 theorem big_pull_modif {F : Type} [Field F] {X : Scheme.{0}} [IsIntegral X] (sX : X ⟶ Sp F) (n : ℕ)
@@ -107,7 +107,7 @@ theorem big_pull_modif {F : Type} [Field F] {X : Scheme.{0}} [IsIntegral X] (sX 
     exact ⟨y.1, (morphismRestrict_base_coe M.σ U y).symm.trans (congrArg Subtype.val hy)⟩
 
 theorem ampleAt_generic (hN : GlobalTheory.Published.NefNumerics) {F : Type} [Field F] {Y : Scheme.{0}} [IsIntegral Y]
-    [Algebra F Γ(Y, ⊤)] (hp : IsProjOver (strHom F Y)) {n : ℕ} (hd : topologicalKrullDim Y = (n + 1 : ℕ))
+    [Algebra F Γ(Y, ⊤)] (hp : IsProjOver (strHom F (X := Y))) {n : ℕ} (hd : topologicalKrullDim Y = (n + 1 : ℕ))
     {L A : LB Y} (hL : IsNef F L) (hA : IsAmpleLB A) {c : ℝ} (hc : 0 < c)
     (h : ∃ᶠ m : ℕ in atTop, c * (m : ℝ) ^ (n + 1) ≤ lbH0 F (tens (lbPow L m) A)) : AmpleAt L (genericPoint Y) := by
   have := isNoetherian_of_isProjOver hp

@@ -71,7 +71,7 @@ theorem isRelevant_of_dim {W : Ideal (MvPolynomial (Fin m) κ)}
 theorem field_case (h1 : StPts) (h2 : StPull) (h3 : StDiv) (hS : ChowDegreeSection.Statement)
     (hP : ChowDegreeClosedPoint.Statement) [PerfectField κ] (e : ℕ) :
     ∀ (Z : Scheme.{0}) [IsIntegral Z] [Algebra κ Γ(Z, ⊤)] (B : LB Z) (s : Fin m → B.Sec),
-      IsProjOver (strHom κ Z) → Emb (strHom κ Z) s →
+      IsProjOver (strHom κ (X := Z)) → Emb (strHom κ Z) s →
       ringKrullDim (MvPolynomial (Fin m) κ ⧸ ptIdeal (strHom κ Z) s (genericPoint Z)) = (e + 1 : ℕ) →
       topologicalKrullDim Z = e ∧
         topSelfIntersection κ B e = chowDegree (ptIdeal (strHom κ Z) s (genericPoint Z)) (e + 1) := by

@@ -78,7 +78,7 @@ theorem UpperTheory.weight_units_section_at_point :
   intro k _ _ C _ hC G _ hG X _ _ _ i hi H p hp
   have := hG.smooth
   have := hG.geomConnected
-  have : Smooth (strHom k C) := have := hC.1; SmoothOfRelativeDimension.smooth 1 _
+  have : Smooth (strHom k (X := C)) := have := hC.1; SmoothOfRelativeDimension.smooth 1 _
   have : IsLocallyNoetherian G.left := LocallyOfFiniteType.isLocallyNoetherian (G.hom ≫ strHom k C)
   let b := Module.Free.chooseBasis ℤ X
   let pt : Sp k := IsLocalRing.closedPoint k
