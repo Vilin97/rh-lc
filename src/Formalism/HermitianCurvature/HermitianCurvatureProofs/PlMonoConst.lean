@@ -135,9 +135,9 @@ theorem qminor_poly {n t : ℕ} (E : Fin n → Fin n → A) (a b : Fin t → Fin
     simp only [hT]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [Finset.mul_sum, map_sum]
-    refine Finset.sum_congr rfl fun σ _ => ?_
-    rw [mul_left_comm (u ^ t) (((Equiv.Perm.sign σ : ℤ) : ℂ)),
-      map_mul (algebraMap ℂ A) (((Equiv.Perm.sign σ : ℤ) : ℂ)), map_intCast]
+      refine Finset.sum_congr rfl fun σ _ => ?_
+      rw [mul_left_comm (u ^ t) (((Equiv.Perm.sign σ : ℤ) : ℂ)),
+        map_mul (algebraMap ℂ A) (((Equiv.Perm.sign σ : ℤ) : ℂ)), map_intCast]
 
 end poly
 

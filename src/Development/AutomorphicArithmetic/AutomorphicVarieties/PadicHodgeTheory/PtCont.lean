@@ -74,7 +74,7 @@ private theorem ptc_pow {l : ℕ} [Fact l.Prime] {R : Type} [CommRing R] [IsLoca
         exact hP (Ideal.subset_span rfl)
       rw [← (maximalIdeal.isMaximal _).eq_of_le (Ideal.IsPrime.ne_top inferInstance) this]
       infer_instance
-    haveI : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap P hc
+    haveI : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := ℤ_[l]) P hc
     have := eq_maximalIdeal (Ideal.comap_isMaximal_of_surjective y hy (K := P))
     rw [Ideal.map_le_iff_le_comap, this]
   obtain ⟨N, hN⟩ := Ideal.exists_pow_le_of_le_radical_of_fg h1 (Ideal.FG.map (IsNoetherian.noetherian _) y)

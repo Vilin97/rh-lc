@@ -59,10 +59,10 @@ theorem coTup_mulVec {n M d : ℕ} (b : Module.Basis (Fin d) F E) (G : Matrix (F
   have h0 : (G.map (inclR R) *ᵥ X a) i = ∑ j, inclR R (G i j) * X a j := by
     simp [Matrix.mulVec, dotProduct]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [coTup, h0, map_sum, Finsupp.coe_finset_sum, Finset.sum_apply, repr_incl_mul]
+    simp only [coTup, h0, map_sum, Finset.sum_apply, repr_incl_mul]
   simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, actMat, Fintype.sum_prod_type]
   rw [Finset.sum_eq_single a]
-  · simp [coTup]
+  · simp [coTup, repr_incl_mul]
   · intro a' _ h
     simp [Ne.symm h]
   · simp
@@ -173,7 +173,7 @@ theorem map_actTup {n M d : ℕ} (b : Module.Basis (Fin d) F E) (g : GL (Fin M) 
         rw [Measure.map_map hAc.measurable he, Measure.map_map hes (hAc.measurable.comp he)]
     _ = (c • μ.map e).map e.symm := by rw [h1]
     _ = c • μ := by
-        rw [Measure.map_smul, Measure.map_map hes he]
+        rw [Measure.map_smul c hes.aemeasurable, Measure.map_map hes he]
         simp
 
 end Meas

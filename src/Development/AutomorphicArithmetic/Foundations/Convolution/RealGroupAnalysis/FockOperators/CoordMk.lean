@@ -15,7 +15,7 @@ noncomputable section
 
 namespace UpperTheory.ConvolutionTheory.R2.Fo
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E]
 
 private theorem continuous_coordE (τ : E →+* ℂ) : Continuous (coord τ) :=
   AddMonoidHomClass.continuous_of_bound (coord τ) 1 fun x => by
@@ -33,8 +33,11 @@ private theorem continuous_infEqF_symm : Continuous (TR.infEq F).symm :=
 
 private theorem cw_rt (w : InfinitePlace F) (k : F) :
     cw w (rt k) = w.embedding k := by
-  have h : TR.pInf F (rt k) w = InfinitePlace.embedding_of_isReal (IsTotallyReal.isReal w) k :=
-    InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe (IsTotallyReal.isReal w) _
+  have h : TR.pInf F (rt k) w = InfinitePlace.embedding_of_isReal (IsTotallyReal.isReal w) k := by
+    change InfinitePlace.Completion.ringEquivRealOfIsReal (IsTotallyReal.isReal w)
+      ((algebraMap F (A F) k).1 w) = _
+    rw [AdeleRing.algebraMap_fst_apply, InfinitePlace.Completion.ringEquivRealOfIsReal_apply]
+    exact InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe (IsTotallyReal.isReal w) (WithAbs.toAbs _ k)
   rw [cw, h, InfinitePlace.embedding_of_isReal_apply]
 
 private theorem embedding_pl (τ : E →+* ℂ) (k : F) :
@@ -66,7 +69,7 @@ end UpperTheory.ConvolutionTheory.R2.Fo
 
 open UpperTheory.ConvolutionTheory.R2.Fo in
 theorem UpperTheory.ConvolutionTheory.R2.Fo.coordMk :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E), (∀ (τ : E →+* ℂ) u t, coord τ (pInf E (D.mkE u t)) = cw (pl F τ) u + τ D.θ * cw (pl F τ) t) ∧
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E), (∀ (τ : E →+* ℂ) u t, coord τ (pInf E (D.mkE u t)) = cw (pl F τ) u + τ D.θ * cw (pl F τ) t) ∧
     (∀ τ : E →+* ℂ, τ D.θ ^ 2 = cw (pl F τ) (rt D.δ) ∧ starRingEnd ℂ (τ D.θ) = -τ D.θ ∧ τ D.θ ≠ 0) ∧
     (∀ w, cw w (rt D.δ) ≠ 0) ∧ ∀ w, ∃ τ : E →+* ℂ, pl F τ = w := by
   intro F E _ _ _ _ _ _ _ D

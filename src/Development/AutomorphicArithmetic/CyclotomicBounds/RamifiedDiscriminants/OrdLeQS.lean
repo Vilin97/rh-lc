@@ -98,7 +98,7 @@ private theorem two_totient_le {n : ℕ} (h : 2 ∣ n) : 2 * Nat.totient n ≤ n
     rcases Nat.eq_zero_or_pos m with hm | hm
     · subst hm; simp
     by_cases h2 : 2 ∣ m
-    · rw [Nat.totient_mul_of_prime_of_dvd Nat.prime_two h2]
+    · rw [Nat.totient_mul_of_dvd h2]
       have := ih m (by omega) h2
       omega
     · rw [Nat.totient_mul_of_prime_of_not_dvd Nat.prime_two h2]

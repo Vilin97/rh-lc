@@ -94,7 +94,7 @@ private theorem finite_max (k S : Type) [CommRing k] [IsLocalRing k] [CommRing S
     (fun m => ⟨m.asIdeal, m.isMaximal.isPrime, ⟨?_⟩⟩) ?_
   · have := m.isMaximal
     exact (IsLocalRing.eq_maximalIdeal
-      (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := k) m.asIdeal)).symm
+      (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := k) m.asIdeal)).symm
   · intro m m' hm
     exact MaximalSpectrum.ext (congrArg Subtype.val hm)
 
@@ -124,7 +124,7 @@ theorem h90 : H90 := by
   have hu : IsUnit (∑ m, algebraMap S T (e m) * z m) := by
     by_contra hnu
     obtain ⟨P, hP, hmem⟩ := exists_max_ideal_of_mem_nonunits hnu
-    let m : MaximalSpectrum S := ⟨P.comap (algebraMap S T), Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P⟩
+    let m : MaximalSpectrum S := ⟨P.comap (algebraMap S T), Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := S) P⟩
     apply hzP m P hP rfl
     rw [← Finset.add_sum_erase _ _ (Finset.mem_univ m)] at hmem
     have h1 : ∑ m' ∈ Finset.univ.erase m, algebraMap S T (e m') * z m' ∈ P :=

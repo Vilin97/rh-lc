@@ -180,7 +180,7 @@ def dbl (hM₁ : ∀ (I I' : Chart x) (J : Chart y), I.1 ⊆ I'.1 → M I J ≤ 
 theorem dbl_good (hM₁ : ∀ (I I' : Chart x) (J : Chart y), I.1 ⊆ I'.1 → M I J ≤ M I' J)
     (hM₂ : ∀ (I : Chart x) (J J' : Chart y), J.1 ⊆ J'.1 → M I J ≤ M I J')
     (hA : ∀ I, Cech.AugExact S (M I) (Ax I)) (hB : ∀ J, Cech.AugExact S (fun I => M I J) (Bx J)) :
-    (dbl Ax Bx hM₁ hM₂ hA hB).Good := {
+    (dbl Ax Bx hM₁ hM₂ hA hB).Good where
   ha p := LinearMap.ext fun s => Subtype.ext (funext fun I' => funext fun J => by
     change dE S E (support x) p s.1 I' = vW S E x y p 0 (fun I _ => s.1 I) I' J
     rw [vW_apply])
@@ -246,7 +246,6 @@ theorem dbl_good (hM₁ : ∀ (I I' : Chart x) (J : Chart y), I.1 ⊆ I'.1 → M
       exact congrFun (htf J) I'
     · rintro ⟨s, rfl⟩
       exact Subtype.ext (vW_vW p q s.1)
-}
 
 end Double
 

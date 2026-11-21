@@ -641,6 +641,8 @@ theorem fub_core (β : ℂ) (σh : Equiv.Perm (Fin p)) (dh : Fin p → ℂ) (σb
   unfold U.PhiTop
   rw [show U.muXiH s 0 σb = volume from rfl]
   congr 1
+  funext y
+  dsimp only [g]
   rw [integral_smul]
   rfl
 

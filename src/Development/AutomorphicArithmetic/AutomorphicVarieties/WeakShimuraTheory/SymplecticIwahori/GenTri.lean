@@ -40,16 +40,14 @@ private theorem gt_prj (c : Fin 4 → R) (Y : M4 R) (i : Fin 4) :
   simp only [Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C]
 
 private theorem gt_ord {I : Subgroup H} {ps : Fin 4 → H → R} {s₀ : H} {r : H →* M4 R} (h : Ord I ps s₀ r) :
-    Ord I (fun i g => f (ps i g)) s₀ (mapRep f r) where
-  charpoly := by
-    rw [gt_rep, RingHom.mapMatrix_apply, Matrix.charpoly_map, h.charpoly, Polynomial.map_prod]
+    Ord I (fun i g => f (ps i g)) s₀ (mapRep f r) := by
+  refine ⟨?_, ?_, ?_⟩
+  · rw [gt_rep, RingHom.mapMatrix_apply, Matrix.charpoly_map, h.charpoly, Polynomial.map_prod]
     simp only [Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C]
-  stable := by
-    intro g i j hij
+  · intro g i j hij
     rw [gt_rep, gt_rep, gt_prj f (fun a => ps a s₀), gt_prj f (fun a => ps a s₀), ← map_mul, ← map_mul,
       h.stable g i j hij, map_zero]
-  inert := by
-    intro s hs i
+  · intro s hs i
     rw [gt_rep, gt_rep, gt_prj f (fun a => ps a s₀), ← map_one f.mapMatrix, ← gt_smul, ← map_sub, ← map_mul,
       ← map_mul, h.inert s hs i, map_zero]
 

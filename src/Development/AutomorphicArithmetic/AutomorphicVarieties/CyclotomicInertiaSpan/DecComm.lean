@@ -112,5 +112,3 @@ theorem UpperTheory.V.B1.decComm :
       rwa [← IsLocalRing.residue_eq_zero_iff, map_sub, sub_eq_zero]
     rw [ValuationSubring.valuation_lt_one_iff] at hmem
     convert hmem using 2
-    rw [commutatorElement_def]
-    rfl

@@ -20,7 +20,7 @@ private lemma sum_prod_le {ι : Type*} [Fintype ι] [DecidableEq ι] {α : Type*
   have h2 : ∏ i, ∑ x ∈ t i, g x = ∑ ξ ∈ Fintype.piFinset t, ∏ i, g (ξ i) :=
     Finset.prod_univ_sum t fun _ x => g x
   have h3 : ∏ i, ∑ x ∈ t i, g x ≤ ∏ _i : ι, ∑' x, g x := by
-    apply Finset.prod_le_prod
+    apply Finset.prod_le_prod₀
     · intro i _
       exact Finset.sum_nonneg fun x _ => hg x
     · intro i _

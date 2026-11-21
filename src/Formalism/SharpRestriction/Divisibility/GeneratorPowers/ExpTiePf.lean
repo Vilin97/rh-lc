@@ -122,7 +122,7 @@ private lemma psJet_eq_zero_lemma_8 {R κ : Type} [CommRing R] [Fintype κ] [Dec
     (g : MvPowerSeries κ R)
     (h : ∀ e : κ →₀ ℕ, (e.sum fun _ k => k) ≤ m → MvPowerSeries.coeff e g = 0) :
     psJet m g = 0 := by
-  rw [← mk_eq_psJet_lemma_6 m 0 g (fun e he => by rw [h e he, MvPolynomial.coeff_zero]), map_zero]
+  rw [← mk_eq_psJet_lemma_6 m 0 g (fun e he => by rw [h e he, MvPolynomial.coeff_zero]; rfl), map_zero]
 
 private lemma vanish_mul_lemma_9 {R τ : Type} [CommRing R] [DecidableEq τ] (a b : MvPowerSeries τ R)
     (k l : ℕ)

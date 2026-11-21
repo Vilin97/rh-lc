@@ -147,7 +147,7 @@ theorem continuous_actTup (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) (R : Type)
   haveI : IsTopologicalRing (R ⊗[F] E) := (GlobalTheory.CompanionTheory.SW.TopK.topTens_props F E σ hCM R).1
   refine continuous_pi fun a => continuous_pi fun i => ?_
   simp only [actTup, Matrix.mulVec, dotProduct]
-  exact continuous_finset_sum _ fun j _ => continuous_const.mul
+  exact continuous_finsetSum _ fun j _ => continuous_const.mul
     ((continuous_apply j).comp (continuous_apply a))
 
 theorem measurable_actTup (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) (R : Type) [CommRing R] [Algebra F R]
@@ -248,7 +248,7 @@ theorem theta_map (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) {M n : ℕ} (J : M
     rw [← He.restrict_map, Measure.map_map He.measurable He.symm.measurable]
     simp
   unfold thetaMeas
-  rw [Measure.map_smul, hmass]
+  rw [Measure.map_smul, hmass] <;> try exact hmG.aemeasurable
   congr 1
   set_option synthInstance.maxHeartbeats 100000 in
     rw [Measure.map_sum hmG.aemeasurable, ← sum_reindex (gramEquiv σ J g T)]

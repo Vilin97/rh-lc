@@ -67,22 +67,22 @@ theorem frame_evaluation_comp_change {R : Type} [CommRing R] {ι : Type} {r : �
     · by_cases hv : LL.vec i = true
       set_option synthInstance.maxHeartbeats 100000 in
         · simp only [RingHom.comp_apply, eBeta, frameCoordinateEvaluation, eval₂Hom_X', hS, hv, if_true, map_sum, map_mul,
-          eval₂Hom_C, RingHom.id_apply]
-        calc ∑ a, g0inv a c * ∑ b, ph (X (i, b)) * g0 b a
-            = ∑ b, ph (X (i, b)) * ∑ a, g0 b a * g0inv a c := by
-              simp only [Finset.mul_sum]
-              rw [Finset.sum_comm]
-              refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun a _ => by ring
-          _ = ph (X (i, c)) := by simp [hh]
+            eval₂Hom_C, RingHom.id_apply]
+          calc ∑ a, g0inv a c * ∑ b, ph (X (i, b)) * g0 b a
+              = ∑ b, ph (X (i, b)) * ∑ a, g0 b a * g0inv a c := by
+                simp only [Finset.mul_sum]
+                rw [Finset.sum_comm]
+                refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun a _ => by ring
+            _ = ph (X (i, c)) := by simp [hh]
       set_option synthInstance.maxHeartbeats 100000 in
         · simp only [RingHom.comp_apply, eBeta, frameCoordinateEvaluation, eval₂Hom_X', hS, hv, if_true, map_sum, map_mul,
-          eval₂Hom_C, RingHom.id_apply, if_false, Bool.false_eq_true]
-        calc ∑ a, g0 c a * ∑ b, g0inv a b * ph (X (i, b))
-            = ∑ b, (∑ a, g0 c a * g0inv a b) * ph (X (i, b)) := by
-              simp only [Finset.mul_sum, Finset.sum_mul]
-              rw [Finset.sum_comm]
-              refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun a _ => by ring
-          _ = ph (X (i, c)) := by simp [hh]
+            eval₂Hom_C, RingHom.id_apply, if_false, Bool.false_eq_true]
+          calc ∑ a, g0 c a * ∑ b, g0inv a b * ph (X (i, b))
+              = ∑ b, (∑ a, g0 c a * g0inv a b) * ph (X (i, b)) := by
+                simp only [Finset.mul_sum, Finset.sum_mul]
+                rw [Finset.sum_comm]
+                refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun a _ => by ring
+            _ = ph (X (i, c)) := by simp [hh]
     · simp [frameCoordinateEvaluation, eBeta, hS]
 
 

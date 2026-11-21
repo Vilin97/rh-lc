@@ -46,9 +46,9 @@ theorem integral_sq_sub_le {μ : Measure ℂ} {u a : ℂ → H} {ab : ℂ → �
     (hab : MemLp ab 2 μ) (hd : ∀ᵐ D ∂μ, ‖a D‖ ≤ ab D) :
     ∫ D, ‖u D - a D‖ ^ 2 ∂μ ≤ 2 * ∫ D, ‖u D‖ ^ 2 ∂μ + 2 * ∫ D, ab D ^ 2 ∂μ := by
   have i1 : Integrable (fun D => ‖u D - a D‖ ^ 2) μ :=
-    (memLp_two_iff_integrable_sq_norm (hu.sub ha).1).1 (hu.sub ha)
-  have i2 : Integrable (fun D => ‖u D‖ ^ 2) μ := (memLp_two_iff_integrable_sq_norm hu.1).1 hu
-  have i3 : Integrable (fun D => ab D ^ 2) μ := (memLp_two_iff_integrable_sq hab.1).1 hab
+    (memLp_two_iff_integrable_sq_norm (hu.sub ha).aestronglyMeasurable).1 (hu.sub ha)
+  have i2 : Integrable (fun D => ‖u D‖ ^ 2) μ := (memLp_two_iff_integrable_sq_norm hu.aestronglyMeasurable).1 hu
+  have i3 : Integrable (fun D => ab D ^ 2) μ := (memLp_two_iff_integrable_sq hab.aestronglyMeasurable).1 hab
   calc ∫ D, ‖u D - a D‖ ^ 2 ∂μ ≤ ∫ D, (2 * ‖u D‖ ^ 2 + 2 * ab D ^ 2) ∂μ := by
         refine integral_mono_ae i1 ((i2.const_mul 2).add (i3.const_mul 2)) ?_
         filter_upwards [hd] with D hD

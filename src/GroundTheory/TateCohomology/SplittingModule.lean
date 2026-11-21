@@ -44,7 +44,7 @@ noncomputable def splittingSES : ShortComplex (Rep.{u} k G) :=
   pullbackSES (coindSES.obj M) (cocycleHom (splittingCocycle M u))
 
 theorem splittingSES_shortExact : (splittingSES M u).ShortExact :=
-  pullbackSES_shortExact _ (coindSES_shortExact M)
+  pullbackSES_shortExact (cocycleHom (splittingCocycle M u)) (coindSES_shortExact M)
 
 noncomputable abbrev splittingModule : Rep.{u} k G := (splittingSES M u).X₂
 

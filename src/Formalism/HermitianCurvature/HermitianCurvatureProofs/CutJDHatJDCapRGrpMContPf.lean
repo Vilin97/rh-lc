@@ -49,7 +49,7 @@ theorem prodM_succ_right (lo n : ℕ) : prodM a c d lo (n + 1) = prodM a c d lo 
 theorem bus_eq : ∀ i, (bus a c d i).1 = prodM a c d 0 i 0 0 ∧ (bus a c d i).2 = prodM a c d 0 i 0 1
   | 0 => by simp [bus, prodM]
   | i + 1 => by
-    obtain ⟨h1, h2⟩ : _ ∧ _ := bus_eq i
+    obtain ⟨h1, h2⟩ := bus_eq i
     rw [prodM_succ_right]
     simp only [bus, h1, h2, Matrix.mul_apply, Fin.sum_univ_two, Mi, zero_add]
     simp [sub_eq_add_neg]
@@ -195,7 +195,7 @@ theorem loc_tdUv (Y : ℂ) (b : Fin 2) : ∀ m, Loc (tdUv (X := X) r Y m b)
 theorem loc_vABs (Y : ℂ) : ∀ i, Loc (X := X) (Q.vABs r Y i).1 ∧ Loc (X := X) (Q.vABs r Y i).2
   | 0 => ⟨loc_id, loc_zero⟩
   | i + 1 => by
-    obtain ⟨h1, h2⟩ : _ ∧ _ := loc_vABs Y i
+    obtain ⟨h1, h2⟩ := loc_vABs Y i
     by_cases hi : i < r
     · simp only [Q.vABs, dif_pos hi]
       exact ⟨loc_sub (loc_comp h1 (loc_sub (loc_smul Y loc_id) (loc_pbOp _))) (loc_comp h2 (loc_cbOp _)),

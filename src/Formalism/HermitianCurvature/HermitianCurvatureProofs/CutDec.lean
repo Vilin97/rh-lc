@@ -44,7 +44,7 @@ theorem cptCoef_apx {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace �
         refine Complex.ofRealCLM.contDiff.comp (Real.smoothTransition.contDiff.comp ?_)
         refine (contDiff_const.sub ?_).div_const _
         refine ContDiff.sum fun i _ => ContDiff.sum fun j _ => hn2.comp ?_
-        exact (contDiff_apply_apply ℝ ℂ i j).comp (contDiff_id.const_smul (((n : ℝ) + 1)⁻¹))
+        exact (contDiff_apply_apply ℝ i j).comp (contDiff_id.const_smul (((n : ℝ) + 1)⁻¹))
       exact hc.contDiffOn.smul ((Complex.ofRealCLM.contDiff.comp
         (hχs.comp ((JCx1.contDiff_Gf Bs.z Bs.z').div_const ε))).contDiffOn.smul hF')
     · intro g hg hgv

@@ -17,7 +17,7 @@ section Alg
 
 variable {G R S : Type} [Group G] [CommRing R] [CommRing S] {m : ℕ}
 
-private theorem adFun_map (f : R →+* S) (x : GG m R) (X : Matrix (Fin m) (Fin m) R) :
+private theorem adFun_map (f : R →+* S) (x : GG (m := m) (R := R)) (X : Matrix (Fin m) (Fin m) R) :
     (x.adFun X).map f = (GG.map f x).adFun (X.map f) := by
   have h1 : (thetaLie X).map f = thetaLie (X.map f) := by
     unfold thetaLie
@@ -50,8 +50,8 @@ private theorem ep_mul (Y : Matrix (Fin m) (Fin m) R) (Z : Matrix (Fin m) (Fin m
     ep Y * Z = ep (Y * Z.map (pr R)) := by
   rw [ep_eq, Matrix.smul_mul, eps_smul, Matrix.map_mul, inc_pr]
 
-private theorem ad_ep (x : GG m (DualNumber R)) (Y : Matrix (Fin m) (Fin m) R) :
-    GG.ad m _ x (ep Y) = ep ((GG.map (pr R) x).adFun Y) := by
+private theorem ad_ep (x : GG (m := m) (R := DualNumber R)) (Y : Matrix (Fin m) (Fin m) R) :
+    GG.ad x (ep Y) = ep ((GG.map (pr R) x).adFun Y) := by
   rw [ep_eq, map_smul, eps_smul, GG.ad_apply, adFun_map, inc_pr]
 
 private theorem ep_add (X Y : Matrix (Fin m) (Fin m) R) : ep (X + Y) = ep X + ep Y := by
@@ -73,7 +73,8 @@ private theorem ker_sq : RingHom.ker (pr R) * RingHom.ker (pr R) = ⊥ := by
   rw [Ideal.mem_bot]
   ext <;> simp [hx', hy']
 
-private theorem exists_coc (r : G →* GG m R) (r' : G →* GG m (DualNumber R)) (h : (GG.map (pr R)).comp r' = r) :
+private theorem exists_coc (r : G →* GG (m := m) (R := R)) (r' : G →* GG (m := m) (R := DualNumber R))
+    (h : (GG.map (pr R)).comp r' = r) :
     ∃ γ : G → Matrix (Fin m) (Fin m) R, IsCoc r γ ∧
       ∀ g, (r' g).mat = (r g).mat.map (inc R) + ep (γ g * (r g).mat) := by
   have e : (Ideal.Quotient.mk (RingHom.ker (pr R))).comp ((inc R).comp (pr R)) = Ideal.Quotient.mk _ := by
@@ -100,7 +101,8 @@ private theorem exists_coc (r : G →* GG m R) (r' : G →* GG m (DualNumber R))
     rw [← h4, MonoidHom.comp_apply, GG.map_mat, inc_pr] at e2
     rw [(h3 g).2, Matrix.add_mul, Matrix.one_mul, MonoidHom.comp_apply, GG.map_mat, e2]
 
-private theorem exists_conj (r : G →* GG m R) (r' : G →* GG m (DualNumber R)) (h : (GG.map (pr R)).comp r' = r)
+private theorem exists_conj (r : G →* GG (m := m) (R := R)) (r' : G →* GG (m := m) (R := DualNumber R))
+    (h : (GG.map (pr R)).comp r' = r)
     (γ : G → Matrix (Fin m) (Fin m) R) (hγ : ∀ g, (r' g).mat = (r g).mat.map (inc R) + ep (γ g * (r g).mat))
     (X : Matrix (Fin m) (Fin m) R) :
     ∃ n : GL (Fin m) (DualNumber R), Matrix.GeneralLinearGroup.map (pr R) n = 1 ∧
@@ -145,7 +147,7 @@ theorem dual_ord (hP : LocalPublishedTheorems) {l : ℕ} [Fact l.Prime] {O : Typ
     [IsDiscreteValuationRing O] [CharZero O] [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O]
     [IsAdicComplete (maximalIdeal O) O] (D : Dat3 l O) (E : Type) [Field E] [Algebra ℚ_[l] E]
     [Module.Finite ℚ_[l] E] [Algebra O E] [Algebra ℤ_[l] E] [IsScalarTower ℤ_[l] O E] [IsScalarTower ℤ_[l] ℚ_[l] E]
-    (r' : GQ l →* GG 3 (DualNumber E)) (hr : D.InDcr (fstHom E E E : DualNumber E →+* E) r') :
+    (r' : GQ l →* GG (m := 3) (R := DualNumber E)) (hr : D.InDcr (fstHom E E E : DualNumber E →+* E) r') :
     D.InDord (fstHom E E E : DualNumber E →+* E) r' := by
   haveI : Module.Finite ℚ_[l] (DualNumber E) := inferInstanceAs (Module.Finite ℚ_[l] (E × E))
   obtain ⟨γ, hc, hγ⟩ := exists_coc _ r' hr.red

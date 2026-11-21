@@ -96,7 +96,7 @@ theorem divided_powers_preserve_polarization (p : ℕ) [Fact p.Prime] (Q : MvPol
   by_cases hkw : k ≤ m w
   · right
     have hz : padicValInt p (ε ^ k * ((m w).choose k : ℤ)) = padicValNat p ((m w).choose k) := by
-      simp [padicValInt, Int.natAbs_mul, Int.natAbs_pow, hε]
+      simp [padicValInt, Int.natAbs_mul, Int.natAbs_pow, hε, ← Nat.padicValNat_def]
     rw [hz]
     set s : Finset σ := m.support ∪ {v, w} with hs
     have hvs : v ∈ s := by simp [hs]

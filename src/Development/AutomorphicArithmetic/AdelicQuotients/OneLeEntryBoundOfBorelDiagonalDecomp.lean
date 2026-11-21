@@ -124,6 +124,7 @@ theorem UpperTheory.one_le_entry_bound_of_borel_diagonal_decomp :
       (fun p q h => by rw [infAt_apply, mem_adelicBorel.1 hb' h]; rfl)
       r ε hε hr i j hi hj
     rw [← h1, infAt_apply, AdelicGLn.diagonal_apply] at h2
+    rw [AdeleRing.algebraMap_fst_apply] at h2
     exact h2
   have hN : 0 ≤ (n : ℝ) ^ 2 * ε := by positivity
   have pb := AutomorphicForm.height_pos b
@@ -158,7 +159,7 @@ theorem UpperTheory.one_le_entry_bound_of_borel_diagonal_decomp :
       AutomorphicForm.heightConst K n ^ 2 *
         (AutomorphicForm.height b * AutomorphicForm.height m * AutomorphicForm.height b') := by
     calc _ ≤ ∏ᶠ v : HeightOneSpectrum (𝓞 K), AutomorphicForm.locHeight (finAt v (b * m * b')) :=
-          finprod_le_finprod (Filter.eventually_cofinite.1 (eventually_norm_eq_one hc))
+          finprod_le_finprod₀ (Filter.eventually_cofinite.1 (eventually_norm_eq_one hc))
             (fun _ => norm_nonneg _) (AutomorphicForm.finite_mulSupport_locHeight_finAt _) hv
       _ ≤ AutomorphicForm.height (b * m * b') :=
           le_mul_of_one_le_left (zero_le_one.trans (AutomorphicForm.one_le_finprod_locHeight _))

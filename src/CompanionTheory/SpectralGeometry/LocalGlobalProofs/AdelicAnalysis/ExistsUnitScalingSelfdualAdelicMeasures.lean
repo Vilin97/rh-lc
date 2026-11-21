@@ -171,8 +171,10 @@ theorem sdW_iff (hCM : IsCMExt F E σ) {M : ℕ} (J : Matrix (Fin M) (Fin M) E)
   constructor
   · intro h
     rw [← inj μ, h, ← map_coordW hCM hc lam hlam n M, ← Measure.map_smul, inj]
+    exact hm.aemeasurable
   · intro h
     rw [h, Measure.map_smul, map_coordW hCM hc lam hlam n M]
+    exact hm.aemeasurable
 
 end Meas
 

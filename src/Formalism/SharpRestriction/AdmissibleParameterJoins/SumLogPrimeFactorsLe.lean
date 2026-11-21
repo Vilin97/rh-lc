@@ -15,7 +15,7 @@ open Formalism.BasicNotions Formalism.HN
 
 section Scale
 
-variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K]
+variable {K V ι : Type} [Field K] [NumberField K] [StarRing K] [IsTotallyComplex K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [Fintype ι] [DecidableEq ι]
 
 theorem rkK_pos (b : Basis ι K V) (M : Submodule (𝓞 K) V) (hM0 : M ≠ ⊥) : 0 < rkK M := by
@@ -335,7 +335,7 @@ theorem sum_log_primes_le (N : ℕ) :
     intro p hp
     exact Nat.cast_ne_zero.mpr (Finset.mem_filter.mp hp).2.ne_zero
   rw [← h1]
-  have h2 : ((primorial N : ℕ) : ℝ) ≤ (4 : ℝ) ^ N := by exact_mod_cast primorial_le_4_pow N
+  have h2 : ((primorial N : ℕ) : ℝ) ≤ (4 : ℝ) ^ N := by exact_mod_cast primorial_le_four_pow N
   have h3 : (0 : ℝ) < ((primorial N : ℕ) : ℝ) := by exact_mod_cast primorial_pos N
   calc Real.log ((primorial N : ℕ) : ℝ) ≤ Real.log ((4 : ℝ) ^ N) := Real.log_le_log h3 h2
     _ = N * Real.log 4 := by rw [Real.log_pow]

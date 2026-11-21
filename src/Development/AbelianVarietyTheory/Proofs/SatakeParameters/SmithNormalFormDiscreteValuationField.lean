@@ -24,10 +24,12 @@ theorem vNN_le_one_iff (x : L) : vNN L x ≤ 1 ↔ x ∈ Formalism.UG.intL L := 
   rw [map_one] at h
   exact h
 
-theorem vNN_integers : (vNN L).Integers ↥(Formalism.UG.intL L) where
-  hom_inj := Subtype.val_injective
-  map_le_one := fun x => (vNN_le_one_iff L _).2 x.2
-  exists_of_le_one := fun r hr => ⟨⟨r, (vNN_le_one_iff L _).1 hr⟩, rfl⟩
+theorem vNN_integers : (vNN L).Integers ↥(Formalism.UG.intL L) := by
+  refine ⟨Subtype.val_injective, ?_, ?_⟩
+  · intro x
+    exact (vNN_le_one_iff L _).2 x.2
+  · intro r hr
+    exact ⟨⟨r, (vNN_le_one_iff L _).1 hr⟩, rfl⟩
 
 theorem exists_clear {ι : Type} (s : Finset ι) (f : ι → L) :
     ∃ c : L, c ≠ 0 ∧ c ∈ Formalism.UG.intL L ∧ ∀ i ∈ s, c * f i ∈ Formalism.UG.intL L := by

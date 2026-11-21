@@ -264,11 +264,11 @@ theorem rows_sizeZ_cmp (hrd : 0 < D.host.rdE) {b : ℝ} (hb : 1 ≤ b) (c Ch : �
   calc ∏ τ, ∏ l ∈ Finset.Icc 1 (D.R.rS + 1), max 1 (absDl D Z l τ / b ^ (c * (D.R.m : ℝ) ^ 2))
       ≤ ∏ τ, ∏ l ∈ Finset.Icc 1 (D.R.rS + 1),
           (b ^ (max (Ch - c) 0 * (D.R.m : ℝ) ^ 2) * max 1 (absDl D Z l τ / b ^ (Ch * (D.R.m : ℝ) ^ 2))) := by
-        apply Finset.prod_le_prod
+        apply Finset.prod_le_prod₀
         · intro τ _
           exact Finset.prod_nonneg (fun l _ => le_trans zero_le_one (le_max_left _ _))
         · intro τ _
-          apply Finset.prod_le_prod
+          apply Finset.prod_le_prod₀
           · intro l _
             exact le_trans zero_le_one (le_max_left _ _)
           · intro l _
@@ -979,8 +979,10 @@ theorem rowsT_small (hS : Cnt.Stand D u u') (hrd : 0 < D.host.rdE) (t t' : D.s.T
       have h0'' : Dr (X.fl t) (X.fl' t') = 0 := by rw [e]; exact h0'
       have hne : Nonempty D.what₂.Tau := by
         rw [← Fintype.card_pos_iff, D.what₂.card_Tau]
-        simp only [Formalism.BasicNotions.Ranks.f, Formalism.BasicNotions.Ranks.n]
-        positivity
+        have := D.R.two_le_m
+        have := D.R.m_le_f
+        unfold Formalism.BasicNotions.Ranks.f Formalism.BasicNotions.Ranks.n
+        omega
       obtain ⟨τ0⟩ := hne
       have : ∏ τ : D.what₂.Tau,
           (chSh (Tu D u) (Tu D u') (X.fl t) (X.fl' t) (embS D τ) *

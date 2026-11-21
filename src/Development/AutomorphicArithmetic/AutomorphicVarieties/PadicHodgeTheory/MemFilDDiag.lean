@@ -43,19 +43,30 @@ theorem tm_actD (g : G) (hf : ∀ x, f (ρ g x) = ρ' g (f x)) (y : V ⊗[ℚ_[l
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem tm_Dcr (hf : ∀ g x, f (ρ g x) = ρ' g (f x)) {y : V ⊗[ℚ_[l]] Bcr l} (hy : y ∈ Dcr φ ρ) :
-    tm l _ f y ∈ Dcr φ ρ' :=
-  (mem_Dcr _ _ _).2 fun g => by rw [← tm_actC φ f g (hf g), (mem_Dcr _ _ _).1 hy]
+    tm l _ f y ∈ Dcr φ ρ' := by
+  simp only [Dcr, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply,
+    LinearMap.id_apply, sub_eq_zero] at hy ⊢
+  intro g
+  rw [← tm_actC φ f g (hf g), hy g]
 
 theorem tm_FilD (hf : ∀ g x, f (ρ g x) = ρ' g (f x)) {i : ℤ} {y : V ⊗[ℚ_[l]] Bdr l} (hy : y ∈ FilD φ ρ i) :
     tm l _ f y ∈ FilD φ ρ' i := by
-  refine ⟨(mem_Ddr _ _ _).2 fun g => by rw [← tm_actD φ f g (hf g), (mem_Ddr _ _ _).1 hy.1], ?_⟩
-  obtain ⟨z, rfl⟩ := hy.2
-  refine ⟨tm l _ f z, ?_⟩
-  clear hy
-  induction z using TensorProduct.induction_on with
-  | zero => simp only [map_zero]
-  | tmul v b => rfl
-  | add x y hx hy => simp only [map_add (f := _), hx, hy]
+  have hyD : y ∈ Ddr φ ρ := hy.1
+  simp only [Ddr, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply,
+    LinearMap.id_apply, sub_eq_zero] at hyD
+  change tm l _ f y ∈ Ddr φ ρ' ∧ tm l _ f y ∈ FilT A V' i
+  refine ⟨?_, ?_⟩
+  · simp only [Ddr, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply,
+      LinearMap.id_apply, sub_eq_zero]
+    intro g
+    rw [← tm_actD φ f g (hf g), hyD g]
+  · obtain ⟨z, rfl⟩ := hy.2
+    refine ⟨tm l _ f z, ?_⟩
+    clear hy hyD
+    induction z using TensorProduct.induction_on with
+    | zero => simp only [map_zero]
+    | tmul v b => rfl
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem tm_smulC (K : FinExt l) (c : A ⊗[ℚ_[l]] ↥(K0 K)) (y : V ⊗[ℚ_[l]] Bcr l) :
     tm l _ f (smulC V K c y) = smulC V' K c (tm l _ f y) := by

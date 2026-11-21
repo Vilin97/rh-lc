@@ -32,7 +32,8 @@ theorem evL_fb {n M : ℕ} (lev : Fin n → ℕ) (d : Fin M → ℕ) (h : ∑ i,
   unfold fb
   rw [map_list_prod, List.map_ofFn]
   congr 2
-  rw [map_qdet, shift, add_sub_assoc]
+  funext i
+  rw [Function.comp_apply, map_qdet, shift, add_sub_assoc]
   congr 1
   funext p q
   simp [evL, hlev]

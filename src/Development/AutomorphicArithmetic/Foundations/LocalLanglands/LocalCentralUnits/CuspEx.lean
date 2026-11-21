@@ -176,7 +176,7 @@ theorem cuspEx : CuspEx := by
   obtain ⟨r₀, H1, H2, H3⟩ := goodMap E Ω A w h a ha
   have H : Gm a ha r₀ := ⟨H1, H2, H3⟩
   obtain ⟨e, he⟩ := expo E Ω A w h a ha
-  haveI : Nonempty (WD h) := ⟨WD.lpZero h⟩
+  haveI : Nonempty (WD h) := ⟨WD.lpZero⟩
   choose! J hJ using junkEx E Ω A w h
   let r : IrrGL (k := w.adicCompletion E) → WD h := fun x => if GoodCusp x then r₀ x else (J x.1).lpTw (e x)
   have rg : ∀ x, GoodCusp x → r x = r₀ x := fun x hx => if_pos hx

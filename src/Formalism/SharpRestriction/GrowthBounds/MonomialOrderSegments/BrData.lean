@@ -689,7 +689,7 @@ theorem exists_pre (G' : MvPolynomial ((toData Dt).ML × Fin r) (G.KK O)) (h : (
   classical
   refine exists_rename_eq_of_vars_subset_range G' (Prod.map (fM Dt) id) (fM_inj Dt) ?_
   intro v hv
-  rw [Finset.mem_coe, mem_vars] at hv
+  rw [Finset.mem_coe, mem_vars_iff_mem_support] at hv
   obtain ⟨α, hα, hvα⟩ := hv
   rw [Finsupp.mem_support_iff] at hvα
   obtain ⟨x, a⟩ := v

@@ -34,20 +34,20 @@ theorem conj_meas (a : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) :
     Measurable (conjM (k := k) (r := r) a) := by
   refine Continuous.measurable (continuous_pi fun i => continuous_pi fun j => ?_)
   simp only [Formalism.QuantumDeterminants.conjM, Matrix.mul_apply, Matrix.of_apply]
-  exact continuous_finset_sum _ fun l _ =>
-    (continuous_finset_sum _ fun n _ => by fun_prop).mul continuous_const
+  exact continuous_finsetSum _ fun l _ =>
+    (continuous_finsetSum _ fun n _ => by fun_prop).mul continuous_const
 
 theorem rmul_meas (a : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) :
     Measurable (Formalism.FourierDecayAlt.B.rmulF a : Mt k r → Mt k r) := by
   refine Continuous.measurable (continuous_pi fun i => continuous_pi fun j => ?_)
   simp only [Formalism.FourierDecayAlt.B.rmulF, Matrix.mul_apply, Matrix.of_apply]
-  exact continuous_finset_sum _ fun l _ => by fun_prop
+  exact continuous_finsetSum _ fun l _ => by fun_prop
 
 theorem hsN_cont : Continuous (fun y : Mt k r => Formalism.MainNotions.GrowthW.hsN (Matrix.of y)) := by
   unfold Formalism.MainNotions.GrowthW.hsN
   simp only [Matrix.of_apply]
   refine Real.continuous_sqrt.comp ?_
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   exact Complex.continuous_normSq.comp ((continuous_apply j).comp (continuous_apply i))
 
 theorem haarLie_finite_compact (κ : ℝ≥0∞) (hκ : κ ≠ ⊤) (K : Set (Mt k r)) (hK : IsCompact K) :
@@ -107,6 +107,7 @@ theorem haar_lie_measure_on_nilpotent (hL : NLeft) (κ : ℝ≥0∞) (h0 : κ �
     hconc hleft hfin
   refine ⟨hconc, hleft, fun a ha => ?_, hfin, haarLie_ne_zero κ h0⟩
   rw [hc, Measure.map_smul, hμ0.right a ha]
+  exact (rmul_meas a).aemeasurable
 
 theorem measPresN_conj_of {z : Fin (2 * r + k + 1) → ℂ} {μN : Measure (Mt k r)}
     (hN : Formalism.FourierDecayAlt.B.IsHaarOn (Nset k r) μN) (hz : inWb k r z) (hT : 0 < Tz k r z) :

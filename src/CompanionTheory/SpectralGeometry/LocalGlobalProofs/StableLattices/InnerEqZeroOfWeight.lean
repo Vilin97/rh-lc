@@ -49,7 +49,7 @@ lemma klower_mem {a b : Fin n} (hab : b < a) (he : ε a = ε b) {x : U}
     have h := kword_mem (F := F) (w := w) hl'
     simpa [word_cons] using h
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 lemma kcomm_apply (hF : KRel ε F) {i j a b : Fin n} (hij : ε i = ε j) (hab : ε a = ε b) (u : U) :

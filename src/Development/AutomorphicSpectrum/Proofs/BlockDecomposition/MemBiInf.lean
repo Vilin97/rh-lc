@@ -19,7 +19,7 @@ theorem dividedPowerFiltration_bot {B : Type} [CommRing B] {J : Ideal B} (δ : D
   rintro _ ⟨L, hL, hr', rfl⟩
   have : ∃ q ∈ L, q.1 ≠ 0 := by
     by_contra hc
-    push_neg at hc
+    push Not at hc
     have h0 : (L.map Prod.fst).sum = 0 := List.sum_eq_zero (by
       intro x hx
       obtain ⟨q, hq, rfl⟩ := List.mem_map.1 hx

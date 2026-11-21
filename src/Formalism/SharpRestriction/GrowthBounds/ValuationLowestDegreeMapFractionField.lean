@@ -425,11 +425,12 @@ theorem coeff_suppProj (R : Type) [CommRing R] {σ : Type} (s : Set (σ →₀ �
       · rw [if_pos hm]
       · rw [if_neg hm, coeff_monomial, if_neg]
         rintro rfl; exact hm hu
-    · rw [if_neg hu, coeff_zero]
+    · rw [if_neg hu, AddMonoidAlgebra.coeff_zero]
       by_cases hm : m ∈ s
-      · rw [if_pos hm, coeff_monomial, if_neg]
-        rintro rfl; exact hu hm
+      · rw [if_pos hm, coeff_monomial, if_neg (show u ≠ m from fun h => hu (h ▸ hm))]
+        rfl
       · rw [if_neg hm]
+        rfl
   | add p q hp hq =>
     rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
     split_ifs <;> simp
@@ -475,15 +476,15 @@ theorem suppProj_of_disjoint (R : Type) [CommRing R] {σ : Type} (s t : Set (σ 
     rw [MvPolynomial.mem_restrictSupport_iff] at hA
     have hmt : m ∈ t := hA (by rw [Finset.mem_coe, MvPolynomial.mem_support_iff]; exact hc)
     exact Set.disjoint_left.mp hst h hmt
-  · rw [if_neg h]
+  · simp [h]
 
 theorem suppProj_mem_supported (R : Type) [CommRing R] {σ : Type} (s : Set (σ →₀ ℕ)) (A : MvPolynomial σ R)
     (v : Set σ) (hA : A ∈ supported R v) : suppProj R s A ∈ supported R v := by
   rw [MvPolynomial.mem_supported] at hA ⊢
   intro i hi
-  rw [Finset.mem_coe, MvPolynomial.mem_vars] at hi
+  rw [Finset.mem_coe, MvPolynomial.mem_vars_iff_mem_support] at hi
   obtain ⟨d, hd, hid⟩ := hi
-  exact hA (by rw [Finset.mem_coe, MvPolynomial.mem_vars]; exact ⟨d, suppProj_support_subset R s A hd, hid⟩)
+  exact hA (by rw [Finset.mem_coe, MvPolynomial.mem_vars_iff_mem_support]; exact ⟨d, suppProj_support_subset R s A hd, hid⟩)
 
 def polComp (R : Type) [CommRing R] {ι : Type} (n : ℕ) (d : ι → ℕ) :
     MvPolynomial (ι × Fin n) R →ₗ[R] MvPolynomial (ι × Fin n) R :=
@@ -957,7 +958,7 @@ theorem crit_alt [NeZero r] {K : ℕ} [NeZero K] (R : Type) [CommRing R] [IsDoma
       Submodule.map (segRen F j R (r + K)).toLinearMap (XXZ R (segPairs0 F j K m th)) := by
   classical
   obtain ⟨A₀, rfl⟩ := exists_segRen F j A hA
-  obtain ⟨G₀, rfl⟩ := exists_segRen F j G (supported_mono (fun v hv => hv.1) hG)
+  obtain ⟨G₀, rfl⟩ := exists_segRen F j G (supported_mono (show {v : ℤ × Fin K | v.1 ∈ F.letters j ∧ ¬ F.IsW j v.1} ⊆ {v : ℤ × Fin K | v.1 ∈ F.letters j} from fun v hv => hv.1) hG)
   have hG₀ : ∀ u ∈ G₀.vars, ¬ F.IsW j (segE F j u.1) := fun u hu =>
     ((mem_supported.mp hG) (Finset.mem_coe.mpr (mem_vars_rename_inj _ (segVar_injective F j K) G₀ hu))).2
   rw [← segRen_mul]
@@ -1270,10 +1271,10 @@ theorem li_graded {R : Type} [CommRing R] {σ ι κ : Type} (f : ι → MvPolyno
   intro s g hs x0 hx0
   have hfil : ∑ x ∈ s with d x = d x0, g x • f x = 0 := by
     ext m
-    rw [coeff_sum, coeff_zero]
+    rw [coeff_sum, AddMonoidAlgebra.coeff_zero]
     by_cases hm : m ∈ T (d x0)
     · have h0 := congrArg (AddMonoidAlgebra.coeff · m) hs
-      rw [coeff_sum, coeff_zero] at h0
+      rw [coeff_sum, AddMonoidAlgebra.coeff_zero] at h0
       rw [Finset.sum_filter]
       refine Eq.trans ?_ h0
       refine Finset.sum_congr rfl fun x _ => ?_
@@ -1378,7 +1379,8 @@ theorem li_ext {R : Type} [CommRing R] {σ τ α β : Type} (u : α → MvPolyno
     intro m
     have h1 := congrArg (fun P => AddMonoidAlgebra.coeff (sumAlgEquiv R σ τ P) m) hs'
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_smul, coeff_sum, coeff_smul, li_key, map_zero, coeff_zero] at h1
+      simp only [map_sum, map_smul, coeff_sum, coeff_smul, li_key, map_zero, AddMonoidAlgebra.coeff_zero] at h1
+    change _ = 0 at h1
     rw [Finset.sum_comm] at h1
     rw [← h1]
     refine Finset.sum_congr rfl fun b _ => ?_
@@ -1389,7 +1391,9 @@ theorem li_ext {R : Type} [CommRing R] {σ τ α β : Type} (u : α → MvPolyno
   have ha : ∀ b ∈ s.image Prod.snd, ∑ a ∈ s.image Prod.fst, g' a b • u a = 0 := by
     intro b hb'
     ext m
-    rw [coeff_sum, coeff_zero, ← hb b hb' m]
+    rw [coeff_sum, AddMonoidAlgebra.coeff_zero]
+    change (∑ a ∈ s.image Prod.fst, AddMonoidAlgebra.coeff (g' a b • u a) m) = 0
+    rw [← hb b hb' m]
     exact Finset.sum_congr rfl fun a _ => by rw [coeff_smul, smul_eq_mul]
   have h2 := linearIndependent_iff'.mp hu _ (fun a => g' a x0.2) (ha x0.2 (Finset.mem_image_of_mem _ hx0)) x0.1
     (Finset.mem_image_of_mem _ hx0)
@@ -2542,7 +2546,8 @@ theorem last_inequality_clause_of_lemma (D : Formalism.BasicNotions.D7) (h : Con
     have h3 : a.val < b.val := hab
     show N - b.val < N - a.val
     omega
-  exact (h p O S N r K LL B (fun i => N - i.val) hK hanti (fun i => Nat.sub_pos_of_lt i.2) _
+  exact (h p O S N r K LL B (fun i => N - i.val) hK hanti (fun i => Nat.sub_pos_of_lt i.2)
+    {q | (∃ P : PPath (r + K) N LL B, P.mu = joinPT q.1 q.2) ∧ ∀ e ∈ L, e.Sat q.1 q.2}
     (fun q hq => hq.1)).2.2 L rfl
 
 theorem fourth_clause_of_lemmas (D : Formalism.BasicNotions.D7) (hB1 : RotatedSumBound D) (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]

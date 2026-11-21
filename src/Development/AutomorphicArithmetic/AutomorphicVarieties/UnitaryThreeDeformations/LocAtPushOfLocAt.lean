@@ -17,8 +17,8 @@ private theorem map_ofGL (f : R →+* R') (h : GL (Fin 3) R) :
 private theorem conj_push (φ : R →ₐ[O] R') (h : GL (Fin 3) R) (r : D →* GG (m := 3) (R := R)) (g : D) :
     conjBy (GeneralLinearGroup.map (φ : R →+* R') h)⁻¹ (((GG.map (φ : R →+* R')).comp r)) g =
       GG.map (φ : R →+* R') (conjBy h⁻¹ r g) := by
-  simp only [conjBy, MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom, MulAut.conj_apply,
-    MulAut.conj_inv_apply, map_mul, map_inv, map_ofGL]
+  simp only [conjBy, MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom, MulAut.conj_inv_apply,
+    map_mul, map_inv, map_ofGL]
 
 private theorem conj_push_mat (φ : R →ₐ[O] R') (h : GL (Fin 3) R) (r : D →* GG (m := 3) (R := R)) (g : D) (a b : Fin 3) :
     (conjBy (GeneralLinearGroup.map (φ : R →+* R') h)⁻¹ (((GG.map (φ : R →+* R')).comp r)) g).mat a b =
@@ -28,21 +28,19 @@ private theorem conj_push_mat (φ : R →ₐ[O] R') (h : GL (Fin 3) R) (r : D �
 
 private theorem triIn_push (φ : R →ₐ[O] R') {η : D →* ℤˣ} {Ψ : D →* Oˣ} {I : Subgroup D}
     {r : D →* GG (m := 3) (R := R)} {h : GL (Fin 3) R} (H : TriIn η Ψ I r h) :
-    TriIn η Ψ I (((GG.map (φ : R →+* R')).comp r)) (GeneralLinearGroup.map (φ : R →+* R') h) where
-  tri := by
-    intro g hg a b hab
+    TriIn η Ψ I ((GG.map (φ : R →+* R')).comp r) (GeneralLinearGroup.map (φ : R →+* R') h) := by
+  refine ⟨?_, ?_⟩
+  · intro g hg a b hab
     rw [conj_push_mat, H.tri g hg a b hab, map_zero]
-  ine := by
-    intro s hs hη a
+  · intro s hs hη a
     rw [conj_push_mat, H.ine s hs hη a, AlgHom.commutes]
 
 private theorem diagIn_push (φ : R →ₐ[O] R') {η : D →* ℤˣ} {Ψ : D →* Oˣ} {I : Subgroup D}
     {r : D →* GG (m := 3) (R := R)} {h : GL (Fin 3) R} (H : DiagIn η Ψ I r h) :
-    DiagIn η Ψ I (((GG.map (φ : R →+* R')).comp r)) (GeneralLinearGroup.map (φ : R →+* R') h) where
-  toTriIn := triIn_push φ H.toTriIn
-  low := by
-    intro g hg a b hab
-    rw [conj_push_mat, H.low g hg a b hab, map_zero]
+    DiagIn η Ψ I ((GG.map (φ : R →+* R')).comp r) (GeneralLinearGroup.map (φ : R →+* R') h) := by
+  refine ⟨triIn_push φ H.toTriIn, ?_⟩
+  intro g hg a b hab
+  rw [conj_push_mat, H.low g hg a b hab, map_zero]
 
 variable [IsLocalRing O] [IsCO O R] [IsCO O R']
 
@@ -56,7 +54,7 @@ private theorem inHat_push (φ : R →ₐ[O] R') {h : GL (Fin 3) R} (H : InHat h
   intro a b
   have e : ((GeneralLinearGroup.map (φ : R →+* R') h : Matrix (Fin 3) (Fin 3) R') - 1) a b =
       φ (((h : Matrix (Fin 3) (Fin 3) R) - 1) a b) := by
-    by_cases hab : a = b <;> simp [Matrix.sub_apply, Matrix.one_apply, hab]
+    by_cases hab : a = b <;> simp [Matrix.sub_apply, hab]
   rw [e]
   exact hm _ (H a b)
 
@@ -74,4 +72,4 @@ theorem UpperTheory.locAt_push_of_locAt :
     exact ⟨_, inHat_push φ hh, diagIn_push φ ht⟩
   · intro s hs
     have h1 := hU hv s hs
-    simp only [MonoidHom.comp_apply, GG.map_right, h1, map_one]
+    simp only [MonoidHom.comp_apply, h1, map_one]

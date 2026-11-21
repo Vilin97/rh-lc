@@ -50,9 +50,6 @@ lemma qa_Slt {n : ℕ} (m : Fin n × Fin n →₀ ℕ) (a p : Fin n) :
     refine ⟨⟨k, by omega⟩, by simp [Fin.lt_def], ?_⟩
     unfold qa_S
     congr 1
-    ext b
-    simp only [mem_filter, mem_univ, true_and, Fin.lt_def, Fin.le_def]
-    omega
 
 lemma qa_of_cum {n : ℕ} (m m' : Fin n × Fin n →₀ ℕ) (h : ∀ a p, qa_S m a p = qa_S m' a p) : m = m' := by
   ext ⟨a, p⟩

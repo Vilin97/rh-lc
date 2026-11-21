@@ -24,6 +24,8 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
 section PI
 
+open scoped Pointwise
+
 variable {E P : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [MeasurableSpace E] [hB : BorelSpace E]
   [NormedAddCommGroup P] [NormedSpace ℝ P]
   {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V] [NormedSpace ℂ V] [IsScalarTower ℝ ℂ V]
@@ -350,8 +352,7 @@ def mulB (n : ℕ) : Matrix (Fin n) (Fin n) ℂ →L[ℝ] Matrix (Fin n) (Fin n)
       (LinearMap.mul ℝ (Matrix (Fin n) (Fin n) ℂ)))
 
 theorem ContDiff.mmul {P : Type*} [NormedAddCommGroup P] [NormedSpace ℝ P] {f g : P → Matrix (Fin n) (Fin n) ℂ}
-    (hf : ContDiff ℝ ∞ f) (hg : ContDiff ℝ ∞ g) : ContDiff ℝ ∞ (fun p => f p * g p) :=
-by
+    (hf : ContDiff ℝ ∞ f) (hg : ContDiff ℝ ∞ g) : ContDiff ℝ ∞ (fun p => f p * g p) := by
   show ContDiff ℝ ∞ (fun p => (mulB n (f p)) (g p))
   exact ((mulB n).contDiff.comp hf).clm_apply hg
 

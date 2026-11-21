@@ -27,7 +27,7 @@ lemma chiAt_nonneg (X : Data E r) (u : Fin 2 → Fin r → E) (hu : IsIsoPair X.
     0 ≤ (X.chiAt χ a τ0).re := by
   classical
   by_contra hneg
-  push_neg at hneg
+  push Not at hneg
   have he : X.IsIsoV (X.uvec u a) := isIsoV_uvec (X := X) hu ha
   have hreal : ∀ s : X.Ψ → ℝ, F (X.flowV (X.uvec u a) (fun τ => (s τ : ℂ)) x0) =
       cexp (4 * Real.pi * I * ∑ τ, ((X.chiAt χ a τ).re : ℂ) * s τ) * F x0 := by
@@ -85,7 +85,7 @@ lemma chiAt_nonneg (X : Data E r) (u : Fin 2 → Fin r → E) (hu : IsIsoPair X.
   have hprod : ∏ τ, max (if τ = τ0 then y else 1) (if τ = τ0 then y else 1)⁻¹ ^ (X.spread la τ / 2) =
       y ^ (X.spread la τ0 / 2) := by
     rw [Finset.prod_eq_single τ0 (fun τ _ h => by simp [h]) (fun h => absurd (Finset.mem_univ τ0) h)]
-    rw [if_pos rfl, max_eq_left ((inv_le_one_of_one_le₀ hy1).trans hy1)]
+    rw [ite_eq_left rfl, max_eq_left ((inv_le_one_of_one_le₀ hy1).trans hy1)]
   rw [hprod] at hN
   have hY := BoundedSectionAlgebra.nfac_pos (X := X) hdom la
   have hypos : 0 < y ^ (X.spread la τ0 / 2) := Real.rpow_pos_of_pos (by linarith) _
@@ -152,7 +152,7 @@ lemma fz_zero_of_inv (X : Data E r) (u : Fin 2 → Fin r → E) (hu : ∀ i k, h
   let e : (Fin (4 * Fintype.card X.Ψ) → ℝ) → ℂ := fun t => cexp (-(4 * Real.pi * I) * X.pairR χ (B t))
   have hfz : ∀ y, X.fz u g χ P y = ∫ t in K, P (X.Zb u (B t) y) * e t := by
     intro y
-    simp only [Data.fz, if_pos hcond, dif_pos hωex]
+    simp only [Data.fz, ite_eq_left hcond, dite_eq_left hωex]
     rfl
   have hHerm : ∀ s t, IsHermFam (B t + R s) := by
     intro s t τ i k
@@ -215,7 +215,7 @@ lemma fz_zero_of_inv (X : Data E r) (u : Fin 2 → Fin r → E) (hu : ∀ i k, h
     have hy := X.Zb_dom u hu (B t) (herm_comb (X := X) hωH t) hx0
     have hc := hcusp _ hy
     simp only [Data.fj] at hc
-    rw [if_pos (fun p _ => ⟨0, by simp⟩), dif_pos (exists_fd X la)] at hc
+    rw [ite_eq_left (fun p _ => ⟨0, by simp⟩), dite_eq_left (exists_fd X la)] at hc
     simp only [Pi.zero_apply, Complex.ofReal_zero, zero_mul, Finset.sum_const_zero, mul_zero,
       Complex.exp_zero, mul_one] at hc
     have hV : ((volume (exists_fd X la).choose).toReal : ℂ)⁻¹ ≠ 0 :=
@@ -261,10 +261,10 @@ theorem nonvanishing_coefficient_positivity_of (h2 : UnipotentLatticeLift (E := 
   obtain ⟨-, hinvP, hβ⟩ := h2 r X u hu hΛ
   have hcond : IsHermFam χ ∧ X.IsFreqZ X.g χ := by
     by_contra hc
-    exact hfz (by simp only [Data.fz, if_neg hc])
+    exact hfz (by simp only [Data.fz, ite_eq_right hc])
   have hωex : ∃ ω, X.IsLZBasis X.g ω := by
     by_contra hc
-    exact hfz (by simp only [Data.fz, if_pos hcond, dif_neg hc])
+    exact hfz (by simp only [Data.fz, ite_eq_left hcond, dite_eq_right hc])
   obtain ⟨⟨hPsec, C, hC⟩, hcusp⟩ := hP
   have hPinv := hinvP la P hPsec hχΓ
   obtain ⟨⟨hFd, -, hFZ⟩, hFn, -⟩ :=
@@ -319,7 +319,7 @@ theorem nonvanishing_coefficient_positivity_of (h2 : UnipotentLatticeLift (E := 
     intro σ
     funext j
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [Data.emb, Data.uvec, hξ_def, Finset.sum_apply, map_sum, map_mul]
+      simp [Data.emb, Data.uvec, hξ_def, Finset.sum_apply, map_mul]
 
   have hinv : ∀ s : X.Ψ → ℝ, X.fz u X.g (X.embH β) P (X.flow ξ (fun τ => (s τ : ℂ)) x1) =
       X.fz u X.g (X.embH β) P x1 := by

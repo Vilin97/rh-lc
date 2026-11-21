@@ -30,4 +30,4 @@ theorem UpperTheory.Reformulated.B.Qp9.locPair_val_linear :
   · simp only [key, MvPolynomial.C_mul', map_smul, smul_eq_mul, Finset.mul_sum]
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [key, map_sum]
-    exact Finset.sum_comm
+      exact Finset.sum_comm

@@ -21,7 +21,7 @@ private theorem mapd_mul (a : R →+* F) (d : R →+ F) (hd : ∀ y z, d (y * z)
     (Y Z : Matrix (Fin n) (Fin n) R) : (Y * Z).map d = Y.map a * Z.map d + Y.map d * Z.map a := by
   ext i j
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_apply, mul_apply, map_sum, hd, Finset.sum_add_distrib, Matrix.add_apply]
+    simp only [Matrix.map_apply, Matrix.mul_apply, map_sum, hd, Finset.sum_add_distrib, Matrix.add_apply]
 
 private def toDual (a : R →+* F) (d : R →+ F) (hd : ∀ y z, d (y * z) = a y * d z + d y * a z) (h1 : d 1 = 0) :
     R →+* DualNumber F where
@@ -101,7 +101,7 @@ private theorem map_snd_sub (Y Z : Matrix (Fin n) (Fin n) (DualNumber F)) :
 
 private theorem snd_1 : (1 : Matrix (Fin n) (Fin n) (DualNumber F)).map TrivSqZeroExt.snd = 0 := by
   ext i j
-  rw [map_apply, one_apply]
+  rw [Matrix.map_apply, Matrix.one_apply]
   split_ifs <;> simp
 
 end SlopeTestRemainingChoices
@@ -158,12 +158,12 @@ private theorem locDual {F R H : Type} [Field F] [Infinite F] [CommRing R] [Grou
       rw [map_zero, map_list_prod, List.map_ofFn] at this
       rw [← this]
       congr 2
-      congr 1
-      refine Matrix.ext fun r s => ?_
-      simp only [RingHom.mapMatrix_apply, map_apply, Matrix.algebraMap_matrix_apply]
+      funext r
+      refine Matrix.ext fun i j => ?_
+      simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.sub_apply, Matrix.algebraMap_matrix_apply, MonoidHom.comp_apply, Function.comp_apply, map_sub]
       split_ifs
       · rfl
-      · exact (map_zero π).symm)
+      · simp)
     (fun g => ⟨fun i j => ⟨fun hij => hρ g i j hij, fun _ => rfl⟩,
       fun i j => ⟨fun hij => (toDual_fst a d hd h1 _).trans ((hUa g i j).trans (hρ g i j hij)),
         fun hij => (toDual_snd a d hd h1 _).trans (hdU g i j hij)⟩⟩)
@@ -223,7 +223,7 @@ private theorem selGen {l : ℕ} [Fact l.Prime] {L : Loc} {G G0 : Glob l L} (h :
   · rw [hV]
     intro i j hij
     show ((u g).map d * ρ g⁻¹) i j = 0
-    rw [mul_apply]
+    rw [Matrix.mul_apply]
     refine Finset.sum_eq_zero fun k _ => ?_
     by_cases hk : ((k : ℕ) < x.a) ↔ ((j : ℕ) < x.a)
     · rw [map_apply, hdU g i k (by tauto), zero_mul]

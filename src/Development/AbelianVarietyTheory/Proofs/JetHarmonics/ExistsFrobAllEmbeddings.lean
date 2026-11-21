@@ -33,13 +33,13 @@ def frobKer {R C : Type} [CommRing R] [Field C] (V : VF C) (f : R →+* C) (hf :
     exact lt_of_lt_of_le hb (le_add_of_nonneg_left (hf a))
 
 theorem frobKer_isPrime {R C : Type} [CommRing R] [Field C] (V : VF C) (f : R →+* C) (hf : ∀ x, V.Ge 0 (f x)) :
-    (frobKer V f hf).IsPrime where
-  ne_top' := by
-    rw [Ideal.ne_top_iff_one]
+    (frobKer V f hf).IsPrime := by
+  constructor
+  · rw [Ideal.ne_top_iff_one]
     show ¬ 0 < V.v (f 1)
     rw [map_one, V.v.map_one]
     exact lt_irrefl _
-  mem_or_mem' {a b} h := by
+  · intro a b h
     have h' : 0 < V.v (f (a * b)) := h
     rw [map_mul, V.v.map_mul] at h'
     change 0 < V.v (f a) ∨ 0 < V.v (f b)

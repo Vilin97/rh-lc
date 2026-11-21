@@ -16,6 +16,8 @@ open NumberField IntermediateField GroundTheory.Global GroundTheory.Global.SemiL
 
 open scoped NumberField.LiesOver
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 noncomputable section
 
 attribute [local instance] FiniteSubfield.isGalois_of_normal

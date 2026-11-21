@@ -85,7 +85,7 @@ theorem vQ_nat (hp : p.Prime) (S : Formalism.MainNotions.G.UniformizedDVR p O) (
 theorem dvrHyp (S : Formalism.MainNotions.G.UniformizedDVR p O) {n' : ℕ} (hG : Formalism.MainNotions.G.AdmissibleDVR p n' O) : DVRHyp (vQ p S) p := by
   haveI := Fact.mk hG.prime
   refine ⟨hG.prime, hG.five_le, ?_⟩
-  rw [vQ_nat hG.prime S p hG.prime.ne_zero, padicValNat_self]
+  rw [vQ_nat hG.prime S p hG.prime.ne_zero, Nat.padicValNat_def, Nat.Prime.multiplicity_self]
   simp
 
 theorem vQ_nonneg_iff (S : Formalism.MainNotions.G.UniformizedDVR p O) (x : Formalism.MainNotions.G.KK O) :

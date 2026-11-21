@@ -58,7 +58,7 @@ private theorem isGal_equiv {R' : Type} [CommRing R'] [Algebra k R'] (e : R ≃�
     exact ⟨c, (e.commutes c).symm⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [hp, ← map_mul, ← map_sum, hxy j hj]
-    split_ifs <;> simp
+      split_ifs <;> simp
 
 private theorem abstract_hilbert90 (σ : R ≃ₐ[k] R) (q : ℕ) (hσ : IsGal σ q) (O : Subring k) [IsLocalRing O] (S : Subring R)
     (hOS : ∀ x, algebraMap k R x ∈ S ↔ x ∈ O) (hS : ∀ r ∈ S, σ r ∈ S)
@@ -105,8 +105,8 @@ private theorem abstract_hilbert90 (σ : R ≃ₐ[k] R) (q : ℕ) (hσ : IsGal �
       exact ⟨⟨c, (hOS c).1 (hc ▸ r.2)⟩, Subtype.ext hc⟩
     set_option synthInstance.maxHeartbeats 100000 in
       · simp only [map_sum, map_mul, hjp]
-      refine (hxy j hj').trans ?_
-      split_ifs <;> simp
+        refine (hxy j hj').trans ?_
+        split_ifs <;> simp
   obtain ⟨a, rfl⟩ := (intGL_iff S a).1 ha
   obtain ⟨γ, rfl⟩ := (intGL_iff O γ).1 hγ
   have hcp : cp (Matrix.GeneralLinearGroup.map O.subtype γ) = (cp γ).map O.subtype := by

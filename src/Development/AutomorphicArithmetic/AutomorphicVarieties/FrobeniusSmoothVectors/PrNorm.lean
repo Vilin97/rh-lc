@@ -17,7 +17,7 @@ variable {l : ℕ} [Fact l.Prime] {k : Type} [Field k] {F : Frame l k} {n : ℕ}
 
 private theorem conj_left {G : Type} [Group G] (h : GL (Fin n) C)
     (r : G →* GG (m := n) (R := C)) (s : G) :
-    (conjBy h r s).left = h * (r s).left * sgnAct (r s).right h⁻¹ := by
+    (conjBy h r s).left = h * (r s).left * sgnAct n C (r s).right h⁻¹ := by
   simp [conjBy, GG.ofGL, MulAut.conj_apply, SemidirectProduct.mul_left, SemidirectProduct.mul_right, mul_assoc]
 
 private theorem conj_right {G : Type} [Group G] (h : GL (Fin n) C)

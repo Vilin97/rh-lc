@@ -108,7 +108,7 @@ theorem sInvariantToInvariants_surjective : Function.Surjective (sInvariantToInv
 
 omit [IsGalois F Ω] in
 theorem sInvariantToInvariants_eq_zero_iff (x : Additive (sInvariantSubgroup Ω S)) :
-    sInvariantToInvariants S x = 0 ↔
+    sInvariantToInvariants (Ω := Ω) S x = 0 ↔
       ((Additive.toMul x : sInvariantSubgroup Ω S) : (maxUnramifiedOutside F Ω S)ˣ) ∈ sUnitsMax F Ω S := by
   rw [Subtype.ext_iff]
   exact Submodule.Quotient.mk_eq_zero _
@@ -147,9 +147,10 @@ noncomputable def invariantsToSPic : (galUnitsModSUnits F Ω S).ρ.invariants �
       (sInvariantToInvariants_surjective (Ω := Ω) S)).symm.toAddMonoidHom
 
 theorem invariantsToSPic_apply (x : Additive (sInvariantSubgroup Ω S)) :
-    invariantsToSPic S (sInvariantToInvariants S x) = sPicMk S (divAbove S x) := by
+    invariantsToSPic (Ω := Ω) S (sInvariantToInvariants (Ω := Ω) S x) =
+      sPicMk S (divAbove S x) := by
   have h : (QuotientAddGroup.quotientKerEquivOfSurjective _
-      (sInvariantToInvariants_surjective (Ω := Ω) S)).symm (sInvariantToInvariants S x) =
+      (sInvariantToInvariants_surjective (Ω := Ω) S)).symm (sInvariantToInvariants (Ω := Ω) S x) =
       (x : Additive (sInvariantSubgroup Ω S) ⧸ (sInvariantToInvariants (Ω := Ω) S).ker) :=
     (AddEquiv.symm_apply_eq _).2 rfl
   simp only [invariantsToSPic, AddMonoidHom.comp_apply, AddEquiv.coe_toAddMonoidHom, h]
@@ -165,8 +166,9 @@ theorem invariantsToH1_surjective : Function.Surjective (invariantsToH1 (Ω := �
     (subsingleton_cohomology_one_galUnits (K := F) (L := maxUnramifiedOutside F Ω S)) x
 
 theorem invariantsToH1_eq_zero_iff (q : (galUnitsModSUnits F Ω S).ρ.invariants) :
-    invariantsToH1 S q = 0 ↔ ∃ a : Fˣ,
-      sInvariantToInvariants S (Additive.ofMul ⟨_, map_algebraMap_mem_sInvariantSubgroup (Ω := Ω) S a⟩) = q := by
+    invariantsToH1 (Ω := Ω) S q = 0 ↔ ∃ a : Fˣ,
+      sInvariantToInvariants (Ω := Ω) S
+        (Additive.ofMul ⟨_, map_algebraMap_mem_sInvariantSubgroup (Ω := Ω) S a⟩) = q := by
   refine (δ_H0Iso_inv_eq_zero_iff (sUnitsQuotSequence_shortExact F Ω S) q).trans ?_
   constructor
   · rintro ⟨w, rfl⟩
@@ -184,7 +186,7 @@ variable (S : Set (HeightOneSpectrum (𝓞 F)))
 
 noncomputable def h1SUnitsToSPic :
     cohomology (galSUnits S (maxUnramifiedOutside F Ω S)) 1 →+ sPic S :=
-  (QuotientAddGroup.lift (invariantsToH1 (Ω := Ω) S).ker (invariantsToSPic S) (fun q hq => by
+  (QuotientAddGroup.lift (invariantsToH1 (Ω := Ω) S).ker (invariantsToSPic (Ω := Ω) S) (fun q hq => by
       obtain ⟨a, rfl⟩ := (invariantsToH1_eq_zero_iff S q).1 (AddMonoidHom.mem_ker.1 hq)
       rw [AddMonoidHom.mem_ker, invariantsToSPic_apply, divAbove_algebraMap]
       exact (sPicMk_eq_zero_iff S _).2 ⟨a, rfl⟩)).comp
@@ -192,16 +194,17 @@ noncomputable def h1SUnitsToSPic :
       (invariantsToH1_surjective (Ω := Ω) S)).symm.toAddMonoidHom
 
 theorem h1SUnitsToSPic_invariantsToH1 (q : (galUnitsModSUnits F Ω S).ρ.invariants) :
-    h1SUnitsToSPic S (invariantsToH1 S q) = invariantsToSPic S q := by
+    h1SUnitsToSPic (Ω := Ω) S (invariantsToH1 (Ω := Ω) S q) = invariantsToSPic (Ω := Ω) S q := by
   have h : (QuotientAddGroup.quotientKerEquivOfSurjective _
-      (invariantsToH1_surjective (Ω := Ω) S)).symm (invariantsToH1 S q) =
+      (invariantsToH1_surjective (Ω := Ω) S)).symm (invariantsToH1 (Ω := Ω) S q) =
       (q : (galUnitsModSUnits F Ω S).ρ.invariants ⧸ (invariantsToH1 (Ω := Ω) S).ker) :=
     (AddEquiv.symm_apply_eq _).2 rfl
   simp only [h1SUnitsToSPic, AddMonoidHom.comp_apply, AddEquiv.coe_toAddMonoidHom, h]
   rfl
 
 theorem h1SUnitsToSPic_apply (x : Additive (sInvariantSubgroup Ω S)) :
-    h1SUnitsToSPic S (invariantsToH1 S (sInvariantToInvariants S x)) = sPicMk S (divAbove S x) := by
+    h1SUnitsToSPic (Ω := Ω) S (invariantsToH1 (Ω := Ω) S (sInvariantToInvariants (Ω := Ω) S x)) =
+      sPicMk S (divAbove S x) := by
   rw [h1SUnitsToSPic_invariantsToH1, invariantsToSPic_apply]
 
 theorem h1SUnitsToSPic_injective : Function.Injective (h1SUnitsToSPic (Ω := Ω) S) := by
@@ -215,7 +218,8 @@ theorem h1SUnitsToSPic_injective : Function.Injective (h1SUnitsToSPic (Ω := Ω)
   have hxy : divAbove S (x - y) = 0 := by
     rw [map_sub, divAbove_algebraMap, ha, sub_self]
   have hmem := mem_sUnitsMax_of_divAbove_eq_zero S (x := Additive.toMul (x - y)) hxy
-  have h0 : sInvariantToInvariants S (x - y) = 0 := (sInvariantToInvariants_eq_zero_iff S _).2 hmem
+  have h0 : sInvariantToInvariants (Ω := Ω) S (x - y) = 0 :=
+    (sInvariantToInvariants_eq_zero_iff S _).2 hmem
   rw [map_sub, sub_eq_zero] at h0
   rw [h0]
   exact (invariantsToH1_eq_zero_iff S _).2 ⟨a, rfl⟩

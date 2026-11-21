@@ -75,10 +75,10 @@ theorem natCard_groupCohomology_two_galUnits_of_isCyclic [IsCyclic Gal(L/K)] :
   classical
   obtain ⟨σ, hσ⟩ := IsCyclic.exists_generator (α := Gal(L/K))
   let e : groupCohomology (galUnits.{u} K L) 2 ≅
-      (GroundTheory.GroupCoh.tateZeroFunctor (ULift.{u} ℤ) Gal(L/K)).obj (galUnits.{u} K L) :=
+      (GroundTheory.GroupCoh.tateZeroFunctor (R := ULift.{u} ℤ) (G := Gal(L/K))).obj (galUnits.{u} K L) :=
     ((TateCohomology.isoGroupCohomology 2).app (galUnits.{u} K L)).symm ≪≫
       GroundTheory.GroupCoh.tateCohomologyPeriodicIso (galUnits.{u} K L) hσ 0 ≪≫
-      (GroundTheory.GroupCoh.tateCohomologyZeroIso (ULift.{u} ℤ) Gal(L/K)).app (galUnits.{u} K L)
+      (GroundTheory.GroupCoh.tateCohomologyZeroIso (R := ULift.{u} ℤ) (G := Gal(L/K))).app (galUnits.{u} K L)
   rw [Nat.card_congr e.toLinearEquiv.toEquiv]
   rw [← GroundTheory.LocalField.natCard_tateZero_units (K := K) (L := L)]
   exact Nat.card_congr (tateZeroGalUnitsEquiv K L)

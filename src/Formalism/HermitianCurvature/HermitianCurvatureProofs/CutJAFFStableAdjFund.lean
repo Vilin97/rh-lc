@@ -100,7 +100,7 @@ theorem fundamental_domain_group : FundG := by
         ({x : Mt k r | Matrix.of x ∈ B.GV k r} ∩ tsupport φ) :=
       (Formalism.FourierDecayAlt.P.B5.hs_continuous (Wp := Wp) (Wq := Wq)).comp_continuousOn
         (f := fun x : Mt k r => (A₁ (Matrix.of x), φ (Matrix.of x)))
-        ((hA₁.comp hof.continuousOn (fun x hx => hx.1)).prodMk (hφs.continuous.comp hof).continuousOn)
+        ((hA₁.comp hof.continuousOn (fun x (hx : x ∈ {x : Mt k r | Matrix.of x ∈ B.GV k r} ∩ tsupport φ) => hx.1)).prodMk (hφs.continuous.comp hof).continuousOn)
     refine (hc.integrableOn_compact hK).integrable_of_ae_notMem_eq_zero ?_
     filter_upwards [Formalism.FourierDecayAlt.P.HaarUniquenessConjugation.ae_mem hμ] with x hxG hxK
     have hx : x ∉ tsupport φ := fun h => hxK ⟨hxG, h⟩

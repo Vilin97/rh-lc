@@ -113,7 +113,7 @@ theorem measurable_rmul (σ : E →ₐ[F] E) (hcm : IsCMExt F E σ) (R : Type) [
   obtain ⟨t1, -, t3, -, -, -, -, t8, -, -⟩ := TopK.topTens_props F E σ hcm R
   haveI := t8 n M
   have hc : Continuous (fun X : Fin n → Fin M → R ⊗[F] E => rmul R X G) :=
-    continuous_pi fun a => continuous_pi fun i => continuous_finset_sum _ fun c _ => by
+    continuous_pi fun a => continuous_pi fun i => continuous_finsetSum _ fun c _ => by
       have h : Continuous fun X : Fin n → Fin M → R ⊗[F] E => X c i :=
         (continuous_apply i).comp (continuous_apply c)
       exact h.mul continuous_const

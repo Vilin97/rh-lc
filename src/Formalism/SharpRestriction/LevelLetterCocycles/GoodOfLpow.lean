@@ -70,6 +70,8 @@ theorem good_of_sec (C : Ctx W) (A : ArcP n) (hA : A.OK) (c' : ZMod n) (hc' : c'
   convert hS using 1
   rw [show κ₀ + (t + k₀) = κ₀ + (t + k₀) from rfl]
   unfold lE
+  funext m
+  simp only [Pi.add_apply]
   ring
 
 theorem good_of_lpow (C : Ctx W) (A : ArcP n) (hA : A.OK) (c' : ZMod n) (hc' : c' ∈ A.cuts)
@@ -107,6 +109,8 @@ theorem good_add (C : Ctx W) (A : ArcP n) (hA : A.OK) (c' : ZMod n) (hc' : c' �
     (Formalism.MainNotions.UnusedSlot80.ArcF.secIn_lE W hS₂ (κ'₁ + κ₁))
   convert hS using 1
   unfold lE
+  funext m
+  simp only [Pi.add_apply]
   ring
 
 end Formalism.MainNotions.UnusedSlot80.LevC

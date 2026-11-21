@@ -46,7 +46,7 @@ theorem aeval_derivative_minpoly_eq_prod [DecidableEq (L ≃ₐ[K] L)] {x : 𝒪
 theorem differentExponent_eq_sum_lowerIndex [DecidableEq (L ≃ₐ[K] L)] :
     (differentExponent K L : ℕ∞) =
       ∑ σ ∈ Finset.univ.erase (1 : L ≃ₐ[K] L), lowerIndex K L σ := by
-  obtain ⟨x, hx⟩ := exists_integer_adjoin_eq_top K L
+  obtain ⟨x, hx⟩ := exists_integer_adjoin_eq_top (K := K) (L := L)
   rw [differentExponent_eq_addVal hx, aeval_derivative_minpoly_eq_prod hx, addVal_prod]
   refine Finset.sum_congr rfl fun σ _ ↦ ?_
   rw [lowerIndex_eq_addVal_of_adjoin_eq_top hx, ← AddValuation.map_neg, neg_sub]

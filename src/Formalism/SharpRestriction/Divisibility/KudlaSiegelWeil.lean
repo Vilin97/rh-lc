@@ -237,7 +237,7 @@ theorem exists_over (D : D7) (v : FinF D) : ∃ w : FinE D, Over D w v := by
   obtain ⟨Q, -, hQp, hQ⟩ := Ideal.exists_ideal_over_prime_of_isIntegral v.asIdeal
     (⊥ : Ideal (𝓞 D.host.E)) (by rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ (algFE_inj D))]; exact bot_le)
   have hQne : Q ≠ ⊥ := by
-    intro h; rw [h, Ideal.comap_bot_of_injective _ (algFE_inj D)] at hQ; exact v.ne_bot hQ.symm
+    intro h; rw [h, (show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ (algFE_inj D))] at hQ; exact v.ne_bot hQ.symm
   exact ⟨⟨Q, hQp, hQne⟩, hQ⟩
 
 theorem fixed_of_not_split (D : D7) (v : FinF D) (hv : ¬ Split D v) (w : FinE D) (hw : Over D w v) :

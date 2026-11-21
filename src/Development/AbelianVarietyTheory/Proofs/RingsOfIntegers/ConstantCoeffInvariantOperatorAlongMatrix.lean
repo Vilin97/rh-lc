@@ -24,7 +24,7 @@ variable {k : Type} [CommRing k] {d n : ℕ}
 
 theorem dofN_chain {m : ℕ} (F : Fin d → PS k 2 d) (b : Fin n) (u : Fin d → k) {a : Fin m → Pt k n d}
     (ha : NoConst a) (g : PS k m d) :
-    DofN F b u (ev a g) = ∑ c : Fin m, ∑ l : Fin d, ev a (pderiv k (c, l) g) * DofN F b u (a c l) := by
+    DofN F b u (ev a g) = ∑ c : Fin m, ∑ l : Fin d, ev a (pderiv (R := k) (c, l) g) * DofN F b u (a c l) := by
   unfold DofN
   simp only [pderiv_ev ha]
   simp only [Finset.mul_sum (s := (Finset.univ : Finset (Fin m))), Finset.mul_sum (f := fun l => ev a _ * _)]
@@ -60,7 +60,7 @@ theorem dof_X (G : FGLaw k d) (w : Fin d → k) (c : Fin d) :
   · simp
 
 theorem ev_jac (G : FGLaw k d) {a : Pt k n d} (ha : ∀ i, constantCoeff (a i) = 0) (c i : Fin d) :
-    ev ![a] (Jac G c i) = ev ![a, 0] (pderiv k ((1 : Fin 2), i) (G.F c)) := by
+    ev ![a] (Jac G c i) = ev ![a, 0] (pderiv (R := k) ((1 : Fin 2), i) (G.F c)) := by
   rw [Jac, ev_ev (noConst_one ha) germPointsNoConstantTerm_first_zero]
   congr 1
   funext j l
@@ -69,7 +69,7 @@ theorem ev_jac (G : FGLaw k d) {a : Pt k n d} (ha : ∀ i, constantCoeff (a i) =
   · exact ev_zero (noConst_one ha)
 
 theorem dofN_eq (G : FGLaw k d) (b : Fin n) (w : Fin d → k) (g : PS k n d) :
-    DofN G.F b w g = ∑ l, jv G (pt k d b) w l * pderiv k (b, l) g := by
+    DofN G.F b w g = ∑ l, jv G (pt k d b) w l * pderiv (R := k) (b, l) g := by
   simp only [DofN, jv, ev_jac G (cc_pt b)]
 
 theorem ev_jv (G : FGLaw k d) {m : ℕ} {M : Fin m → Pt k n d} (hM : NoConst M) {a : Pt k m d}
@@ -138,10 +138,10 @@ theorem Tan.comp {a : Pt k n d} {w : Fin d → k} (h : Tan G j v a w) (φ : Pt k
 
 theorem jv_add_right (G : FGLaw k d) {a b : Pt k n d} (ha : ∀ i, constantCoeff (a i) = 0)
     (hb : ∀ i, constantCoeff (b i) = 0) (w : Fin d → k) (c : Fin d) :
-    ∑ l, ev ![a, b] (pderiv k ((1 : Fin 2), l) (G.F c)) * jv G b w l = jv G (G.add a b) w c := by
+    ∑ l, ev ![a, b] (pderiv (R := k) ((1 : Fin 2), l) (G.F c)) * jv G b w l = jv G (G.add a b) w c := by
   have hab := noConst_two ha hb
   have key : ∀ i, ev ![G.add a b] (Jac G c i) =
-      ∑ l, ev ![a, b] (pderiv k ((1 : Fin 2), l) (G.F c)) * ev ![b] (Jac G l i) := by
+      ∑ l, ev ![a, b] (pderiv (R := k) ((1 : Fin 2), l) (G.F c)) * ev ![b] (Jac G l i) := by
     intro i
     have e := congrArg (ev ![a, b]) (jac_F G c i)
     rw [ev_ev hab (noConst_one G.const), ev_sum hab] at e
@@ -170,7 +170,8 @@ theorem ev_swap {a b : Pt k n d} (ha : ∀ i, constantCoeff (a i) = 0) (hb : ∀
   · exact ev_pt hab 0 l
 
 theorem pderiv_law_left (G : FGLaw k d) (c l : Fin d) :
-    pderiv k ((0 : Fin 2), l) (G.F c) = ev (n := 2) ![pt k d 1, pt k d 0] (pderiv k ((1 : Fin 2), l) (G.F c)) := by
+    pderiv (R := k) ((0 : Fin 2), l) (G.F c) =
+      ev (n := 2) ![pt k d 1, pt k d 0] (pderiv (R := k) ((1 : Fin 2), l) (G.F c)) := by
   conv_lhs => rw [← G.comm c]
   rw [pderiv_ev (noConst_two (cc_pt 1) (cc_pt 0)), Fin.sum_univ_two]
   simp [LogPf.pderiv_pt]

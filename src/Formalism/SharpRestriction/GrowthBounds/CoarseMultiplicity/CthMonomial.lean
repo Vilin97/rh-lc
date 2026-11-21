@@ -77,7 +77,8 @@ theorem cth_mul (v : σ) (n : ℕ) (F G : MvPolynomial σ K) :
 theorem cth_free (v : σ) {F : MvPolynomial σ K} (hF : ∀ μ ∈ F.support, μ v = 0) {n : ℕ} (hn : n ≠ 0) :
     cth v n F = 0 := by
   ext μ
-  rw [coeff_cth, coeff_zero]
+  rw [coeff_cth]
+  change F.coeff μ * (((μ v).choose n : ℕ) : K) = 0
   by_cases h : μ ∈ F.support
   · rw [hF μ h, Nat.choose_eq_zero_of_lt (Nat.pos_of_ne_zero hn)]
     simp

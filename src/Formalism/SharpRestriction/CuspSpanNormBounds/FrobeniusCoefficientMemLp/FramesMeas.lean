@@ -326,6 +326,7 @@ theorem map_cA_haarLie (κN : ENNReal) : (haarLie (Nset k r) κN).map (cA k r) =
   rw [h0, Measure.map_smul, Measure.map_map continuous_cA.measurable (continuous_expL _).measurable, e,
     ← Measure.map_map (continuous_expL _).measurable (uL k r).continuous.measurable,
     (uL k r).measurePreserving.map_eq]
+  exact continuous_cA.measurable.aemeasurable
 
 theorem map_cA_UW {z : Fin (2 * r + k + 1) → ℂ} {μ : Measure (Mt k r)} (h : IsHaarOn (UWset k r z) μ) :
     μ.map (cA k r) = μ := by

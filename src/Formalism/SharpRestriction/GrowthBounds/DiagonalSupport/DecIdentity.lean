@@ -45,7 +45,7 @@ theorem plane_dec (hA : ATL) (hS : ValSlice) (hC : ValComp) (hVB : ValBd p O Fr 
   refine ⟨?_, ?_, ?_, ?_⟩
   · rw [MvPolynomial.mem_supported]
     intro v hv'
-    obtain ⟨mo, hmo, hvmo⟩ := (MvPolynomial.mem_vars v).mp (Finset.mem_coe.mp hv')
+    obtain ⟨mo, hmo, hvmo⟩ := (MvPolynomial.mem_vars_iff_mem_support v).mp (Finset.mem_coe.mp hv')
     obtain ⟨mo', hmo', he⟩ := hsup mo hmo
     have hF' := (support_homComp δ _ mo' hmo').1
     have hne : mo' ((j, v.1), v.2) ≠ 0 := by
@@ -86,7 +86,7 @@ theorem normal_dec (hA : ATL) (hS : ValSlice) (hVB : ValBd p O Fr deg Y N₁ G' 
   refine ⟨?_, ?_, fun u hu => ⟨?_, ?_⟩⟩
   · rw [MvPolynomial.mem_supported]
     intro v hv'
-    obtain ⟨mo, hmo, hvmo⟩ := (MvPolynomial.mem_vars v).mp (Finset.mem_coe.mp hv')
+    obtain ⟨mo, hmo, hvmo⟩ := (MvPolynomial.mem_vars_iff_mem_support v).mp (Finset.mem_coe.mp hv')
     obtain ⟨mo', hmo', he⟩ := hsup mo hmo
     have hne : mo' ((j, v.1), v.2) ≠ 0 := by
       rw [← he]

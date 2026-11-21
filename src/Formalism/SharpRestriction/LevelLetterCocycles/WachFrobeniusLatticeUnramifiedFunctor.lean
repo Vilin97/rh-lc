@@ -251,6 +251,8 @@ theorem letE_letE (T : LocLat G Qp LL O) (i : ZMod n) (y : W.DD T) :
     (letE i : LetA O n) • ((letE i : LetA O n) • y) = (letE i : LetA O n) • y := by
   rw [smul_smul]
   congr 1
+  ext j
+  simp only [letE, Pi.mul_apply, Pi.single_apply]
   split_ifs <;> simp
 
 theorem wach_frobenius_divisibility_unique_solution [IsDomain O] (hR : RingA W) (hs : W.s = 1) (T : LocLat G Qp LL O)
@@ -265,9 +267,9 @@ theorem wach_frobenius_divisibility_unique_solution [IsDomain O] (hR : RingA W) 
   have hE3 : I.Bs.E3 := frobenius_uniformizer_identity hR
   have hfree : ∀ i, (latD I T).Free i := latD_free I T hInj hFull hmod
   have hA := Formalism.ExponentWindows.E.lattice_filtration_first_form O I.Bs n M (DV I T) (latD I T) (fun _ => hh) hE3
-    (fun i => latD_p5M I T hs hR h5 i hh le_rfl) (fun _ => by exact hM)
+    (fun i => latD_p5M I T hs hR h5 i hh le_rfl) (fun _ => by simpa [I, baseIdOf] using hM)
   have hq : (latD I T).FrobeniusMapsXPow M := hA.1
-  have hC : (latD I T).Complete := Formalism.ExponentWindows.E.completion_holds O I.Bs n (DV I T) (latD I T) hcomp hfree
+  have hC : (latD I T).Complete := Formalism.ExponentWindows.E.completion_holds O I.Bs n (DV I T) (latD I T) (by simpa [I, baseIdOf] using hcomp) hfree
   have hX : (latD I T).XReg := Formalism.ExponentWindows.E.X_regular_on_lattice O I.Bs n (DV I T) (latD I T) hfree
   have hdX : I.d (PowerSeries.X ^ M) = W.π₀ ^ M := by rw [map_pow, I.d_X]
   have hdXq : I.d (PowerSeries.X ^ M * I.Bs.q) = W.π₀ ^ M * Formalism.MainNotions.WachCoordinates.qP W := by
@@ -302,8 +304,8 @@ theorem wach_frobenius_divisibility_unique_solution [IsDomain O] (hR : RingA W) 
       simpa [Formalism.ExponentWindows.E.Lat.dφ, t] using this
     refine ⟨∑ i, (z i).d, ⟨?_, ?_⟩, ?_⟩
     · exact mul_mem_sum T _ _ hzd
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sum, ← sum_shift (fun i => W.φD T (z i).d), ← Finset.sum_sub_distrib]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← sum_shift (fun i => W.φD T (z i).d), ← Finset.sum_sub_distrib]
       rw [Finset.sum_congr rfl fun i _ => hdzi i, sum_letE_smul]
     · rintro Z ⟨⟨yZ, hyZ, rfl⟩, hZ⟩
       let z' : ZMod n → DV I T := fun i => toDV I ((letE i : LetA O n) • (W.π₀ ^ M • yZ))

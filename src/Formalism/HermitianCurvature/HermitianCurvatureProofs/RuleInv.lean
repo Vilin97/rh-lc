@@ -102,7 +102,10 @@ theorem _root_.Formalism.FourierDecayAlt.R.LevelData.inv_Dr_Dri : L.Dr * L.Dri =
 
 theorem _root_.Formalism.FourierDecayAlt.R.LevelData.inv_hR_bar (Y : ℂ) :
     L.G * L.Dbi * L.Dbi * L.Ahatv Y = L.Dr * L.GG * (L.ζbi * L.ζbi * L.Avr Y) := by
-  letI : CommRing (Algebra.adjoin ℂ L.fns) := Algebra.isMulCommutative_adjoin ℂ L.fns_comm
+  open scoped IsMulCommutative in
+  letI : IsMulCommutative (Algebra.adjoin ℂ L.fns) := Algebra.isMulCommutative_adjoin ℂ (by
+    intro x hx y hy _
+    exact L.fns_comm x hx y hy)
   let Dr' : Algebra.adjoin ℂ L.fns := ⟨L.Dr, L.inv_S_prod L.inv_mem_c⟩
   let Drb' : Algebra.adjoin ℂ L.fns := ⟨L.Drb, L.inv_S_prod L.inv_mem_cb⟩
   let Drbi' : Algebra.adjoin ℂ L.fns := ⟨L.Drbi, L.inv_S_prod L.inv_mem_cbi⟩
@@ -110,7 +113,9 @@ theorem _root_.Formalism.FourierDecayAlt.R.LevelData.inv_hR_bar (Y : ℂ) :
   let z' : Algebra.adjoin ℂ L.fns := ⟨L.ζbi, L.inv_S_mem L.inv_mem_ζbi⟩
   have h1 : Drb' * Drbi' = 1 := Subtype.ext L.inv_Drb_Drbi
   have hS : Dr' * Drb' * GG' * (z' * Drbi') * (z' * Drbi') * Drb' = Dr' * GG' * (z' * z') := by
-    linear_combination (Dr' * GG' * z' * z' * (Drb' * Drbi' + 1)) * h1
+    calc
+      _ = Dr' * GG' * (z' * z') * ((Drb' * Drbi') * (Drb' * Drbi')) := by ring
+      _ = _ := by rw [h1]; simp
   have hA := congrArg Subtype.val hS
   simp only [LevelData.G, LevelData.Dbi, LevelData.Ahatv]
   calc L.Dr * L.Drb * L.GG * (L.ζbi * L.Drbi) * (L.ζbi * L.Drbi) * (L.Drb * L.Avr Y)
@@ -121,7 +126,10 @@ theorem _root_.Formalism.FourierDecayAlt.R.LevelData.inv_hR_bar (Y : ℂ) :
 
 theorem _root_.Formalism.FourierDecayAlt.R.LevelData.inv_hR_hol (Y : ℂ) :
     L.G * L.Di * L.Di * L.Ahat Y = L.Drb * L.GG * (L.ζi * L.ζi * L.Ar Y) := by
-  letI : CommRing (Algebra.adjoin ℂ L.fns) := Algebra.isMulCommutative_adjoin ℂ L.fns_comm
+  open scoped IsMulCommutative in
+  letI : IsMulCommutative (Algebra.adjoin ℂ L.fns) := Algebra.isMulCommutative_adjoin ℂ (by
+    intro x hx y hy _
+    exact L.fns_comm x hx y hy)
   let Dr' : Algebra.adjoin ℂ L.fns := ⟨L.Dr, L.inv_S_prod L.inv_mem_c⟩
   let Drb' : Algebra.adjoin ℂ L.fns := ⟨L.Drb, L.inv_S_prod L.inv_mem_cb⟩
   let Dri' : Algebra.adjoin ℂ L.fns := ⟨L.Dri, L.inv_S_prod L.inv_mem_ci⟩
@@ -129,7 +137,9 @@ theorem _root_.Formalism.FourierDecayAlt.R.LevelData.inv_hR_hol (Y : ℂ) :
   let z' : Algebra.adjoin ℂ L.fns := ⟨L.ζi, L.inv_S_mem L.inv_mem_ζi⟩
   have h1 : Dr' * Dri' = 1 := Subtype.ext L.inv_Dr_Dri
   have hS : Dr' * Drb' * GG' * (z' * Dri') * (z' * Dri') * Dr' = Drb' * GG' * (z' * z') := by
-    linear_combination (Drb' * GG' * z' * z' * (Dr' * Dri' + 1)) * h1
+    calc
+      _ = Drb' * GG' * (z' * z') * ((Dr' * Dri') * (Dr' * Dri')) := by ring
+      _ = _ := by rw [h1]; simp
   have hA := congrArg Subtype.val hS
   simp only [LevelData.G, LevelData.Di, LevelData.Ahat]
   calc L.Dr * L.Drb * L.GG * (L.ζi * L.Dri) * (L.ζi * L.Dri) * (L.Dr * L.Ar Y)

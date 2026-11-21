@@ -621,8 +621,11 @@ theorem twist_column_kernel_eq_lambda {B : Fin N → ℕ} (Pa : PPath n N LL B) 
   induction j generalizing J with
   | zero =>
     have h0 : columnLambdaOperator N jj c (extOne : Finset (Fin n) → TwistedRing N n) = extOne := by
-      unfold columnLambdaOperator lambdaOperator
-      split_ifs <;> simp [Module.End.mul_apply, total_contraction_exterior_one]
+      have hlambda {P : Type} [CommRing P] (u v : Fin n → P) (θ : P) :
+          lambdaOperator u v θ (extOne : Finset (Fin n) → P) = extOne := by
+        simp [lambdaOperator, Module.End.mul_apply, total_contraction_exterior_one]
+      unfold columnLambdaOperator
+      split_ifs <;> exact hlambda (P := TwistedRing N n) _ _ _
     simp only [Kcol]
     rw [h0, map_exterior_one]
   | succ j ih =>

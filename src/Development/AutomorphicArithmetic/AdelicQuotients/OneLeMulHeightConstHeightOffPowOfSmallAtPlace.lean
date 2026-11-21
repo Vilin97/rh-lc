@@ -37,7 +37,10 @@ theorem UpperTheory.one_le_mul_heightConst_heightOff_pow_of_small_at_place :
   classical
   have hprod : (∏ w : InfinitePlace E, ‖algebraMap E w.Completion a‖ ^ w.mult) *
       ∏ᶠ v : HeightOneSpectrum (𝓞 E), ‖algebraMap E (v.adicCompletion E) a‖ = 1 :=
-    prod_norm_mul_finprod_norm ha
+    by
+      simpa only [InfinitePlace.Completion.algebraMap_apply,
+        HeightOneSpectrum.algebraMap_adicCompletion, Function.comp_apply,
+        Algebra.algebraMap_self_apply] using prod_norm_mul_finprod_norm ha
   have hNfin : (Function.mulSupport fun v : HeightOneSpectrum (𝓞 E) =>
       ‖algebraMap E (v.adicCompletion E) a‖).Finite :=
     Filter.eventually_cofinite.1 (eventually_norm_eq_one ha)

@@ -141,5 +141,6 @@ theorem ea_brScale : ea_BrScale X := by
       refine Finset.prod_eq_zero (Finset.mem_univ s) (Finset.prod_eq_zero hc ?_)
       rw [h0, mul_zero]
     rw [hz, ea_applyD_zero, MvPolynomial.coeff_zero]
+    rfl
 
 end Formalism.MainNotions.FormalGroupSystem.Pf

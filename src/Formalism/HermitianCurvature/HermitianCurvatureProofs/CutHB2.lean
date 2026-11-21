@@ -188,7 +188,7 @@ theorem cont_lhOf {p : ℕ} (σ : Equiv.Perm (Fin p)) : Continuous (LeftFubiniLe
 
 theorem cont_subS {p : ℕ} : Continuous (U.subS (p := p)) := by
   unfold U.subS
-  refine continuous_finset_sum _ fun i _ => ?_
+  refine continuous_finsetSum _ fun i _ => ?_
   split_ifs
   · exact (continuous_apply i).comp (continuous_apply _)
   · exact continuous_const

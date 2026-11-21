@@ -70,7 +70,7 @@ theorem UpperTheory.HF.diff_EK_supp :
       have h0 : multiplicity P (differentIdeal ℤ (𝓞 H.E)) = 0 := by
         rw [(diff_mult H hl P).2.2.1 (by rw [hel]; exact hl.not_dvd_one), hel]
       have hdv : P ∣ differentIdeal ℤ (𝓞 H.E) := hdiff ▸ dvd_mul_of_dvd_left hPd _
-      exact multiplicity_eq_zero.1 h0 hdv
+      exact (multiplicity_eq_zero (Ideal.finiteMultiplicity hPp.ne_top differentIdeal_ne_bot)).1 h0 hdv
     · rintro ⟨l, hlI, hover⟩
       simp only [UpperTheory.HF.Formalism.HC.HostRaw.ramI, Finset.mem_erase] at hlI
       obtain ⟨hld, hlr⟩ := hlI

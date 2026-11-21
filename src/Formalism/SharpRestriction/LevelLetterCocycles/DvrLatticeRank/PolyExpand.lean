@@ -433,6 +433,7 @@ theorem caseC {O K : Type*} [CommRing O] [Field K] [Algebra O K] (l : ℕ) [Fact
     rintro ⟨d, rfl⟩
     have hd : l ^ (padicValNat l c + 1) ∣ l ^ padicValNat l c * (l * d) := ⟨d, by ring⟩
     rw [← hc'] at hd
+    rw [Nat.padicValNat_def] at hd
     exact pow_succ_padicValNat_not_dvd (p := l) hc0 hd
   generalize hv : padicValNat l c = v at hc' hy
   obtain ⟨r, hr⟩ := hδ
@@ -461,7 +462,7 @@ theorem yc_bound (l : ℕ) [hl : Fact l.Prime] (b B η h : ℕ) (hb : b ≤ h)
   obtain ⟨v, hv⟩ : ∃ v, v = padicValNat l (b.choose (B - 1)) := ⟨_, rfl⟩
   rw [← hv]
   have hvlog : v ≤ Nat.log l b := by
-    rw [hv, ← Nat.factorization_def _ hl.out]
+    rw [hv, Nat.padicValNat_def, ← Nat.factorization_def _ hl.out]
     exact Nat.factorization_choose_le_log
   have hl1 : (1 : ℝ) < l := by exact_mod_cast hl.out.one_lt
   have hvle : (v : ℝ) ≤ Real.logb l h := by

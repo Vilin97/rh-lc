@@ -17,7 +17,8 @@ theorem constantCoeff_mem {g : O⟦X⟧} (hD : 1 ≤ wd g) :
     constantCoeff g ∈ IsLocalRing.maximalIdeal O := by
   have h0 : coeff 0 (g.map (IsLocalRing.residue O)) = 0 :=
     coeff_of_lt_order_toNat 0 (by unfold wd at hD; omega)
-  rwa [coeff_map, coeff_zero_eq_constantCoeff_apply, IsLocalRing.residue_eq_zero_iff] at h0
+  rw [coeff_map, coeff_zero_eq_constantCoeff_apply] at h0
+  exact Ideal.Quotient.eq_zero_iff_mem.mp h0
 
 noncomputable def poly {D : ℕ} (a : Fin D → O) : Polynomial O :=
   ∑ i : Fin D, Polynomial.C (a i) * Polynomial.X ^ (i : ℕ)

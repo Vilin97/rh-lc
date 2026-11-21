@@ -121,6 +121,8 @@ theorem map_qminor {A B : Type} [Ring A] [Algebra ℂ A] [Ring B] [Algebra ℂ B
   congr 2
   congr 1
   congr 1
+  funext k
+  simp only [Function.comp_apply, Tm, map_add]
   split_ifs <;> simp
 
 theorem qminor_reindex {A : Type} [Ring A] [Algebra ℂ A] {n n' t : ℕ} (E : Fin n' → Fin n' → A) (ι : Fin n → Fin n')
@@ -131,6 +133,8 @@ theorem qminor_reindex {A : Type} [Ring A] [Algebra ℂ A] {n n' t : ℕ} (E : F
   congr 2
   congr 1
   congr 1
+  funext l
+  simp only [Tm, Function.comp_apply]
   by_cases h : a (σ l) = b l
   · rw [if_pos h, if_pos (congrArg ι h)]
   · rw [if_neg h, if_neg (fun e => h (hι e))]

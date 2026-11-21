@@ -366,7 +366,8 @@ theorem sd_core {d : ℕ} (b : Module.Basis (Fin d) F E) (n : ℕ) (lam : Measur
   have hsm : c • Measure.map (hermVec R σ b n) (coordHerm R σ b lam n) =
       Measure.map hh.toMeasurableEquiv (c • coordHerm R σ b lam n) := by
     rw [Measure.map_smul]
-    rfl
+    · rfl
+    · exact hh.toMeasurableEquiv.measurable.aemeasurable
   rw [hsm]
   exact hinj.eq_iff
 

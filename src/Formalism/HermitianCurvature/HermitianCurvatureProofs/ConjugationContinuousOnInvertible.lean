@@ -159,6 +159,7 @@ theorem haarUnique : HaarUnique := by
         rw [← Measure.isMulLeftInvariant_eq_smul (pull hU ν) (pull hU μ)]
     _ = Measure.haarScalarFactor (pull hU ν) (pull hU μ) • μ := by
         rw [Measure.map_smul, map_pull μ hμ.conc]
+        exact inc_cont.measurable.aemeasurable
 
 theorem haarInvFromUnique : HaarInvFromUnique :=
   _root_.UpperTheory.Reformulated.B.BlochKatoDuality.haarInvFromUnique

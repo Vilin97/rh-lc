@@ -23,7 +23,18 @@ theorem norm_lev_le (y : GL (Fin r) (Cinf E)) :
   refine (pi_norm_le_iff_of_nonneg (by positivity)).2 fun i =>
     (pi_norm_le_iff_of_nonneg (by positivity)).2 fun j => ?_
   change ‖((lev (Cinf E) r s (y, 1) : GL _ _) : Matrix _ _ (Cinf E)) i j‖ ≤ _
-  rw [GlobalTheory.SmGL.val_emb₂]
+  have hv : ((lev (Cinf E) r s (y, 1) : GL _ _) : Matrix _ _ (Cinf E)) =
+      Matrix.reindex (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s))
+        (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s))
+        (Matrix.fromBlocks y.val 0 0 (1 : Matrix (Fin s) (Fin s) (Cinf E))) := by
+    ext i j
+    obtain ⟨a, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective i
+    obtain ⟨b, rfl⟩ := (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).surjective j
+    simp only [Matrix.reindex_apply, Matrix.submatrix_apply, Equiv.symm_apply_apply]
+    rcases a with a | a <;> rcases b with b | b <;>
+      simp [lev, GlobalTheory.SmGL.emb₂, GlobalTheory.SmGL.leviEmb,
+        GlobalTheory.SmGL.leviTwo, GlobalTheory.SmGL.two, Matrix.blockDiagonal'_apply]
+  rw [hv]
   simp only [Matrix.reindex_apply, Matrix.submatrix_apply]
   generalize (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).symm i = i'
   generalize (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).symm j = j'

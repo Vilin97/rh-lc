@@ -149,3 +149,5 @@ theorem UpperTheory.isCrystalline_triangular_iff_mem_finiteCocycles_of_charData 
     have h1 := (z1fMap φ _ M).2 ((LinearMap.inl E B B).restrictScalars ℚ_[l]) inl _ h
     have h2 := add_mem h1 k1
     convert h2 using 1
+    funext g
+    simp

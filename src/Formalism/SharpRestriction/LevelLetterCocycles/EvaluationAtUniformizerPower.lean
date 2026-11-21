@@ -99,7 +99,8 @@ theorem fix_subst (hR : Ring9 W) (g : PowerSeries O →ₐ[O] PowerSeries O) (hg
 
 theorem γ₀_π₀₁ {δ : W.Gam} (hδ : δ ∈ W.DelF) : W.γ₀ δ W.π₀₁ = W.π₀₁ := by
   have h := congrFun (Formalism.MainNotions.RamifiedCoefficientChains.S9.LD.uniformizer_mem_delta_invariants W δ hδ) 0
-  simpa [LocWach.γA, letγ, LocWach.π₀] using h
+  change W.γ₀ δ W.π₀₁ = W.π₀₁ at h
+  exact h
 
 theorem evaluation_mem_invariants (hR : Ring9 W) (f : PowerSeries O) : Formalism.MainNotions.RamifiedCoefficientChains.Sh.at0 W f ∈ W.AΔ := by
   intro δ hδ
@@ -787,8 +788,8 @@ theorem ser_cv (κ : M →ₗ[L] L) (s₀ : ℕ) (g : PowerSeries L) (y : ℤ �
   rw [ser, PowerSeries.coeff_mk, cv, PowerSeries.coeff_mul,
     Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
   rw [finsum_eq_sum_of_support_subset (s := Finset.range (j + 1))]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i hi => ?_
     have hij : i ≤ j := Nat.lt_succ_iff.1 (Finset.mem_range.1 hi)
     rw [map_smul, ser, PowerSeries.coeff_mk, smul_eq_mul]

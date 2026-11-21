@@ -58,7 +58,7 @@ theorem groupingM {M : Type*} [AddCommGroup M] [Module ℂ M] {t N : ℕ} (κ : 
       · intro i j hij heq
         have e : ∀ x, p.2 (p.2⁻¹ x) = x := fun x => by rw [Equiv.Perm.inv_def, Equiv.apply_symm_apply]
         simp only [Function.comp_apply, e] at heq
-        exact absurd (hp.injective heq) (ne_of_lt hij)
+        exact le_of_eq (congrArg (↑(p.2⁻¹) : Fin t → Fin t) (hp.injective heq))
     rw [← hs]
     ext1
     · funext l; simp

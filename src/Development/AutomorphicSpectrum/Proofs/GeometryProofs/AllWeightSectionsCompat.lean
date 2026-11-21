@@ -116,6 +116,7 @@ theorem comp_eq_of_mem {Z Z' : Comp Xo c} {p : Xo.XF c} (hp : p ∈ (Z : Set (Xo
   have hle : (Z' : Set (Xo.XF c)) ⊆ Z := (hg.mem_closed_set_iff (isClosed_of_mem_irreducibleComponents _ Z.2)).1 h1
   exact Subtype.ext (hle.antisymm (Z'.2.2 Z.2.1 hle))
 
+attribute [local instance 1100] Subalgebra.algebra in
 theorem evR_chart {h : GenFrEx Xo c} {f : Rul Xo c} (hf : f ∈ GlobalTheory.AllWt.secZ Xo c 0) (C : GlobalTheory.Reg.FChart h) {v : c.F}
     (hv : evC h C.Z f = algebraMap c.F (Om C.Z) v) {L : Type} [Field L] [Algebra c.F L] {ψ : C.R →ₐ[c.F] L}
     {z w : FrPt Xo c L} {t : Ix Dw → Lˣ} (hz : FrMap ψ C.y z) (hb : FrBor t z w) :
@@ -134,6 +135,7 @@ theorem evR_chart {h : GenFrEx Xo c} {f : Rul Xo c} (hf : f ∈ GlobalTheory.All
     AlgHom.comp_apply, h2]
   simp
 
+attribute [local instance 1100] Subalgebra.algebra in
 theorem liesOn_chart {h : GenFrEx Xo c} (C : GlobalTheory.Reg.FChart h) {L : Type} [Field L] [Algebra c.F L]
     {ψ : C.R →ₐ[c.F] L} {z w : FrPt Xo c L} {t : Ix Dw → Lˣ} (hz : FrMap ψ C.y z) (hb : FrBor t z w) :
     GlobalTheory.AllWt.LiesOn C.Z w := by

@@ -27,10 +27,10 @@ theorem ptEntry_inj : ∀ (bs cs : List (E × ℕ)), (∀ b ∈ bs, b.1 ≠ 0 �
     omega
   | (t, s) :: bs, (t', s') :: cs, h, h', e, k => by
     obtain ⟨ht, hs⟩ : t ≠ 0 ∧ 1 ≤ s := h (t, s) (by simp)
-    obtain ⟨-, hs'⟩ : t' ≠ 0 ∧ 1 ≤ s' := h' (t', s') (by simp)
+    have hs' : 1 ≤ s' := (h' (t', s') (by simp)).2
     simp only [List.map_cons, List.sum_cons] at e k
     have k0 := k 0 (by omega) (s - 1) (by omega)
-    rw [ptEntry, if_pos (by omega), if_pos (by omega), ptEntry] at k0
+    rw [ptEntry, ite_eq_left (by omega), ite_eq_left (by omega), ptEntry] at k0
     have hss : s = s' ∧ t = t' := by
       split_ifs at k0
       · exact ⟨by omega, k0⟩
@@ -42,8 +42,8 @@ theorem ptEntry_inj : ∀ (bs cs : List (E × ℕ)), (∀ b ∈ bs, b.1 ≠ 0 �
     refine ptEntry_inj bs cs (fun b hb => h b (by simp [hb])) (fun b hb => h' b (by simp [hb])) (by omega)
       fun a ha b hb => ?_
     have := k (a + s) (by omega) (b + s) (by omega)
-    rwa [ptEntry, ptEntry, if_neg (by omega), if_pos (by omega), if_neg (by omega), if_pos (by omega),
-      Nat.add_sub_cancel, Nat.add_sub_cancel] at this
+    rwa [ptEntry, ptEntry, ite_eq_right (by omega), ite_eq_left (by omega),
+      ite_eq_right (by omega), ite_eq_left (by omega), Nat.add_sub_cancel, Nat.add_sub_cancel] at this
 
 theorem ptMat_injective {m : ℕ} : Function.Injective (ptMat : Point E m → Matrix (Fin m) (Fin m) E) := by
   intro w w' h

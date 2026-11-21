@@ -19,7 +19,7 @@ theorem cmap_add (y z : MvPolynomial σ K) : cmap f (y + z) = cmap f y + cmap f 
   ext m; simp only [MvPolynomial.coeff_add, coeff_cmap, map_add (f := _)]
 
 theorem cmap_zero : cmap f (0 : MvPolynomial σ K) = 0 := by
-  ext m; simp only [coeff_cmap, coeff_zero, map_zero]
+  ext m; simp only [coeff_cmap, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, map_zero]
 
 theorem cmap_neg (y : MvPolynomial σ K) : cmap f (-y) = -cmap f y := by
   ext m; simp only [coeff_cmap, coeff_neg, map_neg]

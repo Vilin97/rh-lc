@@ -47,7 +47,8 @@ def conjMap (M : DSModel V S) (M' : DSModel V S') (c : ∀ τ, M'.H τ ≃ₗᵢ
     rw [e, e]
     have e2 : (⟨c i ((a • x : M'.sm i) : M'.H i), (h i _).1 (a • x).2⟩ : M.sm i) = star a • ⟨c i x, (h i _).1 x.2⟩ := by
       ext; exact (c i).map_smulₛₗ a x
-    rw [e2, T.map_update_smul, star_smul, star_star]
+    rw [e2, T.map_update_smul, star_smul]
+    simp only [RingHom.id_apply, star_star]
 
 theorem conjMap_apply (M : DSModel V S) (M' : DSModel V S') (c : ∀ τ, M'.H τ ≃ₗᵢ⋆[ℂ] M.H τ)
     (h : ∀ τ (w : M'.H τ), w ∈ M'.sm τ ↔ c τ w ∈ M.sm τ) (T : MMap M) (v' : M'.Vec) :

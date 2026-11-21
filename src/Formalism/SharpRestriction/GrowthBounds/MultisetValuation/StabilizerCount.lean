@@ -402,8 +402,9 @@ theorem stmt6G (D : Formalism.BasicNotions.D7) (L : SizeData₂ D) (X : Inst D L
       exact ⟨x, hx, by simp⟩
     · have htop : Submodule.comap ((D.gat u w hg).M ⊓ Y.Vram u w hg).subtype
           ((D.gat u w hg).M ⊓ Y.Vram u w hg) = ⊤ := by
-        intro s hs hli
-        exact (LinearIndependent.iff_fractionRing _ _).mp hli
+        ext x
+        simp only [Submodule.mem_comap, Submodule.mem_top, iff_true]
+        exact x.property
       rw [htop]
       simp
   · have hne : (Formalism.MainNotions.G.VV X K (aL L) (bL L) (D.what₂.places.resChar w)).Nonempty :=

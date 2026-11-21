@@ -132,7 +132,7 @@ private lemma vandN_le_pow_mul_pow_mul_vandN_of_interlace (p : ℕ) (u v : ℕ �
   beta_reduce
   have hP0 : ∏ j ∈ Ico 1 (p + 1 + 1), (u 0 - u j) ≤ D ^ (p + 1) := by
     calc _ ≤ ∏ _j ∈ Ico 1 (p + 1 + 1), D := by
-          apply prod_le_prod
+          apply prod_le_prod₀
           · intro j hj
             rw [mem_Ico] at hj
             linarith [hu 0 j (by omega) (by omega)]
@@ -147,7 +147,7 @@ private lemma vandN_le_pow_mul_pow_mul_vandN_of_interlace (p : ℕ) (u v : ℕ �
     linarith [hu (i + 1) (p + 1) (by omega) (by omega)]
   have hC : ∏ i ∈ range p, (u (i + 1) - u (p + 1)) ≤ D ^ p := by
     calc _ ≤ ∏ _i ∈ range p, D := by
-          apply prod_le_prod
+          apply prod_le_prod₀
           · intro i hi
             rw [mem_range] at hi
             linarith [hu (i + 1) (p + 1) (by omega) (by omega)]
@@ -173,7 +173,7 @@ private lemma vandN_le_pow_mul_pow_mul_vandN_of_interlace (p : ℕ) (u v : ℕ �
     linarith [(hint i (by omega)).2, (hint (j + 1) (by omega)).1, hu (i + 1) (j + 1) (by omega) (by omega)]
   have hVW : ∏ i ∈ range p, ∏ j ∈ Ico (i + 1) p, (u (i + 1) - u (j + 1))
       ≤ ∏ i ∈ range p, ∏ j ∈ Ico (i + 1) p, (v i - v (j + 1)) := by
-    apply prod_le_prod
+    apply prod_le_prod₀
     · intro i hi
       apply prod_nonneg
       intro j hj
@@ -181,7 +181,7 @@ private lemma vandN_le_pow_mul_pow_mul_vandN_of_interlace (p : ℕ) (u v : ℕ �
       rw [mem_Ico] at hj
       linarith [hu (i + 1) (j + 1) (by omega) (by omega)]
     · intro i hi
-      apply prod_le_prod
+      apply prod_le_prod₀
       · intro j hj
         rw [mem_range] at hi
         rw [mem_Ico] at hj

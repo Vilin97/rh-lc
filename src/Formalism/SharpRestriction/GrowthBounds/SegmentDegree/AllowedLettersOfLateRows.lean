@@ -69,7 +69,7 @@ theorem allowed_letters_of_late_rows (D : Formalism.BasicNotions.D7) (hA3 : Form
     have hseg : segRen X.F j (FF O) K (Psi (FF O) q.2 I'') ∈
         supported (FF O) {v : ℤ × Fin K | v.1 ∈ X.F.letters j ∧ ¬ X.F.IsW j v.1} := by
       refine hren _ _ fun v hv => ⟨hlet v.1, fun hWv => ?_⟩
-      obtain ⟨m, hm, hvm⟩ := (MvPolynomial.mem_vars _).1 hv
+      obtain ⟨m, hm, hvm⟩ := (MvPolynomial.mem_vars_iff_mem_support _).1 hv
       have hb0 : b'' v.1 = 0 := (hcond v.1).1 hWv
       have hsum : multideg m v.1 = b'' v.1 := ((MvPolynomial.mem_restrictSupport_iff _).1 hPol) hm v.1
       rw [hb0] at hsum
@@ -137,7 +137,7 @@ theorem degAt_of_supported {P : MvPolynomial (ι × Fin n) R} (s : Set (ι × Fi
   show ∑ c, m (x, c) = 0
   refine Finset.sum_eq_zero fun c _ => ?_
   by_contra hne
-  have hv : (x, c) ∈ P.vars := (MvPolynomial.mem_vars _).2 ⟨m, hm, Finsupp.mem_support_iff.2 hne⟩
+  have hv : (x, c) ∈ P.vars := (MvPolynomial.mem_vars_iff_mem_support _).2 ⟨m, hm, Finsupp.mem_support_iff.2 hne⟩
   exact hs _ (hP hv) rfl
 
 end DegAt

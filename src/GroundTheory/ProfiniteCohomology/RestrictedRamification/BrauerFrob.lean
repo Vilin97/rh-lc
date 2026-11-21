@@ -22,6 +22,8 @@ open CategoryTheory NumberField IsDedekindDomain IntermediateField GroundTheory.
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 section Characters
 
 variable (G : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G]

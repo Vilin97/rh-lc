@@ -32,12 +32,8 @@ theorem divisor_supported_of_supported {R σ : Type*} [CommRing R] [IsDomain R] 
     rw [degreeOf_eq_sup]
     refine Nat.le_zero.mp (Finset.sup_le fun m hm => ?_)
     by_contra hmv
-    exact hvs (hs ((mem_vars v).mpr ⟨m, hm, Finsupp.mem_support_iff.mpr (by omega)⟩))
-  have h3 : degreeOf v q ≠ 0 := by
-    obtain ⟨m, hm, hvm⟩ := (mem_vars v).mp hv
-    have := monomial_le_degreeOf v hm
-    have := Finsupp.mem_support_iff.mp hvm
-    omega
+    exact hvs (hs ((mem_vars_iff_mem_support v).mpr ⟨m, hm, Finsupp.mem_support_iff.mpr (by omega)⟩))
+  have h3 : degreeOf v q ≠ 0 := mem_vars_iff_degreeOf_ne_zero.mp hv
   omega
 
 theorem algHom_fixes_supported_polynomials {R σ : Type*} [CommRing R] {s : Set σ} (φ : MvPolynomial σ R →ₐ[R] MvPolynomial σ R)

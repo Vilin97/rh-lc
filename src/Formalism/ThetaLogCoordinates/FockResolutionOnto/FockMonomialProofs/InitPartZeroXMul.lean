@@ -67,7 +67,7 @@ theorem initPart_int (v : σ) (e : ℕ) (f : MvPolynomial σ ℚ_[p]) (hf : f �
 theorem initPart_zero_X_mul (v : σ) (a : MvPolynomial σ ℚ_[p]) : initPart v 0 (X v * a) = 0 := by
   classical
   ext m
-  rw [coeff_initPart, coeff_zero]
+  simp only [coeff_initPart, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   split_ifs with hm
   · rw [MvPolynomial.coeff_X_mul', if_neg (by simp [hm])]
   · rfl

@@ -16,6 +16,7 @@ private theorem locally_constant_right_invariant_open_subgroup {G : Type*} [Grou
     (K₀ : Subgroup G) (hK : IsOpen (K₀ : Set G)) [CompactSpace K₀] [TotallyDisconnectedSpace K₀]
     (e : G → ℂ) (he : IsLocallyConstant e) (hc : HasCompactSupport e) :
     ∃ W : Subgroup G, IsOpen (W : Set G) ∧ ∀ k ∈ W, ∀ x, e (x * k) = e x := by
+  letI : Inv (Set G) := Set.inv
   have hF : IsLocallyConstant fun p : G × G => e (p.1 * p.2) - e p.1 :=
     (he.comp_continuous (continuous_fst.mul continuous_snd)).sub (he.comp_continuous continuous_fst)
   have hN : IsOpen {p : G × G | e (p.1 * p.2) - e p.1 = 0} := hF.isOpen_fiber 0

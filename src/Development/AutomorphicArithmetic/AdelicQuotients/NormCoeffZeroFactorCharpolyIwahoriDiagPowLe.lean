@@ -65,7 +65,7 @@ private lemma nrm_unif {E : Type} [Field E] [NumberField E] (w : HeightOneSpectr
     rw [FinitePlace.norm_def]
     exact_mod_cast (WithZeroMulInt.toNNReal_lt_one_iff h1).2 hv
   rw [FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ hvne] at hlt1 ⊢
-  generalize (WithZero.unzero hvne).toAdd = m at hlt1 ⊢
+  generalize (Valued.v x).log = m at hlt1 ⊢
   have hm : m ≤ -1 := by
     by_contra hc
     have hm0 : 0 ≤ m := by omega

@@ -105,6 +105,7 @@ theorem map_mulVec_eq_smul : ∀ (K : Type) [CommRing K] [TopologicalSpace K] [I
     (continuous_pi fun i => continuous_const.mul (continuous_apply i)).measurable
   have hdiag : μ.map (fun (x : ι → K) i => (Du i : K) * x i) = c • μ := by
     rw [hμ, Measure.map_smul, pi_map_diag, hcc, smul_comm]
+    exact hmd.aemeasurable
   have hm : ∀ M : Matrix ι ι K, Measurable (fun x : ι → K => M *ᵥ x) := fun M =>
     (continuous_const.matrix_mulVec continuous_id).measurable
   have e : (fun x : ι → K => A *ᵥ x) =
@@ -119,5 +120,6 @@ theorem map_mulVec_eq_smul : ∀ (K : Type) [CommRing K] [TopologicalSpace K] [I
     rw [hAeq, Matrix.mul_assoc]
   rw [e, ← Measure.map_map (hm _) (hmd.comp (hm _)), ← Measure.map_map hmd (hm _),
     map_transvections μ L', hdiag, Measure.map_smul, map_transvections μ L]
+  exact (hm _).aemeasurable
 
 end GlobalTheory.CompanionTheory.SW.ModDet

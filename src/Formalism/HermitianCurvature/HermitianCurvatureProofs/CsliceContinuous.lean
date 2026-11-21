@@ -66,7 +66,9 @@ theorem int_cpt_gen (μ : Measure (Mt k r)) (hμ : B.IsHaarOn (Glev k r (Fin.las
     intro x
     rw [hC]
     constructor
-    · rintro ⟨g, hg, rfl⟩; simpa using hg
+    · rintro ⟨g, hg, rfl⟩
+      rw [Matrix.of.apply_symm_apply]
+      exact hg
     · intro hx; exact ⟨Matrix.of x, hx, rfl⟩
   have hCc : IsCompact C := by
     rw [hC]

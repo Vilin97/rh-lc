@@ -157,7 +157,7 @@ theorem vandLamLower : VandLamLower := by
           | (rw [Finset.prod_const, Nat.card_Icc, Nat.add_sub_cancel]; rfl)
           | (unfold Cfg.prodb; rw [Finset.prod_const, Nat.card_Icc, Nat.add_sub_cancel])
       _ ≤ ∏ i ∈ Icc 1 (c.k - 1), ∏ j ∈ Icc 1 c.m, (c.v i + c.b j) := by
-          apply Finset.prod_le_prod
+          apply Finset.prod_le_prod₀
           · intro i _
             apply Finset.prod_nonneg
             intro j hj
@@ -165,7 +165,7 @@ theorem vandLamLower : VandLamLower := by
             linarith [b_ge_one c h j hj.1 hj.2]
           · intro i hi
             rw [Finset.mem_Icc] at hi
-            apply Finset.prod_le_prod
+            apply Finset.prod_le_prod₀
             · intro j hj
               rw [Finset.mem_Icc] at hj
               linarith [b_ge_one c h j hj.1 hj.2]
@@ -512,7 +512,7 @@ lemma mu_bound (c : Cfg) (h : c.Ok) (bb : ℝ) (hs : c.Small bb) :
   have hp : c.prodb ≤ bb ^ (2 * c.m) := by
     unfold Cfg.prodb
     calc ∏ j ∈ Icc 1 c.m, c.b j ≤ ∏ j ∈ Icc 1 c.m, bb ^ 2 := by
-          apply Finset.prod_le_prod
+          apply Finset.prod_le_prod₀
           · intro j hj
             rw [Finset.mem_Icc] at hj
             linarith [b_ge_one c h j hj.1 hj.2]
@@ -673,7 +673,7 @@ lemma key_top (hTp : VandTop) (c : Cfg) (bb : ℝ) (de : ℕ → ℝ) (h : c.Ok)
     ring
   have hA1 : ∏ i ∈ Ioc 1 (c.k - 1), (c.a - c.u de i) ≤ c.a ^ (c.k - 2) := by
     calc ∏ i ∈ Ioc 1 (c.k - 1), (c.a - c.u de i) ≤ ∏ i ∈ Ioc 1 (c.k - 1), c.a := by
-          apply Finset.prod_le_prod
+          apply Finset.prod_le_prod₀
           · intro i hi
             rw [Finset.mem_Ioc] at hi
             obtain ⟨j, rfl⟩ : ∃ j, i = j + 1 := ⟨i - 1, by omega⟩
@@ -714,7 +714,7 @@ lemma key_top (hTp : VandTop) (c : Cfg) (bb : ℝ) (de : ℕ → ℝ) (h : c.Ok)
     rw [hbt]
     calc ∏ i ∈ Icc 1 (c.k - 2), (c.u de (i + 1) + c.bp)
         ≤ ∏ i ∈ Icc 1 (c.k - 2), (c.bp + 4 * (c.k:ℝ) * c.Del) := by
-          apply Finset.prod_le_prod
+          apply Finset.prod_le_prod₀
           · intro i hi
             rw [Finset.mem_Icc] at hi
             have hb := u_mid_bounds c h de hw i hi.1 (by omega)

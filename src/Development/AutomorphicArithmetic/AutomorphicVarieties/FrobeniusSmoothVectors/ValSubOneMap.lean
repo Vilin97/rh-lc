@@ -28,7 +28,7 @@ private theorem adicCont_map {Γ : Type} [TopologicalSpace Γ] (q : C' →ₐ[O]
 
 private theorem map_sgnAct {m : ℕ} {A A' : Type} [CommRing A] [CommRing A'] (f : A →+* A') (s : ℤˣ)
     (g : GL (Fin m) A) :
-    GeneralLinearGroup.map f (sgnAct s g) = sgnAct s (GeneralLinearGroup.map f g) := by
+    GeneralLinearGroup.map f (sgnAct m A s g) = sgnAct m A' s (GeneralLinearGroup.map f g) := by
   rcases Int.units_eq_one_or s with rfl | rfl
   · rw [sgnAct_one, sgnAct_one]
   · rw [sgnAct_neg_one, sgnAct_neg_one, map_theta]

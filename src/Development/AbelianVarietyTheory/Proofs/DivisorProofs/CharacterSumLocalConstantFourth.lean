@@ -18,7 +18,7 @@ section Gen
 variable {E K : Type} [Field E] [NumberField E] [Field K] {P : HeightOneSpectrum (𝓞 E)}
 
 theorem norm_unitV (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {a : E} (h : IsUnit (redP P a)) (σ : K →+* ℂ) :
-    ‖σ (LocE.unitV P χ a)‖ = 1 := by
+    ‖σ (LocE.unitV χ a)‖ = 1 := by
   unfold LocE.unitV
   rw [dite_eq_left h]
   have : Finite (𝓞 E ⧸ P.asIdeal) := Ideal.finiteQuotientOfFreeOfNeBot _ P.ne_bot
@@ -54,8 +54,11 @@ theorem locSmall_om {a b : ℕ} {e e' : ℕ → ℤ} (cq sq : K) (χ : (𝓞 E �
     congr 1
     refine LinearMap.ext fun y => ?_
     simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), map_smul]
-  · unfold Loc.om
-    rw [GlobalTheory.LastSteps.locChar_unit cq χ hu, GlobalTheory.LastSteps.locChar_unit cq χ hu', GlobalTheory.LastSteps.vP_unit hu,
+  · have locChar_eq_unitV {x : E} (hx : IsUnit (redP P x)) :
+        LocE.locChar (qOf P) cq χ x = LocE.unitV χ x := by
+      simp [LocE.locChar, GlobalTheory.LastSteps.vP_unit hx]
+    unfold Loc.om
+    rw [locChar_eq_unitV hu, locChar_eq_unitV hu', GlobalTheory.LastSteps.vP_unit hu,
       GlobalTheory.LastSteps.vP_unit hu']
     simp only [neg_zero, zero_mul, zpow_zero, mul_one, map_mul, map_inv₀, norm_mul, norm_inv, norm_unitV χ hu,
       norm_unitV χ hu', inv_one, one_mul]

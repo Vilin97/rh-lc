@@ -312,7 +312,7 @@ theorem levB_lam_phi (Ti : Comparison₂ W levB) (hs : W.s = 1) (hR : Formalism.
       ring
     rw [hLam]
     congr 1
-    rw [pow_succ' (Formalism.WeaklyAdmissibleFiltrations.φVB PD (LL := LL) (V := T.V)) e, Module.End.mul_apply]
+    simp only [pow_succ', Module.End.mul_apply, hFdef, hφ1]
 
 omit [IsDomain O] in
 theorem smulS_congr_lt {V : Type} [AddCommGroup V] [Module LL V] {m : ℤ} {F F' : ℤ → V} (hF : LB m F)
@@ -382,7 +382,7 @@ theorem levB_frame (Ti : Comparison₂ W levB) (hs : W.s = 1) (hR : Formalism.Ma
     rw [map_mul, Ti.hlevφ _ ζ ⟨1, by simpa using hζ⟩, hζ.pow_eq_one, hi1]
   rw [show (⟨_, hZ⟩ : ↥(W.N T)) = ⟨W.q ^ m • W.φD T ((⟨_, hzN⟩ : ↥(W.N T)) : W.DD T), hZ⟩ from rfl, hB, hlev]
   congr 1
-  rw [pow_succ' (Formalism.WeaklyAdmissibleFiltrations.φVB PD (LL := LL) (V := T.V)) e, Module.End.mul_apply]
+  simp only [pow_succ', Module.End.mul_apply, hFdef, hφ1]
 
 theorem coeff_lev_q_pow (Ti : Comparison₂ W levB) (a : ZMod n) (ζ : LL) (hζ : IsPrimitiveRoot ζ PD.p) (m : ℕ)
     (g : PowerSeries LL) : ∀ i < m, PowerSeries.coeff i (W.lev a ζ (W.q ^ m) * g) = 0 := by

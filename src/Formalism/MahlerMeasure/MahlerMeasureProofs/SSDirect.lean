@@ -237,8 +237,8 @@ theorem absDirect (V : ι' → Submodule K (MvPolynomial σ K)) (a : ι' → ι 
     apply h2 L (v L) (hv L hL)
     intro m hm
     have := topcoeff sv a ha (fun L v => v ∈ V L) h1 s v hv L hL hmax m hm
-    rw [hsum, coeff_zero] at this
-    exact this.symm
+    rw [hsum] at this
+    simpa using this.symm
   have hrest : ∀ i ∈ s.erase L, v i = 0 :=
     ih (s.erase L) (Finset.erase_ssubset hL) v (fun i hi => hv i (mem_of_mem_erase hi))
       (by rw [← Finset.add_sum_erase s v hL, key, zero_add] at hsum; exact hsum)
@@ -310,7 +310,7 @@ lemma kap_smul (F : (τ →₀ ℕ) → (σ →₀ ℕ)) (hF : Function.Injectiv
 
 lemma kap_zero (F : (τ →₀ ℕ) → (σ →₀ ℕ)) (hF : Function.Injective F) :
     kap F hF (0 : MvPolynomial σ K) = 0 := by
-  ext n; simp only [coeff_kap, coeff_zero]
+  ext n; simp [coeff_kap, AddMonoidAlgebra.coeff_zero]
 
 variable (e : τ → σ)
 

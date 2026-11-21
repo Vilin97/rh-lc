@@ -39,7 +39,7 @@ theorem stX_ok (a : I.ι) : (I.stX a).Ok :=
 
 
 set_option maxHeartbeats 1600000 in
-theorem perIn_ok (h : I.Ok) (u : B.Word) (a : I.ι) : (I.perIn u a).Ok where
+theorem perIn_ok (h : I.Ok) (u : B.Word) (a : I.ι) : (I.perIn u a).Ok := {
   step := stX_ok a
   til_smul _ g p := Subtype.ext (Prod.ext
     (tilF_extTop I.Ch I.sel (I.tup a) (I.cst a) I.Ps (base_fields_primes_ok B X).2.1 u (piT_notMem_Q h u a) g p.1.1)
@@ -70,11 +70,11 @@ theorem perIn_ok (h : I.Ok) (u : B.Word) (a : I.ι) : (I.perIn u a).Ok where
     exact ⟨(), trivPt _ _ _ _ _ d, (topPt_val I.sel (I.tup a) (I.cst a) u _).symm.trans
       (congrArg (topPt I.sel (I.tup a) (I.cst a) u) hd)⟩
   H_idx _ := (inferInstance : (⊤ : Subgroup _).FiniteIndex)
-  H_rat _ g := ⟨g, Subgroup.mem_top _, rfl⟩
+  H_rat _ g := ⟨g, Subgroup.mem_top _, rfl⟩ }
 
 
 set_option maxHeartbeats 1600000 in
-theorem perIn_over (h : I.Ok) (u : B.Word) (a : I.ι) : (I.perIn u a).Over (I.atIn u a) where
+theorem perIn_over (h : I.Ok) (u : B.Word) (a : I.ι) : (I.perIn u a).Over (I.atIn u a) := {
   norm_tz := by
     show star (star (((B.primes X).piT u : 𝓞 B.fields.E) : B.fields.E)) *
       star (((B.primes X).piT u : 𝓞 B.fields.E) : B.fields.E) = ((B.primes X).T u : B.fields.E)
@@ -92,7 +92,7 @@ theorem perIn_over (h : I.Ok) (u : B.Word) (a : I.ι) : (I.perIn u a).Over (I.at
     change x ∈ ((I.perIn u a).til b p).1.1.deco.1.N at hx
     show ((I.perIn u a).til b p).1.1.deco.1.f P x = _
     rw [til_deco h u a b p] at hx ⊢
-    exact tilH_f _ p.1.1.deco (conj_piT_notMem hPr u) (piT_notMem_vGs hPr u) P x hx
+    exact tilH_f _ p.1.1.deco (conj_piT_notMem hPr u) (piT_notMem_vGs hPr u) P x hx }
 
 theorem perIn_laws : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok →
     ∀ u a, (I.perIn u a).Ok ∧ (I.perIn u a).Over (I.atIn u a) :=

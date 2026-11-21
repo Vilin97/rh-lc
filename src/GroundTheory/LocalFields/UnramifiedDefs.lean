@@ -36,6 +36,7 @@ variable (K L : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarc
 theorem isUnramified_iff_residueDegree_eq_finrank :
     IsUnramified K L ↔ ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) = Module.finrank K L := by
   rw [isUnramified_iff, ← ramificationIndex_mul_residueDegree K L]
+  change ramificationIndex K L = 1 ↔ _
   have h := residueDegree_pos K L
   constructor
   · intro h1

@@ -15,7 +15,9 @@ private lemma small_power_bound {A : Type*} [Ring A] [_i : Valued A (WithZero (M
   obtain ⟨k, hk⟩ : ∃ k : ℤ, MonoidWithZeroHom.ValueGroup₀.embedding γ.1 = exp k :=
     ⟨log _, (exp_log hg).symm⟩
   refine ⟨(-k + 1).toNat, fun x hx => ?_⟩
-  rw [Valuation.restrict_lt_iff_lt_embedding, hk]
+  apply _i.v.restrict_lt_iff_lt_embedding.mpr
+  change _i.v x < MonoidWithZeroHom.ValueGroup₀.embedding γ.1
+  rw [hk]
   refine lt_of_le_of_lt hx ?_
   rw [exp_lt_exp]
   have := Int.self_le_toNat (-k + 1)
@@ -183,6 +185,7 @@ private theorem core {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
     intro x m hx
     rw [← intValuation_le_pow_iff_mem] at hx ⊢
     rw [← intValuation_liesOver v P x] at hx
+    rw [← Ideal.ramificationIdx'_eq_ramificationIdx v.asIdeal P.asIdeal v.ne_bot, ← he'] at hx
     have h1 : exp (-((e * m : ℕ) : ℤ)) = (exp (-(m : ℤ))) ^ e := by
       rw [← exp_nsmul]
       congr 1

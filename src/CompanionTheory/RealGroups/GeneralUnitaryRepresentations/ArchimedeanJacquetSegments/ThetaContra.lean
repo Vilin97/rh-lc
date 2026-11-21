@@ -85,7 +85,7 @@ theorem herm_ofB (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsN
   change (prodIrr (yy x s) hd).IsIrreducible at hirr
 
   obtain ⟨E5⟩ := theta_contra hGK (prodIrr (yy x s) hd) (isSmooth_prodIrr _ _) hirr
-  obtain ⟨hd', ⟨E4⟩⟩ := GlobalTheory.T.product_transpose_inverse_dual_reverse hA hGK (yy x s) hd
+  obtain ⟨hd', ⟨E4⟩⟩ := GlobalTheory.T.product_transpose_inverse_dual_reverse (k := k) (h := 2) (N := N) hA hGK (yy x s) hd
 
   let c : Fin 2 → ℝ := ![-s, s]
   have hM : ∑ _a : Fin 2, x.1 = N := by

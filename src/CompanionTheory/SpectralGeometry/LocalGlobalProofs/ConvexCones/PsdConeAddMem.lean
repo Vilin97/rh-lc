@@ -36,7 +36,7 @@ theorem isPosDef_orthSum {K₁ K₂ : Type} [Fintype K₁] [Fintype K₂] (e₁ 
   have key : ∑ i, ∑ j, c i * c j * orthSum B₁ B₂ ((e₁.prod e₂) i) ((e₁.prod e₂) j) =
       (∑ k, ∑ l, c (Sum.inl k) * c (Sum.inl l) * B₁ (e₁ k) (e₁ l)) +
         ∑ k, ∑ l, c (Sum.inr k) * c (Sum.inr l) * B₂ (e₂ k) (e₂ l) := by
-    simp [Fintype.sum_sum_type, Finset.sum_add_distrib]
+    simp [Fintype.sum_sum_type, Finset.sum_add_distrib, orthSum]
   rw [key]
   by_cases h0 : (fun k => c (Sum.inl k)) = 0
   · have h3 : (fun k => c (Sum.inr k)) ≠ 0 := fun h3 => hc (by
@@ -59,11 +59,11 @@ variable (O : Type) [CommRing O] [IsDedekindDomain O] [CharZero O] [Module.Finit
 theorem free_int_of_torsion_eq_bot (M : Type) [AddCommGroup M] [Module O M] [Module.Finite O M]
     (ht : Submodule.torsion O M = ⊥) : Module.Free ℤ M := by
   have : Module.Finite ℤ M := Module.Finite.trans O M
-  have : IsAddTorsionFree M := by
+  have : HasUniqueDiv M := by
     refine ⟨fun n hn a b hab => ?_⟩
+    change n • a = n • b at hab
     have h0 : ((n : ℕ) : O) ≠ 0 := by exact_mod_cast hn
     have h1 : ((n : ℕ) : O) • (a - b) = 0 := by
-      simp only at hab
       rw [Nat.cast_smul_eq_nsmul, smul_sub, hab, sub_self]
     have h2 : a - b ∈ Submodule.torsion O M :=
       (Submodule.mem_torsion_iff _).2 ⟨⟨_, mem_nonZeroDivisors_of_ne_zero h0⟩, h1⟩

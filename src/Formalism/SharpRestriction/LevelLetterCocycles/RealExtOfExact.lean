@@ -294,7 +294,7 @@ theorem unitBasis_of (hU : UnitGen W e) (hcr : IsCrys PD W.one.ρ) : UnitBasis W
     exact Submodule.mem_span_singleton_self e
   have hex : ∀ x : W.DD W.one, ∃ ε : W.EE, x = ε • e := by
     intro x
-    refine hb.inductionOn x (fun x => ∃ ε : W.EE, x = ε • e) ⟨0, (zero_smul _ _).symm⟩ ?_ ?_ ?_
+    refine hb.inductionOn x ?_ ?_ ?_
     · intro m
       have hm : (m : W.DD W.one) ∈ Submodule.span (LetA O n) {e} := by
         rw [← hN]

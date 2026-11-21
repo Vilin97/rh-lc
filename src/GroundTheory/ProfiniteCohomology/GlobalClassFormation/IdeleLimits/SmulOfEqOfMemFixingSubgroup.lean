@@ -12,6 +12,8 @@ namespace GroundTheory.ProfCoh
 
 open NumberField IntermediateField GroundTheory.Global GroundTheory.Global.AdeleBaseChange
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 noncomputable section
 
 namespace IdeleLimit

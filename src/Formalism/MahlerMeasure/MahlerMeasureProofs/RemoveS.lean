@@ -523,7 +523,7 @@ theorem pderiv_of_free (v : σ) (y : MvPolynomial σ k) (h : ∀ m ∈ y.support
     by_contra hne
     have h1 := h _ (MvPolynomial.mem_support_iff.mpr hne)
     simp at h1
-  rw [h0, zero_mul]
+  simp only [h0, zero_mul, Finsupp.zero_apply]
 
 theorem eulL_X_pow {s : ℕ} (t : Fin s → σ) (zv : σ) (z a : ℕ) (ha : ∑ c, (Finsupp.single zv z) (t c) = a) :
     eulL t (X zv ^ z : MvPolynomial σ k) = (a : k) • X zv ^ z := by
@@ -629,16 +629,16 @@ theorem eig_P (hv : M.TieVars w e zv sv) (hy : BiHom w e o n y) (hz : M.ZSFree z
   constructor
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, Finset.smul_sum]
-    refine Finset.sum_congr rfl (fun l _ => ?_)
-    have h1 := eig_v (z := z) hv hy hz l
-    have h2 := (eulL_tieE_pow hw' he' hd _ _ _ h1.1 h1.2.1 l).1
-    rw [map_smul, h2, sub_add_cancel, smul_comm]
+      refine Finset.sum_congr rfl (fun l _ => ?_)
+      have h1 := eig_v (z := z) hv hy hz l
+      have h2 := (eulL_tieE_pow hw' he' hd _ _ _ h1.1 h1.2.1 l).1
+      rw [map_smul, h2, sub_add_cancel, smul_comm]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, Finset.smul_sum]
-    refine Finset.sum_congr rfl (fun l _ => ?_)
-    have h1 := eig_v (z := z) hv hy hz l
-    have h2 := (eulL_tieE_pow hw' he' hd _ _ _ h1.1 h1.2.1 l).2
-    rw [map_smul, h2, sub_add_cancel, smul_comm]
+      refine Finset.sum_congr rfl (fun l _ => ?_)
+      have h1 := eig_v (z := z) hv hy hz l
+      have h2 := (eulL_tieE_pow hw' he' hd _ _ _ h1.1 h1.2.1 l).2
+      rw [map_smul, h2, sub_add_cancel, smul_comm]
 
 end
 

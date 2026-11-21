@@ -64,10 +64,12 @@ theorem linkGLOBAL_of_7w {eps : ℝ} (Fm : FamP eps) (Cabs CH C0 eD eL : ℝ) (h
 
 theorem FamGLmin.link7 {𝒞 : FamClass} {C5 : ℝ} (h : FamGLmin 𝒞 C5) (Cabs C0 : ℝ) (hCabs : 0 ≤ Cabs) (hC0 : 3 ≤ C0) :
     Closed 𝒞 fun Fm CH => TuSize Fm → LinkGLOBAL7 Fm Cabs CH C0 Cabs 0 :=
-  ((closed_CH 𝒞).and (h.h2b.and (h.h2v.and (h.h3.and (h.hZa.and (h.hZb.and (h.tCV.and (h.hW.and (h.hμ.and
-    (h.hI.and (h.hR.and h.hB))))))))))).imp
-    fun Fm CH _ ⟨hCH, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11⟩ =>
-      linkGLOBAL7_min Fm Cabs CH C0 C5 hCabs hCH hC0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11
+  by
+    apply ((closed_CH 𝒞).and (h.h2b.and (h.h2v.and (h.h3.and (h.hZa.and (h.hZb.and (h.tCV.and (h.hW.and (h.hμ.and
+      (h.hI.and (h.hR.and h.hB))))))))))).imp
+    intro eps Fm CH _ hs
+    obtain ⟨hCH, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11⟩ := hs
+    exact linkGLOBAL7_min Fm Cabs CH C0 C5 hCabs hCH hC0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11
 
 theorem FamGLmin.link8 {𝒞 : FamClass} {C5 : ℝ} (h : FamGLmin 𝒞 C5) (Cabs C0 : ℝ) (hCabs : 0 ≤ Cabs) (hC0 : 3 ≤ C0)
     (hW : ∀ {eps : ℝ} (Fm : FamP eps), 𝒞 Fm → ChosenWall Fm) :

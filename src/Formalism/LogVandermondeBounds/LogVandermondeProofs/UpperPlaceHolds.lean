@@ -46,7 +46,7 @@ lemma up_vand_le (K : ℕ) (u v : ℕ → ℝ) (hint : ∀ i, i < K → v i < u 
     (hv : ∀ i j, i < j → j < K → v j < v i) : vandN v K ≤ vandN u (K + 1) := by
   have h1 : vandN v K ≤ ∏ i ∈ range K, ∏ j ∈ Ico (i + 1) K, (u i - u (j + 1)) := by
     unfold vandN
-    apply Finset.prod_le_prod
+    apply Finset.prod_le_prod₀
     · intro i hi
       apply Finset.prod_nonneg
       intro j hj
@@ -54,7 +54,7 @@ lemma up_vand_le (K : ℕ) (u v : ℕ → ℝ) (hint : ∀ i, i < K → v i < u 
       have := hv i j (by omega) hj.2
       linarith
     · intro i hi
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro j hj
         simp only [mem_Ico, mem_range] at hi hj
         have := hv i j (by omega) hj.2
@@ -68,7 +68,7 @@ lemma up_vand_le (K : ℕ) (u v : ℕ → ℝ) (hint : ∀ i, i < K → v i < u 
   unfold vandN
   rw [Finset.prod_range_succ]
   simp only [Finset.Ico_self, Finset.prod_empty, mul_one]
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro i hi
     apply Finset.prod_nonneg
     intro j hj
@@ -192,10 +192,10 @@ lemma up_num_le (n m : ℕ) (lam v : ℕ → ℝ) (Bd : ℝ) (hBd : 1 ≤ Bd)
   calc _ ≤ (∏ a ∈ range (n + 1), ((∏ c ∈ Ico (a + 1) (n + 1), (v a - v c)) * Bd ^ m)) *
           ∏ _x ∈ range m, Bd ^ m := by
         apply mul_le_mul
-        · apply Finset.prod_le_prod
+        · apply Finset.prod_le_prod₀
           · intro a _; exact rownonneg a
           · intro a ha; exact hrow1 a (Finset.mem_range.mp ha)
-        · apply Finset.prod_le_prod
+        · apply Finset.prod_le_prod₀
           · intro x _; exact rownonneg (n + 1 + x)
           · intro x _; exact hrow2 (n + 1 + x) (by omega)
         · exact Finset.prod_nonneg (fun x _ => rownonneg (n + 1 + x))

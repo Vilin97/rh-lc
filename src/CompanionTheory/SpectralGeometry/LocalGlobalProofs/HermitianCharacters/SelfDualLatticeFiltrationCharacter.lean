@@ -221,7 +221,9 @@ theorem exists_inf {ψ : AddChar (AF F) ℂ} (hψ : IsCharAF F ψ) (w : Infinite
       ((InfinitePlace.Completion.isometry_extensionEmbedding u).continuous.comp (continuous_apply u))))
   have hemb : ∀ (u : InfinitePlace F) (x : F),
       InfinitePlace.Completion.extensionEmbedding u (algebraMap F u.Completion x) = u.embedding x :=
-    fun u x => InfinitePlace.Completion.extensionEmbedding_coe u _
+    fun u x => by
+      rw [AbsoluteValue.Completion.algebraMap_def]
+      simp [WithAbs.algebraMap_right_apply]
   have h1 : (fun z => ψ (pairA F z 0)) =
       fun z => Complex.exp (2 * Real.pi * Complex.I * ((T z : ℝ) : ℂ)) :=
     (InfiniteAdeleRing.denseRange_algebraMap F).equalizer

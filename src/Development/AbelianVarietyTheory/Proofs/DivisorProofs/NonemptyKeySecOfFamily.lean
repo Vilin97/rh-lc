@@ -27,6 +27,7 @@ namespace GlobalTheory.KeyCover
 
 
 set_option maxHeartbeats 1000000 in
+attribute [local instance 1100] Subalgebra.algebra in
 theorem nonempty_keySec_of_family (E : Type) [Field E] [NumberField E] [IsCMField E]
     (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Level H) (Xo : Moduli Dw l)
     (c : Coeff l) (σ : c.F →+* ℂ) (hσ : Formalism.L2.PjFree.GoodEmb c σ) {g : ℕ}

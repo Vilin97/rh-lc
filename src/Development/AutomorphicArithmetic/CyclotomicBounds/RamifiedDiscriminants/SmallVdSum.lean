@@ -18,14 +18,15 @@ theorem UpperTheory.KR.small_vd_sum :
     have hlogQ : Real.log (H.QS : ℝ) = ∑ p ∈ H.small, (padicValNat p H.QS : ℝ) * Real.log p := by
       show _ = ∑ p ∈ H.QS.primeFactors, (padicValNat p H.QS : ℝ) * Real.log p
       have hprod : (H.QS : ℝ) = ∏ p ∈ H.QS.primeFactors, (p : ℝ) ^ (H.QS.factorization p) := by
-        conv_lhs => rw [← Nat.factorization_prod_pow_eq_self hQ0]
+        conv_lhs => rw [← Nat.prod_factorization_pow_eq_self hQ0]
         rw [Finsupp.prod, Nat.support_factorization]
         push_cast
         rfl
       rw [hprod, Real.log_prod]
       · apply Finset.sum_congr rfl
         intro p hp
-        rw [Real.log_pow, Nat.factorization_def _ (Nat.prime_of_mem_primeFactors hp)]
+        rw [Real.log_pow, Nat.factorization_def _ (Nat.prime_of_mem_primeFactors hp),
+          ← Nat.padicValNat_def]
       · intro p hp
         exact pow_ne_zero _ (Nat.cast_ne_zero.mpr (Nat.prime_of_mem_primeFactors hp).ne_zero)
     have hlog2 : Real.log (H.QS : ℝ) ≤ Real.logb 2 H.QS := by

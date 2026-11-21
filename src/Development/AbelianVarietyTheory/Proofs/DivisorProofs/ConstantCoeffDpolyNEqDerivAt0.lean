@@ -93,8 +93,8 @@ private lemma subst_subst_eq_subst_comp {σ τ ρ : Type} {a : σ → MvPowerSer
   | exact congrFun (MvPowerSeries.subst_comp_subst ha hb) f
 
 private lemma pderiv_inr_subst_twoVars {d : ℕ} (f : MvPowerSeries (Fin 2 × Fin d) C) (k : Fin d) :
-    pderiv C (Sum.inr k) (subst (GlobalTheory.LawLog.twoVars C d) f) =
-      subst (GlobalTheory.LawLog.twoVars C d) (pderiv C ((1 : Fin 2), k) f) := by
+    pderiv (Sum.inr k) (subst (GlobalTheory.LawLog.twoVars C d) f) =
+      subst (GlobalTheory.LawLog.twoVars C d) (pderiv ((1 : Fin 2), k) f) := by
   classical
   rw [pderiv_subst GlobalTheory.LawLog.cc_twoVars, Finset.sum_eq_single ((1 : Fin 2), k)]
   · simp [GlobalTheory.LawLog.twoVars, MvPowerSeries.pderiv_X, Pi.single_apply]
@@ -109,7 +109,7 @@ variable [CharZero C] (v : AddValuation C (WithTop ℝ))
 include v
 
 theorem derivAt0_pderiv [Fintype σ] (Q : MvPolynomial σ C) (l : σ) (S : MvPowerSeries σ C) :
-    derivAt0 Q (pderiv C l S) = derivAt0 (Q * MvPolynomial.X l) S := by
+    derivAt0 Q (pderiv l S) = derivAt0 (Q * MvPolynomial.X l) S := by
   classical
   first
   | (unfold derivAt0
@@ -132,7 +132,7 @@ theorem subst_jacEntry (G : FGLaw C d) (L : LogFGL v d)
     (hL : ∀ a, L.F a = subst (twoVars C d) (G.F a)) {n : ℕ} {Λ : Type} [Finite Λ]
     (ψ : Fin n × Fin d → MvPowerSeries Λ C) (hψ : ∀ q, constantCoeff (ψ q) = 0) (j : Fin n) (k e : Fin d) :
     subst (fun i => ψ (j, i)) (GlobalTheory.LogJacobian.jacEntry L k e) =
-      subst ψ (ev (n := n) ![pt C d j, 0] (pderiv C ((1 : Fin 2), k) (G.F e))) := by
+      subst ψ (ev (n := n) ![pt C d j, 0] (pderiv ((1 : Fin 2), k) (G.F e))) := by
   classical
   have hA : HasSubst (GlobalTheory.LogJacobian.substSecondBlockZero (C := C) d) := hasSubst_lemma (GlobalTheory.LogJacobian.constantCoeff_substSecondBlockZero d)
   have hT : HasSubst (GlobalTheory.LawLog.twoVars C d) := hasSubst_lemma GlobalTheory.LawLog.cc_twoVars
@@ -184,7 +184,7 @@ theorem cc_psi (q : Fin n × Fin d) : constantCoeff (psi L β w q) = 0 := by
   | exact MvPowerSeries.constantCoeff_subst_eq_zero hs ((isExp_expOf L).1 q.2)
 
 theorem pderiv_lin (l : Λ) (j : Fin n) (e : Fin d) :
-    pderiv C l (lin β w j e) = MvPowerSeries.C (β l j * w l e) := by
+    pderiv l (lin β w j e) = MvPowerSeries.C (β l j * w l e) := by
   classical
   first
   | (simp only [lin, map_sum, Derivation.map_smul, MvPowerSeries.pderiv_X]
@@ -193,18 +193,17 @@ theorem pderiv_lin (l : Λ) (j : Fin n) (e : Fin d) :
   | (simp [lin, MvPowerSeries.pderiv_X, Pi.single_apply, MvPowerSeries.smul_eq_C_mul]; done)
 
 theorem pderiv_subst_psi (G : FGLaw C d) (hL : ∀ a, L.F a = subst (twoVars C d) (G.F a)) (l : Λ) (g : PS C n d) :
-    pderiv C l (subst (psi L β w) g) =
+    pderiv l (subst (psi L β w) g) =
       subst (psi L β w) (∑ j, MvPowerSeries.C (β l j) * DofN G.F j (w l) g) := by
   classical
   have hΨ : HasSubst (psi L β w) := hasSubst_lemma (cc_psi L β w)
-  have hpt : ∀ (j : Fin n) (i : Fin d), constantCoeff (pt C d j i) = 0 := fun j i => by simp [pt]
-  have hcol : ∀ (j : Fin n) (c : Fin d), pderiv C l (psi L β w (j, c)) =
-      ∑ e, subst (psi L β w) (ev ![pt C d j, 0] (pderiv C ((1 : Fin 2), e) (G.F c))) *
+  have hcol : ∀ (j : Fin n) (c : Fin d), pderiv l (psi L β w (j, c)) =
+      ∑ e, subst (psi L β w) (ev ![pt C d j, 0] (pderiv ((1 : Fin 2), e) (G.F c))) *
         MvPowerSeries.C (β l j * w l e) := by
     intro j c
     have hlin : HasSubst (lin β w j) := hasSubst_lemma (cc_lin β w j)
     have hE : HasSubst (expOf L) := hasSubst_lemma (isExp_expOf L).1
-    show pderiv C l (subst (lin β w j) (expOf L c)) = _
+    show pderiv l (subst (lin β w j) (expOf L c)) = _
     rw [pderiv_subst (cc_lin β w j)]
     refine Finset.sum_congr rfl fun e _ => ?_
     rw [pderiv_lin, GlobalTheory.LogJacobian.pderiv_expOf, subst_subst_eq_subst_comp hE hlin]
@@ -212,7 +211,7 @@ theorem pderiv_subst_psi (G : FGLaw C d) (hL : ∀ a, L.F a = subst (twoVars C d
     exact subst_jacEntry G L hL (psi L β w) (cc_psi L β w) j e c
   rw [pderiv_subst (cc_psi L β w), Fintype.sum_prod_type]
   simp only [hcol]
-  simp only [GlobalTheory.MatChain.dofN_eq G, GlobalTheory.MatChain.jv]
+  simp only [DofN]
   rw [← MvPowerSeries.coe_substAlgHom hΨ]
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [map_sum, map_mul, MvPowerSeries.coe_substAlgHom, subst_C_eq_C' hΨ]
@@ -221,8 +220,6 @@ theorem pderiv_subst_psi (G : FGLaw C d) (hL : ∀ a, L.F a = subst (twoVars C d
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [Finset.mul_sum, Finset.sum_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun e _ => ?_
-  rw [GlobalTheory.MatChain.ev_jac G (hpt j)]
-  try rw [map_mul]
   ring
 
 end Chain

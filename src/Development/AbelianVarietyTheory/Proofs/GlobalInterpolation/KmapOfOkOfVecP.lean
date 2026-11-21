@@ -252,6 +252,8 @@ section True
 
 open GlobalTheory.Mem GlobalTheory.Mem.Chr
 
+local instance (B : Base) : StarRing B.fields.E := B.fields.starE
+
 variable {B : Base} {X : PreX B.toPre} (I : ColIn B X)
 
 theorem map_muInvDet_pt (h : I.Ok) (a : I.ι) (u : B.Word) (j : Fin B.R.m) {n : ℕ}

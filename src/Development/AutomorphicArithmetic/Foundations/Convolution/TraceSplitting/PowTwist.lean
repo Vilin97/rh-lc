@@ -76,7 +76,8 @@ private theorem module_local (v : HeightOneSpectrum (𝓞 K)) (x : (v.adicComple
 private theorem norm_of_val (v : HeightOneSpectrum (𝓞 K)) (x : v.adicCompletion K) (n : ℤ)
     (h : Valued.v x = WithZero.exp n) : ‖x‖ = (Ideal.absNorm v.asIdeal : ℝ) ^ n := by
   rw [FinitePlace.norm_def, h, WithZeroMulInt.toNNReal_neg_apply _ WithZero.exp_ne_zero]
-  simp [WithZero.exp]
+  rw [WithZero.log_exp, NNReal.coe_zpow]
+  simp
 
 private theorem pow_loc {χ : HChar K} {s : ℂ} (h : UpperTheory.ConvolutionTheory.T.IsPow χ s) (v : HeightOneSpectrum (𝓞 K)) (x : (v.adicCompletion K)ˣ) :
     ((χ.loc v x : ℂˣ) : ℂ) = ((‖(x : v.adicCompletion K)‖ : ℝ) : ℂ) ^ s := by
@@ -91,7 +92,8 @@ private theorem pow_unr {χ : HChar K} {s : ℂ} (h : UpperTheory.ConvolutionThe
 private theorem pow_val {χ : HChar K} {s : ℂ} (h : UpperTheory.ConvolutionTheory.T.IsPow χ s) (v : HeightOneSpectrum (𝓞 K)) :
     ((χ.val v : ℂˣ) : ℂ) = ((Formalism.ConjugateSelfDual.normV v : ℕ) : ℂ) ^ (-s) := by
   have e : χ.val v = χ.loc v (Formalism.L2.Host.atFin v (Formalism.L2.Host.unif v)) := rfl
-  have e2 : (Formalism.ConjugateSelfDual.normV v : ℕ) = Ideal.absNorm v.asIdeal := rfl
+  have e2 : (Formalism.ConjugateSelfDual.normV v : ℕ) = Ideal.absNorm v.asIdeal := by
+    exact (Ideal.absNorm_eq_natCard _).symm
   rw [e, pow_loc h, norm_of_val v _ (-1) (Formalism.L2.Host.unif_spec v), e2, zpow_neg_one, Complex.ofReal_inv,
     Complex.inv_cpow _ _ (by
       rw [Complex.arg_ofReal_of_nonneg (by positivity)]
@@ -266,18 +268,17 @@ open Formalism.L2.Host
 
 private theorem denseInf (u : InfinitePlace K) :
     DenseRange (algebraMap K u.Completion) := by
-  have h1 : DenseRange (fun x : WithAbs u.1 => (x : UniformSpace.Completion (WithAbs u.1))) :=
-    UniformSpace.Completion.denseRange_coe
-  have h2 : DenseRange (InfinitePlace.Completion.ofCompletion : _ → u.Completion) :=
-    (InfinitePlace.Completion.equiv u).symm.surjective.denseRange
-  have h3 := h2.comp h1 (InfinitePlace.Completion.continuous_ofCompletion u)
-  refine h3.mono ?_
+  have h1 := (AbsoluteValue.Completion.denseRange_coe u.1)
+  refine h1.mono ?_
   rintro _ ⟨x, rfl⟩
-  exact ⟨x.ofAbs, rfl⟩
+  refine ⟨x.ofAbs, ?_⟩
+  rw [InfinitePlace.Completion.algebraMap_apply]
 
 private theorem normAlg (w : InfinitePlace K) (x : K) :
     ‖algebraMap K w.Completion x‖ = w x :=
-  InfinitePlace.Completion.norm_coe (K := K) (v := w) _
+  by
+    rw [InfinitePlace.Completion.algebraMap_apply]
+    exact AbsoluteValue.Completion.norm_coe (WithAbs.toAbs w.1 x)
 
 private theorem norm_infEquiv (j : K ≃+* K) (u : InfinitePlace K)
     (y : (u.comap j.toRingHom).Completion) : ‖CT.infEquiv j u y‖ = ‖y‖ := by

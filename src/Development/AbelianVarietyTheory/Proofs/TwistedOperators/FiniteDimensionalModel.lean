@@ -135,7 +135,7 @@ theorem swap_mem_int {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
     have := mul_mem h1 h2
     rwa [Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one] at this
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem eventually_conj {R R' : Type} [CommRing R] [TopologicalSpace R] [IsTopologicalRing R] [CommRing R'] {n : ℕ}
@@ -344,12 +344,10 @@ theorem gelf_mem (hθ : IsInfFam θ) (hc : c.Is) (hF : ∀ g, ∀ k ∈ GinfC V,
     (Submodule.smul_mem _ _ (rder_mem hθ hc hF (GlobalTheory.SmoothAutCheck.parts_mem V τ _).2 hx))
 
 theorem isAutFunSm_coefFun (hθ : IsInfFam θ) (hc : c.Is) (hF : ∀ g, ∀ k ∈ GinfC V, F (g * k) = F g)
-    (ℓ : c.W →L[ℂ] ℂ) (h : IsAutFun V (coefFun c F ℓ)) : IsAutFunSm θ V (coefFun c F ℓ) where
-  toIsAutFun := h
-  smooth := smooth_coefFun hθ hc hF ℓ
-  zfin := ⟨LinearMap.range (coefFun c F), inferInstance, ⟨ℓ, rfl⟩, fun τ k _ hf => gelf_mem hθ hc hF τ k hf⟩
-  growth := by
-    refine ⟨0, fun l hl x => ?_⟩
+    (ℓ : c.W →L[ℂ] ℂ) (h : IsAutFun V (coefFun c F ℓ)) : IsAutFunSm θ V (coefFun c F ℓ) := by
+  refine ⟨h, smooth_coefFun hθ hc hF ℓ, ?_, ?_⟩
+  · exact ⟨LinearMap.range (coefFun c F), inferInstance, ⟨ℓ, rfl⟩, fun τ k _ hf => gelf_mem hθ hc hF τ k hf⟩
+  · refine ⟨0, fun l hl x => ?_⟩
     obtain ⟨ℓ', e⟩ := foldr_mem (LinearMap.range (coefFun c F))
       (fun (p : D.what₂.Tau × Matrix (Fin V.rank) (Fin V.rank) ℂ) f => Rder θ V p.1 p.2 f) l
       (fun p hp y hy => rder_mem hθ hc hF (hl p hp) hy) (LinearMap.mem_range_self _ ℓ)

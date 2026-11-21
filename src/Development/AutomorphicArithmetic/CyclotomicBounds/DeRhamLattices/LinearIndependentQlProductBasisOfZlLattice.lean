@@ -31,7 +31,15 @@ private theorem abstract_indep {R K O B V C σ κ : Type} [CommRing R] [Field K]
     rw [← hd, Fintype.sum_prod_type_right]
     refine Finset.sum_congr rfl fun k _ => ?_
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hy k, map_sum, AddMonoidHom.finset_sum_apply]
+      rw [hy k, map_sum]
+    have hsum (S : Finset σ) :
+        (∑ s ∈ S, act (ω s ⊗ₜ[R] y k s)) (e k) =
+          ∑ s ∈ S, act (ω s ⊗ₜ[R] y k s) (e k) := by
+      classical
+      induction S using Finset.induction_on with
+      | empty => simp
+      | @insert a S ha ih => simp [ha, ih]
+    rw [hsum]
     exact Finset.sum_congr rfl fun s _ => (hact s k _).symm
   have h0 := UpperTheory.KN.coeff_eq_zero_of_sum_tmul_linearIndependent_eq_zero K V C (σ × κ) w hw _ h
   rw [hy k]

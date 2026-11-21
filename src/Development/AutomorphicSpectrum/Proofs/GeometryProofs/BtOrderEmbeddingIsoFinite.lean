@@ -20,14 +20,12 @@ open GlobalTheory.CompanionTheory.Ar.BT.SubOrder
 
 variable {R : Type} [CommRing R] [IsDomain R] {T : Type} [CommGroup T]
 
-theorem isFinOpenSub_top (Γ : QFGroup R T) (hfin : IsFinite Γ.G.hom) : Γ.IsFinOpenSub ⊤ where
-  finite := by
-    have := hfin
+theorem isFinOpenSub_top (Γ : QFGroup R T) (hfin : IsFinite Γ.G.hom) : Γ.IsFinOpenSub ⊤ := by
+  constructor
+  · have := hfin
     have hi : IsIso (⊤ : Γ.G.left.Opens).ι := (Scheme.topIso Γ.G.left).isIso_hom
     infer_instance
-  one := fun _ => trivial
-  mul := fun _ _ _ _ _ _ => trivial
-  inv := fun _ _ _ _ => trivial
+  all_goals simp
 
 noncomputable def secMap {X : Scheme.{0}} {A : Type} [CommRing A] (j : X ⟶ Spec (CommRingCat.of A)) : A →+* Γ(X, ⊤) :=
   ((Scheme.ΓSpecIso (CommRingCat.of A)).inv ≫ j.appTop).hom

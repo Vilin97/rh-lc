@@ -36,7 +36,7 @@ theorem invInvariant : InvInvariant := by
   have h2 : muG ε = (c * c) • muG ε := by
     calc muG ε = (muG ε).inv.inv := (MeasureTheory.Measure.inv_inv _).symm
       _ = (c • muG ε).inv := by rw [← key]
-      _ = c • (muG ε).inv := MeasureTheory.Measure.map_smul _ _ _
+      _ = c • (muG ε).inv := MeasureTheory.Measure.map_smul _ measurable_inv.aemeasurable
       _ = (c * c) • muG ε := by rw [key, smul_smul]
   have hc1 : c = 1 := by
     obtain ⟨K, hKc, hK1⟩ := exists_compact_mem_nhds (1 : ↥(UJ ε))

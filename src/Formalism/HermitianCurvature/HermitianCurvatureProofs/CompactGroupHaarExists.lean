@@ -210,7 +210,9 @@ theorem shellInt : ShellInt := by
       _ = {x | N x ≤ (2:ℝ) ^ m0}.indicator (fun _ => ENNReal.ofReal (((2:ℝ) ^ m0 / 2) ^ (-A))) x := by
           rw [Set.indicator_of_mem (show x ∈ {x | N x ≤ (2:ℝ) ^ m0} from hm0)]
       _ ≤ ∑' m : ℕ, {x | N x ≤ (2:ℝ) ^ m}.indicator
-            (fun _ => ENNReal.ofReal (((2:ℝ) ^ m / 2) ^ (-A))) x := ENNReal.le_tsum m0
+            (fun _ => ENNReal.ofReal (((2:ℝ) ^ m / 2) ^ (-A))) x :=
+        ENNReal.le_tsum (f := fun m : ℕ => {x | N x ≤ (2:ℝ) ^ m}.indicator
+          (fun _ => ENNReal.ofReal (((2:ℝ) ^ m / 2) ^ (-A))) x) m0
   have hq0 : 0 ≤ (2:ℝ) ^ (d - A) := by positivity
   have hq1 : (2:ℝ) ^ (d - A) < 1 := Real.rpow_lt_one_of_one_lt_of_neg (by norm_num) (by linarith)
   have hsum : Summable fun m : ℕ => |C| * 2 ^ A * ((2:ℝ) ^ (d - A)) ^ m :=

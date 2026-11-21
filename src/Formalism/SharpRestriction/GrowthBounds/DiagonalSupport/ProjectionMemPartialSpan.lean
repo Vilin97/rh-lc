@@ -68,13 +68,13 @@ theorem exists_retraction [IsDomain O] [IsPrincipalIdealRing O] (X : Submodule O
 theorem supp_of_mem {S : Set σ} {A : MvPolynomial σ O} (hA : A ∈ supported O S) {a : σ →₀ ℕ}
     (ha : a ∈ A.support) : ∀ v ∈ a.support, v ∈ S := by
   intro v hv
-  exact (MvPolynomial.mem_supported.1 hA) ((MvPolynomial.mem_vars v).2 ⟨a, ha, hv⟩)
+  exact (MvPolynomial.mem_supported.1 hA) ((MvPolynomial.mem_vars_iff_mem_support v).2 ⟨a, ha, hv⟩)
 
 theorem monomial_mem {S : Set σ} {a : σ →₀ ℕ} (c : O) (ha : ∀ v ∈ a.support, v ∈ S) :
     monomial a c ∈ supported O S := by
   rw [MvPolynomial.mem_supported]
   intro v hv
-  obtain ⟨m, hm, hvm⟩ := (MvPolynomial.mem_vars v).1 hv
+  obtain ⟨m, hm, hvm⟩ := (MvPolynomial.mem_vars_iff_mem_support v).1 hv
   have hma : m = a := Finset.mem_singleton.1 (MvPolynomial.support_monomial_subset hm)
   subst hma
   exact ha v hvm

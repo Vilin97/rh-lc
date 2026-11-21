@@ -201,7 +201,7 @@ theorem curv_unit {TT : ℝ} {u : ℂ → ℂ} (hu : ContDiffOn ℝ ((⊤ : ℕ�
     have := hDd.hasFDerivAt.clm_apply (hasFDerivAt_const v ζ)
     simpa using this
   have hsym : S 1 Complex.I = S Complex.I 1 :=
-    ((hu.contDiffAt hn).isSymmSndFDerivAt (by (try simp); exact (show ((2 : ℕ∞) : WithTop ℕ∞) ≤ ((⊤ : ℕ∞) : WithTop ℕ∞) from WithTop.coe_le_coe.2 le_top))) 1 Complex.I
+    ((hu.contDiffAt hn).isSymmSndFDerivAt (by simp)) 1 Complex.I
 
   have h2 : ∀ k : ℂ, (star (fderiv ℝ u ζ k) * fderiv ℝ u ζ k + star (u ζ) * S k k).re = 0 := by
     intro k

@@ -723,6 +723,7 @@ theorem projective_quotient_card : ProjQuotCard := by
     rw [hpi, AddSubgroup.index_pi]
     simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
     congr 1
+    exact (Ideal.absNorm_eq_index I).symm
   have hcomap : (I • (⊤ : Submodule (𝓞 E) (Fin n → 𝓞 E))).comap
       (e : (P × Q) →ₗ[𝓞 E] (Fin n → 𝓞 E)) = I • ⊤ := by
     rw [Submodule.comap_equiv_eq_map_symm, Submodule.map_smul'', Submodule.map_top,

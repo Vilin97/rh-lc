@@ -31,7 +31,7 @@ theorem filter_of_supported {P : MvPolynomial (S × τ) K} {q : S × τ → Prop
     e.filter q = e ∧ e.filter (fun v => ¬ q v) = 0 := by
   rw [mem_supported] at hP
   have key : ∀ v, e v ≠ 0 → q v := fun v hv =>
-    hP (Finset.mem_coe.2 ((mem_vars v).2 ⟨e, he, Finsupp.mem_support_iff.2 hv⟩))
+    hP (Finset.mem_coe.2 ((mem_vars_iff_mem_support v).2 ⟨e, he, Finsupp.mem_support_iff.2 hv⟩))
   refine ⟨(Finsupp.filter_eq_self_iff _ _).2 key, (Finsupp.filter_eq_zero_iff _ _).2 fun v hv => ?_⟩
   by_contra h
   exact hv (key v h)
@@ -47,8 +47,8 @@ theorem slice_mul_left (γ : MvPolynomial (S × τ) K →ₗ[K] K) (P R : MvPoly
     refine Finset.sum_congr rfl fun e he => ?_
     have h := filter_of_supported (q := fun v : S × τ => v.1 ∈ A) hP he
     beta_reduce at h
-    rw [monomial_mul, slice_monomial, slice_monomial, Finsupp.filter_add, Finsupp.filter_add, h.1, h.2,
-      zero_add, mul_smul_comm, monomial_mul, smul_monomial, smul_monomial, smul_eq_mul, smul_eq_mul]
+    rw [monomial_mul_monomial, slice_monomial, slice_monomial, Finsupp.filter_add, Finsupp.filter_add, h.1, h.2,
+      zero_add, mul_smul_comm, monomial_mul_monomial, smul_monomial, smul_monomial, smul_eq_mul, smul_eq_mul]
     congr 1
     ring
   | add p q hp hq => rw [mul_add, map_add (f := _), hp, hq, map_add (f := _), mul_add]

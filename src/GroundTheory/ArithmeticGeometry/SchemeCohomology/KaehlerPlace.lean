@@ -42,8 +42,7 @@ theorem span_D_eq_top (x : K) [Algebra.IsSeparable k⟮x⟯ K] :
   clear hω
   obtain ⟨z, rfl⟩ := (exact_mapBaseChange_map k k⟮x⟯ K ω).mp (Subsingleton.elim _ _)
   induction z with
-  | zero => simp
-  | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b ha hb => simpa only [map_add] using add_mem ha hb
   | tmul a b =>
     rw [mapBaseChange_tmul]
     refine Submodule.smul_mem _ _ ?_
@@ -55,7 +54,7 @@ theorem span_D_eq_top (x : K) [Algebra.IsSeparable k⟮x⟯ K] :
       rw [map_D]
       exact D_mem_span_of_mem_adjoin x e.2
     | zero => simp
-    | add _ _ _ _ h₁ h₂ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h₁ h₂
+    | add _ _ _ _ h₁ h₂ => simpa only [map_add] using add_mem h₁ h₂
     | smul c _ _ h =>
       rw [map_smul, algebra_compatible_smul K c]
       exact Submodule.smul_mem _ _ h

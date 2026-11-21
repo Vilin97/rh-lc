@@ -221,13 +221,13 @@ theorem count_lt_top : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
       rw [mul_inv_rev, hmul, (hstab _).1 hp']
     simp only [f, this]
   obtain ⟨C₀, hC₀, hC₀p⟩ := GlobalTheory.T.gram_orbit_compact_representative F E σ hσ (M + 1) _ hJb 1 e0E hdet Ω hΩ
-  have hsupp : ∀ x, f x ≠ 0 → ∃ p ∈ ι.range, ∃ c ∈ C₀⁻¹, x = p * c := by
+  have hsupp : ∀ x, f x ≠ 0 → ∃ p ∈ ι.range, ∃ c ∈ (fun c => c⁻¹) '' C₀, x = p * c := by
     intro x hx
     have hxΩ : actW (AF F) σ (blockOne (algebraMap F E t) J) x⁻¹ e0 ∈ Ω := by
       by_contra hn
       exact hx (Set.indicator_of_notMem hn _)
     obtain ⟨c, hc, hce⟩ := hC₀p _ hxΩ (by rw [hgram]; exact hgr2 1 e0E)
-    refine ⟨x * c, (hstab _).2 ?_, c⁻¹, Set.inv_mem_inv.2 hc, by group⟩
+    refine ⟨x * c, (hstab _).2 ?_, c⁻¹, ⟨c, hc, rfl⟩, by group⟩
     rw [hmul]
     show actW (AF F) σ (blockOne (algebraMap F E t) J) x (actW (AF F) σ (blockOne (algebraMap F E t) J) c (ratTup (AF F) e0E)) = e0
     rw [hce, ← hmul, mul_inv_cancel]
@@ -278,7 +278,7 @@ theorem count_lt_top : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
     (fun u => by
       obtain ⟨γ, h1, h2⟩ := hcov₁ u
       exact ⟨γ, (hmemΓ₁ γ).2 h1, h2⟩)
-    Q r hr hQ f hfm hf1 hinv C₀⁻¹ hC₀.inv hsupp
+    Q r hr hQ f hfm hf1 hinv ((fun c => c⁻¹) '' C₀) (hC₀.image continuous_inv) hsupp
   have hrew : ∀ (h : HA (AF F) σ (blockOne (algebraMap F E t) J)) (q : Q), f (r q * h) =
       Set.indicator Ω (fun _ => (1 : ℝ≥0∞))
         (actW (AF F) σ (blockOne (algebraMap F E t) J) h⁻¹ (ratTup (AF F) q.1)) := by

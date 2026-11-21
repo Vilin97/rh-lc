@@ -85,7 +85,7 @@ theorem exists_theta (E : Type) [Field E] [NumberField E] [IsCMField E]
     rw [hdual, FractionalIdeal.mem_one_iff] at hmem
     obtain ⟨z, hz⟩ := hmem
     have hint : IsIntegral ℤ a := by
-      rw [← isIntegral_algebraMap_iff , ← hz]
+      rw [← isIntegral_algebraMap_iff (B := E), ← hz]
       exact z.isIntegral_coe
     rw [FractionalIdeal.mem_one_iff]
     exact ⟨⟨a, hint⟩, rfl⟩

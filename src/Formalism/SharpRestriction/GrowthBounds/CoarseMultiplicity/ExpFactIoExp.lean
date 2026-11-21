@@ -31,10 +31,10 @@ theorem rat_int {O K : Type} [CommRing O] [IsLocalRing O] [Field K] [CharZero K]
       rw [x.reduced.gcd_eq_one] at h2
       exact hp.one_lt.ne' (Nat.dvd_one.mp h2)
     have h0 : padicValInt p x.num = 0 := padicValInt.eq_zero_of_not_dvd hnum
-    have h1 : 1 ≤ padicValNat p x.den := one_le_padicValNat_of_dvd x.den_nz hd
+    have h1 : 1 ≤ multiplicity p x.den := one_le_padicValNat_of_dvd x.den_nz hd
     rw [h0] at hv'
     omega
-  have hpv0 : padicValNat p x.den = 0 := padicValNat.eq_zero_of_not_dvd hden
+  have hpv0 : multiplicity p x.den = 0 := padicValNat.eq_zero_of_not_dvd hden
   rw [hpv0] at hv'
   have hdvd : (p : ℤ) ^ c ∣ x.num := by
     have := (padicValInt_dvd_iff (p := p) c x.num).mpr (Or.inr (by omega))

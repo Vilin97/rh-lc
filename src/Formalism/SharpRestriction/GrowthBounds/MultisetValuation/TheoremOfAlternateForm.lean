@@ -641,6 +641,7 @@ theorem eO_pos (v : X.Pl) : 0 < X.eO := by
     obtain ⟨Q, hQ, hQc⟩ := Ideal.exists_ideal_over_maximal_of_isIntegral (S := X.G.O)
       (Ideal.span {(p : X.G.P.W v)}) hker
     have hp : (p : X.G.P.W v) ∈ Q.comap (algebraMap (X.G.P.W v) X.G.O) := by
+      change (p : X.G.P.W v) ∈ Ideal.under (X.G.P.W v) Q
       rw [hQc]
       exact Ideal.mem_span_singleton_self _
     rw [Ideal.mem_comap, map_natCast] at hp

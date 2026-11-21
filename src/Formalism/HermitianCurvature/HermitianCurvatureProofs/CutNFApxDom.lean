@@ -36,7 +36,7 @@ theorem cutN_ckOn {k r : ℕ} {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ
     refine Complex.ofRealCLM.contDiff.comp (Real.smoothTransition.contDiff.comp ?_)
     refine ContDiff.div_const (contDiff_const.sub ?_) _
     refine ContDiff.sum fun i _ => ContDiff.sum fun j _ => ?_
-    exact hN.comp ((contDiff_apply_apply ℝ ℂ i j).comp (contDiff_const_smul _))
+    exact hN.comp ((contDiff_apply_apply (𝕜 := ℝ) i j).comp (contDiff_const_smul _))
   intro g₀ hg₀
   obtain ⟨U, f', hU, hgU, hf', hff⟩ := hf g₀ hg₀
   refine ⟨U, fun g => cutN k r n g • f' g, hU, hgU, hc.contDiffOn.smul hf', fun g hg hgv => ?_⟩

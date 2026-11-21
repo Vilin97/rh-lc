@@ -55,10 +55,10 @@ theorem wtLaw_step (u : Pr.Word) {i : ℕ} (hi : i < R.m) (e : X.Tau → ℤ) (h
   · rw [nuLast_eq W u i hi τ]
     have h1 : (W.nuW u (i + 1) τ).detShift = (W.nuW u (i + 1) τ).w ⟨R.N i - 1, by rw [Nat.add_sub_cancel]; omega⟩ := by
       unfold DomWeight.detShift
-      exact dif_pos hNi
+      exact dite_eq_left hNi
     have h2 : (W.lamTrue u i τ).detShift = (W.lamTrue u i τ).w ⟨R.N i - 1, by omega⟩ := by
       unfold DomWeight.detShift
-      exact dif_pos hNi
+      exact dite_eq_left hNi
     have h3 := Wts.nuW_eq_true W u hi τ ⟨R.N i - 1, by omega⟩
     unfold sExp' at h3
     rw [← he τ] at h3
@@ -75,7 +75,7 @@ theorem wtLaw_step (u : Pr.Word) {i : ℕ} (hi : i < R.m) (e : X.Tau → ℤ) (h
     exact_mod_cast h5
   · have h2 : (W.lamTrue u (i + 1) τ).detShift = (W.lamTrue u (i + 1) τ).w ⟨R.N (i + 1) - 1, by omega⟩ := by
       unfold DomWeight.detShift
-      exact dif_pos hNi1
+      exact dite_eq_left hNi1
     have h3 := Wts.lamTrue_new W u hi τ (⟨R.N (i + 1) - 1, by omega⟩ : Fin (R.N (i + 1)))
       (show ¬ (R.N (i + 1) - 1 < R.N i) by omega)
     unfold sExp at h3

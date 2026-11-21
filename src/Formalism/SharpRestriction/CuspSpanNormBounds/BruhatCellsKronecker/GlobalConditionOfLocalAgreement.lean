@@ -829,6 +829,7 @@ theorem locGen_gdd (p : PlF D) (c : D.host.F)
     simp only [Lat.gS, Nat.cast_mul]
     exact mul_ne_zero (Nat.cast_ne_zero.2 (D.host.g_prime 0).ne_zero) (Nat.cast_ne_zero.2 (D.host.g_prime 1).ne_zero)
   simp only [gdd, zpow_natCast, map_mul, map_pow, map_natCast]
+  rw [FractionalIdeal.spanSingleton_pow]
   exact (LocGen.span (p := p) (pow_ne_zero k hgS)).mul (h.pow ν)
 
 theorem laIsPeriod_of (δ : ∀ p, (D.s.atP p).Fp) (M : ∀ p : PlF D, Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep)

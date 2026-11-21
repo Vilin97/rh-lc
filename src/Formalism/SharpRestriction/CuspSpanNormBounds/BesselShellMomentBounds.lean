@@ -389,7 +389,7 @@ theorem normWt_eq_prod (T T' : ℕ) (γ : Point D.host.E (D.R.rS + 1)) :
 theorem normWt_rpow (T T' : ℕ) (γ : Point D.host.E (D.R.rS + 1)) (p : ℝ) :
     normWt D T T' γ ^ p = ∏ v, WLoc D T T' v γ ^ p := by
   rw [normWt_eq_prod]
-  exact (Real.finset_prod_rpow _ _ (fun v _ => WLoc_nonneg D T T' v γ) p).symm
+  exact (Real.finsetProd_rpow _ _ (fun v _ => WLoc_nonneg D T T' v γ) p).symm
 
 theorem prod_absV_ge_one (x : D.host.E) (hx : IsIntegral ℤ x) (hx0 : x ≠ 0) : 1 ≤ ∏ v, absV D v x := by
   have : NumberField.IsCMField D.host.E := D.host.isCMField_hostE
@@ -869,7 +869,9 @@ theorem J_smul (L : LocBessel k r) (c : ℂ) (F : Mx k r → (L.Wq →L[ℂ] L.W
   unfold LocBessel.J besselJ
   rw [← integral_smul]
   congr 1
-  rw [smul_comm]
+  funext p
+  dsimp only
+  rw [ContinuousLinearMap.smul_comp, ContinuousLinearMap.comp_smul, smul_comm]
 
 def dens (L : LocBessel k r) (F : Mx k r → (L.Wq →L[ℂ] L.Wp)) (μsec : ℂ → Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ)
     (p : (Fin r → ℂ) × ℂ) : ℝ :=

@@ -51,7 +51,7 @@ theorem UpperTheory.Gal.InertialTypesAlt.L.sumCoset :
     obtain ⟨t, ht, c, hc, he⟩ := hFC' _ hq
     obtain ⟨i, hi, hci⟩ := Set.mem_iUnion₂.1 (hs hc)
     refine ⟨i, hi, ?_⟩
-    rw [← DoubleCoset.out_eq' T K q, DoubleCoset.eq]
+    rw [← DoubleCoset.out_eq' q, DoubleCoset.eq]
     refine ⟨t, ht, i⁻¹ * c * y⁻¹, K.mul_mem hci (K.inv_mem hy), ?_⟩
     calc Quotient.out q = Quotient.out q * y * y⁻¹ := by group
       _ = t * c * y⁻¹ := by rw [he]
@@ -83,7 +83,8 @@ theorem UpperTheory.Gal.InertialTypesAlt.L.sumCoset :
     intro q
     rw [quotIndep_holds G μ hμ T ν hsf hinv _ (hFm.indicator (hSo q).measurableSet) (hSinv q) ρ hρ]
     congr 1
-    split_ifs <;> simp
+    funext g
+    simp [Set.indicator_apply]
   have hsupp : (Function.support fun q : DoubleCoset.Quotient (T : Set G) (K : Set G) =>
       quotIntegral μ T ν ({g | DoubleCoset.mk T K g = q}.indicator F)) ⊆
         ↑hfin.toFinset := by

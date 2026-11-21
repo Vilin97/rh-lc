@@ -568,7 +568,7 @@ theorem placesOver_ncard_of_frob (p : ℕ) [hp : Fact p.Prime] (hpN : ¬ p ∣ H
   let : Field (𝓞 H.E ⧸ P) := Ideal.Quotient.field P
   have : Finite (𝓞 H.E ⧸ P) := Ideal.finiteQuotientOfFreeOfNeBot P hP0
   let : Fintype (𝓞 H.E ⧸ P) := Fintype.ofFinite _
-  have hne : (X ^ p - X : (𝓞 H.E ⧸ P)[X]) ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero _ hp.out.one_lt
+  have hne : (X ^ p - X : (𝓞 H.E ⧸ P)[X]) ≠ 0 := Polynomial.X_pow_sub_X_ne_zero hp.out.one_lt
   have hroot : ∀ y : 𝓞 H.E ⧸ P, y ∈ (X ^ p - X : (𝓞 H.E ⧸ P)[X]).roots := by
     intro y
     obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective y

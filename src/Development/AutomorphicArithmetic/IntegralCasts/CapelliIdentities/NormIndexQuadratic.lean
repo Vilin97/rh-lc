@@ -634,6 +634,7 @@ private lemma relIndex_Qv : (Qv (v.valuation K)).relIndex (Wv v) ≠ 0 ∧
         v.valuation K (((q.1 : ℤ) : K) * ((x : Kˣ) : K) - 1 - 2 * π * algebraMap _ K a)
           < v.valuation K 4) ?_ ?_
   · rw [← h1, Nat.card_prod, Nat.card_eq_fintype_card, Fintype.card_units_int] at h2
+    rw [← Ideal.absNorm_eq_natCard] at h2
     have hle : N ⊔ (powMonoidHom 2).range ≤ (Qv (v.valuation K)).subgroupOf (Wv v) := by
       refine sup_le (Subgroup.subgroupOf_mono _ le_sup_left) ?_
       rintro _ ⟨y, rfl⟩

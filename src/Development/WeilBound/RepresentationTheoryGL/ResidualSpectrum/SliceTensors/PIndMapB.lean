@@ -25,19 +25,59 @@ variable {R : Type} [CommRing R]
 
 theorem lev_cc (m : GL (Fin r) R × GL (Fin s) R) (i j : Fin r) :
     (lev R r s m : Matrix (Fin (r + s)) (Fin (r + s)) R) (Fin.castAdd s i) (Fin.castAdd s j) = (m.1 : Matrix _ _ R) i j := by
-  simp [GlobalTheory.SmGL.val_emb₂, GlobalTheory.SmGL.stdSum]
+  have h : (GlobalTheory.SmGL.emb₂ R (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) m).val =
+      Matrix.reindex (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s))
+        (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s))
+        (Matrix.fromBlocks m.1.val 0 0 m.2.val) := by
+    ext i j
+    simp [GlobalTheory.SmGL.emb₂, GlobalTheory.SmGL.leviEmb, GlobalTheory.SmGL.leviTwo,
+      GlobalTheory.SmGL.two, Matrix.reindex_apply, Matrix.blockDiagonal']
+    rcases (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).symm i with a | a <;>
+      rcases (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).symm j with b | b <;> simp
+  rw [lev, h]
+  simp [Matrix.reindex_apply, Matrix.submatrix_apply, GlobalTheory.SmGL.stdSum]
 
 theorem lev_nn (m : GL (Fin r) R × GL (Fin s) R) (i j : Fin s) :
     (lev R r s m : Matrix (Fin (r + s)) (Fin (r + s)) R) (Fin.natAdd r i) (Fin.natAdd r j) = (m.2 : Matrix _ _ R) i j := by
-  simp [GlobalTheory.SmGL.val_emb₂, GlobalTheory.SmGL.stdSum]
+  have h : (GlobalTheory.SmGL.emb₂ R (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) m).val =
+      Matrix.reindex (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s))
+        (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s))
+        (Matrix.fromBlocks m.1.val 0 0 m.2.val) := by
+    ext i j
+    simp [GlobalTheory.SmGL.emb₂, GlobalTheory.SmGL.leviEmb, GlobalTheory.SmGL.leviTwo,
+      GlobalTheory.SmGL.two, Matrix.reindex_apply, Matrix.blockDiagonal']
+    rcases (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).symm i with a | a <;>
+      rcases (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).symm j with b | b <;> simp
+  rw [lev, h]
+  simp [Matrix.reindex_apply, Matrix.submatrix_apply, GlobalTheory.SmGL.stdSum]
 
 theorem lev_cn (m : GL (Fin r) R × GL (Fin s) R) (i : Fin r) (j : Fin s) :
     (lev R r s m : Matrix (Fin (r + s)) (Fin (r + s)) R) (Fin.castAdd s i) (Fin.natAdd r j) = 0 := by
-  simp [GlobalTheory.SmGL.val_emb₂, GlobalTheory.SmGL.stdSum]
+  have h : (GlobalTheory.SmGL.emb₂ R (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) m).val =
+      Matrix.reindex (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s))
+        (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s))
+        (Matrix.fromBlocks m.1.val 0 0 m.2.val) := by
+    ext i j
+    simp [GlobalTheory.SmGL.emb₂, GlobalTheory.SmGL.leviEmb, GlobalTheory.SmGL.leviTwo,
+      GlobalTheory.SmGL.two, Matrix.reindex_apply, Matrix.blockDiagonal']
+    rcases (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).symm i with a | a <;>
+      rcases (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).symm j with b | b <;> simp
+  rw [lev, h]
+  simp [Matrix.reindex_apply, Matrix.submatrix_apply, GlobalTheory.SmGL.stdSum]
 
 theorem lev_nc (m : GL (Fin r) R × GL (Fin s) R) (i : Fin s) (j : Fin r) :
     (lev R r s m : Matrix (Fin (r + s)) (Fin (r + s)) R) (Fin.natAdd r i) (Fin.castAdd s j) = 0 := by
-  simp [GlobalTheory.SmGL.val_emb₂, GlobalTheory.SmGL.stdSum]
+  have h : (GlobalTheory.SmGL.emb₂ R (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)) m).val =
+      Matrix.reindex (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s))
+        (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s))
+        (Matrix.fromBlocks m.1.val 0 0 m.2.val) := by
+    ext i j
+    simp [GlobalTheory.SmGL.emb₂, GlobalTheory.SmGL.leviEmb, GlobalTheory.SmGL.leviTwo,
+      GlobalTheory.SmGL.two, Matrix.reindex_apply, Matrix.blockDiagonal']
+    rcases (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).symm i with a | a <;>
+      rcases (GlobalTheory.SmGL.stdSum (rfl : r + s = r + s)).symm j with b | b <;> simp
+  rw [lev, h]
+  simp [Matrix.reindex_apply, Matrix.submatrix_apply, GlobalTheory.SmGL.stdSum]
 
 theorem unip_col (x : BlockIx (r + s) r → R) (i : Fin (r + s)) (k : Fin r) :
     ((unip x : GL (Fin (r + s)) R) : Matrix _ _ R) i (Fin.castAdd s k) =

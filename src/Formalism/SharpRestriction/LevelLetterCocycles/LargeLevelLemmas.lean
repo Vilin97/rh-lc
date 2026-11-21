@@ -87,7 +87,7 @@ end Pt
 theorem sum_padicValNat_range (p : ℕ) [Fact p.Prime] (n : ℕ) :
     ∑ k ∈ Finset.range (n + 1), padicValNat p k = padicValNat p n.factorial := by
   induction n with
-  | zero => simp
+  | zero => simp [Nat.padicValNat_def]
   | succ m ih =>
     rw [Finset.sum_range_succ, ih, Nat.factorial_succ,
       (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.succ_ne_zero m) (Nat.factorial_ne_zero m), add_comm]

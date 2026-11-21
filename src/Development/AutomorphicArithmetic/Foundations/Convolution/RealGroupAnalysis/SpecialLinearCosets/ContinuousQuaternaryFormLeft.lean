@@ -64,12 +64,16 @@ theorem UpperTheory.ConvolutionTheory.R2.I.tenFt :
         intro a b
         rw [← integral_add (hint a.1 a.2 Z) (hint b.1 b.2 Z)]
         congr 1
+        funext Y
+        simp only [ten, Submodule.coe_add, Pi.add_apply]
         ring
       map_smul' := by
         intro c a
         simp only [RingHom.id_apply, smul_eq_mul]
         rw [← integral_const_mul]
         congr 1
+        funext Y
+        simp only [ten, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul]
         ring }
   have hinv : ∀ (Z : V4 F) (y : M2 v) (a a' : SB (M2 v)), (∀ m, a'.1 m = a.1 (m + y)) →
       ℓ Z a' = ℓ Z a := by
@@ -80,6 +84,8 @@ theorem UpperTheory.ConvolutionTheory.R2.I.tenFt :
     rw [← integral_add_right_eq_self
       (fun Y => ten v θ u a.1 Y * ψ (B4 δ (away v Y) Z)) y']
     congr 1
+    funext Y
+    simp only [ten, (hy' Y).1, (hy' Y).2, h]
   choose c hc using fun Z => invFn F v (ℓ Z) (hinv Z)
   refine ⟨c, fun b hb => ?_⟩
   funext X
@@ -91,5 +97,7 @@ theorem UpperTheory.ConvolutionTheory.R2.I.tenFt :
   rw [← h]
   unfold ft4
   congr 1
+  funext Y
   rw [hm2 X Y, psi_add, hψs]
+  simp only [ten]
   ring

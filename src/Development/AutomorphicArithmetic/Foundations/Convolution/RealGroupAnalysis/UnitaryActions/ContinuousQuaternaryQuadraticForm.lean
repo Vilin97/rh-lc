@@ -44,7 +44,8 @@ theorem herm_eq (v : V4 F) : D.herm v = !![am E (v 1), D.mkE (v 2) (v 3); D.bar 
 @[simp] theorem conjTranspose_herm (v : V4 F) : D.star2 (D.herm v) = D.herm v := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [conjTransposeGal_apply, herm_eq]
 @[simp] theorem unherm_herm (v : V4 F) : D.unherm (D.herm v) = v := by
-  ext i; fin_cases i <;> simp [unherm, herm_eq]
+  have hc (u : A F) : D.co (am E u) = ![u, 0] := by rw [← D.mkE_base, D.co_mkE]
+  ext i; fin_cases i <;> simp [unherm, herm_eq, hc]
 theorem herm_unherm {X : Matrix (Fin 2) (Fin 2) (A E)} (hX : D.star2 X = X) : D.herm (D.unherm X) = X := by
   have h : ∀ i j, D.bar (X j i) = X i j := fun i j => congrFun (congrFun hX i) j
   ext i j; fin_cases i <;> fin_cases j <;> simp [unherm, herm_eq]
@@ -117,7 +118,7 @@ theorem act_nU (u t : A F) (v : V4 F) : D.act (gl (nU (D.mkE u t))) v =
   rw [herm_act]
   have hθ := D.rt_θ_sq
   ext i j; fin_cases i <;> fin_cases j <;>
-    simp [herm, conjTransposeGal_apply, Matrix.mul_apply, Fin.sum_univ_two, bar_mkE, mkE_def, bar_rt, D.conj, ← hθ, map_ofNat] <;> ring
+    simp [herm, conjTransposeGal_apply, Matrix.mul_apply, Fin.sum_univ_two, gl, Matrix.SpecialLinearGroup.toGL, nU, bar_mkE, mkE_def, bar_rt, D.conj, ← hθ, map_ofNat] <;> ring
 theorem act_scalar (z : (A E)ˣ) (v : V4 F) :
     D.act (Matrix.GeneralLinearGroup.scalar (Fin 2) z) v = ((ideleNorm F E z : (A F)ˣ) : A F) • v := by
   apply D.herm_injective

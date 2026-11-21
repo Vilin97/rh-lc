@@ -21,7 +21,9 @@ lemma sub_le_sum_sub {n : ℕ} (ν μ : Fin n → ℤ) (h : ∀ m, μ m ≤ ν m
     (Finset.mem_univ i)
 
 lemma mem_stripsUp {n : ℕ} (μ ν : Fin n → ℤ) (b : ℕ) : ν ∈ stripsUp μ b ↔ HStrip ν μ b := by
-  classical
+  letI : DecidablePred (fun ν => HStrip ν μ b) := fun ν => by
+    unfold HStrip
+    infer_instance
   unfold stripsUp
   rw [Finset.mem_filter, Fintype.mem_piFinset]
   unfold HStrip
@@ -32,7 +34,9 @@ lemma mem_stripsUp {n : ℕ} (μ ν : Fin n → ℤ) (b : ℕ) : ν ∈ stripsUp
     exact ⟨fun i => ⟨h.1 i, by linarith [sub_le_sum_sub ν μ h.1 i, h.2.2]⟩, h⟩
 
 lemma mem_stripsDown {n : ℕ} (μ ν : Fin n → ℤ) (b : ℕ) : ν ∈ stripsDown μ b ↔ HStrip μ ν b := by
-  classical
+  letI : DecidablePred (fun ν => HStrip μ ν b) := fun ν => by
+    unfold HStrip
+    infer_instance
   unfold stripsDown
   rw [Finset.mem_filter, Fintype.mem_piFinset]
   unfold HStrip
@@ -269,6 +273,8 @@ lemma toggle_sum {n : ℕ} (μ : Fin (n + 1) → ℤ) (b : ℕ) (f : (Fin n → 
   · rintro ⟨κ, l⟩ _
     show (⟨fw μ l (bw μ l b κ), l⟩ : Σ _ : Fin n → ℤ, Fin n → ℤ) = ⟨κ, l⟩
     congr 1
+    funext i
+    simp only [fw, bw, Fin.cons_succ]
     ring
   · intro x _
     rfl

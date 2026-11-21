@@ -84,12 +84,15 @@ private theorem act_scalar (D : Dat F E) (w : (A E)ˣ) (a : A F) (ha : am E a = 
     fin_cases i <;> fin_cases j <;>
       simp [Matrix.mul_apply, Fin.sum_univ_two, Matrix.GeneralLinearGroup.scalar, Matrix.scalar_apply,
         Matrix.diagonal_apply] <;> ring
+  have hc (u : A F) : D.co (am E u) 0 = u := by
+    rw [← D.mkE_base, D.co_mkE]
+    rfl
   funext i
   unfold Dat.act Dat.unherm
   simp only [hX]
-  fin_cases i <;> simp [D.co_am_mul, Dat.herm]
+  fin_cases i <;> simp [D.co_am_mul, hc, Dat.herm]
 
-variable [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] {D : Dat F E}
+variable [IsTotallyReal F] [IsTotallyComplex E] {D : Dat F E}
 
 private noncomputable def U (W : Weil D) (f : GL (Fin 2) (A F) → ℂ) (φ : S4 F) (h : GL (Fin 2) (A E)) (g : G1 F) : ℂ :=
   f (gl g * dM (nu F h)) * Th (W.Om g (W.L h φ)).1
@@ -166,7 +169,7 @@ private theorem lift_centre (W : Weil D) (M : Meas F) {f : GL (Fin 2) (A F) → 
 end Main
 
 theorem UpperTheory.ConvolutionTheory.R2.equiv :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), St.Equiv W M π := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), St.Equiv W M π := by
   intro F E _ _ _ _ _ _ _ D W M π f hf φ
   have hl : ∀ γ g, f.1 (ratGL F 2 γ * g) = f.1 g := (π.cusp f hf).1.left
   exact ⟨fun γ h => lift_left W M hl φ γ h, fun ω hω z h => lift_centre W M hl φ ω hω z h⟩

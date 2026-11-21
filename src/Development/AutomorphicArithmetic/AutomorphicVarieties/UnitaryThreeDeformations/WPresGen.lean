@@ -196,7 +196,7 @@ theorem surjective_of_max_le [IsAdicComplete (maximalIdeal O) O] {σ : Type} [Fi
         simpa using Ideal.sub_mem _ h2 hm
       exact (maximalIdeal.isMaximal R).ne_top ((Ideal.eq_top_iff_one _).mpr h1)
     simpa [f] using hu.map (Ideal.Quotient.mk J)
-  haveI : IsHausdorff ((maximalIdeal O).map f) (R ⧸ J) := IsHausdorff.of_le_jacobson _ _ hjac
+  haveI : IsHausdorff ((maximalIdeal O).map f) (R ⧸ J) := IsHausdorff.of_le_jacobson _ _ (by simpa only [Ideal.jacobson_bot] using hjac)
   have hle : (J ⊔ (maximalIdeal O).map (algebraMap O R)).map (Ideal.Quotient.mk J) ≤
       (maximalIdeal O).map f := by
     rw [Ideal.map_sup, Ideal.map_quotient_self, bot_sup_eq, Ideal.map_map]
@@ -534,7 +534,7 @@ theorem exists_wpres_of_coord {O R : Type} [CommRing O] [IsLocalRing O] [IsAdicC
       have hr : Ideal.span (Set.range x) = ⨆ s, g (some s) := Submodule.span_range_eq_iSup
       rw [hr]
       exact sup_le (sup_le le_sup_right (le_sup_left.trans le_sup_left)) (le_sup_right.trans le_sup_left)
-    obtain ⟨s0, hs0⟩ := CompleteLattice.IsCompactElement.exists_finset_of_le_iSup _ hc g hle
+    obtain ⟨s0, hs0⟩ := hc.exists_finset_of_le_iSup g hle
     refine ⟨s0.eraseNone, hs0.trans (iSup₂_le fun o ho => ?_)⟩
     cases o with
     | none => exact sup_le (le_sup_right.trans le_sup_left) le_sup_right

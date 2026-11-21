@@ -131,18 +131,41 @@ theorem mass_le (hK : IsCMUnram K) (h : K →ₗ⋆[K] K →ₗ[K] K) (h1 : h 1 
       _ = (hex.choose.card : ℝ) := by simp
   · positivity
 
-theorem isLattice_one : Submodule.IsLattice K (1 : Submodule (𝓞 K) K) :=
-  ⟨⟨{1}, by rw [Finset.coe_singleton, ← Submodule.one_eq_span]⟩,
-    span_eq_top_of_ne_zero (Submodule.mem_one.2 ⟨1, map_one _⟩) one_ne_zero⟩
+theorem isLattice_one : Submodule.IsFullLattice K (1 : Submodule (𝓞 K) K) where
+  toIsLattice := Submodule.IsLattice.of_fg K (by
+    rw [Submodule.one_eq_span]
+    exact Submodule.fg_span_singleton 1)
+  span_eq_top :=
+    span_eq_top_of_ne_zero (Submodule.mem_one.2 ⟨1, map_one _⟩) one_ne_zero
 
 theorem mass_std_one_le (hK : IsCMUnram K) :
     mass (stdForm K 1) (stdLat K 1) ≤ ((classNumber K * 2 ^ fDeg K : ℕ) : ℝ) := by
   have hs := stdForm_isSymm K 1
   have ho := stdLat_isOrtho K 1
   have := finiteDimensional_of_ortho ho
-  obtain ⟨h', A, hn, hA, hex, e⟩ := exists_model hs (isTotPosDef_of_ortho hK hs ho) (finrank_of_ortho ho)
-    (isLattice_of_ortho ho)
-  rw [← e, ← mass_eq_of_lattices hn hn hA isLattice_one hex]
+  let φ := LinearEquiv.funUnique (Fin 1) K K
+  let h' : K →ₗ⋆[K] K →ₗ[K] K :=
+    ((stdForm K 1).comp φ.symm.toLinearMap).compl₂ φ.symm.toLinearMap
+  have hφ (x y : Fin 1 → K) : h' (φ x) (φ y) = stdForm K 1 x y := by
+    simp [h']
+  have hn : h' 1 1 ≠ 0 := by
+    simp [h', φ, stdForm_apply]
+  have hmap : mapE φ (stdLat K 1) = (1 : Submodule (𝓞 K) K) := by
+    change (stdLat K 1).map (φ.restrictScalars (𝓞 K)).toLinearMap = 1
+    rw [stdLat, Submodule.map_span, Submodule.one_eq_span, ← Set.range_comp]
+    have he : (φ.restrictScalars (𝓞 K)).toLinearMap ∘
+        (fun i : Fin 1 => (Pi.single i 1 : Fin 1 → K)) = fun _ => (1 : K) := by
+      funext i
+      have hi : i = (0 : Fin 1) := Subsingleton.elim _ _
+      subst i
+      change (Pi.single (0 : Fin 1) 1 : Fin 1 → K) 0 = 1
+      exact Pi.single_eq_same _ _
+    rw [he, Set.range_const]
+  obtain ⟨hex, -, -⟩ := massBasic K (Fin 1 → K) (stdForm K 1) hs
+    (trace_pos (isTotPosDef_of_ortho hK hs ho)) (stdLat K 1) (isLattice_of_ortho ho)
+  have e := (mass_mapE φ hφ hex).2
+  rw [hmap] at e
+  rw [← e]
   exact mass_le hK h' hn
 
 end Formalism.MainNotions.BridgeLemVN

@@ -23,7 +23,7 @@ private theorem exists_ne_zero_addVal_algebraMap_eq_mul (hinj : Function.Injecti
   have hnu : ¬ IsUnit (algebraMap R R' ϖ) := by
     intro hu
     have hmax := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := R)
-      (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal R')
+      (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (IsLocalRing.maximalIdeal R')
     have heq := IsLocalRing.eq_maximalIdeal hmax
     have hmem : ϖ ∈ (IsLocalRing.maximalIdeal R').comap (algebraMap R R') := by
       rw [heq]; exact (IsLocalRing.mem_maximalIdeal ϖ).mpr hϖ.not_isUnit
@@ -42,7 +42,7 @@ private theorem exists_ne_zero_addVal_algebraMap_eq_mul (hinj : Function.Injecti
     have hy' : algebraMap R R' y =
         ↑(Units.map (algebraMap R R' : R →* R') u * w ^ n) * ϖ' ^ (e * n) := by
       rw [hu, map_mul, map_pow, hw]
-      simp only [Units.val_mul, Units.val_pow_eq_pow_val, Units.coe_map, MonoidHom.coe_coe]
+      simp only [Units.val_mul, Units.val_pow_eq_pow_val, Units.coe_map, MonoidHom.coe_ofClass]
       ring
     rw [IsDiscreteValuationRing.addVal_def _ _ hϖ' _ hy']
     push_cast
@@ -53,7 +53,7 @@ theorem nval_map (hinj : Function.Injective (algebraMap R R')) [Module.Finite R 
   obtain ⟨e, he, hE⟩ := exists_ne_zero_addVal_algebraMap_eq_mul hinj
   simp only [nval]
   rw [hE x, ← map_natCast (algebraMap R R') l, hE]
-  simp only [ENat.toNat_mul, ENat.toNat_coe, Nat.cast_mul]
+  simp only [ENat.toNat_mul, ENat.toNat_natCast, Nat.cast_mul]
   exact mul_div_mul_left _ _ (by exact_mod_cast he)
 
 end Formalism.MainNotions.TwOe

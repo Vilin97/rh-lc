@@ -46,6 +46,7 @@ theorem padicValHarmonicPowerSumDivLowerBound : LogCoefVal := by
   have hs0 : (s : ℚ) ≠ 0 := by exact_mod_cast (by omega : s ≠ 0)
   have key : (s : ℤ) - (padicValNat p s : ℤ) ≤ padicValRat p (X / s) := by
     rw [padicValRat.div (ne_of_gt hpos) hs0, padicValRat.of_nat]
+    rw [Nat.padicValNat_def]
     omega
   have hk : (s : ℝ) - (padicValNat p s : ℝ) ≤ ((padicValRat p (X / s) : ℤ) : ℝ) := by
     exact_mod_cast key

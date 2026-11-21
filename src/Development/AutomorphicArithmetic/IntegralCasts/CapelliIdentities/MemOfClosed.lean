@@ -5373,6 +5373,7 @@ private theorem UpperTheory.Reformulated.B.Qi13.key {l : ℕ} [Fact l.Prime] {K 
   have hpos : 0 < ‖g m‖ := (norm_pos_iff.mpr hi₀).trans_le (hm i₀ (Finset.mem_univ _))
   have hgm : g m ≠ 0 := norm_pos_iff.mp hpos
   let c : ι → ℤ_[l] := fun i => ⟨g i / g m, by
+    rw [PadicInt.mem_subring_iff]
     rw [norm_div]
     exact (div_le_one hpos).mpr (hm i (Finset.mem_univ _))⟩
   have hsum : ∑ i, φ (c i) * x i = 0 := by

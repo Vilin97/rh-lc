@@ -25,7 +25,7 @@ theorem norm_le {K : Type} [Field K] [NumberField K] (w : HeightOneSpectrum (�
   letI := Fintype.ofFinite (𝓞 K ⧸ w.asIdeal)
   rw [show normV w = Fintype.card (𝓞 K ⧸ w.asIdeal) from Nat.card_eq_fintype_card]
   by_contra hlt
-  refine FiniteField.X_pow_card_sub_X_ne_zero (𝓞 K ⧸ w.asIdeal) hq
+  refine Polynomial.X_pow_sub_X_ne_zero (R := 𝓞 K ⧸ w.asIdeal) hq
     (Polynomial.eq_zero_of_natDegree_lt_card_of_eval_eq_zero' _ Finset.univ (fun y _ => ?_) ?_)
   · obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective y
     have := Ideal.Quotient.eq.2 (h x)
@@ -108,7 +108,9 @@ theorem classChar2 : ClassChar := by
     have h3 := hL.frob_unr ha (Or.inr rfl) hu hv hφ
     have h4 : η.val (w.under (𝓞 K)) = 1 ↔ δ φ = 1 := by
       rw [← Units.val_eq_one, ← Units.val_eq_one (a := δ φ), h3, inv_eq_one, map_eq_one_iff _ ι.symm.injective]
-    have hq : 1 < normV (w.under (𝓞 K)) := NumberField.HeightOneSpectrum.one_lt_absNorm _
+    have hq : 1 < normV (w.under (𝓞 K)) := by
+      simpa [normV, Ideal.absNorm_eq_natCard] using
+        NumberField.HeightOneSpectrum.one_lt_absNorm (w.under (𝓞 K))
     refine ⟨hu, h4.trans ⟨fun h => ?_, fun h => ?_⟩, hd'⟩
     · refine hd'.resolve_right fun h' => ?_
       have hle : normV w ≤ normV (w.under (𝓞 K)) := norm_le w hq fun x => by
@@ -139,7 +141,9 @@ theorem classChar2 : ClassChar := by
     rcases hw.2.2 with h | h
     · rw [hw.2.1.2 h, one_pow]
     · rw [show f = Module.finrank K M from
-        Nat.pow_right_injective (NumberField.HeightOneSpectrum.one_lt_absNorm _) (hf.symm.trans h), hv1]
+        Nat.pow_right_injective (show 1 < normV (w.under (𝓞 K)) from by
+          simpa [normV, Ideal.absNorm_eq_natCard] using
+            NumberField.HeightOneSpectrum.one_lt_absNorm (w.under (𝓞 K))) (hf.symm.trans h), hv1]
   · by_cases h : η.val (w.under (𝓞 K)) = 1
     · exact Or.inl (hw.2.1.1 h)
     · refine Or.inr ?_

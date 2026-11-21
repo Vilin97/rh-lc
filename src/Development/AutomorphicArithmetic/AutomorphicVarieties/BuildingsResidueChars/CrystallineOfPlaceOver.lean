@@ -111,10 +111,12 @@ private theorem eval_root_transport (ι : Om l ≃+* ℂ) (b : ℂ) (q : ℚ_[l]
   rw [e1]
   simpa using h1
 
+set_option synthInstance.maxHeartbeats 100000 in
 private theorem crystalline_to_weil_deligne_smul (ι : Om l ≃+* ℂ) (a : ↥LL.1) (x : ↥(Dcris (P.PD K) ρ)) :
     crystallineToWeilDeligne P ρ ι (a • x) = (ι.toRingHom.comp (algebraMap ↥LL.1 (Om l))) a • crystallineToWeilDeligne P ρ ι x :=
   (congrArg (wdMk P ι ρ) ((crystallineInclusion P ρ).map_smul a x)).trans (wdMk_smul P ι ρ a _)
 
+set_option synthInstance.maxHeartbeats 100000 in
 private theorem fin_step (n : ℕ) (q : ℚ_[l][X])
     (H : ∃ x : ↥(Dcris (P.PD K) ρ), x ≠ 0 ∧ aeval (frobeniusRestriction P ρ ^ n) (q.map (algebraMap ℚ_[l] ↥LL.1)) x = 0) :
     ∃ x ∈ Dcris (P.PD K) ρ, x ≠ 0 ∧

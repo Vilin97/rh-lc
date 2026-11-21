@@ -15,7 +15,51 @@ namespace Formalism.MainNotions.BridgeLemma₂
 open NumberField Module Formalism.HermitianLatticesTheory
 
 theorem second_orthogonal_vector_holds (K : Type) [Field K] [NumberField K] [StarRing K] (hK : IsCMUnram K) : SecondOrthogonalVector K :=
-  fun V _ _ _ _ h L _ hL M hlat hint huni x hx hx0 => exists_orthogonal_second_vector K hK V h L hL M hlat hint huni x hx hx0
+  by
+    classical
+    intro V _ _ _ _ h L hs hL M hlat hint huni x hx hx0
+    obtain ⟨e, he, hspan, hLe, ho⟩ := hL
+    let b : Basis (Fin 2) K V := Basis.mk he (by rw [hspan])
+    have hfull : Submodule.IsFullLattice K M := by
+      refine { toIsLattice := hlat, span_eq_top := ?_ }
+      apply Submodule.dualAnnihilator_eq_bot_iff.mp
+      apply le_antisymm ?_ bot_le
+      intro f hf
+      let v : V := ∑ i : Fin 2, star (f (e i)) • e i
+      have hpair : h v = f := by
+        apply b.ext
+        intro i
+        fin_cases i <;> simp [v, LinearMap.map_smulₛₗ, starRingEnd_apply, ho, b, Basis.coe_mk]
+      have hline (r : K) : r • v ∈ M := by
+        rw [← huni]
+        simp only [dual, Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap]
+        intro y hy
+        have hy0 : h v y = 0 := by
+          rw [hpair]
+          exact (Submodule.mem_dualAnnihilator f).mp hf y (Submodule.subset_span hy)
+        have hz : h y v = 0 := by simpa [hy0] using (hs.eq v y).symm
+        simp [hz]
+      have hv : v = 0 := by
+        by_contra hv
+        obtain ⟨i, hi⟩ : ∃ i, b.repr v i ≠ 0 := by
+          by_contra hn
+          push_neg at hn
+          apply hv
+          apply b.repr.injective
+          ext i
+          simp [hn i]
+        let c := ((Finsupp.lapply i).comp b.repr.toLinearMap).restrictScalars (𝓞 K)
+        have htop : M.map c = ⊤ := by
+          rw [eq_top_iff]
+          intro a _
+          refine ⟨(a / b.repr v i) • v, hline _, ?_⟩
+          simp [c, div_mul_cancel₀ _ hi]
+        have : Module.Finite (𝓞 K) K := Module.finite_def.mpr (htop ▸ hlat.fg.map c)
+        exact RingOfIntegers.not_isField K
+          (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 K) K) (Field.toIsField K))
+      rw [Submodule.mem_bot]
+      simpa [hv] using hpair.symm
+    exact exists_orthogonal_second_vector K hK V h L ⟨e, he, hspan, hLe, ho⟩ M hfull hint huni x hx hx0
 
 theorem plane_class_count_holds (K : Type) [Field K] [NumberField K] [StarRing K] (hK : IsCMUnram K) : PlaneClassCount K :=
   fun V _ _ _ _ h L hs hL s hreps B₁ B₂ hint hshort => class_count_plane_bound K hK V h L hs hL s hreps B₁ B₂ hint hshort

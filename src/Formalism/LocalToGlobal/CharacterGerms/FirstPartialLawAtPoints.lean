@@ -191,14 +191,19 @@ theorem isIU_of_exp {U f : MvPowerSeries τ C} (hi : IntS V U) (he : U = mvExp f
 
 theorem biadd_left {c : Fin dd → MvPowerSeries τ C} (hc : GoodPt V c) :
     ∀ l : List (Fin dd → MvPowerSeries τ C), (∀ a ∈ l, GoodPt V a) →
-      ∃ U : MvPowerSeries τ C, IsIU V U ∧ mvExp (hAt Y (sumL Y l) c) * U = (l.map fun a => mvExp (hAt Y a c)).prod
-  | [], _ => ⟨1, IsIU.one, by
+      ∃ U : MvPowerSeries τ C, IsIU V U ∧ mvExp (hAt Y (sumL Y l) c) * U = (l.map fun a => mvExp (hAt Y a c)).prod := by
+  intro l
+  induction l with
+  | nil =>
+      intro _
+      refine ⟨1, IsIU.one, ?_⟩
       show mvExp (hAt Y (fun _ => 0) c) * 1 = 1
-      rw [hAt_zero_left Y hc.1, rtj_mvExp_zero, one_mul]⟩
-  | a :: l, h => by
+      rw [hAt_zero_left Y hc.1, rtj_mvExp_zero, one_mul]
+  | cons a l ih =>
+      intro h
       have ha : GoodPt V a := h a (List.mem_cons_self (a := a) (l := l))
       have hl := good_sumL Y l fun b hb => h b (List.mem_cons_of_mem _ hb)
-      obtain ⟨U, hU, e⟩ := biadd_left hc l fun b hb => h b (List.mem_cons_of_mem _ hb)
+      obtain ⟨U, hU, e⟩ := ih fun b hb => h b (List.mem_cons_of_mem _ hb)
       have hp := first_partial_law_at_points Y ha.1 hl.1 hc.1
       have hpi : IntS V (MvPowerSeries.subst (P3 a (sumL Y l) c) Y.B.ph1) :=
         IntS.subst (constantCoeff_triple_substitution ha.1 hl.1 hc.1) (integral_triple_substitution ha.2 hl.2 hc.2) Y.intPh1
@@ -216,14 +221,19 @@ theorem biadd_left {c : Fin dd → MvPowerSeries τ C} (hc : GoodPt V c) :
 
 theorem biadd_right {c : Fin dd → MvPowerSeries τ C} (hc : GoodPt V c) :
     ∀ l : List (Fin dd → MvPowerSeries τ C), (∀ a ∈ l, GoodPt V a) →
-      ∃ U : MvPowerSeries τ C, IsIU V U ∧ mvExp (hAt Y c (sumL Y l)) * U = (l.map fun a => mvExp (hAt Y c a)).prod
-  | [], _ => ⟨1, IsIU.one, by
+      ∃ U : MvPowerSeries τ C, IsIU V U ∧ mvExp (hAt Y c (sumL Y l)) * U = (l.map fun a => mvExp (hAt Y c a)).prod := by
+  intro l
+  induction l with
+  | nil =>
+      intro _
+      refine ⟨1, IsIU.one, ?_⟩
       show mvExp (hAt Y c (fun _ => 0)) * 1 = 1
-      rw [hAt_zero_right Y hc.1, rtj_mvExp_zero, one_mul]⟩
-  | a :: l, h => by
+      rw [hAt_zero_right Y hc.1, rtj_mvExp_zero, one_mul]
+  | cons a l ih =>
+      intro h
       have ha : GoodPt V a := h a (List.mem_cons_self (a := a) (l := l))
       have hl := good_sumL Y l fun b hb => h b (List.mem_cons_of_mem _ hb)
-      obtain ⟨U, hU, e⟩ := biadd_right hc l fun b hb => h b (List.mem_cons_of_mem _ hb)
+      obtain ⟨U, hU, e⟩ := ih fun b hb => h b (List.mem_cons_of_mem _ hb)
       have hp := second_partial_law_at_points Y hc.1 ha.1 hl.1
       have hpi : IntS V (MvPowerSeries.subst (P3 c a (sumL Y l)) Y.B.ph2) :=
         IntS.subst (constantCoeff_triple_substitution hc.1 ha.1 hl.1) (integral_triple_substitution hc.2 ha.2 hl.2) Y.intPh2

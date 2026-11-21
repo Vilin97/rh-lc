@@ -17,7 +17,7 @@ set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.finite_flat_subgroup_scheme :
     ∀ (R : Type) [CommRing R] (A : Over (Spec (CommRingCat.of R))) [GrpObj A]
       (B : Type) [CommRing B] [Algebra R B] (h : sp (R₀ := R) B ⟶ A),
-      IsFinFlatSub B h → ∃ _ : GrpObj (sp (R₀ := R) B), IsMonHom h ∧ Mono h := by
+      IsFinFlatSub A B h → ∃ _ : GrpObj (sp (R₀ := R) B), IsMonHom h ∧ Mono h := by
   intro R _ A _ B _ _ h H
   have hmono : Mono h := by
     constructor

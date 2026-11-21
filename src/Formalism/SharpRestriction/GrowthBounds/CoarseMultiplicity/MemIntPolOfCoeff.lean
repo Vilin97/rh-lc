@@ -61,7 +61,9 @@ private theorem vK_coeff_add_half_padicVal_nonneg_of_bbSpec {O : Type} [CommRing
     · rw [GLWeightTheory.valuation_zero_alt]
       simp
   | zero =>
-    rw [MvPolynomial.coeff_zero, GLWeightTheory.valuation_zero_alt]
+    rw [MvPolynomial.coeff_zero]
+    change 0 ≤ vK p (0 : KK O) + _
+    rw [GLWeightTheory.valuation_zero_alt]
     simp
   | add x y _ _ hx hy =>
     rw [MvPolynomial.coeff_add]
@@ -125,7 +127,9 @@ private theorem gOp_mem_span_of_mem_span (hEig : EigAt) {O : Type} [CommRing O] 
   | zero =>
     have h0 : gOp T q (0 : MvPolynomial σ (KK O)) = 0 := by
       ext μ
-      rw [hEig, MvPolynomial.coeff_zero, mul_zero]
+      rw [hEig, MvPolynomial.coeff_zero]
+      change _ * (0 : KK O) = 0
+      exact mul_zero _
     rw [h0]
     exact zero_mem _
   | add x y _ _ hx hy =>
@@ -146,8 +150,8 @@ private theorem exists_algebraMap_eq_of_w_pow_padicVal_mul {O : Type} [CommRing 
     exact hndvd (dvd_zero p)
   have hv : padicValNat p N = e := by
     haveI := Fact.mk hp
-    rw [hN', (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hN'0, padicValNat.prime_pow,
-      padicValNat.eq_zero_of_not_dvd hndvd, add_zero]
+    rw [hN', (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hN'0, (show padicValNat p (p ^ e) = e from by simpa only [← Nat.padicValNat_def] using Nat.multiplicity_prime_pow (p := p) (n := e)),
+      (show padicValNat p N' = 0 from by simpa only [← Nat.padicValNat_def] using multiplicity_eq_zero_of_not_dvd hndvd), add_zero]
   rw [hv] at hz
   obtain ⟨uu, huu⟩ := GLWeightTheory.natCast_isUnit_of_coprime hp DS N' hndvd
   have hpw : (algebraMap O (KK O) w ^ e) ^ 2 = (p : KK O) ^ e := by

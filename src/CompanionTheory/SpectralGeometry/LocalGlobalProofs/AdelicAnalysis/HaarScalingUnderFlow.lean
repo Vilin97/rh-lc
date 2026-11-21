@@ -28,7 +28,7 @@ theorem map_eq_of_conj {G H : Type} [AddCommGroup G] [TopologicalSpace G] [IsTop
     exact hs.comp (hL'.comp he)
   have hν := hH (μ.map e) (e.isAddHaarMeasure_map μ he hs)
   have h1 : (μ.map L).map e = (c • μ).map e := by
-    rw [Measure.map_map he.measurable hL.measurable, Measure.map_smul, ← hν,
+    rw [Measure.map_map he.measurable hL.measurable, Measure.map_smul c he.measurable.aemeasurable, ← hν,
       Measure.map_map hL'.measurable he.measurable]
     congr 1
     funext X

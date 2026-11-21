@@ -166,6 +166,8 @@ theorem smul_mem_iSup {lam : Fin (2 * r + k + 1) → ℝ} {e : ℝ} {ψ : B.Mat 
     exact (le_iSup (fun ν : Box lam e => Wsp k r Wp Wq ε ν) ⟨μ, hμ⟩) (Submodule.subset_span ⟨φ, T, hc, rfl⟩)
   | zero =>
     convert Submodule.zero_mem (⨆ ν : Box lam e, Wsp k r Wp Wq ε ν) using 1
+    ext g
+    simp
   | add x y _ _ hx hy =>
     have hxy : (fun g => (x + y) g • T) = (fun g => x g • T) + (fun g => y g • T) := by
       funext g

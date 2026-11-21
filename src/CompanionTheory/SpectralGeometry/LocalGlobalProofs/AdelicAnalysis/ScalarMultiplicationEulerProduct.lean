@@ -85,6 +85,7 @@ theorem map_inclR_mul [Module.Finite F E] {d : ℕ} (b : Module.Basis (Fin d) F 
     rw [this, Measure.map_id]
   rw [hmul, ← Measure.map_map L.symm.continuous.measurable (hA.comp L.continuous).measurable,
     ← Measure.map_map hA.measurable L.continuous.measurable, hν, Measure.map_smul, hid]
+  exact L.symm.continuous.measurable.aemeasurable
 
 end
 

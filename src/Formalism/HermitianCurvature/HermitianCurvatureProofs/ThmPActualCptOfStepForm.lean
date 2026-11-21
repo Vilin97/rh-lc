@@ -27,7 +27,7 @@ def pc (c : Fin r → ℂ) : ℂ := ∏ a : Fin r with a.val < (Fin.last r).val,
 
 theorem pc_continuous : Continuous (pc (r := r)) := by
   unfold pc
-  exact continuous_finset_prod _ fun a _ => continuous_apply a
+  exact continuous_finsetProd _ fun a _ => continuous_apply a
 
 theorem pc_ne_zero {c : Fin r → ℂ} (hc : c ∈ OmX r) : pc c ≠ 0 := Finset.prod_ne_zero_iff.2 fun a _ => hc a
 

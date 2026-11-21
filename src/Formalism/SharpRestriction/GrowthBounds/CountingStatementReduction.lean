@@ -308,24 +308,24 @@ theorem blk_det : (blk W Dm).det = Dm.det := by
   rw [Matrix.det_succ_column_zero, Fin.sum_univ_succ]
   have h : (blk W Dm).submatrix Fin.succ Fin.succ = Dm := by
     ext i j
-    simp [Matrix.submatrix_apply]
-  simp [h]
+    simp [Matrix.submatrix_apply, blk]
+  simp [h, blk]
 
 theorem blk_map (φ : A →+* A') : (blk W Dm).map φ = blk (fun j => φ (W j)) (Dm.map φ) := by
   ext i j
-  refine Fin.cases ?_ (fun i' => ?_) i <;> refine Fin.cases ?_ (fun j' => ?_) j <;> simp
+  refine Fin.cases ?_ (fun i' => ?_) i <;> refine Fin.cases ?_ (fun j' => ?_) j <;> simp [blk]
 
 theorem lowM_mul_blk_00 : (lowM γ v b' * blk W Dm) 0 0 = γ := by
-  rw [Matrix.mul_apply, Fin.sum_univ_succ]; simp
+  rw [Matrix.mul_apply, Fin.sum_univ_succ]; simp [lowM, blk]
 
 theorem lowM_mul_blk_0s (j : Fin n) : (lowM γ v b' * blk W Dm) 0 j.succ = γ * W j := by
-  rw [Matrix.mul_apply, Fin.sum_univ_succ]; simp
+  rw [Matrix.mul_apply, Fin.sum_univ_succ]; simp [lowM, blk]
 
 theorem lowerMatrix_mul_block_succ_zero (i : Fin n) : (lowM γ v b' * blk W Dm) i.succ 0 = v i := by
-  rw [Matrix.mul_apply, Fin.sum_univ_succ]; simp
+  rw [Matrix.mul_apply, Fin.sum_univ_succ]; simp [lowM, blk]
 
 theorem lowM_mul_blk_ss (i j : Fin n) : (lowM γ v b' * blk W Dm) i.succ j.succ = v i * W j + (b' * Dm) i j := by
-  rw [Matrix.mul_apply, Fin.sum_univ_succ, Matrix.mul_apply]; simp
+  rw [Matrix.mul_apply, Fin.sum_univ_succ, Matrix.mul_apply]; simp [lowM, blk]
 
 end GlobalTheory
 
@@ -661,7 +661,8 @@ end Primes
 theorem residue_matrix_generic_corner_entry (O : Type) [CommRing O] (r : ℕ)
     (hM : IsUnit (aeval (fun x : Fin (r + 1 + 1) × Fin (r + 1 + 1) => resMat O r x.1 x.2) (genMat O (r + 1 + 1)).det)) :
     evalG (R := O) (resMat O r) hM (g0r O (r + 1)) = X (Fin.last r) := by
-  rw [evaluation_generic_corner_entry, ← Fin.succ_last, resMat_eq, blk_0s]
+  rw [evaluation_generic_corner_entry, ← Fin.succ_last, resMat_eq]
+  rfl
 
 theorem cW_last (O : Type) [CommRing O] [IsDomain O] (r : ℕ) :
     cW O (r + 1) (Fin.last r) = ((gam O (r + 1))⁻¹ : (CA O (r + 1))ˣ) *
@@ -738,10 +739,10 @@ theorem res_coeff (O : Type) [CommRing O] (r : ℕ) (c : ℤ) (ka : Fin (r + 1) 
       (fun _ => 0) (b.map φ) * blk XX (g.map φ) := by
     ext i j
     refine Fin.cases ?_ (fun i' => ?_) i <;> refine Fin.cases ?_ (fun j' => ?_) j
-    · rw [lowM_mul_blk_00]; simp
-    · rw [lowM_mul_blk_0s]; simp
-    · rw [lowerMatrix_mul_block_succ_zero]; simp
-    · rw [lowM_mul_blk_ss, blk_ss, Matrix.map_mul]; simp
+    · rw [lowM_mul_blk_00]; simp [blk]
+    · rw [lowM_mul_blk_0s]; simp [blk]
+    · rw [lowerMatrix_mul_block_succ_zero]; simp [blk]
+    · rw [lowM_mul_blk_ss, Matrix.map_mul]; simp [blk]
   have hu2 : IsUnit (aeval (fun x : Fin (r + 1 + 1) × Fin (r + 1 + 1) => blk XX (g.map φ) x.1 x.2)
       (genMat O (r + 1 + 1)).det) := by
     have := mapC_unit (O := O) (Fin (r + 1)) g hg
@@ -1126,7 +1127,7 @@ theorem subOps_int (D : Formalism.BasicNotions.D7) (p n' : ℕ) (O : Type) [Comm
       ∀ F ∈ Pol (KK O) r d, F ∈ L →
         ((p : KK O) ^ (N0 n * Nat.log p (2 * degIn d S + n - 1))) • e F ∈ L := by
   have hchar : CharZero (KK O) := (integral_formula_lattice_holds p n' O S0 hG).1
-  have hCR : CompleteReducibilityIsotypic := complete_reducibility_of_semisimple D (Formalism.MainNotions.G.GLWeightTheory.weight_condition_from_integral_form D)
+  have hCR : CompleteReducibilityIsotypic := Formalism.MainNotions.G.GLWeightTheory.complete_reducibility_of_semisimple D (Formalism.MainNotions.G.GLWeightTheory.weight_condition_from_integral_form D)
   have hRes : SubrepRestrictionRep := subrep_restriction_of_reducibility hCR
   have hRep : IsGLRep (subOps (KK O) Lt S φ) := subOps_rep Lt S φ hφ
   have hst : ∀ a b, ∀ x ∈ Pol (KK O) r d, subOps (KK O) Lt S φ a b x ∈ Pol (KK O) r d :=
@@ -1357,7 +1358,6 @@ theorem fock_nondeg' {σ : Type} (F : MvPolynomial σ K) (h : ∀ G, fockBilinea
   have h1 := h (monomial m 1)
   rw [fockBilinear_apply, fock_form_symm, fock_form_monomial, one_mul] at h1
   have h2 : ((expFact m : ℕ) : K) ≠ 0 := by exact_mod_cast exponent_factorial_ne_zero_of m
-  rw [coeff_zero]
   exact (mul_eq_zero.1 h1).resolve_right h2
 
 theorem subOps_contra (Lt : Letters (Fin N)) (S : Set (Fin N)) (φ : Fin n → Fin r) (a b : Fin n)
@@ -1367,7 +1367,7 @@ theorem subOps_contra (Lt : Letters (Fin N)) (S : Set (Fin N)) (φ : Fin n → F
 
 theorem subOps_top (D : Formalism.BasicNotions.D7) (Lt : Letters (Fin N)) (S : Set (Fin N)) (φ : Fin n → Fin r)
     (hRep : IsGLRep (subOps K Lt S φ)) : (⨆ mu : Fin n → ℤ, isoSub (subOps K Lt S φ) mu) = ⊤ :=
-  complete_reducibility_of_semisimple D (Formalism.MainNotions.G.GLWeightTheory.weight_condition_from_integral_form D) K _ n _ hRep
+  Formalism.MainNotions.G.GLWeightTheory.complete_reducibility_of_semisimple D (Formalism.MainNotions.G.GLWeightTheory.weight_condition_from_integral_form D) K _ n _ hRep
 
 theorem subOps_orth (Lt : Letters (Fin N)) (S : Set (Fin N)) (φ : Fin n → Fin r)
     (hRep : IsGLRep (subOps K Lt S φ)) (lam mu : Fin n → ℤ) (h : lam ≠ mu)
@@ -1456,7 +1456,7 @@ theorem mem_bbSpec_one_iff {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValua
       obtain ⟨μ, c, hc, rfl⟩ := hx
       rw [fock_lattice_monomial_iff hV]
       unfold halfFactorialValuation
-      simpa using hc
+      simpa [Nat.padicValNat_def] using hc
     | zero => exact fock_lattice_zero_mem hV
     | add x y _ _ hx hy => exact fock_lattice_add_mem hV hx hy
     | smul o x _ hx => exact fock_lattice_smul_mem hV o hx
@@ -1465,7 +1465,7 @@ theorem mem_bbSpec_one_iff {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValua
     refine Submodule.sum_mem _ fun m _ => Submodule.subset_span ⟨m, F.coeff m, ?_, rfl⟩
     have := (fock_lattice_monomial_iff hV m _).1 ((fock_lattice_iff_monomials hV F).1 h m)
     unfold halfFactorialValuation at this
-    simpa using this
+    simpa [Nat.padicValNat_def] using this
 
 theorem mem_bbSpec_one_iff' {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {p : ℕ}
     (hp : p.Prime) (S0 : UniformizedDVR p O) {σ : Type} (F : MvPolynomial σ (KK O)) :
@@ -2143,7 +2143,7 @@ theorem ext_poly (D : Formalism.BasicNotions.D7) {K : Type} [Field K] [CharZero 
       ∀ F ∈ weightSp (glOps K r Lt S) la, P F = e' F := by
   have hE : IsGLRep (glOps K r Lt S) := polynomial_isGLRep Lt S
   have hE' : IsGLRep (fun a b => glOps K r Lt S (φ a) (φ b) : GLOps n K _) := ext_rep hE hφ
-  exact ext_abs (glOps K r Lt S) φ hE hE' (complete_reducibility_of_semisimple D (Formalism.MainNotions.G.GLWeightTheory.weight_condition_from_integral_form D) K _ n _ hE')
+  exact ext_abs (glOps K r Lt S) φ hE hE' (Formalism.MainNotions.G.GLWeightTheory.complete_reducibility_of_semisimple D (Formalism.MainNotions.G.GLWeightTheory.weight_condition_from_integral_form D) K _ n _ hE')
     (fockBilinear K (Fin N × Fin r)) (fun a b x y => fock_form_contravariant Lt S a b x y)
     (fun x hx => ext_fock_nondeg x hx) la e' he'
 

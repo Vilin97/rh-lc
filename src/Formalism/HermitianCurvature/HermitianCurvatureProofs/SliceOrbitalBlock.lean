@@ -77,6 +77,8 @@ theorem coreQ (σh : Equiv.Perm (Fin ph)) (dh : Fin ph → ℂ) (σb : Equiv.Per
   unfold U.PhiTop
   rw [show U.muXiH m 0 σb = volume from rfl]
   congr 1
+  funext η
+  change (∫ x, U.psiH U.betaU σb η • _ ∂(μR.prod volume)) = _
   rw [integral_smul]
   rfl
 

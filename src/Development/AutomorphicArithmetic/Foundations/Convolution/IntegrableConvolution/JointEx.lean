@@ -288,7 +288,7 @@ theorem UpperTheory.ConvolutionTheory.L1.jointEx :
     CompactSelfAdjoint.exists_real_of_hasEigenvalue (IsSelfAdjoint.of_nonneg (h.A_pos 0)) hEv
   obtain ⟨hwc, hwQ⟩ := mem_eigIn.1 w.2
   have hr0 : 0 ≤ r := by
-    have hp := (ContinuousLinearMap.nonneg_iff_isPositive _).1 (h.A_pos 0)
+    have hp := ContinuousLinearMap.nonneg_iff_isPositive.1 (h.A_pos 0)
     have h3 := hp.re_inner_nonneg_right (w : H)
     have h4 : 0 < ‖(w : H)‖ ^ 2 := by positivity
     have h5 : RCLike.re (inner ℂ (w : H) ((r : ℂ) • (w : H))) = r * ‖(w : H)‖ ^ 2 := by

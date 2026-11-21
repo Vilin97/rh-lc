@@ -1282,7 +1282,11 @@ theorem winK (P : ParameterChoice' D L) (sN : SizeN L) (sK : SizeK L) (h3 : 3 �
     rw [show (9 : ℝ) = ((9 : ℕ) : ℝ) by norm_num, rpow_nat, one_mul] at hE4
     exact hE4
   have hf0 : (0 : ℝ) < D.R.f := by
-    have : 0 < D.R.f := by unfold Ranks.f Ranks.n; positivity
+    have : 0 < D.R.f := by
+      have := D.R.two_le_m
+      have := D.R.m_le_f
+      unfold Ranks.f Ranks.n
+      omega
     exact_mod_cast this
   have ht : (1 : ℝ) ≤ D.R.t := by
     have : 1 ≤ D.R.t := by

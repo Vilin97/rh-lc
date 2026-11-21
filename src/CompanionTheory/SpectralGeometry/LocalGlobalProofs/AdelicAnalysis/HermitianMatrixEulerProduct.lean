@@ -298,7 +298,7 @@ theorem continuous_tmul [IsTopologicalRing R] [ContinuousAdd (R ⊗[F] E)]
 theorem continuous_offE [IsTopologicalRing R] [ContinuousAdd (R ⊗[F] E)]
     [ContinuousSMul R (R ⊗[F] E)] (b : Module.Basis (Fin d) F E) (p) :
     Continuous fun x : Idx n d → R => offE R b x p :=
-  continuous_finset_sum _ fun k _ => (continuous_tmul R (b k)).comp (continuous_apply _)
+  continuous_finsetSum _ fun k _ => (continuous_tmul R (b k)).comp (continuous_apply _)
 
 theorem continuous_psi [IsTopologicalRing R] [ContinuousAdd (R ⊗[F] E)]
     [ContinuousSMul R (R ⊗[F] E)] {σ : E →ₐ[F] E} (hsig : Continuous (sigR R σ))
@@ -375,7 +375,8 @@ theorem map_eq_of_coord {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ)
   rw [hτeq, ← Measure.map_map K.continuous.measurable (hT.measurable.comp K.symm.continuous.measurable),
     ← Measure.map_map hT.measurable K.symm.continuous.measurable, hc _ hμ, Measure.map_smul,
     Measure.map_map K.continuous.measurable K.symm.continuous.measurable]
-  simp
+  · simp
+  · exact K.continuous.measurable.aemeasurable
 
 end Main
 

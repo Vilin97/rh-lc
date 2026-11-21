@@ -48,8 +48,9 @@ private theorem exists_int_basis {l : ℕ} [Fact l.Prime] {G : Type} [Group G] [
     rw [h2]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
   haveI : Submodule.IsLattice ℚ_[l] Λ :=
-    { fg := (Submodule.fg_span (Set.finite_range _)).of_le hle
-      span_eq_top := by
+    Submodule.IsLattice.of_fg ℚ_[l] ((Submodule.fg_span (Set.finite_range _)).of_le hle)
+  haveI : Submodule.IsFullLattice ℚ_[l] Λ :=
+    { span_eq_top := by
         rw [eq_top_iff, ← e₀.span_eq]
         refine Submodule.span_mono ?_
         rintro _ ⟨i, rfl⟩
@@ -66,13 +67,13 @@ private theorem exists_int_basis {l : ℕ} [Fact l.Prime] {G : Type} [Group G] [
     | zero => simp
     | add x y _ _ hx hy => rw [map_add (f := _)]; exact Λ.add_mem hx hy
     | smul a x _ hx => rw [LinearMap.map_smul_of_tower]; exact Λ.smul_mem a hx
-  refine ⟨_, b.extendOfIsLattice ℚ_[l], fun g i j => ?_⟩
-  have h1 : ρ g (b.extendOfIsLattice ℚ_[l] j) =
-      ∑ k, ((b.repr ⟨_, hst g _ (b j).2⟩ k : ℤ_[l]) : ℚ_[l]) • b.extendOfIsLattice ℚ_[l] k := by
+  refine ⟨_, b.extendOfIsFullLattice ℚ_[l], fun g i j => ?_⟩
+  have h1 : ρ g (b.extendOfIsFullLattice ℚ_[l] j) =
+      ∑ k, (algebraMap ℤ_[l] ℚ_[l] (b.repr ⟨_, hst g _ (b j).2⟩ k)) • b.extendOfIsFullLattice ℚ_[l] k := by
     have := congrArg Λ.subtype (b.sum_repr ⟨_, hst g _ (b j).2⟩)
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum] at this
-    simp only [Basis.extendOfIsLattice_apply]
+    simp only [Basis.extendOfIsFullLattice_apply]
     exact this.symm
   rw [h1, Basis.repr_sum_self]
   exact PadicInt.norm_le_one _
@@ -140,7 +141,6 @@ private theorem period {l : ℕ} [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l
         rw [hI (Subgroup.inclusion (GK_le hKK) g) g.2 ((UpperTheory.V.Loc.memIK K' g).1 hg), one_smul]
       rw [← map_one M]
       ext i j
-      apply PadicInt.ext
       rw [hM, hM, h, map_one, Module.End.one_apply])
   haveI : Nontrivial P.R.B := nontrivial_B P
   haveI : Nontrivial (Ainf l) := AI.ιA.domain_nontrivial

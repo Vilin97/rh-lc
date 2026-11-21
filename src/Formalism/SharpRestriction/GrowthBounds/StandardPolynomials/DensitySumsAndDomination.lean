@@ -147,7 +147,7 @@ theorem xi_mono_mem (N t b : ℕ) (γ : Fin r → ℕ) (hb : ∑ c, γ c = b) :
     subst hm''
     refine ⟨fun v hv => ?_, ?_⟩
     · rw [hm] at hv
-      obtain ⟨c, -, hc⟩ := Finset.mem_biUnion.mp (Finsupp.support_finset_sum hv)
+      obtain ⟨c, -, hc⟩ := Finsupp.mem_support_finsetSum v hv
       exact ⟨c, Finset.mem_singleton.mp (Finsupp.support_single_subset hc)⟩
     · simp only [hval]
       exact hb

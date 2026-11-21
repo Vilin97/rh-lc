@@ -13,7 +13,7 @@ variable (l : ℕ) [hl : Fact l.Prime]
 theorem sum_Ioc_zero_eq_factorial (y : ℕ) :
     ∑ m ∈ Ioc 0 y, padicValNat l m = padicValNat l y.factorial := by
   induction y with
-  | zero => simp
+  | zero => simp [Nat.padicValNat_def]
   | succ n ih =>
     rw [Finset.sum_Ioc_succ_top (Nat.zero_le n), ih, Nat.factorial_succ,
       (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by omega) (Nat.factorial_ne_zero n)]
@@ -26,7 +26,7 @@ theorem padicValNat_factorial_le_div_sub_one (y : ℕ) :
     have : (1:ℝ) < l := by exact_mod_cast h1
     linarith
   have key : (l - 1) * padicValNat l y.factorial ≤ y := by
-    rw [sub_one_mul_padicValNat_factorial]; exact Nat.sub_le _ _
+    rw [Nat.padicValNat_def, hl.out.sub_one_mul_multiplicity_factorial]; exact Nat.sub_le _ _
   have key' : (((l - 1 : ℕ) : ℝ)) * (padicValNat l y.factorial : ℝ) ≤ y := by
     exact_mod_cast key
   rw [Nat.cast_sub h1.le, Nat.cast_one] at key'
@@ -35,7 +35,7 @@ theorem padicValNat_factorial_le_div_sub_one (y : ℕ) :
 theorem padicValNat_choose_le_logb' (k n : ℕ) :
     ((padicValNat l (k.choose n) : ℕ) : ℝ) ≤ Real.logb l k := by
   have h1 : padicValNat l (k.choose n) ≤ Nat.log l k := by
-    rw [← Nat.factorization_def _ hl.out]
+    rw [Nat.padicValNat_def, ← Nat.factorization_def _ hl.out]
     exact Nat.factorization_choose_le_log
   have h2 : ((Nat.log l k : ℕ) : ℝ) ≤ Real.logb l k := by
     first
@@ -86,7 +86,7 @@ theorem sum_sub_eq_sum_Ioc (j0 : ℤ) (k0 k1 : ℕ) (T : Finset ℤ)
     omega
   · intro a ha
     simp only [Finset.mem_coe, hT] at ha
-    simp only [padicValInt]
+    simp only [padicValInt, ← Nat.padicValNat_def]
     congr 1
     omega
 
@@ -108,7 +108,7 @@ theorem sum_sub_eq_sum_Ioc_of_sub (j0 : ℤ) (k0 k1 : ℕ) (T : Finset ℤ)
     omega
   · intro a ha
     simp only [Finset.mem_coe, hT] at ha
-    simp only [padicValInt]
+    simp only [padicValInt, ← Nat.padicValNat_def]
     congr 1
     omega
 

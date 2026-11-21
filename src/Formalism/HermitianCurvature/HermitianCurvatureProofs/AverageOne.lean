@@ -398,13 +398,9 @@ theorem meanExists : MeanExists := by
     | add z1 z2 _ _ h1 h2 =>
       have := (AddSubgroup.closure (Set.range e)).add_mem h1 h2
       convert this using 1
-      apply Subtype.ext
-      simp
     | smul a z _ h =>
       have := (AddSubgroup.closure (Set.range e)).zsmul_mem h a
       convert this using 1
-      apply Subtype.ext
-      simp
   obtain ⟨hmean, hvan⟩ := exists_mean e he c
   refine ⟨LIMf e c, hmean, ?_⟩
   intro g hg htend

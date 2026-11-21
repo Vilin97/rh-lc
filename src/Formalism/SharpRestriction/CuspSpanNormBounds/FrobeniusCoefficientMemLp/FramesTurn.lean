@@ -383,6 +383,7 @@ theorem isRootMeas_turn (L : LocBessel k r) (ka : ℝ) (hka : 0 < ka) (hc : L.c 
     rw [Measure.map_map (continuous_rootCoordsS _).measurable continuous_cA.measurable, e,
       ← Measure.map_map (rot_mp u hu).measurable (continuous_rootCoordsS _).measurable, h2', Measure.map_smul,
       (rot_mp u hu).map_eq]
+    exact (rot_mp u hu).measurable.aemeasurable
 
 theorem isPtRep_turn (L : LocBessel k r) (ka : ℝ) {p : Point ℂ (r + 1)} {g : Mx k r} (h : IsPtRepO L p g) :
     IsPtRep (turnL L ka) (turnPt p) (tTi k r * g * tT k r) :=

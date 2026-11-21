@@ -83,9 +83,11 @@ private theorem quaternaryForm_polarization {F : Type} [Field F] [NumberField F]
     ψ (B4 δ a v) = (finiteAdelicChar F (Bf δ (finPartPi a) (finPartPi v)) : ℂ) := by
   have : B4 δ a v = finiteAdeleInr (Bf δ (finPartPi a) (finPartPi v)) := by
     refine Prod.ext ?_ ?_
-    · simp [B4, ha, finiteAdeleInr_fst]
+    · change (2 : InfiniteAdeleRing F) * ((a 2).1 * (v 2).1 - (rt δ).1 * ((a 3).1 * (v 3).1)) - (a 1).1 * (v 0).1 - (a 0).1 * (v 1).1 = 0
+      simp [ha]
     · have h2 : (2 : A F).2 = (2 : FiniteAdeleRing (𝓞 F) F) := map_ofNat (RingHom.snd (InfiniteAdeleRing F) (FiniteAdeleRing (𝓞 F) F)) 2
-      simp [B4, Bf, finPartPi, finiteAdeleInr_snd, h2]
+      change (2 : FiniteAdeleRing (𝓞 F) F) * ((a 2).2 * (v 2).2 - (rt δ).2 * ((a 3).2 * (v 3).2)) - (a 1).2 * (v 0).2 - (a 0).2 * (v 1).2 = Bf δ (finPartPi a) (finPartPi v)
+      rfl
   rw [ψ, this, finiteAdelicChar_apply]
 
 private theorem level_of_mem {F : Type} [Field F] [NumberField F] (δ : F) {f : V4 F → ℂ}

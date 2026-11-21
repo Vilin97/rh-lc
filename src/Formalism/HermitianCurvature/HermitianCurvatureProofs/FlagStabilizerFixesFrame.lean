@@ -102,7 +102,7 @@ theorem isoExpl (H : Matrix (Fin n) (Fin n) ℂ) (m : ι → Fin n → ℂ) (hH 
 
 theorem nsq_cont : Continuous fun x : Fin n → ℂ => nsq x := by
   show Continuous fun x : Fin n → ℂ => ∑ i, Complex.normSq (x i)
-  exact continuous_finset_sum _ fun i _ => Complex.continuous_normSq.comp (continuous_apply i)
+  exact continuous_finsetSum _ fun i _ => Complex.continuous_normSq.comp (continuous_apply i)
 
 theorem eN_eq_sqrt (x : Fin n → ℂ) : eN x = Real.sqrt (nsq x) := by
   rw [eN, EuclideanSpace.norm_eq]

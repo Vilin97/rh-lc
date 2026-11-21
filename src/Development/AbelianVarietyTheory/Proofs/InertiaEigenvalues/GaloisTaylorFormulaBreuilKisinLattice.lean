@@ -31,11 +31,11 @@ theorem desc_eq {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] 
 theorem nabla_pow_smul {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [Algebra O K] [IsUnitBall O K]
     {l e a : ℕ} {ι : Type} [Fintype ι] [DecidableEq ι] {P : PhiMod O K l e a ι} (C : Conn P) (k : ℕ)
     (f : ZMod a → K⟦X⟧) (v : Vec K a ι) : (C.nabla ^ k) (f • v) = ∑ p ∈ Finset.range (k + 1),
-      (k.choose p : K⟦X⟧) • ((fun τ => (⇑(derivative K))^[p] (f τ)) • (C.nabla ^ (k - p)) v) :=
+      (k.choose p : K⟦X⟧) • ((fun τ => (⇑(derivative (R := K)))^[p] (f τ)) • (C.nabla ^ (k - p)) v) :=
   GlobalTheory.T.nabla_pow_apply_smul_leibniz C k f v
 
 theorem descN_eq (K : Type) [NormedField K] (p : ℕ) (f : K⟦X⟧) :
-    descN K p f = X ^ p * (⇑(derivative K))^[p] f :=
+    descN K p f = X ^ p * (⇑(derivative (R := K)))^[p] f :=
   GlobalTheory.T.descN_eq_X_pow_mul_iterate_derivative' K p f
 
 theorem muDiv_mul_choose {l : ℕ} [Fact l.Prime] (a : ℕ) [NeZero a] {e : ℕ} [NeZero e] (O : Type) [CommRing O]

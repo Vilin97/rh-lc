@@ -67,9 +67,9 @@ theorem map_qminor {B : Type} [Ring B] [Algebra ℂ B] (f : B →+* A)
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [map_mul, map_intCast, map_list_prod, List.map_ofFn]
   congr 3
-  split_ifs
-  · rw [hf]
-  · rw [map_zero]
+  funext k
+  simp only [Function.comp_apply, Tm, map_add, hE']
+  split_ifs <;> simp [hf]
 
 def EX (a b : Fin n) : A[X] := C (E a b) + if a = b then X else 0
 
@@ -101,7 +101,7 @@ theorem Tm_EX (v : ℂ) (c p : Fin n) : Tm (EX E) v c p = C (Tm E v c p) + if c 
 theorem cancel (Z : Fin n → A[X]) (v : ℂ) (h : ∀ c, ∑ p, Z p * Tm (EX E) v c p = 0) : ∀ p, Z p = 0 := by
   have step : ∀ k, (∀ p, (Z p).coeff (k + 1) = 0) → ∀ p, (Z p).coeff k = 0 := by
     intro k hk c
-    have h1 := congrArg (fun f => coeff f (k + 1)) (h c)
+    have h1 := congrArg (fun f : A[X] => f.coeff (k + 1)) (h c)
     simp only [Tm_EX, mul_add, Finset.sum_add_distrib, coeff_add, finsetSum_coeff, coeff_mul_C, hk, zero_mul,
       Finset.sum_const_zero, zero_add, mul_ite, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true, coeff_mul_X,
       coeff_zero] at h1

@@ -29,7 +29,7 @@ theorem UpperTheory.ConvolutionTheory.L1.matchFin :
       continuous_toFun := hgc
       continuous_invFun := continuous_pi hcc }
   have hΨc : Continuous fun g : Fin (m + 1) → GL (Fin n) (v.adicCompletion F) => ∏ i, φ i (g i) :=
-    continuous_finset_prod _ fun i _ => (h i).1.comp (continuous_apply i)
+    continuous_finsetProd _ fun i _ => (h i).1.comp (continuous_apply i)
   have hΨs : HasCompactSupport fun g : Fin (m + 1) → GL (Fin n) (v.adicCompletion F) => ∏ i, φ i (g i) := by
     refine HasCompactSupport.intro' (K := Set.pi Set.univ fun i => tsupport (φ i))
       (isCompact_univ_pi fun i => (h i).2) (isClosed_set_pi fun i _ => isClosed_tsupport _) ?_
@@ -49,3 +49,7 @@ theorem UpperTheory.ConvolutionTheory.L1.matchFin :
     rw [← hpush]
     unfold UpperTheory.ConvolutionTheory.L1.Split.transfer
     congr 1
+    funext g
+    rw [htens]
+    change (∏ i, φ i ((e.symm (e g)) i)) = _
+    rw [e.symm_apply_apply]

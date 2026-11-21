@@ -155,7 +155,8 @@ theorem divided_power_padic_valuation_bound {ι : Type} [Fintype ι] {n : ℕ} (
   have hv := congrArg (padicValNat p) htot
   rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (exponent_factorial_ne_zero m) hX0, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (exponent_factorial_ne_zero m') hY0] at hv
   rw [show padicValInt p (∏ l ∈ f.support, zf l) =
-    padicValNat p (∏ l ∈ f.support, zf l).natAbs from rfl, hY]
+    padicValNat p (∏ l ∈ f.support, zf l).natAbs from by
+      rw [padicValInt, Nat.padicValNat_def], hY]
   omega
 
 end Formalism.MainNotions.G.GLWeightTheory

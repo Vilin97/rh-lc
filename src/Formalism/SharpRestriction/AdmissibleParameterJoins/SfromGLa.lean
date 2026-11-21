@@ -92,11 +92,8 @@ theorem cj_mem_isom {φ : V ≃ₗ[K] V'} (hφ : ∀ x y, h' (φ x) (φ y) = h x
   rw [cj_apply, cj_apply, hφ, hg, isom_symm hφ]
 
 theorem isLattice_tr (φ : V ≃ₗ[K] V') {M : Submodule (𝓞 K) V} (hM : Submodule.IsLattice K M) :
-    Submodule.IsLattice K (latMap φ M) where
-  fg := hM.fg.map _
-  span_eq_top := by
-    have h1 : ((latMap φ M : Submodule (𝓞 K) V') : Set V') = (φ : V →ₗ[K] V') '' (M : Set V) := rfl
-    rw [h1, Submodule.span_image, hM.span_eq_top, Submodule.map_top, LinearEquiv.range]
+    Submodule.IsLattice K (latMap φ M) :=
+  Submodule.IsLattice.of_fg K (hM.fg.map _)
 
 theorem genus_tr {φ : V ≃ₗ[K] V'} (hφ : ∀ x y, h' (φ x) (φ y) = h x y) {L M : Submodule (𝓞 K) V}
     (hM : M ∈ genus h L) : latMap φ M ∈ genus h' (latMap φ L) := by

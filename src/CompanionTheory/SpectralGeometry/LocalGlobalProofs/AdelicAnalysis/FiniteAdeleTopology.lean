@@ -64,6 +64,7 @@ theorem exists_mul_Oh_subset (U : Set (A F)) (hU : U ∈ 𝓝 (0 : A F)) :
     rw [this]
     exact (isCompact_Oh F).image (continuous_const.mul continuous_id)
   obtain ⟨N, hN⟩ := exists_subset_nhds_of_isCompact' hV hc (fun N => h2 N N.pos) (U := U) (by
+    apply mem_nhdsSet_iff_forall.mpr
     intro x hx
     have : x = 0 := h3 x fun M hM => Set.mem_iInter.1 hx ⟨M, hM⟩
     rwa [this])

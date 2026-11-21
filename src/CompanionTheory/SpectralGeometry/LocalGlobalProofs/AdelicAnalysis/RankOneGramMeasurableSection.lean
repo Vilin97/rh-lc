@@ -254,7 +254,7 @@ theorem reflM_cont [TopologicalSpace K] [IsTopologicalRing K] {X : Type*} [Topol
   simp only [reflM, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul, Matrix.vecMulVec_apply, rowOf,
     Matrix.vecMul, dotProduct]
   exact continuous_const.sub (ha.mul ((hd' i).mul
-    (continuous_finset_sum _ fun k _ => (hτ.comp (hd' k)).mul continuous_const)))
+    (continuous_finsetSum _ fun k _ => (hτ.comp (hd' k)).mul continuous_const)))
 
 theorem continuousAt_ringInverse [TopologicalSpace K] [IsTopologicalRing K]
     (hU : IsOpenEmbedding (Units.val : Kˣ → K)) {a : K} (ha : IsUnit a) :
@@ -278,7 +278,7 @@ theorem local_refl [TopologicalSpace K] [IsTopologicalRing K] (τ : K →+* K) (
   have hcf : Continuous cf := by
     refine continuous_const.sub ?_
     simp only [hform]
-    exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+    exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
       ((hτc.comp (continuous_apply i)).mul continuous_const).mul continuous_const
   have hopen : IsOpen {a : K | IsUnit a} := by
     have : {a : K | IsUnit a} = Set.range (Units.val : Kˣ → K) := by

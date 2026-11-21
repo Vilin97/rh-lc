@@ -372,8 +372,8 @@ theorem comb_of_span {ι : Type} [Fintype ι] {σ : Type} (Ψ0 : ι → MvPolyno
   · exact (Finsupp.mem_supported O l).1 hl (Finsupp.mem_support_iff.2 hb)
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [Finsupp.linearCombination_apply, Finsupp.sum_fintype l (fun i a => a • Ψ0 i) (fun i => zero_smul _ _), map_sum]
-    refine Finset.sum_congr rfl fun b _ => ?_
-    rw [MvPolynomial.smul_eq_C_mul, MvPolynomial.smul_eq_C_mul, map_mul, map_C]
+      refine Finset.sum_congr rfl fun b _ => ?_
+      rw [MvPolynomial.smul_eq_C_mul, MvPolynomial.smul_eq_C_mul, map_mul, map_C]
 
 theorem polSet_finite {N r : ℕ} (d : Fin N → ℕ) : {m : Fin N × Fin r →₀ ℕ | ∀ i, multideg m i = d i}.Finite := by
   refine (Set.finite_Icc (0 : Fin N × Fin r →₀ ℕ) (Finsupp.equivFunOnFinite.symm fun x => d x.1)).subset ?_

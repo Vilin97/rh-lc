@@ -42,7 +42,7 @@ namespace GlobalTheory.CompanionTheory.PicField
 
 theorem pic_eq_zero (k : Type) [Field k] (c : Pic (Sp k)) : c = 0 := by
   obtain ⟨p⟩ : Nonempty (Sp k) := inferInstance
-  obtain ⟨V, hV, hc⟩ := exists_pull_eq_zero c p
+  obtain ⟨V, hV, hc⟩ := GlobalTheory.AbDual.exists_pull_eq_zero c p
   have hV' : V = ⊤ := by
     have hs : Subsingleton (Sp k) := by
       unfold Sp; infer_instance

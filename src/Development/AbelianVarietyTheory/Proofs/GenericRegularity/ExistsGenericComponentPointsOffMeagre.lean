@@ -327,6 +327,7 @@ theorem isMeagre_family (U : Formalism.L2.PjFree.Unf Xo c σ r) (hσ : Formalism
   obtain ⟨b₀, hb₀, hbb⟩ := Set.mem_iUnion₂.1 (hcov hb)
   exact Set.mem_iUnion₂.2 ⟨b₀, hb₀, hx, b, hbb, h⟩
 
+attribute [local instance 1100] Subalgebra.algebra in
 theorem isMeagre_chart (U : Formalism.L2.PjFree.Unf Xo c σ r) (hσ : Formalism.L2.PjFree.GoodEmb c σ)
     (hU : Formalism.L2.PjFree.IsUnf U) (k : U.Comp) {h : GenFrEx Xo c} (C : FChart h) :
     IsMeagre {x | ∃ hx : x ∈ (U.X k).dom, ∃ (ψ : C.R →ₐ[c.F] CAt σ) (z : FrPt Xo c (CAt σ)) (t : Ix Dw → (CAt σ)ˣ),
@@ -378,6 +379,7 @@ theorem isMeagre_chart (U : Formalism.L2.PjFree.Unf Xo c σ r) (hσ : Formalism.
   rw [e']
   exact ha0
 
+attribute [local instance 1100] Subalgebra.algebra in
 theorem exists_generic_of_injective {h : GenFrEx Xo c} (C : FChart h) (ψ : C.R →ₐ[c.F] CAt σ)
     (hψ : Function.Injective ψ) {z : FrPt Xo c (CAt σ)} (hz : FrMap ψ C.y z) :
     ∃ (φ : Om C.Z →ₐ[c.F] CAt σ) (y' : FrPt Xo c (CAt σ)) (t : Ix Dw → (CAt σ)ˣ),

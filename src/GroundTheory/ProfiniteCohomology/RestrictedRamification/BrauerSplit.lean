@@ -22,6 +22,8 @@ open CategoryTheory NumberField IsDedekindDomain IntermediateField GroundTheory.
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 section TowerInfl
 
 variable {k L : Type} [Field k] [Field L] [Algebra k L] [IsGalois k L] (M : IntermediateField k L)

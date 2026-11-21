@@ -154,7 +154,7 @@ theorem summandFun_mul_left (hfix : ∀ h : H, (h : G) ∈ V → ∀ a : A, A.ρ
     simp only [summandFun, dif_pos hx, dif_pos hx']
     rw [← Module.End.mul_apply, ← map_mul]
     apply rho_eq_of_inv_mul_mem hfix
-    have hsection (y : ↥(H ⊔ V)) : (supSection y : G)⁻¹ * (y : G) ∈ V := by
+    have hsection (y : ↥(H ⊔ V)) : (supSection (H := H) (V := V) y : G)⁻¹ * (y : G) ∈ V := by
       have hex : ∃ g ∈ H, g⁻¹ * (y : G) ∈ V := by
         obtain ⟨g, hg, w, hw, heq⟩ := Subgroup.mem_sup_of_normal_right.1 y.2
         exact ⟨g, hg, by rwa [← heq, inv_mul_cancel_left]⟩
@@ -175,7 +175,7 @@ theorem summandFun_mul_right (hfix : ∀ h : H, (h : G) ∈ V → ∀ a : A, A.�
     simp only [summandFun, dif_pos hx, dif_pos hx']
     rw [← Module.End.mul_apply, ← map_mul]
     apply rho_eq_of_inv_mul_mem hfix
-    have hsection (y : ↥(H ⊔ V)) : (supSection y : G)⁻¹ * (y : G) ∈ V := by
+    have hsection (y : ↥(H ⊔ V)) : (supSection (H := H) (V := V) y : G)⁻¹ * (y : G) ∈ V := by
       have hex : ∃ g ∈ H, g⁻¹ * (y : G) ∈ V := by
         obtain ⟨g, hg, w, hw, heq⟩ := Subgroup.mem_sup_of_normal_right.1 y.2
         exact ⟨g, hg, by rwa [← heq, inv_mul_cancel_left]⟩
@@ -198,7 +198,7 @@ theorem summandFun_mul_right_of_mem (hfix : ∀ h : H, (h : G) ∈ V → ∀ a :
   · have hx' : x * v ∈ H ⊔ V := hmem.2 hx
     simp only [summandFun, dif_pos hx, dif_pos hx']
     apply rho_eq_of_inv_mul_mem hfix
-    have hsection (y : ↥(H ⊔ V)) : (supSection y : G)⁻¹ * (y : G) ∈ V := by
+    have hsection (y : ↥(H ⊔ V)) : (supSection (H := H) (V := V) y : G)⁻¹ * (y : G) ∈ V := by
       have hex : ∃ g ∈ H, g⁻¹ * (y : G) ∈ V := by
         obtain ⟨g, hg, w, hw, heq⟩ := Subgroup.mem_sup_of_normal_right.1 y.2
         exact ⟨g, hg, by rwa [← heq, inv_mul_cancel_left]⟩
@@ -217,7 +217,7 @@ theorem summandFun_one (hfix : ∀ h : H, (h : G) ∈ V → ∀ a : A, A.ρ h a 
   have h1 : (1 : G) ∈ H ⊔ V := one_mem _
   simp only [summandFun, dif_pos h1]
   rw [← rho_eq_of_inv_mul_mem hfix (h₁ := 1) ?_ a, map_one, Module.End.one_apply]
-  have hsection (y : ↥(H ⊔ V)) : (supSection y : G)⁻¹ * (y : G) ∈ V := by
+  have hsection (y : ↥(H ⊔ V)) : (supSection (H := H) (V := V) y : G)⁻¹ * (y : G) ∈ V := by
     have hex : ∃ g ∈ H, g⁻¹ * (y : G) ∈ V := by
       obtain ⟨g, hg, w, hw, heq⟩ := Subgroup.mem_sup_of_normal_right.1 y.2
       exact ⟨g, hg, by rwa [← heq, inv_mul_cancel_left]⟩

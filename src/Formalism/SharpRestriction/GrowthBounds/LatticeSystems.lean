@@ -501,10 +501,9 @@ theorem ef_edges_finite_gen {W Qq : Type} [CommRing W] [Field Qq] [Algebra W Qq]
     rw [Submodule.map_comap_subtype, Submodule.map_comap_subtype, inf_eq_right.mpr hA.2.2.1,
       inf_eq_right.mpr hB.2.2.1] at h3
     exact h3
-  · convert Set.finite_empty
-    ext A
-    simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
-    exact fun h => hL h.2.1
+  · apply Set.Finite.subset Set.finite_empty
+    intro A hA
+    exact (hL hA.2.1).elim
 
 section PlacesLevel
 
@@ -2065,6 +2064,8 @@ theorem lc_snf {W Qq : Type} [CommRing W] [IsDomain W] [IsPrincipalIdealRing W] 
       exact (inf_eq_right.2 hle).symm
     rw [h1, hNs, Submodule.map_span, ← Set.range_comp]
     congr 2
+    funext i
+    exact map_smul φ (a i) (bT i)
   · obtain ⟨φ', hφ'⟩ : ∃ φ' : (Fin k → W) ≃ₗ[W] e.tgt, ∀ x, ((φ' x : e.tgt) : Fin k → Qq) = φ x :=
       ⟨(LinearEquiv.ofInjective φ hφi).trans (LinearEquiv.ofEq _ _ hφr), fun x => rfl⟩
     have hmap : N.map (φ' : (Fin k → W) →ₗ[W] e.tgt) = Submodule.comap e.tgt.subtype e.src := by

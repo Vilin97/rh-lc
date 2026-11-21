@@ -72,7 +72,7 @@ structure Br (B : Base F E) (M : Model σ X W) (om : Rep σ X W) (M₁ : Model �
 
 theorem I_right' (M : Model σ X W) (om : Rep σ X W) (Φ : Fn F n d) (h₀ h : UA σ W.J) :
     M.I om (om (1, h₀) Φ) h = M.I om Φ (h * h₀) := by
-  simp only [Model.I, theta, ← Module.End.mul_apply, ← map_mul, Prod.mk_mul_mk, mul_one]
+  simp only [Model.I, theta, ← mul_apply_eq_comp, ← map_mul, Prod.mk_mul_mk, mul_one]
 
 theorem pure_add_smul {κ : Type} [Fintype κ] (f g : SInf F κ) (a : ℂ) (φ) : pure (f + a • g) φ = pure f φ + a • pure g φ := by
   funext x

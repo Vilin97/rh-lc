@@ -162,7 +162,7 @@ theorem comm_mul (β : BdR →ₗ[Qp] BdR) (r : LL) (x : LL' ⊗[LL] ((Fin k →
           - (algebraMap LL LL' r) • LinearMap.id :
         (Fin k → LL') ⊗[Qp] BdR →ₗ[LL'] (Fin k → LL') ⊗[Qp] BdR) (EE BdR x) := by
   induction x using TensorProduct.induction_on with
-  | zero => simp
+  | zero => simp only [LinearMap.map_zero, LinearEquiv.map_zero]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul c y =>
     induction y using TensorProduct.induction_on with

@@ -1323,7 +1323,7 @@ theorem kgeTw_of (E : KerEnt D Dx T) (hU : E.UnUnit) (hR : KmapRat E) {u : D.wha
   have hpp := D.what₂.places.resChar_prime w
   obtain ⟨k, hk⟩ : ∃ k, k = padicValNat (D.what₂.places.resChar w) n := ⟨_, rfl⟩
   obtain ⟨n', hn'⟩ : ∃ n', n' = n / D.what₂.places.resChar w ^ n.factorization (D.what₂.places.resChar w) := ⟨_, rfl⟩
-  have hfac : n.factorization (D.what₂.places.resChar w) = k := by rw [hk, Nat.factorization_def n hpp]
+  have hfac : n.factorization (D.what₂.places.resChar w) = k := by rw [hk, Nat.factorization_def n hpp, Nat.padicValNat_def]
   have hprod : D.what₂.places.resChar w ^ k * n' = n := by
     rw [hn', ← hfac]; exact Nat.ordProj_mul_ordCompl_eq_self n _
   have hcop : Nat.Coprime n' (D.what₂.places.resChar w) := by
@@ -1451,7 +1451,7 @@ theorem kform_of_ker (E : KerEnt D Dx T) (Ee : Ent D) (hν : ∀ u i, Ee.nu u i 
       subst h0
       have := kgeTw_of E hU hR hUs hL hi hEK one_ne_zero (fun c => by rw [hS.2 u μ hUs c]) (hK.2 u μ hUs 0 hi)
       have e : B - (if (0 : ℕ) = 0 then 1 - sp else 1) * vDG D u w =
-          B - (padicValNat (D.what₂.places.resChar w) 1 : ℝ) := by simp [h1]
+          B - (padicValNat (D.what₂.places.resChar w) 1 : ℝ) := by simp [h1, Nat.padicValNat_def]
       rw [e]
       exact this
     · have e : B - (if i = 0 then 1 - sp else 1) * vDG D u w = B - vDG D u w := by

@@ -181,7 +181,6 @@ theorem homologyMap_cochainsMap_unit (A : Rep.{u} k G) (n : ℕ) :
     rw [linearYonedaObjMap_id, Category.id_comp, Category.assoc]
     exact iso_resHomComplex_adj_iso S A
   rw [← e2, ← H.homologyMap_eq, e1, HomologicalComplex.homologyMap_comp]
-  rfl
 
 end Key
 

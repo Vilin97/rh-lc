@@ -239,14 +239,14 @@ lemma detGood (T' : Subalgebra O (X' → O)) (R' : Subalgebra O (X' → Matrix d
     split_ifs
     · exact hF e
     · exact Subalgebra.zero_mem _
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [coeff_det_eq R' a ha n x', coeff_psi, Finset.sum_apply, map_sum]
-    refine Finset.sum_congr rfl fun e _ => ?_
-    by_cases h : wt e = n + Fintype.card d
-    · rw [if_pos h, if_pos h]
-      exact hFx e x'
-    · rw [if_neg h, if_neg h]
-      simp
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [coeff_det_eq R' a ha n x', coeff_psi, Finset.sum_apply, map_sum]
+      refine Finset.sum_congr rfl fun e _ => ?_
+      by_cases h : wt e = n + Fintype.card d
+      · rw [if_pos h, if_pos h]
+        exact hFx e x'
+      · rw [if_neg h, if_neg h]
+        simp
 end Good
 
 section Inv

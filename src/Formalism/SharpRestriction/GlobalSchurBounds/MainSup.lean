@@ -103,7 +103,8 @@ theorem proviso_e (L : SizeData₂ D) (h4f : LinkB.RankM D) (hDu : StandardLatti
   have hd : 0 < StandardLattice.duStarU D u := by rw [← hDu u]; exact_mod_cast (D.mem u).A.duStar_pos
   have hk := D.R.k_ge
   have hf : 1 ≤ D.R.f := by
-    have : 0 < D.R.f := by unfold Ranks.f Ranks.n; positivity
+    have hm : D.R.m ≤ D.R.f := D.R.m_le_f
+    have hm2 := D.R.two_le_m
     omega
   have hfk : 2 * D.R.f ≤ 2 ^ D.R.k := by
     have h1 : D.R.f ≤ D.R.k := D.R.f_le_k

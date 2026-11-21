@@ -66,7 +66,7 @@ theorem sz_mertens (n : ℕ) (hn : 1 ≤ n) :
       exact_mod_cast (Finset.mem_filter.mp hp).2.ne_zero
     rw [← h1, ← Real.log_pow]
     apply Real.log_le_log (by exact_mod_cast primorial_pos n)
-    exact_mod_cast primorial_le_4_pow n
+    exact_mod_cast primorial_le_four_pow n
   have hfloor : ∀ p ∈ Nat.primesLE n, (n : ℝ) / p ≤ ((n / p : ℕ) : ℝ) + 1 := by
     intro p hp
     have hpp := hprime p hp

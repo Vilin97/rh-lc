@@ -90,7 +90,13 @@ private theorem lenEigLe_gen (Q : Type) [CommGroup Q] [Finite Q] :
     refine ⟨(∏ i, (AddChar.zmodChar (n i) (hu' i)).toMonoidHom.comp
       (Pi.evalMonoidHom (fun i => Multiplicative (ZMod (n i))) i)).comp e.toMonoidHom, fun i => ?_⟩
     simp only [MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom, MulEquiv.apply_symm_apply,
-      MonoidHom.finset_prod_apply, Pi.evalMonoidHom_apply]
+      ]
+    change MonoidHom.eval (Pi.mulSingle (σ i) (Multiplicative.ofAdd 1))
+      (∏ j : ι, (AddChar.zmodChar (n j) (hu' j)).toMonoidHom.comp
+        (Pi.evalMonoidHom (fun j => Multiplicative (ZMod (n j))) j)) = u i
+    rw [map_prod]
+    change (∏ j : ι, (AddChar.zmodChar (n j) (hu' j)).toMonoidHom
+      (Pi.mulSingle (M := fun j => Multiplicative (ZMod (n j))) (σ i) (Multiplicative.ofAdd 1) j)) = u i
     rw [Finset.prod_eq_single (σ i)]
     · haveI : Fact (1 < n (σ i)) := ⟨hn _⟩
       simp [AddChar.zmodChar_apply, ZMod.val_one]

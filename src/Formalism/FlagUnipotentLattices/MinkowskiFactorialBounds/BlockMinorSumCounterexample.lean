@@ -61,7 +61,7 @@ theorem disjointness_of_supports_holds : Formalism.HermitianLatticeCounting.Expa
     linarith
   · simp only [not_exists] at h0
     have h1 : ∏ v, ‖D v - D' v‖ < ∏ _v : ι, ro :=
-      Finset.prod_lt_prod_of_nonempty (fun i _ => lt_of_le_of_ne (norm_nonneg _) (Ne.symm (h0 i)))
+      Finset.prod_lt_prod_of_nonempty₀ (fun i _ => lt_of_le_of_ne (norm_nonneg _) (Ne.symm (h0 i)))
         (fun i _ => hlt i) Finset.univ_nonempty
     simp only [Finset.prod_const, Finset.card_univ] at h1
     linarith
@@ -125,7 +125,7 @@ lemma mul_cutoff_of_gt {K L y : ℝ} (hK : 0 ≤ K) (hL : 0 < L) (h : L < y) :
 
 lemma integrable_cutoff_below {K L : ℝ} (hK : 0 ≤ K) :
     IntegrableOn (fun y : ℝ => y * TruncationCutoff K L y) (Set.Ioc 0 L) :=
-  (integrableOn_congr_fun (fun _ hy => (mul_cutoff_of_le hK hy.1 hy.2).symm) measurableSet_Ioc).1
+  (integrableOn_congr_fun (fun _ (hy : _ ∈ Set.Ioc (0 : ℝ) L) => (mul_cutoff_of_le hK hy.1 hy.2).symm) measurableSet_Ioc).1
     (continuous_id.integrableOn_Ioc)
 
 lemma integrable_cutoff_beyond {K L : ℝ} (hK : 2 < K) (hL : 0 < L) :
@@ -296,7 +296,7 @@ theorem separated_cutoff_sum_of_disjoint_polydiscs (hd : SeparatedPolydiscsDisjo
   rw [← le_div_iff₀ hV] at h
   refine le_trans h ?_
   rw [← Finset.card_univ, ← Finset.prod_const, ← Finset.prod_div_distrib]
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro v _
     rw [(hi K _ hK (hLpos v)).2]
     have : 0 < K - 2 := by linarith
@@ -717,7 +717,7 @@ theorem integral_norm_application_holds : Formalism.HermitianLatticeCounting.Exp
   constructor
   · rw [Finset.prod_pow, Finset.prod_pow]
     exact pow_le_pow_left₀ (Finset.prod_nonneg fun v _ => by positivity) (prod_max_inv_le_prod_max' ι G hG h1) A
-  · apply Finset.prod_le_prod
+  · apply Finset.prod_le_prod₀
     · intro v _; positivity
     · intro v _
       apply pow_le_pow_left₀ (by positivity)

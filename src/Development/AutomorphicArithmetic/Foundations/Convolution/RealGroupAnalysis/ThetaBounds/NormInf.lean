@@ -34,7 +34,7 @@ private theorem real_comp (w : InfinitePlace E) (s : ℝ) :
     (InfinitePlace.Completion.ringEquivRealOfIsReal (IsTotallyReal.isReal (w.comap (algebraMap F E)))).symm.toRingHom
   have hψ : Continuous ψ :=
     ((InfinitePlace.Completion.isometryEquivComplexOfIsComplex (IsTotallyComplex.isComplex w)).continuous.comp
-      (LiesOver.continuous_completionMap (v := w.comap (algebraMap F E)) (w := w))).comp
+      (continuous_algebraMap _ _)).comp
       (InfinitePlace.Completion.isometryEquivRealOfIsReal (IsTotallyReal.isReal (w.comap (algebraMap F E)))).symm.continuous
   have := map_real_smul ψ hψ s 1
   simpa [ψ] using this

@@ -465,7 +465,7 @@ theorem seg_bound (O : Type) [CommRing O] (hX : X.Hyp p K) (j : ℤ) {x : SegRin
     hres0 (Finset.mem_coe.mpr hmm)
   have hsupp' := MvPolynomial.mem_supported.mp hsupp
   have hm : ∀ v ∈ mm.support, v ∈ okVars X.F K j := fun v hv =>
-    hsupp' (Finset.mem_coe.mpr ((MvPolynomial.mem_vars v).mpr ⟨mm, hmm, hv⟩))
+    hsupp' (Finset.mem_coe.mpr ((MvPolynomial.mem_vars_iff_mem_support v).mpr ⟨mm, hmm, hv⟩))
   have hmain := vs_img_le hX.even hV p j mm hm
   have hmain' := (Nat.cast_le (α := ℝ)).mpr hmain
   have hp : 0 < p := hX.prime.pos

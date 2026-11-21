@@ -42,14 +42,15 @@ theorem local_int {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (�
     ∀ i j, Valued.v (((g⁻¹ * g' : GL (Fin n) (v.adicCompletion F)) : Matrix (Fin n) (Fin n) (v.adicCompletion F)) i j) ≤ 1 :=
   GlobalTheory.T.heckeDoubleCoset_adicCompletion_inv_mul_integral F v n ϖ k hϖ a a' b b' g g' ha' hai hbi hb' hc hg hg'
 
-theorem triv_mul {n : ℕ} {T : Set (HeightOneSpectrum (𝓞 L⁺))} {x y : GA L n} (hx : TrivOutside L T x)
-    (hy : TrivOutside L T y) : TrivOutside L T (x * y) := by
+theorem triv_mul {n : ℕ} {T : Set (HeightOneSpectrum (𝓞 L⁺))} {x y : GA L n}
+    (hx : TrivOutside (L := L) T x) (hy : TrivOutside (L := L) T y) :
+    TrivOutside (L := L) T (x * y) := by
   intro w hw
   have : ((x * y).1 : Matrix (Fin n) (Fin n) (AL L)) = (x.1 : Matrix (Fin n) (Fin n) (AL L)) * (y.1 : Matrix (Fin n) (Fin n) (AL L)) := rfl
   rw [this, Matrix.map_mul, hx w hw, hy w hw, mul_one]
 
-theorem triv_inv {n : ℕ} {T : Set (HeightOneSpectrum (𝓞 L⁺))} {x : GA L n} (hx : TrivOutside L T x) :
-    TrivOutside L T x⁻¹ := by
+theorem triv_inv {n : ℕ} {T : Set (HeightOneSpectrum (𝓞 L⁺))} {x : GA L n}
+    (hx : TrivOutside (L := L) T x) : TrivOutside (L := L) T x⁻¹ := by
   intro w hw
   have h1 : (((x⁻¹ : GA L n).1 : GL (Fin n) (AL L)) : Matrix (Fin n) (Fin n) (AL L)) * (x.1 : Matrix (Fin n) (Fin n) (AL L)) = 1 := by
     rw [← Units.val_mul, ← Subgroup.coe_mul, inv_mul_cancel]
@@ -58,7 +59,7 @@ theorem triv_inv {n : ℕ} {T : Set (HeightOneSpectrum (𝓞 L⁺))} {x : GA L n
   simp only [Matrix.map_mul, hx w hw, mul_one] at h2
   rw [h2, Matrix.map_one _ (map_zero _) (map_one _)]
 
-theorem mem_Umax_of_loc {n : ℕ} (s : SplitPlace L) (x : GA L n) (hx : TrivOutside L {s.v} x)
+theorem mem_Umax_of_loc {n : ℕ} (s : SplitPlace L) (x : GA L n) (hx : TrivOutside (L := L) {s.v} x)
     (h1 : ∀ i j, Valued.v (((s.loc (L := L) n x : GL (Fin n) (s.v.adicCompletion L⁺)) : Matrix (Fin n) (Fin n) (s.v.adicCompletion L⁺)) i j) ≤ 1)
     (h2 : ∀ i j, Valued.v (((s.loc (L := L) n x⁻¹ : GL (Fin n) (s.v.adicCompletion L⁺)) : Matrix (Fin n) (Fin n) (s.v.adicCompletion L⁺)) i j) ≤ 1) :
     x ∈ Umax L n := by
@@ -160,7 +161,7 @@ theorem finite_image_tSet : ∀ (L : Type) [Field L] [NumberField L] [IsCMField 
     have h1 := local_int s.v ϖ k hunif a a' b b' _ _ ia'.1 ia.2 ib.2 ib'.1 hcl hg hg'
     have h2 := local_int s.v ϖ k hunif a' a b' b _ _ ia.1 ia'.2 ib'.2 ib.1 hcl' hg' hg
     rw [QuotientGroup.eq]
-    have htriv : TrivOutside L {s.v} (x⁻¹ * x') := triv_mul (triv_inv hx.1) hx'.1
+    have htriv : TrivOutside (L := L) {s.v} (x⁻¹ * x') := triv_mul (triv_inv hx.1) hx'.1
     refine ((hJ _ ?_).1).2 ?_
     · intro w hw
       refine htriv w ?_

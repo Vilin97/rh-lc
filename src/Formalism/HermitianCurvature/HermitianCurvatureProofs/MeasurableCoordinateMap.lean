@@ -173,11 +173,15 @@ theorem comp_eq (θ : B.SS k r → ℝ) (F : B.Mat k r → (Wq →L[ℂ] Wp)) (x
   have E1 : rhoX S γ w x * Matrix.of P.1.2 =
       C2.tauM k r S.z (G.upper (e (x, q.1.2.1))) * Matrix.of q.1.2.2 := by
     have := congrArg (fun s : B.SS k r => Matrix.of s.1.2) hX
-    simpa [Xi, C6.actR] using this.symm
+    apply Matrix.ext
+    intro i j
+    simpa [Xi, C6.actR] using congrFun (congrFun this.symm i) j
   have E2 : (γ⁻¹ * rhoX S γ w x * γ) * Matrix.of P.2.2 =
       C2.tauM k r S.z' (G.upper q.2.2.1) * Matrix.of q.2.2.2 := by
     have := congrArg (fun s : B.SS k r => Matrix.of s.2.2) hX
-    simpa [Xi, C6.actR] using this.symm
+    apply Matrix.ext
+    intro i j
+    simpa [Xi, C6.actR] using congrFun (congrFun this.symm i) j
   have c1 : WeylGroupFacts.col k r (Matrix.of P.1.2) := by
     have h : Matrix.of P.1.2 = (rhoX S γ w x)⁻¹ * (rhoX S γ w x * Matrix.of P.1.2) := by
       rw [← Matrix.mul_assoc, iρ, Matrix.one_mul]

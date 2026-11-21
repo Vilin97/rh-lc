@@ -66,15 +66,18 @@ structure NewTup (R : RealDat3 D (A3.comap id (f μ)) Ks) (mu : HeightOneSpectru
 
 
 variable {mu tw} in
-theorem isTup (hf : Function.Injective f) (h : R.IsTup) (n : NewTup R mu tw) : (dat3 f μ R mu tw).IsTup where
-  mu_off := n.off
-  mu_used := n.used
-  mu_ne w hw heq := by
+theorem isTup (hf : Function.Injective f) (h : R.IsTup) (n : NewTup R mu tw) : (dat3 f μ R mu tw).IsTup := by
+  constructor
+  case mu_off => exact n.off
+  case mu_used => exact n.used
+  case mu_ne =>
+    intro w hw heq
     change mu w = μ at heq
     apply h.mu_ne w (n.sub hw)
     rw [← n.on w hw, heq]
     rfl
-  mu_conj w := by
+  case mu_conj =>
+    intro w
     change mu (Formalism.DivisionValues.conjPl w) = mu w
     by_cases hw : w ∈ tw
     · apply hf
@@ -83,7 +86,8 @@ theorem isTup (hf : Function.Injective f) (h : R.IsTup) (n : NewTup R mu tw) : (
       exact h.mu_conj w
     · have hc : Formalism.DivisionValues.conjPl w ∉ tw := fun hc => hw ((n.conj w).1 hc)
       rw [n.off _ hc, n.off w hw]
-  mu_on w hw := by
+  case mu_on =>
+    intro w hw
     obtain ⟨ψw, Qw, h1, h2⟩ := h.mu_on w (n.sub hw)
     refine ⟨ψw, Qw, h1, ?_⟩
     change R.xiH (f (mu w)) = R.C.delAt (Formalism.EigenvalueLevelCeiling.plc w) * ψw
@@ -94,18 +98,19 @@ theorem isTup (hf : Function.Injective f) (h : R.IsTup) (n : NewTup R mu tw) : (
 
 set_option maxHeartbeats 2000000 in
 theorem keep {cG : G0 R.Pg D.R.r ≃* G0g D.nd} (h : Keep (A3 := A3.comap id (f μ)) R.toRealDat (bare3 _ P0 ψ0 P1 ψ1).lv2 cG) :
-    Keep (A3 := A3.comap f μ) (dat3 f μ R mu tw).toRealDat (bare3 _ P0 ψ0 P1 ψ1).lv2 cG where
-  std := h.std
-  signs := h.signs
-  frames := h.frames
-  beta := h.beta
-  prX := h.prX
-  grp := h.grp
-  psi := h.psi
-  guard := ⟨fun t => h.guard.1 (f t), fun t => h.guard.2 (f t)⟩
-  valKs := h.valKs
-  frameKs := h.frameKs
-  levKs := h.levKs
+    Keep (A3 := A3.comap f μ) (dat3 f μ R mu tw).toRealDat (bare3 _ P0 ψ0 P1 ψ1).lv2 cG := by
+  constructor
+  case std => exact h.std
+  case signs => exact h.signs
+  case frames => exact h.frames
+  case beta => exact h.beta
+  case prX => exact h.prX
+  case grp => exact h.grp
+  case psi => exact h.psi
+  case guard => exact ⟨fun t => h.guard.1 (f t), fun t => h.guard.2 (f t)⟩
+  case valKs => exact h.valKs
+  case frameKs => exact h.frameKs
+  case levKs => exact h.levKs
 
 
 end GlobalTheory.Mem.R3.Res

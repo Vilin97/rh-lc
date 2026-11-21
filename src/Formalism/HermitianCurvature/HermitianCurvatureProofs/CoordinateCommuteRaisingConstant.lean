@@ -599,45 +599,45 @@ theorem levNab : LevNab := by
   intro P D _
   have hL : D.Laws P.TT := Fact.out
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
-  · mx2_dg; exact nabla_zeta_comm hL _
-  · mx2_dg; exact nab_zi hL _
-  · mx2_dg; exact nab_zb hL _
-  · mx2_dg; exact nab_cf hL _ _ _ (by rw [eci hL, if_neg vz_ne]) (by rw [eci hL, if_neg vz_ne.symm])
-  · mx2_dg; exact nab_gg hL _
-  · mx2_dg; exact nab_ggi hL _
+  · rw [← Matrix.diagonal_one]; simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub]; congr 1; funext π; exact nabla_zeta_comm hL _
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nab_zi hL _
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nab_zb hL _
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nab_cf hL _ _ _ (by rw [eci hL, if_neg vz_ne]) (by rw [eci hL, if_neg vz_ne.symm])
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nab_gg hL _
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nab_ggi hL _
   · rintro x (((⟨m, rfl⟩ | ⟨m, rfl⟩) | ⟨m, rfl⟩) | ⟨m, rfl⟩)
-    · mx2_dg; exact nab_cf hL _ _ _ (cf_c hL m).1 (cf_cb hL m).2
-    · mx2_dg; exact nab_cf hL _ _ _ (cf_ci hL m).1 (cf_cbi hL m).2
-    · mx2_dg; exact nab_cf hL _ _ _ (cf_cb hL m).1 (cf_c hL m).2
-    · mx2_dg; exact nab_cf hL _ _ _ (cf_cbi hL m).1 (cf_ci hL m).2
+    · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nab_cf hL _ _ _ (cf_c hL m).1 (cf_cb hL m).2
+    · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nab_cf hL _ _ _ (cf_ci hL m).1 (cf_cbi hL m).2
+    · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nab_cf hL _ _ _ (cf_cb hL m).1 (cf_c hL m).2
+    · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nab_cf hL _ _ _ (cf_cbi hL m).1 (cf_ci hL m).2
 
 theorem levNabs : LevNabs := by
   intro P D _
   have hL : D.Laws P.TT := Fact.out
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
-  · mx2_dg; exact nabs_zb hL _
-  · mx2_dg; exact nabs_zbi hL _
-  · mx2_dg; exact nabs_cf hL _ _ _ (by rw [ec hL, if_neg vz_ne.symm]) (by rw [ec hL, if_neg vz_ne])
-  · mx2_dg; exact nabs_cf hL _ _ _ (by rw [eci hL, if_neg vz_ne.symm]) (by rw [eci hL, if_neg vz_ne])
-  · mx2_dg; exact nabs_gg hL _
-  · mx2_dg; exact nabs_ggi hL _
+  · rw [← Matrix.diagonal_one]; simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub]; congr 1; funext π; exact nabs_zb hL _
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nabs_zbi hL _
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nabs_cf hL _ _ _ (by rw [ec hL, if_neg vz_ne.symm]) (by rw [ec hL, if_neg vz_ne])
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nabs_cf hL _ _ _ (by rw [eci hL, if_neg vz_ne.symm]) (by rw [eci hL, if_neg vz_ne])
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nabs_gg hL _
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nabs_ggi hL _
   · rintro x (((⟨m, rfl⟩ | ⟨m, rfl⟩) | ⟨m, rfl⟩) | ⟨m, rfl⟩)
-    · mx2_dg; exact nabs_cf hL _ _ _ (cf_c hL m).2 (cf_cb hL m).1
-    · mx2_dg; exact nabs_cf hL _ _ _ (cf_ci hL m).2 (cf_cbi hL m).1
-    · mx2_dg; exact nabs_cf hL _ _ _ (cf_cb hL m).2 (cf_c hL m).1
-    · mx2_dg; exact nabs_cf hL _ _ _ (cf_cbi hL m).2 (cf_ci hL m).1
+    · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nabs_cf hL _ _ _ (cf_c hL m).2 (cf_cb hL m).1
+    · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nabs_cf hL _ _ _ (cf_ci hL m).2 (cf_cbi hL m).1
+    · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nabs_cf hL _ _ _ (cf_cb hL m).2 (cf_c hL m).1
+    · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact nabs_cf hL _ _ _ (cf_cbi hL m).2 (cf_ci hL m).1
 
 theorem levPP : LevPP := by
   intro P D _ l m
   have hL : D.Laws P.TT := Fact.out
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
-  · mx2_dg; exact mk_comm D _ _ _ _ (hL.comm _ _) (by rw [neg_mul_neg, neg_mul_neg]; exact hL.comm _ _)
-  · mx2_dg; exact mk_comm D _ _ _ _ (hL.comm _ _) (by rw [neg_mul_neg, neg_mul_neg]; exact hL.comm _ _)
-  · mx2_dg; exact mk_comm D _ _ _ _ (hL.comm _ _) (by rw [neg_mul_neg, neg_mul_neg]; exact hL.comm _ _)
-  · mx2_dg; exact partialDeriv_commute_nab hL _ _
-  · mx2_dg; exact partialDerivBar_commute_nab hL _ _
-  · mx2_dg; exact partialDeriv_commute_nabs hL _ _
-  · mx2_dg; exact partialDerivBar_commute_nabs hL _ _
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact mk_comm D _ _ _ _ (hL.comm _ _) (by rw [neg_mul_neg, neg_mul_neg]; exact hL.comm _ _)
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact mk_comm D _ _ _ _ (hL.comm _ _) (by rw [neg_mul_neg, neg_mul_neg]; exact hL.comm _ _)
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact mk_comm D _ _ _ _ (hL.comm _ _) (by rw [neg_mul_neg, neg_mul_neg]; exact hL.comm _ _)
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact partialDeriv_commute_nab hL _ _
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact partialDerivBar_commute_nab hL _ _
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact partialDeriv_commute_nabs hL _ _
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact partialDerivBar_commute_nabs hL _ _
 
 theorem levP : LevP := by
   intro P D _ l
@@ -645,27 +645,27 @@ theorem levP : LevP := by
   refine ⟨?_, ?_, ?_⟩
   · intro m
     by_cases h : l = m
-    · subst h; rw [if_pos rfl]; mx2_dg; exact p_c hL l
-    · rw [if_neg h, add_zero]; mx2_dg
+    · subst h; rw [if_pos rfl]; simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact p_c hL l
+    · rw [if_neg h, add_zero]; simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π
       exact pP_0 hL _ _ _ (by rw [ec hL, if_neg (fun e => h ((vc_inj _ _).1 e))])
         (by rw [ec hL, if_neg (fun e => h ((vcb_inj _ _).1 e))])
   · intro m
     by_cases h : l = m
-    · subst h; rw [if_pos rfl]; mx2_dg; exact p_ci hL l
-    · rw [if_neg h, sub_zero]; mx2_dg
+    · subst h; rw [if_pos rfl]; simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact p_ci hL l
+    · rw [if_neg h, sub_zero]; simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π
       exact pP_0 hL _ _ _ (by rw [eci hL, if_neg (fun e => h ((vc_inj _ _).1 e))])
         (by rw [eci hL, if_neg (fun e => h ((vcb_inj _ _).1 e))])
   · rintro x ((⟨m, rfl⟩ | ⟨m, rfl⟩) | hx)
-    · mx2_dg; exact pP_0 hL _ _ _ (by rw [ec hL, if_neg (vc_vcb _ _)]) (by rw [ec hL, if_neg (vc_vcb _ _).symm])
-    · mx2_dg; exact pP_0 hL _ _ _ (by rw [eci hL, if_neg (vc_vcb _ _)]) (by rw [eci hL, if_neg (vc_vcb _ _).symm])
+    · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact pP_0 hL _ _ _ (by rw [ec hL, if_neg (vc_vcb _ _)]) (by rw [ec hL, if_neg (vc_vcb _ _).symm])
+    · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact pP_0 hL _ _ _ (by rw [eci hL, if_neg (vc_vcb _ _)]) (by rw [eci hL, if_neg (vc_vcb _ _).symm])
     · simp only [zfnsA, Set.mem_insert_iff, Set.mem_singleton_iff] at hx
       rcases hx with rfl | rfl | rfl | rfl | rfl | rfl
-      · mx2_dg; exact pP_0 hL _ _ _ (zeta_free_of_variable hL l).1 (zf_zb hL l).2
-      · mx2_dg; exact pP_0 hL _ _ _ (zf_zi hL l).1 (zf_zbi hL l).2
-      · mx2_dg; exact pP_0 hL _ _ _ (zf_zb hL l).1 (zeta_free_of_variable hL l).2
-      · mx2_dg; exact pP_0 hL _ _ _ (zf_zbi hL l).1 (zf_zi hL l).2
-      · mx2_dg; exact pP_0 hL _ _ _ (zf_gg hL l).1 (zf_gg hL l).2
-      · mx2_dg; exact pP_0 hL _ _ _ (zf_ggi hL l).1 (zf_ggi hL l).2
+      · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact pP_0 hL _ _ _ (zeta_free_of_variable hL l).1 (zf_zb hL l).2
+      · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact pP_0 hL _ _ _ (zf_zi hL l).1 (zf_zbi hL l).2
+      · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact pP_0 hL _ _ _ (zf_zb hL l).1 (zeta_free_of_variable hL l).2
+      · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact pP_0 hL _ _ _ (zf_zbi hL l).1 (zf_zi hL l).2
+      · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact pP_0 hL _ _ _ (zf_gg hL l).1 (zf_gg hL l).2
+      · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact pP_0 hL _ _ _ (zf_ggi hL l).1 (zf_ggi hL l).2
 
 theorem levPb : LevPb := by
   intro P D _ l
@@ -673,29 +673,29 @@ theorem levPb : LevPb := by
   refine ⟨?_, ?_, ?_⟩
   · intro m
     by_cases h : l = m
-    · subst h; rw [if_pos rfl]; mx2_dg
+    · subst h; rw [if_pos rfl]; simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π
       rw [DAlg.cbP, partialDerivBar_mul_fn hL, ec hL, ec hL, if_pos rfl, if_pos rfl]
-    · rw [if_neg h, add_zero]; mx2_dg
+    · rw [if_neg h, add_zero]; simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π
       exact pbP_0 hL _ _ _ (by rw [ec hL, if_neg (fun e => h ((vcb_inj _ _).1 e))])
         (by rw [ec hL, if_neg (fun e => h ((vc_inj _ _).1 e))])
   · intro m
     by_cases h : l = m
-    · subst h; rw [if_pos rfl]; mx2_dg
+    · subst h; rw [if_pos rfl]; simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π
       rw [DAlg.cbiP, partialDerivBar_mul_fn hL, eci hL, eci hL, if_pos rfl, if_pos rfl, sub_eq_add_neg, multiplierPair_neg]
-    · rw [if_neg h, sub_zero]; mx2_dg
+    · rw [if_neg h, sub_zero]; simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π
       exact pbP_0 hL _ _ _ (by rw [eci hL, if_neg (fun e => h ((vcb_inj _ _).1 e))])
         (by rw [eci hL, if_neg (fun e => h ((vc_inj _ _).1 e))])
   · rintro x ((⟨m, rfl⟩ | ⟨m, rfl⟩) | hx)
-    · mx2_dg; exact pbP_0 hL _ _ _ (by rw [ec hL, if_neg (vc_vcb _ _).symm]) (by rw [ec hL, if_neg (vc_vcb _ _)])
-    · mx2_dg; exact pbP_0 hL _ _ _ (by rw [eci hL, if_neg (vc_vcb _ _).symm]) (by rw [eci hL, if_neg (vc_vcb _ _)])
+    · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact pbP_0 hL _ _ _ (by rw [ec hL, if_neg (vc_vcb _ _).symm]) (by rw [ec hL, if_neg (vc_vcb _ _)])
+    · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact pbP_0 hL _ _ _ (by rw [eci hL, if_neg (vc_vcb _ _).symm]) (by rw [eci hL, if_neg (vc_vcb _ _)])
     · simp only [zfnsA, Set.mem_insert_iff, Set.mem_singleton_iff] at hx
       rcases hx with rfl | rfl | rfl | rfl | rfl | rfl
-      · mx2_dg; exact pbP_0 hL _ _ _ (zeta_free_of_variable hL l).2 (zf_zb hL l).1
-      · mx2_dg; exact pbP_0 hL _ _ _ (zf_zi hL l).2 (zf_zbi hL l).1
-      · mx2_dg; exact pbP_0 hL _ _ _ (zf_zb hL l).2 (zeta_free_of_variable hL l).1
-      · mx2_dg; exact pbP_0 hL _ _ _ (zf_zbi hL l).2 (zf_zi hL l).1
-      · mx2_dg; exact pbP_0 hL _ _ _ (zf_gg hL l).2 (zf_gg hL l).1
-      · mx2_dg; exact pbP_0 hL _ _ _ (zf_ggi hL l).2 (zf_ggi hL l).1
+      · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact pbP_0 hL _ _ _ (zeta_free_of_variable hL l).2 (zf_zb hL l).1
+      · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact pbP_0 hL _ _ _ (zf_zi hL l).2 (zf_zbi hL l).1
+      · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact pbP_0 hL _ _ _ (zf_zb hL l).2 (zeta_free_of_variable hL l).1
+      · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact pbP_0 hL _ _ _ (zf_zbi hL l).2 (zf_zi hL l).1
+      · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact pbP_0 hL _ _ _ (zf_gg hL l).2 (zf_gg hL l).1
+      · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact pbP_0 hL _ _ _ (zf_ggi hL l).2 (zf_ggi hL l).1
 
 theorem form (x : A P D) (hx : x ∈ fnsA P D) : ∃ f fb, x = sc P D (D.fnP f fb) := by
   rcases hx with ((((⟨m, rfl⟩ | ⟨m, rfl⟩) | ⟨m, rfl⟩) | ⟨m, rfl⟩) | hx)
@@ -713,21 +713,21 @@ theorem levFns : LevFns := by
   · intro x hx y hy
     obtain ⟨f, fb, rfl⟩ := form P D x hx
     obtain ⟨g, gb, rfl⟩ := form P D y hy
-    mx2_dg; exact multiplierPair_comm D _ _ _ _
+    simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact multiplierPair_comm D _ _ _ _
   · intro l
     refine ⟨?_, ?_, ?_, ?_⟩
-    · mx2_dg; exact inv1 hL _ _ (ux hL _) (ux hL _)
-    · mx2_dg; exact inv2 hL _ _ (ux hL _) (ux hL _)
-    · mx2_dg; exact inv1 hL _ _ (ux hL _) (ux hL _)
-    · mx2_dg; exact inv2 hL _ _ (ux hL _) (ux hL _)
-  · mx2_dg; exact inv1 hL _ _ (ux hL _) (ux hL _)
-  · mx2_dg; exact inv2 hL _ _ (ux hL _) (ux hL _)
-  · mx2_dg; exact inv1 hL _ _ (ux hL _) (ux hL _)
-  · mx2_dg; exact inv2 hL _ _ (ux hL _) (ux hL _)
-  · mx2_dg; exact inv1 hL _ _ hL.unit_gg hL.unit_gg
-  · mx2_dg; exact inv2 hL _ _ hL.unit_gg hL.unit_gg
+    · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact inv1 hL _ _ (ux hL _) (ux hL _)
+    · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact inv2 hL _ _ (ux hL _) (ux hL _)
+    · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact inv1 hL _ _ (ux hL _) (ux hL _)
+    · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact inv2 hL _ _ (ux hL _) (ux hL _)
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact inv1 hL _ _ (ux hL _) (ux hL _)
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact inv2 hL _ _ (ux hL _) (ux hL _)
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact inv1 hL _ _ (ux hL _) (ux hL _)
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact inv2 hL _ _ (ux hL _) (ux hL _)
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact inv1 hL _ _ hL.unit_gg hL.unit_gg
+  · simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π; exact inv2 hL _ _ hL.unit_gg hL.unit_gg
   · rw [Matrix.algebraMap_eq_diagonal]
-    mx2_dg
+    simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA, nabsA, sc, Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, Matrix.diagonal_one]; congr 1; funext π
     rw [Pi.algebraMap_apply, Algebra.algebraMap_eq_smul_one, ← multiplierPair_one, smul_fnP, DAlg.zP, DAlg.zbP, multiplierPair_mul,
       sub_eq_add_neg, multiplierPair_neg, multiplierPair_add, DAlg.ggP]
     congr 1
@@ -810,6 +810,8 @@ theorem starGens : StarGens := by
       · show MulOpposite.op (D.mulOp _ * D.mulOp _) = MulOpposite.op (D.mulOp _ * D.mulOp _)
         congr 1
         ext h : 1; simp [DAlg.mulOp, mul_left_comm]
+    funext π
+    simp only [Pi.star_apply, star_add, star_smul, star_mul]
     rw [h1, h2]; simp
 
 theorem levelStar : LevelStar := by
@@ -1496,6 +1498,8 @@ theorem kap_nabs (f : Ty P → ℂ) : kap P D f * nabsA P D = nabsA P D * kap P 
 theorem star_kap (f : Ty P → ℂ) : star (kap P D f) = kap P D (fun π => star (f π)) := by
   rw [kap_eq, kap_eq, Matrix.star_eq_conjTranspose, Matrix.diagonal_conjTranspose]
   congr 1
+  funext π
+  simp only [Pi.star_apply]
   rw [Algebra.algebraMap_eq_smul_one, Algebra.algebraMap_eq_smul_one, star_smul, star_one]
 
 theorem S_shift (l : ℕ) (f g : Ty P → ℂ) (h : ∀ π π', Up P l π π' → g π' = f π) :
@@ -2781,6 +2785,8 @@ theorem T_eq (hP : P.OK) (hN : SSNorm) (u : ℂ) {l : ℕ} (hl : l ∈ Icc 1 (P.
       rw [Pi.mul_apply, Pi.mul_apply, xEx_up P h {l} (by simp), rr_up_same P hl h]
   rw [E_Ss, mul_assoc, ← mul_assoc (kap P D _) (kap P D _), kap_mul, h1, ← mul_assoc, (hN P D hP l hl).1, kap_mul]
   congr 1
+  funext π
+  simp only [Pi.mul_apply, rr1]
   rw [div_eq_mul_inv, mul_assoc]
 
 theorem upper_sum_mul_lambda (hP : P.OK) {u : ℂ} (hu : Good P u) (hN : SSNorm) :
@@ -2834,6 +2840,8 @@ theorem Lam4 (hP : P.OK) (u v : ℂ) (hN : SSNorm) (hM : SSMixed) :
       rw [mul_assoc, ← mul_assoc (SS P D i), (hN P D hP i hi).2, kap_mul, kap_mul, mul_assoc]
     rw [h1, h2, ← map_sub]
     congr 1
+    funext π
+    simp only [Pi.mul_apply, Pi.sub_apply, rr, rr1]
     rw [div_eq_mul_inv, div_eq_mul_inv, mul_inv, mul_inv]
     ring
   · intro j hj hne
@@ -3120,9 +3128,15 @@ theorem mixed_relation_diagonal_four (hN : SSNorm) (hM : SSMixed) (hS : NabSS) (
   have e3 : dA P D v * (ggA P D * kap P D fun π => xC P π u) = kap P D fun π => qC P v * (xC P π (v + 1))⁻¹ * xC P π u := by
     rw [dA, smul_mul_assoc, mul_assoc, lc (kap_g P D _), lc1 (Gg P D), kap_mul, ← map_smul]
     congr 1
+    funext π
+    simp only [Pi.smul_apply, Pi.mul_apply, smul_eq_mul]
+    ring
   have e4 : (ggA P D * kap P D fun π => xC P π v) * dA P D u = kap P D fun π => xC P π v * (qC P u * (xC P π (u + 1))⁻¹) := by
     rw [dA, mul_smul_comm, mul_assoc, lc (kap_G P D _), lc1 (gG P D), kap_mul, ← map_smul]
     congr 1
+    funext π
+    simp only [Pi.smul_apply, Pi.mul_apply, smul_eq_mul]
+    ring
   rw [e3, e4, kap_mul, kap_mul, ← map_sub]
   congr 1
   funext π

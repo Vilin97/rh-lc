@@ -43,7 +43,10 @@ private theorem fin_fst (k : GL (Fin 2) (Af E)) (a b : Fin 2) :
     ((finGL E 2 k).val a b).1 = ((1 : Matrix (Fin 2) (Fin 2) (A E)) a b).1 := by
   have := GlobalTheory.HenQ.finGL_apply k a b
   rw [this]
-  simp [GlobalTheory.HenQ.sFin_fst]
+  change ((1 : Matrix (Fin 2) (Fin 2) (A E)) a b).1 -
+    (GlobalTheory.CuspRep.sFin E ((1 : Matrix (Fin 2) (Fin 2) (Af E)) a b)).1 +
+    (GlobalTheory.CuspRep.sFin E (k.val a b)).1 = _
+  rw [GlobalTheory.HenQ.sFin_fst, GlobalTheory.HenQ.sFin_fst, sub_zero, add_zero]
 
 private theorem eI_mul (x y : A E) (h : x.1 = y.1) : eI E * x = eI E * y :=
   Prod.ext (by rw [eI_fst, eI_fst, h]) (by rw [eI_snd, eI_snd])
@@ -119,7 +122,7 @@ end
 
 open UpperTheory.ConvolutionTheory.R2.Ff.TubeLevelLattice in
 theorem UpperTheory.ConvolutionTheory.R2.Ff.lLevel :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D), LLevel W := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D), LLevel W := by
   intro F E _ _ _ _ _ _ _ D W φ
   obtain ⟨ρ, -, -, -, -, hfin⟩ := actCont F E D
   have hT : Continuous fun p : GL (Fin 2) (Af E) × (Fin 4 → Af F) => TT D p.1 p.2 :=
@@ -138,7 +141,7 @@ theorem UpperTheory.ConvolutionTheory.R2.Ff.lLevel :
       obtain ⟨φ₀, g, hg, rfl⟩ := hG
       obtain ⟨hlc, hcs⟩ := (mem_finiteSchwartzBruhatPi F).1 hg
       have ht : Tendsto (fun k : GL (Fin 2) (Af E) => k⁻¹) (𝓝 1) (𝓝 1) := by
-        simpa using (continuous_inv (G := GL (Fin 2) (Af E))).tendsto 1
+        simpa only [inv_one] using (continuous_inv (G := GL (Fin 2) (Af E))).tendsto 1
       filter_upwards [ht.eventually (tube (TT D) hT h1 hinv hlc hcs)] with k hk v
       have e1 : infPartPi (D.act (finGL E 2 k)⁻¹ v) = infPartPi v := by
         funext i

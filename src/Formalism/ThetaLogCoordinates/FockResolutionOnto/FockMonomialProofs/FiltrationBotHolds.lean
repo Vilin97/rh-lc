@@ -70,7 +70,7 @@ theorem exists_pow_div (v : σ) (e : ℕ) (f : MvPolynomial σ ℚ_[p])
   refine ⟨MvPolynomial.divMonomial f (Finsupp.single v e), ?_⟩
   have hmod : MvPolynomial.modMonomial f (Finsupp.single v e) = 0 := by
     ext m
-    rw [coeff_zero]
+    simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     by_cases hle : Finsupp.single v e ≤ m
     · rw [MvPolynomial.coeff_modMonomial_of_le _ hle]
     · rw [MvPolynomial.coeff_modMonomial_of_not_le _ hle]
@@ -292,7 +292,7 @@ theorem filtration_bot_holds : FilBot := by
   rw [Pol, mem_restrictSupport_iff] at hPol
   rw [mem_restrictSupport_iff] at hS
   ext m
-  rw [coeff_zero]
+  simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   by_contra hne
   have h1 : MultiDeg LLw m := hPol (mem_support_iff.mpr hne)
   have h2 : e ≤ m (Fin.last K, ρ) := hS (mem_support_iff.mpr hne)

@@ -186,8 +186,8 @@ theorem size_eq (X : Fin n → Fin M → AF F ⊗[F] E) :
 
 theorem cont_size : Continuous fun X : Fin n → Fin M → AF F ⊗[F] E => sizeTup b (projInf X) := by
   simp only [size_eq]
-  refine continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun i _ =>
-    continuous_finset_sum _ fun k _ => continuous_finset_sum _ fun w _ => ?_
+  refine continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun i _ =>
+    continuous_finsetSum _ fun k _ => continuous_finsetSum _ fun w _ => ?_
   exact (cont_norm_w w).comp (cont_fstA.comp ((cont_repr (AF F) b k).comp
     ((continuous_apply i).comp (continuous_apply a))))
 
@@ -245,8 +245,8 @@ theorem cinf_cpt (r : ℝ) :
     {c | ∑ a, ∑ i, ∑ k, ∑ w : InfinitePlace F, ‖c a i k w‖ ≤ r}
   have hcl : IsClosed S := by
     refine isClosed_le ?_ continuous_const
-    refine continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun i _ =>
-      continuous_finset_sum _ fun k _ => continuous_finset_sum _ fun w _ => ?_
+    refine continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun i _ =>
+      continuous_finsetSum _ fun k _ => continuous_finsetSum _ fun w _ => ?_
     exact (cont_norm_w w).comp ((continuous_apply k).comp ((continuous_apply i).comp (continuous_apply a)))
   have hB : IsCompact (Set.pi Set.univ fun _ : Fin n => Set.pi Set.univ fun _ : Fin M =>
       Set.pi Set.univ fun _ : Fin d => {y : Ainf F | ∀ w, ‖y w‖ ≤ r}) :=

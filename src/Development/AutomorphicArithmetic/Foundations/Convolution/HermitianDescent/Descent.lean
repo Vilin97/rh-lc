@@ -79,8 +79,8 @@ theorem descent : Descent := by
           (LinearMap.eqLocus s LinearMap.id).subtype) (r ⊗ₜ[k] n) = r • (n : M) := rfl
       rw [h3, hg]
       simp_rw [h1, ← TensorProduct.smul_tmul, ← TensorProduct.sum_tmul, h2]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [hg, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [hg, map_sum]
     have := sep_sum σ q hG.pos x y hxy fun j => (s ^ j) m
     simp only [pow_zero, Module.End.one_apply] at this
     refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) this

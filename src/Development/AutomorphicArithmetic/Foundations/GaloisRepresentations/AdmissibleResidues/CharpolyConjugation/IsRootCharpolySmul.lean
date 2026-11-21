@@ -52,7 +52,7 @@ private theorem finite_char_ine {F Ω : Type} [Field F] [NumberField F] [Field �
   have hc : Continuous fun g => (m g : Matrix (Fin 1) (Fin 1) (Qbar l)) := by
     simp only [hval]
     exact (Units.continuous_val.comp hμ).smul continuous_const
-  have h0 : (wdOf h hl ι m).mono0 :=
+  have h0 : (GlobalTheory.WeilDeligne.wdOf h hl ι m).mono0 :=
     WD.mono0_of_lpDim_eq_one (by rw [lpDim_wdOf]; simp)
   have hfin := (weilDeligneParam_monodromy_eq_zero_iff hl ι hc).1 h0
   refine (hfin.image Matrix.GeneralLinearGroup.det).subset ?_

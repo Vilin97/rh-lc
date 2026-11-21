@@ -15,6 +15,7 @@ theorem UpperTheory.Reformulated.B.Qi4.extendPt :
   haveI hprime : (RingHom.ker y).IsPrime := RingHom.ker_isPrime y
   obtain ⟨Q, hPQ, hQ, hQc⟩ :=
     Ideal.exists_ideal_over_prime_of_isIntegral (RingHom.ker y) P hP
+  change Q.comap (algebraMap Λ T) = RingHom.ker y at hQc
   have hker : ∀ a ∈ Q.comap (algebraMap Λ T), (y : Λ →+* K) a = 0 := by
     intro a ha
     rw [hQc] at ha

@@ -133,9 +133,7 @@ lemma ubl_fib (D : RealPlaceData k r Wp Wq) (E : Mat k r → C6.EndH Wp Wq) (hE 
       (le_abs_self _).trans (Finset.single_le_sum (f := fun j => |Cf j|)
         (fun j _ => abs_nonneg _) (Finset.mem_range.2 hi))
     have hnorm : ‖(((v.map nz).prod : ℝ) : ℂ)‖ = |(v.map nz).prod| := by
-      first
-      | simp
-      | rw [Complex.norm_real, Real.norm_eq_abs]
+      rw [Complex.norm_real, Real.norm_eq_abs]
     rw [hnorm]
     calc |(v.map nz).prod| * ‖dLR u (v' ++ v.map nrm) E g‖
         ≤ |(v.map nz).prod| * (Cf (u.length + (v' ++ v.map nrm).length) *

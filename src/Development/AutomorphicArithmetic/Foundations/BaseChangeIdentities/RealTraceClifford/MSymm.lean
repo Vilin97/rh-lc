@@ -31,3 +31,5 @@ theorem UpperTheory.RealTr.mSymm :
     (hS w _).symm
   rw [hc, ← hN]
   congr 1
+  ext i
+  simp [Function.comp_def, sub_eq_add_neg, add_comm]

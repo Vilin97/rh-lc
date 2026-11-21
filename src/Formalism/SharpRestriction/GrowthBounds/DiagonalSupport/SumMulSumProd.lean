@@ -83,7 +83,7 @@ theorem XG_supported (j : G) (x : MvPolynomial (ι × Fin n) O) (hx : x ∈ XG �
     x ∈ supported O {v : ι × Fin n | π v.1 = j} := by
   rw [MvPolynomial.mem_supported]
   intro v hv
-  obtain ⟨d, hd, hvd⟩ := (MvPolynomial.mem_vars v).mp (Finset.mem_coe.mp hv)
+  obtain ⟨d, hd, hvd⟩ := (MvPolynomial.mem_vars_iff_mem_support v).mp (Finset.mem_coe.mp hv)
   obtain ⟨mo', -, rfl⟩ := Finset.mem_image.mp (hx.1 d hd)
   rw [Finsupp.mem_support_iff] at hvd
   show π v.1 = j

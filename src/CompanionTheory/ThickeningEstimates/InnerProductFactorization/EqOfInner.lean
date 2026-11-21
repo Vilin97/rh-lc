@@ -39,6 +39,9 @@ theorem exists_rho (w : l ⊕ l → ℝ) (f : Sch l) : ∃ g : Sch l, ⇑g = rho
       (innerSL ℝ (qPart w)).hasTemperateGrowth.add (Function.HasTemperateGrowth.const _)
     have h3 := GlobalTheory.Published.Metaplectic.hasTemperateGrowth_eChar.comp h2
     convert h3 using 1
+    funext x
+    change exp (((2 * π * ⟪qPart w, x⟫ + π * ⟪pPart w, qPart w⟫ : ℝ) : ℂ) * I) =
+      exp (((2 * π * (⟪qPart w, x⟫ + ⟪pPart w, qPart w⟫ / 2) : ℝ) : ℂ) * I)
     congr 1
     push_cast
     ring

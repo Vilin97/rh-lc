@@ -83,7 +83,8 @@ theorem pieri_rule_count_form (D : Formalism.BasicNotions.D7) : Formalism.MainNo
     · ext μ
       simp only [Finset.mem_filter]
       exact and_congr Iff.rfl (Formalism.MainNotions.G.ColumnFamilies.hstrip_iff ν μ b).symm
-    · have hs := (Finset.mem_filter.1 hμ).2
+    · simp only [Finset.mem_filter] at hμ
+      have hs := hμ.2
       exact stCount_eq_dGT (m + 1) μ (strip_up_antitone hν ((Formalism.MainNotions.G.ColumnFamilies.hstrip_iff ν μ b).1 hs))
   · rw [← hc, ← hdown]
     unfold Formalism.InvariantFactorPaths.GelfandTsetlinBases.stripsDown
@@ -92,7 +93,8 @@ theorem pieri_rule_count_form (D : Formalism.BasicNotions.D7) : Formalism.MainNo
     · ext μ
       simp only [Finset.mem_filter]
       exact and_congr Iff.rfl (Formalism.MainNotions.G.ColumnFamilies.hstrip_iff μ ν b).symm
-    · have hs := (Finset.mem_filter.1 hμ).2
+    · simp only [Finset.mem_filter] at hμ
+      have hs := hμ.2
       exact stCount_eq_dGT (m + 1) μ (strip_down_antitone hν ((Formalism.MainNotions.G.ColumnFamilies.hstrip_iff μ ν b).1 hs))
 
 end Formalism.MainNotions.G.Joints.Lit

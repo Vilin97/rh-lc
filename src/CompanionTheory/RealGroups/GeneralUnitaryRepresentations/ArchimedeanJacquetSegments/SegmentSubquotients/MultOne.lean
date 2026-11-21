@@ -24,7 +24,7 @@ theorem entry_le {d l : ℕ} (b : SizeMatrix (fun _ : Fin l => Fin d) (fun _ : F
 
 theorem isSmooth_segTerm {d l : ℕ} (σ : IrrRep (GL (Fin d) k)) (a : Fin l) :
     IsSmooth (segTerm σ.ρ l a) :=
-  isSmooth_twist σ.smooth (isSmoothChar_of_isUnram (isUnram_absPow k _)).detChar
+  isSmooth_twist σ.smooth (GlobalTheory.SmGL.isSmoothChar_of_isUnram (isUnram_absPow k _)).detChar
 
 theorem isIrreducible_segTerm {d l : ℕ} (σ : IrrRep (GL (Fin d) k)) (a : Fin l) :
     (segTerm σ.ρ l a).IsIrreducible :=

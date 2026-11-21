@@ -56,7 +56,9 @@ theorem padicValNat_choose_pow {p : ℕ} (hp : p.Prime) (k : ℕ) :
   have hc : (p ^ (k + 1)).choose (p ^ k) ≠ 0 := (Nat.choose_pos hle).ne'
   rw [← padicValNat_eq_emultiplicity hc, ← padicValNat_eq_emultiplicity (pow_pos hp.pos k).ne',
     padicValNat.prime_pow] at h
-  have h' : padicValNat p ((p ^ (k + 1)).choose (p ^ k)) + k = k + 1 := by exact_mod_cast h
+  have h' : padicValNat p ((p ^ (k + 1)).choose (p ^ k)) + k = k + 1 := by
+    rw [Nat.padicValNat_def]
+    exact_mod_cast h
   omega
 
 section Norm

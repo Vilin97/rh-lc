@@ -88,7 +88,8 @@ theorem fstar_decay : ∀ (F : Type) [Field F] [NumberField F] [MeasurableSpace 
   have hd : den b ≠ 0 := fun h0 => by
     have := hlf
     rw [h0, Nat.cast_zero, ENNReal.inv_zero] at hden
-    exact ((measure_mono fun x hx => hx.1).trans_lt hO.measure_lt_top).ne hden
+    exact ((measure_mono (show {x : A F | x ∈ Oh F ∧ algebraMap F (A F) b * x ∈ Oh F} ⊆ Oh F from
+      fun _ hx => hx.1)).trans_lt hO.measure_lt_top).ne hden
   have hm : (0 : ℝ) < (den b : ℝ) ^ M := pow_pos (by exact_mod_cast Nat.pos_of_ne_zero hd) M
   have hB := H.2.2.2.2.2.2.2.2.2.1
   have hD := impl_D H a⁻¹ hm fun s hs => by

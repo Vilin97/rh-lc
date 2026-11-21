@@ -173,7 +173,7 @@ lemma thetaSummable_coercive (G : Matrix ι ι ℚ)
     · exact hlt
     · exfalso
       have hSv : M *ᵥ v = 0 := by
-        refine (hPSD.dotProduct_mulVec_zero_iff v).mp ?_
+        refine (hPSD.dotProduct_mulVec_zero_iff).mp ?_
         rw [star_trivial]
         exact heq.symm
       have hdetS : M.det = 0 := Matrix.exists_mulVec_eq_zero_iff.mp ⟨v, hv, hSv⟩
@@ -299,7 +299,7 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
 lemma isAddTorsionFree_ringOfIntegers_submodule (L : Submodule (NumberField.RingOfIntegers K) V) :
     IsAddTorsionFree L := by
   constructor
-  intro n hn a b hab
+  intro n hn a b _ hab
   apply Subtype.ext
   have hab' : n • (a : V) = n • (b : V) := by
     have := congrArg (fun y : L => (y : V)) hab
@@ -317,7 +317,7 @@ lemma thetaSummable_main (h : V →ₗ⋆[K] V →ₗ[K] K)
         ((Algebra.trace ℚ K (h (γ + x) (γ + x)) : ℚ) : ℂ))) := by
   classical
   haveI : Module.Finite (NumberField.RingOfIntegers K) L :=
-    Module.Finite.iff_fg.mpr (Submodule.IsLattice.fg (A := K))
+    Module.Finite.iff_fg.mpr (Submodule.IsLattice.fg (A := K) L)
   haveI : Module.Finite ℤ L := Module.Finite.trans (NumberField.RingOfIntegers K) L
   haveI : IsAddTorsionFree L := isAddTorsionFree_ringOfIntegers_submodule L
   haveI : Module.IsTorsionFree ℤ L := by

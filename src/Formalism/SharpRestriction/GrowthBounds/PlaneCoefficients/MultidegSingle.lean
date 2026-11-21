@@ -177,7 +177,7 @@ theorem lkDeg : LkDeg := by
   rw [hFs] at hν
   obtain ⟨μ, hμ, hν'⟩ := Finset.mem_biUnion.1 (MvPolynomial.support_sum hν)
   obtain ⟨ν0, a0, b0⟩ := LkD.PhiJ_monomial Dt hV hS.2.1 hJ j μ (fun v hv =>
-    (mem_supported.1 hF) (Finset.mem_coe.2 ((mem_vars v).2 ⟨μ, hμ, hv⟩)))
+    (mem_supported.1 hF) (Finset.mem_coe.2 ((mem_vars_iff_mem_support v).2 ⟨μ, hμ, hv⟩)))
   rw [a0] at hν'
   have := support_monomial_subset hν'
   rw [Finset.mem_singleton] at this

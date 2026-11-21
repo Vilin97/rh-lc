@@ -61,7 +61,7 @@ private theorem hx_pow {O : Type} [CommRing O] [IsLocalRing O] {R : Type} [CommR
       rw [← (maximalIdeal.isMaximal _).eq_of_le (Ideal.IsPrime.ne_top inferInstance)
         (Ideal.map_le_iff_le_comap.1 hP)]
       infer_instance
-    haveI : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap P hc
+    haveI : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under P hc
     have hi : (y : R →+* A).IsIntegral := by
       refine RingHom.IsIntegral.tower_top (algebraMap O R) _ ?_
       rw [AlgHom.comp_algebraMap]

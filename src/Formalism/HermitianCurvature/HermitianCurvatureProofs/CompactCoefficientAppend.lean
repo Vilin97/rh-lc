@@ -64,7 +64,9 @@ theorem orbJ_one_eq (S : B.RealPlaceData k ρ Wp Wq) {γ : B.Mat k ρ} (hγ : γ
     intro θ hθ p hp
     have h := hθ.2.2 p hp
     rw [hR, integral_dirac] at h
-    simpa [hact] using h
+    change θ (C6.actR γ (1 : B.Mat k ρ) p) = 1 at h
+    rw [hact p] at h
+    exact h
   unfold D.orbJ
   split_ifs with hex
   · have h1 := hθ _ hex.choose_spec.1

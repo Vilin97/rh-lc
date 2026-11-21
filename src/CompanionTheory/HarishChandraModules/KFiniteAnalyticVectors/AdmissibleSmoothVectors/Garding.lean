@@ -97,6 +97,7 @@ end Gard
 
 open Gard in
 theorem garding_finite_smooth_vectors : GardingFin := by
+  open scoped Pointwise in
   intro n ε H _ _ _ σ hσ Y _ hY v hv
   obtain ⟨⟨h1, hm⟩, hiso, hcont⟩ := hσ
   let ρ : UJ ε → H →L[ℂ] H := fun x => σ (toM x)

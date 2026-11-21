@@ -139,7 +139,7 @@ private theorem coeff_coeffη_eq_coeff_comb (b : Fin r →₀ ℕ) (m : Fin N ×
          fun h' => by rw [h', llPart_comb]⟩
       rw [if_pos h, coeff_monomial, coeff_monomial]
       exact if_congr key rfl rfl
-    · rw [if_neg h, coeff_zero, coeff_monomial, if_neg]
+    · rw [if_neg h, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, coeff_monomial, if_neg]
       rintro rfl
       exact h (etaPart_comb b m)
   · simp only [map_add (f := _), MvPolynomial.coeff_add, hp, hq]
@@ -299,7 +299,9 @@ private theorem map_mem_sSup_of_forall_mapsTo {R V : Type*} [Semiring R] [AddCom
 theorem ycond_stable (LL : Letters N) (j : ℕ) (M : WithTop ℤ) : GlStable p LL j (YCond p (r := r) LL j M) := by
   intro c d x hx
   unfold Formalism.GM.M.YCond at hx ⊢
-  exact map_mem_sSup_of_forall_mapsTo (Formalism.GM.M.glAct p LL j c d) _ (fun T hT => hT.2 c d) x hx
+  exact map_mem_sSup_of_forall_mapsTo (Formalism.GM.M.glAct p LL j c d)
+    {S | S ≤ MvPolynomial.restrictSupport ℚ_[p] {m | ((wt LL j 0 m : ℤ) : WithTop ℤ) ≤ M} ∧
+      GlStable p LL j S} (fun T hT => hT.2 c d) x hx
 
 theorem ycond_le (LL : Letters N) (j : ℕ) (M : WithTop ℤ) :
     YCond p (r := r) LL j M ≤ MvPolynomial.restrictSupport ℚ_[p]
@@ -593,8 +595,8 @@ theorem ycond_hc (LL : Letters N) (j : ℕ) (M : WithTop ℤ) (t : ℕ)
   refine ycond_map p LL LL j j M (homogeneousComponent t) (fun c d G => ?_) (fun G m hm => ?_) F hF
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [glAct_apply, glAct_apply, map_sum]
-    refine Finset.sum_congr rfl (fun i _ => ?_)
-    split_ifs <;> simp [op_hc]
+      refine Finset.sum_congr rfl (fun i _ => ?_)
+      split_ifs <;> simp [op_hc]
   · have h := mem_support_iff.1 hm
     rw [coeff_homogeneousComponent] at h
     split_ifs at h

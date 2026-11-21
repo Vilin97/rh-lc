@@ -26,7 +26,7 @@ theorem valuation_le_iff_ord_le (x y : kˣ) :
 
 theorem ord_inv_eq_neg_ord (x : kˣ) : ord k x⁻¹ = -ord k x := by
   have h := ord_mul k x⁻¹ x
-  rw [inv_mul_cancel, ord_eq_zero (by simp)] at h
+  rw [inv_mul_cancel, ord_eq_zero (k := k) (x := 1) (by simp)] at h
   omega
 
 theorem ord_pow_bis (x : kˣ) (n : ℕ) : ord k (x ^ n) = n * ord k x := by
@@ -65,7 +65,7 @@ theorem exists_hasConductor_of_continuous_ne_one (ψ : AddChar k Circle) (hψ : 
     ∃ c : kˣ, HasConductor ψ c := by
   obtain ⟨s, hs⟩ := exists_ball_char_trivial ψ hψ
   obtain ⟨t, ht⟩ := exists_uniformizer_valuation (k := k)
-  have hot : ord k t = 1 := ord_eq_one ht
+  have hot : ord k t = 1 := ord_eq_one (k := k) ht
   let b : ℕ → kˣ := fun n => s * t⁻¹ ^ n
   have hb : ∀ n : ℕ, ord k (b n) = ord k s - n := fun n => by
     simp only [b]

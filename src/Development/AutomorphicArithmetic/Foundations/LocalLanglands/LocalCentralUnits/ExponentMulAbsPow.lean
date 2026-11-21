@@ -37,7 +37,16 @@ private theorem nabs_eq_residue (z : kˣ) :
 
 private theorem norm_smooth_char {χ : kˣ →* ℂˣ} (hχ : IsSmoothChar χ) (z : kˣ) :
     ‖(χ z : ℂ)‖ = nabs k z ^ GroundTheory.LocalField.quasiCharExponent χ := by
-  rw [GroundTheory.LocalField.norm_quasiChar_apply (GlobalTheory.DelEps.GaussBridge.continuous_of_isSmoothChar hχ) z,
+  have hc : Continuous χ := by
+    refine continuous_def.2 fun U _ => isOpen_iff_forall_mem_open.2 fun x hx => ?_
+    refine ⟨(fun y => x⁻¹ * y) ⁻¹' (χ.ker : Set kˣ), fun y hy => ?_,
+      hχ.preimage (continuous_const_mul _), by simp⟩
+    have h : χ (x⁻¹ * y) = 1 := hy
+    rw [map_mul, map_inv, inv_mul_eq_one] at h
+    show χ y ∈ U
+    rw [← h]
+    exact hx
+  rw [GroundTheory.LocalField.norm_quasiChar_apply hc z,
     GroundTheory.LocalField.modulus_of_ne_zero z.ne_zero, nabs_eq_residue]
   simp
 

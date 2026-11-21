@@ -293,7 +293,7 @@ theorem posInd : PosInd := by
       exact zero_ne_one h2
     rw [he, smul_mul_assoc]
     refine ⟨?_, smul_ne_zero hu hne⟩
-    rw [MonomialOrder.degree_smul_of_isRegular (isRegular_of_ne_zero hu), h1]
+    rw [MonomialOrder.degree_smul_of_isRegular (IsRegular.of_ne_zero hu), h1]
   apply linearIndependent_of_degree_injective (colLex (m + 1) (m + 1))
   · intro y
     exact (hdeg y).2

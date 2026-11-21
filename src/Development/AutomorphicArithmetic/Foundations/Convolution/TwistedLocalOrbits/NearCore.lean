@@ -231,7 +231,7 @@ theorem UpperTheory.ConvolutionTheory.Loc.nearCore :
     rw [IsTwRegSemisimple, hN1]
     exact hγE
   obtain ⟨D, hD, hDs⟩ := orbProper k E σ hgen n _ hreg _ hφ.2
-  haveI : ValuativeExtension k k := ⟨fun _ _ => Iff.rfl⟩
+  haveI : ValuativeExtension k k := ⟨fun {_ _} => Iff.rfl⟩
   obtain ⟨a1, a2, a3, -⟩ := untwist k n μk γ
   obtain ⟨D', hD', hDs'⟩ := orbProper k k 1 a1 n γ (a3 hγ) _ hf.2
   have hKo' : IsOpen ((K.comap (incl : GL (Fin n) k →* GL (Fin n) E) : Subgroup (GL (Fin n) k)) : Set (GL (Fin n) k)) :=

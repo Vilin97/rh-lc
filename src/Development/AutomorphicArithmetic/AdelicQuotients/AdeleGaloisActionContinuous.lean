@@ -27,7 +27,7 @@ private theorem galOf_cont {A B : Type*} [CommRing A] [Algebra F A] [CommRing B]
     rfl
   have h' : (galOf e σ : B → B) = fun y => ∑ i, e (σ (b i) ⊗ₜ 1) * e (1 ⊗ₜ c i y) := funext h
   rw [h']
-  exact continuous_finset_sum _ fun i _ => continuous_const.mul (hm.comp (hc i))
+  exact continuous_finsetSum _ fun i _ => continuous_const.mul (hm.comp (hc i))
 
 private theorem galAd_cont (σ : E ≃ₐ[F] E) : Continuous (galAd σ) := by
   haveI : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E

@@ -63,8 +63,8 @@ theorem fullAct_pathWord_support_dominated (isVec : ℕ → Bool) (B : ℕ → �
   refine (Top.factEV L n i isVec B μ I' g hp hI).1 _ ?_
   intro h0
   have h1 := congrArg (AddMonoidAlgebra.coeff · e) h0
-  rw [coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at h1
-  exact (mem_support_iff.1 he) h1
+  rw [coeff_weightedHomogeneousComponent, if_pos rfl] at h1
+  exact (mem_support_iff.1 he) (by simpa using h1)
 
 end basic
 

@@ -124,7 +124,8 @@ theorem top_lift_exists : Formalism.FourierDecayAlt.TL.TopLiftExists3 := by
         simp [D.positionted, Fr.ofWord, P5.bTall, P5.bTl, Wd.bT, Fr.Start.frame]
       have he : e = Wd.e1 := funext fun i => (Nat.not_lt_zero _ i.2).elim
       rw [h1, he]
-      simpa using hΦ
+      change Top.IsRadOf P Bs Φ F
+      exact hΦ
     · rw [if_neg hne]
       obtain ⟨nf, fib, -, -, hR⟩ := hDw w e hw
       exact hR F hFc Φ hΦ

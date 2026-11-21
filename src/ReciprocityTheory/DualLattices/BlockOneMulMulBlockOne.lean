@@ -115,7 +115,10 @@ theorem smith_mat (hv : v.Integers R) : ∀ (d n : ℕ) (A : Matrix (Fin d) (Fin
   | d + 1, n + 1, A => by
     classical
     set g : Fin (n + 1) → Fin (d + 1) → R := fun j i => A i j with hg
-    have hp := exists_pivot hv (b := d) (ι := Fin (n + 1)) g
+    have hp : ∃ (i0 : Fin (d + 1)) (a : R) (u : Fin (d + 1) → R) (s : Fin (n + 1) → R),
+        u i0 = 1 ∧ a • u ∈ Submodule.span R (Set.range g) ∧ (∀ j, g j i0 = a * s j) ∧
+          (a = 0 → ∀ j, g j = 0) ∧ (a ≠ 0 → ∃ j0, g j0 = a • u ∧ s j0 = 1) :=
+      exists_pivot hv (b := d) (ι := Fin (n + 1)) g
     obtain ⟨i0, a, u, s, hu, hau, hs, hz, hnz⟩ := hp
     by_cases ha : a = 0
     · have hA : A = 0 := by

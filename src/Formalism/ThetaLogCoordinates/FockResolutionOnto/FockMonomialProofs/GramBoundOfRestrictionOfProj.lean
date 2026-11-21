@@ -20,7 +20,7 @@ private theorem coeff_initPart_eq_ite (v : σ) (e : ℕ) (f : MvPolynomial σ �
   classical
   unfold initPart
   rw [coeff_sum]
-  simp only [apply_ite (AddMonoidAlgebra.coeff · n), coeff_monomial, coeff_zero]
+  simp only [apply_ite (AddMonoidAlgebra.coeff · n), coeff_monomial, AddMonoidAlgebra.coeff_zero, Pi.zero_apply]
   rw [Finset.sum_eq_single n]
   · by_cases h : n v = e <;> simp [h]
   · intro b _ hb
@@ -51,7 +51,8 @@ theorem strip_monomial_ne (v : σ) (e : ℕ) (m : σ →₀ ℕ) (hm : m v ≠ e
     strip p v e (monomial m 1) = 0 := by
   classical
   ext n
-  rw [coeff_strip, coeff_zero]
+  rw [coeff_strip]
+  change (if n v = 0 then _ else 0) = 0
   split_ifs with h
   · rw [coeff_monomial, if_neg]
     rintro rfl
@@ -261,7 +262,7 @@ theorem projAtOf_of (hX : ProjX) : ProjAtOf := by
     refine ⟨Submodule.zero_mem _, by rw [smul_zero]; exact Submodule.zero_mem _, ?_⟩
     intro g hg
     obtain ⟨y, hy, hyf, rfl⟩ := hfree g hg
-    rw [fock_eq_zero_of _ _ (fun n => Or.inr (coeff_zero n)), fock_eq_zero_of]
+    rw [fock_eq_zero_of _ _ (fun n => Or.inr (by rfl)), fock_eq_zero_of]
     intro n
     by_cases hn : n = m
     · subst hn

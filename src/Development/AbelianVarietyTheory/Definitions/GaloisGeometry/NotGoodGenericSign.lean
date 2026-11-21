@@ -77,8 +77,9 @@ theorem inertJunk_col {X : Col.Fields} {Pr : Col.Primes X} {R : Ranks} (W : Col.
     (Xg : Finset (Col.G0 X.E Pr.vGs R.r → X.K)) (S0 : Set (HeightOneSpectrum (𝓞 X.E)))
     (xiVal : Tup X.F X.E X.K S → HeightOneSpectrum (𝓞 X.E) → X.Kˣ)
     (trIv : Fin R.m → (Col.LevOffI ∅ Pr.vGs S0 × List ℕ → X.K) → Col.LevOffI ∅ Pr.vGs S0 × List ℕ → X.K) :
-    InertJunk (colIn3 W Ch sel hX v0 TU Xg S0 xiVal trIv) where
-  R t Q s := by
+    InertJunk (colIn3 W Ch sel hX v0 TU Xg S0 xiVal trIv) := by
+  refine { R := ?_, L := ?_ }
+  · intro t Q s
     rcases csd_zero_or (Col.mtildeKGSD W Ch sel t.1) (Col.mtildeKOk W Ch sel t.1 hX) (formPts _ _) Pr.vGs S0 Q s with
       h | ⟨y, hy, hyeq⟩
     · exact Or.inl h
@@ -86,7 +87,7 @@ theorem inertJunk_col {X : Col.Fields} {Pr : Col.Primes X} {R : Ranks} (W : Col.
       show Col.InertTypeOk (R.r + R.m * R.t) y
       rw [← rank_rows R]
       exact hy
-  L j t Q s := by
+  · intro j t Q s
     rcases csd_zero_or (Col.mtKGSD W Ch sel t.1 (j.1 + 1)) (Col.mtKOk W Ch sel t.1 hX (j.1 + 1)) (formPts _ _) Pr.vGs S0
         Q s with h | ⟨y, hy, hyeq⟩
     · exact Or.inl h

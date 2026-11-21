@@ -96,7 +96,7 @@ theorem corank_one_mod_prime_over (p : Ideal (𝓞 D.host.F)) (hp : p.IsMaximal)
   have hcard : Nat.card (Md ⧸ K) = Ideal.absNorm p ^ 2 := by
     rw [← Nat.card_congr (φ.quotKerEquivOfSurjective hsurj).toEquiv,
       Nat.card_congr (Submodule.quotEquivOfEq _ _ hker).toEquiv, ← Formalism.MainNotions.BridgeLemma.absNorm_pE]
-    rfl
+    exact (Ideal.absNorm_eq_natCard P).symm
   have hq := Formalism.MainNotions.BridgeLemma.absNorm_ge_two p hp
   show Nat.log (Ideal.absNorm p ^ 2) (Nat.card (Md ⧸ K)) = 1
   rw [hcard]

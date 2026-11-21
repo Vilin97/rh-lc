@@ -204,23 +204,27 @@ theorem gradNPf_lte (l : ℕ) [hp : Fact l.Prime] (hl2 : l ≠ 2) (hl : v (l : L
         (padicValNat l m') (by rw [he]; ring)
       have hv : padicValNat l (l * m') = padicValNat l m' + 1 := by
         rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hp.out.ne_zero hm']
-        first
-          | rw [padicValNat_self]; ring
-          | rw [padicValNat.self hl1]; ring
-          | simp; ring
-          | simp
+        have hs : padicValNat l l = 1 := by
+          simpa only [← Nat.padicValNat_def] using Nat.multiplicity_self hl1
+        rw [hs]
+        omega
       refine ⟨ε', hε', ?_⟩
       rw [hv, show l * m' = m' * l from Nat.mul_comm l m', pow_mul, he']
       ring
     · obtain ⟨ε, hε, he⟩ := lte_pow_coprime_step_lemma_6 v ι hι hR l hl x t ht hxt m hdvd
       refine ⟨ε, hε, ?_⟩
-      rw [padicValNat.eq_zero_of_not_dvd hdvd, he]
+      have hz : padicValNat l m = 0 := by
+        simpa only [← Nat.padicValNat_def] using (multiplicity_eq_zero_of_not_dvd hdvd)
+      rw [hz, he]
       ring
 
 theorem gradNPf_sum_val (l : ℕ) [hp : Fact l.Prime] (N : ℕ) :
     ∑ y ∈ Ico 1 (N + 1), (1 + padicValNat l y) = N + padicValNat l N.factorial := by
   induction N with
-  | zero => simp
+  | zero =>
+    have hz : padicValNat l 1 = 0 := by
+      simpa only [← Nat.padicValNat_def] using (multiplicity_one_right (a := l))
+    simp [hz]
   | succ N ih =>
     rw [sum_Ico_succ_top (by omega : 1 ≤ N + 1), ih, Nat.factorial_succ,
       (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.succ_ne_zero N) (Nat.factorial_ne_zero N)]

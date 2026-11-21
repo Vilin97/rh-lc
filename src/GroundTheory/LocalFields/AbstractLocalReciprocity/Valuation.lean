@@ -98,7 +98,9 @@ theorem pow_left_injective {n : ℕ} (hn : n ≠ 0) :
   have h' : n • Multiplicative.toAdd x = n • Multiplicative.toAdd y := by
     rw [← toAdd_pow, ← toAdd_pow]
     exact congrArg Multiplicative.toAdd h
-  exact nsmul_right_injective hn h'
+  rw [← sub_eq_zero]
+  apply eq_zero_of_nsmul_eq_zero hn
+  rw [nsmul_sub, h', sub_self]
 
 theorem pow_left_inj {n : ℕ} (hn : n ≠ 0) {x y : Multiplicative ℤ̂} : x ^ n = y ^ n ↔ x = y :=
   (pow_left_injective hn).eq_iff

@@ -145,7 +145,7 @@ lemma piR_ker {σ : Type} (S : UniformizedDVR p O) (Y : MvPolynomial σ O)
   have : C S.w ∣ Y := by
     rw [MvPolynomial.C_dvd_iff_dvd_coeff]
     intro m
-    have h1 : IsLocalRing.residue O (Y.coeff m) = 0 := by rw [← coeff_map, h, coeff_zero]
+    have h1 : IsLocalRing.residue O (Y.coeff m) = 0 := by rw [← coeff_map, h]; simp
     rw [IsLocalRing.residue_eq_zero_iff, S.w_irr.maximalIdeal_eq, Ideal.mem_span_singleton] at h1
     exact h1
   exact this
@@ -250,7 +250,7 @@ theorem Inv_main [CharP (FF O) p] (S : UniformizedDVR p O) (LL : LiftLetters (Fi
           have eV : ∀ J, MvPolynomial.map (IsLocalRing.residue O) ((Y1 J) ^ p) =
               piS p O LL.pos s0 (SgW ℤ LL mu c j J) := by
             intro J
-            rw [map_pow, hY2, ← piS_frob p LL.pos (s0 - 1) s0 (by omega) _ (fun v hv => hs1 v.1 hv.1 hv.2) _
+            rw [map_pow, hY2, ← piS_frob p LL.pos (s0 - 1) s0 (by omega) {v : Fin N × Fin (r + K) | v.1.val < j ∧ IsUsed mu c v.1} (fun v hv => hs1 v.1 hv.1 hv.2) _
               (SgW_supported LL mu c j J), e1, pow_one]
           have pair : ∀ m J', (condUS LL ⟨j, h⟩ m ∨ SgW ℤ LL mu c j J' = 0) →
               ∃ u, yO S.w LL ⟨j, h⟩ m * (Y1 J') ^ p = C S.w * u ∧

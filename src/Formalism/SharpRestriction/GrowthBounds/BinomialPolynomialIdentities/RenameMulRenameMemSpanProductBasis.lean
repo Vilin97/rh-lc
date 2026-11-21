@@ -26,10 +26,10 @@ theorem multideg_mapDomain_headVar (m : Fin N × Fin r →₀ ℕ) (i : Fin N) :
   have h1 : ∀ c : Fin r, (m.mapDomain (plVar (K := K))) (i, Fin.castAdd K c) = m (i, c) := by
     intro c
     have : (i, Fin.castAdd K c) = plVar (K := K) (i, c) := rfl
-    rw [this, Finsupp.mapDomain_apply]
-    intro a b h
-    simp only [plVar, Prod.mk.injEq] at h
-    exact Prod.ext h.1 (Fin.castAdd_injective r K h.2)
+    rw [this, Finsupp.mapDomain_apply_of_injective (by
+      intro a b h
+      simp only [plVar, Prod.mk.injEq] at h
+      exact Prod.ext h.1 (Fin.castAdd_injective r K h.2))]
   have h2 : ∀ c : Fin K, (m.mapDomain (plVar (K := K))) (i, Fin.natAdd r c) = 0 := by
     intro c
     apply Finsupp.mapDomain_of_notMem_range
@@ -48,10 +48,10 @@ theorem multideg_mapDomain_tailVar (m : Fin N × Fin K →₀ ℕ) (i : Fin N) :
   have h1 : ∀ c : Fin K, (m.mapDomain (tanVar (r := r))) (i, Fin.natAdd r c) = m (i, c) := by
     intro c
     have : (i, Fin.natAdd r c) = tanVar (r := r) (i, c) := rfl
-    rw [this, Finsupp.mapDomain_apply]
-    intro a b h
-    simp only [tanVar, Prod.mk.injEq] at h
-    exact Prod.ext h.1 (Fin.natAdd_injective K r h.2)
+    rw [this, Finsupp.mapDomain_apply_of_injective (by
+      intro a b h
+      simp only [tanVar, Prod.mk.injEq] at h
+      exact Prod.ext h.1 (Fin.natAdd_injective K r h.2))]
   have h2 : ∀ c : Fin r, (m.mapDomain (tanVar (r := r))) (i, Fin.castAdd K c) = 0 := by
     intro c
     apply Finsupp.mapDomain_of_notMem_range

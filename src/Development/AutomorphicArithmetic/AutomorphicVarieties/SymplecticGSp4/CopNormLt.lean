@@ -127,7 +127,7 @@ private theorem cop_main {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDom
     show ‖f x‖ ≤ 1
     rw [h2]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hm _ hc).le ((cop_intIff _).1 h3))
-  obtain ⟨E, hE⟩ := UpperTheory.V.Loc.ptFin R F hm
+  obtain ⟨E, hE⟩ := UpperTheory.V.Loc.ptFin (l := l) R F hm
   haveI : FiniteDimensional ℚ_[l] E.1 := E.2
   obtain ⟨c', hc'⟩ := cop_coef E.1
   have hc : ∀ x, (F x).fst ∈ c'.O := fun x => hc' _ (hE x).1 (h1 x)

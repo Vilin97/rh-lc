@@ -126,10 +126,12 @@ lemma qh_homog [IsDomain R] (Q : MvPolynomial (Fin n × Fin n) R) (ν : Fin n �
   rw [qh_weight]
   by_contra hne
   apply hd
-  rw [← qh_phi_coeff, h, coeff_monomial, if_neg, coeff_zero]
-  intro heq
-  apply hne
-  rw [← heq]; rfl
+  have hne' : Finsupp.equivFunOnFinite.symm ν ≠ Finsupp.mapDomain Prod.snd d := by
+    intro heq
+    apply hne
+    rw [← heq]; rfl
+  rw [← qh_phi_coeff, h, coeff_monomial, if_neg hne']
+  simp
 
 lemma qh_invariant [IsDomain R] (Q : MvPolynomial (Fin n × Fin n) R) (ν : Fin n → ℕ)
     (hQ : algebraMap _ (GLCoord R n) (rename Prod.swap Q) ∈ inducedSections R (fun a => (ν a : ℤ)))

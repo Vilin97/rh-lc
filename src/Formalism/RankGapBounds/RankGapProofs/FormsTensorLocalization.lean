@@ -21,7 +21,8 @@ theorem tensor_reduction_holds : TensorStep := by
     have h1 : l ^ (∑ i, e i) • PiTensorProduct.tprod k f =
         PiTensorProduct.tprod k (fun i => ((⟨l ^ e i • f i, hB i (f i)⟩ : B i) : A i)) := by
       show _ = PiTensorProduct.tprod k (fun i => l ^ e i • f i)
-      rw [MultilinearMap.map_smul_univ, Finset.prod_pow_eq_pow_sum]
+      rw [MultilinearMap.map_smul_univ]
+      simp only [RingHom.id_apply, Finset.prod_pow_eq_pow_sum]
     rw [h1]
     exact ⟨PiTensorProduct.tprod k (fun i => (⟨l ^ e i • f i, hB i (f i)⟩ : B i)), by
       rw [PiTensorProduct.map_tprod]; rfl⟩

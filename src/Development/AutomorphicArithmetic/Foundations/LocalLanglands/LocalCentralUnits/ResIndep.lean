@@ -67,7 +67,7 @@ private theorem range_sub {κ K : Type} [Field κ] [Field K] (ι : K →+* κ) (
     (ι.range : Set κ) = ((X ^ q - X : κ[X]).roots.toFinset : Set κ) := by
   have : Finite K := Nat.finite_of_card_ne_zero (by omega)
   have := Fintype.ofFinite K
-  have hne : (X ^ q - X : κ[X]) ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero κ hq
+  have hne : (X ^ q - X : κ[X]) ≠ 0 := Polynomial.X_pow_sub_X_ne_zero hq
   have hsub : (ι.range : Set κ) ⊆ ((X ^ q - X : κ[X]).roots.toFinset : Set κ) := by
     rintro _ ⟨y, rfl⟩
     simp only [Finset.mem_coe, Multiset.mem_toFinset, mem_roots hne, IsRoot.def, eval_sub, eval_pow, eval_X]

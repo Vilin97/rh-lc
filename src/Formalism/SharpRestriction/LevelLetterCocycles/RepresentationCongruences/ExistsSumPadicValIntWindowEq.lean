@@ -28,9 +28,9 @@ theorem padicValNat_factorial_le_div_sub_one' (l : ℕ) [hp : Fact l.Prime] (n :
   have hlR : (0 : ℝ) < (l : ℝ) - 1 := by
     have : (2 : ℝ) ≤ l := by exact_mod_cast hl
     linarith
-  have key := sub_one_mul_padicValNat_factorial (p := l) n
+  have key := Nat.Prime.sub_one_mul_multiplicity_factorial (n := n) hp.out
   have hle : (l - 1) * padicValNat l n.factorial ≤ n := by
-    rw [key]; exact Nat.sub_le _ _
+    rw [Nat.padicValNat_def, key]; exact Nat.sub_le _ _
   have hcast : ((l - 1 : ℕ) : ℝ) = (l : ℝ) - 1 := by
     rw [Nat.cast_sub (by omega), Nat.cast_one]
   have h' : ((l : ℝ) - 1) * (padicValNat l n.factorial : ℝ) ≤ n := by
@@ -74,7 +74,7 @@ theorem exists_sum_padicValInt_window_eq (l : ℕ) (a : ℤ) (S N : ℕ)
       rw [Finset.mem_range] at hj
       have he : a + (j : ℤ) = -(((m + 1 + (S - 1 - j) : ℕ)) : ℤ) := by omega
       rw [padicValInt, he, Int.natAbs_neg]
-      rfl
+      rw [Int.natAbs_natCast, ← Nat.padicValNat_def]
   · obtain ⟨m, hm⟩ := Int.eq_ofNat_of_zero_le (show (0 : ℤ) ≤ a - 1 by omega)
     refine ⟨m, ?_, ?_⟩
     · have := (abs_le.mp hlast.2).2
@@ -83,7 +83,7 @@ theorem exists_sum_padicValInt_window_eq (l : ℕ) (a : ℤ) (S N : ℕ)
       intro j _
       have he : a + (j : ℤ) = ((m + 1 + j : ℕ) : ℤ) := by push_cast; omega
       rw [padicValInt, he]
-      rfl
+      rw [Int.natAbs_natCast, ← Nat.padicValNat_def]
 
 theorem sum_padicValInt_window_le (l : ℕ) [Fact l.Prime] (a : ℤ) (S N : ℕ)
     (ha : ∀ i ∈ Finset.Ico a (a + S), i ≠ 0 ∧ |i| ≤ (N : ℤ)) :

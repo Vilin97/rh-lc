@@ -41,7 +41,7 @@ private lemma prod_fib {m : ℕ} (y : Fin m → G) (x : G) : (List.ofFn (fib y x
 
 private lemma closed_centr [T2Space G] (γ : G) : IsClosed ((Subgroup.centralizer {γ} : Subgroup G) : Set G) := by
   have : ((Subgroup.centralizer {γ} : Subgroup G) : Set G) = {g | g * γ = γ * g} := by
-    ext g; simp [Subgroup.mem_centralizer_singleton_iff]
+    ext g; simp [Subgroup.mem_centralizer_singleton_iff, commute_iff_eq]
   rw [this]
   exact isClosed_eq (continuous_id.mul continuous_const) (continuous_const.mul continuous_id)
 

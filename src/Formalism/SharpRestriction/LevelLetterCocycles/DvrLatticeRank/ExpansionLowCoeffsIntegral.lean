@@ -101,7 +101,30 @@ theorem levπ01 (c : ZMod n) (ζ : LL) (hζ : IsPrimitiveRoot ζ PD.p) :
     have hl := congrArg (W.lev c ζ) hπq
     rw [map_mul, map_sub, map_pow, map_add (f := _), map_one] at hl
     rw [hE, mul_pow, ← map_pow, hζ.pow_eq_one, map_one, one_mul] at hl
-    obtain ⟨w, hw, hw0⟩ := framepf_exp_pow_sub_one E hE0 hEd PD.p
+    have hexp : ∀ p : ℕ, ∃ w : PowerSeries LL,
+        E ^ p - 1 = X * w ∧ constantCoeff w = (p : LL) := by
+      have hX1 : X ∣ E - 1 := by
+        rw [PowerSeries.X_dvd_iff]
+        simp [hE0]
+      obtain ⟨w1, hw1⟩ := hX1
+      have hc1 : constantCoeff w1 = 1 := by
+        have h1 : coeff 1 (E - 1) = coeff 0 w1 := by
+          rw [hw1]
+          exact PowerSeries.coeff_succ_X_mul 0 w1
+        have h3 : coeff 1 (E - 1) = coeff 1 E := by
+          simp [PowerSeries.coeff_one]
+        rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, ← h1, h3, hE1]
+      intro p
+      induction p with
+      | zero => exact ⟨0, by simp, by simp⟩
+      | succ k ih =>
+        obtain ⟨w, hw, hwc⟩ := ih
+        refine ⟨w * E + w1, ?_, ?_⟩
+        · have he : E ^ (k + 1) - 1 = (E ^ k - 1) * E + (E - 1) := by ring
+          rw [he, hw, hw1]
+          ring
+        · simp [hwc, hc1, hE0]
+    obtain ⟨w, hw, hw0⟩ := hexp PD.p
     rw [hw] at hl
     have h := congrArg (coeff 1) hl
     rw [coeff_one_mul, hq0, h0, coeff_succ_X_mul, coeff_zero_eq_constantCoeff_apply, hw0] at h
