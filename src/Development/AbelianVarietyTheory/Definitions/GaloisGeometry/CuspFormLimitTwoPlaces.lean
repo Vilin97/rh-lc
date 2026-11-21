@@ -56,7 +56,9 @@ def SeedWU2 (Ty : UnitaryAutomorphicTypeClass) (Gen : ℕ → ℕ → Multiset �
 theorem sameWtAt_of_off (ι : Qbar l ≃+* ℂ) {w₀ v' w : HeightOneSpectrum (𝓞 E)} {U U' : Submodule ℂ (UA E a → ℂ)}
     (h : SameWtOff ι w₀ v' U U') (hw : ∀ τ : E →+* ℂ, OverPl ι τ w → ∀ u, OverPl ι τ u → u = w)
     (h₀ : Apart w w₀) (h' : Apart w v') : SameWtAt ι w U U' :=
-  fun τ hτ lam => h τ (fun u hu => by rw [hw τ hτ u hu]; exact ⟨h₀, h'⟩) lam
+  by
+    unfold SameWtAt SameWtOff at *
+    exact fun τ hτ lam => h τ (fun u hu => by rw [hw τ hτ u hu]; exact ⟨h₀, h'⟩) lam
 
 end GlobalTheory.CongL
 

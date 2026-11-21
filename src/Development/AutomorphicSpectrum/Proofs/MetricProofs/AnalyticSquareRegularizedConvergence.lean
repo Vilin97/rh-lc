@@ -72,5 +72,5 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.analytic_square_regularized_co
       apply PositivityTheory.Xgp.sq_limit.mIntegrable_of_continuous
       · intro i
         exact ReciprocityTheory.AnForm.M.isPotentialAdd _ _ _ (Q.SW.sing (w i)).1 (ReciprocityTheory.AnForm.M.isPotential_ofFun _ _ ((Q.SW.reg (w i)).2.2 t htt.1 htt.2.le).1)
-      · exact continuous_const.add (continuous_finset_sum _ fun i _ => continuous_const.mul (ReciprocityTheory.AnForm.M.projLine_continuous_of_smooth _ ((Q.SW.reg (mm i)).2.2 t htt.1 htt.2.le).1))
+      · exact continuous_const.add (continuous_finsetSum _ fun i _ => continuous_const.mul (ReciprocityTheory.AnForm.M.projLine_continuous_of_smooth _ ((Q.SW.reg (mm i)).2.2 t htt.1 htt.2.le).1))
     exact (hsT.add hrT).congr' hev

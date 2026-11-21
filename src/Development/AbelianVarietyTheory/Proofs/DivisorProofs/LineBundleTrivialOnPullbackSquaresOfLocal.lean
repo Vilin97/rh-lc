@@ -29,7 +29,15 @@ theorem trivCond_of_local : ∀ (S : Scheme.{0}) (A : Over S) [GrpObj A] (N : LB
   have hP : IsGrpPullback (Over.mk y) A t φ :=
     ((isGrpPullback_of_iso e).comp (isGrpPullback_pullback A t)).congr (Category.id_comp _)
       (by simp [e])
-  have hA' : IsAbelianScheme (Over.mk y) := GlobalTheory.PolPull.isAbelianScheme_of_isGrpPullback hA hP
+  have hA' : IsAbelianScheme (Over.mk y) := by
+    refine ⟨?_, MorphismProperty.of_isPullback (P := @Smooth) hP.1 hA.smooth,
+      MorphismProperty.of_isPullback (P := @IsProper) hP.1 hA.proper,
+      MorphismProperty.of_isPullback (P := @GeometricallyConnected) hP.1 hA.geomConnected⟩
+    rw [isCommMonObj_iff_isMulCommutative]
+    intro U
+    refine ⟨⟨fun x z => Over.OverMorphism.ext (hP.1.hom_ext ?_ (by rw [Over.w, Over.w]))⟩⟩
+    rw [← hP.2 U x z (pushPt hP.1.w x) (pushPt hP.1.w z) rfl rfl,
+      ← hP.2 U z x (pushPt hP.1.w z) (pushPt hP.1.w x) rfl rfl, _root_.mul_comm]
   haveI := hA'.comm
   obtain ⟨r, hr⟩ := hR
   have he : eSec (Over.mk y) ≫ φ = t ≫ eSec A := (cubeMapOf hP).e_comm

@@ -382,7 +382,9 @@ theorem sec₀_mul {e₁ e₂ e : Ix Dw → ℤ} (h : e₁ + e₂ = e) (f₁ : s
 def vanBd (la : AllWt.Weight Dw) : Submodule c.F (H0 (str₀ X Z) (L₀ X Z la) ⊤) where
   carrier := {s | ∀ y ∈ bd₀ X Z, ∀ i hi, germ i y (memTop y) hi s ∈ IsLocalRing.maximalIdeal _}
   zero_mem' y _ i hi := by rw [map_zero]; exact zero_mem _
-  add_mem' hs ht y hy i hi := by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hs y hy i hi) (ht y hy i hi)
+  add_mem' hs ht y hy i hi := by
+    rw [map_add (germ i y (memTop y) hi)]
+    exact add_mem (hs y hy i hi) (ht y hy i hi)
   smul_mem' a s hs y hy i hi := by rw [germ_smul]; exact Ideal.mul_mem_left _ _ (hs y hy i hi)
 
 theorem mem_vanBd {la : AllWt.Weight Dw} {s : H0 (str₀ X Z) (L₀ X Z la) ⊤} :

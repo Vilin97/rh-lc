@@ -262,7 +262,7 @@ theorem phi_isPsh_continuous : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
         continuousOn_pi.2 fun a => continuousOn_pi.2 fun c => hip τ a c
       exact Complex.continuous_re.comp_continuousOn ((continuous_id.matrix_det).comp_continuousOn hm)
     have hc : ContinuousOn (fun t => (∏ τ, ((R t).gram fun a => w τ a t).det.re) / idx) U :=
-      (continuousOn_finset_prod _ fun τ _ => hdet τ).div_const _
+      (continuousOn_finsetProd _ fun τ _ => hdet τ).div_const _
     refine hc.congr fun t ht => ?_
     rw [(hnz t ht).1]
     rfl

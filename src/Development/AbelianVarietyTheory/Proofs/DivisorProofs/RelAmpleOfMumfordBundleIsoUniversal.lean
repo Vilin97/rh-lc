@@ -30,7 +30,11 @@ namespace GlobalTheory.MumAmple
 
 theorem relAmple_of_lam_iso_univ : ∀ {o : Type} [CommRing o] {ζ : o} {g n : ℕ} (F : SFam g n ζ) (R' : Type) [CommRing R'] [IsNoetherianRing R'] (T : Sp R' ⟶ F.X) (B : Over (Sp R')) [GrpObj B] [IsCommMonObj B] (β : B.left ⟶ F.univ.A.left) (β₂ : (G2 B).left ⟶ (G2 F.univ.A).left), IsGrpPullback B F.univ.A T β → IsSquare β β₂ → ∀ L : LB B.left, L.IsLB → LBIso (abelian₂ B L) (F.univ.P.pull β₂) → RelAmple B L := by
   intro o _ ζ g n F R' _ _ T B _ _ β β₂ hpb hsq L hL hiso
-  have hB : IsAbelianScheme B := GlobalTheory.PolPull.isAbelianScheme_of_isGrpPullback F.univ.ab hpb
+  have hB : IsAbelianScheme B :=
+    { comm := inferInstance
+      smooth := MorphismProperty.of_isPullback (P := @Smooth) hpb.1 F.univ.ab.smooth
+      proper := MorphismProperty.of_isPullback (P := @IsProper) hpb.1 F.univ.ab.proper
+      geomConnected := MorphismProperty.of_isPullback (P := @GeometricallyConnected) hpb.1 F.univ.ab.geomConnected }
   have := hB.proper
   have := hB.smooth
   refine ProperFinite.relAmple_of_geometricFibres B hL fun K _ _ y => ?_

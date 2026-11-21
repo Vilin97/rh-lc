@@ -95,6 +95,7 @@ theorem exists_functional : ∀ (d : ℕ) (T : Fin 3 → Matrix (Fin d) (Fin d) 
     rw [← hΛ, MultilinearMap.map_sum, hprod, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun r _ => ?_
   rw [MultilinearMap.map_smul_univ, hL, hg, smul_eq_mul, Complex.ofReal_prod]
+  simp only [RingHom.id_apply]
   ring
 
 end

@@ -46,7 +46,7 @@ theorem exists_embed_padicAlgCl (p : ℕ) [Fact p.Prime] (K : IntermediateField 
   let ι : FractionRing W →+* PadicAlgCl p := K'.val.toRingHom.comp τ
   let j : W →+* OO p := (integralClosureToPadicAlgClIntegers K').comp f'
   have hj : ∀ v, (j v : PadicAlgCl p) = ι (algebraMap W (FractionRing W) v) := fun v => by
-    show ((f' v : K') : PadicAlgCl p) = ((τ (algebraMap W (FractionRing W) v) : K') : PadicAlgCl p)
+    dsimp [j, ι, integralClosureToPadicAlgClIntegers, RingHom.comp_apply]
     rw [← RingHom.comp_apply τ, hτW]; rfl
   have hball : ∀ x, ‖ι x‖ ≤ 1 ↔ x ∈ Set.range (algebraMap W (FractionRing W)) := by
     intro x

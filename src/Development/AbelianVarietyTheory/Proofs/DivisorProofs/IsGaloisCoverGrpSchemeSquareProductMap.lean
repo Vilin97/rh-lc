@@ -85,13 +85,13 @@ theorem GlobalTheory.UPel.HT.Hecke.isGaloisCover_grpSchemeSquareProductMap : ∀
     · rw [Category.assoc, grpSchemeSquareProductMap_comp_fst, reassoc_of% transl_lift_fst_left, hψ.inv a.1]
     · rw [Category.assoc, grpSchemeSquareProductMap_comp_snd, reassoc_of% transl_lift_snd_left, hψ.inv a.2]
   · rw [grpSchemeSquareProductMap_eq_pullback_map]
-    exact MorphismProperty.pullback_map (P := @IsFinite) hfin hfin (Over.w ψ).symm (Over.w ψ).symm
+    exact MorphismProperty.pullbackMap (P := @IsFinite) hfin hfin (Over.w ψ).symm (Over.w ψ).symm
   · rw [grpSchemeSquareProductMap_eq_pullback_map]
     haveI : MorphismProperty.IsStableUnderComposition @Etale.{0} := ⟨fun _ _ _ _ ↦ inferInstance⟩
-    exact MorphismProperty.pullback_map (P := @Etale) het het (Over.w ψ).symm (Over.w ψ).symm
+    exact MorphismProperty.pullbackMap (P := @Etale) het het (Over.w ψ).symm (Over.w ψ).symm
   · rw [grpSchemeSquareProductMap_eq_pullback_map]
     haveI : MorphismProperty.IsStableUnderComposition @Surjective.{0} := ⟨fun _ _ _ _ ↦ inferInstance⟩
-    exact MorphismProperty.pullback_map (P := @Surjective) hon hon (Over.w ψ).symm (Over.w ψ).symm
+    exact MorphismProperty.pullbackMap (P := @Surjective) hon hon (Over.w ψ).symm (Over.w ψ).symm
   · intro K _ _ y y' e
     have e₁ : (y ≫ (fst A A).left) ≫ ψ.left = (y' ≫ (fst A A).left) ≫ ψ.left := by
       rw [Category.assoc, Category.assoc, ← grpSchemeSquareProductMap_comp_fst, reassoc_of% e]

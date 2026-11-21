@@ -86,7 +86,9 @@ theorem tailLog_on_compact_of_chart {e : ℕ} {X : Type} [TopologicalSpace X] [C
       rw [h1, h2]
   calc ∫ y in S, F y = integralWith A hne.some Φ g := by rw [hgI, hSint]
     _ ≤ integralWith A hne.some Φ h := hle
-    _ = mInt A Φ h := (mInt_eq_integralWith A Φ hne h).symm
+    _ = mInt A Φ h := by
+      unfold mInt
+      rw [dite_eq_left hne]
     _ ≤ _ := hB
 
 end GlobalTheory.CompanionTheory.Metric.LocTail

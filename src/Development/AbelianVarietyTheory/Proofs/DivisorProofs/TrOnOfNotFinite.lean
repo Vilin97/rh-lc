@@ -282,8 +282,8 @@ theorem levOp_split (ρ : Representation ℂ G V) (U₀ : Subgroup G) (K₀ : Su
     LevOpTmul.levOp_apply _ _ _ b _ hb.toFinset (fun q hq => by simpa using hq),
     LevOpTmul.levOp_apply ρ _ _ _ _ ((ha.toFinset ×ˢ hb.toFinset).image e) ?_,
     Finset.sum_image (fun p _ q _ h => he h), Finset.sum_product]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [LinearMap.id_apply, Subgroup.relIndex_self, Nat.cast_one, inv_one, one_smul, map_smul, map_sum,
+  · set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.id_apply, Subgroup.relIndex_self, Nat.cast_one, inv_one, one_smul, map_smul, map_sum,
       Finset.smul_sum]
     refine Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun q _ => ?_
     simp only [e]

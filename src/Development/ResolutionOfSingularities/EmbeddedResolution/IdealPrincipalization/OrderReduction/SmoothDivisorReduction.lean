@@ -61,6 +61,7 @@ private theorem boundary_dropTrivialBoundary_of_eq_nil (T : MarkedIdealWithBound
     (MaxContactReduction.dropTrivialBoundary T).boundary = [] := by
   unfold MaxContactReduction.dropTrivialBoundary
   simp [h]
+  rfl
 
 private theorem isBalanced_of_mult_eq_one (T : MarkedIdealWithBoundary.{u})
     (hft : AlgebraicGeometry.LocallyOfFiniteType T.structMap) (h : T.mult = 1) :

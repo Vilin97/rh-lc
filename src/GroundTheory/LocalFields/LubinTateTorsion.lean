@@ -70,16 +70,14 @@ theorem coeff_ltPoly_sub (π : 𝒪[K]) (n : ℕ) :
     Polynomial.coeff_coe]
 
 theorem isLubinTateSeries_ltPoly (π : 𝒪[K]) :
-    IsLubinTateSeries π (ltPoly π : PowerSeries 𝒪[K]) where
-  constantCoeff_eq_zero := by
-    have hq := one_lt_card_residueField' (K := K)
-    rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, Polynomial.coeff_coe, ltPoly]
+    IsLubinTateSeries π (ltPoly π : PowerSeries 𝒪[K]) := by
+  have hq := one_lt_card_residueField' K
+  refine { constantCoeff_eq_zero := ?_, coeff_one := ?_, dvd_coeff_sub := ?_ }
+  · rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, Polynomial.coeff_coe, ltPoly]
     simp [coeff_X_pow, show 0 ≠ Nat.card 𝓀[K] by omega]
-  coeff_one := by
-    have hq := one_lt_card_residueField' (K := K)
-    rw [Polynomial.coeff_coe, ltPoly]
+  · rw [Polynomial.coeff_coe, ltPoly]
     simp [coeff_X_pow, hq.ne]
-  dvd_coeff_sub n := by
+  · intro n
     rw [coeff_ltPoly_sub, coeff_C_mul_X]
     split_ifs
     · exact dvd_rfl
@@ -452,17 +450,16 @@ theorem map_residue_ltEisenstein (hπ : Irreducible π) (n : ℕ) :
     map_residue_ltPolyIter π hπ, ← pow_mul, mul_comm]
 
 theorem isEisensteinAt_ltEisenstein (hπ : Irreducible π) (n : ℕ) :
-    (ltEisenstein π n).IsEisensteinAt (IsLocalRing.maximalIdeal 𝒪[K]) where
-  leading := by
-    rw [(ltEisenstein_monic π n).1.leadingCoeff]
+    (ltEisenstein π n).IsEisensteinAt (IsLocalRing.maximalIdeal 𝒪[K]) := by
+  refine { leading := ?_, mem := ?_, notMem := ?_ }
+  · rw [(ltEisenstein_monic π n).1.leadingCoeff]
     exact fun h => (IsLocalRing.maximalIdeal.isMaximal 𝒪[K]).ne_top
       ((Ideal.eq_top_iff_one _).mpr h)
-  mem {k} hk := by
+  · intro k hk
     rw [← IsLocalRing.residue_eq_zero_iff, ← coeff_map, map_residue_ltEisenstein hπ, coeff_X_pow]
     rw [(ltEisenstein_monic π n).2] at hk
     simp [hk.ne]
-  notMem := by
-    have hq := one_lt_card_residueField' K
+  · have hq := one_lt_card_residueField' K
     have h0 : (ltEisenstein π n).coeff 0 = π := by
       rw [ltEisenstein, coeff_add, coeff_C_zero, coeff_zero_eq_eval_zero, eval_pow,
         ← coeff_zero_eq_eval_zero, coeff_zero_ltPolyIter, zero_pow (by omega), add_zero]

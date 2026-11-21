@@ -37,7 +37,7 @@ theorem exists_smul_of_isTwistPull : ∀ (K : Type) [Field K] [IsAlgClosed K] [C
     (DVR.mulGen_isGen _ _ _ _ _ _ _ hα' (DVR.invGen_isGen _ _ _ _ hα)) (fun U _ h => by
       simp [Fintype.prod_sum_type, Fin.prod_univ_two])
   obtain ⟨c, rfl⟩ := (ConcreteCategory.bijective_of_isIso (Scheme.ΓSpecIso (CommRingCat.of K)).inv).2 a
-  refine ⟨c, SecMod.ext_coord fun j => ?_⟩
+  refine ⟨c, DVR.SecOps.sec_ext fun j => ?_⟩
   refine sec_ext_val P.isLB (fun y J hJ => ?_) j
   have e1 := VVRank.sv_of_isTwistPull P.A h' (𝟙 _) y hJ
   have e0 := VVRank.sv_of_isTwistPull P.A h (𝟙 _) y hJ

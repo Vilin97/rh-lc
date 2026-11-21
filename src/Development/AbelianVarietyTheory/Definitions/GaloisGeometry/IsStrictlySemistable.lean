@@ -227,7 +227,9 @@ theorem _root_.GlobalTheory.LogCris.model_mul_eq_zero {m r : ℕ} (hϖ : ϖ ∈ 
   set d : Fin m →₀ ℕ := ∑ i ∈ S, Finsupp.single i 1
   have hX : (∏ i ∈ S, MvPolynomial.X i : MvPolynomial (Fin m) O) = MvPolynomial.monomial d 1 := by
     simp only [d, MvPolynomial.X, MvPolynomial.monomial_sum_one]
-  rw [Ideal.Quotient.eq_zero_iff_mem, Ideal.mem_span_singleton']
+  rw [Ideal.Quotient.eq_zero_iff_mem]
+  change g ∈ Ideal.span ({((∏ i ∈ S, MvPolynomial.X i : MvPolynomial (Fin m) O) - MvPolynomial.C ϖ)} : Set _)
+  rw [Ideal.mem_span_singleton']
   have h2 : MvPolynomial.C ϖ * g ∈
       Ideal.span (Set.singleton ((∏ i ∈ S, MvPolynomial.X i : MvPolynomial (Fin m) O) - MvPolynomial.C ϖ)) := by
     rw [← Ideal.Quotient.eq_zero_iff_mem, map_mul]

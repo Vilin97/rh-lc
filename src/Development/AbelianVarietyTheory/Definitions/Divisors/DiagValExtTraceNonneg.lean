@@ -148,7 +148,7 @@ def mid : Chart S.X₂ (r + s) :=
 theorem crd_frame (hy : y ∈ ptsIn p σ a.U) (i j : Fin r ⊕ Fin s) :
     (a.mid hS).crd p σ (a.frame j) y (finSumFinEquiv i) = (1 : Matrix _ _ ℂ) i j := by
   have := congrFun ((a.mid hS).crd_frame hy (finSumFinEquiv j)) (finSumFinEquiv i)
-  simpa [mid, Pi.single_apply, one_apply] using this
+  simpa [mid, Pi.single_apply, Matrix.one_apply] using this
 
 
 variable (p σ) in
@@ -169,7 +169,7 @@ theorem tr_eq (hy : y ∈ ptsIn p σ a.U) (hy' : y ∈ ptsIn p σ a'.U) :
     have e (b : Fin r) := a.crd_frame hS hy i (.inl b)
     simp only [mulVec, dotProduct, of_apply]
     refine (Finset.sum_congr rfl fun b _ => congrArg (· * _) (e b)).trans ?_
-    rcases i with i | i <;> simp [one_apply, Chart.tr, sub]
+    rcases i with i | i <;> simp [Matrix.one_apply, Chart.tr, sub]
   have h₂ (i j : Fin s) : a.tr p σ hS a' y (.inr i) (.inr j) = a.quot.tr p σ a'.quot y i j := by
     rw [tr_apply]
     refine Eq.symm ((congrFun (a.quot.crd_app (a.mid hS) S.g (a'.t j) hy' hy) _).trans ?_)
@@ -254,7 +254,7 @@ theorem IsConj.quot {h' : Met p σ' S.X₂ (r + s)} (H : h.IsConj h') :
     congrArg transpose (dualGram_map_star M.toBlocks₁₁)
   rw [quotGram, quotGram, e₁]
   ext i j
-  simp [mul_apply, toBlocks₂₁, toBlocks₁₂, toBlocks₂₂]
+  simp [Matrix.mul_apply, toBlocks₂₁, toBlocks₁₂, toBlocks₂₂, map_sum, map_mul]
 
 end Met
 

@@ -70,8 +70,9 @@ theorem h_fg : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegral X] (p : 
   obtain ⟨φ, hφ⟩ := exists_hom P a b M hM
   have := GlobalTheory.T.addGroupFG_lineBundleSections_arithmeticVariety k X p D hX M.B M.isLB
   rw [← hφ, AddMonoidHom.range_eq_map]
-  classical
-  obtain ⟨S, hS⟩ := this.out
-  exact ⟨S.image φ, by rw [Finset.coe_image, ← AddMonoidHom.map_closure, hS]⟩
+  obtain ⟨S, hS, hfin⟩ := AddGroup.fg_iff.mp this
+  apply (AddSubgroup.fg_iff _).mpr
+  refine ⟨(φ : M.B.Sec → X.functionField) '' S, ?_, hfin.image φ⟩
+  rw [← AddMonoidHom.map_closure, hS]
 
 end GlobalTheory.HSNef.PairFG

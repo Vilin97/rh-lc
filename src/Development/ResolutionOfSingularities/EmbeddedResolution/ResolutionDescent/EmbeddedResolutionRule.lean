@@ -114,7 +114,7 @@ theorem pullbackCondition_baseChangeEmb (D : EmbeddingDatum k Y p) (K : Type u) 
 def baseChangeEmb (D : EmbeddingDatum k Y p) (K : Type u) [Field K] [Algebra k K] :
     baseChange p K ⟶ baseChange D.ambientStruct K :=
   pullback.lift (baseChangeProjection p K ≫ D.emb) (baseChangeToSpec p K)
-    (pullbackCondition_baseChangeEmb D K)
+    (by exact pullbackCondition_baseChangeEmb D K)
 
 @[simp]
 theorem baseChangeEmb_comp_baseChangeProjection (D : EmbeddingDatum k Y p) (K : Type u) [Field K]

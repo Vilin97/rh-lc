@@ -35,7 +35,9 @@ theorem torsion_from_closure : ∀ (R : Type) [CommRing R] [IsDomain R] (A : Pol
     congrArg spMap em.comp_algebraMap.symm
   obtain ⟨w, hw⟩ := H (Kb R) F em.toRingHom t0.left ((Over.w t0).trans hs)
   have hw2 : w ≫ (torsion A.A N).hom = (TFK (R := R) (Kb R)).hom := by
-    refine spec_map_field_cancel em.toRingHom _ _ ?_
+    have : Surjective (spMap em.toRingHom) := ⟨fun y => ⟨default, Subsingleton.elim _ _⟩⟩
+    have : Epi (spMap em.toRingHom) := Flat.epi_of_flat_of_surjective _
+    apply (cancel_epi (spMap em.toRingHom)).1
     rw [← Category.assoc, hw, Over.w t0, hs, ← spMap_comp_spMap]
     rfl
   let w1 : TFK (R := R) (Kb R) ⟶ torsion A.A N := Over.homMk w hw2

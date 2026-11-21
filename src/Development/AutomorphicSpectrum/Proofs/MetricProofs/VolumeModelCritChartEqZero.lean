@@ -53,7 +53,8 @@ theorem not_flat (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) →
       (Fin e → ℂ) →ₗ[ℂ] (Fin e → ℂ)) = 0) : False := by
   obtain ⟨y, hy⟩ := exists_infinite_fibre hO hne han hdet
   refine (fib_finite M Ψ hP hΨ y).not_infinite ((Set.Infinite.image
-    ((M.atlas.chart j).symm.injOn.mono fun u hu => hOt hu.1) hy).mono ?_)
+    (Set.InjOn.mono (s₁ := O ∩ (modelQ M Ψ ∘ (M.atlas.chart j).symm) ⁻¹' {y})
+      (fun u hu => hOt hu.1) (M.atlas.chart j).symm.injOn) hy).mono ?_)
   rintro _ ⟨u, ⟨huO, hqu⟩, rfl⟩
   exact ⟨hqu, h0 u huO⟩
 

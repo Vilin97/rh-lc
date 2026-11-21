@@ -31,7 +31,7 @@ noncomputable section
 
 open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory.KerPow GlobalTheory.IndefiniteRowSideFullHecke.TwistedPoints
+open GlobalTheory.KerPow
 attribute [local instance] Over.cartesianMonoidalCategory
 
 namespace GlobalTheory.TwistCompare

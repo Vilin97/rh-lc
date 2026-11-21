@@ -181,7 +181,7 @@ private lemma isAdicComplete_maximalIdeal_adicCompletionIntegers (ϖ : w.adicCom
       obtain ⟨γ, hγ⟩ := hu
       obtain ⟨n, hn⟩ := Valued.exists_pow_lt_of_le_exp_neg_one (R := w.adicCompletion E) hϖ.le
         (Units.map (MonoidWithZeroHom.ValueGroup₀.embedding
-          (f := (.ofClass (Valued.v : Valuation (w.adicCompletion E) (WithZero (Multiplicative ℤ)))))) γ)
+          (f := ((Valued.v : Valuation (w.adicCompletion E) (WithZero (Multiplicative ℤ))) : (w.adicCompletion E) →*₀ WithZero (Multiplicative ℤ)))).toMonoidHom γ)
       refine ⟨n, fun a ha => hus (hγ ?_)⟩
       show (Valued.v : Valuation (w.adicCompletion E) (WithZero (Multiplicative ℤ))).restrict
         (a : w.adicCompletion E) < γ.1

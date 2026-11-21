@@ -132,12 +132,19 @@ theorem phi_mk (A : PAlg l) (n : ℕ) (r : A.Acr n) :
   rw [← map_sub, ← hc, map_mul, map_natCast]
   exact Ideal.mul_mem_left _ _ (Ideal.mem_sup_left (Ideal.mem_span_singleton_self _))
 
-def phiMorC (n : ℕ) : CH.Mor (Oc F κ true n) (Oc F κ true n) (ACris.phi ℂ_[l] l) :=
-  omMor (crMor (F := F) (F' := F) (b := bs l true n) (b' := bs l true n) (ht := rfl) (ht' := rfl) ((base l).phi n) rfl
-    ((base l).dpP_phi n) (phiPt F κ n) fun _ y r =>
-      ((congrArg y.1.1 (phi_mk (base l) n r)).trans (map_pow y.1.1 _ l)).symm) (ACris.phi ℂ_[l] l) ((base l).phi_cris n)
+def phiMorC (n : ℕ) : CH.Mor (Oc F κ true n) (Oc F κ true n) (ACris.phi (K := ℂ_[l]) (p := l)) := by
+  have hcris (a : Acris l) : (base l).phi n ((base l).cris n a) =
+      (base l).cris n (ACris.phi (K := ℂ_[l]) (p := l) a) :=
+    (base l).pdOk_frob.acr_cris (base l).frob_comp_s (ACris.phiZero (K := ℂ_[l]) (p := l))
+      (fun y => RingHom.congr_fun (f := ACris.phiAway ℂ_[l] l)
+        (awayW_ext fun x => by rw [ACris.phiAway_algebraMap, awayW_algebraMap, wmap_frobenius]) y.1) n a
+  exact
+    omMor (crMor (F := F) (F' := F) (b := bs l true n) (b' := bs l true n) (ht := rfl) (ht' := rfl) ((base l).phi n) rfl
+      ((base l).dpP_phi n) (phiPt F κ n) fun _ y r =>
+        ((congrArg y.1.1 (phi_mk (base l) n r)).trans (map_pow y.1.1 _ l)).symm)
+      (ACris.phi (K := ℂ_[l]) (p := l)) hcris
 
-def phiHc (n j : ℕ) : Hc F κ true n j →ₛₗ[ACris.phi ℂ_[l] l] Hc F κ true n j := (phiMorC F κ n).pull j
+def phiHc (n j : ℕ) : Hc F κ true n j →ₛₗ[ACris.phi (K := ℂ_[l]) (p := l)] Hc F κ true n j := (phiMorC F κ n).pull j
 
 def cmpMor (n : ℕ) : CH.Mor (Oc F κ false n) (Oc F κ true n) (RingHom.id _) :=
   omMor (crMor (F := F) (F' := F) (b := bs l false n) (b' := bs l true n) (ht := rfl) (ht' := rfl) (RingHom.id _) rfl

@@ -248,7 +248,7 @@ theorem lower_center {L : Flat.LogPeriods n a g Λ} {bas : Module.Basis (Fin g �
       intro i _
       simpa using (h.B_psd i).dotProduct_mulVec_nonneg v
     have h1 := (Finset.sum_eq_zero_iff_of_nonneg hnn).1 h0 j (Finset.mem_univ j)
-    exact ((h.B_psd j).dotProduct_mulVec_zero_iff v).1 (by simpa using h1)
+    exact ((h.B_psd j).dotProduct_mulVec_zero_iff).1 (by simpa using h1)
   have := GlobalTheory.CompanionTheory.ChartBlockLower.im_lower_on_kernel n a g L.a_le (Metric.ball 0 ρ) T0 B c
     Metric.isOpen_ball (h.T_cont.mono (Metric.ball_subset_ball h.ρ_le)) h.B_psd h.c_pos h.im_lower
     0 (Metric.mem_ball_self h.ρ_pos) 0 (fun j hj => (hj rfl).elim) (fun j _ => rfl) v

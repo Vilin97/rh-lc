@@ -203,7 +203,10 @@ theorem toBaseChange_pts_bijective (B : Type) [CommRing B] [Algebra R B] [Algebr
   refine ⟨fun x y h => ofConv_injective (Algebra.TensorProduct.ext (Subsingleton.elim _ _)
     (AlgHom.ext fun a => DFunLike.congr_fun (congrArg ofConv h) a)), fun x => ?_⟩
   exact ⟨toConv (Algebra.TensorProduct.lift (Algebra.ofId R' B) x.ofConv fun _ _ => .all _ _),
-    ofConv_injective (AlgHom.ext fun a => by simp)⟩
+    ofConv_injective (AlgHom.ext fun a => by
+      change Algebra.TensorProduct.lift (Algebra.ofId R' B) x.ofConv
+        (fun _ _ => .all _ _) ((1 : R') ⊗ₜ[R] a) = x.ofConv a
+      rw [Algebra.TensorProduct.lift_tmul, map_one, one_mul])⟩
 
 variable {R R' A}
 
@@ -285,7 +288,9 @@ def toHom (s : SemiHom (RingHom.id O) G H) : G ⟶ H :=
   ⟨fun n => (s.app n).toBialgHom, fun n => BialgHom.ext (s.res_app n)⟩
 
 def comp (t : SemiHom τ G'' G') (s : SemiHom σ G' G) : SemiHom (τ.comp σ) G'' G :=
-  ⟨fun n => (t.app n).comp (s.app n), fun n a => by simp [t.res_app, s.res_app]⟩
+  ⟨fun n => (t.app n).comp (s.app n), fun n a => by
+    change G''.res n (t.app (n + 1) (s.app (n + 1) a)) = t.app n (s.app n (G.res n a))
+    rw [t.res_app, s.res_app]⟩
 
 @[simp] theorem comp_app (t : SemiHom τ G'' G') (s : SemiHom σ G' G) (n : ℕ) (a : G.A n) :
     (t.comp s).app n a = t.app n (s.app n a) := rfl
@@ -419,7 +424,8 @@ variable (G H K : PDivGroup p O) (O') [Algebra O O']
     refine le_antisymm (fun a ha => ?_) ((torsionIdeal_le_ker_iff _
       (bcMap O' (G.res n) : O' ⊗[O] G.A (n + 1) →ₐ[O'] O' ⊗[O] G.A n)).2
         ((key _ _).2 ⟨AlgHom.id _ _, rfl⟩))
-    obtain ⟨y, hy⟩ := (key _ (Ideal.Quotient.mkₐ O' (torsionIdeal O' _ (p ^ n)))).1
+    obtain ⟨y, hy⟩ := (key _ (Ideal.Quotient.mkₐ O'
+      (torsionIdeal (R := O') (A := O' ⊗[O] G.A (n + 1)) (p ^ n)))).1
       ((torsionIdeal_le_ker_iff _ _).1 fun a ha => Ideal.Quotient.eq_zero_iff_mem.2 ha)
     have h := DFunLike.congr_fun hy a
     have ha' : bcMap O' (G.res n) a = 0 := ha
@@ -442,7 +448,7 @@ def baseChangeMap (f : G ⟶ H) : G.baseChange O' ⟶ H.baseChange O' :=
 variable {O'} in
 theorem baseChange_hom_ext {G' : PDivGroup p O'} {f g : G' ⟶ G.baseChange O'}
     (h : ∀ n a, f.app n (1 ⊗ₜ a) = g.app n (1 ⊗ₜ a)) : f = g :=
-  hom_ext fun n => bc_hom_ext (h n)
+  Hom.ext (funext fun n => bc_hom_ext (h n))
 
 variable (p O) in
 @[simps] def baseChangeFunctor : PDivGroup p O ⥤ PDivGroup p O' where

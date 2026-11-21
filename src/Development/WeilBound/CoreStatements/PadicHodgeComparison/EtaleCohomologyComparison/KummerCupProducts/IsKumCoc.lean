@@ -97,7 +97,7 @@ def Splits (U : Scheme.{0}) : Prop := ∀ (Y : Scheme.{0}) (f : Y ⟶ U), Etale 
 
 def Rep {R : Type} [CommRing R] {I : GlobalTheory.EtC.Cx R} {X : Scheme.{0}} {n : ℤ} (x : CohomologyClass ((chains R).obj (sch.obj X)) I n)
     (a : Sec (I.X n) X) : Prop :=
-  ∃ α : Cocycle ((chains R).obj (sch.obj X)) I n, CohomologyClass.mk α = x ∧ ev R α.1 0 n (by simp) X (𝟙 X) = a
+  ∃ α : Cocycle ((chains R).obj (sch.obj X)) I n, CohomologyClass.mk α = x ∧ ev α.1 0 n (by simp) X (𝟙 X) = a
 
 def primRes {q : ℕ} {V U : Scheme.{0}} (g : V ⟶ U) (ζ : Prim q Γ(U, ⊤)) : Prim q Γ(V, ⊤) := ζ.map g.appTop.hom
 
@@ -194,9 +194,9 @@ def InGen : Prop := ∀ (q : ℕ) [NeZero q] (i : ℤ),
 
 def InSch : Prop := ∀ (R : Type) [CommRing R] (X : Scheme.{0}) (I : GlobalTheory.EtC.Cx R) (m n k : ℤ), m + 1 = n → n + 1 = k →
   (∀ z : Sec (I.X n) X, Sec.map (I.d n k) z = 0 → ∃ α : Cocycle ((chains R).obj (sch.obj X)) I n,
-    (∀ (U : Scheme.{0}) (x : U ⟶ X), ev R α.1 0 n (by simp) U x = Sec.res x z) ∧ ∀ (p : ℕ) s h U x, ev R α.1 (p + 1) s h U x = 0) ∧
-  ∀ α : Cocycle ((chains R).obj (sch.obj X)) I n, Sec.map (I.d n k) (ev R α.1 0 n (by simp) X (𝟙 X)) = 0 ∧
-    (CohomologyClass.mk α = 0 ↔ ∃ y : Sec (I.X m) X, Sec.map (I.d m n) y = ev R α.1 0 n (by simp) X (𝟙 X))
+    (∀ (U : Scheme.{0}) (x : U ⟶ X), ev α.1 0 n (by simp) U x = Sec.res x z) ∧ ∀ (p : ℕ) s h U x, ev α.1 (p + 1) s h U x = 0) ∧
+  ∀ α : Cocycle ((chains R).obj (sch.obj X)) I n, Sec.map (I.d n k) (ev α.1 0 n (by simp) X (𝟙 X)) = 0 ∧
+    (CohomologyClass.mk α = 0 ↔ ∃ y : Sec (I.X m) X, Sec.map (I.d m n) y = ev α.1 0 n (by simp) X (𝟙 X))
 
 def InTw : Prop := ∀ (q : ℕ) [NeZero q] (i j : ℤ), IsTwPair (twPair q i j)
 
@@ -211,12 +211,12 @@ def InKum : Prop := ∀ (q : ℕ) [NeZero q], IsKum q (kumT q)
 
 def InC1 : Prop := ∀ (q : ℕ) [NeZero q] (E : Spc) (L : E ⟶ ofCat (glCat 1)), GlobalTheory.EtC.Inv q E →
   ∃ γ : Cocycle _ _ 2, CohomologyClass.mk γ = c1 q L ∧
-    (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev (ZMod q) γ.1 0 2 (by simp) U x = 0) ∧
+    (∀ (U : Scheme.{0}) (x : Sx E 0 U), ev γ.1 0 2 (by simp) U x = 0) ∧
     (∀ (U : Scheme.{0}) (x : Sx E 1 U) (v : (Γ(U, ⊤))ˣ), v ^ q = lineUnit L x →
-      ev (ZMod q) γ.1 1 1 (by simp) U x = Sec.map ((GlobalTheory.EtC.res _ (tw q 1)).d 0 1) (kumT q U v)) ∧
+      ev γ.1 1 1 (by simp) U x = Sec.map ((GlobalTheory.EtC.res _ (tw q 1)).d 0 1) (kumT q U v)) ∧
     ∀ (U : Scheme.{0}) (x : Sx E 2 U) (v w : (Γ(U, ⊤))ˣ), v ^ q = lineUnit L (x.sub 0 1 (by omega)) →
       w ^ q = lineUnit L (x.sub 1 1 (by omega)) →
-      ev (ZMod q) γ.1 2 0 (by simp) U x = kumT q U v + kumT q U w - kumT q U (v * w)
+      ev γ.1 2 0 (by simp) U x = kumT q U v + kumT q U w - kumT q U (v * w)
 
 structure EtIn : Prop where
   a2 : A2

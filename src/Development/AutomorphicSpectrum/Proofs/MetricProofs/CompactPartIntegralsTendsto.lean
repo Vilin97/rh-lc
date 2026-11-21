@@ -193,9 +193,13 @@ theorem cpt_maMeasure [CompactSpace X] (A : FinHolAtlas e X) (hne : Nonempty (Ch
   have hint : ∀ j, Integrable G (chartMeasure A hne.some Φ j) := fun j =>
     (cpt_chartMeasure A hne.some Φ hK hKU j (hc j) hG hGK).1.2
       (cpt_integrableOn A hne.some Φ hK hKU j (hc j) hG hB)
-  rw [maMeasure_eq_sum A Φ hne]
-  refine ⟨integrable_finset_sum_measure.2 fun j _ => hint j, ?_⟩
-  rw [integral_finset_sum_measure fun j _ => hint j]
+  have hmeasure : maMeasure A Φ = ∑ j, chartMeasure A hne.some Φ j := by
+    unfold maMeasure
+    rw [dite_eq_left hne]
+    rfl
+  rw [hmeasure]
+  refine ⟨integrable_finsetSum_measure.2 fun j _ => hint j, ?_⟩
+  rw [integral_finsetSum_measure fun j _ => hint j]
   exact Finset.sum_congr rfl fun j _ => (cpt_chartMeasure A hne.some Φ hK hKU j (hc j) hG hGK).2
 
 theorem cpt_meas {U S : Set X} (hU : IsOpen U) (hS : MeasurableSet S) (hSU : S ⊆ U) {f : X → ℝ}

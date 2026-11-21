@@ -139,7 +139,10 @@ theorem formalGroup_singular (a : R) :
   have h3 : X 0 + X 1 + uThird W + C a * lam W = 0 := by
     simpa [cThree, cTwo, hW] using (third_point W).2.2.1
   have hd : Fgl1.dd W * invOfUnit (Fgl1.dd W) (-1) = 1 :=
-    mul_invOfUnit _ _ (by rw [Fgl1.dd_cc]; simp)
+    mul_invOfUnit _ _ (by
+      have hc := (third_point W).1
+      simp only [hW] at hc ⊢
+      simp [Fgl1.dd, hc])
   have hd' : Fgl1.dd W = -1 + C a * uThird W := by simp [Fgl1.dd, hW]
   have key : uThird W = (X 0 + X 1 - C a * X 0 * X 1) * Fgl1.dd W := by
     rw [hd']

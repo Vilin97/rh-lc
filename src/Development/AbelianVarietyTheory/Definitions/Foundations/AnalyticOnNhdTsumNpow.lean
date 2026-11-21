@@ -93,7 +93,8 @@ theorem cosetSum_indicator (g : G) : LeftInv (P ⊓ Γ) (indicator ((P ⊓ Γ : 
     rw [cosetSum, tsum_eq_single _ h0, term_mk h]
     exact indicator_of_mem (by simp) _
   · have h0 : term P Γ (indicator ((P ⊓ Γ : Subgroup G) : Set G) (1 : G → ℂ)) g = 0 := funext fun q =>
-      indicator_of_notMem (fun e => hg ((Γ.mul_mem_cancel_left q.out.2).1 e.2)) _
+      indicator_of_notMem (fun (e : ((q.out : Γ) : G) * g ∈ ((P ⊓ Γ : Subgroup G) : Set G)) =>
+        hg ((Γ.mul_mem_cancel_left q.out.2).1 (show ((q.out : Γ) : G) * g ∈ P ∧ ((q.out : Γ) : G) * g ∈ Γ from e).2)) _
     rw [CosetConv, cosetSum, h0, indicator_of_notMem hg]
     exact ⟨h, by simpa using summable_zero, tsum_zero⟩
 

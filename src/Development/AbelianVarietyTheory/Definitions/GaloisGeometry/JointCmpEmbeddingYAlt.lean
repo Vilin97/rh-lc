@@ -43,7 +43,9 @@ def foOf (Hh : Formalism.L2.Herm.SymmetricHermitianColumns D) (St : ChainCharts 
   chOf := (St (j + 1) hj).chOf
   lat := (St (j + 1) hj).lat
   K := (St (j + 1) hj).K
-  val := hv (j + 1) hj
+  val := by
+    unfold ValAll at hv
+    exact hv (j + 1) hj
   tw := fun _ => DetTw.ofChiD (detTieOf Hh _) (cTw D (j + 1))
 
 end Site

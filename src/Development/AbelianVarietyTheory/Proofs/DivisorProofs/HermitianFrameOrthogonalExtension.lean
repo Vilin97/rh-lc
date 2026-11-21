@@ -25,7 +25,7 @@ lemma Jm_apply (p q : ℕ) (a b : Ix p q) : Jm p q a b =
     | .inl i, .inl j => if i = j then 1 else 0
     | .inr i, .inr j => if i = j then -1 else 0
     | _, _ => 0 := by
-  rcases a with a | a <;> rcases b with b | b <;> simp [Jm, Formalism.UG.Jpq, one_apply] <;> split_ifs <;> simp
+  rcases a with a | a <;> rcases b with b | b <;> simp [Jm, Formalism.UG.Jpq, Matrix.one_apply] <;> split_ifs <;> simp
 
 lemma Jm_mul_Jm (p q : ℕ) : Jm p q * Jm p q = 1 := by
   simp [Jm, Formalism.UG.Jpq, fromBlocks_multiply, fromBlocks_one]
@@ -35,7 +35,7 @@ lemma mul_Jm_apply {m : Type} {p q : ℕ} (D : Matrix m (Ix p q) ℂ) (i : m) (a
       | .inl _ => D i a
       | .inr _ => - D i a := by
   rcases a with a | a <;>
-    simp [Matrix.mul_apply, Fintype.sum_sum_type, Jm, Formalism.UG.Jpq, one_apply]
+    simp [Matrix.mul_apply, Fintype.sum_sum_type, Jm, Formalism.UG.Jpq, Matrix.one_apply]
 
 def col {n n₁ r₁ s₁ : ℕ} (ι : Matrix (Fin n) (Fin n₁) ℂ) (C₁ : Matrix (Fin n₁) (Ix r₁ s₁) ℂ) (e f : Fin n → ℂ) :
     Ix (r₁ + 1) (s₁ + 1) → Fin n → ℂ

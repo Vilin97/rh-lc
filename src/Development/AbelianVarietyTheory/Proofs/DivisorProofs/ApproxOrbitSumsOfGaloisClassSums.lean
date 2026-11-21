@@ -72,8 +72,8 @@ theorem exists_invariant [Finite (B ≃ₐ[A] B)] (𝔷 : Ideal B) (hz : 𝔷.Is
   set x := u * F with hx
   set T : Finset B := Finset.univ.image (fun σ : B ≃ₐ[A] B => σ x) with hT
   refine ⟨∑ b ∈ T, b, fun σ => ?_, ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_equiv σ.toEquiv (fun b => ?_) (fun b _ => rfl)
     simp only [hT, Finset.mem_image, Finset.mem_univ, true_and]
     constructor
@@ -131,7 +131,7 @@ theorem exists_pow_le [IsLocalRing A] [IsNoetherianRing A] [Module.Finite A B] (
   have hm' : (P.comap (algebraMap A B)).IsMaximal := by
     rw [← (maximalIdeal.isMaximal A).eq_of_le (Ideal.IsPrime.ne_top inferInstance) hm]
     infer_instance
-  have hPm : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap P hm'
+  have hPm : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under P hm'
   have hPe : P = 𝔷 := hPm.eq_of_le hz.ne_top hPz
   exact Set.disjoint_left.1 hPd (hPe ▸ hzz : z ∈ P) (Submonoid.mem_sup_right (Submonoid.mem_powers z))
 

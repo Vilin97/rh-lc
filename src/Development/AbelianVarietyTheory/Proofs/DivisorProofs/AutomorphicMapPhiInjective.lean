@@ -20,7 +20,7 @@ namespace GlobalTheory.BCT.TrKer
 
 theorem multilinear_mem_span {ι : Type} [Fintype ι] [DecidableEq ι] {M : ι → Type}
     [∀ i, AddCommGroup (M i)] [∀ i, Module ℂ (M i)] {N : Type} [AddCommGroup N] [Module ℂ N]
-    (Φ : MultilinearMap ℂ M N) (s : ∀ i, Set (M i)) (f : ∀ i, M i)
+    (Φ : MultilinearMap (RingHom.id ℂ) M N) (s : ∀ i, Set (M i)) (f : ∀ i, M i)
     (hf : ∀ i, f i ∈ Submodule.span ℂ (s i)) :
     Φ f ∈ Submodule.span ℂ {y | ∃ g : ∀ i, M i, (∀ i, g i ∈ s i) ∧ y = Φ g} := by
   first

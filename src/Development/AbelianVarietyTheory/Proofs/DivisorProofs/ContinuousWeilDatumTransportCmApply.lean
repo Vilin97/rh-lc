@@ -46,8 +46,11 @@ theorem continuous_transportF_apply : ∀ (F E : Type) [Field F] [NumberField F]
 
   have hth : ∀ w, Continuous fun p => GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ (om p Φ) w := by
     intro w
-    choose g h hh hg using fun p : UG (cA σ) (incM F JA) × UG (cA σ) (incM F JB) =>
+    have hex : ∀ p : UG (cA σ) (incM F JA) × UG (cA σ) (incM F JB),
+        ∃ (g : GAF σ JS) (h : GAF σ JT),
+          mtF σ JT h = p.1.1.1 ∧ mtF σ JS g = (p.2⁻¹).1.1ᵀ := fun p =>
       GlobalTheory.T.exists_unitaryPair_partner_cmExtension F E σ B hB hstd nS nT JS JT hJS hJT ξ₀ hξ0 hσξ JA JB ξ hJA hJB p.1 p.2
+    choose g h hh hg using hex
     have hθ : IsThetaFunOF σ JS JT ξ₀ B.ψ (GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ Φ) :=
       ⟨GlobalTheory.T.thetaTransform_rationalTranslate_quasiInvariant_cm F E σ B hB hstd nS nT JS JT hJS hJT ξ₀ hξ0 hσξ JA JB ξ hJA hJB κ co hco Φ hΦ,
         GlobalTheory.T.thetaTransform_adelicSchwartz_hasFiniteLevel_CM F E σ B hB hstd nS nT JS JT hJS hJT ξ₀ hξ0 hσξ JA JB ξ hJA hJB κ co hco Φ hΦ,

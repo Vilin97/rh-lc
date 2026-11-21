@@ -18,6 +18,9 @@ section AlgCl
 
 variable (p : ℕ) [Fact p.Prime]
 
+local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
+local notation "𝔪" => maximalIdeal 𝔹
+
 instance isAdicComplete_maximalIdeal_bDeRhamPlus_padicComplex :
     IsAdicComplete (maximalIdeal (BDeRhamPlus (normInteger ℂ_[p]) p))
       (BDeRhamPlus (normInteger ℂ_[p]) p) :=
@@ -128,6 +131,8 @@ section Galois
 
 variable {p : ℕ} [Fact p.Prime] {K : IntermediateField ℚ_[p] (PadicAlgCl p)}
 
+local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
+
 theorem gal_smul_padicIntToWitt (σ : Gal(PadicAlgCl p/K)) (x : ℤ_[p]) :
     σ • IsPerfectoidField.padicIntToWitt (K := ℂ_[p]) p x =
       IsPerfectoidField.padicIntToWitt (K := ℂ_[p]) p x := by
@@ -157,7 +162,7 @@ theorem gal_smul_algClToBdR (σ : Gal(PadicAlgCl p/K)) (x : PadicAlgCl p) :
           (σ : PadicAlgCl p →+* PadicAlgCl p))
       commutes' := fun q => by
         simp only [RingHom.toMonoidHom_eq_coe, OneHom.toFun_eq_coe, MonoidHom.toOneHom_coe,
-          MonoidHom.coe_coe, RingHom.coe_comp, Function.comp_apply, RingHom.coe_coe, galBdR_apply]
+          MonoidHom.coe_ofClass, RingHom.coe_comp, Function.comp_apply, RingHom.coe_coe, galBdR_apply]
         rw [IsScalarTower.algebraMap_apply ℚ_[p] K (PadicAlgCl p), AlgEquiv.commutes,
           ← IsScalarTower.algebraMap_apply, AlgHom.commutes, gal_smul_algebraMap_bdR] }
   have hg : g = algClToBdR p := eq_algClToBdR p g fun y => by

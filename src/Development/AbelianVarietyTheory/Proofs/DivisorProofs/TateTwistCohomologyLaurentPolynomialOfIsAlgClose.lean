@@ -25,7 +25,7 @@ theorem isPrincipalIdealRing : IsPrincipalIdealRing (LaurentPolynomial K) := by
   refine ⟨fun P => ?_⟩
   obtain ⟨g, hg⟩ := (IsPrincipalIdealRing.principal (P.comap (algebraMap K[X] (LaurentPolynomial K))))
   refine ⟨algebraMap K[X] (LaurentPolynomial K) g, ?_⟩
-  rw [← IsLocalization.map_comap (Submonoid.powers (X : K[X])) (LaurentPolynomial K) P, Ideal.under_def, hg,
+  rw [← IsLocalization.map_under (Submonoid.powers (X : K[X])) (LaurentPolynomial K) P, Ideal.under_def, hg,
     Ideal.submodule_span_eq, Ideal.map_span, Set.image_singleton, Ideal.submodule_span_eq]
 
 theorem units_eq (u : (LaurentPolynomial K)ˣ) :

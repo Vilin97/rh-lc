@@ -237,8 +237,8 @@ private theorem valuesIn_of_range_subset {χ : HChar D.host.E} {s : ℝ} (h : χ
     χ.ValuesIn s σ' := fun v hv => hσ (h v hv)
 
 theorem NumbersIn.mono {S : GridChoice W Set.univ} {μ₀ : T} (h : NumbersIn σ S μ₀) (hσ : Set.range σ ⊆ Set.range σ') :
-    NumbersIn σ' S μ₀ where
-  chars :=
+    NumbersIn σ' S μ₀ :=
+  { chars :=
     { mu0 := fun j w x => hσ (h.chars.mu0 j w x)
       xi := fun t w x => hσ (h.chars.xi t w x)
       chi := fun i h1 h2 w x => hσ (h.chars.chi i h1 h2 w x)
@@ -246,17 +246,17 @@ theorem NumbersIn.mono {S : GridChoice W Set.univ} {μ₀ : T} (h : NumbersIn σ
       chiPsi := valuesIn_of_range_subset h.chars.chiPsi hσ
       del := valuesIn_of_range_subset h.chars.del hσ
       del' := valuesIn_of_range_subset h.chars.del' hσ }
-  eighth := fun z hz => hσ (h.eighth z hz)
-  roots := fun t w hw z hz => hσ (h.roots t w hw z hz)
-  phases := fun t Φ β hβ w x y e h1 h2 => hσ (h.phases t Φ β hβ w x y e h1 h2)
-  sqrt := fun w hw => hσ (h.sqrt w hw)
-  jets := fun t Φ β hβ τ hτ d hd c =>
-    ⟨fun j a b => hσ ((h.jets t Φ β hβ τ hτ d hd c).1 j a b), fun i a b => hσ ((h.jets t Φ β hβ τ hτ d hd c).2 i a b)⟩
-  ratios := fun i j t Λ Λ₀ h1 h2 s hs1 hs2 h0 => hσ (h.ratios i j t Λ Λ₀ h1 h2 s hs1 hs2 h0)
-  bottom := fun i j hex => by
-    obtain ⟨A, A', WW, X, hX, Ω, Ω', hΩ, hΩ', hs⟩ := h.bottom i j hex
-    exact ⟨A, A', WW, X, hX, Ω, Ω', hΩ, hΩ', fun t g hg =>
-      ⟨fun k hk => hσ ((hs t g hg).1 k hk), fun k hk => hσ ((hs t g hg).2 k hk)⟩⟩
+    eighth := fun z hz => hσ (h.eighth z hz)
+    roots := fun t w hw z hz => hσ (h.roots t w hw z hz)
+    phases := fun t Φ β hβ w x y e h1 h2 => hσ (h.phases t Φ β hβ w x y e h1 h2)
+    sqrt := fun w hw => hσ (h.sqrt w hw)
+    jets := fun t Φ β hβ τ hτ d hd c =>
+      ⟨fun j a b => hσ ((h.jets t Φ β hβ τ hτ d hd c).1 j a b), fun i a b => hσ ((h.jets t Φ β hβ τ hτ d hd c).2 i a b)⟩
+    ratios := fun i j t Λ Λ₀ h1 h2 s hs1 hs2 h0 => hσ (h.ratios i j t Λ Λ₀ h1 h2 s hs1 hs2 h0)
+    bottom := fun i j hex => by
+      obtain ⟨A, A', WW, X, hX, Ω, Ω', hΩ, hΩ', hs⟩ := h.bottom i j hex
+      exact ⟨A, A', WW, X, hX, Ω, Ω', hΩ, hΩ', fun t g hg =>
+        ⟨fun k hk => hσ ((hs t g hg).1 k hk), fun k hk => hσ ((hs t g hg).2 k hk)⟩⟩ }
 
 variable {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 : Type} {A : FamIn D.what₂.LL Γ Pl0 T D.R.m}
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks}

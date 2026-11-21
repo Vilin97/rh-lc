@@ -87,7 +87,7 @@ theorem isSSec_finset_sum_and_n1_le_card_mul_sum (n : ℕ) (Y : Type) [Topologic
               (Filter.Eventually.of_forall hpt))
         _ = _ := by
           rw [lintegral_const_mul' _ _ (ENNReal.natCast_ne_top _),
-            lintegral_finset_sum' _ (fun P hP => (hcont P hP).aemeasurable
+            lintegral_finsetSum' _ (fun P hP => (hcont P hP).aemeasurable
               Metric.isOpen_ball.measurableSet)]
     unfold n1
     calc _ ≤ ∑ a, (T.card : ℝ≥0∞) * ∑ P ∈ T, ∫⁻ v in Metric.ball (C.c a) (C.r a), ENNReal.ofReal

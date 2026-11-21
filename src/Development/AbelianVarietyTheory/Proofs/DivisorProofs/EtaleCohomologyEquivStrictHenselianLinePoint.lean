@@ -61,7 +61,22 @@ theorem eqv_local : ∀ (q : ℕ) [NeZero q] (T : Type) [CommRing T] [IsDomain T
     have := DFunLike.congr_fun h Polynomial.X
     simpa using this
   rcases lt_trichotomy n 0 with hn | rfl | hn
-  · have h1 := (GlobalTheory.T.etaleCohomology_negative_vanishing_degree_zero (ZMod q) (tw q i)).1
+  · have h1 : ∀ E : Spc, ∀ n : ℤ, n < 0 → Subsingleton (H (ZMod q) E (tw q i) n) := by
+      intro E n hn
+      have hz : ∀ α : CochainComplex.HomComplex.Cochain ((chains (ZMod q)).obj E)
+          (res (ZMod q) (tw q i)) n, α = 0 := by
+        intro α
+        apply (GlobalTheory.T.etaleCochainEvalOnSimplex_basic_properties (ZMod q)).2.2.1 α 0
+        intro p s h U x
+        have hs : s < 0 := by omega
+        haveI := ((GlobalTheory.T.chosenInjectiveResolutionEtaleSheaf_sections_exactness
+          (ZMod q) (tw q i) U).2.2.2 s hs)
+        exact Subsingleton.elim _ _
+      refine ⟨fun a b => ?_⟩
+      obtain ⟨a, rfl⟩ := a.mk_surjective
+      obtain ⟨b, rfl⟩ := b.mk_surjective
+      have : a = b := CochainComplex.HomComplex.Cocycle.ext (by rw [hz a.1, hz b.1])
+      rw [this]
     haveI := h1 (sp O) n hn
     haveI := h1 (sp (TensorProduct T (FractionRing T) O)) n hn
     exact bijective_of_subsingleton _ 0

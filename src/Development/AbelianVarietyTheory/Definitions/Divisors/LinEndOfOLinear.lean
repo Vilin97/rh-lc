@@ -47,6 +47,5 @@ theorem thickMap_map {G H : Over (Sp R)} (b : G ⟶ H) (e : ℕ) :
   · simp only [thickMap, pullback.map, Category.assoc]
     erw [pullback.lift_snd, pullback.lift_snd, pullback.lift_snd]
     simp
-    erw [pullback.lift_snd_assoc]
 
 end GlobalTheory.Mum.EndModel

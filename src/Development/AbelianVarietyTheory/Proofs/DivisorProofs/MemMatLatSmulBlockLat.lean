@@ -119,7 +119,7 @@ theorem isNatDatum_invFourierSum {ψ : AddChar k Circle} {ϖ : kˣ} (hϖ : IsUni
       refine hY (mem_matLat_stdLat.2 fun i j => ?_)
       by_cases hj : j ∈ P
       · exact h i j hj
-      · simpa only [setCols, of_apply, dif_neg hj] using (mem_matLat_blockLat.1 H).2 i j hj
+      · simpa only [setCols, of_apply, dif_neg hj] using (mem_matLat_blockLat (ϖ := ϖ) (e := e) (P := P) |>.1 H).2 i j hj
     · rfl
   · have h1 := mem_matLat_smul_stdLat.1 hZ
     rw [invFourierSum_apply, invFourierSum_apply]

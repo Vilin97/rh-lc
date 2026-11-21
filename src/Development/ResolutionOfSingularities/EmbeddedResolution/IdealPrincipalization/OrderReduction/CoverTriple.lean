@@ -107,7 +107,7 @@ theorem support_iteratedStrictTransform_subset_support {X : Scheme.{u}} (d : Blo
   have := FunctorialResolution.EmbeddedResolution.quasiCompact_strictTransformι_of_isLocallyNoetherian (d.map i) (d.center i) A
   have := FunctorialResolution.EmbeddedResolution.quasiCompact_strictTransformι_of_isLocallyNoetherian (d.map i) (d.center i) B
   rw [support_strictTransform_eq_closure_preimage, support_strictTransform_eq_closure_preimage]
-  exact closure_mono (Set.sdiff_subset_sdiff_left (Set.preimage_mono hAB))
+  exact closure_mono (Set.preimage_mono (Set.sdiff_subset_sdiff_left hAB))
 
 end BlowupSequenceData
 

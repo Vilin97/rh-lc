@@ -15,7 +15,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 def ChrFacts : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (B : Base F E) (X : Chars F E)
-    (a a' : ℕ) (v : Pl F) (τ : E →ₐ[F] Fv F v), X.IsGood B a a' →
+    (a a' : ℕ) (v : Pl F) (τ : E →ₐ[F] Fv F v), Chars.IsGood B X a a' →
     (∀ x, ‖(chrW X.α τ x : ℂ)‖ = 1) ∧ (∀ x, ‖(chrW X.β τ x : ℂ)‖ = 1) ∧ chrW X.ν τ = chrW X.α τ / chrW X.β τ ∧
     (∃ e : ℕ, CondLE (unifAt v) e (chrW X.α τ) ∧ CondLE (unifAt v) e (chrW X.β τ)) ∧
     (v ∈ X.T → ¬ GlobalTheory.SplitWeil.IsUnram (chrW X.ν τ)) ∧

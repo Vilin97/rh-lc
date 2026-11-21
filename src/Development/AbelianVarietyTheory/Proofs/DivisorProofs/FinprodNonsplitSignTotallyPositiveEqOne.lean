@@ -19,7 +19,10 @@ theorem embReal_algebraMap {w : InfinitePlace F} (hw : w.IsReal) (t : F) :
     InfinitePlace.Completion.extensionEmbeddingOfIsReal hw (algebraMap F w.Completion t) =
       InfinitePlace.embedding_of_isReal hw t := by
   have := InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hw ((WithAbs.equiv w.1).symm t)
-  simpa using this
+  rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+    Algebra.algebraMap_self_apply]
+  rw [← WithAbs.equiv_symm_apply]
+  simpa only [RingEquiv.apply_symm_apply] using this
 
 theorem eta_inf_eq_one [Algebra.IsQuadraticExtension F E] {w : InfinitePlace F} (hw : w.IsReal) (t : Fˣ)
     (ht : 0 < InfinitePlace.embedding_of_isReal hw (t : F)) :

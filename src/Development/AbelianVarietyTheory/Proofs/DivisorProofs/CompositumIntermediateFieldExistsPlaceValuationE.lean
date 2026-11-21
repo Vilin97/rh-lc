@@ -86,8 +86,7 @@ theorem exists_valuation_eq (F F' K : Type) [Field F] [NumberField F] [Field F']
     ⟨Q.under (𝓞 K), inferInstance, Ideal.ne_bot_of_liesOver_of_ne_bot w.ne_bot _⟩
   have hlo' : 𝔭.asIdeal.LiesOver w.asIdeal := hlo
   refine ⟨𝔭, fun a => ?_⟩
-  rw [← HeightOneSpectrum.valuation_liesOver K w 𝔭 a,
-    Ideal.ramificationIdx'_eq_ramificationIdx w.asIdeal 𝔭.asIdeal w.ne_bot]
+  rw [← HeightOneSpectrum.valuation_liesOver K w 𝔭 a]
   change _ ^ (Q.under (𝓞 K)).ramificationIdx (𝓞 F) = _
   rw [he, pow_one]
 

@@ -100,12 +100,12 @@ theorem bij_drop_last (K : Type) [Field K] (d : ℕ) : Function.Bijective ((drop
   refine ⟨fun v w hvw => ?_, fun p => ⟨Fin.snoc p.1 p.2, ?_⟩⟩
   · have h1 := congrArg Prod.fst hvw
     have h2 := congrArg Prod.snd hvw
-    simp only [LinearMap.prod_apply, Pi.prod] at h1 h2
+    simp only [LinearMap.prod_apply] at h1 h2
     funext i
     refine Fin.lastCases ?_ (fun j => ?_) i
     · exact h2
     · exact congrFun h1 j
-  · ext j <;> simp [drop, lastC]
+  · ext j <;> simp [drop, lastC, GlobalTheory.InnerAutomorphism.dropLast]
 
 theorem lam_decomp (K : Type) [Field K] (d : ℕ) (lam : (Fin (d + 1) → K) →ₗ[K] K) :
     lam = (lam ∘ₗ incl K d) ∘ₗ drop K d + lam (Pi.single (Fin.last d) 1) • lastC K d := by
@@ -114,7 +114,7 @@ theorem lam_decomp (K : Type) [Field K] (d : ℕ) (lam : (Fin (d + 1) → K) →
     funext i
     refine Fin.lastCases ?_ (fun j => ?_) i
     · simp [incl]
-    · simp [incl, drop, Pi.single_apply, Fin.castSucc_ne_last]
+    · simp [incl, drop, GlobalTheory.InnerAutomorphism.dropLast, Pi.single_apply, Fin.castSucc_ne_last]
   conv_lhs => rw [hv]
   simp [lastC, mul_comm]
 

@@ -129,8 +129,8 @@ theorem exists_nhds_add_eq {X : Type} [TopologicalSpace X] [AddCommGroup X] [IsT
         (hK.of_isClosed_subset (hlc.isClosed_fiber c) hsub) (hlc.isOpen_fiber c) subset_rfl
       exact ⟨V, hV, fun _ y hy z hz => hKV (Set.add_mem_add hy hz)⟩
   choose V hV0 hVc using hV
-  refine ⟨⋂ c ∈ hfin.toFinset, (V c ∩ -V c), (Filter.biInter_finset_mem _).2 fun c _ =>
-    Filter.inter_mem (hV0 c) (neg_mem_nhds_zero X (hV0 c)), fun y z hz => ?_⟩
+  refine ⟨⋂ c ∈ hfin.toFinset, (V c ∩ (fun x : X => -x) ⁻¹' V c), (Filter.biInter_finset_mem _).2 fun c _ =>
+    Filter.inter_mem (hV0 c) ((continuous_neg.tendsto (0 : X)) (by simpa using hV0 c)), fun y z hz => ?_⟩
   have hz' : ∀ c ∈ g '' tsupport g, z ∈ V c ∧ -z ∈ V c := fun c hc => by
     have := Set.mem_iInter₂.1 hz c (hfin.mem_toFinset.2 hc)
     exact ⟨this.1, this.2⟩

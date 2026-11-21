@@ -868,7 +868,28 @@ private theorem minIndexCard_lt_or_maxCandidateOrder_lt_of_isBlowupAlongIdealShe
       conv_lhs => rw [← himgc]
       exact sortedIndices_image_strictTransformIndex π (monomialCenter T.ideal T.mult T.boundary)
         T.boundary _
-    rcases trichotomous_of (List.Lex (· < ·))
+    have htrich : ∀ (a b : List ℕ), List.Lex (· < ·) a b ∨ a = b ∨ List.Lex (· < ·) b a := by
+      intro a
+      induction a with
+      | nil =>
+        intro b
+        cases b with
+        | nil => exact Or.inr (Or.inl rfl)
+        | cons _ _ => exact Or.inl List.Lex.nil
+      | cons x xs ih =>
+        intro b
+        cases b with
+        | nil => exact Or.inr (Or.inr List.Lex.nil)
+        | cons y ys =>
+          rcases lt_trichotomy x y with h | h | h
+          · exact Or.inl (List.Lex.rel h)
+          · subst y
+            rcases ih ys with h | h | h
+            · exact Or.inl (List.Lex.cons h)
+            · exact Or.inr (Or.inl (congrArg (List.cons x) h))
+            · exact Or.inr (Or.inr (List.Lex.cons h))
+          · exact Or.inr (Or.inr (List.Lex.rel h))
+    rcases htrich
         (MonomialCenter.sortedIndices (lexMaxIndices T.ideal T.mult T.boundary))
         (MonomialCenter.sortedIndices
           (preimageStrictTransformIndex π (monomialCenter T.ideal T.mult T.boundary) T.boundary

@@ -200,7 +200,7 @@ theorem re_form_pos_of_relAmple :
     have h2 := him (star x)
     rw [star_star] at h1 h2
     exact Complex.le_def.mpr ⟨h1, h2.symm⟩
-  refine (hpsd.dotProduct_mulVec_zero_iff (star z)).mp ?_
+  refine (hpsd.dotProduct_mulVec_zero_iff).mp ?_
   rw [star_star]
   exact Complex.ext h0.symm (him z)
 

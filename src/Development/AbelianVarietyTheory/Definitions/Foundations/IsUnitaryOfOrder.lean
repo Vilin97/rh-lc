@@ -256,10 +256,16 @@ theorem resInf_apply (χ : HChar L) (w : InfinitePlace F) (k : Fˣ) :
   simp [HChar.resInf]
 
 theorem LevelLe.mul {χ χ' : HChar L} {v : HeightOneSpectrum (𝓞 L)} {n : ℕ} (h : χ.LevelLe v n) (h' : χ'.LevelLe v n) :
-    (χ * χ').LevelLe v n := fun x hx hx' => by rw [loc_mul, h x hx hx', h' x hx hx', one_mul]
+    (χ * χ').LevelLe v n := fun x hx hx' => by
+  change χ.1 (localIdele L v x) * χ'.1 (localIdele L v x) = 1
+  change χ.loc v x * χ'.loc v x = 1
+  rw [h x hx hx', h' x hx hx', one_mul]
 
 theorem LevelLe.inv {χ : HChar L} {v : HeightOneSpectrum (𝓞 L)} {n : ℕ} (h : χ.LevelLe v n) :
-    (χ⁻¹).LevelLe v n := fun x hx hx' => by rw [loc_inv, h x hx hx', inv_one]
+    (χ⁻¹).LevelLe v n := fun x hx hx' => by
+  change (χ.1 (localIdele L v x))⁻¹ = 1
+  change (χ.loc v x)⁻¹ = 1
+  rw [h x hx hx', inv_one]
 
 end HChar
 

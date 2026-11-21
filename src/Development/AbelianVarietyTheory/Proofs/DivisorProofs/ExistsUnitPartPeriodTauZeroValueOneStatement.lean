@@ -20,4 +20,5 @@ open GlobalTheory.Toroidal GlobalTheory.LogKS GlobalTheory.RigChart GlobalTheory
 attribute [local instance] Over.cartesianMonoidalCategory
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.exists_unitPartPeriodTau_zero_value_one : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (k : Type) [Field k] [CharZero k] (m d : ℕ) (t : SAB H (Sp (ChartRing k m d))) (P : PELUnif (maximalIdeal (ChartRing k m d)) t) (gam : Fin m → LinearMap.BilinForm ℤ P.D.toPre.X) (mu : P.D.toPre.X), ∃ τ₀, IsUnitTau P.D.toPre (bdParam k m d) gam mu 0 τ₀ ∧ ∀ (Z : Scheme.{0}) (r : Z ⟶ Sp (ChartRing k m d)) (z : Z) (J : (Z ⟶ P.D.toPre.P.A.left) → P.D.toPre.P.L.ι), Good P.D.toPre.P.L z J → val τ₀ r z J = 1 := by
-  first | exact @GlobalTheory.UnitTauZero.exists_isUnitTau_zero_val_one | exact GlobalTheory.UnitTauZero.exists_isUnitTau_zero_val_one | (intros; apply GlobalTheory.UnitTauZero.exists_isUnitTau_zero_val_one <;> assumption)
+  intro E _ _ _ H k _ _ m d t P gam mu
+  exact GlobalTheory.UnitTauZero.exists_isUnitTau_zero_val_one E H k m d t P gam mu

@@ -219,8 +219,8 @@ theorem detachedToCoprod_succ_of_lt (s i : ℕ) (h : s < i) :
 
 theorem detachedToCoprod_self (i : ℕ) :
     S.detachedToCoprod i (i + 1) (Nat.lt_succ_self i) = S.detachedCoprodInr i := by
-  rw [detachedToCoprod]
-  simp [detachedCoprodInr_eq]
+  set_option backward.isDefEq.respectTransparency false in
+    simp [detachedToCoprod, detachedCoprodInr_eq]
 
 private theorem detachedCoprod_hom_ext_forall (W : EmbeddedBlowupSequence k Y pY) :
     ∀ (i : ℕ) (Z : Scheme.{u}) (f g : W.detachedCoprod i ⟶ Z),

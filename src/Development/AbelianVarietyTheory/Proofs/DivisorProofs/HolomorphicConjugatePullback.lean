@@ -34,7 +34,7 @@ variable {S : Scheme.{0}} {k : Type} [Field k] (x : Sp k ⟶ S) (A : Over S) [Gr
 
 theorem pull_map_left_fst {B : Over S} (f : A ⟶ B) :
     ((Over.pullback x).map f).left ≫ pullback.fst B.hom x = pullback.fst A.hom x ≫ f.left := by
-  simp only [Over.pullback_map_left]
+  simp only [Over.pullback_map_left, pullback.lift_fst]
 
 theorem push_comp_map {T : Over (Sp k)} {g : T.left ⟶ S} (f : A ⟶ A)
     (e : (T ⟶ (Over.pullback x).obj A) → (Over.mk g ⟶ A)) (he : ∀ z, (e z).left = z.left ≫ pullback.fst A.hom x)

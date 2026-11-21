@@ -23,9 +23,9 @@ theorem exists_isPullDeg_top : ∀ {R R' : Type} [CommRing R] [IsDomain R] [Comm
       trivial), IsOpenImmersion.lift_fac _ _ _⟩
   refine ⟨{ p with W := ⊤, psiW := ψ, g := g, g_comm := hg, psi_pr := fun x => ?_ }, rfl, rfl, fun _ => rfl⟩
   obtain ⟨b, hb, hc⟩ := p.psi_pr x
-  refine ⟨b, hb, corr_of_val D.P.isLB fun y J hJ => (val_corr hJ hc _).trans ?_⟩
-  refine (val_pull hJ _ _ _).trans (Eq.trans ?_ (val_pull hJ _ _ _).symm)
-  exact GlobalTheory.ArcSpecialise.psiOn_agree p.psiW ψ _ _ _
-    (by rw [Category.assoc, Category.assoc]; exact congrArg _ (p.g_comm.trans hg.symm)) hJ
+  refine ⟨b, hb, corr_of_val D.P.isLB fun y J hJ => (val_corr hJ hc _).trans (by
+    refine (val_pull hJ _ _ _).trans (Eq.trans ?_ (val_pull hJ _ _ _).symm)
+    exact GlobalTheory.ArcSpecialise.psiOn_agree p.psiW ψ _ _ _
+      (by rw [Category.assoc, Category.assoc]; exact congrArg _ (p.g_comm.trans hg.symm)) hJ)⟩
 
 end GlobalTheory.PullDegWhole

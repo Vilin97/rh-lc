@@ -154,13 +154,13 @@ theorem PtY.mv_spec {y : Ys X n} (p : PtY ST SG Q y) (d : DecoSet (E := X.E) (n 
     (p.mv d).1.1.deco = d ∧ (p.mv d).1.1.1.2 = p.1.1.1.2 ∧ (p.mv d).1.2 = p.1.2 := by
   have h : (∀ (P : Q) (x : Sp X.E n), p.1.1.1.2 P x ∈ d.1.at P.1 ↔ x ∈ stdAt X.E n P.1) ∧ p.1.2 ∈ y.ys d.1.N :=
     ⟨fun P x => by rw [h1 P]; exact p.1.1.2 P x, by rw [h2]; exact p.2⟩
-  have e : p.mv d = ⟨(⟨(d, p.1.1.1.2), h.1⟩, p.1.2), h.2⟩ := dif_pos h
+  have e : p.mv d = ⟨(⟨(d, p.1.1.1.2), h.1⟩, p.1.2), h.2⟩ := dite_eq_left h
   rw [e]
   exact ⟨rfl, rfl, rfl⟩
 
 theorem PtY.mv_dia {y : Ys X n} (p : PtY ST SG Q y) (P : ST) (a : (Res P.1)ˣ) :
     p.mv (DecoSet.dia1 P a p.1.1.deco) = ⟨(⟨(DecoSet.dia1 P a p.1.1.deco, p.1.1.1.2), p.1.1.2⟩, p.1.2), p.2⟩ :=
-  dif_pos ⟨p.1.1.2, p.2⟩
+  dite_eq_left ⟨p.1.1.2, p.2⟩
 
 theorem tdatY_ok (hP : ∀ P : ST, conjPrime₂ P.1 ≠ P.1) (hT : ∀ P : ST, (T : 𝓞 X.E) ∈ P.1.asIdeal ∧ (T : 𝓞 X.E) ∉ P.1.asIdeal ^ 2) :
     (tdatY ST T y β Λ Θ pref).Ok T where
@@ -267,7 +267,7 @@ theorem mv_dn (p : PtY ST SG Q y) (P : ST) (hP : MoveHyp ST SG P) (hQ : ∀ w : 
       (p.mv (p.1.1.deco.dn P g)).1.1.1.2 = p.1.1.1.2 ∧ (p.mv (p.1.1.deco.dn P g)).1.2 = p.1.2 := by
   have e : (p.1.1.deco.dn P g).1 = p.1.1.deco.1.dn P g := by
     unfold DecoSet.dn
-    rw [dif_pos hg]
+    rw [dite_eq_left hg]
   have hs := (p.1.1.deco.2.dnN_spec P hP.ne).2.2.1
   have h := p.mv_spec (p.1.1.deco.dn P g)
     (fun w => by rw [e]; exact (hs w.1 (hQ w).1 (hQ w).2).localization_eq)
@@ -278,7 +278,13 @@ theorem tdatY_tied (hP : ∀ P : ST, MoveHyp ST SG P)
     (hT : ∀ P : ST, (T : 𝓞 X.E) ∈ P.1.asIdeal ∧ (T : 𝓞 X.E) ∉ P.1.asIdeal ^ 2)
     (hQ : ∀ (P : ST) (w : Q), w.1 ≠ P.1 ∧ w.1 ≠ conjPrime₂ P.1) (hy : ∀ P : ST, y.Off P.1) :
     (tdatY ST T y β Λ Θ pref).Tied T where
-  ok b p := by rw [tdatY_deco]; exact p.1.1.deco.2.res _
+  ok b p := by
+    rw [tdatY_deco]
+    have hd := p.1.1.deco.2
+    refine ⟨hd.lat, hd.uni, hd.f_add, hd.f_smul, hd.f_off, hd.f_ne, ?_, ?_, ?_, ?_, ?_⟩
+    all_goals
+      intro w
+      exact (Finset.notMem_empty _ w.2).elim
   Lsh_eq _ _ := rfl
   dnN_eq _ _ _ := rfl
   ker_eq _ _ _ := rfl
@@ -408,7 +414,7 @@ theorem tilH_f (P : ST) (x : Sp E N) (hx : x ∈ (DecoSet.tilH (ST := ST) hN pi 
   show (DecoSet.til (ST := ST) pi d).1.f P x = _
   rw [DecoSet.til_val d hT hG] at hx ⊢
   have : (d.1.til (ST := ST) pi).f P x =
-      redP P.1 (hStd E (n + 1) (z0 E n (algebraMap (𝓞 E) E pi)) x) := if_pos (le_locP _ _ hx)
+      redP P.1 (hStd E (n + 1) (z0 E n (algebraMap (𝓞 E) E pi)) x) := ite_eq_left (le_locP _ _ hx)
   rw [this, hermStd_lastVector_apply]
   rfl
 

@@ -67,12 +67,15 @@ theorem isRigCls_diagCls (w : G ⟶ G) [IsMonHom w] (P : RigPic (G ⊗ G)) : IsR
 
 variable {G' : Over S'} [GrpObj G'] [IsCommMonObj G'] {f : S' ⟶ S} {φ : G'.left ⟶ G.left} (h : IsGrpPullback G' G f φ)
 
+omit [IsCommMonObj G] [IsCommMonObj G'] in
 def sqMap : (G' ⊗ G').left ⟶ (G ⊗ G).left := (lift (pushHom h _ (fst G' G')) (pushHom h _ (snd G' G'))).left
 
-
+omit [IsCommMonObj G] [IsCommMonObj G'] in
+@[reassoc] theorem sqMap_fst : sqMap h ≫ (fst G G).left = (fst G' G').left ≫ φ :=
   congrArg (fun q => q.left) (lift_fst (pushHom h _ (fst G' G')) (pushHom h _ (snd G' G')))
 
-
+omit [IsCommMonObj G] [IsCommMonObj G'] in
+@[reassoc] theorem sqMap_snd : sqMap h ≫ (snd G G).left = (snd G' G').left ≫ φ :=
   congrArg (fun q => q.left) (lift_snd (pushHom h _ (fst G' G')) (pushHom h _ (snd G' G')))
 
 
@@ -163,6 +166,7 @@ variable {R : Type} [CommRing R] (I : Ideal R) (e : ℕ)
     thickMap R I e G ≫ pullback.fst G.hom (thick R I (e + 1)) = pullback.fst G.hom (thick R I e) :=
   (pullback.lift_fst _ _ _).trans (Category.comp_id _)
 
+@[reassoc] theorem thickMap_snd (G : Over (Sp R)) :
     thickMap R I e G ≫ pullback.snd G.hom (thick R I (e + 1)) = pullback.snd G.hom (thick R I e) ≫ thickTrans R I e :=
   pullback.lift_snd _ _ _
 
@@ -245,6 +249,7 @@ theorem isGrpPullback_levToDat (G : Over (Sp A.R)) [GrpObj G] (e : ℕ) :
       (sE A.f le_rfl e) (levToDat A G e) :=
   @Out.PullGtPf.isGrpPullback_hMap _ _ _ _ _ _ _ _ A.f le_rfl e G _ _ _ (Iso.refl _) (inferInstanceAs (IsMonHom (𝟙 _)))
 
+@[reassoc] theorem levToDat_fst (G : Over (Sp A.R)) (e : ℕ) :
     levToDat A G e ≫ pullback.fst _ _ = pullback.fst _ _ ≫ pullback.fst G.hom (spMap A.f) :=
   (Out.PullGtPf.hMap_fst _ _ _).trans (congrArg _ (Category.id_comp _))
 

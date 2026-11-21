@@ -27,7 +27,7 @@ theorem exists_avg_notMem (W : Submodule ℂ V) {s t : kˣ} {x : V} (hx : ∀ h 
   by_contra hall
   push Not at hall
   apply hxW
-  have hsum := sum_avg ψ σ hc (t := t) hx
+  have hsum := sum_avg ψ σ (c := c) hc (t := t) hx
   have hm : ((Fintype.card (Q (c * t⁻¹) (c * s⁻¹)) : ℕ) : ℂ) • x ∈ W := by
     rw [← hsum]
     exact W.sum_mem fun f _ => hall _ (out_mem f)

@@ -468,7 +468,8 @@ theorem isNormalScheme [IsNormalScheme X] : IsNormalScheme Y :=
     let := sectionsAction ρ _ (h.preimage_le W)
     let := (π.app W).hom.toAlgebra
     obtain ⟨_, _, _⟩ := h.isInvariant W
-    exact isDomain_and_isIntegrallyClosed_localization_of_isInvariant (G := G) Γ(Y, W)
+    exact isDomain_and_isIntegrallyClosed_localization_of_isInvariant (G := G)
+      (A := Γ(X, π ⁻¹ᵁ W)) Γ(Y, W)
       ((IsNormalScheme.iff_forall_isAffineOpen X).mp ‹_› _ (hW.preimage π)) p
 
 section Base

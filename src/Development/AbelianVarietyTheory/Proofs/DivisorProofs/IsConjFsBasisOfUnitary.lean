@@ -48,7 +48,7 @@ end CxPts
 theorem AlgChart.holo_map (hm : ∀ z, (m z).1 = z.1 ≫ f) (c' : AlgChart p' σ' D')
     (c : AlgChart p σ D) : DifferentiableOn ℂ (c.e ∘ m ∘ c'.e.symm)
       (c'.e.target ∩ c'.e.symm ⁻¹' (m ⁻¹' c.e.source)) :=
-  differentiableOn_euclidean.2 fun a => ((c'.holo _ (f.app _ (c.x a))).mono fun _ hv =>
+  differentiableOn_euclidean.2 fun a => ((c'.holo _ (f.app _ (c.x a))).mono fun x (hv : x ∈ c'.e.target ∩ c'.e.symm ⁻¹' (m ⁻¹' c.e.source)) =>
     ⟨hv.1, (mem_ptsIn_preimage hm).2 (c.source_subset hv.2)⟩).congr fun _ hv =>
       (c.apply_eq _ hv.2 a).trans (ev_of_comp hm _ _ _)
 

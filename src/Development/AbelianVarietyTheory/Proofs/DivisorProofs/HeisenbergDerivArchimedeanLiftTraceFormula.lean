@@ -89,7 +89,7 @@ noncomputable section
 namespace GlobalTheory.ArchDecay.HeisArch
 
 theorem infAd_zero {F : Type} [Field F] [NumberField F] : infAd F (0 : mixedEmbedding.mixedSpace F) = 0 := by
-  unfold infAd; rw [map_zero, map_zero]; rfl
+  unfold infAd; rw [map_zero, map_zero]
 
 theorem heisD_liftI : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (n d : ℕ) (X : Spc F E n) (W : Spc F E d) (M : Model σ X W) (ψ : AddChar (AF F) ℂ), IsStd ψ → ∃ T : (Fin n × Fin d → mixedEmbedding.mixedSpace F) ≃L[ℝ] ((Fin n × Fin d → mixedEmbedding.mixedSpace F) →L[ℝ] ℝ), ∀ (ζ : (Fin n × Fin d → mixedEmbedding.mixedSpace F) × (Fin n × Fin d → mixedEmbedding.mixedSpace F)), ∀ f ∈ schA F (Fin n × Fin d), heisD M ψ (liftI M ζ) f = dR F (T : (Fin n × Fin d → mixedEmbedding.mixedSpace F) →L[ℝ] ((Fin n × Fin d → mixedEmbedding.mixedSpace F) →L[ℝ] ℝ)) (-(2 * Real.pi * Complex.I)) ζ f := by
   intro F E _ _ _ _ _ σ n d X W M ψ hψ

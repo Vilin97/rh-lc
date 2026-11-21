@@ -104,13 +104,17 @@ structure IsWh (W : Spc F E d) (u : Matrix (Fin d) (Fin j) E) (χ : AddChar (AE 
 
 def KeyThree : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (a a' : ℕ) (G : Geo σ a a') (X : Chars F E)
-    (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' → ∀ (j : ℕ) (u u' : Matrix (Fin (a + a')) (Fin (j + 3)) E),
-    IsFrame σ G.W u u' → ∀ χ Λ, IsChar σ χ → IsWh (σ := σ) G.W u χ Λ → ∀ f ∈ Sig B G om om', ∀ h, Λ (fun x => f (x * h)) = 0
+    (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W),
+    GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsTriple B G X om om' →
+    ∀ (j : ℕ) (u u' : Matrix (Fin (a + a')) (Fin (j + 3)) E),
+    IsFrame σ G.W u u' → ∀ χ Λ, IsChar σ χ → IsWh (σ := σ) G.W u χ Λ → ∀ f ∈ ThKEnd.Sig B G om om', ∀ h, Λ (fun x => f (x * h)) = 0
 
 def KeyTwo : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (a a' : ℕ) (G : Geo σ a a') (X : Chars F E)
-    (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' → ∀ (u u' : Matrix (Fin (a + a')) (Fin 2) E),
-    IsFrame σ G.W u u' → ∀ m, IsLev u u' m → ∀ χ Λ, IsChar σ χ → IsWh (σ := σ) G.W u χ Λ → ∀ f ∈ Sig B G om om', ∀ h₀,
+    (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W),
+    GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsTriple B G X om om' →
+    ∀ (u u' : Matrix (Fin (a + a')) (Fin 2) E),
+    IsFrame σ G.W u u' → ∀ m, IsLev u u' m → ∀ χ Λ, IsChar σ χ → IsWh (σ := σ) G.W u χ Λ → ∀ f ∈ ThKEnd.Sig B G om om', ∀ h₀,
     ∃ V ∈ 𝓝 h₀, ∃ (b : ℕ → GL (Fin 2) (AE F E)) (y : ℕ → ℂ), b 0 = 1 ∧ (∀ i, Matrix.GeneralLinearGroup.det (b i) = 1) ∧
       Tendsto (fun i => ‖y i‖) atTop atTop ∧ ∀ h ∈ V, ∃ x : ℂ, ∀ i, Λ (fun z => f (z * (m (b i) * h))) = x * y i
 

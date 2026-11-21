@@ -134,8 +134,17 @@ theorem isTaylorExpansionOn_mvPolynomial {k : Type*} [CommRing k] {ι : Type*}
     IsTaylorExpansionOn (MvPolynomial ι k) φ φ' D β := by
   intro N hN x
   have hβN : β ^ N ∈ maximalIdeal B ^ N := Ideal.pow_mem_pow hβ N
+  let T : R →+* B ⧸ (maximalIdeal B ^ N) :=
+    { toFun := fun f => Ideal.Quotient.mk _ (TaylorExpansion.truncatedSeries φ D β N f)
+      map_one' := by rw [TaylorExpansion.truncatedSeries_one φ D β N hN, map_one]
+      map_zero' := by rw [TaylorExpansion.truncatedSeries_zero, map_zero]
+      map_add' := by intros; rw [TaylorExpansion.truncatedSeries_add, map_add]
+      map_mul' := by
+        intro a b
+        rw [← map_mul]
+        exact Ideal.Quotient.eq.mpr (TaylorExpansion.truncatedSeries_mul_sub_mem φ D β N _ hβN a b) }
   have key :
-      (TaylorExpansion.truncatedSeriesRingHom φ D β N (maximalIdeal B ^ N) hN hβN).comp
+      T.comp
           (algebraMap (MvPolynomial ι k) R) =
         ((Ideal.Quotient.mk (maximalIdeal B ^ N)).comp φ').comp
           (algebraMap (MvPolynomial ι k) R) := by
@@ -147,12 +156,14 @@ theorem isTaylorExpansionOn_mvPolynomial {k : Type*} [CommRing k] {ι : Type*}
         rw [TaylorExpansion.truncatedSeries_of_deriv_eq_zero φ D β N hN
           (algebraMap (MvPolynomial ι k) R (MvPolynomial.C c)) (hDconst c)]
         exact hconst c
-      simp only [RingHom.coe_comp, Function.comp_apply, TaylorExpansion.truncatedSeriesRingHom_apply, h1]
+      change Ideal.Quotient.mk _ (TaylorExpansion.truncatedSeries φ D β N _) = _
+      rw [h1]
+      rfl
     · intro i
-      simp only [RingHom.coe_comp, Function.comp_apply, TaylorExpansion.truncatedSeriesRingHom_apply]
+      simp only [RingHom.coe_comp, Function.comp_apply, T]
       exact Ideal.Quotient.eq.2 (hvar i N hN)
   have h := RingHom.congr_fun key x
-  simp only [RingHom.coe_comp, Function.comp_apply, TaylorExpansion.truncatedSeriesRingHom_apply] at h
+  simp only [RingHom.coe_comp, Function.comp_apply, T] at h
   exact Ideal.Quotient.eq.1 h
 
 private theorem derivation_apply_eq_zero_of_formallyUnramified {P R : Type*} [CommRing P]

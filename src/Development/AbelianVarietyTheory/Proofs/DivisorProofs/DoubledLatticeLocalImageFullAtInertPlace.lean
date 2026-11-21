@@ -73,6 +73,7 @@ theorem latDbl_fill : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
     intro z hz
     have h1 := hsd _ (at_toCols₁ hz)
     have h2 := hsd _ (at_toCols₂ hz)
+    unfold cA incM at h1 h2
     constructor
     · intro hzm γ hγ
       rw [symp_dbl, AddChar.map_sub_eq_div, (h1.1 hzm.1) _ hγ.1, (h2.1 hzm.2) _ hγ.2, div_one]

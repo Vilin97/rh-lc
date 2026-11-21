@@ -109,7 +109,11 @@ theorem isogeny_rep : ∀ (S : Scheme.{0}) [IsLocallyNoetherian S] (A : Over S) 
   intro A₀ _ _ φ₀ h₀
   haveI : IsLocallyNoetherian Y.left := LocallyOfFiniteType.isLocallyNoetherian Y.hom
   obtain ⟨H, _, i, hi, hm, hHf, hHe, hik, hH⟩ := hY A₀ φ₀ h₀
-  have hA₀ : IsAbelianScheme A₀ := GlobalTheory.PolPull.isAbelianScheme_of_isGrpPullback hA h₀
+  have hA₀ : IsAbelianScheme A₀ := by
+    exact { comm := inferInstance
+            smooth := MorphismProperty.of_isPullback (P := @Smooth) h₀.1 hA.smooth
+            proper := MorphismProperty.of_isPullback (P := @IsProper) h₀.1 hA.proper
+            geomConnected := MorphismProperty.of_isPullback (P := @GeometricallyConnected) h₀.1 hA.geomConnected }
   obtain ⟨B, gB, cB, ψ, ψ', hB, hq, hker⟩ := exists_quot_quasiInv A₀ H i k hA₀ hi hm hHf hHe hik
   refine ⟨B, gB, cB, ψ, ψ', hB, hq, ?_⟩
   intro T x A₁ _ _ φ₁ B₁ _ _ ψ₁ ψ₁' h₁ hB₁ hq₁
@@ -120,7 +124,11 @@ theorem isogeny_rep : ∀ (S : Scheme.{0}) [IsLocallyNoetherian S] (A : Over S) 
   have hkill : ∀ (T' : Over T) (g : T' ⟶ A₁), g ≫ ψ₁ = 1 → g ^ k = 1 := by
     intro T' g hg
     rw [← GlobalTheory.TranslQuotientPow.comp_id_pow, ← e₁, ← Category.assoc, hg, one_comp]
-  have hA₁ : IsAbelianScheme A₁ := GlobalTheory.PolPull.isAbelianScheme_of_isGrpPullback hA h₁
+  have hA₁ : IsAbelianScheme A₁ := by
+    exact { comm := inferInstance
+            smooth := MorphismProperty.of_isPullback (P := @Smooth) h₁.1 hA.smooth
+            proper := MorphismProperty.of_isPullback (P := @IsProper) h₁.1 hA.proper
+            geomConnected := MorphismProperty.of_isPullback (P := @GeometricallyConnected) h₁.1 hA.geomConnected }
   obtain ⟨y, ⟨hyx, hyker⟩, hyu⟩ := hH T x A₁ φ₁ B₁ ψ₁ h₁ hB₁ hψ₁m hkill
   have w : φ₁ ≫ A.hom = (A₁.hom ≫ y) ≫ Y.hom := by rw [h₁.1.w, Category.assoc, hyx]
   let θ := h₀.1.lift φ₁ (A₁.hom ≫ y) w

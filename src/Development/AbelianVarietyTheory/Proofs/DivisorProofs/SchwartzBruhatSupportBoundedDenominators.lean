@@ -32,8 +32,11 @@ theorem natCast_mul_apply (m : ℕ) (a : FiniteAdeleRing (𝓞 F) F) (v : Height
     ((m : FiniteAdeleRing (𝓞 F) F) * a) v = (m : v.adicCompletion F) * a v := by
   have hm : (m : FiniteAdeleRing (𝓞 F) F) v = (m : v.adicCompletion F) := by
     induction m with
-    | zero => simp
-    | succ n ih => simp [Nat.cast_succ, ih]
+    | zero => rfl
+    | succ n ih =>
+      rw [Nat.cast_succ, Nat.cast_succ]
+      change (n : FiniteAdeleRing (𝓞 F) F) v + 1 = _
+      rw [ih]
   simp [hm]
 
 theorem isOpen_denSet (κ : Type) [Finite κ] (m : ℕ) : IsOpen (denSet (F := F) κ m) := by

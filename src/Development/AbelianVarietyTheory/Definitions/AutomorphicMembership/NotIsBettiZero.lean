@@ -39,7 +39,8 @@ theorem expo_detSym (τ : GlobalTheory.AllWt.Psi H) (a : ℕ → Bool) (R : Opti
     · rintro ⟨rfl, rfl⟩
       exact dif_pos i.2
   have h1 : expo Dw (detSym Dw a R τ.1) ⟨ρ, i⟩ = ∑ k ∈ Finset.range (Dw.p + Dw.q), expo Dw (rootSym Dw a R τ.1 k) ⟨ρ, i⟩ :=
-    (Finsupp.sum_finsetSum_index (fun _ => by simp) fun _ _ _ => by split_ifs <;> simp).symm
+    (Finsupp.sum_finsetSum_index (h := fun (a : Sym E) (n : ℤ) => if letterOf Dw a.2.2 = some ⟨ρ, i⟩ then n else 0)
+      (fun _ => by simp) (fun _ _ _ => by split_ifs <;> simp)).symm
   have h2 : ∀ k, expo Dw (rootSym Dw a R τ.1 k) ⟨ρ, i⟩ = if k < Dw.p then (if τ.1 = ρ ∧ k = i then 1 else 0)
       else if conjEmb τ.1 = ρ ∧ Dw.p + Dw.q - 1 - k = i then -1 else 0 := fun k => by
     unfold expo rootSym

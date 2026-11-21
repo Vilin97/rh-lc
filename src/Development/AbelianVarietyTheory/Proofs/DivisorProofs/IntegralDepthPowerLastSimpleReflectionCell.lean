@@ -52,7 +52,7 @@ theorem sums_over_levels {X : Type} [MeasurableSpace X] (μ : Measure X) (f : X 
   refine ⟨hL, hI, ?_⟩
   have hIm : Integrable c (μ.map f) :=
     (integrable_map_measure measurable_from_nat.aestronglyMeasurable hf.aemeasurable).2 hI
-  rw [← integral_map hf.aemeasurable measurable_from_nat.aestronglyMeasurable, integral_countable' hIm,
+  rw [← integral_map hf.aemeasurable measurable_from_nat.aestronglyMeasurable, integral_countable hIm,
     ← hs.tsum_eq]
   congr 1; funext j
   rw [measureReal_def, hmap, ENNReal.toReal_ofReal (hw0 j), Complex.real_smul, mul_comm]

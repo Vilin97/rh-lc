@@ -50,7 +50,7 @@ theorem sumF_map (φ : R →+* R') (hI : I.map φ ≤ I') (σ : F →+* F')
     induction hy using Submodule.span_induction with
     | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
     | smul c a _ ha => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ ha
   refine ⟨Submodule.span R' (l '' (T : Set F)), Submodule.fg_span (T.finite_toSet.image _), hN _ hs,
     fun i => hN _ (hx i), fun n => ?_⟩
@@ -64,7 +64,7 @@ theorem sumF_map (φ : R →+* R') (hI : I.map φ ≤ I') (σ : F →+* F')
     have := Ideal.mem_map_of_mem φ hr
     rw [Ideal.map_pow] at this
     exact Ideal.pow_right_mono hI n this
-  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  · rw [map_add]; exact add_mem ha hb
 
 theorem sumF_lin {x x' : Ix → F} {s s' : F} (h : SumF I F x s) (h' : SumF I F x' s') (c : F) :
     SumF I F (fun i => c * x i + x' i) (c * s + s') := by

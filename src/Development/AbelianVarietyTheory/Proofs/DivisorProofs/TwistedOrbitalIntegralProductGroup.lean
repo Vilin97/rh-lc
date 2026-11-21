@@ -298,19 +298,19 @@ theorem dcPair_bij (T K : Subgroup G) (T' K' : Subgroup G') : Function.Bijective
     have e2 := congrArg Prod.snd e
     simp only [Prod.fst_mul, Prod.snd_mul] at e1 e2
     refine Prod.ext ?_ ?_
-    · calc q1 = DoubleCoset.mk T K (Quotient.out q1) := (DoubleCoset.out_eq' T K q1).symm
+    · calc q1 = DoubleCoset.mk T K (Quotient.out q1) := (DoubleCoset.out_eq' q1).symm
         _ = DoubleCoset.mk T K (Quotient.out q2) := (@DoubleCoset.eq _ _ _ _ _ _).mpr ⟨a.1, ha.1, b.1, hb.1, e1⟩
-        _ = q2 := DoubleCoset.out_eq' T K q2
-    · calc q1' = DoubleCoset.mk T' K' (Quotient.out q1') := (DoubleCoset.out_eq' T' K' q1').symm
+        _ = q2 := DoubleCoset.out_eq' q2
+    · calc q1' = DoubleCoset.mk T' K' (Quotient.out q1') := (DoubleCoset.out_eq' q1').symm
         _ = DoubleCoset.mk T' K' (Quotient.out q2') := (@DoubleCoset.eq _ _ _ _ _ _).mpr ⟨a.2, ha.2, b.2, hb.2, e2⟩
-        _ = q2' := DoubleCoset.out_eq' T' K' q2'
+        _ = q2' := DoubleCoset.out_eq' q2'
   · intro p
-    obtain ⟨a, b, ha, hb, e⟩ := DoubleCoset.mk_out_eq_mul T K (Quotient.out p).1
-    obtain ⟨a', b', ha', hb', e'⟩ := DoubleCoset.mk_out_eq_mul T' K' (Quotient.out p).2
+    obtain ⟨a, ha, b, hb, e⟩ := DoubleCoset.mk_out_eq_mul T K (Quotient.out p).1
+    obtain ⟨a', ha', b', hb', e'⟩ := DoubleCoset.mk_out_eq_mul T' K' (Quotient.out p).2
     refine ⟨(DoubleCoset.mk T K (Quotient.out p).1, DoubleCoset.mk T' K' (Quotient.out p).2), ?_⟩
     unfold dcPair
     rw [e, e']
-    conv_rhs => rw [← DoubleCoset.out_eq' (T.prod T') (K.prod K') p]
+    conv_rhs => rw [← DoubleCoset.out_eq' p]
     rw [DoubleCoset.eq]
     refine ⟨(a, a')⁻¹, (T.prod T').inv_mem (Subgroup.mem_prod.mpr ⟨ha, ha'⟩),
       (b, b')⁻¹, (K.prod K').inv_mem (Subgroup.mem_prod.mpr ⟨hb, hb'⟩), ?_⟩
@@ -355,7 +355,7 @@ theorem twOrb_prod : ∀ (G G' : Type) [Group G] [TopologicalSpace G] [IsTopolog
       (Quotient.out (Equiv.ofBijective _ (dcPair_bij (twCent θ δ) K (twCent θ' δ') K') z)) =
       orbTerm θ K δ f (Quotient.out z.1) * orbTerm θ' K' δ' f' (Quotient.out z.2) := by
     intro z
-    obtain ⟨a, b, ha, hb, e⟩ := DoubleCoset.mk_out_eq_mul ((twCent θ δ).prod (twCent θ' δ')) (K.prod K')
+    obtain ⟨a, ha, b, hb, e⟩ := DoubleCoset.mk_out_eq_mul ((twCent θ δ).prod (twCent θ' δ')) (K.prod K')
       (Quotient.out z.1, Quotient.out z.2)
     rw [Subgroup.mem_prod] at ha hb
     have e2 : Quotient.out (Equiv.ofBijective _ (dcPair_bij (twCent θ δ) K (twCent θ' δ') K') z) =

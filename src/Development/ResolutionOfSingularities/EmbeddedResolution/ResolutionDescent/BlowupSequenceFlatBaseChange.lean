@@ -62,9 +62,9 @@ theorem pullbackTransitionMap_eq_comp (s : SequenceOfBlowups X) {X' : Scheme.{u}
 def baseChangeTower (s : SequenceOfBlowups X) {X' : Scheme.{u}} (φ : X' ⟶ X) : ℕᵒᵖ ⥤ Scheme.{u} where
   obj i := pullback φ (s.projectionToBase i.unop)
   map {_ _} f := s.pullbackTransitionMap φ (leOfHom f.unop)
-  map_id i := pullbackTransitionMap_refl s φ (leOfHom (𝟙 i).unop)
-  map_comp {_ _ _} f g :=
-    pullbackTransitionMap_eq_comp s φ (leOfHom f.unop) (leOfHom g.unop) (leOfHom (f ≫ g).unop)
+  map_id i := by exact pullbackTransitionMap_refl s φ (leOfHom (𝟙 i).unop)
+  map_comp {_ _ _} f g := by
+    exact pullbackTransitionMap_eq_comp s φ (leOfHom f.unop) (leOfHom g.unop) (leOfHom (f ≫ g).unop)
 
 theorem isIso_pullback_fst_projectionToBase_zero (s : SequenceOfBlowups X) {X' : Scheme.{u}} (φ : X' ⟶ X) :
     IsIso (pullback.fst φ (s.projectionToBase 0)) := by
@@ -117,7 +117,7 @@ def baseChange (s : SequenceOfBlowups X) {X' : Scheme.{u}} (φ : X' ⟶ X) [Alge
   tower := s.baseChangeTower φ
   isoZero := s.baseChangeTowerObjZeroIso φ
   center i := (s.center i).comap (pullback.snd φ (s.projectionToBase i))
-  isBlowup i hi := isBlowupAlongIdealSheaf_baseChangeTower_map s φ i hi
+  isBlowup i hi := by exact isBlowupAlongIdealSheaf_baseChangeTower_map s φ i hi
 
 @[simp]
 theorem baseChange_length (s : SequenceOfBlowups X) {X' : Scheme.{u}} (φ : X' ⟶ X)

@@ -85,9 +85,7 @@ theorem theta_consts_algebraic : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLoc
   let x' : Ix → (TFK (R := W) C ⟶ A'.A) := fun i => Over.homMk (x₀ i).left ((Over.w (x₀ i)).trans heq)
   have hx' : ∀ i, x' i ^ (m ^ 2) = 1 := fun i => pow_homMk heq _ (tx₀ i)
   choose p' hp' using fun i => hf.2.1 (x' i) (hx' i)
-  choose p₁ hp₁ using fun i => pullQk_surjective hD hGF cC hB hB' (k := m ^ 2) (p' i)
-  have e₂ : ∀ i, (p' i).y = hD.xe.symm (p₁ i).y ∧ IsPullGtF φ hD C (p₁ i).g (p' i).g :=
-    fun i => (eq_pullQk_iff hD hGF cC hB hB' _ _).1 (hp₁ i).symm
+  choose p₁ e₂ using fun i => qkPullExists hGF R W φ D.toPre D'.toPre hD C cC (m ^ 2) (p' i)
   have hQ := GlobalTheory.T.levelPoints_algClosure_fractionRing_bijective R D.toPre C em (m ^ 2) hk
   choose p hp using fun i => (hQ.2 (p₁ i)).exists
   have hGt := GlobalTheory.T.torus_torsion_points_correspond_values

@@ -127,7 +127,7 @@ theorem sq_norm_smoothSection_sub_glued_le : ∀ (n : ℕ) (Y : Type) [Topologic
         · simp [Set.indicator_of_mem hy]
         · simp [Set.indicator_of_notMem hy]
     _ = (C.m : ℝ≥0∞) * ∑ a, ∫⁻ y in S a, ENNReal.ofReal (A.nsq L (D a) y) ∂A.mu := by
-        rw [lintegral_const_mul' _ _ (ENNReal.natCast_ne_top _), lintegral_finset_sum' _ (fun a _ => hmeas a)]
+        rw [lintegral_const_mul' _ _ (ENNReal.natCast_ne_top _), lintegral_finsetSum' _ (fun a _ => hmeas a)]
         congr 1
         exact Finset.sum_congr rfl fun a _ => lintegral_indicator (hSo a).measurableSet _
     _ = _ := by

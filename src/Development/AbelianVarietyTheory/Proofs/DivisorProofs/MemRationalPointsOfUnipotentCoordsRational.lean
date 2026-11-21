@@ -19,7 +19,7 @@ theorem mem_ratPts_of_crd_rat : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
   have hmul : ∀ {a b c : ℕ} (X : Matrix (Fin a) (Fin b) E) (Y : Matrix (Fin b) (Fin c) E),
       adMat F (X * Y) = adMat F X * adMat F Y := fun X Y => by
     unfold adMat
-    exact Matrix.map_mul (f := (inclR (F := F) (AF F) : E →+* _))
+    exact Matrix.map_mul (L := X) (M := Y) (f := (inclR (F := F) (AF F) : E →+* _))
   have hadd : ∀ {a b : ℕ} (X Y : Matrix (Fin a) (Fin b) E),
       adMat F (X + Y) = adMat F X + adMat F Y := fun X Y => by
     ext i k; simp [adMat]

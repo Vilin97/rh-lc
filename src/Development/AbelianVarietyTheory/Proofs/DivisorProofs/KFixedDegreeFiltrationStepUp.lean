@@ -32,6 +32,7 @@ theorem tprod_mem_chi (c : ι → ℚ) (g : ι → Formalism.BasicNotions.TH.Pol
   rw [mem_chiPart]
   intro w X hX
   rw [atPl_tprod', (mem_chiOne _ _).1 (hg w) X hX, MultilinearMap.map_update_smul, Function.update_eq_self]
+  rfl
 
 theorem sum_update_le (h : ι → Formalism.BasicNotions.TH.Pol P Q R S) (e : ι → ℕ) (hh : ∀ v, (h v).totalDegree ≤ e v) (w : ι)
     (g' : Formalism.BasicNotions.TH.Pol P Q R S) (k : ℕ) (hg' : g'.totalDegree ≤ k) :

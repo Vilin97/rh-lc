@@ -43,7 +43,9 @@ theorem ext_of_pt_eq : ∀ (K : Type) [Field K] (A B : AbVar K) (f g : A ⟶ B),
     change (equalizer.lift y hx ≫ equalizer.ι f.hom.left g.hom.left) (IsLocalRing.closedPoint Ω) = _
     rw [equalizer.lift_ι]
     exact congrArg (pullback.fst A.X.hom q) (pointOfClosedPoint_apply (pullback.snd A.X.hom q) w hw _)
-  exact hom_ext (Over.OverMorphism.ext (ext_of_isDominant_of_isSeparated B.X.hom
-    ((Over.w f.hom).trans (Over.w g.hom).symm) (equalizer.ι _ _) (equalizer.condition _ _)))
+  have : IsDominant (equalizer.ι f.hom.left g.hom.left) := hdom
+  have heq : f.hom = g.hom := Over.OverMorphism.ext (ext_of_isDominant_of_isSeparated B.X.hom
+    ((Over.w f.hom).trans (Over.w g.hom).symm) (equalizer.ι _ _) (equalizer.condition _ _))
+  exact Subtype.ext heq
 
 end GlobalTheory.AV.AbVar

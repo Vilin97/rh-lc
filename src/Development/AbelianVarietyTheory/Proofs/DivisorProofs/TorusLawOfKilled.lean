@@ -111,6 +111,8 @@ lemma torEl_add (h : ∀ τ, OrthFr (Hm τ) (q τ) (x₀ τ)) (s s' : ι → Fin
       cd (x₀ τ) (fun a => Complex.exp (((s' τ a : ℝ) : ℂ) * Complex.I))
   rw [cd_mul hx]
   congr 1
+  funext a
+  simp only [Pi.add_apply, Complex.ofReal_add, add_mul, Complex.exp_add, Pi.mul_apply]
 
 omit [Fintype ι] [DecidableEq ι] in
 lemma torEl_zero (h : ∀ τ, OrthFr (Hm τ) (q τ) (x₀ τ)) : torEl x₀ 0 = 1 := by

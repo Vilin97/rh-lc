@@ -26,7 +26,7 @@ section Eigen
 variable {O : Type} [CommRing O] (ρ : O →+* End F) (ρ' : O →+* End G) (ρ'' : O →+* End H)
   (σ : O →+* Γ(X, ⊤))
 
-abbrev act (a : O) : F ⟶ F := ρ a
+abbrev act (a : O) : F ⟶ F := (ρ a).asHom
 
 def ActsThrough : Prop := ∀ a, act ρ a = smulHom F (σ a)
 
@@ -46,9 +46,14 @@ theorem mem_eigenSub_iff {s : Γ(F, V)} : s ∈ (eigenSub ρ σ).sec V ↔
 
 
 variable {ρ σ} in
-def eigenLift (φ : G ⟶ F) (h : ∀ a, φ ≫ act ρ a = σ a • φ) : G ⟶ eigen ρ σ :=
-  (eigenSub ρ σ).lift φ fun V s => mem_eigenSub_iff.2 fun a => congr(($(h a)).app V s)
+def eigenLift (φ : G ⟶ F) (h : ∀ a, φ ≫ act ρ a = σ a • φ) : G ⟶ eigen ρ σ := by
+  have hmem (V : X.Opens) (s : Γ(G, V)) : φ.app V s ∈ (eigenSub ρ σ).sec V :=
+    mem_eigenSub_iff.2 fun a => congr(($(h a)).app V s)
+  exact homOfLinear (G := eigen ρ σ)
+    (fun V => (appLinear φ V).codRestrict ((eigenSub ρ σ).sec V) (hmem V))
+    fun hW s => Subtype.ext (app_resM φ hW s)
 
+@[reassoc (attr := simp)] theorem eigenLift_ι (φ : G ⟶ F) (h : ∀ a, φ ≫ act ρ a = σ a • φ) :
     eigenLift φ h ≫ eigenι ρ σ = φ := rfl
 
 
@@ -68,25 +73,35 @@ instance epi_eigenπ : Epi (eigenπ ρ σ) := inferInstanceAs (Epi (cokernel.π 
 theorem act_eigenπ (a : O) : act ρ a ≫ eigenπ ρ σ = σ a • eigenπ ρ σ := by
   have := Sigma.ι (fun _ : O => F) a ≫= cokernel.condition
     (Sigma.desc fun a : O => act ρ a - smulHom F (σ a) : ∐ (fun _ : O => F) ⟶ F)
-  rw [Sigma.ι_desc_assoc, comp_zero, Preadditive.sub_comp, sub_eq_zero, smulHom_comp] at this
+  rw [Sigma.ι_comp_desc_assoc, comp_zero, Preadditive.sub_comp, sub_eq_zero, smulHom_comp] at this
   exact this
 
 
 variable {ρ σ} in
 def eigenDesc (φ : F ⟶ G) (h : ∀ a, act ρ a ≫ φ = σ a • φ) : eigenQuot ρ σ ⟶ G :=
   cokernel.desc _ φ (Sigma.hom_ext _ _ fun a => by
-    rw [Sigma.ι_desc_assoc, comp_zero, Preadditive.sub_comp, h a, smulHom_comp]
+    rw [Sigma.ι_comp_desc_assoc, comp_zero, Preadditive.sub_comp, h a, smulHom_comp]
     exact sub_self _)
 
 @[reassoc (attr := simp)] theorem eigenπ_desc (φ : F ⟶ G) (h : ∀ a, act ρ a ≫ φ = σ a • φ) :
     eigenπ ρ σ ≫ eigenDesc φ h = φ := cokernel.π_desc _ _ _
 
 def dualAct : O →+* End (dual F) where
-  toFun a := GlobalTheory.CompanionTheory.Ar.dualMap (act ρ a)
-  map_one' := by rw [act, map_one]; exact dualMap_id
-  map_mul' a b := by rw [act, mul_comm, map_mul]; exact dualMap_comp _ _
-  map_zero' := by rw [act, map_zero]; exact dualMap_zero
-  map_add' a b := by rw [act, map_add (f := _)]; exact dualMap_add _ _
+  toFun a := End.of (GlobalTheory.CompanionTheory.Ar.dualMap (act ρ a))
+  map_one' := by
+    apply End.ext
+    simpa only [act, map_one] using! (dualMap_id (F := F))
+  map_mul' a b := by
+    apply End.ext
+    change GlobalTheory.CompanionTheory.Ar.dualMap (act ρ (a * b)) = _
+    rw [mul_comm a b]
+    simpa only [act, map_mul] using! (dualMap_comp (act ρ a) (act ρ b))
+  map_zero' := by
+    apply End.ext
+    simpa only [act, map_zero] using! (dualMap_zero (F := F) (G := F))
+  map_add' a b := by
+    apply End.ext
+    simpa only [act, map_add] using! (dualMap_add (act ρ a) (act ρ b))
 
 @[simp] theorem act_dualAct (a : O) : act (dualAct ρ) a = GlobalTheory.CompanionTheory.Ar.dualMap (act ρ a) := rfl
 
@@ -109,11 +124,19 @@ theorem pullback_map_smul (f : Y ⟶ X) (a : Γ(X, ⊤)) (φ : F ⟶ G) :
   rw [smul_hom_def, smul_hom_def, Functor.map_comp, pullback_map_smulHom]
 
 def pullAct (f : Y ⟶ X) : O →+* End ((Scheme.Modules.pullback f).obj F) where
-  toFun a := (Scheme.Modules.pullback f).map (act ρ a)
-  map_one' := by rw [act, map_one]; exact CategoryTheory.Functor.map_id _ _
-  map_mul' a b := by rw [act, map_mul]; exact Functor.map_comp _ _ _
-  map_zero' := by rw [act, map_zero]; exact Functor.map_zero _ _ _
-  map_add' a b := by rw [act, map_add (f := _)]; exact Functor.map_add _
+  toFun a := End.of ((Scheme.Modules.pullback f).map (act ρ a))
+  map_one' := by
+    apply End.ext
+    simpa only [act, map_one] using! ((Scheme.Modules.pullback f).map_id F)
+  map_mul' a b := by
+    apply End.ext
+    simpa only [act, map_mul] using! ((Scheme.Modules.pullback f).map_comp (act ρ b) (act ρ a))
+  map_zero' := by
+    apply End.ext
+    simpa only [act, map_zero] using! ((Scheme.Modules.pullback f).map_zero F F)
+  map_add' a b := by
+    apply End.ext
+    simpa only [act, map_add] using! ((Scheme.Modules.pullback f).map_add (f := act ρ a) (g := act ρ b))
 
 @[simp] theorem act_pullAct (f : Y ⟶ X) (a : O) :
     act (pullAct ρ f) a = (Scheme.Modules.pullback f).map (act ρ a) := rfl
@@ -136,7 +159,7 @@ variable (X) in
 abbrev scal [Algebra k Γ(X, ⊤)] (σ : O →+* k) : O →+* Γ(X, ⊤) := (algebraMap k Γ(X, ⊤)).comp σ
 
 def splitMap (σ : ι → (O →+* k)) : k ⊗[ℤ] O →ₐ[k] (ι → k) :=
-  Algebra.TensorProduct.lift (Algebra.ofId k (ι → k)) (Pi.ringHom σ).toIntAlgHom
+  Algebra.TensorProduct.lift (Algebra.ofId k (ι → k)) (RingHom.pi σ).toIntAlgHom
     fun _ _ => Commute.all _ _
 
 def IsSplitBy (σ : ι → (O →+* k)) : Prop := Function.Bijective (splitMap σ)
@@ -185,6 +208,7 @@ theorem frob_app (U : X.Opens) (a : Γ(X, U)) : (frob X p h).app U a = (a ^ p : 
 
 theorem frob_appTop (a : Γ(X, ⊤)) : (frob X p h).appTop a = a ^ p := frob_app p h ⊤ a
 
+@[reassoc] theorem frob_naturality (f : Y ⟶ X) (hY : (p : Γ(Y, ⊤)) = 0) :
     frob Y p hY ≫ f = f ≫ frob X p h := SS.FrobField.absFrob_nat f p 1 Fact.out hY h
 
 

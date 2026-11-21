@@ -65,14 +65,13 @@ instance : Module F (SecMod p N) where
 
 @[simp] theorem coord_mk (s : LB.Sec N) (j : N.ι) : (mk p s).sec.f j = s.f j := rfl
 
-  exact DVR.SecOps.sec_ext (s := s.sec) (t := t.sec) h
 
 theorem eq_zero_iff_coord (s : SecMod p N) : s = 0 ↔ ∀ j, s.sec.f j = 0 := by
   constructor
   · rintro rfl j
     exact coord_zero j
   · intro h
-    exact ext_coord fun j => (h j).trans (coord_zero j).symm
+    exact DVR.SecOps.sec_ext fun j => (h j).trans (coord_zero j).symm
 
 section Val
 variable {X Z : Scheme.{0}} {L : LB X} {K : Type} [Fintype K] {φ : K → (Y ⟶ X)} {ε : K → ℤ}

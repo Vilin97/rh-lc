@@ -201,7 +201,7 @@ theorem index_span_mul (c : 𝓞 M) {a : M} (ha : a ≠ 0) :
       exact ⟨r, by simp [f, mul_smul]⟩
   change AddSubgroup.relIndex _ _ = _
   rw [h1, h2, AddSubgroup.relIndex_map_map_of_injective _ _ hf, AddSubgroup.relIndex_top_right]
-  rfl
+  exact (Ideal.absNorm_eq_index _).symm
 
 theorem sum_log_norm (c : 𝓞 M) (hc : c ≠ 0) :
     ∑ ρ : M →ₐ[ℚ] ℂ, Real.log ‖ρ (c : M)‖ = Real.log (Ideal.absNorm (Ideal.span {c}) : ℕ) := by
@@ -396,7 +396,6 @@ theorem mem_ellT_iff {M : IntermediateField ℚ ℂ} [NumberField M] (hM : ∀ �
       | smul c x _ hx =>
         have hc : IsIntegral ℤ (((c : M) : ℂ)) := map_isIntegral_int (M.val : M →+* ℂ) c.isIntegral_coe
         convert hc.mul hx using 1
-        · rfl
         rw [Finset.mul_sum]
         refine Finset.sum_congr rfl fun σ _ => ?_
         rw [← mul_assoc]
@@ -469,7 +468,6 @@ theorem span_inv_eq_ellT {M : IntermediateField ℚ ℂ} [NumberField M] (hM : �
         mul_div_cancel_right₀ _ ((map_ne_zero ψ).2 hα)]
       exact map_isIntegral_int ψ r.isIntegral_coe
     convert hc.mul h2 using 1
-    · rfl
     change ((c : M) : ℂ) * ((γ⁻¹ : M) : ℂ) * ψ y = _
     rw [IntermediateField.coe_inv]
     ring
@@ -482,7 +480,6 @@ theorem span_inv_eq_ellT {M : IntermediateField ℚ ℂ} [NumberField M] (hM : �
       | add _ _ _ _ _ h1 h2 => simpa only [map_add (f := _), mul_add] using h1.add h2
       | mem_mul m hm i z _ hz =>
         convert (hx m hm).mul hz using 1
-        · rfl
         rw [map_mul, pow_succ]; ring
     have h1 := key h α (hA ▸ Submodule.mem_span_singleton_self α)
     rw [← hγ, ← mul_pow] at h1

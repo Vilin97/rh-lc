@@ -126,7 +126,7 @@ def zD : ℤ_[l] →+* BdR l := ((algebraMap (BdRp l) (BdR l)).comp (aD l)).comp
 def θD : BdRp l →+* ℂ_[l] := IsPerfectoidField.thetaBDeRhamPlusField (K := ℂ_[l]) l
 
 def φB : Bcris l →+* Bcris l :=
-  Loc2.map (ACris.phi ℂ_[l] l) (map_natCast _ l) (l : Acris) (Loc2.isUnit_left _ _)
+  Loc2.map (ACris.phi (K := ℂ_[l]) (p := l)) (map_natCast _ l) (l : Acris) (Loc2.isUnit_left _ _)
     (ACris.phi_periodT_eq_mul (untilt_epsilon (p := l)))
 
 def FilD (a : ℤ) : Submodule (BdRp l) (BdR l) := IsPerfectoidField.fil ℂ_[l] l a

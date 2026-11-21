@@ -316,8 +316,8 @@ theorem extend_family [IsAdicComplete (maximalIdeal O) O] [Finite (ResidueField 
         · obtain ⟨a, hai⟩ := (hdual z).1 hz (v i) (hv i)
           rw [← hai, algebraMap_smul]
           exact L.smul_mem _ (hv i)
-        set_option synthInstance.maxHeartbeats 100000 in
-          · rw [← hB, map_sub, map_sum]
+        · set_option synthInstance.maxHeartbeats 100000 in
+            rw [← hB, map_sub, map_sum]
           simp only [hB, hm, hon]
           simp
       have := hyz _ hz'

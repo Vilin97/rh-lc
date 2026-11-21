@@ -41,7 +41,7 @@ theorem exists_norm_lift_step : ∀ (L : Type) [Field L] [Valued L (WithZero (Mu
     rw [hι, GlobalTheory.UTr.conj_algebraMap]; rw [← this]; ring
   have h1 : (x : GlobalTheory.UTr.Alg P) - 1 ∈ Ideal.span {πA ^ m} := hxm
   obtain ⟨a, ha⟩ := Ideal.mem_span_singleton'.1 h1
-  have hxc : GlobalTheory.UTr.conj P (x : GlobalTheory.UTr.Alg P) = x := GlobalTheory.UTr.mem_plus.1 hx
+  have hxc : GlobalTheory.UTr.conj P (x : GlobalTheory.UTr.Alg P) = x := (GlobalTheory.UTr.mem_plus (P := P)).1 hx
   have hca : πA ^ m * GlobalTheory.UTr.conj P a = πA ^ m * a := by
     have := congrArg (GlobalTheory.UTr.conj P) ha
     rw [map_mul, map_pow, hconjπ, map_sub, map_one, hxc] at this

@@ -44,6 +44,7 @@ theorem selfDual_exists_snd_of_orth : ∀ {F : Type} [Field F] [NumberField F] (
     simp [φ, hc0]
   haveI : IsNoetherian O (LinearMap.range φ) := isNoetherian_of_isNoetherianRing_of_finite _ _
   haveI : IsNoetherian O Λ₁ := isNoetherian_of_le hle
+  haveI : Module.Finite O Λ₁ := Module.IsNoetherian.finite O Λ₁
   haveI : Module.IsTorsionFree O Λ₁ := inferInstance
   haveI : Module.Free O Λ₁ := Module.free_of_finite_type_torsion_free'
   let b := Module.Free.chooseBasis O Λ₁

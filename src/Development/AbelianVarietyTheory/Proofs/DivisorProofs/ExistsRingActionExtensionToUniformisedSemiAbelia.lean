@@ -52,7 +52,7 @@ theorem exists_oLinear_of_oAct : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLoc
     have hp : IsMonHom (padd G (g a) (g b)) := by unfold padd; infer_instance
     refine L2 _ _ _ _ (hg (a + b)) hp (hgA (a + b)) ?_
     have := actsAs_padd U.toUnifPre (hgA a) (hgA b)
-    rw [o.onB.map_add (f := _)]
+    rw [o.onB.map_add]
     convert this using 1
     funext χ; simp [star_add, add_smul]
   let oG : RingAct G O := { act := g, hom := hg, map_one := one, map_mul := mul, map_add := add }

@@ -40,7 +40,7 @@ theorem GMem.exists_baseChange : ∀ {I : Type} (X₁ : GlobalTheory.GSep.GSet) 
   have hI : (maximalIdeal V).map io ≤ maximalIdeal V' := by
     letI := io.toAlgebra
     haveI : Algebra.IsIntegral V V' := ⟨hfin.to_isIntegral⟩
-    have hmax := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := V) (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal V')
+    have hmax := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := V) (algebraMap _ _) hfin.to_isIntegral (maximalIdeal V')
     rw [Ideal.map_le_iff_le_comap]
     exact (IsLocalRing.eq_maximalIdeal hmax).ge
   let G' : Over (Sp V') := (Over.pullback (spMap io)).obj 𝔪.G

@@ -35,7 +35,7 @@ theorem linD_linC {F R : Type} [Field F] [CommRing R] (e : F →+* R) {κ : Type
       rw [← hp i j, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul]; ring
-  simp only [h, apply_ite e, map_one, map_zero, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+  simp only [h, apply_ite e, map_one, map_zero, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
 
 theorem exists_leftInv {F : Type} [Field F] {κ : Type} [Fintype κ] {r : ℕ} (a : Fin r → κ → F)
     (ha : LinearIndependent F a) : ∃ p : Fin r → κ → F, ∀ i j, ∑ k, p i k * a j k = if i = j then 1 else 0 := by
@@ -82,11 +82,11 @@ variable {F}
 
 theorem continuous_linC {R : Type} [CommRing R] [TopologicalSpace R] [IsTopologicalRing R] {κ : Type} [Fintype κ]
     {r : ℕ} (c : Fin r → κ → R) : Continuous (linC c) :=
-  continuous_pi fun _ => continuous_finset_sum _ fun j _ => (continuous_apply j).mul continuous_const
+  continuous_pi fun _ => continuous_finsetSum _ fun j _ => (continuous_apply j).mul continuous_const
 
 theorem continuous_linD {R : Type} [CommRing R] [TopologicalSpace R] [IsTopologicalRing R] {κ : Type} [Fintype κ]
     {r : ℕ} (d : Fin r → κ → R) : Continuous (linD d) :=
-  continuous_pi fun _ => continuous_finset_sum _ fun k _ => continuous_const.mul (continuous_apply k)
+  continuous_pi fun _ => continuous_finsetSum _ fun k _ => continuous_const.mul (continuous_apply k)
 
 theorem comp_mem_SB {R : Type} [CommRing R] [TopologicalSpace R] [IsTopologicalRing R] {κ : Type} [Fintype κ] {r : ℕ}
     (c d : Fin r → κ → R) (hdc : ∀ y, linD d (linC c y) = y)
@@ -107,11 +107,11 @@ theorem exists_schwartz_comp {κ : Type} [Fintype κ] {r : ℕ} (c d : Fin r →
   let Lc : (Fin r → mixedEmbedding.mixedSpace F) →ₗ[ℝ] (κ → mixedEmbedding.mixedSpace F) :=
     { toFun := linC c
       map_add' := by intro y z; funext k; simp [linC, add_mul, Finset.sum_add_distrib]
-      map_smul' := by intro a y; funext k; simp [linC, Finset.smul_sum, smul_mul_assoc] }
+      map_smul' := by intro a y; funext k; simp [linC, Finset.smul_sum] }
   let Ld : (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] (Fin r → mixedEmbedding.mixedSpace F) :=
     { toFun := linD d
       map_add' := by intro y z; funext k; simp [linD, mul_add, Finset.sum_add_distrib]
-      map_smul' := by intro a y; funext k; simp [linD, Finset.smul_sum, mul_smul_comm] }
+      map_smul' := by intro a y; funext k; simp [linD, Finset.smul_sum] }
   let Lc' := LinearMap.toContinuousLinearMap Lc
   let Ld' := LinearMap.toContinuousLinearMap Ld
   have hb : ∃ (k : ℕ) (C : ℝ), ∀ y, ‖y‖ ≤ C * (1 + ‖Lc' y‖) ^ k := by
@@ -175,7 +175,7 @@ theorem integrable_lagrForm : ∀ (F : Type) [Field F] [NumberField F] (ψ : Add
   have hW1 : ∀ x, (W x).1 = linC (fun j k => algebraMap F (AF F) ((u j).1 k)) x := by
     intro x; funext k
     simp [W, linC, Prod.fst_sum, Finset.sum_apply]
-  have hWc : Continuous W := continuous_finset_sum _ fun j _ => (continuous_apply j).smul continuous_const
+  have hWc : Continuous W := continuous_finsetSum _ fun j _ => (continuous_apply j).smul continuous_const
   have hT : Continuous fun x => ψ ((0 : κ → AF F) ⬝ᵥ (W x).2 + ⅟(2 : AF F) * ((W x).1 ⬝ᵥ (W x).2)) :=
     hψ.1.comp (by fun_prop)
   refine (hint.bdd_mul (c := 1)

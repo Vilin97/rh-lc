@@ -111,13 +111,12 @@ structure URep (k r : ℕ) : Type 1 where
   R : Rep k r
   rep : IsURepOn (GG k r) R.σ
 
-theorem URep.repOn (U : URep k r) : RepOn (GG k r) U.R.σ where
-  one_mem := by
-    change (1 : Mx k r)ᴴ * _ * 1 = _
+theorem URep.repOn (U : URep k r) : RepOn (GG k r) U.R.σ := by
+  refine ⟨?_, ?_, U.rep.1.1, U.rep.1.2⟩
+  · change (1 : Mx k r)ᴴ * _ * 1 = _
     simp
-  mul_mem := fun a ha b hb => (PI.UnitaryGroupMassFormula.CapelliEig.unitary_Hecke_group k r a ha).2.2 b hb
-  map_one := U.rep.1.1
-  map_mul := U.rep.1.2
+  · intro a ha b hb
+    exact (PI.UnitaryGroupMassFormula.CapelliEig.unitary_Hecke_group k r a ha).2.2 b hb
 
 
 open Classical in

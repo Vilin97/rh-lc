@@ -206,8 +206,10 @@ def restr (S : Set (CxPts p σ)) (hS : IsOpen S) : AlgChart p σ D where
 
 theorem holo_trans :
     DifferentiableOn ℂ (c'.e ∘ c.e.symm) (c.e.target ∩ c.e.symm ⁻¹' c'.e.source) :=
-  differentiableOn_euclidean.2 fun a => ((c.holo _ (c'.x a)).mono fun _ hv =>
-    ⟨hv.1, c'.source_subset hv.2⟩).congr fun _ hv => c'.apply_eq _ hv.2 a
+  differentiableOn_euclidean.2 fun a => ((c.holo _ (c'.x a)).mono
+    (show c.e.target ∩ c.e.symm ⁻¹' c'.e.source ⊆
+      c.e.target ∩ c.e.symm ⁻¹' ptsIn p σ c'.U from
+      fun _ hv => ⟨hv.1, c'.source_subset hv.2⟩)).congr fun _ hv => c'.apply_eq _ hv.2 a
 
 theorem differentiableAt_ev {W : Y.Opens} (f : Γ(Y, W)) {y : CxPts p σ} (hy : y ∈ c.e.source)
     (hW : y ∈ ptsIn p σ W) : DifferentiableAt ℂ (ev p σ W f ∘ c.e.symm) (c.e y) :=

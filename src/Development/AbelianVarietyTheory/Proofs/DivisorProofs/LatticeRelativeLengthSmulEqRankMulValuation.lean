@@ -33,9 +33,6 @@ theorem relLen_map_lsmul : ∀ (C : Type) [Field C] (v : AddValuation C (WithTop
     have hInt : Int0 v = v.toValuation.integer := by
       ext x
       rw [mem_addValuationIntegerRing_iff]
-      change 0 ≤ v x ↔ Multiplicative.ofAdd (OrderDual.toDual (v x)) ≤
-        Multiplicative.ofAdd (OrderDual.toDual 0)
-      rw [Multiplicative.ofAdd_le, OrderDual.toDual_le_toDual]
     rw [hInt]
     infer_instance
   have : Module.Free (Int0 v) X :=

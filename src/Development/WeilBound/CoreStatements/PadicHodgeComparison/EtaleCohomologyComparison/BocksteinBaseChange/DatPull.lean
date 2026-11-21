@@ -32,7 +32,7 @@ def galH (M : Model l K) (k : Bool) (j : ℕ) (σ : Gal(PadicAlgCl l/K)) : Sys.H
   f n := B.galHc _ _ σ (galOC_okToOC σ) k n j
   comm n x := SH.red_gal _ _ σ _ k n j x
 
-def phiH (M : Model l K) (j : ℕ) : Sys.Hom (M.HS true j) (M.HS true j) (ACris.phi ℂ_[l] l) where
+def phiH (M : Model l K) (j : ℕ) : Sys.Hom (M.HS true j) (M.HS true j) (ACris.phi (K := ℂ_[l]) (p := l)) where
   f n := B.phiHc _ _ n j
   comm n x := SH.red_phi _ _ n j x
 

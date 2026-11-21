@@ -22,6 +22,7 @@ variable {F : Type} [Field F] [NumberField F] (w : HeightOneSpectrum (𝓞 F)) (
 
 theorem emb_surjective (hw : (p : 𝓞 F) ∈ w.asIdeal) (h2 : (p : 𝓞 F) ∉ w.asIdeal ^ 2)
     (hN : Ideal.absNorm w.asIdeal = p) : Function.Surjective (Formalism.BasicNotions.Examples₂.LocF.emb w p hw) := by
+  let K := w.adicCompletion F
   have hp0 : (p : K) ≠ 0 := Nat.cast_ne_zero.2 hp.out.ne_zero
   have hres : ∀ a : 𝓞 F, ∃ m : ℤ, a - m ∈ w.asIdeal := by
     intro a
@@ -99,7 +100,9 @@ theorem nonempty_ident (D : D7) : Nonempty (Ident D) := by
   have key : ∀ k v, Function.Surjective (Formalism.BasicNotions.Examples₂.LocF.emb (D.naut.plGw k v) (D.host.g k) (D.naut.plGw_over k v)) := by
     intro k v
     refine emb_surjective _ _ _ (fun h => ?_)
-      (GlobalTheory.TameLabels.normV_eq_of_split (D.host.g_prime k) (D.nd.g_split k) (D.naut.plGw_over k v))
+      (by
+        simpa [Formalism.ConjugateSelfDual.normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using
+          (GlobalTheory.TameLabels.normV_eq_of_split (D.host.g_prime k) (D.nd.g_split k) (D.naut.plGw_over k v)))
     have h0 : Ideal.span {((D.host.g k : ℕ) : 𝓞 D.host.E)} ≠ 0 := by
       rw [Ne, Ideal.zero_eq_bot, Ideal.span_singleton_eq_bot]
       exact_mod_cast (D.host.g_prime k).ne_zero

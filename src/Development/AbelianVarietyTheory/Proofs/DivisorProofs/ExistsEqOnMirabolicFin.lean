@@ -62,7 +62,8 @@ theorem mem_of_separates {X : Type} [TopologicalSpace X] [CompactSpace X] (A : S
     · intro c _ hc
       obtain ⟨a, ha⟩ := Function.ne_iff.1 hc
       rw [Finset.prod_eq_zero (Finset.mem_univ a) (if_neg (Ne.symm ha)), mul_zero]
-    · simp
+    · intro h
+      exact (h (hfin.mem_toFinset.mpr ⟨x, rfl⟩)).elim
   rw [e]
   exact A.sum_mem fun c _ => A.smul_mem (A.prod_mem fun a _ => hind _ a.1.2 _) _
 

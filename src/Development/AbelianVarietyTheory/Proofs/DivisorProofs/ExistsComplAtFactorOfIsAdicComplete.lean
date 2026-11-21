@@ -74,7 +74,7 @@ theorem exists_complAt_factor_of_isAdicComplete : ∀ (W : Type) [CommRing W] [I
     · have h1 : residue R (c (IsLocalization.mk' L a s)) = residue R r := by
         rw [← hx, ResidueField.map_residue]
       have h2 : r - c (IsLocalization.mk' L a s) ∈ maximalIdeal R := by
-        rw [← residue_eq_zero_iff, map_sub, h1, sub_self]
+        rw [← residue_eq_zero_iff, (residue R).map_sub, h1, sub_self]
       have h3 : c (IsLocalization.mk' L a s) * ψ s = ψ a := by
         show c (IsLocalization.mk' L a s) * c (algebraMap A L s) = c (algebraMap A L a)
         rw [← map_mul, IsLocalization.mk'_spec]

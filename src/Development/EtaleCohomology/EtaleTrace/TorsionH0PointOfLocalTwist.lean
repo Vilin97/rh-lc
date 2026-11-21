@@ -12,14 +12,16 @@ namespace LateralTheory.EtaleTrace
 
 def PtCover : Prop := ∀ (k : Type) [Field k] [IsAlgClosed k] (T : Sieve (S k)), T ∈ Scheme.etaleTopology (S k) → T.arrows (𝟙 _)
 
-def TwZero : Prop := ∀ (q : ℕ) [NeZero q] (U : Scheme.{0}) (ζ ξ : Prim q Γ(U, ⊤)), twGen (q := q) 0 ζ = twGen 0 ξ
+def TwZero : Prop := ∀ (q : ℕ) [NeZero q] (U : Scheme.{0}) (ζ ξ : Prim q Γ(U, ⊤)),
+  GlobalTheory.EtC.twGen (U := U) 0 ζ = GlobalTheory.EtC.twGen (U := U) 0 ξ
 
 def EvNat : Prop := ∀ (R : Type) [CommRing R] (F : Shv R) (X U : Scheme.{0}) (α : CochainComplex.HomComplex.Cochain ((chains R).obj (sch.obj X)) (res R F) 0)
-  (x : U ⟶ X), ev R α 0 0 (by simp) U x = Sec.res x (ev R α 0 0 (by simp) X (𝟙 X))
+  (x : U ⟶ X), ev (R := R) α 0 0 (by simp) U x = Sec.res x (ev (R := R) α 0 0 (by simp) X (𝟙 X))
 
 def CocEq : Prop := ∀ (R : Type) [CommRing R] (F : Shv R) (X : Scheme.{0})
   (α β : CochainComplex.HomComplex.Cocycle ((chains R).obj (sch.obj X)) (res R F) 0),
-  (∀ (U : Scheme.{0}) (x : Sx (sch.obj X) 0 U), ev R α.1 0 0 (by simp) U x = ev R β.1 0 0 (by simp) U x) → α = β
+  (∀ (U : Scheme.{0}) (x : Sx (sch.obj X) 0 U),
+    ev (R := R) α.1 0 0 (by simp) U x = ev (R := R) β.1 0 0 (by simp) U x) → α = β
 
 theorem exists_prim (l : ℕ) [Fact l.Prime] (k : Type) [Field k] [IsAlgClosed k] (hl : (l : k) ≠ 0) (j : ℕ) :
     Nonempty (Prim (l ^ j) Γ(S k, ⊤)) := by

@@ -418,7 +418,7 @@ theorem mem_baseLb {B : Base} {X : PreX B.toPre} (hPr : (B.primes X).Ok) (u : B.
     refine ⟨r, fun j => (h1 j).symm, fun P hP => ?_⟩
     obtain ⟨q, hq⟩ := h2 (lastIdx n) (by simp only [lastIdx]; omega)
     rw [hq]
-    exact Ideal.mul_mem_right _ q ((rls_vT_iff hX hPr u P).1 hP)
+    exact Ideal.mul_mem_right q P.asIdeal ((rls_vT_iff hX hPr u P).1 hP)
 
 end GlobalTheory.Mem.Col2.Reside
 
@@ -436,13 +436,14 @@ theorem GlobalTheory.Mem.Col2.TC.charts_funKilled : ∀ {B : Base} {X : PreX B.t
   have hB : BasePi ((B.primes X).vT u) (X.piT u) := by
     refine ⟨fun r => ⟨fun hr => piT_dvd_of_mem hX hPr u r (fun P => hr P.1 P.2), ?_⟩, hPr.piT_cop u⟩
     rintro ⟨q, rfl⟩ P hP
-    exact Ideal.mul_mem_right _ q ((rls_vT_iff hX hPr u P).1 hP)
+    exact Ideal.mul_mem_right q P.asIdeal ((rls_vT_iff hX hPr u P).1 hP)
   have hLb : ∀ β, (K β).lev.Lb = baseLb B.fields.E (B.R.N i) ((B.primes X).vT u) := fun β => by
     obtain ⟨k, hk⟩ := hK
     ext x
     exact (hk.lb β x).trans (GlobalTheory.Mem.Col2.Reside.mem_baseLb hPr u _ x).symm
   have hlaws := fun β => GlobalTheory.Mem.Col2.Reside.swapLaws B.sp.cm hB (hPr.T_prime u) (hPr.piT_norm u) (rls_vT_iff hX hPr u)
-    (fun P hP => hPr.vT_norm u P hP) hgr (K β).lev (hLb β)
+    (fun P hP => by simpa only [Ideal.absNorm_apply, Submodule.cardQuot_apply] using hPr.vT_norm u P hP)
+    hgr (K β).lev (hLb β)
   choose hl hk using hlaws
   refine ⟨fun β => { K β with lev := GlobalTheory.Mem.Col2.Reside.swap (K β).lev _ (hl β) }, hK, fun β => ⟨hk β, rfl, rfl, rfl, ?_, rfl, rfl⟩⟩
   intro κ' κ e

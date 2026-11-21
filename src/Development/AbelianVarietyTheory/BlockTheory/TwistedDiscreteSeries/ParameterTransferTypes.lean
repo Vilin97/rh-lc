@@ -42,7 +42,8 @@ end Satake
 section Spaces
 
 variable {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m}
-  {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A)
+  {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
+  (R : _root_.Formalism.IndefR.Links.RealDat D A Ks) (F : Face D A)
 
 
 open Classical in

@@ -42,7 +42,7 @@ theorem limPt_of_steps : AddSt → ActSt → ContSt → LimPtSt := by
   refine ⟨fun i => ?_, fun i α => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [Finset.sum_apply, map_sum]
-    exact Finset.sum_eq_zero fun b _ => cc_mv (A b) (hw0 b) i
+      exact Finset.sum_eq_zero fun b _ => cc_mv (A b) (hw0 b) i
   · obtain ⟨N₀, hN₀⟩ := hCont C v (Fin d) σ (κ × Fin d) (expOf (fglOf hB) i) (fun x => w x.1 x.2)
       (fun x => hw0 x.1 x.2) α
     have h1 := hN₀ (fun q x => A x.1 q x.2) (fun q x => dAct C B (a N₀ x.1) q x.2) (fun q x => hAI _ _ _)

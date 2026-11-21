@@ -72,14 +72,14 @@ theorem isLab_split (V : HSp D) (P : Pl D.host.E) (hP : conjPl P ≠ P) (j : ℕ
 theorem evC_single (V : HSp D) (P : Pl D.host.E) (a : List ℤ → ℂ) (d : List ℤ) (hd : IsLab V P d) :
     evC V P a (Finsupp.single d 1) = a d := by
   unfold evC
-  rw [Finsupp.sum_single_index (by simp), if_pos hd, one_mul]
+  rw [Finsupp.sum_single_index (by simp), ite_eq_left hd, one_mul]
 
 theorem evC_splitC (V : HSp D) (P : Pl D.host.E) (hP : conjPl P ≠ P) (a : List ℤ → ℂ) (z : ℕ → ℂ) :
     evC V P a (splitC V.rank z) = ∑ j ∈ Finset.range (V.rank + 1), z j * a (splitLab V.rank j) := by
   unfold evC splitC
-  rw [← Finsupp.sum_finset_sum_index (by simp) (by intro d x y; split_ifs <;> simp [add_mul])]
+  rw [← Finsupp.sum_finsetSum_index (by simp) (by intro d x y; split_ifs <;> simp [add_mul])]
   refine Finset.sum_congr rfl fun j hj => ?_
-  rw [Finsupp.sum_single_index (by simp), if_pos (isLab_split V P hP j (Nat.lt_succ_iff.1 (Finset.mem_range.1 hj)))]
+  rw [Finsupp.sum_single_index (by simp), ite_eq_left (isLab_split V P hP j (Nat.lt_succ_iff.1 (Finset.mem_range.1 hj)))]
 
 theorem eig_rel (V : HSp D) (P : Pl D.host.E) (hP : conjPl P ≠ P) (u : GA D V → ℂ) (hu : u ≠ 0)
     (hfix : ∀ k ∈ hyp V P, ∀ h, u (h * k) = u h) (c : List ℤ → ℂ)

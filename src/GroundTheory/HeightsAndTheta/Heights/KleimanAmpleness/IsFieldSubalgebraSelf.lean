@@ -60,33 +60,22 @@ def locIn (A : Subalgebra S Ω) (p : Ideal A) : Subring Ω :=
 
 variable (S)
 
-variable (S) in
 def modelPts (y : (Σ k, ι k) → Ω) : Set (Subring Ω) :=
   {z | ∃ c : ∀ k, ι k, (∀ k, y ⟨k, c k⟩ ≠ 0) ∧
     ∃ p : Ideal (chartRingOver S y c), p.IsPrime ∧ z = locIn (chartRingOver S y c) p}
 
-
-variable (S) in
 def SameModel {K' : Type} {ι' : K' → Type} (y : (Σ k, ι k) → Ω) (y' : (Σ k, ι' k) → Ω) : Prop :=
   modelPts S y = modelPts S y'
 
-
-variable (S) in
 def IsModelWithBase (y : (Σ k, ι k) → Ω) (k₀ : K) : Prop :=
   (∀ k, ∃ i, y ⟨k, i⟩ ≠ 0) ∧ SameModel S y (oneBlock (blockVec y k₀))
 
-
-variable (S) in
 def Dominates {K₁ : Type} {ι₁ : K₁ → Type} (y₁ : (Σ k, ι₁ k) → Ω) (y₀ : (Σ k, ι k) → Ω) : Prop :=
   ∀ z₁ ∈ modelPts S y₁, ∃ z₀ ∈ modelPts S y₀, z₀ ≤ z₁ ∧ ∀ a ∈ z₀, a⁻¹ ∈ z₁ → a⁻¹ ∈ z₀
 
-
-variable (S) in
 def IsBirational (y : (Σ k, ι k) → Ω) : Prop :=
   ∀ c : ∀ k, ι k, (∀ k, y ⟨k, c k⟩ ≠ 0) → Subfield.closure (chartRingOver S y c : Set Ω) = ⊤
 
-
-variable (S) in
 def IsNormalModel (y : (Σ k, ι k) → Ω) : Prop :=
   ∀ c : ∀ k, ι k, (∀ k, y ⟨k, c k⟩ ≠ 0) → IsIntegrallyClosed (chartRingOver S y c)
 
@@ -462,13 +451,11 @@ theorem dominates_self {S : Type} [CommRing S] {Ω : Type} [Field Ω] [Algebra S
 
 def ptOne : (Σ _ : Unit, Fin 1) → F := fun _ => 1
 
-theorem isField_subalgebra_self (A : Subalgebra F F) : IsField A where
-  exists_pair_ne := ⟨0, 1, zero_ne_one⟩
-  mul_comm := mul_comm
-  mul_inv_cancel {a} ha := by
-    refine ⟨⟨(a : F)⁻¹, by simpa using A.algebraMap_mem (a : F)⁻¹⟩, Subtype.ext ?_⟩
-    have : (a : F) ≠ 0 := fun h => ha (Subtype.ext h)
-    simp [this]
+theorem isField_subalgebra_self (A : Subalgebra F F) : IsField A := by
+  refine ⟨⟨0, 1, zero_ne_one⟩, mul_comm, ?_⟩
+  intro a ha
+  refine ⟨⟨(a : F)⁻¹, by simpa using A.algebraMap_mem (a : F)⁻¹⟩, Subtype.ext ?_⟩
+  exact mul_inv_cancel₀ (fun h => ha (Subtype.ext h))
 
 theorem isBirational_ptOne : IsBirational F (ptOne F) := by
   intro c _

@@ -19,7 +19,7 @@ theorem card_finset_le {V A Q : Type} [AddCommGroup V] [Module ℚ V] [Module.Fi
   haveI : Module.Finite ℤ F := Module.Finite.span_of_finite ℤ (Finset.finite_toSet _)
   let g : F →ₗ[ℤ] V := f.toIntLinearMap ∘ₗ F.subtype
   have hg : Function.Injective g := hf.comp F.subtype_injective
-  haveI : IsAddTorsionFree V := IsAddTorsionFree.of_module_rat V
+  haveI : HasUniqueDiv V := HasUniqueDiv.of_module_rat V
   haveI : Module.IsTorsionFree ℤ F := Function.Injective.moduleIsTorsionFree g hg (by simp)
   haveI : Module.Free ℤ F := Module.free_of_finite_type_torsion_free'
   have hr : Module.finrank ℤ F ≤ Module.finrank ℚ V := by

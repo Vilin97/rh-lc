@@ -85,10 +85,10 @@ theorem normalAt_one_iff (x : KeyIn ℂ) (τ : Matrix (Fin x.P.g) (Fin x.P.g) �
   constructor
   · rintro ⟨u, h1, h2, h3, h4, h5, h6⟩
     refine ⟨u, h1, h2, h3, h4, ?_, h6⟩
-    convert h5 using 1
+    simpa only [_root_.one_mul] using h5
   · rintro ⟨u, h1, h2, h3, h4, h5, h6⟩
     refine ⟨u, h1, h2, h3, h4, ?_, h6⟩
-    convert h5 using 1
+    simpa only [_root_.one_mul] using h5
 
 theorem NormalAt.mem_siegelH {x : KeyIn ℂ} {τ M : Matrix (Fin x.P.g) (Fin x.P.g) ℂ} {a b : Fin x.P.g → ℂ} {c : ℂ}
     (h : NormalAt x τ M a b c) : τ ∈ ReciprocityTheory.PTheta.SiegelH (Fin x.P.g) := by

@@ -22,15 +22,15 @@ theorem pr_eq_trace (Q : Matrix α α E) (x y : Matrix α ν E) :
     pr c Q x y = 2⁻¹ * Algebra.trace F E (Matrix.trace (Qᵀ * (x * (y.map c)ᵀ))) := by
   have h : fromCols x (0 : Matrix α ν E) * stdJ ν E * ((fromCols (0 : Matrix α ν E) y).map c)ᵀ = x * (y.map c)ᵀ := by
     ext i k
-    simp [stdJ, mul_apply, Fintype.sum_sum_type, one_apply]
+    simp [stdJ, Matrix.mul_apply, Fintype.sum_sum_type, Matrix.one_apply]
   rw [pr, form, hTens_eq, h]
   congr 2
-  simp only [Matrix.trace, diag, mul_apply, transpose_apply]
+  simp only [Matrix.trace, diag, Matrix.mul_apply, transpose_apply]
   rw [Finset.sum_comm]
 
 theorem trace_single_pair (Q : Matrix α α E) (y : Matrix α ν E) (i : α) (j : ν) (z : E) :
     Matrix.trace (Qᵀ * (Matrix.single i j z * (y.map c)ᵀ)) = z * (Q * y.map c) i j := by
-  simp [Matrix.trace, mul_apply, Matrix.single_apply, Finset.mul_sum, ite_and]
+  simp [Matrix.trace, Matrix.mul_apply, Matrix.single_apply, Finset.mul_sum, ite_and]
   refine Finset.sum_congr rfl fun _ _ => by ring
 
 def prLin (Q : Matrix α α E) : Matrix α ν E →ₗ[F] Matrix α ν E →ₗ[F] F :=
@@ -66,7 +66,7 @@ theorem pr_alg : ∀ (F : Type) [Field F] [CharZero F] (E : Type) [Field E] [Alg
   ·
     have h : Matrix.trace (Qᵀ * (y * (x.map c)ᵀ)) = c (Matrix.trace (Qᵀ * (x * (y.map c)ᵀ))) := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [Matrix.trace, diag, mul_apply, transpose_apply, map_apply, map_sum, map_mul, hc, hQ.1]
+        simp only [Matrix.trace, diag, Matrix.mul_apply, transpose_apply, map_apply, map_sum, map_mul, hc, hQ.1]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
       exact congrArg _ (Finset.sum_congr rfl fun j _ => mul_comm _ _)
@@ -93,7 +93,7 @@ theorem pr_alg : ∀ (F : Type) [Field F] [CharZero F] (E : Type) [Field E] [Alg
     have h : ((y * (a.map c)ᵀ).map c)ᵀ = a * (y.map c)ᵀ := by
       ext i j
       set_option synthInstance.maxHeartbeats 100000 in
-        simp [mul_apply, map_sum, hc, mul_comm]
+        simp [Matrix.mul_apply, map_sum, hc, mul_comm]
     rw [hap, hap, h, Matrix.mul_assoc]
 
 end GlobalTheory.KSp

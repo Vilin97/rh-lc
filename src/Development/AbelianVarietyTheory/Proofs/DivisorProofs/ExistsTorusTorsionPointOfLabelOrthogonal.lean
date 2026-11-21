@@ -46,9 +46,10 @@ theorem torus_label_over : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matr
   have hωv : (ω : AlgebraicClosure (FractionRing V)) = yb (algebraMap X₁.o₁ X₁.S.R (X₁.S.ζ ^ (X₁.S.r * X₁.S.N))) := rfl
   have hω : IsPrimitiveRoot ω (X₁.S.r * X₁.S.N) := by
     have : NeZero ((X₁.S.r * X₁.S.N : ℕ) : AlgebraicClosure (FractionRing V)) := ⟨Nat.cast_ne_zero.2 hkpos.ne'⟩
-    rw [← IsPrimitiveRoot.coe_units_iff, ← Polynomial.isRoot_cyclotomic_iff,
+    apply (IsPrimitiveRoot.coe_units_iff).1
+    rw [hωv, ← (Polynomial.isRoot_cyclotomic_iff (R := AlgebraicClosure (FractionRing V))),
       ← Polynomial.map_cyclotomic _ (yb.comp (algebraMap X₁.o₁ X₁.S.R))]
-    exact (hζ.isRoot_cyclotomic hkpos).map
+    exact (hζ.isRoot_cyclotomic hkpos).map (yb.comp (algebraMap X₁.o₁ X₁.S.R))
 
   have hy : (TFK (R := V) (AlgebraicClosure (FractionRing V))).hom ≫ spMap 𝔪.yK = spMap yb := (Spec.map_comp _ _).symm
   let h : Over.mk ((TFK (R := V) (AlgebraicClosure (FractionRing V))).hom ≫ spMap 𝔪.yK) ⟶ baseOver (Sp X₁.S.R) :=
@@ -180,8 +181,8 @@ theorem exists_torus_char : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Mat
   have hf : (algebraMap (FractionRing V) (AlgebraicClosure (FractionRing V))).comp
       (algebraMap (FractionRing V) (FractionRing V)) = algebraMap (FractionRing V) (AlgebraicClosure (FractionRing V)) := by
     ext; simp
-  let qb := qkExt hB (algebraMap (FractionRing V) (AlgebraicClosure (FractionRing V))) hf q
-  have hqb : QkExt (algebraMap (FractionRing V) (AlgebraicClosure (FractionRing V))) q qb := (qkExt_iff hB _ hf _ _).2 rfl
+  obtain ⟨qb, hqb, -⟩ := existsUnique_qkExt (F' := AlgebraicClosure (FractionRing V)) hB
+    (algebraMap (FractionRing V) (AlgebraicClosure (FractionRing V))) hf q
   rw [qkToAkU_iff_of_algebra hL.1.globalFns hL.1.kerPow 𝔪.U hkpos hqb xF]
   have hA : AdmBase V (maximalIdeal V) := ⟨𝔪.cn.1, inferInstance, 𝔪.cn.2.1, 𝔪.cn.2.2.1⟩
   obtain ⟨f, f₁, -⟩ := GlobalTheory.TorsionIso.torsion_eq hL V (maximalIdeal V) hA 𝔪.D 𝔪.A 𝔪.G 𝔪.semi 𝔪.U
@@ -195,7 +196,8 @@ theorem exists_torus_char : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Mat
     rw [← map_pow, ← MonoidHom.pow_apply, hχ1, MonoidHom.one_apply, map_one]
   have hqbt : IsTor χb qb.g := by
     have e1 : q.g = torusPt _ _ (Additive.ofMul χ) := (isTorusPtF_iff_eq _ _).1 ((isTor_iff _ _).1 (hqg ▸ hg₀))
-    show IsTor χb (gtExt _ _ hf q.g)
+    have hg : qb.g = gtExt _ _ hf q.g := (eq_gtExt_iff _ hf _ _).2 hqb.2
+    rw [hg]
     rw [e1, GlobalTheory.QkNumberField.gtExt_torusPt, isTor_iff]
     exact isTorusPtF_torusPt _
   have hlab : ∀ b mu, 𝔪.YY b mu → (χb (Multiplicative.ofAdd (𝔪.e₈ mu)) : AlgebraicClosure (FractionRing V)) =
@@ -204,7 +206,7 @@ theorem exists_torus_char : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Mat
     intro b mu h
     show algebraMap _ _ ((χ (Multiplicative.ofAdd (𝔪.e₈ mu)) : FractionRing V)) = _
     rw [hχ, hmf b _ ((hyy b mu).1 h), Units.val_pow_eq_pow_val, hωv, ← map_pow, ← map_pow, ← pow_mul]
-  have hover := torus_label_over g n F W Z i X₁ z₁ act V ev X m t δ 𝔪 τ χb hχb1 hlab qb (f qb) hqy hqbt hqbf
+  have hover := torus_label_over g n F W Z i X₁ z₁ act V ev X m t δ 𝔪 τ χb hχb1 hlab qb (f qb) (hqb.1.trans hqy) hqbt hqbf
   have heq : fieldMap (FractionRing V) (AlgebraicClosure (FractionRing V)) ≫ xF = f qb := by
     refine Over.OverMorphism.ext (𝔪.cart.1.hom_ext ?_ (by rw [Over.w, Over.w]))
     rw [hover, Over.comp_left, Category.assoc, hxF, ← Category.assoc]

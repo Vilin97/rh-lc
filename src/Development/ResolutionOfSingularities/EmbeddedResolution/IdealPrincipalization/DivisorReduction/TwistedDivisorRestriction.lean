@@ -133,11 +133,32 @@ theorem nonzeroOnComponents_comap_lowerIdealAfterBlowup (T : MarkedIdealWithBoun
   · push Not at hcase
     obtain ⟨y, hyC, hy⟩ := hcase
     have hy0 : orderAt T.ideal ((T.boundary.get ⟨j, hj⟩).subschemeι y) = 0 := by
-      rcases orderAt_eq_zero_or_le_orderAt_of_isDerivBalanced T.base T.structMap T.ideal T.mult
-        (isDerivBalanced_of_isBalanced T hV.locallyOfFiniteType hbal)
-        ((T.boundary.get ⟨j, hj⟩).subschemeι y) with h | h
-      · exact h
-      · exact absurd ((mem_orderAtLeastLocus_iff T.ideal T.mult _).mpr h) hy
+      by_contra h0
+      have hm : 1 ≤ T.mult := by
+        by_contra hn
+        have : T.mult = 0 := by omega
+        apply hy
+        rw [mem_orderAtLeastLocus_iff, this]
+        exact zero_le
+      have hlt : T.mult - 1 < T.mult := by omega
+      have hbal' := isDerivBalanced_of_isBalanced T hV.locallyOfFiniteType hbal
+      have hpow := IsDerivBalanced.derivIdealSheafIterate_pow_le T.base T.structMap hbal' hlt
+      have hsub : T.mult - (T.mult - 1) = 1 := by omega
+      rw [hsub, pow_one] at hpow
+      have hord := orderAt_le_of_le hpow ((T.boundary.get ⟨j, hj⟩).subschemeι y)
+      rw [orderAt_pow T.base T.structMap] at hord
+      have hne : orderAt (derivIdealSheafIterate T.base T.structMap (T.mult - 1) T.ideal)
+          ((T.boundary.get ⟨j, hj⟩).subschemeι y) ≠ 0 := by
+        intro hz
+        rw [hz, mul_zero] at hord
+        exact h0 (le_antisymm hord zero_le)
+      have hmem : (T.boundary.get ⟨j, hj⟩).subschemeι y ∈
+          (derivIdealSheafIterate T.base T.structMap (T.mult - 1) T.ideal).support := by
+        by_contra hc
+        exact hne ((orderAt_eq_zero_iff_not_mem_support _ _).mpr hc)
+      apply hy
+      rw [← support_derivIdealSheafIterate_eq_orderAtLeastLocus T.base T.structMap T.ideal hm]
+      exact hmem
     have hle : orderAt (DivisorReduction.lowerIdealAfterBlowup T j hj)
         ((T.boundary.get ⟨j, hj⟩).subschemeι y) ≤ 0 := by
       rw [← hy0, horder]

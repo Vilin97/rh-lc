@@ -51,7 +51,10 @@ theorem mixS_add {ψ : AddChar (AF D.host.F) ℂ} (hψ : Continuous ψ) {S S₀ 
   have h1 := d.integrableOn_mixS hψ hμ hf x w₀
   have h2 := d.integrableOn_mixS hψ hμ hg x w₀
   simp only [HypDec.integrandS_eq] at h1 h2
-  simp only [_root_.I195MixedCoordinates_16a87883d9a2fbb6523804b0.source, Pi.add_apply, HypDec.integrandS_eq]
+  change (∫ a in 𝓕, heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T w₀) (f + g))) 0 ∂μ) =
+    (∫ a in 𝓕, heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T w₀) f)) 0 ∂μ) +
+    (∫ a in 𝓕, heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T w₀) g)) 0 ∂μ)
+  simp only [HypDec.integrandS_eq, Pi.add_apply]
   rw [← integral_add h1 h2]
   congr 1; funext a; ring
 
@@ -95,7 +98,18 @@ theorem evalAt_add {ψ : AddChar (AF D.host.F) ℂ} (hψ : Continuous ψ) {V V�
   have h2 := integrableOn_mixT_of_quasi hψ dW V₀ vT.covol (continuous_mixS hψ dV W vS.covol hg x)
     (fun δ w => GlobalTheory.MixModel.Check.mixS_quasi dV vS.μ vS.𝓕 hg x δ w) y w₀
   simp only [HypDec.integrandT_eq] at h1 h2
-  simp only [evalAt, mixS_add hψ dV W vS.covol hf hg x, _root_.I195MixedCoordinates_16a87883d9a2fbb6523804b0.target, Pi.add_apply, HypDec.integrandT_eq]
+  change _root_.I195MixedCoordinates_16a87883d9a2fbb6523804b0.target dW V₀ ψ vT.μ vT.𝓕
+      (_root_.I195MixedCoordinates_16a87883d9a2fbb6523804b0.source dV W ψ vS.μ vS.𝓕 (f + g) x) y w₀ =
+    _root_.I195MixedCoordinates_16a87883d9a2fbb6523804b0.target dW V₀ ψ vT.μ vT.𝓕
+      (_root_.I195MixedCoordinates_16a87883d9a2fbb6523804b0.source dV W ψ vS.μ vS.𝓕 f x) y w₀ +
+    _root_.I195MixedCoordinates_16a87883d9a2fbb6523804b0.target dW V₀ ψ vT.μ vT.𝓕
+      (_root_.I195MixedCoordinates_16a87883d9a2fbb6523804b0.source dV W ψ vS.μ vS.𝓕 g x) y w₀
+  rw [mixS_add hψ dV W vS.covol hf hg x]
+  change (∫ a in vT.𝓕, heisO ψ V₀ W (dW.incX V₀ a) (heisO ψ V₀ W (dW.incAdj V₀ y) (heisO ψ V₀ W (dW.inc0 V₀ w₀) (_root_.I195MixedCoordinates_16a87883d9a2fbb6523804b0.source dV W ψ vS.μ vS.𝓕 f x + _root_.I195MixedCoordinates_16a87883d9a2fbb6523804b0.source dV W ψ vS.μ vS.𝓕 g x))) 0 ∂vT.μ) = _
+  change (∫ a in vT.𝓕, heisO ψ V₀ W (dW.incX V₀ a) (heisO ψ V₀ W (dW.incAdj V₀ y) (heisO ψ V₀ W (dW.inc0 V₀ w₀) (_root_.I195MixedCoordinates_16a87883d9a2fbb6523804b0.source dV W ψ vS.μ vS.𝓕 f x + _root_.I195MixedCoordinates_16a87883d9a2fbb6523804b0.source dV W ψ vS.μ vS.𝓕 g x))) 0 ∂vT.μ) =
+    (∫ a in vT.𝓕, heisO ψ V₀ W (dW.incX V₀ a) (heisO ψ V₀ W (dW.incAdj V₀ y) (heisO ψ V₀ W (dW.inc0 V₀ w₀) (_root_.I195MixedCoordinates_16a87883d9a2fbb6523804b0.source dV W ψ vS.μ vS.𝓕 f x))) 0 ∂vT.μ) +
+    (∫ a in vT.𝓕, heisO ψ V₀ W (dW.incX V₀ a) (heisO ψ V₀ W (dW.incAdj V₀ y) (heisO ψ V₀ W (dW.inc0 V₀ w₀) (_root_.I195MixedCoordinates_16a87883d9a2fbb6523804b0.source dV W ψ vS.μ vS.𝓕 g x))) 0 ∂vT.μ)
+  simp only [HypDec.integrandT_eq, Pi.add_apply]
   rw [← integral_add h1 h2]
   congr 1; funext a; ring
 

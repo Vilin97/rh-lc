@@ -83,7 +83,7 @@ theorem FiniteClasses.of_le (h : FiniteClasses Γ K) (hle : K' ≤ K) (hi : K'.r
     (DoubleCoset.mk Γ K' (p.1.out * (p.2.out : K)) : ClassSet Γ K')) fun c => ?_, fun g => ?_⟩
   · induction c using Quotient.inductionOn' with
     | h g =>
-      obtain ⟨γ, k, hγ, hk, e⟩ := DoubleCoset.mk_out_eq_mul Γ K g
+      obtain ⟨γ, hγ, k, hk, e⟩ := DoubleCoset.mk_out_eq_mul Γ K g
       obtain ⟨k', e'⟩ := QuotientGroup.mk_out_eq_mul (K'.subgroupOf K) (⟨k, hk⟩ : K)⁻¹
       refine ⟨(DoubleCoset.mk Γ K g, QuotientGroup.mk (⟨k, hk⟩ : K)⁻¹), ?_⟩
       refine ((@DoubleCoset.eq _ _ Γ K' _ _).2 ⟨γ, hγ, (k' : K), k'.2, ?_⟩).symm
@@ -101,7 +101,7 @@ theorem FiniteClasses.of_ge (h : FiniteClasses Γ K') (hle : K' ≤ K) (hi : K'.
     fun g => ?_⟩
   · induction c using Quotient.inductionOn' with
     | h g =>
-      obtain ⟨γ, k, hγ, hk, e⟩ := DoubleCoset.mk_out_eq_mul Γ K' g
+      obtain ⟨γ, hγ, k, hk, e⟩ := DoubleCoset.mk_out_eq_mul Γ K' g
       exact ⟨DoubleCoset.mk Γ K' g, ((@DoubleCoset.eq _ _ Γ K _ _).2 ⟨γ, hγ, k, hle hk, e⟩).symm⟩
   · haveI := h.2 g
     let f : stabAt Γ K g → K ⧸ K'.subgroupOf K := fun x => QuotientGroup.mk ⟨_, x.2⟩
@@ -143,7 +143,7 @@ theorem bijective_classMap (hπ : Function.Surjective π) :
   constructor
   · intro c d e
     obtain ⟨_, ⟨γ, hγ, rfl⟩, k, hk, e'⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 e
-    rw [← DoubleCoset.out_eq' _ _ c, ← DoubleCoset.out_eq' _ _ d]
+    rw [← DoubleCoset.out_eq' c, ← DoubleCoset.out_eq' d]
     refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨γ, hγ, (γ * c.out)⁻¹ * d.out, ?_, by group⟩
     rw [Subgroup.mem_comap, map_mul, e', map_inv, map_mul, inv_mul_cancel_left]
     exact hk
@@ -151,7 +151,7 @@ theorem bijective_classMap (hπ : Function.Surjective π) :
     induction c using Quotient.inductionOn' with
     | h g' =>
       obtain ⟨g, rfl⟩ := hπ g'
-      obtain ⟨γ, k, hγ, hk, e⟩ := DoubleCoset.mk_out_eq_mul Γ (L.comap π) g
+      obtain ⟨γ, hγ, k, hk, e⟩ := DoubleCoset.mk_out_eq_mul Γ (L.comap π) g
       refine ⟨DoubleCoset.mk Γ (L.comap π) g, ((@DoubleCoset.eq _ _ (Γ.map π) L _ _).2
         ⟨π γ, ⟨γ, hγ, rfl⟩, π k, hk, ?_⟩).symm⟩
       rw [e, map_mul, map_mul]
@@ -199,10 +199,10 @@ theorem FiniteClasses.measure_toReal [MeasurableSpace G] [MeasurableMul G] [Coun
     classMass_eq_finsum_out, finsum_eq_sum_of_fintype]
   · simp only [e]
   · intro x
-    obtain ⟨γ, hγ, k, hk, e⟩ := (@DoubleCoset.eq _ _ Γ K _ x).1 (DoubleCoset.out_eq' Γ K (DoubleCoset.mk Γ K x))
+    obtain ⟨γ, hγ, k, hk, e⟩ := (@DoubleCoset.eq _ _ Γ K _ x).1 (DoubleCoset.out_eq' (DoubleCoset.mk Γ K x))
     exact ⟨_, ⟨γ, hγ⟩, ⟨k, hk⟩, e⟩
   · intro i j γ γ' k k' e
-    rw [← DoubleCoset.out_eq' _ _ i, ← DoubleCoset.out_eq' _ _ j]
+    rw [← DoubleCoset.out_eq' i, ← DoubleCoset.out_eq' j]
     refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨(γ'⁻¹ * γ : Γ), (γ'⁻¹ * γ).2, (k * k'⁻¹ : K), (k * k'⁻¹).2, ?_⟩
     rw [Subgroup.coe_mul, Subgroup.coe_mul, mul_assoc, mul_assoc, ← mul_assoc (γ : G), ← mul_assoc, ← mul_assoc,
       mul_assoc _ _ (k : G), e]

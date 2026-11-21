@@ -30,7 +30,7 @@ theorem minVal_linearOn (γ : LinearMap.BilinForm ℤ X) : (InvFun.minVal O).Lin
   · rw [← h]
     simp only [zero_mul]
     convert Real.sInf_empty
-    exact Set.eq_empty_of_forall_notMem fun x ⟨⟨_, h⟩, h'⟩ => h' h.symm
+    simp [eq_comm]
   · rw [← smul_eq_mul (c 0) (sInf _), ← Real.sInf_smul_of_nonneg (hc 0)]
     congr 1
     ext x

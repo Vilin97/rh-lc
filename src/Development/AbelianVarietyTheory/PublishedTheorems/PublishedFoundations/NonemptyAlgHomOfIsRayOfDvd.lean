@@ -123,7 +123,7 @@ theorem closure_isFrob_eq_top (M : Type) [Field M] [NumberField M] [Algebra K M]
     (hm : 𝔪 ≠ ⊥) :
     Subgroup.closure {σ : M ≃ₐ[K] M | ∃ 𝔭 : HeightOneSpectrum (𝓞 K), ¬ 𝔭.asIdeal ∣ 𝔪 ∧ IsFrob M 𝔭 σ} = ⊤ := by
   have hS : {𝔭 : HeightOneSpectrum (𝓞 K) | 𝔭.asIdeal ∣ 𝔪}.Finite := Ideal.finite_factors hm
-  refine GlobalTheory.Mem.FieldsEx.closure_frob_eq_top K M _ hS fun F _ _ _ hF σ => ?_
+  refine GlobalTheory.Mem.FieldsEx.closure_frob_eq_top K M {𝔭 : HeightOneSpectrum (𝓞 K) | 𝔭.asIdeal ∣ 𝔪} hS fun F _ _ _ hF σ => ?_
   by_contra hσ
   obtain ⟨T, hT, H⟩ := GlobalTheory.Mem.Fld.exists_two_primes_of_isFrob_one K F σ hσ
   choose P Q hne hP hQ hNP hNQ using fun v : {v // v ∉ {𝔭 : HeightOneSpectrum (𝓞 K) | 𝔭.asIdeal ∣ 𝔪} ∪ T} =>
@@ -131,7 +131,7 @@ theorem closure_isFrob_eq_top (M : Type) [Field M] [NumberField M] [Algebra K M]
   have hu : ∀ x : _ × Bool, (cond x.2 (P x.1) (Q x.1)).asIdeal.under (𝓞 K) = x.1.1.asIdeal := by
     rintro ⟨v, _ | _⟩
     exacts [(hQ v).over.symm, (hP v).over.symm]
-  refine GlobalTheory.Mem.ZetaPole.not_injective_double_primes K F _ (hS.union hT) (fun x => cond x.2 (P x.1) (Q x.1))
+  refine GlobalTheory.Mem.ZetaPole.not_injective_double_primes K F ({𝔭 : HeightOneSpectrum (𝓞 K) | 𝔭.asIdeal ∣ 𝔪} ∪ T) (hS.union hT) (fun x => cond x.2 (P x.1) (Q x.1))
     (fun x y h => ?_) ?_
   · have e : x.1 = y.1 := Subtype.ext (HeightOneSpectrum.ext (by rw [← hu x, ← hu y]; exact congrArg _ (congrArg _ h)))
     obtain ⟨v, a⟩ := x

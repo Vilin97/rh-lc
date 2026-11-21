@@ -44,7 +44,7 @@ theorem ker_each (B : Fin a → Matrix (Fin g) (Fin g) ℤ)
     simpa using (hB i).dotProduct_mulVec_nonneg r
   have h2 := (Finset.sum_eq_zero_iff_of_nonneg hnn).1 h0 j (Finset.mem_univ j)
   have h3 : (B j).map (fun x : ℤ => (x : ℝ)) *ᵥ r = 0 :=
-    ((hB j).dotProduct_mulVec_zero_iff r).1 (by simpa using h2)
+    ((hB j).dotProduct_mulVec_zero_iff).1 (by simpa using h2)
   rw [hr, map_mulVec_real] at h3
   funext k
   have := congrFun h3 k

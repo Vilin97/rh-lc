@@ -172,7 +172,8 @@ theorem mul_mem_nPlusU_of_mem_cartanSub {x y : U n} (hx : x ∈ nPlusU n) (hy : 
     exact mul_e_diag_mem_nPlusU hx k
   exact this hy x hx
 
-abbrev centralizerT (n : ℕ) : Subalgebra ℂ (U n) := Subalgebra.centralizer ℂ (cartanSet n)
+noncomputable abbrev centralizerT (n : ℕ) : Subalgebra ℂ (U n) :=
+  Subalgebra.centralizer ℂ (cartanSet n)
 
 theorem commute_e_diag_of_mem {z : U n} (hz : z ∈ centralizerT n) (k : Fin n) :
     e (k, k) * z = z * e (k, k) :=

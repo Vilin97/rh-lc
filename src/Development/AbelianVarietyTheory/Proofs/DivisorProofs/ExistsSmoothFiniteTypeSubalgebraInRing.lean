@@ -127,7 +127,13 @@ theorem Place.exists_smooth_subalgebra : ∀ {κ' : Type} [Field κ'] [Algebra �
     rw [this]; exact F.ring.mul_mem _ _ (hA₀R a.2) hsi
   · simp only [T, Finset.coe_union, Set.mem_union, Finset.mem_coe]; exact Or.inr hx
   · intro f
-    obtain ⟨r1, hr1, r2, hr2, hr20, e⟩ := F.isLocModel.frac f
+    have hfrac : ∃ a ∈ F.ring, ∃ b ∈ F.ring, b ≠ 0 ∧ f * b = a := by
+      obtain ⟨a, b, hb, e⟩ := IsFractionRing.div_surjective (A := F.ring) f
+      have hb0 : (b : κ') ≠ 0 := fun h => nonZeroDivisors.ne_zero hb (Subtype.ext h)
+      refine ⟨a, a.2, b, b.2, hb0, ?_⟩
+      rw [← e]
+      exact div_mul_cancel₀ _ hb0
+    obtain ⟨r1, hr1, r2, hr2, hr20, e⟩ := hfrac
     obtain ⟨t1, ht1A, ht1, h1⟩ := hσ ⟨r1, hr1⟩
     obtain ⟨t2, ht2A, ht2, h2⟩ := hσ ⟨r2, hr2⟩
     have unit_ne : ∀ t : R, IsUnit t → (t : κ') ≠ 0 := by

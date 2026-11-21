@@ -45,6 +45,8 @@ theorem mixT_indep_quasi {S T T₀ : HSp D} {ρ : ℕ} (d : HypDec T T₀ ρ) {�
   funext y w₀
   refine covolOne_integral_eq hμ hμ' _ ?_
   intro γ hγ ξ
+  change heisO ψ S T (d.incX S (γ + ξ)) (heisO ψ S T (d.incAdj S y) (heisO ψ S T (d.inc0 S w₀) f)) 0 =
+    heisO ψ S T (d.incX S ξ) (heisO ψ S T (d.incAdj S y) (heisO ψ S T (d.inc0 S w₀) f)) 0
   obtain ⟨δ, hδ⟩ : d.incX S γ ∈ ratMx D _ _ := ratMx_mul (rat_mem _) hγ
   have h := hq δ (d.incX S ξ + d.incAdj S y + d.inc0 S w₀)
   rw [show ratW T S δ = d.incX S γ from hδ] at h
@@ -61,7 +63,8 @@ theorem evalAt_indep {V V₀ W W₀ : HSp D} {ρ σ : ℕ} (dV : HypDec V V₀ �
     (hT : IsCovolOne (ratMx D σ V₀.rank) μT 𝓕T) (hT' : IsCovolOne (ratMx D σ V₀.rank) μT' 𝓕T')
     {Ψ : WO V W → ℂ} (hΨ : IsThetaFunO ψ V W Ψ) (x : Mx D W.rank ρ) (y : Mx D V₀.rank σ) :
     evalAt ψ dV dW μS' 𝓕S' μT' 𝓕T' Ψ x y = evalAt ψ dV dW μS 𝓕S μT 𝓕T Ψ x y := by
-  unfold evalAt
+  change dW.mixT V₀ ψ μT' 𝓕T' (dV.mixS W ψ μS' 𝓕S' Ψ x) y =
+    dW.mixT V₀ ψ μT 𝓕T (dV.mixS W ψ μS 𝓕S Ψ x) y
   rw [dV.mixS_indep hS hS' hΨ]
   exact congrFun (mixT_indep_quasi dW hT hT' (GlobalTheory.MixModel.Check.mixS_quasi dV μS 𝓕S hΨ x)) y
 

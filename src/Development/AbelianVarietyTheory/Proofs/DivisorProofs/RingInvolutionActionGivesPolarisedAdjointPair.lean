@@ -95,8 +95,8 @@ theorem adj_act : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (D : De
     abel
   obtain ⟨t, ht, htv⟩ := exists_gen hL hF (LB.invGen _ _ _ u) (DVR.invGen_isGen _ _ _ _ hu)
   let w : LB.Iso (cubeLB B ![fst B B ≫ f, snd B B] D.toPre.P.L) (cubeLB B ![fst B B, snd B B ≫ g] D.toPre.P.L) :=
-    genIso t
-  refine ⟨hf, hg, fun y => o.c_lin a y, fun y => o.c_lin (star a) y, w, genIso_isGen ht,
+    ActAdj.genIso t
+  refine ⟨hf, hg, fun y => o.c_lin a y, fun y => o.c_lin (star a) y, w, ActAdj.genIso_isGen ht,
     fun y y' z J₁ J₂ hJ₁ hJ₂ => ?_⟩
   let P := (lift (toUnit (TK R) ≫ D.toPre.c y) (toUnit (TK R) ≫ D.toPre.c y')).left
   have hp : ∀ b b' J, Good D.toPre.P.L z J → val ((pol D).tau b b') (𝟙 _) z J = val (D.toPre.tau b b') (𝟙 _) z J :=
@@ -120,9 +120,9 @@ theorem adj_act : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (D : De
   have m₁ : P z ∈ LB.wchart D.toPre.P.L φ₁ j₁ := hK₁.mem φ₁ P
   have m₂ : P z ∈ LB.wchart D.toPre.P.L φ₀ j₂ := hK₂.mem φ₀ P
   have m₁' : P z ∈ LB.wchart D.toPre.P.L φ₀ j₁' := hK₁.mem φ₀ P
-  have eA : adjVal w P z J₁ J₂ = gm P z _ (t.s (Sum.elim j₁ j₂)) := gm_genIso t P z (j₁, j₂) ⟨m₁, m₂⟩
+  have eA : adjVal w P z J₁ J₂ = gm P z _ (t.s (Sum.elim j₁ j₂)) := ActAdj.gm_genIso t P z (j₁, j₂) ⟨m₁, m₂⟩
   have eT : val t P z J₁ = gm P z _ (t.s (Sum.elim j₁ j₁')) := val_of t P z J₁ _ (by rintro (k | k) <;> rfl)
-  have tr := gen_trans ht P z (chart_le j₁ j₂ ⟨m₁, m₂⟩) (chart_le j₁ j₁' ⟨m₁, m₁'⟩)
+  have tr := gen_trans ht P z (ActAdj.chart_le j₁ j₂ ⟨m₁, m₂⟩) (ActAdj.chart_le j₁ j₁' ⟨m₁, m₁'⟩)
   have trτ := gen_trans ((pol D).tau_gen (h y) y') (𝟙 _) z (hK₂.mem _ (𝟙 _)) (hK₁.mem _ (𝟙 _))
   let H : ((TK R).left ⟶ B.left) → ((TK R).left.presheaf.stalk z)ˣ :=
     fun ψ => gm ψ z (D.toPre.P.L.U (J₂ ψ) ⊓ D.toPre.P.L.U (J₁ ψ)) (D.toPre.P.L.g (J₂ ψ) (J₁ ψ))

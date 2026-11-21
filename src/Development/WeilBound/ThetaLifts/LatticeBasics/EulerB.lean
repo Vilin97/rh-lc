@@ -47,7 +47,7 @@ def Oh : AddSubgroup (AF F) where
   zero_mem' := ⟨map_zero (InfiniteAdeleRing.ringEquiv_mixedSpace F), fun v => by rw [map_zero]; exact zero_mem _⟩
   add_mem' := fun {a b} ha hb => ⟨(map_add (InfiniteAdeleRing.ringEquiv_mixedSpace F) a.1 b.1).trans
     ((congrArg₂ (· + ·) ha.1 hb.1).trans (add_zero _)),
-    fun v => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha.2 v) (hb.2 v)⟩
+    fun v => by rw [map_add]; exact add_mem (ha.2 v) (hb.2 v)⟩
   neg_mem' := fun {a} ha => ⟨(map_neg (InfiniteAdeleRing.ringEquiv_mixedSpace F) a.1).trans
     ((congrArg Neg.neg ha.1).trans neg_zero), fun v => by rw [map_neg]; exact neg_mem (ha.2 v)⟩
 
@@ -107,13 +107,13 @@ theorem isClosed_latHat (hL : Y.L.IsLattice E) : IsClosed (latHat Y : Set (Fin n
 def aeInt (Y : Spc F E n) : Submodule (AF F) (Fin n → AE F E) where
   carrier := {w | ∀ᶠ v : Pl F in cofinite, ∀ a ∈ Oh F, (idem v * a) • w ∈ latHat Y}
   zero_mem' := by
-    rw [Set.mem_setOf_eq]
+    rw [Set.mem_ofPred_eq]
     exact Eventually.of_forall fun _ _ _ => by rw [smul_zero]; exact zero_mem _
   add_mem' := fun h h' => by
-    rw [Set.mem_setOf_eq] at *
+    rw [Set.mem_ofPred_eq] at *
     exact (h.and h').mono fun _ e a ha => by rw [smul_add]; exact add_mem (e.1 a ha) (e.2 a ha)
   smul_mem' := fun c w h => by
-    rw [Set.mem_setOf_eq] at *
+    rw [Set.mem_ofPred_eq] at *
     refine (h.and c.2.2).mono fun v e a ha => ?_
     have := e.1 _ (idem_mem (v := v) (a := a * c) (by rw [map_mul]; exact mul_mem (ha.2 v) e.2))
     rwa [← mul_assoc, idem_sq, ← mul_assoc, mul_smul] at this
@@ -121,7 +121,7 @@ def aeInt (Y : Spc F E n) : Submodule (AF F) (Fin n → AE F E) where
 omit [NumberField E] in
 theorem aeInt_iff {w} : w ∈ aeInt Y ↔ ∀ᶠ v : Pl F in cofinite, ∀ a ∈ Oh F, (idem v * a) • w ∈ latHat Y := Iff.rfl
 
-theorem mem_of_lat (hL : Y.L.IsLattice E) (P : Submodule (AF F) (Fin n → AE F E)) (hP : ∀ x ∈ Y.L, incV F x ∈ P)
+theorem mem_of_lat (hL : Y.L.IsFullLattice E) (P : Submodule (AF F) (Fin n → AE F E)) (hP : ∀ x ∈ Y.L, incV F x ∈ P)
     (w : Fin n → AE F E) : w ∈ P := by
   have h1 : ∀ x : Fin n → E, ∀ t : E, incV F (t • x) ∈ P := fun x => by
     induction (hL.span_eq_top ▸ Submodule.mem_top : x ∈ Submodule.span E (Y.L : Set (Fin n → E))) using Submodule.span_induction with
@@ -140,8 +140,7 @@ theorem mem_of_lat (hL : Y.L.IsLattice E) (P : Submodule (AF F) (Fin n → AE F 
     | smul s x _ hx => exact fun t => by rw [smul_smul]; exact hx _
   rw [← Finset.univ_sum_single w]
   refine sum_mem fun i _ => ?_
-  induction w i using TensorProduct.induction_on with
-  | zero => rw [Pi.single_zero]; exact zero_mem _
+  induction w i using TensorProduct.inductionOn with
   | add x y hx hy => rw [Pi.single_add]; exact add_mem hx hy
   | tmul a y =>
     convert P.smul_mem a (h1 (Pi.single i y) 1) using 1
@@ -150,10 +149,10 @@ theorem mem_of_lat (hL : Y.L.IsLattice E) (P : Submodule (AF F) (Fin n → AE F 
     · subst e; simp [incV, inclR, TensorProduct.smul_tmul']
     · simp [incV, e]
 
-theorem mem_aeInt (hL : Y.L.IsLattice E) (w : Fin n → AE F E) : w ∈ aeInt Y :=
+theorem mem_aeInt (hL : Y.L.IsFullLattice E) (w : Fin n → AE F E) : w ∈ aeInt Y :=
   mem_of_lat hL _ (fun _ hx => aeInt_iff.2 <| Eventually.of_forall fun v _ ha => gen_mem (idem_mem (ha.2 v)) hx) w
 
-theorem gen_surj (hL : Y.L.IsLattice E) {m : ℕ} {x : Fin m → Y.L} (hx : Submodule.span ℤ (Set.range x) = ⊤) :
+theorem gen_surj (hL : Y.L.IsFullLattice E) {m : ℕ} {x : Fin m → Y.L} (hx : Submodule.span ℤ (Set.range x) = ⊤) :
     Function.Surjective (Fintype.linearCombination (AF F) fun i => incV F (x i).1) := fun w => by
   refine mem_of_lat hL (LinearMap.range _) (fun y hy => ?_) w
   obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).1 (hx ▸ Submodule.mem_top : (⟨y, hy⟩ : Y.L) ∈ _)
@@ -164,9 +163,9 @@ theorem gen_surj (hL : Y.L.IsLattice E) {m : ℕ} {x : Fin m → Y.L} (hx : Subm
   rw [Fintype.linearCombination_apply]
   exact Finset.sum_congr rfl fun i _ => Int.cast_smul_eq_zsmul _ _ _
 
-theorem ae_mulVec (hL : Y.L.IsLattice E) (A : Matrix (Fin n) (Fin n) (AE F E)) :
+theorem ae_mulVec (hL : Y.L.IsFullLattice E) (A : Matrix (Fin n) (Fin n) (AE F E)) :
     ∀ᶠ v in cofinite, ∀ z ∈ latHat Y, At (evFin F v) z → A *ᵥ z ∈ latHat Y := by
-  obtain ⟨m, x, -, hx⟩ := lat_gen hL
+  obtain ⟨m, x, -, hx⟩ := lat_gen hL.toIsLattice
   filter_upwards [eventually_all.2 fun i => aeInt_iff.1 (mem_aeInt hL (A *ᵥ incV F (x i).1))] with v hv z hz h
   obtain ⟨a, ha, rfl⟩ := (hx z).1 hz
   rw [← at_iff.1 h, Finset.smul_sum, Matrix.mulVec_sum]

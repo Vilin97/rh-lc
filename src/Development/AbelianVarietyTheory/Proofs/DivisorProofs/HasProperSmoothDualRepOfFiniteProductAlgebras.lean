@@ -47,7 +47,7 @@ theorem hasRepAF_of_disjoint_cover {S : Scheme.{0}} (A : Over S) [GrpObj A] (g :
   have hb : ∀ i, j i ≫ bt = b i ≫ Over.homMk (V i).ι := fun i => by
     ext1; simp [j, bt]
 
-  have hk : ∀ i, IsOpenImmersion (A ◁ j i).left := fun i => (GlobalTheory.T.isOpenImmersion_whiskerLeft_range_preimage_snd A (j i)).1
+  haveI hk : ∀ i, IsOpenImmersion (A ◁ j i).left := fun i => (GlobalTheory.T.isOpenImmersion_whiskerLeft_range_preimage_snd A (j i)).1
   have hkc : ⨆ i, (A ◁ j i).left.opensRange = ⊤ := by
     rw [eq_top_iff]
     intro z _

@@ -73,7 +73,17 @@ theorem GlobalTheory.PolDeg.exists_symmetric_pol : ∀ (R : Type) [CommRing R] [
   obtain ⟨R', _, _, _, ρ, b, hR', hinj, hfin, hloc, hb⟩ := GlobalTheory.T.exists_halving_point_abelianScheme_finite_ext R Q.B a hR Q.isAb
   haveI := hR'.1
   have h := isGrpPullback_pullback Q.B (spMap ρ)
-  have hA := PolPull.isAbelianScheme_of_isGrpPullback Q.isAb h
+  have hA : IsAbelianScheme ((Over.pullback (spMap ρ)).obj Q.B) := by
+    have := Q.isAb.comm
+    have hc : IsCommMonObj ((Over.pullback (spMap ρ)).obj Q.B) := by
+      rw [isCommMonObj_iff_isMulCommutative]
+      intro T
+      refine ⟨⟨fun x y => Over.OverMorphism.ext (h.1.hom_ext ?_ (by rw [Over.w, Over.w]))⟩⟩
+      rw [← h.2 T x y (pushPt h.1.w x) (pushPt h.1.w y) rfl rfl,
+        ← h.2 T y x (pushPt h.1.w y) (pushPt h.1.w x) rfl rfl, _root_.mul_comm]
+    exact ⟨hc, MorphismProperty.of_isPullback (P := @Smooth) h.1 Q.isAb.smooth,
+      MorphismProperty.of_isPullback (P := @IsProper) h.1 Q.isAb.proper,
+      MorphismProperty.of_isPullback (P := @GeometricallyConnected) h.1 Q.isAb.geomConnected⟩
   haveI := hA.comm
   obtain ⟨b', hb'⟩ := exists_half h a b hb
   have hM' := pull_isLB hM (pullback.fst Q.B.hom (spMap ρ))

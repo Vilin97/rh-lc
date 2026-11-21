@@ -20,7 +20,7 @@ theorem unit_lift_near_fibre : ∀ (X X' Z Z' : Scheme.{0}) (p : X' ⟶ X) (i : 
     rw [← Scheme.Hom.comp_apply, h.w, Scheme.Hom.comp_apply]
   by_cases hxr : x ∈ Set.range i
   swap
-  · refine ⟨W ⊓ ⟨(Set.range i)ᶜ, hi.base_closed.isClosed_range.isOpen_compl⟩, 1, inf_le_left, ⟨hx, hxr⟩,
+  · refine ⟨W ⊓ ⟨(Set.range i)ᶜ, i.isClosedEmbedding.isClosed_range.isOpen_compl⟩, 1, inf_le_left, ⟨hx, hxr⟩,
       fun z hz => ?_⟩
     exact absurd ⟨p' z, (hw z).symm⟩ hz.2
   obtain ⟨z0, hz0⟩ := hxr

@@ -372,7 +372,8 @@ theorem famUnif_holds : FamUnif := by
     simpa using this
   · let β : (I → ℂ) × (Fin g → ℂ) →L[ℂ] (Fin (Fintype.card I) → ℂ) × (Fin g → ℂ) :=
       ContinuousLinearMap.prodMap (ψ.symm : (I → ℂ) →L[ℂ] (Fin (Fintype.card I) → ℂ)) (ContinuousLinearMap.id ℂ _)
-    have h1 := isHolTo_comp hhol (Metric.isOpen_ball.prod isOpen_univ) β.differentiable.differentiableOn
+    have h1 := isHolTo_comp hhol (C := Metric.ball (0 : I → ℂ) r ×ˢ Set.univ)
+      (Metric.isOpen_ball.prod isOpen_univ) β.differentiable.differentiableOn
       (fun q hq => ⟨hmem q.1 hq.1, Set.mem_univ _⟩)
     refine isHolTo_congr (isHolTo_comp_hom h1 (𝟙 _)) ?_
     intro q hq

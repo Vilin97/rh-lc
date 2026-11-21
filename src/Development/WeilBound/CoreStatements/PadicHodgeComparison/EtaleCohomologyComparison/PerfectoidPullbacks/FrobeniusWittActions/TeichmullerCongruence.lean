@@ -132,15 +132,22 @@ def mOut (M : Model l K) (n : ℕ) (hT : TeichmullerCongruence r N) :
 
 
 variable (l) in
-def phiA (N : ℕ) : Acris l →+* Acris l := ACris.phi ℂ_[l] l ^ N
+def phiA (N : ℕ) : Acris l →+* Acris l := ACris.phi (K := ℂ_[l]) (p := l) ^ N
 
-theorem phiA_succ (N : ℕ) (a : Acris l) : phiA l (N + 1) a = ACris.phi ℂ_[l] l (phiA l N a) := by
+theorem phiA_succ (N : ℕ) (a : Acris l) :
+    phiA l (N + 1) a = ACris.phi (K := ℂ_[l]) (p := l) (phiA l N a) := by
   rw [phiA, pow_succ']; rfl
 
 theorem phiP_cris (n N : ℕ) (a : Acris l) : phiP l n N ((base l).cris n a) = (base l).cris n (phiA l N a) := by
+  have hφ (x : Acris l) :
+      (base l).phi n ((base l).cris n x) =
+        (base l).cris n (ACris.phi (K := ℂ_[l]) (p := l) x) :=
+    (base l).pdOk_frob.acr_cris (base l).frob_comp_s (ACris.phiZero (K := ℂ_[l]) (p := l))
+      (fun y => RingHom.congr_fun (f := ACris.phiAway (K := ℂ_[l]) (p := l))
+        (awayW_ext fun x => by rw [ACris.phiAway_algebraMap, awayW_algebraMap, wmap_frobenius]) y.1) n x
   induction N with
   | zero => rfl
-  | succ N ih => rw [phiP_succ, ih, phiA_succ, (base l).phi_cris]
+  | succ N ih => rw [phiP_succ, ih, phiA_succ, hφ]
 
 end Mid
 

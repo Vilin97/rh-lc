@@ -545,7 +545,7 @@ structure Conn {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [
 
   nabla : Module.End K (Vec K a ι)
   leibniz : ∀ (f : ZMod a → K⟦X⟧) (v : Vec K a ι),
-    nabla (f • v) = (fun τ => PowerSeries.derivative K (f τ)) • v + f • nabla v
+    nabla (f • v) = (fun τ => PowerSeries.derivative (f τ)) • v + f • nabla v
   mem_MM : ∀ m ∈ P.MM, nabla m ∈ P.MM
 
 namespace Conn
@@ -662,10 +662,10 @@ theorem frobMat_unitMod : frobMat t ϖ (unitMod l a e O K ι) = 1 := by
 
 variable (l e a ι) in
 def unitConn : Conn (unitMod l a e O K ι) where
-  nabla := ((PowerSeries.derivative K).toLinearMap.compLeft ι).compLeft (ZMod a)
+  nabla := ((PowerSeries.derivative (R := K)).toLinearMap.compLeft ι).compLeft (ZMod a)
   leibniz f v := funext fun τ => funext fun i => by
-    change PowerSeries.derivative K (f τ * v τ i) =
-      PowerSeries.derivative K (f τ) * v τ i + f τ * PowerSeries.derivative K (v τ i)
+    change PowerSeries.derivative (f τ * v τ i) =
+      PowerSeries.derivative (f τ) * v τ i + f τ * PowerSeries.derivative (v τ i)
     rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
     ring
   mem_MM m hm := mem_ext_unitMod.2 fun τ i => derivative_mem_S (mem_ext_unitMod.1 hm τ i)
@@ -676,8 +676,8 @@ omit [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.F
 theorem unitConn_frobCompat : (unitConn (O := O) (K := K) l a e ι).FrobCompat := fun m _ =>
   funext fun τ => funext fun i => by
     rw [Pi.smul_apply, Pi.smul_apply, PhiMod.phi_apply, mx_unitMod, Matrix.one_mulVec]
-    change PowerSeries.derivative K ((unitMod l a e O K ι).phi m τ i) =
-      _ * frob K l (PowerSeries.derivative K (m (τ - 1) i))
+    change PowerSeries.derivative ((unitMod l a e O K ι).phi m τ i) =
+      _ * frob K l (PowerSeries.derivative (m (τ - 1) i))
     rw [PhiMod.phi_apply, mx_unitMod, Matrix.one_mulVec, frobV_apply]
     apply mul_left_cancel₀ (X_ne_zero (R := K))
     have h := N_frob l (m (τ - 1) i)
@@ -689,18 +689,18 @@ theorem unitConn_frobCompat : (unitConn (O := O) (K := K) l a e ι).FrobCompat :
 
 omit [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] in
 theorem exists_iterate_derivative {f : K⟦X⟧} (hf : f ∈ S O K e) (r : ℕ) : ∃ i₀ : ℕ, ∀ i ≥ i₀,
-    ∃ h ∈ S O K e, (PowerSeries.derivative K)^[i] f = (l : K⟦X⟧) ^ r * h := by
+    ∃ h ∈ S O K e, (PowerSeries.derivative (R := K))^[i] f = (l : K⟦X⟧) ^ r * h := by
   obtain ⟨N, hN⟩ := exists_sum_monomial_add l e hf r
   obtain ⟨h, hh, hf⟩ := hN N le_rfl
   have key : ∀ (i : ℕ) (p h : K⟦X⟧), (∀ n, N ≤ n → coeff n p = 0) → h ∈ S O K e →
       ∃ p' h', (∀ n, N ≤ n + i → coeff n p' = 0) ∧ h' ∈ S O K e ∧
-        (PowerSeries.derivative K)^[i] (p + (l : K⟦X⟧) ^ r * h) = p' + (l : K⟦X⟧) ^ r * h' := by
+        (PowerSeries.derivative (R := K))^[i] (p + (l : K⟦X⟧) ^ r * h) = p' + (l : K⟦X⟧) ^ r * h' := by
     intro i p h hp hh
     induction i with
     | zero => exact ⟨p, h, hp, hh, rfl⟩
     | succ i ih =>
       obtain ⟨p', h', h1, h2, h3⟩ := ih
-      refine ⟨PowerSeries.derivative K p', _, fun n hn => ?_, derivative_mem_S h2, ?_⟩
+      refine ⟨PowerSeries.derivative p', _, fun n hn => ?_, derivative_mem_S h2, ?_⟩
       · rw [coeff_derivative, h1 _ (by omega), zero_mul]
       · rw [Function.iterate_succ_apply', h3, map_add (f := _), ← Nat.cast_pow, ← nsmul_eq_mul, map_nsmul, nsmul_eq_mul]
   refine ⟨N, fun i hi => ?_⟩
@@ -895,8 +895,8 @@ omit [NeZero a] [NeZero e] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.F
 theorem natural_constHom (Y : Matrix κ ι O) :
     (unitConn (K := K) l a e ι).Natural (unitConn l a e κ) (constHom l a e Y) := fun m _ =>
   funext fun τ => funext fun i => by
-    change PowerSeries.derivative K (∑ j, algebraMap O K⟦X⟧ (Y i j) * m τ j) =
-      ∑ j, algebraMap O K⟦X⟧ (Y i j) * PowerSeries.derivative K (m τ j)
+    change PowerSeries.derivative (∑ j, algebraMap O K⟦X⟧ (Y i j) * m τ j) =
+      ∑ j, algebraMap O K⟦X⟧ (Y i j) * PowerSeries.derivative (m τ j)
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, algebraMap_eq_C, ← smul_eq_C_mul, Derivation.map_smul]
 

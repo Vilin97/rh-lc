@@ -43,8 +43,8 @@ theorem _root_.GlobalTheory.HSAmp.gram_isHermitian_and_l2_eq_quadratic_form (S :
   have hint := h.integrable
   have hterm : ∀ (c : ι → ℂ) (σ : S), Integrable (fun y => ∑ i, ∑ j,
       c i * (starRingEnd ℂ) (c j) * (v σ y i * (starRingEnd ℂ) (v σ y j))) (μ σ) :=
-    fun c σ => integrable_finset_sum _ fun i _ =>
-      integrable_finset_sum _ fun j _ => (hint σ i j).const_mul _
+    fun c σ => integrable_finsetSum _ fun i _ =>
+      integrable_finsetSum _ fun j _ => (hint σ i j).const_mul _
   refine ⟨?_, fun c => ⟨fun σ => ?_, ?_, ?_⟩⟩
   · ext i j
     simp only [Matrix.conjTranspose_apply, _root_.GlobalTheory.HSAmp.gram, Matrix.of_apply,
@@ -70,7 +70,7 @@ theorem _root_.GlobalTheory.HSAmp.gram_isHermitian_and_l2_eq_quadratic_form (S :
       simp only [_root_.GlobalTheory.HSAmp.cmb]
       rw [← integral_complex_ofReal,
         integral_congr_ae (ae_of_all _ fun y => ofReal_norm_sum_mul_sq_eq_double_sum_conj c (v σ y)),
-        integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ =>
+        integral_finsetSum _ fun i _ => integrable_finsetSum _ fun j _ =>
           (hint σ i j).const_mul _]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [integral_finsetSum _ fun j _ => (hint σ i j).const_mul _]

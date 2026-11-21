@@ -89,7 +89,8 @@ end Transport
 theorem isSDLat_of_isSdLat {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
     (L : Submodule (𝓞 E) (Sp E n)) (hL : IsSdLat L) : IsSDLat E n L := by
   obtain ⟨h1, h2⟩ := hL
-  refine ⟨h1.fg, h1.span_eq_top, fun y => ?_⟩
+  letI := h1
+  refine ⟨h1.fg, Submodule.IsFullLattice.span_eq_top, fun y => ?_⟩
   have h3 : y ∈ L ↔ y ∈ Formalism.HermitianLatticesTheory.dual (hStd E n) L := by
     rw [show Formalism.HermitianLatticesTheory.dual (hStd E n) L = L from h2]
   rw [h3]

@@ -48,7 +48,7 @@ theorem frame_mulVec (x y : Fin n → S) (ι : Matrix (Fin n) (Fin m) S) (s t : 
 theorem frame_embM (x y : Fin n → S) (ι : Matrix (Fin n) (Fin n₁) S) (x' y' : Fin d → S) (ι' : Matrix (Fin d) (Fin d₁) S)
     (z : Matrix (Fin n₁) (Fin d₁) S) : frame x y ι * embM z * (frame x' y' ι')ᵀ = ι * z * ι'ᵀ := by
   ext r l
-  simp [frame, embM, Matrix.mul_apply, Fintype.sum_option]
+  simp [frame, embM, Matrix.mul_apply, Fintype.sum_option, Function.swap]
 
 def mom (Z : Matrix (Ix n₁) (Ix d₁) S) : Ix n₁ ⊕ Fin d₁ → S :=
   Sum.elim (fun i => Z i none) fun j => Z none (some (some j))

@@ -72,7 +72,6 @@ theorem charMap_matrix : ∀ (V₁ : Type) [CommRing V₁] [IsDomain V₁] [IsLo
   rw [RingHom.id_comp, ← Over.comp_left] at hleft
   have e := huniq _ _ _ hleft hright
   have e' := DFunLike.congr_fun e χ
-  rw [AddMonoidHom.comp_apply, AddMonoidHom.finset_sum_apply] at e'
-  exact e'
+  simpa using e'
 
 end GlobalTheory.Poinc.MatChar

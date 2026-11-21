@@ -31,7 +31,7 @@ theorem pullTorus_left_comp_iso (h : IsGrpPullback G' G f φ) (i : splitTorus S 
   apply pullback.hom_ext
   · rw [Category.assoc, IsPullback.isoPullback_hom_fst, pullTorus_left, Category.assoc]
     have : ((Over.pullback f).map i).left ≫ pullback.fst G.hom f = pullback.fst (splitTorus S X).hom f ≫ i.left := by
-      simp; exact pullback.lift_fst _ _ _
+      simp
     rw [this, ← Category.assoc, GlobalTheory.SplitTorus.bcIso_hom_fst]
   · rw [Category.assoc, IsPullback.isoPullback_hom_snd, Category.assoc]
     have : ((Over.pullback f).map i).left ≫ pullback.snd G.hom f = pullback.snd (splitTorus S X).hom f := by

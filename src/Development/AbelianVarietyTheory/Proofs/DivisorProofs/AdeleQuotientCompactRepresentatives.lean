@@ -22,7 +22,7 @@ theorem exists_compact_adele_ext : ∀ (F E : Type) [Field F] [NumberField F] [F
   let b := Module.finBasis F E
   let B : Module.Basis (Fin (Module.finrank F E)) (AF F) (AE F E) := Algebra.TensorProduct.basis (AF F) b
   let φ : (Fin (Module.finrank F E) → AF F) → AE F E := fun c => ∑ i, c i • B i
-  have hφ : Continuous φ := continuous_finset_sum _ fun i _ => (continuous_apply i).smul continuous_const
+  have hφ : Continuous φ := continuous_finsetSum _ fun i _ => (continuous_apply i).smul continuous_const
   refine ⟨φ '' Set.univ.pi (fun _ => K), (isCompact_univ_pi fun _ => hK).image hφ, fun a => ?_⟩
   choose x hx using fun i => hK' (B.repr a i)
   refine ⟨∑ i, x i • b i, fun i => B.repr a i - algebraMap F (AF F) (x i), fun i _ => hx i, ?_⟩

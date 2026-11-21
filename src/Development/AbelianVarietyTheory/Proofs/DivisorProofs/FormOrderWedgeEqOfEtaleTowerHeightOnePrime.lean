@@ -117,6 +117,8 @@ theorem formOrd_append_of_ord_eq : ∀ {K L : Type} [Field K] [Field L] (cK : �
     (by rw [← hf, hrat0]) (fun i => (τ i : L))
   have e1 : (fun i => j (x i : K)) = fun i => (ι (x i) : L) := funext fun i => hj (x i)
   rw [e1, ← hratP] at key
+  change P.formOrd (dForm cL (Fin.append (fun i => (τ i : L)) (fun i => (ι (x i) : L)))) =
+    P0.formOrd (dForm cK (fun i => (x i : K)))
   rw [key, P.formOrd_smul_toRat hF ((map_ne_zero j).2 hf0), hordK f hf0, hK]
 
 end GlobalTheory.FieldPair

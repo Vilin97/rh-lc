@@ -1263,11 +1263,9 @@ theorem wordS_nodup : ∀ v : List (Bool × ℝ), ((wordS v).map Letter.intersec
       have h2 := congrArg Fin.val e
       simp only [Function.comp_apply, Fin.coe_castSucc, Fin.val_last] at h2
       omega
-    · have := wordS_nodup v
-      convert this.map (Fin.castSucc_injective _) using 1
-      · rfl
-      · rw [List.map_map]
-        rfl
+    · have h := (wordS_nodup v).map (Fin.castSucc_injective v.length)
+      rw [List.map_map] at h
+      exact h
 
 theorem plusWord_slots_nodup (w : List ℝ) : ((wordP w).map Letter.intersection_update_fsHerm_neg_one).Nodup := by
   unfold wordP
@@ -2334,6 +2332,8 @@ section Free
 
 variable {A : Type} [Ring A] {N : ℕ}
 
+local notation "sn" => Fin.snoc (α := fun _ => Fin 2)
+
 theorem eU_mul_snoc (i j : Fin 2) (X : SlopeTestRemainingChoices (Fin (N + 1)) A) (e e' : Ix (Fin N)) (b b' : Fin 2) :
     ((eU (Fin.last N) i j : SlopeTestRemainingChoices (Fin (N + 1)) A) * X) (sn e b) (sn e' b') = if b = i then X (sn e j) (sn e' b') else 0 := by
   rw [Matrix.mul_apply, sum_snoc]
@@ -2933,6 +2933,8 @@ section Core4
 
 variable {P : M.Par} {l : ℕ} {L : LevelData (A P (DQ P)) P.r}
 
+local notation "sn" => Fin.snoc (α := fun _ => Fin 2)
+
 theorem mem_lift_positions (w : List ℝ) (k : Fin w.length) : k.castSucc ∈ ((wordP w).map liftL).map Letter.intersection_update_fsHerm_neg_one := by
   rw [List.map_map]
   have := wordP_all_positions w k
@@ -3040,6 +3042,8 @@ theorem third_identity_frame_sum (hL : IsModelLevel P (DQ P) L) (hOK : P.OK)
 end CoreI3
 
 section Relabel
+
+local notation "sn" => Fin.snoc (α := fun _ => Fin 2)
 
 variable {N : ℕ}
 
@@ -3252,6 +3256,8 @@ noncomputable section
 section Diag
 
 variable {P : M.Par} {l : ℕ} {L : LevelData (A P (DQ P)) P.r}
+
+local notation "sn" => Fin.snoc (α := fun _ => Fin 2)
 
 theorem io_diag {S : Type} [Fintype S] [DecidableEq S] (x : A P (DQ P)) :
     (io x : SlopeTestRemainingChoices S (A P (DQ P))) = Matrix.diagonal fun _ => x := by

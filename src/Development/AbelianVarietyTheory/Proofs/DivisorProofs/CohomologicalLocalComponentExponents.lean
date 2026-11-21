@@ -224,7 +224,9 @@ theorem tprod_line {X : α → Type} [∀ a, AddCommGroup (X a)] [∀ a, Module 
   induction w using PiTensorProduct.induction_on with
   | smul_tprod r v =>
     choose c hc using fun a => ht a (v a)
-    exact ⟨r * ∏ a, c a, by rw [funext hc, MultilinearMap.map_smul_univ, smul_smul]⟩
+    exact ⟨r * ∏ a, c a, by
+      rw [funext hc, MultilinearMap.map_smul_univ, smul_smul]
+      simp⟩
   | add a b ha hb =>
     obtain ⟨c, rfl⟩ := ha
     obtain ⟨d, rfl⟩ := hb

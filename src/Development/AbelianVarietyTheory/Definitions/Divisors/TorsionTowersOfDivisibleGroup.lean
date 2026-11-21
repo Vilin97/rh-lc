@@ -334,7 +334,7 @@ theorem map_y (f : A ⟶ A₁) [IsMonHom f] (n : ℕ) :
 
 theorem hom_ext_y {g g' : G ⟶ H} (h : ∀ n, spOver (g.app n : H.A n →ₐ[O] G.A n) ≫ t₁.y n =
     spOver (g'.app n : H.A n →ₐ[O] G.A n) ≫ t₁.y n) : g = g' :=
-  hom_ext fun n => BialgHom.coe_toAlgHom_injective (t₁.inj n _ _ _ (h n))
+  Hom.ext (funext fun n => BialgHom.coe_toAlgHom_injective (t₁.inj n _ _ _ (h n)))
 
 theorem eq_map_iff (f : A ⟶ A₁) [IsMonHom f] (g : G ⟶ H) :
     g = t.map t₁ f ↔ ∀ n, spOver (g.app n : H.A n →ₐ[O] G.A n) ≫ t₁.y n = t.y n ≫ f :=

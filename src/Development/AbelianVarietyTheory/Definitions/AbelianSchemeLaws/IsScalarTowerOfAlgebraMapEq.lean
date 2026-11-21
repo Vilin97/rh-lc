@@ -549,7 +549,8 @@ def secCubeMap (φ : ∀ V : X.Opens, SecOn L V →ₗ[Γ(X, V)] SecOn M V)
     (hφ : ∀ {V W : X.Opens} (h : W ≤ V) (s : SecOn L V),
       φ W (SecOn.restrict L h s) = SecOn.restrict M h (φ V s)) :
     secCube f L D ⟶ secCube f M D :=
-  GlobalTheory.Cube.homMk (fun _ => SecOnR.lin f (φ _)) fun h x => hφ (iInf_le_iInf_of_subset D h) x
+  GlobalTheory.Cube.homMk κ R (fun _ => SecOnR.lin f (φ _)) fun h x =>
+    hφ (iInf_le_iInf_of_subset D h) x
 
 def secCubeIso (φ : ∀ V : X.Opens, SecOn L V ≃ₗ[Γ(X, V)] SecOn M V)
     (hφ : ∀ {V W : X.Opens} (h : W ≤ V) (s : SecOn L V),

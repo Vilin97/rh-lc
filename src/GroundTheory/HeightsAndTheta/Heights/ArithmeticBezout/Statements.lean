@@ -304,13 +304,12 @@ theorem mem_incidence_point {F : Type*} [Field F] (u : Fin 1 × Fin 1 → Algebr
     · simp
 
 theorem isProjPrime_point (F : Type*) [Field F] :
-    IsProjPrime (⊥ : Ideal (MvPolynomial (Fin 1) F)) where
-  isPrime := Ideal.isPrime_bot
-  isHomog := by
-    intro f hf d
+    IsProjPrime (⊥ : Ideal (MvPolynomial (Fin 1) F)) := by
+  refine ⟨Ideal.isPrime_bot, ?_, ?_⟩
+  · intro f hf d
     rw [Ideal.mem_bot] at hf ⊢
     simp [hf]
-  isRelevant := ⟨0, by rw [Ideal.mem_bot]; exact X_ne_zero 0⟩
+  · exact ⟨0, by rw [Ideal.mem_bot]; exact X_ne_zero 0⟩
 
 theorem isChowForm_point (F : Type*) [Field F] :
     IsChowForm (⊥ : Ideal (MvPolynomial (Fin 1) F)) 1 (X (0, 0)) := by

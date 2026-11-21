@@ -83,7 +83,17 @@ theorem exists_lift : ∀ (K : Type) [Field K] [IsAlgClosed K] (V : Type) [CommR
   let g₀ : Y₀.left ⟶ A.left := pullback.fst A.hom s
   have G₀ : IsGrpPullback Y₀ A s g₀ := isGrpPullback_pullback A s
   have hL₀ : (L.pull g₀).IsLB := pull_isLB hL g₀
-  have hA₀ : IsAbelianScheme Y₀ := GlobalTheory.PolPull.isAbelianScheme_of_isGrpPullback hA G₀
+  have hA₀ : IsAbelianScheme Y₀ := by
+    have hcomm : IsCommMonObj Y₀ := by
+      rw [isCommMonObj_iff_isMulCommutative]
+      intro T
+      refine ⟨⟨fun x y => Over.OverMorphism.ext (G₀.1.hom_ext ?_ (by rw [Over.w, Over.w]))⟩⟩
+      rw [← G₀.2 T x y (pushPt G₀.1.w x) (pushPt G₀.1.w y) rfl rfl,
+        ← G₀.2 T y x (pushPt G₀.1.w y) (pushPt G₀.1.w x) rfl rfl, _root_.mul_comm]
+    exact { comm := hcomm
+            smooth := MorphismProperty.of_isPullback (P := @Smooth) G₀.1 hA.smooth
+            proper := MorphismProperty.of_isPullback (P := @IsProper) G₀.1 hA.proper
+            geomConnected := MorphismProperty.of_isPullback (P := @GeometricallyConnected) G₀.1 hA.geomConnected }
   haveI := hA.proper
   have ha₀ : RelAmple Y₀ (L.pull g₀) := GlobalTheory.AmpleBaseChange.relAmple_of_isPullback hL haL G₀.1
   have hK₀ : KTriv Y₀ (L.pull g₀) := by
