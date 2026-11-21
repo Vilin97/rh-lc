@@ -152,7 +152,7 @@ private theorem rep_eq {E : Type} [Field E] [NumberField E] [_root_.NumberField.
 
 set_option synthInstance.maxHeartbeats 200000 in
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.compLine :
-    ∀ {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (b b' : BW.Blo 𝔢.S 2), BloIn b 𝔵.τ₂ 𝔵.m₂ 𝔵.B₂ → BloIn b' 𝔵.τ₁ 𝔵.m₁ 𝔵.B₁ →
+    ∀ {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : _root_.UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.Fam 𝔢) (b b' : BW.Blo 𝔢.S 2), BloIn b 𝔵.τ₂ 𝔵.m₂ 𝔵.B₂ → BloIn b' 𝔵.τ₁ 𝔵.m₁ 𝔵.B₁ →
       ∃ c : ℂ, c ≠ 0 ∧ ∀ k ∈ KG E (2 + 2), ∀ (u : ℝ → Eu 𝔵.d') (U : L (Eu 𝔵.d')) (φ : GlobalTheory.CuspRep.Sm E (2 + 2)), Continuous u → HasCompactSupport u →
         (∀ᵐ x : ℝ, U x = u x) → BW.Rep μ (𝔵.A'.J U) φ → ∀ t : Fin (dat2 b b').len → ℝ,
           (dat2 b b').comp (GlobalTheory.CuspRep.rt E (2 + 2) ((k : G1 E (2 + 2)) : GlobalTheory.CuspRep.GA E (2 + 2)) φ).1 t =

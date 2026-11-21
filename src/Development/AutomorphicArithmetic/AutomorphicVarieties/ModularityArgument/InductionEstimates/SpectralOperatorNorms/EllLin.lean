@@ -58,7 +58,7 @@ private theorem zt_zero (K : Type) [Field K] [NumberField K] : UpperTheory.V.Z.I
   rw [UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.zt, this, map_one]
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.ellLin {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))}
-    [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (b b' : BW.Blo 𝔢.S 2) (hb : BloIn b 𝔵.τ₂ 𝔵.m₂ 𝔵.B₂)
+    [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : _root_.UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.Fam 𝔢) (b b' : BW.Blo 𝔢.S 2) (hb : BloIn b 𝔵.τ₂ 𝔵.m₂ 𝔵.B₂)
     (hb' : BloIn b' 𝔵.τ₁ 𝔵.m₁ 𝔵.B₁) (k : G1 E (2 + 2)) :
     ∃ ℓ : Eu 𝔵.d' →L[ℂ] ℂ, ∀ v, ℓ v = ell b b' k (𝔵.A'.sec v) := by
   set Q := quotientMeasure (Gam E 2) (BW.mu1 E 2)
