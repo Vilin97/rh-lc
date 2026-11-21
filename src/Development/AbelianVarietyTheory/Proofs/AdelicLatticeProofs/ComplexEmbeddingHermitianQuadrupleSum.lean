@@ -215,14 +215,14 @@ theorem omO_self (h : Chart θ σ) (x : RW T S) : omO S T x x = 0 := by
   rw [← h1, h2, h.pi_iota] at h3
   linarith
 
-theorem theta_zero : IsThetaFunO ψ S T 0 where
+theorem theta_zero : IsThetaFunO ψ S T 0 := {
   quasi γ w := by simp only [Pi.zero_apply, mul_zero]
   level := ⟨⊤, isOpen_univ, fun u _ _ => by funext w; simp only [heisO, Pi.zero_apply, mul_zero]⟩
   cont := continuous_const
-  smooth k L _ _ w := contDiff_const
+  smooth k L _ _ w := contDiff_const }
 
 theorem theta_add {f g : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (hg : IsThetaFunO ψ S T g) :
-    IsThetaFunO ψ S T (f + g) where
+    IsThetaFunO ψ S T (f + g) := {
   quasi γ w := by simp only [Pi.add_apply, hf.quasi, hg.quasi, mul_add]
   level := by
     obtain ⟨U, hU, h1⟩ := hf.level
@@ -234,9 +234,9 @@ theorem theta_add {f g : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (hg : IsThe
     unfold heisO at e1 e2 ⊢
     rw [Pi.add_apply, Pi.add_apply, mul_add, e1, e2]
   cont := hf.cont.add hg.cont
-  smooth k L h1 h2 w := (hf.smooth k L h1 h2 w).add (hg.smooth k L h1 h2 w)
+  smooth k L h1 h2 w := (hf.smooth k L h1 h2 w).add (hg.smooth k L h1 h2 w) }
 
-theorem theta_smul (c : ℂ) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ S T (c • f) where
+theorem theta_smul (c : ℂ) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ S T (c • f) := {
   quasi γ w := by
     rw [Pi.smul_apply, Pi.smul_apply, hf.quasi, smul_eq_mul, smul_eq_mul, mul_left_comm]
   level := by
@@ -247,7 +247,7 @@ theorem theta_smul (c : ℂ) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) : 
     unfold heisO at e1 ⊢
     rw [Pi.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul, mul_left_comm, e1]
   cont := hf.cont.const_smul c
-  smooth k L h1 h2 w := contDiff_const.mul (hf.smooth k L h1 h2 w)
+  smooth k L h1 h2 w := contDiff_const.mul (hf.smooth k L h1 h2 w) }
 
 theorem theta_sub {f g : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (hg : IsThetaFunO ψ S T g) :
     IsThetaFunO ψ S T (f - g) := by

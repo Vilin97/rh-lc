@@ -32,7 +32,7 @@ theorem psi_ne_zero (hψ : IsStdChar D ψ (-1)) (a : AF D.host.F) : ψ a ≠ 0 :
 
 theorem isTheta_star_mul_mul (hψ : IsStdChar D ψ (-1)) {g h f : WO S T → ℂ} (hg : IsThetaFunO ψ S T g)
     (hh : IsThetaFunO ψ S T h) (hf : IsThetaFunO ψ S T f) :
-    IsThetaFunO ψ S T (fun x => star (g x) * h x * f x) where
+    IsThetaFunO ψ S T (fun x => star (g x) * h x * f x) := {
   quasi γ w := by
     rw [hg.quasi, hh.quasi, hf.quasi, star_mul']
     linear_combination (star (g w) * h w * f w * ψ (-(symplOH S T (ratW T S γ) w))) *
@@ -54,7 +54,7 @@ theorem isTheta_star_mul_mul (hψ : IsStdChar D ψ (-1)) {g h f : WO S T → ℂ
   smooth k L hL hL0 w := by
     have hs : ContDiff ℝ ∞ (fun t => star (g (w + L t))) :=
       Complex.conjCLE.contDiff.comp (hg.smooth k L hL hL0 w)
-    exact ContDiff.mul (ContDiff.mul hs (hh.smooth k L hL hL0 w)) (hf.smooth k L hL hL0 w)
+    exact ContDiff.mul (ContDiff.mul hs (hh.smooth k L hL hL0 w)) (hf.smooth k L hL hL0 w) }
 
 theorem exists_bound (hψ : IsStdChar D ψ (-1)) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) :
     ∃ C : ℝ, ∀ x, ‖f x‖ ≤ C := by

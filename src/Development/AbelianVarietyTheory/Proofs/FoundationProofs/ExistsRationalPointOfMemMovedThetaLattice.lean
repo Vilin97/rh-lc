@@ -40,15 +40,8 @@ theorem mv_smul (g : GL (Fin N) (AE D)) (g' : GL (Fin N') (AE D)) (e : D.host.E)
     simp only [Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, map_mul]
   rw [this, Matrix.mul_smul, Matrix.smul_mul]
 
-#check Formalism.UG.P.adelstab_incl_int
-#check Formalism.UG.CS.span_recovery_of_integral_adelic_approx
-#check Formalism.UG.CS.csGlob_intAdApprox
-#check Formalism.UG.CS.globLat
-#check Formalism.UG.P.easyc_latS_std
-#check GlobalTheory.NormSum.AdLattice.lat
-
 theorem inc_int (o : 𝓞 D.host.E) : inc D (o : D.host.E) ∈ OhE D :=
-  (incl_mem_iff (F := ℚ) (o : D.host.E)).2 ⟨o, rfl⟩
+  Formalism.UG.P.adelstab_incl_int (F := ℚ) o
 
 theorem mulVec_mem_of_span {R m n : Type} [CommRing R] [Fintype n] {S : Subring R} (M : Matrix m n R) (i : m)
     {T : Set (n → R)} (hT : ∀ u ∈ T, (M *ᵥ u) i ∈ S) {u : n → R} (hu : u ∈ Submodule.span S T) :
@@ -66,15 +59,26 @@ theorem mv_int_of_maps {g : GL (Fin N) (AE D)} {g' : GL (Fin N') (AE D)}
     {L : Submodule (𝓞 D.host.E) (Fin N → D.host.E)} {L' : Submodule (𝓞 D.host.E) (Fin N' → D.host.E)}
     (h : Moves D g L) (h' : Moves D g' L') {A : Matrix (Fin N') (Fin N) D.host.E}
     (hA : ∀ x ∈ L, A.mulVec x ∈ L') (i : Fin N') (j : Fin N) : mv g g' A i j ∈ OhE D := by
-  have hL : L = lat g := by
+  let Λ := Formalism.UG.stdLat (n := Fin N) (A := D.host.E) (𝓞 D.host.E)
+  have hstd (v : Fin N → AE D) :
+      v ∈ Formalism.UG.latS (F := ℚ) (IsDedekindDomain.FiniteAdeleRing (𝓞 ℚ) ℚ) (OhE D) Λ ↔
+        ∀ i, v i ∈ OhE D := by
+    dsimp [Λ, OhE]
+    rw [Formalism.UG.P.easyc_latS_std]
+    exact Formalism.UG.P.adelstab_mem_stdLat (F := ℚ) (E := D.host.E) v
+  have hL : L = Formalism.UG.CS.globLat g Λ := by
     ext x
-    exact (h x).trans (mem_lat g x).symm
-  have h1 := (lat_span g ((g : Matrix (Fin N) (Fin N) (AE D)) *ᵥ Pi.single j 1)).2 (by
+    exact (h x).trans (hstd _).symm
+  have h1 := (Formalism.UG.P.span_recovery_of_integral_adelic_approx
+    Formalism.UG.P.csGlob_intAdApprox ℚ D.host.E (Fin N) Λ
+    (Formalism.UG.P.standard_lattice_full_holds D.host.E (Fin N)).1
+    (Formalism.UG.P.standard_lattice_full_holds D.host.E (Fin N)).2
+    g ((g : Matrix (Fin N) (Fin N) (AE D)) *ᵥ Pi.single j 1)).2 (hstd _ |>.2 (by
     intro k
     rw [mulVec_mulVec, Units.inv_mul, one_mulVec, Pi.single_apply]
     split_ifs
     · exact one_mem _
-    · exact zero_mem _)
+    · exact zero_mem _))
   have h3 := mulVec_mem_of_span
     (((g'⁻¹ : GL (Fin N') (AE D)) : Matrix (Fin N') (Fin N') (AE D)) * A.map (inc D)) i (by
       rintro _ ⟨x, hx, rfl⟩

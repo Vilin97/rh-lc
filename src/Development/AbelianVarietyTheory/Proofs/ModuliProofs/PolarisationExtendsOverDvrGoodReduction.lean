@@ -62,10 +62,10 @@ theorem exists_baseChange (hB : PolBaseChangeSt) {V K V' K' : Type} [CommRing V]
   have e : φ' ≫ pullback.fst B.hom (spMap a) = g ≫ φ := pullback.lift_fst _ _ _
   refine ⟨P', M', φ', hπ.cancel (gc.congr rfl e.symm) (pullback.lift_snd _ _ _), ?_, hM⟩
   have i₁ : LBIso P'.L (M.L.L.pull (g ≫ φ)) :=
-    LBIso.trans P'.isLB (pull_isLB P.isLB _) (pull_isLB M.L.isLB _) (LBIso.symm ⟨t, ht⟩) (lbIso_pull_comp hL g)
+    LBIso.trans P'.isLB (LB.isLB_pull P.isLB _) (LB.isLB_pull M.L.isLB _) (LBIso.symm ⟨t, ht⟩) (lbIso_pull_comp hL g)
   have i₂ := lbIso_pull_comp hM φ'
   rw [e] at i₂
-  exact LBIso.trans P'.isLB (pull_isLB M.L.isLB _) (pull_isLB M'.L.isLB _) i₁ i₂.symm
+  exact LBIso.trans P'.isLB (LB.isLB_pull M.L.isLB _) (LB.isLB_pull M'.L.isLB _) i₁ i₂.symm
 
 end GlobalTheory.PolExtendDVR
 
@@ -79,7 +79,7 @@ theorem polarisation_extends_dvr : Laws → Laws2 → ∀ (V K : Type) [CommRing
   obtain ⟨P', M', φ', hφ', hL', hM⟩ := exists_baseChange (K' := FractionRing V') h.polBaseChange (algebraMap V V')
     (algebraMap_adicCompletion_injective_of_dvr V) P B M φ hφ hL
   have hπ := isGrpPullback_pullback B (spMap (algebraMap V V'))
-  have hB' := PolPull.isAbelianScheme_of_isGrpPullback hB hπ
+  have hB' := (pol_pull _ _ B _ _ _ M.L.L M'.L.L M.L.isLB M'.L.isLB hB hπ hM).1
   have hA' := GlobalTheory.T.relAmple_extended_principalPolarisation_dvr h h₂ V' (FractionRing V') P' _ M' φ' hB' hφ' hL' inferInstance
   have : Module.FaithfullyFlat V V' := Module.FaithfullyFlat.of_flat_of_isLocalHom
   have hA : RelAmple B M.L.L :=

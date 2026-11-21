@@ -159,7 +159,7 @@ theorem join_inl_inr (C : WO A S → WO S A' → ℂ) (u : WO A S) (v : WO S A')
 
 variable {S} {ψ : AddChar (AF D.host.F) ℂ} {C : WO A S → WO S A' → ℂ}
 
-theorem isThetaFunO_join (h : IsBiTheta ψ A S A' C) : IsThetaFunO ψ W S (join d S C) where
+theorem isThetaFunO_join (h : IsBiTheta ψ A S A' C) : IsThetaFunO ψ W S (join d S C) := {
   quasi γ w := by
     have e₁ : fstH d S (ratW S W γ) = ratW S A (γ * d.iA) := (rat_mul γ d.iA).symm
     have e₂ : sndH d S (ratW S W γ) = ratW A' S (A'.gram⁻¹ * ((γ * d.iB)ᴴ * S.gram)) := by
@@ -182,7 +182,7 @@ theorem isThetaFunO_join (h : IsBiTheta ψ A S A' C) : IsThetaFunO ψ W S (join 
     simp only [join_apply, map_add (f := _)]
     exact h.smooth k ((fstH d S).comp L) ((sndH d S).comp L) ((continuous_fstH d S).comp hL)
       ((continuous_sndH d S).comp hL) (fun t => map_mul_eq_zero_left _ (h0 t) _)
-      (fun t => fin_dagger A' S (map_mul_eq_zero_left _ (h0 t) _)) _ _
+      (fun t => fin_dagger A' S (map_mul_eq_zero_left _ (h0 t) _)) _ _ }
 
 theorem cont_of_join (h : IsThetaFunO ψ W S (join d S C)) : Continuous fun p : WO A S × WO S A' => C p.1 p.2 := by
     have := h.cont.comp (((continuous_inlH d S).comp continuous_fst).add ((continuous_inrH d S).comp continuous_snd))

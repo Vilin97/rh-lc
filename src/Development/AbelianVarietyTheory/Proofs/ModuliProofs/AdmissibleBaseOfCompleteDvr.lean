@@ -225,7 +225,18 @@ theorem inducedBy_of_onQ (hn : 2 ≤ n) (h : SameMatch mt w) {j : ℕ} (hj : 1 �
     revert q
     rw [← pow_mul]
     exact fun q => hQ _ _ _ rfl ((qMap_iff (TateInh.homOfIso J)).2 rfl).2
-  have E := N'.qEq_equivalence ((n ^ j) ^ 2)
+  have E : Equivalence (N'.QEq (k := (n ^ j) ^ 2)) := by
+    constructor
+    · intro p
+      exact ⟨0, by simp, by simp⟩
+    ·
+      rintro p p' ⟨z, hz, hz'⟩
+      exact ⟨-z, by rw [hz, smul_neg, add_neg_cancel_right],
+        by rw [hz', N'.io_neg, mul_inv_cancel_right]⟩
+    ·
+      rintro p p' p'' ⟨z, hz, hz'⟩ ⟨t, ht, ht'⟩
+      exact ⟨z + t, by rw [ht, hz, smul_add, add_assoc],
+        by rw [ht', hz', N'.io_add, _root_.mul_assoc]⟩
   obtain ⟨e, he⟩ := exists_pullDeg hV he hb he' hb' ν ν' J hJ (k := (n ^ j) ^ 2)
     (by
       have : 2 ≤ n ^ j := hn.trans (Nat.le_self_pow (by omega) n)

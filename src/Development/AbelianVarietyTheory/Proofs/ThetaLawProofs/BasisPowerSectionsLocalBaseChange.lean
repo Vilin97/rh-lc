@@ -108,7 +108,6 @@ section Transfer
 
 open CategoryTheory AlgebraicGeometry
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory.AbLaw (pw isLB_pw)
 open GlobalTheory.SectionLimit
 
 variable {X Y Z : Scheme.{0}} {L : LB X} {M : LB Y} {C : Type} [CommRing C] {n N : ℕ}
@@ -159,14 +158,14 @@ theorem transfer (hL : L.IsLB) (hM : M.IsLB) (φ : Y ⟶ X) (p : Y ⟶ Sp C) (β
     obtain ⟨i, hi⟩ := exists_chart hM (r z)
     exact (key Z r z J i hJ hi).2 (gs_congr r z (h i))
 
-theorem pw_trans (s : LB.Sec (pw L (n : ℤ))) (r : Z ⟶ X) (z : Z) {j i : L.ι} (hj : r z ∈ L.U j) (hi : r z ∈ L.U i) :
+theorem pw_trans (s : LB.Sec (AbLaw.pw L (n : ℤ))) (r : Z ⟶ X) (z : Z) {j i : L.ι} (hj : r z ∈ L.U j) (hi : r z ∈ L.U i) :
     gs r z (L.U j) (s.f j) = (gm r z (L.U j ⊓ L.U i) (L.g j i) ^ (n : ℤ)).val * gs r z (L.U i) (s.f i) := by
   have hm : r z ∈ L.U j ⊓ L.U i := ⟨hj, hi⟩
   refine (gs_res r z _ hm _).symm.trans ((congrArg (gs r z _) (s.compat j i)).trans ((gs_mul r z _ hm _ _).trans
     (congrArg₂ (· * ·) ?_ (gs_res r z _ hm _))))
   exact (gs_unit r z _ hm _).trans (congrArg Units.val (map_zpow _ _ _))
 
-theorem exists_pw (β : Out.H0 L n) : ∃ b : LB.Sec (pw L (n : ℤ)),
+theorem exists_pw (β : Out.H0 L n) : ∃ b : LB.Sec (AbLaw.pw L (n : ℤ)),
     ∀ (Z : Scheme.{0}) (q : Z ⟶ X) (z : Z) (j : L.ι), q z ∈ L.U j →
       gs q z (LB.wchart L (fun _ : Fin 1 => 𝟙 X) (fun _ => j)) (β.f fun _ => j) = gs q z (L.U j) (b.f j) := by
   have le : ∀ j, L.U j ≤ LB.wchart L (fun _ : Fin 1 => 𝟙 X) (fun _ => j) := fun j y hy => mem_wc hy
@@ -180,7 +179,7 @@ theorem exists_pw (β : Out.H0 L n) : ∃ b : LB.Sec (pw L (n : ℤ)),
   rw [Category.comp_id]
   rfl
 
-theorem exists_powerSection_of_chartFunctions (a : LB.Sec (pw L (n : ℤ))) : ∃ s : Out.H0 L n,
+theorem exists_powerSection_of_chartFunctions (a : LB.Sec (AbLaw.pw L (n : ℤ))) : ∃ s : Out.H0 L n,
     ∀ (Z : Scheme.{0}) (q : Z ⟶ X) (z : Z) (j : L.ι), q z ∈ L.U j →
       gs q z (LB.wchart L (fun _ : Fin 1 => 𝟙 X) (fun _ => j)) (s.f fun _ => j) = gs q z (L.U j) (a.f j) := by
   have le : ∀ j : Fin 1 → L.ι, LB.wchart L (fun _ : Fin 1 => 𝟙 X) j ≤ L.U (j 0) := fun j y hy => Set.mem_iInter.1 hy 0
@@ -194,13 +193,13 @@ theorem exists_powerSection_of_chartFunctions (a : LB.Sec (pw L (n : ℤ))) : �
   rw [Fin.prod_univ_one, Category.comp_id]
 
 theorem exists_up (hL : L.IsLB) (hM : M.IsLB) {φ : Y ⟶ X} {w : LB.Iso M (L.pull φ)} (hw : w.IsGen)
-    (a : LB.Sec (pw M (n : ℤ))) : ∃ s : LB.Sec (LB.LinComb L (K := Fin 1) (fun _ => φ) (fun _ => (n : ℤ))),
+    (a : LB.Sec (AbLaw.pw M (n : ℤ))) : ∃ s : LB.Sec (LB.LinComb L (K := Fin 1) (fun _ => φ) (fun _ => (n : ℤ))),
     ∀ (Z : Scheme.{0}) (r : Z ⟶ Y) (z : Z) (j : L.ι) (i : M.ι), φ (r z) ∈ L.U j → r z ∈ M.U i →
       gs r z (LB.wchart L (fun _ : Fin 1 => φ) (fun _ => j)) (s.f fun _ => j) =
         (gw w r z j i ^ n).val * gs r z (M.U i) (a.f i) := by
   have le : ∀ (i : M.ι) (j : Fin 1 → L.ι), M.U i ⊓ LB.wchart L (fun _ : Fin 1 => φ) j ≤
       (L.pull φ).U (fun _ => j 0) ⊓ M.U i := fun i j y hy => ⟨mem_pull.2 (Set.mem_iInter.1 hy.2 0), hy.1⟩
-  let u : LB.Iso (LB.LinComb L (K := Fin 1) (fun _ => φ) (fun _ => (n : ℤ))) (pw M (n : ℤ)) :=
+  let u : LB.Iso (LB.LinComb L (K := Fin 1) (fun _ => φ) (fun _ => (n : ℤ))) (AbLaw.pw M (n : ℤ)) :=
     ⟨fun p => (res (le p.1 p.2) (w.s (fun _ => p.2 0, p.1)) ^ n)⁻¹⟩
   have hv : ∀ (Z : Scheme.{0}) (r : Z ⟶ Y) (z : Z) (i : M.ι) (j : Fin 1 → L.ι),
       r z ∈ M.U i ⊓ LB.wchart L (fun _ : Fin 1 => φ) j →
@@ -219,7 +218,16 @@ theorem exists_up (hL : L.IsLB) (hM : M.IsLB) {φ : Y ⟶ X} {w : LB.Iso M (L.pu
     simp only [zpow_natCast, mul_pow, mul_inv, inv_pow, inv_inv]
     exact congrArg (· * _) (mul_comm _ _)
   have hA := DVR.linComb_isLB L hL (fun _ : Fin 1 => φ) (fun _ => (n : ℤ))
-  have hB := isLB_pw hM (n : ℤ)
+  have hB : (AbLaw.pw M (n : ℤ)).IsLB := by
+    refine ⟨hM.cover, ?_, ?_⟩
+    · intro i
+      have h := congrArg (· ^ (n : ℤ)) (hM.g_self i)
+      simp only [one_zpow, ← map_zpow] at h
+      exact h
+    · intro i j k
+      have h := congrArg (· ^ (n : ℤ)) (hM.cocycle i j k)
+      simp only [mul_zpow, ← map_zpow] at h
+      exact h
   refine ⟨DVR.secOfIso a hu hA hB, fun Z r z j i hj hi => ?_⟩
   have hm : r z ∈ LB.wchart L (fun _ : Fin 1 => φ) (fun _ => j) ⊓ M.U i := ⟨mem_wc hj, hi⟩
   refine (gs_res r z inf_le_left hm _).symm.trans ((congrArg (gs r z _)

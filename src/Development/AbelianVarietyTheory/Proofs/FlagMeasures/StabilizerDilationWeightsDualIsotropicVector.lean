@@ -131,7 +131,9 @@ theorem le_of_tendsto_conj (ν : Measure (Mt k r)) (U : Set (Mt k r)) (hU : IsOp
     exact fun i hi => hx i (le_trans hab hi)
   have hVle : ∀ m, ν (V m) ≤ C := by
     intro m
-    calc ν (V m) ≤ ν (conjM (n m) ⁻¹' U) := measure_mono (Set.biInter_subset_of_mem (le_refl m))
+    calc ν (V m) ≤ ν (conjM (n m) ⁻¹' U) := measure_mono (by
+        intro x hx
+        exact Set.mem_iInter₂.mp hx m (le_refl m))
       _ = ν.map (conjM (n m)) U := (Measure.map_apply (hm m) hU.measurableSet).symm
       _ ≤ C := h m
   have hsub : U ⊆ ⋃ m, V m := by
@@ -176,6 +178,8 @@ theorem DD_mul {ε : ℝ} (h : ε ≠ 0) : DD k r ε * DD k r ε⁻¹ = 1 := by
   unfold DD
   rw [Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
   congr 1
+  funext i
+  simp only [Complex.ofReal_inv, _root_.inv_zpow]
   exact mul_inv_cancel₀ (zpow_ne_zero _ hc)
 
 theorem DD_unit {ε : ℝ} (h : ε ≠ 0) : IsUnit (DD k r ε).det := Matrix.isUnit_det_of_right_inverse (DD_mul h)
@@ -659,11 +663,11 @@ private theorem map_conjM_conj_smul_eq_of_map_conjM_smul_eq {R : Set (Mat k r)} 
       = (((s • ν).map (conjM D⁻¹)).map (conjM n)).map (conjM D) := by
         rw [map_conj_conj, map_conj_conj]
     _ = ((c • (s • ν)).map (conjM n)).map (conjM D) := by
-        rw [Measure.map_smul s ν (conjM D⁻¹), hc, smul_comm s c ν]
+        rw [Measure.map_smul s (conj_cont _).measurable.aemeasurable, hc, smul_comm s c ν]
     _ = (c • (s' • ν)).map (conjM D) := by
-        rw [Measure.map_smul c (s • ν) (conjM n), h]
+        rw [Measure.map_smul c (conj_cont _).measurable.aemeasurable, h]
     _ = s' • (c • ν).map (conjM D) := by
-        rw [Measure.map_smul c (s' • ν), Measure.map_smul s' ν, Measure.map_smul c ν, smul_comm c s']
+        rw [Measure.map_smul c (conj_cont _).measurable.aemeasurable, Measure.map_smul s' (conj_cont _).measurable.aemeasurable, Measure.map_smul c (conj_cont _).measurable.aemeasurable, smul_comm c s']
     _ = s' • ν := by
         rw [← hc, hback]
 

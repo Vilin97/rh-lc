@@ -78,20 +78,12 @@ theorem cro_ordGe_mul_left {t : ℕ} (g : PS k n d) {f : PS k n d} (hf : OrdGe t
   rwa [zero_add] at h
 
 theorem cro_ordGe_pderiv {t : ℕ} {f : PS k n d} (hf : OrdGe (t + 1) f) (i : Fin n × Fin d) :
-    OrdGe t (pderiv k i f) := by
+    OrdGe t (pderiv i f) := by
   intro m hm
-  unfold pderiv
-  show coeff m (pderivFun i f) = 0
-  unfold pderivFun
+  rw [MvPowerSeries.coeff_pderiv]
   have hz : coeff (m + Finsupp.single i 1) f = 0 := hf _ (by
-    have e : (m + Finsupp.single i 1).degree = m.degree + 1 := by
-      first
-        | (rw [map_add (f := _), Finsupp.degree_single])
-        | simp [Finsupp.degree_single]
-        | (rw [Finsupp.degree_eq_sum, Finsupp.degree_eq_sum]
-           simp [Finset.sum_add_distrib, Finsupp.single_apply])
+    rw [map_add, Finsupp.degree_single]
     omega)
-  show coeff (m + Finsupp.single i 1) f * ((m i : k) + 1) = 0
   rw [hz, zero_mul]
 
 theorem cro_ordGe_lin {t : ℕ} {f : PS k n d} (hf : OrdGe (t + 1) f) (b : Fin n) (v : Fin d → k) :
@@ -339,26 +331,19 @@ theorem cro_dofN_lin (F : Fin d → PS k 2 d)
   beta_reduce
   rw [← sub_mul]
   have key : ∀ A : PS k n d, constantCoeff A = v j →
-      OrdGe (t + 1) ((A - C (v j)) * pderiv k (b, j) X) := by
+      OrdGe (t + 1) ((A - C (v j)) * pderiv (b, j) X) := by
     intro A hA
     have h1 : OrdGe 1 (A - C (v j)) := by
       rw [ordGe_one_iff, map_sub, hA, MvPowerSeries.constantCoeff_C, sub_self]
     have h3 := OrdGe.mul h1 (cro_ordGe_pderiv hX (b, j))
     rwa [add_comm] at h3
   apply key
-  have hc : ∀ i, constantCoeff (ev ![pt k d b, 0] ((pderiv k ((1 : Fin 2), i)) (F j))) =
+  have hc : ∀ i, constantCoeff (ev ![pt k d b, 0] (pderiv ((1 : Fin 2), i) (F j))) =
       if i = j then 1 else 0 := by
     intro i
     rw [cro_constCoeff_ev]
-    · rw [← hF i j]
-      first
-        | (show coeff (0 + Finsupp.single ((1 : Fin 2), i) 1) (F j) *
-              (((0 : Fin 2 × Fin d →₀ ℕ) ((1 : Fin 2), i) : k) + 1) = _
-           simp)
-        | (unfold pderiv
-           show coeff 0 (pderivFun ((1 : Fin 2), i) (F j)) = _
-           unfold pderivFun
-           simp)
+    · rw [← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, MvPowerSeries.coeff_pderiv]
+      simpa using hF i j
     · intro p l
       fin_cases p <;> simp [pt]
   set_option synthInstance.maxHeartbeats 100000 in

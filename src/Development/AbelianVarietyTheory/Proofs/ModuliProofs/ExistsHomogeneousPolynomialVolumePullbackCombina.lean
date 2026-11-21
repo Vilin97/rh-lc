@@ -243,24 +243,44 @@ variable {X : Scheme.{0}} {L : LB X} {I : Type} [Fintype I]
 theorem lbIso_pow (hL : L.IsLB) (φ : I → (X ⟶ X)) (x : I → ℤ) (a : ℕ) :
     LBIso (lbPow (LB.LinComb L φ x) a) (LB.LinComb L φ (a • x)) := by
   have h := LB.isLB_linComb hL φ
-  refine (cls_eq_iff (LB.isLB_linComb (h x) _ _) (h _)).1 ?_
-  rw [cls_lbPow (h x), cls_linComb hL, cls_linComb hL, Finset.smul_sum]
-  exact Finset.sum_congr rfl fun i _ => by rw [Pi.smul_apply, smul_assoc]
+  apply LBIso.symm
+  refine iso_of_chart (LB.isLB_linComb (h x) _ _) ⟨fun j _ => j, fun _ _ hj => ?_, ?_⟩
+  · exact Set.mem_iInter.2 fun _ => mem_pull.2 hj
+  · intro z p q hp hq
+    refine (gm_linComb L φ (a • x) (𝟙 X) z p q hp hq).trans ?_
+    refine Eq.symm ((gm_linComb (LB.LinComb L φ x) (fun _ : PUnit => 𝟙 X) (fun _ => (a : ℤ)) (𝟙 X) z _ _ (Set.mem_iInter.2 fun _ => mem_pull.2 hp) (Set.mem_iInter.2 fun _ => mem_pull.2 hq)).trans ?_)
+    simp only [Fintype.prod_unique]
+    rw [gm_pull_g, gm_linComb]
+    simp only [Pi.smul_apply, nsmul_eq_mul, zpow_mul, Finset.prod_zpow]
 
 theorem lbIso_div (hL : L.IsLB) (φ : I → (X ⟶ X)) (x y : I → ℤ) :
     LBIso (LB.div (LB.LinComb L φ x) (LB.LinComb L φ y)) (LB.LinComb L φ (x - y)) := by
   have h := LB.isLB_linComb hL φ
-  refine (cls_eq_iff (LB.isLB_div (h x) (h y)) (h _)).1 ?_
-  rw [cls_div (h x) (h y), cls_linComb hL, cls_linComb hL, cls_linComb hL, ← Finset.sum_sub_distrib]
-  exact Finset.sum_congr rfl fun i _ => by rw [Pi.sub_apply, sub_smul]
+  apply LBIso.symm
+  refine iso_of_chart (LB.isLB_div (h x) (h y)) ⟨fun j => (j, j), fun _ _ hj => ⟨hj, hj⟩, ?_⟩
+  intro z p q hp hq
+  refine (gm_linComb L φ (x - y) (𝟙 X) z p q hp hq).trans (Eq.symm ?_)
+  refine (gm_div' (LB.LinComb L φ x) (LB.LinComb L φ y) (𝟙 X) z (p, p) (q, q) ⟨hp, hp⟩ ⟨hq, hq⟩).trans ?_
+  rw [gm_linComb L φ x (𝟙 X) z p q hp hq, gm_linComb L φ y (𝟙 X) z p q hp hq]
+  simp only [Pi.sub_apply, zpow_sub, Finset.prod_mul_distrib, Finset.prod_inv_distrib]
 
 theorem lbIso_div_pow (hL : L.IsLB) (φ : I → (X ⟶ X)) (x y : I → ℤ) (a : ℕ) :
     LBIso (LB.div (lbPow (LB.LinComb L φ x) a) (LB.LinComb L φ y)) (LB.LinComb L φ (a • x - y)) := by
   have h := LB.isLB_linComb hL φ
   have hp : (lbPow (LB.LinComb L φ x) a).IsLB := LB.isLB_linComb (h x) _ _
-  refine (cls_eq_iff (LB.isLB_div hp (h y)) (h _)).1 ?_
-  rw [cls_div hp (h y), (cls_eq_iff hp (h _)).2 (lbIso_pow hL φ x a), ← cls_div (h _) (h y) (LB.isLB_div (h _) (h y))]
-  exact (cls_eq_iff _ _).2 (lbIso_div hL φ _ _)
+  have hc : LBIso (LB.div (lbPow (LB.LinComb L φ x) a) (LB.LinComb L φ y))
+      (LB.div (LB.LinComb L φ (a • x)) (LB.LinComb L φ y)) := by
+    have hd : (dual (LB.LinComb L φ y)).IsLB := {
+      cover := (h y).cover
+      g_self := fun i => by
+        have e := congrArg (·⁻¹) ((h y).g_self i)
+        simpa only [dual, inv_one, ← map_inv] using e
+      cocycle := fun i j k => by
+        have e := congrArg (·⁻¹) ((h y).cocycle i j k)
+        simpa only [dual, mul_inv, ← map_inv] using e }
+    have ht := tens_congr_left hd (lbIso_pow hL φ x a)
+    simpa only [tens_eq_div, dual, inv_inv, map_inv] using ht
+  exact LBIso.trans (LB.isLB_div hp (h y)) (LB.isLB_div (h _) (h y)) (h _) hc (lbIso_div hL φ _ _)
 
 theorem vAmp_of_veryAmpleBy {K : Type} [Field K] {p : X ⟶ Sp K} {m : ℕ} {s : Fin (m + 1) → L.Sec}
     (h : AbLaw.VeryAmpleBy p L s) : VAmp p L s := by

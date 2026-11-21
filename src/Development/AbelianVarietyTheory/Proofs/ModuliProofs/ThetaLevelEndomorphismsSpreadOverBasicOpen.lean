@@ -122,7 +122,7 @@ theorem main : Out.Laws → Out.Laws2 → ∀ (o : Type) [CommRing o] (g k : ℕ
   have ee : e' ≫ e = 𝟙 _ := by
     apply hφ.1.hom_ext
     · rw [Category.assoc, e₁, Category.id_comp]; exact pullback.lift_fst _ _ _
-    · rw [Category.assoc, e₂, Category.id_comp]
+    · rw [Category.assoc, e₂, Category.id_comp]; exact pullback.lift_snd _ _ _
   have wpt : ∀ i, (t.pt i).left ≫ t.A.hom = 𝟙 (Sp K) := fun i => Over.w (t.pt i)
   let v : Fin (2 * g) ⊕ J → (t.A.left ⟶ t.A.left) :=
     Sum.elim (fun i => t.A.hom ≫ (t.pt i).left) (fun j => (t.act j).left)
@@ -174,7 +174,7 @@ theorem main : Out.Laws → Out.Laws2 → ∀ (o : Type) [CommRing o] (g k : ℕ
   have w₂ : w ≫ P.A.hom = t.A.hom ≫ spMap ψ := hχ₀.lift_snd _ _ _
   have hw : IsGrpPullback t.A P.A (spMap ψ) w := hχ.cancel (hφ.congr hψs.symm w₁.symm) w₂
   have hwL : LBIso t.L (P.L.pull w) :=
-    hφL.trans t.isLB (pull_isLB P'.isLB _) (pull_isLB P.isLB _)
+    hφL.trans t.isLB (LB.isLB_pull P'.isLB _) (LB.isLB_pull P.isLB _)
       (LBIso.chartPull (chartPullSame P'.L (fun _ : PUnit => φ) (fun _ : PUnit => χ) (fun _ => 1) w fun _ => w₁.symm)
         (chartPullPull P.L w w rfl) ⟨c, hc⟩)
   let d : P.A.left ⟶ pullback P'.A.hom (spMap (algebraMap R (Localization.Away f))) := pullback.lift χ P.A.hom hχ₀.w

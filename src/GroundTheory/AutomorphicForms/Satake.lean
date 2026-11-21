@@ -20,8 +20,8 @@ namespace Spherical
 variable {n : ℕ}
 
 theorem evalAt_polyEmb (z : Fin n → ℂˣ) (Q : MvPolynomial (Fin n) ℂ) :
-    evalAt z (polyEmb n Q) = MvPolynomial.aeval (fun i => (z i : ℂ)) Q := by
-  have : (evalAt z).comp (polyEmb n) = MvPolynomial.aeval (fun i => (z i : ℂ)) := by
+    evalAt z (polyEmb (n := n) Q) = MvPolynomial.aeval (fun i => (z i : ℂ)) Q := by
+  have : (evalAt z).comp (polyEmb (n := n)) = MvPolynomial.aeval (fun i => (z i : ℂ)) := by
     refine MvPolynomial.algHom_ext fun i => ?_
     rw [AlgHom.comp_apply, polyEmb_X, evalAt_single, MvPolynomial.aeval_X, one_mul,
       monomialChar_apply, Finset.prod_eq_single i (fun j _ hj => by simp [hj])
@@ -30,7 +30,7 @@ theorem evalAt_polyEmb (z : Fin n → ℂˣ) (Q : MvPolynomial (Fin n) ℂ) :
   exact AlgHom.congr_fun this Q
 
 theorem polyEmb_esymm_mem (k : ℕ) :
-    polyEmb n (MvPolynomial.esymm (Fin n) ℂ k) ∈ symmetricLaurent n := fun σ => by
+    polyEmb (n := n) (MvPolynomial.esymm (Fin n) ℂ k) ∈ symmetricLaurent (n := n) := fun σ => by
   rw [← polyEmb_rename, MvPolynomial.esymm_isSymmetric (Fin n) ℂ k σ]
 
 theorem exists_perm_of_map_eq {z z' : Fin n → ℂˣ}
@@ -40,7 +40,7 @@ theorem exists_perm_of_map_eq {z z' : Fin n → ℂˣ}
   _root_.UpperTheory.Reformulated.B.Yoa3.exists_perm_of_map_eq h
 
 theorem exists_perm_of_evalAt_eq {z z' : Fin n → ℂˣ}
-    (h : ∀ p ∈ symmetricLaurent n, evalAt z p = evalAt z' p) :
+    (h : ∀ p ∈ symmetricLaurent (n := n), evalAt z p = evalAt z' p) :
     ∃ σ : Equiv.Perm (Fin n), z' = z ∘ σ := by
   apply exists_perm_of_map_eq
   have he : ∀ k, (Multiset.map (fun i => (z i : ℂ)) Finset.univ.val).esymm k =
@@ -57,8 +57,8 @@ theorem exists_perm_of_evalAt_eq {z z' : Fin n → ℂˣ}
   have := congrArg Polynomial.roots hp
   rwa [Polynomial.roots_multiset_prod_X_sub_C, Polynomial.roots_multiset_prod_X_sub_C] at this
 
-theorem evalAt_comp_of_mem {p : LaurentRing n} (hp : p ∈ symmetricLaurent n) (z : Fin n → ℂˣ)
-    (σ : Equiv.Perm (Fin n)) : evalAt (z ∘ σ) p = evalAt z p := by
+theorem evalAt_comp_of_mem {p : LaurentRing n} (hp : p ∈ symmetricLaurent (n := n))
+    (z : Fin n → ℂˣ) (σ : Equiv.Perm (Fin n)) : evalAt (z ∘ σ) p = evalAt z p := by
   rw [← evalAt_permAct, hp σ]
 
 variable {F : Type u} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
@@ -69,7 +69,7 @@ variable [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)]
   {μ : Measure (GL (Fin n) F)} [μ.IsHaarMeasure]
 
 theorem range_satakeTransform :
-    (satakeTransform μ (F := F) (n := n)).range = symmetricLaurent n := by
+    (satakeTransform μ (F := F) (n := n)).range = symmetricLaurent (n := n) := by
   refine le_antisymm (fun p hp => ?_) symmetricLaurent_le_range
   obtain ⟨h, rfl⟩ := (AlgHom.mem_range _).1 hp
   exact satakeTransform_mem_symmetric h

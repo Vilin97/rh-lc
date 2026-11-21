@@ -65,7 +65,7 @@ theorem finite_stabAt_of_out {G : Type} [Group G] {Γ L : Subgroup G}
   haveI := h (DoubleCoset.mk Γ L g)
   haveI : Nonempty (stabAt Γ L (DoubleCoset.mk Γ L g).out) := ⟨⟨1, one_mem_stabAt _ _ _⟩⟩
   refine Nat.finite_of_card_ne_zero ?_
-  rw [← stabOrder_mk, ← DoubleCoset.out_eq' _ _ (DoubleCoset.mk _ _ g), stabOrder_mk]
+  rw [← stabOrder_mk, ← DoubleCoset.out_eq' (DoubleCoset.mk _ _ g), stabOrder_mk]
   exact Nat.card_pos.ne'
 
 variable {D : D7}

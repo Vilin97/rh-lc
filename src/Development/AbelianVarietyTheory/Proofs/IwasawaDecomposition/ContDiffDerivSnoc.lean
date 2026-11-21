@@ -210,7 +210,7 @@ theorem linOn_word (l : List (D.what₂.Tau × Matrix (Fin V.rank) (Fin V.rank) 
   exact linOn_Rder (hl p hp)
 
 theorem isAutFunSm_add {φ ψ : GA D V → ℂ} (h : IsAutFunSm θ V φ) (h' : IsAutFunSm θ V ψ) :
-    IsAutFunSm θ V (φ + ψ) where
+    IsAutFunSm θ V (φ + ψ) := {
   left γ hγ g := by simp only [Pi.add_apply, h.left γ hγ g, h'.left γ hγ g]
   level := by
     obtain ⟨U, hU, hUk⟩ := h.level
@@ -259,9 +259,9 @@ theorem isAutFunSm_add {φ ψ : GA D V → ℂ} (h : IsAutFunSm θ V φ) (h' : I
         (mul_le_mul_of_nonneg_left (hK g).2 (le_max_right C' 0))
     rw [add_mul]
     linarith [norm_add_le (l.foldr (fun p f => Rder θ V p.1 p.2 f) φ (x * g))
-      (l.foldr (fun p f => Rder θ V p.1 p.2 f) ψ (x * g)), hC g hg, hC' g hg]
+      (l.foldr (fun p f => Rder θ V p.1 p.2 f) ψ (x * g)), hC g hg, hC' g hg] }
 
-theorem isAutFunSm_smul (c : ℂ) {φ : GA D V → ℂ} (h : IsAutFunSm θ V φ) : IsAutFunSm θ V (c • φ) where
+theorem isAutFunSm_smul (c : ℂ) {φ : GA D V → ℂ} (h : IsAutFunSm θ V φ) : IsAutFunSm θ V (c • φ) := {
   left γ hγ g := by simp only [Pi.smul_apply, h.left γ hγ g]
   level := by
     obtain ⟨U, hU, hUk⟩ := h.level
@@ -285,7 +285,7 @@ theorem isAutFunSm_smul (c : ℂ) {φ : GA D V → ℂ} (h : IsAutFunSm θ V φ)
     have e : l.foldr (fun p f => Rder θ V p.1 p.2 f) (c • φ) = c • l.foldr (fun p f => Rder θ V p.1 p.2 f) φ :=
       (linOn_word (θ := θ) (V := V) l hl).2.2 c φ (mem_smFun h)
     rw [e, Pi.smul_apply, norm_smul, mul_assoc]
-    exact mul_le_mul_of_nonneg_left (hC g hg) (norm_nonneg c)
+    exact mul_le_mul_of_nonneg_left (hC g hg) (norm_nonneg c) }
 
 theorem isCuspFun_add {φ ψ : GA D V → ℂ} (h : IsAutFun V φ) (h' : IsAutFun V ψ) (c : IsCuspFun V φ)
     (c' : IsCuspFun V ψ) : IsCuspFun V (φ + ψ) := by
@@ -335,7 +335,7 @@ end Sob
 
 variable {S : D.what₂.Tau → SPar} {M : DSModel V S} {J : Set (GA D V)} {χ : GA D V → ℂ}
 
-private theorem isAutFunSm_zero' : IsAutFunSm θ V (0 : GA D V → ℂ) where
+private theorem isAutFunSm_zero' : IsAutFunSm θ V (0 : GA D V → ℂ) := {
   left _ _ _ := rfl
   level := ⟨⊤, by simp, fun _ _ _ _ => rfl⟩
   cont := continuous_const
@@ -352,7 +352,7 @@ private theorem isAutFunSm_zero' : IsAutFunSm θ V (0 : GA D V → ℂ) where
     have := (linOn_word (θ := θ) (V := V) l hl).2.2 0 0 (Submodule.zero_mem _)
     simp only [zero_smul] at this
     rw [this]
-    simp
+    simp }
 
 theorem isMultMap_zero : IsMultMap θ M J χ 0 where
   aut _ := isAutFunSm_zero'

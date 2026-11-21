@@ -119,7 +119,8 @@ theorem isDiff_list_prod : ∀ {k : ℕ} (w : Fin k → Fin g → ℂ) (v : Fin 
     simp only [List.ofFn_zero, List.prod_nil, Finset.univ_eq_empty, Finset.sum_empty]
     exact ⟨Chart.isTan_one, isDiff_zero u⟩
   | k + 1, w, v, hv, hd => by
-    obtain ⟨h1, h2⟩ := isDiff_list_prod (fun i => w i.succ) (fun i => v i.succ) (fun i => hv _) (fun i => hd _)
+    obtain ⟨h1, h2⟩ := isDiff_list_prod (k := k) (fun i => w i.succ) (fun i => v i.succ)
+      (fun i => hv i.succ) (fun i => hd i.succ)
     rw [List.ofFn_succ, List.prod_cons, Fin.sum_univ_succ]
     exact ⟨Chart.isTan_mul (hv 0) h1, isDiff_add u (hv 0) h1 (hd 0) h2⟩
 

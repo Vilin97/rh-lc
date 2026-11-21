@@ -42,7 +42,7 @@ theorem biLift_smul {A S X : HSp D} (oma : Om A S) (omX : Om S X) (vA : Vol A) (
   simp only [e, integral_const_mul]
 
 theorem theta_smul {S T : HSp D} {ψ : AddChar (AF D.host.F) ℂ} (a : ℂ) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) :
-    IsThetaFunO ψ S T (a • f) where
+    IsThetaFunO ψ S T (a • f) := {
   quasi γ w := by simp only [Pi.smul_apply, smul_eq_mul]; rw [hf.quasi]; ring
   level := by
     obtain ⟨U, hUo, hU⟩ := hf.level
@@ -51,7 +51,7 @@ theorem theta_smul {S T : HSp D} {ψ : AddChar (AF D.host.F) ℂ} (a : ℂ) {f :
       funext w; simp only [heisO, Pi.smul_apply, smul_eq_mul]; ring
     rw [e, hU u hu hi]
   cont := continuous_const.mul hf.cont
-  smooth k L hL hfin w := (contDiff_const.mul (hf.smooth k L hL hfin w))
+  smooth k L hL hfin w := (contDiff_const.mul (hf.smooth k L hL hfin w)) }
 
 theorem sum_fin {G M : Type} [AddCommMonoid M] (s : Finset G) (F : G → M) :
     ∑ g ∈ s, F g = ∑ i : Fin s.card, F (s.equivFin.symm i) := by

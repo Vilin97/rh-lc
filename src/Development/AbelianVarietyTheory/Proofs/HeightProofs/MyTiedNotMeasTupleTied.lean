@@ -10,7 +10,7 @@ public import Formalism.LocalToGlobal.BesselHermitianTheta.TiedWeilUnr
 
 noncomputable section
 
-open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.L2.Theta IsDedekindDomain NumberField GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedMeasureTuples Formalism.UG.P
+open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.L2.Theta IsDedekindDomain NumberField Formalism.UG.P
 
 namespace GlobalTheory.MeasTupleEq
 

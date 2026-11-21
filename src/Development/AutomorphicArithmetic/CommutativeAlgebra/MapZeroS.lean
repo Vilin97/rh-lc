@@ -130,17 +130,52 @@ theorem c₂_d {I Q : Cx R} {T : Scheme.{0}} (s t : ℤ) (x : Sec ((LL I Q).X s)
 
 theorem sg_pull {X Y : Scheme.{0}} {I : Cx R} {n : ℤ} (f : Y ⟶ X) (α : Cocycle ((chains R).obj (sch.obj X)) I n) :
     sg (zcomp (Cocycle.ofHom ((chains R).map (sch.map f))) α (zero_add n)) = Sec.res f (sg α) := by
-  have hEval := GlobalTheory.T.etaleCochainEvalOnSimplex_basic_properties R
-    (E := sch.obj X) (I := I) (n := n)
-  have h1 := hEval.2.2.2.1 (sch.map f) α.1 0 n (by simp) Y (𝟙 Y)
-  have h2 := hEval.2.1 α.1 0 n (by simp) Y X f (𝟙 X)
-  refine h1.trans (Eq.trans ?_ h2.symm)
-  congr 1
+  let k := op (SimplexCategory.mk 0)
+  let g := (sch.map f).app k
+  have hChains : (chainsXIso R (sch.obj Y) 0).inv ≫ ((chains R).map (sch.map f)).f (-((0 : ℕ) : ℤ)) =
+      (free R).map g ≫ (chainsXIso R (sch.obj X) 0).inv := by
+    have h : ((chains R).map (sch.map f)).f (-((0 : ℕ) : ℤ)) =
+        (chainsXIso R (sch.obj Y) 0).hom ≫ ((chainsN R).map (sch.map f)).f 0 ≫
+          (chainsXIso R (sch.obj X) 0).inv :=
+      HomologicalComplex.extendMap_f ((chainsN R).map (sch.map f))
+        ComplexShape.embeddingDownNat (i := 0) rfl
+    rw [h, Iso.inv_hom_id_assoc]
+    rfl
+  have hMap : Sec.map ((free R).map g) (freeGen R ((sch.obj Y).obj k) Y (𝟙 Y)) =
+      freeGen R ((sch.obj X).obj k) Y f := by
+    have h := ConcreteCategory.congr_hom
+      (NatTrans.congr_app (toSheafify_naturality Scheme.etaleTopology.{0} ((freeP R).map (yoneda.map f))) (op Y))
+      (ModuleCat.freeMk (ULift.up (𝟙 Y)))
+    have hGen : ((freeP R).map (yoneda.map f)).app (op Y) (ModuleCat.freeMk (ULift.up (𝟙 Y))) =
+        ModuleCat.freeMk (ULift.up f) := by
+      change (ModuleCat.free (ULift.{1} R)).map (TypeCat.ofHom (fun x : ULift (Y ⟶ Y) => ULift.up (x.down ≫ f)))
+        (ModuleCat.freeMk (ULift.up (𝟙 Y))) = _
+      rw [ModuleCat.free_map_apply]
+      exact congrArg (fun a : Y ⟶ X => ModuleCat.freeMk (ULift.up a)) (Category.id_comp f)
+    exact h.symm.trans (congrArg ((toSheafify Scheme.etaleTopology ((freeP R).obj (yoneda.obj X))).app (op Y)).hom hGen)
+  have hRes : Sec.res f (freeGen R ((sch.obj X).obj k) X (𝟙 X)) = freeGen R ((sch.obj X).obj k) Y f := by
+    have h := ConcreteCategory.congr_hom
+      ((toSheafify Scheme.etaleTopology ((freeP R).obj (yoneda.obj X))).naturality f.op)
+      (ModuleCat.freeMk (ULift.up (𝟙 X)))
+    have hGen : ((freeP R).obj (yoneda.obj X)).map f.op (ModuleCat.freeMk (ULift.up (𝟙 X))) =
+        ModuleCat.freeMk (ULift.up f) := by
+      change (ModuleCat.free (ULift.{1} R)).map (TypeCat.ofHom (fun x : ULift (X ⟶ X) => ULift.up (f ≫ x.down)))
+        (ModuleCat.freeMk (ULift.up (𝟙 X))) = _
+      rw [ModuleCat.free_map_apply]
+      exact congrArg (fun a : Y ⟶ X => ModuleCat.freeMk (ULift.up a)) (Category.comp_id f)
+    exact h.symm.trans (congrArg ((toSheafify Scheme.etaleTopology ((freeP R).obj (yoneda.obj X))).app (op Y)).hom hGen)
+  change Sec.map ((chainsXIso R (sch.obj Y) 0).inv ≫
+      ((Cochain.ofHom ((chains R).map (sch.map f))).comp α.1 (zero_add n)).v _ _ (by simp))
+      (freeGen R ((sch.obj Y).obj k) Y (𝟙 Y)) =
+    Sec.res f (Sec.map ((chainsXIso R (sch.obj X) 0).inv ≫ α.1.v _ _ (by simp))
+      (freeGen R ((sch.obj X).obj k) X (𝟙 X)))
+  rw [Cochain.zero_cochain_comp_v, Cochain.ofHom_v, ← Category.assoc, hChains, Category.assoc,
+    ← map_map, hMap, res_map, hRes]
 
 theorem sg_sub {X : Scheme.{0}} {I : Cx R} {n : ℤ} (α β : Cocycle ((chains R).obj (sch.obj X)) I n) : sg (α - β) = sg α - sg β := by
-  have hEval := GlobalTheory.T.etaleCochainEvalOnSimplex_basic_properties R
-    (E := sch.obj X) (I := I) (n := n)
-  exact (hEval.1 α.1 β.1 0 n (by simp) X (𝟙 X)).2.1
+  change ev (α.1 - β.1) 0 n (by simp) X (𝟙 X) = sg α - sg β
+  simp only [sg, ev, Cochain.sub_v, Preadditive.comp_sub]
+  rfl
 
 theorem res_add {F : Shv R} {V U : Scheme.{0}} (g : V ⟶ U) (x y : Sec F U) : Sec.res g (x + y) = Sec.res g x + Sec.res g y :=
   map_add _ _ _

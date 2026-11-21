@@ -277,7 +277,46 @@ theorem range_subset_abLocus_of_goodReduction : (∀ (T K : Type) [CommRing T] [
     exact (algebraMap K L).injective.comp (IsFractionRing.injective R K)
   have hcl : spMap g (IsLocalRing.closedPoint T) = spMap R.subtype P := PrimeSpectrum.ext hgp
   obtain ⟨hB, hB'⟩ := isSemiAbelian_pullback_of_range_subset A₀ hφ.1 (spMap g) (range_subset_of_centre R hginj P hcl)
-  have hH := IsSemiAbelian.pullback (spMap g ≫ y₀) G hG
+  have hH : IsSemiAbelian ((Over.pullback (spMap g ≫ y₀)).obj G) := by
+    have := hG.comm
+    have := hG.smooth
+    have := hG.separated
+    have := hG.quasiCompact
+    have := hG.geomConnected
+    refine ⟨inferInstance, inferInstanceAs (Smooth (pullback.snd _ _)),
+      inferInstanceAs (IsSeparated (pullback.snd _ _)),
+      inferInstanceAs (QuasiCompact (pullback.snd _ _)),
+      inferInstanceAs (GeometricallyConnected (pullback.snd _ _)), ?_⟩
+    intro Ω _ _ q
+    obtain ⟨E⟩ := hG.fibres Ω (q ≫ spMap g ≫ y₀)
+    let em := (Functor.mapMonNatIso (Over.pullbackComp q (spMap g ≫ y₀)) ≪≫
+      Functor.mapMonCompIso).app (Mon.mk G)
+    let e : (Over.pullback (q ≫ (spMap g ≫ y₀))).obj G ≅
+        (Over.pullback q).obj ((Over.pullback (spMap g ≫ y₀)).obj G) := (Mon.forget _).mapIso em
+    haveI : IsMonHom e.hom := by
+      show IsMonHom em.hom.hom
+      infer_instance
+    letI := E.grpB
+    haveI := E.q_hom
+    haveI := E.i_hom
+    have : IsIso e.hom.left := Functor.map_isIso (Over.forget _) e.hom
+    exact ⟨{
+      X := E.X
+      addCommGroup := E.addCommGroup
+      free := E.free
+      finite := E.finite
+      B := E.B
+      grpB := E.grpB
+      isAbelian := E.isAbelian
+      q := e.inv ≫ E.q
+      q_hom := inferInstance
+      q_flat := by rw [Over.comp_left]; have := E.q_flat; infer_instance
+      q_surjective := by rw [Over.comp_left]; have := E.q_surjective; infer_instance
+      q_quasiCompact := by rw [Over.comp_left]; have := E.q_quasiCompact; infer_instance
+      i := E.i ≫ e.hom
+      i_hom := inferInstance
+      isKernel := by
+        refine IsPullback.of_iso E.isKernel (Iso.refl _) e (Iso.refl _) (Iso.refl _) ?_ ?_ ?_ ?_ <;> simp }⟩
   obtain ⟨a, ha⟩ := exists_iso_of_comp_eq A₀ hc'.symm
   obtain ⟨b, hb⟩ := exists_iso_of_comp_eq G (k := spMap g ≫ y₀) (l := spMap (algebraMap T L))
     (g := spMap (algebraMap R K) ≫ y₀) (j := spMap (algebraMap K L)) (by rw [← Category.assoc, hc', Category.assoc])

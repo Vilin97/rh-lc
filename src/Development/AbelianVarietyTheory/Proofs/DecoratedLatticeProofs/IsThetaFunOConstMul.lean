@@ -20,7 +20,7 @@ namespace GlobalTheory.LastSeeSaw
 variable {D : D7}
 
 theorem isThetaFunO_const_mul {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} (c : ℂ) {f : WO S T → ℂ}
-    (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ S T (fun w => c * f w) where
+    (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ S T (fun w => c * f w) := {
   quasi γ w := by
     show c * f (ratW T S γ + w) = _ * (c * f w)
     rw [hf.quasi]; ring
@@ -32,7 +32,7 @@ theorem isThetaFunO_const_mul {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} (c 
     simp only [heisO] at e ⊢
     rw [← e]; ring
   cont := continuous_const.mul hf.cont
-  smooth n L hL h0 w := contDiff_const.mul (hf.smooth n L hL h0 w)
+  smooth n L hL h0 w := contDiff_const.mul (hf.smooth n L hL h0 w) }
 
 theorem isThetaFunO_kap {L L'' : HSp D} (τ : Matrix (Fin L.rank) (Fin L''.rank) D.host.E)
     (hτ : τᴴ ⬝ (L.gram ⬝ τ) = (-(D.host.xi0 * star D.host.xi0)) • L''.gram) (S : HSp D) {ψ : AddChar (AF D.host.F) ℂ}

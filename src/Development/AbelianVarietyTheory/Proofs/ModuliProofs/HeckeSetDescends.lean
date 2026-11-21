@@ -182,7 +182,8 @@ theorem heckeKer_comap (D : Datum H) (P : Ideal (𝓞 E)) (p i : ℕ) (t : SAB H
       simp only [Set.mem_inter_iff, Set.mem_preimage, SetLike.mem_coe, Subgroup.mem_comap]
       rw [htors]
     rw [e2, e1, card_preimage r hr _ (fun y hy => hs y (hkill y _ hsp hy)),
-      card_preimage r hr _ (fun y hy => hs y (hkill y _ hsp hy.2))]
+      card_preimage r hr ((C : Set (T' ⟶ t.G)) ∩ t.tors T' (Ideal.span {(p : 𝓞 E)}))
+        (fun y hy => hs y (hkill y _ hsp hy.2))]
     exact c6
 
 end GlobalTheory.HkSetDesc

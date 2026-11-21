@@ -213,7 +213,9 @@ theorem chowla_selberg_of_mean_log (h2 : finrank ℚ K = 2) (hD : discr K = -d) 
   rw [← h3] at h1
   refine ⟨h1, fun E _ _ _ _ 𝔄 h𝔄 L _ _ j τ => ?_⟩
   have h4 : (0 : ℝ) < √d := Real.sqrt_pos.2 (by exact_mod_cast (by omega : 0 < d))
-  have h5 : 0 < rootDiscr E := Real.rpow_pos_of_pos (by exact_mod_cast abs_pos.2 (discr_ne_zero E)) _
+  have h5 : 0 < rootDiscr E := by
+    rw [rootDiscr_def]
+    exact Real.rpow_pos_of_pos (by exact_mod_cast abs_pos.2 (discr_ne_zero E)) _
   rw [two_mul_deg_lineHerm_different h𝔄 n hn, Complex.ofReal_sub, Complex.ofReal_add, meanLog, h1,
     rootDiscr_eq_sqrt h2 hD, Real.log_div (by positivity) h4.ne', Real.log_div (by positivity) h5.ne']
   push_cast

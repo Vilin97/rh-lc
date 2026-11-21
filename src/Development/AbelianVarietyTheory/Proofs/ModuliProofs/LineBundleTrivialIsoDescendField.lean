@@ -95,7 +95,7 @@ theorem exists_gen {K₀ K : Type} [Field K₀] [Field K] (i : K₀ →+* K) (p�
     ((Scheme.ΓSpecIso (CommRingCat.of K)).symm.commRingCatIsoToRingEquiv.trans
       (RingEquiv.ofBijective p.appTop.hom hb)).symm.toMulEquiv.isField (Field.toIsField K)
   have : Surjective φ := ((GlobalTheory.FieldBaseChange.epi_and_isMonHom_iff K₀ K i).1 X₀ X p₀ p φ H).2.2.1
-  have hP := pull_isLB hM φ
+  have hP := LB.isLB_pull hM φ
   let ts : (M.pull φ).Sec := ⟨fun j => (t.s j).val, fun a b => congrArg Units.val (ht a b)⟩
   obtain ⟨n, c, s, hs⟩ := GlobalTheory.SectionsDescent.main K₀ K i X₀ X p₀ p φ M hM H ts
   choose u hu using fun a => exists_ratio hP t ht (secPull M φ (s a))

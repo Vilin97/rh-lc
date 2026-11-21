@@ -36,7 +36,7 @@ theorem continuous_rmul {k m n : ℕ} (P : Mx D m n) : Continuous (rmul (k := k)
 
 theorem theta_comp {ψ : AddChar (AF D.host.F) ℂ} {A B T : HSp D} (P : Matrix (Fin A.rank) (Fin B.rank) D.host.E)
     (h : ∀ x y : WO A T, symplOH B T (x * rat P) (y * rat P) = symplOH A T x y) {f : WO B T → ℂ}
-    (hf : IsThetaFunO ψ B T f) : IsThetaFunO ψ A T fun w => f (w * rat P) where
+    (hf : IsThetaFunO ψ B T f) : IsThetaFunO ψ A T fun w => f (w * rat P) := {
   quasi γ w := by
     have e : ratW T A γ * rat P = ratW T B (γ * P) := by rw [ratW_eq, ratW_eq, rat_mul]
     show f ((ratW T A γ + w) * rat P) = _
@@ -53,7 +53,7 @@ theorem theta_comp {ψ : AddChar (AF D.host.F) ℂ} {A B T : HSp D} (P : Matrix 
   smooth k L hL h0 w := by
     have := hf.smooth k ((rmul (rat P)).comp L) ((continuous_rmul _).comp hL)
       (fun t => map_mul_eq_zero_left _ (h0 t) _) (w * rat P)
-    simpa only [Matrix.add_mul, AddMonoidHom.comp_apply, rmul_apply] using this
+    simpa only [Matrix.add_mul, AddMonoidHom.comp_apply, rmul_apply] using this }
 
 theorem entries_fix_conj {A : Type} [CommRing A] {m n : ℕ} (c : A) {M : Matrix (Fin n) (Fin n) A}
     (hM : ∀ i j, c * M i j = M i j) (P : Matrix (Fin m) (Fin n) A) (Q : Matrix (Fin n) (Fin m) A) (i j : Fin m) :

@@ -263,11 +263,13 @@ theorem integral_of_frMap (T : CDVR) [Algebra c.F T.V] (io : c.F →+* T.Fr) : l
   rw [ej] at hx hu hf
   have hinj : Function.Injective (algebraMap T.V T.Fr) := IsFractionRing.injective _ _
   have hio : ∀ r, algebraMap T.V T.Fr (algebraMap c.F T.V r) = io r := fun r => (hj _).symm.trans (j.commutes r)
-  obtain ⟨G, m⟩ : ∃ G : SAB H (Sp T.V), Nonempty (SABMap G Xo.univ.t y.x) :=
-    GlobalTheory.ModFam.exists_sabPull y.x Xo.univ.t
+  obtain ⟨G, m⟩ : ∃ G : SAB H (Sp T.V), Nonempty (SABMap G Xo.univ.t y.x) := by
+    obtain ⟨_, _, _, _, _, m, -⟩ := sabPull Out.CubePf.cubePull y.x Xo.univ.t
+    exact ⟨_, ⟨m⟩⟩
   obtain ⟨m⟩ := m
-  obtain ⟨t', m2⟩ : ∃ t' : SAB H (Sp T.Fr), Nonempty (SABMap t' G (spMap (algebraMap T.V T.Fr))) :=
-    GlobalTheory.ModFam.exists_sabPull (spMap (algebraMap T.V T.Fr)) G
+  obtain ⟨t', m2⟩ : ∃ t' : SAB H (Sp T.Fr), Nonempty (SABMap t' G (spMap (algebraMap T.V T.Fr))) := by
+    obtain ⟨_, _, _, _, _, m, -⟩ := sabPull Out.CubePf.cubePull (spMap (algebraMap T.V T.Fr)) G
+    exact ⟨_, ⟨m⟩⟩
   obtain ⟨m2⟩ := m2
   obtain ⟨w0, hw0⟩ := exists_rigIso m
   obtain ⟨w2, hw2⟩ := exists_rigIso m2

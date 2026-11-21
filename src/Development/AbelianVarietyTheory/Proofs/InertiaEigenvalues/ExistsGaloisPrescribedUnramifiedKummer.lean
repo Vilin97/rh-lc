@@ -50,8 +50,8 @@ theorem iotaO_injective : Function.Injective (iotaO l a) := by
   have hc : Function.Injective ((iotaO l a).comp (algebraMap ℤ_[l] (Wq l a))) := fun u v h => by
     simp only [RingHom.comp_apply, iotaO_algebraMap] at h
     exact Subtype.val_injective ((algebraMap ℚ_[l] (Om l)).injective h)
-  refine (RingHom.injective_iff_ker_eq_bot _).2 (Ideal.eq_bot_of_comap_eq_bot (R := ℤ_[l]) ?_)
-  rw [RingHom.comap_ker]
+  refine (RingHom.injective_iff_ker_eq_bot _).2 (Ideal.eq_bot_of_under_eq_bot (R := ℤ_[l]) ?_)
+  rw [Ideal.under_def, RingHom.comap_ker]
   exact (RingHom.injective_iff_ker_eq_bot _).1 hc
 
 def iota : Wq l a →+* ↥(Kunr l a) := (iotaO l a).codRestrict (Kunr l a) (iotaO_mem l a)
@@ -117,14 +117,16 @@ attribute [local instance] algK
 
 theorem algebraMap_K (w : Wq l a) : algebraMap (Wq l a) ↥(Kunr l a) w = iota l a w := rfl
 
-theorem isFractionRing : IsFractionRing (Wq l a) ↥(Kunr l a) where
-  map_units s := by
+theorem isFractionRing : IsFractionRing (Wq l a) ↥(Kunr l a) := by
+  refine (isLocalization_iff (nonZeroDivisors (Wq l a)) ↥(Kunr l a)).2 ⟨?_, ?_, ?_⟩
+  · intro s
     refine IsUnit.mk0 _ fun h => nonZeroDivisors.coe_ne_zero s (iota_injective l a ?_)
     rw [← algebraMap_K, h, map_zero]
-  surj y := by
+  · intro y
     obtain ⟨w, s, hs, h⟩ := exists_frac l a y
     exact ⟨⟨w, ⟨s, mem_nonZeroDivisors_of_ne_zero hs⟩⟩, Subtype.ext (by simpa [algebraMap_K] using h)⟩
-  exists_of_eq h := ⟨1, by rw [iota_injective l a h]⟩
+  · intro x y h
+    exact ⟨1, by rw [iota_injective l a h]⟩
 
 end GlobalTheory.TameFrob
 

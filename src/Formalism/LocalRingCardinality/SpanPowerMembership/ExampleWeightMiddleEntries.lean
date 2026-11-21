@@ -28,10 +28,10 @@ def hc0 : HCParam R0 where
   e := hcE
   u_gt_v := by
     intro i
-    fin_cases i <;> simp [hcU, hcV] <;> norm_num
+    fin_cases i <;> simp [hcU, hcV, R0] <;> norm_num
   v_gt_u := by
     intro i
-    fin_cases i <;> simp [hcU, hcV] <;> norm_num
+    fin_cases i <;> simp [hcU, hcV, R0] <;> norm_num
   u_last_gt := by
     intro h h'
     simp [hcU, hcB, R0]
@@ -47,44 +47,44 @@ def hc0 : HCParam R0 where
   e_int := by
     intro j
     fin_cases j
-    · exact ⟨100, by simp [hcE]⟩
-    · exact ⟨118, by simp [hcE]⟩
+    · exact ⟨100, by simp [hcE, R0]⟩
+    · exact ⟨118, by simp [hcE, R0]⟩
   u_half := by
     intro i
     fin_cases i
-    · exact ⟨56, by simp [hcU]; norm_num⟩
-    · exact ⟨23, by simp [hcU]; norm_num⟩
-    · exact ⟨19, by simp [hcU]; norm_num⟩
-    · exact ⟨15, by simp [hcU]; norm_num⟩
-    · exact ⟨11, by simp [hcU]; norm_num⟩
-    · exact ⟨7, by simp [hcU]; norm_num⟩
-    · exact ⟨3, by simp [hcU]; norm_num⟩
-    · exact ⟨-1, by simp [hcU]; norm_num⟩
+    · exact ⟨56, by simp [hcU, R0]; norm_num⟩
+    · exact ⟨23, by simp [hcU, R0]; norm_num⟩
+    · exact ⟨19, by simp [hcU, R0]; norm_num⟩
+    · exact ⟨15, by simp [hcU, R0]; norm_num⟩
+    · exact ⟨11, by simp [hcU, R0]; norm_num⟩
+    · exact ⟨7, by simp [hcU, R0]; norm_num⟩
+    · exact ⟨3, by simp [hcU, R0]; norm_num⟩
+    · exact ⟨-1, by simp [hcU, R0]; norm_num⟩
   v_int := by
     intro i
     fin_cases i
-    · exact ⟨24, by simp [hcV]⟩
-    · exact ⟨20, by simp [hcV]⟩
-    · exact ⟨16, by simp [hcV]⟩
-    · exact ⟨12, by simp [hcV]⟩
-    · exact ⟨8, by simp [hcV]⟩
-    · exact ⟨4, by simp [hcV]⟩
-    · exact ⟨0, by simp [hcV]⟩
+    · exact ⟨24, by simp [hcV, R0]⟩
+    · exact ⟨20, by simp [hcV, R0]⟩
+    · exact ⟨16, by simp [hcV, R0]⟩
+    · exact ⟨12, by simp [hcV, R0]⟩
+    · exact ⟨8, by simp [hcV, R0]⟩
+    · exact ⟨4, by simp [hcV, R0]⟩
+    · exact ⟨0, by simp [hcV, R0]⟩
   b_int := by
     intro j
     fin_cases j
-    · exact ⟨91, by simp [hcB]⟩
-    · exact ⟨109, by simp [hcB]⟩
+    · exact ⟨91, by simp [hcB, R0]⟩
+    · exact ⟨109, by simp [hcB, R0]⟩
 
 theorem exampleWeight_cloud_gap_four (l : ℕ) (h : l + 1 < R0.k - 1) :
     hc0.v ⟨l, by omega⟩ - hc0.v ⟨l + 1, h⟩ = 4 * 1 := by
   have h6 : l < 6 := by have := h; simp [R0] at this; omega
-  interval_cases l <;> simp [hc0, hcV] <;> norm_num
+  interval_cases l <;> simp [hc0, hcV, R0] <;> norm_num
 
 theorem exampleWeight_middle_entries (l : ℕ) (h : l < R0.k - 2) :
     hc0.u ⟨l + 1, by omega⟩ = hc0.v ⟨l, by omega⟩ - 1 / 2 := by
   have h6 : l < 6 := by simpa [R0] using h
-  interval_cases l <;> simp [hc0, hcU, hcV] <;> norm_num
+  interval_cases l <;> simp [hc0, hcU, hcV, R0] <;> norm_num
 
 section RowsSec
 
@@ -209,7 +209,7 @@ abbrev atTExample (Dst : ℝ) (hD : 0 < Dst) : ColumnsAtT R0 (emptyColumnChain T
   { T := T
     T_prime := hT.out
     vT := Fin 8
-    card_vT := by simp [exampleRanks_f]
+    card_vT := Fintype.card_fin 8
     Fv := fun _ => ZMod T
     card_Fv := fun _ => ZMod.card T
     psiT := fun _ => ZMod.stdAddChar
@@ -235,7 +235,9 @@ theorem dstarOf_pos : 0 < dstarOf T := by
 
 theorem atTToy_Tstar_eq : (atTExample Tau T (dstarOf T) (dstarOf_pos T)).Tstar = T := by
   have hT0 : (0 : ℝ) ≤ T := by exact_mod_cast hT.out.pos.le
-  simp only [ColumnsAtT.Tstar, ColumnsAtT.Xu, dstarOf, exampleRanks_f, exampleRanks_k, Nat.cast_one, div_one]
+  have hf : R0.f = 8 := rfl
+  have hk : R0.k = 8 := rfl
+  simp only [ColumnsAtT.Tstar, ColumnsAtT.Xu, dstarOf, hf, hk, Nat.cast_one, div_one]
   have h64 : ((8 : ℕ) : ℝ) * ((8 : ℕ) : ℝ) = ((64 : ℕ) : ℝ) := by norm_num
   rw [h64, one_div, Real.pow_rpow_inv_natCast (by positivity) (by norm_num), mul_assoc,
     ← Real.rpow_add (by norm_num)]
@@ -250,7 +252,7 @@ theorem exampleLevel_near_lower :
   have hT0 : (0 : ℝ) ≤ T := by exact_mod_cast hT.out.pos.le
   refine ⟨le_refl _, ?_⟩
   show (T : ℝ) ≤ (1 + 1 / ((R0.f : ℝ) * R0.k)) * T
-  have : (1 : ℝ) ≤ 1 + 1 / ((R0.f : ℝ) * R0.k) := by simp [exampleRanks_f, exampleRanks_k]
+  have : (1 : ℝ) ≤ 1 + 1 / ((R0.f : ℝ) * R0.k) := le_add_of_nonneg_right (by positivity)
   nlinarith
 
 abbrev trivialPeriodMap : PeriodMap R0 (emptyColumnChain Tau) where

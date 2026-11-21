@@ -206,7 +206,7 @@ theorem trW_heis' (w : WOF F E nS nT) (f : WOF F E nS nT → ℂ) :
   change ψ (symplOHF σ JS JT ξ₀ xᵀ w) * f (xᵀ + w) = ψ (symplOHF σ JT' JS' ξ₀ xᵀᵀ wᵀ) * f (xᵀ + w)
   rw [symplOH_tr σ hS hT]
 
-theorem theta_trW {f : WOF F E nT nS → ℂ} (h : IsThetaFunOF σ JT' JS' ξ₀ ψ f) : IsThetaFunOF σ JS JT ξ₀ ψ (trW f) where
+theorem theta_trW {f : WOF F E nT nS → ℂ} (h : IsThetaFunOF σ JT' JS' ξ₀ ψ f) : IsThetaFunOF σ JS JT ξ₀ ψ (trW f) := {
   quasi γ w := by
     have := h.quasi γᵀ wᵀ
     rw [← symplOH_tr σ hS hT]
@@ -218,9 +218,9 @@ theorem theta_trW {f : WOF F E nT nS → ℂ} (h : IsThetaFunOF σ JT' JS' ξ₀
     rwa [trW_heis σ hS hT] at this
   cont := h.cont.comp continuous_trW
   smooth k L hL hL' w :=
-    h.smooth k (trAW.comp L) (continuous_trW.comp hL) (fun t => congrArg Matrix.transpose (hL' t)) wᵀ
+    h.smooth k (trAW.comp L) (continuous_trW.comp hL) (fun t => congrArg Matrix.transpose (hL' t)) wᵀ }
 
-theorem theta_trW' {f : WOF F E nS nT → ℂ} (h : IsThetaFunOF σ JS JT ξ₀ ψ f) : IsThetaFunOF σ JT' JS' ξ₀ ψ (trW f) where
+theorem theta_trW' {f : WOF F E nS nT → ℂ} (h : IsThetaFunOF σ JS JT ξ₀ ψ f) : IsThetaFunOF σ JT' JS' ξ₀ ψ (trW f) := {
   quasi γ w := by
     have := h.quasi γᵀ wᵀ
     rw [← symplOH_tr σ hS hT] at this
@@ -232,7 +232,7 @@ theorem theta_trW' {f : WOF F E nS nT → ℂ} (h : IsThetaFunOF σ JS JT ξ₀ 
     rwa [trW_heis' σ hS hT] at this
   cont := h.cont.comp continuous_trW
   smooth k L hL hL' w :=
-    h.smooth k (trAW.comp L) (continuous_trW.comp hL) (fun t => congrArg Matrix.transpose (hL' t)) wᵀ
+    h.smooth k (trAW.comp L) (continuous_trW.comp hL) (fun t => congrArg Matrix.transpose (hL' t)) wᵀ }
 
 theorem actO_tr (g : GAF σ JT') (h : GAF σ JS') (x : WOF F E nT nS) :
     actOF σ JS JT (dualG σ hS h) (dualG σ hT g) xᵀ = (actOF σ JT' JS' g h x)ᵀ := by

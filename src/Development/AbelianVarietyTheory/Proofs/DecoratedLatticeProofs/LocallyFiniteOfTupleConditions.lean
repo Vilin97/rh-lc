@@ -35,7 +35,7 @@ theorem vac_mono {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {LS : Lat S} {LT
   ⟨hf.1, fun u hu => hf.2.1 u (latO_mono' S T _ _ h hu), fun e he u hu hh => hf.2.2 e he u (latO_mono' S T _ _ h hu) hh⟩
 
 theorem theta_smul' {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} (c : ℂ) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) :
-    IsThetaFunO ψ S T (c • f) where
+    IsThetaFunO ψ S T (c • f) := {
   quasi γ w := by simp only [Pi.smul_apply, smul_eq_mul]; rw [hf.quasi γ w]; ring
   level := by
     obtain ⟨U, hUo, hU⟩ := hf.level
@@ -44,7 +44,7 @@ theorem theta_smul' {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} (c : ℂ) {f 
       funext w; simp only [heisO, Pi.smul_apply, smul_eq_mul]; ring
     rw [e, hU u hu hi]
   cont := continuous_const.mul hf.cont
-  smooth k L hL hfin w := (contDiff_const.mul (hf.smooth k L hL hfin w))
+  smooth k L hL hfin w := (contDiff_const.mul (hf.smooth k L hL hfin w)) }
 
 theorem vac_smul {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {LS : Lat S} {LT : Lat T} {P : Pl D → Prop}
     (c : ℂ) {f : WO S T → ℂ} (hf : Vac ψ S T LS LT P f) : Vac ψ S T LS LT P (c • f) := by

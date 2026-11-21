@@ -126,9 +126,14 @@ theorem exists_isSmulPt (a : O) (g : GtPt D T) : ∃ g', IsSmulPt oa a g g' := b
       apply Additive.ofMul.injective
       simp only [ofMul_mul, ofMul_inv]
       abel) (fun y J hJ => by
-      have C : IsCub (th D (T := T) y J) := isCub_cubV D.cub hJ
+      have face (x y' : T ⟶ D.P.A) : th D y J 1 x y' = 1 := by
+        have e := val_corr hJ (D.cub.face 0) (lift x y').left
+        rw [val_one] at e
+        refine Eq.trans ?_ e
+        refine Eq.trans ?_ (val_cub D.cub (lift x y') hJ (pzero D.P.A _) (x2 D.P.A 0) (x2 D.P.A 1)).symm
+        congr 1 <;> simp [x2, pzero, Hom.one_def]
       have e := (rosGen_add hG oa a hJ 1 1 g.b).1
-      rw [_root_.mul_one, MonObj.one_comp, C.face, C.face, _root_.mul_one, _root_.one_mul] at e
+      rw [_root_.mul_one, MonObj.one_comp, face, face, _root_.mul_one, _root_.one_mul] at e
       refine (vv 0 y J hJ).trans ?_
       rw [smul_zero, cPoint_zero, mul_eq_left.1 e.symm, _root_.mul_one, cv_zero g hJ]) (fun χ χ' y J hJ => by
       have e₁ := congrArg Additive.ofMul (rosGen_add hG oa a hJ (cP D _ χ) (cP D _ χ') g.b).1
@@ -196,7 +201,7 @@ theorem add_smulPt (a a' : O) (g : GtPt D T) :
   have := oa.onB.hom a
   have := oa.onB.hom (star a)
   refine (isAdd_iff _ _ _).2 ⟨?_, fun χ y J hJ => ?_⟩
-  · rw [smulPt_b, smulPt_b, smulPt_b, oa.onB.map_add (f := _)]; exact MonObj.comp_mul _ _ _
+  · rw [smulPt_b, smulPt_b, smulPt_b, oa.onB.map_add]; exact MonObj.comp_mul _ _ _
   · have e₁ := congrArg Additive.ofMul (IsRos.val_sum hG D.P.isAb D.cub
       (by rw [star_add]; exact oa.onB.map_add _ _) (oa.onB.map_add a a')
       (rosGen_isRos hG oa (a + a')) (rosGen_isRos hG oa a) (rosGen_isRos hG oa a') hJ (cP D _ χ) g.b)

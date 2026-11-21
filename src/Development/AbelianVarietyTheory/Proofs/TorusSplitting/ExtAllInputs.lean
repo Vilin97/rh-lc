@@ -116,7 +116,8 @@ private theorem two_pow_add_pow_sub_two_pow_mul_le (c : ℕ) (ε : ℝ) (h0 : 0 
     have hB1 : (1 : ℝ) ≤ 2 ^ c + 1 := by linarith
     have hbB : (2 : ℝ) ^ (c * i) ≤ (2 ^ c + 1) ^ (i + 1) := by
       rw [pow_mul]
-      calc ((2 : ℝ) ^ c) ^ i ≤ (2 ^ c + 1) ^ i := pow_le_pow_left₀ hb (by linarith) i
+      calc
+        ((2 : ℝ) ^ c) ^ i ≤ (2 ^ c + 1) ^ i := pow_le_pow_left₀ hb (by linarith) i
         _ ≤ (2 ^ c + 1) ^ (i + 1) := pow_le_pow_right₀ hB1 (Nat.le_succ i)
     have ha : 0 ≤ (2 : ℝ) ^ c + ε := by linarith
     have hpos : 0 ≤ (i : ℝ) * ε * (2 ^ c + 1) ^ i := by positivity

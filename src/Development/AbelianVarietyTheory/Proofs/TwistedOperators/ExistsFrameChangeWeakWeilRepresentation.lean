@@ -22,7 +22,7 @@ namespace GlobalTheory.AdSpan
 variable {D : D7} (S T : HSp D) (b : Module.Basis (Fin S.rank) D.host.E S.V)
 
 theorem isThetaFunO_reF (ψ : AddChar (AF D.host.F) ℂ) (f : WO S T → ℂ) (hf : IsThetaFunO ψ S T f) :
-    IsThetaFunO ψ (reS S b) T (reF S T b f) where
+    IsThetaFunO ψ (reS S b) T (reF S T b f) := {
   quasi γ w := by
     show f (reW S T b (ratW T (reS S b) γ + w)) = ψ (-(symplOH (reS S b) T (ratW T (reS S b) γ) w)) * f (reW S T b w)
     rw [reW_add, ← symplOH_reW, reW_ratW S T b γ]
@@ -38,7 +38,7 @@ theorem isThetaFunO_reF (ψ : AddChar (AF D.host.F) ℂ) (f : WO S T → ℂ) (h
       (fun t => (reW_map_eq_zero S T b _ (L t)).2 (hL0 t)) (reW S T b w)
     have e : (fun t => reF S T b f (w + L t)) = fun t => f (reW S T b w + (reWAdd S T b).comp L t) :=
       funext fun t => by rw [reF_apply, reW_add]; rfl
-    rw [e]; exact this
+    rw [e]; exact this }
 
 theorem isThetaFunO_of_reF (ψ : AddChar (AF D.host.F) ℂ) (f : WO S T → ℂ)
     (hf : IsThetaFunO ψ (reS S b) T (reF S T b f)) : IsThetaFunO ψ S T f := by

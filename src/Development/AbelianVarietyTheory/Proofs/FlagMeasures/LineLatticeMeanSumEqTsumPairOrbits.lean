@@ -369,6 +369,7 @@ theorem exists_block {k : ℕ} (δ : GL (Fin k) E) : ∃ γ : GL (Fin (k + 1)) E
     simpa [M] using Matrix.GeneralLinearGroup.det_ne_zero δ
   refine ⟨Matrix.GeneralLinearGroup.mkOfDetNeZero M hd, ?_, h1, fun b => by simp [M]⟩
   funext a
+  simp only [Matrix.mulVec_single_one, Matrix.col_apply, Pi.single_apply]
   refine Fin.cases ?_ (fun a => ?_) a <;> simp [M]
 
 omit [NumberField E] in

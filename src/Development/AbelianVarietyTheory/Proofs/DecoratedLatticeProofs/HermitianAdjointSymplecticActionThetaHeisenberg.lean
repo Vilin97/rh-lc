@@ -108,7 +108,7 @@ theorem heis_dagger (ψ : AddChar (AF D.host.F) ℂ) (hn : ∀ a, ‖ψ a‖ = 1
   rw [dagger_add, dagger_dagger, hs, conj_psi hn]
 
 theorem theta_fwd (ψ : AddChar (AF D.host.F) ℂ) (hn : ∀ a, ‖ψ a‖ = 1) (S T : HSp D) {f : WO S T → ℂ}
-    (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ T S (cj (dagger T S) f) where
+    (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ T S (cj (dagger T S) f) := {
   quasi γ w := by
     have hr : dagger T S (ratW S T γ) = ratW T S (T.gram⁻¹ * (γᴴ * S.gram)) := by
       rw [ratW_eq, ratW_eq]; exact dagger_rat T S γ
@@ -132,7 +132,7 @@ theorem theta_fwd (ψ : AddChar (AF D.host.F) ℂ) (hn : ∀ a, ‖ψ a‖ = 1) 
       simp only [GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj, AddMonoidHom.comp_apply, Complex.conjCLE_apply]
       rw [dagger_add]; rfl
     rw [e]
-    exact Complex.conjCLE.contDiff.comp h
+    exact Complex.conjCLE.contDiff.comp h }
 
 theorem theta_iff (ψ : AddChar (AF D.host.F) ℂ) (hn : ∀ a, ‖ψ a‖ = 1) (S T : HSp D) (f : WO S T → ℂ) :
     IsThetaFunO ψ T S (cj (dagger T S) f) ↔ IsThetaFunO ψ S T f := by

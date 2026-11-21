@@ -52,7 +52,7 @@ theorem symplOH_four (x y : WO X Y) : symplOH X Y x y =
 variable {ψ : AddChar (AF D.host.F) ℂ} {C : WO A S → WO S A' → ℂ} {φ₁ : WO A A' → ℂ} {φ₂ : WO S S → ℂ}
 
 theorem isThetaFunO_four (h : IsBiTheta ψ A S A' C) (h₁ : IsThetaFunO ψ A A' φ₁) (h₂ : IsThetaFunO ψ S S φ₂) :
-    IsThetaFunO ψ X Y (four d e C φ₁ φ₂) where
+    IsThetaFunO ψ X Y (four d e C φ₁ φ₂) := {
   quasi γ w := by
     have e₁ : sandwich e.pA d.jB (ratW Y X γ) = ratW S A (e.qA * γ * d.iB) := by
       rw [ratW_eq, ratW_eq, rat_mul, rat_mul]; rfl
@@ -96,7 +96,7 @@ theorem isThetaFunO_four (h : IsBiTheta ψ A S A' C) (h₁ : IsThetaFunO ψ A A'
       ((h₁.smooth k ((sandwich e.pB d.jB).comp L) ((continuous_sandwich _ _).comp hL)
         (fun t => map_sandwich _ _ _ (h0 t)) _).mul
       (h₂.smooth k ((sandwich e.pA d.jA).comp L) ((continuous_sandwich _ _).comp hL)
-        (fun t => map_sandwich _ _ _ (h0 t)) _))
+        (fun t => map_sandwich _ _ _ (h0 t)) _)) }
 
 theorem end_const_mul {Z : Type} (L : Module.End ℂ (Z → ℂ)) (c : ℂ) (f : Z → ℂ) (z : Z) :
     L (fun y => c * f y) z = c * L f z :=

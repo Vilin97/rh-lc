@@ -140,8 +140,10 @@ theorem continuous_kern_phe : ∀ (B : RowsAut) (d : InfinitePlace B.I.F → ℝ
           Nat.cast_le.mpr (Set.ncard_le_ncard hsub hpre)
       _ = (({γ ∈ B.I.GFset | (x0⁻¹ * γ * y0).2 ∈ B.I.Kset ∧
             ∀ v, dOp (uMat ((x0⁻¹ * γ * y0).1 v)) ≤ r v}.ncard : ℕ) : ℝ) := by
-          rw [Set.ncard_preimage_of_injective_subset_range Subtype.val_injective
-            (fun γ hγ => ⟨⟨γ, hγ.1⟩, rfl⟩)]
+          apply congrArg (fun k : ℕ => (k : ℝ))
+          apply Set.ncard_preimage_of_injective_subset_range Subtype.val_injective
+          intro γ hγ
+          exact ⟨⟨γ, hγ.1⟩, rfl⟩
       _ ≤ _ := hcard
   obtain ⟨hsum, -⟩ := GlobalTheory.summable_and_tsum_le_of_box_count (InfinitePlace B.I.F) B.I.GFset D t
     (2 * (n : ℝ) ^ 2) _ C' hA hC'0 ha hDnn ht0 hcount

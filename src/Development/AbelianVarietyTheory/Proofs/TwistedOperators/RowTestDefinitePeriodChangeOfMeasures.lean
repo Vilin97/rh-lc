@@ -37,7 +37,7 @@ theorem fd_int_scale {D : D7} {V : HSp D} {μ μ' : Measure (GA D V)} (hμ : μ.
   rw [NNReal.smul_def, Complex.real_smul]
 
 theorem biTheta_slice1 {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {A S A' : HSp D} {C : WO A S → WO S A' → ℂ}
-    (h : IsBiTheta ψ A S A' C) (v : WO S A') : IsThetaFunO ψ A S fun u => C u v where
+    (h : IsBiTheta ψ A S A' C) (v : WO S A') : IsThetaFunO ψ A S fun u => C u v := {
   quasi := fun γ u => h.quasiL γ u v
   level := by
     obtain ⟨U, hU, hl⟩ := h.levL
@@ -45,10 +45,10 @@ theorem biTheta_slice1 {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {A S A' : HSp D
   cont := h.cont.comp (continuous_id.prodMk continuous_const)
   smooth := fun n L hL h0 u => by
     have := h.smooth n L 0 hL continuous_const h0 (fun _ => Matrix.map_zero _ (map_zero (finPart D))) u v
-    simpa using this
+    simpa using this }
 
 theorem biTheta_slice2 {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {A S A' : HSp D} {C : WO A S → WO S A' → ℂ}
-    (h : IsBiTheta ψ A S A' C) (u : WO A S) : IsThetaFunO ψ S A' (C u) where
+    (h : IsBiTheta ψ A S A' C) (u : WO A S) : IsThetaFunO ψ S A' (C u) := {
   quasi := fun γ v => h.quasiR γ u v
   level := by
     obtain ⟨U, hU, hl⟩ := h.levR
@@ -56,7 +56,7 @@ theorem biTheta_slice2 {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {A S A' : HSp D
   cont := h.cont.comp (continuous_const.prodMk continuous_id)
   smooth := fun n L hL h0 v => by
     have := h.smooth n 0 L continuous_const hL (fun _ => Matrix.map_zero _ (map_zero (finPart D))) h0 u v
-    simpa using this
+    simpa using this }
 
 section
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc}

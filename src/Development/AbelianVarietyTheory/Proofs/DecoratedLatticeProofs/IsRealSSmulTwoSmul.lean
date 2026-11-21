@@ -38,13 +38,13 @@ theorem biComb_smul (ψ : AddChar (AF D.host.F) ℂ) (A S A' : HSp D) (a : WO A 
   rw [h1, comb_smul]; rfl
 
 theorem isThetaFunO_smul {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} (c : ℂ) {f : WO S T → ℂ}
-    (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ S T (c • f) where
+    (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ S T (c • f) := {
   quasi γ w := by simp only [Pi.smul_apply, smul_eq_mul]; rw [hf.quasi]; ring
   level := by
     obtain ⟨U, hUo, hU⟩ := hf.level
     exact ⟨U, hUo, fun u hu hi => by rw [heisO_smul, hU u hu hi]⟩
   cont := continuous_const.mul hf.cont
-  smooth k L hL hfin w := contDiff_const.mul (hf.smooth k L hL hfin w)
+  smooth k L hL hfin w := contDiff_const.mul (hf.smooth k L hL hfin w) }
 
 theorem isLatVac_smul {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} (c : ℂ) {Λ : AddSubgroup (WO S T)} {f : WO S T → ℂ}
     (hf : IsLatVac (heisO ψ S T) Λ f) : IsLatVac (heisO ψ S T) Λ (c • f) :=

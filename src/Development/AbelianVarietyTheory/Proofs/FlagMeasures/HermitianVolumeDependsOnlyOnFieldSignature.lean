@@ -128,10 +128,7 @@ theorem exists_image (e : E' ≃+* E) (he : ∀ y, e (star y) = star (e y)) (J :
       exact ⟨σ c, rfl⟩
   have hmem : ∀ y, y ∈ L ↔ f y ∈ L.map f := fun y =>
     ⟨fun h => ⟨y, h, rfl⟩, fun ⟨z, hz, h⟩ => hinj h ▸ hz⟩
-  refine ⟨L.map f, ⟨hL.fg.map f, ?_⟩, ?_, hmem⟩
-  · have : ((L.map f : Submodule (𝓞 E) (Fin n → E)) : Set (Fin n → E)) = g '' (L : Set (Fin n → E')) := rfl
-    rw [this, ← Submodule.map_span, hL.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
-    exact hsurj
+  refine ⟨L.map f, Submodule.IsLattice.of_fg E (hL.fg.map f), ?_, hmem⟩
   · intro x
     obtain ⟨x, rfl⟩ := hsurj x
     rw [← hmem, hd]
@@ -180,8 +177,8 @@ theorem volumeInvariant : VolumeInvariant := by
   rintro I I' p q ⟨e, he⟩ h h' c μf _ _ c' μf' _ _ hc hc'
   have hn : I'.n = I.n := (rank_eq I' h').trans (rank_eq I h).symm
   obtain ⟨A, Λ, hA, hΛ, hd, hmem⟩ := exists_isometry I.cm.cmUnram e he hn I.J I'.J I.J_herm I'.J_herm
-    I.J_det I'.J_det I.L ⟨I.L_fg, I.L_span⟩ (by simpa only [hform_eq] using I.L_dual)
-    I'.L ⟨I'.L_fg, I'.L_span⟩ (by simpa only [hform_eq] using I'.L_dual)
+    I.J_det I'.J_det I.L (Submodule.IsLattice.of_fg I.E I.L_fg) (by simpa only [hform_eq] using I.L_dual)
+    I'.L (Submodule.IsLattice.of_fg I'.E I'.L_fg) (by simpa only [hform_eq] using I'.L_dual)
     (hasSignature_all I h) (hasSignature_all I' h')
   obtain ⟨xf, hx⟩ := GlobalTheory.T.exists_finiteAdelicPoint_lattice_eq_selfDual I Λ hΛ (by simpa only [hform_eq] using hd)
   exact GlobalTheory.T.gaugeVolume_eq_of_semilinear_isometry_genus I I' e A xf he hn hA (hx ▸ hmem) c μf c' μf' hc hc'

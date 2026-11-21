@@ -50,7 +50,7 @@ theorem foldr_rder_zero (l : List (D.what₂.Tau × Matrix (Fin V.rank) (Fin V.r
     rw [List.foldr_cons, ih]
     exact rder_zero θ V p.1 p.2
 
-theorem isAutFunSm_zero : IsAutFunSm θ V (fun _ => 0) where
+theorem isAutFunSm_zero : IsAutFunSm θ V (fun _ => 0) := {
   left _ _ _ := rfl
   level := ⟨⊤, isOpen_univ, fun _ _ _ _ => rfl⟩
   cont := continuous_const
@@ -66,7 +66,7 @@ theorem isAutFunSm_zero : IsAutFunSm θ V (fun _ => 0) where
     have h := foldr_rder_zero θ V l
     change ‖(l.foldr (fun p f => Rder θ V p.1 p.2 f) (0 : GA D V → ℂ)) (x * g)‖ ≤ _
     rw [h]
-    simp
+    simp }
 
 theorem isCuspFun_zero : IsCuspFun V (fun _ => 0) := by
   intro r C _ μ 𝓕 _ _ g
@@ -109,7 +109,7 @@ theorem foldr_rder_smul (l : List (D.what₂.Tau × Matrix (Fin V.rank) (Fin V.r
 
 
 variable (V) in
-theorem isAutFunSm_smul {φ : GA D V → ℂ} (h : IsAutFunSm θ V φ) (c : ℂ) : IsAutFunSm θ V (c • φ) where
+theorem isAutFunSm_smul {φ : GA D V → ℂ} (h : IsAutFunSm θ V φ) (c : ℂ) : IsAutFunSm θ V (c • φ) := {
   left γ hγ g := by simp only [Pi.smul_apply, h.left γ hγ g]
   level := by
     obtain ⟨U, hU, hk⟩ := h.level
@@ -125,7 +125,7 @@ theorem isAutFunSm_smul {φ : GA D V → ℂ} (h : IsAutFunSm θ V φ) (c : ℂ)
     obtain ⟨C, hC⟩ := hN l hl x
     refine ⟨‖c‖ * C, fun g hg => ?_⟩
     rw [foldr_rder_smul, Pi.smul_apply, norm_smul, mul_assoc]
-    exact mul_le_mul_of_nonneg_left (hC g hg) (norm_nonneg c)
+    exact mul_le_mul_of_nonneg_left (hC g hg) (norm_nonneg c) }
 
 
 variable (V) in

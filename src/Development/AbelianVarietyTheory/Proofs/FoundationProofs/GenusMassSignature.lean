@@ -13,7 +13,7 @@ noncomputable section
 
 namespace GlobalTheory.Proof.GenusMassSignature
 
-open NumberField Formalism.BasicNotions GlobalTheory.IndefiniteRowSideFullHecke.SelfDualLatticeMass Matrix
+open NumberField Formalism.BasicNotions Matrix
 open scoped ComplexOrder MatrixOrder
 
 theorem denseRange_of_not_isReal {K : Type} [Field K] (σ : K →+* ℂ)

@@ -462,7 +462,7 @@ theorem eigConj : ∀ (n : ℕ) (ε : Fin n → Bool) (χ : Fin n → ℂ) (f : 
     obtain ⟨U, F, hU, hgU, hF, hfF⟩ := hf (g₀.map star) (UJ_star hg₀)
     have hc : ∀ {k : WithTop ℕ∞}, ContDiff ℝ k (fun x : Matrix (Fin n) (Fin n) ℂ => x.map star) :=
       contDiff_pi.2 fun i => contDiff_pi.2 fun j =>
-        (Complex.conjCLE : ℂ →L[ℝ] ℂ).contDiff.comp (contDiff_apply_apply ℝ ℂ i j)
+        (Complex.conjCLE : ℂ →L[ℝ] ℂ).contDiff.comp (contDiff_apply_apply (𝕜 := ℝ) i j)
     refine ⟨(fun x : Matrix (Fin n) (Fin n) ℂ => x.map star) ⁻¹' U, fun x => F (x.map star),
       hU.preimage (hc (k := 0)).continuous, by simpa using hgU, hF.comp hc.contDiffOn (fun x hx => hx), ?_⟩
     intro g hg hgu

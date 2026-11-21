@@ -26,7 +26,8 @@ theorem exists_local_inverse {m : ℕ} {f : (Fin m → ℂ) → Fin m → ℂ} {
   have hV : x ∈ interior (U ∩ {y | AnalyticAt ℂ f y}) :=
     mem_interior_iff_mem_nhds.2 (inter_mem hU hf.eventually_analyticAt)
   have hi : Function.Injective (fderiv ℂ f x) :=
-    HoloInjDerivInj.proof m f _ isOpen_interior (fun y hy => (interior_subset hy).2)
+    HoloInjDerivInj.proof m f (interior (U ∩ {y | AnalyticAt ℂ f y})) isOpen_interior
+      (fun y hy => (interior_subset hy).2)
       (hinj.mono fun y hy => (interior_subset hy).1) x hV
   let e : (Fin m → ℂ) ≃L[ℂ] (Fin m → ℂ) :=
     (LinearEquiv.ofInjectiveEndo (fderiv ℂ f x : (Fin m → ℂ) →ₗ[ℂ] Fin m → ℂ) hi).toContinuousLinearEquiv

@@ -57,6 +57,6 @@ theorem cutBy_of_regular_of_zeroEstimate : ∀ (K σ Hh : Type) [Field K] (I : I
     rw [_root_.one_mul, MvPolynomial.homogeneousComponent_of_mem hF, if_pos rfl] at h
     rwa [hV]
   · rw [hV] at h
-    exact (Ideal.span_le.2 fun G hG => hG.1) h
+    exact (Ideal.span_le.2 fun G (hG : G ∈ {G : MvPolynomial σ K | G ∈ I ∧ G.IsHomogeneous d}) => hG.1) h
 
 end GlobalTheory

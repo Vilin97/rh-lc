@@ -79,7 +79,7 @@ namespace GlobalTheory.RawLift.CoefLeft
 variable {D : D7}
 
 theorem isThetaFunO_add_smul {S T' : HSp D} {ψ : AddChar (AF D.host.F) ℂ} {f g : WO S T' → ℂ}
-    (hf : IsThetaFunO ψ S T' f) (hg : IsThetaFunO ψ S T' g) (z : ℂ) : IsThetaFunO ψ S T' (f + z • g) where
+    (hf : IsThetaFunO ψ S T' f) (hg : IsThetaFunO ψ S T' g) (z : ℂ) : IsThetaFunO ψ S T' (f + z • g) := {
   quasi γ w := by
     simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     rw [hf.quasi, hg.quasi]; ring
@@ -97,7 +97,7 @@ theorem isThetaFunO_add_smul {S T' : HSp D} {ψ : AddChar (AF D.host.F) ℂ} {f 
   cont := hf.cont.add (hg.cont.const_smul z)
   smooth k L hL hL0 w := by
     have := (hf.smooth k L hL hL0 w).add ((hg.smooth k L hL hL0 w).const_smul z)
-    simpa only [Pi.add_apply, Pi.smul_apply] using this
+    simpa only [Pi.add_apply, Pi.smul_apply] using this }
 
 theorem memLp_two_of_lintegral {X : Type} [MeasurableSpace X] {ν : Measure X} {f : X → ℂ}
     (hm : AEStronglyMeasurable f ν) (h : ∫⁻ x, ‖f x‖ₑ ^ 2 ∂ν < ⊤) : MemLp f 2 ν := by

@@ -28,14 +28,14 @@ theorem heisO_zero' (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (u : WO S T) 
     heisO ψ S T u 0 = 0 := by
   funext w; simp [heisO]
 
-theorem isThetaFunO_zero (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) : IsThetaFunO ψ S T 0 where
+theorem isThetaFunO_zero (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) : IsThetaFunO ψ S T 0 := {
   quasi := by intro γ w; simp
   level := ⟨⊤, isOpen_univ, fun u _ _ => heisO_zero' ψ S T u⟩
   cont := continuous_const
-  smooth := by intro k L _ _ w; exact contDiff_const
+  smooth := by intro k L _ _ w; exact contDiff_const }
 
 theorem isThetaFunO_add {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {f g : WO S T → ℂ}
-    (hf : IsThetaFunO ψ S T f) (hg : IsThetaFunO ψ S T g) : IsThetaFunO ψ S T (f + g) where
+    (hf : IsThetaFunO ψ S T f) (hg : IsThetaFunO ψ S T g) : IsThetaFunO ψ S T (f + g) := {
   quasi := by intro γ w; simp [hf.quasi, hg.quasi, mul_add]
   level := by
     obtain ⟨U, hU, hUf⟩ := hf.level
@@ -47,10 +47,10 @@ theorem isThetaFunO_add {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {f g : WO
   cont := hf.cont.add hg.cont
   smooth := by
     intro k L hL hL' w
-    exact (hf.smooth k L hL hL' w).add (hg.smooth k L hL hL' w)
+    exact (hf.smooth k L hL hL' w).add (hg.smooth k L hL hL' w) }
 
 theorem isThetaFunO_smul {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {f : WO S T → ℂ} (c : ℂ)
-    (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ S T (c • f) where
+    (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ S T (c • f) := {
   quasi := by intro γ w; simp [hf.quasi]; ring
   level := by
     obtain ⟨U, hU, hUf⟩ := hf.level
@@ -58,7 +58,7 @@ theorem isThetaFunO_smul {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {f : WO 
   cont := continuous_const.mul hf.cont
   smooth := by
     intro k L hL hL' w
-    exact contDiff_const.mul (hf.smooth k L hL hL' w)
+    exact contDiff_const.mul (hf.smooth k L hL hL' w) }
 
 end GlobalTheory.LocMod.LinSpace
 

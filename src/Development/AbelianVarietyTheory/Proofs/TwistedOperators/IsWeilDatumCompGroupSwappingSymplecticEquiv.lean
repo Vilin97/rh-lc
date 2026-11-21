@@ -26,7 +26,7 @@ theorem theta_pull {ψ : AddChar (AF D.host.F) ℂ} {A B C E : HSp D} (e : WO A 
     (hrat : ∀ x, x ∈ ratL B A → e x ∈ ratL E C) (hs : ∀ x y, symplO C E (e x) (e y) = symplO A B x y)
     (hinf : ∀ x : WO A B, x.map (infPart D) = 0 → (e x).map (infPart D) = 0)
     (hfin : ∀ x : WO A B, x.map (finPart D) = 0 → (e x).map (finPart D) = 0)
-    {f : WO C E → ℂ} (hf : IsThetaFunO ψ C E f) : IsThetaFunO ψ A B (fun w => f (e w)) where
+    {f : WO C E → ℂ} (hf : IsThetaFunO ψ C E f) : IsThetaFunO ψ A B (fun w => f (e w)) := {
   quasi γ w := by
     obtain ⟨γ', hγ'⟩ := hrat (ratW B A γ) ⟨γ, rfl⟩
     have e1 : e (ratW B A γ) = ratW E C γ' := hγ'.symm
@@ -43,7 +43,7 @@ theorem theta_pull {ψ : AddChar (AF D.host.F) ℂ} {A B C E : HSp D} (e : WO A 
   cont := hf.cont.comp hc
   smooth k L hL h0 w := by
     have := hf.smooth k ((e : WO A B →+ WO C E).comp L) (hc.comp hL) (fun t => hfin _ (h0 t)) (e w)
-    simpa only [AddMonoidHom.comp_apply, AddMonoidHom.coe_coe, map_add (f := _)] using this
+    simpa only [AddMonoidHom.comp_apply, AddMonoidHom.coe_coe, map_add (f := _)] using this }
 
 theorem isDetAt_inv {e : AE D} (he : e * e = e) {V V₂ : HSp D} {g : GA D V} {k : GA D V₂} {x : (AE D)ˣ}
     (hx : IsDetAt e V g x) (hk : (mt V₂ k).det = (mt V g⁻¹).det) : IsDetAt e V₂ k x⁻¹ := by

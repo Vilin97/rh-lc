@@ -130,7 +130,7 @@ theorem exists_conj_unif : ∀ (x x' : KeyIn ℂ), KeyPB x' x (starRingEnd ℂ) 
   rintro x x' ⟨φ, he, w, hg', F, hφ, hw, hrig, hth, hF, hε, hv⟩ hg g u Hm χ θ Fd ⟨hA, hR, hθ, hFd⟩
   rw [KeyFibre.eq_dualMapR_of_algebraMap _ F hF hε] at hv
   obtain ⟨w', hw', hinv⟩ := exists_inv w hw
-  have hP := pull_isLB x.P.isLB φ
+  have hP : (x.P.L.pull φ).IsLB := DVR.linComb_isLB x.P.L x.P.isLB _ _
   let u₁ := conjPull hφ u
   have me : MeasurableEmbedding (star : (Fin g → ℂ) → Fin g → ℂ) :=
     (starL' ℝ (A := Fin g → ℂ)).toHomeomorph.measurableEmbedding

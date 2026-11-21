@@ -60,7 +60,7 @@ theorem heisO_add' (u : WO S T') (f g : WO S T' → ℂ) : heisO ψ S T' u (f + 
   funext w; simp only [heisO, Pi.add_apply]; ring
 
 theorem theta_add {f g : WO S T' → ℂ} (hf : IsThetaFunO ψ S T' f) (hg : IsThetaFunO ψ S T' g) :
-    IsThetaFunO ψ S T' (f + g) where
+    IsThetaFunO ψ S T' (f + g) := {
   quasi γ w := by simp only [Pi.add_apply]; rw [hf.quasi, hg.quasi]; ring
   level := by
     obtain ⟨U, hUo, hU⟩ := hf.level
@@ -68,9 +68,9 @@ theorem theta_add {f g : WO S T' → ℂ} (hf : IsThetaFunO ψ S T' f) (hg : IsT
     refine ⟨U ⊓ U', hUo.inter hUo', fun u hu hi => ?_⟩
     rw [heisO_add', hU u hu.1 hi, hU' u hu.2 hi]
   cont := hf.cont.add hg.cont
-  smooth k L hL hfin w := (hf.smooth k L hL hfin w).add (hg.smooth k L hL hfin w)
+  smooth k L hL hfin w := (hf.smooth k L hL hfin w).add (hg.smooth k L hL hfin w) }
 
-theorem theta_smul (c : ℂ) {f : WO S T' → ℂ} (hf : IsThetaFunO ψ S T' f) : IsThetaFunO ψ S T' (c • f) where
+theorem theta_smul (c : ℂ) {f : WO S T' → ℂ} (hf : IsThetaFunO ψ S T' f) : IsThetaFunO ψ S T' (c • f) := {
   quasi γ w := by simp only [Pi.smul_apply, smul_eq_mul]; rw [hf.quasi]; ring
   level := by
     obtain ⟨U, hUo, hU⟩ := hf.level
@@ -79,7 +79,7 @@ theorem theta_smul (c : ℂ) {f : WO S T' → ℂ} (hf : IsThetaFunO ψ S T' f) 
       funext w; simp only [heisO, Pi.smul_apply, smul_eq_mul]; ring
     rw [e, hU u hu hi]
   cont := continuous_const.mul hf.cont
-  smooth k L hL hfin w := contDiff_const.mul (hf.smooth k L hL hfin w)
+  smooth k L hL hfin w := contDiff_const.mul (hf.smooth k L hL hfin w) }
 
 theorem theta_sub {f g : WO S T' → ℂ} (hf : IsThetaFunO ψ S T' f) (hg : IsThetaFunO ψ S T' g) :
     IsThetaFunO ψ S T' (f - g) := by

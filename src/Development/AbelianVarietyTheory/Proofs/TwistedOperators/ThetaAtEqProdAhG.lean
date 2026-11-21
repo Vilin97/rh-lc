@@ -198,7 +198,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.OrthonormalLatticeThetaValues Globa
 variable {D : D7}
 
 theorem theta_smul {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} (c : ℂ) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) :
-    IsThetaFunO ψ S T (c • f) where
+    IsThetaFunO ψ S T (c • f) := {
   quasi γ w := by simp only [Pi.smul_apply, smul_eq_mul]; rw [hf.quasi]; ring
   level := by
     obtain ⟨U, hUo, hU⟩ := hf.level
@@ -207,7 +207,7 @@ theorem theta_smul {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} (c : ℂ) {f :
       funext w; simp only [heisO, Pi.smul_apply, smul_eq_mul]; ring
     rw [e, hU u hu hi]
   cont := continuous_const.mul hf.cont
-  smooth k L hL hfin w := (contDiff_const.mul (hf.smooth k L hL hfin w))
+  smooth k L hL hfin w := (contDiff_const.mul (hf.smooth k L hL hfin w)) }
 
 theorem realPt_add (S T : HSp D) (X Y : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :
     realPt S T (X + Y) = realPt S T X + realPt S T Y := by

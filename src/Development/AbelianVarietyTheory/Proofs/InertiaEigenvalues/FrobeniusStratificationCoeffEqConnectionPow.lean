@@ -47,7 +47,7 @@ theorem taylor_eq_C {K : Type} [Field K] [CharZero K] (sh : K⟦X⟧ →+* K⟦X
       intro h0
       have := congrArg (constantCoeff : K⟦X⟧ →+* K) h0
       simp [Nat.factorial_ne_zero] at this
-    rw [coeff_C, if_neg (by omega)]
+    rw [coeff_C, ite_eq_right (by omega)]
     exact (mul_eq_zero.1 h).resolve_left hne
 
 theorem taylor_X {K : Type} [Field K] [CharZero K] (sh : K⟦X⟧ →+* K⟦X⟧⟦X⟧)
@@ -64,7 +64,7 @@ theorem taylor_X {K : Type} [Field K] [CharZero K] (sh : K⟦X⟧ →+* K⟦X⟧
       intro h0
       have := congrArg (constantCoeff : K⟦X⟧ →+* K) h0
       simp [Nat.factorial_ne_zero] at this
-    rw [map_add (f := _), coeff_C, coeff_X, if_neg (by omega), if_neg (by omega), add_zero]
+    rw [map_add (f := _), coeff_C, coeff_X, ite_eq_right (by omega), ite_eq_right (by omega), add_zero]
     exact (mul_eq_zero.1 h).resolve_left hne
 
 end GlobalTheory.TaylorStrat
@@ -103,7 +103,7 @@ end GlobalTheory.TaylorStrat
 
 theorem GlobalTheory.TaylorStrat.stratification_coeff_eq_nabla_pow : ∀ (O K : Type) [CommRing O] [NormedField K] [IsUltrametricDist K] [CompleteSpace K] [Algebra O K] [IsUnitBall O K] (l e a : ℕ) (ι : Type) [Fintype ι] [DecidableEq ι] [Fact l.Prime] [NormedAlgebra ℚ_[l] K] [NeZero e] [NeZero a] (P : PhiMod O K l e a ι) (sh : K⟦X⟧ →+* K⟦X⟧⟦X⟧) (φ₂ : K⟦X⟧⟦X⟧ →+* K⟦X⟧⟦X⟧), (∀ (f : K⟦X⟧) (i : ℕ), (i.factorial : K⟦X⟧) * coeff i (sh f) = (PowerSeries.derivative (R := K))^[i] f) → (∀ f : K⟦X⟧, φ₂ (PowerSeries.C f) = PowerSeries.C (frob K l f)) → (∀ f : K⟦X⟧, φ₂ (sh f) = sh (frob K l f)) → ∀ ε : ZMod a → Matrix ι ι K⟦X⟧⟦X⟧, (∀ τ, (ε τ).map PowerSeries.constantCoeff = 1) → (∀ τ, ε τ * ((P.mx (τ - 1)).map (frob K l)).map sh = ((P.mx (τ - 1)).map (frob K l)).map PowerSeries.C * (ε (τ - 1)).map φ₂) → ∀ (τ : ZMod a) (n : ℕ) (i j : ι), (n.factorial : K⟦X⟧) * coeff n (ε τ i j) = (P.mxInv τ *ᵥ (P.nabla ^ n) (P.phi (bas j)) τ) i := by
   intro O K _ _ _ _ _ _ l e a ι _ _ _ _ _ _ P sh φ₂ hsh hφC hφsh ε hε0 hε τ n i j
-  haveI : CharZero K := charZero_of_injective_algebraMap (algebraMap ℚ_[l] K).injective
+  have : CharZero K := charZero_of_injective_algebraMap (algebraMap ℚ_[l] K).injective
   have hl2 : 2 ≤ l := (Fact.out : l.Prime).two_le
   have hshX := taylor_X sh hsh
   have hshC : ∀ c : K, sh (C c) = C (C c) := fun c => taylor_eq_C sh hsh _ (by simp)
@@ -207,7 +207,7 @@ theorem GlobalTheory.TaylorStrat.stratification_coeff_eq_nabla_pow : ∀ (O K : 
     | zero => intro w; rfl
     | succ n ih =>
       intro w
-      rw [pow_succ, Module.End.mul_apply, P.nabla_xiExt, ih]
+      rw [pow_succ, mul_apply_eq_comp, P.nabla_xiExt, ih]
       rfl
   rw [hphi, hnab, P.xiExt_apply, Matrix.mulVec_mulVec, key]
   show (n.factorial : K⟦X⟧) * coeff n (((Y τ).map C * (W τ).map sh) i j) =

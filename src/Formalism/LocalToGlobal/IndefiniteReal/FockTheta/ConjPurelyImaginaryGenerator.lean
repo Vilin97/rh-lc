@@ -772,7 +772,7 @@ theorem contDiff_dRho_chart (hψ : IsStdChar D ψ (-1)) (hLine : LineAtExists D)
 
 theorem theta_dRho (hψ : IsStdChar D ψ (-1)) (hLine : LineAtExists D) (τ : D.what₂.Tau)
     (z : Matrix (Fin T.rank) (Fin S.rank) ℂ) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) :
-    IsThetaFunO ψ S T (dRho (heisO ψ S T) (Eqv.thetaC D) τ z f) where
+    IsThetaFunO ψ S T (dRho (heisO ψ S T) (Eqv.thetaC D) τ z f) := {
   quasi γ w := dRho_quasi hψ hLine τ z hf γ w
   level := by
     obtain ⟨U, hUo, hU⟩ := hf.level
@@ -803,7 +803,7 @@ theorem theta_dRho (hψ : IsStdChar D ψ (-1)) (hLine : LineAtExists D) (τ : D.
       rw [Matrix.map_apply, Matrix.zero_apply] at this
       exact this
     rw [e]
-    exact (contDiff_dRho_chart hψ hLine τ z hf w).comp A'.contDiff
+    exact (contDiff_dRho_chart hψ hLine τ z hf w).comp A'.contDiff }
 
 
 end Calc

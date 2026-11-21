@@ -151,9 +151,14 @@ theorem existsUnique_char_of_triple (hT : ThetaUnifAV) (hmul : Out.MulNSt) {E : 
   have hg := isGrpPullback_pullback t.G (y b₀)
   obtain ⟨hL, hr, ⟨c', w, hw, -⟩, hsym⟩ := Out.CubePf.cubePull S _ t.G _ (cubeMapOf hg) t.PP t.cub
   obtain ⟨-, ws, gs', -⟩ := hsym t.sym
-  have semi := IsSemiAbelian.pullback (y b₀) t.G t.semi
-  have := semi.smooth
-  have := semi.geomConnected
+  haveI := t.semi.smooth
+  haveI := t.semi.geomConnected
+  haveI : Smooth ((Over.pullback (y b₀)).obj t.G).hom := by
+    change Smooth (pullback.snd t.G.hom (y b₀))
+    infer_instance
+  haveI : GeometricallyConnected ((Over.pullback (y b₀)).obj t.G).hom := by
+    change GeometricallyConnected (pullback.snd t.G.hom (y b₀))
+    infer_instance
   obtain ⟨U, hU, hc, -⟩ := exists_isAffineOpen_mem_and_subset (X := S) (U := ⊤)
     (x := y b₀ (default : PrimeSpectrum ℂ)) trivial
   have hy : ∀ x, y b₀ x ∈ U := fun x => (top_le_preimage_iff_mem _ U).2 hc trivial

@@ -29,7 +29,8 @@ theorem t2Space_ptsOver_of_isSeparated {X S : Scheme.{0}} (p : X ⟶ S) [IsSepar
     (Points.PtsOver.isClosedEmbedding_map (pullback.diagonal p) hd s)).isClosed_range
   convert hc using 1
   have key : ∀ x, h (Points.PtsOver.map (pullback.diagonal p) hd s x) = (x, x) := fun x =>
-    Prod.ext (Subtype.ext (by simp [h])) (Subtype.ext (by simp [h]))
+    Prod.ext (Subtype.ext (by simp [h, Points.PtsOver.prodHomeomorph, Points.PtsOver.map, Category.assoc]))
+      (Subtype.ext (by simp [h, Points.PtsOver.prodHomeomorph, Points.PtsOver.map, Category.assoc]))
   ext ⟨a, b⟩
   constructor
   · intro hab

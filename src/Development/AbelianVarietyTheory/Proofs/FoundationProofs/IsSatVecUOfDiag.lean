@@ -89,7 +89,8 @@ theorem cartanU (hU : IsUnramInv ϖ σ q) (g : GU σ n) : ∃ (d : Fin n → ℤ
     (GlobalTheory.InertDoubleCoset.conj_mem_UJ σ (GlobalTheory.InertDoubleCoset.inv_frame σ eh) g.2)
     ⟨h * k₁, mul_mem hh' h₁, k₂ * h⁻¹, mul_mem h₂ (inv_mem hh'), by
       simp only [Units.val_mul, e, hd', inv_inv, Matrix.mul_assoc]; rfl⟩
-  obtain ⟨t, ht⟩ := exists_diag hU hG
+  obtain ⟨t, ht, -⟩ := P.fSatake_diag_exists (σ := σ) (fun i : Fin n => ϖ ^ (List.ofFn d).getD i.1 0) fun i => by
+    rw [map_zpow₀, hU.2.2.1, hG.rev, ← zpow_add₀ (unif_ne_zero hU), add_neg_cancel, zpow_zero]
   simp only [hd'] at ht
   exact ⟨d, t, hd, ht, dc_GU hU (a := k₁) (b := k₂) h₁ h₂ (Units.ext (by simp only [Units.val_mul, ht]; exact e))⟩
 

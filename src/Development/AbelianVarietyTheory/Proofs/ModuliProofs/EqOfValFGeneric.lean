@@ -43,8 +43,8 @@ theorem exists_polAV {Z : Scheme.{0}} (G : Over Z) [GrpObj G] [IsCommMonObj G] (
   have hψ : ψ ≫ pullback.fst G.hom W.ι = pullback.fst G.hom x := h₀.1.lift_fst _ _ _
   have h₃ : IsGrpPullback ((Over.pullback x).obj G) ((Over.pullback W.ι).obj G) x' ψ :=
     h₀.cancel (h₂.congr rfl hψ.symm) (h₀.1.lift_snd _ _ _)
-  have hL := pull_isLB L.isLB (pullback.fst G.hom x)
-  have hL₀ := pull_isLB L.isLB (pullback.fst G.hom W.ι)
+  have hL := LB.isLB_pull L.isLB (pullback.fst G.hom x)
+  have hL₀ := LB.isLB_pull L.isLB (pullback.fst G.hom W.ι)
   obtain ⟨w, hw⟩ : LBIso (L.L.pull (pullback.fst G.hom x)) ((L.L.pull (pullback.fst G.hom W.ι)).pull ψ) :=
     LBIso.chartPull (chartPullId _)
       (chartPullLinComb L.L _ (fun _ : PUnit => ψ) (fun _ => pullback.fst G.hom x) (fun _ => 1) (𝟙 _)

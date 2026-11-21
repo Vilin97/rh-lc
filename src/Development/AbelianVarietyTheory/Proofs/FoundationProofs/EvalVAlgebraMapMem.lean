@@ -54,7 +54,7 @@ theorem exists_trace {z : Formalism.L2.Theta.AE D} (hz : z ∈ intL D) :
     obtain ⟨t, ht⟩ := exists_of_star_eq D (x := (o : D.host.E) + star (o : D.host.E))
       (by rw [star_add, star_star, add_comm])
     have hti : IsIntegral ℤ t := by
-      rw [← isIntegral_algebraMap_iff , ht]
+      rw [← isIntegral_algebraMap_iff (B := D.host.E), ht]
       exact o.2.add (isIntegral_star o.2)
     refine ⟨algebraMap D.host.F (Af D.host.F) t * α, fun v => ?_, ?_⟩
     · rw [map_mul]; exact mul_mem (evalV_algebraMap_mem v t hti) (hα v)
@@ -65,7 +65,7 @@ theorem exists_trace {z : Formalism.L2.Theta.AE D} (hz : z ∈ intL D) :
   | add x y _ _ hx hy =>
     obtain ⟨a, ha, h1⟩ := hx
     obtain ⟨b, hb, h2⟩ := hy
-    exact ⟨a + b, fun v => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha v) (hb v), by
+    exact ⟨a + b, fun v => by rw [map_add]; exact add_mem (ha v) (hb v), by
       rw [RingHom.map_add (f := _), map_add (fj D), ← h1, ← h2, add_add_add_comm]⟩
   | neg x _ hx =>
     obtain ⟨a, ha, h1⟩ := hx

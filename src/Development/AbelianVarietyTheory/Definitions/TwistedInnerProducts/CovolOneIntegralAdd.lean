@@ -356,7 +356,7 @@ theorem isThetaFunO_prod (P₁ : Matrix (Fin T₁.rank) (Fin T.rank) D.host.E) (
       symplOH S₁ T₁ (sandwich (rat P₁) (rat Q₁) x) (sandwich (rat P₁) (rat Q₁) y) +
         symplOH S₂ T₂ (sandwich (rat P₂) (rat Q₂) x) (sandwich (rat P₂) (rat Q₂) y))
     {f₁ : WO S₁ T₁ → ℂ} {f₂ : WO S₂ T₂ → ℂ} (h₁ : IsThetaFunO ψ S₁ T₁ f₁) (h₂ : IsThetaFunO ψ S₂ T₂ f₂) :
-    IsThetaFunO ψ S T fun w => f₁ (sandwich (rat P₁) (rat Q₁) w) * f₂ (sandwich (rat P₂) (rat Q₂) w) where
+    IsThetaFunO ψ S T fun w => f₁ (sandwich (rat P₁) (rat Q₁) w) * f₂ (sandwich (rat P₂) (rat Q₂) w) := {
   quasi γ w := by
     have e₁ : sandwich (rat P₁) (rat Q₁) (ratW T S γ) = ratW T₁ S₁ (P₁ * γ * Q₁) := by
       rw [ratW_eq, ratW_eq, rat_mul, rat_mul]; rfl
@@ -381,7 +381,7 @@ theorem isThetaFunO_prod (P₁ : Matrix (Fin T₁.rank) (Fin T.rank) D.host.E) (
     exact (h₁.smooth k ((sandwich (rat P₁) (rat Q₁)).comp L) ((continuous_sandwich _ _).comp hL)
       (fun t => map_sandwich _ _ _ (h0 t)) _).mul
       (h₂.smooth k ((sandwich (rat P₂) (rat Q₂)).comp L) ((continuous_sandwich _ _).comp hL)
-        (fun t => map_sandwich _ _ _ (h0 t)) _)
+        (fun t => map_sandwich _ _ _ (h0 t)) _) }
 
 end Product
 

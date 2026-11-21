@@ -206,7 +206,7 @@ theorem isValChar_mul (ha : IsGlobalArtin art) (h : Corr art (r.comp (X.art i Q)
       hv (Finset.mem_image.2 ⟨P, hm, HeightOneSpectrum.ext hP⟩)
     rw [← (hχ.2.2.2 v P hP).2 (Finset.notMem_empty v) m]
     refine forall_congr' fun x => forall_congr' fun hx => ?_
-    change χ.loc P x * ξ.loc P x = _
+    change (_ → χ.loc P x * ξ.loc P x = 1) ↔ _
     rw [hu x hx, mul_one]
 
 theorem exists_isHeckeL {E : Type} [Field E] [NumberField E] {I : Type} [Fintype I] {φ : I → E →+* ℂ} {s : ℕ} {κ : I → ℕ}

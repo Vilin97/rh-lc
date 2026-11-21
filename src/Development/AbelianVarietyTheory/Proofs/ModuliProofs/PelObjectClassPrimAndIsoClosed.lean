@@ -75,7 +75,22 @@ theorem adj_pull (ψ : A ⟶ G) [IsMonHom ψ] {L : LB A.left} {M : LB G.left} (h
     (h : LBIso L (M.pull ψ.left)) {u v : A ⟶ A} {u₀ v₀ : G ⟶ G} (hu : u ≫ ψ = ψ ≫ u₀) (hv : v ≫ ψ = ψ ≫ v₀)
     (H : LBIso (cubeLB G ![fst G G ≫ u₀, snd G G] M) (cubeLB G ![fst G G, snd G G ≫ v₀] M)) :
     LBIso (cubeLB A ![fst A A ≫ u, snd A A] L) (cubeLB A ![fst A A, snd A A ≫ v] L) := by
-  have hP := pull_isLB hM ψ.left
+  have hP : (M.pull ψ.left).IsLB := by
+    refine { cover := top_le_iff.1 ?_, g_self := ?_, cocycle := ?_ }
+    · intro y _
+      obtain ⟨i, hi⟩ := exists_chart hM (ψ.left y)
+      exact TopologicalSpace.Opens.mem_iSup.2 ⟨fun _ => i, mem_pull.2 hi⟩
+    · intro J
+      refine unit_ext fun y hy => ?_
+      rw [gm_res (𝟙 _) y _ hy, map_one, gm_pull_g M ψ.left (𝟙 _) y J J hy hy]
+      exact gm_self hM _ y (mem_pull.1 hy)
+    · intro I J K
+      refine unit_ext fun y hy => ?_
+      rw [map_mul, gm_res (𝟙 _) y _ hy, gm_res (𝟙 _) y _ hy, gm_res (𝟙 _) y _ hy,
+        gm_pull_g M ψ.left (𝟙 _) y I J hy.1.1 hy.1.2,
+        gm_pull_g M ψ.left (𝟙 _) y J K hy.1.2 hy.2,
+        gm_pull_g M ψ.left (𝟙 _) y I K hy.1.1 hy.2]
+      exact gm_cocycle hM _ y (mem_pull.1 hy.1.1) (mem_pull.1 hy.1.2) (mem_pull.1 hy.2)
   refine ((cube_congr h _).trans (cube_isLB hL _) (cube_isLB hP _) (cube_isLB hP _) ?_).trans
     (cube_isLB hL _) (cube_isLB hP _) (cube_isLB hL _) (cube_congr h _).symm
   refine LBIso.chartPull (chartPullCube ψ M _ _ (ψ ⊗ₘ ψ) fun i => ?_) (chartPullCube ψ M _ _ (ψ ⊗ₘ ψ) fun i => ?_) H
@@ -85,7 +100,22 @@ theorem adj_pull (ψ : A ⟶ G) [IsMonHom ψ] {L : LB A.left} {M : LB G.left} (h
 theorem prim_pull (ψ : A ⟶ G) [IsMonHom ψ] {L : LB A.left} {M : LB G.left} (hL : L.IsLB) (hM : M.IsLB)
     (h : LBIso L (M.pull ψ.left)) {u : A ⟶ A} {u₀ : G ⟶ G} (hu : u ≫ ψ = ψ ≫ u₀)
     (H : LBIso M (cubeLB G ![𝟙 G, u₀] M)) : LBIso L (cubeLB A ![𝟙 A, u] L) := by
-  have hP := pull_isLB hM ψ.left
+  have hP : (M.pull ψ.left).IsLB := by
+    refine { cover := top_le_iff.1 ?_, g_self := ?_, cocycle := ?_ }
+    · intro y _
+      obtain ⟨i, hi⟩ := exists_chart hM (ψ.left y)
+      exact TopologicalSpace.Opens.mem_iSup.2 ⟨fun _ => i, mem_pull.2 hi⟩
+    · intro J
+      refine unit_ext fun y hy => ?_
+      rw [gm_res (𝟙 _) y _ hy, map_one, gm_pull_g M ψ.left (𝟙 _) y J J hy hy]
+      exact gm_self hM _ y (mem_pull.1 hy)
+    · intro I J K
+      refine unit_ext fun y hy => ?_
+      rw [map_mul, gm_res (𝟙 _) y _ hy, gm_res (𝟙 _) y _ hy, gm_res (𝟙 _) y _ hy,
+        gm_pull_g M ψ.left (𝟙 _) y I J hy.1.1 hy.1.2,
+        gm_pull_g M ψ.left (𝟙 _) y J K hy.1.2 hy.2,
+        gm_pull_g M ψ.left (𝟙 _) y I K hy.1.1 hy.2]
+      exact gm_cocycle hM _ y (mem_pull.1 hy.1.1) (mem_pull.1 hy.1.2) (mem_pull.1 hy.2)
   refine (h.trans hL hP (cube_isLB hP _) ?_).trans hL (cube_isLB hP _) (cube_isLB hL _) (cube_congr h _).symm
   refine LBIso.chartPull (chartPullPull M _ ψ.left rfl) (chartPullCube ψ M _ _ ψ fun i => ?_) H
   fin_cases i <;> simp [hu]

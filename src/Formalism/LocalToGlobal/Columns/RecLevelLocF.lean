@@ -14,10 +14,15 @@ namespace Formalism.L2.Col
 open Formalism.L2.DIV (Pl kP St redAt redFn resS)
 open Formalism.UG Formalism.UG.P
 
-section Fun
-
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] {ST : Finset (Pl E)} {π : 𝓞 E} (v : HeightOneSpectrum (𝓞 F))
+
+local notation "Rv" => E ⊗[F] v.adicCompletion F
+local notation "ιv" => inclE (F := F) (E := E) (v.adicCompletion F)
+local notation "𝒪v" => Formalism.BasicNotions.intV E v
+local notation "pE" => algebraMap (𝓞 E) E π
+
+section Fun
 
 theorem rll_baseLb_le_Ker : baseLb E n ST ≤ baseKer E n ST := by
   refine le_inf (Deco.base_ok (E := E) (n := n) (ST := ST) (SG := ∅)).L_le_Lsh ?_
@@ -87,9 +92,6 @@ theorem fLoc_ne (hv : v ∈ plUnder F ST) : fLoc hc n ST v ≠ 0 := by
 end Fun
 
 section Card
-
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
-variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] {ST : Finset (Pl E)} {π : 𝓞 E} (v : HeightOneSpectrum (𝓞 F))
 
 def rll_rho (P : Pl E) : 𝒪v →+ kP P where
   toFun s := resS F P ⟨afsplitIE v s.1, afsplit_IE_int v _ s.2⟩

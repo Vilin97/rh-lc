@@ -13,7 +13,7 @@ noncomputable section
 namespace Formalism.MainNotions.ModuliIntegralCharts.H1.FoldPermutation
 
 open MvPowerSeries Formalism.L2.Pj ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ ReciprocityTheory.ChartRestriction.G.TB
-open Formalism.MainNotions.ModuliIntegralCharts.H1.FormalGroupOnCopies Formalism.MainNotions.ModuliIntegralCharts.H1.PartialDerivativeExponent Formalism.MainNotions.ModuliIntegralCharts.H1.FormalGroupCopies
+open Formalism.MainNotions.ModuliIntegralCharts.H1.PartialDerivativeExponent Formalism.MainNotions.ModuliIntegralCharts.H1.FormalGroupCopies
 
 variable {k : Type} [CommRing k] {d : ℕ}
 
@@ -28,7 +28,8 @@ theorem cz_ptz {n : ℕ} (b : Fin n) : LogPf.CZ (![pt k d b, 0] : Fin 2 → Pt k
   fin_cases j <;> simp [pt]
 
 theorem pderiv_embP {n' n : ℕ} (e : Fin n' → Fin n) (he : Function.Injective e) (g : PS k n' d) (b : Fin n')
-    (j : Fin d) : pderiv k (e b, j) (ev (embP e) g) = ev (embP e) (pderiv k (b, j) g) := by
+    (j : Fin d) : pderiv (R := k) (e b, j) (ev (embP e) g) =
+      ev (embP e) (pderiv (R := k) (b, j) g) := by
   classical
   rw [LogPf.pderiv_ev (cz_embP e), Finset.sum_eq_single (b, j)]
   · simp [embP, LogPf.pderiv_pt]
@@ -42,7 +43,7 @@ theorem pderiv_embP {n' n : ℕ} (e : Fin n' → Fin n) (he : Function.Injective
   · simp
 
 theorem pderiv_ev_embP_of_notMem_range {n' n : ℕ} (e : Fin n' → Fin n) (g : PS k n' d) (c : Fin n) (hc : ∀ b, e b ≠ c)
-    (j : Fin d) : pderiv k (c, j) (ev (embP e) g) = 0 := by
+    (j : Fin d) : pderiv (R := k) (c, j) (ev (embP e) g) = 0 := by
   classical
   refine LogPf.pderiv_ev_zero (cz_embP e) g (c, j) fun b i => ?_
   rw [show embP (k := k) (d := d) e b i = pt k d (e b) i from rfl, LogPf.pderiv_pt, if_neg]

@@ -43,9 +43,9 @@ theorem pushout_functional {K : Type} [Field K] {A B C : CommRingCat.{0}} (f : C
     exact this
   refine ⟨fun α β hα hβ => ?_, fun G hG w => ?_⟩
   · let α' : A →ₗ[K] K :=
-      { toFun := α, map_add' := α.map_add (f := _), map_smul' := fun c a => by rw [Algebra.smul_def]; exact hα c a }
+      { toFun := α, map_add' := map_add α, map_smul' := fun c a => by rw [Algebra.smul_def]; exact hα c a }
     let β' : B →ₗ[K] K :=
-      { toFun := β, map_add' := β.map_add (f := _), map_smul' := fun c b => by rw [Algebra.smul_def]; exact hβ c b }
+      { toFun := β, map_add' := map_add β, map_smul' := fun c b => by rw [Algebra.smul_def]; exact hβ c b }
     refine ⟨((LinearMap.mul' K K).comp (TensorProduct.map α' β')).toAddMonoidHom.comp φ.hom.toAddMonoidHom,
       fun a b => ?_⟩
     show LinearMap.mul' K K (TensorProduct.map α' β' (φ.hom (i.hom a * j.hom b))) = α a * β b

@@ -174,17 +174,17 @@ instance isDiscreteRep_coindInvQuotShortComplex_X₃ : IsDiscreteRep (coindInvQu
 
 
 omit [CompactSpace G] in
-theorem coindInvQuotShortComplex_shortExact : (coindInvQuotShortComplex A N).ShortExact where
-  exact := by
-    rw [← ShortComplex.exact_map_iff_of_faithful _ (forget₂ (Rep.{u} k (G ⧸ N)) (ModuleCat.{u} k)),
+theorem coindInvQuotShortComplex_shortExact : (coindInvQuotShortComplex A N).ShortExact := by
+  apply ShortComplex.ShortExact.mk'
+  · rw [← ShortComplex.exact_map_iff_of_faithful _ (forget₂ (Rep.{u} k (G ⧸ N)) (ModuleCat.{u} k)),
       ShortComplex.moduleCat_exact_iff]
     intro y hy
     change Submodule.Quotient.mk (p := LinearMap.range (coindInvariants A N).f.hom.toLinearMap) y = 0 at hy
     obtain ⟨x, hx⟩ := (Submodule.Quotient.mk_eq_zero _).1 hy
     exact ⟨x, hx⟩
-  mono_f := (Rep.mono_iff_injective _).2 fun x y h =>
-    Subtype.ext (coindEmbedding_injective A (congrArg Subtype.val h))
-  epi_g := (Rep.epi_iff_surjective _).2 (Submodule.mkQ_surjective _)
+  · exact (Rep.mono_iff_injective _).2 fun x y h =>
+      Subtype.ext (coindEmbedding_injective A (congrArg Subtype.val h))
+  · exact (Rep.epi_iff_surjective _).2 (Submodule.mkQ_surjective _)
 
 noncomputable def coindInvQuotToInvariants :
     (coindInvQuotShortComplex A N).X₃ ⟶ (coindInvariants A N).X₃ :=

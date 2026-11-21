@@ -48,7 +48,20 @@ theorem exists_int_mul (D : D7) {N : ℕ} (q : ℕ) (k : GA D N) (h : TrivAt D q
     rw [this]
     exact add_mem (mul_mem (natCast_mem _ c) (hmS i j)) (mul_mem (natCast_mem _ s) h1)
   refine ⟨s, Nat.Coprime.prod_left fun r _ => hm r.1 r.2, hint, fun i j => ?_⟩
-  rw [AdLattice.inv_entry (D.host.conj : D.host.E →ₐ[ℚ] D.host.E) _ k.2]
+  have hinv : (((k : GL (Fin N) (AE D))⁻¹ : GL (Fin N) (AE D)) :
+      Matrix (Fin N) (Fin N) (AE D)) i j =
+      Formalism.UG.sigR (D.host.conj : D.host.E →ₐ[ℚ] D.host.E)
+        (IsDedekindDomain.FiniteAdeleRing (𝓞 ℚ) ℚ) (((k : GL (Fin N) (AE D)) : Matrix _ _ _) j i) := by
+    have hU := k.2
+    change Formalism.UG.cT (Formalism.UG.sigR (D.host.conj : D.host.E →ₐ[ℚ] D.host.E)
+      (IsDedekindDomain.FiniteAdeleRing (𝓞 ℚ) ℚ)) ((k : GL (Fin N) (AE D)) : Matrix _ _ _) *
+      (1 : Matrix (Fin N) (Fin N) D.host.E).map (Formalism.UG.inclE (F := ℚ) (E := D.host.E) (IsDedekindDomain.FiniteAdeleRing (𝓞 ℚ) ℚ)) *
+      ((k : GL (Fin N) (AE D)) : Matrix _ _ _) =
+      (1 : Matrix (Fin N) (Fin N) D.host.E).map (Formalism.UG.inclE (F := ℚ) (E := D.host.E) (IsDedekindDomain.FiniteAdeleRing (𝓞 ℚ) ℚ)) at hU
+    rw [Matrix.map_one _ (map_zero _) (map_one _), Matrix.mul_one] at hU
+    have he := Units.inv_eq_of_mul_eq_one_left hU
+    exact congrFun (congrFun he i) j
+  rw [hinv]
   have := Formalism.UG.P.csDual_sig_mem (D.host.conj : D.host.E →ₐ[ℚ] D.host.E) (hint j i)
   rwa [map_mul, map_natCast] at this
 

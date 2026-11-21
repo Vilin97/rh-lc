@@ -191,7 +191,7 @@ theorem heisO_mul (u : WO S T) (f g : WO S T → ℂ) :
   ring
 
 theorem isTheta_mul {f g : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (hg : IsThetaFunO ψ' S T g) :
-    IsThetaFunO (ψ * ψ') S T (f * g) where
+    IsThetaFunO (ψ * ψ') S T (f * g) := {
   quasi γ w := by
     simp only [Pi.mul_apply, hf.quasi, hg.quasi, AddChar.mul_apply]
     ring
@@ -200,7 +200,7 @@ theorem isTheta_mul {f g : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (hg : IsT
     obtain ⟨U', hU', h2⟩ := hg.level
     exact ⟨U ⊓ U', hU.inter hU', fun u hu h0 => by rw [heisO_mul, h1 u hu.1 h0, h2 u hu.2 h0]⟩
   cont := hf.cont.mul hg.cont
-  smooth k L h1 h2 w := (hf.smooth k L h1 h2 w).mul (hg.smooth k L h1 h2 w)
+  smooth k L h1 h2 w := (hf.smooth k L h1 h2 w).mul (hg.smooth k L h1 h2 w) }
 
 theorem star_char (hn : ∀ x, ‖ψ x‖ = 1) (x : AF D.host.F) : star (ψ x) = ψ⁻¹ x := by
   have h1 : ψ⁻¹ x * ψ x = 1 := by
@@ -211,7 +211,7 @@ theorem star_char (hn : ∀ x, ‖ψ x‖ = 1) (x : AF D.host.F) : star (ψ x) =
   exact mul_right_cancel₀ h0 (h2.trans h1.symm)
 
 theorem isTheta_star (hn : ∀ x, ‖ψ x‖ = 1) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) :
-    IsThetaFunO ψ⁻¹ S T (star f) where
+    IsThetaFunO ψ⁻¹ S T (star f) := {
   quasi γ w := by rw [Pi.star_apply, Pi.star_apply, hf.quasi, star_mul', star_char hn]
   level := by
     obtain ⟨U, hU, h1⟩ := hf.level
@@ -219,7 +219,7 @@ theorem isTheta_star (hn : ∀ x, ‖ψ x‖ = 1) {f : WO S T → ℂ} (hf : IsT
     funext w
     rw [Pi.star_apply, ← congrFun (h1 u hu h0) w, heisO, heisO, star_mul', star_char hn, Pi.star_apply]
   cont := hf.cont.star
-  smooth k L h1 h2 w := Complex.conjCLE.contDiff.comp (hf.smooth k L h1 h2 w)
+  smooth k L h1 h2 w := Complex.conjCLE.contDiff.comp (hf.smooth k L h1 h2 w) }
 
 theorem isTheta_mul_star (hn : ∀ x, ‖ψ x‖ = 1) {f h : WO S T → ℂ} (hf : IsThetaFunO ψ S T f)
     (hh : IsThetaFunO ψ S T h) : IsThetaFunO 1 S T (f * star h) := by
@@ -307,7 +307,7 @@ theorem heisO_rat {γ : WO S T} (h : γ ∈ ratL T S) {g : WO S T → ℂ} (hg :
   rw [heisO, Pi.mul_apply, chi, AddChar.map_add_eq_mul, mul_assoc]
   exact congrArg _ this
 
-theorem isTheta_chi (hψ : IsCharAF D.host.F ψ) {γ : WO S T} (h : γ ∈ ratL T S) : IsThetaFunO 1 S T (chi ψ S T γ) where
+theorem isTheta_chi (hψ : IsCharAF D.host.F ψ) {γ : WO S T} (h : γ ∈ ratL T S) : IsThetaFunO 1 S T (chi ψ S T γ) := {
   quasi γ' w := by rw [chi_add, chi_rat hψ h (γ' := ratW T S γ') ⟨γ', rfl⟩, AddChar.one_apply]
   level := by
     haveI := (GlobalTheory.AdelicMatrixLattice.lattice D T S).1
@@ -359,7 +359,7 @@ theorem isTheta_chi (hψ : IsCharAF D.host.F ψ) {γ : WO S T} (h : γ ∈ ratL 
     have hs : ContDiff ℝ ∞ ((phase lam S T γ).comp L) :=
       contDiff_additive _ (hl.comp (continuous_symplOH S T hL continuous_const))
     rw [e]
-    exact contDiff_const.mul (hs.cexp.mul hs.cexp)
+    exact contDiff_const.mul (hs.cexp.mul hs.cexp) }
 
 theorem smul_mem_ratL (b : D.host.F) {γ : WO S T} (h : γ ∈ ratL T S) :
     (algebraMap D.host.F (AF D.host.F) b • γ : WO S T) ∈ ratL T S := by

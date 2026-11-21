@@ -17,7 +17,7 @@ theorem exists_mul_pow_mem_incidenceIdeal_of_generic {σ β K F : Type*} [Fintyp
     {h : MvPolynomial (β × σ) (MvPolynomial σ K)}
     (hf : map (aeval ξ : MvPolynomial σ K →ₐ[K] F).toRingHom h ∈
       Ideal.span (Set.range (linForm ξ : β → _))) (j : σ) :
-    ∃ m : ℕ, h * C (X j ^ m) ∈ incidenceIdeal p := by
+    ∃ m : ℕ, h * C (X j ^ m) ∈ incidenceIdeal (β := β) p := by
   let φ : MvPolynomial σ K →+* F := (aeval ξ : MvPolynomial σ K →ₐ[K] F).toRingHom
   have hφ : (fun j => φ (X j)) = ξ := by ext j; simp [φ]
   by_cases hj : ξ j = 0
@@ -52,7 +52,7 @@ theorem eq_zero_of_mem_elimIdeal_of_forall_meets {K : Type} [Field K] {N : ℕ}
     {P : Ideal (MvPolynomial (Fin N) K)}
     (hP : ∀ u : Fin N → AlgebraicClosure K, ∃ y : Fin N → AlgebraicClosure K,
       y ≠ 0 ∧ (∀ g ∈ P, aeval y g = 0) ∧ ∑ j, u j * y j = 0)
-    {f : MvPolynomial (Unit × Fin N) K} (hf : f ∈ elimIdeal P) : f = 0 := by
+    {f : MvPolynomial (Unit × Fin N) K} (hf : f ∈ elimIdeal (β := Unit) P) : f = 0 := by
   apply map_injective (algebraMap K (AlgebraicClosure K)) (algebraMap K _).injective
   rw [map_zero]
   apply MvPolynomial.funext

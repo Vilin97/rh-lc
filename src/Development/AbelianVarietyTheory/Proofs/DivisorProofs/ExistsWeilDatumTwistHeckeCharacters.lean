@@ -25,7 +25,7 @@ theorem heisO_smul (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (u : WO S T) (
   ring
 
 theorem thetaO_smul {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} (c : ℂ) {f : WO S T → ℂ}
-    (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ S T (c • f) where
+    (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ S T (c • f) := {
   quasi γ w := by
     simp only [Pi.smul_apply, smul_eq_mul]
     rw [hf.quasi]
@@ -34,7 +34,7 @@ theorem thetaO_smul {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} (c : ℂ) {f 
     obtain ⟨U, hU, h⟩ := hf.level
     exact ⟨U, hU, fun u hu h0 => by rw [heisO_smul, h u hu h0]⟩
   cont := hf.cont.const_smul c
-  smooth k L hL h0 w := (hf.smooth k L hL h0 w).const_smul c
+  smooth k L hL h0 w := (hf.smooth k L hL h0 w).const_smul c }
 
 theorem triv_of_resEta_zero {ν : (AE D)ˣ →* Circle} (h : ResEta D ν 0) (a : (AF D.host.F)ˣ) : ν (idF D a) = 1 := by
   obtain ⟨η, hη⟩ := h.1

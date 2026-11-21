@@ -35,7 +35,7 @@ theorem exists_normal_finite_model_of_finite_over_open : ∀ (O F : Type) [CommR
     rw [← hf, ← hc]; simp only [Category.assoc, pullback.condition]
   have hfin : IsFinite f.fromNormalization :=
     isFinite_fromNormalization_of_over_fractionRing (o := .of O) f s F c w
-  have h := isPullback_toNormalization_of_isLocalization (nonZeroDivisors O) hb fW W.ι f hf.symm
+  have h := isPullback_toNormalization_of_isLocalization (M := nonZeroDivisors O) hb fW W.ι f hf.symm
   have hb' : IsPullback (pullback.fst (f.fromNormalization ≫ s) (spMap (algebraMap O F)))
       (pullback.snd _ _) (f.fromNormalization ≫ s) (spMap (algebraMap O F)) := .of_hasPullback _ _
   have hpre := isPreimmersion_of_isPullback_localization (nonZeroDivisors O) hb

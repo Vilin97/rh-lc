@@ -15,7 +15,7 @@ namespace GlobalTheory.SeeSawFold
 variable {D : D7}
 
 theorem theta_add' {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {f g : WO S T → ℂ}
-    (hf : IsThetaFunO ψ S T f) (hg : IsThetaFunO ψ S T g) : IsThetaFunO ψ S T (fun w => f w + g w) where
+    (hf : IsThetaFunO ψ S T f) (hg : IsThetaFunO ψ S T g) : IsThetaFunO ψ S T (fun w => f w + g w) := {
   quasi γ w := by rw [hf.quasi, hg.quasi]; ring
   level := by
     obtain ⟨U, hU, hUf⟩ := hf.level
@@ -29,10 +29,10 @@ theorem theta_add' {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {f g : WO S T 
     simp only [heisO] at a1 a2 ⊢
     rw [mul_add, a1, a2]
   cont := hf.cont.add hg.cont
-  smooth k L hL hL' w := (hf.smooth k L hL hL' w).add (hg.smooth k L hL hL' w)
+  smooth k L hL hL' w := (hf.smooth k L hL hL' w).add (hg.smooth k L hL hL' w) }
 
 theorem theta_const_mul' {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {f : WO S T → ℂ}
-    (a : ℂ) (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ S T (fun w => a * f w) where
+    (a : ℂ) (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ S T (fun w => a * f w) := {
   quasi γ w := by rw [hf.quasi]; ring
   level := by
     obtain ⟨U, hU, hUf⟩ := hf.level
@@ -42,7 +42,7 @@ theorem theta_const_mul' {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {f : WO 
     simp only [heisO] at a1 ⊢
     rw [mul_left_comm, a1]
   cont := continuous_const.mul hf.cont
-  smooth k L hL hL' w := contDiff_const.mul (hf.smooth k L hL hL' w)
+  smooth k L hL hL' w := contDiff_const.mul (hf.smooth k L hL hL' w) }
 
 theorem theta_zero' (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) : IsThetaFunO ψ S T (fun _ => 0) :=
   ⟨fun _ _ => by simp, ⟨⊤, isOpen_univ, fun a _ _ => by funext w; simp [heisO]⟩, continuous_const,

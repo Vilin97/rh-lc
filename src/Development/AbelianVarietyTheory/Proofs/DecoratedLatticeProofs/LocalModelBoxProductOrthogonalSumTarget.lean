@@ -87,14 +87,14 @@ theorem symplO_zero_left' (S T : HSp D) (y : WO S T) : symplO S T 0 y = 0 := by
   simp only [add_zero] at h
   exact left_eq_add.mp h
 
-theorem isThetaFunO_zero' (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) : IsThetaFunO ψ S T 0 where
+theorem isThetaFunO_zero' (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) : IsThetaFunO ψ S T 0 := {
   quasi γ w := by simp
   level := ⟨⊤, isOpen_univ, fun u _ _ => by funext w; simp [heisO]⟩
   cont := continuous_const
-  smooth _ _ _ _ _ := contDiff_const
+  smooth _ _ _ _ _ := contDiff_const }
 
 theorem isThetaFunO_add' {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {f g : WO S T → ℂ} (hf : IsThetaFunO ψ S T f)
-    (hg : IsThetaFunO ψ S T g) : IsThetaFunO ψ S T (f + g) where
+    (hg : IsThetaFunO ψ S T g) : IsThetaFunO ψ S T (f + g) := {
   quasi γ w := by simp only [Pi.add_apply]; rw [hf.quasi, hg.quasi]; ring
   level := by
     obtain ⟨U, hUo, hU⟩ := hf.level
@@ -104,10 +104,10 @@ theorem isThetaFunO_add' {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {f g : W
       funext w; simp only [heisO, Pi.add_apply]; ring
     rw [e, hU u hu.1 hi, hU' u hu.2 hi]
   cont := hf.cont.add hg.cont
-  smooth k L hL hfin w := (hf.smooth k L hL hfin w).add (hg.smooth k L hL hfin w)
+  smooth k L hL hfin w := (hf.smooth k L hL hfin w).add (hg.smooth k L hL hfin w) }
 
 theorem isThetaFunO_smul' {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} (c : ℂ) {f : WO S T → ℂ}
-    (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ S T (c • f) where
+    (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ S T (c • f) := {
   quasi γ w := by simp only [Pi.smul_apply, smul_eq_mul]; rw [hf.quasi]; ring
   level := by
     obtain ⟨U, hUo, hU⟩ := hf.level
@@ -116,7 +116,7 @@ theorem isThetaFunO_smul' {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} (c : �
       funext w; simp only [heisO, Pi.smul_apply, smul_eq_mul]; ring
     rw [e, hU u hu hi]
   cont := continuous_const.mul hf.cont
-  smooth k L hL hfin w := (contDiff_const.mul (hf.smooth k L hL hfin w))
+  smooth k L hL hfin w := (contDiff_const.mul (hf.smooth k L hL hfin w)) }
 
 def heisL (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (u : WO S T) : (WO S T → ℂ) →ₗ[ℂ] (WO S T → ℂ) where
   toFun := heisO ψ S T u

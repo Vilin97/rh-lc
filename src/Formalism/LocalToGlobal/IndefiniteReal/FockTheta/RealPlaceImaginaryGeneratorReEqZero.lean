@@ -36,14 +36,14 @@ theorem heisO_add_smul (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (u : WO S 
   simp only [heisO, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
   ring
 
-theorem theta_zero (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) : IsThetaFunO ψ S T 0 where
+theorem theta_zero (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) : IsThetaFunO ψ S T 0 := {
   quasi := by intro γ w; simp
   level := ⟨⊤, by rw [AddSubgroup.coe_top]; exact isOpen_univ, fun u _ _ => by funext w; simp [heisO]⟩
   cont := continuous_const
-  smooth := fun _ _ _ _ _ => contDiff_const
+  smooth := fun _ _ _ _ _ => contDiff_const }
 
 theorem theta_add_smul {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {f g : WO S T → ℂ} (hf : IsThetaFunO ψ S T f)
-    (hg : IsThetaFunO ψ S T g) (c : ℂ) : IsThetaFunO ψ S T (f + c • g) where
+    (hg : IsThetaFunO ψ S T g) (c : ℂ) : IsThetaFunO ψ S T (f + c • g) := {
   quasi := by
     intro γ w
     simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, hf.quasi, hg.quasi]
@@ -57,7 +57,7 @@ theorem theta_add_smul {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {f g : WO 
   smooth := by
     intro k L hL hfin w
     simpa [Pi.add_apply, Pi.smul_apply] using
-      (hf.smooth k L hL hfin w).add ((hg.smooth k L hL hfin w).const_smul c)
+      (hf.smooth k L hL hfin w).add ((hg.smooth k L hL hfin w).const_smul c) }
 
 theorem theta_smul {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {g : WO S T → ℂ} (hg : IsThetaFunO ψ S T g) (c : ℂ) :
     IsThetaFunO ψ S T (c • g) := by

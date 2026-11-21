@@ -183,7 +183,7 @@ theorem adj_heis (ψ : AddChar (AF D.host.F) ℂ) (hψ : ∀ x, ‖ψ x‖ = 1) 
   simp only [heisO, dag, map_mul, adj_add, symplOH_adj, conj_psi ψ hψ, neg_neg]
 
 theorem adj_theta (ψ : AddChar (AF D.host.F) ℂ) (hψ : ∀ x, ‖ψ x‖ = 1) (S T : HSp D) (f : WO S T → ℂ)
-    (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ T S (dag S T f) where
+    (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ T S (dag S T f) := {
   quasi γ w := by
     simp only [dag]
     rw [adj_add, adj_ratW, hf.quasi, map_mul, conj_psi ψ hψ, ← adj_ratW, symplOH_adj]
@@ -201,7 +201,7 @@ theorem adj_theta (ψ : AddChar (AF D.host.F) ℂ) (hψ : ∀ x, ‖ψ x‖ = 1)
         fun t => Complex.conjCLE (f (adjO S T w + (adjHom S T).comp L t)) := by
       funext t; simp [dag, adj_add, adjHom]
     rw [e]
-    exact Complex.conjCLE.contDiff.comp h
+    exact Complex.conjCLE.contDiff.comp h }
 
 theorem adjLaw : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ S T : HSp D, AdjLaw ψ S T := by
   intro D ψ hψ S T

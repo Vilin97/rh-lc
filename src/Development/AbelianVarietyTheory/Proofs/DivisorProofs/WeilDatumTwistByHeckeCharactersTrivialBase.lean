@@ -198,7 +198,7 @@ theorem heisOF_smul (ξ₀ : E) (ψ : AddChar (AF F) ℂ) (u : WOF F E nS nT) (c
   ring
 
 theorem thetaOF_smul {ξ₀ : E} {ψ : AddChar (AF F) ℂ} (c : ℂ) {f : WOF F E nS nT → ℂ}
-    (hf : IsThetaFunOF σ JS JT ξ₀ ψ f) : IsThetaFunOF σ JS JT ξ₀ ψ (c • f) where
+    (hf : IsThetaFunOF σ JS JT ξ₀ ψ f) : IsThetaFunOF σ JS JT ξ₀ ψ (c • f) := {
   quasi γ w := by
     simp only [Pi.smul_apply, smul_eq_mul]
     rw [hf.quasi]
@@ -207,7 +207,7 @@ theorem thetaOF_smul {ξ₀ : E} {ψ : AddChar (AF F) ℂ} (c : ℂ) {f : WOF F 
     obtain ⟨U, hU, h⟩ := hf.level
     exact ⟨U, hU, fun u hu h0 => by rw [heisOF_smul, h u hu h0]⟩
   cont := hf.cont.const_smul c
-  smooth k L hL h0 w := (hf.smooth k L hL h0 w).const_smul c
+  smooth k L hL h0 w := (hf.smooth k L hL h0 w).const_smul c }
 
 theorem heckeF_mul {χ ν : (AEF F E)ˣ →* Circle} (hχ : IsHeckeCharF χ) (hν : IsHeckeCharF ν) :
     IsHeckeCharF (χ * ν) :=

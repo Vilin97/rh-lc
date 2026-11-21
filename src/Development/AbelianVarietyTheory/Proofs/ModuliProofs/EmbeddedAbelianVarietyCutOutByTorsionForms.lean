@@ -37,10 +37,10 @@ theorem symB_of_iso {K : Type} [Field K] {A : Over (Sp K)} [GrpObj A] {L : LB A.
   have h1 : LBIso (M.pull e.inv) (lbPow L N) :=
     LBIso.chartPull (Geo.Tor.chartPullPull M e.inv e.inv rfl) (Geo.Tor.chartPullSec _ e.hom e.inv e.inv_hom_id) h
   have hN := powIsLB hL N
-  have hM' := Geo.Tor.pull_isLB hM e.inv
+  have hM' := LB.isLB_pull hM e.inv
   obtain ⟨-, a, -, -, c, -⟩ := GlobalTheory.T.sectionsHaveFiniteDimension_invariance_isomorphisms K A.left A.hom L hL
-  exact LBIso.trans hM' hN (Geo.Tor.pull_isLB hM' _) h1 (LBIso.trans hN (Geo.Tor.pull_isLB hN _) (Geo.Tor.pull_isLB hM' _)
-    (LBIso.trans hN (powIsLB (Geo.Tor.pull_isLB hL _) N) (Geo.Tor.pull_isLB hN _) ((a _ (Geo.Tor.pull_isLB hL _) hs).2 N) (c _ _ N))
+  exact LBIso.trans hM' hN (LB.isLB_pull hM' _) h1 (LBIso.trans hN (LB.isLB_pull hN _) (LB.isLB_pull hM' _)
+    (LBIso.trans hN (powIsLB (LB.isLB_pull hL _) N) (LB.isLB_pull hN _) ((a _ (LB.isLB_pull hL _) hs).2 N) (c _ _ N))
     (isoPullAlong h1.symm _))
 
 theorem sectionsHaveFiniteDimension_of_iso_pulled_pow {K : Type} [Field K] {X Y : Scheme.{0}} (p : X ⟶ Sp K) {L : LB X} (hL : L.IsLB)
@@ -52,10 +52,10 @@ theorem sectionsHaveFiniteDimension_of_iso_pulled_pow {K : Type} [Field K] {X Y 
       ((GlobalTheory.T.sectionsHaveFiniteDimension_invariance_isomorphisms K X p L hL).2.2.1 N n).symm).1 r hr
   have h2 := ((GlobalTheory.T.sectionsHaveFiniteDimension_invariance_isomorphisms K X p _ (powIsLB hN n)).2.2.2.2.2 Y e r).1 h1
   have h3 : LBIso (lbPow M n) ((lbPow (lbPow L N) n).pull e.hom) :=
-    LBIso.trans (powIsLB hM n) (powIsLB (Geo.Tor.pull_isLB hN _) n) (Geo.Tor.pull_isLB (powIsLB hN n) _)
-      (((GlobalTheory.T.sectionsHaveFiniteDimension_invariance_isomorphisms K Y (e.hom ≫ p) M hM).2.1 _ (Geo.Tor.pull_isLB hN _) h).2 n)
+    LBIso.trans (powIsLB hM n) (powIsLB (LB.isLB_pull hN _) n) (LB.isLB_pull (powIsLB hN n) _)
+      (((GlobalTheory.T.sectionsHaveFiniteDimension_invariance_isomorphisms K Y (e.hom ≫ p) M hM).2.1 _ (LB.isLB_pull hN _) h).2 n)
       ((GlobalTheory.T.sectionsHaveFiniteDimension_invariance_isomorphisms K X p _ hN).2.2.2.2.1 Y e.hom n)
-  exact ((GlobalTheory.T.sectionsHaveFiniteDimension_invariance_isomorphisms K Y (e.hom ≫ p) _ (Geo.Tor.pull_isLB (powIsLB hN n) _)).2.1 _ (powIsLB hM n) h3.symm).1 r h2
+  exact ((GlobalTheory.T.sectionsHaveFiniteDimension_invariance_isomorphisms K Y (e.hom ≫ p) _ (LB.isLB_pull (powIsLB hN n) _)).2.1 _ (powIsLB hM n) h3.symm).1 r h2
 
 end GlobalTheory.EmbCut
 

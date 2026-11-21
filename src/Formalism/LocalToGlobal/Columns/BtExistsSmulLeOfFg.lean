@@ -179,11 +179,11 @@ section Cols
 
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Chars X Pr R.m)
 
-theorem sepElt_of_ok (hPr : Pr.Ok) (u : Pr.Word) : SepElt (Pr.vT u) (cO X.E (Pr.piT u)) where
-  conj P := by
-    rw [cO_cO]
-    exact decoFin_mem_of_mem_divs P.2
-  off P := conj_piT_notMem hPr u P
+theorem sepElt_of_ok (hPr : Pr.Ok) (u : Pr.Word) : SepElt (Pr.vT u) (cO X.E (Pr.piT u)) := by
+  refine ⟨?_, conj_piT_notMem hPr u⟩
+  intro P
+  rw [cO_cO]
+  exact decoFin_mem_of_mem_divs P.2
 
 end Cols
 

@@ -50,8 +50,8 @@ theorem sum_primeBound (N Q q d : ℕ) (g : Fin 2 → ℕ) (a b : ℝ) (S : Fins
     symm
     refine Finset.sum_subset_zero_on_sdiff h2 (fun p hp => ?_) fun p hp => ?_
     · obtain ⟨h3, h4⟩ := Finset.mem_sdiff.1 hp
-      rw [← Nat.factorization_def _ (hS p h3), Finsupp.notMem_support_iff.1 (Nat.support_factorization Q ▸ h4)]; simp
-    · rw [Nat.factorization_def _ (Nat.prime_of_mem_primeFactors hp)]; ring
+      rw [Nat.padicValNat_def, ← Nat.factorization_def _ (hS p h3), Finsupp.notMem_support_iff.1 (Nat.support_factorization Q ▸ h4)]; simp
+    · rw [Nat.factorization_def _ (Nat.prime_of_mem_primeFactors hp), Nat.padicValNat_def]; ring
   unfold primeBound
   simp only [add_mul, Finset.sum_add_distrib, ite_mul, zero_mul, Finset.sum_mul]
   rw [hQ, Finset.sum_ite_mem, Finset.inter_eq_right.2 hA, Finset.sum_comm]
@@ -73,7 +73,7 @@ theorem depth_sum {D : D7} (B : WeightFamilies.Prov D) {j : ℕ} (large₂ : Siz
   have hn1 : 1 ≤ w.n := by
     have hf : 1 ≤ D.R.f := by
       unfold Ranks.f Ranks.n
-      have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity)
+      have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord from D.R.ord_pos)
       omega
     have hr : 1 ≤ D.R.r := by
       have := D.R.two_le_m

@@ -317,7 +317,7 @@ theorem exists_stableBas_local (hS : SecBaseChangeAnySt) {Z : Scheme.{0}} [IsLoc
   have : ConnectedSpace C.toScheme := isConnected_iff_connectedSpace.1 isConnected_connectedComponent
   let q : C.toScheme := ⟨⟨p, hc⟩, mem_connectedComponent⟩
   obtain ⟨t', ⟨m⟩⟩ : ∃ t' : SAB H C.toScheme, Nonempty (SABMap t' t (C.ι ≫ U.ι)) := by
-    obtain ⟨_, _, _, _, _, m, -⟩ := sabPull Out.CubePf.cubePull (C.ι ≫ U.ι) t
+    obtain ⟨_, _, _, _, _, m, -⟩ := ReciprocityTheory.ChartRestriction.G.Geo.Tor.sabPull Out.CubePf.cubePull (C.ι ≫ U.ι) t
     exact ⟨_, ⟨m⟩⟩
   have := t'.semi.smooth
   have := t'.semi.geomConnected

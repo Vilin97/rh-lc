@@ -9,7 +9,7 @@ public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.Tendst
 
 @[expose] public section
 
-open NumberField IsDedekindDomain Polynomial GlobalTheory.CMRam GlobalTheory.FieldSize
+open NumberField IsDedekindDomain Polynomial GlobalTheory.FieldSize
 
 set_option autoImplicit false
 

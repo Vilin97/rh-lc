@@ -482,14 +482,17 @@ theorem position_pair (β : V → V → ℂ) (hβ : ∀ v v', β (-v) v' = -β v
     (w : List C.Letter) : ∀ (ys : List ℝ) (X : Ix (Fin (KB.plusW ys w).length) → V)
     (X' : Ix (Fin (KB.minusW ys w).length) → V),
     ∑ z, β (actP (JL (Lw ys w) * RRw QQ (Ww ys w)) X z) (X' (z ∘ Fin.cast (len_pm ys w))) =
-      KB.pairJ (fun x x' => ∑ e, β (actP (RRw QQ (D.positionted w)) x e) (x' e)) ys X X'
-  | [], X, X' => by
+      KB.pairJ (fun x x' => ∑ e, β (actP (RRw QQ (D.positionted w)) x e) (x' e)) ys X X' := by
+  intro ys
+  induction ys with
+  | nil =>
+    intro X X'
     have hc : ∀ z : Ix (Fin w.length), z ∘ Fin.cast (len_pm [] w) = z :=
       fun z => funext fun t => congrArg z (Fin.ext rfl)
     rw [Lw_nil, Ww_nil, JL, one_mul]
-    rfl
-  | y :: ys, X, X' => by
-    have ih := position_pair β hβ QQ w ys
+    simp only [hc, KB.pairJ]
+  | cons y ys ih =>
+    intro X X'
     have h' : (KB.minusW ys w).length + 1 = (KB.plusW ys w).length + 1 := by rw [len_pm]
     have e1 : (JL (Lw (y :: ys) w) * RRw QQ (Ww (y :: ys) w) : SlopeTestRemainingChoices (Fin ((KB.plusW ys w).length + 1)) (Q.Pr V)) =
         ins (0 : Fin ((KB.plusW ys w).length + 1)) (YangianSpanCharacter.T.J (SlopeTestRemainingChoices (Fin ((KB.plusW ys w).length + 1)) (Q.Pr V))) *
@@ -516,15 +519,17 @@ section Positions2
 
 def castL {n m : ℕ} (h : n = m) (l : Letter ℂ (Fin n)) : Letter ℂ (Fin m) := ⟨l.plus, Fin.cast h l.intersection_update_fsHerm_neg_one, l.pt⟩
 
-theorem Lw_plus : ∀ (ys : List ℝ) (w : List C.Letter), ∀ l ∈ Lw ys w, l.plus = true
-  | [], w => fun l hl => by simp [Lw_nil] at hl
-  | y :: ys, w => by
+theorem Lw_plus : ∀ (ys : List ℝ) (w : List C.Letter), ∀ l ∈ Lw ys w, l.plus = true := by
+  intro ys w
+  induction ys with
+  | nil => simp [Lw_nil]
+  | cons y ys ih =>
     intro l hl
     rw [Lw_cons] at hl
     rcases List.mem_cons.1 hl with rfl | hl
     · rfl
     · obtain ⟨l', hl', rfl⟩ := List.mem_map.1 hl
-      exact Lw_plus ys w l' hl'
+      exact ih l' hl'
 
 theorem plusW_getElem (ys : List ℝ) (w : List C.Letter) (i : ℕ) (h : i < (KB.plusW ys w).length) :
     (KB.plusW ys w)[i] = if h' : i < ys.length then (true, ys[i]) else

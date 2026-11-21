@@ -114,10 +114,14 @@ def incV : (Fin m → ↥L.1) →ₗ[ℚ_[l]] (Fin m → ↥L'.1) :=
 
 abbrev upRep : ↥Gw →* GL (Fin m) ↥L'.1 := mapRep (IntermediateField.inclusion hL).toRingHom r
 
-theorem isMor_incV : IsMor hL (incV hL m) (Bw.repE L r) (Bw.repE L' (upRep hL m r)) where
-  smul a x := funext fun i => map_mul (IntermediateField.inclusion hL) a (x i)
-  equiv g x := funext fun i => by
-    exact RingHom.map_mulVec (IntermediateField.inclusion hL).toRingHom _ x i
+theorem isMor_incV : IsMor hL (incV hL m) (Bw.repE L r) (Bw.repE L' (upRep hL m r)) := by
+  constructor
+  · intro a x
+    exact funext fun i => map_mul (IntermediateField.inclusion hL) a (x i)
+  · intro g x
+    funext i
+    exact RingHom.map_mulVec (IntermediateField.inclusion hL).toRingHom
+      (r (Bw.e.symm g) : Matrix (Fin m) (Fin m) ↥L.1) x i
 
 end Model
 

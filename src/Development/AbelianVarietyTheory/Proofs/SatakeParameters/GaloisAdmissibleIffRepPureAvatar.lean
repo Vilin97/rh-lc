@@ -10,7 +10,7 @@ noncomputable section
 
 namespace GlobalTheory.GaloisInputCompare
 
-open Formalism.BasicNotions NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.MainNotions.N Formalism.MainNotions.SumRepresentations.At GlobalTheory.IndefiniteRowSideFullHecke.GaloisRepresentations
+open Formalism.BasicNotions NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.MainNotions.N Formalism.MainNotions.SumRepresentations.At
 
 variable {R : Ranks} {H : Host R} {what₂ : Rows.Data R} (N : NData R H what₂) (A : NAut N)
 
@@ -35,7 +35,7 @@ theorem exists_inducesW (i : N.Loc) (τ : H.E →+* Qbar (N.l i)) :
       smul_mem' := fun c x hx => by
         change ‖τ ((c * x : 𝓞 H.E) : H.E)‖ < 1
         rw [show ((c * x : 𝓞 H.E) : H.E) = c * x from rfl, map_mul, norm_mul]
-        exact mul_lt_one_of_nonneg_of_lt_one_right (hle c) (norm_nonneg _) hx }
+        exact (mul_le_of_le_one_left (norm_nonneg _) (hle c)).trans_lt hx }
   have hI : ∀ x : 𝓞 H.E, x ∈ I ↔ ‖τ (x : H.E)‖ < 1 := fun x => Iff.rfl
   have hl : ((N.l i : ℕ) : 𝓞 H.E) ∈ I := by
     rw [hI, show (((N.l i : ℕ) : 𝓞 H.E) : H.E) = (N.l i : ℕ) by simp, map_natCast,

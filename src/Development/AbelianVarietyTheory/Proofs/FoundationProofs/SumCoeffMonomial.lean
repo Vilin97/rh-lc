@@ -73,7 +73,7 @@ theorem expo_le (D : D7) {a d : ℕ} {n : D.what₂.Tau → ℕ} (T : Tup D a d 
     (p : ∀ τ, Fin (n τ) → Equiv.Perm (Fin a)) (k : D.what₂.Tau × Fin d × Fin a) :
     expo D T p k ≤ n k.1 := by
   obtain ⟨τ0, r, c⟩ := k
-  simp only [expo, Finsupp.coe_finset_sum, Finset.sum_apply]
+  simp only [expo, Finset.sum_apply']
   rw [Finset.sum_eq_single τ0]
   · calc _ ≤ ∑ _j : Fin (n τ0), 1 := by
           refine Finset.sum_le_sum fun j _ => ?_

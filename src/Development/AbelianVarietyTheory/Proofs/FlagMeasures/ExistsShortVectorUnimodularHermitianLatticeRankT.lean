@@ -76,7 +76,7 @@ theorem posDef_map {K : Type} [Field K] [StarRing K] {n : ℕ} (σ : K →+* ℂ
     fun_prop
   have hpsdM : (G.map σ).PosSemidef := PosSemidef.of_dotProduct_mulVec_nonneg hH hpsd
   refine PosDef.of_dotProduct_mulVec_pos hH fun w hw => lt_of_le_of_ne (hpsd w) fun h0 => ?_
-  have hk : G.map σ *ᵥ w = 0 := (hpsdM.dotProduct_mulVec_zero_iff w).1 h0.symm
+  have hk : G.map σ *ᵥ w = 0 := (hpsdM.dotProduct_mulVec_zero_iff).1 h0.symm
   have hdet : (G.map σ).det = 0 := Matrix.exists_mulVec_eq_zero_iff.1 ⟨w, hw, hk⟩
   have hdσ : σ G.det = 0 := by
     rw [RingHom.map_det]

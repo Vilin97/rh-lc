@@ -199,6 +199,7 @@ theorem lbIso_linComb_lam_of_appellHumbert : Out.Laws → Out.Laws2 → (∀ (S 
     (fun a => ⟨R (r uv a) l, hΛ _ l⟩) (fun a => map_add _ _ _) fun I => by
       rw [← hpt]
       exact (CubeValues.le_preimage_wchart _ P₀.L _ (j uv)).1 (hj' uv) I
+  dsimp only [withFrame]
   change u.fr i z * ∏ uv : Fin 8 × Fin 8, _ = u.fr i (z + l) * ∏ uv : Fin 8 × Fin 8, _
   simp only [hst, mul_zpow, Finset.prod_mul_distrib, ← Complex.exp_int_mul, ← Complex.exp_sum]
   rw [ah_step hu l i z hi, hχ, ← Complex.exp_add, hH, hH, ← sum_symmetrise W fun a b => hermForm H₀ (R a z) (R b l),

@@ -67,7 +67,7 @@ theorem heisOF_smul (c : ℂ) (w : WOF F E nS nT) (f : WOF F E nS nT → ℂ) :
   ring
 
 theorem theta_add {f g : WOF F E nS nT → ℂ} (hf : IsThetaFunOF σ JS JT xi0 ψ f) (hg : IsThetaFunOF σ JS JT xi0 ψ g) :
-    IsThetaFunOF σ JS JT xi0 ψ (f + g) where
+    IsThetaFunOF σ JS JT xi0 ψ (f + g) := {
   quasi γ w := by
     simp only [Pi.add_apply]
     rw [hf.quasi, hg.quasi, mul_add]
@@ -76,16 +76,16 @@ theorem theta_add {f g : WOF F E nS nT → ℂ} (hf : IsThetaFunOF σ JS JT xi0 
     obtain ⟨V, hV, hV'⟩ := hg.level
     exact ⟨U ⊓ V, hU.inter hV, fun u hu h0 => by rw [heisOF_add, hU' u hu.1 h0, hV' u hu.2 h0]⟩
   cont := hf.cont.add hg.cont
-  smooth k L hL h0 w := (hf.smooth k L hL h0 w).add (hg.smooth k L hL h0 w)
+  smooth k L hL h0 w := (hf.smooth k L hL h0 w).add (hg.smooth k L hL h0 w) }
 
-theorem theta_zero : IsThetaFunOF σ JS JT xi0 ψ (0 : WOF F E nS nT → ℂ) where
+theorem theta_zero : IsThetaFunOF σ JS JT xi0 ψ (0 : WOF F E nS nT → ℂ) := {
   quasi γ w := by simp
   level := ⟨⊤, by rw [AddSubgroup.coe_top]; exact isOpen_univ, fun u _ _ => by funext x; simp [heisOF]⟩
   cont := continuous_const
-  smooth k L hL h0 w := contDiff_const
+  smooth k L hL h0 w := contDiff_const }
 
 theorem theta_smul (c : ℂ) {f : WOF F E nS nT → ℂ} (hf : IsThetaFunOF σ JS JT xi0 ψ f) :
-    IsThetaFunOF σ JS JT xi0 ψ (c • f) where
+    IsThetaFunOF σ JS JT xi0 ψ (c • f) := {
   quasi γ w := by
     simp only [Pi.smul_apply, smul_eq_mul]
     rw [hf.quasi]
@@ -94,7 +94,7 @@ theorem theta_smul (c : ℂ) {f : WOF F E nS nT → ℂ} (hf : IsThetaFunOF σ J
     obtain ⟨U, hU, hU'⟩ := hf.level
     exact ⟨U, hU, fun u hu h0 => by rw [heisOF_smul, hU' u hu h0]⟩
   cont := hf.cont.const_smul c
-  smooth k L hL h0 w := (hf.smooth k L hL h0 w).const_smul c
+  smooth k L hL h0 w := (hf.smooth k L hL h0 w).const_smul c }
 
 
 variable (σ JS JT xi0 ψ) in

@@ -76,7 +76,7 @@ def trA {m n : ℕ} : Mx D m n →+ Mx D n m where
 theorem continuous_tr {m n : ℕ} : Continuous (fun x : Mx D m n => (xᵀ : Mx D n m)) := continuous_id.matrix_transpose
 
 theorem theta_trF {f : WO (dualSp T ΛT hT) (dualSp S ΛS hS) → ℂ} (h : IsThetaFunO ψ (dualSp T ΛT hT) (dualSp S ΛS hS) f) :
-    IsThetaFunO ψ S T (trF f) where
+    IsThetaFunO ψ S T (trF f) := {
   quasi γ w := by
     have := h.quasi γᵀ wᵀ
     rw [← symplOH_tr S T ΛS ΛT hS hT]
@@ -87,10 +87,10 @@ theorem theta_trF {f : WO (dualSp T ΛT hT) (dualSp S ΛS hS) → ℂ} (h : IsTh
     have := congrArg trF (hU' uᵀ hu (congrArg Matrix.transpose hu'))
     rwa [trF_heis] at this
   cont := h.cont.comp continuous_tr
-  smooth k L hL hL' w := h.smooth k (trA.comp L) (continuous_tr.comp hL) (fun t => congrArg Matrix.transpose (hL' t)) wᵀ
+  smooth k L hL hL' w := h.smooth k (trA.comp L) (continuous_tr.comp hL) (fun t => congrArg Matrix.transpose (hL' t)) wᵀ }
 
 theorem theta_trF' {f : WO S T → ℂ} (h : IsThetaFunO ψ S T f) :
-    IsThetaFunO ψ (dualSp T ΛT hT) (dualSp S ΛS hS) (trF f) where
+    IsThetaFunO ψ (dualSp T ΛT hT) (dualSp S ΛS hS) (trF f) := {
   quasi γ w := by
     have := h.quasi γᵀ wᵀ
     rw [← symplOH_tr S T ΛS ΛT hS hT] at this
@@ -101,7 +101,7 @@ theorem theta_trF' {f : WO S T → ℂ} (h : IsThetaFunO ψ S T f) :
     have := congrArg trF (hU' uᵀ hu (congrArg Matrix.transpose hu'))
     rwa [trF_heis' ψ S T ΛS ΛT hS hT] at this
   cont := h.cont.comp continuous_tr
-  smooth k L hL hL' w := h.smooth k (trA.comp L) (continuous_tr.comp hL) (fun t => congrArg Matrix.transpose (hL' t)) wᵀ
+  smooth k L hL hL' w := h.smooth k (trA.comp L) (continuous_tr.comp hL) (fun t => congrArg Matrix.transpose (hL' t)) wᵀ }
 
 theorem actO_tr (g : GA D (dualSp T ΛT hT)) (h : GA D (dualSp S ΛS hS)) (x : WO (dualSp T ΛT hT) (dualSp S ΛS hS)) :
     actO S T (dualG S ΛS hS h) (dualG T ΛT hT g) xᵀ = (actO (dualSp T ΛT hT) (dualSp S ΛS hS) g h x)ᵀ := by

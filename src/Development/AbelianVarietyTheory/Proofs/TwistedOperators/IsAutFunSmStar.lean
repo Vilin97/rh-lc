@@ -376,7 +376,7 @@ theorem exists_gelf_op (τ : D.what₂.Tau) : ∃ c : ℕ → Module.End ℂ (go
     rw [RderC, conjAt, ← (hPQ _ _).1, ← (hPQ _ _).2]
     rfl
 
-theorem isAutFunSm_star {F : GA D V → ℂ} (h : IsAutFunSm θ V F) (hh : F ∈ homFun θ V) : IsAutFunSm θ V (star F) where
+theorem isAutFunSm_star {F : GA D V → ℂ} (h : IsAutFunSm θ V F) (hh : F ∈ homFun θ V) : IsAutFunSm θ V (star F) := {
   left γ hγ g := congrArg star (h.left γ hγ g)
   level := by
     obtain ⟨U, hU, e⟩ := h.level
@@ -419,7 +419,7 @@ theorem isAutFunSm_star {F : GA D V → ℂ} (h : IsAutFunSm θ V F) (hh : F ∈
       | nil => rfl
       | cons p l ih => rw [List.foldr_cons, ih, Rder_star, List.foldr_cons]
     rw [e, Pi.star_apply, norm_star]
-    exact hC g hg
+    exact hC g hg }
 
 end GlobalTheory.ConjMult
 
