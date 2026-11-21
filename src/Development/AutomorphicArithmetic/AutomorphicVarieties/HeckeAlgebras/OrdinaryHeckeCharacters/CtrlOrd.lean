@@ -145,7 +145,7 @@ private theorem ctrlOrd_approx (hinj : Function.Injective (algebraMap O Ω)) (τ
     (c : ℕ) (hc : W.c0 ≤ c) (hφ : ∀ t : X.I.T, (t : Gp) ∈ X.I.Tc c → φ t = 1)
     (hθ : ∀ t : X.I.T, algebraMap O Ω (θ t) = algebraMap O Ω (φ t) * W.χ ⟨t, X.I.T_le t.2⟩)
     (U : Subgroup X.Ub) (hU : X.FinLevel U) (hF : X.Free τ θ U) (f : X.Fn O m) (hf : f ∈ X.Ord τ θ U) :
-    ∃ G ∈ X.ClO W τ U c φ, G ∈ X.Lat m W (mIm O Ω 0) ∧ ∃ h : X.Fn O m, X.mapFn (B := Ω) h = X.ctrl m W G ∧
+    ∃ G ∈ X.ClO m W τ U c φ, G ∈ X.Lat m W (mIm O Ω 0) ∧ ∃ h : X.Fn O m, X.mapFn (B := Ω) h = X.ctrl m W G ∧
       h - f ∈ X.valIn O m 1 := by
   obtain ⟨hSp, hper⟩ := (mem_ord_iff X τ θ U f).1 hf
   have hA := (Submodule.mem_inf.1 hSp).1
@@ -252,7 +252,7 @@ theorem UpperTheory.V.Hi.ctrlOrd :
         funext p
         simp [map_smul] }
   have hev : ∀ F p, ev F p = X.unt m W F p.2.1 (x p.1) p.2.2 := fun F p => rfl
-  have hlat : ∀ (Λ : Submodule O Ω) (F : Fin m → X.Fn Ω (W.d + 1)), F ∈ X.ClO W τ U c φ →
+  have hlat : ∀ (Λ : Submodule O Ω) (F : Fin m → X.Fn Ω (W.d + 1)), F ∈ X.ClO m W τ U c φ →
       (∀ p, ev F p ∈ Λ) → F ∈ X.Lat m W Λ := fun Λ F hFC hv =>
     UpperTheory.mem_lattice_of_values_at_double_coset_reps Γ Ga Gp X O Ω W m τ φ U c hc N x hcov F hFC Λ (fun n i k => hv (n, i, k))
   have hctrlLat : ∀ (Λ : Submodule O Ω) (F : Fin m → X.Fn Ω (W.d + 1)), F ∈ X.Lat m W Λ →
@@ -269,12 +269,12 @@ theorem UpperTheory.V.Hi.ctrlOrd :
     rw [Frame.unt_apply] at hu
     have hv := congrArg (fun v => (W.ξ g.2 : Matrix (Fin (W.d + 1)) (Fin (W.d + 1)) Ω) *ᵥ v) hu
     simpa [Matrix.mulVec_mulVec] using hv
-  have hTC : ∀ F ∈ X.ClO W τ U c φ, X.UF m W ⟨X.I.z, X.I.z_mem⟩ F ∈ X.ClO W τ U c φ :=
+  have hTC : ∀ F ∈ X.ClO m W τ U c φ, X.UF m W ⟨X.I.z, X.I.z_mem⟩ F ∈ X.ClO m W τ U c φ :=
     (UpperTheory.classicalForms_level_monotone_and_Up_stable Γ Ga Gp X O Ω W m τ φ U c hφ).2.1
-  have hbij : Set.BijOn ev (X.ClO W τ U c φ) Set.univ := by
+  have hbij : Set.BijOn ev (X.ClO m W τ U c φ) Set.univ := by
     refine ⟨fun _ _ => Set.mem_univ _, ?_, ?_⟩
     · intro F1 h1 F2 h2 he
-      have hD : F1 - F2 ∈ X.ClO W τ U c φ := Submodule.sub_mem _ h1 h2
+      have hD : F1 - F2 ∈ X.ClO m W τ U c φ := Submodule.sub_mem _ h1 h2
       have hL := hlat ⊥ (F1 - F2) hD (fun p => by
         rw [map_sub, Pi.sub_apply, he, sub_self]
         exact Submodule.zero_mem _)
@@ -286,20 +286,20 @@ theorem UpperTheory.V.Hi.ctrlOrd :
       obtain ⟨F, hFC, hFv⟩ := UpperTheory.exists_automorphicForm_with_prescribed_iwahori_values Γ Ga Gp X O Ω W m τ φ U c θ hφ hθ hF N x hcov hdis
         (fun n i k => v (n, i, k))
       exact ⟨F, hFC, funext fun p => hFv p.1 p.2.1 p.2.2⟩
-  have hint : ∀ F ∈ X.ClO W τ U c φ, (∀ p, ev F p ∈ mIm O Ω 0) →
+  have hint : ∀ F ∈ X.ClO m W τ U c φ, (∀ p, ev F p ∈ mIm O Ω 0) →
       ∀ p, ev (X.UF m W ⟨X.I.z, X.I.z_mem⟩ F) p ∈ mIm O Ω 0 := by
     intro F hFC hv p
     have hL := ctrlOrd_stab X W (mIm O Ω 0) F (hlat _ F hFC hv)
     exact hL p.2.1 (x p.1) p.2.2
   obtain ⟨S, hSfree, hSspan, hSprop, hSapprox⟩ := UpperTheory.exists_free_lattice_spanning_ordinary_part O Ω (Fin m → X.Fn Ω (W.d + 1))
-    (Fin N × Fin m × Fin (W.d + 1)) (X.ClO W τ U c φ) (X.UF m W ⟨X.I.z, X.I.z_mem⟩) ev hinj hbij hTC hint
+    (Fin N × Fin m × Fin (W.d + 1)) (X.ClO m W τ U c φ) (X.UF m W ⟨X.I.z, X.I.z_mem⟩) ev hinj hbij hTC hint
   have hClOrd : X.ClOrd W ((Matrix.GeneralLinearGroup.map (algebraMap O Ω)).comp τ) U c
       ((Units.map (algebraMap O Ω).toMonoidHom).comp φ) = Submodule.span Ω (S : Set _) := by
     rw [← hSspan]
     rfl
-  have hSC : ∀ F ∈ S, F ∈ X.ClO W τ U c φ := fun F h => (hSprop F h).1
+  have hSC : ∀ F ∈ S, F ∈ X.ClO m W τ U c φ := fun F h => (hSprop F h).1
   have hSlat : ∀ F ∈ S, F ∈ X.Lat m W (mIm O Ω 0) := fun F h => hlat _ F (hSprop F h).1 (hSprop F h).2.1
-  have hCper := ctrlOrd_per (X.ClO W τ U c φ) (X.UF m W ⟨X.I.z, X.I.z_mem⟩) hTC
+  have hCper := ctrlOrd_per (X.ClO m W τ U c φ) (X.UF m W ⟨X.I.z, X.I.z_mem⟩) hTC
   have hSper : ∀ F ∈ S, ∀ k, ∃ n : ℕ,
       (X.UF m W ⟨X.I.z, X.I.z_mem⟩ ^ (n + 1)) F - F ∈ X.Lat m W (mIm O Ω k) := by
     intro F h k

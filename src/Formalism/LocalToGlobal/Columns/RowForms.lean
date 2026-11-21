@@ -27,7 +27,7 @@ section Glue
 variable {E K : Type} [Field E] [NumberField E] [Field K] {n : ℕ}
 
 
-abbrev uSG (SG Q : Finset (HeightOneSpectrum (𝓞 E))) : Finset (HeightOneSpectrum (𝓞 E)) := SG ∪ Q
+abbrev uSG (SG Q : Finset (HeightOneSpectrum (𝓞 E))) : Finset (HeightOneSpectrum (𝓞 E)) := open Classical in SG ∪ Q
 
 variable {SG Q : Finset (HeightOneSpectrum (𝓞 E))}
 
@@ -175,6 +175,7 @@ variable {X}
 
 def QE (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) (ξ : Chr X.F X.E X.K) :
     Finset (HeightOneSpectrum (𝓞 X.E)) :=
+  open Classical in
   if h : (Qprime ξ).Finite then h.toFinset.image sel else ∅
 
 end Sel
@@ -242,6 +243,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
   (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ} (mu : Tup X.F X.E X.K S)
 
 
+variable (Pr) in
 abbrev rowSG : Finset (HeightOneSpectrum (𝓞 X.E)) := uSG Pr.vGs (QE sel (mu : Chr X.F X.E X.K))
 
 def rowTy (P : LevFam X.E X.K R.r Pr.vGs) : LevFam X.E X.K (R.N R.m - 1) (rowSG Pr sel mu) :=

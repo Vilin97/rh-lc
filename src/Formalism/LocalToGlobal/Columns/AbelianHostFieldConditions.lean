@@ -142,6 +142,7 @@ end Fields
 
 
 def divs {A : Type} [CommRing A] [IsDedekindDomain A] (a : A) : Finset (HeightOneSpectrum A) :=
+  open Classical in
   if h : {P : HeightOneSpectrum A | a ∈ P.asIdeal}.Finite then h.toFinset else ∅
 
 structure Primes (X : Fields) where
@@ -171,7 +172,7 @@ def vT (u : Pr.Word) : Finset (HeightOneSpectrum (𝓞 X.E)) := divs (Pr.piT u)
 def vG (i : Fin 2) : Finset (HeightOneSpectrum (𝓞 X.E)) := divs (X.conjO (Pr.piG i))
 
 
-def vGs : Finset (HeightOneSpectrum (𝓞 X.E)) := Pr.vG 0 ∪ Pr.vG 1
+def vGs : Finset (HeightOneSpectrum (𝓞 X.E)) := open Classical in Pr.vG 0 ∪ Pr.vG 1
 
 structure Ok : Prop where
 
