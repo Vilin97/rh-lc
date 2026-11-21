@@ -366,6 +366,7 @@ def ExportTie (c : NChoice D) (E : IntegralHeckeForms.XD D) {Ks : Type} [Field K
 
 variable {Bs : DefBase D.what₂.LL} {Df : DefSide Bs} {S : IndefData Df} {P : Type} [Group P] [Finite P] {oc : OnConst}
 
+attribute [local instance 2000] Submodule.module in
 def TiedAt (c : NChoice D) (E : IntegralHeckeForms.XD D) (O : OnObj S P oc) (v : HeightOneSpectrum (𝓞 D.what₂.LL)) (i : Bs.J)
     (ι : Fin D.R.m) : Prop :=
   ∃ (T : Full D) (_ : Algebra T.J.Q.c.F D.what₂.LL) (R : RealDat D A T.J.Q.c.F)

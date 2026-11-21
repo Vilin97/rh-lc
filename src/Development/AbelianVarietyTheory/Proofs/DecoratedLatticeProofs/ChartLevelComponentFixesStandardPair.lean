@@ -110,7 +110,11 @@ theorem GlobalTheory.AdForm.comp_fixes_stdPair : ∀ {B : Base} {X : PreX B.toPr
   rw [← hMdef] at hM
   rcases Nat.eq_zero_or_pos ((_root_.GlobalTheory.Mem.assemble B (I.cols l) Z.W Z.V Z.S Z.N Z.G).sp.X j).rank with h0 | hpos
   · have : g = 1 := by
-      exact Units.ext (Matrix.ext fun a _ => absurd a.2 (by omega))
+      apply Units.ext
+      apply Matrix.ext
+      intro a b
+      have ha : a.val < ((_root_.GlobalTheory.Mem.assemble B (I.cols l) Z.W Z.V Z.S Z.N Z.G).sp.X j).rank := a.isLt
+      omega
     rw [this, one_smul]
   let r₀ : Fin ((_root_.GlobalTheory.Mem.assemble B (I.cols l) Z.W Z.V Z.S Z.N Z.G).sp.X j).rank := ⟨((_root_.GlobalTheory.Mem.assemble B (I.cols l) Z.W Z.V Z.S Z.N Z.G).sp.X j).rank - 1, by omega⟩
   have hr₀ : r₀.1 + 1 = ((_root_.GlobalTheory.Mem.assemble B (I.cols l) Z.W Z.V Z.S Z.N Z.G).sp.X j).rank := by simp only [r₀]; omega

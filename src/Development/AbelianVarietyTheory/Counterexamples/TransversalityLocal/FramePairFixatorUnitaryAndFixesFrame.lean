@@ -61,14 +61,14 @@ theorem img_one (Λ : Submodule M.L.O V) : img (1 : V ≃ₗ[E] V) Λ = Λ := by
   · intro hx
     exact ⟨x, hx, rfl⟩
 
-theorem trel_equiv (P : FPair H r) : Equivalence (TRel P) where
-  refl := fun t => ⟨1, P.St.one_mem, (img_one _).symm⟩
-  symm := by
-    rintro t t' ⟨s, hs, h⟩
+theorem trel_equiv (P : FPair H r) : Equivalence (TRel P) := by
+  constructor
+  · intro t
+    exact ⟨1, P.St.one_mem, (img_one _).symm⟩
+  · rintro t t' ⟨s, hs, h⟩
     refine ⟨s⁻¹, P.St.inv_mem hs, ?_⟩
     rw [h, ← img_mul, inv_mul_cancel, img_one]
-  trans := by
-    rintro t t' t'' ⟨s, hs, h⟩ ⟨s', hs', h'⟩
+  · rintro t t' t'' ⟨s, hs, h⟩ ⟨s', hs', h'⟩
     exact ⟨s' * s, P.St.mul_mem hs' hs, by rw [h', h, img_mul]⟩
 
 theorem framePairFixator_unitary_and_fixes_frame (P : FPair H r) {g : V ≃ₗ[E] V} (hg : g ∈ P.UW0) :
@@ -114,14 +114,14 @@ theorem perp_stable {g : V ≃ₗ[E] V} (hu : IsUnitary H g) (f : Fin (r + 1) �
   rw [← hx', hu']
   exact hv' x hx
 
-theorem rel_equiv (P : FPair H r) : Equivalence (Datum.Rel (P := P)) where
-  refl := fun d => ⟨1, P.UW0.one_mem, by
-    refine ⟨fun x y h => ?_, fun x y h => ?_, fun x' y' x y h' h => ?_⟩
+theorem rel_equiv (P : FPair H r) : Equivalence (Datum.Rel (P := P)) := by
+  constructor
+  · intro d
+    refine ⟨1, P.UW0.one_mem, fun x y h => ?_, fun x y h => ?_, fun x' y' x y h' h => ?_⟩
     · rw [show y = x from Subtype.ext h]
     · rw [show y = x from Subtype.ext h]
-    · rw [show y' = x' from Subtype.ext h', show y = x from Subtype.ext h]⟩
-  symm := by
-    rintro d d' ⟨g, hg, h1, h2, h3⟩
+    · rw [show y' = x' from Subtype.ext h', show y = x from Subtype.ext h]
+  · rintro d d' ⟨g, hg, h1, h2, h3⟩
     refine ⟨g⁻¹, P.UW0.inv_mem hg, fun x y hxy => ?_, fun x y hxy => ?_,
       fun x' y' x y hx' hx => ?_⟩
     · have e : (x : V) = g y := by rw [hxy]; exact (g.apply_symm_apply (x : V)).symm
@@ -131,8 +131,7 @@ theorem rel_equiv (P : FPair H r) : Equivalence (Datum.Rel (P := P)) where
     · have e1 : (x' : V) = g y' := by rw [hx']; exact (g.apply_symm_apply (x' : V)).symm
       have e2 : (x : V) = g y := by rw [hx]; exact (g.apply_symm_apply (x : V)).symm
       exact (h3 y' x' y x e1 e2).symm
-  trans := by
-    rintro d d' d'' ⟨g, hg, h1, h2, h3⟩ ⟨g', hg', k1, k2, k3⟩
+  · rintro d d' d'' ⟨g, hg, h1, h2, h3⟩ ⟨g', hg', k1, k2, k3⟩
     have sA : ∀ u : ↥(H.perp (H.X P.A.f)), g u ∈ H.perp (H.X P.A.f) := fun u =>
       perp_stable (framePairFixator_unitary_and_fixes_frame P hg).1 P.A.f (fun b => ((framePairFixator_unitary_and_fixes_frame P hg).2 b).1) u.2
     have sB : ∀ u : ↥(H.perp (H.X P.B.f)), g u ∈ H.perp (H.X P.B.f) := fun u =>

@@ -228,6 +228,7 @@ theorem redL_smul (a : valO P) {x : Fin n → E} (hx : x ∈ localization₂ P.a
   refine (show ∀ (r : 𝓞 E), ∀ x ∈ localization₂ P.asIdeal M,
     redL M P (r • x) = (Ideal.Quotient.mk P.asIdeal r : Res P) • redL M P x from ?_) |> fun H => ?_
   · obtain ⟨r, s, hs', h⟩ := (intAt_iff P _).2 a.2
+    letI : Module.IsTorsionFree (Res P) (TDat.Red M P) := DivisionSemiring.to_moduleIsTorsionFree
     apply smul_right_injective _ (show (Ideal.Quotient.mk P.asIdeal s : Res P) ≠ 0 from mk_ne_zero hs')
     show (Ideal.Quotient.mk P.asIdeal s : Res P) • _ = (Ideal.Quotient.mk P.asIdeal s : Res P) • _
     rw [← H s _ ((locO P M).smul_mem a hx), smul_eq_of a h, H r x hx, smul_smul]

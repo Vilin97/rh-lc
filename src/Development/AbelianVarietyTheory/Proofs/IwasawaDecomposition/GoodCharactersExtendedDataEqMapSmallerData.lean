@@ -198,7 +198,7 @@ theorem GlobalTheory.Mem.R3.DefLatBC.good_ext : GlobalTheory.Published.DiscreteS
         ∀ (e : Gc B w.px ≃* Gc B' w'.px), (∀ g, HEq (e g) g) → ∀ χ' : Gc B' w'.px → (w'.st Z').toD7.what₂.LL, χ' ∈ ((famR (w'.st Z') w'.I hX' (usedOf w'.I T' {v | B'.places.resChar v ∈ T'.pl}) z'.Xg z'.tr).fam3.F.lvlA z'.F.P0 z'.F.ψ0).X ↔ ∃ χ ∈ ((famR (w.st Z) w.I hX (usedOf w.I T Wt) z.Xg z.tr).fam3.F.lvlA z.F.P0 z.F.ψ0).X, χ' = fun g => φ (χ (e.symm g))) := by
   intro _ _ _ _ _ _ _
   refine StepW.of_all fun K B' f' T' w' _ _ _ B f T w hE hf _ hp Z hX Wt z hG _ _ _ Z' hX' hG' _ _ z' _ hx j j' hj φ hφ e he χ' => ?_
-  show χ' ∈ z'.Xg ↔ ∃ χ ∈ z.Xg, χ' = fun g => φ (χ (e.symm g))
+  show χ' ∈ z'.Xg ↔ ∃ χ : Gc B w.px → (w.st Z).toD7.what₂.LL, χ ∈ z.Xg ∧ χ' = fun g => φ (χ (e.symm g))
   have g1 := (goodSet_iff _ _ _).1 z.good
   have g2 := (goodSet_iff _ _ _).1 z'.good
   exact GlobalTheory.Mem.R3.DefLatBC.good_transport (w.st Z).toD7.what₂.embLL (w'.st Z').toD7.what₂.embLL φ hφ e

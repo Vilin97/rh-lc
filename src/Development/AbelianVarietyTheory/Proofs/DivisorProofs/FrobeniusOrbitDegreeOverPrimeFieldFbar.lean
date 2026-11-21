@@ -14,7 +14,7 @@ noncomputable section
 
 namespace GlobalTheory.GoodCharsCompare
 
-open Polynomial Formalism.CyclotomicNorms GlobalTheory.IndefiniteRowSideFullHecke.CuspValueComparison GlobalTheory.IndefiniteRowSideFullHecke.TameCharacterTorusValues
+open Polynomial Formalism.CyclotomicNorms GlobalTheory.IndefiniteRowSideFullHecke.CuspValueComparison
 
 variable {g : ℕ} [Fact g.Prime]
 
@@ -58,7 +58,7 @@ theorem _root_.GlobalTheory.GoodCharsCompare.card_rootsBar (f : (ZMod g)[X]) :
   unfold _root_.Formalism.CyclotomicNorms.rootsBar
   rw [IsAlgClosed.card_roots_eq_natDegree, natDegree_map]
 
-abbrev dg (y : Fbar g) : ℕ := (minpoly (ZMod g) y).natDegree
+abbrev dg (y : _root_.Formalism.CyclotomicNorms.Fbar g) : ℕ := (minpoly (ZMod g) y).natDegree
 
 open Polynomial in
 variable {g : ℕ} [Fact g.Prime] in

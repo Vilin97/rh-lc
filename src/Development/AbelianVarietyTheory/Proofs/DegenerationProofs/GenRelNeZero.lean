@@ -90,7 +90,7 @@ theorem fix_torsion (hL : Laws) {S : Scheme.{0}} [IsLocallyNoetherian S] (P : Po
   · show x ≫ o.act 1 = x
     rw [o.map_one, Category.comp_id]
   · show x ≫ o.act (a + b) = (x ≫ o.act a) * (x ≫ o.act b)
-    rw [o.map_add (f := _), ← MonObj.comp_mul]
+    rw [o.map_add, ← MonObj.comp_mul]
     rfl
   · show x ≫ o.act (a * b) = (x ≫ o.act b) ≫ o.act a
     rw [o.map_mul, Category.assoc]

@@ -69,11 +69,15 @@ theorem per_indep {ρ : ℕ} (B : GlobalTheory.Unf.BesLev D ρ) {ψ : AddChar (A
     (GlobalTheory.Core.Mi.PerCmp.besPer_domA B hψ h2 φ f hφ hf)
 
 theorem hN_top {M : Vol G} {t : T} (hM : M.Is t) : NFlag (G.V (.grid D.R.m 0)) G.besTop.e = flagN (topLev G hM).d :=
-  (nFlag_diag (GlobalTheory.RowUnf.rowBes G 0 (by have := D.R.two_le_m; omega) ((D.R.m - 2) / 2)
+  by
+  set_option maxHeartbeats 20000000 in
+   exact (nFlag_diag (GlobalTheory.RowUnf.rowBes G 0 (by have := D.R.two_le_m; omega) ((D.R.m - 2) / 2)
     (by have := top_idx (D := D); omega)).e (lam _) (lam_ne _)).symm
 
 def topVNRow {M₀ : Vol G} (h₀ : M₀.IsRow) : GlobalTheory.Unf.VolN (besDecAt G 0 ((D.R.m - 2) / 2) top_idx) :=
-  volNOf (d := GlobalTheory.RowUnf.rowBes G 0 (by have := D.R.two_le_m; omega) ((D.R.m - 2) / 2) (by have := top_idx (D := D); omega))
+  by
+  set_option maxHeartbeats 20000000 in
+   exact volNOf (d := GlobalTheory.RowUnf.rowBes G 0 (by have := D.R.two_le_m; omega) ((D.R.m - 2) / 2) (by have := top_idx (D := D); omega))
     (nFlag_diag _ (lam _) (lam_ne _)).symm
     (GlobalTheory.RowUnf.topVolN G M₀ h₀ (by have := D.R.two_le_m; omega) (by have := top_idx (D := D); omega))
 
@@ -185,7 +189,7 @@ def downPure (P : PolDown G) (d : SchDown G t) : PureT G (downPath t D.R.m D.R.m
 variable {M t} in
 def oppPer (hM : M.Is t) (P : PolRow G × PolDown G) (d : SchRow G × SchDown G t) (φ : Fn G (.top 0)) (F : Fn G (.grid 0 D.R.m)) :
     (chain G W t hM).Var → ℂ :=
-  colPer W hM _ 0 top_idx (topVN hM) (chainData G W t hM (downPure W t P.2 d.2)) (rowLift W M P.1 d.1 F) φ 1
+  GlobalTheory.RowChain.colPer W hM _ 0 top_idx (topVN hM) (chainData G W t hM (downPure W t P.2 d.2)) (rowLift W M P.1 d.1 F) φ 1
 
 theorem pathLift_oppositePure (P : PolRow G × PolDown G) (d : SchRow G × SchDown G t) (F : Fn G (.grid 0 D.R.m)) :
     liftP W M (oppPath t D.R.m) (oppPure W t P d) F =
@@ -294,7 +298,9 @@ theorem exists_rowMeas (j : ℕ) : ∃ ρ : Measure (rowGrp G j), (j < D.R.m →
         fun _ => D.host.xi0 ^ ((D.R.m - 2 - j) / 2),
         GlobalTheory.SeeSaw.Model.isLineVec_nLine (pow_ne_zero _ (GlobalTheory.Unf.Inhab.cmHost_imaginaryGenerator_ne_zero D)), cocpt_top G (by omega), v,
         (GlobalTheory.Unf.Inhab.nonempty_volN _).some⟩
-    have e : rowGrp G j = besGrp B.d B.o := (dif_neg h).trans (dif_pos h')
+    have e : rowGrp G j = besGrp B.d B.o := by
+      simp only [rowGrp, dif_neg h, dif_pos h']
+      rfl
     obtain ⟨ρ, h1, h2⟩ := exists_haar_heq e B.μR (GlobalTheory.QuotZero.bes_haar_inv B).2.1
     refine ⟨ρ, fun _ => h1, fun t M hM => ⟨fun σ hj => by omega, fun σ hj => ?_⟩⟩
     obtain rfl : σ = (D.R.m - 2 - j) / 2 := by omega

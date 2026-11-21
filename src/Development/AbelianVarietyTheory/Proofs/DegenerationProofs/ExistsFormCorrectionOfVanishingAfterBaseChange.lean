@@ -189,12 +189,12 @@ theorem exists_form_correction : ∀ (A : Type) [CommRing A] [IsLocalRing A] [Is
     MvPolynomial.IsHomogeneous.sum _ _ _ fun i _ => (hQ i).C_mul _, fun d => ?_, fun k => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [MvPolynomial.coeff_sum, map_sum]
-    refine Finset.sum_eq_zero fun i _ => ?_
-    rw [MvPolynomial.coeff_C_mul, map_mul, congrFun hgc i, Pi.zero_apply, zero_mul]
+      refine Finset.sum_eq_zero fun i _ => ?_
+      rw [MvPolynomial.coeff_C_mul, map_mul, congrFun hgc i, Pi.zero_apply, zero_mul]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sub, sub_eq_zero, map_sum]
-    refine (hc' k).trans (Finset.sum_congr rfl fun i _ => ?_)
-    rw [map_mul, MvPolynomial.eval₂Hom_C, hτQ i k]
-    rfl
+      refine (hc' k).trans (Finset.sum_congr rfl fun i _ => ?_)
+      rw [map_mul, MvPolynomial.eval₂Hom_C, hτQ i k]
+      rfl
 
 end GlobalTheory.FormCorr

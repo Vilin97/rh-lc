@@ -242,7 +242,7 @@ theorem coh.sigmaEquiv_lof {ι : Type} [Finite ι] {U : ι → X.Opens} (hcov : 
     (hU : ∀ s : Finset ι, s.Nonempty → IsAffineOpen (⨅ i ∈ s, U i)) (k : κ) (x : coh (F k) n) :
     coh.sigmaEquiv F R n hcov hU (DirectSum.lof R κ (fun k => coh (F k) n) k x) =
       cohOn.map R (Sigma.ι F k) ⊤ n x :=
-  cohOn.directSumMap_lof (Cofan.mk (∐ F) (Sigma.ι F)) R ⊤ n k x
+  cohOn.directSumMap_lof (c := Cofan.mk (∐ F) (Sigma.ι F)) R ⊤ n k x
 
 end DirectSum
 

@@ -77,7 +77,10 @@ theorem ptEntry_col {K : Type} [Zero K] : ∀ (bs : List (K × ℕ)), (∀ b ∈
         by_cases h2 : j' < s
         · rw [if_pos ⟨by omega, h2⟩, if_neg (by omega)]
         · rw [if_neg (fun hh => h2 hh.2), if_neg (fun hh => by omega)]
-    · obtain ⟨i0, hi0, t0, ht0, h0⟩ := ptEntry_col rest (fun b hb => h b (by simp [hb])) (j - s) (by omega)
+    · have hrest : ∀ b ∈ rest, b.1 ≠ 0 ∧ 1 ≤ b.2 :=
+        fun b hb => h b (List.mem_cons_of_mem _ hb)
+      have hjrest : j - s < (rest.map Prod.snd).sum := by omega
+      obtain ⟨i0, hi0, t0, ht0, h0⟩ := ptEntry_col rest hrest (j - s) hjrest
       refine ⟨i0 + s, by omega, t0, ht0, fun j' => ?_⟩
       simp only [ptEntry]
       rw [if_neg (fun hh => by omega)]

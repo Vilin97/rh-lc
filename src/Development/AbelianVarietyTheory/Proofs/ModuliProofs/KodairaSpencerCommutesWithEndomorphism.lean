@@ -35,14 +35,15 @@ private theorem valAt'_comp_lemma {Y Z : Scheme.{0}} (x : Sp ℂ ⟶ Y) (φ : Y 
     rw [dite_eq_right h, dite_eq_right h']
 
 theorem ptDer_push {X Y : Scheme.{0}} (y : Sp ℂ ⟶ X) (f : X ⟶ Y) (δ : ∀ W : X.Opens, Γ(X, W) → ℂ) (h : PtDer y δ) :
-    PtDer (y ≫ f) (fun W a => δ (f ⁻¹ᵁ W) ((f.app W).hom a)) where
-  add W hW a b := by
-    rw [map_add (f := _)]
+    PtDer (y ≫ f) (fun W a => δ (f ⁻¹ᵁ W) ((f.app W).hom a)) := by
+  constructor
+  · intro W hW a b
+    rw [(f.app W).hom.map_add]
     exact h.add (f ⁻¹ᵁ W) hW _ _
-  mul W hW a b := by
+  · intro W hW a b
     rw [map_mul, valAt'_comp_lemma y f W a, valAt'_comp_lemma y f W b]
     exact h.mul (f ⁻¹ᵁ W) hW _ _
-  res W W' hle hW a := by
+  · intro W W' hle hW a
     have hle' : f ⁻¹ᵁ W' ≤ f ⁻¹ᵁ W := fun x hx => hle hx
     have nat : (f.app W').hom (resG Y hle a) = resG X hle' ((f.app W).hom a) :=
       congrArg (fun φ : Γ(Y, W) ⟶ Γ(X, f ⁻¹ᵁ W') => φ.hom a) (f.naturality (homOfLE hle).op)
@@ -50,14 +51,15 @@ theorem ptDer_push {X Y : Scheme.{0}} (y : Sp ℂ ⟶ X) (f : X ⟶ Y) (δ : ∀
     exact h.res (f ⁻¹ᵁ W) (f ⁻¹ᵁ W') hle' hW _
 
 theorem ptDer_sub {X : Scheme.{0}} (y : Sp ℂ ⟶ X) (δ δ' : ∀ W : X.Opens, Γ(X, W) → ℂ) (h : PtDer y δ) (h' : PtDer y δ') :
-    PtDer y (fun W a => δ W a - δ' W a) where
-  add W hW a b := by
+    PtDer y (fun W a => δ W a - δ' W a) := by
+  constructor
+  · intro W hW a b
     rw [h.add W hW, h'.add W hW]
     ring
-  mul W hW a b := by
+  · intro W hW a b
     rw [h.mul W hW, h'.mul W hW]
     ring
-  res W W' hle hW a := by
+  · intro W W' hle hW a
     rw [h.res W W' hle hW, h'.res W W' hle hW]
 
 theorem app_top_constFn {R : Type} [CommRing R] {X : Scheme.{0}} (p : X ⟶ Sp R) (f : X ⟶ X) (hf : f ≫ p = p) (r : R) :

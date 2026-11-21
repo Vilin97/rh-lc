@@ -260,9 +260,9 @@ private theorem mem_latDR_iff_span {E : Type} [Field E] [NumberField E] [IsCMFie
       (x : Sp S ⟶ X) (n : ℕ) (v : Fin n → (Sp (DualNumber S) ⟶ t.G.left)),
       (∀ i, IsTanAtG t x (v i)) →
       (∀ w, IsTanAtG t x w → ∃! a : Fin n → S, IsCombAtG t x v a w) →
-      (∀ i, IsTanAtG t (spMap φ ≫ x) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v i)) ∧
+      (∀ i, IsTanAtG t (spMap φ ≫ x) (spMap (dualMap φ) ≫ v i)) ∧
       ∀ w, IsTanAtG t (spMap φ ≫ x) w →
-        ∃! a : Fin n → T, IsCombAtG t (spMap φ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v i) a w := by
+        ∃! a : Fin n → T, IsCombAtG t (spMap φ ≫ x) (fun i => spMap (dualMap φ) ≫ v i) a w := by
     intro S T _ _ φ x n v hv hv'
     have := t.semi.comm
     have := t.semi.smooth
@@ -279,11 +279,11 @@ private theorem mem_latDR_iff_span {E : Type} [Field E] [NumberField E] [IsCMFie
     have hs : Smooth ((Over.pullback x).obj t.G).hom :=
       inferInstanceAs (Smooth (pullback.snd t.G.hom x))
     obtain ⟨u', hb', hu'⟩ := GlobalTheory.exists_isLieBasis_baseChange S T φ _ _ _ h₂ hs n u hb
-    have e : Chart.dualMapR φ = GlobalTheory.CompanionTheory.Ar.dualMap φ := by
+    have e : Chart.dualMapR φ = dualMap φ := by
       ext a <;> rfl
     have key := (b₃ n u').1 hb'
     have e' : ∀ i, (u' i).left ≫ pullback.fst ((Over.pullback x).obj t.G).hom (spMap φ) ≫ pullback.fst t.G.hom x =
-        spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v i := fun i => by
+        spMap (dualMap φ) ≫ v i := fun i => by
       rw [← Category.assoc, hu', e, Category.assoc, hu]
     refine ⟨fun i => e' i ▸ key.1 i, ?_⟩
     rw [← funext e']

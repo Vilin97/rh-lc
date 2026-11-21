@@ -17,7 +17,8 @@ open Formalism.BasicNotions Formalism.BasicNotions.Loc ReciprocityTheory.Gal Mod
 namespace GlobalTheory.CrFrac
 
 theorem push_comp {O R A B' Γ : Type} [CommRing O] [CommRing R] [CommRing A] [CommRing B'] [Algebra O R]
-    [Algebra O A] [Algebra O B'] [Group Γ] (g : A →ₐ[O] B') (F : R →ₐ[O] A) (r : Γ →* GG 3 R) :
+    [Algebra O A] [Algebra O B'] [Group Γ] (g : A →ₐ[O] B') (F : R →ₐ[O] A)
+    (r : Γ →* GG (m := 3) (R := R)) :
     push (g.comp F) r = (GG.map (g : A →+* B')).comp (push F r) := rfl
 
 theorem core (hL : LocalPublishedTheorems) {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]

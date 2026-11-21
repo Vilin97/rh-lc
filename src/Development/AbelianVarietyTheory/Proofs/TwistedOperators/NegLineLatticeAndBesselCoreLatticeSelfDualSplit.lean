@@ -60,18 +60,8 @@ theorem isSelfDualC_latPi {S : HSp D} (hg : S.gram = -1) {I : FractionalIdeal (�
       rw [FractionalIdeal.mem_zero_iff]
       exact ⟨hcon x, fun h => h ▸ Submodule.zero_mem (I : Submodule (𝓞 D.host.E) D.host.E)⟩)
   refine ⟨⟨Submodule.fg_pi fun _ => FractionalIdeal.fg_of_isNoetherianRing le_rfl _, ?_⟩, fun y => ⟨fun hy x hx => ?_, fun h => ?_⟩⟩
-  · rw [eq_top_iff, ← (Pi.basisFun D.host.E (Fin S.rank)).span_eq, Submodule.span_le]
-    rintro _ ⟨i, rfl⟩
-    have hm : (Pi.single i a0 : Fin S.rank → D.host.E) ∈ latPi S I := mem_latPi.2 fun k => by
-      by_cases hk : k = i
-      · subst hk; simpa using ha0
-      · rw [Pi.single_eq_of_ne hk]; exact Submodule.zero_mem (I : Submodule (𝓞 D.host.E) D.host.E)
-    have e : (Pi.basisFun D.host.E (Fin S.rank)) i = a0⁻¹ • (Pi.single i a0 : Fin S.rank → D.host.E) := by
-      ext k; by_cases hk : k = i
-      · subst hk; simp [ha00]
-      · simp [hk]
-    rw [e]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hm)
+  · intro s _ hs
+    exact (LinearIndependent.iff_fractionRing (𝓞 D.host.E) D.host.E).mp hs
   · rw [hpair]
     have hy' := mem_latPi.1 hy
     have hx' := mem_latPi.1 hx

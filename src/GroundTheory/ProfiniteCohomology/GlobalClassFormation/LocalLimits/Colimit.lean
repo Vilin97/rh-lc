@@ -20,7 +20,7 @@ open scoped Pointwise
 noncomputable section
 
 variable {K : FiniteSubfield} {v : HeightOneSpectrum (𝓞 K.1)}
-  (ι : ℚ̄ →ₐ[K.1] AlgebraicClosure (v.adicCompletion K.1))
+  (ι : AlgebraicClosure ℚ →ₐ[K.1] AlgebraicClosure (v.adicCompletion K.1))
 
 section Level
 

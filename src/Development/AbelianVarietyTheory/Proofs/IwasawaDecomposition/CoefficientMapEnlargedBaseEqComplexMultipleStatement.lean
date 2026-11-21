@@ -25,4 +25,4 @@ theorem _root_.GlobalTheory.T.coefficientMap_enlargedBase_eq_complexMultiple : �
     ∀ c0L'', GlobalTheory.Mem.R3.Rw.OmExt.CoefFam R'.toRealDat c0L'' →
     ∃ μ : ℂ, ∀ (v : Formalism.IndefR.FWT.VsV (w.st Z).toD7 i (w.st Z).toD7.what₂.LL) (v' : Formalism.IndefR.FWT.VsV (w'.st Z').toD7 i' (w'.st Z').toD7.what₂.LL),
       HEq (MvPolynomial.map (w'.st Z').toD7.what₂.embLL v'.1) (MvPolynomial.map (w.st Z).toD7.what₂.embLL v.1) → HEq (c0L'' i' v') (μ • c0L i v) := by
-  first | exact @GlobalTheory.Mem.R3.Rw.OmExt.coef_schur | exact GlobalTheory.Mem.R3.Rw.OmExt.coef_schur | (intros; apply GlobalTheory.Mem.R3.Rw.OmExt.coef_schur <;> assumption)
+  exact @GlobalTheory.Mem.R3.Rw.OmExt.coef_schur

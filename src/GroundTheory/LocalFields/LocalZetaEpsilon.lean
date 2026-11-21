@@ -71,7 +71,8 @@ theorem unitFiltration_sub_one_mem_valBall {j : ℕ} {v : Kˣ} (hv : v ∈ unitF
   · exact (mem_unitFiltrationUnits_iff_valBall hj).mp hv
 
 open Classical in
-def quasiCharExt (x : K) : ℂ := if h : x = 0 then 0 else ((χ (Units.mk0 x h) : ℂˣ) : ℂ)
+def quasiCharExt (χ : Kˣ →* ℂˣ) (x : K) : ℂ :=
+  if h : x = 0 then 0 else ((χ (Units.mk0 x h) : ℂˣ) : ℂ)
 
 omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem quasiCharExt_units (u : Kˣ) : quasiCharExt χ (u : K) = ((χ u : ℂˣ) : ℂ) := by

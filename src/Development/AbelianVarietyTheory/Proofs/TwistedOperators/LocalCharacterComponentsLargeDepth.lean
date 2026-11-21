@@ -78,8 +78,7 @@ theorem chrP_big : Big fun ch => ChrP ch := by
   have hc : ∀ P ∈ R.toLevCh.Q t, ((Ideal.absNorm D.host.ccK : ℕ) : 𝓞 D.host.E) ∉ P.asIdeal := hch.guard t
   have hm : 0 < D.R.m := by have := D.R.two_le_m; omega
   refine ⟨fun x => ?_, (((Good.locGrid_isGood hL ch.G ch.W t hde hc).1 w hw).square 0 hm 0 hm).cond, fun j hj => ?_⟩
-  · rw [hp.2.2 x]
-    rfl
+  · rw [hp.2.2 x] <;> rfl
   have hE : ChrEq (R.toLevCh.mu t (j + 1)) (muBase R.toLevCh (j + 1) * R.toLevCh.xiH t) := by
     have h1 : muBase R.toLevCh (j + 1) = R.toLevCh.C.mu0 ⟨j, hj⟩ := dif_pos hj
     rw [h1]

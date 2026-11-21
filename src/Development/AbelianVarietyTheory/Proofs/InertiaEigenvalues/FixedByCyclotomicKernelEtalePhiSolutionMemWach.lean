@@ -252,6 +252,7 @@ theorem tilt_mem (I : IoS AI R) (hW : IoW I) (c : Om l) (hc : c ∈ K0 K) (m : �
   have h1 := hW ⟨c, hc⟩ m hm hl hcm x ht (fun i => ⟨_, hint i⟩) fun _ => rfl
   exact ⟨_, (I.ioE_ext _).trans (congrArg (inclR LL) h1)⟩
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem eroot_mem (I : IoS AI R) (j : ℕ) : ∃ e,
     (φRW LL)^[j] (fW LL (WittVector.teichmuller l (AI.εroot j))) = I.ioE e ^ l ^ s := by
   obtain ⟨e, he⟩ := exists_succ I
@@ -263,6 +264,7 @@ theorem mem_perf {R E : Type} [CommRing R] [CommRing E] {j : E →+* R} {φ : R 
     x ∈ perf j φ hφ p := ⟨n, e ^ k, 0, by rw [h, map_pow, mul_zero, add_zero]⟩
 
 
+set_option synthInstance.maxHeartbeats 200000 in
 set_option maxHeartbeats 1000000 in
 theorem approx (hG : Good K s LL) (I : IoS AI R) (hW : IoW I) (y : RW LL) (hy : FixH AI K y) (m : ℕ) :
     ∃ (n : ℕ) (y0 : RW LL) (e : R.EE) (r : RW LL),
@@ -309,6 +311,7 @@ theorem vec (hG : Good K s LL) (I : IoS AI R) (hW : IoW I) (d : ℕ) (Pm : Matri
     (padic_closed (I.ioE : R.EE →+* RW LL) l1 l2 hs (complete R (P.PD_p K))) d Pm).2 z
     (fun i => (mem_fixSub_iff _).2 (hz i)) h
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem main : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (K : FinExt l) (s : ℕ) (LL : FinExt l), Good K s LL → ∀ (Γ : GamS P K s LL) (R : WSer Γ) (I : IoS AI R), IoW I → ∀ (p q : ℕ) (A : Matrix (Fin p) (Fin p) R.EE) (A' : Matrix (Fin q) (Fin q) R.EE) (Y : Matrix (Fin p) (Fin q) R.EE) (U : Matrix (Fin p) (Fin q) (RW LL)), IsUnit A → IsUnit A' → (∀ i j, FixH AI K (U i j)) → A.map I.ioE * U.map (φRW LL) = U * A'.map I.ioE + Y.map I.ioE → ∀ i j, U i j ∈ Set.range I.ioE := by
   intro l _ P AI K s LL hG Γ R I hW p q A A' Y U _ hA' hU h i j
   obtain ⟨C, hC⟩ := hA'.exists_right_inv

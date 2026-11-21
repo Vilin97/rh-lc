@@ -23,8 +23,7 @@ theorem lowerWord_weight (hE : Formalism.REAL.KRel ε E) {μ : Fin n → ℝ} {y
     ∀ (l : List (Fin n × Fin n)), (∀ p ∈ l, IsKLow ε p) → ∀ (a : Fin n),
       E a a (lowWord E y l) = (lowWt μ l a : ℂ) • lowWord E y l
   | [], _, a => by simpa [lowWord, lowWt] using hy a
-  | p :: l, hl, a => by
-    obtain ⟨c, d⟩ := p
+  | (c, d) :: l, hl, a => by
     have hcd : IsKLow ε (c, d) := hl _ (List.mem_cons_self ..)
     have h := congrArg (fun X : Module.End ℂ M => X (lowWord E y l)) (hE a a c d rfl hcd.2)
     simp only [LinearMap.sub_apply, Module.End.mul_apply] at h
@@ -71,8 +70,7 @@ theorem lowerWord_raise_mem_span (hE : Formalism.REAL.KRel ε E) {μ : Fin n →
     simp only [lowWord]
     rw [hy.2 a b hab hε]
     exact Submodule.zero_mem _
-  | p :: l, hl, a, b, hab, hε => by
-    obtain ⟨c, d⟩ := p
+  | (c, d) :: l, hl, a, b, hab, hε => by
     have hcd : IsKLow ε (c, d) := hl _ (List.mem_cons_self ..)
     have hl' : ∀ p ∈ l, IsKLow ε p := fun p hp => hl p (List.mem_cons_of_mem _ hp)
     have ih := lowerWord_raise_mem_span hE hy l hl'

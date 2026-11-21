@@ -68,7 +68,7 @@ theorem isClosed_stage : IsClosed (stage e δ ρ s : Set (ContinuousMultilinearM
     ext Φ; simp [mem_stage]
   rw [this]
   exact (isClosed_biInter fun i _ => isClosed_iInter fun g => isClosed_iInter fun y => h1 _ _ _).inter
-    (isClosed_biInter fun i _ => isClosed_iInter fun y => h2 _ _ _)
+    (isClosed_iInter fun i => isClosed_iInter fun _ => isClosed_iInter fun y => h2 _ _ _)
 
 theorem comp_mem_stage (hΦ : Φ ∈ stage e δ ρ s) {g : G} (hg : ∀ i ∈ s, ∀ a, Commute g (e i a)) :
     (ρ g).compContinuousMultilinearMap Φ ∈ stage e δ ρ s := by
@@ -221,8 +221,8 @@ noncomputable def insertMap (σ : ι) (u : Hs σ) (B : Hs σ →L[ℂ] Continuou
         obtain rfl : inst = dec := Subsingleton.elim _ _
         by_cases hi : i = σ
         · subst hi
-          simp only [Function.update_self, Function.update_idem, map_smul, ContinuousMultilinearMap.smul_apply]
-        · simp only [Function.update_comm hi, ContinuousMultilinearMap.map_update_smul]
+          simp only [Function.update_self, Function.update_idem, map_smul, ContinuousMultilinearMap.smul_apply, RingHom.id_apply]
+        · simp only [Function.update_comm hi, ContinuousMultilinearMap.map_update_smul, RingHom.id_apply]
           rw [Function.update_of_ne (Ne.symm hi), Function.update_of_ne (Ne.symm hi)] }
     (‖B‖ * ‖u‖) fun y => by
       change ‖B (y σ) (Function.update y σ u)‖ ≤ _

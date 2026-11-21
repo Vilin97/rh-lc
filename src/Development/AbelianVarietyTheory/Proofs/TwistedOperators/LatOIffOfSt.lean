@@ -45,8 +45,15 @@ theorem keep_stdLatO : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G 
         x ∈ stdLatO S (.top t j) ↔ actO _ _ 1 g x ∈ stdLatO S (.top t j) := by
   intro D T L sc G W U S t ht Φ β j hj k hk e he g hg x
   classical
-  obtain ⟨βS, hβS⟩ := frame_exists_alt D.host.F D.host.E _ (colLat (S.N.fr (.top j))) (GlobalTheory.FunObj.VecEx.isLattice_colLat _)
-  obtain ⟨βT, hβT⟩ := frame_exists_alt D.host.F D.host.E _ (colLat (S.N.fr (.top (j + 1)))) (GlobalTheory.FunObj.VecEx.isLattice_colLat _)
+  have hfull {n : ℕ} (B : GL (Fin n) D.host.E) : (colLat B).IsFullLattice D.host.E := by
+    letI := GlobalTheory.FunObj.VecEx.isLattice_colLat B
+    refine ⟨?_⟩
+    rw [colLat, Submodule.span_span_of_tower]
+    change Submodule.span D.host.E (Set.range (B : Matrix (Fin n) (Fin n) D.host.E).col) = ⊤
+    rw [← Matrix.range_mulVecLin]
+    exact LinearMap.range_eq_top.mpr (Matrix.mulVec_surjective_iff_isUnit.mpr B.isUnit)
+  obtain ⟨βS, hβS⟩ := frame_exists_alt D.host.F D.host.E _ (colLat (S.N.fr (.top j))) (hfull _)
+  obtain ⟨βT, hβT⟩ := frame_exists_alt D.host.F D.host.E _ (colLat (S.N.fr (.top (j + 1)))) (hfull _)
   set a : AE D := e + cA D e with ha
   set b : Lev.EAf D := toEAf D (1 - a) with hbdef
   have hcb : ∀ w, GlobalTheory.StdFrames.cpt (D := D) w b = 1 - GlobalTheory.StdFrames.cpt (D := D) w (toEAf D a) := fun w => by

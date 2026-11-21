@@ -124,6 +124,8 @@ theorem spanK_spanIn_le [NumberField F] {R : ℕ → Type} [∀ j, CommRing (R j
 
 end Coord
 
+attribute [local instance 2000] Submodule.module
+
 section Forms
 
 variable {T : Full D} {h : LawsP T.toTop} {j : ℕ} {w : WeightFamilies.Wt D j} {K : Type} [Field K] [NumberField K]

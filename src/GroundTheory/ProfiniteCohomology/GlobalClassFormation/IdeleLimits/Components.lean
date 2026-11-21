@@ -48,7 +48,7 @@ def finiteComponent (n : ℕ) :
     continuous_of_discreteTopology (finiteComponentRep w) n
 
 
-set_option maxHeartbeats 2000000 in
+set_option maxHeartbeats 4000000 in
 theorem placeProj_comp_finiteShapiroIso (n : ℕ) :
     cohomologyMap (finiteProjAboveRep (K := K.1) (L := F.1) v) n ≫ (finiteShapiroIso v w n).hom =
       finiteComponent w n := by
@@ -149,9 +149,11 @@ theorem ideleEmbedding_fst_of_comap_eq {E : FiniteSubfield} [Algebra F.1 E.1]
     (w' : InfinitePlace E.1) (u : InfinitePlace F.1) (hu : w'.comap (algebraMap F.1 E.1) = u)
     [w'.LiesOver u] (x : IdeleGroup F.1) :
     ((ideleEmbedding F.1 E.1 x : IdeleGroup E.1) : 𝔸[E.1]).1 w' =
-      NumberField.LiesOver.completionMap (v := u) (w := w') ((x : 𝔸[F.1]).1 u) := by
+      AbsoluteValue.Completion.map u.1 w'.1 ((x : 𝔸[F.1]).1 u) := by
   subst hu
-  rfl
+  exact (GroundTheory.Global.InfinitePlace.infiniteAdeleRingMap_apply (x : 𝔸[F.1]).1 w').trans
+    (AbsoluteValue.Completion.algebraMap_apply_of_liesOver
+      (w'.comap (algebraMap F.1 E.1)).1 w'.1 _)
 
 variable {E : FiniteSubfield} [Fact (K ≤ E)] [Fact (F ≤ E)] [E.1.fixingSubgroup.Normal]
 
@@ -170,7 +172,7 @@ theorem levelTransition_comp_infiniteComponent (w' : v.placesOver E.1) [w'.1.Lie
   apply Additive.toMul.injective
   apply Units.ext
   change ((ideleEmbedding F.1 E.1 _ : IdeleGroup E.1) : 𝔸[E.1]).1 w'.1 =
-    NumberField.LiesOver.completionMap (v := w.1) (w := w'.1) _
+    AbsoluteValue.Completion.map w.1.1 w'.1.1 _
   exact ideleEmbedding_fst_of_comap_eq w'.1 w.1 (InfinitePlace.LiesOver.comap_eq w'.1 w.1) _
 
 end Infinite

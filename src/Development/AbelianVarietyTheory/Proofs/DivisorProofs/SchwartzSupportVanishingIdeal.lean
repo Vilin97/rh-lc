@@ -60,12 +60,29 @@ theorem mem_span_of_vanish : ∀ {k : Type} [Field k] [ValuativeRel k] [Topologi
     rw [← hψk, h]
     simp)
   obtain ⟨n, hn, hinv, hsupp⟩ := GlobalTheory.SBUnif.sb_lattice_bounds k Y Y' φ hφ
-  obtain ⟨P, hP⟩ := GlobalTheory.IrredSB.cover (k := k) (Y := Y) (Y' := Y') hn hn
+  let K : AddSubgroup (Matrix Y Y' k) :=
+    ({ carrier := {u | ∀ r q, u r q ∈ 𝒪[k]}
+       add_mem' := fun ha hb r q => add_mem (ha r q) (hb r q)
+       zero_mem' := fun _ _ => zero_mem _
+       neg_mem' := fun ha r q => neg_mem (ha r q) } : AddSubgroup (Matrix Y Y' k)).map
+      (nsmulAddMonoidHom n)
+  have hcover : ∃ P : Finset (Matrix Y Y' k), ∀ t : Matrix Y Y' k,
+      (∀ r q, (n • t) r q ∈ 𝒪[k]) →
+      ∃ p ∈ P, ∃ u ∈ K, t = p + u := by
+    obtain ⟨R, hR, hRc⟩ := GlobalTheory.matrix_integers_mod_nat_finite k Y Y' (n * n) (Nat.mul_pos hn hn)
+    refine ⟨(hR.image fun s => ((n : k)⁻¹) • s).toFinset, fun t ht => ?_⟩
+    obtain ⟨s, hs, u, hu, he⟩ := hRc _ ht
+    have hn0 : (n : k) ≠ 0 := by exact_mod_cast hn.ne'
+    have hinv' : ∀ v : Matrix Y Y' k, (n : k)⁻¹ • (n • v) = v := fun v => by
+      rw [← Nat.cast_smul_eq_nsmul k, smul_smul, inv_mul_cancel₀ hn0, one_smul]
+    refine ⟨(n : k)⁻¹ • s, (Set.Finite.mem_toFinset _).2 ⟨s, hs, rfl⟩, n • u, ⟨u, hu, rfl⟩, ?_⟩
+    rw [← hinv' t, he, smul_add, mul_smul, hinv']
+  obtain ⟨P, hP⟩ := hcover
   have hn' : (n : k) ≠ 0 := by exact_mod_cast hn.ne'
   refine mem_of_sep (fun b t => (ψk (GlobalTheory.IrredSB.pair b t) : ℂ)) {z | ∀ r q, (r, q) ∉ I → z r q = 0}
     (fun b t u => by rw [GlobalTheory.IrredSB.pair_add_right, AddChar.map_add_eq_mul, Circle.coe_mul])
     (GlobalTheory.WeilM.SB (Matrix Y Y' k)) _ (fun f hf b => GlobalTheory.IrredSB.modul_mem_SB ψk hck hf b)
-    ?_ (GlobalTheory.IrredSB.lat k Y Y' n)
+    ?_ (K)
     (P.filter fun p => φ p ≠ 0) ?_ φ hφ ?_
   · intro f hf b hb
     refine Submodule.subset_span ⟨b, hb, f, hf, ?_⟩

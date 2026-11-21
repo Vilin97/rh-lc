@@ -81,6 +81,7 @@ def PG (R : RealDat D A Ks) (i : Fin D.R.m) {H : Type} [AddCommGroup H] [Module 
 def IsUpd (R R' : RealDat D A Ks) : Prop := R' = R ∨ ∃ HX HV HE HW gE gW jX jV νY fdY ν0 fd0 νX fdX νV fdV νW fdW BV,
   R' = R.upd1 HX HV HE HW gE gW jX jV νY fdY ν0 fd0 νX fdX νV fdV νW fdW BV
 
+set_option maxHeartbeats 4000000 in
 theorem realDatum_isUpdate_first_models (R : RealDat D A Ks) : ∀ R' HX HV HE HW gE gW jX jV νY fdY ν0 fd0 νX fdX νV fdV νW fdW BV, IsUpd R R' →
     IsUpd R (R'.upd1 HX HV HE HW gE gW jX jV νY fdY ν0 fd0 νX fdX νV fdV νW fdW BV) := by
   rintro R' HX HV HE HW gE gW jX jV νY fdY ν0 fd0 νX fdX νV fdV νW fdW BV
@@ -90,7 +91,7 @@ theorem realDatum_isUpdate_first_models (R : RealDat D A Ks) : ∀ R' HX HV HE H
     exact (by with_unfolding_all exact ((Eq.refl (R.upd1 HX HV HE HW gE gW jX jV νY fdY ν0 fd0 νX fdX νV fdV νW fdW BV)) :))
 
 
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 4000000 in
 theorem exists_models (hI : Inputs D) (hX : IdemClass A) {F : Face D A} (hL : LiftsAt D A Ks F) (R : RealDat D A Ks) (h : R.Pre0 F) :
     ∃ HX HV HE gE jX jV νY fdY ν0 fd0 νX fdX νV fdV, ∀ R2 : RealDat D A Ks,
       R2 = updM R HX HV HE gE jX jV νY fdY ν0 fd0 νX fdX νV fdV R.ωP R.vP (fun _ _ => 0) (fun _ _ => 0) →
@@ -110,7 +111,7 @@ theorem exists_models (hI : Inputs D) (hX : IdemClass A) {F : Face D A} (hL : Li
     exact (by with_unfolding_all exact (m' :))
 
 
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 4000000 in
 theorem exists_at (hI : Inputs D) {F : Face D A} (hF : SeedFacts D A Ks F) (R : RealDat D A Ks) (h : R.Pre0 F)
     (hω : WeilAt R A.μ0) (hV : ModVAt R A.μ0) (hl : LiftAt R A.μ0) (hr : RatAt R A.μ0) (i : Fin D.R.m) (t : T)
     (H₀ : HMod (Bridge.Gf (Vc D i) → (R.cV i).W)) (j₀ : A.fam.amb.FL i t →ₛₗ[D.what₂.embLL] H₀.H)
@@ -161,7 +162,7 @@ theorem exists_at (hI : Inputs D) {F : Face D A} (hF : SeedFacts D A Ks F) (R : 
     exact ⟨ω, v, H₀, j₀, ν₀, fd₀, th, g, hω', hv, m1, m2, m3, hth, hg, fun e => absurd e ht⟩
 
 
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 4000000 in
 theorem exists_thPW_keep (hI : Inputs D) (hX : IdemClass A) {F : Face D A} (hL : LiftsAt D A Ks F) (hF : SeedFacts D A Ks F)
     (R : RealDat D A Ks) (h : R.Pre0 F) (hW : ModW R) (hω : WeilAt R A.μ0) (hV : ModVAt R A.μ0) (hl : LiftAt R A.μ0)
     (hr : RatAt R A.μ0) :
@@ -221,7 +222,7 @@ theorem realDatum_thetaPairWeil_update_third {R : RealDat D A Ks} (a : R.IsThPW)
   ⟨a.ωP, a.vP, a.pt_theta, a.ioP, a.thF, a.thG⟩
 
 
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 4000000 in
 theorem exists_weak_keep (hI : Inputs D) (hX : IdemClass A) {F : Face D A} (hL : LiftsAt D A Ks F) (hF : SeedFacts D A Ks F)
     (Q : RealDat D A Ks → Prop)
     (hQM : ∀ R HX HV HE gE jX jV νY fdY ν0 fd0 νX fdX νV fdV ωP vP thF thG, Q R →

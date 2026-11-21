@@ -306,7 +306,9 @@ theorem primes_eq_of_halfIs (T : Core D) (R : RealDat D A Ks) {μ0 : T0} (hT : L
   have hP0 : P ≠ ⊥ := by
     rintro rfl
     apply (R.C.P.pb k).ne_bot
-    rw [← hPc, Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective _ _)]
+    rw [← hPc]
+    change Ideal.comap (algebraMap (𝓞 D.host.K) (𝓞 D.host.E)) ⊥ = ⊥
+    exact Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective _ _)
   let PP : Pl D.host.E := ⟨P, hP, hP0⟩
   have hu : PP.under (𝓞 D.host.K) = R.C.P.pb k := HeightOneSpectrum.ext hPc
   have hmem : PP ∈ R.Pg := (hL.Pg PP).2 ⟨k, hu⟩

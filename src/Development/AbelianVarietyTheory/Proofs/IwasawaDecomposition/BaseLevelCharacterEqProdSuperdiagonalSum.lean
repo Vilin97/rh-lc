@@ -27,8 +27,12 @@ theorem baseLevelCharacter_eq_prod_superdiagonalSum {Pg : Finset (Pl D.host.E)} 
     (y : (Formalism.L2.DIV.P0 Pg r ψ).H) :
     (((Formalism.L2.DIV.P0 Pg r ψ).chi y : D.what₂.LLˣ) : D.what₂.LL) =
       ∏ PP : ↥Pg, ψ PP.1 (edgeSum supEdge ((y : G0 Pg r) PP)) := by
-  simp only [Formalism.L2.DIV.P0, LevelP.ofLocal]
-  erw [MonoidHom.finset_prod_apply, Units.coe_prod]
+  change ↥(Subgroup.pi Set.univ fun PP : ↥Pg => unip (kP PP.1) r) at y
+  change (((∏ PP : ↥Pg, (addCharHom (ψ PP.1) (supHom (kP PP.1) r)).comp
+    (LevelP.prj (fun PP : ↥Pg => unip (kP PP.1) r) PP)) y : D.what₂.LLˣ) : D.what₂.LL) = _
+  letI : IsOneApply (↥(Subgroup.pi Set.univ fun PP : ↥Pg => unip (kP PP.1) r) →* D.what₂.LLˣ) := ⟨fun _ => rfl⟩
+  letI : IsMulApply (↥(Subgroup.pi Set.univ fun PP : ↥Pg => unip (kP PP.1) r) →* D.what₂.LLˣ) := ⟨fun _ _ _ => rfl⟩
+  rw [prod_apply, Units.coe_prod]
   rfl
 
 theorem supSum_map {κ : Type} [CommRing κ] {n : ℕ} (e : κ →+* ZMod n) {r : ℕ} (g : GL (Fin r) κ) :

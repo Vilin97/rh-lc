@@ -122,7 +122,10 @@ theorem transport_any : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
   have hf := hfix _ h1m _ h2m r hr'
   rw [← hsplit, hsy] at hf
   have h1 := hsp.2.1.impl g (Matrix.fromCols w₁ᵀ w₂ᵀ * (GlobalTheory.DblVac.matD g⁻¹)ᵀ) _ hr'.2
-  rw [hback, hf, GlobalTheory.VacTransport.tens_smul, map_smul, hact r hr'] at h1
+  change (omd g) (dd.rho B.ψ _ (tens (evFin F v) φ r)) =
+    dd.rho B.ψ (actB (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) g _) ((omd g) (tens (evFin F v) φ r)) at h1
+  rw [hback] at h1
+  rw [hf, GlobalTheory.VacTransport.tens_smul, map_smul, hact r hr'] at h1
   rw [← h1, GlobalTheory.VacTransport.tens_smul]
 
 theorem vdbl_line_of_unr : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
@@ -318,7 +321,10 @@ theorem vdbl_eigen_of_unr : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
       rw [hs1]
       exact this
     have h3 := hU.impl g (u • z) Φ hΦ
-    simp only [Darboux.rho, he, e2] at h3
+    change (omd g) (dd.rho B.ψ (u • z) Φ) =
+      dd.rho B.ψ (actB (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) g (u • z)) ((omd g) Φ) at h3
+    rw [e2] at h3
+    simp only [Darboux.rho, he] at h3
     exact h3
   have hE0 := doubled_vac_eigen_any F E σ B a a' G X om om' hT v d' hd' dd hdc θ hθ hvac
   have hE1 := transport_any F E σ B a a' G X om om' hT v d' hd' dd hdc θ hθ hvac omd hsp g hg vD hvDSB φ₁ hφ₁ hE0 hA

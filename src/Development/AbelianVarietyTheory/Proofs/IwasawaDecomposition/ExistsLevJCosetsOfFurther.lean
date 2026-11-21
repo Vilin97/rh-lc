@@ -58,8 +58,10 @@ theorem exists_levJ_cosets_of_further : ∀ {B : Base} {X : PreX B.toPre} (I : T
       have hne : ((I.rec7 l Z).host.g j : 𝓞 (I.rec7 l Z).host.F) ≠ 0 := Nat.cast_ne_zero.2 (l.pr.g_prime j).ne_zero
       have hfin := Ideal.finite_factors (I := Ideal.span {((I.rec7 l Z).host.g j : 𝓞 (I.rec7 l Z).host.F)}) (by
         rw [Ne, Ideal.zero_eq_bot, Ideal.span_singleton_eq_bot]; exact hne)
-      exact (hfin.subset fun v (hv : ((I.rec7 l Z).host.g j : 𝓞 (I.rec7 l Z).host.F) ∈ v.asIdeal) =>
-        (Ideal.dvd_iff_le.2 ((Ideal.span_singleton_le_iff_mem _).2 hv))).to_subtype
+      have hf : Set.Finite {v : HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F) | ((I.rec7 l Z).host.g j : 𝓞 (I.rec7 l Z).host.F) ∈ v.asIdeal} := hfin.subset (by
+        intro v hv
+        exact Ideal.dvd_iff_le.2 ((Ideal.span_singleton_le_iff_mem _).2 hv))
+      exact hf.to_subtype
     exact Finite.instSigma
   haveI : ∀ p : ι, Finite (kv (I.rec7 l Z).host.F p.2.1) := fun p => Formalism.UG.P.glint_finite_residueField p.2.1
   haveI hfinV : Finite (∀ p : ι, Fin ((I.rec7 l Z).R.N ((I.rec7 l Z).R.m - 1)) → kv (I.rec7 l Z).host.F p.2.1) := Pi.finite

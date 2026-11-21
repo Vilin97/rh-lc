@@ -20,9 +20,7 @@ private theorem sp_comp {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (�
 
 private theorem sp_dual_comp {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : S →+* T) (ψ : T →+* U) :
     spMap (dualMap (ψ.comp φ)) = spMap (dualMap ψ) ≫ spMap (dualMap φ) := by
-  rw [← sp_comp]
-  congr 1
-  exact RingHom.ext fun x => by ext <;> simp [dualMap]
+  rw [Formalism.L2.Pj.dualMap_comp, sp_comp]
 
 private theorem sp_inj {S T : Type} [CommRing S] [CommRing T] {φ ψ : S →+* T} (h : spMap φ = spMap ψ) : φ = ψ :=
   congrArg CommRingCat.Hom.hom (Spec.map_injective h)

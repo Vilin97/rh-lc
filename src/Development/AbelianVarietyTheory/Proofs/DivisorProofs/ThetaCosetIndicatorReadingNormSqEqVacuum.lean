@@ -103,7 +103,7 @@ theorem ip_sum (hψ : IsStdChar D ψ (-1)) {μ : Measure (WO S T)} {𝓕 : Set (
       ∑ i ∈ s, ∑ j ∈ s, (a i * starRingEnd ℂ (a j)) * GlobalTheory.Ker.ipO μ 𝓕 (h i) (h j) := by
     unfold GlobalTheory.Ker.ipO
     simp only [e]
-    rw [integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => hi i j]
+    rw [integral_finsetSum _ fun i _ => integrable_finsetSum _ fun j _ => hi i j]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [integral_finsetSum _ fun j _ => hi i j]
     exact Finset.sum_congr rfl fun j _ => integral_const_mul _ _

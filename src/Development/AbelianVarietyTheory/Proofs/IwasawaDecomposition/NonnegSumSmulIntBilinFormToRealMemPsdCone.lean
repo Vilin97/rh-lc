@@ -95,15 +95,15 @@ theorem sum_smul_toReal_mem_psdCone : ∀ (O : Type) [CommRing O] [IsDedekindDom
   have : Module.FinitePresentation O (X ⧸ R) := Module.finitePresentation_of_finite _ _
   have hproj : Module.Projective O (X ⧸ R) := Module.Flat.projective_of_finitePresentation
   have : Module.Finite ℤ (X ⧸ R) := Module.Finite.trans O (X ⧸ R)
-  have : IsAddTorsionFree (X ⧸ R) := by
-    refine ⟨fun n hn a b hab => ?_⟩
+  have : Module.IsTorsionFree ℤ (X ⧸ R) := by
+    refine ⟨fun {n} hn a b hab => ?_⟩
     induction a using Submodule.Quotient.induction_on with | H x => ?_
     induction b using Submodule.Quotient.induction_on with | H y => ?_
     simp only at hab
     rw [← Submodule.Quotient.mk_smul, ← Submodule.Quotient.mk_smul, Submodule.Quotient.eq] at hab
     rw [Submodule.Quotient.eq]
-    refine hZ n (by exact_mod_cast hn) (x - y) ?_
-    rw [natCast_zsmul, smul_sub]; exact hab
+    refine hZ n (isRegular_iff_ne_zero.mp hn) (x - y) ?_
+    rw [smul_sub]; exact hab
   have : Module.Free ℤ (X ⧸ R) := Module.free_of_finite_type_torsion_free'
 
   have hBq : ∀ x x' y y', Submodule.Quotient.mk (p := R) x = Submodule.Quotient.mk x' →

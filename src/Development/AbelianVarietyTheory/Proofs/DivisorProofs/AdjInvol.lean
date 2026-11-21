@@ -50,13 +50,13 @@ variable {σ} (anti : ∀ a b, σ (a * b) = σ b * σ a) (one : σ 1 = 1) (invol
 theorem sec_val {a : 𝔸} (h : σ a * a = 1) : ((sec σ anti one invol a : 𝔸ˣ) : 𝔸) = a := by
   rw [sec, dite_eq_left h]
 
-theorem lieData : IsLieData σ (skew σ).subtype (sec σ anti one invol) where
-  anti := anti
-  one := one
-  invol := invol
-  inj := Subtype.val_injective
-  skew X := ⟨fun h => ⟨⟨X, (mem_skew σ).2 h⟩, rfl⟩, by rintro ⟨Y, rfl⟩; exact (mem_skew σ).1 Y.2⟩
-  mul a b ha hb := by
+theorem lieData : IsLieData σ (skew σ).subtype (sec σ anti one invol) := by
+  refine ⟨anti, one, invol, Subtype.val_injective, ?_, ?_⟩
+  · intro X
+    refine ⟨fun h => ⟨⟨X, (mem_skew σ).2 h⟩, rfl⟩, ?_⟩
+    rintro ⟨Y, rfl⟩
+    exact (mem_skew σ).1 Y.2
+  · intro a b ha hb
     have hab : σ (a * b) * (a * b) = 1 := by rw [anti, mul_assoc, ← mul_assoc (σ a), ha, one_mul, hb]
     refine Subtype.ext (Units.ext ?_)
     rw [Subgroup.coe_mul, Units.val_mul, sec_val _ _ _ ha, sec_val _ _ _ hb, sec_val _ _ _ hab]

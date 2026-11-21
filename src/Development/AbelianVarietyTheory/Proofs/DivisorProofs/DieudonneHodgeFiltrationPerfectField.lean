@@ -52,8 +52,10 @@ theorem hodge_filtration : ∀ (p : ℕ) [Fact p.Prime] (T : Theory p) (k : Type
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     obtain ⟨m, rfl⟩ := T.base.red_surjective G trivial x
-    rw [← T.base.red_smap trivial trivial (frobProj (p_eq_zero p k) G), T.base.red_eq_zero] at hx
-    obtain ⟨n, hn⟩ := hx
+    rw [← T.base.red_smap trivial trivial (frobProj (p_eq_zero p k) G)] at hx
+    have hx' := (T.base.red_eq_zero (frobTwist (p_eq_zero p k) G) trivial _).1 hx
+    clear hx
+    obtain ⟨n, hn⟩ := hx'
     obtain ⟨n', rfl⟩ := hbij.2 n
     have hm : m = p • n' := hbij.1 (by rw [hn, map_nsmul])
     exact (T.base.red_eq_zero G trivial m).2 ⟨n', hm⟩
@@ -84,7 +86,7 @@ theorem hodge_filtration : ∀ (p : ℕ) [Fact p.Prime] (T : Theory p) (k : Type
   rw [G.exact_rigOfOmega_rigToLie (p_eq_zero p k) (T.red G m)]
   constructor
   · intro hm
-    obtain ⟨m', hm'⟩ := (h1 _).2 (by simpa using hm)
+    obtain ⟨m', hm'⟩ := (h1 _).2 hm
     have h0 : T.red G (m - T.V G m') = 0 := by rw [map_sub, hm', sub_self]
     obtain ⟨n, hn⟩ := (T.base.red_eq_zero G trivial _).1 h0
     refine ⟨m' + T.F G n, ?_⟩

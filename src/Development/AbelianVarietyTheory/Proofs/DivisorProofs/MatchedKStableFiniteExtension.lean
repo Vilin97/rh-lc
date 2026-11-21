@@ -73,8 +73,8 @@ theorem exists_kStable_compl_fockDeg : GlobalTheory.ThK.KP → ∀ (F E : Type) 
       intro g
       have e := GlobalTheory.T.compact_weil_l2_invariant F E σ B a (a + a') G.V G.W G.M om X.β (X.β / X.α) hT.base hT.geo.hM hT.weil k hk g (A g) (hA g)
       show ‖(A g).toLp 2 volume‖ = ‖g.toLp 2 volume‖
-      rw [SchwartzMap.norm_toLp, SchwartzMap.norm_toLp, eLpNorm_eq_lintegral_rpow_enorm two_ne_zero ENNReal.ofNat_ne_top,
-        eLpNorm_eq_lintegral_rpow_enorm two_ne_zero ENNReal.ofNat_ne_top]
+      rw [SchwartzMap.norm_toLp, SchwartzMap.norm_toLp, eLpNorm_eq_lintegral_rpow_eNorm_toReal two_ne_zero ENNReal.ofNat_ne_top (A g).continuous.aestronglyMeasurable,
+        eLpNorm_eq_lintegral_rpow_eNorm_toReal two_ne_zero ENNReal.ofNat_ne_top g.continuous.aestronglyMeasurable]
       simp only [ENNReal.toReal_ofNat, ENNReal.rpow_two]
       rw [e]
     have hinner : ∀ g h, inner ℂ (ι (A g)) (ι (A h)) = inner ℂ (ι g) (ι h) := by
@@ -145,7 +145,7 @@ theorem exists_kStable_compl : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F
       Monotone.directed_le fun i j hij => Submodule.map_mono (GlobalTheory.IndLine.fockDeg_mono G.M B.ψ B.emb hij)
     have hfg : U₀.FG := Module.Finite.iff_fg.mp hU₀
     have hc : IsCompactElement U₀ := (Submodule.fg_iff_compact U₀).mp hfg
-    obtain ⟨x, ⟨j, rfl⟩, hx⟩ := (CompleteLattice.isCompactElement_iff_le_of_directed_sSup_le _ U₀).mp hc
+    obtain ⟨x, ⟨j, rfl⟩, hx⟩ := (isCompactElement_iff_le_of_directed_sSup_le U₀).mp hc
       (Set.range fun j => (GlobalTheory.IndLine.fockDeg G.M B.ψ B.emb j).map R.p) (Set.range_nonempty _)
       hdir.directedOn_range (by simp only [sSup_range, htop, le_top])
     exact ⟨j, hx⟩

@@ -65,7 +65,7 @@ theorem mem_range_of_roots {K : Type} [Field K] {O : Type} [CommRing O] [IsDomai
   let c : ℕ := ∏ ρ ∈ Q.roots.toFinset, df ρ
   have hc : ¬ l ∣ c := by
     intro h
-    obtain ⟨ρ, -, hρ⟩ := (Prime.dvd_finset_prod_iff hl.prime _).1 h
+    obtain ⟨ρ, -, hρ⟩ := (Prime.dvd_finsetProd_iff hl.prime _).1 h
     exact hdf ρ hρ
   have hcr : ∀ a ∈ Q.roots, IsIntegral ℤ ((c : ℂ) * a) := by
     intro a ha

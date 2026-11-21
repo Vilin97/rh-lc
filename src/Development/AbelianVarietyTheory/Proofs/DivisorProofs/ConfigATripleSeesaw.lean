@@ -85,6 +85,8 @@ theorem symp_mixedA {B : Base F E} {j₀ j₁ i₀ i₁ : ℕ} {H : Plane E n n�
   have ha : Matrix.vecMulVec y (incV F H'.x) ∈ (iso0 n H' : Set (Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))) := ⟨y, rfl⟩
   have ha' : Matrix.vecMulVec y' (incV F H'.x) ∈ (iso0 n H' : Set (Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))) := ⟨y', rfl⟩
   have hcross := GlobalTheory.T.symplectic_isotropic_embedded_vanishes_adelic F E σ n d d₁ X.J W.J H' (fun u => (hH'.orth u).1)
+  change ∀ u ∈ (iso0 n H' : Set (Matrix (Fin n) (Fin d) (AE F E))), ∀ z : Matrix (Fin n) (Fin d₁) (AE F E),
+    symp (cA σ) (-1) (incM F X.J) (incM F W.J) (incM F (1 : Matrix (Fin n) (Fin n) E) * z * (incM F H'.ι)ᵀ) u = 0 at hcross
   have h_aa := GlobalTheory.T.symplectic_isotropic_plane_vanishes_adelic F E σ n d d₁ X.J W.J H' hH'.xx _ ha _ ha'
   have h_ba' := hcross _ ha' (Matrix.vecMulVec (incV F H.x) v)
   have h_b'a := hcross _ ha (Matrix.vecMulVec (incV F H.x) v')
@@ -95,7 +97,12 @@ theorem symp_mixedA {B : Base F E} {j₀ j₁ i₀ i₁ : ℕ} {H : Plane E n n�
   have h_c'b := symp_eq_zero (JB := W.J) _ _ _ (piece_ix hH (z' * (incM F H'.ι)ᵀ) (incM F H'.ι *ᵥ v))
   have h_cc : symp (cA σ) (-1) (incM F X.J) (incM F W.J) (incM F H.ι * z * (incM F H'.ι)ᵀ)
       (incM F H.ι * z' * (incM F H'.ι)ᵀ) = 0 := by
-    rw [piece_c_left_identity H H' z, piece_c_left_identity H H' z', GlobalTheory.T.symplectic_form_restricted_plane F E σ n d d₁ X.J W.J W₁.J H'.ι hH'.gram]
+    have hr := GlobalTheory.T.symplectic_form_restricted_plane F E σ n d d₁ X.J W.J W₁.J H'.ι hH'.gram (incM F H.ι * z) (incM F H.ι * z')
+    change symp (cA σ) (-1) (incM F X.J) (incM F W.J)
+      (incM F (1 : Matrix (Fin n) (Fin n) E) * (incM F H.ι * z) * (incM F H'.ι)ᵀ)
+      (incM F (1 : Matrix (Fin n) (Fin n) E) * (incM F H.ι * z') * (incM F H'.ι)ᵀ) =
+      symp (cA σ) (-1) (incM F X.J) (incM F W₁.J) (incM F H.ι * z) (incM F H.ι * z') at hr
+    rw [piece_c_left_identity H H' z, piece_c_left_identity H H' z', hr]
     have e1 := piece_ii (d := d₁) hH z z'
     have e2 := piece_ii (d := d₁) hH z' z
     simp only [incM_one, Matrix.transpose_one, Matrix.mul_one] at e1 e2
@@ -103,6 +110,7 @@ theorem symp_mixedA {B : Base F E} {j₀ j₁ i₀ i₁ : ℕ} {H : Plane E n n�
         symp (cA σ) (-1) (incM F X₁.J) (incM F W₁.J) z z' := by
       simp only [symp, hTens_eq, e1, e2]
     rw [this, M₁.co.form, hz, hz', zero_dotProduct, zero_dotProduct, sub_self]
+  change symp (cA σ) (-1) (incM F X.J) (incM F W.J) (Matrix.vecMulVec y (incV F H'.x)) (Matrix.vecMulVec y' (incV F H'.x)) = 0 at h_aa
   rw [← piece_b_eq] at h_ba' h_b'a
   rw [← piece_c_left_identity] at h_ca' h_c'a
   rw [← piece_c_right_identity] at h_cb' h_c'b

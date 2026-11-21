@@ -228,7 +228,7 @@ theorem exists_chart_baseChange {S S' : Type} [CommRing S] [Algebra c.F S] [Alge
   have hG := GlobalTheory.T.rawChart_baseChange_rig_germ_alt E H Dw l Xo S S' φ.toRingHom y.x R.d R.B.G.F R.B.A.act R.x
     (fun m => rjBC φ.toRingHom y.x R.d m 1 ≫ R.x m) (fun _ => rfl) R.e e' R.frame.gen hg hc
     R.wP R.prim.1
-  have h₁ := GlobalTheory.T.isRawChart_baseChange_jetPoints E H Dw l Xo S S' φ.toRingHom y.x R.d R.B.G.F R.B.A.act R.x
+  have h₁ := GlobalTheory.RawChartBC.rIsChart_baseChange E H Dw l Xo S S' φ.toRingHom y.x R.d R.B.G.F R.B.A.act R.x
       (fun m => rjBC φ.toRingHom y.x R.d m 1 ≫ R.x m) (fun _ => rfl) y.u R.uvec R.chart
   have h₂ := GlobalTheory.T.isFrame_rawChart_baseChange E H Dw l Xo S S' φ.toRingHom y.x R.d R.B.G.F R.B.A.act R.x
       (fun m => rjBC φ.toRingHom y.x R.d m 1 ≫ R.x m) (fun _ => rfl) R.e e' R.frame.gen hg hc

@@ -74,9 +74,9 @@ theorem exists_change {φ : c.F →+* R} {x : Sp R ⟶ Z.X} (f : EigFrame Z φ x
     exact Finset.sum_comm
   refine ⟨EigFrame.ofVec (fun τ i => ∑ k, A τ i k • f.vec τ k) (fun τ i a => ?_) fun τ w hw => ?_,
     fun τ i => tan_ext rfl⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [map_sum, map_smul, f.act_vec, Finset.smul_sum]
-    exact Finset.sum_congr rfl fun k _ => smul_comm _ _ _
+  · set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, f.act_vec, Finset.smul_sum]
+      exact Finset.sum_congr rfl fun k _ => smul_comm _ _ _
   · obtain ⟨a, ha, hu⟩ := f.existsUnique_sum τ w hw
     refine ⟨Matrix.vecMul a (B τ), ?_, fun b hb => ?_⟩
     · show w = _

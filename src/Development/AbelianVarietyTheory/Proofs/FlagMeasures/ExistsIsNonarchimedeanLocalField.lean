@@ -5,7 +5,7 @@ public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MemRiemannRoc
 
 @[expose] public section
 
-open ValuativeRel Formalism.MainNotions.S Formalism.MainNotions.S.Loc GlobalTheory.HL GlobalTheory.IndefiniteRowSideFullHecke.FrameCoefficientData GlobalTheory.NonGenericCompare
+open ValuativeRel Formalism.MainNotions.S Formalism.MainNotions.S.Loc GlobalTheory.HL GlobalTheory.NonGenericCompare
 open scoped Pointwise ENNReal Classical
 
 noncomputable section

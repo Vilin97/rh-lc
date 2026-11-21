@@ -163,9 +163,41 @@ theorem exists_theta_ne_zero {E : Type} [Field E] [NumberField E] [IsCMField E] 
   have hsd : SelfD (U.X k) (U.X k).Λ := (uw_lattice _ H Dw l Xo c σ _ _ hσ hU' h1 W0 k).2.1
   obtain ⟨A, hA⟩ := hg
   have hd := ((GlobalTheory.Dict.reads_existsUnique_theta E H Dw l Xo c r _ _ bas idx _ x.1 _ _ A hb x.2 hsd 1 _).2 Y.θ hA).1
-  refine GlobalTheory.FrameEquiv.exists_apply_pv_ne_zero E r _ _ bas idx hb x.1 x.2 _ hd.continuous fun h0 => ?_
-  have h9 := Y.c9
-  simp [h0] at h9
+  have dense_of_rat_of_span {V : Type} [AddCommGroup V] [Module ℝ V] [TopologicalSpace V] [ContinuousAdd V]
+      [ContinuousSMul ℝ V] (S : Set V) (h0 : (0 : V) ∈ S) (ha : ∀ u ∈ S, ∀ v ∈ S, u + v ∈ S)
+      (hq : ∀ q : ℚ, ∀ u ∈ S, (q : ℝ) • u ∈ S) (hS : Submodule.span ℝ S = ⊤) : Dense S := by
+    let P : Submodule ℝ V :=
+      { carrier := closure S
+        zero_mem' := subset_closure h0
+        add_mem' := fun {a b} h1 h2 => map_mem_closure₂ continuous_add h1 h2 ha
+        smul_mem' := fun t a h1 => by
+          have ht : t ∈ closure (Set.range ((↑) : ℚ → ℝ)) := Rat.denseRange_cast t
+          refine map_mem_closure₂ (f := fun (s : ℝ) (v : V) => s • v) continuous_smul ht h1 ?_
+          rintro _ ⟨q, rfl⟩ u hu
+          exact hq q u hu }
+    have hP : Submodule.span ℝ S ≤ P := Submodule.span_le.2 subset_closure
+    intro z
+    exact hP (hS ▸ Submodule.mem_top)
+  have hq (q : ℚ) (v : Fin r → E) : pv (U.X k) idx x.1 ((q : E) • v) = (q : ℝ) • pv (U.X k) idx x.1 v := by
+    rw [pv_smul]
+    funext j
+    simp
+  have hdense : DenseRange (pv (U.X k) idx x.1) := by
+    refine dense_of_rat_of_span _ ⟨0, ?_⟩ ?_ ?_ (span_range_pv idx hb x.2)
+    · simpa using hq 0 0
+    · rintro _ ⟨u, rfl⟩ _ ⟨v, rfl⟩
+      refine ⟨u + v, ?_⟩
+      rw [pv, pv, pv, per_add]
+      rfl
+    · rintro q _ ⟨u, rfl⟩
+      exact ⟨_, hq q u⟩
+  have hn : Y.θ ≠ 0 := by
+    intro h0
+    have h9 := Y.c9
+    simp [h0] at h9
+  by_contra h
+  push Not at h
+  exact hn (hdense.equalizer hd.continuous continuous_const (funext h))
 
 
 set_option maxHeartbeats 1000000 in

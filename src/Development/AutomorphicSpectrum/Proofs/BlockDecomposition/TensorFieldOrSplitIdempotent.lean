@@ -6,7 +6,7 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.Continuo
 
 @[expose] public section
 
-open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes IsDedekindDomain NumberField GlobalTheory.Published Sa2 GlobalTheory.CompanionTheory.SaGen
+open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes IsDedekindDomain NumberField GlobalTheory.Published GlobalTheory.CompanionTheory.SaGen
 open scoped TensorProduct Topology
 
 noncomputable section
@@ -30,7 +30,7 @@ theorem sigma_sigma {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (x : E) : σ (σ x
 
 theorem exists_moved {σ : E →ₐ[F] E} (h : IsCMExt F E σ) : ∃ y, σ y ≠ y := by
   by_contra hc
-  push_neg at hc
+  push Not at hc
   obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
   have hreal : ComplexEmbedding.IsReal τ := ComplexEmbedding.isReal_iff.2 (RingHom.ext fun x => by
     rw [ComplexEmbedding.conjugate_coe_eq]

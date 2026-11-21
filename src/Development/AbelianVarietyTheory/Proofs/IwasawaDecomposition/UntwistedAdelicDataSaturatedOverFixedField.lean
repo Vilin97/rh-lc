@@ -26,12 +26,12 @@ theorem stepW_seed_fixed : StepW Pinned fun K B f T _ =>
     (↑(NonzeroPlacesOverPrimes.forcedContentSupportPrimes K B.toPre) : Set ℕ) ⊆ ↑T.pl ∧ ∀ px : PreX B.toPre,
       (∃ F₀, SeedW K B.toPre f B.KsC F₀ px Set.univ ⊤) → ∃ F₀, SeedW K B.toPre f B.KsC F₀ px ↑T.pl B.fixedCoefficientFieldInComplex := by
   refine evG_all fun K => ?_
-  choose S S₁ hS₁ hS using GlobalTheory.T.exists_uniform_normalisedAdelicSeeds K
+  choose S S₁ hS using GlobalTheory.T.exists_uniform_normalisedAdelicSeeds K
   refine ⟨fun P f F => S₁ P f F, fun P f F _ => S P f F ∪ NonzeroPlacesOverPrimes.forcedContentSupportPrimes K P, fun _ _ _ _ _ => ∅,
-    fun _ _ _ _ _ => ∅, fun P f F => hS₁ P f F, by simp, ?_⟩
+    fun _ _ _ _ _ => ∅, fun P f F => (hS P f F).1, by simp, ?_⟩
   intro B f T _ hHas hP _ _ _ _ w _
   refine ⟨fun p hp => hP (Finset.mem_union_right _ hp), fun px hs => ?_⟩
-  obtain ⟨F₀, h⟩ := hS _ _ _ px hs
+  obtain ⟨F₀, h⟩ := (hS _ _ _).2 px hs
   refine ⟨F₀, h.mono ?_ ?_⟩
   · intro p hp
     exact hP (Finset.mem_union_left _ hp)

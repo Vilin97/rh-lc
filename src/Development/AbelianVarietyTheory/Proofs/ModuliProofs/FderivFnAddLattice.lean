@@ -41,14 +41,15 @@ theorem fderiv_fn_add_lattice (m : A₀.left ⟶ X) (W : X.Opens) (f : Γ(X, W))
     _ = fderiv ℂ (fn u m W f) z := by rw [h]
 
 theorem ptDer_sub {y : Sp ℂ ⟶ X} {δ δ' : ∀ W : X.Opens, Γ(X, W) → ℂ} (h : PtDer y δ) (h' : PtDer y δ') :
-    PtDer y (fun W f => δ W f - δ' W f) where
-  add W hW f f' := by
+    PtDer y (fun W f => δ W f - δ' W f) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro W hW f f'
     rw [h.add W hW f f', h'.add W hW f f']
     ring
-  mul W hW f f' := by
+  · intro W hW f f'
     rw [h.mul W hW f f', h'.mul W hW f f']
     ring
-  res W W' hle hW' f := by
+  · intro W W' hle hW' f
     rw [h.res W W' hle hW' f, h'.res W W' hle hW' f]
 end
 

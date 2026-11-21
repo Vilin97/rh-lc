@@ -44,8 +44,7 @@ theorem jetsAt_of_one (ch : Choice R) (hL : R.toLevCh.Is A.μ0) (h : JetsOne ch)
   refine ⟨σ.sum fun P c => c * κ P, fun t a β hβ M τ hM hτ y => ?_⟩
   rw [defTot_eq_sum, Finsupp.sum_mul]
   refine Finsupp.sum_congr fun P _ => ?_
-  rw [hκ P t a β hβ M τ hM hτ y]
-  ring
+  rw [hκ P t a β hβ M τ hM hτ y, mul_assoc]
 
 end GlobalTheory.RowClaim.JetsAssembly
 

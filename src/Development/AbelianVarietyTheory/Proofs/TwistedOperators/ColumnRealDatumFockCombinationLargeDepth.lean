@@ -104,7 +104,7 @@ theorem lift_cen (hθ : IsInfFam θ) {S T : HSp D} {x : DefSp S} {y : DefSp T} (
       refine Finset.sum_congr rfl fun u _ => ?_
       rw [map_smul, hW.om_heis a b u _ hF, h3, hag a ha b hb.1 _ hF, hv, hl, smul_comm]
       congr 1
-      ring
+      exact GlobalTheory.SplitScalar.heisO_smul _ _ _ _ _ _
     have hpt := (GlobalTheory.SeeSaw.LiftSumProof.liftSum D ψ θ hθ S T x y hx hy k hk P).1
     rw [liftT_apply, liftT_apply, ← GlobalTheory.ChainOnto.setIntegral_fd_mul_right D S v.μ v.𝓕 v.haar v.fund
       (fun g => k.om (g, h * b) (k.pt ψ θ x y P) 0 * φ g) (fun γ hγ g => by rw [fix_left hW hpt g _ hγ, hφ.1 γ hγ g]) a,
@@ -303,7 +303,7 @@ theorem col_step {j : ℕ} (hj : j + 2 ≤ D.R.m) (he : Even j) (I : Type) [Fint
   have hcont := fun i => Lp_cont W hv hM t hc (Q i) hφ j h0.le
   have hsum : GlobalTheory.Unf.IsContAut _ (∑ i, Lp W v M t c j (Q i) φ) :=
     ⟨fun γ hγ g => by simp only [Finset.sum_apply, (hcont _).1 γ hγ g],
-      by simpa only [Finset.sum_fn] using continuous_finset_sum _ fun i _ => (hcont i).2⟩
+      by simpa only [Finset.sum_fn] using continuous_finsetSum _ fun i _ => (hcont i).2⟩
   obtain ⟨e1, e2⟩ := hS (volT hM h0) (volT hM h1) _ _ (kd_is W hv t h0 (hc _ h0)) (kd_is W hv t h1 (hc _ h1)) rfl rfl
     (hre t t₀ j h0) (hre t t₀ (j + 1) h1) _ hsum hχ
   have e : biL W M t j (∑ i, Lp W v M t c j (Q i) φ) (combC W c C j) = ∑ p : Fin n × I, Lp W v M t c (j + 1 + 1)
@@ -345,7 +345,7 @@ theorem col_ind : ∀ σ j (hj : j + 2 * σ + 2 = D.R.m), Even j → ∀ (I : Ty
       (GlobalTheory.RowChain.topEmb G _ h') ∂M.ν (.grid D.R.m D.R.m) = _
     rw [(hS t M hM c hc φ hφ hχ).1]
     simp only [Finset.sum_apply, Lp_topEmb, mul_comm (F _), Finset.sum_mul]
-    apply integral_finset_sum
+    apply integral_finsetSum
     intro i _
     have h1 := Lp_cont W hv hM t hc (Q' i) hφ D.R.m le_rfl
     have h2 := hM (.grid D.R.m D.R.m) ⟨le_rfl, rfl⟩ (fun e => by cases e)

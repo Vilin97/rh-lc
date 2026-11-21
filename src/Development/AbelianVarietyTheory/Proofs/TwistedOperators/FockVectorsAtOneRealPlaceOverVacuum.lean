@@ -361,7 +361,7 @@ private theorem laws_lemma_7 {D : D7} {V W : HSp D} {ψ : AddChar (AF D.host.F) 
   have hex : ∀ T : (WO V W → ℂ) → (WO V W → ℂ), (∀ g, IsThetaFunO ψ V W g → IsThetaFunO ψ V W (T g)) →
       (∀ g h, IsThetaFunO ψ V W g → IsThetaFunO ψ V W h → T (g + h) = T g + T h) → (∀ (c : ℂ) g, T (c • g) = c • T g) →
       ∃ e : Module.End ℂ (GlobalTheory.VacuumFockLaws.thetaSub V W ψ), ∀ g : GlobalTheory.VacuumFockLaws.thetaSub V W ψ, (e g : WO V W → ℂ) = T g :=
-    fun T h1 h2 h3 => exists_end_coe_eq_of_linear_on_submodule _ T (fun g hg => h1 g hg) (fun g hg h hh => h2 g h hg hh) (fun c g _ => h3 c g)
+    fun T h1 h2 h3 => exists_end_coe_eq_of_linear_on_submodule (GlobalTheory.VacuumFockLaws.thetaSub V W ψ) T (fun g hg => h1 g hg) (fun g hg h hh => h2 g h hg hh) (fun c g _ => h3 c g)
   choose a ha using fun k : Fin W.rank × Fin V.rank => hex (fun g => Formalism.IndefR.Datum.aPlus (heisO ψ V W) θ τ (cplxO s s') (unitMap B B' k.1 k.2) g) (Ath k) (Aadd k) (Asmul k)
   choose b hb using fun k : Fin W.rank × Fin V.rank => hex (fun g => ((-(fockScale D τ : ℂ)⁻¹) • Formalism.IndefR.Datum.annih (heisO ψ V W) θ τ (cplxO s s') (unitMap B B' k.1 k.2) g)) (Bth k) (Badd k) (Bsmul k)
   have ha' : ∀ (k : Fin W.rank × Fin V.rank) (g : GlobalTheory.VacuumFockLaws.thetaSub V W ψ), (a k g : WO V W → ℂ) = Formalism.IndefR.Datum.aPlus (heisO ψ V W) θ τ (cplxO s s') (unitMap B B' k.1 k.2) (g : WO V W → ℂ) := fun k g => ha k g

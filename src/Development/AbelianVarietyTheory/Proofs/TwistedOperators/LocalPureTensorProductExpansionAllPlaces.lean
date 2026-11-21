@@ -43,11 +43,11 @@ theorem oneProduct : Big fun {D} _ _ _ _ {T} _ _ _ _ _ _ ch => ∀ (s : ℤˣ) (
   have hsum : ∀ F : PureDat ch.G t × Combs ch.G → ℂ,
       ((∑ a ∈ SJ, Finsupp.single (key a) (xJ a)).sum fun k x => x * F k) = ∑ a ∈ SJ, xJ a * F (key a) := by
     intro F
-    rw [← Finsupp.sum_finset_sum_index (fun _ => zero_mul _) (fun _ _ _ => add_mul _ _ _)]
+    rw [← Finsupp.sum_finsetSum_index (fun _ => zero_mul _) (fun _ _ _ => add_mul _ _ _)]
     exact Finset.sum_congr rfl fun a _ => Finsupp.sum_single_index (zero_mul _)
   refine ⟨∑ a ∈ SJ, Finsupp.single (key a) (xJ a), ?_, ?_, ?_⟩
   · intro k hk
-    obtain ⟨a, ha, hk'⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum hk)
+    obtain ⟨a, ha, hk'⟩ := Finset.mem_biUnion.1 (Finsupp.support_finsetSum hk)
     rw [Finset.mem_singleton.1 (Finsupp.support_single_subset hk')]
     exact ⟨fun j => hJ a ha j, fun n => hdr n⟩
   · intro u y hu hy

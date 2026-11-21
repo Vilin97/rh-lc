@@ -82,10 +82,12 @@ theorem realVal_lt_one_iff {x : K} : realVal V K x < 1 ↔ valV V x < 1 := by
   have := (WithZeroMulInt.toNNReal_strictMono (e := 2) (by norm_num)).lt_iff_lt (a := valV V x) (b := 1)
   simpa [realVal] using this
 
-theorem realVal_integers : (realVal V K).Integers V where
-  hom_inj := IsFractionRing.injective V K
-  map_le_one x := realVal_le_one_iff.2 (valV_algebraMap_le_one x)
-  exists_of_le_one _ h := IsDiscreteValuationRing.exists_lift_of_le_one (realVal_le_one_iff.1 h)
+theorem realVal_integers : (realVal V K).Integers V := by
+  refine ⟨IsFractionRing.injective V K, ?_, ?_⟩
+  · intro x
+    exact (realVal_le_one_iff (V := V)).2 (valV_algebraMap_le_one x)
+  · intro x hx
+    exact IsDiscreteValuationRing.exists_lift_of_le_one ((realVal_le_one_iff (V := V)).1 hx)
 
 end Dvr
 

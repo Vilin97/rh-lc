@@ -41,16 +41,18 @@ lemma isIntegral_trace_conj (c : E ≃ₐ[ℚ] E) (φ₀ : E →+* ℂ)
   exact (isIntegral_algHom_iff (algebraMap K ℂ).toIntAlgHom (algebraMap K ℂ).injective).mp h2
 
 lemma isLocalizedModule_subtype (Λ : Submodule (𝓞 K) E)
-    (h : Submodule.span K (Λ : Set E) = ⊤) : IsLocalizedModule (𝓞 K)⁰ Λ.subtype where
-  map_units s := by
-    have := isLocalizedModule_id (𝓞 K)⁰ E K
-    exact IsLocalizedModule.map_units (S := (𝓞 K)⁰) (LinearMap.id : E →ₗ[𝓞 K] _) s
-  surj y := by
+    (h : Submodule.span K (Λ : Set E) = ⊤) : IsLocalizedModule (𝓞 K)⁰ Λ.subtype := by
+  refine {
+    map_units := (isLocalizedModule_id (𝓞 K)⁰ E K).map_units
+    surj := ?_
+    exists_of_eq := ?_ }
+  · intro y
     have hy : y ∈ Submodule.span K (Λ : Set E) := h ▸ Submodule.mem_top
     obtain ⟨t, ht⟩ := multiple_mem_span_of_mem_localization_span (𝓞 K)⁰ K _ y hy
     rw [Submodule.span_eq] at ht
     exact ⟨(⟨_, ht⟩, t), rfl⟩
-  exists_of_eq h := ⟨1, by simpa using h⟩
+  · intro x₁ x₂ hxy
+    exact ⟨1, by simpa using hxy⟩
 
 theorem exists_family (c : E ≃ₐ[ℚ] E) (φ₀ : E →+* ℂ)
     (hc : ∀ (φ : E →+* ℂ) (x : E), φ (c x) = starRingEnd ℂ (φ x))

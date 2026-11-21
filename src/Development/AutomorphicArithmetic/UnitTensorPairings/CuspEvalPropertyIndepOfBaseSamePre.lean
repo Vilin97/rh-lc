@@ -40,6 +40,8 @@ private theorem exists_restrict {L L' : Type} [Field L] [Field L'] (ι : L →+*
   · intro x y
     rw [← map_add (f := _)]
     congr 1
+    funext k
+    simp
   · intro a x
     have : (fun k => ι ((a • x) k)) = ι a • (fun k => ι (x k)) := by
       funext k

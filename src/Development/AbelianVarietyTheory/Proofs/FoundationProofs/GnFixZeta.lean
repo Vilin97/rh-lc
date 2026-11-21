@@ -113,9 +113,9 @@ theorem ev_fix {T : Tower p Ω} {L : ℕ} {ψ : O0 p →+* Ω} (hψ : IsReb T L 
   have hq : g (T.qq L) = T.qq L := ((Basic.mem_gn T L g).1 hg2).2
   obtain ⟨d, e, a, he, -, rfl, rfl⟩ := h
   set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
-    refine Finset.sum_congr rfl fun t _ => ?_
-    rw [map_mul, hg1 _ (he t).2, reb_fix hψ hq]
+    constructor <;> rw [map_sum] <;>
+      refine Finset.sum_congr rfl fun t _ => ?_ <;>
+      rw [map_mul, hg1 _ (he t).2, reb_fix hψ hq]
 
 theorem conj_mem {T : Tower p Ω} {L : ℕ} {σ g : Gal p Ω} (hσ : σ ∈ Gn T L) (hg : g ∈ Ggeo p Ω ⊓ Gn T L) :
     σ * g * σ⁻¹ ∈ Ggeo p Ω ⊓ Gn T L := by

@@ -163,8 +163,66 @@ theorem stabY_finite : ∀ (D : D7) (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FP
     have h5 := Submodule.finrank_le (U ⊔ W)
     omega
   have hΛlat : Submodule.IsLattice D.host.E Λ := hΛ.1
+  have hriesz (φ : (VS D).V →ₗ[D.host.E] D.host.E) : ∃ μ : (VS D).V, ∀ v, (VS D).hT μ v = φ v := by
+    classical
+    obtain ⟨bs, hbs⟩ := Formalism.HermitianLatticesTheory.dualLattice_dualBasis (VS D).hT (VS D).nondeg (VS D).frame
+    refine ⟨∑ j, star (φ ((VS D).frame j)) • bs j, fun v => ?_⟩
+    have key : (VS D).hT (∑ j, star (φ ((VS D).frame j)) • bs j) = φ := by
+      apply (VS D).frame.ext
+      intro i
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, LinearMap.sum_apply]
+      have hs : ∀ j, (VS D).hT (star (φ ((VS D).frame j)) • bs j) ((VS D).frame i) =
+          φ ((VS D).frame j) * (if i = j then 1 else 0) := by
+        intro j
+        rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, star_star]
+        congr 1
+        rw [← (VS D).herm.eq ((VS D).frame i) (bs j), hbs]
+        split_ifs <;> simp
+      simp only [hs, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+    rw [key]
+  
+  have hspan : Submodule.span D.host.E (Λ : Set (VS D).V) = ⊤ := by
+    by_contra hspan
+    obtain ⟨φ, hφ₀, hφ⟩ := Submodule.exists_le_ker_of_lt_top _ (lt_top_iff_ne_top.mpr hspan)
+    obtain ⟨μ, hμ⟩ := hriesz φ
+    have hμ₀ : μ ≠ 0 := by
+      intro h
+      apply hφ₀
+      ext y
+      simpa [h] using (hμ y).symm
+    have hline (a : D.host.E) : a • μ ∈ Λ := by
+      rw [← _hGl.2.1]
+      change a • μ ∈ Formalism.E.hdual (VS D).hT Λ
+      simp only [Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap,
+          LinearMap.restrictScalars_apply]
+      intro y hy
+      have hy₀ := LinearMap.mem_ker.mp (hφ (Submodule.subset_span hy))
+      simp [← (VS D).herm.eq (a • μ) y, LinearMap.map_smulₛₗ, hμ, hy₀]
+    obtain ⟨ψ, hψ, -⟩ := Submodule.exists_le_ker_of_notMem
+      (show μ ∉ (⊥ : Submodule D.host.E (VS D).V) by simpa using hμ₀)
+    let f := ψ.restrictScalars (𝓞 D.host.E)
+    have hmap (x : D.host.E) : x ∈ Λ.map f := by
+      refine ⟨(x / ψ μ) • μ, hline _, ?_⟩
+      change ψ ((x / ψ μ) • μ) = x
+      rw [map_smul, smul_eq_mul, div_mul_cancel₀ _ hψ]
+    obtain ⟨d, hd₀, hd⟩ := FractionalIdeal.isFractional_of_fg
+      (S := nonZeroDivisors (𝓞 D.host.E)) (hΛlat.fg.map f)
+    have hinj := IsFractionRing.injective (𝓞 D.host.E) D.host.E
+    have hne {a : 𝓞 D.host.E} (ha : a ≠ 0) : algebraMap (𝓞 D.host.E) D.host.E a ≠ 0 :=
+      fun h => ha (hinj (h.trans (map_zero _).symm))
+    have hinteger (x : D.host.E) : IsLocalization.IsInteger (𝓞 D.host.E) x := by
+      have hx := hd _ (hmap ((algebraMap (𝓞 D.host.E) D.host.E d)⁻¹ * x))
+      rwa [Algebra.smul_def, ← mul_assoc, mul_inv_cancel₀ (hne (nonZeroDivisors.ne_zero hd₀)),
+        one_mul] at hx
+    apply RingOfIntegers.not_isField D.host.E
+    refine ⟨⟨0, 1, zero_ne_one⟩, mul_comm, ?_⟩
+    intro a ha
+    obtain ⟨b, hb⟩ := hinteger ((algebraMap (𝓞 D.host.E) D.host.E a)⁻¹)
+    refine ⟨b, hinj ?_⟩
+    rw [map_mul, hb, map_one, mul_inv_cancel₀ (hne ha)]
   have hmul : ∀ v : (VS D).V, ∃ d : 𝓞 D.host.E, d ≠ 0 ∧ d • v ∈ Λ := fun v => by
-    have hv : v ∈ Submodule.span D.host.E (Λ : Set (VS D).V) := by rw [hΛlat.span_eq_top]; trivial
+    have hv : v ∈ Submodule.span D.host.E (Λ : Set (VS D).V) := by rw [hspan]; trivial
     obtain ⟨t, ht⟩ := multiple_mem_span_of_mem_localization_span (nonZeroDivisors (𝓞 D.host.E)) D.host.E _ v hv
     rw [Submodule.span_eq] at ht
     exact ⟨t, nonZeroDivisors.ne_zero t.2, ht⟩
@@ -219,18 +277,14 @@ theorem stabY_finite : ∀ (D : D7) (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FP
       rw [(memW w).1 hw.1 b hb.2]
       exact zero_mem _
     | zero => rw [map_zero]; exact zero_mem _
-    | add a c _ _ ha hc => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hc
+    | add a c _ _ ha hc => rw [map_add]; exact add_mem ha hc
     | smul o a _ ha =>
       rw [← algebraMap_smul D.host.E o a, map_smul, smul_eq_mul]
       exact Submodule.mul_mem_mul (Submodule.mem_one.2 ⟨o, rfl⟩) ha |> fun h => by simpa using h
 
   let Λ₀ : LV D := Θ ⊔ ΛU
   have hΛ₀ : Submodule.IsLattice D.host.E Λ₀ := by
-    refine ⟨hΘfg.sup (hΛlat.fg.of_le inf_le_left), span_top_of_mul _ fun v => ?_⟩
-    obtain ⟨d, hd0, hd⟩ := hmul2 v
-    have hle : ΛW ⊔ ΛU ≤ Λ₀ :=
-      sup_le (fun x hx => Submodule.mem_sup_left (Submodule.subset_span (hΛW x hx.1 hx.2))) le_sup_right
-    exact ⟨d, hd0, hle hd⟩
+    exact Submodule.IsLattice.of_fg D.host.E (hΘfg.sup (hΛlat.fg.of_le inf_le_left))
   refine (GlobalTheory.StabFin.finite_of_fix (VS D).hT U hpos Λ₀ hΛ₀).subset ?_
   rintro h ⟨hh, hm⟩
 

@@ -558,8 +558,6 @@ theorem isEigV_kapI_iff {Fr : Type} [Field Fr] [Algebra V Fr] (io : c.F →+* Fr
 
 end KapMore
 
-open GlobalTheory.CompanionTheory.Ar (dualMap)
-
 theorem dualMap_comp_alg {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) :
     (dualMap f).comp (algebraMap A (DualNumber A)) = (algebraMap B (DualNumber B)).comp f := by
   apply RingHom.ext

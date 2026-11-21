@@ -146,7 +146,7 @@ def sndInnerCLM : V₁ × (EuclideanSpace ℝ ι) →L[ℝ] (V₁ × (EuclideanS
     ((innerSL ℝ).comp (ContinuousLinearMap.snd ℝ V₁ (EuclideanSpace ℝ ι)))
 
 theorem sndInnerCLM_apply (p q : V₁ × (EuclideanSpace ℝ ι)) :
-    sndInnerCLM p q = inner ℝ p.2 q.2 := by
+    sndInnerCLM V₁ ι p q = inner ℝ p.2 q.2 := by
   simp [sndInnerCLM]
 
 def partialFourierDeriv (F : 𝓢(V₁ × (EuclideanSpace ℝ ι), E)) : 𝓢(V₁ × (EuclideanSpace ℝ ι), V₁ × (EuclideanSpace ℝ ι) →L[ℝ] E) :=
@@ -154,7 +154,7 @@ def partialFourierDeriv (F : 𝓢(V₁ × (EuclideanSpace ℝ ι), E)) : 𝓢(V�
       (fstIncl (V₁ := V₁) (ι := ι))) (SchwartzMap.fderivCLM ℝ (V₁ × (EuclideanSpace ℝ ι)) E F) +
     (-(2 * π * I) : ℂ) • SchwartzMap.bilinLeftCLM
       (ContinuousLinearMap.smulRightL ℝ (V₁ × (EuclideanSpace ℝ ι)) E).flip
-      sndInnerCLM.hasTemperateGrowth F
+      (sndInnerCLM V₁ ι).hasTemperateGrowth F
 
 theorem partialFourierDeriv_apply (F : 𝓢(V₁ × (EuclideanSpace ℝ ι), E)) (p q : V₁ × (EuclideanSpace ℝ ι)) :
     partialFourierDeriv F p q =

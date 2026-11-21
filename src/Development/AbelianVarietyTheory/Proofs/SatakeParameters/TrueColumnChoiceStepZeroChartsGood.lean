@@ -31,7 +31,7 @@ theorem GlobalTheory.TwU.AtTrue.charts_zero_good : ∀ {B : Base} {X : PreX B.to
     ext x
     exact (hk.lb β x).trans (GlobalTheory.Mem.Col2.Reside.mem_baseLb hPr u _ x).symm
   have hlaws := fun β => GlobalTheory.Mem.Col2.Reside.swapLaws B.sp.cm hB (hPr.T_prime u) (hPr.piT_norm u) (rls_vT_iff hX hPr u)
-    (fun P hP => hPr.vT_norm u P hP) hgr (K0 β).lev (hLb β)
+    (fun P hP => by simpa [Ideal.absNorm_apply, Submodule.cardQuot_apply] using hPr.vT_norm u P hP) hgr (K0 β).lev (hLb β)
   choose hl hk using hlaws
   refine ⟨fun β => { K0 β with lev := GlobalTheory.Mem.Col2.Reside.swap (K0 β).lev _ (hl β) }, ⟨hR, fun β => ⟨hk β, N, hN, fun κ => ?_⟩⟩, fun β => hEq β, hy⟩
   have hm : κ.1 ∈ F.to0.cls0.lev.U := (hEq β).2.2.1 ▸ κ.2

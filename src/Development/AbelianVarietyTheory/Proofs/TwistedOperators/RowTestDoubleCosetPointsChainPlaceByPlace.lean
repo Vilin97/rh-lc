@@ -197,7 +197,7 @@ theorem idem_sum (he : IsIdemSum e P) (h : ∀ w, Formalism.L2.NTheta.IsIdemAt (
     rw [Finset.sum_eq_single u (fun v _ hv => orth he h (Ne.symm hv)) (fun hu' => absurd hu hu'), (hi u).1]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum]
-    exact Finset.sum_congr rfl fun u _ => (hi u).2
+      exact Finset.sum_congr rfl fun u _ => (hi u).2
 
 theorem sum_orth (he : IsIdemSum e P) (h : ∀ w, Formalism.L2.NTheta.IsIdemAt (eL w) w.1) {S : Finset P} {w : P} (hw : w ∉ S) :
     (∑ w ∈ S, (eL w + cA D (eL w))) * (eL w + cA D (eL w)) = 0 := by

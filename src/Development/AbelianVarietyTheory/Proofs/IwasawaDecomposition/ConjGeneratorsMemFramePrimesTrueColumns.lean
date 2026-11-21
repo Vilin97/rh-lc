@@ -64,7 +64,9 @@ theorem conj_gen_mem_frame : ∀ (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : 
       have : x = 0 := FaithfulSMul.algebraMap_injective (𝓞 (w.D Z).host.K) (𝓞 (w.D Z).host.E) (hx.trans (map_zero _).symm)
       rw [this]; exact Ideal.zero_mem _)
   have hgQ : π * b ∈ Q := by
-    rw [hprod, ← map_natCast (algebraMap (𝓞 (w.D Z).host.K) (𝓞 (w.D Z).host.E)), ← Ideal.mem_comap, hQ]
+    rw [hprod, ← map_natCast (algebraMap (𝓞 (w.D Z).host.K) (𝓞 (w.D Z).host.E)), ← Ideal.mem_comap]
+    change _ ∈ Ideal.under (𝓞 (w.D Z).host.K) Q
+    rw [hQ]
     exact w.I.C.P.pb_over k
   rcases hQp.mem_or_mem hgQ with hπQ | hbQ
   ·

@@ -144,7 +144,7 @@ theorem arch_decay_of_compact {B : Base F E} {b a' : ℕ} {G : Geo σ (b + 2) a'
   let U' := fun i => G.M.co.e (Matrix.vecMulVec (inclR (F := F) (AF F) (t i) • incV F H.y) (incV F H'.x))
   have hp : Continuous ⇑(Finset.sup s (schwartzSeminormFamily ℂ (Fin b × Fin (b + a') → mixedEmbedding.mixedSpace F) ℂ)) :=
     Seminorm.continuous_finsetSup fun i _ => (schwartz_withSeminorms ℂ _ ℂ).continuous_seminorm i
-  choose D₀ hCb using fun j => slice_decay B.ψ hT.base.std S U' (fun i j => by rw [← G.M.co.form]; convert ht i j)
+  choose D₀ hCb using fun j => slice_decay B.ψ hT.base.std S U' (fun i j => by rw [← G.M.co.form]; convert ht i j <;> rfl)
     (sliceL c ∘ₗ e) (exists_slice_clm hT.geo.hM he c) (fun i a Ψ hΨ => by
       have := he.inv (Matrix.vecMulVec (a • inclR (F := F) (AF F) (t i) • incV F H.y) (incV F H'.x)) (Or.inl ⟨_, rfl⟩) Ψ hΨ
       rw [Matrix.smul_vecMulVec, Darboux.rho, map_smul] at this
@@ -217,7 +217,7 @@ theorem dom : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F]
     have hval : Continuous fun l : (AE F E)ˣ =>
         (1 + ∑ i, ∑ v : InfinitePlace F, ‖(GlobalTheory.XTermMaj.crd F E (l : AE F E) i).1 v‖) ^ (-(N : ℝ)) := by
       refine Continuous.rpow_const ?_ fun l => Or.inl (by positivity)
-      refine continuous_const.add (continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun v _ => ?_)
+      refine continuous_const.add (continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun v _ => ?_)
       exact continuous_norm.comp ((continuous_apply v).comp (continuous_fst.comp ((continuous_apply i).comp hcrd)))
     have hm : Measurable fun l : (AE F E)ˣ => GlobalTheory.XTermMaj.maj F E N U (l : AE F E) := by
       have e1 : (fun l : (AE F E)ˣ => GlobalTheory.XTermMaj.maj F E N U (l : AE F E)) =

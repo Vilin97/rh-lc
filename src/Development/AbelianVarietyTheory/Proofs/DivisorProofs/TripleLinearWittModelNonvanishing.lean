@@ -40,6 +40,8 @@ theorem ip_smul_smul (μ : Measure X) (a b : ℂ) (f g : X → ℂ) :
   unfold ip
   rw [← integral_const_mul]
   congr 1
+  funext y
+  simp only [Pi.smul_apply, smul_eq_mul, map_mul]
   ring
 
 theorem ip_sum_sum (μ : Measure X) [IsFiniteMeasureOnCompacts μ] {V : Type} (F : Finset V) (a : V → ℂ)
@@ -56,7 +58,7 @@ theorem ip_sum_sum (μ : Measure X) [IsFiniteMeasureOnCompacts μ] {V : Type} (F
     refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
     rw [map_mul]
     ring
-  rw [e, integral_finsetSum _ (fun y _ => integrable_finset_sum _ fun y' _ =>
+  rw [e, integral_finsetSum _ (fun y _ => integrable_finsetSum _ fun y' _ =>
     (integrable_mul_conj μ (hxs y) (hxs y')).const_mul _)]
   refine Finset.sum_congr rfl fun y _ => ?_
   rw [integral_finsetSum _ (fun y' _ => (integrable_mul_conj μ (hxs y) (hxs y')).const_mul _)]

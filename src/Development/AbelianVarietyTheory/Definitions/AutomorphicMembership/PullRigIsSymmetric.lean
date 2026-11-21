@@ -119,7 +119,39 @@ def combCub {L : RigLB G} (c : CubicalStr G L) : CubicalStr A (combRig u δ L) :
   CubTransport.cubicalOfVal (L := combRig u δ L)
     (combGen L.L (fun i => (u i).left) δ (thφ A (x3 A)) thε fun i => (pullCub c (u i)).t)
     (isGen_combGen _ _ _ _ _ _ fun i => (pullCub c (u i)).isGen) fun T z I hI => by
-      have h := isCub_prod _ (fun i => isCub_cubV (pullCub c (u i)) (T := T) (good_factor hI i)) δ
+      have hCub (i : J) : IsCub (cubV (pullCub c (u i)) (T := T) z (fun χ _ => I χ i)) := by
+        let ci := pullCub c (u i)
+        have hi := good_factor hI i
+        constructor
+        · intro x y
+          have hface := val_corr hi (ci.face 0) (lift x y).left
+          refine Eq.trans ?_ (hface.trans (val_one _))
+          refine Eq.trans ?_ (val_cub ci (lift x y) hi (pzero A _) (x2 A 0) (x2 A 1)).symm
+          congr 1 <;> simp [x2, pzero, Hom.one_def]
+        · intro x y w
+          refine ((val_corr hi ci.cubeSymmetric_swap_first (lift x (lift y w)).left).trans
+            (val_cub ci (lift x (lift y w)) hi _ _ _)).trans ?_
+          congr 1 <;> simp [x3]
+        · intro x y w
+          refine ((val_corr hi ci.cubeSymmetric_swap_last (lift x (lift y w)).left).trans
+            (val_cub ci (lift x (lift y w)) hi _ _ _)).trans ?_
+          congr 1 <;> simp [x3]
+        · intro x x' x'' y
+          let r := lift x (lift x' (lift x'' y))
+          have e := ((val_mul hi _ _ r.left).trans
+            (congrArg₂ (· * ·) (val_cub ci r hi _ _ _) (val_cub ci r hi _ _ _))).symm.trans
+            ((val_corr hi ci.cocycle r.left).trans ((val_mul hi _ _ r.left).trans
+              (congrArg₂ (· * ·) (val_cub ci r hi _ _ _) (val_cub ci r hi _ _ _))))
+          have a₀ : r ≫ x4 A 0 = x := by simp [r, x4]
+          have a₁ : r ≫ x4 A 1 = x' := by simp [r, x4]
+          have a₂ : r ≫ x4 A 2 = x'' := by simp [r, x4]
+          have a₃ : r ≫ x4 A 3 = y := by simp [r, x4]
+          have b₀ : r ≫ padd A (x4 A 0) (x4 A 1) = x * x' :=
+            (MonObj.comp_mul _ _ _).trans (by rw [a₀, a₁])
+          have b₁ : r ≫ padd A (x4 A 1) (x4 A 2) = x' * x'' :=
+            (MonObj.comp_mul _ _ _).trans (by rw [a₁, a₂])
+          rwa [b₀, b₁, a₀, a₁, a₂, a₃] at e
+      have h := isCub_prod _ hCub δ
       convert h using 4 with x y w
       exact val_combGen (fun i => (pullCub c (u i)).t) _ hI
 

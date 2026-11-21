@@ -40,7 +40,7 @@ theorem map_eq_zero_of_disjoint : GlobalTheory.ThK.KP → ∀ (F E : Type) [Fiel
     GlobalTheory.T.lowPart_finite_dimensional hKP F E σ B a a' G X om om' R Rf hM
   have hfg : ((lowPartInf B G.M R.p).map S).FG :=
     (Module.Finite.iff_fg.1 hfin).map S
-  obtain ⟨Y, ⟨m, rfl⟩, hm⟩ := (CompleteLattice.isCompactElement_iff_le_of_directed_sSup_le (Submodule ℂ R.Pi) _).1
+  obtain ⟨Y, ⟨m, rfl⟩, hm⟩ := (isCompactElement_iff_le_of_directed_sSup_le _).1
     ((Submodule.fg_iff_compact _).1 hfg) (Set.range U) (Set.range_nonempty U)
     hUmono.directed_le.directedOn_range (by rw [sSup_range, htop]; exact le_top)
   have hstep := GlobalTheory.T.low_degree_K_equivariant hKP F E σ B a a' G X om om' R Rf hM

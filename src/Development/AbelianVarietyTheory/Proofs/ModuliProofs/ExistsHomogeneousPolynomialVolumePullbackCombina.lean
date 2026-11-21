@@ -240,30 +240,49 @@ open GlobalTheory.ZV GlobalTheory.CechPic
 
 variable {X : Scheme.{0}} {L : LB X} {I : Type} [Fintype I]
 
+set_option backward.isDefEq.respectTransparency false in
 theorem lbIso_pow (hL : L.IsLB) (φ : I → (X ⟶ X)) (x : I → ℤ) (a : ℕ) :
     LBIso (lbPow (LB.LinComb L φ x) a) (LB.LinComb L φ (a • x)) := by
   have h := LB.isLB_linComb hL φ
   apply LBIso.symm
   refine iso_of_chart (LB.isLB_linComb (h x) _ _) ⟨fun j _ => j, fun _ _ hj => ?_, ?_⟩
-  · exact Set.mem_iInter.2 fun _ => mem_pull.2 hj
+  · change _ ∈ L.wchart φ _ at hj
+    exact Set.mem_iInter.2 fun _ => by simpa [LB.LinComb] using hj
   · intro z p q hp hq
+    change I → L.ι at p q
+    change z ∈ L.wchart φ p at hp
+    change z ∈ L.wchart φ q at hq
     refine (gm_linComb L φ (a • x) (𝟙 X) z p q hp hq).trans ?_
-    refine Eq.symm ((gm_linComb (LB.LinComb L φ x) (fun _ : PUnit => 𝟙 X) (fun _ => (a : ℤ)) (𝟙 X) z _ _ (Set.mem_iInter.2 fun _ => mem_pull.2 hp) (Set.mem_iInter.2 fun _ => mem_pull.2 hq)).trans ?_)
+    refine Eq.symm ((gm_linComb (LB.LinComb L φ x) (fun _ : PUnit => 𝟙 X) (fun _ => (a : ℤ)) (𝟙 X) z _ _ (Set.mem_iInter.2 fun _ => by simpa [LB.LinComb] using hp) (Set.mem_iInter.2 fun _ => by simpa [LB.LinComb] using hq)).trans ?_)
     simp only [Fintype.prod_unique]
-    rw [gm_pull_g, gm_linComb]
-    simp only [Pi.smul_apply, nsmul_eq_mul, zpow_mul, Finset.prod_zpow]
+    rw [Category.id_comp]
+    change gm (𝟙 X) z (L.wchart φ p ⊓ L.wchart φ q) ((LB.LinComb L φ x).g p q) ^ (a : ℤ) = _
+    rw [gm_linComb L φ x (𝟙 X) z p q hp hq]
+    simp only [Pi.smul_apply, nsmul_eq_mul, zpow_mul]
+    rw [← Finset.prod_zpow]
+    apply Finset.prod_congr rfl
+    intro k hk
+    rw [← zpow_mul, ← zpow_mul, mul_comm]
 
+set_option backward.isDefEq.respectTransparency false in
 theorem lbIso_div (hL : L.IsLB) (φ : I → (X ⟶ X)) (x y : I → ℤ) :
     LBIso (LB.div (LB.LinComb L φ x) (LB.LinComb L φ y)) (LB.LinComb L φ (x - y)) := by
   have h := LB.isLB_linComb hL φ
   apply LBIso.symm
   refine iso_of_chart (LB.isLB_div (h x) (h y)) ⟨fun j => (j, j), fun _ _ hj => ⟨hj, hj⟩, ?_⟩
   intro z p q hp hq
+  change I → L.ι at p q
+  change z ∈ L.wchart φ p at hp
+  change z ∈ L.wchart φ q at hq
   refine (gm_linComb L φ (x - y) (𝟙 X) z p q hp hq).trans (Eq.symm ?_)
   refine (gm_div' (LB.LinComb L φ x) (LB.LinComb L φ y) (𝟙 X) z (p, p) (q, q) ⟨hp, hp⟩ ⟨hq, hq⟩).trans ?_
+  dsimp only [Prod.fst, Prod.snd]
+  change gm (𝟙 X) z (L.wchart φ p ⊓ L.wchart φ q) ((LB.LinComb L φ x).g p q) *
+    (gm (𝟙 X) z (L.wchart φ p ⊓ L.wchart φ q) ((LB.LinComb L φ y).g p q))⁻¹ = _
   rw [gm_linComb L φ x (𝟙 X) z p q hp hq, gm_linComb L φ y (𝟙 X) z p q hp hq]
   simp only [Pi.sub_apply, zpow_sub, Finset.prod_mul_distrib, Finset.prod_inv_distrib]
 
+set_option backward.isDefEq.respectTransparency false in
 theorem lbIso_div_pow (hL : L.IsLB) (φ : I → (X ⟶ X)) (x y : I → ℤ) (a : ℕ) :
     LBIso (LB.div (lbPow (LB.LinComb L φ x) a) (LB.LinComb L φ y)) (LB.LinComb L φ (a • x - y)) := by
   have h := LB.isLB_linComb hL φ

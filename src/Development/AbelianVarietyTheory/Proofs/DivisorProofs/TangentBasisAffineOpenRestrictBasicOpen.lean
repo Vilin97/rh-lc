@@ -48,11 +48,11 @@ theorem tanBasis_basicOpen : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
     have hs : Smooth ((Over.pullback x).obj t.G).hom :=
       inferInstanceAs (Smooth (pullback.snd t.G.hom x))
     obtain ⟨u', hb', hu'⟩ := GlobalTheory.exists_isLieBasis_baseChange _ _ φ _ _ _ h₂ hs n u hbase
-    have e : Chart.dualMapR φ = GlobalTheory.CompanionTheory.Ar.dualMap φ := by
+    have e : Chart.dualMapR φ = dualMap φ := by
       ext a <;> rfl
     have key := (b₃ n u').1 hb'
     have e' : ∀ i, (u' i).left ≫ pullback.fst ((Over.pullback x).obj t.G).hom (spMap φ) ≫ pullback.fst t.G.hom x =
-        spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v i := fun i => by
+        spMap (dualMap φ) ≫ v i := fun i => by
       rw [← Category.assoc, hu', e, Category.assoc, hu]
     rw [← funext e']
     rw [← spMap_res_chart U W hW]

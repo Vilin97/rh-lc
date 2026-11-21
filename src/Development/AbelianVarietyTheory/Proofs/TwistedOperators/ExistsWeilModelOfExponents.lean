@@ -218,105 +218,106 @@ theorem exists_weil_transp {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (ε : Bool)
     ∃ om : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep D.sp.cm.sig Vs Ws, M.IsWeil ψ χ χ' om ∧
       GlobalTheory.TripleRead.IsTransp ψ ε M om ω (Equiv.refl (Fin X.rank)) (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.conjU S (GlobalTheory.RealDict.sgE (D := D) ε) hJ)
         (GlobalTheory.TripleRead.toUX X (Equiv.refl (Fin X.rank)) hJW) := by
-  have hω' : IsWeilDatumO ψ (sgn ε S) X χ χ' (ω.toSgn ε) := hω
-  obtain ⟨h1, h2, L0, hL0, h3⟩ := conj_herm (neg (sgn ε S))
-  let Th : HSp D := GlobalTheory.WeilSchrodinger.hspOf D (k := S.rank) (neg (sgn ε S)).gramᵀ h1 h2 L0 hL0 h3 (fun _ => (0, 0))
-  let Sh : HSp D := GlobalTheory.DualSwap.dualSp (neg X) _ (GlobalTheory.PlaceModel.isSelfDualC_latFrame (neg X))
-  have hTg : Th.gram = (neg (sgn ε S)).gramᵀ := GlobalTheory.WeilSchrodinger.gram_hspOf _ _ _ _ _ _ _
-  have hSg : Sh.gram = (neg X).gram⁻¹ᵀ := GlobalTheory.DualSwap.dualSp_gram _ _ _
-  let e : Fin X.rank ≃ Fin X.rank := Equiv.refl _
-  have hT' : Th.gramᵀ = -((sgn ε S).gram.submatrix (Equiv.refl (Fin S.rank)) (Equiv.refl (Fin S.rank))) := by
-    rw [hTg]
-    rfl
-  have hS' : Sh.gram⁻¹ = -(X.gramᵀ.submatrix e.symm e.symm) := by
-    refine Matrix.inv_eq_left_inv ?_
-    have key : (neg X).gramᵀ * (neg X).gram⁻¹ᵀ = 1 := by
-      rw [← Matrix.transpose_mul, Matrix.nonsing_inv_mul _ (isUnit_iff_ne_zero.2 (gram_det_ne (neg X))), Matrix.transpose_one]
-    rw [hSg]
-    exact key
+  set_option backward.isDefEq.respectTransparency false in
+    have hω' : IsWeilDatumO ψ (sgn ε S) X χ χ' (ω.toSgn ε) := hω
+    obtain ⟨h1, h2, L0, hL0, h3⟩ := conj_herm (neg (sgn ε S))
+    let Th : HSp D := GlobalTheory.WeilSchrodinger.hspOf D (k := S.rank) (neg (sgn ε S)).gramᵀ h1 h2 L0 hL0 h3 (fun _ => (0, 0))
+    let Sh : HSp D := GlobalTheory.DualSwap.dualSp (neg X) _ (GlobalTheory.PlaceModel.isSelfDualC_latFrame (neg X))
+    have hTg : Th.gram = (neg (sgn ε S)).gramᵀ := GlobalTheory.WeilSchrodinger.gram_hspOf _ _ _ _ _ _ _
+    have hSg : Sh.gram = (neg X).gram⁻¹ᵀ := GlobalTheory.DualSwap.dualSp_gram _ _ _
+    let e : Fin X.rank ≃ Fin X.rank := Equiv.refl _
+    have hT' : Th.gramᵀ = -((sgn ε S).gram.submatrix (Equiv.refl (Fin S.rank)) (Equiv.refl (Fin S.rank))) := by
+      rw [hTg]
+      rfl
+    have hS' : Sh.gram⁻¹ = -(X.gramᵀ.submatrix e.symm e.symm) := by
+      refine Matrix.inv_eq_left_inv ?_
+      have key : (neg X).gramᵀ * (neg X).gram⁻¹ᵀ = 1 := by
+        rw [← Matrix.transpose_mul, Matrix.nonsing_inv_mul _ (isUnit_iff_ne_zero.2 (gram_det_ne (neg X))), Matrix.transpose_one]
+      rw [hSg]
+      exact key
 
-  obtain ⟨φ', hφ'c, hφ'Q, hφ'm, hφ'S, hφ'd⟩ := GlobalTheory.GrpConj.exists_conj_equiv D (sgn ε S) Th (Equiv.refl _) hT'
-  obtain ⟨φ, hφc, hφQ, hφm, hφS, hφd⟩ := GlobalTheory.InvTransposeIso.grp_contra D X Sh e.symm hS'
-  obtain ⟨L, hL1, hL2, hLc, hLc', hLQ, hLi, hLf⟩ := GlobalTheory.Twist.exists_transposeGram_coordinate_homeomorph_symplectic.coordsLin_spec D (sgn ε S) X Sh Th (Equiv.refl _) e.symm
-  have hsy := GlobalTheory.DarbouxSymp.symplO_darboux D (sgn ε S) X Sh Th (Equiv.refl _) e.symm hT' hS'
-  have hLx : ∀ u : Matrix (Fin S.rank) (Fin X.rank) (AE D), L u = (HMul.hMul (uᵀ.submatrix e id) ((sgn ε S).gram.map (incA D)) :
-      Matrix (Fin X.rank) (Fin S.rank) (AE D)) := fun u => (hL1 u).trans rfl
-  have hpt : ∀ x : Matrix (Fin X.rank) (Fin S.rank) (AE D), GlobalTheory.TripleRead.ptO (sgn ε S).gram e x = L.symm x :=
-    fun x => ((hL2 x).trans rfl).symm
+    obtain ⟨φ', hφ'c, hφ'Q, hφ'm, hφ'S, hφ'd⟩ := GlobalTheory.GrpConj.exists_conj_equiv D (sgn ε S) Th (Equiv.refl _) hT'
+    obtain ⟨φ, hφc, hφQ, hφm, hφS, hφd⟩ := GlobalTheory.InvTransposeIso.grp_contra D X Sh e.symm hS'
+    obtain ⟨L, hL1, hL2, hLc, hLc', hLQ, hLi, hLf⟩ := GlobalTheory.Twist.exists_transposeGram_coordinate_homeomorph_symplectic.coordsLin_spec D (sgn ε S) X Sh Th (Equiv.refl _) e.symm
+    have hsy := GlobalTheory.DarbouxSymp.symplO_darboux D (sgn ε S) X Sh Th (Equiv.refl _) e.symm hT' hS'
+    have hLx : ∀ u : Matrix (Fin S.rank) (Fin X.rank) (AE D), L u = (HMul.hMul (uᵀ.submatrix e id) ((sgn ε S).gram.map (incA D)) :
+        Matrix (Fin X.rank) (Fin S.rank) (AE D)) := fun u => (hL1 u).trans rfl
+    have hpt : ∀ x : Matrix (Fin X.rank) (Fin S.rank) (AE D), GlobalTheory.TripleRead.ptO (sgn ε S).gram e x = L.symm x :=
+      fun x => ((hL2 x).trans rfl).symm
 
-  have hact : ∀ (g : GA D Sh) (h : GA D Th) (x : WO Sh Th), L (actO Sh Th g h x) = actO (sgn ε S) X (φ' h) (φ g) (L x) := by
-    intro g h x
-    have hg : Formalism.L2.Theta.mt X (φ g) = ((Formalism.L2.Theta.mt Sh g⁻¹)ᵀ).submatrix e e :=
-      eq_submatrix_symm e.symm _ _ (hφm g)
-    have hh : Formalism.L2.Theta.mt (sgn ε S) (φ' h)⁻¹ = (Formalism.L2.Theta.mt Th h⁻¹).map (cA D) := by
-      rw [← map_inv]
-      exact hφ'm h⁻¹
-    have hTinc : (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.incM Th.gram)ᵀ = -((sgn ε S).gram.map (incA D)) := by
-      have e0 : (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.incM Th.gram)ᵀ = GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.incM Th.gramᵀ := rfl
-      rw [e0, hT']
-      exact incM_neg_refl _
-    have hPP : Formalism.L2.Theta.mt Th h * Formalism.L2.Theta.mt Th h⁻¹ = 1 := by
-      simp only [Formalism.L2.Theta.mt, map_inv, Units.mul_inv]
-    have hu := unit_aux (cA D) _ _ _ _ hPP hTinc (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.mt_gram Th h)
-    exact (hLx _).trans (actE_eq_of_conj_related e _ x _ _ _ _ _ _ (hLx x) hg hh hu)
+    have hact : ∀ (g : GA D Sh) (h : GA D Th) (x : WO Sh Th), L (actO Sh Th g h x) = actO (sgn ε S) X (φ' h) (φ g) (L x) := by
+      intro g h x
+      have hg : Formalism.L2.Theta.mt X (φ g) = ((Formalism.L2.Theta.mt Sh g⁻¹)ᵀ).submatrix e e :=
+        eq_submatrix_symm e.symm _ _ (hφm g)
+      have hh : Formalism.L2.Theta.mt (sgn ε S) (φ' h)⁻¹ = (Formalism.L2.Theta.mt Th h⁻¹).map (cA D) := by
+        rw [← map_inv]
+        exact hφ'm h⁻¹
+      have hTinc : (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.incM Th.gram)ᵀ = -((sgn ε S).gram.map (incA D)) := by
+        have e0 : (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.incM Th.gram)ᵀ = GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.incM Th.gramᵀ := rfl
+        rw [e0, hT']
+        exact incM_neg_refl _
+      have hPP : Formalism.L2.Theta.mt Th h * Formalism.L2.Theta.mt Th h⁻¹ = 1 := by
+        simp only [Formalism.L2.Theta.mt, map_inv, Units.mul_inv]
+      have hu := unit_aux (cA D) _ _ _ _ hPP hTinc (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.mt_gram Th h)
+      exact (hLx _).trans (actE_eq_of_conj_related e _ x _ _ _ _ _ _ (hLx x) hg hh hu)
 
-  obtain ⟨ω', hω'', hrel⟩ := GlobalTheory.T.isWeilDatum_comp_group_swapping_symplectic_equiv D ψ (sgn ε S) X Sh Th rfl rfl L φ.toMonoidHom φ'.toMonoidHom hLc hLc' hLQ
-    (fun x y => by rw [hL1, hL1]; exact hsy x y) hLi hLf hφc hφ'c hφQ hφ'Q hact hφS hφ'S hφd hφ'd χ χ' (ω.toSgn ε) hω'
-  have hA : Vs.J = Th.gramᵀ := (gram_neg_sgn ε S hJ).trans hT'.symm
-  have hB : (-1 : AF D.host.F ⊗[D.host.F] D.host.E) • GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F Ws.J =
-      GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F (D.host.xi0 • Sh.gram⁻¹) := by
-    rw [hS', hJW]
-    funext i j
-    simp [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM, e]
-  obtain ⟨om, hom⟩ := GlobalTheory.T.exists_weilDatum_transport_adelicSchwartz_thetaTransform D ψ hω'.std Sh Th χ' χ hω''.hecS hω''.hecT hω''.resS hω''.resT Vs.J Ws.J (-1) hA hB
-    (Fin S.rank × Fin X.rank) M.co hrat ω' hω''
-  have h2 := GlobalTheory.T.transportedWeil_preserves_schwartz_heisenberg_equivariant D ψ hω'.std Sh Th χ' χ hω''.hecS hω''.hecT hω''.resS hω''.resT Vs.J Ws.J (-1) hA hB
-    (Fin S.rank × Fin X.rank) M.co hrat ω' hω'' om hom
-  have h3 := GlobalTheory.T.transportedWeilDatum_keeps_admissible_forms D ψ hω'.std Sh Th χ' χ hω''.hecS hω''.hecT hω''.resS hω''.resT Vs.J Ws.J (-1) hA hB
-    (Fin S.rank × Fin X.rank) M.co hrat ω' hω'' om hom
-  have h4 := GlobalTheory.T.transportedWeilDatum_isUnitary_adelicSchwartz D ψ hω'.std Sh Th χ' χ hω''.hecS hω''.hecT hω''.resS hω''.resT Vs.J Ws.J (-1) hA hB
-    (Fin S.rank × Fin X.rank) M.co hrat ω' hω'' om hom
-  have h5 := GlobalTheory.T.continuous_transported_weilDatum_adelicSchwartz D ψ hω'.std Sh Th χ' χ hω''.hecS hω''.hecT hω''.resS hω''.resT Vs.J Ws.J (-1) hA hB
-    (Fin S.rank × Fin X.rank) M.co hrat ω' hω'' om hom
-  have h6 := GlobalTheory.T.exists_doubledWeil_blockEmbedding_acts_on_first_boxFactor D ψ hω'.std Sh Th χ' χ hω''.hecS hω''.hecT hω''.resS hω''.resT Vs.J Ws.J (-1) hA hB
-    (Fin S.rank × Fin X.rank) M.co hrat ω' hω'' om hom
-  have h7 := GlobalTheory.T.exists_doubled_schrodingerModel_transposed_siegelRule D ψ hω'.std Sh Th χ' χ hω''.hecS hω''.hecT hω''.resS hω''.resT Vs.J Ws.J (-1) hA hB
-    (Fin S.rank × Fin X.rank) M.co hrat ω' hω'' om hom
-  have hsp : GlobalTheory.WeilM.IsUSplitting (GlobalTheory.WeilM.adeleClass D.host.F) ψ M.co
-      (GlobalTheory.WeilM.actAB (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig)) om := ⟨⟨h2.1, h2.2, h3⟩, h4, h5⟩
-  have hW : M.IsWeil ψ χ χ' om :=
-    ⟨⟨GlobalTheory.WeilSchrodinger.isUSplitting_inr hsp, h6⟩, ⟨GlobalTheory.WeilSchrodinger.transD _ M.co, GlobalTheory.WeilSchrodinger.transD_e M.co,
-      GlobalTheory.WeilSchrodinger.isUSplitting_inl hsp, h7⟩, h5⟩
-  refine ⟨om, hW, ?_⟩
-  intro Φ hΦ g h
-  have hm : Formalism.L2.Theta.mt (sgn ε S) ((ofSgn ε S).symm g) = Formalism.L2.Theta.mt S g := by
-    rw [← mt_ofSgn, MulEquiv.apply_symm_apply]
-  have h0 := hφ'm (φ'.symm ((ofSgn ε S).symm g))
-  rw [MulEquiv.apply_symm_apply] at h0
-  have ha : Formalism.L2.Theta.mt Th (φ'.symm ((ofSgn ε S).symm g)) = (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.conjU S _ hJ g).1.1 :=
-    eq_map_conj _ _ (hm.symm.trans h0)
-  have h1 := hφm (φ.symm h)
-  rw [MulEquiv.apply_symm_apply] at h1
-  have hP : Formalism.L2.Theta.mt Sh (φ.symm h)⁻¹ * Formalism.L2.Theta.mt Sh (φ.symm h) = 1 := by
-    simp only [Formalism.L2.Theta.mt, map_inv, Units.inv_mul]
-  have hb : Formalism.L2.Theta.mt Sh (φ.symm h) = ((GlobalTheory.TripleRead.toUX X e hJW h)⁻¹).1.1ᵀ :=
-    eq_inv_transpose _ _ _ _ hP (Units.mul_inv (GlobalTheory.TripleRead.toUX X e hJW h).1) h1
-  obtain ⟨-, ht⟩ := hom (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.conjU S _ hJ g) (GlobalTheory.TripleRead.toUX X e hJW h) (φ.symm h)
-    (φ'.symm ((ofSgn ε S).symm g)) ha hb Φ hΦ
-  have hth : ∀ (Ψ : (Fin S.rank × Fin X.rank → AF D.host.F) → ℂ) (u : WO Sh Th),
-      GlobalTheory.TripleRead.thO M ψ (sgn ε S).gram e Ψ (L u) = GlobalTheory.WeilSchrodinger.thetaTr D.host.F M.co ψ Ψ u := fun Ψ u => by
-    unfold GlobalTheory.TripleRead.thO
-    rw [hpt, LinearEquiv.symm_apply_apply]
-    rfl
-  funext x
-  obtain ⟨u, rfl⟩ := L.surjective x
-  have hΦf : GlobalTheory.WeilSchrodinger.thetaTr D.host.F M.co ψ Φ = fun u => GlobalTheory.TripleRead.thO M ψ (sgn ε S).gram e Φ (L u) :=
-    funext fun u => (hth Φ u).symm
-  have k1 := congrFun ht u
-  have k2 := congrArg (fun F => ω' (φ.symm h, φ'.symm ((ofSgn ε S).symm g)) F u) hΦf
-  have k3 := congrFun (hrel (φ.symm h) (φ'.symm ((ofSgn ε S).symm g)) (GlobalTheory.TripleRead.thO M ψ (sgn ε S).gram e Φ)) u
-  refine (hth _ u).trans (k1.trans (k2.trans (k3.trans ?_)))
-  simp [WRep.toSgn, e]
+    obtain ⟨ω', hω'', hrel⟩ := GlobalTheory.T.isWeilDatum_comp_group_swapping_symplectic_equiv D ψ (sgn ε S) X Sh Th rfl rfl L φ.toMonoidHom φ'.toMonoidHom hLc hLc' hLQ
+      (fun x y => by rw [hL1, hL1]; exact hsy x y) hLi hLf hφc hφ'c hφQ hφ'Q hact hφS hφ'S hφd hφ'd χ χ' (ω.toSgn ε) hω'
+    have hA : Vs.J = Th.gramᵀ := (gram_neg_sgn ε S hJ).trans hT'.symm
+    have hB : (-1 : AF D.host.F ⊗[D.host.F] D.host.E) • GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F Ws.J =
+        GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F (D.host.xi0 • Sh.gram⁻¹) := by
+      rw [hS', hJW]
+      funext i j
+      simp [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM, e]
+    obtain ⟨om, hom⟩ := GlobalTheory.T.exists_weilDatum_transport_adelicSchwartz_thetaTransform D ψ hω'.std Sh Th χ' χ hω''.hecS hω''.hecT hω''.resS hω''.resT Vs.J Ws.J (-1) hA hB
+      (Fin S.rank × Fin X.rank) M.co hrat ω' hω''
+    have h2 := GlobalTheory.T.transportedWeil_preserves_schwartz_heisenberg_equivariant D ψ hω'.std Sh Th χ' χ hω''.hecS hω''.hecT hω''.resS hω''.resT Vs.J Ws.J (-1) hA hB
+      (Fin S.rank × Fin X.rank) M.co hrat ω' hω'' om hom
+    have h3 := GlobalTheory.T.transportedWeilDatum_keeps_admissible_forms D ψ hω'.std Sh Th χ' χ hω''.hecS hω''.hecT hω''.resS hω''.resT Vs.J Ws.J (-1) hA hB
+      (Fin S.rank × Fin X.rank) M.co hrat ω' hω'' om hom
+    have h4 := GlobalTheory.T.transportedWeilDatum_isUnitary_adelicSchwartz D ψ hω'.std Sh Th χ' χ hω''.hecS hω''.hecT hω''.resS hω''.resT Vs.J Ws.J (-1) hA hB
+      (Fin S.rank × Fin X.rank) M.co hrat ω' hω'' om hom
+    have h5 := GlobalTheory.T.continuous_transported_weilDatum_adelicSchwartz D ψ hω'.std Sh Th χ' χ hω''.hecS hω''.hecT hω''.resS hω''.resT Vs.J Ws.J (-1) hA hB
+      (Fin S.rank × Fin X.rank) M.co hrat ω' hω'' om hom
+    have h6 := GlobalTheory.T.exists_doubledWeil_blockEmbedding_acts_on_first_boxFactor D ψ hω'.std Sh Th χ' χ hω''.hecS hω''.hecT hω''.resS hω''.resT Vs.J Ws.J (-1) hA hB
+      (Fin S.rank × Fin X.rank) M.co hrat ω' hω'' om hom
+    have h7 := GlobalTheory.T.exists_doubled_schrodingerModel_transposed_siegelRule D ψ hω'.std Sh Th χ' χ hω''.hecS hω''.hecT hω''.resS hω''.resT Vs.J Ws.J (-1) hA hB
+      (Fin S.rank × Fin X.rank) M.co hrat ω' hω'' om hom
+    have hsp : GlobalTheory.WeilM.IsUSplitting (GlobalTheory.WeilM.adeleClass D.host.F) ψ M.co
+        (GlobalTheory.WeilM.actAB (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig)) om := ⟨⟨h2.1, h2.2, h3⟩, h4, h5⟩
+    have hW : M.IsWeil ψ χ χ' om :=
+      ⟨⟨GlobalTheory.WeilSchrodinger.isUSplitting_inr hsp, h6⟩, ⟨GlobalTheory.WeilSchrodinger.transD _ M.co, GlobalTheory.WeilSchrodinger.transD_e M.co,
+        GlobalTheory.WeilSchrodinger.isUSplitting_inl hsp, h7⟩, h5⟩
+    refine ⟨om, hW, ?_⟩
+    intro Φ hΦ g h
+    have hm : Formalism.L2.Theta.mt (sgn ε S) ((ofSgn ε S).symm g) = Formalism.L2.Theta.mt S g := by
+      rw [← mt_ofSgn, MulEquiv.apply_symm_apply]
+    have h0 := hφ'm (φ'.symm ((ofSgn ε S).symm g))
+    rw [MulEquiv.apply_symm_apply] at h0
+    have ha : Formalism.L2.Theta.mt Th (φ'.symm ((ofSgn ε S).symm g)) = (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.conjU S _ hJ g).1.1 :=
+      eq_map_conj _ _ (hm.symm.trans h0)
+    have h1 := hφm (φ.symm h)
+    rw [MulEquiv.apply_symm_apply] at h1
+    have hP : Formalism.L2.Theta.mt Sh (φ.symm h)⁻¹ * Formalism.L2.Theta.mt Sh (φ.symm h) = 1 := by
+      simp only [Formalism.L2.Theta.mt, map_inv, Units.inv_mul]
+    have hb : Formalism.L2.Theta.mt Sh (φ.symm h) = ((GlobalTheory.TripleRead.toUX X e hJW h)⁻¹).1.1ᵀ :=
+      eq_inv_transpose _ _ _ _ hP (Units.mul_inv (GlobalTheory.TripleRead.toUX X e hJW h).1) h1
+    obtain ⟨-, ht⟩ := hom (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.conjU S _ hJ g) (GlobalTheory.TripleRead.toUX X e hJW h) (φ.symm h)
+      (φ'.symm ((ofSgn ε S).symm g)) ha hb Φ hΦ
+    have hth : ∀ (Ψ : (Fin S.rank × Fin X.rank → AF D.host.F) → ℂ) (u : WO Sh Th),
+        GlobalTheory.TripleRead.thO M ψ (sgn ε S).gram e Ψ (L u) = GlobalTheory.WeilSchrodinger.thetaTr D.host.F M.co ψ Ψ u := fun Ψ u => by
+      unfold GlobalTheory.TripleRead.thO
+      rw [hpt, LinearEquiv.symm_apply_apply]
+      rfl
+    funext x
+    obtain ⟨u, rfl⟩ := L.surjective x
+    have hΦf : GlobalTheory.WeilSchrodinger.thetaTr D.host.F M.co ψ Φ = fun u => GlobalTheory.TripleRead.thO M ψ (sgn ε S).gram e Φ (L u) :=
+      funext fun u => (hth Φ u).symm
+    have k1 := congrFun ht u
+    have k2 := congrArg (fun F => ω' (φ.symm h, φ'.symm ((ofSgn ε S).symm g)) F u) hΦf
+    have k3 := congrFun (hrel (φ.symm h) (φ'.symm ((ofSgn ε S).symm g)) (GlobalTheory.TripleRead.thO M ψ (sgn ε S).gram e Φ)) u
+    refine (hth _ u).trans (k1.trans (k2.trans (k3.trans ?_)))
+    simp [WRep.toSgn, e]
 
 end GlobalTheory.PairDarboux
 

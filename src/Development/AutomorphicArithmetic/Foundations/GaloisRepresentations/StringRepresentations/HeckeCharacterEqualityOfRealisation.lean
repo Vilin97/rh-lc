@@ -37,7 +37,7 @@ theorem unr_part {R : Ranks} {H : Host R} {what₂ : Rows.Data R} {N : NData R H
     rcases List.mem_cons.1 hp with rfl | hp
     · have h := h12.1
       obtain ⟨d, hd'⟩ : ∃ d, p.d = d + 1 := ⟨p.d - 1, by omega⟩
-      rw [GlobalTheory.StringDecomp.spehLoc_eq, hd', List.range_succ_eq_map] at h
+      rw [GlobalTheory.StringDecomp.spehLoc_eq, hd', List.range_succ_eq_map, List.foldr_cons] at h
       exact (A.unr_tw _ _).1 ((A.unr_sum _ _).1 h).1
     · exact unr_part L h12.2 p hp hd
 

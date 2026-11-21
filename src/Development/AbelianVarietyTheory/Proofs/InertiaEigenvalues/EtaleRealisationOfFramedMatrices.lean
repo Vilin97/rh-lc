@@ -27,7 +27,6 @@ theorem equivFun_frob {T : Type} [AddCommGroup T] [Module ℤ_[l] T] {ι : Type}
   funext i
   simp only [Module.Basis.equivFun_apply]
   induction y with
-  | zero => rw [map_zero, map_zero, Finsupp.zero_apply, map_zero]
   | tmul a t =>
     rw [TensorProduct.map_tmul, Module.Basis.baseChange_repr_tmul, Module.Basis.baseChange_repr_tmul,
       map_smul, AlgHom.toLinearMap_apply, LinearMap.id_apply]

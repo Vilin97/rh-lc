@@ -20,8 +20,9 @@ private theorem sp_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f
 private theorem dual_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
     spMap (dualMap (g.comp f)) = spMap (dualMap g) ≫ spMap (dualMap f) := by
   rw [← sp_comp]
-  congr 1
-  ext r <;> simp [dualMap]
+  have h : dualMap (g.comp f) = (dualMap g).comp (dualMap f) := by
+    ext r <;> simp [dualMap]
+  rw [h]
 
 private theorem epi_sp {k K : Type} [Field k] [Field K] (a : k →+* K) : Epi (spMap a) := by
   letI := a.toAlgebra

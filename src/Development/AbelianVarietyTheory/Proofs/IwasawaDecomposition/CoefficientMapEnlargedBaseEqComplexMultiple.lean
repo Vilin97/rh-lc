@@ -106,7 +106,11 @@ theorem coef_schur : ∀ {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} {T : 
   intro B B' f f' T T' w w' Z Z' hX hX' Wt Wt' z hE hff hpx hstd Ks _ _ _ Xg tr R' cG' hP hL hB hRS i i' hii c0L hc c0L'' hc''
   obtain ⟨gR, c0R, ht⟩ := hc
   obtain ⟨gR', c0R', ht'⟩ := hc''
-  obtain ⟨hW, hρ, hnW, hiW, -⟩ := hRS.2.2.2.2.2.2.2.2.2.2.2.2.1 i i' hii
+  have hs := hRS.2.2.2.2.2.2.2.2.2.2.2.2.1 i i' hii
+  have hW := hs.1
+  have hρ := hs.2.1
+  have hnW := hs.2.2.1
+  have hiW := hs.2.2.2.1
   have hcI := z.pins.char.base.models.cV i
   have hmapL := ht.mapL i
   have hmapL' := ht'.mapL i'

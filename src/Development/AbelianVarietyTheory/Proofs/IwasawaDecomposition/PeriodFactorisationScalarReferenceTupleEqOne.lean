@@ -378,11 +378,54 @@ theorem exists_nums_numOK : ∀ (B : Base) (C : Cols B) (G : Type) [Group G] (p 
     ∃ n : Nums p W₀, ∀ η hη V S N G', NumOK (assemble B C (p.what₂ e W₀ n η hη) V S N G') := by
   intro B C G _ p e W₀
   refine ⟨numsOf p e W₀, fun η hη V S N G' => ?_⟩
+  have hd : ∀ (μ : C.Tup) j,
+      (data0 p e W₀).downTo μ j = ((p.what₂ e W₀ (numsOf p e W₀) η hη).what₂).downTo μ j := by
+    intro μ j
+    induction j with
+    | zero => rfl
+    | succ j ih =>
+      simp only [Rows.Data.downTo, ih]
+  have hi : ∀ μ : C.Tup, (data0 p e W₀).iota μ = ((p.what₂ e W₀ (numsOf p e W₀) η hη).what₂).iota μ := by
+    intro μ
+    simp only [Rows.Data.iota, hd]
+  have hv : ∀ μ : C.Tup, (data0 p e W₀).V0 μ = ((p.what₂ e W₀ (numsOf p e W₀) η hη).what₂).V0 μ := by
+    intro μ
+    rfl
+  have hq : ∀ μ : C.Tup, (data0 p e W₀).Qsp μ = ((p.what₂ e W₀ (numsOf p e W₀) η hη).what₂).Qsp μ := by
+    intro μ
+    simp only [Rows.Data.Qsp, Rows.Data.Usp, hv, hi]
+  have hs : ∀ μ : C.Tup, (data0 p e W₀).sec μ = ((p.what₂ e W₀ (numsOf p e W₀) η hη).what₂).sec μ := by
+    intro μ
+    have helper (q₁ q₂ : Submodule ℂ ((p.sA true μ).A.T))
+        (f₁ f₂ : (p.sA true μ).A.T →ₗ[ℂ] (p.ch true).EE.T)
+        (hf₁ : Function.Injective (f₁.domRestrict q₁))
+        (hf₂ : Function.Injective (f₂.domRestrict q₂))
+        (hq' : q₁ = q₂) (hf' : f₁ = f₂) :
+        q₁.subtype ∘ₗ (LinearEquiv.ofInjective (f₁.domRestrict q₁) hf₁).symm.toLinearMap ∘ₗ
+            (LinearMap.range (f₁.domRestrict q₁)).orthogonalProjectionOnto.toLinearMap =
+        q₂.subtype ∘ₗ (LinearEquiv.ofInjective (f₂.domRestrict q₂) hf₂).symm.toLinearMap ∘ₗ
+            (LinearMap.range (f₂.domRestrict q₂)).orthogonalProjectionOnto.toLinearMap := by
+      subst q₂
+      subst f₂
+      rfl
+    exact helper _ _ _ _ ((data0 p e W₀).iotaQ_inj μ)
+      (((p.what₂ e W₀ (numsOf p e W₀) η hη).what₂).iotaQ_inj μ) (hq μ) (hi μ)
   exact
   { lam := fun μ j _ _ π _ => rfl
     bu := fun u φ x => by
-      kexactB (rfl : buSec (data0 p e W₀) u φ x = buSec (data0 p e W₀) u φ x)
-    ze := fun u μ c h1 h2 h3 => (by with_unfolding_all exact ((zeOf_eq (data0 p e W₀) u μ c ⟨by kexactB h1, by kexactB h2⟩ h3) :))
+      change buSec (data0 p e W₀) u φ x = perOf p e W₀ u C.mu0 φ (((p.what₂ e W₀ (numsOf p e W₀) η hη).what₂).sec C.mu0 x)
+      simp only [buSec, hs]
+    ze := fun u μ c h1 h2 h3 => by
+      apply zeOf_eq (data0 p e W₀) u μ c
+      · constructor
+        · intro φ F hF
+          have ht := h1 φ F (by change F ∈ ((p.what₂ e W₀ (numsOf p e W₀) η hη).what₂).V0 μ; rw [← hv μ]; exact hF)
+          change perOf p e W₀ u μ φ F = c * buSec (data0 p e W₀) u φ (((p.what₂ e W₀ (numsOf p e W₀) η hη).what₂).iota μ (((p.what₂ e W₀ (numsOf p e W₀) η hη).what₂).Qsp μ |>.starProjection F)) at ht
+          change perOf p e W₀ u μ φ F = c * buSec (data0 p e W₀) u φ ((data0 p e W₀).iota μ ((data0 p e W₀).Qsp μ |>.starProjection F))
+          rw [hi μ, hq μ]
+          exact ht
+        · exact h2
+      · exact h3
     idx := fun Y => ⟨fun μ j w h1 h2 => (ijIdx_eq_can _ Y μ j h1 h2 w).symm, fun μ j w _ _ => rfl⟩
     jw := fun μ j w _ _ => rfl }
 

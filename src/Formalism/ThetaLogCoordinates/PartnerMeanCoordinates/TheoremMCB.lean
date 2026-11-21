@@ -14,7 +14,7 @@ public import Formalism.ThetaLogCoordinates.TraceIsometryWeights.DischargeHeight
 
 namespace Formalism.InvariantFactorPaths.MC
 
-open MvPolynomial Finset Formalism.GM Formalism.GM.M Formalism.GM.TM Formalism.InvariantFactorPaths.OddLevelGainBounds.TB
+open MvPolynomial Finset Formalism.GM Formalism.GM.M Formalism.GM.TM
 
 def GamIntC : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (N r : ℕ) (LL : Letters (N + 1)) (ρ : Fin r) (z : ℕ)

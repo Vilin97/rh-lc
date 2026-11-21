@@ -300,6 +300,8 @@ theorem card_zeros_on_torsion_le_of_symmetric_veryAmple :
     refine ⟨MvPolynomial.rename E F, hF.trans ?_⟩
     rw [MvPolynomial.eval₂_rename]
     congr 1
+    funext x
+    simp
   · rw [Nat.one_mul]
     obtain ⟨l, hl, c, hc⟩ := hgrow n hn
     exact ⟨l, hl, c, fun t => (hc t).exists⟩

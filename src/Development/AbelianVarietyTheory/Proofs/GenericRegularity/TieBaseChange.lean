@@ -18,7 +18,8 @@ theorem MChart.tie_baseChange : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
   intro E _ _ _ H Dw l Xo c O _ β Y M R S _ _ _ _ f ψ u y z hT hF
   obtain ⟨Λ, hL, hS⟩ := hT
   obtain ⟨hx, hu, pm, h1, h2, h3⟩ := hF
-  obtain ⟨Λ', hV, hTh⟩ := GlobalTheory.T.lift_baseChange_alt E H Dw l Xo c O β Y M R f y.x Λ S ψ
+  have hbase := GlobalTheory.T.lift_baseChange_alt E H Dw l Xo c O β Y M R f y.x Λ S ψ
+  obtain ⟨Λ', hV, hTh⟩ := hbase
   rcases z with ⟨zx⟩
   dsimp only at hx hu h1 h2 h3 ⊢
   subst hx

@@ -47,6 +47,8 @@ theorem exists_generates_isLB (R : Type) [CommRing R] [IsNoetherianRing R] (X : 
     have : IsNoetherianRing Γ(X, (affChart φ a).1) :=
       isNoetherianRing_of_surjective _ _ _ (φ.app_surjective _ (isAffineOpen_chart R N a))
     exact IsNoetherian.noetherian _
+  change ∀ a, ∃ S : Finset Γ(X, (affChart φ a).1),
+    Ideal.span (S : Set _) = J.ideal (affChart φ a) at fg
   choose S hS using fg
   choose e₀ he₀ using fun p : Σ a, S a =>
     exists_form_of_mem φ J p.1 p.2.1 (hS p.1 ▸ Ideal.subset_span p.2.2)

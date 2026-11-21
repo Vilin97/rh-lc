@@ -212,8 +212,8 @@ theorem _root_.GlobalTheory.T.referenceTuple_hilbertModel_definiteForms_enlarged
   have hm := LiftExt.m_eq (a := Z) (a' := Z') hP
   let i : Fin (w.st Z).toD7.R.m := Fin.cast hm i'
   have h : (i : ℕ) = i' := rfl
-  obt ⟨⟨-, -, -, -, -, -, hβ, -, -, hPg, -, -, h1, -⟩, h2⟩ := hS
-  obt ⟨c1, c2, c3, c4, -⟩ := h1 i i' h
-  obt ⟨-, -, hHV, -, -, hν, hfd⟩ := h2 i i' h
+  obtain ⟨⟨-, -, -, -, -, -, hβ, -, -, hPg, -, -, h1, -⟩, h2⟩ := hS
+  obtain ⟨c1, c2, c3, c4, -⟩ := h1 i i' h
+  obtain ⟨-, -, hHV, -, -, hν, hfd⟩ := h2 i i' h
   exact ModVExt.modV_of (a := Z) (a' := Z') (R := z.R.toRealDat) (R' := R'.toRealDat) hP h hβ hPg hL.2.2.2 hL.2.2.1 c1 c2 c3 c4
     (hL.1 i i' h).2 hHV hν hfd z.pins.char.base.models

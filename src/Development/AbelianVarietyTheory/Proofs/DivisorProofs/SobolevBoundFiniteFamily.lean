@@ -183,7 +183,7 @@ theorem lintegral_thetaSum_le (hKP : KP) (F E : Type) [Field F] [NumberField F] 
           rw [map_sum, thetaSum_finset_sum _ _ fun j _ => pres _ _ (memA j)]
         exact enorm_sum_le _ _
     _ = ∑ j, ∫⁻ g₀ in G₁.M.dom, ‖theta om₁ (pureA F (f j) (φ j)) g₀ 1‖ₑ ∂G₁.M.μ :=
-        lintegral_finset_sum _ fun j _ => (cont j).enorm.measurable
+        lintegral_finsetSum _ fun j _ => (cont j).enorm.measurable
     _ ≤ ∑ j, (∑ i, C i) * ENNReal.ofReal (((Finset.univ.biUnion T).sup (schwartzSeminormFamily ℂ _ ℂ)) (f j)) := by
         refine Finset.sum_le_sum fun j _ => (hb j (f j)).trans (mul_le_mul' ?_ (ENNReal.ofReal_le_ofReal ?_))
         · exact Finset.single_le_sum (f := C) (fun _ _ => zero_le) (Finset.mem_univ j)

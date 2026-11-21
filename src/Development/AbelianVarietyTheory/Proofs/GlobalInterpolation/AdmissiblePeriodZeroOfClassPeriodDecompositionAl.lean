@@ -141,8 +141,8 @@ theorem vAdd_nat (D : D7) (w : D.what₂.places.Pl) (n : ℕ) (hn : n ≠ 0) :
     pow_ne_zero _ (Nat.cast_ne_zero.mpr hp.ne_zero)
   have hrL : (r : D.what₂.LL) ≠ 0 := Nat.cast_ne_zero.mpr hr0
   have hv : padicValNat (D.what₂.places.resChar w) ((D.what₂.places.resChar w) ^ k * r) = k := by
-    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hr0, padicValNat.prime_pow,
-      padicValNat.eq_zero_of_not_dvd hr, add_zero]
+    rw [Nat.padicValNat_def, Nat.multiplicity_mul (pow_ne_zero _ hp.ne_zero) hr0,
+      Nat.multiplicity_prime_pow, multiplicity_eq_zero_of_not_dvd hr, add_zero]
   rw [hv]
   have e1 : (((D.what₂.places.resChar w ^ k * r : ℕ)) : D.what₂.LL) =
       ((((D.what₂.places.resChar w : ℕ) : 𝓞 D.what₂.LL) ^ k : 𝓞 D.what₂.LL) : D.what₂.LL) * ((r : 𝓞 D.what₂.LL) : D.what₂.LL) := by

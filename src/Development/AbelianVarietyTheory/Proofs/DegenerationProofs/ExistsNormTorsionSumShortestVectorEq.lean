@@ -178,8 +178,9 @@ theorem exists_norm_FF_eq : Laws → Laws2 → UTorsSt → ∀ (o Ω : Type) [Co
     (fun t' => GlobalTheory.T.torusOperator_eigen_of_expansion_single_class hL hL2 hU o Ω S ρ p y₀ u l hint x rig e th s hx hs w₀ hw₀.1 α b σ Φ hσ hσΦ hsupp t' t)] at ht
   have hE : Real.exp (-(l.q α / S.N)) = Real.exp (-(lam * (((Q α : ℚ) / S.N : ℚ) : ℝ))) := by
     rw [hq]; push_cast; ring_nf
-  obtain ⟨i, -, hi⟩ := IsUltrametricDist.exists_norm_finset_sum_le_of_nonempty Finset.univ_nonempty
-    (fun i => b i * ∑ j, y₀ (algebraMap o S.R (S.proj _ (l.wt α) j i)) * y₀ ⟨S.ev t j, S.ev_mem t j⟩)
+  obtain ⟨i, -, hi⟩ := (Finset.le_sup'_iff Finset.univ_nonempty).1
+    (Finset.univ_nonempty.norm_sum_le_sup'_norm
+      (fun i => b i * ∑ j, y₀ (algebraMap o S.R (S.proj _ (l.wt α) j i)) * y₀ ⟨S.ev t j, S.ev_mem t j⟩))
   refine ⟨t, i, ?_⟩
   have hw : Real.exp (-(l.q α / S.N)) ≤
       ‖∑ i, b i * ∑ j, y₀ (algebraMap o S.R (S.proj _ (l.wt α) j i)) * y₀ ⟨S.ev t j, S.ev_mem t j⟩‖ := by

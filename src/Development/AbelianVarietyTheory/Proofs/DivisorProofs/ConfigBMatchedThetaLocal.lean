@@ -320,6 +320,7 @@ theorem chi_le_tensSpan {ι : Type} [Fintype ι] [DecidableEq ι] {P Q R S : ℕ
       intro w X hX
       rw [GlobalTheory.TensIrr.atPl_tprod, (mem_chiOne _ _).1 ((mem_lowOne _ _ _).1 (hv w)).1 X hX, MultilinearMap.map_update_smul,
         Function.update_eq_self]
+      simp
     · exact Finset.sum_le_sum fun w _ => ((mem_lowOne _ _ _).1 (hv w)).2
   intro T hT
   refine (Submodule.span_le.2 ?_) (GlobalTheory.T.character_part_tensor_span ι P Q R S x _ T hT)

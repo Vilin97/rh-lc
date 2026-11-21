@@ -440,7 +440,7 @@ theorem lbIso_lbPow_linComb {Y : Scheme.{0}} {L : LB Y} (hL : L.IsLB) {I : Type}
     LBIso (lbPow (LB.LinComb L φ (fun i => ∑ k, (n k : ℤ) * ε k i)) e)
       (LB.LinComb L φ (fun i => ∑ k, ((e • n) k : ℤ) * ε k i)) := by
   have h := LB.isLB_linComb hL φ (fun i => ∑ k, (n k : ℤ) * ε k i)
-  refine (CechPic.cls_eq_iff (isLB_lbPow h e) (LB.isLB_linComb hL φ _)).2 ?_
+  refine (CechPic.cls_eq_iff (isLB_lbPow h e) (LB.isLB_linComb hL φ _)).1 ?_
   rw [CechPic.cls_lbPow h, CechPic.cls_linComb hL, CechPic.cls_linComb hL, Finset.smul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← natCast_zsmul, smul_smul, Finset.mul_sum]

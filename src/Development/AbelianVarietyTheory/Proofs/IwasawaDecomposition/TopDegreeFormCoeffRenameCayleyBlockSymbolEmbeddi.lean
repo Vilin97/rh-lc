@@ -67,8 +67,8 @@ theorem graph_apply' {n : ℕ} (g : Fin n → Fin n) (x y : Fin n) :
 theorem graph_permOf (τ : Fin q → Equiv.Perm (Fin p)) :
     (∑ a, Finsupp.single (a, permOf hc τ a) 1 : Fin (p * q) × Fin (p * q) →₀ ℕ) =
       (blockGraph τ).mapDomain (blockEmb hc) := by
-  rw [blockGraph, Finsupp.mapDomain_finset_sum]
-  simp_rw [Finsupp.mapDomain_finset_sum, Finsupp.mapDomain_single, blockEmb_eq]
+  rw [blockGraph, Finsupp.mapDomain_finsetSum]
+  simp_rw [Finsupp.mapDomain_finsetSum, Finsupp.mapDomain_single, blockEmb_eq]
   rw [← (idx hc).sum_comp, ← (Equiv.prodCongrLeft fun b => τ b).sum_comp, Fintype.sum_prod_type, Finset.sum_comm]
   refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun j _ => ?_
   simp [permOf_apply]

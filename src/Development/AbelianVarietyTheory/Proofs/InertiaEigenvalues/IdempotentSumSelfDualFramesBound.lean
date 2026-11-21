@@ -250,7 +250,7 @@ theorem toEAf_int {x : AE D} (hx : finPart D x ∈ intAE D) : toEAf D x ∈ Form
     rw [Algebra.TensorProduct.comm_tmul, h]
     exact mul_mem (Subring.subset_closure (Or.inl ⟨⟨o, ⟨o, rfl⟩⟩, rfl⟩)) (Subring.subset_closure (Or.inr ⟨⟨a, ha⟩, rfl⟩))
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | neg a _ ha => rw [map_neg]; exact neg_mem ha
 
 theorem natCast_mem_AA (k : ℕ) : ((k * Ideal.absNorm D.host.ccK : ℕ) : D.host.E) ∈ D.host.AA := by

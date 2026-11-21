@@ -196,6 +196,7 @@ theorem exists_low_coef : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Nu
     intro w Z hZ
     rw [GlobalTheory.TensIrr.atPl_tprod, LowMinor.fockAct1_wit hPR hQS _ _ _ (ek w) (ek' w) Z hZ, MultilinearMap.map_update_smul,
       Function.update_eq_self]
+    rfl
   let ℓ := GlobalTheory.TensIrr.prodForm (V := fun _ : InfinitePlace F => Formalism.BasicNotions.TH.Pol (a - G.p) G.p (a + a' - (G.p + G.q)) (G.p + G.q))
     fun _ => GlobalTheory.MinorCoef.evZ (GlobalTheory.MinorCoef.base _ _ _ _)
   have hξ : ∀ T ∈ N, (ℓ ∘ₗ N.subtype ∘ₗ s) (R.p (Φ T)) = ℓ T := fun T hT => by
@@ -209,21 +210,21 @@ theorem exists_low_coef : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Nu
   obtain ⟨γ, hγ, Yg, hgen, hKC, hγ1⟩ :=
     i_kline i_lineex F E σ (Fin (a + a')) _ _ B.emb (incM F G.W.J) Complex.I C G.W.θ hb.cm hC1 hCθ κ hκ.1 hκ.2
   obtain ⟨U, hU, hAc⟩ := GlobalTheory.FockBottom.exp_of_gen hW2 hadm hγ hgen hKC
-  rw [hγ1] at hAc
+  subst κ
   have hgY : ∀ w, g w = NormedSpace.exp (Yg w) := fun w => by
     obtain ⟨C', hC'⟩ := (hC1 w).2
     have hL := GlobalTheory.FockKStab.frame_inv (hC1 w) hC'
     have e := hgen 1 w
-    rw [hγ1, one_smul] at e
+    rw [one_smul] at e
     have e' : C w * g w = C w * NormedSpace.exp (Yg w) := (hgr w).symm.trans e
     have := congrArg (C' * ·) e'
     simpa only [← Matrix.mul_assoc, hL, Matrix.one_mul] using this
   rw [← hr] at hf
   obtain ⟨T, rfl⟩ := hf
-  have h0 := hker κ hκ (Φ (T - T₀)) (hr ▸ LinearMap.mem_range_self Φ _) _ (hAc (T - T₀)) (by rw [map_sub, map_sub, hfx, sub_self])
+  have h0 := hker _ hκ (Φ (T - T₀)) (hr ▸ LinearMap.mem_range_self Φ _) _ (hAc (T - T₀)) (by rw [map_sub, map_sub, hfx, sub_self])
   rw [map_sub, map_sub, map_sub, sub_eq_zero] at h0
   have hUN : U T₀ ∈ N := by
-    have h1 := hstab κ hκ (Φ T₀) (key ▸ Submodule.mem_map_of_mem hT₀) _ (hAc T₀)
+    have h1 := hstab _ hκ (Φ T₀) (key ▸ Submodule.mem_map_of_mem hT₀) _ (hAc T₀)
     rw [key] at h1
     obtain ⟨T', hT', e⟩ := h1
     exact hinj e ▸ hT'

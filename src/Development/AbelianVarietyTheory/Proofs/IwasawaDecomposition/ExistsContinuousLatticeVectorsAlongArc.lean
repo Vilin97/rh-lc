@@ -147,8 +147,9 @@ theorem isHolTo_spMap {A : Type} [CommRing A] {ψ : ℂ → (A →+* ℂ)} {r : 
 theorem continuousAt_snd {A : Type} [CommRing A] {ψ : ℂ → (A →+* ℂ)} {z : ℂ} (h : ∀ a, ContinuousAt (fun u => ψ u a) z)
     {X : Scheme.{0}} (V : Sp (DualNumber A) ⟶ X) (U : X.Opens) (hU : ⊤ ≤ (spMap (dualMap (ψ z)) ≫ V) ⁻¹ᵁ U)
     (f : Γ(X, U)) : ContinuousAt (fun u => TrivSqZeroExt.snd (valR (spMap (dualMap (ψ u)) ≫ V) U f)) z := by
-  obtain ⟨s, a, hs, H⟩ := exists_frac V U f (spMap (dualMap (ψ z)) (IsLocalRing.closedPoint (DualNumber ℂ)))
-    (hU (x := IsLocalRing.closedPoint (DualNumber ℂ)) trivial)
+  let p : Sp (DualNumber ℂ) := IsLocalRing.closedPoint (DualNumber ℂ)
+  obtain ⟨s, a, hs, H⟩ := exists_frac V U f (spMap (dualMap (ψ z)) p)
+    (hU (x := p) trivial)
   have h0 : ψ z s.fst ≠ 0 := fun h0 => hs (by
     change dualMap (ψ z) s ∈ IsLocalRing.maximalIdeal (DualNumber ℂ)
     rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff, TrivSqZeroExt.isUnit_iff_isUnit_fst]
@@ -241,7 +242,32 @@ theorem exists_lattice_sections : ∀ (E : Type) [Field E] [NumberField E] [IsCM
         (spMap (dualMap (ψ u)) ≫ fr.v (e j).1 (e j).2) := fun u => by
     by_cases hu : u ∈ Metric.ball (0 : ℂ) ρ
     · obtain ⟨D, hD⟩ := LatSec.exists_lieEquiv Z.t (hexp u hu).1 (hA u hu) (hexp u hu).2.2.2.2
-      obtain ⟨f, hf⟩ := GlobalTheory.ShFam.EigFrame.exists_baseChange E H Dw l Xo c O β Z A ℂ φ _ fr (ψ u)
+      have ex : ∃ f : EigFrame Z ((ψ u).comp φ) (spMap (ψ u) ≫ (x ≫ genι Z)), ∀ τ i, f.v τ i = spMap (dualMap (ψ u)) ≫ fr.v τ i := by
+        open ReciprocityTheory.ChartRestriction.G.PullbackSections GlobalTheory.LieMet GlobalTheory.LocM GlobalTheory.LocM.FrameBC in
+        have h : GlobalTheory.LocM.IsFrame Z.t ((ψ u).comp φ) (spMap (ψ u) ≫ (x ≫ genι Z)) ((fun τ i => spMap (dualMap (ψ u)) ≫ fr.v τ i)) := by
+          letI : Algebra c.F A := φ.toAlgebra
+          letI : Algebra c.F ℂ := ((ψ u).comp φ).toAlgebra
+          let v : ∀ τ, Fin (Dw.mult τ) → TanM (x ≫ genι Z) Z.t.G := fun τ i => tanOf (fr.tan τ i)
+          have eps_dual (a : A) : spMap (dualMap (ψ u)) ≫ spMap (epsMul a) = spMap (epsMul ((ψ u) a)) ≫ spMap (dualMap (ψ u)) := by
+            rw [spMap_comp_spMap, spMap_comp_spMap]
+            congr 1
+            refine RingHom.ext fun z => TrivSqZeroExt.ext ?_ ?_ <;> simp [dualMap, epsMul, mul_comm]
+          have he : ∀ τ i (a : 𝓞 E), (fun τ i => spMap (dualMap (ψ u)) ≫ fr.v τ i) τ i ≫ (Z.t.act.act a).left =
+              spMap (epsMul (((ψ u).comp φ) (embK c τ a))) ≫ (fun τ i => spMap (dualMap (ψ u)) ≫ fr.v τ i) τ i := fun τ i a => by
+            show (spMap (dualMap (ψ u)) ≫ fr.v τ i) ≫ _ = _ ≫ spMap (dualMap (ψ u)) ≫ fr.v τ i
+            rw [Category.assoc, fr.eig τ i a, ← Category.assoc, eps_dual, Category.assoc, RingHom.comp_apply]
+          have h1 := full_of_eig c v (fun τ i => (eig_iff c τ (v τ i)).1 (fr.eig τ i)) fun τ n hn => by
+            exact (existsUnique_congr fun a => LieMet.isComb_iff (v τ) a n).1 (fr.basis τ _ (isTan_tv n) ((eig_iff c τ n).2 hn))
+          have h2 : Full fun k : (Σ τ : E →+* ℂ, Fin (Dw.mult τ)) => resM (ψ u) (v k.1 k.2) := by
+            have h := full_equiv (eB Dw).symm (full_bc (ψ u) (full_equiv (eB Dw) h1))
+            exact (funext fun k => congrArg (fun j : IxB Dw => resM (ψ u) (v j.1 j.2)) ((eB Dw).apply_symm_apply k)) ▸ h
+          refine ⟨fun τ i => ⟨isTan_map (ψ u) rfl (fr.tan τ i), he τ i⟩, fun τ w hw hwe => ?_⟩
+          have h3 := eig_of_full c (fun τ i => resM (ψ u) (v τ i)) (fun τ i => (eig_iff c τ _).1 (he τ i)) h2 τ (tanOf hw)
+            ((eig_iff c τ _).1 hwe)
+          exact (existsUnique_congr fun a => LieMet.isComb_iff (fun i => resM (ψ u) (v τ i)) a (tanOf hw)).2 h3
+        exact ⟨⟨_, fun τ i => (h.1 τ i).1, fun τ i => (h.1 τ i).2, h.2⟩, fun _ _ => rfl⟩
+      let f := Classical.choose ex
+      have hf := Classical.choose_spec ex
       obtain ⟨b, hb⟩ := LatSec.exists_basis f
       refine ⟨((b.reindex e.symm).equivFun.symm.trans D.symm).toContinuousLinearEquiv, fun _ => ⟨⟨_, rfl⟩, fun j => ?_⟩⟩
       have h1 := hD (D.symm (f.vec (e j).1 (e j).2))

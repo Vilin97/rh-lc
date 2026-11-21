@@ -130,6 +130,40 @@ theorem exists_transport (K : Type) [Field K] {ST SG SG' SB : Finset (HeightOneS
     ∃ x' : HomE E a b, phiT K d d' x' = phiT K d d' x ∧
       ∀ (P : SB) s l, IntAt P.1 (c P * (inFr (f₀ P) (f P) x' - inFr (f₀ P) (f' P) x) (Pi.single s 1) l) := by
   obtain ⟨S₀, hS₀⟩ := hd.lat.fg
+  obtain ⟨S₁, hS₁⟩ := hd'.lat.fg
+  have hone : Full (1 : Submodule (𝓞 E) E) := by
+    intro x
+    obtain ⟨n, hn, hnx⟩ := full_stdLat (E := E) 1 (fun _ => x)
+    refine ⟨n, hn, ?_⟩
+    simpa [stdLat, Submodule.mem_pi] using hnx (0 : Fin 1) (Set.mem_univ _)
+  have hfull : Full d'.N := by
+    let M : Sp E b → Submodule (𝓞 E) (Sp E b) := fun y =>
+      (1 : Submodule (𝓞 E) E).comap ((hStd E b y).restrictScalars (𝓞 E))
+    have hM : ∀ y, Full (M y) := by
+      intro y x
+      obtain ⟨n, hn, hx⟩ := hone (hStd E b y x)
+      refine ⟨n, hn, ?_⟩
+      simpa [M] using hx
+    have hle : S₁.inf M ≤ d'.N := by
+      intro x hx
+      rw [← hd'.uni]
+      simp only [dual, Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap,
+        LinearMap.restrictScalars_apply]
+      intro y hy
+      rw [← hS₁] at hy
+      induction hy using Submodule.span_induction with
+      | mem y hy => exact (show S₁.inf M ≤ M y from Finset.inf_le hy) hx
+      | zero => simp
+      | add y z hy hz ihy ihz => simpa using Submodule.add_mem (1 : Submodule (𝓞 E) E) ihy ihz
+      | smul r y hy ih =>
+        let r' : 𝓞 E := ⟨star (r : E), r.isIntegral_coe.map (starRingEnd E).toIntAlgHom⟩
+        rw [← algebraMap_smul E r y, LinearMap.map_smulₛₗ, LinearMap.smul_apply]
+        have hr := (1 : Submodule (𝓞 E) E).smul_mem r' ih
+        change star (r : E) * hStd E b y x ∈ (1 : Submodule (𝓞 E) E) at hr
+        simpa [starRingEnd_apply, smul_eq_mul] using hr
+    intro x
+    obtain ⟨n, hn, hx⟩ := full_finset_inf S₁ M hM x
+    exact ⟨n, hn, hle hx⟩
   obtain ⟨t, ht⟩ := exists_approx_family (W := HomE E a b) (ST ∪ SB)
     (fun P => if h : P ∈ SB then
         homInto ((Finset.univ.image fun s : Fin a => f₀ ⟨P, h⟩ (Pi.single s 1) : Finset (Sp E a)) : Set (Sp E a))
@@ -138,7 +172,7 @@ theorem exists_transport (K : Type) [Field K] {ST SG SG' SB : Finset (HeightOneS
     (fun P => by
       by_cases h : P ∈ SB
       · simp only [dif_pos h]; exact full_homInto _ _ (full_stdLat b)
-      · simp only [dif_neg h]; exact full_homInto _ _ (full_of_span _ hd'.lat.span_eq_top))
+      · simp only [dif_neg h]; exact full_homInto _ _ hfull)
     (fun P => if h : P ∈ SB then (f ⟨P, h⟩).toLinearMap ∘ₗ (f' ⟨P, h⟩).symm.toLinearMap ∘ₗ x else x)
   refine ⟨t, ?_, fun P s l => ?_⟩
   · rw [← add_sub_cancel x t]

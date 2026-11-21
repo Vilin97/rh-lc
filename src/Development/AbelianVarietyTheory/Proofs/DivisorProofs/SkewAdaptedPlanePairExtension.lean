@@ -104,11 +104,13 @@ theorem evalZero_scalar_eq_one : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E :
       (fun Φ hΦ => hS₁.pres _ _ (hmap _ (hS.pres _ _ hΦ)))
       (fun z Φ hΦ => by
         simp only [LinearMap.comp_apply]
-        rw [hS.impl p _ Φ hΦ, actB_mul_left, hheis _ _ (hS.pres _ _ hΦ),
+        set_option backward.isDefEq.respectTransparency false in
+        rw [hS.impl p (H'.ι.map (inclR (AF F)) * z) Φ hΦ, actB_mul_left, hheis _ _ (hS.pres _ _ hΦ),
           hS₁.impl _ _ _ (hmap _ (hS.pres _ _ hΦ)), actB_inv_actB])
       (fun y Φ hΦ => by
         simp only [LinearMap.comp_apply]
-        rw [hS.impl p _ Φ hΦ, actB_vecMulVec, hinv _ _ (hS.pres _ _ hΦ)])
+        set_option backward.isDefEq.respectTransparency false in
+        rw [hS.impl p (Matrix.vecMulVec (incV F H'.x) y) Φ hΦ, actB_vecMulVec, hinv _ _ (hS.pres _ _ hΦ)])
       (fun l hl => by
         have e0 : l ∘ₗ (omd₁ p⁻¹ ∘ₗ ed ∘ₗ omd p) = ((l ∘ₗ omd₁ p⁻¹) ∘ₗ ed) ∘ₗ omd p := rfl
         rw [e0]

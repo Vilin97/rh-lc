@@ -47,8 +47,33 @@ theorem leftInverse (hX : X.IsHerm σ B r s) (hH : H.IsAdapted σ B X X₁ i₀ 
     ∃ P : Matrix (Fin n₁) (Fin n) E, P * H.ι = 1 := by
   set f : (Fin n₁ → E) →ₗ[E] (Fin n → E) := Matrix.toLin' H.ι with hf
   have htop : Submodule.span E {H.x} ⊔ Submodule.span E {H.y} ⊔ LinearMap.range f = ⊤ := by
-    have hl := hX.lat
-    rw [eq_top_iff, ← hl.span_eq_top, Submodule.span_le]
+    classical
+    have hl : Submodule.span E (X.L : Set (Fin n → E)) = ⊤ := by
+      obtain ⟨t, ht⟩ := hX.lat.fg
+      rw [eq_top_iff]
+      intro z _
+      obtain ⟨d, hd, hdint⟩ := exists_integral_multiples ℤ ℚ (L := E) (t.image (form σ X.J z))
+      have hz : (d : E) • z ∈ X.L := by
+        apply (hX.dual _).2
+        intro x hx
+        rw [← ht] at hx
+        induction hx using Submodule.span_induction with
+        | mem x hx =>
+          have hi := hdint (form σ X.J z x) (Finset.mem_image.mpr ⟨x, hx, rfl⟩)
+          simpa [form, dotProduct, Finset.mul_sum, mul_assoc, Algebra.smul_def] using hi
+        | zero => simpa [form, dotProduct, Matrix.mulVec] using (isIntegral_zero : IsIntegral ℤ (0 : E))
+        | add x y hx hy ihx ihy =>
+          rw [GlobalTheory.AdaptedPlaneDual.form_add_right]
+          exact ihx.add ihy
+        | smul c x hx ih =>
+          change IsIntegral ℤ (form σ X.J ((d : E) • z) ((c : E) • x))
+          rw [GlobalTheory.AdaptedPlaneDual.form_smul_right]
+          exact (c.2.map (RingHom.toIntAlgHom σ.toRingHom)).mul ih
+      have hdE : (d : E) ≠ 0 := by exact_mod_cast hd
+      have hmem : (d : E) • z ∈ Submodule.span E (X.L : Set (Fin n → E)) := Submodule.subset_span hz
+      have := Submodule.smul_mem (Submodule.span E (X.L : Set (Fin n → E))) (d : E)⁻¹ hmem
+      simpa [smul_smul, hdE] using this
+    rw [eq_top_iff, ← hl, Submodule.span_le]
     intro z hz
     obtain ⟨s, t, u, -, -, -, rfl⟩ := hH.split z hz
     refine Submodule.add_mem _ (Submodule.add_mem _ ?_ ?_) ?_

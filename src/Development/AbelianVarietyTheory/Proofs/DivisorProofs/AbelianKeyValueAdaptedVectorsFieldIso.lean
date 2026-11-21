@@ -47,9 +47,8 @@ def rhoE : TE R F' ⟶ TE R F :=
       spMap (algebraMap F' (DualNumber F')) ≫ spMap (algebraMap (FractionRing R) F') ≫
         spMap (algebraMap R (FractionRing R))
     simp only [← spMap_comp']
-    congr 1
-    exact RingHom.ext fun r => TrivSqZeroExt.ext (by simp [dualMap, he, TrivSqZeroExt.algebraMap_eq_inl])
-      (by simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]))
+    apply congrArg spMap
+    ext r <;> simp [dualMap, he, TrivSqZeroExt.algebraMap_eq_inl])
 
 
 include he in

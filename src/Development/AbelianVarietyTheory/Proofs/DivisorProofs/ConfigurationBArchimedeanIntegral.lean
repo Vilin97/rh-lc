@@ -60,7 +60,10 @@ theorem line_one_eq {β : Type} [Fintype β] [DecidableEq β] {R S : ℕ} (hCM :
     rw [one_smul, hY w] at h1
     calc _ = ((γ (Multiplicative.ofAdd 1)).1 : Matrix β β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))).map (piInf (τ w)) * C w * A' := by
           rw [Matrix.mul_assoc, hCA, Matrix.mul_one]
-      _ = _ := by rw [h1, Matrix.mul_assoc, hCA, Matrix.mul_one]
+      _ = _ := by
+        calc
+          _ = ((k.1 : Matrix β β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))).map (piInf (τ w)) * C w) * A' := congrArg (fun M => M * A') h1
+          _ = _ := by rw [Matrix.mul_assoc, hCA, Matrix.mul_one]
   have hA1 := hγ.2 (Multiplicative.ofAdd 1)
   have hmat : ((γ (Multiplicative.ofAdd 1)).1 : Matrix β β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) = k.1 := by
     ext i j
@@ -70,7 +73,7 @@ theorem line_one_eq {β : Type} [Fintype β] [DecidableEq β] {R S : ℕ} (hCM :
       have e1 := congrFun (congrFun (hA1 u hu0) i) j
       have e2 := congrFun (congrFun (hk u hu0) i) j
       simp only [Matrix.smul_apply, Matrix.sub_apply, Matrix.zero_apply, smul_sub] at e1 e2 ⊢
-      rw [← sub_sub_sub_cancel_right _ _ (u • (1 : Matrix β β (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) i j), e1, e2, sub_zero]
+      linear_combination e1 - e2
     · intro w
       have := congrFun (congrFun (hw w) i) j
       simp only [Matrix.map_apply] at this
@@ -171,12 +174,14 @@ theorem GlobalTheory.FockInclK.tensIncl_acts : GlobalTheory.ThK.KP → ∀ (F E 
     (fun t l hl => (hwp.isUSplitting).adm _ l hl) (fun T => hW2 γ hγ _ hgen T)
 
   have hA₁ := (GlobalTheory.RealLift.actsLaws F _ (Φ₁ T) (Φ₁ (U₁ T)) (Φ₁ T₁)).2.1 _ (map_zero _) (hSA₁ T)
-  rw [MonoidHom.comp_apply, hγ₁1] at hA₁
+  change Acts (evI F) (om₁ (1, γ₁ (Multiplicative.ofAdd 1))) (Φ₁ T) (Φ₁ (U₁ T)) at hA₁
+  rw [hγ₁1] at hA₁
   have eT : U₁ T = T₁ := hD₁.2.1 ((GlobalTheory.RealLift.actsLaws F _ (Φ₁ T) _ _).2.2.2.1 _ hA₁ hT)
 
   have hA := (GlobalTheory.RealLift.actsLaws F _ (Φ (tensIncl F P Q r₀ s₀ T)) (Φ (U (tensIncl F P Q r₀ s₀ T)))
     (Φ (U (tensIncl F P Q r₀ s₀ T)))).2.1 _ (map_zero _) (hSA _)
-  rw [MonoidHom.comp_apply, hγ1] at hA
+  change Acts (evI F) (om (1, γ (Multiplicative.ofAdd 1))) _ _ at hA
+  rw [hγ1] at hA
   have hLL := GlobalTheory.RealLift.Main.map_sumPl (fun _ : InfinitePlace F => (polIncl P Q r₀ s₀).toLinearMap)
     (fun w => fockAct2 P Q R₀ S₀ (Y₁ w) + (((B.mβ w : ℂ) / 2) * (Y₁ w).trace) • 1)
     (fun w => fockAct2 P Q (R₀ + 1) (S₀ + 1) (extMat r₀ s₀ (Y₁ w)) +

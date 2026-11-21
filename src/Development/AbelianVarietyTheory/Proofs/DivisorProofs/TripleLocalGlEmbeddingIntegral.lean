@@ -164,6 +164,7 @@ theorem diag_integral : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [F
         ((ν (GlobalTheory.SplitFlip.gdet g) : ℂ) / starRingEnd ℂ (ν (GlobalTheory.SplitFlip.gdet g) : ℂ)) * ∫ x, φ₁ x * φ₂ x ∂μ := by
   intro hP F E _ _ _ _ _ σ B a a' G X om om' hT v hv t K hK S hS ν α ι hι hint d' hd' dd hdd omd hspl hres g p hp
     φ₁ h₁ φ₂ h₂ φ'' h'' hact μ hμ
+  change UG _ (dbl (incM F G.V'.J)) →* _ at omd
   set k := K g with hk
   let gd := diagL (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) k
   let gd' := diagR (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) k
@@ -223,8 +224,12 @@ theorem diag_integral : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [F
     acts_comp v (fun f hf => hspl.pres gd' f hf) hR' (hL φ₁ h₁ T₂ hT₂sb)
   have hφ'' : φ'' = boxFun (S g φ₁) T₂ := by
     refine GlobalTheory.TensUniq.eq_of_tens_eq v (boxFun φ₁ φ₂) _ _ (boxFun_mem_SB h₁ h₂) fun r hr => ?_
-    rw [← hact r hr, hpq, map_mul]
-    exact hcomp r hr
+    have heq : omd p = omd gd * omd gd' := by
+      calc
+        omd p = omd (gd * gd') := congrArg omd hpq
+        _ = omd gd * omd gd' := map_mul omd gd gd'
+    exact (hact r hr).symm.trans ((congrArg (fun f : Module.End ℂ _ =>
+      f (tens (evFin F v) (boxFun φ₁ φ₂) r)) heq).trans (hcomp r hr))
   subst hφ''
   have e : (fun x => boxFun (S g φ₁) T₂ (Sum.elim x x)) =
       fun x => c * (S g φ₁ x * starRingEnd ℂ (S g (fun y => starRingEnd ℂ (φ₂ y)) x)) := by

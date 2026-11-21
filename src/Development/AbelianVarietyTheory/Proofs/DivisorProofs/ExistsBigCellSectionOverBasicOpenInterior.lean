@@ -246,11 +246,11 @@ theorem Carries.map {S S' : Type} [CommRing S] [CommRing S'] {z : Sp S ⟶ Y₀ 
     rw [← frX_frMap hPP, Category.assoc, hP]; exact hx'
   refine ⟨inst', P', hP', ?_, fun σ i => ?_⟩
   · rw [Category.assoc, hz]; exact TF.X.ptY_frMap hPP
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [← tanPull_frVec hPP hP hP' hx' σ i, hvec, map_sum]
-    exact Finset.sum_congr rfl fun j _ => by
-      rw [map_smulₛₗ, tanPull_valV TF hv _ hx' hU hU']
-      rfl
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [← tanPull_frVec hPP hP hP' hx' σ i, hvec, map_sum]
+      exact Finset.sum_congr rfl fun j _ => by
+        rw [map_smulₛₗ, tanPull_valV TF hv _ hx' hU hU']
+        rfl
 
 variable {W : (Y₀ TF.X Z).Opens} {k : TF.X.F.J}
   {L N : ∀ σ : E →+* ℂ, Matrix (Fin (Dw.mult σ)) (Fin (Dw.mult σ)) Γ(Y₀ TF.X Z, W)}

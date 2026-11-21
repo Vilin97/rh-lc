@@ -66,6 +66,7 @@ theorem infRel_surjective (hP : GlobalTheory.FunPr.Hypotheses₂) (B : Base F E)
     intro z Φ _
     funext x
     simp only [evA_apply, Darboux.rho, schr, incM_one_eq, Matrix.one_mul, Ma]
+    dsimp only [incM, cA]
     rw [hlow z, ins0_dotProduct_ins0, ins0_dotProduct_ins0, ← ins0_add]
   have hinv₂ : ∀ u ∈ iso0 (F := F) n H', ∀ Φ ∈ schA F (Fin n × Fin d), evA F hd (Ma.co.rho B.ψ u Φ) = evA F hd Φ := by
     rintro u ⟨y, rfl⟩ Φ _

@@ -253,9 +253,9 @@ theorem mem_of_char_eq {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {r : D.hos
         congr 4
         ring
     convert h1 using 1
-    rw [(fe D).map_mul, (fe D).map_mul, hH1, ← e1, ← one_add_one_eq_two (R := AE D), (fe D).map_add (f := _), (fe D).map_one,
+    rw [(fe D).map_mul, (fe D).map_mul, hH1, ← e1, ← one_add_one_eq_two (R := AE D), (fe D).map_add, (fe D).map_one,
       ← one_add_one_eq_two (R := D.host.E)]
-    simp only [RingHom.map_mul, RingHom.map_add (f := _), RingHom.map_one]
+    simp only [RingHom.map_mul, RingHom.map_add, RingHom.map_one]
     ring
   have hc := GlobalTheory.T.unitaryFinitePoint_congr_one_of_inv_conj_congr (GlobalTheory.T.conjugatePlace_valuation_count_under D) 𝔪 Sf hG y (GlobalTheory.T.valued_finiteUnitary_le_one_off_openSubset S g y Sf gS hg hy) fun w hw => by
     obtain ⟨h1, h2, h3⟩ := place_facts hG hw k

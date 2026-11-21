@@ -34,7 +34,6 @@ theorem span_pull_baseChange (H : GlobalTheory.Published.AbelianDeRham.BaseChang
   refine ⟨Submodule.eq_top_iff'.2 fun x ↦ ?_, hF⟩
   obtain ⟨z, rfl⟩ := hbc.2 x
   induction z with
-  | zero => rw [map_zero]; exact Submodule.zero_mem _
   | add a b ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   | tmul r c => rw [liftSemi_tmul]; exact Submodule.smul_mem _ r (Submodule.subset_span ⟨c, rfl⟩)
 

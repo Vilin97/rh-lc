@@ -32,7 +32,8 @@ theorem not_two_primes {R : Type*} [CommRing R] (P : Ideal R) [hP : P.IsPrime] {
 
 theorem unrAt_mul {L : Type} [Field L] [NumberField L] {χ χ' : HChar L} {v : HeightOneSpectrum (𝓞 L)} (h : χ.UnrAt v)
     (h' : χ'.UnrAt v) : (χ * χ').UnrAt v := fun x hx => by
-  rw [HChar.loc_mul, h x hx, h' x hx, one_mul]
+  change χ.loc v x * χ'.loc v x = 1
+  rw [h x hx, h' x hx, one_mul]
 
 theorem unrAt_one {L : Type} [Field L] [NumberField L] (v : HeightOneSpectrum (𝓞 L)) : (1 : HChar L).UnrAt v := fun _ _ => rfl
 

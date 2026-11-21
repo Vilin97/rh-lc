@@ -360,7 +360,8 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem mem_mult_iff {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} {θ : Formalism.IndefR.Datum.InfFam D} {M : DSModel V S}
     {J : Set (GA D V)} {χ : GA D V → ℂ} {U : MMap M} :
     U ∈ Mult θ M J χ ↔ ∃ s : Set (MMap M), (∀ T ∈ s, IsMultMap θ M J χ T) ∧ U ∈ Submodule.span ℂ s :=
-  ⟨fun h => ⟨_, fun _ hT => hT, h⟩, fun ⟨_, hs, h⟩ => Submodule.span_mono hs h⟩
+  ⟨fun h => ⟨_, fun _ hT => hT, h⟩, fun ⟨s, hs, h⟩ =>
+    Submodule.span_mono (show s ⊆ {T | IsMultMap θ M J χ T} from hs) h⟩
 
 
 set_option maxHeartbeats 4000000 in

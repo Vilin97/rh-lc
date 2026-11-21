@@ -226,7 +226,7 @@ private theorem jL_of {hX : B.fields.Ok} {hX' : B'.fields.Ok} {Wt : Set B.places
   obtain ⟨y, rfl⟩ := ((Formalism.L2.Col.mtKGSD (Pr := B.primes w.px) B.wts w.I.Ch w.I.sel (mu0F (X := B.fields) (tuOf w.I (usedOf w.I T Wt))).1 ((i : ℕ) + 1)).res ok).surjective x
   obtain ⟨y', rfl⟩ := ((Formalism.L2.Col.mtKGSD (Pr := B'.primes w'.px) B'.wts w'.I.Ch w'.I.sel (mu0F (X := B'.fields) (tuOf w'.I (usedOf w'.I T' Wt'))).1 ((i' : ℕ) + 1)).res ok').surjective x'
   rw [LinearEquiv.symm_apply_apply, LinearEquiv.symm_apply_apply] at h
-  exact (by with_unfolding_all exact (e.jL i i' hi ok ok' y y' h :))
+  with_unfolding_all exact e.jL i i' hi ok ok' y y' h
 
 end Two
 

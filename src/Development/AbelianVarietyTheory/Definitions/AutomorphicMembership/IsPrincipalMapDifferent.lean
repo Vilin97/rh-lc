@@ -46,6 +46,7 @@ structure LatChart (L : Lat B) : Type where
 
   c : ∀ σ, Fin (Dw.mult σ) → Fin n → Γ(Z.X, U)
 
+  adapted : ∀ (k : Type) [Field k] (x : Sp k ⟶ Z.X), ⊤ ≤ x ⁻¹ᵁ U → Set.range x ⊆ Z.opn →
     ∃ u, Z.FlagAt x u ∧ HasCoord g L m x u fun σ i l => valR x U (c σ i l)
 
 

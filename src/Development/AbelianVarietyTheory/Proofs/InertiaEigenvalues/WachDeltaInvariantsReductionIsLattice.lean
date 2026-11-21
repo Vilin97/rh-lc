@@ -71,7 +71,7 @@ theorem smul_mem_DΔ (T : LocLat G Qp LL O) {a : LetA O n₀} (ha : ∀ i, ∀ �
 
 theorem approx (T : LocLat G Qp LL O) (hT : IsCrys PD T.ρ) (x : W.DD T) :
     ∃ (m : ℕ) (y z : W.DD T), y ∈ W.N T ∧ ((letπ : LetA O n₀) ^ m) • x = y + PD.p • z := by
-  refine (W.N_base T hT).inductionOn x _ ⟨0, 0, 0, zero_mem _, by simp⟩ ?_ ?_ ?_
+  refine (W.N_base T hT).inductionOn x ?_ ?_ ?_
   · intro y
     exact ⟨0, y, 0, y.2, by simp⟩
   · rintro e x ⟨m, y, z, hy, h⟩
@@ -141,10 +141,11 @@ theorem exists_lat {l n : ℕ} {R : RingPG k l} {F : DFun R n G} {ι : k⸨X⸩ 
       let x : _ → ↥(DΔ W T) := fun j => ⟨((fun _ => a j) : LetA O n₀) • b j,
         smul_mem_DΔ W T (fun _ => ha j) (hbΔ j).2⟩
       refine ⟨∑ j, x j, ?_, ?_⟩
-      · rw [AddSubgroup.val_finset_sum]
+      · change (DΔ W T).subtype (∑ j, x j) ∈ W.N T
+        rw [map_sum]
         exact sum_mem fun j _ => (W.N T).smul_mem _ (hbΔ j).1
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [map_sum]
+      · set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         exact Finset.sum_congr rfl fun j _ =>
           p.j_smul T A q hq i (fun _ => a j) (c j) (b' j) (x j) (hι j) rfl
     · rintro ⟨x, hx, rfl⟩
@@ -162,7 +163,10 @@ theorem exists_lat {l n : ℕ} {R : RingPG k l} {F : DFun R n G} {ι : k⸨X⸩ 
       let x' : _ → ↥(DΔ W T) := fun j => ⟨a j • b j, smul_mem_DΔ W T (hinv j) (hbΔ j).2⟩
       have hx' : x = ∑ j, x' j := by
         apply Subtype.ext
-        rw [AddSubgroup.val_finset_sum, ← ha]
+        change (DΔ W T).subtype x = (DΔ W T).subtype (∑ j, x' j)
+        rw [map_sum]
+        change (x : W.DD T) = ∑ j, a j • b j
+        exact ha.symm
       refine ⟨c, ?_⟩
       set_option synthInstance.maxHeartbeats 100000 in
         rw [hx', map_sum]
@@ -262,8 +266,8 @@ theorem red_lift {l : ℕ} [Fact l.Prime] [CharP k l] {R : RingPG k l} {ι : k�
       refine Finset.sum_congr rfl fun δ _ => ?_
       rw [map_mul]
       rfl
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [hb, map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [hb, map_sum]
       congr 1
       have h1 : ∀ δ ∈ W.DelF, PowerSeries.map (algebraMap O k) (W.γ₀ δ (d • b₀)) =
           ((W.DelF.card : ℕ) : k)⁻¹ • PowerSeries.map (algebraMap O k) b₀ := by

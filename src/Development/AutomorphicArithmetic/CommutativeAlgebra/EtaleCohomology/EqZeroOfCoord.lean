@@ -33,6 +33,7 @@ theorem UpperTheory.Ru.crystallineComparison.injOf :
     UpperTheory.Ru.crystallineComparison.InjOf := by
   intro l _ K B₀ ι hι hc hq G Amp hF hE hL e e' hB hP hcomp M hM j κ _ v c u hu
   obtain ⟨a⟩ := hL.ch M hM
+  set_option synthInstance.maxHeartbeats 2000000 in
   have h0 : (per l K).t ^ u • ∑ k, (show (per l K).A from c k) • e'.e a j (v k) = 0 := by
     change ((UpperTheory.Ru.crystallineComparison.tA l ^ u • ∑ k, c k • (show (M.MS j).lim from e'.e a j (v k)) : (M.MS j).lim)) = 0
     apply Subtype.ext

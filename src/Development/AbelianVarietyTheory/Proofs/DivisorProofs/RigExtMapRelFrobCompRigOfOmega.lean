@@ -24,7 +24,7 @@ theorem exists_dualSystem (R M : Type) [CommRing R] [AddCommGroup M] [Module R M
   obtain ⟨u, hu⟩ := (dualTensorHom_bijective (R := R) (M := M) (N := M)).2 LinearMap.id
   obtain ⟨u, rfl⟩ := (LinearEquiv.rTensor M (CartierDual.toDual R M)).surjective u
   obtain ⟨s, rfl⟩ := TensorProduct.exists_finset u
-  exact ⟨s, fun a => by simpa using LinearMap.congr_fun hu a⟩
+  exact ⟨s, fun a => by simpa [CartierDual.toDual] using LinearMap.congr_fun hu a⟩
 
 variable [Bialgebra R A]
 
@@ -76,7 +76,7 @@ theorem eq_zero_of_prime_smul_eq_zero {G H : PDivGroup p R} {f : G ⟶ H}
     (e : (p : ℤ_[p]) • f = 0) : f = 0 := by
   have e' : ((p : ℤ_[p]) • 𝟙 G) ≫ f = ((p : ℤ_[p]) • 𝟙 G) ≫ 0 := by
     rw [Linear.smul_comp, Category.id_comp, e, Limits.comp_zero]
-  refine hom_ext fun n => BialgHom.ext fun a => Test.mulP_injective G n ?_
+  refine Hom.ext (funext fun n => BialgHom.ext fun a => Test.mulP_injective G n ?_)
   obtain ⟨b, rfl⟩ := H.res_surjective n a
   rw [← res_app, ← res_app, mulP_res, mulP_res, ← prime_smul_id_app, ← prime_smul_id_app]
   exact congrArg (fun g => Hom.app g (n + 1) b) e'
@@ -105,8 +105,8 @@ theorem relFrob_app_verschiebung_app (n : ℕ) (a : G.A n) :
     (BialgHom.toLinearMap_convPow (toConv (BialgHom.id R (G.A n))) p)).symm
 
 theorem relFrob_comp_verschiebung : relFrob h G ≫ verschiebung h G = (p : ℤ_[p]) • 𝟙 G :=
-  hom_ext fun n => BialgHom.ext fun a =>
-    (relFrob_app_verschiebung_app h G n a).trans (prime_smul_id_app G n a).symm
+  Hom.ext (funext fun n => BialgHom.ext fun a =>
+    (relFrob_app_verschiebung_app h G n a).trans (prime_smul_id_app G n a).symm)
 
 theorem frobProj_app_relFrob_app (n : ℕ) (x : (frobTwist h G).A n) :
     (frobProj h G).app n ((relFrob h G).app n x) = x ^ p := by

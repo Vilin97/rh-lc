@@ -29,7 +29,7 @@ theorem transport_haar_eq {G H : Type} [Group G] [TopologicalSpace G] [IsTopolog
       Measure.map_apply (map_continuous e).measurable ((map_continuous e.symm).measurable hs)]
     congr 1; ext x; simp
   have hq : Measure.QuasiMeasurePreserving e.symm ν μ :=
-    ⟨(map_continuous e.symm).measurable, by rw [hmap]⟩
+    ⟨(map_continuous e.symm).measurable.aemeasurable, by rw [hmap]⟩
   let eΓ : ΓH → ΓG := fun g => ⟨e g.1, hΓ' g.1 g.2⟩
   have heΓ : Function.Bijective eΓ := by
     refine ⟨fun a b hab => Subtype.ext (e.injective (congrArg Subtype.val hab)), fun y => ⟨⟨e.symm y.1, hΓ y.1 y.2⟩, ?_⟩⟩

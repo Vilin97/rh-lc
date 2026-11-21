@@ -7,14 +7,15 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomolog
 
 @[expose] public section
 
-open NumberField IsDedekindDomain GlobalTheory.CuspNF Matrix Topology
+open NumberField IsDedekindDomain Matrix Topology
 
 namespace GlobalTheory.CuspNF.KprOpen
 
 theorem mem_map_ker {A : Type*} [CommRing A] {n : Type*} [Fintype n] [DecidableEq n] (S : Subring A) (m : S) (g : GL n A)
     (h1 : ∀ i j, (g : Matrix n n A) i j ∈ S) (h2 : ∀ i j, ((g⁻¹ : GL n A) : Matrix n n A) i j ∈ S)
     (h3 : ∀ i j, ∃ y ∈ S, y * (m : A) = (g : Matrix n n A) i j - (1 : Matrix n n A) i j) :
-    g ∈ (GeneralLinearGroup.map (n := n) (Ideal.Quotient.mk (Ideal.span {m}))).ker.map (GeneralLinearGroup.map S.subtype) := by
+    g ∈ (Matrix.GeneralLinearGroup.map (n := n) (Ideal.Quotient.mk (Ideal.span {m}))).ker.map
+      (Matrix.GeneralLinearGroup.map S.subtype) := by
   let P : Matrix n n S := Matrix.of fun i j => ⟨_, h1 i j⟩
   let Q : Matrix n n S := Matrix.of fun i j => ⟨_, h2 i j⟩
   have hinj : Function.Injective (S.subtype.mapMatrix : Matrix n n S →+* Matrix n n A) := fun x y h => by

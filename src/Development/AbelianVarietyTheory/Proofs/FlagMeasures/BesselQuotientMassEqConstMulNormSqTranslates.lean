@@ -405,6 +405,7 @@ theorem besselQuotientMass_eq_const_mul_norm_sq_translates : ∀ (k r : ℕ) (ε
     induction hv using Submodule.span_induction with
     | mem y hy =>
       obtain ⟨g, hg, rfl⟩ := hy
+      refine ⟨hmeas _ (hsm w hw g hg), ?_⟩
       rw [hinv w hw g hg]
       rw [hl2 w hw] at hfin
       exact lt_top_iff_ne_top.2 fun h => hfin (by rw [h]; simp)

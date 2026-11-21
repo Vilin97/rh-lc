@@ -176,7 +176,7 @@ private theorem almostIn_pz (h : GridFit p G) (i j : Fin D.R.m) (l : ℕ) :
 private theorem isSet_pz (h : GridFit p G) {w : D.what₂.places.Pl} (hw : TwistedAt D w) :
     IsFinSetSplitPlacesCoprimeConductor (GlobalTheory.FunObj.SqNum.condF G.pl) (belowSet (ex.nch.Q w)) := by
   refine (placesBelow_splitCoprimeConductor_of_admissible (h.cond w hw) fun P hP => (h.list _ (h.setting.inW1 hw)).1 P ?_).1
-  obtain ⟨v, hv, hd⟩ := (Prime.dvd_finset_prod_iff (below P).prime _).1 hP
+  obtain ⟨v, hv, hd⟩ := (below P).prime.exists_mem_finset_dvd hP
   have e : below P = v := HeightOneSpectrum.ext
     ((v.isMaximal.eq_of_le (below P).isPrime.ne_top (Ideal.le_of_dvd ((below P).prime.dvd_of_dvd_pow hd))).symm)
   subst e

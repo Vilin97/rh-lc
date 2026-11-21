@@ -31,6 +31,7 @@ def NetExistsSt : Prop :=
     ∃ NN : Finset (FPt (T.U j σ).X), IsNet (T.U j σ) (wtA ka) ka.n NN ∧
       Real.log (16 * NN.card) ≤ Cn * Zb D large₂ ^ 3
 
+set_option synthInstance.maxHeartbeats 400000 in
 def AlgInjAtSt : Prop :=
   ∀ (D : D7) (T : Top D) (_h : LawsP T) (j : ℕ) (_hj : InR D j) (ka : WeightFamilies.Wt D j) (σ : T.Q.c.F →+* ℂ),
     GoodEmb T.Q.c σ → ∀ (m : ℕ) (f : Fin m → T.C j ka),

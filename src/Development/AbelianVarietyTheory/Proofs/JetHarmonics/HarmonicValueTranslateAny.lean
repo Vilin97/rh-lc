@@ -349,6 +349,7 @@ theorem translate_eq_box : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   have ht : t = (u₁ * u₀) • bx fun i => ζ₁ i • Φ₁ i θα₁ := by
     rw [(isSmul_iff _ _ _).1 (hu₁ θα _ _ t₀ t ((hΦ' _ _).2 rfl) ((isSmul_iff _ _ _).2 rfl) hΦt hsm), hθα', map_smul,
       MultilinearMap.map_smul_univ, hbΦ, smul_comm (∏ i, ζ₁ i) u₀, smul_smul]
+    simp only [RingHom.id_apply]
   refine ⟨u₁ * u₀, p₁, w₁, ζ₁, fun i => Φ₁ i θα₁, fun i => ζ₁ i • Φ₁ i θα₁, σ₁, _, ?_, (hbx _ _).2 rfl, ht,
     fun i => ⟨hw₁ i, hζ₁ i, hp₁ x hpx i, (hΦ₁ i _ _).2 rfl, (isSmul_iff _ _ _).2 rfl, hσ₁ i⟩⟩
   rw [AddValuation.map_mul, hu₀, ColumnSplit.val_eq_zero_of_pow_eq_one v hm hum, add_zero]

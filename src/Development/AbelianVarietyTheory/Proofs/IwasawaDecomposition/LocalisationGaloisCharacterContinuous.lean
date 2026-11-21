@@ -50,7 +50,9 @@ theorem le_comap_of_padicInt {p : ℕ} [Fact p.Prime] {A B : Type} [CommRing A] 
     congr 1
     exact RingHom.ext hφ
   haveI : ((maximalIdeal B).comap φ).IsMaximal :=
-    Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := ℤ_[p]) _ (by rw [hc]; infer_instance)
+    Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (algebraMap ℤ_[p] A)
+      (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance))
+      ((maximalIdeal B).comap φ) (by rw [hc]; infer_instance)
   exact (IsLocalRing.eq_maximalIdeal this).ge
 
 theorem continuous_of_heq {p q : ℕ} [Fact p.Prime] [Fact q.Prime] (hpq : p = q) {A B : Type} [CommRing A] [IsLocalRing A]

@@ -50,7 +50,7 @@ def coordE : (m → AF F) ≃ₜ+ (Vi F m × Vf F m) where
     refine Prod.ext ?_ rfl
     show (eI F m).symm (fun i => InfiniteAdeleRing.ringEquiv_mixedSpace F
       ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (eI F m p.1 i))) = p.1
-    simp
+    simp only [RingEquiv.apply_symm_apply, ContinuousLinearEquiv.symm_apply_apply]
   map_add' t t' := by
     refine Prod.ext ?_ rfl
     show (eI F m).symm (fun i => InfiniteAdeleRing.ringEquiv_mixedSpace F ((t i).1 + (t' i).1)) = _ + _

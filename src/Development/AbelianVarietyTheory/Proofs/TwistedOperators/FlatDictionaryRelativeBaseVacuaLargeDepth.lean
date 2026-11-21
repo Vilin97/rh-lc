@@ -68,7 +68,16 @@ theorem locAt_of_placeAt : Big fun ch => ∀ s, PlaceAt ch s → ConLin ch → L
       rcases Finset.mem_union.1 (Finsupp.support_sub hi) with h1 | h2
       · obtain ⟨d, hd, rfl⟩ := Finset.mem_image.1 (Finsupp.mapDomain_support h1)
         exact ⟨fun j => ⟨((hτe d hd).1 j).2.1, (hc d hd).1 j⟩, fun n => ⟨((hτe d hd).2 n).2.1, (hc d hd).2 n⟩⟩
-      · obtain ⟨a, ha, hi'⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum h2)
+      · have hex : ∃ a ∈ SA, i ∈ (xA a • σ a).support := by
+          by_contra hn
+          push_neg at hn
+          have hz : (∑ a ∈ SA, xA a • σ a) i = 0 := by
+            simp only [Finset.sum_apply']
+            apply Finset.sum_eq_zero
+            intro a ha
+            exact Finsupp.notMem_support_iff.mp (hn a ha)
+          exact (Finsupp.mem_support_iff.mp h2) hz
+        obtain ⟨a, ha, hi'⟩ := hex
         exact hσ1 a ha i (Finsupp.support_smul hi')
     have hzero := hC t e he (PureDat ch.G t × Combs ch.G) μ.support μ Prod.fst Prod.snd hsupp (fun u' y' hu hy => by
       rw [hL]

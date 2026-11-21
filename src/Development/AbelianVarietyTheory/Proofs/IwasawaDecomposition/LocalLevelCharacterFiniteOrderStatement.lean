@@ -11,4 +11,5 @@ open scoped TensorProduct
 attribute [local instance] GlobalTheory.Mem.Col2.starE Formalism.BasicNotions.Host.cmStar
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.localLevelCharacter_finiteOrder : ∀ {F E K : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E] [Field K] (hc : Formalism.BasicNotions.CMData F E) {n : ℕ} [NeZero n] {Q : Finset (Pl E)} (Θ : LevQFam E K n Q) (hQ : ∀ P : Q, conjPrime₂ P.1 ≠ P.1) (hΘ : ThetaOpen Θ) (P : Q), ∃ m : ℕ, 0 < m ∧ ∀ k, (qbLoc hc Θ hQ hΘ).chr P k ^ m = 1 := by
-  first | exact @GlobalTheory.Mem.Col2.ChEx.qbLoc_chr_exp | exact GlobalTheory.Mem.Col2.ChEx.qbLoc_chr_exp | (intros; apply GlobalTheory.Mem.Col2.ChEx.qbLoc_chr_exp <;> assumption)
+  intro F E K _ _ _ _ _ _ _ hc n _ Q Θ hQ hΘ P
+  exact GlobalTheory.Mem.Col2.ChEx.qbLoc_chr_exp hc Θ hQ hΘ P

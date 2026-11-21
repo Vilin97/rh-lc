@@ -32,7 +32,7 @@ def IsSplitSet {E : Type} [Field E] [NumberField E] [StarRing E] (T : Finset (Pl
 
 def FrameExists : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n : ℕ)
-    (L : Submodule (𝓞 E) (Fin n → E)), Submodule.IsLattice E L →
+    (L : Submodule (𝓞 E) (Fin n → E)), Submodule.IsFullLattice E L →
     ∃ β : GL (Fin n) (E ⊗[F] Af F), IsFrame β L
 
 def FrameStd : Prop :=
@@ -216,9 +216,9 @@ theorem class_set_finite_of_finite_index : ClassSetFiniteOfIndex := by
     fun p => DoubleCoset.mk Γ K' (Quotient.out p.1 * ((Quotient.out p.2 : K) : G))
   refine Finite.of_surjective f ?_
   intro c
-  rw [← DoubleCoset.out_eq' Γ K' c]
+  rw [← DoubleCoset.out_eq' (H := Γ) (K := K') c]
   set g : G := Quotient.out c with hg
-  obtain ⟨h, k, hh, hk, e⟩ := DoubleCoset.mk_out_eq_mul Γ K g
+  obtain ⟨h, hh, k, hk, e⟩ := DoubleCoset.mk_out_eq_mul Γ K g
   obtain ⟨k', e'⟩ := QuotientGroup.mk_out_eq_mul (K'.subgroupOf K) (⟨k, hk⟩⁻¹ : K)
   refine ⟨(DoubleCoset.mk Γ K g, QuotientGroup.mk (⟨k, hk⟩⁻¹ : K)), ?_⟩
   show DoubleCoset.mk Γ K' (Quotient.out (DoubleCoset.mk Γ K g) *
@@ -238,11 +238,40 @@ theorem levelAfL_le_UA {F E : Type} [Field F] [NumberField F] [Field E] [NumberF
     (hc : CMData F E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (L : Submodule (𝓞 E) (Fin n → E)) :
     levelAfL hc.sig J L ≤ UA hc J := inf_le_left
 
+private theorem span_eq_top_of_def_unimod
+    {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
+    {hc : CMData F E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {L : Submodule (𝓞 E) (Fin n → E)}
+    (hU : IsDefUnimod hc J L) : Submodule.span E (L : Set (Fin n → E)) = ⊤ := by
+  classical
+  obtain ⟨s, hs⟩ := hU.lat.fg
+  apply eq_top_iff.2
+  intro y _
+  obtain ⟨m, hm0, hm⟩ := Formalism.UG.P.adelstabL_den
+    (fun x : s => hform (hc.sig : E →+* E) J x y)
+  have hy : (m : E) • y ∈ L := by
+    change (m : E) • y ∈ (L : Set (Fin n → E))
+    rw [← hU.selfdual]
+    intro x hx
+    rw [Formalism.UG.P.csScale_hform_smul_right]
+    rw [← hs] at hx
+    induction hx using Submodule.span_induction with
+    | mem x hx => exact ⟨⟨_, hm ⟨x, hx⟩⟩, rfl⟩
+    | zero => rw [Formalism.UG.P.csScale_hform_zero_left, mul_zero]; exact zero_mem _
+    | add x z _ _ hx hz =>
+      rw [Formalism.UG.P.csScale_hform_add_left, mul_add]
+      exact add_mem hx hz
+    | smul r x _ hx =>
+      change (m : E) * hform (hc.sig : E →+* E) J ((algebraMap (𝓞 E) E r) • x) y ∈ _
+      rw [Formalism.UG.P.csScale_hform_smul_left, mul_left_comm]
+      exact mul_mem ⟨⟨_, Formalism.UG.P.csScale_sigma_int hc.sig r⟩, rfl⟩ hx
+  have hy' := (Submodule.span E (L : Set (Fin n → E))).smul_mem (m : E)⁻¹ (Submodule.subset_span hy)
+  rwa [smul_smul, inv_mul_cancel₀ (Int.cast_ne_zero.mpr hm0), one_smul] at hy'
+
 theorem clFinite_of (h : LevFiniteIndex) : ClFinite := by
   intro F E _ _ _ _ _ _ hc LL _ n J L β D hU hβ
   obtain ⟨hle, hidx⟩ := h F E hc LL n J L β D hβ
   have hfin := Formalism.UG.Final.ClassSetFiniteL F E (Fin n) hc.sig J (cm_comp hc) hU.herm hU.unit hU.tdef L
-    (Module.Finite.iff_fg.2 hU.lat.fg) hU.lat.span_eq_top
+    (Module.Finite.iff_fg.2 hU.lat.fg) (span_eq_top_of_def_unimod hU)
   refine class_set_finite_of_finite_index _ _ _ _ ?_ ?_ hfin
   · intro x hx
     exact Subgroup.mem_subgroupOf.2 (hle (Subgroup.mem_subgroupOf.1 hx))
@@ -324,7 +353,7 @@ theorem standard_definite_unimodular : StdIsDefUnimod := by
       · simp [Formalism.BasicNotions.Examples₂.sgn, h]
   have key : IsDefUnimod hc (Matrix.diagonal (fun _ : Fin n => (Formalism.BasicNotions.Examples₂.sgn neg : E)))
       (stdLat (n := Fin n) (A := E) (𝓞 E)) := by
-    refine ⟨?_, ?_, ?_, ⟨Module.Finite.iff_fg.1 hfull.1, hfull.2⟩, ?_⟩
+    refine ⟨?_, ?_, ?_, Submodule.IsLattice.of_fg E (Module.Finite.iff_fg.1 hfull.1), ?_⟩
     · rcases hJ with ⟨h, _⟩ | ⟨h, _⟩
       · rw [h]; exact hstd.1
       · rw [h]
@@ -375,6 +404,10 @@ section HatDual
 open Formalism.UG.P
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}
+
+local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
+local notation "𝒮" => tensInt (F := F) (FiniteAdeleRing (𝓞 F) F) (intOE E) (intAd F)
+local notation "ιA" => inclE (F := F) (E := E) (FiniteAdeleRing (𝓞 F) F)
 
 theorem levelafC_eq_incl (D : 𝓞 F) : levelafC E D = ιA (algebraMap (𝓞 F) E D) := by
   have := csGlob_tmul_int (F := F) (E := E) (1 : E) D
@@ -916,7 +949,7 @@ theorem exists_gramS (hc : CMData F E) {J : Matrix (Fin n) (Fin n) E} {L : Submo
     set u : Fin n → E ⊗[F] Af F :=
       ((Gu⁻¹ : GL (Fin n) (E ⊗[F] Af F)) : Matrix (Fin n) (Fin n) (E ⊗[F] Af F)) *ᵥ Pi.single j 1 with hu
     have hw : (β : Matrix (Fin n) (Fin n) (E ⊗[F] Af F)) *ᵥ u ∈ hatL (F := F) L := by
-      refine hat_selfdual hc.sig J L hU.lat.span_eq_top hU.selfdual _ fun l hl => ?_
+      refine hat_selfdual hc.sig J L (span_eq_top_of_def_unimod hU) hU.selfdual _ fun l hl => ?_
       set y : Fin n → E ⊗[F] Af F :=
         ((β⁻¹ : GL (Fin n) (E ⊗[F] Af F)) : Matrix (Fin n) (Fin n) (E ⊗[F] Af F)) *ᵥ
           (fun i => inclE (F := F) (Af F) (l i)) with hy
@@ -1315,7 +1348,7 @@ theorem fr_coprime (I : Ideal (𝓞 E)) (hI : I ≠ ⊥) (D : ℕ) (h : I ⊔ Id
   have : Finite (𝓞 E ⧸ I) := Ideal.finiteQuotientOfFreeOfNeBot I hI
   have := Fintype.ofFinite (𝓞 E ⧸ I)
   have hcard : p ∣ Fintype.card (𝓞 E ⧸ I) := by
-    rw [← Nat.card_eq_fintype_card]; exact h1
+    rwa [← Nat.card_eq_fintype_card, ← Ideal.absNorm_eq_natCard]
   obtain ⟨x, hx⟩ := exists_prime_addOrderOf_dvd_card p hcard
   have hpx : p • x = 0 := by rw [← hx]; exact addOrderOf_nsmul_eq_zero x
   have hx0 : x ≠ 0 := by
@@ -1479,6 +1512,9 @@ end FrAd
 section FrGlue
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}
+
+local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
+local notation "ιA" => inclE (F := F) (E := E) (FiniteAdeleRing (𝓞 F) F)
 
 theorem fr_mem_hat {L : Submodule (𝓞 E) (Fin n → E)} {l : Fin n → E} (hl : l ∈ L) :
     (fun i => ιA (l i)) ∈ hatL (F := F) L :=
@@ -1708,13 +1744,11 @@ theorem mk_isLattice (Λ : Submodule (𝓞 E) (Fin n → E)) (hΛ : Submodule.Is
     Submodule.IsLattice.of_fg ℚ (Submodule.IsLattice.fg E Λ).restrictScalars
   exact { span_eq_top := mk_span_rat Λ hΛ.span_eq_top }
 
-theorem mk_finrank (Λ : Submodule (𝓞 E) (Fin n → E)) (hΛ : Submodule.IsLattice E Λ) :
+theorem mk_finrank (Λ : Submodule (𝓞 E) (Fin n → E)) (hΛ : Submodule.IsFullLattice E Λ) :
     Module.finrank ℤ (Λ.restrictScalars ℤ : Submodule ℤ (Fin n → E)) = Module.finrank ℚ E * n := by
   have := mk_isLattice Λ hΛ
   have h1 : Module.finrank ℤ (Λ.restrictScalars ℤ : Submodule ℤ (Fin n → E)) = Module.finrank ℚ (Fin n → E) :=
-    Module.finrank_eq_of_rank_eq (by
-      rw [Submodule.IsLattice.rank' ℚ (Λ.restrictScalars ℤ : Submodule ℤ (Fin n → E))]
-      exact (Module.finrank_eq_rank ℚ (Fin n → E)).symm)
+    Submodule.IsFullLattice.finrank_eq ℚ (Λ.restrictScalars ℤ)
   rw [h1, Module.finrank_pi_fintype]
   simp [mul_comm]
 
@@ -1751,7 +1785,7 @@ theorem mkAct_injective (Λ : Submodule (𝓞 E) (Fin n → E)) (hΛ : Submodule
   exact Matrix.toLin'.injective h2
 
 theorem mk_card_dvd (hM : Formalism.HermitianLatticeCounting.S6.MinkowskiBound) (Λ : Submodule (𝓞 E) (Fin n → E))
-    (hΛ : Submodule.IsLattice E Λ) (Γ : Subgroup (GL (Fin n) E)) (hfin : Finite Γ) (hst : Γ ≤ stabGL Λ) :
+    (hΛ : Submodule.IsFullLattice E Λ) (Γ : Subgroup (GL (Fin n) E)) (hfin : Finite Γ) (hst : Γ ≤ stabGL Λ) :
     Nat.card Γ ∣ minkNum (Module.finrank ℚ E * n) := by
   have hlat := mk_isLattice Λ hΛ
   have hfree : Module.Free ℤ (Λ.restrictScalars ℤ : Submodule ℤ (Fin n → E)) := Submodule.IsLattice.free ℚ _

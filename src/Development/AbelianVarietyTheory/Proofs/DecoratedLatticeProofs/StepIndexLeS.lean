@@ -32,7 +32,7 @@ variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws
 
 theorem step_index_le_s (J : QJ a t) (i : Fin J.r) {j : ℕ} (hj : j + 2 ≤ B.R.m) : j ≤ (J.G i).s := by
   have h1 := (J.G i).hs
-  have h2 : (I.rec7 l Z).R.m = B.R.m := rfl
+  change j + 2 ≤ (assemble B (I.cols l) Z.W Z.V Z.S Z.N Z.G).R.m at hj
   omega
 
 def phi (J : QJ a t) (j : ℕ) (hj : j + 2 ≤ B.R.m) :

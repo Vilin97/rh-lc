@@ -23,17 +23,17 @@ theorem twArgs_lev : ∀ (K : Ctx) (B : Base) (f : Fr B.toPre) (T : TwDat B) (w 
   refine ⟨?_, ?_, ?_, ?_⟩
   · exact heq_of_eq (t.r.z.lev.C.trans (congrArg _ w.C_eq))
   · exact heq_of_eq t.r.z.lev.Pg
-  · intro μ hμ
+  · change ∀ μ, Formalism.IndefR.RecTie.Used0 (w.st Z).toD7 μ →
+      HEq (t.r.z.R.Q (Y.tupT μ)) (w.I.Q μ) ∧ HEq (t.r.z.R.xiH (Y.tupT μ)) (w.I.xi μ)
+    intro μ hμ
     have hix : ixOf w.I (usedOf w.I T Wt) (t.r.Y.tupT μ) = μ := (t.r.tup_ix _).symm.trans (t.r.Y.tupTie μ hμ)
-    have e1 : t.r.z.R.Q (Y.tupT μ) = w.I.Q μ :=
-      (congrArg (fun g => t.r.z.R.Q (g μ)) hT').trans ((t.r.z.lev.Q _).trans (congrArg _ hix))
-    have e2 : t.r.z.R.xiH (Y.tupT μ) = w.I.xi μ :=
-      (congrArg (fun g => t.r.z.R.xiH (g μ)) hT').trans ((t.r.z.lev.xiH _).trans (congrArg _ hix))
-    refine ⟨?_, ?_⟩
-    · exact (by with_unfolding_all exact (heq_of_eq e1 :))
-    · exact (by with_unfolding_all exact (heq_of_eq e2 :))
+    rw [hT', t.r.z.lev.Q, t.r.z.lev.xiH, hix]
+    exact ⟨HEq.rfl, HEq.rfl⟩
   · intro i p v s hp
     refine ⟨p, s, HEq.rfl, HEq.rfl, ?_⟩
-    kexactB lam_eq i s p v (by kexactB hp)
+    change t.r.z.R.EEp3 p ≠ ⊥ at hp
+    change lam i s p v = t.r.z.R.lam3 i s p v
+    exact lam_eq i s p v hp
+
 
 end GlobalTheory.Mem.R3

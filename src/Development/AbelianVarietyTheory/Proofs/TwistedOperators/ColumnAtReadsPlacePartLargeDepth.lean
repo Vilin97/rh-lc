@@ -27,8 +27,8 @@ theorem colAt_smul_of_mul_idem : Big fun {D} _ _ _ _ {T} _ _ _ _ _ _ ch => ∀ (
   intro t w eL e' hL he u
   have hw := (GlobalTheory.FunObj.Comparison₂.cpt_idemSum hL).2.1 w.1 (Finset.mem_singleton_self _)
 
-  have h1 := congrArg (fun a => cpt w.1 (toEAf _ a)) he
-  simp only [map_mul, hw, mul_one] at h1
+  have h1 := congrArg ((cpt w.1).comp (toEAf _)) he
+  simp only [map_mul, RingHom.comp_apply, hw, mul_one] at h1
   funext j
   simp only [GridChoice.colAt]
   split_ifs with hj

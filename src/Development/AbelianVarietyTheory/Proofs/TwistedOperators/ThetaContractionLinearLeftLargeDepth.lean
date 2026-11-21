@@ -32,6 +32,8 @@ theorem contr_comb_left (hψ : IsStdChar D ψ (-1)) {ρ σ : ℕ} {B : Unf.BesLe
   unfold GlobalTheory.Unf.contr
   rw [← integral_const_mul, ← integral_add (i1.const_mul c) i2]
   congr 1
+  funext w
+  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
   ring
 
 private theorem contr_flatBF_smul_add (hψ : IsStdChar D ψ (-1)) {ρ σ : ℕ} {B : Unf.BesLev D ρ} {J : Unf.JacLev D ρ}

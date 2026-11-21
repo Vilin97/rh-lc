@@ -35,7 +35,7 @@ theorem chiFin_triv {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z :
   ⟨1, one_pos, fun _ _ => by simp only [triv, pow_one]; rfl⟩
 
 
-set_option maxHeartbeats 4000000 in
+set_option maxHeartbeats 16000000 in
 theorem exists_level_elt : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m) (bad : Set (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (Ch : Type) (chOf : (I.stp u a i).Cl → Ch) (K : Charts I l Z u a i hi bad chOf) (k : Ch → GA B (B.R.N i)), ReadsAt I l Z K k → ∀ (c : (I.stp u a i).Cl) (κ : (K (chOf c)).lev.U), ∃ x : (K (chOf c)).lev.U, (∃ q : ChPt (Pr := B.primes X) (R := B.R) I.sel (I.tup a) u i, PtOf ((show GA B (B.R.N i) from ((K (chOf c)).y ⟨c, rfl⟩).1) * (show GA B (B.R.N i) from x.1) * k (chOf c)) q) ∧ ∀ P : SBof I a, GlobalTheory.TwU.CongAt (GlobalTheory.TwU.seamP (sm I l Z) P.1) ((I.cst a).D P) (κ.1⁻¹ * x.1) := by
   intro B X I hOk hPins l Z u a i hi bad Ch chOf K k hR c κ
   classical
@@ -89,8 +89,9 @@ theorem exists_level_elt : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok 
   have hQsub : ∀ P ∈ I.Q a, P ∈ SBof I a := fun P hP => by
     show P ∈ uSG _ _
     exact Finset.mem_union_right _ hP
+  obtain ⟨p0, hp0, -⟩ := hR.k_std (chOf c)
   refine ⟨κ * w, ?_, ?_⟩
-  · obtain ⟨p0, hp0, -⟩ := hR.k_std (chOf c)
+  ·
     have hyU : y ∈ UAd B.sp.cm (B.R.N i) := eU ▸ ((K (chOf c)).y ⟨c, rfl⟩).2
     have hxU : (show GA B (B.R.N i) from (κ * w).1) ∈ UAd B.sp.cm (B.R.N i) := eU ▸ (((K (chOf c)).lev.U_eq _).1 (κ * w).2).1
     have hkU : kk ∈ UAd B.sp.cm (B.R.N i) := hp0.uni

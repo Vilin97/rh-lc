@@ -168,12 +168,12 @@ def suppGrp (ε : AE D) (B : HSp D) : Subgroup (GA D B) where
   inv_mem' := suppAt_inv
 
 theorem suppAt_of_mem_Ex {d : BesselDatum A B ι} {ε : AE D} {i} {g : GA D B} (hg : g ∈ d.Ex ε i) : SuppAt ε B g :=
-  (Subgroup.closure_le (suppGrp ε B)).2 (fun _ h => h.1) hg
+  (Subgroup.closure_le (suppGrp ε B)).2 (fun _ (h : _ ∈ d.ExSet ε i) => h.1) hg
 
 theorem suppAt_of_mem_ExGe {d : BesselDatum A B ι} {ε : AE D} {p} {g : GA D B} (hg : g ∈ ExGe d ε p) :
     SuppAt ε B g :=
   (Subgroup.closure_le (suppGrp ε B)).2
-    (Set.iUnion_subset fun _ => Set.iUnion_subset fun _ _ h => h.1) hg
+    (Set.iUnion_subset fun i => Set.iUnion_subset fun _ _ (h : _ ∈ d.ExSet ε i) => h.1) hg
 
 theorem Ex_le_ExGe (d : BesselDatum A B ι) (ε : AE D) {p : ℕ} {i : Fin (d.ρ + 1)} (h : p ≤ i.1) :
     d.Ex ε i ≤ ExGe d ε p :=

@@ -103,7 +103,9 @@ variable {Tw : TwForms D} {H : Formalism.L2.Herm.HermColsCh D} {J : Formalism.L2
 
 theorem ChData.frRat (j : ℕ) (hj : j + 1 ≤ D.R.m) (β : T.Ch u μ (j + 1)) :
     FrRatJ ((Cd.Lc Gt Fl ht j hj).t β) (Cd.Lc Gt Fl ht j hj).B :=
-  fun _ _ => rfl
+  fun _ _ => by
+    unfold ChData.Lc locInOf levelsG_tie ChData.St chartTw frOf
+    rfl
 
 
 set_option maxHeartbeats 4000000 in

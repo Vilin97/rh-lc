@@ -31,7 +31,9 @@ theorem sel_eq_of_conj {X : Formalism.L2.Col.Fields} (hX : X.Ok) {sel : HeightOn
 
 theorem unrAt_mul_iff {L : Type} [Field L] [NumberField L] {χ χ' : HChar L} {v : HeightOneSpectrum (𝓞 L)} (h' : χ'.UnrAt v) :
     (χ * χ').UnrAt v ↔ χ.UnrAt v :=
-  forall₂_congr fun x hx => by rw [HChar.loc_mul, h' x hx, mul_one]
+  forall₂_congr fun x hx => by
+    change (χ.loc v x * χ'.loc v x = 1 ↔ χ.loc v x = 1)
+    rw [h' x hx, mul_one]
 
 def delAt {P : Pre} (f : Top.Fr P) (n : ℕ) : HChar P.host.E := if n = P.host.pde then f.del' else f.del
 

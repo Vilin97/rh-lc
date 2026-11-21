@@ -94,8 +94,43 @@ theorem sphEig_eq_satEig (hQ : StdPsi hF Q) (π : NG.FinTyp D.host.E n) (s : Spl
   obtain ⟨u, hu⟩ := (GlobalTheory.LFun.SatBridge.hasSatGL_of_hasSatake D.host.E s.w _ _ τ.ρ α hα).exists_vec
   obtain ⟨b, hb⟩ := exists_locMat hQ s i hi hic
   have hL := GlobalTheory.HeckeDual.isLattice_frameLat V
+  have hspan : Submodule.span D.host.E (frameLat V : Set (Fin V.rank → D.host.E)) = ⊤ := by
+    have hfull : Submodule.span D.host.E (V.L0 : Set V.V) = ⊤ := by
+      let W := Submodule.span D.host.E (V.L0 : Set V.V)
+      change W = ⊤
+      by_contra h
+      let e : V.V ≃ₗ⋆[D.host.E] V.V :=
+        (V.frame.equivFun.trans (starLinearEquiv D.host.E)).trans V.frame.equivFun.symm
+      let g : V.V →ₗ[D.host.E] Module.Dual D.host.E W :=
+        (LinearMap.domRestrict' W).comp (V.hT.comp e.toLinearMap)
+      have hdim : Module.finrank D.host.E (Module.Dual D.host.E W) < Module.finrank D.host.E V.V := by
+        rw [Subspace.dual_finrank_eq]
+        exact Submodule.finrank_lt h
+      obtain ⟨x, hx, hx₀⟩ :=
+        Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+      have hsmul (a : D.host.E) : a • e x ∈ V.L0 := by
+        rw [← V.baseLattice_isUnimodular]
+        rw [Formalism.HermitianLatticesTheory.dualBasic_mem_dual]
+        intro y hy
+        have hxy : V.hT (e x) y = 0 :=
+          congrArg (fun f : Module.Dual D.host.E W => f ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+        have hyx : V.hT y (e x) = 0 := by
+          rw [(V.herm.eq (e x) y).symm, hxy, map_zero]
+        simp [hyx]
+      let i : D.host.E →ₗ[𝓞 D.host.E] V.L0 :=
+        ((LinearMap.toSpanSingleton D.host.E _ (e x)).restrictScalars (𝓞 D.host.E)).codRestrict V.L0 hsmul
+      let : Module.Finite (𝓞 D.host.E) V.L0 := Module.Finite.iff_fg.mpr V.standardTuple_isLattice.fg
+      let : Module.Finite (𝓞 D.host.E) D.host.E := Module.Finite.of_injective i fun a b hab =>
+        smul_left_injective D.host.E (fun hzero => hx₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
+      exact RingOfIntegers.not_isField D.host.E
+        (isField_of_isIntegral_of_isField (R := 𝓞 D.host.E) (S := D.host.E)
+          (FaithfulSMul.algebraMap_injective _ _) (Field.toIsField _))
+    have heq : (frameLat V : Set (Fin V.rank → D.host.E)) =
+        V.frame.equivFun.toLinearMap '' (V.L0 : Set V.V) :=
+      (V.frame.equivFun.toEquiv.image_eq_preimage_symm _).symm
+    rw [heq, ← Submodule.map_span, hfull, Submodule.map_top, LinearEquiv.range]
   obtain ⟨e, he, -⟩ := SplitChart.exists_isSplitChart (isCMExt_host D)
-    ((GlobalTheory.Mem.Vol.cmData_isCMExt_and_gram_isHermND _ _ D.sp.cm).2 V) hL.fg hL.span_eq_top
+    ((GlobalTheory.Mem.Vol.cmData_isCMExt_and_gram_isHermND _ _ D.sp.cm).2 V) hL.fg hspan
     (rfl : s.w.under (𝓞 D.host.F) = _) hs (GlobalTheory.AdelicU.SelfDual.isSelfDualAt_frameLat D V _)
   obtain ⟨⟨a, -, ha⟩, hK⟩ := id he
 
@@ -279,8 +314,8 @@ theorem exists_rat (Y : R3.Read (A3 := A3) R.toRealDat F.lv2 X0) (hlev : R.toLev
         Module.End ℂ (MMap (R.MW i (sg0 D A3.A)))) ∘ₗ (R.HW i (sg0 D A3.A)).e)
     (by
       rintro (_ | p | t) x
-      set_option synthInstance.maxHeartbeats 100000 in
-        · simp only [Sum.elim_inl, LinearMap.comp_apply, LinearMap.sub_apply, LinearMap.sum_apply, LinearMap.smul_apply,
+      · set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Sum.elim_inl, LinearMap.comp_apply, LinearMap.sub_apply, LinearMap.sum_apply, LinearMap.smul_apply,
           Module.End.one_apply, map_sub, map_sum]
         congr 1
         exact Finset.sum_congr rfl fun g _ => by rw [map_smulₛₗ, map_smul, hact']

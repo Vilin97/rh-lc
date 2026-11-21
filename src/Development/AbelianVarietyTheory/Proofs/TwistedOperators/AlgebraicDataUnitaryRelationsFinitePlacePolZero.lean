@@ -110,10 +110,10 @@ theorem polZero_relV : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
       exact ⟨neg_mem (hφ i).1, (hφ i).2.1, fun w hw => (hφ i).2.2 w (hT₀ w hw)⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, Fin.sum_univ_add]
-    simp only [Fin.append_left, Fin.append_right, RelV.pure_neg, Finset.sum_neg_distrib, ← sub_eq_add_neg]
-    congr 1
-    refine Finset.sum_congr rfl fun i _ => ?_
-    exact GlobalTheory.ThK.PolMatchStep.pure_update v (om (g, 1)) (f i) (φ i) (hφ i).2.1 (hstd i) (hψ i).2
+      simp only [Fin.append_left, Fin.append_right, RelV.pure_neg, Finset.sum_neg_distrib, ← sub_eq_add_neg]
+      congr 1
+      refine Finset.sum_congr rfl fun i _ => ?_
+      exact GlobalTheory.ThK.PolMatchStep.pure_update v (om (g, 1)) (f i) (φ i) (hφ i).2.1 (hstd i) (hψ i).2
   · rw [Fin.sum_univ_add]
     simp only [Fin.append_left, Fin.append_right, map_neg, TensorProduct.neg_tmul, Finset.sum_neg_distrib]
     have e : ∀ i, (fun w : T => Rf.p w (Function.update (φ i) v (ψ i) w)) = fun w : T => Rf.p w (φ i w) := by

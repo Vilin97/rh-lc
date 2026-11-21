@@ -31,9 +31,18 @@ theorem charW_seed_std : ∀ (X : Stages) (px : PreX X.B.toPre) (I : Col2.ColIn 
       R.toLevCh = R₀.toLevCh ∧ HEq R.eG R₀.eG ∧ R.ψ = R₀.ψ ∧ R.mu = R₀.mu ∧ R.twPl = R₀.twPl ∧
       (BrgStd X I hX U Xg tr₀ R₀.toRealDat → BrgStd X I hX U Xg tr₀ R) ∧
       ∀ c : G0 R.Pg X.toD7.R.r ≃* G0g X.toD7.nd, HEq c cG → Keep (A3 := (famR X I hX U Xg tr₀)) R (face0 X I hX U Xg tr₀).lv2 c)
-    (fun R a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 h => by qmove h)
-    (fun R a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 h => by qmove h)
-    (fun R a1 a2 a3 a4 a5 a6 h => by qmove h)
+    (fun R a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 h => by
+      rcases h with ⟨i, t, a, l, e, s, m, w, b, k⟩
+      exact ⟨⟨i.tie, i.onto, i.hR, i.hL, i.SF⟩, ⟨t.mu_off, t.mu_used, t.mu_ne, t.mu_conj, t.mu_on⟩, a, l, e, s, m, w, b,
+        fun c hc => ⟨(k c hc).std, (k c hc).signs, (k c hc).frames, (k c hc).beta, (k c hc).prX, (k c hc).grp, (k c hc).psi, (k c hc).guard, (k c hc).valKs, (k c hc).frameKs, (k c hc).levKs⟩⟩)
+    (fun R a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 h => by
+      rcases h with ⟨i, t, a, l, e, s, m, w, b, k⟩
+      exact ⟨⟨i.tie, i.onto, i.hR, i.hL, i.SF⟩, ⟨t.mu_off, t.mu_used, t.mu_ne, t.mu_conj, t.mu_on⟩, a, l, e, s, m, w, b,
+        fun c hc => ⟨(k c hc).std, (k c hc).signs, (k c hc).frames, (k c hc).beta, (k c hc).prX, (k c hc).grp, (k c hc).psi, (k c hc).guard, (k c hc).valKs, (k c hc).frameKs, (k c hc).levKs⟩⟩)
+    (fun R a1 a2 a3 a4 a5 a6 h => by
+      rcases h with ⟨i, t, a, l, e, s, m, w, b, k⟩
+      exact ⟨⟨i.tie, i.onto, i.hR, i.hL, i.SF⟩, ⟨t.mu_off, t.mu_used, t.mu_ne, t.mu_conj, t.mu_on⟩, a, l, e, s, m, w, b,
+        fun c hc => ⟨(k c hc).std, (k c hc).signs, (k c hc).frames, (k c hc).beta, (k c hc).prX, (k c hc).grp, (k c hc).psi, (k c hc).guard, (k c hc).valKs, (k c hc).frameKs, (k c hc).levKs⟩⟩)
     R₀.toRealDat p0 ⟨⟨i0.tie, i0.onto, i0.hR, i0.hL, i0.SF⟩, ⟨t0.mu_off, t0.mu_used, t0.mu_ne, t0.mu_conj, t0.mu_on⟩, a0, rfl, HEq.rfl,
       rfl, rfl, rfl, id, fun c hc => by cases eq_of_heq hc; exact k0⟩
   have e1 : R1.ExAt := hEx R1 p1 c1 t1 f1 g1
@@ -64,7 +73,9 @@ theorem charW_seed_std : ∀ (X : Stages) (px : PreX X.B.toPre) (I : Col2.ColIn 
       (R1.upd5 nW FW R1.mu R1.twPl R1.err0).twPl = R₀.twPl ∧
       (BrgStd X I hX U Xg tr₀ R₀.toRealDat → BrgStd X I hX U Xg tr₀ (R1.upd5 nW FW R1.mu R1.twPl R1.err0)) ∧
       ∀ c : G0 R1.Pg X.toD7.R.r ≃* G0g X.toD7.nd, HEq c cG → Keep (A3 := (famR X I hX U Xg tr₀)) (R1.upd5 nW FW R1.mu R1.twPl R1.err0) (face0 X I hX U Xg tr₀).lv2 c := by
-    qmove q1
+    rcases q1 with ⟨i, t, a, l, e, s, m, w, b, k⟩
+    exact ⟨⟨i.tie, i.onto, i.hR, i.hL, i.SF⟩, ⟨t.mu_off, t.mu_used, t.mu_ne, t.mu_conj, t.mu_on⟩, a, l, e, s, m, w, b,
+      fun c hc => ⟨(k c hc).std, (k c hc).signs, (k c hc).frames, (k c hc).beta, (k c hc).prX, (k c hc).grp, (k c hc).psi, (k c hc).guard, (k c hc).valKs, (k c hc).frameKs, (k c hc).levKs⟩⟩
   obtain ⟨i1, u1, a1, l6, e6, s6, m6, w6, b6, k6⟩ := q5
   have p6 := RealDat.preliminary_of_scalar_update (RealDat.preliminary_of_index_update p1 nW FW R1.mu R1.twPl R1.err0) kap R2.lam
   have f6 := RealDat.full_Y_of_scalar_update (RealDat.full_Y_of_index_update f1 nW FW R1.mu R1.twPl R1.err0) kap R2.lam

@@ -91,7 +91,9 @@ theorem symN_eq_uni (n : Type) [Fintype n] [DecidableEq n] {c : ℕ} (hc : 1 ≤
         have := h4 (.inl r) (.inl s) le_rfl
         change g.val r s = _ at this
         rw [this]
-        simp [one_apply])
+        change (1 : Matrix (n ⊕ Fin (2 * σ)) (n ⊕ Fin (2 * σ)) k) (.inl r) (.inl s) =
+          (1 : Matrix n n k) r s
+        simp only [Matrix.one_apply, Sum.inl.injEq])
       simpa using hu
     · rw [symN_odd]
       refine Subgroup.subset_closure fun r s hrs => hx r s ?_

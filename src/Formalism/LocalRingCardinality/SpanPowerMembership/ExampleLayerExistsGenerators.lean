@@ -193,7 +193,9 @@ def H0 : Host R0 where
   gal_sqq := Formalism.HC.D7.gal_sqq R0.toFrame hostHyp0 layer0
   QS_exact := Formalism.HC.D7.exact R0.toFrame exampleRanks_h_injective hostHyp0 (le_refl 2) layer0
   QS_le := (by norm_num : 2 ^ (2 + 2) ≤ 4 ^ 2)
-  o_pow := by rw [exampleRanks_o]; norm_num
+  o_pow := by
+    rw [exampleRanks_o, one_pow]
+    exact Nat.one_le_pow _ _ (by decide)
   q_ne_three := (by norm_num : (571 : ℕ) ≠ 3)
   qd_big := (by norm_num : 4 * 15 * 9 + 1 < 571 ∧ 4 * 15 * 9 + 1 < 599)
   splitBound := 2

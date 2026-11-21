@@ -116,15 +116,14 @@ theorem sza_vand_pos (D : D7) (u : D.what₂.Word) (τ : D.what₂.Tau) : 0 < va
   have hab : a < b := (Finset.mem_filter.mp hb).2
   exact sub_pos.mpr (sza_u_anti D u τ hab)
 
-theorem szaData_ok (D : D7) (u : D.what₂.Word) : (szaData D u).Ok where
-  hk := by have := D.R.m_add_three_le_k; show 1 ≤ D.R.k; omega
-  hv := sza_v_pos D
-  hdF := by show (2 * D.host.v) ^ D.R.f = (2 * D.host.v) ^ (szaData D u).f; rw [szaData_f]
-  hg1 := (D.host.g_prime 0).two_le
-  hg2 := (D.host.g_prime 1).two_le
-  hT := (D.mem u).A.T_prime.two_le
-  hvol := szaMass_pos D _
-  hVu := sza_vand_pos D u
+theorem szaData_ok (D : D7) (u : D.what₂.Word) : (szaData D u).Ok := by
+  refine ⟨?_, sza_v_pos D, ?_, (D.host.g_prime 0).two_le, (D.host.g_prime 1).two_le,
+    (D.mem u).A.T_prime.two_le, szaMass_pos D _, sza_vand_pos D u⟩
+  · have := D.R.m_add_three_le_k
+    show 1 ≤ D.R.k
+    omega
+  · show (2 * D.host.v) ^ D.R.f = (2 * D.host.v) ^ (szaData D u).f
+    rw [szaData_f]
 
 theorem szaData_LBound (D : D7) (u : D.what₂.Word) : (szaData D u).LBound := by
   intro M hk _

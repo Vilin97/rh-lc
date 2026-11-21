@@ -70,8 +70,10 @@ theorem carries_at_image {F : Type} [Field F] {e : F ≃+* c.F} (C : FlagCpt Z e
   have hx₀ : spMap (C.Y.X.presheaf.stalkSpecializes hsp).hom ≫ (stalkPt C.Y y ≫ C.π ≫ genι Z) =
       stalkPt C.Y (p (IsLocalRing.closedPoint K)) ≫ C.π ≫ genι Z := by
     rw [← Category.assoc, hρ]
-  obtain ⟨g₀, hg₀⟩ := ValCoord.exists_bc f (C.Y.X.presheaf.stalkSpecializes hsp).hom hx₀
-  exact ⟨_, g₀, t, t', ValCoord.tri_bc hx₀ hg₀ (by rw [← CarriesAt.algebraMap_eq_comp_specializes hsp]; exact h2),
+  refine ⟨(C.Y.X.presheaf.stalkSpecializes hsp).hom.comp φ₁, ?_⟩
+  let g₀ := Classical.choose (ValCoord.exists_bc f (C.Y.X.presheaf.stalkSpecializes hsp).hom hx₀)
+  have hg₀ := Classical.choose_spec (ValCoord.exists_bc f (C.Y.X.presheaf.stalkSpecializes hsp).hom hx₀)
+  exact ⟨g₀, t, t', ValCoord.tri_bc hx₀ hg₀ (by rw [← CarriesAt.algebraMap_eq_comp_specializes hsp]; exact h2),
     ValCoord.tri_bc hx₀ hg₀ (by rw [← hψ]; exact h3)⟩
 
 theorem tri_of_carries {F : Type} [Field F] {e : F ≃+* c.F} (C : FlagCpt Z e) {K : Type} [Field K]

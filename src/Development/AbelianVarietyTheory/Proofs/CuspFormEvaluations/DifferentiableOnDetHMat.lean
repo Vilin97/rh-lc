@@ -491,7 +491,7 @@ theorem differentiableOn_det_hMat (hs : IsSympl X bas) :
 
 theorem differentiableOn_tauMat (hs : IsSympl X bas) (i j : Fin g) :
     DifferentiableOn ℂ (fun x => tauMat X bas idx x i j) X.dom := by
-  simp only [tauMat, mul_apply]
+  simp only [tauMat, Matrix.mul_apply, perMat_apply]
   exact DifferentiableOn.fun_sum fun l _ =>
     (differentiableOn_hMat idx hs i l).mul (differentiableOn_per X _ _)
 

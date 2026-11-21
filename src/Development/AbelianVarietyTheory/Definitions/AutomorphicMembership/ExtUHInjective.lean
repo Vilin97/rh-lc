@@ -112,7 +112,7 @@ theorem stepY_fin_orb (hX : X.Ok) (hI : ∀ b P, (Θ b P).H.FiniteIndex)
 
 theorem stepY_ok (hX : X.Ok) (hI : ∀ b P, (Θ b P).H.FiniteIndex)
     (hr : ∀ b P g, ∃ m : ℕ, 0 < m ∧ (Θ b P).lam g ^ m = 1)
-    (hy : ∀ N, Submodule.IsLattice X.E N → (y.ys N).Finite) : (stepY ST y β Λ Θ pref).Ok where
+    (hy : ∀ N, Submodule.IsLattice X.E N → (y.ys N).Finite) : (stepY ST y β Λ Θ pref).Ok := {
   fin_orb := stepY_fin_orb y β Λ Θ pref hX hI hy
   fin_stab b p :=
     haveI := autO_finite (posStar_of_ok hX) p.1.1.deco.2.lat
@@ -137,6 +137,7 @@ theorem stepY_ok (hX : X.Ok) (hI : ∀ b P, (Θ b P).H.FiniteIndex)
   lsh_lat b p := p.1.1.deco.2.Lsh_lattice
   stab_inj b g p h h1 := stepY_eq_one y β Λ Θ pref b g p h
     (Subtype.ext ((toGLm X.E n).injective (h1.trans (map_one _).symm)))
+}
 
 end StepOk
 
@@ -163,7 +164,7 @@ theorem PtY.mv_dia {y : Ys X n} (p : PtY ST SG Q y) (P : ST) (a : (Res P.1)ˣ) :
   dite_eq_left ⟨p.1.1.2, p.2⟩
 
 theorem tdatY_ok (hP : ∀ P : ST, conjPrime₂ P.1 ≠ P.1) (hT : ∀ P : ST, (T : 𝓞 X.E) ∈ P.1.asIdeal ∧ (T : 𝓞 X.E) ∉ P.1.asIdeal ^ 2) :
-    (tdatY ST T y β Λ Θ pref).Ok T where
+    (tdatY ST T y β Λ Θ pref).Ok T := {
   N_lat _ p := p.1.1.deco.2.lat
   dnN_lat _ p P := (p.1.1.deco.2.dnN_spec P (hP P)).1
   ker_lat _ p P := by
@@ -236,6 +237,7 @@ theorem tdatY_ok (hP : ∀ P : ST, conjPrime₂ P.1 ≠ P.1) (hT : ∀ P : ST, (
     show ((Pi.mulSingle P a : DiaG (E := X.E) (ST := ST)) P).1 * _ = _
     rw [Pi.mulSingle_eq_same]
     rfl
+}
 
 theorem tdatY_deco (b : β) (p : PtY ST SG Q y) :
     (tdatY ST T y β Λ Θ pref).deco b p = p.1.1.deco.1.res (Finset.empty_subset _) :=
@@ -277,7 +279,7 @@ theorem mv_dn (p : PtY ST SG Q y) (P : ST) (hP : MoveHyp ST SG P) (hQ : ∀ w : 
 theorem tdatY_tied (hP : ∀ P : ST, MoveHyp ST SG P)
     (hT : ∀ P : ST, (T : 𝓞 X.E) ∈ P.1.asIdeal ∧ (T : 𝓞 X.E) ∉ P.1.asIdeal ^ 2)
     (hQ : ∀ (P : ST) (w : Q), w.1 ≠ P.1 ∧ w.1 ≠ conjPrime₂ P.1) (hy : ∀ P : ST, y.Off P.1) :
-    (tdatY ST T y β Λ Θ pref).Tied T where
+    (tdatY ST T y β Λ Θ pref).Tied T := {
   ok b p := by
     rw [tdatY_deco]
     have hd := p.1.1.deco.2
@@ -336,6 +338,7 @@ theorem tdatY_tied (hP : ∀ P : ST, MoveHyp ST SG P)
     have h2 := mv_dn (p.mv (p.1.1.deco.up P (T : 𝓞 X.E) x)) P (hP P) (hQ P) (hy P) (g := p.1.1.deco.1.f P)
       (by rw [h1.1, e]; exact p.1.1.deco.2)
     exact PtY.ext' (Subtype.ext (h2.1.trans (by rw [h1.1, e]))) (h2.2.1.trans h1.2.1) (h2.2.2.trans h1.2.2)
+}
 
 end TOk
 

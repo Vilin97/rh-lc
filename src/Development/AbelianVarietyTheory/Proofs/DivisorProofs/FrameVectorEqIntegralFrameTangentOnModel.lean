@@ -30,4 +30,5 @@ theorem GlobalTheory.frVec_of_integral_frame : ∀ {E : Type} [Field E] [NumberF
   refine ((GlobalTheory.FlagMod.toModel_eq_iff _ _ _ _ _).2 ⟨u' ≫ ρ, ?_, ?_, ?_⟩).symm
   · rw [Category.assoc, hρh, ← Category.assoc, hb]
   · rw [Category.assoc, hρ0, hu1]
-  · rw [Category.assoc, hρm, ← Category.assoc, hu2, GlobalTheory.FlagMod.tanPull_left, Category.assoc, hv]
+  · rw [Category.assoc, hρm, ← Category.assoc, hu2,
+      GlobalTheory.FlagMod.tanPull_left (algebraMap T.V T.Fr) e v, Category.assoc, hv]

@@ -124,7 +124,15 @@ theorem unimodGenus (n : ℕ) [NeZero n] : UnimodGenus hc n := by
     rwa [he, hStd_single_left] at this
   have hn : h.Nondegenerate := ⟨fun x hx => hr x fun y => by rw [← hsym.eq, hx, map_zero], hr⟩
   exact GlobalTheory.Mass.Genus.exists_globLat_eq (J := 1) hs hfix (Module.Finite.iff_fg.2 stdLat_lattice.fg)
-    stdLat_lattice.span_eq_top N (GlobalTheory.SelfDualPoint.mem_genus h hc.cmUnram hsym hn stdLat_lattice hN
+    (by
+      apply top_unique
+      intro v _
+      have hv : v = ∑ i, v i • (Pi.single i (1 : E) : Fin n → E) := by
+        funext j
+        simp [Finset.sum_apply, Pi.single_apply]
+      rw [hv]
+      exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _
+        (Submodule.subset_span (by simpa using single_mem_stdLat (E := E) i 1))) N (GlobalTheory.SelfDualPoint.mem_genus h hc.cmUnram hsym hn stdLat_lattice hN
       (he ▸ stdLat_unimodular) (he ▸ hU))
 
 variable {hc Q} {n : ℕ}

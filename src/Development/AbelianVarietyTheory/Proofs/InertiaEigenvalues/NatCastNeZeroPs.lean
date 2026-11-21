@@ -111,7 +111,7 @@ theorem isUnit_delta_l {A : Type} [CommRing A] (D : Delta l A) (htf : ∀ x : A,
 section Sh
 
 variable {K : Type} [NormedField K] [CharZero K] (sh : K⟦X⟧ →+* K⟦X⟧⟦X⟧)
-  (hsh : ∀ (f : K⟦X⟧) (i : ℕ), (i.factorial : K⟦X⟧) * coeff i (sh f) = (PowerSeries.derivative K)^[i] f)
+  (hsh : ∀ (f : K⟦X⟧) (i : ℕ), (i.factorial : K⟦X⟧) * coeff i (sh f) = (PowerSeries.derivative (R := K))^[i] f)
 include hsh
 
 theorem constantCoeff_sh (f : K⟦X⟧) : constantCoeff (sh f) = f := by
@@ -125,10 +125,10 @@ theorem sh_X : sh X = C X + X := by
   · simp [coeff_C, coeff_X]
     simpa [derivative_X] using h
   · have h3 : ((i + 2).factorial : K⟦X⟧) ≠ 0 := natCast_ne_zero_ps (Nat.cast_ne_zero.2 (Nat.factorial_ne_zero _))
-    have h4 : (PowerSeries.derivative K)^[i + 2] X = 0 := by
+    have h4 : (PowerSeries.derivative (R := K))^[i + 2] X = 0 := by
       rw [Function.iterate_succ_apply, Function.iterate_succ_apply, derivative_X]
-      have : PowerSeries.derivative K (1 : K⟦X⟧) = 0 := (PowerSeries.derivative K).map_one_eq_zero
-      rw [this]; exact Function.iterate_fixed (map_zero _) i
+      rw [derivative_one]
+      exact iterate_derivative_zero
     rw [h4] at h
     rw [(mul_eq_zero.1 h).resolve_left h3]
     simp [coeff_C, coeff_X]

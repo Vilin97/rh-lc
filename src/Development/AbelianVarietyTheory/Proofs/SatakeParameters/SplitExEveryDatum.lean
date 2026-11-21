@@ -18,6 +18,8 @@ namespace GlobalTheory.SplitConjPlace
 
 variable {D : D7}
 
+local notation "cO" => IsCMField.ringOfIntegersComplexConj D.host.E
+
 theorem cO_cO (x : 𝓞 D.host.E) : cO (cO x) = x := by
   apply RingOfIntegers.ext
   rw [IsCMField.coe_ringOfIntegersComplexConj, IsCMField.coe_ringOfIntegersComplexConj]
@@ -109,7 +111,7 @@ theorem splitEx_of (hstar : ∀ x : D.host.E, D.host.conj x = IsCMField.complexC
       isPrime := Ideal.comap_isPrime _ _
       ne_bot := by
         obtain ⟨y, hy, hy0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot v.ne_bot
-        exact Ideal.comap_ne_bot_of_integral_mem hy0 hy (Algebra.IsIntegral.isIntegral y) }
+        exact Ideal.under_ne_bot_of_integral_mem hy0 hy (Algebra.IsIntegral.isIntegral y) }
   have hover' : (conjPlE v).asIdeal.comap (algebraMap (𝓞 (maximalRealSubfield D.host.E)) (𝓞 D.host.E)) =
       v₀.asIdeal := by
     ext a
@@ -141,12 +143,15 @@ namespace GlobalTheory.SplitConjPlace
 
 variable {D : D7}
 
+local notation "cO" => IsCMField.ringOfIntegersComplexConj D.host.E
+local notation "Fp" => maximalRealSubfield D.host.E
+
 def belowE (v : PlE D.host) : HeightOneSpectrum (𝓞 Fp) where
   asIdeal := v.asIdeal.comap (algebraMap (𝓞 Fp) (𝓞 D.host.E))
   isPrime := Ideal.comap_isPrime _ _
   ne_bot := by
     obtain ⟨y, hy, hy0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot v.ne_bot
-    exact Ideal.comap_ne_bot_of_integral_mem hy0 hy (Algebra.IsIntegral.isIntegral y)
+    exact Ideal.under_ne_bot_of_integral_mem hy0 hy (Algebra.IsIntegral.isIntegral y)
 
 theorem fixed_of_cO {x : 𝓞 D.host.E} (hx : cO x = x) : ∃ y : 𝓞 Fp, algebraMap (𝓞 Fp) (𝓞 D.host.E) y = x :=
   (IsCMField.ringOfIntegersComplexConj_eq_self_iff D.host.E _).1 hx

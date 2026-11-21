@@ -115,7 +115,9 @@ theorem infPow_diagUnits : ∀ (E : Type) [Field E] [NumberField E] (n : (E →+
         · exact (congrArg norm (DFunLike.congr_fun h1 z)).trans (Complex.norm_conj z)
     refine InfinitePlace.ext _ _ fun a => ?_
     rw [InfinitePlace.apply]
-    exact (hn _).trans (InfinitePlace.Completion.norm_coe w (WithAbs.toAbs _ a))
+    apply (hn _).trans
+    simpa [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply] using
+      (InfinitePlace.Completion.norm_coe w (WithAbs.toAbs _ a))
   have hinj : Function.Injective res := by
     rintro ⟨v, j⟩ ⟨v', j'⟩ h
     obtain rfl : v = v' := (hmk ⟨v, j⟩).symm.trans ((congrArg InfinitePlace.mk h).trans (hmk ⟨v', j'⟩))

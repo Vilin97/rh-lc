@@ -219,7 +219,7 @@ theorem exists_lam : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Fiel
   have hKΦ := GlobalTheory.SchAConj.star_mem_schA F _ Φ hΦ
   have hbx := GlobalTheory.SchwartzBox.boxFun_mem_schA F _ _ Φ hΦ _ hKΦ
   have hv := hS _ hbx
-  rw [hbox m gd hgd Φ hΦ _ hKΦ] at hv
+  have hv := (congrArg (fun x => lam x) (hbox m gd hgd Φ hΦ _ hKΦ)).symm.trans hv
   rw [hlamx, hlamx] at hv
   rw [h5, h5, hk Φ hΦ] at hv
   have hc : conjLin e (fun x => star (Φ x)) = fun y => star (e Φ y) := by

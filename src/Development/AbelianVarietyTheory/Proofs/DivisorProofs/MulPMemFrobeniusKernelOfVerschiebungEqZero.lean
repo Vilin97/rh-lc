@@ -20,7 +20,7 @@ theorem mulP_mem_kerIdeal_of_verschiebung_eq_zero (p : ℕ) [Fact p.Prime] (R : 
   have hx := (kerIdeal_le_ker_iff ((G.mulP 1).comp ((relFrob h G).app 1)) x).1
     fun c hc => Ideal.Quotient.eq_zero_iff_mem.2 hc
   let y := x.comp ((relFrob h G).app 2 : (frobTwist h G).A 2 →ₐ[R] G.A 2)
-  have hy : torsionIdeal R ((frobTwist h G).A 2) p ≤ RingHom.ker y :=
+  have hy : torsionIdeal (R := R) (A := (frobTwist h G).A 2) p ≤ RingHom.ker y :=
     (kerIdeal_le_ker_iff _ y).2 fun z => by
       have e : (relFrob h G).app 2 (mulBy R _ p z) =
           G.mulP 1 ((relFrob h G).app 1 ((frobTwist h G).res 1 z)) := by
@@ -30,8 +30,8 @@ theorem mulP_mem_kerIdeal_of_verschiebung_eq_zero (p : ℕ) [Fact p.Prime] (R : 
       exact (congrArg x e).trans this
   obtain ⟨b, rfl⟩ := G.res_surjective 1 a
   rw [← PDivGroup.res_app] at ha
-  have hb : (verschiebung h G).app 2 b ∈ torsionIdeal R ((frobTwist h G).A 2) p := by
-    have : (verschiebung h G).app 2 b ∈ torsionIdeal R ((frobTwist h G).A 2) (p ^ 1) := by
+  have hb : (verschiebung h G).app 2 b ∈ torsionIdeal (R := R) (A := (frobTwist h G).A 2) p := by
+    have : (verschiebung h G).app 2 b ∈ torsionIdeal (R := R) (A := (frobTwist h G).A 2) (p ^ 1) := by
       rw [← (frobTwist h G).ker_res 1]
       exact ha
     rwa [pow_one] at this

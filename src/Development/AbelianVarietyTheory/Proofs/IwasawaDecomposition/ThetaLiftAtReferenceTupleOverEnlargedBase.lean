@@ -54,9 +54,12 @@ theorem isAutFunSm_iff (hP : B'.toPre = B.toPre) (hW : HEq W' W) {θ : InfFam a.
   rcases B' with ⟨P'⟩
   change P' = B.toPre at hP
   subst hP
-  ksub hW W' W
-  ksub hθ θ' θ
-  ksub hφ φ' φ
+  have : W' = W := by with_unfolding_all exact eq_of_heq hW
+  subst W'
+  have : θ' = θ := by with_unfolding_all exact eq_of_heq hθ
+  subst θ'
+  have : φ' = φ := by with_unfolding_all exact eq_of_heq hφ
+  subst φ'
   refine ⟨fun h => ⟨⟨?_, ?_, ?_⟩, ?_, ?_, ?_⟩, fun h => ⟨⟨?_, ?_, ?_⟩, ?_, ?_, ?_⟩⟩
   · exact (by with_unfolding_all exact (h.1.1 :))
   · exact (by with_unfolding_all exact (h.1.2 :))
@@ -75,11 +78,36 @@ theorem isMultMap_iff (hP : B'.toPre = B.toPre) (hW : HEq W' W) (h : DSTie M' M)
     {J : Set (GA a.D W)} {J' : Set (GA a'.D W')} (hJ : HEq J' J) {χ : GA a.D W → ℂ} {χ' : GA a'.D W' → ℂ} (hχ : HEq χ' χ)
     {T : MMap M} {T' : MMap M'} (hT : HEq T' T) : IsMultMap θ' M' J' χ' T' ↔ IsMultMap θ M J χ T := by
   have k := fun φ φ' => isAutFunSm_iff (φ := φ) (φ' := φ') hP hW hθ
-  tie_cases
-  ksub hθ θ' θ
-  ksub hJ J' J
-  ksub hχ χ' χ
-  ksub hT T' T
+  rcases B' with ⟨P'⟩
+  change P' = B.toPre at hP
+  subst hP
+  have : W' = W := by with_unfolding_all exact eq_of_heq hW
+  subst W'
+  rcases M with @⟨H, nacg, ips, σ, lam, ε, fr, enum, ds, fu, fg⟩
+  rcases M' with @⟨H', nacg', ips', σ', lam', ε', fr', enum', ds', fu', fg'⟩
+  rcases h with ⟨h1, h2, h3, h4, h5, h6, h7⟩
+  have : H' = H := by with_unfolding_all exact eq_of_heq h1
+  subst H'
+  have : nacg' = nacg := by with_unfolding_all exact eq_of_heq h2
+  subst nacg'
+  have : ips' = ips := by with_unfolding_all exact eq_of_heq h3
+  subst ips'
+  have : σ' = σ := by with_unfolding_all exact eq_of_heq h4
+  subst σ'
+  have : lam' = lam := by with_unfolding_all exact eq_of_heq h5
+  subst lam'
+  have : ε' = ε := by with_unfolding_all exact eq_of_heq h6
+  subst ε'
+  have : fr' = fr := by with_unfolding_all exact eq_of_heq h7
+  subst fr'
+  have : θ' = θ := by with_unfolding_all exact eq_of_heq hθ
+  subst θ'
+  have : J' = J := by with_unfolding_all exact eq_of_heq hJ
+  subst J'
+  have : χ' = χ := by with_unfolding_all exact eq_of_heq hχ
+  subst χ'
+  have : T' = T := by with_unfolding_all exact eq_of_heq hT
+  subst T'
   refine ⟨fun h => ⟨fun v => ?_, ?_, ?_, ?_, ?_⟩, fun h => ⟨fun v => ?_, ?_, ?_, ?_, ?_⟩⟩
   · exact (by with_unfolding_all exact ((k (T v) (((T v))) (((HEq.refl (T v))))).1 (((h.1 ((by with_unfolding_all exact (v :)))))) : _))
   · exact (by with_unfolding_all exact (h.2 :))
@@ -100,11 +128,33 @@ theorem mult_heq (hP : B'.toPre = B.toPre) (hW : HEq W' W) (h : DSTie M' M) {θ 
   generalize IsMultMap θ' M' J' χ' = p' at k ⊢
   generalize IsMultMap θ M J χ = p at k ⊢
   clear hθ hJ hχ
-  tie_cases
+  rcases B' with ⟨P'⟩
+  change P' = B.toPre at hP
+  subst hP
+  have : W' = W := by with_unfolding_all exact eq_of_heq hW
+  subst W'
+  rcases M with @⟨H, nacg, ips, σ, lam, ε, fr, enum, ds, fu, fg⟩
+  rcases M' with @⟨H', nacg', ips', σ', lam', ε', fr', enum', ds', fu', fg'⟩
+  rcases h with ⟨h1, h2, h3, h4, h5, h6, h7⟩
+  have : H' = H := by with_unfolding_all exact eq_of_heq h1
+  subst H'
+  have : nacg' = nacg := by with_unfolding_all exact eq_of_heq h2
+  subst nacg'
+  have : ips' = ips := by with_unfolding_all exact eq_of_heq h3
+  subst ips'
+  have : σ' = σ := by with_unfolding_all exact eq_of_heq h4
+  subst σ'
+  have : lam' = lam := by with_unfolding_all exact eq_of_heq h5
+  subst lam'
+  have : ε' = ε := by with_unfolding_all exact eq_of_heq h6
+  subst ε'
+  have : fr' = fr := by with_unfolding_all exact eq_of_heq h7
+  subst fr'
   have hp : @Eq (MMap M → Prop) ((by with_unfolding_all exact (p' :))) p := funext fun T => (by with_unfolding_all exact ((propext (k T ((T)) (((HEq.refl T))))) : _))
   have hp' : HEq p' p := (by with_unfolding_all exact ((heq_of_eq hp) :))
   clear k hp
-  ksub hp' p' p
+  have : p' = p := by with_unfolding_all exact eq_of_heq hp'
+  subst p'
   exact (by with_unfolding_all exact ((HEq.refl (Submodule.span ℂ {T | p T})) :))
 
 theorem thetaLift_of (hP : B'.toPre = B.toPre) (hV : HEq V' V) (hW : HEq W' W) (h : DSTie M' M)
@@ -114,32 +164,116 @@ theorem thetaLift_of (hP : B'.toPre = B.toPre) (hV : HEq V' V) (hW : HEq W' W) (
     {BV BV'} (hBV : HEq BV' BV) {io io'} (hio : HEq io' io) {H H'} (hH : HEq H' H) {ν ν'} (hν : HEq ν' ν) {fd fd'} (hfd : HEq fd' fd)
     {ω ω'} (hω : HEq ω' ω) {v v'} (hv : HEq v' v) {th th'} (hth : HEq th' th)
     (h0 : ThetaLift M Wl θ ψ c BV io H ν fd ω v th) : ThetaLift M' Wl' θ' ψ' c' BV' io' H' ν' fd' ω' v' th' := by
-  tie_cases
-  coef_cases
-  ksub hWl Wl' Wl
-  ksub hθ θ' θ
-  ksub hψ ψ' ψ
-  ksub hBV BV' BV
-  ksub hio io' io
-  ksub hH H' H
-  ksub hν ν' ν
-  ksub hfd fd' fd
-  ksub hω ω' ω
-  ksub hv v' v
-  ksub hth th' th
+  rcases B' with ⟨P'⟩
+  change P' = B.toPre at hP
+  subst hP
+  have : W' = W := by with_unfolding_all exact eq_of_heq hW
+  subst W'
+  rcases M with @⟨H, nacg, ips, σ, lam, ε, fr, enum, ds, fu, fg⟩
+  rcases M' with @⟨H', nacg', ips', σ', lam', ε', fr', enum', ds', fu', fg'⟩
+  rcases h with ⟨h1, h2, h3, h4, h5, h6, h7⟩
+  have : H' = H := by with_unfolding_all exact eq_of_heq h1
+  subst H'
+  have : nacg' = nacg := by with_unfolding_all exact eq_of_heq h2
+  subst nacg'
+  have : ips' = ips := by with_unfolding_all exact eq_of_heq h3
+  subst ips'
+  have : σ' = σ := by with_unfolding_all exact eq_of_heq h4
+  subst σ'
+  have : lam' = lam := by with_unfolding_all exact eq_of_heq h5
+  subst lam'
+  have : ε' = ε := by with_unfolding_all exact eq_of_heq h6
+  subst ε'
+  have : fr' = fr := by with_unfolding_all exact eq_of_heq h7
+  subst fr'
+  have : V' = V := by with_unfolding_all exact eq_of_heq hV
+  subst V'
+  rcases c with @⟨Wc, nc, ic, fc, ρc⟩
+  rcases c' with @⟨Wc', nc', ic', fc', ρc'⟩
+  have : Wc' = Wc := by with_unfolding_all exact eq_of_heq c1
+  subst Wc'
+  have : nc' = nc := by with_unfolding_all exact eq_of_heq c3
+  subst nc'
+  have : ic' = ic := by with_unfolding_all exact eq_of_heq c4
+  subst ic'
+  have : ρc' = ρc := by with_unfolding_all exact eq_of_heq c2
+  subst ρc'
+  have : fc' = fc := Subsingleton.elim _ _
+  subst fc'
+  have : Wl' = Wl := by with_unfolding_all exact eq_of_heq hWl
+  subst Wl'
+  have : θ' = θ := by with_unfolding_all exact eq_of_heq hθ
+  subst θ'
+  have : ψ' = ψ := by with_unfolding_all exact eq_of_heq hψ
+  subst ψ'
+  have : BV' = BV := by with_unfolding_all exact eq_of_heq hBV
+  subst BV'
+  have : io' = io := by with_unfolding_all exact eq_of_heq hio
+  subst io'
+  have : H' = H := by with_unfolding_all exact eq_of_heq hH
+  subst H'
+  have : ν' = ν := by with_unfolding_all exact eq_of_heq hν
+  subst ν'
+  have : fd' = fd := by with_unfolding_all exact eq_of_heq hfd
+  subst fd'
+  have : ω' = ω := by with_unfolding_all exact eq_of_heq hω
+  subst ω'
+  have : v' = v := by with_unfolding_all exact eq_of_heq hv
+  subst v'
+  have : th' = th := by with_unfolding_all exact eq_of_heq hth
+  subst th'
   exact (by with_unfolding_all exact (h0 :))
 
 theorem postLift_of (hP : B'.toPre = B.toPre) (hV : HEq V' V) (hW : HEq W' W) (h : DSTie M' M) {c : CoefA V} {c' : CoefA V'}
     (c1 : HEq c'.W c.W) (c2 : HEq c'.ρ c.ρ) (c3 : HEq c'.nW c.nW) (c4 : HEq c'.iW c.iW)
     {Y Y'} (hY : HEq Y' Y) {X X'} (hX : HEq X' X) {L L'} (hL : HEq L' L) {th th'} (hth : HEq th' th) {g g'} (hg : HEq g' g)
     (h0 : PostLift M c Y X L th g) : PostLift M' c' Y' X' L' th' g' := by
-  tie_cases
-  coef_cases
-  ksub hY Y' Y
-  ksub hX X' X
-  ksub hL L' L
-  ksub hth th' th
-  ksub hg g' g
+  rcases B' with ⟨P'⟩
+  change P' = B.toPre at hP
+  subst hP
+  have : W' = W := by with_unfolding_all exact eq_of_heq hW
+  subst W'
+  rcases M with @⟨H, nacg, ips, σ, lam, ε, fr, enum, ds, fu, fg⟩
+  rcases M' with @⟨H', nacg', ips', σ', lam', ε', fr', enum', ds', fu', fg'⟩
+  rcases h with ⟨h1, h2, h3, h4, h5, h6, h7⟩
+  have : H' = H := by with_unfolding_all exact eq_of_heq h1
+  subst H'
+  have : nacg' = nacg := by with_unfolding_all exact eq_of_heq h2
+  subst nacg'
+  have : ips' = ips := by with_unfolding_all exact eq_of_heq h3
+  subst ips'
+  have : σ' = σ := by with_unfolding_all exact eq_of_heq h4
+  subst σ'
+  have : lam' = lam := by with_unfolding_all exact eq_of_heq h5
+  subst lam'
+  have : ε' = ε := by with_unfolding_all exact eq_of_heq h6
+  subst ε'
+  have : fr' = fr := by with_unfolding_all exact eq_of_heq h7
+  subst fr'
+  have : V' = V := by with_unfolding_all exact eq_of_heq hV
+  subst V'
+  rcases c with @⟨Wc, nc, ic, fc, ρc⟩
+  rcases c' with @⟨Wc', nc', ic', fc', ρc'⟩
+  have : Wc' = Wc := by with_unfolding_all exact eq_of_heq c1
+  subst Wc'
+  have : nc' = nc := by with_unfolding_all exact eq_of_heq c3
+  subst nc'
+  have : ic' = ic := by with_unfolding_all exact eq_of_heq c4
+  subst ic'
+  have : ρc' = ρc := by with_unfolding_all exact eq_of_heq c2
+  subst ρc'
+  have : fc' = fc := Subsingleton.elim _ _
+  subst fc'
+  have : Y' = Y := by with_unfolding_all exact eq_of_heq hY
+  subst Y'
+  have : X' = X := by with_unfolding_all exact eq_of_heq hX
+  subst X'
+  have : L' = L := by with_unfolding_all exact eq_of_heq hL
+  subst L'
+  have : th' = th := by with_unfolding_all exact eq_of_heq hth
+  subst th'
+  have : g' = g := by with_unfolding_all exact eq_of_heq hg
+  subst g'
   exact (by with_unfolding_all exact (h0 :))
 
 end Comparison₂
@@ -156,20 +290,40 @@ theorem m_eq (hP : B'.toPre = B.toPre) : a'.D.R.m = a.D.R.m := by
   exact (by with_unfolding_all exact ((Eq.refl a.D.R.m) :))
 
 theorem wc_heq (hP : B'.toPre = B.toPre) {i : Fin a.D.R.m} {i' : Fin a'.D.R.m} (h : (i : ℕ) = i') : HEq (Wc a'.D i') (Wc a.D i) := by
-  pre_cases
+  rcases B' with ⟨P'⟩
+  change P' = B.toPre at hP
+  subst hP
+  have hi : i' = i := by
+    apply Fin.ext
+    exact h.symm
+  subst i'
   exact (by with_unfolding_all exact ((HEq.refl (Wc a.D i)) :))
 
 theorem vc_heq (hP : B'.toPre = B.toPre) {i : Fin a.D.R.m} {i' : Fin a'.D.R.m} (h : (i : ℕ) = i') : HEq (Vc a'.D i') (Vc a.D i) := by
-  pre_cases
+  rcases B' with ⟨P'⟩
+  change P' = B.toPre at hP
+  subst hP
+  have hi : i' = i := by
+    apply Fin.ext
+    exact h.symm
+  subst i'
   exact (by with_unfolding_all exact ((HEq.refl (Vc a.D i)) :))
 
 theorem lev_heq (hP : B'.toPre = B.toPre) {i : Fin a.D.R.m} {i' : Fin a'.D.R.m} (h : (i : ℕ) = i')
     {β : ∀ i, GL (Fin (Wc a.D i).rank) (Lev.EAf a.D)} {β' : ∀ i, GL (Fin (Wc a'.D i).rank) (Lev.EAf a'.D)} (hβ : HEq β' β)
     {Pg : Finset (Pl a.D.host.E)} {Pg' : Finset (Pl a'.D.host.E)} (hPg : HEq Pg' Pg) :
     HEq (levS _ (β' i') (datW i' Pg')) (levS _ (β i) (datW i Pg)) ∧ HEq (levChi _ (β' i') (datW i' Pg')) (levChi _ (β i) (datW i Pg)) := by
-  pre_cases
-  ksub hβ β' β
-  ksub hPg Pg' Pg
+  rcases B' with ⟨P'⟩
+  change P' = B.toPre at hP
+  subst hP
+  have hi : i' = i := by
+    apply Fin.ext
+    exact h.symm
+  subst i'
+  have : β' = β := by with_unfolding_all exact eq_of_heq hβ
+  subst β'
+  have : Pg' = Pg := by with_unfolding_all exact eq_of_heq hPg
+  subst Pg'
   exact (by with_unfolding_all exact ((And.intro (HEq.refl (levS _ (β i) (datW i Pg))) (HEq.refl (levChi _ (β i) (datW i Pg)))) :))
 
 theorem gaL_heq (hP : B'.toPre = B.toPre) {i : Fin a.D.R.m} {i' : Fin a'.D.R.m} (h : (i : ℕ) = i')
@@ -184,10 +338,19 @@ theorem gaL_heq (hP : B'.toPre = B.toPre) {i : Fin a.D.R.m} {i' : Fin a'.D.R.m} 
   obtain rfl : fG' = fG := Subsingleton.elim _ _
   obtain rfl : c' = c := funext fun g => hc g g HEq.rfl
   clear hc
-  pre_cases
-  ksub hβ β' β
-  ksub hPg Pg' Pg
-  ksub he eG' eG
+  rcases B' with ⟨P'⟩
+  change P' = B.toPre at hP
+  subst hP
+  have hi : i' = i := by
+    apply Fin.ext
+    exact h.symm
+  subst i'
+  have : β' = β := by with_unfolding_all exact eq_of_heq hβ
+  subst β'
+  have : Pg' = Pg := by with_unfolding_all exact eq_of_heq hPg
+  subst Pg'
+  have : eG' = eG := by with_unfolding_all exact eq_of_heq he
+  subst eG'
   exact (by with_unfolding_all exact ((HEq.refl (gaL _ (β i) (datW i Pg) eG c')) :))
 
 theorem gc_eq (hP : B'.toPre = B.toPre) {px : PreX B.toPre} {px' : PreX B'.toPre} (hpx : HEq px' px) :
@@ -195,7 +358,8 @@ theorem gc_eq (hP : B'.toPre = B.toPre) {px : PreX B.toPre} {px' : PreX B'.toPre
   rcases B' with ⟨P'⟩
   change P' = B.toPre at hP
   subst hP
-  ksub hpx px' px
+  have : px' = px := by with_unfolding_all exact eq_of_heq hpx
+  subst px'
   exact (by with_unfolding_all exact ((And.intro (Eq.refl (Gc B px)) (HEq.refl (inferInstance : Group (Gc B px)))) :))
 
 variable {G G' : Type} [iG : Group G] [Fintype G] [iG' : Group G'] [Fintype G'] {Pl0 T0 Pl0' T0' : Type}
@@ -244,9 +408,9 @@ theorem liftAt_of_rSide : ∀ {B B' : Base} {f : Fr B.toPre} {f' : Fr B'.toPre} 
   have hm := m_eq (a := Z) (a' := Z') hP
   let i : Fin (w.st Z).toD7.R.m := Fin.cast hm i'
   have h : (i : ℕ) = i' := rfl
-  obt ⟨⟨hψ, hθ, hβ, -, -, -, -, -, -, hPg, he, -, h1, -⟩, h2⟩ := hS
-  obt ⟨c1, c2, c3, c4, -, hio, hBV, m1, m2, m3, m4, m5, m6, m7, -, hHW, -⟩ := h1 i i' h
-  obt ⟨hω, hv, hHV, hF, hg, hν, hfd⟩ := h2 i i' h
+  obtain ⟨⟨hψ, hθ, hβ, -, -, -, -, -, -, hPg, he, -, h1, -⟩, h2⟩ := hS
+  obtain ⟨c1, c2, c3, c4, -, hio, hBV, m1, m2, m3, m4, m5, m6, m7, -, hHW, -⟩ := h1 i i' h
+  obtain ⟨hω, hv, hHV, hF, hg, hν, hfd⟩ := h2 i i' h
   have hG := gc_eq hP hpx
   have hb := z.pins.char.base.thP
   have l1 := (hb.thF i (mu0F (X := B.fields) (tuOf w.I (usedOf w.I T Wt)))).1 (hEx.thF i _)

@@ -62,7 +62,7 @@ theorem exists_arcF_over : Laws → BrGtSt → BrWpSt → AllD fun D => ∀ (R :
     show A.ν.eX (A.ν.eX.symm _) = ν'.eX (ν'.eX.symm (a • ν'.eX (I.e y)))
     rw [AddEquiv.apply_symm_apply, AddEquiv.apply_symm_apply, eX_numHom]
   · have h := numHom_qPt f hf A.bimult A.ν ν' hJ hth (A.hq n a) (hq' n a)
-    exact ⟨q' n a, h.1, h.2, (N'.qEq_equivalence n).refl _⟩
+    exact ⟨q' n a, h.1, h.2, ⟨0, by simp, by simp⟩⟩
 
 end GlobalTheory.ArcExt
 end

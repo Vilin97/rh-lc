@@ -45,10 +45,13 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 private theorem isTanBasis_map {X : Scheme.{0}} {t : SAB H X} {R S : Type} [CommRing R] [CommRing S] {x : Sp R ⟶ X}
     {g : ℕ} {b : Fin g → (Sp (DualNumber R) ⟶ t.G.left)} (h : IsTanBasis t x b) (β : R →+* S) :
     IsTanBasis t (spMap β ≫ x) fun i => spMap (dualMap β) ≫ b i := by
-  refine ⟨fun i => GlobalTheory.LieMet.isTan_map _ rfl (h.1 i), fun T _ φ w hw => ?_⟩
-  rw [← Category.assoc, spMap_comp'] at hw ⊢
-  simp only [GlobalTheory.LineNorm.Chart.dual_comp]
-  exact h.2 T _ w hw
+  constructor
+  · intro i
+    exact GlobalTheory.LieMet.isTan_map (t := t) (x := x) β rfl (h.1 i)
+  · intro T _ φ w hw
+    rw [← Category.assoc, spMap_comp'] at hw ⊢
+    simp only [GlobalTheory.LineNorm.Chart.dual_comp]
+    exact h.2 T _ w hw
 
 variable {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {O : Type} [CommRing O] {β : O →+* c.F}
   {Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β} {F : Type} [Field F] [NumberField F] {e : F ≃+* c.F} {Y : Var F}

@@ -21,7 +21,7 @@ namespace CurveDegreeVert
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 def fsLine (b : K → ℕ) : HermLine ι :=
-  HermLine.ofMetrics (fun k => fsMetric (ι k)) (fun k => (b k : ℤ))
+  HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) (fun k => (b k : ℤ))
 
 theorem isSmoothHerm_fsLine (b : K → ℕ) : IsSmoothHerm (fsLine b : HermLine ι) := by
   have hfun : (fsLine b : HermLine ι).h =

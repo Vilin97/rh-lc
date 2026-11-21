@@ -155,6 +155,8 @@ theorem exists_isLocBasis_dual (D : D7) (u : D.what₂.Word) (Ch : ℕ → Type)
       (fun a => Tf.til.z0 a / ((D.mem u).A.T : D.host.E)) v).trans ?_
     rw [← mulVec_mulVec, iXm, LinearMap.toMatrix'_mulVec]
     congr 1
+    funext a
+    simp only [Pi.smul_apply, smul_eq_mul]
     ring
   rw [← mem_dual_tilde_iff Tf c, ← hv, ← Tf.til.til_lat c, Units.val_mul, ← mulVec_mulVec]
   set y := (Z : Matrix (Fin (D.R.N D.R.m)) (Fin (D.R.N D.R.m)) D.host.E) *ᵥ v

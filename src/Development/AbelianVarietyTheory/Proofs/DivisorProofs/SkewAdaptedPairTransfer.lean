@@ -86,7 +86,7 @@ theorem char_eq_one : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Number
   have k := key hd md
     (by
       rw [hmd', hhd', Matrix.fromBlocks_multiply, Matrix.fromBlocks_multiply]
-      simp [hmι])
+      simpa [incM] using hmι)
     (by rw [hmd', Matrix.fromBlocks_mulVec]; simp [hmx'])
     (by rw [hmd', Matrix.fromBlocks_mulVec]; simp)
     (by rw [hmd', Matrix.fromBlocks_mulVec]; simp [hmy'])
@@ -95,8 +95,11 @@ theorem char_eq_one : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Number
   have hpres : om (1, m) Φ₁ ∈ schA F (Fin n × Fin d) := by
     have := hUS.toIsSplitting.pres m Φ₁ hΦ₁
     exact this
-  rw [hbox m md hmd Φ₁ hΦ₁ Φ₂ hΦ₂] at k
-  rw [show (om.comp (MonoidHom.inr _ _)) m Φ₁ = om (1, m) Φ₁ from rfl, hEe _ hpres Φ₂ hΦ₂, hEe Φ₁ hΦ₁ Φ₂ hΦ₂,
+  change Ed (omd md (boxFun Φ₁ Φ₂)) = omd₁ hd (Ed (boxFun Φ₁ Φ₂)) at k
+  have hb := hbox m md hmd Φ₁ hΦ₁ Φ₂ hΦ₂
+  change (omd md) (boxFun Φ₁ Φ₂) = boxFun (om (1, m) Φ₁) Φ₂ at hb
+  rw [hb] at k
+  rw [hEe _ hpres Φ₂ hΦ₂, hEe Φ₁ hΦ₁ Φ₂ hΦ₂,
     hbox₁ h₁ hd hhd (e Φ₁) (he.maps Φ₁ hΦ₁) (e₂ Φ₂) (he₂s Φ₂ hΦ₂), hce h₁ m ⟨hmx, hmy, hmι⟩ Φ₁ hΦ₁] at k
   have hA : om₁ (1, h₁) (e Φ₁) ≠ 0 := by
     intro h0

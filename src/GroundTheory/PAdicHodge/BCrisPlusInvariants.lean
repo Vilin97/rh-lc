@@ -19,6 +19,11 @@ namespace ACris
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
+local notation "𝒪" => normInteger ℂ_[p]
+local notation "𝒪♭" => PreTilt 𝒪 p
+local notation "𝔹" => BDeRhamPlus 𝒪 p
+local notation "φW" => WittVector.frobeniusEquiv p 𝒪♭
+
 section Teichmuller
 
 omit hp in
@@ -204,7 +209,7 @@ theorem algebraMap_aCris_injective :
 set_option maxHeartbeats 1600000 in
 theorem phiPlus_iterate_algebraMap (n : ℕ) (a : ACris ℂ_[p] p) :
     (phiPlus ℂ_[p] p)^[n] (algebraMap (ACris ℂ_[p] p) (BCrisPlus ℂ_[p] p) a) =
-      algebraMap (ACris ℂ_[p] p) (BCrisPlus ℂ_[p] p) ((phi ℂ_[p] p)^[n] a) := by
+      algebraMap (ACris ℂ_[p] p) (BCrisPlus ℂ_[p] p) ((phi (K := ℂ_[p]) (p := p))^[n] a) := by
   induction n with
   | zero => rfl
   | succ n ih => rw [Function.iterate_succ_apply', ih, phiPlus_algebraMap,
@@ -279,13 +284,13 @@ theorem mem_unramifiedClosure_of_iotaPlus_eq {x : BCrisPlus ℂ_[p] p} {β : Pad
     induction n with
     | zero => rfl
     | succ n ih => rw [Function.iterate_succ_apply', ih, map_pow, map_natCast]
-  have ha : (phi ℂ_[p] p)^[N] a = a := by
+  have ha : (phi (K := ℂ_[p]) (p := p))^[N] a = a := by
     apply algebraMap_aCris_injective
     rw [← phiPlus_iterate_algebraMap, ← hs, hsk, ← RingHom.coe_pow, map_mul, RingHom.coe_pow,
       hfix, hphik]
   obtain ⟨u₀, -⟩ := exists_theta_approx_of_phi_iterate hN ha 0
 
-  have hθa : ((theta ℂ_[p] p a : 𝒪) : ℂ_[p]) = ((r n₁ * (p : PadicAlgCl p) ^ k : PadicAlgCl p) : ℂ_[p]) := by
+  have hθa : ((theta a : 𝒪) : ℂ_[p]) = ((r n₁ * (p : PadicAlgCl p) ^ k : PadicAlgCl p) : ℂ_[p]) := by
     have h1 : iota ℂ_[p] p a = algClToBdR p (r n₁ * (p : PadicAlgCl p) ^ k) := by
       rw [← iotaPlus_algebraMap, ← hs, map_mul, hsk, map_pow, map_natCast, hrx, map_mul, map_pow,
         map_natCast]

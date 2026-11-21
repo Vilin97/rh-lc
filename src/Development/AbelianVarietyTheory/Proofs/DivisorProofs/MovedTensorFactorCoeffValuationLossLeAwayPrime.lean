@@ -160,15 +160,16 @@ theorem GlobalTheory.MovedTwist.moved_lossLe : ∀ {D : D7} {Γ : Type} [Group �
     (hK _).1 (hF.sqrt P.1 (.inr ⟨t, P.2⟩))
   have hmu : ∀ j (x : (Kw P.1)ˣ), UnitIn K q (((locGrid ch.G t P).mu j x : ℂˣ) : ℂ) := fun j x => by
     show UnitIn K q ((((GlobalTheory.FunObj.muBase _ j * _).loc _) x : ℂˣ) : ℂ)
-    rw [HChar.loc_mul, Units.val_mul]
+    change UnitIn K q (((GlobalTheory.FunObj.muBase R.toLevCh j).loc P.1 x * (R.xiH t).loc P.1 x : ℂˣ) : ℂ)
+    rw [Units.val_mul]
     refine UnitIn.mul ?_ ⟨(hK _).1 (hF.chars.xi t _ x), ?_⟩
     · rcases j with _ | j
-      · simpa [GlobalTheory.FunObj.muBase] using unitIn_one K q
+      · simpa [GlobalTheory.FunObj.muBase, HChar.loc] using unitIn_one K q
       · rw [GlobalTheory.FunObj.muBase]
         split_ifs with hj
         · obtain ⟨n, -, hn⟩ := (R.toLevCh.C.isMu0 ⟨j, hj⟩).inf
           exact ⟨(hK _).1 (hF.chars.mu0 ⟨j, hj⟩ _ x), unitOff_loc _ hn _ hq x⟩
-        · simpa using unitIn_one K q
+        · simpa [HChar.loc] using unitIn_one K q
     · obtain ⟨n, hn, ho⟩ := hS.core.lev.xi_fin t
       refine unitOff_of_pow_eq_one q hn ?_
       have : ((R.toLevCh.xiH t) ^ n).loc P.1 x = 1 := by rw [show (R.toLevCh.xiH t) ^ n = 1 from ho]; rfl

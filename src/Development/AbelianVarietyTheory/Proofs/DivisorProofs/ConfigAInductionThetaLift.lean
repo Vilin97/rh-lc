@@ -72,8 +72,14 @@ theorem lowPart_frobInf_line : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F
     (GlobalTheory.T.config_a_theta_global_factor hK F E σ B b a' G G₁ H H' hC X om om' R Rf om₁ om₁' R₁ Rf₁ hM hM₁) φ φ' hφ hφ'
   have hoff : ∀ ψ : R.Pi →ₗ[ℂ] R₁.Pi, IsFrobInf B G.M G₁.M om om₁ R.p R₁.p H' X.α ((a' : ℝ) / 2) ψ →
       ∀ z ∈ offPart B G.M om R.p G₁.W H' X.α ((a' : ℝ) / 2) (lowPartInf B G.M R.p), ψ z = 0 :=
-    fun ψ hψ z hz => LinearMap.mem_ker.1 ((Submodule.span_le.2 fun y hy =>
-      LinearMap.mem_ker.2 (frobInf_offEig hM hM₁ hψ hy.2)) hz)
+    by
+      intro ψ hψ z hz
+      change z ∈ Submodule.span ℂ {y : R.Pi | y ∈ lowPartInf B G.M R.p ∧
+        IsOffEig B G.M om R.p G₁.W H' X.α ((a' : ℝ) / 2) y} at hz
+      apply LinearMap.mem_ker.1
+      apply (Submodule.span_le.2 ?_) hz
+      intro y hy
+      exact LinearMap.mem_ker.2 (frobInf_offEig hM hM₁ hψ hy.2)
   rcases hS with h0 | ⟨c, hc⟩
   · left
     intro x hx

@@ -192,7 +192,10 @@ theorem lev_twArgs {K : Ctx} {B : GlobalTheory.Mem.Base} {f : Fr B.toPre} {T : T
       have := hg PP.1 PP.2 h'
       rw [e PP.1 PP.2 h'] at this
       exact this
-  kexactB key g
+  run_tac Lean.Elab.Tactic.withMainContext do
+    let e ← Lean.Elab.Term.elabTerm (← `($(Lean.mkIdent `key) $(Lean.mkIdent `g))) none
+    (← Lean.Elab.Tactic.getMainGoal).assign e
+    Lean.Elab.Tactic.replaceMainGoal []
 
 end Args
 

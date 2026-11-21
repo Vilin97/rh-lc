@@ -77,13 +77,13 @@ theorem redE_dual {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) :
     redE B ≫ spMap (dualMap f) = spMap f ≫ redE A := by
   simp only [redE, spMap_comp_spMap]
   congr 1
-  ext z <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext z <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem dualMap_comp {A B E : Type} [CommRing A] [CommRing B] [CommRing E] (f : B →+* E) (g : A →+* B) :
     spMap (dualMap f) ≫ spMap (dualMap g) = spMap (dualMap (f.comp g)) := by
   rw [spMap_comp_spMap]
   congr 1
-  ext z <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext z <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem famφB_hom {V : Type} [CommRing V] [IsDomain V] (D : DegPre V) (β : D.X) (i : Fin 4) :
     D.famφB β i ≫ D.P.A.hom = D.P.A.hom := by

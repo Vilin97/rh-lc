@@ -55,6 +55,6 @@ theorem rowData : Big fun {D} _ _ _ _ {T} _ _ _ _ _ _ ch => ∀ (t : T) (e : AE 
   refine ⟨0, fun _ _ _ => ⟨0, fun D large₂ _ _ Γ _ _ Pl0 T A Ks _ _ _ R F s ch _ _ => ?_⟩⟩
   intro t e he φ fr hfr
   obtain ⟨dr, cr, h1, h2, h3⟩ := exists_rowData ch.W s.core.lev ch.rm t e he _ fr hfr
-  exact ⟨dr, cr, h1, h2, fun i y hy => by rw [h3 i]; exact if_pos hy⟩
+  exact ⟨dr, cr, h1, h2, fun i y hy => by simp only [h3 i, hy, ↓reduceIte]⟩
 
 end GlobalTheory.RowSingle

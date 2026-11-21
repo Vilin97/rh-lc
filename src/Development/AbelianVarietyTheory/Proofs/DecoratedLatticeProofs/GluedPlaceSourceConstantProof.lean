@@ -17,8 +17,6 @@ open GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedCharacter (compFin ExtUnr
 open scoped TensorProduct Pointwise
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-#check GlobalTheory.T.gluedLattice_finite_expansions_localField
-
 namespace GlobalTheory.FinPl.SrcExact
 
 section Det
@@ -251,8 +249,8 @@ theorem GlobalTheory.FinPl.sourceExact : ∀ D : D7, GlobalTheory.FinPl.SourceEx
   obtain ⟨hram, heq⟩ := toCA_ram hφ
   set φc := toCA φ hφ.2.2 with hφc
   have hχ1 : χ ≠ 1 := hχχ ▸ resChar_ne_one hχ q
-  rw [show liftA o om vA (φ P) Ξ = θ (φc P) _ from (hθv (φc P) _ _ hΞ).symm]
-  rw [((GlobalTheory.T.gluedLattice_finite_expansions_localField k n n' q χ hχ1 Λ).1 P).1]
+  rw [show liftA o om vA (φ P) Ξ = θ (φc P) _ from (hθv (φc P) _ _ hΞ).symm,
+    ((GlobalTheory.T.gluedLattice_finite_expansions_localField k n n' q χ hχ1 Λ).1 P).1]
   have e0 : θ (φc P) (tensCol (latInd P.ker Λ) (vecInd Λ)) = 0 :=
     GlobalTheory.LastSteps.lift_latInd P hram heq (hinv θ hθe _ (hsb.2.1 Λ inferInstance) P.ker inferInstance) Λ
   have e1 : ∀ Q ∈ withLat Λ, θ (φc P) (tensCol (latInd P.ker Q.ker + GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.mainDatum q χ 1 P Q)

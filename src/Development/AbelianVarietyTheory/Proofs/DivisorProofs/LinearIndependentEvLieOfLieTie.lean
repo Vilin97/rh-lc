@@ -48,7 +48,38 @@ theorem lieTie_unique_right {Y : Scheme.{0}} {ψ : P.A.A.left ⟶ Y} {x : LieG P
   haveI := HodgeTateCompare.isLocalRing_dualNumber (O := O)
   have hp : ¬ IsUnit (p : DualNumber O) := fun h => (Fact.out : ¬ IsUnit (p : O)) (by
     simpa using h.map (TrivSqZeroExt.fstHom O O O))
-  have e : xG.1 = xG'.1 := (existsUnique_right hp (isAdicComplete_dualNumber p) x.1).unique h1 h1'
+  have mem_pow {R : Type} [CommRing R] (a : R) (n : ℕ) (x : R) :
+      x ∈ (Ideal.span {a} ^ n • ⊤ : Submodule R R) ↔ a ^ n ∣ x := by
+    rw [Ideal.span_singleton_pow, smul_eq_mul, Ideal.mul_top, Ideal.mem_span_singleton]
+  have dual_dvd (n : ℕ) (x : DualNumber O) :
+      (p : DualNumber O) ^ n ∣ x ↔ (p : O) ^ n ∣ x.fst ∧ (p : O) ^ n ∣ x.snd := by
+    have e : (p : DualNumber O) ^ n = TrivSqZeroExt.inl ((p : O) ^ n) := by
+      rw [← TrivSqZeroExt.inl_pow, TrivSqZeroExt.inl_natCast]
+    rw [e]
+    constructor
+    · rintro ⟨y, rfl⟩
+      exact ⟨⟨y.fst, by simp⟩, ⟨y.snd, by simp⟩⟩
+    · rintro ⟨⟨a, ha⟩, b, hb⟩
+      exact ⟨TrivSqZeroExt.inl a + TrivSqZeroExt.inr b, by ext <;> simp [ha, hb]⟩
+  have hc : IsAdicComplete (Ideal.span {(p : DualNumber O)}) (DualNumber O) := by
+    have h := (inferInstance : IsAdicComplete (Ideal.span {(p : O)}) O)
+    refine { haus' := ?_, toIsPrecomplete := ?_ }
+    · intro x hx
+      simp only [SModEq.zero, mem_pow, dual_dvd] at hx
+      refine TrivSqZeroExt.ext (h.toIsHausdorff.haus' x.fst fun n => ?_)
+        (h.toIsHausdorff.haus' x.snd fun n => ?_)
+      · rw [SModEq.zero, mem_pow]; exact (hx n).1
+      · rw [SModEq.zero, mem_pow]; exact (hx n).2
+    · constructor
+      intro f hf
+      simp only [SModEq.sub_mem, mem_pow, dual_dvd] at hf ⊢
+      obtain ⟨a, ha⟩ := h.toIsPrecomplete.prec' (fun n => (f n).fst) fun {m n} hmn => by
+        rw [SModEq.sub_mem, mem_pow]; exact (hf hmn).1
+      obtain ⟨b, hb⟩ := h.toIsPrecomplete.prec' (fun n => (f n).snd) fun {m n} hmn => by
+        rw [SModEq.sub_mem, mem_pow]; exact (hf hmn).2
+      simp only [SModEq.sub_mem, mem_pow] at ha hb
+      exact ⟨TrivSqZeroExt.inl a + TrivSqZeroExt.inr b, fun n => ⟨by simpa using ha n, by simpa using hb n⟩⟩
+  have e : xG.1 = xG'.1 := (existsUnique_right hp hc x.1).unique h1 h1'
   have e1 : w.left = w'.left :=
     P.gen_pull.1.hom_ext (by rw [h3, h3', e]) ((Over.w w).trans (Over.w w').symm)
   rw [← h2, ← h2', e1]

@@ -116,9 +116,9 @@ theorem genMap_mem_sat (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fin S.ran
     by_contra hx0
     exact h x hx0 hx
   have hs : s ∈ Submodule.span D.host.E (ΛS : Set (Fin S.rank → D.host.E)) := by
-    rw [hS.span_eq_top]; trivial
+    rw [Submodule.IsLattice.span_eq_top (self := hS)]; trivial
   have ht : t ∈ Submodule.span D.host.E (ΛT : Set (Fin T.rank → D.host.E)) := by
-    rw [hT.span_eq_top]; trivial
+    rw [Submodule.IsLattice.span_eq_top (self := hT)]; trivial
   induction hs using Submodule.span_induction with
   | mem s hs =>
     induction ht using Submodule.span_induction with

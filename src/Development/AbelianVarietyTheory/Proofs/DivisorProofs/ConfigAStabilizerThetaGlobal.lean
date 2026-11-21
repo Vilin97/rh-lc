@@ -312,8 +312,8 @@ theorem slice_decay {κ₁ ι T : Type} [Fintype κ₁] [Fintype ι] (ψ : AddCh
   choose C hC using key
   let d : (ι → Af F) → κ → Af F := fun y a => ∑ i, y i * p2 ((S i).2 a)
   let s : (ι → Af F) → κ → Af F := fun y a => ∑ i, y i * p2 ((S i).1 a)
-  have hd : Continuous d := continuous_pi fun a => continuous_finset_sum _ fun i _ => (continuous_apply i).mul continuous_const
-  have hs : Continuous s := continuous_pi fun a => continuous_finset_sum _ fun i _ => (continuous_apply i).mul continuous_const
+  have hd : Continuous d := continuous_pi fun a => continuous_finsetSum _ fun i _ => (continuous_apply i).mul continuous_const
+  have hs : Continuous s := continuous_pi fun a => continuous_finsetSum _ fun i _ => (continuous_apply i).mul continuous_const
   let m : (ι → Af F) → (κ → Af F) × (κ → Af F) × Af F := fun y => (d y, s y, p2 (⅟(2 : AF F)) * (s y ⬝ᵥ d y))
   have hm : Continuous m := hd.prodMk (hs.prodMk (continuous_const.mul (hs.dotProduct hd)))
   have hfin := GlobalTheory.T.heisenberg_schwartz_finite_values F κ ψ hψ.1 g hg _ (hΩ.image hm)
@@ -414,7 +414,7 @@ theorem arch_decay : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberF
   let U' := fun i => G.M.co.e (Matrix.vecMulVec (inclR (F := F) (AF F) (t i) • incV F H.y) (incV F H'.x))
   have hp : Continuous ⇑(Finset.sup s (schwartzSeminormFamily ℂ (Fin b × Fin (b + a') → mixedEmbedding.mixedSpace F) ℂ)) :=
     Seminorm.continuous_finsetSup fun i _ => (schwartz_withSeminorms ℂ _ ℂ).continuous_seminorm i
-  choose C hCb using fun j => slice_decay B.ψ hT.base.std S U' (fun i j => by rw [← G.M.co.form]; convert ht i j)
+  choose C hCb using fun j => slice_decay B.ψ hT.base.std S U' (fun i j => by rw [← G.M.co.form]; convert ht i j <;> rfl)
     (sliceL c ∘ₗ e) (exists_slice_clm hT.geo.hM he c) (fun i a Ψ hΨ => by
       have := he.inv (Matrix.vecMulVec (a • inclR (F := F) (AF F) (t i) • incV F H.y) (incV F H'.x)) (Or.inl ⟨_, rfl⟩) Ψ hΨ
       rw [Matrix.smul_vecMulVec, Darboux.rho, map_smul] at this

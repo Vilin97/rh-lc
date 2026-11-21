@@ -97,12 +97,12 @@ theorem card_ker_eq_norm_pow : ∀ (S : Scheme.{0}) (A : Over S) [GrpObj A] [IsC
   intro S A _ _ hA F _ _ act k _ _ x h ℓ hℓ hℓk hyp c hc hv
   obtain ⟨B, e, ψ, he, htan⟩ := GlobalTheory.T.geometric_point_abelian_variety_action S A hA F act k x
   have hiso := (GlobalTheory.AV.AbVar.DegNorm.isIsogeny_and_deg_ne_zero B ψ c hc).1
-  have hE := deg_eq_card_ker_of_tangent k B (ψ c) hiso (htan c hv)
+  have hE := deg_eq_card_ker_of_tangent k B (ψ c).asHom hiso (htan c hv)
   have hD := GlobalTheory.T.degree_pow_finrank_eq_natAbs_norm_pow k B F ψ c hc
-  have hker : Nat.card {g : Over.mk x ⟶ A // g ≫ act.act c = 1} = Nat.card (ptMap (ψ c)).ker := by
+  have hker : Nat.card {g : Over.mk x ⟶ A // g ≫ act.act c = 1} = Nat.card (ptMap (ψ c).asHom).ker := by
     apply Nat.card_congr
     refine Equiv.subtypeEquiv e.toEquiv (fun g => ?_)
-    change _ ↔ e g ≫ Hom.hom (ψ c) = 1
+    change _ ↔ e g ≫ Hom.hom (ψ c).asHom = 1
     rw [← he, MulEquiv.map_eq_one_iff]
 
   have htors : Nat.card {g : Over.mk x ⟶ A // g ^ ℓ = 1} = ℓ ^ (2 * B.dim) := by
@@ -141,7 +141,7 @@ theorem card_ker_eq_norm_pow : ∀ (S : Scheme.{0}) (A : Over S) [GrpObj A] [IsC
   have hd0 : Module.finrank ℚ F ≠ 0 := Module.finrank_pos.ne'
   rw [hker, ← hE]
   apply Nat.pow_left_injective hd0
-  change deg (A := B) (B := B) (ψ c) ^ Module.finrank ℚ F = ((Algebra.norm ℤ c).natAbs ^ h) ^ Module.finrank ℚ F
+  change deg (A := B) (B := B) (ψ c).asHom ^ Module.finrank ℚ F = ((Algebra.norm ℤ c).natAbs ^ h) ^ Module.finrank ℚ F
   rw [hD, hdim, pow_mul]
 
 end GlobalTheory.AVCount

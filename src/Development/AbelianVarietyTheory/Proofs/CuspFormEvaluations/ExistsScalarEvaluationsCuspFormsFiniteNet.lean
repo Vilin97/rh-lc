@@ -28,13 +28,12 @@ private theorem linearIndependent_inclusion_of_le {K R ι : Type} [Field K] [Add
     LinearIndependent K (fun i => (⟨F i, hAB (F i).2⟩ : B)) := by
   exact hF.map' (Submodule.inclusion hAB) (Submodule.ker_inclusion A B hAB)
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem exists_scalar_readings_on_net : ∀ (D : D7) (T : Top D) (h : LawsP T), GamAt T.toCore → ∀ (large₂ : SizeData₂ D) (j : ℕ) (_hj : InR D j) (w : WeightFamilies.Wt D j), ReciprocityTheory.ChartRestriction.G.PullbackSections.SupBoundPageRows D large₂ w → 2 ≤ large₂.sc.L → D.R.r ≤ w.n → 16 ≤ D.R.f → ∀ σ : T.Q.c.F →+* ℂ, GoodEmb T.Q.c σ → ∃ (n : ℕ) (ev : Fin n → ((recB h.toLawsCore).Cusp j w →ₛₗ[σ] ℂ)), (∀ F, ∃ y, (recB h.toLawsCore).supN j w σ F / 4 ≤ ‖ev y F‖) ∧ (∀ y F, ‖ev y F‖ ≤ (recB h.toLawsCore).supN j w σ F) ∧ Real.log (16 * (n : ℝ)) ≤ 1041 * Zb D large₂ ^ 3 ∧ ∀ (m : ℕ) (F : Fin m → (recB h.toLawsCore).Cusp j w), LinearIndependent T.Q.c.F F → LinearIndependent ℂ (fun i => fun y => ev y (F i)) := by
   intro D T h hG large₂ j hj w hP hL hr hf σ hσ
   classical
   obtain ⟨NN, -, hnet, hlog⟩ :=
     GlobalTheory.RunIn.exists_net_max_at_goodEmb D T h hG large₂ j hj w hP hL hr hf σ hσ
-  have hind0 := GlobalTheory.cusp_readings_linearIndependent
-  unfold ReciprocityTheory.ChartRestriction.G.PullbackSections.AlgInjAtSt at hind0
 
   obtain ⟨L, hLdef⟩ : ∃ L, L = lieFac (T.Q.Dw j) (xiR D) (wtA w) := ⟨_, rfl⟩
   have hL0 : 0 < L := hLdef ▸ lieFac_pos _ _ _
@@ -47,13 +46,13 @@ theorem exists_scalar_readings_on_net : ∀ (D : D7) (T : Top D) (h : LawsP T), 
     have h1 := GlobalTheory.NetNormExamples.pnorm_nonneg ((T.U j σ).X k) (laU (T.U j σ) (wtA w) w.n k)
       (fun _ => (1 : ℂ)) x
     rwa [hpn, norm_one, one_mul] at h1
-  have hg : goodOf T.Q.c σ = σ := by rw [goodOf, if_pos hσ]
+  have hg : goodOf T.Q.c σ = σ := by rw [goodOf, ite_eq_left hσ]
 
   have hsup : ∀ F : (recB h.toLawsCore).Cusp j w, (recB h.toLawsCore).supN j w σ F =
       L * supN (T.U j σ).X (laU (T.U j σ) (wtA w) w.n) (rdU (T.U j σ) F.1) := by
     intro F
     dsimp only [recB, cutN]
-    rw [if_pos hj]
+    rw [ite_eq_left hj]
     dsimp only [Formalism.L2.Pj.Core.Ns, supC]
     rw [hg, hLdef]
 
@@ -107,7 +106,17 @@ theorem exists_scalar_readings_on_net : ∀ (D : D7) (T : Top D) (h : LawsP T), 
   ·
     intro m F hF
     have hF' := linearIndependent_inclusion_of_le (B := T.C j w) inf_le_left F hF
-    have hind := hind0 D T h j hj w σ hσ m _ hF'
+    have hlin : LinearIndependent T.Q.c.F (fun i => (F i : T.R j)) :=
+      hF'.map' (T.C j w).subtype (T.C j w).ker_subtype
+    have hmem : ∀ i, (F i : T.R j) ∈ sec (T.Q.Xo j) T.Q.c (wtA w) w.n := fun i =>
+      Formalism.L2.Pj.cusp_le_sec (T.Q.Xo j) T.Q.c (T.U j) (wtA w) w.n
+        (Submodule.mem_inf.mp (F i).2).1
+    have hind : LinearIndependent ℂ (fun i => rdU (T.U j σ) (F i : T.R j)) :=
+      (GlobalTheory.reading_linearIndependent_and_injective
+        GlobalTheory.lawsFieldsSeparately.2.1 _ _ _ _ (T.Q.Xo j) T.Q.c σ _
+        (Formalism.L2.PjFree.Unf.ofPj (T.U j σ))
+        ((Formalism.L2.PjFree.isUnf_ofPj (T.U j σ)).2 (h.unf j hj σ hσ))
+        (wtA w) w.n).1 m (fun i => (F i : T.R j)) hmem hlin
     rw [Fintype.linearIndependent_iff] at hind ⊢
     intro g hgz i
     refine hind g ?_ i
@@ -150,7 +159,7 @@ theorem exists_scalar_readings_on_net : ∀ (D : D7) (T : Top D) (h : LawsP T), 
       rw [hQ, Finset.sum_apply, Finset.sum_apply]
       refine Finset.sum_eq_zero fun i _ => ?_
       have hz : rdU (T.U j σ) (F i).1 k x = 0 := by
-        simp only [rdU, LinearMap.coe_mk, AddHom.coe_mk, dif_neg hx]
+        simp only [rdU, LinearMap.coe_mk, AddHom.coe_mk, dite_eq_right hx]
       rw [Pi.smul_apply, Pi.smul_apply, hz, smul_zero]
 
 end GlobalTheory

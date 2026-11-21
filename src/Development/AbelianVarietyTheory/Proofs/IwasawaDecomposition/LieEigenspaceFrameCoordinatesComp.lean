@@ -60,7 +60,10 @@ theorem spMap_comp2 {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : 
 
 theorem dualMap_comp2 {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : S →+* T) (ψ : T →+* U) :
     dualMap (ψ.comp φ) = (dualMap ψ).comp (dualMap φ) :=
-  RingHom.ext fun x => by ext <;> simp [dualMap]
+  by
+    apply RingHom.ext
+    intro x
+    apply TrivSqZeroExt.ext <;> simp [dualMap]
 
 end GlobalTheory.ShFam.CoordComp
 

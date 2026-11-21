@@ -45,7 +45,8 @@ theorem twist_scalar : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numbe
   have hP₁ := (GlobalTheory.ThK.Check.isPair_of_isTriple hT₁).1
   have hS := IsUWeilPair.isUSplitting hP.weil
   obtain ⟨h1, h2⟩ := GlobalTheory.T.eval_comp_om_rho_equivariant_isoA_invariant F E σ B b a' G G₁ H H' hC e he X om om' hT k a hx hι
-  refine GlobalTheory.T.config_first_eval_char_compat hKP F E σ B b a' G G₁ H H' hC e he X om om' om₁ om₁' hT hT₁ (e ∘ₗ om (k, 1)) h1 h2 fun y => ?_
+  refine GlobalTheory.T.config_first_eval_char_compat hKP F E σ B b a' G G₁ H H' hC e he X om om' om₁ om₁' hT hT₁ (e ∘ₗ om (k, 1)) h1 h2 ?_
+  intro y
   have := hS.adm (k, 1) _ (GlobalTheory.T.eigen_intertwiner_good_models F E σ B _ _ _ _ G.V G.W G₁.V G₁.W G.M G₁.M H.ι H'.ι _ e hP.good hP₁.good he _
     (proj_adm F _ y))
   rwa [LinearMap.comp_assoc] at this

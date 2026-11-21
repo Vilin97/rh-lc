@@ -285,6 +285,8 @@ theorem exists_sub_inc_mem_hat (h : Submodule.span D.host.E (Λ : Set (Fin n →
       obtain ⟨t, ht⟩ := exists_sub_inc_mem a
       refine ⟨t • x, ?_⟩
       convert smul_mem_hat ht (inc_mem_hat hx) using 1
+      funext i
+      simp [Pi.smul_apply, map_mul, sub_mul]
     | zero => exact fun a => ⟨0, by convert zero_mem_hat (Λ := Λ) using 1; funext i; simp⟩
     | add x y _ _ hx hy =>
       intro a
@@ -292,12 +294,15 @@ theorem exists_sub_inc_mem_hat (h : Submodule.span D.host.E (Λ : Set (Fin n →
       obtain ⟨y', hy'⟩ := hy a
       refine ⟨x' + y', ?_⟩
       convert add_mem_hat hx' hy' using 1
-      ring
+      funext i
+      simp [Pi.smul_apply, map_add, mul_add, sub_add_sub_comm]
     | smul c x _ hx =>
       intro a
       obtain ⟨x', hx'⟩ := hx (a * inc D c)
       refine ⟨x', ?_⟩
       convert hx' using 2
+      funext i
+      simp [Pi.smul_apply, map_mul, mul_assoc]
   choose x hx using fun j : Fin n => h1 (Pi.single j 1) (h ▸ Submodule.mem_top) (y j)
   refine ⟨∑ j, x j, ?_⟩
   convert (Formalism.L2.Herm.hatL (F := D.host.F) Λ).sum_mem (t := Finset.univ) fun j _ => hx j using 1
@@ -312,7 +317,7 @@ theorem hA_eq (V : HSp D) (x y : Fin V.rank → EAf D) :
 
 theorem isSelfDualC_lat {V : HSp D} {β : GL (Fin V.rank) (EAf D)} (h : Unimod (OA D) (gramOf V β)) :
     IsSelfDualC V (lat β) :=
-  ⟨GlobalTheory.NormSum.AdLattice.lat_isLattice β, fun y => (mem_lat_iff_dual h y).trans
+  ⟨(GlobalTheory.NormSum.AdLattice.lat_isLattice β).toIsLattice, fun y => (mem_lat_iff_dual h y).trans
     ⟨fun H x hx => H x hx, fun H x hx => H x hx⟩⟩
 
 theorem dualL_eq {V : HSp D} {Λ : Lat V} (h : IsSelfDualC V Λ) : Formalism.L2.Herm.dualL D.sp.cm V Λ = Λ := by
@@ -451,7 +456,7 @@ theorem dualL_lat_eq {β β' : GL (Fin V.rank) (EAf D)}
     intro x
     rw [← cjA_mem_iff, cjA_hA, ← inc_mem_iff, ← Formalism.UG.P.csDual_hform_incl D.sp.cm.sig V.gram]
     rfl
-  rw [SetLike.mem_coe, ← inc_mem_hat_iff (GlobalTheory.NormSum.AdLattice.lat_isLattice β'), ← dual_hat_lat h]
+  rw [SetLike.mem_coe, ← inc_mem_hat_iff (GlobalTheory.NormSum.AdLattice.lat_isLattice β').toIsLattice, ← dual_hat_lat h]
   exact ⟨fun H => hA_mem_of_forall fun x hx => (e x).2 (H x hx), fun H x hx => (e x).1 (H _ (inc_mem_hat hx))⟩
 
 theorem mem_hat_dualL_iff {Λ : Lat V} (h : Submodule.IsLattice D.host.E Λ) (y : Fin V.rank → EAf D) :

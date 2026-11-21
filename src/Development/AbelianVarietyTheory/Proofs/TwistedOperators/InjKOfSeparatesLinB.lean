@@ -27,11 +27,12 @@ namespace GlobalTheory.RowEx
 
 theorem injK_of_separates_linB (hS : GlobalTheory.IndefiniteRowSideFullHecke.LevelPlusSubgroup.FunctionalsSeparate) (hL : LinB) : InjK := by
   refine GlobalTheory.RowTest.injK_of_separates hS ?_
-  obtain ⟨C0, hL⟩ := hL
+  rcases hL with ⟨C0, hL⟩
   refine ⟨C0, fun ε CF hCF => ?_⟩
   obtain ⟨x0, hL⟩ := hL ε CF hCF
   refine ⟨x0, fun D large₂ hε hx Γ _ _ Pl0 T A Ks _ _ _ R F hset ch hch hsc ρ ξ a u => ?_⟩
   exact hL D large₂ hε hx Γ Pl0 T A Ks R F hset (ch.withReal ρ ξ) hsc (hch.toIsBase.withReal ρ ξ) a u
+
 
 end GlobalTheory.RowEx
 

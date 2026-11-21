@@ -53,7 +53,7 @@ theorem exists_torus_point : LL → UTorsSt → ∀ (o Ω : Type) [CommRing o] [
     have : NeZero ((S.r * S.N : ℕ) : PadicAlgCl p) := ⟨Nat.cast_ne_zero.2 hn.ne⟩
     rw [← IsPrimitiveRoot.coe_units_iff, ← Polynomial.isRoot_cyclotomic_iff,
       ← Polynomial.map_cyclotomic _ (y₀.comp (algebraMap o S.R))]
-    exact (hζ.isRoot_cyclotomic hn.pos).map
+    exact (hζ.isRoot_cyclotomic hn.pos).map (y₀.comp (algebraMap o S.R))
 
   let pt : Multiplicative S.Gam →* (TFK (R := u.V) (PadicAlgCl p) ⟶ u.A.A) :=
     MonoidHom.mk' (fun a => g.pt a.toAdd) fun _ _ => g.pt_add _ _

@@ -76,7 +76,7 @@ theorem coset_indicator_finprod : ∀ (F : Type) [Field F] [NumberField F] (κ :
     · rw [Set.indicator_of_notMem hy]
       simp only [Set.mem_setOf_eq, not_forall] at hy
       obtain ⟨i, v, hv⟩ := hy
-      refine (finprod_eq_zero _ v (Set.indicator_of_notMem (fun h => hv (by simpa [map_sub] using h i)) _) ?_).symm
+      refine (finprod_eq_zero _ v (Set.indicator_of_notMem (show (fun j => Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v (y j)) ∉ {x | ∀ j, x j - Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v (a j) ∈ N v} from fun h => hv (by simpa [map_sub] using h i)) _) ?_).symm
       refine (Filter.eventually_cofinite.1 ((hNcof.and (hint a)).and (hint y))).subset fun w hw h' => hw ?_
       refine Set.indicator_of_mem (fun j => ?_) _
       rw [← SetLike.mem_coe, h'.1.1, SetLike.mem_coe]

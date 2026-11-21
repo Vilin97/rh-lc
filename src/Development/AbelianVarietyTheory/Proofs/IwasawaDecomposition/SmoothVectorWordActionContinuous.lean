@@ -26,7 +26,7 @@ theorem continuous_apply_family {Y L E : Type} [TopologicalSpace Y] [AddCommGrou
       conv_lhs => rw [← b.sum_repr (f y), map_sum]
     simp only [map_smul, Module.Basis.coord_apply]
   rw [e]
-  exact continuous_finset_sum _ fun i _ =>
+  exact continuous_finsetSum _ fun i _ =>
     ((b.coord i).continuous_of_finiteDimensional.comp hf).smul (hW _)
 
 variable {n : ℕ} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]

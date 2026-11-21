@@ -281,7 +281,7 @@ theorem radicalCovolume : RadicalCovolume := by
     rcases le_total b m with h | h
     · exact hF.1 h
     · exact (hF.2.2.1 b h).le
-  obtain ⟨T, T', Λ, hT, hΛ, hFT⟩ := GlobalTheory.T.exists_biorthogonal_frame_of_saturated_flag I.E I.n m F r hF.1 hF.2.1 hF.2.2.1 ⟨hfg, hsp⟩
+  obtain ⟨T, T', Λ, hT, hΛ, hFT⟩ := GlobalTheory.T.exists_biorthogonal_frame_of_saturated_flag I.E I.n m F r hF.1 hF.2.1 hF.2.2.1 (Submodule.IsLattice.of_fg I.E hfg)
     (fun b y hy hyb => by
       by_cases hb : m ≤ b
       · rwa [hF.2.2.1 b hb]

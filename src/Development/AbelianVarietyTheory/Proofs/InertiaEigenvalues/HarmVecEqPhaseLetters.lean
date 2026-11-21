@@ -37,6 +37,7 @@ theorem coord_mem_fieldRange {ι K J : Type} [Field K] [Fintype J] (σ : K →+*
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, MvPolynomial.coeff_map, smul_eq_mul, map_sum] at h1
     simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, smul_eq_mul, MvPolynomial.coeff_zero]
+    change (∑ x, π (a x) * (e x).coeff m) = 0
     rw [← h1]
     refine Finset.sum_congr rfl fun k _ => ?_
     have e1 : a k * σ (AddMonoidAlgebra.coeff (e k) m) = AddMonoidAlgebra.coeff (e k) m • a k := by
@@ -150,6 +151,7 @@ theorem io_eq_phase_smul_letters : ∀ (D : D7) (G : Type) [Group G] [Fintype G]
   have n3' : Submodule.span ℂ (Set.range c0') = ⊤ := n3
   have hsm : ∀ (a : T.Q.c.F) P, toF T.Q.c lt (a • P) = (a : ℂ) • toF T.Q.c lt P := fun a P => by
     rw [MvPolynomial.smul_eq_C_mul, map_mul, toF_C, MvPolynomial.smul_eq_C_mul]
+  set_option synthInstance.maxHeartbeats 200000 in
   obtain ⟨B₀, hB₀⟩ := exists_ext c0' n4
     { toFun := fun v => toF T.Q.c lt (io v)
       map_add' := fun v w => by rw [map_add (f := _), map_add (f := _)]

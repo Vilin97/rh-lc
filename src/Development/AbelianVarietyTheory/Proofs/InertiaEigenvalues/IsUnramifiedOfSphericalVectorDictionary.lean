@@ -24,6 +24,8 @@ namespace GlobalTheory.UnramDict
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 
+local notation3 "L⁺" => maximalRealSubfield L
+
 theorem kappa_tmul (F : FinIso L n) (x : L) (a : AFplus L) :
     F.κ.toRingHom (x ⊗ₜ[L⁺] a) = algebraMap L _ x * GlobalTheory.AdeleBaseChange.adMap L⁺ L a := by
   rw [Model.kappa_eq F (Model.finIso L n)]
@@ -80,6 +82,7 @@ theorem trivOutside (F : FinIso L n) {w : HeightOneSpectrum (𝓞 L)} {y : GAf L
     rw [← h1]
     simp only [Units.val_one, Matrix.one_apply]
     split_ifs <;> simp
+    rfl
   rw [map_sub, sub_eq_zero] at h0
   rw [Matrix.map_apply, h0]
   simp only [Matrix.one_apply]

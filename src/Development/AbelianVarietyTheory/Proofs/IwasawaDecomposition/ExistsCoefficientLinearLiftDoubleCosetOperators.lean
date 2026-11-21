@@ -72,6 +72,8 @@ theorem tSet_subset_of_unif (n : ℕ) (s : SplitPlace L) (ϖ ϖ' : s.v.adicCompl
     show _ = _ * Matrix.diagonal c
     rw [Formalism.UG.diagJ, Formalism.UG.diagJ, Matrix.diagonal_mul_diagonal]
     congr 1
+    funext i
+    simp only [c]
     split_ifs
     · rw [hu]; field_simp
     · rw [one_mul]

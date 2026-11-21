@@ -109,7 +109,7 @@ theorem rowDiv_shift (R : Type) [CommRing R] {r n : ℕ} (H : Fin r → ℤ) (a 
     (f : MvPolynomial (Fin r × Fin n) R) (hf : IsWeightedHomogeneous (rowZ r n) f H) :
     IsWeightedHomogeneous (rowZ r n) (rowDiv R a b k f) (H + k • (Pi.single a 1 - Pi.single b 1)) := by
   unfold rowDiv
-  conv => enter [2, 1, 2]; rw [f.as_sum]
+  nth_rw 1 [f.as_sum]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum, Polynomial.finsetSum_coeff]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
@@ -390,8 +390,8 @@ theorem exists_frame_adapted (hn : 0 < n) (p : LocF.PP Lc n) : ∃ (h : GL (Fin 
   have h0' : c ⟨0, hn⟩ ≠ 0 := h0
   have e2 : ∑ a, Lc.res (N₀.mulVec x a) * c a = ∑ d ∈ Finset.univ.erase ⟨0, hn⟩, -(Lc.res (x d) * c d) := by
     rw [Finset.sum_eq_single ⟨0, hn⟩]
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [Matrix.mulVec, dotProduct, map_sum, Finset.sum_mul, ← Finset.sum_erase (a := ⟨0, hn⟩) _ (by simp [N₀])]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [Matrix.mulVec, dotProduct, map_sum, Finset.sum_mul, ← Finset.sum_erase (a := ⟨0, hn⟩) _ (by simp [N₀])]
       refine Finset.sum_congr rfl fun d hd => ?_
       have hd' := Finset.ne_of_mem_erase hd
       simp only [N₀, Matrix.of_apply, true_and, ne_eq, hd', not_false_eq_true, if_true, map_mul, hb]
@@ -513,7 +513,7 @@ theorem ten_update_mem (D : D7) (w : D.what₂.places.Pl) {n : ℕ} (lam : D.wha
     intro r hr
     obtain ⟨s, hs, e⟩ := hφ a
     rw [smul_eq_C_mul (a := a), map_mul, map_C, ← smul_eq_C_mul, ← tenM_apply, MultilinearMap.map_update_smul,
-      smul_smul, e, ← map_mul, tenM_apply]
+      smul_smul, e, RingHom.id_apply, ← map_mul, tenM_apply]
     exact hy _ (mul_mem hr hs)
 
 theorem map_int_mem (R : Type) [CommRing R] {n : ℕ} (lam : DomWeight n)
@@ -525,7 +525,7 @@ theorem map_int_mem (R : Type) [CommRing R] {n : ℕ} (lam : DomWeight n)
     simp only
     rw [← lclosedeq_applyWord_map, lclosedeq_hw_map]
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact add_mem hy hz
   | smul a y _ hy =>
     rw [smul_eq_C_mul, map_mul, map_C, ← smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hy
@@ -595,7 +595,14 @@ theorem pow_smul_mem_valB_erase : ∀ (D : D7) (u : D.what₂.Word) (X : Ch D u)
       congr 1
       rw [← tenM_apply, ← tenM_apply, ← Function.update_eq_self (X.fm.tauOf w v)
         (fun τ => roundAct ℂ _ (PtModel.lamT X i τ) (Co.mv w h τ) (map (Int.castRingHom ℂ) (f τ))),
-        ← MultilinearMap.map_update_smul]
+        ]
+      have hsm := (tenM (D.R.N i)).map_update_smul
+        (fun τ => roundAct ℂ _ (PtModel.lamT X i τ) (Co.mv w h τ) (map (Int.castRingHom ℂ) (f τ)))
+        (X.fm.tauOf w v) ((X.A.T : ℂ) ^ (PtModel.lamT X i (X.fm.tauOf w v)).w ⟨0, D.R.N_pos i⟩)
+        (roundAct ℂ _ (PtModel.lamT X i (X.fm.tauOf w v)) (Co.mv w h (X.fm.tauOf w v))
+          (map (Int.castRingHom ℂ) (f (X.fm.tauOf w v))))
+      simp only [RingHom.id_apply] at hsm
+      rw [← hsm]
       congr 1
       funext τ
       by_cases hτ : τ = X.fm.tauOf w v

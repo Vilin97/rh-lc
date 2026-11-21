@@ -28,8 +28,7 @@ namespace GlobalTheory.RowEx
 theorem nfPhase_of_sumOKK : SumOKK → NFPhase := by
   intro _
   refine ⟨0, fun ε CF _ => ⟨0, fun D large₂ _ _ Γ _ _ Pl0 T A Ks _ _ _ R F hS ch hIs _ => ?_⟩⟩
-  haveI := hS.fin
-  exact GlobalTheory.PhaseField.phases_core hS.core.lev ch.S.toGridChoice (GlobalTheory.RowClaim.Test.pde_ne_q hS) hIs.guard
+  exact (letI := hS.fin; GlobalTheory.PhaseField.phases_core hS.core.lev ch.S.toGridChoice (GlobalTheory.RowClaim.Test.pde_ne_q hS) hIs.guard)
 
 end GlobalTheory.RowEx
 

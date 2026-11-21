@@ -163,6 +163,7 @@ theorem coef_schur (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' 
 
 
 set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 200000 in
 theorem agree_root (z : Dat (w.st Z) w.I hX T Wt) (z' : Dat (w'.st Z') w'.I hX' T' Wt') (hE : Enl0 B B') (hf : HEq f' f)
     (hpx : HEq w'.px w.px) (hstd : z.Std) (hB : z'.Std) (hN : ExtN z z')
     (i : Fin (w.st Z).toD7.R.m) (i' : Fin (w'.st Z').toD7.R.m) (hii : (i : ℕ) = i')

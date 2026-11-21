@@ -203,9 +203,10 @@ theorem theta_high (hpp : p.Prime) (hp : IsUnit (p : T.V)) (y y' : IntFr Xo c T 
     GlobalTheory.T.exists_orth_pull_isTranslSum_of_isThetaTrace E H Dw l Xo T.Fr _ _ f f' p y.1.s y'.1.s s _ hpp hP hR (t none).ne_zero hs hT
   obtain ⟨F, F', a₁, a₂, -, a₃, a₄, -⟩ :=
     GlobalTheory.T.exists_ext_pair_alt E H Dw l Xo T _ _ I.G I'.G I.t' I'.t' I.m1 I.m2 I'.m1 I'.m2 f f₂ hP.1 hf₂
-  obtain ⟨b₀, rfl⟩ := GlobalTheory.T.integral_scalar_of_pulledBack_generator_extends_model E H Dw l Xo c T io y' y I' I f₂ F' F (p ^ 3) (p ^ 2) b w a₂ a₁ a₃ (a₄ _ hff)
+  have hb : b ∈ Set.range (algebraMap T.V T.Fr) := GlobalTheory.T.integral_scalar_of_pulledBack_generator_extends_model E H Dw l Xo c T io y' y I' I f₂ F' F (p ^ 3) (p ^ 2) b w a₂ a₁ a₃ (a₄ _ hff)
     (by rw [Nat.cast_pow]; exact hp.pow 3) w₁
     (GlobalTheory.T.sum_symmetricTranslates_thetaPullback_extends E H Dw l Xo c T io y' I' (p ^ 2) w (hU I') (by rw [Nat.cast_pow]; exact hp.pow 2) w₂)
+  obtain ⟨b₀, rfl⟩ := hb
   have hζ0 : ζ ≠ 0 := fun h => by simp [h, hpp.ne_zero] at hζ
   have hp0 : (p : T.Fr) ≠ 0 := by simpa using (hp.map (algebraMap T.V T.Fr)).ne_zero
   have vp : vV T.V (p : T.Fr) = 0 := by

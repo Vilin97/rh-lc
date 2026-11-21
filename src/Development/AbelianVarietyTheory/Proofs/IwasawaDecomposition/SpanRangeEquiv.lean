@@ -476,8 +476,11 @@ theorem inMt_state (pin : ColPin w) :
   rw [hm]
   exact idFrame_castFr _ _ (hF i)
 
-theorem sMt : SMt :=
-  StepW.of_all fun _ _ _ _ _ _ _ hs _ x => hs.1.elim fun pin => (inMt_state x pin).elim fun m _ => ⟨m⟩
+theorem sMt : SMt := by
+  unfold SMt
+  apply StepW.of_all
+  intro K B f T w hK hF hs P x
+  exact hs.1.elim fun pin => (inMt_state x pin).elim fun m _ => ⟨m⟩
 
 end State
 

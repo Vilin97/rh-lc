@@ -97,7 +97,7 @@ theorem core_decay {Y ι : Type} [Fintype ι] (ψ : AddChar (AF F) ℂ) (hψ : I
           · linear_combination (x j * mk a 0) * this
           · linear_combination (x j * mk a 0) * this
         rw [hs, Prod.fst_sum, Prod.snd_sum, sum_dotProduct, dotProduct_sum, ← Finset.sum_sub_distrib]
-        simp only [this, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+        simp only [this, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
       have h1 : pureA F (archOp (archW (mk a 0 • U i)) h + h : SInf F κ) g =
           schr ψ (mk a 0 • U i) (pureA F h g) + pureA F h g := by
         rw [schr_pureA ψ hψ, finOp_arch]
@@ -123,10 +123,10 @@ theorem exists_bound_of_exp {κ' : Type} [Fintype κ'] {e : ((κ → AF F) → �
   have hsum : ∀ h, (∑ j, q j) h = ∑ j, q j h := fun h => by
     induction (Finset.univ : Finset ι) using Finset.induction_on with
     | empty => rw [Finset.sum_empty, Finset.sum_empty]; rfl
-    | insert a s ha ih => rw [Finset.sum_insert ha, Finset.sum_insert ha, Seminorm.add_apply, ih]
+    | insert a s ha ih => rw [Finset.sum_insert ha, Finset.sum_insert ha, add_apply, ih]
   refine ⟨∑ j, q j, ?_, fun y h => ?_⟩
   · rw [show (⇑(∑ j, q j) : SInf F κ → ℝ) = fun h => ∑ j, q j h from funext hsum]
-    exact continuous_finset_sum _ fun j _ => hq j
+    exact continuous_finsetSum _ fun j _ => hq j
   · rw [hsum, hP, Finset.sum_apply]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ => ?_)
     rw [hqe, pureA, norm_mul, mul_comm]

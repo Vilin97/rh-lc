@@ -108,8 +108,8 @@ theorem _root_.GlobalTheory.T.rationalDefiniteForms_largerField_combination_smal
   (z : Dat (w.st Z) w.I hX T Wt) (Wt' : Set B'.places.Pl)
   (R' : RealDat3 (w'.st Z').toD7 (famR (w'.st Z') w'.I hX' (usedOf w'.I T' Wt') Xg tr) Ks), Enl0 B B' → HEq f' f → HEq w'.px w.px → RSideW z Wt' R' → JSpan z Wt' R' := by
   intro B B' f f' T T' w w' Z Z' hX hX' Wt Ks _ _ _ Xg tr z Wt' R' hE hf hpx hRS i i' hii x'
-  obt ⟨ι, hι⟩ := exists_iota_comp B.embLL B'.embLL hE.2.2.2
-  obt ⟨b, hb⟩ := GlobalTheory.Mem.R3.Rw.JSpanPf.exists_bc w w' Wt Wt' hE hf hpx ((i : ℕ) + 1) ((i' : ℕ) + 1) (by rw [hii]) ι hι
+  obtain ⟨ι, hι⟩ := exists_iota_comp B.embLL B'.embLL hE.2.2.2
+  obtain ⟨b, hb⟩ := GlobalTheory.Mem.R3.Rw.JSpanPf.exists_bc w w' Wt Wt' hE hf hpx ((i : ℕ) + 1) ((i' : ℕ) + 1) (by rw [hii]) ι hι
   have hj := fun φ => hRS.2.2.2.2.2.2.2.2.2.2.2.2.2 i i' hii (Formalism.L2.Col.mtKOk _ _ _ _ hX _) (Formalism.L2.Col.mtKOk _ _ _ _ hX' _) φ
     (b.lift φ) (hb φ)
   have hc := hRS.2.2.2.2.2.2.2.2.2.2.2.2.1 i i' hii

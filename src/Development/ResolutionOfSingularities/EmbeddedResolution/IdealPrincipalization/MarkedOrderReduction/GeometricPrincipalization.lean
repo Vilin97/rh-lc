@@ -25,16 +25,21 @@ noncomputable section
 
 namespace FunctorialResolution.EmbeddedResolution
 
-theorem MonomialStrictTransformComponents.transformedComponentHypotheses : MonomialStrictTransformComponents.TransformedComponentHypotheses.{u} where
-  transformed_components := intersectionComponents_transformedBoundary_of_isBlowupAlongIdealSheaf
-  strictTransform_components := exists_eq_closure_of_isIrreducibleComponentOf_strictTransform
+theorem MonomialStrictTransformComponents.transformedComponentHypotheses :
+    MonomialStrictTransformComponents.TransformedComponentHypotheses.{u} := by
+  exact {
+    transformed_components := intersectionComponents_transformedBoundary_of_isBlowupAlongIdealSheaf
+    strictTransform_components := exists_eq_closure_of_isIrreducibleComponentOf_strictTransform }
 
-theorem principalizationGeometryHypotheses : PrincipalizationGeometryHypotheses.{u} :=
-  geometricHypotheses_of_orderReductionHypotheses
-    (OrderReductionHypotheses.of_strictTransformHypotheses
-      (StrictTransformCase.strictTransformHypotheses_of_residualHypotheses
-        (MonomialStrictTransformComponents.strictTransformHypotheses_of_transformedComponents
-          MonomialStrictTransformComponents.transformedComponentHypotheses)))
+theorem principalizationGeometryHypotheses : PrincipalizationGeometryHypotheses.{u} := by
+  have h := StrictTransformCase.strictTransformHypotheses_of_residualHypotheses
+    (MonomialStrictTransformComponents.strictTransformHypotheses_of_transformedComponents
+      MonomialStrictTransformComponents.transformedComponentHypotheses)
+  have hOrder : OrderReductionHypotheses.{u} := {
+    controlledTransform_orderAt_le := orderAt_controlledTransform_le_of_orderAt_eq_on_center
+    strictTransform_components := h.strictTransform_components
+    monomial := h.monomial }
+  exact geometricHypotheses_of_orderReductionHypotheses hOrder
 
 end FunctorialResolution.EmbeddedResolution
 

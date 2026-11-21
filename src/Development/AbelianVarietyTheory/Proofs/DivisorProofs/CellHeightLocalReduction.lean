@@ -10,7 +10,7 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsOpenSet
 
 noncomputable section
 
-open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.WhitHered Matrix Topology Pointwise
+open GlobalTheory.PRep GlobalTheory.SmGL Matrix Topology Pointwise
 
 namespace GlobalTheory.WhitHered.CellLoc
 
@@ -29,7 +29,7 @@ theorem isClosed_parab (e : (Σ a, Fin (m a)) ≃ Fin N) : IsClosed (parab k e :
   obtain ⟨_, _⟩ := GlobalTheory.SplitWeil.Model.secondCountable_and_t2_local_field (k := k)
   have : (parab k e : Set (GL (Fin N) k)) = ⋂ i, ⋂ j, ⋂ _ : blk e j < blk e i, {g : GL (Fin N) k | g.val i j = 0} := by
     ext g
-    simp only [SetLike.mem_coe, mem_parab, Set.mem_iInter, Set.mem_setOf_eq]
+    simp only [SetLike.mem_coe, mem_parab, Set.mem_iInter, Set.mem_ofPred_eq]
   rw [this]
   exact isClosed_iInter fun i => isClosed_iInter fun j => isClosed_iInter fun _ =>
     isClosed_eq (Units.continuous_val.matrix_elem i j) continuous_const

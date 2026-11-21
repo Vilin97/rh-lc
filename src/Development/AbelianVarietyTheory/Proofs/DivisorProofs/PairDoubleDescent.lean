@@ -96,7 +96,12 @@ theorem eq_smul_isEv : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Fi
     rw [h0]
     funext x
     simp [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure]
-  obtain ⟨y₀, hy₀⟩ := Function.ne_iff.1 hne
+  obtain ⟨y₀, hy₀⟩ : ∃ y, e (pure g φ) y ≠ 0 := by
+    by_contra h
+    push_neg at h
+    apply hne
+    ext y
+    exact h y
   obtain ⟨c, hc⟩ := GlobalTheory.T.schrodinger_invariant_functionals_lagrangian hP F B.ψ hψ (Fin n × Fin d) L hiso hrk (ev0 ∘ₗ f) (ev0 ∘ₗ e) (inv f hfh hfi) (inv e hevh hev.inv)
     ⟨M.co.rho B.ψ (j (M₁.co.e.symm (y₀, 0))) (pure g φ), hmem _ _ hΦ₀, by
       rw [LinearMap.comp_apply, ← hrec e hevh _ hΦ₀ y₀]; exact hy₀⟩

@@ -377,8 +377,8 @@ theorem petAt_le {σ : c.F →+* ℂ} (U : Unf Xo c σ r) (V : HSp D) (dict : GA
     petAt U ξ V dict (muQ1 V) W f ≤ B := by
   have hB : 0 ≤ B := (homN_nonneg U ξ W f _).trans (h 1)
   rw [petAt_eq]
-  refine ENNReal.toReal_le_of_le_ofReal hB ((MeasureTheory.eLpNorm_le_of_ae_bound (C := B)
-    (Filter.Eventually.of_forall fun q => ?_)).trans (by simp))
+  refine ENNReal.toReal_le_of_le_ofReal hB ((MeasureTheory.eLpNorm'_le_eLpNormEssSup (by norm_num)).trans
+    (MeasureTheory.eLpNormEssSup_le_of_ae_bound (C := B) (Filter.Eventually.of_forall fun q => ?_)))
   rw [Real.norm_of_nonneg (homN_nonneg U ξ W f _)]
   exact h _
 

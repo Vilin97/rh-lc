@@ -27,7 +27,7 @@ theorem isAddHaarMeasure_unipMeasure (r : ℕ) : (unipMeasure E a r).IsAddHaarMe
   infer_instance
 
 theorem ctFun_resQ_eq_zero {φ : GA E a → ℂ} (hφ : φ ∈ cuspCont E a) {r : ℕ} (h0 : 0 < r) (h1 : r < a)
-    (y : normOneGL (K := E) (n := a)) : ctFun E a r (resQ φ) y = 0 := by
+    (y : normOneGL (K := E) (n := a)) : ctFun r (resQ φ) y = 0 := by
   obtain ⟨-, hl, -, hc⟩ := mem_cuspCont.1 hφ
   have h := hc r h0 h1 (unipMeasure E a r) (unipFundamentalDomain E a r)
     (isAddHaarMeasure_unipMeasure r) isAddFundamentalDomain_unipFundamentalDomain (y : GA E a)

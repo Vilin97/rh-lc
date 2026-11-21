@@ -278,7 +278,7 @@ theorem main : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F
     (GlobalTheory.ThK.TorusCentre.det_ne_zero_of_isSkew hP₁.skew) cU hcUc (by
       intro p t hpt
       refine Units.ext ?_
-      rw [hcU]
+      change c p = 1
       exact siegL hKP F E σ B n d X W M χX χW om r s r' s' hP d₁ W₁ H' i₀ i₁ M₁ om₁ r₁ s₁ hH hP₁
         dd omd hdd homd dd₁ omd₁ hdd₁ homd₁ Ed hEpres hEheis hEinv hEadm ⟨Φ₀, hΦ₀, hne⟩ p t hpt (ext p) (hc p) (c p)
         (fun Φ hΦ => hkey p Φ hΦ))

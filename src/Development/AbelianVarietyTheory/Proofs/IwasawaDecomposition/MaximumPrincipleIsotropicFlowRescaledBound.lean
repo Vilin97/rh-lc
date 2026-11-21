@@ -101,6 +101,7 @@ theorem stepBound (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (
       rw [hx'def, EmbeddingHermitianPairs.flow_flow X hξ.2.1]
       congr 1
       congr 1
+      funext τ
       exact Complex.ext (by simp) (by rw [hs]; simp)
     rw [he]
     exact h

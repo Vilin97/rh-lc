@@ -372,7 +372,7 @@ theorem chart_of (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.
   obtain ⟨lev, Y, SI, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10⟩ := chartQ_exists (F := B.host.F) (E := B.host.E) B.sp.cm (B.R.N i)
     (chH (X := B.fields) (lvG I a i c₀.1) (bar (rpT I u a i c₀))) (f := B.R.f)
     (basePi_of_ok hX hPr u) (hPr.piT_norm u) (rls_vT_iff hX hPr u)
-    (fun P hP => (hPr.vT_norm u P hP : Ideal.absNorm P.asIdeal = B.T u)) (rls_T_notUnder hPr u)
+    (fun P hP => by simpa [Ideal.absNorm_eq_natCard] using hPr.vT_norm u P hP) (rls_T_notUnder hPr u)
     (hf ▸ colBase_index (X := B.fields) B.sp.cm (B.R.N i) hPr u) (chLam (X := B.fields) B.embLL (lvG I a i c₀.1) (bar (rpT I u a i c₀)))
     q (qbOpen _ _ hcj hO) (trace_not_mem_twistPrime_under I hI hPr u a) B.embLL k hkU hkV hkL hkT hkO
     (gramN (I.rec7 l Z) i hi) hg1 (badQ (I.rec7 l Z) Q') hbad

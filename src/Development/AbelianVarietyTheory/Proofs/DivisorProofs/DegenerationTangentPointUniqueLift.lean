@@ -44,11 +44,11 @@ theorem exists_factor_dualMap (e : ℕ) :
     have h1 : x.fst ∈ I ^ (e + 1) := by
       have := congrArg TrivSqZeroExt.fst hx
       rw [← Ideal.Quotient.eq_zero_iff_mem]
-      simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using this
+      simpa [dualMap] using this
     have h2 : x.snd ∈ I ^ (e + 1) := by
       have := congrArg TrivSqZeroExt.snd hx
       rw [← Ideal.Quotient.eq_zero_iff_mem]
-      simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using this
+      simpa [dualMap] using this
     have ex : x = algebraMap R (DualNumber R) x.fst + algebraMap R (DualNumber R) x.snd * DualNumber.eps := by
       ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
     rw [Ideal.mk_ker, ← Ideal.map_pow, ex]

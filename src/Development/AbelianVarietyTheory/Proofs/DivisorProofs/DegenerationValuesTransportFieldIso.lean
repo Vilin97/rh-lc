@@ -84,13 +84,13 @@ theorem good_dual {J : (Sp F ⟶ X) → L.ι} (hJ : ∀ ψ : Sp F ⟶ X, ⊤ ≤
 theorem redE_dualMap (f : F →+* F') : redE F' ≫ spMap (dualMap f) = spMap f ≫ redE F := by
   rw [← spMap_comp', ← spMap_comp']
   refine congrArg spMap ?_
-  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext a <;> simp [GlobalTheory.MBLow.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem inl_dualMap (f : F →+* F') : spMap (dualMap f) ≫ spMap (algebraMap F (DualNumber F)) =
     spMap (algebraMap F' (DualNumber F')) ≫ spMap f := by
   rw [← spMap_comp', ← spMap_comp']
   refine congrArg spMap ?_
-  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext a <;> simp [GlobalTheory.MBLow.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 end Dual
 

@@ -89,8 +89,6 @@ theorem y_comp_mulN (n : ℕ) : t.y n ≫ mulN A (p ^ n) = toUnit _ ≫ η[A] :=
 def toTorsion (n : ℕ) : SpAlg O (G.A n) ⟶ torsion A (p ^ n) :=
   pullback.lift (t.y n) (toUnit _) (t.y_comp_mulN n)
 
-  pullback.lift_fst _ _ _
-
 end PDivGroup.TorsionTower
 
 end GlobalTheory
@@ -118,7 +116,9 @@ theorem toTorsion_left_injective (n : ℕ) (R : CommRingCat.{0}) :
   obtain ⟨φ, hφ⟩ := exists_spOver a'
   obtain ⟨ψ, hψ⟩ := exists_spOver b'
   have hy : a' ≫ t.y n = b' ≫ t.y n := by
-    rw [← t.toTorsion_ι, ← Category.assoc, ← Category.assoc]
+    have hι : t.toTorsion n ≫ torsion.ι A (p ^ n) = t.y n :=
+      pullback.lift_fst _ _ _
+    rw [← hι, ← Category.assoc, ← Category.assoc]
     congr 1
     exact Over.OverMorphism.ext e
   rw [← hφ, ← hψ] at hy
@@ -143,7 +143,9 @@ theorem toTorsion_left_surjective (n : ℕ) (R : CommRingCat.{0}) :
   have e : spOver φ ≫ t.toTorsion n = z := by
     refine pullback.hom_ext ?_ (toUnit_unique _ _)
     change spOver φ ≫ t.toTorsion n ≫ torsion.ι A (p ^ n) = z ≫ torsion.ι A (p ^ n)
-    rw [toTorsion_ι, hφ]
+    have hι : t.toTorsion n ≫ torsion.ι A (p ^ n) = t.y n :=
+      pullback.lift_fst _ _ _
+    rw [hι, hφ]
   exact ⟨(spOver φ).left, congrArg Over.Hom.left e⟩
 
 instance isIso_toTorsion (n : ℕ) : IsIso (t.toTorsion n) := by
@@ -156,14 +158,12 @@ def torsionIso (n : ℕ) : SpAlg O (G.A n) ≅ torsion A (p ^ n) :=
   haveI := t.isIso_toTorsion n
   asIso (t.toTorsion n)
 
-    (t.torsionIso n).hom ≫ torsion.ι A (p ^ n) = t.y n :=
-  t.toTorsion_ι n
-
 theorem isPullback_y : ∀ (p : ℕ) (O : Type) [CommRing O] (G : GlobalTheory.PDivGroup p O) (A : Over (Sp O))
     [GrpObj A] (t : G.TorsionTower A) (n : ℕ), IsPullback (t.y n) (toUnit _) (mulN A (p ^ n)) η[A] := by
   intro p O _ G A _ t n
-  exact IsPullback.of_iso_pullback ⟨t.y_comp_mulN n⟩ (t.torsionIso n) (t.torsionIso_hom_ι n)
-    (pullback.lift_snd _ _ _)
+  have hι : (t.torsionIso n).hom ≫ torsion.ι A (p ^ n) = t.y n :=
+    pullback.lift_fst _ _ _
+  exact IsPullback.of_iso_pullback ⟨t.y_comp_mulN n⟩ (t.torsionIso n) hι (pullback.lift_snd _ _ _)
 
 end PDivGroup.TorsionTower
 

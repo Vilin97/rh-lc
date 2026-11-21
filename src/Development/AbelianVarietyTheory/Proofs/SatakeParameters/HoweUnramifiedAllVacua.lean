@@ -31,6 +31,8 @@ theorem comb_of_scalar {X A M : Type} [AddCommGroup M] [Module ℂ M] (vac : M �
       Finsupp.linearCombination ℂ (fun p => a p s) cA := by
     rw [LinearMap.map_finsupp_linearCombination]
     congr 2
+    funext p
+    exact (Finsupp.linearCombination_apply ℂ (ca p)).trans (hca p s hs).symm
   calc (cA.sum fun p z => z • a p s) = Finsupp.linearCombination ℂ (fun p => a p s) cA :=
         (Finsupp.linearCombination_apply ℂ cA).symm
     _ = _ := h.symm

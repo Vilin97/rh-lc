@@ -142,9 +142,11 @@ theorem cover_read_const : ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j, Formal
   have hU := hL.unf j hj σ hσ
   have hU₂ : IsUnf C.U₂ := hC.2.2.2.1
   choose h₀ hh₀ using GlobalTheory.CoverOnto.exists_dict₂_comp D T hL j hj σ hσ C hC
-  choose γ₀ hΛ hiso hfr using fun k₂ => GlobalTheory.CoverFrameMove.frames_differ D T hL j hj σ hσ C hC (h₀ k₂)
-  choose u hu1 hu using fun k₂ => const_of_rel D T hL j hj σ hσ C hC n k₂ (T.dict j σ (h₀ k₂)).1 (γ₀ k₂)
+  have hframes := fun k₂ : C.U₂.Comp => GlobalTheory.CoverFrameMove.frames_differ D T hL j hj σ hσ C hC (h₀ k₂)
+  choose γ₀ hΛ hiso hfr using hframes
+  have hconst := fun k₂ : C.U₂.Comp => const_of_rel D T hL j hj σ hσ C hC n k₂ (T.dict j σ (h₀ k₂)).1 (γ₀ k₂)
     (rel_at D T hL j hj σ hσ C hC (h₀ k₂) (γ₀ k₂) (hΛ k₂) (hiso k₂) (hfr k₂) k₂ _ (hh₀ k₂) rfl)
+  choose u hu1 hu using hconst
   refine ⟨u, hu1, ?_⟩
   intro a hDom f hf f₂ hf₂ hP h
   have e₂ : (C.dict₂ h).1 = (C.dict₂ (h₀ (C.dict₂ h).1)).1 := (hh₀ _).symm

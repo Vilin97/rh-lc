@@ -61,7 +61,7 @@ theorem exists_lamX_eq : ∀ (I : AutInst) (Λ : Submodule (𝓞 I.E) (Fin I.n �
     rw [dualBasic_mem_dual, hM x]
     simp only [hap, Submodule.mem_one, RingHom.mem_range]
   obtain ⟨g, hg, e⟩ := GlobalTheory.Mass.Genus.exists_globLat_eq (J := I.J) hs hfix (Module.Finite.iff_fg.2 I.L_fg)
-    I.L_span Λ (mem_genus h I.cm.cmUnram hsym hn ⟨I.L_fg, I.L_span⟩ hΛ (hdual _ I.L_dual) (hdual _ hd))
+    I.L_span Λ (mem_genus h I.cm.cmUnram hsym hn (Submodule.IsLattice.of_fg I.E I.L_fg) hΛ (hdual _ I.L_dual) (hdual _ hd))
   exact ⟨⟨g, hg⟩, (lamX_eq_globLat I _).trans e⟩
 
 end GlobalTheory.SelfDualPoint

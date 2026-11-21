@@ -87,13 +87,13 @@ def eigenDesc (φ : F ⟶ G) (h : ∀ a, act ρ a ≫ φ = σ a • φ) : eigenQ
     eigenπ ρ σ ≫ eigenDesc φ h = φ := cokernel.π_desc _ _ _
 
 def dualAct : O →+* End (dual F) where
-  toFun a := End.of (GlobalTheory.CompanionTheory.Ar.dualMap (act ρ a))
+  toFun a := End.of (dualMap (act ρ a))
   map_one' := by
     apply End.ext
     simpa only [act, map_one] using! (dualMap_id (F := F))
   map_mul' a b := by
     apply End.ext
-    change GlobalTheory.CompanionTheory.Ar.dualMap (act ρ (a * b)) = _
+    change dualMap (act ρ (a * b)) = _
     rw [mul_comm a b]
     simpa only [act, map_mul] using! (dualMap_comp (act ρ a) (act ρ b))
   map_zero' := by
