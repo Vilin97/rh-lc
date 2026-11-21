@@ -234,14 +234,16 @@ theorem isPerfectPairing_openSubgroupOf (U V : OpenSubgroup G) (hVU : V ≤ U) :
 
 include H in
 theorem groupDualityHypotheses (U : OpenSubgroup G) :
-    GroupDualityHypotheses n (Rep.res (U : Subgroup G).subtype D) (H.t U).toAddMonoidHom where
-  nonempty_addEquiv := H.nonempty_addEquiv
-  finite_two M _ _ hM := H.finite_cohomology U M hM 2 le_rfl
-  subsingleton_three M _ _ hM := H.subsingleton_cohomology_three U M hM
-  bijective_cores W := by
+    GroupDualityHypotheses n (Rep.res (U : Subgroup G).subtype D) (H.t U).toAddMonoidHom := by
+  refine ⟨H.nonempty_addEquiv, ?_, ?_, ?_, ?_⟩
+  · intro M _ _ hM
+    exact H.finite_cohomology U M hM 2 le_rfl
+  · intro M _ _ hM
+    exact H.subsingleton_cohomology_three U M hM
+  · intro W
     obtain ⟨V, hVU, rfl⟩ := exists_eq_openSubgroupOf U W
     exact H.bijective_t_cohomologyCores_openSubgroupOf U V hVU
-  isPerfectPairing W := by
+  · intro W
     obtain ⟨V, hVU, rfl⟩ := exists_eq_openSubgroupOf U W
     exact H.isPerfectPairing_openSubgroupOf U V hVU
 

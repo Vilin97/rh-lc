@@ -150,11 +150,11 @@ def O1 : LB (PSpace R N) where
 theorem O1_g_eq_ratioUnit_chart_inf (i j : Fin (N + 1)) :
     (O1 R N).g i j = ratioUnit (chart R N i ⊓ chart R N j) i j inf_le_left inf_le_right := rfl
 
-theorem O1_isLB : (O1 R N).IsLB where
+theorem O1_isLB : (O1 R N).IsLB := {
   cover := iSup_chart R N
   g_self _ := Units.ext (ratioOn_self (hi := le_rfl))
   cocycle _ _ _ := Units.ext (ratioOn_mul_ratioOn (hi := inf_le_left.trans inf_le_left)
-    (hj := inf_le_left.trans inf_le_right))
+    (hj := inf_le_left.trans inf_le_right)) }
 
 def coord (k : Fin (N + 1)) : (O1 R N).Sec where
   f i := ratio R N i k

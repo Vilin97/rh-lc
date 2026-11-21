@@ -42,7 +42,7 @@ def resLB {X Y : Scheme.{0}} (φ : Y ⟶ X) (L : LB X) : LB Y where
   U i := φ ⁻¹ᵁ L.U i
   g i j := pullU φ (L.U i ⊓ L.U j) (L.g i j)
 
-theorem isLB_resLB {X Y : Scheme.{0}} (φ : Y ⟶ X) {L : LB X} (hL : L.IsLB) : (resLB φ L).IsLB where
+theorem isLB_resLB {X Y : Scheme.{0}} (φ : Y ⟶ X) {L : LB X} (hL : L.IsLB) : (resLB φ L).IsLB := {
   cover := by
     refine eq_top_iff.2 fun y _ => ?_
     have hy : φ y ∈ (⨆ i, L.U i) := by rw [hL.cover]; trivial
@@ -59,7 +59,7 @@ theorem isLB_resLB {X Y : Scheme.{0}} (φ : Y ⟶ X) {L : LB X} (hL : L.IsLB) : 
       L.U i ⊓ L.U j ⊓ L.U k ≤ L.U i ⊓ L.U k) (L.g i k)
     have h4 := congrArg (pullU φ (L.U i ⊓ L.U j ⊓ L.U k)) (hL.cocycle i j k)
     rw [map_mul] at h4
-    exact (congrArg₂ (· * ·) h1 h2).trans (h4.trans h3.symm)
+    exact (congrArg₂ (· * ·) h1 h2).trans (h4.trans h3.symm) }
 
 theorem glue {X : Scheme.{0}} (W : ℕ → X.Opens) (hc : ⨆ D, W D = ⊤)
     (hd : Pairwise fun D D' => W D ⊓ W D' = ⊥) (U : X.Opens)

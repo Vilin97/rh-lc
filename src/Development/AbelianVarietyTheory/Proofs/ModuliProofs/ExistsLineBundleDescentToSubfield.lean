@@ -83,7 +83,7 @@ theorem exists_unit_eq {i : I} {U : (D.obj i).Opens} (hU : IsCompact (U : Set (D
 
 theorem pull_isLB_of_germ {Y Z : Scheme.{0}} (M : LB Y) (F : Z ⟶ Y) (hcov : ∀ y : Y, ∃ a, y ∈ M.U a)
     (hco : ∀ (z : Z) a b c, F z ∈ M.U a → F z ∈ M.U b → F z ∈ M.U c →
-      gm F z _ (M.g a b) * gm F z _ (M.g b c) = gm F z _ (M.g a c)) : (M.pull F).IsLB where
+      gm F z _ (M.g a b) * gm F z _ (M.g b c) = gm F z _ (M.g a c)) : (M.pull F).IsLB := {
   cover := top_le_iff.1 fun y _ => by
     obtain ⟨i, hi⟩ := hcov (F y)
     exact TopologicalSpace.Opens.mem_iSup.2 ⟨fun _ => i, mem_pull.2 hi⟩
@@ -94,7 +94,7 @@ theorem pull_isLB_of_germ {Y Z : Scheme.{0}} (M : LB Y) (F : Z ⟶ Y) (hcov : �
     rw [map_mul, gm_res (𝟙 Z) y _ hy, gm_res (𝟙 Z) y _ hy, gm_res (𝟙 Z) y _ hy,
       gm_pull_g M F (𝟙 Z) y I J hy.1.1 hy.1.2,
       gm_pull_g M F (𝟙 Z) y J K hy.1.2 hy.2, gm_pull_g M F (𝟙 Z) y I K hy.1.1 hy.2]
-    exact hco y _ _ _ (mem_pull.1 hy.1.1) (mem_pull.1 hy.1.2) (mem_pull.1 hy.2)
+    exact hco y _ _ _ (mem_pull.1 hy.1.1) (mem_pull.1 hy.1.2) (mem_pull.1 hy.2) }
 
 
 omit [∀ i, CompactSpace (D.obj i)] in

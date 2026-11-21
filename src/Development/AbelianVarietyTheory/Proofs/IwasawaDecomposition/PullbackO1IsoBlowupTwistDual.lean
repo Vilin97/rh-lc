@@ -27,7 +27,7 @@ private theorem germ_res_val_eq_germ {X : Scheme.{0}} {V W : X.Opens} (h : W ≤
   simp [res]
 
 theorem isLB_of_chartPull_id {X : Scheme.{0}} {A B : LB X} (hB : B.IsLB) (a : ChartPull A B (𝟙 X))
-    (hc : ⨆ i, A.U i = ⊤) : A.IsLB where
+    (hc : ⨆ i, A.U i = ⊤) : A.IsLB := {
   cover := hc
   g_self := by
     obtain ⟨idx, hle, hg⟩ := a
@@ -62,7 +62,7 @@ theorem isLB_of_chartPull_id {X : Scheme.{0}} {A B : LB X} (hB : B.IsLB) (a : Ch
       X.presheaf.germ _ y (show y ∈ B.U (idx i) ⊓ B.U (idx j) ⊓ B.U (idx k) from ⟨⟨hi', hj'⟩, hk'⟩) u.val)
       (hB.cocycle (idx i) (idx j) (idx k))
     simp only [Units.val_mul, map_mul, germ_res_val_eq_germ] at hB3
-    exact hB3
+    exact hB3 }
 
 private theorem gm_id_res_eq {X : Scheme.{0}} {U V : X.Opens} (h : V ≤ U) (y : X) (hy : y ∈ V)
     (a : Γ(X, U)ˣ) : gm (𝟙 X) y V (res h a) = gm (𝟙 X) y U a := by

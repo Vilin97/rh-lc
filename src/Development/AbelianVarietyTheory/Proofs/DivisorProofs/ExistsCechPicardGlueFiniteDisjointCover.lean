@@ -70,7 +70,7 @@ theorem same_of_mem {i i' : κ} (hd : Pairwise fun i i' => Disjoint (f i).opensR
 
 variable {L} in
 theorem isLB_glueLB (hL : ∀ i, (L i).IsLB) (hcov : ⨆ i, (f i).opensRange = ⊤)
-    (hd : Pairwise fun i i' => Disjoint (f i).opensRange (f i').opensRange) : (glueLB f L).IsLB where
+    (hd : Pairwise fun i i' => Disjoint (f i).opensRange (f i').opensRange) : (glueLB f L).IsLB := {
   cover := by
     refine top_le_iff.1 fun y _ => ?_
     have hy : y ∈ ⨆ i, (f i).opensRange := by rw [hcov]; trivial
@@ -102,7 +102,7 @@ theorem isLB_glueLB (hL : ∀ i, (L i).IsLB) (hcov : ⨆ i, (f i).opensRange = �
     have e3 := gm_glueLB f L i (𝟙 _) z k k'' hz hz''
     rw [Category.id_comp] at e1 e2 e3
     rw [map_mul, gm_res _ z _ hy, gm_res _ z _ hy, gm_res _ z _ hy, e1, e2, e3,
-      gm_cocycle (hL i) _ z hz hz' hz'']
+      gm_cocycle (hL i) _ z hz hz' hz''] }
 
 theorem exists_pic_glue : ∀ {Y : Scheme.{0}} {κ : Type} [Finite κ] {Z : κ → Scheme.{0}} (f : ∀ i, Z i ⟶ Y)
     [∀ i, IsOpenImmersion (f i)], (⨆ i, (f i).opensRange = ⊤) →

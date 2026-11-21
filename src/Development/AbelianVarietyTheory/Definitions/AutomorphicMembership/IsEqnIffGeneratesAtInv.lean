@@ -672,22 +672,22 @@ private theorem val_res_eq_resG {U V : X.Opens} (e : V ≤ U) (u : Γ(X, U)ˣ) :
     ((res e u : Γ(X, V)ˣ) : Γ(X, V)) = resG X e (u : Γ(X, U)) := by
   rfl
 
-theorem isLB_toLB (D : CartierDiv X) : (toLB D).IsLB where
+theorem isLB_toLB (D : CartierDiv X) : (toLB D).IsLB := {
   cover := (by
       refine eq_top_iff.2 fun x _ => ?_
       obtain ⟨U, hx, g, hg⟩ := D.exists_isEqn_nhds x
       exact TopologicalSpace.Opens.mem_iSup.2 ⟨⟨(U, g), gen_mem hx, hg⟩, hx⟩)
-    ; g_self := fun i => (by
+    , g_self := fun i => (by
       apply Units.ext
       apply fn_ext
       intro hU
       rw [val_res_eq_resG, fnOf_resG, fnOf_toLB_g, div_self (Units.ne_zero _), Units.val_one, map_one])
-    ; cocycle := fun i j k => (by
+    , cocycle := fun i j k => (by
       apply Units.ext
       apply fn_ext
       intro hU
       simp only [Units.val_mul, map_mul, val_res_eq_resG, fnOf_resG, fnOf_toLB_g]
-      rw [div_mul_div_cancel₀ (Units.ne_zero _)])
+      rw [div_mul_div_cancel₀ (Units.ne_zero _)]) }
 
 theorem presents_toLB (D : CartierDiv X) : Presents D (toLB D) fun i => i.1.2 := by
   exact ⟨isLB_toLB D, fun i j h => by rw [fnOf_toLB_g i j h, div_mul_cancel₀ _ (Units.ne_zero _)],

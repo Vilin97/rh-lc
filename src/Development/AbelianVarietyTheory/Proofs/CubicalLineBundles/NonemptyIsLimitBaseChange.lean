@@ -221,7 +221,7 @@ theorem exists_units_of_isLimit {i : I} [QuasiSeparatedSpace (D.obj i)] {A : Typ
   refine (val a ha).trans (e'.trans (congrArg₂ (· * ·) ?_ (val b hb).symm))
   rw [D.map_comp]
 
-theorem lb_div_isLB {Y : Scheme.{0}} {M N : LB Y} (hM : M.IsLB) (hN : N.IsLB) : (LB.div N M).IsLB where
+theorem lb_div_isLB {Y : Scheme.{0}} {M N : LB Y} (hM : M.IsLB) (hN : N.IsLB) : (LB.div N M).IsLB := {
   cover := top_le_iff.1 fun y _ => by
     obtain ⟨i, hi⟩ := exists_chart hN y
     obtain ⟨j, hj⟩ := exists_chart hM y
@@ -235,7 +235,7 @@ theorem lb_div_isLB {Y : Scheme.{0}} {M N : LB Y} (hM : M.IsLB) (hN : N.IsLB) : 
       ((gm_res (𝟙 Y) y _ hy _).trans (gm_div M N (𝟙 Y) y q r ⟨hy.1.2, hy.2⟩)))).trans
       (Eq.trans ?_ ((gm_res (𝟙 Y) y _ hy _).trans (gm_div M N (𝟙 Y) y p r ⟨hy.1.1, hy.2⟩)).symm)
     rw [← gm_cocycle hN (𝟙 Y) y hy.1.1.1 hy.1.2.1 hy.2.1, ← gm_cocycle hM (𝟙 Y) y hy.1.1.2 hy.1.2.2 hy.2.2,
-      mul_inv, mul_mul_mul_comm]
+      mul_inv, mul_mul_mul_comm] }
 
 theorem gm_div_pull_g {Y Z : Scheme.{0}} (M N : LB Y) (F : Z ⟶ Y) (z : Z) (p q : N.ι × M.ι)
     (hz : F z ∈ (LB.div N M).U p ⊓ (LB.div N M).U q) :

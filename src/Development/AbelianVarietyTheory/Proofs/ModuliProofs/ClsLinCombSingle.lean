@@ -45,7 +45,7 @@ theorem gm_div' (A B : LB X) (r : Z ⟶ X) (z : Z) (p q : A.ι × B.ι)
       gm r z _ (A.g p.1 q.1) * (gm r z _ (B.g p.2 q.2))⁻¹ :=
   gm_div B A r z p q ⟨hp, hq⟩
 
-theorem isLB_dual {A : LB X} (hA : A.IsLB) : (dual A).IsLB where
+theorem isLB_dual {A : LB X} (hA : A.IsLB) : (dual A).IsLB := {
   cover := hA.cover
   g_self i := by
     have h := congrArg (·⁻¹) (hA.g_self i)
@@ -54,7 +54,7 @@ theorem isLB_dual {A : LB X} (hA : A.IsLB) : (dual A).IsLB where
   cocycle i j k := by
     have h := congrArg (·⁻¹) (hA.cocycle i j k)
     simp only [mul_inv, ← map_inv] at h
-    exact h
+    exact h }
 
 theorem tens_eq_div (A B : LB X) : tens A B = LB.div A (dual B) := by
   unfold tens LB.div dual

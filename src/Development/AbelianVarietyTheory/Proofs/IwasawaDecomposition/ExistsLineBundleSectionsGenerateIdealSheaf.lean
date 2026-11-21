@@ -25,7 +25,7 @@ theorem val_res_pullO_g (φ : X ⟶ PSpace R N) (e : ℕ) (i j : (pullO φ e).ι
   rw [res, Units.coe_map, MonoidHom.coe_coe, this]
   exact (map_pow _ _ e).trans (congrArg (· ^ e) (resG_pullRatio h))
 
-theorem isLB_pullO (φ : X ⟶ PSpace R N) (e : ℕ) : (pullO φ e).IsLB where
+theorem isLB_pullO (φ : X ⟶ PSpace R N) (e : ℕ) : (pullO φ e).IsLB := {
   cover := (isCoordFamily_pullRatio φ).cover
   g_self i := by
     ext
@@ -34,7 +34,7 @@ theorem isLB_pullO (φ : X ⟶ PSpace R N) (e : ℕ) : (pullO φ e).IsLB where
   cocycle i j k := by
     ext
     rw [Units.val_mul, val_res_pullO_g, val_res_pullO_g, val_res_pullO_g]
-    exact (mul_pow _ _ e).symm.trans (congrArg (· ^ e) pullRatio_mul_pullRatio)
+    exact (mul_pow _ _ e).symm.trans (congrArg (· ^ e) pullRatio_mul_pullRatio) }
 
 theorem exists_generates_isLB (R : Type) [CommRing R] [IsNoetherianRing R] (X : Scheme.{0}) (s : X ⟶ Sp R)
     (J : X.IdealSheafData) (hs : IsProjOver s) :

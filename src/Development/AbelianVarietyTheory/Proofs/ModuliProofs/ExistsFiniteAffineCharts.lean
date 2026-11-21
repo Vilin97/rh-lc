@@ -38,7 +38,7 @@ noncomputable def refineLB (L : LB X) {κ : Type} (W : κ → X.Opens) (c : κ �
   ⟨κ, W, fun a b => res (inf_le_inf (h a) (h b)) (L.g (c a) (c b))⟩
 
 theorem refineLB_isLB {L : LB X} (hL : L.IsLB) {κ : Type} (W : κ → X.Opens) (c : κ → L.ι)
-    (h : ∀ a, W a ≤ L.U (c a)) (hc : ⨆ a, W a = ⊤) : (refineLB L W c h).IsLB where
+    (h : ∀ a, W a ≤ L.U (c a)) (hc : ⨆ a, W a = ⊤) : (refineLB L W c h).IsLB := {
   cover := hc
   g_self a := by
     have := congrArg (res (h a)) (hL.g_self (c a))
@@ -46,7 +46,7 @@ theorem refineLB_isLB {L : LB X} (hL : L.IsLB) {κ : Type} (W : κ → X.Opens) 
     exact (res_res _ _ _).trans this
   cocycle a b d :=
     (congrArg₂ (· * ·) (res_res _ _ _) (res_res _ _ _)).trans
-      ((cocycle_on hL _ _ _ _ _ _).trans (res_res _ _ _).symm)
+      ((cocycle_on hL _ _ _ _ _ _).trans (res_res _ _ _).symm) }
 
 theorem iso_refineLB {L : LB X} (hL : L.IsLB) {κ : Type} (W : κ → X.Opens) (c : κ → L.ι)
     (h : ∀ a, W a ≤ L.U (c a)) : LBIso L (refineLB L W c h) := by

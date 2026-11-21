@@ -280,7 +280,7 @@ theorem gm_lbProd_g (L : ι → LB X) (n : ι → ℤ) (r : Y ⟶ X) (y : Y) (j 
 
 variable {L : ι → LB X}
 
-theorem isLB_lbProd (hL : ∀ i, (L i).IsLB) (n : ι → ℤ) : (lbProd L n).IsLB where
+theorem isLB_lbProd (hL : ∀ i, (L i).IsLB) (n : ι → ℤ) : (lbProd L n).IsLB := {
   cover := top_le_iff.1 fun x _ ↦ by
     choose j hj using fun i ↦ Semi.LB.mem_of_cover (hL i) x
     exact Opens.mem_iSup.2 ⟨j, mem_prodChart.2 hj⟩
@@ -290,7 +290,7 @@ theorem isLB_lbProd (hL : ∀ i, (L i).IsLB) (n : ι → ℤ) : (lbProd L n).IsL
     refine (congrArg₂ (· * ·) (res_lbProd_g L n j j' _) (res_lbProd_g L n j' j'' _)).trans
       (Eq.trans ?_ (res_lbProd_g L n j j'' _).symm)
     rw [← Finset.prod_mul_distrib]
-    exact Finset.prod_congr rfl fun i _ ↦ by rw [← mul_zpow, Semi.LB.res_cocycle (hL i)]
+    exact Finset.prod_congr rfl fun i _ ↦ by rw [← mul_zpow, Semi.LB.res_cocycle (hL i)] }
 
 theorem isLB_lbInvProd (hL : ∀ i, (L i).IsLB) (S : Finset ι) : (lbInvProd L S).IsLB :=
   isLB_lbProd hL _

@@ -112,12 +112,17 @@ theorem prod_bd {v : V} {S : ℕ} {M R : ℝ} (hR : 0 ≤ R) (hM : 0 ≤ M)
     (hW : ∀ W : List (Fin n × Fin n), W.length ≤ S → ‖(W.map fun p => E p.1 p.2).prod v‖ ≤ M ^ W.length * ‖v‖) :
     ∀ (L : List (ℂ × Fin n × Fin n)), (∀ p ∈ L, ‖p.1‖ ≤ R) → ∀ W : List (Fin n × Fin n), W.length + L.length ≤ S →
       ‖(W.map fun p => E p.1 p.2).prod ((L.map fun p => Tm E p.1 p.2.1 p.2.2).prod v)‖ ≤
-        (R + M) ^ L.length * M ^ W.length * ‖v‖
-  | [], _, W, h => by simpa using hW W (by simpa using h)
-  | p :: L, hL, W, h => by
+        (R + M) ^ L.length * M ^ W.length * ‖v‖ := by
+  intro L
+  induction L with
+  | nil =>
+    intro _ W h
+    simpa using hW W (by simpa using h)
+  | cons p L ih =>
+    intro hL W h
     have hL' : ∀ q ∈ L, ‖q.1‖ ≤ R := fun q hq => hL q (List.mem_cons_of_mem _ hq)
-    have h1 := prod_bd hR hM hW L hL' W (by simp at h; omega)
-    have h2 := prod_bd hR hM hW L hL' (W ++ [p.2]) (by simp at h ⊢; omega)
+    have h1 := ih hL' W (by simp at h; omega)
+    have h2 := ih hL' (W ++ [p.2]) (by simp at h ⊢; omega)
     set y := (L.map fun p => Tm E p.1 p.2.1 p.2.2).prod v with hy
     have e : (((p :: L).map fun p => Tm E p.1 p.2.1 p.2.2).prod v) = (if p.2.1 = p.2.2 then p.1 else 0) • y + E p.2.1 p.2.2 y := by
       rw [List.map_cons, List.prod_cons, Module.End.mul_apply, ← hy]
@@ -133,7 +138,7 @@ theorem prod_bd {v : V} {S : ℕ} {M R : ℝ} (hR : 0 ≤ R) (hM : 0 ≤ M)
     refine (norm_add_le _ _).trans ?_
     rw [norm_smul, List.length_cons]
     calc _ ≤ R * ((R + M) ^ L.length * M ^ W.length * ‖v‖) + (R + M) ^ L.length * M ^ (W.length + 1) * ‖v‖ :=
-          add_le_add (mul_le_mul hc h1 (norm_nonneg _) hR) h2
+          add_le_add (mul_le_mul_of_nonneg' hc h1 (norm_nonneg _) hR) h2
       _ = _ := by ring
 
 theorem qminor_bd {t : ℕ} {v : V} {M R : ℝ} (hR : 0 ≤ R) (hM : 0 ≤ M)

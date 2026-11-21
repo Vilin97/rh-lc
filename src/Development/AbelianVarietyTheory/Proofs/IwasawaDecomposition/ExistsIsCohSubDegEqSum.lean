@@ -209,7 +209,7 @@ def refine (M : LB C) (idx : J → M.ι) (hle : ∀ j, T j ≤ M.U (idx j)) : LB
   g j j' := res (inf_le_inf (hle j) (hle j')) (M.g (idx j) (idx j'))
 
 theorem isLB_refine (hT : ⨆ j, T j = ⊤) {M : LB C} (hM : M.IsLB) (idx : J → M.ι)
-    (hle : ∀ j, T j ≤ M.U (idx j)) : (refine M idx hle).IsLB where
+    (hle : ∀ j, T j ≤ M.U (idx j)) : (refine M idx hle).IsLB := {
   cover := hT
   g_self j := by
     have hg : ((refine M idx hle).g j j).val =
@@ -233,7 +233,7 @@ theorem isLB_refine (hT : ⨆ j, T j = ⊤) {M : LB C} (hM : M.IsLB) (idx : J �
     have h1 := congrArg (resG C (inf_le_inf (inf_le_inf (hle i) (hle j)) (hle k))) h0
     rw [map_mul, resG_resG, resG_resG, resG_resG] at h1
     exact (congrArg₂ (· * ·) (resG_resG _ _ _) (resG_resG _ _ _)).trans
-      (h1.trans (resG_resG _ _ _).symm)
+      (h1.trans (resG_resG _ _ _).symm) }
 
 private theorem res_transition_mul_comm_square {M : LB C} (hM : M.IsLB) (i i' k k' : M.ι) {W : C.Opens}
     (h₁ : W ≤ M.U i) (h₂ : W ≤ M.U i') (h₃ : W ≤ M.U k) (h₄ : W ≤ M.U k') :

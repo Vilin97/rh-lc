@@ -101,7 +101,7 @@ theorem rs_cst (f : X ⟶ Spec (CommRingCat.of R)) {U V : X.Opens} (h : V ≤ U)
     rs X h (cst f U r) = cst f V r :=
   rs_rs le_top h _
 
-theorem isLB_pw {H : LB X} (hH : H.IsLB) (t : ℤ) : (pw H t).IsLB where
+theorem isLB_pw {H : LB X} (hH : H.IsLB) (t : ℤ) : (pw H t).IsLB := {
   cover := hH.cover
   g_self := fun i => by
     have h := congrArg (· ^ t) (hH.g_self i)
@@ -110,7 +110,7 @@ theorem isLB_pw {H : LB X} (hH : H.IsLB) (t : ℤ) : (pw H t).IsLB where
   cocycle := fun i j k => by
     have h := congrArg (· ^ t) (hH.cocycle i j k)
     simp only [mul_zpow, ← map_zpow] at h
-    exact h
+    exact h }
 
 theorem isLB_tw {M H : LB X} (hM : M.IsLB) (hH : H.IsLB) (t : ℤ) : (tw M H t).IsLB :=
   LB.isLB_div hM (isLB_pw hH (-t))

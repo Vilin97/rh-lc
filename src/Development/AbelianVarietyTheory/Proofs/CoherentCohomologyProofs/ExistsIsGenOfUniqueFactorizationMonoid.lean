@@ -218,13 +218,13 @@ theorem resG_ofFrames_g (he : ∀ i, IsFrame (e i)) (i j : ι) {W : X.Opens} (h 
         (F.presheaf.map (homOfLE (h.trans inf_le_right)).op (e j)) :=
   (he i).resG_unit (he j) _ _ h
 
-theorem ofFrames_isLB (he : ∀ i, IsFrame (e i)) (hU : ⨆ i, U i = ⊤) : (ofFrames he).IsLB where
+theorem ofFrames_isLB (he : ∀ i, IsFrame (e i)) (hU : ⨆ i, U i = ⊤) : (ofFrames he).IsLB := {
   cover := hU
   g_self i := Units.ext ((resG_ofFrames_g he i i _).trans ((he i).repr_self _))
   cocycle i j k := Units.ext <| by
     rw [Units.val_mul, val_res, val_res, val_res]
     rw [resG_ofFrames_g, resG_ofFrames_g, resG_ofFrames_g]
-    exact ((he i).repr_change (he j) _ _ _).symm
+    exact ((he i).repr_change (he j) _ _ _).symm }
 
 def toFramesLinear (he : ∀ i, IsFrame (e i)) (V : X.Opens) :
     Γ(F, V) →ₗ[Γ(X, V)] Γ(toMod (ofFrames he), V) where

@@ -31,13 +31,13 @@ def commonRestr {Y : Scheme.{0}} {Λ : Type} [AddCommGroup Λ] {B : Λ → LB Y}
   g j j' := (B s).g (C.idx s j) (C.idx s j')
 
 theorem isLB_commonRestr {Y : Scheme.{0}} {Λ : Type} [AddCommGroup Λ] {B : Λ → LB Y} (C : Common B) (s : Λ) :
-    (commonRestr C s).IsLB where
+    (commonRestr C s).IsLB := {
   cover := by
     refine eq_top_iff.2 fun y _ => ?_
     obtain ⟨j, hj⟩ := C.cover y
     exact TopologicalSpace.Opens.mem_iSup.2 ⟨j, (C.mem s j y).2 hj⟩
   g_self j := (C.isLB s).g_self (C.idx s j)
-  cocycle i j k := (C.isLB s).cocycle (C.idx s i) (C.idx s j) (C.idx s k)
+  cocycle i j k := (C.isLB s).cocycle (C.idx s i) (C.idx s j) (C.idx s k) }
 
 theorem commonRestr_iso {Y : Scheme.{0}} {Λ : Type} [AddCommGroup Λ] {B : Λ → LB Y} (C : Common B) (s : Λ) :
     LBIso (commonRestr C s) (B s) :=

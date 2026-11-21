@@ -185,10 +185,10 @@ theorem rootG_cocycle (h : VeroneseRel u) (i j l : τ) :
     exact rootRatio_mul hk h l _ _)
 
 theorem rootLB_isLB (h : VeroneseRel u) (hc : ⨆ i : τ, nonzeroLocus (u fun _ => i) = ⊤) :
-    (rootLB hk h).IsLB where
+    (rootLB hk h).IsLB := {
   cover := hc
   g_self := rootG_self hk h
-  cocycle := rootG_cocycle hk h
+  cocycle := rootG_cocycle hk h }
 
 def rootIso (h : VeroneseRel u) : LB.Iso (pw (rootLB hk h) (k : ℤ)) Q where
   s p := (isUnit_resG_sec (u fun _ => (show τ from p.2)) p.1 inf_le_right inf_le_left).unit

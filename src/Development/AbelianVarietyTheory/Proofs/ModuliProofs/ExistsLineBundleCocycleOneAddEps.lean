@@ -37,7 +37,7 @@ def regauge {X : Scheme.{0}} (L : LB X) (u : ∀ i, Γ(X, L.U i)ˣ) : LB X :=
   ⟨L.ι, L.U, fun i i' => (res inf_le_left (u i))⁻¹ * L.g i i' * res inf_le_right (u i')⟩
 
 lemma regauge_isLB {X : Scheme.{0}} {L : LB X} (hL : L.IsLB) (u : ∀ i, Γ(X, L.U i)ˣ) :
-    (regauge L u).IsLB where
+    (regauge L u).IsLB := {
   cover := hL.cover
   g_self := fun i => by
     have := hL.g_self i
@@ -55,7 +55,7 @@ lemma regauge_isLB {X : Scheme.{0}} {L : LB X} (hL : L.IsLB) (u : ∀ i, Γ(X, L
         L.U i ⊓ L.U j ⊓ L.U k ≤ L.U i ⊓ L.U k)
         ((res inf_le_left (u i))⁻¹ * L.g i k * res inf_le_right (u k))
     simp only [map_mul, map_inv, res_res, ← this]
-    group
+    group }
 
 lemma regauge_iso {X : Scheme.{0}} {L : LB X} (hL : L.IsLB) (u : ∀ i, Γ(X, L.U i)ˣ) :
     LBIso L (regauge L u) := by

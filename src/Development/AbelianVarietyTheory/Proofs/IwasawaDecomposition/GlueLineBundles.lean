@@ -115,7 +115,7 @@ theorem eq_of_mem (hdisj : ∀ a b x, x ∈ V a → x ∈ V b → a = b) {a b : 
   hdisj a b _ w.2 (mem_of_mem_NU V M h)
 
 theorem glue_isLB (hdisj : ∀ a b x, x ∈ V a → x ∈ V b → a = b) (hcov : ∀ x, ∃ a, x ∈ V a)
-    (hM : ∀ a, (M a).IsLB) : (glue V M).IsLB where
+    (hM : ∀ a, (M a).IsLB) : (glue V M).IsLB := {
   cover := top_le_iff.1 fun x _ => by
     obtain ⟨a, ha⟩ := hcov x
     obtain ⟨w, rfl⟩ : ∃ w : (V a).toScheme, (V a).ι w = x := ⟨⟨x, ha⟩, rfl⟩
@@ -150,7 +150,7 @@ theorem glue_isLB (hdisj : ∀ a b x, x ∈ V a → x ∈ V b → a = b) (hcov :
     refine ⟨_, (V a).ι, inferInstance, w, rfl, ?_⟩
     rw [map_mul, gm_res (V a).ι w _ hx', gm_res (V a).ι w _ hx', gm_res (V a).ι w _ hx', gm_glue_g' V M a w i k hw hk,
       gm_glue_g' V M a w k l hk hl, gm_glue_g' V M a w i l hw hl]
-    exact gm_cocycle (hM a) (𝟙 _) w hw hk hl
+    exact gm_cocycle (hM a) (𝟙 _) w hw hk hl }
 
 end GlobalTheory.GlueLineBundle
 

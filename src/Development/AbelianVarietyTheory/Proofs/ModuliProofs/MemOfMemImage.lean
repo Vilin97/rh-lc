@@ -73,14 +73,14 @@ theorem iso_self {L : LB X} (hL : L.IsLB) : LBIso L L := by
 
 theorem isLB_of_stalk {L : LB X} (hc : ∀ x, ∃ i, x ∈ L.U i)
     (h : ∀ x i j k, x ∈ L.U i → x ∈ L.U j → x ∈ L.U k →
-      gm (𝟙 X) x _ (L.g i j) * gm (𝟙 X) x _ (L.g j k) = gm (𝟙 X) x _ (L.g i k)) : L.IsLB where
+      gm (𝟙 X) x _ (L.g i j) * gm (𝟙 X) x _ (L.g j k) = gm (𝟙 X) x _ (L.g i k)) : L.IsLB := {
   cover := top_le_iff.1 fun y _ => TopologicalSpace.Opens.mem_iSup.2 (hc y)
   g_self i := unit_ext fun y hy => by
     rw [gm_res (𝟙 X) y _ hy, map_one]
     exact mul_eq_left.1 (h y i i i hy hy hy)
   cocycle i j k := unit_ext fun y hy => by
     rw [map_mul, gm_res (𝟙 X) y _ hy, gm_res (𝟙 X) y _ hy, gm_res (𝟙 X) y _ hy]
-    exact h y i j k hy.1.1 hy.1.2 hy.2
+    exact h y i j k hy.1.1 hy.1.2 hy.2 }
 
 theorem cocycle_descend {L : LB Y} (ψ : Z ⟶ Y) [IsOpenImmersion ψ] (z : Z) {i j k : L.ι}
     (hi : ψ z ∈ L.U i) (hj : ψ z ∈ L.U j) (hk : ψ z ∈ L.U k)

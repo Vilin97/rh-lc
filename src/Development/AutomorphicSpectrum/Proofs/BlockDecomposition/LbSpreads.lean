@@ -21,7 +21,7 @@ theorem isLB_of_germs {B : Scheme.{0}} {S : Type} (V : S → B.Opens) (t : ∀ k
     (hcov : ∀ y, ∃ k, y ∈ V k)
     (hcoc : ∀ k l m (y : B), y ∈ V k → y ∈ V l → y ∈ V m →
       gm (𝟙 B) y _ (t k l) * gm (𝟙 B) y _ (t l m) = gm (𝟙 B) y _ (t k m)) :
-    LB.IsLB (⟨S, V, t⟩ : LB B) where
+    LB.IsLB (⟨S, V, t⟩ : LB B) := {
   cover := by
     refine top_le_iff.1 fun y _ => ?_
     obtain ⟨k, hk⟩ := hcov y
@@ -36,7 +36,7 @@ theorem isLB_of_germs {B : Scheme.{0}} {S : Type} (V : S → B.Opens) (t : ∀ k
     have hk : y ∈ V k := hy.2
     have hi : y ∈ V i := hy.1.1
     rw [map_mul, gm_res _ y _ hy, gm_res _ y _ hy, gm_res _ y _ hy]
-    exact hcoc i j k y hi hj hk
+    exact hcoc i j k y hi hj hk }
 
 theorem exists_iso_pull {X B : Scheme.{0}} (ρ : X ⟶ B) (M : LB X) (hM : M.IsLB) (M₁ : LB B)
     (a : M₁.ι → M.ι) (hle : ∀ k, ρ ⁻¹ᵁ M₁.U k ≤ M.U (a k))

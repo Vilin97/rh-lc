@@ -19,7 +19,7 @@ set_option backward.isDefEq.respectTransparency false
 
 theorem isLB_of_gm {Y : Scheme.{0}} (L : LB Y) (hc : ∀ y : Y, ∃ i, y ∈ L.U i)
     (h : ∀ (y : Y) i j k, y ∈ L.U i → y ∈ L.U j → y ∈ L.U k →
-      gm (𝟙 Y) y _ (L.g i j) * gm (𝟙 Y) y _ (L.g j k) = gm (𝟙 Y) y _ (L.g i k)) : L.IsLB where
+      gm (𝟙 Y) y _ (L.g i j) * gm (𝟙 Y) y _ (L.g j k) = gm (𝟙 Y) y _ (L.g i k)) : L.IsLB := {
   cover := top_le_iff.1 fun y _ => Opens.mem_iSup.2 (hc y)
   g_self i := unit_ext fun y hy => by
     refine (gm_res (𝟙 Y) y _ hy _).trans ?_
@@ -27,7 +27,7 @@ theorem isLB_of_gm {Y : Scheme.{0}} (L : LB Y) (hc : ∀ y : Y, ∃ i, y ∈ L.U
     exact mul_eq_left.1 (h y i i i hy hy hy)
   cocycle i j k := unit_ext fun y hy =>
     ((map_mul _ _ _).trans (congrArg₂ (· * ·) (gm_res (𝟙 Y) y _ hy _) (gm_res (𝟙 Y) y _ hy _))).trans
-      ((h y i j k hy.1.1 hy.1.2 hy.2).trans (gm_res (𝟙 Y) y _ hy _).symm)
+      ((h y i j k hy.1.1 hy.1.2 hy.2).trans (gm_res (𝟙 Y) y _ hy _).symm) }
 
 section Limit
 
