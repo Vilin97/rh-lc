@@ -57,6 +57,7 @@ theorem scalar_pair_trans : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' 
   have hGv : ∀ s : TauC Y u u', s.G ≠ 0 → Gval (lf D (X.Fu u)) s.frame ≠ 0 := fun s hs h =>
     hs ((Formalism.L2.SG.Pf.SatGram.gterm_G Y s).trans h)
   have hlat : Submodule.IsLattice D.host.E t.lam := ((Y.rowsOK u).1 t.lam t.mem).2.1.1
+  have hfull : Submodule.IsFullLattice D.host.E t.lam := ((Y.rowsOK u).1 t.lam t.mem).1.1
   have hLF : IsLift t.lam (lf D (X.Fu u)) := ((Y.rowsOK u).1 t.lam t.mem).2.1.2.2.1
   have hLt : ∀ s : TauC Y u u', IsLift s.lam s.frame := fun s => s.rep.2.2.2.2.1
   obtain ⟨⟨hl1, hl1'⟩, hs1, hS1⟩ := (show scalT t t' from hsc1)
@@ -64,16 +65,16 @@ theorem scalar_pair_trans : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' 
   rw [← hl1] at hs2 hS2
   have hL' : IsLift t.lam t'.frame := by rw [hl1]; exact hLt t'
   have hL'' : IsLift t.lam t''.frame := by rw [hl1, hl2]; exact hLt t''
-  have hth1 := (Formalism.L2.SG.NGCut.CorankRelation.s0_eq_one_iff_Th_eq_Hp D.R.k hdim t.lam hlat _ t.frame t'.frame _ hLF (hLt t)
+  have hth1 := (Formalism.L2.SG.NGCut.CorankRelation.s0_eq_one_iff_Th_eq_Hp D.R.k hdim t.lam hfull _ t.frame t'.frame _ hLF (hLt t)
     (hGv t hG)).1 hs1
-  have hth2 := (Formalism.L2.SG.NGCut.CorankRelation.s0_eq_one_iff_Th_eq_Hp D.R.k hdim t.lam hlat _ t'.frame t''.frame _ hLF hL'
+  have hth2 := (Formalism.L2.SG.NGCut.CorankRelation.s0_eq_one_iff_Th_eq_Hp D.R.k hdim t.lam hfull _ t'.frame t''.frame _ hLF hL'
     (hGv t' hG')).1 hs2
   have htr := Formalism.L2.SG.NGCut.CorankRelation.Th_trans t.lam _ t.frame t'.frame t''.frame (t'.lin * t.lin⁻¹)
     (t''.lin * t'.lin⁻¹) (fun x hx => (Formalism.L2.SG.NGCut.CorankRelation.frame_mem_iff t' t'' x).1 hx) hth1 hth2
   have hmul : (t''.lin * t'.lin⁻¹) * (t'.lin * t.lin⁻¹) = t''.lin * t.lin⁻¹ := by group
   rw [hmul] at htr
   have hs3 : Lat.s0 t.lam (lf D (X.Fu u)) t.frame t''.frame (t''.lin * t.lin⁻¹) D.R.k = 1 :=
-    (Formalism.L2.SG.NGCut.CorankRelation.s0_eq_one_iff_Th_eq_Hp D.R.k hdim t.lam hlat _ t.frame t''.frame _ hLF (hLt t) (hGv t hG)).2 htr
+    (Formalism.L2.SG.NGCut.CorankRelation.s0_eq_one_iff_Th_eq_Hp D.R.k hdim t.lam hfull _ t.frame t''.frame _ hLF (hLt t) (hGv t hG)).2 htr
 
   have hi1 := t.rep.2.2.1
   have hi2 := t'.rep.2.2.1

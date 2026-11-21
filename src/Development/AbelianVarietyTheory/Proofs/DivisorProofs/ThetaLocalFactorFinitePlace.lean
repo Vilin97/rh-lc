@@ -174,10 +174,10 @@ end GlobalTheory.UnitaryTriSplit
 
 namespace GlobalTheory.UnitaryTriSplit
 theorem finite_bad {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n d : ℕ}
-    (X : Spc F E n) (Y : Spc F E d) (hX : X.L.IsLattice E) (hY : Y.L.IsLattice E)
+    (X : Spc F E n) (Y : Spc F E d) (hX : X.L.IsFullLattice E) (hY : Y.L.IsFullLattice E)
     (M : Matrix (Fin n) (Fin n) (AE F E)) (N : Matrix (Fin d) (Fin d) (AE F E)) :
     Set.Finite {w : Pl (F := F) | ¬ ∀ γ ∈ latAtV X Y w, M * γ * Matrix.transpose N ∈ latAtV X Y w} := by
-  refine (((GlobalTheory.T.lattice_stable_almost_all_places_left) F E n d X Y hX M).union ((GlobalTheory.T.lattice_stable_almost_all_places_right) F E n d X Y hY N)).subset ?_
+  refine (((GlobalTheory.T.lattice_stable_almost_all_places_left) F E n d X Y hX M).union ((GlobalTheory.T.lattice_stable_almost_all_places_right) F E n d X Y hY.toIsLattice N)).subset ?_
   intro w hw
   by_contra hc
   simp only [Set.mem_union, Set.mem_setOf_eq, not_or, not_not] at hc

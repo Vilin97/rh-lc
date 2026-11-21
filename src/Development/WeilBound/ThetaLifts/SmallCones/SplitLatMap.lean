@@ -73,7 +73,27 @@ theorem low_eps {B : Base F E} (hB : B.IsGood σ) {ε : E} {κ : ℂ} (hκ1 : κ
     Submodule.IsLattice.of_fg E (fg_comap _ (fun u u' e => by
       have := congrArg (P *ᵥ ·) (show H.ι *ᵥ u = H.ι *ᵥ u' from e)
       simpa [Matrix.mulVec_mulVec, hPι] using this) Y.L hY.lat.fg)
-  refine ⟨by omega, by omega, fun i j => ?_, fun w => ?_, hL ▸ hlat, fun u => ?_,
+  have hfull : (Y.L.comap ((Matrix.mulVecLin H.ι).restrictScalars (𝓞 E))).IsFullLattice E := by
+    let := hlat
+    refine { span_eq_top := ?_ }
+    apply top_unique
+    intro u _
+    have hz : H.ι *ᵥ u ∈ Submodule.span E (Y.L : Set (Fin n → E)) := by
+      rw [Submodule.IsFullLattice.span_eq_top (self := hY.lat)]
+      trivial
+    have hmap : ∀ z ∈ Y.L, P *ᵥ z ∈
+        Submodule.span E (Y.L.comap ((Matrix.mulVecLin H.ι).restrictScalars (𝓞 E)) : Set (Fin n₁ → E)) := by
+      intro z hz
+      obtain ⟨a, b, u', -, -, hu', rfl⟩ := hH.split z hz
+      apply Submodule.subset_span
+      change H.ι *ᵥ (P *ᵥ (a • H.x + H.ι *ᵥ u' + b • H.y)) ∈ Y.L
+      rw [add_comm (a • H.x), hP]
+      exact (hH.low u').1 hu'
+    have hspan := (Submodule.span_le.mpr (show (Y.L : Set (Fin n → E)) ⊆
+        (Submodule.span E (Y.L.comap ((Matrix.mulVecLin H.ι).restrictScalars (𝓞 E)) : Set (Fin n₁ → E))).comap (Matrix.mulVecLin P) from hmap)) hz
+    simpa only [Submodule.mem_comap, Matrix.mulVecLin_apply, Matrix.mulVec_mulVec,
+      hPι, Matrix.one_mulVec] using hspan
+  refine ⟨by omega, by omega, fun i j => ?_, fun w => ?_, hL ▸ hfull, fun u => ?_,
     fun w => ?_, fun v u => ?_⟩
   · rw [← form_single (σ := σ) Y₁.J j i, ← form_single (σ := σ) Y₁.J i j, hform, hform, form_swap hcm hY.herm]
   · rw [← cg]

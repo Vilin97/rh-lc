@@ -194,9 +194,8 @@ theorem haar_polar_le (ε : Fin n → Bool) (hq : 1 ≤ q0 ε) (ν : Measure (UJ
         congr 1
         refine lintegral_congr fun z => ?_
         simp only [hG_eq]
-        delta dk
-        rw [lintegral_mul_const' _ _ ENNReal.ofReal_ne_top, lintegral_smul_measure, smul_eq_mul,
-          mul_assoc]
+        rw [dk_def, lintegral_mul_const' _ _ ENNReal.ofReal_ne_top, lintegral_smul_measure,
+          smul_eq_mul, mul_assoc]
         rfl
     _ ≤ c * ∫⁻ z : PCoord ε → ℂ, (muK ε Set.univ)⁻¹ * H (pmat z) ∂volume := by
         exact mul_le_mul_right (lintegral_mono fun z => mul_le_mul_right (mul_le_mul_right (hJ z) _) _) c

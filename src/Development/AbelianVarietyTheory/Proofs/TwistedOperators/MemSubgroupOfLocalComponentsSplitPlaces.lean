@@ -112,7 +112,7 @@ theorem mem_of_loc : ∀ {D : D7} (V : HSp D) (P : Finset (Pl D.host.E)) (e : AE
     have b : es w * cA D e = 0 := by rw [← a, mul_assoc, hec, mul_zero]
     have c : cA D (es w) * e = 0 := by
       have k := congrArg (cA D) b
-      rwa [RingHom.map_mul, cA_cA, map_zero] at k
+      rwa [RingHom.map_mul, Formalism.L2.Theta.cA_cA, map_zero] at k
     have d : cA D (es w) * cA D e = cA D (es w) := by rw [← RingHom.map_mul, a]
     have hf : (es w + cA D (es w)) * (e + cA D e) = es w + cA D (es w) := by linear_combination a + b + c + d
     obtain ⟨h, hH, sh, lh⟩ := hyp w hw (es w) (hes w hw)

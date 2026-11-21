@@ -59,7 +59,7 @@ theorem finFub (hIS : S0.IntSStatement) (k r : ℕ) (ε : Fin (2 * r + k + 1) �
     rw [integral_smul]
     have hy := unitary_matrix_mem_set ε y
     have h0 := hall _ (cayley_conj_inv_mem_hermitian_group hP hy)
-    delta aaFun sInt psiCoef at h0
+    unfold aaFun sInt psiCoef at h0
     have hfun : (fun p : Formalism.QuantumDeterminants.Mt k r × Formalism.QuantumDeterminants.Mt k r =>
         finKer T' μ' v₁ v₂ P x (Formalism.MainNotions.S.umat y) p •
           chiInv (Formalism.MainNotions.S.psiGen k r z c) π (Matrix.of p.1) (Matrix.of p.2) ξ) =

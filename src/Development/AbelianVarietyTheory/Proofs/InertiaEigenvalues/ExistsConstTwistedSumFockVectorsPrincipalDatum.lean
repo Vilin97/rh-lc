@@ -318,10 +318,10 @@ theorem om_fock {B : Base S T} (hB : B.Good) {ν : (AE D)ˣ →* Circle} {ω : P
     (hg : g ∈ GfC S) {f : WO S T → ℂ} (hf : IsThetaFunO B.F.ψ S T f) (P : Links.PolF D T.rank S.rank) :
     ω (g, 1) (B.F.fock f P) = B.F.fock (ω (g, 1) f) P :=
   (GlobalTheory.OrientedHeis.om_pureTensorO D _ _ S T _ _ ω hω hB.frame.vac.2.inf _ _ _ _ _ _ _ _ g 1
-    (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ hg])
-    (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ (one_mem _)])
-    (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ hg])
-    (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ (one_mem _)]) f hf P).2
+    (fun τ => by rw [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ hg] <;> simp)
+    (fun τ => by rw [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ (one_mem _)] <;> simp)
+    (fun τ => by rw [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ hg] <;> simp)
+    (fun τ => by rw [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ (one_mem _)] <;> simp) f hf P).2
 
 theorem sum_om_fock_princ : ∀ {D : D7} {S T : HSp D} (B : Base S T), B.Good → S.SigOK → ∀ (ψ : Twist D Circle), ψ.Good → B.admitted ψ.Q →
     ∀ (ω : PairRep S T), B.IsWeil ψ.chi ω → ∀ (F : Finset (Bridge.Gf S)) (hF : ∀ u ∈ F, u ∈ B.levJ ψ),

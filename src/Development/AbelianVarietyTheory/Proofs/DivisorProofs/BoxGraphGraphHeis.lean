@@ -77,8 +77,8 @@ theorem map_infPart_of_half {S T : HSp D} {a : AE D} (ha : infPart D a = 0) {u :
   rw [← hu i j, map_mul, ha, zero_mul]
 
 theorem sb_trans_latO {S T : HSp D} {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)}
-    {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)} (hS : Submodule.IsLattice D.host.E ΛS)
-    (hT : Submodule.IsLattice D.host.E ΛT) {ε : AE D} (hinf : infPart D ε = 0) {φ : WO S T → ℂ}
+    {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)} (hS : Submodule.IsFullLattice D.host.E ΛS)
+    (hT : Submodule.IsFullLattice D.host.E ΛT) {ε : AE D} (hinf : infPart D ε = 0) {φ : WO S T → ℂ}
     (h : IsSBHalf ε (latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) fun _ => True) φ)
     {x : WO S T} (hx : IsHalf ε x) :
     IsSBHalf ε (latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) fun _ => True)
@@ -93,7 +93,9 @@ theorem sb_modul_latO {S T : HSp D} {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank
     {y : WO S T} (hy : IsHalf (cA D ε) y) :
     IsSBHalf ε (latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) fun _ => True)
       (fun t => ψ (symplO S T t y) * φ t) := by
-  obtain ⟨k, hk, hky⟩ := GlobalTheory.PlaceVec.exists_nsmul_mem_latO hS.1 hT.1 y (map_infPart_of_half hinf hy)
+  obtain ⟨k, hk, hky⟩ := GlobalTheory.PlaceVec.exists_nsmul_mem_latO
+    (GlobalTheory.PlaceVec.selfDual_isFullLattice S ΛS hS)
+    (GlobalTheory.PlaceVec.selfDual_isFullLattice T ΛT hT) y (map_infPart_of_half hinf hy)
   refine sb_modul h (fun t => ψ (symplO S T t y)) (fun a b => ?_) hk (fun u hu _ => ?_)
   · show ψ (symplO S T (a + b) y) = ψ (symplO S T a y) * ψ (symplO S T b y)
     rw [symplO_add_left', AddChar.map_add_eq_mul]
@@ -202,10 +204,12 @@ theorem GlobalTheory.BigDat.boxGraph_graph_heis : ∀ {D : D7} {T : Type} {L : L
       have hx₂ : IsHalf ε (mapW e x) := hx.2
       have s₁ : IsSBHalf ε (latV G i j) (fun t => φ₁ (t + mapV e x)) :=
         sb_trans_latO (S := negSp (spW G i j)) (T := spV G i j) (ΛS := G.Λ (.grid ((i : ℕ) + 1) ((j : ℕ) + 1)))
-          (ΛT := G.Λ (.grid (i : ℕ) ((j : ℕ) + 1))) sdW'.1 sdV.1 hinf hφ₁ hx₁
+          (ΛT := G.Λ (.grid (i : ℕ) ((j : ℕ) + 1))) (GlobalTheory.PlaceVec.selfDual_isFullLattice (negSp (spW G i j)) _ sdW')
+          (GlobalTheory.PlaceVec.selfDual_isFullLattice (spV G i j) _ sdV) hinf hφ₁ hx₁
       have s₂ : IsSBHalf ε (latW G i j) (fun t => φ₂ (t + mapW e x)) :=
         sb_trans_latO (S := spV₁ G i j) (T := spW G i j) (ΛS := G.Λ (.grid ((i : ℕ) + 1) (j : ℕ)))
-          (ΛT := G.Λ (.grid ((i : ℕ) + 1) ((j : ℕ) + 1))) sdV₁.1 sdW.1 hinf hφ₂ hx₂
+          (ΛT := G.Λ (.grid ((i : ℕ) + 1) ((j : ℕ) + 1))) (GlobalTheory.PlaceVec.selfDual_isFullLattice (spV₁ G i j) _ sdV₁)
+          (GlobalTheory.PlaceVec.selfDual_isFullLattice (spW G i j) _ sdW) hinf hφ₂ hx₂
       show (fun u => box e φ₁ φ₂ (u + x), heisPt Γ W.ψ x (box e (T₁ φ₁) (T₂ φ₂))) ∈ boxGraph e ε T₁ T₂
       rw [heisPt_box e Γ hW hWW]
       refine Submodule.subset_span ⟨_, _, s₁, s₂, ?_⟩

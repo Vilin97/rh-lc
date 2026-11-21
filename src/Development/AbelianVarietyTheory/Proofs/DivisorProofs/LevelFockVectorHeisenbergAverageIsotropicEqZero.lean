@@ -246,7 +246,8 @@ theorem exists_sum_heisO_eq_zero {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D
   obtain ⟨hv, e, he, ⟨Tm, hTm⟩, hall⟩ := h
   have ho := GlobalTheory.PlaceModelSum.isOrthSum_of_isIdemSum he
   have hinf := ho.conj.infPart_eq
-  have hSB := GlobalTheory.PlaceVec.isSBHalf_of_red hS.1 hT.1 hinf (frMapAdj S T βS βT) (GlobalTheory.PlaceVec.frMapAdj_add S T βS βT)
+  have hSB := GlobalTheory.PlaceVec.isSBHalf_of_red (GlobalTheory.PlaceVec.selfDual_isFullLattice S ΛS hS)
+    (GlobalTheory.PlaceVec.selfDual_isFullLattice T ΛT hT) hinf (frMapAdj S T βS βT) (GlobalTheory.PlaceVec.frMapAdj_add S T βS βT)
     (GlobalTheory.PlaceVec.frMapAdj_up S T βS βT) (GlobalTheory.PlaceVec.frMapAdj_down S T βS βT) (LT.Pg ∪ Q)
     (fun y => omegaG LT m y * omegaQ Q T.rank m (-1) y) fun y y' h => by
       rw [GlobalTheory.PlaceDatum.omegaG_congr LT m y y' fun PP hPP => h PP (Finset.mem_union_left _ hPP),

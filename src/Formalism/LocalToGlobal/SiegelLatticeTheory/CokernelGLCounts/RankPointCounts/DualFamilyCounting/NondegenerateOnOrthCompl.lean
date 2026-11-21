@@ -6,6 +6,7 @@ public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepre
 public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.InvMemLocROfUnimod
 public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.FiniteRepSetOfOrtho
 public import Formalism.HermitianLattices.HermitianLatticesProofs.IsomAct
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.StandardBaseFlagComplementIntegralLattice
 
 @[expose] public section
 
@@ -133,7 +134,7 @@ theorem gmap_eq_self {h : V →ₗ⋆[K] V →ₗ[K] K} {U : Submodule K V} {g :
   · intro hx
     exact ⟨x, hx, hg.2 x (hM x hx)⟩
 
-theorem cut_isLatIn {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.IsLattice K Λ) (X : Submodule K V) :
+theorem cut_isLatIn {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.IsFullLattice K Λ) (X : Submodule K V) :
     IsLatIn X (Λ ⊓ X.restrictScalars (𝓞 K)) := by
   refine ⟨?_, ?_⟩
   · have := isNoetherian_of_fg_of_noetherian _ hΛ.fg
@@ -250,9 +251,14 @@ theorem glueMass_of (h1 : JordanExists) (h2 : JordanInv) (h6 : GlueLoc) (h8 : Gl
     (hG : GenusMassW) : GlueMass := by
   intro K F V _ _ _ _ _ _ _ _ _ _ _ hK hF h hs hnd U hUW hpos M hM hMi hne c hc
   classical
+  have hnd' : h.Nondegenerate := ⟨hnd, fun y hy => hnd y fun x => by
+    rw [← hs.eq x y, hy x, map_zero]⟩
+  have hfull : ∀ {Λ : Submodule (𝓞 K) V}, Λ ∈ GlueSet h U M → Submodule.IsFullLattice K Λ :=
+    fun hΛ => { toIsLattice := hΛ.1, span_eq_top :=
+      GlobalTheory.LoopC.Base.span_eq_top_of_unimodular h hs hnd' hΛ.1 hΛ.2.1 }
   obtain ⟨Λ₀, hΛ₀⟩ := hne
   obtain ⟨T₀, hT⟩ : ∃ T₀, Λ₀ ⊓ (orthK h U).restrictScalars (𝓞 K) = T₀ := ⟨_, rfl⟩
-  have hT₀ : IsLatIn (orthK h U) T₀ := hT ▸ G9.cut_isLatIn hΛ₀.1 _
+  have hT₀ : IsLatIn (orthK h U) T₀ := hT ▸ G9.cut_isLatIn (hfull hΛ₀) _
   have hT₀i : Formalism.HermitianLatticesTheory.IsIntegralLat h T₀ := hT ▸ G9.integral_of_unimod hΛ₀.2.1 _
   obtain ⟨sY, hsY1, hsY2, hsYfin, hmass⟩ := hG K F V hK hF h hs hnd U hUW hpos T₀ hT₀ hT₀i c hc
   have hrefl : ∀ T, SameGenusFix (F := F) h U T T :=
@@ -260,7 +266,7 @@ theorem glueMass_of (h1 : JordanExists) (h2 : JordanInv) (h6 : GlueLoc) (h8 : Gl
   have hB : ∀ Λ ∈ GlueSet h U M, IsLatIn (orthK h U) (Λ ⊓ (orthK h U).restrictScalars (𝓞 K)) ∧
       SameGenusFix (F := F) h U T₀ (Λ ⊓ (orthK h U).restrictScalars (𝓞 K)) := by
     intro Λ hΛ
-    have hl := G9.cut_isLatIn hΛ.1 (orthK h U)
+    have hl := G9.cut_isLatIn (hfull hΛ) (orthK h U)
     refine ⟨hl, ?_⟩
     have e1 := ((h8 K F V hK hF h hs hnd U hUW hpos M hM Λ hΛ _ hl).1).mpr (hrefl _)
     have e2 := ((h8 K F V hK hF h hs hnd U hUW hpos M hM Λ₀ hΛ₀ _ hl).1).mp e1

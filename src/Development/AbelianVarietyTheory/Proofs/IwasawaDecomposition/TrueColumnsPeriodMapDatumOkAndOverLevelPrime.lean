@@ -44,28 +44,34 @@ theorem stX_ok (a : I.ι) : (I.stX a).Ok := by
     intro P _
     obtain ⟨m, hm, hpow⟩ := levQX_root (R := B.R) I.sel (I.tup a) P
     exact isOfFinOrder_iff_pow_eq_one.2 ⟨m, hm, hpow _⟩
-  refine
-    { fin_orb := stepY_fin_orb (ST := ∅) y Unit (fun _ => Λ) (fun _ => Θ) (fun _ => True) hX
-        (fun _ => levQX_finiteIndex I.sel (I.tup a)) (fun _ _ => Set.finite_singleton _)
-      fin_stab b p := by
-        have := autO_finite (posStar_of_ok hX) p.1.1.deco.full_lattice
-        exact Finite.of_injective _ (stabAut_inj y Unit (fun _ => Λ) (fun _ => Θ) (fun _ => True) b p)
-      unit _ g := by
-        let M : Matrix (Fin (B.R.N B.R.m - 1)) (Fin (B.R.N B.R.m - 1)) B.fields.E := ↑(toGLm _ _ g.1.1)
-        have h : Mᴴ * 1 * M = 1 := toGLm_mem_UJ g.1
-        rw [Matrix.mul_one] at h
-        exact h
-      root _ g :=
-        isOfFinOrder_iff_pow_eq_one.1
-          ((MonoidHom.isOfFinOrder Λ.chr (isOfFinOrder_of_finite g.2.1)).mul (hRoot g.2.2))
-      lsh_smul _ g p x := by
-        show (↑(toGLm _ _ g.1.1) : Matrix _ _ _) *ᵥ x ∈ (p.1.1.deco.1.act g.1.1 g.2.1.1).Lsh ↔
-          x ∈ p.1.1.deco.1.Lsh
-        rw [toGLm_mulVec, Deco.Lsh_act _ g.1.2, mem_gmap, LinearEquiv.symm_apply_apply]
-      lsh_full_lat _ p := p.1.1.deco.2.Lsh_full_lattice
-      stab_inj b g p h h₁ :=
-        stepY_eq_one y Unit (fun _ => Λ) (fun _ => Θ) (fun _ => True) b g p h
-          (Subtype.ext ((toGLm B.fields.E (B.R.N B.R.m - 1)).injective (h₁.trans (map_one _).symm))) }
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · exact stepY_fin_orb (ST := ∅) y Unit (fun _ => Λ) (fun _ => Θ) (fun _ => True) hX
+      (fun _ => levQX_finiteIndex I.sel (I.tup a)) (fun _ _ => Set.finite_singleton _)
+  · intro b p
+    haveI : Finite (autO p.1.1.deco.1.N) := by
+      first
+      | exact autO_finite (posStar_of_ok hX) p.1.1.deco.full_lattice
+      | exact autO_finite (posStar_of_ok hX) p.1.1.deco.full_lattice.toIsLattice
+    exact Finite.of_injective _ (stabAut_inj y Unit (fun _ => Λ) (fun _ => Θ) (fun _ => True) b p)
+  · intro _ g
+    let M : Matrix (Fin (B.R.N B.R.m - 1)) (Fin (B.R.N B.R.m - 1)) B.fields.E := ↑(toGLm _ _ g.1.1)
+    have h : Mᴴ * 1 * M = 1 := toGLm_mem_UJ g.1
+    rw [Matrix.mul_one] at h
+    exact h
+  · intro _ g
+    exact isOfFinOrder_iff_pow_eq_one.1
+      ((MonoidHom.isOfFinOrder Λ.chr (isOfFinOrder_of_finite g.2.1)).mul (hRoot g.2.2))
+  · intro _ g p x
+    show (↑(toGLm _ _ g.1.1) : Matrix _ _ _) *ᵥ x ∈ (p.1.1.deco.1.act g.1.1 g.2.1.1).Lsh ↔
+      x ∈ p.1.1.deco.1.Lsh
+    rw [toGLm_mulVec, Deco.Lsh_act _ g.1.2, mem_gmap, LinearEquiv.symm_apply_apply]
+  · intro _ p
+    first
+    | exact p.1.1.deco.2.Lsh_full_lattice
+    | exact p.1.1.deco.2.Lsh_full_lattice.toIsLattice
+  · intro b g p h h₁
+    exact stepY_eq_one y Unit (fun _ => Λ) (fun _ => Θ) (fun _ => True) b g p h
+      (Subtype.ext ((toGLm B.fields.E (B.R.N B.R.m - 1)).injective (h₁.trans (map_one _).symm)))
 
 
 set_option maxHeartbeats 1600000 in

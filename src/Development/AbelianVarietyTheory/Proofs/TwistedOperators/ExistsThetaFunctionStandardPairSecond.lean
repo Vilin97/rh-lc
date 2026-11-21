@@ -61,8 +61,8 @@ theorem exists_den_dualCoord {A' WW : HSp D} {ΛS : Submodule (𝓞 D.host.E) (F
   exact mul_mem hξ h1
 
 theorem exists_mul_dualCoord {A' WW : HSp D} {ΛS : Submodule (𝓞 D.host.E) (Fin A'.rank → D.host.E)}
-    {ΛT : Submodule (𝓞 D.host.E) (Fin WW.rank → D.host.E)} (hS : Submodule.IsLattice D.host.E ΛS)
-    (hT : Submodule.IsLattice D.host.E ΛT) {a : AE D} (hinf : infPart D a = 0) (βA' : GL (Fin A'.rank) (EAf D))
+    {ΛT : Submodule (𝓞 D.host.E) (Fin WW.rank → D.host.E)} (hS : Submodule.IsFullLattice D.host.E ΛS)
+    (hT : Submodule.IsFullLattice D.host.E ΛT) {a : AE D} (hinf : infPart D a = 0) (βA' : GL (Fin A'.rank) (EAf D))
     (βW : GL (Fin WW.rank) (EAf D)) : ∃ K : ℕ, 0 < K ∧ ∀ t : WO A' WW, IsHalf a t → IsIntM (dualCoord A' WW βA' βW t) →
       K • t ∈ latO A' WW (ΛS : Set (Fin A'.rank → D.host.E)) (ΛT : Set (Fin WW.rank → D.host.E)) (fun _ => True) := by
   obtain ⟨m, hm, hξ⟩ := GlobalTheory.PlaceVec.exists_nsmul_mem_int (eToEAf D D.host.xi0⁻¹)
@@ -174,7 +174,8 @@ theorem exists_theta : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFa
   have hSd : IsSelfDualC A' rA'.Λ := hA.1
   have hSB : IsSBHalf (cA D e) (latO A' WW rA'.Λ rW.Λ fun _ => True) (stdSnd ν e I a A' WW rA'.β rW.β) :=
     stdSnd_isSB hν.1 he hI a A' WW rA'.β rW.β _ (exists_den_dualCoord hSd.1.fg hW.1.1.fg rA'.β rW.β)
-      (exists_mul_dualCoord hSd.1 hW.1.1 hinf rA'.β rW.β)
+      (exists_mul_dualCoord (GlobalTheory.PlaceVec.selfDual_isFullLattice _ _ hSd)
+        (GlobalTheory.PlaceVec.selfDual_isFullLattice _ _ hW.1) hinf rA'.β rW.β)
   obtain ⟨Tm, hTm⟩ := (GlobalTheory.PlaceModelSum.placeModelExistsSum D ψ hv.1 A' WW rA'.Λ rW.Λ hSd hW.1 _ e he vac hv.2.theta
     hv.2.lat).2
   obtain ⟨f, h⟩ := GlobalTheory.PlaceVec.exists_isThetaAt hv.1 hSd hW.1 ha hinf ⟨Tm, hTm⟩ hSB

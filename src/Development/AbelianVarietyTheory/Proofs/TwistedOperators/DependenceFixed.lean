@@ -15,6 +15,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DiagonalBloc
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.LevelHyperspecialTrivialCharacterSplitsOffPlaces
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.RamificationIdxEqOneOfIsSquare
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ProdSubProdLe
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NsmulProjectionXColumnsMemSelfDualLattice
 
 @[expose] public section
 
@@ -420,8 +421,8 @@ theorem fix_pair {μ₀ : T₀} (hL : L.Is μ₀) (hq : OffQ D) (G : GridData L 
   have g2 := (mem_congLev.1 gc).2.2
   have h1 := (mem_congLev.1 hc).2.1
   have h2 := (mem_congLev.1 hc).2.2
-  obtain ⟨βS, hβS⟩ := frame_exists_alt D.host.F D.host.E _ ΛS hS.1
-  obtain ⟨βT, hβT⟩ := frame_exists_alt D.host.F D.host.E _ ΛT hT.1
+  obtain ⟨βS, hβS⟩ := frame_exists_alt D.host.F D.host.E _ ΛS (GlobalTheory.ProjXCols.selfDual_isFullLattice S ΛS hS)
+  obtain ⟨βT, hβT⟩ := frame_exists_alt D.host.F D.host.E _ ΛT (GlobalTheory.ProjXCols.selfDual_isFullLattice T ΛT hT)
   rw [← stabilizer_eq_stabilizer_lattice _ _ _ _ _ hβS] at g1
   rw [← stabilizer_eq_stabilizer_lattice _ _ _ _ _ hβT] at h1
   have key := GlobalTheory.PlaceProduct.eigen_of_local_components D S T om f (hW.om_cont f hf) g g0 h h0 ∅ (fun _ => 1)

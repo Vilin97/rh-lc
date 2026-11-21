@@ -55,10 +55,15 @@ theorem hypotheses_nonempty_of_unramified_exponents_alt : _root_.GlobalTheory.Fc
   have hO := _root_.GlobalTheory.T.open0_of_unitary_group_hypotheses P hL cDep
   have hNrow := _root_.UpperTheory.GalC.final_alt_alt P.nLink prN P.toHypothesesX serN P.depthZeroSupport'
     P.localFiniteness P.localTateDuality P.localEulerChar hL cDep hN
-  have hmono := _root_.GlobalTheory.Glob.open_and_linked_of_stronger_extension_alt hL (_root_.GlobalTheory.HeightCounting.Up.extensionWithList hL cDep) (_root_.GlobalTheory.Mem.LiteralAutomorphy.extensionWithAtProperty hL (_root_.GlobalTheory.HeightCounting.Up.extensionWithOrigin hL cDep) A) SExt.none (geoCl anyGeometry)
+  let extension := _root_.GlobalTheory.Mem.LiteralAutomorphy.extensionWithAtProperty hL
+    (_root_.GlobalTheory.HeightCounting.Up.extensionWithOrigin hL cDep) A
+  have hmono := _root_.GlobalTheory.Glob.open_and_linked_of_stronger_extension_alt hL
+    (_root_.GlobalTheory.HeightCounting.Up.extensionWithList hL cDep) extension SExt.none (geoCl anyGeometry)
     (fun _ _ _ _ _ _ _ _ _ _ _ _ _ x => ⟨x.1.1⟩)
   have hO' := hmono.2 hO
-  have hN' : _root_.GlobalTheory.Fc.RL.LinkedAt (_root_.GlobalTheory.Mem.Top.Bl.parametersOfExtension (_root_.GlobalTheory.Mem.LiteralAutomorphy.extensionWithAtProperty hL (_root_.GlobalTheory.HeightCounting.Up.extensionWithOrigin hL cDep) A) SExt.none (geoCl anyGeometry)) (fun Q L => _root_.GlobalTheory.Fc.R1.SlotNormCondition Q L S0.NL) :=
+  have hN' : _root_.GlobalTheory.Fc.RL.LinkedAt
+      (_root_.GlobalTheory.Mem.Top.Bl.parametersOfExtension extension SExt.none (geoCl anyGeometry))
+      (fun Q L => _root_.GlobalTheory.Fc.R1.SlotNormCondition Q L S0.NL) :=
     hmono.1 (fun 𝒜 _ => S0.NL (Cp.D3 3 𝒜)) hNrow
   have hAll := _root_.GlobalTheory.Fc.AllAtMemberStage0.allRows_of_open0_alt P.globalArtinReciprocity P.siegelWeilUnitaryConvergent2 P.discreteSeriesCover
     P.harishChandraModules P.cuspRapidDecay P.casselmanWallach P.discreteSeriesClassification hOL.1 hOL.2

@@ -79,11 +79,16 @@ theorem exists_classSum_schwartzProducts_pathInduction {μ₀ : T} (hL : L.Is μ
       x w b ∈ GlobalTheory.SplitFlip.matLat _ (GlobalTheory.SplitFlip.stdLat (Kw w) _)) →
     ∃ (ι : Type) (s : Finset ι) (φ d : ι → PureT G p) (r : ι → ArgT G p), (∀ κ ∈ s, VecAll ρ e p (φ κ) (d κ)) ∧
       ∀ (x : ArgT G p) (y : U), HalfAll e p x →
-        K (fun w => pathArgs B t w p x) y = ∑ κ ∈ s, famProd p (φ κ) x * K (fun w => pathArgs B t w p (r κ)) y
-  | _, .nil, _, _, U, K, _, _ => ⟨Unit, {()}, fun _ => (), fun _ => (), fun _ => (), fun _ _ => trivial, fun x y _ => by
-      rw [Finset.sum_singleton]
-      exact (one_mul _).symm⟩
-  | _, .snoc a p, hg, hnd, U, K, hK1, hK2 => by
+        K (fun w => pathArgs B t w p x) y = ∑ κ ∈ s, famProd p (φ κ) x * K (fun w => pathArgs B t w p (r κ)) y := by
+  intro Y p
+  induction p with
+  | nil =>
+    intro _ _ U K _ _
+    refine ⟨Unit, {()}, fun _ => (), fun _ => (), fun _ => (), fun _ _ => trivial, fun x y _ => ?_⟩
+    rw [Finset.sum_singleton]
+    exact (one_mul _).symm
+  | snoc a p ih =>
+    intro hg hnd U K hK1 hK2
     have hnd' : (edges p ++ [edgeOf a]).Nodup :=
       edges_snoc a p ▸ (hnd : (edges (.snoc a p)).Nodup)
     have hnd1 : (edges p).Nodup := hnd'.of_append_left
@@ -119,8 +124,12 @@ theorem exists_classSum_schwartzProducts_pathInduction {μ₀ : T} (hL : L.Is μ
         z.2 h0 w hw (edgeOf a) hm
       rw [Function.update_self] at h
       exact GlobalTheory.SplitFlip.mem_matLat_stdLat.1 h r c
-    have hArrowExpansion :=
-      arrow_sb B ρ hL (t := t) (e := e) he n (a := a) ha (Y := ArgT G p × U) F hF1 hF2
+    have hArrowExpansion :
+        ∃ (ι : Type) (s : Finset ι) (φ : ι → Sch G a) (r : ι → WO (G.pS a.pair) (G.pT a.pair)),
+          (∀ i ∈ s, IsSBHalf e (latA G a) (φ i)) ∧
+            ∀ x y, IsHalf e x → F x y = ∑ i ∈ s, φ i x * F (r i) y := by
+      exact arrow_sb (W := W) B ρ (μ₀ := μ₀) hL (t := t) (e := e) he n (a := a) ha
+        (Y := ArgT G p × U) F hF1 hF2
     obtain ⟨ι₁, s₁, φa, r₁, hφa, hexp⟩ := hArrowExpansion
     let K' (x : ∀ w, (locGrid G t w).Args) (y : ι₁ × U) : ℂ :=
       K (fun w => Function.update (x w) (edgeOf a) (locArg B t w a (r₁ y.1))) y.2
@@ -152,8 +161,7 @@ theorem exists_classSum_schwartzProducts_pathInduction {μ₀ : T} (hL : L.Is μ
       have h := hK2 (fun w => Function.update (x w) (edgeOf a) (locArg B t w a (r₁ y.1))) y.2 h0 w hw b hm
       have hba : b ≠ edgeOf a := fun hEq => hne (hEq ▸ hb)
       rwa [Function.update_of_ne hba] at h
-    obtain ⟨ι₂, s₂, φ₂, d₂, r₂, hv, hexp₂⟩ :=
-      exists_classSum_schwartzProducts_pathInduction hL B ρ t he n p hg.init hnd1 K' hK'1 hK'2
+    obtain ⟨ι₂, s₂, φ₂, d₂, r₂, hv, hexp₂⟩ := ih hg.init hnd1 (U := ι₁ × U) K' hK'1 hK'2
     obtain ⟨Tm, hTm, -, -⟩ := exists_arrowModel ρ hL he ha
     refine ⟨ι₂ × ι₁, s₂ ×ˢ s₁, fun κ => (φ₂ κ.1, φa κ.2), fun κ => (d₂ κ.1, Tm (φa κ.2)), fun κ => (r₂ κ.1, r₁ κ.2),
       fun κ hκ => ?_, fun x y hx => ?_⟩

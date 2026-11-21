@@ -76,7 +76,7 @@ theorem exists_mReps (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : 
 
 theorem nkCount_eq_sum (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) (hs : h.IsSymm) (hd : IsTotPosDef h)
     (S : VecSplit h h') {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {n : 𝓞 F} (hn : n ≠ 0) (hx : h S.x₀ S.x₀ = algebraMap F K (n : F))
     {s : Finset (Submodule (𝓞 K) V')} {R : Finset (Submodule (𝓞 K) V)} (hR : IsMReps S L 𝔭 s R) :
     ∀ᶠ J in atTop, ∀ᶠ k in atTop,
@@ -116,12 +116,12 @@ theorem nkCount_eq_sum (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF 
     obtain ⟨hg', e'⟩ := hγ M' hM'
     have hxM := (hR.1 M hM).1.2
     have hxM' := (hR.1 M' hM').1.2
-    obtain ⟨g', hg'', e''⟩ := OrbF.same_orbit hK hF hs hd S hL hLi h𝔭 hn hx hg hg'
+    obtain ⟨g', hg'', e''⟩ := OrbF.same_orbit hK hF hs hd S hL.toIsLattice hLi h𝔭 hn hx hg hg'
       (by rw [e]; exact hxM) (by rw [e']; exact hxM') hJ h1 h2
     rw [e, e'] at e''
     exact hne ((hR.2 M' (hR.1 M' hM').1).unique ⟨hM, g', hg'', e''⟩
       ⟨hM', 1, one_mem _, by rw [OrbF.extOf_one, autSub_gmap_one]⟩)
-  rw [Finset.sum_congr rfl hterm, ← cnt_biUnion h (locF 𝔭 L) 𝔭 k n (finite_quot hL h𝔭 k) R _ hst hdis,
+  rw [Finset.sum_congr rfl hterm, ← cnt_biUnion h (locF 𝔭 L) 𝔭 k n (finite_quot hL.toIsLattice h𝔭 k) R _ hst hdis,
     ← nkCount_locF hF h L 𝔭 h𝔭 k n]
   symm
   apply cnt_eq_nkCount

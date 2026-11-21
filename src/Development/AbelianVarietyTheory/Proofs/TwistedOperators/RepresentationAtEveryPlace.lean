@@ -227,7 +227,7 @@ theorem exists_glue (V : HSp D) {e : AE D} (h0 : e * cA D e = 0) (hee : e * e = 
     rw [← adj_mul, hYX, adj_smul, adj_one]
   have key := glue_alg h0 hee hc hX hY hX' hY' hYX hXY (giA_mul_gA V) (gA_mul_giA V)
   have hf : cA D (1 - e - cA D e) = 1 - e - cA D e := by
-    rw [RingHom.map_sub, RingHom.map_sub, RingHom.map_one, cA_cA, sub_right_comm]
+    rw [RingHom.map_sub, RingHom.map_sub, RingHom.map_one, GlobalTheory.SeeSaw.cA_cA, sub_right_comm]
   have hadj : adj (X + HMul.hMul (giA V) (HMul.hMul (adj Y) (gA V)) + (1 - e - cA D e) • (1 : Mx D V.rank V.rank)) =
       adj X + HMul.hMul (gA V) (HMul.hMul Y (giA V)) + (1 - e - cA D e) • (1 : Mx D V.rank V.rank) := by
     rw [adj_add, adj_add, adj_mul, adj_mul, adj_adj, adj_gA, adj_giA, adj_smul, adj_one, Matrix.mul_assoc, hf]

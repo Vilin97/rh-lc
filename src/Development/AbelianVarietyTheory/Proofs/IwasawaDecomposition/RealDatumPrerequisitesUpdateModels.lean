@@ -156,8 +156,8 @@ theorem exists_at (hI : Inputs D) {F : Face D A} (hF : SeedFacts D A Ks F) (R : 
       ((hsp t).2.2 i).2.2.1 ((hsp t).2.2 i).2.2.2
     obtain ⟨v, hv⟩ := hI.thPVec R.ψ R.θ (Vc D i) (Wc D i) (fun _ => 1) (cart (R.MW i (sg0 D A))) (R.ΛV i) (R.ΛW i)
       (R.βV i) (R.βW i) R.Pg (R.Q t) (R.xiR t) sdV.1 sdW.1 sdV.2 sdW.2 (hid t).1 (hid t).2 (R.vacP i) (hω i).2.1.1
-    obtain ⟨th, hth⟩ := orZero_exists (PF R i H₀ ν₀ fd₀ ω v)
-    obtain ⟨g, hg⟩ := orZero_exists (PG R i th)
+    obtain ⟨th, hth⟩ := orZero_exists (X := H₀.H →ₗ[ℂ] MMap (R.MW i (sg0 D A))) (PF R i H₀ ν₀ fd₀ ω v)
+    obtain ⟨g, hg⟩ := orZero_exists (X := H₀.H →ₗ[ℂ] (R.HW i (sg0 D A)).H) (PG R i th)
     exact ⟨ω, v, H₀, j₀, ν₀, fd₀, th, g, hω', hv, m1, m2, m3, hth, hg, fun e => absurd e ht⟩
 
 

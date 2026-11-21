@@ -99,6 +99,14 @@ theorem isLattice_pre (φ : W ≃ₗ[K] C) {M : Submodule (𝓞 K) C} (h : Submo
   exact (linearIndepOn_id_imageₛ_iff (f := (φ : W →ₗ[K] C))
     φ.injective.injOn).1 hK
 
+omit [NumberField K] [StarRing K] in
+theorem isFullLattice_pre (φ : W ≃ₗ[K] C) {M : Submodule (𝓞 K) C}
+    (h : Submodule.IsFullLattice K M) : Submodule.IsFullLattice K (pre φ M) := by
+  refine { toIsLattice := isLattice_pre φ h.toIsLattice, span_eq_top := ?_ }
+  rw [pre_eq_map]
+  change Submodule.span K (φ.symm.toLinearMap '' (M : Set C)) = ⊤
+  rw [← Submodule.map_span, h.span_eq_top, Submodule.map_top, LinearEquiv.range]
+
 omit [NumberField K] in
 theorem dual_pre (φ : W ≃ₗ[K] C) {HW : HermSpace K W} {H' : HermSpace K C}
     (hφ : ∀ x y, H'.B (φ x) (φ y) = HW.B x y) (M : Submodule (𝓞 K) C) :
@@ -143,7 +151,7 @@ theorem isDat_pre (φ : W ≃ₗ[K] C) {HW : HermSpace K W} {H' : HermSpace K C}
       pre φ (fixLat Γ) := by
     ext y
     simp [fixLat, pre, Submodule.mem_comap]
-  refine ⟨⟨isLattice_pre φ hlat, ?_⟩, ?_, ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩, ?_, ?_⟩
+  refine ⟨⟨isFullLattice_pre φ hlat, ?_⟩, ?_, ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩, ?_, ?_⟩
   · intro a ha b hb
     have hab := hint _ ha _ hb
     simp only [LinearMap.flip_apply, LinearMap.restrictScalars_apply, LinearEquiv.coe_coe] at hab ⊢

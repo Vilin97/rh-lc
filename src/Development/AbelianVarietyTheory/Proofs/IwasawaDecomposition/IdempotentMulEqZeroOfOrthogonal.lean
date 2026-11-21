@@ -12,6 +12,7 @@ public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.IsSelf
 public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.MemLatOIffExistsActO
 public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ThetaAtEqSumHeisOfFourierSum
 public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ScaledMatrixMemRationalLattice
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.PlacewiseToAdelicDecompositionForall
 
 @[expose] public section
 
@@ -407,7 +408,7 @@ theorem mul_pair_one {w : AE D} (hw : infPart D w = 0) :
   · rw [RingHom.map_sub, RingHom.map_mul, hw, zero_mul, sub_zero]
   · rw [RingHom.map_sub, RingHom.map_mul, GlobalTheory.LatVac.finPart_pair, ← Algebra.TensorProduct.one_def, mul_one, sub_self]
 
-theorem exists_nsmul_mem_latO (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT) :
+theorem exists_nsmul_mem_latO (hS : Submodule.IsFullLattice D.host.E ΛS) (hT : Submodule.IsFullLattice D.host.E ΛT) :
     ∃ K : ℕ, 0 < K ∧ ∀ t : WO S T, t.map (infPart D) = 0 →
       (∀ i j, toEAf D (t i j) ∈ Formalism.L2.Herm.intAf D.host.F D.host.E) →
       K • t ∈ latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) (fun _ => True) := by
@@ -429,7 +430,7 @@ theorem exists_nsmul_mem_latO (hS : Submodule.IsLattice D.host.E ΛS) (hT : Subm
   · rw [mul_pair_one (congrFun (congrFun ht p.1) p.2)]
   · rw [TensorProduct.tmul_zero, mul_zero, mul_zero, mul_zero]
 
-theorem exists_nsmul_mem_latO' (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT)
+theorem exists_nsmul_mem_latO' (hS : Submodule.IsFullLattice D.host.E ΛS) (hT : Submodule.IsFullLattice D.host.E ΛT)
     (t : WO S T) (ht : t.map (infPart D) = 0) : ∃ k : ℕ, 0 < k ∧
       k • t ∈ latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) (fun _ => True) := by
   obtain ⟨K, hK, h⟩ := exists_nsmul_mem_latO hS hT
@@ -468,7 +469,8 @@ theorem exists_isThetaAt {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ 
     refine ⟨_, ⟨r, hr, rfl⟩, e • u, hsm e he u hu, ?_⟩
     have := (mem_half S T).1 ht.2
     rw [← this, htr, smul_add, smul_comm e k u]
-  · exact exists_nsmul_mem_latO' hS.1 hT.1 y (infPart_of_half (infPart_cA hinf) ((isHalf_iff S T).2 hy))
+  · exact exists_nsmul_mem_latO' (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull S ΛS hS)
+      (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull T ΛT hT) y (infPart_of_half (infPart_cA hinf) ((isHalf_iff S T).2 hy))
 
 theorem redM_add {a b : ℕ} (PP : Formalism.L2.DIV.Pl D.host.E) (X Y Z : Matrix (Fin b) (Fin a) (EAf D)) (hX : IsIntM X)
     (hZ : IsIntM Z) (h : ∀ i j, Y i j = X i j + (Ideal.absNorm PP.asIdeal : ℕ) * Z i j) : redM PP Y = redM PP X := by
@@ -584,7 +586,7 @@ theorem exists_den_frMapO (hS : ΛS.FG) (hT : ΛT.FG) (βS : GL (Fin S.rank) (EA
   obtain ⟨N, hN, h'⟩ := exists_den_mul (Formalism.L2.Herm.intAf D.host.F D.host.E) exists_den_adele (βT⁻¹).val βS.val
   exact ⟨N * M, Nat.mul_pos hN hM, fun u hu => h' M (u.map (toEAf D)) (h u hu)⟩
 
-theorem exists_nsmul_of_frMapO (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT)
+theorem exists_nsmul_of_frMapO (hS : Submodule.IsFullLattice D.host.E ΛS) (hT : Submodule.IsFullLattice D.host.E ΛT)
     (βS : GL (Fin S.rank) (EAf D)) (βT : GL (Fin T.rank) (EAf D)) :
     ∃ K : ℕ, 0 < K ∧ ∀ t : WO S T, t.map (infPart D) = 0 → IsIntM (frMapO S T βS βT t) →
       K • t ∈ latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) (fun _ => True) := by

@@ -312,6 +312,8 @@ theorem siegelMeanCc_of_oneVectorCc : OneVectorCc → SiegelMeanCc := by
     rw [Finset.prod_eq_zero (Finset.mem_univ v) (eq_zero_of_isDens (hc v) (hK v) (h0 v) (hφ v).2.2.2 (hs1 ℝ) hv
       (qEps_frame I s y.1 y.2.2 v _)), ENNReal.ofReal_zero]
   have hL : Submodule.IsLattice I.E I.L := Submodule.IsLattice.of_fg I.E I.L_fg
+  have hLfull : Submodule.IsFullLattice I.E I.L :=
+    { toIsLattice := hL, span_eq_top := I.L_span }
   haveI : FiniteDimensional I.F I.E := Module.finite_of_finrank_eq_succ hCM.2.2.1
   let b := Module.finBasis I.F I.E
   obtain ⟨g1, g2, g3⟩ := test_smooth I φ θ hθ (fun v => (hφ v).1) hK _ rfl
@@ -319,8 +321,8 @@ theorem siegelMeanCc_of_oneVectorCc : OneVectorCc → SiegelMeanCc := by
   have hsg : ∀ (R : Type) [CommRing R] [Algebra I.F R], algebraMap I.F R (sgn I.F s) = sgn R s := fun R _ _ => by
     cases s <;> simp [sgn]
   obtain ⟨⟨ψ, hψ⟩, hB⟩ := b1 hn (sgn I.F s) (hs1 _) _ b _ _ _ _ g1 g2 g3
-    ⟨GlobalTheory.T.isSchwartzBruhat_indicator_localLatticeCompletion I.F I.E I.n I.L hL, (GlobalTheory.T.eventually_localLatticeCompletion_eq_coordinateLattice I.F I.E I.n _ b I.L hL).mono fun v hv => by rw [hv],
-      GlobalTheory.T.indicator_completedLattice_eq_finprod_local I.F I.E I.n I.L hL⟩ fun _ => rfl
+    ⟨GlobalTheory.T.isSchwartzBruhat_indicator_localLatticeCompletion I.F I.E I.n I.L hLfull, (GlobalTheory.T.eventually_localLatticeCompletion_eq_coordinateLattice I.F I.E I.n _ b I.L hLfull).mono fun v hv => by rw [hv],
+      GlobalTheory.T.indicator_completedLattice_eq_finprod_local I.F I.E I.n I.L hLfull⟩ fun _ => rfl
   obtain ⟨⟨μi, hμi⟩, ⟨νi, hνi⟩, ⟨μv, hμv⟩, ⟨νv, hνv⟩, hQ⟩ := ((hB ψ hψ).2 μ hμ).2 S hS
   obtain ⟨Fi, Fl, hFi, hFl, -, hmean⟩ := hQ μi νi μv νv hμi hνi hμv hνv
   obtain ⟨lam, m, hlam, hψi, hm, hdual, hprod⟩ := GlobalTheory.T.adelic_character_frequencies_and_conductor_product I θ hθ ψ hψ

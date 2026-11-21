@@ -84,7 +84,7 @@ def CoefIndep : Prop := ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : 
 
 def NabBaseChange : Prop := ∀ (E K₀ K ι : Type) [Field E] [NumberField E] [Field K₀] [NumberField K₀] [Field K] [NumberField K]
     [Fintype ι] (n : ℕ) (f : K₀ →+* K) (emb : ι → E →+* K₀) (lam : ι → DomWeight n) (M : Submodule (𝓞 E) (Fin n → E)),
-    Submodule.IsLattice E M →
+    Submodule.IsFullLattice E M →
     nabAtr (fun τ => f.comp (emb τ)) lam M ≤
       Submodule.span (𝓞 K) {y : VV K lam | ∃ x ∈ nabAtr emb lam M, (y : Pol K ι n) = MvPolynomial.map f (x : Pol K₀ ι n)}
 

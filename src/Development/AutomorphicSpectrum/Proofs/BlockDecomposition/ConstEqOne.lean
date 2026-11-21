@@ -113,7 +113,7 @@ theorem extChar : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
   set e : Fin n → ℤ := fun i => ord k (t i) with he
   have hu : t * (dg ϖ e)⁻¹ ∈ torusO k (Fin n) := by
     intro i
-    apply (ord_eq_zero_iff k).1
+    apply ord_eq_zero_iff.1
     have h1 : ord k (t i * (ϖ ^ e i)⁻¹) = 0 := by
       have h2 := ord_mul k (t i * (ϖ ^ e i)⁻¹) (ϖ ^ e i)
       rw [inv_mul_cancel_right, ord_zpow, hϖ, mul_one] at h2

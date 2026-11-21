@@ -122,34 +122,9 @@ omit [Fintype n''] in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.isGlue_last (q : _root_.GlobalTheory.LatPair.Unif k) (L : Submodule 𝒪[k] (n'' → k)) [L.IsFullLattice k] :
     _root_.GlobalTheory.LatPair.IsGlue (_root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.lastKer L) (q.inv • _root_.GlobalTheory.LatPair.avec k n'' 1 1) := by
   rw [_root_.GlobalTheory.LatPair.isGlue_iff q]
-  have hLat : (lastKer L).IsFullLattice k := by
-    refine { toIsLattice := Submodule.IsLattice.of_fg k ?_, span_eq_top := ?_ }
-    · exact ((Submodule.IsLattice.fg k L).map (inX k n'' 1)).sup
-        (Submodule.fg_span_singleton _)
-    · let W := Submodule.span k (lastKer L : Set (n'' ⊕ Fin 1 → k))
-      have hX (x : n'' → k) : inX k n'' 1 x ∈ W := by
-        have hx : x ∈ Submodule.span k (L : Set (n'' → k)) := by
-          rw [Submodule.IsFullLattice.span_eq_top]
-          trivial
-        induction hx using Submodule.span_induction with
-        | mem x hx => exact Submodule.subset_span (Submodule.mem_sup_left ⟨x, hx, rfl⟩)
-        | zero => simp
-        | add x y _ _ hx hy => simpa using W.add_mem hx hy
-        | smul a x _ hx =>
-          convert W.smul_mem a hx using 1
-          ext (i | i) <;> simp [inX]
-      have hA : avec k n'' 1 1 ∈ W :=
-        Submodule.subset_span (Submodule.mem_sup_right (Submodule.mem_span_singleton_self _))
-      refine eq_top_iff.2 fun y _ => ?_
-      have hy : y = inX k n'' 1 (y ∘ Sum.inl) + y (Sum.inr 0) • avec k n'' 1 1 := by
-        funext i
-        rcases i with i | i
-        · simp [inX, avec]
-        · fin_cases i
-          simp [inX, avec]
-      rw [hy]
-      exact W.add_mem (hX _) (W.smul_mem _ hA)
-  refine ⟨hLat, ?_, ?_⟩
+  refine ⟨?_, ?_, ?_⟩
+  · rw [lastKer_eq q L]
+    exact gluedLat_isLattice q 1 2 L 0
   · rw [_root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.mem_lastKer]
     rintro ⟨-, h⟩
     have hinv : (((q : 𝒪[k]) : k))⁻¹ ∈ 𝒪[k] := by
@@ -166,6 +141,7 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.isGlue
       exact L.zero_mem
     · simpa [_root_.GlobalTheory.LatPair.avec] using one_mem 𝒪[k]
 
+omit [Fintype n''] in
 def lastPair (q : Unif k) (L : Submodule 𝒪[k] (n'' → k)) [L.IsFullLattice k] : Pair k (n'' ⊕ Fin 1) :=
   glue (isGlue_last q L)
 

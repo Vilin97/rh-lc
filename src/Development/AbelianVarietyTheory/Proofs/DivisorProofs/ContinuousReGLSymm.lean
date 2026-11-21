@@ -13,6 +13,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsOpenComapP
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SymPrOpenBounded
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactEntriesBd
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OnePowNotMemHeightOneAsIdeal
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.MemHatIffOfSelfDual
 
 @[expose] public section
 
@@ -114,7 +115,7 @@ namespace GridChoice
 
 theorem isCO_levTop (β : CosFam G t) {j : ℕ} (hj : j < D.R.m) : IsCO (G.V (.top j)) (S.levTop t Φ β j hj) := by
   rcases j with _ | j
-  · exact congLev_open_compact _ (isV_Xp G).sd.1 (G.pl.modul_ne_bot sc)
+  · exact congLev_open_compact _ (GlobalTheory.AdIsom.selfDual_isFullLattice (isV_Xp G).sd) (G.pl.modul_ne_bot sc)
   · exact isCO_prodLev _ _ _ _ _ fun w => openBdd_pr W S t Φ β w (j + 1) j.succ_pos hj
 
 theorem isCO_levRow {i : ℕ} (hi : i ≤ D.R.m) : IsCO (G.V (.grid i D.R.m)) (S.levRow t i hi) :=

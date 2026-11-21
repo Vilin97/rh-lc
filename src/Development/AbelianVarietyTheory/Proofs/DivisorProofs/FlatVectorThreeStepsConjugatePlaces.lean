@@ -200,7 +200,8 @@ theorem vec_three_steps (hF : F.Good) {G : TypeDat D T.rank} {Q J K : Finset (Pl
     rw [show idem J = ∑ PP ∈ J, idemAt PP from rfl, Finset.sum_mul]
     exact Finset.sum_eq_zero fun j hj => idemAt_mul_idem hQ sK (sJ hj) (Finset.disjoint_left.1 hd hj)
   have hinf := GlobalTheory.PlaceVec.infPart_cA (GlobalTheory.PlaceVec.idemSum_infPart (hP.mono s1).isIdemSum)
-  have hSB := GlobalTheory.PlaceVec.isSBHalf_of_red hF.sdS.1 hF.sdT.1 hinf (frMapAdj S T F.βS F.βT)
+  have hSB := GlobalTheory.PlaceVec.isSBHalf_of_red (GlobalTheory.PlaceVec.selfDual_isFullLattice S F.ΛS hF.sdS)
+    (GlobalTheory.PlaceVec.selfDual_isFullLattice T F.ΛT hF.sdT) hinf (frMapAdj S T F.βS F.βT)
     (GlobalTheory.PlaceVec.frMapAdj_add S T _ _) (GlobalTheory.PlaceVec.frMapAdj_up S T _ _) (GlobalTheory.PlaceVec.frMapAdj_down S T _ _) G.Pg
     (omegaG G.levT G.muC) (GlobalTheory.PlaceDatum.omegaG_congr G.levT G.muC)
   have hM := Frame.isPlaceModel_placeMap hF h

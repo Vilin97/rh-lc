@@ -76,7 +76,7 @@ theorem volume_index_b_bounded (D : D7) (u u' : D.what₂.Word)
   have hT : ((Tu D u : ℕ) : D.host.E) ≠ 0 := by
     have := hyps.2.2.2.1.1.pos
     exact_mod_cast this.ne'
-  have hlat : Submodule.IsLattice D.host.E t.lam := (hyps.2.2.2.2.2.1 t.lam t.mem).1.1
+  have hlat : Submodule.IsFullLattice D.host.E t.lam := (hyps.2.2.2.2.2.1 t.lam t.mem).1.1
   have hf := frame_indep F0 hT
   have hLi : L⁻¹ * L = 1 := nonsing_inv_mul _ (by rw [lo_det hL]; exact isUnit_one)
   have hLL : L * L⁻¹ = 1 := mul_nonsing_inv _ (by rw [lo_det hL]; exact isUnit_one)
@@ -126,7 +126,7 @@ theorem volume_index_b_bounded (D : D7) (u u' : D.what₂.Word)
         _ = 1 := by rw [hg, Matrix.mul_one, hLi]
 
   obtain ⟨φ, hφ⟩ := coord_exists hf
-  obtain ⟨m1, hm1, hb1⟩ := lat_fun_bdd t.lam hlat φ
+  obtain ⟨m1, hm1, hb1⟩ := lat_fun_bdd t.lam hlat.toIsLattice φ
   have hmc : ∀ c, ∃ m : ℕ, m ≠ 0 ∧ (m : D.host.E) • F0.fvec c ∈ t.lam := fun c => lat_smul_mem t.lam hlat _
   choose mc hmc0 hmcL using hmc
   set m2 : ℕ := ∏ c, mc c with hm2

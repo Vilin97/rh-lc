@@ -30,8 +30,12 @@ theorem funEquiv_symm_mem_nabAt_of_nabAtr : ∀ {E K ι : Type} [Field E] [Numbe
     Submodule.IsLattice E M → ∀ (v : VV K fun τ => (σ τ).dual),
     v ∈ nabAtr emb (fun τ => (σ τ).dual) M → (GlobalTheory.FunObj.funEquiv σ).symm v ∈ nabAt emb σ M := by
   intro E K ι _ _ _ _ _ emb n σ M hM v hv
-  have hA : ∀ τ, (tauLat emb τ M).FG := fun τ =>
-    (Formalism.L2.DIV.tauLatLattice E K ι n emb τ M hM).fg
+  have hA : ∀ τ, (tauLat emb τ M).FG := by
+    classical
+    intro τ
+    obtain ⟨S, hS⟩ := hM.fg
+    rw [Formalism.L2.DIV.du_tauLat_eq, ← hS, Formalism.L2.DIV.du_tl_span]
+    exact ⟨S.image (Formalism.L2.DIV.du_f (emb τ)), by rw [Finset.coe_image]⟩
   change ((GlobalTheory.FunObj.funEquiv σ).symm v).1 ∈ nabP σ (fun τ => tauLat emb τ M)
   simp only [nabP, transLat, Submodule.mem_iInf, Submodule.mem_comap]
   intro w B hB

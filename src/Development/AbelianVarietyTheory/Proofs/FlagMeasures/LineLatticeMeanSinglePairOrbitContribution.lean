@@ -124,7 +124,7 @@ theorem map_withDensity_of_invariant {X : Type} [MeasurableSpace X] (μ : Measur
   simp only [hGf]
 
 theorem covol_stabilizer (hE : IsTotallyComplex E) {k : ℕ} (hk : 1 ≤ k) (Λ : Submodule (𝓞 E) (Fin (k + 1) → E))
-    (Λ₀ : Submodule (𝓞 E) (Fin 1 → E)) (Λ' : Submodule (𝓞 E) (Fin k → E)) (hΛ : Submodule.IsLattice E Λ)
+    (Λ₀ : Submodule (𝓞 E) (Fin 1 → E)) (Λ' : Submodule (𝓞 E) (Fin k → E)) (hΛ : Submodule.IsFullLattice E Λ)
     (hΛ₀ : Submodule.IsFullLattice E Λ₀) (hΛ' : Submodule.IsFullLattice E Λ')
     (hmem : ∀ y, y ∈ Λ ↔ (fun _ => y 0) ∈ Λ₀ ∧ Fin.tail y ∈ Λ') (f : ℝ → ENNReal) (hf : Measurable f)
     (Φ : VecInf E (k + 1) → ENNReal) (hΦ : Measurable Φ) :
@@ -265,7 +265,7 @@ theorem orbit_term : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex 
   have e : κ = Formalism.HermitianLatticesTheory.vInv E ^ Formalism.HermitianLatticesTheory.fDeg E / (Ideal.absNorm 𝔞 : ℝ) * κ' := by
     rw [← hc₀, ← e', ← GlobalTheory.T.infiniteLatticeCovolume_split_lattice_prod E hE k _ Λ₀ Λ' hΛ₀ hΛ'.toIsLattice hmem,
       (hκc _ (by rw [detNorm_oneInf]; exact one_pos)).2.1, detNorm_oneInf, div_one]
-  have hmain := covol_stabilizer hE hk _ Λ₀ Λ' hΛ.toIsLattice hΛ₀' hΛ' hmem (fun t => w (κ / t))
+  have hmain := covol_stabilizer hE hk _ Λ₀ Λ' hΛ hΛ₀' hΛ' hmem (fun t => w (κ / t))
     (hw.comp (measurable_const.div measurable_id)) Φ hΦ
   have hdens : ((haarGL E (k + 1)).withDensity fun g => w (covAt E (k + 1) (latAt E (k + 1) (Lf 𝔞 Λ') g)) *
       Φ (fun u a => (Matrix.of (g u))⁻¹ a 0)) = (haarGL E (k + 1)).withDensity fun g =>

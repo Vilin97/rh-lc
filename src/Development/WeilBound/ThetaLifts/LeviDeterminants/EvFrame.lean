@@ -74,7 +74,7 @@ structure FrOK (σ : E →ₐ[F] E) {m m₁ : ℕ} (Y : Spc F E m) (Y₁ : Spc F
     incM F Q * incM F A = mask (AE F E) m₁ c s t * incM F Q
 
 theorem exists_frOK (hB : B.IsGood σ) {m m₁ i₀ i₁ : ℕ} {Y : Spc F E m} {Y₁ : Spc F E m₁} {H : Plane E m m₁}
-    (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hL : Y.L.IsLattice E) {η : ℤ} (hη : η * η = 1)
+    (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hL : Y.L.IsFullLattice E) {η : ℤ} (hη : η * η = 1)
     (hJ : ∀ i j, σ (Y.J j i) = η * Y.J i j) : ∃ Q, FrOK σ Y Y₁ H η Q := by
   obtain ⟨Q, hPQ, hQP, hQ⟩ := exists_frame_inv hH hL
   have hA : incM F Q * incM F (frame H) = 1 := by rw [← incM_mul, hQP, incM_one']

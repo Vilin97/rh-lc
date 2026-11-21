@@ -26,6 +26,7 @@ public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.Exist
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PtYAndItYOfPair
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsNegConjMemberHermitianLatticeSpaceData
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsHermitianLatticeLocalBases
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GridSquareSkewSumSpaceIsSkewHermitianSelfDual
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsLatticeLatticeBlockDirectSumScaled
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ScaledLatticeConjDirectSumTraceSelfDualStatement
 
@@ -187,15 +188,16 @@ theorem exists_bases (hL : L.Is μ₀) (h : IsTripleOf W M t i j e Bs Γ X) (hT 
   have hsd := (node_isV G hL (X := .grid i j) ⟨i.2.le, j.2.le⟩).sd
   have hV := (node_isV G hL (X := .grid i (j + 1)) ⟨i.2.le, j.2⟩).sd
   have hV₁ := (node_isV G hL (X := .grid (i + 1) j) ⟨i.2, j.2.le⟩).sd
-  haveI hl₁ : (latSmall G i j).IsLattice D.host.E := GlobalTheory.TripleSpaceW.conjSub_isLattice hsd.1
+  haveI hl₁ : (latSmall G i j).IsFullLattice D.host.E :=
+    GlobalTheory.TripleSpaceW.conjSub_isFullLattice (GlobalTheory.FunObj.selfDual_isFullLattice _ _ hsd)
   have hAA : D.host.AA ≠ 0 := fun h => by
     have := Formalism.IndefR.Fin.factPrincipalDatum D.R D.host
     rw [h, mul_zero, zero_mul, zero_mul] at this
     exact zero_ne_one this
-  haveI hl₂ : (latSkew e).IsLattice D.host.E :=
-    GlobalTheory.SkewLat.PairLatLattice.pairLat_isLattice (GlobalTheory.SkewLat.PairLatLattice.scLat_isLattice hAA hV.1)
-      (GlobalTheory.TripleSpaceW.conjSub_isLattice (GlobalTheory.SkewLat.PairLatLattice.scLat_isLattice hAA
-        (GlobalTheory.TripleSpaceW.conjSub_isLattice hV₁.1))) e
+  haveI hl₂ : (latSkew e).IsFullLattice D.host.E :=
+    GlobalTheory.SkewLat.pairLat_isFull (GlobalTheory.SkewLat.scLat_isFull hAA (GlobalTheory.FunObj.selfDual_isFullLattice _ _ hV))
+      (GlobalTheory.TripleSpaceW.conjSub_isFullLattice (GlobalTheory.SkewLat.scLat_isFull hAA
+        (GlobalTheory.TripleSpaceW.conjSub_isFullLattice (GlobalTheory.FunObj.selfDual_isFullLattice _ _ hV₁)))) e
   choose b₁ hb₁ using fun v : Bs.P => exists_isSplitBasis (Bs.τ v) (latSmall G i j) (isCMExt_host D)
   choose b₂ hb₂ using fun v : Bs.P => exists_isSplitBasis (Bs.τ v) (latSkew e) (isCMExt_host D)
   refine ⟨fun v => if h : v ∈ Bs.P then b₁ ⟨v, h⟩ else 1, fun v => if h : v ∈ Bs.P then b₂ ⟨v, h⟩ else 1,
@@ -249,7 +251,7 @@ theorem exists_vac (hL : L.Is μ₀) (h : IsTripleOf W M t i j e Bs Γ X) (hT : 
   obtain ⟨φ₀, k1, k2, θ, k3, k4⟩ := GlobalTheory.LatVac.exists_isVac _ Bs X₁ Y₁ _ _ _ _ hT.base h₁ h₂
     ⟨Γ.M'.co, Γ.M'.vac, Γ.M'.μ, Γ.M'.dom⟩ hT.geo.hM'.rat v
   rw [eΛ]
-  refine ⟨h₁.lat, h₂.lat, fun z hz => ⟨fun hz' γ hγ => h.ψ ▸ hiso z hz' γ hγ, fun hz' =>
+  refine ⟨h₁.lat.toIsLattice, h₂.lat.toIsLattice, fun z hz => ⟨fun hz' γ hγ => h.ψ ▸ hiso z hz' γ hγ, fun hz' =>
     hle z ((hsd z hz).2 fun γ hγ => h.ψ ▸ hz' γ (hle γ hγ))⟩, φ₀, k1, k2, ⟨θ, k3, k4⟩, fun Φ hΦ y hy => ?_⟩
   have hfix : ∀ γ ∈ genPtS t e v, Acts (evFin D.host.F v) (Γ.M'.co.rho W.ψ γ) φ₀ φ₀ := fun γ hγ => by
     have a1 : Acts (evFin D.host.F v) (Γ.M'.co.rho Bs.ψ γ) φ₀ _ := k4 γ (hle γ (genPtS_subset t e v hγ))
@@ -263,7 +265,7 @@ theorem exists_vac (hL : L.Is μ₀) (h : IsTripleOf W M t i j e Bs Γ X) (hT : 
           mul_zero, AddChar.map_zero_eq_one]
     rw [a2, one_smul, h.ψ] at a1
     exact a1
-  obtain ⟨c, hc0, hc⟩ := GlobalTheory.LatBound.locCo_latAtV_bounded X₁ Y₁ v Γ.M'.co h₁.lat h₂.lat
+  obtain ⟨c, hc0, hc⟩ := GlobalTheory.LatBound.locCo_latAtV_bounded X₁ Y₁ v Γ.M'.co h₁.lat.toIsLattice h₂.lat.toIsLattice
   obtain ⟨a, ha⟩ := GlobalTheory.SchrFixUniq.proportional_of_fixed v (GlobalTheory.LatVac.psiAt W.ψ v) (GlobalTheory.VacAny.continuous_psiV hstd.1 v)
     (GlobalTheory.PsiNontriv.psiAt_ne_one W.ψ hstd v) (GlobalTheory.LatVac.locCo Γ.M'.co v '' genPtS t e v)
     ((latPtS t e v).map (GlobalTheory.LatVac.locCo Γ.M'.co v)) c

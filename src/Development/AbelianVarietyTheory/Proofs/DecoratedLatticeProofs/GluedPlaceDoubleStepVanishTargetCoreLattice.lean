@@ -21,11 +21,12 @@ theorem GlobalTheory.FinPl.vertexGlued_vanish_lastLat : ∀ (D : D7) (k : Type) 
   intro D k _ _ _ _ p n n' n'' _ _ _ _ _ _ q ψ σ B J B' s₁ s₂ l vL hψ hs₁ hs₂ M₀ M₁ M α α₀ β γ γ₀ P Q Λ _ hM₀ hM₁ hM hG hβ hγ hγ₀ Ξ₁ Ξ₂ hΞ₁ hΞ₂ φ hφ
   obtain ⟨χ, hχ, -, -, hcond⟩ := (GlobalTheory.T.exists_splitPoint_frame_character D).2 k p |>.2 ψ hψ
   have hc := hcond hG.unit
-  obtain ⟨ε, -, hV⟩ := GlobalTheory.T.doubleUnfoldingStep_at_glued_finite_place D k p q ψ χ hc hχ
+  obtain ⟨_, -, hV⟩ := GlobalTheory.T.doubleUnfoldingStep_at_glued_finite_place D k p q ψ χ hc hχ
   have hO := GlobalTheory.T.splitPlace_baseVacuum_datum_exists_unique D
   have h₁ := (hO k p n (n' ⊕ Fin 1) ψ hψ B.V₀ J.W₀ α₀ β M₀ M₁ hM₀ hM₁ Ξ₁ hΞ₁).2.2 hG.unit _ _ hG.lat hβ
   have hO₂ := hO k p (n'' ⊕ Fin 1) n ψ hψ J.W₀ B'.V₀ β γ₀ M₁ M hM₁ hM Ξ₂ hΞ₂
-  refine (hV n n' n'' σ B J B' s₁ s₂ l vL hs₁ hs₂ α α₀ β γ γ₀ hG.sum hγ P P Q).2 Λ M₀ M₁ M₁ M Ξ₁ Ξ₁ Ξ₂ Ξ₂ h₁ ?_ φ hφ
-  rcases hγ₀ with h | h
-  · exact Or.inl (hO₂.2.2 hG.unit _ _ hβ h)
-  · exact Or.inr (hO₂.2.2 hG.unit _ _ hβ h)
+  have h₂ := hγ₀.imp
+    (hO₂.2.2 hG.unit Q.lat (lastKer Λ) hβ)
+    (hO₂.2.2 hG.unit Q.lat (lastPair q Λ).lat hβ)
+  exact (hV n n' n'' σ B J B' s₁ s₂ l vL hs₁ hs₂ α α₀ β γ γ₀ hG.sum hγ P P Q).2
+    Λ M₀ M₁ M₁ M Ξ₁ Ξ₁ Ξ₂ Ξ₂ h₁ h₂ φ hφ

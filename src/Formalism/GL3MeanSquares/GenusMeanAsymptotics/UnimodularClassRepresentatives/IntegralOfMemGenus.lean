@@ -117,7 +117,7 @@ theorem sum_ballCount (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
       Formalism.HermitianLatticesTheory.mass h L + ∑ᶠ n ∈ boxSet K F T, repMass h L (algebraMap F K (n : F)) := by
   classical
   have hM : ∀ M ∈ s, Submodule.IsLattice K M ∧ Formalism.HermitianLatticesTheory.IsIntegralLat h M := fun M hMs =>
-    ⟨(hsr.1 M hMs).1, integral_of_mem_genus hs hL hLi (hsr.1 M hMs)⟩
+    ⟨(hsr.1 M hMs).1.toIsLattice, integral_of_mem_genus hs hL hLi (hsr.1 M hMs)⟩
   have hmass : Formalism.HermitianLatticesTheory.mass h L = ∑ M ∈ s, ((Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℕ) : ℝ)⁻¹ := by
     have hex : ∃ s, Formalism.ThetaLiftIndependence.IsClassReps h L s := ⟨s, hsr⟩
     rw [Formalism.HermitianLatticesTheory.massBasic_mass_eq h L hex]

@@ -12,6 +12,7 @@ public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.Product
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalHeisenbergSpanPreservesTypeRelationsStatement
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.WeilActionLiftPairStepVectorInvLevelChar
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.EvalVAlgebraMapMem
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NsmulProjectionXColumnsMemSelfDualLattice
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.PadOneMemSecondBlockTriangular
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GramMapMulInv
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsSelfDualCoordLatticeOfSelfDualFrame
@@ -239,12 +240,14 @@ theorem step_twist : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type
       rw [omegaQ_split (R.Q t) _ _ _ hPP, mul_left_comm]
   have hΦ : IsSBHalf (cA D (es PP)) (latH (Vc D i) (Wc D i) (R.ΛV i) (R.ΛW i))
       (adjDat (Vc D i) (Wc D i) (R.βV i) (R.βW i) (es PP) (omegaQ {PP} (Wc D i).rank (R.xiR t) (-1))) :=
-    GlobalTheory.PlaceVec.isSBHalf_of_red dS.1 dT.1 (GlobalTheory.SplitScalar.infPart_splitIdem ha) _
+    GlobalTheory.PlaceVec.isSBHalf_of_red (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ dS) (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ dT) (GlobalTheory.SplitScalar.infPart_splitIdem ha) _
       (GlobalTheory.PlaceVec.frMapAdj_add _ _ _ _) (GlobalTheory.PlaceVec.frMapAdj_up _ _ _ _) (GlobalTheory.PlaceVec.frMapAdj_down _ _ _ _) {PP} _
       fun y y' h => GlobalTheory.PlaceVec.omegaQ_congr _ _ _ _ h
   refine step_of_shape R hW i t hv ha hε hae' dS dT hth hΦ hs hT hC hL fun ℓ hℓ => ?_
   obtain ⟨c, hB⟩ := hc.lev.βV i
-  refine GlobalTheory.T.mem_span_translates_conjugateHalf_twistPlace D _ _ (R.βV i) (R.βW i) hr _ _ _ hB dS.1 dT.1 (es PP) PP h0 (R.xiR t)
+  refine GlobalTheory.T.mem_span_translates_conjugateHalf_twistPlace D _ _ (R.βV i) (R.βW i) hr _ _ _ hB
+    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ dS | exact dS.1)
+    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ dT | exact dT.1) (es PP) PP h0 (R.xiR t)
     (GlobalTheory.ChainTw.RModel.xiR_ne R hc.lev t PP hPP) _
     ((GlobalTheory.T.thetaCoefficient_isSchwartzBruhat_uniform_split D R.ψ _ _ hψ _ _ dS dT _ ha f hT.1).2.1 ℓ hℓ) fun κ k1 k2 k3 k4 _ x x' hx hx' => ?_
   have k5 : ∀ P' ∈ P, P' ≠ PP → redFn (R.βV i) P' (finE (Vc D i) κ) = 1 := fun P' h h' =>

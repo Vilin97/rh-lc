@@ -70,7 +70,7 @@ theorem siegel_eigen_eq_one_any : ∀ (F E : Type) [Field F] [NumberField F] [Fi
     rw [div_eq_mul_inv]
     exact (hT.chars.unrβ P hPT).mul (hT.chars.unrα P hPT).inv
   have hβ : (X.β / X.α) (Matrix.GeneralLinearGroup.det t) = 1 := by
-    refine GlobalTheory.DblVacSiegelAny.chr_det_eq_one_any (v := v) G.V hT.geo.hV.lat.toIsLattice hunr t (fun u hu => ?_) fun z hz => ?_
+    refine GlobalTheory.DblVacSiegelAny.chr_det_eq_one_any (v := v) G.V hT.geo.hV.lat hunr t (fun u hu => ?_) fun z hz => ?_
     · have e1 : (GlobalTheory.DblVac.matD p - 1) * (diagCols (Fin a) : Matrix (Fin a ⊕ Fin a) (Fin a) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) =
           (diagCols (Fin a) : Matrix (Fin a ⊕ Fin a) (Fin a) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * ((t : Matrix (Fin a) (Fin a) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) - 1) := by
         rw [Matrix.sub_mul, Matrix.mul_sub, ht, Matrix.one_mul, Matrix.mul_one]

@@ -12,6 +12,8 @@ public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.Par
 open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR.Datum MeasureTheory Matrix ValuativeRel GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Unf GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.SeeSaw GlobalTheory.LocMod
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
+set_option synthInstance.maxHeartbeats 400000
+
 noncomputable section
 namespace GlobalTheory.KappaModel
 
@@ -46,7 +48,7 @@ theorem finv_hat_neg_one : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologica
   have hg : g ∈ SB (n → k) := ⟨hc.1.comp_continuous e.continuous, hc.2.comp_homeomorph e⟩
   let p : (n → k) × (Empty → k) ≃ₜ (n → k) := Homeomorph.prodUnique (n → k) (Empty → k)
   set f : (n → k) × (Empty → k) → ℂ := fun q => g q.1 with hfdef
-  have hf : f ∈ SB ((n → k) × (Empty → k)) := ⟨hg.1.comp_continuous p.continuous, hg.2.comp_homeomorph p⟩
+  have hf : f ∈ SB ((n → k) × (Empty → k)) := ⟨hg.1.comp_continuous continuous_fst, hg.2.comp_homeomorph p⟩
   set a : n → k := fun r => x r () with hadef
   obtain ⟨-, hinv⟩ := hC' Empty a f hf
   set μJ : Measure (Empty → k) := Measure.pi fun _ => ν with hμJ

@@ -156,7 +156,7 @@ theorem exists_vac (hL : L.Is μ₀) (h : IsTripleOf W M t i j e Bs Γ X) (hT : 
   obtain ⟨f, hf⟩ := GlobalTheory.PureGlue.eq_pure_of_slices Γ.M.vac (fun v => (hG.vac v).2.1) hG.std Φ hΦ fun v y hy => by
     have hle := GlobalTheory.BigDat.latPt_le_latAtV t i j e Bs Γ X hti v
     obtain ⟨hgen, hsd⟩ := GlobalTheory.BigDatLat.latPt_le_closure_and_selfDual hL W i j e Γ h.JW h.JWW v
-    obtain ⟨c, hc0, hc⟩ := GlobalTheory.LatBound.locCo_latAtV_bounded Γ.V Γ.W v Γ.M.co hT.geo.hV.lat hT.geo.hW.lat
+    obtain ⟨c, hc0, hc⟩ := GlobalTheory.LatBound.locCo_latAtV_bounded Γ.V Γ.W v Γ.M.co hT.geo.hV.lat.toIsLattice hT.geo.hW.lat.toIsLattice
     obtain ⟨a, ha⟩ := GlobalTheory.SchrFixUniq.proportional_of_fixed v (GlobalTheory.LatVac.psiAt W.ψ v) (GlobalTheory.VacAny.continuous_psiV hstd.1 v)
       (GlobalTheory.PsiNontriv.psiAt_ne_one W.ψ hstd v) (GlobalTheory.LatVac.locCo Γ.M.co v '' genPt e v)
       ((latPt e v).map (GlobalTheory.LatVac.locCo Γ.M.co v)) c

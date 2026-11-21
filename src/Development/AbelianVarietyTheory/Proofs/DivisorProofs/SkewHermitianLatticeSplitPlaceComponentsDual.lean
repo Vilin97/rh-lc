@@ -16,7 +16,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdealMapSmul
 @[expose] public section
 
 open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK GlobalTheory.KSplit
-open scoped Matrix TensorProduct
+open scoped Matrix TensorProduct Pointwise
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 noncomputable section
@@ -128,11 +128,29 @@ theorem skewSplitDual : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
   have h𝔡0 : differentIdeal ℤ (𝓞 F) ≠ ⊥ := differentIdeal_ne_bot
   have hdet : W.J.det ≠ 0 := GlobalTheory.InertSelfDual.det_ne_zero_of_skew σ B hW
   have hdetT : W.Jᵀ.det ≠ 0 := by rw [Matrix.det_transpose]; exact hdet
+  have hfull : Submodule.IsFullLattice E
+      ((differentIdeal ℤ (𝓞 F)).map (algebraMap (𝓞 F) (𝓞 E)) • W.L) := by
+    haveI := hW.lat
+    haveI := GlobalTheory.T.ideal_map_smul_isLattice_of_ne_bot F E d W.L _ h𝔡0 hW.lat.toIsLattice
+    obtain ⟨a, ha, ha0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot h𝔡0
+    have haE : ((algebraMap (𝓞 F) (𝓞 E) a : 𝓞 E) : E) ≠ 0 := by
+      intro h
+      apply ha0
+      have h1 : algebraMap (𝓞 F) (𝓞 E) a = 0 := by exact_mod_cast h
+      exact (FaithfulSMul.algebraMap_injective (𝓞 F) (𝓞 E)) (by simpa using h1)
+    let u : Eˣ := Units.mk0 _ haE
+    apply Submodule.IsFullLattice.of_le E (M := u • W.L)
+    intro x hx
+    obtain ⟨y, hy, rfl⟩ := (Submodule.mem_smul_pointwise_iff_exists _ _ _).mp hx
+    have heq : (u • y : Fin d → E) = (algebraMap (𝓞 F) (𝓞 E) a) • y := by
+      rw [Units.smul_def, Units.val_mk0, ← algebraMap_smul E (algebraMap (𝓞 F) (𝓞 E) a) y]
+    rw [heq]
+    exact Submodule.smul_mem_smul (Ideal.mem_map_of_mem _ ha) hy
   have hglob := eq_dualGlob (σ := σ) (J := W.J) (L := W.L) hB.unram hW.dual
   have hloc : latLoc F W.L v =
       dualLoc σ W.Jᵀ ((differentIdeal ℤ (𝓞 F)).map (algebraMap (𝓞 F) (𝓞 E)) • W.L) v :=
     (congrArg (fun L => latLoc F L v) hglob).trans
-      (SelfDual.latLoc_dualGlob hdetT (GlobalTheory.T.ideal_map_smul_isLattice_of_ne_bot F E d W.L _ h𝔡0 hW.lat) v)
+      (SelfDual.latLoc_dualGlob hdetT hfull v)
   obtain ⟨z, hz0, hz1, hzle, hzeq⟩ := GlobalTheory.T.exists_local_generator_of_nonzero_ideal F (differentIdeal ℤ (𝓞 F)) v h𝔡0
   have key := mem_splitLat_comp_iff_skew hcm hW.skew t z hloc (GlobalTheory.T.mem_localLattice_idealMap_smul_iff_generator F E d W.L _ v z hzle hzeq)
   set M : Matrix (Fin d) (Fin d) (Fv F v) := z • (c.1ᵀ * W.J.map t) with hM

@@ -87,13 +87,12 @@ theorem tendsto_right (hH : HermRepUnram) (hLI : LIStat) (hK : Formalism.Hermiti
   have h1 : Tendsto (fun j : ℕ => Formalism.HermitianLatticesTheory.mass h L /
       (j : ℝ) ^ (2 * Formalism.HermitianLatticesTheory.fDeg K * finrank K V)) atTop (𝓝 0) :=
     tendsto_const_nhds.div_atTop ((tendsto_pow_atTop hexp).comp tendsto_natCast_atTop_atTop)
-  have hLat := hL.toIsLattice
   have h2 := (tendsto_singS_sum hK hF hs hd (by assumption) hLi hm).const_mul
     (c * lamG F h L * (normD h L)⁻¹)
   refine (h1.add h2).congr fun j => ?_
   rw [add_div]
   congr 1
-  rw [finsum_mem_congr rfl fun n hn => repMass_eq hH hLI hK hF hs hd hLat hLi hm hc hn,
+  rw [finsum_mem_congr rfl fun n hn => repMass_eq hH hLI hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi hm hc hn,
     finsum_mem_eq_finite_toFinset_sum _ (A5.boxSet_finite hK hF ((j : ℝ) ^ 2)),
     finsum_mem_eq_finite_toFinset_sum _ (A5.boxSet_finite hK hF ((j : ℝ) ^ 2)),
     ← Finset.mul_sum, zpow_neg, zpow_natCast, ← pow_mul, ← mul_assoc 2, div_eq_mul_inv]

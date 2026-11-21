@@ -98,7 +98,7 @@ theorem exists_place (p : ℕ) (hp : p.Prime) : ∃ v : HeightOneSpectrum (𝓞 
 
 theorem inJ_iff {k : Type} [Field k] {n a t fc : ℕ} (ha : n ≤ a) (hfc : n ≤ fc) (M : Matrix (Fin n) (Fin n) k) :
     InJ a t fc false M ↔ ∀ i j : Fin n, (j < i → M i j = 0) ∧ M i i = 1 := by
-  have hb : ∀ x : Fin n, blkOf a t x = x := fun x => if_pos (lt_of_lt_of_le x.2 ha)
+  have hb : ∀ x : Fin n, Formalism.L2.Forms.blkOf a t x = x := fun x => if_pos (lt_of_lt_of_le x.2 ha)
   constructor
   · rintro ⟨h1, h2, -, -⟩ i j
     exact ⟨fun h => h1 i j (by rw [hb, hb]; exact h), h2 i (lt_of_lt_of_le i.2 ha)⟩

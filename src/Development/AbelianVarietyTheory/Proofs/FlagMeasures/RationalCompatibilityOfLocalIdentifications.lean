@@ -103,7 +103,7 @@ theorem mem_localLattice_of_cong (Z : LocDat D) (p : PlF D) (g : Formalism.MainN
   · exact IotaBP.localLattice_mono Z p le_sup_right (hX F' hc hcX)
 
 theorem mem_NgX_of_local (Z : LocDat D) {Λ : Submodule (𝓞 D.host.E) (VS D).V}
-    (hΛ : Submodule.IsLattice D.host.E Λ) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
+    (hΛ : Submodule.IsFullLattice D.host.E Λ) {T T' : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
     (F' : LFlag (D.sp.Y 0) D.R.rS T') {v : (VS D).V} (hv : v ∈ Λ)
     (h : ∀ p : PlF D, (Z.M p).split ≠ none →
       Cong (locH Z p) (lattice₂ D Z.M p Λ) (scaled Z p (frame F)) (scaled Z p (frame F')) (baseChange₂ D p v)) :
@@ -111,7 +111,7 @@ theorem mem_NgX_of_local (Z : LocDat D) {Λ : Submodule (𝓞 D.host.E) (VS D).V
   refine BwdNP.mem_of_bcP Z (IotaBP.isLattice_NgX hΛ F F') fun p => ?_
   match hs : (Z.M p).split with
   | none => exact IotaBP.untyped_mem Z p hs F F' (BwdNP.baseChange_mem_localLattice Z hv p)
-  | some g => exact mem_localLattice_of_cong Z p g hs hΛ.fg F F' (h p (by rw [hs]; exact Option.some_ne_none g))
+  | some g => exact mem_localLattice_of_cong Z p g hs hΛ.toIsLattice.fg F F' (h p (by rw [hs]; exact Option.some_ne_none g))
 
 theorem iotaCompat_of_local : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word) (t₀ t : TauC Y u u'),
     t.lam = t₀.lam → t.lam' = t₀.lam' →
@@ -147,7 +147,7 @@ theorem iotaCompat_of_local : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u
     refine Submodule.mem_map.2 ⟨y', hy', ?_⟩
     show t.lin y' = t.lin (t₀.lin.symm (t₀.lin y'))
     rw [LinearEquiv.symm_apply_apply]
-  have hLat : Submodule.IsLattice D.host.E t₀.lam := ((Y.rowsOK u).1 t₀.lam t₀.mem).1.1
+  have hLat : Submodule.IsFullLattice D.host.E t₀.lam := ((Y.rowsOK u).1 t₀.lam t₀.mem).1.1
   unfold Formalism.MainNotions.S.Lat.IotaCompat
   intro x' hx' l hlr
   have hx'Λ : x' ∈ t₀.lam := (Submodule.mem_inf.1 hx').1

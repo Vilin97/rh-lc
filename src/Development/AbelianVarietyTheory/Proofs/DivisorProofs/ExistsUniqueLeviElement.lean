@@ -117,7 +117,7 @@ lemma frame_mulVec_eq_zero (σ : E →ₐ[F] E) (hσ : ∀ z, σ (σ z) = z) (B 
       rw [frame, Matrix.fromCols_mulVec]; rfl
     rw [this, h2, Matrix.mulVec_zero, add_zero] at hv
     exact hv
-  have hu0 := not_line W₁.L hW₁.lat (fun k => v (Sum.inl k)) fun a =>
+  have hu0 := not_line W₁.L hW₁.lat.toIsLattice (fun k => v (Sum.inl k)) fun a =>
     (hA.low _).mpr (by rw [Matrix.mulVec_smul, hu, smul_zero]; exact zero_mem _)
   ext (k | k)
   · exact congrFun hu0 k

@@ -151,7 +151,7 @@ private theorem at_vecMulVec_right {n d : ℕ} {v : Pl (F := F)} (x : Fin n → 
   exact at_transpose (at_vecMulVec he x)
 
 private theorem coords {σ : E →ₐ[F] E} {B : Base F E} {n n₁ i₀ i₁ : ℕ} {H : Plane E n n₁} {Y : Spc F E n}
-    {Y₁ : Spc F E n₁} (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hL : Y.L.IsLattice E)
+    {Y₁ : Spc F E n₁} (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hL : Y.L.IsFullLattice E)
     (ho : ∀ u, form σ Y.J H.x (H.ι *ᵥ u) = 0) :
     ∃ (s t : Fin n → E) (U : Matrix (Fin n₁) (Fin n) E),
       (∀ j l, s j * H.x l + ∑ q, H.ι l q * U q j + t j * H.y l = if l = j then 1 else 0) ∧

@@ -284,7 +284,7 @@ theorem core (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K
     have hb : 𝔭 ≠ ⊥ := Ring.ne_bot_of_isMaximal_of_not_isField h𝔭 (NumberField.RingOfIntegers.not_isField F)
     exact_mod_cast (Ideal.absNorm_eq_zero_iff.not.mpr hb)
   have hsplit : alphaL h L₀ 𝔭 = alphaN h L₀ 𝔭 1 * alphaL h' (S₁.cut L₀) 𝔭 :=
-    alphaL_split hK hF hs hd S₁ hx1 hL hLi hxL h𝔭 hvd
+    alphaL_split hK hF hs hd S₁ hx1 hLf hLi hxL h𝔭 hvd
   have hαpos : 0 < alphaL h L₀ 𝔭 := alphaL_pos hK hF hs hd hL hLi h𝔭
   have hαC : 0 < alphaL h' (S₁.cut L₀) 𝔭 := alphaL_pos hK hF hs₁' hd₁' hC hCi h𝔭
   have hαN : alphaN h L₀ 𝔭 1 ≠ 0 := by
@@ -293,9 +293,9 @@ theorem core (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K
     exact lt_irrefl _ hαpos
   have hNsm : alphaN (algebraMap F K (n : F) • h) L₀ 𝔭 n =
       (Ideal.absNorm 𝔭 : ℝ) ^ vF 𝔭 n * alphaN h L₀ 𝔭 1 := by
-    have e := alphaN_smul hK hF hs hd hL hLi h𝔭 hn hs' hd' (by omega) one_ne_zero
+    have e := alphaN_smul hK hF hs hd hLf hLi h𝔭 hn hs' hd' (by omega) one_ne_zero
     rwa [mul_one] at e
-  have hLsm := alphaL_smul hK hF hs hd hL hLi h𝔭 hn hs' hd'
+  have hLsm := alphaL_smul hK hF hs hd hLf hLi h𝔭 hn hs' hd'
   have hvsm := PinA.vd_smul hK hF hs hd hLf hLi h𝔭 hn
   have hvT : vd (algebraMap F K (n : F) • h') (locF 𝔭 (S₁.cut L₀)) 𝔭 =
       vd h' (S₁.cut L₀) 𝔭 + finrank K V' * vF 𝔭 n := by
@@ -303,7 +303,7 @@ theorem core (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K
     exact PinA.vd_smul hK hF hs₁' hd₁' hCf hCi h𝔭 hn
   have hαT : alphaL (algebraMap F K (n : F) • h') (locF 𝔭 (S₁.cut L₀)) 𝔭 =
       (Ideal.absNorm 𝔭 : ℝ) ^ (vF 𝔭 n * finrank K V' ^ 2) * alphaL h' (S₁.cut L₀) 𝔭 := by
-    rw [← alphaL_smul hK hF hs₁' hd₁' hC hCi h𝔭 hn hsc' hdc']
+    rw [← alphaL_smul hK hF hs₁' hd₁' hCf hCi h𝔭 hn hsc' hdc']
     unfold alphaL
     simp only [akCount_locF hF _ (S₁.cut L₀) 𝔭 h𝔭]
   have hrep : IsLocReps S₁ L₀ 𝔭 {locF 𝔭 (S₁.cut L₀)} :=

@@ -106,11 +106,12 @@ theorem sum_regroup (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : I
 
 theorem repMass_eq_prod_psi' (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) (hs : h.IsSymm)
     (hd : IsTotPosDef h) (S : VecSplit h h') {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {c : ℝ}
+    (hLfull : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {c : ℝ}
     (hc : MassConst K F (finrank K V - 1) c) :
     repMass h L (h S.x₀ S.x₀) =
       c * ∏' 𝔭 : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal}, psiP S L 𝔭.1 := by
   classical
+  have hL : Submodule.IsLattice K L := hLfull.toIsLattice
   obtain ⟨s', hs'⟩ := exists_fibReps hK hs hd S hL hLi
   rw [repMass_eq_sum_fib hK hs hd S hL hLi hs']
   by_cases H : ∀ 𝔭 : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal}, ∃ T, fibLoc S L 𝔭.1 T ≠ 0
@@ -118,11 +119,12 @@ theorem repMass_eq_prod_psi' (hK : Formalism.HermitianLatticesTheory.IsCMUnram K
     have hn0 : n ≠ 0 := by
       rintro rfl
       exact S.hx₀ (by rw [hn]; simp)
-    have hA := StabilizerLattices.isLattice_cut S hL
+    have hAfull := StabilizerLattices.isFullLattice_cut S hLfull
+    have hA := hAfull.toIsLattice
     have hAi := isIntegralLat_cut S hLi
-    have f1 := finite_vd_ne_zero hK hF hs hd hL hLi
+    have f1 := finite_vd_ne_zero hK hF hs hd hLfull hLi
     have f2 := finite_vF_ne_zero hn0
-    have f3 := finite_vd_ne_zero hK hF (S.isSymm hs) (S.isTotPosDef hd) hA hAi
+    have f3 := finite_vd_ne_zero hK hF (S.isSymm hs) (S.isTotPosDef hd) hAfull hAi
     set Z : Finset {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal} :=
       f1.toFinset ∪ f2.toFinset ∪ f3.toFinset with hZ
     have hZL : ∀ 𝔭 ∉ Z, vd h L 𝔭.1 = 0 := by

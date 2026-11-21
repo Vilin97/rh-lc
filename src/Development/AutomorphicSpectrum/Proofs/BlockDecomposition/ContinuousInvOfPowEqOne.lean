@@ -223,8 +223,7 @@ theorem tor_conj_nlo (N : ℕ) : ∀ s ∈ Tor k N, ∀ n ∈ Nlo k N, s⁻¹ * 
     apply mem_parab_iff.2
     intro a b i j hab
     change (leviEmb k e s : Matrix (Fin N) (Fin N) k) (e ⟨a, i⟩) (e ⟨b, j⟩) = 0
-    change (Matrix.reindex e e (Matrix.blockDiagonal' fun a : (Fin N)ᵒᵈ => ((s (OrderDual.ofDual a) : GL _ k) : Matrix _ _ k))) (e ⟨a, i⟩) (e ⟨b, j⟩) = 0
-    simp [Matrix.blockDiagonal'_apply, hab.ne']
+    exact leviEmb_apply_ne k e s hab.ne' i j
   change n ∈ unipRad k e at hn
   change (torEmb k N s)⁻¹ * n * torEmb k N s ∈ unipRad k e
   obtain ⟨u, hu, rfl⟩ := Subgroup.mem_map.1 hn

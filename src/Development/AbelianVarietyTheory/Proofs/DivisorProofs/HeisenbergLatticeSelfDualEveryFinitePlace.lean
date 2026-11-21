@@ -94,7 +94,7 @@ section Frame
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 theorem exists_formFrame' (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (hJ : J.det ≠ 0)
-    (L : Submodule (𝓞 E) (Fin n → E)) (hL : L.IsLattice E)
+    (L : Submodule (𝓞 E) (Fin n → E)) (hL : L.IsFullLattice E)
     (hdual : ∀ y, (∀ x ∈ L, form σ J y x ∈ (algebraMap (𝓞 E) E).range) → y ∈ L) :
     ∃ (k : ℕ) (S T : Matrix (Fin n) (Fin k) E), (∀ j, (fun i => S i j) ∈ L) ∧ (∀ j, (fun i => T i j) ∈ L) ∧
       (∀ j, ∀ x ∈ L, form σ J (fun i => T i j) x ∈ (algebraMap (𝓞 E) E).range) ∧ T * (J * S.map σ)ᵀ = 1 := by

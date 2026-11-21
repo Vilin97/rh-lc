@@ -78,7 +78,7 @@ theorem finite_under_eq (v : Pl (F := F)) : {P : HeightOneSpectrum (𝓞 E) | P.
   rw [Ideal.dvd_iff_le, Ideal.map_le_iff_le_comap, ← hP]
   exact le_rfl
 
-theorem chr_det_eq_one_any {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) {v : Pl (F := F)} {χ : Chr F E}
+theorem chr_det_eq_one_any {d : ℕ} (W : Spc F E d) (hL : W.L.IsFullLattice E) {v : Pl (F := F)} {χ : Chr F E}
     (hχ : ∀ P : HeightOneSpectrum (𝓞 E), P.under (𝓞 F) = v → UnrAt χ P) (t : GL (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
     (h1 : At (evFin F v) ((t : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) - 1))
     (ht : ∀ z ∈ GlobalTheory.InertSph.latAt W v, (t : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) *ᵥ z ∈ GlobalTheory.InertSph.latAt W v ∧

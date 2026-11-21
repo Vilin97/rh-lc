@@ -118,7 +118,7 @@ theorem form_mem {σ : E →ₐ[F] E} {B : Base F E} (hB : B.IsGood σ) {d r s :
   set_option synthInstance.maxHeartbeats 100000 in
     rw [← hsc (form σ W.J x y), map_sum]
   refine sum_mem fun i _ => ?_
-  rw [map_smul, Algebra.smul_def]
+  rw [Algebra.smul_def, map_mul, τ.commutes]
   refine mul_mem (mem_of_trace_int hB.std hu _ fun a => ?_) (apply_coe_mem τ _)
   have h := (hW.dual x).1 hx y hy (algebraMap (𝓞 F) (𝓞 E) a * c i)
   have e : (a : F) * Algebra.trace F E ((c i : E) * form σ W.J x y) =
@@ -182,7 +182,7 @@ theorem exists_gram {σ : E →ₐ[F] E} {B : Base F E} (hB : B.IsGood σ) {d r 
     (h₁ : IsSplitBasis τ W.L b₁) (h₂ : IsSplitBasis (τ.comp σ) W.L b₂) :
     ∃ S : Matrix (Fin d) (Fin d) (v.adicCompletionIntegers F), IsUnit S.det ∧
       S.map (fun x => (x : Fv F v)) = b₁.1ᵀ * W.J.map τ * b₂.1 := by
-  obtain ⟨k, S, T, hS, hT, hTS⟩ := exists_formFrame σ W.J (det_ne_zero_of_skew σ B hW) W.L hW.lat
+  obtain ⟨k, S, T, hS, hT, hTS⟩ := exists_formFrame σ W.J (det_ne_zero_of_skew σ B hW) W.L hW.lat.toIsLattice
     (fun y hy => (hW.dual y).2 fun x hx o => by
       obtain ⟨r, hr⟩ := hy x hx
       rw [← hr]

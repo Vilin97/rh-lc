@@ -30,8 +30,9 @@ theorem moyPrasadJacquetIso : GlobalTheory.Published.MoyPrasadJacquetIso := by
       (GlobalTheory.T.isCompact_parahoric_subgroup k n s d e) (leviEmb k e) (leviEmb_mem_normalizer k e) ((Gx k e).comap (leviEmb k e))
       (fun _ hm => hm) (lowC k e) (GlobalTheory.T.parahoric_levi_unipotent_lower k n s d e)
       (fun U hU => by
-        obtain ⟨t, ht, hc⟩ := GlobalTheory.T.central_torus_contracts_lower k n s d e U hU
-        exact ⟨t, fun m _ => ht m, hc⟩) y hy
+        refine (GlobalTheory.T.central_torus_contracts_lower k n s d e U hU).imp ?_
+        intro t ht
+        exact ⟨fun m _ => ht.1 m, ht.2⟩) y hy
     exact ⟨v, hv, hvy⟩
 
 end GlobalTheory.CompanionTheory.MoyPrasadTop

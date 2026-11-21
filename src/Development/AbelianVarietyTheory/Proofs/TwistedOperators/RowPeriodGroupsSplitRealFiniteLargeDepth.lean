@@ -28,7 +28,8 @@ theorem grpAt_all {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type} {A
   obtain ⟨hi, hf, hc, he, hu, hrest⟩ := GlobalTheory.AdelicSplit.adelic_split D (ch.G.V (.grid D.R.m j))
   have hV := ch.G.isV (X := .grid D.R.m j) ⟨le_rfl, by omega⟩ (fun k hk => by
     simp only [Node.grid.injEq] at hk; omega)
-  have hlat := congLev_open_compact (ch.G.V (.grid D.R.m j)) hV.sd.1 (𝔪 := ⊤) top_ne_bot
+  have hlat := congLev_open_compact (ch.G.V (.grid D.R.m j))
+    (Formalism.IndefR.Fin.PDA.selfDual_isFullLattice _ _ hV.sd) (𝔪 := ⊤) top_ne_bot
   have hR : IsClosed ((rowGrp ch.G j : Subgroup (GA D (ch.G.V (.grid D.R.m j)))) : Set (GA D (ch.G.V (.grid D.R.m j)))) ∧ (∀ a ∈ GinfC _, ∀ b ∈ GfC _, a * b ∈ rowGrp ch.G j → a ∈ rowGrp ch.G j ∧ b ∈ rowGrp ch.G j) ∧
       (∀ μ : Measure (rowGrp ch.G j), μ.IsHaarMeasure → μ.IsInvInvariant) ∧
       ∀ μ : Measure ((rowGrp ch.G j).subgroupOf (GfC _)), μ.IsHaarMeasure → μ.IsInvInvariant := by

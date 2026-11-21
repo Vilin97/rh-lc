@@ -252,43 +252,7 @@ theorem gram_xx (hA : H'.IsAdapted σ B W W₁ i₀ i₁) :
 
 theorem span_plane (hS : W.IsSkew σ B r' s') (hA : H'.IsAdapted σ B W W₁ i₀ i₁) (z : Fin d → E) :
     ∃ (s t : E) (u : Fin d₁ → E), z = s • H'.x + H'.ι *ᵥ u + t • H'.y := by
-  haveI : Submodule.IsLattice E W.L := hS.lat
-  have htop : Submodule.span E (W.L : Set (Fin d → E)) = ⊤ := by
-    rw [eq_top_iff]
-    intro y _
-    obtain ⟨generators, hgen⟩ := Submodule.IsLattice.fg E W.L
-    obtain ⟨a, ha, hclear⟩ :=
-      exists_integral_multiples ℤ ℚ (generators.image (form σ W.J y))
-    -- Clear denominators on the generators, then use self-duality.
-    have hint (x : Fin d → E) (hx : x ∈ W.L) :
-        IsIntegral ℤ (form σ W.J (a • y) x) := by
-      rw [← hgen] at hx
-      induction hx using Submodule.span_induction with
-      | mem x hx =>
-        rw [form, smul_dotProduct]
-        exact hclear _ (Finset.mem_image_of_mem _ hx)
-      | zero =>
-        simp only [form, Pi.zero_apply, map_zero]
-        change IsIntegral ℤ ((a • y) ⬝ᵥ W.J *ᵥ (0 : Fin d → E))
-        rw [Matrix.mulVec_zero, dotProduct_zero]
-        exact isIntegral_zero
-      | add x x' _ _ hx hx' =>
-        have hσ : (fun i => σ ((x + x') i)) = (fun i => σ (x i)) + fun i => σ (x' i) := by
-          funext i
-          simp only [Pi.add_apply, map_add]
-        rw [form, hσ, Matrix.mulVec_add, dotProduct_add]
-        exact hx.add hx'
-      | smul b x _ hx =>
-        have hσ : (fun i => σ ((b • x) i)) = σ (algebraMap _ E b) • fun i => σ (x i) := by
-          funext i
-          simp [Pi.smul_apply, Algebra.smul_def, smul_eq_mul]
-        rw [form, hσ, Matrix.mulVec_smul, dotProduct_smul, smul_eq_mul]
-        exact ((RingOfIntegers.isIntegral_coe b).map σ.toRingHom.toIntAlgHom).mul hx
-    have hy : a • y ∈ W.L := (hS.dual _).2 fun x hx o =>
-      Algebra.isIntegral_trace ((RingOfIntegers.isIntegral_coe o).mul (hint x hx))
-    have hmem := Submodule.subset_span (R := E) (s := (W.L : Set (Fin d → E))) hy
-    rw [← Int.cast_smul_eq_zsmul E] at hmem
-    exact (Submodule.smul_mem_iff _ (Int.cast_ne_zero.mpr ha)).mp hmem
+  have htop : Submodule.span E (W.L : Set (Fin d → E)) = ⊤ := hS.lat.span_eq_top
   have hz : z ∈ Submodule.span E (W.L : Set (Fin d → E)) := by
     rw [htop]
     exact Submodule.mem_top

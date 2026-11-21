@@ -1,12 +1,13 @@
 module
 
 public import Statements
-public import Supplements.Kernels.MainTheorems
+public import Development.AutomorphicArithmetic.CharacterBoxes.ClaimStrip
+public import Development.AutomorphicArithmetic.CharacterBoxes.MainConclusion
 
 @[expose] public section
 
 theorem LFunction_ne_zero_of_half_lt_re : DirichletLNonvanishingRightOfHalf :=
-  allChi
+  UpperTheory.FinalTheorems.everyCharacter
 
 theorem riemannHypothesis : RiemannHypothesis :=
   Claim.zeta LFunction_ne_zero_of_half_lt_re

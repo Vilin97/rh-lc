@@ -79,9 +79,20 @@ theorem hat_le_std {D : D7} (S T : HSp D) {A : Submodule (𝓞 D.host.E) (Fin S.
     {B : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)} (hA : IsSelfDualC S A) (hB : IsSelfDualC T B)
     (𝔪 : Ideal (𝓞 D.host.E)) : ∃ N : ℕ, 0 < N ∧ ∀ v ∈ GlobalTheory.ChiGrid.hatMx (𝔪 • GlobalTheory.ChiGrid.homLat A B),
       N • v ∈ GlobalTheory.AdForm.stdHom S T := by
+  have hstd (n : ℕ) : Submodule.IsFullLattice D.host.E (Formalism.L2.Col.stdLat D.host.E n) := by
+    haveI := Formalism.L2.Col.stdLat_lattice (E := D.host.E) (n := n)
+    refine ⟨?_⟩
+    apply top_unique
+    intro v _
+    have hv : v = ∑ i, v i • (Pi.single i (1 : D.host.E) : Fin n → D.host.E) := by
+      funext j
+      simp [Finset.sum_apply, Pi.single_apply]
+    rw [hv]
+    exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _
+      (Submodule.subset_span (by simpa using Formalism.L2.Col.single_mem_stdLat (E := D.host.E) i 1))
   obtain ⟨K, hK, h⟩ := GlobalTheory.GridWeil.exists_nsmul_hatMx (S := S) (T := T)
-    (Formalism.L2.Col.stdLat_lattice (E := D.host.E) (n := S.rank)) (Formalism.L2.Col.stdLat_lattice (E := D.host.E) (n := T.rank))
-    (GlobalTheory.ChiGrid.homLat A B) (Module.Finite.iff_fg.1 (homLat_fg hA.1 hB.1.fg))
+    (hstd S.rank) (hstd T.rank)
+    (GlobalTheory.ChiGrid.homLat A B) (Module.Finite.iff_fg.1 (homLat_fg (GlobalTheory.PlaceVec.selfDual_isFullLattice S A hA) hB.1.fg))
   refine ⟨K, hK, fun v hv => ?_⟩
   rw [stdHom_eq]
   refine h _ (AddSubgroup.closure_mono ?_ hv)

@@ -17,6 +17,7 @@ public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.Leng
 public import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.CoeSelfDualLatticeInFrameCoordinatesEq
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ThetaKernelAlgebraicExpansion
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsThetaFunctionStandardPairSecond
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NsmulProjectionXColumnsMemSelfDualLattice
 
 @[expose] public section
 
@@ -214,8 +215,8 @@ theorem exists_den_dualCoord {A' WW : HSp D} {ΛS : Submodule (𝓞 D.host.E) (F
   exact mul_mem hξ h1
 
 theorem exists_mul_dualCoord {A' WW : HSp D} {ΛS : Submodule (𝓞 D.host.E) (Fin A'.rank → D.host.E)}
-    {ΛT : Submodule (𝓞 D.host.E) (Fin WW.rank → D.host.E)} (hS : Submodule.IsLattice D.host.E ΛS)
-    (hT : Submodule.IsLattice D.host.E ΛT) {a : AE D} (hinf : infPart D a = 0) (βA' : GL (Fin A'.rank) (EAf D))
+    {ΛT : Submodule (𝓞 D.host.E) (Fin WW.rank → D.host.E)} (hS : Submodule.IsFullLattice D.host.E ΛS)
+    (hT : Submodule.IsFullLattice D.host.E ΛT) {a : AE D} (hinf : infPart D a = 0) (βA' : GL (Fin A'.rank) (EAf D))
     (βW : GL (Fin WW.rank) (EAf D)) : ∃ K : ℕ, 0 < K ∧ ∀ t : WO A' WW, IsHalf a t → IsIntM (dualCoord A' WW βA' βW t) →
       K • t ∈ latO A' WW (ΛS : Set (Fin A'.rank → D.host.E)) (ΛT : Set (Fin WW.rank → D.host.E)) (fun _ => True) := by
   obtain ⟨m, hm, hξ⟩ := GlobalTheory.PlaceVec.exists_nsmul_mem_int (eToEAf D D.host.xi0⁻¹)
@@ -333,7 +334,8 @@ theorem finDatum'_isAlgComb : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Cons
   exact isAlgComb_of_isThetaAt hI.isVac'.1 hSd hWd (by rw [← RingHom.map_mul, hee]) hinf
     (stdSnd_isSB hν.1 he (GlobalTheory.ConstRatio.ideal_ne_bot X (locPl G) t) _ A' WW X.rA'.β X.rW.β _
       (exists_den_dualCoord hSd.1.fg hWd.1.fg X.rA'.β X.rW.β)
-      (exists_mul_dualCoord hSd.1 hWd.1 hinf X.rA'.β X.rW.β))
+      (exists_mul_dualCoord (GlobalTheory.ProjXCols.selfDual_isFullLattice A' _ hSd)
+        (GlobalTheory.ProjXCols.selfDual_isFullLattice WW _ hWd) hinf X.rA'.β X.rW.β))
     (fun x => stdSnd_mem hν.1 he _ _ A' WW X.rA'.β X.rW.β x) (hI.snd t)
 
 end GlobalTheory.BotFourierSnd

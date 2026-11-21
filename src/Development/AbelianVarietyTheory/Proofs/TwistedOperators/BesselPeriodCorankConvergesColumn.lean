@@ -116,7 +116,7 @@ theorem pairVec_cont (hθ : IsInfFam θ) (ξ : Module.Dual ℂ (coefPlus G θ).W
     Continuous (pairVec (coefPlus G θ) ξ Ψ) := by
   obtain ⟨_, _, _, _, _, _, _⟩ := GlobalTheory.Mem.AdelicGroupTop.adelic_unitary_topology D (G.V (.top 0))
   have hV := G.isV (X := .top 0) (Nat.zero_le _) (fun j e => by cases e)
-  have hU := (congLev_open_compact (G.V (.top 0)) hV.sd.1 (G.pl.modul_ne_bot sc)).1
+  have hU := (congLev_open_compact (G.V (.top 0)) (Formalism.IndefR.Fin.PDA.selfDual_isFullLattice _ _ hV.sd) (G.pl.modul_ne_bot sc)).1
   refine continuous_iff_continuousAt.2 fun h0 => ?_
   have hn : h0 • (((G.Kplus).comap (Lev.finE (G.V (.top 0))) : Subgroup _) : Set (GA D (G.V (.top 0)))) ∈ nhds h0 :=
     (hU.leftCoset h0).mem_nhds ⟨1, one_mem _, mul_one h0⟩
@@ -135,7 +135,7 @@ theorem pairVec_isAutFun (hθ : IsInfFam θ) (ξ : Module.Dual ℂ (coefPlus G �
     IsAutFun (G.V (.top 0)) (pairVec (coefPlus G θ) ξ Ψ) := by
   have hV := G.isV (X := .top 0) (Nat.zero_le _) (fun j e => by cases e)
   exact ⟨fun γ hγ g => pairVec_left G θ ξ hΨ hγ g,
-    ⟨_, (congLev_open_compact (G.V (.top 0)) hV.sd.1 (G.pl.modul_ne_bot sc)).1,
+    ⟨_, (congLev_open_compact (G.V (.top 0)) (Formalism.IndefR.Fin.PDA.selfDual_isFullLattice _ _ hV.sd) (G.pl.modul_ne_bot sc)).1,
       fun k hk hkf g => pairVec_right G θ ξ hΨ hk hkf g⟩, pairVec_cont G θ hθ ξ hΨ⟩
 
 end Col

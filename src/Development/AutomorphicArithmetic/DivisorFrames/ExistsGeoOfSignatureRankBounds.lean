@@ -50,10 +50,22 @@ private theorem herm_of_lat {D : D7} (B : Base D.host.F D.host.E) (τf : Infinit
     ∃ Λ bas, Spc.IsHerm D.sp.cm.sig B (Spc.mk ((-1 : D.host.E) • S.gram) Λ (fun w => -s (τf w)) bas) q p ∧
       ∀ y, y ∈ Λ ↔ star y ∈ Λ₀ := by
   have hlat := Formalism.L2.Col.brp_starLat_lattice _ _ hsd.1
+  have hfull : Submodule.IsFullLattice D.host.E (Formalism.L2.Col.starLat D.host.E Λ₀) := by
+    let _ := hlat
+    refine ⟨?_⟩
+    apply le_antisymm le_top
+    have hspan : Submodule.span D.host.E (Λ₀ : Set (Fin S.rank → D.host.E)) = ⊤ :=
+      Submodule.IsFullLattice.span_eq_top (self := GlobalTheory.ProjXCols.selfDual_isFullLattice S Λ₀ hsd)
+    have h := Formalism.L2.Col.brp_star_span_top D.host.E _ hspan
+    rw [← h]
+    apply Submodule.span_mono
+    rintro _ ⟨x, hx, rfl⟩
+    change star (star x) ∈ Λ₀
+    simpa using hx
   obtain ⟨bas, hbas⟩ := exists_bas B _ hlat
   have eJ : ∀ w, ((-1 : D.host.E) • S.gram).map (B.emb w).1 = -((gramAt D S (τf w)).map star) := fun w => by
     ext a b; simp [gramAt, hB]
-  refine ⟨_, bas, ⟨fun a b => ?_, fun w => ?_, hlat, fun y => GlobalTheory.TripleSpace.mem_starLat_iff_form S hsd y, fun w => ?_, hbas⟩,
+  refine ⟨_, bas, ⟨fun a b => ?_, fun w => ?_, hfull, fun y => GlobalTheory.TripleSpace.mem_starLat_iff_form S hsd y, fun w => ?_, hbas⟩,
     fun y => Iff.rfl⟩
   · show star (((-1 : D.host.E) • S.gram) b a) = ((-1 : D.host.E) • S.gram) a b
     simp only [Matrix.smul_apply, smul_eq_mul, star_mul', star_neg, star_one, GlobalTheory.TripleSpace.star_gram]
@@ -79,12 +91,17 @@ private theorem skew_of_lat {D : D7} (B : Base D.host.F D.host.E) (τf : Infinit
     congrArg (D.host.xi0 • ·) (blk_empty e _ _).symm
   have hZ := GlobalTheory.LineSelfDual.isSelfDualC_selfDualLatticeCoordsInFrame D (zeroSp D)
   have hlat := GlobalTheory.SkewLat.isLattice_pairLat GlobalTheory.SkewLat.DualPair.AA_ne hA.1 hZ.1 e'
+  have hfull := GlobalTheory.SkewLat.pairLat_isFull
+    (GlobalTheory.SkewLat.scLat_isFull GlobalTheory.SkewLat.DualPair.AA_ne
+      (GlobalTheory.ProjXCols.selfDual_isFullLattice X Λ₀ hA))
+    (GlobalTheory.SkewLat.scLat_isFull GlobalTheory.SkewLat.DualPair.AA_ne
+      (GlobalTheory.ProjXCols.selfDual_isFullLattice (zeroSp D) _ hZ)) e'
   obtain ⟨bas, hbas⟩ := exists_bas B _ hlat
   have hsub : Subsingleton (Matrix (Fin (zeroSp D).rank) (Fin (zeroSp D).rank) ℂ) :=
     inferInstanceAs (Subsingleton (Matrix (Fin 0) (Fin 0) ℂ))
   have hsub' : Subsingleton (Fin (zeroSp D).rank → D.host.E) :=
     inferInstanceAs (Subsingleton (Fin 0 → D.host.E))
-  refine ⟨_, bas, ⟨fun a b => ?_, fun w => ?_, hlat, fun y => ?_, fun w => ?_, hbas⟩, fun y => ?_⟩
+  refine ⟨_, bas, ⟨fun a b => ?_, fun w => ?_, hfull, fun y => ?_, fun w => ?_, hbas⟩, fun y => ?_⟩
   · show star (D.host.xi0 * X.gram (e a) (e b)) = -(D.host.xi0 * X.gram (e b) (e a))
     rw [star_mul', GlobalTheory.DualPairCheck.star_purely_imaginary_eq_neg D, GlobalTheory.TripleSpace.star_gram, neg_mul]
   · show GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.HasSig (Complex.I • (D.host.xi0 • (X.gramᵀ).submatrix e e).map (B.emb w).1) _ _

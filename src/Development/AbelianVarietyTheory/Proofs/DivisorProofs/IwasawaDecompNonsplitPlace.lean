@@ -82,7 +82,7 @@ theorem iwasawa_line : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
     haveI := hB.unram
     intro w _
     exact Ideal.ramificationIdx_eq_one w.asIdeal (𝓞 F)
-  haveI : Submodule.IsLattice E W.L := hW.lat
+  haveI : Submodule.IsFullLattice E W.L := hW.lat
   let e : Matrix (Fin d) (Fin 1) E := Matrix.of fun i _ => H'.x i
   let pr : Matrix (Fin 1) (Fin d) E := Matrix.of fun _ j => (W.J *ᵥ fun i => σ (H'.y i)) j
   have hpe : pr * e = 1 := by

@@ -43,15 +43,6 @@ theorem goodTower_volume_of_reduced : (PartI ∧ N1ab ∧ N1c ∧ ∀ (E : Type)
   have hCmpSt : Cmp.CmpSt := GlobalTheory.T.comparison_of_inputs_avoidance hPB hAvoid hResK
   have hTied : HodgeComparisonCompatibility := GlobalTheory.T.CmpHodgeTied_holds
   have hPair : Cmp.CmpPair := GlobalTheory.T.cmpPair_of_inputs hPB hCmpSt hTied hTheta
-  have hA0 := GlobalTheory.T.flat_zero_from_resolution_and_gaga hResK hGaga
-  have hA1 := GlobalTheory.T.flat_first_from_resolution_and_gaga hResK hGaga
-  refine ⟨?_, ?_⟩
-  · intro E _ _ _ H D Xo l c Y _ hgl hs hp hq
-    exact GlobalTheory.T.exists_good_root_tower hGiven hW hA0 hA1 E H D Xo l c Y hgl hs hp hq
-  · exact GlobalTheory.T.volume_theorem_of_inputs hGiven hPts hW
-      (GlobalTheory.T.exists_geometric_height_constants hGiven hW GlobalTheory.T.FlatDegree_holds)
-      (GlobalTheory.T.model_on_hodge_from_family hFam)
-      (GlobalTheory.T.triv_flag_on_hodge_of_fargues hFHT) GlobalTheory.T.FlatDegree_holds
-      GlobalTheory.T.TwistAut_holds hPair hCmpSt
+  exact GlobalTheory.T.good_tower_volume_theorem hGiven hPts hAvoid hW hFam hPair
 
 end GlobalTheory.CompanionTheory.Ar.Top

@@ -162,7 +162,7 @@ theorem exists_lattice_maxEven_adapted : ∀ {F E : Type} [Field F] [NumberField
   have hσ : ∀ e, σ (σ e) = e := fun e => by
     obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
     exact τ.injective (by rw [hcm.2.2.2, hcm.2.2.2, star_star])
-  refine ⟨stdLattice E n, isLattice_stdLattice, ?_⟩
+  refine ⟨stdLattice E n, isLattice_stdLattice.toIsLattice, ?_⟩
   filter_upwards [Filter.eventually_all.2 fun i => Filter.eventually_all.2 fun j => eventually_one_tmul_mem_intLoc (F := F) (J i j),
     Filter.eventually_all.2 fun i => Filter.eventually_all.2 fun j => eventually_one_tmul_mem_intLoc (F := F) (J⁻¹ i j),
     eventually_one_tmul_mem_intLoc (F := F) (2⁻¹ : E),

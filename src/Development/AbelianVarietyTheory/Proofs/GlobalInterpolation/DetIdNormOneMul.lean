@@ -124,13 +124,13 @@ theorem gen_relDet {P : HeightOneSpectrum (𝓞 E)} {L L' : Submodule (𝓞 E) (
       rw [Algebra.smul_def, map_mul]
       exact le_trans (mul_le_of_le_one_left' (P.valuation_le_one (K := E) c)) ha
 
-theorem relDet_mul {L L' L'' : Submodule (𝓞 E) (Sp E n)} (hL : Submodule.IsLattice E L) (hL' : Submodule.IsLattice E L')
-    (hL'' : Submodule.IsLattice E L'') : relDet L L'' = relDet L L' * relDet L' L'' := by
+theorem relDet_mul {L L' L'' : Submodule (𝓞 E) (Sp E n)} (hL : IsSdLat L) (hL' : IsSdLat L')
+    (hL'' : IsSdLat L'') : relDet L L'' = relDet L L' * relDet L' L'' := by
   choose f hf using fun P => exists_isFr P hL
   choose f' hf' using fun P => exists_isFr P hL'
   choose f'' hf'' using fun P => exists_isFr P hL''
-  refine eq_of_gen _ _ (fun P => gen_relDet hL.fg (hf P) (hf'' P))
-    (fun P => gen_mul (gen_relDet hL.fg (hf P) (hf' P)) (gen_relDet hL'.fg (hf' P) (hf'' P))) fun P => ?_
+  refine eq_of_gen _ _ (fun P => gen_relDet hL.1.fg (hf P) (hf'' P))
+    (fun P => gen_mul (gen_relDet hL.1.fg (hf P) (hf' P)) (gen_relDet hL'.1.fg (hf' P) (hf'' P))) fun P => ?_
   congr 1
   have := dt_ne (f P)
   have := dt_ne (f' P)
@@ -138,8 +138,8 @@ theorem relDet_mul {L L' L'' : Submodule (𝓞 E) (Sp E n)} (hL : Submodule.IsLa
 
 theorem normOne_relDet {L L' : Submodule (𝓞 E) (Sp E n)} (hL : IsSdLat L) (hL' : IsSdLat L') : NormOne (relDet L L') := by
   refine ⟨barI (relDet L L'), fun _ => Iff.rfl, ?_⟩
-  choose f hf using fun P => exists_isFr P hL.1
-  choose f' hf' using fun P => exists_isFr P hL'.1
+  choose f hf using fun P => exists_isFr P hL
+  choose f' hf' using fun P => exists_isFr P hL'
   have hg := fun P => gen_relDet hL.1.fg (hf P) (hf' P)
   refine eq_of_gen _ _ (fun P => gen_mul (hg P) (gen_bar (hg (conjPrime₂ P)))) gen_one fun P => ?_
   have h1 := val_dual hL (hf (conjPrime₂ P)) (f' := f P) (by rw [conjP_conjP]; exact hf P)
@@ -165,7 +165,7 @@ theorem detId_normOne_mul (D : D7) (n : ℕ) (L L' L'' : Submodule (𝓞 D.host.
   have h1 := isSdLat_of hL
   have h2 := isSdLat_of hL'
   have h3 := isSdLat_of hL''
-  refine ⟨?_, relDet_mul h1.1 h2.1 h3.1⟩
+  refine ⟨?_, relDet_mul h1 h2 h3⟩
   obtain ⟨J, hJ, e⟩ := normOne_relDet h1 h2
   exact ⟨J, fun x => by rw [hJ, hs]; rfl, e⟩
 

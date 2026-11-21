@@ -190,7 +190,9 @@ theorem bc_mu (hc : CMData F E) (S : HSpace E) (hsig : S.SigOK) (hpos : S.IsPosD
     exact hspanM
   refine ⟨?_, hfull⟩
   rw [hmu', hcomap]
-  have hneM : crdLat S L ≠ ⊥ := Formalism.L2.Col.isLattice_ne_bot hM
+  have hfullM : Submodule.IsFullLattice E (crdLat S L) :=
+    { toIsLattice := hM, span_eq_top := hspanM }
+  have hneM : crdLat S L ≠ ⊥ := Formalism.L2.Col.isLattice_ne_bot hfullM
   have hfgT := hfg0
   have hrT : rkK (Submodule.span (𝓞 K) (ιm '' (crdLat S L : Set (Fin S.rank → E)))) = S.rank := hbc.1.trans hrM
   have hneT : Submodule.span (𝓞 K) (ιm '' (crdLat S L : Set (Fin S.rank → E))) ≠ ⊥ := by

@@ -53,7 +53,7 @@ theorem ker_finE {D : D7} (V : HSp D) {k : GA D V} (hk : Lev.finE V k = 1) : k �
 theorem level_of_open {D : D7} (V : HSp D) (U : Subgroup (GA D V)) (hUo : IsOpen (U : Set (GA D V)))
     (hinf : GinfC V ≤ U) :
     ∃ K : Subgroup (GL (Fin V.rank) (Lev.EAf D)), GlobalTheory.IndefiniteRowSideFullHecke.ClassFunctionSumIntegral.IsOpenCompactLevel V K ∧ ∀ k ∈ Lev.levA V K, k ∈ U := by
-  obtain ⟨ho, hc⟩ := GlobalTheory.FunObj.congLev_open_compact V (GlobalTheory.HeckeDual.isLattice_frameLat V) (𝔪 := ⊤) top_ne_bot
+  obtain ⟨ho, hc⟩ := GlobalTheory.FunObj.congLev_open_compact V (GlobalTheory.AdelicU.SelfDual.isLattice_frameLat V) (𝔪 := ⊤) top_ne_bot
   set K₀ := congLev D.sp.cm V.gram (GlobalTheory.AdelicU.frameLat V) ⊤ with hK₀
   have hmem : ∀ k ∈ Lev.levA V (K₀ ⊓ U.map (Lev.finE V)), k ∈ U := by
     intro k hk

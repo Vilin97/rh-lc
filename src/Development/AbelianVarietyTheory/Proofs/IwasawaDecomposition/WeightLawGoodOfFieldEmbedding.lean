@@ -117,13 +117,7 @@ theorem gram_posDef (hb : C.HasRatBasis) (φ : K →+* ℂ) (hp : (C.gramV.map �
 omit [StarRing K] in
 theorem exists_smul_mem {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
     {M : Submodule (𝓞 K) V} {x : V} (hx : x ∈ Submodule.span K (M : Set V)) : ∃ d : 𝓞 K, d ≠ 0 ∧ d • x ∈ M := by
-  first
-  | exact @_root_.GlobalTheory.NonzeroSmulMemIntegralSpan.exists_ne_zero_smul_mem
-  | exact _root_.GlobalTheory.NonzeroSmulMemIntegralSpan.exists_ne_zero_smul_mem
-  | (apply _root_.GlobalTheory.NonzeroSmulMemIntegralSpan.exists_ne_zero_smul_mem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.NonzeroSmulMemIntegralSpan.exists_ne_zero_smul_mem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.NonzeroSmulMemIntegralSpan.exists_ne_zero_smul_mem <;> first | assumption | infer_instance)
-  | (intros; exact _root_.GlobalTheory.NonzeroSmulMemIntegralSpan.exists_ne_zero_smul_mem ..)
+  exact _root_.GlobalTheory.NonzeroSmulMemIntegralSpan.exists_ne_zero_smul_mem hx
 
 theorem values_isLattice (M : C.Cl → Submodule (𝓞 K) C.V) (hM : ∀ c, Submodule.IsFullLattice K (M c))
     (L : Submodule (𝓞 K) C.Forms) (hL : ∀ x, x ∈ L ↔ ∀ c, x.1 c ∈ M c) :
@@ -186,6 +180,7 @@ theorem rho_rat (hF : FOk emb σ) (hS : S.Ok) (b : S.β) (g : S.G b) (i j : VVId
 theorem hasRatBasis (hF : FOk emb σ) (hS : S.Ok) (h : (S.fam emb lam).Ok) : (S.csd emb lam h).HasRatBasis :=
   GlobalTheory.FormsDescent.hasRatBasis_of_act _ fun c γ i j => rho_rat S emb σ lam hF hS c.1 γ.1 i j
 
+omit [StarRing E] in
 theorem gramV_posDef (h : (S.fam emb lam).Ok) (φ : K →+* ℂ) : ((S.csd emb lam h).gramV.map φ).PosDef := by
   have h1 := pairingPositive_holds K ι n lam (gramKd emb (1 : Matrix (Fin n) (Fin n) E)) φ fun τ => by
     have : gramKd emb (1 : Matrix (Fin n) (Fin n) E) τ = 1 := by
@@ -209,12 +204,13 @@ theorem delAtr_isLattice (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.
   (GlobalTheory.TransLattice.nabDelLattice K ι n lam _ fun τ =>
     dualFr_isFullLattice _ (GlobalTheory.TauLat.tauLatLattice E K ι n emb τ L hL)).2
 
-end Step
-
-theorem lawGood : ∀ {E K ι : Type} [Field E] [NumberField E] [StarRing E] [Field K] [NumberField K] [StarRing K] [Fintype ι] {n : ℕ} (S : GStep E K n) (emb : ι → E →+* K) (σ : K →+* ℂ) (lam : ι → DomWeight n), FOk emb σ → S.Ok → ∀ h, S.LawGood emb lam h := by
-  intro E K ι _ _ _ _ _ _ _ n S emb σ lam hF hS h
+theorem lawGood (hF : FOk emb σ) (hS : S.Ok)
+    (hLsh : ∀ b (d : S.D b), Submodule.IsFullLattice E (S.Lsh b d))
+    (h : (S.fam emb lam).Ok) : S.LawGood emb lam h := by
   exact ⟨fun v => (frameOfSpec _ _ (step_gram_posDef S emb σ lam hF hS h v.embedding)).1,
     values_isLattice (S.csd emb lam h) (fun c => delAtr emb lam (S.Lsh c.1 (S.rep c)))
-      (fun c => delAtr_isLattice emb lam _ (hS.lsh_full_lat c.1 (S.rep c))) _ fun _ => Iff.rfl⟩
+      (fun c => delAtr_isLattice emb lam _ (hLsh c.1 (S.rep c))) _ fun _ => Iff.rfl⟩
+
+end Step
 
 end GlobalTheory.Mem.LatGood

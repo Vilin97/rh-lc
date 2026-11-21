@@ -7,6 +7,7 @@ public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.Spl
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsNsmulHalf
 public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ScaledFiniteMatrixMemLattice
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.InfPartOneSubEInfSmul
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NsmulProjectionXColumnsMemSelfDualLattice
 
 @[expose] public section
 
@@ -25,7 +26,7 @@ variable {D : D7}
 theorem exists_nsmul_mulVec {m m' : ℕ} (M : Matrix (Fin m') (Fin m) D.host.E)
     {L : Submodule (NumberField.RingOfIntegers D.host.E) (Fin m → D.host.E)}
     {L' : Submodule (NumberField.RingOfIntegers D.host.E) (Fin m' → D.host.E)} (hL : L.FG)
-    (hL' : Submodule.IsLattice D.host.E L') : ∃ N : ℕ, 0 < N ∧ ∀ t ∈ L, N • M.mulVec t ∈ L' := by
+    (hL' : Submodule.IsFullLattice D.host.E L') : ∃ N : ℕ, 0 < N ∧ ∀ t ∈ L, N • M.mulVec t ∈ L' := by
   classical
   obtain ⟨s, rfl⟩ := hL
   choose N hN hm using fun t => GlobalTheory.VacUnique.Den.exists_nsmul_mem_lattice L' hL' (M.mulVec t)
@@ -40,7 +41,7 @@ theorem exists_nsmul_mulVec {m m' : ℕ} (M : Matrix (Fin m') (Fin m) D.host.E)
 
 theorem exists_nsmul_rat_mul (S : HSp D) {T T' : HSp D} (M : Matrix (Fin T'.rank) (Fin T.rank) D.host.E)
     (LS : Set (Fin S.rank → D.host.E)) {L : Lat T} {L' : Lat T'} (hL : L.FG)
-    (hL' : Submodule.IsLattice D.host.E L') (P : Pl D → Prop) :
+    (hL' : Submodule.IsFullLattice D.host.E L') (P : Pl D → Prop) :
     ∃ N : ℕ, 0 < N ∧ ∀ u ∈ latO S T LS (L : Set _) P, N • (rat M * u : WO S T') ∈ latO S T' LS (L' : Set _) P := by
   obtain ⟨N, hN, h⟩ := exists_nsmul_mulVec M hL hL'
   refine ⟨N, hN, fun u hu => ?_⟩
@@ -66,8 +67,23 @@ theorem exists_nsmul_rat_mul (S : HSp D) {T T' : HSp D} (M : Matrix (Fin T'.rank
   | neg x _ hx => rw [Matrix.mul_neg, neg_nsmul]; exact neg_mem hx
 
 theorem isLattice_span {L : HSp D} {ζ : Fin L.rank → D.host.E} (h : IsLineVec L ζ) :
-    Submodule.IsLattice D.host.E (Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ} : Lat L) := by
-  exact Submodule.IsLattice.of_fg D.host.E (Submodule.fg_span_singleton ζ)
+    Submodule.IsFullLattice D.host.E (Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ} : Lat L) := by
+  haveI : Submodule.IsLattice D.host.E (Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ} : Lat L) :=
+    Submodule.IsLattice.of_fg D.host.E (Submodule.fg_span_singleton ζ)
+  refine ⟨?_⟩
+  rw [Submodule.span_span_of_tower]
+  apply eq_top_iff.mpr
+  intro v _
+  let j : Fin L.rank := ⟨0, by have := h.1; omega⟩
+  have hs : Subsingleton (Fin L.rank) := by rw [h.1]; infer_instance
+  have hj : ζ j ≠ 0 := fun hz => h.2 (by
+    have : ζ = 0 := funext fun i => by rw [Subsingleton.elim i j, hz]; rfl
+    rw [this, Matrix.mulVec_zero, dotProduct_zero])
+  apply Submodule.mem_span_singleton.mpr
+  refine ⟨v j / ζ j, ?_⟩
+  funext i
+  rw [Subsingleton.elim i j]
+  simp [Pi.smul_apply, smul_eq_mul, div_mul_cancel₀ _ hj]
 
 theorem isHalf_mul {l m n : ℕ} {e : AE D} (M : Mx D l m) {u : Mx D m n} (hu : IsHalf e u) : IsHalf e (M * u : Mx D l n) :=
   fun i j => by
@@ -134,7 +150,7 @@ structure Near (o : OrthDec X T L) (ΛX : AddSubgroup (WO S X)) (ΛT : AddSubgro
   inr : ∀ u ∈ ΛL, N • (o.resT S).symm (0, u) ∈ ΛX
 
 theorem exists_near (o : OrthDec X T L) (LS : Set (Fin S.rank → D.host.E)) {LX : Lat X} {LT : Lat T} {LL : Lat L}
-    (hX : Submodule.IsLattice D.host.E LX) (hT : Submodule.IsLattice D.host.E LT) (hL : Submodule.IsLattice D.host.E LL)
+    (hX : Submodule.IsFullLattice D.host.E LX) (hT : Submodule.IsFullLattice D.host.E LT) (hL : Submodule.IsFullLattice D.host.E LL)
     (P : Pl D → Prop) :
     ∃ N, Near o (latO S X LS (LX : Set _) P) (latO S T LS (LT : Set _) P) (latO S L LS (LL : Set _) P) N := by
   obtain ⟨a, ha, h1⟩ := exists_nsmul_rat_mul S o.qA LS hX.fg hT P
@@ -281,7 +297,7 @@ theorem over_boxT : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topologi
   intro D k _ _ _ _ p n n'' _ _ _ _ ψ hψ _ S X T L o ζ hζ β γ γ₀ hγ LS LT LX hS hT hX f₂ F₂ Ψ₂ hO b g₃ T₃ hg₃ h₃ hSB
   obtain ⟨T₂, h₂⟩ := hO.2.2.2.2.1
   have hF : F₂ = T₂ (extFun β γ Ψ₂) := hO.2.2.2.2.2 T₂ h₂
-  obtain ⟨N, hN⟩ := exists_near (S := S) o (LS : Set _) hX.1 hT.1 (isLattice_span hζ) (· = p.v)
+  obtain ⟨N, hN⟩ := exists_near (S := S) o (LS : Set _) (GlobalTheory.ProjXCols.selfDual_isFullLattice X LX hX) (GlobalTheory.ProjXCols.selfDual_isFullLattice T LT hT) (isLattice_span hζ) (· = p.v)
   have h₀ := isPlaceModel_boxMap hN h₂ h₃
   obtain ⟨ε, hε, heq⟩ := p.above
   have hs := p.split

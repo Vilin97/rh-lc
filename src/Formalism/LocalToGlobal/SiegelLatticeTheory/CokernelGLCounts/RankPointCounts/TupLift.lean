@@ -188,7 +188,9 @@ theorem repAtTup_of (M : ∀ p : Formalism.MainNotions.S.LocalSplitGroups.PlF D,
   have hFun := Formalism.L2.SG.Closed.TermFun_holds D u u' F0 γ.lam hΛ
   obtain ⟨Fa, ⟨pa, ea⟩, hGa, hcell⟩ := hel.2
   have hdca := (hEq ⟨Fa, pa⟩ ⟨F₁, p₁⟩).1 (ea.trans e₁.symm)
-  have hG₁ : Gval (lf D F0) F₁ ≠ 0 := by rw [Formalism.L2.SG.Pf.gval_rel (lf D F0) hdca]; exact hGa
+  change DCRel γ.lam (lf D F0) Fa F₁ at hdca
+  have hG₁ : Gval (lf D F0) F₁ ≠ 0 := fun h =>
+    hGa ((Formalism.L2.SG.Pf.gval_rel (lf D F0) hdca).symm.trans h)
   have hcell₁ : IsInCell (ZhatOM (ZhatL (lf D F0) F₁)) w := (hFun.2.1 ⟨Fa, pa⟩ ⟨F₁, p₁⟩ hdca w).1 hcell
   obtain ⟨Fg, ⟨pg, eg⟩, hgen⟩ := hel.1.1
   have hgen₁ : IsGeneric γ.lam (gS D) (lf D F0) F₁ :=

@@ -157,8 +157,19 @@ theorem exists_level : ∀ {D : D7} (V : HSp D) (n : ℕ) (ι : Formalism.MainNo
     have h2 := (GlobalTheory.UnitarySplit.real_finite_split D V).2.2.1 _ (ker_finE V h1)
       (mul_mem (inv_mem (hGf y)) (hGf x))
     exact hinj (inv_mul_eq_one.1 h2).symm
+  have hstd : Submodule.IsFullLattice D.host.E (Formalism.L2.Col.stdLat D.host.E V.rank) := by
+    letI := Formalism.L2.Col.stdLat_lattice (E := D.host.E) (n := V.rank)
+    constructor
+    apply eq_top_iff.mpr
+    intro v _
+    have hv : v = ∑ i, v i • (Pi.single i 1 : Fin V.rank → D.host.E) := by
+      funext j
+      simp [Finset.sum_apply, Pi.single_apply]
+    rw [hv]
+    exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _
+      (Submodule.subset_span (by simpa using Formalism.L2.Col.single_mem_stdLat (E := D.host.E) i 1))
   obtain ⟨hK₀o, hK₀c⟩ := GlobalTheory.FunObj.congLev_open_compact V (Λ := Formalism.L2.Col.stdLat D.host.E V.rank)
-    Formalism.L2.Col.stdLat_lattice (𝔪 := ⊤) top_ne_bot
+    hstd (𝔪 := ⊤) top_ne_bot
   obtain ⟨K₀, hK₀⟩ : ∃ K₀, K₀ = GlobalTheory.ChiGrid.congLev D.sp.cm V.gram (Formalism.L2.Col.stdLat D.host.E V.rank) ⊤ := ⟨_, rfl⟩
   rw [← hK₀] at hK₀o hK₀c
   obtain ⟨f, hf⟩ : ∃ f : Formalism.MainNotions.StandardLatticesGL3.GA D V.rank →* GL (Fin V.rank) (Lev.EAf D), f = (Lev.finE V).comp ι := ⟨_, rfl⟩

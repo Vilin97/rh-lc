@@ -118,12 +118,15 @@ theorem colcon_gen (G : GridData L sc) (W : G.Weil) (t : T) {M : Vol G} (hM : M.
       have hl : List.range' (j + 1) (2 * (σ + 1)) = (j + 1) :: (j + 1 + 1) :: List.range' (j + 1 + 1 + 1) (2 * σ) := by
         rw [show 2 * (σ + 1) = 2 * σ + 1 + 1 by ring, List.range'_succ, List.range'_succ]
       rw [hl]
-      refine ⟨f₁, colcon_quot (colcon_rowGrp_jac hM (j + 1) (σ + 1) (by omega)) (hJ _ _ _) h1, fun a => ?_⟩
-      refine ⟨f₂ a, colcon_quot (colcon_rowGrp_bes hM (j + 1 + 1) σ (by omega) _) (hB _ _ (by omega)) (h2 a).1,
+      have hjJ : j + 1 + 2 * (σ + 1) + 1 = D.R.m := by omega
+      refine ⟨f₁, colcon_quot (colcon_rowGrp_jac hM (j + 1) (σ + 1) hjJ)
+        (hJ (j + 1) (σ + 1) hjJ) h1, fun a => ?_⟩
+      refine ⟨f₂ a, colcon_quot (colcon_rowGrp_bes hM (j + 1 + 1) σ hj' vN')
+        (hB (j + 1 + 1) σ hj') (h2 a).1,
         fun b => ?_⟩
       have hi := (h2 a).2 b
       dsimp only [GlobalTheory.RowChain.colPer, dataFrom] at hi
-      have ih := colcon_gen G W t hM Φ F ρ hJ hB σ (j + 1 + 1) (by omega) _
+      have ih := colcon_gen G W t hM Φ F ρ hJ hB σ (j + 1 + 1) hj' vN'
         (Function.update (Function.update h (j + 1) a) (j + 1 + 1) b) b _ (f₂ a b) (by simp) hi
       refine colcon_nIter_congr _ _ _ _ _ ih fun h' hh' => ?_
       have e0 : h' j = h j := (hh' j (by simp only [List.mem_range'_1]; omega)).trans
@@ -140,10 +143,11 @@ theorem colcon_gen (G : GridData L sc) (W : G.Weil) (t : T) {M : Vol G} (hM : M.
         (dite_eq_right hlast).trans (dite_eq_left hx)
       rw [hC]
       obtain rfl : σ = (D.R.m - 4 - j) / 2 := by omega
-      -- The contraction uses only Bessel data independent of vN.
-      simp only [e0, e1, e2, colcon_getD_downFam] <;>
-        (dsimp only [biL, GlobalTheory.SeeSaw.biLift, volAt, contr, flatBF, flatFB, Link.κ,
-          stepAt, linkAt, besAt, jacAt]; rfl)
+      simp only [e0, e1, e2, colcon_getD_downFam]
+      -- These projections of the Bessel data are independent of the choice of vN.
+      dsimp only [biL, GlobalTheory.SeeSaw.biLift, volAt, contr, flatBF, flatFB, Link.κ,
+        stepAt, linkAt, besAt, jacAt]
+      rfl
 
 theorem nIter_conAt_of_colPer : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L sc) (W : G.Weil) (t : T) {M : Vol G} (hM : M.Is t) (Φ : SchDown G t) (F : Fn G (.grid D.R.m D.R.m)) (φ : Fn G (.top 0)) (z : ℂ), (chain G W t hM).Iter (colPer W hM _ 0 top_idx (topVN hM) (chainData G W t hM (downFam t D.R.m D.R.m Φ)) F φ 1) z → ∀ (ρ : ∀ j, Measure (rowGrp G j)), (∀ j σ (hj : j + 2 * σ + 1 = D.R.m), HEq (ρ j) (jacAt G hM j σ hj).μR) → (∀ j σ (hj : j + 2 * σ + 2 = D.R.m), HEq (ρ j) (besAt G hM j σ hj (GlobalTheory.Unf.Inhab.nonempty_volN _).some).μR) → NIter ρ (fun j => M.ν (.grid D.R.m j)) (fun h => jPer W M t (conAt W hM Φ h) F _ 0 top_idx φ) (idx D) 1 z := by
   intro D T L sc G W t M hM Φ F φ z hz ρ hJ hB

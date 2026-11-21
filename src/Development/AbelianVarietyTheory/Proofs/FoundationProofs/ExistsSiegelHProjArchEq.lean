@@ -49,26 +49,13 @@ theorem exists_siegelH_projArch_eq (x : ∀ w : InfinitePlace F, siegelH w.Compl
       rw [Subgroup.coe_mul, map_mul, coe_embArchP, projArch_embArch_ne σ Q hv.1, h2 v hv.2, mul_one]
     · rw [Subgroup.coe_mul, map_mul, coe_embArchP, proj_embArch, h3, mul_one]
 
-variable {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsLattice E L] {a : GL (Fin n) (AF F ⊗[F] E)}
+variable {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsFullLattice E L] {a : GL (Fin n) (AF F ⊗[F] E)}
 
 theorem HasIwasawa.adelic (hf : ∀ v : HeightOneSpectrum (𝓞 F), HasIwasawa σ Q (KFin σ Q L v))
     (hi : ∀ w : InfinitePlace F, HasIwasawa σ Q (KArch σ Q w (bc (compInf F E w) a))) :
     HasIwasawa σ Q (KAd σ Q L a) := fun g => by
   choose x k hk hx using fun v => hf v (proj σ Q v g)
   choose y l hl hy using fun w => hi w (projArch σ Q w g)
-  haveI : Submodule.IsLattice E (sumLat finSumFinEquiv L L) := by
-    let φ : ((Fin n → E) × (Fin n → E)) ≃ₗ[E] (Fin (n + n) → E) :=
-      (LinearEquiv.sumArrowLequivProdArrow _ _ E E).symm.trans
-        (LinearEquiv.funCongrLeft E E finSumFinEquiv.symm)
-    have e : sumLat finSumFinEquiv L L =
-        (L.prod L).map (φ.toLinearMap.restrictScalars (𝓞 E)) := by
-      ext w
-      refine ⟨fun hw => ⟨(_, _), hw, pairVec_eta _ w⟩, ?_⟩
-      rintro ⟨x, hx, rfl⟩
-      exact (pairVec_mem_sumLat _).2 hx
-    apply Submodule.IsLattice.of_fg E
-    rw [e]
-    exact ((Submodule.IsLattice.fg E L).prod (Submodule.IsLattice.fg E L)).map _
   have hS := Filter.eventually_cofinite.1 (eventually_proj_mem_stabLoc σ Q (sumLat finSumFinEquiv L L) g)
   obtain ⟨p, h1, h2, h3⟩ := exists_siegelH_proj_eq x hS.toFinset
   obtain ⟨q, h4, -, h5⟩ := exists_siegelH_projArch_eq y Finset.univ

@@ -120,7 +120,7 @@ theorem iwaLoc {B : Base F E} (hB : B.IsGood σ) {Y : Spc F E n} {r s : ℕ} (hY
   obtain ⟨ξ, hξ, hJ, hL⟩ := exists_selfDual hB hY v
   haveI := hB.unram
   obtain ⟨θ, hθ⟩ := GlobalTheory.exists_integer_add_conj_eq_one_of_formallyUnramified F E σ hB.cm inferInstance
-  haveI : Y.L.IsLattice E := hY.elim (·.lat) (·.lat)
+  haveI : Y.L.IsFullLattice E := hY.elim (·.lat) (·.lat)
   obtain ⟨g', rfl⟩ := bk_surj hξ Y.J g
   obtain ⟨q, k, ⟨t, ht⟩, hk, e⟩ := core hB.cm hθ hJ Y.L (unramAt hB v)
     ((isEmpty_or_nonempty _).symm.imp_right (inert_of_local F E σ B hB v)) hL hx (by

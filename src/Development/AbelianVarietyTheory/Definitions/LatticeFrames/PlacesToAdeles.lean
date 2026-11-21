@@ -63,7 +63,8 @@ def OrbitGlued (D : D7) : Prop :=
     ∀ γ ∈ grpAt B.V₀ (· = p.v), (∀ a : AE D, a • ratV (vecB B.o B.ζ) ∈ latA B.V₀ L₀ (· = p.v) →
         mt B.V₀ γ⁻¹ *ᵥ (a • ratV (vecB B.o B.ζ)) ∈ latA B.V₀ L₀ (· = p.v)) →
       (∃ a ∈ grpAt B.A (· = p.v), ∃ κ, InK B.V₀ L₀ (· = p.v) κ ∧ γ = B.o.emb (a, 1) * κ) ∨
-      ∃ (Λ : Submodule 𝒪[k] (n → k)) (_ : Λ.IsFullLattice k),
+      ∃ (Λ : Submodule 𝒪[k] (n → k)) (hΛ : Λ.IsFullLattice k),
+        letI := hΛ
         β₀.IsLatMoved γ L₀ (lastKer Λ) ∨ β₀.IsLatMoved γ L₀ (lastPair q Λ).lat
 
 def SourceGlued (D : D7) : Prop :=
@@ -122,7 +123,8 @@ def VertexGlued (D : D7) : Prop :=
         ∀ (Λ : Submodule 𝒪[k] (n'' → k)) [Λ.IsFullLattice k] (L₁ : Lat B.V₀) (L₂ L₂' : Lat J.W₀) (L₃ : Lat B'.V₀)
           (f₁ Ξ₁ : WO B.V₀ J.W₀ → ℂ) (f₂ Ξ₂ : WO J.W₀ B'.V₀ → ℂ),
           Over ψ α₀ β L₁ L₂ f₁ (latInd (gluedS q 1 P.ker P.vec) Q.lat) Ξ₁ →
-          (Over ψ β γ₀ L₂' L₃ f₂ (latInd Q.lat (lastKer Λ)) Ξ₂ ∨ Over ψ β γ₀ L₂' L₃ f₂ (latInd Q.lat (lastPair q Λ).lat) Ξ₂) →
+          (Over ψ β γ₀ L₂' L₃ f₂ (latInd Q.lat (lastKer Λ)) Ξ₂ ∨
+            Over ψ β γ₀ L₂' L₃ f₂ (latInd Q.lat (lastPair q Λ).lat) Ξ₂) →
           ∀ φ, IsRam α φ → hand0 s₁ s₂ l vL (φ P) Ξ₁ Ξ₂ = 0
 
 def RamBijective (D : D7) : Prop :=
