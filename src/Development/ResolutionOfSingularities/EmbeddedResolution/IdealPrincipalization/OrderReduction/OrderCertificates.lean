@@ -190,9 +190,7 @@ private theorem hasOrderCertificateMultOne_appendLowerDimReduction (hstar : MaxC
   refine MarkedBlowupSequenceData.append_dataAt_of_forall s _ hinv (fun Dd => HasOrderCertificateMultOne Dd)
     (isInvariantUnderIso_hasOrderCertificateMultOne S.base) hs ?_ i hi
   have hbeq : (MaxContactCoverData.derivedTriple S s hft [] 0).boundary = s.boundary s.length := by
-    rw [MaxContactCoverData.derivedTriple_boundary]
-    simp
-    rfl
+    rw [MaxContactCoverData.derivedTriple_boundary, List.nil_append, List.drop_zero]
   have hmemE : (MaxContactCoverData.derivedTriple S s hft [] 0).boundary.get ⟨j, hjS⟩ ∈
       s.boundary s.length := by
     rw [← hbeq]
