@@ -1,3 +1,0 @@
-module
-
-public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KFinSmoothBoth

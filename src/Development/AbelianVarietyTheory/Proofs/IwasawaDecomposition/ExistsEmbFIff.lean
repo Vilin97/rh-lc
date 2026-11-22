@@ -16,7 +16,7 @@ public import Formalism.LocalToGlobal.Columns.TiedValRat
 public import Formalism.LocalToGlobal.HermitianForms.FramesLemmas
 public import Formalism.LocalToGlobal.GlobalTheory.GL6.FrobeniusNoKernelOfFrobeniusSimilitude
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.UfGLRatHom
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.InvSmulMemOfRedL
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.InvSmulMemOfRedL
 
 @[expose] public section
 

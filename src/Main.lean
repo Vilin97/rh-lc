@@ -3,6 +3,7 @@ module
 public import Statements
 public import Development.AutomorphicArithmetic.CharacterBoxes.ClaimStrip
 public import Development.AutomorphicArithmetic.CharacterBoxes.MainConclusion
+public import Supplements.Kernels.MainTheorems
 
 @[expose] public section
 

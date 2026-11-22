@@ -11,7 +11,7 @@ public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.LocBasis
 public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.IdxChange
 public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.DualMu
 public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.TheoremDivIneq
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ImageLcv
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ImageLcv
 
 @[expose] public section
 

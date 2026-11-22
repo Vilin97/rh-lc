@@ -2,7 +2,7 @@ module
 
 public import Formalism.RealPlaceAnalysis.Complexify
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.IsClosedEmbeddingToM
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.ComplexificationHolds
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.ComplexificationHolds
 
 @[expose] public section
 

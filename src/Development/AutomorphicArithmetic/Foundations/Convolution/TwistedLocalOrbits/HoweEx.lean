@@ -1,3 +1,0 @@
-module
-
-public import Development.AutomorphicArithmetic.Foundations.Convolution.TwistedLocalOrbits.HoweLine

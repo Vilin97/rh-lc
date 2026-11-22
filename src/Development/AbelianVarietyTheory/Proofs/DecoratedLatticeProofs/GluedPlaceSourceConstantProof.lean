@@ -6,7 +6,7 @@ public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.Lin
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SourceLiftAtGluedPlaceProof
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsBilinearEquivariantOrthogonalSummandLift
 public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.LengthCommensurableSpanSpanOfDetNeZero
-import GroundTheory.LocalFields.Uniqueness
+public import GroundTheory.LocalFields.Uniqueness
 
 @[expose] public section
 

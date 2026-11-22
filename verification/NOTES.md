@@ -12,10 +12,24 @@ Comparator's output will be added here when the run finishes.
 | Joined archive | `cat lean.tar.gz.part{01..14} > lean.tar.gz`: 239,275,554 bytes, sha256 `9631b4f020199e580ba86178cb56c6e9b09f690c2369a80dc4334aa93f49c7fc` |
 
 The first commit of this repository, `40e56bab`, is the archive's `lean/` directory exactly as
-published. Later commits add only `src/Challenge.lean`, `comparator.json`, a marked block at the
-end of `lakefile.toml` that registers the `Challenge` library, the README, this folder and the CI
-workflow. `git diff 40e56bab HEAD --stat` shows this, and CI downloads the archive again and
-compares it with the tree.
+published. Later commits add `src/Challenge.lean`, `comparator.json`, `export-targets.txt`, the
+README, this folder, the CI workflow and, since
+[#7](https://github.com/leanprover-community/riemann-hypothesis/pull/7), the build cache in
+`scripts/`. Nothing else under `src/` is touched. `git diff 40e56bab HEAD --stat` shows this, and
+CI downloads the archive again and compares it with the tree.
+
+`lakefile.toml` is the original with two additions:
+
+- three lines at the top, which set `platformIndependent = true` for the build cache;
+- a marked block at the end, which registers the `Challenge` library, the `cache` executable and
+  the cache server.
+
+CI checks that the original file sits unchanged between the two. Neither addition makes Lake
+treat an existing build as out of date; that was tested on a small Lean `v4.33.1` project, not
+on this one.
+
+The build cache is described in [CACHE.md](CACHE.md). The steps in the README's "Checking it" do
+not use it.
 
 The server answers HTTP 200 with an HTML page for any path, so a `part15` URL appears to exist.
 Check the joined sha256, not the status codes.
@@ -42,11 +56,29 @@ the import closure of `Main`.
 
 [`static-scan.txt`](static-scan.txt) is a text search over every file. It finds no `axiom`,
 `sorry`, `admit`, `native_decide`, `implemented_by`, `extern`, `unsafe`, `opaque`, `debug.*`
-option or `skipKernelTC`. All notation is `local` or `scoped`. The two uses of metaprogramming:
+option or `skipKernelTC`. All notation is `local` or `scoped`, and nothing in the source reads
+or writes files, starts processes or reads the environment.
+
+The source does use Lean's metaprogramming API in these places (corrected after
+[issue #2](https://github.com/leanprover-community/riemann-hypothesis/issues/2); an earlier version of these
+notes listed only the first two):
 
 - `BuildAid/D1.lean` … `D5.lean` each add one name to Lean's deny list for library suggestions.
-- `Formalism/HermitianCurvature/HermitianCurvatureProofs/CutCptCopy.lean` copies declarations
-  under new names with `addDecl`, so the kernel checks every copy.
+- `Formalism/HermitianCurvature/HermitianCurvatureProofs/CutCptCopy.lean` defines a command that
+  copies declarations under new names with `addDecl`, so the kernel checks every copy.
+- `Formalism/LocalToGlobal/IndefiniteReal/HeckeNonvanishing/Imports.lean` defines the tactic
+  `kexactB`, which elaborates a term and assigns it to the goal without the elaborator checking
+  that its type matches. It is used, through small macros, in 67 files.
+- `Formalism/LocalToGlobal/NumberFieldFamilies/OwnStruct.lean` defines the tactic `kcopy` and
+  the command `#kcopy_probe`, which rebuild a term field by field and assign it the same way.
+- `run_tac` appears 33 times: 31 revert all hypotheses before an `exact`, and two are short
+  blocks, one of which assigns a hypothesis to the goal directly.
+- One `@[positivity]` extension, in `…/TotientGaloisClasses/EvalFrameOrd.lean`.
+
+For proofs made with `kexactB`, `kcopy` or a direct assignment, the elaborator has not checked
+the term against the goal, so the kernel is the only check. That is sound, because the kernel
+checks every declaration, and it is the reason this repository re-checks the exported proof with
+independent kernels.
 
 A text search is not a proof. The axiom check and kernel replay in Comparator are.
 
@@ -112,9 +144,9 @@ as limited evidence here. The judging is done by Lean 4.36.0 and independent che
 |---|---|---|
 | Lean `v4.33.1` | official release | builds the project |
 | [lean4export](https://github.com/leanprover/lean4export) | tag `v4.33.0` (`15f6055e`), built with Lean `v4.33.1` | writes the two exports |
-| Lean `v4.36.0` | official release | `lake comparator`, its kernel, and the bundled `leanchecker-paranoid`, `nanoda_bin`, `con-leche`, `con-ron` |
+| Lean `v4.36.0` | official release | `lake comparator`, its kernel, and the bundled `leanchecker-paranoid` and `nanoda_bin` |
 | bubblewrap | Debian `0.12.0` | the sandbox `lake comparator` requires |
-| [lean4lean](https://github.com/digama0/lean4lean) | `master` (`67f63b0c`), built with Lean `v4.33.1` | sixth checker, run separately |
+| [lean4lean](https://github.com/digama0/lean4lean) | `master` (`67f63b0c`), built with Lean `v4.33.1` | a further checker, run separately |
 
 lean4export carries a `v4.33.0` toolchain file. It is built with `v4.33.1` because Lean refuses
 `.olean` files written by a different Lean build, and it has to read the project's. Both Lean
@@ -135,21 +167,44 @@ on Lean `v4.33.1` and the same Mathlib pin, proving four small statements (`zeta
 | con-ron | accepts | 27 s | 1.47 GB |
 | lean4lean (only with `--paranoid`) | rejects: `unknown constant 'Decidable.intro'` | 11 s | 0.68 GB |
 
-With the four checkers named in the config, `lake comparator` exits 0 with "Your solution is
-okay!". With `--paranoid` it exits 1, on lean4lean alone. On a small test project, a wrong
+With Lean paranoid, nanoda, con-leche and con-ron named in the config, `lake comparator` exits 0
+with "Your solution is okay!". With `--paranoid` it exits 1, on lean4lean alone. On a small test project, a wrong
 statement, a `sorry` and an extra axiom were each rejected before any kernel ran, and a proof
 swapped inside the export was rejected by every kernel.
 
+## Checkers
+
+`lake comparator --paranoid` adds five checkers to Lean's kernel: Lean paranoid, nanoda,
+con-leche, con-ron and lean4lean. Three of them cannot check this project, for reasons that
+have nothing to do with whether the proof is right, and `lake comparator` counts any non-zero
+exit from a checker as a rejection. So `comparator.json` names only Lean paranoid and nanoda.
+
+- **con-leche and con-ron** refuse a mutual inductive block that has a reflexive member. The
+  submission has one in the proof's dependencies:
+  `FunctorialResolution.EmbeddedResolution.PrincipalizationCertificate`, declared mutually with
+  `OrderCertificate`, has a constructor argument `hcert : ∀ z hz, PrincipalizationCertificate …`,
+  a function into the type being defined. An independent run (Andrew Sutherland, on the Lean Zulip) reports
+  that both exit 2 on the real export, in `--verified` and `--trusted` modes, with
+  `in-process model of …PrincipalizationCertificate: reflexive member`. We reproduced this on
+  a small project with a mutual reflexive pair: both exit 2 with the same message, which makes
+  `lake comparator` exit 1, while Lean's kernel, Lean paranoid and nanoda accept. They did
+  accept the Mathlib-sized smoke test above, and a non-mutual reflexive inductive.
+- **lean4lean** from Lean 4.36 rejects every export made by Lean 4.33.1 with
+  `unknown constant 'Decidable.intro'`, because 4.36 redefined `Decidable` in the core library.
+
+That leaves two independent kernel designs judging the export: Lean's own, run both normally
+and as the hardened build, and nanoda.
+
 ## lean4lean
 
-Lean 4.36's lean4lean cannot read a 4.33.1 export, so lean4lean `master` is built with Lean
-`v4.33.1` and replays the compiled `.olean` files directly:
+lean4lean `master`, built with Lean `v4.33.1`, replays the compiled `.olean` files as a third
+design:
 
 ```bash
 lake env lean4lean --fresh Main
 ```
 
-This checker reads the build's output files, not the export the other five judge.
+This checker reads the build's output files, not the export the others judge.
 On the Mathlib-sized smoke test it accepted all 750,225 declarations it replayed, in 37 minutes
 on one thread.
 
@@ -180,6 +235,12 @@ on one thread.
   - The exporter and the other tools in the work directory are rebuilt after the build.
   - Every compiled dependency file in the build folder is compared with a clean official copy.
     A first comparison during the build found all 121,742 files identical.
+- **Export.** The solution is exported inside a sandbox as well, with no network and the build
+  folder read-only. The exporter maps the build's `.olean` files straight into memory, and
+  `lake env` reads the folder's configuration, so both steps handle files the build could have
+  written. Only the export file leaves the sandbox, and the judge treats it as untrusted.
+- **After the build.** Nothing in the build folder is run or opened outside a sandbox. The
+  judge's config, the export targets and the challenge export come from the clean clone.
 - **Judge.** `lake comparator` runs the checkers inside its own bubblewrap sandbox, with no
   network. Since it is given exports, it builds nothing from the project.
 - **Standalone Comparator.** The archived standalone Comparator (tag `v4.33.0`) is the
@@ -205,9 +266,88 @@ on one thread.
   done
   ```
 
-- Estimates for the real run, scaled from the smoke test and uncertain by a factor of 2 to 3:
-  about 3.2 million declarations, a solution export of 70 to 75 GB, and about 12 hours for the
-  five checkers in sequence, with a peak of roughly 285 GB of memory in con-ron.
+- An independent run (Andrew Sutherland, on the Lean Zulip) reports a solution export of
+  61,570,595,788 bytes with these export targets, sha256
+  `5ea74b912147c5c93cc2b6d70cc727cf908df2f62ac6a20480a3fa02f6be244e`. The exporter took about
+  1 h 20 min on one thread and peaked at 163 GB of memory. A second independent build, in a
+  different directory, reports the same size and checksum: see
+  [Comparing builds](#comparing-builds).
+- Our estimate for the kernels, scaled from the smoke test and uncertain by a factor of 2 to 3:
+  roughly 4 hours each for Lean's kernel and the hardened build at about 150 GB of memory, and
+  under an hour for nanoda.
+
+## Comparing builds
+
+To compare two builds of this repository, compare the checksums of their exports. The checksums
+of the compiled `.olean` files agree in full only between builds made in the same directory.
+patunz reported this in
+[issue #6](https://github.com/leanprover-community/riemann-hypothesis/issues/6). Apart from the
+cache bootstrap's figures, the measurements in this section were made by the people named, not
+by us.
+
+**Cause.** In Lean `v4.33.1`, `Lean.Linter.recordLints`
+([`PersistentLintLog.lean`](https://github.com/leanprover/lean4/blob/v4.33.1/src/Lean/Linter/PersistentLintLog.lean))
+stores each linter message in the environment extension `lintLogExt`, with the name of the
+source file, so that `lake lint` can read the messages back from the `.olean`. Lake passes the
+source file to `lean` as an absolute path. So a module that emits a linter message has its
+build directory written into its `.olean`, and a module that emits none does not. This is how
+Lean and Lake behave; the submission does nothing to cause it.
+
+**Compiled files.** Andrew Sutherland's `project-oleans.sha256`
+(<https://math.mit.edu/~drew/grh/>, sha256
+`375cbee2fc3fc0f5088ef2e6dc9a5ac5530924310dc62422ec65aac9dc4c1d25`) gives a checksum for each of
+the 175,187 compiled files of a build whose project root was `/home/ubuntu/grh/src/lean`. Two
+`lake build`s at other paths have been compared with it:
+
+| Build | Compared | Identical | Different |
+|---|---:|---:|---:|
+| patunz, build in progress ([gist](https://gist.github.com/patunz/c542c37ca851b788eccdefa4f07a8ef7/d6d8da67f26f9e6e2a6b56c2a84cbf4d4e428e4b)) | 40,281 | 20,994 | 19,287 |
+| ishaan2006, complete ([result](https://github.com/ishaan2006/rh-lean-reproduction/blob/ea1d0a9901f07063f83c13bddb1fd7e1893089a7/results/olean_comparison.txt)) | 175,187 | 76,968 | 98,219 |
+
+- In the first, no module without a warning differs.
+- In the second, each of the 98,219 differing files contains that build's path, and none of the
+  76,968 identical files does. `Main.olean` is identical.
+- Recompiled with the source at Sutherland's path, the one module patunz tried
+  ([comment](https://github.com/leanprover-community/riemann-hypothesis/issues/6#issuecomment-7061992853))
+  and a random sample of 300 of ishaan2006's differing modules
+  ([result](https://github.com/ishaan2006/rh-lean-reproduction/blob/ea1d0a9901f07063f83c13bddb1fd7e1893089a7/results/path_sample_result.txt))
+  all have the manifest's checksums.
+
+So a manifest of `.olean` checksums can be checked in full only by a build at the same path.
+From any other path, only the modules without linter messages can match. Sutherland's build
+called `lean` directly with the inputs Lake supplies, and nobody has reported a complete
+`lake build` at his path.
+
+The cache bootstrap met the same difference between the two builds it draws on. Of the modules
+it attested, 10,813 matched exactly and 10,141 matched once only the file names stored in
+`lintLogExt` were changed ([CACHE.md](CACHE.md)).
+
+**Exports.** lean4export writes declarations, and the entries of `lintLogExt` are not
+declarations, so the stored path is not exported. The reports agree with that:
+
+- *Solution.* ishaan2006's build, the one with 98,219 differing `.olean` files, gives an export
+  with the size and sha256 quoted under [Building](#building)
+  ([result](https://github.com/ishaan2006/rh-lean-reproduction/blob/ea1d0a9901f07063f83c13bddb1fd7e1893089a7/results/export_result.txt)).
+- *Challenge.* Ticobit ran step 1 of the README in two directories on one machine (macOS,
+  arm64). Both exports have the sha256 given in the README,
+  `bd484ac9886a96f26b1d9a7a59ebd45b7a70d102c015d4f31f9302bbdd6ab2b9`
+  ([result](https://github.com/Ticobit/rh-verification/blob/639250def42a6219c732abb6dbf632ff1373c546/issue6/EXPORT_TEST.md)).
+- Ticobit's parse of Sutherland's solution export finds neither `/` nor `\` in any of its
+  7,125,163 name strings or 162 string literals
+  ([result](https://github.com/Ticobit/rh-verification/blob/639250def42a6219c732abb6dbf632ff1373c546/issue6/SOLUTION_NDJSON_CHECK.md)).
+
+None of these builds was sandboxed, and the solution export has been reproduced once.
+
+## Limits
+
+- Comparator checks the challenge and the solution against the same Mathlib, so it cannot
+  detect a modified Mathlib. The pin here is Mathlib's official `v4.33.1` tag, and the
+  challenge export is reproduced on GitHub's CI.
+- The exports are made by Lean 4.33.1 and judged by Lean 4.36.0. Lean's help text lists exports
+  made elsewhere as an intended use, and the export format version is the same (3.1.0), but
+  this is not the common path.
+- A passing run still trusts the checkers, Mathlib's definitions, Mathlib's official build
+  cache, the exporter, and the sandboxes.
 
 ## Results
 

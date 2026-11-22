@@ -1,6 +1,6 @@
 .lake/
-
 .leanwrap/
 scratch/
 scratch_*
 *.leanwrap.lock
+__pycache__/

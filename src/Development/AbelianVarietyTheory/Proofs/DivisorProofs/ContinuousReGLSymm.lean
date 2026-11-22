@@ -13,7 +13,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsOpenComapP
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SymPrOpenBounded
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactEntriesBd
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OnePowNotMemHeightOneAsIdeal
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.MemHatIffOfSelfDual
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.MemHatIffOfSelfDual
 
 @[expose] public section
 
