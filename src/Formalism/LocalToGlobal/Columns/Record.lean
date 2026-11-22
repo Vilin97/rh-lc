@@ -15,7 +15,7 @@ public import Formalism.LocalToGlobal.Columns.InputsLemmas
 public import Formalism.LocalToGlobal.Columns.CmUnramifiedOfFieldConditions
 public import Formalism.LocalToGlobal.Columns.DGamAut
 public import Formalism.LocalRingCardinality.MinkMEqMinkowskiNumber
-public import Formalism.LocalToGlobal.Columns.HeckeSpCount
+import Formalism.LocalToGlobal.Columns.HeckeSpCount
 
 @[expose] public section
 

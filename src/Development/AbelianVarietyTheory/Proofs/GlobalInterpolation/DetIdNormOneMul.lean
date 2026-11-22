@@ -5,7 +5,7 @@ public import Formalism.LocalToGlobal.KernelLattices.ThDistC
 public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.IndexExponentDegree
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.EmbHInjective
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.StandardRankOneLatticeOfLocal
-public import Formalism.LocalToGlobal.Columns.MemLocPOfSmul
+import Formalism.LocalToGlobal.Columns.MemLocPOfSmul
 
 @[expose] public section
 

@@ -3,7 +3,7 @@ module
 public import Mathlib
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.MemHatIffOfSelfDual
 
-public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.GluedHermitianLatticeUnique
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.GluedHermitianLatticeUnique
 
 @[expose] public section
 

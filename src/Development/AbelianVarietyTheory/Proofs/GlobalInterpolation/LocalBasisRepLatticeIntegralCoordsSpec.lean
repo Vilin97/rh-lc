@@ -2,7 +2,7 @@ module
 
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.CoP
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsLocalBasisSnocOfLocalBasisStatement
-public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.InvSmulMemOfRedL
+import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.InvSmulMemOfRedL
 
 @[expose] public section
 

@@ -6,7 +6,7 @@ public import Development.AutomorphicArithmetic.Foundations.Convolution.BlockHec
 public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.TsphVec
 
 import all Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.TsphVec
-public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SummandsContRep
+import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SummandsContRep
 
 @[expose] public section
 

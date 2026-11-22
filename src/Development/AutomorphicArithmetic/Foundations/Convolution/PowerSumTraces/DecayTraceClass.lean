@@ -1,7 +1,7 @@
 module
 
 public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.DecayTraceClassAlt
-public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.CuspCompact
+import GroundTheory.AutomorphicForms.CuspidalDiscreteness.CuspCompact
 
 @[expose] public section
 
