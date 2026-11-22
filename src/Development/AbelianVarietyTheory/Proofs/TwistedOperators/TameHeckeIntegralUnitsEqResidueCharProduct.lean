@@ -129,7 +129,7 @@ theorem loc_eq_of_tame {L : Type} [Field L] [NumberField L] (χ : Formalism.L2.H
       exact h
   rwa [map_mul, map_inv, mul_inv_eq_one] at h1
 
-theorem tameOn_of_tame : ∀ (D : D7) (c : (AE D)ˣ →* Circle) (χ : Formalism.L2.Host.HChar D.host.E) (e : AE D) (P : Finset (Pl D.host.E)) (cR : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ), ChrEq c χ → (∀ PP, χ.TameAt PP) → IsIdemSum e P → (∀ PP, PP ∉ P → (¬ ∃ PP' ∈ P, IsConjPl PP' PP) → χ.UnrAt PP) → (∀ PP ∈ P, IsRes χ PP (cR PP)) → TameOn c e P cR := by
+theorem tameOn_of_tame : ∀ (D : D7) (c : (AE D)ˣ →* Circle) (χ : Formalism.L2.Host.HChar D.host.E) (e : AE D) (P : Finset (Pl D.host.E)) (cR : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ), ChrEq c χ → (∀ PP, χ.TameAt PP) → IsIdemSum e P → (∀ PP, PP ∉ P → (¬ ∃ PP' ∈ P, Lev.IsConjPl (D := D) PP' PP) → χ.UnrAt PP) → (∀ PP ∈ P, IsRes χ PP (cR PP)) → TameOn c e P cR := by
   classical
   intro D c χ e P cR hc ht he hunr hres x hx1 hx2 hx3 hxe u hu
   obtain ⟨ι, h1, h2, h3⟩ := GlobalTheory.HostAdeleIso.exists_finiteAdele_equiv D
@@ -190,7 +190,7 @@ theorem tameOn_of_tame : ∀ (D : D7) (c : (AE D)ˣ →* Circle) (χ : Formalism
   refine (Finset.prod_subset Finset.subset_union_left fun Q _ hQ => ?_).symm.trans
     (Finset.prod_congr rfl fun Q hQ => ?_)
   · rw [Units.val_eq_one]
-    by_cases hcj : ∃ PP' ∈ P, IsConjPl PP' Q
+    by_cases hcj : ∃ PP' ∈ P, Lev.IsConjPl (D := D) PP' Q
     · obtain ⟨R, hR, hRQ⟩ := hcj
       have h5 := val_sub_lt_one Valued.v R ((G Q).comp (sigR (Af D.host.F) D.sp.cm.sig))
         (fun y hy => hGint Q _ (GlobalTheory.PlaceIdem.sig_mem D hy))
