@@ -131,7 +131,7 @@ theorem prodS_bound (S : Finset {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal}) :
       0 ≤ ∏ 𝔭 ∈ S, aLoc h L 𝔭 n ∧ ∏ 𝔭 ∈ S, aLoc h L 𝔭 n ≤ C := by
   have hm1 : 1 ≤ finrank K V := by omega
   choose C hC using fun 𝔭 : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal} =>
-    alphaN_bound hK hF hs hd hL.toIsLattice hLi hm 𝔭.2
+    alphaN_bound hK hF hs hd hL hLi hm 𝔭.2
   refine ⟨∏ 𝔭 ∈ S, C 𝔭 / eFac K (finrank K V) 𝔭.1, fun n hn => ?_⟩
   have hpos : ∀ 𝔭 : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal}, 0 < eFac K (finrank K V) 𝔭.1 :=
     fun 𝔭 => eFac_pos 𝔭.2 hm1

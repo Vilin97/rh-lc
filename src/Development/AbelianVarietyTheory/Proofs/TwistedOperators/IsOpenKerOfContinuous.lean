@@ -135,6 +135,7 @@ theorem exists_subset_ballLat {K : Set (m → k)} (hK : IsCompact K) :
   exact ⟨s, fun x hx i => hs (Set.mem_iUnion.2 ⟨i, x, hx, rfl⟩)⟩
 
 theorem isCompact_lattice (L : Submodule 𝒪[k] (m → k)) (hL : L.IsFullLattice k) : IsCompact (L : Set (m → k)) := by
+  letI : L.IsFullLattice k := hL
   obtain ⟨S, hS⟩ := hL.toIsLattice.fg
   obtain ⟨s, hs⟩ := exists_subset_ballLat (K := (S : Set (m → k))) S.finite_toSet.isCompact
   have h1 : L ≤ ballLat m s := hS ▸ Submodule.span_le.2 hs
@@ -157,6 +158,7 @@ theorem perp_mem_nhds (hψ : Continuous ψ) (L : Submodule 𝒪[k] (m → k)) (h
 
 theorem isCompact_perp (hψ : Continuous ψ) (hψ1 : ψ ≠ 1) [DecidableEq m] (L : Submodule 𝒪[k] (m → k))
     (hL : L.IsFullLattice k) : IsCompact (perp ψ L : Set (m → k)) := by
+  letI : L.IsFullLattice k := hL
   have h := ExchangeSupport.mem_SB_of hψ1 ((perp ψ L : Set (m → k)).indicator fun _ => (1 : ℂ)) ?_ ?_
   · have h2 : IsCompact (closure _) := h.2
     rwa [Set.support_indicator, Function.support_const one_ne_zero, Set.inter_univ,

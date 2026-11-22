@@ -40,9 +40,12 @@ theorem isModel_ext : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topolo
   have hζ0 : ζ ≠ 0 := by
     rintro rfl
     exact hζ.2 (by simp)
+  letI : Submodule.IsLattice D.host.E
+      (Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ} : Lat L) :=
+    Submodule.IsLattice.of_fg _ (Submodule.fg_span_singleton ζ)
   letI : Submodule.IsFullLattice D.host.E
       (Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ} : Lat L) :=
-    ⟨Submodule.IsLattice.of_fg _ (Submodule.fg_span_singleton ζ), by
+    ⟨by
       rw [Submodule.span_span_of_tower]
       exact (finrank_eq_one_iff_of_ne_zero ζ hζ0).1 (by rw [Module.finrank_fin_fun, hζ.1])⟩
   letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull S LS hS

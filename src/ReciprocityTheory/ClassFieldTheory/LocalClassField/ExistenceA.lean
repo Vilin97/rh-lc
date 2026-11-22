@@ -60,7 +60,7 @@ theorem cycK_eq_one {n : ℕ} [NeZero n] (hμ : ∀ ζ : PadicAlgCl p, ζ ^ n = 
     cycK p K n g = 1 := by
   obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot (PadicAlgCl p) n
   have h1 : g ζ = ζ := g.commutes ⟨ζ, hμ ζ hζ.pow_eq_one⟩
-  rw [cycN_spec (K := K) (L := PadicAlgCl p) n g ζ hζ.pow_eq_one] at h1
+  rw [cycN_spec (K := K) (L := PadicAlgCl p) (n := n) g ζ hζ.pow_eq_one] at h1
   have h2 : ζ ^ ((cycK p K n g : (ZMod n)ˣ) : ZMod n).val = ζ ^ (1 % n) := by
     rw [← pow_eq_pow_mod 1 hζ.pow_eq_one, pow_one]
     exact h1

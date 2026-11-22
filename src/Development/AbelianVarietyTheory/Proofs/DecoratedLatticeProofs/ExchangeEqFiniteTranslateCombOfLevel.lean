@@ -38,6 +38,7 @@ theorem exists_comb {ψ : AddChar k Circle} (hψ : Continuous ψ) (hψ1 : ψ ≠
     hg.continuousAt.preimage_mem_nhds (hU.mem_nhds (by simp [hg1, U.one_mem]))
   obtain ⟨t, ht⟩ := exists_ballLat_subset (inter_mem hV (perp_mem_nhds hψ W hW))
   have hBl : (ballLat n t).IsFullLattice k := ballLat_isLattice t
+  letI : (ballLat n t).IsFullLattice k := hBl
   have hBopen := (LatPair.isClopen_lattice (ballLat n t)).2
   obtain ⟨T, hT⟩ := exists_isReps (perp ψ W) (ballLat n t).toAddSubgroup (isCompact_perp hψ hψ1 W hW) hBopen
   refine ⟨∑ x ∈ T, Finsupp.single (g x)

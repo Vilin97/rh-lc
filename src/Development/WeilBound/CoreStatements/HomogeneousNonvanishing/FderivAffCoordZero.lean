@@ -233,7 +233,7 @@ private theorem contDiffAt_log_prod_fsMetric_rho_blk {K : Type} [Fintype K] {ι 
     ContDiffAt ℝ ((⊤ : ℕ∞) : WithTop ℕ∞)
       (fun z : (k : K) × ι k → ℂ => Real.log (∏ k, (fsMetric (ι := ι k)).ρ (GP.blk k z))) z := by
   have hpos : 0 < ∏ k, (fsMetric (ι := ι k)).ρ (GP.blk k z) :=
-    Finset.prod_pos fun k _ => fsMetric.pos _ (hz k)
+    Finset.prod_pos fun k _ => (fsMetric (ι := ι k)).pos _ (hz k)
   exact (contDiffAt_prod fun k _ => contDiffAt_fsMetric_rho_blk k (hz k)).log hpos.ne'
 
 private theorem levi_log_prod_fsMetric_eq_sum {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
@@ -248,7 +248,7 @@ private theorem levi_log_prod_fsMetric_eq_sum {K : Type} [Fintype K] {ι : K →
   have hcongr : (fun z : (k : K) × ι k → ℂ => Real.log (∏ k, (fsMetric (ι := ι k)).ρ (GP.blk k z))) =ᶠ[𝓝 z]
       fun y => ∑ k ∈ Finset.univ, Real.log ((fsMetric (ι := ι k)).ρ (GP.blk k y)) := by
     filter_upwards [hev] with y hy
-    exact Real.log_prod (fun k _ => (fsMetric.pos _ (hy k)).ne')
+    exact Real.log_prod (fun k _ => ((fsMetric (ι := ι k)).pos _ (hy k)).ne')
   rw [ReciprocityTheory.AnForm.levi_congr hcongr]
   rw [GP.levi_sum (f := fun k y => Real.log ((fsMetric (ι := ι k)).ρ (GP.blk k y)))]
   · refine Finset.sum_congr rfl fun k _ => ?_
@@ -332,11 +332,11 @@ private theorem log_prod_fsMetric_blk_smul {K : Type} [Fintype K] {ι : K → Ty
     intro k
     ext i
     simp [GP.blk]
-  simp only [hb, fsMetric.smul]
+  simp only [hb, ConeMetric.smul]
   rw [Finset.prod_mul_distrib, Real.log_mul, Real.log_prod]
   · exact fun k _ => norm_ne_zero_iff.2 (hc k)
   · exact Finset.prod_ne_zero_iff.2 fun k _ => norm_ne_zero_iff.2 (hc k)
-  · exact (Finset.prod_pos fun k _ => fsMetric.pos _ (GP.blk_ne hz k)).ne'
+  · exact (Finset.prod_pos fun k _ => (fsMetric (ι := ι k)).pos _ (GP.blk_ne hz k)).ne'
 
 open GP HolomorphicMinorCharts ReciprocityTheory.AnForm in
 theorem g_pos : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P J : Ideal (MRing ι)) (e : ℕ) (R : AnLogRes P J e), IsEmbedded R.A P R.U R.lift → ∃ Amp : HermLine ι, IsSmoothHerm Amp ∧ IsPotential R.A (potOf R Amp) ∧ IsPosPot R.A (potOf R Amp) := by
@@ -350,11 +350,11 @@ theorem g_pos : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι
       intro k
       ext i
       simp [blk]
-    simp only [hb, fsMetric.smul, zpow_one]
+    simp only [hb, ConeMetric.smul, zpow_one]
     exact Finset.prod_mul_distrib
   have hpos : ∀ z : (k : K) × ι k → ℂ, (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) →
       0 < ∏ k, (fsMetric (ι := ι k)).ρ (blk k z) := fun z hz =>
-    Finset.prod_pos fun k _ => fsMetric.pos _ (blk_ne hz k)
+    Finset.prod_pos fun k _ => (fsMetric (ι := ι k)).pos _ (blk_ne hz k)
   let Amp : HermLine ι := ⟨fun _ => 1, fun z => ∏ k, (fsMetric (ι := ι k)).ρ (blk k z), hpos, hsm⟩
   have hΦ := fun c z hc hz => log_prod_fsMetric_blk_smul (ι := ι) c z hc hz
   refine ⟨Amp, ?_, ?_, ?_⟩

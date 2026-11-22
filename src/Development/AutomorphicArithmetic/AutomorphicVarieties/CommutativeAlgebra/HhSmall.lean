@@ -17,7 +17,7 @@ private theorem expand_small {O : Type} [CommRing O] [IsLocalRing O] {ι : Type}
       Ideal.mul_mem_mul ((res_eq_zero_iff O R x).1 hx) hy
     rwa [hs, Ideal.mem_bot] at this
   have z1 : ∀ a b, p (Z a b) = 0 := fun a b => congrFun (congrFun hZ a) b
-  have z2 : ∀ a b, res O R (Z a b) = 0 := fun a b => by rw [← res_map O R p, z1, map_zero]
+  have z2 : ∀ a b, res O R (Z a b) = 0 := fun a b => by rw [← res_map p, z1, map_zero]
   have h1 : ∀ a b, res O R ((h - 1) a b) = 0 := fun a b => by
     have := congrFun (congrFun hh a) b
     simp only [map_apply] at this

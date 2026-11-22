@@ -311,7 +311,7 @@ theorem betaLUniq_of' (h1 : GramNondeg) (h2 : AgreeOnH) (h3 : WAniso) (h4 : Line
         (hS D).hT (hS D).herm (hS D).nondeg hF.1 hF.2.1 }
   have n' := h1 (hS D) Λ F F' hfull hF.2.2.1 hT'.1 hT'.2.2
   have n'' := h1 (hS D) Λ F F'' hfull hF.2.2.1 hT''.1 hT''.2.2
-  have hH := h2 (hS D) Λ F F' F'' β₁ β₂ D.R.k hF.1 hF.2.2.1 hT''.1 hdim n' n'' hs1 hs2
+  have hH := h2 (hS D) Λ F F' F'' β₁ β₂ D.R.k hfull hF.2.2.1 hT''.1 hdim n' n'' hs1 hs2
   exact h4 (hS D) Λ F F' F'' β₁ β₂ D.R.k hdim hfull hT'.1 n' (h3 D u' F') hP1.1.1 hP2.1.1 hP1.2.1
     hP2.2.1 hP1.2.2.1 hP2.2.2.1 hH (h5 D u u' Λ F F' F'' β₁ β₂ hF hT' hT'' hG' hG'' hP1 hP2 hs1 hs2)
 

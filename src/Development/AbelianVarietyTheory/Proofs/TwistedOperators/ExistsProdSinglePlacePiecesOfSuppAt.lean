@@ -79,7 +79,7 @@ theorem exists_prod_pieces : ∀ {D : D7} (V : HSp D) (P : Finset (Pl D.host.E))
     add_mul_self_eq_of_orthogonal_idempotents (h1 _ w.2) (by rw [← RingHom.map_mul, h1 _ w.2]) (h3 _ w.2 _ w.2)
   have hEc : ∀ w, cA D (E w) = E w := fun w => by
     show cA D (es w.1 + cA D (es w.1)) = es w.1 + cA D (es w.1)
-    rw [RingHom.map_add (f := _), cA_cA, add_comm]
+    rw [RingHom.map_add (f := _), Formalism.L2.Theta.cA_cA, add_comm]
   have hEo : ∀ w w', w ≠ w' → E w * E w' = 0 := fun w w' hww => by
     have := h2 _ w.2 _ w'.2 fun h => hww (Subtype.ext h)
     exact add_mul_add_eq_zero_of_pairwise_products_zero this (by rw [← RingHom.map_mul, this, RingHom.map_zero]) (h3 _ w.2 _ w'.2) (h3 _ w'.2 _ w.2)

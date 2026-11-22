@@ -23,7 +23,10 @@ theorem isFullLattice_span {D : D7} {L : HSp D} {ζ : Fin L.rank → D.host.E} (
   have hζ : ζ ≠ 0 := by
     rintro rfl
     exact h.2 (by simp)
-  refine ⟨Submodule.IsLattice.of_fg _ (Submodule.fg_span_singleton ζ), ?_⟩
+  letI : Submodule.IsLattice D.host.E
+      (Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ} : Lat L) :=
+    Submodule.IsLattice.of_fg D.host.E (Submodule.fg_span_singleton ζ)
+  refine ⟨?_⟩
   rw [Submodule.span_span_of_tower]
   exact (finrank_eq_one_iff_of_ne_zero ζ hζ).1 (by rw [Module.finrank_fin_fun, h.1])
 

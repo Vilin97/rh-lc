@@ -151,42 +151,8 @@ theorem mjH_succ (i : Fin D.R.m) : mjH Z ((i : ℕ) + 1) = HLat.ofCoord ((s0Of R
 theorem mjH_good (hH : Holds R F) (j : ℕ) : (mjH Z j).Good :=
   mapSeq_ind_all _ _ D.what₂.Mj Z.jW (fun _ A _ => A.Good)
     (fun i => by
-      have : Submodule.IsLattice D.what₂.LL ((s0Of R F).M i) := hH.prim.mLat i
-      refine ofCoord_good (L := (s0Of R F).M i) ⟨?_⟩ fun v =>
-        frame_gram_unit _ (RealDat3.kForm_of (F := F) hH.prim.unif false i v).1
-      let A := R.FW i
-      let b := R.toRealDat.bL F.lv2 false i
-      let S : Set (Fin (R.nW i) → D.what₂.LL) := A.MK
-      have hS : Submodule.span D.what₂.LL S = ⊤ := by
-        obtain ⟨_, _, -, -, hspanKs, -, hspanLL⟩ := (hH.aux.integral i).1
-        have hMK : Submodule.span Ks S = A.WK := (hH.aux.integral i).2.1.2
-        rw [← Submodule.span_span_of_tower Ks D.what₂.LL S, hMK]
-        change Submodule.span D.what₂.LL ((R.FW i).WK : Set (Fin (R.nW i) → D.what₂.LL)) = ⊤
-        rw [← hspanKs, Submodule.span_span_of_tower, hspanLL]
-      apply top_unique
-      intro c hcTop
-      clear hcTop
-      change Fin (Module.finrank D.what₂.LL (R.toRealDat.WL F.lv2 false i)) → D.what₂.LL at c
-      let f := Fintype.linearCombination D.what₂.LL b
-      have hf : f c ∈ R.toRealDat.WL F.lv2 false i := by
-        change Fintype.linearCombination D.what₂.LL b c ∈ _
-        rw [Fintype.linearCombination_apply]
-        exact Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (Module.finBasis _ _ k).2
-      have hfc : f c ∈ Submodule.span D.what₂.LL S := hS.symm ▸ Submodule.mem_top
-      obtain ⟨a, hay⟩ := multiple_mem_span_of_mem_localization_span
-        (nonZeroDivisors (𝓞 D.what₂.LL)) D.what₂.LL S (f c) hfc
-      let t : D.what₂.LL := (a : 𝓞 D.what₂.LL)
-      have hac : t • c ∈ (s0Of R F).M i := by
-        change f (t • c) ∈ A.Mj _ _ _
-        rw [map_smul]
-        have hg := (R.toRealDat.WL F.lv2 false i).smul_mem t hf
-        change (a : 𝓞 D.what₂.LL) • f c ∈ Submodule.span (𝓞 D.what₂.LL) S at hay
-        rw [← algebraMap_smul D.what₂.LL] at hay
-        exact ⟨⟨hay, hg.1⟩, hg.2⟩
-      have ht : t ≠ 0 := RingOfIntegers.coe_ne_zero_iff.mpr (nonZeroDivisors.coe_ne_zero a)
-      let S₀ : Set (Fin ((s0Of R F).dW i) → D.what₂.LL) := (s0Of R F).M i
-      have htc : t • c ∈ Submodule.span D.what₂.LL S₀ := Submodule.subset_span (s := S₀) hac
-      exact inv_smul_smul₀ ht c ▸ (Submodule.span D.what₂.LL S₀).smul_mem t⁻¹ htc)
+      exact ofCoord_good (hH.prim.mLat i) fun v =>
+        frame_gram_unit _ (RealDat3.kForm_of (F := F) hH.prim.unif false i v).1)
     (fun _ => unitLat_good _) j
 
 theorem jM_basis (hH : Holds R F) (j : ℕ) : LinearIndependent ℂ (fun k => jM Z j ((mjH Z j).b k)) ∧

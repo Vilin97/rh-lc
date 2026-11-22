@@ -114,11 +114,13 @@ theorem series_translate {F : Frame S T} (hF : F.Good) {ω : PairRep S T} {χS �
     (hω : IsWeilDatumO F.ψ S T χS χT ω) {f : WO S T → ℂ} (hf : IsThetaFunO F.ψ S T f) {γ : GA D T} (hγ : γ ∈ GfC T)
     (h : GA D S) (Pol : PolF D T.rank S.rank) (g : GA D T) :
     series F ω f h Pol (g * γ) = series F ω (ω (1, γ) f) h Pol g := by
+  have compAt_one (τ : D.what₂.Tau) {n : ℕ} : compAt F.θ τ (1 : Mx D n n) = 1 :=
+    Matrix.map_one _ (map_zero ((F.θ τ).comp (infPart D))) (map_one ((F.θ τ).comp (infPart D)))
   have k := (GlobalTheory.OrientedHeis.om_pureTensorO D F.ψ F.θ S T χS χT ω hω hF.vac.2.inf (fun _ => 1) (fun _ => 1)
     (fun τ => (F.BS τ).val) (fun τ => (F.BS τ).val) F.sT F.sT F.BT F.BT 1 γ
-    (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ (one_mem _)])
+    (fun τ => by simp [compAt_one])
     (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ hγ])
-    (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ (one_mem _)])
+    (fun τ => by simp [compAt_one])
     (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ hγ]) f hf Pol).2
   have e2 : ((h, g * γ) : GA D S × GA D T) = (h, g) * (1, γ) := by simp
   rw [series_apply, series_apply, e2, map_mul, Module.End.mul_apply]

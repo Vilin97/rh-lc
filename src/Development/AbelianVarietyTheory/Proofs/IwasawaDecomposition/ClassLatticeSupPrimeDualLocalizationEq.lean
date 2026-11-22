@@ -63,18 +63,32 @@ theorem nsmul_dual_mem_loc {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (F
     | zero => simp
     | add x y _ _ hx hy => rw [smul_add]; exact add_mem hx hy
     | smul a x _ hx => rw [smul_comm]; exact Submodule.smul_mem _ a hx
-  have hdual := GlobalTheory.T.unitary_completion_maps_dualLattices F E σ n J v L S.Lb y hJ hL hLb hy hyl
-  have h1 : (fun a => inclE (F := F) (v.adicCompletion F) (z a)) ∈
-      latS (F := F) (v.adicCompletion F) (intV E v) (dualL (σ : E →+* E) J L) :=
-    Submodule.subset_span ⟨z, hz, rfl⟩
-  have h2 := nsmul_latS_of_nsmul v T S.Lb (dualL (σ : E →+* E) J S.Lb) hT _ ((hdual _).mp h1)
+  let zV : Fin n → E ⊗[F] v.adicCompletion F := fun a => inclE (F := F) (v.adicCompletion F) (z a)
+  have hdual : (y⁻¹).1 *ᵥ zV ∈
+      latS (F := F) (v.adicCompletion F) (intV E v) (dualL (σ : E →+* E) J S.Lb) := by
+    apply (GlobalTheory.DualCompletion.mem_latS_dualL σ J hJ v S.Lb hLb _).2
+    intro u hu
+    have huL : y.1 *ᵥ u ∈ latS (F := F) (v.adicCompletion F) (intV E v) L := by
+      apply (hyl _).2
+      rwa [Matrix.mulVec_mulVec, ← Units.val_mul, inv_mul_cancel, Units.val_one, Matrix.one_mulVec]
+    have hyU : cT (sigR σ (v.adicCompletion F)) y.1 *
+        J.map (inclE (F := F) (v.adicCompletion F)) * y.1 =
+        J.map (inclE (F := F) (v.adicCompletion F)) := hy
+    have hpair := Formalism.UG.P.hform_mulVec (sigR σ (v.adicCompletion F))
+      (J.map (inclE (F := F) (v.adicCompletion F))) y.1 u ((y⁻¹).1 *ᵥ zV)
+    rw [hyU, Matrix.mulVec_mulVec, ← Units.val_mul, mul_inv_cancel, Units.val_one,
+      Matrix.one_mulVec] at hpair
+    rw [← hpair]
+    exact Formalism.L2.G.RelativeIndexFlags.pair_int v σ J L z
+      ((GlobalTheory.DualCompletion.mem_dualL (σ : E →+* E) J L z).1 hz) _ huL
+  have h2 := nsmul_latS_of_nsmul v T S.Lb (dualL (σ : E →+* E) J S.Lb) hT _ hdual
   rw [← Matrix.mulVec_smul] at h2
   have h3 := (hyl _).mpr h2
   have h4 : (fun a => inclE (F := F) (v.adicCompletion F) ((T • z) a)) ∈
       latS (F := F) (v.adicCompletion F) (intV E v) L := by
     convert h3 using 1
     funext a
-    simp only [Pi.smul_apply, map_nsmul]
+    simp only [zV, Pi.smul_apply, map_nsmul]
   exact GlobalTheory.T.exists_smul_mem_lattice_of_mem_completion F E v n L hL (T • z) h4
 
 

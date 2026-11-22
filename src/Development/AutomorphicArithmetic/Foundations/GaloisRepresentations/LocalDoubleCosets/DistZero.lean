@@ -49,7 +49,7 @@ theorem UpperTheory.Gal.LocD.distZero :
         (GroundTheory.Automorphic.Parabolic.cellUnion C (j + 1)) (closure (C ⟨j, hj⟩)) (x ⟨j, hj⟩)
         (GroundTheory.Automorphic.Parabolic.isOpen_cellUnion hdisj hcov hcl' (j + 1)) isClosed_closure ?_ ?_ ?_ (hfix _) ?_ g hg
       · rw [Set.inter_comm]
-        have h1 := GroundTheory.Automorphic.Parabolic.closure_inter_cellUnion_succ hdisj hcov hcl' ⟨j, hj⟩
+        have h1 := GroundTheory.Automorphic.Parabolic.closure_inter_cellUnion_succ hdisj hcl' ⟨j, hj⟩
         rw [h1, hC]
       · intro h y hy
         rw [GroundTheory.Automorphic.Parabolic.mem_cellUnion] at hy ⊢

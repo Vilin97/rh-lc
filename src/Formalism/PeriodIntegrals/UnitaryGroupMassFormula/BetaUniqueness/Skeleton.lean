@@ -20,7 +20,7 @@ def GramNondeg : Prop :=
 
 def AgreeOnH : Prop :=
   ∀ {E : Type} [Field E] [NumberField E] [StarRing E] (S : HSpace E) (Λ : Submodule (𝓞 E) S.V) {r : ℕ} {T T' : E} (F : LFlag S r T) (F' F'' : LFlag S r T')
-    (β₁ β₂ : S.V ≃ₗ[E] S.V) (k : ℕ), Submodule.IsLattice E Λ → IsLift Λ F → IsLift Λ F'' →
+    (β₁ β₂ : S.V ≃ₗ[E] S.V) (k : ℕ), Submodule.IsFullLattice E Λ → IsLift Λ F → IsLift Λ F'' →
     finrank E S.V = k + 2 * r + 1 →
     (finrank E (UUE Λ F F') = 2 * r + 2 ∧ UUE Λ F F' ⊓ orth S (UUE Λ F F') = ⊥) →
     (finrank E (UUE Λ F F'') = 2 * r + 2 ∧ UUE Λ F F'' ⊓ orth S (UUE Λ F F'') = ⊥) →

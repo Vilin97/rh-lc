@@ -29,7 +29,7 @@ theorem vE_eq_neg_log {F : Type} [Field F] [NumberField F] (p : HeightOneSpectru
   rw [hku, GlobalTheory.UnramVal.vE_zpow_mul_unit L hϖ k u]
 
   obtain ⟨g, hg⟩ := p.valuation_exists_uniformizer F
-  obtain ⟨q, hq, hqg⟩ := GlobalTheory.LocSplit.exists_irreducible p ι g hg
+  obtain ⟨q, hq, hqg⟩ := GlobalTheory.LocSplit.exists_irreducible p ι hd hv g hg
   obtain ⟨w, hw⟩ := IsDiscreteValuationRing.associated_of_irreducible 𝒪[K] hϖ hq
   have h0 : p.valuation F x ≠ 0 := (Valuation.ne_zero_iff _).mpr hx
   set n := WithZero.log (p.valuation F x) with hn
