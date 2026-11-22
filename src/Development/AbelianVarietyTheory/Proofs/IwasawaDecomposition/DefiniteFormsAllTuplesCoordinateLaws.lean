@@ -104,7 +104,9 @@ theorem lvlMat_laws {σ : K →+* ℂ} (hσ : ∀ a, σ (star a) = starRingEnd �
   have hproj := (orthogonal_projection_spec K _ h0 S (hpos _) G r hr _ hP.idem hP.selfAdj).1.1
   have hop := level_operator_spec K _ h0 S (hpos _) G r hr P ψ
   refine ⟨posDef_of_mk (cut_posDef S.H (S.lvlE r P ψ) hinj hE (Nat.card P) Nat.card_pos _ (hpos _)),
-    S.lf_lvlNab_isFullLattice hS r P ψ, fun a b => ?_, fun c a => ?_, ?_,
+    (Formalism.DivisionValues.exponent_index_lattice.cut_isFullLattice (S.lvlE r P ψ) hinj _
+      (Formalism.DivisionValues.ValuationLatticeField.valLatF_isFullLattice S.I S.I_injective S.Nab hS.nab_isFullLattice)),
+    fun a b => ?_, fun c a => ?_, ?_,
     fun a _ b hb => (hop b (Subalgebra.mem_center_iff.1 hb _).symm).2 a, rfl, Subalgebra.mem_center_iff.2 hI.2, hI.1.idem,
     hform_sa ?_⟩
   · show S.lvlOp r P ψ (a + b) = S.lvlOp r P ψ a + S.lvlOp r P ψ b

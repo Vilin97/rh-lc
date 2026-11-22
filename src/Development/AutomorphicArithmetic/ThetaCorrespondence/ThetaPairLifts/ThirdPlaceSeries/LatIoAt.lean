@@ -43,7 +43,7 @@ theorem latIoAt_alt : _root_.GlobalTheory.BigOn.Exp.SerBase.LatticeInclusionAt :
     have h0 := baseOf_of_realPin_at (cG := p.cG) hC.lev hρ hpin ((Fm.ex x hx i).nch.twI w) j ((Fm.ex x hx i).nch.sd w)
     exact { h0 with }
   have hlam := hBo.lam
-  have hMlat := GlobalTheory.LatFull.latAt_isLattice _ ρ hρ ((Fm.ex x hx i).nch.twI w) j ((Fm.ex x hx i).nch.sd w) h
+  have hMlat := GlobalTheory.LatFull.latAt_isFullLattice _ ρ hρ ((Fm.ex x hx i).nch.twI w) j ((Fm.ex x hx i).nch.sd w) h
   obtain ⟨hPh, hPF⟩ := (mem_harmLat _ _ _).1 hP
   rw [hlam] at hPF
   have key : ∀ φ ∈ coefLatFn (embLL0 (Fm.D x i)) (labLL0 (Fm.D x i)) (smallInt (Fm.D x i)) (lamV (Fm.D x i) j)

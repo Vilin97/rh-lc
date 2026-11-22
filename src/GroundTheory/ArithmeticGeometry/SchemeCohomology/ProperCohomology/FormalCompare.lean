@@ -75,7 +75,8 @@ theorem mem_range_formalβ_of_mem_towerLimit {c : ℕ}
     {x : ∀ n, Sheaf.H.{u} (modulesAb (quotPow I F n)) q} (hx : x ∈ towerLimit (E := fun m => Sheaf.H.{u} (modulesAb (quotPow I F m)) q) (formalτE I F q))
     (n : ℕ) : x n ∈ LinearMap.range (formalβ I F q n) := by
   obtain ⟨p, hp⟩ := (bijective_towerLimitMap (formalτP I F q) (formalτE I F q) (formalτQ I F q)
-    (formalι I F q) (formalπ I F q) (formalι_comm I F q)
+    (formalι I F q) (formalπ I F q) (formalι_comm I F q) (formalπ_comm I F q)
+    (formalι_injective I F q) (range_formalι I F q)
     (formalι_injective I F q) (range_formalι I F q) (formalπ_comm I F q) hQ).2 ⟨x, hx⟩
   obtain ⟨h, hh⟩ := Submodule.Quotient.mk_surjective _ (p.1 n)
   refine ⟨h, ?_⟩

@@ -54,7 +54,7 @@ theorem phiPlus_mem_span_periodT {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1)
 
   obtain ⟨w, hw⟩ := Ideal.mem_span_singleton'.1 (p_mul_phi_mem_span_mu hε hζ ha)
   obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.1 (mu_mem_span_periodT (K := K) hε hζ)
-  have hpa : (p : ACris K p) * phi a = periodT hε * (c * w) := by
+  have hpa : (p : ACris K p) * phi (K := K) (p := p) a = periodT hε * (c * w) := by
     rw [← hw, ← hc]; ring
 
   have h1 := congrArg (phiPlus K p) hs
@@ -67,7 +67,7 @@ theorem phiPlus_mem_span_periodT {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1)
   have h2 : phiPlus K p y * algebraMap (ACris K p) (BCrisPlus K p) ((p : ACris K p) ^ (k + 1)) =
       algebraMap (ACris K p) (BCrisPlus K p) (periodT hε) *
         algebraMap (ACris K p) (BCrisPlus K p) (c * w) := by
-    rw [pow_succ, map_mul, ← mul_assoc, h1, ← map_mul, mul_comm (phi a), hpa, map_mul]
+    rw [pow_succ, map_mul, ← mul_assoc, h1, ← map_mul, mul_comm (phi (K := K) (p := p) a), hpa, map_mul]
   calc algebraMap (ACris K p) (BCrisPlus K p) (c * w) * ↑hu.unit⁻¹ *
         algebraMap (ACris K p) (BCrisPlus K p) (periodT hε)
       = phiPlus K p y * algebraMap (ACris K p) (BCrisPlus K p) ((p : ACris K p) ^ (k + 1)) *

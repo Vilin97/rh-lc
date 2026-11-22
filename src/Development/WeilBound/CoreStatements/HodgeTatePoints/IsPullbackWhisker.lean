@@ -133,7 +133,6 @@ theorem basis_bc {n : ℕ} {tg : Fin n → (Sp (DualNumber S) ⟶ t.G.left)} (ht
   have htg' : (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ tg i) = fun l => (M'.pt (j (b l))).left :=
     funext fun l => by
       rw [hj, htg]
-      rfl
   obtain ⟨v, hv⟩ := M'.onto (Over.homMk w hw.1) hw.2
   have hvw : (M'.pt v).left = w := by rw [hv]; rfl
   let B := Module.Basis.mk hli' hsp'.ge

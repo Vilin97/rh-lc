@@ -31,7 +31,6 @@ theorem exists_mem_span_red_eq (p : ℕ) [Fact p.Prime] (P : ∀ (k : Type) [Com
     obtain ⟨n', hn', h2⟩ := hy
     refine ⟨n + n', add_mem hn hn', ?_⟩
     rw [LinearMap.map_add (B.red _ hG') n n', h1, h2, LinearMap.map_add (f := _)]
-    rfl
   | tmul r y =>
     obtain ⟨m, rfl⟩ := B.red_surjective G hG y
     obtain ⟨R, rfl⟩ := (WittVector.constantCoeff_surjective p : Function.Surjective

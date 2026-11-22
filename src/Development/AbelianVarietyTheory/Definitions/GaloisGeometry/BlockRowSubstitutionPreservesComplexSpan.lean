@@ -1665,7 +1665,7 @@ theorem latIn_of {Fo : FormsIn M (j + 1) hj} {Lc : LocIn X u w hg Lv j Fo.Ch}
     alg := fun v a => (X.g u w hg).spl_alg _ ((X.g u w hg).pl v).2 a
     base := fun v t => frlat_re (rankN D (j + 1) hj) ((X.g u w hg).pl v).1 ((X.g u w hg).spl _ ((X.g u w hg).pl v).2) (Lc.Lb β)
       Lc.B ((Lc.t β).fr _ ((X.g u w hg).pl v).2) (hfr _ _) ((Lc.t β).fr_lat _ ((X.g u w hg).pl v).2) (Fo.K β).lev.Lb H.Lb_eq t
-    lat := H.lat
+    lat := fun cl => Formalism.MainNotions.G.ChF.isLattice_chart (Fo.K β) cl
     chi := H.chi }
 
 
@@ -2068,7 +2068,7 @@ theorem StepTies.lat (S : StepTies hj Fo Lc Gt c) (β : Fo.Ch) : LatTies hj w Fo
   exact {
     siteGood_prime_torsion := S.siteGood_prime_torsion
     Lb_eq := S.Lb_eq β
-    lat := fun cl => isLattice_chart (Fo.K β) cl
+    lat := fun cl => (isLattice_chart (Fo.K β) cl).toIsLattice
     chi := S.chi β }
 
 theorem StepTies.core (S : StepTies hj Fo Lc Gt c) (K : CmpTied D X0 T Gt c) (ht : Fl.t = D.R.t) (hF : FillTie Gt u w h Fl) (β : Fo.Ch) :

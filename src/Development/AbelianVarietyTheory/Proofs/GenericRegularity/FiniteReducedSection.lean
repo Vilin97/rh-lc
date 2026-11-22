@@ -66,7 +66,6 @@ theorem rzMap_sec_eq (i : Fin (WeightFamilies.dimY D j + 1)) :
     rw [Formalism.MainNotions.Gaps.EtaleWeightGaps.sec, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, rzMap_emb, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
-  rfl
 
 theorem map_Jid_eq : Ideal.map (phiZ X la N Ω gF w) (Jid X la w) =
     Ideal.span (Set.range fun i : Fin (WeightFamilies.dimY D j) =>

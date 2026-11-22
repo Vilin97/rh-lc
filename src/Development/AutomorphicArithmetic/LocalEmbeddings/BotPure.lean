@@ -336,7 +336,9 @@ theorem exists_pure (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) {Bs : Base
       have hx' : IsHalf ε (m x) := (isHalf_m m).2 (GlobalTheory.BigDat.isHalf_mono (hεa i) ((hA i _).1 hx))
       have := mem_graphP_of_intertwines _ Bs.ψ (fun _ => 1) (m x) (m x) (fun Φ hΦ => by
         simp only [one_mul]
-        exact ⟨GlobalTheory.BigDat.GraphHeis.sb_trans_latO hS.1 hT.1 hinf hΦ hx', hTm.trans Φ hΦ _ hx'⟩) hp.2
+        exact ⟨GlobalTheory.BigDat.GraphHeis.sb_trans_latO
+          (GlobalTheory.PlaceVec.selfDual_isFullLattice S ΛS hS)
+          (GlobalTheory.PlaceVec.selfDual_isFullLattice T ΛT hT) hinf hΦ hx', hTm.trans Φ hΦ _ hx'⟩) hp.2
       simp only [one_mul, map_add (f := _), LinearEquiv.symm_apply_apply] at this
       rwa [← thM_rho m Mo hB] at this⟩)
     (fun i _ y hy p hp => ⟨GlobalTheory.HeisSchA.rho_mem_schA Mo Bs.ψ hstd y _ hp.1, by

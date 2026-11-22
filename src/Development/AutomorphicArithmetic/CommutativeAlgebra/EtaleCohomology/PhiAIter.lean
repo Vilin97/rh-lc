@@ -36,7 +36,7 @@ private theorem galA_tA (g : K.fixingSubgroup) : ∃ χ : ℤ_[l]ˣ, galA g (tA 
 private theorem phiA_tA : phiA l (tA l) = (l : Acris l) * tA l := ACris.phi_periodT_eq_mul _
 
 private theorem phiA_zA (x : ℤ_[l]) : phiA l (zA l x) = zA l x := by
-  change ACris.phi (algebraMap (Ainf l) (Acris l) (IsPerfectoidField.padicIntToWitt l x)) = _
+  change ACris.phi (K := ℂ_[l]) (p := l) (algebraMap (Ainf l) (Acris l) (IsPerfectoidField.padicIntToWitt l x)) = _
   rw [ACris.phi_algebraMap]
   have h := AInf.isAdicComplete_p (K := ℂ_[l]) (p := l)
   have he := RingHom.congr_fun (ringHom_ext_padicInt

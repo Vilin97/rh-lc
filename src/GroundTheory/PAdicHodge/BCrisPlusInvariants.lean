@@ -290,7 +290,7 @@ theorem mem_unramifiedClosure_of_iotaPlus_eq {x : BCrisPlus ℂ_[p] p} {β : Pad
       hfix, hphik]
   obtain ⟨u₀, -⟩ := exists_theta_approx_of_phi_iterate hN ha 0
 
-  have hθa : ((theta a : 𝒪) : ℂ_[p]) = ((r n₁ * (p : PadicAlgCl p) ^ k : PadicAlgCl p) : ℂ_[p]) := by
+  have hθa : ((theta ℂ_[p] p a : 𝒪) : ℂ_[p]) = ((r n₁ * (p : PadicAlgCl p) ^ k : PadicAlgCl p) : ℂ_[p]) := by
     have h1 : iota ℂ_[p] p a = algClToBdR p (r n₁ * (p : PadicAlgCl p) ^ k) := by
       rw [← iotaPlus_algebraMap, ← hs, map_mul, hsk, map_pow, map_natCast, hrx, map_mul, map_pow,
         map_natCast]

@@ -124,7 +124,9 @@ theorem exists_katz_etDual : ∀ (p : ℕ) [Fact p.Prime] (Bc : GlobalTheory.Die
       obtain ⟨m₁, e₁⟩ := Be.red_surjective (G₁ k G) (he k G) (rigExtMap (i₁ k G) x)
       refine ⟨(m₀, m₁), ?_⟩
       change rigExtMap (q₀ k G) (Bc.red _ _ m₀) + rigExtMap (q₁ k G) (Be.red _ _ m₁) = x
-      rw [e₀, e₁, rigExtMap_rigExtMap, rigExtMap_rigExtMap]
+      rw [e₀, e₁]
+      rw [rigExtMap_rigExtMap (q₀ k G) (i₀ k G) x,
+        rigExtMap_rigExtMap (q₁ k G) (i₁ k G) x]
       change ((rigExtMap (q₀ k G ≫ i₀ k G) + rigExtMap (q₁ k G ≫ i₁ k G)) x) = x
       rw [← (rigExtMap_add_and_natCast_smul_id p k (CharP.cast_eq_zero k p) G G).1,
         hs, rigExtMap_id]

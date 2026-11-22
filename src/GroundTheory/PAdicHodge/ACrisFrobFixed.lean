@@ -111,17 +111,18 @@ theorem exists_phi_eq (y : ACris K p) :
       phi (K := K) (p := p) y = algebraMap (AInf K p) (ACris K p) w + (p : ACris K p) * z := by
   obtain ⟨y₀, z₁, rfl⟩ := exists_eq_add_p_pow_mul 1 y
   obtain ⟨w, z, hz, e⟩ := exists_phiAway_eq y₀.2
-  refine ⟨w, algebraMap (ACrisZero K p) (ACris K p) ⟨z, hz⟩ + phi z₁, ?_⟩
-  have e' : phiZero y₀ = algebraMap (AInf K p) (ACrisZero K p) w +
+  refine ⟨w, algebraMap (ACrisZero K p) (ACris K p) ⟨z, hz⟩ + phi (K := K) (p := p) z₁, ?_⟩
+  have e' : phiZero (K := K) (p := p) y₀ = algebraMap (AInf K p) (ACrisZero K p) w +
       (p : ACrisZero K p) * ⟨z, hz⟩ :=
     Subtype.ext (by rw [coe_phiZero, e]; rfl)
-  have hof : phi (algebraMap (ACrisZero K p) (ACris K p) y₀) =
-      algebraMap (ACrisZero K p) (ACris K p) (phiZero y₀) := phi_of y₀
+  have hof : phi (K := K) (p := p) (algebraMap (ACrisZero K p) (ACris K p) y₀) =
+      algebraMap (ACrisZero K p) (ACris K p) (phiZero (K := K) (p := p) y₀) := phi_of y₀
   have hw : algebraMap (AInf K p) (ACris K p) w =
       algebraMap (ACrisZero K p) (ACris K p) (algebraMap (AInf K p) (ACrisZero K p) w) :=
     AdicCompletion.algebraMap_apply _ w
   rw [RingHom.map_add, map_mul, pow_one, map_natCast, hof, e', RingHom.map_add, map_mul,
-    map_natCast, hw, mul_add, add_assoc]
+    map_natCast, hw, mul_add]
+  ring
 
 
 omit [CharZero K] in
