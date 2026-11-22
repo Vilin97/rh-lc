@@ -172,9 +172,9 @@ end
 
 theorem psi_eq_psi' : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] (L : LocE F E), ∀ (r k : ℕ) (S : Frames L r k), ∀ h ∈ S.St, S.psi h = S.psi' h := by
   intro F _ _ _ _ _ E _ _ _ L r k S h hh
-  obtain ⟨s, ⟨hs0, -⟩, hs⟩ := exists_matrix S S.f h hh.1
-  obtain ⟨s', ⟨hs0', hs1'⟩, hs'⟩ := exists_matrix S S.f' h hh.2
-  obtain ⟨C, ⟨hC0, hC1⟩, hC⟩ := exists_matrix S S.f' h⁻¹ (inv_mem hh.2)
+  obtain ⟨s, ⟨hs0, -⟩, hs⟩ := exists_matrix S S.f S.T S.gram h hh.1
+  obtain ⟨s', ⟨hs0', hs1'⟩, hs'⟩ := exists_matrix S S.f' S.T' S.gram' h hh.2
+  obtain ⟨C, ⟨hC0, hC1⟩, hC⟩ := exists_matrix S S.f' S.T' S.gram' h⁻¹ (inv_mem hh.2)
   have hiso : ∀ x y, hf L S.Hm (h x) (h y) = hf L S.Hm x y := hh.1.1.1
   have hcan : ∀ x, h (h⁻¹ x) = x := fun x => h.apply_symm_apply x
   have hneg : ∀ j : Fin r, s' j.castSucc j.succ = -C j.castSucc j.succ := by

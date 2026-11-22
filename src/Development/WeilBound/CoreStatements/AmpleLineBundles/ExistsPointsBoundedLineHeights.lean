@@ -145,7 +145,7 @@ theorem CoverDenseAlt.exists_points_bounded_line_heights : ∀ (K : Type) [Finty
   · exact fun h => hx ((hval f).mp h)
   · rw [height_eq e (A j) (hA j)]
     have h1 := hC j x hxP
-    have h2 : (m j : ℝ) * height HermLine.standard x ≤ m j * C₀ :=
+    have h2 : (m j : ℝ) * height (GroundTheory.Heights₂.Heights.HermLine.standard n) x ≤ m j * C₀ :=
       mul_le_mul_of_nonneg_left (hC₀ x hxS) (Nat.cast_nonneg _)
     have h3 : |m j * C₀ + C j| ≤ ∑ j, |m j * C₀ + C j| :=
       Finset.single_le_sum (f := fun j => |m j * C₀ + C j|) (fun _ _ => abs_nonneg _) (Finset.mem_univ j)

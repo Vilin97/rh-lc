@@ -199,8 +199,9 @@ theorem std_deg (r : ℕ) : (∀ F, (HermitianBundle.standard K r).degree F ≤ 
       have h2 := integers_deg_le (Submodule.map (stdExt K r).proj F)
       have h3 := (stdExt K r).degree_submodule_le F
       linarith
-    · rw [HermitianBundle.degree_top_eq_arithDegree, HermitianExtension.arithDegree_eq_add,
-        ← HermitianBundle.degree_top_eq_arithDegree, ih.2, add_zero]
+    · rw [HermitianBundle.degree_top_eq_arithDegree, (stdExt K r).arithDegree_eq_add,
+        ← HermitianBundle.degree_top_eq_arithDegree, ih.2,
+        HermitianBundle.arithDegree_integers, add_zero]
 
 theorem standard_hermitian_bundle_semistable : ∀ (K : Type) [Field K] [NumberField K] (r : ℕ), (HermitianBundle.standard K r).slopeMax ≤ 0 ∧ (HermitianBundle.standard K r).normDegree ⊤ = 0 := by
   intro K _ _ r

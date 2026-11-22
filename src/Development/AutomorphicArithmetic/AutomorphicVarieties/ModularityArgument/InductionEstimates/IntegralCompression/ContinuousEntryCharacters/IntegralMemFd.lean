@@ -94,6 +94,9 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA.vecEx :
       ∃ (U : ∀ w : Pl K, Subgroup (Gw 2 w)) (φ : G1 K 2 → ℂ), Lev U ∧ φ ≠ 0 ∧ Rd τ φ ∧ (∃ B : ℝ, ∀ x, ‖φ x‖ ≤ B) ∧
         FixA C.κ₂ (C.p n q) φ ∧ FixF (levOn S U) φ := by
   intro K _ _ _ ι _ C μ _ τ hτ n q hn S hS
+  haveI : T2Space (G1 K 2) := by
+    set_option synthInstance.maxHeartbeats 100000 in
+      infer_instance
   have hSum : IsSummand μ τ := ⟨hτ.le, hτ.closed, hτ.inv, hτ.ne, hτ.irr⟩
   obtain ⟨U, hU, hUne⟩ := UpperTheory.ConvolutionTheory.T.levelEx K 2 μ τ hSum S hS
   have hZne : τ ⊓ fixF μ (levOn S U) ≠ ⊥ := by
@@ -150,7 +153,8 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA.vecEx :
   have hYσ : ∀ (k : archCompact K 2), ∀ y ∈ Y, rightRegularRep (Gam K 2) μ (arc1 k) y ∈ Y := by
     rintro k _ ⟨ψ, hψ, rfl⟩
     refine ⟨(gkModuleCusp K 2).σ k ψ, ⟨hforms.1.σ k ψ hψ.1, hAst _ k.2 _ hψ.2⟩, ?_⟩
-    exact cls_tr μ (arc1 k) fun y => apply_mul_infEmb_of_mem (hcen ψ hψ) y k
+    exact cls_tr μ (φ := ψ) (ψ := (gkModuleCusp K 2).σ k ψ) (arc1 k)
+      fun y => apply_mul_infEmb_of_mem (hcen ψ hψ) y k
   have hYf : ∀ u ∈ levOn S U, ∀ y ∈ Y, rightRegularRep (Gam K 2) μ (fin1 u) y ∈ Y := by
     rintro u hu _ ⟨ψ, hψ, rfl⟩
     have hm := lev_max S U hU u hu

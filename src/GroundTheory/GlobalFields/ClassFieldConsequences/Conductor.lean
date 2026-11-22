@@ -65,8 +65,10 @@ variable {K}
 namespace Modulus
 
 theorem exponent_conductor (v : HeightOneSpectrum (𝓞 K)) :
-    (conductor K L).exponent v = localConductorExponent L v :=
-  multiplicity_finprod_asIdeal_pow_eq (finite_support_localConductorExponent L) v
+    (conductor K L).exponent v = localConductorExponent L v := by
+  rw [exponent, if_pos (FiniteMultiplicity.of_prime_left v.prime
+    (conductor K L).ideal_ne_bot)]
+  exact multiplicity_finprod_asIdeal_pow_eq (finite_support_localConductorExponent L) v
 
 theorem conductor_dvd_iff (𝔪 : Modulus K) :
     conductor K L ∣ 𝔪 ↔ (∀ v, localConductorExponent L v ≤ 𝔪.exponent v) ∧

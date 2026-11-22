@@ -56,7 +56,7 @@ private lemma unipotent_pairing_integral_iff_mem_stabilizer_lemma {F : Type} [Fi
     (n : S.GLV) (hn : n ∈ S.Nof g) :
     (∀ (a : Fin r) (b : Fin (r + 1)), _root_.GlobalTheory.HL.hf L S.Hm (n (g b)) (es a) ∈ L.O) ↔
       n ∈ MulAction.stabilizer S.GLV (Submodule.span L.O (Set.range g)) := by
-  obtain ⟨s, ⟨hlow, hdiag⟩, hns⟩ := _root_.GlobalTheory.HL.FrameOnto.exists_matrix S g n hn
+  obtain ⟨s, ⟨hlow, hdiag⟩, hns⟩ := _root_.GlobalTheory.HL.FrameOnto.exists_matrix S g T hg n hn
   have hpair : ∀ (c : Fin (r + 1) → E) (a : Fin r),
       _root_.GlobalTheory.HL.hf L S.Hm (∑ i, c i • g i) (es a) = c a.castSucc := by
     intro c a

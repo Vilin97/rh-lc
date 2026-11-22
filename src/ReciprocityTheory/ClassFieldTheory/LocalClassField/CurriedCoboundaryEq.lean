@@ -110,7 +110,8 @@ theorem normA (hN : IsOpen (N : Set G)) (x : M.coch.X 2) (hx : M.coch.d 2 x = 0)
     (continuous_cur M x (continuous_retr' N hN) (continuous_rep N hN)).neg
   refine ⟨mk1 M _ hc, fun n hn g => ?_⟩
   rw [cur_sub, curried_coboundary_eq]
-  exact stepA h0 n hn g
+  exact stepA (isTwoCocycle_curried M x hx) (retr_mul_rep N)
+    (fun g => (retr N g).property) (retr_mul' N) (rep_mul' N) h0 n hn g
 
 theorem normB [N.Normal] (hN : IsOpen (N : Set G)) (h1 : Subsingleton ((M.resSub N).H 1)) (x : M.coch.X 2)
     (hx : M.coch.d 2 x = 0) (h0 : ∀ n ∈ N, ∀ g, cur M x n g = 0) :
@@ -146,7 +147,8 @@ theorem normB [N.Normal] (hN : IsOpen (N : Set G)) (h1 : Subsingleton ((M.resSub
       ((continuous_retr' N hN).prodMk (continuous_comp_rep N hN e))
   refine ⟨mk1 M _ hc, fun n hn g => ?_⟩
   rw [cur_sub, curried_coboundary_eq, cur_sub, curried_coboundary_eq]
-  exact stepB h0 e he0 he n hn g
+  exact stepB hC (retr_mul_rep N) (fun g => (retr N g).property)
+    (retr_mul' N) (rep_mul' N) h0 e he0 he n hn g
 
 theorem norm_all [N.Normal] (hN : IsOpen (N : Set G)) (h1 : Subsingleton ((M.resSub N).H 1)) (x : M.coch.X 2)
     (hx : M.coch.d 2 x = 0)

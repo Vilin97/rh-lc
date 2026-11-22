@@ -134,7 +134,7 @@ theorem UpperTheory.TP.tail_k :
   have mA : ∀ S, MeasurableSet (A S) := fun S => by
     refine MeasurableSet.diff ?_ oU.measurableSet
     simp only [Set.setOf_forall]
-    exact (isClosed_iInter fun u => isClosed_iInter fun _ => Euler.isClosed_int hL u).measurableSet
+    exact (isClosed_iInter fun u => isClosed_iInter fun _ => Euler.isClosed_int hL.toIsLattice u).measurableSet
   have anti : Antitone A := fun S S' hS g hg => ⟨fun v hv => hg.1 v (hS hv), hg.2⟩
   have emp : ⋂ S, A S = ∅ := by
     refine Set.eq_empty_of_forall_notMem fun g hg => ?_

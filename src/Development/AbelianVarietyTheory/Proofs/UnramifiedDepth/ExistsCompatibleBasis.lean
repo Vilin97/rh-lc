@@ -125,7 +125,7 @@ theorem main :
     GlobalTheory.tateBasis_gram GlobalTheory.PadicOrderAction.main B (Ainf.ainfTowerL p O hv ε hε) Dt ch.gb O₀ cj Ad dL
     (WdAinf.thetaBar_surj p O hv ε hε) hab hcj hAd hdL
     (fun n => Ideal.mk_ker (I := Ideal.span {(p : O) ^ (n + 1)}))
-    (fun n => IsPrimitiveRoot.coe_units_iff.1 (Ainf.zeta_primitive p O ε n))
+    (fun n => IsPrimitiveRoot.coe_units_iff.1 (Ainf.zeta_primitive p O hv ε hε n))
     (fun n => Units.ext (Ainf.zeta_succ_pow p O ε n))
     τ hτ hτp hbas hperf
   refine ⟨Dt,

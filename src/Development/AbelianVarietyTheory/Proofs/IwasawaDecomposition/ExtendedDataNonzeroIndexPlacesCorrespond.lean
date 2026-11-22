@@ -72,7 +72,7 @@ theorem extendedData_nonzero_index_places_correspond : GlobalTheory.Published.Di
     rw [← hG2, ← hG3] at k
     exact k
   · have k := GlobalTheory.T.lattice_index_nonzero_iff_under_field_map _ _ φ _ _ N hN1 P P' hP _ _ hT.fg (GlobalTheory.Mem.NonzeroPlacesOverPrimes.dual_fg _ hH _ hTfull)
-    rw [← GlobalTheory.T.hermitianDualLattice_baseChange _ _ φ _ _ N hN1 _ _ hN3 hH _ hT, ← hN2] at k
+    rw [← GlobalTheory.Mem.DualBC.dual_baseChange _ _ φ _ _ N hN1 _ _ hN3 hH _ hTfull, ← hN2] at k
     exact k
 
 end GlobalTheory.Mem.R3.TwistedPlaceExtensions
