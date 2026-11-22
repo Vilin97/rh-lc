@@ -216,7 +216,7 @@ theorem symO_std_le {n : ℕ} :
       exact (RingOfIntegers.isIntegral_coe (y j)).map (embF c σ).toIntAlgHom
     refine ⟨∑ j, C (⟨embF c σ (b j), (mem_integralClosure_iff ℤ c.F).2 (hint j)⟩ : integralClosure ℤ c.F) *
       X (⟨σ, i, j⟩ : LtN Dw n), ?_⟩
-    simp [letB]
+    set_option synthInstance.maxHeartbeats 100000 in simp [letB]
 
 theorem scale_mem_symO {n : ℕ} (Λ : GenLat E n) (k : ℕ) (hk : ∀ b ∈ Λ.La, (k : 𝓞 E) • b ∈ Formalism.L2.Pj.stdLat E n)
     {P : MvPolynomial (LtN Dw n) c.F} (hP : P ∈ symO c Λ) :
