@@ -39,8 +39,8 @@ theorem exists_untilt_eq_of_cp (π : 𝒪) : ∃ x : 𝒪♭, PreTilt.untilt x =
   exact ⟨IsPerfectoidField.ofCompatible p y hy, by rw [IsPerfectoidField.untilt_ofCompatible]; rfl⟩
 
 theorem exists_phi_eq_p_mul_theta_sub_mem (c : 𝒪) :
-    ∃ u : ACris ℂ_[p] p, phi u = (p : ACris ℂ_[p] p) * u ∧
-      theta u - (p : 𝒪) ^ 2 * c ∈ Ideal.span {(p : 𝒪) ^ 3} := by
+    ∃ u : ACris ℂ_[p] p, phi (K := ℂ_[p]) (p := p) u = (p : ACris ℂ_[p] p) * u ∧
+      theta (K := ℂ_[p]) (p := p) u - (p : 𝒪) ^ 2 * c ∈ Ideal.span {(p : 𝒪) ^ 3} := by
   obtain ⟨x, hx⟩ := exists_untilt_eq_of_cp (1 + (p : 𝒪) ^ 2 * c)
   have h1 : PreTilt.untilt x - 1 = (p : 𝒪) ^ 2 * c := by rw [hx]; ring
   have hmem : PreTilt.untilt x - 1 ∈ Ideal.span {(p : 𝒪)} := by
@@ -49,10 +49,11 @@ theorem exists_phi_eq_p_mul_theta_sub_mem (c : 𝒪) :
   exact ⟨logTeich hmem, phi_logTeich hmem, theta_logTeich_sub_mem hmem h1⟩
 
 theorem exists_phi_eq_p_mul_theta_eq (c : 𝒪) :
-    ∃ u : ACris ℂ_[p] p, phi u = (p : ACris ℂ_[p] p) * u ∧
-      theta u = (p : 𝒪) ^ 2 * c := by
+    ∃ u : ACris ℂ_[p] p, phi (K := ℂ_[p]) (p := p) u = (p : ACris ℂ_[p] p) * u ∧
+      theta (K := ℂ_[p]) (p := p) u = (p : 𝒪) ^ 2 * c := by
   choose g hgφ hgθ using exists_phi_eq_p_mul_theta_sub_mem (p := p)
-  have he : ∀ c, ∃ e : 𝒪, theta (g c) = (p : 𝒪) ^ 2 * c - (p : 𝒪) ^ 3 * e := fun c => by
+  have he : ∀ c, ∃ e : 𝒪,
+      theta (K := ℂ_[p]) (p := p) (g c) = (p : 𝒪) ^ 2 * c - (p : 𝒪) ^ 3 * e := fun c => by
     obtain ⟨e, he⟩ := Ideal.mem_span_singleton'.1 (hgθ c)
     exact ⟨-e, by linear_combination -he⟩
   choose e he using he
@@ -75,7 +76,7 @@ theorem exists_phi_eq_p_mul_theta_eq (c : 𝒪) :
       rw [Ideal.span_le, Set.singleton_subset_iff, SetLike.mem_coe, Ideal.mem_comap, map_natCast]
       exact Ideal.mem_span_singleton_self _
     have h1 := hs.map (theta (K := ℂ_[p]) (p := p)) hle
-    have htel : ∀ M, ∑ j ∈ Finset.range M, theta (a j) =
+    have htel : ∀ M, ∑ j ∈ Finset.range M, theta (K := ℂ_[p]) (p := p) (a j) =
         (p : 𝒪) ^ 2 * c - (p : 𝒪) ^ (M + 2) * cs M := by
       intro M
       induction M with
@@ -85,7 +86,7 @@ theorem exists_phi_eq_p_mul_theta_eq (c : 𝒪) :
         simp only [ha_def]
         rw [map_mul, map_pow, map_natCast, he, hcs1]
         ring
-    have h2 : IsAdicSum (Ideal.span {(p : 𝒪)}) (fun n => theta (a n))
+    have h2 : IsAdicSum (Ideal.span {(p : 𝒪)}) (fun n => theta (K := ℂ_[p]) (p := p) (a n))
         ((p : 𝒪) ^ 2 * c) := fun k => ⟨k, fun M hM => by
       rw [htel, sub_sub_cancel, Ideal.span_singleton_pow]
       exact Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton.2 (pow_dvd_pow _ (by omega)))⟩
@@ -99,7 +100,7 @@ local notation "θdR" => IsPerfectoidField.thetaBDeRhamPlusField (K := ℂ_[p]) 
 set_option maxHeartbeats 1600000 in
 theorem phiPlus_eq_of_mul_eq {y : (BCrisPlus ℂ_[p] p)} {a : ACris ℂ_[p] p} {k m : ℕ}
     (hy : y * (p : (BCrisPlus ℂ_[p] p)) ^ k = algebraMap (ACris ℂ_[p] p) (BCrisPlus ℂ_[p] p) a)
-    (ha : phi a = (p : ACris ℂ_[p] p) ^ m * a) :
+    (ha : phi (K := ℂ_[p]) (p := p) a = (p : ACris ℂ_[p] p) ^ m * a) :
     phiPlus ℂ_[p] p y = (p : (BCrisPlus ℂ_[p] p)) ^ m * y := by
   have h := congrArg (phiPlus ℂ_[p] p) hy
   rw [map_mul, map_pow, map_natCast, phiPlus_algebraMap, ha, map_mul, map_pow, map_natCast,

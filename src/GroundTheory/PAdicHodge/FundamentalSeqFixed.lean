@@ -223,16 +223,16 @@ theorem isClosed_range_algebraMap_padic : IsClosed (Set.range (algebraMap ℚ_[p
 
 
 set_option maxHeartbeats 1600000 in
-theorem theta_mem_range_of_phi_eq {y : ACris ℂ_[p] p} (hy : phi y = y) :
-    ∃ q : ℚ_[p], ((theta y : 𝒪) : ℂ_[p]) = algebraMap ℚ_[p] ℂ_[p] q := by
+theorem theta_mem_range_of_phi_eq {y : ACris ℂ_[p] p} (hy : phi ℂ_[p] p y = y) :
+    ∃ q : ℚ_[p], ((theta ℂ_[p] p y : 𝒪) : ℂ_[p]) = algebraMap ℚ_[p] ℂ_[p] q := by
   have happrox : ∀ m : ℕ, ∃ z : ℤ,
-      ‖((theta y : 𝒪) : ℂ_[p]) - (z : ℂ_[p])‖ ≤ ‖(p : ℂ_[p])‖ ^ m := by
+      ‖((theta ℂ_[p] p y : 𝒪) : ℂ_[p]) - (z : ℂ_[p])‖ ≤ ‖(p : ℂ_[p])‖ ^ m := by
     intro m
     rcases Nat.eq_zero_or_pos m with rfl | hm
-    · exact ⟨0, by simpa using mem_normInteger.1 (theta y).2⟩
+    · exact ⟨0, by simpa using mem_normInteger.1 (theta ℂ_[p] p y).2⟩
     obtain ⟨c, hc⟩ := exists_theta_eq_sum_of_phi_iterate (N := 1) le_rfl
       (by rw [Function.iterate_one]; exact hy) hm
-    obtain ⟨z, hz⟩ := exists_int_dvd_sub m (theta y) ⟨c, fun k => by
+    obtain ⟨z, hz⟩ := exists_int_dvd_sub m (theta ℂ_[p] p y) ⟨c, fun k => by
       obtain ⟨e, he⟩ := hc k
       refine ⟨e, Subtype.ext ?_⟩
       simp only [one_mul] at he
@@ -242,7 +242,7 @@ theorem theta_mem_range_of_phi_eq {y : ACris ℂ_[p] p} (hy : phi y = y) :
     refine ⟨z, ?_⟩
     have h := (dvd_iff_norm_le (pow_ne_zero m natCast_p_ne_zero')).1 hz
     simpa using h
-  have hmem : ((theta y : 𝒪) : ℂ_[p]) ∈ closure (Set.range (algebraMap ℚ_[p] ℂ_[p])) := by
+  have hmem : ((theta ℂ_[p] p y : 𝒪) : ℂ_[p]) ∈ closure (Set.range (algebraMap ℚ_[p] ℂ_[p])) := by
     rw [Metric.mem_closure_iff]
     intro δ hδ
     obtain ⟨m, hm⟩ := exists_pow_lt_of_lt_one hδ (norm_natCast_p_lt_one (p := p))
@@ -262,13 +262,13 @@ local notation "𝔭" => Ideal.span {(p : ACris ℂ_[p] p)}
 local notation "θdR" => IsPerfectoidField.thetaBDeRhamPlusField (K := ℂ_[p]) p
 
 theorem mem_pow_of_p_pow_mul_phi_eq {a : ACris ℂ_[p] p} {m : ℕ} (hm : 1 ≤ m)
-    (ha : (p : ACris ℂ_[p] p) ^ m * phi a = a) (j : ℕ) : a ∈ 𝔭 ^ j := by
+    (ha : (p : ACris ℂ_[p] p) ^ m * phi ℂ_[p] p a = a) (j : ℕ) : a ∈ 𝔭 ^ j := by
   induction j with
   | zero => simp
   | succ j ih =>
     rw [Ideal.span_singleton_pow, Ideal.mem_span_singleton'] at ih ⊢
     obtain ⟨b, hb⟩ := ih
-    refine ⟨(p : ACris ℂ_[p] p) ^ (m - 1) * phi b, ?_⟩
+    refine ⟨(p : ACris ℂ_[p] p) ^ (m - 1) * phi ℂ_[p] p b, ?_⟩
     conv_rhs => rw [← ha, ← hb]
     rw [map_mul, map_pow, map_natCast]
     obtain ⟨k, rfl⟩ : ∃ k, m = k + 1 := ⟨m - 1, by omega⟩
@@ -285,7 +285,7 @@ theorem eq_zero_of_p_pow_mul_phiPlus_eq {y : BCrisPlus ℂ_[p] p} {m : ℕ} (hm 
   rw [← hk, map_pow, map_natCast] at hs
   have h1 := congrArg (phiPlus ℂ_[p] p) hs
   rw [map_mul, map_pow, map_natCast, phiPlus_algebraMap] at h1
-  have ha : (p : ACris ℂ_[p] p) ^ m * phi a = a := by
+  have ha : (p : ACris ℂ_[p] p) ^ m * phi ℂ_[p] p a = a := by
     apply algebraMap_aCris_injective
     rw [map_mul, map_pow, map_natCast, ← h1, ← hs]
     conv_rhs => rw [← hy]
@@ -330,7 +330,7 @@ theorem exists_eq_algebraMap_of_phiPlus_eq {y : BCrisPlus ℂ_[p] p}
   obtain ⟨k, hk⟩ := s.2
   simp only at hs
   rw [← hk, map_pow, map_natCast] at hs
-  have hφa : phi a = a := by
+  have hφa : phi ℂ_[p] p a = a := by
     apply algebraMap_aCris_injective
     have h1 := congrArg (phiPlus ℂ_[p] p) hs
     rw [map_mul, map_pow, map_natCast, phiPlus_algebraMap, hy, hs] at h1
