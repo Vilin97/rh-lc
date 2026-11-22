@@ -331,7 +331,7 @@ theorem reads_datum (hI : GlobalTheory.NormSum.Inp D) {large₂ : SizeData₂ D}
   have hfr : Formalism.L2.DIV.IsFrame X.rA'.β (Formalism.L2.Col.stdLat D.host.E A'.rank) := hLS.eq_stdLat ▸ hX.is.rigA'.2.1
   have hee : X.e s * X.e s = X.e s := GlobalTheory.PlaceDatum.idemSum_mul_self he.1
   have hinf := GlobalTheory.PlaceDatum.infPart_cA (GlobalTheory.PlaceDatum.infPart_idemSum he.1)
-  have sb := GlobalTheory.T.halfCosetIndicatorModIdeal_isSchwartzBruhatHalf A' WW X.rA'.Λ X.rW.Λ hSd.1 hTd.1 _ hinf _ hm1
+  have sb := GlobalTheory.T.halfCosetIndicatorModIdeal_isSchwartzBruhatHalf A' WW X.rA'.Λ X.rW.Λ (GlobalTheory.PlaceVec.selfDual_isFullLattice A' X.rA'.Λ hSd) (GlobalTheory.PlaceVec.selfDual_isFullLattice WW X.rW.Λ hTd) _ hinf _ hm1
   have sb0 := sb 0 fun _ _ => mul_zero _
   have sb1 := sb (unitPt A' WW (cA D (X.e s)) A.rank) fun a b => by
     unfold unitPt

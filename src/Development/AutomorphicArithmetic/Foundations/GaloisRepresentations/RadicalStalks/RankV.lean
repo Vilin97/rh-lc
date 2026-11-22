@@ -50,7 +50,6 @@ theorem UpperTheory.Gal.Ord.rankV :
     exact h1.symm
   have h1 : rigExtMap (verschiebung hk G) (e hn hA t y) = 0 := by
     rw [← map_eq_verschiebung hk t t₁ ht F V₁ hF hFV, ← he.primPull hn hA₁ hA t₁ t, h0, (e hn hA₁ t₁).map_zero]
-    rfl
   obtain ⟨-, -, -, -, -, h2, h3⟩ := rigExt_field_of_charP p k hk G
   have h4 : e hn hA t y ∈ Submodule.span k (Set.range (absFrob hk G).rig) := h3 ▸ h2 ▸ h1
   have h5 : ∀ z, e hn hA t (frobDR p k hk A z) = (absFrob hk G).rig (e hn hA t z) := fun z => by
@@ -61,14 +60,14 @@ theorem UpperTheory.Gal.Ord.rankV :
     | mem u hu =>
       obtain ⟨v, rfl⟩ := hu
       exact ⟨(e hn hA t).symm v, by rw [h5]; exact congrArg (absFrob hk G).rig ((e hn hA t).apply_symm_apply v)⟩
-    | zero => exact ⟨0, by rw [map_zero (f := frobDR p k hk A), (e hn hA t).map_zero]; rfl⟩
+    | zero => exact ⟨0, by rw [map_zero (f := frobDR p k hk A), (e hn hA t).map_zero]⟩
     | add u v _ _ hu hv =>
       obtain ⟨a, rfl⟩ := hu
       obtain ⟨b, rfl⟩ := hv
-      exact ⟨a + b, by rw [map_add (f := _), map_add (f := _)]; rfl⟩
+      exact ⟨a + b, by rw [map_add (f := _), map_add (f := _)]⟩
     | smul l u _ hu =>
       obtain ⟨a, rfl⟩ := hu
       obtain ⟨r, rfl⟩ := IsAlgClosed.exists_pow_nat_eq l (Fact.out : p.Prime).pos
-      exact ⟨r • a, by rw [map_smulₛₗ, map_smul, frobR_apply]; rfl⟩
+      exact ⟨r • a, by rw [map_smulₛₗ, map_smul, frobR_apply]⟩
   obtain ⟨z, hz⟩ := h6 _ h4
   exact ⟨z, (e hn hA t).injective hz⟩

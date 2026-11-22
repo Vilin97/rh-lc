@@ -97,11 +97,17 @@ theorem main : MaxMass → ∀ (K V : Type) [Field K] [NumberField K] [StarRing 
   obtain ⟨c, hc⟩ := hMM K hK _ hj
   obtain ⟨-, hu', ho'⟩ := GlobalTheory.T.exists_maximal_integralHermitianLattice_orthonormal_maximal K V' h' hK hs' hnd'
   obtain ⟨hIl, hIu, hIr⟩ := ho' I _ hI
-  obtain ⟨hImax, -, hIlam⟩ := hu' I hIl hIu
+  have hIfull : Submodule.IsFullLattice K I := by
+    refine { toIsLattice := hIl, span_eq_top := ?_ }
+    obtain ⟨e, -, hspan, rfl, -⟩ := hI
+    apply top_unique
+    rw [← hspan]
+    exact Submodule.span_mono Submodule.subset_span
+  obtain ⟨hImax, -, hIlam⟩ := hu' I hIfull hIu
   have hcI : mass h' I = c := by rw [hc V' h' hs' hp' hIr I hImax, hIlam, mul_one]
-  have hcpos : 0 < c := hcI ▸ (GlobalTheory.T.hermitianGenusMass_eq_orbitStabilizerMass K V' h' hK hs' hp' I hIl).2.1
+  have hcpos : 0 < c := hcI ▸ (GlobalTheory.T.hermitianGenusMass_eq_orbitStabilizerMass K V' h' hK hs' hp' I hIfull).2.1
   have hdisc := GlobalTheory.T.hermitianLatticeDiscriminantOrder_ne_zero_unimodular K V h hK hs hnd
-  obtain ⟨hmass, hmpos, hYst, hfin, -⟩ := GlobalTheory.T.hermitianGenusMass_eq_orbitStabilizerMass K V h hK hs hp M₀ hM₀.1.1.toIsLattice
+  obtain ⟨hmass, hmpos, hYst, hfin, -⟩ := GlobalTheory.T.hermitianGenusMass_eq_orbitStabilizerMass K V h hK hs hp M₀ hM₀.1.1
   obtain ⟨hi0, hn₀⟩ := (hdisc M₁ hM₁.1).2.2.1 M₀ hM₀.1 hle₀
   have hn'0 := (hdisc M₀ hM₀.1).1
   set n' := discN h M₀ with hn'
@@ -112,7 +118,7 @@ theorem main : MaxMass → ∀ (K V : Type) [Field K] [NumberField K] [StarRing 
     exact mul_le_mul_of_nonneg_left (GlobalTheory.T.maximalLatticeLocalFactorProduct_pos_and_le K V h hK hs hnd hj M₀ hM₀).2 hcpos.le
   have hDst : Stable (isom h) (latsDisc (R := 𝓞 K) h n) := by
     intro g M hM
-    have h1 := (GlobalTheory.T.hermitianGenusMass_eq_orbitStabilizerMass K V h hK hs hp M hM.1.1.toIsLattice).2.2.1 g M (mem_genus_self h M hM.1.1)
+    have h1 := (GlobalTheory.T.hermitianGenusMass_eq_orbitStabilizerMass K V h hK hs hp M hM.1.1).2.2.1 g M (mem_genus_self h M hM.1.1)
     have h2 := (hdisc M hM.1).2.2.2.1 _ h1
     exact ⟨h2.1, h2.2.trans hM.2⟩
   let X : Set (Submodule (𝓞 K) V × Submodule (𝓞 K) V) :=
@@ -121,9 +127,9 @@ theorem main : MaxMass → ∀ (K V : Type) [Field K] [NumberField K] [StarRing 
     rintro g p ⟨h1, h2, h3⟩
     exact ⟨hDst g _ h1, hYst g _ h2, Submodule.map_mono h3⟩
   have f1 := GlobalTheory.T.orbitStabilizerMass_eq_weightedSum_fibres (isom h) _ _ X (latsDisc (R := 𝓞 K) h n) Prod.fst (fun _ _ => rfl) hXst hDst
-    (fun p hp => hp.1) (fun y hy => hfin y hy.1.1.toIsLattice)
+    (fun p hp => hp.1) (fun y hy => hfin y hy.1.1)
   have f2 := GlobalTheory.T.orbitStabilizerMass_eq_weightedSum_fibres (isom h) _ _ X (genus h M₀) Prod.snd (fun _ _ => rfl) hXst hYst
-    (fun p hp => hp.2.1) (fun y hy => hfin y hy.1.toIsLattice)
+    (fun p hp => hp.2.1) (fun y hy => hfin y hy.1)
   obtain ⟨mono, hconst, -⟩ := GlobalTheory.T.orbitWeightedStabilizerSum_mono_subadditive (isom h) (Submodule (𝓞 K) V)
   have s1 : orbMass (isom h) (latsDisc (R := 𝓞 K) h n) ≤ orbMass (isom h) X := by
     rw [f1]

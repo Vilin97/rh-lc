@@ -566,7 +566,7 @@ theorem xiCoef_mul_right_of_red (hB : B.Good) (hS : S.SigOK) {u : UnivTwist D C}
       (fun τ => (B.F.BS τ).val) (fun τ => (B.F.BS τ).val) B.F.sT B.F.sT B.F.BT B.F.BT 1 κ
       (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ (one_mem _)])
       (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ hκ])
-      (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ (one_mem _)])
+      (fun τ => by rw [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ (show (1 : GA D S) ∈ GfC S from one_mem _), Matrix.one_mul])
       (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ hκ]) _ hth P).2, hvec]
     rfl
   have e2 : ((h, g * κ) : GA D S × GA D T) = (h, g) * (1, κ) := by simp

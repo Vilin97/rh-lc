@@ -164,8 +164,41 @@ abbrev GlueData (Y : ℝ) : Type :=
 theorem card_glueData_le (hE : Formalism.HermitianLatticesTheory.IsCMUnram E) (Y : ℝ) (hY : 1 ≤ Y) :
     ENat.card (GlueData E Y) ≤ (((realIdeals E Y).ncard * ((classNumber E * 2 ^ Formalism.HermitianLatticesTheory.fDeg E) *
       ((classNumber E * 2 ^ Formalism.HermitianLatticesTheory.fDeg E) * ⌊Y ^ 2⌋₊)) : ℕ) : ENat) := by
-  refine enat_card_sigma_le _ _ ?_ fun 𝔫 => enat_card_sigma_le _ _ (GlobalTheory.T.card_rankOne_hermitian_lattice_classes_le E hE _) fun q₁ =>
-    enat_card_sigma_le _ _ (GlobalTheory.T.card_rankOne_hermitian_lattice_classes_le E hE _) fun q₂ => ?_
+  have hline (𝔫 : realIdeals E Y) : ENat.card (LineCls (Submodule.map (Algebra.linearMap (𝓞 E) E) 𝔫.1)) ≤
+      ((classNumber E * 2 ^ Formalism.HermitianLatticesTheory.fDeg E : ℕ) : ENat) := by
+    let N := Submodule.map (Algebra.linearMap (𝓞 E) E) 𝔫.1
+    have hN : N ≠ ⊥ := by
+      intro h
+      apply 𝔫.2.1
+      apply Submodule.map_injective_of_injective (FaithfulSMul.algebraMap_injective (𝓞 E) E)
+      simpa [N] using h
+    have hfull (X : Lines N) : Submodule.IsFullLattice E X.1.2 := by
+      have hne : X.1.2 ≠ ⊥ := by
+        intro hbot
+        apply hN
+        rw [← X.2.2.2.2, hbot]
+        simp
+      obtain ⟨x, hx, hx0⟩ := X.1.2.ne_bot_iff.mp hne
+      letI : Submodule.IsLattice E X.1.2 := X.2.2.2.1
+      refine ⟨?_, ?_⟩
+      apply top_unique
+      intro y hy
+      have hx' : x ∈ Submodule.span E (X.1.2 : Set E) := Submodule.subset_span hx
+      have := (Submodule.span E (X.1.2 : Set E)).smul_mem (y * x⁻¹) hx'
+      simpa [smul_eq_mul, mul_assoc, hx0] using this
+    let FullLines := {X : E × Submodule (𝓞 E) E // star X.1 = X.1 ∧ (∀ φ : E →+* ℂ, 0 < (φ X.1).re) ∧
+      Submodule.IsFullLattice E X.2 ∧ Submodule.span (𝓞 E) {t | ∃ x ∈ X.2, ∃ y ∈ X.2, t = star x * X.1 * y} = N}
+    let f : Quot (fun X Y : FullLines => LineRel X.1 Y.1) → LineCls N :=
+      Quot.map (fun X => ⟨X.1, X.2.1, X.2.2.1, X.2.2.2.1.toIsLattice, X.2.2.2.2⟩) (fun _ _ h => h)
+    have hs : Function.Surjective f := by
+      intro q
+      induction q using Quot.inductionOn with
+      | _ X =>
+        exact ⟨Quot.mk _ ⟨X.1, X.2.1, X.2.2.1, hfull X, X.2.2.2.2⟩, rfl⟩
+    exact (enat_card_le_of_rel (fun q p => f p = q) (fun q => hs q) (by intros; subst_vars; rfl)).trans
+      (GlobalTheory.T.card_rankOne_hermitian_lattice_classes_le E hE N)
+  refine enat_card_sigma_le _ _ ?_ fun 𝔫 => enat_card_sigma_le _ _ (hline 𝔫) fun q₁ =>
+    enat_card_sigma_le _ _ (hline 𝔫) fun q₂ => ?_
   · have hf : (realIdeals E Y).Finite := (GlobalTheory.T.ncard_realGenerated_ideals_le E hE Y hY).1
     rw [hf.cast_ncard_eq]
     exact le_rfl

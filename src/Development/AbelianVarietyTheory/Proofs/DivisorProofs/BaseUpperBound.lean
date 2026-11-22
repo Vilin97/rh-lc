@@ -179,7 +179,7 @@ theorem mem_span_coefLat (hC : GlobalTheory.Hk3.Core R F) (hBo : BaseOf R i B)
   have hlat : B.latAt (finPt _ h) = Bridge.hLat (Vc D i) (fin (Vc D i) h) :=
     GlobalTheory.LatAtHLat.latAt_eq_hLat D _ _ B (hBo.ΛS ▸ GlobalTheory.AdTh.RecPair.coe_eq_of_frame (hC.lev.βV i)) _
   have hP' := GlobalTheory.T.dualWeylLattice_baseChange_span_proof D.host.E D.LL0 D.what₂.LL D.what₂.Tau _ (algebraMap D.LL0 D.what₂.LL) (labLL0 D) (lamV D i) _
-    (GlobalTheory.RepsCompare.isLattice_hLat (Vc D i) (fin (Vc D i) h)) hP
+    (GlobalTheory.FreeBlockTwist.hLat_full (Vc D i) (fin (Vc D i) h)) hP
   clear hP hw
   induction hP' using Submodule.span_induction with
   | mem y hy =>

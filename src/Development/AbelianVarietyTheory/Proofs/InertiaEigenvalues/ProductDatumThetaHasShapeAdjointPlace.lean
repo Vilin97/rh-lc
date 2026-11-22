@@ -136,7 +136,8 @@ theorem hasShape_adjDat : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : H
   have hSB : ∀ ω : (∀ PP : Pl D.host.E, Matrix (Fin S.rank) (Fin T.rank) (kP PP)) → ℂ,
       (∀ y y', (∀ PP ∈ P, y PP = y' PP) → ω y = ω y') →
       IsSBHalf (cA D e) (latH S T ΛS ΛT) (adjDat S T βS βT e ω) := fun ω hω =>
-    GlobalTheory.PlaceVec.isSBHalf_of_red hS.1 hT.1 hinf (frMapAdj S T βS βT) (GlobalTheory.PlaceVec.frMapAdj_add S T βS βT)
+    GlobalTheory.PlaceVec.isSBHalf_of_red (GlobalTheory.PlaceVec.selfDual_isFullLattice S ΛS hS)
+      (GlobalTheory.PlaceVec.selfDual_isFullLattice T ΛT hT) hinf (frMapAdj S T βS βT) (GlobalTheory.PlaceVec.frMapAdj_add S T βS βT)
       (GlobalTheory.PlaceVec.frMapAdj_up S T βS βT) (GlobalTheory.PlaceVec.frMapAdj_down S T βS βT) P ω hω
   have s12 := hSB (fun y => ω₁ y * ω₂ y) fun y y' h => by
     rw [h₁ y y' (h PP hPP), h₂ y y' fun Q hQ _ => h Q hQ]
@@ -145,7 +146,8 @@ theorem hasShape_adjDat : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : H
   have hxs : cA D e₀ • x = x := (GlobalTheory.SplitScalar.isHalf_iff _ _).1 hx
   have hx' : IsHalf (cA D e) x := by
     rw [GlobalTheory.SplitScalar.isHalf_iff, ← hxs, smul_smul, hee₀]
-  have st := isSBHalf_transl s12 hx' (GlobalTheory.PlaceVec.exists_nsmul_mem_latO hS.1 hT.1 x
+  have st := isSBHalf_transl s12 hx' (GlobalTheory.PlaceVec.exists_nsmul_mem_latO
+    (GlobalTheory.PlaceVec.selfDual_isFullLattice S ΛS hS) (GlobalTheory.PlaceVec.selfDual_isFullLattice T ΛT hT) x
     (GlobalTheory.PlaceVec.half_infPart hinf ((GlobalTheory.PlaceModel.isHalf_iff S T).1 hx')))
   obtain ⟨hp, hp1⟩ := GlobalTheory.IdemRes.resS_idem_eq_one D e₀ PP he₀
   have hN : toEAf D e₀ • frMapAdj S T βS βT x = frMapAdj S T βS βT x := by

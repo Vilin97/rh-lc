@@ -386,7 +386,7 @@ theorem sameGenus [FiniteDimensional K V] {h : V →ₗ⋆[K] V →ₗ[K] K} (hK
       (GlobalTheory.T.maximalHermitianLattice_badPrimes_iff_gramDet K V h hK hs hn N hN _ (Module.finBasis K V) P hP).symm
   by_cases hb : P ∈ badP h M
   swap
-  · exact GlobalTheory.T.exists_isometry_of_unimodular_lattices_at_place K V h hK hs hn M N hM.1.1.toIsLattice hN.1.1.toIsLattice P hP (by_contra fun a => hb ⟨hP, a⟩)
+  · exact GlobalTheory.T.exists_isometry_of_unimodular_lattices_at_place K V h hK hs hn M N hM.1.1 hN.1.1 P hP (by_contra fun a => hb ⟨hP, a⟩)
       (by_contra fun a => hb (par.2 ⟨hP, a⟩))
   let p : HeightOneSpectrum (𝓞 K) := ⟨P, hP.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hP
     (RingOfIntegers.not_isField K)⟩
@@ -396,9 +396,42 @@ theorem sameGenus [FiniteDimensional K V] {h : V →ₗ⋆[K] V →ₗ[K] K} (hK
   have πs := LocWitt.symm' hs x x
   obtain ⟨L, L1, L2, L3, ⟨w, L4, L5⟩, L6⟩ := exists_ext hK hs hn hM (p := p) hb πs πv
   obtain ⟨L', N1, N2, N3, N4, N6⟩ := exists_ext hK hs hn hN (p := p) (par.1 hb) πs πv
+  have full (A : Submodule (𝓞 K) V) (hA : Submodule.IsFullLattice K A)
+      (B : Submodule (𝓞 K) (V × K)) (hB : Submodule.IsLattice K B)
+      (b0 : (0, 1) ∈ loc (K := K) p.asIdeal B)
+      (bA : ∀ v, (v, 0) ∈ loc (K := K) p.asIdeal B ↔ v ∈ loc (K := K) p.asIdeal A) :
+      Submodule.IsFullLattice K B := by
+    refine { toIsLattice := hB, span_eq_top := ?_ }
+    let T := Submodule.span K (B : Set (V × K))
+    have hloc : ∀ z ∈ loc (K := K) p.asIdeal B, z ∈ T := by
+      intro z hz
+      obtain ⟨s, hs, hsz⟩ := (mem_loc hc B z).1 hz
+      have hs0 : s ≠ 0 := fun e => hs (e ▸ p.asIdeal.zero_mem)
+      have hsK : algebraMap (𝓞 K) K s ≠ 0 := (IsFractionRing.injective (𝓞 K) K).ne hs0
+      have ht : (algebraMap (𝓞 K) K s) • z ∈ T := by
+        rw [algebraMap_smul]
+        exact Submodule.subset_span hsz
+      have := T.smul_mem (algebraMap (𝓞 K) K s)⁻¹ ht
+      have heq : (algebraMap (𝓞 K) K s)⁻¹ • ((algebraMap (𝓞 K) K s) • z) = z := by
+        rw [smul_smul, inv_mul_cancel₀ hsK, one_smul]
+      exact heq ▸ this
+    have hfirst : ∀ v : V, (v, 0) ∈ T := by
+      have hle : Submodule.span K (A : Set V) ≤ T.comap (LinearMap.inl K V K) := by
+        apply Submodule.span_le.mpr
+        intro v hv
+        exact hloc _ ((bA v).2 (locBasic_le_locS _ _ hv))
+      rw [hA.span_eq_top] at hle
+      intro v
+      exact hle (Submodule.mem_top)
+    apply eq_top_iff.mpr
+    intro z _
+    have hz := T.add_mem (hfirst z.1) (T.smul_mem z.2 (hloc _ b0))
+    simpa using hz
+  have LF := full M hM.1.1 L L1 L3 L6
+  have NF := full N hN.1.1 L' N1 N3 N6
   have s' := extForm_symm hs πs
   have n' := extForm_nondeg hn π0
-  obtain ⟨g, g1, g2⟩ := GlobalTheory.T.exists_isometry_of_unimodular_lattices_at_place K (V × K) _ hK s' n' L L' L1 N1 P hP L2 N2
+  obtain ⟨g, g1, g2⟩ := GlobalTheory.T.exists_isometry_of_unimodular_lattices_at_place K (V × K) _ hK s' n' L L' LF NF P hP L2 N2
   rw [mem_iff_of_gmap] at g2
   obtain ⟨k, k1, k2, k3⟩ := LocWitt.main K (V × K) _ hK s' n' L' N1 P hP hc N2 (g (0, 1))
     ((g2 _).2 L3) (0, 1) N3 (g1 _ _) ⟨g w, (g2 _).2 L4, (g1 _ _).trans L5⟩ N4

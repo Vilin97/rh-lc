@@ -395,9 +395,18 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {v : HeightOneSpectrum (𝓞 F)} (s : SplitAt σ J L v)
 
 theorem isOpen_ker_red : IsOpen (s.red.ker : Set (stabLoc σ J L v)) := by
-  rw [show (s.red.ker : Set (stabLoc σ J L v)) = (↑) ⁻¹' (stabLocOne σ J s.emb L : Set (GLoc σ J v)) from
-    Set.ext s.red_eq_one_iff]
-  exact (isOpen_stabLocOne J s.emb L s.cm).preimage continuous_subtype_val
+  have hU : IsOpen {z : Fv F v | Valued.v z < 1} := by
+    simpa using Valued.isOpen_ball (Fv F v) 1
+  have e : (s.red.ker : Set (stabLoc σ J L v)) = ⋂ i, ⋂ j,
+      (fun g : stabLoc σ J L v => ((s.basis⁻¹ * splitHom σ J s.emb g * s.basis).1 - 1) i j) ⁻¹'
+        {z : Fv F v | Valued.v z < 1} := by
+    ext g
+    simp only [Set.mem_iInter, Set.mem_preimage, Set.mem_ofPred_eq]
+    exact (s.red_eq_one_iff g).trans (s.isBasis.mem_stabLocOne_iff.trans (and_iff_right g.2))
+  rw [e]
+  refine isOpen_iInter_of_finite fun i => isOpen_iInter_of_finite fun j => hU.preimage ?_
+  exact (((Units.continuous_val.comp ((continuous_const.mul (continuous_splitHom s.emb)).mul
+    continuous_const)).sub continuous_const).matrix_elem i j).comp continuous_subtype_val
 
 end SplitAt
 

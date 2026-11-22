@@ -123,11 +123,25 @@ theorem localForm_zero_right₂ (Z : LocDat D) (p : PlF D) (x : Vp D p) : LocFac
 
 theorem mem_of_loc (Z : LocDat D) (Λ : LV D) (hΛ : Submodule.IsLattice D.host.E Λ) (x : (VS D).V)
     (h : ∀ p, baseChange₂ D p x ∈ lattice₂ D Z.M p Λ) : x ∈ Λ := by
-  have := ((GlobalTheory.T.numberField_lattice_determined_by_local_lattices (GlobalTheory.HL.placesOf Z) (nV D) (LatLoc.cL Λ) (LatLoc.isLattice_map _ _ hΛ)).1
-    (LatLoc.cE D x)).2 (fun p => by rw [← LatLoc.baseChange_eq, ← LatLoc.localLattice_eq]; exact h p)
-  obtain ⟨x', hx', he⟩ := Submodule.mem_map.1 this
-  have : x' = x := (LatLoc.cE D).injective he
-  rwa [this] at hx'
+  let Γ : LV D := Λ ⊔ Submodule.span (𝓞 D.host.E) {x}
+  have hΓ : Submodule.IsLattice D.host.E Γ :=
+    Submodule.IsLattice.of_fg _ (hΛ.fg.sup (Submodule.fg_span_singleton x))
+  have heq : Λ = Γ := ((LatLoc.lattices_local_global D Z).1 Λ Γ hΛ hΓ).2 (by
+    intro p
+    apply le_antisymm
+    · exact Submodule.span_mono (Set.image_mono (show Λ ≤ Γ from le_sup_left))
+    · unfold lattice₂
+      apply Submodule.span_le.2
+      rintro _ ⟨y, hy, rfl⟩
+      obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hy
+      rw [map_add]
+      apply Submodule.add_mem
+      · exact Submodule.subset_span ⟨a, ha, rfl⟩
+      · obtain ⟨o, rfl⟩ := Submodule.mem_span_singleton.1 hb
+        rw [← algebraMap_smul D.host.E o x, baseChange_smul₂]
+        exact Submodule.smul_mem _ (⟨_, iota_mem_O Z p o⟩ : (Z.M p).L.O) (h p))
+  rw [heq]
+  exact (show Submodule.span (𝓞 D.host.E) {x} ≤ Γ from le_sup_right) (Submodule.subset_span (Set.mem_singleton x))
 
 theorem exists_nat_smul_mem (Λ : LV D) (hΛ : Submodule.IsFullLattice D.host.E Λ) (v : (VS D).V) :
     ∃ n : ℕ, 0 < n ∧ (n : D.host.E) • v ∈ Λ :=
@@ -141,23 +155,7 @@ variable {D : D7}
 
 theorem mem_int_of_loc (Z : LocDat D) (z : D.host.E) (hz : ∀ p, (D.s.atP p).ιE z ∈ (Z.M p).L.O) :
     z ∈ Set.range (algebraMap (𝓞 D.host.E) D.host.E) := by
-  let Λ1 : Submodule (𝓞 D.host.E) (Fin 1 → D.host.E) := Submodule.span (𝓞 D.host.E) {fun _ => (1 : D.host.E)}
-  have h1 : (fun _ : Fin 1 => (1 : D.host.E)) ∈ Λ1 := Submodule.mem_span_singleton_self _
-  have hL : Submodule.IsLattice D.host.E Λ1 := by
-    exact Submodule.IsLattice.of_fg D.host.E (Submodule.fg_span_singleton _)
-  have key := ((GlobalTheory.T.numberField_lattice_determined_by_local_lattices (GlobalTheory.HL.placesOf Z) 1 Λ1 hL).1 (fun _ => z)).2 (fun p => by
-    have hg : (GlobalTheory.HL.placesOf Z).bc p (fun _ : Fin 1 => (1 : D.host.E)) ∈ (GlobalTheory.HL.placesOf Z).lat p Λ1 :=
-      Submodule.subset_span ⟨_, h1, rfl⟩
-    have e : (GlobalTheory.HL.placesOf Z).bc p (fun _ : Fin 1 => z) = (⟨(D.s.atP p).ιE z, hz p⟩ : ((GlobalTheory.HL.placesOf Z).L p).O) •
-        (GlobalTheory.HL.placesOf Z).bc p (fun _ : Fin 1 => (1 : D.host.E)) := by
-      funext i
-      change (D.s.atP p).ιE z = (D.s.atP p).ιE z * (D.s.atP p).ιE 1
-      rw [map_one, mul_one]
-    rw [e]; exact Submodule.smul_mem _ _ hg)
-  obtain ⟨o, ho⟩ := Submodule.mem_span_singleton.1 key
-  refine ⟨o, ?_⟩
-  have := congrFun ho 0
-  simpa [Algebra.smul_def] using this
+  exact ((GlobalTheory.HL.PlacesInt.integers_local (GlobalTheory.HL.placesOf Z)).1 z).1 hz
 
 theorem range_add {a b : D.host.E} (ha : a ∈ Set.range (algebraMap (𝓞 D.host.E) D.host.E))
     (hb : b ∈ Set.range (algebraMap (𝓞 D.host.E) D.host.E)) : a + b ∈ Set.range (algebraMap (𝓞 D.host.E) D.host.E) := by

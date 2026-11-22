@@ -275,8 +275,8 @@ theorem Mof_eq (g g' : Fin (r + 1) → S.V) :
 
 theorem lead_translate {n n' : S.GLV} (hn : n ∈ S.N) (hn' : n' ∈ S.N') (l : Fin (r + 2)) :
     lead (Matrix.of fun a b => hf L S.Hm (n' (S.f' b)) (n (S.f a))) l = S.D l := by
-  obtain ⟨s, hs, h⟩ := FrameOnto.exists_matrix S S.f n hn
-  obtain ⟨s', hs', h'⟩ := FrameOnto.exists_matrix S S.f' n' hn'
+  obtain ⟨s, hs, h⟩ := FrameOnto.exists_matrix S S.f S.T S.gram n hn
+  obtain ⟨s', hs', h'⟩ := FrameOnto.exists_matrix S S.f' S.T' S.gram' n' hn'
   have h1 := congrArg Matrix.transpose (gram_change L S.Hm S.f' S.f _ _ s' s h' h)
   have h2 : (Matrix.of fun a b => hf L S.Hm (n' (S.f' b)) (n (S.f a))) =
       (s.map L.cj)ᵀ * (S.Zh * s') := by
@@ -375,10 +375,10 @@ theorem exponents_and_defect : ∀ {F : Type} [Field F] [ValuativeRel F] [Topolo
     rw [← lead_translate S hn hn' l]
     exact det_mem _ fun i j => hint _ (hf2 _) _ (hf1 _)
   have hsp : ∀ j, S.spanTo (S.fr d Λ) j = S.spanTo S.f j := by
-    obtain ⟨s, hs, h⟩ := FrameOnto.exists_matrix S S.f _ hn
+    obtain ⟨s, hs, h⟩ := FrameOnto.exists_matrix S S.f S.T S.gram _ hn
     exact spanTo_eq S _ _ s hs h
   have hsp' : ∀ j, S.spanTo (S.fr' d Λ) j = S.spanTo S.f' j := by
-    obtain ⟨s, hs, h⟩ := FrameOnto.exists_matrix S S.f' _ hn'
+    obtain ⟨s, hs, h⟩ := FrameOnto.exists_matrix S S.f' S.T' S.gram' _ hn'
     exact spanTo_eq S _ _ s hs h
   have hdet : (Matrix.of fun i j => hf L S.Hm (gens S (S.fr d Λ) (S.fr' d Λ) i)
       (gens S (S.fr d Λ) (S.fr' d Λ) j)).det =

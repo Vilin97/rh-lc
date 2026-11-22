@@ -160,7 +160,7 @@ theorem exists_complete_discreteValuationRing_of_isNormDiscrete :
         exact zero_le_one
       obtain ⟨m, hm⟩ := normDiscrete_exists_nat hv ⟨a, ha⟩ h0
       obtain ⟨u, hu⟩ := normDiscrete_associated_pow (π := ⟨π, hπm⟩) hπ ⟨a, ha⟩ hm
-      have hirr := irreducible_algebraMap_adicCompletion_of_dvr R
+      have hirr := irreducible_algebraMap_adicCompletion_of_dvr
         (normDiscrete_irreducible (π := ⟨π, hπm⟩) hπ)
       have h2 : IsDiscreteValuationRing.addVal V (algebraMap R V ⟨a, ha⟩) = m :=
         IsDiscreteValuationRing.addVal_def _ (Units.map (algebraMap R V : R →* V) u) hirr m

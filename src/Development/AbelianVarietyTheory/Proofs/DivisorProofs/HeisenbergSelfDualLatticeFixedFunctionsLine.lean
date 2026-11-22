@@ -55,7 +55,7 @@ theorem vacuum_line : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
     simp only [χ, dif_pos h]
     rw [h.choose_spec.2] at key
     exact key
-  obtain ⟨c, hc0, hcb⟩ := GlobalTheory.T.tensorLattice_localDarbouxCoords_bounded G.V G.W v co hT.geo.hV.lat hT.geo.hW.lat
+  obtain ⟨c, hc0, hcb⟩ := GlobalTheory.T.tensorLattice_localDarbouxCoords_bounded G.V G.W v co hT.geo.hV.lat.toIsLattice hT.geo.hW.lat.toIsLattice
   have hsd' := GlobalTheory.T.selfDual_localImage_latticeSupportedAtPlace v co B.ψ Λ hAt hsd
   have hfill := GlobalTheory.T.selfDualLocalSubgroup_firstProj_eq_annihilator v (GlobalTheory.LatVac.psiAt B.ψ v) (Λ.map (GlobalTheory.LatVac.locCo co v)) c hc0 (fun x => hψ x) hsd'
     (fun l hl i => by

@@ -269,9 +269,9 @@ theorem om_src_fock (hB : B.Good) (hS : S.SigOK) {ω : PairRep S T} (hω : B.IsW
   rw [Frame.fock, (GlobalTheory.OrientedHeis.om_pureTensorO D _ _ S T _ _ ω hω hB.frame.vac.2.inf (fun _ => 1) (fun _ => 1)
       (fun τ => (B.F.BS τ).val) (fun τ => (B.F.BS τ).val) B.F.sT B.F.sT B.F.BT B.F.BT k 1
       (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ hk])
-      (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ (one_mem _)])
+      (fun τ => by simp [GlobalTheory.WeilVacMove.compAt_one])
       (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ hk])
-      (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ (one_mem _)]) _ hth P).2,
+      (fun τ => by simp [GlobalTheory.WeilVacMove.compAt_one]) _ hth P).2,
     om_src_move hB hS hω hQ hb hk sk hs hr φ]
   rfl
 

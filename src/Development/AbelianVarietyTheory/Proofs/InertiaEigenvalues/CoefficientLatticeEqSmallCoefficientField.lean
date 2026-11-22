@@ -101,7 +101,7 @@ theorem coefLat_eq_small : ∀ (D : D7) (S T : HSp D) (B : Base S T), B.Good →
   refine le_antisymm (fun P hP => ?_)
     (harmLat_le D.LL0.val.toRingHom D.what₂.embLL (labLL0 D) O B.w B.F.BS hM)
   have h1 := GlobalTheory.SmallSpan.harmLat_le_span D.LL0.val.toRingHom D.what₂.embLL (labLL0 D) O O (fun a => hO ⟨a, rfl⟩)
-    B.w B.F.BS hB.wt hm hM.toIsLattice hP
+    B.w B.F.BS hB.wt hm hM hP
   rw [Submodule.span_eq] at h1
   exact h1
 

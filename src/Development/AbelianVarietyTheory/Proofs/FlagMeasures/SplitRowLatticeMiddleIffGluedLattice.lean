@@ -4,6 +4,7 @@ public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.RowMinor
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsIsometryOfUnimodularLatticesAtPlace
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MemOfPerpPerp
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.FixedFramesPerpendicularVectors
 public import Formalism.HermitianLattices.FinalNeighbourConstruct
 
 @[expose] public section
@@ -385,24 +386,34 @@ theorem iXY_mem_Wb (w : (D.sp.X 0).V) : D.sp.iXY 0 w ∈ Wb D :=
 
 theorem mem_genus_of_unimodular {Λ : LatV D} (h1 : Submodule.IsLattice D.host.E Λ) (h2 : IsUnimodular (hS D).hT Λ) :
     Λ ∈ genus (hS D).hT (hS D).L0 := by
-  refine ⟨h1, fun P hP => ?_⟩
+  have hfull : Submodule.IsFullLattice D.host.E Λ :=
+    { toIsLattice := h1
+      span_eq_top := GlobalTheory.LoopC.WMem.span_eq_top_of_unimodular Λ h1 h2 }
+  have hfull0 : Submodule.IsFullLattice D.host.E (hS D).L0 :=
+    { toIsLattice := (hS D).standardTuple_isLattice
+      span_eq_top := GlobalTheory.LoopC.WMem.span_eq_top_of_unimodular
+        (hS D).L0 (hS D).standardTuple_isLattice (hS D).baseLattice_isUnimodular }
+  refine ⟨hfull, fun P hP => ?_⟩
   have k := fun (M : LatV D) (hM : M.FG) =>
     (locDual (𝓞 D.host.E) D.host.E (hS D).V (hS D).hT (hS D).herm star_algebraMap_ringOfIntegers_mem_range M hM).2.1
   exact GlobalTheory.Mass.UnimodLoc.exists_isom_of_isUnimodularAt _ _ _ D.sp.cm.cmUnram (hS D).herm (hS D).nondeg _ _
-    (hS D).standardTuple_isLattice h1 P hP (k _ (hS D).standardTuple_isLattice.fg (hS D).baseLattice_isUnimodular P hP) (k _ h1.fg h2 P hP)
+    hfull0 hfull P hP (k _ (hS D).standardTuple_isLattice.fg (hS D).baseLattice_isUnimodular P hP) (k _ h1.fg h2 P hP)
 
 
 open Matrix in
 open scoped ENNReal in
 theorem main : ∀ (D : D7) (u : D.what₂.Word) (F0 : Fb D u) (Λ : LatV D), 1 ≤ Tu D u → IsBase D u F0 → IsRowLat D F0 Λ → (IsSplit D F0 Λ → Λ ⊓ toO (hS D) (Wb D) ∈ glueSet D u (L0X D Λ (lf D F0)) ∧ Lsub Λ (lf D F0) = (Λ ⊓ toO (hS D) (Wb D)) ⊔ toO (hS D) F0.X) ∧ (∀ L' : LatW D, ∀ L ∈ glueSet D u L', IsRowLat D F0 (XS D F0 ⊔ L ⊔ YS D) ∧ IsSplit D F0 (XS D F0 ⊔ L ⊔ YS D) ∧ (XS D F0 ⊔ L ⊔ YS D) ⊓ toO (hS D) (Wb D) = L) := by
   rintro D u F0 Λ - ⟨he, hz⟩ ⟨-, ⟨hlat, huni, hlift, hconv, hprim⟩, hX⟩
+  have hfull : Submodule.IsFullLattice D.host.E Λ :=
+    { toIsLattice := hlat
+      span_eq_top := GlobalTheory.LoopC.WMem.span_eq_top_of_unimodular Λ hlat huni }
   refine ⟨fun hsp => ?_, ?_⟩
   · have hL : ∀ w ∈ Λ ⊓ toO (hS D) (Wb D), w ∈ Wb D := fun w hw => hw.2
     have hsub : Lsub Λ (lf D F0) = (Λ ⊓ toO (hS D) (Wb D)) ⊔ toO (hS D) F0.X := by
       rw [← glue_Lsub he hL, ← show Λ = _ from hsp]
     have hspan : spanE (hS D) (Λ ⊓ toO (hS D) (Wb D)) = Wb D := by
       refine le_antisymm (Submodule.span_le.2 hL) fun w hw => ?_
-      obtain ⟨d, hd0, hd⟩ := GlobalTheory.Mass.RowPerp.exists_smul_mem hlat w
+      obtain ⟨d, hd0, hd⟩ := GlobalTheory.Mass.RowPerp.exists_smul_mem hfull w
       have h1 : d • w ∈ Λ ⊓ toO (hS D) (Wb D) := ⟨hd, (toO (hS D) (Wb D)).smul_mem d hw⟩
       have h2 := Submodule.smul_mem _ (algebraMap (𝓞 D.host.E) D.host.E d)⁻¹ (Submodule.subset_span (R := D.host.E) h1)
       rwa [← algebraMap_smul D.host.E d w,

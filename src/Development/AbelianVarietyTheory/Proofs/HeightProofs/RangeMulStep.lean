@@ -198,7 +198,6 @@ theorem ev_sec {F : Type} [Field F] (ev : Rp X la N →+* F) (τ : Ω →+* F) (
     rw [map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [ev_smul, hc 1 _ (by rw [add_zero_weight_one_eq]; exact emb_mem_Vw X la N wL (w k)), pow_one, mul_assoc]
-  rfl
 
 end One
 

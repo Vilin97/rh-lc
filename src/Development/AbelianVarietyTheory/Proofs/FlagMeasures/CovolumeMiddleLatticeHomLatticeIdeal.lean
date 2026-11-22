@@ -199,6 +199,24 @@ theorem isLattice_coordLat {m : ℕ} {Λ : Submodule (𝓞 E) (Fin n → E)} (hS
     exact hu
   · intro s hs hli
     exact (LinearIndependent.iff_fractionRing _ _).mp hli
+theorem isFullLattice_coordLat {m : ℕ} {Λ : Submodule (𝓞 E) (Fin n → E)} (hSD : GlobalTheory.SgGlob.SelfDual σ J Λ)
+    {Y : Matrix (Fin n) (Fin m) E} {Ly : Matrix (Fin m) (Fin n) E} (hY : Ly * Y = 1) :
+    Submodule.IsFullLattice E (coordLat Λ Y) := by
+  letI : Submodule.IsLattice E (coordLat Λ Y) := isLattice_coordLat σ J hSD hY
+  refine { span_eq_top := ?_ }
+  apply top_unique
+  intro u _
+  obtain ⟨d, hd, hdu⟩ := exists_smul_mem σ J hSD (Y *ᵥ u)
+  have hdE : (d : E) ≠ 0 := by exact_mod_cast hd
+  have hm : (d : E) • u ∈ coordLat Λ Y := by
+    change Y *ᵥ ((d : E) • u) ∈ Λ
+    simpa [Matrix.mulVec_smul] using hdu
+  have h := (Submodule.span E (coordLat Λ Y : Set (Fin m → E))).smul_mem (d : E)⁻¹
+    (Submodule.subset_span hm)
+  have heq : (d : E)⁻¹ • ((d : E) • u) = u := by
+    rw [smul_smul, inv_mul_cancel₀ hdE, one_smul]
+  rwa [heq] at h
+
 theorem smul_mem_iff (hσ : ∀ x, σ (σ x) = x) (hJ : ∀ i j, σ (J j i) = J i j)
     {Λ : Submodule (𝓞 E) (Fin n → E)} (hSD : GlobalTheory.SgGlob.SelfDual σ J Λ) {r : ℕ} (e g : Fin r → Fin n → E)
     (hee : ∀ c d, form σ J (e c) (e d) = 0) (hgg : ∀ c d, form σ J (g c) (g d) = 0)
@@ -441,6 +459,26 @@ theorem isLattice_lineLat {I : FractionalIdeal (𝓞 E)⁰ E} (hI : I ≠ 0) : S
   refine ⟨hm ▸ hfg.map _, ?_⟩
   intro s hs hli
   exact (LinearIndependent.iff_fractionRing _ _).mp hli
+theorem isFullLattice_lineLat {I : FractionalIdeal (𝓞 E)⁰ E} (hI : I ≠ 0) :
+    Submodule.IsFullLattice E (lineLat E I) := by
+  letI : Submodule.IsLattice E (lineLat E I) := isLattice_lineLat E hI
+  obtain ⟨x, hx, hx0⟩ : ∃ x ∈ I, x ≠ 0 := by
+    by_contra h
+    push_neg at h
+    exact hI (FractionalIdeal.ext fun y => ⟨fun hy => (FractionalIdeal.mem_zero_iff _).2 (h y hy),
+      fun hy => by rw [(FractionalIdeal.mem_zero_iff _).1 hy]; exact FractionalIdeal.zero_mem _⟩)
+  refine { span_eq_top := ?_ }
+  apply top_unique
+  intro y _
+  have hm : (fun _ : Fin 1 => x) ∈ lineLat E I := hx
+  have h := (Submodule.span E (lineLat E I : Set (Fin 1 → E))).smul_mem (y 0 / x)
+    (Submodule.subset_span hm)
+  have heq : (y 0 / x) • (fun _ : Fin 1 => x) = y := by
+    ext i
+    rw [Subsingleton.elim i 0]
+    simp [div_mul_cancel₀ _ hx0]
+  rwa [heq] at h
+
 def gS (c : ℝ) : MatInf E 1 := fun _ _ _ => ((c : ℂ))⁻¹
 
 def gC {m : ℕ} (C : InfinitePlace E → Matrix (Fin m) (Fin m) ℂ) : MatInf E m := fun w => ((C w)⁻¹ : Matrix (Fin m) (Fin m) ℂ)
@@ -480,7 +518,7 @@ theorem covAt_line (hE : IsTotallyComplex E) {I : FractionalIdeal (𝓞 E)⁰ E}
   · simp [mem_lineLat, Fin.forall_fin_one]
 
 theorem exists_core (hE : IsTotallyComplex E) {m : ℕ} (Λ' : Submodule (𝓞 E) (Fin m → E))
-    (hΛ' : Submodule.IsLattice E Λ') (C : InfinitePlace E → Matrix (Fin m) (Fin m) ℂ)
+    (hΛ' : Submodule.IsFullLattice E Λ') (C : InfinitePlace E → Matrix (Fin m) (Fin m) ℂ)
     (hC : ∀ w, IsUnit (C w).det) {I : FractionalIdeal (𝓞 E)⁰ E} (hI : I ≠ 0) {c : ℝ} (hc : 0 < c) :
     ∃ L : Submodule ℤ (InfinitePlace E → Fin m → ℂ),
       (∀ z, z ∈ L ↔ ∃ T : Matrix (Fin 1) (Fin m) E, (∀ y ∈ Λ', (T *ᵥ y) 0 ∈ I) ∧
@@ -517,7 +555,7 @@ theorem exists_core (hE : IsTotallyComplex E) {m : ℕ} (Λ' : Submodule (𝓞 E
           rfl }
   have hg : 0 < detNorm E 1 (gS E c) := by
     rw [detNorm_gS E hc]; positivity
-  obtain ⟨hd, hz, hcov⟩ := homCovolume E hE 1 m (lineLat E I) Λ' (isLattice_lineLat E hI) hΛ' (gS E c) (gC E C)
+  obtain ⟨hd, hz, hcov⟩ := homCovolume E hE 1 m (lineLat E I) Λ' (isFullLattice_lineLat E hI) hΛ' (gS E c) (gC E C)
     hg (detNorm_gC E hC) L₃ (fun z => Iff.rfl)
   let e₀ : (InfinitePlace E → Fin m → ℂ) ≃ₗ[ℝ] (InfinitePlace E → Fin 1 → Fin m → ℂ) :=
     { toFun := fun z w _ l => z w l, invFun := fun z w l => z w 0 l, map_add' := fun _ _ => rfl,
@@ -647,7 +685,7 @@ theorem hasDom_homLat (hE : IsTotallyComplex E) (σ : E →+* E) (hσ : ∀ x, �
   set C : InfinitePlace E → Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ := fun w => Cm w.embedding (A w) Y with hCdef
   have hCu : ∀ w, IsUnit (C w).det := fun w =>
     isUnit_det_Cm σ J w.embedding (A w) (hτ _) (hMod w) (hBu w) hs (hAe w) (hAg w) hY hcol
-  have hlat := isLattice_coordLat σ J hSD hY
+  have hlat := isFullLattice_coordLat σ J hSD hY
 
   have hrow : ∀ (t : Fin (2 * r + k + 1) → E) (w : InfinitePlace E) (l : Fin (k + 1)),
       herm (Hpk k r) (bvec (wI k r l)) (A w *ᵥ mv w.embedding t) =

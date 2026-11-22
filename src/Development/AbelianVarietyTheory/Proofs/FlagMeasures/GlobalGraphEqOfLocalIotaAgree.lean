@@ -5,6 +5,7 @@ public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.NGDat
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.TermLoc
 public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.LocClosed
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HermitianLatticeLocalGlobalPrinciple
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.IsUnimodularOfLocalStandardLatticeTranslates
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.ScalarFramePfA
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.LocalOrthogonalProjCommComplementUnitary
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.LocFacts
@@ -65,12 +66,7 @@ variable {D : D7}
 
 theorem mem_iff_loc (Z : LocDat D) (N : LV D) (hN : Submodule.IsLattice D.host.E N) (x : (VS D).V) :
     x ∈ N ↔ ∀ p, baseChange₂ D p x ∈ lattice₂ D Z.M p N := by
-  have h := (GlobalTheory.T.numberField_lattice_determined_by_local_lattices (GlobalTheory.HL.placesOf Z) (nV D) (LatLoc.cL N) (LatLoc.isLattice_map _ _ hN)).1 (LatLoc.cE D x)
-  simp only [← LatLoc.localLattice_eq, ← LatLoc.baseChange_eq] at h
-  refine Iff.trans ⟨fun hx => Submodule.mem_map_of_mem hx, fun hx => ?_⟩ h
-  obtain ⟨y, hy, hyx⟩ := hx
-  have : y = x := (LatLoc.cE D).injective hyx
-  exact this ▸ hy
+  exact GlobalTheory.Unfold.StdDual.mem_iff_local Z N hN x
 
 theorem smul_mem_latP (Z : LocDat D) (p : PlF D) (Λ : LV D) {u : (D.s.atP p).Ep} (hu : u ∈ (Z.M p).L.O)
     {w : Vp D p} (hw : w ∈ lattice₂ D Z.M p Λ) : u • w ∈ lattice₂ D Z.M p Λ := by

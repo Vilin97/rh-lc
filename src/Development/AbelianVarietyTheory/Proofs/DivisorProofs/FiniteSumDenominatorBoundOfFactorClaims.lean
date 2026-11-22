@@ -7,6 +7,7 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.DiscreteSeri
 public import Development.AbelianVarietyTheory.Definitions.Foundations.NormSumPairRankZeroOfCurveCoordNorm
 public import Formalism.PairingDivisors.PairingDivisorProofs.ValAdd
 public import Formalism.LocalToGlobal.Columns.CoefModAt
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsNatSmulSingle
 public import Formalism.LocalToGlobal.Divisibility.JetBounds.JetBoundsProofs.NormEqOneOfNotMem
 public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.TwistedLatticeNaturality
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.OrthogonalSumCoefficientLatticeIsLatticeAndDual
@@ -413,7 +414,8 @@ theorem exists_intMod_levelPrimePow_eq_add_mul (ch : Choice R) {t : T} {w : PlL 
   have hlat : Submodule.IsLattice D.what₂.LL (formLat ch.G ch.rp ch.e) :=
     GlobalTheory.TestLat.SumLat.isLattice_sumLat _ _ _ fun c =>
       (GlobalTheory.Mem.LatGood.delAtr_isLattice (emb D) (LaP ch.G) _
-        (isSelfDualE_latOf ch.G (ch.rp.x c.2)).1).toIsLattice
+        (Formalism.IndefR.Fin.PDA.selfDual_isFullLattice (Xp ch.G) _
+          (isSelfDualE_latOf ch.G (ch.rp.x c.2)))).toIsLattice
   have key : ∀ x ∈ formLat ch.G ch.rp ch.e, y ⬝ᵥ x = 0 ∨ -B ≤ (vw w (y ⬝ᵥ x) : ℝ) := by
     intro x hx
     have e1 : ∑ a, D.what₂.embLL (x a) * vK ch t Fx a =

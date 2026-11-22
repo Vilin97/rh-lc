@@ -359,7 +359,7 @@ theorem split_eigen : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
       omd g (boxFun (tens (evFin F v) (G.M.vac v) r) (fun x => star (tens (evFin F v) (G.M.vac v) r x))) =
         μ • boxFun (tens (evFin F v) (G.M.vac v) r) (fun x => star (tens (evFin F v) (G.M.vac v) r x)) := by
   intro F E _ _ _ _ _ σ B a a' G X om om' hT v _ _ hunr dd omd hdc hsp r hr g hg
-  exact dbl_eigen σ G.V G.W hT.geo.hV.lat hT.geo.hW.lat G.M B.ψ hT.base.std v hunr
+  exact dbl_eigen σ G.V G.W hT.geo.hV.lat.toIsLattice hT.geo.hW.lat.toIsLattice G.M B.ψ hT.base.std v hunr
     (GlobalTheory.PsiUnrSelfDual.latAtV_selfDual F E σ B a a' G X om om' hT v hunr) _ (hT.geo.hM.vac v) dd omd hdc hsp.2.1 r hr g hg
 
 end GlobalTheory.DblVacAny

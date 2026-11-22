@@ -99,9 +99,9 @@ theorem exists_move (hL : L.Is μ₀) (hst : ∀ t, SquareStanding G t) {W : G.W
     rw [x1, x3, GlobalTheory.T.standardPairFirstMember_eq_prod_local_gridBases hL B t i j X _ he] at f1
     have k : (X.ω t).toSgn true (1, h) X.vac = cA' • vacA ρ i j := by
       rw [om_compare (hI.weil μ₀) (hI.weil t) hy vA.2.theta, mul_inv_cancel₀ (Circle.coe_ne_zero _), one_smul, kA]
-    letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ sW
-    letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ sX
-    have := thetaAt_move (hI.weil t) inferInstance inferInstance (GlobalTheory.PlaceVec.idemSum_mul_self he) he.2 (GlobalTheory.PlaceVec.idemSum_infPart he)
+    have := thetaAt_move (ΛS := G.Λ (.grid (i + 1) (j + 1))) (ΛX := latX G i j)
+      (hI.weil t) (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ sW)
+      (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ sX) (GlobalTheory.PlaceVec.idemSum_mul_self he) he.2 (GlobalTheory.PlaceVec.idemSum_infPart he)
       vA.2.theta (hfx t (hst t) _ he _) hcA k f1
     rwa [eA] at this
   · have he := hI.idem t
@@ -113,9 +113,9 @@ theorem exists_move (hL : L.Is μ₀) (hst : ∀ t, SquareStanding G t) {W : G.W
       congr 1
       simp only [GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.alpha, LevCh.mu, Lift.tup, MonoidHom.mul_apply, Circle.coe_mul]
       field_simp
-    letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ sW₁
-    letI := GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ sX
-    exact thetaAt_move (S := spW₁ G i j) (hI.weil' t) inferInstance inferInstance (by rw [← map_mul, GlobalTheory.PlaceVec.idemSum_mul_self he])
+    exact thetaAt_move (S := spW₁ G i j) (ΛS := G.Λ (.grid i j)) (ΛX := latX G i j)
+      (hI.weil' t) (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ sW₁)
+      (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ sX) (by rw [← map_mul, GlobalTheory.PlaceVec.idemSum_mul_self he])
       (by rw [← map_mul, he.2, map_zero]) (GlobalTheory.PlaceVec.infPart_cA (GlobalTheory.PlaceVec.idemSum_infPart he))
       vB.2.theta (fun x hx => hfx t (hst t) _ he _ x (by rwa [GlobalTheory.LatVac.cA_cA, or_comm] at hx))
       (mul_ne_zero (mul_ne_zero hcB (inv_ne_zero (Circle.coe_ne_zero _))) (Circle.coe_ne_zero _)) k f1
