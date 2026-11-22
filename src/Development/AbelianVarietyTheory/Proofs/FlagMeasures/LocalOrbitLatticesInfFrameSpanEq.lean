@@ -5,6 +5,7 @@ public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HermitianLatt
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.NGData
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.TermLoc
 public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.LocClosed
+import Development.AbelianVarietyTheory.Proofs.FlagMeasures.GluedUnimodularLatticeIffLocalCompletions
 
 @[expose] public section
 
@@ -91,23 +92,7 @@ theorem xplus_le {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T) (S : Submodule D
 theorem le_of_loc (Z : LocDat D) (Λ₂ : LV D) (h2 : Submodule.IsLattice D.host.E Λ₂) (N : LV D)
     (hN : ∀ z ∈ N, ∀ p, baseChange₂ D p z ∈ lattice₂ D Z.M p Λ₂) : N ≤ Λ₂ := by
   intro x hx
-  have hlat : Submodule.IsLattice D.host.E (Λ₂ ⊔ Submodule.span (𝓞 D.host.E) {x}) := by
-    refine ⟨h2.fg.sup (Submodule.fg_span_singleton x), ?_⟩
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
-  have heq : ∀ p, lattice₂ D Z.M p (Λ₂ ⊔ Submodule.span (𝓞 D.host.E) {x}) = lattice₂ D Z.M p Λ₂ := by
-    intro p
-    apply le_antisymm
-    · apply Submodule.span_le.2
-      rintro _ ⟨w, hw, rfl⟩
-      obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hw
-      obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 hz
-      rw [map_add (f := _)]
-      exact add_mem (Submodule.subset_span ⟨y, hy, rfl⟩) (hN _ (N.smul_mem c hx) p)
-    · exact Submodule.span_mono (Set.image_mono (by intro y hy; exact Submodule.mem_sup_left hy))
-  have := ((GlobalTheory.Unfold.LatLoc.lattices_local_global D Z).1 _ Λ₂ hlat h2).2 heq
-  rw [← this]
-  exact Submodule.mem_sup_right (Submodule.mem_span_singleton_self x)
+  exact GlobalTheory.GenMass.GlueLoc.mem_of_bcP Z h2.fg (hN x hx)
 
 theorem fix_span {u u' : D.what₂.Word}
     (F : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E))
