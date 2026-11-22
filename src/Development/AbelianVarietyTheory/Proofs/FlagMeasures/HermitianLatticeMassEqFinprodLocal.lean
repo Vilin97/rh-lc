@@ -133,7 +133,7 @@ end Global
 
 theorem mass_eq_finprod : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     {sig : E →ₐ[F] E} (A : Places F E sig), ∀ (r k : ℕ) (G : GFrames A r k), 4 * r + 7 ≤ k →
-    ∀ Λ : G.Lt, Submodule.IsLattice E Λ →
+    ∀ Λ : G.Lt, Submodule.IsFullLattice E Λ →
     {p | (G.S p).St ⊓ MulAction.stabilizer (G.S p).GLV (A.lat p Λ) ≠ (G.S p).K0}.Finite ∧
       G.mu Λ = ∏ᶠ p, (G.S p).mu (A.lat p Λ) := by
   intro F E _ _ _ _ _ sig A r k G hk Λ hΛ
@@ -189,7 +189,7 @@ theorem mass_eq_finprod : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [
         have := (Subgroup.mem_pi _).1 h p (Set.mem_univ p)
         rw [he] at this
         exact this
-    obtain ⟨γ, -, hγ⟩ := GlobalTheory.T.exists_mem_St_approximating_local_elements A r k G Λ hΛ c hc g hgSt hgfin
+    obtain ⟨γ, -, hγ⟩ := GlobalTheory.T.exists_mem_St_approximating_local_elements A r k G Λ hΛ.toIsLattice c hc g hgSt hgfin
     refine ⟨γ, ?_⟩
     have key : ∀ p, (g p)⁻¹ * φ γ p ∈ K p ⊓ U p := by
       intro p

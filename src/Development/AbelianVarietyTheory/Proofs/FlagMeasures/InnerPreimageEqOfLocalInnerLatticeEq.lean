@@ -60,11 +60,55 @@ theorem localLattice_mono' (Z : LocDat D) (p : PlF D) {Λ Λ' : LV D} (h : Λ �
 
 theorem mem_of_local (Z : LocDat D) (Γ : LV D) (hΓ : Submodule.IsLattice D.host.E Γ) (x : (VS D).V)
     (h : ∀ p, baseChange₂ D p x ∈ lattice₂ D Z.M p Γ) : x ∈ Γ := by
-  have r := ((GlobalTheory.T.numberField_lattice_determined_by_local_lattices (GlobalTheory.HL.placesOf Z) (nV D) (LatLoc.cL Γ) (LatLoc.isLattice_map _ _ hΓ)).1
-    (LatLoc.cE D x)).2 (fun p => by rw [← LatLoc.baseChange_eq, ← LatLoc.localLattice_eq]; exact h p)
-  obtain ⟨y, hy, hxy⟩ := Submodule.mem_map.1 r
-  have : y = x := (LatLoc.cE D).injective hxy
-  exact this ▸ hy
+  let X := Submodule.span D.host.E (Γ : Set (VS D).V)
+  obtain ⟨Q, hQX, hQv, hQQ⟩ := exists_proj X
+  let B : LV D := Submodule.span (𝓞 D.host.E) (Set.range (VS D).frame)
+  let Λ := Γ ⊔ B.map (Q.restrictScalars (𝓞 D.host.E))
+  have hΓΛ : Γ ≤ Λ := le_sup_left
+  have hB : B.FG := Submodule.fg_span (Set.finite_range _)
+  have hΛ : Submodule.IsLattice D.host.E Λ :=
+    Submodule.IsLattice.of_fg D.host.E (hΓ.fg.sup (hB.map _))
+  have hspan : Submodule.span D.host.E (Λ : Set (VS D).V) = ⊤ := by
+    apply top_unique
+    rw [← (VS D).frame.span_eq]
+    refine Submodule.span_le.2 ?_
+    rintro _ ⟨i, rfl⟩
+    change (VS D).frame i ∈ Submodule.span D.host.E (Λ : Set (VS D).V)
+    have hdiff := Submodule.span_mono (show (Γ : Set (VS D).V) ⊆ Λ from hΓΛ) (hQv ((VS D).frame i))
+    have hi : (VS D).frame i ∈ B := Submodule.subset_span (Set.mem_range_self i)
+    have hQi : Q ((VS D).frame i) ∈ Λ :=
+      Submodule.mem_sup_right (Submodule.mem_map_of_mem (f := Q.restrictScalars (𝓞 D.host.E)) hi)
+    simpa only [sub_add_cancel] using (Submodule.span D.host.E (Λ : Set (VS D).V)).add_mem
+      hdiff (Submodule.subset_span hQi)
+  have hfull : Submodule.IsFullLattice D.host.E (LatLoc.cL Λ) := by
+    refine { toIsLattice := LatLoc.isLattice_map (LatLoc.cE D) Λ hΛ, span_eq_top := ?_ }
+    change Submodule.span D.host.E ((LatLoc.cE D).toLinearMap '' (Λ : Set (VS D).V)) = ⊤
+    rw [← Submodule.map_span, hspan, Submodule.map_top, LinearEquiv.range]
+  have hrec := (GlobalTheory.T.numberField_lattice_determined_by_local_lattices
+    (GlobalTheory.HL.placesOf Z) (nV D) (LatLoc.cL Λ) hfull).1
+  have hx : x ∈ Λ := by
+    have hmem := (hrec (LatLoc.cE D x)).2 fun p => by
+      rw [← LatLoc.baseChange_eq, ← LatLoc.localLattice_eq]
+      exact localLattice_mono' Z p hΓΛ (h p)
+    obtain ⟨y, hy, hyx⟩ := Submodule.mem_map.1 hmem
+    exact (show y = x from (LatLoc.cE D).injective hyx) ▸ hy
+  have hmap : Γ.map (Q.restrictScalars (𝓞 D.host.E)) = ⊥ := by
+    apply (Submodule.eq_bot_iff _).2
+    rintro _ ⟨y, hy, rfl⟩
+    exact hQX y (Submodule.subset_span hy)
+  obtain ⟨P, hP⟩ := Ideal.exists_maximal (𝓞 D.host.F)
+  let p : PlF D := ⟨P, hP.isPrime,
+    Ring.ne_bot_of_isMaximal_of_not_isField hP (NumberField.RingOfIntegers.not_isField D.host.F)⟩
+  have hbc := endP_latP Z p Q Γ (h p)
+  rw [hmap, lattice₂, Submodule.bot_coe, Set.image_singleton, map_zero, Submodule.span_zero_singleton,
+    Submodule.mem_bot, bcP_endP, ← map_zero (baseChange₂ D p)] at hbc
+  have hQx : Q x = 0 := by
+    refine (VS D).frame.ext_elem fun i => (D.s.atP p).ιE.injective ?_
+    exact congrFun hbc i
+  obtain ⟨y, hy, _, ⟨z, _, rfl⟩, rfl⟩ := Submodule.mem_sup.1 hx
+  change Q (y + Q z) = 0 at hQx
+  rw [map_add, hQX y (Submodule.subset_span hy), hQQ, zero_add] at hQx
+  simpa only [LinearMap.restrictScalars_apply, hQx, add_zero] using hy
 
 theorem herm_smul_right {F E : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [CommRing E] [Algebra F E]
     [TopologicalSpace E] [MeasurableSpace E] {M : Loc.Model F E} {V : Type} [AddCommGroup V] [Module E V]

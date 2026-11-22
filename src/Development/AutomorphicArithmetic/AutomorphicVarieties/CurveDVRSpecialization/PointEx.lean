@@ -208,7 +208,7 @@ private theorem pe_form (ρ : NRep F n A) : G.IsForm O n (K.tw ρ).toHomUnits (J
   have hinv : ∀ h : F.G0, (ρ.r h)ᵀ * (ρ.r h⁻¹)ᵀ = 1 := by
     intro h
     rw [← Matrix.transpose_mul, ← map_mul, inv_mul_cancel, map_one, Matrix.transpose_one]
-  have hJ : ((Jgl n : GL (Fin n) A) : Matrix (Fin n) (Fin n) A) = Jmat A n := rfl
+  have hJ : ((Jgl (R := A) n : GL (Fin n) A) : Matrix (Fin n) (Fin n) A) = Jmat A n := rfl
   show (K.tw ρ g)ᵀ * _ * K.tw ρ (G.conj g) = _
   rw [hJ]
   simp only [Pr.TwLink.tw, MonoidHom.coe_mk, OneHom.coe_mk]
@@ -331,6 +331,7 @@ private theorem pe_ine {k : Type} [Field k] [Algebra (ResidueField O) k] [CharP 
 
 end Tw
 
+set_option maxHeartbeats 16000000 in
 theorem UpperTheory.V.Pr.pointEx_of_le {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     [IsCoef l O] [Algebra ℤ_[l] O] {F : Frame l (ResidueField O)} {n : ℕ} (T : Pr.Setup F n)
     (Φ : T.B.B →ₐ[O] T.S.B) (hΦ : T.IsPhi Φ) (x : Ideal T.S.A) (L : T.S.Loc x) (p : Ideal L.R) (hp : p.IsPrime)
@@ -390,7 +391,7 @@ theorem UpperTheory.V.Pr.pointEx_of_le {l : ℕ} [Fact l.Prime] {O : Type} [Comm
   have hcont : ∀ i k, AdicCont (maximalIdeal (PowerSeries K))
       fun g => (L.ρ.map (j : L.R →+* PowerSeries K)).r g i k := fun i k =>
     pe_cont (j : L.R →+* PowerSeries K) ((loc_rho T.ok T.n23 T.S x L).1.1 i k)
-  refine ⟨⟨K, (T.K.tw (L.ρ.map (j : L.R →+* PowerSeries K))).toHomUnits, ?_, Jgl n, ?_,
+  refine ⟨⟨K, (T.K.tw (L.ρ.map (j : L.R →+* PowerSeries K))).toHomUnits, ?_, Jgl (R := PowerSeries K) n, ?_,
     pe_form T.K _, ?_, ?_, T.K.twψ (L.ρ.map (j : L.R →+* PowerSeries K)), ?_, ?_⟩, j, hjk, hjl,
     hmat, rfl, ?_⟩
   · intro a b

@@ -182,7 +182,7 @@ theorem exists_gram {σ : E →ₐ[F] E} {B : Base F E} (hB : B.IsGood σ) {d r 
     (h₁ : IsSplitBasis τ W.L b₁) (h₂ : IsSplitBasis (τ.comp σ) W.L b₂) :
     ∃ S : Matrix (Fin d) (Fin d) (v.adicCompletionIntegers F), IsUnit S.det ∧
       S.map (fun x => (x : Fv F v)) = b₁.1ᵀ * W.J.map τ * b₂.1 := by
-  obtain ⟨k, S, T, hS, hT, hTS⟩ := exists_formFrame σ W.J (det_ne_zero_of_skew σ B hW) W.L hW.lat.toIsLattice
+  obtain ⟨k, S, T, hS, hT, hTS⟩ := exists_formFrame σ W.J (det_ne_zero_of_skew σ B hW) W.L hW.lat
     (fun y hy => (hW.dual y).2 fun x hx o => by
       obtain ⟨r, hr⟩ := hy x hx
       rw [← hr]

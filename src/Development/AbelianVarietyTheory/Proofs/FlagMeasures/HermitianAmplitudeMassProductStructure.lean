@@ -109,7 +109,7 @@ end GlobalTheory.HL.ProdStruct
 namespace GlobalTheory.HL.ProdStruct
 attribute [local instance] instLf instChar0
 
-private theorem full_lattice_of_term {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
+theorem full_lattice_of_term {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
     [Algebra F E] {sig : E →ₐ[F] E} {A : Places F E sig} {r k : ℕ} (G : GFrames A r k)
     {d : G.Dat} {Λ : G.Lt} (hΛ : G.IsTerm d Λ) : Submodule.IsFullLattice E Λ := by
   refine { toIsLattice := hΛ.1, span_eq_top := ?_ }
@@ -174,7 +174,7 @@ theorem product_structure : ∀ {F E : Type} [Field F] [NumberField F] [Field E]
       (fun Λ h1 => ⟨(KF p hp Λ Λ h1 h1).2.2.2, (KF p hp Λ Λ h1 h1).2.1, (KF p hp Λ Λ h1 h1).2.2.1⟩)
   have hmuG : ∀ Γ, G.IsTerm d Γ → G.mu Γ = ∏ p ∈ s, (G.S p).mu (A.lat p Γ) := by
     intro Γ hΓ
-    rw [(GlobalTheory.T.hermitianLattice_mass_eq_finprod_local A r k G hk Γ hΓ.1).2]
+    rw [(GlobalTheory.T.hermitianLattice_mass_eq_finprod_local A r k G hk Γ (by first | exact full_lattice_of_term G hΓ | exact hΓ.1)).2]
     apply finprod_eq_prod_of_mulSupport_subset
     intro p hp
     by_contra hps

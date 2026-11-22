@@ -16,6 +16,6 @@ theorem complSt_holds : ComplSt := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible W
   have hl : IsLocalHom (algebraMap W (AdicCompletion (maximalIdeal W) W)) := inferInstance
   exact ⟨⟨AdicCompletion (maximalIdeal W) W⟩, algebraMap W (AdicCompletion (maximalIdeal W) W), hl, ϖ, hϖ,
-    GlobalTheory.irreducible_algebraMap_adicCompletion_of_dvr W hϖ⟩
+    GlobalTheory.irreducible_algebraMap_adicCompletion_of_dvr hϖ⟩
 
 end Formalism.L2.Pj

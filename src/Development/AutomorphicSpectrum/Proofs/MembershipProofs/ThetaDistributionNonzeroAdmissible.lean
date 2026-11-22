@@ -119,13 +119,13 @@ theorem pure_mem {κ : Type} [Fintype κ] (ψ : AddChar (AdeleRing (𝓞 F) F) �
     (fun x => ψ (x ⬝ᵥ y) * pureA F f g (x + x₁)) ∈ schA F κ := by
   let e := InfiniteAdeleRing.ringEquiv_mixedSpace F
   let a : (κ → mixedEmbedding.mixedSpace F) →+ AdeleRing (𝓞 F) F :=
-    { toFun := fun u => (fun i => GroundTheory.Global.infiniteAdeleInl (GroundTheory.Global.mixedToInfinite (u i))) ⬝ᵥ y
+    { toFun := fun u => (fun i => GroundTheory.Global.infiniteAdeleInl (GroundTheory.Global.mixedToInfinite F (u i))) ⬝ᵥ y
       map_zero' := by simp
       map_add' := fun u v => by simp [dotProduct, add_mul, Finset.sum_add_distrib] }
   have ha : Continuous a := by
     refine continuous_finsetSum _ fun i _ => Continuous.mul ?_ continuous_const
     exact GroundTheory.Global.continuous_infiniteAdeleInl.comp
-      (GroundTheory.Global.continuous_mixedToInfinite.comp (continuous_apply i))
+      ((GroundTheory.Global.continuous_mixedToInfinite (K := F)).comp (continuous_apply i))
   have hT : Function.HasTemperateGrowth fun u => ψ (a u) :=
     temperate_char _ (hψ.comp ha) (fun _ => hn _) (by simp) fun s t => by rw [map_add (f := _), AddChar.map_add_eq_mul]
   let ψf : AddChar (FiniteAdeleRing (𝓞 F) F) ℂ := ψ.compAddMonoidHom GroundTheory.Global.finiteAdeleInr
@@ -140,7 +140,7 @@ theorem pure_mem {κ : Type} [Fintype κ] (ψ : AddChar (AdeleRing (𝓞 F) F) �
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [dotProduct, map_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
-    have : GroundTheory.Global.mixedToInfinite (e (x i).1) = (x i).1 := e.symm_apply_apply _
+    have : GroundTheory.Global.mixedToInfinite F (e (x i).1) = (x i).1 := e.symm_apply_apply _
     rw [this]
     refine Prod.ext (α := InfiniteAdeleRing F) (β := FiniteAdeleRing (𝓞 F) F) ?_ ?_
     · change _ = (GroundTheory.Global.infiniteAdeleInl (x i).1 * y i).1 + (GroundTheory.Global.finiteAdeleInr ((x i).2 * (y i).2)).1

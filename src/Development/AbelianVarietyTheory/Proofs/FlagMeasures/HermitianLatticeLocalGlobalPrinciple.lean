@@ -47,17 +47,22 @@ theorem cL_injective : Function.Injective (cL (D := D)) := by
   rwa [Submodule.comap_map_eq_of_injective (by exact (cE D).injective),
     Submodule.comap_map_eq_of_injective (by exact (cE D).injective)] at this
 
-theorem std_finite (Z : LocDat D) (Λ : LV D) (h : Submodule.IsLattice D.host.E Λ) :
+theorem std_finite (Z : LocDat D) (Λ : LV D) (h : Submodule.IsFullLattice D.host.E Λ) :
     {p | lattice₂ D Z.M p Λ ≠ Submodule.span ((GlobalTheory.HL.placesOf Z).L p).O
       (Set.range fun i => (Pi.single i 1 : Fin (nV D) → ((GlobalTheory.HL.placesOf Z).loc p).Ep))}.Finite := by
-  have := (GlobalTheory.T.numberField_lattice_determined_by_local_lattices (GlobalTheory.HL.placesOf Z) (nV D) (cL Λ) (isLattice_map _ _ h)).2.2
+  have hc : Submodule.IsFullLattice D.host.E (cL Λ) := by
+    refine { toIsLattice := isLattice_map _ _ h.toIsLattice, span_eq_top := ?_ }
+    change Submodule.span D.host.E ((cE D).toLinearMap '' (Λ : Set (VS D).V)) = ⊤
+    rw [Submodule.span_image, h.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+    exact (cE D).surjective
+  have := (GlobalTheory.T.numberField_lattice_determined_by_local_lattices (GlobalTheory.HL.placesOf Z) (nV D) (cL Λ) hc).2.2
   simp only [localLattice_eq]
   exact this
 
-theorem lattices_local_global : ∀ (D : D7) (Z : LocDat D), (∀ Λ₁ Λ₂ : LV D, Submodule.IsLattice D.host.E Λ₁ →
-    Submodule.IsLattice D.host.E Λ₂ → {p | lattice₂ D Z.M p Λ₁ ≠ lattice₂ D Z.M p Λ₂}.Finite ∧
+theorem lattices_local_global : ∀ (D : D7) (Z : LocDat D), (∀ Λ₁ Λ₂ : LV D, Submodule.IsFullLattice D.host.E Λ₁ →
+    Submodule.IsFullLattice D.host.E Λ₂ → {p | lattice₂ D Z.M p Λ₁ ≠ lattice₂ D Z.M p Λ₂}.Finite ∧
       ((∀ p, lattice₂ D Z.M p Λ₁ = lattice₂ D Z.M p Λ₂) → Λ₁ = Λ₂)) ∧
-    ∀ (Λ₀ : LV D), Submodule.IsLattice D.host.E Λ₀ → ∀ Lp : ∀ p : PlF D, Submodule (Z.M p).L.O (Vp D p),
+    ∀ (Λ₀ : LV D), Submodule.IsFullLattice D.host.E Λ₀ → ∀ Lp : ∀ p : PlF D, Submodule (Z.M p).L.O (Vp D p),
       (∀ p, (Lp p).FG ∧ Submodule.span (D.s.atP p).Ep (Lp p : Set (Vp D p)) = ⊤) →
       {p | Lp p ≠ lattice₂ D Z.M p Λ₀}.Finite →
       ∃ Λ : LV D, Submodule.IsLattice D.host.E Λ ∧ ∀ p, lattice₂ D Z.M p Λ = Lp p := by
@@ -68,8 +73,14 @@ theorem lattices_local_global : ∀ (D : D7) (Z : LocDat D), (∀ Λ₁ Λ₂ : 
     simp only [Set.mem_union, Set.mem_setOf_eq, not_or, not_not] at hc
     exact hp (hc.1.trans hc.2.symm)
   · apply cL_injective
-    have r₁ := (GlobalTheory.T.numberField_lattice_determined_by_local_lattices (GlobalTheory.HL.placesOf Z) (nV D) (cL Λ₁) (isLattice_map _ _ h₁)).1
-    have r₂ := (GlobalTheory.T.numberField_lattice_determined_by_local_lattices (GlobalTheory.HL.placesOf Z) (nV D) (cL Λ₂) (isLattice_map _ _ h₂)).1
+    have hc (Λ : LV D) (h : Submodule.IsFullLattice D.host.E Λ) :
+        Submodule.IsFullLattice D.host.E (cL Λ) := by
+      refine { toIsLattice := isLattice_map _ _ h.toIsLattice, span_eq_top := ?_ }
+      change Submodule.span D.host.E ((cE D).toLinearMap '' (Λ : Set (VS D).V)) = ⊤
+      rw [Submodule.span_image, h.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+      exact (cE D).surjective
+    have r₁ := (GlobalTheory.T.numberField_lattice_determined_by_local_lattices (GlobalTheory.HL.placesOf Z) (nV D) (cL Λ₁) (hc Λ₁ h₁)).1
+    have r₂ := (GlobalTheory.T.numberField_lattice_determined_by_local_lattices (GlobalTheory.HL.placesOf Z) (nV D) (cL Λ₂) (hc Λ₂ h₂)).1
     ext x
     rw [r₁, r₂]
     refine forall_congr' fun p => ?_

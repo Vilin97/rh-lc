@@ -95,8 +95,29 @@ theorem red_omHT_bc : ∀ (A K : Type) [CommRing A] [IsDomain A] [IsNoetherianRi
   · rw [LinearMap.comp_apply, hs, hj₁]
     exact congrArg ι (Subtype.ext e.symm)
   · have hl := (pt_om_block C v O hv E c hc κ' N V Ω' P σ').2.2.1
+    have hfull : (latIn (P.omHT σ') (P.Ωsp σ')).IsFullLattice C := by
+      refine { toIsLattice := hl, span_eq_top := ?_ }
+      apply eq_top_iff.mpr
+      intro x _
+      have hx : (x : Ω') ∈ Submodule.span C (P.om : Set Ω') := by
+        rw [P.om_lat.span_eq_top]
+        trivial
+      obtain ⟨a, ha, hay⟩ := exists_smul_mem_of_mem_span_val hv P.om hx
+      obtain ⟨z, hz, hze⟩ := P.κ_mem (a • (x : Ω')) hay
+      have hm : (algebraMap O C κ' * a) • x ∈ latIn (P.omHT σ') (P.Ωsp σ') := by
+        change (algebraMap O C κ' * a) • (x : Ω') ∈ P.omHT σ'
+        refine ⟨P.ht z, ⟨z, hz, rfl⟩, ?_⟩
+        rw [hze, ← algebraMap_smul C, smul_smul]
+        change eigProj P.ρΩ σ' ((algebraMap O C κ' * a) • (x : Ω')) = _
+        rw [map_smul, LatBasic.eigProj_of_mem x.2]
+      have hm' := Submodule.subset_span hm (R := C)
+      have hn : algebraMap O C κ' * a ≠ 0 := mul_ne_zero P.κ_ne ha
+      have := (Submodule.span C (latIn (P.omHT σ') (P.Ωsp σ') : Set (P.Ωsp σ'))).smul_mem
+        (algebraMap O C κ' * a)⁻¹ hm'
+      rw [smul_smul, inv_mul_cancel₀ hn, one_smul] at this
+      exact this
     rw [← finrank_baseChange_flat (O := O), ← LinearMap.finrank_range_of_inj hinj, hrange,
-      ← finrank_lattice _ hl]
+      ← finrank_lattice _ hfull]
     have e : (latIn (P.omHT σ') (P.Ωsp σ')).map ((P.Ωsp σ').subtype.restrictScalars O) =
         P.omHT σ' := by
       rw [LatBasic.map_latIn]

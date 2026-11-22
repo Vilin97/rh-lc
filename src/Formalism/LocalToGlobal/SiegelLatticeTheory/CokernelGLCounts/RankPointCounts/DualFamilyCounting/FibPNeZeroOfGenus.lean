@@ -56,9 +56,11 @@ theorem finite_fibS (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h
       exact Submodule.span_mono (SetLike.coe_subset_coe.mpr le_sup_left)
     · rw [← hT.2]
       exact Submodule.span_mono (SetLike.coe_subset_coe.mpr le_sup_right)
-  have hD : Submodule.IsLattice K (Formalism.HermitianLatticesTheory.dual h (M ⊔ T)) :=
-    (Formalism.HermitianLatticesTheory.dualLattice (𝓞 K) K V h hs (nondegenerate_of hs hnd) Formalism.HermitianLatticesTheory.star_algebraMap_ringOfIntegers_mem_range _ hNfull).1.toIsLattice
-  have hND := LIOrb.isLattice_inf hN hD
+  letI := hNfull
+  letI hDfull : Submodule.IsFullLattice K (Formalism.HermitianLatticesTheory.dual h (M ⊔ T)) :=
+    (Formalism.HermitianLatticesTheory.dualLattice (𝓞 K) K V h hs (nondegenerate_of hs hnd) Formalism.HermitianLatticesTheory.star_algebraMap_ringOfIntegers_mem_range _ hNfull).1
+  have hD := hDfull.toIsLattice
+  have hND : Submodule.IsFullLattice K ((M ⊔ T) ⊓ Formalism.HermitianLatticesTheory.dual h (M ⊔ T)) := inferInstance
   have key : ∀ Λ ∈ fibS h U 𝔭 M T, locF 𝔭 (M ⊔ T) ≤ Λ ∧ Λ ≤ locF 𝔭 (Formalism.HermitianLatticesTheory.dual h (M ⊔ T)) ∧
       locF 𝔭 Λ = Λ := by
     rintro Λ ⟨⟨Λ', -, rfl⟩, h1, h2, h3⟩

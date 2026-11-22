@@ -44,10 +44,10 @@ theorem frame_unimodular : ∀ {F : Type} [Field F] [ValuativeRel F] [Topologica
   have hg : ∀ i, gens S (S.fr d Λ) (S.fr' d Λ) i ∈ Λ := fun i =>
     (hM (hMe ▸ Submodule.subset_span ⟨i, rfl⟩)).1
   have hsp : ∀ j, S.spanTo (S.fr d Λ) j = S.spanTo S.f j := by
-    obtain ⟨s, hs, h⟩ := FrameOnto.exists_matrix S S.f _ hn
+    obtain ⟨s, hs, h⟩ := FrameOnto.exists_matrix S S.f S.T S.gram _ hn
     exact spanTo_eq S _ _ s hs h
   have hsp' : ∀ j, S.spanTo (S.fr' d Λ) j = S.spanTo S.f' j := by
-    obtain ⟨s, hs, h⟩ := FrameOnto.exists_matrix S S.f' _ hn'
+    obtain ⟨s, hs, h⟩ := FrameOnto.exists_matrix S S.f' S.T' S.gram' _ hn'
     exact spanTo_eq S _ _ s hs h
   have hdet : (Matrix.of fun i j => hf L S.Hm (gens S (S.fr d Λ) (S.fr' d Λ) i)
       (gens S (S.fr d Λ) (S.fr' d Λ) j)).det =

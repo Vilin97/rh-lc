@@ -296,7 +296,7 @@ theorem gram_skew_unimodular : ∀ (F E : Type) [Field F] [NumberField F] [Field
     rw [hGe, hGe]; exact sesq_skew σL _ hσσ hJskew _ _
 
   obtain ⟨k, S, T, hS, hT, hTS⟩ := GlobalTheory.InertSelfDual.exists_formFrame σ X.J
-    (GlobalTheory.InertSelfDual.det_ne_zero_of_skew σ B hX) X.L hX.lat.toIsLattice (fun y hy => (hX.dual y).2 fun x hx o => by
+    (GlobalTheory.InertSelfDual.det_ne_zero_of_skew σ B hX) X.L hX.lat (fun y hy => (hX.dual y).2 fun x hx o => by
       obtain ⟨c, hc⟩ := hy x hx
       rw [← hc]
       exact Algebra.isIntegral_trace ((RingOfIntegers.isIntegral_coe o).mul (RingOfIntegers.isIntegral_coe c)))

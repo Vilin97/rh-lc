@@ -8,6 +8,7 @@ public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.NumberFieldLa
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HermitianLatticeLocalGlobalPrinciple
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HermitianLatticeLocalGlobalPrincipleStatement
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.UnitaryComplementMovesLocalTermsWithDataStatement
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.LocalTermLatticeOverInnerDatumFgSpanStatement
 
 @[expose] public section
 
@@ -33,9 +34,14 @@ theorem finrank_loc (p : PlF D) :
   simp only [Ranks.r, Ranks.rS]
   omega
 
-theorem localLattice_fg_and_span_eq_top (Z : LocDat D) (Λ : LV D) (h : Submodule.IsLattice D.host.E Λ) (p : PlF D) :
+theorem localLattice_fg_and_span_eq_top (Z : LocDat D) (Λ : LV D) (h : Submodule.IsFullLattice D.host.E Λ) (p : PlF D) :
     (lattice₂ D Z.M p Λ).FG ∧ Submodule.span (D.s.atP p).Ep (lattice₂ D Z.M p Λ : Set (Vp D p)) = ⊤ := by
-  have := (GlobalTheory.T.numberField_lattice_determined_by_local_lattices (GlobalTheory.HL.placesOf Z) (nV D) (LatLoc.cL Λ) (LatLoc.isLattice_map _ _ h)).2.1 p
+  have hmap : Submodule.IsFullLattice D.host.E (LatLoc.cL Λ) := by
+    refine { toIsLattice := LatLoc.isLattice_map _ _ h.toIsLattice, span_eq_top := ?_ }
+    change Submodule.span D.host.E (((LatLoc.cE D).toLinearMap) '' (Λ : Set (VS D).V)) = ⊤
+    rw [Submodule.span_image, h.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+    exact (LatLoc.cE D).surjective
+  have := (GlobalTheory.T.numberField_lattice_determined_by_local_lattices (GlobalTheory.HL.placesOf Z) (nV D) (LatLoc.cL Λ) hmap).2.1 p
   rw [LatLoc.localLattice_eq]
   exact this
 
@@ -73,7 +79,11 @@ theorem glue_local_orbits : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' 
           (y p) (y' p) τ hτ1 hm).1, by rw [← hτ2]⟩
   choose h hU h1 τ hτ1 hτ2 using key
   obtain ⟨Λ', hΛ', hp⟩ := (GlobalTheory.T.hermitianLattice_local_global_principle D Z).2 Λ hΛ (fun p => LocNG.img (h p) (lattice₂ D Z.M p Λ))
-    (fun p => img_lattice _ _ (localLattice_fg_and_span_eq_top Z Λ hΛ p))
+    (fun p => by
+      obtain ⟨t, ht, heq⟩ := hτ p
+      apply img_lattice
+      rw [← heq]
+      exact GlobalTheory.T.localTermLattice_over_innerDatum_fg_span D Z FP p (y p) t ht)
     (hfin.subset fun p hp hc => hp (by simp only [h1 p hc, img_one]))
   exact ⟨Λ', ⟨hΛ', fun p => ⟨τ p, hτ1 p, (hτ2 p).trans (hp p).symm⟩⟩, fun p => ⟨h p, hU p, (hp p).symm⟩⟩
 

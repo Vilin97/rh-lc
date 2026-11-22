@@ -109,7 +109,9 @@ theorem exists_modulus_congruenceSubgroup_le (hS : S.Finite) {n : ℕ} (hn : n �
     by_contra h
     exact hv (if_neg h)
   let 𝔪 : Modulus K := ⟨∏ᶠ w, w.asIdeal ^ a w, finprod_asIdeal_pow_ne_bot a, Set.univ⟩
-  have hexp : ∀ v, 𝔪.exponent v = a v := fun v ↦ multiplicity_finprod_asIdeal_pow_eq ha v
+  have hexp : ∀ v, 𝔪.exponent v = a v := fun v ↦ by
+    simpa [Modulus.exponent, 𝔪, FiniteMultiplicity.of_prime_left v.prime
+      (finprod_asIdeal_pow_ne_bot a)] using multiplicity_finprod_asIdeal_pow_eq ha v
   refine ⟨𝔪, fun v hv ↦ by rw [hexp]; exact if_neg hv, fun x hx ↦ ?_⟩
   obtain ⟨hf, hr⟩ := (Modulus.mem_congruenceSubgroup _).1 hx
   set T := hS.toFinset

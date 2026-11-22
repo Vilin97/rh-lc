@@ -4,7 +4,7 @@ public import Mathlib
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.NGData
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.TermLoc
 public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.LocClosed
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HermitianLatticeLocalGlobalPrinciple
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.InnerPreimageEqOfLocalInnerLatticeEq
 
 @[expose] public section
 
@@ -281,17 +281,8 @@ variable {D : D7}
 
 theorem mem_iff_local (Z : LocDat D) (Λ : LV D) (hΛ : Submodule.IsLattice D.host.E Λ) (x : (VS D).V) :
     x ∈ Λ ↔ ∀ p, baseChange₂ D p x ∈ lattice₂ D Z.M p Λ := by
-  have r := (GlobalTheory.T.numberField_lattice_determined_by_local_lattices (GlobalTheory.HL.placesOf Z) (nV D) (LatLoc.cL Λ) (LatLoc.isLattice_map _ _ hΛ)).1
-    (LatLoc.cE D x)
-  simp only [← LatLoc.localLattice_eq, ← LatLoc.baseChange_eq] at r
-  refine Iff.trans ?_ r
-  unfold LatLoc.cL
-  constructor
-  · intro hx
-    exact ⟨x, hx, rfl⟩
-  · rintro ⟨y, hy, hyx⟩
-    have : y = x := (LatLoc.cE D).injective hyx
-    rwa [← this]
+  exact ⟨fun hx p => Submodule.subset_span ⟨x, hx, rfl⟩,
+    GlobalTheory.Unfold.LsubG.mem_of_local Z Λ hΛ x⟩
 
 theorem unimodular_of_local : ∀ (D : D7) (Z : LocDat D) (A : ∀ p : PlF D, LocNG.FrameD (locH Z p) D.R.rS) (Λ : LV D), Submodule.IsLattice D.host.E Λ → (∀ p, ∃ n ∈ (A p).N, ∃ L, (A p).IsInner L ∧ lattice₂ D Z.M p Λ = LocNG.img n ((A p).LamStd L)) → Formalism.HermitianLatticesTheory.IsUnimodular (VS D).hT Λ := by
   intro D Z A Λ hΛ hloc

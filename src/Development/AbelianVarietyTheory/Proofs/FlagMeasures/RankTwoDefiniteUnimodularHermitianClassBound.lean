@@ -170,7 +170,7 @@ theorem card_glueData_le (hE : Formalism.HermitianLatticesTheory.IsCMUnram E) (Y
     have hN : N ≠ ⊥ := by
       intro h
       apply 𝔫.2.1
-      apply Submodule.map_injective_of_injective (FaithfulSMul.algebraMap_injective (𝓞 E) E)
+      apply Submodule.map_injective_of_injective (f := Algebra.linearMap (𝓞 E) E) (FaithfulSMul.algebraMap_injective (𝓞 E) E)
       simpa [N] using h
     have hfull (X : Lines N) : Submodule.IsFullLattice E X.1.2 := by
       have hne : X.1.2 ≠ ⊥ := by
@@ -180,7 +180,7 @@ theorem card_glueData_le (hE : Formalism.HermitianLatticesTheory.IsCMUnram E) (Y
         simp
       obtain ⟨x, hx, hx0⟩ := X.1.2.ne_bot_iff.mp hne
       letI : Submodule.IsLattice E X.1.2 := X.2.2.2.1
-      refine ⟨?_, ?_⟩
+      refine { span_eq_top := ?_ }
       apply top_unique
       intro y hy
       have hx' : x ∈ Submodule.span E (X.1.2 : Set E) := Submodule.subset_span hx

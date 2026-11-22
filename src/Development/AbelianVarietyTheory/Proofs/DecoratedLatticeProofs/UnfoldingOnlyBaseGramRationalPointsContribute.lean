@@ -62,17 +62,17 @@ theorem GlobalTheory.Unf.cut_gram_base : ∀ (D : D7) (ψ : AddChar (AF D.host.F
     inferInstanceAs (Countable (Fin W.rank → Fin ρ → D.host.E))
   have hT := GlobalTheory.T.mixedThetaSeries_terms_laws_unipotent_rational D ψ V V₀ W ρ d χV χW om om' hW hW' vS
   obtain ⟨-, hM⟩ := GlobalTheory.T.flag_subgroups_closed_normal_cocompact' D V V₀ ρ d
-  obtain ⟨-, hcl, hnorm, K, hK, hKc⟩ := hM (centre d) (Or.inl rfl)
+  obtain ⟨-, hcl, hnorm, K, hK, hKc⟩ := hM (GlobalTheory.MixPer.centre d) (Or.inl rfl)
   have hdisc : DiscreteTopology (NFlagQ V d.e) :=
     DiscreteTopology.of_continuous_injective (f := fun γ : NFlagQ V d.e => (⟨γ.1.1, γ.2⟩ : GQ V))
       (Continuous.subtype_mk (continuous_subtype_val.comp continuous_subtype_val) _)
       (fun a b h => Subtype.ext (Subtype.ext (congrArg (fun x : GQ V => (x : GA D V)) h)))
-  have hcl' : IsClosed (((centre d).subgroupOf (flagN d) : Subgroup (flagN d)) : Set (flagN d)) := by
+  have hcl' : IsClosed (((GlobalTheory.MixPer.centre d).subgroupOf (flagN d) : Subgroup (flagN d)) : Set (flagN d)) := by
     rw [Subgroup.coe_subgroupOf]; exact hcl.preimage continuous_subtype_val
-  have hcpt : ∃ K' : Set ((centre d).subgroupOf (flagN d)), IsCompact K' ∧
-      ∀ m, ∃ γ ∈ (NFlagQ V d.e).subgroupOf ((centre d).subgroupOf (flagN d)), ∃ k ∈ K', m = γ * k := by
-    let φ : centre d → (centre d).subgroupOf (flagN d) := fun c =>
-      ⟨⟨c.1, (hM (centre d) (Or.inl rfl)).1 c.2⟩, Subgroup.mem_subgroupOf.2 c.2⟩
+  have hcpt : ∃ K' : Set ((GlobalTheory.MixPer.centre d).subgroupOf (flagN d)), IsCompact K' ∧
+      ∀ m, ∃ γ ∈ (NFlagQ V d.e).subgroupOf ((GlobalTheory.MixPer.centre d).subgroupOf (flagN d)), ∃ k ∈ K', m = γ * k := by
+    let φ : GlobalTheory.MixPer.centre d → (GlobalTheory.MixPer.centre d).subgroupOf (flagN d) := fun c =>
+      ⟨⟨c.1, (hM (GlobalTheory.MixPer.centre d) (Or.inl rfl)).1 c.2⟩, Subgroup.mem_subgroupOf.2 c.2⟩
     have hφ : Continuous φ := Continuous.subtype_mk (Continuous.subtype_mk continuous_subtype_val _) _
     refine ⟨φ '' K, hK.image hφ, fun m => ?_⟩
     obtain ⟨γ, hγ, k, hk, e⟩ := hKc ⟨m.1.1, Subgroup.mem_subgroupOf.1 m.2⟩
@@ -106,7 +106,7 @@ theorem GlobalTheory.Unf.cut_gram_base : ∀ (D : D7) (ψ : AddChar (AF D.host.F
     simp only [F, Subgroup.coe_mul]
     rw [hTh.left γ.1 hγ' γ.2 n.1 n.2, hsplit, tsum_mul_left, tsum_mul_left,
       lemR γ.1 hγ' γ.2 _ (hW.om_pres _ _ hΨ)]
-  have hcinv : ∀ c : {x : Matrix (Fin W.rank) (Fin ρ) D.host.E // gramQ W x ≠ gramQ W x₀}, ∀ γ ∈ NFlagQ V d.e, γ ∈ (centre d).subgroupOf (flagN d) → ∀ n,
+  have hcinv : ∀ c : {x : Matrix (Fin W.rank) (Fin ρ) D.host.E // gramQ W x ≠ gramQ W x₀}, ∀ γ ∈ NFlagQ V d.e, γ ∈ (GlobalTheory.MixPer.centre d).subgroupOf (flagN d) → ∀ n,
       ∑' i : {i : {x : Matrix (Fin W.rank) (Fin ρ) D.host.E // gramQ W x ≠ gramQ W x₀} // id i = c}, F i.1 (γ * n) =
         ∑' i : {i : {x : Matrix (Fin W.rank) (Fin ρ) D.host.E // gramQ W x ≠ gramQ W x₀} // id i = c}, F i.1 n := by
     intro c γ hγ hγM n
@@ -118,8 +118,8 @@ theorem GlobalTheory.Unf.cut_gram_base : ∀ (D : D7) (ψ : AddChar (AF D.host.F
     congr 1
     refine (hT _ (hW.om_pres _ _ hΨ)).2.1 γ.1 hγ' γ.2 i.1.1 i.1.1 ?_
     rw [blockX_of_fix d (mem_fixer.2 (hc' ▸ d.nC_jX c')), Matrix.mul_one]
-  have heig : ∀ c : {x : Matrix (Fin W.rank) (Fin ρ) D.host.E // gramQ W x ≠ gramQ W x₀}, ∃ u ∈ (centre d).subgroupOf (flagN d), ∃ a : ℂ, a ≠ 1 ∧ ∀ i : {x : Matrix (Fin W.rank) (Fin ρ) D.host.E // gramQ W x ≠ gramQ W x₀}, id i = c →
-      ∀ m ∈ (centre d).subgroupOf (flagN d), ∀ n, F i (m * u * n) = a * F i (m * n) := by
+  have heig : ∀ c : {x : Matrix (Fin W.rank) (Fin ρ) D.host.E // gramQ W x ≠ gramQ W x₀}, ∃ u ∈ (GlobalTheory.MixPer.centre d).subgroupOf (flagN d), ∃ a : ℂ, a ≠ 1 ∧ ∀ i : {x : Matrix (Fin W.rank) (Fin ρ) D.host.E // gramQ W x ≠ gramQ W x₀}, id i = c →
+      ∀ m ∈ (GlobalTheory.MixPer.centre d).subgroupOf (flagN d), ∀ n, F i (m * u * n) = a * F i (m * n) := by
     intro c
     obtain ⟨c', hc'⟩ := lemQ c.1 c.2
     refine ⟨⟨d.nC c', d.nC_mem_NFlag c'⟩, Subgroup.mem_subgroupOf.2 ⟨c', rfl⟩, a c' c.1, hc', ?_⟩
@@ -131,5 +131,5 @@ theorem GlobalTheory.Unf.cut_gram_base : ∀ (D : D7) (ψ : AddChar (AF D.host.F
     rw [mul_assoc, hE, hE, hE]
     simp only [id]
     ring
-  exact GlobalTheory.T.integral_tsum_normal_eigenfunctions_eq_zero (flagN d) vN.ν (NFlagQ V d.e) ((centre d).subgroupOf (flagN d)) j4 hdisc hnorm hcl' hcpt
+  exact GlobalTheory.T.integral_tsum_normal_eigenfunctions_eq_zero (flagN d) vN.ν (NFlagQ V d.e) ((GlobalTheory.MixPer.centre d).subgroupOf (flagN d)) j4 hdisc hnorm hcl' hcpt
     vN.𝓝 hFD (by rw [h1]; exact ENNReal.one_ne_top) _ _ id F hmeas hbd hinv hcinv heig

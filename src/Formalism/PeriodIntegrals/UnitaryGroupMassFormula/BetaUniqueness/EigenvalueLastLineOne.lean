@@ -8,6 +8,7 @@ public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BetaUniqueness.E
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BetaUniqueness.FlagVectorMemLocalization
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BetaUniqueness.WAniso
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BetaUniqueness.CMNorm
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.StandardBaseFlagComplementIntegralLattice
 
 @[expose] public section
 
@@ -129,7 +130,11 @@ theorem eigenOne_gen (Λ : Submodule (𝓞 E) S.V) {g r : ℕ} {T T' : E} {F : L
     rw [Submodule.map_comap_subtype] at h1
     exact h1.map _
   have hI0 : I ≠ ⊥ := by
-    obtain ⟨a, ha, haΛ⟩ := exists_smul_mem S Λ hL v
+    have hfull : Submodule.IsFullLattice E Λ :=
+      { toIsLattice := hL
+        span_eq_top := GlobalTheory.LoopC.Base.span_eq_top_of_unimodular
+          S.hT S.herm S.nondeg hL hU }
+    obtain ⟨a, ha, haΛ⟩ := exists_smul_mem S Λ hfull v
     intro hbot
     have : π (a • v) ∈ I := (hmemI _).mpr ⟨a • v, haΛ, W.smul_of_tower_mem a hvW, rfl⟩
     rw [hbot, Submodule.mem_bot, smulO, map_smul, hπv, smul_eq_mul, mul_one] at this

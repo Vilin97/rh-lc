@@ -317,9 +317,33 @@ theorem lf_lvlH_pos (h : BlockHyp B ℓ v0 s) (v : InfinitePlace K) :
 
 theorem lf_exp_spec (h : BlockHyp B ℓ v0 s) (w : HeightOneSpectrum (𝓞 K)) :
     ∀ a ∈ w.asIdeal ^ B.JexpW ℓ Z w, ∀ z ∈ B.cutZ ℓ Z, a • z ∈ localization₂ w.asIdeal (B.delZ ℓ Z) := by
+  have hDelFull : ∀ c, Submodule.IsFullLattice K (B.S.Del c) := by
+    intro c
+    have hs : (s : 𝓞 K) ≠ 0 := by exact_mod_cast h.ok.good.s_pos.ne'
+    have hdual := (Formalism.HermitianLatticesTheory.dualLattice (𝓞 K) K B.S.V
+      B.S.pair h.ok.good.symm h.ok.good.nondeg exponent_index_lattice.hstar
+      (B.S.Nab c) (h.ok.good.nab_isFullLattice c)).1
+    have hsK : algebraMap (𝓞 K) K (s : 𝓞 K) ≠ 0 :=
+      (IsFractionRing.injective (𝓞 K) K).ne hs
+    refine { toIsLattice := B.S.lf_del_isLattice h.ok.good c, span_eq_top := ?_ }
+    apply eq_top_iff.mpr
+    intro x _
+    have hx : x ∈ Submodule.span K (Formalism.HermitianLatticesTheory.dual B.S.pair (B.S.Nab c) : Set B.S.V) := by
+      rw [hdual.span_eq_top]; exact Submodule.mem_top
+    have hle : Submodule.span K (Formalism.HermitianLatticesTheory.dual B.S.pair (B.S.Nab c) : Set B.S.V) ≤
+        Submodule.span K (B.S.Del c : Set B.S.V) := by
+      apply Submodule.span_le.mpr
+      intro y hy
+      apply (Submodule.smul_mem_iff _ hsK).mp
+      rw [algebraMap_smul K]
+      exact Submodule.subset_span (h.ok.good.dual_le c y hy)
+    exact hle hx
+  have hloc := Formalism.HermitianLatticesTheory.indexBasic_locS_top B.S.delLat
+    (ValuationLatticeField.valLatF_isFullLattice B.S.I B.S.I_injective B.S.Del hDelFull).span_eq_top
   have hAB : B.cutZ ℓ Z ≤ locS (nonZeroDivisors (𝓞 K)) (B.delZ ℓ Z) := by
     intro z _
-    obtain ⟨a, ha, hz⟩ := B.S.delLat_mem_locS h.ok.good ((B.fE ℓ Z).mulVec z)
+    obtain ⟨a, ha, hz⟩ : (B.fE ℓ Z).mulVec z ∈ locS (nonZeroDivisors (𝓞 K)) B.S.delLat := by
+      rw [hloc]; exact Submodule.mem_top
     refine ⟨a, ha, (exponent_index_lattice.mem_cutLat _ _ _).mpr ?_⟩
     rwa [exponent_index_lattice.mulVec_osmul]
   exact (exponent_weight_spectral w _ _ (lf_cutZ_isLattice (Z := Z) h).fg hAB).1

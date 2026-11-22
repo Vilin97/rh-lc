@@ -181,7 +181,7 @@ theorem FFStar_KK (hl' : IsUnram l') (q : Unif k) (χ : AddChar 𝓀[k] ℂ) {φ
   have h2 : GsStar χ φ ∈ EqForm π' := by
     simp only [GsStar, LinearMap.sum_apply, LinearMap.smul_apply]
     exact sum_mem fun c _ => Submodule.smul_mem _ _ (dia_mem_EqForm _ hφ)
-  rw [FFStar_eq_U_GsStar q h, FFStar_eq_U_GsStar q (KK_ram hl hθ P₀ Q₀ hl' hφ h), h1,
+  rw [FFStar_eq_U_GsStar q χ h, FFStar_eq_U_GsStar q χ (KK_ram hl hθ P₀ Q₀ hl' hφ h), h1,
     U_KK hl hθ P₀ Q₀ hl' q h2]
 
 theorem KK_FFStar (hl' : IsUnram l') (q : Unif k) (χ : AddChar 𝓀[k] ℂ) {φ : Form k n' V'} (hφ : φ ∈ EqForm π')

@@ -102,7 +102,7 @@ section Ord
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
 
-theorem ml_ordDet_gmap (Q : HeightOneSpectrum (𝓞 E)) (N : Submodule (𝓞 E) (Sp E n)) (hN : Submodule.IsLattice E N) (γ : Sp E n ≃ₗ[E] Sp E n) :
+theorem ml_ordDet_gmap (Q : HeightOneSpectrum (𝓞 E)) (N : Submodule (𝓞 E) (Sp E n)) (hN : Submodule.IsFullLattice E N) (γ : Sp E n ≃ₗ[E] Sp E n) :
     ordDet Q (gmap γ N) = ordE Q ((LinearEquiv.det γ : Eˣ) : E) + ordDet Q N := by
   obtain ⟨f, hf⟩ := exists_frameD Q hN
   have hf' : ∀ x, (γ * f) x ∈ localization₂ Q.asIdeal (gmap γ N) ↔ x ∈ stdAt E n Q := by
@@ -174,7 +174,7 @@ theorem ml_muOff_gmap {sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum 
   unfold muFac zFac
   by_cases hv : ∃ P ∈ SB, P.asIdeal.under (𝓞 X.F) = v.asIdeal
   · rw [if_pos hv, if_pos hv, if_pos hv, one_mul]
-  · rw [if_neg hv, if_neg hv, if_neg hv, ← Units.val_mul, ← zpow_add, ml_ordDet_gmap (sel v) N hN.1 γ]
+  · rw [if_neg hv, if_neg hv, if_neg hv, ← Units.val_mul, ← zpow_add, ml_ordDet_gmap (sel v) N (hcnt_isFullLattice_of_unimodular hN.1 hN.2) γ]
 
 theorem ml_ratio {sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)} (hsel : IsSel X sel) (SB : Finset (HeightOneSpectrum (𝓞 X.E)))
     (mU : HeightOneSpectrum (𝓞 X.E) → X.Kˣ) (mI : SB → X.E → X.K)

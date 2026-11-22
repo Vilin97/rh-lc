@@ -158,8 +158,8 @@ theorem exists_isom_cut (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF
   have hvA : vd h' (S.cut L) 𝔭 = vd h L 𝔭 := vd_cut hK hF hs hd S h1 hL hLi hx h𝔭
   have hvB : vd h' (S.cut (Formalism.HermitianLatticesTheory.gmap g L)) 𝔭 = vd h L 𝔭 := by
     rw [vd_cut_of_mem_locF hK hF hs hd S h1 hML hMi h𝔭 hxM, UnimodularLocalization.vd_gmap hg]
-  have hA := StabilizerLattices.isLattice_cut S hL.toIsLattice
-  have hB := StabilizerLattices.isLattice_cut S hML.toIsLattice
+  have hA := StabilizerLattices.isFullLattice_cut S hL
+  have hB := StabilizerLattices.isFullLattice_cut S hML
   have hAi := UnimodularLocalization.isIntegralLat_cut S hLi
   have hBi := UnimodularLocalization.isIntegralLat_cut S hMi
   have hs' : h'.IsSymm := S.isSymm hs

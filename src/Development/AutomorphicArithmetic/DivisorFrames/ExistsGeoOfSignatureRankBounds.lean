@@ -62,7 +62,7 @@ private theorem herm_of_lat {D : D7} (B : Base D.host.F D.host.E) (τf : Infinit
     rintro _ ⟨x, hx, rfl⟩
     change star (star x) ∈ Λ₀
     simpa using hx
-  obtain ⟨bas, hbas⟩ := exists_bas B _ hlat
+  obtain ⟨bas, hbas⟩ := exists_bas B _ hfull
   have eJ : ∀ w, ((-1 : D.host.E) • S.gram).map (B.emb w).1 = -((gramAt D S (τf w)).map star) := fun w => by
     ext a b; simp [gramAt, hB]
   refine ⟨_, bas, ⟨fun a b => ?_, fun w => ?_, hfull, fun y => GlobalTheory.TripleSpace.mem_starLat_iff_form S hsd y, fun w => ?_, hbas⟩,
@@ -96,7 +96,7 @@ private theorem skew_of_lat {D : D7} (B : Base D.host.F D.host.E) (τf : Infinit
       (GlobalTheory.ProjXCols.selfDual_isFullLattice X Λ₀ hA))
     (GlobalTheory.SkewLat.scLat_isFull GlobalTheory.SkewLat.DualPair.AA_ne
       (GlobalTheory.ProjXCols.selfDual_isFullLattice (zeroSp D) _ hZ)) e'
-  obtain ⟨bas, hbas⟩ := exists_bas B _ hlat
+  obtain ⟨bas, hbas⟩ := exists_bas B _ hfull
   have hsub : Subsingleton (Matrix (Fin (zeroSp D).rank) (Fin (zeroSp D).rank) ℂ) :=
     inferInstanceAs (Subsingleton (Matrix (Fin 0) (Fin 0) ℂ))
   have hsub' : Subsingleton (Fin (zeroSp D).rank → D.host.E) :=
