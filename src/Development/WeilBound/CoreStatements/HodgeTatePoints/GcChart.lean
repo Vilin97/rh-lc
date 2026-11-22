@@ -78,8 +78,19 @@ theorem chart_ii : ∀ (A K : Type) [CommRing A] [IsDomain A] [IsNoetherianRing 
   have hp0 : algebraMap A K ((p : A) ^ R) ≠ 0 := by
     rw [map_pow, map_natCast]
     exact pow_ne_zero _ (Nat.cast_ne_zero.2 hp.out.ne_zero)
-  have hlat : D.om'.IsLattice K := by
-    exact Submodule.IsLattice.of_fg K (Submodule.FG.of_le D.om_lat.fg (om'_le D))
+  have hlat : D.om'.IsFullLattice K := by
+    letI : D.om'.IsLattice K :=
+      Submodule.IsLattice.of_fg K (Submodule.FG.of_le D.om_lat.fg (om'_le D))
+    refine ⟨?_⟩
+    apply top_unique
+    rw [← D.om_lat.span_eq_top]
+    apply Submodule.span_le.2
+    intro x hx
+    have hh := Submodule.subset_span (R := K) (pow_smul_mem D hx)
+    rw [← IsScalarTower.algebraMap_smul K] at hh
+    have hh' := (Submodule.span K (D.om' : Set Ω)).smul_mem
+      (algebraMap A K ((p : A) ^ R))⁻¹ hh
+    simpa [smul_smul, hp0] using hh'
   refine test_incl A K Ω D.om' _ hlat hP fun q hq h1 => ?_
   by_cases hpq : (p : A) ∈ q
   swap

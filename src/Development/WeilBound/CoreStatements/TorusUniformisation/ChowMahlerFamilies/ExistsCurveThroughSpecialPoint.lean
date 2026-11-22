@@ -72,7 +72,7 @@ theorem alg (O B S D : Type) [CommRing O] [IsLocalRing O] [CommRing B] [Algebra 
   have hht : (m'.height : WithBot ℕ∞) = 1 := by
     rw [← IsLocalization.AtPrime.ringKrullDim_eq_height m' D, hd]
   have hB' : ringKrullDim B' = 1 := by
-    rw [← GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient m', hht,
+    rw [← GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient (ResidueField O) m', hht,
       ringKrullDim_eq_zero_of_isField ((Ideal.Quotient.maximal_ideal_iff_isField_quotient m').1 hm'), add_zero]
   obtain ⟨n, hn, htr⟩ := GroundTheory.Arith.Abelian.Jacobian.exists_ringKrullDim_eq_trdeg (ResidueField O) (A := B')
   have hn1 : n = 1 := by

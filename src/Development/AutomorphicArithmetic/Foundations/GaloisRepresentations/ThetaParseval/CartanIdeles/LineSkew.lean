@@ -27,7 +27,34 @@ theorem lineSkew : LineSkew := by
     intro v
     exact absurd v.2 (by simp [hP])
   case lat =>
-    exact Submodule.IsLattice.of_fg E (Submodule.fg_pi (fun _ => hl.lat.fg))
+    have hfg := Submodule.fg_pi (ι := Fin d) (p := fun _ => 𝔞) (fun _ => hl.lat.fg)
+    haveI : Submodule.IsLattice E (skewSpc F δ 𝔞 d).L := Submodule.IsLattice.of_fg E hfg
+    have ha : ∃ a : E, a ∈ 𝔞 ∧ a ≠ 0 := by
+      by_contra h
+      have hz : ∀ x ∈ 𝔞, x = 0 := by
+        intro x hx
+        by_contra hx0
+        exact h ⟨x, hx, hx0⟩
+      have h1 : (1 : E) ∈ 𝔞 := (hl.dual 1).2 (by
+        intro x hx o
+        simpa [hz x hx] using (isIntegral_zero : IsIntegral ℤ (0 : ℚ)))
+      exact h ⟨1, h1, one_ne_zero⟩
+    obtain ⟨a, ha, ha0⟩ := ha
+    refine ⟨?_⟩
+    apply top_unique
+    intro x _
+    rw [← Finset.univ_sum_single x]
+    apply Submodule.sum_mem
+    intro i _
+    have hs : Pi.single i a ∈ (skewSpc F δ 𝔞 d).L := by
+      change Pi.single i a ∈ Submodule.pi Set.univ (fun _ : Fin d => 𝔞)
+      simp only [Submodule.mem_pi, Set.mem_univ, true_implies]
+      intro j
+      by_cases h : j = i
+      · subst j; simpa using ha
+      · simp [h]
+    have hm := (Submodule.span E ((skewSpc F δ 𝔞 d).L : Set (Fin d → E))).smul_mem (x i / a) (Submodule.subset_span hs)
+    simpa [← Pi.single_smul, smul_eq_mul, div_mul_cancel₀ _ ha0] using hm
   case dual =>
     intro y
     have hform : ∀ x : Fin d → E, form σ (skewSpc F δ 𝔞 d).J y x = ∑ i, y i * (δ * σ (x i)) := by
