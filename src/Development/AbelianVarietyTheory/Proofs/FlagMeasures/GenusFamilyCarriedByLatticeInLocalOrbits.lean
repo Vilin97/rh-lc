@@ -78,7 +78,37 @@ theorem glue_local_orbits : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' 
         (GlobalTheory.T.unitaryComplement_moves_local_terms_with_data (Z.M p) (Z.agree p).1 (locH Z p) D.R.rS D.R.k (FP p) (finrank_loc p) (hR p) g hg
           (y p) (y' p) τ hτ1 hm).1, by rw [← hτ2]⟩
   choose h hU h1 τ hτ1 hτ2 using key
-  obtain ⟨Λ', hΛ', hp⟩ := (GlobalTheory.T.hermitianLattice_local_global_principle D Z).2 Λ hΛ (fun p => LocNG.img (h p) (lattice₂ D Z.M p Λ))
+  obtain ⟨M, hM⟩ := Ideal.exists_maximal (𝓞 D.host.F)
+  let p : PlF D := ⟨M, hM.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hM (NumberField.RingOfIntegers.not_isField D.host.F)⟩
+  obtain ⟨t, ht, heq⟩ := hτ p
+  have hspan : Submodule.span (D.s.atP p).Ep (lattice₂ D Z.M p Λ : Set (Vp D p)) = ⊤ := by
+    rw [← heq]
+    exact (GlobalTheory.T.localTermLattice_over_innerDatum_fg_span D Z FP p (y p) t ht).2
+  have hfull : Submodule.IsFullLattice D.host.E Λ := by
+    let U := Submodule.span D.host.E (Λ : Set (VS D).V)
+    let b := Module.finBasis D.host.E U
+    let W := Submodule.span (D.s.atP p).Ep
+      (Set.range fun i => baseChange₂ D p (b i : (VS D).V))
+    have hW (x : U) : baseChange₂ D p (x : (VS D).V) ∈ W := by
+      have hx := congrArg (fun y : U => baseChange₂ D p (y : (VS D).V)) (b.sum_repr x)
+      change baseChange₂ D p (U.subtype (∑ i, b.repr x i • b i)) = _ at hx
+      rw [map_sum, map_sum] at hx
+      rw [← hx]
+      exact W.sum_mem fun i _ => by
+        rw [map_smul, baseChange_smul₂]
+        exact W.smul_mem _ (Submodule.subset_span (Set.mem_range_self i))
+    have htop : W = ⊤ := by
+      apply top_le_iff.mp
+      rw [← hspan, lattice₂, Submodule.span_span_of_tower]
+      refine Submodule.span_le.2 ?_
+      rintro y ⟨x, hx, heq⟩
+      rw [← heq]
+      exact hW ⟨x, Submodule.subset_span hx⟩
+    refine { toIsLattice := hΛ, span_eq_top := Submodule.eq_of_le_of_finrank_le le_top ?_ }
+    rw [finrank_top, Module.finrank_eq_card_basis (VS D).frame, Fintype.card_fin]
+    simpa only [Module.finrank_fin_fun, Fintype.card_fin] using
+      finrank_le_of_span_eq_top (show Submodule.span (D.s.atP p).Ep _ = ⊤ from htop)
+  obtain ⟨Λ', hΛ', hp⟩ := (GlobalTheory.T.hermitianLattice_local_global_principle D Z).2 Λ hfull (fun p => LocNG.img (h p) (lattice₂ D Z.M p Λ))
     (fun p => by
       obtain ⟨t, ht, heq⟩ := hτ p
       apply img_lattice

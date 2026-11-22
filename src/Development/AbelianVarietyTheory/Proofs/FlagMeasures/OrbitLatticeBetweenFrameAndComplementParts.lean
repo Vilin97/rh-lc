@@ -7,6 +7,7 @@ public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.LocalOrthogon
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HermitianLatticeLocalGlobalPrinciple
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.TotallyPositiveOrthogonalOfTwoFlagExtendedSpacesStatement
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsNatMulIntegral
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.FrameFixingIsometriesEmbedProdLocalUnitary
 
 @[expose] public section
 
@@ -15,6 +16,47 @@ open NumberField Formalism.BasicNotions Formalism.MainNotions.S Formalism.MainNo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.FrameProj
+variable {D : D7}
+
+private theorem localLattice_fg_span (Z : LocDat D) (Λ : LV D) (h : Submodule.IsFullLattice D.host.E Λ) (p : PlF D) :
+    (lattice₂ D Z.M p Λ).FG ∧ Submodule.span (D.s.atP p).Ep (lattice₂ D Z.M p Λ : Set (Vp D p)) = ⊤ := by
+  have hc : Submodule.IsFullLattice D.host.E (GlobalTheory.Unfold.LatLoc.cL Λ) := by
+    refine { toIsLattice := GlobalTheory.Unfold.LatLoc.isLattice_map _ _ h.toIsLattice, span_eq_top := ?_ }
+    change Submodule.span D.host.E ((GlobalTheory.Unfold.LatLoc.cE D).toLinearMap '' (Λ : Set (VS D).V)) = ⊤
+    rw [Submodule.span_image, h.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+    exact (GlobalTheory.Unfold.LatLoc.cE D).surjective
+  have := (GlobalTheory.T.numberField_lattice_determined_by_local_lattices (GlobalTheory.HL.placesOf Z) (nV D) (GlobalTheory.Unfold.LatLoc.cL Λ) hc).2.1 p
+  rw [GlobalTheory.Unfold.LatLoc.localLattice_eq]
+  exact this
+
+private theorem isFullLattice_of_local_span {D : D7} (Z : LocDat D) (p : PlF D) (Λ : LV D)
+    (hΛ : Submodule.IsLattice D.host.E Λ)
+    (hspan : Submodule.span (D.s.atP p).Ep (lattice₂ D Z.M p Λ : Set (Vp D p)) = ⊤) :
+    Submodule.IsFullLattice D.host.E Λ := by
+  let U := Submodule.span D.host.E (Λ : Set (VS D).V)
+  let b := Module.finBasis D.host.E U
+  let W := Submodule.span (D.s.atP p).Ep
+    (Set.range fun i => baseChange₂ D p (b i : (VS D).V))
+  have hW (x : U) : baseChange₂ D p (x : (VS D).V) ∈ W := by
+    have hx := congrArg (fun y : U => baseChange₂ D p (y : (VS D).V)) (b.sum_repr x)
+    change baseChange₂ D p (U.subtype (∑ i, b.repr x i • b i)) = _ at hx
+    rw [map_sum, map_sum] at hx
+    rw [← hx]
+    exact W.sum_mem fun i _ => by
+      rw [map_smul, baseChange_smul₂]
+      exact W.smul_mem _ (Submodule.subset_span (Set.mem_range_self i))
+  have htop : W = ⊤ := by
+    apply top_le_iff.mp
+    rw [← hspan, lattice₂, Submodule.span_span_of_tower]
+    refine Submodule.span_le.2 ?_
+    rintro y ⟨x, hx, heq⟩
+    rw [← heq]
+    exact hW ⟨x, Submodule.subset_span hx⟩
+  refine { toIsLattice := hΛ, span_eq_top := Submodule.eq_of_le_of_finrank_le le_top ?_ }
+  rw [finrank_top, Module.finrank_eq_card_basis (VS D).frame, Fintype.card_fin]
+  simpa only [Module.finrank_fin_fun, Fintype.card_fin] using
+    finrank_le_of_span_eq_top (show Submodule.span (D.s.atP p).Ep _ = ⊤ from htop)
+
 
 set_option maxHeartbeats 1600000 in
 open GlobalTheory.ThetaMove.CommonRef in
@@ -49,10 +91,25 @@ theorem lattice_between_parts : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u
   have hQp : ∀ p : PlF D, ∀ x, baseChange₂ D p (Q x) = ((N : (D.s.atP p).Ep) • projP Z p U) (baseChange₂ D p x) := by
     intro p x
     rw [hQx, LinearMap.smul_apply, baseChange_smul₂, baseChangeAt_proj Z p, map_natCast]
+  obtain ⟨p⟩ := GlobalTheory.PhiEmbed.exists_place D
+  obtain ⟨g, hg, hgp⟩ := hloc p
+  have hspan₀ := (localLattice_fg_span Z Λ₀ hΛ₀ p).2
+  have hspan : Submodule.span (D.s.atP p).Ep (lattice₂ D Z.M p Λ : Set (Vp D p)) = ⊤ := by
+    rw [← hgp]
+    have e : (LocNG.img g (lattice₂ D Z.M p Λ₀) : Set (Vp D p)) =
+        (g : Vp D p →ₗ[(D.s.atP p).Ep] Vp D p) '' (lattice₂ D Z.M p Λ₀ : Set (Vp D p)) := rfl
+    rw [e, Submodule.span_image, hspan₀, Submodule.map_top, LinearMap.range_eq_top]
+    exact g.surjective
+  have hΛfull := isFullLattice_of_local_span Z p Λ hΛ hspan
   have hlat' : Submodule.IsLattice D.host.E (Λ ⊔ Λ.map (Q.restrictScalars (𝓞 D.host.E))) :=
     Submodule.IsLattice.of_fg D.host.E (hΛ.fg.sup (hΛ.fg.map _))
+  have hlatFull : Submodule.IsFullLattice D.host.E (Λ ⊔ Λ.map (Q.restrictScalars (𝓞 D.host.E))) := by
+    refine { toIsLattice := hlat', span_eq_top := ?_ }
+    apply top_unique
+    rw [← hΛfull.span_eq_top]
+    exact Submodule.span_mono (by intro x hx; exact Submodule.mem_sup_left hx)
   have heq : Λ ⊔ Λ.map (Q.restrictScalars (𝓞 D.host.E)) = Λ := by
-    refine ((GlobalTheory.Unfold.LatLoc.lattices_local_global D Z).1 _ Λ hlat' hΛ).2 fun p => ?_
+    refine ((GlobalTheory.Unfold.LatLoc.lattices_local_global D Z).1 _ Λ hlatFull hΛfull).2 fun p => ?_
     rw [localLattice_sup, sup_eq_left, localLattice_map Z p Q _ (hQp p)]
     obtain ⟨h, hh, himg⟩ := hloc p
     obtain ⟨Qp, hQpdef⟩ : ∃ Qp : Vp D p →ₗ[(D.s.atP p).Ep] Vp D p, Qp = (N : (D.s.atP p).Ep) • projP Z p U :=

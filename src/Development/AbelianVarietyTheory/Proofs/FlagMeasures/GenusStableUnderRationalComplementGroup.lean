@@ -8,6 +8,7 @@ public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.RationalAutom
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsComplementUnitaryMulActionLocalInnerDatumStatement
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HermitianDatumEqOfSameLatticeStatement
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HermitianLatticeLocalGlobalPrincipleStatement
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.LocalTermLatticeOverInnerDatumFgSpanStatement
 
 @[expose] public section
 
@@ -62,7 +63,38 @@ theorem inGen_of_gRel : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.
     change a • (act p).smul b (d p) = y' p
     rw [a0]
     exact a1
-  · have hfin := ((GlobalTheory.T.hermitianLattice_local_global_principle D Z).1 Λ (Formalism.HermitianLatticesTheory.gmap h Λ) hov.1 hov''.1).1
+  · have full_of_over (L : LV D) (z : Dat Z FP) (hz : LocOver L z) :
+        Submodule.IsFullLattice D.host.E L := by
+      obtain ⟨M, hM⟩ := Ideal.exists_maximal (𝓞 D.host.F)
+      let p : PlF D := ⟨M, hM.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hM (NumberField.RingOfIntegers.not_isField D.host.F)⟩
+      obtain ⟨t, ht, heq⟩ := hz.2 p
+      have hspan : Submodule.span (D.s.atP p).Ep (lattice₂ D Z.M p L : Set (Vp D p)) = ⊤ := by
+        rw [← heq]
+        exact (GlobalTheory.T.localTermLattice_over_innerDatum_fg_span D Z FP p (z p) t ht).2
+      let U := Submodule.span D.host.E (L : Set (VS D).V)
+      let b := Module.finBasis D.host.E U
+      let W := Submodule.span (D.s.atP p).Ep
+        (Set.range fun i => baseChange₂ D p (b i : (VS D).V))
+      have hW (x : U) : baseChange₂ D p (x : (VS D).V) ∈ W := by
+        have hx := congrArg (fun y : U => baseChange₂ D p (y : (VS D).V)) (b.sum_repr x)
+        change baseChange₂ D p (U.subtype (∑ i, b.repr x i • b i)) = _ at hx
+        rw [map_sum, map_sum] at hx
+        rw [← hx]
+        exact W.sum_mem fun i _ => by
+          rw [map_smul, baseChange_smul₂]
+          exact W.smul_mem _ (Submodule.subset_span (Set.mem_range_self i))
+      have htop : W = ⊤ := by
+        apply top_le_iff.mp
+        rw [← hspan, lattice₂, Submodule.span_span_of_tower]
+        refine Submodule.span_le.2 ?_
+        rintro y ⟨x, hx, heq⟩
+        rw [← heq]
+        exact hW ⟨x, Submodule.subset_span hx⟩
+      refine { toIsLattice := hz.1, span_eq_top := Submodule.eq_of_le_of_finrank_le le_top ?_ }
+      rw [finrank_top, Module.finrank_eq_card_basis (VS D).frame, Fintype.card_fin]
+      simpa only [Module.finrank_fin_fun, Fintype.card_fin] using
+        finrank_le_of_span_eq_top (show Submodule.span (D.s.atP p).Ep _ = ⊤ from htop)
+    have hfin := ((GlobalTheory.T.hermitianLattice_local_global_principle D Z).1 Λ (Formalism.HermitianLatticesTheory.gmap h Λ) (full_of_over Λ y hov) (full_of_over _ y'' hov'')).1
     refine (hfin.union hgen.2).subset fun p hp => ?_
     by_cases hyd : y p = d p
     · left

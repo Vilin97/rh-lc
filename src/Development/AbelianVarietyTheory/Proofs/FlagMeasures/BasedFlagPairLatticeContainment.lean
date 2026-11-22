@@ -10,6 +10,7 @@ public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.TotallyPositi
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.OrthogonalDecompositionLocalNondegenerateStatement
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.CompletionLatticeInfOrthEqOrthPartStatement
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsNatSmulMemOfMemSpan
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.InnerPreimageEqOfLocalInnerLatticeEq
 
 @[expose] public section
 
@@ -122,26 +123,8 @@ theorem localForm_zero_right₂ (Z : LocDat D) (p : PlF D) (x : Vp D p) : LocFac
   simp [LocFacts₂]
 
 theorem mem_of_loc (Z : LocDat D) (Λ : LV D) (hΛ : Submodule.IsLattice D.host.E Λ) (x : (VS D).V)
-    (h : ∀ p, baseChange₂ D p x ∈ lattice₂ D Z.M p Λ) : x ∈ Λ := by
-  let Γ : LV D := Λ ⊔ Submodule.span (𝓞 D.host.E) {x}
-  have hΓ : Submodule.IsLattice D.host.E Γ :=
-    Submodule.IsLattice.of_fg _ (hΛ.fg.sup (Submodule.fg_span_singleton x))
-  have heq : Λ = Γ := ((LatLoc.lattices_local_global D Z).1 Λ Γ hΛ hΓ).2 (by
-    intro p
-    apply le_antisymm
-    · exact Submodule.span_mono (Set.image_mono (show Λ ≤ Γ from le_sup_left))
-    · unfold lattice₂
-      apply Submodule.span_le.2
-      rintro _ ⟨y, hy, rfl⟩
-      obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hy
-      rw [map_add]
-      apply Submodule.add_mem
-      · exact Submodule.subset_span ⟨a, ha, rfl⟩
-      · obtain ⟨o, rfl⟩ := Submodule.mem_span_singleton.1 hb
-        rw [← algebraMap_smul D.host.E o x, baseChange_smul₂]
-        exact Submodule.smul_mem _ (⟨_, iota_mem_O Z p o⟩ : (Z.M p).L.O) (h p))
-  rw [heq]
-  exact (show Submodule.span (𝓞 D.host.E) {x} ≤ Γ from le_sup_right) (Submodule.subset_span (Set.mem_singleton x))
+    (h : ∀ p, baseChange₂ D p x ∈ lattice₂ D Z.M p Λ) : x ∈ Λ :=
+  GlobalTheory.Unfold.LsubG.mem_of_local Z Λ hΛ x h
 
 theorem exists_nat_smul_mem (Λ : LV D) (hΛ : Submodule.IsFullLattice D.host.E Λ) (v : (VS D).V) :
     ∃ n : ℕ, 0 < n ∧ (n : D.host.E) • v ∈ Λ :=

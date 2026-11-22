@@ -116,7 +116,7 @@ open GlobalTheory.Unfold.FixFin in
 theorem GlobalTheory.Unfold.FixFin.conj_aut_finite : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word), ∀ (F : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) (F' : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) (w : Point D.host.E (D.R.rS + 1)), ZhatOM (ZhatL F F') = ptMat w → Gval F F' ≠ 0 → ∀ (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS), Based Z FP (Tu D u) (Tu D u') F F' → (∀ p, (FP p).RelG (LocNG.theta (Z.M p))) → ∀ (φ : ↥(FlagPairStabilizer F F') →* (∀ p, ↥(FP p).UW0)), (∀ (h : ↥(FlagPairStabilizer F F')) p, Ext p (h : GV D) ((φ h p : ↥(FP p).UW0) : Vp D p ≃ₗ[(D.s.atP p).Ep] Vp D p)) → ∀ Λ₀ : LV D, Submodule.IsFullLattice D.host.E Λ₀ → ∀ a : ∀ p, ↥(FP p).UW0, {p | ((a p : ↥(FP p).UW0) : Vp D p ≃ₗ[(D.s.atP p).Ep] Vp D p) ∉ LocNG.Aut (lattice₂ D Z.M p Λ₀)}.Finite → {h : ↥(FlagPairStabilizer F F') | ∀ p, (((a p)⁻¹ * φ h p * a p : ↥(FP p).UW0) : Vp D p ≃ₗ[(D.s.atP p).Ep] Vp D p) ∈ LocNG.Aut (lattice₂ D Z.M p Λ₀)}.Finite := by
   intro D X Y u u' F F' w hw hG Z FP hB hR φ hφ Λ₀ hΛ₀ a ha
   have hLG := LatLoc.lattices_local_global D Z
-  obtain ⟨Λa, hΛa, hΛap⟩ := hLG.2 Λ₀ hΛ₀.toIsLattice
+  obtain ⟨Λa, hΛa, hΛap⟩ := hLG.2 Λ₀ hΛ₀
     (fun p => LocNG.img ((a p : ↥(FP p).UW0) : Vp D p ≃ₗ[(D.s.atP p).Ep] Vp D p) (lattice₂ D Z.M p Λ₀))
     (fun p => img_fg_span _ _ (localLattice_fg_span Z Λ₀ hΛ₀ p))
     (ha.subset fun p hp hA => hp (mem_Aut.1 hA))
@@ -130,9 +130,12 @@ theorem GlobalTheory.Unfold.FixFin.conj_aut_finite : ∀ (D : D7) (X : HidaSetti
   refine (H133.preimage Subtype.val_injective.injOn).subset ?_
   intro h hh
   refine ⟨h.2, ?_⟩
-  have hgl : Submodule.IsLattice D.host.E (Formalism.HermitianLatticesTheory.gmap (h : GV D) Λa) :=
-    LatLoc.isLattice_map (h : GV D) Λa hΛa
-  apply (hLG.1 _ _ hgl hΛa).2
+  have hgl : Submodule.IsFullLattice D.host.E (Formalism.HermitianLatticesTheory.gmap (h : GV D) Λa) := by
+    refine { toIsLattice := LatLoc.isLattice_map (h : GV D) Λa hΛa, span_eq_top := ?_ }
+    change Submodule.span D.host.E (((h : GV D) : (VS D).V →ₗ[D.host.E] (VS D).V) '' (Λa : Set (VS D).V)) = ⊤
+    rw [Submodule.span_image, hΛaFull.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+    exact (h : GV D).surjective
+  apply (hLG.1 _ _ hgl hΛaFull).2
   intro p
   rw [H128.2.2.1 (h : GV D) p _ Λa (hφ h p), hΛap p]
   have e := mem_Aut.1 (hh p)

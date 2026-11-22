@@ -86,7 +86,7 @@ theorem mass_genus_local_weights : ∀ (D : D7) (X : HidaSetting D) (Y : Full X)
     (GlobalTheory.T.frameFixingIsometry_ext_preserves_completions_ae D X Y u u' F F' w hw hG Z FP hB hR φ hφE Λ₀ hlat)
     (GlobalTheory.T.finite_doubleCosets_rational_localLatticeStabilizers D X Y u u' F F' w hw hG Z FP hB hR φ hφE Λ₀
       (by first | exact hfull | exact hfull.toIsLattice))
-    (GlobalTheory.T.finite_rationalIsometries_fixing_frames_conjStabilizer D X Y u u' F F' w hw hG Z FP hB hR φ hφE Λ₀ hlat) d0 hc0 hfin
+    (GlobalTheory.T.finite_rationalIsometries_fixing_frames_conjStabilizer D X Y u u' F F' w hw hG Z FP hB hR φ hφE Λ₀ hfull) d0 hc0 hfin
   refine ⟨V1, hV1, fun d hd hfd => ?_⟩
   have h3 := hdd d hd
   rw [GlobalTheory.T.genusMass_eq_sum_over_rationalGroup_orbits D X Y u u' F F' w hw hG Z FP hB hR φ hφE hφi hMv' d]

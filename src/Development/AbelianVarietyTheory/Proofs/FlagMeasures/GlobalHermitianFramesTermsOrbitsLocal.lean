@@ -179,7 +179,11 @@ theorem lrel_of_local (G : GFrames A r k) {d : G.Dat} {Γ Γ' : G.Lt} (hT : G.Is
   have hc : {p | ¬ ∃ u : (𝒪[(A.loc p).Fp])ˣ,
       ((u : 𝒪[(A.loc p).Fp]) : (A.loc p).Fp) = (((fun _ => 1 : ∀ p, ((A.loc p).Fp)ˣ) p) : (A.loc p).Fp)}.Finite :=
     Set.finite_empty.subset fun p hp => hp ⟨1, by simp⟩
-  obtain ⟨g, hg, hgp⟩ := GlobalTheory.T.exists_mem_St_approximating_local_elements A r k G Γ hT.1 (fun _ => 1) hc n (fun p => (hn p).1) hfin
+  have happrox := by
+    first
+    | exact GlobalTheory.T.exists_mem_St_approximating_local_elements A r k G Γ hfull (fun _ => 1) hc n (fun p => (hn p).1) hfin
+    | exact GlobalTheory.T.exists_mem_St_approximating_local_elements A r k G Γ hfull.toIsLattice (fun _ => 1) hc n (fun p => (hn p).1) hfin
+  obtain ⟨g, hg, hgp⟩ := happrox
   have hloc : ∀ p, A.lat p Γ' = A.lat p (Γ.map ((g : G.V →ₗ[E] G.V).restrictScalars (𝓞 E))) := by
     intro p
     haveI := (A.loc p).lf

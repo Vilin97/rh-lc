@@ -97,6 +97,35 @@ private theorem latP_fg_and_span_eq_top (Z : LocDat D) (Λ : LV D) (hΛ : Submod
   rw [GlobalTheory.Unfold.LatLoc.localLattice_eq]
   exact h
 
+private theorem isFullLattice_of_local_span {D : D7} (Z : LocDat D) (p : PlF D) (Λ : LV D)
+    (hΛ : Submodule.IsLattice D.host.E Λ)
+    (hspan : Submodule.span (D.s.atP p).Ep (lattice₂ D Z.M p Λ : Set (Vp D p)) = ⊤) :
+    Submodule.IsFullLattice D.host.E Λ := by
+  let U := Submodule.span D.host.E (Λ : Set (VS D).V)
+  let b := Module.finBasis D.host.E U
+  let W := Submodule.span (D.s.atP p).Ep
+    (Set.range fun i => baseChange₂ D p (b i : (VS D).V))
+  have hW (x : U) : baseChange₂ D p (x : (VS D).V) ∈ W := by
+    have hx := congrArg (fun y : U => baseChange₂ D p (y : (VS D).V)) (b.sum_repr x)
+    change baseChange₂ D p (U.subtype (∑ i, b.repr x i • b i)) = _ at hx
+    rw [map_sum, map_sum] at hx
+    rw [← hx]
+    exact W.sum_mem fun i _ => by
+      rw [map_smul, baseChange_smul₂]
+      exact W.smul_mem _ (Submodule.subset_span (Set.mem_range_self i))
+  have htop : W = ⊤ := by
+    apply top_le_iff.mp
+    rw [← hspan, lattice₂, Submodule.span_span_of_tower]
+    refine Submodule.span_le.2 ?_
+    rintro y ⟨x, hx, heq⟩
+    rw [← heq]
+    exact hW ⟨x, Submodule.subset_span hx⟩
+  refine { toIsLattice := hΛ, span_eq_top := Submodule.eq_of_le_of_finrank_le le_top ?_ }
+  rw [finrank_top, Module.finrank_eq_card_basis (VS D).frame, Fintype.card_fin]
+  simpa only [Module.finrank_fin_fun, Fintype.card_fin] using
+    finrank_le_of_span_eq_top (show Submodule.span (D.s.atP p).Ep _ = ⊤ from htop)
+
+
 private theorem gmap_inv_gmap_flag_measures (γ : GV D) (L : LV D) :
     Formalism.HermitianLatticesTheory.gmap γ⁻¹ (Formalism.HermitianLatticesTheory.gmap γ L) = L := by
   ext x
@@ -140,12 +169,12 @@ theorem GlobalTheory.DblCos.finite_double_cosets : ∀ (D : D7) (X : HidaSetting
           lattice₂ D Z.M p Λs ≠ lattice₂ D Z.M p Λ₀ := ⟨hex, he⟩
       simp only [fam, dif_pos hc]
       exact hc.1.choose_spec.2
-  refine ⟨(Slat.filter (fun Λs => Submodule.IsLattice D.host.E Λs)).image fam, ?_, ?_⟩
+  refine ⟨(Slat.filter (fun Λs => Submodule.IsFullLattice D.host.E Λs)).image fam, ?_, ?_⟩
   ·
     intro s hs
     obtain ⟨Λs, hmem, rfl⟩ := Finset.mem_image.1 hs
-    have hL : Submodule.IsLattice D.host.E Λs := (Finset.mem_filter.1 hmem).2
-    apply (hcmp Λs Λ₀ hL hΛ₀.toIsLattice).1.subset
+    have hL : Submodule.IsFullLattice D.host.E Λs := (Finset.mem_filter.1 hmem).2
+    apply (hcmp Λs Λ₀ hL hΛ₀).1.subset
     intro p hp
     by_contra he
     apply hp
@@ -153,7 +182,7 @@ theorem GlobalTheory.DblCos.finite_double_cosets : ∀ (D : D7) (X : HidaSetting
     exact (mem_Aut_iff p Z.M _ _).2 (img_one p Z.M _)
   · intro g hg
 
-    obtain ⟨Λ, hΛ, hΛp⟩ := hglue Λ₀ hΛ₀.toIsLattice
+    obtain ⟨Λ, hΛ, hΛp⟩ := hglue Λ₀ hΛ₀
       (fun p => LocNG.img ((g p : ↥(FP p).UW0) : Vp D p ≃ₗ[(D.s.atP p).Ep] Vp D p) (lattice₂ D Z.M p Λ₀))
       (fun p => by
         obtain ⟨hfg, hspan⟩ := latP_fg_and_span_eq_top Z Λ₀ hΛ₀ p
@@ -163,9 +192,19 @@ theorem GlobalTheory.DblCos.finite_double_cosets : ∀ (D : D7) (X : HidaSetting
         intro p hp hmem
         exact hp ((mem_Aut_iff p Z.M _ _).1 hmem))
     obtain ⟨Λs, hΛsS, γ, hγ, hγΛ⟩ := hSlat Λ hΛ (fun p => ⟨_, (g p).2, (hΛp p).symm⟩)
-    have hΛsL : Submodule.IsLattice D.host.E Λs := by
-      have := GlobalTheory.RatLocMove.isLattice_gmap' γ⁻¹ Λ hΛ
-      rwa [← hγΛ, gmap_inv_gmap_flag_measures] at this
+    have hΛfull : Submodule.IsFullLattice D.host.E Λ := by
+      obtain ⟨M, hM⟩ := Ideal.exists_maximal (𝓞 D.host.F)
+      let p : PlF D := ⟨M, hM.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hM (NumberField.RingOfIntegers.not_isField D.host.F)⟩
+      apply isFullLattice_of_local_span Z p Λ hΛ
+      rw [hΛp p]
+      exact span_img p Z.M _ _ (latP_fg_and_span_eq_top Z Λ₀ hΛ₀ p).2
+    have hΛsL : Submodule.IsFullLattice D.host.E Λs := by
+      have hfull : Submodule.IsFullLattice D.host.E (Formalism.HermitianLatticesTheory.gmap γ⁻¹ Λ) := by
+        refine { toIsLattice := GlobalTheory.RatLocMove.isLattice_gmap' γ⁻¹ Λ hΛ, span_eq_top := ?_ }
+        change Submodule.span D.host.E (((γ⁻¹ : GV D) : (VS D).V →ₗ[D.host.E] (VS D).V) '' (Λ : Set (VS D).V)) = ⊤
+        rw [Submodule.span_image, hΛfull.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+        exact (γ⁻¹ : GV D).surjective
+      rwa [← hγΛ, gmap_inv_gmap_flag_measures] at hfull
     let hh : ↥(FlagPairStabilizer F F') := ⟨γ, (mem_H0sub F F' γ).2 hγ⟩
     let s := fam Λs
     refine ⟨s, Finset.mem_image.2 ⟨Λs, Finset.mem_filter.2 ⟨hΛsS, hΛsL⟩, rfl⟩, hh,

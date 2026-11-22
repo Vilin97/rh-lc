@@ -189,7 +189,11 @@ theorem mass_eq_finprod : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [
         have := (Subgroup.mem_pi _).1 h p (Set.mem_univ p)
         rw [he] at this
         exact this
-    obtain ⟨γ, -, hγ⟩ := GlobalTheory.T.exists_mem_St_approximating_local_elements A r k G Λ hΛ.toIsLattice c hc g hgSt hgfin
+    have happrox := by
+      first
+      | exact GlobalTheory.T.exists_mem_St_approximating_local_elements A r k G Λ hΛ c hc g hgSt hgfin
+      | exact GlobalTheory.T.exists_mem_St_approximating_local_elements A r k G Λ hΛ.toIsLattice c hc g hgSt hgfin
+    obtain ⟨γ, -, hγ⟩ := happrox
     refine ⟨γ, ?_⟩
     have key : ∀ p, (g p)⁻¹ * φ γ p ∈ K p ⊓ U p := by
       intro p
