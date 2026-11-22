@@ -432,9 +432,7 @@ theorem separateBoundaryInvariant_appendLowerDimReduction (hstar : MaxContactCov
   have hordBound := LowerDimReductionPullback.isOrderBoundedByMult_derivedTriple hstar S hV hm hO s hft [] 0 hVc
   have hbalanced := LowerDimReductionPullback.isBalanced_derivedTriple hstar S hV hm hO s hft [] 0 hVc
   have hbdC : (MaxContactCoverData.derivedTriple S s hft [] 0).boundary = s.boundary s.length := by
-    rw [MaxContactCoverData.derivedTriple_boundary]
-    simp
-    rfl
+    rw [MaxContactCoverData.derivedTriple_boundary, List.nil_append, List.drop_zero]
   have hjC' : j < (MaxContactCoverData.derivedTriple S s hft [] 0).boundary.length := by
     rw [hbdC]
     exact hbj

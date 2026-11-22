@@ -256,8 +256,7 @@ theorem isPullbackBlowupSequence_derivedTriple
   have hDU' := LowerDimReductionPullback.isBalanced_derivedTriple hstar (NontrivialBoundary.pullbackWithNontrivialBoundary S q) hV' hm hO' s'
     hftT [] 0 hVU'
   have hUb : (MaxContactCoverData.derivedTriple S s hftS [] 0).boundary = s.boundary s.length := by
-    simp
-    rfl
+    rw [MaxContactCoverData.derivedTriple_boundary, List.nil_append, List.drop_zero]
   have hjL : j < (s.boundary s.length).length :=
     lt_of_lt_of_le hj (NontrivialBoundary.length_boundary_le_length_lastBoundary S s)
   have hcLT : NontrivialBoundary.survivingBoundaryCount S q j < (s'.boundary s'.length).length :=

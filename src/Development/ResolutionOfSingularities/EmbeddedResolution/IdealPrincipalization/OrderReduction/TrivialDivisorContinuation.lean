@@ -115,9 +115,7 @@ theorem nonempty_pullback_appendLowerDimReduction_of_comap_eq_top
       Scheme.IdealSheafData.mem_support_comap.mpr (mem_support_of_eq h1 hy)
     exact notMem_support_of_eq_top hComapTop _ h4
   have hb : (FunctorialResolution.EmbeddedResolution.MaxContactCoverData.derivedTriple S s hft [] 0).boundary = s.boundary s.length := by
-    rw [FunctorialResolution.EmbeddedResolution.MaxContactCoverData.derivedTriple_boundary]
-    simp
-    rfl
+    rw [FunctorialResolution.EmbeddedResolution.MaxContactCoverData.derivedTriple_boundary, List.nil_append, List.drop_zero]
   have hj' : j₁ < (FunctorialResolution.EmbeddedResolution.MaxContactCoverData.derivedTriple S s hft [] 0).boundary.length := by
     rw [hb]; exact hj
   have hget : (FunctorialResolution.EmbeddedResolution.MaxContactCoverData.derivedTriple S s hft [] 0).boundary.get ⟨j₁, hj'⟩ = Dj := by
