@@ -168,7 +168,8 @@ theorem places_half {D : D7} (C : Formalism.L2.Host.CharFrame D) (v : HeightOneS
     (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E) {I : Ideal (𝓞 D.host.E)} (hp : ((ownAt D v : ℕ) : 𝓞 D.host.E) ∈ I)
     (hI : I ⊔ I.map (H.bar : 𝓞 D.host.E →+* 𝓞 D.host.E) = ⊤) (Q : Finset (Pl D.host.E)) (hQ : ∀ P ∈ Q, I ≤ P.asIdeal)
     (hpl : IsTwistPlaces D.host.g Q)
-    (hram : ∀ P, ¬ (C.delAt (Formalism.EigenvalueLevelCeiling.plc v)).UnrAt P → P ∈ Q ∨ ∃ P' ∈ Q, IsConjPl P' P) :
+    (hram : ∀ P, ¬ (C.delAt (Formalism.EigenvalueLevelCeiling.plc v)).UnrAt P →
+      P ∈ Q ∨ ∃ P' ∈ Q, Formalism.IndefR.Lev.IsConjPl (D := D) P' P) :
     ∏ P ∈ Q, P.asIdeal ≤ I := by
   have hδ : (ownAt D v).Prime ∧ Formalism.L2.Host.IsDelta (H := D.host) (ownAt D v) (C.delAt (Formalism.EigenvalueLevelCeiling.plc v)) := by
     unfold ownAt Formalism.L2.Host.CharFrame.delAt

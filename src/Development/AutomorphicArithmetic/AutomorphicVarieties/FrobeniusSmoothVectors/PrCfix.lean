@@ -89,7 +89,7 @@ private theorem finrank_skew {K : Type} [Field K] {n : ℕ} (h2 : (2 : K) ≠ 0)
 theorem UpperTheory.V.Fr.pr_cfix :
     ∀ (K : Type) [Field K] (n : ℕ) (x : GG (m := n) (R := K)),
       (2 : K) ≠ 0 → x * x = 1 → x.right = -1 →
-        2 * Module.finrank K (LinearMap.ker (GG.ad x - 1)) + n = n * n := by
+        2 * Module.finrank K (LinearMap.ker (GG.ad (m := n) (R := K) x - 1)) + n = n * n := by
   intro K _ n x h2 hx hr
   have hg : x.left * theta x.left = 1 := by
     have h := congrArg SemidirectProduct.left hx
@@ -111,7 +111,8 @@ theorem UpperTheory.V.Fr.pr_cfix :
       Units.inv_mul, Matrix.one_mul, Jmat_mul_Jmat]
   have hne : x.right ≠ 1 := by
     rw [hr]; decide
-  have key : ∀ X : Matrix (Fin n) (Fin n) K, X ∈ LinearMap.ker (GG.ad x - 1) ↔
+  have key : ∀ X : Matrix (Fin n) (Fin n) K,
+      X ∈ LinearMap.ker (GG.ad (m := n) (R := K) x - 1) ↔
       (X * ((x.left : Matrix (Fin n) (Fin n) K) * Jmat (R := K) n))ᵀ
         = -(X * ((x.left : Matrix (Fin n) (Fin n) K) * Jmat (R := K) n)) := by
     intro X
