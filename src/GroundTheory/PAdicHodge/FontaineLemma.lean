@@ -28,14 +28,14 @@ theorem iterate_phiPlus_algebraMap (n : ℕ) (x : ACris K p) :
   | succ n ih => rw [Function.iterate_succ_apply', ih, phiPlus_algebraMap, Function.iterate_succ_apply']
 
 theorem thetaField_iotaPlus_algebraMap (x : ACris K p) :
-    θdR (iotaPlus K p (algebraMap (ACris K p) (BCrisPlus K p) x)) = (theta x : K) := by
+    θdR (iotaPlus K p (algebraMap (ACris K p) (BCrisPlus K p) x)) = (theta K p x : K) := by
   rw [iotaPlus_algebraMap, thetaField_iota]
 
 theorem theta_phi_iterate_eq_zero_of_mul_eq {y : BCrisPlus K p} {a : ACris K p} {k : ℕ}
     (hya : y * algebraMap (ACris K p) (BCrisPlus K p) ((p : ACris K p) ^ k) =
       algebraMap (ACris K p) (BCrisPlus K p) a)
     (hy : ∀ n : ℕ, θdR (iotaPlus K p ((phiPlus K p)^[n] y)) = 0) (n : ℕ) :
-    theta ((phi (K := K) (p := p))^[n] a) = 0 := by
+    theta K p ((phi (K := K) (p := p))^[n] a) = 0 := by
   apply Subtype.ext
   rw [ZeroMemClass.coe_zero, ← thetaField_iotaPlus_algebraMap, ← iterate_phiPlus_algebraMap, ← hya,
     ← RingHom.coe_pow, map_mul, map_mul, map_mul, RingHom.coe_pow, hy n, zero_mul]

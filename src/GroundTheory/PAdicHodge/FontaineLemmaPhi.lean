@@ -99,17 +99,18 @@ set_option maxHeartbeats 1600000 in
 theorem exists_phi_eq_add_mul [CharZero K] {ξ : AInf K p} (hξ : RingHom.ker θ = Ideal.span {ξ})
     {X : ACrisZero K p} (hX : (p : 𝔸) * (X : 𝔸) = algebraMap (AInf K p) 𝔸 (φ ξ) - p)
     (y : ACris K p) :
-    ∃ b : AInf K p, ∃ s : ACris K p, phi y =
+    ∃ b : AInf K p, ∃ s : ACris K p, phi (K := K) (p := p) y =
       algebraMap (AInf K p) (ACris K p) b + algebraMap (ACrisZero K p) (ACris K p) X * s := by
   refine exists_eq_add_mul_of_forall (a := (p : AInf K p)) (r := (p : ACris K p))
     (algebraMap (AInf K p) (ACris K p)) (map_natCast _ p) _ (phi (K := K) (p := p)) (fun y => ?_) y
   obtain ⟨y₀, z₁, rfl⟩ := exists_eq_add_p_pow_mul 1 y
   obtain ⟨b, s, hs, e⟩ := exists_phiAway_eq_add_mul hξ hX y₀.2
   refine ⟨b, algebraMap (ACrisZero K p) (ACris K p) ⟨s, hs⟩, z₁, ?_⟩
-  have e' : phiZero y₀ = algebraMap (AInf K p) (ACrisZero K p) b + X * ⟨s, hs⟩ :=
+  have e' : phiZero (K := K) (p := p) y₀ =
+      algebraMap (AInf K p) (ACrisZero K p) b + X * ⟨s, hs⟩ :=
     Subtype.ext (by rw [coe_phiZero, e]; rfl)
-  have hof : phi (algebraMap (ACrisZero K p) (ACris K p) y₀) =
-      algebraMap (ACrisZero K p) (ACris K p) (phiZero y₀) := phi_of y₀
+  have hof : phi (K := K) (p := p) (algebraMap (ACrisZero K p) (ACris K p) y₀) =
+      algebraMap (ACrisZero K p) (ACris K p) (phiZero (K := K) (p := p) y₀) := phi_of y₀
   have hb : algebraMap (AInf K p) (ACris K p) b =
       algebraMap (ACrisZero K p) (ACris K p) (algebraMap (AInf K p) (ACrisZero K p) b) :=
     AdicCompletion.algebraMap_apply _ b
@@ -128,7 +129,7 @@ section Theta
 variable [CharZero K]
 
 theorem theta_phi_iterate_algebraMap (n : ℕ) (w : AInf K p) :
-    theta ((phi (K := K) (p := p))^[n] (algebraMap (AInf K p) (ACris K p) w)) =
+    theta (K := K) (p := p) ((phi (K := K) (p := p))^[n] (algebraMap (AInf K p) (ACris K p) w)) =
       θ ((φ ^ n) w) := by
   have h : (phi (K := K) (p := p))^[n] (algebraMap (AInf K p) (ACris K p) w) =
       algebraMap (AInf K p) (ACris K p) ((φ ^ n) w) := by
@@ -142,8 +143,8 @@ theorem theta_phi_iterate_algebraMap (n : ℕ) (w : AInf K p) :
 set_option maxHeartbeats 1600000 in
 theorem p_mul_phi_mem_span_mu {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1)
     (hζ : PreTilt.untilt ((_root_.frobeniusEquiv 𝒪♭ p).symm ε) ≠ 1) {y : ACris K p}
-    (hy : ∀ n : ℕ, theta ((phi (K := K) (p := p))^[n] y) = 0) :
-    (p : ACris K p) * phi y ∈
+    (hy : ∀ n : ℕ, theta (K := K) (p := p) ((phi (K := K) (p := p))^[n] y) = 0) :
+    (p : ACris K p) * phi (K := K) (p := p) y ∈
       Ideal.span {algebraMap (AInf K p) (ACris K p) (AInf.mu ε)} := by
   have hξ := AInf.ker_fontaineTheta_eq_span_xi hε hζ
   have hξk : AInf.xi ε ∈ RingHom.ker θ := by rw [hξ]; exact Ideal.mem_span_singleton_self _
@@ -166,21 +167,22 @@ theorem p_mul_phi_mem_span_mu {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1)
     rw [hof, map_mul]
   have hp0 := AInf.natCast_ne_zero hε hζ
 
-  have e2 : (p : ACris K p) * phi y =
+  have e2 : (p : ACris K p) * phi (K := K) (p := p) y =
       algebraMap (AInf K p) (ACris K p) ((p : AInf K p) * b) +
         algebraMap (AInf K p) (ACris K p) (AInf.mu ε * d) * s := by
     rw [e, mul_add, ← mul_assoc, hXc, map_mul, map_mul, map_natCast]
   have hb : ∀ n : ℕ, θ ((φ ^ n) b) = 0 := by
     intro n
     set Φ := phi (K := K) (p := p) ^ n with hΦ
-    have hΦa : ∀ w, theta (Φ (algebraMap (AInf K p) (ACris K p) w)) = θ ((φ ^ n) w) :=
+    have hΦa : ∀ w, theta (K := K) (p := p) (Φ (algebraMap (AInf K p) (ACris K p) w)) =
+        θ ((φ ^ n) w) :=
       fun w => by rw [hΦ, RingHom.coe_pow, theta_phi_iterate_algebraMap]
-    have h : theta (Φ (phi y)) = 0 := by
+    have h : theta (K := K) (p := p) (Φ (phi (K := K) (p := p) y)) = 0 := by
       rw [hΦ, RingHom.coe_pow, ← Function.iterate_succ_apply]
       exact hy (n + 1)
-    have hl : theta (Φ ((p : ACris K p) * phi y)) = 0 := by
+    have hl : theta (K := K) (p := p) (Φ ((p : ACris K p) * phi (K := K) (p := p) y)) = 0 := by
       rw [map_mul, map_natCast, map_mul, map_natCast, h, mul_zero]
-    have hr : theta (Φ (algebraMap (AInf K p) (ACris K p) ((p : AInf K p) * b) +
+    have hr : theta (K := K) (p := p) (Φ (algebraMap (AInf K p) (ACris K p) ((p : AInf K p) * b) +
         algebraMap (AInf K p) (ACris K p) (AInf.mu ε * d) * s)) = (p : 𝒪) * θ ((φ ^ n) b) := by
       rw [RingHom.map_add Φ, map_mul Φ, RingHom.map_add (theta (K := K) (p := p)),
         map_mul (theta (K := K) (p := p)), hΦa, hΦa,

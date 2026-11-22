@@ -189,14 +189,14 @@ theorem exists_thetaField_iota_eq (y : ACris K p) :
   exact h0
 
 theorem thetaField_iota (y : ACris K p) :
-    IsPerfectoidField.thetaBDeRhamPlusField p (iota K p y) = (theta y : K) := by
+    IsPerfectoidField.thetaBDeRhamPlusField p (iota K p y) = (theta K p y : K) := by
   let F : ACris K p →+* normInteger K :=
     ((IsPerfectoidField.thetaBDeRhamPlusField p).comp (iota K p)).codRestrict (normInteger K)
       fun y => by
         obtain ⟨a, ha⟩ := exists_thetaField_iota_eq (K := K) (p := p) y
         rw [RingHom.comp_apply, ha]
         exact acrisZero_le_thetaIntegral a.2
-  have hF : F = theta := ringHom_ext fun a => Subtype.ext (by
+  have hF : F = theta K p := ringHom_ext fun a => Subtype.ext (by
     change IsPerfectoidField.thetaBDeRhamPlusField p (iota K p (_root_.AdicCompletion.of _ _ a)) = _
     rw [iota_of, thetaField_toBDeRhamPlus, theta_of, coe_thetaZero])
   exact congrArg Subtype.val (RingHom.congr_fun hF y)
@@ -206,7 +206,7 @@ set_option maxHeartbeats 1600000 in
 theorem exists_theta_eq_sum_of_phi_iterate {y : ACris K p} {N : ℕ} (hN : 1 ≤ N)
     (hy : (phi (K := K) (p := p))^[N] y = y) {m : ℕ} (hm : 1 ≤ m) :
     ∃ c : ℕ → normInteger K, ∀ j : ℕ, ∃ e : normInteger K,
-      (theta y : K) = ∑ i ∈ Finset.range m, (p : K) ^ i * ((c i : K)) ^ p ^ (N * j) +
+      (theta K p y : K) = ∑ i ∈ Finset.range m, (p : K) ^ i * ((c i : K)) ^ p ^ (N * j) +
         (p : K) ^ m * (e : K) := by
   have hfix : ∀ j, (phi (K := K) (p := p))^[N * j] y = y := fun j => by
     rw [Function.iterate_mul]; exact Function.iterate_fixed hy j
@@ -239,7 +239,7 @@ theorem exists_theta_eq_sum_of_phi_iterate {y : ACris K p} {N : ℕ} (hN : 1 ≤
     congr 1
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_pow, map_natCast, WittVector.frobeniusEquiv_pow_teichmuller]
-  refine ⟨θ ((φ ^ n) w'') + theta ((phi (K := K) (p := p) ^ n) z'), ?_⟩
+  refine ⟨θ ((φ ^ n) w'') + theta K p ((phi (K := K) (p := p) ^ n) z'), ?_⟩
   conv_lhs => rw [hyn]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_add (f := _), map_mul, map_pow, map_natCast, theta_algebraMap, hwn, map_add (f := _), map_sum, map_mul,
@@ -259,10 +259,10 @@ variable {p : ℕ} [hp : Fact p.Prime]
 theorem exists_theta_approx_of_phi_iterate {y : ACris ℂ_[p] p} {N : ℕ} (hN : 1 ≤ N)
     (hy : (phi (K := ℂ_[p]) (p := p))^[N] y = y) (m : ℕ) :
     ∃ u ∈ unramifiedClosure p,
-      ‖((theta y : normInteger ℂ_[p]) : ℂ_[p]) - (u : ℂ_[p])‖ ≤ ‖(p : ℂ_[p])‖ ^ m := by
+      ‖((theta ℂ_[p] p y : normInteger ℂ_[p]) : ℂ_[p]) - (u : ℂ_[p])‖ ≤ ‖(p : ℂ_[p])‖ ^ m := by
   rcases Nat.eq_zero_or_pos m with rfl | hm
   · refine ⟨0, zero_mem _, ?_⟩
-    simpa using mem_normInteger.1 (theta y).2
+    simpa using mem_normInteger.1 (theta ℂ_[p] p y).2
   obtain ⟨c, hc⟩ := exists_theta_eq_sum_of_phi_iterate hN hy hm
   have hc1 : ∀ i, ‖(c i : ℂ_[p])‖ ≤ 1 := fun i => mem_normInteger.1 (c i).2
   choose Kf hK using fun i => eventually_approx_pow (hc1 i) m
