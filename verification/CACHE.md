@@ -21,7 +21,7 @@ An unattested module uses the guarded source fallback: stock Lean elaborates it 
 
 Source Lean commands explicitly pass **`-j1`**. `LEAN_NUM_THREADS=1` alone does not limit the [Lean 4.33.1 shell](https://github.com/leanprover/lean4/blob/v4.33.1/src/Lean/Shell.lean#L219), whose default pool uses the hardware thread count. Independent module jobs provide parallelism.
 
-`Trace.lean` uses the pinned Lake's hashing/import-trace operations to reconstruct source/dependency/compiler/options/module/package input hashes. It writes synthetic fetch traces and packs complete `.ltar` artifacts with stock `leantar`; only root-package mappings are published. Ordinary Lake commands retain their normal graph-processing costs. Mathematical verification is separate: see [the Comparator instructions](../README.md#checking-it).
+`Trace.lean` uses the pinned Lake's hashing/import-trace operations to reconstruct source/dependency/compiler/options/module/package input hashes. It writes synthetic fetch traces and packs complete `.ltar` artifacts with stock `leantar`; only root-package mappings are published. Ordinary Lake commands retain their normal graph-processing costs. Mathematical verification is separate: see [the Comparator instructions](../README.md#checking-the-proof-yourself).
 
 ## Produce and test
 

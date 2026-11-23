@@ -102,7 +102,13 @@ revisionEndpoint = "https://example.invalid/revisions"
         selected = client.find_record(root, identity, fetcher=fetch)
         assert selected == record and requests == [index]
         shutil.rmtree(root / ".lake/build")
+        # A checkout that was built before has X.hash beside X. Lake reads it instead of hashing X.
+        stale = [lib / "Subject.olean.hash", lib / "Subject.ilean.hash", ir / "Subject.c.hash"]
+        for path in stale:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("0" * 16)
         client.consume(root, cache, selected, identity, workers=2, fetcher=fetch)
+        assert not any(path.exists() for path in stale)
         for ext, data in originals.items():
             assert (ir if ext == "c" else lib).joinpath("Subject." + ext).read_bytes() == data
         assert "up-to-date" in run(root, "lake", "--no-build", "--rehash", "build", "Subject")

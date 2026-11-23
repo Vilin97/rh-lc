@@ -64,9 +64,18 @@ def main():
             helper.main()
         assert (lib / "Subject.olean").read_bytes() == originals["olean"]
         (lib / "Subject.olean").write_bytes(b"corrupt existing output")
+        # Lake reads X.hash instead of hashing X, so a replaced output must not keep its old one.
+        stale = [lib / "Subject.olean.hash", lib / "Subject.olean.private.hash",
+                 lib / "Subject.ilean.hash", ir / "Subject.c.hash"]
+        unrelated = [lib / "SubjectExtra.olean.hash", lib / "Subject.trace.hash",
+                     ir / "Subject.olean.hash"]
+        for path in stale + unrelated:
+            path.write_text("0" * 16)
         with patch.object(sys, "argv", ["restore-cache", "--project", str(root), "--manifest", str(manifest), "--jobs", "2"]):
             helper.main()
         assert (lib / "Subject.olean").read_bytes() == originals["olean"]
+        assert not any(path.exists() for path in stale)
+        assert all(path.read_text() == "0" * 16 for path in unrelated)
 
         def rejects(function):
             try:

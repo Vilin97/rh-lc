@@ -232,7 +232,7 @@ jobs:
           SEED_SHA: ${{ inputs.proof_seed_sha256 }}
           PR_NUMBER: ${{ inputs.pr_number }}
         run: |
-          test "$PR_NUMBER" = 91
+          test "$PR_NUMBER" = "$(python3 -c 'import json; print(json.load(open("trusted/tools/ci_native/proof-policy.json"))["pr_number"])')"
           python3 trusted/tools/ci_native/fetch_proof_seed.py --seed-sha256 "$SEED_SHA" --output seed
       - id: plan
         env:
@@ -240,6 +240,7 @@ jobs:
           RUN_ID: ${{ github.run_id }}
           ATTEMPT: ${{ github.run_attempt }}
           WORKFLOW_SHA: ${{ github.workflow_sha }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           python3 trusted/tools/ci_native/prepare_proofs.py --seed seed/seed.json --seed-sha256 "$SEED_SHA" \
             --registry trusted/tools/ci_native/proof-runners.json --output control \
@@ -329,6 +330,12 @@ jobs:
           SECONDS_LIMIT: ${{ matrix.timeout_seconds }}
         run: |
           umask 077
+          export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+          export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+          if [[ ! -S "$XDG_RUNTIME_DIR/bus" ]]; then
+            echo "The dedicated runner account has no systemd user bus at $XDG_RUNTIME_DIR/bus; check its user manager and loginctl linger setting." >&2
+            exit 1
+          fi
           systemd-run --user --wait --collect --pipe --unit="rh-proof-${RUN_ID}-${ATTEMPT}-${ID}" \
             -p "CPUQuota=$((CPUS*100))%" -p "MemoryMax=${MEMORY}M" -p MemorySwapMax=0 \
             -p TasksMax=16384 -p LimitSTACK=infinity -p "RuntimeMaxSec=$((SECONDS_LIMIT+120))" \
@@ -411,6 +418,12 @@ jobs:
         run: |
           umask 077
           export PATH="$HOME/.elan/bin:$PATH"
+          export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+          export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+          if [[ ! -S "$XDG_RUNTIME_DIR/bus" ]]; then
+            echo "The dedicated runner account has no systemd user bus at $XDG_RUNTIME_DIR/bus; check its user manager and loginctl linger setting." >&2
+            exit 1
+          fi
           systemd-run --user --wait --collect --pipe --unit="rh-quick-${RUN_ID}-${ATTEMPT}" \
             -p CPUQuota=800% -p MemoryMax=64G -p MemorySwapMax=0 -p TasksMax=16384 \
             -p LimitNOFILE=65536 -p LimitSTACK=infinity -p RuntimeMaxSec=1800 \

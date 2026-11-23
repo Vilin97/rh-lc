@@ -248,6 +248,7 @@ def consume(root, cache, record, identity, workers=24, fetcher=fetch):
             Path(base).mkdir(parents=True, exist_ok=True)
     env["RUST_MIN_STACK"] = str(max(int(env.get("RUST_MIN_STACK", "0")), 8388608))
     lean = Path(subprocess.check_output(["elan", "which", "lean"], cwd=root, env=env, text=True).strip())
+    restore.clear_output_hashes(root, rows)
     print(f"Restoring {len(jobs)} CI modules with stock leantar ({workers} workers)...", flush=True)
     subprocess.run([str(lean.with_name("leantar")), "--jobs", str(workers), "-f", "-x", "-j", "-"],
                    input=json.dumps(jobs), text=True, cwd=root, env=env, check=True)
