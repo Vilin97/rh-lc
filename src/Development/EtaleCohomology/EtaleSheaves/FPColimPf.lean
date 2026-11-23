@@ -1,5 +1,6 @@
 module
 
+import Mathlib
 public import Mathlib.Algebra.Category.Ring.Basic
 public import Mathlib.Algebra.MvPolynomial.Variables
 public import Mathlib.CategoryTheory.Limits.Types.Filtered
@@ -17,7 +18,7 @@ import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.CategoryTheory.Limits.Filtered
-import Mathlib.CategoryTheory.Limits.Preserves.Over
+public import Mathlib.CategoryTheory.Limits.Preserves.Over
 import Mathlib.CategoryTheory.WithTerminal.Cone
 import Mathlib.CategoryTheory.WithTerminal.Lemmas
 import Mathlib.Combinatorics.Enumerative.DyckWord

@@ -42,7 +42,7 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
-
+public import Mathlib.Geometry.Euclidean.Projection
 @[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
